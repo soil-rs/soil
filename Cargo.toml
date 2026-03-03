@@ -1,0 +1,1075 @@
+[workspace.package]
+authors = ["Parity Technologies <admin@parity.io>"]
+edition = "2021"
+homepage = "https://paritytech.github.io/polkadot-sdk/"
+license = "GPL-3.0-only"
+repository = "https://github.com/parity-blockchains/soil.git"
+
+[workspace]
+resolver = "2"
+
+members = [
+	"bin/node/inspect",
+	"bin/node/primitives",
+	"bin/node/rpc",
+	"bin/utils/chain-spec-builder",
+	"bin/utils/subkey",
+	"client/allocator",
+	"client/api",
+	"client/authority-discovery",
+	"client/basic-authorship",
+	"client/block-builder",
+	"client/chain-spec",
+	"client/chain-spec/derive",
+	"client/cli",
+	"client/consensus/aura",
+	"client/consensus/babe",
+	"client/consensus/babe/rpc",
+	"client/consensus/beefy",
+	"client/consensus/beefy/rpc",
+	"client/consensus/common",
+	"client/consensus/epochs",
+	"client/consensus/grandpa",
+	"client/consensus/grandpa/rpc",
+	"client/consensus/manual-seal",
+	"client/consensus/pow",
+	"client/consensus/slots",
+	"client/db",
+	"client/executor",
+	"client/executor/common",
+	"client/executor/polkavm",
+	"client/executor/runtime-test",
+	"client/executor/wasmtime",
+	"client/informant",
+	"client/keystore",
+	"client/merkle-mountain-range",
+	"client/merkle-mountain-range/rpc",
+	"client/mixnet",
+	"client/network",
+	"client/network-gossip",
+	"client/network/common",
+	"client/network/light",
+	"client/network/statement",
+	"client/network/sync",
+	"client/network/test",
+	"client/network/transactions",
+	"client/network/types",
+	"client/offchain",
+	"client/proposer-metrics",
+	"client/rpc",
+	"client/rpc-api",
+	"client/rpc-servers",
+	"client/rpc-spec-v2",
+	"client/runtime-utilities",
+	"client/service",
+	"client/service/test",
+	"client/state-db",
+	"client/statement-store",
+	"client/storage-monitor",
+	"client/sync-state-rpc",
+	"client/sysinfo",
+	"client/telemetry",
+	"client/tracing",
+	"client/tracing/proc-macro",
+	"client/transaction-pool",
+	"client/transaction-pool/api",
+	"client/utils",
+	"deprecated/hashing",
+	"deprecated/hashing/proc-macro",
+	"frame",
+	"frame/alliance",
+	"frame/asset-conversion",
+	"frame/asset-conversion/ops",
+	"frame/asset-rate",
+	"frame/asset-rewards",
+	"frame/assets",
+	"frame/assets-freezer",
+	"frame/assets-holder",
+	"frame/atomic-swap",
+	"frame/aura",
+	"frame/authority-discovery",
+	"frame/authorship",
+	"frame/babe",
+	"frame/bags-list",
+	"frame/bags-list/fuzzer",
+	"frame/bags-list/remote-tests",
+	"frame/balances",
+	"frame/beefy",
+	"frame/beefy-mmr",
+	"frame/benchmarking",
+	"frame/benchmarking/pov",
+	"frame/bounties",
+	"frame/broker",
+	"frame/child-bounties",
+	"frame/collective",
+	"frame/conviction-voting",
+	"frame/core-fellowship",
+	"frame/dap",
+	"frame/delegated-staking",
+	"frame/democracy",
+	"frame/dummy-dim",
+	"frame/election-provider-multi-block",
+	"frame/election-provider-multi-phase",
+	"frame/election-provider-multi-phase/test-staking-e2e",
+	"frame/election-provider-support",
+	"frame/election-provider-support/benchmarking",
+	"frame/election-provider-support/solution-type",
+	"frame/election-provider-support/solution-type/fuzzer",
+	"frame/elections-phragmen",
+	"frame/examples",
+	"frame/examples/authorization-tx-extension",
+	"frame/examples/basic",
+	"frame/examples/default-config",
+	"frame/examples/dev-mode",
+	"frame/examples/frame-crate",
+	"frame/examples/kitchensink",
+	"frame/examples/multi-block-migrations",
+	"frame/examples/offchain-worker",
+	"frame/examples/single-block-migrations",
+	"frame/examples/split",
+	"frame/examples/tasks",
+	"frame/examples/view-functions",
+	"frame/executive",
+	"frame/fast-unstake",
+	"frame/glutton",
+	"frame/grandpa",
+	"frame/honzon/oracle",
+	"frame/honzon/oracle/runtime-api",
+	"frame/identity",
+	"frame/im-online",
+	"frame/indices",
+	"frame/insecure-randomness-collective-flip",
+	"frame/lottery",
+	"frame/membership",
+	"frame/merkle-mountain-range",
+	"frame/message-queue",
+	"frame/meta-tx",
+	"frame/metadata-hash-extension",
+	"frame/migrations",
+	"frame/mixnet",
+	"frame/multi-asset-bounties",
+	"frame/multisig",
+	"frame/nft-fractionalization",
+	"frame/nfts",
+	"frame/nfts/runtime-api",
+	"frame/nis",
+	"frame/node-authorization",
+	"frame/nomination-pools",
+	"frame/nomination-pools/benchmarking",
+	"frame/nomination-pools/fuzzer",
+	"frame/nomination-pools/runtime-api",
+	"frame/offences",
+	"frame/offences/benchmarking",
+	"frame/origin-restriction",
+	"frame/paged-list",
+	"frame/paged-list/fuzzer",
+	"frame/parameters",
+	"frame/people",
+	"frame/preimage",
+	"frame/proxy",
+	"frame/ranked-collective",
+	"frame/recovery",
+	"frame/referenda",
+	"frame/remark",
+	"frame/revive",
+	"frame/revive/fixtures",
+	"frame/revive/proc-macro",
+	"frame/revive/uapi",
+	"frame/revive/ui-tests",
+	"frame/root-offences",
+	"frame/root-testing",
+	"frame/safe-mode",
+	"frame/salary",
+	"frame/sassafras",
+	"frame/scheduler",
+	"frame/scored-pool",
+	"frame/session",
+	"frame/session/benchmarking",
+	"frame/society",
+	"frame/staking",
+	"frame/staking-async/runtime-api",
+	"frame/staking/reward-curve",
+	"frame/staking/reward-fn",
+	"frame/staking/runtime-api",
+	"frame/state-trie-migration",
+	"frame/statement",
+	"frame/sudo",
+	"frame/support",
+	"frame/support/procedural",
+	"frame/support/procedural/tools",
+	"frame/support/procedural/tools/derive",
+	"frame/support/test",
+	"frame/support/test/compile_pass",
+	"frame/support/test/pallet",
+	"frame/support/test/stg_frame_crate",
+	"frame/system",
+	"frame/system/benchmarking",
+	"frame/system/rpc/runtime-api",
+	"frame/timestamp",
+	"frame/tips",
+	"frame/transaction-payment",
+	"frame/transaction-payment/asset-conversion-tx-payment",
+	"frame/transaction-payment/asset-tx-payment",
+	"frame/transaction-payment/rpc",
+	"frame/transaction-payment/rpc/runtime-api",
+	"frame/transaction-payment/skip-feeless-payment",
+	"frame/transaction-storage",
+	"frame/treasury",
+	"frame/try-runtime",
+	"frame/tx-pause",
+	"frame/uniques",
+	"frame/utility",
+	"frame/verify-signature",
+	"frame/vesting",
+	"frame/whitelist",
+	"primitives/api",
+	"primitives/api/proc-macro",
+	"primitives/api/test",
+	"primitives/application-crypto",
+	"primitives/application-crypto/test",
+	"primitives/arithmetic",
+	"primitives/arithmetic/fuzzer",
+	"primitives/authority-discovery",
+	"primitives/block-builder",
+	"primitives/blockchain",
+	"primitives/consensus/aura",
+	"primitives/consensus/babe",
+	"primitives/consensus/beefy",
+	"primitives/consensus/common",
+	"primitives/consensus/grandpa",
+	"primitives/consensus/pow",
+	"primitives/consensus/sassafras",
+	"primitives/consensus/slots",
+	"primitives/core",
+	"primitives/core/fuzz",
+	"primitives/crypto/ec-utils",
+	"primitives/crypto/hashing",
+	"primitives/crypto/hashing/proc-macro",
+	"primitives/database",
+	"primitives/debug-derive",
+	"primitives/ethereum-standards",
+	"primitives/externalities",
+	"primitives/genesis-builder",
+	"primitives/inherents",
+	"primitives/io",
+	"primitives/keyring",
+	"primitives/keystore",
+	"primitives/maybe-compressed-blob",
+	"primitives/merkle-mountain-range",
+	"primitives/metadata-ir",
+	"primitives/mixnet",
+	"primitives/npos-elections",
+	"primitives/npos-elections/fuzzer",
+	"primitives/offchain",
+	"primitives/panic-handler",
+	"primitives/rpc",
+	"primitives/runtime",
+	"primitives/runtime-interface",
+	"primitives/runtime-interface/proc-macro",
+	"primitives/runtime-interface/test",
+	"primitives/runtime-interface/test-wasm",
+	"primitives/runtime-interface/test-wasm-deprecated",
+	"primitives/session",
+	"primitives/staking",
+	"primitives/state-machine",
+	"primitives/statement-store",
+	"primitives/std",
+	"primitives/storage",
+	"primitives/test-primitives",
+	"primitives/timestamp",
+	"primitives/tracing",
+	"primitives/transaction-pool",
+	"primitives/transaction-storage-proof",
+	"primitives/trie",
+	"primitives/version",
+	"primitives/version/proc-macro",
+	"primitives/wasm-interface",
+	"primitives/weights",
+	"scripts/ci/node-template-release",
+	"test-utils",
+	"test-utils/client",
+	"test-utils/runtime",
+	"test-utils/runtime/client",
+	"test-utils/runtime/transaction-pool",
+	"utils/binary-merkle-tree",
+	"utils/build-script-utils",
+	"utils/fork-tree",
+	"utils/frame/generate-bags",
+	"utils/frame/remote-externalities",
+	"utils/frame/rpc/client",
+	"utils/frame/rpc/state-trie-migration-rpc",
+	"utils/frame/rpc/support",
+	"utils/frame/rpc/system",
+	"utils/prometheus",
+	"utils/substrate-bip39",
+	"utils/wasm-builder",
+]
+
+default-members = [
+	"bin/node/inspect",
+]
+
+[workspace.lints.rust]
+suspicious_double_ref_op = { level = "allow", priority = 2 }
+# `substrate_runtime` is a common `cfg` condition name used in the repo.
+unexpected_cfgs = { level = "warn", check-cfg = [
+	'cfg(build_opt_level, values("3"))',
+	'cfg(build_profile, values("debug", "release"))',
+	'cfg(enable_alloc_error_handler)',
+	'cfg(fuzzing)',
+	'cfg(ignore_flaky_test)',
+	'cfg(substrate_runtime)',
+] }
+
+[workspace.lints.clippy]
+all = { level = "allow", priority = 0 }
+bind_instead_of_map = { level = "allow", priority = 2 }              # stylistic
+borrowed-box = { level = "allow", priority = 2 }                     # Reasonable to fix this one
+complexity = { level = "warn", priority = 1 }
+correctness = { level = "warn", priority = 1 }
+default_constructed_unit_structs = { level = "allow", priority = 2 } # stylistic
+derivable_impls = { level = "allow", priority = 2 }                  # false positives
+eq_op = { level = "allow", priority = 2 }                            # In tests we test equality.
+erasing_op = { level = "allow", priority = 2 }                       # E.g. 0 * DOLLARS
+extra-unused-type-parameters = { level = "allow", priority = 2 }     # stylistic
+identity-op = { level = "allow", priority = 2 }                      # One case where we do 0 +
+if-same-then-else = { level = "allow", priority = 2 }
+needless-lifetimes = { level = "allow", priority = 2 }               # generated code
+needless_option_as_deref = { level = "allow", priority = 2 }         # false positives
+nonminimal-bool = { level = "allow", priority = 2 }                  # maybe
+option-map-unit-fn = { level = "allow", priority = 2 }               # stylistic
+stable_sort_primitive = { level = "allow", priority = 2 }            # prefer stable sort
+too-many-arguments = { level = "allow", priority = 2 }               # (Turning this on would lead to)
+type_complexity = { level = "allow", priority = 2 }                  # raison d'etre
+unit_arg = { level = "allow", priority = 2 }                         # stylistic
+unnecessary_cast = { level = "allow", priority = 2 }                 # Types may change
+useless_conversion = { level = "allow", priority = 2 }               # Types may change
+while_immutable_condition = { level = "allow", priority = 2 }        # false positives
+zero-prefixed-literal = { level = "allow", priority = 2 }            # 00_1000_000
+
+
+[workspace.dependencies]
+
+# Substrate path dependencies
+binary-merkle-tree = { path = "utils/binary-merkle-tree", default-features = false }
+chain-spec-builder = { path = "bin/utils/chain-spec-builder", default-features = false, package = "staging-chain-spec-builder" }
+ethereum-standards = { path = "primitives/ethereum-standards" }
+fork-tree = { path = "utils/fork-tree", default-features = false }
+frame = { path = "frame", default-features = false, package = "polkadot-sdk-frame" }
+frame-benchmarking = { path = "frame/benchmarking", default-features = false }
+frame-benchmarking-cli = { path = "utils/frame/benchmarking-cli", default-features = false }
+frame-benchmarking-pallet-pov = { default-features = false, path = "frame/benchmarking/pov" }
+frame-election-provider-solution-type = { path = "frame/election-provider-support/solution-type", default-features = false }
+frame-election-provider-support = { path = "frame/election-provider-support", default-features = false }
+frame-executive = { path = "frame/executive", default-features = false }
+frame-metadata-hash-extension = { path = "frame/metadata-hash-extension", default-features = false }
+frame-storage-access-test-runtime = { path = "utils/frame/storage-access-test-runtime", default-features = false }
+frame-support = { path = "frame/support", default-features = false }
+frame-support-procedural = { path = "frame/support/procedural", default-features = false }
+frame-support-procedural-tools = { path = "frame/support/procedural/tools", default-features = false }
+frame-support-procedural-tools-derive = { path = "frame/support/procedural/tools/derive", default-features = false }
+frame-support-test = { path = "frame/support/test" }
+frame-system = { path = "frame/system", default-features = false }
+frame-system-benchmarking = { path = "frame/system/benchmarking", default-features = false }
+frame-system-rpc-runtime-api = { path = "frame/system/rpc/runtime-api", default-features = false }
+frame-try-runtime = { path = "frame/try-runtime", default-features = false }
+generate-bags = { path = "utils/frame/generate-bags", default-features = false }
+kitchensink-runtime = { path = "bin/node/runtime" }
+mmr-gadget = { path = "client/merkle-mountain-range", default-features = false }
+mmr-rpc = { path = "client/merkle-mountain-range/rpc", default-features = false }
+node-cli = { path = "bin/node/cli", package = "staging-node-cli" }
+node-inspect = { path = "bin/node/inspect", default-features = false, package = "staging-node-inspect" }
+node-primitives = { path = "bin/node/primitives", default-features = false }
+node-rpc = { path = "bin/node/rpc" }
+node-testing = { path = "bin/node/testing" }
+pallet-alliance = { path = "frame/alliance", default-features = false }
+pallet-asset-conversion = { path = "frame/asset-conversion", default-features = false }
+pallet-asset-conversion-ops = { path = "frame/asset-conversion/ops", default-features = false }
+pallet-asset-conversion-tx-payment = { path = "frame/transaction-payment/asset-conversion-tx-payment", default-features = false }
+pallet-asset-rate = { path = "frame/asset-rate", default-features = false }
+pallet-asset-rewards = { path = "frame/asset-rewards", default-features = false }
+pallet-asset-tx-payment = { path = "frame/transaction-payment/asset-tx-payment", default-features = false }
+pallet-assets = { path = "frame/assets", default-features = false }
+pallet-assets-freezer = { path = "frame/assets-freezer", default-features = false }
+pallet-assets-holder = { path = "frame/assets-holder", default-features = false }
+pallet-assets-precompiles = { path = "frame/assets/precompiles", default-features = false }
+pallet-atomic-swap = { default-features = false, path = "frame/atomic-swap" }
+pallet-aura = { path = "frame/aura", default-features = false }
+pallet-authority-discovery = { path = "frame/authority-discovery", default-features = false }
+pallet-authorship = { path = "frame/authorship", default-features = false }
+pallet-babe = { path = "frame/babe", default-features = false }
+pallet-bags-list = { path = "frame/bags-list", default-features = false }
+pallet-bags-list-remote-tests = { path = "frame/bags-list/remote-tests" }
+pallet-balances = { path = "frame/balances", default-features = false }
+pallet-beefy = { path = "frame/beefy", default-features = false }
+pallet-beefy-mmr = { path = "frame/beefy-mmr", default-features = false }
+pallet-bounties = { path = "frame/bounties", default-features = false }
+pallet-broker = { path = "frame/broker", default-features = false }
+pallet-child-bounties = { path = "frame/child-bounties", default-features = false }
+pallet-collective = { path = "frame/collective", default-features = false }
+pallet-contracts = { path = "frame/contracts", default-features = false }
+pallet-contracts-fixtures = { path = "frame/contracts/fixtures", default-features = false }
+pallet-contracts-mock-network = { default-features = false, path = "frame/contracts/mock-network" }
+pallet-contracts-proc-macro = { path = "frame/contracts/proc-macro", default-features = false }
+pallet-contracts-uapi = { path = "frame/contracts/uapi", default-features = false }
+pallet-conviction-voting = { path = "frame/conviction-voting", default-features = false }
+pallet-core-fellowship = { path = "frame/core-fellowship", default-features = false }
+pallet-dap = { path = "frame/dap", default-features = false }
+pallet-default-config-example = { path = "frame/examples/default-config", default-features = false }
+pallet-delegated-staking = { path = "frame/delegated-staking", default-features = false }
+pallet-democracy = { path = "frame/democracy", default-features = false }
+pallet-dev-mode = { path = "frame/examples/dev-mode", default-features = false }
+pallet-dummy-dim = { path = "frame/dummy-dim", default-features = false }
+pallet-election-provider-multi-block = { path = "frame/election-provider-multi-block", default-features = false }
+pallet-election-provider-multi-phase = { path = "frame/election-provider-multi-phase", default-features = false }
+pallet-election-provider-support-benchmarking = { path = "frame/election-provider-support/benchmarking", default-features = false }
+pallet-elections-phragmen = { path = "frame/elections-phragmen", default-features = false }
+pallet-example-authorization-tx-extension = { path = "frame/examples/authorization-tx-extension", default-features = false }
+pallet-example-basic = { path = "frame/examples/basic", default-features = false }
+pallet-example-frame-crate = { path = "frame/examples/frame-crate", default-features = false }
+pallet-example-kitchensink = { path = "frame/examples/kitchensink", default-features = false }
+pallet-example-mbm = { path = "frame/examples/multi-block-migrations", default-features = false }
+pallet-example-offchain-worker = { path = "frame/examples/offchain-worker", default-features = false }
+pallet-example-single-block-migrations = { path = "frame/examples/single-block-migrations", default-features = false }
+pallet-example-split = { path = "frame/examples/split", default-features = false }
+pallet-example-tasks = { path = "frame/examples/tasks", default-features = false }
+pallet-example-view-functions = { path = "frame/examples/view-functions", default-features = false }
+pallet-examples = { path = "frame/examples" }
+pallet-fast-unstake = { path = "frame/fast-unstake", default-features = false }
+pallet-glutton = { path = "frame/glutton", default-features = false }
+pallet-grandpa = { path = "frame/grandpa", default-features = false }
+pallet-identity = { path = "frame/identity", default-features = false }
+pallet-im-online = { path = "frame/im-online", default-features = false }
+pallet-indices = { path = "frame/indices", default-features = false }
+pallet-insecure-randomness-collective-flip = { path = "frame/insecure-randomness-collective-flip", default-features = false }
+pallet-lottery = { default-features = false, path = "frame/lottery" }
+pallet-membership = { path = "frame/membership", default-features = false }
+pallet-message-queue = { path = "frame/message-queue", default-features = false }
+pallet-meta-tx = { path = "frame/meta-tx", default-features = false }
+pallet-migrations = { path = "frame/migrations", default-features = false }
+pallet-mixnet = { default-features = false, path = "frame/mixnet" }
+pallet-mmr = { path = "frame/merkle-mountain-range", default-features = false }
+pallet-multi-asset-bounties = { path = "frame/multi-asset-bounties", default-features = false }
+pallet-multisig = { path = "frame/multisig", default-features = false }
+pallet-nft-fractionalization = { path = "frame/nft-fractionalization", default-features = false }
+pallet-nfts = { path = "frame/nfts", default-features = false }
+pallet-nfts-runtime-api = { path = "frame/nfts/runtime-api", default-features = false }
+pallet-nis = { path = "frame/nis", default-features = false }
+pallet-node-authorization = { default-features = false, path = "frame/node-authorization" }
+pallet-nomination-pools = { path = "frame/nomination-pools", default-features = false }
+pallet-nomination-pools-benchmarking = { path = "frame/nomination-pools/benchmarking", default-features = false }
+pallet-nomination-pools-runtime-api = { path = "frame/nomination-pools/runtime-api", default-features = false }
+pallet-offences = { path = "frame/offences", default-features = false }
+pallet-offences-benchmarking = { path = "frame/offences/benchmarking", default-features = false }
+pallet-oracle = { path = "frame/honzon/oracle", default-features = false }
+pallet-oracle-runtime-api = { path = "frame/honzon/oracle/runtime-api", default-features = false }
+pallet-origin-restriction = { path = "frame/origin-restriction", default-features = false }
+pallet-paged-list = { path = "frame/paged-list", default-features = false }
+pallet-parameters = { path = "frame/parameters", default-features = false }
+pallet-people = { path = "frame/people", default-features = false }
+pallet-preimage = { path = "frame/preimage", default-features = false }
+pallet-proxy = { path = "frame/proxy", default-features = false }
+pallet-ranked-collective = { path = "frame/ranked-collective", default-features = false }
+pallet-recovery = { path = "frame/recovery", default-features = false }
+pallet-referenda = { path = "frame/referenda", default-features = false }
+pallet-remark = { default-features = false, path = "frame/remark" }
+pallet-revive = { path = "frame/revive", default-features = false }
+pallet-revive-eth-rpc = { path = "frame/revive/rpc", default-features = false }
+pallet-revive-fixtures = { path = "frame/revive/fixtures", default-features = false }
+pallet-revive-proc-macro = { path = "frame/revive/proc-macro", default-features = false }
+pallet-revive-uapi = { path = "frame/revive/uapi", default-features = false }
+pallet-revive-ui-tests = { path = "frame/revive/ui-tests", default-features = false }
+pallet-root-offences = { default-features = false, path = "frame/root-offences" }
+pallet-root-testing = { path = "frame/root-testing", default-features = false }
+pallet-safe-mode = { default-features = false, path = "frame/safe-mode" }
+pallet-salary = { path = "frame/salary", default-features = false }
+pallet-scheduler = { path = "frame/scheduler", default-features = false }
+pallet-scored-pool = { default-features = false, path = "frame/scored-pool" }
+pallet-session = { path = "frame/session", default-features = false }
+pallet-session-benchmarking = { path = "frame/session/benchmarking", default-features = false }
+pallet-skip-feeless-payment = { path = "frame/transaction-payment/skip-feeless-payment", default-features = false }
+pallet-society = { path = "frame/society", default-features = false }
+pallet-staking = { path = "frame/staking", default-features = false }
+pallet-staking-async = { path = "frame/staking-async", default-features = false }
+pallet-staking-async-ah-client = { path = "frame/staking-async/ah-client", default-features = false }
+pallet-staking-async-parachain-runtime = { path = "frame/staking-async/runtimes/parachain" }
+pallet-staking-async-preset-store = { path = "frame/staking-async/runtimes/preset-store", default-features = false }
+pallet-staking-async-rc-client = { path = "frame/staking-async/rc-client", default-features = false }
+pallet-staking-async-rc-runtime = { path = "frame/staking-async/runtimes/rc" }
+pallet-staking-async-rc-runtime-constants = { path = "frame/staking-async/runtimes/rc/constants", default-features = false }
+pallet-staking-async-runtime-api = { path = "frame/staking-async/runtime-api", default-features = false }
+pallet-staking-reward-curve = { path = "frame/staking/reward-curve", default-features = false }
+pallet-staking-reward-fn = { path = "frame/staking/reward-fn", default-features = false }
+pallet-staking-runtime-api = { path = "frame/staking/runtime-api", default-features = false }
+pallet-state-trie-migration = { path = "frame/state-trie-migration", default-features = false }
+pallet-statement = { default-features = false, path = "frame/statement" }
+pallet-sudo = { path = "frame/sudo", default-features = false }
+pallet-timestamp = { path = "frame/timestamp", default-features = false }
+pallet-tips = { path = "frame/tips", default-features = false }
+pallet-transaction-payment = { path = "frame/transaction-payment", default-features = false }
+pallet-transaction-payment-rpc = { path = "frame/transaction-payment/rpc", default-features = false }
+pallet-transaction-payment-rpc-runtime-api = { path = "frame/transaction-payment/rpc/runtime-api", default-features = false }
+pallet-transaction-storage = { default-features = false, path = "frame/transaction-storage" }
+pallet-treasury = { path = "frame/treasury", default-features = false }
+pallet-tx-pause = { default-features = false, path = "frame/tx-pause" }
+pallet-uniques = { path = "frame/uniques", default-features = false }
+pallet-utility = { path = "frame/utility", default-features = false }
+pallet-verify-signature = { path = "frame/verify-signature", default-features = false }
+pallet-vesting = { path = "frame/vesting", default-features = false }
+pallet-whitelist = { path = "frame/whitelist", default-features = false }
+prometheus-endpoint = { path = "utils/prometheus", default-features = false, package = "substrate-prometheus-endpoint" }
+remote-externalities = { path = "utils/frame/remote-externalities", default-features = false, package = "frame-remote-externalities" }
+revive-dev-node = { path = "frame/revive/dev-node/node" }
+revive-dev-runtime = { path = "frame/revive/dev-node/runtime" }
+sc-allocator = { path = "client/allocator", default-features = false }
+sc-authority-discovery = { path = "client/authority-discovery", default-features = false }
+sc-basic-authorship = { path = "client/basic-authorship", default-features = false }
+sc-block-builder = { path = "client/block-builder", default-features = false }
+sc-chain-spec = { path = "client/chain-spec", default-features = false }
+sc-chain-spec-derive = { path = "client/chain-spec/derive", default-features = false }
+sc-cli = { path = "client/cli", default-features = false }
+sc-client-api = { path = "client/api", default-features = false }
+sc-client-db = { path = "client/db", default-features = false }
+sc-consensus = { path = "client/consensus/common", default-features = false }
+sc-consensus-aura = { path = "client/consensus/aura", default-features = false }
+sc-consensus-babe = { path = "client/consensus/babe", default-features = false }
+sc-consensus-babe-rpc = { path = "client/consensus/babe/rpc", default-features = false }
+sc-consensus-beefy = { path = "client/consensus/beefy", default-features = false }
+sc-consensus-beefy-rpc = { path = "client/consensus/beefy/rpc", default-features = false }
+sc-consensus-epochs = { path = "client/consensus/epochs", default-features = false }
+sc-consensus-grandpa = { path = "client/consensus/grandpa", default-features = false }
+sc-consensus-grandpa-rpc = { path = "client/consensus/grandpa/rpc", default-features = false }
+sc-consensus-manual-seal = { path = "client/consensus/manual-seal", default-features = false }
+sc-consensus-pow = { path = "client/consensus/pow", default-features = false }
+sc-consensus-slots = { path = "client/consensus/slots", default-features = false }
+sc-executor = { path = "client/executor", default-features = false }
+sc-executor-common = { path = "client/executor/common", default-features = false }
+sc-executor-polkavm = { path = "client/executor/polkavm", default-features = false }
+sc-executor-wasmtime = { path = "client/executor/wasmtime", default-features = false }
+sc-informant = { path = "client/informant", default-features = false }
+sc-keystore = { path = "client/keystore", default-features = false }
+sc-mixnet = { path = "client/mixnet", default-features = false }
+sc-network = { path = "client/network", default-features = false }
+sc-network-common = { path = "client/network/common", default-features = false }
+sc-network-gossip = { path = "client/network-gossip", default-features = false }
+sc-network-light = { path = "client/network/light", default-features = false }
+sc-network-statement = { default-features = false, path = "client/network/statement" }
+sc-network-sync = { path = "client/network/sync", default-features = false }
+sc-network-test = { path = "client/network/test" }
+sc-network-transactions = { path = "client/network/transactions", default-features = false }
+sc-network-types = { path = "client/network/types", default-features = false }
+sc-offchain = { path = "client/offchain", default-features = false }
+sc-proposer-metrics = { path = "client/proposer-metrics", default-features = false }
+sc-rpc = { path = "client/rpc", default-features = false }
+sc-rpc-api = { path = "client/rpc-api", default-features = false }
+sc-rpc-server = { path = "client/rpc-servers", default-features = false }
+sc-rpc-spec-v2 = { path = "client/rpc-spec-v2", default-features = false }
+sc-runtime-test = { path = "client/executor/runtime-test" }
+sc-runtime-utilities = { path = "client/runtime-utilities", default-features = true }
+sc-service = { path = "client/service", default-features = false }
+sc-service-test = { path = "client/service/test" }
+sc-state-db = { path = "client/state-db", default-features = false }
+sc-statement-store = { default-features = false, path = "client/statement-store" }
+sc-storage-monitor = { path = "client/storage-monitor", default-features = false }
+sc-sync-state-rpc = { path = "client/sync-state-rpc", default-features = false }
+sc-sysinfo = { path = "client/sysinfo", default-features = false }
+sc-telemetry = { path = "client/telemetry", default-features = false }
+sc-tracing = { path = "client/tracing", default-features = false }
+sc-tracing-proc-macro = { path = "client/tracing/proc-macro", default-features = false }
+sc-transaction-pool = { path = "client/transaction-pool", default-features = false }
+sc-transaction-pool-api = { path = "client/transaction-pool/api", default-features = false }
+sc-utils = { path = "client/utils", default-features = false }
+sp-api = { path = "primitives/api", default-features = false }
+sp-api-proc-macro = { path = "primitives/api/proc-macro", default-features = false }
+sp-application-crypto = { path = "primitives/application-crypto", default-features = false }
+sp-arithmetic = { path = "primitives/arithmetic", default-features = false }
+sp-authority-discovery = { path = "primitives/authority-discovery", default-features = false }
+sp-block-builder = { path = "primitives/block-builder", default-features = false }
+sp-blockchain = { path = "primitives/blockchain", default-features = false }
+sp-consensus = { path = "primitives/consensus/common", default-features = false }
+sp-consensus-aura = { path = "primitives/consensus/aura", default-features = false }
+sp-consensus-babe = { path = "primitives/consensus/babe", default-features = false }
+sp-consensus-beefy = { path = "primitives/consensus/beefy", default-features = false }
+sp-consensus-grandpa = { path = "primitives/consensus/grandpa", default-features = false }
+sp-consensus-pow = { path = "primitives/consensus/pow", default-features = false }
+sp-consensus-sassafras = { path = "primitives/consensus/sassafras", default-features = false }
+sp-consensus-slots = { path = "primitives/consensus/slots", default-features = false }
+sp-core = { path = "primitives/core", default-features = false }
+sp-core-hashing = { default-features = false, path = "deprecated/hashing" }
+sp-core-hashing-proc-macro = { default-features = false, path = "deprecated/hashing/proc-macro" }
+sp-crypto-ec-utils = { default-features = false, path = "primitives/crypto/ec-utils" }
+sp-crypto-hashing = { path = "primitives/crypto/hashing", default-features = false }
+sp-crypto-hashing-proc-macro = { path = "primitives/crypto/hashing/proc-macro", default-features = false }
+sp-database = { path = "primitives/database", default-features = false }
+sp-debug-derive = { path = "primitives/debug-derive", default-features = false }
+sp-externalities = { path = "primitives/externalities", default-features = false }
+sp-genesis-builder = { path = "primitives/genesis-builder", default-features = false }
+sp-inherents = { path = "primitives/inherents", default-features = false }
+sp-io = { path = "primitives/io", default-features = false }
+sp-keyring = { path = "primitives/keyring", default-features = false }
+sp-keystore = { path = "primitives/keystore", default-features = false }
+sp-maybe-compressed-blob = { path = "primitives/maybe-compressed-blob", default-features = false }
+sp-metadata-ir = { path = "primitives/metadata-ir", default-features = false }
+sp-mixnet = { path = "primitives/mixnet", default-features = false }
+sp-mmr-primitives = { path = "primitives/merkle-mountain-range", default-features = false }
+sp-npos-elections = { path = "primitives/npos-elections", default-features = false }
+sp-offchain = { path = "primitives/offchain", default-features = false }
+sp-panic-handler = { path = "primitives/panic-handler", default-features = false }
+sp-rpc = { path = "primitives/rpc", default-features = false }
+sp-runtime = { path = "primitives/runtime", default-features = false }
+sp-runtime-interface = { path = "primitives/runtime-interface", default-features = false }
+sp-runtime-interface-proc-macro = { path = "primitives/runtime-interface/proc-macro", default-features = false }
+sp-runtime-interface-test-wasm = { path = "primitives/runtime-interface/test-wasm" }
+sp-runtime-interface-test-wasm-deprecated = { path = "primitives/runtime-interface/test-wasm-deprecated" }
+sp-session = { path = "primitives/session", default-features = false }
+sp-staking = { path = "primitives/staking", default-features = false }
+sp-state-machine = { path = "primitives/state-machine", default-features = false }
+sp-statement-store = { path = "primitives/statement-store", default-features = false }
+sp-std = { path = "primitives/std", default-features = false }
+sp-storage = { path = "primitives/storage", default-features = false }
+sp-test-primitives = { path = "primitives/test-primitives" }
+sp-timestamp = { path = "primitives/timestamp", default-features = false }
+sp-tracing = { path = "primitives/tracing", default-features = false }
+sp-transaction-pool = { path = "primitives/transaction-pool", default-features = false }
+sp-transaction-storage-proof = { path = "primitives/transaction-storage-proof", default-features = false }
+sp-trie = { path = "primitives/trie", default-features = false }
+sp-version = { path = "primitives/version", default-features = false }
+sp-version-proc-macro = { path = "primitives/version/proc-macro", default-features = false }
+sp-wasm-interface = { path = "primitives/wasm-interface", default-features = false }
+sp-weights = { path = "primitives/weights", default-features = false }
+subkey = { path = "bin/utils/subkey", default-features = false }
+substrate-bip39 = { path = "utils/substrate-bip39", default-features = false }
+substrate-build-script-utils = { path = "utils/build-script-utils", default-features = false }
+substrate-cli-test-utils = { path = "test-utils/cli" }
+substrate-frame-rpc-support = { default-features = false, path = "utils/frame/rpc/support" }
+substrate-frame-rpc-system = { path = "utils/frame/rpc/system", default-features = false }
+substrate-rpc-client = { path = "utils/frame/rpc/client", default-features = false }
+substrate-state-trie-migration-rpc = { path = "utils/frame/rpc/state-trie-migration-rpc", default-features = false }
+substrate-test-client = { path = "test-utils/client" }
+substrate-test-runtime = { path = "test-utils/runtime" }
+substrate-test-runtime-client = { path = "test-utils/runtime/client" }
+substrate-test-runtime-transaction-pool = { path = "test-utils/runtime/transaction-pool" }
+substrate-test-utils = { path = "test-utils" }
+substrate-wasm-builder = { path = "utils/wasm-builder", default-features = false }
+test-pallet = { path = "frame/support/test/pallet", default-features = false, package = "frame-support-test-pallet" }
+
+# External dependencies
+Inflector = { version = "0.11.4" }
+aes-gcm = { version = "0.10" }
+ahash = { version = "0.8.2" }
+alloy-consensus = { version = "1.0.41", default-features = false }
+alloy-core = { version = "1.2.1", default-features = false }
+alloy-primitives = { version = "1.2.1", default-features = false }
+alloy-rlp = { version = "0.3", default-features = false }
+alloy-trie = { version = "0.9.1", default-features = false }
+always-assert = { version = "0.1" }
+anyhow = { version = "1.0.81", default-features = false }
+approx = { version = "0.5.1" }
+aquamarine = { version = "0.5.0" }
+arbitrary = { version = "1.3.2" }
+ark-bls12-377 = { version = "0.5.0", default-features = false }
+ark-bls12-377-ext = { version = "0.5.0", default-features = false }
+ark-bls12-381 = { version = "0.5.0", default-features = false }
+ark-bls12-381-ext = { version = "0.5.0", default-features = false }
+ark-bw6-761 = { version = "0.5.0", default-features = false }
+ark-bw6-761-ext = { version = "0.5.0", default-features = false }
+ark-ec = { version = "0.5.0", default-features = false }
+ark-ed-on-bls12-377 = { version = "0.5.0", default-features = false }
+ark-ed-on-bls12-377-ext = { version = "0.5.0", default-features = false }
+ark-ed-on-bls12-381-bandersnatch = { version = "0.5.0", default-features = false }
+ark-ed-on-bls12-381-bandersnatch-ext = { version = "0.5.0", default-features = false }
+ark-ff = { version = "0.5.0", default-features = false }
+ark-scale = { version = "0.0.13", default-features = false }
+ark-std = { version = "0.5.0", default-features = false }
+ark-vrf = { version = "0.1.0", default-features = false }
+array-bytes = { version = "6.2.2", default-features = false }
+arrayvec = { version = "0.7.4" }
+assert_cmd = { version = "2.0.14" }
+assert_matches = { version = "1.5.0" }
+async-channel = { version = "1.8.0" }
+async-std = { version = "1.9.0" }
+async-trait = { version = "0.1.88" }
+asynchronous-codec = { version = "0.6" }
+backoff = { version = "0.4" }
+backtrace = { version = "0.3.71" }
+bincode = { version = "1.3.3" }
+bip39 = { version = "2.2.0", default-features = false }
+bitflags = { version = "1.3.2" }
+bitvec = { version = "1.0.1", default-features = false }
+blake2 = { version = "0.10.4", default-features = false }
+blake2b_simd = { version = "1.0.2", default-features = false }
+blake3 = { version = "1.5" }
+bn = { package = "substrate-bn", version = "0.6", default-features = false }
+bounded-collections = { version = "0.3.2", default-features = false }
+bounded-vec = { version = "0.7" }
+bs58 = { version = "0.5.1", default-features = false }
+build-helper = { version = "0.1.1" }
+byte-slice-cast = { version = "1.2.1", default-features = false }
+byteorder = { version = "1.3.2", default-features = false }
+bytes = { version = "1.4.0", default-features = false }
+cargo_metadata = { version = "0.15.4" }
+cfg-expr = { version = "0.15.5" }
+cfg-if = { version = "1.0" }
+chrono = { version = "0.4.31" }
+cid = { version = "0.11.1" }
+clap = { version = "4.5.13" }
+clap_complete = { version = "4.5.13" }
+cmd_lib = { version = "1.9.5" }
+coarsetime = { version = "0.1.22" }
+codec = { version = "3.7.5", default-features = false, package = "parity-scale-codec" }
+color-eyre = { version = "0.6.3", default-features = false }
+color-print = { version = "0.3.4" }
+colored = { version = "2.0.4" }
+comfy-table = { version = "7.1.4", default-features = false }
+console = { version = "0.15.8" }
+const-hex = { version = "1.10.0", default-features = false }
+cpu-time = { version = "1.0.0" }
+criterion = { version = "0.5.1", default-features = false }
+curve25519-dalek = { version = "4.1.3" }
+derive-syn-parse = { version = "0.2.0" }
+derive-where = { version = "1.2.7" }
+derive_more = { version = "0.99.17", default-features = false }
+digest = { version = "0.10.3", default-features = false }
+directories = { version = "5.0.1" }
+dlmalloc = { version = "0.2.4" }
+docify = { version = "0.2.9" }
+dyn-clonable = { version = "0.9.0" }
+dyn-clone = { version = "1.0.16" }
+ed25519-dalek = { version = "2.1", default-features = false }
+ed25519-zebra = { version = "4.0.3", default-features = false }
+either = { version = "1.8.1", default-features = false }
+enumflags2 = { version = "0.7.11" }
+enumn = { version = "0.1.13" }
+env_filter = { version = "0.1.3" }
+env_logger = { version = "0.11.2" }
+environmental = { version = "1.1.4", default-features = false }
+ethabi = { version = "2.0.0", default-features = false, package = "ethabi-decode" }
+ethbloom = { version = "0.14.1", default-features = false }
+ethereum-types = { version = "0.15.1", default-features = false }
+exit-future = { version = "0.2.0" }
+expander = { version = "2.0.0" }
+fatality = { version = "0.1.1" }
+fdlimit = { version = "0.3.0" }
+femme = { version = "2.2.1" }
+filetime = { version = "0.2.16" }
+finality-grandpa = { version = "0.16.3", default-features = false }
+flate2 = { version = "1.0" }
+fnv = { version = "1.0.6" }
+foldhash = { version = "0.1.5", default-features = false }
+forwarded-header-value = { version = "0.1.1" }
+fraction = { version = "0.13.1" }
+frame-metadata = { version = "23.0.1", default-features = false }
+fs4 = { version = "0.7.0" }
+fs_extra = { version = "1.3.0" }
+futures = { version = "0.3.31" }
+futures-timer = { version = "3.0.2" }
+futures-util = { version = "0.3.30", default-features = false }
+gethostname = { version = "0.2.3" }
+git2 = { version = "0.20.0", default-features = false }
+glob = { version = "0.3" }
+governor = { version = "0.6.0" }
+handlebars = { version = "5.1.0" }
+hash-db = { version = "0.16.0", default-features = false }
+hash256-std-hasher = { version = "0.15.2", default-features = false }
+hashbrown = "0.15.3"
+hex = { version = "0.4.3", default-features = false }
+hex-literal = { version = "0.4.1", default-features = false }
+hkdf = { version = "0.12.0" }
+hmac = { version = "0.12.1" }
+honggfuzz = { version = "0.5.55" }
+http = { version = "1.1" }
+http-body = { version = "1", default-features = false }
+http-body-util = { version = "0.1.2", default-features = false }
+humantime-serde = { version = "1.1" }
+hyper = { version = "1.3.1", default-features = false }
+hyper-rustls = { version = "0.27.3", default-features = false, features = [
+"http1",
+"http2",
+"logging",
+"ring",
+"rustls-native-certs",
+"tls12",
+] }
+hyper-util = { version = "0.1.5", default-features = false }
+impl-serde = { version = "0.5.0", default-features = false }
+impl-trait-for-tuples = { version = "0.2.2" }
+indexmap = { version = "2.7.1" }
+indicatif = { version = "0.17.7" }
+integer-sqrt = { version = "0.1.2" }
+ip_network = { version = "0.4.1" }
+is-terminal = { version = "0.4.9" }
+is_executable = { version = "1.0.1" }
+isahc = { version = "1.2" }
+itertools = { version = "0.11" }
+jobserver = { version = "0.1.26" }
+jsonpath_lib = { version = "0.3" }
+jsonrpsee = { version = "0.24.10" }
+jsonrpsee-core = { version = "0.24.10" }
+k256 = { version = "0.13.4", default-features = false }
+kvdb = { version = "0.13.0" }
+kvdb-memorydb = { version = "0.13.0" }
+kvdb-rocksdb = { version = "0.21.0" }
+kvdb-shared-tests = { version = "0.11.0" }
+landlock = { version = "0.3.0" }
+libc = { version = "0.2.155" }
+libfuzzer-sys = { version = "0.4" }
+libp2p = { version = "0.54.1" }
+libp2p-identity = { version = "0.2.9" }
+libp2p-kad = { version = "0.46.2", default-features = false }
+libsecp256k1 = { version = "0.7.0", default-features = false }
+linked-hash-map = { version = "0.5.4" }
+linked_hash_set = { version = "0.1.4" }
+linregress = { version = "0.5.1" }
+lite-json = { version = "0.2.0", default-features = false }
+litep2p = { version = "0.13.2", features = ["rsa", "websocket"] }
+log = { version = "0.4.22", default-features = false }
+macro_magic = { version = "0.5.1" }
+maplit = { version = "1.0.2" }
+memmap2 = { version = "0.9.3" }
+memory-db = { version = "0.34.0", default-features = false }
+merkleized-metadata = { version = "0.5.0" }
+merlin = { version = "3.0", default-features = false }
+metered = { version = "0.6.1", default-features = false, package = "prioritized-metered-channel" }
+milagro-bls = { version = "1.5.4", default-features = false, package = "snowbridge-milagro-bls" }
+mixnet = { version = "0.7.0" }
+mmr-lib = { version = "0.8.1", package = "polkadot-ckb-merkle-mountain-range", default-features = false }
+mockall = { version = "0.13.1" }
+multiaddr = { version = "0.18.1" }
+multihash = { version = "0.19.1", default-features = false }
+multistream-select = { version = "0.13.0" }
+names = { version = "0.14.0", default-features = false }
+nix = { version = "0.29.0" }
+nohash-hasher = { version = "0.2.0" }
+novelpoly = { version = "2.0.0", package = "reed-solomon-novelpoly" }
+num-bigint = { version = "0.4.6", default-features = false }
+num-format = { version = "0.4.3" }
+num-integer = { version = "0.1.46", default-features = false }
+num-rational = { version = "0.4.1" }
+num-traits = { version = "0.2.17", default-features = false }
+num_cpus = { version = "1.13.1" }
+once_cell = { version = "1.21.3" }
+orchestra = { version = "0.4.0", default-features = false }
+parity-bytes = { version = "0.1.2", default-features = false }
+parity-db = { version = "0.4.12" }
+parity-wasm = { version = "0.45.0" }
+parking_lot = { version = "0.12.1", default-features = false }
+partial_sort = { version = "0.2.0" }
+paste = { version = "1.0.15", default-features = false }
+pbkdf2 = { version = "0.12.2", default-features = false }
+pin-project = { version = "1.1.3" }
+polkavm = { version = "0.30.0", default-features = false }
+polkavm-common = { version = "0.30.0", default-features = false }
+polkavm-derive = "0.30.0"
+polkavm-linker = "0.30.0"
+portpicker = { version = "0.1.1" }
+pretty_assertions = { version = "1.3.0" }
+primitive-types = { version = "0.13.1", default-features = false, features = ["num-traits"] }
+proc-macro-crate = { version = "3.0.0" }
+proc-macro-warning = { version = "1.0.0", default-features = false }
+proc-macro2 = { version = "1.0.86" }
+procfs = { version = "0.16.0" }
+prometheus = { version = "0.13.0", default-features = false }
+prometheus-parse = { version = "0.2.2" }
+proptest = { version = "1" }
+prost = { version = "0.12.4" }
+prost-build = { version = "0.13.2" }
+pyroscope = { version = "0.5.8" }
+pyroscope_pprofrs = { version = "0.2.8" }
+quick_cache = { version = "0.3" }
+quickcheck = { version = "1.0.3", default-features = false }
+quote = { version = "1.0.37" }
+rand = { version = "0.8.5", default-features = false }
+rand_chacha = { version = "0.3.1", default-features = false }
+rand_core = { version = "0.6.2" }
+rand_distr = { version = "0.4.3" }
+rand_pcg = { version = "0.3.1" }
+rbtag = { version = "0.3" }
+ref-cast = { version = "1.0.23" }
+regex = { version = "1.10.2" }
+revm = { version = "27.0.2", default-features = false }
+ripemd = { version = "0.1.3", default-features = false }
+rlp = { version = "0.6.1", default-features = false }
+rpassword = { version = "7.0.0" }
+rstest = { version = "0.18.2" }
+rustc-hash = { version = "1.1.0" }
+rustc-hex = { version = "2.1.0", default-features = false }
+rustix = { version = "1.0.3", default-features = false }
+rustls = { version = "0.23.18", default-features = false, features = [
+"logging",
+"ring",
+"std",
+"tls12",
+] }
+rustversion = { version = "1.0.17" }
+rusty-fork = { version = "0.3.0", default-features = false }
+safe-mix = { version = "1.0", default-features = false }
+scale-info = { version = "2.11.6", default-features = false }
+schemars = { version = "0.8.13", default-features = false }
+schnellru = { version = "0.2.3" }
+schnorrkel = { version = "0.11.4", default-features = false }
+seccompiler = { version = "0.4.0" }
+secp256k1 = { version = "0.28.0", default-features = false }
+secrecy = { version = "0.8.0", default-features = false }
+serde = { version = "1.0.214", default-features = false }
+serde-big-array = { version = "0.3.2" }
+serde_derive = { version = "1.0.117" }
+serde_json = { version = "1.0.132", default-features = false }
+serde_with = { version = "3.12.0", default-features = false, features = ["hex", "macros"] }
+serde_yaml = { version = "0.9" }
+sha1 = { version = "0.10.6" }
+sha2 = { version = "0.10.7", default-features = false }
+sha3 = { version = "0.10.0", default-features = false }
+shlex = { version = "1.3.0" }
+simple-mermaid = { version = "0.1.1" }
+slotmap = { version = "1.0" }
+smallvec = { version = "1.11.0", default-features = false }
+soketto = { version = "0.8.0" }
+spinners = { version = "4.1.1" }
+sqlx = { version = "0.8.2" }
+ss58-registry = { version = "1.34.0", default-features = false }
+ssz_rs = { version = "0.9.0", default-features = false }
+ssz_rs_derive = { version = "0.9.0", default-features = false }
+static_assertions = { version = "1.1.0", default-features = false }
+static_init = { version = "1.0.3" }
+strum = { version = "0.26.3", default-features = false }
+subxt = { version = "0.44", default-features = false }
+subxt-metadata = { version = "0.44", default-features = false }
+subxt-signer = { version = "0.44" }
+syn = { version = "2.0.87" }
+sysinfo = { version = "0.30" }
+tar = { version = "0.4" }
+tempfile = { version = "3.8.1" }
+test-case = { version = "=3.3.1" }
+test-log = { version = "0.2.14" }
+thiserror = { version = "1.0.64" }
+thousands = { version = "0.2.0" }
+threadpool = { version = "1.7" }
+tikv-jemalloc-ctl = { version = "0.6.0", features = [
+"stats",
+] }
+tikv-jemallocator = { version = "0.6.0" }
+time = { version = "0.3" }
+tiny-keccak = { version = "2.0.2" }
+tokio = { version = "1.45.0", default-features = false }
+tokio-retry = { version = "0.3.0" }
+tokio-stream = { version = "0.1.14" }
+tokio-test = { version = "0.4.4" }
+tokio-tungstenite = { version = "0.26.2" }
+tokio-util = { version = "0.7.8" }
+toml = { version = "0.8.12" }
+toml_edit = { version = "0.19" }
+tower = { version = "0.4.13" }
+tower-http = { version = "0.5.2" }
+tracing = { version = "0.1.37", default-features = false }
+tracing-core = { version = "0.1.32", default-features = false }
+tracing-futures = { version = "0.2.4" }
+tracing-log = { version = "0.2.0" }
+tracing-subscriber = { version = "=0.3.19" }
+trie-bench = { version = "0.42.1" }
+trie-db = { version = "0.31.0", default-features = false }
+trie-root = { version = "0.18.0", default-features = false }
+trie-standardmap = { version = "0.16.0" }
+trybuild = { version = "1.0.103" }
+tt-call = { version = "1.0.8" }
+tuplex = { version = "0.1", default-features = false }
+twox-hash = { version = "1.6.3", default-features = false }
+txtesttool = { version = "0.7.0", package = "substrate-txtesttool" }
+unsigned-varint = { version = "0.7.2" }
+url = { version = "2.5.4" }
+verifiable = { version = "0.1", default-features = false }
+void = { version = "1.0.2" }
+w3f-bls = { version = "0.1.9", default-features = false }
+wait-timeout = { version = "0.2" }
+walkdir = { version = "2.5.0" }
+wasm-instrument = { version = "0.4", default-features = false }
+wasm-opt = { version = "0.116" }
+wasm-timer = { version = "0.2.5" }
+wasmi = { version = "0.32.3", default-features = false }
+wasmtime = { version = "35.0.0", default-features = false }
+wat = { version = "1.0.0" }
+x25519-dalek = { version = "2.0" }
+zeroize = { version = "1.7.0", default-features = false }
+zombienet-configuration = { version = "0.4.5" }
+zombienet-orchestrator = { version = "0.4.5" }
+zombienet-sdk = { version = "0.4.5" }
+zstd = { version = "0.12.4", default-features = false }
+
+[profile.release]
+# Polkadot runtime requires unwinding.
+opt-level = 3
+panic = "unwind"
+
+[profile.dev]
+# Debug info significantly slows down the build.
+# This setting only keeps source line information for stack traces.
+debug = "line-tables-only"
+
+# make sure dev builds with backtrace do not slow us down
+[profile.dev.package.backtrace]
+inherits = "release"
+
+[profile.production]
+codegen-units = 1
+inherits = "release"
+lto = true
+
+[profile.testnet]
+debug = 1               # debug symbols are useful for profilers
+debug-assertions = true
+inherits = "release"
+overflow-checks = true
+
+# The list of dependencies below (which can be both direct and indirect dependencies) are crates
+# that are suspected to be CPU-intensive, and that are unlikely to require debugging (as some of
+# their debug info might be missing) or to require to be frequently recompiled. We compile these
+# dependencies with `opt-level=3` even in "dev" mode in order to make "dev" mode more usable.
+# The majority of these crates are cryptographic libraries.
+#
+# If you see an error mentioning "profile package spec ... did not match any packages", it
+# probably concerns this list.
+#
+# This list is ordered alphabetically.
+[profile.dev.package]
+ark-vrf = { opt-level = 3 }
+blake2 = { opt-level = 3 }
+blake2b_simd = { opt-level = 3 }
+chacha20poly1305 = { opt-level = 3 }
+cranelift-codegen = { opt-level = 3 }
+crc32fast = { opt-level = 3 }
+crossbeam-deque = { opt-level = 3 }
+crypto-mac = { opt-level = 3 }
+curve25519-dalek = { opt-level = 3 }
+ed25519-dalek = { opt-level = 3 }
+flate2 = { opt-level = 3 }
+futures-channel = { opt-level = 3 }
+hash-db = { opt-level = 3 }
+hashbrown = { opt-level = 3 }
+hmac = { opt-level = 3 }
+httparse = { opt-level = 3 }
+integer-sqrt = { opt-level = 3 }
+keccak = { opt-level = 3 }
+libm = { opt-level = 3 }
+librocksdb-sys = { opt-level = 3 }
+libsecp256k1 = { opt-level = 3 }
+libz-sys = { opt-level = 3 }
+mio = { opt-level = 3 }
+nalgebra = { opt-level = 3 }
+num-bigint = { opt-level = 3 }
+parking_lot = { opt-level = 3 }
+parking_lot_core = { opt-level = 3 }
+percent-encoding = { opt-level = 3 }
+polkavm-linker = { opt-level = 3 }
+primitive-types = { opt-level = 3 }
+ring = { opt-level = 3 }
+rustls = { opt-level = 3 }
+sha2 = { opt-level = 3 }
+sha3 = { opt-level = 3 }
+smallvec = { opt-level = 3 }
+snow = { opt-level = 3 }
+substrate-bip39 = { opt-level = 3 }
+twox-hash = { opt-level = 3 }
+uint = { opt-level = 3 }
+wasmi = { opt-level = 3 }
+x25519-dalek = { opt-level = 3 }
+yamux = { opt-level = 3 }
+zeroize = { opt-level = 3 }
