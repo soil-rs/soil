@@ -31,7 +31,178 @@ static_assertions = { workspace = true, default-features = true }
 # pallet-asset-conversion: turn on "num-traits" feature
 primitive-types = { features = ["codec", "num-traits", "scale-info"], workspace = true }
 
-polkadot-sdk = { features = ["runtime-full", "tuples-96"], workspace = true }
+# Substrate dependencies (formerly via polkadot-sdk umbrella runtime-full):
+binary-merkle-tree = { workspace = true }
+ethereum-standards = { workspace = true }
+frame = { workspace = true }
+frame-benchmarking = { workspace = true }
+frame-benchmarking-pallet-pov = { workspace = true }
+frame-election-provider-solution-type = { workspace = true }
+frame-election-provider-support = { workspace = true }
+frame-executive = { workspace = true }
+frame-metadata-hash-extension = { workspace = true }
+frame-support = { features = ["tuples-96"], workspace = true }
+frame-support-procedural = { workspace = true }
+frame-support-procedural-tools-derive = { workspace = true }
+frame-system = { workspace = true }
+frame-system-benchmarking = { workspace = true }
+frame-system-rpc-runtime-api = { workspace = true }
+frame-try-runtime = { workspace = true }
+pallet-alliance = { workspace = true }
+pallet-asset-conversion = { workspace = true }
+pallet-asset-conversion-ops = { workspace = true }
+pallet-asset-conversion-tx-payment = { workspace = true }
+pallet-asset-rate = { workspace = true }
+pallet-asset-rewards = { workspace = true }
+pallet-asset-tx-payment = { workspace = true }
+pallet-assets = { workspace = true }
+pallet-assets-freezer = { workspace = true }
+pallet-assets-holder = { workspace = true }
+pallet-atomic-swap = { workspace = true }
+pallet-aura = { workspace = true }
+pallet-authority-discovery = { workspace = true }
+pallet-authorship = { workspace = true }
+pallet-babe = { workspace = true }
+pallet-bags-list = { workspace = true }
+pallet-balances = { workspace = true }
+pallet-beefy = { workspace = true }
+pallet-beefy-mmr = { workspace = true }
+pallet-bounties = { workspace = true }
+pallet-broker = { workspace = true }
+pallet-child-bounties = { workspace = true }
+pallet-collective = { workspace = true }
+pallet-conviction-voting = { workspace = true }
+pallet-core-fellowship = { workspace = true }
+pallet-dap = { workspace = true }
+pallet-delegated-staking = { workspace = true }
+pallet-democracy = { workspace = true }
+pallet-dev-mode = { workspace = true }
+pallet-dummy-dim = { workspace = true }
+pallet-election-provider-multi-block = { workspace = true }
+pallet-election-provider-multi-phase = { workspace = true }
+pallet-election-provider-support-benchmarking = { workspace = true }
+pallet-elections-phragmen = { workspace = true }
+pallet-fast-unstake = { workspace = true }
+pallet-glutton = { workspace = true }
+pallet-grandpa = { workspace = true }
+pallet-identity = { workspace = true }
+pallet-im-online = { workspace = true }
+pallet-indices = { workspace = true }
+pallet-insecure-randomness-collective-flip = { workspace = true }
+pallet-lottery = { workspace = true }
+pallet-membership = { workspace = true }
+pallet-message-queue = { workspace = true }
+pallet-meta-tx = { workspace = true }
+pallet-migrations = { workspace = true }
+pallet-mixnet = { workspace = true }
+pallet-mmr = { workspace = true }
+pallet-multi-asset-bounties = { workspace = true }
+pallet-multisig = { workspace = true }
+pallet-nft-fractionalization = { workspace = true }
+pallet-nfts = { workspace = true }
+pallet-nfts-runtime-api = { workspace = true }
+pallet-nis = { workspace = true }
+pallet-node-authorization = { workspace = true }
+pallet-nomination-pools = { workspace = true }
+pallet-nomination-pools-benchmarking = { workspace = true }
+pallet-nomination-pools-runtime-api = { workspace = true }
+pallet-offences = { workspace = true }
+pallet-offences-benchmarking = { workspace = true }
+pallet-oracle = { workspace = true }
+pallet-oracle-runtime-api = { workspace = true }
+pallet-origin-restriction = { workspace = true }
+pallet-paged-list = { workspace = true }
+pallet-parameters = { workspace = true }
+pallet-people = { workspace = true }
+pallet-preimage = { workspace = true }
+pallet-proxy = { workspace = true }
+pallet-ranked-collective = { workspace = true }
+pallet-recovery = { workspace = true }
+pallet-referenda = { workspace = true }
+pallet-remark = { workspace = true }
+pallet-revive = { workspace = true }
+pallet-revive-proc-macro = { workspace = true }
+pallet-revive-uapi = { workspace = true }
+pallet-root-offences = { workspace = true }
+pallet-root-testing = { workspace = true }
+pallet-safe-mode = { workspace = true }
+pallet-salary = { workspace = true }
+pallet-scheduler = { workspace = true }
+pallet-scored-pool = { workspace = true }
+pallet-session = { workspace = true }
+pallet-session-benchmarking = { workspace = true }
+pallet-skip-feeless-payment = { workspace = true }
+pallet-society = { workspace = true }
+pallet-staking = { workspace = true }
+pallet-staking-async = { workspace = true }
+pallet-staking-async-ah-client = { workspace = true }
+pallet-staking-async-runtime-api = { workspace = true }
+pallet-staking-reward-curve = { workspace = true }
+pallet-staking-reward-fn = { workspace = true }
+pallet-staking-runtime-api = { workspace = true }
+pallet-state-trie-migration = { workspace = true }
+pallet-statement = { workspace = true }
+pallet-sudo = { workspace = true }
+pallet-timestamp = { workspace = true }
+pallet-tips = { workspace = true }
+pallet-transaction-payment = { workspace = true }
+pallet-transaction-payment-rpc-runtime-api = { workspace = true }
+pallet-transaction-storage = { workspace = true }
+pallet-treasury = { workspace = true }
+pallet-tx-pause = { workspace = true }
+pallet-uniques = { workspace = true }
+pallet-utility = { workspace = true }
+pallet-verify-signature = { workspace = true }
+pallet-vesting = { workspace = true }
+pallet-whitelist = { workspace = true }
+sc-chain-spec-derive = { workspace = true }
+sc-tracing-proc-macro = { workspace = true }
+sp-api = { workspace = true }
+sp-api-proc-macro = { workspace = true }
+sp-application-crypto = { workspace = true }
+sp-arithmetic = { workspace = true }
+sp-authority-discovery = { workspace = true }
+sp-block-builder = { workspace = true }
+sp-consensus-aura = { workspace = true }
+sp-consensus-babe = { workspace = true }
+sp-consensus-beefy = { workspace = true }
+sp-consensus-grandpa = { workspace = true }
+sp-consensus-pow = { workspace = true }
+sp-consensus-slots = { workspace = true }
+sp-core = { workspace = true }
+sp-crypto-ec-utils = { workspace = true }
+sp-crypto-hashing = { workspace = true }
+sp-crypto-hashing-proc-macro = { workspace = true }
+sp-externalities = { workspace = true }
+sp-genesis-builder = { workspace = true }
+sp-inherents = { workspace = true }
+sp-io = { workspace = true }
+sp-keyring = { workspace = true }
+sp-keystore = { workspace = true }
+sp-metadata-ir = { workspace = true }
+sp-mixnet = { workspace = true }
+sp-mmr-primitives = { workspace = true }
+sp-npos-elections = { workspace = true }
+sp-offchain = { workspace = true }
+sp-runtime = { workspace = true }
+sp-runtime-interface = { workspace = true }
+sp-runtime-interface-proc-macro = { workspace = true }
+sp-session = { workspace = true }
+sp-staking = { workspace = true }
+sp-state-machine = { workspace = true }
+sp-statement-store = { workspace = true }
+sp-std = { workspace = true }
+sp-storage = { workspace = true }
+sp-timestamp = { workspace = true }
+sp-tracing = { workspace = true }
+sp-transaction-pool = { workspace = true }
+sp-transaction-storage-proof = { workspace = true }
+sp-trie = { workspace = true }
+sp-version = { workspace = true }
+sp-version-proc-macro = { workspace = true }
+sp-wasm-interface = { workspace = true }
+sp-weights = { workspace = true }
+substrate-bip39 = { workspace = true }
 
 # shared code between runtime and node
 node-primitives = { workspace = true }
@@ -45,32 +216,389 @@ substrate-wasm-builder = { optional = true, workspace = true, default-features =
 
 [features]
 default = ["std"]
-with-tracing = ["polkadot-sdk/with-tracing"]
+with-tracing = [
+	"frame-executive/with-tracing",
+	"sp-io/with-tracing",
+	"sp-tracing/with-tracing",
+]
 std = [
+	"binary-merkle-tree/std",
 	"codec/std",
+	"ethereum-standards/std",
+	"frame/std",
+	"frame-benchmarking/std",
+	"frame-benchmarking-pallet-pov/std",
+	"frame-election-provider-support/std",
+	"frame-executive/std",
+	"frame-metadata-hash-extension/std",
+	"frame-support/std",
+	"frame-support-procedural/std",
+	"frame-system/std",
+	"frame-system-benchmarking/std",
+	"frame-system-rpc-runtime-api/std",
+	"frame-try-runtime/std",
 	"log/std",
 	"node-primitives/std",
+	"pallet-alliance/std",
+	"pallet-asset-conversion/std",
+	"pallet-asset-conversion-ops/std",
+	"pallet-asset-conversion-tx-payment/std",
+	"pallet-asset-rate/std",
+	"pallet-asset-rewards/std",
+	"pallet-asset-tx-payment/std",
+	"pallet-assets/std",
+	"pallet-assets-freezer/std",
+	"pallet-assets-holder/std",
+	"pallet-atomic-swap/std",
+	"pallet-aura/std",
+	"pallet-authority-discovery/std",
+	"pallet-authorship/std",
+	"pallet-babe/std",
+	"pallet-bags-list/std",
+	"pallet-balances/std",
+	"pallet-beefy/std",
+	"pallet-beefy-mmr/std",
+	"pallet-bounties/std",
+	"pallet-broker/std",
+	"pallet-child-bounties/std",
+	"pallet-collective/std",
+	"pallet-conviction-voting/std",
+	"pallet-core-fellowship/std",
+	"pallet-dap/std",
+	"pallet-delegated-staking/std",
+	"pallet-democracy/std",
+	"pallet-dev-mode/std",
+	"pallet-dummy-dim/std",
+	"pallet-election-provider-multi-block/std",
+	"pallet-election-provider-multi-phase/std",
+	"pallet-election-provider-support-benchmarking/std",
+	"pallet-elections-phragmen/std",
 	"pallet-example-mbm/std",
 	"pallet-example-tasks/std",
-	"polkadot-sdk/std",
+	"pallet-fast-unstake/std",
+	"pallet-glutton/std",
+	"pallet-grandpa/std",
+	"pallet-identity/std",
+	"pallet-im-online/std",
+	"pallet-indices/std",
+	"pallet-insecure-randomness-collective-flip/std",
+	"pallet-lottery/std",
+	"pallet-membership/std",
+	"pallet-message-queue/std",
+	"pallet-meta-tx/std",
+	"pallet-migrations/std",
+	"pallet-mixnet/std",
+	"pallet-mmr/std",
+	"pallet-multi-asset-bounties/std",
+	"pallet-multisig/std",
+	"pallet-nft-fractionalization/std",
+	"pallet-nfts/std",
+	"pallet-nfts-runtime-api/std",
+	"pallet-nis/std",
+	"pallet-node-authorization/std",
+	"pallet-nomination-pools/std",
+	"pallet-nomination-pools-benchmarking/std",
+	"pallet-nomination-pools-runtime-api/std",
+	"pallet-offences/std",
+	"pallet-offences-benchmarking/std",
+	"pallet-oracle/std",
+	"pallet-oracle-runtime-api/std",
+	"pallet-origin-restriction/std",
+	"pallet-paged-list/std",
+	"pallet-parameters/std",
+	"pallet-people/std",
+	"pallet-preimage/std",
+	"pallet-proxy/std",
+	"pallet-ranked-collective/std",
+	"pallet-recovery/std",
+	"pallet-referenda/std",
+	"pallet-remark/std",
+	"pallet-revive/std",
+	"pallet-root-offences/std",
+	"pallet-root-testing/std",
+	"pallet-safe-mode/std",
+	"pallet-salary/std",
+	"pallet-scheduler/std",
+	"pallet-scored-pool/std",
+	"pallet-session/std",
+	"pallet-session-benchmarking/std",
+	"pallet-skip-feeless-payment/std",
+	"pallet-society/std",
+	"pallet-staking/std",
+	"pallet-staking-async/std",
+	"pallet-staking-async-ah-client/std",
+	"pallet-staking-async-runtime-api/std",
+	"pallet-staking-reward-fn/std",
+	"pallet-staking-runtime-api/std",
+	"pallet-state-trie-migration/std",
+	"pallet-statement/std",
+	"pallet-sudo/std",
+	"pallet-timestamp/std",
+	"pallet-tips/std",
+	"pallet-transaction-payment/std",
+	"pallet-transaction-payment-rpc-runtime-api/std",
+	"pallet-transaction-storage/std",
+	"pallet-treasury/std",
+	"pallet-tx-pause/std",
+	"pallet-uniques/std",
+	"pallet-utility/std",
+	"pallet-verify-signature/std",
+	"pallet-vesting/std",
+	"pallet-whitelist/std",
 	"primitive-types/std",
 	"rand?/std",
 	"scale-info/std",
 	"serde_json/std",
+	"sp-api/std",
+	"sp-api-proc-macro/std",
+	"sp-application-crypto/std",
+	"sp-arithmetic/std",
+	"sp-authority-discovery/std",
+	"sp-block-builder/std",
+	"sp-consensus-aura/std",
+	"sp-consensus-babe/std",
+	"sp-consensus-beefy/std",
+	"sp-consensus-grandpa/std",
+	"sp-consensus-pow/std",
+	"sp-consensus-slots/std",
+	"sp-core/std",
+	"sp-crypto-ec-utils/std",
+	"sp-crypto-hashing/std",
 	"sp-debug-derive/std",
+	"sp-externalities/std",
+	"sp-genesis-builder/std",
+	"sp-inherents/std",
+	"sp-io/std",
+	"sp-keyring/std",
+	"sp-keystore/std",
+	"sp-metadata-ir/std",
+	"sp-mixnet/std",
+	"sp-mmr-primitives/std",
+	"sp-npos-elections/std",
+	"sp-offchain/std",
+	"sp-runtime/std",
+	"sp-runtime-interface/std",
+	"sp-session/std",
+	"sp-staking/std",
+	"sp-state-machine/std",
+	"sp-statement-store/std",
+	"sp-std/std",
+	"sp-storage/std",
+	"sp-timestamp/std",
+	"sp-tracing/std",
+	"sp-transaction-pool/std",
+	"sp-transaction-storage-proof/std",
+	"sp-trie/std",
+	"sp-version/std",
+	"sp-wasm-interface/std",
+	"sp-weights/std",
+	"substrate-bip39/std",
 	"substrate-wasm-builder",
 ]
 runtime-benchmarks = [
+	"frame/runtime-benchmarks",
+	"frame-benchmarking/runtime-benchmarks",
+	"frame-benchmarking-pallet-pov/runtime-benchmarks",
+	"frame-election-provider-support/runtime-benchmarks",
+	"frame-support/runtime-benchmarks",
+	"frame-system/runtime-benchmarks",
+	"frame-system-benchmarking/runtime-benchmarks",
+	"pallet-alliance/runtime-benchmarks",
+	"pallet-asset-conversion/runtime-benchmarks",
+	"pallet-asset-conversion-ops/runtime-benchmarks",
+	"pallet-asset-conversion-tx-payment/runtime-benchmarks",
+	"pallet-asset-rate/runtime-benchmarks",
+	"pallet-asset-rewards/runtime-benchmarks",
+	"pallet-asset-tx-payment/runtime-benchmarks",
+	"pallet-assets/runtime-benchmarks",
+	"pallet-assets-freezer/runtime-benchmarks",
+	"pallet-assets-holder/runtime-benchmarks",
+	"pallet-babe/runtime-benchmarks",
+	"pallet-bags-list/runtime-benchmarks",
+	"pallet-balances/runtime-benchmarks",
+	"pallet-beefy-mmr/runtime-benchmarks",
+	"pallet-bounties/runtime-benchmarks",
+	"pallet-broker/runtime-benchmarks",
+	"pallet-child-bounties/runtime-benchmarks",
+	"pallet-collective/runtime-benchmarks",
+	"pallet-conviction-voting/runtime-benchmarks",
+	"pallet-core-fellowship/runtime-benchmarks",
+	"pallet-dap/runtime-benchmarks",
+	"pallet-delegated-staking/runtime-benchmarks",
+	"pallet-democracy/runtime-benchmarks",
+	"pallet-dummy-dim/runtime-benchmarks",
+	"pallet-election-provider-multi-block/runtime-benchmarks",
+	"pallet-election-provider-multi-phase/runtime-benchmarks",
+	"pallet-election-provider-support-benchmarking/runtime-benchmarks",
+	"pallet-elections-phragmen/runtime-benchmarks",
 	"pallet-example-mbm/runtime-benchmarks",
 	"pallet-example-tasks/runtime-benchmarks",
-	"polkadot-sdk/runtime-benchmarks",
+	"pallet-fast-unstake/runtime-benchmarks",
+	"pallet-glutton/runtime-benchmarks",
+	"pallet-grandpa/runtime-benchmarks",
+	"pallet-identity/runtime-benchmarks",
+	"pallet-im-online/runtime-benchmarks",
+	"pallet-indices/runtime-benchmarks",
+	"pallet-lottery/runtime-benchmarks",
+	"pallet-membership/runtime-benchmarks",
+	"pallet-message-queue/runtime-benchmarks",
+	"pallet-meta-tx/runtime-benchmarks",
+	"pallet-migrations/runtime-benchmarks",
+	"pallet-mmr/runtime-benchmarks",
+	"pallet-multi-asset-bounties/runtime-benchmarks",
+	"pallet-multisig/runtime-benchmarks",
+	"pallet-nft-fractionalization/runtime-benchmarks",
+	"pallet-nfts/runtime-benchmarks",
+	"pallet-nis/runtime-benchmarks",
+	"pallet-nomination-pools/runtime-benchmarks",
+	"pallet-nomination-pools-benchmarking/runtime-benchmarks",
+	"pallet-offences/runtime-benchmarks",
+	"pallet-offences-benchmarking/runtime-benchmarks",
+	"pallet-oracle/runtime-benchmarks",
+	"pallet-origin-restriction/runtime-benchmarks",
+	"pallet-paged-list/runtime-benchmarks",
+	"pallet-parameters/runtime-benchmarks",
+	"pallet-people/runtime-benchmarks",
+	"pallet-preimage/runtime-benchmarks",
+	"pallet-proxy/runtime-benchmarks",
+	"pallet-ranked-collective/runtime-benchmarks",
+	"pallet-recovery/runtime-benchmarks",
+	"pallet-referenda/runtime-benchmarks",
+	"pallet-remark/runtime-benchmarks",
+	"pallet-revive/runtime-benchmarks",
+	"pallet-root-offences/runtime-benchmarks",
+	"pallet-safe-mode/runtime-benchmarks",
+	"pallet-salary/runtime-benchmarks",
+	"pallet-scheduler/runtime-benchmarks",
+	"pallet-session/runtime-benchmarks",
+	"pallet-session-benchmarking/runtime-benchmarks",
+	"pallet-skip-feeless-payment/runtime-benchmarks",
+	"pallet-society/runtime-benchmarks",
+	"pallet-staking/runtime-benchmarks",
+	"pallet-staking-async/runtime-benchmarks",
+	"pallet-staking-async-ah-client/runtime-benchmarks",
+	"pallet-state-trie-migration/runtime-benchmarks",
+	"pallet-sudo/runtime-benchmarks",
+	"pallet-timestamp/runtime-benchmarks",
+	"pallet-tips/runtime-benchmarks",
+	"pallet-transaction-payment/runtime-benchmarks",
+	"pallet-transaction-storage/runtime-benchmarks",
+	"pallet-treasury/runtime-benchmarks",
+	"pallet-tx-pause/runtime-benchmarks",
+	"pallet-uniques/runtime-benchmarks",
+	"pallet-utility/runtime-benchmarks",
+	"pallet-verify-signature/runtime-benchmarks",
+	"pallet-vesting/runtime-benchmarks",
+	"pallet-whitelist/runtime-benchmarks",
 	"rand",
 	"rand_pcg",
+	"sp-runtime/runtime-benchmarks",
+	"sp-staking/runtime-benchmarks",
 ]
 try-runtime = [
+	"frame/try-runtime",
+	"frame-benchmarking-pallet-pov/try-runtime",
+	"frame-election-provider-support/try-runtime",
+	"frame-executive/try-runtime",
+	"frame-support/try-runtime",
+	"frame-system/try-runtime",
+	"frame-try-runtime/try-runtime",
+	"pallet-alliance/try-runtime",
+	"pallet-asset-conversion/try-runtime",
+	"pallet-asset-conversion-ops/try-runtime",
+	"pallet-asset-conversion-tx-payment/try-runtime",
+	"pallet-asset-rate/try-runtime",
+	"pallet-asset-rewards/try-runtime",
+	"pallet-asset-tx-payment/try-runtime",
+	"pallet-assets/try-runtime",
+	"pallet-assets-freezer/try-runtime",
+	"pallet-assets-holder/try-runtime",
+	"pallet-atomic-swap/try-runtime",
+	"pallet-aura/try-runtime",
+	"pallet-authority-discovery/try-runtime",
+	"pallet-authorship/try-runtime",
+	"pallet-babe/try-runtime",
+	"pallet-bags-list/try-runtime",
+	"pallet-balances/try-runtime",
+	"pallet-beefy/try-runtime",
+	"pallet-beefy-mmr/try-runtime",
+	"pallet-bounties/try-runtime",
+	"pallet-broker/try-runtime",
+	"pallet-child-bounties/try-runtime",
+	"pallet-collective/try-runtime",
+	"pallet-conviction-voting/try-runtime",
+	"pallet-core-fellowship/try-runtime",
+	"pallet-dap/try-runtime",
+	"pallet-delegated-staking/try-runtime",
+	"pallet-democracy/try-runtime",
+	"pallet-dev-mode/try-runtime",
+	"pallet-dummy-dim/try-runtime",
+	"pallet-election-provider-multi-block/try-runtime",
+	"pallet-election-provider-multi-phase/try-runtime",
+	"pallet-elections-phragmen/try-runtime",
 	"pallet-example-mbm/try-runtime",
 	"pallet-example-tasks/try-runtime",
-	"polkadot-sdk/try-runtime",
+	"pallet-fast-unstake/try-runtime",
+	"pallet-glutton/try-runtime",
+	"pallet-grandpa/try-runtime",
+	"pallet-identity/try-runtime",
+	"pallet-im-online/try-runtime",
+	"pallet-indices/try-runtime",
+	"pallet-insecure-randomness-collective-flip/try-runtime",
+	"pallet-lottery/try-runtime",
+	"pallet-membership/try-runtime",
+	"pallet-message-queue/try-runtime",
+	"pallet-meta-tx/try-runtime",
+	"pallet-migrations/try-runtime",
+	"pallet-mixnet/try-runtime",
+	"pallet-mmr/try-runtime",
+	"pallet-multi-asset-bounties/try-runtime",
+	"pallet-multisig/try-runtime",
+	"pallet-nft-fractionalization/try-runtime",
+	"pallet-nfts/try-runtime",
+	"pallet-nis/try-runtime",
+	"pallet-node-authorization/try-runtime",
+	"pallet-nomination-pools/try-runtime",
+	"pallet-offences/try-runtime",
+	"pallet-oracle/try-runtime",
+	"pallet-origin-restriction/try-runtime",
+	"pallet-paged-list/try-runtime",
+	"pallet-parameters/try-runtime",
+	"pallet-people/try-runtime",
+	"pallet-preimage/try-runtime",
+	"pallet-proxy/try-runtime",
+	"pallet-ranked-collective/try-runtime",
+	"pallet-recovery/try-runtime",
+	"pallet-referenda/try-runtime",
+	"pallet-remark/try-runtime",
+	"pallet-revive/try-runtime",
+	"pallet-root-offences/try-runtime",
+	"pallet-root-testing/try-runtime",
+	"pallet-safe-mode/try-runtime",
+	"pallet-salary/try-runtime",
+	"pallet-scheduler/try-runtime",
+	"pallet-scored-pool/try-runtime",
+	"pallet-session/try-runtime",
+	"pallet-skip-feeless-payment/try-runtime",
+	"pallet-society/try-runtime",
+	"pallet-staking/try-runtime",
+	"pallet-staking-async/try-runtime",
+	"pallet-staking-async-ah-client/try-runtime",
+	"pallet-state-trie-migration/try-runtime",
+	"pallet-statement/try-runtime",
+	"pallet-sudo/try-runtime",
+	"pallet-timestamp/try-runtime",
+	"pallet-tips/try-runtime",
+	"pallet-transaction-payment/try-runtime",
+	"pallet-transaction-storage/try-runtime",
+	"pallet-treasury/try-runtime",
+	"pallet-tx-pause/try-runtime",
+	"pallet-uniques/try-runtime",
+	"pallet-utility/try-runtime",
+	"pallet-verify-signature/try-runtime",
+	"pallet-vesting/try-runtime",
+	"pallet-whitelist/try-runtime",
+	"sp-runtime/try-runtime",
 ]
 experimental = [
 	"pallet-example-tasks/experimental",

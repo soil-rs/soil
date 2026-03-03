@@ -24,8 +24,8 @@ targets = ["x86_64-unknown-linux-gnu"]
 
 [badges]
 maintenance = { status = "actively-developed" }
-is-it-maintained-issue-resolution = { repository = "paritytech/polkadot-sdk" }
-is-it-maintained-open-issues = { repository = "paritytech/polkadot-sdk" }
+is-it-maintained-issue-resolution = { repository = "bitarray/soil" }
+is-it-maintained-open-issues = { repository = "bitarray/soil" }
 
 [lib]
 crate-type = ["cdylib", "rlib"]
@@ -60,94 +60,88 @@ serde = { features = ["derive"], workspace = true, default-features = true }
 serde_json = { workspace = true, default-features = true }
 subxt-signer = { workspace = true, features = ["unstable-eth"] }
 
-# The Polkadot-SDK:
-polkadot-sdk = { features = [
-	"fork-tree",
-	"frame-benchmarking-cli",
-	"frame-remote-externalities",
-	"frame-support-procedural-tools",
-	"generate-bags",
-	"mmr-gadget",
-	"mmr-rpc",
-	"pallet-transaction-payment-rpc",
-	"sc-allocator",
-	"sc-authority-discovery",
-	"sc-basic-authorship",
-	"sc-block-builder",
-	"sc-chain-spec",
-	"sc-cli",
-	"sc-client-api",
-	"sc-client-db",
-	"sc-consensus",
-	"sc-consensus-aura",
-	"sc-consensus-babe",
-	"sc-consensus-babe-rpc",
-	"sc-consensus-beefy",
-	"sc-consensus-beefy-rpc",
-	"sc-consensus-epochs",
-	"sc-consensus-grandpa",
-	"sc-consensus-grandpa-rpc",
-	"sc-consensus-manual-seal",
-	"sc-consensus-pow",
-	"sc-consensus-slots",
-	"sc-executor",
-	"sc-executor-common",
-	"sc-executor-polkavm",
-	"sc-executor-wasmtime",
-	"sc-informant",
-	"sc-keystore",
-	"sc-mixnet",
-	"sc-network",
-	"sc-network-common",
-	"sc-network-gossip",
-	"sc-network-light",
-	"sc-network-statement",
-	"sc-network-sync",
-	"sc-network-transactions",
-	"sc-network-types",
-	"sc-offchain",
-	"sc-proposer-metrics",
-	"sc-rpc",
-	"sc-rpc-api",
-	"sc-rpc-server",
-	"sc-rpc-spec-v2",
-	"sc-service",
-	"sc-state-db",
-	"sc-statement-store",
-	"sc-storage-monitor",
-	"sc-sync-state-rpc",
-	"sc-sysinfo",
-	"sc-telemetry",
-	"sc-tracing",
-	"sc-transaction-pool",
-	"sc-transaction-pool-api",
-	"sc-utils",
-	"sp-blockchain",
-	"sp-consensus",
-	"sp-core-hashing",
-	"sp-core-hashing-proc-macro",
-	"sp-database",
-	"sp-maybe-compressed-blob",
-	"sp-panic-handler",
-	"sp-rpc",
-	"staging-chain-spec-builder",
-	"staging-node-inspect",
-	"staging-tracking-allocator",
-	"std",
-	"subkey",
-	"substrate-build-script-utils",
-	"substrate-frame-rpc-support",
-	"substrate-frame-rpc-system",
-	"substrate-prometheus-endpoint",
-	"substrate-rpc-client",
-	"substrate-state-trie-migration-rpc",
-	"substrate-wasm-builder",
-	"tracing-gum",
-], workspace = true, default-features = true }
+# Substrate dependencies (formerly via polkadot-sdk umbrella):
+fork-tree = { workspace = true, default-features = true }
+frame-benchmarking-cli = { workspace = true, default-features = true }
+remote-externalities = { workspace = true, default-features = true }
+frame-support-procedural-tools = { workspace = true, default-features = true }
+generate-bags = { workspace = true, default-features = true }
+mmr-gadget = { workspace = true, default-features = true }
+mmr-rpc = { workspace = true, default-features = true }
+pallet-transaction-payment-rpc = { workspace = true, default-features = true }
+sc-allocator = { workspace = true, default-features = true }
+sc-authority-discovery = { workspace = true, default-features = true }
+sc-basic-authorship = { workspace = true, default-features = true }
+sc-block-builder = { workspace = true, default-features = true }
+sc-chain-spec = { workspace = true, default-features = true }
+sc-cli = { workspace = true, default-features = true }
+sc-client-api = { workspace = true, default-features = true }
+sc-client-db = { workspace = true, default-features = true }
+sc-consensus = { workspace = true, default-features = true }
+sc-consensus-aura = { workspace = true, default-features = true }
+sc-consensus-babe = { workspace = true, default-features = true }
+sc-consensus-babe-rpc = { workspace = true, default-features = true }
+sc-consensus-beefy = { workspace = true, default-features = true }
+sc-consensus-beefy-rpc = { workspace = true, default-features = true }
+sc-consensus-epochs = { workspace = true, default-features = true }
+sc-consensus-grandpa = { workspace = true, default-features = true }
+sc-consensus-grandpa-rpc = { workspace = true, default-features = true }
+sc-consensus-manual-seal = { workspace = true, default-features = true }
+sc-consensus-pow = { workspace = true, default-features = true }
+sc-consensus-slots = { workspace = true, default-features = true }
+sc-executor = { workspace = true, default-features = true }
+sc-executor-common = { workspace = true, default-features = true }
+sc-executor-polkavm = { workspace = true, default-features = true }
+sc-executor-wasmtime = { workspace = true, default-features = true }
+sc-informant = { workspace = true, default-features = true }
+sc-keystore = { workspace = true, default-features = true }
+sc-mixnet = { workspace = true, default-features = true }
+sc-network = { workspace = true, default-features = true }
+sc-network-common = { workspace = true, default-features = true }
+sc-network-gossip = { workspace = true, default-features = true }
+sc-network-light = { workspace = true, default-features = true }
+sc-network-statement = { workspace = true, default-features = true }
+sc-network-sync = { workspace = true, default-features = true }
+sc-network-transactions = { workspace = true, default-features = true }
+sc-network-types = { workspace = true, default-features = true }
+sc-offchain = { workspace = true, default-features = true }
+sc-proposer-metrics = { workspace = true, default-features = true }
+sc-rpc = { workspace = true, default-features = true }
+sc-rpc-api = { workspace = true, default-features = true }
+sc-rpc-server = { workspace = true, default-features = true }
+sc-rpc-spec-v2 = { workspace = true, default-features = true }
+sc-service = { workspace = true, default-features = true }
+sc-state-db = { workspace = true, default-features = true }
+sc-statement-store = { workspace = true, default-features = true }
+sc-storage-monitor = { workspace = true, default-features = true }
+sc-sync-state-rpc = { workspace = true, default-features = true }
+sc-sysinfo = { workspace = true, default-features = true }
+sc-telemetry = { workspace = true, default-features = true }
+sc-tracing = { workspace = true, default-features = true }
+sc-transaction-pool = { workspace = true, default-features = true }
+sc-transaction-pool-api = { workspace = true, default-features = true }
+sc-utils = { workspace = true, default-features = true }
+sp-blockchain = { workspace = true, default-features = true }
+sp-consensus = { workspace = true, default-features = true }
+sp-core-hashing = { workspace = true, default-features = true }
+sp-core-hashing-proc-macro = { workspace = true, default-features = true }
+sp-database = { workspace = true, default-features = true }
+sp-maybe-compressed-blob = { workspace = true, default-features = true }
+sp-panic-handler = { workspace = true, default-features = true }
+sp-rpc = { workspace = true, default-features = true }
+chain-spec-builder = { workspace = true, default-features = true }
+node-inspect = { optional = true, workspace = true, default-features = true }
+subkey = { workspace = true, default-features = true }
+substrate-build-script-utils = { workspace = true, default-features = true }
+substrate-frame-rpc-support = { workspace = true, default-features = true }
+substrate-frame-rpc-system = { workspace = true, default-features = true }
+prometheus-endpoint = { workspace = true, default-features = true }
+substrate-rpc-client = { workspace = true, default-features = true }
+substrate-state-trie-migration-rpc = { workspace = true, default-features = true }
+substrate-wasm-builder = { workspace = true, default-features = true }
 
 # Shared code between the staging node and kitchensink runtime:
 kitchensink-runtime = { workspace = true }
-node-inspect = { optional = true, workspace = true, default-features = true }
 node-primitives = { workspace = true, default-features = true }
 node-rpc = { workspace = true }
 
@@ -176,23 +170,34 @@ clap_complete = { optional = true, workspace = true }
 
 node-inspect = { optional = true, workspace = true, default-features = true }
 
-polkadot-sdk = { features = [
-	"frame-benchmarking-cli",
-	"sc-cli",
-	"sc-storage-monitor",
-	"substrate-build-script-utils",
-], optional = true, workspace = true, default-features = true }
+frame-benchmarking-cli = { optional = true, workspace = true, default-features = true }
+sc-cli = { optional = true, workspace = true, default-features = true }
+sc-storage-monitor = { optional = true, workspace = true, default-features = true }
+substrate-build-script-utils = { optional = true, workspace = true, default-features = true }
 
 [features]
 default = ["cli"]
-cli = ["clap", "clap_complete", "node-inspect", "polkadot-sdk"]
+cli = [
+	"clap",
+	"clap_complete",
+	"node-inspect",
+	"dep:frame-benchmarking-cli",
+	"dep:sc-cli",
+	"dep:sc-storage-monitor",
+	"dep:substrate-build-script-utils",
+]
 runtime-benchmarks = [
+	"frame-benchmarking-cli/runtime-benchmarks",
 	"kitchensink-runtime/runtime-benchmarks",
 	"node-inspect?/runtime-benchmarks",
-	"polkadot-sdk/runtime-benchmarks",
+	"sc-client-db/runtime-benchmarks",
+	"sc-service/runtime-benchmarks",
+	"sp-runtime/runtime-benchmarks",
 ]
 try-runtime = [
 	"kitchensink-runtime/try-runtime",
-	"polkadot-sdk/try-runtime",
+	"frame-support/try-runtime",
+	"frame-system/try-runtime",
+	"sp-runtime/try-runtime",
 	"substrate-cli-test-utils/try-runtime",
 ]
