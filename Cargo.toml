@@ -9,6 +9,7 @@ repository = "https://github.com/bitarray/soil.git"
 resolver = "2"
 
 members = [
+	"bin/node/runtime",
 	"bin/node/inspect",
 	"bin/node/primitives",
 	"bin/node/rpc",

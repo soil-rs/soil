@@ -33,7 +33,6 @@ primitive-types = { features = ["codec", "num-traits", "scale-info"], workspace 
 
 # Substrate dependencies (formerly via polkadot-sdk umbrella runtime-full):
 binary-merkle-tree = { workspace = true }
-ethereum-standards = { workspace = true }
 frame = { workspace = true }
 frame-benchmarking = { workspace = true }
 frame-benchmarking-pallet-pov = { workspace = true }
@@ -120,9 +119,6 @@ pallet-ranked-collective = { workspace = true }
 pallet-recovery = { workspace = true }
 pallet-referenda = { workspace = true }
 pallet-remark = { workspace = true }
-pallet-revive = { workspace = true }
-pallet-revive-proc-macro = { workspace = true }
-pallet-revive-uapi = { workspace = true }
 pallet-root-offences = { workspace = true }
 pallet-root-testing = { workspace = true }
 pallet-safe-mode = { workspace = true }
@@ -134,9 +130,6 @@ pallet-session-benchmarking = { workspace = true }
 pallet-skip-feeless-payment = { workspace = true }
 pallet-society = { workspace = true }
 pallet-staking = { workspace = true }
-pallet-staking-async = { workspace = true }
-pallet-staking-async-ah-client = { workspace = true }
-pallet-staking-async-runtime-api = { workspace = true }
 pallet-staking-reward-curve = { workspace = true }
 pallet-staking-reward-fn = { workspace = true }
 pallet-staking-runtime-api = { workspace = true }
@@ -224,7 +217,6 @@ with-tracing = [
 std = [
 	"binary-merkle-tree/std",
 	"codec/std",
-	"ethereum-standards/std",
 	"frame/std",
 	"frame-benchmarking/std",
 	"frame-benchmarking-pallet-pov/std",
@@ -313,7 +305,6 @@ std = [
 	"pallet-recovery/std",
 	"pallet-referenda/std",
 	"pallet-remark/std",
-	"pallet-revive/std",
 	"pallet-root-offences/std",
 	"pallet-root-testing/std",
 	"pallet-safe-mode/std",
@@ -325,9 +316,6 @@ std = [
 	"pallet-skip-feeless-payment/std",
 	"pallet-society/std",
 	"pallet-staking/std",
-	"pallet-staking-async/std",
-	"pallet-staking-async-ah-client/std",
-	"pallet-staking-async-runtime-api/std",
 	"pallet-staking-reward-fn/std",
 	"pallet-staking-runtime-api/std",
 	"pallet-state-trie-migration/std",
@@ -465,7 +453,6 @@ runtime-benchmarks = [
 	"pallet-recovery/runtime-benchmarks",
 	"pallet-referenda/runtime-benchmarks",
 	"pallet-remark/runtime-benchmarks",
-	"pallet-revive/runtime-benchmarks",
 	"pallet-root-offences/runtime-benchmarks",
 	"pallet-safe-mode/runtime-benchmarks",
 	"pallet-salary/runtime-benchmarks",
@@ -475,8 +462,6 @@ runtime-benchmarks = [
 	"pallet-skip-feeless-payment/runtime-benchmarks",
 	"pallet-society/runtime-benchmarks",
 	"pallet-staking/runtime-benchmarks",
-	"pallet-staking-async/runtime-benchmarks",
-	"pallet-staking-async-ah-client/runtime-benchmarks",
 	"pallet-state-trie-migration/runtime-benchmarks",
 	"pallet-sudo/runtime-benchmarks",
 	"pallet-timestamp/runtime-benchmarks",
@@ -571,7 +556,6 @@ try-runtime = [
 	"pallet-recovery/try-runtime",
 	"pallet-referenda/try-runtime",
 	"pallet-remark/try-runtime",
-	"pallet-revive/try-runtime",
 	"pallet-root-offences/try-runtime",
 	"pallet-root-testing/try-runtime",
 	"pallet-safe-mode/try-runtime",
@@ -582,8 +566,6 @@ try-runtime = [
 	"pallet-skip-feeless-payment/try-runtime",
 	"pallet-society/try-runtime",
 	"pallet-staking/try-runtime",
-	"pallet-staking-async/try-runtime",
-	"pallet-staking-async-ah-client/try-runtime",
 	"pallet-state-trie-migration/try-runtime",
 	"pallet-statement/try-runtime",
 	"pallet-sudo/try-runtime",
