@@ -24,8 +24,8 @@ targets = ["x86_64-unknown-linux-gnu"]
 
 [badges]
 maintenance = { status = "actively-developed" }
-is-it-maintained-issue-resolution = { repository = "parity-blockchains/soil" }
-is-it-maintained-open-issues = { repository = "parity-blockchains/soil" }
+is-it-maintained-issue-resolution = { repository = "bitarray/soil" }
+is-it-maintained-open-issues = { repository = "bitarray/soil" }
 
 [lib]
 crate-type = ["cdylib", "rlib"]
