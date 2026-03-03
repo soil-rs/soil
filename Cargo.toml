@@ -182,7 +182,6 @@ members = [
 	"frame/session/benchmarking",
 	"frame/society",
 	"frame/staking",
-	"frame/staking-async/runtime-api",
 	"frame/staking/reward-curve",
 	"frame/staking/reward-fn",
 	"frame/staking/runtime-api",
@@ -474,14 +473,6 @@ pallet-session-benchmarking = { path = "frame/session/benchmarking", default-fea
 pallet-skip-feeless-payment = { path = "frame/transaction-payment/skip-feeless-payment", default-features = false }
 pallet-society = { path = "frame/society", default-features = false }
 pallet-staking = { path = "frame/staking", default-features = false }
-pallet-staking-async = { path = "frame/staking-async", default-features = false }
-pallet-staking-async-ah-client = { path = "frame/staking-async/ah-client", default-features = false }
-pallet-staking-async-parachain-runtime = { path = "frame/staking-async/runtimes/parachain" }
-pallet-staking-async-preset-store = { path = "frame/staking-async/runtimes/preset-store", default-features = false }
-pallet-staking-async-rc-client = { path = "frame/staking-async/rc-client", default-features = false }
-pallet-staking-async-rc-runtime = { path = "frame/staking-async/runtimes/rc" }
-pallet-staking-async-rc-runtime-constants = { path = "frame/staking-async/runtimes/rc/constants", default-features = false }
-pallet-staking-async-runtime-api = { path = "frame/staking-async/runtime-api", default-features = false }
 pallet-staking-reward-curve = { path = "frame/staking/reward-curve", default-features = false }
 pallet-staking-reward-fn = { path = "frame/staking/reward-fn", default-features = false }
 pallet-staking-runtime-api = { path = "frame/staking/runtime-api", default-features = false }
