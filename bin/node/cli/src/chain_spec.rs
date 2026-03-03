@@ -18,15 +18,12 @@
 
 //! Substrate chain configurations.
 
-use polkadot_sdk::*;
-
-use crate::chain_spec::sc_service::Properties;
+use sc_service::Properties;
 use kitchensink_runtime::{
 	genesis_config_presets::{Staker, ENDOWMENT, STASH},
 	wasm_binary_unwrap, Block, MaxNominations, StakerStatus,
 };
 use pallet_im_online::sr25519::AuthorityId as ImOnlineId;
-use pallet_revive::is_eth_derived;
 use sc_chain_spec::ChainSpecExtension;
 use sc_service::ChainType;
 use sc_telemetry::TelemetryEndpoints;
@@ -363,9 +360,6 @@ pub fn testnet_genesis_patch(
 		"sudo": {
 			"key": root_key,
 		},
-		"revive": {
-			"mappedAccounts": endowed_accounts.iter().filter(|x| ! is_eth_derived(x)).cloned().collect::<Vec<_>>()
-		}
 	})
 }
 

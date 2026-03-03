@@ -30,8 +30,6 @@
 
 #![warn(missing_docs)]
 
-#[cfg(feature = "cli")]
-mod benchmarking;
 pub mod chain_spec;
 #[cfg(feature = "cli")]
 mod cli;

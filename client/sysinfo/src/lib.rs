@@ -32,7 +32,7 @@ pub use sysinfo::{
 	benchmark_cpu, benchmark_cpu_parallelism, benchmark_disk_random_writes,
 	benchmark_disk_sequential_writes, benchmark_memory, benchmark_sr25519_verify, gather_hwbench,
 	gather_sysinfo, serialize_throughput, serialize_throughput_option, Metric, Requirement,
-	Requirements, Throughput,
+	Requirements, Throughput, SUBSTRATE_REFERENCE_HARDWARE,
 };
 
 /// The operating system part of the current target triplet.
