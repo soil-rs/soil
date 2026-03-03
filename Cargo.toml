@@ -171,11 +171,6 @@ members = [
 	"frame/recovery",
 	"frame/referenda",
 	"frame/remark",
-	"frame/revive",
-	"frame/revive/fixtures",
-	"frame/revive/proc-macro",
-	"frame/revive/uapi",
-	"frame/revive/ui-tests",
 	"frame/root-offences",
 	"frame/root-testing",
 	"frame/safe-mode",
@@ -407,11 +402,6 @@ pallet-bounties = { path = "frame/bounties", default-features = false }
 pallet-broker = { path = "frame/broker", default-features = false }
 pallet-child-bounties = { path = "frame/child-bounties", default-features = false }
 pallet-collective = { path = "frame/collective", default-features = false }
-pallet-contracts = { path = "frame/contracts", default-features = false }
-pallet-contracts-fixtures = { path = "frame/contracts/fixtures", default-features = false }
-pallet-contracts-mock-network = { default-features = false, path = "frame/contracts/mock-network" }
-pallet-contracts-proc-macro = { path = "frame/contracts/proc-macro", default-features = false }
-pallet-contracts-uapi = { path = "frame/contracts/uapi", default-features = false }
 pallet-conviction-voting = { path = "frame/conviction-voting", default-features = false }
 pallet-core-fellowship = { path = "frame/core-fellowship", default-features = false }
 pallet-dap = { path = "frame/dap", default-features = false }
@@ -473,12 +463,6 @@ pallet-ranked-collective = { path = "frame/ranked-collective", default-features 
 pallet-recovery = { path = "frame/recovery", default-features = false }
 pallet-referenda = { path = "frame/referenda", default-features = false }
 pallet-remark = { default-features = false, path = "frame/remark" }
-pallet-revive = { path = "frame/revive", default-features = false }
-pallet-revive-eth-rpc = { path = "frame/revive/rpc", default-features = false }
-pallet-revive-fixtures = { path = "frame/revive/fixtures", default-features = false }
-pallet-revive-proc-macro = { path = "frame/revive/proc-macro", default-features = false }
-pallet-revive-uapi = { path = "frame/revive/uapi", default-features = false }
-pallet-revive-ui-tests = { path = "frame/revive/ui-tests", default-features = false }
 pallet-root-offences = { default-features = false, path = "frame/root-offences" }
 pallet-root-testing = { path = "frame/root-testing", default-features = false }
 pallet-safe-mode = { default-features = false, path = "frame/safe-mode" }
@@ -519,8 +503,6 @@ pallet-vesting = { path = "frame/vesting", default-features = false }
 pallet-whitelist = { path = "frame/whitelist", default-features = false }
 prometheus-endpoint = { path = "utils/prometheus", default-features = false, package = "substrate-prometheus-endpoint" }
 remote-externalities = { path = "utils/frame/remote-externalities", default-features = false, package = "frame-remote-externalities" }
-revive-dev-node = { path = "frame/revive/dev-node/node" }
-revive-dev-runtime = { path = "frame/revive/dev-node/runtime" }
 sc-allocator = { path = "client/allocator", default-features = false }
 sc-authority-discovery = { path = "client/authority-discovery", default-features = false }
 sc-basic-authorship = { path = "client/basic-authorship", default-features = false }
