@@ -127,12 +127,9 @@ members = [
 	"crates/topsoil/examples/dev-mode",
 	"crates/topsoil/examples/frame-crate",
 	"crates/topsoil/examples/kitchensink",
-	"crates/topsoil/examples/multi-block-migrations",
 	"crates/topsoil/examples/offchain-worker",
 	"crates/topsoil/examples/single-block-migrations",
 	"crates/topsoil/examples/split",
-	"crates/topsoil/examples/tasks",
-	"crates/topsoil/examples/view-functions",
 	"crates/topsoil/executive",
 	"crates/topsoil/fast-unstake",
 	"crates/topsoil/glutton",
@@ -149,7 +146,6 @@ members = [
 	"crates/topsoil/message-queue",
 	"crates/topsoil/meta-tx",
 	"crates/topsoil/metadata-hash-extension",
-	"crates/topsoil/migrations",
 	"crates/topsoil/mixnet",
 	"crates/topsoil/multi-asset-bounties",
 	"crates/topsoil/multisig",
@@ -210,7 +206,6 @@ members = [
 	"crates/topsoil/transaction-payment/asset-tx-payment",
 	"crates/topsoil/transaction-payment/rpc",
 	"crates/topsoil/transaction-payment/rpc/runtime-api",
-	"crates/topsoil/transaction-payment/skip-feeless-payment",
 	"crates/topsoil/transaction-storage",
 	"crates/topsoil/treasury",
 	"crates/topsoil/try-runtime",
@@ -420,12 +415,9 @@ topsoil-example-authorization-tx-extension = { path = "crates/topsoil/examples/a
 topsoil-example-basic = { path = "crates/topsoil/examples/basic", default-features = false }
 topsoil-example-frame-crate = { path = "crates/topsoil/examples/frame-crate", default-features = false }
 topsoil-example-kitchensink = { path = "crates/topsoil/examples/kitchensink", default-features = false }
-topsoil-example-mbm = { path = "crates/topsoil/examples/multi-block-migrations", default-features = false }
 topsoil-example-offchain-worker = { path = "crates/topsoil/examples/offchain-worker", default-features = false }
 topsoil-example-single-block-migrations = { path = "crates/topsoil/examples/single-block-migrations", default-features = false }
 topsoil-example-split = { path = "crates/topsoil/examples/split", default-features = false }
-topsoil-example-tasks = { path = "crates/topsoil/examples/tasks", default-features = false }
-topsoil-example-view-functions = { path = "crates/topsoil/examples/view-functions", default-features = false }
 topsoil-examples = { path = "crates/topsoil/examples" }
 topsoil-fast-unstake = { path = "crates/topsoil/fast-unstake", default-features = false }
 topsoil-glutton = { path = "crates/topsoil/glutton", default-features = false }
@@ -438,7 +430,6 @@ topsoil-lottery = { default-features = false, path = "crates/topsoil/lottery" }
 topsoil-membership = { path = "crates/topsoil/membership", default-features = false }
 topsoil-message-queue = { path = "crates/topsoil/message-queue", default-features = false }
 topsoil-meta-tx = { path = "crates/topsoil/meta-tx", default-features = false }
-topsoil-migrations = { path = "crates/topsoil/migrations", default-features = false }
 topsoil-mixnet = { default-features = false, path = "crates/topsoil/mixnet" }
 topsoil-mmr = { path = "crates/topsoil/merkle-mountain-range", default-features = false }
 topsoil-multi-asset-bounties = { path = "crates/topsoil/multi-asset-bounties", default-features = false }
@@ -473,7 +464,6 @@ topsoil-scheduler = { path = "crates/topsoil/scheduler", default-features = fals
 topsoil-scored-pool = { default-features = false, path = "crates/topsoil/scored-pool" }
 topsoil-session = { path = "crates/topsoil/session", default-features = false }
 topsoil-session-benchmarking = { path = "crates/topsoil/session/benchmarking", default-features = false }
-topsoil-skip-feeless-payment = { path = "crates/topsoil/transaction-payment/skip-feeless-payment", default-features = false }
 topsoil-society = { path = "crates/topsoil/society", default-features = false }
 topsoil-staking = { path = "crates/topsoil/staking", default-features = false }
 topsoil-staking-reward-curve = { path = "crates/topsoil/staking/reward-curve", default-features = false }

@@ -663,7 +663,7 @@ pub mod pallet {
 
 		/// The migrator that is used to run Multi-Block-Migrations.
 		///
-		/// Can be set to `topsoil_migrations` or an alternative implementation of the interface.
+		/// Can be set to an implementation of the `MultiStepMigrator` interface.
 		/// The diagram in `topsoil_executive::block_flowchart` explains when it runs.
 		type MultiBlockMigrator: MultiStepMigrator;
 

@@ -1485,9 +1485,8 @@ pub mod pallet_macros {
 	/// ```
 	///
 	/// Please note that this only works for signed dispatchables and requires a transaction
-	/// extension such as [`topsoil_skip_feeless_payment::SkipCheckIfFeeless`] to wrap the
-	/// existing payment extension. Else, this is completely ignored and the dispatchable is
-	/// still charged.
+	/// extension to wrap the existing payment extension that checks the `feeless_if` condition.
+	/// Else, this is completely ignored and the dispatchable is still charged.
 	///
 	/// Also this will not allow accountless caller to send a transaction if some transaction
 	/// extension such as `topsoil_system::CheckNonce` is used.
@@ -1496,11 +1495,8 @@ pub mod pallet_macros {
 	///
 	/// ### Macro expansion
 	///
-	/// The macro implements the [`topsoil_skip_feeless_payment::CheckIfFeeless`] trait on the
-	/// dispatchable and calls the corresponding closure in the implementation.
-	///
-	/// [`topsoil_skip_feeless_payment::SkipCheckIfFeeless`]: ../../topsoil_skip_feeless_payment/struct.SkipCheckIfFeeless.html
-	/// [`topsoil_skip_feeless_payment::CheckIfFeeless`]: ../../topsoil_skip_feeless_payment/struct.SkipCheckIfFeeless.html
+	/// The macro implements the `CheckIfFeeless` trait on the dispatchable and calls the
+	/// corresponding closure in the implementation.
 	pub use topsoil_support_procedural::feeless_if;
 
 	/// Allows defining an error enum that will be returned from the dispatchable when an error

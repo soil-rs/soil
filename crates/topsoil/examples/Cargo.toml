@@ -25,8 +25,6 @@ topsoil-example-kitchensink = { workspace = true }
 topsoil-example-offchain-worker = { workspace = true }
 topsoil-example-single-block-migrations = { workspace = true }
 topsoil-example-split = { workspace = true }
-topsoil-example-tasks = { workspace = true }
-topsoil-example-view-functions = { workspace = true }
 
 [features]
 default = ["std"]
@@ -40,8 +38,6 @@ std = [
 	"topsoil-example-offchain-worker/std",
 	"topsoil-example-single-block-migrations/std",
 	"topsoil-example-split/std",
-	"topsoil-example-tasks/std",
-	"topsoil-example-view-functions/std",
 ]
 try-runtime = [
 	"topsoil-default-config-example/try-runtime",
@@ -52,6 +48,4 @@ try-runtime = [
 	"topsoil-example-offchain-worker/try-runtime",
 	"topsoil-example-single-block-migrations/try-runtime",
 	"topsoil-example-split/try-runtime",
-	"topsoil-example-tasks/try-runtime",
-	"topsoil-example-view-functions/try-runtime",
 ]
