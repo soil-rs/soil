@@ -24,7 +24,6 @@ members = [
 	"client/chain-spec",
 	"client/chain-spec/derive",
 	"client/cli",
-	"client/consensus/babe",
 	"client/consensus/babe/rpc",
 	"client/consensus/beefy",
 	"client/consensus/beefy/rpc",
@@ -497,7 +496,6 @@ sc-cli = { path = "client/cli", default-features = false }
 sc-client-api = { path = "client/api", default-features = false }
 sc-client-db = { path = "client/db", default-features = false }
 sc-consensus = { path = "client/consensus/common", default-features = false }
-sc-consensus-babe = { path = "client/consensus/babe", default-features = false }
 sc-consensus-babe-rpc = { path = "client/consensus/babe/rpc", default-features = false }
 sc-consensus-beefy = { path = "client/consensus/beefy", default-features = false }
 sc-consensus-beefy-rpc = { path = "client/consensus/beefy/rpc", default-features = false }
