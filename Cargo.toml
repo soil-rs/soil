@@ -18,271 +18,271 @@ members = [
 	"bin/node/testing",
 	"bin/utils/chain-spec-builder",
 	"bin/utils/subkey",
-	"soil/allocator",
-	"soil/client-api",
+	"crates/soil/allocator",
+	"crates/soil/client-api",
 	"client/authority-discovery",
-	"soil/basic-authorship",
+	"crates/soil/basic-authorship",
 	"client/block-builder",
-	"soil/chain-spec",
-	"soil/chain-spec-derive",
-	"soil/cli",
+	"crates/soil/chain-spec",
+	"crates/soil/chain-spec-derive",
+	"crates/soil/cli",
 	"client/consensus/aura",
 	"client/consensus/babe",
-	"soil/consensus-babe-rpc",
+	"crates/soil/consensus-babe-rpc",
 	"client/consensus/beefy",
-	"soil/consensus-beefy-rpc",
+	"crates/soil/consensus-beefy-rpc",
 	"client/consensus/common",
-	"soil/consensus-epochs",
+	"crates/soil/consensus-epochs",
 	"client/consensus/grandpa",
-	"soil/consensus-grandpa-rpc",
-	"soil/consensus-manual-seal",
+	"crates/soil/consensus-grandpa-rpc",
+	"crates/soil/consensus-manual-seal",
 	"client/consensus/pow",
 	"client/consensus/slots",
-	"soil/client-db",
-	"soil/executor",
-	"soil/executor-common",
-	"soil/executor-polkavm",
-	"soil/runtime-test",
-	"soil/executor-wasmtime",
-	"soil/informant",
+	"crates/soil/client-db",
+	"crates/soil/executor",
+	"crates/soil/executor-common",
+	"crates/soil/executor-polkavm",
+	"crates/soil/runtime-test",
+	"crates/soil/executor-wasmtime",
+	"crates/soil/informant",
 	"client/keystore",
-	"soil/mmr-gadget",
-	"soil/mmr-rpc",
+	"crates/soil/mmr-gadget",
+	"crates/soil/mmr-rpc",
 	"client/mixnet",
-	"soil/network",
-	"soil/network-gossip",
-	"soil/network-common",
-	"soil/network-light",
-	"soil/network-statement",
-	"soil/network-sync",
-	"soil/network-test",
-	"soil/network-transactions",
-	"soil/network-types",
+	"crates/soil/network",
+	"crates/soil/network-gossip",
+	"crates/soil/network-common",
+	"crates/soil/network-light",
+	"crates/soil/network-statement",
+	"crates/soil/network-sync",
+	"crates/soil/network-test",
+	"crates/soil/network-transactions",
+	"crates/soil/network-types",
 	"client/offchain",
-	"soil/proposer-metrics",
+	"crates/soil/proposer-metrics",
 	"client/rpc",
-	"soil/rpc-api",
-	"soil/rpc-server",
-	"soil/rpc-spec-v2",
-	"soil/runtime-utilities",
-	"soil/service",
-	"soil/service-test",
-	"soil/state-db",
+	"crates/soil/rpc-api",
+	"crates/soil/rpc-server",
+	"crates/soil/rpc-spec-v2",
+	"crates/soil/runtime-utilities",
+	"crates/soil/service",
+	"crates/soil/service-test",
+	"crates/soil/state-db",
 	"client/statement-store",
-	"soil/storage-monitor",
-	"soil/sync-state-rpc",
-	"soil/sysinfo",
-	"soil/telemetry",
+	"crates/soil/storage-monitor",
+	"crates/soil/sync-state-rpc",
+	"crates/soil/sysinfo",
+	"crates/soil/telemetry",
 	"client/tracing",
-	"soil/tracing-proc-macro",
+	"crates/soil/tracing-proc-macro",
 	"client/transaction-pool",
-	"soil/transaction-pool-api",
-	"soil/utils",
+	"crates/soil/transaction-pool-api",
+	"crates/soil/utils",
 	"deprecated/hashing",
 	"deprecated/hashing/proc-macro",
-	"topsoil",
-	"topsoil/alliance",
-	"topsoil/asset-conversion",
-	"topsoil/asset-conversion/ops",
-	"topsoil/asset-rate",
-	"topsoil/asset-rewards",
-	"topsoil/assets",
-	"topsoil/assets-freezer",
-	"topsoil/assets-holder",
-	"topsoil/atomic-swap",
-	"topsoil/aura",
-	"topsoil/authority-discovery",
-	"topsoil/authorship",
-	"topsoil/babe",
-	"topsoil/bags-list",
-	"topsoil/bags-list/fuzzer",
-	"topsoil/bags-list/remote-tests",
-	"topsoil/balances",
-	"topsoil/beefy",
-	"topsoil/beefy-mmr",
-	"topsoil/benchmarking",
-	"topsoil/benchmarking/pov",
-	"topsoil/bounties",
-	"topsoil/broker",
-	"topsoil/child-bounties",
-	"topsoil/collective",
-	"topsoil/conviction-voting",
-	"topsoil/core-fellowship",
-	"topsoil/dap",
-	"topsoil/delegated-staking",
-	"topsoil/democracy",
-	"topsoil/dummy-dim",
-	"topsoil/election-provider-multi-block",
-	"topsoil/election-provider-multi-phase",
-	"topsoil/election-provider-multi-phase/test-staking-e2e",
-	"topsoil/election-provider-support",
-	"topsoil/election-provider-support/benchmarking",
-	"topsoil/election-provider-support/solution-type",
-	"topsoil/election-provider-support/solution-type/fuzzer",
-	"topsoil/elections-phragmen",
-	"topsoil/examples",
-	"topsoil/examples/authorization-tx-extension",
-	"topsoil/examples/basic",
-	"topsoil/examples/default-config",
-	"topsoil/examples/dev-mode",
-	"topsoil/examples/frame-crate",
-	"topsoil/examples/kitchensink",
-	"topsoil/examples/multi-block-migrations",
-	"topsoil/examples/offchain-worker",
-	"topsoil/examples/single-block-migrations",
-	"topsoil/examples/split",
-	"topsoil/examples/tasks",
-	"topsoil/examples/view-functions",
-	"topsoil/executive",
-	"topsoil/fast-unstake",
-	"topsoil/glutton",
-	"topsoil/grandpa",
-	"topsoil/honzon/oracle",
-	"topsoil/honzon/oracle/runtime-api",
-	"topsoil/identity",
-	"topsoil/im-online",
-	"topsoil/indices",
-	"topsoil/insecure-randomness-collective-flip",
-	"topsoil/lottery",
-	"topsoil/membership",
-	"topsoil/merkle-mountain-range",
-	"topsoil/message-queue",
-	"topsoil/meta-tx",
-	"topsoil/metadata-hash-extension",
-	"topsoil/migrations",
-	"topsoil/mixnet",
-	"topsoil/multi-asset-bounties",
-	"topsoil/multisig",
-	"topsoil/nft-fractionalization",
-	"topsoil/nfts",
-	"topsoil/nfts/runtime-api",
-	"topsoil/nis",
-	"topsoil/node-authorization",
-	"topsoil/nomination-pools",
-	"topsoil/nomination-pools/benchmarking",
-	"topsoil/nomination-pools/fuzzer",
-	"topsoil/nomination-pools/runtime-api",
-	"topsoil/offences",
-	"topsoil/offences/benchmarking",
-	"topsoil/origin-restriction",
-	"topsoil/paged-list",
-	"topsoil/paged-list/fuzzer",
-	"topsoil/parameters",
-	"topsoil/people",
-	"topsoil/preimage",
-	"topsoil/proxy",
-	"topsoil/ranked-collective",
-	"topsoil/recovery",
-	"topsoil/referenda",
-	"topsoil/remark",
-	"topsoil/root-offences",
-	"topsoil/root-testing",
-	"topsoil/safe-mode",
-	"topsoil/salary",
-	"topsoil/sassafras",
-	"topsoil/scheduler",
-	"topsoil/scored-pool",
-	"topsoil/session",
-	"topsoil/session/benchmarking",
-	"topsoil/society",
-	"topsoil/staking",
-	"topsoil/staking/reward-curve",
-	"topsoil/staking/reward-fn",
-	"topsoil/staking/runtime-api",
-	"topsoil/state-trie-migration",
-	"topsoil/statement",
-	"topsoil/sudo",
-	"topsoil/support",
-	"topsoil/support/procedural",
-	"topsoil/support/procedural/tools",
-	"topsoil/support/procedural/tools/derive",
-	"topsoil/support/test",
-	"topsoil/support/test/compile_pass",
-	"topsoil/support/test/pallet",
-	"topsoil/support/test/stg_frame_crate",
-	"topsoil/system",
-	"topsoil/system/benchmarking",
-	"topsoil/system/rpc/runtime-api",
-	"topsoil/timestamp",
-	"topsoil/tips",
-	"topsoil/transaction-payment",
-	"topsoil/transaction-payment/asset-conversion-tx-payment",
-	"topsoil/transaction-payment/asset-tx-payment",
-	"topsoil/transaction-payment/rpc",
-	"topsoil/transaction-payment/rpc/runtime-api",
-	"topsoil/transaction-payment/skip-feeless-payment",
-	"topsoil/transaction-storage",
-	"topsoil/treasury",
-	"topsoil/try-runtime",
-	"topsoil/tx-pause",
-	"topsoil/uniques",
-	"topsoil/utility",
-	"topsoil/verify-signature",
-	"topsoil/vesting",
-	"topsoil/whitelist",
-	"soil/api",
-	"soil/api-proc-macro",
-	"soil/api/test",
-	"soil/application-crypto",
-	"soil/application-crypto/test",
-	"soil/arithmetic",
-	"soil/arithmetic/fuzzer",
-	"soil/authority-discovery",
-	"soil/block-builder",
-	"soil/blockchain",
-	"soil/consensus-aura",
-	"soil/consensus-babe",
-	"soil/consensus-beefy",
-	"soil/consensus",
-	"soil/consensus-grandpa",
-	"soil/consensus-pow",
-	"soil/consensus-sassafras",
-	"soil/consensus-slots",
-	"soil/core",
-	"soil/core/fuzz",
-	"soil/crypto-ec-utils",
-	"soil/crypto-hashing",
-	"soil/crypto-hashing/proc-macro",
-	"soil/database",
-	"soil/debug-derive",
+	"crates/topsoil",
+	"crates/topsoil/alliance",
+	"crates/topsoil/asset-conversion",
+	"crates/topsoil/asset-conversion/ops",
+	"crates/topsoil/asset-rate",
+	"crates/topsoil/asset-rewards",
+	"crates/topsoil/assets",
+	"crates/topsoil/assets-freezer",
+	"crates/topsoil/assets-holder",
+	"crates/topsoil/atomic-swap",
+	"crates/topsoil/aura",
+	"crates/topsoil/authority-discovery",
+	"crates/topsoil/authorship",
+	"crates/topsoil/babe",
+	"crates/topsoil/bags-list",
+	"crates/topsoil/bags-list/fuzzer",
+	"crates/topsoil/bags-list/remote-tests",
+	"crates/topsoil/balances",
+	"crates/topsoil/beefy",
+	"crates/topsoil/beefy-mmr",
+	"crates/topsoil/benchmarking",
+	"crates/topsoil/benchmarking/pov",
+	"crates/topsoil/bounties",
+	"crates/topsoil/broker",
+	"crates/topsoil/child-bounties",
+	"crates/topsoil/collective",
+	"crates/topsoil/conviction-voting",
+	"crates/topsoil/core-fellowship",
+	"crates/topsoil/dap",
+	"crates/topsoil/delegated-staking",
+	"crates/topsoil/democracy",
+	"crates/topsoil/dummy-dim",
+	"crates/topsoil/election-provider-multi-block",
+	"crates/topsoil/election-provider-multi-phase",
+	"crates/topsoil/election-provider-multi-phase/test-staking-e2e",
+	"crates/topsoil/election-provider-support",
+	"crates/topsoil/election-provider-support/benchmarking",
+	"crates/topsoil/election-provider-support/solution-type",
+	"crates/topsoil/election-provider-support/solution-type/fuzzer",
+	"crates/topsoil/elections-phragmen",
+	"crates/topsoil/examples",
+	"crates/topsoil/examples/authorization-tx-extension",
+	"crates/topsoil/examples/basic",
+	"crates/topsoil/examples/default-config",
+	"crates/topsoil/examples/dev-mode",
+	"crates/topsoil/examples/frame-crate",
+	"crates/topsoil/examples/kitchensink",
+	"crates/topsoil/examples/multi-block-migrations",
+	"crates/topsoil/examples/offchain-worker",
+	"crates/topsoil/examples/single-block-migrations",
+	"crates/topsoil/examples/split",
+	"crates/topsoil/examples/tasks",
+	"crates/topsoil/examples/view-functions",
+	"crates/topsoil/executive",
+	"crates/topsoil/fast-unstake",
+	"crates/topsoil/glutton",
+	"crates/topsoil/grandpa",
+	"crates/topsoil/honzon/oracle",
+	"crates/topsoil/honzon/oracle/runtime-api",
+	"crates/topsoil/identity",
+	"crates/topsoil/im-online",
+	"crates/topsoil/indices",
+	"crates/topsoil/insecure-randomness-collective-flip",
+	"crates/topsoil/lottery",
+	"crates/topsoil/membership",
+	"crates/topsoil/merkle-mountain-range",
+	"crates/topsoil/message-queue",
+	"crates/topsoil/meta-tx",
+	"crates/topsoil/metadata-hash-extension",
+	"crates/topsoil/migrations",
+	"crates/topsoil/mixnet",
+	"crates/topsoil/multi-asset-bounties",
+	"crates/topsoil/multisig",
+	"crates/topsoil/nft-fractionalization",
+	"crates/topsoil/nfts",
+	"crates/topsoil/nfts/runtime-api",
+	"crates/topsoil/nis",
+	"crates/topsoil/node-authorization",
+	"crates/topsoil/nomination-pools",
+	"crates/topsoil/nomination-pools/benchmarking",
+	"crates/topsoil/nomination-pools/fuzzer",
+	"crates/topsoil/nomination-pools/runtime-api",
+	"crates/topsoil/offences",
+	"crates/topsoil/offences/benchmarking",
+	"crates/topsoil/origin-restriction",
+	"crates/topsoil/paged-list",
+	"crates/topsoil/paged-list/fuzzer",
+	"crates/topsoil/parameters",
+	"crates/topsoil/people",
+	"crates/topsoil/preimage",
+	"crates/topsoil/proxy",
+	"crates/topsoil/ranked-collective",
+	"crates/topsoil/recovery",
+	"crates/topsoil/referenda",
+	"crates/topsoil/remark",
+	"crates/topsoil/root-offences",
+	"crates/topsoil/root-testing",
+	"crates/topsoil/safe-mode",
+	"crates/topsoil/salary",
+	"crates/topsoil/sassafras",
+	"crates/topsoil/scheduler",
+	"crates/topsoil/scored-pool",
+	"crates/topsoil/session",
+	"crates/topsoil/session/benchmarking",
+	"crates/topsoil/society",
+	"crates/topsoil/staking",
+	"crates/topsoil/staking/reward-curve",
+	"crates/topsoil/staking/reward-fn",
+	"crates/topsoil/staking/runtime-api",
+	"crates/topsoil/state-trie-migration",
+	"crates/topsoil/statement",
+	"crates/topsoil/sudo",
+	"crates/topsoil/support",
+	"crates/topsoil/support/procedural",
+	"crates/topsoil/support/procedural/tools",
+	"crates/topsoil/support/procedural/tools/derive",
+	"crates/topsoil/support/test",
+	"crates/topsoil/support/test/compile_pass",
+	"crates/topsoil/support/test/pallet",
+	"crates/topsoil/support/test/stg_frame_crate",
+	"crates/topsoil/system",
+	"crates/topsoil/system/benchmarking",
+	"crates/topsoil/system/rpc/runtime-api",
+	"crates/topsoil/timestamp",
+	"crates/topsoil/tips",
+	"crates/topsoil/transaction-payment",
+	"crates/topsoil/transaction-payment/asset-conversion-tx-payment",
+	"crates/topsoil/transaction-payment/asset-tx-payment",
+	"crates/topsoil/transaction-payment/rpc",
+	"crates/topsoil/transaction-payment/rpc/runtime-api",
+	"crates/topsoil/transaction-payment/skip-feeless-payment",
+	"crates/topsoil/transaction-storage",
+	"crates/topsoil/treasury",
+	"crates/topsoil/try-runtime",
+	"crates/topsoil/tx-pause",
+	"crates/topsoil/uniques",
+	"crates/topsoil/utility",
+	"crates/topsoil/verify-signature",
+	"crates/topsoil/vesting",
+	"crates/topsoil/whitelist",
+	"crates/soil/api",
+	"crates/soil/api-proc-macro",
+	"crates/soil/api/test",
+	"crates/soil/application-crypto",
+	"crates/soil/application-crypto/test",
+	"crates/soil/arithmetic",
+	"crates/soil/arithmetic/fuzzer",
+	"crates/soil/authority-discovery",
+	"crates/soil/block-builder",
+	"crates/soil/blockchain",
+	"crates/soil/consensus-aura",
+	"crates/soil/consensus-babe",
+	"crates/soil/consensus-beefy",
+	"crates/soil/consensus",
+	"crates/soil/consensus-grandpa",
+	"crates/soil/consensus-pow",
+	"crates/soil/consensus-sassafras",
+	"crates/soil/consensus-slots",
+	"crates/soil/core",
+	"crates/soil/core/fuzz",
+	"crates/soil/crypto-ec-utils",
+	"crates/soil/crypto-hashing",
+	"crates/soil/crypto-hashing/proc-macro",
+	"crates/soil/database",
+	"crates/soil/debug-derive",
 	"primitives/ethereum-standards",
-	"soil/externalities",
-	"soil/genesis-builder",
-	"soil/inherents",
-	"soil/io",
-	"soil/keyring",
-	"soil/keystore",
-	"soil/maybe-compressed-blob",
-	"soil/merkle-mountain-range",
-	"soil/metadata-ir",
-	"soil/mixnet",
-	"soil/npos-elections",
-	"soil/npos-elections/fuzzer",
-	"soil/offchain",
-	"soil/panic-handler",
-	"soil/rpc",
-	"soil/runtime",
-	"soil/runtime-interface",
-	"soil/runtime-interface-proc-macro",
-	"soil/runtime-interface/test",
-	"soil/runtime-interface/test-wasm",
-	"soil/runtime-interface/test-wasm-deprecated",
-	"soil/session",
-	"soil/staking",
-	"soil/state-machine",
-	"soil/statement-store",
-	"soil/std",
-	"soil/storage",
-	"soil/test-primitives",
-	"soil/timestamp",
-	"soil/tracing",
-	"soil/transaction-pool",
-	"soil/transaction-storage-proof",
-	"soil/trie",
-	"soil/version",
-	"soil/version-proc-macro",
-	"soil/wasm-interface",
-	"soil/weights",
+	"crates/soil/externalities",
+	"crates/soil/genesis-builder",
+	"crates/soil/inherents",
+	"crates/soil/io",
+	"crates/soil/keyring",
+	"crates/soil/keystore",
+	"crates/soil/maybe-compressed-blob",
+	"crates/soil/merkle-mountain-range",
+	"crates/soil/metadata-ir",
+	"crates/soil/mixnet",
+	"crates/soil/npos-elections",
+	"crates/soil/npos-elections/fuzzer",
+	"crates/soil/offchain",
+	"crates/soil/panic-handler",
+	"crates/soil/rpc",
+	"crates/soil/runtime",
+	"crates/soil/runtime-interface",
+	"crates/soil/runtime-interface-proc-macro",
+	"crates/soil/runtime-interface/test",
+	"crates/soil/runtime-interface/test-wasm",
+	"crates/soil/runtime-interface/test-wasm-deprecated",
+	"crates/soil/session",
+	"crates/soil/staking",
+	"crates/soil/state-machine",
+	"crates/soil/statement-store",
+	"crates/soil/std",
+	"crates/soil/storage",
+	"crates/soil/test-primitives",
+	"crates/soil/timestamp",
+	"crates/soil/tracing",
+	"crates/soil/transaction-pool",
+	"crates/soil/transaction-storage-proof",
+	"crates/soil/trie",
+	"crates/soil/version",
+	"crates/soil/version-proc-macro",
+	"crates/soil/wasm-interface",
+	"crates/soil/weights",
 	"scripts/ci/node-template-release",
 	"test-utils",
 	"test-utils/cli",
@@ -355,264 +355,264 @@ binary-merkle-tree = { path = "utils/binary-merkle-tree", default-features = fal
 chain-spec-builder = { path = "bin/utils/chain-spec-builder", default-features = false, package = "staging-chain-spec-builder" }
 ethereum-standards = { path = "primitives/ethereum-standards" }
 fork-tree = { path = "utils/fork-tree", default-features = false }
-topsoil = { path = "topsoil", default-features = false }
-topsoil-benchmarking = { path = "topsoil/benchmarking", default-features = false }
-topsoil-benchmarking-pallet-pov = { default-features = false, path = "topsoil/benchmarking/pov" }
-topsoil-election-provider-solution-type = { path = "topsoil/election-provider-support/solution-type", default-features = false }
-topsoil-election-provider-support = { path = "topsoil/election-provider-support", default-features = false }
-topsoil-executive = { path = "topsoil/executive", default-features = false }
-topsoil-metadata-hash-extension = { path = "topsoil/metadata-hash-extension", default-features = false }
-topsoil-support = { path = "topsoil/support", default-features = false }
-topsoil-support-procedural = { path = "topsoil/support/procedural", default-features = false }
-topsoil-support-procedural-tools = { path = "topsoil/support/procedural/tools", default-features = false }
-topsoil-support-procedural-tools-derive = { path = "topsoil/support/procedural/tools/derive", default-features = false }
-topsoil-support-test = { path = "topsoil/support/test" }
-topsoil-system = { path = "topsoil/system", default-features = false }
-topsoil-system-benchmarking = { path = "topsoil/system/benchmarking", default-features = false }
-topsoil-system-rpc-runtime-api = { path = "topsoil/system/rpc/runtime-api", default-features = false }
-topsoil-try-runtime = { path = "topsoil/try-runtime", default-features = false }
+topsoil = { path = "crates/topsoil", default-features = false }
+topsoil-benchmarking = { path = "crates/topsoil/benchmarking", default-features = false }
+topsoil-benchmarking-pallet-pov = { default-features = false, path = "crates/topsoil/benchmarking/pov" }
+topsoil-election-provider-solution-type = { path = "crates/topsoil/election-provider-support/solution-type", default-features = false }
+topsoil-election-provider-support = { path = "crates/topsoil/election-provider-support", default-features = false }
+topsoil-executive = { path = "crates/topsoil/executive", default-features = false }
+topsoil-metadata-hash-extension = { path = "crates/topsoil/metadata-hash-extension", default-features = false }
+topsoil-support = { path = "crates/topsoil/support", default-features = false }
+topsoil-support-procedural = { path = "crates/topsoil/support/procedural", default-features = false }
+topsoil-support-procedural-tools = { path = "crates/topsoil/support/procedural/tools", default-features = false }
+topsoil-support-procedural-tools-derive = { path = "crates/topsoil/support/procedural/tools/derive", default-features = false }
+topsoil-support-test = { path = "crates/topsoil/support/test" }
+topsoil-system = { path = "crates/topsoil/system", default-features = false }
+topsoil-system-benchmarking = { path = "crates/topsoil/system/benchmarking", default-features = false }
+topsoil-system-rpc-runtime-api = { path = "crates/topsoil/system/rpc/runtime-api", default-features = false }
+topsoil-try-runtime = { path = "crates/topsoil/try-runtime", default-features = false }
 generate-bags = { path = "utils/frame/generate-bags", default-features = false }
 kitchensink-runtime = { path = "bin/node/runtime" }
-soil-mmr-gadget = { path = "soil/mmr-gadget", default-features = false }
-soil-mmr-rpc = { path = "soil/mmr-rpc", default-features = false }
+soil-mmr-gadget = { path = "crates/soil/mmr-gadget", default-features = false }
+soil-mmr-rpc = { path = "crates/soil/mmr-rpc", default-features = false }
 node-cli = { path = "bin/node/cli", package = "staging-node-cli" }
 node-inspect = { path = "bin/node/inspect", default-features = false, package = "staging-node-inspect" }
 node-primitives = { path = "bin/node/primitives", default-features = false }
 node-rpc = { path = "bin/node/rpc" }
 node-testing = { path = "bin/node/testing" }
-topsoil-alliance = { path = "topsoil/alliance", default-features = false }
-topsoil-asset-conversion = { path = "topsoil/asset-conversion", default-features = false }
-topsoil-asset-conversion-ops = { path = "topsoil/asset-conversion/ops", default-features = false }
-topsoil-asset-conversion-tx-payment = { path = "topsoil/transaction-payment/asset-conversion-tx-payment", default-features = false }
-topsoil-asset-rate = { path = "topsoil/asset-rate", default-features = false }
-topsoil-asset-rewards = { path = "topsoil/asset-rewards", default-features = false }
-topsoil-asset-tx-payment = { path = "topsoil/transaction-payment/asset-tx-payment", default-features = false }
-topsoil-assets = { path = "topsoil/assets", default-features = false }
-topsoil-assets-freezer = { path = "topsoil/assets-freezer", default-features = false }
-topsoil-assets-holder = { path = "topsoil/assets-holder", default-features = false }
-topsoil-atomic-swap = { default-features = false, path = "topsoil/atomic-swap" }
-topsoil-aura = { path = "topsoil/aura", default-features = false }
-topsoil-authority-discovery = { path = "topsoil/authority-discovery", default-features = false }
-topsoil-authorship = { path = "topsoil/authorship", default-features = false }
-topsoil-babe = { path = "topsoil/babe", default-features = false }
-topsoil-bags-list = { path = "topsoil/bags-list", default-features = false }
-topsoil-bags-list-remote-tests = { path = "topsoil/bags-list/remote-tests" }
-topsoil-balances = { path = "topsoil/balances", default-features = false }
-topsoil-beefy = { path = "topsoil/beefy", default-features = false }
-topsoil-beefy-mmr = { path = "topsoil/beefy-mmr", default-features = false }
-topsoil-bounties = { path = "topsoil/bounties", default-features = false }
-topsoil-broker = { path = "topsoil/broker", default-features = false }
-topsoil-child-bounties = { path = "topsoil/child-bounties", default-features = false }
-topsoil-collective = { path = "topsoil/collective", default-features = false }
-topsoil-conviction-voting = { path = "topsoil/conviction-voting", default-features = false }
-topsoil-core-fellowship = { path = "topsoil/core-fellowship", default-features = false }
-topsoil-dap = { path = "topsoil/dap", default-features = false }
-topsoil-default-config-example = { path = "topsoil/examples/default-config", default-features = false }
-topsoil-delegated-staking = { path = "topsoil/delegated-staking", default-features = false }
-topsoil-democracy = { path = "topsoil/democracy", default-features = false }
-topsoil-dev-mode = { path = "topsoil/examples/dev-mode", default-features = false }
-topsoil-dummy-dim = { path = "topsoil/dummy-dim", default-features = false }
-topsoil-election-provider-multi-block = { path = "topsoil/election-provider-multi-block", default-features = false }
-topsoil-election-provider-multi-phase = { path = "topsoil/election-provider-multi-phase", default-features = false }
-topsoil-election-provider-support-benchmarking = { path = "topsoil/election-provider-support/benchmarking", default-features = false }
-topsoil-elections-phragmen = { path = "topsoil/elections-phragmen", default-features = false }
-topsoil-example-authorization-tx-extension = { path = "topsoil/examples/authorization-tx-extension", default-features = false }
-topsoil-example-basic = { path = "topsoil/examples/basic", default-features = false }
-topsoil-example-frame-crate = { path = "topsoil/examples/frame-crate", default-features = false }
-topsoil-example-kitchensink = { path = "topsoil/examples/kitchensink", default-features = false }
-topsoil-example-mbm = { path = "topsoil/examples/multi-block-migrations", default-features = false }
-topsoil-example-offchain-worker = { path = "topsoil/examples/offchain-worker", default-features = false }
-topsoil-example-single-block-migrations = { path = "topsoil/examples/single-block-migrations", default-features = false }
-topsoil-example-split = { path = "topsoil/examples/split", default-features = false }
-topsoil-example-tasks = { path = "topsoil/examples/tasks", default-features = false }
-topsoil-example-view-functions = { path = "topsoil/examples/view-functions", default-features = false }
-topsoil-examples = { path = "topsoil/examples" }
-topsoil-fast-unstake = { path = "topsoil/fast-unstake", default-features = false }
-topsoil-glutton = { path = "topsoil/glutton", default-features = false }
-topsoil-grandpa = { path = "topsoil/grandpa", default-features = false }
-topsoil-identity = { path = "topsoil/identity", default-features = false }
-topsoil-im-online = { path = "topsoil/im-online", default-features = false }
-topsoil-indices = { path = "topsoil/indices", default-features = false }
-topsoil-insecure-randomness-collective-flip = { path = "topsoil/insecure-randomness-collective-flip", default-features = false }
-topsoil-lottery = { default-features = false, path = "topsoil/lottery" }
-topsoil-membership = { path = "topsoil/membership", default-features = false }
-topsoil-message-queue = { path = "topsoil/message-queue", default-features = false }
-topsoil-meta-tx = { path = "topsoil/meta-tx", default-features = false }
-topsoil-migrations = { path = "topsoil/migrations", default-features = false }
-topsoil-mixnet = { default-features = false, path = "topsoil/mixnet" }
-topsoil-mmr = { path = "topsoil/merkle-mountain-range", default-features = false }
-topsoil-multi-asset-bounties = { path = "topsoil/multi-asset-bounties", default-features = false }
-topsoil-multisig = { path = "topsoil/multisig", default-features = false }
-topsoil-nft-fractionalization = { path = "topsoil/nft-fractionalization", default-features = false }
-topsoil-nfts = { path = "topsoil/nfts", default-features = false }
-topsoil-nfts-runtime-api = { path = "topsoil/nfts/runtime-api", default-features = false }
-topsoil-nis = { path = "topsoil/nis", default-features = false }
-topsoil-node-authorization = { default-features = false, path = "topsoil/node-authorization" }
-topsoil-nomination-pools = { path = "topsoil/nomination-pools", default-features = false }
-topsoil-nomination-pools-benchmarking = { path = "topsoil/nomination-pools/benchmarking", default-features = false }
-topsoil-nomination-pools-runtime-api = { path = "topsoil/nomination-pools/runtime-api", default-features = false }
-topsoil-offences = { path = "topsoil/offences", default-features = false }
-topsoil-offences-benchmarking = { path = "topsoil/offences/benchmarking", default-features = false }
-topsoil-oracle = { path = "topsoil/honzon/oracle", default-features = false }
-topsoil-oracle-runtime-api = { path = "topsoil/honzon/oracle/runtime-api", default-features = false }
-topsoil-origin-restriction = { path = "topsoil/origin-restriction", default-features = false }
-topsoil-paged-list = { path = "topsoil/paged-list", default-features = false }
-topsoil-parameters = { path = "topsoil/parameters", default-features = false }
-topsoil-people = { path = "topsoil/people", default-features = false }
-topsoil-preimage = { path = "topsoil/preimage", default-features = false }
-topsoil-proxy = { path = "topsoil/proxy", default-features = false }
-topsoil-ranked-collective = { path = "topsoil/ranked-collective", default-features = false }
-topsoil-recovery = { path = "topsoil/recovery", default-features = false }
-topsoil-referenda = { path = "topsoil/referenda", default-features = false }
-topsoil-remark = { default-features = false, path = "topsoil/remark" }
-topsoil-root-offences = { default-features = false, path = "topsoil/root-offences" }
-topsoil-root-testing = { path = "topsoil/root-testing", default-features = false }
-topsoil-safe-mode = { default-features = false, path = "topsoil/safe-mode" }
-topsoil-salary = { path = "topsoil/salary", default-features = false }
-topsoil-scheduler = { path = "topsoil/scheduler", default-features = false }
-topsoil-scored-pool = { default-features = false, path = "topsoil/scored-pool" }
-topsoil-session = { path = "topsoil/session", default-features = false }
-topsoil-session-benchmarking = { path = "topsoil/session/benchmarking", default-features = false }
-topsoil-skip-feeless-payment = { path = "topsoil/transaction-payment/skip-feeless-payment", default-features = false }
-topsoil-society = { path = "topsoil/society", default-features = false }
-topsoil-staking = { path = "topsoil/staking", default-features = false }
-topsoil-staking-reward-curve = { path = "topsoil/staking/reward-curve", default-features = false }
-topsoil-staking-reward-fn = { path = "topsoil/staking/reward-fn", default-features = false }
-topsoil-staking-runtime-api = { path = "topsoil/staking/runtime-api", default-features = false }
-topsoil-state-trie-migration = { path = "topsoil/state-trie-migration", default-features = false }
-topsoil-statement = { default-features = false, path = "topsoil/statement" }
-topsoil-sudo = { path = "topsoil/sudo", default-features = false }
-topsoil-timestamp = { path = "topsoil/timestamp", default-features = false }
-topsoil-tips = { path = "topsoil/tips", default-features = false }
-topsoil-transaction-payment = { path = "topsoil/transaction-payment", default-features = false }
-topsoil-transaction-payment-rpc = { path = "topsoil/transaction-payment/rpc", default-features = false }
-topsoil-transaction-payment-rpc-runtime-api = { path = "topsoil/transaction-payment/rpc/runtime-api", default-features = false }
-topsoil-transaction-storage = { default-features = false, path = "topsoil/transaction-storage" }
-topsoil-treasury = { path = "topsoil/treasury", default-features = false }
-topsoil-tx-pause = { default-features = false, path = "topsoil/tx-pause" }
-topsoil-uniques = { path = "topsoil/uniques", default-features = false }
-topsoil-utility = { path = "topsoil/utility", default-features = false }
-topsoil-verify-signature = { path = "topsoil/verify-signature", default-features = false }
-topsoil-vesting = { path = "topsoil/vesting", default-features = false }
-topsoil-whitelist = { path = "topsoil/whitelist", default-features = false }
+topsoil-alliance = { path = "crates/topsoil/alliance", default-features = false }
+topsoil-asset-conversion = { path = "crates/topsoil/asset-conversion", default-features = false }
+topsoil-asset-conversion-ops = { path = "crates/topsoil/asset-conversion/ops", default-features = false }
+topsoil-asset-conversion-tx-payment = { path = "crates/topsoil/transaction-payment/asset-conversion-tx-payment", default-features = false }
+topsoil-asset-rate = { path = "crates/topsoil/asset-rate", default-features = false }
+topsoil-asset-rewards = { path = "crates/topsoil/asset-rewards", default-features = false }
+topsoil-asset-tx-payment = { path = "crates/topsoil/transaction-payment/asset-tx-payment", default-features = false }
+topsoil-assets = { path = "crates/topsoil/assets", default-features = false }
+topsoil-assets-freezer = { path = "crates/topsoil/assets-freezer", default-features = false }
+topsoil-assets-holder = { path = "crates/topsoil/assets-holder", default-features = false }
+topsoil-atomic-swap = { default-features = false, path = "crates/topsoil/atomic-swap" }
+topsoil-aura = { path = "crates/topsoil/aura", default-features = false }
+topsoil-authority-discovery = { path = "crates/topsoil/authority-discovery", default-features = false }
+topsoil-authorship = { path = "crates/topsoil/authorship", default-features = false }
+topsoil-babe = { path = "crates/topsoil/babe", default-features = false }
+topsoil-bags-list = { path = "crates/topsoil/bags-list", default-features = false }
+topsoil-bags-list-remote-tests = { path = "crates/topsoil/bags-list/remote-tests" }
+topsoil-balances = { path = "crates/topsoil/balances", default-features = false }
+topsoil-beefy = { path = "crates/topsoil/beefy", default-features = false }
+topsoil-beefy-mmr = { path = "crates/topsoil/beefy-mmr", default-features = false }
+topsoil-bounties = { path = "crates/topsoil/bounties", default-features = false }
+topsoil-broker = { path = "crates/topsoil/broker", default-features = false }
+topsoil-child-bounties = { path = "crates/topsoil/child-bounties", default-features = false }
+topsoil-collective = { path = "crates/topsoil/collective", default-features = false }
+topsoil-conviction-voting = { path = "crates/topsoil/conviction-voting", default-features = false }
+topsoil-core-fellowship = { path = "crates/topsoil/core-fellowship", default-features = false }
+topsoil-dap = { path = "crates/topsoil/dap", default-features = false }
+topsoil-default-config-example = { path = "crates/topsoil/examples/default-config", default-features = false }
+topsoil-delegated-staking = { path = "crates/topsoil/delegated-staking", default-features = false }
+topsoil-democracy = { path = "crates/topsoil/democracy", default-features = false }
+topsoil-dev-mode = { path = "crates/topsoil/examples/dev-mode", default-features = false }
+topsoil-dummy-dim = { path = "crates/topsoil/dummy-dim", default-features = false }
+topsoil-election-provider-multi-block = { path = "crates/topsoil/election-provider-multi-block", default-features = false }
+topsoil-election-provider-multi-phase = { path = "crates/topsoil/election-provider-multi-phase", default-features = false }
+topsoil-election-provider-support-benchmarking = { path = "crates/topsoil/election-provider-support/benchmarking", default-features = false }
+topsoil-elections-phragmen = { path = "crates/topsoil/elections-phragmen", default-features = false }
+topsoil-example-authorization-tx-extension = { path = "crates/topsoil/examples/authorization-tx-extension", default-features = false }
+topsoil-example-basic = { path = "crates/topsoil/examples/basic", default-features = false }
+topsoil-example-frame-crate = { path = "crates/topsoil/examples/frame-crate", default-features = false }
+topsoil-example-kitchensink = { path = "crates/topsoil/examples/kitchensink", default-features = false }
+topsoil-example-mbm = { path = "crates/topsoil/examples/multi-block-migrations", default-features = false }
+topsoil-example-offchain-worker = { path = "crates/topsoil/examples/offchain-worker", default-features = false }
+topsoil-example-single-block-migrations = { path = "crates/topsoil/examples/single-block-migrations", default-features = false }
+topsoil-example-split = { path = "crates/topsoil/examples/split", default-features = false }
+topsoil-example-tasks = { path = "crates/topsoil/examples/tasks", default-features = false }
+topsoil-example-view-functions = { path = "crates/topsoil/examples/view-functions", default-features = false }
+topsoil-examples = { path = "crates/topsoil/examples" }
+topsoil-fast-unstake = { path = "crates/topsoil/fast-unstake", default-features = false }
+topsoil-glutton = { path = "crates/topsoil/glutton", default-features = false }
+topsoil-grandpa = { path = "crates/topsoil/grandpa", default-features = false }
+topsoil-identity = { path = "crates/topsoil/identity", default-features = false }
+topsoil-im-online = { path = "crates/topsoil/im-online", default-features = false }
+topsoil-indices = { path = "crates/topsoil/indices", default-features = false }
+topsoil-insecure-randomness-collective-flip = { path = "crates/topsoil/insecure-randomness-collective-flip", default-features = false }
+topsoil-lottery = { default-features = false, path = "crates/topsoil/lottery" }
+topsoil-membership = { path = "crates/topsoil/membership", default-features = false }
+topsoil-message-queue = { path = "crates/topsoil/message-queue", default-features = false }
+topsoil-meta-tx = { path = "crates/topsoil/meta-tx", default-features = false }
+topsoil-migrations = { path = "crates/topsoil/migrations", default-features = false }
+topsoil-mixnet = { default-features = false, path = "crates/topsoil/mixnet" }
+topsoil-mmr = { path = "crates/topsoil/merkle-mountain-range", default-features = false }
+topsoil-multi-asset-bounties = { path = "crates/topsoil/multi-asset-bounties", default-features = false }
+topsoil-multisig = { path = "crates/topsoil/multisig", default-features = false }
+topsoil-nft-fractionalization = { path = "crates/topsoil/nft-fractionalization", default-features = false }
+topsoil-nfts = { path = "crates/topsoil/nfts", default-features = false }
+topsoil-nfts-runtime-api = { path = "crates/topsoil/nfts/runtime-api", default-features = false }
+topsoil-nis = { path = "crates/topsoil/nis", default-features = false }
+topsoil-node-authorization = { default-features = false, path = "crates/topsoil/node-authorization" }
+topsoil-nomination-pools = { path = "crates/topsoil/nomination-pools", default-features = false }
+topsoil-nomination-pools-benchmarking = { path = "crates/topsoil/nomination-pools/benchmarking", default-features = false }
+topsoil-nomination-pools-runtime-api = { path = "crates/topsoil/nomination-pools/runtime-api", default-features = false }
+topsoil-offences = { path = "crates/topsoil/offences", default-features = false }
+topsoil-offences-benchmarking = { path = "crates/topsoil/offences/benchmarking", default-features = false }
+topsoil-oracle = { path = "crates/topsoil/honzon/oracle", default-features = false }
+topsoil-oracle-runtime-api = { path = "crates/topsoil/honzon/oracle/runtime-api", default-features = false }
+topsoil-origin-restriction = { path = "crates/topsoil/origin-restriction", default-features = false }
+topsoil-paged-list = { path = "crates/topsoil/paged-list", default-features = false }
+topsoil-parameters = { path = "crates/topsoil/parameters", default-features = false }
+topsoil-people = { path = "crates/topsoil/people", default-features = false }
+topsoil-preimage = { path = "crates/topsoil/preimage", default-features = false }
+topsoil-proxy = { path = "crates/topsoil/proxy", default-features = false }
+topsoil-ranked-collective = { path = "crates/topsoil/ranked-collective", default-features = false }
+topsoil-recovery = { path = "crates/topsoil/recovery", default-features = false }
+topsoil-referenda = { path = "crates/topsoil/referenda", default-features = false }
+topsoil-remark = { default-features = false, path = "crates/topsoil/remark" }
+topsoil-root-offences = { default-features = false, path = "crates/topsoil/root-offences" }
+topsoil-root-testing = { path = "crates/topsoil/root-testing", default-features = false }
+topsoil-safe-mode = { default-features = false, path = "crates/topsoil/safe-mode" }
+topsoil-salary = { path = "crates/topsoil/salary", default-features = false }
+topsoil-scheduler = { path = "crates/topsoil/scheduler", default-features = false }
+topsoil-scored-pool = { default-features = false, path = "crates/topsoil/scored-pool" }
+topsoil-session = { path = "crates/topsoil/session", default-features = false }
+topsoil-session-benchmarking = { path = "crates/topsoil/session/benchmarking", default-features = false }
+topsoil-skip-feeless-payment = { path = "crates/topsoil/transaction-payment/skip-feeless-payment", default-features = false }
+topsoil-society = { path = "crates/topsoil/society", default-features = false }
+topsoil-staking = { path = "crates/topsoil/staking", default-features = false }
+topsoil-staking-reward-curve = { path = "crates/topsoil/staking/reward-curve", default-features = false }
+topsoil-staking-reward-fn = { path = "crates/topsoil/staking/reward-fn", default-features = false }
+topsoil-staking-runtime-api = { path = "crates/topsoil/staking/runtime-api", default-features = false }
+topsoil-state-trie-migration = { path = "crates/topsoil/state-trie-migration", default-features = false }
+topsoil-statement = { default-features = false, path = "crates/topsoil/statement" }
+topsoil-sudo = { path = "crates/topsoil/sudo", default-features = false }
+topsoil-timestamp = { path = "crates/topsoil/timestamp", default-features = false }
+topsoil-tips = { path = "crates/topsoil/tips", default-features = false }
+topsoil-transaction-payment = { path = "crates/topsoil/transaction-payment", default-features = false }
+topsoil-transaction-payment-rpc = { path = "crates/topsoil/transaction-payment/rpc", default-features = false }
+topsoil-transaction-payment-rpc-runtime-api = { path = "crates/topsoil/transaction-payment/rpc/runtime-api", default-features = false }
+topsoil-transaction-storage = { default-features = false, path = "crates/topsoil/transaction-storage" }
+topsoil-treasury = { path = "crates/topsoil/treasury", default-features = false }
+topsoil-tx-pause = { default-features = false, path = "crates/topsoil/tx-pause" }
+topsoil-uniques = { path = "crates/topsoil/uniques", default-features = false }
+topsoil-utility = { path = "crates/topsoil/utility", default-features = false }
+topsoil-verify-signature = { path = "crates/topsoil/verify-signature", default-features = false }
+topsoil-vesting = { path = "crates/topsoil/vesting", default-features = false }
+topsoil-whitelist = { path = "crates/topsoil/whitelist", default-features = false }
 prometheus-endpoint = { path = "utils/prometheus", default-features = false, package = "substrate-prometheus-endpoint" }
 remote-externalities = { path = "utils/frame/remote-externalities", default-features = false, package = "frame-remote-externalities" }
-soil-allocator = { path = "soil/allocator", default-features = false }
+soil-allocator = { path = "crates/soil/allocator", default-features = false }
 sc-authority-discovery = { path = "client/authority-discovery", default-features = false }
-soil-basic-authorship = { path = "soil/basic-authorship", default-features = false }
+soil-basic-authorship = { path = "crates/soil/basic-authorship", default-features = false }
 sc-block-builder = { path = "client/block-builder", default-features = false }
-soil-chain-spec = { path = "soil/chain-spec", default-features = false }
-soil-chain-spec-derive = { path = "soil/chain-spec-derive", default-features = false }
-soil-cli = { path = "soil/cli", default-features = false }
-soil-client-api = { path = "soil/client-api", default-features = false }
-soil-client-db = { path = "soil/client-db", default-features = false }
+soil-chain-spec = { path = "crates/soil/chain-spec", default-features = false }
+soil-chain-spec-derive = { path = "crates/soil/chain-spec-derive", default-features = false }
+soil-cli = { path = "crates/soil/cli", default-features = false }
+soil-client-api = { path = "crates/soil/client-api", default-features = false }
+soil-client-db = { path = "crates/soil/client-db", default-features = false }
 sc-consensus = { path = "client/consensus/common", default-features = false }
 sc-consensus-aura = { path = "client/consensus/aura", default-features = false }
 sc-consensus-babe = { path = "client/consensus/babe", default-features = false }
-soil-consensus-babe-rpc = { path = "soil/consensus-babe-rpc", default-features = false }
+soil-consensus-babe-rpc = { path = "crates/soil/consensus-babe-rpc", default-features = false }
 sc-consensus-beefy = { path = "client/consensus/beefy", default-features = false }
-soil-consensus-beefy-rpc = { path = "soil/consensus-beefy-rpc", default-features = false }
-soil-consensus-epochs = { path = "soil/consensus-epochs", default-features = false }
+soil-consensus-beefy-rpc = { path = "crates/soil/consensus-beefy-rpc", default-features = false }
+soil-consensus-epochs = { path = "crates/soil/consensus-epochs", default-features = false }
 sc-consensus-grandpa = { path = "client/consensus/grandpa", default-features = false }
-soil-consensus-grandpa-rpc = { path = "soil/consensus-grandpa-rpc", default-features = false }
-soil-consensus-manual-seal = { path = "soil/consensus-manual-seal", default-features = false }
+soil-consensus-grandpa-rpc = { path = "crates/soil/consensus-grandpa-rpc", default-features = false }
+soil-consensus-manual-seal = { path = "crates/soil/consensus-manual-seal", default-features = false }
 sc-consensus-pow = { path = "client/consensus/pow", default-features = false }
 sc-consensus-slots = { path = "client/consensus/slots", default-features = false }
-soil-executor = { path = "soil/executor", default-features = false }
-soil-executor-common = { path = "soil/executor-common", default-features = false }
-soil-executor-polkavm = { path = "soil/executor-polkavm", default-features = false }
-soil-executor-wasmtime = { path = "soil/executor-wasmtime", default-features = false }
-soil-informant = { path = "soil/informant", default-features = false }
+soil-executor = { path = "crates/soil/executor", default-features = false }
+soil-executor-common = { path = "crates/soil/executor-common", default-features = false }
+soil-executor-polkavm = { path = "crates/soil/executor-polkavm", default-features = false }
+soil-executor-wasmtime = { path = "crates/soil/executor-wasmtime", default-features = false }
+soil-informant = { path = "crates/soil/informant", default-features = false }
 sc-keystore = { path = "client/keystore", default-features = false }
 sc-mixnet = { path = "client/mixnet", default-features = false }
-soil-network = { path = "soil/network", default-features = false }
-soil-network-common = { path = "soil/network-common", default-features = false }
-soil-network-gossip = { path = "soil/network-gossip", default-features = false }
-soil-network-light = { path = "soil/network-light", default-features = false }
-soil-network-statement = { default-features = false, path = "soil/network-statement" }
-soil-network-sync = { path = "soil/network-sync", default-features = false }
-soil-network-test = { path = "soil/network-test" }
-soil-network-transactions = { path = "soil/network-transactions", default-features = false }
-soil-network-types = { path = "soil/network-types", default-features = false }
+soil-network = { path = "crates/soil/network", default-features = false }
+soil-network-common = { path = "crates/soil/network-common", default-features = false }
+soil-network-gossip = { path = "crates/soil/network-gossip", default-features = false }
+soil-network-light = { path = "crates/soil/network-light", default-features = false }
+soil-network-statement = { default-features = false, path = "crates/soil/network-statement" }
+soil-network-sync = { path = "crates/soil/network-sync", default-features = false }
+soil-network-test = { path = "crates/soil/network-test" }
+soil-network-transactions = { path = "crates/soil/network-transactions", default-features = false }
+soil-network-types = { path = "crates/soil/network-types", default-features = false }
 sc-offchain = { path = "client/offchain", default-features = false }
-soil-proposer-metrics = { path = "soil/proposer-metrics", default-features = false }
+soil-proposer-metrics = { path = "crates/soil/proposer-metrics", default-features = false }
 sc-rpc = { path = "client/rpc", default-features = false }
-soil-rpc-api = { path = "soil/rpc-api", default-features = false }
-soil-rpc-server = { path = "soil/rpc-server", default-features = false }
-soil-rpc-spec-v2 = { path = "soil/rpc-spec-v2", default-features = false }
-soil-runtime-test = { path = "soil/runtime-test" }
-soil-runtime-utilities = { path = "soil/runtime-utilities", default-features = true }
-soil-service = { path = "soil/service", default-features = false }
-soil-service-test = { path = "soil/service-test" }
-soil-state-db = { path = "soil/state-db", default-features = false }
+soil-rpc-api = { path = "crates/soil/rpc-api", default-features = false }
+soil-rpc-server = { path = "crates/soil/rpc-server", default-features = false }
+soil-rpc-spec-v2 = { path = "crates/soil/rpc-spec-v2", default-features = false }
+soil-runtime-test = { path = "crates/soil/runtime-test" }
+soil-runtime-utilities = { path = "crates/soil/runtime-utilities", default-features = true }
+soil-service = { path = "crates/soil/service", default-features = false }
+soil-service-test = { path = "crates/soil/service-test" }
+soil-state-db = { path = "crates/soil/state-db", default-features = false }
 sc-statement-store = { default-features = false, path = "client/statement-store" }
-soil-storage-monitor = { path = "soil/storage-monitor", default-features = false }
-soil-sync-state-rpc = { path = "soil/sync-state-rpc", default-features = false }
-soil-sysinfo = { path = "soil/sysinfo", default-features = false }
-soil-telemetry = { path = "soil/telemetry", default-features = false }
+soil-storage-monitor = { path = "crates/soil/storage-monitor", default-features = false }
+soil-sync-state-rpc = { path = "crates/soil/sync-state-rpc", default-features = false }
+soil-sysinfo = { path = "crates/soil/sysinfo", default-features = false }
+soil-telemetry = { path = "crates/soil/telemetry", default-features = false }
 sc-tracing = { path = "client/tracing", default-features = false }
-soil-tracing-proc-macro = { path = "soil/tracing-proc-macro", default-features = false }
+soil-tracing-proc-macro = { path = "crates/soil/tracing-proc-macro", default-features = false }
 sc-transaction-pool = { path = "client/transaction-pool", default-features = false }
-soil-transaction-pool-api = { path = "soil/transaction-pool-api", default-features = false }
-soil-utils = { path = "soil/utils", default-features = false }
-soil-api = { path = "soil/api", default-features = false }
-soil-api-proc-macro = { path = "soil/api-proc-macro", default-features = false }
-soil-application-crypto = { path = "soil/application-crypto", default-features = false }
-soil-arithmetic = { path = "soil/arithmetic", default-features = false }
-soil-authority-discovery = { path = "soil/authority-discovery", default-features = false }
-soil-block-builder = { path = "soil/block-builder", default-features = false }
-soil-blockchain = { path = "soil/blockchain", default-features = false }
-soil-consensus = { path = "soil/consensus", default-features = false }
-soil-consensus-aura = { path = "soil/consensus-aura", default-features = false }
-soil-consensus-babe = { path = "soil/consensus-babe", default-features = false }
-soil-consensus-beefy = { path = "soil/consensus-beefy", default-features = false }
-soil-consensus-grandpa = { path = "soil/consensus-grandpa", default-features = false }
-soil-consensus-pow = { path = "soil/consensus-pow", default-features = false }
-soil-consensus-sassafras = { path = "soil/consensus-sassafras", default-features = false }
-soil-consensus-slots = { path = "soil/consensus-slots", default-features = false }
-soil-core = { path = "soil/core", default-features = false }
+soil-transaction-pool-api = { path = "crates/soil/transaction-pool-api", default-features = false }
+soil-utils = { path = "crates/soil/utils", default-features = false }
+soil-api = { path = "crates/soil/api", default-features = false }
+soil-api-proc-macro = { path = "crates/soil/api-proc-macro", default-features = false }
+soil-application-crypto = { path = "crates/soil/application-crypto", default-features = false }
+soil-arithmetic = { path = "crates/soil/arithmetic", default-features = false }
+soil-authority-discovery = { path = "crates/soil/authority-discovery", default-features = false }
+soil-block-builder = { path = "crates/soil/block-builder", default-features = false }
+soil-blockchain = { path = "crates/soil/blockchain", default-features = false }
+soil-consensus = { path = "crates/soil/consensus", default-features = false }
+soil-consensus-aura = { path = "crates/soil/consensus-aura", default-features = false }
+soil-consensus-babe = { path = "crates/soil/consensus-babe", default-features = false }
+soil-consensus-beefy = { path = "crates/soil/consensus-beefy", default-features = false }
+soil-consensus-grandpa = { path = "crates/soil/consensus-grandpa", default-features = false }
+soil-consensus-pow = { path = "crates/soil/consensus-pow", default-features = false }
+soil-consensus-sassafras = { path = "crates/soil/consensus-sassafras", default-features = false }
+soil-consensus-slots = { path = "crates/soil/consensus-slots", default-features = false }
+soil-core = { path = "crates/soil/core", default-features = false }
 sp-core-hashing = { default-features = false, path = "deprecated/hashing" }
 sp-core-hashing-proc-macro = { default-features = false, path = "deprecated/hashing/proc-macro" }
-soil-crypto-ec-utils = { default-features = false, path = "soil/crypto-ec-utils" }
-soil-crypto-hashing = { path = "soil/crypto-hashing", default-features = false }
-soil-crypto-hashing-proc-macro = { path = "soil/crypto-hashing/proc-macro", default-features = false }
-soil-database = { path = "soil/database", default-features = false }
-soil-debug-derive = { path = "soil/debug-derive", default-features = false }
-soil-externalities = { path = "soil/externalities", default-features = false }
-soil-genesis-builder = { path = "soil/genesis-builder", default-features = false }
-soil-inherents = { path = "soil/inherents", default-features = false }
-soil-io = { path = "soil/io", default-features = false }
-soil-keyring = { path = "soil/keyring", default-features = false }
-soil-keystore = { path = "soil/keystore", default-features = false }
-soil-maybe-compressed-blob = { path = "soil/maybe-compressed-blob", default-features = false }
-soil-metadata-ir = { path = "soil/metadata-ir", default-features = false }
-soil-mixnet = { path = "soil/mixnet", default-features = false }
-soil-mmr-primitives = { path = "soil/merkle-mountain-range", default-features = false }
-soil-npos-elections = { path = "soil/npos-elections", default-features = false }
-soil-offchain = { path = "soil/offchain", default-features = false }
-soil-panic-handler = { path = "soil/panic-handler", default-features = false }
-soil-rpc = { path = "soil/rpc", default-features = false }
-soil-runtime = { path = "soil/runtime", default-features = false }
-soil-runtime-interface = { path = "soil/runtime-interface", default-features = false }
-soil-runtime-interface-proc-macro = { path = "soil/runtime-interface-proc-macro", default-features = false }
-sp-runtime-interface-test-wasm = { path = "soil/runtime-interface/test-wasm" }
-sp-runtime-interface-test-wasm-deprecated = { path = "soil/runtime-interface/test-wasm-deprecated" }
-soil-session = { path = "soil/session", default-features = false }
-soil-staking = { path = "soil/staking", default-features = false }
-soil-state-machine = { path = "soil/state-machine", default-features = false }
-soil-statement-store = { path = "soil/statement-store", default-features = false }
-soil-std = { path = "soil/std", default-features = false }
-soil-storage = { path = "soil/storage", default-features = false }
-soil-test-primitives = { path = "soil/test-primitives" }
-soil-timestamp = { path = "soil/timestamp", default-features = false }
-soil-tracing = { path = "soil/tracing", default-features = false }
-soil-transaction-pool = { path = "soil/transaction-pool", default-features = false }
-soil-transaction-storage-proof = { path = "soil/transaction-storage-proof", default-features = false }
-soil-trie = { path = "soil/trie", default-features = false }
-soil-version = { path = "soil/version", default-features = false }
-soil-version-proc-macro = { path = "soil/version-proc-macro", default-features = false }
-soil-wasm-interface = { path = "soil/wasm-interface", default-features = false }
-soil-weights = { path = "soil/weights", default-features = false }
+soil-crypto-ec-utils = { default-features = false, path = "crates/soil/crypto-ec-utils" }
+soil-crypto-hashing = { path = "crates/soil/crypto-hashing", default-features = false }
+soil-crypto-hashing-proc-macro = { path = "crates/soil/crypto-hashing/proc-macro", default-features = false }
+soil-database = { path = "crates/soil/database", default-features = false }
+soil-debug-derive = { path = "crates/soil/debug-derive", default-features = false }
+soil-externalities = { path = "crates/soil/externalities", default-features = false }
+soil-genesis-builder = { path = "crates/soil/genesis-builder", default-features = false }
+soil-inherents = { path = "crates/soil/inherents", default-features = false }
+soil-io = { path = "crates/soil/io", default-features = false }
+soil-keyring = { path = "crates/soil/keyring", default-features = false }
+soil-keystore = { path = "crates/soil/keystore", default-features = false }
+soil-maybe-compressed-blob = { path = "crates/soil/maybe-compressed-blob", default-features = false }
+soil-metadata-ir = { path = "crates/soil/metadata-ir", default-features = false }
+soil-mixnet = { path = "crates/soil/mixnet", default-features = false }
+soil-mmr-primitives = { path = "crates/soil/merkle-mountain-range", default-features = false }
+soil-npos-elections = { path = "crates/soil/npos-elections", default-features = false }
+soil-offchain = { path = "crates/soil/offchain", default-features = false }
+soil-panic-handler = { path = "crates/soil/panic-handler", default-features = false }
+soil-rpc = { path = "crates/soil/rpc", default-features = false }
+soil-runtime = { path = "crates/soil/runtime", default-features = false }
+soil-runtime-interface = { path = "crates/soil/runtime-interface", default-features = false }
+soil-runtime-interface-proc-macro = { path = "crates/soil/runtime-interface-proc-macro", default-features = false }
+sp-runtime-interface-test-wasm = { path = "crates/soil/runtime-interface/test-wasm" }
+sp-runtime-interface-test-wasm-deprecated = { path = "crates/soil/runtime-interface/test-wasm-deprecated" }
+soil-session = { path = "crates/soil/session", default-features = false }
+soil-staking = { path = "crates/soil/staking", default-features = false }
+soil-state-machine = { path = "crates/soil/state-machine", default-features = false }
+soil-statement-store = { path = "crates/soil/statement-store", default-features = false }
+soil-std = { path = "crates/soil/std", default-features = false }
+soil-storage = { path = "crates/soil/storage", default-features = false }
+soil-test-primitives = { path = "crates/soil/test-primitives" }
+soil-timestamp = { path = "crates/soil/timestamp", default-features = false }
+soil-tracing = { path = "crates/soil/tracing", default-features = false }
+soil-transaction-pool = { path = "crates/soil/transaction-pool", default-features = false }
+soil-transaction-storage-proof = { path = "crates/soil/transaction-storage-proof", default-features = false }
+soil-trie = { path = "crates/soil/trie", default-features = false }
+soil-version = { path = "crates/soil/version", default-features = false }
+soil-version-proc-macro = { path = "crates/soil/version-proc-macro", default-features = false }
+soil-wasm-interface = { path = "crates/soil/wasm-interface", default-features = false }
+soil-weights = { path = "crates/soil/weights", default-features = false }
 subkey = { path = "bin/utils/subkey", default-features = false }
 substrate-bip39 = { path = "utils/substrate-bip39", default-features = false }
 substrate-build-script-utils = { path = "utils/build-script-utils", default-features = false }
@@ -627,7 +627,7 @@ substrate-test-runtime-client = { path = "test-utils/runtime/client" }
 substrate-test-runtime-transaction-pool = { path = "test-utils/runtime/transaction-pool" }
 substrate-test-utils = { path = "test-utils" }
 substrate-wasm-builder = { path = "utils/wasm-builder", default-features = false }
-test-pallet = { path = "topsoil/support/test/pallet", default-features = false, package = "topsoil-support-test-pallet" }
+test-pallet = { path = "crates/topsoil/support/test/pallet", default-features = false, package = "topsoil-support-test-pallet" }
 
 # External dependencies
 Inflector = { version = "0.11.4" }
