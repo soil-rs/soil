@@ -74,6 +74,68 @@ Rules:
 | `frame-*`                  | `topsoil-`    | `topsoil/`    |
 | `frame` (umbrella)         | `topsoil`     | `topsoil/`    |
 
+### `no_std` design for `sc-*` → `soil-*` migrations
+
+Every `soil-*` crate must compile under `no_std`. For crates originating from
+`sc-*` (inherently std-only), the `no_std` build produces an empty library. The
+`#[cfg(feature = "std")]` boundary is placed at the **module declaration level**
+in `lib.rs`, not scattered throughout interior code.
+
+#### Merged pairs (`sp-*` + `sc-*` → single `soil-*`)
+
+The primitives half (former `sp-*`) is always available. The client half (former
+`sc-*`) is feature-gated per module:
+
+```rust
+#![cfg_attr(not(feature = "std"), no_std)]
+
+// Always available (former sp-*)
+mod error;
+mod traits;
+pub use error::*;
+pub use traits::*;
+
+// std-only (former sc-*)
+#[cfg(feature = "std")]
+mod import_queue;
+#[cfg(feature = "std")]
+pub use import_queue::*;
+
+#[cfg(feature = "std")]
+mod verifier;
+#[cfg(feature = "std")]
+pub use verifier::*;
+```
+
+#### Standalone `sc-*` → `soil-*`
+
+Every existing `mod` declaration in `lib.rs` gets `#[cfg(feature = "std")]`.
+Top-level items (structs, functions, traits, impls) that lived directly in
+`lib.rs` are moved into a new `mod client`, also feature-gated. Other modules
+remain as top-level siblings — they are **not** nested under `client`.
+
+```rust
+#![cfg_attr(not(feature = "std"), no_std)]
+
+#[cfg(feature = "std")]
+mod some_mod;
+#[cfg(feature = "std")]
+pub use some_mod::*;
+
+#[cfg(feature = "std")]
+mod another_mod;
+#[cfg(feature = "std")]
+pub use another_mod::*;
+
+// Top-level items from old lib.rs moved here
+#[cfg(feature = "std")]
+mod client;
+#[cfg(feature = "std")]
+pub use client::*;
+```
+
+Under `no_std`, the crate compiles as an empty library.
+
 ### Dependency invariant
 
 ```
