@@ -2,7 +2,7 @@
 name = "soil-consensus-pow"
 version = "0.32.0"
 authors.workspace = true
-description = "Primitives for Aura consensus"
+description = "Primitives for PoW consensus"
 edition.workspace = true
 license = "Apache-2.0"
 homepage.workspace = true
@@ -16,11 +16,42 @@ workspace = true
 targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
+async-trait = { optional = true, workspace = true }
 codec = { features = ["derive"], workspace = true }
+futures = { optional = true, workspace = true }
+futures-timer = { optional = true, workspace = true }
+log = { optional = true, workspace = true, default-features = true }
+parking_lot = { optional = true, workspace = true, default-features = true }
+prometheus-endpoint = { optional = true, workspace = true, default-features = true }
+sc-client-api = { optional = true, workspace = true, default-features = true }
+sc-consensus = { optional = true, workspace = true, default-features = true }
 soil-api = { workspace = true }
+soil-block-builder = { optional = true, workspace = true, default-features = true }
+soil-blockchain = { optional = true, workspace = true, default-features = true }
+soil-consensus = { optional = true, workspace = true, default-features = true }
 soil-core = { workspace = true }
+soil-inherents = { optional = true, workspace = true, default-features = true }
 soil-runtime = { workspace = true }
+thiserror = { optional = true, workspace = true }
 
 [features]
 default = ["std"]
-std = ["codec/std", "soil-api/std", "soil-core/std", "soil-runtime/std"]
+std = [
+	"async-trait",
+	"codec/std",
+	"futures",
+	"futures-timer",
+	"log",
+	"parking_lot",
+	"prometheus-endpoint",
+	"sc-client-api",
+	"sc-consensus",
+	"soil-api/std",
+	"soil-block-builder",
+	"soil-blockchain",
+	"soil-consensus",
+	"soil-core/std",
+	"soil-inherents",
+	"soil-runtime/std",
+	"thiserror",
+]

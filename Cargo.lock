@@ -12994,10 +12994,23 @@ dependencies = [
 name = "soil-consensus-pow"
 version = "0.32.0"
 dependencies = [
+ "async-trait",
+ "futures",
+ "futures-timer",
+ "log",
  "parity-scale-codec",
+ "parking_lot 0.12.5",
+ "sc-client-api",
+ "sc-consensus",
  "soil-api",
+ "soil-block-builder",
+ "soil-blockchain",
+ "soil-consensus",
  "soil-core",
+ "soil-inherents",
  "soil-runtime",
+ "substrate-prometheus-endpoint",
+ "thiserror 1.0.69",
 ]
 
 [[package]]

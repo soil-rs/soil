@@ -21,6 +21,14 @@
 
 extern crate alloc;
 
+#[cfg(feature = "std")]
+mod client;
+#[cfg(feature = "std")]
+mod worker;
+
+#[cfg(feature = "std")]
+pub use client::*;
+
 #[cfg(not(feature = "std"))]
 use alloc::vec::Vec;
 use codec::Decode;
