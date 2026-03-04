@@ -47,7 +47,7 @@ use frame_support::{
 	BoundedSlice, BoundedVec, ConsensusEngineId, Parameter,
 };
 use log;
-use sp_consensus_aura::{AuthorityIndex, ConsensusLog, Slot, AURA_ENGINE_ID};
+use soil_consensus_aura::{AuthorityIndex, ConsensusLog, Slot, AURA_ENGINE_ID};
 use soil_runtime::{
 	generic::DigestItem,
 	traits::{IsMember, Member, SaturatedConversion, Saturating, Zero},

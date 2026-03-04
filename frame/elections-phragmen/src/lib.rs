@@ -113,12 +113,12 @@ use frame_support::{
 };
 use log;
 use scale_info::TypeInfo;
-use sp_npos_elections::{ElectionResult, ExtendedBalance};
+use soil_npos_elections::{ElectionResult, ExtendedBalance};
 use soil_runtime::{
 	traits::{Saturating, StaticLookup, Zero},
 	Debug, DispatchError, Perbill,
 };
-use sp_staking::currency_to_vote::CurrencyToVote;
+use soil_staking::currency_to_vote::CurrencyToVote;
 
 #[cfg(any(feature = "try-runtime", test))]
 use soil_runtime::TryRuntimeError;
@@ -1006,7 +1006,7 @@ impl<T: Config> Pallet<T> {
 		let weight_voters = voters_and_votes.len() as u32;
 		let weight_edges = num_edges;
 		let _ =
-			sp_npos_elections::seq_phragmen(num_to_elect, candidate_ids, voters_and_votes, None)
+			soil_npos_elections::seq_phragmen(num_to_elect, candidate_ids, voters_and_votes, None)
 				.map(|ElectionResult::<T::AccountId, Perbill> { winners, assignments: _ }| {
 					// this is already sorted by id.
 					let old_members_ids_sorted = Members::<T>::take()

@@ -18,8 +18,8 @@
 
 use codec::DecodeAll;
 use soil_application_crypto::RuntimeAppPublic;
-use sp_consensus::Error as ConsensusError;
-use sp_consensus_beefy::{
+use soil_consensus::Error as ConsensusError;
+use soil_consensus_beefy::{
 	AuthorityIdBound, KnownSignature, ValidatorSet, ValidatorSetId, VersionedFinalityProof,
 };
 use soil_runtime::traits::{Block as BlockT, NumberFor};
@@ -81,7 +81,7 @@ pub(crate) fn verify_with_validator_set<'a, Block: BlockT, AuthorityId: Authorit
 #[cfg(test)]
 pub(crate) mod tests {
 	use codec::Encode;
-	use sp_consensus_beefy::{
+	use soil_consensus_beefy::{
 		ecdsa_crypto, known_payloads, test_utils::Keyring, Commitment, Payload, SignedCommitment,
 		VersionedFinalityProof,
 	};

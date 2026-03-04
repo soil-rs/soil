@@ -41,7 +41,7 @@
 use codec::Codec;
 use soil_std::prelude::Vec;
 
-sp_api::decl_runtime_apis! {
+soil_api::decl_runtime_apis! {
 	/// Runtime API for querying oracle data from the blockchain.
 	///
 	/// This trait provides methods to retrieve oracle data without requiring direct

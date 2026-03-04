@@ -34,7 +34,7 @@ use sc_network_sync::{SyncEvent, SyncEventStream};
 use sc_network_types::PeerId;
 use sc_statement_store::Store;
 use soil_core::Pair;
-use sp_statement_store::{Statement, StatementSource, StatementStore};
+use soil_statement_store::{Statement, StatementSource, StatementStore};
 use std::{
 	collections::HashMap,
 	num::{NonZeroU32, NonZeroUsize},
@@ -116,7 +116,7 @@ impl SyncEventStream for TestSync {
 	}
 }
 
-impl sp_consensus::SyncOracle for TestSync {
+impl soil_consensus::SyncOracle for TestSync {
 	fn is_major_syncing(&self) -> bool {
 		unimplemented!()
 	}
@@ -219,7 +219,7 @@ fn build_handler(
 
 	let (queue_sender, queue_receiver) = async_channel::bounded::<(
 		Statement,
-		futures::channel::oneshot::Sender<sp_statement_store::SubmitResult>,
+		futures::channel::oneshot::Sender<soil_statement_store::SubmitResult>,
 	)>(MAX_PENDING_STATEMENTS);
 
 	let network = TestNetwork::new();

@@ -27,7 +27,7 @@ use jsonrpsee::{
 /// Re-export the API for backward compatibility.
 pub use sc_rpc_api::statement::{error::Error, StatementApiServer};
 use soil_core::Bytes;
-use sp_statement_store::{
+use soil_statement_store::{
 	OptimizedTopicFilter, StatementEvent, StatementSource, SubmitResult, TopicFilter,
 };
 use std::sync::Arc;
@@ -99,11 +99,11 @@ async fn send_in_chunks(
 
 /// Trait alias for statement store API required by the RPC.
 pub trait StatementStoreApi:
-	sp_statement_store::StatementStore + sc_statement_store::StatementStoreSubscriptionApi
+	soil_statement_store::StatementStore + sc_statement_store::StatementStoreSubscriptionApi
 {
 }
 impl<T> StatementStoreApi for T where
-	T: sp_statement_store::StatementStore + sc_statement_store::StatementStoreSubscriptionApi
+	T: soil_statement_store::StatementStore + sc_statement_store::StatementStoreSubscriptionApi
 {
 }
 /// Statement store API

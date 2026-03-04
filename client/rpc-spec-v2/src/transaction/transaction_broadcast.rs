@@ -35,7 +35,7 @@ use sc_client_api::BlockchainEvents;
 use sc_transaction_pool_api::{
 	error::IntoPoolError, TransactionFor, TransactionPool, TransactionSource,
 };
-use sp_blockchain::HeaderBackend;
+use soil_blockchain::HeaderBackend;
 use soil_core::Bytes;
 use soil_runtime::traits::Block as BlockT;
 use std::{collections::HashMap, sync::Arc};

@@ -29,10 +29,10 @@ use sc_consensus::{
 };
 use sc_telemetry::TelemetryHandle;
 use sc_utils::mpsc::TracingUnboundedSender;
-use sp_api::{Core, RuntimeApiInfo};
-use sp_blockchain::BlockStatus;
-use sp_consensus::{BlockOrigin, Error as ConsensusError, SelectChain};
-use sp_consensus_grandpa::{ConsensusLog, GrandpaApi, ScheduledChange, SetId, GRANDPA_ENGINE_ID};
+use soil_api::{Core, RuntimeApiInfo};
+use soil_blockchain::BlockStatus;
+use soil_consensus::{BlockOrigin, Error as ConsensusError, SelectChain};
+use soil_consensus_grandpa::{ConsensusLog, GrandpaApi, ScheduledChange, SetId, GRANDPA_ENGINE_ID};
 use soil_runtime::{
 	generic::OpaqueDigestItemId,
 	traits::{Block as BlockT, Header as HeaderT, NumberFor, Zero},
@@ -809,7 +809,7 @@ where
 		let justification = match justification {
 			Err(e) => {
 				return match e {
-					sp_blockchain::Error::OutdatedJustification => {
+					soil_blockchain::Error::OutdatedJustification => {
 						Err(ConsensusError::OutdatedJustification)
 					},
 					_ => Err(ConsensusError::ClientImport(e.to_string())),

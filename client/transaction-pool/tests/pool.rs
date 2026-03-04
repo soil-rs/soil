@@ -30,8 +30,8 @@ use sc_transaction_pool::*;
 use sc_transaction_pool_api::{
 	ChainEvent, MaintainedTransactionPool, TransactionPool, TransactionStatus,
 };
-use sp_blockchain::HeaderBackend;
-use sp_consensus::BlockOrigin;
+use soil_blockchain::HeaderBackend;
+use soil_consensus::BlockOrigin;
 use soil_runtime::{
 	generic::BlockId,
 	traits::Block as _,

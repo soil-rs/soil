@@ -30,7 +30,7 @@
 
 use frame_support::{pallet_prelude::*, traits::fungible::Inspect};
 use frame_system::pallet_prelude::*;
-use sp_statement_store::{Proof, Statement};
+use soil_statement_store::{Proof, Statement};
 
 pub use pallet::*;
 
@@ -48,7 +48,7 @@ pub mod pallet {
 	#[pallet::config]
 	pub trait Config: frame_system::Config
 	where
-		<Self as frame_system::Config>::AccountId: From<sp_statement_store::AccountId>,
+		<Self as frame_system::Config>::AccountId: From<soil_statement_store::AccountId>,
 	{
 		/// The overarching event type.
 		#[allow(deprecated)]
@@ -82,7 +82,7 @@ pub mod pallet {
 	#[pallet::generate_deposit(pub(super) fn deposit_event)]
 	pub enum Event<T: Config>
 	where
-		<T as frame_system::Config>::AccountId: From<sp_statement_store::AccountId>,
+		<T as frame_system::Config>::AccountId: From<soil_statement_store::AccountId>,
 	{
 		/// A new statement is submitted
 		NewStatement { account: T::AccountId, statement: Statement },
@@ -91,11 +91,11 @@ pub mod pallet {
 	#[pallet::hooks]
 	impl<T: Config> Hooks<BlockNumberFor<T>> for Pallet<T>
 	where
-		<T as frame_system::Config>::AccountId: From<sp_statement_store::AccountId>,
-		sp_statement_store::AccountId: From<<T as frame_system::Config>::AccountId>,
+		<T as frame_system::Config>::AccountId: From<soil_statement_store::AccountId>,
+		soil_statement_store::AccountId: From<<T as frame_system::Config>::AccountId>,
 		<T as frame_system::Config>::RuntimeEvent: From<pallet::Event<T>>,
 		<T as frame_system::Config>::RuntimeEvent: TryInto<pallet::Event<T>>,
-		sp_statement_store::BlockHash: From<<T as frame_system::Config>::Hash>,
+		soil_statement_store::BlockHash: From<<T as frame_system::Config>::Hash>,
 	{
 		fn offchain_worker(now: BlockNumberFor<T>) {
 			log::trace!(target: LOG_TARGET, "Collecting statements at #{:?}", now);
@@ -106,11 +106,11 @@ pub mod pallet {
 
 impl<T: Config> Pallet<T>
 where
-	<T as frame_system::Config>::AccountId: From<sp_statement_store::AccountId>,
-	sp_statement_store::AccountId: From<<T as frame_system::Config>::AccountId>,
+	<T as frame_system::Config>::AccountId: From<soil_statement_store::AccountId>,
+	soil_statement_store::AccountId: From<<T as frame_system::Config>::AccountId>,
 	<T as frame_system::Config>::RuntimeEvent: From<pallet::Event<T>>,
 	<T as frame_system::Config>::RuntimeEvent: TryInto<pallet::Event<T>>,
-	sp_statement_store::BlockHash: From<<T as frame_system::Config>::Hash>,
+	soil_statement_store::BlockHash: From<<T as frame_system::Config>::Hash>,
 {
 	/// Submit a statement event. The statement will be picked up by the offchain worker and
 	/// broadcast to the network.
@@ -131,7 +131,7 @@ where
 					};
 					statement.set_proof(proof);
 				}
-				sp_statement_store::runtime_api::statement_store::submit_statement(statement);
+				soil_statement_store::runtime_api::statement_store::submit_statement(statement);
 			}
 		}
 	}

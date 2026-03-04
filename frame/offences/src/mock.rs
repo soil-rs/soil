@@ -28,7 +28,7 @@ use frame_support::{
 	weights::{constants::RocksDbWeight, Weight},
 };
 use soil_runtime::{traits::IdentityLookup, BuildStorage, Perbill};
-use sp_staking::{
+use soil_staking::{
 	offence::{self, Kind, OffenceDetails},
 	SessionIndex,
 };

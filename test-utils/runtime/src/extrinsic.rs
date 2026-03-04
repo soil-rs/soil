@@ -25,7 +25,7 @@ use codec::Encode;
 use frame_metadata_hash_extension::CheckMetadataHash;
 use frame_system::{CheckNonce, CheckWeight};
 use soil_core::crypto::Pair as TraitPair;
-use sp_keyring::Sr25519Keyring;
+use soil_keyring::Sr25519Keyring;
 use soil_runtime::{
 	generic::Preamble, traits::TransactionExtension, transaction_validity::TransactionPriority,
 	Perbill,

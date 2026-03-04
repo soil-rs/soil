@@ -31,18 +31,18 @@ sc-consensus-epochs = { workspace = true, default-features = true }
 sc-transaction-pool = { workspace = true, default-features = true }
 sc-transaction-pool-api = { workspace = true, default-features = true }
 serde = { features = ["derive"], workspace = true, default-features = true }
-sp-api = { workspace = true, default-features = true }
-sp-blockchain = { workspace = true, default-features = true }
-sp-consensus = { workspace = true, default-features = true }
-sp-consensus-aura = { workspace = true, default-features = true }
-sp-consensus-babe = { workspace = true, default-features = true }
-sp-consensus-slots = { workspace = true, default-features = true }
+soil-api = { workspace = true, default-features = true }
+soil-blockchain = { workspace = true, default-features = true }
+soil-consensus = { workspace = true, default-features = true }
+soil-consensus-aura = { workspace = true, default-features = true }
+soil-consensus-babe = { workspace = true, default-features = true }
+soil-consensus-slots = { workspace = true, default-features = true }
 soil-core = { workspace = true, default-features = true }
 soil-externalities = { workspace = true, default-features = true }
-sp-inherents = { workspace = true, default-features = true }
+soil-inherents = { workspace = true, default-features = true }
 soil-keystore = { workspace = true, default-features = true }
 soil-runtime = { workspace = true, default-features = true }
-sp-timestamp = { workspace = true, default-features = true }
+soil-timestamp = { workspace = true, default-features = true }
 soil-trie = { workspace = true, default-features = true }
 thiserror = { workspace = true }
 

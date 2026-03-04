@@ -26,8 +26,8 @@ pub use sc_client_api::{execution_extensions::ExecutionExtensions, BadBlocks, Fo
 pub use sc_client_db::{self, Backend, BlocksPruning};
 pub use sc_executor::{self, WasmExecutionMethod, WasmExecutor};
 pub use sc_service::{client, RpcHandlers};
-pub use sp_consensus;
-pub use sp_keyring::{Ed25519Keyring, Sr25519Keyring};
+pub use soil_consensus;
+pub use soil_keyring::{Ed25519Keyring, Sr25519Keyring};
 pub use soil_keystore::{Keystore, KeystorePtr};
 pub use soil_runtime::{Storage, StorageChild};
 

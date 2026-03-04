@@ -46,7 +46,7 @@ use frame_support::{
 use frame_system::pallet_prelude::BlockNumberFor;
 use scale_info::TypeInfo;
 use soil_core::Get;
-pub use sp_npos_elections::{ElectionResult, ElectionScore};
+pub use soil_npos_elections::{ElectionResult, ElectionScore};
 use soil_runtime::{
 	traits::{CheckedSub, One, Zero},
 	SaturatedConversion, Saturating,
@@ -66,7 +66,7 @@ pub type FallbackErrorOf<T> = <<T as crate::Config>::Fallback as ElectionProvide
 
 /// The relative distribution of a voter's stake among the winning targets.
 pub type AssignmentOf<T> =
-	sp_npos_elections::Assignment<<T as MinerConfig>::AccountId, SolutionAccuracyOf<T>>;
+	soil_npos_elections::Assignment<<T as MinerConfig>::AccountId, SolutionAccuracyOf<T>>;
 
 /// A paginated raw solution type.
 ///

@@ -17,7 +17,7 @@
 
 //! Integration tests for bls12-381
 
-use sp_api::{ApiExt, ProvideRuntimeApi};
+use soil_api::{ApiExt, ProvideRuntimeApi};
 use soil_application_crypto::{bls381::AppPair, RuntimePublic};
 use soil_core::{
 	bls381::Pair as Bls381Pair,

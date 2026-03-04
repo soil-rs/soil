@@ -38,7 +38,7 @@ use frame_support::traits::{Get, KeyOwnerProofSystem};
 use frame_system::pallet_prelude::HeaderFor;
 use log::{error, info};
 
-use sp_consensus_babe::{AuthorityId, EquivocationProof, Slot, KEY_TYPE};
+use soil_consensus_babe::{AuthorityId, EquivocationProof, Slot, KEY_TYPE};
 use soil_runtime::{
 	transaction_validity::{
 		InvalidTransaction, TransactionPriority, TransactionSource, TransactionValidity,
@@ -46,8 +46,8 @@ use soil_runtime::{
 	},
 	DispatchError, KeyTypeId, Perbill,
 };
-use sp_session::{GetSessionNumber, GetValidatorCount};
-use sp_staking::{
+use soil_session::{GetSessionNumber, GetValidatorCount};
+use soil_staking::{
 	offence::{Kind, Offence, OffenceReportSystem, ReportOffence},
 	SessionIndex,
 };
@@ -147,7 +147,7 @@ where
 		let (equivocation_proof, key_owner_proof) = evidence;
 
 		// Check the membership proof to extract the offender's id
-		let key = (sp_consensus_babe::KEY_TYPE, equivocation_proof.offender.clone());
+		let key = (soil_consensus_babe::KEY_TYPE, equivocation_proof.offender.clone());
 		let offender =
 			P::check_proof(key, key_owner_proof.clone()).ok_or(InvalidTransaction::BadProof)?;
 
@@ -169,7 +169,7 @@ where
 		let slot = equivocation_proof.slot;
 
 		// Validate the equivocation proof (check votes are different and signatures are valid)
-		if !sp_consensus_babe::check_equivocation_proof(equivocation_proof) {
+		if !soil_consensus_babe::check_equivocation_proof(equivocation_proof) {
 			return Err(Error::<T>::InvalidEquivocationProof.into());
 		}
 

@@ -56,7 +56,7 @@ use sc_network::{
 use sc_network_sync::{SyncEvent, SyncEventStream};
 use sc_network_types::PeerId;
 use soil_runtime::traits::Block as BlockT;
-use sp_statement_store::{
+use soil_statement_store::{
 	FilterDecision, Hash, Statement, StatementSource, StatementStore, SubmitResult,
 };
 use std::{
@@ -296,7 +296,7 @@ impl StatementHandlerPrototype {
 	/// Gossiping is enabled when major syncing is done.
 	pub fn build<
 		N: NetworkPeers + NetworkEventStream,
-		S: SyncEventStream + sp_consensus::SyncOracle,
+		S: SyncEventStream + soil_consensus::SyncOracle,
 	>(
 		self,
 		network: N,
@@ -388,7 +388,7 @@ impl StatementHandlerPrototype {
 /// Handler for statements. Call [`StatementHandler::run`] to start the processing.
 pub struct StatementHandler<
 	N: NetworkPeers + NetworkEventStream,
-	S: SyncEventStream + sp_consensus::SyncOracle,
+	S: SyncEventStream + soil_consensus::SyncOracle,
 > {
 	protocol_name: ProtocolName,
 	/// Interval at which we call `propagate_statements`.
@@ -552,7 +552,7 @@ impl Peer {
 impl<N, S> StatementHandler<N, S>
 where
 	N: NetworkPeers + NetworkEventStream,
-	S: SyncEventStream + sp_consensus::SyncOracle,
+	S: SyncEventStream + soil_consensus::SyncOracle,
 {
 	/// Create a new `StatementHandler` for testing/benchmarking purposes.
 	#[cfg(any(test, feature = "test-helpers"))]
@@ -1214,7 +1214,7 @@ mod tests {
 		}
 	}
 
-	impl sp_consensus::SyncOracle for TestSync {
+	impl soil_consensus::SyncOracle for TestSync {
 		fn is_major_syncing(&self) -> bool {
 			false
 		}
@@ -1301,9 +1301,9 @@ mod tests {
 
 	#[derive(Clone)]
 	struct TestStatementStore {
-		statements: Arc<Mutex<HashMap<sp_statement_store::Hash, sp_statement_store::Statement>>>,
+		statements: Arc<Mutex<HashMap<soil_statement_store::Hash, soil_statement_store::Statement>>>,
 		recent_statements:
-			Arc<Mutex<HashMap<sp_statement_store::Hash, sp_statement_store::Statement>>>,
+			Arc<Mutex<HashMap<soil_statement_store::Hash, soil_statement_store::Statement>>>,
 	}
 
 	impl TestStatementStore {
@@ -1315,45 +1315,45 @@ mod tests {
 	impl StatementStore for TestStatementStore {
 		fn statements(
 			&self,
-		) -> sp_statement_store::Result<
-			Vec<(sp_statement_store::Hash, sp_statement_store::Statement)>,
+		) -> soil_statement_store::Result<
+			Vec<(soil_statement_store::Hash, soil_statement_store::Statement)>,
 		> {
 			Ok(self.statements.lock().unwrap().iter().map(|(h, s)| (*h, s.clone())).collect())
 		}
 
 		fn take_recent_statements(
 			&self,
-		) -> sp_statement_store::Result<
-			Vec<(sp_statement_store::Hash, sp_statement_store::Statement)>,
+		) -> soil_statement_store::Result<
+			Vec<(soil_statement_store::Hash, soil_statement_store::Statement)>,
 		> {
 			Ok(self.recent_statements.lock().unwrap().drain().collect())
 		}
 
 		fn statement(
 			&self,
-			_hash: &sp_statement_store::Hash,
-		) -> sp_statement_store::Result<Option<sp_statement_store::Statement>> {
+			_hash: &soil_statement_store::Hash,
+		) -> soil_statement_store::Result<Option<soil_statement_store::Statement>> {
 			unimplemented!()
 		}
 
-		fn has_statement(&self, hash: &sp_statement_store::Hash) -> bool {
+		fn has_statement(&self, hash: &soil_statement_store::Hash) -> bool {
 			self.statements.lock().unwrap().contains_key(hash)
 		}
 
-		fn statement_hashes(&self) -> Vec<sp_statement_store::Hash> {
+		fn statement_hashes(&self) -> Vec<soil_statement_store::Hash> {
 			self.statements.lock().unwrap().keys().cloned().collect()
 		}
 
 		fn statements_by_hashes(
 			&self,
-			hashes: &[sp_statement_store::Hash],
+			hashes: &[soil_statement_store::Hash],
 			filter: &mut dyn FnMut(
-				&sp_statement_store::Hash,
+				&soil_statement_store::Hash,
 				&[u8],
-				&sp_statement_store::Statement,
+				&soil_statement_store::Statement,
 			) -> FilterDecision,
-		) -> sp_statement_store::Result<(
-			Vec<(sp_statement_store::Hash, sp_statement_store::Statement)>,
+		) -> soil_statement_store::Result<(
+			Vec<(soil_statement_store::Hash, soil_statement_store::Statement)>,
 			usize,
 		)> {
 			let statements = self.statements.lock().unwrap();
@@ -1381,63 +1381,63 @@ mod tests {
 
 		fn broadcasts(
 			&self,
-			_match_all_topics: &[sp_statement_store::Topic],
-		) -> sp_statement_store::Result<Vec<Vec<u8>>> {
+			_match_all_topics: &[soil_statement_store::Topic],
+		) -> soil_statement_store::Result<Vec<Vec<u8>>> {
 			unimplemented!()
 		}
 
 		fn posted(
 			&self,
-			_match_all_topics: &[sp_statement_store::Topic],
+			_match_all_topics: &[soil_statement_store::Topic],
 			_dest: [u8; 32],
-		) -> sp_statement_store::Result<Vec<Vec<u8>>> {
+		) -> soil_statement_store::Result<Vec<Vec<u8>>> {
 			unimplemented!()
 		}
 
 		fn posted_clear(
 			&self,
-			_match_all_topics: &[sp_statement_store::Topic],
+			_match_all_topics: &[soil_statement_store::Topic],
 			_dest: [u8; 32],
-		) -> sp_statement_store::Result<Vec<Vec<u8>>> {
+		) -> soil_statement_store::Result<Vec<Vec<u8>>> {
 			unimplemented!()
 		}
 
 		fn broadcasts_stmt(
 			&self,
-			_match_all_topics: &[sp_statement_store::Topic],
-		) -> sp_statement_store::Result<Vec<Vec<u8>>> {
+			_match_all_topics: &[soil_statement_store::Topic],
+		) -> soil_statement_store::Result<Vec<Vec<u8>>> {
 			unimplemented!()
 		}
 
 		fn posted_stmt(
 			&self,
-			_match_all_topics: &[sp_statement_store::Topic],
+			_match_all_topics: &[soil_statement_store::Topic],
 			_dest: [u8; 32],
-		) -> sp_statement_store::Result<Vec<Vec<u8>>> {
+		) -> soil_statement_store::Result<Vec<Vec<u8>>> {
 			unimplemented!()
 		}
 
 		fn posted_clear_stmt(
 			&self,
-			_match_all_topics: &[sp_statement_store::Topic],
+			_match_all_topics: &[soil_statement_store::Topic],
 			_dest: [u8; 32],
-		) -> sp_statement_store::Result<Vec<Vec<u8>>> {
+		) -> soil_statement_store::Result<Vec<Vec<u8>>> {
 			unimplemented!()
 		}
 
 		fn submit(
 			&self,
-			_statement: sp_statement_store::Statement,
-			_source: sp_statement_store::StatementSource,
-		) -> sp_statement_store::SubmitResult {
+			_statement: soil_statement_store::Statement,
+			_source: soil_statement_store::StatementSource,
+		) -> soil_statement_store::SubmitResult {
 			unimplemented!()
 		}
 
-		fn remove(&self, _hash: &sp_statement_store::Hash) -> sp_statement_store::Result<()> {
+		fn remove(&self, _hash: &soil_statement_store::Hash) -> soil_statement_store::Result<()> {
 			unimplemented!()
 		}
 
-		fn remove_by(&self, _who: [u8; 32]) -> sp_statement_store::Result<()> {
+		fn remove_by(&self, _who: [u8; 32]) -> soil_statement_store::Result<()> {
 			unimplemented!()
 		}
 	}

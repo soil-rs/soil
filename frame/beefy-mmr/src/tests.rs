@@ -18,7 +18,7 @@
 use std::vec;
 
 use codec::{Decode, Encode};
-use sp_consensus_beefy::{
+use soil_consensus_beefy::{
 	known_payloads,
 	mmr::{BeefyNextAuthoritySet, MmrLeafVersion},
 	AncestryHelper, Commitment, Payload, ValidatorSet,

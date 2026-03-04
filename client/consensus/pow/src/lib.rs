@@ -53,14 +53,14 @@ use sc_consensus::{
 	BasicQueue, BlockCheckParams, BlockImport, BlockImportParams, BoxBlockImport,
 	BoxJustificationImport, ForkChoiceStrategy, ImportResult, Verifier,
 };
-use sp_api::ProvideRuntimeApi;
-use sp_block_builder::BlockBuilder as BlockBuilderApi;
-use sp_blockchain::HeaderBackend;
-use sp_consensus::{
+use soil_api::ProvideRuntimeApi;
+use soil_block_builder::BlockBuilder as BlockBuilderApi;
+use soil_blockchain::HeaderBackend;
+use soil_consensus::{
 	Environment, Error as ConsensusError, ProposeArgs, Proposer, SelectChain, SyncOracle,
 };
-use sp_consensus_pow::{Seal, TotalDifficulty, POW_ENGINE_ID};
-use sp_inherents::{CreateInherentDataProviders, InherentDataProvider};
+use soil_consensus_pow::{Seal, TotalDifficulty, POW_ENGINE_ID};
+use soil_inherents::{CreateInherentDataProviders, InherentDataProvider};
 use soil_runtime::{
 	generic::{BlockId, Digest, DigestItem},
 	traits::{Block as BlockT, Header as HeaderT},
@@ -84,7 +84,7 @@ pub enum Error<B: BlockT> {
 	#[error("Fetching best header failed using select chain: {0}")]
 	BestHeaderSelectChain(ConsensusError),
 	#[error("Fetching best header failed: {0}")]
-	BestHeader(sp_blockchain::Error),
+	BestHeader(soil_blockchain::Error),
 	#[error("Best header does not exist")]
 	NoBestHeader,
 	#[error("Block proposing error: {0}")]
@@ -94,18 +94,18 @@ pub enum Error<B: BlockT> {
 	#[error("Error with block built on {0:?}: {1}")]
 	BlockBuiltError(B::Hash, ConsensusError),
 	#[error("Creating inherents failed: {0}")]
-	CreateInherents(sp_inherents::Error),
+	CreateInherents(soil_inherents::Error),
 	#[error("Checking inherents failed: {0}")]
-	CheckInherents(sp_inherents::Error),
+	CheckInherents(soil_inherents::Error),
 	#[error(
 		"Checking inherents unknown error for identifier: {}",
 		String::from_utf8_lossy(.0)
 	)]
-	CheckInherentsUnknownError(sp_inherents::InherentIdentifier),
+	CheckInherentsUnknownError(soil_inherents::InherentIdentifier),
 	#[error("Multiple pre-runtime digests")]
 	MultiplePreRuntimeDigests,
 	#[error(transparent)]
-	Client(sp_blockchain::Error),
+	Client(soil_blockchain::Error),
 	#[error(transparent)]
 	Codec(codec::Error),
 	#[error("{0}")]
@@ -270,13 +270,13 @@ where
 		at_hash: B::Hash,
 		inherent_data_providers: CIDP::InherentDataProviders,
 	) -> Result<(), Error<B>> {
-		use sp_block_builder::CheckInherentsError;
+		use soil_block_builder::CheckInherentsError;
 
 		if *block.header().number() < self.check_inherents_after {
 			return Ok(());
 		}
 
-		sp_block_builder::check_inherents(
+		soil_block_builder::check_inherents(
 			self.client.clone(),
 			at_hash,
 			block,
@@ -465,7 +465,7 @@ pub fn import_queue<B, Algorithm>(
 	algorithm: Algorithm,
 	spawner: &impl soil_core::traits::SpawnEssentialNamed,
 	registry: Option<&Registry>,
-) -> Result<PowImportQueue<B>, sp_consensus::Error>
+) -> Result<PowImportQueue<B>, soil_consensus::Error>
 where
 	B: BlockT,
 	Algorithm: PowAlgorithm<B> + Clone + Send + Sync + 'static,

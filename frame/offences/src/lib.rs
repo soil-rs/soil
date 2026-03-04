@@ -33,7 +33,7 @@ use codec::Encode;
 use core::marker::PhantomData;
 use frame_support::weights::Weight;
 use soil_runtime::{traits::Hash, Perbill};
-use sp_staking::{
+use soil_staking::{
 	offence::{Kind, Offence, OffenceDetails, OffenceError, OnOffenceHandler, ReportOffence},
 	SessionIndex,
 };

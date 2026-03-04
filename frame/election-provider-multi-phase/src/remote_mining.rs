@@ -35,7 +35,7 @@ use frame_support::{
 };
 use remote_externalities::{Builder, Mode, OnlineConfig};
 use soil_core::{ConstU32, H256};
-use sp_npos_elections::BalancingConfig;
+use soil_npos_elections::BalancingConfig;
 use soil_runtime::{Perbill, Weight};
 
 pub mod polkadot {

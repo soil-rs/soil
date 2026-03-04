@@ -31,7 +31,7 @@ use sc_executor_common::{
 };
 use schnellru::{ByLength, LruMap};
 use soil_core::traits::{Externalities, FetchRuntimeCode, RuntimeCode};
-use sp_version::RuntimeVersion;
+use soil_version::RuntimeVersion;
 use soil_wasm_interface::HostFunctions;
 
 use std::{
@@ -335,14 +335,14 @@ fn decode_version(mut version: &[u8]) -> Result<RuntimeVersion, WasmError> {
 }
 
 fn decode_runtime_apis(apis: &[u8]) -> Result<Vec<([u8; 8], u32)>, WasmError> {
-	use sp_api::RUNTIME_API_INFO_SIZE;
+	use soil_api::RUNTIME_API_INFO_SIZE;
 
 	apis.chunks(RUNTIME_API_INFO_SIZE)
 		.map(|chunk| {
 			// `chunk` can be less than `RUNTIME_API_INFO_SIZE` if the total length of `apis`
 			// doesn't completely divide by `RUNTIME_API_INFO_SIZE`.
 			<[u8; RUNTIME_API_INFO_SIZE]>::try_from(chunk)
-				.map(sp_api::deserialize_runtime_api_info)
+				.map(soil_api::deserialize_runtime_api_info)
 				.map_err(|_| WasmError::Other("a clipped runtime api info declaration".to_owned()))
 		})
 		.collect::<Result<Vec<_>, WasmError>>()
@@ -361,12 +361,12 @@ pub fn read_embedded_version(blob: &RuntimeBlob) -> Result<Option<RuntimeVersion
 			.transpose()?
 			.map(Into::into);
 
-		let core_version = apis.as_ref().and_then(sp_version::core_version_from_apis);
+		let core_version = apis.as_ref().and_then(soil_version::core_version_from_apis);
 		// We do not use `RuntimeVersion::decode` here because that `decode_version` relies on
 		// presence of a special API in the `apis` field to treat the input as a non-legacy version.
 		// However the structure found in the `runtime_version` always contain an empty `apis`
 		// field. Therefore the version read will be mistakenly treated as an legacy one.
-		let mut decoded_version = sp_version::RuntimeVersion::decode_with_version_hint(
+		let mut decoded_version = soil_version::RuntimeVersion::decode_with_version_hint(
 			&mut version_section,
 			core_version,
 		)
@@ -447,8 +447,8 @@ mod tests {
 	use super::*;
 	use alloc::borrow::Cow;
 	use codec::Encode;
-	use sp_api::{Core, RuntimeApiInfo};
-	use sp_version::{create_apis_vec, RuntimeVersion};
+	use soil_api::{Core, RuntimeApiInfo};
+	use soil_version::{create_apis_vec, RuntimeVersion};
 	use soil_wasm_interface::HostFunctions;
 	use substrate_test_runtime::Block;
 
@@ -459,7 +459,7 @@ mod tests {
 		pub authoring_version: u32,
 		pub spec_version: u32,
 		pub impl_version: u32,
-		pub apis: sp_version::ApisVec,
+		pub apis: soil_version::ApisVec,
 	}
 
 	#[test]
@@ -551,7 +551,7 @@ mod tests {
 			system_version: 1,
 		};
 
-		let embedded = sp_version::embed::embed_runtime_version(&wasm, runtime_version.clone())
+		let embedded = soil_version::embed::embed_runtime_version(&wasm, runtime_version.clone())
 			.expect("Embedding works");
 
 		let blob = RuntimeBlob::new(&embedded).expect("Embedded blob is valid");

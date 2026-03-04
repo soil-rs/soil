@@ -140,9 +140,9 @@ mod tests {
 		report, AuthorityId, FinalityProof, GrandpaJustification, GrandpaJustificationSender,
 	};
 	use sc_rpc::testing::test_executor;
-	use sp_blockchain::HeaderBackend;
+	use soil_blockchain::HeaderBackend;
 	use soil_core::crypto::ByteArray;
-	use sp_keyring::Ed25519Keyring;
+	use soil_keyring::Ed25519Keyring;
 	use soil_runtime::traits::{Block as BlockT, Header as HeaderT};
 	use substrate_test_runtime_client::{
 		runtime::{Block, Header, H256},
@@ -354,7 +354,7 @@ mod tests {
 			};
 
 			let msg = finality_grandpa::Message::Precommit(precommit.clone());
-			let encoded = sp_consensus_grandpa::localized_payload(round, set_id, &msg);
+			let encoded = soil_consensus_grandpa::localized_payload(round, set_id, &msg);
 			let signature = peers[0].sign(&encoded[..]).into();
 
 			let precommit = finality_grandpa::SignedPrecommit {

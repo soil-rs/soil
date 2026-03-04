@@ -36,7 +36,7 @@ use sc_network_sync::{
 	state_request_handler::StateRequestHandler,
 	strategy::polkadot::{PolkadotSyncingStrategy, PolkadotSyncingStrategyConfig},
 };
-use sp_blockchain::HeaderBackend;
+use soil_blockchain::HeaderBackend;
 use soil_runtime::traits::{Block as BlockT, Zero};
 use substrate_test_runtime_client::{
 	runtime::{Block as TestBlock, Hash as TestHash},
@@ -227,7 +227,7 @@ impl TestNetworkBuilder {
 			&full_net_config,
 			protocol_id.clone(),
 			None,
-			Box::new(sp_consensus::block_validation::DefaultBlockAnnounceValidator),
+			Box::new(soil_consensus::block_validation::DefaultBlockAnnounceValidator),
 			syncing_strategy,
 			chain_sync_network_handle,
 			import_queue.service(),

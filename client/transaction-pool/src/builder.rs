@@ -125,26 +125,26 @@ pub trait FullClientTransactionPool<Block, Client>:
 	>
 where
 	Block: BlockT,
-	Client: sp_api::ProvideRuntimeApi<Block>
+	Client: soil_api::ProvideRuntimeApi<Block>
 		+ sc_client_api::BlockBackend<Block>
 		+ sc_client_api::blockchain::HeaderBackend<Block>
 		+ soil_runtime::traits::BlockIdTo<Block>
-		+ sp_blockchain::HeaderMetadata<Block, Error = sp_blockchain::Error>
+		+ soil_blockchain::HeaderMetadata<Block, Error = soil_blockchain::Error>
 		+ 'static,
-	Client::Api: sp_transaction_pool::runtime_api::TaggedTransactionQueue<Block>,
+	Client::Api: soil_transaction_pool::runtime_api::TaggedTransactionQueue<Block>,
 {
 }
 
 impl<Block, Client, P> FullClientTransactionPool<Block, Client> for P
 where
 	Block: BlockT,
-	Client: sp_api::ProvideRuntimeApi<Block>
+	Client: soil_api::ProvideRuntimeApi<Block>
 		+ sc_client_api::BlockBackend<Block>
 		+ sc_client_api::blockchain::HeaderBackend<Block>
 		+ soil_runtime::traits::BlockIdTo<Block>
-		+ sp_blockchain::HeaderMetadata<Block, Error = sp_blockchain::Error>
+		+ soil_blockchain::HeaderMetadata<Block, Error = soil_blockchain::Error>
 		+ 'static,
-	Client::Api: sp_transaction_pool::runtime_api::TaggedTransactionQueue<Block>,
+	Client::Api: soil_transaction_pool::runtime_api::TaggedTransactionQueue<Block>,
 	P: MaintainedTransactionPool<
 			Block = Block,
 			Hash = ExtrinsicHash<FullChainApi<Client, Block>>,
@@ -181,18 +181,18 @@ pub struct Builder<'a, Block, Client> {
 impl<'a, Client, Block> Builder<'a, Block, Client>
 where
 	Block: BlockT,
-	Client: sp_api::ProvideRuntimeApi<Block>
+	Client: soil_api::ProvideRuntimeApi<Block>
 		+ sc_client_api::BlockBackend<Block>
 		+ sc_client_api::blockchain::HeaderBackend<Block>
 		+ soil_runtime::traits::BlockIdTo<Block>
 		+ sc_client_api::ExecutorProvider<Block>
 		+ sc_client_api::UsageProvider<Block>
-		+ sp_blockchain::HeaderMetadata<Block, Error = sp_blockchain::Error>
+		+ soil_blockchain::HeaderMetadata<Block, Error = soil_blockchain::Error>
 		+ Send
 		+ Sync
 		+ 'static,
 	<Block as BlockT>::Hash: std::marker::Unpin,
-	Client::Api: sp_transaction_pool::runtime_api::TaggedTransactionQueue<Block>,
+	Client::Api: soil_transaction_pool::runtime_api::TaggedTransactionQueue<Block>,
 {
 	/// Creates new instance of `Builder`
 	pub fn new(

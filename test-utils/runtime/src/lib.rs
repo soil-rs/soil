@@ -47,7 +47,7 @@ use frame_system::{
 };
 use scale_info::TypeInfo;
 use soil_application_crypto::{ecdsa, ed25519, sr25519, RuntimeAppPublic, Ss58Codec};
-use sp_keyring::Sr25519Keyring;
+use soil_keyring::Sr25519Keyring;
 
 #[cfg(feature = "bls-experimental")]
 use soil_application_crypto::{bls381, ecdsa_bls381};
@@ -60,10 +60,10 @@ use soil_trie::{
 use trie_db::{Trie, TrieMut};
 
 use serde_json::json;
-use sp_api::{decl_runtime_apis, impl_runtime_apis};
+use soil_api::{decl_runtime_apis, impl_runtime_apis};
 pub use soil_core::hash::H256;
-use sp_genesis_builder::PresetId;
-use sp_inherents::{CheckInherentsResult, InherentData};
+use soil_genesis_builder::PresetId;
+use soil_inherents::{CheckInherentsResult, InherentData};
 use soil_runtime::{
 	impl_opaque_keys, impl_tx_ext_default,
 	traits::{BlakeTwo256, Block as BlockT, DispatchInfoOf, Dispatchable, NumberFor, Verify},
@@ -73,15 +73,15 @@ use soil_runtime::{
 	ApplyExtrinsicResult, ExtrinsicInclusionMode, Perbill,
 };
 #[cfg(any(feature = "std", test))]
-use sp_version::NativeVersion;
-use sp_version::RuntimeVersion;
+use soil_version::NativeVersion;
+use soil_version::RuntimeVersion;
 
-pub use sp_consensus_babe::{AllowedSlots, BabeEpochConfiguration, Slot};
+pub use soil_consensus_babe::{AllowedSlots, BabeEpochConfiguration, Slot};
 
 pub use pallet_balances::Call as BalancesCall;
 pub use pallet_utility::Call as UtilityCall;
 
-pub type AuraId = sp_consensus_aura::sr25519::AuthorityId;
+pub type AuraId = soil_consensus_aura::sr25519::AuthorityId;
 #[cfg(feature = "std")]
 pub use extrinsic::{ExtrinsicBuilder, Transfer};
 
@@ -115,7 +115,7 @@ pub fn wasm_binary_logging_disabled_unwrap() -> &'static [u8] {
 }
 
 /// Test runtime version.
-#[sp_version::runtime_version]
+#[soil_version::runtime_version]
 pub const VERSION: RuntimeVersion = RuntimeVersion {
 	spec_name: alloc::borrow::Cow::Borrowed("test"),
 	impl_name: alloc::borrow::Cow::Borrowed("parity-test"),
@@ -510,7 +510,7 @@ pub const TEST_RUNTIME_BABE_EPOCH_CONFIGURATION: BabeEpochConfiguration = BabeEp
 };
 
 impl_runtime_apis! {
-	impl sp_api::Core<Block> for Runtime {
+	impl soil_api::Core<Block> for Runtime {
 		fn version() -> RuntimeVersion {
 			version()
 		}
@@ -526,7 +526,7 @@ impl_runtime_apis! {
 		}
 	}
 
-	impl sp_api::Metadata<Block> for Runtime {
+	impl soil_api::Metadata<Block> for Runtime {
 		fn metadata() -> OpaqueMetadata {
 			OpaqueMetadata::new(Runtime::metadata().into())
 		}
@@ -539,7 +539,7 @@ impl_runtime_apis! {
 		}
 	}
 
-	impl sp_transaction_pool::runtime_api::TaggedTransactionQueue<Block> for Runtime {
+	impl soil_transaction_pool::runtime_api::TaggedTransactionQueue<Block> for Runtime {
 		fn validate_transaction(
 			source: TransactionSource,
 			utx: <Block as BlockT>::Extrinsic,
@@ -551,7 +551,7 @@ impl_runtime_apis! {
 		}
 	}
 
-	impl sp_block_builder::BlockBuilder<Block> for Runtime {
+	impl soil_block_builder::BlockBuilder<Block> for Runtime {
 		fn apply_extrinsic(extrinsic: <Block as BlockT>::Extrinsic) -> ApplyExtrinsicResult {
 			Executive::apply_extrinsic(extrinsic)
 		}
@@ -682,9 +682,9 @@ impl_runtime_apis! {
 		}
 	}
 
-	impl sp_consensus_aura::AuraApi<Block, AuraId> for Runtime {
-		fn slot_duration() -> sp_consensus_aura::SlotDuration {
-			sp_consensus_aura::SlotDuration::from_millis(1000)
+	impl soil_consensus_aura::AuraApi<Block, AuraId> for Runtime {
+		fn slot_duration() -> soil_consensus_aura::SlotDuration {
+			soil_consensus_aura::SlotDuration::from_millis(1000)
 		}
 
 		fn authorities() -> Vec<AuraId> {
@@ -692,10 +692,10 @@ impl_runtime_apis! {
 		}
 	}
 
-	impl sp_consensus_babe::BabeApi<Block> for Runtime {
-		fn configuration() -> sp_consensus_babe::BabeConfiguration {
+	impl soil_consensus_babe::BabeApi<Block> for Runtime {
+		fn configuration() -> soil_consensus_babe::BabeConfiguration {
 			let epoch_config = Babe::epoch_config().unwrap_or(TEST_RUNTIME_BABE_EPOCH_CONFIGURATION);
-			sp_consensus_babe::BabeConfiguration {
+			soil_consensus_babe::BabeConfiguration {
 				slot_duration: Babe::slot_duration(),
 				epoch_length: EpochDuration::get(),
 				c: epoch_config.c,
@@ -709,32 +709,32 @@ impl_runtime_apis! {
 			Babe::current_epoch_start()
 		}
 
-		fn current_epoch() -> sp_consensus_babe::Epoch {
+		fn current_epoch() -> soil_consensus_babe::Epoch {
 			Babe::current_epoch()
 		}
 
-		fn next_epoch() -> sp_consensus_babe::Epoch {
+		fn next_epoch() -> soil_consensus_babe::Epoch {
 			Babe::next_epoch()
 		}
 
 		fn submit_report_equivocation_unsigned_extrinsic(
-			_equivocation_proof: sp_consensus_babe::EquivocationProof<
+			_equivocation_proof: soil_consensus_babe::EquivocationProof<
 			<Block as BlockT>::Header,
 			>,
-			_key_owner_proof: sp_consensus_babe::OpaqueKeyOwnershipProof,
+			_key_owner_proof: soil_consensus_babe::OpaqueKeyOwnershipProof,
 		) -> Option<()> {
 			None
 		}
 
 		fn generate_key_ownership_proof(
-			_slot: sp_consensus_babe::Slot,
-			_authority_id: sp_consensus_babe::AuthorityId,
-		) -> Option<sp_consensus_babe::OpaqueKeyOwnershipProof> {
+			_slot: soil_consensus_babe::Slot,
+			_authority_id: soil_consensus_babe::AuthorityId,
+		) -> Option<soil_consensus_babe::OpaqueKeyOwnershipProof> {
 			None
 		}
 	}
 
-	impl sp_offchain::OffchainWorkerApi<Block> for Runtime {
+	impl soil_offchain::OffchainWorkerApi<Block> for Runtime {
 		fn offchain_worker(header: &<Block as BlockT>::Header) {
 			let ext = Extrinsic::new_bare(
 				substrate_test_pallet::pallet::Call::storage_change{
@@ -747,8 +747,8 @@ impl_runtime_apis! {
 		}
 	}
 
-	impl sp_session::SessionKeys<Block> for Runtime {
-		fn generate_session_keys(owner: Vec<u8>, _: Option<Vec<u8>>) -> sp_session::OpaqueGeneratedSessionKeys {
+	impl soil_session::SessionKeys<Block> for Runtime {
+		fn generate_session_keys(owner: Vec<u8>, _: Option<Vec<u8>>) -> soil_session::OpaqueGeneratedSessionKeys {
 			SessionKeys::generate(&owner, None).into()
 		}
 
@@ -759,35 +759,35 @@ impl_runtime_apis! {
 		}
 	}
 
-	impl sp_consensus_grandpa::GrandpaApi<Block> for Runtime {
-		fn grandpa_authorities() -> sp_consensus_grandpa::AuthorityList {
+	impl soil_consensus_grandpa::GrandpaApi<Block> for Runtime {
+		fn grandpa_authorities() -> soil_consensus_grandpa::AuthorityList {
 			Vec::new()
 		}
 
-		fn current_set_id() -> sp_consensus_grandpa::SetId {
+		fn current_set_id() -> soil_consensus_grandpa::SetId {
 			0
 		}
 
 		fn submit_report_equivocation_unsigned_extrinsic(
-			_equivocation_proof: sp_consensus_grandpa::EquivocationProof<
+			_equivocation_proof: soil_consensus_grandpa::EquivocationProof<
 			<Block as BlockT>::Hash,
 			NumberFor<Block>,
 			>,
-			_key_owner_proof: sp_consensus_grandpa::OpaqueKeyOwnershipProof,
+			_key_owner_proof: soil_consensus_grandpa::OpaqueKeyOwnershipProof,
 		) -> Option<()> {
 			None
 		}
 
 		fn generate_key_ownership_proof(
-			_set_id: sp_consensus_grandpa::SetId,
-			_authority_id: sp_consensus_grandpa::AuthorityId,
-		) -> Option<sp_consensus_grandpa::OpaqueKeyOwnershipProof> {
+			_set_id: soil_consensus_grandpa::SetId,
+			_authority_id: soil_consensus_grandpa::AuthorityId,
+		) -> Option<soil_consensus_grandpa::OpaqueKeyOwnershipProof> {
 			None
 		}
 	}
 
-	impl sp_genesis_builder::GenesisBuilder<Block> for Runtime {
-		fn build_state(config: Vec<u8>) -> sp_genesis_builder::Result {
+	impl soil_genesis_builder::GenesisBuilder<Block> for Runtime {
+		fn build_state(config: Vec<u8>) -> soil_genesis_builder::Result {
 			build_state::<RuntimeGenesisConfig>(config)
 		}
 
@@ -1151,8 +1151,8 @@ mod tests {
 	use frame_support::dispatch::DispatchInfo;
 	use pretty_assertions::assert_eq;
 	use sc_block_builder::BlockBuilderBuilder;
-	use sp_api::{ApiExt, ProvideRuntimeApi};
-	use sp_consensus::BlockOrigin;
+	use soil_api::{ApiExt, ProvideRuntimeApi};
+	use soil_consensus::BlockOrigin;
 	use soil_core::{storage::well_known_keys::HEAP_PAGES, traits::CallContext};
 	use soil_runtime::{
 		traits::{DispatchTransaction, Hash as _},
@@ -1358,7 +1358,7 @@ mod tests {
 		use serde_json::json;
 		use soil_application_crypto::Ss58Codec;
 		use soil_core::traits::Externalities;
-		use sp_genesis_builder::Result as BuildResult;
+		use soil_genesis_builder::Result as BuildResult;
 		use soil_state_machine::BasicExternalities;
 		use std::{fs, io::Write};
 		use storage_key_generator::hex;

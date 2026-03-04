@@ -39,7 +39,7 @@ use self::error::Error;
 
 use sc_client_api::BlockBackend;
 pub use sc_rpc_api::chain::*;
-use sp_blockchain::HeaderBackend;
+use soil_blockchain::HeaderBackend;
 
 /// Blockchain backend API
 #[async_trait]
@@ -171,6 +171,6 @@ where
 	}
 }
 
-fn client_err(err: sp_blockchain::Error) -> Error {
+fn client_err(err: soil_blockchain::Error) -> Error {
 	Error::Client(Box::new(err))
 }

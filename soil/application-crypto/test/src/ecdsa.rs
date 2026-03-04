@@ -16,7 +16,7 @@
 // limitations under the License.
 
 //! Integration tests for ecdsa
-use sp_api::{ApiExt, ProvideRuntimeApi};
+use soil_api::{ApiExt, ProvideRuntimeApi};
 use soil_application_crypto::{ecdsa::AppPair, RuntimePublic};
 use soil_core::{
 	crypto::{ByteArray, Pair},

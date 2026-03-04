@@ -37,7 +37,7 @@ use sc_executor_common::{
 	},
 };
 use soil_core::traits::{CallContext, CodeExecutor, Externalities, RuntimeCode};
-use sp_version::{GetNativeVersion, NativeVersion, RuntimeVersion};
+use soil_version::{GetNativeVersion, NativeVersion, RuntimeVersion};
 use soil_wasm_interface::{ExtendedHostFunctions, HostFunctions};
 
 /// Set up the externalities and safe calling environment to execute runtime calls.

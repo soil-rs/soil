@@ -23,9 +23,9 @@ scale-info = { features = ["derive"], workspace = true, default-features = true 
 
 soil-core = { workspace = true, default-features = true }
 soil-io = { workspace = true, default-features = true }
-sp-npos-elections = { workspace = true }
+soil-npos-elections = { workspace = true }
 soil-runtime = { workspace = true, default-features = true }
-sp-staking = { workspace = true, default-features = true }
+soil-staking = { workspace = true, default-features = true }
 soil-tracing = { workspace = true, default-features = true }
 
 frame-election-provider-support = { workspace = true, default-features = true }

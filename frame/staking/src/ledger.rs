@@ -33,7 +33,7 @@
 
 use frame_support::{defensive, ensure, traits::Defensive};
 use soil_runtime::DispatchResult;
-use sp_staking::{StakingAccount, StakingInterface};
+use soil_staking::{StakingAccount, StakingInterface};
 
 use crate::{
 	asset, BalanceOf, Bonded, Config, Error, Ledger, Pallet, Payee, RewardDestination,
@@ -292,7 +292,7 @@ pub struct StakingLedgerInspect<T: Config> {
 	#[codec(compact)]
 	pub active: BalanceOf<T>,
 	pub unlocking: frame_support::BoundedVec<UnlockChunk<BalanceOf<T>>, T::MaxUnlockingChunks>,
-	pub legacy_claimed_rewards: frame_support::BoundedVec<sp_staking::EraIndex, T::HistoryDepth>,
+	pub legacy_claimed_rewards: frame_support::BoundedVec<soil_staking::EraIndex, T::HistoryDepth>,
 }
 
 #[cfg(test)]

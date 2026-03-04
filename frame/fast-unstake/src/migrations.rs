@@ -23,7 +23,7 @@ pub mod v1 {
 		traits::{Defensive, Get, GetStorageVersion, OnRuntimeUpgrade},
 		weights::Weight,
 	};
-	use sp_staking::EraIndex;
+	use soil_staking::EraIndex;
 
 	#[cfg(feature = "try-runtime")]
 	use frame_support::ensure;

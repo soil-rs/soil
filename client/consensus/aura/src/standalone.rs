@@ -25,11 +25,11 @@ use log::trace;
 use codec::Codec;
 
 use sc_client_api::UsageProvider;
-use sp_api::{Core, ProvideRuntimeApi};
+use soil_api::{Core, ProvideRuntimeApi};
 use soil_application_crypto::{AppCrypto, AppPublic};
-use sp_blockchain::Result as CResult;
-use sp_consensus::Error as ConsensusError;
-use sp_consensus_slots::Slot;
+use soil_blockchain::Result as CResult;
+use soil_consensus::Error as ConsensusError;
+use soil_consensus_slots::Slot;
 use soil_core::crypto::{ByteArray, Pair};
 use soil_keystore::KeystorePtr;
 use soil_runtime::{
@@ -324,7 +324,7 @@ where
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use sp_keyring::sr25519::Keyring;
+	use soil_keyring::sr25519::Keyring;
 
 	#[test]
 	fn authorities_call_works() {

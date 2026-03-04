@@ -24,7 +24,7 @@ use soil_runtime::{
 	traits::{BadOrigin, Dispatchable},
 	FixedU128,
 };
-use sp_staking::{Agent, DelegationInterface};
+use soil_staking::{Agent, DelegationInterface};
 
 macro_rules! unbonding_pools_with_era {
 	($($k:expr => $v:expr),* $(,)?) => {{

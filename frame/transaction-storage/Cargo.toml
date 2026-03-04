@@ -24,14 +24,14 @@ frame-system = { workspace = true }
 pallet-balances = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { optional = true, workspace = true, default-features = true }
-sp-inherents = { workspace = true }
+soil-inherents = { workspace = true }
 soil-io = { workspace = true }
 soil-runtime = { workspace = true }
-sp-transaction-storage-proof = { workspace = true }
+soil-transaction-storage-proof = { workspace = true }
 tracing = { workspace = true }
 
 [dev-dependencies]
-sp-transaction-storage-proof = { default-features = true, workspace = true }
+soil-transaction-storage-proof = { default-features = true, workspace = true }
 
 [features]
 default = ["std"]
@@ -43,10 +43,10 @@ std = [
 	"pallet-balances/std",
 	"scale-info/std",
 	"serde",
-	"sp-inherents/std",
+	"soil-inherents/std",
 	"soil-io/std",
 	"soil-runtime/std",
-	"sp-transaction-storage-proof/std",
+	"soil-transaction-storage-proof/std",
 	"tracing/std",
 ]
 runtime-benchmarks = [

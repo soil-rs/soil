@@ -34,13 +34,13 @@ use sc_network_test::{
 	PeersFullClient, TestClient, TestNetFactory,
 };
 use sc_transaction_pool_api::RejectAllTxPool;
-use sp_api::{ApiRef, ProvideRuntimeApi};
-use sp_consensus::{BlockOrigin, Error as ConsensusError, SelectChain};
-use sp_consensus_grandpa::{
+use soil_api::{ApiRef, ProvideRuntimeApi};
+use soil_consensus::{BlockOrigin, Error as ConsensusError, SelectChain};
+use soil_consensus_grandpa::{
 	AuthorityList, EquivocationProof, GrandpaApi, OpaqueKeyOwnershipProof, GRANDPA_ENGINE_ID,
 };
 use soil_core::H256;
-use sp_keyring::Ed25519Keyring;
+use soil_keyring::Ed25519Keyring;
 use soil_keystore::{testing::MemoryKeystore, Keystore, KeystorePtr};
 use soil_runtime::{
 	codec::Encode,
@@ -178,7 +178,7 @@ impl ProvideRuntimeApi<Block> for TestApi {
 	}
 }
 
-sp_api::mock_impl_runtime_apis! {
+soil_api::mock_impl_runtime_apis! {
 	impl GrandpaApi<Block> for RuntimeApi {
 		fn grandpa_authorities(&self) -> AuthorityList {
 			self.inner.genesis_authorities.clone()
@@ -205,7 +205,7 @@ sp_api::mock_impl_runtime_apis! {
 }
 
 impl GenesisAuthoritySetProvider<Block> for TestApi {
-	fn get(&self) -> sp_blockchain::Result<AuthorityList> {
+	fn get(&self) -> soil_blockchain::Result<AuthorityList> {
 		Ok(self.genesis_authorities.clone())
 	}
 }
@@ -414,7 +414,7 @@ fn add_scheduled_change(builder: &mut impl BlockBuilderExt, change: ScheduledCha
 	builder
 		.push_deposit_log_digest_item(DigestItem::Consensus(
 			GRANDPA_ENGINE_ID,
-			sp_consensus_grandpa::ConsensusLog::ScheduledChange(change).encode(),
+			soil_consensus_grandpa::ConsensusLog::ScheduledChange(change).encode(),
 		))
 		.unwrap();
 }
@@ -427,7 +427,7 @@ fn add_forced_change(
 	builder
 		.push_deposit_log_digest_item(DigestItem::Consensus(
 			GRANDPA_ENGINE_ID,
-			sp_consensus_grandpa::ConsensusLog::ForcedChange(median_last_finalized, change)
+			soil_consensus_grandpa::ConsensusLog::ForcedChange(median_last_finalized, change)
 				.encode(),
 		))
 		.unwrap();
@@ -1826,7 +1826,7 @@ async fn grandpa_environment_checks_if_best_block_is_descendent_of_finality_targ
 #[tokio::test]
 async fn grandpa_environment_uses_round_base_block_for_voting_if_finality_target_errors() {
 	use finality_grandpa::voter::Environment;
-	use sp_consensus::SelectChain;
+	use soil_consensus::SelectChain;
 
 	let peers = &[Ed25519Keyring::Alice];
 	let voters = make_ids(peers);
@@ -2031,7 +2031,7 @@ async fn justification_with_equivocation() {
 			let precommit = finality_grandpa::Precommit { target_hash, target_number };
 
 			let msg = finality_grandpa::Message::Precommit(precommit.clone());
-			let encoded = sp_consensus_grandpa::localized_payload(round, set_id, &msg);
+			let encoded = soil_consensus_grandpa::localized_payload(round, set_id, &msg);
 
 			let precommit = finality_grandpa::SignedPrecommit {
 				precommit: precommit.clone(),
@@ -2104,7 +2104,7 @@ async fn imports_justification_for_regular_blocks_on_import() {
 		let precommit = finality_grandpa::Precommit { target_hash: hash, target_number: number };
 
 		let msg = finality_grandpa::Message::Precommit(precommit.clone());
-		let encoded = sp_consensus_grandpa::localized_payload(round, set_id, &msg);
+		let encoded = soil_consensus_grandpa::localized_payload(round, set_id, &msg);
 		let signature = peers[0].sign(&encoded[..]).into();
 
 		let precommit = finality_grandpa::SignedPrecommit {
@@ -2215,13 +2215,13 @@ async fn grandpa_environment_doesnt_send_equivocation_reports_for_itself() {
 
 	// reporting the equivocation should fail since the offender is a local
 	// authority (i.e. we have keys in our keystore for the given id)
-	let equivocation_proof = sp_consensus_grandpa::Equivocation::Prevote(equivocation.clone());
+	let equivocation_proof = soil_consensus_grandpa::Equivocation::Prevote(equivocation.clone());
 	assert!(matches!(environment.report_equivocation(equivocation_proof), Err(Error::Safety(_))));
 
 	// if we set the equivocation offender to another id for which we don't have
 	// keys it should work
 	equivocation.identity = TryFrom::try_from(&[1; 32][..]).unwrap();
-	let equivocation_proof = sp_consensus_grandpa::Equivocation::Prevote(equivocation);
+	let equivocation_proof = soil_consensus_grandpa::Equivocation::Prevote(equivocation);
 	environment.report_equivocation(equivocation_proof).unwrap();
 }
 

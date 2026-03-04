@@ -39,7 +39,7 @@ pub(crate) fn syn_err(message: &'static str) -> syn::Error {
 }
 
 /// Generates a struct to store the election result in a small/compact way. This can encode a
-/// structure which is the equivalent of a `sp_npos_elections::Assignment<_>`.
+/// structure which is the equivalent of a `soil_npos_elections::Assignment<_>`.
 ///
 /// The following data types can be configured by the macro.
 ///

@@ -71,11 +71,11 @@ use sc_network::{types::ProtocolName, NetworkBackend, NotificationService};
 use sc_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG, CONSENSUS_INFO};
 use sc_transaction_pool_api::OffchainTransactionPoolFactory;
 use sc_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver};
-use sp_api::ProvideRuntimeApi;
+use soil_api::ProvideRuntimeApi;
 use soil_application_crypto::AppCrypto;
-use sp_blockchain::{Error as ClientError, HeaderBackend, HeaderMetadata, Result as ClientResult};
-use sp_consensus::SelectChain;
-use sp_consensus_grandpa::{
+use soil_blockchain::{Error as ClientError, HeaderBackend, HeaderMetadata, Result as ClientResult};
+use soil_consensus::SelectChain;
+use soil_consensus_grandpa::{
 	AuthorityList, AuthoritySignature, SetId, CLIENT_LOG_TARGET as LOG_TARGET,
 };
 use soil_core::{crypto::ByteArray, traits::CallContext};
@@ -146,7 +146,7 @@ use environment::{Environment, VoterSetState};
 use until_imported::UntilGlobalMessageBlocksImported;
 
 // Re-export these two because it's just so damn convenient.
-pub use sp_consensus_grandpa::{
+pub use soil_consensus_grandpa::{
 	AuthorityId, AuthorityPair, CatchUp, Commit, CompactCommit, GrandpaApi, Message, Precommit,
 	Prevote, PrimaryPropose, ScheduledChange, SignedMessage, GRANDPA_ENGINE_ID,
 };
@@ -288,7 +288,7 @@ pub enum Error {
 
 	/// A runtime api request failed.
 	#[error("runtime API request failed: {0}")]
-	RuntimeApi(sp_api::ApiError),
+	RuntimeApi(soil_api::ApiError),
 }
 
 /// Something which can determine if a block is known.
@@ -317,12 +317,12 @@ pub trait ClientForGrandpa<Block, BE>:
 	LockImportRun<Block, BE>
 	+ Finalizer<Block, BE>
 	+ AuxStore
-	+ HeaderMetadata<Block, Error = sp_blockchain::Error>
+	+ HeaderMetadata<Block, Error = soil_blockchain::Error>
 	+ HeaderBackend<Block>
 	+ BlockchainEvents<Block>
 	+ ProvideRuntimeApi<Block>
 	+ ExecutorProvider<Block>
-	+ BlockImport<Block, Error = sp_consensus::Error>
+	+ BlockImport<Block, Error = soil_consensus::Error>
 	+ StorageProvider<Block, BE>
 where
 	BE: Backend<Block>,
@@ -337,12 +337,12 @@ where
 	T: LockImportRun<Block, BE>
 		+ Finalizer<Block, BE>
 		+ AuxStore
-		+ HeaderMetadata<Block, Error = sp_blockchain::Error>
+		+ HeaderMetadata<Block, Error = soil_blockchain::Error>
 		+ HeaderBackend<Block>
 		+ BlockchainEvents<Block>
 		+ ProvideRuntimeApi<Block>
 		+ ExecutorProvider<Block>
-		+ BlockImport<Block, Error = sp_consensus::Error>
+		+ BlockImport<Block, Error = soil_consensus::Error>
 		+ StorageProvider<Block, BE>,
 {
 }
@@ -748,7 +748,7 @@ pub fn grandpa_peers_set_config<B: BlockT, N: NetworkBackend<B, <B as BlockT>::H
 /// block import worker that has already been instantiated with `block_import`.
 pub fn run_grandpa_voter<Block: BlockT, BE: 'static, C, N, S, SC, VR>(
 	grandpa_params: GrandpaParams<Block, C, N, S, SC, VR>,
-) -> sp_blockchain::Result<impl Future<Output = ()> + Send>
+) -> soil_blockchain::Result<impl Future<Output = ()> + Send>
 where
 	BE: Backend<Block> + 'static,
 	N: NetworkT<Block> + Sync + 'static,

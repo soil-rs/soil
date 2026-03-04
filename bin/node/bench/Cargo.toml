@@ -36,12 +36,12 @@ sc-transaction-pool = { workspace = true, default-features = true }
 sc-transaction-pool-api = { workspace = true, default-features = true }
 serde = { workspace = true, default-features = true }
 serde_json = { workspace = true, default-features = true }
-sp-consensus = { workspace = true, default-features = true }
+soil-consensus = { workspace = true, default-features = true }
 soil-core = { workspace = true, default-features = true }
-sp-inherents = { workspace = true, default-features = true }
+soil-inherents = { workspace = true, default-features = true }
 soil-runtime = { workspace = true, default-features = true }
 soil-state-machine = { workspace = true, default-features = true }
-sp-timestamp = { workspace = true }
+soil-timestamp = { workspace = true }
 soil-tracing = { workspace = true, default-features = true }
 soil-trie = { workspace = true, default-features = true }
 tempfile = { workspace = true }

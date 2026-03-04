@@ -25,7 +25,7 @@ use soil_runtime::{
 };
 use std::{any::Any, borrow::Cow, collections::HashMap, sync::Arc};
 
-use sp_consensus::{BlockOrigin, Error};
+use soil_consensus::{BlockOrigin, Error};
 
 /// Block import result.
 #[derive(Debug, PartialEq, Eq)]
@@ -343,7 +343,7 @@ pub trait BlockImport<B: BlockT> {
 
 #[async_trait::async_trait]
 impl<B: BlockT> BlockImport<B> for crate::import_queue::BoxBlockImport<B> {
-	type Error = sp_consensus::error::Error;
+	type Error = soil_consensus::error::Error;
 
 	/// Check block preconditions.
 	async fn check_block(&self, block: BlockCheckParams<B>) -> Result<ImportResult, Self::Error> {

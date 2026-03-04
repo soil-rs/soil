@@ -42,8 +42,8 @@ use futures::{
 
 use sc_network::{event::DhtEvent, Multiaddr};
 use sc_network_types::PeerId;
-use sp_authority_discovery::AuthorityId;
-use sp_blockchain::HeaderBackend;
+use soil_authority_discovery::AuthorityId;
+use soil_blockchain::HeaderBackend;
 use soil_core::traits::SpawnNamed;
 use soil_runtime::traits::Block as BlockT;
 mod error;

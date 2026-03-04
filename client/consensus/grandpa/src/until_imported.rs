@@ -38,7 +38,7 @@ use parking_lot::Mutex;
 use prometheus_endpoint::{register, Gauge, PrometheusError, Registry, U64};
 use sc_client_api::{BlockImportNotification, ImportNotifications};
 use sc_utils::mpsc::TracingUnboundedReceiver;
-use sp_consensus_grandpa::AuthorityId;
+use soil_consensus_grandpa::AuthorityId;
 use soil_runtime::traits::{Block as BlockT, Header as HeaderT, NumberFor};
 
 use std::{
@@ -567,7 +567,7 @@ mod tests {
 	use futures_timer::Delay;
 	use sc_client_api::BlockImportNotification;
 	use sc_utils::mpsc::{tracing_unbounded, TracingUnboundedSender};
-	use sp_consensus::BlockOrigin;
+	use soil_consensus::BlockOrigin;
 	use soil_core::crypto::UncheckedFrom;
 	use substrate_test_runtime_client::runtime::{Block, Hash, Header};
 

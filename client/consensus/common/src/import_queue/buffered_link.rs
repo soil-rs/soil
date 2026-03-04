@@ -25,7 +25,7 @@
 //! ```
 //! use sc_consensus::import_queue::Link;
 //! # use sc_consensus::import_queue::buffered_link::buffered_link;
-//! # use sp_test_primitives::Block;
+//! # use soil_test_primitives::Block;
 //! # struct DummyLink; impl Link<Block> for DummyLink {}
 //! # let my_link = DummyLink;
 //! let (mut tx, mut rx) = buffered_link::<Block>(100_000);
@@ -176,7 +176,7 @@ impl<B: BlockT> BufferedLinkReceiver<B> {
 
 #[cfg(test)]
 mod tests {
-	use sp_test_primitives::Block;
+	use soil_test_primitives::Block;
 
 	#[test]
 	fn is_closed() {

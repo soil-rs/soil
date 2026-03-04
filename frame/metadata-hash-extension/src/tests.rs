@@ -23,12 +23,12 @@ use frame_support::{
 	pallet_prelude::{InvalidTransaction, TransactionValidityError},
 };
 use merkleized_metadata::{generate_metadata_digest, ExtraInfo};
-use sp_api::{Metadata, ProvideRuntimeApi};
+use soil_api::{Metadata, ProvideRuntimeApi};
 use soil_runtime::{
 	traits::{ExtrinsicLike, TransactionExtension},
 	transaction_validity::{TransactionSource, UnknownTransaction},
 };
-use sp_transaction_pool::runtime_api::TaggedTransactionQueue;
+use soil_transaction_pool::runtime_api::TaggedTransactionQueue;
 use substrate_test_runtime_client::{
 	prelude::*,
 	runtime::{self, ExtrinsicBuilder},

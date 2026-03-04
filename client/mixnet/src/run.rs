@@ -50,10 +50,10 @@ use sc_network::{
 use sc_transaction_pool_api::{
 	LocalTransactionPool, OffchainTransactionPoolFactory, TransactionPool,
 };
-use sp_api::{ApiExt, ProvideRuntimeApi};
-use sp_consensus::SyncOracle;
+use soil_api::{ApiExt, ProvideRuntimeApi};
+use soil_consensus::SyncOracle;
 use soil_keystore::{KeystoreExt, KeystorePtr};
-use sp_mixnet::{runtime_api::MixnetApi, types::Mixnode};
+use soil_mixnet::{runtime_api::MixnetApi, types::Mixnode};
 use soil_runtime::{
 	traits::{Block, Header},
 	transaction_validity::TransactionSource,

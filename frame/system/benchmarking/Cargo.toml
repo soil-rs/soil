@@ -27,7 +27,7 @@ soil-runtime = { workspace = true }
 [dev-dependencies]
 soil-externalities = { workspace = true, default-features = true }
 soil-io = { workspace = true, default-features = true }
-sp-version = { workspace = true, default-features = true }
+soil-version = { workspace = true, default-features = true }
 
 [features]
 default = ["std"]

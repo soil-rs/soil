@@ -26,7 +26,7 @@ use crate::mock::{
 };
 use codec::Encode;
 use frame_support::traits::Hooks;
-use sp_consensus_aura::{Slot, AURA_ENGINE_ID};
+use soil_consensus_aura::{Slot, AURA_ENGINE_ID};
 use soil_runtime::{Digest, DigestItem, TryRuntimeError};
 
 #[test]

@@ -22,7 +22,7 @@ use crate::LOG_TARGET;
 use codec::{Decode, Encode};
 use log::{info, trace};
 use sc_client_api::backend::AuxStore;
-use sp_blockchain::{Error as ClientError, Result as ClientResult};
+use soil_blockchain::{Error as ClientError, Result as ClientResult};
 use soil_runtime::traits::{Block, NumberFor};
 
 const VERSION_KEY: &[u8] = b"mmr_auxschema_version";
@@ -81,7 +81,7 @@ where
 pub(crate) fn load_or_init_state<B, BE>(
 	backend: &BE,
 	default: NumberFor<B>,
-) -> sp_blockchain::Result<NumberFor<B>>
+) -> soil_blockchain::Result<NumberFor<B>>
 where
 	B: Block,
 	BE: AuxStore,

@@ -84,9 +84,9 @@ use sc_telemetry::{telemetry, ConnectionMessage, Telemetry, TelemetryHandle, SUB
 use sc_tracing::block::TracingExecuteBlock;
 use sc_transaction_pool_api::{MaintainedTransactionPool, TransactionPool};
 use sc_utils::mpsc::{tracing_unbounded, TracingUnboundedSender};
-use sp_api::{CallApiAt, ProvideRuntimeApi};
-use sp_blockchain::{HeaderBackend, HeaderMetadata};
-use sp_consensus::block_validation::{
+use soil_api::{CallApiAt, ProvideRuntimeApi};
+use soil_blockchain::{HeaderBackend, HeaderMetadata};
+use soil_consensus::block_validation::{
 	BlockAnnounceValidator, Chain, DefaultBlockAnnounceValidator,
 };
 use soil_core::traits::{CodeExecutor, SpawnNamed};
@@ -393,7 +393,7 @@ pub fn new_wasm_executor<H: HostFunctions>(config: &ExecutorConfiguration) -> Wa
 /// If any filter returns `true` for a block's justifications, the block will not be pruned.
 pub fn new_db_backend<Block>(
 	settings: DatabaseSettings,
-) -> Result<Arc<Backend<Block>>, sp_blockchain::Error>
+) -> Result<Arc<Backend<Block>>, soil_blockchain::Error>
 where
 	Block: BlockT,
 {
@@ -421,7 +421,7 @@ pub fn new_client<E, Block, RA, G>(
 		Block,
 		RA,
 	>,
-	sp_blockchain::Error,
+	soil_blockchain::Error,
 >
 where
 	Block: BlockT,
@@ -504,10 +504,10 @@ pub fn spawn_tasks<TBl, TBackend, TExPool, TRpc, TCl>(
 ) -> Result<RpcHandlers, Error>
 where
 	TCl: ProvideRuntimeApi<TBl>
-		+ HeaderMetadata<TBl, Error = sp_blockchain::Error>
+		+ HeaderMetadata<TBl, Error = soil_blockchain::Error>
 		+ Chain<TBl>
 		+ BlockBackend<TBl>
-		+ BlockIdTo<TBl, Error = sp_blockchain::Error>
+		+ BlockIdTo<TBl, Error = soil_blockchain::Error>
 		+ ProofProvider<TBl>
 		+ HeaderBackend<TBl>
 		+ BlockchainEvents<TBl>
@@ -517,10 +517,10 @@ where
 		+ CallApiAt<TBl>
 		+ Send
 		+ 'static,
-	<TCl as ProvideRuntimeApi<TBl>>::Api: sp_api::Metadata<TBl>
-		+ sp_transaction_pool::runtime_api::TaggedTransactionQueue<TBl>
-		+ sp_session::SessionKeys<TBl>
-		+ sp_api::ApiExt<TBl>,
+	<TCl as ProvideRuntimeApi<TBl>>::Api: soil_api::Metadata<TBl>
+		+ soil_transaction_pool::runtime_api::TaggedTransactionQueue<TBl>
+		+ soil_session::SessionKeys<TBl>
+		+ soil_api::ApiExt<TBl>,
 	TBl: BlockT,
 	TBl::Hash: Unpin,
 	TBl::Header: Unpin,
@@ -529,7 +529,7 @@ where
 {
 	let chain_info = client.usage_info().chain;
 
-	sp_session::generate_initial_session_keys(
+	soil_session::generate_initial_session_keys(
 		client.clone(),
 		chain_info.best_hash,
 		config.dev_key_seed.clone().map(|s| vec![s]).unwrap_or_default(),
@@ -829,7 +829,7 @@ where
 	TCl: ProvideRuntimeApi<TBl>
 		+ BlockchainEvents<TBl>
 		+ HeaderBackend<TBl>
-		+ HeaderMetadata<TBl, Error = sp_blockchain::Error>
+		+ HeaderMetadata<TBl, Error = soil_blockchain::Error>
 		+ ExecutorProvider<TBl>
 		+ CallApiAt<TBl>
 		+ ProofProvider<TBl>
@@ -839,7 +839,7 @@ where
 		+ Sync
 		+ 'static,
 	TBackend: sc_client_api::backend::Backend<TBl> + 'static,
-	<TCl as ProvideRuntimeApi<TBl>>::Api: sp_session::SessionKeys<TBl> + sp_api::Metadata<TBl>,
+	<TCl as ProvideRuntimeApi<TBl>>::Api: soil_session::SessionKeys<TBl> + soil_api::Metadata<TBl>,
 	TExPool: MaintainedTransactionPool<Block = TBl, Hash = <TBl as BlockT>::Hash> + 'static,
 	TBl::Hash: Unpin,
 	TBl::Header: Unpin,
@@ -1003,10 +1003,10 @@ pub fn build_network<Block, Net, TxPool, IQ, Client>(
 where
 	Block: BlockT,
 	Client: ProvideRuntimeApi<Block>
-		+ HeaderMetadata<Block, Error = sp_blockchain::Error>
+		+ HeaderMetadata<Block, Error = soil_blockchain::Error>
 		+ Chain<Block>
 		+ BlockBackend<Block>
-		+ BlockIdTo<Block, Error = sp_blockchain::Error>
+		+ BlockIdTo<Block, Error = soil_blockchain::Error>
 		+ ProofProvider<Block>
 		+ HeaderBackend<Block>
 		+ BlockchainEvents<Block>
@@ -1169,10 +1169,10 @@ pub fn build_network_advanced<Block, Net, TxPool, IQ, Client>(
 where
 	Block: BlockT,
 	Client: ProvideRuntimeApi<Block>
-		+ HeaderMetadata<Block, Error = sp_blockchain::Error>
+		+ HeaderMetadata<Block, Error = soil_blockchain::Error>
 		+ Chain<Block>
 		+ BlockBackend<Block>
-		+ BlockIdTo<Block, Error = sp_blockchain::Error>
+		+ BlockIdTo<Block, Error = soil_blockchain::Error>
 		+ ProofProvider<Block>
 		+ HeaderBackend<Block>
 		+ BlockchainEvents<Block>
@@ -1364,7 +1364,7 @@ where
 	Block: BlockT,
 	Client: HeaderBackend<Block>
 		+ BlockBackend<Block>
-		+ HeaderMetadata<Block, Error = sp_blockchain::Error>
+		+ HeaderMetadata<Block, Error = soil_blockchain::Error>
 		+ ProofProvider<Block>
 		+ Send
 		+ Sync
@@ -1480,7 +1480,7 @@ where
 	Block: BlockT,
 	Client: HeaderBackend<Block>
 		+ BlockBackend<Block>
-		+ HeaderMetadata<Block, Error = sp_blockchain::Error>
+		+ HeaderMetadata<Block, Error = soil_blockchain::Error>
 		+ ProofProvider<Block>
 		+ Send
 		+ Sync

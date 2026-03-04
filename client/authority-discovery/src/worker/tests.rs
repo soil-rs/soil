@@ -44,7 +44,7 @@ use sc_network_types::{
 	multiaddr::{Multiaddr, Protocol},
 	PeerId,
 };
-use sp_api::{ApiRef, ProvideRuntimeApi};
+use soil_api::{ApiRef, ProvideRuntimeApi};
 use soil_keystore::{testing::MemoryKeystore, Keystore};
 use soil_runtime::traits::{Block as BlockT, NumberFor, Zero};
 use substrate_test_runtime_client::runtime::Block;
@@ -67,7 +67,7 @@ impl<Block: BlockT> HeaderBackend<Block> for TestApi {
 	fn header(
 		&self,
 		_hash: Block::Hash,
-	) -> std::result::Result<Option<Block::Header>, sp_blockchain::Error> {
+	) -> std::result::Result<Option<Block::Header>, soil_blockchain::Error> {
 		Ok(None)
 	}
 
@@ -87,21 +87,21 @@ impl<Block: BlockT> HeaderBackend<Block> for TestApi {
 	fn status(
 		&self,
 		_hash: Block::Hash,
-	) -> std::result::Result<sc_client_api::blockchain::BlockStatus, sp_blockchain::Error> {
+	) -> std::result::Result<sc_client_api::blockchain::BlockStatus, soil_blockchain::Error> {
 		Ok(sc_client_api::blockchain::BlockStatus::Unknown)
 	}
 
 	fn number(
 		&self,
 		_hash: Block::Hash,
-	) -> std::result::Result<Option<NumberFor<Block>>, sp_blockchain::Error> {
+	) -> std::result::Result<Option<NumberFor<Block>>, soil_blockchain::Error> {
 		Ok(None)
 	}
 
 	fn hash(
 		&self,
 		_number: NumberFor<Block>,
-	) -> std::result::Result<Option<Block::Hash>, sp_blockchain::Error> {
+	) -> std::result::Result<Option<Block::Hash>, soil_blockchain::Error> {
 		Ok(None)
 	}
 }
@@ -110,7 +110,7 @@ pub(crate) struct RuntimeApi {
 	authorities: Vec<AuthorityId>,
 }
 
-sp_api::mock_impl_runtime_apis! {
+soil_api::mock_impl_runtime_apis! {
 	impl AuthorityDiscoveryApi<Block> for RuntimeApi {
 		fn authorities(&self) -> Vec<AuthorityId> {
 			self.authorities.clone()

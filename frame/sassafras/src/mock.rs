@@ -23,7 +23,7 @@ use frame_support::{
 	derive_impl,
 	traits::{ConstU32, OnFinalize, OnInitialize},
 };
-use sp_consensus_sassafras::{
+use soil_consensus_sassafras::{
 	digests::SlotClaim,
 	vrf::{RingProver, VrfSignature},
 	AuthorityIndex, AuthorityPair, EpochConfiguration, Slot, TicketBody, TicketEnvelope, TicketId,

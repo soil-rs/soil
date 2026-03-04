@@ -54,10 +54,10 @@ use sc_network_test::{
 	PeersFullClient, TestNetFactory,
 };
 use sc_utils::{mpsc::TracingUnboundedReceiver, notification::NotificationReceiver};
-use sp_api::{ApiRef, ProvideRuntimeApi};
+use soil_api::{ApiRef, ProvideRuntimeApi};
 use soil_application_crypto::key_types::BEEFY as BEEFY_KEY_TYPE;
-use sp_consensus::BlockOrigin;
-use sp_consensus_beefy::{
+use soil_consensus::BlockOrigin;
+use soil_consensus_beefy::{
 	ecdsa_crypto,
 	ecdsa_crypto::{AuthorityId, Signature},
 	known_payloads,
@@ -69,7 +69,7 @@ use sp_consensus_beefy::{
 };
 use soil_core::H256;
 use soil_keystore::{testing::MemoryKeystore, Keystore, KeystorePtr};
-use sp_mmr_primitives::{Error as MmrError, MmrApi};
+use soil_mmr_primitives::{Error as MmrError, MmrApi};
 use soil_runtime::{
 	codec::{Decode, Encode},
 	traits::{Header as HeaderT, NumberFor},
@@ -296,7 +296,7 @@ impl ProvideRuntimeApi<Block> for TestApi {
 		RuntimeApi { inner: self.clone() }.into()
 	}
 }
-sp_api::mock_impl_runtime_apis! {
+soil_api::mock_impl_runtime_apis! {
 	impl BeefyApi<Block, AuthorityId> for RuntimeApi {
 		fn beefy_genesis() -> Option<NumberFor<Block>> {
 			Some(self.inner.beefy_genesis)
@@ -528,7 +528,7 @@ async fn wait_for_beefy_signed_commitments(
 			let expected = expected.next();
 			async move {
 				let signed_commitment = match versioned_finality_proof {
-					sp_consensus_beefy::VersionedFinalityProof::V1(sc) => sc,
+					soil_consensus_beefy::VersionedFinalityProof::V1(sc) => sc,
 				};
 				let commitment_block_num = signed_commitment.commitment.block_number;
 				assert_eq!(expected, Some(commitment_block_num).as_ref());

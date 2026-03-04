@@ -20,7 +20,7 @@
 
 use crate::LOG_TARGET;
 use sc_transaction_pool_api::ChainEvent;
-use sp_blockchain::TreeRoute;
+use soil_blockchain::TreeRoute;
 use soil_runtime::traits::{Block as BlockT, NumberFor, Saturating};
 use tracing::{debug, trace};
 
@@ -192,7 +192,7 @@ where
 mod enactment_state_tests {
 	use super::{EnactmentAction, EnactmentState};
 	use sc_transaction_pool_api::ChainEvent;
-	use sp_blockchain::{HashAndNumber, TreeRoute};
+	use soil_blockchain::{HashAndNumber, TreeRoute};
 	use soil_runtime::traits::NumberFor;
 	use std::sync::Arc;
 	use substrate_test_runtime_client::runtime::{Block, Hash};

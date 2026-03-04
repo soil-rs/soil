@@ -29,14 +29,14 @@ codec = { workspace = true, default-features = true }
 sc-executor-common = { workspace = true, default-features = true }
 sc-executor-polkavm = { workspace = true, default-features = true }
 sc-executor-wasmtime = { workspace = true, default-features = true }
-sp-api = { workspace = true, default-features = true }
+soil-api = { workspace = true, default-features = true }
 soil-core = { workspace = true, default-features = true }
 soil-externalities = { workspace = true, default-features = true }
 soil-io = { workspace = true, default-features = true }
 soil-panic-handler = { workspace = true, default-features = true }
 soil-runtime-interface = { workspace = true, default-features = true }
 soil-trie = { workspace = true, default-features = true }
-sp-version = { workspace = true, default-features = true }
+soil-version = { workspace = true, default-features = true }
 soil-wasm-interface = { workspace = true, default-features = true }
 
 [dev-dependencies]
@@ -62,7 +62,7 @@ default = ["std"]
 # This crate does not have `no_std` support, we just require this for tests
 std = [
 	"sc-runtime-test/std",
-	"sp-api/std",
+	"soil-api/std",
 	"soil-core/std",
 	"soil-externalities/std",
 	"soil-io/std",
@@ -71,7 +71,7 @@ std = [
 	"soil-state-machine/std",
 	"soil-tracing/std",
 	"soil-trie/std",
-	"sp-version/std",
+	"soil-version/std",
 	"soil-wasm-interface/std",
 	"substrate-test-runtime/std",
 ]

@@ -204,14 +204,14 @@ mod tests {
 		}
 	}
 
-	fn open_database(db_path: &Path, db_type: DatabaseType) -> sp_blockchain::Result<()> {
+	fn open_database(db_path: &Path, db_type: DatabaseType) -> soil_blockchain::Result<()> {
 		crate::utils::open_database::<Block>(
 			&DatabaseSource::RocksDb { path: db_path.to_owned(), cache_size: 128 },
 			db_type,
 			true,
 		)
 		.map(|_| ())
-		.map_err(|e| sp_blockchain::Error::Backend(e.to_string()))
+		.map_err(|e| soil_blockchain::Error::Backend(e.to_string()))
 	}
 
 	#[test]

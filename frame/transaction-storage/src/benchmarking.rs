@@ -25,7 +25,7 @@ use frame_benchmarking::v2::*;
 use frame_support::traits::{Get, OnFinalize, OnInitialize};
 use frame_system::{pallet_prelude::BlockNumberFor, EventRecord, Pallet as System, RawOrigin};
 use soil_runtime::traits::{Bounded, CheckedDiv, One, Zero};
-use sp_transaction_storage_proof::TransactionStorageProof;
+use soil_transaction_storage_proof::TransactionStorageProof;
 
 // Proof generated from max size storage:
 // ```

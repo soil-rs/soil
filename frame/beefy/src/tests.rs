@@ -26,7 +26,7 @@ use frame_support::{
 	dispatch::{DispatchResultWithPostInfo, Pays},
 	traits::{Currency, KeyOwnerProofSystem, OnInitialize},
 };
-use sp_consensus_beefy::{
+use soil_consensus_beefy::{
 	check_double_voting_proof, ecdsa_crypto,
 	known_payloads::MMR_ROOT_ID,
 	test_utils::{
@@ -36,7 +36,7 @@ use sp_consensus_beefy::{
 	Payload, ValidatorSet, ValidatorSetId, KEY_TYPE as BEEFY_KEY_TYPE,
 };
 use soil_runtime::{DigestItem, Perbill};
-use sp_session::MembershipProof;
+use soil_session::MembershipProof;
 
 use crate::{self as beefy, mock::*, Call, Config, Error, WeightInfoExt};
 

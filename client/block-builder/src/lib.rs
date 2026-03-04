@@ -19,7 +19,7 @@
 //! Substrate block builder
 //!
 //! This crate provides the [`BlockBuilder`] utility and the corresponding runtime api
-//! [`BlockBuilder`](sp_block_builder::BlockBuilder).
+//! [`BlockBuilder`](soil_block_builder::BlockBuilder).
 //!
 //! The block builder utility is used in the node as an abstraction over the runtime api to
 //! initialize a block, to push extrinsics and to finalize a block.
@@ -28,11 +28,11 @@
 
 use codec::Encode;
 
-use sp_api::{
+use soil_api::{
 	ApiExt, ApiRef, CallApiAt, Core, ProofRecorder, ProvideRuntimeApi, StorageChanges,
 	TransactionOutcome,
 };
-use sp_blockchain::{ApplyExtrinsicFailed, Error, HeaderBackend};
+use soil_blockchain::{ApplyExtrinsicFailed, Error, HeaderBackend};
 use soil_core::traits::CallContext;
 use soil_externalities::Extensions;
 use soil_runtime::{
@@ -42,7 +42,7 @@ use soil_runtime::{
 };
 use std::marker::PhantomData;
 
-pub use sp_block_builder::BlockBuilder as BlockBuilderApi;
+pub use soil_block_builder::BlockBuilder as BlockBuilderApi;
 
 /// A builder for creating an instance of [`BlockBuilder`].
 pub struct BlockBuilderBuilder<'a, B, C> {
@@ -339,7 +339,7 @@ where
 		let storage_changes = self
 			.api
 			.into_storage_changes(&state, self.parent_hash)
-			.map_err(sp_blockchain::Error::StorageChanges)?;
+			.map_err(soil_blockchain::Error::StorageChanges)?;
 
 		Ok(BuiltBlock { block: <Block as BlockT>::new(header, self.extrinsics), storage_changes })
 	}
@@ -349,7 +349,7 @@ where
 	/// Returns the inherents created by the runtime or an error if something failed.
 	pub fn create_inherents(
 		&mut self,
-		inherent_data: sp_inherents::InherentData,
+		inherent_data: soil_inherents::InherentData,
 	) -> Result<Vec<Block::Extrinsic>, Error> {
 		let parent_hash = self.parent_hash;
 		self.api
@@ -380,7 +380,7 @@ where
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use sp_blockchain::HeaderBackend;
+	use soil_blockchain::HeaderBackend;
 	use soil_core::Blake2Hasher;
 	use soil_state_machine::Backend;
 	use substrate_test_runtime_client::{

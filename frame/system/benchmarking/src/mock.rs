@@ -94,7 +94,7 @@ impl soil_core::traits::ReadRuntimeVersion for MockedReadRuntimeVersion {
 pub fn new_test_ext() -> soil_io::TestExternalities {
 	let t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 
-	let version = sp_version::RuntimeVersion {
+	let version = soil_version::RuntimeVersion {
 		spec_name: "spec_name".into(),
 		spec_version: 123,
 		impl_version: 456,

@@ -36,8 +36,8 @@ use tracing::{
 
 use crate::{SpanDatum, TraceEvent, Values};
 use sc_client_api::BlockBackend;
-use sp_api::{Core, ProvideRuntimeApi};
-use sp_blockchain::HeaderBackend;
+use soil_api::{Core, ProvideRuntimeApi};
+use soil_blockchain::HeaderBackend;
 use soil_core::hexdisplay::HexDisplay;
 use soil_rpc::tracing::{BlockTrace, Span, TraceBlockResponse};
 use soil_runtime::{
@@ -62,7 +62,7 @@ pub trait TracingExecuteBlock<Block: BlockT>: Send + Sync {
 	///
 	/// The execution should be done sync on the same thread, because the caller will register
 	/// special tracing collectors.
-	fn execute_block(&self, orig_hash: Block::Hash, block: Block) -> sp_blockchain::Result<()>;
+	fn execute_block(&self, orig_hash: Block::Hash, block: Block) -> soil_blockchain::Result<()>;
 }
 
 /// Default implementation of [`ExecuteBlock`].
@@ -85,7 +85,7 @@ where
 	Client::Api: Core<Block>,
 	Block: BlockT,
 {
-	fn execute_block(&self, _: Block::Hash, block: Block) -> sp_blockchain::Result<()> {
+	fn execute_block(&self, _: Block::Hash, block: Block) -> soil_blockchain::Result<()> {
 		self.client
 			.runtime_api()
 			.execute_block(*block.header().parent_hash(), block.into())
@@ -102,7 +102,7 @@ pub type TraceBlockResult<T> = Result<T, Error>;
 #[non_exhaustive]
 pub enum Error {
 	#[error("Invalid block Id: {0}")]
-	InvalidBlockId(#[from] sp_blockchain::Error),
+	InvalidBlockId(#[from] soil_blockchain::Error),
 	#[error("Missing block component: {0}")]
 	MissingBlockComponent(String),
 	#[error("Dispatch error: {0}")]

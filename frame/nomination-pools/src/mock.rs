@@ -24,7 +24,7 @@ use frame_support::{
 };
 use frame_system::{EnsureSignedBy, RawOrigin};
 use soil_runtime::{BuildStorage, DispatchResult, FixedU128};
-use sp_staking::{
+use soil_staking::{
 	Agent, DelegationInterface, DelegationMigrator, Delegator, OnStakingUpdate, Stake,
 };
 
@@ -84,7 +84,7 @@ impl StakingMock {
 	}
 }
 
-impl sp_staking::StakingInterface for StakingMock {
+impl soil_staking::StakingInterface for StakingMock {
 	type Balance = Balance;
 	type AccountId = AccountId;
 	type CurrencyToVote = ();
@@ -110,9 +110,9 @@ impl sp_staking::StakingInterface for StakingMock {
 
 	fn status(
 		_: &Self::AccountId,
-	) -> Result<sp_staking::StakerStatus<Self::AccountId>, DispatchError> {
+	) -> Result<soil_staking::StakerStatus<Self::AccountId>, DispatchError> {
 		Nominations::get()
-			.map(|noms| sp_staking::StakerStatus::Nominator(noms))
+			.map(|noms| soil_staking::StakerStatus::Nominator(noms))
 			.ok_or(DispatchError::Other("NotStash"))
 	}
 
@@ -236,7 +236,7 @@ impl sp_staking::StakingInterface for StakingMock {
 	}
 
 	#[cfg(feature = "runtime-benchmarks")]
-	fn max_exposure_page_size() -> sp_staking::Page {
+	fn max_exposure_page_size() -> soil_staking::Page {
 		unimplemented!("method currently not used in testing")
 	}
 

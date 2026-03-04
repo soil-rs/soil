@@ -31,7 +31,7 @@ use sc_client_api::{
 	backend,
 	blockchain::{Backend as BlockChainBackendT, HeaderBackend},
 };
-use sp_consensus::BlockOrigin;
+use soil_consensus::BlockOrigin;
 use soil_runtime::traits::Block as BlockT;
 use substrate_test_runtime::Transfer;
 

@@ -24,7 +24,7 @@ use frame_support::{
 	weights::Weight,
 	Twox64Concat,
 };
-use sp_staking::offence::OnOffenceHandler;
+use soil_staking::offence::OnOffenceHandler;
 
 #[cfg(feature = "try-runtime")]
 use frame_support::ensure;
@@ -119,7 +119,7 @@ mod test {
 	use crate::mock::{new_test_ext, with_on_offence_fractions, Runtime as T, KIND};
 	use codec::Encode;
 	use soil_runtime::Perbill;
-	use sp_staking::offence::OffenceDetails;
+	use soil_staking::offence::OffenceDetails;
 
 	#[test]
 	fn migration_to_v1_works() {

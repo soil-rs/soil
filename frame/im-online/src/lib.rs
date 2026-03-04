@@ -106,7 +106,7 @@ use soil_runtime::{
 	traits::{AtLeast32BitUnsigned, Convert, Saturating, TrailingZeroInput},
 	Debug, PerThing, Perbill, Permill, SaturatedConversion,
 };
-use sp_staking::{
+use soil_staking::{
 	offence::{Kind, Offence, ReportOffence},
 	SessionIndex,
 };

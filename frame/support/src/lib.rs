@@ -61,7 +61,7 @@ pub mod __private {
 	pub use serde_json;
 	pub use soil_core::{Get, OpaqueMetadata, Void};
 	pub use soil_crypto_hashing_proc_macro;
-	pub use sp_inherents;
+	pub use soil_inherents;
 	#[cfg(feature = "std")]
 	pub use soil_io::TestExternalities;
 	pub use soil_io::{self, hashing, storage::root as storage_root};
@@ -443,7 +443,7 @@ pub mod pallet_prelude {
 	pub use frame_support::pallet_macros::*;
 	pub use frame_support_procedural::{inject_runtime_type, register_default_impl};
 	pub use scale_info::TypeInfo;
-	pub use sp_inherents::MakeFatalError;
+	pub use soil_inherents::MakeFatalError;
 	pub use soil_runtime::{
 		traits::{
 			CheckedAdd, CheckedConversion, CheckedDiv, CheckedMul, CheckedShl, CheckedShr,
@@ -823,7 +823,7 @@ pub mod pallet_macros {
 	/// mod pallet {
 	/// # 	use frame_support::pallet_prelude::*;
 	/// # 	use frame_support::inherent::IsFatalError;
-	/// # 	use sp_timestamp::InherentError;
+	/// # 	use soil_timestamp::InherentError;
 	/// # 	use core::result;
 	/// #
 	/// 	// Example inherent identifier
@@ -1296,7 +1296,7 @@ pub mod pallet_macros {
 	/// accepts view function queries and dispatches them to the right pallet. You can do that
 	/// by implementing the
 	/// [`RuntimeViewFunction`](frame_support::view_functions::runtime_api::RuntimeViewFunction)
-	/// trait for the runtime inside an [`impl_runtime_apis!`](sp_api::impl_runtime_apis)
+	/// trait for the runtime inside an [`impl_runtime_apis!`](soil_api::impl_runtime_apis)
 	/// block.
 	///
 	/// The `RuntimeViewFunction` trait implements a hashing-based dispatching mechanism to

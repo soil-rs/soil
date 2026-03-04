@@ -63,7 +63,7 @@ use log;
 
 use frame::prelude::*;
 
-pub use sp_mmr_primitives::{
+pub use soil_mmr_primitives::{
 	self as primitives, utils, utils::NodesUtils, AncestryProof, Error, FullLeaf, LeafDataProvider,
 	LeafIndex, LeafProof, NodeIndex, OnNewRoot,
 };

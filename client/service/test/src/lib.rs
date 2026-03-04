@@ -37,7 +37,7 @@ use sc_service::{
 	SpawnTaskHandle, TaskManager,
 };
 use sc_transaction_pool_api::TransactionPool;
-use sp_blockchain::HeaderBackend;
+use soil_blockchain::HeaderBackend;
 use soil_runtime::traits::Block as BlockT;
 use std::{iter, net::Ipv4Addr, pin::Pin, sync::Arc, task::Context, time::Duration};
 use tempfile::TempDir;

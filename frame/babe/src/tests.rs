@@ -25,7 +25,7 @@ use frame_support::{
 };
 use mock::*;
 use pallet_session::ShouldEndSession;
-use sp_consensus_babe::{
+use soil_consensus_babe::{
 	AllowedSlots, BabeEpochConfiguration, Slot, VrfSignature, RANDOMNESS_LENGTH,
 };
 use soil_core::crypto::Pair;
@@ -99,8 +99,8 @@ fn first_block_epoch_zero_start() {
 		assert_eq!(pre_digest.logs.len(), 1);
 		assert_eq!(header.digest.logs[0], pre_digest.logs[0]);
 
-		let consensus_log = sp_consensus_babe::ConsensusLog::NextEpochData(
-			sp_consensus_babe::digests::NextEpochDescriptor {
+		let consensus_log = soil_consensus_babe::ConsensusLog::NextEpochData(
+			soil_consensus_babe::digests::NextEpochDescriptor {
 				authorities: Authorities::<Test>::get().into_inner(),
 				randomness: Randomness::<Test>::get(),
 			},
@@ -142,7 +142,7 @@ fn current_slot_is_processed_on_initialization() {
 
 fn test_author_vrf_output<F>(make_pre_digest: F)
 where
-	F: Fn(sp_consensus_babe::AuthorityIndex, Slot, VrfSignature) -> soil_runtime::Digest,
+	F: Fn(soil_consensus_babe::AuthorityIndex, Slot, VrfSignature) -> soil_runtime::Digest,
 {
 	let (pairs, mut ext) = new_test_ext_with_pairs(1);
 
@@ -279,17 +279,17 @@ fn can_enact_next_config() {
 
 		let current_config = BabeEpochConfiguration {
 			c: (0, 4),
-			allowed_slots: sp_consensus_babe::AllowedSlots::PrimarySlots,
+			allowed_slots: soil_consensus_babe::AllowedSlots::PrimarySlots,
 		};
 
 		let next_config = BabeEpochConfiguration {
 			c: (1, 4),
-			allowed_slots: sp_consensus_babe::AllowedSlots::PrimarySlots,
+			allowed_slots: soil_consensus_babe::AllowedSlots::PrimarySlots,
 		};
 
 		let next_next_config = BabeEpochConfiguration {
 			c: (2, 4),
-			allowed_slots: sp_consensus_babe::AllowedSlots::PrimarySlots,
+			allowed_slots: soil_consensus_babe::AllowedSlots::PrimarySlots,
 		};
 
 		EpochConfig::<Test>::put(current_config);
@@ -314,7 +314,7 @@ fn can_enact_next_config() {
 		assert_eq!(NextEpochConfig::<Test>::get(), Some(next_next_config.clone()));
 
 		let consensus_log =
-			sp_consensus_babe::ConsensusLog::NextConfigData(NextConfigDescriptor::V1 {
+			soil_consensus_babe::ConsensusLog::NextConfigData(NextConfigDescriptor::V1 {
 				c: next_next_config.c,
 				allowed_slots: next_next_config.allowed_slots,
 			});
@@ -351,7 +351,7 @@ fn can_fetch_current_and_next_epoch_data() {
 	new_test_ext(5).execute_with(|| {
 		EpochConfig::<Test>::put(BabeEpochConfiguration {
 			c: (1, 4),
-			allowed_slots: sp_consensus_babe::AllowedSlots::PrimarySlots,
+			allowed_slots: soil_consensus_babe::AllowedSlots::PrimarySlots,
 		});
 
 		// genesis authorities should be used for the first and second epoch
@@ -468,7 +468,7 @@ fn report_equivocation_current_session_works() {
 		);
 
 		// create the key ownership proof
-		let key = (sp_consensus_babe::KEY_TYPE, &offending_authority_pair.public());
+		let key = (soil_consensus_babe::KEY_TYPE, &offending_authority_pair.public());
 		let key_owner_proof = Historical::prove(key).unwrap();
 
 		// report the equivocation
@@ -532,7 +532,7 @@ fn report_equivocation_old_session_works() {
 		);
 
 		// create the key ownership proof
-		let key = (sp_consensus_babe::KEY_TYPE, &offending_authority_pair.public());
+		let key = (soil_consensus_babe::KEY_TYPE, &offending_authority_pair.public());
 		let key_owner_proof = Historical::prove(key).unwrap();
 
 		// start a new era and report the equivocation
@@ -589,7 +589,7 @@ fn report_equivocation_invalid_key_owner_proof() {
 		);
 
 		// create the key ownership proof
-		let key = (sp_consensus_babe::KEY_TYPE, &offending_authority_pair.public());
+		let key = (soil_consensus_babe::KEY_TYPE, &offending_authority_pair.public());
 		let mut key_owner_proof = Historical::prove(key).unwrap();
 
 		// we change the session index in the key ownership proof
@@ -606,7 +606,7 @@ fn report_equivocation_invalid_key_owner_proof() {
 
 		// it should fail as well if we create a key owner proof
 		// for a different authority than the offender
-		let key = (sp_consensus_babe::KEY_TYPE, &authorities[1].0);
+		let key = (soil_consensus_babe::KEY_TYPE, &authorities[1].0);
 		let key_owner_proof = Historical::prove(key).unwrap();
 
 		// we need to progress to a new era to make sure that the key
@@ -645,7 +645,7 @@ fn report_equivocation_invalid_equivocation_proof() {
 			.unwrap();
 
 		// create the key ownership proof
-		let key = (sp_consensus_babe::KEY_TYPE, &offending_authority_pair.public());
+		let key = (soil_consensus_babe::KEY_TYPE, &offending_authority_pair.public());
 		let key_owner_proof = Historical::prove(key).unwrap();
 
 		let assert_invalid_equivocation = |equivocation_proof| {
@@ -755,7 +755,7 @@ fn report_equivocation_validate_unsigned_prevents_duplicates() {
 			CurrentSlot::<Test>::get(),
 		);
 
-		let key = (sp_consensus_babe::KEY_TYPE, &offending_authority_pair.public());
+		let key = (soil_consensus_babe::KEY_TYPE, &offending_authority_pair.public());
 		let key_owner_proof = Historical::prove(key).unwrap();
 
 		let inner = Call::report_equivocation_unsigned {
@@ -868,7 +868,7 @@ fn report_equivocation_after_skipped_epochs_works() {
 		);
 
 		// create the key ownership proof
-		let key = (sp_consensus_babe::KEY_TYPE, &offending_authority_pair.public());
+		let key = (soil_consensus_babe::KEY_TYPE, &offending_authority_pair.public());
 		let key_owner_proof = Historical::prove(key).unwrap();
 
 		// which is for session index 1 (while current epoch index is 10)
@@ -899,7 +899,7 @@ fn valid_equivocation_reports_dont_pay_fees() {
 
 		// create the key ownership proof.
 		let key_owner_proof =
-			Historical::prove((sp_consensus_babe::KEY_TYPE, &offending_authority_pair.public()))
+			Historical::prove((soil_consensus_babe::KEY_TYPE, &offending_authority_pair.public()))
 				.unwrap();
 
 		// check the dispatch info for the call.
@@ -963,7 +963,7 @@ fn add_epoch_configurations_migration_works() {
 
 		let current_epoch = BabeEpochConfiguration {
 			c: (1, 4),
-			allowed_slots: sp_consensus_babe::AllowedSlots::PrimarySlots,
+			allowed_slots: soil_consensus_babe::AllowedSlots::PrimarySlots,
 		};
 
 		crate::migrations::add_epoch_configuration::<Test>(current_epoch.clone());

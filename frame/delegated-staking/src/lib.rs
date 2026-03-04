@@ -17,7 +17,7 @@
 
 //! # Delegated Staking Pallet
 //!
-//! This pallet implements [`sp_staking::DelegationInterface`] that provides delegation
+//! This pallet implements [`soil_staking::DelegationInterface`] that provides delegation
 //! functionality to `delegators` and `agents`. It is designed to be used in conjunction with
 //! [`StakingInterface`] and relies on [`Config::CoreStaking`] to provide primitive staking
 //! functions.
@@ -86,7 +86,7 @@
 //! slashes are cleared.
 //!
 //! The user of this pallet can apply slash using
-//! [DelegationInterface::delegator_slash](sp_staking::DelegationInterface::delegator_slash).
+//! [DelegationInterface::delegator_slash](soil_staking::DelegationInterface::delegator_slash).
 //!
 //! ## Migration from Nominator to Agent
 //! More details [here](https://hackmd.io/@ak0n/454-np-governance).
@@ -158,7 +158,7 @@ use soil_runtime::{
 	traits::{CheckedAdd, CheckedSub, TrailingZeroInput, Zero},
 	ArithmeticError, Debug, DispatchResult, Perbill, Saturating,
 };
-use sp_staking::{Agent, Delegator, EraIndex, StakingInterface, StakingUnchecked};
+use soil_staking::{Agent, Delegator, EraIndex, StakingInterface, StakingUnchecked};
 
 /// The log target of this pallet.
 pub const LOG_TARGET: &str = "runtime::delegated-staking";
@@ -787,7 +787,7 @@ impl<T: Config> Pallet<T> {
 				ensure!(
 					matches!(
 						T::CoreStaking::status(&agent).expect("agent should be bonded"),
-						sp_staking::StakerStatus::Nominator(_) | sp_staking::StakerStatus::Idle
+						soil_staking::StakerStatus::Nominator(_) | soil_staking::StakerStatus::Idle
 					),
 					"agent should be bonded and not validator"
 				);

@@ -26,7 +26,7 @@ frame-support = { workspace = true }
 frame-system = { workspace = true }
 log = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
-sp-consensus-sassafras = { features = ["serde"], workspace = true }
+soil-consensus-sassafras = { features = ["serde"], workspace = true }
 soil-io = { workspace = true }
 soil-runtime = { workspace = true }
 
@@ -44,7 +44,7 @@ std = [
 	"frame-system/std",
 	"log/std",
 	"scale-info/std",
-	"sp-consensus-sassafras/std",
+	"soil-consensus-sassafras/std",
 	"soil-io/std",
 	"soil-runtime/std",
 ]

@@ -33,8 +33,8 @@ pub use call_executor::*;
 pub use client::*;
 pub use notifications::*;
 pub use proof_provider::*;
-pub use sp_blockchain as blockchain;
-pub use sp_blockchain::HeaderBackend;
+pub use soil_blockchain as blockchain;
+pub use soil_blockchain::HeaderBackend;
 
 pub use soil_state_machine::{CompactProof, StorageProof};
 pub use soil_storage::{ChildInfo, PrefixedStorageKey, StorageData, StorageKey};
@@ -47,7 +47,7 @@ pub trait UsageProvider<Block: soil_runtime::traits::Block> {
 
 /// Utility methods for the client.
 pub mod utils {
-	use sp_blockchain::{Error, HeaderBackend, HeaderMetadata};
+	use soil_blockchain::{Error, HeaderBackend, HeaderMetadata};
 	use soil_runtime::traits::Block as BlockT;
 
 	/// Returns a function for checking block ancestry, the returned function will
@@ -82,7 +82,7 @@ pub mod utils {
 				}
 			}
 
-			let ancestor = sp_blockchain::lowest_common_ancestor(client, *hash, *base)?;
+			let ancestor = soil_blockchain::lowest_common_ancestor(client, *hash, *base)?;
 
 			Ok(ancestor.hash == *base)
 		}

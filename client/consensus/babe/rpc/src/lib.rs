@@ -32,11 +32,11 @@ use serde::{Deserialize, Serialize};
 use sc_consensus_babe::{authorship, BabeWorkerHandle};
 use sc_consensus_epochs::Epoch as EpochT;
 use sc_rpc_api::{check_if_safe, UnsafeRpcError};
-use sp_api::ProvideRuntimeApi;
+use soil_api::ProvideRuntimeApi;
 use soil_application_crypto::AppCrypto;
-use sp_blockchain::{Error as BlockChainError, HeaderBackend, HeaderMetadata};
-use sp_consensus::{Error as ConsensusError, SelectChain};
-use sp_consensus_babe::{digests::PreDigest, AuthorityId, BabeApi as BabeRuntimeApi};
+use soil_blockchain::{Error as BlockChainError, HeaderBackend, HeaderMetadata};
+use soil_consensus::{Error as ConsensusError, SelectChain};
+use soil_consensus_babe::{digests::PreDigest, AuthorityId, BabeApi as BabeRuntimeApi};
 use soil_core::crypto::ByteArray;
 use soil_keystore::KeystorePtr;
 use soil_runtime::traits::{Block as BlockT, Header as _};
@@ -196,9 +196,9 @@ mod tests {
 	use sc_consensus_babe::ImportQueueParams;
 	use sc_rpc_api::DenyUnsafe;
 	use sc_transaction_pool_api::{OffchainTransactionPoolFactory, RejectAllTxPool};
-	use sp_consensus_babe::inherents::InherentDataProvider;
+	use soil_consensus_babe::inherents::InherentDataProvider;
 	use soil_core::{crypto::key_types::BABE, testing::TaskExecutor};
-	use sp_keyring::Sr25519Keyring;
+	use soil_keyring::Sr25519Keyring;
 	use soil_keystore::{testing::MemoryKeystore, Keystore};
 	use substrate_test_runtime_client::{
 		runtime::Block, Backend, DefaultTestClientBuilderExt, TestClient, TestClientBuilder,

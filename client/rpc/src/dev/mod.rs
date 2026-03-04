@@ -25,7 +25,7 @@ mod tests;
 use jsonrpsee::Extensions;
 use sc_client_api::{BlockBackend, HeaderBackend};
 use sc_rpc_api::{check_if_safe, dev::error::Error};
-use sp_api::{ApiExt, Core, ProvideRuntimeApi};
+use soil_api::{ApiExt, Core, ProvideRuntimeApi};
 use soil_core::Encode;
 use soil_runtime::{
 	generic::DigestItem,

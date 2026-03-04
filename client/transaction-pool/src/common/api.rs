@@ -28,15 +28,15 @@ use codec::Encode;
 use futures::future::{Future, FutureExt};
 use prometheus_endpoint::Registry as PrometheusRegistry;
 use sc_client_api::{blockchain::HeaderBackend, BlockBackend};
-use sp_api::{ApiExt, ProvideRuntimeApi};
-use sp_blockchain::{HeaderMetadata, TreeRoute};
+use soil_api::{ApiExt, ProvideRuntimeApi};
+use soil_blockchain::{HeaderMetadata, TreeRoute};
 use soil_core::traits::SpawnEssentialNamed;
 use soil_runtime::{
 	generic::BlockId,
 	traits::{self, Block as BlockT, BlockIdTo},
 	transaction_validity::{TransactionSource, TransactionValidity},
 };
-use sp_transaction_pool::runtime_api::TaggedTransactionQueue;
+use soil_transaction_pool::runtime_api::TaggedTransactionQueue;
 use std::{
 	marker::PhantomData,
 	pin::Pin,
@@ -190,7 +190,7 @@ where
 		+ BlockBackend<Block>
 		+ BlockIdTo<Block>
 		+ HeaderBackend<Block>
-		+ HeaderMetadata<Block, Error = sp_blockchain::Error>,
+		+ HeaderMetadata<Block, Error = soil_blockchain::Error>,
 	Client: Send + Sync + 'static,
 	Client::Api: TaggedTransactionQueue<Block>,
 {
@@ -307,7 +307,7 @@ where
 		from: <Self::Block as BlockT>::Hash,
 		to: <Self::Block as BlockT>::Hash,
 	) -> Result<TreeRoute<Self::Block>, Self::Error> {
-		sp_blockchain::tree_route::<Block, Client>(&*self.client, from, to).map_err(Into::into)
+		soil_blockchain::tree_route::<Block, Client>(&*self.client, from, to).map_err(Into::into)
 	}
 }
 
@@ -325,7 +325,7 @@ where
 		+ BlockBackend<Block>
 		+ BlockIdTo<Block>
 		+ HeaderBackend<Block>
-		+ HeaderMetadata<Block, Error = sp_blockchain::Error>,
+		+ HeaderMetadata<Block, Error = soil_blockchain::Error>,
 	Client: Send + Sync + 'static,
 	Client::Api: TaggedTransactionQueue<Block>,
 {
@@ -344,7 +344,7 @@ where
 				))
 		}?;
 
-		use sp_api::Core;
+		use soil_api::Core;
 
 		soil_tracing::within_span!(
 			soil_tracing::Level::TRACE, "runtime::validate_transaction";

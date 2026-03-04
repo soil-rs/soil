@@ -23,11 +23,11 @@ use codec::Encode;
 use futures::prelude::*;
 use sc_consensus::{BlockImport, BlockImportParams, ForkChoiceStrategy, ImportResult, StateAction};
 use sc_transaction_pool_api::TransactionPool;
-use sp_api::{ProofRecorder, ProvideRuntimeApi};
-use sp_blockchain::HeaderBackend;
-use sp_consensus::{self, BlockOrigin, Environment, ProposeArgs, Proposer, SelectChain};
+use soil_api::{ProofRecorder, ProvideRuntimeApi};
+use soil_blockchain::HeaderBackend;
+use soil_consensus::{self, BlockOrigin, Environment, ProposeArgs, Proposer, SelectChain};
 use soil_externalities::Extensions;
-use sp_inherents::{CreateInherentDataProviders, InherentDataProvider};
+use soil_inherents::{CreateInherentDataProviders, InherentDataProvider};
 use soil_runtime::traits::{Block as BlockT, Header as HeaderT};
 use soil_trie::proof_size_extension::ProofSizeExt;
 use std::{sync::Arc, time::Duration};
@@ -79,7 +79,7 @@ pub async fn seal_block<B, BI, SC, C, E, TP, CIDP>(
 	}: SealBlockParams<'_, B, BI, SC, C, E, TP, CIDP>,
 ) where
 	B: BlockT,
-	BI: BlockImport<B, Error = sp_consensus::Error> + Send + Sync + 'static,
+	BI: BlockImport<B, Error = soil_consensus::Error> + Send + Sync + 'static,
 	C: HeaderBackend<B> + ProvideRuntimeApi<B>,
 	E: Environment<B>,
 	E::Proposer: Proposer<B>,

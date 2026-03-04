@@ -24,8 +24,8 @@ pallet-mmr = { workspace = true }
 pallet-session = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { optional = true, workspace = true, default-features = true }
-sp-api = { workspace = true }
-sp-consensus-beefy = { workspace = true }
+soil-api = { workspace = true }
+soil-consensus-beefy = { workspace = true }
 soil-core = { workspace = true }
 soil-io = { workspace = true }
 soil-runtime = { workspace = true }
@@ -34,7 +34,7 @@ soil-state-machine = { workspace = true }
 [dev-dependencies]
 array-bytes = { workspace = true, default-features = true }
 pallet-balances = { workspace = true }
-sp-staking = { workspace = true, default-features = true }
+soil-staking = { workspace = true, default-features = true }
 
 [features]
 default = ["std"]
@@ -52,12 +52,12 @@ std = [
 	"pallet-session/std",
 	"scale-info/std",
 	"serde",
-	"sp-api/std",
-	"sp-consensus-beefy/std",
+	"soil-api/std",
+	"soil-consensus-beefy/std",
 	"soil-core/std",
 	"soil-io/std",
 	"soil-runtime/std",
-	"sp-staking/std",
+	"soil-staking/std",
 	"soil-state-machine/std",
 ]
 try-runtime = [
@@ -77,5 +77,5 @@ runtime-benchmarks = [
 	"pallet-mmr/runtime-benchmarks",
 	"pallet-session/runtime-benchmarks",
 	"soil-runtime/runtime-benchmarks",
-	"sp-staking/runtime-benchmarks",
+	"soil-staking/runtime-benchmarks",
 ]

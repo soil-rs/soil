@@ -399,23 +399,23 @@ pub mod runtime {
 		/// Types to define your runtime version.
 		// TODO: Remove deprecation suppression once
 		#[allow(deprecated)]
-		pub use sp_version::create_runtime_str;
-		pub use sp_version::{runtime_version, RuntimeVersion};
+		pub use soil_version::create_runtime_str;
+		pub use soil_version::{runtime_version, RuntimeVersion};
 
 		#[cfg(feature = "std")]
-		pub use sp_version::NativeVersion;
+		pub use soil_version::NativeVersion;
 
 		/// Macro to implement runtime APIs.
-		pub use sp_api::impl_runtime_apis;
+		pub use soil_api::impl_runtime_apis;
 
 		// Types often used in the runtime APIs.
 		pub use soil_core::OpaqueMetadata;
-		pub use sp_genesis_builder::{
+		pub use soil_genesis_builder::{
 			PresetId, Result as GenesisBuilderResult, DEV_RUNTIME_PRESET,
 			LOCAL_TESTNET_RUNTIME_PRESET,
 		};
-		pub use sp_inherents::{CheckInherentsResult, InherentData};
-		pub use sp_keyring::Sr25519Keyring;
+		pub use soil_inherents::{CheckInherentsResult, InherentData};
+		pub use soil_keyring::Sr25519Keyring;
 		pub use soil_runtime::{ApplyExtrinsicResult, ExtrinsicInclusionMode};
 	}
 
@@ -430,19 +430,19 @@ pub mod runtime {
 	/// ```
 	// TODO: This is because of wildcard imports, and it should be not needed once we can avoid
 	// that. Imports like that are needed because we seem to need some unknown types in the macro
-	// expansion. See `sp_session::runtime_api::*;` as one example. All runtime api decls should be
+	// expansion. See `soil_session::runtime_api::*;` as one example. All runtime api decls should be
 	// moved to file similarly.
 	#[allow(ambiguous_glob_reexports)]
 	pub mod apis {
 		pub use frame_system_rpc_runtime_api::*;
-		pub use sp_api::{self, *};
-		pub use sp_block_builder::*;
-		pub use sp_consensus_aura::*;
-		pub use sp_consensus_grandpa::*;
-		pub use sp_genesis_builder::*;
-		pub use sp_offchain::*;
-		pub use sp_session::runtime_api::*;
-		pub use sp_transaction_pool::runtime_api::*;
+		pub use soil_api::{self, *};
+		pub use soil_block_builder::*;
+		pub use soil_consensus_aura::*;
+		pub use soil_consensus_grandpa::*;
+		pub use soil_genesis_builder::*;
+		pub use soil_offchain::*;
+		pub use soil_session::runtime_api::*;
+		pub use soil_transaction_pool::runtime_api::*;
 	}
 
 	/// A set of opinionated types aliases commonly used in runtimes.
@@ -633,25 +633,25 @@ pub mod deps {
 	#[cfg(feature = "runtime")]
 	pub use frame_executive;
 	#[cfg(feature = "runtime")]
-	pub use sp_api;
+	pub use soil_api;
 	#[cfg(feature = "runtime")]
-	pub use sp_block_builder;
+	pub use soil_block_builder;
 	#[cfg(feature = "runtime")]
-	pub use sp_consensus_aura;
+	pub use soil_consensus_aura;
 	#[cfg(feature = "runtime")]
-	pub use sp_consensus_grandpa;
+	pub use soil_consensus_grandpa;
 	#[cfg(feature = "runtime")]
-	pub use sp_genesis_builder;
+	pub use soil_genesis_builder;
 	#[cfg(feature = "runtime")]
-	pub use sp_inherents;
+	pub use soil_inherents;
 	#[cfg(feature = "runtime")]
-	pub use sp_keyring;
+	pub use soil_keyring;
 	#[cfg(feature = "runtime")]
-	pub use sp_offchain;
+	pub use soil_offchain;
 	#[cfg(feature = "runtime")]
 	pub use soil_storage;
 	#[cfg(feature = "runtime")]
-	pub use sp_version;
+	pub use soil_version;
 
 	#[cfg(feature = "runtime-benchmarks")]
 	pub use frame_benchmarking;

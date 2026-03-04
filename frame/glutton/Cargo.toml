@@ -24,7 +24,7 @@ frame-system = { workspace = true }
 log = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 soil-core = { workspace = true }
-sp-inherents = { workspace = true }
+soil-inherents = { workspace = true }
 soil-io = { workspace = true }
 soil-runtime = { workspace = true }
 
@@ -39,7 +39,7 @@ std = [
 	"log/std",
 	"scale-info/std",
 	"soil-core/std",
-	"sp-inherents/std",
+	"soil-inherents/std",
 	"soil-io/std",
 	"soil-runtime/std",
 ]

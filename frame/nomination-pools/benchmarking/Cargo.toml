@@ -33,7 +33,7 @@ pallet-staking = { workspace = true }
 # Substrate Primitives
 soil-runtime = { workspace = true }
 soil-runtime-interface = { workspace = true }
-sp-staking = { workspace = true }
+soil-staking = { workspace = true }
 
 [dev-dependencies]
 pallet-balances = { workspace = true }
@@ -61,7 +61,7 @@ std = [
 	"soil-io/std",
 	"soil-runtime-interface/std",
 	"soil-runtime/std",
-	"sp-staking/std",
+	"soil-staking/std",
 ]
 runtime-benchmarks = [
 	"frame-benchmarking/runtime-benchmarks",
@@ -75,5 +75,5 @@ runtime-benchmarks = [
 	"pallet-staking/runtime-benchmarks",
 	"pallet-timestamp/runtime-benchmarks",
 	"soil-runtime/runtime-benchmarks",
-	"sp-staking/runtime-benchmarks",
+	"soil-staking/runtime-benchmarks",
 ]

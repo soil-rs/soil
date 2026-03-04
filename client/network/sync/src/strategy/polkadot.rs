@@ -39,7 +39,7 @@ use sc_consensus::{BlockImportError, BlockImportStatus};
 use sc_network::ProtocolName;
 use sc_network_common::sync::{message::BlockAnnounce, SyncMode};
 use sc_network_types::PeerId;
-use sp_blockchain::{Error as ClientError, HeaderBackend, HeaderMetadata};
+use soil_blockchain::{Error as ClientError, HeaderBackend, HeaderMetadata};
 use soil_runtime::traits::{Block as BlockT, Header, NumberFor};
 use std::{any::Any, collections::HashMap, sync::Arc};
 
@@ -101,7 +101,7 @@ where
 	B: BlockT,
 	Client: HeaderBackend<B>
 		+ BlockBackend<B>
-		+ HeaderMetadata<B, Error = sp_blockchain::Error>
+		+ HeaderMetadata<B, Error = soil_blockchain::Error>
 		+ ProofProvider<B>
 		+ Send
 		+ Sync
@@ -340,7 +340,7 @@ where
 	B: BlockT,
 	Client: HeaderBackend<B>
 		+ BlockBackend<B>
-		+ HeaderMetadata<B, Error = sp_blockchain::Error>
+		+ HeaderMetadata<B, Error = soil_blockchain::Error>
 		+ ProofProvider<B>
 		+ Send
 		+ Sync

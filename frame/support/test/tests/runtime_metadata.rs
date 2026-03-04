@@ -62,7 +62,7 @@ frame_support::construct_runtime!(
 	}
 );
 
-sp_api::decl_runtime_apis! {
+soil_api::decl_runtime_apis! {
 	/// ApiWithCustomVersion trait documentation
 	///
 	/// Documentation on multiline.
@@ -84,7 +84,7 @@ sp_api::decl_runtime_apis! {
 mod apis {
 	use super::{Block, BlockT, Runtime};
 
-	sp_api::impl_runtime_apis! {
+	soil_api::impl_runtime_apis! {
 		#[allow(deprecated)]
 		impl crate::Api<Block> for Runtime {
 			fn test(_data: u64) {
@@ -104,8 +104,8 @@ mod apis {
 			fn wild_card(_: u32) {}
 		}
 
-		impl sp_api::Core<Block> for Runtime {
-			fn version() -> sp_version::RuntimeVersion {
+		impl soil_api::Core<Block> for Runtime {
+			fn version() -> soil_version::RuntimeVersion {
 				unimplemented!()
 			}
 			fn execute_block(_: <Block as BlockT>::LazyBlock) {
@@ -210,7 +210,7 @@ fn runtime_metadata() {
 				RuntimeApiMethodMetadataIR {
 					name: "version",
 					inputs: vec![],
-					output: meta_type::<sp_version::RuntimeVersion>(),
+					output: meta_type::<soil_version::RuntimeVersion>(),
 					docs: maybe_docs(vec![" Returns the version of the runtime."]),
 					deprecation_info: ItemDeprecationInfoIR::NotDeprecated,
 				},

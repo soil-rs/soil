@@ -46,7 +46,7 @@ tuplex = { workspace = true, default-features = false }
 [dev-dependencies]
 rand = { workspace = true, default-features = true }
 serde_json = { workspace = true, default-features = true }
-sp-api = { workspace = true, default-features = true }
+soil-api = { workspace = true, default-features = true }
 soil-keystore = { workspace = true, default-features = true }
 soil-state-machine = { workspace = true, default-features = true }
 soil-tracing = { workspace = true, default-features = true }
@@ -70,7 +70,7 @@ std = [
 	"scale-info/std",
 	"serde/std",
 	"simple-mermaid",
-	"sp-api/std",
+	"soil-api/std",
 	"soil-application-crypto/std",
 	"soil-arithmetic/std",
 	"soil-core/std",

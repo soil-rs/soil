@@ -30,10 +30,10 @@ use sc_consensus::{
 	block_import::{BlockImport, BlockImportParams, ForkChoiceStrategy},
 	import_queue::{BasicQueue, BoxBlockImport, Verifier},
 };
-use sp_blockchain::HeaderBackend;
-use sp_consensus::{Environment, Proposer, SelectChain};
+use soil_blockchain::HeaderBackend;
+use soil_consensus::{Environment, Proposer, SelectChain};
 use soil_core::traits::SpawnNamed;
-use sp_inherents::CreateInherentDataProviders;
+use soil_inherents::CreateInherentDataProviders;
 use soil_runtime::{traits::Block as BlockT, ConsensusEngineId};
 use std::{marker::PhantomData, sync::Arc, time::Duration};
 
@@ -52,7 +52,7 @@ pub use self::{
 	seal_block::{seal_block, SealBlockParams, MAX_PROPOSAL_DURATION},
 };
 use sc_transaction_pool_api::TransactionPool;
-use sp_api::ProvideRuntimeApi;
+use soil_api::ProvideRuntimeApi;
 
 const LOG_TARGET: &str = "manual-seal";
 
@@ -164,7 +164,7 @@ pub async fn run_manual_seal<B, BI, CB, E, C, TP, SC, CS, CIDP>(
 	}: ManualSealParams<B, BI, E, C, TP, SC, CS, CIDP>,
 ) where
 	B: BlockT + 'static,
-	BI: BlockImport<B, Error = sp_consensus::Error> + Send + Sync + 'static,
+	BI: BlockImport<B, Error = soil_consensus::Error> + Send + Sync + 'static,
 	C: HeaderBackend<B> + Finalizer<B, CB> + ProvideRuntimeApi<B> + 'static,
 	CB: ClientBackend<B> + 'static,
 	E: Environment<B> + 'static,
@@ -222,7 +222,7 @@ pub async fn run_instant_seal<B, BI, CB, E, C, TP, SC, CIDP>(
 	}: InstantSealParams<B, BI, E, C, TP, SC, CIDP>,
 ) where
 	B: BlockT + 'static,
-	BI: BlockImport<B, Error = sp_consensus::Error> + Send + Sync + 'static,
+	BI: BlockImport<B, Error = soil_consensus::Error> + Send + Sync + 'static,
 	C: HeaderBackend<B> + Finalizer<B, CB> + ProvideRuntimeApi<B> + 'static,
 	CB: ClientBackend<B> + 'static,
 	E: Environment<B> + 'static,
@@ -271,7 +271,7 @@ pub async fn run_instant_seal_and_finalize<B, BI, CB, E, C, TP, SC, CIDP>(
 	}: InstantSealParams<B, BI, E, C, TP, SC, CIDP>,
 ) where
 	B: BlockT + 'static,
-	BI: BlockImport<B, Error = sp_consensus::Error> + Send + Sync + 'static,
+	BI: BlockImport<B, Error = soil_consensus::Error> + Send + Sync + 'static,
 	C: HeaderBackend<B> + Finalizer<B, CB> + ProvideRuntimeApi<B> + 'static,
 	CB: ClientBackend<B> + 'static,
 	E: Environment<B> + 'static,
@@ -348,8 +348,8 @@ mod tests {
 	use sc_consensus::ImportedAux;
 	use sc_transaction_pool::{BasicPool, FullChainApi, Options, RevalidationType};
 	use sc_transaction_pool_api::{MaintainedTransactionPool, TransactionPool, TransactionSource};
-	use sp_api::StorageProof;
-	use sp_inherents::InherentData;
+	use soil_api::StorageProof;
+	use soil_inherents::InherentData;
 	use soil_runtime::generic::{Digest, DigestItem};
 	use substrate_test_runtime_client::{
 		DefaultTestClientBuilderExt, Sr25519Keyring::*, TestClientBuilder, TestClientBuilderExt,

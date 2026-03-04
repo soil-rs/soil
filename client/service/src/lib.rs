@@ -50,8 +50,8 @@ use sc_network_sync::SyncingService;
 use sc_network_types::PeerId;
 use sc_rpc_server::Server;
 use sc_utils::mpsc::TracingUnboundedReceiver;
-use sp_blockchain::HeaderMetadata;
-use sp_consensus::SyncOracle;
+use soil_blockchain::HeaderMetadata;
+use soil_consensus::SyncOracle;
 use soil_runtime::traits::{Block as BlockT, Header as HeaderT};
 
 pub use self::{
@@ -182,7 +182,7 @@ async fn build_network_future<
 	C: BlockchainEvents<B>
 		+ HeaderBackend<B>
 		+ BlockBackend<B>
-		+ HeaderMetadata<B, Error = sp_blockchain::Error>
+		+ HeaderMetadata<B, Error = soil_blockchain::Error>
 		+ ProofProvider<B>
 		+ Send
 		+ Sync
@@ -249,7 +249,7 @@ pub async fn build_system_rpc_future<
 	C: BlockchainEvents<B>
 		+ HeaderBackend<B>
 		+ BlockBackend<B>
-		+ HeaderMetadata<B, Error = sp_blockchain::Error>
+		+ HeaderMetadata<B, Error = soil_blockchain::Error>
 		+ ProofProvider<B>
 		+ Send
 		+ Sync
@@ -498,7 +498,7 @@ impl<B, H, C, Pool, E> sc_network_transactions::config::TransactionPool<H, B>
 where
 	C: HeaderBackend<B>
 		+ BlockBackend<B>
-		+ HeaderMetadata<B, Error = sp_blockchain::Error>
+		+ HeaderMetadata<B, Error = soil_blockchain::Error>
 		+ ProofProvider<B>
 		+ Send
 		+ Sync
@@ -575,7 +575,7 @@ mod tests {
 	use super::*;
 	use futures::executor::block_on;
 	use sc_transaction_pool::BasicPool;
-	use sp_consensus::SelectChain;
+	use soil_consensus::SelectChain;
 	use substrate_test_runtime_client::{
 		prelude::*,
 		runtime::{ExtrinsicBuilder, Transfer, TransferData},

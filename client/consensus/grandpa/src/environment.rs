@@ -40,10 +40,10 @@ use sc_client_api::{
 };
 use sc_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG, CONSENSUS_INFO};
 use sc_transaction_pool_api::OffchainTransactionPoolFactory;
-use sp_api::ApiExt;
-use sp_blockchain::HeaderMetadata;
-use sp_consensus::SelectChain as SelectChainT;
-use sp_consensus_grandpa::{
+use soil_api::ApiExt;
+use soil_blockchain::HeaderMetadata;
+use soil_consensus::SelectChain as SelectChainT;
+use soil_consensus_grandpa::{
 	AuthorityId, AuthoritySignature, Equivocation, EquivocationProof, GrandpaApi, RoundNumber,
 	SetId, GRANDPA_ENGINE_ID,
 };
@@ -616,13 +616,13 @@ pub(crate) fn ancestry<Block: BlockT, Client>(
 	block: Block::Hash,
 ) -> Result<Vec<Block::Hash>, GrandpaError>
 where
-	Client: HeaderMetadata<Block, Error = sp_blockchain::Error>,
+	Client: HeaderMetadata<Block, Error = soil_blockchain::Error>,
 {
 	if base == block {
 		return Err(GrandpaError::NotDescendent);
 	}
 
-	let tree_route_res = sp_blockchain::tree_route(&**client, block, base);
+	let tree_route_res = soil_blockchain::tree_route(&**client, block, base);
 
 	let tree_route = match tree_route_res {
 		Ok(tree_route) => tree_route,

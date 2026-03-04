@@ -42,13 +42,13 @@ use sc_consensus_slots::{
 	SlotInfo, StorageChanges,
 };
 use sc_telemetry::TelemetryHandle;
-use sp_api::{Core, ProvideRuntimeApi};
+use soil_api::{Core, ProvideRuntimeApi};
 use soil_application_crypto::AppPublic;
-use sp_blockchain::HeaderBackend;
-use sp_consensus::{BlockOrigin, Environment, Error as ConsensusError, Proposer, SelectChain};
-use sp_consensus_slots::Slot;
+use soil_blockchain::HeaderBackend;
+use soil_consensus::{BlockOrigin, Environment, Error as ConsensusError, Proposer, SelectChain};
+use soil_consensus_slots::Slot;
 use soil_core::crypto::Pair;
-use sp_inherents::CreateInherentDataProviders;
+use soil_inherents::CreateInherentDataProviders;
 use soil_keystore::KeystorePtr;
 use soil_runtime::traits::{Block as BlockT, Header, Member, NumberFor};
 
@@ -63,8 +63,8 @@ pub use import_queue::{
 	ImportQueueParams,
 };
 pub use sc_consensus_slots::SlotProportion;
-pub use sp_consensus::SyncOracle;
-pub use sp_consensus_aura::{
+pub use soil_consensus::SyncOracle;
+pub use soil_consensus_aura::{
 	digests::CompatibleDigestItem,
 	inherents::{InherentDataProvider, InherentType as AuraInherent, INHERENT_IDENTIFIER},
 	AuraApi, ConsensusLog, SlotDuration, AURA_ENGINE_ID,
@@ -482,10 +482,10 @@ pub enum Error<B: BlockT> {
 	BadSignature(B::Hash),
 	/// Client Error
 	#[error(transparent)]
-	Client(sp_blockchain::Error),
+	Client(soil_blockchain::Error),
 	/// Inherents Error
 	#[error("Inherent error: {0}")]
-	Inherent(sp_inherents::Error),
+	Inherent(soil_inherents::Error),
 }
 
 impl<B: BlockT> From<Error<B>> for String {
@@ -555,12 +555,12 @@ mod tests {
 	use sc_keystore::LocalKeystore;
 	use sc_network_test::{Block as TestBlock, *};
 	use soil_application_crypto::{key_types::AURA, AppCrypto};
-	use sp_consensus::{NoNetwork as DummyOracle, Proposal, ProposeArgs};
-	use sp_consensus_aura::sr25519::AuthorityPair;
-	use sp_keyring::sr25519::Keyring;
+	use soil_consensus::{NoNetwork as DummyOracle, Proposal, ProposeArgs};
+	use soil_consensus_aura::sr25519::AuthorityPair;
+	use soil_keyring::sr25519::Keyring;
 	use soil_keystore::Keystore;
 	use soil_runtime::traits::{Block as BlockT, Header as _};
-	use sp_timestamp::Timestamp;
+	use soil_timestamp::Timestamp;
 	use std::{
 		task::Poll,
 		time::{Duration, Instant},
@@ -572,7 +572,7 @@ mod tests {
 
 	const SLOT_DURATION_MS: u64 = 1000;
 
-	type Error = sp_blockchain::Error;
+	type Error = soil_blockchain::Error;
 
 	struct DummyFactory(Arc<TestClient>);
 	struct DummyProposer(Arc<TestClient>);

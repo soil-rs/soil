@@ -149,48 +149,48 @@ pallet-vesting = { workspace = true }
 pallet-whitelist = { workspace = true }
 sc-chain-spec-derive = { workspace = true }
 sc-tracing-proc-macro = { workspace = true }
-sp-api = { workspace = true }
+soil-api = { workspace = true }
 soil-api-proc-macro = { workspace = true }
 soil-application-crypto = { workspace = true }
 soil-arithmetic = { workspace = true }
-sp-authority-discovery = { workspace = true }
-sp-block-builder = { workspace = true }
-sp-consensus-aura = { workspace = true }
-sp-consensus-babe = { workspace = true }
-sp-consensus-beefy = { workspace = true }
-sp-consensus-grandpa = { workspace = true }
-sp-consensus-pow = { workspace = true }
-sp-consensus-slots = { workspace = true }
+soil-authority-discovery = { workspace = true }
+soil-block-builder = { workspace = true }
+soil-consensus-aura = { workspace = true }
+soil-consensus-babe = { workspace = true }
+soil-consensus-beefy = { workspace = true }
+soil-consensus-grandpa = { workspace = true }
+soil-consensus-pow = { workspace = true }
+soil-consensus-slots = { workspace = true }
 soil-core = { workspace = true }
 soil-crypto-ec-utils = { workspace = true }
 soil-crypto-hashing = { workspace = true }
 soil-crypto-hashing-proc-macro = { workspace = true }
 soil-externalities = { workspace = true }
-sp-genesis-builder = { workspace = true }
-sp-inherents = { workspace = true }
+soil-genesis-builder = { workspace = true }
+soil-inherents = { workspace = true }
 soil-io = { workspace = true }
-sp-keyring = { workspace = true }
+soil-keyring = { workspace = true }
 soil-keystore = { workspace = true }
 soil-metadata-ir = { workspace = true }
-sp-mixnet = { workspace = true }
-sp-mmr-primitives = { workspace = true }
-sp-npos-elections = { workspace = true }
-sp-offchain = { workspace = true }
+soil-mixnet = { workspace = true }
+soil-mmr-primitives = { workspace = true }
+soil-npos-elections = { workspace = true }
+soil-offchain = { workspace = true }
 soil-runtime = { workspace = true }
 soil-runtime-interface = { workspace = true }
 soil-runtime-interface-proc-macro = { workspace = true }
-sp-session = { workspace = true }
-sp-staking = { workspace = true }
+soil-session = { workspace = true }
+soil-staking = { workspace = true }
 soil-state-machine = { workspace = true }
-sp-statement-store = { workspace = true }
+soil-statement-store = { workspace = true }
 soil-std = { workspace = true }
 soil-storage = { workspace = true }
-sp-timestamp = { workspace = true }
+soil-timestamp = { workspace = true }
 soil-tracing = { workspace = true }
-sp-transaction-pool = { workspace = true }
-sp-transaction-storage-proof = { workspace = true }
+soil-transaction-pool = { workspace = true }
+soil-transaction-storage-proof = { workspace = true }
 soil-trie = { workspace = true }
-sp-version = { workspace = true }
+soil-version = { workspace = true }
 soil-version-proc-macro = { workspace = true }
 soil-wasm-interface = { workspace = true }
 soil-weights = { workspace = true }
@@ -335,47 +335,47 @@ std = [
 	"rand?/std",
 	"scale-info/std",
 	"serde_json/std",
-	"sp-api/std",
+	"soil-api/std",
 	"soil-api-proc-macro/std",
 	"soil-application-crypto/std",
 	"soil-arithmetic/std",
-	"sp-authority-discovery/std",
-	"sp-block-builder/std",
-	"sp-consensus-aura/std",
-	"sp-consensus-babe/std",
-	"sp-consensus-beefy/std",
-	"sp-consensus-grandpa/std",
-	"sp-consensus-pow/std",
-	"sp-consensus-slots/std",
+	"soil-authority-discovery/std",
+	"soil-block-builder/std",
+	"soil-consensus-aura/std",
+	"soil-consensus-babe/std",
+	"soil-consensus-beefy/std",
+	"soil-consensus-grandpa/std",
+	"soil-consensus-pow/std",
+	"soil-consensus-slots/std",
 	"soil-core/std",
 	"soil-crypto-ec-utils/std",
 	"soil-crypto-hashing/std",
 	"soil-debug-derive/std",
 	"soil-externalities/std",
-	"sp-genesis-builder/std",
-	"sp-inherents/std",
+	"soil-genesis-builder/std",
+	"soil-inherents/std",
 	"soil-io/std",
-	"sp-keyring/std",
+	"soil-keyring/std",
 	"soil-keystore/std",
 	"soil-metadata-ir/std",
-	"sp-mixnet/std",
-	"sp-mmr-primitives/std",
-	"sp-npos-elections/std",
-	"sp-offchain/std",
+	"soil-mixnet/std",
+	"soil-mmr-primitives/std",
+	"soil-npos-elections/std",
+	"soil-offchain/std",
 	"soil-runtime/std",
 	"soil-runtime-interface/std",
-	"sp-session/std",
-	"sp-staking/std",
+	"soil-session/std",
+	"soil-staking/std",
 	"soil-state-machine/std",
-	"sp-statement-store/std",
+	"soil-statement-store/std",
 	"soil-std/std",
 	"soil-storage/std",
-	"sp-timestamp/std",
+	"soil-timestamp/std",
 	"soil-tracing/std",
-	"sp-transaction-pool/std",
-	"sp-transaction-storage-proof/std",
+	"soil-transaction-pool/std",
+	"soil-transaction-storage-proof/std",
 	"soil-trie/std",
-	"sp-version/std",
+	"soil-version/std",
 	"soil-wasm-interface/std",
 	"soil-weights/std",
 	"substrate-bip39/std",
@@ -475,7 +475,7 @@ runtime-benchmarks = [
 	"rand",
 	"rand_pcg",
 	"soil-runtime/runtime-benchmarks",
-	"sp-staking/runtime-benchmarks",
+	"soil-staking/runtime-benchmarks",
 ]
 try-runtime = [
 	"frame/try-runtime",

@@ -228,7 +228,7 @@ impl<B: BlockT> NetworkBlock<B::Hash, NumberFor<B>> for SyncingService<B> {
 	}
 }
 
-impl<B: BlockT> sp_consensus::SyncOracle for SyncingService<B> {
+impl<B: BlockT> soil_consensus::SyncOracle for SyncingService<B> {
 	fn is_major_syncing(&self) -> bool {
 		self.is_major_syncing.load(Ordering::Relaxed)
 	}

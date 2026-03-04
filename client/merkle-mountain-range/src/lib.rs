@@ -47,10 +47,10 @@ use futures::StreamExt;
 use log::{debug, error, trace, warn};
 use sc_client_api::{Backend, BlockchainEvents, FinalityNotification, FinalityNotifications};
 use sc_offchain::OffchainDb;
-use sp_api::ProvideRuntimeApi;
-use sp_blockchain::{HeaderBackend, HeaderMetadata};
-use sp_consensus_beefy::MmrRootHash;
-use sp_mmr_primitives::{utils, LeafIndex, MmrApi};
+use soil_api::ProvideRuntimeApi;
+use soil_blockchain::{HeaderBackend, HeaderMetadata};
+use soil_consensus_beefy::MmrRootHash;
+use soil_mmr_primitives::{utils, LeafIndex, MmrApi};
 use soil_runtime::traits::{Block, Header, NumberFor};
 use std::{marker::PhantomData, sync::Arc};
 

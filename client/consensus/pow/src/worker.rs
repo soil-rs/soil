@@ -25,7 +25,7 @@ use log::*;
 use parking_lot::Mutex;
 use sc_client_api::ImportNotifications;
 use sc_consensus::{BlockImportParams, BoxBlockImport, StateAction, StorageChanges};
-use sp_consensus::{BlockOrigin, Proposal};
+use soil_consensus::{BlockOrigin, Proposal};
 use soil_runtime::{
 	generic::BlockId,
 	traits::{Block as BlockT, Header as HeaderT},

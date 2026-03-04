@@ -20,7 +20,7 @@
 
 use crate::DbHash;
 use codec::{Decode, Encode};
-use sp_blockchain;
+use soil_blockchain;
 use soil_database::{Database, Transaction};
 use std::hash::Hash;
 
@@ -33,7 +33,7 @@ pub fn read_children<
 	column: u32,
 	prefix: &[u8],
 	parent_hash: K,
-) -> sp_blockchain::Result<Vec<V>> {
+) -> soil_blockchain::Result<Vec<V>> {
 	let mut buf = prefix.to_vec();
 	parent_hash.using_encoded(|s| buf.extend(s));
 
@@ -46,7 +46,7 @@ pub fn read_children<
 
 	let children: Vec<V> = match Decode::decode(&mut &raw_val[..]) {
 		Ok(children) => children,
-		Err(_) => return Err(sp_blockchain::Error::Backend("Error decoding children".into())),
+		Err(_) => return Err(soil_blockchain::Error::Backend("Error decoding children".into())),
 	};
 
 	Ok(children)

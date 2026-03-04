@@ -27,7 +27,7 @@ use soil_core::{
 	storage::{well_known_keys, StateVersion, Storage},
 	Pair,
 };
-use sp_keyring::Sr25519Keyring;
+use soil_keyring::Sr25519Keyring;
 use soil_runtime::{
 	traits::{Block as BlockT, Hash as HashT, Header as HeaderT},
 	BuildStorage,

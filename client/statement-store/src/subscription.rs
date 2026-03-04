@@ -42,8 +42,8 @@ use itertools::Itertools;
 use crate::LOG_TARGET;
 use sc_utils::id_sequence::SeqID;
 use soil_core::{traits::SpawnNamed, Bytes, Encode};
-pub use sp_statement_store::StatementStore;
-use sp_statement_store::{
+pub use soil_statement_store::StatementStore;
+use soil_statement_store::{
 	OptimizedTopicFilter, Result, Statement, StatementEvent, Topic, MAX_TOPICS,
 };
 use std::{
@@ -469,7 +469,7 @@ mod tests {
 
 	use super::*;
 	use soil_core::Decode;
-	use sp_statement_store::Topic;
+	use soil_statement_store::Topic;
 
 	fn unwrap_statement(item: StatementEvent) -> Bytes {
 		match item {

@@ -26,15 +26,15 @@ use sc_client_api::{
 	StorageEventStream, StorageKey,
 };
 use sc_offchain::OffchainDb;
-use sp_api::{ApiRef, ProvideRuntimeApi};
-use sp_blockchain::{BlockStatus, CachedHeaderMetadata, HeaderBackend, HeaderMetadata, Info};
-use sp_consensus::BlockOrigin;
+use soil_api::{ApiRef, ProvideRuntimeApi};
+use soil_blockchain::{BlockStatus, CachedHeaderMetadata, HeaderBackend, HeaderMetadata, Info};
+use soil_consensus::BlockOrigin;
 use soil_core::{
 	offchain::{DbExternalities, StorageKind},
 	H256,
 };
-use sp_mmr_primitives as mmr;
-use sp_mmr_primitives::{utils::NodesUtils, LeafIndex, NodeIndex};
+use soil_mmr_primitives as mmr;
+use soil_mmr_primitives::{utils::NodesUtils, LeafIndex, NodeIndex};
 use soil_runtime::{
 	generic::BlockId,
 	traits::{Block as BlockT, Header as HeaderT},
@@ -301,7 +301,7 @@ impl ProvideRuntimeApi<Block> for MockClient {
 	}
 }
 
-sp_api::mock_impl_runtime_apis! {
+soil_api::mock_impl_runtime_apis! {
 	impl mmr::MmrApi<Block, MmrHash, BlockNumber> for MockRuntimeApi {
 		fn mmr_root() -> Result<MmrHash, mmr::Error> {
 			Err(mmr::Error::PalletNotIncluded)

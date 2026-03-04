@@ -22,7 +22,7 @@ frame-system = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 soil-arithmetic = { workspace = true }
 soil-core = { workspace = true }
-sp-npos-elections = { workspace = true }
+soil-npos-elections = { workspace = true }
 soil-runtime = { workspace = true }
 soil-std = { workspace = true }
 
@@ -30,7 +30,7 @@ soil-std = { workspace = true }
 [dev-dependencies]
 rand = { features = ["small_rng"], workspace = true, default-features = true }
 soil-io = { workspace = true, default-features = true }
-sp-npos-elections = { workspace = true, default-features = true }
+soil-npos-elections = { workspace = true, default-features = true }
 
 [features]
 default = ["std"]
@@ -43,7 +43,7 @@ std = [
 	"soil-arithmetic/std",
 	"soil-core/std",
 	"soil-io/std",
-	"sp-npos-elections/std",
+	"soil-npos-elections/std",
 	"soil-runtime/std",
 	"soil-std/std",
 ]

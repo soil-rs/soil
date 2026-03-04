@@ -20,10 +20,10 @@
 use sc_client_api::{backend::Finalizer, client::BlockBackend};
 use sc_consensus::{BlockImport, BlockImportParams, ForkChoiceStrategy};
 use sc_service::client::Client;
-use sp_consensus::Error as ConsensusError;
+use soil_consensus::Error as ConsensusError;
 use soil_runtime::{traits::Block as BlockT, Justification, Justifications};
 
-pub use sp_consensus::BlockOrigin;
+pub use soil_consensus::BlockOrigin;
 
 /// Extension trait for a test client.
 pub trait ClientExt<Block: BlockT>: Sized {
@@ -32,7 +32,7 @@ pub trait ClientExt<Block: BlockT>: Sized {
 		&self,
 		hash: Block::Hash,
 		justification: Option<Justification>,
-	) -> sp_blockchain::Result<()>;
+	) -> soil_blockchain::Result<()>;
 
 	/// Returns hash of the genesis block.
 	fn genesis_hash(&self) -> <Block as BlockT>::Hash;
@@ -75,7 +75,7 @@ where
 		&self,
 		hash: Block::Hash,
 		justification: Option<Justification>,
-	) -> sp_blockchain::Result<()> {
+	) -> soil_blockchain::Result<()> {
 		Finalizer::finalize_block(self, hash, justification, true)
 	}
 

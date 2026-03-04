@@ -39,7 +39,7 @@ use soil_runtime::{
 	ArithmeticError, Perbill, Percent,
 };
 
-use sp_staking::{
+use soil_staking::{
 	EraIndex, Page, SessionIndex,
 	StakingAccount::{self, Controller, Stash},
 	StakingInterface,
@@ -139,7 +139,7 @@ pub mod pallet {
 		/// Consequently, the backward convert is used convert the u128s from sp-elections back to a
 		/// [`BalanceOf`].
 		#[pallet::no_default_bounds]
-		type CurrencyToVote: sp_staking::currency_to_vote::CurrencyToVote<BalanceOf<Self>>;
+		type CurrencyToVote: soil_staking::currency_to_vote::CurrencyToVote<BalanceOf<Self>>;
 
 		/// Something that provides the election functionality.
 		#[pallet::no_default]
@@ -314,7 +314,7 @@ pub mod pallet {
 		///
 		/// WARNING: this only reports slashing and withdraw events for the time being.
 		#[pallet::no_default_bounds]
-		type EventListeners: sp_staking::OnStakingUpdate<Self::AccountId, BalanceOf<Self>>;
+		type EventListeners: soil_staking::OnStakingUpdate<Self::AccountId, BalanceOf<Self>>;
 
 		#[pallet::no_default_bounds]
 		/// Filter some accounts from participating in staking.
@@ -2311,7 +2311,7 @@ pub mod pallet {
 				Error::<T>::InvalidEraToReward
 			);
 
-			let offence_details = sp_staking::offence::OffenceDetails {
+			let offence_details = soil_staking::offence::OffenceDetails {
 				offender: validator_stash.clone(),
 				reporters: Vec::new(),
 			};

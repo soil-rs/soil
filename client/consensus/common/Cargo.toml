@@ -26,12 +26,12 @@ sc-client-api = { workspace = true, default-features = true }
 sc-network-types = { workspace = true, default-features = true }
 sc-utils = { workspace = true, default-features = true }
 serde = { features = ["derive"], workspace = true, default-features = true }
-sp-blockchain = { workspace = true, default-features = true }
-sp-consensus = { workspace = true, default-features = true }
+soil-blockchain = { workspace = true, default-features = true }
+soil-consensus = { workspace = true, default-features = true }
 soil-core = { workspace = true, default-features = true }
 soil-runtime = { workspace = true, default-features = true }
 soil-state-machine = { workspace = true, default-features = true }
 thiserror = { workspace = true }
 
 [dev-dependencies]
-sp-test-primitives = { workspace = true }
+soil-test-primitives = { workspace = true }

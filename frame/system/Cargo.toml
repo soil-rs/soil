@@ -30,7 +30,7 @@ serde = { features = ["alloc", "derive"], workspace = true }
 soil-core = { features = ["serde"], workspace = true }
 soil-io = { workspace = true }
 soil-runtime = { features = ["serde"], workspace = true }
-sp-version = { features = ["serde"], workspace = true }
+soil-version = { features = ["serde"], workspace = true }
 soil-weights = { features = ["serde"], workspace = true }
 
 [dev-dependencies]
@@ -50,7 +50,7 @@ std = [
 	"soil-core/std",
 	"soil-io/std",
 	"soil-runtime/std",
-	"sp-version/std",
+	"soil-version/std",
 	"soil-weights/std",
 ]
 runtime-benchmarks = [

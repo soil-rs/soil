@@ -18,7 +18,7 @@
 //! Benchmarks for the Sassafras pallet.
 
 use crate::*;
-use sp_consensus_sassafras::{vrf::VrfSignature, EphemeralPublic, EpochConfiguration};
+use soil_consensus_sassafras::{vrf::VrfSignature, EphemeralPublic, EpochConfiguration};
 
 use frame_benchmarking::v2::*;
 use frame_support::traits::Hooks;

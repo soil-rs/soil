@@ -25,7 +25,7 @@ use frame_support::{
 	traits::{Get, UncheckedOnRuntimeUpgrade},
 	weights::Weight,
 };
-use sp_consensus_grandpa::AuthorityList;
+use soil_consensus_grandpa::AuthorityList;
 
 const GRANDPA_AUTHORITIES_KEY: &[u8] = b":grandpa_authorities";
 

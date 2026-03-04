@@ -24,7 +24,7 @@ use soil_runtime::{
 	traits::{Convert, Zero},
 	BoundToRuntimeAppPublic, ConsensusEngineId, Permill, RuntimeAppPublic,
 };
-use sp_staking::SessionIndex;
+use soil_staking::SessionIndex;
 
 /// A trait for online node inspection in a session.
 ///

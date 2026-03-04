@@ -27,7 +27,7 @@ soil-application-crypto = { features = ["serde"], workspace = true }
 soil-core = { features = ["serde"], workspace = true }
 soil-io = { workspace = true }
 soil-runtime = { features = ["serde"], workspace = true }
-sp-staking = { features = ["serde"], workspace = true }
+soil-staking = { features = ["serde"], workspace = true }
 
 [dev-dependencies]
 pallet-balances = { workspace = true }
@@ -49,7 +49,7 @@ std = [
 	"soil-core/std",
 	"soil-io/std",
 	"soil-runtime/std",
-	"sp-staking/std",
+	"soil-staking/std",
 ]
 runtime-benchmarks = [
 	"frame-benchmarking/runtime-benchmarks",
@@ -58,7 +58,7 @@ runtime-benchmarks = [
 	"pallet-balances/runtime-benchmarks",
 	"pallet-session/runtime-benchmarks",
 	"soil-runtime/runtime-benchmarks",
-	"sp-staking/runtime-benchmarks",
+	"soil-staking/runtime-benchmarks",
 ]
 try-runtime = [
 	"frame-support/try-runtime",

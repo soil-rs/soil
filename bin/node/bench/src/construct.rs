@@ -33,8 +33,8 @@ use sc_transaction_pool_api::{
 	ImportNotificationStream, PoolStatus, ReadyTransactions, TransactionFor, TransactionSource,
 	TransactionStatusStreamFor, TxHash, TxInvalidityReportMap,
 };
-use sp_consensus::{Environment, ProposeArgs, Proposer};
-use sp_inherents::InherentDataProvider;
+use soil_consensus::{Environment, ProposeArgs, Proposer};
+use soil_inherents::InherentDataProvider;
 use soil_runtime::OpaqueExtrinsic;
 
 use crate::{
@@ -127,7 +127,7 @@ impl core::Benchmark for ConstructionBenchmark {
 			None,
 			None,
 		);
-		let timestamp_provider = sp_timestamp::InherentDataProvider::from_system_time();
+		let timestamp_provider = soil_timestamp::InherentDataProvider::from_system_time();
 
 		let start = std::time::Instant::now();
 

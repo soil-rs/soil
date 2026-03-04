@@ -152,7 +152,7 @@ enum HandleRequestError {
 	DecodeScale(#[from] codec::Error),
 
 	#[error(transparent)]
-	Client(#[from] sp_blockchain::Error),
+	Client(#[from] soil_blockchain::Error),
 
 	#[error("Invalid request {0}.")]
 	InvalidRequest(#[from] Box<dyn std::error::Error + Send + Sync>),

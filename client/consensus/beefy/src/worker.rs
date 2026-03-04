@@ -38,10 +38,10 @@ use futures::{stream::Fuse, FutureExt, StreamExt};
 use log::{debug, error, info, trace, warn};
 use sc_client_api::{Backend, HeaderBackend};
 use sc_utils::notification::NotificationReceiver;
-use sp_api::ProvideRuntimeApi;
+use soil_api::ProvideRuntimeApi;
 use soil_arithmetic::traits::{AtLeast32Bit, Saturating};
-use sp_consensus::SyncOracle;
-use sp_consensus_beefy::{
+use soil_consensus::SyncOracle;
+use soil_consensus_beefy::{
 	AuthorityIdBound, BeefyApi, Commitment, DoubleVotingProof, PayloadProvider, ValidatorSet,
 	VersionedFinalityProof, VoteMessage, BEEFY_ENGINE_ID,
 };
@@ -1042,8 +1042,8 @@ pub(crate) mod tests {
 	use sc_network_gossip::GossipEngine;
 	use sc_network_sync::SyncingService;
 	use sc_network_test::TestNetFactory;
-	use sp_blockchain::Backend as BlockchainBackendT;
-	use sp_consensus_beefy::{
+	use soil_blockchain::Backend as BlockchainBackendT;
+	use soil_consensus_beefy::{
 		ecdsa_crypto, known_payloads,
 		known_payloads::MMR_ROOT_ID,
 		mmr::MmrRootProvider,

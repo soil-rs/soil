@@ -217,7 +217,7 @@ use soil_arithmetic::{
 	traits::{CheckedAdd, Zero},
 	PerThing, UpperOf,
 };
-use sp_npos_elections::{EvaluateSupport, VoteWeight};
+use soil_npos_elections::{EvaluateSupport, VoteWeight};
 use soil_runtime::{
 	traits::{Hash, Saturating},
 	SaturatedConversion,
@@ -793,7 +793,7 @@ pub mod pallet {
 			// pages must be at least 1.
 			assert!(T::Pages::get() > 0);
 
-			// Based on the requirements of [`sp_npos_elections::Assignment::try_normalize`].
+			// Based on the requirements of [`soil_npos_elections::Assignment::try_normalize`].
 			let max_vote: usize = <SolutionOf<T::MinerConfig> as NposSolution>::LIMIT;
 
 			// 2. Maximum sum of [SolutionAccuracy; 16] must fit into `UpperOf<OffchainAccuracy>`.

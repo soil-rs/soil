@@ -29,5 +29,5 @@ thiserror = { workspace = true }
 
 [dev-dependencies]
 soil-io = { workspace = true, default-features = true }
-sp-version = { workspace = true, default-features = true }
+soil-version = { workspace = true, default-features = true }
 subxt = { workspace = true, features = ["native"] }

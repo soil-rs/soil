@@ -32,7 +32,7 @@ pub enum Error {
 	Pool(#[from] TxPoolError),
 
 	#[error("Blockchain error: {0}")]
-	Blockchain(#[from] sp_blockchain::Error),
+	Blockchain(#[from] soil_blockchain::Error),
 
 	#[error("Block conversion error: {0}")]
 	BlockIdConversion(String),

@@ -22,7 +22,7 @@ log = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { features = ["derive"], workspace = true }
 soil-application-crypto = { workspace = true }
-sp-mixnet = { workspace = true }
+soil-mixnet = { workspace = true }
 
 [features]
 default = ["std"]
@@ -33,7 +33,7 @@ std = [
 	"scale-info/std",
 	"serde/std",
 	"soil-application-crypto/std",
-	"sp-mixnet/std",
+	"soil-mixnet/std",
 ]
 try-runtime = [
 	"frame/try-runtime",

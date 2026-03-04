@@ -220,24 +220,24 @@ members = [
 	"frame/verify-signature",
 	"frame/vesting",
 	"frame/whitelist",
-	"primitives/api",
+	"soil/api",
 	"soil/api-proc-macro",
-	"primitives/api/test",
+	"soil/api/test",
 	"soil/application-crypto",
 	"soil/application-crypto/test",
 	"soil/arithmetic",
 	"soil/arithmetic/fuzzer",
-	"primitives/authority-discovery",
-	"primitives/block-builder",
-	"primitives/blockchain",
-	"primitives/consensus/aura",
-	"primitives/consensus/babe",
-	"primitives/consensus/beefy",
-	"primitives/consensus/common",
-	"primitives/consensus/grandpa",
-	"primitives/consensus/pow",
-	"primitives/consensus/sassafras",
-	"primitives/consensus/slots",
+	"soil/authority-discovery",
+	"soil/block-builder",
+	"soil/blockchain",
+	"soil/consensus-aura",
+	"soil/consensus-babe",
+	"soil/consensus-beefy",
+	"soil/consensus",
+	"soil/consensus-grandpa",
+	"soil/consensus-pow",
+	"soil/consensus-sassafras",
+	"soil/consensus-slots",
 	"soil/core",
 	"soil/core/fuzz",
 	"soil/crypto-ec-utils",
@@ -247,18 +247,18 @@ members = [
 	"soil/debug-derive",
 	"primitives/ethereum-standards",
 	"soil/externalities",
-	"primitives/genesis-builder",
-	"primitives/inherents",
+	"soil/genesis-builder",
+	"soil/inherents",
 	"soil/io",
-	"primitives/keyring",
+	"soil/keyring",
 	"soil/keystore",
 	"soil/maybe-compressed-blob",
-	"primitives/merkle-mountain-range",
+	"soil/merkle-mountain-range",
 	"soil/metadata-ir",
-	"primitives/mixnet",
-	"primitives/npos-elections",
-	"primitives/npos-elections/fuzzer",
-	"primitives/offchain",
+	"soil/mixnet",
+	"soil/npos-elections",
+	"soil/npos-elections/fuzzer",
+	"soil/offchain",
 	"soil/panic-handler",
 	"soil/rpc",
 	"soil/runtime",
@@ -267,19 +267,19 @@ members = [
 	"soil/runtime-interface/test",
 	"soil/runtime-interface/test-wasm",
 	"soil/runtime-interface/test-wasm-deprecated",
-	"primitives/session",
-	"primitives/staking",
+	"soil/session",
+	"soil/staking",
 	"soil/state-machine",
-	"primitives/statement-store",
+	"soil/statement-store",
 	"soil/std",
 	"soil/storage",
-	"primitives/test-primitives",
-	"primitives/timestamp",
+	"soil/test-primitives",
+	"soil/timestamp",
 	"soil/tracing",
-	"primitives/transaction-pool",
-	"primitives/transaction-storage-proof",
+	"soil/transaction-pool",
+	"soil/transaction-storage-proof",
 	"soil/trie",
-	"primitives/version",
+	"soil/version",
 	"soil/version-proc-macro",
 	"soil/wasm-interface",
 	"soil/weights",
@@ -555,21 +555,21 @@ sc-tracing-proc-macro = { path = "client/tracing/proc-macro", default-features =
 sc-transaction-pool = { path = "client/transaction-pool", default-features = false }
 sc-transaction-pool-api = { path = "client/transaction-pool/api", default-features = false }
 sc-utils = { path = "client/utils", default-features = false }
-sp-api = { path = "primitives/api", default-features = false }
+soil-api = { path = "soil/api", default-features = false }
 soil-api-proc-macro = { path = "soil/api-proc-macro", default-features = false }
 soil-application-crypto = { path = "soil/application-crypto", default-features = false }
 soil-arithmetic = { path = "soil/arithmetic", default-features = false }
-sp-authority-discovery = { path = "primitives/authority-discovery", default-features = false }
-sp-block-builder = { path = "primitives/block-builder", default-features = false }
-sp-blockchain = { path = "primitives/blockchain", default-features = false }
-sp-consensus = { path = "primitives/consensus/common", default-features = false }
-sp-consensus-aura = { path = "primitives/consensus/aura", default-features = false }
-sp-consensus-babe = { path = "primitives/consensus/babe", default-features = false }
-sp-consensus-beefy = { path = "primitives/consensus/beefy", default-features = false }
-sp-consensus-grandpa = { path = "primitives/consensus/grandpa", default-features = false }
-sp-consensus-pow = { path = "primitives/consensus/pow", default-features = false }
-sp-consensus-sassafras = { path = "primitives/consensus/sassafras", default-features = false }
-sp-consensus-slots = { path = "primitives/consensus/slots", default-features = false }
+soil-authority-discovery = { path = "soil/authority-discovery", default-features = false }
+soil-block-builder = { path = "soil/block-builder", default-features = false }
+soil-blockchain = { path = "soil/blockchain", default-features = false }
+soil-consensus = { path = "soil/consensus", default-features = false }
+soil-consensus-aura = { path = "soil/consensus-aura", default-features = false }
+soil-consensus-babe = { path = "soil/consensus-babe", default-features = false }
+soil-consensus-beefy = { path = "soil/consensus-beefy", default-features = false }
+soil-consensus-grandpa = { path = "soil/consensus-grandpa", default-features = false }
+soil-consensus-pow = { path = "soil/consensus-pow", default-features = false }
+soil-consensus-sassafras = { path = "soil/consensus-sassafras", default-features = false }
+soil-consensus-slots = { path = "soil/consensus-slots", default-features = false }
 soil-core = { path = "soil/core", default-features = false }
 sp-core-hashing = { default-features = false, path = "deprecated/hashing" }
 sp-core-hashing-proc-macro = { default-features = false, path = "deprecated/hashing/proc-macro" }
@@ -579,17 +579,17 @@ soil-crypto-hashing-proc-macro = { path = "soil/crypto-hashing/proc-macro", defa
 soil-database = { path = "soil/database", default-features = false }
 soil-debug-derive = { path = "soil/debug-derive", default-features = false }
 soil-externalities = { path = "soil/externalities", default-features = false }
-sp-genesis-builder = { path = "primitives/genesis-builder", default-features = false }
-sp-inherents = { path = "primitives/inherents", default-features = false }
+soil-genesis-builder = { path = "soil/genesis-builder", default-features = false }
+soil-inherents = { path = "soil/inherents", default-features = false }
 soil-io = { path = "soil/io", default-features = false }
-sp-keyring = { path = "primitives/keyring", default-features = false }
+soil-keyring = { path = "soil/keyring", default-features = false }
 soil-keystore = { path = "soil/keystore", default-features = false }
 soil-maybe-compressed-blob = { path = "soil/maybe-compressed-blob", default-features = false }
 soil-metadata-ir = { path = "soil/metadata-ir", default-features = false }
-sp-mixnet = { path = "primitives/mixnet", default-features = false }
-sp-mmr-primitives = { path = "primitives/merkle-mountain-range", default-features = false }
-sp-npos-elections = { path = "primitives/npos-elections", default-features = false }
-sp-offchain = { path = "primitives/offchain", default-features = false }
+soil-mixnet = { path = "soil/mixnet", default-features = false }
+soil-mmr-primitives = { path = "soil/merkle-mountain-range", default-features = false }
+soil-npos-elections = { path = "soil/npos-elections", default-features = false }
+soil-offchain = { path = "soil/offchain", default-features = false }
 soil-panic-handler = { path = "soil/panic-handler", default-features = false }
 soil-rpc = { path = "soil/rpc", default-features = false }
 soil-runtime = { path = "soil/runtime", default-features = false }
@@ -597,19 +597,19 @@ soil-runtime-interface = { path = "soil/runtime-interface", default-features = f
 soil-runtime-interface-proc-macro = { path = "soil/runtime-interface-proc-macro", default-features = false }
 sp-runtime-interface-test-wasm = { path = "soil/runtime-interface/test-wasm" }
 sp-runtime-interface-test-wasm-deprecated = { path = "soil/runtime-interface/test-wasm-deprecated" }
-sp-session = { path = "primitives/session", default-features = false }
-sp-staking = { path = "primitives/staking", default-features = false }
+soil-session = { path = "soil/session", default-features = false }
+soil-staking = { path = "soil/staking", default-features = false }
 soil-state-machine = { path = "soil/state-machine", default-features = false }
-sp-statement-store = { path = "primitives/statement-store", default-features = false }
+soil-statement-store = { path = "soil/statement-store", default-features = false }
 soil-std = { path = "soil/std", default-features = false }
 soil-storage = { path = "soil/storage", default-features = false }
-sp-test-primitives = { path = "primitives/test-primitives" }
-sp-timestamp = { path = "primitives/timestamp", default-features = false }
+soil-test-primitives = { path = "soil/test-primitives" }
+soil-timestamp = { path = "soil/timestamp", default-features = false }
 soil-tracing = { path = "soil/tracing", default-features = false }
-sp-transaction-pool = { path = "primitives/transaction-pool", default-features = false }
-sp-transaction-storage-proof = { path = "primitives/transaction-storage-proof", default-features = false }
+soil-transaction-pool = { path = "soil/transaction-pool", default-features = false }
+soil-transaction-storage-proof = { path = "soil/transaction-storage-proof", default-features = false }
 soil-trie = { path = "soil/trie", default-features = false }
-sp-version = { path = "primitives/version", default-features = false }
+soil-version = { path = "soil/version", default-features = false }
 soil-version-proc-macro = { path = "soil/version-proc-macro", default-features = false }
 soil-wasm-interface = { path = "soil/wasm-interface", default-features = false }
 soil-weights = { path = "soil/weights", default-features = false }

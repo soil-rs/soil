@@ -27,8 +27,8 @@ use sc_client_api::Backend as ClientBackend;
 use sc_network_sync::strategy::warp::{
 	EncodedProof, VerificationResult, Verifier, WarpSyncProvider,
 };
-use sp_blockchain::{Backend as BlockchainBackend, HeaderBackend};
-use sp_consensus_grandpa::{AuthorityList, SetId, GRANDPA_ENGINE_ID};
+use soil_blockchain::{Backend as BlockchainBackend, HeaderBackend};
+use soil_consensus_grandpa::{AuthorityList, SetId, GRANDPA_ENGINE_ID};
 use soil_runtime::{
 	generic::BlockId,
 	traits::{Block as BlockT, Header as HeaderT, NumberFor, One},
@@ -45,7 +45,7 @@ pub enum Error {
 	DecodeScale(#[from] codec::Error),
 	/// Client backend error.
 	#[error("{0}")]
-	Client(#[from] sp_blockchain::Error),
+	Client(#[from] soil_blockchain::Error),
 	/// Invalid request data.
 	#[error("{0}")]
 	InvalidRequest(String),
@@ -393,10 +393,10 @@ mod tests {
 	use codec::Encode;
 	use rand::prelude::*;
 	use sc_block_builder::BlockBuilderBuilder;
-	use sp_blockchain::HeaderBackend;
-	use sp_consensus::BlockOrigin;
-	use sp_consensus_grandpa::GRANDPA_ENGINE_ID;
-	use sp_keyring::Ed25519Keyring;
+	use soil_blockchain::HeaderBackend;
+	use soil_consensus::BlockOrigin;
+	use soil_consensus_grandpa::GRANDPA_ENGINE_ID;
+	use soil_keyring::Ed25519Keyring;
 	use std::sync::Arc;
 	use substrate_test_runtime_client::{
 		BlockBuilderExt, ClientBlockImportExt, ClientExt, DefaultTestClientBuilderExt,
@@ -442,9 +442,9 @@ mod tests {
 					.collect::<Vec<_>>();
 
 				let digest = soil_runtime::generic::DigestItem::Consensus(
-					sp_consensus_grandpa::GRANDPA_ENGINE_ID,
-					sp_consensus_grandpa::ConsensusLog::ScheduledChange(
-						sp_consensus_grandpa::ScheduledChange { delay: 0u64, next_authorities },
+					soil_consensus_grandpa::GRANDPA_ENGINE_ID,
+					soil_consensus_grandpa::ConsensusLog::ScheduledChange(
+						soil_consensus_grandpa::ScheduledChange { delay: 0u64, next_authorities },
 					)
 					.encode(),
 				);
@@ -469,7 +469,7 @@ mod tests {
 					let precommit = finality_grandpa::Precommit { target_hash, target_number };
 
 					let msg = finality_grandpa::Message::Precommit(precommit.clone());
-					let encoded = sp_consensus_grandpa::localized_payload(42, current_set_id, &msg);
+					let encoded = soil_consensus_grandpa::localized_payload(42, current_set_id, &msg);
 					let signature = keyring.sign(&encoded[..]).into();
 
 					let precommit = finality_grandpa::SignedPrecommit {

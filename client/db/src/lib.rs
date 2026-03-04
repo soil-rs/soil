@@ -69,7 +69,7 @@ use sc_client_api::{
 };
 use sc_state_db::{IsPruned, LastCanonicalized, StateDb};
 use soil_arithmetic::traits::Saturating;
-use sp_blockchain::{
+use soil_blockchain::{
 	Backend as _, CachedHeaderMetadata, DisplacedLeavesAfterFinalization, Error as ClientError,
 	HeaderBackend, HeaderMetadata, HeaderMetadataCache, Result as ClientResult,
 };
@@ -625,7 +625,7 @@ impl<Block: BlockT> BlockchainDb<Block> {
 			Some(justifications) => match Decode::decode(&mut &justifications[..]) {
 				Ok(justifications) => Ok(Some(justifications)),
 				Err(err) => {
-					return Err(sp_blockchain::Error::Backend(format!(
+					return Err(soil_blockchain::Error::Backend(format!(
 						"Error decoding justifications: {err}"
 					)))
 				},
@@ -642,7 +642,7 @@ impl<Block: BlockT> BlockchainDb<Block> {
 			match Decode::decode(&mut &body[..]) {
 				Ok(body) => return Ok(Some(body)),
 				Err(err) => {
-					return Err(sp_blockchain::Error::Backend(format!(
+					return Err(soil_blockchain::Error::Backend(format!(
 						"Error decoding body: {err}"
 					)))
 				},
@@ -667,7 +667,7 @@ impl<Block: BlockT> BlockchainDb<Block> {
 											utils::join_input(header.as_ref(), t.as_ref());
 										let ex = Block::Extrinsic::decode(&mut input).map_err(
 											|err| {
-												sp_blockchain::Error::Backend(format!(
+												soil_blockchain::Error::Backend(format!(
 													"Error decoding indexed extrinsic: {err}"
 												))
 											},
@@ -675,7 +675,7 @@ impl<Block: BlockT> BlockchainDb<Block> {
 										body.push(ex);
 									},
 									None => {
-										return Err(sp_blockchain::Error::Backend(format!(
+										return Err(soil_blockchain::Error::Backend(format!(
 											"Missing indexed transaction {hash:?}"
 										)))
 									},
@@ -689,7 +689,7 @@ impl<Block: BlockT> BlockchainDb<Block> {
 					return Ok(Some(body));
 				},
 				Err(err) => {
-					return Err(sp_blockchain::Error::Backend(format!(
+					return Err(soil_blockchain::Error::Backend(format!(
 						"Error decoding body list: {err}",
 					)))
 				},
@@ -808,7 +808,7 @@ impl<Block: BlockT> sc_client_api::blockchain::Backend<Block> for BlockchainDb<B
 						match self.db.get(columns::TRANSACTION, hash.as_ref()) {
 							Some(t) => transactions.push(t),
 							None => {
-								return Err(sp_blockchain::Error::Backend(format!(
+								return Err(soil_blockchain::Error::Backend(format!(
 									"Missing indexed transaction {hash:?}",
 								)))
 							},
@@ -818,14 +818,14 @@ impl<Block: BlockT> sc_client_api::blockchain::Backend<Block> for BlockchainDb<B
 				Ok(Some(transactions))
 			},
 			Err(err) => {
-				Err(sp_blockchain::Error::Backend(format!("Error decoding body list: {err}")))
+				Err(soil_blockchain::Error::Backend(format!("Error decoding body list: {err}")))
 			},
 		}
 	}
 }
 
 impl<Block: BlockT> HeaderMetadata<Block> for BlockchainDb<Block> {
-	type Error = sp_blockchain::Error;
+	type Error = soil_blockchain::Error;
 
 	fn header_metadata(
 		&self,
@@ -911,7 +911,7 @@ impl<Block: BlockT> BlockImportOperation<Block> {
 		state_version: StateVersion,
 	) -> ClientResult<Block::Hash> {
 		if storage.top.keys().any(|k| well_known_keys::is_child_storage_key(k)) {
-			return Err(sp_blockchain::Error::InvalidState);
+			return Err(soil_blockchain::Error::InvalidState);
 		}
 
 		let child_delta = storage.children_default.values().map(|child_content| {
@@ -1293,7 +1293,7 @@ impl<Block: BlockT> Backend<Block> {
 
 		let requested_state_pruning = config.state_pruning.clone();
 		let state_meta_db = StateMetaDb(db.clone());
-		let map_e = sp_blockchain::Error::from_state_db;
+		let map_e = soil_blockchain::Error::from_state_db;
 
 		let (state_db_init_commit_set, state_db) = StateDb::open(
 			state_meta_db,
@@ -1391,15 +1391,15 @@ impl<Block: BlockT> Backend<Block> {
 		if meta.best_number.saturating_sub(best_number).saturated_into::<u64>() >
 			self.canonicalization_delay
 		{
-			return Err(sp_blockchain::Error::SetHeadTooOld);
+			return Err(soil_blockchain::Error::SetHeadTooOld);
 		}
 
 		let parent_exists =
-			self.blockchain.status(route_to)? == sp_blockchain::BlockStatus::InChain;
+			self.blockchain.status(route_to)? == soil_blockchain::BlockStatus::InChain;
 
 		// Cannot find tree route with empty DB or when imported a detached block.
 		if meta.best_hash != Default::default() && parent_exists {
-			let tree_route = sp_blockchain::tree_route(&self.blockchain, meta.best_hash, route_to)?;
+			let tree_route = soil_blockchain::tree_route(&self.blockchain, meta.best_hash, route_to)?;
 
 			// uncanonicalize: check safety violations and ensure the numbers no longer
 			// point to these block hashes in the key mapping.
@@ -1410,7 +1410,7 @@ impl<Block: BlockT> Backend<Block> {
 						(&r.number, &r.hash)
 					);
 
-					return Err(sp_blockchain::Error::NotInFinalizedChain);
+					return Err(soil_blockchain::Error::NotInFinalizedChain);
 				}
 
 				retracted.push(r.hash);
@@ -1451,7 +1451,7 @@ impl<Block: BlockT> Backend<Block> {
 		if last_finalized != self.blockchain.meta.read().genesis_hash &&
 			*header.parent_hash() != last_finalized
 		{
-			return Err(sp_blockchain::Error::NonSequentialFinalization(format!(
+			return Err(soil_blockchain::Error::NonSequentialFinalization(format!(
 				"Last finalized {last_finalized:?} not parent of {:?}",
 				header.hash()
 			)));
@@ -1521,7 +1521,7 @@ impl<Block: BlockT> Backend<Block> {
 			.ok_or_else(|| {
 				let best_hash = info.best_hash;
 
-				sp_blockchain::Error::Backend(format!(
+				soil_blockchain::Error::Backend(format!(
 					"Can't canonicalize missing block number #{to_canonicalize} when for best block {best_hash:?} (#{best_number})",
 				))
 			})?;
@@ -1536,7 +1536,7 @@ impl<Block: BlockT> Backend<Block> {
 
 			trace!(target: "db", "Canonicalize block #{to_canonicalize} ({hash_to_canonicalize:?})");
 			let commit = self.storage.state_db.canonicalize_block(&hash_to_canonicalize).map_err(
-				sp_blockchain::Error::from_state_db::<
+				soil_blockchain::Error::from_state_db::<
 					sc_state_db::Error<soil_database::error::DatabaseError>,
 				>,
 			)?;
@@ -1701,13 +1701,13 @@ impl<Block: BlockT> Backend<Block> {
 					.state_db
 					.insert_block(&hash, number_u64, pending_block.header.parent_hash(), changeset)
 					.map_err(|e: sc_state_db::Error<soil_database::error::DatabaseError>| {
-						sp_blockchain::Error::from_state_db(e)
+						soil_blockchain::Error::from_state_db(e)
 					})?;
 				apply_state_commit(&mut transaction, commit);
 				if number <= last_finalized_num {
 					// Canonicalize in the db when re-importing existing blocks with state.
 					let commit = self.storage.state_db.canonicalize_block(&hash).map_err(
-						sp_blockchain::Error::from_state_db::<
+						soil_blockchain::Error::from_state_db::<
 							sc_state_db::Error<soil_database::error::DatabaseError>,
 						>,
 					)?;
@@ -1925,7 +1925,7 @@ impl<Block: BlockT> Backend<Block> {
 					with_state: false,
 				});
 			} else {
-				return Err(sp_blockchain::Error::UnknownBlock(format!(
+				return Err(soil_blockchain::Error::UnknownBlock(format!(
 					"Cannot set head {set_head:?}",
 				)));
 			}
@@ -1990,7 +1990,7 @@ impl<Block: BlockT> Backend<Block> {
 
 		if requires_canonicalization && sc_client_api::Backend::have_state_at(self, f_hash, f_num) {
 			let commit = self.storage.state_db.canonicalize_block(&f_hash).map_err(
-				sp_blockchain::Error::from_state_db::<
+				soil_blockchain::Error::from_state_db::<
 					sc_state_db::Error<soil_database::error::DatabaseError>,
 				>,
 			)?;
@@ -2125,7 +2125,7 @@ impl<Block: BlockT> Backend<Block> {
 					}
 				},
 				Err(err) => {
-					return Err(sp_blockchain::Error::Backend(format!(
+					return Err(soil_blockchain::Error::Backend(format!(
 						"Error decoding body list: {err}",
 					)))
 				},
@@ -2307,7 +2307,7 @@ impl<Block: BlockT> sc_client_api::backend::Backend<Block> for Backend<Block> {
 			self.storage
 				.state_db
 				.reset(state_meta_db)
-				.map_err(sp_blockchain::Error::from_state_db)?;
+				.map_err(soil_blockchain::Error::from_state_db)?;
 			self.blockchain.clear_pinning_cache();
 			Err(e)
 		} else {
@@ -2453,7 +2453,7 @@ impl<Block: BlockT> sc_client_api::backend::Backend<Block> for Backend<Block> {
 				}
 				let mut transaction = Transaction::new();
 				let removed = self.blockchain.header(hash_to_revert)?.ok_or_else(|| {
-					sp_blockchain::Error::UnknownBlock(format!(
+					soil_blockchain::Error::UnknownBlock(format!(
 						"Error reverting to {hash_to_revert}. Block header not found.",
 					))
 				})?;
@@ -2587,19 +2587,19 @@ impl<Block: BlockT> sc_client_api::backend::Backend<Block> for Backend<Block> {
 		let best_hash = self.blockchain.info().best_hash;
 
 		if best_hash == hash {
-			return Err(sp_blockchain::Error::Backend(format!("Can't remove best block {hash:?}")));
+			return Err(soil_blockchain::Error::Backend(format!("Can't remove best block {hash:?}")));
 		}
 
 		let hdr = self.blockchain.header_metadata(hash)?;
 		if !self.have_state_at(hash, hdr.number) {
-			return Err(sp_blockchain::Error::UnknownBlock(format!(
+			return Err(soil_blockchain::Error::UnknownBlock(format!(
 				"State already discarded for {hash:?}",
 			)));
 		}
 
 		let mut leaves = self.blockchain.leaves.write();
 		if !leaves.contains(hdr.number, hash) {
-			return Err(sp_blockchain::Error::Backend(format!(
+			return Err(soil_blockchain::Error::Backend(format!(
 				"Can't remove non-leaf block {hash:?}",
 			)));
 		}
@@ -2700,7 +2700,7 @@ impl<Block: BlockT> sc_client_api::backend::Backend<Block> for Backend<Block> {
 					let state = RefTrackingState::new(db_state, self.storage.clone(), Some(hash));
 					Ok(RecordStatsState::new(state, Some(hash), self.state_usage.clone()))
 				} else {
-					Err(sp_blockchain::Error::UnknownBlock(format!(
+					Err(soil_blockchain::Error::UnknownBlock(format!(
 						"State already discarded for {hash:?}",
 					)))
 				}
@@ -2750,7 +2750,7 @@ impl<Block: BlockT> sc_client_api::backend::Backend<Block> for Backend<Block> {
 		)
 	}
 
-	fn pin_block(&self, hash: <Block as BlockT>::Hash) -> sp_blockchain::Result<()> {
+	fn pin_block(&self, hash: <Block as BlockT>::Hash) -> soil_blockchain::Result<()> {
 		let hint = || {
 			let header_metadata = self.blockchain.header_metadata(hash);
 			header_metadata
@@ -2765,7 +2765,7 @@ impl<Block: BlockT> sc_client_api::backend::Backend<Block> for Backend<Block> {
 		if let Some(number) = self.blockchain.number(hash)? {
 			self.storage.state_db.pin(&hash, number.saturated_into::<u64>(), hint).map_err(
 				|_| {
-					sp_blockchain::Error::UnknownBlock(format!(
+					soil_blockchain::Error::UnknownBlock(format!(
 						"Unable to pin: state already discarded for `{hash:?}`",
 					))
 				},
@@ -2803,7 +2803,7 @@ pub(crate) mod tests {
 		backend::{Backend as BTrait, BlockImportOperation as Op},
 		blockchain::Backend as BLBTrait,
 	};
-	use sp_blockchain::{lowest_common_ancestor, tree_route};
+	use soil_blockchain::{lowest_common_ancestor, tree_route};
 	use soil_core::H256;
 	use soil_runtime::{
 		testing::{Block as RawBlock, Header, MockCallU64, TestXt},
@@ -2836,7 +2836,7 @@ pub(crate) mod tests {
 		extrinsics_root: H256,
 		body: Vec<UncheckedXt>,
 		transaction_index: Option<Vec<IndexOperation>>,
-	) -> Result<H256, sp_blockchain::Error> {
+	) -> Result<H256, soil_blockchain::Error> {
 		use soil_runtime::testing::Digest;
 
 		let digest = Digest::default();
@@ -4542,7 +4542,7 @@ pub(crate) mod tests {
 		};
 		let mut op = backend.begin_operation().unwrap();
 		op.set_block_data(header, None, None, None, NewBlockState::Best, true).unwrap();
-		assert!(matches!(backend.commit_operation(op), Err(sp_blockchain::Error::SetHeadTooOld)));
+		assert!(matches!(backend.commit_operation(op), Err(soil_blockchain::Error::SetHeadTooOld)));
 
 		// Insert 2 as best again.
 		let header = backend.blockchain().header(block2).unwrap().unwrap();
@@ -4583,7 +4583,7 @@ pub(crate) mod tests {
 			.err()
 			.unwrap();
 		match err {
-			sp_blockchain::Error::StateDatabase(m) if m == "Block already exists" => (),
+			soil_blockchain::Error::StateDatabase(m) if m == "Block already exists" => (),
 			e @ _ => panic!("Unexpected error {:?}", e),
 		}
 	}

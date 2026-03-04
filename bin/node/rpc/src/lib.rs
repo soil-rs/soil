@@ -45,13 +45,13 @@ use sc_consensus_grandpa::{
 };
 pub use sc_rpc::SubscriptionTaskExecutor;
 use sc_transaction_pool_api::TransactionPool;
-use sp_api::ProvideRuntimeApi;
+use soil_api::ProvideRuntimeApi;
 use soil_application_crypto::RuntimeAppPublic;
-use sp_block_builder::BlockBuilder;
-use sp_blockchain::{Error as BlockChainError, HeaderBackend, HeaderMetadata};
-use sp_consensus::SelectChain;
-use sp_consensus_babe::BabeApi;
-use sp_consensus_beefy::AuthorityIdBound;
+use soil_block_builder::BlockBuilder;
+use soil_blockchain::{Error as BlockChainError, HeaderBackend, HeaderMetadata};
+use soil_consensus::SelectChain;
+use soil_consensus_babe::BabeApi;
+use soil_consensus_beefy::AuthorityIdBound;
 use soil_keystore::KeystorePtr;
 
 /// Extra dependencies for BABE.

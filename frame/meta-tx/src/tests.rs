@@ -20,7 +20,7 @@ use core::ops::Add;
 use frame_support::traits::tokens::fungible::Inspect;
 use mock::*;
 use soil_io::hashing::blake2_256;
-use sp_keyring::Sr25519Keyring;
+use soil_keyring::Sr25519Keyring;
 use soil_runtime::{
 	generic::Era,
 	traits::{Applyable, Checkable, Hash, IdentityLookup},

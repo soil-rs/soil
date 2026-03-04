@@ -25,14 +25,14 @@ pretty_assertions = { workspace = true }
 rustversion = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { features = ["derive"], workspace = true }
-sp-api = { workspace = true }
+soil-api = { workspace = true }
 soil-arithmetic = { workspace = true }
 soil-core = { workspace = true }
 soil-io = { workspace = true }
 soil-metadata-ir = { workspace = true }
 soil-runtime = { workspace = true }
 soil-state-machine = { optional = true, workspace = true, default-features = true }
-sp-version = { workspace = true }
+soil-version = { workspace = true }
 static_assertions = { workspace = true, default-features = true }
 trybuild = { features = ["diff"], workspace = true }
 # The "std" feature for this pallet is never activated on purpose, in order to test construct_runtime error message
@@ -49,14 +49,14 @@ std = [
 	"frame-system/std",
 	"scale-info/std",
 	"serde/std",
-	"sp-api/std",
+	"soil-api/std",
 	"soil-arithmetic/std",
 	"soil-core/std",
 	"soil-io/std",
 	"soil-metadata-ir/std",
 	"soil-runtime/std",
 	"soil-state-machine/std",
-	"sp-version/std",
+	"soil-version/std",
 	"test-pallet/std",
 ]
 experimental = ["frame-support/experimental", "frame-system/experimental"]

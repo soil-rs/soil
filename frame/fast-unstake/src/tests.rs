@@ -31,7 +31,7 @@ use frame_support::{
 use pallet_staking::{CurrentEra, RewardDestination};
 
 use soil_runtime::traits::BadOrigin;
-use sp_staking::StakingInterface;
+use soil_staking::StakingInterface;
 
 #[test]
 fn test_setup_works() {

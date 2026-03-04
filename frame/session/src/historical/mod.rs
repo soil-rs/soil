@@ -37,8 +37,8 @@ use soil_runtime::{
 	traits::{Convert, OpaqueKeys},
 	KeyTypeId,
 };
-use sp_session::{MembershipProof, ValidatorCount};
-use sp_staking::SessionIndex;
+use soil_session::{MembershipProof, ValidatorCount};
+use soil_staking::SessionIndex;
 use soil_trie::{
 	trie_types::{TrieDBBuilder, TrieDBMutBuilderV0},
 	LayoutV0, MemoryDB, RandomState, Recorder, StorageProof, Trie, TrieMut, TrieRecorder,
@@ -153,7 +153,7 @@ impl<T: Config> ValidatorSet<T::AccountId> for Pallet<T> {
 	type ValidatorId = T::ValidatorId;
 	type ValidatorIdOf = T::ValidatorIdOf;
 
-	fn session_index() -> sp_staking::SessionIndex {
+	fn session_index() -> soil_staking::SessionIndex {
 		super::Pallet::<T>::current_index()
 	}
 

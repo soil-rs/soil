@@ -15,7 +15,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-pub use sp_inherents::{
+pub use soil_inherents::{
 	CheckInherentsResult, InherentData, InherentIdentifier, IsFatalError, MakeFatalError,
 };
 
@@ -24,7 +24,7 @@ pub use sp_inherents::{
 /// The pallet may provide an inherent, verify an inherent, or both provide and verify.
 ///
 /// Briefly, inherent extrinsics ("inherents") are extrinsics that are added to a block by the block
-/// producer. See [`sp_inherents`] for more documentation on inherents.
+/// producer. See [`soil_inherents`] for more documentation on inherents.
 pub trait ProvideInherent {
 	/// The call type of the pallet.
 	type Call;

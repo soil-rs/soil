@@ -33,21 +33,21 @@ use soil_keystore::KeystorePtr;
 use std::sync::Arc;
 
 use sc_consensus::{BlockImportParams, ForkChoiceStrategy, Verifier};
-use sp_api::{ProvideRuntimeApi, StorageProof};
-use sp_blockchain::{HeaderBackend, HeaderMetadata};
-use sp_consensus_babe::{
+use soil_api::{ProvideRuntimeApi, StorageProof};
+use soil_blockchain::{HeaderBackend, HeaderMetadata};
+use soil_consensus_babe::{
 	digests::{NextEpochDescriptor, PreDigest, SecondaryPlainPreDigest},
 	inherents::BabeInherentData,
 	AuthorityId, BabeApi, BabeAuthorityWeight, BabeConfiguration, ConsensusLog, BABE_ENGINE_ID,
 };
-use sp_consensus_slots::Slot;
-use sp_inherents::InherentData;
+use soil_consensus_slots::Slot;
+use soil_inherents::InherentData;
 use soil_runtime::{
 	generic::Digest,
 	traits::{Block as BlockT, Header},
 	DigestItem,
 };
-use sp_timestamp::TimestampInherentData;
+use soil_timestamp::TimestampInherentData;
 
 /// Provides BABE-compatible predigests and BlockImportParams.
 /// Intended for use with BABE runtimes.
@@ -92,7 +92,7 @@ impl<B: BlockT, C> BabeVerifier<B, C> {
 impl<B, C> Verifier<B> for BabeVerifier<B, C>
 where
 	B: BlockT,
-	C: HeaderBackend<B> + HeaderMetadata<B, Error = sp_blockchain::Error>,
+	C: HeaderBackend<B> + HeaderMetadata<B, Error = soil_blockchain::Error>,
 {
 	async fn verify(
 		&self,
@@ -119,7 +119,7 @@ where
 				pre_digest.slot(),
 			)
 			.map_err(|e| format!("failed to fetch epoch_descriptor: {}", e))?
-			.ok_or_else(|| format!("{}", sp_consensus::Error::InvalidAuthoritiesSet))?;
+			.ok_or_else(|| format!("{}", soil_consensus::Error::InvalidAuthoritiesSet))?;
 		// drop the lock
 		drop(epoch_changes);
 
@@ -136,7 +136,7 @@ where
 	C: AuxStore
 		+ HeaderBackend<B>
 		+ ProvideRuntimeApi<B>
-		+ HeaderMetadata<B, Error = sp_blockchain::Error>
+		+ HeaderMetadata<B, Error = soil_blockchain::Error>
 		+ UsageProvider<B>,
 	C::Api: BabeApi<B>,
 {
@@ -165,13 +165,13 @@ where
 				slot,
 			)
 			.map_err(|e| Error::StringError(format!("failed to fetch epoch_descriptor: {}", e)))?
-			.ok_or(sp_consensus::Error::InvalidAuthoritiesSet)?;
+			.ok_or(soil_consensus::Error::InvalidAuthoritiesSet)?;
 
 		let epoch = epoch_changes
 			.viable_epoch(&epoch_descriptor, |slot| Epoch::genesis(&self.config, slot))
 			.ok_or_else(|| {
 				log::info!(target: LOG_TARGET, "create_digest: no viable_epoch :(");
-				sp_consensus::Error::InvalidAuthoritiesSet
+				soil_consensus::Error::InvalidAuthoritiesSet
 			})?;
 
 		Ok(epoch.as_ref().clone())
@@ -183,7 +183,7 @@ where
 	B: BlockT,
 	C: AuxStore
 		+ HeaderBackend<B>
-		+ HeaderMetadata<B, Error = sp_blockchain::Error>
+		+ HeaderMetadata<B, Error = soil_blockchain::Error>
 		+ UsageProvider<B>
 		+ ProvideRuntimeApi<B>,
 	C::Api: BabeApi<B>,
@@ -217,13 +217,13 @@ where
 				.map_err(|e| {
 					Error::StringError(format!("failed to fetch epoch_descriptor: {}", e))
 				})?
-				.ok_or(sp_consensus::Error::InvalidAuthoritiesSet)?;
+				.ok_or(soil_consensus::Error::InvalidAuthoritiesSet)?;
 
 			match epoch_descriptor {
 				ViableEpochDescriptor::Signaled(identifier, _epoch_header) => {
 					let epoch_mut = epoch_changes
 						.epoch_mut(&identifier)
-						.ok_or(sp_consensus::Error::InvalidAuthoritiesSet)?;
+						.ok_or(soil_consensus::Error::InvalidAuthoritiesSet)?;
 
 					// mutate the current epoch
 					epoch_mut.authorities = self.authorities.clone();
@@ -268,7 +268,7 @@ where
 				slot,
 			)
 			.map_err(|e| Error::StringError(format!("failed to fetch epoch_descriptor: {}", e)))?
-			.ok_or(sp_consensus::Error::InvalidAuthoritiesSet)?;
+			.ok_or(soil_consensus::Error::InvalidAuthoritiesSet)?;
 		// drop the lock
 		drop(epoch_changes);
 		// a quick check to see if we're in the authorities

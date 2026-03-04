@@ -37,7 +37,7 @@ use crate::{
 	LOG_TARGET,
 };
 use soil_application_crypto::RuntimeAppPublic;
-use sp_consensus_beefy::{AuthorityIdBound, ValidatorSet, ValidatorSetId, VoteMessage};
+use soil_consensus_beefy::{AuthorityIdBound, ValidatorSet, ValidatorSetId, VoteMessage};
 
 // Timeout for rebroadcasting messages.
 #[cfg(not(test))]
@@ -496,7 +496,7 @@ pub(crate) mod tests {
 	use crate::{communication::peers::PeerReport, keystore::BeefyKeystore};
 	use sc_network_test::Block;
 	use soil_application_crypto::key_types::BEEFY as BEEFY_KEY_TYPE;
-	use sp_consensus_beefy::{
+	use soil_consensus_beefy::{
 		ecdsa_crypto, known_payloads, test_utils::Keyring, Commitment, MmrRootHash, Payload,
 		SignedCommitment, VoteMessage,
 	};

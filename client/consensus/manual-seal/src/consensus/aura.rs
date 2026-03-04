@@ -22,15 +22,15 @@
 use crate::{ConsensusDataProvider, Error};
 use sc_client_api::{AuxStore, UsageProvider};
 use sc_consensus::BlockImportParams;
-use sp_api::{ProvideRuntimeApi, StorageProof};
-use sp_consensus_aura::{
+use soil_api::{ProvideRuntimeApi, StorageProof};
+use soil_consensus_aura::{
 	digests::CompatibleDigestItem,
 	sr25519::{AuthorityId, AuthoritySignature},
 	AuraApi, Slot, SlotDuration,
 };
-use sp_inherents::InherentData;
+use soil_inherents::InherentData;
 use soil_runtime::{traits::Block as BlockT, Digest, DigestItem};
-use sp_timestamp::TimestampInherentData;
+use soil_timestamp::TimestampInherentData;
 use std::{marker::PhantomData, sync::Arc};
 
 /// Consensus data provider for Aura. This allows to use manual-seal driven nodes to author valid
@@ -48,7 +48,7 @@ where
 	B: BlockT,
 {
 	/// Creates a new instance of the [`AuraConsensusDataProvider`], requires that `client`
-	/// implements [`sp_consensus_aura::AuraApi`]
+	/// implements [`soil_consensus_aura::AuraApi`]
 	pub fn new<C>(client: Arc<C>) -> Self
 	where
 		C: AuxStore + ProvideRuntimeApi<B> + UsageProvider<B>,

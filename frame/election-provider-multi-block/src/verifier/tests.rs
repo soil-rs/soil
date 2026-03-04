@@ -27,7 +27,7 @@ use crate::{
 use frame_election_provider_support::Support;
 use frame_support::{assert_noop, assert_ok};
 use soil_core::bounded_vec;
-use sp_npos_elections::ElectionScore;
+use soil_npos_elections::ElectionScore;
 use soil_runtime::{traits::Bounded, PerU16};
 
 mod feasibility_check {
@@ -119,7 +119,7 @@ mod feasibility_check {
 
 			assert_noop!(
 				VerifierPallet::feasibility_check_page_inner(paged.solution_pages[0].clone(), 0),
-				FeasibilityError::NposElection(sp_npos_elections::Error::SolutionInvalidIndex)
+				FeasibilityError::NposElection(soil_npos_elections::Error::SolutionInvalidIndex)
 			);
 		})
 	}
@@ -153,7 +153,7 @@ mod feasibility_check {
 						paged.solution_pages[0].clone(),
 						0
 					),
-					FeasibilityError::NposElection(sp_npos_elections::Error::SolutionInvalidIndex),
+					FeasibilityError::NposElection(soil_npos_elections::Error::SolutionInvalidIndex),
 				);
 			})
 	}
@@ -577,7 +577,7 @@ mod async_verification {
 				verifier_events_since_last_call(),
 				vec![Event::<Runtime>::VerificationFailed(
 					0,
-					FeasibilityError::NposElection(sp_npos_elections::Error::SolutionInvalidIndex)
+					FeasibilityError::NposElection(soil_npos_elections::Error::SolutionInvalidIndex)
 				),]
 			);
 
@@ -1059,7 +1059,7 @@ mod multi_page_sync_verification {
 					paged.score,
 				)
 				.unwrap_err(),
-				FeasibilityError::NposElection(sp_npos_elections::Error::SolutionInvalidIndex)
+				FeasibilityError::NposElection(soil_npos_elections::Error::SolutionInvalidIndex)
 			);
 
 			assert_eq!(
@@ -1069,7 +1069,7 @@ mod multi_page_sync_verification {
 					Event::<Runtime>::VerificationFailed(
 						2,
 						FeasibilityError::NposElection(
-							sp_npos_elections::Error::SolutionInvalidIndex
+							soil_npos_elections::Error::SolutionInvalidIndex
 						)
 					),
 				]

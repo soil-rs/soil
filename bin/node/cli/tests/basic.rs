@@ -704,7 +704,7 @@ fn successful_execution_gives_ok() {
 #[test]
 fn should_import_block_with_test_client() {
 	use node_testing::client::{
-		sp_consensus::BlockOrigin, ClientBlockImportExt, TestClientBuilder, TestClientBuilderExt,
+		soil_consensus::BlockOrigin, ClientBlockImportExt, TestClientBuilder, TestClientBuilderExt,
 	};
 
 	let client = TestClientBuilder::new().build();
@@ -721,7 +721,7 @@ fn default_config_as_json_works() {
 	let r = executor_call(
 		&mut t,
 		"GenesisBuilder_get_preset",
-		&None::<&sp_genesis_builder::PresetId>.encode(),
+		&None::<&soil_genesis_builder::PresetId>.encode(),
 	)
 	.0
 	.unwrap();

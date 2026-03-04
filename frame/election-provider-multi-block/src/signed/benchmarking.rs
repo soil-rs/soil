@@ -25,7 +25,7 @@ use frame_benchmarking::v2::*;
 use frame_election_provider_support::ElectionProvider;
 use frame_support::pallet_prelude::*;
 use frame_system::RawOrigin;
-use sp_npos_elections::ElectionScore;
+use soil_npos_elections::ElectionScore;
 use soil_runtime::traits::One;
 use soil_std::boxed::Box;
 

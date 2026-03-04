@@ -39,7 +39,7 @@ shlex = { workspace = true }
 soil-core = { optional = true, workspace = true, default-features = true }
 soil-io = { optional = true, workspace = true, default-features = true }
 soil-tracing = { optional = true, workspace = true, default-features = true }
-sp-version = { optional = true, workspace = true, default-features = true }
+soil-version = { optional = true, workspace = true, default-features = true }
 
 [features]
 # Enable support for generating the metadata hash.
@@ -58,5 +58,5 @@ metadata-hash = [
 	"soil-core",
 	"soil-io",
 	"soil-tracing",
-	"sp-version",
+	"soil-version",
 ]

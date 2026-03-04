@@ -39,7 +39,7 @@ parameter_types! {
 		authoring_version: 1,
 		spec_version: 1,
 		impl_version: 1,
-		apis: sp_version::create_apis_vec!([]),
+		apis: soil_version::create_apis_vec!([]),
 		transaction_version: 1,
 		system_version: 1,
 	};

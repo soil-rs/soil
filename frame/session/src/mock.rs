@@ -32,7 +32,7 @@ use soil_runtime::{
 	traits::{Convert, OpaqueKeys},
 	BuildStorage,
 };
-use sp_staking::SessionIndex;
+use soil_staking::SessionIndex;
 use std::collections::BTreeMap;
 
 impl_opaque_keys! {

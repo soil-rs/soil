@@ -20,11 +20,11 @@
 
 use sc_client_api::backend;
 use sc_executor::RuntimeVersionOf;
-use sp_blockchain::{HeaderBackend, Result};
+use soil_blockchain::{HeaderBackend, Result};
 use soil_core::traits::{FetchRuntimeCode, RuntimeCode, WrappedRuntimeCode};
 use soil_runtime::traits::{Block as BlockT, NumberFor};
 use soil_state_machine::BasicExternalities;
-use sp_version::RuntimeVersion;
+use soil_version::RuntimeVersion;
 use std::{
 	collections::{hash_map::DefaultHasher, HashMap},
 	hash::Hasher as _,
@@ -83,7 +83,7 @@ pub enum WasmSubstituteError {
 	VersionInvalid(String),
 }
 
-impl From<WasmSubstituteError> for sp_blockchain::Error {
+impl From<WasmSubstituteError> for soil_blockchain::Error {
 	fn from(err: WasmSubstituteError) -> Self {
 		Self::Application(Box::new(err))
 	}

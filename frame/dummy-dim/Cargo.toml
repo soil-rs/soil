@@ -19,7 +19,7 @@ frame-support = { workspace = true }
 frame-system = { workspace = true }
 log = { workspace = true }
 scale-info = { workspace = true, features = ["derive"] }
-sp-api = { workspace = true }
+soil-api = { workspace = true }
 soil-arithmetic = { workspace = true }
 soil-core = { workspace = true }
 soil-io = { workspace = true }
@@ -39,7 +39,7 @@ std = [
 	"log/std",
 	"pallet-people/std",
 	"scale-info/std",
-	"sp-api/std",
+	"soil-api/std",
 	"soil-arithmetic/std",
 	"soil-core/std",
 	"soil-io/std",
