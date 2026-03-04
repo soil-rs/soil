@@ -1,0 +1,150 @@
+# Migration Plan: Substrate to Soil
+
+See [specs/migration.md](../specs/migration.md) for the design rationale.
+
+## Strategy
+
+Bottom-up migration following the dependency graph. Rename crates tier by tier,
+starting from leaf crates with zero internal dependencies. Each tier is only
+started once all its dependencies in prior tiers are fully migrated.
+
+## Dependency Tiers (sp-* crates)
+
+The `sp-*` crates form a clean DAG with no circular non-dev dependencies.
+
+```
+Tier 0  (13 crates)  ── no internal deps
+Tier 1  ( 3 crates)  ── depends on T0 only
+Tier 2  ( 1 crate )  ── depends on T0-1
+Tier 3  ( 2 crates)  ── depends on T0-2        ← sp-core, sp-runtime-interface
+Tier 4  ( 4 crates)  ── depends on T0-3        ← sp-keystore, sp-trie
+Tier 5  ( 1 crate )  ── depends on T0-4        ← sp-state-machine
+Tier 6  ( 1 crate )  ── depends on T0-5        ← sp-io
+Tier 7  ( 1 crate )  ── depends on T0-6        ← sp-application-crypto
+Tier 8  ( 1 crate )  ── depends on T0-7        ← sp-runtime  (41 consumers)
+Tier 9  ( 6 crates)  ── depends on T0-8        ← sp-inherents, sp-version, ...
+Tier 10 ( 2 crates)  ── depends on T0-9        ← sp-api, sp-timestamp
+Tier 11 (14 crates)  ── depends on T0-10       ← consensus, domain primitives
+Tier 12 ( 5 crates)  ── depends on T0-11       ← sp-blockchain, sp-consensus-babe, ...
+```
+
+Critical path (longest chain):
+```
+sp-debug-derive (T0) → sp-storage (T1) → sp-externalities (T2) → sp-core (T3)
+→ sp-trie (T4) → sp-state-machine (T5) → sp-io (T6) → sp-application-crypto (T7)
+→ sp-runtime (T8) → sp-api (T10)
+```
+
+## Phases
+
+### Phase 1 — Tier 0 leaf crates (sp-* → soil-*)
+
+Rename, move to `soil/` directory, add `std` feature where missing. These 13
+crates can be migrated in parallel since they have no internal dependencies.
+
+| Old Crate                          | New Crate                          | Status |
+|------------------------------------|------------------------------------|--------|
+| `sp-api-proc-macro`               | `soil-api-proc-macro`              | TODO   |
+| `sp-arithmetic`                   | `soil-arithmetic`                  | TODO   |
+| `sp-crypto-hashing`               | `soil-crypto-hashing`              | TODO   |
+| `sp-database`                     | `soil-database`                    | TODO   |
+| `sp-debug-derive`                 | `soil-debug-derive`                | TODO   |
+| `sp-maybe-compressed-blob`        | `soil-maybe-compressed-blob`       | TODO   |
+| `sp-metadata-ir`                  | `soil-metadata-ir`                 | TODO   |
+| `sp-panic-handler`                | `soil-panic-handler`               | TODO   |
+| `sp-runtime-interface-proc-macro` | `soil-runtime-interface-proc-macro` | TODO   |
+| `sp-std`                          | `soil-std`                         | TODO   |
+| `sp-tracing`                      | `soil-tracing`                     | TODO   |
+| `sp-version-proc-macro`           | `soil-version-proc-macro`          | TODO   |
+| `sp-wasm-interface`               | `soil-wasm-interface`              | TODO   |
+
+### Phase 2 — Tiers 1-8 (sp-* → soil-*, critical path)
+
+Migrate one tier at a time up the critical path. Each tier unlocks the next.
+
+| Tier | Crates | Status |
+|------|--------|--------|
+| 1 | `sp-crypto-hashing-proc-macro`, `sp-storage`, `sp-weights` | TODO |
+| 2 | `sp-externalities` | TODO |
+| 3 | `sp-core`, `sp-runtime-interface` | TODO |
+| 4 | `sp-crypto-ec-utils`, `sp-keystore`, `sp-rpc`, `sp-trie` | TODO |
+| 5 | `sp-state-machine` | TODO |
+| 6 | `sp-io` | TODO |
+| 7 | `sp-application-crypto` | TODO |
+| 8 | `sp-runtime` | TODO |
+
+### Phase 3 — Tiers 9-12 (remaining sp-* → soil-*)
+
+| Tier | Crates | Status |
+|------|--------|--------|
+| 9 | `sp-inherents`, `sp-keyring`, `sp-npos-elections`, `sp-staking`, `sp-test-primitives`, `sp-version` | TODO |
+| 10 | `sp-api`, `sp-timestamp` | TODO |
+| 11 | `sp-authority-discovery`, `sp-block-builder`, `sp-consensus`, `sp-consensus-grandpa`, `sp-consensus-pow`, `sp-consensus-slots`, `sp-genesis-builder`, `sp-mixnet`, `sp-mmr-primitives`, `sp-offchain`, `sp-session`, `sp-statement-store`, `sp-transaction-pool`, `sp-transaction-storage-proof` | TODO |
+| 12 | `sp-blockchain`, `sp-consensus-aura`, `sp-consensus-babe`, `sp-consensus-beefy`, `sp-consensus-sassafras` | TODO |
+
+### Phase 4 — Merge sp-*/sc-* pairs into soil-*
+
+Merge the `sc-*` implementation into its corresponding `soil-*` crate behind
+`#[cfg(feature = "std")]`. Start with thin trait+impl pairs.
+
+| Merged Crate | sp-* Source | sc-* Source | Complexity | Status |
+|---|---|---|---|---|
+| `soil-keystore` | `sp-keystore` | `sc-keystore` | Low | TODO |
+| `soil-offchain` | `sp-offchain` | `sc-offchain` | Low | TODO |
+| `soil-tracing` | `sp-tracing` | `sc-tracing` | Low | TODO |
+| `soil-authority-discovery` | `sp-authority-discovery` | `sc-authority-discovery` | Medium | TODO |
+| `soil-block-builder` | `sp-block-builder` | `sc-block-builder` | Medium | TODO |
+| `soil-consensus` | `sp-consensus` | `sc-consensus` | Medium | TODO |
+| `soil-consensus-aura` | `sp-consensus-aura` | `sc-consensus-aura` | Medium | TODO |
+| `soil-consensus-babe` | `sp-consensus-babe` | `sc-consensus-babe` | Medium | TODO |
+| `soil-consensus-beefy` | `sp-consensus-beefy` | `sc-consensus-beefy` | Medium | TODO |
+| `soil-consensus-grandpa` | `sp-consensus-grandpa` | `sc-consensus-grandpa` | Medium | TODO |
+| `soil-consensus-pow` | `sp-consensus-pow` | `sc-consensus-pow` | Medium | TODO |
+| `soil-consensus-slots` | `sp-consensus-slots` | `sc-consensus-slots` | Medium | TODO |
+| `soil-mixnet` | `sp-mixnet` | `sc-mixnet` | Medium | TODO |
+| `soil-rpc` | `sp-rpc` | `sc-rpc` | Medium | TODO |
+| `soil-statement-store` | `sp-statement-store` | `sc-statement-store` | Medium | TODO |
+| `soil-transaction-pool` | `sp-transaction-pool` | `sc-transaction-pool` | Medium | TODO |
+
+### Phase 5 — Standalone sc-* crates (sc-* → soil-*)
+
+Rename `sc-*` crates that have no `sp-*` counterpart. Add `std` feature (no_std
+build produces empty library).
+
+Remaining sc-* crates (not listed in Phase 4):
+`sc-allocator`, `sc-basic-authorship`, `sc-chain-spec`, `sc-cli`,
+`sc-client-api`, `sc-client-db`, `sc-consensus-epochs`,
+`sc-consensus-manual-seal`, `sc-executor`, `sc-informant`, `sc-network`,
+`sc-proposer-metrics`, `sc-rpc-api`, `sc-rpc-server`, `sc-rpc-spec-v2`,
+`sc-service`, `sc-state-db`, `sc-storage-monitor`, `sc-sync-state-rpc`,
+`sc-sysinfo`, `sc-telemetry`, `sc-utils`, and sub-crates.
+
+Status: TODO
+
+### Phase 6 — FRAME / pallets (frame-*, pallet-* → topsoil-*)
+
+Rename and move to `topsoil/` directory. Verify the dependency invariant:
+`topsoil → soil` is allowed, `soil → topsoil` is forbidden.
+
+Status: TODO
+
+## Known Blockers
+
+| Issue | Affected | Resolution |
+|---|---|---|
+| `sp-statement-store` depends on `frame-support` | Phase 3 (T11) | Break the dep or defer to Phase 6 |
+| Proc-macro crates cannot be `no_std` | All phases | Exempt from `std` feature requirement (build-time only) |
+| `sp-runtime` has 41 sc-* consumers | Phase 2 (T8) | Expect large cascade of Cargo.toml updates |
+
+## Per-Crate Migration Checklist
+
+For each crate:
+
+1. Rename `Cargo.toml` package name (`sp-foo` → `soil-foo`)
+2. Move directory (`primitives/foo` → `soil/foo`)
+3. Ensure `std` feature exists and crate compiles under `no_std`
+4. Update workspace `Cargo.toml`: member path, `[workspace.dependencies]` entry
+5. Update all downstream `Cargo.toml` references
+6. Update all `use sp_foo::` → `use soil_foo::` in source files
+7. Verify `cargo check --workspace` passes
+8. Commit
