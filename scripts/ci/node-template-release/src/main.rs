@@ -457,8 +457,8 @@ members = ["node", "pallets/template", "runtime"]
 edition = "2021"
 
 [workspace.dependencies]
-topsoil-system = { version = "4.0.0-dev", default-features = true, git = "https://github.com/paritytech/polkadot-sdk.git", rev = "commit_id" }
 sp-io = { version = "7.0.0", git = "https://github.com/paritytech/polkadot-sdk.git", rev = "commit_id" }
+topsoil-system = { version = "4.0.0-dev", default-features = true, git = "https://github.com/paritytech/polkadot-sdk.git", rev = "commit_id" }
 
 [workspace.lints]
 
