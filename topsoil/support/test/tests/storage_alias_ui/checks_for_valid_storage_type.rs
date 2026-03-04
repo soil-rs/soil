@@ -15,7 +15,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#[frame_support::storage_alias]
+#[topsoil_support::storage_alias]
 type Ident = StorageValue<hello::World, u32>;
 
 fn main() {}

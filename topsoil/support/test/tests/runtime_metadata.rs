@@ -16,7 +16,7 @@
 // limitations under the License.
 #![allow(useless_deprecated)]
 
-use frame_support::{derive_impl, traits::ConstU32};
+use topsoil_support::{derive_impl, traits::ConstU32};
 use scale_info::{form::MetaForm, meta_type};
 use soil_metadata_ir::{
 	ItemDeprecationInfoIR, RuntimeApiMetadataIR, RuntimeApiMethodMetadataIR,
@@ -29,12 +29,12 @@ pub type Header = soil_runtime::generic::Header<u32, soil_runtime::traits::Blake
 pub type Block = soil_runtime::generic::Block<Header, UncheckedExtrinsic>;
 pub type UncheckedExtrinsic = soil_runtime::generic::UncheckedExtrinsic<u32, RuntimeCall, (), ()>;
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Runtime {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Runtime {
 	type BlockWeights = ();
 	type BlockLength = ();
 	type DbWeight = ();
-	type BaseCallFilter = frame_support::traits::Everything;
+	type BaseCallFilter = topsoil_support::traits::Everything;
 	type RuntimeOrigin = RuntimeOrigin;
 	type Nonce = u64;
 	type RuntimeCall = RuntimeCall;
@@ -55,10 +55,10 @@ impl frame_system::Config for Runtime {
 	type MaxConsumers = ConstU32<16>;
 }
 
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub enum Runtime
 	{
-		System: frame_system,
+		System: topsoil_system,
 	}
 );
 

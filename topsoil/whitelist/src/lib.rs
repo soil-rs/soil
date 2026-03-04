@@ -44,7 +44,7 @@ extern crate alloc;
 
 use alloc::boxed::Box;
 use codec::{DecodeLimit, Encode, FullCodec};
-use frame::{
+use topsoil::{
 	prelude::*,
 	traits::{QueryPreimage, StorePreimage},
 };
@@ -52,23 +52,23 @@ use scale_info::TypeInfo;
 
 pub use pallet::*;
 
-#[frame::pallet]
+#[topsoil::pallet]
 pub mod pallet {
 	use super::*;
 
 	#[pallet::config]
-	pub trait Config: frame_system::Config {
+	pub trait Config: topsoil_system::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// The overarching call type.
-		type RuntimeCall: IsType<<Self as frame_system::Config>::RuntimeCall>
+		type RuntimeCall: IsType<<Self as topsoil_system::Config>::RuntimeCall>
 			+ Dispatchable<RuntimeOrigin = Self::RuntimeOrigin, PostInfo = PostDispatchInfo>
 			+ GetDispatchInfo
 			+ FullCodec
 			+ TypeInfo
-			+ From<frame_system::Call<Self>>
+			+ From<topsoil_system::Call<Self>>
 			+ Parameter;
 
 		/// Required origin for whitelisting a call.
@@ -168,7 +168,7 @@ pub mod pallet {
 				.map_err(|_| Error::<T>::UnavailablePreImage)?;
 
 			let call = <T as Config>::RuntimeCall::decode_all_with_depth_limit(
-				frame::deps::frame_support::MAX_EXTRINSIC_DEPTH,
+				topsoil::deps::topsoil_support::MAX_EXTRINSIC_DEPTH,
 				&mut &call[..],
 			)
 			.map_err(|_| Error::<T>::UndecodableCall)?;
@@ -225,7 +225,7 @@ impl<T: Config> Pallet<T> {
 
 		T::Preimages::unrequest(&call_hash);
 
-		let result = call.dispatch(frame_system::Origin::<T>::Root.into());
+		let result = call.dispatch(topsoil_system::Origin::<T>::Root.into());
 
 		let call_actual_weight = match result {
 			Ok(call_post_info) => call_post_info.actual_weight,

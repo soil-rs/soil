@@ -15,16 +15,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use frame_benchmarking::v2::*;
+use topsoil_benchmarking::v2::*;
 #[allow(unused_imports)]
-use frame_support_test::Config;
+use topsoil_support_test::Config;
 
 #[benchmarks]
 mod benches {
 	use super::*;
 
 	#[benchmark]
-	fn bench() -> Result<(), frame_benchmarking::v2::BenchmarkError> {
+	fn bench() -> Result<(), topsoil_benchmarking::v2::BenchmarkError> {
 		#[block]
 		{}
 		Ok(())

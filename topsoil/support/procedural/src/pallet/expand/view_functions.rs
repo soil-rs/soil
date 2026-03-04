@@ -52,17 +52,17 @@ fn expand_view_function_prefix_impl(
 	where_clause: Option<&syn::WhereClause>,
 ) -> TokenStream {
 	let pallet_ident = &def.pallet_struct.pallet;
-	let frame_support = &def.frame_support;
-	let frame_system = &def.frame_system;
+	let topsoil_support = &def.topsoil_support;
+	let topsoil_system = &def.topsoil_system;
 	let type_impl_gen = &def.type_impl_generics(span);
 	let type_use_gen = &def.type_use_generics(span);
 
 	quote::quote! {
-		impl<#type_impl_gen> #frame_support::view_functions::ViewFunctionIdPrefix for #pallet_ident<#type_use_gen> #where_clause {
+		impl<#type_impl_gen> #topsoil_support::view_functions::ViewFunctionIdPrefix for #pallet_ident<#type_use_gen> #where_clause {
 			fn prefix() -> [::core::primitive::u8; 16usize] {
 				<
-					<T as #frame_system::Config>::PalletInfo
-					as #frame_support::traits::PalletInfo
+					<T as #topsoil_system::Config>::PalletInfo
+					as #topsoil_support::traits::PalletInfo
 				>::name_hash::<Pallet<#type_use_gen>>()
 					.expect("No name_hash found for the pallet in the runtime! This usually means that the pallet wasn't added to `construct_runtime!`.")
 			}
@@ -76,7 +76,7 @@ fn expand_view_function(
 	where_clause: Option<&syn::WhereClause>,
 	view_fn: &ViewFunctionDef,
 ) -> TokenStream {
-	let frame_support = &def.frame_support;
+	let topsoil_support = &def.topsoil_support;
 	let pallet_ident = &def.pallet_struct.pallet;
 	let type_impl_gen = &def.type_impl_generics(span);
 	let type_decl_bounded_gen = &def.type_decl_bounded_generics(span);
@@ -103,14 +103,14 @@ fn expand_view_function(
 		#( #[doc = #docs] )*
 		#[allow(missing_docs)]
 		#[derive(
-			#frame_support::DebugNoBound,
-			#frame_support::CloneNoBound,
-			#frame_support::EqNoBound,
-			#frame_support::PartialEqNoBound,
-			#frame_support::__private::codec::Encode,
-			#frame_support::__private::codec::Decode,
-			#frame_support::__private::codec::DecodeWithMemTracking,
-			#frame_support::__private::scale_info::TypeInfo,
+			#topsoil_support::DebugNoBound,
+			#topsoil_support::CloneNoBound,
+			#topsoil_support::EqNoBound,
+			#topsoil_support::PartialEqNoBound,
+			#topsoil_support::__private::codec::Encode,
+			#topsoil_support::__private::codec::Decode,
+			#topsoil_support::__private::codec::DecodeWithMemTracking,
+			#topsoil_support::__private::scale_info::TypeInfo,
 		)]
 		#[codec(encode_bound())]
 		#[codec(decode_bound())]
@@ -132,15 +132,15 @@ fn expand_view_function(
 			}
 		}
 
-		impl<#type_impl_gen> #frame_support::view_functions::ViewFunctionIdSuffix for #view_function_struct_ident<#type_use_gen> #where_clause {
+		impl<#type_impl_gen> #topsoil_support::view_functions::ViewFunctionIdSuffix for #view_function_struct_ident<#type_use_gen> #where_clause {
 			const SUFFIX: [::core::primitive::u8; 16usize] = [ #( #view_function_id_suffix_bytes ),* ];
 		}
 
-		impl<#type_impl_gen> #frame_support::view_functions::ViewFunction for #view_function_struct_ident<#type_use_gen> #where_clause {
-			fn id() -> #frame_support::view_functions::ViewFunctionId {
-				#frame_support::view_functions::ViewFunctionId {
-					prefix: <#pallet_ident<#type_use_gen> as #frame_support::view_functions::ViewFunctionIdPrefix>::prefix(),
-					suffix: <Self as #frame_support::view_functions::ViewFunctionIdSuffix>::SUFFIX,
+		impl<#type_impl_gen> #topsoil_support::view_functions::ViewFunction for #view_function_struct_ident<#type_use_gen> #where_clause {
+			fn id() -> #topsoil_support::view_functions::ViewFunctionId {
+				#topsoil_support::view_functions::ViewFunctionId {
+					prefix: <#pallet_ident<#type_use_gen> as #topsoil_support::view_functions::ViewFunctionIdPrefix>::prefix(),
+					suffix: <Self as #topsoil_support::view_functions::ViewFunctionIdSuffix>::SUFFIX,
 				}
 			}
 
@@ -160,7 +160,7 @@ fn impl_dispatch_view_function(
 	where_clause: Option<&syn::WhereClause>,
 	view_fns: &[ViewFunctionDef],
 ) -> TokenStream {
-	let frame_support = &def.frame_support;
+	let topsoil_support = &def.topsoil_support;
 	let pallet_ident = &def.pallet_struct.pallet;
 	let type_impl_gen = &def.type_impl_generics(span);
 	let type_use_gen = &def.type_use_generics(span);
@@ -168,26 +168,26 @@ fn impl_dispatch_view_function(
 	let query_match_arms = view_fns.iter().map(|view_fn| {
 		let view_function_struct_ident = view_fn.view_function_struct_ident();
 		quote::quote! {
-			<#view_function_struct_ident<#type_use_gen> as #frame_support::view_functions::ViewFunctionIdSuffix>::SUFFIX => {
-				<#view_function_struct_ident<#type_use_gen> as #frame_support::view_functions::ViewFunction>::execute(input, output)
+			<#view_function_struct_ident<#type_use_gen> as #topsoil_support::view_functions::ViewFunctionIdSuffix>::SUFFIX => {
+				<#view_function_struct_ident<#type_use_gen> as #topsoil_support::view_functions::ViewFunction>::execute(input, output)
 			}
 		}
 	});
 
 	quote::quote! {
-		impl<#type_impl_gen> #frame_support::view_functions::DispatchViewFunction
+		impl<#type_impl_gen> #topsoil_support::view_functions::DispatchViewFunction
 			for #pallet_ident<#type_use_gen> #where_clause
 		{
 			#[deny(unreachable_patterns)]
-			fn dispatch_view_function<O: #frame_support::__private::codec::Output>(
-				id: & #frame_support::view_functions::ViewFunctionId,
+			fn dispatch_view_function<O: #topsoil_support::__private::codec::Output>(
+				id: & #topsoil_support::view_functions::ViewFunctionId,
 				input: &mut &[u8],
 				output: &mut O
-			) -> Result<(), #frame_support::view_functions::ViewFunctionDispatchError>
+			) -> Result<(), #topsoil_support::view_functions::ViewFunctionDispatchError>
 			{
 				match id.suffix {
 					#( #query_match_arms )*
-					_ => Err(#frame_support::view_functions::ViewFunctionDispatchError::NotFound(id.clone())),
+					_ => Err(#topsoil_support::view_functions::ViewFunctionDispatchError::NotFound(id.clone())),
 				}
 			}
 		}
@@ -200,7 +200,7 @@ fn impl_view_function_metadata(
 	where_clause: Option<&syn::WhereClause>,
 	view_fns: &[ViewFunctionDef],
 ) -> TokenStream {
-	let frame_support = &def.frame_support;
+	let topsoil_support = &def.topsoil_support;
 	let pallet_ident = &def.pallet_struct.pallet;
 	let type_impl_gen = &def.type_impl_generics(span);
 	let type_use_gen = &def.type_use_generics(span);
@@ -215,9 +215,9 @@ fn impl_view_function_metadata(
 					let pat = &typed.pat;
 					let ty = &typed.ty;
 					Some(quote::quote! {
-						#frame_support::__private::metadata_ir::PalletViewFunctionParamMetadataIR {
+						#topsoil_support::__private::metadata_ir::PalletViewFunctionParamMetadataIR {
 							name: ::core::stringify!(#pat),
-							ty: #frame_support::__private::scale_info::meta_type::<#ty>(),
+							ty: #topsoil_support::__private::scale_info::meta_type::<#ty>(),
 						}
 					})
 				}
@@ -228,7 +228,7 @@ fn impl_view_function_metadata(
 		let doc = if cfg!(feature = "no-metadata-docs") { &no_docs } else { &view_fn.docs };
 
 		let deprecation = match crate::deprecation::get_deprecation(
-			&quote::quote! { #frame_support },
+			&quote::quote! { #topsoil_support },
 			&def.item.attrs,
 		) {
 			Ok(deprecation) => deprecation,
@@ -236,14 +236,14 @@ fn impl_view_function_metadata(
 		};
 
 		quote::quote! {
-			#frame_support::__private::metadata_ir::PalletViewFunctionMetadataIR {
+			#topsoil_support::__private::metadata_ir::PalletViewFunctionMetadataIR {
 				name: ::core::stringify!(#name),
-				id: <#view_function_struct_ident<#type_use_gen> as #frame_support::view_functions::ViewFunction>::id().into(),
-				inputs: #frame_support::__private::soil_std::vec![ #( #inputs ),* ],
-				output: #frame_support::__private::scale_info::meta_type::<
-					<#view_function_struct_ident<#type_use_gen> as #frame_support::view_functions::ViewFunction>::ReturnType
+				id: <#view_function_struct_ident<#type_use_gen> as #topsoil_support::view_functions::ViewFunction>::id().into(),
+				inputs: #topsoil_support::__private::soil_std::vec![ #( #inputs ),* ],
+				output: #topsoil_support::__private::scale_info::meta_type::<
+					<#view_function_struct_ident<#type_use_gen> as #topsoil_support::view_functions::ViewFunction>::ReturnType
 				>(),
-				docs: #frame_support::__private::soil_std::vec![ #( #doc ),* ],
+				docs: #topsoil_support::__private::soil_std::vec![ #( #doc ),* ],
 				deprecation_info: #deprecation,
 			}
 		}
@@ -253,8 +253,8 @@ fn impl_view_function_metadata(
 		impl<#type_impl_gen> #pallet_ident<#type_use_gen> #where_clause {
 			#[doc(hidden)]
 			pub fn pallet_view_functions_metadata()
-				-> #frame_support::__private::Vec<#frame_support::__private::metadata_ir::PalletViewFunctionMetadataIR> {
-				#frame_support::__private::vec![ #( #view_functions ),* ]
+				-> #topsoil_support::__private::Vec<#topsoil_support::__private::metadata_ir::PalletViewFunctionMetadataIR> {
+				#topsoil_support::__private::vec![ #( #view_functions ),* ]
 			}
 		}
 	}

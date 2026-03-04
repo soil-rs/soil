@@ -59,7 +59,7 @@ use syn::parse::{Parse, ParseStream};
 /// # fn main() {}
 /// use soil_runtime::curve::PiecewiseLinear;
 ///
-/// pallet_staking_reward_curve::build! {
+/// topsoil_staking_reward_curve::build! {
 ///     const I_NPOS: PiecewiseLinear<'static> = curve!(
 ///         min_inflation: 0_025_000,
 ///         max_inflation: 0_100_000,

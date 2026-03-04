@@ -555,7 +555,7 @@ mod test_iterators {
 	#[test]
 	fn double_map_reversible_reversible_iteration() {
 		soil_io::TestExternalities::default().execute_with(|| {
-			type DoubleMap = self::frame_system::DoubleMap<Runtime>;
+			type DoubleMap = self::topsoil_system::DoubleMap<Runtime>;
 
 			// All map iterator
 			let prefix = DoubleMap::prefix_hash().to_vec();

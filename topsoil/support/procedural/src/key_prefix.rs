@@ -15,7 +15,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use frame_support_procedural_tools::generate_access_from_frame_or_crate;
+use topsoil_support_procedural_tools::generate_access_from_frame_or_crate;
 use proc_macro2::{Span, TokenStream};
 use quote::{format_ident, quote, ToTokens};
 use syn::{Ident, Result};
@@ -28,7 +28,7 @@ pub fn impl_key_prefix_for_tuples(input: proc_macro::TokenStream) -> Result<Toke
 	}
 
 	let mut all_trait_impls = TokenStream::new();
-	let frame_support = generate_access_from_frame_or_crate("frame-support")?;
+	let topsoil_support = generate_access_from_frame_or_crate("topsoil-support")?;
 
 	for i in 2..=MAX_IDENTS {
 		let current_tuple = (0..i)
@@ -68,7 +68,7 @@ pub fn impl_key_prefix_for_tuples(input: proc_macro::TokenStream) -> Result<Toke
 				> HasReversibleKeyPrefix<( #( #kargs, )* )> for ( #( Key<#hashers, #current_tuple>, )* ) {
 					fn decode_partial_key(key_material: &[u8]) -> Result<
 						Self::Suffix,
-						#frame_support::__private::codec::Error,
+						#topsoil_support::__private::codec::Error,
 					> {
 						<#suffix_keygen>::decode_final_key(key_material).map(|k| k.0)
 					}

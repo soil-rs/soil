@@ -49,7 +49,7 @@ impl syn::parse::Parse for CreateTtReturnMacroDef {
 
 /// A proc macro that accepts a name and any number of key-value pairs, to be used to create a
 /// declarative macro that follows tt-call conventions and simply calls
-/// [`tt_call::tt_return`], accepting an optional `frame-support` argument and returning
+/// [`tt_call::tt_return`], accepting an optional `topsoil-support` argument and returning
 /// the key-value pairs that were supplied to the proc macro.
 ///
 /// # Example

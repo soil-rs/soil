@@ -21,14 +21,14 @@
 use crate::{
 	mock::*, BoundedSupport, BoundedSupports, IndexAssignment, NposSolution, TryFromOtherBounds,
 };
-use frame_support::traits::ConstU32;
+use topsoil_support::traits::ConstU32;
 use rand::SeedableRng;
 use soil_npos_elections::{Support, Supports};
 
 mod solution_type {
 	use super::*;
 	use codec::{Decode, Encode, MaxEncodedLen};
-	// these need to come from the same dev-dependency `frame-election-provider-support`, not from
+	// these need to come from the same dev-dependency `topsoil-election-provider-support`, not from
 	// the crate.
 	use crate::{generate_solution_type, Assignment, Error as NposError, NposSolution};
 	use core::fmt::Debug;
@@ -107,7 +107,7 @@ mod solution_type {
 				VoterIndex = u32,
 				TargetIndex = u16,
 				Accuracy = TestAccuracy,
-				MaxVoters = frame_support::traits::ConstU32::<20>,
+				MaxVoters = topsoil_support::traits::ConstU32::<20>,
 			>(16)
 		);
 

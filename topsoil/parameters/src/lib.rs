@@ -35,7 +35,7 @@
 //! This pallet exposes two APIs; one *inbound* side to update parameters, and one *outbound* side
 //! to access said parameters. Parameters themselves are defined in the runtime config and will be
 //! aggregated into an enum. Each parameter is addressed by a `key` and can have a default value.
-//! This is not done by the pallet but through the [`frame_support::dynamic_params::dynamic_params`]
+//! This is not done by the pallet but through the [`topsoil_support::dynamic_params::dynamic_params`]
 //! macro or alternatives.
 //!
 //! Note that this is incurring one storage read per access. This should not be a problem in most
@@ -51,8 +51,8 @@
 //!
 //! The outbound side is runtime facing for the most part. More general, it provides a `Get`
 //! implementation and can be used in every spot where that is accepted. Two macros are in place:
-//! [`frame_support::dynamic_params::define_parameters` and
-//! [`frame_support::dynamic_params:dynamic_pallet_params`] to define and expose parameters in a
+//! [`topsoil_support::dynamic_params::define_parameters` and
+//! [`topsoil_support::dynamic_params:dynamic_pallet_params`] to define and expose parameters in a
 //! typed manner.
 //!
 //! See the [`pallet`] module for more information about the interfaces this pallet exposes,
@@ -112,10 +112,10 @@
 //! implementor can then match on the key and the origin to decide whether the origin is
 //! permissioned to set the value.
 
-use frame_support::pallet_prelude::*;
-use frame_system::pallet_prelude::*;
+use topsoil_support::pallet_prelude::*;
+use topsoil_system::pallet_prelude::*;
 
-use frame_support::traits::{
+use topsoil_support::traits::{
 	dynamic_params::{AggregatedKeyValue, IntoKey, Key, RuntimeParameterStore, TryIntoKey},
 	EnsureOriginWithArg,
 };
@@ -134,20 +134,20 @@ type KeyOf<T> = <<T as Config>::RuntimeParameters as AggregatedKeyValue>::Key;
 /// The value type of a parameter.
 type ValueOf<T> = <<T as Config>::RuntimeParameters as AggregatedKeyValue>::Value;
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
 
 	#[pallet::config(with_default)]
-	pub trait Config: frame_system::Config {
+	pub trait Config: topsoil_system::Config {
 		/// The overarching event type.
 		#[pallet::no_default_bounds]
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// The overarching KV type of the parameters.
 		///
-		/// Usually created by [`frame_support::dynamic_params`] or equivalent.
+		/// Usually created by [`topsoil_support::dynamic_params`] or equivalent.
 		#[pallet::no_default_bounds]
 		type RuntimeParameters: AggregatedKeyValue;
 
@@ -215,23 +215,23 @@ pub mod pallet {
 	/// Default implementations of [`DefaultConfig`], which can be used to implement [`Config`].
 	pub mod config_preludes {
 		use super::*;
-		use frame_support::derive_impl;
+		use topsoil_support::derive_impl;
 
 		/// A configuration for testing.
 		pub struct TestDefaultConfig;
 
-		#[derive_impl(frame_system::config_preludes::TestDefaultConfig, no_aggregated_types)]
-		impl frame_system::DefaultConfig for TestDefaultConfig {}
+		#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig, no_aggregated_types)]
+		impl topsoil_system::DefaultConfig for TestDefaultConfig {}
 
-		#[frame_support::register_default_impl(TestDefaultConfig)]
+		#[topsoil_support::register_default_impl(TestDefaultConfig)]
 		impl DefaultConfig for TestDefaultConfig {
 			#[inject_runtime_type]
 			type RuntimeEvent = ();
 			#[inject_runtime_type]
 			type RuntimeParameters = ();
 
-			type AdminOrigin = frame_support::traits::AsEnsureOriginWithArg<
-				frame_system::EnsureRoot<Self::AccountId>,
+			type AdminOrigin = topsoil_support::traits::AsEnsureOriginWithArg<
+				topsoil_system::EnsureRoot<Self::AccountId>,
 			>;
 
 			type WeightInfo = ();

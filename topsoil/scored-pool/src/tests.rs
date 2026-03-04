@@ -20,12 +20,12 @@
 use super::*;
 use mock::*;
 
-use frame_support::{assert_noop, assert_ok, traits::OnInitialize};
+use topsoil_support::{assert_noop, assert_ok, traits::OnInitialize};
 use soil_runtime::traits::BadOrigin;
 
 type ScoredPool = Pallet<Test>;
-type System = frame_system::Pallet<Test>;
-type Balances = pallet_balances::Pallet<Test>;
+type System = topsoil_system::Pallet<Test>;
+type Balances = topsoil_balances::Pallet<Test>;
 
 #[test]
 fn query_membership_works() {
@@ -42,7 +42,7 @@ fn submit_candidacy_must_not_work() {
 	new_test_ext().execute_with(|| {
 		assert_noop!(
 			ScoredPool::submit_candidacy(RuntimeOrigin::signed(99)),
-			pallet_balances::Error::<Test, _>::InsufficientBalance,
+			topsoil_balances::Error::<Test, _>::InsufficientBalance,
 		);
 		assert_noop!(
 			ScoredPool::submit_candidacy(RuntimeOrigin::signed(40)),

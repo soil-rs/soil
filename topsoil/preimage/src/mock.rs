@@ -19,37 +19,37 @@
 
 use super::*;
 
-use crate as pallet_preimage;
-use frame_support::{
+use crate as topsoil_preimage;
+use topsoil_support::{
 	derive_impl, ord_parameter_types, parameter_types,
 	traits::{fungible::HoldConsideration, ConstU64},
 };
-use frame_system::EnsureSignedBy;
+use topsoil_system::EnsureSignedBy;
 use soil_core::H256;
 use soil_runtime::{
 	traits::{BlakeTwo256, Convert},
 	BuildStorage,
 };
 
-type Block = frame_system::mocking::MockBlock<Test>;
+type Block = topsoil_system::mocking::MockBlock<Test>;
 
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub enum Test
 	{
-		System: frame_system,
-		Balances: pallet_balances,
-		Preimage: pallet_preimage,
+		System: topsoil_system,
+		Balances: topsoil_balances,
+		Preimage: topsoil_preimage,
 	}
 );
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
 	type Block = Block;
-	type AccountData = pallet_balances::AccountData<u64>;
+	type AccountData = topsoil_balances::AccountData<u64>;
 }
 
-#[derive_impl(pallet_balances::config_preludes::TestDefaultConfig)]
-impl pallet_balances::Config for Test {
+#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
+impl topsoil_balances::Config for Test {
 	type ExistentialDeposit = ConstU64<5>;
 	type AccountStore = System;
 }
@@ -59,7 +59,7 @@ ord_parameter_types! {
 }
 
 parameter_types! {
-	pub const PreimageHoldReason: RuntimeHoldReason = RuntimeHoldReason::Preimage(pallet_preimage::HoldReason::Preimage);
+	pub const PreimageHoldReason: RuntimeHoldReason = RuntimeHoldReason::Preimage(topsoil_preimage::HoldReason::Preimage);
 }
 
 pub struct ConvertDeposit;
@@ -78,8 +78,8 @@ impl Config for Test {
 }
 
 pub fn new_test_ext() -> soil_io::TestExternalities {
-	let mut t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
-	let balances = pallet_balances::GenesisConfig::<Test> {
+	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let balances = topsoil_balances::GenesisConfig::<Test> {
 		balances: vec![(1, 100), (2, 100), (3, 100), (4, 100), (5, 100)],
 		..Default::default()
 	};
@@ -95,10 +95,10 @@ pub fn hashed(data: impl AsRef<[u8]>) -> H256 {
 pub fn insert_old_unrequested<T: Config>(
 	s: u32,
 	acc: T::AccountId,
-) -> <T as frame_system::Config>::Hash {
+) -> <T as topsoil_system::Config>::Hash {
 	// The preimage size does not matter here as it is not touched.
 	let preimage = s.to_le_bytes();
-	let hash = <T as frame_system::Config>::Hashing::hash(&preimage[..]);
+	let hash = <T as topsoil_system::Config>::Hashing::hash(&preimage[..]);
 
 	#[allow(deprecated)]
 	StatusFor::<T>::insert(

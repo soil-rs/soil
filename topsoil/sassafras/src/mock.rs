@@ -17,9 +17,9 @@
 
 //! Test utilities for Sassafras pallet.
 
-use crate::{self as pallet_sassafras, EpochChangeInternalTrigger, *};
+use crate::{self as topsoil_sassafras, EpochChangeInternalTrigger, *};
 
-use frame_support::{
+use topsoil_support::{
 	derive_impl,
 	traits::{ConstU32, OnFinalize, OnInitialize},
 };
@@ -43,39 +43,39 @@ const LOG_TARGET: &str = "sassafras::tests";
 const EPOCH_LENGTH: u32 = 10;
 const MAX_AUTHORITIES: u32 = 100;
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
-	type Block = frame_system::mocking::MockBlock<Test>;
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
+	type Block = topsoil_system::mocking::MockBlock<Test>;
 }
 
-impl<C> frame_system::offchain::CreateTransactionBase<C> for Test
+impl<C> topsoil_system::offchain::CreateTransactionBase<C> for Test
 where
 	RuntimeCall: From<C>,
 {
 	type RuntimeCall = RuntimeCall;
-	type Extrinsic = frame_system::mocking::MockUncheckedExtrinsic<Test>;
+	type Extrinsic = topsoil_system::mocking::MockUncheckedExtrinsic<Test>;
 }
 
-impl<C> frame_system::offchain::CreateBare<C> for Test
+impl<C> topsoil_system::offchain::CreateBare<C> for Test
 where
 	RuntimeCall: From<C>,
 {
 	fn create_bare(call: Self::RuntimeCall) -> Self::Extrinsic {
-		frame_system::mocking::MockUncheckedExtrinsic::<Test>::new_bare(call)
+		topsoil_system::mocking::MockUncheckedExtrinsic::<Test>::new_bare(call)
 	}
 }
 
-impl pallet_sassafras::Config for Test {
+impl topsoil_sassafras::Config for Test {
 	type EpochLength = ConstU32<EPOCH_LENGTH>;
 	type MaxAuthorities = ConstU32<MAX_AUTHORITIES>;
 	type EpochChangeTrigger = EpochChangeInternalTrigger;
 	type WeightInfo = ();
 }
 
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub enum Test {
-		System: frame_system,
-		Sassafras: pallet_sassafras,
+		System: topsoil_system,
+		Sassafras: topsoil_sassafras,
 	}
 );
 
@@ -103,9 +103,9 @@ pub fn new_test_ext_with_pairs(
 
 	let authorities: Vec<_> = pairs.iter().map(|p| p.public()).collect();
 
-	let mut storage = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let mut storage = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 
-	pallet_sassafras::GenesisConfig::<Test> {
+	topsoil_sassafras::GenesisConfig::<Test> {
 		authorities: authorities.clone(),
 		epoch_config: TEST_EPOCH_CONFIGURATION,
 		_phantom: core::marker::PhantomData,

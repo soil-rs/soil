@@ -26,7 +26,7 @@
 use alloc::vec::Vec;
 use codec::{Decode, Encode, EncodeLike, FullCodec};
 use core::marker::PhantomData;
-use frame::{
+use topsoil::{
 	deps::soil_io,
 	prelude::*,
 	runtime::prelude::storage::{StorageAppender, StorageList, StoragePrefixedContainer},
@@ -60,10 +60,10 @@ pub type ValueIndex = u32;
 /// are loaded once a page is read from storage. Iteration then happens on the cached elements. This
 /// reduces the number of storage `read` calls on the overlay. **Appending** to the list happens by
 /// appending to the last page by utilizing
-/// [`storage::append`](frame::deps::soil_io::storage::append). It allows to directly extend
+/// [`storage::append`](topsoil::deps::soil_io::storage::append). It allows to directly extend
 /// the elements of `values` vector of the page without loading the whole vector from storage. A new
 /// page is instantiated once [`Page::next`] overflows `ValuesPerNewPage`. Its vector will also be
-/// created through [`storage::append`](frame::deps::soil_io::storage::append). **Draining** advances
+/// created through [`storage::append`](topsoil::deps::soil_io::storage::append). **Draining** advances
 /// the internal indices identical to Iteration. It additionally persists the increments to storage
 /// and thereby 'drains' elements. Completely drained pages are deleted from storage.
 ///
@@ -83,7 +83,7 @@ pub struct StoragePagedList<Prefix, Value, ValuesPerNewPage> {
 
 /// The state of a [`StoragePagedList`].
 ///
-/// This struct doubles as [`frame::deps::frame_support::storage::StorageList::Appender`].
+/// This struct doubles as [`topsoil::deps::topsoil_support::storage::StorageList::Appender`].
 #[derive(
 	Encode, Decode, CloneNoBound, PartialEqNoBound, EqNoBound, DebugNoBound, DefaultNoBound,
 )]
@@ -407,7 +407,7 @@ where
 #[allow(dead_code)]
 pub(crate) mod mock {
 	pub use super::*;
-	use frame::testing_prelude::*;
+	use topsoil::testing_prelude::*;
 
 	parameter_types! {
 		pub const ValuesPerNewPage: u32 = 5;
@@ -428,7 +428,7 @@ pub(crate) mod mock {
 #[cfg(test)]
 mod tests {
 	use super::mock::*;
-	use frame::testing_prelude::*;
+	use topsoil::testing_prelude::*;
 
 	#[test]
 	fn append_works() {

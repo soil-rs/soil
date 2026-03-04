@@ -19,33 +19,33 @@
 
 #![cfg(test)]
 
-use crate as pallet_aura;
-use frame_support::{
+use crate as topsoil_aura;
+use topsoil_support::{
 	derive_impl, parameter_types,
 	traits::{ConstU32, ConstU64, DisabledValidators},
 };
 use soil_consensus_aura::{ed25519::AuthorityId, AuthorityIndex};
 use soil_runtime::{testing::UintAuthorityId, BuildStorage};
 
-type Block = frame_system::mocking::MockBlock<Test>;
+type Block = topsoil_system::mocking::MockBlock<Test>;
 
 pub const SLOT_DURATION: u64 = 2;
 
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub enum Test
 	{
-		System: frame_system,
-		Timestamp: pallet_timestamp,
-		Aura: pallet_aura,
+		System: topsoil_system,
+		Timestamp: topsoil_timestamp,
+		Aura: topsoil_aura,
 	}
 );
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
 	type Block = Block;
 }
 
-impl pallet_timestamp::Config for Test {
+impl topsoil_timestamp::Config for Test {
 	type Moment = u64;
 	type OnTimestampSet = Aura;
 	type MinimumPeriod = ConstU64<{ SLOT_DURATION / 2 }>;
@@ -80,7 +80,7 @@ impl DisabledValidators for MockDisabledValidators {
 	}
 }
 
-impl pallet_aura::Config for Test {
+impl topsoil_aura::Config for Test {
 	type AuthorityId = AuthorityId;
 	type DisabledValidators = MockDisabledValidators;
 	type MaxAuthorities = ConstU32<10>;
@@ -89,8 +89,8 @@ impl pallet_aura::Config for Test {
 }
 
 pub fn build_ext(authorities: Vec<u64>) -> soil_io::TestExternalities {
-	let mut storage = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
-	pallet_aura::GenesisConfig::<Test> {
+	let mut storage = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	topsoil_aura::GenesisConfig::<Test> {
 		authorities: authorities.into_iter().map(|a| UintAuthorityId(a).to_public_key()).collect(),
 	}
 	.assimilate_storage(&mut storage)

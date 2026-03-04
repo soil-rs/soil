@@ -15,20 +15,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use frame_support::derive_impl;
-use frame_system::pallet_prelude::BlockNumberFor;
+use topsoil_support::derive_impl;
+use topsoil_system::pallet_prelude::BlockNumberFor;
 use soil_core::{sr25519, ConstU64};
 use soil_runtime::{
 	generic,
 	traits::{BlakeTwo256, Verify},
 };
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 mod module {
 	use super::*;
-	use frame_support::pallet_prelude::*;
+	use topsoil_support::pallet_prelude::*;
 
-	pub type Request<T> = (<T as frame_system::Config>::AccountId, Role, BlockNumberFor<T>);
+	pub type Request<T> = (<T as topsoil_system::Config>::AccountId, Role, BlockNumberFor<T>);
 	pub type Requests<T> = Vec<Request<T>>;
 
 	#[derive(Copy, Clone, Eq, PartialEq, Debug, Encode, Decode, MaxEncodedLen, TypeInfo)]
@@ -83,7 +83,7 @@ mod module {
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
-	pub trait Config: frame_system::Config + TypeInfo {}
+	pub trait Config: topsoil_system::Config + TypeInfo {}
 
 	#[pallet::call]
 	impl<T: Config> Pallet<T> {}
@@ -134,7 +134,7 @@ mod module {
 	pub type RequestLifeTime<T: Config> = StorageValue<_, u64, ValueQuery, ConstU64<0>>;
 
 	#[pallet::genesis_config]
-	#[derive(frame_support::DefaultNoBound)]
+	#[derive(topsoil_support::DefaultNoBound)]
 	pub struct GenesisConfig<T: Config> {
 		pub enable_storage_role: bool,
 		pub request_life_time: u64,
@@ -161,9 +161,9 @@ pub type Header = generic::Header<BlockNumber, BlakeTwo256>;
 pub type UncheckedExtrinsic = generic::UncheckedExtrinsic<u32, RuntimeCall, Signature, ()>;
 pub type Block = generic::Block<Header, UncheckedExtrinsic>;
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Runtime {
-	type BaseCallFilter = frame_support::traits::Everything;
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Runtime {
+	type BaseCallFilter = topsoil_support::traits::Everything;
 	type Block = Block;
 	type RuntimeOrigin = RuntimeOrigin;
 	type RuntimeCall = RuntimeCall;
@@ -174,9 +174,9 @@ impl frame_system::Config for Runtime {
 
 impl module::Config for Runtime {}
 
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub enum Runtime {
-		System: frame_system,
+		System: topsoil_system,
 		Module: module,
 	}
 );

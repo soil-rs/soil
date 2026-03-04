@@ -15,17 +15,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 mod pallet {
-	use frame_support::pallet_prelude::*;
-	use frame_system::pallet_prelude::*;
+	use topsoil_support::pallet_prelude::*;
+	use topsoil_system::pallet_prelude::*;
 
 	#[pallet::config(with_default)]
-	pub trait Config: frame_system::Config {
+	pub trait Config: topsoil_system::Config {
 		#[pallet::no_default_bounds]
 		#[pallet::include_metadata]
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		#[pallet::constant]
 		type MyGetParam2: Get<u32>;

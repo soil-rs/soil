@@ -15,7 +15,7 @@
 
 use super::*;
 
-use frame_support::{
+use topsoil_support::{
 	assert_ok,
 	dispatch::{DispatchInfo, GetDispatchInfo, PostDispatchInfo},
 	pallet_prelude::*,
@@ -27,15 +27,15 @@ use frame_support::{
 	},
 	weights::Weight,
 };
-use frame_system as system;
+use topsoil_system as system;
 use mock::{ExtrinsicBaseWeight, *};
-use pallet_balances::Call as BalancesCall;
+use topsoil_balances::Call as BalancesCall;
 use soil_runtime::{
 	traits::{DispatchTransaction, StaticLookup},
 	BuildStorage,
 };
 
-const CALL: &<Runtime as frame_system::Config>::RuntimeCall =
+const CALL: &<Runtime as topsoil_system::Config>::RuntimeCall =
 	&RuntimeCall::Balances(BalancesCall::transfer_allow_death { dest: 2, value: 69 });
 
 pub struct ExtBuilder {
@@ -72,8 +72,8 @@ impl ExtBuilder {
 	}
 	pub fn build(self) -> soil_io::TestExternalities {
 		self.set_constants();
-		let mut t = frame_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
-		pallet_balances::GenesisConfig::<Runtime> {
+		let mut t = topsoil_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
+		topsoil_balances::GenesisConfig::<Runtime> {
 			balances: if self.balance_factor > 0 {
 				vec![
 					(1, 10 * self.balance_factor),
@@ -270,7 +270,7 @@ fn transaction_payment_in_asset_possible() {
 			// check that fee was charged in the given asset
 			assert_eq!(Assets::balance(asset_id, caller), balance - fee_in_asset);
 
-			System::assert_has_event(RuntimeEvent::Assets(pallet_assets::Event::Withdrawn {
+			System::assert_has_event(RuntimeEvent::Assets(topsoil_assets::Event::Withdrawn {
 				asset_id,
 				who: caller,
 				amount: fee_in_asset,
@@ -480,7 +480,7 @@ fn asset_transaction_payment_with_tip_and_refund() {
 			)
 			.unwrap();
 
-			System::assert_has_event(RuntimeEvent::Assets(pallet_assets::Event::Withdrawn {
+			System::assert_has_event(RuntimeEvent::Assets(topsoil_assets::Event::Withdrawn {
 				asset_id,
 				who: caller,
 				amount: fee_in_asset,
@@ -505,7 +505,7 @@ fn asset_transaction_payment_with_tip_and_refund() {
 			);
 			assert_eq!(Balances::free_balance(caller), 20 * balance_factor);
 
-			System::assert_has_event(RuntimeEvent::Assets(pallet_assets::Event::Deposited {
+			System::assert_has_event(RuntimeEvent::Assets(topsoil_assets::Event::Deposited {
 				asset_id,
 				who: caller,
 				amount: expected_token_refund,
@@ -902,13 +902,13 @@ fn no_fee_and_no_weight_for_other_origins() {
 
 		let len = CALL.encoded_size();
 
-		let origin = frame_system::RawOrigin::Root.into();
+		let origin = topsoil_system::RawOrigin::Root.into();
 		let (pre, origin) = ext.validate_and_prepare(origin, CALL, &info, len, 0).unwrap();
 
 		assert!(origin.as_system_ref().unwrap().is_root());
 
 		let pd_res = Ok(());
-		let mut post_info = frame_support::dispatch::PostDispatchInfo {
+		let mut post_info = topsoil_support::dispatch::PostDispatchInfo {
 			actual_weight: Some(info.total_weight()),
 			pays_fee: Default::default(),
 		};
@@ -949,7 +949,7 @@ fn transaction_payment_rejects_reduced_to_zero_in_native_asset() {
 
 			// Calculate the actual fee
 			let fee =
-				pallet_transaction_payment::Pallet::<Runtime>::compute_fee(len as u32, &info, tip);
+				topsoil_transaction_payment::Pallet::<Runtime>::compute_fee(len as u32, &info, tip);
 
 			// Set balance to cause ReducedToZero
 			let balance = ed + fee - 1;
@@ -1015,7 +1015,7 @@ fn transaction_payment_rejects_reduced_to_zero_in_asset() {
 			info.extension_weight = ext.weight(CALL);
 
 			let fee_in_native =
-				pallet_transaction_payment::Pallet::<Runtime>::compute_fee(len as u32, &info, tip);
+				topsoil_transaction_payment::Pallet::<Runtime>::compute_fee(len as u32, &info, tip);
 
 			let fee_in_asset = AssetConversion::quote_price_tokens_for_exact_tokens(
 				NativeOrWithId::WithId(asset_id),

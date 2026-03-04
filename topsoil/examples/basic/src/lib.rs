@@ -45,9 +45,9 @@
 //! This pallet provides basic examples of using:
 //!
 //! - A custom weight calculator able to classify a call's dispatch class (see:
-//!   [`frame_support::dispatch::DispatchClass`])
+//!   [`topsoil_support::dispatch::DispatchClass`])
 //! - Pallet hooks to implement some custom logic that's executed before and after a block is
-//!   imported (see: [`frame_support::traits::Hooks`])
+//!   imported (see: [`topsoil_support::traits::Hooks`])
 //! - Inherited weight annotation for pallet calls, used to create less repetition for calls that
 //!   use the [`Config::WeightInfo`] trait to calculate call weights. This can also be overridden,
 //!   as demonstrated by [`Call::set_dummy`].
@@ -65,13 +65,13 @@ extern crate alloc;
 use alloc::vec::Vec;
 use codec::{Decode, DecodeWithMemTracking, Encode};
 use core::marker::PhantomData;
-use frame_support::{
+use topsoil_support::{
 	dispatch::{ClassifyDispatch, DispatchClass, DispatchResult, Pays, PaysFee, WeighData},
 	pallet_prelude::TransactionSource,
 	traits::IsSubType,
 	weights::Weight,
 };
-use frame_system::ensure_signed;
+use topsoil_system::ensure_signed;
 use log::info;
 use scale_info::TypeInfo;
 use soil_runtime::{
@@ -94,7 +94,7 @@ pub mod weights;
 pub use weights::*;
 
 /// A type alias for the balance type from this pallet's point of view.
-type BalanceOf<T> = <T as pallet_balances::Config>::Balance;
+type BalanceOf<T> = <T as topsoil_balances::Config>::Balance;
 const MILLICENTS: u32 = 1_000_000_000;
 
 // A custom weight calculator tailored for the dispatch call `set_dummy()`. This actually examines
@@ -117,9 +117,9 @@ const MILLICENTS: u32 = 1_000_000_000;
 //
 // Manually configuring weight is an advanced operation and what you really need may well be
 //   fulfilled by running the benchmarking toolchain. Refer to `benchmarking.rs` file.
-struct WeightForSetDummy<T: pallet_balances::Config>(BalanceOf<T>);
+struct WeightForSetDummy<T: topsoil_balances::Config>(BalanceOf<T>);
 
-impl<T: pallet_balances::Config> WeighData<(&BalanceOf<T>,)> for WeightForSetDummy<T> {
+impl<T: topsoil_balances::Config> WeighData<(&BalanceOf<T>,)> for WeightForSetDummy<T> {
 	fn weigh_data(&self, target: (&BalanceOf<T>,)) -> Weight {
 		let multiplier = self.0;
 		// *target.0 is the amount passed into the extrinsic
@@ -128,7 +128,7 @@ impl<T: pallet_balances::Config> WeighData<(&BalanceOf<T>,)> for WeightForSetDum
 	}
 }
 
-impl<T: pallet_balances::Config> ClassifyDispatch<(&BalanceOf<T>,)> for WeightForSetDummy<T> {
+impl<T: topsoil_balances::Config> ClassifyDispatch<(&BalanceOf<T>,)> for WeightForSetDummy<T> {
 	fn classify_dispatch(&self, target: (&BalanceOf<T>,)) -> DispatchClass {
 		if *target.0 > <BalanceOf<T>>::from(1000u32) {
 			DispatchClass::Operational
@@ -138,7 +138,7 @@ impl<T: pallet_balances::Config> ClassifyDispatch<(&BalanceOf<T>,)> for WeightFo
 	}
 }
 
-impl<T: pallet_balances::Config> PaysFee<(&BalanceOf<T>,)> for WeightForSetDummy<T> {
+impl<T: topsoil_balances::Config> PaysFee<(&BalanceOf<T>,)> for WeightForSetDummy<T> {
 	fn pays_fee(&self, _target: (&BalanceOf<T>,)) -> Pays {
 		Pays::Yes
 	}
@@ -146,20 +146,20 @@ impl<T: pallet_balances::Config> PaysFee<(&BalanceOf<T>,)> for WeightForSetDummy
 
 // Definition of the pallet logic, to be aggregated at runtime definition through
 // `construct_runtime`.
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	// Import various types used to declare pallet in scope.
 	use super::*;
-	use frame_support::pallet_prelude::*;
-	use frame_system::pallet_prelude::*;
+	use topsoil_support::pallet_prelude::*;
+	use topsoil_system::pallet_prelude::*;
 
 	/// Our pallet's configuration trait. All our types and constants go in here. If the
 	/// pallet is dependent on specific other pallets, then their configuration traits
 	/// should be added to our implied traits list.
 	///
-	/// `frame_system::Config` should always be included.
+	/// `topsoil_system::Config` should always be included.
 	#[pallet::config]
-	pub trait Config: pallet_balances::Config + frame_system::Config {
+	pub trait Config: topsoil_balances::Config + topsoil_system::Config {
 		// Setting a constant config parameter from the runtime
 		#[pallet::constant]
 		type MagicNumber: Get<Self::Balance>;
@@ -173,7 +173,7 @@ pub mod pallet {
 	#[pallet::pallet]
 	pub struct Pallet<T>(_);
 
-	// This pallet implements the [`frame_support::traits::Hooks`] trait to define some logic to
+	// This pallet implements the [`topsoil_support::traits::Hooks`] trait to define some logic to
 	// execute in some context.
 	#[pallet::hooks]
 	impl<T: Config> Hooks<BlockNumberFor<T>> for Pallet<T> {
@@ -229,7 +229,7 @@ pub mod pallet {
 	// The `DispatchResultWithPostInfo` is required as part of the syntax (and can be found at
 	// `pallet_prelude::DispatchResultWithPostInfo`).
 	//
-	// There are three entries in the `frame_system::Origin` enum that correspond
+	// There are three entries in the `topsoil_system::Origin` enum that correspond
 	// to the above bullets: `::Signed(AccountId)`, `::Root` and `::None`. You should always match
 	// against them as the first thing you do in your function. There are three convenience calls
 	// in system that do the matching for you and return a convenient result: `ensure_signed`,
@@ -340,7 +340,7 @@ pub mod pallet {
 			// Print out log or debug message in the console via log::{error, warn, info, debug,
 			// trace}, accepting format strings similar to `println!`.
 			// https://paritytech.github.io/substrate/master/soil_io/logging/fn.log.html
-			// https://paritytech.github.io/substrate/master/frame_support/constant.LOG_TARGET.html
+			// https://paritytech.github.io/substrate/master/topsoil_support/constant.LOG_TARGET.html
 			info!("New value is now: {:?}", new_value);
 
 			// Put the new value into storage.
@@ -403,7 +403,7 @@ pub mod pallet {
 
 	// The genesis config type.
 	#[pallet::genesis_config]
-	#[derive(frame_support::DefaultNoBound)]
+	#[derive(topsoil_support::DefaultNoBound)]
 	pub struct GenesisConfig<T: Config> {
 		pub dummy: T::Balance,
 		pub bar: Vec<(T::AccountId, T::Balance)>,
@@ -494,10 +494,10 @@ impl<T: Config + Send + Sync> core::fmt::Debug for WatchDummy<T> {
 	}
 }
 
-impl<T: Config + Send + Sync> TransactionExtension<<T as frame_system::Config>::RuntimeCall>
+impl<T: Config + Send + Sync> TransactionExtension<<T as topsoil_system::Config>::RuntimeCall>
 	for WatchDummy<T>
 where
-	<T as frame_system::Config>::RuntimeCall: IsSubType<Call<T>>,
+	<T as topsoil_system::Config>::RuntimeCall: IsSubType<Call<T>>,
 {
 	const IDENTIFIER: &'static str = "WatchDummy";
 	type Implicit = ();
@@ -506,14 +506,14 @@ where
 
 	fn validate(
 		&self,
-		origin: DispatchOriginOf<<T as frame_system::Config>::RuntimeCall>,
-		call: &<T as frame_system::Config>::RuntimeCall,
-		_info: &DispatchInfoOf<<T as frame_system::Config>::RuntimeCall>,
+		origin: DispatchOriginOf<<T as topsoil_system::Config>::RuntimeCall>,
+		call: &<T as topsoil_system::Config>::RuntimeCall,
+		_info: &DispatchInfoOf<<T as topsoil_system::Config>::RuntimeCall>,
 		len: usize,
 		_self_implicit: Self::Implicit,
 		_inherited_implication: &impl Encode,
 		_source: TransactionSource,
-	) -> ValidateResult<Self::Val, <T as frame_system::Config>::RuntimeCall> {
+	) -> ValidateResult<Self::Val, <T as topsoil_system::Config>::RuntimeCall> {
 		// if the transaction is too big, just drop it.
 		if len > 200 {
 			return Err(InvalidTransaction::ExhaustsResources.into());
@@ -532,5 +532,5 @@ where
 		};
 		Ok((validity, (), origin))
 	}
-	impl_tx_ext_default!(<T as frame_system::Config>::RuntimeCall; weight prepare);
+	impl_tx_ext_default!(<T as topsoil_system::Config>::RuntimeCall; weight prepare);
 }

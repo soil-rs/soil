@@ -39,7 +39,7 @@ pub mod v1;
 pub mod __private {
 	pub use alloc::{boxed::Box, str, vec, vec::Vec};
 	pub use codec;
-	pub use frame_support::{storage, traits};
+	pub use topsoil_support::{storage, traits};
 	pub use log;
 	pub use paste;
 	pub use soil_core::defer;
@@ -72,7 +72,7 @@ pub use v1::*;
 /// #![cfg(feature = "runtime-benchmarks")]
 ///
 /// use super::{mock_helpers::*, Pallet as MyPallet};
-/// use frame_benchmarking::v2::*;
+/// use topsoil_benchmarking::v2::*;
 ///
 /// #[benchmarks]
 /// mod benchmarks {
@@ -188,12 +188,12 @@ pub use v1::*;
 /// The keywords `extra` and `skip_meta` can be provided as optional arguments to the
 /// `#[benchmark]` attribute, i.e. `#[benchmark(extra, skip_meta)]`. Including either of these
 /// will enable the `extra` or `skip_meta` option, respectively. These options enable the same
-/// behavior they did in the old benchmarking syntax in `frame_benchmarking`, namely:
+/// behavior they did in the old benchmarking syntax in `topsoil_benchmarking`, namely:
 ///
 /// #### `extra`
 ///
 /// Specifies that this benchmark should not normally run. To run benchmarks marked with
-/// `extra`, you will need to invoke the `frame-benchmarking-cli` with `--extra`.
+/// `extra`, you will need to invoke the `topsoil-benchmarking-cli` with `--extra`.
 ///
 /// #### `skip_meta`
 ///
@@ -223,8 +223,8 @@ pub use v1::*;
 ///
 /// ## Benchmark Tests
 ///
-/// Benchmark tests can be generated using the old syntax in `frame_benchmarking`,
-/// including the `frame_benchmarking::impl_benchmark_test_suite` macro.
+/// Benchmark tests can be generated using the old syntax in `topsoil_benchmarking`,
+/// including the `topsoil_benchmarking::impl_benchmark_test_suite` macro.
 ///
 /// An example is shown below (taken from the `message-queue` pallet's `benchmarking` module):
 /// ```ignore
@@ -283,7 +283,7 @@ pub use v1::*;
 /// #![cfg(feature = "runtime-benchmarks")]
 ///
 /// use super::{mock_helpers::*, Pallet as MyPallet};
-/// use frame_benchmarking::v2::*;
+/// use topsoil_benchmarking::v2::*;
 ///
 /// #[benchmarks]
 /// mod benchmarks {
@@ -316,8 +316,8 @@ pub use v1::*;
 ///
 /// To migrate your code from benchmarking v1 to benchmarking v2, you may follow these
 /// steps:
-/// 1. Change the import from `frame_benchmarking::v1::` to `frame_benchmarking::v2::*`, or
-///    `frame::benchmarking::prelude::*` under the umbrella crate;
+/// 1. Change the import from `topsoil_benchmarking::v1::` to `topsoil_benchmarking::v2::*`, or
+///    `topsoil::benchmarking::prelude::*` under the umbrella crate;
 /// 2. Move the code inside the v1 `benchmarks! { ... }` block to the v2 benchmarks module `mod
 ///    benchmarks { ... }` under the benchmarks macro (`#[benchmarks]` for a regular module, or
 ///    `#[instance_benchmarks]` to set up the module in instance benchmarking mode);
@@ -344,7 +344,7 @@ pub use v1::*;
 /// ```ignore
 /// #![cfg(feature = "runtime-benchmarks")]
 ///
-/// use frame_benchmarking::v1::*;
+/// use topsoil_benchmarking::v1::*;
 ///
 /// benchmarks! {
 ///
@@ -366,7 +366,7 @@ pub use v1::*;
 /// ```ignore
 /// #![cfg(feature = "runtime-benchmarks")]
 ///
-/// use frame_benchmarking::v2::*;
+/// use topsoil_benchmarking::v2::*;
 ///
 /// #[benchmarks]
 /// mod benchmarks {
@@ -390,7 +390,7 @@ pub use v1::*;
 /// ```
 pub mod v2 {
 	pub use super::*;
-	pub use frame_support_procedural::{
+	pub use topsoil_support_procedural::{
 		benchmark, benchmarks, block, extrinsic_call, instance_benchmarks,
 	};
 

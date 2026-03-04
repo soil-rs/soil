@@ -19,12 +19,12 @@
 
 #![cfg(test)]
 
-use frame_support::{
+use topsoil_support::{
 	derive_impl, parameter_types,
 	traits::{ConstU32, ConstU64},
 	weights::Weight,
 };
-use pallet_session::historical as pallet_session_historical;
+use topsoil_session::historical as pallet_session_historical;
 use soil_runtime::{testing::UintAuthorityId, traits::ConvertInto, BuildStorage, Permill};
 use soil_staking::{
 	offence::{OffenceError, ReportOffence},
@@ -34,13 +34,13 @@ use soil_staking::{
 use crate as imonline;
 use crate::Config;
 
-type Block = frame_system::mocking::MockBlock<Runtime>;
+type Block = topsoil_system::mocking::MockBlock<Runtime>;
 
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub enum Runtime {
-		System: frame_system,
-		Session: pallet_session,
-		Balances: pallet_balances,
+		System: topsoil_system,
+		Session: topsoil_session,
+		Balances: topsoil_balances,
 		ImOnline: imonline,
 		Historical: pallet_session_historical,
 	}
@@ -55,7 +55,7 @@ parameter_types! {
 }
 
 pub struct TestSessionManager;
-impl pallet_session::SessionManager<u64> for TestSessionManager {
+impl topsoil_session::SessionManager<u64> for TestSessionManager {
 	fn new_session(_new_index: SessionIndex) -> Option<Vec<u64>> {
 		Validators::mutate(|l| l.take())
 	}
@@ -63,7 +63,7 @@ impl pallet_session::SessionManager<u64> for TestSessionManager {
 	fn start_session(_: SessionIndex) {}
 }
 
-impl pallet_session::historical::SessionManager<u64, u64> for TestSessionManager {
+impl topsoil_session::historical::SessionManager<u64, u64> for TestSessionManager {
 	fn new_session(_new_index: SessionIndex) -> Option<Vec<(u64, u64)>> {
 		Validators::mutate(|l| {
 			l.take().map(|validators| validators.iter().map(|v| (*v, *v)).collect())
@@ -96,7 +96,7 @@ impl ReportOffence<u64, IdentificationTuple, Offence> for OffenceHandler {
 }
 
 pub fn new_test_ext() -> soil_io::TestExternalities {
-	let t = frame_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
+	let t = topsoil_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
 	let mut result: soil_io::TestExternalities = t.into();
 	// Set the default keys, otherwise session will discard the validator.
 	result.execute_with(|| {
@@ -108,14 +108,14 @@ pub fn new_test_ext() -> soil_io::TestExternalities {
 	result
 }
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Runtime {
-	type AccountData = pallet_balances::AccountData<u64>;
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Runtime {
+	type AccountData = topsoil_balances::AccountData<u64>;
 	type Block = Block;
 }
 
-#[derive_impl(pallet_balances::config_preludes::TestDefaultConfig)]
-impl pallet_balances::Config for Runtime {
+#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
+impl topsoil_balances::Config for Runtime {
 	type AccountStore = System;
 }
 
@@ -124,29 +124,29 @@ parameter_types! {
 	pub const Offset: u64 = 0;
 }
 
-impl pallet_session::Config for Runtime {
-	type ShouldEndSession = pallet_session::PeriodicSessions<Period, Offset>;
+impl topsoil_session::Config for Runtime {
+	type ShouldEndSession = topsoil_session::PeriodicSessions<Period, Offset>;
 	type SessionManager =
-		pallet_session::historical::NoteHistoricalRoot<Runtime, TestSessionManager>;
+		topsoil_session::historical::NoteHistoricalRoot<Runtime, TestSessionManager>;
 	type SessionHandler = (ImOnline,);
 	type ValidatorId = u64;
 	type ValidatorIdOf = ConvertInto;
 	type Keys = UintAuthorityId;
 	type RuntimeEvent = RuntimeEvent;
-	type NextSessionRotation = pallet_session::PeriodicSessions<Period, Offset>;
+	type NextSessionRotation = topsoil_session::PeriodicSessions<Period, Offset>;
 	type DisablingStrategy = ();
 	type WeightInfo = ();
 	type Currency = Balances;
 	type KeyDeposit = ();
 }
 
-impl pallet_session::historical::Config for Runtime {
+impl topsoil_session::historical::Config for Runtime {
 	type RuntimeEvent = RuntimeEvent;
 	type FullIdentification = u64;
 	type FullIdentificationOf = ConvertInto;
 }
 
-impl pallet_authorship::Config for Runtime {
+impl topsoil_authorship::Config for Runtime {
 	type FindAuthor = ();
 	type EventHandler = ImOnline;
 }
@@ -161,17 +161,17 @@ parameter_types! {
 
 pub struct TestNextSessionRotation;
 
-impl frame_support::traits::EstimateNextSessionRotation<u64> for TestNextSessionRotation {
+impl topsoil_support::traits::EstimateNextSessionRotation<u64> for TestNextSessionRotation {
 	fn average_session_length() -> u64 {
 		// take the mock result if any and return it
 		let mock = MockAverageSessionLength::mutate(|p| p.take());
 
-		mock.unwrap_or(pallet_session::PeriodicSessions::<Period, Offset>::average_session_length())
+		mock.unwrap_or(topsoil_session::PeriodicSessions::<Period, Offset>::average_session_length())
 	}
 
 	fn estimate_current_session_progress(now: u64) -> (Option<Permill>, Weight) {
 		let (estimate, weight) =
-			pallet_session::PeriodicSessions::<Period, Offset>::estimate_current_session_progress(
+			topsoil_session::PeriodicSessions::<Period, Offset>::estimate_current_session_progress(
 				now,
 			);
 
@@ -182,7 +182,7 @@ impl frame_support::traits::EstimateNextSessionRotation<u64> for TestNextSession
 	}
 
 	fn estimate_next_session_rotation(now: u64) -> (Option<u64>, Weight) {
-		pallet_session::PeriodicSessions::<Period, Offset>::estimate_next_session_rotation(now)
+		topsoil_session::PeriodicSessions::<Period, Offset>::estimate_next_session_rotation(now)
 	}
 }
 
@@ -198,7 +198,7 @@ impl Config for Runtime {
 	type MaxPeerInHeartbeats = ConstU32<10_000>;
 }
 
-impl<LocalCall> frame_system::offchain::CreateTransactionBase<LocalCall> for Runtime
+impl<LocalCall> topsoil_system::offchain::CreateTransactionBase<LocalCall> for Runtime
 where
 	RuntimeCall: From<LocalCall>,
 {
@@ -206,7 +206,7 @@ where
 	type Extrinsic = Extrinsic;
 }
 
-impl<LocalCall> frame_system::offchain::CreateBare<LocalCall> for Runtime
+impl<LocalCall> topsoil_system::offchain::CreateBare<LocalCall> for Runtime
 where
 	RuntimeCall: From<LocalCall>,
 {

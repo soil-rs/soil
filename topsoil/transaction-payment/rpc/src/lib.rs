@@ -28,14 +28,14 @@ use jsonrpsee::{
 		ErrorObjectOwned,
 	},
 };
-use pallet_transaction_payment_rpc_runtime_api::{FeeDetails, InclusionFee, RuntimeDispatchInfo};
+use topsoil_transaction_payment_rpc_runtime_api::{FeeDetails, InclusionFee, RuntimeDispatchInfo};
 use soil_api::ProvideRuntimeApi;
 use soil_blockchain::HeaderBackend;
 use soil_core::Bytes;
 use soil_rpc::number::NumberOrHex;
 use soil_runtime::traits::{Block as BlockT, MaybeDisplay};
 
-pub use pallet_transaction_payment_rpc_runtime_api::TransactionPaymentApi as TransactionPaymentRuntimeApi;
+pub use topsoil_transaction_payment_rpc_runtime_api::TransactionPaymentApi as TransactionPaymentRuntimeApi;
 
 #[rpc(client, server)]
 pub trait TransactionPaymentApi<BlockHash, ResponseType> {

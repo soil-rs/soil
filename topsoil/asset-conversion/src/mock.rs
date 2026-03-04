@@ -18,9 +18,9 @@
 //! Test environment for Asset Conversion pallet.
 
 use super::*;
-use crate as pallet_asset_conversion;
+use crate as topsoil_asset_conversion;
 use core::default::Default;
-use frame_support::{
+use topsoil_support::{
 	construct_runtime, derive_impl,
 	instances::{Instance1, Instance2},
 	ord_parameter_types, parameter_types,
@@ -33,42 +33,42 @@ use frame_support::{
 	},
 	PalletId,
 };
-use frame_system::{EnsureSigned, EnsureSignedBy};
+use topsoil_system::{EnsureSigned, EnsureSignedBy};
 use soil_arithmetic::Permill;
 use soil_runtime::{
 	traits::{AccountIdConversion, IdentityLookup},
 	BuildStorage,
 };
 
-type Block = frame_system::mocking::MockBlock<Test>;
+type Block = topsoil_system::mocking::MockBlock<Test>;
 
 construct_runtime!(
 	pub enum Test
 	{
-		System: frame_system,
-		Balances: pallet_balances,
-		Assets: pallet_assets::<Instance1>,
-		PoolAssets: pallet_assets::<Instance2>,
-		AssetConversion: pallet_asset_conversion,
+		System: topsoil_system,
+		Balances: topsoil_balances,
+		Assets: topsoil_assets::<Instance1>,
+		PoolAssets: topsoil_assets::<Instance2>,
+		AssetConversion: topsoil_asset_conversion,
 	}
 );
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
 	type AccountId = u128;
 	type Lookup = IdentityLookup<Self::AccountId>;
 	type Block = Block;
-	type AccountData = pallet_balances::AccountData<u128>;
+	type AccountData = topsoil_balances::AccountData<u128>;
 }
 
-#[derive_impl(pallet_balances::config_preludes::TestDefaultConfig)]
-impl pallet_balances::Config for Test {
+#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
+impl topsoil_balances::Config for Test {
 	type Balance = u128;
 	type ExistentialDeposit = ConstU128<100>;
 	type AccountStore = System;
 }
 
-impl pallet_assets::Config<Instance1> for Test {
+impl topsoil_assets::Config<Instance1> for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type Balance = u128;
 	type RemoveItemsLimit = ConstU32<1000>;
@@ -77,7 +77,7 @@ impl pallet_assets::Config<Instance1> for Test {
 	type ReserveData = ();
 	type Currency = Balances;
 	type CreateOrigin = AsEnsureOriginWithArg<EnsureSigned<Self::AccountId>>;
-	type ForceOrigin = frame_system::EnsureRoot<Self::AccountId>;
+	type ForceOrigin = topsoil_system::EnsureRoot<Self::AccountId>;
 	type AssetDeposit = ConstU128<1>;
 	type AssetAccountDeposit = ConstU128<10>;
 	type MetadataDepositBase = ConstU128<1>;
@@ -89,12 +89,12 @@ impl pallet_assets::Config<Instance1> for Test {
 	type Extra = ();
 	type WeightInfo = ();
 	type CallbackHandle = ();
-	pallet_assets::runtime_benchmarks_enabled! {
+	topsoil_assets::runtime_benchmarks_enabled! {
 		type BenchmarkHelper = ();
 	}
 }
 
-impl pallet_assets::Config<Instance2> for Test {
+impl topsoil_assets::Config<Instance2> for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type Balance = u128;
 	type RemoveItemsLimit = ConstU32<1000>;
@@ -104,7 +104,7 @@ impl pallet_assets::Config<Instance2> for Test {
 	type Currency = Balances;
 	type CreateOrigin =
 		AsEnsureOriginWithArg<EnsureSignedBy<AssetConversionOrigin, Self::AccountId>>;
-	type ForceOrigin = frame_system::EnsureRoot<Self::AccountId>;
+	type ForceOrigin = topsoil_system::EnsureRoot<Self::AccountId>;
 	type AssetDeposit = ConstU128<0>;
 	type AssetAccountDeposit = ConstU128<0>;
 	type MetadataDepositBase = ConstU128<0>;
@@ -116,7 +116,7 @@ impl pallet_assets::Config<Instance2> for Test {
 	type Extra = ();
 	type WeightInfo = ();
 	type CallbackHandle = ();
-	pallet_assets::runtime_benchmarks_enabled! {
+	topsoil_assets::runtime_benchmarks_enabled! {
 		type BenchmarkHelper = ();
 	}
 }
@@ -140,7 +140,7 @@ pub type WithFirstAssetLocator =
 
 impl Config for Test {
 	type RuntimeEvent = RuntimeEvent;
-	type Balance = <Self as pallet_balances::Config>::Balance;
+	type Balance = <Self as topsoil_balances::Config>::Balance;
 	type HigherPrecisionBalance = soil_core::U256;
 	type AssetKind = NativeOrWithId<u32>;
 	type Assets = NativeAndAssets;
@@ -162,9 +162,9 @@ impl Config for Test {
 }
 
 pub(crate) fn new_test_ext() -> soil_io::TestExternalities {
-	let mut t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 
-	pallet_balances::GenesisConfig::<Test> {
+	topsoil_balances::GenesisConfig::<Test> {
 		balances: vec![(1, 10000), (2, 20000), (3, 30000), (4, 40000)],
 		..Default::default()
 	}

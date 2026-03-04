@@ -17,12 +17,12 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 use codec::{Decode, Encode, Joiner};
-use frame_support::{
+use topsoil_support::{
 	dispatch::{DispatchClass, GetDispatchInfo},
 	traits::Currency,
 	weights::Weight,
 };
-use frame_system::{self, AccountInfo, DispatchEventInfo, EventRecord, Phase};
+use topsoil_system::{self, AccountInfo, DispatchEventInfo, EventRecord, Phase};
 use soil_core::{storage::well_known_keys, traits::Externalities};
 use soil_runtime::{
 	traits::Hash as HashT, transaction_validity::InvalidTransaction, ApplyExtrinsicResult,
@@ -91,11 +91,11 @@ fn changes_trie_block() -> (Vec<u8>, Hash) {
 		vec![
 			CheckedExtrinsic {
 				format: soil_runtime::generic::ExtrinsicFormat::Bare,
-				function: RuntimeCall::Timestamp(pallet_timestamp::Call::set { now: time }),
+				function: RuntimeCall::Timestamp(topsoil_timestamp::Call::set { now: time }),
 			},
 			CheckedExtrinsic {
 				format: soil_runtime::generic::ExtrinsicFormat::Signed(alice(), tx_ext(0, 0)),
-				function: RuntimeCall::Balances(pallet_balances::Call::transfer_allow_death {
+				function: RuntimeCall::Balances(topsoil_balances::Call::transfer_allow_death {
 					dest: bob().into(),
 					value: 69 * DOLLARS,
 				}),
@@ -118,11 +118,11 @@ fn blocks() -> ((Vec<u8>, Hash), (Vec<u8>, Hash)) {
 		vec![
 			CheckedExtrinsic {
 				format: soil_runtime::generic::ExtrinsicFormat::Bare,
-				function: RuntimeCall::Timestamp(pallet_timestamp::Call::set { now: time1 }),
+				function: RuntimeCall::Timestamp(topsoil_timestamp::Call::set { now: time1 }),
 			},
 			CheckedExtrinsic {
 				format: soil_runtime::generic::ExtrinsicFormat::Signed(alice(), tx_ext(0, 0)),
-				function: RuntimeCall::Balances(pallet_balances::Call::transfer_allow_death {
+				function: RuntimeCall::Balances(topsoil_balances::Call::transfer_allow_death {
 					dest: bob().into(),
 					value: 69 * DOLLARS,
 				}),
@@ -138,18 +138,18 @@ fn blocks() -> ((Vec<u8>, Hash), (Vec<u8>, Hash)) {
 		vec![
 			CheckedExtrinsic {
 				format: soil_runtime::generic::ExtrinsicFormat::Bare,
-				function: RuntimeCall::Timestamp(pallet_timestamp::Call::set { now: time2 }),
+				function: RuntimeCall::Timestamp(topsoil_timestamp::Call::set { now: time2 }),
 			},
 			CheckedExtrinsic {
 				format: soil_runtime::generic::ExtrinsicFormat::Signed(bob(), tx_ext(0, 0)),
-				function: RuntimeCall::Balances(pallet_balances::Call::transfer_allow_death {
+				function: RuntimeCall::Balances(topsoil_balances::Call::transfer_allow_death {
 					dest: alice().into(),
 					value: 5 * DOLLARS,
 				}),
 			},
 			CheckedExtrinsic {
 				format: soil_runtime::generic::ExtrinsicFormat::Signed(alice(), tx_ext(1, 0)),
-				function: RuntimeCall::Balances(pallet_balances::Call::transfer_allow_death {
+				function: RuntimeCall::Balances(topsoil_balances::Call::transfer_allow_death {
 					dest: bob().into(),
 					value: 15 * DOLLARS,
 				}),
@@ -173,11 +173,11 @@ fn block_with_size(time: u64, nonce: u32, size: usize) -> (Vec<u8>, Hash) {
 		vec![
 			CheckedExtrinsic {
 				format: soil_runtime::generic::ExtrinsicFormat::Bare,
-				function: RuntimeCall::Timestamp(pallet_timestamp::Call::set { now: time * 1000 }),
+				function: RuntimeCall::Timestamp(topsoil_timestamp::Call::set { now: time * 1000 }),
 			},
 			CheckedExtrinsic {
 				format: soil_runtime::generic::ExtrinsicFormat::Signed(alice(), tx_ext(nonce, 0)),
-				function: RuntimeCall::System(frame_system::Call::remark { remark: vec![0; size] }),
+				function: RuntimeCall::System(topsoil_system::Call::remark { remark: vec![0; size] }),
 			},
 		],
 		(time * 1000 / SLOT_DURATION).into(),
@@ -188,16 +188,16 @@ fn block_with_size(time: u64, nonce: u32, size: usize) -> (Vec<u8>, Hash) {
 fn panic_execution_with_foreign_code_gives_error() {
 	let mut t = new_test_ext(bloaty_code_unwrap());
 	t.insert(
-		<frame_system::Account<Runtime>>::hashed_key_for(alice()),
-		AccountInfo::<<Runtime as frame_system::Config>::Nonce, _> {
+		<topsoil_system::Account<Runtime>>::hashed_key_for(alice()),
+		AccountInfo::<<Runtime as topsoil_system::Config>::Nonce, _> {
 			providers: 1,
 			data: (69u128, 0u128, 0u128, 1u128 << 127),
 			..Default::default()
 		}
 		.encode(),
 	);
-	t.insert(<pallet_balances::TotalIssuance<Runtime>>::hashed_key().to_vec(), 69_u128.encode());
-	t.insert(<frame_system::BlockHash<Runtime>>::hashed_key_for(0), vec![0u8; 32]);
+	t.insert(<topsoil_balances::TotalIssuance<Runtime>>::hashed_key().to_vec(), 69_u128.encode());
+	t.insert(<topsoil_system::BlockHash<Runtime>>::hashed_key_for(0), vec![0u8; 32]);
 
 	let r = executor_call(&mut t, "Core_initialize_block", &vec![].and(&from_block_number(1u32))).0;
 	assert!(r.is_ok());
@@ -212,16 +212,16 @@ fn panic_execution_with_foreign_code_gives_error() {
 fn bad_extrinsic_with_native_equivalent_code_gives_error() {
 	let mut t = new_test_ext(compact_code_unwrap());
 	t.insert(
-		<frame_system::Account<Runtime>>::hashed_key_for(alice()),
-		AccountInfo::<<Runtime as frame_system::Config>::Nonce, _> {
+		<topsoil_system::Account<Runtime>>::hashed_key_for(alice()),
+		AccountInfo::<<Runtime as topsoil_system::Config>::Nonce, _> {
 			providers: 1,
 			data: (69u128, 0u128, 0u128, 1u128 << 127),
 			..Default::default()
 		}
 		.encode(),
 	);
-	t.insert(<pallet_balances::TotalIssuance<Runtime>>::hashed_key().to_vec(), 69u128.encode());
-	t.insert(<frame_system::BlockHash<Runtime>>::hashed_key_for(0), vec![0u8; 32]);
+	t.insert(<topsoil_balances::TotalIssuance<Runtime>>::hashed_key().to_vec(), 69u128.encode());
+	t.insert(<topsoil_system::BlockHash<Runtime>>::hashed_key_for(0), vec![0u8; 32]);
 
 	let r = executor_call(&mut t, "Core_initialize_block", &vec![].and(&from_block_number(1u32))).0;
 	assert!(r.is_ok());
@@ -236,8 +236,8 @@ fn bad_extrinsic_with_native_equivalent_code_gives_error() {
 fn successful_execution_with_native_equivalent_code_gives_ok() {
 	let mut t = new_test_ext(compact_code_unwrap());
 	t.insert(
-		<frame_system::Account<Runtime>>::hashed_key_for(alice()),
-		AccountInfo::<<Runtime as frame_system::Config>::Nonce, _> {
+		<topsoil_system::Account<Runtime>>::hashed_key_for(alice()),
+		AccountInfo::<<Runtime as topsoil_system::Config>::Nonce, _> {
 			providers: 1,
 			data: (111 * DOLLARS, 0u128, 0u128, 1u128 << 127),
 			..Default::default()
@@ -245,18 +245,18 @@ fn successful_execution_with_native_equivalent_code_gives_ok() {
 		.encode(),
 	);
 	t.insert(
-		<frame_system::Account<Runtime>>::hashed_key_for(bob()),
+		<topsoil_system::Account<Runtime>>::hashed_key_for(bob()),
 		AccountInfo::<
-			<Runtime as frame_system::Config>::Nonce,
-			<Runtime as frame_system::Config>::AccountData,
+			<Runtime as topsoil_system::Config>::Nonce,
+			<Runtime as topsoil_system::Config>::AccountData,
 		>::default()
 		.encode(),
 	);
 	t.insert(
-		<pallet_balances::TotalIssuance<Runtime>>::hashed_key().to_vec(),
+		<topsoil_balances::TotalIssuance<Runtime>>::hashed_key().to_vec(),
 		(111 * DOLLARS).encode(),
 	);
-	t.insert(<frame_system::BlockHash<Runtime>>::hashed_key_for(0), vec![0u8; 32]);
+	t.insert(<topsoil_system::BlockHash<Runtime>>::hashed_key_for(0), vec![0u8; 32]);
 
 	let r = executor_call(&mut t, "Core_initialize_block", &vec![].and(&from_block_number(1u32))).0;
 	assert!(r.is_ok());
@@ -277,8 +277,8 @@ fn successful_execution_with_native_equivalent_code_gives_ok() {
 fn successful_execution_with_foreign_code_gives_ok() {
 	let mut t = new_test_ext(bloaty_code_unwrap());
 	t.insert(
-		<frame_system::Account<Runtime>>::hashed_key_for(alice()),
-		AccountInfo::<<Runtime as frame_system::Config>::Nonce, _> {
+		<topsoil_system::Account<Runtime>>::hashed_key_for(alice()),
+		AccountInfo::<<Runtime as topsoil_system::Config>::Nonce, _> {
 			providers: 1,
 			data: (111 * DOLLARS, 0u128, 0u128, 1u128 << 127),
 			..Default::default()
@@ -286,18 +286,18 @@ fn successful_execution_with_foreign_code_gives_ok() {
 		.encode(),
 	);
 	t.insert(
-		<frame_system::Account<Runtime>>::hashed_key_for(bob()),
+		<topsoil_system::Account<Runtime>>::hashed_key_for(bob()),
 		AccountInfo::<
-			<Runtime as frame_system::Config>::Nonce,
-			<Runtime as frame_system::Config>::AccountData,
+			<Runtime as topsoil_system::Config>::Nonce,
+			<Runtime as topsoil_system::Config>::AccountData,
 		>::default()
 		.encode(),
 	);
 	t.insert(
-		<pallet_balances::TotalIssuance<Runtime>>::hashed_key().to_vec(),
+		<topsoil_balances::TotalIssuance<Runtime>>::hashed_key().to_vec(),
 		(111 * DOLLARS).encode(),
 	);
-	t.insert(<frame_system::BlockHash<Runtime>>::hashed_key_for(0), vec![0u8; 32]);
+	t.insert(<topsoil_system::BlockHash<Runtime>>::hashed_key_for(0), vec![0u8; 32]);
 
 	let r = executor_call(&mut t, "Core_initialize_block", &vec![].and(&from_block_number(1u32))).0;
 	assert!(r.is_ok());
@@ -327,15 +327,15 @@ fn full_native_block_import_works() {
 	let fees_after_refund = t.execute_with(|| transfer_fee_with_refund(&xt(), weight_refund));
 
 	let transfer_weight = default_transfer_call().get_dispatch_info().call_weight.saturating_add(
-		<Runtime as frame_system::Config>::BlockWeights::get()
+		<Runtime as topsoil_system::Config>::BlockWeights::get()
 			.get(DispatchClass::Normal)
 			.base_extrinsic,
 	);
-	let timestamp_weight = pallet_timestamp::Call::set::<Runtime> { now: Default::default() }
+	let timestamp_weight = topsoil_timestamp::Call::set::<Runtime> { now: Default::default() }
 		.get_dispatch_info()
 		.call_weight
 		.saturating_add(
-			<Runtime as frame_system::Config>::BlockWeights::get()
+			<Runtime as topsoil_system::Config>::BlockWeights::get()
 				.get(DispatchClass::Mandatory)
 				.base_extrinsic,
 		);
@@ -349,7 +349,7 @@ fn full_native_block_import_works() {
 		let events = vec![
 			EventRecord {
 				phase: Phase::ApplyExtrinsic(0),
-				event: RuntimeEvent::System(frame_system::Event::ExtrinsicSuccess {
+				event: RuntimeEvent::System(topsoil_system::Event::ExtrinsicSuccess {
 					dispatch_info: DispatchEventInfo {
 						weight: timestamp_weight,
 						class: DispatchClass::Mandatory,
@@ -360,7 +360,7 @@ fn full_native_block_import_works() {
 			},
 			EventRecord {
 				phase: Phase::ApplyExtrinsic(1),
-				event: RuntimeEvent::Balances(pallet_balances::Event::Withdraw {
+				event: RuntimeEvent::Balances(topsoil_balances::Event::Withdraw {
 					who: alice().into(),
 					amount: fees,
 				}),
@@ -368,7 +368,7 @@ fn full_native_block_import_works() {
 			},
 			EventRecord {
 				phase: Phase::ApplyExtrinsic(1),
-				event: RuntimeEvent::Balances(pallet_balances::Event::Transfer {
+				event: RuntimeEvent::Balances(topsoil_balances::Event::Transfer {
 					from: alice().into(),
 					to: bob().into(),
 					amount: 69 * DOLLARS,
@@ -377,8 +377,8 @@ fn full_native_block_import_works() {
 			},
 			EventRecord {
 				phase: Phase::ApplyExtrinsic(1),
-				event: RuntimeEvent::Balances(pallet_balances::Event::Deposit {
-					who: pallet_treasury::Pallet::<Runtime>::account_id(),
+				event: RuntimeEvent::Balances(topsoil_balances::Event::Deposit {
+					who: topsoil_treasury::Pallet::<Runtime>::account_id(),
 					amount: fees_after_refund,
 				}),
 				topics: vec![],
@@ -386,7 +386,7 @@ fn full_native_block_import_works() {
 			EventRecord {
 				phase: Phase::ApplyExtrinsic(1),
 				event: RuntimeEvent::TransactionPayment(
-					pallet_transaction_payment::Event::TransactionFeePaid {
+					topsoil_transaction_payment::Event::TransactionFeePaid {
 						who: alice().into(),
 						actual_fee: fees_after_refund,
 						tip: 0,
@@ -396,7 +396,7 @@ fn full_native_block_import_works() {
 			},
 			EventRecord {
 				phase: Phase::ApplyExtrinsic(1),
-				event: RuntimeEvent::System(frame_system::Event::ExtrinsicSuccess {
+				event: RuntimeEvent::System(topsoil_system::Event::ExtrinsicSuccess {
 					dispatch_info: DispatchEventInfo {
 						weight: transfer_weight
 							.saturating_add(extension_weight.saturating_sub(weight_refund)),
@@ -412,7 +412,7 @@ fn full_native_block_import_works() {
 				!matches!(
 					ev.event,
 					RuntimeEvent::VoterList(
-						pallet_bags_list::Event::<Runtime, _>::ScoreUpdated { .. }
+						topsoil_bags_list::Event::<Runtime, _>::ScoreUpdated { .. }
 					)
 				)
 			})
@@ -438,7 +438,7 @@ fn full_native_block_import_works() {
 		let events = vec![
 			EventRecord {
 				phase: Phase::Initialization,
-				event: RuntimeEvent::Treasury(pallet_treasury::Event::UpdatedInactive {
+				event: RuntimeEvent::Treasury(topsoil_treasury::Event::UpdatedInactive {
 					reactivated: 0,
 					deactivated: pot,
 				}),
@@ -446,7 +446,7 @@ fn full_native_block_import_works() {
 			},
 			EventRecord {
 				phase: Phase::ApplyExtrinsic(0),
-				event: RuntimeEvent::System(frame_system::Event::ExtrinsicSuccess {
+				event: RuntimeEvent::System(topsoil_system::Event::ExtrinsicSuccess {
 					dispatch_info: DispatchEventInfo {
 						weight: timestamp_weight,
 						class: DispatchClass::Mandatory,
@@ -457,7 +457,7 @@ fn full_native_block_import_works() {
 			},
 			EventRecord {
 				phase: Phase::ApplyExtrinsic(1),
-				event: RuntimeEvent::Balances(pallet_balances::Event::Withdraw {
+				event: RuntimeEvent::Balances(topsoil_balances::Event::Withdraw {
 					who: bob().into(),
 					amount: fees,
 				}),
@@ -465,7 +465,7 @@ fn full_native_block_import_works() {
 			},
 			EventRecord {
 				phase: Phase::ApplyExtrinsic(1),
-				event: RuntimeEvent::Balances(pallet_balances::Event::Transfer {
+				event: RuntimeEvent::Balances(topsoil_balances::Event::Transfer {
 					from: bob().into(),
 					to: alice().into(),
 					amount: 5 * DOLLARS,
@@ -474,8 +474,8 @@ fn full_native_block_import_works() {
 			},
 			EventRecord {
 				phase: Phase::ApplyExtrinsic(1),
-				event: RuntimeEvent::Balances(pallet_balances::Event::Deposit {
-					who: pallet_treasury::Pallet::<Runtime>::account_id(),
+				event: RuntimeEvent::Balances(topsoil_balances::Event::Deposit {
+					who: topsoil_treasury::Pallet::<Runtime>::account_id(),
 					amount: fees_after_refund,
 				}),
 				topics: vec![],
@@ -483,7 +483,7 @@ fn full_native_block_import_works() {
 			EventRecord {
 				phase: Phase::ApplyExtrinsic(1),
 				event: RuntimeEvent::TransactionPayment(
-					pallet_transaction_payment::Event::TransactionFeePaid {
+					topsoil_transaction_payment::Event::TransactionFeePaid {
 						who: bob().into(),
 						actual_fee: fees_after_refund,
 						tip: 0,
@@ -493,7 +493,7 @@ fn full_native_block_import_works() {
 			},
 			EventRecord {
 				phase: Phase::ApplyExtrinsic(1),
-				event: RuntimeEvent::System(frame_system::Event::ExtrinsicSuccess {
+				event: RuntimeEvent::System(topsoil_system::Event::ExtrinsicSuccess {
 					dispatch_info: DispatchEventInfo {
 						weight: transfer_weight
 							.saturating_add(extension_weight.saturating_sub(weight_refund)),
@@ -504,7 +504,7 @@ fn full_native_block_import_works() {
 			},
 			EventRecord {
 				phase: Phase::ApplyExtrinsic(2),
-				event: RuntimeEvent::Balances(pallet_balances::Event::Withdraw {
+				event: RuntimeEvent::Balances(topsoil_balances::Event::Withdraw {
 					who: alice().into(),
 					amount: fees,
 				}),
@@ -512,7 +512,7 @@ fn full_native_block_import_works() {
 			},
 			EventRecord {
 				phase: Phase::ApplyExtrinsic(2),
-				event: RuntimeEvent::Balances(pallet_balances::Event::Transfer {
+				event: RuntimeEvent::Balances(topsoil_balances::Event::Transfer {
 					from: alice().into(),
 					to: bob().into(),
 					amount: 15 * DOLLARS,
@@ -521,8 +521,8 @@ fn full_native_block_import_works() {
 			},
 			EventRecord {
 				phase: Phase::ApplyExtrinsic(2),
-				event: RuntimeEvent::Balances(pallet_balances::Event::Deposit {
-					who: pallet_treasury::Pallet::<Runtime>::account_id(),
+				event: RuntimeEvent::Balances(topsoil_balances::Event::Deposit {
+					who: topsoil_treasury::Pallet::<Runtime>::account_id(),
 					amount: fees_after_refund,
 				}),
 				topics: vec![],
@@ -530,7 +530,7 @@ fn full_native_block_import_works() {
 			EventRecord {
 				phase: Phase::ApplyExtrinsic(2),
 				event: RuntimeEvent::TransactionPayment(
-					pallet_transaction_payment::Event::TransactionFeePaid {
+					topsoil_transaction_payment::Event::TransactionFeePaid {
 						who: alice().into(),
 						actual_fee: fees_after_refund,
 						tip: 0,
@@ -540,7 +540,7 @@ fn full_native_block_import_works() {
 			},
 			EventRecord {
 				phase: Phase::ApplyExtrinsic(2),
-				event: RuntimeEvent::System(frame_system::Event::ExtrinsicSuccess {
+				event: RuntimeEvent::System(topsoil_system::Event::ExtrinsicSuccess {
 					dispatch_info: DispatchEventInfo {
 						weight: transfer_weight
 							.saturating_add(extension_weight.saturating_sub(weight_refund)),
@@ -633,15 +633,15 @@ fn native_big_block_import_fails_on_fallback() {
 fn panic_execution_gives_error() {
 	let mut t = new_test_ext(bloaty_code_unwrap());
 	t.insert(
-		<frame_system::Account<Runtime>>::hashed_key_for(alice()),
-		AccountInfo::<<Runtime as frame_system::Config>::Nonce, _> {
+		<topsoil_system::Account<Runtime>>::hashed_key_for(alice()),
+		AccountInfo::<<Runtime as topsoil_system::Config>::Nonce, _> {
 			data: (0 * DOLLARS, 0u128, 0u128, 0u128),
 			..Default::default()
 		}
 		.encode(),
 	);
-	t.insert(<pallet_balances::TotalIssuance<Runtime>>::hashed_key().to_vec(), 0_u128.encode());
-	t.insert(<frame_system::BlockHash<Runtime>>::hashed_key_for(0), vec![0u8; 32]);
+	t.insert(<topsoil_balances::TotalIssuance<Runtime>>::hashed_key().to_vec(), 0_u128.encode());
+	t.insert(<topsoil_system::BlockHash<Runtime>>::hashed_key_for(0), vec![0u8; 32]);
 
 	let r = executor_call(&mut t, "Core_initialize_block", &vec![].and(&from_block_number(1u32))).0;
 	assert!(r.is_ok());
@@ -656,8 +656,8 @@ fn panic_execution_gives_error() {
 fn successful_execution_gives_ok() {
 	let mut t = new_test_ext(compact_code_unwrap());
 	t.insert(
-		<frame_system::Account<Runtime>>::hashed_key_for(alice()),
-		AccountInfo::<<Runtime as frame_system::Config>::Nonce, _> {
+		<topsoil_system::Account<Runtime>>::hashed_key_for(alice()),
+		AccountInfo::<<Runtime as topsoil_system::Config>::Nonce, _> {
 			providers: 1,
 			data: (111 * DOLLARS, 0u128, 0u128, 1u128 << 127),
 			..Default::default()
@@ -665,18 +665,18 @@ fn successful_execution_gives_ok() {
 		.encode(),
 	);
 	t.insert(
-		<frame_system::Account<Runtime>>::hashed_key_for(bob()),
+		<topsoil_system::Account<Runtime>>::hashed_key_for(bob()),
 		AccountInfo::<
-			<Runtime as frame_system::Config>::Nonce,
-			<Runtime as frame_system::Config>::AccountData,
+			<Runtime as topsoil_system::Config>::Nonce,
+			<Runtime as topsoil_system::Config>::AccountData,
 		>::default()
 		.encode(),
 	);
 	t.insert(
-		<pallet_balances::TotalIssuance<Runtime>>::hashed_key().to_vec(),
+		<topsoil_balances::TotalIssuance<Runtime>>::hashed_key().to_vec(),
 		(111 * DOLLARS).encode(),
 	);
-	t.insert(<frame_system::BlockHash<Runtime>>::hashed_key_for(0), vec![0u8; 32]);
+	t.insert(<topsoil_system::BlockHash<Runtime>>::hashed_key_for(0), vec![0u8; 32]);
 
 	let r = executor_call(&mut t, "Core_initialize_block", &vec![].and(&from_block_number(1u32))).0;
 	assert!(r.is_ok());

@@ -19,17 +19,17 @@
 
 use super::*;
 use crate::{
-	self as pallet_identity,
+	self as topsoil_identity,
 	legacy::{IdentityField, IdentityInfo},
 };
 
 use codec::{Decode, Encode};
-use frame_support::{
+use topsoil_support::{
 	assert_err, assert_noop, assert_ok, derive_impl, parameter_types,
 	traits::{ConstU32, ConstU64, Get},
 	BoundedVec,
 };
-use frame_system::EnsureRoot;
+use topsoil_system::EnsureRoot;
 use soil_core::H256;
 use soil_io::crypto::{sr25519_generate, sr25519_sign};
 use soil_keystore::{testing::MemoryKeystore, KeystoreExt};
@@ -38,31 +38,31 @@ use soil_runtime::{
 	BuildStorage, MultiSignature, MultiSigner,
 };
 
-type AccountIdOf<Test> = <Test as frame_system::Config>::AccountId;
+type AccountIdOf<Test> = <Test as topsoil_system::Config>::AccountId;
 pub type AccountPublic = <MultiSignature as Verify>::Signer;
 pub type AccountId = <AccountPublic as IdentifyAccount>::AccountId;
 
-type Block = frame_system::mocking::MockBlock<Test>;
+type Block = topsoil_system::mocking::MockBlock<Test>;
 
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub enum Test
 	{
-		System: frame_system,
-		Balances: pallet_balances,
-		Identity: pallet_identity,
+		System: topsoil_system,
+		Balances: topsoil_balances,
+		Identity: topsoil_identity,
 	}
 );
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
 	type AccountId = AccountId;
 	type Lookup = IdentityLookup<Self::AccountId>;
 	type Block = Block;
-	type AccountData = pallet_balances::AccountData<u64>;
+	type AccountData = topsoil_balances::AccountData<u64>;
 }
 
-#[derive_impl(pallet_balances::config_preludes::TestDefaultConfig)]
-impl pallet_balances::Config for Test {
+#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
+impl topsoil_balances::Config for Test {
 	type AccountStore = System;
 }
 
@@ -71,7 +71,7 @@ parameter_types! {
 	pub const MaxRegistrars: u32 = 20;
 }
 
-impl pallet_identity::Config for Test {
+impl topsoil_identity::Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type Currency = Balances;
 	type Slashed = ();
@@ -97,8 +97,8 @@ impl pallet_identity::Config for Test {
 }
 
 pub fn new_test_ext() -> soil_io::TestExternalities {
-	let mut t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
-	pallet_balances::GenesisConfig::<Test> {
+	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	topsoil_balances::GenesisConfig::<Test> {
 		balances: vec![
 			(account(1), 100),
 			(account(2), 100),
@@ -1316,7 +1316,7 @@ fn set_username_with_acceptance_should_work() {
 
 		// set up username
 		let username = test_username_of(b"101".to_vec(), suffix.clone());
-		let now = frame_system::Pallet::<Test>::block_number();
+		let now = topsoil_system::Pallet::<Test>::block_number();
 		let expiration = now + <<Test as Config>::PendingUsernameExpiration as Get<u64>>::get();
 
 		assert_ok!(Identity::set_username_for(
@@ -1683,7 +1683,7 @@ fn unaccepted_usernames_through_grant_should_expire() {
 
 		// set up username
 		let username = test_username_of(b"101".to_vec(), suffix.clone());
-		let now = frame_system::Pallet::<Test>::block_number();
+		let now = topsoil_system::Pallet::<Test>::block_number();
 		let expiration = now + <<Test as Config>::PendingUsernameExpiration as Get<u64>>::get();
 
 		let suffix: Suffix<Test> = suffix.try_into().unwrap();
@@ -1747,7 +1747,7 @@ fn unaccepted_usernames_through_deposit_should_expire() {
 
 		// set up username
 		let username = test_username_of(b"101".to_vec(), suffix.clone());
-		let now = frame_system::Pallet::<Test>::block_number();
+		let now = topsoil_system::Pallet::<Test>::block_number();
 		let expiration = now + <<Test as Config>::PendingUsernameExpiration as Get<u64>>::get();
 
 		let suffix: Suffix<Test> = suffix.try_into().unwrap();

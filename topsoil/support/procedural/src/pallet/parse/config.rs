@@ -16,7 +16,7 @@
 // limitations under the License.
 
 use super::helper;
-use frame_support_procedural_tools::{get_cfg_attributes, get_doc_literals, is_using_frame_crate};
+use topsoil_support_procedural_tools::{get_cfg_attributes, get_doc_literals, is_using_frame_crate};
 use proc_macro_warning::Warning;
 use quote::ToTokens;
 use syn::{parse_quote, spanned::Spanned, token, Token, TraitItemType};
@@ -32,7 +32,7 @@ mod keyword {
 	syn::custom_keyword!(IsType);
 	syn::custom_keyword!(RuntimeEvent);
 	syn::custom_keyword!(Event);
-	syn::custom_keyword!(frame_system);
+	syn::custom_keyword!(topsoil_system);
 	syn::custom_keyword!(disable_frame_system_supertrait_check);
 	syn::custom_keyword!(no_default);
 	syn::custom_keyword!(no_default_bounds);
@@ -238,7 +238,7 @@ impl syn::parse::Parse for FromEventParse {
 /// Check if trait_item is `type RuntimeEvent`, if so checks its bounds are those expected.
 /// (Event type is reserved type)
 fn check_event_type(
-	frame_system: &syn::Path,
+	topsoil_system: &syn::Path,
 	trait_item: &syn::TraitItem,
 	trait_has_instance: bool,
 ) -> syn::Result<bool> {
@@ -259,13 +259,13 @@ fn check_event_type(
 	// Check bound contains IsType and From
 	let has_is_type_bound = type_.bounds.iter().any(|s| {
 		syn::parse2::<IsTypeBoundEventParse>(s.to_token_stream())
-			.map_or(false, |b| has_expected_system_config(b.0, frame_system))
+			.map_or(false, |b| has_expected_system_config(b.0, topsoil_system))
 	});
 
 	if !has_is_type_bound {
 		let msg =
 			"Invalid `type RuntimeEvent`, associated type `RuntimeEvent` is reserved and must \
-					bound: `IsType<<Self as frame_system::Config>::RuntimeEvent>`"
+					bound: `IsType<<Self as topsoil_system::Config>::RuntimeEvent>`"
 				.to_string();
 		return Err(syn::Error::new(type_.span(), msg));
 	}
@@ -293,33 +293,33 @@ fn check_event_type(
 	Ok(true)
 }
 
-/// Check that the path to `frame_system::Config` is valid, this is that the path is just
-/// `frame_system::Config` or when using the `frame` crate it is
-/// `polkadot_sdk_frame::xyz::frame_system::Config`.
-fn has_expected_system_config(path: syn::Path, frame_system: &syn::Path) -> bool {
-	// Check if `frame_system` is actually 'frame_system'.
-	if path.segments.iter().all(|s| s.ident != "frame_system") {
+/// Check that the path to `topsoil_system::Config` is valid, this is that the path is just
+/// `topsoil_system::Config` or when using the `frame` crate it is
+/// `topsoil::xyz::topsoil_system::Config`.
+fn has_expected_system_config(path: syn::Path, topsoil_system: &syn::Path) -> bool {
+	// Check if `topsoil_system` is actually 'topsoil_system'.
+	if path.segments.iter().all(|s| s.ident != "topsoil_system") {
 		return false;
 	}
 
 	let mut expected_system_config =
-		match (is_using_frame_crate(&path), is_using_frame_crate(&frame_system)) {
+		match (is_using_frame_crate(&path), is_using_frame_crate(&topsoil_system)) {
 			(true, false) =>
-			// We can't use the path to `frame_system` from `frame` if `frame_system` is not being
+			// We can't use the path to `topsoil_system` from `frame` if `topsoil_system` is not being
 			// in scope through `frame`.
 			{
 				return false
 			},
 			(false, true) =>
-			// We know that the only valid frame_system path is one that is `frame_system`, as
+			// We know that the only valid topsoil_system path is one that is `topsoil_system`, as
 			// `frame` re-exports it as such.
 			{
-				syn::parse2::<syn::Path>(quote::quote!(frame_system)).expect("is a valid path; qed")
+				syn::parse2::<syn::Path>(quote::quote!(topsoil_system)).expect("is a valid path; qed")
 			},
 			(_, _) =>
-			// They are either both `frame_system` or both `polkadot_sdk_frame::xyz::frame_system`.
+			// They are either both `topsoil_system` or both `topsoil::xyz::topsoil_system`.
 			{
-				frame_system.clone()
+				topsoil_system.clone()
 			},
 		};
 
@@ -327,7 +327,7 @@ fn has_expected_system_config(path: syn::Path, frame_system: &syn::Path) -> bool
 		.segments
 		.push(syn::PathSegment::from(syn::Ident::new("Config", path.span())));
 
-	// the parse path might be something like `frame_system::Config<...>`, so we
+	// the parse path might be something like `topsoil_system::Config<...>`, so we
 	// only compare the idents along the path.
 	expected_system_config
 		.segments
@@ -374,7 +374,7 @@ fn contains_type_info_bound(ty: &TraitItemType) -> bool {
 
 impl ConfigDef {
 	pub fn try_from(
-		frame_system: &syn::Path,
+		topsoil_system: &syn::Path,
 		index: usize,
 		item: &mut syn::Item,
 		enable_default: bool,
@@ -422,14 +422,14 @@ impl ConfigDef {
 			None
 		};
 		for trait_item in &mut item.items {
-			let is_event = check_event_type(frame_system, trait_item, has_instance)?;
+			let is_event = check_event_type(topsoil_system, trait_item, has_instance)?;
 
 			let mut already_no_default = false;
 			let mut already_constant = false;
 			let mut already_no_default_bounds = false;
 			let mut already_collected_associated_type = None;
 
-			// add deprecation notice for `RuntimeEvent`, iff pallet is not `frame_system`
+			// add deprecation notice for `RuntimeEvent`, iff pallet is not `topsoil_system`
 			if is_event && !is_frame_system {
 				if let syn::TraitItem::Type(type_event) = trait_item {
 					let allow_dep: syn::Attribute = parse_quote!(#[allow(deprecated)]);
@@ -439,7 +439,7 @@ impl ConfigDef {
 						let warning = Warning::new_deprecated("RuntimeEvent")
 						.old("have `RuntimeEvent` associated type in the pallet config")
 						.new("remove it as it is redundant since associated bound gets appended automatically: \n
-							pub trait Config: frame_system::Config<RuntimeEvent: From<Event<Self>>> { }")
+							pub trait Config: topsoil_system::Config<RuntimeEvent: From<Event<Self>>> { }")
 						.help_link("https://github.com/paritytech/polkadot-sdk/pull/7229")
 						.span(type_event.ident.span())
 						.build_or_panic();
@@ -578,7 +578,7 @@ impl ConfigDef {
 
 		let has_frame_system_supertrait = item.supertraits.iter().any(|s| {
 			syn::parse2::<syn::Path>(s.to_token_stream())
-				.map_or(false, |b| has_expected_system_config(b, frame_system))
+				.map_or(false, |b| has_expected_system_config(b, topsoil_system))
 		});
 
 		if !has_frame_system_supertrait && !disable_system_supertrait_check {
@@ -597,10 +597,10 @@ impl ConfigDef {
 			let msg = format!(
 				"Invalid pallet::trait, expected explicit `{}::Config` as supertrait, \
 				found {}. \
-				(try `pub trait Config: frame_system::Config {{ ...` or \
-				`pub trait Config<I: 'static>: frame_system::Config {{ ...`). \
+				(try `pub trait Config: topsoil_system::Config {{ ...` or \
+				`pub trait Config<I: 'static>: topsoil_system::Config {{ ...`). \
 				To disable this check, use `#[pallet::disable_frame_system_supertrait_check]`",
-				frame_system.to_token_stream(),
+				topsoil_system.to_token_stream(),
 				found,
 			);
 			return Err(syn::Error::new(item.span(), msg));
@@ -623,116 +623,116 @@ mod tests {
 	use super::*;
 	#[test]
 	fn has_expected_system_config_works() {
-		let frame_system = syn::parse2::<syn::Path>(quote::quote!(frame_system)).unwrap();
-		let path = syn::parse2::<syn::Path>(quote::quote!(frame_system::Config)).unwrap();
-		assert!(has_expected_system_config(path, &frame_system));
+		let topsoil_system = syn::parse2::<syn::Path>(quote::quote!(topsoil_system)).unwrap();
+		let path = syn::parse2::<syn::Path>(quote::quote!(topsoil_system::Config)).unwrap();
+		assert!(has_expected_system_config(path, &topsoil_system));
 	}
 
 	#[test]
 	fn has_expected_system_config_works_with_assoc_type() {
-		let frame_system = syn::parse2::<syn::Path>(quote::quote!(frame_system)).unwrap();
+		let topsoil_system = syn::parse2::<syn::Path>(quote::quote!(topsoil_system)).unwrap();
 		let path =
-			syn::parse2::<syn::Path>(quote::quote!(frame_system::Config<RuntimeCall = Call>))
+			syn::parse2::<syn::Path>(quote::quote!(topsoil_system::Config<RuntimeCall = Call>))
 				.unwrap();
-		assert!(has_expected_system_config(path, &frame_system));
+		assert!(has_expected_system_config(path, &topsoil_system));
 	}
 
 	#[test]
 	fn has_expected_system_config_works_with_frame() {
-		let path = syn::parse2::<syn::Path>(quote::quote!(frame_system::Config)).unwrap();
+		let path = syn::parse2::<syn::Path>(quote::quote!(topsoil_system::Config)).unwrap();
 
-		let frame_system =
-			syn::parse2::<syn::Path>(quote::quote!(polkadot_sdk_frame::deps::frame_system))
+		let topsoil_system =
+			syn::parse2::<syn::Path>(quote::quote!(topsoil::deps::topsoil_system))
 				.unwrap();
-		assert!(has_expected_system_config(path.clone(), &frame_system));
+		assert!(has_expected_system_config(path.clone(), &topsoil_system));
 
-		let frame_system =
-			syn::parse2::<syn::Path>(quote::quote!(frame::deps::frame_system)).unwrap();
-		assert!(has_expected_system_config(path, &frame_system));
+		let topsoil_system =
+			syn::parse2::<syn::Path>(quote::quote!(topsoil::deps::topsoil_system)).unwrap();
+		assert!(has_expected_system_config(path, &topsoil_system));
 	}
 
 	#[test]
 	fn has_expected_system_config_works_with_frame_full_path() {
-		let frame_system =
-			syn::parse2::<syn::Path>(quote::quote!(polkadot_sdk_frame::deps::frame_system))
+		let topsoil_system =
+			syn::parse2::<syn::Path>(quote::quote!(topsoil::deps::topsoil_system))
 				.unwrap();
 		let path =
-			syn::parse2::<syn::Path>(quote::quote!(polkadot_sdk_frame::deps::frame_system::Config))
+			syn::parse2::<syn::Path>(quote::quote!(topsoil::deps::topsoil_system::Config))
 				.unwrap();
-		assert!(has_expected_system_config(path, &frame_system));
+		assert!(has_expected_system_config(path, &topsoil_system));
 
-		let frame_system =
-			syn::parse2::<syn::Path>(quote::quote!(frame::deps::frame_system)).unwrap();
+		let topsoil_system =
+			syn::parse2::<syn::Path>(quote::quote!(topsoil::deps::topsoil_system)).unwrap();
 		let path =
-			syn::parse2::<syn::Path>(quote::quote!(frame::deps::frame_system::Config)).unwrap();
-		assert!(has_expected_system_config(path, &frame_system));
+			syn::parse2::<syn::Path>(quote::quote!(topsoil::deps::topsoil_system::Config)).unwrap();
+		assert!(has_expected_system_config(path, &topsoil_system));
 	}
 
 	#[test]
 	fn has_expected_system_config_works_with_other_frame_full_path() {
-		let frame_system =
-			syn::parse2::<syn::Path>(quote::quote!(polkadot_sdk_frame::xyz::frame_system)).unwrap();
+		let topsoil_system =
+			syn::parse2::<syn::Path>(quote::quote!(topsoil::xyz::topsoil_system)).unwrap();
 		let path =
-			syn::parse2::<syn::Path>(quote::quote!(polkadot_sdk_frame::xyz::frame_system::Config))
+			syn::parse2::<syn::Path>(quote::quote!(topsoil::xyz::topsoil_system::Config))
 				.unwrap();
-		assert!(has_expected_system_config(path, &frame_system));
+		assert!(has_expected_system_config(path, &topsoil_system));
 
-		let frame_system =
-			syn::parse2::<syn::Path>(quote::quote!(frame::xyz::frame_system)).unwrap();
+		let topsoil_system =
+			syn::parse2::<syn::Path>(quote::quote!(topsoil::xyz::topsoil_system)).unwrap();
 		let path =
-			syn::parse2::<syn::Path>(quote::quote!(frame::xyz::frame_system::Config)).unwrap();
-		assert!(has_expected_system_config(path, &frame_system));
+			syn::parse2::<syn::Path>(quote::quote!(topsoil::xyz::topsoil_system::Config)).unwrap();
+		assert!(has_expected_system_config(path, &topsoil_system));
 	}
 
 	#[test]
 	fn has_expected_system_config_does_not_works_with_mixed_frame_full_path() {
-		let frame_system =
-			syn::parse2::<syn::Path>(quote::quote!(polkadot_sdk_frame::xyz::frame_system)).unwrap();
+		let topsoil_system =
+			syn::parse2::<syn::Path>(quote::quote!(topsoil::xyz::topsoil_system)).unwrap();
 		let path =
-			syn::parse2::<syn::Path>(quote::quote!(polkadot_sdk_frame::deps::frame_system::Config))
+			syn::parse2::<syn::Path>(quote::quote!(topsoil::deps::topsoil_system::Config))
 				.unwrap();
-		assert!(!has_expected_system_config(path, &frame_system));
+		assert!(!has_expected_system_config(path, &topsoil_system));
 	}
 
 	#[test]
 	fn has_expected_system_config_does_not_works_with_other_mixed_frame_full_path() {
-		let frame_system =
-			syn::parse2::<syn::Path>(quote::quote!(polkadot_sdk_frame::deps::frame_system))
+		let topsoil_system =
+			syn::parse2::<syn::Path>(quote::quote!(topsoil::deps::topsoil_system))
 				.unwrap();
 		let path =
-			syn::parse2::<syn::Path>(quote::quote!(polkadot_sdk_frame::xyz::frame_system::Config))
+			syn::parse2::<syn::Path>(quote::quote!(topsoil::xyz::topsoil_system::Config))
 				.unwrap();
-		assert!(!has_expected_system_config(path, &frame_system));
+		assert!(!has_expected_system_config(path, &topsoil_system));
 	}
 
 	#[test]
 	fn has_expected_system_config_does_not_work_with_frame_full_path_if_not_frame_crate() {
-		let frame_system = syn::parse2::<syn::Path>(quote::quote!(frame_system)).unwrap();
+		let topsoil_system = syn::parse2::<syn::Path>(quote::quote!(topsoil_system)).unwrap();
 		let path =
-			syn::parse2::<syn::Path>(quote::quote!(polkadot_sdk_frame::deps::frame_system::Config))
+			syn::parse2::<syn::Path>(quote::quote!(topsoil::deps::topsoil_system::Config))
 				.unwrap();
-		assert!(!has_expected_system_config(path, &frame_system));
+		assert!(!has_expected_system_config(path, &topsoil_system));
 	}
 
 	#[test]
 	fn has_expected_system_config_unexpected_frame_system() {
-		let frame_system =
-			syn::parse2::<syn::Path>(quote::quote!(framez::deps::frame_system)).unwrap();
-		let path = syn::parse2::<syn::Path>(quote::quote!(frame_system::Config)).unwrap();
-		assert!(!has_expected_system_config(path, &frame_system));
+		let topsoil_system =
+			syn::parse2::<syn::Path>(quote::quote!(framez::deps::topsoil_system)).unwrap();
+		let path = syn::parse2::<syn::Path>(quote::quote!(topsoil_system::Config)).unwrap();
+		assert!(!has_expected_system_config(path, &topsoil_system));
 	}
 
 	#[test]
 	fn has_expected_system_config_unexpected_path() {
-		let frame_system = syn::parse2::<syn::Path>(quote::quote!(frame_system)).unwrap();
-		let path = syn::parse2::<syn::Path>(quote::quote!(frame_system::ConfigSystem)).unwrap();
-		assert!(!has_expected_system_config(path, &frame_system));
+		let topsoil_system = syn::parse2::<syn::Path>(quote::quote!(topsoil_system)).unwrap();
+		let path = syn::parse2::<syn::Path>(quote::quote!(topsoil_system::ConfigSystem)).unwrap();
+		assert!(!has_expected_system_config(path, &topsoil_system));
 	}
 
 	#[test]
 	fn has_expected_system_config_not_frame_system() {
-		let frame_system = syn::parse2::<syn::Path>(quote::quote!(something)).unwrap();
+		let topsoil_system = syn::parse2::<syn::Path>(quote::quote!(something)).unwrap();
 		let path = syn::parse2::<syn::Path>(quote::quote!(something::Config)).unwrap();
-		assert!(!has_expected_system_config(path, &frame_system));
+		assert!(!has_expected_system_config(path, &topsoil_system));
 	}
 }

@@ -18,12 +18,12 @@
 //! The crate's benchmarks.
 
 use super::*;
-use crate::{pallet as pallet_asset_rate, Pallet as AssetRate};
+use crate::{pallet as topsoil_asset_rate, Pallet as AssetRate};
 
 use codec::Encode;
-use frame_benchmarking::v2::*;
-use frame_support::assert_ok;
-use frame_system::RawOrigin;
+use topsoil_benchmarking::v2::*;
+use topsoil_support::assert_ok;
+use topsoil_system::RawOrigin;
 use soil_core::crypto::FromEntropy;
 
 /// Trait describing the factory function for the `AssetKind` parameter.
@@ -56,7 +56,7 @@ mod benchmarks {
 		_(RawOrigin::Root, Box::new(asset_kind.clone()), default_conversion_rate());
 
 		assert_eq!(
-			pallet_asset_rate::ConversionRateToNative::<T>::get(asset_kind),
+			topsoil_asset_rate::ConversionRateToNative::<T>::get(asset_kind),
 			Some(default_conversion_rate())
 		);
 		Ok(())
@@ -75,7 +75,7 @@ mod benchmarks {
 		_(RawOrigin::Root, Box::new(asset_kind.clone()), FixedU128::from_u32(2));
 
 		assert_eq!(
-			pallet_asset_rate::ConversionRateToNative::<T>::get(asset_kind),
+			topsoil_asset_rate::ConversionRateToNative::<T>::get(asset_kind),
 			Some(FixedU128::from_u32(2))
 		);
 		Ok(())
@@ -93,7 +93,7 @@ mod benchmarks {
 		#[extrinsic_call]
 		_(RawOrigin::Root, Box::new(asset_kind.clone()));
 
-		assert!(pallet_asset_rate::ConversionRateToNative::<T>::get(asset_kind).is_none());
+		assert!(topsoil_asset_rate::ConversionRateToNative::<T>::get(asset_kind).is_none());
 		Ok(())
 	}
 

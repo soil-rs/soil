@@ -19,9 +19,9 @@
 
 #![cfg(feature = "runtime-benchmarks")]
 
-use frame_benchmarking::v2::*;
-use frame_support::{dispatch::DispatchResultWithPostInfo, traits::OnInitialize};
-use frame_system::RawOrigin;
+use topsoil_benchmarking::v2::*;
+use topsoil_support::{dispatch::DispatchResultWithPostInfo, traits::OnInitialize};
+use topsoil_system::RawOrigin;
 
 #[cfg(test)]
 use crate::tests::MEMBERS;

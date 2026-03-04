@@ -37,15 +37,15 @@
 //!
 //! ### Usage Example
 //!
-//! This example shows how to interact with pallet-uniques (assuming the pallet called Uniques in
+//! This example shows how to interact with topsoil-uniques (assuming the pallet called Uniques in
 //! the chain’s Runtime) via the asset ops.
 //!
-//! If you are interested in the implementation example, you can look at the pallet-uniques
-//! implementation. You can check out the pallet-uniques tests if you want more examples of usage.
+//! If you are interested in the implementation example, you can look at the topsoil-uniques
+//! implementation. You can check out the topsoil-uniques tests if you want more examples of usage.
 //!
 //! ```rust,ignore
-//! type Collection = pallet_uniques::asset_ops::Collection<Uniques>;
-//! type Item = pallet_uniques::asset_ops::Item<Uniques>;
+//! type Collection = topsoil_uniques::asset_ops::Collection<Uniques>;
+//! type Item = topsoil_uniques::asset_ops::Item<Uniques>;
 //!
 //! // Collection creation
 //! //
@@ -71,7 +71,7 @@
 //! let metadata = Collection::inspect(&collection_id, Bytes::default()).unwrap();
 //!
 //! // Get collection attribute
-//! use pallet_uniques::asset_strategies::Attribute;
+//! use topsoil_uniques::asset_strategies::Attribute;
 //! let attr_key = "example-key";
 //! let attr_value = Collection::inspect(
 //!    &collection_id,

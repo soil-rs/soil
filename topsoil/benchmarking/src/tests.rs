@@ -19,7 +19,7 @@
 
 #![cfg(test)]
 
-use frame_support::{derive_impl, parameter_types, traits::ConstU32};
+use topsoil_support::{derive_impl, parameter_types, traits::ConstU32};
 use soil_runtime::{
 	testing::H256,
 	traits::{BlakeTwo256, IdentityLookup},
@@ -27,16 +27,16 @@ use soil_runtime::{
 };
 use std::cell::RefCell;
 
-#[frame_support::pallet(dev_mode)]
+#[topsoil_support::pallet(dev_mode)]
 mod pallet_test {
-	use frame_support::pallet_prelude::*;
-	use frame_system::pallet_prelude::*;
+	use topsoil_support::pallet_prelude::*;
+	use topsoil_system::pallet_prelude::*;
 
 	#[pallet::pallet]
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
-	pub trait Config: frame_system::Config {
+	pub trait Config: topsoil_system::Config {
 		type LowerBound: Get<u32>;
 		type UpperBound: Get<u32>;
 		type MaybeItem: Get<Option<u32>>;
@@ -64,19 +64,19 @@ mod pallet_test {
 	}
 }
 
-type Block = frame_system::mocking::MockBlock<Test>;
+type Block = topsoil_system::mocking::MockBlock<Test>;
 
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub enum Test
 	{
-		System: frame_system,
+		System: topsoil_system,
 		TestPallet: pallet_test,
 	}
 );
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
-	type BaseCallFilter = frame_support::traits::Everything;
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
+	type BaseCallFilter = topsoil_support::traits::Everything;
 	type BlockWeights = ();
 	type BlockLength = ();
 	type DbWeight = ();
@@ -98,7 +98,7 @@ impl frame_system::Config for Test {
 	type SystemWeightInfo = ();
 	type SS58Prefix = ();
 	type OnSetCode = ();
-	type MaxConsumers = frame_support::traits::ConstU32<16>;
+	type MaxConsumers = topsoil_support::traits::ConstU32<16>;
 }
 
 parameter_types! {
@@ -126,8 +126,8 @@ thread_local! {
 mod benchmarks {
 	use super::{new_test_ext, pallet_test::Value, Test, VALUES_PER_COMPONENT};
 	use crate::{account, BenchmarkError, BenchmarkParameter, BenchmarkResult, BenchmarkingSetup};
-	use frame_support::{assert_err, assert_ok, ensure, traits::Get};
-	use frame_system::RawOrigin;
+	use topsoil_support::{assert_err, assert_ok, ensure, traits::Get};
+	use topsoil_system::RawOrigin;
 	use rusty_fork::rusty_fork_test;
 
 	// Additional used internally by the benchmark macro.
@@ -136,7 +136,7 @@ mod benchmarks {
 	crate::benchmarks! {
 		where_clause {
 			where
-				crate::tests::RuntimeOrigin: From<RawOrigin<<T as frame_system::Config>::AccountId>>,
+				crate::tests::RuntimeOrigin: From<RawOrigin<<T as topsoil_system::Config>::AccountId>>,
 		}
 
 		set_value {

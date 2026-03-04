@@ -15,15 +15,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 #[allow(unused_imports)]
 pub mod pallet {
-	use frame_support::pallet_prelude::{Hooks, IsType};
-	use frame_system::pallet_prelude::BlockNumberFor;
+	use topsoil_support::pallet_prelude::{Hooks, IsType};
+	use topsoil_system::pallet_prelude::BlockNumberFor;
 
 	#[pallet::config]
 	pub trait Config:
-		frame_system::Config<Hash = soil_core::H256, RuntimeEvent: From<Event<Self>>>
+		topsoil_system::Config<Hash = soil_core::H256, RuntimeEvent: From<Event<Self>>>
 	{
 		type Bar: Clone + std::fmt::Debug + Eq;
 	}

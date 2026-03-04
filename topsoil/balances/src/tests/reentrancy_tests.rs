@@ -18,7 +18,7 @@
 //! Tests regarding the reentrancy functionality.
 
 use super::*;
-use frame_support::traits::tokens::{
+use topsoil_support::traits::tokens::{
 	Fortitude::Force,
 	Precision::BestEffort,
 	Preservation::{Expendable, Protect},

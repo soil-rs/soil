@@ -15,10 +15,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 mod pallet {
     #[pallet::config]
-    pub trait Config: frame_system::Config {}
+    pub trait Config: topsoil_system::Config {}
 
     #[pallet::pallet]
     pub struct Pallet<T>(_);
@@ -27,14 +27,14 @@ mod pallet {
     impl<T: Config> Pallet<T> {}
 }
 
-#[frame_support::runtime]
+#[topsoil_support::runtime]
 mod runtime {
     #[runtime::runtime]
     #[runtime::derive(RuntimeCall)]
     pub struct Runtime;
 
     #[runtime::pallet_index(0)]
-    pub type System = frame_system;
+    pub type System = topsoil_system;
 
     #[runtime::pallet_index(0)]
     pub type Pallet = pallet;

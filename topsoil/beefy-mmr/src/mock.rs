@@ -18,7 +18,7 @@
 use std::vec;
 
 use codec::Encode;
-use frame_support::{
+use topsoil_support::{
 	construct_runtime, derive_impl, parameter_types,
 	traits::{ConstU32, ConstU64},
 };
@@ -32,7 +32,7 @@ use soil_runtime::{
 };
 use soil_state_machine::BasicExternalities;
 
-use crate as pallet_beefy_mmr;
+use crate as topsoil_beefy_mmr;
 
 pub use soil_consensus_beefy::{
 	ecdsa_crypto::AuthorityId as BeefyId, mmr::BeefyDataProvider, ConsensusLog, BEEFY_ENGINE_ID,
@@ -41,40 +41,40 @@ use soil_core::offchain::{testing::TestOffchainExt, OffchainDbExt, OffchainWorke
 
 impl_opaque_keys! {
 	pub struct MockSessionKeys {
-		pub dummy: pallet_beefy::Pallet<Test>,
+		pub dummy: topsoil_beefy::Pallet<Test>,
 	}
 }
 
-type Block = frame_system::mocking::MockBlock<Test>;
+type Block = topsoil_system::mocking::MockBlock<Test>;
 
 construct_runtime!(
 	pub enum Test
 	{
-		System: frame_system,
-		Session: pallet_session,
-		Balances: pallet_balances,
-		Mmr: pallet_mmr,
-		Beefy: pallet_beefy,
-		BeefyMmr: pallet_beefy_mmr,
+		System: topsoil_system,
+		Session: topsoil_session,
+		Balances: topsoil_balances,
+		Mmr: topsoil_mmr,
+		Beefy: topsoil_beefy,
+		BeefyMmr: topsoil_beefy_mmr,
 	}
 );
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
-	type AccountData = pallet_balances::AccountData<u64>;
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
+	type AccountData = topsoil_balances::AccountData<u64>;
 	type Block = Block;
 }
 
-#[derive_impl(pallet_balances::config_preludes::TestDefaultConfig)]
-impl pallet_balances::Config for Test {
+#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
+impl topsoil_balances::Config for Test {
 	type AccountStore = System;
 }
 
-impl pallet_session::Config for Test {
+impl topsoil_session::Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type ValidatorId = u64;
 	type ValidatorIdOf = ConvertInto;
-	type ShouldEndSession = pallet_session::PeriodicSessions<ConstU64<1>, ConstU64<0>>;
-	type NextSessionRotation = pallet_session::PeriodicSessions<ConstU64<1>, ConstU64<0>>;
+	type ShouldEndSession = topsoil_session::PeriodicSessions<ConstU64<1>, ConstU64<0>>;
+	type NextSessionRotation = topsoil_session::PeriodicSessions<ConstU64<1>, ConstU64<0>>;
 	type SessionManager = MockSessionManager;
 	type SessionHandler = <MockSessionKeys as OpaqueKeys>::KeyTypeIdProviders;
 	type Keys = MockSessionKeys;
@@ -85,22 +85,22 @@ impl pallet_session::Config for Test {
 }
 
 pub type MmrLeaf = soil_consensus_beefy::mmr::MmrLeaf<
-	frame_system::pallet_prelude::BlockNumberFor<Test>,
-	<Test as frame_system::Config>::Hash,
+	topsoil_system::pallet_prelude::BlockNumberFor<Test>,
+	<Test as topsoil_system::Config>::Hash,
 	crate::MerkleRootOf<Test>,
 	Vec<u8>,
 >;
 
-impl pallet_mmr::Config for Test {
+impl topsoil_mmr::Config for Test {
 	const INDEXING_PREFIX: &'static [u8] = b"mmr";
 
 	type Hashing = Keccak256;
 
 	type LeafData = BeefyMmr;
 
-	type OnNewRoot = pallet_beefy_mmr::DepositBeefyDigest<Test>;
+	type OnNewRoot = topsoil_beefy_mmr::DepositBeefyDigest<Test>;
 
-	type BlockHashProvider = pallet_mmr::DefaultBlockHashProvider<Test>;
+	type BlockHashProvider = topsoil_mmr::DefaultBlockHashProvider<Test>;
 
 	type WeightInfo = ();
 
@@ -108,7 +108,7 @@ impl pallet_mmr::Config for Test {
 	type BenchmarkHelper = ();
 }
 
-impl pallet_beefy::Config for Test {
+impl topsoil_beefy::Config for Test {
 	type BeefyId = BeefyId;
 	type MaxAuthorities = ConstU32<100>;
 	type MaxNominators = ConstU32<1000>;
@@ -124,10 +124,10 @@ parameter_types! {
 	pub LeafVersion: MmrLeafVersion = MmrLeafVersion::new(1, 5);
 }
 
-impl pallet_beefy_mmr::Config for Test {
+impl topsoil_beefy_mmr::Config for Test {
 	type LeafVersion = LeafVersion;
 
-	type BeefyAuthorityToMerkleLeaf = pallet_beefy_mmr::BeefyEcdsaToEthereum;
+	type BeefyAuthorityToMerkleLeaf = topsoil_beefy_mmr::BeefyEcdsaToEthereum;
 
 	type LeafExtra = Vec<u8>;
 
@@ -140,7 +140,7 @@ impl BeefyDataProvider<Vec<u8>> for DummyDataProvider {
 	fn extra_data() -> Vec<u8> {
 		let mut col = vec![(15, vec![1, 2, 3]), (5, vec![4, 5, 6])];
 		col.sort();
-		binary_merkle_tree::merkle_root::<<Test as pallet_mmr::Config>::Hashing, _>(
+		binary_merkle_tree::merkle_root::<<Test as topsoil_mmr::Config>::Hashing, _>(
 			col.into_iter().map(|pair| pair.encode()),
 		)
 		.as_ref()
@@ -149,7 +149,7 @@ impl BeefyDataProvider<Vec<u8>> for DummyDataProvider {
 }
 
 pub struct MockSessionManager;
-impl pallet_session::SessionManager<u64> for MockSessionManager {
+impl topsoil_session::SessionManager<u64> for MockSessionManager {
 	fn end_session(_: soil_staking::SessionIndex) {}
 	fn start_session(_: soil_staking::SessionIndex) {}
 	fn new_session(idx: soil_staking::SessionIndex) -> Option<Vec<u64>> {
@@ -184,7 +184,7 @@ pub fn new_test_ext(ids: Vec<u8>) -> TestExternalities {
 }
 
 pub fn new_test_ext_raw_authorities(authorities: Vec<(u64, BeefyId)>) -> TestExternalities {
-	let mut t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 
 	let session_keys: Vec<_> = authorities
 		.iter()
@@ -194,11 +194,11 @@ pub fn new_test_ext_raw_authorities(authorities: Vec<(u64, BeefyId)>) -> TestExt
 
 	BasicExternalities::execute_with_storage(&mut t, || {
 		for (ref id, ..) in &session_keys {
-			frame_system::Pallet::<Test>::inc_providers(id);
+			topsoil_system::Pallet::<Test>::inc_providers(id);
 		}
 	});
 
-	pallet_session::GenesisConfig::<Test> { keys: session_keys, ..Default::default() }
+	topsoil_session::GenesisConfig::<Test> { keys: session_keys, ..Default::default() }
 		.assimilate_storage(&mut t)
 		.unwrap();
 

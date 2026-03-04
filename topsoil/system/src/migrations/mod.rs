@@ -20,7 +20,7 @@
 use super::LOG_TARGET;
 use crate::{Config, Pallet};
 use codec::{Decode, Encode, FullCodec};
-use frame_support::{
+use topsoil_support::{
 	pallet_prelude::ValueQuery, traits::PalletInfoAccess, weights::Weight, Blake2_128Concat,
 };
 use Debug;
@@ -53,13 +53,13 @@ pub trait V2ToV3 {
 	type AccountData: 'static + FullCodec;
 }
 
-#[frame_support::storage_alias]
+#[topsoil_support::storage_alias]
 type UpgradedToU32RefCount<T: Config> = StorageValue<Pallet<T>, bool, ValueQuery>;
 
-#[frame_support::storage_alias]
+#[topsoil_support::storage_alias]
 type UpgradedToTripleRefCount<T: Config> = StorageValue<Pallet<T>, bool, ValueQuery>;
 
-#[frame_support::storage_alias]
+#[topsoil_support::storage_alias]
 type Account<V, T: Config> = StorageMap<
 	Pallet<T>,
 	Blake2_128Concat,

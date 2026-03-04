@@ -140,7 +140,7 @@ pub use pallet::*;
 use types::*;
 
 use core::convert::TryInto;
-use frame_support::{
+use topsoil_support::{
 	pallet_prelude::*,
 	traits::{
 		fungible::{
@@ -168,16 +168,16 @@ macro_rules! log {
 	($level:tt, $patter:expr $(, $values:expr)* $(,)?) => {
 		log::$level!(
 			target: $crate::LOG_TARGET,
-			concat!("[{:?}] 🏊‍♂️ ", $patter), <frame_system::Pallet<T>>::block_number() $(, $values)*
+			concat!("[{:?}] 🏊‍♂️ ", $patter), <topsoil_system::Pallet<T>>::block_number() $(, $values)*
 		)
 	};
 }
 pub type BalanceOf<T> =
-	<<T as Config>::Currency as FunInspect<<T as frame_system::Config>::AccountId>>::Balance;
+	<<T as Config>::Currency as FunInspect<<T as topsoil_system::Config>::AccountId>>::Balance;
 
-use frame_system::{ensure_signed, pallet_prelude::*, RawOrigin};
+use topsoil_system::{ensure_signed, pallet_prelude::*, RawOrigin};
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
 
@@ -188,14 +188,14 @@ pub mod pallet {
 	pub struct Pallet<T>(PhantomData<T>);
 
 	#[pallet::config]
-	pub trait Config: frame_system::Config {
+	pub trait Config: topsoil_system::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// Injected identifier for the pallet.
 		#[pallet::constant]
-		type PalletId: Get<frame_support::PalletId>;
+		type PalletId: Get<topsoil_support::PalletId>;
 
 		/// Currency type.
 		type Currency: FunHoldMutate<Self::AccountId, Reason = Self::RuntimeHoldReason>

@@ -18,8 +18,8 @@
 //! Tests for Uniques pallet.
 
 use crate::{mock::*, Event, *};
-use frame_support::{assert_noop, assert_ok, traits::Currency};
-use pallet_balances::Error as BalancesError;
+use topsoil_support::{assert_noop, assert_ok, traits::Currency};
+use topsoil_balances::Error as BalancesError;
 use soil_runtime::{traits::Dispatchable, DispatchError};
 
 fn items() -> Vec<(u64, u32, u32)> {
@@ -1103,7 +1103,7 @@ fn clear_collection_metadata_works() {
 mod asset_ops_tests {
 	use super::*;
 	use crate::asset_strategies::*;
-	use frame_support::traits::tokens::asset_ops::{common_strategies::*, *};
+	use topsoil_support::traits::tokens::asset_ops::{common_strategies::*, *};
 
 	type Collection = asset_ops::Collection<Uniques>;
 	type Item = asset_ops::Item<Uniques>;

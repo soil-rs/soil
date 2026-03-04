@@ -36,11 +36,11 @@
 
 extern crate alloc;
 /// For our tests
-extern crate self as frame_metadata_hash_extension;
+extern crate self as topsoil_metadata_hash_extension;
 
 use codec::{Decode, DecodeWithMemTracking, Encode};
-use frame_support::{pallet_prelude::Weight, DebugNoBound};
-use frame_system::Config;
+use topsoil_support::{pallet_prelude::Weight, DebugNoBound};
+use topsoil_system::Config;
 use scale_info::TypeInfo;
 use soil_runtime::{
 	impl_tx_ext_default,

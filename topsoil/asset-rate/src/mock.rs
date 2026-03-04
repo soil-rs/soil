@@ -17,38 +17,38 @@
 
 //! The crate's mock.
 
-use crate as pallet_asset_rate;
-use frame_support::derive_impl;
+use crate as topsoil_asset_rate;
+use topsoil_support::derive_impl;
 use soil_runtime::BuildStorage;
 
-type Block = frame_system::mocking::MockBlock<Test>;
+type Block = topsoil_system::mocking::MockBlock<Test>;
 
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub enum Test
 	{
-		System: frame_system,
-		AssetRate: pallet_asset_rate,
-		Balances: pallet_balances,
+		System: topsoil_system,
+		AssetRate: topsoil_asset_rate,
+		Balances: topsoil_balances,
 	}
 );
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
 	type Block = Block;
-	type AccountData = pallet_balances::AccountData<u64>;
+	type AccountData = topsoil_balances::AccountData<u64>;
 }
 
-#[derive_impl(pallet_balances::config_preludes::TestDefaultConfig)]
-impl pallet_balances::Config for Test {
+#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
+impl topsoil_balances::Config for Test {
 	type AccountStore = System;
 }
 
-impl pallet_asset_rate::Config for Test {
+impl topsoil_asset_rate::Config for Test {
 	type WeightInfo = ();
 	type RuntimeEvent = RuntimeEvent;
-	type CreateOrigin = frame_system::EnsureRoot<u64>;
-	type RemoveOrigin = frame_system::EnsureRoot<u64>;
-	type UpdateOrigin = frame_system::EnsureRoot<u64>;
+	type CreateOrigin = topsoil_system::EnsureRoot<u64>;
+	type RemoveOrigin = topsoil_system::EnsureRoot<u64>;
+	type UpdateOrigin = topsoil_system::EnsureRoot<u64>;
 	type Currency = Balances;
 	type AssetKind = u32;
 	#[cfg(feature = "runtime-benchmarks")]
@@ -57,5 +57,5 @@ impl pallet_asset_rate::Config for Test {
 
 // Build genesis storage according to the mock runtime.
 pub fn new_test_ext() -> soil_io::TestExternalities {
-	frame_system::GenesisConfig::<Test>::default().build_storage().unwrap().into()
+	topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap().into()
 }

@@ -28,21 +28,21 @@ use crate::{
 	},
 };
 use codec::Decode;
-use frame_support::traits::OnRuntimeUpgrade;
-use pallet_migrations::WeightInfo as _;
+use topsoil_support::traits::OnRuntimeUpgrade;
+use topsoil_migrations::WeightInfo as _;
 
 #[test]
 fn lazy_migration_works() {
 	new_test_ext().execute_with(|| {
-		frame_support::__private::soil_tracing::try_init_simple();
+		topsoil_support::__private::soil_tracing::try_init_simple();
 		// Insert some values into the old storage map.
 		for i in 0..1024 {
 			v1::v0::MyMap::<T>::insert(i, i);
 		}
 
 		// Give it enough weight do do exactly 16 iterations:
-		let limit = <T as pallet_migrations::Config>::WeightInfo::progress_mbms_none() +
-			pallet_migrations::Pallet::<T>::exec_migration_max_weight() +
+		let limit = <T as topsoil_migrations::Config>::WeightInfo::progress_mbms_none() +
+			topsoil_migrations::Pallet::<T>::exec_migration_max_weight() +
 			weights::SubstrateWeight::<T>::step() * 16;
 		MigratorServiceWeight::set(&limit);
 
@@ -57,7 +57,7 @@ fn lazy_migration_works() {
 			for i in 0..1024 {
 				let key = crate::MyMap::<T>::hashed_key_for(i);
 				let value =
-					frame_support::storage::unhashed::get_raw(&key[..]).expect("value exists");
+					topsoil_support::storage::unhashed::get_raw(&key[..]).expect("value exists");
 
 				if let Ok(value) = u64::decode(&mut &value[..]) {
 					assert_eq!(value, i as u64);

@@ -15,7 +15,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use frame_support::construct_runtime;
+use topsoil_support::construct_runtime;
 
 construct_runtime! {
 	pub struct Runtime where
@@ -23,7 +23,7 @@ construct_runtime! {
 		Block = Block,
 		NodeBlock = Block,
 	{
-		System: frame_system exclude_part { Call },
+		System: topsoil_system exclude_part { Call },
 	}
 }
 

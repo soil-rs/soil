@@ -23,7 +23,7 @@ use super::*;
 #[cfg(test)]
 use crate::Pallet as Parameters;
 
-use frame_benchmarking::v2::*;
+use topsoil_benchmarking::v2::*;
 
 #[benchmarks(where T::RuntimeParameters: Default)]
 mod benchmarks {

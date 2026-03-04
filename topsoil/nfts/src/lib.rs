@@ -21,8 +21,8 @@
 //!
 //! ## Related Modules
 //!
-//! * [`System`](../frame_system/index.html)
-//! * [`Support`](../frame_support/index.html)
+//! * [`System`](../topsoil_system/index.html)
+//! * [`Support`](../topsoil_support/index.html)
 
 #![recursion_limit = "256"]
 // Ensure we're `no_std` when compiling for Wasm.
@@ -52,11 +52,11 @@ extern crate alloc;
 
 use alloc::{boxed::Box, vec, vec::Vec};
 use codec::{Decode, Encode};
-use frame_support::traits::{
+use topsoil_support::traits::{
 	tokens::Locker, BalanceStatus::Reserved, Currency, EnsureOriginWithArg, Incrementable,
 	ReservableCurrency,
 };
-use frame_system::Config as SystemConfig;
+use topsoil_system::Config as SystemConfig;
 use soil_runtime::{
 	traits::{BlockNumberProvider, IdentifyAccount, Saturating, StaticLookup, Verify, Zero},
 	Debug,
@@ -72,11 +72,11 @@ pub const LOG_TARGET: &'static str = "runtime::nfts";
 /// A type alias for the account ID type used in the dispatchable functions of this pallet.
 type AccountIdLookupOf<T> = <<T as SystemConfig>::Lookup as StaticLookup>::Source;
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
-	use frame_support::{pallet_prelude::*, traits::ExistenceRequirement};
-	use frame_system::{ensure_signed, pallet_prelude::OriginFor};
+	use topsoil_support::{pallet_prelude::*, traits::ExistenceRequirement};
+	use topsoil_system::{ensure_signed, pallet_prelude::OriginFor};
 
 	/// The in-code storage version.
 	const STORAGE_VERSION: StorageVersion = StorageVersion::new(1);
@@ -126,11 +126,11 @@ pub mod pallet {
 
 	#[pallet::config]
 	/// The module configuration trait.
-	pub trait Config<I: 'static = ()>: frame_system::Config {
+	pub trait Config<I: 'static = ()>: topsoil_system::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self, I>>
-			+ IsType<<Self as frame_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// Identifier for the collection of item.
 		///
@@ -244,7 +244,7 @@ pub mod pallet {
 		/// Weight information for extrinsics in this pallet.
 		type WeightInfo: WeightInfo;
 
-		/// Provider for the block number. Normally this is the `frame_system` pallet.
+		/// Provider for the block number. Normally this is the `topsoil_system` pallet.
 		type BlockNumberProvider: BlockNumberProvider;
 	}
 

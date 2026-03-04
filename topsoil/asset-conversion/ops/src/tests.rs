@@ -18,7 +18,7 @@
 //! Asset Conversion Ops pallet tests.
 
 use crate::{mock::*, *};
-use frame_support::{
+use topsoil_support::{
 	assert_noop, assert_ok,
 	traits::{
 		fungible::{Inspect as FungibleInspect, NativeOrWithId},
@@ -30,13 +30,13 @@ use frame_support::{
 #[test]
 fn migrate_pool_account_id_with_native() {
 	new_test_ext().execute_with(|| {
-		type PoolLocator = <Test as pallet_asset_conversion::Config>::PoolLocator;
+		type PoolLocator = <Test as topsoil_asset_conversion::Config>::PoolLocator;
 		let user = 1;
 		let token_1 = NativeOrWithId::Native;
 		let token_2 = NativeOrWithId::WithId(2);
 		let pool_id = PoolLocator::pool_id(&token_1, &token_2).unwrap();
 		let lp_token =
-			<Test as pallet_asset_conversion::Config>::PoolAssetId::initial_value().unwrap();
+			<Test as topsoil_asset_conversion::Config>::PoolAssetId::initial_value().unwrap();
 
 		// setup pool and provide some liquidity.
 		assert_ok!(NativeAndAssets::create(token_2.clone(), user, false, 1));
@@ -114,13 +114,13 @@ fn migrate_pool_account_id_with_native() {
 #[test]
 fn migrate_pool_account_id_with_insufficient_assets() {
 	new_test_ext().execute_with(|| {
-		type PoolLocator = <Test as pallet_asset_conversion::Config>::PoolLocator;
+		type PoolLocator = <Test as topsoil_asset_conversion::Config>::PoolLocator;
 		let user = 1;
 		let token_1 = NativeOrWithId::WithId(1);
 		let token_2 = NativeOrWithId::WithId(2);
 		let pool_id = PoolLocator::pool_id(&token_1, &token_2).unwrap();
 		let lp_token =
-			<Test as pallet_asset_conversion::Config>::PoolAssetId::initial_value().unwrap();
+			<Test as topsoil_asset_conversion::Config>::PoolAssetId::initial_value().unwrap();
 
 		// setup pool and provide some liquidity.
 		assert_ok!(NativeAndAssets::create(token_1.clone(), user, false, 1));
@@ -198,13 +198,13 @@ fn migrate_pool_account_id_with_insufficient_assets() {
 #[test]
 fn migrate_pool_account_id_with_sufficient_assets() {
 	new_test_ext().execute_with(|| {
-		type PoolLocator = <Test as pallet_asset_conversion::Config>::PoolLocator;
+		type PoolLocator = <Test as topsoil_asset_conversion::Config>::PoolLocator;
 		let user = 1;
 		let token_1 = NativeOrWithId::WithId(1);
 		let token_2 = NativeOrWithId::WithId(2);
 		let pool_id = PoolLocator::pool_id(&token_1, &token_2).unwrap();
 		let lp_token =
-			<Test as pallet_asset_conversion::Config>::PoolAssetId::initial_value().unwrap();
+			<Test as topsoil_asset_conversion::Config>::PoolAssetId::initial_value().unwrap();
 
 		// setup pool and provide some liquidity.
 		assert_ok!(NativeAndAssets::create(token_1.clone(), user, true, 1));

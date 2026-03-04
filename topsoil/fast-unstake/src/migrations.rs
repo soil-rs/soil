@@ -18,7 +18,7 @@
 pub mod v1 {
 	use crate::{types::BalanceOf, *};
 	use alloc::vec::Vec;
-	use frame_support::{
+	use topsoil_support::{
 		storage::unhashed,
 		traits::{Defensive, Get, GetStorageVersion, OnRuntimeUpgrade},
 		weights::Weight,
@@ -26,7 +26,7 @@ pub mod v1 {
 	use soil_staking::EraIndex;
 
 	#[cfg(feature = "try-runtime")]
-	use frame_support::ensure;
+	use topsoil_support::ensure;
 	#[cfg(feature = "try-runtime")]
 	use soil_runtime::TryRuntimeError;
 

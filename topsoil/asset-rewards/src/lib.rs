@@ -83,7 +83,7 @@
 pub use pallet::*;
 
 use codec::{Codec, Decode, Encode, MaxEncodedLen};
-use frame_support::{
+use topsoil_support::{
 	ensure,
 	traits::{
 		fungibles::{Inspect, Mutate},
@@ -119,7 +119,7 @@ pub(crate) const PRECISION_SCALING_FACTOR: u16 = 4096;
 
 /// Convenience alias for `PoolInfo`.
 pub type PoolInfoFor<T> = PoolInfo<
-	<T as frame_system::Config>::AccountId,
+	<T as topsoil_system::Config>::AccountId,
 	<T as Config>::AssetId,
 	<T as Config>::Balance,
 	BlockNumberFor<T>,
@@ -176,10 +176,10 @@ soil_api::decl_runtime_apis! {
 	}
 }
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
-	use frame_support::{
+	use topsoil_support::{
 		pallet_prelude::*,
 		traits::{
 			fungibles::MutateFreeze,
@@ -187,7 +187,7 @@ pub mod pallet {
 			Consideration, Footprint, RewardsPool,
 		},
 	};
-	use frame_system::pallet_prelude::{
+	use topsoil_system::pallet_prelude::{
 		ensure_signed, BlockNumberFor as SystemBlockNumberFor, OriginFor,
 	};
 	use soil_runtime::{
@@ -218,10 +218,10 @@ pub mod pallet {
 	}
 
 	#[pallet::config]
-	pub trait Config: frame_system::Config {
+	pub trait Config: topsoil_system::Config {
 		/// Overarching event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// The pallet's unique identifier, used to derive the pool's account ID.
 		///
@@ -271,7 +271,7 @@ pub mod pallet {
 		/// This provider is used to determine the current block number for the pallet.
 		/// It must return monotonically increasing values when called from consecutive blocks.
 		///
-		/// It can be configured to use the local block number (via `frame_system::Pallet`) or a
+		/// It can be configured to use the local block number (via `topsoil_system::Pallet`) or a
 		/// remote block number (e.g., from a relay chain). However, note that using a remote
 		/// block number might have implications for the behavior of the pallet, especially if the
 		/// remote block number advances faster than the local block number.
@@ -422,7 +422,7 @@ pub mod pallet {
 			// The AccountId is at least 16 bytes to contain the unique PalletId.
 			let pool_id: PoolId = 1;
 			assert!(
-				<frame_support::PalletId as AccountIdConversion<T::AccountId>>::try_into_sub_account(
+				<topsoil_support::PalletId as AccountIdConversion<T::AccountId>>::try_into_sub_account(
 					&T::PalletId::get(), pool_id,
 				)
 				.is_some()

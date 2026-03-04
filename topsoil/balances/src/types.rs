@@ -20,7 +20,7 @@
 use crate::{Config, CreditOf, Event, Pallet};
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use core::ops::BitOr;
-use frame_support::traits::{Imbalance, LockIdentifier, OnUnbalanced, WithdrawReasons};
+use topsoil_support::traits::{Imbalance, LockIdentifier, OnUnbalanced, WithdrawReasons};
 use scale_info::TypeInfo;
 use soil_runtime::Saturating;
 

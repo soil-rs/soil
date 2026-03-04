@@ -16,14 +16,14 @@
 // limitations under the License.
 
 use super::*;
-use frame_support::traits::OnRuntimeUpgrade;
+use topsoil_support::traits::OnRuntimeUpgrade;
 use log;
 
 #[cfg(feature = "try-runtime")]
 use soil_runtime::TryRuntimeError;
 
 pub mod v1 {
-	use frame_support::{pallet_prelude::*, weights::Weight};
+	use topsoil_support::{pallet_prelude::*, weights::Weight};
 
 	use super::*;
 

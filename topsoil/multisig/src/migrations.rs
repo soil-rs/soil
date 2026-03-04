@@ -18,32 +18,32 @@
 // Migrations for Multisig Pallet
 
 use crate::*;
-use frame::prelude::*;
+use topsoil::prelude::*;
 
 pub mod v1 {
 	use super::*;
 
-	type OpaqueCall<T> = frame::traits::WrapperKeepOpaque<<T as Config>::RuntimeCall>;
+	type OpaqueCall<T> = topsoil::traits::WrapperKeepOpaque<<T as Config>::RuntimeCall>;
 
-	#[frame::storage_alias]
+	#[topsoil::storage_alias]
 	type Calls<T: Config> = StorageMap<
 		Pallet<T>,
 		Identity,
 		[u8; 32],
-		(OpaqueCall<T>, <T as frame_system::Config>::AccountId, BalanceOf<T>),
+		(OpaqueCall<T>, <T as topsoil_system::Config>::AccountId, BalanceOf<T>),
 	>;
 
 	pub struct MigrateToV1<T>(core::marker::PhantomData<T>);
 	impl<T: Config> OnRuntimeUpgrade for MigrateToV1<T> {
 		#[cfg(feature = "try-runtime")]
-		fn pre_upgrade() -> Result<Vec<u8>, frame::try_runtime::TryRuntimeError> {
+		fn pre_upgrade() -> Result<Vec<u8>, topsoil::try_runtime::TryRuntimeError> {
 			log!(info, "Number of calls to refund and delete: {}", Calls::<T>::iter().count());
 
 			Ok(Vec::new())
 		}
 
 		fn on_runtime_upgrade() -> Weight {
-			use frame::traits::ReservableCurrency as _;
+			use topsoil::traits::ReservableCurrency as _;
 			let current = Pallet::<T>::in_code_storage_version();
 			let onchain = Pallet::<T>::on_chain_storage_version();
 
@@ -69,7 +69,7 @@ pub mod v1 {
 		}
 
 		#[cfg(feature = "try-runtime")]
-		fn post_upgrade(_state: Vec<u8>) -> Result<(), frame::try_runtime::TryRuntimeError> {
+		fn post_upgrade(_state: Vec<u8>) -> Result<(), topsoil::try_runtime::TryRuntimeError> {
 			ensure!(
 				Calls::<T>::iter().count() == 0,
 				"there are some dangling calls that need to be destroyed and refunded"

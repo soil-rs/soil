@@ -21,7 +21,7 @@ use super::*;
 use migrations::v0;
 use mock::*;
 
-use frame_support::{assert_noop, assert_ok};
+use topsoil_support::{assert_noop, assert_ok};
 use soil_crypto_hashing::blake2_256;
 use soil_runtime::traits::BadOrigin;
 use BidKind::*;
@@ -1465,7 +1465,7 @@ fn poke_deposit_handles_insufficient_balance() {
 		// Should fail due to insufficient balance
 		assert_noop!(
 			Society::poke_deposit(Origin::signed(20)),
-			pallet_balances::Error::<Test>::InsufficientBalance
+			topsoil_balances::Error::<Test>::InsufficientBalance
 		);
 	});
 }

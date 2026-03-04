@@ -21,15 +21,15 @@
 
 use super::*;
 use enumflags2::{BitFlag, BitFlags};
-use frame_benchmarking::v1::{
+use topsoil_benchmarking::v1::{
 	account, benchmarks_instance_pallet, whitelist_account, whitelisted_caller, BenchmarkError,
 };
-use frame_support::{
+use topsoil_support::{
 	assert_ok,
 	traits::{EnsureOrigin, Get, UnfilteredDispatchable},
 	BoundedVec,
 };
-use frame_system::RawOrigin as SystemOrigin;
+use topsoil_system::RawOrigin as SystemOrigin;
 use soil_runtime::traits::{Bounded, One};
 
 use crate::Pallet as Nfts;
@@ -190,10 +190,10 @@ fn add_collection_attribute<T: Config<I>, I: 'static>(
 }
 
 fn assert_last_event<T: Config<I>, I: 'static>(generic_event: <T as Config<I>>::RuntimeEvent) {
-	let events = frame_system::Pallet::<T>::events();
-	let system_event: <T as frame_system::Config>::RuntimeEvent = generic_event.into();
+	let events = topsoil_system::Pallet::<T>::events();
+	let system_event: <T as topsoil_system::Config>::RuntimeEvent = generic_event.into();
 	// compare to the last event record
-	let frame_system::EventRecord { event, .. } = &events[events.len() - 1];
+	let topsoil_system::EventRecord { event, .. } = &events[events.len() - 1];
 	assert_eq!(event, &system_event);
 }
 

@@ -74,10 +74,10 @@ impl ToTokens for OuterEnumType {
 /// ```ignore
 /// enum RuntimeEvent {
 ///     #[codec(index = 0)]
-///     System(pallet_system::Event),
+///     System(topsoil_system::Event),
 ///
 ///     #[codec(index = 5)]
-///     Balances(pallet_system::Event),
+///     Balances(topsoil_system::Event),
 /// }
 /// ```
 ///

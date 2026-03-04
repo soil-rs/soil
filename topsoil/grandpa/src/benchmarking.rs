@@ -18,8 +18,8 @@
 //! Benchmarks for the GRANDPA pallet.
 
 use super::*;
-use frame_benchmarking::v2::*;
-use frame_system::RawOrigin;
+use topsoil_benchmarking::v2::*;
+use topsoil_system::RawOrigin;
 use soil_core::H256;
 
 #[benchmarks]

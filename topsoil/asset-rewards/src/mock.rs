@@ -18,9 +18,9 @@
 //! Test environment for Asset Rewards pallet.
 
 use super::*;
-use crate as pallet_asset_rewards;
+use crate as topsoil_asset_rewards;
 use core::default::Default;
-use frame_support::{
+use topsoil_support::{
 	construct_runtime, derive_impl,
 	instances::Instance1,
 	parameter_types,
@@ -30,34 +30,34 @@ use frame_support::{
 	},
 	PalletId,
 };
-use frame_system::EnsureSigned;
+use topsoil_system::EnsureSigned;
 use soil_runtime::{traits::IdentityLookup, BuildStorage};
 
 #[cfg(feature = "runtime-benchmarks")]
 use self::benchmarking::BenchmarkHelper;
 
-type Block = frame_system::mocking::MockBlock<MockRuntime>;
+type Block = topsoil_system::mocking::MockBlock<MockRuntime>;
 
 construct_runtime!(
 	pub enum MockRuntime
 	{
-		System: frame_system,
-		Balances: pallet_balances,
-		Assets: pallet_assets::<Instance1>,
-		AssetsFreezer: pallet_assets_freezer::<Instance1>,
-		StakingRewards: pallet_asset_rewards,
+		System: topsoil_system,
+		Balances: topsoil_balances,
+		Assets: topsoil_assets::<Instance1>,
+		AssetsFreezer: topsoil_assets_freezer::<Instance1>,
+		StakingRewards: topsoil_asset_rewards,
 	}
 );
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for MockRuntime {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for MockRuntime {
 	type AccountId = u128;
 	type Lookup = IdentityLookup<Self::AccountId>;
 	type Block = Block;
-	type AccountData = pallet_balances::AccountData<u128>;
+	type AccountData = topsoil_balances::AccountData<u128>;
 }
 
-impl pallet_balances::Config for MockRuntime {
+impl topsoil_balances::Config for MockRuntime {
 	type Balance = u128;
 	type DustRemoval = ();
 	type RuntimeEvent = RuntimeEvent;
@@ -74,7 +74,7 @@ impl pallet_balances::Config for MockRuntime {
 	type DoneSlashHandler = ();
 }
 
-impl pallet_assets::Config<Instance1> for MockRuntime {
+impl topsoil_assets::Config<Instance1> for MockRuntime {
 	type RuntimeEvent = RuntimeEvent;
 	type Balance = u128;
 	type RemoveItemsLimit = ConstU32<1000>;
@@ -83,7 +83,7 @@ impl pallet_assets::Config<Instance1> for MockRuntime {
 	type ReserveData = ();
 	type Currency = Balances;
 	type CreateOrigin = AsEnsureOriginWithArg<EnsureSigned<Self::AccountId>>;
-	type ForceOrigin = frame_system::EnsureRoot<Self::AccountId>;
+	type ForceOrigin = topsoil_system::EnsureRoot<Self::AccountId>;
 	type AssetDeposit = ConstU128<1>;
 	type AssetAccountDeposit = ConstU128<10>;
 	type MetadataDepositBase = ConstU128<1>;
@@ -95,7 +95,7 @@ impl pallet_assets::Config<Instance1> for MockRuntime {
 	type Extra = ();
 	type WeightInfo = ();
 	type CallbackHandle = ();
-	pallet_assets::runtime_benchmarks_enabled! {
+	topsoil_assets::runtime_benchmarks_enabled! {
 		type BenchmarkHelper = ();
 	}
 }
@@ -109,11 +109,11 @@ parameter_types! {
 /// Give Root Origin permission to create pools.
 pub struct MockPermissionedOrigin;
 impl EnsureOrigin<RuntimeOrigin> for MockPermissionedOrigin {
-	type Success = <MockRuntime as frame_system::Config>::AccountId;
+	type Success = <MockRuntime as topsoil_system::Config>::AccountId;
 
 	fn try_origin(origin: RuntimeOrigin) -> Result<Self::Success, RuntimeOrigin> {
 		match origin.clone().into() {
-			Ok(frame_system::RawOrigin::Root) => Ok(PermissionedAccountId::get()),
+			Ok(topsoil_system::RawOrigin::Root) => Ok(PermissionedAccountId::get()),
 			_ => Err(origin),
 		}
 	}
@@ -125,7 +125,7 @@ impl EnsureOrigin<RuntimeOrigin> for MockPermissionedOrigin {
 }
 
 /// Allow Freezes for the `Assets` pallet
-impl pallet_assets_freezer::Config<pallet_assets_freezer::Instance1> for MockRuntime {
+impl topsoil_assets_freezer::Config<topsoil_assets_freezer::Instance1> for MockRuntime {
 	type RuntimeFreezeReason = RuntimeFreezeReason;
 	type RuntimeEvent = RuntimeEvent;
 }
@@ -149,13 +149,13 @@ impl BenchmarkHelper<NativeOrWithId<u32>> for AssetRewardsBenchmarkHelper {
 
 parameter_types! {
 	pub const CreationHoldReason: RuntimeHoldReason =
-		RuntimeHoldReason::StakingRewards(pallet_asset_rewards::HoldReason::PoolCreation);
+		RuntimeHoldReason::StakingRewards(topsoil_asset_rewards::HoldReason::PoolCreation);
 }
 
 impl Config for MockRuntime {
 	type RuntimeEvent = RuntimeEvent;
 	type AssetId = NativeOrWithId<u32>;
-	type Balance = <Self as pallet_balances::Config>::Balance;
+	type Balance = <Self as topsoil_balances::Config>::Balance;
 	type Assets = NativeAndAssets;
 	type AssetsFreezer = NativeAndAssetsFreezer;
 	type PalletId = StakingRewardsPalletId;
@@ -168,15 +168,15 @@ impl Config for MockRuntime {
 		CreationHoldReason,
 		LinearStoragePrice<ConstU128<100>, ConstU128<0>, u128>,
 	>;
-	type BlockNumberProvider = frame_system::Pallet<Self>;
+	type BlockNumberProvider = topsoil_system::Pallet<Self>;
 	#[cfg(feature = "runtime-benchmarks")]
 	type BenchmarkHelper = AssetRewardsBenchmarkHelper;
 }
 
 pub(crate) fn new_test_ext() -> soil_io::TestExternalities {
-	let mut t = frame_system::GenesisConfig::<MockRuntime>::default().build_storage().unwrap();
+	let mut t = topsoil_system::GenesisConfig::<MockRuntime>::default().build_storage().unwrap();
 
-	pallet_assets::GenesisConfig::<MockRuntime, Instance1> {
+	topsoil_assets::GenesisConfig::<MockRuntime, Instance1> {
 		// Genesis assets: id, owner, is_sufficient, min_balance
 		// pub assets: Vec<(T::AssetId, T::AccountId, bool, T::Balance)>,
 		assets: vec![(1, 1, true, 1), (10, 1, true, 1), (20, 1, true, 1)],
@@ -204,7 +204,7 @@ pub(crate) fn new_test_ext() -> soil_io::TestExternalities {
 	.unwrap();
 
 	let pool_zero_account_id = 31086825966906540362769395565;
-	pallet_balances::GenesisConfig::<MockRuntime> {
+	topsoil_balances::GenesisConfig::<MockRuntime> {
 		balances: vec![
 			(0, 10000),
 			(1, 10000),

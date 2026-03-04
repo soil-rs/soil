@@ -15,14 +15,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//! Test that `construct_runtime!` also works when `frame-support` or `frame-system` are renamed in
+//! Test that `construct_runtime!` also works when `topsoil-support` or `topsoil-system` are renamed in
 //! the `Cargo.toml`.
 
 #![cfg_attr(not(feature = "std"), no_std)]
 
 extern crate alloc;
 
-use frame_support::{
+use topsoil_support::{
 	construct_runtime, derive_impl, parameter_types,
 	traits::{ConstU16, ConstU32, ConstU64, Everything},
 };
@@ -34,8 +34,8 @@ use soil_runtime::{
 use soil_version::RuntimeVersion;
 
 pub const VERSION: RuntimeVersion = RuntimeVersion {
-	spec_name: alloc::borrow::Cow::Borrowed("frame-support-test-compile-pass"),
-	impl_name: alloc::borrow::Cow::Borrowed("substrate-frame-support-test-compile-pass-runtime"),
+	spec_name: alloc::borrow::Cow::Borrowed("topsoil-support-test-compile-pass"),
+	impl_name: alloc::borrow::Cow::Borrowed("substrate-topsoil-support-test-compile-pass-runtime"),
 	authoring_version: 0,
 	spec_version: 0,
 	impl_version: 0,
@@ -52,8 +52,8 @@ parameter_types! {
 	pub const Version: RuntimeVersion = VERSION;
 }
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Runtime {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Runtime {
 	type BaseCallFilter = Everything;
 	type BlockWeights = ();
 	type BlockLength = ();
@@ -85,6 +85,6 @@ pub type UncheckedExtrinsic = generic::UncheckedExtrinsic<u32, RuntimeCall, Sign
 
 construct_runtime!(
 	pub enum Runtime {
-		System: frame_system,
+		System: topsoil_system,
 	}
 );

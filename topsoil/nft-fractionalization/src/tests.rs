@@ -19,12 +19,12 @@
 
 use crate::{mock::*, *};
 
-use frame::{deps::soil_runtime::ModuleError, testing_prelude::*};
+use topsoil::{deps::soil_runtime::ModuleError, testing_prelude::*};
 use fungible::{hold::Inspect as InspectHold, Mutate as MutateFungible};
 use fungibles::{metadata::Inspect, InspectEnumerable};
 use TokenError::FundsUnavailable;
 
-use pallet_nfts::CollectionConfig;
+use topsoil_nfts::CollectionConfig;
 
 fn assets() -> Vec<u32> {
 	let mut s: Vec<_> = <<Test as Config>::Assets>::asset_ids().collect();
@@ -50,7 +50,7 @@ fn events() -> Vec<Event<Test>> {
 	result
 }
 
-type AccountIdOf<Test> = <Test as frame_system::Config>::AccountId;
+type AccountIdOf<Test> = <Test as topsoil_system::Config>::AccountId;
 
 fn account(id: u8) -> AccountIdOf<Test> {
 	[id; 32].into()
@@ -93,7 +93,7 @@ fn fractionalize_should_work() {
 		assert_eq!(Balances::total_balance_on_hold(&account(1)), 2);
 		assert_eq!(
 			String::from_utf8(
-				<Assets as Inspect<<Test as frame_system::Config>::AccountId>>::name(0)
+				<Assets as Inspect<<Test as topsoil_system::Config>::AccountId>>::name(0)
 			)
 			.unwrap(),
 			"Frac 0-0"

@@ -18,28 +18,28 @@
 #![cfg(test)]
 
 use super::*;
-use crate as pallet_atomic_swap;
-use frame::testing_prelude::*;
+use crate as topsoil_atomic_swap;
+use topsoil::testing_prelude::*;
 
-type Block = frame_system::mocking::MockBlock<Test>;
+type Block = topsoil_system::mocking::MockBlock<Test>;
 
 construct_runtime!(
 	pub enum Test
 	{
-		System: frame_system,
-		Balances: pallet_balances,
-		AtomicSwap: pallet_atomic_swap,
+		System: topsoil_system,
+		Balances: topsoil_balances,
+		AtomicSwap: topsoil_atomic_swap,
 	}
 );
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
 	type Block = Block;
-	type AccountData = pallet_balances::AccountData<u64>;
+	type AccountData = topsoil_balances::AccountData<u64>;
 }
 
-#[derive_impl(pallet_balances::config_preludes::TestDefaultConfig)]
-impl pallet_balances::Config for Test {
+#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
+impl topsoil_balances::Config for Test {
 	type AccountStore = System;
 }
 
@@ -53,8 +53,8 @@ const A: u64 = 1;
 const B: u64 = 2;
 
 pub fn new_test_ext() -> TestExternalities {
-	let mut t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
-	let genesis = pallet_balances::GenesisConfig::<Test> {
+	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let genesis = topsoil_balances::GenesisConfig::<Test> {
 		balances: vec![(A, 100), (B, 200)],
 		..Default::default()
 	};

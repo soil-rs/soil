@@ -18,7 +18,7 @@
 use super::super::LOG_TARGET;
 use soil_io::hashing::twox_128;
 
-use frame_support::{
+use topsoil_support::{
 	traits::{
 		Get, GetStorageVersion, PalletInfoAccess, StorageVersion,
 		STORAGE_VERSION_STORAGE_KEY_POSTFIX,
@@ -30,12 +30,12 @@ use frame_support::{
 ///
 /// This new prefix must be the same as the one set in construct_runtime. For safety, use
 /// `PalletInfo` to get it, as:
-/// `<Runtime as frame_system::Config>::PalletInfo::name::<MembershipPallet>`.
+/// `<Runtime as topsoil_system::Config>::PalletInfo::name::<MembershipPallet>`.
 ///
 /// The migration will look into the storage version in order not to trigger a migration on an up
 /// to date storage. Thus the on chain storage version must be less than 4 in order to trigger the
 /// migration.
-pub fn migrate<T: frame_system::Config, P: GetStorageVersion + PalletInfoAccess, N: AsRef<str>>(
+pub fn migrate<T: topsoil_system::Config, P: GetStorageVersion + PalletInfoAccess, N: AsRef<str>>(
 	old_pallet_name: N,
 	new_pallet_name: N,
 ) -> Weight {
@@ -58,14 +58,14 @@ pub fn migrate<T: frame_system::Config, P: GetStorageVersion + PalletInfoAccess,
 	);
 
 	if on_chain_storage_version < 4 {
-		frame_support::storage::migration::move_pallet(
+		topsoil_support::storage::migration::move_pallet(
 			old_pallet_name.as_bytes(),
 			new_pallet_name.as_bytes(),
 		);
 		log_migration("migration", old_pallet_name, new_pallet_name);
 
 		StorageVersion::new(4).put::<P>();
-		<T as frame_system::Config>::BlockWeights::get().max_block
+		<T as topsoil_system::Config>::BlockWeights::get().max_block
 	} else {
 		log::warn!(
 			target: LOG_TARGET,
@@ -77,7 +77,7 @@ pub fn migrate<T: frame_system::Config, P: GetStorageVersion + PalletInfoAccess,
 }
 
 /// Some checks prior to migration. This can be linked to
-/// `frame_support::traits::OnRuntimeUpgrade::pre_upgrade` for further testing.
+/// `topsoil_support::traits::OnRuntimeUpgrade::pre_upgrade` for further testing.
 ///
 /// Panics if anything goes wrong.
 pub fn pre_migrate<P: GetStorageVersion, N: AsRef<str>>(old_pallet_name: N, new_pallet_name: N) {
@@ -92,7 +92,7 @@ pub fn pre_migrate<P: GetStorageVersion, N: AsRef<str>>(old_pallet_name: N, new_
 	let new_pallet_prefix = twox_128(new_pallet_name.as_bytes());
 	let storage_version_key = twox_128(STORAGE_VERSION_STORAGE_KEY_POSTFIX);
 
-	let mut new_pallet_prefix_iter = frame_support::storage::KeyPrefixIterator::new(
+	let mut new_pallet_prefix_iter = topsoil_support::storage::KeyPrefixIterator::new(
 		new_pallet_prefix.to_vec(),
 		new_pallet_prefix.to_vec(),
 		|key| Ok(key.to_vec()),
@@ -105,7 +105,7 @@ pub fn pre_migrate<P: GetStorageVersion, N: AsRef<str>>(old_pallet_name: N, new_
 }
 
 /// Some checks for after migration. This can be linked to
-/// `frame_support::traits::OnRuntimeUpgrade::post_upgrade` for further testing.
+/// `topsoil_support::traits::OnRuntimeUpgrade::post_upgrade` for further testing.
 ///
 /// Panics if anything goes wrong.
 pub fn post_migrate<P: GetStorageVersion, N: AsRef<str>>(old_pallet_name: N, new_pallet_name: N) {
@@ -119,7 +119,7 @@ pub fn post_migrate<P: GetStorageVersion, N: AsRef<str>>(old_pallet_name: N, new
 
 	// Assert that nothing remains at the old prefix.
 	let old_pallet_prefix = twox_128(old_pallet_name.as_bytes());
-	let old_pallet_prefix_iter = frame_support::storage::KeyPrefixIterator::new(
+	let old_pallet_prefix_iter = topsoil_support::storage::KeyPrefixIterator::new(
 		old_pallet_prefix.to_vec(),
 		old_pallet_prefix.to_vec(),
 		|_| Ok(()),
@@ -128,7 +128,7 @@ pub fn post_migrate<P: GetStorageVersion, N: AsRef<str>>(old_pallet_name: N, new
 
 	// NOTE: storage_version_key is already in the new prefix.
 	let new_pallet_prefix = twox_128(new_pallet_name.as_bytes());
-	let new_pallet_prefix_iter = frame_support::storage::KeyPrefixIterator::new(
+	let new_pallet_prefix_iter = topsoil_support::storage::KeyPrefixIterator::new(
 		new_pallet_prefix.to_vec(),
 		new_pallet_prefix.to_vec(),
 		|_| Ok(()),

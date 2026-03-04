@@ -18,8 +18,8 @@
 //! Storage migrations for the preimage pallet.
 
 use crate::*;
-use frame_support::{pallet_prelude::*, storage_alias, traits::OnRuntimeUpgrade, BoundedVec};
-use frame_system::pallet_prelude::BlockNumberFor;
+use topsoil_support::{pallet_prelude::*, storage_alias, traits::OnRuntimeUpgrade, BoundedVec};
+use topsoil_system::pallet_prelude::BlockNumberFor;
 use soil_core::H256;
 
 /// The log target.
@@ -32,21 +32,21 @@ mod v0 {
 	#[storage_alias]
 	pub type PublicProps<T: Config> = StorageValue<
 		Pallet<T>,
-		Vec<(PropIndex, <T as frame_system::Config>::Hash, <T as frame_system::Config>::AccountId)>,
+		Vec<(PropIndex, <T as topsoil_system::Config>::Hash, <T as topsoil_system::Config>::AccountId)>,
 		ValueQuery,
 	>;
 
 	#[storage_alias]
 	pub type NextExternal<T: Config> =
-		StorageValue<Pallet<T>, (<T as frame_system::Config>::Hash, VoteThreshold)>;
+		StorageValue<Pallet<T>, (<T as topsoil_system::Config>::Hash, VoteThreshold)>;
 
 	#[cfg(feature = "try-runtime")]
 	#[storage_alias]
 	pub type ReferendumInfoOf<T: Config> = StorageMap<
 		Pallet<T>,
-		frame_support::Twox64Concat,
+		topsoil_support::Twox64Concat,
 		ReferendumIndex,
-		ReferendumInfo<BlockNumberFor<T>, <T as frame_system::Config>::Hash, BalanceOf<T>>,
+		ReferendumInfo<BlockNumberFor<T>, <T as topsoil_system::Config>::Hash, BalanceOf<T>>,
 	>;
 }
 
@@ -56,7 +56,7 @@ pub mod v1 {
 	/// Migration for translating bare `Hash`es into `Bounded<Call>`s.
 	pub struct Migration<T>(core::marker::PhantomData<T>);
 
-	impl<T: Config + frame_system::Config<Hash = H256>> OnRuntimeUpgrade for Migration<T> {
+	impl<T: Config + topsoil_system::Config<Hash = H256>> OnRuntimeUpgrade for Migration<T> {
 		#[cfg(feature = "try-runtime")]
 		fn pre_upgrade() -> Result<Vec<u8>, soil_runtime::TryRuntimeError> {
 			ensure!(StorageVersion::get::<Pallet<T>>() == 0, "can only upgrade from version 0");

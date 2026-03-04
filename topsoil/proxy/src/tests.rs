@@ -22,33 +22,33 @@
 use super::*;
 use crate as proxy;
 use alloc::{vec, vec::Vec};
-use frame::testing_prelude::*;
+use topsoil::testing_prelude::*;
 
-type Block = frame_system::mocking::MockBlock<Test>;
+type Block = topsoil_system::mocking::MockBlock<Test>;
 
 construct_runtime!(
 	pub struct Test {
-		System: frame_system,
-		Balances: pallet_balances,
+		System: topsoil_system,
+		Balances: topsoil_balances,
 		Proxy: proxy,
-		Utility: pallet_utility,
+		Utility: topsoil_utility,
 	}
 );
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
 	type Block = Block;
 	type BaseCallFilter = BaseFilter;
-	type AccountData = pallet_balances::AccountData<u64>;
+	type AccountData = topsoil_balances::AccountData<u64>;
 }
 
-#[derive_impl(pallet_balances::config_preludes::TestDefaultConfig)]
-impl pallet_balances::Config for Test {
+#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
+impl topsoil_balances::Config for Test {
 	type ReserveIdentifier = [u8; 8];
 	type AccountStore = System;
 }
 
-impl pallet_utility::Config for Test {
+impl topsoil_utility::Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type RuntimeCall = RuntimeCall;
 	type PalletsOrigin = OriginCaller;
@@ -79,14 +79,14 @@ impl Default for ProxyType {
 		Self::Any
 	}
 }
-impl frame::traits::InstanceFilter<RuntimeCall> for ProxyType {
+impl topsoil::traits::InstanceFilter<RuntimeCall> for ProxyType {
 	fn filter(&self, c: &RuntimeCall) -> bool {
 		match self {
 			ProxyType::Any => true,
 			ProxyType::JustTransfer => {
 				matches!(
 					c,
-					RuntimeCall::Balances(pallet_balances::Call::transfer_allow_death { .. })
+					RuntimeCall::Balances(topsoil_balances::Call::transfer_allow_death { .. })
 				)
 			},
 			ProxyType::JustUtility => matches!(c, RuntimeCall::Utility { .. }),
@@ -128,19 +128,19 @@ impl Config for Test {
 	type MaxPending = ConstU32<2>;
 	type AnnouncementDepositBase = AnnouncementDepositBase;
 	type AnnouncementDepositFactor = AnnouncementDepositFactor;
-	type BlockNumberProvider = frame_system::Pallet<Test>;
+	type BlockNumberProvider = topsoil_system::Pallet<Test>;
 }
 
 use super::{Call as ProxyCall, Event as ProxyEvent};
-use frame_system::Call as SystemCall;
-use pallet_balances::{Call as BalancesCall, Error as BalancesError, Event as BalancesEvent};
-use pallet_utility::{Call as UtilityCall, Event as UtilityEvent};
+use topsoil_system::Call as SystemCall;
+use topsoil_balances::{Call as BalancesCall, Error as BalancesError, Event as BalancesEvent};
+use topsoil_utility::{Call as UtilityCall, Event as UtilityEvent};
 
-type SystemError = frame_system::Error<Test>;
+type SystemError = topsoil_system::Error<Test>;
 
 pub fn new_test_ext() -> TestState {
-	let mut t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
-	pallet_balances::GenesisConfig::<Test> {
+	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	topsoil_balances::GenesisConfig::<Test> {
 		balances: vec![(1, 10), (2, 10), (3, 10), (4, 10), (5, 3)],
 		..Default::default()
 	}
@@ -152,7 +152,7 @@ pub fn new_test_ext() -> TestState {
 }
 
 fn last_events(n: usize) -> Vec<RuntimeEvent> {
-	frame_system::Pallet::<Test>::events()
+	topsoil_system::Pallet::<Test>::events()
 		.into_iter()
 		.rev()
 		.take(n)
@@ -289,7 +289,7 @@ fn delayed_requires_pre_announcement() {
 		assert_noop!(Proxy::proxy_announced(RuntimeOrigin::signed(0), 2, 1, None, call.clone()), e);
 		let call_hash = BlakeTwo256::hash_of(&call);
 		assert_ok!(Proxy::announce(RuntimeOrigin::signed(2), 1, call_hash));
-		frame_system::Pallet::<Test>::set_block_number(2);
+		topsoil_system::Pallet::<Test>::set_block_number(2);
 		assert_ok!(Proxy::proxy_announced(RuntimeOrigin::signed(0), 2, 1, None, call.clone()));
 	});
 }
@@ -307,7 +307,7 @@ fn proxy_announced_removes_announcement_and_returns_deposit() {
 		let e = Error::<Test>::Unannounced;
 		assert_noop!(Proxy::proxy_announced(RuntimeOrigin::signed(0), 3, 1, None, call.clone()), e);
 
-		frame_system::Pallet::<Test>::set_block_number(2);
+		topsoil_system::Pallet::<Test>::set_block_number(2);
 		assert_ok!(Proxy::proxy_announced(RuntimeOrigin::signed(0), 3, 1, None, call.clone()));
 		let announcements = Announcements::<Test>::get(3);
 		assert_eq!(announcements.0, vec![Announcement { real: 2, call_hash, height: 1 }]);
@@ -333,7 +333,7 @@ fn filtering_works() {
 			ProxyEvent::ProxyExecuted { result: Err(SystemError::CallFiltered.into()) }.into(),
 		);
 
-		let derivative_id = pallet_utility::derivative_account_id(1, 0);
+		let derivative_id = topsoil_utility::derivative_account_id(1, 0);
 		Balances::make_free_balance_be(&derivative_id, 1000);
 		let inner = Box::new(call_transfer(6, 1));
 

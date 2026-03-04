@@ -20,12 +20,12 @@
 use super::*;
 use crate::list::List;
 use alloc::{vec, vec::Vec};
-use frame_benchmarking::v1::{
+use topsoil_benchmarking::v1::{
 	account, benchmarks_instance_pallet, whitelist_account, whitelisted_caller,
 };
-use frame_election_provider_support::ScoreProvider;
-use frame_support::{assert_ok, traits::Get};
-use frame_system::RawOrigin as SystemOrigin;
+use topsoil_election_provider_support::ScoreProvider;
+use topsoil_support::{assert_ok, traits::Get};
+use topsoil_system::RawOrigin as SystemOrigin;
 use soil_runtime::traits::One;
 
 benchmarks_instance_pallet! {
@@ -430,7 +430,7 @@ benchmarks_instance_pallet! {
 		assert!(List::<T, _>::get_bags().len() >= 2);
 	}
 	: {
-		use frame_support::traits::Hooks;
+		use topsoil_support::traits::Hooks;
 		<Pallet<T, I> as Hooks<_>>::on_idle(Default::default(), Weight::MAX);
 	}
 	verify {

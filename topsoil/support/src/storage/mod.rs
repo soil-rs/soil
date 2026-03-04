@@ -1752,7 +1752,7 @@ mod test {
 	use super::*;
 	use crate::{assert_ok, hash::Identity, pallet_prelude::NMapKey, Twox128};
 	use bounded_vec::BoundedVec;
-	use frame_support::traits::ConstU32;
+	use topsoil_support::traits::ConstU32;
 	use generator::StorageValue as _;
 	use soil_crypto_hashing::twox_128;
 	use soil_io::TestExternalities;

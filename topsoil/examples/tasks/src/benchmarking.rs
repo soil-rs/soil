@@ -15,12 +15,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//! Benchmarking for `pallet-example-tasks`.
+//! Benchmarking for `topsoil-example-tasks`.
 
 #![cfg(feature = "runtime-benchmarks")]
 
 use crate::*;
-use frame_benchmarking::v2::*;
+use topsoil_benchmarking::v2::*;
 
 #[benchmarks]
 mod benchmarks {

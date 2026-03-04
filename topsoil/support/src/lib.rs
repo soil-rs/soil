@@ -28,9 +28,9 @@
 
 #![cfg_attr(not(feature = "std"), no_std)]
 
-/// Export ourself as `frame_support` to make tests happy.
+/// Export ourself as `topsoil_support` to make tests happy.
 #[doc(hidden)]
-extern crate self as frame_support;
+extern crate self as topsoil_support;
 
 #[doc(hidden)]
 extern crate alloc;
@@ -131,7 +131,7 @@ use scale_info::TypeInfo;
 use soil_runtime::TypeId;
 
 /// A unified log target for support operations.
-pub const LOG_TARGET: &str = "runtime::frame-support";
+pub const LOG_TARGET: &str = "runtime::topsoil-support";
 
 /// A type that cannot be instantiated.
 #[derive(Encode, Decode, Debug, PartialEq, Eq, Clone, TypeInfo)]
@@ -188,33 +188,33 @@ impl TypeId for PalletId {
 ///    pallet name. The macro uses the presence of generic arguments to the prefix type as an
 ///    indication that it should use the pallet name as the `prefix`:
 #[doc = docify::embed!("src/tests/storage_alias.rs", storage_alias_guess)]
-pub use frame_support_procedural::storage_alias;
+pub use topsoil_support_procedural::storage_alias;
 
-pub use frame_support_procedural::derive_impl;
+pub use topsoil_support_procedural::derive_impl;
 
 /// Experimental macros for defining dynamic params that can be used in pallet configs.
 #[cfg(feature = "experimental")]
 pub mod dynamic_params {
-	pub use frame_support_procedural::{
+	pub use topsoil_support_procedural::{
 		dynamic_aggregated_params_internal, dynamic_pallet_params, dynamic_params,
 	};
 }
 
 #[doc(inline)]
-pub use frame_support_procedural::{
+pub use topsoil_support_procedural::{
 	construct_runtime, match_and_insert, transactional, PalletError,
 };
 
-pub use frame_support_procedural::runtime;
+pub use topsoil_support_procedural::runtime;
 
 #[doc(hidden)]
-pub use frame_support_procedural::{__create_tt_macro, __generate_dummy_part_checker};
+pub use topsoil_support_procedural::{__create_tt_macro, __generate_dummy_part_checker};
 
 /// Derive [`Clone`] but do not bound any generic.
 ///
 /// This is useful for type generic over runtime:
 /// ```
-/// # use frame_support::CloneNoBound;
+/// # use topsoil_support::CloneNoBound;
 /// trait Config {
 /// 		type C: Clone;
 /// }
@@ -226,13 +226,13 @@ pub use frame_support_procedural::{__create_tt_macro, __generate_dummy_part_chec
 /// 		c: T::C,
 /// }
 /// ```
-pub use frame_support_procedural::CloneNoBound;
+pub use topsoil_support_procedural::CloneNoBound;
 
 /// Derive [`Eq`] but do not bound any generic.
 ///
 /// This is useful for type generic over runtime:
 /// ```
-/// # use frame_support::{EqNoBound, PartialEqNoBound};
+/// # use topsoil_support::{EqNoBound, PartialEqNoBound};
 /// trait Config {
 /// 		type C: Eq;
 /// }
@@ -244,13 +244,13 @@ pub use frame_support_procedural::CloneNoBound;
 /// 		c: T::C,
 /// }
 /// ```
-pub use frame_support_procedural::EqNoBound;
+pub use topsoil_support_procedural::EqNoBound;
 
 /// Derive [`PartialEq`] but do not bound any generic.
 ///
 /// This is useful for type generic over runtime:
 /// ```
-/// # use frame_support::PartialEqNoBound;
+/// # use topsoil_support::PartialEqNoBound;
 /// trait Config {
 /// 		type C: PartialEq;
 /// }
@@ -262,13 +262,13 @@ pub use frame_support_procedural::EqNoBound;
 /// 		c: T::C,
 /// }
 /// ```
-pub use frame_support_procedural::PartialEqNoBound;
+pub use topsoil_support_procedural::PartialEqNoBound;
 
 /// Derive [`Ord`] but do not bound any generic.
 ///
 /// This is useful for type generic over runtime:
 /// ```
-/// # use frame_support::{OrdNoBound, PartialOrdNoBound, EqNoBound, PartialEqNoBound};
+/// # use topsoil_support::{OrdNoBound, PartialOrdNoBound, EqNoBound, PartialEqNoBound};
 /// trait Config {
 /// 		type C: Ord;
 /// }
@@ -280,13 +280,13 @@ pub use frame_support_procedural::PartialEqNoBound;
 /// 		c: T::C,
 /// }
 /// ```
-pub use frame_support_procedural::OrdNoBound;
+pub use topsoil_support_procedural::OrdNoBound;
 
 /// Derive [`PartialOrd`] but do not bound any generic.
 ///
 /// This is useful for type generic over runtime:
 /// ```
-/// # use frame_support::{OrdNoBound, PartialOrdNoBound, EqNoBound, PartialEqNoBound};
+/// # use topsoil_support::{OrdNoBound, PartialOrdNoBound, EqNoBound, PartialEqNoBound};
 /// trait Config {
 /// 		type C: PartialOrd;
 /// }
@@ -298,13 +298,13 @@ pub use frame_support_procedural::OrdNoBound;
 /// 		c: T::C,
 /// }
 /// ```
-pub use frame_support_procedural::PartialOrdNoBound;
+pub use topsoil_support_procedural::PartialOrdNoBound;
 
 /// Derive [`Debug`] but do not bound any generic.
 ///
 /// This is useful for type generic over runtime:
 /// ```
-/// # use frame_support::DebugNoBound;
+/// # use topsoil_support::DebugNoBound;
 /// # use core::fmt::Debug;
 /// trait Config {
 /// 		type C: Debug;
@@ -317,13 +317,13 @@ pub use frame_support_procedural::PartialOrdNoBound;
 /// 		c: T::C,
 /// }
 /// ```
-pub use frame_support_procedural::DebugNoBound;
+pub use topsoil_support_procedural::DebugNoBound;
 
 /// Derive [`Default`] but do not bound any generic.
 ///
 /// This is useful for type generic over runtime:
 /// ```
-/// # use frame_support::DefaultNoBound;
+/// # use topsoil_support::DefaultNoBound;
 /// # use core::default::Default;
 /// trait Config {
 /// 	type C: Default;
@@ -345,7 +345,7 @@ pub use frame_support_procedural::DebugNoBound;
 /// 	Quxx,
 /// }
 /// ```
-pub use frame_support_procedural::DefaultNoBound;
+pub use topsoil_support_procedural::DefaultNoBound;
 
 /// Assert the annotated function is executed within a storage transaction.
 ///
@@ -354,7 +354,7 @@ pub use frame_support_procedural::DefaultNoBound;
 /// # Example
 ///
 /// ```
-/// # use frame_support::{
+/// # use topsoil_support::{
 /// # 	require_transactional, transactional, dispatch::DispatchResult
 /// # };
 ///
@@ -376,7 +376,7 @@ pub use frame_support_procedural::DefaultNoBound;
 /// 	update_all(value)
 /// }
 /// ```
-pub use frame_support_procedural::require_transactional;
+pub use topsoil_support_procedural::require_transactional;
 
 /// Convert the current crate version into a [`CrateVersion`](crate::traits::CrateVersion).
 ///
@@ -388,10 +388,10 @@ pub use frame_support_procedural::require_transactional;
 /// # Example
 ///
 /// ```
-/// # use frame_support::{traits::CrateVersion, crate_to_crate_version};
+/// # use topsoil_support::{traits::CrateVersion, crate_to_crate_version};
 /// const Version: CrateVersion = crate_to_crate_version!();
 /// ```
-pub use frame_support_procedural::crate_to_crate_version;
+pub use topsoil_support_procedural::crate_to_crate_version;
 
 #[doc(hidden)]
 pub use serde::{Deserialize, Serialize};
@@ -440,8 +440,8 @@ pub mod pallet_prelude {
 	};
 	pub use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 	pub use core::marker::PhantomData;
-	pub use frame_support::pallet_macros::*;
-	pub use frame_support_procedural::{inject_runtime_type, register_default_impl};
+	pub use topsoil_support::pallet_macros::*;
+	pub use topsoil_support_procedural::{inject_runtime_type, register_default_impl};
 	pub use scale_info::TypeInfo;
 	pub use soil_inherents::MakeFatalError;
 	pub use soil_runtime::{
@@ -470,13 +470,13 @@ pub mod pallet_prelude {
 ///
 /// The module to declare a pallet is organized as follows:
 /// ```
-/// #[frame_support::pallet]    // <- the macro
+/// #[topsoil_support::pallet]    // <- the macro
 /// mod pallet {
 /// 	#[pallet::pallet]
 /// 	pub struct Pallet<T>(_);
 ///
 /// 	#[pallet::config]
-/// 	pub trait Config: frame_system::Config {}
+/// 	pub trait Config: topsoil_system::Config {}
 ///
 /// 	#[pallet::call]
 /// 	impl<T: Config> Pallet<T> {
@@ -486,19 +486,19 @@ pub mod pallet_prelude {
 /// }
 /// ```
 ///
-/// The documentation for each individual part can be found at [frame_support::pallet_macros]
+/// The documentation for each individual part can be found at [topsoil_support::pallet_macros]
 ///
 /// ## Dev Mode (`#[pallet(dev_mode)]`)
 ///
 /// Syntax:
 ///
 /// ```
-/// #[frame_support::pallet(dev_mode)]
+/// #[topsoil_support::pallet(dev_mode)]
 /// mod pallet {
 /// # 	 #[pallet::pallet]
 /// # 	 pub struct Pallet<T>(_);
 /// # 	 #[pallet::config]
-/// # 	 pub trait Config: frame_system::Config {}
+/// # 	 pub trait Config: topsoil_system::Config {}
 /// 	/* ... */
 /// }
 /// ```
@@ -515,14 +515,14 @@ pub mod pallet_prelude {
 /// * Call indices no longer need to be specified on every `#[pallet::call]` declaration. By
 ///   default, dev mode pallets will assume a call index based on the order of the call.
 /// * All storages are marked as unbounded, meaning you do not need to implement
-///   [`MaxEncodedLen`](frame_support::pallet_prelude::MaxEncodedLen) on storage types. This is
+///   [`MaxEncodedLen`](topsoil_support::pallet_prelude::MaxEncodedLen) on storage types. This is
 ///   equivalent to specifying `#[pallet::unbounded]` on all storage type definitions.
 /// * Storage hashers no longer need to be specified and can be replaced by `_`. In dev mode,
 ///   these will be replaced by `Blake2_128Concat`. In case of explicit key-binding, `Hasher`
 ///   can simply be ignored when in `dev_mode`.
 ///
 /// Note that the `dev_mode` argument can only be supplied to the `#[pallet]` or
-/// `#[frame_support::pallet]` attribute macro that encloses your pallet module. This
+/// `#[topsoil_support::pallet]` attribute macro that encloses your pallet module. This
 /// argument cannot be specified anywhere else, including but not limited to the
 /// `#[pallet::pallet]` attribute macro.
 ///
@@ -542,13 +542,13 @@ pub mod pallet_prelude {
 ///
 /// The struct must be defined as follows:
 /// ```
-/// #[frame_support::pallet]
+/// #[topsoil_support::pallet]
 /// mod pallet {
 /// 	#[pallet::pallet]         // <- the macro
 /// 	pub struct Pallet<T>(_);  // <- the struct definition
 ///
 /// 	#[pallet::config]
-/// 	pub trait Config: frame_system::Config {}
+/// 	pub trait Config: topsoil_system::Config {}
 /// }
 /// ```
 //
@@ -559,31 +559,31 @@ pub mod pallet_prelude {
 /// The macro adds this attribute to the Pallet struct definition:
 /// ```ignore
 /// #[derive(
-/// 	frame_support::CloneNoBound,
-/// 	frame_support::EqNoBound,
-/// 	frame_support::PartialEqNoBound,
-/// 	frame_support::DebugNoBound,
+/// 	topsoil_support::CloneNoBound,
+/// 	topsoil_support::EqNoBound,
+/// 	topsoil_support::PartialEqNoBound,
+/// 	topsoil_support::DebugNoBound,
 /// )]
 /// ```
 /// and replaces the type `_` with `PhantomData<T>`.
 ///
 /// It also implements on the pallet:
 ///
-/// * [`GetStorageVersion`](frame_support::traits::GetStorageVersion)
-/// * [`OnGenesis`](frame_support::traits::OnGenesis): contains some logic to write the pallet
+/// * [`GetStorageVersion`](topsoil_support::traits::GetStorageVersion)
+/// * [`OnGenesis`](topsoil_support::traits::OnGenesis): contains some logic to write the pallet
 ///   version into storage.
-/// * [`PalletInfoAccess`](frame_support::traits::PalletInfoAccess) to ease access to pallet
-///   information given by [`frame_support::traits::PalletInfo`]. (The implementation uses the
-///   associated type [`frame_support::traits::PalletInfo`]).
-/// * [`StorageInfoTrait`](frame_support::traits::StorageInfoTrait) to give information about
+/// * [`PalletInfoAccess`](topsoil_support::traits::PalletInfoAccess) to ease access to pallet
+///   information given by [`topsoil_support::traits::PalletInfo`]. (The implementation uses the
+///   associated type [`topsoil_support::traits::PalletInfo`]).
+/// * [`StorageInfoTrait`](topsoil_support::traits::StorageInfoTrait) to give information about
 ///   storages.
 ///
 /// If the attribute `set_storage_max_encoded_len` is set then the macro calls
-/// [`StorageInfoTrait`](frame_support::traits::StorageInfoTrait) for each storage in the
-/// implementation of [`StorageInfoTrait`](frame_support::traits::StorageInfoTrait) for the
+/// [`StorageInfoTrait`](topsoil_support::traits::StorageInfoTrait) for each storage in the
+/// implementation of [`StorageInfoTrait`](topsoil_support::traits::StorageInfoTrait) for the
 /// pallet. Otherwise, it implements
-/// [`StorageInfoTrait`](frame_support::traits::StorageInfoTrait) for the pallet using the
-/// [`PartialStorageInfoTrait`](frame_support::traits::PartialStorageInfoTrait)
+/// [`StorageInfoTrait`](topsoil_support::traits::StorageInfoTrait) for the pallet using the
+/// [`PartialStorageInfoTrait`](topsoil_support::traits::PartialStorageInfoTrait)
 /// implementation of storages.
 ///
 /// ## Note on deprecation.
@@ -595,7 +595,7 @@ pub mod pallet_prelude {
 ///   code.
 /// - If the item is annotated with `deprecated` attribute then the generated code will be
 ///   automatically annotated with `allow(deprecated)`
-pub use frame_support_procedural::pallet;
+pub use topsoil_support_procedural::pallet;
 
 /// Contains macro stubs for all of the `pallet::` macros
 pub mod pallet_macros {
@@ -609,9 +609,9 @@ pub mod pallet_macros {
 	///
 	/// ### Example
 	/// ```
-	/// #[frame_support::pallet]
+	/// #[topsoil_support::pallet]
 	/// mod pallet {
-	/// # 	use frame_support::pallet_prelude::*;
+	/// # 	use topsoil_support::pallet_prelude::*;
 	/// #
 	/// 	#[pallet::pallet]
 	/// 	pub struct Pallet<T>(_);
@@ -621,10 +621,10 @@ pub mod pallet_macros {
 	/// 	pub type MyStorage<T> = StorageValue<_, u32>;
 	/// #
 	/// # 	#[pallet::config]
-	/// # 	pub trait Config: frame_system::Config {}
+	/// # 	pub trait Config: topsoil_system::Config {}
 	/// }
 	/// ```
-	pub use frame_support_procedural::whitelist_storage;
+	pub use topsoil_support_procedural::whitelist_storage;
 
 	/// Allows specifying the weight of a call.
 	///
@@ -640,16 +640,16 @@ pub mod pallet_macros {
 	/// ## Example
 	///
 	/// ```
-	/// #[frame_support::pallet]
+	/// #[topsoil_support::pallet]
 	/// mod pallet {
-	///  	use frame_support::pallet_prelude::*;
-	///  	use frame_system::pallet_prelude::*;
+	///  	use topsoil_support::pallet_prelude::*;
+	///  	use topsoil_system::pallet_prelude::*;
 	///
 	/// 	#[pallet::pallet]
 	/// 	pub struct Pallet<T>(_);
 	///
 	///  	#[pallet::config]
-	///  	pub trait Config: frame_system::Config {
+	///  	pub trait Config: topsoil_system::Config {
 	///         /// Type for specifying dispatchable weights.
 	///         type WeightInfo: WeightInfo;
 	///     }
@@ -685,7 +685,7 @@ pub mod pallet_macros {
 	///     }
 	/// }
 	/// ```
-	pub use frame_support_procedural::weight;
+	pub use topsoil_support_procedural::weight;
 
 	/// Allows whitelisting a storage item from decoding during try-runtime checks.
 	///
@@ -695,9 +695,9 @@ pub mod pallet_macros {
 	///
 	/// ### Example
 	/// ```
-	/// #[frame_support::pallet]
+	/// #[topsoil_support::pallet]
 	/// mod pallet {
-	/// # 	use frame_support::pallet_prelude::*;
+	/// # 	use topsoil_support::pallet_prelude::*;
 	/// #
 	/// 	#[pallet::pallet]
 	/// 	pub struct Pallet<T>(_);
@@ -707,10 +707,10 @@ pub mod pallet_macros {
 	/// 	pub type MyStorage<T> = StorageValue<_, u32>;
 	/// #
 	/// # 	#[pallet::config]
-	/// # 	pub trait Config: frame_system::Config {}
+	/// # 	pub trait Config: topsoil_system::Config {}
 	/// }
 	/// ```
-	pub use frame_support_procedural::disable_try_decode_storage;
+	pub use topsoil_support_procedural::disable_try_decode_storage;
 
 	/// Declares a storage as unbounded in potential size.
 	///
@@ -722,9 +722,9 @@ pub mod pallet_macros {
 	/// ## Example
 	///
 	/// ```
-	/// #[frame_support::pallet]
+	/// #[topsoil_support::pallet]
 	/// mod pallet {
-	/// # 	use frame_support::pallet_prelude::*;
+	/// # 	use topsoil_support::pallet_prelude::*;
 	/// #
 	/// 	#[pallet::pallet]
 	/// 	pub struct Pallet<T>(_);
@@ -734,10 +734,10 @@ pub mod pallet_macros {
 	/// 	pub type MyStorage<T> = StorageValue<_, u32>;
 	/// #
 	/// # 	#[pallet::config]
-	/// # 	pub trait Config: frame_system::Config {}
+	/// # 	pub trait Config: topsoil_system::Config {}
 	/// }
 	/// ```
-	pub use frame_support_procedural::unbounded;
+	pub use topsoil_support_procedural::unbounded;
 
 	/// Defines what storage prefix to use for a storage item when building the trie.
 	///
@@ -747,9 +747,9 @@ pub mod pallet_macros {
 	/// ## Example
 	///
 	/// ```
-	/// #[frame_support::pallet]
+	/// #[topsoil_support::pallet]
 	/// mod pallet {
-	/// # 	use frame_support::pallet_prelude::*;
+	/// # 	use topsoil_support::pallet_prelude::*;
 	/// #
 	/// 	#[pallet::pallet]
 	/// 	pub struct Pallet<T>(_);
@@ -759,10 +759,10 @@ pub mod pallet_macros {
 	/// 	pub type MyStorage<T> = StorageValue<_, u32>;
 	/// #
 	/// # 	#[pallet::config]
-	/// # 	pub trait Config: frame_system::Config {}
+	/// # 	pub trait Config: topsoil_system::Config {}
 	/// }
 	/// ```
-	pub use frame_support_procedural::storage_prefix;
+	pub use topsoil_support_procedural::storage_prefix;
 
 	/// Ensures the generated `DefaultConfig` will not have any bounds for
 	/// that trait item.
@@ -773,7 +773,7 @@ pub mod pallet_macros {
 	/// As an example, if you have a trait item `type AccountId: SomeTrait;` in your `Config`
 	/// trait, the generated `DefaultConfig` will only have `type AccountId;` with no trait
 	/// bound.
-	pub use frame_support_procedural::no_default_bounds;
+	pub use topsoil_support_procedural::no_default_bounds;
 
 	/// Ensures the trait item will not be used as a default with the
 	/// `#[derive_impl(..)]` attribute macro.
@@ -781,7 +781,7 @@ pub mod pallet_macros {
 	/// The optional attribute `#[pallet::no_default]` can be attached to trait items within a
 	/// `Config` trait impl that has [`#[pallet::config(with_default)]`](`config`)
 	/// attached.
-	pub use frame_support_procedural::no_default;
+	pub use topsoil_support_procedural::no_default;
 
 	/// Declares a module as importable into a pallet via
 	/// [`#[import_section]`](`import_section`).
@@ -803,7 +803,7 @@ pub mod pallet_macros {
 	/// same crate with the same ident/name. The ident you specify can then be used instead of
 	/// the module's ident name when you go to import it via
 	/// [`#[import_section]`](`import_section`).
-	pub use frame_support_procedural::pallet_section;
+	pub use topsoil_support_procedural::pallet_section;
 
 	/// The `#[pallet::inherent]` attribute allows the pallet to provide
 	/// [inherents](https://docs.substrate.io/fundamentals/transaction-types/#inherent-transactions).
@@ -819,10 +819,10 @@ pub mod pallet_macros {
 	/// Example usage:
 	///
 	/// ```
-	/// #[frame_support::pallet]
+	/// #[topsoil_support::pallet]
 	/// mod pallet {
-	/// # 	use frame_support::pallet_prelude::*;
-	/// # 	use frame_support::inherent::IsFatalError;
+	/// # 	use topsoil_support::pallet_prelude::*;
+	/// # 	use topsoil_support::inherent::IsFatalError;
 	/// # 	use soil_timestamp::InherentError;
 	/// # 	use core::result;
 	/// #
@@ -855,7 +855,7 @@ pub mod pallet_macros {
 	/// 	}
 	/// #
 	/// # 	#[pallet::config]
-	/// # 	pub trait Config: frame_system::Config {}
+	/// # 	pub trait Config: topsoil_system::Config {}
 	/// }
 	/// ```
 	///
@@ -866,7 +866,7 @@ pub mod pallet_macros {
 	///
 	/// The macro currently makes no use of this information, but it might use this information
 	/// in the future to give information directly to `construct_runtime`.
-	pub use frame_support_procedural::inherent;
+	pub use topsoil_support_procedural::inherent;
 
 	/// Splits a pallet declaration into multiple parts.
 	///
@@ -876,8 +876,8 @@ pub mod pallet_macros {
 	///
 	/// ## Example
 	/// ```
-	/// # use frame_support::pallet_macros::pallet_section;
-	/// # use frame_support::pallet_macros::import_section;
+	/// # use topsoil_support::pallet_macros::pallet_section;
+	/// # use topsoil_support::pallet_macros::import_section;
 	/// #
 	/// /// A [`pallet_section`] that defines the events for a pallet.
 	/// /// This can later be imported into the pallet using [`import_section`].
@@ -893,15 +893,15 @@ pub mod pallet_macros {
 	/// }
 	///
 	/// #[import_section(events)]
-	/// #[frame_support::pallet]
+	/// #[topsoil_support::pallet]
 	/// mod pallet {
-	/// # 	use frame_support::pallet_prelude::*;
+	/// # 	use topsoil_support::pallet_prelude::*;
 	/// #
 	/// 	#[pallet::pallet]
 	/// 	pub struct Pallet<T>(_);
 	/// #
 	/// # 	#[pallet::config]
-	/// # 	pub trait Config: frame_system::Config<RuntimeEvent: From<Event<Self>>> {
+	/// # 	pub trait Config: topsoil_system::Config<RuntimeEvent: From<Event<Self>>> {
 	/// # 	}
 	/// }
 	/// ```
@@ -919,16 +919,16 @@ pub mod pallet_macros {
 	///
 	/// Note that sections are imported by their module name/ident, and should be referred to
 	/// by their _full path_ from the perspective of the target pallet.
-	pub use frame_support_procedural::import_section;
+	pub use topsoil_support_procedural::import_section;
 
 	/// Allows defining getter functions on `Pallet` storage.
 	///
 	/// ## Example
 	///
 	/// ```
-	/// #[frame_support::pallet]
+	/// #[topsoil_support::pallet]
 	/// mod pallet {
-	/// # 	use frame_support::pallet_prelude::*;
+	/// # 	use topsoil_support::pallet_prelude::*;
 	/// #
 	/// 	#[pallet::pallet]
 	/// 	pub struct Pallet<T>(_);
@@ -938,12 +938,12 @@ pub mod pallet_macros {
 	/// 	pub type MyStorage<T> = StorageValue<_, u32>;
 	/// #
 	/// # 	#[pallet::config]
-	/// # 	pub trait Config: frame_system::Config {}
+	/// # 	pub trait Config: topsoil_system::Config {}
 	/// }
 	/// ```
 	///
-	/// See [`pallet::storage`](`frame_support::pallet_macros::storage`) for more info.
-	pub use frame_support_procedural::getter;
+	/// See [`pallet::storage`](`topsoil_support::pallet_macros::storage`) for more info.
+	pub use topsoil_support_procedural::getter;
 
 	/// Defines constants that are added to the constant field of
 	/// [`PalletMetadata`](frame_metadata::v15::PalletMetadata) struct for this pallet.
@@ -951,15 +951,15 @@ pub mod pallet_macros {
 	/// Must be defined like:
 	///
 	/// ```
-	/// #[frame_support::pallet]
+	/// #[topsoil_support::pallet]
 	/// mod pallet {
-	/// # 	use frame_support::pallet_prelude::*;
+	/// # 	use topsoil_support::pallet_prelude::*;
 	/// #
 	/// 	#[pallet::pallet]
 	/// 	pub struct Pallet<T>(_);
 	///
 	/// # 	#[pallet::config]
-	/// # 	pub trait Config: frame_system::Config {}
+	/// # 	pub trait Config: topsoil_system::Config {}
 	/// #
 	/// 	#[pallet::extra_constants]
 	/// 	impl<T: Config> Pallet<T> // $optional_where_clause
@@ -975,28 +975,28 @@ pub mod pallet_macros {
 	///
 	/// I.e. a regular rust `impl` block with some optional where clause and functions with 0
 	/// args, 0 generics, and some return type.
-	pub use frame_support_procedural::extra_constants;
+	pub use topsoil_support_procedural::extra_constants;
 
 	#[rustfmt::skip]
-	/// Allows bypassing the `frame_system::Config` supertrait check.
+	/// Allows bypassing the `topsoil_system::Config` supertrait check.
 	///
-	/// To bypass the syntactic `frame_system::Config` supertrait check, use the attribute
+	/// To bypass the syntactic `topsoil_system::Config` supertrait check, use the attribute
 	/// `pallet::disable_frame_system_supertrait_check`.
 	///
 	/// Note this bypass is purely syntactic, and does not actually remove the requirement that your
-	/// pallet implements `frame_system::Config`. When using this check, your config is still required to implement
-	/// `frame_system::Config` either via
-	/// - Implementing a trait that itself implements `frame_system::Config`
-	/// - Tightly coupling it with another pallet which itself implements `frame_system::Config`
+	/// pallet implements `topsoil_system::Config`. When using this check, your config is still required to implement
+	/// `topsoil_system::Config` either via
+	/// - Implementing a trait that itself implements `topsoil_system::Config`
+	/// - Tightly coupling it with another pallet which itself implements `topsoil_system::Config`
 	///
 	/// e.g.
 	///
 	/// ```
-	/// #[frame_support::pallet]
+	/// #[topsoil_support::pallet]
 	/// mod pallet {
-	/// # 	use frame_support::pallet_prelude::*;
-	/// # 	use frame_system::pallet_prelude::*;
-	/// 	trait OtherTrait: frame_system::Config {}
+	/// # 	use topsoil_support::pallet_prelude::*;
+	/// # 	use topsoil_system::pallet_prelude::*;
+	/// 	trait OtherTrait: topsoil_system::Config {}
 	///
 	/// 	#[pallet::pallet]
 	/// 	pub struct Pallet<T>(_);
@@ -1010,22 +1010,22 @@ pub mod pallet_macros {
 	/// To learn more about supertraits, see the
 	/// [trait_based_programming](../../polkadot_sdk_docs/reference_docs/trait_based_programming/index.html)
 	/// reference doc.
-	pub use frame_support_procedural::disable_frame_system_supertrait_check;
+	pub use topsoil_support_procedural::disable_frame_system_supertrait_check;
 
 	/// The mandatory attribute allowing definition of configurable types for the pallet.
 	///
 	/// Item must be defined as:
 	///
 	/// ```
-	/// #[frame_support::pallet]
+	/// #[topsoil_support::pallet]
 	/// mod pallet {
-	/// # 	use frame_support::pallet_prelude::*;
+	/// # 	use topsoil_support::pallet_prelude::*;
 	/// #
 	/// 	#[pallet::pallet]
 	/// 	pub struct Pallet<T>(_);
 	///
 	/// 	#[pallet::config]
-	/// 	pub trait Config: frame_system::Config // + $optionally_some_other_supertraits
+	/// 	pub trait Config: topsoil_system::Config // + $optionally_some_other_supertraits
 	/// 	// $optional_where_clause
 	/// 	{
 	/// 		// config items here
@@ -1034,7 +1034,7 @@ pub mod pallet_macros {
 	/// ```
 	///
 	/// I.e. a regular trait definition named `Config`, with the supertrait
-	/// [`frame_system::pallet::Config`](../../frame_system/pallet/trait.Config.html), and
+	/// [`topsoil_system::pallet::Config`](../../topsoil_system/pallet/trait.Config.html), and
 	/// optionally other supertraits and a where clause. (Specifying other supertraits here is
 	/// known as [tight coupling](https://docs.substrate.io/reference/how-to-guides/pallet-design/use-tight-coupling/))
 	///
@@ -1042,16 +1042,16 @@ pub mod pallet_macros {
 	///
 	/// An optional `with_default` argument may also be specified. Doing so will automatically
 	/// generate a `DefaultConfig` trait inside your pallet which is suitable for use with
-	/// [`#[derive_impl(..)`](`frame_support::derive_impl`) to derive a default testing
+	/// [`#[derive_impl(..)`](`topsoil_support::derive_impl`) to derive a default testing
 	/// config:
 	///
 	/// ```
-	/// #[frame_support::pallet]
+	/// #[topsoil_support::pallet]
 	/// mod pallet {
-	/// # 	use frame_support::pallet_prelude::*;
-	/// # 	use frame_system::pallet_prelude::*;
+	/// # 	use topsoil_support::pallet_prelude::*;
+	/// # 	use topsoil_system::pallet_prelude::*;
 	/// # 	use core::fmt::Debug;
-	/// # 	use frame_support::traits::Contains;
+	/// # 	use topsoil_support::traits::Contains;
 	/// #
 	/// # 	pub trait SomeMoreComplexBound {}
 	/// #
@@ -1059,7 +1059,7 @@ pub mod pallet_macros {
 	/// 	pub struct Pallet<T>(_);
 	///
 	/// 	#[pallet::config(with_default)] // <- with_default is optional
-	/// 	pub trait Config: frame_system::Config {
+	/// 	pub trait Config: topsoil_system::Config {
 	/// 		/// A more complex type.
 	/// 		#[pallet::no_default] // Example of type where no default should be provided
 	/// 		type MoreComplexType: SomeMoreComplexBound;
@@ -1079,13 +1079,13 @@ pub mod pallet_macros {
 	/// As shown above:
 	/// * you may attach the [`#[pallet::no_default]`](`no_default`)
 	/// attribute to specify that a particular trait item _cannot_ be used as a default when a
-	/// test `Config` is derived using the [`#[derive_impl(..)]`](`frame_support::derive_impl`)
+	/// test `Config` is derived using the [`#[derive_impl(..)]`](`topsoil_support::derive_impl`)
 	/// attribute macro. This will cause that particular trait item to simply not appear in
 	/// default testing configs based on this config (the trait item will not be included in
 	/// `DefaultConfig`).
 	/// * you may attach the [`#[pallet::no_default_bounds]`](`no_default_bounds`)
 	/// attribute to specify that a particular trait item can be used as a default when a
-	/// test `Config` is derived using the [`#[derive_impl(..)]`](`frame_support::derive_impl`)
+	/// test `Config` is derived using the [`#[derive_impl(..)]`](`topsoil_support::derive_impl`)
 	/// attribute macro. But its bounds cannot be enforced at this point and should be
 	/// discarded when generating the default config trait.
 	/// * you may not specify any attribute to generate a trait item in the default config
@@ -1099,7 +1099,7 @@ pub mod pallet_macros {
 	/// The auto-generated `DefaultConfig` trait:
 	/// - is always a _subset_ of your pallet's `Config` trait.
 	/// - can only contain items that don't rely on externalities, such as
-	///   `frame_system::Config`.
+	///   `topsoil_system::Config`.
 	///
 	/// Trait items that _do_ rely on externalities should be marked with
 	/// [`#[pallet::no_default]`](`no_default`)
@@ -1107,13 +1107,13 @@ pub mod pallet_macros {
 	/// Consequently:
 	/// - Any items that rely on externalities _must_ be marked with
 	///   [`#[pallet::no_default]`](`no_default`) or your trait will fail to compile when used
-	///   with [`derive_impl`](`frame_support::derive_impl`).
+	///   with [`derive_impl`](`topsoil_support::derive_impl`).
 	/// - Items marked with [`#[pallet::no_default]`](`no_default`) are entirely excluded from
 	///   the `DefaultConfig` trait, and therefore any impl of `DefaultConfig` doesn't need to
 	///   implement such items.
 	///
 	/// For more information, see:
-	/// * [`frame_support::derive_impl`].
+	/// * [`topsoil_support::derive_impl`].
 	/// * [`#[pallet::no_default]`](`no_default`)
 	/// * [`#[pallet::no_default_bounds]`](`no_default_bounds`)
 	///
@@ -1129,12 +1129,12 @@ pub mod pallet_macros {
 	/// the [`#[pallet::include_metadata]`](`include_metadata`) attribute to selectively
 	/// include only certain associated types in the metadata collection.
 	/// ```
-	/// #[frame_support::pallet]
+	/// #[topsoil_support::pallet]
 	/// mod pallet {
-	/// # 	use frame_support::pallet_prelude::*;
-	/// # 	use frame_system::pallet_prelude::*;
+	/// # 	use topsoil_support::pallet_prelude::*;
+	/// # 	use topsoil_system::pallet_prelude::*;
 	/// # 	use core::fmt::Debug;
-	/// # 	use frame_support::traits::{Contains, VariantCount};
+	/// # 	use topsoil_support::traits::{Contains, VariantCount};
 	/// #
 	/// # 	pub trait SomeMoreComplexBound {}
 	/// #
@@ -1142,7 +1142,7 @@ pub mod pallet_macros {
 	/// 	pub struct Pallet<T>(_);
 	///
 	/// 	#[pallet::config(with_default, without_automatic_metadata)] // <- with_default and without_automatic_metadata are optional
-	/// 	pub trait Config: frame_system::Config {
+	/// 	pub trait Config: topsoil_system::Config {
 	/// 		/// The overarching freeze reason.
 	/// 		#[pallet::no_default_bounds] // Default with bounds is not supported for RuntimeFreezeReason
 	/// 		type RuntimeFreezeReason: Parameter + Member + MaxEncodedLen + Copy + VariantCount;
@@ -1161,18 +1161,18 @@ pub mod pallet_macros {
 	/// 	}
 	/// }
 	/// ```
-	pub use frame_support_procedural::config;
+	pub use topsoil_support_procedural::config;
 
 	/// Allows defining an enum that gets composed as an aggregate enum by `construct_runtime`.
 	///
 	/// The `#[pallet::composite_enum]` attribute allows you to define an enum that gets
 	/// composed as an aggregate enum by `construct_runtime`. This is similar in principle with
-	/// [frame_support_procedural::event] and [frame_support_procedural::error].
+	/// [topsoil_support_procedural::event] and [topsoil_support_procedural::error].
 	///
 	/// The attribute currently only supports enum definitions, and identifiers that are named
 	/// `FreezeReason`, `HoldReason`, `LockId` or `SlashReason`. Arbitrary identifiers for the
 	/// enum are not supported. The aggregate enum generated by
-	/// [`frame_support::construct_runtime`] will have the name of `RuntimeFreezeReason`,
+	/// [`topsoil_support::construct_runtime`] will have the name of `RuntimeFreezeReason`,
 	/// `RuntimeHoldReason`, `RuntimeLockId` and `RuntimeSlashReason` respectively.
 	///
 	/// NOTE: The aggregate enum generated by `construct_runtime` generates a conversion
@@ -1192,9 +1192,9 @@ pub mod pallet_macros {
 	/// e.g, defining `HoldReason` in a pallet
 	///
 	/// ```
-	/// #[frame_support::pallet]
+	/// #[topsoil_support::pallet]
 	/// mod pallet {
-	/// # 	use frame_support::pallet_prelude::*;
+	/// # 	use topsoil_support::pallet_prelude::*;
 	/// #
 	/// 	#[pallet::pallet]
 	/// 	pub struct Pallet<T>(_);
@@ -1209,18 +1209,18 @@ pub mod pallet_macros {
 	/// 	}
 	/// #
 	/// # 	#[pallet::config]
-	/// # 	pub trait Config: frame_system::Config {}
+	/// # 	pub trait Config: topsoil_system::Config {}
 	/// }
-	pub use frame_support_procedural::composite_enum;
+	pub use topsoil_support_procedural::composite_enum;
 
 	/// Allows the pallet to validate unsigned transactions.
 	///
 	/// Item must be defined as:
 	///
 	/// ```
-	/// #[frame_support::pallet]
+	/// #[topsoil_support::pallet]
 	/// mod pallet {
-	/// # 	use frame_support::pallet_prelude::*;
+	/// # 	use topsoil_support::pallet_prelude::*;
 	/// #
 	/// 	#[pallet::pallet]
 	/// 	pub struct Pallet<T>(_);
@@ -1236,12 +1236,12 @@ pub mod pallet_macros {
 	/// 	}
 	/// #
 	/// # 	#[pallet::config]
-	/// # 	pub trait Config: frame_system::Config {}
+	/// # 	pub trait Config: topsoil_system::Config {}
 	/// }
 	/// ```
 	///
 	/// I.e. a trait implementation with bound `T: Config`, of trait
-	/// [`ValidateUnsigned`](frame_support::pallet_prelude::ValidateUnsigned) for
+	/// [`ValidateUnsigned`](topsoil_support::pallet_prelude::ValidateUnsigned) for
 	/// type `Pallet<T>`, and some optional where clause.
 	///
 	/// NOTE: There is also the [`soil_runtime::traits::TransactionExtension`] trait that can be
@@ -1250,8 +1250,8 @@ pub mod pallet_macros {
 	/// ## Macro expansion
 	///
 	/// The macro currently makes no use of this information, but it might use this information
-	/// in the future to give information directly to [`frame_support::construct_runtime`].
-	pub use frame_support_procedural::validate_unsigned;
+	/// in the future to give information directly to [`topsoil_support::construct_runtime`].
+	pub use topsoil_support_procedural::validate_unsigned;
 
 	/// Allows defining	view functions on a pallet.
 	///
@@ -1267,12 +1267,12 @@ pub mod pallet_macros {
 	///
 	/// ## Example
 	/// ```
-	/// #[frame_support::pallet]
+	/// #[topsoil_support::pallet]
 	/// pub mod pallet {
-	/// 	use frame_support::pallet_prelude::*;
+	/// 	use topsoil_support::pallet_prelude::*;
 	///
 	///  	#[pallet::config]
-	///  	pub trait Config: frame_system::Config {}
+	///  	pub trait Config: topsoil_system::Config {}
 	///
 	///  	#[pallet::pallet]
 	///  	pub struct Pallet<T>(_);
@@ -1295,7 +1295,7 @@ pub mod pallet_macros {
 	/// To allow outside access to pallet view functions, you need to add a runtime API that
 	/// accepts view function queries and dispatches them to the right pallet. You can do that
 	/// by implementing the
-	/// [`RuntimeViewFunction`](frame_support::view_functions::runtime_api::RuntimeViewFunction)
+	/// [`RuntimeViewFunction`](topsoil_support::view_functions::runtime_api::RuntimeViewFunction)
 	/// trait for the runtime inside an [`impl_runtime_apis!`](soil_api::impl_runtime_apis)
 	/// block.
 	///
@@ -1305,10 +1305,10 @@ pub mod pallet_macros {
 	/// stable as long as those two elements are not modified. In general, pallet view
 	/// functions should expose a _stable_ interface and changes to the method signature are
 	/// strongly discouraged. For more details on the dispatching mechanism, see the
-	/// [`DispatchViewFunction`](frame_support::view_functions::DispatchViewFunction) trait.
-	pub use frame_support_procedural::view_functions;
+	/// [`DispatchViewFunction`](topsoil_support::view_functions::DispatchViewFunction) trait.
+	pub use topsoil_support_procedural::view_functions;
 
-	/// Allows defining a struct implementing the [`Get`](frame_support::traits::Get) trait to
+	/// Allows defining a struct implementing the [`Get`](topsoil_support::traits::Get) trait to
 	/// ease the use of storage types.
 	///
 	/// This attribute is meant to be used alongside [`#[pallet::storage]`](`storage`) to
@@ -1317,10 +1317,10 @@ pub mod pallet_macros {
 	/// Item must be defined as:
 	///
 	/// ```
-	/// #[frame_support::pallet]
+	/// #[topsoil_support::pallet]
 	/// mod pallet {
 	/// # 	use soil_runtime::FixedU128;
-	/// # 	use frame_support::pallet_prelude::*;
+	/// # 	use topsoil_support::pallet_prelude::*;
 	/// #
 	/// 	#[pallet::pallet]
 	/// 	pub struct Pallet<T>(_);
@@ -1336,7 +1336,7 @@ pub mod pallet_macros {
 	/// 	}
 	/// #
 	/// # 	#[pallet::config]
-	/// # 	pub trait Config: frame_system::Config {}
+	/// # 	pub trait Config: topsoil_system::Config {}
 	/// }
 	/// ```
 	///
@@ -1345,20 +1345,20 @@ pub mod pallet_macros {
 	/// The macro renames the function to some internal name, generates a struct with the
 	/// original name of the function and its generic, and implements `Get<$ReturnType>` by
 	/// calling the user defined function.
-	pub use frame_support_procedural::type_value;
+	pub use topsoil_support_procedural::type_value;
 
 	/// Allows defining a storage version for the pallet.
 	///
 	/// Because the `pallet::pallet` macro implements
-	/// [`GetStorageVersion`](frame_support::traits::GetStorageVersion), the current storage
+	/// [`GetStorageVersion`](topsoil_support::traits::GetStorageVersion), the current storage
 	/// version needs to be communicated to the macro. This can be done by using the
 	/// `pallet::storage_version` attribute:
 	///
 	/// ```
-	/// #[frame_support::pallet]
+	/// #[topsoil_support::pallet]
 	/// mod pallet {
-	/// # 	use frame_support::pallet_prelude::StorageVersion;
-	/// # 	use frame_support::traits::GetStorageVersion;
+	/// # 	use topsoil_support::pallet_prelude::StorageVersion;
+	/// # 	use topsoil_support::traits::GetStorageVersion;
 	/// #
 	/// 	const STORAGE_VERSION: StorageVersion = StorageVersion::new(5);
 	///
@@ -1367,24 +1367,24 @@ pub mod pallet_macros {
 	/// 	pub struct Pallet<T>(_);
 	/// #
 	/// # 	#[pallet::config]
-	/// # 	pub trait Config: frame_system::Config {}
+	/// # 	pub trait Config: topsoil_system::Config {}
 	/// }
 	/// ```
 	///
 	/// If not present, the current storage version is set to the default value.
-	pub use frame_support_procedural::storage_version;
+	pub use topsoil_support_procedural::storage_version;
 
 	/// The `#[pallet::hooks]` attribute allows you to specify a
-	/// [`frame_support::traits::Hooks`] implementation for `Pallet` that specifies
+	/// [`topsoil_support::traits::Hooks`] implementation for `Pallet` that specifies
 	/// pallet-specific logic.
 	///
 	/// The item the attribute attaches to must be defined as follows:
 	///
 	/// ```
-	/// #[frame_support::pallet]
+	/// #[topsoil_support::pallet]
 	/// mod pallet {
-	/// # 	use frame_support::pallet_prelude::*;
-	/// # 	use frame_system::pallet_prelude::*;
+	/// # 	use topsoil_support::pallet_prelude::*;
+	/// # 	use topsoil_system::pallet_prelude::*;
 	/// #
 	/// 	#[pallet::pallet]
 	/// 	pub struct Pallet<T>(_);
@@ -1395,7 +1395,7 @@ pub mod pallet_macros {
 	/// 	}
 	/// #
 	/// # 	#[pallet::config]
-	/// # 	pub trait Config: frame_system::Config {}
+	/// # 	pub trait Config: topsoil_system::Config {}
 	/// }
 	/// ```
 	/// I.e. a regular trait implementation with generic bound: `T: Config`, for the trait
@@ -1406,20 +1406,20 @@ pub mod pallet_macros {
 	/// ## Macro expansion
 	///
 	/// The macro implements the traits
-	/// [`OnInitialize`](frame_support::traits::OnInitialize),
-	/// [`OnIdle`](frame_support::traits::OnIdle),
-	/// [`OnFinalize`](frame_support::traits::OnFinalize),
-	/// [`OnRuntimeUpgrade`](frame_support::traits::OnRuntimeUpgrade),
-	/// [`OffchainWorker`](frame_support::traits::OffchainWorker), and
-	/// [`IntegrityTest`](frame_support::traits::IntegrityTest) using
-	/// the provided [`Hooks`](frame_support::traits::Hooks) implementation.
+	/// [`OnInitialize`](topsoil_support::traits::OnInitialize),
+	/// [`OnIdle`](topsoil_support::traits::OnIdle),
+	/// [`OnFinalize`](topsoil_support::traits::OnFinalize),
+	/// [`OnRuntimeUpgrade`](topsoil_support::traits::OnRuntimeUpgrade),
+	/// [`OffchainWorker`](topsoil_support::traits::OffchainWorker), and
+	/// [`IntegrityTest`](topsoil_support::traits::IntegrityTest) using
+	/// the provided [`Hooks`](topsoil_support::traits::Hooks) implementation.
 	///
 	/// NOTE: `OnRuntimeUpgrade` is implemented with `Hooks::on_runtime_upgrade` and some
 	/// additional logic. E.g. logic to write the pallet version into storage.
 	///
 	/// NOTE: The macro also adds some tracing logic when implementing the above traits. The
 	/// following hooks emit traces: `on_initialize`, `on_finalize` and `on_runtime_upgrade`.
-	pub use frame_support_procedural::hooks;
+	pub use topsoil_support_procedural::hooks;
 
 	/// Generates a helper function on `Pallet` that handles deposit events.
 	///
@@ -1428,10 +1428,10 @@ pub mod pallet_macros {
 	/// ## Macro expansion
 	///
 	/// The macro will add on enum `Event` the attributes:
-	/// * `#[derive(`[`frame_support::CloneNoBound`]`)]`
-	/// * `#[derive(`[`frame_support::EqNoBound`]`)]`
-	/// * `#[derive(`[`frame_support::PartialEqNoBound`]`)]`
-	/// * `#[derive(`[`frame_support::DebugNoBound`]`)]`
+	/// * `#[derive(`[`topsoil_support::CloneNoBound`]`)]`
+	/// * `#[derive(`[`topsoil_support::EqNoBound`]`)]`
+	/// * `#[derive(`[`topsoil_support::PartialEqNoBound`]`)]`
+	/// * `#[derive(`[`topsoil_support::DebugNoBound`]`)]`
 	/// * `#[derive(`[`codec::Encode`]`)]`
 	/// * `#[derive(`[`codec::Decode`]`)]`
 	///
@@ -1441,7 +1441,7 @@ pub mod pallet_macros {
 	///
 	/// If `#[pallet::generate_deposit]` is present then the macro implements `fn
 	/// deposit_event` on `Pallet`.
-	pub use frame_support_procedural::generate_deposit;
+	pub use topsoil_support_procedural::generate_deposit;
 
 	/// Allows defining logic to make an extrinsic call feeless.
 	///
@@ -1456,10 +1456,10 @@ pub mod pallet_macros {
 	/// ### Example
 	///
 	/// ```
-	/// #[frame_support::pallet(dev_mode)]
+	/// #[topsoil_support::pallet(dev_mode)]
 	/// mod pallet {
-	/// # 	use frame_support::pallet_prelude::*;
-	/// # 	use frame_system::pallet_prelude::*;
+	/// # 	use topsoil_support::pallet_prelude::*;
+	/// # 	use topsoil_system::pallet_prelude::*;
 	/// #
 	/// 	#[pallet::pallet]
 	/// 	pub struct Pallet<T>(_);
@@ -1480,28 +1480,28 @@ pub mod pallet_macros {
 	/// 	}
 	/// #
 	/// # 	#[pallet::config]
-	/// # 	pub trait Config: frame_system::Config {}
+	/// # 	pub trait Config: topsoil_system::Config {}
 	/// }
 	/// ```
 	///
 	/// Please note that this only works for signed dispatchables and requires a transaction
-	/// extension such as [`pallet_skip_feeless_payment::SkipCheckIfFeeless`] to wrap the
+	/// extension such as [`topsoil_skip_feeless_payment::SkipCheckIfFeeless`] to wrap the
 	/// existing payment extension. Else, this is completely ignored and the dispatchable is
 	/// still charged.
 	///
 	/// Also this will not allow accountless caller to send a transaction if some transaction
-	/// extension such as `frame_system::CheckNonce` is used.
-	/// Extensions such as `frame_system::CheckNonce` require a funded account to validate
+	/// extension such as `topsoil_system::CheckNonce` is used.
+	/// Extensions such as `topsoil_system::CheckNonce` require a funded account to validate
 	/// the transaction.
 	///
 	/// ### Macro expansion
 	///
-	/// The macro implements the [`pallet_skip_feeless_payment::CheckIfFeeless`] trait on the
+	/// The macro implements the [`topsoil_skip_feeless_payment::CheckIfFeeless`] trait on the
 	/// dispatchable and calls the corresponding closure in the implementation.
 	///
-	/// [`pallet_skip_feeless_payment::SkipCheckIfFeeless`]: ../../pallet_skip_feeless_payment/struct.SkipCheckIfFeeless.html
-	/// [`pallet_skip_feeless_payment::CheckIfFeeless`]: ../../pallet_skip_feeless_payment/struct.SkipCheckIfFeeless.html
-	pub use frame_support_procedural::feeless_if;
+	/// [`topsoil_skip_feeless_payment::SkipCheckIfFeeless`]: ../../topsoil_skip_feeless_payment/struct.SkipCheckIfFeeless.html
+	/// [`topsoil_skip_feeless_payment::CheckIfFeeless`]: ../../topsoil_skip_feeless_payment/struct.SkipCheckIfFeeless.html
+	pub use topsoil_support_procedural::feeless_if;
 
 	/// Allows defining an error enum that will be returned from the dispatchable when an error
 	/// occurs.
@@ -1511,7 +1511,7 @@ pub mod pallet_macros {
 	/// Item must be defined as so:
 	///
 	/// ```
-	/// #[frame_support::pallet(dev_mode)]
+	/// #[topsoil_support::pallet(dev_mode)]
 	/// mod pallet {
 	/// 	#[pallet::pallet]
 	/// 	pub struct Pallet<T>(_);
@@ -1525,7 +1525,7 @@ pub mod pallet_macros {
 	/// 	}
 	/// #
 	/// # 	#[pallet::config]
-	/// # 	pub trait Config: frame_system::Config {}
+	/// # 	pub trait Config: topsoil_system::Config {}
 	/// }
 	/// ```
 	/// I.e. a regular enum named `Error`, with generic `T` and fieldless or multiple-field
@@ -1535,15 +1535,15 @@ pub mod pallet_macros {
 	/// be properly used in the metadata, and its encoded size should be as small as possible,
 	/// preferably 1 byte in size in order to reduce storage size. The error enum itself has an
 	/// absolute maximum encoded size specified by
-	/// [`frame_support::MAX_MODULE_ERROR_ENCODED_SIZE`].
+	/// [`topsoil_support::MAX_MODULE_ERROR_ENCODED_SIZE`].
 	///
 	/// (1 byte can still be 256 different errors. The more specific the error, the easier it
 	/// is to diagnose problems and give a better experience to the user. Don't skimp on having
 	/// lots of individual error conditions.)
 	///
-	/// Field types in enum variants must also implement [`frame_support::PalletError`],
+	/// Field types in enum variants must also implement [`topsoil_support::PalletError`],
 	/// otherwise the pallet will fail to compile. Rust primitive types have already
-	/// implemented the [`frame_support::PalletError`] trait along with some commonly used
+	/// implemented the [`topsoil_support::PalletError`] trait along with some commonly used
 	/// stdlib types such as [`Option`] and [`core::marker::PhantomData`], and hence
 	/// in most use cases, a manual implementation is not necessary and is discouraged.
 	///
@@ -1570,7 +1570,7 @@ pub mod pallet_macros {
 	///   generated code.
 	/// - If the item is annotated with `deprecated` attribute then the generated code will be
 	///   automatically annotated with `allow(deprecated)`
-	pub use frame_support_procedural::error;
+	pub use topsoil_support_procedural::error;
 
 	/// Allows defining pallet events.
 	///
@@ -1580,15 +1580,15 @@ pub mod pallet_macros {
 	/// The Event enum can be defined as follows:
 	///
 	/// ```
-	/// #[frame_support::pallet(dev_mode)]
+	/// #[topsoil_support::pallet(dev_mode)]
 	/// mod pallet {
-	/// #     use frame_support::pallet_prelude::IsType;
+	/// #     use topsoil_support::pallet_prelude::IsType;
 	/// #
 	/// 	#[pallet::pallet]
 	/// 	pub struct Pallet<T>(_);
 	///
 	/// 	#[pallet::config]
-	/// 	pub trait Config: frame_system::Config {}
+	/// 	pub trait Config: topsoil_system::Config {}
 	///
 	/// 	#[pallet::event]
 	/// 	#[pallet::generate_deposit(fn deposit_event)] // Optional
@@ -1607,12 +1607,12 @@ pub mod pallet_macros {
 	///
 	/// ```rs
 	/// 	#[pallet::config]
-	/// 	pub trait Config: frame_system::Config<RuntimeEvent: From<Event<Self>>> {}
+	/// 	pub trait Config: topsoil_system::Config<RuntimeEvent: From<Event<Self>>> {}
 	/// ```
 	///
 	/// Each field must implement [`Clone`], [`Eq`], [`PartialEq`], [`codec::Encode`],
 	/// [`codec::Decode`], and [`Debug`] (on std only). For ease of use, bound by the trait
-	/// `Member`, available in [`frame_support::pallet_prelude`].
+	/// `Member`, available in [`topsoil_support::pallet_prelude`].
 	///
 	/// ## Note on deprecation of Events
 	///
@@ -1626,7 +1626,7 @@ pub mod pallet_macros {
 	///   generated code.
 	/// - If the item is annotated with `deprecated` attribute then the generated code will be
 	///   automatically annotated with `allow(deprecated)`
-	pub use frame_support_procedural::event;
+	pub use topsoil_support_procedural::event;
 
 	/// Selectively includes associated types in the metadata.
 	///
@@ -1637,7 +1637,7 @@ pub mod pallet_macros {
 	///
 	/// This attribute can be used in combination with the
 	/// [`#[pallet::config(without_automatic_metadata)]`](`config`).
-	pub use frame_support_procedural::include_metadata;
+	pub use topsoil_support_procedural::include_metadata;
 
 	/// Allows a pallet to declare a set of functions as a *dispatchable extrinsic*.
 	///
@@ -1660,20 +1660,20 @@ pub mod pallet_macros {
 	/// correct function.
 	///
 	/// The macro also ensures that the extrinsic when invoked will be wrapped via
-	/// [`frame_support::storage::with_storage_layer`] to make it transactional. Thus if the
+	/// [`topsoil_support::storage::with_storage_layer`] to make it transactional. Thus if the
 	/// extrinsic returns with an error any state changes that had already occurred will be
 	/// rolled back.
 	///
 	/// ```
-	/// #[frame_support::pallet(dev_mode)]
+	/// #[topsoil_support::pallet(dev_mode)]
 	/// pub mod custom_pallet {
-	/// #   use frame_support::pallet_prelude::*;
-	/// #   use frame_system::pallet_prelude::*;
+	/// #   use topsoil_support::pallet_prelude::*;
+	/// #   use topsoil_system::pallet_prelude::*;
 	/// #   #[pallet::config]
-	/// #   pub trait Config: frame_system::Config {}
+	/// #   pub trait Config: topsoil_system::Config {}
 	/// #   #[pallet::pallet]
 	/// #   pub struct Pallet<T>(_);
-	/// #   use frame_support::traits::BuildGenesisConfig;
+	/// #   use topsoil_support::traits::BuildGenesisConfig;
 	///     #[pallet::call]
 	///     impl<T: Config> Pallet<T> {
 	///         pub fn some_dispatchable(_origin: OriginFor<T>, _input: u32) -> DispatchResult {
@@ -1692,24 +1692,24 @@ pub mod pallet_macros {
 	/// }
 	///
 	/// fn main() {
-	/// #   use frame_support::{derive_impl, construct_runtime};
-	/// #   use frame_support::__private::codec::Encode;
-	/// #   use frame_support::__private::TestExternalities;
-	/// #   use frame_support::traits::UnfilteredDispatchable;
+	/// #   use topsoil_support::{derive_impl, construct_runtime};
+	/// #   use topsoil_support::__private::codec::Encode;
+	/// #   use topsoil_support::__private::TestExternalities;
+	/// #   use topsoil_support::traits::UnfilteredDispatchable;
 	/// #    impl custom_pallet::Config for Runtime {}
-	/// #    #[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-	/// #    impl frame_system::Config for Runtime {
-	/// #        type Block = frame_system::mocking::MockBlock<Self>;
+	/// #    #[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+	/// #    impl topsoil_system::Config for Runtime {
+	/// #        type Block = topsoil_system::mocking::MockBlock<Self>;
 	/// #    }
 	///     construct_runtime! {
 	///         pub enum Runtime {
-	///             System: frame_system,
+	///             System: topsoil_system,
 	///             Custom: custom_pallet
 	///         }
 	///     }
 	///
 	/// #    TestExternalities::new_empty().execute_with(|| {
-	///     let origin: RuntimeOrigin = frame_system::RawOrigin::Signed(10).into();
+	///     let origin: RuntimeOrigin = topsoil_system::RawOrigin::Signed(10).into();
 	///     // calling into a dispatchable from within the runtime is simply a function call.
 	///         let _ = custom_pallet::Pallet::<Runtime>::some_dispatchable(origin.clone(), 10);
 	///
@@ -1741,7 +1741,7 @@ pub mod pallet_macros {
 	///
 	/// **WARNING**: modifying dispatchables, changing their order (i.e. using [`call_index`]),
 	/// removing some, etc., must be done with care. This will change the encoding of the call,
-	/// and the call can be stored on-chain (e.g. in `pallet-scheduler`). Thus, migration
+	/// and the call can be stored on-chain (e.g. in `topsoil-scheduler`). Thus, migration
 	/// might be needed. This is why the use of `call_index` is mandatory by default in FRAME.
 	///
 	/// ## Weight info
@@ -1756,16 +1756,16 @@ pub mod pallet_macros {
 	/// * Or it can be simply ignored when the pallet is in `dev_mode`.
 	///
 	/// ```
-	/// #[frame_support::pallet]
+	/// #[topsoil_support::pallet]
 	/// mod pallet {
-	///     use frame_support::pallet_prelude::*;
-	///     use frame_system::pallet_prelude::*;
+	///     use topsoil_support::pallet_prelude::*;
+	///     use topsoil_system::pallet_prelude::*;
 	///
 	///     #[pallet::pallet]
 	///     pub struct Pallet<T>(_);
 	///
 	///     #[pallet::config]
-	///     pub trait Config: frame_system::Config {
+	///     pub trait Config: topsoil_system::Config {
 	///         /// Type for specifying dispatchable weights.
 	///         type WeightInfo: WeightInfo;
 	///     }
@@ -1810,7 +1810,7 @@ pub mod pallet_macros {
 	/// following code is automatically generated:
 	///
 	/// ```
-	/// #[frame_support::pallet(dev_mode)]
+	/// #[topsoil_support::pallet(dev_mode)]
 	/// mod pallet {
 	/// 	#[pallet::pallet]
 	/// 	pub struct Pallet<T>(_);
@@ -1819,7 +1819,7 @@ pub mod pallet_macros {
 	/// 	impl<T: Config> Pallet<T> {} // <- automatically generated
 	///
 	/// 	#[pallet::config]
-	/// 	pub trait Config: frame_system::Config {}
+	/// 	pub trait Config: topsoil_system::Config {}
 	/// }
 	/// ```
 	///
@@ -1832,7 +1832,7 @@ pub mod pallet_macros {
 	///   generated code.
 	/// - If the item is annotated with `deprecated` attribute then the generated code will be
 	///   automatically annotated with `allow(deprecated)`
-	pub use frame_support_procedural::call;
+	pub use topsoil_support_procedural::call;
 
 	/// Enforce the index of a variant in the generated `enum Call`.
 	///
@@ -1843,7 +1843,7 @@ pub mod pallet_macros {
 	/// a defined call index will have that call index, but incremented by 1, e.g. if there are
 	/// 3 dispatchable functions `fn foo`, `fn bar` and `fn qux` in that order, and only `fn
 	/// bar` has a call index of 10, then `fn qux` will have an index of 11, instead of 1.
-	pub use frame_support_procedural::call_index;
+	pub use topsoil_support_procedural::call_index;
 
 	/// Declares the arguments of a [`call`] function to be encoded using
 	/// [`codec::Compact`].
@@ -1856,15 +1856,15 @@ pub mod pallet_macros {
 	/// allows. In all such cases, using `compact` is sensible.
 	///
 	/// ```
-	/// #[frame_support::pallet(dev_mode)]
+	/// #[topsoil_support::pallet(dev_mode)]
 	/// pub mod custom_pallet {
-	/// #   use frame_support::pallet_prelude::*;
-	/// #   use frame_system::pallet_prelude::*;
+	/// #   use topsoil_support::pallet_prelude::*;
+	/// #   use topsoil_system::pallet_prelude::*;
 	/// #   #[pallet::config]
-	/// #   pub trait Config: frame_system::Config {}
+	/// #   pub trait Config: topsoil_system::Config {}
 	/// #   #[pallet::pallet]
 	/// #   pub struct Pallet<T>(_);
-	/// #   use frame_support::traits::BuildGenesisConfig;
+	/// #   use topsoil_support::traits::BuildGenesisConfig;
 	///     #[pallet::call]
 	///     impl<T: Config> Pallet<T> {
 	///         pub fn some_dispatchable(_origin: OriginFor<T>, #[pallet::compact] _input: u32) -> DispatchResult {
@@ -1872,15 +1872,15 @@ pub mod pallet_macros {
 	///         }
 	///     }
 	/// }
-	pub use frame_support_procedural::compact;
+	pub use topsoil_support_procedural::compact;
 
 	/// Allows you to define the genesis configuration for the pallet.
 	///
 	/// Item is defined as either an enum or a struct. It needs to be public and implement the
-	/// trait [`frame_support::traits::BuildGenesisConfig`].
+	/// trait [`topsoil_support::traits::BuildGenesisConfig`].
 	///
 	/// See [`genesis_build`] for an example.
-	pub use frame_support_procedural::genesis_config;
+	pub use topsoil_support_procedural::genesis_config;
 
 	/// Allows you to define how the state of your pallet at genesis is built. This
 	/// takes as input the `GenesisConfig` type (as `self`) and constructs the pallet's initial
@@ -1891,15 +1891,15 @@ pub mod pallet_macros {
 	/// ## Example
 	///
 	/// ```
-	/// #[frame_support::pallet]
+	/// #[topsoil_support::pallet]
 	/// pub mod pallet {
 	/// # 	#[pallet::config]
-	/// # 	pub trait Config: frame_system::Config {}
+	/// # 	pub trait Config: topsoil_system::Config {}
 	/// # 	#[pallet::pallet]
 	/// # 	pub struct Pallet<T>(_);
-	/// # 	use frame_support::traits::BuildGenesisConfig;
+	/// # 	use topsoil_support::traits::BuildGenesisConfig;
 	///     #[pallet::genesis_config]
-	///     #[derive(frame_support::DefaultNoBound)]
+	///     #[derive(topsoil_support::DefaultNoBound)]
 	///     pub struct GenesisConfig<T: Config> {
 	///         foo: Vec<T::AccountId>
 	///     }
@@ -1921,15 +1921,15 @@ pub mod pallet_macros {
 	/// This is deprecated and will soon be removed.
 	///
 	/// ```
-	/// #[frame_support::pallet]
+	/// #[topsoil_support::pallet]
 	/// pub mod pallet {
 	/// #     #[pallet::config]
-	/// #     pub trait Config: frame_system::Config {}
+	/// #     pub trait Config: topsoil_system::Config {}
 	/// #     #[pallet::pallet]
 	/// #     pub struct Pallet<T>(_);
-	/// #     use frame_support::traits::GenesisBuild;
+	/// #     use topsoil_support::traits::GenesisBuild;
 	///     #[pallet::genesis_config]
-	///     #[derive(frame_support::DefaultNoBound)]
+	///     #[derive(topsoil_support::DefaultNoBound)]
 	///     pub struct GenesisConfig<T: Config> {
 	/// 		foo: Vec<T::AccountId>
 	/// 	}
@@ -1942,22 +1942,22 @@ pub mod pallet_macros {
 	///     }
 	/// }
 	/// ```
-	pub use frame_support_procedural::genesis_build;
+	pub use topsoil_support_procedural::genesis_build;
 
 	/// Allows adding an associated type trait bounded by
-	/// [`Get`](frame_support::pallet_prelude::Get) from [`pallet::config`](`macro@config`)
+	/// [`Get`](topsoil_support::pallet_prelude::Get) from [`pallet::config`](`macro@config`)
 	/// into metadata.
 	///
 	/// ## Example
 	///
 	/// ```
-	/// #[frame_support::pallet]
+	/// #[topsoil_support::pallet]
 	/// mod pallet {
-	///     use frame_support::pallet_prelude::*;
+	///     use topsoil_support::pallet_prelude::*;
 	///     # #[pallet::pallet]
 	///     # pub struct Pallet<T>(_);
 	///     #[pallet::config]
-	///     pub trait Config: frame_system::Config {
+	///     pub trait Config: topsoil_system::Config {
 	/// 		/// This is like a normal `Get` trait, but it will be added into metadata.
 	/// 		#[pallet::constant]
 	/// 		type Foo: Get<u32>;
@@ -1974,7 +1974,7 @@ pub mod pallet_macros {
 	///   generated code.
 	/// - If the item is annotated with `deprecated` attribute then the generated code will be
 	///   automatically annotated with `allow(deprecated)`
-	pub use frame_support_procedural::constant;
+	pub use topsoil_support_procedural::constant;
 
 	/// Declares a type alias as a storage item.
 	///
@@ -2012,9 +2012,9 @@ pub mod pallet_macros {
 	/// * `MaxValues` - _not currently used_.
 	///
 	/// Each `Key` type requires its own designated `Hasher` declaration, so that
-	/// [`StorageDoubleMap`](frame_support::storage::types::StorageDoubleMap) needs two of
-	/// each, and [`StorageNMap`](frame_support::storage::types::StorageNMap) needs `N` such
-	/// pairs. Since [`StorageValue`](frame_support::storage::types::StorageValue) only stores
+	/// [`StorageDoubleMap`](topsoil_support::storage::types::StorageDoubleMap) needs two of
+	/// each, and [`StorageNMap`](topsoil_support::storage::types::StorageNMap) needs `N` such
+	/// pairs. Since [`StorageValue`](topsoil_support::storage::types::StorageValue) only stores
 	/// a single element, no configuration of hashers is needed.
 	///
 	/// ### Syntax
@@ -2033,11 +2033,11 @@ pub mod pallet_macros {
 	/// #### Example
 	///
 	/// ```
-	/// #[frame_support::pallet]
+	/// #[topsoil_support::pallet]
 	/// mod pallet {
-	///     # use frame_support::pallet_prelude::*;
+	///     # use topsoil_support::pallet_prelude::*;
 	///     # #[pallet::config]
-	///     # pub trait Config: frame_system::Config {}
+	///     # pub trait Config: topsoil_system::Config {}
 	///     # #[pallet::pallet]
 	///     # pub struct Pallet<T>(_);
 	///     /// Positional syntax, without bounding `T`.
@@ -2063,35 +2063,35 @@ pub mod pallet_macros {
 	///
 	/// Notably, all value types need to implement `Encode`, `Decode`, `MaxEncodedLen` and
 	/// `TypeInfo`, and possibly `Default`, if
-	/// [`ValueQuery`](frame_support::storage::types::ValueQuery) is used, explained in the
+	/// [`ValueQuery`](topsoil_support::storage::types::ValueQuery) is used, explained in the
 	/// next section.
 	///
 	/// ### QueryKind
 	///
 	/// Every storage type mentioned above has a generic type called
-	/// [`QueryKind`](frame_support::storage::types::QueryKindTrait) that determines its
+	/// [`QueryKind`](topsoil_support::storage::types::QueryKindTrait) that determines its
 	/// "query" type. This refers to the kind of value returned when querying the storage, for
 	/// instance, through a `::get()` method.
 	///
 	/// There are three types of queries:
 	///
-	/// 1. [`OptionQuery`](frame_support::storage::types::OptionQuery): The default query type.
+	/// 1. [`OptionQuery`](topsoil_support::storage::types::OptionQuery): The default query type.
 	///    It returns `Some(V)` if the value is present, or `None` if it isn't, where `V` is
 	///    the value type.
-	/// 2. [`ValueQuery`](frame_support::storage::types::ValueQuery): Returns the value itself
+	/// 2. [`ValueQuery`](topsoil_support::storage::types::ValueQuery): Returns the value itself
 	///    if present; otherwise, it returns `Default::default()`. This behavior can be
 	///    adjusted with the `OnEmpty` generic parameter, which defaults to `OnEmpty =
 	///    GetDefault`.
-	/// 3. [`ResultQuery`](frame_support::storage::types::ResultQuery): Returns `Result<V, E>`,
+	/// 3. [`ResultQuery`](topsoil_support::storage::types::ResultQuery): Returns `Result<V, E>`,
 	///    where `V` is the value type.
 	///
-	/// See [`QueryKind`](frame_support::storage::types::QueryKindTrait) for further examples.
+	/// See [`QueryKind`](topsoil_support::storage::types::QueryKindTrait) for further examples.
 	///
 	/// ### Optimized Appending
 	///
 	/// All storage items — such as
-	/// [`StorageValue`](frame_support::storage::types::StorageValue),
-	/// [`StorageMap`](frame_support::storage::types::StorageMap), and their variants—offer an
+	/// [`StorageValue`](topsoil_support::storage::types::StorageValue),
+	/// [`StorageMap`](topsoil_support::storage::types::StorageMap), and their variants—offer an
 	/// `::append()` method optimized for collections. Using this method avoids the
 	/// inefficiency of decoding and re-encoding entire collections when adding items. For
 	/// instance, consider the storage declaration `type MyVal<T> = StorageValue<_, Vec<u8>,
@@ -2103,15 +2103,15 @@ pub mod pallet_macros {
 	#[doc = docify::embed!("src/lib.rs", example_storage_value_append)]
 	/// Similarly, there also exists a `::try_append()` method, which can be used when handling
 	/// types where an append operation might fail, such as a
-	/// [`BoundedVec`](frame_support::BoundedVec).
+	/// [`BoundedVec`](topsoil_support::BoundedVec).
 	///
 	/// #### Example
 	#[doc = docify::embed!("src/lib.rs", example_storage_value_try_append)]
 	/// ### Optimized Length Decoding
 	///
 	/// All storage items — such as
-	/// [`StorageValue`](frame_support::storage::types::StorageValue),
-	/// [`StorageMap`](frame_support::storage::types::StorageMap), and their counterparts —
+	/// [`StorageValue`](topsoil_support::storage::types::StorageValue),
+	/// [`StorageMap`](topsoil_support::storage::types::StorageMap), and their counterparts —
 	/// incorporate the `::decode_len()` method. This method allows for efficient retrieval of
 	/// a collection's length without the necessity of decoding the entire dataset.
 	/// #### Example
@@ -2119,7 +2119,7 @@ pub mod pallet_macros {
 	/// ### Hashers
 	///
 	/// For all storage types, except
-	/// [`StorageValue`](frame_support::storage::types::StorageValue), a set of hashers needs
+	/// [`StorageValue`](topsoil_support::storage::types::StorageValue), a set of hashers needs
 	/// to be specified. The choice of hashers is crucial, especially in production chains. The
 	/// purpose of storage hashers in maps is to ensure the keys of a map are
 	/// uniformly distributed. An unbalanced map/trie can lead to inefficient performance.
@@ -2137,11 +2137,11 @@ pub mod pallet_macros {
 	/// should be used.
 	///
 	/// For more information, look at the types that implement
-	/// [`frame_support::StorageHasher`](frame_support::StorageHasher).
+	/// [`topsoil_support::StorageHasher`](topsoil_support::StorageHasher).
 	///
 	/// Lastly, it's recommended for hashers with "concat" to have reversible hashes. Refer to
 	/// the implementors section of
-	/// [`hash::ReversibleStorageHasher`](frame_support::hash::ReversibleStorageHasher).
+	/// [`hash::ReversibleStorageHasher`](topsoil_support::hash::ReversibleStorageHasher).
 	///
 	/// ### Prefixes
 	///
@@ -2153,12 +2153,12 @@ pub mod pallet_macros {
 	/// > The storage prefix begins with `twox128(pallet_prefix) ++ twox128(STORAGE_PREFIX)`,
 	/// > where
 	/// > `pallet_prefix` is the name assigned to the pallet instance in
-	/// > [`frame_support::construct_runtime`](frame_support::construct_runtime), and
+	/// > [`topsoil_support::construct_runtime`](topsoil_support::construct_runtime), and
 	/// > `STORAGE_PREFIX` is the name of the `type` aliased to a particular storage type, such
 	/// > as
 	/// > `Foo` in `type Foo<T> = StorageValue<..>`.
 	///
-	/// For [`StorageValue`](frame_support::storage::types::StorageValue), no additional key is
+	/// For [`StorageValue`](topsoil_support::storage::types::StorageValue), no additional key is
 	/// required. For map types, the prefix is extended with one or more keys defined by the
 	/// map.
 	///
@@ -2176,11 +2176,11 @@ pub mod pallet_macros {
 	///
 	/// #### Example
 	/// ```
-	/// #[frame_support::pallet]
+	/// #[topsoil_support::pallet]
 	/// mod pallet {
-	///     # use frame_support::pallet_prelude::*;
+	///     # use topsoil_support::pallet_prelude::*;
 	///     # #[pallet::config]
-	///     # pub trait Config: frame_system::Config {}
+	///     # pub trait Config: topsoil_system::Config {}
 	///     # #[pallet::pallet]
 	///     # pub struct Pallet<T>(_);
 	/// 	/// A kitchen-sink StorageValue, with all possible additional attributes.
@@ -2202,9 +2202,9 @@ pub mod pallet_macros {
 	///   generated code.
 	/// - If the item is annotated with `deprecated` attribute then the generated code will be
 	///   automatically annotated with `allow(deprecated)`
-	pub use frame_support_procedural::storage;
+	pub use topsoil_support_procedural::storage;
 
-	pub use frame_support_procedural::{
+	pub use topsoil_support_procedural::{
 		authorize, task_condition, task_index, task_list, task_weight, tasks_experimental,
 		weight_of_authorize,
 	};
@@ -2220,11 +2220,11 @@ pub mod pallet_macros {
 	/// ## Syntax Variants
 	///
 	/// ```
-	/// #[frame_support::pallet]
+	/// #[topsoil_support::pallet]
 	/// mod pallet {
-	///     # use frame_support::pallet_prelude::*;
+	///     # use topsoil_support::pallet_prelude::*;
 	///     # #[pallet::config]
-	///     # pub trait Config: frame_system::Config {}
+	///     # pub trait Config: topsoil_system::Config {}
 	///     # #[pallet::pallet]
 	///     # pub struct Pallet<T>(_);
 	/// 	/// On the spot declaration.
@@ -2240,11 +2240,11 @@ pub mod pallet_macros {
 	/// Or, more commonly used:
 	///
 	/// ```
-	/// #[frame_support::pallet]
+	/// #[topsoil_support::pallet]
 	/// mod pallet {
-	///     # use frame_support::pallet_prelude::*;
+	///     # use topsoil_support::pallet_prelude::*;
 	///     # #[pallet::config]
-	///     # pub trait Config: frame_system::Config {}
+	///     # pub trait Config: topsoil_system::Config {}
 	///     # #[pallet::pallet]
 	///     # pub struct Pallet<T>(_);
 	/// 	#[derive(PartialEq, Eq, Clone, Debug, Encode, Decode, TypeInfo, MaxEncodedLen)]
@@ -2265,7 +2265,7 @@ pub mod pallet_macros {
 	///
 	/// Read more about origins at the [Origin Reference
 	/// Docs](../../polkadot_sdk_docs/reference_docs/frame_origin/index.html).
-	pub use frame_support_procedural::origin;
+	pub use topsoil_support_procedural::origin;
 }
 
 #[deprecated(note = "Will be removed after July 2023; Use `soil_runtime::traits` directly instead.")]
@@ -2275,7 +2275,7 @@ pub mod error {
 }
 
 #[doc(inline)]
-pub use frame_support_procedural::register_default_impl;
+pub use topsoil_support_procedural::register_default_impl;
 
 // Generate a macro that will enable/disable code based on `std` feature being active.
 soil_core::generate_feature_enabled_macro!(std_enabled, feature = "std", $);

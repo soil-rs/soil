@@ -17,12 +17,12 @@
 
 //! # Multi-phase, multi-block, election provider pallet.
 //!
-//! > This pallet is sometimes abbreviated as `EPMB`, and `pallet_election_provider_multi_phase` as
+//! > This pallet is sometimes abbreviated as `EPMB`, and `topsoil_election_provider_multi_phase` as
 //! > `EPM`.
 //!
 //! ## Overall idea
 //!
-//! `pallet_election_provider_multi_phase` provides the basic ability for NPoS solutions to be
+//! `topsoil_election_provider_multi_phase` provides the basic ability for NPoS solutions to be
 //! computed offchain (essentially anywhere) and submitted back to the chain as signed or unsigned
 //! transaction, with sensible configurations and fail-safe mechanisms to ensure system safety.
 //! Nonetheless, it has a limited capacity in terms of number of voters it can process in a **single
@@ -36,7 +36,7 @@
 //! system can grow significantly (yet, obviously not indefinitely).
 //!
 //! Note that this pallet does not consider how the recipient is processing the results. To ensure
-//! scalability, the recipient of this pallet's data (i.e. `pallet-staking`) must also be capable of
+//! scalability, the recipient of this pallet's data (i.e. `topsoil-staking`) must also be capable of
 //! pagination and multi-block processing.
 //!
 //! ## Companion pallets
@@ -200,18 +200,18 @@
 use crate::signed::{CalculateBaseDeposit, CalculatePageDeposit};
 use crate::verifier::{AsynchronousVerifier, Verifier};
 use codec::{Decode, Encode, MaxEncodedLen};
-use frame_election_provider_support::{
+use topsoil_election_provider_support::{
 	onchain, BoundedSupportsOf, DataProviderBounds, ElectionDataProvider, ElectionProvider,
 	InstantElectionProvider,
 };
-use frame_support::{
+use topsoil_support::{
 	dispatch::PostDispatchInfo,
 	pallet_prelude::*,
 	traits::{Defensive, EnsureOrigin},
 	weights::WeightMeter,
 	DebugNoBound, Twox64Concat,
 };
-use frame_system::pallet_prelude::*;
+use topsoil_system::pallet_prelude::*;
 use scale_info::TypeInfo;
 use soil_arithmetic::{
 	traits::{CheckedAdd, Zero},
@@ -254,7 +254,7 @@ pub mod weights;
 
 pub use pallet::*;
 pub use types::*;
-pub use weights::traits::pallet_election_provider_multi_block::WeightInfo;
+pub use weights::traits::topsoil_election_provider_multi_block::WeightInfo;
 
 /// A fallback implementation that transitions the pallet to the emergency phase.
 pub struct InitiateEmergencyPhase<T>(soil_std::marker::PhantomData<T>);
@@ -413,7 +413,7 @@ impl<T: Config, Queued: Get<Phase<T>>, NotQueued: Get<Phase<T>>> Get<Phase<T>>
 ///
 /// Note that this is different from [`pallet::Error`].
 #[derive(
-	frame_support::DebugNoBound, frame_support::PartialEqNoBound, frame_support::EqNoBound,
+	topsoil_support::DebugNoBound, topsoil_support::PartialEqNoBound, topsoil_support::EqNoBound,
 )]
 pub enum ElectionError<T: Config> {
 	/// An error happened in the feasibility check sub-system.
@@ -532,12 +532,12 @@ impl<T: Config> OnRoundRotation for CleanRound<T> {
 	}
 }
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
 
 	#[pallet::config]
-	pub trait Config: frame_system::Config {
+	pub trait Config: topsoil_system::Config {
 		/// Duration of the unsigned phase.
 		#[pallet::constant]
 		type UnsignedPhase: Get<BlockNumberFor<Self>>;
@@ -580,7 +580,7 @@ pub mod pallet {
 		/// miner implementation should implement this trait, and use the said `BaseMiner`.
 		type MinerConfig: crate::unsigned::miner::MinerConfig<
 			Pages = Self::Pages,
-			AccountId = <Self as frame_system::Config>::AccountId,
+			AccountId = <Self as topsoil_system::Config>::AccountId,
 			MaxVotesPerVoter = <Self::DataProvider as ElectionDataProvider>::MaxVotesPerVoter,
 			VoterSnapshotPerBlock = Self::VoterSnapshotPerBlock,
 			TargetSnapshotPerBlock = Self::TargetSnapshotPerBlock,
@@ -1238,7 +1238,7 @@ pub mod pallet {
 	>;
 	/// Same as [`PagedVoterSnapshot`], but it will store the hash of the snapshot.
 	///
-	/// The hash is generated using [`frame_system::Config::Hashing`].
+	/// The hash is generated using [`topsoil_system::Config::Hashing`].
 	#[pallet::storage]
 	pub type PagedVoterSnapshotHash<T: Config> =
 		StorageDoubleMap<_, Twox64Concat, u32, Twox64Concat, PageIndex, T::Hash>;
@@ -1256,7 +1256,7 @@ pub mod pallet {
 	>;
 	/// Same as [`PagedTargetSnapshot`], but it will store the hash of the snapshot.
 	///
-	/// The hash is generated using [`frame_system::Config::Hashing`].
+	/// The hash is generated using [`topsoil_system::Config::Hashing`].
 	#[pallet::storage]
 	pub type PagedTargetSnapshotHash<T: Config> =
 		StorageDoubleMap<_, Twox64Concat, u32, Twox64Concat, PageIndex, T::Hash>;
@@ -1565,7 +1565,7 @@ impl<T: Config> Pallet<T> {
 	/// anything. If so, it will re-collect the associated snapshot page and do the fallback. Else,
 	/// it will early return without touching the snapshot.
 	fn fallback_for_page(page: PageIndex) -> Result<BoundedSupportsOf<Self>, ElectionError<T>> {
-		use frame_election_provider_support::InstantElectionProvider;
+		use topsoil_election_provider_support::InstantElectionProvider;
 		let (voters, targets, desired_targets) = if T::Fallback::bother() {
 			(
 				Snapshot::<T>::voters(page).ok_or(ElectionError::Other("snapshot!"))?,
@@ -1607,7 +1607,7 @@ impl<T: Config> Pallet<T> {
 		maybe_max_ratio: Option<soil_runtime::Percent>,
 		maybe_max_warn_ratio: Option<soil_runtime::Percent>,
 	) {
-		use frame_support::weights::constants::{
+		use topsoil_support::weights::constants::{
 			WEIGHT_PROOF_SIZE_PER_KB, WEIGHT_REF_TIME_PER_MILLIS,
 		};
 
@@ -1650,7 +1650,7 @@ impl<T: Config> Pallet<T> {
 	///
 	/// Arguments:
 	///
-	/// * `limit_weight` should be the maximum block weight (often obtained from `frame_system`).
+	/// * `limit_weight` should be the maximum block weight (often obtained from `topsoil_system`).
 	/// * `maybe_max_ratio` is the maximum ratio of `limit_weight` that we may consume, else we
 	///   panic.
 	/// * `maybe_max_warn_rati` has the same effect, but it emits a warning instead of panic.
@@ -1784,9 +1784,9 @@ where
 
 	/// Progress blocks until one block before the criteria is met.
 	pub(crate) fn roll_until_before_matches(criteria: impl FnOnce() -> bool + Copy) {
-		use frame_support::storage::TransactionOutcome;
+		use topsoil_support::storage::TransactionOutcome;
 		loop {
-			let should_break = frame_support::storage::with_transaction(
+			let should_break = topsoil_support::storage::with_transaction(
 				|| -> TransactionOutcome<Result<_, DispatchError>> {
 					Pallet::<T>::roll_next(false);
 					if criteria() {
@@ -1822,7 +1822,7 @@ where
 	pub(crate) fn submit_full_solution(
 		PagedRawSolution { score, solution_pages, .. }: PagedRawSolution<T::MinerConfig>,
 	) -> DispatchResultWithPostInfo {
-		use frame_system::RawOrigin;
+		use topsoil_system::RawOrigin;
 		use soil_std::boxed::Box;
 		use types::Pagify;
 
@@ -1850,9 +1850,9 @@ where
 	}
 
 	fn funded_account(seed: &'static str, index: u32) -> T::AccountId {
-		use frame_benchmarking::whitelist;
-		use frame_support::traits::fungible::{Inspect, Mutate};
-		let who: T::AccountId = frame_benchmarking::account(seed, index, 777);
+		use topsoil_benchmarking::whitelist;
+		use topsoil_support::traits::fungible::{Inspect, Mutate};
+		let who: T::AccountId = topsoil_benchmarking::account(seed, index, 777);
 		whitelist!(who);
 
 		// Calculate deposit for worst-case scenario: full queue + all pages submitted.
@@ -1884,20 +1884,20 @@ where
 
 	/// Roll all pallets forward, for the given number of blocks.
 	pub(crate) fn roll_to(n: BlockNumberFor<T>, try_state: bool) {
-		let now = frame_system::Pallet::<T>::block_number();
+		let now = topsoil_system::Pallet::<T>::block_number();
 		assert!(n > now, "cannot roll to current or past block");
 		let one: BlockNumberFor<T> = 1u32.into();
 		let mut i = now + one;
 		while i <= n {
 			// remove previous weight usage in system.
-			frame_system::BlockWeight::<T>::kill();
+			topsoil_system::BlockWeight::<T>::kill();
 
-			frame_system::Pallet::<T>::set_block_number(i);
-			let mut meter = frame_system::Pallet::<T>::remaining_block_weight();
+			topsoil_system::Pallet::<T>::set_block_number(i);
+			let mut meter = topsoil_system::Pallet::<T>::remaining_block_weight();
 			Pallet::<T>::on_poll(i, &mut meter);
 
 			// register the new weight in system
-			frame_system::Pallet::<T>::register_extra_weight_unchecked(
+			topsoil_system::Pallet::<T>::register_extra_weight_unchecked(
 				meter.consumed(),
 				DispatchClass::Mandatory,
 			);
@@ -1916,7 +1916,7 @@ where
 
 	/// Roll to next block.
 	pub(crate) fn roll_next(try_state: bool) {
-		Self::roll_to(frame_system::Pallet::<T>::block_number() + 1u32.into(), try_state);
+		Self::roll_to(topsoil_system::Pallet::<T>::block_number() + 1u32.into(), try_state);
 	}
 }
 
@@ -2032,8 +2032,8 @@ impl<T: Config> ElectionProvider for Pallet<T> {
 mod phase_rotation {
 	use super::{Event, *};
 	use crate::{mock::*, verifier::Status, Phase};
-	use frame_election_provider_support::ElectionProvider;
-	use frame_support::assert_ok;
+	use topsoil_election_provider_support::ElectionProvider;
+	use topsoil_support::assert_ok;
 
 	#[test]
 	fn single_page() {
@@ -2752,8 +2752,8 @@ mod election_provider {
 		verifier::{AsynchronousVerifier, Status, Verifier},
 		Phase,
 	};
-	use frame_election_provider_support::{BoundedSupport, BoundedSupports, ElectionProvider};
-	use frame_support::{
+	use topsoil_election_provider_support::{BoundedSupport, BoundedSupports, ElectionProvider};
+	use topsoil_support::{
 		assert_storage_noop, testing_prelude::bounded_vec, unsigned::ValidateUnsigned,
 	};
 

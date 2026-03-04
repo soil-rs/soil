@@ -47,9 +47,9 @@ mod tests {
 	};
 
 	#[crate::pallet]
-	pub mod frame_system {
+	pub mod topsoil_system {
 		#[allow(unused)]
-		use super::{frame_system, frame_system::pallet_prelude::*};
+		use super::{topsoil_system, topsoil_system::pallet_prelude::*};
 		pub use crate::dispatch::RawOrigin;
 		use crate::pallet_prelude::*;
 
@@ -121,11 +121,11 @@ mod tests {
 	crate::construct_runtime!(
 		pub enum Runtime
 		{
-			System: self::frame_system,
+			System: self::topsoil_system,
 		}
 	);
 
-	impl self::frame_system::Config for Runtime {
+	impl self::topsoil_system::Config for Runtime {
 		type AccountId = AccountId;
 		type Block = Block;
 		type BaseCallFilter = crate::traits::Everything;
@@ -154,7 +154,7 @@ mod tests {
 	fn value_translate_works() {
 		let t = RuntimeGenesisConfig::default().build_storage().unwrap();
 		TestExternalities::new(t).execute_with(|| {
-			type Value = self::frame_system::Value<Runtime>;
+			type Value = self::topsoil_system::Value<Runtime>;
 
 			// put the old value `1111u32` in the storage.
 			let key = Value::storage_value_final_key();
@@ -176,7 +176,7 @@ mod tests {
 	fn map_translate_works() {
 		let t = RuntimeGenesisConfig::default().build_storage().unwrap();
 		TestExternalities::new(t).execute_with(|| {
-			type NumberMap = self::frame_system::NumberMap<Runtime>;
+			type NumberMap = self::topsoil_system::NumberMap<Runtime>;
 
 			// start with a map of u32 -> u64.
 			for i in 0u32..100u32 {
@@ -211,9 +211,9 @@ mod tests {
 	fn try_mutate_works() {
 		let t = RuntimeGenesisConfig::default().build_storage().unwrap();
 		TestExternalities::new(t).execute_with(|| {
-			type Value = self::frame_system::Value<Runtime>;
-			type NumberMap = self::frame_system::NumberMap<Runtime>;
-			type DoubleMap = self::frame_system::DoubleMap<Runtime>;
+			type Value = self::topsoil_system::Value<Runtime>;
+			type NumberMap = self::topsoil_system::NumberMap<Runtime>;
+			type DoubleMap = self::topsoil_system::DoubleMap<Runtime>;
 
 			assert_eq!(Value::get(), (0, 0));
 			assert_eq!(NumberMap::get(0), 0);

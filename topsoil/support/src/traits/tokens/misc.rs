@@ -217,7 +217,7 @@ impl WithdrawReasons {
 	/// Choose all variants except for `one`.
 	///
 	/// ```rust
-	/// # use frame_support::traits::WithdrawReasons;
+	/// # use topsoil_support::traits::WithdrawReasons;
 	/// # fn main() {
 	/// assert_eq!(
 	/// 	WithdrawReasons::FEE | WithdrawReasons::TRANSFER | WithdrawReasons::RESERVE | WithdrawReasons::TIP,

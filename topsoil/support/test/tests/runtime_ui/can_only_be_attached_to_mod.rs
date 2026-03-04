@@ -15,7 +15,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#[frame_support::runtime]
+#[topsoil_support::runtime]
 fn construct_runtime() {}
 
 fn main() {}

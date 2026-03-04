@@ -18,7 +18,7 @@
 //! Tests regarding the functionality of the `fungible` trait set implementations.
 
 use super::*;
-use frame_support::traits::{
+use topsoil_support::traits::{
 	tokens::{
 		Fortitude::{Force, Polite},
 		Precision::{BestEffort, Exact},

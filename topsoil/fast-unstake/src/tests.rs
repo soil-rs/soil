@@ -15,11 +15,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//! Tests for pallet-fast-unstake.
+//! Tests for topsoil-fast-unstake.
 
 use super::*;
 use crate::{mock::*, types::*, Event};
-use frame_support::{
+use topsoil_support::{
 	pallet_prelude::*,
 	testing_prelude::*,
 	traits::{
@@ -28,7 +28,7 @@ use frame_support::{
 		Currency,
 	},
 };
-use pallet_staking::{CurrentEra, RewardDestination};
+use topsoil_staking::{CurrentEra, RewardDestination};
 
 use soil_runtime::traits::BadOrigin;
 use soil_staking::StakingInterface;
@@ -53,7 +53,7 @@ fn register_works() {
 
 #[test]
 fn register_insufficient_funds_fails() {
-	use pallet_balances::Error as BalancesError;
+	use topsoil_balances::Error as BalancesError;
 	ExtBuilder::default().build_and_execute(|| {
 		ErasToCheckPerBlock::<T>::put(1);
 		<T as Config>::Currency::make_free_balance_be(&1, 3);
@@ -806,7 +806,7 @@ mod on_idle {
 			assert_ok!(FastUnstake::register_fast_unstake(RuntimeOrigin::signed(VALIDATOR_PREFIX)));
 
 			// but they indeed are exposed!
-			assert!(pallet_staking::EraInfo::<T>::get_paged_exposure(
+			assert!(topsoil_staking::EraInfo::<T>::get_paged_exposure(
 				BondingDuration::get() - 1,
 				&VALIDATOR_PREFIX,
 				0
@@ -1114,8 +1114,8 @@ mod batched {
 #[test]
 fn kusama_estimate() {
 	use crate::WeightInfo;
-	let block_time = frame_support::weights::Weight::from_parts(
-		frame_support::weights::constants::WEIGHT_REF_TIME_PER_SECOND * 2,
+	let block_time = topsoil_support::weights::Weight::from_parts(
+		topsoil_support::weights::constants::WEIGHT_REF_TIME_PER_SECOND * 2,
 		0,
 	)
 	.ref_time() as f32;
@@ -1126,8 +1126,8 @@ fn kusama_estimate() {
 #[test]
 fn polkadot_estimate() {
 	use crate::WeightInfo;
-	let block_time = frame_support::weights::Weight::from_parts(
-		frame_support::weights::constants::WEIGHT_REF_TIME_PER_SECOND * 2,
+	let block_time = topsoil_support::weights::Weight::from_parts(
+		topsoil_support::weights::constants::WEIGHT_REF_TIME_PER_SECOND * 2,
 		0,
 	)
 	.ref_time() as f32;

@@ -28,7 +28,7 @@ use quote::ToTokens;
 use std::collections::HashMap;
 use syn::{spanned::Spanned, Ident, Token};
 
-use frame_support_procedural_tools::syn_ext as ext;
+use topsoil_support_procedural_tools::syn_ext as ext;
 use runtime_types::RuntimeType;
 
 mod keyword {
@@ -274,7 +274,7 @@ fn runtime_parsing_works() {
 			pub struct Runtime;
 
 			#[runtime::pallet_index(0)]
-			pub type System = frame_system::Pallet<Runtime>;
+			pub type System = topsoil_system::Pallet<Runtime>;
 
 			#[runtime::pallet_index(1)]
 			pub type Pallet1 = pallet1<Instance1>;

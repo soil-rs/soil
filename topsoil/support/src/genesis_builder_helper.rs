@@ -22,7 +22,7 @@
 extern crate alloc;
 
 use alloc::{format, vec::Vec};
-use frame_support::traits::BuildGenesisConfig;
+use topsoil_support::traits::BuildGenesisConfig;
 use soil_genesis_builder::{PresetId, Result as BuildResult};
 
 /// Build `GenesisConfig` from a JSON blob not using any defaults and store it in the storage. For

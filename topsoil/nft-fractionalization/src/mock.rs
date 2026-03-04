@@ -18,10 +18,10 @@
 //! Test environment for Nft fractionalization pallet.
 
 use super::*;
-use crate as pallet_nft_fractionalization;
+use crate as topsoil_nft_fractionalization;
 
-use frame::{deps::soil_runtime::MultiSignature, testing_prelude::*, traits::Verify};
-use pallet_nfts::PalletFeatures;
+use topsoil::{deps::soil_runtime::MultiSignature, testing_prelude::*, traits::Verify};
+use topsoil_nfts::PalletFeatures;
 
 type Block = MockBlock<Test>;
 type Signature = MultiSignature;
@@ -32,28 +32,28 @@ type AccountId = <AccountPublic as IdentifyAccount>::AccountId;
 construct_runtime!(
 	pub enum Test
 	{
-		System: frame_system,
-		NftFractionalization: pallet_nft_fractionalization,
-		Assets: pallet_assets,
-		Balances: pallet_balances,
-		Nfts: pallet_nfts,
+		System: topsoil_system,
+		NftFractionalization: topsoil_nft_fractionalization,
+		Assets: topsoil_assets,
+		Balances: topsoil_balances,
+		Nfts: topsoil_nfts,
 	}
 );
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
 	type AccountId = AccountId;
 	type Lookup = IdentityLookup<Self::AccountId>;
 	type Block = Block;
-	type AccountData = pallet_balances::AccountData<u64>;
+	type AccountData = topsoil_balances::AccountData<u64>;
 }
 
-#[derive_impl(pallet_balances::config_preludes::TestDefaultConfig)]
-impl pallet_balances::Config for Test {
+#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
+impl topsoil_balances::Config for Test {
 	type AccountStore = System;
 }
 
-impl pallet_assets::Config for Test {
+impl topsoil_assets::Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type Balance = u64;
 	type RemoveItemsLimit = ConstU32<1000>;
@@ -62,7 +62,7 @@ impl pallet_assets::Config for Test {
 	type ReserveData = ();
 	type Currency = Balances;
 	type CreateOrigin = AsEnsureOriginWithArg<EnsureSigned<Self::AccountId>>;
-	type ForceOrigin = frame_system::EnsureRoot<Self::AccountId>;
+	type ForceOrigin = topsoil_system::EnsureRoot<Self::AccountId>;
 	type AssetDeposit = ConstU64<1>;
 	type AssetAccountDeposit = ConstU64<10>;
 	type MetadataDepositBase = ConstU64<1>;
@@ -74,7 +74,7 @@ impl pallet_assets::Config for Test {
 	type Extra = ();
 	type CallbackHandle = ();
 	type WeightInfo = ();
-	pallet_assets::runtime_benchmarks_enabled! {
+	topsoil_assets::runtime_benchmarks_enabled! {
 		type BenchmarkHelper = ();
 	}
 }
@@ -83,13 +83,13 @@ parameter_types! {
 	pub storage Features: PalletFeatures = PalletFeatures::all_enabled();
 }
 
-impl pallet_nfts::Config for Test {
+impl topsoil_nfts::Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type CollectionId = u32;
 	type ItemId = u32;
 	type Currency = Balances;
-	type CreateOrigin = AsEnsureOriginWithArg<frame_system::EnsureSigned<Self::AccountId>>;
-	type ForceOrigin = frame_system::EnsureRoot<Self::AccountId>;
+	type CreateOrigin = AsEnsureOriginWithArg<topsoil_system::EnsureSigned<Self::AccountId>>;
+	type ForceOrigin = topsoil_system::EnsureRoot<Self::AccountId>;
 	type Locker = ();
 	type CollectionDeposit = ConstU64<2>;
 	type ItemDeposit = ConstU64<1>;
@@ -108,8 +108,8 @@ impl pallet_nfts::Config for Test {
 	type OffchainSignature = Signature;
 	type OffchainPublic = AccountPublic;
 	type WeightInfo = ();
-	type BlockNumberProvider = frame_system::Pallet<Test>;
-	pallet_nfts::runtime_benchmarks_enabled! {
+	type BlockNumberProvider = topsoil_system::Pallet<Test>;
+	topsoil_nfts::runtime_benchmarks_enabled! {
 		type Helper = ();
 	}
 }
@@ -127,10 +127,10 @@ impl Config for Test {
 	type Currency = Balances;
 	type NewAssetSymbol = NewAssetSymbol;
 	type NewAssetName = NewAssetName;
-	type NftCollectionId = <Self as pallet_nfts::Config>::CollectionId;
-	type NftId = <Self as pallet_nfts::Config>::ItemId;
-	type AssetBalance = <Self as pallet_balances::Config>::Balance;
-	type AssetId = <Self as pallet_assets::Config>::AssetId;
+	type NftCollectionId = <Self as topsoil_nfts::Config>::CollectionId;
+	type NftId = <Self as topsoil_nfts::Config>::ItemId;
+	type AssetBalance = <Self as topsoil_balances::Config>::Balance;
+	type AssetId = <Self as topsoil_assets::Config>::AssetId;
 	type Assets = Assets;
 	type Nfts = Nfts;
 	type PalletId = NftFractionalizationPalletId;
@@ -143,7 +143,7 @@ impl Config for Test {
 
 // Build genesis storage according to the mock runtime.
 pub(crate) fn new_test_ext() -> TestExternalities {
-	let t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 
 	let mut ext = TestExternalities::new(t);
 	ext.execute_with(|| System::set_block_number(1));

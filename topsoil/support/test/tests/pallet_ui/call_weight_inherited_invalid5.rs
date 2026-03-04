@@ -17,12 +17,12 @@
 
 // Stray tokens after good input.
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 mod parentheses {
 	use super::*;
 	
 	#[pallet::config]
-	pub trait Config: frame_system::Config {
+	pub trait Config: topsoil_system::Config {
 	}
 
 	#[pallet::pallet]
@@ -37,12 +37,12 @@ mod parentheses {
 	}
 }
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 mod assign {
 	use super::*;
 	
 	#[pallet::config]
-	pub trait Config: frame_system::Config {
+	pub trait Config: topsoil_system::Config {
 	}
 
 	#[pallet::pallet]

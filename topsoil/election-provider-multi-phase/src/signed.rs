@@ -30,11 +30,11 @@ use alloc::{
 };
 use codec::{Decode, Encode, HasCompact};
 use core::cmp::Ordering;
-use frame_election_provider_support::NposSolution;
-use frame_support::traits::{
+use topsoil_election_provider_support::NposSolution;
+use topsoil_support::traits::{
 	defensive_prelude::*, Currency, Get, OnUnbalanced, ReservableCurrency,
 };
-use frame_system::pallet_prelude::BlockNumberFor;
+use topsoil_system::pallet_prelude::BlockNumberFor;
 use soil_arithmetic::traits::SaturatedConversion;
 use soil_core::bounded::BoundedVec;
 use soil_npos_elections::ElectionScore;
@@ -88,15 +88,15 @@ where
 }
 
 pub type BalanceOf<T> =
-	<<T as Config>::Currency as Currency<<T as frame_system::Config>::AccountId>>::Balance;
+	<<T as Config>::Currency as Currency<<T as topsoil_system::Config>::AccountId>>::Balance;
 pub type PositiveImbalanceOf<T> = <<T as Config>::Currency as Currency<
-	<T as frame_system::Config>::AccountId,
+	<T as topsoil_system::Config>::AccountId,
 >>::PositiveImbalance;
 pub type NegativeImbalanceOf<T> = <<T as Config>::Currency as Currency<
-	<T as frame_system::Config>::AccountId,
+	<T as topsoil_system::Config>::AccountId,
 >>::NegativeImbalance;
 pub type SignedSubmissionOf<T> = SignedSubmission<
-	<T as frame_system::Config>::AccountId,
+	<T as topsoil_system::Config>::AccountId,
 	BalanceOf<T>,
 	<<T as crate::Config>::MinerConfig as MinerConfig>::Solution,
 >;
@@ -121,7 +121,7 @@ pub enum InsertResult<T: Config> {
 /// Mask type which pretends to be a set of `SignedSubmissionOf<T>`, while in fact delegating to the
 /// actual implementations in `SignedSubmissionIndices<T>`, `SignedSubmissionsMap<T>`, and
 /// `SignedSubmissionNextIndex<T>`.
-#[cfg_attr(feature = "std", derive(frame_support::DebugNoBound))]
+#[cfg_attr(feature = "std", derive(topsoil_support::DebugNoBound))]
 pub struct SignedSubmissions<T: Config> {
 	indices: SubmissionIndicesOf<T>,
 	next_idx: u32,
@@ -301,7 +301,7 @@ impl<T: Config> SignedSubmissions<T> {
 	pub fn insert(&mut self, submission: SignedSubmissionOf<T>) -> InsertResult<T> {
 		// verify the expectation that we never reuse an index
 		debug_assert!(!self.indices.iter().map(|(_, _, x)| x).any(|&idx| idx == self.next_idx));
-		let block_number = frame_system::Pallet::<T>::block_number();
+		let block_number = topsoil_system::Pallet::<T>::block_number();
 
 		let maybe_weakest = match self.indices.try_push((
 			submission.raw_solution.score,
@@ -568,8 +568,8 @@ mod tests {
 	use crate::{
 		mock::*, CurrentPhase, ElectionCompute, ElectionError, Error, Event, Perbill, Phase, Round,
 	};
-	use frame_election_provider_support::bounds::ElectionBoundsBuilder;
-	use frame_support::{assert_noop, assert_ok, assert_storage_noop};
+	use topsoil_election_provider_support::bounds::ElectionBoundsBuilder;
+	use topsoil_support::{assert_noop, assert_ok, assert_storage_noop};
 	use soil_runtime::Percent;
 
 	#[test]

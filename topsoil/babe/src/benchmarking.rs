@@ -20,7 +20,7 @@
 #![cfg(feature = "runtime-benchmarks")]
 
 use super::*;
-use frame_benchmarking::v2::*;
+use topsoil_benchmarking::v2::*;
 
 type Header = soil_runtime::generic::Header<u64, soil_runtime::traits::BlakeTwo256>;
 

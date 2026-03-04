@@ -19,15 +19,15 @@
 
 use super::*;
 use crate::Pallet as AssetRewards;
-use frame_benchmarking::{v2::*, whitelisted_caller, BenchmarkError};
-use frame_support::{
+use topsoil_benchmarking::{v2::*, whitelisted_caller, BenchmarkError};
+use topsoil_support::{
 	assert_ok,
 	traits::{
 		fungibles::{Create, Inspect, Mutate},
 		Consideration, EnsureOrigin, Footprint,
 	},
 };
-use frame_system::{Pallet as System, RawOrigin};
+use topsoil_system::{Pallet as System, RawOrigin};
 use soil_runtime::{traits::One, Saturating};
 use soil_std::prelude::*;
 

@@ -37,7 +37,7 @@
 // --extrinsic
 // *
 // --runtime
-// ../../../../../target/release/wbuild/pallet-staking-async-parachain-runtime/pallet_staking_async_parachain_runtime.compact.wasm
+// ../../../../../target/release/wbuild/topsoil-staking-async-parachain-runtime/pallet_staking_async_parachain_runtime.compact.wasm
 // --steps
 // 10
 // --repeat
@@ -57,12 +57,12 @@
 #![allow(missing_docs)]
 #![allow(dead_code)]
 
-use frame_support::{traits::Get, weights::{Weight, constants::RocksDbWeight}};
+use topsoil_support::{traits::Get, weights::{Weight, constants::RocksDbWeight}};
 use core::marker::PhantomData;
 
 /// Weights for `pallet_election_provider_multi_block_unsigned`.
 pub struct WeightInfo<T>(PhantomData<T>);
-impl<T: frame_system::Config> crate::weights::traits::pallet_election_provider_multi_block_unsigned::WeightInfo for WeightInfo<T> {
+impl<T: topsoil_system::Config> crate::weights::traits::pallet_election_provider_multi_block_unsigned::WeightInfo for WeightInfo<T> {
 	/// Storage: `MultiBlockElection::CurrentPhase` (r:1 w:0)
 	/// Proof: `MultiBlockElection::CurrentPhase` (`max_values`: Some(1), `max_size`: Some(5), added: 500, mode: `Measured`)
 	/// Storage: UNKNOWN KEY `0x33ed3d010c1fea25c2adbfba9297161f` (r:1 w:0)

@@ -15,14 +15,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#[frame_support::runtime]
+#[topsoil_support::runtime]
 mod runtime {
     #[runtime::runtime]
     #[runtime::derive(RuntimeCall)]
     pub struct Runtime;
 
     #[runtime::pallet_index("0")]
-    pub type System = frame_system;
+    pub type System = topsoil_system;
 }
 
 fn main() {}

@@ -20,24 +20,24 @@
 use super::*;
 
 use core::array;
-use frame_benchmarking::{v2::*, BenchmarkError};
-use frame_system::{Pallet as System, RawOrigin};
+use topsoil_benchmarking::{v2::*, BenchmarkError};
+use topsoil_system::{Pallet as System, RawOrigin};
 use soil_core::{twox_128, Get};
 use soil_io::{storage, KillStorageResult};
 use soil_runtime::traits::One;
 
 fn assert_has_event<T: Config>(generic_event: <T as Config>::RuntimeEvent) {
-	frame_system::Pallet::<T>::assert_has_event(generic_event.into());
+	topsoil_system::Pallet::<T>::assert_has_event(generic_event.into());
 }
 
 fn assert_last_event<T: Config>(generic_event: <T as Config>::RuntimeEvent) {
-	frame_system::Pallet::<T>::assert_last_event(generic_event.into());
+	topsoil_system::Pallet::<T>::assert_last_event(generic_event.into());
 }
 
 #[benchmarks]
 mod benches {
 	use super::*;
-	use frame_support::traits::Hooks;
+	use topsoil_support::traits::Hooks;
 
 	#[benchmark]
 	fn onboard_new_mbms() {
@@ -258,6 +258,6 @@ mod benches {
 	}
 
 	// Implements a test for each benchmark. Execute with:
-	// `cargo test -p pallet-migrations --features runtime-benchmarks`.
+	// `cargo test -p topsoil-migrations --features runtime-benchmarks`.
 	impl_benchmark_test_suite!(Pallet, crate::mock::new_test_ext(), crate::mock::Test);
 }

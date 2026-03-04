@@ -15,7 +15,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use frame_support::pallet_macros::pallet_section;
+use topsoil_support::pallet_macros::pallet_section;
 
 #[pallet_section]
 mod storage {

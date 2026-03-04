@@ -27,7 +27,7 @@
 //! The Offchain Worker Example: A simple pallet demonstrating
 //! concepts, APIs and structures common to most offchain workers.
 //!
-//! Run `cargo doc --package pallet-example-offchain-worker --open` to view this module's
+//! Run `cargo doc --package topsoil-example-offchain-worker --open` to view this module's
 //! documentation.
 //!
 //! - [`Config`]
@@ -56,8 +56,8 @@ extern crate alloc;
 
 use alloc::vec::Vec;
 use codec::{Decode, DecodeWithMemTracking, Encode};
-use frame_support::{traits::Get, weights::Weight};
-use frame_system::{
+use topsoil_support::{traits::Get, weights::Weight};
+use topsoil_system::{
 	self as system,
 	offchain::{
 		AppCrypto, CreateAuthorizedTransaction, CreateSignedTransaction, SendSignedTransaction,
@@ -108,14 +108,14 @@ pub mod crypto {
 
 	pub struct TestAuthId;
 
-	impl frame_system::offchain::AppCrypto<MultiSigner, MultiSignature> for TestAuthId {
+	impl topsoil_system::offchain::AppCrypto<MultiSigner, MultiSignature> for TestAuthId {
 		type RuntimeAppPublic = Public;
 		type GenericSignature = soil_core::sr25519::Signature;
 		type GenericPublic = soil_core::sr25519::Public;
 	}
 
 	// implemented for mock runtime in test
-	impl frame_system::offchain::AppCrypto<<Sr25519Signature as Verify>::Signer, Sr25519Signature>
+	impl topsoil_system::offchain::AppCrypto<<Sr25519Signature as Verify>::Signer, Sr25519Signature>
 		for TestAuthId
 	{
 		type RuntimeAppPublic = Public;
@@ -126,24 +126,24 @@ pub mod crypto {
 
 pub use pallet::*;
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
-	use frame_support::pallet_prelude::*;
-	use frame_system::pallet_prelude::*;
+	use topsoil_support::pallet_prelude::*;
+	use topsoil_system::pallet_prelude::*;
 
 	/// This pallet's configuration trait
 	///
 	/// # Requirements
 	///
-	/// This pallet requires `frame_system::AuthorizeCall` to be included in the runtime's
+	/// This pallet requires `topsoil_system::AuthorizeCall` to be included in the runtime's
 	/// transaction extension pipeline.
 	/// The integrity test will verify this at runtime.
 	#[pallet::config]
 	pub trait Config:
 		CreateSignedTransaction<Call<Self>>
 		+ CreateAuthorizedTransaction<Call<Self>>
-		+ frame_system::Config
+		+ topsoil_system::Config
 	{
 		/// The identifier type for an offchain worker.
 		type AuthorityId: AppCrypto<Self::Public, Self::Signature>;
@@ -186,7 +186,7 @@ pub mod pallet {
 		///
 		/// This pallet uses the `#[pallet::authorize]` attribute on calls that require
 		/// authorization validation. For these calls to work properly, the runtime must
-		/// include `frame_system::AuthorizeCall` as part of its transaction extension pipeline.
+		/// include `topsoil_system::AuthorizeCall` as part of its transaction extension pipeline.
 		///
 		/// This test validates that the Block type's Extrinsic includes the necessary
 		/// transaction extension structure by checking the type name.
@@ -195,13 +195,13 @@ pub mod pallet {
 
 			// Get the full type name of the Block's Extrinsic type
 			let extrinsic_type_name = core::any::type_name::<<T::Block as BlockT>::Extrinsic>();
-			let extension_type_name = core::any::type_name::<frame_system::AuthorizeCall<T>>();
+			let extension_type_name = core::any::type_name::<topsoil_system::AuthorizeCall<T>>();
 
 			// Verify that AuthorizeCall is present in the extrinsic type
 			// The extrinsic should contain the AuthorizeCall extension in its structure
 			assert!(
 				extrinsic_type_name.contains(extension_type_name),
-				"The runtime must include `frame_system::AuthorizeCall` in its transaction extension \
+				"The runtime must include `topsoil_system::AuthorizeCall` in its transaction extension \
 				pipeline for this pallet to work correctly. The pallet uses `#[pallet::authorize]` \
 				which requires AuthorizeCall to validate authorized transactions. \
 				Current extrinsic type: {}",
@@ -228,7 +228,7 @@ pub mod pallet {
 			// Since off-chain workers are just part of the runtime code, they have direct access
 			// to the storage and other included pallets.
 			//
-			// We can easily import `frame_system` and retrieve a block hash of the parent block.
+			// We can easily import `topsoil_system` and retrieve a block hash of the parent block.
 			let parent_hash = <system::Pallet<T>>::block_hash(block_number - 1u32.into());
 			log::debug!("Current block: {:?} (parent hash: {:?})", block_number, parent_hash);
 
@@ -544,7 +544,7 @@ impl<T: Config> Pallet<T> {
 		// By default general transactions start the transaction extension pipeline with the origin
 		// `None`. We define custom validation logic using the `#[pallet::authorize]` attribute.
 		// This custom validation is executed by the transaction extension `AuthorizeCall`, which
-		// will change the origin to `frame_system::Origin::Authorized` if validation succeeds.
+		// will change the origin to `topsoil_system::Origin::Authorized` if validation succeeds.
 		// Note that it's EXTREMELY important to carefully implement custom validation logic, as
 		// any mistakes can lead to opening DoS or spam attack vectors. See validation logic docs
 		// for more details.

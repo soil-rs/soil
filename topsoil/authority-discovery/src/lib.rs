@@ -26,7 +26,7 @@
 extern crate alloc;
 
 use alloc::vec::Vec;
-use frame_support::{
+use topsoil_support::{
 	traits::{Get, OneSessionHandler},
 	WeakBoundedVec,
 };
@@ -34,18 +34,18 @@ use soil_authority_discovery::AuthorityId;
 
 pub use pallet::*;
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
-	use frame_support::pallet_prelude::*;
-	use frame_system::pallet_prelude::BlockNumberFor;
+	use topsoil_support::pallet_prelude::*;
+	use topsoil_system::pallet_prelude::BlockNumberFor;
 
 	#[pallet::pallet]
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
 	/// The pallet's config trait.
-	pub trait Config: frame_system::Config + pallet_session::Config {
+	pub trait Config: topsoil_system::Config + topsoil_session::Config {
 		/// The maximum number of authorities that can be added.
 		type MaxAuthorities: Get<u32>;
 	}
@@ -60,7 +60,7 @@ pub mod pallet {
 	pub type NextKeys<T: Config> =
 		StorageValue<_, WeakBoundedVec<AuthorityId, T::MaxAuthorities>, ValueQuery>;
 
-	#[derive(frame_support::DefaultNoBound)]
+	#[derive(topsoil_support::DefaultNoBound)]
 	#[pallet::genesis_config]
 	pub struct GenesisConfig<T: Config> {
 		pub keys: Vec<AuthorityId>,
@@ -186,7 +186,7 @@ impl<T: Config> Pallet<T> {
 	/// * `Keys` should not contain duplicates.
 	/// * `NextKeys` should not contain duplicates.
 	pub fn do_try_state() -> Result<(), soil_runtime::TryRuntimeError> {
-		use frame_support::ensure;
+		use topsoil_support::ensure;
 		let keys = Keys::<T>::get();
 		ensure!(keys.len() as u32 <= T::MaxAuthorities::get(), "Keys exceeds MaxAuthorities");
 		let mut sorted_keys = keys.to_vec();
@@ -212,9 +212,9 @@ impl<T: Config> Pallet<T> {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use crate as pallet_authority_discovery;
+	use crate as topsoil_authority_discovery;
 	use alloc::vec;
-	use frame_support::{derive_impl, parameter_types, traits::ConstU32};
+	use topsoil_support::{derive_impl, parameter_types, traits::ConstU32};
 	use soil_application_crypto::Pair;
 	use soil_authority_discovery::AuthorityPair;
 	use soil_core::crypto::key_types;
@@ -225,15 +225,15 @@ mod tests {
 		BuildStorage, KeyTypeId, Perbill,
 	};
 
-	type Block = frame_system::mocking::MockBlock<Test>;
+	type Block = topsoil_system::mocking::MockBlock<Test>;
 
-	frame_support::construct_runtime!(
+	topsoil_support::construct_runtime!(
 		pub enum Test
 		{
-			System: frame_system,
-			Session: pallet_session,
-			Balances: pallet_balances,
-			AuthorityDiscovery: pallet_authority_discovery,
+			System: topsoil_system,
+			Session: topsoil_session,
+			Balances: topsoil_balances,
+			AuthorityDiscovery: topsoil_authority_discovery,
 		}
 	);
 
@@ -245,15 +245,15 @@ mod tests {
 		type MaxAuthorities = ConstU32<100>;
 	}
 
-	impl pallet_session::Config for Test {
+	impl topsoil_session::Config for Test {
 		type SessionManager = ();
 		type Keys = UintAuthorityId;
-		type ShouldEndSession = pallet_session::PeriodicSessions<Period, Offset>;
+		type ShouldEndSession = topsoil_session::PeriodicSessions<Period, Offset>;
 		type SessionHandler = TestSessionHandler;
 		type RuntimeEvent = RuntimeEvent;
 		type ValidatorId = AuthorityId;
 		type ValidatorIdOf = ConvertInto;
-		type NextSessionRotation = pallet_session::PeriodicSessions<Period, Offset>;
+		type NextSessionRotation = topsoil_session::PeriodicSessions<Period, Offset>;
 		type DisablingStrategy = ();
 		type WeightInfo = ();
 		type Currency = Balances;
@@ -267,21 +267,21 @@ mod tests {
 		pub const Offset: BlockNumber = 0;
 	}
 
-	#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-	impl frame_system::Config for Test {
+	#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+	impl topsoil_system::Config for Test {
 		type AccountId = AuthorityId;
 		type Lookup = IdentityLookup<Self::AccountId>;
 		type Block = Block;
-		type AccountData = pallet_balances::AccountData<u64>;
+		type AccountData = topsoil_balances::AccountData<u64>;
 	}
 
-	#[derive_impl(pallet_balances::config_preludes::TestDefaultConfig)]
-	impl pallet_balances::Config for Test {
+	#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
+	impl topsoil_balances::Config for Test {
 		type AccountStore = System;
 	}
 
 	pub struct TestSessionHandler;
-	impl pallet_session::SessionHandler<AuthorityId> for TestSessionHandler {
+	impl topsoil_session::SessionHandler<AuthorityId> for TestSessionHandler {
 		const KEY_TYPE_IDS: &'static [KeyTypeId] = &[key_types::DUMMY];
 
 		fn on_new_session<Ks: OpaqueKeys>(
@@ -299,7 +299,7 @@ mod tests {
 	#[test]
 	fn authorities_returns_current_and_next_authority_set() {
 		// The whole authority discovery pallet ignores account ids, but we still need them for
-		// `pallet_session::OneSessionHandler::on_new_session`, thus its safe to use the same value
+		// `topsoil_session::OneSessionHandler::on_new_session`, thus its safe to use the same value
 		// everywhere.
 		let account_id = AuthorityPair::from_seed_slice(vec![10; 32].as_ref()).unwrap().public();
 
@@ -314,7 +314,7 @@ mod tests {
 			.map(|i| AuthorityPair::from_seed_slice(vec![i; 32].as_ref()).unwrap().public())
 			.map(AuthorityId::from)
 			.collect();
-		// Needed for `pallet_session::OneSessionHandler::on_new_session`.
+		// Needed for `topsoil_session::OneSessionHandler::on_new_session`.
 		let second_authorities_and_account_ids = second_authorities
 			.clone()
 			.into_iter()
@@ -326,7 +326,7 @@ mod tests {
 			.map(|i| AuthorityPair::from_seed_slice(vec![i; 32].as_ref()).unwrap().public())
 			.map(AuthorityId::from)
 			.collect();
-		// Needed for `pallet_session::OneSessionHandler::on_new_session`.
+		// Needed for `topsoil_session::OneSessionHandler::on_new_session`.
 		let third_authorities_and_account_ids = third_authorities
 			.clone()
 			.into_iter()
@@ -338,7 +338,7 @@ mod tests {
 			.map(|i| AuthorityPair::from_seed_slice(vec![i; 32].as_ref()).unwrap().public())
 			.map(AuthorityId::from)
 			.collect();
-		// Needed for `pallet_session::OneSessionHandler::on_new_session`.
+		// Needed for `topsoil_session::OneSessionHandler::on_new_session`.
 		let fourth_authorities_and_account_ids = fourth_authorities
 			.clone()
 			.into_iter()
@@ -346,9 +346,9 @@ mod tests {
 			.collect::<Vec<(&AuthorityId, AuthorityId)>>();
 
 		// Build genesis.
-		let mut t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+		let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 
-		pallet_authority_discovery::GenesisConfig::<Test> { keys: vec![], ..Default::default() }
+		topsoil_authority_discovery::GenesisConfig::<Test> { keys: vec![], ..Default::default() }
 			.assimilate_storage(&mut t)
 			.unwrap();
 
@@ -356,7 +356,7 @@ mod tests {
 		let mut externalities = TestExternalities::new(t);
 
 		externalities.execute_with(|| {
-			use frame_support::traits::OneSessionHandler;
+			use topsoil_support::traits::OneSessionHandler;
 
 			AuthorityDiscovery::on_genesis_session(
 				first_authorities.iter().map(|id| (id, id.clone())),

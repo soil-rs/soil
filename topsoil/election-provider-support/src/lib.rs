@@ -85,9 +85,9 @@
 //! ## Example
 //!
 //! ```rust
-//! # use frame_election_provider_support::{*, data_provider};
+//! # use topsoil_election_provider_support::{*, data_provider};
 //! # use soil_npos_elections::{Support, Assignment};
-//! # use frame_support::traits::ConstU32;
+//! # use topsoil_support::traits::ConstU32;
 //! # use soil_runtime::bounded_vec;
 //!
 //! type AccountId = u64;
@@ -133,7 +133,7 @@
 //! mod generic_election_provider {
 //!     use super::*;
 //!     use soil_runtime::traits::Zero;
-//! 	use frame_support::pallet_prelude::Weight;
+//! 	use topsoil_support::pallet_prelude::Weight;
 //!
 //!     pub struct GenericElectionProvider<T: Config>(std::marker::PhantomData<T>);
 //!
@@ -154,9 +154,9 @@
 //!         type Pages = T::Pages;
 //!         type DataProvider = T::DataProvider;
 //!
-//! 		fn duration() -> <Self as frame_election_provider_support::ElectionProvider>::BlockNumber { todo!() }
+//! 		fn duration() -> <Self as topsoil_election_provider_support::ElectionProvider>::BlockNumber { todo!() }
 //!
-//! 		fn start() -> Result<(), <Self as frame_election_provider_support::ElectionProvider>::Error> { todo!() }
+//! 		fn start() -> Result<(), <Self as topsoil_election_provider_support::ElectionProvider>::Error> { todo!() }
 //!
 //!         fn elect(page: PageIndex) -> Result<BoundedSupportsOf<Self>, Self::Error> {
 //!             unimplemented!()
@@ -169,7 +169,7 @@
 //! }
 //!
 //! mod runtime {
-//!     use frame_support::parameter_types;
+//!     use topsoil_support::parameter_types;
 //!     use super::generic_election_provider;
 //!     use super::data_provider_mod;
 //!     use super::AccountId;
@@ -207,15 +207,15 @@ extern crate alloc;
 
 use alloc::{boxed::Box, vec::Vec};
 use core::fmt::Debug;
-use frame_support::traits::{Defensive, DefensiveResult};
+use topsoil_support::traits::{Defensive, DefensiveResult};
 use soil_core::ConstU32;
 use soil_runtime::traits::{Bounded, Saturating, Zero};
 
 pub use bounds::DataProviderBounds;
 pub use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 /// Re-export the solution generation macro.
-pub use frame_election_provider_solution_type::generate_solution_type;
-pub use frame_support::{traits::Get, weights::Weight, BoundedVec, DefaultNoBound};
+pub use topsoil_election_provider_solution_type::generate_solution_type;
+pub use topsoil_support::{traits::Get, weights::Weight, BoundedVec, DefaultNoBound};
 use scale_info::TypeInfo;
 /// Re-export some type as they are used in the interface.
 pub use soil_arithmetic::PerThing;

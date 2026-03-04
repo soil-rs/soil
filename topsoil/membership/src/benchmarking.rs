@@ -18,9 +18,9 @@
 //! Membership pallet benchmarking.
 
 use super::{Pallet as Membership, *};
-use frame_benchmarking::v1::{account, benchmarks_instance_pallet, whitelist, BenchmarkError};
-use frame_support::{assert_ok, traits::EnsureOrigin};
-use frame_system::RawOrigin;
+use topsoil_benchmarking::v1::{account, benchmarks_instance_pallet, whitelist, BenchmarkError};
+use topsoil_support::{assert_ok, traits::EnsureOrigin};
+use topsoil_system::RawOrigin;
 
 const SEED: u32 = 0;
 

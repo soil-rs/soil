@@ -18,14 +18,14 @@
 //! Two phase election pallet benchmarking.
 
 use core::cmp::Reverse;
-use frame_benchmarking::{v2::*, BenchmarkError};
-use frame_election_provider_support::{bounds::DataProviderBounds, IndexAssignment};
-use frame_support::{
+use topsoil_benchmarking::{v2::*, BenchmarkError};
+use topsoil_election_provider_support::{bounds::DataProviderBounds, IndexAssignment};
+use topsoil_support::{
 	assert_ok,
 	traits::{Hooks, TryCollect},
 	BoundedVec,
 };
-use frame_system::RawOrigin;
+use topsoil_system::RawOrigin;
 use rand::{prelude::SliceRandom, rngs::SmallRng, SeedableRng};
 use soil_arithmetic::{per_things::Percent, traits::One};
 use soil_runtime::InnerOf;
@@ -58,7 +58,7 @@ fn solution_with_size<T: Config>(
 
 	// first generates random targets.
 	let targets: Vec<T::AccountId> = (0..size.targets)
-		.map(|i| frame_benchmarking::account("Targets", i, SEED))
+		.map(|i| topsoil_benchmarking::account("Targets", i, SEED))
 		.collect();
 
 	let mut rng = SmallRng::seed_from_u64(SEED.into());
@@ -80,7 +80,7 @@ fn solution_with_size<T: Config>(
 				.cloned()
 				.try_collect()
 				.expect("<SolutionOf<T::MinerConfig>>::LIMIT is the correct bound; qed.");
-			let voter = frame_benchmarking::account::<T::AccountId>("Voter", i, SEED);
+			let voter = topsoil_benchmarking::account::<T::AccountId>("Voter", i, SEED);
 			(voter, stake, winner_votes)
 		})
 		.collect::<Vec<_>>();
@@ -98,7 +98,7 @@ fn solution_with_size<T: Config>(
 				.cloned()
 				.try_collect()
 				.expect("<SolutionOf<T::MinerConfig>>::LIMIT is the correct bound; qed.");
-			let voter = frame_benchmarking::account::<T::AccountId>("Voter", i, SEED);
+			let voter = topsoil_benchmarking::account::<T::AccountId>("Voter", i, SEED);
 			(voter, stake, votes)
 		})
 		.collect::<Vec<_>>();
@@ -170,7 +170,7 @@ fn set_up_data_provider<T: Config>(v: u32, t: u32) {
 	// fill targets.
 	let mut targets = (0..t)
 		.map(|i| {
-			let target = frame_benchmarking::account::<T::AccountId>("Target", i, SEED);
+			let target = topsoil_benchmarking::account::<T::AccountId>("Target", i, SEED);
 
 			T::DataProvider::add_target(target.clone());
 			target
@@ -185,7 +185,7 @@ fn set_up_data_provider<T: Config>(v: u32, t: u32) {
 
 	// fill voters.
 	(0..v).for_each(|i| {
-		let voter = frame_benchmarking::account::<T::AccountId>("Voter", i, SEED);
+		let voter = topsoil_benchmarking::account::<T::AccountId>("Voter", i, SEED);
 		let weight = T::Currency::minimum_balance().saturated_into::<u64>() * 1000;
 		T::DataProvider::add_voter(voter, weight, targets.clone().try_into().unwrap());
 	});
@@ -228,7 +228,7 @@ mod benchmarks {
 
 		#[block]
 		{
-			let now = frame_system::Pallet::<T>::block_number();
+			let now = topsoil_system::Pallet::<T>::block_number();
 			Pallet::<T>::phase_transition(Phase::Unsigned((true, now)));
 		}
 
@@ -355,7 +355,7 @@ mod benchmarks {
 		assert!(SnapshotMetadata::<T>::get().is_none());
 		assert_eq!(
 			CurrentPhase::<T>::get(),
-			<Phase<frame_system::pallet_prelude::BlockNumberFor::<T>>>::Off
+			<Phase<topsoil_system::pallet_prelude::BlockNumberFor::<T>>>::Off
 		);
 
 		Ok(())
@@ -395,7 +395,7 @@ mod benchmarks {
 			..Default::default()
 		};
 
-		let caller = frame_benchmarking::whitelisted_caller();
+		let caller = topsoil_benchmarking::whitelisted_caller();
 		let deposit =
 			Pallet::<T>::deposit_for(&solution, SnapshotMetadata::<T>::get().unwrap_or_default());
 		T::Currency::make_free_balance_be(
@@ -500,7 +500,7 @@ mod benchmarks {
 		let t = T::BenchmarkingConfig::MAXIMUM_TARGETS;
 
 		set_up_data_provider::<T>(v, t);
-		let now = frame_system::Pallet::<T>::block_number();
+		let now = topsoil_system::Pallet::<T>::block_number();
 		CurrentPhase::<T>::put(Phase::Unsigned((true, now)));
 		Pallet::<T>::create_snapshot().unwrap();
 

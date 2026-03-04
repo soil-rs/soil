@@ -17,13 +17,13 @@
 
 //! Test environment for NIS pallet.
 
-use frame::{runtime::prelude::*, testing_prelude::*, traits::StorageMapShim};
+use topsoil::{runtime::prelude::*, testing_prelude::*, traits::StorageMapShim};
 
-use crate::{self as pallet_nis, *};
+use crate::{self as topsoil_nis, *};
 
 pub type Balance = u64;
 
-type Block = frame_system::mocking::MockBlock<Test>;
+type Block = topsoil_system::mocking::MockBlock<Test>;
 
 // Configure a mock runtime to test the pallet.
 #[frame_construct_runtime]
@@ -41,22 +41,22 @@ mod runtime {
 	pub struct Test;
 
 	#[runtime::pallet_index(0)]
-	pub type System = frame_system;
+	pub type System = topsoil_system;
 	#[runtime::pallet_index(1)]
-	pub type Balances = pallet_balances<Instance1>;
+	pub type Balances = topsoil_balances<Instance1>;
 	#[runtime::pallet_index(2)]
-	pub type NisBalances = pallet_balances<Instance2>;
+	pub type NisBalances = topsoil_balances<Instance2>;
 	#[runtime::pallet_index(3)]
-	pub type Nis = pallet_nis;
+	pub type Nis = topsoil_nis;
 }
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
 	type Block = Block;
-	type AccountData = pallet_balances::AccountData<Balance>;
+	type AccountData = topsoil_balances::AccountData<Balance>;
 }
 
-impl pallet_balances::Config<pallet_balances::Instance1> for Test {
+impl topsoil_balances::Config<topsoil_balances::Instance1> for Test {
 	type Balance = Balance;
 	type DustRemoval = ();
 	type RuntimeEvent = RuntimeEvent;
@@ -73,15 +73,15 @@ impl pallet_balances::Config<pallet_balances::Instance1> for Test {
 	type DoneSlashHandler = ();
 }
 
-impl pallet_balances::Config<pallet_balances::Instance2> for Test {
+impl topsoil_balances::Config<topsoil_balances::Instance2> for Test {
 	type Balance = u128;
 	type DustRemoval = ();
 	type RuntimeEvent = RuntimeEvent;
 	type ExistentialDeposit = ConstU128<1>;
 	type AccountStore = StorageMapShim<
-		pallet_balances::Account<Test, pallet_balances::Instance2>,
+		topsoil_balances::Account<Test, topsoil_balances::Instance2>,
 		u64,
-		pallet_balances::AccountData<u128>,
+		topsoil_balances::AccountData<u128>,
 	>;
 	type WeightInfo = ();
 	type MaxLocks = ();
@@ -107,13 +107,13 @@ ord_parameter_types! {
 	pub const One: u64 = 1;
 }
 
-impl pallet_nis::Config for Test {
+impl topsoil_nis::Config for Test {
 	type WeightInfo = ();
 	type RuntimeEvent = RuntimeEvent;
 	type PalletId = NisPalletId;
 	type Currency = Balances;
-	type CurrencyBalance = <Self as pallet_balances::Config<pallet_balances::Instance1>>::Balance;
-	type FundOrigin = frame_system::EnsureSigned<Self::AccountId>;
+	type CurrencyBalance = <Self as topsoil_balances::Config<topsoil_balances::Instance1>>::Balance;
+	type FundOrigin = topsoil_system::EnsureSigned<Self::AccountId>;
 	type Deficit = ();
 	type IgnoredIssuance = IgnoredIssuance;
 	type Counterpart = NisBalances;
@@ -136,8 +136,8 @@ impl pallet_nis::Config for Test {
 // This function basically just builds a genesis storage key/value store according to
 // our desired mockup.
 pub fn new_test_ext() -> soil_io::TestExternalities {
-	let mut t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
-	pallet_balances::GenesisConfig::<Test, pallet_balances::Instance1> {
+	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	topsoil_balances::GenesisConfig::<Test, topsoil_balances::Instance1> {
 		balances: vec![(1, 100), (2, 100), (3, 100), (4, 100)],
 		..Default::default()
 	}
@@ -150,5 +150,5 @@ pub fn new_test_ext() -> soil_io::TestExternalities {
 // our desired mockup, but without any balances.
 #[cfg(feature = "runtime-benchmarks")]
 pub fn new_test_ext_empty() -> soil_io::TestExternalities {
-	frame_system::GenesisConfig::<Test>::default().build_storage().unwrap().into()
+	topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap().into()
 }

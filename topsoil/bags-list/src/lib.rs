@@ -36,7 +36,7 @@
 //! including its configuration trait, dispatchables, storage items, events and errors.
 //!
 //! This pallet provides an implementation of
-//! [`frame_election_provider_support::SortedListProvider`] and it can typically be used by another
+//! [`topsoil_election_provider_support::SortedListProvider`] and it can typically be used by another
 //! pallet via this API.
 //!
 //! ## Overview
@@ -121,12 +121,12 @@ pub mod example {}
 
 use alloc::{boxed::Box, vec::Vec};
 use codec::FullCodec;
-use frame_election_provider_support::{ScoreProvider, SortedListProvider};
-use frame_support::{
+use topsoil_election_provider_support::{ScoreProvider, SortedListProvider};
+use topsoil_support::{
 	traits::Get,
 	weights::{Weight, WeightMeter},
 };
-use frame_system::ensure_signed;
+use topsoil_system::ensure_signed;
 use soil_runtime::traits::{AtLeast32BitUnsigned, Bounded, StaticLookup};
 
 #[cfg(any(test, feature = "try-runtime", feature = "fuzz"))]
@@ -156,30 +156,30 @@ macro_rules! log {
 		log::$level!(
 			target: crate::LOG_TARGET,
 			concat!("[{:?}] 👜 [{}]", $patter),
-			<frame_system::Pallet<T>>::block_number(),
-			<crate::Pallet::<T, I> as frame_support::traits::PalletInfoAccess>::name()
+			<topsoil_system::Pallet<T>>::block_number(),
+			<crate::Pallet::<T, I> as topsoil_support::traits::PalletInfoAccess>::name()
 			$(, $values)*
 		)
 	};
 }
 
-type AccountIdLookupOf<T> = <<T as frame_system::Config>::Lookup as StaticLookup>::Source;
+type AccountIdLookupOf<T> = <<T as topsoil_system::Config>::Lookup as StaticLookup>::Source;
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
-	use frame_support::pallet_prelude::*;
-	use frame_system::pallet_prelude::*;
+	use topsoil_support::pallet_prelude::*;
+	use topsoil_system::pallet_prelude::*;
 
 	#[pallet::pallet]
 	pub struct Pallet<T, I = ()>(_);
 
 	#[pallet::config]
-	pub trait Config<I: 'static = ()>: frame_system::Config {
+	pub trait Config<I: 'static = ()>: topsoil_system::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self, I>>
-			+ IsType<<Self as frame_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// Weight information for extrinsics in this pallet.
 		type WeightInfo: weights::WeightInfo;
@@ -668,7 +668,7 @@ impl<T: Config<I>, I: 'static> SortedListProvider<T::AccountId> for Pallet<T, I>
 	type Score = T::Score;
 
 	fn range() -> (Self::Score, Self::Score) {
-		use frame_support::traits::Get;
+		use topsoil_support::traits::Get;
 		(
 			T::BagThresholds::get().first().cloned().unwrap_or_default(),
 			T::BagThresholds::get().last().cloned().unwrap_or_default(),
@@ -752,9 +752,9 @@ impl<T: Config<I>, I: 'static> SortedListProvider<T::AccountId> for Pallet<T, I>
 		Self::do_try_state()
 	}
 
-	frame_election_provider_support::runtime_benchmarks_enabled! {
+	topsoil_election_provider_support::runtime_benchmarks_enabled! {
 		fn score_update_worst_case(who: &T::AccountId, is_increase: bool) -> Self::Score {
-			use frame_support::traits::Get as _;
+			use topsoil_support::traits::Get as _;
 			let thresholds = T::BagThresholds::get();
 			let node = list::Node::<T, I>::get(who).unwrap();
 			let current_bag_idx = thresholds
@@ -783,7 +783,7 @@ impl<T: Config<I>, I: 'static> ScoreProvider<T::AccountId> for Pallet<T, I> {
 		Node::<T, I>::get(id).map(|node| node.score())
 	}
 
-	frame_election_provider_support::runtime_benchmarks_or_std_enabled! {
+	topsoil_election_provider_support::runtime_benchmarks_or_std_enabled! {
 		fn set_score_of(id: &T::AccountId, new_score: T::Score) {
 			ListNodes::<T, I>::mutate(id, |maybe_node| {
 				if let Some(node) = maybe_node.as_mut() {

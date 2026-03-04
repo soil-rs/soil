@@ -19,7 +19,7 @@
 //! of the NFTs pallet.
 
 use crate::*;
-use frame_support::pallet_prelude::*;
+use topsoil_support::pallet_prelude::*;
 
 impl<T: Config<I>, I: 'static> Pallet<T, I> {
 	/// Transfer an NFT to the specified destination account.
@@ -153,7 +153,7 @@ impl<T: Config<I>, I: 'static> Pallet<T, I> {
 
 			details.owner = new_owner.clone();
 			OwnershipAcceptance::<T, I>::remove(&new_owner);
-			frame_system::Pallet::<T>::dec_consumers(&new_owner);
+			topsoil_system::Pallet::<T>::dec_consumers(&new_owner);
 
 			// Emit `OwnerChanged` event.
 			Self::deposit_event(Event::OwnerChanged { collection, new_owner });
@@ -176,10 +176,10 @@ impl<T: Config<I>, I: 'static> Pallet<T, I> {
 		let exists = OwnershipAcceptance::<T, I>::contains_key(&who);
 		match (exists, maybe_collection.is_some()) {
 			(false, true) => {
-				frame_system::Pallet::<T>::inc_consumers(&who)?;
+				topsoil_system::Pallet::<T>::inc_consumers(&who)?;
 			},
 			(true, false) => {
-				frame_system::Pallet::<T>::dec_consumers(&who);
+				topsoil_system::Pallet::<T>::dec_consumers(&who);
 			},
 			_ => {},
 		}

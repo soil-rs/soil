@@ -15,7 +15,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use frame_support::{*, pallet_prelude::inject_runtime_type};
+use topsoil_support::{*, pallet_prelude::inject_runtime_type};
 use static_assertions::assert_type_eq_all;
 
 pub trait Config {

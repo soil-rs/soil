@@ -18,7 +18,7 @@
 //! Tests for [`ItemOf`], [`fungible::UnionOf`] and [`fungibles::UnionOf`] set types.
 
 use super::*;
-use frame_support::{
+use topsoil_support::{
 	parameter_types,
 	traits::{
 		fungible,
@@ -46,11 +46,11 @@ parameter_types! {
 
 /// Implementation of the `fungible` traits through the [`ItemOf`] type, specifically for a
 /// single asset class from [`T`] identified by [`FIRST_ASSET`].
-type FirstFungible<T> = ItemOf<T, frame_support::traits::ConstU32<{ FIRST_ASSET }>, u64>;
+type FirstFungible<T> = ItemOf<T, topsoil_support::traits::ConstU32<{ FIRST_ASSET }>, u64>;
 
 /// Implementation of the `fungible` traits through the [`ItemOf`] type, specifically for a
 /// single asset class from [`T`] identified by [`UNKNOWN_ASSET`].
-type UnknownFungible<T> = ItemOf<T, frame_support::traits::ConstU32<{ UNKNOWN_ASSET }>, u64>;
+type UnknownFungible<T> = ItemOf<T, topsoil_support::traits::ConstU32<{ UNKNOWN_ASSET }>, u64>;
 
 /// Implementation of `fungibles` traits using [`fungibles::UnionOf`] that exclusively utilizes
 /// the [`FirstFungible`] from the left.

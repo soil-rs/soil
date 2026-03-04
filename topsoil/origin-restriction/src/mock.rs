@@ -17,7 +17,7 @@
 
 use crate::*;
 use codec::MaxEncodedLen;
-use frame_support::{
+use topsoil_support::{
 	derive_impl,
 	dispatch::{DispatchErrorWithPostInfo, GetDispatchInfo},
 	pallet_prelude::TransactionValidityError,
@@ -25,7 +25,7 @@ use frame_support::{
 	traits::ContainsPair,
 	weights::IdentityFee,
 };
-use pallet_transaction_payment::ConstFeeMultiplier;
+use topsoil_transaction_payment::ConstFeeMultiplier;
 use soil_core::{ConstU64, H256};
 use soil_runtime::{
 	testing::UintAuthorityId,
@@ -34,7 +34,7 @@ use soil_runtime::{
 	BuildStorage, DispatchError, FixedU128, TransactionOutcome,
 };
 
-pub type AccountId = <Test as frame_system::Config>::AccountId;
+pub type AccountId = <Test as topsoil_system::Config>::AccountId;
 pub type BlockNumber = u64;
 
 pub type TransactionExtension = (RestrictOrigin<Test>,);
@@ -52,17 +52,17 @@ pub const CALL_WEIGHT: u64 = 15;
 pub const CALL_WEIGHT_EXCESS: u64 = 150;
 
 /// A small mock pallet to test calls from within the runtime.
-#[frame_support::pallet(dev_mode)]
+#[topsoil_support::pallet(dev_mode)]
 pub mod mock_pallet {
 	use super::{CALL_WEIGHT, CALL_WEIGHT_EXCESS};
-	use frame_support::pallet_prelude::*;
-	use frame_system::pallet_prelude::*;
+	use topsoil_support::pallet_prelude::*;
+	use topsoil_system::pallet_prelude::*;
 
 	#[pallet::pallet]
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
-	pub trait Config: frame_system::Config {}
+	pub trait Config: topsoil_system::Config {}
 
 	#[pallet::call]
 	impl<T: Config> Pallet<T> {
@@ -86,20 +86,20 @@ pub mod mock_pallet {
 	}
 }
 
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub enum Test {
-		System: frame_system,
+		System: topsoil_system,
 		MockPallet: mock_pallet,
 		OriginsRestriction: crate,
-		TransactionPayment: pallet_transaction_payment,
+		TransactionPayment: topsoil_transaction_payment,
 	}
 );
 
 /// Convenience aliases for the mock pallet calls.
 pub type MockPalletCall = mock_pallet::Call<Test>;
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
 	type RuntimeOrigin = RuntimeOrigin;
 	type RuntimeCall = RuntimeCall;
 	type RuntimeEvent = RuntimeEvent;
@@ -141,10 +141,10 @@ impl RestrictedEntity<OriginCaller, u64> for RuntimeRestrictedEntity {
 
 	fn restricted_entity(caller: &OriginCaller) -> Option<RuntimeRestrictedEntity> {
 		match caller {
-			OriginCaller::system(frame_system::Origin::<Test>::Signed(RESTRICTED_ORIGIN_1)) => {
+			OriginCaller::system(topsoil_system::Origin::<Test>::Signed(RESTRICTED_ORIGIN_1)) => {
 				Some(RuntimeRestrictedEntity::A)
 			},
-			OriginCaller::system(frame_system::Origin::<Test>::Signed(RESTRICTED_ORIGIN_2)) => {
+			OriginCaller::system(topsoil_system::Origin::<Test>::Signed(RESTRICTED_ORIGIN_2)) => {
 				Some(RuntimeRestrictedEntity::B)
 			},
 			_ => None,
@@ -153,7 +153,7 @@ impl RestrictedEntity<OriginCaller, u64> for RuntimeRestrictedEntity {
 
 	#[cfg(feature = "runtime-benchmarks")]
 	fn benchmarked_restricted_origin() -> OriginCaller {
-		OriginCaller::system(frame_system::Origin::<Test>::Signed(RESTRICTED_ORIGIN_1))
+		OriginCaller::system(topsoil_system::Origin::<Test>::Signed(RESTRICTED_ORIGIN_1))
 	}
 }
 
@@ -180,13 +180,13 @@ impl crate::Config for Test {
 	type OperationAllowedOneTimeExcess = TestOperationAllowedOneTimeExcess;
 }
 
-frame_support::parameter_types! {
+topsoil_support::parameter_types! {
 	pub ConstFeeMultiplierInner: FixedU128 = FixedU128::from_u32(1);
 }
 
 pub struct OnChargeTransaction;
 
-impl pallet_transaction_payment::OnChargeTransaction<Test> for OnChargeTransaction {
+impl topsoil_transaction_payment::OnChargeTransaction<Test> for OnChargeTransaction {
 	type Balance = u64;
 	type LiquidityInfo = ();
 	fn withdraw_fee(
@@ -227,11 +227,11 @@ impl pallet_transaction_payment::OnChargeTransaction<Test> for OnChargeTransacti
 	}
 }
 
-impl pallet_transaction_payment::TxCreditHold<Test> for OnChargeTransaction {
+impl topsoil_transaction_payment::TxCreditHold<Test> for OnChargeTransaction {
 	type Credit = ();
 }
 
-impl pallet_transaction_payment::Config for Test {
+impl topsoil_transaction_payment::Config for Test {
 	type WeightInfo = ();
 	type RuntimeEvent = RuntimeEvent;
 	type WeightToFee = IdentityFee<u64>;
@@ -332,7 +332,7 @@ pub fn exec_tx(tx: UncheckedExtrinsic) -> Result<(), TransactionExecutionError> 
 	let info = tx.get_dispatch_info();
 	let len = tx.encoded_size();
 
-	let checked = Checkable::check(tx, &frame_system::ChainContext::<Test>::default())?;
+	let checked = Checkable::check(tx, &topsoil_system::ChainContext::<Test>::default())?;
 
 	with_transaction(|| {
 		let validity = checked.validate::<Test>(TransactionSource::External, &info, len);

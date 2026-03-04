@@ -18,8 +18,8 @@
 //! The crate's tests.
 
 use super::*;
-use crate::pallet as pallet_asset_rate;
-use frame_support::{assert_noop, assert_ok};
+use crate::pallet as topsoil_asset_rate;
+use topsoil_support::{assert_noop, assert_ok};
 use mock::{new_test_ext, AssetRate, RuntimeOrigin, Test};
 use soil_runtime::FixedU128;
 
@@ -28,7 +28,7 @@ const ASSET_ID: u32 = 42;
 #[test]
 fn create_works() {
 	new_test_ext().execute_with(|| {
-		assert!(pallet_asset_rate::ConversionRateToNative::<Test>::get(ASSET_ID).is_none());
+		assert!(topsoil_asset_rate::ConversionRateToNative::<Test>::get(ASSET_ID).is_none());
 		assert_ok!(AssetRate::create(
 			RuntimeOrigin::root(),
 			Box::new(ASSET_ID),
@@ -36,7 +36,7 @@ fn create_works() {
 		));
 
 		assert_eq!(
-			pallet_asset_rate::ConversionRateToNative::<Test>::get(ASSET_ID),
+			topsoil_asset_rate::ConversionRateToNative::<Test>::get(ASSET_ID),
 			Some(FixedU128::from_float(0.1))
 		);
 	});
@@ -45,7 +45,7 @@ fn create_works() {
 #[test]
 fn create_existing_throws() {
 	new_test_ext().execute_with(|| {
-		assert!(pallet_asset_rate::ConversionRateToNative::<Test>::get(ASSET_ID).is_none());
+		assert!(topsoil_asset_rate::ConversionRateToNative::<Test>::get(ASSET_ID).is_none());
 		assert_ok!(AssetRate::create(
 			RuntimeOrigin::root(),
 			Box::new(ASSET_ID),
@@ -73,7 +73,7 @@ fn remove_works() {
 		));
 
 		assert_ok!(AssetRate::remove(RuntimeOrigin::root(), Box::new(ASSET_ID),));
-		assert!(pallet_asset_rate::ConversionRateToNative::<Test>::get(ASSET_ID).is_none());
+		assert!(topsoil_asset_rate::ConversionRateToNative::<Test>::get(ASSET_ID).is_none());
 	});
 }
 
@@ -102,7 +102,7 @@ fn update_works() {
 		));
 
 		assert_eq!(
-			pallet_asset_rate::ConversionRateToNative::<Test>::get(ASSET_ID),
+			topsoil_asset_rate::ConversionRateToNative::<Test>::get(ASSET_ID),
 			Some(FixedU128::from_float(0.5))
 		);
 	});
@@ -133,14 +133,14 @@ fn convert_works() {
 
 		let conversion_from_asset = <AssetRate as ConversionFromAssetBalance<
 			BalanceOf<Test>,
-			<Test as pallet_asset_rate::Config>::AssetKind,
+			<Test as topsoil_asset_rate::Config>::AssetKind,
 			BalanceOf<Test>,
 		>>::from_asset_balance(10, ASSET_ID);
 		assert_eq!(conversion_from_asset.expect("Conversion rate exists for asset"), 25);
 
 		let conversion_to_asset = <AssetRate as ConversionToAssetBalance<
 			BalanceOf<Test>,
-			<Test as pallet_asset_rate::Config>::AssetKind,
+			<Test as topsoil_asset_rate::Config>::AssetKind,
 			BalanceOf<Test>,
 		>>::to_asset_balance(25, ASSET_ID);
 		assert_eq!(conversion_to_asset.expect("Conversion rate exists for asset"), 9);
@@ -152,7 +152,7 @@ fn convert_unknown_throws() {
 	new_test_ext().execute_with(|| {
 		let conversion = <AssetRate as ConversionFromAssetBalance<
 			BalanceOf<Test>,
-			<Test as pallet_asset_rate::Config>::AssetKind,
+			<Test as topsoil_asset_rate::Config>::AssetKind,
 			BalanceOf<Test>,
 		>>::from_asset_balance(10, ASSET_ID);
 		assert!(conversion.is_err());
@@ -170,7 +170,7 @@ fn convert_overflow_throws() {
 
 		let conversion = <AssetRate as ConversionToAssetBalance<
 			BalanceOf<Test>,
-			<Test as pallet_asset_rate::Config>::AssetKind,
+			<Test as topsoil_asset_rate::Config>::AssetKind,
 			BalanceOf<Test>,
 		>>::to_asset_balance(10, ASSET_ID);
 		assert!(conversion.is_err());

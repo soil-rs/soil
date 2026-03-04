@@ -30,7 +30,7 @@ use codec::Encode;
 use soil_core::crypto::key_types::DUMMY;
 use soil_runtime::{testing::UintAuthorityId, Perbill};
 
-use frame_support::{
+use topsoil_support::{
 	assert_err, assert_noop, assert_ok,
 	traits::{ConstU64, OnInitialize},
 };
@@ -409,7 +409,7 @@ fn session_keys_generate_output_works_as_set_keys_input() {
 
 #[test]
 fn upgrade_keys() {
-	use frame_support::storage;
+	use topsoil_support::storage;
 	use soil_core::crypto::key_types::DUMMY;
 
 	// This test assumes certain mocks.
@@ -488,7 +488,7 @@ fn test_migration_v1() {
 		historical::{HistoricalSessions, StoredRange},
 		mock::Historical,
 	};
-	use frame_support::traits::{PalletInfoAccess, StorageVersion};
+	use topsoil_support::traits::{PalletInfoAccess, StorageVersion};
 
 	new_test_ext().execute_with(|| {
 		assert!(HistoricalSessions::<Test>::iter_values().count() > 0);
@@ -496,7 +496,7 @@ fn test_migration_v1() {
 
 		let old_pallet = "Session";
 		let new_pallet = <Historical as PalletInfoAccess>::name();
-		frame_support::storage::migration::move_pallet(
+		topsoil_support::storage::migration::move_pallet(
 			new_pallet.as_bytes(),
 			old_pallet.as_bytes(),
 		);
@@ -514,14 +514,14 @@ fn set_keys_should_fail_with_insufficient_funds() {
 		// Account 999 is mocked to have KeyDeposit -1
 		let account_id = 999;
 		let keys = MockSessionKeys { dummy: UintAuthorityId(account_id).into() };
-		frame_system::Pallet::<Test>::inc_providers(&account_id);
+		topsoil_system::Pallet::<Test>::inc_providers(&account_id);
 		// Make sure we have a validator ID
 		ValidatorAccounts::mutate(|m| {
 			m.insert(account_id, account_id);
 		});
 
 		// Attempt to set keys with an account that has insufficient funds
-		// Should fail with Err(Token(FundsUnavailable)) from `pallet-balances`
+		// Should fail with Err(Token(FundsUnavailable)) from `topsoil-balances`
 		assert_err!(
 			Session::set_keys(
 				RuntimeOrigin::signed(account_id),
@@ -573,7 +573,7 @@ fn purge_keys_should_unhold_funds() {
 		});
 
 		// Ensure system providers are properly set for the test account
-		frame_system::Pallet::<Test>::inc_providers(&account_id);
+		topsoil_system::Pallet::<Test>::inc_providers(&account_id);
 
 		// First set the keys to reserve the deposit
 		let res = Session::set_keys(
@@ -634,7 +634,7 @@ mod externally_set_keys_tracking {
 	const ACCOUNT: u64 = 1000;
 
 	fn setup_account() {
-		frame_system::Pallet::<Test>::inc_providers(&ACCOUNT);
+		topsoil_system::Pallet::<Test>::inc_providers(&ACCOUNT);
 		ValidatorAccounts::mutate(|m| {
 			m.insert(ACCOUNT, ACCOUNT);
 		});
@@ -660,7 +660,7 @@ mod externally_set_keys_tracking {
 
 	fn assert_local_state(consumers_before: u32) {
 		assert!(!ExternallySetKeys::<Test>::contains_key(&ACCOUNT));
-		// +1 from session's inc_consumers, +1 from pallet-balances hold.
+		// +1 from session's inc_consumers, +1 from topsoil-balances hold.
 		assert_eq!(System::consumers(&ACCOUNT), consumers_before + 2);
 		assert_eq!(session_hold(ACCOUNT), KeyDeposit::get());
 	}
@@ -771,7 +771,7 @@ mod disabling_byzantine_threshold {
 
 	// Common test data - the stash of the offending validator, the era of the offence and the
 	// active set
-	const OFFENDER_ID: <Test as frame_system::Config>::AccountId = 7;
+	const OFFENDER_ID: <Test as topsoil_system::Config>::AccountId = 7;
 	const MAX_OFFENDER_SEVERITY: OffenceSeverity = OffenceSeverity(Perbill::from_percent(100));
 	const MIN_OFFENDER_SEVERITY: OffenceSeverity = OffenceSeverity(Perbill::from_percent(0));
 	const ACTIVE_SET: [<Test as Config>::ValidatorId; 7] = [1, 2, 3, 4, 5, 6, 7];
@@ -852,7 +852,7 @@ mod disabling_with_reenabling {
 
 	// Common test data - the stash of the offending validator, the era of the offence and the
 	// active set
-	const OFFENDER_ID: <Test as frame_system::Config>::AccountId = 7;
+	const OFFENDER_ID: <Test as topsoil_system::Config>::AccountId = 7;
 	const MAX_OFFENDER_SEVERITY: OffenceSeverity = OffenceSeverity(Perbill::from_percent(100));
 	const LOW_OFFENDER_SEVERITY: OffenceSeverity = OffenceSeverity(Perbill::from_percent(0));
 	const ACTIVE_SET: [<Test as Config>::ValidatorId; 7] = [1, 2, 3, 4, 5, 6, 7];

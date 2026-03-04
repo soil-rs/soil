@@ -15,22 +15,22 @@
 
 use super::*;
 
-use frame_support::{
+use topsoil_support::{
 	assert_ok,
 	dispatch::{DispatchInfo, GetDispatchInfo, PostDispatchInfo},
 	pallet_prelude::*,
 	traits::{fungibles::Mutate, OriginTrait},
 	weights::Weight,
 };
-use frame_system as system;
+use topsoil_system as system;
 use mock::{ExtrinsicBaseWeight, *};
-use pallet_balances::Call as BalancesCall;
+use topsoil_balances::Call as BalancesCall;
 use soil_runtime::{
 	traits::{DispatchTransaction, StaticLookup},
 	BuildStorage,
 };
 
-const CALL: &<Runtime as frame_system::Config>::RuntimeCall =
+const CALL: &<Runtime as topsoil_system::Config>::RuntimeCall =
 	&RuntimeCall::Balances(BalancesCall::transfer_allow_death { dest: 2, value: 69 });
 
 pub struct ExtBuilder {
@@ -67,8 +67,8 @@ impl ExtBuilder {
 	}
 	pub fn build(self) -> soil_io::TestExternalities {
 		self.set_constants();
-		let mut t = frame_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
-		pallet_balances::GenesisConfig::<Runtime> {
+		let mut t = topsoil_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
+		topsoil_balances::GenesisConfig::<Runtime> {
 			balances: if self.balance_factor > 0 {
 				vec![
 					(1, 10 * self.balance_factor),
@@ -214,7 +214,7 @@ fn transaction_payment_in_asset_possible() {
 			assert_eq!(Assets::balance(asset_id, caller), balance - fee);
 			assert_eq!(Assets::balance(asset_id, BLOCK_AUTHOR), 0);
 
-			System::assert_has_event(RuntimeEvent::Assets(pallet_assets::Event::Withdrawn {
+			System::assert_has_event(RuntimeEvent::Assets(topsoil_assets::Event::Withdrawn {
 				asset_id,
 				who: caller,
 				amount: fee,
@@ -231,7 +231,7 @@ fn transaction_payment_in_asset_possible() {
 			// check that the block author gets rewarded
 			assert_eq!(Assets::balance(asset_id, BLOCK_AUTHOR), fee);
 
-			System::assert_has_event(RuntimeEvent::Assets(pallet_assets::Event::Deposited {
+			System::assert_has_event(RuntimeEvent::Assets(topsoil_assets::Event::Deposited {
 				asset_id,
 				who: BLOCK_AUTHOR,
 				amount: fee,
@@ -341,7 +341,7 @@ fn asset_transaction_payment_with_tip_and_refund() {
 				ext.validate_and_prepare(Some(caller).into(), CALL, &info, len, 0).unwrap();
 			assert_eq!(Assets::balance(asset_id, caller), balance - fee_with_tip);
 
-			System::assert_has_event(RuntimeEvent::Assets(pallet_assets::Event::Withdrawn {
+			System::assert_has_event(RuntimeEvent::Assets(topsoil_assets::Event::Withdrawn {
 				asset_id,
 				who: caller,
 				amount: fee_with_tip,
@@ -367,7 +367,7 @@ fn asset_transaction_payment_with_tip_and_refund() {
 			assert_eq!(Assets::balance(asset_id, caller), balance - (final_fee));
 			assert_eq!(Assets::balance(asset_id, BLOCK_AUTHOR), final_fee);
 
-			System::assert_has_event(RuntimeEvent::Assets(pallet_assets::Event::Deposited {
+			System::assert_has_event(RuntimeEvent::Assets(topsoil_assets::Event::Deposited {
 				asset_id,
 				who: caller,
 				amount: fee_with_tip - final_fee,
@@ -626,13 +626,13 @@ fn no_fee_and_no_weight_for_other_origins() {
 
 		let len = CALL.encoded_size();
 
-		let origin = frame_system::RawOrigin::Root.into();
+		let origin = topsoil_system::RawOrigin::Root.into();
 		let (pre, origin) = ext.validate_and_prepare(origin, CALL, &info, len, 0).unwrap();
 
 		assert!(origin.as_system_ref().unwrap().is_root());
 
 		let pd_res = Ok(());
-		let mut post_info = frame_support::dispatch::PostDispatchInfo {
+		let mut post_info = topsoil_support::dispatch::PostDispatchInfo {
 			actual_weight: Some(info.total_weight()),
 			pays_fee: Default::default(),
 		};

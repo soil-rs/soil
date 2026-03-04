@@ -16,7 +16,7 @@
 // limitations under the License.
 
 use crate::*;
-use frame_support::traits::tokens::{Fortitude::Polite, Preservation::Expendable};
+use topsoil_support::traits::tokens::{Fortitude::Polite, Preservation::Expendable};
 use soil_staking::{Agent, DelegationInterface, DelegationMigrator, Delegator};
 
 /// Types of stake strategies.
@@ -83,7 +83,7 @@ impl<T> Member<T> {
 /// different. Refer the two possible strategies currently: [`TransferStake`] and
 /// [`DelegateStake`] for more detail.
 pub trait StakeStrategy {
-	type Balance: frame_support::traits::tokens::Balance;
+	type Balance: topsoil_support::traits::tokens::Balance;
 	type AccountId: Clone + core::fmt::Debug;
 	type CoreStaking: StakingInterface<Balance = Self::Balance, AccountId = Self::AccountId>;
 

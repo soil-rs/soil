@@ -15,11 +15,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//! # Child Bounties Pallet ( `pallet-child-bounties` )
+//! # Child Bounties Pallet ( `topsoil-child-bounties` )
 //!
 //! ## Child Bounty
 //!
-//! > NOTE: This pallet is tightly coupled with `pallet-treasury` and `pallet-bounties`.
+//! > NOTE: This pallet is tightly coupled with `topsoil-treasury` and `topsoil-bounties`.
 //!
 //! With child bounties, a large bounty proposal can be divided into smaller chunks,
 //! for parallel execution, and for efficient governance and tracking of spent funds.
@@ -64,7 +64,7 @@ const LOG_TARGET: &str = "runtime::child-bounties";
 
 use alloc::vec::Vec;
 
-use frame_support::traits::{
+use topsoil_support::traits::{
 	Currency,
 	ExistenceRequirement::{AllowDeath, KeepAlive},
 	Get, OnUnbalanced, ReservableCurrency, WithdrawReasons,
@@ -78,22 +78,22 @@ use soil_runtime::{
 	Debug, DispatchResult,
 };
 
-use frame_support::pallet_prelude::*;
-use frame_system::pallet_prelude::{
+use topsoil_support::pallet_prelude::*;
+use topsoil_system::pallet_prelude::{
 	ensure_signed, BlockNumberFor as SystemBlockNumberFor, OriginFor,
 };
-use pallet_bounties::BountyStatus;
+use topsoil_bounties::BountyStatus;
 use scale_info::TypeInfo;
 pub use weights::WeightInfo;
 
 pub use pallet::*;
 
-pub type BalanceOf<T> = pallet_treasury::BalanceOf<T>;
-pub type BountiesError<T> = pallet_bounties::Error<T>;
-pub type BountyIndex = pallet_bounties::BountyIndex;
-pub type AccountIdLookupOf<T> = <<T as frame_system::Config>::Lookup as StaticLookup>::Source;
+pub type BalanceOf<T> = topsoil_treasury::BalanceOf<T>;
+pub type BountiesError<T> = topsoil_bounties::Error<T>;
+pub type BountyIndex = topsoil_bounties::BountyIndex;
+pub type AccountIdLookupOf<T> = <<T as topsoil_system::Config>::Lookup as StaticLookup>::Source;
 pub type BlockNumberFor<T> =
-	<<T as pallet_treasury::Config>::BlockNumberProvider as BlockNumberProvider>::BlockNumber;
+	<<T as topsoil_treasury::Config>::BlockNumberProvider as BlockNumberProvider>::BlockNumber;
 
 /// A child bounty proposal.
 #[derive(Encode, Decode, Clone, PartialEq, Eq, Debug, TypeInfo, MaxEncodedLen)]
@@ -137,7 +137,7 @@ pub enum ChildBountyStatus<AccountId, BlockNumber> {
 	},
 }
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 
 	use super::*;
@@ -151,7 +151,7 @@ pub mod pallet {
 
 	#[pallet::config]
 	pub trait Config:
-		frame_system::Config + pallet_treasury::Config + pallet_bounties::Config
+		topsoil_system::Config + topsoil_treasury::Config + topsoil_bounties::Config
 	{
 		/// Maximum number of child bounties that can be added to a parent bounty.
 		#[pallet::constant]
@@ -163,7 +163,7 @@ pub mod pallet {
 
 		/// The overarching event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// Weight information for extrinsics in this pallet.
 		type WeightInfo: WeightInfo;
@@ -297,7 +297,7 @@ pub mod pallet {
 
 			// Read parent bounty account info.
 			let parent_bounty_account =
-				pallet_bounties::Pallet::<T>::bounty_account_id(parent_bounty_id);
+				topsoil_bounties::Pallet::<T>::bounty_account_id(parent_bounty_id);
 
 			// Ensure parent bounty has enough balance after adding child-bounty.
 			let bounty_balance = T::Currency::free_balance(&parent_bounty_account);
@@ -833,7 +833,7 @@ impl<T: Config> Pallet<T> {
 	///
 	/// It may be configured to use the relay chain block number on a parachain.
 	pub fn treasury_block_number() -> BlockNumberFor<T> {
-		<T as pallet_treasury::Config>::BlockNumberProvider::current_block_number()
+		<T as topsoil_treasury::Config>::BlockNumberProvider::current_block_number()
 	}
 
 	// This function will calculate the deposit of a curator.
@@ -847,7 +847,7 @@ impl<T: Config> Pallet<T> {
 		}
 
 		// We just use the same logic from the parent bounties pallet.
-		pallet_bounties::Pallet::<T>::calculate_curator_deposit(bounty_fee)
+		topsoil_bounties::Pallet::<T>::calculate_curator_deposit(bounty_fee)
 	}
 
 	/// The account ID of a child-bounty account.
@@ -882,7 +882,7 @@ impl<T: Config> Pallet<T> {
 	fn ensure_bounty_active(
 		bounty_id: BountyIndex,
 	) -> Result<(T::AccountId, BlockNumberFor<T>), DispatchError> {
-		let parent_bounty = pallet_bounties::Bounties::<T>::get(bounty_id)
+		let parent_bounty = topsoil_bounties::Bounties::<T>::get(bounty_id)
 			.ok_or(BountiesError::<T>::InvalidIndex)?;
 		if let BountyStatus::Active { curator, update_due } = parent_bounty.get_status() {
 			Ok((curator, update_due))
@@ -933,7 +933,7 @@ impl<T: Config> Pallet<T> {
 
 				// Transfer fund from child-bounty to parent bounty.
 				let parent_bounty_account =
-					pallet_bounties::Pallet::<T>::bounty_account_id(parent_bounty_id);
+					topsoil_bounties::Pallet::<T>::bounty_account_id(parent_bounty_id);
 				let child_bounty_account =
 					Self::child_bounty_account_id(parent_bounty_id, child_bounty_id);
 				let balance = T::Currency::free_balance(&child_bounty_account);
@@ -966,17 +966,17 @@ impl<T: Config> Pallet<T> {
 ///
 /// Function `children_curator_fees` not only returns the fee but also removes cumulative curator
 /// fees during call.
-impl<T: Config> pallet_bounties::ChildBountyManager<BalanceOf<T>> for Pallet<T> {
+impl<T: Config> topsoil_bounties::ChildBountyManager<BalanceOf<T>> for Pallet<T> {
 	/// Returns number of active child bounties for `bounty_id`
 	fn child_bounties_count(
-		bounty_id: pallet_bounties::BountyIndex,
-	) -> pallet_bounties::BountyIndex {
+		bounty_id: topsoil_bounties::BountyIndex,
+	) -> topsoil_bounties::BountyIndex {
 		ParentChildBounties::<T>::get(bounty_id)
 	}
 
 	/// Returns cumulative child bounty curator fees for `bounty_id` also removing the associated
 	/// storage item. This function is assumed to be called when parent bounty is claimed.
-	fn children_curator_fees(bounty_id: pallet_bounties::BountyIndex) -> BalanceOf<T> {
+	fn children_curator_fees(bounty_id: topsoil_bounties::BountyIndex) -> BalanceOf<T> {
 		// This is asked for when the parent bounty is being claimed. No use of
 		// keeping it in state after that. Hence removing.
 		let children_fee_total = ChildrenCuratorFees::<T>::get(bounty_id);

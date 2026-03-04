@@ -22,8 +22,8 @@ use crate::{asset, ConfigOp, Pallet as Staking};
 use testing_utils::*;
 
 use codec::Decode;
-use frame_election_provider_support::{bounds::DataProviderBounds, SortedListProvider};
-use frame_support::{
+use topsoil_election_provider_support::{bounds::DataProviderBounds, SortedListProvider};
+use topsoil_support::{
 	pallet_prelude::*,
 	storage::bounded_vec::BoundedVec,
 	traits::{Get, Imbalance, UnfilteredDispatchable},
@@ -34,10 +34,10 @@ use soil_runtime::{
 };
 use soil_staking::{currency_to_vote::CurrencyToVote, SessionIndex};
 
-pub use frame_benchmarking::{
+pub use topsoil_benchmarking::{
 	impl_benchmark_test_suite, v2::*, whitelist_account, whitelisted_caller, BenchmarkError,
 };
-use frame_system::RawOrigin;
+use topsoil_system::RawOrigin;
 
 const SEED: u32 = 0;
 const MAX_SPANS: u32 = 100;
@@ -1190,7 +1190,7 @@ mod benchmarks {
 mod tests {
 	use super::*;
 	use crate::mock::{ExtBuilder, RuntimeOrigin, Staking, Test};
-	use frame_support::assert_ok;
+	use topsoil_support::assert_ok;
 
 	#[test]
 	fn create_validators_with_nominators_for_era_works() {

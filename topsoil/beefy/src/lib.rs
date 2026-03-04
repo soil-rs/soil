@@ -30,14 +30,14 @@ use alloc::{boxed::Box, vec::Vec};
 use codec::{Encode, MaxEncodedLen};
 use log;
 
-use frame_support::{
+use topsoil_support::{
 	dispatch::{DispatchResultWithPostInfo, Pays},
 	pallet_prelude::*,
 	traits::{Get, OneSessionHandler},
 	weights::{constants::RocksDbWeight as DbWeight, Weight},
 	BoundedSlice, BoundedVec, Parameter,
 };
-use frame_system::{
+use topsoil_system::{
 	ensure_none, ensure_signed,
 	pallet_prelude::{BlockNumberFor, HeaderFor, OriginFor},
 };
@@ -60,13 +60,13 @@ pub use pallet::*;
 
 const LOG_TARGET: &str = "runtime::beefy";
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
-	use frame_system::{ensure_root, pallet_prelude::BlockNumberFor};
+	use topsoil_system::{ensure_root, pallet_prelude::BlockNumberFor};
 
 	#[pallet::config]
-	pub trait Config: frame_system::Config {
+	pub trait Config: topsoil_system::Config {
 		/// Authority identifier type
 		type BeefyId: Member
 			+ Parameter
@@ -286,7 +286,7 @@ pub mod pallet {
 		) -> DispatchResult {
 			ensure_root(origin)?;
 			ensure!(delay_in_blocks >= One::one(), Error::<T>::InvalidConfiguration);
-			let genesis_block = frame_system::Pallet::<T>::block_number() + delay_in_blocks;
+			let genesis_block = topsoil_system::Pallet::<T>::block_number() + delay_in_blocks;
 			GenesisBlock::<T>::put(Some(genesis_block));
 			Ok(())
 		}
@@ -609,7 +609,7 @@ impl<T: Config> Pallet<T> {
 				BEEFY_ENGINE_ID,
 				ConsensusLog::AuthoritiesChange(validator_set.clone()).encode(),
 			);
-			frame_system::Pallet::<T>::deposit_log(log);
+			topsoil_system::Pallet::<T>::deposit_log(log);
 
 			let next_id = new_id + 1;
 			if let Some(next_validator_set) = ValidatorSet::<T::BeefyId>::new(queued, next_id) {
@@ -637,7 +637,7 @@ impl<T: Config> Pallet<T> {
 		let id = GENESIS_AUTHORITY_SET_ID;
 		Authorities::<T>::put(bounded_authorities);
 		ValidatorSetId::<T>::put(id);
-		// Like `pallet_session`, initialize the next validator set as well.
+		// Like `topsoil_session`, initialize the next validator set as well.
 		NextAuthorities::<T>::put(bounded_authorities);
 
 		if let Some(validator_set) = ValidatorSet::<T::BeefyId>::new(authorities.clone(), id) {
@@ -667,7 +667,7 @@ impl<T: Config> soil_runtime::BoundToRuntimeAppPublic for Pallet<T> {
 
 impl<T: Config> OneSessionHandler<T::AccountId> for Pallet<T>
 where
-	T: pallet_session::Config,
+	T: topsoil_session::Config,
 {
 	type Key = T::BeefyId;
 
@@ -715,7 +715,7 @@ where
 
 		let validator_set_id = ValidatorSetId::<T>::get();
 		// Update the mapping for the new set id that corresponds to the latest session (i.e. now).
-		let session_index = pallet_session::Pallet::<T>::current_index();
+		let session_index = topsoil_session::Pallet::<T>::current_index();
 		SetIdSession::<T>::insert(validator_set_id, &session_index);
 		// Prune old entry if limit reached.
 		let max_set_id_session_entries = T::MaxSetIdSessionEntries::get().max(1);
@@ -730,7 +730,7 @@ where
 			ConsensusLog::<T::BeefyId>::OnDisabled(i as AuthorityIndex).encode(),
 		);
 
-		frame_system::Pallet::<T>::deposit_log(log);
+		topsoil_system::Pallet::<T>::deposit_log(log);
 	}
 }
 

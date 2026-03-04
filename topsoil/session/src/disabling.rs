@@ -16,7 +16,7 @@
 // limitations under the License.
 
 use crate::*;
-use frame_support::defensive;
+use topsoil_support::defensive;
 /// Controls validator disabling
 pub trait DisablingStrategy<T: Config> {
 	/// Make a disabling decision. Returning a [`DisablingDecision`]

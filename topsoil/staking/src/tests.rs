@@ -19,11 +19,11 @@
 
 use super::{ConfigOp, Event, *};
 use crate::{asset, ledger::StakingLedgerInspect};
-use frame_election_provider_support::{
+use topsoil_election_provider_support::{
 	bounds::{DataProviderBounds, ElectionBoundsBuilder},
 	ElectionProvider, SortedListProvider, Support,
 };
-use frame_support::{
+use topsoil_support::{
 	assert_noop, assert_ok, assert_storage_noop,
 	dispatch::{extract_actual_weight, GetDispatchInfo, WithPostDispatchInfo},
 	hypothetically,
@@ -34,8 +34,8 @@ use frame_support::{
 	},
 };
 use mock::*;
-use pallet_balances::Error as BalancesError;
-use pallet_session::{disabling::UpToLimitWithReEnablingDisablingStrategy, Event as SessionEvent};
+use topsoil_balances::Error as BalancesError;
+use topsoil_session::{disabling::UpToLimitWithReEnablingDisablingStrategy, Event as SessionEvent};
 use soil_runtime::{
 	assert_eq_error_rate, bounded_vec,
 	traits::{BadOrigin, Dispatchable},
@@ -2136,7 +2136,7 @@ fn bond_with_no_staked_value() {
 			);
 			// bonded with absolute minimum value possible.
 			assert_ok!(Staking::bond(RuntimeOrigin::signed(1), 5, RewardDestination::Account(1)));
-			assert_eq!(pallet_balances::Holds::<Test>::get(&1)[0].amount, 5);
+			assert_eq!(topsoil_balances::Holds::<Test>::get(&1)[0].amount, 5);
 
 			// unbonding even 1 will cause all to be unbonded.
 			assert_ok!(Staking::unbond(RuntimeOrigin::signed(1), 1));
@@ -2157,14 +2157,14 @@ fn bond_with_no_staked_value() {
 			// not yet removed.
 			assert_ok!(Staking::withdraw_unbonded(RuntimeOrigin::signed(1), 0));
 			assert!(Staking::ledger(1.into()).is_ok());
-			assert_eq!(pallet_balances::Holds::<Test>::get(&1)[0].amount, 5);
+			assert_eq!(topsoil_balances::Holds::<Test>::get(&1)[0].amount, 5);
 
 			mock::start_active_era(3);
 
 			// poof. Account 1 is removed from the staking system.
 			assert_ok!(Staking::withdraw_unbonded(RuntimeOrigin::signed(1), 0));
 			assert!(Staking::ledger(1.into()).is_err());
-			assert_eq!(pallet_balances::Holds::<Test>::get(&1).len(), 0);
+			assert_eq!(topsoil_balances::Holds::<Test>::get(&1).len(), 0);
 		});
 }
 
@@ -2438,9 +2438,9 @@ fn reward_validator_slashing_validator_does_not_overflow() {
 #[test]
 fn reward_from_authorship_event_handler_works() {
 	ExtBuilder::default().build_and_execute(|| {
-		use pallet_authorship::EventHandler;
+		use topsoil_authorship::EventHandler;
 
-		assert_eq!(<pallet_authorship::Pallet<Test>>::author(), Some(11));
+		assert_eq!(<topsoil_authorship::Pallet<Test>>::author(), Some(11));
 
 		Pallet::<Test>::note_author(11);
 		Pallet::<Test>::note_author(11);
@@ -3283,13 +3283,13 @@ fn zero_slash_keeps_nominators() {
 #[test]
 fn six_session_delay() {
 	ExtBuilder::default().initialize_first_session(false).build_and_execute(|| {
-		use pallet_session::SessionManager;
+		use topsoil_session::SessionManager;
 
 		let val_set = Session::validators();
 		let init_session = Session::current_index();
 		let init_active_era = active_era();
 
-		// pallet-session is delaying session by one, thus the next session to plan is +2.
+		// topsoil-session is delaying session by one, thus the next session to plan is +2.
 		assert_eq!(<Staking as SessionManager<_>>::new_session(init_session + 2), None);
 		assert_eq!(
 			<Staking as SessionManager<_>>::new_session(init_session + 3),
@@ -3465,7 +3465,7 @@ fn test_multi_page_payout_stakers_by_page() {
 		assert_eq!(actual_exposure_1.own(), 0);
 		assert_eq!(actual_exposure_1.others().len(), 100 - 64);
 
-		let pre_payout_total_issuance = pallet_balances::TotalIssuance::<Test>::get();
+		let pre_payout_total_issuance = topsoil_balances::TotalIssuance::<Test>::get();
 		RewardOnUnbalanceWasCalled::set(false);
 		System::reset_events();
 
@@ -3487,8 +3487,8 @@ fn test_multi_page_payout_stakers_by_page() {
 		let controller_balance_after_p0_payout = asset::stakeable_balance::<Test>(&11);
 
 		// verify rewards have been paid out but still some left
-		assert!(pallet_balances::TotalIssuance::<Test>::get() > pre_payout_total_issuance);
-		assert!(pallet_balances::TotalIssuance::<Test>::get() < pre_payout_total_issuance + payout);
+		assert!(topsoil_balances::TotalIssuance::<Test>::get() > pre_payout_total_issuance);
+		assert!(topsoil_balances::TotalIssuance::<Test>::get() < pre_payout_total_issuance + payout);
 
 		// verify the validator has been rewarded
 		assert!(controller_balance_after_p0_payout > controller_balance_before_p0_payout);
@@ -3512,7 +3512,7 @@ fn test_multi_page_payout_stakers_by_page() {
 
 		// verify all rewards have been paid out
 		assert_eq_error_rate!(
-			pallet_balances::TotalIssuance::<Test>::get(),
+			topsoil_balances::TotalIssuance::<Test>::get(),
 			pre_payout_total_issuance + payout,
 			2
 		);
@@ -3555,13 +3555,13 @@ fn test_multi_page_payout_stakers_by_page() {
 
 			// compute and ensure the reward amount is greater than zero.
 			let payout = current_total_payout_for_duration(reward_time_per_era());
-			let pre_payout_total_issuance = pallet_balances::TotalIssuance::<Test>::get();
+			let pre_payout_total_issuance = topsoil_balances::TotalIssuance::<Test>::get();
 
 			mock::start_active_era(i);
 			RewardOnUnbalanceWasCalled::set(false);
 			mock::make_all_reward_payment(i - 1);
 			assert_eq_error_rate!(
-				pallet_balances::TotalIssuance::<Test>::get(),
+				topsoil_balances::TotalIssuance::<Test>::get(),
 				pre_payout_total_issuance + payout,
 				2
 			);
@@ -3742,7 +3742,7 @@ fn test_multi_page_payout_stakers_backward_compatible() {
 		assert_eq!(actual_exposure_1.own(), 0);
 		assert_eq!(actual_exposure_1.others().len(), 100 - 64);
 
-		let pre_payout_total_issuance = pallet_balances::TotalIssuance::<Test>::get();
+		let pre_payout_total_issuance = topsoil_balances::TotalIssuance::<Test>::get();
 		RewardOnUnbalanceWasCalled::set(false);
 
 		let controller_balance_before_p0_payout = asset::stakeable_balance::<Test>(&11);
@@ -3757,8 +3757,8 @@ fn test_multi_page_payout_stakers_backward_compatible() {
 		let controller_balance_after_p0_payout = asset::stakeable_balance::<Test>(&11);
 
 		// verify rewards have been paid out but still some left
-		assert!(pallet_balances::TotalIssuance::<Test>::get() > pre_payout_total_issuance);
-		assert!(pallet_balances::TotalIssuance::<Test>::get() < pre_payout_total_issuance + payout);
+		assert!(topsoil_balances::TotalIssuance::<Test>::get() > pre_payout_total_issuance);
+		assert!(topsoil_balances::TotalIssuance::<Test>::get() < pre_payout_total_issuance + payout);
 
 		// verify the validator has been rewarded
 		assert!(controller_balance_after_p0_payout > controller_balance_before_p0_payout);
@@ -3777,7 +3777,7 @@ fn test_multi_page_payout_stakers_backward_compatible() {
 
 		// verify all rewards have been paid out
 		assert_eq_error_rate!(
-			pallet_balances::TotalIssuance::<Test>::get(),
+			topsoil_balances::TotalIssuance::<Test>::get(),
 			pre_payout_total_issuance + payout,
 			2
 		);
@@ -3821,13 +3821,13 @@ fn test_multi_page_payout_stakers_backward_compatible() {
 
 			// compute and ensure the reward amount is greater than zero.
 			let payout = current_total_payout_for_duration(reward_time_per_era());
-			let pre_payout_total_issuance = pallet_balances::TotalIssuance::<Test>::get();
+			let pre_payout_total_issuance = topsoil_balances::TotalIssuance::<Test>::get();
 
 			mock::start_active_era(i);
 			RewardOnUnbalanceWasCalled::set(false);
 			mock::make_all_reward_payment(i - 1);
 			assert_eq_error_rate!(
-				pallet_balances::TotalIssuance::<Test>::get(),
+				topsoil_balances::TotalIssuance::<Test>::get(),
 				pre_payout_total_issuance + payout,
 				2
 			);
@@ -4347,7 +4347,7 @@ fn offences_weight_calculated_correctly() {
 	ExtBuilder::default().nominate(true).build_and_execute(|| {
 		// On offence with zero offenders: 4 Reads, 1 Write
 		let zero_offence_weight =
-			<Test as frame_system::Config>::DbWeight::get().reads_writes(4, 1);
+			<Test as topsoil_system::Config>::DbWeight::get().reads_writes(4, 1);
 		assert_eq!(
 			<Staking as OnOffenceHandler<_, _, _>>::on_offence(&[], &[Perbill::from_percent(50)], 0),
 			zero_offence_weight
@@ -4355,15 +4355,15 @@ fn offences_weight_calculated_correctly() {
 
 		// On Offence with N offenders, Unapplied: 4 Reads, 1 Write + 4 Reads, 5 Writes, 2 Reads + 2
 		// Writes for `SessionInterface::report_offence` call.
-		let n_offence_unapplied_weight = <Test as frame_system::Config>::DbWeight::get()
+		let n_offence_unapplied_weight = <Test as topsoil_system::Config>::DbWeight::get()
 			.reads_writes(4, 1) +
-			<Test as frame_system::Config>::DbWeight::get().reads_writes(4, 5) +
-			<Test as frame_system::Config>::DbWeight::get().reads_writes(2, 2);
+			<Test as topsoil_system::Config>::DbWeight::get().reads_writes(4, 5) +
+			<Test as topsoil_system::Config>::DbWeight::get().reads_writes(2, 2);
 
 		let offenders: Vec<
 			OffenceDetails<
-				<Test as frame_system::Config>::AccountId,
-				pallet_session::historical::IdentificationTuple<Test>,
+				<Test as topsoil_system::Config>::AccountId,
+				topsoil_session::historical::IdentificationTuple<Test>,
 			>,
 		> = (1..10)
 			.map(|i| OffenceDetails {
@@ -4386,17 +4386,17 @@ fn offences_weight_calculated_correctly() {
 		let n = 1; // Number of offenders
 		let rw = 3 + 3 * n; // rw reads and writes
 		let one_offence_unapplied_weight =
-			<Test as frame_system::Config>::DbWeight::get().reads_writes(4, 1)
+			<Test as topsoil_system::Config>::DbWeight::get().reads_writes(4, 1)
 		 +
-			<Test as frame_system::Config>::DbWeight::get().reads_writes(rw, rw)
+			<Test as topsoil_system::Config>::DbWeight::get().reads_writes(rw, rw)
 			// One `slash_cost`
-			+ <Test as frame_system::Config>::DbWeight::get().reads_writes(6, 5)
+			+ <Test as topsoil_system::Config>::DbWeight::get().reads_writes(6, 5)
 			// `slash_cost` * nominators (1)
-			+ <Test as frame_system::Config>::DbWeight::get().reads_writes(6, 5)
+			+ <Test as topsoil_system::Config>::DbWeight::get().reads_writes(6, 5)
 			// `reward_cost` * reporters (1)
-			+ <Test as frame_system::Config>::DbWeight::get().reads_writes(2, 2)
+			+ <Test as topsoil_system::Config>::DbWeight::get().reads_writes(2, 2)
 			// `SessionInterface::report_offence`
-			+ <Test as frame_system::Config>::DbWeight::get().reads_writes(2, 2);
+			+ <Test as topsoil_system::Config>::DbWeight::get().reads_writes(2, 2);
 
 		assert_eq!(
 			<Staking as OnOffenceHandler<_, _, _>>::on_offence(
@@ -4660,7 +4660,7 @@ fn do_not_die_when_active_is_ed() {
 #[test]
 fn on_finalize_weight_is_nonzero() {
 	ExtBuilder::default().build_and_execute(|| {
-		let on_finalize_weight = <Test as frame_system::Config>::DbWeight::get().reads(1);
+		let on_finalize_weight = <Test as topsoil_system::Config>::DbWeight::get().reads(1);
 		assert!(<Staking as Hooks<u64>>::on_initialize(1).all_gte(on_finalize_weight));
 	})
 }
@@ -4726,13 +4726,13 @@ fn restricted_accounts_can_only_withdraw() {
 
 mod election_data_provider {
 	use super::*;
-	use frame_election_provider_support::ElectionDataProvider;
+	use topsoil_election_provider_support::ElectionDataProvider;
 
 	#[test]
 	fn targets_2sec_block() {
 		let mut validators = 1000;
 		while <Test as Config>::WeightInfo::get_npos_targets(validators).all_lt(Weight::from_parts(
-			2u64 * frame_support::weights::constants::WEIGHT_REF_TIME_PER_SECOND,
+			2u64 * topsoil_support::weights::constants::WEIGHT_REF_TIME_PER_SECOND,
 			u64::MAX,
 		)) {
 			validators += 1;
@@ -4750,7 +4750,7 @@ mod election_data_provider {
 
 		while <Test as Config>::WeightInfo::get_npos_voters(validators, nominators).all_lt(
 			Weight::from_parts(
-				2u64 * frame_support::weights::constants::WEIGHT_REF_TIME_PER_SECOND,
+				2u64 * topsoil_support::weights::constants::WEIGHT_REF_TIME_PER_SECOND,
 				u64::MAX,
 			),
 		) {
@@ -5689,7 +5689,7 @@ fn min_commission_works() {
 #[should_panic]
 #[cfg(debug_assertions)]
 fn change_of_absolute_max_nominations() {
-	use frame_election_provider_support::ElectionDataProvider;
+	use topsoil_election_provider_support::ElectionDataProvider;
 	ExtBuilder::default()
 		.add_staker(61, 61, 10, StakerStatus::Nominator(vec![1]))
 		.add_staker(71, 71, 10, StakerStatus::Nominator(vec![1, 2, 3]))
@@ -5820,7 +5820,7 @@ fn change_of_absolute_max_nominations() {
 
 #[test]
 fn nomination_quota_max_changes_decoding() {
-	use frame_election_provider_support::ElectionDataProvider;
+	use topsoil_election_provider_support::ElectionDataProvider;
 	ExtBuilder::default()
 		.add_staker(60, 61, 10, StakerStatus::Nominator(vec![1]))
 		.add_staker(70, 71, 10, StakerStatus::Nominator(vec![1, 2, 3]))
@@ -5859,7 +5859,7 @@ fn api_nominations_quota_works() {
 
 mod sorted_list_provider {
 	use super::*;
-	use frame_election_provider_support::SortedListProvider;
+	use topsoil_election_provider_support::SortedListProvider;
 
 	#[test]
 	fn re_nominate_does_not_change_counters_or_list() {
@@ -6738,7 +6738,7 @@ fn test_runtime_api_pending_rewards() {
 }
 
 mod staking_interface {
-	use frame_support::storage::with_storage_layer;
+	use topsoil_support::storage::with_storage_layer;
 	use soil_staking::StakingInterface;
 
 	use super::*;
@@ -8437,7 +8437,7 @@ mod validator_disabling_integration {
 #[cfg(all(feature = "try-runtime", test))]
 mod migration_tests {
 	use super::*;
-	use frame_support::traits::UncheckedOnRuntimeUpgrade;
+	use topsoil_support::traits::UncheckedOnRuntimeUpgrade;
 	use migrations::{v15, v16};
 
 	#[test]
@@ -8800,7 +8800,7 @@ mod getters {
 
 mod hold_migration {
 	use super::*;
-	use frame_support::traits::fungible::Mutate;
+	use topsoil_support::traits::fungible::Mutate;
 	use soil_staking::{Stake, StakingInterface};
 
 	#[test]

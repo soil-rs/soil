@@ -20,7 +20,7 @@
 use alloc::vec::Vec;
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use core::fmt::Debug;
-use frame_support::Parameter;
+use topsoil_support::Parameter;
 use scale_info::TypeInfo;
 use soil_arithmetic::traits::AtLeast32BitUnsigned;
 use soil_runtime::traits::BlockNumberProvider;

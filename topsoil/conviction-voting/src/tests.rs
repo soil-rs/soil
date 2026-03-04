@@ -19,23 +19,23 @@
 
 use std::{cell::RefCell, collections::BTreeMap};
 
-use frame_support::{
+use topsoil_support::{
 	assert_noop, assert_ok, derive_impl, parameter_types,
 	traits::{ConstU32, ConstU64, Contains, Polling, VoteTally},
 };
 use soil_runtime::BuildStorage;
 
 use super::*;
-use crate as pallet_conviction_voting;
+use crate as topsoil_conviction_voting;
 
-type Block = frame_system::mocking::MockBlock<Test>;
+type Block = topsoil_system::mocking::MockBlock<Test>;
 
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub enum Test
 	{
-		System: frame_system,
-		Balances: pallet_balances,
-		Voting: pallet_conviction_voting,
+		System: topsoil_system,
+		Balances: topsoil_balances,
+		Voting: topsoil_conviction_voting,
 	}
 );
 
@@ -43,19 +43,19 @@ frame_support::construct_runtime!(
 pub struct BaseFilter;
 impl Contains<RuntimeCall> for BaseFilter {
 	fn contains(call: &RuntimeCall) -> bool {
-		!matches!(call, &RuntimeCall::Balances(pallet_balances::Call::force_set_balance { .. }))
+		!matches!(call, &RuntimeCall::Balances(topsoil_balances::Call::force_set_balance { .. }))
 	}
 }
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
 	type BaseCallFilter = BaseFilter;
 	type Block = Block;
-	type AccountData = pallet_balances::AccountData<u64>;
+	type AccountData = topsoil_balances::AccountData<u64>;
 }
 
-#[derive_impl(pallet_balances::config_preludes::TestDefaultConfig)]
-impl pallet_balances::Config for Test {
+#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
+impl topsoil_balances::Config for Test {
 	type AccountStore = System;
 }
 
@@ -141,7 +141,7 @@ impl Polling<TallyOf<Test>> for TestPolls {
 			Some(Ongoing(..)) => {},
 			_ => return Err(()),
 		}
-		let now = frame_system::Pallet::<Test>::block_number();
+		let now = topsoil_system::Pallet::<Test>::block_number();
 		polls.insert(index, Completed(now, approved));
 		Polls::set(polls);
 		Ok(())
@@ -150,19 +150,19 @@ impl Polling<TallyOf<Test>> for TestPolls {
 
 impl Config for Test {
 	type RuntimeEvent = RuntimeEvent;
-	type Currency = pallet_balances::Pallet<Self>;
+	type Currency = topsoil_balances::Pallet<Self>;
 	type VoteLockingPeriod = ConstU64<3>;
 	type MaxVotes = ConstU32<3>;
 	type WeightInfo = ();
-	type MaxTurnout = frame_support::traits::TotalIssuanceOf<Balances, Self::AccountId>;
+	type MaxTurnout = topsoil_support::traits::TotalIssuanceOf<Balances, Self::AccountId>;
 	type Polls = TestPolls;
 	type BlockNumberProvider = System;
 	type VotingHooks = HooksHandler;
 }
 
 pub fn new_test_ext() -> soil_io::TestExternalities {
-	let mut t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
-	pallet_balances::GenesisConfig::<Test> {
+	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	topsoil_balances::GenesisConfig::<Test> {
 		balances: vec![(1, 10), (2, 20), (3, 30), (4, 40), (5, 50), (6, 60)],
 		..Default::default()
 	}
@@ -177,7 +177,7 @@ pub fn new_test_ext() -> soil_io::TestExternalities {
 fn params_should_work() {
 	new_test_ext().execute_with(|| {
 		assert_eq!(Balances::free_balance(42), 0);
-		assert_eq!(pallet_balances::TotalIssuance::<Test>::get(), 210);
+		assert_eq!(topsoil_balances::TotalIssuance::<Test>::get(), 210);
 	});
 }
 

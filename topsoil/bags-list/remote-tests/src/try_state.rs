@@ -16,7 +16,7 @@
 
 //! Test to execute the sanity-check of the voter bag.
 
-use frame_support::{
+use topsoil_support::{
 	storage::generator::StorageMap,
 	traits::{Get, PalletInfoAccess},
 };
@@ -29,18 +29,18 @@ pub async fn execute<Runtime, Block>(
 	currency_name: &'static str,
 	ws_url: String,
 ) where
-	Runtime: crate::RuntimeT<pallet_bags_list::Instance1>,
+	Runtime: crate::RuntimeT<topsoil_bags_list::Instance1>,
 	Block: BlockT + DeserializeOwned,
 	Block::Header: DeserializeOwned,
 {
 	let mut ext = Builder::<Block>::new()
 		.mode(Mode::Online(OnlineConfig {
 			transport_uris: vec![ws_url.to_string()],
-			pallets: vec![pallet_bags_list::Pallet::<Runtime, pallet_bags_list::Instance1>::name()
+			pallets: vec![topsoil_bags_list::Pallet::<Runtime, topsoil_bags_list::Instance1>::name()
 				.to_string()],
 			hashed_prefixes: vec![
-				<pallet_staking::Bonded<Runtime>>::prefix_hash().to_vec(),
-				<pallet_staking::Ledger<Runtime>>::prefix_hash().to_vec(),
+				<topsoil_staking::Bonded<Runtime>>::prefix_hash().to_vec(),
+				<topsoil_staking::Ledger<Runtime>>::prefix_hash().to_vec(),
 			],
 			..Default::default()
 		}))
@@ -51,7 +51,7 @@ pub async fn execute<Runtime, Block>(
 	ext.execute_with(|| {
 		soil_core::crypto::set_default_ss58_version(Runtime::SS58Prefix::get().try_into().unwrap());
 
-		pallet_bags_list::Pallet::<Runtime, pallet_bags_list::Instance1>::do_try_state().unwrap();
+		topsoil_bags_list::Pallet::<Runtime, topsoil_bags_list::Instance1>::do_try_state().unwrap();
 
 		log::info!(target: crate::LOG_TARGET, "executed bags-list sanity check with no errors.");
 

@@ -39,8 +39,8 @@ extern crate alloc;
 
 use alloc::{vec, vec::Vec};
 use blake2::{Blake2b512, Digest};
-use frame_support::{pallet_prelude::*, weights::WeightMeter, DefaultNoBound};
-use frame_system::pallet_prelude::*;
+use topsoil_support::{pallet_prelude::*, weights::WeightMeter, DefaultNoBound};
+use topsoil_system::pallet_prelude::*;
 use soil_io::hashing::twox_256;
 use soil_runtime::{traits::Zero, FixedPointNumber, FixedU64};
 
@@ -54,15 +54,15 @@ pub const MAX_TRASH_DATA_ENTRIES: u32 = 65_000;
 /// Hard limit for any other resource limit (in units).
 pub const RESOURCE_HARD_LIMIT: FixedU64 = FixedU64::from_u32(10);
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
 
 	#[pallet::config]
-	pub trait Config: frame_system::Config {
+	pub trait Config: topsoil_system::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// The admin origin that can set computational limits and initialize the pallet.
 		type AdminOrigin: EnsureOrigin<Self::RuntimeOrigin>;

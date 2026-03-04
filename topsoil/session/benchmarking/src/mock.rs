@@ -20,11 +20,11 @@
 #![cfg(test)]
 
 use codec::Encode;
-use frame_election_provider_support::{
+use topsoil_election_provider_support::{
 	bounds::{ElectionBounds, ElectionBoundsBuilder},
 	onchain, SequentialPhragmen,
 };
-use frame_support::{
+use topsoil_support::{
 	derive_impl, parameter_types,
 	traits::{ConstU32, ConstU64},
 };
@@ -33,44 +33,44 @@ use soil_runtime::{traits::IdentityLookup, BuildStorage, KeyTypeId};
 type AccountId = u64;
 type Nonce = u32;
 
-type Block = frame_system::mocking::MockBlock<Test>;
+type Block = topsoil_system::mocking::MockBlock<Test>;
 
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub enum Test
 	{
-		System: frame_system,
-		Balances: pallet_balances,
-		Staking: pallet_staking,
-		Session: pallet_session,
-		Historical: pallet_session::historical
+		System: topsoil_system,
+		Balances: topsoil_balances,
+		Staking: topsoil_staking,
+		Session: topsoil_session,
+		Historical: topsoil_session::historical
 	}
 );
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
 	type Nonce = Nonce;
 	type AccountId = AccountId;
 	type Lookup = IdentityLookup<Self::AccountId>;
 	type Block = Block;
-	type AccountData = pallet_balances::AccountData<u64>;
+	type AccountData = topsoil_balances::AccountData<u64>;
 }
 
-#[derive_impl(pallet_balances::config_preludes::TestDefaultConfig)]
-impl pallet_balances::Config for Test {
+#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
+impl topsoil_balances::Config for Test {
 	type ExistentialDeposit = ConstU64<10>;
 	type AccountStore = System;
 }
 
-impl pallet_timestamp::Config for Test {
+impl topsoil_timestamp::Config for Test {
 	type Moment = u64;
 	type OnTimestampSet = ();
 	type MinimumPeriod = ConstU64<5>;
 	type WeightInfo = ();
 }
-impl pallet_session::historical::Config for Test {
+impl topsoil_session::historical::Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type FullIdentification = ();
-	type FullIdentificationOf = pallet_staking::UnitIdentificationOf<Self>;
+	type FullIdentificationOf = topsoil_staking::UnitIdentificationOf<Self>;
 }
 
 soil_runtime::impl_opaque_keys! {
@@ -80,7 +80,7 @@ soil_runtime::impl_opaque_keys! {
 }
 
 pub struct TestSessionHandler;
-impl pallet_session::SessionHandler<AccountId> for TestSessionHandler {
+impl topsoil_session::SessionHandler<AccountId> for TestSessionHandler {
 	// corresponds to the opaque key id above
 	const KEY_TYPE_IDS: &'static [KeyTypeId] = &[KeyTypeId([100u8, 117u8, 109u8, 121u8])];
 
@@ -96,11 +96,11 @@ impl pallet_session::SessionHandler<AccountId> for TestSessionHandler {
 	fn on_disabled(_: u32) {}
 }
 
-impl pallet_session::Config for Test {
-	type SessionManager = pallet_session::historical::NoteHistoricalRoot<Test, Staking>;
+impl topsoil_session::Config for Test {
+	type SessionManager = topsoil_session::historical::NoteHistoricalRoot<Test, Staking>;
 	type Keys = SessionKeys;
-	type ShouldEndSession = pallet_session::PeriodicSessions<(), ()>;
-	type NextSessionRotation = pallet_session::PeriodicSessions<(), ()>;
+	type ShouldEndSession = topsoil_session::PeriodicSessions<(), ()>;
+	type NextSessionRotation = topsoil_session::PeriodicSessions<(), ()>;
 	type SessionHandler = TestSessionHandler;
 	type RuntimeEvent = RuntimeEvent;
 	type ValidatorId = AccountId;
@@ -112,7 +112,7 @@ impl pallet_session::Config for Test {
 	// the validator before setting session keys; see `ensure_can_pay_key_deposit`.
 	type KeyDeposit = ConstU64<2000000000>;
 }
-pallet_staking_reward_curve::build! {
+topsoil_staking_reward_curve::build! {
 	const I_NPOS: soil_runtime::curve::PiecewiseLinear<'static> = curve!(
 		min_inflation: 0_025_000,
 		max_inflation: 0_100_000,
@@ -140,20 +140,20 @@ impl onchain::Config for OnChainSeqPhragmen {
 	type Bounds = ElectionsBounds;
 }
 
-#[derive_impl(pallet_staking::config_preludes::TestDefaultConfig)]
-impl pallet_staking::Config for Test {
+#[derive_impl(topsoil_staking::config_preludes::TestDefaultConfig)]
+impl topsoil_staking::Config for Test {
 	type OldCurrency = Balances;
 	type Currency = Balances;
-	type CurrencyBalance = <Self as pallet_balances::Config>::Balance;
-	type UnixTime = pallet_timestamp::Pallet<Self>;
-	type AdminOrigin = frame_system::EnsureRoot<Self::AccountId>;
+	type CurrencyBalance = <Self as topsoil_balances::Config>::Balance;
+	type UnixTime = topsoil_timestamp::Pallet<Self>;
+	type AdminOrigin = topsoil_system::EnsureRoot<Self::AccountId>;
 	type SessionInterface = Self;
-	type EraPayout = pallet_staking::ConvertCurve<RewardCurve>;
+	type EraPayout = topsoil_staking::ConvertCurve<RewardCurve>;
 	type NextNewSession = Session;
 	type ElectionProvider = onchain::OnChainExecution<OnChainSeqPhragmen>;
 	type GenesisElectionProvider = Self::ElectionProvider;
-	type VoterList = pallet_staking::UseNominatorsAndValidatorsMap<Self>;
-	type TargetList = pallet_staking::UseValidatorsMap<Self>;
+	type VoterList = topsoil_staking::UseNominatorsAndValidatorsMap<Self>;
+	type TargetList = topsoil_staking::UseValidatorsMap<Self>;
 }
 
 impl crate::Config for Test {
@@ -165,6 +165,6 @@ impl crate::Config for Test {
 }
 
 pub fn new_test_ext() -> soil_io::TestExternalities {
-	let t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	soil_io::TestExternalities::new(t)
 }

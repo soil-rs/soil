@@ -31,7 +31,7 @@ extern crate alloc;
 use alloc::vec::Vec;
 use codec::Encode;
 use core::marker::PhantomData;
-use frame_support::weights::Weight;
+use topsoil_support::weights::Weight;
 use soil_runtime::{traits::Hash, Perbill};
 use soil_staking::{
 	offence::{Kind, Offence, OffenceDetails, OffenceError, OnOffenceHandler, ReportOffence},
@@ -44,14 +44,14 @@ pub use pallet::*;
 type OpaqueTimeSlot = Vec<u8>;
 
 /// A type alias for a report identifier.
-type ReportIdOf<T> = <T as frame_system::Config>::Hash;
+type ReportIdOf<T> = <T as topsoil_system::Config>::Hash;
 
 const LOG_TARGET: &str = "runtime::offences";
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
-	use frame_support::pallet_prelude::*;
+	use topsoil_support::pallet_prelude::*;
 
 	const STORAGE_VERSION: StorageVersion = StorageVersion::new(1);
 
@@ -62,10 +62,10 @@ pub mod pallet {
 
 	/// The pallet's config trait.
 	#[pallet::config]
-	pub trait Config: frame_system::Config {
+	pub trait Config: topsoil_system::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 		/// Full identification of the validator.
 		type IdentificationTuple: Parameter;
 		/// A handler called for every offence report.

@@ -18,7 +18,7 @@
 //! Home of the parsing and expansion code for the new pallet benchmarking syntax
 
 use derive_syn_parse::Parse;
-use frame_support_procedural_tools::generate_access_from_frame_or_crate;
+use topsoil_support_procedural_tools::generate_access_from_frame_or_crate;
 use proc_macro::TokenStream;
 use proc_macro2::{Ident, Span, TokenStream as TokenStream2};
 use quote::{quote, quote_spanned, ToTokens};
@@ -479,7 +479,7 @@ pub fn benchmarks(
 	tokens: TokenStream,
 	instance: bool,
 ) -> syn::Result<TokenStream> {
-	let krate = generate_access_from_frame_or_crate("frame-benchmarking")?;
+	let krate = generate_access_from_frame_or_crate("topsoil-benchmarking")?;
 	// gather module info
 	let module: ItemMod = syn::parse(tokens)?;
 	let mod_span = module.span();
@@ -590,7 +590,7 @@ pub fn benchmarks(
 		true => quote!(T, I),
 	};
 
-	let frame_system = generate_access_from_frame_or_crate("frame-system")?;
+	let topsoil_system = generate_access_from_frame_or_crate("topsoil-system")?;
 
 	// benchmark name variables
 	let benchmark_names_str: Vec<String> = benchmark_names.iter().map(|n| n.to_string()).collect();
@@ -689,7 +689,7 @@ pub fn benchmarks(
 			}
 			#[cfg(any(feature = "runtime-benchmarks", test))]
 			impl<#type_use_generics> #krate::Benchmarking for Pallet<#type_use_generics>
-			where T: #frame_system::Config,#where_clause
+			where T: #topsoil_system::Config,#where_clause
 			{
 				fn benchmarks(
 					extra: bool,
@@ -748,7 +748,7 @@ pub fn benchmarks(
 						_ => return Err("Could not find extrinsic.".into()),
 					};
 					let mut whitelist = whitelist.to_vec();
-					let whitelisted_caller_key = <#frame_system::Account<
+					let whitelisted_caller_key = <#topsoil_system::Account<
 						T,
 					> as #krate::__private::storage::StorageMap<_, _,>>::hashed_key_for(
 						#krate::whitelisted_caller::<T::AccountId>()
@@ -774,8 +774,8 @@ pub fn benchmarks(
 
 					let on_before_start = || {
 						// Set the block number to at least 1 so events are deposited.
-						if #krate::__private::Zero::is_zero(&#frame_system::Pallet::<T>::block_number()) {
-							#frame_system::Pallet::<T>::set_block_number(1u32.into());
+						if #krate::__private::Zero::is_zero(&#topsoil_system::Pallet::<T>::block_number()) {
+							#topsoil_system::Pallet::<T>::set_block_number(1u32.into());
 						}
 
 						// Commit the externalities to the database, flushing the DB cache.
@@ -855,7 +855,7 @@ pub fn benchmarks(
 			}
 
 			#[cfg(test)]
-			impl<#type_use_generics> Pallet<#type_use_generics> where T: #frame_system::Config, #where_clause {
+			impl<#type_use_generics> Pallet<#type_use_generics> where T: #topsoil_system::Config, #where_clause {
 				/// Test a particular benchmark by name.
 				///
 				/// This isn't called `test_benchmark_by_name` just in case some end-user eventually
@@ -922,11 +922,11 @@ fn expand_benchmark(
 	where_clause: TokenStream2,
 ) -> TokenStream2 {
 	// set up variables needed during quoting
-	let krate = match generate_access_from_frame_or_crate("frame-benchmarking") {
+	let krate = match generate_access_from_frame_or_crate("topsoil-benchmarking") {
 		Ok(ident) => ident,
 		Err(err) => return err.to_compile_error().into(),
 	};
-	let frame_system = match generate_access_from_frame_or_crate("frame-system") {
+	let topsoil_system = match generate_access_from_frame_or_crate("topsoil-system") {
 		Ok(path) => path,
 		Err(err) => return err.to_compile_error().into(),
 	};
@@ -965,11 +965,11 @@ fn expand_benchmark(
 				Expr::Cast(t) => {
 					let ty = t.ty.clone();
 					quote_spanned! { origin.span() =>
-						<<T as #frame_system::Config>::RuntimeOrigin as From<#ty>>::from(#origin);
+						<<T as #topsoil_system::Config>::RuntimeOrigin as From<#ty>>::from(#origin);
 					}
 				},
 				_ => quote_spanned! { origin.span() =>
-					Into::<<T as #frame_system::Config>::RuntimeOrigin>::into(#origin);
+					Into::<<T as #topsoil_system::Config>::RuntimeOrigin>::into(#origin);
 				},
 			};
 
@@ -1136,7 +1136,7 @@ fn expand_benchmark(
 		}
 
 		#[cfg(test)]
-		impl<#type_use_generics> Pallet<#type_use_generics> where T: #frame_system::Config, #where_clause {
+		impl<#type_use_generics> Pallet<#type_use_generics> where T: #topsoil_system::Config, #where_clause {
 			#[allow(unused)]
 			fn #test_ident() -> Result<(), #krate::BenchmarkError> {
 				let selected_benchmark = SelectedBenchmark::#name;
@@ -1151,8 +1151,8 @@ fn expand_benchmark(
 
 					let on_before_start = || {
 						// Set the block number to at least 1 so events are deposited.
-						if #krate::__private::Zero::is_zero(&#frame_system::Pallet::<T>::block_number()) {
-							#frame_system::Pallet::<T>::set_block_number(1u32.into());
+						if #krate::__private::Zero::is_zero(&#topsoil_system::Pallet::<T>::block_number()) {
+							#topsoil_system::Pallet::<T>::set_block_number(1u32.into());
 						}
 					};
 

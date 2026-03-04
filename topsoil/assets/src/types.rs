@@ -18,7 +18,7 @@
 //! Various basic types for use in the assets pallet.
 
 use super::*;
-use frame_support::{
+use topsoil_support::{
 	pallet_prelude::*,
 	traits::{fungible, tokens::ConversionToAssetBalance},
 };
@@ -317,8 +317,8 @@ pub enum ConversionError {
 	AssetNotSufficient,
 }
 
-// Type alias for `frame_system`'s account id.
-type AccountIdOf<T> = <T as frame_system::Config>::AccountId;
+// Type alias for `topsoil_system`'s account id.
+type AccountIdOf<T> = <T as topsoil_system::Config>::AccountId;
 // This pallet's asset id and balance type.
 type AssetIdOf<T, I> = <T as Config<I>>::AssetId;
 type AssetBalanceOf<T, I> = <T as Config<I>>::Balance;

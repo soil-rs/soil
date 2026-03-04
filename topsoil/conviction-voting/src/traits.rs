@@ -19,7 +19,7 @@
 
 use crate::AccountVote;
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
-use frame_support::dispatch::DispatchResult;
+use topsoil_support::dispatch::DispatchResult;
 use scale_info::TypeInfo;
 use Debug;
 

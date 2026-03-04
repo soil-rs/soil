@@ -18,9 +18,9 @@
 
 #![cfg(any(test, feature = "runtime-benchmarks"))]
 
-use crate as pallet_meta_tx;
+use crate as topsoil_meta_tx;
 use crate::*;
-use frame_support::{
+use topsoil_support::{
 	construct_runtime, derive_impl,
 	weights::{FixedFee, NoFee},
 };
@@ -50,39 +50,39 @@ mod tx_ext {
 		soil_runtime::generic::UncheckedExtrinsic<AccountId, RuntimeCall, Signature, TxExtension>;
 
 	/// Transaction extension.
-	pub type TxExtension = (pallet_verify_signature::VerifySignature<Runtime>, TxBareExtension);
+	pub type TxExtension = (topsoil_verify_signature::VerifySignature<Runtime>, TxBareExtension);
 
 	/// Transaction extension without signature information.
 	///
 	/// Helper type used to decode the part of the extension which should be signed.
 	pub type TxBareExtension = (
-		frame_system::CheckNonZeroSender<Runtime>,
-		frame_system::CheckSpecVersion<Runtime>,
-		frame_system::CheckTxVersion<Runtime>,
-		frame_system::CheckGenesis<Runtime>,
-		frame_system::CheckMortality<Runtime>,
-		frame_system::CheckNonce<Runtime>,
-		frame_system::CheckWeight<Runtime>,
-		pallet_transaction_payment::ChargeTransactionPayment<Runtime>,
+		topsoil_system::CheckNonZeroSender<Runtime>,
+		topsoil_system::CheckSpecVersion<Runtime>,
+		topsoil_system::CheckTxVersion<Runtime>,
+		topsoil_system::CheckGenesis<Runtime>,
+		topsoil_system::CheckMortality<Runtime>,
+		topsoil_system::CheckNonce<Runtime>,
+		topsoil_system::CheckWeight<Runtime>,
+		topsoil_transaction_payment::ChargeTransactionPayment<Runtime>,
 	);
 
 	pub const META_EXTENSION_VERSION: ExtensionVersion = 0;
 
 	/// Meta transaction extension.
 	pub type MetaTxExtension =
-		(pallet_verify_signature::VerifySignature<Runtime>, MetaTxBareExtension);
+		(topsoil_verify_signature::VerifySignature<Runtime>, MetaTxBareExtension);
 
 	/// Meta transaction extension without signature information.
 	///
 	/// Helper type used to decode the part of the extension which should be signed.
 	pub type MetaTxBareExtension = (
 		MetaTxMarker<Runtime>,
-		frame_system::CheckNonZeroSender<Runtime>,
-		frame_system::CheckSpecVersion<Runtime>,
-		frame_system::CheckTxVersion<Runtime>,
-		frame_system::CheckGenesis<Runtime>,
-		frame_system::CheckMortality<Runtime>,
-		frame_system::CheckNonce<Runtime>,
+		topsoil_system::CheckNonZeroSender<Runtime>,
+		topsoil_system::CheckSpecVersion<Runtime>,
+		topsoil_system::CheckTxVersion<Runtime>,
+		topsoil_system::CheckGenesis<Runtime>,
+		topsoil_system::CheckMortality<Runtime>,
+		topsoil_system::CheckNonce<Runtime>,
 	);
 }
 
@@ -92,7 +92,7 @@ impl Config for Runtime {
 	type Extension = MetaTxExtension;
 }
 
-impl pallet_verify_signature::Config for Runtime {
+impl topsoil_verify_signature::Config for Runtime {
 	type Signature = MultiSignature;
 	type AccountIdentifier = <Signature as Verify>::Signer;
 	type WeightInfo = ();
@@ -100,26 +100,26 @@ impl pallet_verify_signature::Config for Runtime {
 	type BenchmarkHelper = ();
 }
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Runtime {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Runtime {
 	type AccountId = AccountId;
 	type Lookup = IdentityLookup<Self::AccountId>;
-	type Block = frame_system::mocking::MockBlock<Runtime>;
-	type AccountData = pallet_balances::AccountData<<Self as pallet_balances::Config>::Balance>;
+	type Block = topsoil_system::mocking::MockBlock<Runtime>;
+	type AccountData = topsoil_balances::AccountData<<Self as topsoil_balances::Config>::Balance>;
 }
 
-#[derive_impl(pallet_balances::config_preludes::TestDefaultConfig)]
-impl pallet_balances::Config for Runtime {
+#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
+impl topsoil_balances::Config for Runtime {
 	type ReserveIdentifier = [u8; 8];
 	type AccountStore = System;
 }
 
 pub const TX_FEE: u32 = 10;
 
-impl pallet_transaction_payment::Config for Runtime {
+impl topsoil_transaction_payment::Config for Runtime {
 	type WeightInfo = ();
 	type RuntimeEvent = RuntimeEvent;
-	type OnChargeTransaction = pallet_transaction_payment::FungibleAdapter<Balances, ()>;
+	type OnChargeTransaction = topsoil_transaction_payment::FungibleAdapter<Balances, ()>;
 	type OperationalFeeMultiplier = ConstU8<1>;
 	type WeightToFee = FixedFee<TX_FEE, Balance>;
 	type LengthToFee = NoFee<Balance>;
@@ -128,18 +128,18 @@ impl pallet_transaction_payment::Config for Runtime {
 
 construct_runtime!(
 	pub enum Runtime {
-		System: frame_system,
-		Balances: pallet_balances,
-		MetaTx: pallet_meta_tx,
-		TxPayment: pallet_transaction_payment,
-		VerifySignature: pallet_verify_signature,
+		System: topsoil_system,
+		Balances: topsoil_balances,
+		MetaTx: topsoil_meta_tx,
+		TxPayment: topsoil_transaction_payment,
+		VerifySignature: topsoil_verify_signature,
 	}
 );
 
 pub(crate) fn new_test_ext() -> soil_io::TestExternalities {
 	let mut ext = soil_io::TestExternalities::new(Default::default());
 	ext.execute_with(|| {
-		frame_system::GenesisConfig::<Runtime>::default().build();
+		topsoil_system::GenesisConfig::<Runtime>::default().build();
 		System::set_block_number(1);
 	});
 	ext.register_extension(KeystoreExt::new(MemoryKeystore::new()));

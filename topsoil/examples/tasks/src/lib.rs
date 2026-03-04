@@ -18,10 +18,10 @@
 //! This pallet demonstrates the use of the `pallet::task` api for service work.
 #![cfg_attr(not(feature = "std"), no_std)]
 
-use frame_support::dispatch::DispatchResult;
-use frame_system::offchain::CreateBare;
+use topsoil_support::dispatch::DispatchResult;
+use topsoil_system::offchain::CreateBare;
 #[cfg(feature = "experimental")]
-use frame_system::offchain::SubmitTransaction;
+use topsoil_system::offchain::SubmitTransaction;
 // Re-export pallet items so that they can be accessed from the crate namespace.
 pub use pallet::*;
 
@@ -35,13 +35,13 @@ pub mod weights;
 pub use weights::*;
 
 #[cfg(feature = "experimental")]
-const LOG_TARGET: &str = "pallet-example-tasks";
+const LOG_TARGET: &str = "topsoil-example-tasks";
 
-#[frame_support::pallet(dev_mode)]
+#[topsoil_support::pallet(dev_mode)]
 pub mod pallet {
 	use super::*;
-	use frame_support::pallet_prelude::*;
-	use frame_system::pallet_prelude::*;
+	use topsoil_support::pallet_prelude::*;
+	use topsoil_system::pallet_prelude::*;
 
 	#[pallet::error]
 	pub enum Error<T> {
@@ -74,11 +74,11 @@ pub mod pallet {
 				// Create a valid task
 				let task = Task::<T>::AddNumberIntoTotal { i: key };
 				let runtime_task = <T as Config>::RuntimeTask::from(task);
-				let call = frame_system::Call::<T>::do_task { task: runtime_task.into() };
+				let call = topsoil_system::Call::<T>::do_task { task: runtime_task.into() };
 
 				// Submit the task as an unsigned transaction
-				let xt = <T as CreateBare<frame_system::Call<T>>>::create_bare(call.into());
-				let res = SubmitTransaction::<T, frame_system::Call<T>>::submit_transaction(xt);
+				let xt = <T as CreateBare<topsoil_system::Call<T>>>::create_bare(call.into());
+				let res = SubmitTransaction::<T, topsoil_system::Call<T>>::submit_transaction(xt);
 				match res {
 					Ok(_) => log::info!(target: LOG_TARGET, "Submitted the task."),
 					Err(e) => log::error!(target: LOG_TARGET, "Error submitting task: {:?}", e),
@@ -91,9 +91,9 @@ pub mod pallet {
 	}
 
 	#[pallet::config]
-	pub trait Config: CreateBare<frame_system::Call<Self>> + frame_system::Config {
-		type RuntimeTask: frame_support::traits::Task
-			+ IsType<<Self as frame_system::Config>::RuntimeTask>
+	pub trait Config: CreateBare<topsoil_system::Call<Self>> + topsoil_system::Config {
+		type RuntimeTask: topsoil_support::traits::Task
+			+ IsType<<Self as topsoil_system::Config>::RuntimeTask>
 			+ From<Task<Self>>;
 		type WeightInfo: WeightInfo;
 	}

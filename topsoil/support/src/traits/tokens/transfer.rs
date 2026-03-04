@@ -19,14 +19,14 @@
 
 use crate::pallet_prelude::{Decode, Encode};
 use core::fmt::Debug;
-use frame_support::traits::tokens::PaymentStatus;
+use topsoil_support::traits::tokens::PaymentStatus;
 use scale_info::TypeInfo;
 use soil_runtime::codec::{FullCodec, MaxEncodedLen};
 
 /// Is intended to be implemented using a `fungible` impl, but can also be implemented with
 /// XCM/Asset and made generic over assets.
 ///
-/// It is similar to the `frame_support::traits::tokens::Pay`, but it offers a variable source
+/// It is similar to the `topsoil_support::traits::tokens::Pay`, but it offers a variable source
 /// account for the payment.
 pub trait Transfer {
 	/// The type by which we measure units of the currency in which we make payments.

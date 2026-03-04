@@ -18,7 +18,7 @@
 use crate::CheckMetadataHash;
 use codec::{Decode, Encode};
 use frame_metadata::RuntimeMetadataPrefixed;
-use frame_support::{
+use topsoil_support::{
 	derive_impl,
 	pallet_prelude::{InvalidTransaction, TransactionValidityError},
 };
@@ -35,16 +35,16 @@ use substrate_test_runtime_client::{
 	DefaultTestClientBuilderExt, TestClientBuilder,
 };
 
-type Block = frame_system::mocking::MockBlock<Test>;
+type Block = topsoil_system::mocking::MockBlock<Test>;
 
-frame_support::construct_runtime! {
+topsoil_support::construct_runtime! {
 	pub enum Test {
-		System: frame_system,
+		System: topsoil_system,
 	}
 }
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
 	type Block = Block;
 }
 
@@ -126,26 +126,26 @@ mod docs {
 
 	#[docify::export]
 	mod add_metadata_hash_extension {
-		frame_support::construct_runtime! {
+		topsoil_support::construct_runtime! {
 			pub enum Runtime {
-				System: frame_system,
+				System: topsoil_system,
 			}
 		}
 
 		/// The `TransactionExtension` to the basic transaction logic.
 		pub type TxExtension = (
-			frame_system::AuthorizeCall<Runtime>,
-			frame_system::CheckNonZeroSender<Runtime>,
-			frame_system::CheckSpecVersion<Runtime>,
-			frame_system::CheckTxVersion<Runtime>,
-			frame_system::CheckGenesis<Runtime>,
-			frame_system::CheckMortality<Runtime>,
-			frame_system::CheckNonce<Runtime>,
-			frame_system::CheckWeight<Runtime>,
+			topsoil_system::AuthorizeCall<Runtime>,
+			topsoil_system::CheckNonZeroSender<Runtime>,
+			topsoil_system::CheckSpecVersion<Runtime>,
+			topsoil_system::CheckTxVersion<Runtime>,
+			topsoil_system::CheckGenesis<Runtime>,
+			topsoil_system::CheckMortality<Runtime>,
+			topsoil_system::CheckNonce<Runtime>,
+			topsoil_system::CheckWeight<Runtime>,
 			// Add the `CheckMetadataHash` extension.
 			// The position in this list is not important, so we could also add it to beginning.
-			frame_metadata_hash_extension::CheckMetadataHash<Runtime>,
-			frame_system::WeightReclaim<Runtime>,
+			topsoil_metadata_hash_extension::CheckMetadataHash<Runtime>,
+			topsoil_system::WeightReclaim<Runtime>,
 		);
 
 		/// In your runtime this will be your real address type.
@@ -159,8 +159,8 @@ mod docs {
 	}
 
 	// Put here to not have it in the docs as well.
-	#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-	impl frame_system::Config for add_metadata_hash_extension::Runtime {
+	#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+	impl topsoil_system::Config for add_metadata_hash_extension::Runtime {
 		type Block = Block;
 		type RuntimeEvent = add_metadata_hash_extension::RuntimeEvent;
 		type RuntimeOrigin = add_metadata_hash_extension::RuntimeOrigin;

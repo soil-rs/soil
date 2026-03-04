@@ -73,11 +73,11 @@ impl<T: Decode + Sized> Iterator for StorageIterator<T> {
 			break match maybe_next {
 				Some(next) => {
 					self.previous_key = next.clone();
-					let maybe_value = frame_support::storage::unhashed::get::<T>(&next);
+					let maybe_value = topsoil_support::storage::unhashed::get::<T>(&next);
 					match maybe_value {
 						Some(value) => {
 							if self.drain {
-								frame_support::storage::unhashed::kill(&next);
+								topsoil_support::storage::unhashed::kill(&next);
 							}
 							Some((self.previous_key[self.prefix.len()..].to_vec(), value))
 						},
@@ -141,11 +141,11 @@ impl<K: Decode + Sized, T: Decode + Sized, H: ReversibleStorageHasher> Iterator
 					let mut key_material = H::reverse(&next[self.prefix.len()..]);
 					match K::decode(&mut key_material) {
 						Ok(key) => {
-							let maybe_value = frame_support::storage::unhashed::get::<T>(&next);
+							let maybe_value = topsoil_support::storage::unhashed::get::<T>(&next);
 							match maybe_value {
 								Some(value) => {
 									if self.drain {
-										frame_support::storage::unhashed::kill(&next);
+										topsoil_support::storage::unhashed::kill(&next);
 									}
 									Some((key, value))
 								},
@@ -229,7 +229,7 @@ pub fn get_storage_value<T: Decode + Sized>(module: &[u8], item: &[u8], hash: &[
 	let storage_prefix = storage_prefix(module, item);
 	key[0..32].copy_from_slice(&storage_prefix);
 	key[32..].copy_from_slice(hash);
-	frame_support::storage::unhashed::get::<T>(&key)
+	topsoil_support::storage::unhashed::get::<T>(&key)
 }
 
 /// Take a particular value in storage by the `module`, the map's `item` name and the key `hash`.
@@ -238,7 +238,7 @@ pub fn take_storage_value<T: Decode + Sized>(module: &[u8], item: &[u8], hash: &
 	let storage_prefix = storage_prefix(module, item);
 	key[0..32].copy_from_slice(&storage_prefix);
 	key[32..].copy_from_slice(hash);
-	frame_support::storage::unhashed::take::<T>(&key)
+	topsoil_support::storage::unhashed::take::<T>(&key)
 }
 
 /// Put a particular value into storage by the `module`, the map's `item` name and the key `hash`.
@@ -247,7 +247,7 @@ pub fn put_storage_value<T: Encode>(module: &[u8], item: &[u8], hash: &[u8], val
 	let storage_prefix = storage_prefix(module, item);
 	key[0..32].copy_from_slice(&storage_prefix);
 	key[32..].copy_from_slice(hash);
-	frame_support::storage::unhashed::put(&key, &value);
+	topsoil_support::storage::unhashed::put(&key, &value);
 }
 
 /// Remove all items under a storage prefix by the `module`, the map's `item` name and the key
@@ -258,7 +258,7 @@ pub fn remove_storage_prefix(module: &[u8], item: &[u8], hash: &[u8]) {
 	let storage_prefix = storage_prefix(module, item);
 	key[0..32].copy_from_slice(&storage_prefix);
 	key[32..].copy_from_slice(hash);
-	let _ = frame_support::storage::unhashed::clear_prefix(&key, None, None);
+	let _ = topsoil_support::storage::unhashed::clear_prefix(&key, None, None);
 }
 
 /// Attempt to remove all values under a storage prefix by the `module`, the map's `item` name and
@@ -288,7 +288,7 @@ pub fn clear_storage_prefix(
 	let storage_prefix = storage_prefix(module, item);
 	key[0..32].copy_from_slice(&storage_prefix);
 	key[32..].copy_from_slice(hash);
-	frame_support::storage::unhashed::clear_prefix(&key, maybe_limit, maybe_cursor)
+	topsoil_support::storage::unhashed::clear_prefix(&key, maybe_limit, maybe_cursor)
 }
 
 /// Take a particular item in storage by the `module`, the map's `item` name and the key `hash`.
@@ -314,7 +314,7 @@ pub fn take_storage_item<K: Encode + Sized, T: Decode + Sized, H: StorageHasher>
 /// If a pallet named "my_example" has 2 storages named "Foo" and "Bar" and the pallet is renamed
 /// "my_new_example_name", a migration can be:
 /// ```
-/// # use frame_support::storage::migration::move_storage_from_pallet;
+/// # use topsoil_support::storage::migration::move_storage_from_pallet;
 /// # soil_io::TestExternalities::new_empty().execute_with(|| {
 /// move_storage_from_pallet(b"Foo", b"my_example", b"my_new_example_name");
 /// move_storage_from_pallet(b"Bar", b"my_example", b"my_new_example_name");
@@ -351,7 +351,7 @@ pub fn move_storage_from_pallet(
 /// If a pallet named "my_example" has some storages and the pallet is renamed
 /// "my_new_example_name", a migration can be:
 /// ```
-/// # use frame_support::storage::migration::move_pallet;
+/// # use topsoil_support::storage::migration::move_pallet;
 /// # soil_io::TestExternalities::new_empty().execute_with(|| {
 /// move_pallet(b"my_example", b"my_new_example_name");
 /// # })
@@ -397,7 +397,7 @@ mod tests {
 	use soil_io::TestExternalities;
 
 	struct OldPalletStorageValuePrefix;
-	impl frame_support::traits::StorageInstance for OldPalletStorageValuePrefix {
+	impl topsoil_support::traits::StorageInstance for OldPalletStorageValuePrefix {
 		const STORAGE_PREFIX: &'static str = "foo_value";
 		fn pallet_prefix() -> &'static str {
 			"my_old_pallet"
@@ -406,7 +406,7 @@ mod tests {
 	type OldStorageValue = StorageValue<OldPalletStorageValuePrefix, u32>;
 
 	struct OldPalletStorageMapPrefix;
-	impl frame_support::traits::StorageInstance for OldPalletStorageMapPrefix {
+	impl topsoil_support::traits::StorageInstance for OldPalletStorageMapPrefix {
 		const STORAGE_PREFIX: &'static str = "foo_map";
 		fn pallet_prefix() -> &'static str {
 			"my_old_pallet"
@@ -415,7 +415,7 @@ mod tests {
 	type OldStorageMap = StorageMap<OldPalletStorageMapPrefix, Twox64Concat, u32, u32>;
 
 	struct NewPalletStorageValuePrefix;
-	impl frame_support::traits::StorageInstance for NewPalletStorageValuePrefix {
+	impl topsoil_support::traits::StorageInstance for NewPalletStorageValuePrefix {
 		const STORAGE_PREFIX: &'static str = "foo_value";
 		fn pallet_prefix() -> &'static str {
 			"my_new_pallet"
@@ -424,7 +424,7 @@ mod tests {
 	type NewStorageValue = StorageValue<NewPalletStorageValuePrefix, u32>;
 
 	struct NewPalletStorageMapPrefix;
-	impl frame_support::traits::StorageInstance for NewPalletStorageMapPrefix {
+	impl topsoil_support::traits::StorageInstance for NewPalletStorageMapPrefix {
 		const STORAGE_PREFIX: &'static str = "foo_map";
 		fn pallet_prefix() -> &'static str {
 			"my_new_pallet"

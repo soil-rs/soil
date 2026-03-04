@@ -21,7 +21,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-//! Benchmarking setup for pallet-example-split
+//! Benchmarking setup for topsoil-example-split
 
 // Only enable this module for benchmarking.
 #![cfg(feature = "runtime-benchmarks")]
@@ -29,8 +29,8 @@ use super::*;
 
 #[allow(unused)]
 use crate::Pallet as Template;
-use frame_benchmarking::v2::*;
-use frame_system::RawOrigin;
+use topsoil_benchmarking::v2::*;
+use topsoil_system::RawOrigin;
 
 #[benchmarks]
 mod benchmarks {

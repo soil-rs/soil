@@ -19,8 +19,8 @@
 
 use alloc::vec::Vec;
 use codec::Codec;
-use frame_election_provider_support::{ElectionProvider, SortedListProvider, VoteWeight};
-use frame_support::{
+use topsoil_election_provider_support::{ElectionProvider, SortedListProvider, VoteWeight};
+use topsoil_support::{
 	pallet_prelude::*,
 	traits::{
 		fungible::{
@@ -33,7 +33,7 @@ use frame_support::{
 	weights::Weight,
 	BoundedVec,
 };
-use frame_system::{ensure_root, ensure_signed, pallet_prelude::*};
+use topsoil_system::{ensure_root, ensure_signed, pallet_prelude::*};
 use soil_runtime::{
 	traits::{SaturatedConversion, StaticLookup, Zero},
 	ArithmeticError, Perbill, Percent,
@@ -61,11 +61,11 @@ use crate::{
 // account which is not provided as an input. The value set should be conservative but sensible.
 pub(crate) const SPECULATIVE_NUM_SPANS: u32 = 32;
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
 	use codec::HasCompact;
-	use frame_election_provider_support::ElectionDataProvider;
+	use topsoil_election_provider_support::ElectionDataProvider;
 
 	use crate::{BenchmarkingConfig, PagedExposureMetadata};
 
@@ -88,7 +88,7 @@ pub mod pallet {
 	}
 
 	#[pallet::config(with_default)]
-	pub trait Config: frame_system::Config {
+	pub trait Config: topsoil_system::Config {
 		/// The old trait for staking balance. Deprecated and only used for migrating old ledgers.
 		#[pallet::no_default]
 		type OldCurrency: InspectLockableCurrency<
@@ -134,7 +134,7 @@ pub mod pallet {
 
 		/// Convert a balance into a number used for election calculation. This must fit into a
 		/// `u64` but is allowed to be sensibly lossy. The `u64` is used to communicate with the
-		/// [`frame_election_provider_support`] crate which accepts u64 numbers and does operations
+		/// [`topsoil_election_provider_support`] crate which accepts u64 numbers and does operations
 		/// in 128.
 		/// Consequently, the backward convert is used convert the u128s from sp-elections back to a
 		/// [`BalanceOf`].
@@ -192,7 +192,7 @@ pub mod pallet {
 		/// The overarching event type.
 		#[pallet::no_default_bounds]
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// Handler for the unbalanced reduction when slashing a staker.
 		#[pallet::no_default_bounds]
@@ -346,18 +346,18 @@ pub mod pallet {
 	/// Default implementations of [`DefaultConfig`], which can be used to implement [`Config`].
 	pub mod config_preludes {
 		use super::*;
-		use frame_support::{derive_impl, parameter_types, traits::ConstU32};
+		use topsoil_support::{derive_impl, parameter_types, traits::ConstU32};
 		pub struct TestDefaultConfig;
 
-		#[derive_impl(frame_system::config_preludes::TestDefaultConfig, no_aggregated_types)]
-		impl frame_system::DefaultConfig for TestDefaultConfig {}
+		#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig, no_aggregated_types)]
+		impl topsoil_system::DefaultConfig for TestDefaultConfig {}
 
 		parameter_types! {
 			pub const SessionsPerEra: SessionIndex = 3;
 			pub const BondingDuration: EraIndex = 3;
 		}
 
-		#[frame_support::register_default_impl(TestDefaultConfig)]
+		#[topsoil_support::register_default_impl(TestDefaultConfig)]
 		impl DefaultConfig for TestDefaultConfig {
 			#[inject_runtime_type]
 			type RuntimeEvent = ();
@@ -732,7 +732,7 @@ pub mod pallet {
 
 	/// The last planned session scheduled by the session pallet.
 	///
-	/// This is basically in sync with the call to [`pallet_session::SessionManager::new_session`].
+	/// This is basically in sync with the call to [`topsoil_session::SessionManager::new_session`].
 	#[pallet::storage]
 	pub type CurrentPlannedSession<T> = StorageValue<_, SessionIndex, ValueQuery>;
 
@@ -743,7 +743,7 @@ pub mod pallet {
 	pub type ChillThreshold<T: Config> = StorageValue<_, Percent, OptionQuery>;
 
 	#[pallet::genesis_config]
-	#[derive(frame_support::DefaultNoBound)]
+	#[derive(topsoil_support::DefaultNoBound)]
 	pub struct GenesisConfig<T: Config> {
 		pub validator_count: u32,
 		pub minimum_validator_count: u32,
@@ -789,12 +789,12 @@ pub mod pallet {
 					asset::free_to_stake::<T>(stash) >= balance,
 					"Stash does not have enough balance to bond."
 				);
-				frame_support::assert_ok!(<Pallet<T>>::bond(
+				topsoil_support::assert_ok!(<Pallet<T>>::bond(
 					T::RuntimeOrigin::from(Some(stash.clone()).into()),
 					balance,
 					RewardDestination::Staked,
 				));
-				frame_support::assert_ok!(match status {
+				topsoil_support::assert_ok!(match status {
 					crate::StakerStatus::Validator => <Pallet<T>>::validate(
 						T::RuntimeOrigin::from(Some(stash.clone()).into()),
 						Default::default(),

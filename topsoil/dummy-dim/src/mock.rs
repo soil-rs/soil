@@ -15,29 +15,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use frame_support::derive_impl;
-use frame_system::{offchain::CreateTransactionBase, pallet_prelude::ExtrinsicFor, EnsureRoot};
+use topsoil_support::derive_impl;
+use topsoil_system::{offchain::CreateTransactionBase, pallet_prelude::ExtrinsicFor, EnsureRoot};
 use soil_core::{ConstU16, ConstU32, ConstU64, H256};
 use soil_runtime::{
 	traits::{BlakeTwo256, IdentityLookup},
 	BuildStorage,
 };
 
-type Block = frame_system::mocking::MockBlock<Test>;
+type Block = topsoil_system::mocking::MockBlock<Test>;
 
 // Configure a mock runtime to test the pallet.
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub enum Test
 	{
-		System: frame_system,
-		People: pallet_people,
+		System: topsoil_system,
+		People: topsoil_people,
 		DummyDim: crate
 	}
 );
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
-	type BaseCallFilter = frame_support::traits::Everything;
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
+	type BaseCallFilter = topsoil_support::traits::Everything;
 	type BlockWeights = ();
 	type BlockLength = ();
 	type DbWeight = ();
@@ -59,10 +59,10 @@ impl frame_system::Config for Test {
 	type SystemWeightInfo = ();
 	type SS58Prefix = ConstU16<42>;
 	type OnSetCode = ();
-	type MaxConsumers = frame_support::traits::ConstU32<16>;
+	type MaxConsumers = topsoil_support::traits::ConstU32<16>;
 }
 
-impl pallet_people::Config for Test {
+impl topsoil_people::Config for Test {
 	type WeightInfo = ();
 	type RuntimeEvent = RuntimeEvent;
 	type Crypto = verifiable::demo_impls::Simple;
@@ -89,7 +89,7 @@ pub fn advance_to(b: u64) {
 	}
 }
 
-impl CreateTransactionBase<pallet_people::Call<Self>> for Test {
+impl CreateTransactionBase<topsoil_people::Call<Self>> for Test {
 	type Extrinsic = ExtrinsicFor<Test>;
 	type RuntimeCall = RuntimeCall;
 }
@@ -113,6 +113,6 @@ impl TestExt {
 }
 
 pub fn new_test_ext() -> soil_io::TestExternalities {
-	let c = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let c = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	soil_io::TestExternalities::from(c)
 }

@@ -17,7 +17,7 @@ use super::*;
 use crate::mock::{
 	pallet_dummy::Call, DummyExtension, PrepareCount, Runtime, RuntimeCall, ValidateCount,
 };
-use frame_support::dispatch::DispatchInfo;
+use topsoil_support::dispatch::DispatchInfo;
 use soil_runtime::{traits::DispatchTransaction, transaction_validity::TransactionSource};
 
 #[test]

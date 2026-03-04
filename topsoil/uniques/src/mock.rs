@@ -18,33 +18,33 @@
 //! Test environment for Uniques pallet.
 
 use super::*;
-use crate as pallet_uniques;
+use crate as topsoil_uniques;
 
-use frame_support::{
+use topsoil_support::{
 	construct_runtime, derive_impl,
 	traits::{AsEnsureOriginWithArg, ConstU32, ConstU64},
 };
 use soil_runtime::BuildStorage;
 
-type Block = frame_system::mocking::MockBlock<Test>;
+type Block = topsoil_system::mocking::MockBlock<Test>;
 
 construct_runtime!(
 	pub enum Test
 	{
-		System: frame_system,
-		Balances: pallet_balances,
-		Uniques: pallet_uniques,
+		System: topsoil_system,
+		Balances: topsoil_balances,
+		Uniques: topsoil_uniques,
 	}
 );
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
 	type Block = Block;
-	type AccountData = pallet_balances::AccountData<u64>;
+	type AccountData = topsoil_balances::AccountData<u64>;
 }
 
-#[derive_impl(pallet_balances::config_preludes::TestDefaultConfig)]
-impl pallet_balances::Config for Test {
+#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
+impl topsoil_balances::Config for Test {
 	type AccountStore = System;
 }
 
@@ -53,8 +53,8 @@ impl Config for Test {
 	type CollectionId = u32;
 	type ItemId = u32;
 	type Currency = Balances;
-	type CreateOrigin = AsEnsureOriginWithArg<frame_system::EnsureSigned<u64>>;
-	type ForceOrigin = frame_system::EnsureRoot<u64>;
+	type CreateOrigin = AsEnsureOriginWithArg<topsoil_system::EnsureSigned<u64>>;
+	type ForceOrigin = topsoil_system::EnsureRoot<u64>;
 	type Locker = ();
 	type CollectionDeposit = ConstU64<2>;
 	type ItemDeposit = ConstU64<1>;
@@ -70,7 +70,7 @@ impl Config for Test {
 }
 
 pub(crate) fn new_test_ext() -> soil_io::TestExternalities {
-	let t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 
 	let mut ext = soil_io::TestExternalities::new(t);
 	ext.execute_with(|| System::set_block_number(1));

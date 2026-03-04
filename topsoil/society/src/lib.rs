@@ -260,7 +260,7 @@ pub mod migrations;
 extern crate alloc;
 
 use alloc::vec::Vec;
-use frame_support::{
+use topsoil_support::{
 	impl_ensure_origin_with_arg_ignoring_arg,
 	pallet_prelude::*,
 	storage::KeyLenOf,
@@ -271,7 +271,7 @@ use frame_support::{
 	},
 	PalletId,
 };
-use frame_system::pallet_prelude::{
+use topsoil_system::pallet_prelude::{
 	ensure_signed, BlockNumberFor as SystemBlockNumberFor, OriginFor,
 };
 use rand_chacha::{
@@ -297,11 +297,11 @@ pub type BlockNumberFor<T, I> =
 	<<T as Config<I>>::BlockNumberProvider as BlockNumberProvider>::BlockNumber;
 
 pub type BalanceOf<T, I> =
-	<<T as Config<I>>::Currency as Currency<<T as frame_system::Config>::AccountId>>::Balance;
+	<<T as Config<I>>::Currency as Currency<<T as topsoil_system::Config>::AccountId>>::Balance;
 pub type NegativeImbalanceOf<T, I> = <<T as Config<I>>::Currency as Currency<
-	<T as frame_system::Config>::AccountId,
+	<T as topsoil_system::Config>::AccountId,
 >>::NegativeImbalance;
-pub type AccountIdLookupOf<T> = <<T as frame_system::Config>::Lookup as StaticLookup>::Source;
+pub type AccountIdLookupOf<T> = <<T as topsoil_system::Config>::Lookup as StaticLookup>::Source;
 
 #[derive(Encode, Decode, Copy, Clone, PartialEq, Eq, Debug, TypeInfo, MaxEncodedLen)]
 pub struct Vote {
@@ -457,7 +457,7 @@ pub struct IntakeRecord<AccountId, Balance> {
 }
 
 pub type IntakeRecordFor<T, I> =
-	IntakeRecord<<T as frame_system::Config>::AccountId, BalanceOf<T, I>>;
+	IntakeRecord<<T as topsoil_system::Config>::AccountId, BalanceOf<T, I>>;
 
 #[derive(
 	Encode,
@@ -482,7 +482,7 @@ pub type GroupParamsFor<T, I> = GroupParams<BalanceOf<T, I>>;
 
 pub(crate) const STORAGE_VERSION: StorageVersion = StorageVersion::new(2);
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
 
@@ -491,11 +491,11 @@ pub mod pallet {
 	pub struct Pallet<T, I = ()>(_);
 
 	#[pallet::config]
-	pub trait Config<I: 'static = ()>: frame_system::Config {
+	pub trait Config<I: 'static = ()>: topsoil_system::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self, I>>
-			+ IsType<<Self as frame_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// The societies's pallet id
 		#[pallet::constant]
@@ -547,7 +547,7 @@ pub mod pallet {
 
 		/// Weight information for extrinsics in this pallet.
 		type WeightInfo: WeightInfo;
-		/// Provider for the block number. Normally this is the `frame_system` pallet.
+		/// Provider for the block number. Normally this is the `topsoil_system` pallet.
 		type BlockNumberProvider: BlockNumberProvider;
 	}
 
@@ -829,7 +829,7 @@ pub mod pallet {
 	}
 
 	#[pallet::genesis_config]
-	#[derive(frame_support::DefaultNoBound)]
+	#[derive(topsoil_support::DefaultNoBound)]
 	pub struct GenesisConfig<T: Config<I>, I: 'static = ()> {
 		pub pot: BalanceOf<T, I>,
 	}
@@ -1462,7 +1462,7 @@ pub mod pallet {
 
 /// Simple ensure origin struct to filter for the founder account.
 pub struct EnsureFounder<T>(core::marker::PhantomData<T>);
-impl<T: Config> EnsureOrigin<<T as frame_system::Config>::RuntimeOrigin> for EnsureFounder<T> {
+impl<T: Config> EnsureOrigin<<T as topsoil_system::Config>::RuntimeOrigin> for EnsureFounder<T> {
 	type Success = T::AccountId;
 	fn try_origin(o: T::RuntimeOrigin) -> Result<Self::Success, T::RuntimeOrigin> {
 		match (o.as_signer(), Founder::<T>::get()) {
@@ -1474,7 +1474,7 @@ impl<T: Config> EnsureOrigin<<T as frame_system::Config>::RuntimeOrigin> for Ens
 	#[cfg(feature = "runtime-benchmarks")]
 	fn try_successful_origin() -> Result<T::RuntimeOrigin, ()> {
 		let founder = Founder::<T>::get().ok_or(())?;
-		Ok(T::RuntimeOrigin::from(frame_system::RawOrigin::Signed(founder)))
+		Ok(T::RuntimeOrigin::from(topsoil_system::RawOrigin::Signed(founder)))
 	}
 }
 

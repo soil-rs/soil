@@ -15,15 +15,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// ! A basic pallet to test it compiles along with a runtime using it when `frame_system` and
-// `frame_support` are reexported by a `frame` crate.
+// ! A basic pallet to test it compiles along with a runtime using it when `topsoil_system` and
+// `topsoil_support` are reexported by a `frame` crate.
 
-use frame::deps::{frame_support, frame_system};
+use topsoil::deps::{topsoil_support, topsoil_system};
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
-	use frame_support::pallet_prelude::*;
+	use topsoil_support::pallet_prelude::*;
 
 	#[pallet::pallet]
 	pub struct Pallet<T>(_);
@@ -31,12 +31,12 @@ pub mod pallet {
 	#[pallet::config]
 	// The only valid syntax here is the following or
 	// ```
-	// pub trait Config: frame::deps::frame_system::Config {}
+	// pub trait Config: topsoil::deps::topsoil_system::Config {}
 	// ```
-	pub trait Config: frame_system::Config {}
+	pub trait Config: topsoil_system::Config {}
 
 	#[pallet::genesis_config]
-	#[derive(frame_support::DefaultNoBound)]
+	#[derive(topsoil_support::DefaultNoBound)]
 	pub struct GenesisConfig<T: Config> {
 		#[serde(skip)]
 		_config: core::marker::PhantomData<T>,
@@ -52,23 +52,23 @@ pub mod pallet {
 // Dummy test to make sure a runtime would compile.
 mod tests {
 	use super::{
-		frame_support::{construct_runtime, derive_impl},
-		frame_system, pallet,
+		topsoil_support::{construct_runtime, derive_impl},
+		topsoil_system, pallet,
 	};
 
-	type Block = frame_system::mocking::MockBlock<Runtime>;
+	type Block = topsoil_system::mocking::MockBlock<Runtime>;
 
 	impl crate::pallet::Config for Runtime {}
 
-	#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-	impl frame_system::Config for Runtime {
+	#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+	impl topsoil_system::Config for Runtime {
 		type Block = Block;
 	}
 
 	construct_runtime! {
 		pub struct Runtime
 		{
-			System: frame_system,
+			System: topsoil_system,
 			Pallet: pallet,
 		}
 	}

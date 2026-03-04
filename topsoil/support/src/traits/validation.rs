@@ -156,7 +156,7 @@ impl<BlockNumber: Zero> EstimateNextSessionRotation<BlockNumber> for () {
 /// we will try to fetch new validators).
 ///
 /// This only refers to the point when we fetch the next session details and not when we enact them
-/// (for enactment there's `EstimateNextSessionRotation`). With `pallet-session` this should be
+/// (for enactment there's `EstimateNextSessionRotation`). With `topsoil-session` this should be
 /// triggered whenever `SessionManager::new_session` is called.
 ///
 /// For example, if we are using a staking module this would be the block when the session module
@@ -238,7 +238,7 @@ impl<N: Zero> Lateness<N> for () {
 }
 
 /// Implementors of this trait provide information about whether or not some validator has
-/// been registered with them. The [Session module](../../pallet_session/index.html) is an
+/// been registered with them. The [Session module](../../topsoil_session/index.html) is an
 /// implementor.
 pub trait ValidatorRegistration<ValidatorId> {
 	/// Returns true if the provided validator ID has been registered with the implementing runtime

@@ -60,14 +60,14 @@ pub type CallableCallFor<A, R> = <A as Callable<R>>::RuntimeCall;
 /// Means to checks if the dispatchable is feeless.
 ///
 /// This is automatically implemented for all dispatchables during pallet expansion.
-/// If a call is marked by [`#[pallet::feeless_if]`](`macro@frame_support_procedural::feeless_if`)
+/// If a call is marked by [`#[pallet::feeless_if]`](`macro@topsoil_support_procedural::feeless_if`)
 /// attribute, the corresponding closure is checked.
 pub trait CheckIfFeeless {
 	/// The Origin type of the runtime.
 	type Origin;
 
 	/// Checks if the dispatchable satisfies the feeless condition as defined by
-	/// [`#[pallet::feeless_if]`](`macro@frame_support_procedural::feeless_if`)
+	/// [`#[pallet::feeless_if]`](`macro@topsoil_support_procedural::feeless_if`)
 	fn is_feeless(&self, origin: &Self::Origin) -> bool;
 }
 
@@ -714,7 +714,7 @@ mod weight_tests {
 	use soil_runtime::{generic, traits::BlakeTwo256};
 	use soil_weights::RuntimeDbWeight;
 
-	pub use self::frame_system::{Call, Config};
+	pub use self::topsoil_system::{Call, Config};
 
 	fn from_actual_ref_time(ref_time: Option<u64>) -> PostDispatchInfo {
 		PostDispatchInfo {
@@ -728,8 +728,8 @@ mod weight_tests {
 	}
 
 	#[crate::pallet(dev_mode)]
-	pub mod frame_system {
-		use super::{frame_system, frame_system::pallet_prelude::*};
+	pub mod topsoil_system {
+		use super::{topsoil_system, topsoil_system::pallet_prelude::*};
 		pub use crate::dispatch::RawOrigin;
 		use crate::pallet_prelude::*;
 
@@ -837,7 +837,7 @@ mod weight_tests {
 	crate::construct_runtime!(
 		pub enum Runtime
 		{
-			System: self::frame_system,
+			System: self::topsoil_system,
 		}
 	);
 
@@ -1361,8 +1361,8 @@ mod extension_weight_tests {
 	use soil_weights::RuntimeDbWeight;
 	use test_extensions::{ActualWeightIs, FreeIfUnder, HalfCostIf};
 
-	use super::weight_tests::frame_system;
-	use frame_support::construct_runtime;
+	use super::weight_tests::topsoil_system;
+	use topsoil_support::construct_runtime;
 
 	pub type TxExtension = (HalfCostIf, FreeIfUnder, ActualWeightIs);
 	pub type UncheckedExtrinsic = generic::UncheckedExtrinsic<u64, RuntimeCall, (), TxExtension>;
@@ -1374,11 +1374,11 @@ mod extension_weight_tests {
 
 	construct_runtime!(
 		pub enum ExtRuntime {
-			System: frame_system,
+			System: topsoil_system,
 		}
 	);
 
-	impl frame_system::Config for ExtRuntime {
+	impl topsoil_system::Config for ExtRuntime {
 		type Block = Block;
 		type AccountId = AccountId;
 		type Balance = Balance;
@@ -1422,7 +1422,7 @@ mod extension_weight_tests {
 	#[test]
 	fn no_post_dispatch_with_no_refund() {
 		ExtBuilder::default().build_and_execute(|| {
-			let call = RuntimeCall::System(frame_system::Call::<ExtRuntime>::f99 {});
+			let call = RuntimeCall::System(topsoil_system::Call::<ExtRuntime>::f99 {});
 			let ext: TxExtension = (HalfCostIf(false), FreeIfUnder(1500), ActualWeightIs(0));
 			let uxt = UncheckedExtrinsic::new_signed(call.clone(), 0, (), ext.clone());
 			assert_eq!(uxt.extension_weight(), Weight::from_parts(600, 0));
@@ -1448,7 +1448,7 @@ mod extension_weight_tests {
 	#[test]
 	fn no_post_dispatch_refunds_when_dispatched() {
 		ExtBuilder::default().build_and_execute(|| {
-			let call = RuntimeCall::System(frame_system::Call::<ExtRuntime>::f99 {});
+			let call = RuntimeCall::System(topsoil_system::Call::<ExtRuntime>::f99 {});
 			let ext: TxExtension = (HalfCostIf(true), FreeIfUnder(100), ActualWeightIs(0));
 			let uxt = UncheckedExtrinsic::new_signed(call.clone(), 0, (), ext.clone());
 			assert_eq!(uxt.extension_weight(), Weight::from_parts(600, 0));
@@ -1466,7 +1466,7 @@ mod extension_weight_tests {
 	#[test]
 	fn post_dispatch_with_refunds() {
 		ExtBuilder::default().build_and_execute(|| {
-			let call = RuntimeCall::System(frame_system::Call::<ExtRuntime>::f100 {});
+			let call = RuntimeCall::System(topsoil_system::Call::<ExtRuntime>::f100 {});
 			// First testcase
 			let ext: TxExtension = (HalfCostIf(false), FreeIfUnder(2000), ActualWeightIs(0));
 			let uxt = UncheckedExtrinsic::new_signed(call.clone(), 0, (), ext.clone());
@@ -1559,7 +1559,7 @@ mod extension_weight_tests {
 	#[test]
 	fn checked_extrinsic_apply() {
 		ExtBuilder::default().build_and_execute(|| {
-			let call = RuntimeCall::System(frame_system::Call::<ExtRuntime>::f100 {});
+			let call = RuntimeCall::System(topsoil_system::Call::<ExtRuntime>::f100 {});
 			// First testcase
 			let ext: TxExtension = (HalfCostIf(false), FreeIfUnder(2000), ActualWeightIs(0));
 			let xt = CheckedExtrinsic {

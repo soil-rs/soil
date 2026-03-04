@@ -119,7 +119,7 @@ extern crate alloc;
 use crate::types::{AuthorityProperties, Provider, Suffix, Username, UsernameInformation};
 use alloc::{boxed::Box, vec::Vec};
 use codec::Encode;
-use frame_support::{
+use topsoil_support::{
 	ensure,
 	pallet_prelude::{DispatchError, DispatchResult},
 	traits::{
@@ -127,7 +127,7 @@ use frame_support::{
 	},
 	BoundedVec,
 };
-use frame_system::pallet_prelude::*;
+use topsoil_system::pallet_prelude::*;
 pub use pallet::*;
 use soil_runtime::traits::{
 	AppendZerosInput, Hash, IdentifyAccount, Saturating, StaticLookup, Verify, Zero,
@@ -138,17 +138,17 @@ pub use types::{
 pub use weights::WeightInfo;
 
 type BalanceOf<T> =
-	<<T as Config>::Currency as Currency<<T as frame_system::Config>::AccountId>>::Balance;
+	<<T as Config>::Currency as Currency<<T as topsoil_system::Config>::AccountId>>::Balance;
 type NegativeImbalanceOf<T> = <<T as Config>::Currency as Currency<
-	<T as frame_system::Config>::AccountId,
+	<T as topsoil_system::Config>::AccountId,
 >>::NegativeImbalance;
-type AccountIdLookupOf<T> = <<T as frame_system::Config>::Lookup as StaticLookup>::Source;
+type AccountIdLookupOf<T> = <<T as topsoil_system::Config>::Lookup as StaticLookup>::Source;
 type ProviderOf<T> = Provider<BalanceOf<T>>;
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
-	use frame_support::pallet_prelude::*;
+	use topsoil_support::pallet_prelude::*;
 
 	#[cfg(feature = "runtime-benchmarks")]
 	pub trait BenchmarkHelper<Public, Signature> {
@@ -171,10 +171,10 @@ pub mod pallet {
 	}
 
 	#[pallet::config]
-	pub trait Config: frame_system::Config {
+	pub trait Config: topsoil_system::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// The currency trait.
 		type Currency: ReservableCurrency<Self::AccountId>;
@@ -1238,7 +1238,7 @@ pub mod pallet {
 		) -> DispatchResultWithPostInfo {
 			ensure_signed(origin)?;
 			if let Some((who, expiration, provider)) = PendingUsernames::<T>::take(&username) {
-				let now = frame_system::Pallet::<T>::block_number();
+				let now = topsoil_system::Pallet::<T>::block_number();
 				ensure!(now > expiration, Error::<T>::NotExpired);
 				let actual_weight = match provider {
 					Provider::AuthorityDeposit(deposit) => {
@@ -1297,7 +1297,7 @@ pub mod pallet {
 			ensure!(who == authority_account, Error::<T>::NotUsernameAuthority);
 			match username_info.provider {
 				Provider::AuthorityDeposit(_) | Provider::Allocation => {
-					let now = frame_system::Pallet::<T>::block_number();
+					let now = topsoil_system::Pallet::<T>::block_number();
 					let grace_period_expiry = now.saturating_add(T::UsernameGracePeriod::get());
 					UnbindingUsernames::<T>::try_mutate(&username, |maybe_init| {
 						if maybe_init.is_some() {
@@ -1324,7 +1324,7 @@ pub mod pallet {
 			ensure_signed(origin)?;
 			let grace_period_expiry =
 				UnbindingUsernames::<T>::take(&username).ok_or(Error::<T>::NotUnbinding)?;
-			let now = frame_system::Pallet::<T>::block_number();
+			let now = topsoil_system::Pallet::<T>::block_number();
 			ensure!(now >= grace_period_expiry, Error::<T>::TooEarly);
 			let username_info = UsernameInfoOf::<T>::take(&username)
 				.defensive_proof("an unbinding username must exist")
@@ -1557,7 +1557,7 @@ impl<T: Config> Pallet<T> {
 	/// A username was granted by an authority, but must be accepted by `who`. Put the username
 	/// into a queue for acceptance.
 	pub fn queue_acceptance(who: &T::AccountId, username: Username<T>, provider: ProviderOf<T>) {
-		let now = frame_system::Pallet::<T>::block_number();
+		let now = topsoil_system::Pallet::<T>::block_number();
 		let expiration = now.saturating_add(T::PendingUsernameExpiration::get());
 		PendingUsernames::<T>::insert(&username, (who.clone(), expiration, provider));
 		Self::deposit_event(Event::UsernameQueued { who: who.clone(), username, expiration });

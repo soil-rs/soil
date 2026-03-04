@@ -22,8 +22,8 @@
 use super::*;
 use crate::Pallet as Balances;
 
-use frame_benchmarking::v2::*;
-use frame_system::RawOrigin;
+use topsoil_benchmarking::v2::*;
+use topsoil_system::RawOrigin;
 use soil_runtime::traits::Bounded;
 use types::ExtraFlags;
 
@@ -283,15 +283,15 @@ mod benchmarks {
 					frozen: Zero::zero(),
 					flags: ExtraFlags::old_logic(),
 				};
-				frame_system::Pallet::<T>::inc_providers(&user);
+				topsoil_system::Pallet::<T>::inc_providers(&user);
 				assert!(T::AccountStore::try_mutate_exists(&user, |a| -> DispatchResult {
 					*a = Some(account);
 					Ok(())
 				})
 				.is_ok());
 				assert!(!Balances::<T, I>::account(&user).flags.is_new_logic());
-				assert_eq!(frame_system::Pallet::<T>::providers(&user), 1);
-				assert_eq!(frame_system::Pallet::<T>::consumers(&user), 0);
+				assert_eq!(topsoil_system::Pallet::<T>::providers(&user), 1);
+				assert_eq!(topsoil_system::Pallet::<T>::consumers(&user), 0);
 				user
 			})
 			.collect();
@@ -302,8 +302,8 @@ mod benchmarks {
 		for i in 0..u {
 			let user: T::AccountId = account("old_user", i, SEED);
 			assert!(Balances::<T, I>::account(&user).flags.is_new_logic());
-			assert_eq!(frame_system::Pallet::<T>::providers(&user), 1);
-			assert_eq!(frame_system::Pallet::<T>::consumers(&user), 1);
+			assert_eq!(topsoil_system::Pallet::<T>::providers(&user), 1);
+			assert_eq!(topsoil_system::Pallet::<T>::consumers(&user), 1);
 		}
 	}
 

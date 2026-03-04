@@ -17,12 +17,12 @@
 
 //! Tests for the module.
 
-use crate as pallet_membership;
+use crate as topsoil_membership;
 use crate::{mock::*, *};
 
 use soil_runtime::{bounded_vec, traits::BadOrigin, BuildStorage};
 
-use frame_support::{assert_noop, assert_ok, assert_storage_noop, traits::StorageVersion};
+use topsoil_support::{assert_noop, assert_ok, assert_storage_noop, traits::StorageVersion};
 
 #[test]
 fn query_membership_works() {
@@ -187,7 +187,7 @@ fn reset_members_works() {
 #[test]
 #[should_panic(expected = "Members cannot contain duplicate accounts.")]
 fn genesis_build_panics_with_duplicate_members() {
-	pallet_membership::GenesisConfig::<Test> {
+	topsoil_membership::GenesisConfig::<Test> {
 		members: bounded_vec![1, 2, 3, 1],
 		phantom: Default::default(),
 	}
@@ -198,12 +198,12 @@ fn genesis_build_panics_with_duplicate_members() {
 #[test]
 fn migration_v4() {
 	new_test_ext().execute_with(|| {
-		use frame_support::traits::PalletInfo;
+		use topsoil_support::traits::PalletInfo;
 		let old_pallet_name = "OldMembership";
 		let new_pallet_name =
-			<Test as frame_system::Config>::PalletInfo::name::<Membership>().unwrap();
+			<Test as topsoil_system::Config>::PalletInfo::name::<Membership>().unwrap();
 
-		frame_support::storage::migration::move_pallet(
+		topsoil_support::storage::migration::move_pallet(
 			new_pallet_name.as_bytes(),
 			old_pallet_name.as_bytes(),
 		);

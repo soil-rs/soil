@@ -18,9 +18,9 @@
 //! Test environment for Nfts pallet.
 
 use super::*;
-use crate as pallet_nfts;
+use crate as topsoil_nfts;
 
-use frame_support::{
+use topsoil_support::{
 	construct_runtime, derive_impl, parameter_types,
 	traits::{AsEnsureOriginWithArg, ConstU32, ConstU64},
 };
@@ -30,14 +30,14 @@ use soil_runtime::{
 	BuildStorage, MultiSignature,
 };
 
-type Block = frame_system::mocking::MockBlock<Test>;
+type Block = topsoil_system::mocking::MockBlock<Test>;
 
 construct_runtime!(
 	pub enum Test
 	{
-		System: frame_system,
-		Balances: pallet_balances,
-		Nfts: pallet_nfts,
+		System: topsoil_system,
+		Balances: topsoil_balances,
+		Nfts: topsoil_nfts,
 	}
 );
 
@@ -45,16 +45,16 @@ pub type Signature = MultiSignature;
 pub type AccountPublic = <Signature as Verify>::Signer;
 pub type AccountId = <AccountPublic as IdentifyAccount>::AccountId;
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
 	type AccountId = AccountId;
 	type Lookup = IdentityLookup<Self::AccountId>;
 	type Block = Block;
-	type AccountData = pallet_balances::AccountData<u64>;
+	type AccountData = topsoil_balances::AccountData<u64>;
 }
 
-#[derive_impl(pallet_balances::config_preludes::TestDefaultConfig)]
-impl pallet_balances::Config for Test {
+#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
+impl topsoil_balances::Config for Test {
 	type AccountStore = System;
 }
 
@@ -67,8 +67,8 @@ impl Config for Test {
 	type CollectionId = u32;
 	type ItemId = u32;
 	type Currency = Balances;
-	type CreateOrigin = AsEnsureOriginWithArg<frame_system::EnsureSigned<Self::AccountId>>;
-	type ForceOrigin = frame_system::EnsureRoot<Self::AccountId>;
+	type CreateOrigin = AsEnsureOriginWithArg<topsoil_system::EnsureSigned<Self::AccountId>>;
+	type ForceOrigin = topsoil_system::EnsureRoot<Self::AccountId>;
 	type Locker = ();
 	type CollectionDeposit = ConstU64<2>;
 	type ItemDeposit = ConstU64<1>;
@@ -92,11 +92,11 @@ impl Config for Test {
 	type WeightInfo = ();
 	#[cfg(feature = "runtime-benchmarks")]
 	type Helper = ();
-	type BlockNumberProvider = frame_system::Pallet<Test>;
+	type BlockNumberProvider = topsoil_system::Pallet<Test>;
 }
 
 pub(crate) fn new_test_ext() -> soil_io::TestExternalities {
-	let t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 
 	let mut ext = soil_io::TestExternalities::new(t);
 	ext.register_extension(KeystoreExt::new(MemoryKeystore::new()));

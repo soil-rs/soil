@@ -21,14 +21,14 @@
 
 use super::*;
 use alloc::vec;
-use frame_benchmarking::{
+use topsoil_benchmarking::{
 	v1::{
 		account, benchmarks_instance_pallet, whitelist_account, whitelisted_caller, BenchmarkError,
 	},
 	BenchmarkResult,
 };
-use frame_support::traits::{EnsureOrigin, Get, UnfilteredDispatchable};
-use frame_system::RawOrigin as SystemOrigin;
+use topsoil_support::traits::{EnsureOrigin, Get, UnfilteredDispatchable};
+use topsoil_system::RawOrigin as SystemOrigin;
 use soil_runtime::{traits::Bounded, Weight};
 
 use crate::Pallet as Assets;
@@ -148,11 +148,11 @@ fn add_approvals<T: Config<I>, I: 'static>(minter: T::AccountId, n: u32) {
 }
 
 fn assert_last_event<T: Config<I>, I: 'static>(generic_event: <T as Config<I>>::RuntimeEvent) {
-	frame_system::Pallet::<T>::assert_last_event(generic_event.into());
+	topsoil_system::Pallet::<T>::assert_last_event(generic_event.into());
 }
 
 fn assert_event<T: Config<I>, I: 'static>(generic_event: <T as Config<I>>::RuntimeEvent) {
-	frame_system::Pallet::<T>::assert_has_event(generic_event.into());
+	topsoil_system::Pallet::<T>::assert_has_event(generic_event.into());
 }
 
 benchmarks_instance_pallet! {
@@ -273,7 +273,7 @@ benchmarks_instance_pallet! {
 		let target_lookup = T::Lookup::unlookup(target.clone());
 	}: _(SystemOrigin::Signed(caller.clone()), asset_id.clone(), target_lookup, amount)
 	verify {
-		assert!(frame_system::Pallet::<T>::account_exists(&caller));
+		assert!(topsoil_system::Pallet::<T>::account_exists(&caller));
 		assert_last_event::<T, I>(Event::Transferred { asset_id: asset_id.into(), from: caller, to: target, amount }.into());
 	}
 
@@ -596,7 +596,7 @@ benchmarks_instance_pallet! {
 	}
 
 	total_issuance {
-		use frame_support::traits::fungibles::Inspect;
+		use topsoil_support::traits::fungibles::Inspect;
 		let (asset_id, _, _) = create_default_minted_asset::<T, I>(true, 100u32.into());
 		let amount;
 	}: {
@@ -615,7 +615,7 @@ benchmarks_instance_pallet! {
 	}
 
 	allowance {
-		use frame_support::traits::fungibles::approvals::Inspect;
+		use topsoil_support::traits::fungibles::approvals::Inspect;
 		let (asset_id, caller, _) = create_default_minted_asset::<T, I>(true, 100u32.into());
 		add_approvals::<T, I>(caller.clone(), 1);
 		let delegate: T::AccountId = account("approval", 0, SEED);

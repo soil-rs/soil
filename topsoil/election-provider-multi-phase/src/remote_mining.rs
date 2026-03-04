@@ -20,7 +20,7 @@
 //! Run like this:
 //!
 //! ```ignore
-//! RUST_LOG=remote-ext=info,runtime::election-provider=debug cargo test --release --features remote-mining -p pallet-election-provider-multi-phase mine_for_ -- --test-threads 1
+//! RUST_LOG=remote-ext=info,runtime::election-provider=debug cargo test --release --features remote-mining -p topsoil-election-provider-multi-phase mine_for_ -- --test-threads 1
 //! ```
 //!
 //! See the comments below on how to feed specific hash.
@@ -28,8 +28,8 @@
 use crate::{ElectionCompute, Miner, MinerConfig, RawSolution, RoundSnapshot};
 use codec::Decode;
 use core::marker::PhantomData;
-use frame_election_provider_support::generate_solution_type;
-use frame_support::{
+use topsoil_election_provider_support::generate_solution_type;
+use topsoil_support::{
 	traits::Get,
 	weights::constants::{WEIGHT_PROOF_SIZE_PER_MB, WEIGHT_REF_TIME_PER_SECOND},
 };
@@ -133,7 +133,7 @@ pub struct HackyGetSnapshot<T: MinerConfig>(PhantomData<T>);
 
 type UntypedSnapshotOf<T> = RoundSnapshot<
 	<T as MinerConfig>::AccountId,
-	frame_election_provider_support::Voter<
+	topsoil_election_provider_support::Voter<
 		<T as MinerConfig>::AccountId,
 		<T as MinerConfig>::MaxVotesPerVoter,
 	>,
@@ -149,7 +149,7 @@ impl<T: MinerConfig> HackyGetSnapshot<T> {
 			soil_core::hashing::twox_128(b"Snapshot"),
 		]
 		.concat();
-		frame_support::storage::unhashed::get::<UntypedSnapshotOf<T>>(&key).unwrap()
+		topsoil_support::storage::unhashed::get::<UntypedSnapshotOf<T>>(&key).unwrap()
 	}
 
 	fn desired_targets() -> u32 {
@@ -158,7 +158,7 @@ impl<T: MinerConfig> HackyGetSnapshot<T> {
 			soil_core::hashing::twox_128(b"DesiredTargets"),
 		]
 		.concat();
-		frame_support::storage::unhashed::get::<u32>(&key).unwrap()
+		topsoil_support::storage::unhashed::get::<u32>(&key).unwrap()
 	}
 }
 
@@ -170,7 +170,7 @@ impl Get<Option<BalancingConfig>> for Balancing {
 		Some(BalancingConfig { iterations: 10, tolerance: 0 })
 	}
 }
-pub type SolverOf<T> = frame_election_provider_support::SequentialPhragmen<
+pub type SolverOf<T> = topsoil_election_provider_support::SequentialPhragmen<
 	<T as MinerConfig>::AccountId,
 	Perbill,
 	Balancing,

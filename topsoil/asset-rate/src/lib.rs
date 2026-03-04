@@ -62,7 +62,7 @@
 extern crate alloc;
 
 use alloc::boxed::Box;
-use frame_support::traits::{
+use topsoil_support::traits::{
 	fungible::Inspect,
 	tokens::{ConversionFromAssetBalance, ConversionToAssetBalance},
 };
@@ -84,30 +84,30 @@ pub mod weights;
 #[cfg(feature = "runtime-benchmarks")]
 pub use benchmarking::AssetKindFactory;
 
-// Type alias for `frame_system`'s account id.
-type AccountIdOf<T> = <T as frame_system::Config>::AccountId;
+// Type alias for `topsoil_system`'s account id.
+type AccountIdOf<T> = <T as topsoil_system::Config>::AccountId;
 // This pallet's asset kind and balance type.
 type AssetKindOf<T> = <T as Config>::AssetKind;
 // Generic fungible balance type.
 type BalanceOf<T> = <<T as Config>::Currency as Inspect<AccountIdOf<T>>>::Balance;
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
-	use frame_support::pallet_prelude::*;
-	use frame_system::pallet_prelude::*;
+	use topsoil_support::pallet_prelude::*;
+	use topsoil_system::pallet_prelude::*;
 
 	#[pallet::pallet]
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
-	pub trait Config: frame_system::Config {
+	pub trait Config: topsoil_system::Config {
 		/// The Weight information for extrinsics in this pallet.
 		type WeightInfo: WeightInfo;
 
 		/// The runtime event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// The origin permissioned to create a conversion rate for an asset.
 		type CreateOrigin: EnsureOrigin<Self::RuntimeOrigin>;

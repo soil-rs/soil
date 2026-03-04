@@ -17,18 +17,18 @@
 
 // Function does not exist in the trait.
 
-use frame_support::pallet_prelude::*;
-use frame_system::pallet_prelude::*;
+use topsoil_support::pallet_prelude::*;
+use topsoil_system::pallet_prelude::*;
 
 pub trait WeightInfo {
 }
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 mod parentheses {
 	use super::*;
 	
 	#[pallet::config]
-	pub trait Config: frame_system::Config {
+	pub trait Config: topsoil_system::Config {
 		type WeightInfo: crate::WeightInfo;
 	}
 
@@ -44,12 +44,12 @@ mod parentheses {
 	}
 }
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 mod assign {
 	use super::*;
 	
 	#[pallet::config]
-	pub trait Config: frame_system::Config {
+	pub trait Config: topsoil_system::Config {
 		type WeightInfo: crate::WeightInfo;
 	}
 

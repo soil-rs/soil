@@ -22,13 +22,13 @@
 use super::*;
 
 use extension::VerifySignature;
-use frame_support::{
+use topsoil_support::{
 	derive_impl,
 	dispatch::GetDispatchInfo,
 	pallet_prelude::{InvalidTransaction, TransactionSource, TransactionValidityError},
 	traits::OriginTrait,
 };
-use frame_system::Call as SystemCall;
+use topsoil_system::Call as SystemCall;
 use soil_io::hashing::blake2_256;
 use soil_runtime::{
 	generic::ExtensionVersion,
@@ -36,18 +36,18 @@ use soil_runtime::{
 	traits::DispatchTransaction,
 };
 
-type Block = frame_system::mocking::MockBlock<Test>;
+type Block = topsoil_system::mocking::MockBlock<Test>;
 
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub enum Test
 	{
-		System: frame_system,
+		System: topsoil_system,
 		VerifySignaturePallet: crate,
 	}
 );
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
 	type Block = Block;
 }
 
@@ -71,7 +71,7 @@ impl crate::Config for Test {
 #[cfg(feature = "runtime-benchmarks")]
 pub fn new_test_ext() -> soil_io::TestExternalities {
 	use soil_runtime::BuildStorage;
-	let t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	let mut ext = soil_io::TestExternalities::new(t);
 	ext.execute_with(|| System::set_block_number(1));
 	ext

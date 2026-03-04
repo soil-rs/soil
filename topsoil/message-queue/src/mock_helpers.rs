@@ -23,7 +23,7 @@
 
 use crate::*;
 use alloc::vec::Vec;
-use frame_support::traits::Defensive;
+use topsoil_support::traits::Defensive;
 
 /// Converts `Self` into a `Weight` by using `Self` for all components.
 pub trait IntoWeight {
@@ -144,10 +144,10 @@ pub fn book_for<T: Config>(page: &PageOf<T>) -> BookStateOf<T> {
 #[cfg(any(feature = "std", feature = "runtime-benchmarks", test))]
 pub fn assert_last_event<T: Config>(generic_event: <T as Config>::RuntimeEvent) {
 	assert!(
-		!frame_system::Pallet::<T>::block_number().is_zero(),
+		!topsoil_system::Pallet::<T>::block_number().is_zero(),
 		"The genesis block has n o events"
 	);
-	frame_system::Pallet::<T>::assert_last_event(generic_event.into());
+	topsoil_system::Pallet::<T>::assert_last_event(generic_event.into());
 }
 
 /// Provide a setup for `bump_service_head`.

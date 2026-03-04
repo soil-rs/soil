@@ -17,12 +17,12 @@
 
 use super::*;
 use crate::{self as multi_phase, signed::GeometricDepositBase, unsigned::MinerConfig};
-use frame_election_provider_support::{
+use topsoil_election_provider_support::{
 	bounds::{DataProviderBounds, ElectionBounds, ElectionBoundsBuilder},
 	data_provider, onchain, ElectionDataProvider, NposSolution, SequentialPhragmen,
 };
-pub use frame_support::derive_impl;
-use frame_support::{
+pub use topsoil_support::derive_impl;
+use topsoil_support::{
 	parameter_types,
 	traits::{ConstU32, Hooks},
 	weights::{constants, Weight},
@@ -53,10 +53,10 @@ pub type Block = soil_runtime::generic::Block<Header, UncheckedExtrinsic>;
 pub type UncheckedExtrinsic =
 	soil_runtime::generic::UncheckedExtrinsic<AccountId, RuntimeCall, (), ()>;
 
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub enum Runtime {
-		System: frame_system,
-		Balances: pallet_balances,
+		System: topsoil_system,
+		Balances: topsoil_balances,
 		MultiPhase: multi_phase,
 	}
 );
@@ -67,7 +67,7 @@ pub(crate) type BlockNumber = u64;
 pub(crate) type VoterIndex = u32;
 pub(crate) type TargetIndex = u16;
 
-frame_election_provider_support::generate_solution_type!(
+topsoil_election_provider_support::generate_solution_type!(
 	#[compact]
 	pub struct TestNposSolution::<
 		VoterIndex = VoterIndex,
@@ -116,7 +116,7 @@ pub fn roll_to_round(n: u32) {
 
 	while Round::<Runtime>::get() != n {
 		roll_to_signed();
-		frame_support::assert_ok!(MultiPhase::elect(Zero::zero()));
+		topsoil_support::assert_ok!(MultiPhase::elect(Zero::zero()));
 	}
 }
 
@@ -127,7 +127,7 @@ pub struct TrimHelpers {
 		Box<dyn Fn(&[IndexAssignmentOf<Runtime>]) -> Result<usize, soil_npos_elections::Error>>,
 	pub voter_index: Box<
 		dyn Fn(
-			&<Runtime as frame_system::Config>::AccountId,
+			&<Runtime as topsoil_system::Config>::AccountId,
 		) -> Option<SolutionVoterIndexOf<Runtime>>,
 	>,
 }
@@ -208,10 +208,10 @@ pub fn witness() -> SolutionOrSnapshotSize {
 		.unwrap_or_default()
 }
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Runtime {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Runtime {
 	type SS58Prefix = ();
-	type BaseCallFilter = frame_support::traits::Everything;
+	type BaseCallFilter = topsoil_support::traits::Everything;
 	type RuntimeOrigin = RuntimeOrigin;
 	type Nonce = u64;
 	type RuntimeCall = RuntimeCall;
@@ -227,7 +227,7 @@ impl frame_system::Config for Runtime {
 	type BlockWeights = BlockWeights;
 	type Version = ();
 	type PalletInfo = PalletInfo;
-	type AccountData = pallet_balances::AccountData<u64>;
+	type AccountData = topsoil_balances::AccountData<u64>;
 	type OnNewAccount = ();
 	type OnKilledAccount = ();
 	type SystemWeightInfo = ();
@@ -237,15 +237,15 @@ impl frame_system::Config for Runtime {
 
 const NORMAL_DISPATCH_RATIO: Perbill = Perbill::from_percent(75);
 parameter_types! {
-	pub BlockWeights: frame_system::limits::BlockWeights = frame_system::limits::BlockWeights
+	pub BlockWeights: topsoil_system::limits::BlockWeights = topsoil_system::limits::BlockWeights
 		::with_sensible_defaults(
 			Weight::from_parts(2u64 * constants::WEIGHT_REF_TIME_PER_SECOND, u64::MAX),
 			NORMAL_DISPATCH_RATIO,
 		);
 }
 
-#[derive_impl(pallet_balances::config_preludes::TestDefaultConfig)]
-impl pallet_balances::Config for Runtime {
+#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
+impl topsoil_balances::Config for Runtime {
 	type AccountStore = System;
 }
 
@@ -413,7 +413,7 @@ impl MinerConfig for Runtime {
 impl crate::Config for Runtime {
 	type RuntimeEvent = RuntimeEvent;
 	type Currency = Balances;
-	type EstimateCallFee = frame_support::traits::ConstU64<8>;
+	type EstimateCallFee = topsoil_support::traits::ConstU64<8>;
 	type SignedPhase = SignedPhase;
 	type UnsignedPhase = UnsignedPhase;
 	type BetterSignedThreshold = BetterSignedThreshold;
@@ -433,8 +433,8 @@ impl crate::Config for Runtime {
 	type BenchmarkingConfig = TestBenchmarkingConfig;
 	type Fallback = MockFallback;
 	type GovernanceFallback =
-		frame_election_provider_support::onchain::OnChainExecution<OnChainSeqPhragmen>;
-	type ForceOrigin = frame_system::EnsureRoot<AccountId>;
+		topsoil_election_provider_support::onchain::OnChainExecution<OnChainSeqPhragmen>;
+	type ForceOrigin = topsoil_system::EnsureRoot<AccountId>;
 	type MaxWinners = MaxWinners;
 	type MaxBackersPerWinner = MaxBackersPerWinner;
 	type MinerConfig = Self;
@@ -454,7 +454,7 @@ impl Convert<usize, BalanceOf<Runtime>> for Runtime {
 	}
 }
 
-impl<LocalCall> frame_system::offchain::CreateTransactionBase<LocalCall> for Runtime
+impl<LocalCall> topsoil_system::offchain::CreateTransactionBase<LocalCall> for Runtime
 where
 	RuntimeCall: From<LocalCall>,
 {
@@ -462,7 +462,7 @@ where
 	type Extrinsic = Extrinsic;
 }
 
-impl<LocalCall> frame_system::offchain::CreateBare<LocalCall> for Runtime
+impl<LocalCall> topsoil_system::offchain::CreateBare<LocalCall> for Runtime
 where
 	RuntimeCall: From<LocalCall>,
 {
@@ -550,7 +550,7 @@ impl ElectionDataProvider for StakingMock {
 	fn add_voter(
 		voter: AccountId,
 		weight: VoteWeight,
-		targets: frame_support::BoundedVec<AccountId, Self::MaxVotesPerVoter>,
+		targets: topsoil_support::BoundedVec<AccountId, Self::MaxVotesPerVoter>,
 	) {
 		let mut current = Voters::get();
 		current.push((voter, weight, targets));
@@ -632,9 +632,9 @@ impl ExtBuilder {
 	pub fn build(self) -> soil_io::TestExternalities {
 		soil_tracing::try_init_simple();
 		let mut storage =
-			frame_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
+			topsoil_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
 
-		let _ = pallet_balances::GenesisConfig::<Runtime> {
+		let _ = topsoil_balances::GenesisConfig::<Runtime> {
 			balances: vec![
 				// bunch of account for submitting stuff only.
 				(99, 100),
@@ -681,8 +681,8 @@ impl ExtBuilder {
 
 		#[cfg(feature = "try-runtime")]
 		ext.execute_with(|| {
-			frame_support::assert_ok!(
-				<MultiPhase as frame_support::traits::Hooks<u64>>::try_state(System::block_number())
+			topsoil_support::assert_ok!(
+				<MultiPhase as topsoil_support::traits::Hooks<u64>>::try_state(System::block_number())
 			);
 		});
 	}

@@ -27,20 +27,20 @@ use crate::{
 	SolutionOf,
 };
 use codec::{Decode, Encode, MaxEncodedLen};
-use frame_election_provider_support::{
+use topsoil_election_provider_support::{
 	ExtendedBalance, NposSolution, PageIndex, TryFromOtherBounds,
 };
-use frame_support::{
+use topsoil_support::{
 	ensure,
 	pallet_prelude::{ValueQuery, *},
 	traits::{defensive_prelude::*, DefensiveSaturating, Get},
 };
-use frame_system::pallet_prelude::*;
+use topsoil_system::pallet_prelude::*;
 use pallet::*;
 use soil_npos_elections::{evaluate_support, ElectionScore};
 use soil_std::{collections::btree_map::BTreeMap, prelude::*};
 
-pub(crate) type SupportsOfVerifier<V> = frame_election_provider_support::BoundedSupports<
+pub(crate) type SupportsOfVerifier<V> = topsoil_election_provider_support::BoundedSupports<
 	<V as Verifier>::AccountId,
 	<V as Verifier>::MaxWinnersPerPage,
 	<V as Verifier>::MaxBackersPerWinner,
@@ -107,7 +107,7 @@ impl soil_npos_elections::Backings for PartialBackings {
 	}
 }
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub(crate) mod pallet {
 	use super::*;
 
@@ -276,7 +276,7 @@ pub(crate) mod pallet {
 		/// verified, a call to [`finalize_correct`] will seal the correct pages and flip the
 		/// invalid/valid variants.
 		pub(crate) fn set_invalid_page(page: PageIndex, supports: SupportsOfVerifier<Pallet<T>>) {
-			use frame_support::traits::TryCollect;
+			use topsoil_support::traits::TryCollect;
 			Self::mutate_checked(|| {
 				let backings: BoundedVec<_, _> = supports
 					.iter()
@@ -458,7 +458,7 @@ pub(crate) mod pallet {
 		/// Ensure that all the storage items managed by this struct are in `kill` state, meaning
 		/// that in the expect state after an election is OVER.
 		pub(crate) fn assert_killed() {
-			use frame_support::assert_storage_noop;
+			use topsoil_support::assert_storage_noop;
 			assert_storage_noop!(Self::kill());
 		}
 
@@ -578,7 +578,7 @@ pub(crate) mod pallet {
 	pub struct Pallet<T>(PhantomData<T>);
 
 	#[pallet::genesis_config]
-	#[derive(frame_support::DefaultNoBound)]
+	#[derive(topsoil_support::DefaultNoBound)]
 	pub struct GenesisConfig<T: Config> {
 		/// Initial value for [`MinimumScore`]
 		pub(crate) minimum_score: ElectionScore,

@@ -20,7 +20,7 @@ use crate::{
 	pallet::{parse::event::PalletEventDepositAttr, Def},
 	COUNTER,
 };
-use frame_support_procedural_tools::get_doc_literals;
+use topsoil_support_procedural_tools::get_doc_literals;
 use syn::{spanned::Spanned, Ident};
 
 /// * Add __Ignore variant on Event
@@ -67,8 +67,8 @@ pub fn expand_event(def: &mut Def) -> proc_macro2::TokenStream {
 		super::merge_where_clauses(&[&event.where_clause, &def.config.where_clause]);
 
 	let event_ident = &event.event;
-	let frame_system = &def.frame_system;
-	let frame_support = &def.frame_support;
+	let topsoil_system = &def.topsoil_system;
+	let topsoil_support = &def.topsoil_support;
 	let event_use_gen = &event.gen_kind.type_use_gen(event.attr_span);
 	let event_impl_gen = &event.gen_kind.type_impl_gen(event.attr_span);
 	let event_item = {
@@ -87,7 +87,7 @@ pub fn expand_event(def: &mut Def) -> proc_macro2::TokenStream {
 			#[codec(skip)]
 			__Ignore(
 				::core::marker::PhantomData<(#event_use_gen)>,
-				#frame_support::Never,
+				#topsoil_support::Never,
 			)
 		);
 
@@ -96,7 +96,7 @@ pub fn expand_event(def: &mut Def) -> proc_macro2::TokenStream {
 	}
 
 	let deprecation = match crate::deprecation::get_deprecation_enum(
-		&quote::quote! {#frame_support},
+		&quote::quote! {#topsoil_support},
 		event_item.variants.iter().enumerate().map(|(index, item)| {
 			let index = crate::deprecation::variant_index_for_deprecation(index as u8, item);
 
@@ -116,14 +116,14 @@ pub fn expand_event(def: &mut Def) -> proc_macro2::TokenStream {
 	// derive some traits because system event require Clone, FullCodec, Eq, PartialEq and Debug
 	event_item.attrs.push(syn::parse_quote!(
 		#[derive(
-			#frame_support::CloneNoBound,
-			#frame_support::EqNoBound,
-			#frame_support::PartialEqNoBound,
-			#frame_support::DebugNoBound,
-			#frame_support::__private::codec::Encode,
-			#frame_support::__private::codec::Decode,
-			#frame_support::__private::codec::DecodeWithMemTracking,
-			#frame_support::__private::scale_info::TypeInfo,
+			#topsoil_support::CloneNoBound,
+			#topsoil_support::EqNoBound,
+			#topsoil_support::PartialEqNoBound,
+			#topsoil_support::DebugNoBound,
+			#topsoil_support::__private::codec::Encode,
+			#topsoil_support::__private::codec::Decode,
+			#topsoil_support::__private::codec::DecodeWithMemTracking,
+			#topsoil_support::__private::scale_info::TypeInfo,
 		)]
 	));
 
@@ -151,16 +151,16 @@ pub fn expand_event(def: &mut Def) -> proc_macro2::TokenStream {
 				#(#maybe_allow_attrs)*
 				#fn_vis fn deposit_event(event: Event<#event_use_gen>) {
 					let event = <
-						<T as #frame_system::Config>::RuntimeEvent as
+						<T as #topsoil_system::Config>::RuntimeEvent as
 						From<Event<#event_use_gen>>
 					>::from(event);
 
 					let event = <
-						<T as #frame_system::Config>::RuntimeEvent as
-						Into<<T as #frame_system::Config>::RuntimeEvent>
+						<T as #topsoil_system::Config>::RuntimeEvent as
+						Into<<T as #topsoil_system::Config>::RuntimeEvent>
 					>::into(event);
 
-					<#frame_system::Pallet<T>>::deposit_event(event)
+					<#topsoil_system::Pallet<T>>::deposit_event(event)
 				}
 			}
 		)
@@ -192,9 +192,9 @@ pub fn expand_event(def: &mut Def) -> proc_macro2::TokenStream {
 		impl<#event_impl_gen> #event_ident<#event_use_gen> #event_where_clause {
 			#[allow(dead_code)]
 			#[doc(hidden)]
-			pub fn event_metadata<W: #frame_support::__private::scale_info::TypeInfo + 'static>() -> #frame_support::__private::metadata_ir::PalletEventMetadataIR {
-				#frame_support::__private::metadata_ir::PalletEventMetadataIR {
-					ty: #frame_support::__private::scale_info::meta_type::<W>(),
+			pub fn event_metadata<W: #topsoil_support::__private::scale_info::TypeInfo + 'static>() -> #topsoil_support::__private::metadata_ir::PalletEventMetadataIR {
+				#topsoil_support::__private::metadata_ir::PalletEventMetadataIR {
+					ty: #topsoil_support::__private::scale_info::meta_type::<W>(),
 					deprecation_info: #deprecation,
 				}
 			}

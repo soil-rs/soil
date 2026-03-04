@@ -15,7 +15,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use frame_support::{derive_impl, traits::ConstU32};
+use topsoil_support::{derive_impl, traits::ConstU32};
 use scale_info::meta_type;
 use soil_metadata_ir::PalletAssociatedTypeMetadataIR;
 
@@ -25,18 +25,18 @@ pub type Block = soil_runtime::generic::Block<Header, UncheckedExtrinsic>;
 pub type UncheckedExtrinsic = soil_runtime::generic::UncheckedExtrinsic<u32, RuntimeCall, (), ()>;
 
 /// Pallet without collectable associated types.
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
-	use frame_support::pallet_prelude::*;
+	use topsoil_support::pallet_prelude::*;
 
 	#[pallet::pallet]
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
-	pub trait Config: frame_system::Config {
+	pub trait Config: topsoil_system::Config {
 		// Runtime events already propagated to the metadata.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		// Constants are already propagated.
 		#[pallet::constant]
@@ -50,18 +50,18 @@ pub mod pallet {
 }
 
 /// Pallet with default collectable associated types.
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet2 {
-	use frame_support::pallet_prelude::*;
+	use topsoil_support::pallet_prelude::*;
 
 	#[pallet::pallet]
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
-	pub trait Config: frame_system::Config {
+	pub trait Config: topsoil_system::Config {
 		// Runtime events already propagated to the metadata.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		// Constants are already propagated.
 		#[pallet::constant]
@@ -86,19 +86,19 @@ pub mod pallet2 {
 }
 
 /// Pallet with implicit collectable associated types.
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet3 {
-	use frame_support::pallet_prelude::*;
+	use topsoil_support::pallet_prelude::*;
 
 	#[pallet::pallet]
 	pub struct Pallet<T>(_);
 
 	// Associated types are not collected by default.
 	#[pallet::config(without_automatic_metadata)]
-	pub trait Config: frame_system::Config {
+	pub trait Config: topsoil_system::Config {
 		// Runtime events already propagated to the metadata.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		// Constants are already propagated.
 		#[pallet::constant]
@@ -140,12 +140,12 @@ impl pallet3::Config for Runtime {
 	type NotIncluded = u8;
 }
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Runtime {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Runtime {
 	type BlockWeights = ();
 	type BlockLength = ();
 	type DbWeight = ();
-	type BaseCallFilter = frame_support::traits::Everything;
+	type BaseCallFilter = topsoil_support::traits::Everything;
 	type RuntimeOrigin = RuntimeOrigin;
 	type Nonce = u64;
 	type RuntimeCall = RuntimeCall;
@@ -166,10 +166,10 @@ impl frame_system::Config for Runtime {
 	type MaxConsumers = ConstU32<16>;
 }
 
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub enum Runtime
 	{
-		System: frame_system,
+		System: topsoil_system,
 		Example: pallet,
 		DefaultInclusion: pallet2,
 		ExplicitInclusion: pallet3,

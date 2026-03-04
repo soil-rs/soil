@@ -15,15 +15,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//! Tests for pallet-assets-holder.
+//! Tests for topsoil-assets-holder.
 
 use crate::mock::*;
 
-use frame_support::{
+use topsoil_support::{
 	assert_noop, assert_ok,
 	traits::tokens::fungibles::{Inspect, InspectHold, MutateHold, UnbalancedHold},
 };
-use pallet_assets::BalanceOnHold;
+use topsoil_assets::BalanceOnHold;
 
 const WHO: AccountId = 1;
 const ASSET_ID: AssetId = 1;
@@ -186,7 +186,7 @@ mod impl_hold_unbalanced {
 
 	// Note: Tests for `handle_dust`, `write_balance`, `set_total_issuance`, `decrease_balance`
 	// and `increase_balance` are intentionally left out without testing, since:
-	// 1. It is expected these methods are tested within `pallet-assets`, and
+	// 1. It is expected these methods are tested within `topsoil-assets`, and
 	// 2. There are no valid cases that can be directly asserted using those methods in
 	// the scope of this pallet.
 
@@ -285,7 +285,7 @@ mod impl_hold_unbalanced {
 
 mod impl_hold_mutate {
 	use super::*;
-	use frame_support::traits::tokens::{Fortitude, Precision, Preservation};
+	use topsoil_support::traits::tokens::{Fortitude, Precision, Preservation};
 	use soil_runtime::TokenError;
 
 	#[test]

@@ -26,8 +26,8 @@ use crate::{
 	},
 	Config, Pallet,
 };
-use frame_benchmarking::v2::*;
-use frame_support::{migrations::SteppedMigration, weights::WeightMeter};
+use topsoil_benchmarking::v2::*;
+use topsoil_support::{migrations::SteppedMigration, weights::WeightMeter};
 
 #[benchmarks]
 mod benches {

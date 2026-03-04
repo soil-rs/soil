@@ -21,15 +21,15 @@ use super::*;
 
 use crate::{CoreAssignment::Task, Pallet as Broker};
 use alloc::{vec, vec::Vec};
-use frame_benchmarking::v2::*;
-use frame_support::{
+use topsoil_benchmarking::v2::*;
+use topsoil_support::{
 	storage::bounded_vec::BoundedVec,
 	traits::{
 		fungible::{Inspect, Mutate},
 		EnsureOrigin, Hooks,
 	},
 };
-use frame_system::{Pallet as System, RawOrigin};
+use topsoil_system::{Pallet as System, RawOrigin};
 use soil_arithmetic::{FixedU64, Perbill};
 use soil_core::Get;
 use soil_runtime::{
@@ -41,11 +41,11 @@ const SEED: u32 = 0;
 const MAX_CORE_COUNT: u16 = 1_000;
 
 fn assert_last_event<T: Config>(generic_event: <T as Config>::RuntimeEvent) {
-	frame_system::Pallet::<T>::assert_last_event(generic_event.into());
+	topsoil_system::Pallet::<T>::assert_last_event(generic_event.into());
 }
 
 fn assert_has_event<T: Config>(generic_event: <T as Config>::RuntimeEvent) {
-	frame_system::Pallet::<T>::assert_has_event(generic_event.into());
+	topsoil_system::Pallet::<T>::assert_has_event(generic_event.into());
 }
 
 fn new_config_record<T: Config>() -> ConfigRecordOf<T> {
@@ -1344,6 +1344,6 @@ mod benches {
 	}
 
 	// Implements a test for each benchmark. Execute with:
-	// `cargo test -p pallet-broker --features runtime-benchmarks`.
+	// `cargo test -p topsoil-broker --features runtime-benchmarks`.
 	impl_benchmark_test_suite!(Pallet, crate::mock::new_test_ext(), crate::mock::Test);
 }

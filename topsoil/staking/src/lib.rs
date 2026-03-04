@@ -159,21 +159,21 @@
 //! ### Example: Rewarding a validator by id.
 //!
 //! ```
-//! use pallet_staking::{self as staking};
-//! use frame_support::traits::RewardsReporter;
+//! use topsoil_staking::{self as staking};
+//! use topsoil_support::traits::RewardsReporter;
 //!
-//! #[frame_support::pallet(dev_mode)]
+//! #[topsoil_support::pallet(dev_mode)]
 //! pub mod pallet {
 //!   use super::*;
-//!   use frame_support::pallet_prelude::*;
-//!   use frame_system::pallet_prelude::*;
-//!   # use frame_support::traits::RewardsReporter;
+//!   use topsoil_support::pallet_prelude::*;
+//!   use topsoil_system::pallet_prelude::*;
+//!   # use topsoil_support::traits::RewardsReporter;
 //!
 //!   #[pallet::pallet]
 //!   pub struct Pallet<T>(_);
 //!
 //!   #[pallet::config]
-//!   pub trait Config: frame_system::Config + staking::Config {}
+//!   pub trait Config: topsoil_system::Config + staking::Config {}
 //!
 //!   #[pallet::call]
 //!   impl<T: Config> Pallet<T> {
@@ -222,9 +222,9 @@
 //!
 //! Total reward is split among validators and their nominators depending on the number of points
 //! they received during the era. Points are added to a validator using the method
-//! [`frame_support::traits::RewardsReporter::reward_by_ids`] implemented by the [`Pallet`].
+//! [`topsoil_support::traits::RewardsReporter::reward_by_ids`] implemented by the [`Pallet`].
 //!
-//! [`Pallet`] implements [`pallet_authorship::EventHandler`] to add reward points to block producer
+//! [`Pallet`] implements [`topsoil_authorship::EventHandler`] to add reward points to block producer
 //! and block producer of referenced uncles.
 //!
 //! The validator and its nominator split their reward as following:
@@ -280,8 +280,8 @@
 //!
 //! ## Related Modules
 //!
-//! - [Balances](../pallet_balances/index.html): Used to manage values at stake.
-//! - [Session](../pallet_session/index.html): Used to manage sessions. Also, a list of new
+//! - [Balances](../topsoil_balances/index.html): Used to manage values at stake.
+//! - [Session](../topsoil_session/index.html): Used to manage sessions. Also, a list of new
 //!   validators is stored in the Session pallet's `Validators` at the end of each era.
 
 #![cfg_attr(not(feature = "std"), no_std)]
@@ -311,8 +311,8 @@ extern crate alloc;
 
 use alloc::{collections::btree_map::BTreeMap, vec, vec::Vec};
 use codec::{Decode, DecodeWithMemTracking, Encode, HasCompact, MaxEncodedLen};
-use frame_election_provider_support::ElectionProvider;
-use frame_support::{
+use topsoil_election_provider_support::ElectionProvider;
+use topsoil_support::{
 	defensive, defensive_assert,
 	traits::{
 		tokens::fungible::{Credit, Debt},
@@ -345,7 +345,7 @@ macro_rules! log {
 	($level:tt, $patter:expr $(, $values:expr)* $(,)?) => {
 		log::$level!(
 			target: crate::LOG_TARGET,
-			concat!("[{:?}] 💸 ", $patter), <frame_system::Pallet<T>>::block_number() $(, $values)*
+			concat!("[{:?}] 💸 ", $patter), <topsoil_system::Pallet<T>>::block_number() $(, $values)*
 		)
 	};
 }
@@ -367,11 +367,11 @@ pub type RewardPoint = u32;
 /// The balance type of this pallet.
 pub type BalanceOf<T> = <T as Config>::CurrencyBalance;
 
-type PositiveImbalanceOf<T> = Debt<<T as frame_system::Config>::AccountId, <T as Config>::Currency>;
+type PositiveImbalanceOf<T> = Debt<<T as topsoil_system::Config>::AccountId, <T as Config>::Currency>;
 pub type NegativeImbalanceOf<T> =
-	Credit<<T as frame_system::Config>::AccountId, <T as Config>::Currency>;
+	Credit<<T as topsoil_system::Config>::AccountId, <T as Config>::Currency>;
 
-type AccountIdLookupOf<T> = <<T as frame_system::Config>::Lookup as StaticLookup>::Source;
+type AccountIdLookupOf<T> = <<T as topsoil_system::Config>::Lookup as StaticLookup>::Source;
 
 /// Information regarding the active era (era in used in session).
 #[derive(
@@ -928,7 +928,7 @@ impl<Balance, const MAX: u32> NominationsQuota<Balance> for FixedNominationsQuot
 
 /// Means for interacting with a specialized version of the `session` trait.
 ///
-/// This is needed because `Staking` sets the `ValidatorIdOf` of the `pallet_session::Config`
+/// This is needed because `Staking` sets the `ValidatorIdOf` of the `topsoil_session::Config`
 pub trait SessionInterface<AccountId> {
 	/// Report an offending validator.
 	fn report_offence(validator: AccountId, severity: OffenceSeverity);
@@ -938,30 +938,30 @@ pub trait SessionInterface<AccountId> {
 	fn prune_historical_up_to(up_to: SessionIndex);
 }
 
-impl<T: Config> SessionInterface<<T as frame_system::Config>::AccountId> for T
+impl<T: Config> SessionInterface<<T as topsoil_system::Config>::AccountId> for T
 where
-	T: pallet_session::Config<ValidatorId = <T as frame_system::Config>::AccountId>,
-	T: pallet_session::historical::Config,
-	T::SessionHandler: pallet_session::SessionHandler<<T as frame_system::Config>::AccountId>,
-	T::SessionManager: pallet_session::SessionManager<<T as frame_system::Config>::AccountId>,
+	T: topsoil_session::Config<ValidatorId = <T as topsoil_system::Config>::AccountId>,
+	T: topsoil_session::historical::Config,
+	T::SessionHandler: topsoil_session::SessionHandler<<T as topsoil_system::Config>::AccountId>,
+	T::SessionManager: topsoil_session::SessionManager<<T as topsoil_system::Config>::AccountId>,
 	T::ValidatorIdOf: Convert<
-		<T as frame_system::Config>::AccountId,
-		Option<<T as frame_system::Config>::AccountId>,
+		<T as topsoil_system::Config>::AccountId,
+		Option<<T as topsoil_system::Config>::AccountId>,
 	>,
 {
 	fn report_offence(
-		validator: <T as frame_system::Config>::AccountId,
+		validator: <T as topsoil_system::Config>::AccountId,
 		severity: OffenceSeverity,
 	) {
-		<pallet_session::Pallet<T>>::report_offence(validator, severity)
+		<topsoil_session::Pallet<T>>::report_offence(validator, severity)
 	}
 
-	fn validators() -> Vec<<T as frame_system::Config>::AccountId> {
-		<pallet_session::Pallet<T>>::validators()
+	fn validators() -> Vec<<T as topsoil_system::Config>::AccountId> {
+		<topsoil_session::Pallet<T>>::validators()
 	}
 
 	fn prune_historical_up_to(up_to: SessionIndex) {
-		<pallet_session::historical::Pallet<T>>::prune_up_to(up_to);
+		<topsoil_session::historical::Pallet<T>>::prune_up_to(up_to);
 	}
 }
 
@@ -1095,9 +1095,9 @@ impl<T: Config> Convert<T::AccountId, Option<Exposure<T::AccountId, BalanceOf<T>
 /// A typical usage of this type is:
 ///
 /// ```ignore
-/// impl pallet_session::historical::Config for Runtime {
+/// impl topsoil_session::historical::Config for Runtime {
 ///     type FullIdentification = soil_staking::Exposure<AccountId, Balance>;
-///     type IdentificationOf = pallet_staking::DefaultExposureOf<Self>
+///     type IdentificationOf = topsoil_staking::DefaultExposureOf<Self>
 /// }
 /// ```
 pub struct DefaultExposureOf<T>(core::marker::PhantomData<T>);
@@ -1116,9 +1116,9 @@ impl<T: Config> Convert<T::AccountId, Option<Exposure<T::AccountId, BalanceOf<T>
 /// `None` otherwise. Also see the documentation of [`DefaultExposureOf`] for more info.
 ///
 /// ```ignore
-/// impl pallet_session::historical::Config for Runtime {
+/// impl topsoil_session::historical::Config for Runtime {
 ///     type FullIdentification = ();
-///     type IdentificationOf = pallet_staking::UnitIdentificationOf<Self>
+///     type IdentificationOf = topsoil_staking::UnitIdentificationOf<Self>
 /// }
 /// ```
 pub struct UnitIdentificationOf<T>(core::marker::PhantomData<T>);
@@ -1402,7 +1402,7 @@ pub trait BenchmarkingConfig {
 	type MaxNominators: Get<u32>;
 }
 
-/// A mock benchmarking config for pallet-staking.
+/// A mock benchmarking config for topsoil-staking.
 ///
 /// Should only be used for testing.
 #[cfg(feature = "std")]
@@ -1410,6 +1410,6 @@ pub struct TestBenchmarkingConfig;
 
 #[cfg(feature = "std")]
 impl BenchmarkingConfig for TestBenchmarkingConfig {
-	type MaxValidators = frame_support::traits::ConstU32<100>;
-	type MaxNominators = frame_support::traits::ConstU32<100>;
+	type MaxValidators = topsoil_support::traits::ConstU32<100>;
+	type MaxNominators = topsoil_support::traits::ConstU32<100>;
 }

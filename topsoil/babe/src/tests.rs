@@ -18,13 +18,13 @@
 //! Consensus extension module tests for BABE consensus.
 
 use super::{Call, *};
-use frame_support::{
+use topsoil_support::{
 	assert_err, assert_noop, assert_ok,
 	dispatch::{GetDispatchInfo, Pays},
 	traits::{Currency, EstimateNextSessionRotation, KeyOwnerProofSystem, OnFinalize},
 };
 use mock::*;
-use pallet_session::ShouldEndSession;
+use topsoil_session::ShouldEndSession;
 use soil_consensus_babe::{
 	AllowedSlots, BabeEpochConfiguration, Slot, VrfSignature, RANDOMNESS_LENGTH,
 };
@@ -420,7 +420,7 @@ fn disabled_validators_cannot_author_blocks() {
 		// so we should still be able to author blocks
 		start_era(2);
 
-		assert_eq!(pallet_staking::CurrentEra::<Test>::get().unwrap(), 2);
+		assert_eq!(topsoil_staking::CurrentEra::<Test>::get().unwrap(), 2);
 
 		// let's disable the validator at index 0
 		Session::disable_index(0);
@@ -447,7 +447,7 @@ fn report_equivocation_current_session_works() {
 
 			assert_eq!(
 				Staking::eras_stakers(1, &validator),
-				pallet_staking::Exposure { total: 10_000, own: 10_000, others: vec![] },
+				topsoil_staking::Exposure { total: 10_000, own: 10_000, others: vec![] },
 			);
 		}
 
@@ -488,7 +488,7 @@ fn report_equivocation_current_session_works() {
 		assert_eq!(Staking::slashable_balance_of(&offending_validator_id), 0);
 		assert_eq!(
 			Staking::eras_stakers(2, &offending_validator_id),
-			pallet_staking::Exposure { total: 0, own: 0, others: vec![] },
+			topsoil_staking::Exposure { total: 0, own: 0, others: vec![] },
 		);
 
 		// check that the balances of all other validators are left intact.
@@ -501,7 +501,7 @@ fn report_equivocation_current_session_works() {
 			assert_eq!(Staking::slashable_balance_of(validator), 10_000);
 			assert_eq!(
 				Staking::eras_stakers(2, &validator),
-				pallet_staking::Exposure { total: 10_000, own: 10_000, others: vec![] },
+				topsoil_staking::Exposure { total: 10_000, own: 10_000, others: vec![] },
 			);
 		}
 	})
@@ -560,7 +560,7 @@ fn report_equivocation_old_session_works() {
 		assert_eq!(Staking::slashable_balance_of(&offending_validator_id), 0);
 		assert_eq!(
 			Staking::eras_stakers(3, &offending_validator_id),
-			pallet_staking::Exposure { total: 0, own: 0, others: vec![] },
+			topsoil_staking::Exposure { total: 0, own: 0, others: vec![] },
 		);
 	})
 }
@@ -946,7 +946,7 @@ fn valid_equivocation_reports_dont_pay_fees() {
 
 #[test]
 fn add_epoch_configurations_migration_works() {
-	use frame_support::storage::migration::{get_storage_value, put_storage_value};
+	use topsoil_support::storage::migration::{get_storage_value, put_storage_value};
 
 	new_test_ext(1).execute_with(|| {
 		let next_config_descriptor =

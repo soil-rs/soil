@@ -19,7 +19,7 @@
 
 use crate::{test_fungibles::TestFungibles, *};
 use alloc::collections::btree_map::BTreeMap;
-use frame_support::{
+use topsoil_support::{
 	assert_ok, derive_impl, ensure, ord_parameter_types, parameter_types,
 	traits::{
 		fungible::{Balanced, Credit, Inspect, ItemOf, Mutate},
@@ -29,7 +29,7 @@ use frame_support::{
 	},
 	PalletId,
 };
-use frame_system::{EnsureRoot, EnsureSignedBy};
+use topsoil_system::{EnsureRoot, EnsureSignedBy};
 use soil_arithmetic::Perbill;
 use soil_core::{ConstU32, ConstU64, Get};
 use soil_runtime::{
@@ -37,19 +37,19 @@ use soil_runtime::{
 	BuildStorage, Saturating,
 };
 
-type Block = frame_system::mocking::MockBlock<Test>;
+type Block = topsoil_system::mocking::MockBlock<Test>;
 
 // Configure a mock runtime to test the pallet.
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub enum Test
 	{
-		System: frame_system,
+		System: topsoil_system,
 		Broker: crate,
 	}
 );
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
 	type Block = Block;
 }
 
@@ -350,6 +350,6 @@ impl TestExt {
 }
 
 pub fn new_test_ext() -> soil_io::TestExternalities {
-	let c = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let c = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	soil_io::TestExternalities::from(c)
 }

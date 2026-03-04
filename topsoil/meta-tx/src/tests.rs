@@ -17,7 +17,7 @@
 
 use crate::*;
 use core::ops::Add;
-use frame_support::traits::tokens::fungible::Inspect;
+use topsoil_support::traits::tokens::fungible::Inspect;
 use mock::*;
 use soil_io::hashing::blake2_256;
 use soil_keyring::Sr25519Keyring;
@@ -26,33 +26,33 @@ use soil_runtime::{
 	traits::{Applyable, Checkable, Hash, IdentityLookup},
 	DispatchErrorWithPostInfo, MultiSignature,
 };
-type VerifySignatureExt = pallet_verify_signature::VerifySignature<Runtime>;
+type VerifySignatureExt = topsoil_verify_signature::VerifySignature<Runtime>;
 
 fn create_tx_bare_ext(account: AccountId) -> TxBareExtension {
 	(
-		frame_system::CheckNonZeroSender::<Runtime>::new(),
-		frame_system::CheckSpecVersion::<Runtime>::new(),
-		frame_system::CheckTxVersion::<Runtime>::new(),
-		frame_system::CheckGenesis::<Runtime>::new(),
-		frame_system::CheckMortality::<Runtime>::from(Era::immortal()),
-		frame_system::CheckNonce::<Runtime>::from(
-			frame_system::Pallet::<Runtime>::account(&account).nonce,
+		topsoil_system::CheckNonZeroSender::<Runtime>::new(),
+		topsoil_system::CheckSpecVersion::<Runtime>::new(),
+		topsoil_system::CheckTxVersion::<Runtime>::new(),
+		topsoil_system::CheckGenesis::<Runtime>::new(),
+		topsoil_system::CheckMortality::<Runtime>::from(Era::immortal()),
+		topsoil_system::CheckNonce::<Runtime>::from(
+			topsoil_system::Pallet::<Runtime>::account(&account).nonce,
 		),
-		frame_system::CheckWeight::<Runtime>::new(),
-		pallet_transaction_payment::ChargeTransactionPayment::<Runtime>::from(0),
+		topsoil_system::CheckWeight::<Runtime>::new(),
+		topsoil_transaction_payment::ChargeTransactionPayment::<Runtime>::from(0),
 	)
 }
 
 pub fn create_meta_tx_bare_ext(account: AccountId) -> MetaTxBareExtension {
 	(
 		MetaTxMarker::new(),
-		frame_system::CheckNonZeroSender::<Runtime>::new(),
-		frame_system::CheckSpecVersion::<Runtime>::new(),
-		frame_system::CheckTxVersion::<Runtime>::new(),
-		frame_system::CheckGenesis::<Runtime>::new(),
-		frame_system::CheckMortality::<Runtime>::from(Era::immortal()),
-		frame_system::CheckNonce::<Runtime>::from(
-			frame_system::Pallet::<Runtime>::account(&account).nonce,
+		topsoil_system::CheckNonZeroSender::<Runtime>::new(),
+		topsoil_system::CheckSpecVersion::<Runtime>::new(),
+		topsoil_system::CheckTxVersion::<Runtime>::new(),
+		topsoil_system::CheckGenesis::<Runtime>::new(),
+		topsoil_system::CheckMortality::<Runtime>::from(Era::immortal()),
+		topsoil_system::CheckNonce::<Runtime>::from(
+			topsoil_system::Pallet::<Runtime>::account(&account).nonce,
 		),
 	)
 }
@@ -104,7 +104,7 @@ fn sign_and_execute_meta_tx() {
 		// Alice builds a meta transaction.
 
 		let remark_call =
-			RuntimeCall::System(frame_system::Call::remark_with_event { remark: vec![1] });
+			RuntimeCall::System(topsoil_system::Call::remark_with_event { remark: vec![1] });
 		let meta_tx_bare_ext = create_meta_tx_bare_ext(alice_account.clone());
 		let meta_tx_sig =
 			create_signature(remark_call.clone(), meta_tx_bare_ext.clone(), alice_keyring);
@@ -167,9 +167,9 @@ fn sign_and_execute_meta_tx() {
 			}),
 		}));
 
-		System::assert_has_event(RuntimeEvent::System(frame_system::Event::Remarked {
+		System::assert_has_event(RuntimeEvent::System(topsoil_system::Event::Remarked {
 			sender: alice_account.clone(),
-			hash: <Runtime as frame_system::Config>::Hashing::hash(&[1]),
+			hash: <Runtime as topsoil_system::Config>::Hashing::hash(&[1]),
 		}));
 
 		// Alice balance is unchanged, Bob paid the transaction fee.
@@ -196,7 +196,7 @@ fn invalid_signature() {
 		// Alice builds a meta transaction.
 
 		let remark_call =
-			RuntimeCall::System(frame_system::Call::remark_with_event { remark: vec![1] });
+			RuntimeCall::System(topsoil_system::Call::remark_with_event { remark: vec![1] });
 		let meta_tx_bare_ext = create_meta_tx_bare_ext(alice_account.clone());
 		// signature is invalid since it's signed by charlie instead of alice.
 		let invalid_meta_tx_sig = create_signature(
@@ -268,7 +268,7 @@ fn meta_tx_extension_work() {
 		// Alice builds a meta transaction.
 
 		let remark_call =
-			RuntimeCall::System(frame_system::Call::remark_with_event { remark: vec![1] });
+			RuntimeCall::System(topsoil_system::Call::remark_with_event { remark: vec![1] });
 
 		let meta_tx_bare_ext = create_meta_tx_bare_ext(alice_account.clone());
 		let meta_tx_sig =
@@ -303,7 +303,7 @@ fn meta_tx_extension_work() {
 
 		// increment alice's nonce to invalidate the meta tx and verify that the
 		// meta tx extension works.
-		frame_system::Pallet::<Runtime>::inc_account_nonce(alice_account.clone());
+		topsoil_system::Pallet::<Runtime>::inc_account_nonce(alice_account.clone());
 
 		// Check Extrinsic validity and apply it.
 		let result = apply_extrinsic(uxt);
@@ -335,7 +335,7 @@ fn meta_tx_call_fails() {
 		// Alice builds a meta transaction.
 
 		// transfer more than alice has
-		let transfer_call = RuntimeCall::Balances(pallet_balances::Call::transfer_allow_death {
+		let transfer_call = RuntimeCall::Balances(topsoil_balances::Call::transfer_allow_death {
 			dest: bob_account.clone(),
 			value: alice_balance * 2,
 		});

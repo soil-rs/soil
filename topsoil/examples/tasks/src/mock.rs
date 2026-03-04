@@ -18,29 +18,29 @@
 //! Mock runtime for `tasks-example` tests.
 #![cfg(test)]
 
-use crate::{self as pallet_example_tasks};
-use frame_support::derive_impl;
+use crate::{self as topsoil_example_tasks};
+use topsoil_support::derive_impl;
 use soil_runtime::testing::TestXt;
 
 pub type AccountId = u32;
 pub type Balance = u32;
 
-type Block = frame_system::mocking::MockBlock<Runtime>;
-frame_support::construct_runtime!(
+type Block = topsoil_system::mocking::MockBlock<Runtime>;
+topsoil_support::construct_runtime!(
 	pub enum Runtime {
-		System: frame_system,
-		TasksExample: pallet_example_tasks,
+		System: topsoil_system,
+		TasksExample: topsoil_example_tasks,
 	}
 );
 
 pub type Extrinsic = TestXt<RuntimeCall, ()>;
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Runtime {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Runtime {
 	type Block = Block;
 }
 
-impl<LocalCall> frame_system::offchain::CreateTransactionBase<LocalCall> for Runtime
+impl<LocalCall> topsoil_system::offchain::CreateTransactionBase<LocalCall> for Runtime
 where
 	RuntimeCall: From<LocalCall>,
 {
@@ -48,7 +48,7 @@ where
 	type Extrinsic = Extrinsic;
 }
 
-impl<LocalCall> frame_system::offchain::CreateBare<LocalCall> for Runtime
+impl<LocalCall> topsoil_system::offchain::CreateBare<LocalCall> for Runtime
 where
 	RuntimeCall: From<LocalCall>,
 {
@@ -57,14 +57,14 @@ where
 	}
 }
 
-impl pallet_example_tasks::Config for Runtime {
+impl topsoil_example_tasks::Config for Runtime {
 	type RuntimeTask = RuntimeTask;
 	type WeightInfo = ();
 }
 
 pub fn advance_to(b: u64) {
 	#[cfg(feature = "experimental")]
-	use frame_support::traits::Hooks;
+	use topsoil_support::traits::Hooks;
 	while System::block_number() < b {
 		System::set_block_number(System::block_number() + 1);
 		#[cfg(feature = "experimental")]

@@ -19,7 +19,7 @@ use crate::{mock::*, *};
 
 use crate::primitives::{mmr_lib::helper, utils, Compact, LeafProof};
 
-use frame::{
+use topsoil::{
 	deps::soil_core::{
 		offchain::{testing::TestOffchainExt, OffchainDbExt, OffchainWorkerExt},
 		H256,
@@ -28,7 +28,7 @@ use frame::{
 };
 
 pub(crate) fn new_test_ext() -> TestState {
-	frame_system::GenesisConfig::<Test>::default().build_storage().unwrap().into()
+	topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap().into()
 }
 
 fn register_offchain_ext(ext: &mut TestState) {
@@ -38,12 +38,12 @@ fn register_offchain_ext(ext: &mut TestState) {
 }
 
 fn new_block() -> Weight {
-	let number = frame_system::Pallet::<Test>::block_number() + 1;
+	let number = topsoil_system::Pallet::<Test>::block_number() + 1;
 	let hash = H256::repeat_byte(number as u8);
 	LeafDataTestValue::mutate(|r| r.a = number);
 
-	frame_system::Pallet::<Test>::reset_events();
-	frame_system::Pallet::<Test>::initialize(&number, &hash, &Default::default());
+	topsoil_system::Pallet::<Test>::reset_events();
+	topsoil_system::Pallet::<Test>::initialize(&number, &hash, &Default::default());
 	MMR::on_initialize(number)
 }
 
@@ -119,7 +119,7 @@ fn should_append_to_mmr_when_on_initialize_is_called() {
 	let (parent_b1, parent_b2) = ext.execute_with(|| {
 		// when
 		new_block();
-		let parent_b1 = <frame_system::Pallet<Test>>::parent_hash();
+		let parent_b1 = <topsoil_system::Pallet<Test>>::parent_hash();
 
 		// then
 		assert_eq!(crate::NumberOfLeaves::<Test>::get(), 1);
@@ -138,7 +138,7 @@ fn should_append_to_mmr_when_on_initialize_is_called() {
 
 		// when
 		new_block();
-		let parent_b2 = <frame_system::Pallet<Test>>::parent_hash();
+		let parent_b2 = <topsoil_system::Pallet<Test>>::parent_hash();
 
 		// then
 		assert_eq!(crate::NumberOfLeaves::<Test>::get(), 2);
@@ -256,7 +256,7 @@ fn should_generate_proofs_correctly() {
 	// to retrieve full leaf data.
 	register_offchain_ext(&mut ext);
 	ext.execute_with(|| {
-		let best_block_number = frame_system::Pallet::<Test>::block_number();
+		let best_block_number = topsoil_system::Pallet::<Test>::block_number();
 		// when generate proofs for all leaves.
 		let proofs = (1_u64..=best_block_number)
 			.into_iter()
@@ -527,7 +527,7 @@ fn generate_and_verify_batch_proof(
 		crate::Pallet::<Test>::generate_proof(block_numbers.to_vec(), None).unwrap()
 	});
 
-	let max_block_number = ext.execute_with(|| frame_system::Pallet::<Test>::block_number());
+	let max_block_number = ext.execute_with(|| topsoil_system::Pallet::<Test>::block_number());
 	let min_block_number = block_numbers.iter().max().unwrap();
 
 	// generate all possible historical proofs for the given blocks
@@ -724,7 +724,7 @@ fn should_verify_canonicalized() {
 	soil_tracing::init_for_tests();
 
 	// How deep is our fork-aware storage (in terms of blocks/leaves, nodes will be more).
-	let block_hash_size: u64 = <Test as frame_system::Config>::BlockHashCount::get();
+	let block_hash_size: u64 = <Test as topsoil_system::Config>::BlockHashCount::get();
 
 	// Start off with chain initialisation and storing indexing data off-chain.
 	// Create twice as many leaf entries than our fork-aware capacity,

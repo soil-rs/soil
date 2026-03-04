@@ -42,9 +42,9 @@
 //! ### Example - Get random seed for the current block
 //!
 //! ```
-//! use frame::{prelude::*, traits::Randomness};
+//! use topsoil::{prelude::*, traits::Randomness};
 //!
-//! #[frame::pallet]
+//! #[topsoil::pallet]
 //! pub mod pallet {
 //!     use super::*;
 //!
@@ -52,13 +52,13 @@
 //!     pub struct Pallet<T>(_);
 //!
 //!     #[pallet::config]
-//!     pub trait Config: frame_system::Config + pallet_insecure_randomness_collective_flip::Config {}
+//!     pub trait Config: topsoil_system::Config + topsoil_insecure_randomness_collective_flip::Config {}
 //!
 //!     #[pallet::call]
 //!     impl<T: Config> Pallet<T> {
 //!         #[pallet::weight(0)]
 //!         pub fn random_module_example(origin: OriginFor<T>) -> DispatchResult {
-//!             let _random_value = pallet_insecure_randomness_collective_flip::Pallet::<T>::random(&b"my context"[..]);
+//!             let _random_value = topsoil_insecure_randomness_collective_flip::Pallet::<T>::random(&b"my context"[..]);
 //!             Ok(())
 //!         }
 //!     }
@@ -71,7 +71,7 @@
 use safe_mix::TripletMix;
 
 use codec::Encode;
-use frame::{prelude::*, traits::Randomness};
+use topsoil::{prelude::*, traits::Randomness};
 
 const RANDOM_MATERIAL_LEN: u32 = 81;
 
@@ -83,7 +83,7 @@ fn block_number_to_index<T: Config>(block_number: BlockNumberFor<T>) -> usize {
 
 pub use pallet::*;
 
-#[frame::pallet]
+#[topsoil::pallet]
 pub mod pallet {
 	use super::*;
 
@@ -91,12 +91,12 @@ pub mod pallet {
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
-	pub trait Config: frame_system::Config {}
+	pub trait Config: topsoil_system::Config {}
 
 	#[pallet::hooks]
 	impl<T: Config> Hooks<BlockNumberFor<T>> for Pallet<T> {
 		fn on_initialize(block_number: BlockNumberFor<T>) -> Weight {
-			let parent_hash = frame_system::Pallet::<T>::parent_hash();
+			let parent_hash = topsoil_system::Pallet::<T>::parent_hash();
 
 			RandomMaterial::<T>::mutate(|ref mut values| {
 				if values.try_push(parent_hash).is_err() {
@@ -136,7 +136,7 @@ impl<T: Config> Randomness<T::Hash, BlockNumberFor<T>> for Pallet<T> {
 	/// and mean that all bits of the resulting value are entirely manipulatable by the author of
 	/// the parent block, who can determine the value of `parent_hash`.
 	fn random(subject: &[u8]) -> (T::Hash, BlockNumberFor<T>) {
-		let block_number = frame_system::Pallet::<T>::block_number();
+		let block_number = topsoil_system::Pallet::<T>::block_number();
 		let index = block_number_to_index::<T>(block_number);
 
 		let hash_series = RandomMaterial::<T>::get();
@@ -161,19 +161,19 @@ impl<T: Config> Randomness<T::Hash, BlockNumberFor<T>> for Pallet<T> {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use crate as pallet_insecure_randomness_collective_flip;
-	use frame::{
-		testing_prelude::{frame_system::limits, *},
+	use crate as topsoil_insecure_randomness_collective_flip;
+	use topsoil::{
+		testing_prelude::{topsoil_system::limits, *},
 		traits::Header as _,
 	};
 
-	type Block = frame_system::mocking::MockBlock<Test>;
+	type Block = topsoil_system::mocking::MockBlock<Test>;
 
 	construct_runtime!(
 		pub enum Test
 		{
-			System: frame_system,
-			CollectiveFlip: pallet_insecure_randomness_collective_flip,
+			System: topsoil_system,
+			CollectiveFlip: topsoil_insecure_randomness_collective_flip,
 		}
 	);
 
@@ -183,15 +183,15 @@ mod tests {
 			.build();
 	}
 
-	#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-	impl frame_system::Config for Test {
+	#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+	impl topsoil_system::Config for Test {
 		type Block = Block;
 	}
 
-	impl pallet_insecure_randomness_collective_flip::Config for Test {}
+	impl topsoil_insecure_randomness_collective_flip::Config for Test {}
 
 	fn new_test_ext() -> TestExternalities {
-		let t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+		let t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 		t.into()
 	}
 

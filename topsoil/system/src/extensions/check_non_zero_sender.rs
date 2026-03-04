@@ -18,7 +18,7 @@
 use crate::Config;
 use codec::{Decode, DecodeWithMemTracking, Encode};
 use core::marker::PhantomData;
-use frame_support::{pallet_prelude::TransactionSource, traits::OriginTrait, DefaultNoBound};
+use topsoil_support::{pallet_prelude::TransactionSource, traits::OriginTrait, DefaultNoBound};
 use scale_info::TypeInfo;
 use soil_runtime::{
 	impl_tx_ext_default,
@@ -84,7 +84,7 @@ impl<T: Config + Send + Sync> TransactionExtension<T::RuntimeCall> for CheckNonZ
 mod tests {
 	use super::*;
 	use crate::mock::{new_test_ext, Test, CALL};
-	use frame_support::{assert_ok, dispatch::DispatchInfo};
+	use topsoil_support::{assert_ok, dispatch::DispatchInfo};
 	use soil_runtime::{
 		traits::{AsTransactionAuthorizedOrigin, DispatchTransaction, TxBaseImplication},
 		transaction_validity::{TransactionSource::External, TransactionValidityError},

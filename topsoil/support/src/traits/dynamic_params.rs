@@ -21,7 +21,7 @@
 //! `parameters` pallet.
 
 use codec::MaxEncodedLen;
-use frame_support::Parameter;
+use topsoil_support::Parameter;
 
 /// A dynamic parameter store across an aggregated KV type.
 pub trait RuntimeParameterStore {

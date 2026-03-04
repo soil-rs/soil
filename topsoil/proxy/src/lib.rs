@@ -35,7 +35,7 @@ pub mod weights;
 
 extern crate alloc;
 use alloc::{boxed::Box, vec};
-use frame::{
+use topsoil::{
 	prelude::*,
 	traits::{Currency, InstanceFilter, ReservableCurrency},
 };
@@ -45,12 +45,12 @@ pub use weights::WeightInfo;
 type CallHashOf<T> = <<T as Config>::CallHasher as Hash>::Output;
 
 type BalanceOf<T> =
-	<<T as Config>::Currency as Currency<<T as frame_system::Config>::AccountId>>::Balance;
+	<<T as Config>::Currency as Currency<<T as topsoil_system::Config>::AccountId>>::Balance;
 
 pub type BlockNumberFor<T> =
 	<<T as Config>::BlockNumberProvider as BlockNumberProvider>::BlockNumber;
 
-type AccountIdLookupOf<T> = <<T as frame_system::Config>::Lookup as StaticLookup>::Source;
+type AccountIdLookupOf<T> = <<T as topsoil_system::Config>::Lookup as StaticLookup>::Source;
 
 /// The parameters under which a particular account has a proxy relationship with some other
 /// account.
@@ -120,7 +120,7 @@ pub enum DepositKind {
 	Announcements,
 }
 
-#[frame::pallet]
+#[topsoil::pallet]
 pub mod pallet {
 	use super::*;
 
@@ -129,18 +129,18 @@ pub mod pallet {
 
 	/// Configuration trait.
 	#[pallet::config]
-	pub trait Config: frame_system::Config {
+	pub trait Config: topsoil_system::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// The overarching call type.
 		type RuntimeCall: Parameter
 			+ Dispatchable<RuntimeOrigin = Self::RuntimeOrigin>
 			+ GetDispatchInfo
-			+ From<frame_system::Call<Self>>
+			+ From<topsoil_system::Call<Self>>
 			+ IsSubType<Call<Self>>
-			+ IsType<<Self as frame_system::Config>::RuntimeCall>;
+			+ IsType<<Self as topsoil_system::Config>::RuntimeCall>;
 
 		/// The currency mechanism.
 		type Currency: ReservableCurrency<Self::AccountId>;
@@ -153,7 +153,7 @@ pub mod pallet {
 			+ Member
 			+ Ord
 			+ PartialOrd
-			+ frame::traits::InstanceFilter<<Self as Config>::RuntimeCall>
+			+ topsoil::traits::InstanceFilter<<Self as Config>::RuntimeCall>
 			+ Default
 			+ MaxEncodedLen;
 
@@ -204,7 +204,7 @@ pub mod pallet {
 		///
 		/// Must return monotonically increasing values when called from consecutive blocks.
 		/// Can be configured to return either:
-		/// - the local block number of the runtime via `frame_system::Pallet`
+		/// - the local block number of the runtime via `topsoil_system::Pallet`
 		/// - a remote block number, eg from the relay chain through `RelaychainDataProvider`
 		/// - an arbitrary value through a custom implementation of the trait
 		///
@@ -213,12 +213,12 @@ pub mod pallet {
 		/// this to their local block number provider if they have the pallet already deployed.
 		///
 		/// Suggested values:
-		/// - Solo- and Relay-chains: `frame_system::Pallet`
+		/// - Solo- and Relay-chains: `topsoil_system::Pallet`
 		/// - Parachains that may produce blocks sparingly or only when needed (on-demand):
-		///   - already have the pallet deployed: `frame_system::Pallet`
+		///   - already have the pallet deployed: `topsoil_system::Pallet`
 		///   - are freshly deploying this pallet: `RelaychainDataProvider`
 		/// - Parachains with a reliably block production rate (PLO or bulk-coretime):
-		///   - already have the pallet deployed: `frame_system::Pallet`
+		///   - already have the pallet deployed: `topsoil_system::Pallet`
 		///   - are freshly deploying this pallet: no strong recommendation. Both local and remote
 		///     providers can be used. Relay provider can be a bit better in cases where the
 		///     parachain is lagging its block production to avoid clock skew.
@@ -357,7 +357,7 @@ pub mod pallet {
 			T::Currency::reserve(&who, deposit)?;
 
 			Proxies::<T>::insert(&pure, (bounded_proxies, deposit));
-			let extrinsic_index = <frame_system::Pallet<T>>::extrinsic_index().unwrap_or_default();
+			let extrinsic_index = <topsoil_system::Pallet<T>>::extrinsic_index().unwrap_or_default();
 			Self::deposit_event(Event::PureCreated {
 				pure,
 				who,
@@ -832,7 +832,7 @@ impl<T: Config> Pallet<T> {
 		let (height, ext_index) = maybe_when.unwrap_or_else(|| {
 			(
 				T::BlockNumberProvider::current_block_number(),
-				frame_system::Pallet::<T>::extrinsic_index().unwrap_or_default(),
+				topsoil_system::Pallet::<T>::extrinsic_index().unwrap_or_default(),
 			)
 		});
 
@@ -996,10 +996,10 @@ impl<T: Config> Pallet<T> {
 		real: T::AccountId,
 		call: <T as Config>::RuntimeCall,
 	) {
-		use frame::traits::{InstanceFilter as _, OriginTrait as _};
+		use topsoil::traits::{InstanceFilter as _, OriginTrait as _};
 		// This is a freshly authenticated new account, the origin restrictions doesn't apply.
-		let mut origin: T::RuntimeOrigin = frame_system::RawOrigin::Signed(real).into();
-		origin.add_filter(move |c: &<T as frame_system::Config>::RuntimeCall| {
+		let mut origin: T::RuntimeOrigin = topsoil_system::RawOrigin::Signed(real).into();
+		origin.add_filter(move |c: &<T as topsoil_system::Config>::RuntimeCall| {
 			let c = <T as Config>::RuntimeCall::from_ref(c);
 			// We make sure the proxy call does access this pallet to change modify proxies.
 			match c.is_sub_type() {

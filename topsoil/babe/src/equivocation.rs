@@ -34,8 +34,8 @@
 //! definition.
 
 use alloc::{boxed::Box, vec, vec::Vec};
-use frame_support::traits::{Get, KeyOwnerProofSystem};
-use frame_system::pallet_prelude::HeaderFor;
+use topsoil_support::traits::{Get, KeyOwnerProofSystem};
+use topsoil_system::pallet_prelude::HeaderFor;
 use log::{error, info};
 
 use soil_consensus_babe::{AuthorityId, EquivocationProof, Slot, KEY_TYPE};
@@ -110,7 +110,7 @@ impl<T, R, P, L>
 	OffenceReportSystem<Option<T::AccountId>, (EquivocationProof<HeaderFor<T>>, T::KeyOwnerProof)>
 	for EquivocationReportSystem<T, R, P, L>
 where
-	T: Config + pallet_authorship::Config + frame_system::offchain::CreateBare<Call<T>>,
+	T: Config + topsoil_authorship::Config + topsoil_system::offchain::CreateBare<Call<T>>,
 	R: ReportOffence<
 		T::AccountId,
 		P::IdentificationTuple,
@@ -125,7 +125,7 @@ where
 	fn publish_evidence(
 		evidence: (EquivocationProof<HeaderFor<T>>, T::KeyOwnerProof),
 	) -> Result<(), ()> {
-		use frame_system::offchain::SubmitTransaction;
+		use topsoil_system::offchain::SubmitTransaction;
 		let (equivocation_proof, key_owner_proof) = evidence;
 
 		let call = Call::report_equivocation_unsigned {
@@ -164,7 +164,7 @@ where
 		evidence: (EquivocationProof<HeaderFor<T>>, T::KeyOwnerProof),
 	) -> Result<(), DispatchError> {
 		let (equivocation_proof, key_owner_proof) = evidence;
-		let reporter = reporter.or_else(|| <pallet_authorship::Pallet<T>>::author());
+		let reporter = reporter.or_else(|| <topsoil_authorship::Pallet<T>>::author());
 		let offender = equivocation_proof.offender.clone();
 		let slot = equivocation_proof.slot;
 

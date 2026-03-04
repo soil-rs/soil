@@ -20,7 +20,7 @@
 
 use alloc::collections::btree_map::BTreeMap;
 use core::iter::Sum;
-use frame_support::{
+use topsoil_support::{
 	pallet_prelude::OptionQuery,
 	storage_alias,
 	traits::{Currency, LockableCurrency, OnRuntimeUpgrade, ReservableCurrency},
@@ -54,7 +54,7 @@ pub trait UnlockConfig<I>: 'static {
 	/// Should match the currency type previously used for the pallet, if applicable.
 	type DataDepositPerByte: soil_core::Get<BalanceOf<Self, I>>;
 	/// The name of the pallet as previously configured in
-	/// [`construct_runtime!`](frame_support::construct_runtime).
+	/// [`construct_runtime!`](topsoil_support::construct_runtime).
 	type PalletName: soil_core::Get<&'static str>;
 	/// The DB weight as configured in the runtime to calculate the correct weight.
 	type DbWeight: soil_core::Get<RuntimeDbWeight>;
@@ -95,8 +95,8 @@ impl<T: UnlockConfig<I>, I: 'static> UnreserveDeposits<T, I> {
 	///
 	/// * `BTreeMap<T::AccountId, T::Balance>`: Map of account IDs to their respective total
 	///   reserved balance by this pallet
-	/// * `frame_support::weights::Weight`: The weight of this operation.
-	fn get_deposits() -> (BTreeMap<T::AccountId, BalanceOf<T, I>>, frame_support::weights::Weight) {
+	/// * `topsoil_support::weights::Weight`: The weight of this operation.
+	fn get_deposits() -> (BTreeMap<T::AccountId, BalanceOf<T, I>>, topsoil_support::weights::Weight) {
 		use soil_core::Get;
 
 		let mut tips_len = 0;
@@ -135,7 +135,7 @@ where
 	#[cfg(feature = "try-runtime")]
 	fn pre_upgrade() -> Result<alloc::vec::Vec<u8>, soil_runtime::TryRuntimeError> {
 		use codec::Encode;
-		use frame_support::ensure;
+		use topsoil_support::ensure;
 
 		// Get the Tips pallet view of balances it has reserved
 		let (account_deposits, _) = Self::get_deposits();
@@ -167,8 +167,8 @@ where
 	}
 
 	/// Executes the migration, unreserving funds that are locked in Tip deposits.
-	fn on_runtime_upgrade() -> frame_support::weights::Weight {
-		use frame_support::traits::Get;
+	fn on_runtime_upgrade() -> topsoil_support::weights::Weight {
+		use topsoil_support::traits::Get;
 
 		// Get staked and deposited balances as reported by this pallet.
 		let (account_deposits, initial_reads) = Self::get_deposits();
@@ -234,8 +234,8 @@ mod test {
 		migrations::unreserve_deposits::UnreserveDeposits,
 		tests::{new_test_ext, Balances, RuntimeOrigin, Test, Tips},
 	};
-	use frame_support::{assert_ok, parameter_types, traits::TypedGet};
-	use frame_system::pallet_prelude::BlockNumberFor;
+	use topsoil_support::{assert_ok, parameter_types, traits::TypedGet};
+	use topsoil_system::pallet_prelude::BlockNumberFor;
 	use soil_core::ConstU64;
 
 	parameter_types! {
@@ -265,11 +265,11 @@ mod test {
 		let tip_1_reason = b"pineapple_on_pizza".to_vec();
 		new_test_ext().execute_with(|| {
 			// Set up
-			assert_ok!(<Test as pallet_treasury::Config>::Currency::reserve(
+			assert_ok!(<Test as topsoil_treasury::Config>::Currency::reserve(
 				&tipper_0,
 				tipper_0_initial_reserved
 			));
-			assert_ok!(<Test as pallet_treasury::Config>::Currency::reserve(
+			assert_ok!(<Test as topsoil_treasury::Config>::Currency::reserve(
 				&tipper_1,
 				tipper_1_initial_reserved
 			));
@@ -288,14 +288,14 @@ mod test {
 
 			// Verify the expected amount is reserved
 			assert_eq!(
-				<Test as pallet_treasury::Config>::Currency::reserved_balance(&tipper_0),
+				<Test as topsoil_treasury::Config>::Currency::reserved_balance(&tipper_0),
 				tipper_0_initial_reserved +
 					<Test as crate::Config>::TipReportDepositBase::get() +
 					<Test as crate::Config>::DataDepositPerByte::get() *
 						tip_0_reason.len() as u64
 			);
 			assert_eq!(
-				<Test as pallet_treasury::Config>::Currency::reserved_balance(&tipper_1),
+				<Test as topsoil_treasury::Config>::Currency::reserved_balance(&tipper_1),
 				tipper_1_initial_reserved +
 					<Test as crate::Config>::TipReportDepositBase::get() +
 					<Test as crate::Config>::DataDepositPerByte::get() *
@@ -312,11 +312,11 @@ mod test {
 
 			// Check the deposits were were unreserved
 			assert_eq!(
-				<Test as pallet_treasury::Config>::Currency::reserved_balance(&tipper_0),
+				<Test as topsoil_treasury::Config>::Currency::reserved_balance(&tipper_0),
 				tipper_0_initial_reserved
 			);
 			assert_eq!(
-				<Test as pallet_treasury::Config>::Currency::reserved_balance(&tipper_1),
+				<Test as topsoil_treasury::Config>::Currency::reserved_balance(&tipper_1),
 				tipper_1_initial_reserved
 			);
 		});

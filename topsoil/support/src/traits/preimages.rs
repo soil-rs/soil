@@ -51,7 +51,7 @@ impl<T, H: Hash> Bounded<T, H> {
 	///
 	/// # Examples
 	/// ```
-	/// use frame_support::{traits::Bounded, soil_runtime::traits::BlakeTwo256};
+	/// use topsoil_support::{traits::Bounded, soil_runtime::traits::BlakeTwo256};
 	///
 	/// // Transmute from `String` to `&str`.
 	/// let x: Bounded<String, BlakeTwo256> = Bounded::Inline(Default::default());

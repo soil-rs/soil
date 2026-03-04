@@ -21,16 +21,16 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-//! Benchmarking for `pallet-example-basic`.
+//! Benchmarking for `topsoil-example-basic`.
 
 // Only enable this module for benchmarking.
 #![cfg(feature = "runtime-benchmarks")]
 
 use crate::*;
-use frame_benchmarking::v2::*;
-use frame_system::RawOrigin;
+use topsoil_benchmarking::v2::*;
+use topsoil_system::RawOrigin;
 
-// To actually run this benchmark on pallet-example-basic, we need to put this pallet into the
+// To actually run this benchmark on topsoil-example-basic, we need to put this pallet into the
 //   runtime and compile it with `runtime-benchmarks` feature. The detail procedures are
 //   documented at:
 //   https://docs.substrate.io/reference/how-to-guides/weights/add-benchmarks/
@@ -39,7 +39,7 @@ use frame_system::RawOrigin;
 // The exact command of how the estimate generated is printed at the top of the file.
 
 // Details on using the benchmarks macro can be seen at:
-//   https://paritytech.github.io/substrate/master/frame_benchmarking/trait.Benchmarking.html#tymethod.benchmarks
+//   https://paritytech.github.io/substrate/master/topsoil_benchmarking/trait.Benchmarking.html#tymethod.benchmarks
 #[benchmarks]
 mod benchmarks {
 	use super::*;
@@ -113,7 +113,7 @@ mod benchmarks {
 	}
 
 	// This line generates test cases for benchmarking, and could be run by:
-	//   `cargo test -p pallet-example-basic --all-features`, you will see one line per case:
+	//   `cargo test -p topsoil-example-basic --all-features`, you will see one line per case:
 	//   `test benchmarking::bench_sort_vector ... ok`
 	//   `test benchmarking::bench_accumulate_dummy ... ok`
 	//   `test benchmarking::bench_set_dummy_benchmark ... ok` in the result.

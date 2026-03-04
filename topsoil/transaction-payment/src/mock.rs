@@ -16,29 +16,29 @@
 // limitations under the License.
 
 use super::*;
-use crate as pallet_transaction_payment;
-use frame_support::{
+use crate as topsoil_transaction_payment;
+use topsoil_support::{
 	derive_impl,
 	dispatch::DispatchClass,
 	parameter_types,
 	traits::{fungible, Imbalance, OnUnbalanced},
 	weights::{Weight, WeightToFee as WeightToFeeT},
 };
-use frame_system as system;
-use pallet_balances::Call as BalancesCall;
+use topsoil_system as system;
+use topsoil_balances::Call as BalancesCall;
 
-type Block = frame_system::mocking::MockBlock<Runtime>;
+type Block = topsoil_system::mocking::MockBlock<Runtime>;
 
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub struct Runtime
 	{
 		System: system,
-		Balances: pallet_balances,
-		TransactionPayment: pallet_transaction_payment::{Pallet, Storage, Event<T>},
+		Balances: topsoil_balances,
+		TransactionPayment: topsoil_transaction_payment::{Pallet, Storage, Event<T>},
 	}
 );
 
-pub(crate) const CALL: &<Runtime as frame_system::Config>::RuntimeCall =
+pub(crate) const CALL: &<Runtime as topsoil_system::Config>::RuntimeCall =
 	&RuntimeCall::Balances(BalancesCall::transfer_allow_death { dest: 2, value: 69 });
 
 parameter_types! {
@@ -46,9 +46,9 @@ parameter_types! {
 }
 
 pub struct BlockWeights;
-impl Get<frame_system::limits::BlockWeights> for BlockWeights {
-	fn get() -> frame_system::limits::BlockWeights {
-		frame_system::limits::BlockWeights::builder()
+impl Get<topsoil_system::limits::BlockWeights> for BlockWeights {
+	fn get() -> topsoil_system::limits::BlockWeights {
+		topsoil_system::limits::BlockWeights::builder()
 			.base_block(Weight::zero())
 			.for_class(DispatchClass::all(), |weights| {
 				weights.base_extrinsic = ExtrinsicBaseWeight::get().into();
@@ -66,15 +66,15 @@ parameter_types! {
 	pub static OperationalFeeMultiplier: u8 = 5;
 }
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Runtime {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Runtime {
 	type BlockWeights = BlockWeights;
 	type Block = Block;
-	type AccountData = pallet_balances::AccountData<Self::AccountId>;
+	type AccountData = topsoil_balances::AccountData<Self::AccountId>;
 }
 
-#[derive_impl(pallet_balances::config_preludes::TestDefaultConfig)]
-impl pallet_balances::Config for Runtime {
+#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
+impl topsoil_balances::Config for Runtime {
 	type AccountStore = System;
 }
 
@@ -102,12 +102,12 @@ parameter_types! {
 }
 
 pub struct DealWithFees;
-impl OnUnbalanced<fungible::Credit<<Runtime as frame_system::Config>::AccountId, Balances>>
+impl OnUnbalanced<fungible::Credit<<Runtime as topsoil_system::Config>::AccountId, Balances>>
 	for DealWithFees
 {
 	fn on_unbalanceds(
 		mut fees_then_tips: impl Iterator<
-			Item = fungible::Credit<<Runtime as frame_system::Config>::AccountId, Balances>,
+			Item = fungible::Credit<<Runtime as topsoil_system::Config>::AccountId, Balances>,
 		>,
 	) {
 		if let Some(fees) = fees_then_tips.next() {

@@ -17,12 +17,12 @@
 
 //! Implementations for the Staking FRAME Pallet.
 
-use frame_election_provider_support::{
+use topsoil_election_provider_support::{
 	bounds::{CountBound, SizeBound},
 	data_provider, BoundedSupportsOf, DataProviderBounds, ElectionDataProvider, ElectionProvider,
 	PageIndex, ScoreProvider, SortedListProvider, TryFromOtherBounds, VoteWeight, VoterOf,
 };
-use frame_support::{
+use topsoil_support::{
 	defensive,
 	dispatch::WithPostDispatchInfo,
 	pallet_prelude::*,
@@ -33,8 +33,8 @@ use frame_support::{
 	},
 	weights::Weight,
 };
-use frame_system::{pallet_prelude::BlockNumberFor, RawOrigin};
-use pallet_session::historical;
+use topsoil_system::{pallet_prelude::BlockNumberFor, RawOrigin};
+use topsoil_session::historical;
 use soil_runtime::{
 	traits::{
 		Bounded, CheckedAdd, Convert, One, SaturatedConversion, Saturating, StaticLookup, Zero,
@@ -60,7 +60,7 @@ use alloc::{boxed::Box, vec, vec::Vec};
 use super::pallet::*;
 
 #[cfg(feature = "try-runtime")]
-use frame_support::ensure;
+use topsoil_support::ensure;
 #[cfg(any(test, feature = "try-runtime"))]
 use soil_runtime::TryRuntimeError;
 
@@ -457,7 +457,7 @@ impl<T: Config> Pallet<T> {
 			// Initial era has been set.
 			let current_era_start_session_index = ErasStartSessionIndex::<T>::get(current_era)
 				.unwrap_or_else(|| {
-					frame_support::print("Error: start_session_index must be set for current_era");
+					topsoil_support::print("Error: start_session_index must be set for current_era");
 					0
 				});
 
@@ -507,7 +507,7 @@ impl<T: Config> Pallet<T> {
 			} else if next_active_era_start_session_index < start_session {
 				// This arm should never happen, but better handle it than to stall the staking
 				// pallet.
-				frame_support::print("Warning: A session appears to have been skipped.");
+				topsoil_support::print("Warning: A session appears to have been skipped.");
 				Self::start_era(start_session);
 			}
 		}
@@ -746,7 +746,7 @@ impl<T: Config> Pallet<T> {
 		supports: BoundedSupportsOf<T::ElectionProvider>,
 	) -> BoundedVec<(T::AccountId, Exposure<T::AccountId, BalanceOf<T>>), MaxWinnersOf<T>> {
 		let total_issuance = asset::total_issuance::<T>();
-		let to_currency = |e: frame_election_provider_support::ExtendedBalance| {
+		let to_currency = |e: topsoil_election_provider_support::ExtendedBalance| {
 			T::CurrencyToVote::to_currency(e, total_issuance)
 		};
 
@@ -1139,7 +1139,7 @@ impl<T: Config> Pallet<T> {
 	///
 	/// This is always mandatory weight.
 	fn register_weight(weight: Weight) {
-		<frame_system::Pallet<T>>::register_extra_weight_unchecked(
+		<topsoil_system::Pallet<T>>::register_extra_weight_unchecked(
 			weight,
 			DispatchClass::Mandatory,
 		);
@@ -1169,7 +1169,7 @@ impl<T: Config> Pallet<T> {
 		T::OldCurrency::remove_lock(STAKING_ID, &stash);
 
 		// Get rid of the extra consumer we used to have with OldCurrency.
-		frame_system::Pallet::<T>::dec_consumers(&stash);
+		topsoil_system::Pallet::<T>::dec_consumers(&stash);
 
 		let Ok(ledger) = Self::ledger(Stash(stash.clone())) else {
 			// User is no longer bonded. Removing the lock is enough.
@@ -1208,7 +1208,7 @@ impl<T: Config> Pallet<T> {
 	// necessary. However, this is a good opportunity to clean up the extra consumer/providers that
 	// were previously used.
 	fn do_migrate_virtual_staker(stash: &T::AccountId) -> DispatchResult {
-		let consumer_count = frame_system::Pallet::<T>::consumers(stash);
+		let consumer_count = topsoil_system::Pallet::<T>::consumers(stash);
 		// fail early if no consumers.
 		ensure!(consumer_count > 0, Error::<T>::AlreadyMigrated);
 
@@ -1219,11 +1219,11 @@ impl<T: Config> Pallet<T> {
 
 		// get rid of the consumers
 		for _ in 0..consumer_count {
-			frame_system::Pallet::<T>::dec_consumers(&stash);
+			topsoil_system::Pallet::<T>::dec_consumers(&stash);
 		}
 
 		// get the current count of providers
-		let actual_providers = frame_system::Pallet::<T>::providers(stash);
+		let actual_providers = topsoil_system::Pallet::<T>::providers(stash);
 
 		let expected_providers =
 			// We expect these accounts to have only one provider, and hold no balance. However, if
@@ -1241,7 +1241,7 @@ impl<T: Config> Pallet<T> {
 		// if actual provider is less than expected, it is already migrated.
 		ensure!(actual_providers == expected_providers, Error::<T>::AlreadyMigrated);
 
-		frame_system::Pallet::<T>::dec_providers(&stash)?;
+		topsoil_system::Pallet::<T>::dec_providers(&stash)?;
 
 		Ok(())
 	}
@@ -1648,7 +1648,7 @@ impl<T: Config> ElectionDataProvider for Pallet<T> {
 ///
 /// Once the first new_session is planned, all session must start and then end in order, though
 /// some session can lag in between the newest session planned and the latest session started.
-impl<T: Config> pallet_session::SessionManager<T::AccountId> for Pallet<T> {
+impl<T: Config> topsoil_session::SessionManager<T::AccountId> for Pallet<T> {
 	fn new_session(new_index: SessionIndex) -> Option<Vec<T::AccountId>> {
 		log!(trace, "planning new session {}", new_index);
 		CurrentPlannedSession::<T>::put(new_index);
@@ -1675,7 +1675,7 @@ impl<T: Config> historical::SessionManager<T::AccountId, Exposure<T::AccountId, 
 	fn new_session(
 		new_index: SessionIndex,
 	) -> Option<Vec<(T::AccountId, Exposure<T::AccountId, BalanceOf<T>>)>> {
-		<Self as pallet_session::SessionManager<_>>::new_session(new_index).map(|validators| {
+		<Self as topsoil_session::SessionManager<_>>::new_session(new_index).map(|validators| {
 			validators
 				.into_iter()
 				.map(|v| {
@@ -1688,7 +1688,7 @@ impl<T: Config> historical::SessionManager<T::AccountId, Exposure<T::AccountId, 
 	fn new_session_genesis(
 		new_index: SessionIndex,
 	) -> Option<Vec<(T::AccountId, Exposure<T::AccountId, BalanceOf<T>>)>> {
-		<Self as pallet_session::SessionManager<_>>::new_session_genesis(new_index).map(
+		<Self as topsoil_session::SessionManager<_>>::new_session_genesis(new_index).map(
 			|validators| {
 				validators
 					.into_iter()
@@ -1701,35 +1701,35 @@ impl<T: Config> historical::SessionManager<T::AccountId, Exposure<T::AccountId, 
 		)
 	}
 	fn start_session(start_index: SessionIndex) {
-		<Self as pallet_session::SessionManager<_>>::start_session(start_index)
+		<Self as topsoil_session::SessionManager<_>>::start_session(start_index)
 	}
 	fn end_session(end_index: SessionIndex) {
-		<Self as pallet_session::SessionManager<_>>::end_session(end_index)
+		<Self as topsoil_session::SessionManager<_>>::end_session(end_index)
 	}
 }
 
 impl<T: Config> historical::SessionManager<T::AccountId, ()> for Pallet<T> {
 	fn new_session(new_index: SessionIndex) -> Option<Vec<(T::AccountId, ())>> {
-		<Self as pallet_session::SessionManager<_>>::new_session(new_index)
+		<Self as topsoil_session::SessionManager<_>>::new_session(new_index)
 			.map(|validators| validators.into_iter().map(|v| (v, ())).collect())
 	}
 	fn new_session_genesis(new_index: SessionIndex) -> Option<Vec<(T::AccountId, ())>> {
-		<Self as pallet_session::SessionManager<_>>::new_session_genesis(new_index)
+		<Self as topsoil_session::SessionManager<_>>::new_session_genesis(new_index)
 			.map(|validators| validators.into_iter().map(|v| (v, ())).collect())
 	}
 	fn start_session(start_index: SessionIndex) {
-		<Self as pallet_session::SessionManager<_>>::start_session(start_index)
+		<Self as topsoil_session::SessionManager<_>>::start_session(start_index)
 	}
 	fn end_session(end_index: SessionIndex) {
-		<Self as pallet_session::SessionManager<_>>::end_session(end_index)
+		<Self as topsoil_session::SessionManager<_>>::end_session(end_index)
 	}
 }
 
 /// Add reward points to block authors:
 /// * 20 points to the block producer for producing a (non-uncle) block,
-impl<T> pallet_authorship::EventHandler<T::AccountId, BlockNumberFor<T>> for Pallet<T>
+impl<T> topsoil_authorship::EventHandler<T::AccountId, BlockNumberFor<T>> for Pallet<T>
 where
-	T: Config + pallet_authorship::Config + pallet_session::Config,
+	T: Config + topsoil_authorship::Config + topsoil_session::Config,
 {
 	fn note_author(author: T::AccountId) {
 		<Self as RewardsReporter<T::AccountId>>::reward_by_ids(vec![(author, 20)])
@@ -1738,22 +1738,22 @@ where
 
 /// This is intended to be used with `FilterHistoricalOffences`.
 impl<T: Config>
-	OnOffenceHandler<T::AccountId, pallet_session::historical::IdentificationTuple<T>, Weight>
+	OnOffenceHandler<T::AccountId, topsoil_session::historical::IdentificationTuple<T>, Weight>
 	for Pallet<T>
 where
-	T: pallet_session::Config<ValidatorId = <T as frame_system::Config>::AccountId>,
-	T: pallet_session::historical::Config,
-	T::SessionHandler: pallet_session::SessionHandler<<T as frame_system::Config>::AccountId>,
-	T::SessionManager: pallet_session::SessionManager<<T as frame_system::Config>::AccountId>,
+	T: topsoil_session::Config<ValidatorId = <T as topsoil_system::Config>::AccountId>,
+	T: topsoil_session::historical::Config,
+	T::SessionHandler: topsoil_session::SessionHandler<<T as topsoil_system::Config>::AccountId>,
+	T::SessionManager: topsoil_session::SessionManager<<T as topsoil_system::Config>::AccountId>,
 	T::ValidatorIdOf: Convert<
-		<T as frame_system::Config>::AccountId,
-		Option<<T as frame_system::Config>::AccountId>,
+		<T as topsoil_system::Config>::AccountId,
+		Option<<T as topsoil_system::Config>::AccountId>,
 	>,
 {
 	fn on_offence(
 		offenders: &[OffenceDetails<
 			T::AccountId,
-			pallet_session::historical::IdentificationTuple<T>,
+			topsoil_session::historical::IdentificationTuple<T>,
 		>],
 		slash_fractions: &[Perbill],
 		slash_session: SessionIndex,
@@ -1815,7 +1815,7 @@ impl<T: Config> ScoreProvider<T::AccountId> for Pallet<T> {
 
 /// A simple sorted list implementation that does not require any additional pallets. Note, this
 /// does not provide validators in sorted order. If you desire validators in a sorted order take
-/// a look at `pallet-bags-list`.
+/// a look at `topsoil-bags-list`.
 pub struct UseValidatorsMap<T>(core::marker::PhantomData<T>);
 impl<T: Config> SortedListProvider<T::AccountId> for UseValidatorsMap<T> {
 	type Score = BalanceOf<T>;
@@ -1885,7 +1885,7 @@ impl<T: Config> SortedListProvider<T::AccountId> for UseValidatorsMap<T> {
 
 /// A simple voter list implementation that does not require any additional pallets. Note, this
 /// does not provide nominators in sorted order. If you desire nominators in a sorted order take
-/// a look at `pallet-bags-list`.
+/// a look at `topsoil-bags-list`.
 pub struct UseNominatorsAndValidatorsMap<T>(core::marker::PhantomData<T>);
 impl<T: Config> SortedListProvider<T::AccountId> for UseNominatorsAndValidatorsMap<T> {
 	type Error = ();
@@ -2119,7 +2119,7 @@ impl<T: Config> StakingInterface for Pallet<T> {
 	/// There is an assumption that, this account is keyless and managed by another pallet in the
 	/// runtime. Hence, it can never sign its own transactions.
 	fn is_virtual_staker(who: &T::AccountId) -> bool {
-		frame_system::Pallet::<T>::account_nonce(who).is_zero() &&
+		topsoil_system::Pallet::<T>::account_nonce(who).is_zero() &&
 			VirtualStakers::<T>::contains_key(who)
 	}
 
@@ -2214,7 +2214,7 @@ impl<T: Config> Pallet<T> {
 			"VoterList contains non-staker"
 		);
 
-		use frame_support::traits::fungible::Inspect;
+		use topsoil_support::traits::fungible::Inspect;
 		if T::CurrencyToVote::will_downscale(T::Currency::total_issuance()).map_or(false, |x| x) {
 			log!(warn, "total issuance will cause T::CurrencyToVote to downscale -- report to maintainers.")
 		}
@@ -2359,7 +2359,7 @@ impl<T: Config> Pallet<T> {
 						"ledger corrupted for virtual staker"
 					);
 					ensure!(
-						frame_system::Pallet::<T>::account_nonce(&stash).is_zero(),
+						topsoil_system::Pallet::<T>::account_nonce(&stash).is_zero(),
 						"virtual stakers are keyless and should not have any nonce"
 					);
 					let reward_destination = <Payee<T>>::get(stash.clone()).unwrap();

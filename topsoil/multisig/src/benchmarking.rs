@@ -20,7 +20,7 @@
 #![cfg(feature = "runtime-benchmarks")]
 
 use super::*;
-use frame::benchmarking::prelude::*;
+use topsoil::benchmarking::prelude::*;
 
 use crate::Pallet as Multisig;
 
@@ -41,7 +41,7 @@ fn setup_multi<T: Config>(
 	signatories.sort();
 	// Must first convert to runtime call type.
 	let call: <T as Config>::RuntimeCall =
-		frame_system::Call::<T>::remark { remark: vec![0; z as usize] }.into();
+		topsoil_system::Call::<T>::remark { remark: vec![0; z as usize] }.into();
 	Ok((signatories, Box::new(call)))
 }
 
@@ -55,10 +55,10 @@ mod benchmarks {
 		let max_signatories = T::MaxSignatories::get().into();
 		let (mut signatories, _) = setup_multi::<T>(max_signatories, z)?;
 		let call: <T as Config>::RuntimeCall =
-			frame_system::Call::<T>::remark { remark: vec![0; z as usize] }.into();
+			topsoil_system::Call::<T>::remark { remark: vec![0; z as usize] }.into();
 		let caller = signatories.pop().ok_or("signatories should have len 2 or more")?;
 		// Whitelist caller account from further DB operations.
-		let caller_key = frame_system::Account::<T>::hashed_key_for(&caller);
+		let caller_key = topsoil_system::Account::<T>::hashed_key_for(&caller);
 		add_to_whitelist(caller_key.into());
 
 		#[extrinsic_call]
@@ -80,7 +80,7 @@ mod benchmarks {
 		let multi_account_id = Multisig::<T>::multi_account_id(&signatories, s.try_into().unwrap());
 		let caller = signatories.pop().ok_or("signatories should have len 2 or more")?;
 		// Whitelist caller account from further DB operations.
-		let caller_key = frame_system::Account::<T>::hashed_key_for(&caller);
+		let caller_key = topsoil_system::Account::<T>::hashed_key_for(&caller);
 		add_to_whitelist(caller_key.into());
 
 		#[extrinsic_call]
@@ -116,7 +116,7 @@ mod benchmarks {
 		)?;
 		let caller2 = signatories2.remove(0);
 		// Whitelist caller account from further DB operations.
-		let caller_key = frame_system::Account::<T>::hashed_key_for(&caller2);
+		let caller_key = topsoil_system::Account::<T>::hashed_key_for(&caller2);
 		add_to_whitelist(caller_key.into());
 
 		#[extrinsic_call]
@@ -176,7 +176,7 @@ mod benchmarks {
 		let caller2 = signatories2.remove(0);
 		assert!(Multisigs::<T>::contains_key(&multi_account_id, call_hash));
 		// Whitelist caller account from further DB operations.
-		let caller_key = frame_system::Account::<T>::hashed_key_for(&caller2);
+		let caller_key = topsoil_system::Account::<T>::hashed_key_for(&caller2);
 		add_to_whitelist(caller_key.into());
 
 		#[extrinsic_call]
@@ -206,7 +206,7 @@ mod benchmarks {
 		let caller = signatories.pop().ok_or("signatories should have len 2 or more")?;
 		let call_hash = call.using_encoded(blake2_256);
 		// Whitelist caller account from further DB operations.
-		let caller_key = frame_system::Account::<T>::hashed_key_for(&caller);
+		let caller_key = topsoil_system::Account::<T>::hashed_key_for(&caller);
 		add_to_whitelist(caller_key.into());
 
 		// Create the multi
@@ -250,7 +250,7 @@ mod benchmarks {
 		)?;
 		let caller2 = signatories2.remove(0);
 		// Whitelist caller account from further DB operations.
-		let caller_key = frame_system::Account::<T>::hashed_key_for(&caller2);
+		let caller_key = topsoil_system::Account::<T>::hashed_key_for(&caller2);
 		add_to_whitelist(caller_key.into());
 
 		#[extrinsic_call]
@@ -285,7 +285,7 @@ mod benchmarks {
 		Multisig::<T>::as_multi(o, s as u16, signatories.clone(), None, call, Weight::zero())?;
 		assert!(Multisigs::<T>::contains_key(&multi_account_id, call_hash));
 		// Whitelist caller account from further DB operations.
-		let caller_key = frame_system::Account::<T>::hashed_key_for(&caller);
+		let caller_key = topsoil_system::Account::<T>::hashed_key_for(&caller);
 		add_to_whitelist(caller_key.into());
 
 		#[extrinsic_call]
@@ -346,7 +346,7 @@ mod benchmarks {
 		assert_eq!(multisig.deposit, new_deposit);
 
 		// Whitelist caller account
-		let caller_key = frame_system::Account::<T>::hashed_key_for(&caller);
+		let caller_key = topsoil_system::Account::<T>::hashed_key_for(&caller);
 		add_to_whitelist(caller_key.into());
 
 		#[extrinsic_call]

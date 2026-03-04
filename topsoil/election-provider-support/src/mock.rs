@@ -46,7 +46,7 @@ crate::generate_solution_type! {
 		VoterIndex = u32,
 		TargetIndex = u16,
 		Accuracy = TestAccuracy,
-		MaxVoters = frame_support::traits::ConstU32::<2_500>,
+		MaxVoters = topsoil_support::traits::ConstU32::<2_500>,
 	>(16)
 }
 

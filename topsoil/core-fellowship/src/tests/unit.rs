@@ -22,35 +22,35 @@
 use std::collections::BTreeMap;
 
 use core::cell::RefCell;
-use frame_support::{
+use topsoil_support::{
 	assert_noop, assert_ok, derive_impl, hypothetically, ord_parameter_types,
 	pallet_prelude::Weight,
 	parameter_types,
 	traits::{tokens::GetSalary, ConstU16, ConstU32, IsInVec, TryMapSuccess},
 };
-use frame_system::EnsureSignedBy;
+use topsoil_system::EnsureSignedBy;
 use soil_runtime::{bounded_vec, traits::TryMorphInto, BuildStorage, DispatchError, DispatchResult};
 
-use crate as pallet_core_fellowship;
+use crate as topsoil_core_fellowship;
 use crate::*;
 
-type Block = frame_system::mocking::MockBlock<Test>;
+type Block = topsoil_system::mocking::MockBlock<Test>;
 
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub enum Test
 	{
-		System: frame_system,
-		CoreFellowship: pallet_core_fellowship,
+		System: topsoil_system,
+		CoreFellowship: topsoil_core_fellowship,
 	}
 );
 
 parameter_types! {
-	pub BlockWeights: frame_system::limits::BlockWeights =
-		frame_system::limits::BlockWeights::simple_max(Weight::from_parts(1_000_000, u64::max_value()));
+	pub BlockWeights: topsoil_system::limits::BlockWeights =
+		topsoil_system::limits::BlockWeights::simple_max(Weight::from_parts(1_000_000, u64::max_value()));
 }
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
 	type Block = Block;
 }
 
@@ -123,7 +123,7 @@ impl Config for Test {
 }
 
 pub fn new_test_ext() -> soil_io::TestExternalities {
-	let t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	let mut ext = soil_io::TestExternalities::new(t);
 	ext.execute_with(|| {
 		set_rank(100, 9);

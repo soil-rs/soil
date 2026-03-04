@@ -15,19 +15,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//! Tests for `pallet-example-tasks`.
+//! Tests for `topsoil-example-tasks`.
 #![cfg(test)]
 
 use crate::{mock::*, Numbers};
 #[cfg(feature = "experimental")]
 use codec::Decode;
-use frame_support::traits::Task;
+use topsoil_support::traits::Task;
 #[cfg(feature = "experimental")]
 use soil_core::offchain::{testing, OffchainWorkerExt, TransactionPoolExt};
 use soil_runtime::BuildStorage;
 
 #[cfg(feature = "experimental")]
-use frame_support::{assert_noop, assert_ok};
+use topsoil_support::{assert_noop, assert_ok};
 
 // This function basically just builds a genesis storage key/value store according to
 // our desired mockup.
@@ -55,7 +55,7 @@ fn runtime_task_enumerate_works_via_frame_system_config() {
 		Numbers::<Runtime>::insert(0, 1);
 		Numbers::<Runtime>::insert(1, 4);
 		assert_eq!(
-			<Runtime as frame_system::Config>::RuntimeTask::iter().collect::<Vec<_>>().len(),
+			<Runtime as topsoil_system::Config>::RuntimeTask::iter().collect::<Vec<_>>().len(),
 			2
 		);
 	});
@@ -85,7 +85,7 @@ fn task_index_works_at_pallet_level() {
 fn task_index_works_at_runtime_level() {
 	new_test_ext().execute_with(|| {
 		assert_eq!(
-			<Runtime as frame_system::Config>::RuntimeTask::TasksExample(crate::pallet::Task::<
+			<Runtime as topsoil_system::Config>::RuntimeTask::TasksExample(crate::pallet::Task::<
 				Runtime,
 			>::AddNumberIntoTotal {
 				i: 1u32
@@ -105,7 +105,7 @@ fn task_execution_works() {
 		Numbers::<Runtime>::insert(1, 4);
 
 		let task =
-			<Runtime as frame_system::Config>::RuntimeTask::TasksExample(crate::pallet::Task::<
+			<Runtime as topsoil_system::Config>::RuntimeTask::TasksExample(crate::pallet::Task::<
 				Runtime,
 			>::AddNumberIntoTotal {
 				i: 1u32,
@@ -114,7 +114,7 @@ fn task_execution_works() {
 		assert_eq!(Numbers::<Runtime>::get(0), Some(1));
 		assert_eq!(Numbers::<Runtime>::get(1), None);
 		assert_eq!(crate::Total::<Runtime>::get(), (1, 4));
-		System::assert_last_event(frame_system::Event::<Runtime>::TaskCompleted { task }.into());
+		System::assert_last_event(topsoil_system::Event::<Runtime>::TaskCompleted { task }.into());
 	});
 }
 
@@ -126,11 +126,11 @@ fn task_execution_fails_for_invalid_task() {
 		assert_noop!(
 			System::do_task(
 				RuntimeOrigin::signed(1),
-				<Runtime as frame_system::Config>::RuntimeTask::TasksExample(
+				<Runtime as topsoil_system::Config>::RuntimeTask::TasksExample(
 					crate::pallet::Task::<Runtime>::AddNumberIntoTotal { i: 0u32 }
 				),
 			),
-			frame_system::Error::<Runtime>::InvalidTask
+			topsoil_system::Error::<Runtime>::InvalidTask
 		);
 	});
 }

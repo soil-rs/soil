@@ -22,7 +22,7 @@
 use codec::Codec;
 use soil_runtime::traits::MaybeDisplay;
 
-pub use pallet_transaction_payment::{FeeDetails, InclusionFee, RuntimeDispatchInfo};
+pub use topsoil_transaction_payment::{FeeDetails, InclusionFee, RuntimeDispatchInfo};
 
 soil_api::decl_runtime_apis! {
 	#[api_version(4)]

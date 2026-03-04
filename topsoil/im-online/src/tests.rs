@@ -21,7 +21,7 @@
 
 use super::*;
 use crate::mock::*;
-use frame_support::{assert_noop, dispatch};
+use topsoil_support::{assert_noop, dispatch};
 use soil_core::offchain::{
 	testing::{TestOffchainExt, TestTransactionPoolExt},
 	OffchainDbExt, OffchainWorkerExt, TransactionPoolExt,
@@ -276,7 +276,7 @@ fn should_cleanup_received_heartbeats_on_session_end() {
 
 #[test]
 fn should_mark_online_validator_when_block_is_authored() {
-	use pallet_authorship::EventHandler;
+	use topsoil_authorship::EventHandler;
 
 	new_test_ext().execute_with(|| {
 		advance_session();
@@ -305,7 +305,7 @@ fn should_mark_online_validator_when_block_is_authored() {
 
 #[test]
 fn should_not_send_a_report_if_already_online() {
-	use pallet_authorship::EventHandler;
+	use topsoil_authorship::EventHandler;
 
 	let mut ext = new_test_ext();
 	let (offchain, _state) = TestOffchainExt::new();

@@ -42,11 +42,11 @@
 //! [`General`](soil_runtime::generic::Preamble::General) transaction.
 //! It contains the target call along with a configurable set of extensions and its associated
 //! version. Typically, these extensions include type like
-//! `pallet_verify_signature::VerifySignature`, which provides the signer address
+//! `topsoil_verify_signature::VerifySignature`, which provides the signer address
 //! and the signature of the payload, encompassing the call and the meta-transaction’s
 //! configurations, such as its mortality.  The extensions follow the same [`TransactionExtension`]
-//! contract, and common types such as [`frame_system::CheckGenesis`],
-//! [`frame_system::CheckMortality`], [`frame_system::CheckNonce`], etc., are applicable in the
+//! contract, and common types such as [`topsoil_system::CheckGenesis`],
+//! [`topsoil_system::CheckMortality`], [`topsoil_system::CheckNonce`], etc., are applicable in the
 //! context of meta transactions. Check the `mock` setup for the example.
 
 #![cfg_attr(not(feature = "std"), no_std)]
@@ -64,11 +64,11 @@ pub use weights::WeightInfo;
 mod extension;
 pub use extension::MetaTxMarker;
 
-use frame_support::{
+use topsoil_support::{
 	dispatch::{DispatchInfo, GetDispatchInfo, PostDispatchInfo},
 	pallet_prelude::*,
 };
-use frame_system::{pallet_prelude::*, RawOrigin as SystemOrigin};
+use topsoil_system::{pallet_prelude::*, RawOrigin as SystemOrigin};
 use soil_runtime::{
 	generic::ExtensionVersion,
 	traits::{
@@ -98,19 +98,19 @@ impl<Call, Extension> MetaTx<Call, Extension> {
 }
 
 /// The [`MetaTx`] for the given config.
-pub type MetaTxFor<T> = MetaTx<<T as frame_system::Config>::RuntimeCall, <T as Config>::Extension>;
+pub type MetaTxFor<T> = MetaTx<<T as topsoil_system::Config>::RuntimeCall, <T as Config>::Extension>;
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
 
 	#[pallet::config]
 	pub trait Config:
-		frame_system::Config<
+		topsoil_system::Config<
 		RuntimeCall: Dispatchable<
 			Info = DispatchInfo,
 			PostInfo = PostDispatchInfo,
-			RuntimeOrigin = <Self as frame_system::Config>::RuntimeOrigin,
+			RuntimeOrigin = <Self as topsoil_system::Config>::RuntimeOrigin,
 		>,
 		RuntimeOrigin: AsTransactionAuthorizedOrigin + From<SystemOrigin<Self::AccountId>>,
 	>
@@ -119,23 +119,23 @@ pub mod pallet {
 		type WeightInfo: WeightInfo;
 		/// The overarching event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 		/// Transaction extension/s for meta transactions.
 		///
 		/// The extensions that must be present in every meta transaction. This generally includes
-		/// extensions like `pallet_verify_signature::VerifySignature`,
-		/// [frame_system::CheckSpecVersion], [frame_system::CheckTxVersion],
-		/// [frame_system::CheckGenesis], [frame_system::CheckMortality],
-		/// [frame_system::CheckNonce], etc. Check the `mock` setup for the example.
+		/// extensions like `topsoil_verify_signature::VerifySignature`,
+		/// [topsoil_system::CheckSpecVersion], [topsoil_system::CheckTxVersion],
+		/// [topsoil_system::CheckGenesis], [topsoil_system::CheckMortality],
+		/// [topsoil_system::CheckNonce], etc. Check the `mock` setup for the example.
 		///
 		/// The types implementing the [`TransactionExtension`] trait can be composed into a tuple
 		/// type that will implement the same trait by piping invocations through each type.
 		///
 		/// In the `runtime-benchmarks` environment the type must implement [`Default`] trait.
 		/// The extension must provide an origin and the extension's weight must be zero. Use
-		/// `pallet_meta_tx::WeightlessExtension` type when the `runtime-benchmarks` feature
+		/// `topsoil_meta_tx::WeightlessExtension` type when the `runtime-benchmarks` feature
 		/// enabled.
-		type Extension: TransactionExtension<<Self as frame_system::Config>::RuntimeCall>;
+		type Extension: TransactionExtension<<Self as topsoil_system::Config>::RuntimeCall>;
 	}
 
 	#[pallet::error]

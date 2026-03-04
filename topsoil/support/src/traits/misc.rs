@@ -105,7 +105,7 @@ macro_rules! defensive {
 /// # Example
 ///
 /// ```should_panic
-/// frame_support::defensive_assert!(1 == 0, "Must fail")
+/// topsoil_support::defensive_assert!(1 == 0, "Must fail")
 /// ```
 #[macro_export]
 macro_rules! defensive_assert {
@@ -445,7 +445,7 @@ pub trait DefensiveTruncateFrom<T> {
 	/// # Example
 	///
 	/// ```
-	/// use frame_support::{BoundedVec, traits::DefensiveTruncateFrom};
+	/// use topsoil_support::{BoundedVec, traits::DefensiveTruncateFrom};
 	/// use soil_runtime::traits::ConstU32;
 	///
 	/// let unbound = vec![1, 2];
@@ -495,7 +495,7 @@ pub trait DefensiveMin<T> {
 	/// # Example
 	///
 	/// ```
-	/// use frame_support::traits::DefensiveMin;
+	/// use topsoil_support::traits::DefensiveMin;
 	/// // min(3, 4) is 3.
 	/// assert_eq!(3, 3_u32.defensive_min(4_u32));
 	/// // min(4, 4) is 4.
@@ -503,7 +503,7 @@ pub trait DefensiveMin<T> {
 	/// ```
 	///
 	/// ```should_panic
-	/// use frame_support::traits::DefensiveMin;
+	/// use topsoil_support::traits::DefensiveMin;
 	/// // min(4, 3) panics.
 	/// 4_u32.defensive_min(3_u32);
 	/// ```
@@ -514,13 +514,13 @@ pub trait DefensiveMin<T> {
 	/// # Example
 	///
 	/// ```
-	/// use frame_support::traits::DefensiveMin;
+	/// use topsoil_support::traits::DefensiveMin;
 	/// // min(3, 4) is 3.
 	/// assert_eq!(3, 3_u32.defensive_strict_min(4_u32));
 	/// ```
 	///
 	/// ```should_panic
-	/// use frame_support::traits::DefensiveMin;
+	/// use topsoil_support::traits::DefensiveMin;
 	/// // min(4, 4) panics.
 	/// 4_u32.defensive_strict_min(4_u32);
 	/// ```
@@ -559,7 +559,7 @@ pub trait DefensiveMax<T> {
 	/// # Example
 	///
 	/// ```
-	/// use frame_support::traits::DefensiveMax;
+	/// use topsoil_support::traits::DefensiveMax;
 	/// // max(4, 3) is 4.
 	/// assert_eq!(4, 4_u32.defensive_max(3_u32));
 	/// // max(4, 4) is 4.
@@ -567,7 +567,7 @@ pub trait DefensiveMax<T> {
 	/// ```
 	///
 	/// ```should_panic
-	/// use frame_support::traits::DefensiveMax;
+	/// use topsoil_support::traits::DefensiveMax;
 	/// // max(4, 5) panics.
 	/// 4_u32.defensive_max(5_u32);
 	/// ```
@@ -578,13 +578,13 @@ pub trait DefensiveMax<T> {
 	/// # Example
 	///
 	/// ```
-	/// use frame_support::traits::DefensiveMax;
+	/// use topsoil_support::traits::DefensiveMax;
 	/// // y(4, 3) is 4.
 	/// assert_eq!(4, 4_u32.defensive_strict_max(3_u32));
 	/// ```
 	///
 	/// ```should_panic
-	/// use frame_support::traits::DefensiveMax;
+	/// use topsoil_support::traits::DefensiveMax;
 	/// // max(4, 4) panics.
 	/// 4_u32.defensive_strict_max(4_u32);
 	/// ```
@@ -801,7 +801,7 @@ impl<T> IsType<T> for T {
 /// # Example
 ///
 /// ```
-/// # use frame_support::traits::IsSubType;
+/// # use topsoil_support::traits::IsSubType;
 ///
 /// enum Test {
 ///     String(String),

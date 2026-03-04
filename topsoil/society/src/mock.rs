@@ -18,26 +18,26 @@
 //! Test utilities
 
 use super::*;
-use crate as pallet_society;
+use crate as topsoil_society;
 
-use frame_support::{
+use topsoil_support::{
 	assert_noop, assert_ok, derive_impl, ord_parameter_types, parameter_types,
 	traits::{ConstU32, ConstU64},
 };
-use frame_support_test::TestRandomness;
-use frame_system::EnsureSignedBy;
+use topsoil_support_test::TestRandomness;
+use topsoil_system::EnsureSignedBy;
 use soil_runtime::{traits::IdentityLookup, BuildStorage};
 
 use RuntimeOrigin as Origin;
 
-type Block = frame_system::mocking::MockBlock<Test>;
+type Block = topsoil_system::mocking::MockBlock<Test>;
 
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub enum Test
 	{
-		System: frame_system,
-		Balances: pallet_balances,
-		Society: pallet_society,
+		System: topsoil_system,
+		Balances: topsoil_balances,
+		Society: topsoil_society,
 	}
 );
 
@@ -55,16 +55,16 @@ ord_parameter_types! {
 	pub const MaxBids: u32 = 10;
 }
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
 	type AccountId = u128;
 	type Block = Block;
-	type AccountData = pallet_balances::AccountData<u64>;
+	type AccountData = topsoil_balances::AccountData<u64>;
 	type Lookup = IdentityLookup<Self::AccountId>;
 }
 
-#[derive_impl(pallet_balances::config_preludes::TestDefaultConfig)]
-impl pallet_balances::Config for Test {
+#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
+impl topsoil_balances::Config for Test {
 	type ReserveIdentifier = [u8; 8];
 	type AccountStore = System;
 }
@@ -72,7 +72,7 @@ impl pallet_balances::Config for Test {
 impl Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type PalletId = SocietyPalletId;
-	type Currency = pallet_balances::Pallet<Self>;
+	type Currency = topsoil_balances::Pallet<Self>;
 	type Randomness = TestRandomness<Self>;
 	type GraceStrikes = ConstU32<1>;
 	type PeriodSpend = ConstU64<1000>;
@@ -115,12 +115,12 @@ impl EnvBuilder {
 	}
 
 	pub fn execute<R, F: FnOnce() -> R>(mut self, f: F) -> R {
-		let mut t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+		let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 		self.balances.push((Society::account_id(), self.balance.max(self.pot)));
-		pallet_balances::GenesisConfig::<Test> { balances: self.balances, ..Default::default() }
+		topsoil_balances::GenesisConfig::<Test> { balances: self.balances, ..Default::default() }
 			.assimilate_storage(&mut t)
 			.unwrap();
-		pallet_society::GenesisConfig::<Test> { pot: self.pot }
+		topsoil_society::GenesisConfig::<Test> { pot: self.pot }
 			.assimilate_storage(&mut t)
 			.unwrap();
 		let mut ext: soil_io::TestExternalities = t.into();

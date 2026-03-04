@@ -22,7 +22,7 @@ use crate::pallet::Def;
 /// * Rename the name of the function to internal name
 pub fn expand_type_values(def: &mut Def) -> proc_macro2::TokenStream {
 	let mut expand = quote::quote!();
-	let frame_support = &def.frame_support;
+	let topsoil_support = &def.topsoil_support;
 
 	for type_value in &def.type_values {
 		let fn_name_str = &type_value.ident.to_string();
@@ -63,7 +63,7 @@ pub fn expand_type_values(def: &mut Def) -> proc_macro2::TokenStream {
 		expand.extend(quote::quote_spanned!(type_value.attr_span =>
 			#( #[doc = #docs] )*
 			#vis struct #ident<#struct_use_gen>(core::marker::PhantomData<((), #struct_use_gen)>);
-			impl<#struct_impl_gen> #frame_support::traits::Get<#type_> for #ident<#struct_use_gen>
+			impl<#struct_impl_gen> #topsoil_support::traits::Get<#type_> for #ident<#struct_use_gen>
 			#where_clause
 			{
 				fn get() -> #type_ {

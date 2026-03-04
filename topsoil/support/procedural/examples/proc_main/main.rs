@@ -15,8 +15,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use frame_support::*;
-use frame_support_procedural::import_section;
+use topsoil_support::*;
+use topsoil_support_procedural::import_section;
 #[cfg(test)]
 use soil_io::{MultiRemovalResults, TestExternalities};
 #[cfg(test)]
@@ -28,7 +28,7 @@ use soil_metadata_ir::{
 use soil_runtime::BuildStorage;
 use soil_runtime::{generic, traits::BlakeTwo256};
 
-pub use self::frame_system::{pallet_prelude::*, Config, Pallet};
+pub use self::topsoil_system::{pallet_prelude::*, Config, Pallet};
 
 mod inject_runtime_type;
 mod runtime;
@@ -36,9 +36,9 @@ mod tasks;
 
 #[import_section(tasks::tasks_example)]
 #[pallet]
-pub mod frame_system {
+pub mod topsoil_system {
 	#[allow(unused)]
-	use super::{frame_system, frame_system::pallet_prelude::*};
+	use super::{topsoil_system, topsoil_system::pallet_prelude::*};
 	pub use crate::dispatch::RawOrigin;
 	use crate::{pallet_prelude::*, traits::tasks::Task as TaskTrait};
 
@@ -49,7 +49,7 @@ pub mod frame_system {
 		#[crate::register_default_impl(TestDefaultConfig)]
 		impl DefaultConfig for TestDefaultConfig {
 			type AccountId = u64;
-			type BaseCallFilter = frame_support::traits::Everything;
+			type BaseCallFilter = topsoil_support::traits::Everything;
 			#[inject_runtime_type]
 			type RuntimeOrigin = ();
 			#[inject_runtime_type]
@@ -240,10 +240,10 @@ mod runtime {
 	pub struct Runtime;
 
 	#[runtime::pallet_index(0)]
-	pub type System = self::frame_system;
+	pub type System = self::topsoil_system;
 }
 
-#[crate::derive_impl(self::frame_system::config_preludes::TestDefaultConfig as self::frame_system::DefaultConfig)]
+#[crate::derive_impl(self::topsoil_system::config_preludes::TestDefaultConfig as self::topsoil_system::DefaultConfig)]
 impl Config for Runtime {
 	type Block = Block;
 	type AccountId = AccountId;
@@ -270,7 +270,7 @@ impl<T: Ord> Sorted for Vec<T> {
 #[test]
 fn map_issue_3318() {
 	new_test_ext().execute_with(|| {
-		type OptionLinkedMap = self::frame_system::OptionLinkedMap<Runtime>;
+		type OptionLinkedMap = self::topsoil_system::OptionLinkedMap<Runtime>;
 
 		OptionLinkedMap::insert(1, 1);
 		assert_eq!(OptionLinkedMap::get(1), Some(1));
@@ -282,7 +282,7 @@ fn map_issue_3318() {
 #[test]
 fn map_swap_works() {
 	new_test_ext().execute_with(|| {
-		type OptionLinkedMap = self::frame_system::OptionLinkedMap<Runtime>;
+		type OptionLinkedMap = self::topsoil_system::OptionLinkedMap<Runtime>;
 
 		OptionLinkedMap::insert(0, 0);
 		OptionLinkedMap::insert(1, 1);
@@ -313,7 +313,7 @@ fn map_swap_works() {
 #[test]
 fn double_map_swap_works() {
 	new_test_ext().execute_with(|| {
-		type DataDM = self::frame_system::DataDM<Runtime>;
+		type DataDM = self::topsoil_system::DataDM<Runtime>;
 
 		DataDM::insert(0, 1, 1);
 		DataDM::insert(1, 0, 2);
@@ -347,7 +347,7 @@ fn double_map_swap_works() {
 #[test]
 fn map_basic_insert_remove_should_work() {
 	new_test_ext().execute_with(|| {
-		type Map = self::frame_system::Data<Runtime>;
+		type Map = self::topsoil_system::Data<Runtime>;
 
 		// initialized during genesis
 		assert_eq!(Map::get(&15u32), 42u64);
@@ -375,7 +375,7 @@ fn map_basic_insert_remove_should_work() {
 #[test]
 fn map_iteration_should_work() {
 	new_test_ext().execute_with(|| {
-		type Map = self::frame_system::Data<Runtime>;
+		type Map = self::topsoil_system::Data<Runtime>;
 
 		assert_eq!(Map::iter().collect::<Vec<_>>().sorted(), vec![(15, 42)]);
 		// insert / remove
@@ -427,7 +427,7 @@ fn map_iteration_should_work() {
 fn double_map_basic_insert_remove_remove_prefix_with_commit_should_work() {
 	let key1 = 17u32;
 	let key2 = 18u32;
-	type DoubleMap = self::frame_system::DataDM<Runtime>;
+	type DoubleMap = self::topsoil_system::DataDM<Runtime>;
 	let mut e = new_test_ext();
 	e.execute_with(|| {
 		// initialized during genesis
@@ -472,7 +472,7 @@ fn double_map_basic_insert_remove_remove_prefix_should_work() {
 	new_test_ext().execute_with(|| {
 		let key1 = 17u32;
 		let key2 = 18u32;
-		type DoubleMap = self::frame_system::DataDM<Runtime>;
+		type DoubleMap = self::topsoil_system::DataDM<Runtime>;
 
 		// initialized during genesis
 		assert_eq!(DoubleMap::get(&15u32, &16u32), 42u64);
@@ -520,7 +520,7 @@ fn double_map_basic_insert_remove_remove_prefix_should_work() {
 #[test]
 fn double_map_append_should_work() {
 	new_test_ext().execute_with(|| {
-		type DoubleMap = self::frame_system::AppendableDM<Runtime>;
+		type DoubleMap = self::topsoil_system::AppendableDM<Runtime>;
 
 		let key1 = 17u32;
 		let key2 = 18u32;
@@ -534,7 +534,7 @@ fn double_map_append_should_work() {
 #[test]
 fn double_map_mutate_exists_should_work() {
 	new_test_ext().execute_with(|| {
-		type DoubleMap = self::frame_system::DataDM<Runtime>;
+		type DoubleMap = self::topsoil_system::DataDM<Runtime>;
 
 		let (key1, key2) = (11, 13);
 
@@ -551,7 +551,7 @@ fn double_map_mutate_exists_should_work() {
 #[test]
 fn double_map_try_mutate_exists_should_work() {
 	new_test_ext().execute_with(|| {
-		type DoubleMap = self::frame_system::DataDM<Runtime>;
+		type DoubleMap = self::topsoil_system::DataDM<Runtime>;
 		type TestResult = Result<(), &'static str>;
 
 		let (key1, key2) = (11, 13);

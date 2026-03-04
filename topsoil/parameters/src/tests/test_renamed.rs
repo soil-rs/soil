@@ -19,30 +19,30 @@
 
 //! Tests that the runtime params can be renamed.
 
-use frame_support::{
+use topsoil_support::{
 	assert_noop, assert_ok, construct_runtime, derive_impl,
 	dynamic_params::{dynamic_pallet_params, dynamic_params},
 	traits::AsEnsureOriginWithArg,
 };
-use frame_system::EnsureRoot;
+use topsoil_system::EnsureRoot;
 
-use crate as pallet_parameters;
+use crate as topsoil_parameters;
 use crate::*;
 use dynamic_params::*;
 use RuntimeParametersRenamed::*;
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Runtime {
-	type Block = frame_system::mocking::MockBlock<Runtime>;
-	type AccountData = pallet_balances::AccountData<<Self as pallet_balances::Config>::Balance>;
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Runtime {
+	type Block = topsoil_system::mocking::MockBlock<Runtime>;
+	type AccountData = topsoil_balances::AccountData<<Self as topsoil_balances::Config>::Balance>;
 }
 
-#[derive_impl(pallet_balances::config_preludes::TestDefaultConfig)]
-impl pallet_balances::Config for Runtime {
+#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
+impl topsoil_balances::Config for Runtime {
 	type AccountStore = System;
 }
 
-#[dynamic_params(RuntimeParametersRenamed, pallet_parameters::Parameters::<Runtime>)]
+#[dynamic_params(RuntimeParametersRenamed, topsoil_parameters::Parameters::<Runtime>)]
 pub mod dynamic_params {
 	use super::*;
 
@@ -79,7 +79,7 @@ impl Default for RuntimeParametersRenamed {
 	}
 }
 
-#[derive_impl(pallet_parameters::config_preludes::TestDefaultConfig)]
+#[derive_impl(topsoil_parameters::config_preludes::TestDefaultConfig)]
 impl Config for Runtime {
 	type AdminOrigin = AsEnsureOriginWithArg<EnsureRoot<Self::AccountId>>;
 	type RuntimeParameters = RuntimeParametersRenamed;
@@ -87,7 +87,7 @@ impl Config for Runtime {
 	// WeightInfo is injected by the `derive_impl` macro.
 }
 
-impl pallet_example_basic::Config for Runtime {
+impl topsoil_example_basic::Config for Runtime {
 	// Use the dynamic key in the pallet config:
 	type MagicNumber = dynamic_params::pallet1::Key1;
 	type WeightInfo = ();
@@ -95,10 +95,10 @@ impl pallet_example_basic::Config for Runtime {
 
 construct_runtime!(
 	pub enum Runtime {
-		System: frame_system,
+		System: topsoil_system,
 		PalletParameters: crate,
-		Example: pallet_example_basic,
-		Balances: pallet_balances,
+		Example: topsoil_example_basic,
+		Balances: topsoil_balances,
 	}
 );
 
@@ -109,9 +109,9 @@ pub fn new_test_ext() -> soil_io::TestExternalities {
 }
 
 pub(crate) fn assert_last_event(generic_event: RuntimeEvent) {
-	let events = frame_system::Pallet::<Runtime>::events();
+	let events = topsoil_system::Pallet::<Runtime>::events();
 	// compare to the last event record
-	let frame_system::EventRecord { event, .. } = &events.last().expect("Event expected");
+	let topsoil_system::EventRecord { event, .. } = &events.last().expect("Event expected");
 	assert_eq!(event, &generic_event);
 }
 
@@ -153,13 +153,13 @@ fn set_parameters_example() {
 #[test]
 fn get_through_external_pallet_works() {
 	new_test_ext().execute_with(|| {
-		assert_eq!(<Runtime as pallet_example_basic::Config>::MagicNumber::get(), 0);
+		assert_eq!(<Runtime as topsoil_example_basic::Config>::MagicNumber::get(), 0);
 
 		assert_ok!(PalletParameters::set_parameter(
 			RuntimeOrigin::root(),
 			Pallet1(pallet1::Parameters::Key1(pallet1::Key1, Some(123))),
 		));
 
-		assert_eq!(<Runtime as pallet_example_basic::Config>::MagicNumber::get(), 123);
+		assert_eq!(<Runtime as topsoil_example_basic::Config>::MagicNumber::get(), 123);
 	});
 }

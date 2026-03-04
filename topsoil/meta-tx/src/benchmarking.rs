@@ -18,16 +18,16 @@
 #![cfg(feature = "runtime-benchmarks")]
 
 use super::*;
-use frame_benchmarking::v2::*;
-use frame_support::traits::UnfilteredDispatchable;
+use topsoil_benchmarking::v2::*;
+use topsoil_support::traits::UnfilteredDispatchable;
 use soil_runtime::impl_tx_ext_default;
 
 pub mod types {
 	use super::*;
-	use frame_support::traits::OriginTrait;
+	use topsoil_support::traits::OriginTrait;
 	use soil_runtime::traits::DispatchInfoOf;
 
-	type CallOf<T> = <T as frame_system::Config>::RuntimeCall;
+	type CallOf<T> = <T as topsoil_system::Config>::RuntimeCall;
 
 	/// A weightless extension to facilitate the bare dispatch benchmark.
 	#[derive(TypeInfo, Eq, PartialEq, Clone, Encode, Decode, DecodeWithMemTracking)]
@@ -73,7 +73,7 @@ pub mod types {
 }
 
 fn assert_last_event<T: Config>(generic_event: <T as Config>::RuntimeEvent) {
-	frame_system::Pallet::<T>::assert_last_event(generic_event.into());
+	topsoil_system::Pallet::<T>::assert_last_event(generic_event.into());
 }
 
 #[benchmarks(
@@ -88,7 +88,7 @@ mod benchmarks {
 
 	#[benchmark]
 	fn bare_dispatch(n: Linear<8, 100>) {
-		let meta_call = frame_system::Call::<T>::remark { remark: vec![] }.into();
+		let meta_call = topsoil_system::Call::<T>::remark { remark: vec![] }.into();
 		let meta_ext = T::Extension::default();
 		let meta_ext_weight = meta_ext.weight(&meta_call);
 
@@ -96,15 +96,15 @@ mod benchmarks {
 		assert!(
 			meta_ext_weight.is_zero(),
 			"meta tx extension weight for the benchmarks must be zero. \
-			use `pallet_meta_tx::WeightlessExtension` as `pallet_meta_tx::Config::Extension` \
+			use `topsoil_meta_tx::WeightlessExtension` as `topsoil_meta_tx::Config::Extension` \
 			with the `runtime-benchmarks` feature enabled.",
 		);
 
 		let meta_tx = MetaTxFor::<T>::new(meta_call.clone(), 0u8, meta_ext.clone());
 
 		let caller = whitelisted_caller();
-		let origin: <T as frame_system::Config>::RuntimeOrigin =
-			frame_system::RawOrigin::Signed(caller).into();
+		let origin: <T as topsoil_system::Config>::RuntimeOrigin =
+			topsoil_system::RawOrigin::Signed(caller).into();
 		let call = Call::<T>::dispatch {
 			meta_tx: Box::new(meta_tx.clone()),
 			meta_tx_encoded_len: meta_tx.encoded_size() as u32,

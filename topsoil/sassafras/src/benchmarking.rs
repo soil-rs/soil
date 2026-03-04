@@ -20,9 +20,9 @@
 use crate::*;
 use soil_consensus_sassafras::{vrf::VrfSignature, EphemeralPublic, EpochConfiguration};
 
-use frame_benchmarking::v2::*;
-use frame_support::traits::Hooks;
-use frame_system::RawOrigin;
+use topsoil_benchmarking::v2::*;
+use topsoil_support::traits::Hooks;
+use topsoil_system::RawOrigin;
 
 const LOG_TARGET: &str = "sassafras::benchmark";
 
@@ -60,7 +60,7 @@ mod benchmarks {
 			vrf_signature: make_dummy_vrf_signature(),
 			ticket_claim: None,
 		};
-		frame_system::Pallet::<T>::deposit_log((&slot_claim).into());
+		topsoil_system::Pallet::<T>::deposit_log((&slot_claim).into());
 
 		// We currently don't account for the potential weight added by the `on_finalize`
 		// incremental sorting of the tickets.

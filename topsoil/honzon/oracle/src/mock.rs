@@ -15,10 +15,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate as pallet_oracle;
+use crate as topsoil_oracle;
 
 use crate::{Config, DefaultCombineData};
-use frame_support::{
+use topsoil_support::{
 	construct_runtime, derive_impl, parameter_types,
 	traits::{ConstU32, SortedMembers, Time},
 	PalletId,
@@ -29,8 +29,8 @@ pub type AccountId = u128;
 type Key = u32;
 type Value = u32;
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig as frame_system::DefaultConfig)]
-impl frame_system::Config for Test {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig as topsoil_system::DefaultConfig)]
+impl topsoil_system::Config for Test {
 	type AccountId = AccountId;
 	type Lookup = IdentityLookup<Self::AccountId>;
 	type Block = Block;
@@ -91,12 +91,12 @@ impl Config for Test {
 	type BenchmarkHelper = ();
 }
 
-type Block = frame_system::mocking::MockBlock<Test>;
+type Block = topsoil_system::mocking::MockBlock<Test>;
 
 construct_runtime!(
 	pub enum Test {
-		System: frame_system,
-		ModuleOracle: pallet_oracle,
+		System: topsoil_system,
+		ModuleOracle: topsoil_oracle,
 	}
 );
 
@@ -107,7 +107,7 @@ pub fn set_members(members: Vec<AccountId>) {
 // This function basically just builds a genesis storage key/value store
 // according to our desired mockup.
 pub fn new_test_ext() -> soil_io::TestExternalities {
-	let storage = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let storage = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 
 	let mut t: soil_io::TestExternalities = storage.into();
 

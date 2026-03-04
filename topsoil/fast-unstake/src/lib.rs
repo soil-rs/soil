@@ -127,7 +127,7 @@ pub mod weights;
 
 // some extra imports for docs to link properly.
 #[cfg(doc)]
-pub use frame_support::traits::Hooks;
+pub use topsoil_support::traits::Hooks;
 #[cfg(doc)]
 pub use soil_staking::StakingInterface;
 
@@ -139,21 +139,21 @@ macro_rules! log {
 	($level:tt, $patter:expr $(, $values:expr)* $(,)?) => {
 		log::$level!(
 			target: crate::LOG_TARGET,
-			concat!("[{:?}] 💨 ", $patter), frame_system::Pallet::<T>::block_number() $(, $values)*
+			concat!("[{:?}] 💨 ", $patter), topsoil_system::Pallet::<T>::block_number() $(, $values)*
 		)
 	};
 }
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
 	use crate::types::*;
 	use alloc::vec::Vec;
-	use frame_support::{
+	use topsoil_support::{
 		pallet_prelude::*,
 		traits::{Defensive, ReservableCurrency, StorageVersion},
 	};
-	use frame_system::pallet_prelude::*;
+	use topsoil_system::pallet_prelude::*;
 	use soil_runtime::{traits::Zero, DispatchResult};
 	use soil_staking::{EraIndex, StakingInterface};
 	pub use weights::WeightInfo;
@@ -168,11 +168,11 @@ pub mod pallet {
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
-	pub trait Config: frame_system::Config {
+	pub trait Config: topsoil_system::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self>>
-			+ IsType<<Self as frame_system::Config>::RuntimeEvent>
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>
 			+ TryInto<Event<Self>>;
 
 		/// The currency used for deposits.
@@ -184,7 +184,7 @@ pub mod pallet {
 		type Deposit: Get<BalanceOf<Self>>;
 
 		/// The origin that can control this pallet, in other words invoke [`Pallet::control`].
-		type ControlOrigin: frame_support::traits::EnsureOrigin<Self::RuntimeOrigin>;
+		type ControlOrigin: topsoil_support::traits::EnsureOrigin<Self::RuntimeOrigin>;
 
 		/// Batch size.
 		///
@@ -422,7 +422,7 @@ pub mod pallet {
 
 		/// Halt the operations of this pallet.
 		pub(crate) fn halt(reason: &'static str) {
-			frame_support::defensive!(reason);
+			topsoil_support::defensive!(reason);
 			ErasToCheckPerBlock::<T>::put(0);
 			Self::deposit_event(Event::<T>::InternalError)
 		}

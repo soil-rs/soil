@@ -47,13 +47,13 @@ mod tests;
 
 pub mod weights;
 
-use frame::prelude::*;
-use frame_system::Config as SystemConfig;
+use topsoil::prelude::*;
+use topsoil_system::Config as SystemConfig;
 pub use pallet::*;
 pub use types::*;
 pub use weights::WeightInfo;
 
-#[frame::pallet]
+#[topsoil::pallet]
 pub mod pallet {
 	use super::*;
 	use core::fmt::Display;
@@ -77,10 +77,10 @@ pub mod pallet {
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
-	pub trait Config: frame_system::Config {
+	pub trait Config: topsoil_system::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// The currency mechanism, used for paying for deposits.
 		type Currency: InspectFungible<Self::AccountId>
@@ -206,11 +206,11 @@ pub mod pallet {
 		/// `Deposit` funds of sender are reserved.
 		///
 		/// - `nft_collection_id`: The ID used to identify the collection of the NFT.
-		/// Is used within the context of `pallet_nfts`.
+		/// Is used within the context of `topsoil_nfts`.
 		/// - `nft_id`: The ID used to identify the NFT within the given collection.
-		/// Is used within the context of `pallet_nfts`.
+		/// Is used within the context of `topsoil_nfts`.
 		/// - `asset_id`: The ID of the new asset. It must not exist.
-		/// Is used within the context of `pallet_assets`.
+		/// Is used within the context of `topsoil_assets`.
 		/// - `beneficiary`: The account that will receive the newly created asset.
 		/// - `fractions`: The total issuance of the newly created asset class.
 		///
@@ -269,12 +269,12 @@ pub mod pallet {
 		/// `Deposit` funds will be returned to `asset_creator`.
 		///
 		/// - `nft_collection_id`: The ID used to identify the collection of the NFT.
-		/// Is used within the context of `pallet_nfts`.
+		/// Is used within the context of `topsoil_nfts`.
 		/// - `nft_id`: The ID used to identify the NFT within the given collection.
-		/// Is used within the context of `pallet_nfts`.
+		/// Is used within the context of `topsoil_nfts`.
 		/// - `asset_id`: The ID of the asset being returned and destroyed. Must match
 		/// the original ID of the created asset, corresponding to the NFT.
-		/// Is used within the context of `pallet_assets`.
+		/// Is used within the context of `topsoil_assets`.
 		/// - `beneficiary`: The account that will receive the unified NFT.
 		///
 		/// Emits `NftUnified` event when successful.

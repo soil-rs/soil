@@ -15,7 +15,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use frame_support::derive_impl;
+use topsoil_support::derive_impl;
 
 trait Shape {
 	fn area(&self) -> u32;
@@ -23,7 +23,7 @@ trait Shape {
 
 struct SomeRectangle {}
 
-#[frame_support::register_default_impl(SomeRectangle)]
+#[topsoil_support::register_default_impl(SomeRectangle)]
 impl Shape for SomeRectangle {
 	fn area(&self) -> u32 {
 		10

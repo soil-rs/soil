@@ -19,7 +19,7 @@
 
 use super::{Pallet as TxPause, *};
 use alloc::vec;
-use frame::benchmarking::prelude::*;
+use topsoil::benchmarking::prelude::*;
 
 #[benchmarks]
 mod benchmarks {

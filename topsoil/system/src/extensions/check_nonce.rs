@@ -21,7 +21,7 @@ use alloc::{vec, vec::Vec};
 
 use crate::Config;
 use codec::{Decode, DecodeWithMemTracking, Encode};
-use frame_support::{dispatch::DispatchInfo, pallet_prelude::TransactionSource, DebugNoBound};
+use topsoil_support::{dispatch::DispatchInfo, pallet_prelude::TransactionSource, DebugNoBound};
 use scale_info::TypeInfo;
 use soil_runtime::{
 	traits::{
@@ -209,7 +209,7 @@ where
 mod tests {
 	use super::*;
 	use crate::mock::{new_test_ext, RuntimeCall, Test, CALL};
-	use frame_support::{
+	use topsoil_support::{
 		assert_ok, assert_storage_noop, dispatch::GetDispatchInfo, traits::OriginTrait,
 	};
 	use soil_runtime::{
@@ -425,7 +425,7 @@ mod tests {
 			assert!(origin.as_system_ref().unwrap().is_root());
 
 			let pd_res = Ok(());
-			let mut post_info = frame_support::dispatch::PostDispatchInfo {
+			let mut post_info = topsoil_support::dispatch::PostDispatchInfo {
 				actual_weight: Some(info.total_weight()),
 				pays_fee: Default::default(),
 			};

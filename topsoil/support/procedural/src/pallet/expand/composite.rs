@@ -21,7 +21,7 @@ use proc_macro2::TokenStream;
 /// Expands `composite_enum` and adds the `VariantCount` implementation for it.
 pub fn expand_composites(def: &mut Def) -> TokenStream {
 	let mut expand = quote::quote!();
-	let frame_support = &def.frame_support;
+	let topsoil_support = &def.topsoil_support;
 
 	for composite in &def.composites {
 		let name = &composite.ident;
@@ -30,7 +30,7 @@ pub fn expand_composites(def: &mut Def) -> TokenStream {
 
 		// add `VariantCount` implementation for `composite_enum`
 		expand.extend(quote::quote_spanned!(composite.attr_span =>
-			impl #impl_generics #frame_support::traits::VariantCount for #name #ty_generics #where_clause {
+			impl #impl_generics #topsoil_support::traits::VariantCount for #name #ty_generics #where_clause {
 				const VARIANT_COUNT: u32 = #variants_count;
 			}
 		));

@@ -19,17 +19,17 @@
 
 #![cfg(test)]
 
-use frame_support::{derive_impl, traits::ConstU32};
+use topsoil_support::{derive_impl, traits::ConstU32};
 use soil_runtime::{
 	testing::H256,
 	traits::{BlakeTwo256, IdentityLookup},
 	BuildStorage,
 };
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 mod pallet_test {
-	use frame_support::pallet_prelude::*;
-	use frame_system::pallet_prelude::*;
+	use topsoil_support::pallet_prelude::*;
+	use topsoil_system::pallet_prelude::*;
 
 	#[pallet::pallet]
 	pub struct Pallet<T, I = ()>(PhantomData<(T, I)>);
@@ -39,10 +39,10 @@ mod pallet_test {
 	}
 
 	#[pallet::config]
-	pub trait Config<I: 'static = ()>: frame_system::Config + OtherConfig {
+	pub trait Config<I: 'static = ()>: topsoil_system::Config + OtherConfig {
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self, I>>
-			+ IsType<<Self as frame_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 		type LowerBound: Get<u32>;
 		type UpperBound: Get<u32>;
 	}
@@ -76,12 +76,12 @@ mod pallet_test {
 	}
 }
 
-type Block = frame_system::mocking::MockBlock<Test>;
+type Block = topsoil_system::mocking::MockBlock<Test>;
 
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub enum Test
 	{
-		System: frame_system,
+		System: topsoil_system,
 		TestPallet: pallet_test,
 		TestPallet2: pallet_test::<Instance2>,
 	}
@@ -92,9 +92,9 @@ crate::define_benchmarks!(
 	[pallet_test, TestPallet2]
 );
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
-	type BaseCallFilter = frame_support::traits::Everything;
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
+	type BaseCallFilter = topsoil_support::traits::Everything;
 	type BlockWeights = ();
 	type BlockLength = ();
 	type RuntimeOrigin = RuntimeOrigin;
@@ -142,8 +142,8 @@ fn new_test_ext() -> soil_io::TestExternalities {
 mod benchmarks {
 	use super::pallet_test::{self, Value};
 	use crate::account;
-	use frame_support::ensure;
-	use frame_system::RawOrigin;
+	use topsoil_support::ensure;
+	use topsoil_system::RawOrigin;
 	use soil_core::Get;
 
 	// Additional used internally by the benchmark macro.

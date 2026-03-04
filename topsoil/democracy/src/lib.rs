@@ -156,7 +156,7 @@ extern crate alloc;
 
 use alloc::{vec, vec::Vec};
 use codec::{Decode, Encode};
-use frame_support::{
+use topsoil_support::{
 	ensure,
 	traits::{
 		defensive_prelude::*,
@@ -166,7 +166,7 @@ use frame_support::{
 	},
 	weights::Weight,
 };
-use frame_system::pallet_prelude::{BlockNumberFor, OriginFor};
+use topsoil_system::pallet_prelude::{BlockNumberFor, OriginFor};
 use soil_runtime::{
 	traits::{BadOrigin, Bounded as ArithBounded, One, Saturating, StaticLookup, Zero},
 	ArithmeticError, DispatchError, DispatchResult,
@@ -198,19 +198,19 @@ pub mod migrations;
 pub(crate) const DEMOCRACY_ID: LockIdentifier = *b"democrac";
 
 type BalanceOf<T> =
-	<<T as Config>::Currency as Currency<<T as frame_system::Config>::AccountId>>::Balance;
+	<<T as Config>::Currency as Currency<<T as topsoil_system::Config>::AccountId>>::Balance;
 type NegativeImbalanceOf<T> = <<T as Config>::Currency as Currency<
-	<T as frame_system::Config>::AccountId,
+	<T as topsoil_system::Config>::AccountId,
 >>::NegativeImbalance;
-pub type CallOf<T> = <T as frame_system::Config>::RuntimeCall;
-pub type BoundedCallOf<T> = Bounded<CallOf<T>, <T as frame_system::Config>::Hashing>;
-type AccountIdLookupOf<T> = <<T as frame_system::Config>::Lookup as StaticLookup>::Source;
+pub type CallOf<T> = <T as topsoil_system::Config>::RuntimeCall;
+pub type BoundedCallOf<T> = Bounded<CallOf<T>, <T as topsoil_system::Config>::Hashing>;
+type AccountIdLookupOf<T> = <<T as topsoil_system::Config>::Lookup as StaticLookup>::Source;
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	use super::{DispatchResult, *};
-	use frame_support::pallet_prelude::*;
-	use frame_system::pallet_prelude::*;
+	use topsoil_support::pallet_prelude::*;
+	use topsoil_system::pallet_prelude::*;
 
 	/// The in-code storage version.
 	const STORAGE_VERSION: StorageVersion = StorageVersion::new(1);
@@ -220,10 +220,10 @@ pub mod pallet {
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
-	pub trait Config: frame_system::Config + Sized {
+	pub trait Config: topsoil_system::Config + Sized {
 		type WeightInfo: WeightInfo;
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// The Scheduler.
 		type Scheduler: ScheduleNamed<
@@ -340,7 +340,7 @@ pub mod pallet {
 		type VetoOrigin: EnsureOrigin<Self::RuntimeOrigin, Success = Self::AccountId>;
 
 		/// Overarching type of all pallets origins.
-		type PalletsOrigin: From<frame_system::RawOrigin<Self::AccountId>>;
+		type PalletsOrigin: From<topsoil_system::RawOrigin<Self::AccountId>>;
 
 		/// Handler for the unbalanced reduction when slashing a preimage deposit.
 		type Slash: OnUnbalanced<NegativeImbalanceOf<Self>>;
@@ -438,7 +438,7 @@ pub mod pallet {
 	pub type MetadataOf<T: Config> = StorageMap<_, Blake2_128Concat, MetadataOwner, T::Hash>;
 
 	#[pallet::genesis_config]
-	#[derive(frame_support::DefaultNoBound)]
+	#[derive(topsoil_support::DefaultNoBound)]
 	pub struct GenesisConfig<T: Config> {
 		#[serde(skip)]
 		_config: core::marker::PhantomData<T>,
@@ -599,7 +599,7 @@ pub mod pallet {
 
 			if let Some((until, _)) = Blacklist::<T>::get(proposal_hash) {
 				ensure!(
-					frame_system::Pallet::<T>::block_number() >= until,
+					topsoil_system::Pallet::<T>::block_number() >= until,
 					Error::<T>::ProposalBlacklisted,
 				);
 			}
@@ -702,7 +702,7 @@ pub mod pallet {
 			ensure!(!NextExternal::<T>::exists(), Error::<T>::DuplicateProposal);
 			if let Some((until, _)) = Blacklist::<T>::get(proposal.hash()) {
 				ensure!(
-					frame_system::Pallet::<T>::block_number() >= until,
+					topsoil_system::Pallet::<T>::block_number() >= until,
 					Error::<T>::ProposalBlacklisted,
 				);
 			}
@@ -802,7 +802,7 @@ pub mod pallet {
 			ensure!(proposal_hash == ext_proposal.hash(), Error::<T>::InvalidHash);
 
 			NextExternal::<T>::kill();
-			let now = frame_system::Pallet::<T>::block_number();
+			let now = topsoil_system::Pallet::<T>::block_number();
 			let ref_index = Self::inject_referendum(
 				now.saturating_add(voting_period),
 				ext_proposal,
@@ -842,7 +842,7 @@ pub mod pallet {
 				.map_err(|_| Error::<T>::TooMany)?;
 
 			let until =
-				frame_system::Pallet::<T>::block_number().saturating_add(T::CooloffPeriod::get());
+				topsoil_system::Pallet::<T>::block_number().saturating_add(T::CooloffPeriod::get());
 			Blacklist::<T>::insert(&proposal_hash, (until, existing_vetoers));
 
 			Self::deposit_event(Event::<T>::Vetoed { who, proposal_hash, until });
@@ -1233,7 +1233,7 @@ impl<T: Config> Pallet<T> {
 		delay: BlockNumberFor<T>,
 	) -> ReferendumIndex {
 		Pallet::<T>::inject_referendum(
-			frame_system::Pallet::<T>::block_number().saturating_add(T::VotingPeriod::get()),
+			topsoil_system::Pallet::<T>::block_number().saturating_add(T::VotingPeriod::get()),
 			proposal,
 			threshold,
 			delay,
@@ -1348,7 +1348,7 @@ impl<T: Config> Pallet<T> {
 							let unlock_at = end.saturating_add(
 								T::VoteLockingPeriod::get().saturating_mul(lock_periods.into()),
 							);
-							let now = frame_system::Pallet::<T>::block_number();
+							let now = topsoil_system::Pallet::<T>::block_number();
 							if now < unlock_at {
 								ensure!(
 									matches!(scope, UnvoteScope::Any),
@@ -1441,7 +1441,7 @@ impl<T: Config> Pallet<T> {
 				} => {
 					// remove any delegation votes to our current target.
 					Self::reduce_upstream_delegation(&target, conviction.votes(balance));
-					let now = frame_system::Pallet::<T>::block_number();
+					let now = topsoil_system::Pallet::<T>::block_number();
 					let lock_periods = conviction.lock_periods().into();
 					let unlock_block = now
 						.saturating_add(T::VoteLockingPeriod::get().saturating_mul(lock_periods));
@@ -1481,7 +1481,7 @@ impl<T: Config> Pallet<T> {
 					// remove any delegation votes to our current target.
 					let votes =
 						Self::reduce_upstream_delegation(&target, conviction.votes(balance));
-					let now = frame_system::Pallet::<T>::block_number();
+					let now = topsoil_system::Pallet::<T>::block_number();
 					let lock_periods = conviction.lock_periods().into();
 					let unlock_block = now
 						.saturating_add(T::VoteLockingPeriod::get().saturating_mul(lock_periods));
@@ -1501,7 +1501,7 @@ impl<T: Config> Pallet<T> {
 	/// a security hole) but may be reduced from what they are currently.
 	fn update_lock(who: &T::AccountId) {
 		let lock_needed = VotingOf::<T>::mutate(who, |voting| {
-			voting.rejig(frame_system::Pallet::<T>::block_number());
+			voting.rejig(topsoil_system::Pallet::<T>::block_number());
 			voting.locked_balance()
 		});
 		if lock_needed.is_zero() {
@@ -1612,12 +1612,12 @@ impl<T: Config> Pallet<T> {
 				DispatchTime::At(when),
 				None,
 				63,
-				frame_system::RawOrigin::Root.into(),
+				topsoil_system::RawOrigin::Root.into(),
 				status.proposal,
 			)
 			.is_err()
 			{
-				frame_support::print("LOGIC ERROR: bake_referendum/schedule_named failed");
+				topsoil_support::print("LOGIC ERROR: bake_referendum/schedule_named failed");
 			}
 		} else {
 			Self::deposit_event(Event::<T>::NotPassed { ref_index: index });

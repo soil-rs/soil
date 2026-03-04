@@ -18,39 +18,39 @@
 //! Test environment for Assets pallet.
 
 use super::*;
-use crate as pallet_assets;
+use crate as topsoil_assets;
 
 use codec::Encode;
-use frame_support::{
+use topsoil_support::{
 	assert_ok, construct_runtime, derive_impl, parameter_types,
 	traits::{AsEnsureOriginWithArg, ConstU32},
 };
 use soil_io::storage;
 use soil_runtime::BuildStorage;
 
-type Block = frame_system::mocking::MockBlock<Test>;
+type Block = topsoil_system::mocking::MockBlock<Test>;
 
 construct_runtime!(
 	pub enum Test
 	{
-		System: frame_system,
-		Balances: pallet_balances,
-		Assets: pallet_assets,
+		System: topsoil_system,
+		Balances: topsoil_balances,
+		Assets: topsoil_assets,
 	}
 );
 
 type AccountId = u64;
 type AssetId = u32;
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
 	type Block = Block;
-	type AccountData = pallet_balances::AccountData<u64>;
+	type AccountData = topsoil_balances::AccountData<u64>;
 	type MaxConsumers = ConstU32<3>;
 }
 
-#[derive_impl(pallet_balances::config_preludes::TestDefaultConfig)]
-impl pallet_balances::Config for Test {
+#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
+impl topsoil_balances::Config for Test {
 	type AccountStore = System;
 }
 
@@ -100,8 +100,8 @@ impl AssetsCallbackHandle {
 #[derive_impl(crate::config_preludes::TestDefaultConfig)]
 impl Config for Test {
 	type Currency = Balances;
-	type CreateOrigin = AsEnsureOriginWithArg<frame_system::EnsureSigned<u64>>;
-	type ForceOrigin = frame_system::EnsureRoot<u64>;
+	type CreateOrigin = AsEnsureOriginWithArg<topsoil_system::EnsureSigned<u64>>;
+	type ForceOrigin = topsoil_system::EnsureRoot<u64>;
 	type Freezer = TestFreezer;
 	type Holder = TestHolder;
 	type CallbackHandle = (AssetsCallbackHandle, AutoIncAssetId<Test>);
@@ -216,9 +216,9 @@ pub(crate) fn take_hooks() -> Vec<Hook> {
 }
 
 pub(crate) fn new_test_ext() -> soil_io::TestExternalities {
-	let mut storage = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let mut storage = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 
-	let config: pallet_assets::GenesisConfig<Test> = pallet_assets::GenesisConfig {
+	let config: topsoil_assets::GenesisConfig<Test> = topsoil_assets::GenesisConfig {
 		assets: vec![
 			// id, owner, is_sufficient, min_balance
 			(999, 0, true, 1),

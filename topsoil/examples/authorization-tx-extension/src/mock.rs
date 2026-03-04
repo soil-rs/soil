@@ -24,9 +24,9 @@
 use crate::*;
 pub(crate) use example_runtime::*;
 use extensions::AuthorizeCoownership;
-use frame_support::derive_impl;
-use frame_system::{CheckEra, CheckGenesis, CheckNonce, CheckTxVersion};
-use pallet_verify_signature::VerifySignature;
+use topsoil_support::derive_impl;
+use topsoil_system::{CheckEra, CheckGenesis, CheckNonce, CheckTxVersion};
+use topsoil_verify_signature::VerifySignature;
 use soil_runtime::{
 	generic,
 	traits::{BlakeTwo256, IdentifyAccount, IdentityLookup, Verify},
@@ -66,25 +66,25 @@ mod example_runtime {
 	pub type BlockNumber = u32;
 
 	// For testing the pallet, we construct a mock runtime.
-	frame_support::construct_runtime!(
+	topsoil_support::construct_runtime!(
 		pub enum Runtime
 		{
-			System: frame_system,
-			VerifySignaturePallet: pallet_verify_signature,
+			System: topsoil_system,
+			VerifySignaturePallet: topsoil_verify_signature,
 
-			Assets: pallet_assets,
+			Assets: topsoil_assets,
 			Coownership: pallet_coownership,
 		}
 	);
 
-	#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-	impl frame_system::Config for Runtime {
+	#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+	impl topsoil_system::Config for Runtime {
 		type AccountId = AccountId;
 		type Block = Block;
 		type Lookup = IdentityLookup<Self::AccountId>;
 	}
 
-	impl pallet_verify_signature::Config for Runtime {
+	impl topsoil_verify_signature::Config for Runtime {
 		type Signature = MultiSignature;
 		type AccountIdentifier = MultiSigner;
 		type WeightInfo = ();
@@ -112,7 +112,7 @@ mod example_runtime {
 		}
 	}
 
-	impl pallet_assets::Config for Runtime {
+	impl topsoil_assets::Config for Runtime {
 		type CoownerOrigin = EnsureCoowner;
 	}
 

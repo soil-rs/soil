@@ -19,7 +19,7 @@
 //!
 //! See the [`crate::traits::fungibles`] doc for more information about fungibles traits.
 
-use frame_support::traits::{
+use topsoil_support::traits::{
 	tokens::{
 		fungibles, fungibles::imbalance, AssetId, DepositConsequence, Fortitude, Precision,
 		Preservation, Provenance, Restriction, WithdrawConsequence,

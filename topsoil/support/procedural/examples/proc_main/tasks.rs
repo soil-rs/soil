@@ -18,10 +18,10 @@
 #[cfg(test)]
 use super::{
 	assert_ok,
-	frame_system::{Numbers, Total},
+	topsoil_system::{Numbers, Total},
 	Runtime, RuntimeOrigin, RuntimeTask, System,
 };
-use frame_support_procedural::pallet_section;
+use topsoil_support_procedural::pallet_section;
 
 #[pallet_section]
 mod tasks_example {
@@ -50,7 +50,7 @@ fn tasks_work() {
 	super::new_test_ext().execute_with(|| {
 		Numbers::<Runtime>::insert(0, 1);
 
-		let task = RuntimeTask::System(super::frame_system::Task::<Runtime>::AddNumberIntoTotal {
+		let task = RuntimeTask::System(super::topsoil_system::Task::<Runtime>::AddNumberIntoTotal {
 			i: 0u32,
 		});
 

@@ -31,7 +31,7 @@
 //! performed through the methods exposed by the [`StakingLedger`] implementation in order to ensure
 //! state consistency.
 
-use frame_support::{defensive, ensure, traits::Defensive};
+use topsoil_support::{defensive, ensure, traits::Defensive};
 use soil_runtime::DispatchResult;
 use soil_staking::{StakingAccount, StakingInterface};
 
@@ -284,15 +284,15 @@ use {
 // This structs makes it easy to write tests to compare staking ledgers fetched from storage. This
 // is required because the controller field is not stored in storage and it is private.
 #[cfg(test)]
-#[derive(frame_support::DebugNoBound, Clone, Encode, Decode, TypeInfo, MaxEncodedLen)]
+#[derive(topsoil_support::DebugNoBound, Clone, Encode, Decode, TypeInfo, MaxEncodedLen)]
 pub struct StakingLedgerInspect<T: Config> {
 	pub stash: T::AccountId,
 	#[codec(compact)]
 	pub total: BalanceOf<T>,
 	#[codec(compact)]
 	pub active: BalanceOf<T>,
-	pub unlocking: frame_support::BoundedVec<UnlockChunk<BalanceOf<T>>, T::MaxUnlockingChunks>,
-	pub legacy_claimed_rewards: frame_support::BoundedVec<soil_staking::EraIndex, T::HistoryDepth>,
+	pub unlocking: topsoil_support::BoundedVec<UnlockChunk<BalanceOf<T>>, T::MaxUnlockingChunks>,
+	pub legacy_claimed_rewards: topsoil_support::BoundedVec<soil_staking::EraIndex, T::HistoryDepth>,
 }
 
 #[cfg(test)]

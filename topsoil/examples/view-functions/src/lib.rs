@@ -21,7 +21,7 @@
 
 pub mod tests;
 
-use frame_support::Parameter;
+use topsoil_support::Parameter;
 use scale_info::TypeInfo;
 
 pub struct SomeType1;
@@ -38,16 +38,16 @@ impl SomeAssociation1 for u64 {
 	type _1 = u64;
 }
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
-	use frame_support::pallet_prelude::*;
+	use topsoil_support::pallet_prelude::*;
 
 	#[pallet::error]
 	pub enum Error<T> {}
 
 	#[pallet::config]
-	pub trait Config: frame_system::Config {}
+	pub trait Config: topsoil_system::Config {}
 
 	#[pallet::pallet]
 	pub struct Pallet<T>(_);
@@ -75,16 +75,16 @@ pub mod pallet {
 	}
 }
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet2 {
 	use super::*;
-	use frame_support::pallet_prelude::*;
+	use topsoil_support::pallet_prelude::*;
 
 	#[pallet::error]
 	pub enum Error<T, I = ()> {}
 
 	#[pallet::config]
-	pub trait Config<I: 'static = ()>: frame_system::Config {}
+	pub trait Config<I: 'static = ()>: topsoil_system::Config {}
 
 	#[pallet::pallet]
 	pub struct Pallet<T, I = ()>(PhantomData<(T, I)>);

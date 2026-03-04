@@ -23,14 +23,14 @@ use super::*;
 use crate::extension::{AsPerson, AsPersonInfo};
 
 use core::marker::{Send, Sync};
-use frame_benchmarking::{account, v2::*, BenchmarkError};
-use frame_support::{
+use topsoil_benchmarking::{account, v2::*, BenchmarkError};
+use topsoil_support::{
 	assert_ok,
 	dispatch::RawOrigin,
 	pallet_prelude::{Get, Pays},
 	traits::{Len, OnIdle, OnPoll},
 };
-use frame_system::RawOrigin as SystemOrigin;
+use topsoil_system::RawOrigin as SystemOrigin;
 use soil_runtime::{
 	generic::ExtensionVersion,
 	traits::{AppendZerosInput, AsTransactionAuthorizedOrigin, DispatchTransaction},
@@ -127,9 +127,9 @@ fn prepare_chunks<T: Config>() {
 
 #[benchmarks(
 	where T: Send + Sync,
-		<T as frame_system::Config>::RuntimeCall:
+		<T as topsoil_system::Config>::RuntimeCall:
 			Dispatchable<Info = DispatchInfo, PostInfo = PostDispatchInfo> + IsSubType<Call<T>> + From<Call<T>> + GetDispatchInfo,
-		<T as frame_system::Config>::RuntimeOrigin: AsTransactionAuthorizedOrigin,
+		<T as topsoil_system::Config>::RuntimeOrigin: AsTransactionAuthorizedOrigin,
 )]
 mod benches {
 	use super::*;
@@ -157,7 +157,7 @@ mod benches {
 		};
 
 		// Set up alias account association
-		let block_number = frame_system::Pallet::<T>::block_number();
+		let block_number = topsoil_system::Pallet::<T>::block_number();
 		assert_ok!(pallet::Pallet::<T>::set_alias_account(
 			Origin::PersonalAlias(ra.clone()).into(),
 			account.clone(),
@@ -167,7 +167,7 @@ mod benches {
 		assert!(AliasToAccount::<T>::contains_key(&ra.ca));
 
 		// A simple call to benchmark with
-		let call = frame_system::Call::<T>::remark { remark: vec![] };
+		let call = topsoil_system::Call::<T>::remark { remark: vec![] };
 		let boxed_call = Box::new(call.into());
 
 		#[extrinsic_call]
@@ -188,7 +188,7 @@ mod benches {
 			pallet::Pallet::<T>::should_build_ring(RI_ZERO, T::MaxRingSize::get()).unwrap();
 		assert_ok!(pallet::Pallet::<T>::build_ring(RI_ZERO, to_include));
 
-		let block_number = frame_system::Pallet::<T>::block_number();
+		let block_number = topsoil_system::Pallet::<T>::block_number();
 
 		let alias_value: Alias = [0u8; 32];
 		let alias = RevisedContextualAlias {
@@ -236,7 +236,7 @@ mod benches {
 		assert_ok!(pallet::Pallet::<T>::build_ring(RI_ZERO, to_include));
 
 		let account: T::AccountId = account("test", 0, SEED);
-		let block_number = frame_system::Pallet::<T>::block_number();
+		let block_number = topsoil_system::Pallet::<T>::block_number();
 
 		let alias_value: Alias = [0u8; 32];
 		let alias = RevisedContextualAlias {
@@ -295,10 +295,10 @@ mod benches {
 		let (personal_id, _, _): &(PersonalId, MemberOf<T>, SecretOf<T>) = &people[0];
 
 		let account: T::AccountId = account("test", 0, SEED);
-		let block_number = frame_system::Pallet::<T>::block_number();
+		let block_number = topsoil_system::Pallet::<T>::block_number();
 
 		// An account had already been assigned to this personal id
-		let old_account: T::AccountId = frame_benchmarking::account("test_old", 0, SEED);
+		let old_account: T::AccountId = topsoil_benchmarking::account("test_old", 0, SEED);
 		assert_ok!(pallet::Pallet::<T>::set_personal_id_account(
 			Origin::PersonalIdentity(*personal_id).into(),
 			old_account.clone(),
@@ -332,10 +332,10 @@ mod benches {
 		let (personal_id, _, _): &(PersonalId, MemberOf<T>, SecretOf<T>) = &people[0];
 
 		let account: T::AccountId = account("test", 0, SEED);
-		let block_number = frame_system::Pallet::<T>::block_number();
+		let block_number = topsoil_system::Pallet::<T>::block_number();
 
 		// An account had already been assigned to this personal id
-		let old_account: T::AccountId = frame_benchmarking::account("test_old", 0, SEED);
+		let old_account: T::AccountId = topsoil_benchmarking::account("test_old", 0, SEED);
 		assert_ok!(pallet::Pallet::<T>::set_personal_id_account(
 			Origin::PersonalIdentity(*personal_id).into(),
 			old_account.clone(),
@@ -830,7 +830,7 @@ mod benches {
 		};
 
 		// Set up alias account association
-		let block_number = frame_system::Pallet::<T>::block_number();
+		let block_number = topsoil_system::Pallet::<T>::block_number();
 		assert_ok!(pallet::Pallet::<T>::set_alias_account(
 			Origin::PersonalAlias(ra.clone()).into(),
 			account.clone(),
@@ -840,8 +840,8 @@ mod benches {
 		assert!(AliasToAccount::<T>::contains_key(&ra.ca));
 
 		// A simple call to benchmark with
-		let inner = frame_system::Call::<T>::remark { remark: vec![] };
-		let call: <T as frame_system::Config>::RuntimeCall = inner.into();
+		let inner = topsoil_system::Call::<T>::remark { remark: vec![] };
+		let call: <T as topsoil_system::Config>::RuntimeCall = inner.into();
 
 		let ext =
 			AsPerson::new(Some(AsPersonInfo::<T>::AsPersonalAliasWithAccount(T::Nonce::default())));
@@ -881,7 +881,7 @@ mod benches {
 
 		// Set up personal ID account association
 		let account: T::AccountId = account("caller", 0, SEED);
-		let block_number = frame_system::Pallet::<T>::block_number();
+		let block_number = topsoil_system::Pallet::<T>::block_number();
 		assert_ok!(pallet::Pallet::<T>::set_personal_id_account(
 			Origin::PersonalIdentity(*personal_id).into(),
 			account.clone(),
@@ -890,8 +890,8 @@ mod benches {
 		assert!(AccountToPersonalId::<T>::contains_key(&account));
 
 		// A simple call to benchmark with
-		let inner = frame_system::Call::<T>::remark { remark: vec![] };
-		let call: <T as frame_system::Config>::RuntimeCall = inner.into();
+		let inner = topsoil_system::Call::<T>::remark { remark: vec![] };
+		let call: <T as topsoil_system::Config>::RuntimeCall = inner.into();
 
 		let ext = AsPerson::new(Some(AsPersonInfo::<T>::AsPersonalIdentityWithAccount(
 			T::Nonce::default(),
@@ -929,9 +929,9 @@ mod benches {
 		assert_ok!(pallet::Pallet::<T>::build_ring(RI_ZERO, to_include));
 
 		// The call to set the alias, the only one valid for this extension code path.
-		let block_number = frame_system::Pallet::<T>::block_number();
+		let block_number = topsoil_system::Pallet::<T>::block_number();
 		let inner = Call::<T>::set_alias_account { account, call_valid_at: block_number };
-		let call: <T as frame_system::Config>::RuntimeCall = inner.into();
+		let call: <T as topsoil_system::Config>::RuntimeCall = inner.into();
 
 		let context = T::BenchmarkHelper::valid_account_context();
 		let ext_version: ExtensionVersion = 0;
@@ -987,9 +987,9 @@ mod benches {
 			&recognized_people[0];
 
 		// The call to set the personal ID account, the only one valid for this extension code path.
-		let block_number = frame_system::Pallet::<T>::block_number();
+		let block_number = topsoil_system::Pallet::<T>::block_number();
 		let inner = Call::<T>::set_personal_id_account { account, call_valid_at: block_number };
-		let call: <T as frame_system::Config>::RuntimeCall = inner.into();
+		let call: <T as topsoil_system::Config>::RuntimeCall = inner.into();
 		let ext_version: ExtensionVersion = 0;
 		let signature = (ext_version, &call).using_encoded(|msg| {
 			<T::Crypto as GenerateVerifiable>::sign(secret, &soil_io::hashing::blake2_256(msg))
@@ -1018,6 +1018,6 @@ mod benches {
 	}
 
 	// Implements a test for each benchmark. Execute with:
-	// `cargo test -p pallet-people --features runtime-benchmarks`.
+	// `cargo test -p topsoil-people --features runtime-benchmarks`.
 	impl_benchmark_test_suite!(Pallet, crate::mock::new_test_ext(), crate::mock::Test);
 }

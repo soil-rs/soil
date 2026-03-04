@@ -15,7 +15,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#[frame_support::runtime(dummy)]
+#[topsoil_support::runtime(dummy)]
 mod runtime {
 
 }

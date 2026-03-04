@@ -21,15 +21,15 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-//! Tests for pallet-example-authorization-tx-extension.
+//! Tests for topsoil-example-authorization-tx-extension.
 
 use codec::Encode;
-use frame_support::{
+use topsoil_support::{
 	assert_noop,
 	dispatch::GetDispatchInfo,
 	pallet_prelude::{InvalidTransaction, TransactionValidityError},
 };
-use pallet_verify_signature::VerifySignature;
+use topsoil_verify_signature::VerifySignature;
 use soil_keyring::Sr25519Keyring;
 use soil_runtime::{
 	generic::ExtensionVersion,
@@ -37,7 +37,7 @@ use soil_runtime::{
 	MultiSignature, MultiSigner,
 };
 
-use crate::{extensions::AuthorizeCoownership, mock::*, pallet_assets};
+use crate::{extensions::AuthorizeCoownership, mock::*, topsoil_assets};
 
 #[test]
 fn create_asset_works() {
@@ -46,16 +46,16 @@ fn create_asset_works() {
 		let alice_account = AccountId::from(alice_keyring.public());
 		// Simple call to create asset with Id `42`.
 		let create_asset_call =
-			RuntimeCall::Assets(pallet_assets::Call::create_asset { asset_id: 42 });
+			RuntimeCall::Assets(topsoil_assets::Call::create_asset { asset_id: 42 });
 		let ext_version: ExtensionVersion = 0;
 		// Create extension that will be used for dispatch.
 		let initial_nonce = 23;
 		let tx_ext = (
-			frame_system::CheckNonce::<Runtime>::from(initial_nonce),
+			topsoil_system::CheckNonce::<Runtime>::from(initial_nonce),
 			AuthorizeCoownership::<Runtime, MultiSigner, MultiSignature>::default(),
-			frame_system::CheckGenesis::<Runtime>::new(),
-			frame_system::CheckTxVersion::<Runtime>::new(),
-			frame_system::CheckEra::<Runtime>::from(soil_runtime::generic::Era::immortal()),
+			topsoil_system::CheckGenesis::<Runtime>::new(),
+			topsoil_system::CheckTxVersion::<Runtime>::new(),
+			topsoil_system::CheckEra::<Runtime>::from(soil_runtime::generic::Era::immortal()),
 		);
 		// Create the transaction signature, to be used in the top level `VerifyMultiSignature`
 		// extension.
@@ -66,11 +66,11 @@ fn create_asset_works() {
 		// Add the signature to the extension.
 		let tx_ext = (
 			VerifySignature::new_with_signature(tx_sign, alice_account.clone()),
-			frame_system::CheckNonce::<Runtime>::from(initial_nonce),
+			topsoil_system::CheckNonce::<Runtime>::from(initial_nonce),
 			AuthorizeCoownership::<Runtime, MultiSigner, MultiSignature>::default(),
-			frame_system::CheckGenesis::<Runtime>::new(),
-			frame_system::CheckTxVersion::<Runtime>::new(),
-			frame_system::CheckEra::<Runtime>::from(soil_runtime::generic::Era::immortal()),
+			topsoil_system::CheckGenesis::<Runtime>::new(),
+			topsoil_system::CheckTxVersion::<Runtime>::new(),
+			topsoil_system::CheckEra::<Runtime>::from(soil_runtime::generic::Era::immortal()),
 		);
 		// Create the transaction and we're ready for dispatch.
 		let uxt = UncheckedExtrinsic::new_transaction(create_asset_call, tx_ext);
@@ -78,7 +78,7 @@ fn create_asset_works() {
 		let uxt_info = uxt.get_dispatch_info();
 		let uxt_len = uxt.using_encoded(|e| e.len());
 		// Manually pay for Alice's nonce.
-		frame_system::Account::<Runtime>::mutate(&alice_account, |info| {
+		topsoil_system::Account::<Runtime>::mutate(&alice_account, |info| {
 			info.nonce = initial_nonce;
 			info.providers = 1;
 		});
@@ -92,10 +92,10 @@ fn create_asset_works() {
 		let res = xt.apply::<Runtime>(&uxt_info, uxt_len).unwrap();
 
 		// Asserting the results.
-		assert_eq!(frame_system::Account::<Runtime>::get(&alice_account).nonce, initial_nonce + 1);
+		assert_eq!(topsoil_system::Account::<Runtime>::get(&alice_account).nonce, initial_nonce + 1);
 		assert_eq!(
-			pallet_assets::AssetOwners::<Runtime>::get(42),
-			Some(pallet_assets::Owner::<AccountId>::Single(alice_account))
+			topsoil_assets::AssetOwners::<Runtime>::get(42),
+			Some(topsoil_assets::Owner::<AccountId>::Single(alice_account))
 		);
 		assert!(res.is_ok());
 	});
@@ -113,13 +113,13 @@ fn create_coowned_asset_works() {
 		let charlie_account = AccountId::from(charlie_keyring.public());
 		// Simple call to create asset with Id `42`.
 		let create_asset_call =
-			RuntimeCall::Assets(pallet_assets::Call::create_asset { asset_id: 42 });
+			RuntimeCall::Assets(topsoil_assets::Call::create_asset { asset_id: 42 });
 		let ext_version: ExtensionVersion = 0;
 		// Create the inner transaction extension, to be signed by our coowners, Alice and Bob.
 		let inner_ext: InnerTxExtension = (
-			frame_system::CheckGenesis::<Runtime>::new(),
-			frame_system::CheckTxVersion::<Runtime>::new(),
-			frame_system::CheckEra::<Runtime>::from(soil_runtime::generic::Era::immortal()),
+			topsoil_system::CheckGenesis::<Runtime>::new(),
+			topsoil_system::CheckTxVersion::<Runtime>::new(),
+			topsoil_system::CheckEra::<Runtime>::from(soil_runtime::generic::Era::immortal()),
 		);
 		// Create the payload Alice and Bob need to sign.
 		let inner_payload =
@@ -136,14 +136,14 @@ fn create_coowned_asset_works() {
 		// have it be Charlie.
 		let initial_nonce = 23;
 		let tx_ext = (
-			frame_system::CheckNonce::<Runtime>::from(initial_nonce),
+			topsoil_system::CheckNonce::<Runtime>::from(initial_nonce),
 			AuthorizeCoownership::<Runtime, MultiSigner, MultiSignature>::new(
 				(alice_keyring.into(), alice_inner_sig.clone()),
 				(bob_keyring.into(), bob_inner_sig.clone()),
 			),
-			frame_system::CheckGenesis::<Runtime>::new(),
-			frame_system::CheckTxVersion::<Runtime>::new(),
-			frame_system::CheckEra::<Runtime>::from(soil_runtime::generic::Era::immortal()),
+			topsoil_system::CheckGenesis::<Runtime>::new(),
+			topsoil_system::CheckTxVersion::<Runtime>::new(),
+			topsoil_system::CheckEra::<Runtime>::from(soil_runtime::generic::Era::immortal()),
 		);
 		// Create Charlie's transaction signature, to be used in the top level
 		// `VerifyMultiSignature` extension.
@@ -154,14 +154,14 @@ fn create_coowned_asset_works() {
 		// Add the signature to the extension.
 		let tx_ext = (
 			VerifySignature::new_with_signature(tx_sign, charlie_account.clone()),
-			frame_system::CheckNonce::<Runtime>::from(initial_nonce),
+			topsoil_system::CheckNonce::<Runtime>::from(initial_nonce),
 			AuthorizeCoownership::<Runtime, MultiSigner, MultiSignature>::new(
 				(alice_keyring.into(), alice_inner_sig),
 				(bob_keyring.into(), bob_inner_sig),
 			),
-			frame_system::CheckGenesis::<Runtime>::new(),
-			frame_system::CheckTxVersion::<Runtime>::new(),
-			frame_system::CheckEra::<Runtime>::from(soil_runtime::generic::Era::immortal()),
+			topsoil_system::CheckGenesis::<Runtime>::new(),
+			topsoil_system::CheckTxVersion::<Runtime>::new(),
+			topsoil_system::CheckEra::<Runtime>::from(soil_runtime::generic::Era::immortal()),
 		);
 		// Create the transaction and we're ready for dispatch.
 		let uxt = UncheckedExtrinsic::new_transaction(create_asset_call, tx_ext);
@@ -169,7 +169,7 @@ fn create_coowned_asset_works() {
 		let uxt_info = uxt.get_dispatch_info();
 		let uxt_len = uxt.using_encoded(|e| e.len());
 		// Manually pay for Charlie's nonce.
-		frame_system::Account::<Runtime>::mutate(&charlie_account, |info| {
+		topsoil_system::Account::<Runtime>::mutate(&charlie_account, |info| {
 			info.nonce = initial_nonce;
 			info.providers = 1;
 		});
@@ -184,10 +184,10 @@ fn create_coowned_asset_works() {
 
 		// Asserting the results.
 		assert!(res.is_ok());
-		assert_eq!(frame_system::Account::<Runtime>::get(charlie_account).nonce, initial_nonce + 1);
+		assert_eq!(topsoil_system::Account::<Runtime>::get(charlie_account).nonce, initial_nonce + 1);
 		assert_eq!(
-			pallet_assets::AssetOwners::<Runtime>::get(42),
-			Some(pallet_assets::Owner::<AccountId>::Double(alice_account, bob_account))
+			topsoil_assets::AssetOwners::<Runtime>::get(42),
+			Some(topsoil_assets::Owner::<AccountId>::Double(alice_account, bob_account))
 		);
 	});
 }
@@ -201,15 +201,15 @@ fn inner_authorization_works() {
 		let charlie_account = AccountId::from(charlie_keyring.public());
 		// Simple call to create asset with Id `42`.
 		let create_asset_call =
-			RuntimeCall::Assets(pallet_assets::Call::create_asset { asset_id: 42 });
+			RuntimeCall::Assets(topsoil_assets::Call::create_asset { asset_id: 42 });
 		let ext_version: ExtensionVersion = 0;
 		// Create the inner transaction extension, to be signed by our coowners, Alice and Bob. They
 		// are going to sign this transaction as a mortal one.
 		let inner_ext: InnerTxExtension = (
-			frame_system::CheckGenesis::<Runtime>::new(),
-			frame_system::CheckTxVersion::<Runtime>::new(),
+			topsoil_system::CheckGenesis::<Runtime>::new(),
+			topsoil_system::CheckTxVersion::<Runtime>::new(),
 			// Sign with mortal era check.
-			frame_system::CheckEra::<Runtime>::from(soil_runtime::generic::Era::mortal(4, 0)),
+			topsoil_system::CheckEra::<Runtime>::from(soil_runtime::generic::Era::mortal(4, 0)),
 		);
 		// Create the payload Alice and Bob need to sign.
 		let inner_payload = (&create_asset_call, &inner_ext, inner_ext.implicit().unwrap());
@@ -225,15 +225,15 @@ fn inner_authorization_works() {
 		// have it be Charlie.
 		let initial_nonce = 23;
 		let tx_ext = (
-			frame_system::CheckNonce::<Runtime>::from(initial_nonce),
+			topsoil_system::CheckNonce::<Runtime>::from(initial_nonce),
 			AuthorizeCoownership::<Runtime, MultiSigner, MultiSignature>::new(
 				(alice_keyring.into(), alice_inner_sig.clone()),
 				(bob_keyring.into(), bob_inner_sig.clone()),
 			),
-			frame_system::CheckGenesis::<Runtime>::new(),
-			frame_system::CheckTxVersion::<Runtime>::new(),
+			topsoil_system::CheckGenesis::<Runtime>::new(),
+			topsoil_system::CheckTxVersion::<Runtime>::new(),
 			// Construct the transaction as immortal with a different era check.
-			frame_system::CheckEra::<Runtime>::from(soil_runtime::generic::Era::immortal()),
+			topsoil_system::CheckEra::<Runtime>::from(soil_runtime::generic::Era::immortal()),
 		);
 		// Create Charlie's transaction signature, to be used in the top level
 		// `VerifyMultiSignature` extension.
@@ -244,15 +244,15 @@ fn inner_authorization_works() {
 		// Add the signature to the extension that Charlie signed.
 		let tx_ext = (
 			VerifySignature::new_with_signature(tx_sign, charlie_account.clone()),
-			frame_system::CheckNonce::<Runtime>::from(initial_nonce),
+			topsoil_system::CheckNonce::<Runtime>::from(initial_nonce),
 			AuthorizeCoownership::<Runtime, MultiSigner, MultiSignature>::new(
 				(alice_keyring.into(), alice_inner_sig),
 				(bob_keyring.into(), bob_inner_sig),
 			),
-			frame_system::CheckGenesis::<Runtime>::new(),
-			frame_system::CheckTxVersion::<Runtime>::new(),
+			topsoil_system::CheckGenesis::<Runtime>::new(),
+			topsoil_system::CheckTxVersion::<Runtime>::new(),
 			// Construct the transaction as immortal with a different era check.
-			frame_system::CheckEra::<Runtime>::from(soil_runtime::generic::Era::immortal()),
+			topsoil_system::CheckEra::<Runtime>::from(soil_runtime::generic::Era::immortal()),
 		);
 		// Create the transaction and we're ready for dispatch.
 		let uxt = UncheckedExtrinsic::new_transaction(create_asset_call, tx_ext);
@@ -260,7 +260,7 @@ fn inner_authorization_works() {
 		let uxt_info = uxt.get_dispatch_info();
 		let uxt_len = uxt.using_encoded(|e| e.len());
 		// Manually pay for Charlie's nonce.
-		frame_system::Account::<Runtime>::mutate(charlie_account, |info| {
+		topsoil_system::Account::<Runtime>::mutate(charlie_account, |info| {
 			info.nonce = initial_nonce;
 			info.providers = 1;
 		});

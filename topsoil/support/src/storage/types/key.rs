@@ -279,4 +279,4 @@ pub trait HasReversibleKeyPrefix<P>: ReversibleKeyGenerator + HasKeyPrefix<P> {
 	fn decode_partial_key(key_material: &[u8]) -> Result<Self::Suffix, codec::Error>;
 }
 
-frame_support_procedural::impl_key_prefix_for_tuples!();
+topsoil_support_procedural::impl_key_prefix_for_tuples!();

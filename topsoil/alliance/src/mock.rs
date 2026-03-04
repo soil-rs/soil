@@ -24,17 +24,17 @@ pub use soil_runtime::{
 	BuildStorage,
 };
 
-pub use frame_support::{
+pub use topsoil_support::{
 	assert_noop, assert_ok, derive_impl, ord_parameter_types, parameter_types,
 	traits::EitherOfDiverse, BoundedVec,
 };
-use frame_system::{EnsureRoot, EnsureSignedBy};
-use pallet_identity::{
+use topsoil_system::{EnsureRoot, EnsureSignedBy};
+use topsoil_identity::{
 	legacy::{IdentityField, IdentityInfo},
 	Data, IdentityOf, Judgement, SuperOf,
 };
 
-pub use crate as pallet_alliance;
+pub use crate as topsoil_alliance;
 
 use super::*;
 
@@ -42,18 +42,18 @@ type BlockNumber = u64;
 type AccountId = u64;
 
 parameter_types! {
-	pub BlockWeights: frame_system::limits::BlockWeights =
-		frame_system::limits::BlockWeights::simple_max(Weight::MAX);
+	pub BlockWeights: topsoil_system::limits::BlockWeights =
+		topsoil_system::limits::BlockWeights::simple_max(Weight::MAX);
 }
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
 	type Block = Block;
-	type AccountData = pallet_balances::AccountData<u64>;
+	type AccountData = topsoil_balances::AccountData<u64>;
 }
 
-#[derive_impl(pallet_balances::config_preludes::TestDefaultConfig)]
-impl pallet_balances::Config for Test {
+#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
+impl topsoil_balances::Config for Test {
 	type AccountStore = System;
 }
 
@@ -65,15 +65,15 @@ parameter_types! {
 	pub const MaxMembers: u32 = 100;
 	pub MaxProposalWeight: Weight = soil_runtime::Perbill::from_percent(50) * BlockWeights::get().max_block;
 }
-type AllianceCollective = pallet_collective::Instance1;
-impl pallet_collective::Config<AllianceCollective> for Test {
+type AllianceCollective = topsoil_collective::Instance1;
+impl topsoil_collective::Config<AllianceCollective> for Test {
 	type RuntimeOrigin = RuntimeOrigin;
 	type Proposal = RuntimeCall;
 	type RuntimeEvent = RuntimeEvent;
 	type MotionDuration = MotionDuration;
 	type MaxProposals = MaxProposals;
 	type MaxMembers = MaxMembers;
-	type DefaultVote = pallet_collective::PrimeDefaultVote;
+	type DefaultVote = topsoil_collective::PrimeDefaultVote;
 	type WeightInfo = ();
 	type SetMembersOrigin = EnsureRoot<Self::AccountId>;
 	type MaxProposalWeight = MaxProposalWeight;
@@ -107,13 +107,13 @@ type EnsureTwoOrRoot = EitherOfDiverse<EnsureRoot<AccountId>, EnsureSignedBy<Two
 pub struct BenchmarkHelper;
 
 #[cfg(feature = "runtime-benchmarks")]
-impl pallet_identity::BenchmarkHelper<AccountU64, AccountU64> for BenchmarkHelper {
+impl topsoil_identity::BenchmarkHelper<AccountU64, AccountU64> for BenchmarkHelper {
 	fn sign_message(_message: &[u8]) -> (AccountU64, AccountU64) {
 		(AccountU64(0), AccountU64(0))
 	}
 }
 
-impl pallet_identity::Config for Test {
+impl topsoil_identity::Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type Currency = Balances;
 	type BasicDeposit = BasicDeposit;
@@ -211,7 +211,7 @@ impl ProposalProvider<AccountId, H256, RuntimeCall> for AllianceProposalProvider
 	}
 
 	fn proposal_of(proposal_hash: H256) -> Option<RuntimeCall> {
-		pallet_collective::ProposalOf::<Test, Instance1>::get(proposal_hash)
+		topsoil_collective::ProposalOf::<Test, Instance1>::get(proposal_hash)
 	}
 }
 
@@ -248,16 +248,16 @@ impl Config for Test {
 	type RetirementPeriod = RetirementPeriod;
 }
 
-type Block = frame_system::mocking::MockBlock<Test>;
+type Block = topsoil_system::mocking::MockBlock<Test>;
 
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub enum Test
 	{
-		System: frame_system,
-		Balances: pallet_balances,
-		Identity: pallet_identity,
-		AllianceMotion: pallet_collective::<Instance1>,
-		Alliance: pallet_alliance,
+		System: topsoil_system,
+		Balances: topsoil_balances,
+		Identity: topsoil_identity,
+		AllianceMotion: topsoil_collective::<Instance1>,
+		Alliance: topsoil_alliance,
 	}
 );
 
@@ -275,16 +275,16 @@ fn test_identity_info() -> IdentityInfo<MaxAdditionalFields> {
 	}
 }
 
-pub(super) fn test_identity_info_deposit() -> <Test as pallet_balances::Config>::Balance {
-	let basic_deposit: u64 = <Test as pallet_identity::Config>::BasicDeposit::get();
-	let byte_deposit: u64 = <Test as pallet_identity::Config>::ByteDeposit::get();
+pub(super) fn test_identity_info_deposit() -> <Test as topsoil_balances::Config>::Balance {
+	let basic_deposit: u64 = <Test as topsoil_identity::Config>::BasicDeposit::get();
+	let byte_deposit: u64 = <Test as topsoil_identity::Config>::ByteDeposit::get();
 	byte_deposit * test_identity_info().encoded_size() as u64 + basic_deposit
 }
 
 pub fn new_test_ext() -> soil_io::TestExternalities {
-	let mut t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 
-	pallet_balances::GenesisConfig::<Test> {
+	topsoil_balances::GenesisConfig::<Test> {
 		balances: vec![
 			(1, 1000),
 			(2, 1000),
@@ -301,7 +301,7 @@ pub fn new_test_ext() -> soil_io::TestExternalities {
 	.assimilate_storage(&mut t)
 	.unwrap();
 
-	pallet_alliance::GenesisConfig::<Test> {
+	topsoil_alliance::GenesisConfig::<Test> {
 		fellows: vec![],
 		allies: vec![],
 		phantom: Default::default(),
@@ -403,11 +403,11 @@ pub fn test_cid() -> Cid {
 }
 
 pub fn make_remark_proposal(value: u64) -> (RuntimeCall, u32, H256) {
-	make_proposal(RuntimeCall::System(frame_system::Call::remark { remark: value.encode() }))
+	make_proposal(RuntimeCall::System(topsoil_system::Call::remark { remark: value.encode() }))
 }
 
 pub fn make_kick_member_proposal(who: AccountId) -> (RuntimeCall, u32, H256) {
-	make_proposal(RuntimeCall::Alliance(pallet_alliance::Call::kick_member { who }))
+	make_proposal(RuntimeCall::Alliance(topsoil_alliance::Call::kick_member { who }))
 }
 
 pub fn make_proposal(proposal: RuntimeCall) -> (RuntimeCall, u32, H256) {

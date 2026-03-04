@@ -358,7 +358,7 @@ mod test_iterators {
 	#[should_panic]
 	fn map_translate_with_bad_key_in_debug_mode() {
 		soil_io::TestExternalities::default().execute_with(|| {
-			type Map = self::frame_system::Map<Runtime>;
+			type Map = self::topsoil_system::Map<Runtime>;
 			let prefix = Map::prefix_hash().to_vec();
 
 			// Wrong key
@@ -375,7 +375,7 @@ mod test_iterators {
 	#[should_panic]
 	fn map_translate_with_bad_value_in_debug_mode() {
 		soil_io::TestExternalities::default().execute_with(|| {
-			type Map = self::frame_system::Map<Runtime>;
+			type Map = self::topsoil_system::Map<Runtime>;
 			let prefix = Map::prefix_hash().to_vec();
 
 			// Wrong value
@@ -393,7 +393,7 @@ mod test_iterators {
 	#[test]
 	fn map_translate_with_bad_key_in_production_mode() {
 		soil_io::TestExternalities::default().execute_with(|| {
-			type Map = self::frame_system::Map<Runtime>;
+			type Map = self::topsoil_system::Map<Runtime>;
 			let prefix = Map::prefix_hash().to_vec();
 
 			// Wrong key
@@ -408,7 +408,7 @@ mod test_iterators {
 	#[test]
 	fn map_translate_with_bad_value_in_production_mode() {
 		soil_io::TestExternalities::default().execute_with(|| {
-			type Map = self::frame_system::Map<Runtime>;
+			type Map = self::topsoil_system::Map<Runtime>;
 			let prefix = Map::prefix_hash().to_vec();
 
 			// Wrong value
@@ -425,7 +425,7 @@ mod test_iterators {
 	#[test]
 	fn map_reversible_reversible_iteration() {
 		soil_io::TestExternalities::default().execute_with(|| {
-			type Map = self::frame_system::Map<Runtime>;
+			type Map = self::topsoil_system::Map<Runtime>;
 
 			// All map iterator
 			let prefix = Map::prefix_hash().to_vec();

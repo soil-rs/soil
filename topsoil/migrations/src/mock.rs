@@ -21,28 +21,28 @@
 
 use crate::{mock_helpers::*, Event, Historic};
 
-use frame_support::{derive_impl, migrations::*, weights::Weight};
-use frame_system::EventRecord;
+use topsoil_support::{derive_impl, migrations::*, weights::Weight};
+use topsoil_system::EventRecord;
 use soil_core::H256;
 
-type Block = frame_system::mocking::MockBlock<Test>;
+type Block = topsoil_system::mocking::MockBlock<Test>;
 
 // Configure a mock runtime to test the pallet.
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub enum Test {
-		System: frame_system,
+		System: topsoil_system,
 		Migrations: crate,
 	}
 );
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
 	type Block = Block;
 	type PalletInfo = PalletInfo;
 	type MultiBlockMigrator = Migrations;
 }
 
-frame_support::parameter_types! {
+topsoil_support::parameter_types! {
 	pub const MaxServiceWeight: Weight = Weight::MAX.div(10);
 }
 
@@ -56,7 +56,7 @@ impl crate::Config for Test {
 	type FailedMigrationHandler = MockedFailedMigrationHandler;
 }
 
-frame_support::parameter_types! {
+topsoil_support::parameter_types! {
 	/// The number of started upgrades.
 	pub static UpgradesStarted: u32 = 0;
 	/// The number of completed upgrades.
@@ -111,7 +111,7 @@ pub fn test_closure<R>(f: impl FnOnce() -> R) -> R {
 pub fn run_to_block(n: u64) {
 	System::run_to_block_with::<AllPalletsWithSystem>(
 		n,
-		frame_system::RunToBlockHooks::default()
+		topsoil_system::RunToBlockHooks::default()
 			.before_initialize(|bn| {
 				log::debug!("Block {bn}");
 			})
@@ -131,22 +131,22 @@ pub fn historic() -> Vec<MockedIdentifier> {
 
 // Traits to make using events less insufferable:
 pub trait IntoRecord {
-	fn into_record(self) -> EventRecord<<Test as frame_system::Config>::RuntimeEvent, H256>;
+	fn into_record(self) -> EventRecord<<Test as topsoil_system::Config>::RuntimeEvent, H256>;
 }
 
 impl IntoRecord for Event<Test> {
-	fn into_record(self) -> EventRecord<<Test as frame_system::Config>::RuntimeEvent, H256> {
-		let re: <Test as frame_system::Config>::RuntimeEvent = self.into();
-		EventRecord { phase: frame_system::Phase::Initialization, event: re, topics: vec![] }
+	fn into_record(self) -> EventRecord<<Test as topsoil_system::Config>::RuntimeEvent, H256> {
+		let re: <Test as topsoil_system::Config>::RuntimeEvent = self.into();
+		EventRecord { phase: topsoil_system::Phase::Initialization, event: re, topics: vec![] }
 	}
 }
 
 pub trait IntoRecords {
-	fn into_records(self) -> Vec<EventRecord<<Test as frame_system::Config>::RuntimeEvent, H256>>;
+	fn into_records(self) -> Vec<EventRecord<<Test as topsoil_system::Config>::RuntimeEvent, H256>>;
 }
 
 impl<E: IntoRecord> IntoRecords for Vec<E> {
-	fn into_records(self) -> Vec<EventRecord<<Test as frame_system::Config>::RuntimeEvent, H256>> {
+	fn into_records(self) -> Vec<EventRecord<<Test as topsoil_system::Config>::RuntimeEvent, H256>> {
 		self.into_iter().map(|e| e.into_record()).collect()
 	}
 }

@@ -20,22 +20,22 @@
 #![cfg(test)]
 
 use super::*;
-use crate as pallet_tx_pause;
-use frame::testing_prelude::*;
+use crate as topsoil_tx_pause;
+use topsoil::testing_prelude::*;
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
 	type BaseCallFilter = InsideBoth<Everything, TxPause>;
 	type Block = Block;
-	type AccountData = pallet_balances::AccountData<u64>;
+	type AccountData = topsoil_balances::AccountData<u64>;
 }
 
-#[derive_impl(pallet_balances::config_preludes::TestDefaultConfig)]
-impl pallet_balances::Config for Test {
+#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
+impl topsoil_balances::Config for Test {
 	type AccountStore = System;
 }
 
-impl pallet_utility::Config for Test {
+impl topsoil_utility::Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type RuntimeCall = RuntimeCall;
 	type PalletsOrigin = OriginCaller;
@@ -76,7 +76,7 @@ impl InstanceFilter<RuntimeCall> for ProxyType {
 			ProxyType::JustTransfer => {
 				matches!(
 					c,
-					RuntimeCall::Balances(pallet_balances::Call::transfer_allow_death { .. })
+					RuntimeCall::Balances(topsoil_balances::Call::transfer_allow_death { .. })
 				)
 			},
 			ProxyType::JustUtility => matches!(c, RuntimeCall::Utility { .. }),
@@ -87,7 +87,7 @@ impl InstanceFilter<RuntimeCall> for ProxyType {
 	}
 }
 
-impl pallet_proxy::Config for Test {
+impl topsoil_proxy::Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type RuntimeCall = RuntimeCall;
 	type Currency = Balances;
@@ -100,7 +100,7 @@ impl pallet_proxy::Config for Test {
 	type MaxPending = ConstU32<2>;
 	type AnnouncementDepositBase = ConstU64<1>;
 	type AnnouncementDepositFactor = ConstU64<1>;
-	type BlockNumberProvider = frame_system::Pallet<Test>;
+	type BlockNumberProvider = topsoil_system::Pallet<Test>;
 }
 
 parameter_types! {
@@ -133,23 +133,23 @@ impl Config for Test {
 	type WeightInfo = ();
 }
 
-type Block = frame_system::mocking::MockBlock<Test>;
+type Block = topsoil_system::mocking::MockBlock<Test>;
 
 construct_runtime!(
 	pub enum Test
 	{
-		System: frame_system,
-		Balances: pallet_balances,
-		Utility: pallet_utility,
-		Proxy: pallet_proxy,
-		TxPause: pallet_tx_pause,
+		System: topsoil_system,
+		Balances: topsoil_balances,
+		Utility: topsoil_utility,
+		Proxy: topsoil_proxy,
+		TxPause: topsoil_tx_pause,
 	}
 );
 
 pub fn new_test_ext() -> TestExternalities {
-	let mut t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 
-	pallet_balances::GenesisConfig::<Test> {
+	topsoil_balances::GenesisConfig::<Test> {
 		// The 0 account is NOT a special origin. The rest may be:
 		balances: vec![(0, 1234), (1, 5678), (2, 5678), (3, 5678), (4, 5678)],
 		..Default::default()
@@ -157,7 +157,7 @@ pub fn new_test_ext() -> TestExternalities {
 	.assimilate_storage(&mut t)
 	.unwrap();
 
-	pallet_tx_pause::GenesisConfig::<Test> { paused: vec![] }
+	topsoil_tx_pause::GenesisConfig::<Test> { paused: vec![] }
 		.assimilate_storage(&mut t)
 		.unwrap();
 

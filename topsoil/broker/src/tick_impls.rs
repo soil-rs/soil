@@ -17,7 +17,7 @@
 
 use super::*;
 use alloc::{vec, vec::Vec};
-use frame_support::{pallet_prelude::*, traits::defensive_prelude::*, weights::WeightMeter};
+use topsoil_support::{pallet_prelude::*, traits::defensive_prelude::*, weights::WeightMeter};
 use soil_arithmetic::traits::{One, SaturatedConversion, Saturating, Zero};
 use soil_runtime::traits::{BlockNumberProvider, ConvertBack, MaybeConvert};
 use CompletionStatus::Complete;
@@ -108,7 +108,7 @@ impl<T: Config> Pallet<T> {
 		}
 
 		log::debug!(
-			target: "pallet_broker::process_revenue",
+			target: "topsoil_broker::process_revenue",
 			"Received {amount:?} from RC, converted into {revenue:?} revenue",
 		);
 
@@ -131,7 +131,7 @@ impl<T: Config> Pallet<T> {
 		};
 
 		log::debug!(
-			target: "pallet_broker::process_revenue",
+			target: "topsoil_broker::process_revenue",
 			"Charged {system_payout:?} for system payouts, {revenue:?} remaining for private contributions",
 		);
 

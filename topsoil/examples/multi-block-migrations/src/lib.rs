@@ -20,7 +20,7 @@
 //! # Multi-Block Migrations Example Pallet
 //!
 //! This pallet serves as a minimal example of a pallet that uses the [Multi-Block Migrations
-//! Framework](frame_support::migrations). You can observe how to configure it in a runtime in the
+//! Framework](topsoil_support::migrations). You can observe how to configure it in a runtime in the
 //! `kitchensink-runtime` crate.
 //!
 //! ## Introduction and Purpose
@@ -28,7 +28,7 @@
 //! The primary purpose of this pallet is to demonstrate the concept of Multi-Block Migrations in
 //! Substrate. It showcases the migration of values from in the
 //! [`MyMap`](`pallet::MyMap`) storage map a `u32` to a `u64` data type using the
-//! [`SteppedMigration`](`frame_support::migrations::SteppedMigration`) implementation from the
+//! [`SteppedMigration`](`topsoil_support::migrations::SteppedMigration`) implementation from the
 //! [`migrations::v1`] module.
 //!
 //! The [`MyMap`](`pallet::MyMap`) storage item is defined in this `pallet`, and is
@@ -39,7 +39,7 @@
 //!
 //! To access and navigate this documentation in your browser, use the following command:
 //!
-//! - `cargo doc --package pallet-example-mbm --open`
+//! - `cargo doc --package topsoil-example-mbm --open`
 //!
 //! This documentation is organized to help you understand the pallet's components, features, and
 //! migration process.
@@ -71,15 +71,15 @@ mod mock;
 
 pub use pallet::*;
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
-	use frame_support::{pallet_prelude::StorageMap, Blake2_128Concat};
+	use topsoil_support::{pallet_prelude::StorageMap, Blake2_128Concat};
 
 	#[pallet::pallet]
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
-	pub trait Config: frame_system::Config {}
+	pub trait Config: topsoil_system::Config {}
 
 	/// Define a storage item to illustrate multi-block migrations.
 	#[pallet::storage]

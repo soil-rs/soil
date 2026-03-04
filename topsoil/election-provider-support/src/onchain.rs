@@ -26,8 +26,8 @@ use crate::{
 };
 use alloc::{collections::btree_map::BTreeMap, vec::Vec};
 use core::marker::PhantomData;
-use frame_support::{dispatch::DispatchClass, traits::Get};
-use frame_system::pallet_prelude::BlockNumberFor;
+use topsoil_support::{dispatch::DispatchClass, traits::Get};
+use topsoil_system::pallet_prelude::BlockNumberFor;
 use soil_npos_elections::{
 	assignment_ratio_to_staked_normalized, to_supports, ElectionResult, VoteWeight,
 };
@@ -69,11 +69,11 @@ pub trait Config {
 	type Sort: Get<bool>;
 
 	/// Needed for weight registration.
-	type System: frame_system::Config;
+	type System: topsoil_system::Config;
 
 	/// `NposSolver` that should be used, an example would be `PhragMMS`.
 	type Solver: NposSolver<
-		AccountId = <Self::System as frame_system::Config>::AccountId,
+		AccountId = <Self::System as topsoil_system::Config>::AccountId,
 		Error = soil_npos_elections::Error,
 	>;
 
@@ -91,8 +91,8 @@ pub trait Config {
 
 	/// Something that provides the data for election.
 	type DataProvider: ElectionDataProvider<
-		AccountId = <Self::System as frame_system::Config>::AccountId,
-		BlockNumber = frame_system::pallet_prelude::BlockNumberFor<Self::System>,
+		AccountId = <Self::System as topsoil_system::Config>::AccountId,
+		BlockNumber = topsoil_system::pallet_prelude::BlockNumberFor<Self::System>,
 	>;
 
 	/// Weight information for extrinsics in this pallet.
@@ -106,7 +106,7 @@ pub trait Config {
 impl<T: Config> OnChainExecution<T> {
 	fn elect_with_snapshot(
 		voters: Vec<VoterOf<T::DataProvider>>,
-		targets: Vec<<T::System as frame_system::Config>::AccountId>,
+		targets: Vec<<T::System as topsoil_system::Config>::AccountId>,
 		desired_targets: u32,
 	) -> Result<BoundedSupportsOf<Self>, Error> {
 		if (desired_targets > T::MaxWinnersPerPage::get()) && !T::Sort::get() {
@@ -122,7 +122,7 @@ impl<T: Config> OnChainExecution<T> {
 			.map(|(validator, vote_weight, _)| (validator.clone(), *vote_weight))
 			.collect();
 
-		let stake_of = |w: &<T::System as frame_system::Config>::AccountId| -> VoteWeight {
+		let stake_of = |w: &<T::System as topsoil_system::Config>::AccountId| -> VoteWeight {
 			stake_map.get(w).cloned().unwrap_or_default()
 		};
 
@@ -136,7 +136,7 @@ impl<T: Config> OnChainExecution<T> {
 			targets_len,
 			<T::DataProvider as ElectionDataProvider>::MaxVotesPerVoter::get(),
 		);
-		frame_system::Pallet::<T::System>::register_extra_weight_unchecked(
+		topsoil_system::Pallet::<T::System>::register_extra_weight_unchecked(
 			weight,
 			DispatchClass::Mandatory,
 		);
@@ -169,7 +169,7 @@ impl<T: Config> OnChainExecution<T> {
 impl<T: Config> InstantElectionProvider for OnChainExecution<T> {
 	fn instant_elect(
 		voters: Vec<VoterOf<T::DataProvider>>,
-		targets: Vec<<T::System as frame_system::Config>::AccountId>,
+		targets: Vec<<T::System as topsoil_system::Config>::AccountId>,
 		desired_targets: u32,
 	) -> Result<BoundedSupportsOf<Self>, Self::Error> {
 		Self::elect_with_snapshot(voters, targets, desired_targets)
@@ -181,7 +181,7 @@ impl<T: Config> InstantElectionProvider for OnChainExecution<T> {
 }
 
 impl<T: Config> ElectionProvider for OnChainExecution<T> {
-	type AccountId = <T::System as frame_system::Config>::AccountId;
+	type AccountId = <T::System as topsoil_system::Config>::AccountId;
 	type BlockNumber = BlockNumberFor<T::System>;
 	type Error = Error;
 	type MaxWinnersPerPage = T::MaxWinnersPerPage;
@@ -215,7 +215,7 @@ impl<T: Config> ElectionProvider for OnChainExecution<T> {
 mod tests {
 	use super::*;
 	use crate::{ElectionProvider, PhragMMS, SequentialPhragmen};
-	use frame_support::{assert_noop, derive_impl, parameter_types};
+	use topsoil_support::{assert_noop, derive_impl, parameter_types};
 	use soil_io::TestExternalities;
 	use soil_npos_elections::Support;
 	use soil_runtime::Perbill;
@@ -227,16 +227,16 @@ mod tests {
 	pub type UncheckedExtrinsic = soil_runtime::generic::UncheckedExtrinsic<AccountId, (), (), ()>;
 	pub type Block = soil_runtime::generic::Block<Header, UncheckedExtrinsic>;
 
-	frame_support::construct_runtime!(
+	topsoil_support::construct_runtime!(
 		pub enum Runtime {
-			System: frame_system,
+			System: topsoil_system,
 		}
 	);
 
-	#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-	impl frame_system::Config for Runtime {
+	#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+	impl topsoil_system::Config for Runtime {
 		type SS58Prefix = ();
-		type BaseCallFilter = frame_support::traits::Everything;
+		type BaseCallFilter = topsoil_support::traits::Everything;
 		type RuntimeOrigin = RuntimeOrigin;
 		type Nonce = Nonce;
 		type RuntimeCall = RuntimeCall;
@@ -257,7 +257,7 @@ mod tests {
 		type OnKilledAccount = ();
 		type SystemWeightInfo = ();
 		type OnSetCode = ();
-		type MaxConsumers = frame_support::traits::ConstU32<16>;
+		type MaxConsumers = topsoil_support::traits::ConstU32<16>;
 	}
 
 	struct PhragmenParams;
@@ -296,7 +296,7 @@ mod tests {
 	mod mock_data_provider {
 		use super::*;
 		use crate::{data_provider, DataProviderBounds, PageIndex, VoterOf};
-		use frame_support::traits::ConstU32;
+		use topsoil_support::traits::ConstU32;
 		use soil_runtime::bounded_vec;
 
 		pub struct DataProvider;

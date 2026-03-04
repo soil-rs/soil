@@ -22,36 +22,36 @@
 //!
 //! ## Pallets
 //!
-//! - [`pallet_example_basic`]: This pallet demonstrates concepts, APIs and structures common to
+//! - [`topsoil_example_basic`]: This pallet demonstrates concepts, APIs and structures common to
 //!   most FRAME runtimes.
 //!
-//! - [`pallet_example_offchain_worker`]: This pallet demonstrates concepts, APIs and structures
+//! - [`topsoil_example_offchain_worker`]: This pallet demonstrates concepts, APIs and structures
 //!   common to most offchain workers.
 //!
-//! - [`pallet_default_config_example`]: This pallet demonstrates different ways to implement the
+//! - [`topsoil_default_config_example`]: This pallet demonstrates different ways to implement the
 //!   `Config` trait of pallets.
 //!
-//! - [`pallet_dev_mode`]: This pallet demonstrates the ease of requirements for a pallet in "dev
+//! - [`topsoil_dev_mode`]: This pallet demonstrates the ease of requirements for a pallet in "dev
 //!   mode".
 //!
-//! - [`pallet_example_kitchensink`]: This pallet demonstrates a catalog of all FRAME macros in use
+//! - [`topsoil_example_kitchensink`]: This pallet demonstrates a catalog of all FRAME macros in use
 //!   and their various syntax options.
 //!
-//! - [`pallet_example_split`]: A simple example of a FRAME pallet demonstrating the ability to
+//! - [`topsoil_example_split`]: A simple example of a FRAME pallet demonstrating the ability to
 //!   split sections across multiple files.
 //!
-//! - [`pallet_example_frame_crate`]: Example pallet showcasing how one can be built using only the
+//! - [`topsoil_example_frame_crate`]: Example pallet showcasing how one can be built using only the
 //! `frame` umbrella crate.
 //!
-//! - [`pallet_example_single_block_migrations`]: An example pallet demonstrating best-practices for
+//! - [`topsoil_example_single_block_migrations`]: An example pallet demonstrating best-practices for
 //!   writing storage migrations.
 //!
-//! - [`pallet_example_tasks`]: This pallet demonstrates the use of `Tasks` to execute service work.
+//! - [`topsoil_example_tasks`]: This pallet demonstrates the use of `Tasks` to execute service work.
 //!
-//! - [`pallet_example_view_functions`]: This pallet demonstrates the use of view functions to query
+//! - [`topsoil_example_view_functions`]: This pallet demonstrates the use of view functions to query
 //!   pallet state.
 //!
-//! - [`pallet_example_authorization_tx_extension`]: An example `TransactionExtension` that
+//! - [`topsoil_example_authorization_tx_extension`]: An example `TransactionExtension` that
 //!   authorizes a custom origin through signature validation, along with two support pallets to
 //!   showcase the usage.
 //!

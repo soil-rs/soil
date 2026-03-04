@@ -20,16 +20,16 @@
 #![cfg(test)]
 
 use super::{Event as BountiesEvent, *};
-use crate as pallet_bounties;
+use crate as topsoil_bounties;
 use crate::mock::{Bounties, *};
 
-use frame_support::{
+use topsoil_support::{
 	assert_err_ignore_postinfo, assert_noop, assert_ok,
 	traits::{fungible::Mutate, Currency},
 };
 use soil_runtime::{traits::Dispatchable, TokenError};
 
-type UtilityCall = pallet_utility::Call<Test>;
+type UtilityCall = topsoil_utility::Call<Test>;
 type BountiesCall = crate::Call<Test>;
 
 #[docify::export]
@@ -63,7 +63,7 @@ fn fund_bounty_works() {
 			BountiesEvent::BountyCreated { index: parent_bounty_id },
 		]);
 		assert_eq!(
-			pallet_bounties::Bounties::<Test>::get(parent_bounty_id).unwrap(),
+			topsoil_bounties::Bounties::<Test>::get(parent_bounty_id).unwrap(),
 			Bounty {
 				asset_kind,
 				value,
@@ -74,10 +74,10 @@ fn fund_bounty_works() {
 				},
 			}
 		);
-		assert_eq!(pallet_bounties::BountyCount::<Test>::get(), 1);
+		assert_eq!(topsoil_bounties::BountyCount::<Test>::get(), 1);
 		assert!(Preimage::is_requested(&metadata));
 		assert_eq!(
-			pallet_bounties::CuratorDeposit::<Test>::get(parent_bounty_id, None::<BountyIndex>),
+			topsoil_bounties::CuratorDeposit::<Test>::get(parent_bounty_id, None::<BountyIndex>),
 			None
 		);
 	});
@@ -223,7 +223,7 @@ fn fund_bounty_fails() {
 		);
 
 		// When/Then
-		let invalid_metadata: <Test as frame_system::Config>::Hash = [1u8; 32].into();
+		let invalid_metadata: <Test as topsoil_system::Config>::Hash = [1u8; 32].into();
 		assert_noop!(
 			Bounties::fund_bounty(
 				RuntimeOrigin::root(),
@@ -266,7 +266,7 @@ fn fund_child_bounty_works() {
 			Some(s.child_curator),
 		));
 		s.child_bounty_id =
-			pallet_bounties::TotalChildBountiesPerParent::<Test>::get(s.parent_bounty_id) - 1;
+			topsoil_bounties::TotalChildBountiesPerParent::<Test>::get(s.parent_bounty_id) - 1;
 
 		// Then
 		let payment_id = get_payment_id(s.parent_bounty_id, Some(s.child_bounty_id))
@@ -287,7 +287,7 @@ fn fund_child_bounty_works() {
 			},
 		]);
 		assert_eq!(
-			pallet_bounties::ChildBounties::<Test>::get(s.parent_bounty_id, s.child_bounty_id)
+			topsoil_bounties::ChildBounties::<Test>::get(s.parent_bounty_id, s.child_bounty_id)
 				.unwrap(),
 			ChildBounty {
 				parent_bounty: s.parent_bounty_id,
@@ -300,17 +300,17 @@ fn fund_child_bounty_works() {
 			}
 		);
 		assert_eq!(
-			pallet_bounties::TotalChildBountiesPerParent::<Test>::get(s.parent_bounty_id),
+			topsoil_bounties::TotalChildBountiesPerParent::<Test>::get(s.parent_bounty_id),
 			1
 		);
-		assert_eq!(pallet_bounties::ChildBountiesPerParent::<Test>::get(s.parent_bounty_id), 1);
+		assert_eq!(topsoil_bounties::ChildBountiesPerParent::<Test>::get(s.parent_bounty_id), 1);
 		assert_eq!(
-			pallet_bounties::ChildBountiesValuePerParent::<Test>::get(s.parent_bounty_id),
+			topsoil_bounties::ChildBountiesValuePerParent::<Test>::get(s.parent_bounty_id),
 			s.child_value
 		);
 		assert!(Preimage::is_requested(&s.metadata));
 		assert_eq!(
-			pallet_bounties::CuratorDeposit::<Test>::get(
+			topsoil_bounties::CuratorDeposit::<Test>::get(
 				s.parent_bounty_id,
 				Some(s.child_bounty_id)
 			),
@@ -326,7 +326,7 @@ fn fund_child_bounty_works() {
 			None,
 		));
 		s.child_bounty_id =
-			pallet_bounties::TotalChildBountiesPerParent::<Test>::get(s.parent_bounty_id) - 1;
+			topsoil_bounties::TotalChildBountiesPerParent::<Test>::get(s.parent_bounty_id) - 1;
 
 		// Then
 		let payment_id = get_payment_id(s.parent_bounty_id, Some(s.child_bounty_id))
@@ -343,7 +343,7 @@ fn fund_child_bounty_works() {
 			},
 		]);
 		assert_eq!(
-			pallet_bounties::ChildBounties::<Test>::get(s.parent_bounty_id, s.child_bounty_id)
+			topsoil_bounties::ChildBounties::<Test>::get(s.parent_bounty_id, s.child_bounty_id)
 				.unwrap(),
 			ChildBounty {
 				parent_bounty: s.parent_bounty_id,
@@ -356,12 +356,12 @@ fn fund_child_bounty_works() {
 			}
 		);
 		assert_eq!(
-			pallet_bounties::CuratorDeposit::<Test>::get(s.parent_bounty_id, None::<BountyIndex>)
+			topsoil_bounties::CuratorDeposit::<Test>::get(s.parent_bounty_id, None::<BountyIndex>)
 				.unwrap(),
 			consideration(s.value)
 		);
 		assert_eq!(
-			pallet_bounties::CuratorDeposit::<Test>::get(
+			topsoil_bounties::CuratorDeposit::<Test>::get(
 				s.parent_bounty_id,
 				Some(s.child_bounty_id)
 			),
@@ -416,7 +416,7 @@ fn fund_child_bounty_fails() {
 		);
 
 		// When/Then
-		let invalid_metadata: <Test as frame_system::Config>::Hash = [1u8; 32].into();
+		let invalid_metadata: <Test as topsoil_system::Config>::Hash = [1u8; 32].into();
 		assert_noop!(
 			Bounties::fund_child_bounty(
 				RuntimeOrigin::signed(s.curator),
@@ -514,7 +514,7 @@ fn check_status_works() {
 			}
 		);
 		assert_eq!(
-			pallet_bounties::Bounties::<Test>::get(s.parent_bounty_id).unwrap(),
+			topsoil_bounties::Bounties::<Test>::get(s.parent_bounty_id).unwrap(),
 			Bounty {
 				asset_kind: s.asset_kind,
 				value: s.value,
@@ -526,7 +526,7 @@ fn check_status_works() {
 			}
 		);
 		assert_eq!(
-			pallet_bounties::CuratorDeposit::<Test>::get(s.parent_bounty_id, None::<BountyIndex>),
+			topsoil_bounties::CuratorDeposit::<Test>::get(s.parent_bounty_id, None::<BountyIndex>),
 			None
 		);
 
@@ -544,7 +544,7 @@ fn check_status_works() {
 			BountiesEvent::BountyFundingProcessed { index: s.parent_bounty_id, child_index: None }
 		);
 		assert_eq!(
-			pallet_bounties::Bounties::<Test>::get(s.parent_bounty_id).unwrap().status,
+			topsoil_bounties::Bounties::<Test>::get(s.parent_bounty_id).unwrap().status,
 			BountyStatus::Funded { curator: s.curator }
 		);
 
@@ -566,7 +566,7 @@ fn check_status_works() {
 			}
 		);
 		assert_eq!(
-			pallet_bounties::Bounties::<Test>::get(s.parent_bounty_id).unwrap().status,
+			topsoil_bounties::Bounties::<Test>::get(s.parent_bounty_id).unwrap().status,
 			BountyStatus::RefundAttempted {
 				curator: Some(s.curator),
 				payment_status: PaymentState::Failed
@@ -576,7 +576,7 @@ fn check_status_works() {
 		assert_eq!(Balances::free_balance(s.curator), Balances::minimum_balance());
 		assert_eq!(Balances::reserved_balance(s.curator), s.curator_deposit);
 		assert_eq!(
-			pallet_bounties::CuratorDeposit::<Test>::get(s.parent_bounty_id, None::<BountyIndex>)
+			topsoil_bounties::CuratorDeposit::<Test>::get(s.parent_bounty_id, None::<BountyIndex>)
 				.unwrap(),
 			consideration(s.value)
 		);
@@ -594,11 +594,11 @@ fn check_status_works() {
 			last_event(),
 			BountiesEvent::BountyRefundProcessed { index: s.parent_bounty_id, child_index: None }
 		);
-		assert_eq!(pallet_bounties::Bounties::<Test>::iter().count(), 4 - 1);
-		assert_eq!(pallet_bounties::Bounties::<Test>::get(s.parent_bounty_id), None);
-		assert_eq!(pallet_bounties::ChildBountiesPerParent::<Test>::get(s.parent_bounty_id), 0);
+		assert_eq!(topsoil_bounties::Bounties::<Test>::iter().count(), 4 - 1);
+		assert_eq!(topsoil_bounties::Bounties::<Test>::get(s.parent_bounty_id), None);
+		assert_eq!(topsoil_bounties::ChildBountiesPerParent::<Test>::get(s.parent_bounty_id), 0);
 		assert_eq!(
-			pallet_bounties::TotalChildBountiesPerParent::<Test>::get(s.parent_bounty_id),
+			topsoil_bounties::TotalChildBountiesPerParent::<Test>::get(s.parent_bounty_id),
 			0
 		);
 		assert!(!Preimage::is_requested(&s.metadata));
@@ -607,7 +607,7 @@ fn check_status_works() {
 			Balances::minimum_balance() + s.curator_deposit
 		); // initial
 		assert_eq!(
-			pallet_bounties::CuratorDeposit::<Test>::get(s.parent_bounty_id, None::<BountyIndex>),
+			topsoil_bounties::CuratorDeposit::<Test>::get(s.parent_bounty_id, None::<BountyIndex>),
 			None
 		);
 
@@ -626,7 +626,7 @@ fn check_status_works() {
 			payment_id,
 		}]);
 		assert_eq!(
-			pallet_bounties::Bounties::<Test>::get(s.parent_bounty_id).unwrap().status,
+			topsoil_bounties::Bounties::<Test>::get(s.parent_bounty_id).unwrap().status,
 			BountyStatus::PayoutAttempted {
 				curator: s.curator,
 				beneficiary: s.beneficiary,
@@ -636,7 +636,7 @@ fn check_status_works() {
 		assert!(Preimage::is_requested(&s.metadata));
 		assert_eq!(Balances::free_balance(s.curator), Balances::minimum_balance());
 		assert_eq!(
-			pallet_bounties::CuratorDeposit::<Test>::get(s.parent_bounty_id, None::<BountyIndex>)
+			topsoil_bounties::CuratorDeposit::<Test>::get(s.parent_bounty_id, None::<BountyIndex>)
 				.unwrap(),
 			consideration(s.value)
 		);
@@ -657,16 +657,16 @@ fn check_status_works() {
 			value: s.value,
 			beneficiary: s.beneficiary,
 		}]);
-		assert_eq!(pallet_bounties::Bounties::<Test>::iter().count(), 6 - 1 - 1);
-		assert_eq!(pallet_bounties::Bounties::<Test>::get(s.parent_bounty_id), None);
-		assert_eq!(pallet_bounties::ChildBountiesPerParent::<Test>::get(s.parent_bounty_id), 0);
+		assert_eq!(topsoil_bounties::Bounties::<Test>::iter().count(), 6 - 1 - 1);
+		assert_eq!(topsoil_bounties::Bounties::<Test>::get(s.parent_bounty_id), None);
+		assert_eq!(topsoil_bounties::ChildBountiesPerParent::<Test>::get(s.parent_bounty_id), 0);
 		assert_eq!(
-			pallet_bounties::TotalChildBountiesPerParent::<Test>::get(s.parent_bounty_id),
+			topsoil_bounties::TotalChildBountiesPerParent::<Test>::get(s.parent_bounty_id),
 			0
 		);
 		assert!(!Preimage::is_requested(&s.metadata));
 		assert_eq!(
-			pallet_bounties::CuratorDeposit::<Test>::get(s.parent_bounty_id, None::<BountyIndex>),
+			topsoil_bounties::CuratorDeposit::<Test>::get(s.parent_bounty_id, None::<BountyIndex>),
 			None
 		);
 		assert_eq!(
@@ -697,7 +697,7 @@ fn check_status_works() {
 			}
 		);
 		assert_eq!(
-			pallet_bounties::ChildBounties::<Test>::get(s.parent_bounty_id, s.child_bounty_id)
+			topsoil_bounties::ChildBounties::<Test>::get(s.parent_bounty_id, s.child_bounty_id)
 				.unwrap(),
 			ChildBounty {
 				parent_bounty: s.parent_bounty_id,
@@ -710,7 +710,7 @@ fn check_status_works() {
 			}
 		);
 		assert_eq!(
-			pallet_bounties::CuratorDeposit::<Test>::get(
+			topsoil_bounties::CuratorDeposit::<Test>::get(
 				s.parent_bounty_id,
 				Some(s.child_bounty_id)
 			),
@@ -739,13 +739,13 @@ fn check_status_works() {
 			}
 		);
 		assert_eq!(
-			pallet_bounties::ChildBounties::<Test>::get(s.parent_bounty_id, s.child_bounty_id)
+			topsoil_bounties::ChildBounties::<Test>::get(s.parent_bounty_id, s.child_bounty_id)
 				.unwrap()
 				.status,
 			BountyStatus::Funded { curator: s.child_curator },
 		);
 		assert_eq!(
-			pallet_bounties::ChildBounties::<Test>::iter_prefix(s.parent_bounty_id).count(),
+			topsoil_bounties::ChildBounties::<Test>::iter_prefix(s.parent_bounty_id).count(),
 			1
 		);
 
@@ -772,7 +772,7 @@ fn check_status_works() {
 			}
 		);
 		assert_eq!(
-			pallet_bounties::ChildBounties::<Test>::get(s.parent_bounty_id, s.child_bounty_id)
+			topsoil_bounties::ChildBounties::<Test>::get(s.parent_bounty_id, s.child_bounty_id)
 				.unwrap()
 				.status,
 			BountyStatus::RefundAttempted {
@@ -781,16 +781,16 @@ fn check_status_works() {
 			},
 		);
 		assert_eq!(
-			pallet_bounties::ChildBountiesValuePerParent::<Test>::get(s.parent_bounty_id),
+			topsoil_bounties::ChildBountiesValuePerParent::<Test>::get(s.parent_bounty_id),
 			s.child_value
 		);
 		assert_eq!(
-			pallet_bounties::ChildBounties::<Test>::iter_prefix(s.parent_bounty_id).count(),
+			topsoil_bounties::ChildBounties::<Test>::iter_prefix(s.parent_bounty_id).count(),
 			1
 		);
 		assert!(Preimage::is_requested(&s.metadata));
 		assert_eq!(
-			pallet_bounties::CuratorDeposit::<Test>::get(
+			topsoil_bounties::CuratorDeposit::<Test>::get(
 				s.parent_bounty_id,
 				Some(s.child_bounty_id)
 			)
@@ -821,24 +821,24 @@ fn check_status_works() {
 			}
 		);
 		assert_eq!(
-			pallet_bounties::ChildBounties::<Test>::get(s.parent_bounty_id, s.child_bounty_id),
+			topsoil_bounties::ChildBounties::<Test>::get(s.parent_bounty_id, s.child_bounty_id),
 			None
 		);
-		assert_eq!(pallet_bounties::ChildBountiesPerParent::<Test>::get(s.parent_bounty_id), 0);
+		assert_eq!(topsoil_bounties::ChildBountiesPerParent::<Test>::get(s.parent_bounty_id), 0);
 		assert_eq!(
-			pallet_bounties::TotalChildBountiesPerParent::<Test>::get(s.parent_bounty_id),
+			topsoil_bounties::TotalChildBountiesPerParent::<Test>::get(s.parent_bounty_id),
 			1
 		);
 		assert_eq!(
-			pallet_bounties::ChildBountiesValuePerParent::<Test>::get(s.parent_bounty_id),
+			topsoil_bounties::ChildBountiesValuePerParent::<Test>::get(s.parent_bounty_id),
 			0
 		);
 		assert_eq!(
-			pallet_bounties::ChildBounties::<Test>::iter_prefix(s.parent_bounty_id).count(),
+			topsoil_bounties::ChildBounties::<Test>::iter_prefix(s.parent_bounty_id).count(),
 			0
 		);
 		assert_eq!(
-			pallet_bounties::CuratorDeposit::<Test>::get(
+			topsoil_bounties::CuratorDeposit::<Test>::get(
 				s.parent_bounty_id,
 				Some(s.child_bounty_id)
 			),
@@ -912,21 +912,21 @@ fn check_status_works() {
 			beneficiary: s.child_beneficiary,
 		}]);
 		assert_eq!(
-			pallet_bounties::ChildBounties::<Test>::iter_prefix(s.parent_bounty_id).count(),
+			topsoil_bounties::ChildBounties::<Test>::iter_prefix(s.parent_bounty_id).count(),
 			0
 		);
 		assert_eq!(
-			pallet_bounties::ChildBounties::<Test>::get(s.parent_bounty_id, s.child_bounty_id),
+			topsoil_bounties::ChildBounties::<Test>::get(s.parent_bounty_id, s.child_bounty_id),
 			None
 		);
 		assert!(Preimage::is_requested(&s.metadata)); // still requested by parent bounty
-		assert_eq!(pallet_bounties::ChildBountiesPerParent::<Test>::get(s.parent_bounty_id), 0);
+		assert_eq!(topsoil_bounties::ChildBountiesPerParent::<Test>::get(s.parent_bounty_id), 0);
 		assert_eq!(
-			pallet_bounties::TotalChildBountiesPerParent::<Test>::get(s.parent_bounty_id),
+			topsoil_bounties::TotalChildBountiesPerParent::<Test>::get(s.parent_bounty_id),
 			1
 		);
 		assert_eq!(
-			pallet_bounties::ChildBountiesValuePerParent::<Test>::get(s.parent_bounty_id),
+			topsoil_bounties::ChildBountiesValuePerParent::<Test>::get(s.parent_bounty_id),
 			s.child_value
 		);
 		assert_eq!(
@@ -949,7 +949,7 @@ fn check_status_works() {
 
 		// Then
 		assert_eq!(
-			pallet_bounties::ChildBountiesValuePerParent::<Test>::get(s.parent_bounty_id),
+			topsoil_bounties::ChildBountiesValuePerParent::<Test>::get(s.parent_bounty_id),
 			0
 		);
 		assert!(!Preimage::is_requested(&s.metadata)); // no longer requested
@@ -1034,7 +1034,7 @@ fn retry_payment_works() {
 			BountiesEvent::Paid { index: s.parent_bounty_id, child_index: None, payment_id }
 		);
 		assert_eq!(
-			pallet_bounties::Bounties::<Test>::get(s.parent_bounty_id).unwrap(),
+			topsoil_bounties::Bounties::<Test>::get(s.parent_bounty_id).unwrap(),
 			Bounty {
 				asset_kind: s.asset_kind,
 				value: s.value,
@@ -1046,7 +1046,7 @@ fn retry_payment_works() {
 			}
 		);
 		assert_eq!(
-			pallet_bounties::CuratorDeposit::<Test>::get(s.parent_bounty_id, None::<BountyIndex>),
+			topsoil_bounties::CuratorDeposit::<Test>::get(s.parent_bounty_id, None::<BountyIndex>),
 			None
 		);
 
@@ -1067,7 +1067,7 @@ fn retry_payment_works() {
 			BountiesEvent::Paid { index: s.parent_bounty_id, child_index: None, payment_id }
 		);
 		assert_eq!(
-			pallet_bounties::Bounties::<Test>::get(s.parent_bounty_id).unwrap().status,
+			topsoil_bounties::Bounties::<Test>::get(s.parent_bounty_id).unwrap().status,
 			BountyStatus::RefundAttempted {
 				curator: Some(s.curator),
 				payment_status: PaymentState::Attempted { id: payment_id }
@@ -1089,7 +1089,7 @@ fn retry_payment_works() {
 			BountiesEvent::Paid { index: s.parent_bounty_id, child_index: None, payment_id }
 		);
 		assert_eq!(
-			pallet_bounties::Bounties::<Test>::get(s.parent_bounty_id).unwrap().status,
+			topsoil_bounties::Bounties::<Test>::get(s.parent_bounty_id).unwrap().status,
 			BountyStatus::PayoutAttempted {
 				curator: s.curator,
 				beneficiary: s.beneficiary,
@@ -1130,7 +1130,7 @@ fn retry_payment_works() {
 			}
 		);
 		assert_eq!(
-			pallet_bounties::ChildBounties::<Test>::get(s.parent_bounty_id, s.child_bounty_id)
+			topsoil_bounties::ChildBounties::<Test>::get(s.parent_bounty_id, s.child_bounty_id)
 				.unwrap(),
 			ChildBounty {
 				parent_bounty: s.parent_bounty_id,
@@ -1143,7 +1143,7 @@ fn retry_payment_works() {
 			}
 		);
 		assert_eq!(
-			pallet_bounties::CuratorDeposit::<Test>::get(
+			topsoil_bounties::CuratorDeposit::<Test>::get(
 				s.parent_bounty_id,
 				Some(s.child_bounty_id)
 			),
@@ -1185,7 +1185,7 @@ fn retry_payment_works() {
 			}
 		);
 		assert_eq!(
-			pallet_bounties::ChildBounties::<Test>::get(s.parent_bounty_id, s.child_bounty_id)
+			topsoil_bounties::ChildBounties::<Test>::get(s.parent_bounty_id, s.child_bounty_id)
 				.unwrap()
 				.status,
 			BountyStatus::RefundAttempted {
@@ -1221,7 +1221,7 @@ fn retry_payment_works() {
 			payment_id,
 		}]);
 		assert_eq!(
-			pallet_bounties::ChildBounties::<Test>::get(s.parent_bounty_id, s.child_bounty_id)
+			topsoil_bounties::ChildBounties::<Test>::get(s.parent_bounty_id, s.child_bounty_id)
 				.unwrap()
 				.status,
 			BountyStatus::PayoutAttempted {
@@ -1329,7 +1329,7 @@ fn accept_curator_works() {
 
 		// Then
 		assert_eq!(
-			pallet_bounties::Bounties::<Test>::get(s.parent_bounty_id).unwrap(),
+			topsoil_bounties::Bounties::<Test>::get(s.parent_bounty_id).unwrap(),
 			Bounty {
 				asset_kind: s.asset_kind,
 				value: s.value,
@@ -1338,7 +1338,7 @@ fn accept_curator_works() {
 			}
 		);
 		assert_eq!(
-			pallet_bounties::CuratorDeposit::<Test>::get(s.parent_bounty_id, None::<BountyIndex>)
+			topsoil_bounties::CuratorDeposit::<Test>::get(s.parent_bounty_id, None::<BountyIndex>)
 				.unwrap(),
 			consideration(s.value)
 		);
@@ -1356,7 +1356,7 @@ fn accept_curator_works() {
 
 		// Then
 		assert_eq!(
-			pallet_bounties::ChildBounties::<Test>::get(s.parent_bounty_id, s.child_bounty_id)
+			topsoil_bounties::ChildBounties::<Test>::get(s.parent_bounty_id, s.child_bounty_id)
 				.unwrap(),
 			ChildBounty {
 				parent_bounty: s.parent_bounty_id,
@@ -1366,7 +1366,7 @@ fn accept_curator_works() {
 			}
 		);
 		assert_eq!(
-			pallet_bounties::CuratorDeposit::<Test>::get(
+			topsoil_bounties::CuratorDeposit::<Test>::get(
 				s.parent_bounty_id,
 				Some(s.child_bounty_id)
 			)
@@ -1385,7 +1385,7 @@ fn accept_curator_works() {
 			Some(s.child_curator),
 		));
 		let child_bounty_id =
-			pallet_bounties::TotalChildBountiesPerParent::<Test>::get(s.parent_bounty_id) - 1;
+			topsoil_bounties::TotalChildBountiesPerParent::<Test>::get(s.parent_bounty_id) - 1;
 		let child_bounty_account =
 			Bounties::child_bounty_account(s.parent_bounty_id, child_bounty_id, s.asset_kind)
 				.expect("conversion failed");
@@ -1404,7 +1404,7 @@ fn accept_curator_works() {
 			Some(child_bounty_id),
 		));
 		assert_eq!(
-			pallet_bounties::CuratorDeposit::<Test>::get(
+			topsoil_bounties::CuratorDeposit::<Test>::get(
 				s.parent_bounty_id,
 				Some(s.child_bounty_id)
 			)
@@ -1587,7 +1587,7 @@ fn unassign_curator_works() {
 			child_index: None,
 		}]);
 		assert_eq!(
-			pallet_bounties::Bounties::<Test>::get(s.parent_bounty_id).unwrap(),
+			topsoil_bounties::Bounties::<Test>::get(s.parent_bounty_id).unwrap(),
 			Bounty {
 				asset_kind: s.asset_kind,
 				value: s.value,
@@ -1596,7 +1596,7 @@ fn unassign_curator_works() {
 			}
 		);
 		assert_eq!(
-			pallet_bounties::CuratorDeposit::<Test>::get(s.parent_bounty_id, None::<BountyIndex>),
+			topsoil_bounties::CuratorDeposit::<Test>::get(s.parent_bounty_id, None::<BountyIndex>),
 			None
 		);
 		assert_eq!(
@@ -1657,7 +1657,7 @@ fn unassign_curator_works() {
 			child_index: Some(s.child_bounty_id),
 		}]);
 		assert_eq!(
-			pallet_bounties::ChildBounties::<Test>::get(s.parent_bounty_id, s.child_bounty_id)
+			topsoil_bounties::ChildBounties::<Test>::get(s.parent_bounty_id, s.child_bounty_id)
 				.unwrap(),
 			ChildBounty {
 				parent_bounty: s.parent_bounty_id,
@@ -1667,7 +1667,7 @@ fn unassign_curator_works() {
 			}
 		);
 		assert_eq!(
-			pallet_bounties::CuratorDeposit::<Test>::get(
+			topsoil_bounties::CuratorDeposit::<Test>::get(
 				s.parent_bounty_id,
 				Some(s.child_bounty_id)
 			),
@@ -1806,7 +1806,7 @@ fn propose_curator_works() {
 			}
 		);
 		assert_eq!(
-			pallet_bounties::Bounties::<Test>::get(s.parent_bounty_id).unwrap(),
+			topsoil_bounties::Bounties::<Test>::get(s.parent_bounty_id).unwrap(),
 			Bounty {
 				asset_kind: s.asset_kind,
 				value: s.value,
@@ -1815,7 +1815,7 @@ fn propose_curator_works() {
 			}
 		);
 		assert_eq!(
-			pallet_bounties::CuratorDeposit::<Test>::get(s.parent_bounty_id, None::<BountyIndex>),
+			topsoil_bounties::CuratorDeposit::<Test>::get(s.parent_bounty_id, None::<BountyIndex>),
 			None
 		);
 
@@ -1840,7 +1840,7 @@ fn propose_curator_works() {
 			}
 		);
 		assert_eq!(
-			pallet_bounties::ChildBounties::<Test>::get(s.parent_bounty_id, s.child_bounty_id)
+			topsoil_bounties::ChildBounties::<Test>::get(s.parent_bounty_id, s.child_bounty_id)
 				.unwrap(),
 			ChildBounty {
 				parent_bounty: s.parent_bounty_id,
@@ -1850,7 +1850,7 @@ fn propose_curator_works() {
 			}
 		);
 		assert_eq!(
-			pallet_bounties::CuratorDeposit::<Test>::get(
+			topsoil_bounties::CuratorDeposit::<Test>::get(
 				s.parent_bounty_id,
 				Some(s.child_bounty_id)
 			),
@@ -1987,7 +1987,7 @@ fn award_bounty_works() {
 		// Then
 		let payment_id = get_payment_id(s.parent_bounty_id, None).expect("no payment attempt");
 		assert_eq!(
-			pallet_bounties::Bounties::<Test>::get(s.parent_bounty_id).unwrap(),
+			topsoil_bounties::Bounties::<Test>::get(s.parent_bounty_id).unwrap(),
 			Bounty {
 				asset_kind: s.asset_kind,
 				value: s.value,
@@ -2000,7 +2000,7 @@ fn award_bounty_works() {
 			}
 		);
 		assert_eq!(
-			pallet_bounties::CuratorDeposit::<Test>::get(s.parent_bounty_id, None::<BountyIndex>)
+			topsoil_bounties::CuratorDeposit::<Test>::get(s.parent_bounty_id, None::<BountyIndex>)
 				.unwrap(),
 			consideration(s.value)
 		);
@@ -2029,7 +2029,7 @@ fn award_bounty_works() {
 		let payment_id = get_payment_id(s.parent_bounty_id, Some(s.child_bounty_id))
 			.expect("no payment attempt");
 		assert_eq!(
-			pallet_bounties::ChildBounties::<Test>::get(s.parent_bounty_id, s.child_bounty_id)
+			topsoil_bounties::ChildBounties::<Test>::get(s.parent_bounty_id, s.child_bounty_id)
 				.unwrap(),
 			ChildBounty {
 				parent_bounty: s.parent_bounty_id,
@@ -2043,7 +2043,7 @@ fn award_bounty_works() {
 			}
 		);
 		assert_eq!(
-			pallet_bounties::CuratorDeposit::<Test>::get(
+			topsoil_bounties::CuratorDeposit::<Test>::get(
 				s.parent_bounty_id,
 				Some(s.child_bounty_id)
 			)
@@ -2134,7 +2134,7 @@ fn close_bounty_works() {
 			BountiesEvent::BountyCanceled { index: s.parent_bounty_id, child_index: None }
 		);
 		assert_eq!(
-			pallet_bounties::Bounties::<Test>::get(s.parent_bounty_id).unwrap(),
+			topsoil_bounties::Bounties::<Test>::get(s.parent_bounty_id).unwrap(),
 			Bounty {
 				asset_kind: s.asset_kind,
 				value: s.value,
@@ -2146,7 +2146,7 @@ fn close_bounty_works() {
 			}
 		);
 		assert_eq!(
-			pallet_bounties::CuratorDeposit::<Test>::get(s.parent_bounty_id, None::<BountyIndex>),
+			topsoil_bounties::CuratorDeposit::<Test>::get(s.parent_bounty_id, None::<BountyIndex>),
 			None
 		);
 
@@ -2163,7 +2163,7 @@ fn close_bounty_works() {
 		// Then
 		let payment_id = get_payment_id(s.parent_bounty_id, None).expect("no payment attempt");
 		assert_eq!(
-			pallet_bounties::Bounties::<Test>::get(s.parent_bounty_id).unwrap().status,
+			topsoil_bounties::Bounties::<Test>::get(s.parent_bounty_id).unwrap().status,
 			BountyStatus::RefundAttempted {
 				curator: Some(s.curator),
 				payment_status: PaymentState::Attempted { id: payment_id }
@@ -2179,7 +2179,7 @@ fn close_bounty_works() {
 		// Then
 		let payment_id = get_payment_id(s.parent_bounty_id, None).expect("no payment attempt");
 		assert_eq!(
-			pallet_bounties::Bounties::<Test>::get(s.parent_bounty_id).unwrap().status,
+			topsoil_bounties::Bounties::<Test>::get(s.parent_bounty_id).unwrap().status,
 			BountyStatus::RefundAttempted {
 				curator: None,
 				payment_status: PaymentState::Attempted { id: payment_id }
@@ -2207,7 +2207,7 @@ fn close_bounty_works() {
 			}
 		);
 		assert_eq!(
-			pallet_bounties::ChildBounties::<Test>::get(s.parent_bounty_id, s.child_bounty_id)
+			topsoil_bounties::ChildBounties::<Test>::get(s.parent_bounty_id, s.child_bounty_id)
 				.unwrap(),
 			ChildBounty {
 				parent_bounty: s.parent_bounty_id,
@@ -2220,7 +2220,7 @@ fn close_bounty_works() {
 			}
 		);
 		assert_eq!(
-			pallet_bounties::CuratorDeposit::<Test>::get(
+			topsoil_bounties::CuratorDeposit::<Test>::get(
 				s.parent_bounty_id,
 				Some(s.child_bounty_id)
 			),
@@ -2241,7 +2241,7 @@ fn close_bounty_works() {
 		let payment_id = get_payment_id(s.parent_bounty_id, Some(s.child_bounty_id))
 			.expect("no payment attempt");
 		assert_eq!(
-			pallet_bounties::ChildBounties::<Test>::get(s.parent_bounty_id, s.child_bounty_id)
+			topsoil_bounties::ChildBounties::<Test>::get(s.parent_bounty_id, s.child_bounty_id)
 				.unwrap()
 				.status,
 			BountyStatus::RefundAttempted {
@@ -2264,7 +2264,7 @@ fn close_bounty_works() {
 		let payment_id = get_payment_id(s.parent_bounty_id, Some(s.child_bounty_id))
 			.expect("no payment attempt");
 		assert_eq!(
-			pallet_bounties::ChildBounties::<Test>::get(s.parent_bounty_id, s.child_bounty_id)
+			topsoil_bounties::ChildBounties::<Test>::get(s.parent_bounty_id, s.child_bounty_id)
 				.unwrap()
 				.status,
 			BountyStatus::RefundAttempted {
@@ -2287,7 +2287,7 @@ fn close_bounty_works() {
 		let payment_id = get_payment_id(s.parent_bounty_id, Some(s.child_bounty_id))
 			.expect("no payment attempt");
 		assert_eq!(
-			pallet_bounties::ChildBounties::<Test>::get(s.parent_bounty_id, s.child_bounty_id)
+			topsoil_bounties::ChildBounties::<Test>::get(s.parent_bounty_id, s.child_bounty_id)
 				.unwrap()
 				.status,
 			BountyStatus::RefundAttempted {
@@ -2426,9 +2426,9 @@ fn close_parent_with_child_bounty() {
 			s.asset_kind,
 			s.value + s.child_value, // parent bounty value + child bounty value
 		);
-		assert_eq!(pallet_bounties::ChildBountiesPerParent::<Test>::get(s.parent_bounty_id), 0);
+		assert_eq!(topsoil_bounties::ChildBountiesPerParent::<Test>::get(s.parent_bounty_id), 0);
 		assert_eq!(
-			pallet_bounties::TotalChildBountiesPerParent::<Test>::get(s.parent_bounty_id),
+			topsoil_bounties::TotalChildBountiesPerParent::<Test>::get(s.parent_bounty_id),
 			1
 		);
 
@@ -2440,7 +2440,7 @@ fn close_parent_with_child_bounty() {
 
 		// Then
 		assert_eq!(
-			pallet_bounties::TotalChildBountiesPerParent::<Test>::get(s.parent_bounty_id),
+			topsoil_bounties::TotalChildBountiesPerParent::<Test>::get(s.parent_bounty_id),
 			0
 		);
 	});
@@ -2494,20 +2494,20 @@ fn fund_and_award_child_bounty_without_curator_works() {
 			beneficiary: s.child_beneficiary,
 		}]);
 		assert_eq!(
-			pallet_bounties::ChildBounties::<Test>::iter_prefix(s.parent_bounty_id).count(),
+			topsoil_bounties::ChildBounties::<Test>::iter_prefix(s.parent_bounty_id).count(),
 			0
 		);
 		assert_eq!(
-			pallet_bounties::ChildBounties::<Test>::get(s.parent_bounty_id, s.child_bounty_id),
+			topsoil_bounties::ChildBounties::<Test>::get(s.parent_bounty_id, s.child_bounty_id),
 			None
 		);
-		assert_eq!(pallet_bounties::ChildBountiesPerParent::<Test>::get(s.parent_bounty_id), 0);
+		assert_eq!(topsoil_bounties::ChildBountiesPerParent::<Test>::get(s.parent_bounty_id), 0);
 		assert_eq!(
-			pallet_bounties::TotalChildBountiesPerParent::<Test>::get(s.parent_bounty_id),
+			topsoil_bounties::TotalChildBountiesPerParent::<Test>::get(s.parent_bounty_id),
 			1
 		);
 		assert_eq!(
-			pallet_bounties::ChildBountiesValuePerParent::<Test>::get(s.parent_bounty_id),
+			topsoil_bounties::ChildBountiesValuePerParent::<Test>::get(s.parent_bounty_id),
 			s.child_value
 		);
 		assert_eq!(

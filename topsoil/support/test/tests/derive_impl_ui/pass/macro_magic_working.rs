@@ -15,7 +15,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#[frame_support::macro_magic::export_tokens]
+#[topsoil_support::macro_magic::export_tokens]
 struct MyCoolStruct {
 	field: u32,
 }

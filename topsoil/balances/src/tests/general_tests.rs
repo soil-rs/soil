@@ -24,7 +24,7 @@ use crate::{
 	},
 	AccountData, ExtraFlags, TotalIssuance,
 };
-use frame_support::{
+use topsoil_support::{
 	assert_noop, assert_ok, hypothetically,
 	traits::{
 		fungible::{Mutate, MutateHold},
@@ -116,7 +116,7 @@ fn regression_historic_acc_does_not_evaporate_reserve() {
 #[test]
 fn try_state_works() {
 	use crate::{Config, Freezes, Holds};
-	use frame_support::{
+	use topsoil_support::{
 		storage,
 		traits::{Get, Hooks, VariantCount},
 	};

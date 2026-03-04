@@ -21,7 +21,7 @@
 //! are expected to be removed in the near future, once migration to `fungible::*` traits is done.
 
 use super::*;
-use frame_support::{
+use topsoil_support::{
 	ensure,
 	pallet_prelude::DispatchResult,
 	traits::{
@@ -32,7 +32,7 @@ use frame_support::{
 		NamedReservableCurrency, ReservableCurrency, SignedImbalance, TryDrop, WithdrawReasons,
 	},
 };
-use frame_system::pallet_prelude::BlockNumberFor;
+use topsoil_system::pallet_prelude::BlockNumberFor;
 pub use imbalances::{NegativeImbalance, PositiveImbalance};
 use soil_runtime::traits::Bounded;
 
@@ -42,7 +42,7 @@ mod imbalances {
 	use super::*;
 	use alloc::boxed::Box;
 	use core::mem;
-	use frame_support::traits::{
+	use topsoil_support::traits::{
 		tokens::imbalance::{
 			ImbalanceAccounting, TryMerge, UnsafeConstructorDestructor, UnsafeManualAccounting,
 		},

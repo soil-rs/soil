@@ -19,7 +19,7 @@
 
 use super::*;
 use crate::mock::*;
-use frame::testing_prelude::*;
+use topsoil::testing_prelude::*;
 
 #[test]
 fn add_well_known_node_works() {

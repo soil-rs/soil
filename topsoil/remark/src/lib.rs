@@ -36,17 +36,17 @@ use alloc::vec::Vec;
 pub use pallet::*;
 pub use weights::WeightInfo;
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
-	use frame_support::pallet_prelude::*;
-	use frame_system::pallet_prelude::*;
+	use topsoil_support::pallet_prelude::*;
+	use topsoil_system::pallet_prelude::*;
 
 	#[pallet::config]
-	pub trait Config: frame_system::Config {
+	pub trait Config: topsoil_system::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 		/// Weight information for extrinsics in this pallet.
 		type WeightInfo: WeightInfo;
 	}
@@ -71,7 +71,7 @@ pub mod pallet {
 			ensure!(!remark.is_empty(), Error::<T>::Empty);
 			let sender = ensure_signed(origin)?;
 			let content_hash = soil_io::hashing::blake2_256(&remark);
-			let extrinsic_index = <frame_system::Pallet<T>>::extrinsic_index()
+			let extrinsic_index = <topsoil_system::Pallet<T>>::extrinsic_index()
 				.ok_or_else(|| Error::<T>::BadContext)?;
 			soil_io::transaction_index::index(extrinsic_index, remark.len() as u32, content_hash);
 			Self::deposit_event(Event::Stored { sender, content_hash: content_hash.into() });

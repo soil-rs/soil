@@ -24,14 +24,14 @@ use crate::{
 };
 use alloc::{boxed::Box, vec::Vec};
 use codec::Encode;
-use frame_election_provider_support::{NposSolution, NposSolver, PerThing128, VoteWeight};
-use frame_support::{
+use topsoil_election_provider_support::{NposSolution, NposSolver, PerThing128, VoteWeight};
+use topsoil_support::{
 	dispatch::DispatchResult,
 	ensure,
 	traits::{DefensiveResult, Get},
 	BoundedVec,
 };
-use frame_system::{
+use topsoil_system::{
 	offchain::{CreateBare, SubmitTransaction},
 	pallet_prelude::BlockNumberFor,
 };
@@ -55,26 +55,26 @@ pub(crate) const OFFCHAIN_CACHED_CALL: &[u8] = b"parity/multi-phase-unsigned-ele
 
 /// A voter's fundamental data: their ID, their stake, and the list of candidates for whom they
 /// voted.
-pub type VoterOf<T> = frame_election_provider_support::VoterOf<<T as Config>::DataProvider>;
+pub type VoterOf<T> = topsoil_election_provider_support::VoterOf<<T as Config>::DataProvider>;
 
 /// Same as [`VoterOf`], but parameterized by the `MinerConfig`.
-pub type MinerVoterOf<T> = frame_election_provider_support::Voter<
+pub type MinerVoterOf<T> = topsoil_election_provider_support::Voter<
 	<T as MinerConfig>::AccountId,
 	<T as MinerConfig>::MaxVotesPerVoter,
 >;
 
 /// The relative distribution of a voter's stake among the winning targets.
 pub type Assignment<T> =
-	soil_npos_elections::Assignment<<T as frame_system::Config>::AccountId, SolutionAccuracyOf<T>>;
+	soil_npos_elections::Assignment<<T as topsoil_system::Config>::AccountId, SolutionAccuracyOf<T>>;
 
-/// The [`IndexAssignment`][frame_election_provider_support::IndexAssignment] type specialized for a
+/// The [`IndexAssignment`][topsoil_election_provider_support::IndexAssignment] type specialized for a
 /// particular runtime `T`.
-pub type IndexAssignmentOf<T> = frame_election_provider_support::IndexAssignmentOf<SolutionOf<T>>;
+pub type IndexAssignmentOf<T> = topsoil_election_provider_support::IndexAssignmentOf<SolutionOf<T>>;
 
 /// Error type of the pallet's [`crate::Config::Solver`].
 pub type SolverErrorOf<T> = <<T as Config>::Solver as NposSolver>::Error;
 /// Error type for operations related to the OCW npos solution miner.
-#[derive(frame_support::DebugNoBound, frame_support::PartialEqNoBound)]
+#[derive(topsoil_support::DebugNoBound, topsoil_support::PartialEqNoBound)]
 pub enum MinerError {
 	/// An internal error in the NPoS elections crate.
 	NposElections(soil_npos_elections::Error),
@@ -1105,8 +1105,8 @@ mod tests {
 	};
 	use alloc::vec;
 	use codec::Decode;
-	use frame_election_provider_support::IndexAssignment;
-	use frame_support::{assert_noop, assert_ok, traits::OffchainWorker};
+	use topsoil_election_provider_support::IndexAssignment;
+	use topsoil_support::{assert_noop, assert_ok, traits::OffchainWorker};
 	use soil_npos_elections::ElectionScore;
 	use soil_runtime::{
 		bounded_vec,
@@ -1944,7 +1944,7 @@ mod tests {
 	#[test]
 	fn mine_solution_always_respects_max_backers_per_winner() {
 		use crate::mock::MaxBackersPerWinner;
-		use frame_election_provider_support::BoundedSupport;
+		use topsoil_election_provider_support::BoundedSupport;
 
 		let targets = vec![10, 20, 30, 40];
 		let voters = vec![

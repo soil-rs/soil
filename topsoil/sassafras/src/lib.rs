@@ -54,13 +54,13 @@ use log::{debug, error, trace, warn};
 use scale_info::TypeInfo;
 
 use alloc::vec::Vec;
-use frame_support::{
+use topsoil_support::{
 	dispatch::{DispatchResultWithPostInfo, Pays},
 	traits::{Defensive, Get},
 	weights::Weight,
 	BoundedVec, WeakBoundedVec,
 };
-use frame_system::{
+use topsoil_system::{
 	offchain::{CreateBare, SubmitTransaction},
 	pallet_prelude::BlockNumberFor,
 };
@@ -116,11 +116,11 @@ pub struct TicketsMetadata {
 	pub tickets_count: [u32; 2],
 }
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
-	use frame_support::pallet_prelude::*;
-	use frame_system::pallet_prelude::*;
+	use topsoil_support::pallet_prelude::*;
+	use topsoil_system::pallet_prelude::*;
 
 	/// The Sassafras pallet.
 	#[pallet::pallet]
@@ -128,7 +128,7 @@ pub mod pallet {
 
 	/// Configuration parameters.
 	#[pallet::config]
-	pub trait Config: frame_system::Config + CreateBare<Call<Self>> {
+	pub trait Config: topsoil_system::Config + CreateBare<Call<Self>> {
 		/// Amount of slots that each epoch should last.
 		#[pallet::constant]
 		type EpochLength: Get<u32>;
@@ -268,7 +268,7 @@ pub mod pallet {
 
 	/// Genesis configuration for Sassafras protocol.
 	#[pallet::genesis_config]
-	#[derive(frame_support::DefaultNoBound)]
+	#[derive(topsoil_support::DefaultNoBound)]
 	pub struct GenesisConfig<T: Config> {
 		/// Genesis authorities.
 		pub authorities: Vec<AuthorityId>,
@@ -298,9 +298,9 @@ pub mod pallet {
 	#[pallet::hooks]
 	impl<T: Config> Hooks<BlockNumberFor<T>> for Pallet<T> {
 		fn on_initialize(block_num: BlockNumberFor<T>) -> Weight {
-			debug_assert_eq!(block_num, frame_system::Pallet::<T>::block_number());
+			debug_assert_eq!(block_num, topsoil_system::Pallet::<T>::block_number());
 
-			let claim = <frame_system::Pallet<T>>::digest()
+			let claim = <topsoil_system::Pallet<T>>::digest()
 				.logs
 				.iter()
 				.find_map(|item| item.pre_runtime_try_to::<SlotClaim>(&SASSAFRAS_ENGINE_ID))
@@ -689,7 +689,7 @@ impl<T: Config> Pallet<T> {
 	fn deposit_next_epoch_descriptor_digest(desc: NextEpochDescriptor) {
 		let item = ConsensusLog::NextEpochData(desc);
 		let log = DigestItem::Consensus(SASSAFRAS_ENGINE_ID, item.encode());
-		<frame_system::Pallet<T>>::deposit_log(log)
+		<topsoil_system::Pallet<T>>::deposit_log(log)
 	}
 
 	// Initialize authorities on genesis phase.
@@ -725,7 +725,7 @@ impl<T: Config> Pallet<T> {
 		// This is important to guarantee that a different set of tickets are produced for:
 		// - different chains which share the same ring parameters and
 		// - same chain started with a different slot base.
-		let genesis_hash = frame_system::Pallet::<T>::parent_hash();
+		let genesis_hash = topsoil_system::Pallet::<T>::parent_hash();
 		let mut buf = genesis_hash.as_ref().to_vec();
 		buf.extend_from_slice(&slot.to_le_bytes());
 		let randomness = hashing::blake2_256(buf.as_slice());
@@ -793,7 +793,7 @@ impl<T: Config> Pallet<T> {
 	///
 	/// Before importing the first block this returns `None`.
 	pub fn slot_ticket_id(slot: Slot) -> Option<TicketId> {
-		if frame_system::Pallet::<T>::block_number().is_zero() {
+		if topsoil_system::Pallet::<T>::block_number().is_zero() {
 			return None;
 		}
 		let epoch_idx = EpochIndex::<T>::get();
@@ -1075,7 +1075,7 @@ pub trait EpochChangeTrigger {
 /// An `EpochChangeTrigger` which does nothing.
 ///
 /// In practice this means that the epoch change logic is left to some external component
-/// (e.g. pallet-session).
+/// (e.g. topsoil-session).
 pub struct EpochChangeExternalTrigger;
 
 impl EpochChangeTrigger for EpochChangeExternalTrigger {

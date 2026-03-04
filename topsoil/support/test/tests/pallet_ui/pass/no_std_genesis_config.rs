@@ -15,7 +15,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use frame_support::{construct_runtime, derive_impl};
+use topsoil_support::{construct_runtime, derive_impl};
 use soil_core::sr25519;
 use soil_runtime::{generic, traits::BlakeTwo256};
 
@@ -27,9 +27,9 @@ pub type UncheckedExtrinsic = generic::UncheckedExtrinsic<u32, RuntimeCall, Sign
 
 impl test_pallet::Config for Runtime {}
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Runtime {
-	type BaseCallFilter = frame_support::traits::Everything;
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Runtime {
+	type BaseCallFilter = topsoil_support::traits::Everything;
 	type RuntimeOrigin = RuntimeOrigin;
 	type Nonce = u64;
 	type RuntimeCall = RuntimeCall;
@@ -39,7 +39,7 @@ impl frame_system::Config for Runtime {
 	type Lookup = soil_runtime::traits::IdentityLookup<Self::AccountId>;
 	type Block = Block;
 	type RuntimeEvent = RuntimeEvent;
-	type BlockHashCount = frame_support::traits::ConstU32<250>;
+	type BlockHashCount = topsoil_support::traits::ConstU32<250>;
 	type BlockWeights = ();
 	type BlockLength = ();
 	type DbWeight = ();
@@ -51,13 +51,13 @@ impl frame_system::Config for Runtime {
 	type SystemWeightInfo = ();
 	type SS58Prefix = ();
 	type OnSetCode = ();
-	type MaxConsumers = frame_support::traits::ConstU32<16>;
+	type MaxConsumers = topsoil_support::traits::ConstU32<16>;
 }
 
 construct_runtime! {
 	pub struct Runtime
 	{
-		System: frame_system,
+		System: topsoil_system,
 		Pallet: test_pallet,
 	}
 }

@@ -23,11 +23,11 @@ use crate::Pallet as Collective;
 use core::mem::size_of;
 use soil_runtime::traits::Bounded;
 
-use frame_benchmarking::{
+use topsoil_benchmarking::{
 	v1::{account, whitelisted_caller},
 	v2::*,
 };
-use frame_system::{
+use topsoil_system::{
 	pallet_prelude::BlockNumberFor, Call as SystemCall, Pallet as System, RawOrigin as SystemOrigin,
 };
 
@@ -36,11 +36,11 @@ const SEED: u32 = 0;
 const MAX_BYTES: u32 = 1_024;
 
 fn assert_last_event<T: Config<I>, I: 'static>(generic_event: <T as Config<I>>::RuntimeEvent) {
-	frame_system::Pallet::<T>::assert_last_event(generic_event.into());
+	topsoil_system::Pallet::<T>::assert_last_event(generic_event.into());
 }
 
 fn assert_has_event<T: Config<I>, I: 'static>(generic_event: <T as Config<I>>::RuntimeEvent) {
-	frame_system::Pallet::<T>::assert_has_event(generic_event.into());
+	topsoil_system::Pallet::<T>::assert_has_event(generic_event.into());
 }
 
 fn id_to_remark_data(id: u32, length: usize) -> Vec<u8> {
@@ -339,8 +339,8 @@ mod benchmarks {
 		let approve = false;
 
 		// Whitelist voter account from further DB operations.
-		let voter_key = frame_system::Account::<T>::hashed_key_for(&voter);
-		frame_benchmarking::benchmarking::add_to_whitelist(voter_key.into());
+		let voter_key = topsoil_system::Account::<T>::hashed_key_for(&voter);
+		topsoil_benchmarking::benchmarking::add_to_whitelist(voter_key.into());
 
 		#[extrinsic_call]
 		_(SystemOrigin::Signed(voter), last_hash, index, approve);
@@ -431,8 +431,8 @@ mod benchmarks {
 		)?;
 
 		// Whitelist voter account from further DB operations.
-		let voter_key = frame_system::Account::<T>::hashed_key_for(&voter);
-		frame_benchmarking::benchmarking::add_to_whitelist(voter_key.into());
+		let voter_key = topsoil_system::Account::<T>::hashed_key_for(&voter);
+		topsoil_benchmarking::benchmarking::add_to_whitelist(voter_key.into());
 
 		#[extrinsic_call]
 		close(SystemOrigin::Signed(voter), last_hash, index, Weight::MAX, bytes_in_storage);
@@ -752,7 +752,7 @@ mod benchmarks {
 			T::DisapproveOrigin::try_successful_origin().map_err(|_| BenchmarkError::Weightless)?;
 
 		#[extrinsic_call]
-		_(origin as <T as frame_system::Config>::RuntimeOrigin, last_hash);
+		_(origin as <T as topsoil_system::Config>::RuntimeOrigin, last_hash);
 
 		assert_eq!(Proposals::<T, I>::get().len(), (p - 1) as usize);
 		assert_last_event::<T, I>(Event::Disapproved { proposal_hash: last_hash }.into());
@@ -816,7 +816,7 @@ mod benchmarks {
 			T::KillOrigin::try_successful_origin().map_err(|_| BenchmarkError::Weightless)?;
 
 		#[extrinsic_call]
-		_(origin as <T as frame_system::Config>::RuntimeOrigin, last_hash);
+		_(origin as <T as topsoil_system::Config>::RuntimeOrigin, last_hash);
 
 		assert_eq!(Proposals::<T, I>::get().len(), (p - 1) as usize);
 		assert_last_event::<T, I>(Event::Killed { proposal_hash: last_hash }.into());

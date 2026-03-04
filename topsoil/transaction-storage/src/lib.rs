@@ -33,7 +33,7 @@ extern crate alloc;
 use alloc::vec::Vec;
 use codec::{Decode, Encode, MaxEncodedLen};
 use core::fmt::Debug;
-use frame_support::{
+use topsoil_support::{
 	dispatch::GetDispatchInfo,
 	pallet_prelude::InvalidTransaction,
 	traits::{
@@ -41,7 +41,7 @@ use frame_support::{
 		OnUnbalanced,
 	},
 };
-use frame_system::pallet_prelude::BlockNumberFor;
+use topsoil_system::pallet_prelude::BlockNumberFor;
 use soil_runtime::traits::{BlakeTwo256, Dispatchable, Hash, One, Saturating, Zero};
 use soil_transaction_storage_proof::{
 	encode_index, num_chunks, random_chunk, ChunkIndex, InherentError, TransactionStorageProof,
@@ -50,8 +50,8 @@ use soil_transaction_storage_proof::{
 
 /// A type alias for the balance type from this pallet's point of view.
 type BalanceOf<T> =
-	<<T as Config>::Currency as Inspect<<T as frame_system::Config>::AccountId>>::Balance;
-pub type CreditOf<T> = Credit<<T as frame_system::Config>::AccountId, <T as Config>::Currency>;
+	<<T as Config>::Currency as Inspect<<T as topsoil_system::Config>::AccountId>>::Balance;
+pub type CreditOf<T> = Credit<<T as topsoil_system::Config>::AccountId, <T as Config>::Currency>;
 
 // Re-export pallet items so that they can be accessed from the crate namespace.
 pub use pallet::*;
@@ -98,7 +98,7 @@ enum AuthorizationScope<AccountId> {
 	Preimage(ContentHash),
 }
 
-type AuthorizationScopeFor<T> = AuthorizationScope<<T as frame_system::Config>::AccountId>;
+type AuthorizationScopeFor<T> = AuthorizationScope<<T as topsoil_system::Config>::AccountId>;
 
 /// An authorization to store data.
 #[derive(Encode, Decode, scale_info::TypeInfo, MaxEncodedLen)]
@@ -137,11 +137,11 @@ impl TransactionInfo {
 	}
 }
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
-	use frame_support::pallet_prelude::*;
-	use frame_system::pallet_prelude::*;
+	use topsoil_support::pallet_prelude::*;
+	use topsoil_system::pallet_prelude::*;
 
 	/// A reason for this pallet placing a hold on funds.
 	#[pallet::composite_enum]
@@ -151,15 +151,15 @@ pub mod pallet {
 	}
 
 	#[pallet::config]
-	pub trait Config: frame_system::Config {
+	pub trait Config: topsoil_system::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 		/// A dispatchable call.
 		type RuntimeCall: Parameter
 			+ Dispatchable<RuntimeOrigin = Self::RuntimeOrigin>
 			+ GetDispatchInfo
-			+ From<frame_system::Call<Self>>;
+			+ From<topsoil_system::Call<Self>>;
 		/// The fungible type for this pallet.
 		type Currency: Mutate<Self::AccountId>
 			+ MutateHold<Self::AccountId, Reason = Self::RuntimeHoldReason>
@@ -237,7 +237,7 @@ pub mod pallet {
 			assert!(
 				ProofChecked::<T>::take() || {
 					// Proof is not required for early or empty blocks.
-					let number = frame_system::Pallet::<T>::block_number();
+					let number = topsoil_system::Pallet::<T>::block_number();
 					let period = Self::retention_period();
 					let target_number = number.saturating_sub(period);
 
@@ -305,7 +305,7 @@ pub mod pallet {
 
 			let content_hash = soil_io::hashing::blake2_256(&data);
 			let extrinsic_index =
-				frame_system::Pallet::<T>::extrinsic_index().ok_or(Error::<T>::BadContext)?;
+				topsoil_system::Pallet::<T>::extrinsic_index().ok_or(Error::<T>::BadContext)?;
 			soil_io::transaction_index::index(extrinsic_index, data.len() as u32, content_hash);
 
 			let mut index = 0;
@@ -353,7 +353,7 @@ pub mod pallet {
 			Self::ensure_data_size_ok(info.size as usize)?;
 
 			let extrinsic_index =
-				frame_system::Pallet::<T>::extrinsic_index().ok_or(Error::<T>::BadContext)?;
+				topsoil_system::Pallet::<T>::extrinsic_index().ok_or(Error::<T>::BadContext)?;
 			Self::apply_fee(sender, info.size)?;
 			let content_hash = info.content_hash.into();
 			soil_io::transaction_index::renew(extrinsic_index, content_hash);
@@ -396,7 +396,7 @@ pub mod pallet {
 			ensure!(!ProofChecked::<T>::get(), Error::<T>::DoubleCheck);
 
 			// Get the target block metadata.
-			let number = frame_system::Pallet::<T>::block_number();
+			let number = topsoil_system::Pallet::<T>::block_number();
 			let period = Self::retention_period();
 			let target_number = number.saturating_sub(period);
 			ensure!(!target_number.is_zero(), Error::<T>::UnexpectedProof);
@@ -404,7 +404,7 @@ pub mod pallet {
 				Transactions::<T>::get(target_number).ok_or(Error::<T>::MissingStateData)?;
 
 			// Verify the proof with a "random" chunk (randomness is based on the parent hash).
-			let parent_hash = frame_system::Pallet::<T>::parent_hash();
+			let parent_hash = topsoil_system::Pallet::<T>::parent_hash();
 			Self::verify_chunk_proof(proof, parent_hash.as_ref(), transactions.to_vec())?;
 			ProofChecked::<T>::put(true);
 			Self::deposit_event(Event::ProofChecked);

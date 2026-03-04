@@ -34,7 +34,7 @@ use crate::traits::{
 };
 use alloc::boxed::Box;
 use core::marker::PhantomData;
-use frame_support_procedural::{DebugNoBound, EqNoBound, PartialEqNoBound};
+use topsoil_support_procedural::{DebugNoBound, EqNoBound, PartialEqNoBound};
 use soil_arithmetic::traits::SaturatedConversion;
 use soil_runtime::traits::Zero;
 
@@ -250,8 +250,8 @@ impl<
 /// a specified `asset`.
 ///
 /// This function facilitates imbalance conversions within the implementations of
-/// [`frame_support::traits::fungibles::UnionOf`], [`frame_support::traits::fungible::UnionOf`], and
-/// [`frame_support::traits::fungible::ItemOf`] adapters. It is intended only for internal use
+/// [`topsoil_support::traits::fungibles::UnionOf`], [`topsoil_support::traits::fungible::UnionOf`], and
+/// [`topsoil_support::traits::fungible::ItemOf`] adapters. It is intended only for internal use
 /// within the current crate.
 pub(crate) fn from_fungible<
 	A: AssetId,
@@ -272,8 +272,8 @@ pub(crate) fn from_fungible<
 /// Converts a `fungibles` `imbalance` instance of one type to another using a specified `asset`.
 ///
 /// This function facilitates imbalance conversions within the implementations of
-/// [`frame_support::traits::fungibles::UnionOf`], [`frame_support::traits::fungible::UnionOf`], and
-/// [`frame_support::traits::fungible::ItemOf`] adapters. It is intended only for internal use
+/// [`topsoil_support::traits::fungibles::UnionOf`], [`topsoil_support::traits::fungible::UnionOf`], and
+/// [`topsoil_support::traits::fungible::ItemOf`] adapters. It is intended only for internal use
 /// within the current crate.
 pub(crate) fn from_fungibles<
 	A: AssetId,

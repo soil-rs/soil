@@ -34,7 +34,7 @@ struct ConstDef {
 
 /// Implement the `pallet_constants_metadata` function for the pallet.
 pub fn expand_constants(def: &mut Def) -> proc_macro2::TokenStream {
-	let frame_support = &def.frame_support;
+	let topsoil_support = &def.topsoil_support;
 	let type_impl_gen = &def.type_impl_generics(proc_macro2::Span::call_site());
 	let type_use_gen = &def.type_use_generics(proc_macro2::Span::call_site());
 	let pallet_ident = &def.pallet_struct.pallet;
@@ -49,7 +49,7 @@ pub fn expand_constants(def: &mut Def) -> proc_macro2::TokenStream {
 		let ident = &const_.ident;
 		let const_type = &const_.type_;
 		let deprecation_info = match crate::deprecation::get_deprecation(
-			&quote::quote! { #frame_support },
+			&quote::quote! { #topsoil_support },
 			&const_.attrs,
 		) {
 			Ok(deprecation) => deprecation,
@@ -66,8 +66,8 @@ pub fn expand_constants(def: &mut Def) -> proc_macro2::TokenStream {
 			default_byte_impl: quote::quote!(
 				#(#maybe_allow_attrs)*
 				let value = <<T as Config #trait_use_gen>::#ident as
-					#frame_support::traits::Get<#const_type>>::get();
-				#frame_support::__private::codec::Encode::encode(&value)
+					#topsoil_support::traits::Get<#const_type>>::get();
+				#topsoil_support::__private::codec::Encode::encode(&value)
 			),
 			metadata_name: None,
 			deprecation_info,
@@ -78,7 +78,7 @@ pub fn expand_constants(def: &mut Def) -> proc_macro2::TokenStream {
 	for const_ in def.extra_constants.iter().flat_map(|d| &d.extra_constants) {
 		let ident = &const_.ident;
 		let deprecation_info = match crate::deprecation::get_deprecation(
-			&quote::quote! { #frame_support },
+			&quote::quote! { #topsoil_support },
 			&const_.attrs,
 		) {
 			Ok(deprecation) => deprecation,
@@ -94,7 +94,7 @@ pub fn expand_constants(def: &mut Def) -> proc_macro2::TokenStream {
 			default_byte_impl: quote::quote!(
 				#(#maybe_allow_attrs)*
 				let value = <Pallet<#type_use_gen>>::#ident();
-				#frame_support::__private::codec::Encode::encode(&value)
+				#topsoil_support::__private::codec::Encode::encode(&value)
 			),
 			metadata_name: const_.metadata_name.clone(),
 			deprecation_info,
@@ -111,11 +111,11 @@ pub fn expand_constants(def: &mut Def) -> proc_macro2::TokenStream {
 		let default_byte_impl = &const_.default_byte_impl;
 		let deprecation_info = &const_.deprecation_info;
 		quote::quote!({
-			#frame_support::__private::metadata_ir::PalletConstantMetadataIR {
+			#topsoil_support::__private::metadata_ir::PalletConstantMetadataIR {
 				name: #ident_str,
-				ty: #frame_support::__private::scale_info::meta_type::<#const_type>(),
+				ty: #topsoil_support::__private::scale_info::meta_type::<#const_type>(),
 				value: { #default_byte_impl },
-				docs: #frame_support::__private::vec![ #( #doc ),* ],
+				docs: #topsoil_support::__private::vec![ #( #doc ),* ],
 				deprecation_info: #deprecation_info
 			}
 		})
@@ -126,9 +126,9 @@ pub fn expand_constants(def: &mut Def) -> proc_macro2::TokenStream {
 
 			#[doc(hidden)]
 			pub fn pallet_constants_metadata()
-				-> #frame_support::__private::Vec<#frame_support::__private::metadata_ir::PalletConstantMetadataIR>
+				-> #topsoil_support::__private::Vec<#topsoil_support::__private::metadata_ir::PalletConstantMetadataIR>
 			{
-				#frame_support::__private::vec![ #( #consts ),* ]
+				#topsoil_support::__private::vec![ #( #consts ),* ]
 			}
 		}
 	)

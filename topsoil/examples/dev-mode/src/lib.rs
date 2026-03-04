@@ -27,7 +27,7 @@
 //! A simple example of a FRAME pallet demonstrating
 //! the ease of requirements for a pallet in dev mode.
 //!
-//! Run `cargo doc --package pallet-dev-mode --open` to view this pallet's documentation.
+//! Run `cargo doc --package topsoil-dev-mode --open` to view this pallet's documentation.
 //!
 //! **Dev mode is not meant to be used in production.**
 
@@ -37,8 +37,8 @@
 extern crate alloc;
 
 use alloc::{vec, vec::Vec};
-use frame_support::dispatch::DispatchResult;
-use frame_system::ensure_signed;
+use topsoil_support::dispatch::DispatchResult;
+use topsoil_system::ensure_signed;
 
 // Re-export pallet items so that they can be accessed from the crate namespace.
 pub use pallet::*;
@@ -47,17 +47,17 @@ pub use pallet::*;
 mod tests;
 
 /// A type alias for the balance type from this pallet's point of view.
-type BalanceOf<T> = <T as pallet_balances::Config>::Balance;
+type BalanceOf<T> = <T as topsoil_balances::Config>::Balance;
 
 /// Enable `dev_mode` for this pallet.
-#[frame_support::pallet(dev_mode)]
+#[topsoil_support::pallet(dev_mode)]
 pub mod pallet {
 	use super::*;
-	use frame_support::pallet_prelude::*;
-	use frame_system::pallet_prelude::*;
+	use topsoil_support::pallet_prelude::*;
+	use topsoil_system::pallet_prelude::*;
 
 	#[pallet::config]
-	pub trait Config: pallet_balances::Config + frame_system::Config {}
+	pub trait Config: topsoil_balances::Config + topsoil_system::Config {}
 
 	// Simple declaration of the `Pallet` type. It is placeholder we use to implement traits and
 	// method.

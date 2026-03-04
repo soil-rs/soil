@@ -17,7 +17,7 @@
 
 use super::{Config, Kind, OffenceDetails, Pallet, Perbill, SessionIndex, LOG_TARGET};
 use alloc::vec::Vec;
-use frame_support::{
+use topsoil_support::{
 	pallet_prelude::ValueQuery,
 	storage_alias,
 	traits::{Get, GetStorageVersion, OnRuntimeUpgrade},
@@ -27,7 +27,7 @@ use frame_support::{
 use soil_staking::offence::OnOffenceHandler;
 
 #[cfg(feature = "try-runtime")]
-use frame_support::ensure;
+use topsoil_support::ensure;
 #[cfg(feature = "try-runtime")]
 use soil_runtime::TryRuntimeError;
 
@@ -45,7 +45,7 @@ mod v0 {
 }
 
 pub mod v1 {
-	use frame_support::traits::StorageVersion;
+	use topsoil_support::traits::StorageVersion;
 
 	use super::*;
 
@@ -64,7 +64,7 @@ pub mod v1 {
 
 		fn on_runtime_upgrade() -> Weight {
 			if Pallet::<T>::on_chain_storage_version() > 0 {
-				log::info!(target: LOG_TARGET, "pallet_offences::MigrateToV1 should be removed");
+				log::info!(target: LOG_TARGET, "topsoil_offences::MigrateToV1 should be removed");
 				return T::DbWeight::get().reads(1);
 			}
 
@@ -78,7 +78,7 @@ pub mod v1 {
 		#[cfg(feature = "try-runtime")]
 		fn post_upgrade(_state: Vec<u8>) -> Result<(), TryRuntimeError> {
 			let onchain = Pallet::<T>::on_chain_storage_version();
-			ensure!(onchain == 1, "pallet_offences::MigrateToV1 needs to be run");
+			ensure!(onchain == 1, "topsoil_offences::MigrateToV1 needs to be run");
 			ensure!(
 				v0::ReportsByKindIndex::<T>::iter_keys().count() == 0,
 				"there are some dangling reports that need to be destroyed and refunded"
@@ -90,7 +90,7 @@ pub mod v1 {
 
 /// Type of data stored as a deferred offence
 type DeferredOffenceOf<T> = (
-	Vec<OffenceDetails<<T as frame_system::Config>::AccountId, <T as Config>::IdentificationTuple>>,
+	Vec<OffenceDetails<<T as topsoil_system::Config>::AccountId, <T as Config>::IdentificationTuple>>,
 	Vec<Perbill>,
 	SessionIndex,
 );
@@ -135,7 +135,7 @@ mod test {
 		ext.execute_with(|| {
 			assert_eq!(
 				v1::MigrateToV1::<T>::on_runtime_upgrade(),
-				<T as frame_system::Config>::DbWeight::get().reads_writes(2, 2),
+				<T as topsoil_system::Config>::DbWeight::get().reads_writes(2, 2),
 			);
 
 			assert!(<v0::ReportsByKindIndex<T>>::iter_values().count() == 0);
@@ -152,7 +152,7 @@ mod test {
 			});
 
 			let offence_details = OffenceDetails::<
-				<T as frame_system::Config>::AccountId,
+				<T as topsoil_system::Config>::AccountId,
 				<T as Config>::IdentificationTuple,
 			> {
 				offender: 5,
@@ -169,7 +169,7 @@ mod test {
 			// when
 			assert_eq!(
 				remove_deferred_storage::<T>(),
-				<T as frame_system::Config>::DbWeight::get().reads_writes(1, 1),
+				<T as topsoil_system::Config>::DbWeight::get().reads_writes(1, 1),
 			);
 
 			// then

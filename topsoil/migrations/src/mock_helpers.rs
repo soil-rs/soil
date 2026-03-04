@@ -21,7 +21,7 @@
 
 use alloc::{vec, vec::Vec};
 use codec::{Decode, Encode};
-use frame_support::{
+use topsoil_support::{
 	migrations::*,
 	weights::{Weight, WeightMeter},
 };
@@ -57,7 +57,7 @@ pub fn mocked_id(kind: MockedMigrationKind, steps: u32) -> MockedIdentifier {
 	(b"MockedMigration", kind, steps).encode().try_into().unwrap()
 }
 
-frame_support::parameter_types! {
+topsoil_support::parameter_types! {
 	/// The configs for the migrations to run.
 	storage MIGRATIONS: Vec<(MockedMigrationKind, u32)> = vec![];
 }

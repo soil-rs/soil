@@ -50,7 +50,7 @@ pub fn migrate<T: Config>(to_migrate: Vec<T::AccountId>) -> Weight {
 }
 
 /// Given the list of voters to migrate return a function that does some checks and information
-/// prior to migration. This can be linked to [`frame_support::traits::OnRuntimeUpgrade::
+/// prior to migration. This can be linked to [`topsoil_support::traits::OnRuntimeUpgrade::
 /// pre_upgrade`] for further testing.
 pub fn pre_migrate_fn<T: Config>(to_migrate: Vec<T::AccountId>) -> Box<dyn Fn() -> ()> {
 	Box::new(move || {
@@ -72,7 +72,7 @@ pub fn pre_migrate_fn<T: Config>(to_migrate: Vec<T::AccountId>) -> Box<dyn Fn() 
 }
 
 /// Some checks for after migration. This can be linked to
-/// `frame_support::traits::OnRuntimeUpgrade::post_upgrade` for further testing.
+/// `topsoil_support::traits::OnRuntimeUpgrade::post_upgrade` for further testing.
 ///
 /// Panics if anything goes wrong.
 pub fn post_migrate<T: crate::Config>() {

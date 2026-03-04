@@ -19,7 +19,7 @@ use crate::{Config, Key};
 use alloc::vec;
 use codec::{Decode, DecodeWithMemTracking, Encode};
 use core::{fmt, marker::PhantomData};
-use frame_support::{dispatch::DispatchInfo, ensure, pallet_prelude::TransactionSource};
+use topsoil_support::{dispatch::DispatchInfo, ensure, pallet_prelude::TransactionSource};
 use scale_info::TypeInfo;
 use soil_runtime::{
 	impl_tx_ext_default,
@@ -67,11 +67,11 @@ impl<T: Config + Send + Sync> CheckOnlySudoAccount<T> {
 	}
 }
 
-impl<T: Config + Send + Sync> TransactionExtension<<T as frame_system::Config>::RuntimeCall>
+impl<T: Config + Send + Sync> TransactionExtension<<T as topsoil_system::Config>::RuntimeCall>
 	for CheckOnlySudoAccount<T>
 where
-	<T as frame_system::Config>::RuntimeCall: Dispatchable<Info = DispatchInfo>,
-	<<T as frame_system::Config>::RuntimeCall as Dispatchable>::RuntimeOrigin:
+	<T as topsoil_system::Config>::RuntimeCall: Dispatchable<Info = DispatchInfo>,
+	<<T as topsoil_system::Config>::RuntimeCall as Dispatchable>::RuntimeOrigin:
 		AsSystemOriginSigner<T::AccountId> + Clone,
 {
 	const IDENTIFIER: &'static str = "CheckOnlySudoAccount";
@@ -81,17 +81,17 @@ where
 
 	fn weight(
 		&self,
-		_: &<T as frame_system::Config>::RuntimeCall,
-	) -> frame_support::weights::Weight {
+		_: &<T as topsoil_system::Config>::RuntimeCall,
+	) -> topsoil_support::weights::Weight {
 		use crate::weights::WeightInfo;
 		T::WeightInfo::check_only_sudo_account()
 	}
 
 	fn validate(
 		&self,
-		origin: <<T as frame_system::Config>::RuntimeCall as Dispatchable>::RuntimeOrigin,
-		call: &<T as frame_system::Config>::RuntimeCall,
-		info: &DispatchInfoOf<<T as frame_system::Config>::RuntimeCall>,
+		origin: <<T as topsoil_system::Config>::RuntimeCall as Dispatchable>::RuntimeOrigin,
+		call: &<T as topsoil_system::Config>::RuntimeCall,
+		info: &DispatchInfoOf<<T as topsoil_system::Config>::RuntimeCall>,
 		_len: usize,
 		_self_implicit: Self::Implicit,
 		_inherited_implication: &impl Encode,
@@ -100,7 +100,7 @@ where
 		(
 			ValidTransaction,
 			Self::Val,
-			<<T as frame_system::Config>::RuntimeCall as Dispatchable>::RuntimeOrigin,
+			<<T as topsoil_system::Config>::RuntimeCall as Dispatchable>::RuntimeOrigin,
 		),
 		TransactionValidityError,
 	> {
@@ -119,5 +119,5 @@ where
 		))
 	}
 
-	impl_tx_ext_default!(<T as frame_system::Config>::RuntimeCall; prepare);
+	impl_tx_ext_default!(<T as topsoil_system::Config>::RuntimeCall; prepare);
 }

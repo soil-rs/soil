@@ -16,7 +16,7 @@
 // limitations under the License.
 
 pub mod constants {
-	use frame_support::weights::constants;
+	use topsoil_support::weights::constants;
 	use soil_core::parameter_types;
 	use soil_weights::RuntimeDbWeight;
 

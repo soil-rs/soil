@@ -15,10 +15,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//! Utilities for remote-testing pallet-bags-list.
+//! Utilities for remote-testing topsoil-bags-list.
 
-use frame_election_provider_support::ScoreProvider;
-use pallet_bags_list::Instance1;
+use topsoil_election_provider_support::ScoreProvider;
+use topsoil_bags_list::Instance1;
 
 /// A common log target to use.
 pub const LOG_TARGET: &str = "runtime::bags-list::remote-tests";
@@ -31,12 +31,12 @@ pub mod try_state;
 ///
 /// For example, this can be the `Runtime` type of the Polkadot runtime.
 pub trait RuntimeT<I: 'static>:
-	pallet_staking::Config + pallet_bags_list::Config<I> + frame_system::Config
+	topsoil_staking::Config + topsoil_bags_list::Config<I> + topsoil_system::Config
 {
 }
 impl<
 		I: 'static,
-		T: pallet_staking::Config + pallet_bags_list::Config<I> + frame_system::Config,
+		T: topsoil_staking::Config + topsoil_bags_list::Config<I> + topsoil_system::Config,
 	> RuntimeT<I> for T
 {
 }
@@ -50,20 +50,20 @@ pub fn display_and_check_bags<Runtime: RuntimeT<Instance1>>(
 	currency_unit: u64,
 	currency_name: &'static str,
 ) {
-	use frame_election_provider_support::SortedListProvider;
-	use frame_support::traits::Get;
+	use topsoil_election_provider_support::SortedListProvider;
+	use topsoil_support::traits::Get;
 
-	let min_nominator_bond = <pallet_staking::MinNominatorBond<Runtime>>::get();
+	let min_nominator_bond = <topsoil_staking::MinNominatorBond<Runtime>>::get();
 	log::info!(target: LOG_TARGET, "min nominator bond is {:?}", min_nominator_bond);
 
-	let voter_list_count = <Runtime as pallet_staking::Config>::VoterList::count();
+	let voter_list_count = <Runtime as topsoil_staking::Config>::VoterList::count();
 
 	// go through every bag to track the total number of voters within bags and log some info about
 	// how voters are distributed within the bags.
 	let mut seen_in_bags = 0;
 	let mut rebaggable = 0;
 	let mut active_bags = 0;
-	for vote_weight_thresh in <Runtime as pallet_bags_list::Config<Instance1>>::BagThresholds::get()
+	for vote_weight_thresh in <Runtime as topsoil_bags_list::Config<Instance1>>::BagThresholds::get()
 	{
 		let vote_weight_thresh_u64: u64 = (*vote_weight_thresh)
 			.try_into()
@@ -73,7 +73,7 @@ pub fn display_and_check_bags<Runtime: RuntimeT<Instance1>>(
 		let vote_weight_thresh_as_unit = vote_weight_thresh_u64 as f64 / currency_unit as f64;
 		let pretty_thresh = format!("Threshold: {}. {}", vote_weight_thresh_as_unit, currency_name);
 
-		let bag = match pallet_bags_list::Pallet::<Runtime, Instance1>::list_bags_get(
+		let bag = match topsoil_bags_list::Pallet::<Runtime, Instance1>::list_bags_get(
 			*vote_weight_thresh,
 		) {
 			Some(bag) => bag,
@@ -87,13 +87,13 @@ pub fn display_and_check_bags<Runtime: RuntimeT<Instance1>>(
 
 		for id in bag.std_iter().map(|node| node.std_id().clone()) {
 			let vote_weight =
-				<Runtime as pallet_bags_list::Config<Instance1>>::ScoreProvider::score(&id)
+				<Runtime as topsoil_bags_list::Config<Instance1>>::ScoreProvider::score(&id)
 					.unwrap();
 			let vote_weight_thresh_u64: u64 = (*vote_weight_thresh)
 				.try_into()
 				.map_err(|_| "runtime must configure score to at most u64 to use this test")
 				.unwrap();
-			let vote_weight_as_balance: pallet_staking::BalanceOf<Runtime> =
+			let vote_weight_as_balance: topsoil_staking::BalanceOf<Runtime> =
 				vote_weight_thresh_u64.try_into().map_err(|_| "can't convert").unwrap();
 
 			if vote_weight_as_balance < min_nominator_bond {
@@ -105,11 +105,11 @@ pub fn display_and_check_bags<Runtime: RuntimeT<Instance1>>(
 				);
 			}
 
-			let node = pallet_bags_list::Node::<Runtime, Instance1>::get(&id)
+			let node = topsoil_bags_list::Node::<Runtime, Instance1>::get(&id)
 				.expect("node in bag must exist.");
 			if node.is_misplaced(vote_weight) {
 				rebaggable += 1;
-				let notional_bag = pallet_bags_list::notional_bag_for::<Runtime, _>(vote_weight);
+				let notional_bag = topsoil_bags_list::notional_bag_for::<Runtime, _>(vote_weight);
 				let notional_bag_as_u64: u64 = notional_bag
 					.try_into()
 					.map_err(|_| "runtime must configure score to at most u64 to use this test")
@@ -154,7 +154,7 @@ pub fn display_and_check_bags<Runtime: RuntimeT<Instance1>>(
 		"a total of {} nodes are in {} active bags [{} total bags], {} of which can be rebagged.",
 		voter_list_count,
 		active_bags,
-		<Runtime as pallet_bags_list::Config<Instance1>>::BagThresholds::get().len(),
+		<Runtime as topsoil_bags_list::Config<Instance1>>::BagThresholds::get().len(),
 		rebaggable,
 	);
 }

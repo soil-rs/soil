@@ -21,7 +21,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-use frame_support::{
+use topsoil_support::{
 	storage_alias,
 	traits::{Get, UncheckedOnRuntimeUpgrade},
 };
@@ -67,7 +67,7 @@ impl<T: crate::Config> UncheckedOnRuntimeUpgrade for InnerMigrateV0ToV1<T> {
 	/// - If the value doesn't exist, there is nothing to do.
 	/// - If the value exists, it is read and then written back to storage inside a
 	///   [`crate::CurrentAndPreviousValue`].
-	fn on_runtime_upgrade() -> frame_support::weights::Weight {
+	fn on_runtime_upgrade() -> topsoil_support::weights::Weight {
 		// Read the old value from storage
 		if let Some(old_value) = v0::Value::<T>::take() {
 			// Write the new value to storage
@@ -88,7 +88,7 @@ impl<T: crate::Config> UncheckedOnRuntimeUpgrade for InnerMigrateV0ToV1<T> {
 	#[cfg(feature = "try-runtime")]
 	fn post_upgrade(state: Vec<u8>) -> Result<(), soil_runtime::TryRuntimeError> {
 		use codec::Decode;
-		use frame_support::ensure;
+		use topsoil_support::ensure;
 
 		let maybe_old_value = Option::<u32>::decode(&mut &state[..]).map_err(|_| {
 			soil_runtime::TryRuntimeError::Other("Failed to decode old value from storage")
@@ -115,16 +115,16 @@ impl<T: crate::Config> UncheckedOnRuntimeUpgrade for InnerMigrateV0ToV1<T> {
 }
 
 /// [`UncheckedOnRuntimeUpgrade`] implementation [`InnerMigrateV0ToV1`] wrapped in a
-/// [`VersionedMigration`](frame_support::migrations::VersionedMigration), which ensures that:
+/// [`VersionedMigration`](topsoil_support::migrations::VersionedMigration), which ensures that:
 /// - The migration only runs once when the on-chain storage version is 0
 /// - The on-chain storage version is updated to `1` after the migration executes
 /// - Reads/Writes from checking/settings the on-chain storage version are accounted for
-pub type MigrateV0ToV1<T> = frame_support::migrations::VersionedMigration<
+pub type MigrateV0ToV1<T> = topsoil_support::migrations::VersionedMigration<
 	0, // The migration will only execute when the on-chain storage version is 0
 	1, // The on-chain storage version will be set to 1 after the migration is complete
 	InnerMigrateV0ToV1<T>,
 	crate::pallet::Pallet<T>,
-	<T as frame_system::Config>::DbWeight,
+	<T as topsoil_system::Config>::DbWeight,
 >;
 
 /// Tests for our migration.
@@ -138,7 +138,7 @@ mod test {
 	use self::InnerMigrateV0ToV1;
 	use super::*;
 	use crate::mock::{new_test_ext, MockRuntime};
-	use frame_support::assert_ok;
+	use topsoil_support::assert_ok;
 
 	#[test]
 	fn handles_no_existing_value() {
@@ -160,7 +160,7 @@ mod test {
 			assert_ok!(InnerMigrateV0ToV1::<MockRuntime>::post_upgrade(bytes));
 
 			// The weight should be just 1 read for trying to access the old value.
-			assert_eq!(weight, <MockRuntime as frame_system::Config>::DbWeight::get().reads(1));
+			assert_eq!(weight, <MockRuntime as topsoil_system::Config>::DbWeight::get().reads(1));
 
 			// After the migration, no value should have been set.
 			assert!(crate::Value::<MockRuntime>::get().is_none());
@@ -190,7 +190,7 @@ mod test {
 			// value.
 			assert_eq!(
 				weight,
-				<MockRuntime as frame_system::Config>::DbWeight::get().reads_writes(1, 2)
+				<MockRuntime as topsoil_system::Config>::DbWeight::get().reads_writes(1, 2)
 			);
 
 			// After the migration, the new value should be set as the `current` value.

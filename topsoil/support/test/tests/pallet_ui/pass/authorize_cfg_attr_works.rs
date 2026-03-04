@@ -15,15 +15,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use frame_support::pallet_prelude::*;
-use frame_system::pallet_prelude::*;
+use topsoil_support::pallet_prelude::*;
+use topsoil_system::pallet_prelude::*;
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod my_test {
 	use super::*;
 
 	#[pallet::config]
-	pub trait Config: frame_system::Config {
+	pub trait Config: topsoil_system::Config {
 	}
 
 	#[pallet::pallet]

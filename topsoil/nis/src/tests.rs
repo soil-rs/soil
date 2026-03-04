@@ -17,7 +17,7 @@
 
 //! Tests for NIS pallet.
 
-use frame::testing_prelude::*;
+use topsoil::testing_prelude::*;
 
 use crate::{
 	mock::{Balance, *},

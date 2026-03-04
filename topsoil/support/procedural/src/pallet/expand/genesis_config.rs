@@ -16,7 +16,7 @@
 // limitations under the License.
 
 use crate::{pallet::Def, COUNTER};
-use frame_support_procedural_tools::get_doc_literals;
+use topsoil_support_procedural_tools::get_doc_literals;
 use quote::ToTokens;
 use syn::{spanned::Spanned, Ident};
 
@@ -74,12 +74,12 @@ pub fn expand_genesis_config(def: &mut Def) -> proc_macro2::TokenStream {
 			};
 		};
 
-	let frame_support = &def.frame_support;
+	let topsoil_support = &def.topsoil_support;
 
 	let genesis_config_item =
 		&mut def.item.content.as_mut().expect("Checked by def parser").1[genesis_config.index];
 
-	let serde_crate = format!("{}::__private::serde", frame_support.to_token_stream());
+	let serde_crate = format!("{}::__private::serde", topsoil_support.to_token_stream());
 
 	match genesis_config_item {
 		syn::Item::Enum(syn::ItemEnum { attrs, .. }) |
@@ -95,7 +95,7 @@ pub fn expand_genesis_config(def: &mut Def) -> proc_macro2::TokenStream {
 				));
 			}
 			attrs.push(syn::parse_quote!(
-				#[derive(#frame_support::Serialize, #frame_support::Deserialize)]
+				#[derive(#topsoil_support::Serialize, #topsoil_support::Deserialize)]
 			));
 			attrs.push(syn::parse_quote!( #[serde(rename_all = "camelCase")] ));
 			attrs.push(syn::parse_quote!( #[serde(deny_unknown_fields)] ));

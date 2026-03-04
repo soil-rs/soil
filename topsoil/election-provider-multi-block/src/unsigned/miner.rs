@@ -33,9 +33,9 @@ use crate::{
 	CommonError,
 };
 use codec::Encode;
-use frame_election_provider_support::{ExtendedBalance, NposSolver, Support, VoteWeight};
-use frame_support::{traits::Get, BoundedVec};
-use frame_system::pallet_prelude::*;
+use topsoil_election_provider_support::{ExtendedBalance, NposSolver, Support, VoteWeight};
+use topsoil_support::{traits::Get, BoundedVec};
+use topsoil_system::pallet_prelude::*;
 use scale_info::TypeInfo;
 use soil_npos_elections::EvaluateSupport;
 use soil_runtime::{
@@ -66,7 +66,7 @@ pub(crate) type MinerSolverErrorOf<T> = <<T as MinerConfig>::Solver as NposSolve
 
 /// The errors related to the [`BaseMiner`].
 #[derive(
-	frame_support::DebugNoBound, frame_support::EqNoBound, frame_support::PartialEqNoBound,
+	topsoil_support::DebugNoBound, topsoil_support::EqNoBound, topsoil_support::PartialEqNoBound,
 )]
 pub enum MinerError<T: MinerConfig> {
 	/// An internal error in the NPoS elections crate.
@@ -107,7 +107,7 @@ impl<T: MinerConfig> From<CommonError> for MinerError<T> {
 
 /// The errors related to the `OffchainWorkerMiner`.
 #[derive(
-	frame_support::DebugNoBound, frame_support::EqNoBound, frame_support::PartialEqNoBound,
+	topsoil_support::DebugNoBound, topsoil_support::EqNoBound, topsoil_support::PartialEqNoBound,
 )]
 pub enum OffchainMinerError<T: Config> {
 	/// An error in the base miner.
@@ -215,7 +215,7 @@ pub struct BaseMiner<T: MinerConfig>(soil_std::marker::PhantomData<T>);
 ///
 /// The bounds of this are set such to only encapsulate a single page of a snapshot. The other
 /// counterpart is [`FullSupportsOfMiner`].
-pub type PageSupportsOfMiner<T> = frame_election_provider_support::BoundedSupports<
+pub type PageSupportsOfMiner<T> = topsoil_election_provider_support::BoundedSupports<
 	<T as MinerConfig>::AccountId,
 	<T as MinerConfig>::MaxWinnersPerPage,
 	<T as MinerConfig>::MaxBackersPerWinner,
@@ -224,7 +224,7 @@ pub type PageSupportsOfMiner<T> = frame_election_provider_support::BoundedSuppor
 /// Helper type that computes the maximum total winners across all pages.
 pub struct MaxWinnersFinal<T: MinerConfig>(core::marker::PhantomData<T>);
 
-impl<T: MinerConfig> frame_support::traits::Get<u32> for MaxWinnersFinal<T> {
+impl<T: MinerConfig> topsoil_support::traits::Get<u32> for MaxWinnersFinal<T> {
 	fn get() -> u32 {
 		T::Pages::get().saturating_mul(T::MaxWinnersPerPage::get())
 	}
@@ -235,7 +235,7 @@ impl<T: MinerConfig> frame_support::traits::Get<u32> for MaxWinnersFinal<T> {
 /// This should be used on a support instance that is encapsulating the full solution.
 ///
 /// Another way to look at it, this is never wrapped in a `Vec<_>`
-pub type FullSupportsOfMiner<T> = frame_election_provider_support::BoundedSupports<
+pub type FullSupportsOfMiner<T> = topsoil_election_provider_support::BoundedSupports<
 	<T as MinerConfig>::AccountId,
 	MaxWinnersFinal<T>,
 	<T as MinerConfig>::MaxBackersPerWinnerFinal,
@@ -788,7 +788,7 @@ impl<T: Config> OffchainWorkerMiner<T> {
 
 	fn submit_call(call: Call<T>) -> Result<(), OffchainMinerError<T>> {
 		let xt = T::create_bare(call.into());
-		frame_system::offchain::SubmitTransaction::<T, Call<T>>::submit_transaction(xt)
+		topsoil_system::offchain::SubmitTransaction::<T, Call<T>>::submit_transaction(xt)
 			.map(|_| {
 				sublog!(
 					debug,
@@ -1004,7 +1004,7 @@ impl<T: Config> OffchainWorkerMiner<T> {
 mod trimming {
 	use super::*;
 	use crate::{mock::*, verifier::Verifier};
-	use frame_election_provider_support::TryFromUnboundedPagedSupports;
+	use topsoil_election_provider_support::TryFromUnboundedPagedSupports;
 	use soil_npos_elections::Support;
 
 	#[test]
@@ -1399,7 +1399,7 @@ mod base_miner {
 
 	use super::*;
 	use crate::{mock::*, Snapshot};
-	use frame_election_provider_support::TryFromUnboundedPagedSupports;
+	use topsoil_election_provider_support::TryFromUnboundedPagedSupports;
 	use soil_npos_elections::Support;
 	use soil_runtime::PerU16;
 
@@ -1856,7 +1856,7 @@ mod base_miner {
 #[cfg(test)]
 mod offchain_worker_miner {
 	use crate::{verifier::Verifier, CommonError};
-	use frame_support::traits::Hooks;
+	use topsoil_support::traits::Hooks;
 	use soil_runtime::offchain::storage_lock::{BlockAndTime, StorageLock};
 
 	use super::*;

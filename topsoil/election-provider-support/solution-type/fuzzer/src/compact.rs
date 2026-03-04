@@ -15,7 +15,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use frame_election_provider_solution_type::generate_solution_type;
+use topsoil_election_provider_solution_type::generate_solution_type;
 use honggfuzz::fuzz;
 use soil_arithmetic::Percent;
 use soil_runtime::codec::{Encode, Error};
@@ -26,7 +26,7 @@ fn main() {
 		VoterIndex = u32,
 		TargetIndex = u32,
 		Accuracy = Percent,
-		MaxVoters = frame_support::traits::ConstU32::<100_000>,
+		MaxVoters = topsoil_support::traits::ConstU32::<100_000>,
 	>(16));
 	loop {
 		fuzz!(|fuzzer_data: &[u8]| {

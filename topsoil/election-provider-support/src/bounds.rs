@@ -32,7 +32,7 @@
 //! [`ElectionBoundsBuilder`] helps defining the size and count bounds for both voters and targets.
 //!
 //! ```
-//! use frame_election_provider_support::bounds::*;
+//! use topsoil_election_provider_support::bounds::*;
 //!
 //! // unbounded limits are never exhausted.
 //! let unbounded = ElectionBoundsBuilder::default().build();
@@ -331,7 +331,7 @@ impl ElectionBoundsBuilder {
 mod test {
 	use super::*;
 
-	use frame_support::{assert_err, assert_ok};
+	use topsoil_support::{assert_err, assert_ok};
 
 	#[test]
 	fn data_provider_bounds_unbounded_works() {

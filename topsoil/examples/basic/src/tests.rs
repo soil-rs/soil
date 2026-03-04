@@ -21,10 +21,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-//! Tests for pallet-example-basic.
+//! Tests for topsoil-example-basic.
 
 use crate::*;
-use frame_support::{
+use topsoil_support::{
 	assert_ok, derive_impl,
 	dispatch::{DispatchInfo, GetDispatchInfo},
 	traits::{ConstU64, OnInitialize},
@@ -38,23 +38,23 @@ use soil_runtime::{
 	BuildStorage,
 };
 // Reexport crate as its pallet name for construct_runtime.
-use crate as pallet_example_basic;
+use crate as topsoil_example_basic;
 
-type Block = frame_system::mocking::MockBlock<Test>;
+type Block = topsoil_system::mocking::MockBlock<Test>;
 
 // For testing the pallet, we construct a mock runtime.
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub enum Test
 	{
-		System: frame_system,
-		Balances: pallet_balances,
-		Example: pallet_example_basic,
+		System: topsoil_system,
+		Balances: topsoil_balances,
+		Example: topsoil_example_basic,
 	}
 );
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
-	type BaseCallFilter = frame_support::traits::Everything;
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
+	type BaseCallFilter = topsoil_support::traits::Everything;
 	type BlockWeights = ();
 	type BlockLength = ();
 	type DbWeight = ();
@@ -69,17 +69,17 @@ impl frame_system::Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type Version = ();
 	type PalletInfo = PalletInfo;
-	type AccountData = pallet_balances::AccountData<u64>;
+	type AccountData = topsoil_balances::AccountData<u64>;
 	type OnNewAccount = ();
 	type OnKilledAccount = ();
 	type SystemWeightInfo = ();
 	type SS58Prefix = ();
 	type OnSetCode = ();
-	type MaxConsumers = frame_support::traits::ConstU32<16>;
+	type MaxConsumers = topsoil_support::traits::ConstU32<16>;
 }
 
-#[derive_impl(pallet_balances::config_preludes::TestDefaultConfig)]
-impl pallet_balances::Config for Test {
+#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
+impl topsoil_balances::Config for Test {
 	type AccountStore = System;
 }
 
@@ -95,7 +95,7 @@ pub fn new_test_ext() -> soil_io::TestExternalities {
 		// We use default for brevity, but you can configure as desired if needed.
 		system: Default::default(),
 		balances: Default::default(),
-		example: pallet_example_basic::GenesisConfig {
+		example: topsoil_example_basic::GenesisConfig {
 			dummy: 42,
 			// we configure the map with (key, value) pairs.
 			bar: alloc::vec![(1, 2), (2, 3)],
@@ -147,7 +147,7 @@ fn set_dummy_works() {
 #[test]
 fn signed_ext_watch_dummy_works() {
 	new_test_ext().execute_with(|| {
-		let call = pallet_example_basic::Call::set_dummy { new_value: 10 }.into();
+		let call = topsoil_example_basic::Call::set_dummy { new_value: 10 }.into();
 		let info = DispatchInfo::default();
 
 		assert_eq!(
@@ -179,7 +179,7 @@ fn counted_map_works() {
 #[test]
 fn weights_work() {
 	// must have a defined weight.
-	let default_call = pallet_example_basic::Call::<Test>::accumulate_dummy { increase_by: 10 };
+	let default_call = topsoil_example_basic::Call::<Test>::accumulate_dummy { increase_by: 10 };
 	let info1 = default_call.get_dispatch_info();
 	// aka. `let info = <Call<Test> as GetDispatchInfo>::get_dispatch_info(&default_call);`
 	// TODO: account for proof size weight
@@ -188,7 +188,7 @@ fn weights_work() {
 
 	// `set_dummy` is simpler than `accumulate_dummy`, and the weight
 	//   should be less.
-	let custom_call = pallet_example_basic::Call::<Test>::set_dummy { new_value: 20 };
+	let custom_call = topsoil_example_basic::Call::<Test>::set_dummy { new_value: 20 };
 	let info2 = custom_call.get_dispatch_info();
 	// TODO: account for proof size weight
 	assert!(info1.call_weight.ref_time() > info2.call_weight.ref_time());

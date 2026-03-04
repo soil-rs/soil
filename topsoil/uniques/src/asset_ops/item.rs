@@ -21,7 +21,7 @@ use crate::{
 	asset_strategies::{Attribute, WithItemConfig},
 	Item as ItemStorage, *,
 };
-use frame_support::{
+use topsoil_support::{
 	dispatch::DispatchResult,
 	ensure,
 	traits::tokens::asset_ops::{
@@ -33,7 +33,7 @@ use frame_support::{
 	},
 	BoundedSlice,
 };
-use frame_system::ensure_signed;
+use topsoil_system::ensure_signed;
 use soil_runtime::DispatchError;
 
 pub struct Item<PalletInstance>(PhantomData<PalletInstance>);
@@ -210,7 +210,7 @@ impl<T: Config<I>, I: 'static> Stash<IfOwnedBy<T::AccountId>> for Item<Pallet<T,
 	}
 }
 
-// NOTE: pallet-uniques create and restore operations are equivalent.
+// NOTE: topsoil-uniques create and restore operations are equivalent.
 // If an NFT was burned, it can be "re-created" (equivalently, "restored").
 // It will be "re-created" with all the data still bound to it.
 // If an NFT is minted for the first time, it can be regarded as "restored" with an empty data

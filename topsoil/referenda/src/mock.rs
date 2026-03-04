@@ -18,33 +18,33 @@
 //! The crate's tests.
 
 use super::*;
-use crate::{self as pallet_referenda, types::Track};
+use crate::{self as topsoil_referenda, types::Track};
 use alloc::borrow::Cow;
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
-use frame_support::{
+use topsoil_support::{
 	assert_ok, derive_impl, ord_parameter_types, parameter_types,
 	traits::{
 		ConstU32, ConstU64, Contains, EqualPrivilegeOnly, OnInitialize, OriginTrait, Polling,
 	},
 	weights::Weight,
 };
-use frame_system::{EnsureRoot, EnsureSignedBy};
+use topsoil_system::{EnsureRoot, EnsureSignedBy};
 use soil_runtime::{
 	str_array as s,
 	traits::{BlakeTwo256, Hash},
 	BuildStorage, DispatchResult, Perbill,
 };
 
-type Block = frame_system::mocking::MockBlock<Test>;
+type Block = topsoil_system::mocking::MockBlock<Test>;
 
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub enum Test
 	{
-		System: frame_system,
-		Balances: pallet_balances,
-		Preimage: pallet_preimage,
-		Scheduler: pallet_scheduler,
-		Referenda: pallet_referenda,
+		System: topsoil_system,
+		Balances: topsoil_balances,
+		Preimage: topsoil_preimage,
+		Scheduler: topsoil_scheduler,
+		Referenda: topsoil_referenda,
 	}
 );
 
@@ -52,27 +52,27 @@ frame_support::construct_runtime!(
 pub struct BaseFilter;
 impl Contains<RuntimeCall> for BaseFilter {
 	fn contains(call: &RuntimeCall) -> bool {
-		!matches!(call, &RuntimeCall::Balances(pallet_balances::Call::force_set_balance { .. }))
+		!matches!(call, &RuntimeCall::Balances(topsoil_balances::Call::force_set_balance { .. }))
 	}
 }
 
 parameter_types! {
 	pub MaxWeight: Weight = Weight::from_parts(2_000_000_000_000, u64::MAX);
 }
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
 	type BaseCallFilter = BaseFilter;
 	type Block = Block;
-	type AccountData = pallet_balances::AccountData<u64>;
+	type AccountData = topsoil_balances::AccountData<u64>;
 }
-impl pallet_preimage::Config for Test {
+impl topsoil_preimage::Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type WeightInfo = ();
 	type Currency = Balances;
 	type ManagerOrigin = EnsureRoot<u64>;
 	type Consideration = ();
 }
-impl pallet_scheduler::Config for Test {
+impl topsoil_scheduler::Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type RuntimeOrigin = RuntimeOrigin;
 	type PalletsOrigin = OriginCaller;
@@ -83,10 +83,10 @@ impl pallet_scheduler::Config for Test {
 	type WeightInfo = ();
 	type OriginPrivilegeCmp = EqualPrivilegeOnly;
 	type Preimages = Preimage;
-	type BlockNumberProvider = frame_system::Pallet<Test>;
+	type BlockNumberProvider = topsoil_system::Pallet<Test>;
 }
-#[derive_impl(pallet_balances::config_preludes::TestDefaultConfig)]
-impl pallet_balances::Config for Test {
+#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
+impl topsoil_balances::Config for Test {
 	type AccountStore = System;
 }
 parameter_types! {
@@ -178,11 +178,11 @@ impl TracksInfo<u64, u64> for TestTracksInfo {
 		DATA.iter().map(Cow::Borrowed)
 	}
 	fn track_for(id: &Self::RuntimeOrigin) -> Result<Self::Id, ()> {
-		if let Ok(system_origin) = frame_system::RawOrigin::try_from(id.clone()) {
+		if let Ok(system_origin) = topsoil_system::RawOrigin::try_from(id.clone()) {
 			match system_origin {
-				frame_system::RawOrigin::Root => Ok(0),
-				frame_system::RawOrigin::None => Ok(1),
-				frame_system::RawOrigin::Signed(1) => Ok(2),
+				topsoil_system::RawOrigin::Root => Ok(0),
+				topsoil_system::RawOrigin::None => Ok(1),
+				topsoil_system::RawOrigin::Signed(1) => Ok(2),
 				_ => Err(()),
 			}
 		} else {
@@ -196,8 +196,8 @@ impl Config for Test {
 	type RuntimeCall = RuntimeCall;
 	type RuntimeEvent = RuntimeEvent;
 	type Scheduler = Scheduler;
-	type Currency = pallet_balances::Pallet<Self>;
-	type SubmitOrigin = frame_system::EnsureSigned<u64>;
+	type Currency = topsoil_balances::Pallet<Self>;
+	type SubmitOrigin = topsoil_system::EnsureSigned<u64>;
 	type CancelOrigin = EnsureSignedBy<Four, u64>;
 	type KillOrigin = EnsureRoot<u64>;
 	type Slash = ();
@@ -221,9 +221,9 @@ impl Default for ExtBuilder {
 
 impl ExtBuilder {
 	pub fn build(self) -> soil_io::TestExternalities {
-		let mut t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+		let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 		let balances = vec![(1, 100), (2, 100), (3, 100), (4, 100), (5, 100), (6, 100)];
-		pallet_balances::GenesisConfig::<Test> { balances, ..Default::default() }
+		topsoil_balances::GenesisConfig::<Test> { balances, ..Default::default() }
 			.assimilate_storage(&mut t)
 			.unwrap();
 		let mut ext = soil_io::TestExternalities::new(t);
@@ -290,12 +290,12 @@ impl<Class> VoteTally<u32, Class> for Tally {
 }
 
 pub fn set_balance_proposal(value: u64) -> Vec<u8> {
-	RuntimeCall::Balances(pallet_balances::Call::force_set_balance { who: 42, new_free: value })
+	RuntimeCall::Balances(topsoil_balances::Call::force_set_balance { who: 42, new_free: value })
 		.encode()
 }
 
 pub fn set_balance_proposal_bounded(value: u64) -> BoundedCallOf<Test, ()> {
-	let c = RuntimeCall::Balances(pallet_balances::Call::force_set_balance {
+	let c = RuntimeCall::Balances(topsoil_balances::Call::force_set_balance {
 		who: 42,
 		new_free: value,
 	});
@@ -306,7 +306,7 @@ pub fn set_balance_proposal_bounded(value: u64) -> BoundedCallOf<Test, ()> {
 pub fn propose_set_balance(who: u64, value: u64, delay: u64) -> DispatchResult {
 	Referenda::submit(
 		RuntimeOrigin::signed(who),
-		Box::new(frame_system::RawOrigin::Root.into()),
+		Box::new(topsoil_system::RawOrigin::Root.into()),
 		set_balance_proposal_bounded(value),
 		DispatchTime::After(delay),
 	)
@@ -434,7 +434,7 @@ impl RefState {
 	pub fn create(self) -> ReferendumIndex {
 		assert_ok!(Referenda::submit(
 			RuntimeOrigin::signed(1),
-			Box::new(frame_support::dispatch::RawOrigin::Root.into()),
+			Box::new(topsoil_support::dispatch::RawOrigin::Root.into()),
 			set_balance_proposal_bounded(1),
 			DispatchTime::At(10),
 		));
@@ -462,7 +462,7 @@ impl RefState {
 }
 
 /// note a new preimage without registering.
-pub fn note_preimage(who: u64) -> <Test as frame_system::Config>::Hash {
+pub fn note_preimage(who: u64) -> <Test as topsoil_system::Config>::Hash {
 	use std::sync::atomic::{AtomicU8, Ordering};
 	// note a new preimage on every function invoke.
 	static COUNTER: AtomicU8 = AtomicU8::new(0);

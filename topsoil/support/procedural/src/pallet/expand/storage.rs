@@ -106,7 +106,7 @@ pub struct ResultOnEmptyStructMetadata {
 /// * if generics are named: reorder the generic, remove their name, and add the missing ones.
 /// * Add `#[allow(type_alias_bounds)]`
 pub fn process_generics(def: &mut Def) -> syn::Result<Vec<ResultOnEmptyStructMetadata>> {
-	let frame_support = &def.frame_support;
+	let topsoil_support = &def.topsoil_support;
 	let mut on_empty_struct_metadata = Vec::new();
 
 	for storage_def in def.storages.iter_mut() {
@@ -137,7 +137,7 @@ pub fn process_generics(def: &mut Def) -> syn::Result<Vec<ResultOnEmptyStructMet
 		};
 
 		let default_query_kind: syn::Type =
-			syn::parse_quote!(#frame_support::storage::types::OptionQuery);
+			syn::parse_quote!(#topsoil_support::storage::types::OptionQuery);
 		let mut default_on_empty = |value_ty: syn::Type| -> syn::Type {
 			if let Some(QueryKind::ResultQuery(error_path, variant_name)) =
 				storage_def.query_kind.as_ref()
@@ -154,9 +154,9 @@ pub fn process_generics(def: &mut Def) -> syn::Result<Vec<ResultOnEmptyStructMet
 				});
 				return syn::parse_quote!(#on_empty_ident);
 			}
-			syn::parse_quote!(#frame_support::traits::GetDefault)
+			syn::parse_quote!(#topsoil_support::traits::GetDefault)
 		};
-		let default_max_values: syn::Type = syn::parse_quote!(#frame_support::traits::GetDefault);
+		let default_max_values: syn::Type = syn::parse_quote!(#topsoil_support::traits::GetDefault);
 
 		let set_result_query_type_parameter = |query_type: &mut syn::Type| -> syn::Result<()> {
 			if let Some(QueryKind::ResultQuery(error_path, _)) = storage_def.query_kind.as_ref() {
@@ -276,7 +276,7 @@ pub fn process_generics(def: &mut Def) -> syn::Result<Vec<ResultOnEmptyStructMet
 				};
 				for hasher_idx in hasher_indices {
 					args.args[hasher_idx] = syn::GenericArgument::Type(
-						syn::parse_quote!(#frame_support::Blake2_128Concat),
+						syn::parse_quote!(#topsoil_support::Blake2_128Concat),
 					);
 				}
 			}
@@ -404,8 +404,8 @@ pub fn expand_storages(def: &mut Def) -> proc_macro2::TokenStream {
 		return final_error.into_compile_error();
 	}
 
-	let frame_support = &def.frame_support;
-	let frame_system = &def.frame_system;
+	let topsoil_support = &def.topsoil_support;
+	let topsoil_system = &def.topsoil_system;
 	let pallet_ident = &def.pallet_struct.pallet;
 	let mut entries_builder = vec![];
 	for storage in def.storages.iter() {
@@ -418,7 +418,7 @@ pub fn expand_storages(def: &mut Def) -> proc_macro2::TokenStream {
 
 		let cfg_attrs = &storage.cfg_attrs;
 		let deprecation = match crate::deprecation::get_deprecation(
-			&quote::quote! { #frame_support },
+			&quote::quote! { #topsoil_support },
 			&storage.attrs,
 		) {
 			Ok(deprecation) => deprecation,
@@ -432,11 +432,11 @@ pub fn expand_storages(def: &mut Def) -> proc_macro2::TokenStream {
 		entries_builder.push(quote::quote_spanned!(storage.attr_span =>
 			#(#cfg_attrs)*
 			#(#maybe_allow_attrs)*
-			(|entries: &mut #frame_support::__private::Vec<_>| {
+			(|entries: &mut #topsoil_support::__private::Vec<_>| {
 				{
-					<#full_ident as #frame_support::storage::StorageEntryMetadataBuilder>::build_metadata(
+					<#full_ident as #topsoil_support::storage::StorageEntryMetadataBuilder>::build_metadata(
 						#deprecation,
-						#frame_support::__private::vec![
+						#topsoil_support::__private::vec![
 							#( #docs, )*
 						],
 						entries,
@@ -491,7 +491,7 @@ pub fn expand_storages(def: &mut Def) -> proc_macro2::TokenStream {
 							#(#maybe_allow_attrs)*
 							pub fn #getter() -> #query {
 								<
-									#full_ident as #frame_support::storage::StorageValue<#value>
+									#full_ident as #topsoil_support::storage::StorageValue<#value>
 								>::get()
 							}
 						}
@@ -515,10 +515,10 @@ pub fn expand_storages(def: &mut Def) -> proc_macro2::TokenStream {
 							#[doc = #getter_doc_line]
 							#(#maybe_allow_attrs)*
 							pub fn #getter<KArg>(k: KArg) -> #query where
-								KArg: #frame_support::__private::codec::EncodeLike<#key>,
+								KArg: #topsoil_support::__private::codec::EncodeLike<#key>,
 							{
 								<
-									#full_ident as #frame_support::storage::StorageMap<#key, #value>
+									#full_ident as #topsoil_support::storage::StorageMap<#key, #value>
 								>::get(k)
 							}
 						}
@@ -542,7 +542,7 @@ pub fn expand_storages(def: &mut Def) -> proc_macro2::TokenStream {
 							#[doc = #getter_doc_line]
 							#(#maybe_allow_attrs)*
 							pub fn #getter<KArg>(k: KArg) -> #query where
-								KArg: #frame_support::__private::codec::EncodeLike<#key>,
+								KArg: #topsoil_support::__private::codec::EncodeLike<#key>,
 							{
 								// NOTE: we can't use any trait here because CountedStorageMap
 								// doesn't implement any.
@@ -569,12 +569,12 @@ pub fn expand_storages(def: &mut Def) -> proc_macro2::TokenStream {
 							#[doc = #getter_doc_line]
 							#(#maybe_allow_attrs)*
 							pub fn #getter<KArg1, KArg2>(k1: KArg1, k2: KArg2) -> #query where
-								KArg1: #frame_support::__private::codec::EncodeLike<#key1>,
-								KArg2: #frame_support::__private::codec::EncodeLike<#key2>,
+								KArg1: #topsoil_support::__private::codec::EncodeLike<#key1>,
+								KArg2: #topsoil_support::__private::codec::EncodeLike<#key2>,
 							{
 								<
 									#full_ident as
-									#frame_support::storage::StorageDoubleMap<#key1, #key2, #value>
+									#topsoil_support::storage::StorageDoubleMap<#key1, #key2, #value>
 								>::get(k1, k2)
 							}
 						}
@@ -599,14 +599,14 @@ pub fn expand_storages(def: &mut Def) -> proc_macro2::TokenStream {
 							#(#maybe_allow_attrs)*
 							pub fn #getter<KArg>(key: KArg) -> #query
 							where
-								KArg: #frame_support::storage::types::EncodeLikeTuple<
-									<#keygen as #frame_support::storage::types::KeyGenerator>::KArg
+								KArg: #topsoil_support::storage::types::EncodeLikeTuple<
+									<#keygen as #topsoil_support::storage::types::KeyGenerator>::KArg
 								>
-									+ #frame_support::storage::types::TupleToEncodedIter,
+									+ #topsoil_support::storage::types::TupleToEncodedIter,
 							{
 								<
 									#full_ident as
-									#frame_support::storage::StorageNMap<#keygen, #value>
+									#topsoil_support::storage::StorageNMap<#keygen, #value>
 								>::get(key)
 							}
 						}
@@ -631,10 +631,10 @@ pub fn expand_storages(def: &mut Def) -> proc_macro2::TokenStream {
 							#(#maybe_allow_attrs)*
 							pub fn #getter<KArg>(key: KArg) -> #query
 							where
-								KArg: #frame_support::storage::types::EncodeLikeTuple<
-									<#keygen as #frame_support::storage::types::KeyGenerator>::KArg
+								KArg: #topsoil_support::storage::types::EncodeLikeTuple<
+									<#keygen as #topsoil_support::storage::types::KeyGenerator>::KArg
 								>
-									+ #frame_support::storage::types::TupleToEncodedIter,
+									+ #topsoil_support::storage::types::TupleToEncodedIter,
 							{
 								// NOTE: we can't use any trait here because CountedStorageNMap
 								// doesn't implement any.
@@ -671,22 +671,22 @@ pub fn expand_storages(def: &mut Def) -> proc_macro2::TokenStream {
 						core::marker::PhantomData<(#type_use_gen,)>
 					);
 					#(#cfg_attrs)*
-					impl<#type_impl_gen> #frame_support::traits::StorageInstance
+					impl<#type_impl_gen> #topsoil_support::traits::StorageInstance
 						for #counter_prefix_struct_ident<#type_use_gen>
 						#config_where_clause
 					{
 						fn pallet_prefix() -> &'static str {
 							<
-								<T as #frame_system::Config>::PalletInfo
-								as #frame_support::traits::PalletInfo
+								<T as #topsoil_system::Config>::PalletInfo
+								as #topsoil_support::traits::PalletInfo
 							>::name::<Pallet<#type_use_gen>>()
 								.expect("No name found for the pallet in the runtime! This usually means that the pallet wasn't added to `construct_runtime!`.")
 						}
 
 						fn pallet_prefix_hash() -> [u8; 16] {
 							<
-								<T as #frame_system::Config>::PalletInfo
-								as #frame_support::traits::PalletInfo
+								<T as #topsoil_system::Config>::PalletInfo
+								as #topsoil_support::traits::PalletInfo
 							>::name_hash::<Pallet<#type_use_gen>>()
 								.expect("No name_hash found for the pallet in the runtime! This usually means that the pallet wasn't added to `construct_runtime!`.")
 						}
@@ -697,7 +697,7 @@ pub fn expand_storages(def: &mut Def) -> proc_macro2::TokenStream {
 						}
 					}
 					#(#cfg_attrs)*
-					impl<#type_impl_gen> #frame_support::storage::types::CountedStorageMapInstance
+					impl<#type_impl_gen> #topsoil_support::storage::types::CountedStorageMapInstance
 						for #prefix_struct_ident<#type_use_gen>
 						#config_where_clause
 					{
@@ -716,21 +716,21 @@ pub fn expand_storages(def: &mut Def) -> proc_macro2::TokenStream {
 						core::marker::PhantomData<(#type_use_gen,)>
 					);
 					#(#cfg_attrs)*
-					impl<#type_impl_gen> #frame_support::traits::StorageInstance
+					impl<#type_impl_gen> #topsoil_support::traits::StorageInstance
 						for #counter_prefix_struct_ident<#type_use_gen>
 						#config_where_clause
 					{
 						fn pallet_prefix() -> &'static str {
 							<
-								<T as #frame_system::Config>::PalletInfo
-								as #frame_support::traits::PalletInfo
+								<T as #topsoil_system::Config>::PalletInfo
+								as #topsoil_support::traits::PalletInfo
 							>::name::<Pallet<#type_use_gen>>()
 								.expect("No name found for the pallet in the runtime! This usually means that the pallet wasn't added to `construct_runtime!`.")
 						}
 						fn pallet_prefix_hash() -> [u8; 16] {
 							<
-								<T as #frame_system::Config>::PalletInfo
-								as #frame_support::traits::PalletInfo
+								<T as #topsoil_system::Config>::PalletInfo
+								as #topsoil_support::traits::PalletInfo
 							>::name_hash::<Pallet<#type_use_gen>>()
 								.expect("No name_hash found for the pallet in the runtime! This usually means that the pallet wasn't added to `construct_runtime!`.")
 						}
@@ -740,7 +740,7 @@ pub fn expand_storages(def: &mut Def) -> proc_macro2::TokenStream {
 						}
 					}
 					#(#cfg_attrs)*
-					impl<#type_impl_gen> #frame_support::storage::types::CountedStorageNMapInstance
+					impl<#type_impl_gen> #topsoil_support::storage::types::CountedStorageNMapInstance
 						for #prefix_struct_ident<#type_use_gen>
 						#config_where_clause
 					{
@@ -761,22 +761,22 @@ pub fn expand_storages(def: &mut Def) -> proc_macro2::TokenStream {
 				core::marker::PhantomData<(#type_use_gen,)>
 			);
 			#(#cfg_attrs)*
-			impl<#type_impl_gen> #frame_support::traits::StorageInstance
+			impl<#type_impl_gen> #topsoil_support::traits::StorageInstance
 				for #prefix_struct_ident<#type_use_gen>
 				#config_where_clause
 			{
 				fn pallet_prefix() -> &'static str {
 					<
-						<T as #frame_system::Config>::PalletInfo
-						as #frame_support::traits::PalletInfo
+						<T as #topsoil_system::Config>::PalletInfo
+						as #topsoil_support::traits::PalletInfo
 					>::name::<Pallet<#type_use_gen>>()
 						.expect("No name found for the pallet in the runtime! This usually means that the pallet wasn't added to `construct_runtime!`.")
 				}
 
 				fn pallet_prefix_hash() -> [u8; 16] {
 					<
-						<T as #frame_system::Config>::PalletInfo
-						as #frame_support::traits::PalletInfo
+						<T as #topsoil_system::Config>::PalletInfo
+						as #topsoil_support::traits::PalletInfo
 					>::name_hash::<Pallet<#type_use_gen>>()
 						.expect("No name_hash found for the pallet in the runtime! This usually means that the pallet wasn't added to `construct_runtime!`.")
 				}
@@ -833,7 +833,7 @@ pub fn expand_storages(def: &mut Def) -> proc_macro2::TokenStream {
 			#[allow(non_camel_case_types)]
 			#visibility struct #name;
 
-			impl<#type_impl_gen> #frame_support::traits::Get<Result<#value_ty, #error_path>>
+			impl<#type_impl_gen> #topsoil_support::traits::Get<Result<#value_ty, #error_path>>
 				for #name
 				#config_where_clause
 			{
@@ -858,7 +858,7 @@ pub fn expand_storages(def: &mut Def) -> proc_macro2::TokenStream {
 			.iter()
 			.filter_map(|storage| {
 				// A little hacky; don't generate for cfg gated storages to not get compile errors
-				// when building "frame-feature-testing" gated storages in the "frame-support-test"
+				// when building "frame-feature-testing" gated storages in the "topsoil-support-test"
 				// crate.
 				if storage.try_decode && storage.cfg_attrs.is_empty() {
 					let ident = &storage.ident;
@@ -872,27 +872,27 @@ pub fn expand_storages(def: &mut Def) -> proc_macro2::TokenStream {
 		storage_names.sort_by_cached_key(|ident| ident.to_string());
 
 		quote::quote!(
-			#frame_support::try_runtime_enabled! {
+			#topsoil_support::try_runtime_enabled! {
 				#[allow(deprecated)]
-				impl<#type_impl_gen> #frame_support::traits::TryDecodeEntireStorage
+				impl<#type_impl_gen> #topsoil_support::traits::TryDecodeEntireStorage
 				for #pallet_ident<#type_use_gen> #completed_where_clause
 				{
-					fn try_decode_entire_state() -> Result<usize, #frame_support::__private::Vec<#frame_support::traits::TryDecodeEntireStorageError>> {
-						let pallet_name = <<T as #frame_system::Config>::PalletInfo	as #frame_support::traits::PalletInfo>
+					fn try_decode_entire_state() -> Result<usize, #topsoil_support::__private::Vec<#topsoil_support::traits::TryDecodeEntireStorageError>> {
+						let pallet_name = <<T as #topsoil_system::Config>::PalletInfo	as #topsoil_support::traits::PalletInfo>
 							::name::<#pallet_ident<#type_use_gen>>()
 							.expect("Every active pallet has a name in the runtime; qed");
 
-						#frame_support::__private::log::debug!(target: "runtime::try-decode-state", "trying to decode pallet: {pallet_name}");
+						#topsoil_support::__private::log::debug!(target: "runtime::try-decode-state", "trying to decode pallet: {pallet_name}");
 
 						// NOTE: for now, we have to exclude storage items that are feature gated.
-						let mut errors = #frame_support::__private::Vec::new();
+						let mut errors = #topsoil_support::__private::Vec::new();
 						let mut decoded = 0usize;
 
 						#(
-							#frame_support::__private::log::debug!(target: "runtime::try-decode-state", "trying to decode storage: \
+							#topsoil_support::__private::log::debug!(target: "runtime::try-decode-state", "trying to decode storage: \
 							{pallet_name}::{}", stringify!(#storage_names));
 
-							match <#storage_names as #frame_support::traits::TryDecodeEntireStorage>::try_decode_entire_state() {
+							match <#storage_names as #topsoil_support::traits::TryDecodeEntireStorage>::try_decode_entire_state() {
 								Ok(count) => {
 									decoded += count;
 								},
@@ -918,16 +918,16 @@ pub fn expand_storages(def: &mut Def) -> proc_macro2::TokenStream {
 			#completed_where_clause
 		{
 			#[doc(hidden)]
-			pub fn storage_metadata() -> #frame_support::__private::metadata_ir::PalletStorageMetadataIR {
-				#frame_support::__private::metadata_ir::PalletStorageMetadataIR {
+			pub fn storage_metadata() -> #topsoil_support::__private::metadata_ir::PalletStorageMetadataIR {
+				#topsoil_support::__private::metadata_ir::PalletStorageMetadataIR {
 					prefix: <
-						<T as #frame_system::Config>::PalletInfo as
-						#frame_support::traits::PalletInfo
+						<T as #topsoil_system::Config>::PalletInfo as
+						#topsoil_support::traits::PalletInfo
 					>::name::<#pallet_ident<#type_use_gen>>()
 						.expect("No name found for the pallet in the runtime! This usually means that the pallet wasn't added to `construct_runtime!`."),
 					entries: {
 						#[allow(unused_mut)]
-						let mut entries = #frame_support::__private::vec![];
+						let mut entries = #topsoil_support::__private::vec![];
 						#( #entries_builder(&mut entries); )*
 						entries
 					},

@@ -22,22 +22,22 @@
 
 pub use pallet::*;
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
-	use frame_support::pallet_prelude::*;
+	use topsoil_support::pallet_prelude::*;
 
 	#[pallet::pallet]
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
-	pub trait Config: frame_system::Config {}
+	pub trait Config: topsoil_system::Config {}
 
 	/// I'm the documentation
 	#[pallet::storage]
 	pub type Value<T> = StorageValue<_, u32>;
 
 	#[pallet::genesis_config]
-	#[derive(frame_support::DefaultNoBound)]
+	#[derive(topsoil_support::DefaultNoBound)]
 	pub struct GenesisConfig<T: Config> {
 		#[serde(skip)]
 		_config: core::marker::PhantomData<T>,

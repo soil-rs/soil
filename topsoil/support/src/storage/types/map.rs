@@ -28,7 +28,7 @@ use crate::{
 };
 use alloc::{vec, vec::Vec};
 use codec::{Decode, Encode, EncodeLike, FullCodec, MaxEncodedLen};
-use frame_support::storage::StorageDecodeNonDedupLength;
+use topsoil_support::storage::StorageDecodeNonDedupLength;
 use soil_arithmetic::traits::SaturatedConversion;
 use soil_metadata_ir::{StorageEntryMetadataIR, StorageEntryTypeIR};
 
@@ -41,11 +41,11 @@ use soil_metadata_ir::{StorageEntryMetadataIR, StorageEntryTypeIR};
 /// # Example
 ///
 /// ```
-/// #[frame_support::pallet]
+/// #[topsoil_support::pallet]
 /// mod pallet {
-///     # use frame_support::pallet_prelude::*;
+///     # use topsoil_support::pallet_prelude::*;
 ///     # #[pallet::config]
-///     # pub trait Config: frame_system::Config {}
+///     # pub trait Config: topsoil_system::Config {}
 ///     # #[pallet::pallet]
 ///     # pub struct Pallet<T>(_);
 /// 	/// A kitchen-sink StorageMap, with all possible additional attributes.

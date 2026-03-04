@@ -15,7 +15,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use frame_benchmarking::v2::*;
+use topsoil_benchmarking::v2::*;
 
 #[benchmarks]
 mod benches {

@@ -15,14 +15,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 // Argument expected as list, not named value.
 #[pallet_doc = "invalid"]
 mod pallet {
 	#[pallet::config]
-	pub trait Config: frame_system::Config
+	pub trait Config: topsoil_system::Config
 	where
-		<Self as frame_system::Config>::Nonce: From<u128>,
+		<Self as topsoil_system::Config>::Nonce: From<u128>,
 	{
 	}
 

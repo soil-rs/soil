@@ -148,7 +148,7 @@
 //!
 //! ## Sets of Tokens
 //!
-//! For managing sets of tokens, see the [`fungibles`](`frame_support::traits::fungibles`) trait
+//! For managing sets of tokens, see the [`fungibles`](`topsoil_support::traits::fungibles`) trait
 //! which is a wrapper around this trait but supporting multiple asset instances.
 //!
 //! [`frame_tokens`]: ../../../../polkadot_sdk_docs/reference_docs/frame_tokens/index.html
@@ -163,7 +163,7 @@ mod union_of;
 
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use core::marker::PhantomData;
-use frame_support_procedural::{CloneNoBound, DebugNoBound, EqNoBound, PartialEqNoBound};
+use topsoil_support_procedural::{CloneNoBound, DebugNoBound, EqNoBound, PartialEqNoBound};
 use scale_info::TypeInfo;
 #[cfg(feature = "runtime-benchmarks")]
 use soil_runtime::Saturating;

@@ -20,7 +20,7 @@ use crate::{Config, Pallet, TxPaymentCredit, LOG_TARGET};
 
 use codec::{DecodeWithMemTracking, FullCodec, MaxEncodedLen};
 use core::marker::PhantomData;
-use frame_support::{
+use topsoil_support::{
 	traits::{
 		fungible::{Balanced, Credit, Inspect},
 		tokens::{Precision, WithdrawConsequence},
@@ -36,12 +36,12 @@ use soil_runtime::{
 };
 
 type NegativeImbalanceOf<C, T> =
-	<C as Currency<<T as frame_system::Config>::AccountId>>::NegativeImbalance;
+	<C as Currency<<T as topsoil_system::Config>::AccountId>>::NegativeImbalance;
 
 /// Handle withdrawing, refunding and depositing of transaction fees.
 pub trait OnChargeTransaction<T: Config>: TxCreditHold<T> {
 	/// The underlying integer type in which fees are calculated.
-	type Balance: frame_support::traits::tokens::Balance;
+	type Balance: topsoil_support::traits::tokens::Balance;
 
 	type LiquidityInfo: Default;
 
@@ -104,8 +104,8 @@ pub trait TxCreditHold<T: Config> {
 	type Credit: FullCodec + DecodeWithMemTracking + MaxEncodedLen + TypeInfo + SuppressedDrop;
 }
 
-/// Implements transaction payment for a pallet implementing the [`frame_support::traits::fungible`]
-/// trait (eg. pallet_balances) using an unbalance handler (implementing
+/// Implements transaction payment for a pallet implementing the [`topsoil_support::traits::fungible`]
+/// trait (eg. topsoil_balances) using an unbalance handler (implementing
 /// [`OnUnbalanced`]).
 ///
 /// The unbalance handler is given 2 unbalanceds in [`OnUnbalanced::on_unbalanceds`]: `fee` and
@@ -120,7 +120,7 @@ where
 	OU: OnUnbalanced<<Self::Credit as SuppressedDrop>::Inner>,
 {
 	type LiquidityInfo = Option<<Self::Credit as SuppressedDrop>::Inner>;
-	type Balance = <F as Inspect<<T as frame_system::Config>::AccountId>>::Balance;
+	type Balance = <F as Inspect<<T as topsoil_system::Config>::AccountId>>::Balance;
 
 	fn withdraw_fee(
 		who: &<T>::AccountId,
@@ -137,8 +137,8 @@ where
 			who,
 			fee_with_tip,
 			Precision::Exact,
-			frame_support::traits::tokens::Preservation::Preserve,
-			frame_support::traits::tokens::Fortitude::Polite,
+			topsoil_support::traits::tokens::Preservation::Preserve,
+			topsoil_support::traits::tokens::Fortitude::Polite,
 		)
 		.map_err(|_| InvalidTransaction::Payment)?;
 
@@ -188,7 +188,7 @@ where
 		}
 
 		// skip refund if account was killed by the tx
-		let fee_credit = if frame_system::Pallet::<T>::account_exists(who) {
+		let fee_credit = if topsoil_system::Pallet::<T>::account_exists(who) {
 			let (mut fee_credit, refund_credit) = remaining_credit.split(corrected_fee);
 			// resolve might fail if refund is below the ed and account
 			// is kept alive by other providers
@@ -223,11 +223,11 @@ where
 	T: Config,
 	F: Balanced<T::AccountId> + 'static,
 {
-	type Credit = NoDrop<Credit<<T as frame_system::Config>::AccountId, F>>;
+	type Credit = NoDrop<Credit<<T as topsoil_system::Config>::AccountId, F>>;
 }
 
 /// Implements the transaction payment for a pallet implementing the [`Currency`]
-/// trait (eg. the pallet_balances) using an unbalance handler (implementing
+/// trait (eg. the topsoil_balances) using an unbalance handler (implementing
 /// [`OnUnbalanced`]).
 ///
 /// The unbalance handler is given 2 unbalanceds in [`OnUnbalanced::on_unbalanceds`]: `fee` and
@@ -245,19 +245,19 @@ pub struct CurrencyAdapter<C, OU>(PhantomData<(C, OU)>);
 impl<T, C, OU> OnChargeTransaction<T> for CurrencyAdapter<C, OU>
 where
 	T: Config,
-	C: Currency<<T as frame_system::Config>::AccountId>,
+	C: Currency<<T as topsoil_system::Config>::AccountId>,
 	C::PositiveImbalance: Imbalance<
-		<C as Currency<<T as frame_system::Config>::AccountId>>::Balance,
+		<C as Currency<<T as topsoil_system::Config>::AccountId>>::Balance,
 		Opposite = C::NegativeImbalance,
 	>,
 	C::NegativeImbalance: Imbalance<
-		<C as Currency<<T as frame_system::Config>::AccountId>>::Balance,
+		<C as Currency<<T as topsoil_system::Config>::AccountId>>::Balance,
 		Opposite = C::PositiveImbalance,
 	>,
 	OU: OnUnbalanced<NegativeImbalanceOf<C, T>>,
 {
 	type LiquidityInfo = Option<NegativeImbalanceOf<C, T>>;
-	type Balance = <C as Currency<<T as frame_system::Config>::AccountId>>::Balance;
+	type Balance = <C as Currency<<T as topsoil_system::Config>::AccountId>>::Balance;
 
 	/// Withdraw the predicted fee from the transaction origin.
 	///

@@ -17,14 +17,14 @@
 
 //! Tests for the alliance pallet.
 
-use frame_support::{assert_noop, assert_ok};
-use frame_system::{EventRecord, Phase};
+use topsoil_support::{assert_noop, assert_ok};
+use topsoil_system::{EventRecord, Phase};
 use soil_runtime::traits::BadOrigin;
 
 use super::*;
 use crate::{self as alliance, mock::*};
 
-type AllianceMotionEvent = pallet_collective::Event<Test, pallet_collective::Instance1>;
+type AllianceMotionEvent = topsoil_collective::Event<Test, topsoil_collective::Instance1>;
 
 fn assert_powerless(user: RuntimeOrigin, user_is_member: bool) {
 	// vote / veto with a valid proposal
@@ -188,8 +188,8 @@ fn propose_works() {
 			Box::new(proposal.clone()),
 			proposal_len
 		));
-		assert_eq!(*pallet_collective::Proposals::<Test, Instance1>::get(), vec![hash]);
-		assert_eq!(pallet_collective::ProposalOf::<Test, Instance1>::get(&hash), Some(proposal));
+		assert_eq!(*topsoil_collective::Proposals::<Test, Instance1>::get(), vec![hash]);
+		assert_eq!(topsoil_collective::ProposalOf::<Test, Instance1>::get(&hash), Some(proposal));
 		assert_eq!(
 			System::events(),
 			vec![EventRecord {

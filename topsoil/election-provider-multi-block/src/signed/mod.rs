@@ -57,8 +57,8 @@ use crate::{
 	verifier::{AsynchronousVerifier, SolutionDataProvider, Status, VerificationResult},
 };
 use codec::{Decode, Encode, MaxEncodedLen};
-use frame_election_provider_support::PageIndex;
-use frame_support::{
+use topsoil_election_provider_support::PageIndex;
+use topsoil_support::{
 	dispatch::DispatchResultWithPostInfo,
 	pallet_prelude::{StorageDoubleMap, ValueQuery, *},
 	traits::{
@@ -70,7 +70,7 @@ use frame_support::{
 	},
 	BoundedVec, Twox64Concat,
 };
-use frame_system::{ensure_signed, pallet_prelude::*};
+use topsoil_system::{ensure_signed, pallet_prelude::*};
 use scale_info::TypeInfo;
 use soil_io::MultiRemovalResults;
 use soil_npos_elections::ElectionScore;
@@ -91,11 +91,11 @@ pub(crate) type SignedWeightsOf<T> = <T as crate::signed::Config>::WeightInfo;
 mod tests;
 
 type BalanceOf<T> =
-	<<T as Config>::Currency as Inspect<<T as frame_system::Config>::AccountId>>::Balance;
+	<<T as Config>::Currency as Inspect<<T as topsoil_system::Config>::AccountId>>::Balance;
 
 /// All of the (meta) data around a signed submission
 #[derive(Encode, Decode, MaxEncodedLen, TypeInfo, Default, DebugNoBound)]
-#[cfg_attr(test, derive(frame_support::PartialEqNoBound, frame_support::EqNoBound))]
+#[cfg_attr(test, derive(topsoil_support::PartialEqNoBound, topsoil_support::EqNoBound))]
 #[codec(mel_bound(T: Config))]
 #[scale_info(skip_type_params(T))]
 pub struct SubmissionMetadata<T: Config> {
@@ -227,7 +227,7 @@ impl<Balance: From<u32> + Saturating, G: Get<Balance>> CalculatePageDeposit<Bala
 	}
 }
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
 
@@ -638,7 +638,7 @@ pub mod pallet {
 	#[cfg(any(feature = "try-runtime", test, feature = "runtime-benchmarks", debug_assertions))]
 	impl<T: Config> Submissions<T> {
 		pub(crate) fn sorted_submitters(round: u32) -> BoundedVec<T::AccountId, T::MaxSubmissions> {
-			use frame_support::traits::TryCollect;
+			use topsoil_support::traits::TryCollect;
 			SortedScores::<T>::get(round).into_iter().map(|(x, _)| x).try_collect().unwrap()
 		}
 

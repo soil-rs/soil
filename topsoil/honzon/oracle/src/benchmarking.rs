@@ -18,10 +18,10 @@
 use super::*;
 use crate::Pallet as Oracle;
 
-use frame_benchmarking::v2::*;
+use topsoil_benchmarking::v2::*;
 
-use frame_support::assert_ok;
-use frame_system::{Pallet as System, RawOrigin};
+use topsoil_support::assert_ok;
+use topsoil_system::{Pallet as System, RawOrigin};
 
 #[instance_benchmarks]
 mod benchmarks {

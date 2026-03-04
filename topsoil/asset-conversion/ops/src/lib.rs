@@ -45,36 +45,36 @@ pub use weights::WeightInfo;
 extern crate alloc;
 
 use alloc::boxed::Box;
-use frame_support::traits::{
+use topsoil_support::traits::{
 	fungible::{Inspect as FungibleInspect, Mutate as FungibleMutate},
 	fungibles::{roles::ResetTeam, Inspect, Mutate, Refund},
 	tokens::{Fortitude, Precision, Preservation},
 	AccountTouch,
 };
-use pallet_asset_conversion::{PoolLocator, Pools};
+use topsoil_asset_conversion::{PoolLocator, Pools};
 use soil_runtime::traits::{TryConvert, Zero};
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
-	use frame_support::pallet_prelude::*;
-	use frame_system::pallet_prelude::*;
+	use topsoil_support::pallet_prelude::*;
+	use topsoil_system::pallet_prelude::*;
 
 	#[pallet::pallet]
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
 	pub trait Config:
-		pallet_asset_conversion::Config<
+		topsoil_asset_conversion::Config<
 			PoolId = (
-				<Self as pallet_asset_conversion::Config>::AssetKind,
-				<Self as pallet_asset_conversion::Config>::AssetKind,
+				<Self as topsoil_asset_conversion::Config>::AssetKind,
+				<Self as topsoil_asset_conversion::Config>::AssetKind,
 			),
-		> + frame_system::Config
+		> + topsoil_system::Config
 	{
 		/// Overarching event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// Type previously used to derive the account ID for a pool. Indicates that the pool's
 		/// liquidity assets are located at this account before the migration.
@@ -84,7 +84,7 @@ pub mod pallet {
 		>;
 
 		/// Retrieves information about an existing deposit for a given account ID and asset from
-		/// the [`pallet_asset_conversion::Config::Assets`] registry and can initiate the refund.
+		/// the [`topsoil_asset_conversion::Config::Assets`] registry and can initiate the refund.
 		type AssetsRefund: Refund<
 			Self::AccountId,
 			AssetId = Self::AssetKind,
@@ -92,7 +92,7 @@ pub mod pallet {
 		>;
 
 		/// Retrieves information about an existing deposit for a given account ID and asset from
-		/// the [`pallet_asset_conversion::Config::PoolAssets`] registry and can initiate the
+		/// the [`topsoil_asset_conversion::Config::PoolAssets`] registry and can initiate the
 		/// refund.
 		type PoolAssetsRefund: Refund<
 			Self::AccountId,
@@ -101,12 +101,12 @@ pub mod pallet {
 		>;
 
 		/// Means to reset the team for assets from the
-		/// [`pallet_asset_conversion::Config::PoolAssets`] registry.
+		/// [`topsoil_asset_conversion::Config::PoolAssets`] registry.
 		type PoolAssetsTeam: ResetTeam<Self::AccountId, AssetId = Self::PoolAssetId>;
 
 		/// Registry of an asset used as an account deposit for the
-		/// [`pallet_asset_conversion::Config::Assets`] and
-		/// [`pallet_asset_conversion::Config::PoolAssets`] registries.
+		/// [`topsoil_asset_conversion::Config::Assets`] and
+		/// [`topsoil_asset_conversion::Config::PoolAssets`] registries.
 		type DepositAsset: FungibleMutate<Self::AccountId>;
 
 		/// Weight information for extrinsics in this pallet.

@@ -43,7 +43,7 @@
 //! Configuration of call filters:
 //!
 //! ```ignore
-//! impl frame_system::Config for Runtime {
+//! impl topsoil_system::Config for Runtime {
 //!   // …
 //!   type BaseCallFilter = InsideBoth<DefaultFilter, SafeMode>;
 //!   // …
@@ -72,7 +72,7 @@ pub mod mock;
 mod tests;
 pub mod weights;
 
-use frame::{
+use topsoil::{
 	prelude::{
 		fungible::hold::{Inspect, Mutate},
 		*,
@@ -84,9 +84,9 @@ pub use pallet::*;
 pub use weights::*;
 
 type BalanceOf<T> =
-	<<T as Config>::Currency as fungible::Inspect<<T as frame_system::Config>::AccountId>>::Balance;
+	<<T as Config>::Currency as fungible::Inspect<<T as topsoil_system::Config>::AccountId>>::Balance;
 
-#[frame::pallet]
+#[topsoil::pallet]
 pub mod pallet {
 	use super::*;
 
@@ -94,10 +94,10 @@ pub mod pallet {
 	pub struct Pallet<T>(PhantomData<T>);
 
 	#[pallet::config]
-	pub trait Config: frame_system::Config {
+	pub trait Config: topsoil_system::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// Currency type for this pallet, used for Deposits.
 		type Currency: Inspect<Self::AccountId>
@@ -474,7 +474,7 @@ impl<T: Config> Pallet<T> {
 			Self::hold(who, amount)?;
 		}
 
-		let until = <frame_system::Pallet<T>>::block_number().saturating_add(duration);
+		let until = <topsoil_system::Pallet<T>>::block_number().saturating_add(duration);
 		EnteredUntil::<T>::put(until);
 		Self::deposit_event(Event::Entered { until });
 		T::Notify::entered();
@@ -522,7 +522,7 @@ impl<T: Config> Pallet<T> {
 			ensure!(!Self::is_entered(), Error::<T>::Entered);
 
 			let delay = T::ReleaseDelay::get().ok_or(Error::<T>::NotConfigured)?;
-			let now = <frame_system::Pallet<T>>::block_number();
+			let now = <topsoil_system::Pallet<T>>::block_number();
 			ensure!(now > block.saturating_add(delay), Error::<T>::CannotReleaseYet);
 		}
 
@@ -561,7 +561,7 @@ impl<T: Config> Pallet<T> {
 	///
 	/// Errors if the account already has a hold for the same reason.
 	fn hold(who: T::AccountId, amount: BalanceOf<T>) -> Result<(), Error<T>> {
-		let block = <frame_system::Pallet<T>>::block_number();
+		let block = <topsoil_system::Pallet<T>>::block_number();
 		if !T::Currency::balance_on_hold(&HoldReason::EnterOrExtend.into(), &who).is_zero() {
 			return Err(Error::<T>::AlreadyDeposited.into());
 		}
@@ -608,7 +608,7 @@ where
 	}
 }
 
-impl<T: Config> frame::traits::SafeMode for Pallet<T> {
+impl<T: Config> topsoil::traits::SafeMode for Pallet<T> {
 	type BlockNumber = BlockNumberFor<T>;
 
 	fn is_entered() -> bool {
@@ -617,25 +617,25 @@ impl<T: Config> frame::traits::SafeMode for Pallet<T> {
 
 	fn remaining() -> Option<BlockNumberFor<T>> {
 		EnteredUntil::<T>::get().map(|until| {
-			let now = <frame_system::Pallet<T>>::block_number();
+			let now = <topsoil_system::Pallet<T>>::block_number();
 			until.saturating_sub(now)
 		})
 	}
 
-	fn enter(duration: BlockNumberFor<T>) -> Result<(), frame::traits::SafeModeError> {
+	fn enter(duration: BlockNumberFor<T>) -> Result<(), topsoil::traits::SafeModeError> {
 		Self::do_enter(None, duration).map_err(Into::into)
 	}
 
-	fn extend(duration: BlockNumberFor<T>) -> Result<(), frame::traits::SafeModeError> {
+	fn extend(duration: BlockNumberFor<T>) -> Result<(), topsoil::traits::SafeModeError> {
 		Self::do_extend(None, duration).map_err(Into::into)
 	}
 
-	fn exit() -> Result<(), frame::traits::SafeModeError> {
+	fn exit() -> Result<(), topsoil::traits::SafeModeError> {
 		Self::do_exit(ExitReason::Force).map_err(Into::into)
 	}
 }
 
-impl<T: Config> From<Error<T>> for frame::traits::SafeModeError {
+impl<T: Config> From<Error<T>> for topsoil::traits::SafeModeError {
 	fn from(err: Error<T>) -> Self {
 		match err {
 			Error::<T>::Entered => Self::AlreadyEntered,

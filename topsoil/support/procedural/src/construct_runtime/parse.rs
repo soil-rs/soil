@@ -16,7 +16,7 @@
 // limitations under the License.
 
 use core::str::FromStr;
-use frame_support_procedural_tools::syn_ext as ext;
+use topsoil_support_procedural_tools::syn_ext as ext;
 use proc_macro2::{Span, TokenStream};
 use quote::ToTokens;
 use std::collections::{HashMap, HashSet};
@@ -192,15 +192,15 @@ impl Parse for WhereDefinition {
 pub struct PalletDeclaration {
 	/// Is this pallet fully expanded?
 	pub is_expanded: bool,
-	/// The name of the pallet, e.g.`System` in `System: frame_system`.
+	/// The name of the pallet, e.g.`System` in `System: topsoil_system`.
 	pub name: Ident,
 	/// Optional attributes tagged right above a pallet declaration.
 	pub attrs: Vec<Attribute>,
 	/// Optional fixed index, e.g. `MyPallet ...  = 3,`.
 	pub index: Option<u8>,
-	/// The path of the pallet, e.g. `frame_system` in `System: frame_system`.
+	/// The path of the pallet, e.g. `topsoil_system` in `System: topsoil_system`.
 	pub path: PalletPath,
-	/// The instance of the pallet, e.g. `Instance1` in `Council: pallet_collective::<Instance1>`.
+	/// The instance of the pallet, e.g. `Instance1` in `Council: topsoil_collective::<Instance1>`.
 	pub instance: Option<Ident>,
 	/// The declared pallet parts,
 	/// e.g. `Some([Pallet, Call])` for `System: system::{Pallet, Call}`
@@ -582,13 +582,13 @@ fn parse_pallet_parts_no_generic(input: ParseStream) -> Result<Vec<PalletPartNoG
 pub struct Pallet {
 	/// Is this pallet fully expanded?
 	pub is_expanded: bool,
-	/// The name of the pallet, e.g.`System` in `System: frame_system`.
+	/// The name of the pallet, e.g.`System` in `System: topsoil_system`.
 	pub name: Ident,
 	/// Either automatically inferred, or defined (e.g. `MyPallet ...  = 3,`).
 	pub index: u8,
-	/// The path of the pallet, e.g. `frame_system` in `System: frame_system`.
+	/// The path of the pallet, e.g. `topsoil_system` in `System: topsoil_system`.
 	pub path: PalletPath,
-	/// The instance of the pallet, e.g. `Instance1` in `Council: pallet_collective::<Instance1>`.
+	/// The instance of the pallet, e.g. `Instance1` in `Council: topsoil_collective::<Instance1>`.
 	pub instance: Option<Ident>,
 	/// The pallet parts to use for the pallet.
 	pub pallet_parts: Vec<PalletPart>,
@@ -639,11 +639,11 @@ impl Pallet {
 enum PalletsConversion {
 	/// Pallets implicitly declare parts.
 	///
-	/// `System: frame_system`.
+	/// `System: topsoil_system`.
 	Implicit(Vec<PalletDeclaration>),
 	/// Pallets explicitly declare parts.
 	///
-	/// `System: frame_system::{Pallet, Call}`
+	/// `System: topsoil_system::{Pallet, Call}`
 	///
 	/// However, for backwards compatibility with Polkadot/Kusama
 	/// we must propagate some other parts to the pallet by default.
@@ -653,7 +653,7 @@ enum PalletsConversion {
 	/// This is the end state that contains extra parts included by
 	/// default by Substrate.
 	///
-	/// `System: frame_system expanded::{Error} ::{Pallet, Call}`
+	/// `System: topsoil_system expanded::{Error} ::{Pallet, Call}`
 	///
 	/// For this example, the `Pallet`, `Call` and `Error` parts are collected.
 	ExplicitExpanded(Vec<Pallet>),

@@ -188,7 +188,7 @@ pub trait OnRuntimeUpgrade {
 	#[cfg(feature = "try-runtime")]
 	fn try_on_runtime_upgrade(checks: bool) -> Result<Weight, TryRuntimeError> {
 		let maybe_state = if checks {
-			let _guard = frame_support::StorageNoopGuard::default();
+			let _guard = topsoil_support::StorageNoopGuard::default();
 			let state = Self::pre_upgrade()?;
 			Some(state)
 		} else {
@@ -198,7 +198,7 @@ pub trait OnRuntimeUpgrade {
 		let weight = Self::on_runtime_upgrade();
 
 		if let Some(state) = maybe_state {
-			let _guard = frame_support::StorageNoopGuard::default();
+			let _guard = topsoil_support::StorageNoopGuard::default();
 			// we want to panic if any checks fail right here right now.
 			Self::post_upgrade(state)?
 		}
@@ -414,7 +414,7 @@ pub trait Hooks<BlockNumber> {
 	/// complexity. For example, do not execute any unbounded iterations.
 	///
 	/// NOTE: This function is called BEFORE ANY extrinsic in a block is applied, including inherent
-	/// extrinsics. Hence for instance, if you runtime includes `pallet-timestamp`, the `timestamp`
+	/// extrinsics. Hence for instance, if you runtime includes `topsoil-timestamp`, the `timestamp`
 	/// is not yet up to date at this point.
 	fn on_initialize(_n: BlockNumber) -> Weight {
 		Weight::zero()
@@ -536,7 +536,7 @@ pub trait Hooks<BlockNumber> {
 	///
 	/// This function can freely read from the state, but any change it makes to the state is
 	/// meaningless. Writes can be pushed back to the chain by submitting extrinsics from the
-	/// offchain worker to the transaction pool. See `pallet-example-offchain-worker` for more
+	/// offchain worker to the transaction pool. See `topsoil-example-offchain-worker` for more
 	/// details on this.
 	///
 	/// Moreover, the code in this function has access to a wider range of host functions in

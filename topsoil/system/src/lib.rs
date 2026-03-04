@@ -124,8 +124,8 @@ use soil_version::RuntimeVersion;
 
 use codec::{Decode, DecodeWithMemTracking, Encode, EncodeLike, FullCodec, MaxEncodedLen};
 #[cfg(feature = "std")]
-use frame_support::traits::BuildGenesisConfig;
-use frame_support::{
+use topsoil_support::traits::BuildGenesisConfig;
+use topsoil_support::{
 	dispatch::{
 		extract_actual_pays_fee, extract_actual_weight, DispatchClass, DispatchInfo,
 		DispatchResult, DispatchResultWithPostInfo, GetDispatchInfo, PerDispatchClass,
@@ -183,8 +183,8 @@ pub use extensions::{
 };
 // Backward compatible re-export.
 pub use extensions::check_mortality::CheckMortality as CheckEra;
-pub use frame_support::dispatch::RawOrigin;
-use frame_support::traits::{Authorize, PostInherents, PostTransactions, PreInherents};
+pub use topsoil_support::dispatch::RawOrigin;
+use topsoil_support::traits::{Authorize, PostInherents, PostTransactions, PreInherents};
 use soil_core::storage::StateVersion;
 pub use weights::WeightInfo;
 
@@ -296,16 +296,16 @@ pub struct DispatchEventInfo {
 	pub pays_fee: Pays,
 }
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
-	use crate::{self as frame_system, pallet_prelude::*, *};
+	use crate::{self as topsoil_system, pallet_prelude::*, *};
 	use codec::HasCompact;
-	use frame_support::pallet_prelude::*;
+	use topsoil_support::pallet_prelude::*;
 
 	/// Default implementations of [`DefaultConfig`], which can be used to implement [`Config`].
 	pub mod config_preludes {
 		use super::{inject_runtime_type, DefaultConfig};
-		use frame_support::{derive_impl, traits::Get};
+		use topsoil_support::{derive_impl, traits::Get};
 
 		/// A predefined adapter that covers `BlockNumberFor<T>` for `Config::Block::BlockNumber` of
 		/// the types `u32`, `u64`, and `u128`.
@@ -320,21 +320,21 @@ pub mod pallet {
 		}
 
 		/// Provides a viable default config that can be used with
-		/// [`derive_impl`](`frame_support::derive_impl`) to derive a testing pallet config
+		/// [`derive_impl`](`topsoil_support::derive_impl`) to derive a testing pallet config
 		/// based on this one.
 		///
 		/// See `Test` in the `default-config` example pallet's `test.rs` for an example of
 		/// a downstream user of this particular `TestDefaultConfig`
 		pub struct TestDefaultConfig;
 
-		#[frame_support::register_default_impl(TestDefaultConfig)]
+		#[topsoil_support::register_default_impl(TestDefaultConfig)]
 		impl DefaultConfig for TestDefaultConfig {
 			type Nonce = u32;
 			type Hash = soil_core::hash::H256;
 			type Hashing = soil_runtime::traits::BlakeTwo256;
 			type AccountId = u64;
 			type Lookup = soil_runtime::traits::IdentityLookup<Self::AccountId>;
-			type MaxConsumers = frame_support::traits::ConstU32<16>;
+			type MaxConsumers = topsoil_support::traits::ConstU32<16>;
 			type AccountData = ();
 			type OnNewAccount = ();
 			type OnKilledAccount = ();
@@ -355,8 +355,8 @@ pub mod pallet {
 			type PalletInfo = ();
 			#[inject_runtime_type]
 			type RuntimeTask = ();
-			type BaseCallFilter = frame_support::traits::Everything;
-			type BlockHashCount = TestBlockHashCount<frame_support::traits::ConstU32<10>>;
+			type BaseCallFilter = topsoil_support::traits::Everything;
+			type BlockHashCount = TestBlockHashCount<topsoil_support::traits::ConstU32<10>>;
 			type OnSetCode = ();
 			type SingleBlockMigrations = ();
 			type MultiBlockMigrator = ();
@@ -375,12 +375,12 @@ pub mod pallet {
 		///   'account-indexing' pallet is being used.
 		/// * Given that we don't know anything about the existence of a currency system in scope,
 		///   an [`DefaultConfig::AccountData`] is chosen that has no addition data. Overwrite this
-		///   if you use `pallet-balances` or similar.
+		///   if you use `topsoil-balances` or similar.
 		/// * Make sure to overwrite [`DefaultConfig::Version`].
 		/// * 2s block time, and a default 5mb block size is used.
 		pub struct SolochainDefaultConfig;
 
-		#[frame_support::register_default_impl(SolochainDefaultConfig)]
+		#[topsoil_support::register_default_impl(SolochainDefaultConfig)]
 		impl DefaultConfig for SolochainDefaultConfig {
 			/// The default type for storing how many extrinsics an account has signed.
 			type Nonce = u32;
@@ -398,7 +398,7 @@ pub mod pallet {
 			type Lookup = soil_runtime::traits::AccountIdLookup<Self::AccountId, ()>;
 
 			/// The maximum number of consumers allowed on a single account. Using 128 as default.
-			type MaxConsumers = frame_support::traits::ConstU32<128>;
+			type MaxConsumers = topsoil_support::traits::ConstU32<128>;
 
 			/// The default data to be stored in an account.
 			type AccountData = ();
@@ -452,11 +452,11 @@ pub mod pallet {
 			type PalletInfo = ();
 
 			/// The basic call filter to use in dispatchable. Supports everything as the default.
-			type BaseCallFilter = frame_support::traits::Everything;
+			type BaseCallFilter = topsoil_support::traits::Everything;
 
 			/// Maximum number of block number to block hash mappings to keep (oldest pruned first).
 			/// Using 256 as default.
-			type BlockHashCount = TestBlockHashCount<frame_support::traits::ConstU32<256>>;
+			type BlockHashCount = TestBlockHashCount<topsoil_support::traits::ConstU32<256>>;
 
 			/// The set code logic, just the default since we're not a parachain.
 			type OnSetCode = ();
@@ -472,7 +472,7 @@ pub mod pallet {
 
 		/// It currently uses the same configuration as `SolochainDefaultConfig`.
 		#[derive_impl(SolochainDefaultConfig as DefaultConfig, no_aggregated_types)]
-		#[frame_support::register_default_impl(RelayChainDefaultConfig)]
+		#[topsoil_support::register_default_impl(RelayChainDefaultConfig)]
 		impl DefaultConfig for RelayChainDefaultConfig {}
 
 		/// Default configurations of this pallet in a parachain environment.
@@ -480,7 +480,7 @@ pub mod pallet {
 
 		/// It currently uses the same configuration as `SolochainDefaultConfig`.
 		#[derive_impl(SolochainDefaultConfig as DefaultConfig, no_aggregated_types)]
-		#[frame_support::register_default_impl(ParaChainDefaultConfig)]
+		#[topsoil_support::register_default_impl(ParaChainDefaultConfig)]
 		impl DefaultConfig for ParaChainDefaultConfig {}
 	}
 
@@ -494,7 +494,7 @@ pub mod pallet {
 			+ Member
 			+ From<Event<Self>>
 			+ Debug
-			+ IsType<<Self as frame_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// The basic call filter to use in Origin. All origins are built with this filter as base,
 		/// except Root.
@@ -503,9 +503,9 @@ pub mod pallet {
 		/// order to dispatch. Otherwise it will be rejected with `CallFiltered`. This can be
 		/// bypassed via `dispatch_bypass_filter` which should only be accessible by root. The
 		/// filter can be composed of sub-filters by nesting for example
-		/// [`frame_support::traits::InsideBoth`], [`frame_support::traits::TheseExcept`] or
-		/// [`frame_support::traits::EverythingBut`] et al. The default would be
-		/// [`frame_support::traits::Everything`].
+		/// [`topsoil_support::traits::InsideBoth`], [`topsoil_support::traits::TheseExcept`] or
+		/// [`topsoil_support::traits::EverythingBut`] et al. The default would be
+		/// [`topsoil_support::traits::Everything`].
 		#[pallet::no_default_bounds]
 		type BaseCallFilter: Contains<Self::RuntimeCall>;
 
@@ -663,23 +663,23 @@ pub mod pallet {
 
 		/// The migrator that is used to run Multi-Block-Migrations.
 		///
-		/// Can be set to `pallet_migrations` or an alternative implementation of the interface.
-		/// The diagram in `frame_executive::block_flowchart` explains when it runs.
+		/// Can be set to `topsoil_migrations` or an alternative implementation of the interface.
+		/// The diagram in `topsoil_executive::block_flowchart` explains when it runs.
 		type MultiBlockMigrator: MultiStepMigrator;
 
 		/// A callback that executes in *every block* directly before all inherents were applied.
 		///
-		/// See `frame_executive::block_flowchart` for a in-depth explanation when it runs.
+		/// See `topsoil_executive::block_flowchart` for a in-depth explanation when it runs.
 		type PreInherents: PreInherents;
 
 		/// A callback that executes in *every block* directly after all inherents were applied.
 		///
-		/// See `frame_executive::block_flowchart` for a in-depth explanation when it runs.
+		/// See `topsoil_executive::block_flowchart` for a in-depth explanation when it runs.
 		type PostInherents: PostInherents;
 
 		/// A callback that executes in *every block* directly after all transactions were applied.
 		///
-		/// See `frame_executive::block_flowchart` for a in-depth explanation when it runs.
+		/// See `topsoil_executive::block_flowchart` for a in-depth explanation when it runs.
 		type PostTransactions: PostTransactions;
 	}
 
@@ -1107,7 +1107,7 @@ pub mod pallet {
 	#[pallet::whitelist_storage]
 	pub type ExtrinsicWeightReclaimed<T: Config> = StorageValue<_, Weight, ValueQuery>;
 
-	#[derive(frame_support::DefaultNoBound)]
+	#[derive(topsoil_support::DefaultNoBound)]
 	#[pallet::genesis_config]
 	pub struct GenesisConfig<T: Config> {
 		#[serde(skip)]
@@ -1565,7 +1565,7 @@ impl<T: Config> Pallet<T> {
 	///
 	/// This functions returns the `spec_version` of the last runtime upgrade while executing the
 	/// runtime migrations
-	/// [`on_runtime_upgrade`](frame_support::traits::OnRuntimeUpgrade::on_runtime_upgrade)
+	/// [`on_runtime_upgrade`](topsoil_support::traits::OnRuntimeUpgrade::on_runtime_upgrade)
 	/// function. After all migrations are executed, this will return the `spec_version` of the
 	/// current runtime until there is another runtime upgrade.
 	///
@@ -1961,7 +1961,7 @@ impl<T: Config> Pallet<T> {
 	///
 	/// Normally this is called internally [`initialize`](Self::initialize) at block initiation.
 	pub fn initialize_intra_block_entropy(parent_hash: &T::Hash) {
-		let entropy = (b"frame_system::initialize", parent_hash).using_encoded(blake2_256);
+		let entropy = (b"topsoil_system::initialize", parent_hash).using_encoded(blake2_256);
 		storage::unhashed::put_raw(well_known_keys::INTRABLOCK_ENTROPY, &entropy[..]);
 	}
 
@@ -2124,7 +2124,7 @@ impl<T: Config> Pallet<T> {
 	/// Read and return the events of a specific pallet, as denoted by `E`.
 	///
 	/// This is useful for a pallet that wishes to read only the events it has deposited into
-	/// `frame_system` using the standard `fn deposit_event`.
+	/// `topsoil_system` using the standard `fn deposit_event`.
 	pub fn read_events_for_pallet<E>() -> Vec<E>
 	where
 		T::RuntimeEvent: TryInto<E>,
@@ -2149,8 +2149,8 @@ impl<T: Config> Pallet<T> {
 		n: BlockNumberFor<T>,
 		mut hooks: RunToBlockHooks<T>,
 	) where
-		AllPalletsWithSystem: frame_support::traits::OnInitialize<BlockNumberFor<T>>
-			+ frame_support::traits::OnFinalize<BlockNumberFor<T>>,
+		AllPalletsWithSystem: topsoil_support::traits::OnInitialize<BlockNumberFor<T>>
+			+ topsoil_support::traits::OnFinalize<BlockNumberFor<T>>,
 	{
 		let mut bn = Self::block_number();
 
@@ -2175,8 +2175,8 @@ impl<T: Config> Pallet<T> {
 	#[cfg(any(feature = "std", feature = "runtime-benchmarks", test))]
 	pub fn run_to_block<AllPalletsWithSystem>(n: BlockNumberFor<T>)
 	where
-		AllPalletsWithSystem: frame_support::traits::OnInitialize<BlockNumberFor<T>>
-			+ frame_support::traits::OnFinalize<BlockNumberFor<T>>,
+		AllPalletsWithSystem: topsoil_support::traits::OnInitialize<BlockNumberFor<T>>
+			+ topsoil_support::traits::OnFinalize<BlockNumberFor<T>>,
 	{
 		Self::run_to_block_with::<AllPalletsWithSystem>(n, Default::default());
 	}
@@ -2452,7 +2452,7 @@ impl<T: Config> Pallet<T> {
 pub fn unique(entropy: impl Encode) -> [u8; 32] {
 	let mut last = [0u8; 32];
 	soil_io::storage::read(well_known_keys::INTRABLOCK_ENTROPY, &mut last[..], 0);
-	let next = (b"frame_system::unique", entropy, last).using_encoded(blake2_256);
+	let next = (b"topsoil_system::unique", entropy, last).using_encoded(blake2_256);
 	soil_io::storage::set(well_known_keys::INTRABLOCK_ENTROPY, &next);
 	next
 }

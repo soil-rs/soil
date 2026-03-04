@@ -17,30 +17,30 @@
 
 //! Test mock for the DAP pallet.
 
-use crate::{self as pallet_dap, Config};
-use frame_support::{
+use crate::{self as topsoil_dap, Config};
+use topsoil_support::{
 	derive_impl, parameter_types, soil_runtime::traits::AccountIdConversion, PalletId,
 };
 use soil_runtime::BuildStorage;
 
-type Block = frame_system::mocking::MockBlock<Test>;
+type Block = topsoil_system::mocking::MockBlock<Test>;
 
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub enum Test {
-		System: frame_system,
-		Balances: pallet_balances,
-		Dap: pallet_dap,
+		System: topsoil_system,
+		Balances: topsoil_balances,
+		Dap: topsoil_dap,
 	}
 );
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
 	type Block = Block;
-	type AccountData = pallet_balances::AccountData<u64>;
+	type AccountData = topsoil_balances::AccountData<u64>;
 }
 
-#[derive_impl(pallet_balances::config_preludes::TestDefaultConfig)]
-impl pallet_balances::Config for Test {
+#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
+impl topsoil_balances::Config for Test {
 	type AccountStore = System;
 	type ExistentialDeposit = ExistentialDeposit;
 }
@@ -63,8 +63,8 @@ pub fn new_test_ext(fund_buffer: bool) -> soil_io::TestExternalities {
 		balances.push((buffer, ExistentialDeposit::get()));
 	}
 
-	let mut t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
-	pallet_balances::GenesisConfig::<Test> { balances, ..Default::default() }
+	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	topsoil_balances::GenesisConfig::<Test> { balances, ..Default::default() }
 		.assimilate_storage(&mut t)
 		.unwrap();
 	t.into()

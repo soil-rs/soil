@@ -214,7 +214,7 @@
 //! ## Design
 //!
 //! _Notes_: this section uses pseudo code to explain general design and does not necessarily
-//! reflect the exact implementation. Additionally, a working knowledge of `pallet-staking`'s api is
+//! reflect the exact implementation. Additionally, a working knowledge of `topsoil-staking`'s api is
 //! assumed.
 //!
 //! ### Goals
@@ -325,7 +325,7 @@
 //! ### Slashing
 //!
 //! This section assumes that the slash computation is executed by
-//! `pallet_staking::StakingLedger::slash`, which passes the information to this pallet via
+//! `topsoil_staking::StakingLedger::slash`, which passes the information to this pallet via
 //! [`soil_staking::OnStakingUpdate::on_slash`].
 //!
 //! Unbonding pools need to be slashed to ensure all nominators whom where in the bonded pool while
@@ -357,7 +357,7 @@ use adapter::{Member, Pool, StakeStrategy};
 use alloc::{collections::btree_map::BTreeMap, vec::Vec};
 use codec::{Codec, DecodeWithMemTracking};
 use core::{fmt::Debug, ops::Div};
-use frame_support::{
+use topsoil_support::{
 	defensive, defensive_assert, ensure,
 	pallet_prelude::{MaxEncodedLen, *},
 	storage::bounded_btree_map::BoundedBTreeMap,
@@ -390,7 +390,7 @@ macro_rules! log {
 	($level:tt, $patter:expr $(, $values:expr)* $(,)?) => {
 		log::$level!(
 			target: $crate::LOG_TARGET,
-			concat!("[{:?}] 🏊‍♂️ ", $patter), <frame_system::Pallet<T>>::block_number() $(, $values)*
+			concat!("[{:?}] 🏊‍♂️ ", $patter), <topsoil_system::Pallet<T>>::block_number() $(, $values)*
 		)
 	};
 }
@@ -410,11 +410,11 @@ pub use weights::WeightInfo;
 
 /// The balance type used by the currency system.
 pub type BalanceOf<T> =
-	<<T as Config>::Currency as Inspect<<T as frame_system::Config>::AccountId>>::Balance;
+	<<T as Config>::Currency as Inspect<<T as topsoil_system::Config>::AccountId>>::Balance;
 /// Type used for unique identifier of each pool.
 pub type PoolId = u32;
 
-type AccountIdLookupOf<T> = <<T as frame_system::Config>::Lookup as StaticLookup>::Source;
+type AccountIdLookupOf<T> = <<T as topsoil_system::Config>::Lookup as StaticLookup>::Source;
 
 pub type BlockNumberFor<T> =
 	<<T as Config>::BlockNumberProvider as BlockNumberProvider>::BlockNumber;
@@ -1646,11 +1646,11 @@ impl<T: Config> Get<u32> for TotalUnbondingPools<T> {
 	}
 }
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
-	use frame_support::traits::StorageVersion;
-	use frame_system::pallet_prelude::{
+	use topsoil_support::traits::StorageVersion;
+	use topsoil_system::pallet_prelude::{
 		ensure_root, ensure_signed, BlockNumberFor as SystemBlockNumberFor, OriginFor,
 	};
 	use soil_runtime::Perbill;
@@ -1663,10 +1663,10 @@ pub mod pallet {
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
-	pub trait Config: frame_system::Config {
+	pub trait Config: topsoil_system::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// Weight information for extrinsics in this pallet.
 		type WeightInfo: weights::WeightInfo;
@@ -1694,7 +1694,7 @@ pub mod pallet {
 
 		/// The nomination pool's pallet id.
 		#[pallet::constant]
-		type PalletId: Get<frame_support::PalletId>;
+		type PalletId: Get<topsoil_support::PalletId>;
 
 		/// The maximum pool points-to-balance ratio that an `open` pool can have.
 		///
@@ -1739,7 +1739,7 @@ pub mod pallet {
 		/// The origin that can manage pool configurations.
 		type AdminOrigin: EnsureOrigin<Self::RuntimeOrigin>;
 
-		/// Provider for the block number. Normally this is the `frame_system` pallet.
+		/// Provider for the block number. Normally this is the `topsoil_system` pallet.
 		type BlockNumberProvider: BlockNumberProvider;
 
 		/// Restrict some accounts from participating in a nomination pool.
@@ -2459,8 +2459,8 @@ pub mod pallet {
 
 			if stash_killed {
 				// Maybe an extra consumer left on the pool account, if so, remove it.
-				if frame_system::Pallet::<T>::consumers(&pool_account) == 1 {
-					frame_system::Pallet::<T>::dec_consumers(&pool_account);
+				if topsoil_system::Pallet::<T>::consumers(&pool_account) == 1 {
+					topsoil_system::Pallet::<T>::dec_consumers(&pool_account);
 				}
 
 				// Note: This is not pretty, but we have to do this because of a bug where old pool
@@ -2629,7 +2629,7 @@ pub mod pallet {
 		/// root role.
 		///
 		/// This directly forwards the call to an implementation of `StakingInterface` (e.g.,
-		/// `pallet-staking`) through [`Config::StakeAdapter`], on behalf of the bonded pool.
+		/// `topsoil-staking`) through [`Config::StakeAdapter`], on behalf of the bonded pool.
 		///
 		/// # Note
 		///
@@ -2844,7 +2844,7 @@ pub mod pallet {
 		/// root role, same as [`Pallet::nominate`].
 		///
 		/// This directly forwards the call to an implementation of `StakingInterface` (e.g.,
-		/// `pallet-staking`) through [`Config::StakeAdapter`], on behalf of the bonded pool.
+		/// `topsoil-staking`) through [`Config::StakeAdapter`], on behalf of the bonded pool.
 		///
 		/// Under certain conditions, this call can be dispatched permissionlessly (i.e. by any
 		/// account).
@@ -3306,11 +3306,11 @@ impl<T: Config> Pallet<T> {
 		// 2. the bonded account should become a 'killed stash' in the staking system, and all of
 		//    its consumers removed.
 		defensive_assert!(
-			frame_system::Pallet::<T>::consumers(&reward_account) == 0,
+			topsoil_system::Pallet::<T>::consumers(&reward_account) == 0,
 			"reward account of dissolving pool should have no consumers"
 		);
 		defensive_assert!(
-			frame_system::Pallet::<T>::consumers(&bonded_account) == 0,
+			topsoil_system::Pallet::<T>::consumers(&bonded_account) == 0,
 			"bonded account of dissolving pool should have no consumers"
 		);
 		defensive_assert!(
@@ -4071,7 +4071,7 @@ impl<T: Config> Pallet<T> {
 	/// full unbonding, not partial unbonding.
 	#[cfg(any(feature = "runtime-benchmarks", test))]
 	pub fn fully_unbond(
-		origin: frame_system::pallet_prelude::OriginFor<T>,
+		origin: topsoil_system::pallet_prelude::OriginFor<T>,
 		member: T::AccountId,
 	) -> DispatchResult {
 		let points = PoolMembers::<T>::get(&member).map(|d| d.active_points()).unwrap_or_default();

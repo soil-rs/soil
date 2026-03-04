@@ -35,23 +35,23 @@ fn benchmark_pallet_works() {
 
 #[test]
 fn benchmark_pallet_args_work() {
-	benchmark_pallet_args(&["--list", "--pallet=pallet_balances"], true);
-	benchmark_pallet_args(&["--list", "--pallet=pallet_balances"], true);
+	benchmark_pallet_args(&["--list", "--pallet=topsoil_balances"], true);
+	benchmark_pallet_args(&["--list", "--pallet=topsoil_balances"], true);
 	benchmark_pallet_args(
-		&["--list", "--pallet=pallet_balances", "--genesis-builder=spec-genesis"],
+		&["--list", "--pallet=topsoil_balances", "--genesis-builder=spec-genesis"],
 		true,
 	);
 	benchmark_pallet_args(
-		&["--list", "--pallet=pallet_balances", "--chain=dev", "--genesis-builder=spec-genesis"],
+		&["--list", "--pallet=topsoil_balances", "--chain=dev", "--genesis-builder=spec-genesis"],
 		true,
 	);
 	benchmark_pallet_args(
-		&["--list", "--pallet=pallet_balances", "--chain=dev", "--genesis-builder=spec-runtime"],
+		&["--list", "--pallet=topsoil_balances", "--chain=dev", "--genesis-builder=spec-runtime"],
 		true,
 	);
 	// Error because no runtime is provided:
 	benchmark_pallet_args(
-		&["--list", "--pallet=pallet_balances", "--chain=dev", "--genesis-builder=runtime"],
+		&["--list", "--pallet=topsoil_balances", "--chain=dev", "--genesis-builder=runtime"],
 		false,
 	);
 }
@@ -60,7 +60,7 @@ fn benchmark_pallet(steps: u32, repeat: u32, should_work: bool) {
 	let status = Command::new(cargo_bin("substrate-node"))
 		.args(["benchmark", "pallet", "--dev"])
 		// Use the `addition` benchmark since is the fastest.
-		.args(["--pallet", "frame-benchmarking", "--extrinsic", "addition"])
+		.args(["--pallet", "topsoil-benchmarking", "--extrinsic", "addition"])
 		.args(["--steps", &format!("{}", steps), "--repeat", &format!("{}", repeat)])
 		.args([
 			"--wasm-execution=compiled",

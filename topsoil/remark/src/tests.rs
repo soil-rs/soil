@@ -19,8 +19,8 @@
 
 use super::{Error, Event, Pallet as Remark};
 use crate::mock::*;
-use frame_support::{assert_noop, assert_ok};
-use frame_system::RawOrigin;
+use topsoil_support::{assert_noop, assert_ok};
+use topsoil_system::RawOrigin;
 
 #[test]
 fn generates_event() {
@@ -31,14 +31,14 @@ fn generates_event() {
 		assert_ok!(Remark::<Test>::store(RawOrigin::Signed(caller).into(), data.clone(),));
 		let events = System::events();
 		// this one we create as we expect it
-		let system_event: <Test as frame_system::Config>::RuntimeEvent = Event::Stored {
+		let system_event: <Test as topsoil_system::Config>::RuntimeEvent = Event::Stored {
 			content_hash: soil_io::hashing::blake2_256(&data).into(),
 			sender: caller,
 		}
 		.into();
 		// this one we actually go into the system pallet and get the last event
 		// because we know its there from block +1
-		let frame_system::EventRecord { event, .. } = &events[events.len() - 1];
+		let topsoil_system::EventRecord { event, .. } = &events[events.len() - 1];
 		assert_eq!(event, &system_event);
 	});
 }

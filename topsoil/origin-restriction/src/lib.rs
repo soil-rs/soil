@@ -53,15 +53,15 @@ extern crate alloc;
 pub use weights::WeightInfo;
 
 use codec::{Decode, DecodeWithMemTracking, Encode};
-use frame_support::{
+use topsoil_support::{
 	dispatch::{DispatchInfo, PostDispatchInfo},
 	pallet_prelude::{Pays, Zero},
 	traits::{ContainsPair, OriginTrait},
 	weights::WeightToFee,
 	DebugNoBound, Parameter,
 };
-use frame_system::pallet_prelude::BlockNumberFor;
-use pallet_transaction_payment::OnChargeTransaction;
+use topsoil_system::pallet_prelude::BlockNumberFor;
+use topsoil_transaction_payment::OnChargeTransaction;
 use scale_info::TypeInfo;
 use soil_runtime::{
 	traits::{
@@ -97,11 +97,11 @@ pub trait RestrictedEntity<OriginCaller, Balance>: Sized {
 }
 
 pub use pallet::*;
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
-	use frame_support::{pallet_prelude::*, traits::ContainsPair};
-	use frame_system::pallet_prelude::*;
+	use topsoil_support::{pallet_prelude::*, traits::ContainsPair};
+	use topsoil_system::pallet_prelude::*;
 
 	/// The usage of an entity.
 	#[derive(Encode, Decode, Clone, Eq, PartialEq, Debug, TypeInfo, MaxEncodedLen)]
@@ -113,9 +113,9 @@ pub mod pallet {
 	}
 
 	pub(crate) type OriginCallerFor<T> =
-		<<T as frame_system::Config>::RuntimeOrigin as OriginTrait>::PalletsOrigin;
+		<<T as topsoil_system::Config>::RuntimeOrigin as OriginTrait>::PalletsOrigin;
 	pub(crate) type BalanceOf<T> =
-		<<T as pallet_transaction_payment::Config>::OnChargeTransaction as OnChargeTransaction<
+		<<T as topsoil_transaction_payment::Config>::OnChargeTransaction as OnChargeTransaction<
 			T,
 		>>::Balance;
 
@@ -133,10 +133,10 @@ pub mod pallet {
 
 	#[pallet::config]
 	pub trait Config:
-		frame_system::Config<
+		topsoil_system::Config<
 			RuntimeCall: Dispatchable<Info = DispatchInfo, PostInfo = PostDispatchInfo>,
 			RuntimeOrigin: AsTransactionAuthorizedOrigin,
-		> + pallet_transaction_payment::Config
+		> + topsoil_transaction_payment::Config
 		+ Send
 		+ Sync
 	{
@@ -163,7 +163,7 @@ pub mod pallet {
 
 		/// The runtime event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 	}
 
 	#[pallet::error]
@@ -201,7 +201,7 @@ pub mod pallet {
 				return Err(Error::<T>::NoUsage.into());
 			};
 
-			let now = frame_system::Pallet::<T>::block_number();
+			let now = topsoil_system::Pallet::<T>::block_number();
 			let elapsed = now.saturating_sub(usage.at_block).saturated_into::<u32>();
 
 			let allowance = entity.allowance();
@@ -266,7 +266,7 @@ impl<T: Config> TransactionExtension<T::RuntimeCall> for RestrictOrigin<T> {
 	type Val = Val<T>;
 	type Pre = Pre<T>;
 
-	fn weight(&self, _call: &T::RuntimeCall) -> frame_support::weights::Weight {
+	fn weight(&self, _call: &T::RuntimeCall) -> topsoil_support::weights::Weight {
 		if !self.0 {
 			return Weight::zero();
 		}
@@ -296,7 +296,7 @@ impl<T: Config> TransactionExtension<T::RuntimeCall> for RestrictOrigin<T> {
 			return Err(InvalidTransaction::Call.into());
 		}
 
-		let now = frame_system::Pallet::<T>::block_number();
+		let now = topsoil_system::Pallet::<T>::block_number();
 		let mut usage = match Usages::<T>::get(&entity) {
 			Some(mut usage) => {
 				let elapsed = now.saturating_sub(usage.at_block).saturated_into::<u32>();

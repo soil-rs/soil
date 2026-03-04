@@ -16,8 +16,8 @@
 // limitations under the License.
 
 use codec::EncodeLike;
-use frame_support::{assert_noop, assert_ok, assert_storage_noop};
-use frame_system::RawOrigin;
+use topsoil_support::{assert_noop, assert_ok, assert_storage_noop};
+use topsoil_system::RawOrigin;
 use soil_runtime::{
 	traits::{BadOrigin, Identity},
 	TokenError,
@@ -33,7 +33,7 @@ const ED: u64 = 256;
 /// in the `Vesting` storage item.
 fn vest_and_assert_no_vesting<T>(account: u64)
 where
-	u64: EncodeLike<<T as frame_system::Config>::AccountId>,
+	u64: EncodeLike<<T as topsoil_system::Config>::AccountId>,
 	T: pallet::Config,
 {
 	// Its ok for this to fail because the user may already have no schedules.

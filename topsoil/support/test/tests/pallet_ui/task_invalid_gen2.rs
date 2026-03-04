@@ -15,12 +15,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#[frame_support::pallet(dev_mode)]
+#[topsoil_support::pallet(dev_mode)]
 mod pallet_with_instance {
-	use frame_support::pallet_prelude::{ValueQuery, StorageValue};
+	use topsoil_support::pallet_prelude::{ValueQuery, StorageValue};
 
 	#[pallet::config]
-	pub trait Config<I: 'static = ()>: frame_system::Config {}
+	pub trait Config<I: 'static = ()>: topsoil_system::Config {}
 
 	#[pallet::pallet]
 	pub struct Pallet<T, I = ()>(_);
@@ -32,7 +32,7 @@ mod pallet_with_instance {
 	pub enum Task {}
 
 	#[pallet::tasks_experimental]
-	impl frame_support::traits::Task for Task {}
+	impl topsoil_support::traits::Task for Task {}
 }
 
 fn main() {

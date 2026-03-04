@@ -256,7 +256,7 @@ pub trait QueueFootprintQuery<Origin> {
 	/// full page in the queue. Then, for the messages `["1", "2", "3"]`
 	/// and `total_pages_limit = 3`, `get_batches_footprints()` would return:
 	/// ```
-	/// use frame_support::traits::BatchFootprint;
+	/// use topsoil_support::traits::BatchFootprint;
 	///
 	/// vec![
 	/// 	// The footprint of batch ["1"]

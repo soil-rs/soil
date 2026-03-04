@@ -25,7 +25,7 @@ extern crate alloc;
 
 use super::PALLET_MIGRATIONS_ID;
 use crate::pallet::{Config, MyMap};
-use frame_support::{
+use topsoil_support::{
 	migrations::{MigrationId, SteppedMigration, SteppedMigrationError},
 	pallet_prelude::PhantomData,
 	weights::WeightMeter,
@@ -50,7 +50,7 @@ pub mod weights;
 pub mod v0 {
 	use super::Config;
 	use crate::pallet::Pallet;
-	use frame_support::{storage_alias, Blake2_128Concat};
+	use topsoil_support::{storage_alias, Blake2_128Concat};
 
 	#[storage_alias]
 	/// The storage item that is being migrated from.
@@ -125,7 +125,7 @@ impl<T: Config, W: weights::WeightInfo> SteppedMigration for LazyMigrationV1<T, 
 	}
 
 	#[cfg(feature = "try-runtime")]
-	fn pre_upgrade() -> Result<Vec<u8>, frame_support::soil_runtime::TryRuntimeError> {
+	fn pre_upgrade() -> Result<Vec<u8>, topsoil_support::soil_runtime::TryRuntimeError> {
 		use codec::Encode;
 
 		// Return the state of the storage before the migration.
@@ -133,7 +133,7 @@ impl<T: Config, W: weights::WeightInfo> SteppedMigration for LazyMigrationV1<T, 
 	}
 
 	#[cfg(feature = "try-runtime")]
-	fn post_upgrade(prev: Vec<u8>) -> Result<(), frame_support::soil_runtime::TryRuntimeError> {
+	fn post_upgrade(prev: Vec<u8>) -> Result<(), topsoil_support::soil_runtime::TryRuntimeError> {
 		use codec::Decode;
 
 		// Check the state of the storage after the migration.

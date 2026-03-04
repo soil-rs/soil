@@ -22,8 +22,8 @@ use crate::{
 	CheckSubstrateCall, Extrinsic, Nonce, Pair, RuntimeCall, SignedPayload, TransferData,
 };
 use codec::Encode;
-use frame_metadata_hash_extension::CheckMetadataHash;
-use frame_system::{CheckNonce, CheckWeight};
+use topsoil_metadata_hash_extension::CheckMetadataHash;
+use topsoil_system::{CheckNonce, CheckWeight};
 use soil_core::crypto::Pair as TraitPair;
 use soil_keyring::Sr25519Keyring;
 use soil_runtime::{
@@ -214,7 +214,7 @@ impl ExtrinsicBuilder {
 				self.metadata_hash
 					.map(CheckMetadataHash::new_with_custom_hash)
 					.unwrap_or_else(|| CheckMetadataHash::new(false)),
-				frame_system::WeightReclaim::new(),
+				topsoil_system::WeightReclaim::new(),
 			);
 			let raw_payload = SignedPayload::from_raw(
 				self.function.clone(),

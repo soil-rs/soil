@@ -35,7 +35,7 @@ use syn::spanned::Spanned;
 /// Expand the weight to final token stream and accumulate warnings.
 fn expand_weight(
 	prefix: &str,
-	frame_support: &syn::Path,
+	topsoil_support: &syn::Path,
 	dev_mode: bool,
 	weight_warnings: &mut Vec<Warning>,
 	method: &CallVariantDef,
@@ -43,7 +43,7 @@ fn expand_weight(
 ) -> TokenStream2 {
 	match weight {
 		CallWeightDef::DevModeDefault => quote::quote!(
-			#frame_support::pallet_prelude::Weight::zero()
+			#topsoil_support::pallet_prelude::Weight::zero()
 		),
 		CallWeightDef::Immediate(e) => {
 			weight_constant_warning(e, dev_mode, weight_warnings);
@@ -73,8 +73,8 @@ pub fn expand_call(def: &mut Def) -> proc_macro2::TokenStream {
 		},
 		None => (def.item.span(), def.config.where_clause.clone(), Vec::new(), Vec::new()),
 	};
-	let frame_support = &def.frame_support;
-	let frame_system = &def.frame_system;
+	let topsoil_support = &def.topsoil_support;
+	let topsoil_system = &def.topsoil_system;
 	let type_impl_gen = &def.type_impl_generics(span);
 	let type_decl_bounded_gen = &def.type_decl_bounded_generics(span);
 	let type_use_gen = &def.type_use_generics(span);
@@ -118,7 +118,7 @@ pub fn expand_call(def: &mut Def) -> proc_macro2::TokenStream {
 	for method in &methods {
 		let w = expand_weight(
 			"",
-			frame_support,
+			topsoil_support,
 			def.dev_mode,
 			&mut weight_warnings,
 			method,
@@ -228,11 +228,11 @@ pub fn expand_call(def: &mut Def) -> proc_macro2::TokenStream {
 				let (ok_type, err_type) = match return_type {
 					CallReturnType::DispatchResult => (
 						quote::quote!(()),
-						quote::quote!(#frame_support::pallet_prelude::DispatchError),
+						quote::quote!(#topsoil_support::pallet_prelude::DispatchError),
 					),
 					CallReturnType::DispatchResultWithPostInfo => (
-						quote::quote!(#frame_support::dispatch::PostDispatchInfo),
-						quote::quote!(#frame_support::dispatch::DispatchErrorWithPostInfo),
+						quote::quote!(#topsoil_support::dispatch::PostDispatchInfo),
+						quote::quote!(#topsoil_support::dispatch::DispatchErrorWithPostInfo),
 					),
 				};
 
@@ -240,7 +240,7 @@ pub fn expand_call(def: &mut Def) -> proc_macro2::TokenStream {
 				method.block = syn::parse_quote! {{
 					// We execute all dispatchable in a new storage layer, allowing them
 					// to return an error at any point, and undoing any storage changes.
-					#frame_support::storage::with_storage_layer::<#ok_type, #err_type, _>(
+					#topsoil_support::storage::with_storage_layer::<#ok_type, #err_type, _>(
 						|| #block
 					)
 				}};
@@ -279,7 +279,7 @@ pub fn expand_call(def: &mut Def) -> proc_macro2::TokenStream {
 		});
 
 	let deprecation = match crate::deprecation::get_deprecation_enum(
-		&quote::quote! {#frame_support},
+		&quote::quote! {#topsoil_support},
 		methods.iter().map(|item| (item.call_index as u8, item.attrs.as_ref())),
 	) {
 		Ok(deprecation) => deprecation,
@@ -315,9 +315,9 @@ pub fn expand_call(def: &mut Def) -> proc_macro2::TokenStream {
 					impl<#type_impl_gen> Pallet<#type_use_gen> #where_clause {
 						#[doc(hidden)]
 						fn #attr_fn_getter() -> impl Fn(
-							#frame_support::pallet_prelude::TransactionSource,
+							#topsoil_support::pallet_prelude::TransactionSource,
 							#( &#arg_type ),*
-						) -> #frame_support::pallet_prelude::TransactionValidityWithRefund {
+						) -> #topsoil_support::pallet_prelude::TransactionValidityWithRefund {
 							#authorize_fn
 						}
 					}
@@ -346,14 +346,14 @@ pub fn expand_call(def: &mut Def) -> proc_macro2::TokenStream {
 		let w = match &method.authorize {
 			Some(authorize_def) => expand_weight(
 				"authorize_",
-				frame_support,
+				topsoil_support,
 				def.dev_mode,
 				&mut weight_warnings,
 				method,
 				&authorize_def.weight,
 			),
 			// No authorize logic, weight is negligible
-			None => quote::quote!(#frame_support::pallet_prelude::Weight::zero()),
+			None => quote::quote!(#topsoil_support::pallet_prelude::Weight::zero()),
 		};
 		authorize_fn_weight.push(w);
 	}
@@ -387,14 +387,14 @@ pub fn expand_call(def: &mut Def) -> proc_macro2::TokenStream {
 
 		#( #[doc = #docs] )*
 		#[derive(
-			#frame_support::DebugNoBound,
-			#frame_support::CloneNoBound,
-			#frame_support::EqNoBound,
-			#frame_support::PartialEqNoBound,
-			#frame_support::__private::codec::Encode,
-			#frame_support::__private::codec::Decode,
-			#frame_support::__private::codec::DecodeWithMemTracking,
-			#frame_support::__private::scale_info::TypeInfo,
+			#topsoil_support::DebugNoBound,
+			#topsoil_support::CloneNoBound,
+			#topsoil_support::EqNoBound,
+			#topsoil_support::PartialEqNoBound,
+			#topsoil_support::__private::codec::Encode,
+			#topsoil_support::__private::codec::Decode,
+			#topsoil_support::__private::codec::DecodeWithMemTracking,
+			#topsoil_support::__private::scale_info::TypeInfo,
 		)]
 		#[codec(encode_bound())]
 		#[codec(decode_bound())]
@@ -405,7 +405,7 @@ pub fn expand_call(def: &mut Def) -> proc_macro2::TokenStream {
 			#[codec(skip)]
 			__Ignore(
 				::core::marker::PhantomData<(#type_use_gen,)>,
-				#frame_support::Never,
+				#topsoil_support::Never,
 			),
 			#(
 				#cfg_attrs
@@ -434,11 +434,11 @@ pub fn expand_call(def: &mut Def) -> proc_macro2::TokenStream {
 			)*
 		}
 
-		impl<#type_impl_gen> #frame_support::dispatch::GetDispatchInfo
+		impl<#type_impl_gen> #topsoil_support::dispatch::GetDispatchInfo
 			for #call_ident<#type_use_gen>
 			#where_clause
 		{
-			fn get_dispatch_info(&self) -> #frame_support::dispatch::DispatchInfo {
+			fn get_dispatch_info(&self) -> #topsoil_support::dispatch::DispatchInfo {
 				match *self {
 					#(
 						#cfg_attrs
@@ -446,20 +446,20 @@ pub fn expand_call(def: &mut Def) -> proc_macro2::TokenStream {
 							let __pallet_base_weight = #fn_weight;
 
 							let __pallet_weight = <
-								dyn #frame_support::dispatch::WeighData<( #( & #args_type, )* )>
+								dyn #topsoil_support::dispatch::WeighData<( #( & #args_type, )* )>
 							>::weigh_data(&__pallet_base_weight, ( #( #args_name, )* ));
 
 							let __pallet_class = <
-								dyn #frame_support::dispatch::ClassifyDispatch<
+								dyn #topsoil_support::dispatch::ClassifyDispatch<
 									( #( & #args_type, )* )
 								>
 							>::classify_dispatch(&__pallet_base_weight, ( #( #args_name, )* ));
 
 							let __pallet_pays_fee = <
-								dyn #frame_support::dispatch::PaysFee<( #( & #args_type, )* )>
+								dyn #topsoil_support::dispatch::PaysFee<( #( & #args_type, )* )>
 							>::pays_fee(&__pallet_base_weight, ( #( #args_name, )* ));
 
-							#frame_support::dispatch::DispatchInfo {
+							#topsoil_support::dispatch::DispatchInfo {
 								call_weight: __pallet_weight,
 								extension_weight: Default::default(),
 								class: __pallet_class,
@@ -472,10 +472,10 @@ pub fn expand_call(def: &mut Def) -> proc_macro2::TokenStream {
 			}
 		}
 
-		impl<#type_impl_gen> #frame_support::dispatch::CheckIfFeeless for #call_ident<#type_use_gen>
+		impl<#type_impl_gen> #topsoil_support::dispatch::CheckIfFeeless for #call_ident<#type_use_gen>
 			#where_clause
 		{
-			type Origin = #frame_system::pallet_prelude::OriginFor<T>;
+			type Origin = #topsoil_system::pallet_prelude::OriginFor<T>;
 			#[allow(unused_variables)]
 			fn is_feeless(&self, origin: &Self::Origin) -> bool {
 				match *self {
@@ -491,7 +491,7 @@ pub fn expand_call(def: &mut Def) -> proc_macro2::TokenStream {
 			}
 		}
 
-		impl<#type_impl_gen> #frame_support::traits::GetCallName for #call_ident<#type_use_gen>
+		impl<#type_impl_gen> #topsoil_support::traits::GetCallName for #call_ident<#type_use_gen>
 			#where_clause
 		{
 			fn get_call_name(&self) -> &'static str {
@@ -506,7 +506,7 @@ pub fn expand_call(def: &mut Def) -> proc_macro2::TokenStream {
 			}
 		}
 
-		impl<#type_impl_gen> #frame_support::traits::GetCallIndex for #call_ident<#type_use_gen>
+		impl<#type_impl_gen> #topsoil_support::traits::GetCallIndex for #call_ident<#type_use_gen>
 			#where_clause
 		{
 			fn get_call_index(&self) -> u8 {
@@ -521,22 +521,22 @@ pub fn expand_call(def: &mut Def) -> proc_macro2::TokenStream {
 			}
 		}
 
-		impl<#type_impl_gen> #frame_support::traits::UnfilteredDispatchable
+		impl<#type_impl_gen> #topsoil_support::traits::UnfilteredDispatchable
 			for #call_ident<#type_use_gen>
 			#where_clause
 		{
-			type RuntimeOrigin = #frame_system::pallet_prelude::OriginFor<T>;
+			type RuntimeOrigin = #topsoil_system::pallet_prelude::OriginFor<T>;
 			fn dispatch_bypass_filter(
 				self,
 				origin: Self::RuntimeOrigin
-			) -> #frame_support::dispatch::DispatchResultWithPostInfo {
-				#frame_support::dispatch_context::run_in_context(|| {
+			) -> #topsoil_support::dispatch::DispatchResultWithPostInfo {
+				#topsoil_support::dispatch_context::run_in_context(|| {
 					match self {
 						#(
 							#cfg_attrs
 							Self::#fn_name { #( #args_name_pattern, )* } => {
-								#frame_support::__private::soil_tracing::enter_span!(
-									#frame_support::__private::soil_tracing::trace_span!(stringify!(#fn_name))
+								#topsoil_support::__private::soil_tracing::enter_span!(
+									#topsoil_support::__private::soil_tracing::trace_span!(stringify!(#fn_name))
 								);
 								#maybe_allow_attrs
 								#[allow(clippy::useless_conversion)]
@@ -553,7 +553,7 @@ pub fn expand_call(def: &mut Def) -> proc_macro2::TokenStream {
 			}
 		}
 
-		impl<#type_impl_gen> #frame_support::dispatch::Callable<T> for #pallet_ident<#type_use_gen>
+		impl<#type_impl_gen> #topsoil_support::dispatch::Callable<T> for #pallet_ident<#type_use_gen>
 			#where_clause
 		{
 			type RuntimeCall = #call_ident<#type_use_gen>;
@@ -562,9 +562,9 @@ pub fn expand_call(def: &mut Def) -> proc_macro2::TokenStream {
 		impl<#type_impl_gen> #pallet_ident<#type_use_gen> #where_clause {
 			#[allow(dead_code)]
 			#[doc(hidden)]
-			pub fn call_functions() -> #frame_support::__private::metadata_ir::PalletCallMetadataIR {
-				#frame_support::__private::metadata_ir::PalletCallMetadataIR  {
-					ty: #frame_support::__private::scale_info::meta_type::<#call_ident<#type_use_gen>>(),
+			pub fn call_functions() -> #topsoil_support::__private::metadata_ir::PalletCallMetadataIR {
+				#topsoil_support::__private::metadata_ir::PalletCallMetadataIR  {
+					ty: #topsoil_support::__private::scale_info::meta_type::<#call_ident<#type_use_gen>>(),
 					deprecation_info: #deprecation,
 				}
 			}
@@ -572,15 +572,15 @@ pub fn expand_call(def: &mut Def) -> proc_macro2::TokenStream {
 
 		#( #authorize_fn_pallet_impl )*
 
-		impl<#type_impl_gen> #frame_support::traits::Authorize for #call_ident<#type_use_gen>
+		impl<#type_impl_gen> #topsoil_support::traits::Authorize for #call_ident<#type_use_gen>
 			#where_clause
 		{
-			fn authorize(&self, source: #frame_support::pallet_prelude::TransactionSource) -> ::core::option::Option<::core::result::Result<
+			fn authorize(&self, source: #topsoil_support::pallet_prelude::TransactionSource) -> ::core::option::Option<::core::result::Result<
 				(
-					#frame_support::pallet_prelude::ValidTransaction,
-					#frame_support::pallet_prelude::Weight,
+					#topsoil_support::pallet_prelude::ValidTransaction,
+					#topsoil_support::pallet_prelude::Weight,
 				),
-				#frame_support::pallet_prelude::TransactionValidityError
+				#topsoil_support::pallet_prelude::TransactionValidityError
 			>>
 			{
 				match *self {
@@ -597,7 +597,7 @@ pub fn expand_call(def: &mut Def) -> proc_macro2::TokenStream {
 				}
 			}
 
-			fn weight_of_authorize(&self) -> #frame_support::pallet_prelude::Weight {
+			fn weight_of_authorize(&self) -> #topsoil_support::pallet_prelude::Weight {
 				match *self {
 					#(
 						#cfg_attrs

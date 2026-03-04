@@ -98,14 +98,14 @@ extern crate alloc;
 
 use alloc::{boxed::Box, vec, vec::Vec};
 use codec::{Decode, Encode, MaxEncodedLen};
-use frame_support::pallet_prelude::*;
-use frame_system::pallet_prelude::*;
+use topsoil_support::pallet_prelude::*;
+use topsoil_system::pallet_prelude::*;
 use soil_runtime::{
 	traits::{Dispatchable, Saturating, StaticLookup, Zero},
 	Debug, DispatchError,
 };
 
-use frame_support::{
+use topsoil_support::{
 	dispatch::{DispatchResult, DispatchResultWithPostInfo, GetDispatchInfo, PostDispatchInfo},
 	ensure,
 	traits::{
@@ -129,9 +129,9 @@ pub type ProposalIndex = u32;
 type UrlOf<T, I> = BoundedVec<u8, <T as pallet::Config<I>>::MaxWebsiteUrlLength>;
 
 type BalanceOf<T, I> =
-	<<T as Config<I>>::Currency as Currency<<T as frame_system::Config>::AccountId>>::Balance;
+	<<T as Config<I>>::Currency as Currency<<T as topsoil_system::Config>::AccountId>>::Balance;
 type NegativeImbalanceOf<T, I> = <<T as Config<I>>::Currency as Currency<
-	<T as frame_system::Config>::AccountId,
+	<T as topsoil_system::Config>::AccountId,
 >>::NegativeImbalance;
 
 /// Interface required for identity verification.
@@ -163,7 +163,7 @@ impl<AccountId> IdentityVerifier<AccountId> for () {
 	}
 }
 
-/// The provider of a collective action interface, for example an instance of `pallet-collective`.
+/// The provider of a collective action interface, for example an instance of `topsoil-collective`.
 pub trait ProposalProvider<AccountId, Hash, Proposal> {
 	/// Add a new proposal.
 	/// Returns a proposal length and active proposals count if successful.
@@ -213,11 +213,11 @@ pub enum UnscrupulousItem<AccountId, Url> {
 }
 
 type UnscrupulousItemOf<T, I> =
-	UnscrupulousItem<<T as frame_system::Config>::AccountId, UrlOf<T, I>>;
+	UnscrupulousItem<<T as topsoil_system::Config>::AccountId, UrlOf<T, I>>;
 
-type AccountIdLookupOf<T> = <<T as frame_system::Config>::Lookup as StaticLookup>::Source;
+type AccountIdLookupOf<T> = <<T as topsoil_system::Config>::Lookup as StaticLookup>::Source;
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
 
@@ -226,20 +226,20 @@ pub mod pallet {
 	pub struct Pallet<T, I = ()>(PhantomData<(T, I)>);
 
 	#[pallet::config]
-	pub trait Config<I: 'static = ()>: frame_system::Config {
+	pub trait Config<I: 'static = ()>: topsoil_system::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self, I>>
-			+ IsType<<Self as frame_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// The runtime call dispatch type.
 		type Proposal: Parameter
 			+ Dispatchable<RuntimeOrigin = Self::RuntimeOrigin, PostInfo = PostDispatchInfo>
-			+ From<frame_system::Call<Self>>
+			+ From<topsoil_system::Call<Self>>
 			+ From<Call<Self, I>>
 			+ GetDispatchInfo
 			+ IsSubType<Call<Self, I>>
-			+ IsType<<Self as frame_system::Config>::RuntimeCall>;
+			+ IsType<<Self as topsoil_system::Config>::RuntimeCall>;
 
 		/// Origin for admin-level operations, like setting the Alliance's rules.
 		type AdminOrigin: EnsureOrigin<Self::RuntimeOrigin>;
@@ -402,7 +402,7 @@ pub mod pallet {
 	}
 
 	#[pallet::genesis_config]
-	#[derive(frame_support::DefaultNoBound)]
+	#[derive(topsoil_support::DefaultNoBound)]
 	pub struct GenesisConfig<T: Config<I>, I: 'static = ()> {
 		pub fellows: Vec<T::AccountId>,
 		pub allies: Vec<T::AccountId>,
@@ -774,7 +774,7 @@ pub mod pallet {
 			Self::add_member(&who, MemberRole::Retiring)?;
 			<RetiringMembers<T, I>>::insert(
 				&who,
-				frame_system::Pallet::<T>::block_number()
+				topsoil_system::Pallet::<T>::block_number()
 					.saturating_add(T::RetirementPeriod::get()),
 			);
 
@@ -792,7 +792,7 @@ pub mod pallet {
 			let retirement_period_end = RetiringMembers::<T, I>::get(&who)
 				.ok_or(Error::<T, I>::RetirementNoticeNotGiven)?;
 			ensure!(
-				frame_system::Pallet::<T>::block_number() >= retirement_period_end,
+				topsoil_system::Pallet::<T>::block_number() >= retirement_period_end,
 				Error::<T, I>::RetirementPeriodNotPassed
 			);
 

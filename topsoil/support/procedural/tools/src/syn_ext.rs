@@ -19,7 +19,7 @@
 //! Extension to syn types, mainly for parsing
 // end::description[]
 
-use frame_support_procedural_tools_derive::{Parse, ToTokens};
+use topsoil_support_procedural_tools_derive::{Parse, ToTokens};
 use proc_macro2::{TokenStream, TokenTree};
 use quote::ToTokens;
 use std::iter::once;

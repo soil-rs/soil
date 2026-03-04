@@ -19,33 +19,33 @@
 
 #![cfg(test)]
 
-use crate as pallet_whitelist;
+use crate as topsoil_whitelist;
 
-use frame::testing_prelude::*;
+use topsoil::testing_prelude::*;
 type Block = MockBlock<Test>;
 
 construct_runtime!(
 	pub enum Test
 	{
-		System: frame_system,
-		Balances: pallet_balances,
-		Whitelist: pallet_whitelist,
-		Preimage: pallet_preimage,
+		System: topsoil_system,
+		Balances: topsoil_balances,
+		Whitelist: topsoil_whitelist,
+		Preimage: topsoil_preimage,
 	}
 );
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
 	type Block = Block;
-	type AccountData = pallet_balances::AccountData<u64>;
+	type AccountData = topsoil_balances::AccountData<u64>;
 }
 
-#[derive_impl(pallet_balances::config_preludes::TestDefaultConfig)]
-impl pallet_balances::Config for Test {
+#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
+impl topsoil_balances::Config for Test {
 	type AccountStore = System;
 }
 
-impl pallet_preimage::Config for Test {
+impl topsoil_preimage::Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type Currency = Balances;
 	type ManagerOrigin = EnsureRoot<Self::AccountId>;
@@ -53,7 +53,7 @@ impl pallet_preimage::Config for Test {
 	type WeightInfo = ();
 }
 
-impl pallet_whitelist::Config for Test {
+impl topsoil_whitelist::Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type RuntimeCall = RuntimeCall;
 	type WhitelistOrigin = EnsureRoot<Self::AccountId>;

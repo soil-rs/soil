@@ -21,7 +21,7 @@ use super::*;
 use alloc::borrow::Cow;
 use codec::{Compact, Decode, DecodeWithMemTracking, Encode, EncodeLike, Input, MaxEncodedLen};
 use core::fmt::Debug;
-use frame_support::{
+use topsoil_support::{
 	traits::{schedule::v3::Anon, Bounded},
 	Parameter,
 };
@@ -30,21 +30,21 @@ use soil_arithmetic::{Rounding::*, SignedRounding::*};
 use soil_runtime::{FixedI64, PerThing};
 
 pub type BalanceOf<T, I = ()> =
-	<<T as Config<I>>::Currency as Currency<<T as frame_system::Config>::AccountId>>::Balance;
+	<<T as Config<I>>::Currency as Currency<<T as topsoil_system::Config>::AccountId>>::Balance;
 
 pub type BlockNumberFor<T, I> =
 	<<T as Config<I>>::BlockNumberProvider as BlockNumberProvider>::BlockNumber;
 
 pub type NegativeImbalanceOf<T, I> = <<T as Config<I>>::Currency as Currency<
-	<T as frame_system::Config>::AccountId,
+	<T as topsoil_system::Config>::AccountId,
 >>::NegativeImbalance;
 pub type CallOf<T, I> = <T as Config<I>>::RuntimeCall;
 pub type BoundedCallOf<T, I> =
-	Bounded<<T as Config<I>>::RuntimeCall, <T as frame_system::Config>::Hashing>;
+	Bounded<<T as Config<I>>::RuntimeCall, <T as topsoil_system::Config>::Hashing>;
 pub type VotesOf<T, I> = <T as Config<I>>::Votes;
 pub type TallyOf<T, I> = <T as Config<I>>::Tally;
 pub type PalletsOriginOf<T> =
-	<<T as frame_system::Config>::RuntimeOrigin as OriginTrait>::PalletsOrigin;
+	<<T as topsoil_system::Config>::RuntimeOrigin as OriginTrait>::PalletsOrigin;
 pub type ReferendumInfoOf<T, I> = ReferendumInfo<
 	TrackIdOf<T, I>,
 	PalletsOriginOf<T>,
@@ -52,7 +52,7 @@ pub type ReferendumInfoOf<T, I> = ReferendumInfo<
 	BoundedCallOf<T, I>,
 	BalanceOf<T, I>,
 	TallyOf<T, I>,
-	<T as frame_system::Config>::AccountId,
+	<T as topsoil_system::Config>::AccountId,
 	ScheduleAddressOf<T, I>,
 >;
 pub type ReferendumStatusOf<T, I> = ReferendumStatus<
@@ -62,7 +62,7 @@ pub type ReferendumStatusOf<T, I> = ReferendumStatus<
 	BoundedCallOf<T, I>,
 	BalanceOf<T, I>,
 	TallyOf<T, I>,
-	<T as frame_system::Config>::AccountId,
+	<T as topsoil_system::Config>::AccountId,
 	ScheduleAddressOf<T, I>,
 >;
 pub type DecidingStatusOf<T, I> = DecidingStatus<BlockNumberFor<T, I>>;
@@ -644,7 +644,7 @@ impl Debug for Curve {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use frame_support::traits::ConstU32;
+	use topsoil_support::traits::ConstU32;
 	use soil_runtime::{str_array as s, PerThing};
 
 	const fn percent(x: u128) -> FixedI64 {

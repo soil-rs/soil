@@ -18,7 +18,7 @@
 // Disable warnings for #\[transactional\] being deprecated.
 #![allow(deprecated)]
 
-use frame_support::{
+use topsoil_support::{
 	assert_noop, assert_ok, assert_storage_noop, derive_impl,
 	dispatch::DispatchResult,
 	storage::{with_transaction, TransactionOutcome::*},
@@ -34,17 +34,17 @@ use soil_runtime::{
 
 pub use self::pallet::*;
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
-	use frame_support::pallet_prelude::*;
-	use frame_system::pallet_prelude::*;
+	use topsoil_support::pallet_prelude::*;
+	use topsoil_system::pallet_prelude::*;
 
 	#[pallet::pallet]
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
-	pub trait Config: frame_system::Config {}
+	pub trait Config: topsoil_system::Config {}
 
 	#[pallet::call]
 	impl<T: Config> Pallet<T> {
@@ -78,18 +78,18 @@ pub type Header = generic::Header<BlockNumber, BlakeTwo256>;
 pub type UncheckedExtrinsic = generic::UncheckedExtrinsic<u32, RuntimeCall, Signature, ()>;
 pub type Block = generic::Block<Header, UncheckedExtrinsic>;
 
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub enum Runtime
 
 	{
-		System: frame_system,
+		System: topsoil_system,
 		MyPallet: pallet,
 	}
 );
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Runtime {
-	type BaseCallFilter = frame_support::traits::Everything;
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Runtime {
+	type BaseCallFilter = topsoil_support::traits::Everything;
 	type Block = Block;
 	type RuntimeOrigin = RuntimeOrigin;
 	type RuntimeCall = RuntimeCall;

@@ -21,7 +21,7 @@
 //! to have the functionality defined in this module.
 
 use crate::*;
-use frame_support::pallet_prelude::*;
+use topsoil_support::pallet_prelude::*;
 
 impl<T: Config<I>, I: 'static> Pallet<T, I> {
 	/// Sets the attribute of an item or a collection.

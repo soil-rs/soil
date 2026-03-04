@@ -18,7 +18,7 @@
 //! Various basic types for use in the Uniques pallet.
 
 use super::*;
-use frame_support::{
+use topsoil_support::{
 	pallet_prelude::{BoundedVec, MaxEncodedLen},
 	traits::Get,
 };
@@ -144,7 +144,7 @@ pub struct ItemMetadata<DepositBalance, StringLimit: Get<u32>> {
 
 pub mod asset_strategies {
 	use super::*;
-	use frame_support::traits::tokens::asset_ops::common_strategies::{
+	use topsoil_support::traits::tokens::asset_ops::common_strategies::{
 		Admin, ConfigValue, Owner, PredefinedId, WithConfig,
 	};
 
@@ -154,12 +154,12 @@ pub mod asset_strategies {
 		(ConfigValue<Owner<AccountId>>, ConfigValue<Admin<AccountId>>);
 
 	pub type WithCollectionConfig<T, I = ()> = WithConfig<
-		CollectionManagers<<T as frame_system::Config>::AccountId>,
+		CollectionManagers<<T as topsoil_system::Config>::AccountId>,
 		PredefinedId<<T as Config<I>>::CollectionId>,
 	>;
 
 	pub type WithItemConfig<T, I = ()> = WithConfig<
-		ConfigValue<Owner<<T as frame_system::Config>::AccountId>>,
+		ConfigValue<Owner<<T as topsoil_system::Config>::AccountId>>,
 		PredefinedId<(<T as Config<I>>::CollectionId, <T as Config<I>>::ItemId)>,
 	>;
 }

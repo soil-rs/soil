@@ -22,9 +22,9 @@
 
 use super::{mock_helpers::*, Pallet as MessageQueue, *};
 
-use frame_benchmarking::v2::*;
-use frame_support::traits::Get;
-use frame_system::RawOrigin;
+use topsoil_benchmarking::v2::*;
+use topsoil_support::traits::Get;
+use topsoil_system::RawOrigin;
 use soil_io::hashing::blake2_256;
 
 #[benchmarks(

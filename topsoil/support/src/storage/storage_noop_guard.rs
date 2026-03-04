@@ -28,10 +28,10 @@
 /// # Example
 ///
 /// ```should_panic
-/// use frame_support::{StorageNoopGuard, storage::unhashed::put};
+/// use topsoil_support::{StorageNoopGuard, storage::unhashed::put};
 ///
 /// soil_io::TestExternalities::default().execute_with(|| {
-/// 	let _guard = frame_support::StorageNoopGuard::default();
+/// 	let _guard = topsoil_support::StorageNoopGuard::default();
 /// 	put(b"key", b"value");
 /// 	// Panics since there are storage changes.
 /// });
@@ -95,7 +95,7 @@ mod tests {
 	fn storage_noop_guard_panics_on_changed() {
 		TestExternalities::default().execute_with(|| {
 			let _guard = StorageNoopGuard::default();
-			frame_support::storage::unhashed::put(b"key", b"value");
+			topsoil_support::storage::unhashed::put(b"key", b"value");
 		});
 	}
 
@@ -103,8 +103,8 @@ mod tests {
 	fn storage_noop_guard_works_on_unchanged() {
 		TestExternalities::default().execute_with(|| {
 			let _guard = StorageNoopGuard::default();
-			frame_support::storage::unhashed::put(b"key", b"value");
-			frame_support::storage::unhashed::kill(b"key");
+			topsoil_support::storage::unhashed::put(b"key", b"value");
+			topsoil_support::storage::unhashed::kill(b"key");
 		});
 	}
 
@@ -113,9 +113,9 @@ mod tests {
 	fn storage_noop_guard_panics_on_early_drop() {
 		TestExternalities::default().execute_with(|| {
 			let guard = StorageNoopGuard::default();
-			frame_support::storage::unhashed::put(b"key", b"value");
+			topsoil_support::storage::unhashed::put(b"key", b"value");
 			std::mem::drop(guard);
-			frame_support::storage::unhashed::kill(b"key");
+			topsoil_support::storage::unhashed::kill(b"key");
 		});
 	}
 
@@ -123,7 +123,7 @@ mod tests {
 	fn storage_noop_guard_works_on_changed_forget() {
 		TestExternalities::default().execute_with(|| {
 			let guard = StorageNoopGuard::default();
-			frame_support::storage::unhashed::put(b"key", b"value");
+			topsoil_support::storage::unhashed::put(b"key", b"value");
 			std::mem::forget(guard);
 		});
 	}
@@ -133,7 +133,7 @@ mod tests {
 	fn storage_noop_guard_does_not_double_panic() {
 		TestExternalities::default().execute_with(|| {
 			let _guard = StorageNoopGuard::default();
-			frame_support::storage::unhashed::put(b"key", b"value");
+			topsoil_support::storage::unhashed::put(b"key", b"value");
 			panic!("Something else");
 		});
 	}
@@ -145,7 +145,7 @@ mod tests {
 			let _guard = StorageNoopGuard::from_error_message(
 				"`StorageNoopGuard` found unexpected storage changes.",
 			);
-			frame_support::storage::unhashed::put(b"key", b"value");
+			topsoil_support::storage::unhashed::put(b"key", b"value");
 		});
 	}
 
@@ -155,7 +155,7 @@ mod tests {
 		TestExternalities::default().execute_with(|| {
 			let mut guard = StorageNoopGuard::default();
 			guard.set_error_message("`StorageNoopGuard` found unexpected storage changes.");
-			frame_support::storage::unhashed::put(b"key", b"value");
+			topsoil_support::storage::unhashed::put(b"key", b"value");
 		});
 	}
 
@@ -164,7 +164,7 @@ mod tests {
 	fn storage_noop_guard_panics_new_alias() {
 		TestExternalities::default().execute_with(|| {
 			let _guard = StorageNoopGuard::new();
-			frame_support::storage::unhashed::put(b"key", b"value");
+			topsoil_support::storage::unhashed::put(b"key", b"value");
 		});
 	}
 }

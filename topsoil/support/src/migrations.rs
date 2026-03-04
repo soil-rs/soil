@@ -84,7 +84,7 @@ use soil_runtime::traits::Zero;
 /// 		6,
 /// 		VersionUncheckedMigrateV5ToV6<T, I>,
 /// 		crate::pallet::Pallet<T, I>,
-/// 		<T as frame_system::Config>::DbWeight
+/// 		<T as topsoil_system::Config>::DbWeight
 /// 	>;
 ///
 /// // Migrations tuple to pass to the Executive pallet:
@@ -280,7 +280,7 @@ pub fn migrate_from_pallet_version_to_storage_version<
 /// construct_runtime! {
 /// 	pub enum Runtime
 /// 	{
-/// 		System: frame_system = 0,
+/// 		System: topsoil_system = 0,
 ///
 /// 		SomePalletToRemove: pallet_something = 1,
 /// 		AnotherPalletToRemove: pallet_something_else = 2,
@@ -300,7 +300,7 @@ pub fn migrate_from_pallet_version_to_storage_version<
 /// 	AnyOtherMigrations...
 /// );
 ///
-/// impl frame_system::Config for Runtime {
+/// impl topsoil_system::Config for Runtime {
 /// 	type SingleBlockMigrations = Migrations;
 /// }
 /// ```
@@ -315,10 +315,10 @@ pub fn migrate_from_pallet_version_to_storage_version<
 pub struct RemovePallet<P: Get<&'static str>, DbWeight: Get<RuntimeDbWeight>>(
 	PhantomData<(P, DbWeight)>,
 );
-impl<P: Get<&'static str>, DbWeight: Get<RuntimeDbWeight>> frame_support::traits::OnRuntimeUpgrade
+impl<P: Get<&'static str>, DbWeight: Get<RuntimeDbWeight>> topsoil_support::traits::OnRuntimeUpgrade
 	for RemovePallet<P, DbWeight>
 {
-	fn on_runtime_upgrade() -> frame_support::weights::Weight {
+	fn on_runtime_upgrade() -> topsoil_support::weights::Weight {
 		let hashed_prefix = twox_128(P::get().as_bytes());
 		let keys_removed = match clear_prefix(&hashed_prefix, None) {
 			KillStorageResult::AllRemoved(value) => value,
@@ -387,7 +387,7 @@ impl<P: Get<&'static str>, DbWeight: Get<RuntimeDbWeight>> frame_support::traits
 /// construct_runtime! {
 /// 	pub enum Runtime
 /// 	{
-/// 		System: frame_system = 0,
+/// 		System: topsoil_system = 0,
 ///
 /// 		SomePallet: pallet_something = 1,
 ///
@@ -407,7 +407,7 @@ impl<P: Get<&'static str>, DbWeight: Get<RuntimeDbWeight>> frame_support::traits
 /// 	AnyOtherMigrations...
 /// );
 ///
-/// impl frame_system::Config for Runtime {
+/// impl topsoil_system::Config for Runtime {
 /// 	type SingleBlockMigrations = Migrations;
 /// }
 /// ```
@@ -423,9 +423,9 @@ pub struct RemoveStorage<P: Get<&'static str>, S: Get<&'static str>, DbWeight: G
 	PhantomData<(P, S, DbWeight)>,
 );
 impl<P: Get<&'static str>, S: Get<&'static str>, DbWeight: Get<RuntimeDbWeight>>
-	frame_support::traits::OnRuntimeUpgrade for RemoveStorage<P, S, DbWeight>
+	topsoil_support::traits::OnRuntimeUpgrade for RemoveStorage<P, S, DbWeight>
 {
-	fn on_runtime_upgrade() -> frame_support::weights::Weight {
+	fn on_runtime_upgrade() -> topsoil_support::weights::Weight {
 		let hashed_prefix = storage_prefix(P::get().as_bytes(), S::get().as_bytes());
 		let keys_removed = match clear_prefix(&hashed_prefix, None) {
 			KillStorageResult::AllRemoved(value) => value,

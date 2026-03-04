@@ -20,7 +20,7 @@
 
 use crate::{Config, WeightInfo};
 use codec::{Decode, DecodeWithMemTracking, Encode};
-use frame_support::{pallet_prelude::TransactionSource, traits::OriginTrait};
+use topsoil_support::{pallet_prelude::TransactionSource, traits::OriginTrait};
 use scale_info::TypeInfo;
 use soil_io::hashing::blake2_256;
 use soil_runtime::{

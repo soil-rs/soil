@@ -20,9 +20,9 @@
 //! Has to be compiled and run twice to calibrate on new hardware.
 
 #[cfg(feature = "runtime-benchmarks")]
-use frame_benchmarking::v2::*;
-use frame_support::{pallet_prelude::*, weights::constants::*};
-use frame_system::RawOrigin;
+use topsoil_benchmarking::v2::*;
+use topsoil_support::{pallet_prelude::*, weights::constants::*};
+use topsoil_system::RawOrigin;
 use soil_runtime::{traits::One, Perbill};
 
 use crate::*;
@@ -87,7 +87,7 @@ mod benchmarks {
 		#[block]
 		{
 			Pallet::<T>::on_idle(
-				frame_system::Pallet::<T>::block_number(),
+				topsoil_system::Pallet::<T>::block_number(),
 				Weight::from_parts(WEIGHT_REF_TIME_PER_MILLIS * 100, WEIGHT_PROOF_SIZE_PER_MB * 5),
 			);
 		}
@@ -103,7 +103,7 @@ mod benchmarks {
 		#[block]
 		{
 			Pallet::<T>::on_idle(
-				frame_system::Pallet::<T>::block_number(),
+				topsoil_system::Pallet::<T>::block_number(),
 				Weight::from_parts(WEIGHT_REF_TIME_PER_MILLIS * 100, WEIGHT_PROOF_SIZE_PER_KB * 20),
 			);
 		}
@@ -115,7 +115,7 @@ mod benchmarks {
 		#[block]
 		{
 			Pallet::<T>::on_idle(
-				frame_system::Pallet::<T>::block_number(),
+				topsoil_system::Pallet::<T>::block_number(),
 				T::WeightInfo::empty_on_idle(),
 			);
 		}

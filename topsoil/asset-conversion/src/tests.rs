@@ -16,7 +16,7 @@
 // limitations under the License.
 
 use crate::{mock::*, *};
-use frame_support::{
+use topsoil_support::{
 	assert_noop, assert_ok, assert_storage_noop,
 	instances::Instance1,
 	traits::{
@@ -173,7 +173,7 @@ fn check_max_numbers() {
 fn can_create_pool() {
 	new_test_ext().execute_with(|| {
 		let asset_account_deposit: u128 =
-			<mock::Test as pallet_assets::Config<Instance1>>::AssetAccountDeposit::get();
+			<mock::Test as topsoil_assets::Config<Instance1>>::AssetAccountDeposit::get();
 		let user = 1;
 		let token_1 = NativeOrWithId::Native;
 		let token_2 = NativeOrWithId::WithId(2);

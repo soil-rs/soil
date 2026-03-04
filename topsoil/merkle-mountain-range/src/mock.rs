@@ -15,17 +15,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate as pallet_mmr;
+use crate as topsoil_mmr;
 use crate::*;
 
 use crate::{
-	frame_system::DefaultConfig,
+	topsoil_system::DefaultConfig,
 	primitives::{Compact, LeafDataProvider},
 };
 use codec::{Decode, Encode};
-use frame::{
-	deps::frame_support::derive_impl,
-	prelude::{frame_system, frame_system::config_preludes::TestDefaultConfig},
+use topsoil::{
+	deps::topsoil_support::derive_impl,
+	prelude::{topsoil_system, topsoil_system::config_preludes::TestDefaultConfig},
 	testing_prelude::*,
 };
 
@@ -34,13 +34,13 @@ type Block = MockBlock<Test>;
 construct_runtime!(
 	pub enum Test
 	{
-		System: frame_system,
-		MMR: pallet_mmr,
+		System: topsoil_system,
+		MMR: topsoil_mmr,
 	}
 );
 
 #[derive_impl(TestDefaultConfig)]
-impl frame_system::Config for Test {
+impl topsoil_system::Config for Test {
 	type Block = Block;
 }
 

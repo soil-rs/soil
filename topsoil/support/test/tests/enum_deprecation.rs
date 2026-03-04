@@ -18,7 +18,7 @@
 
 use std::collections::BTreeMap;
 
-use frame_support::{
+use topsoil_support::{
 	derive_impl,
 	dispatch::Parameter,
 	parameter_types,
@@ -46,22 +46,22 @@ impl SomeAssociation1 for u64 {
 	type _1 = u64;
 }
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
-	use frame_support::pallet_prelude::*;
+	use topsoil_support::pallet_prelude::*;
 
 	pub(crate) const STORAGE_VERSION: StorageVersion = StorageVersion::new(10);
 
 	#[pallet::config]
-	pub trait Config: frame_system::Config
+	pub trait Config: topsoil_system::Config
 	where
-		<Self as frame_system::Config>::AccountId: From<SomeType1> + SomeAssociation1,
+		<Self as topsoil_system::Config>::AccountId: From<SomeType1> + SomeAssociation1,
 	{
 		type Balance: Parameter + Default + TypeInfo;
 
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 	}
 
 	#[pallet::pallet]
@@ -110,13 +110,13 @@ pub mod pallet {
 	pub struct Origin<T>(PhantomData<T>);
 }
 
-frame_support::parameter_types!(
+topsoil_support::parameter_types!(
 	pub const MyGetParam3: u32 = 12;
 );
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Runtime {
-	type BaseCallFilter = frame_support::traits::Everything;
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Runtime {
+	type BaseCallFilter = topsoil_support::traits::Everything;
 	type RuntimeOrigin = RuntimeOrigin;
 	type Nonce = u64;
 	type RuntimeCall = RuntimeCall;
@@ -139,13 +139,13 @@ pub type UncheckedExtrinsic = soil_runtime::generic::UncheckedExtrinsic<
 	u64,
 	RuntimeCall,
 	soil_runtime::testing::UintAuthorityId,
-	frame_system::CheckNonZeroSender<Runtime>,
+	topsoil_system::CheckNonZeroSender<Runtime>,
 >;
 
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub struct Runtime {
 		// Exclude part `Storage` in order not to check its metadata in tests.
-		System: frame_system exclude_parts { Pallet, Storage },
+		System: topsoil_system exclude_parts { Pallet, Storage },
 		Example: pallet,
 
 	}

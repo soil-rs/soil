@@ -21,8 +21,8 @@
 //! in order to get all the pallet parts for each pallet.
 //!
 //! Pallets can define their parts:
-//!  - Implicitly: `pub type System = frame_system;`
-//!  - Explicitly: `pub type System = frame_system + Pallet + Call;`
+//!  - Implicitly: `pub type System = topsoil_system;`
+//!  - Explicitly: `pub type System = topsoil_system + Pallet + Call;`
 //!
 //! The `runtime` transitions from the implicit definition to the explicit one.
 //! From the explicit state, Substrate expands the pallets with additional information
@@ -53,7 +53,7 @@
 //! ```
 //!
 //! The `runtime` macro transforms the implicit declaration of each pallet
-//! `System: frame_system` to an explicit one `System: frame_system + Pallet + Call` using the
+//! `System: topsoil_system` to an explicit one `System: topsoil_system + Pallet + Call` using the
 //! `tt_default_parts_v2` macro.
 //!
 //! The `tt_default_parts_v2` macro exposes a plus separated list of pallet parts. For example, the
@@ -74,43 +74,43 @@
 //! For example,
 //!
 //! ```ignore
-//! #[frame_support::runtime]
+//! #[topsoil_support::runtime]
 //! mod runtime {
 //! 	//...
 //!
 //!     #[runtime::pallet_index(0)]
-//! 	pub type System = frame_system; // Implicit definition of parts
+//! 	pub type System = topsoil_system; // Implicit definition of parts
 //!
 //!     #[runtime::pallet_index(1)]
-//! 	pub type Balances = pallet_balances; // Implicit definition of parts
+//! 	pub type Balances = topsoil_balances; // Implicit definition of parts
 //! }
 //! ```
 //! This call has some implicit pallet parts, thus it will expand to:
 //! ```ignore
-//! frame_support::__private::tt_call! {
-//! 	macro = [{ pallet_balances::tt_default_parts_v2 }]
-//! 	~~> frame_support::match_and_insert! {
+//! topsoil_support::__private::tt_call! {
+//! 	macro = [{ topsoil_balances::tt_default_parts_v2 }]
+//! 	~~> topsoil_support::match_and_insert! {
 //! 		target = [{
-//! 			frame_support::__private::tt_call! {
-//! 				macro = [{ frame_system::tt_default_parts_v2 }]
-//! 				~~> frame_support::match_and_insert! {
+//! 			topsoil_support::__private::tt_call! {
+//! 				macro = [{ topsoil_system::tt_default_parts_v2 }]
+//! 				~~> topsoil_support::match_and_insert! {
 //! 					target = [{
-//!                         #[frame_support::runtime]
+//!                         #[topsoil_support::runtime]
 //!                         mod runtime {
 //! 	                        //...
 //!
 //!                             #[runtime::pallet_index(0)]
-//! 		                    pub type System = frame_system;
+//! 		                    pub type System = topsoil_system;
 //!                             
 //! 							#[runtime::pallet_index(1)]
-//! 		                    pub type Balances = pallet_balances;
+//! 		                    pub type Balances = topsoil_balances;
 //!                         }
 //! 					}]
-//! 					pattern = [{ System = frame_system }]
+//! 					pattern = [{ System = topsoil_system }]
 //! 				}
 //! 			}
 //! 		}]
-//! 		pattern = [{ Balances = pallet_balances }]
+//! 		pattern = [{ Balances = topsoil_balances }]
 //! 	}
 //! }
 //! ```
@@ -118,60 +118,60 @@
 //! then `tt_call` will pipe the returned pallet parts into the input of `match_and_insert`.
 //! Thus `match_and_insert` will initially receive the following inputs:
 //! ```ignore
-//! frame_support::match_and_insert! {
+//! topsoil_support::match_and_insert! {
 //! 	target = [{
-//! 		frame_support::match_and_insert! {
+//! 		topsoil_support::match_and_insert! {
 //! 			target = [{
-//!                  #[frame_support::runtime]
+//!                  #[topsoil_support::runtime]
 //!                  mod runtime {
 //! 	                 //...
 //!
 //!                      #[runtime::pallet_index(0)]
-//! 		             pub type System = frame_system;
+//! 		             pub type System = topsoil_system;
 //!
 //!                      #[runtime::pallet_index(1)]
-//! 		             pub type Balances = pallet_balances;
+//! 		             pub type Balances = topsoil_balances;
 //!                  }
 //! 			}]
-//! 			pattern = [{ System = frame_system }]
+//! 			pattern = [{ System = topsoil_system }]
 //! 			tokens = [{ ::{+ Pallet + Call} }]
 //! 		}
 //! 	}]
-//! 	pattern = [{ Balances = pallet_balances }]
+//! 	pattern = [{ Balances = topsoil_balances }]
 //! 	tokens = [{ ::{+ Pallet + Call} }]
 //! }
 //! ```
-//! After dealing with `pallet_balances`, the inner `match_and_insert` will expand to:
+//! After dealing with `topsoil_balances`, the inner `match_and_insert` will expand to:
 //! ```ignore
-//! frame_support::match_and_insert! {
+//! topsoil_support::match_and_insert! {
 //! 	target = [{
-//! 		#[frame_support::runtime]
+//! 		#[topsoil_support::runtime]
 //!         mod runtime {
 //! 	        //...
 //!
 //!             #[runtime::pallet_index(0)]
-//! 		    pub type System = frame_system; // Implicit definition of parts
+//! 		    pub type System = topsoil_system; // Implicit definition of parts
 //!
 //!             #[runtime::pallet_index(1)]
-//! 		    pub type Balances = pallet_balances + Pallet + Call; // Explicit definition of parts
+//! 		    pub type Balances = topsoil_balances + Pallet + Call; // Explicit definition of parts
 //!         }
 //! 	}]
-//! 	pattern = [{ System = frame_system }]
+//! 	pattern = [{ System = topsoil_system }]
 //! 	tokens = [{ ::{+ Pallet + Call} }]
 //! }
 //! ```
 //!
 //! Which will then finally expand to the following:
 //! ```ignore
-//! #[frame_support::runtime]
+//! #[topsoil_support::runtime]
 //! mod runtime {
 //! 	//...
 //!
 //!     #[runtime::pallet_index(0)]
-//! 	pub type System = frame_system + Pallet + Call;
+//! 	pub type System = topsoil_system + Pallet + Call;
 //!
 //!     #[runtime::pallet_index(1)]
-//! 	pub type Balances = pallet_balances + Pallet + Call;
+//! 	pub type Balances = topsoil_balances + Pallet + Call;
 //! }
 //! ```
 //!
@@ -184,7 +184,7 @@
 //! ...
 //! ```
 //!
-//! Visualizing the entire flow of `#[frame_support::runtime]`, it would look like the following:
+//! Visualizing the entire flow of `#[topsoil_support::runtime]`, it would look like the following:
 //!
 //! ```ignore
 //! +----------------------+     +------------------------+     +-------------------+
@@ -218,8 +218,8 @@ pub fn runtime(attr: TokenStream, tokens: TokenStream) -> TokenStream {
 			legacy_ordering = true;
 		} else {
 			let msg = "Invalid runtime macro call: unexpected attribute. Macro call must be \
-				bare, such as `#[frame_support::runtime]` or `#[runtime]`, or must specify the \
-				`legacy_ordering` attribute, such as `#[frame_support::runtime(legacy_ordering)]` or \
+				bare, such as `#[topsoil_support::runtime]` or `#[runtime]`, or must specify the \
+				`legacy_ordering` attribute, such as `#[topsoil_support::runtime(legacy_ordering)]` or \
 				#[runtime(legacy_ordering)].";
 			let span = proc_macro2::TokenStream::from(attr).span();
 			return syn::Error::new(span, msg).to_compile_error().into();

@@ -15,7 +15,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use frame_support::*;
+use topsoil_support::*;
 
 pub trait Animal {
 	type Locomotion;

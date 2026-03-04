@@ -15,11 +15,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//! Some instance placeholder to be used in [`frame_support::pallet`] attribute macro.
+//! Some instance placeholder to be used in [`topsoil_support::pallet`] attribute macro.
 //!
-//! [`frame_support::pallet`] attribute macro does only requires the instance generic `I` to be
+//! [`topsoil_support::pallet`] attribute macro does only requires the instance generic `I` to be
 //! static (contrary to `decl_*` macro which requires instance generic to implement
-//! [`frame_support::traits::Instance`]).
+//! [`topsoil_support::traits::Instance`]).
 //!
 //! Thus support provides some instance types to be used, This allow some instantiable pallet to
 //! depend on specific instance of another:
@@ -28,11 +28,11 @@
 //! pub trait Config<I: 'static = ()>: another_pallet::Config<I> {}
 //! ```
 //!
-//! NOTE: [`frame_support::pallet`] will reexport them inside the module, in order to make them
-//! accessible to [`frame_support::construct_runtime`].
+//! NOTE: [`topsoil_support::pallet`] will reexport them inside the module, in order to make them
+//! accessible to [`topsoil_support::construct_runtime`].
 
 /// `Instance1` to be used for instantiable pallets defined with the
-/// [`#[pallet]`](`frame_support::pallet`) macro. Instances 2-16 are also available but are hidden
+/// [`#[pallet]`](`topsoil_support::pallet`) macro. Instances 2-16 are also available but are hidden
 /// from docs.
 #[derive(Clone, Copy, PartialEq, Eq, crate::DebugNoBound)]
 pub struct Instance1;

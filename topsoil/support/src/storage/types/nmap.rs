@@ -37,7 +37,7 @@ use soil_runtime::SaturatedConversion;
 /// A type representing an *NMap* in storage. This structure associates an arbitrary number of keys
 /// with a value of a specified type stored on-chain.
 ///
-/// For example, [`StorageDoubleMap`](frame_support::storage::types::StorageDoubleMap) is a special
+/// For example, [`StorageDoubleMap`](topsoil_support::storage::types::StorageDoubleMap) is a special
 /// case of an *NMap* with N = 2.
 ///
 /// For general information regarding the `#[pallet::storage]` attribute, refer to
@@ -46,11 +46,11 @@ use soil_runtime::SaturatedConversion;
 /// # Example
 ///
 /// ```
-/// #[frame_support::pallet]
+/// #[topsoil_support::pallet]
 /// mod pallet {
-///     # use frame_support::pallet_prelude::*;
+///     # use topsoil_support::pallet_prelude::*;
 ///     # #[pallet::config]
-///     # pub trait Config: frame_system::Config {}
+///     # pub trait Config: topsoil_system::Config {}
 ///     # #[pallet::pallet]
 ///     # pub struct Pallet<T>(_);
 /// 	/// A kitchen-sink StorageNMap, with all possible additional attributes.

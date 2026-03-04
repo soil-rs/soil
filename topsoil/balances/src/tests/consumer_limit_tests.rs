@@ -18,7 +18,7 @@
 //! Tests for consumer limit behavior in balance locks.
 
 use super::*;
-use frame_support::traits::{
+use topsoil_support::traits::{
 	fungible::{InspectFreeze, MutateFreeze, MutateHold},
 	Currency, Get, LockIdentifier, LockableCurrency, ReservableCurrency, WithdrawReasons,
 };
@@ -41,7 +41,7 @@ fn lock_behavior_when_consumer_limit_fully_exhausted() {
 			// Note: asset-pallets prevents all the consumers to be filled and leaves one untouched.
 			// But other operations in the runtime, notably `uniques::set_accept_ownership` might
 			// overrule it.
-			let max_consumers: u32 = <Test as frame_system::Config>::MaxConsumers::get();
+			let max_consumers: u32 = <Test as topsoil_system::Config>::MaxConsumers::get();
 			for _ in 0..max_consumers {
 				assert_ok!(System::inc_consumers(&1));
 			}
@@ -51,7 +51,7 @@ fn lock_behavior_when_consumer_limit_fully_exhausted() {
 			assert_noop!(System::inc_consumers(&1), DispatchError::TooManyConsumers);
 
 			// Although without limits it would work
-			frame_support::hypothetically!({
+			topsoil_support::hypothetically!({
 				assert_ok!(System::inc_consumers_without_limit(&1));
 			});
 
@@ -69,7 +69,7 @@ fn lock_behavior_when_consumer_limit_fully_exhausted() {
 
 			// And this account cannot transfer any funds out.
 			assert_noop!(
-				Balances::transfer_allow_death(frame_system::RawOrigin::Signed(1).into(), 2, 90),
+				Balances::transfer_allow_death(topsoil_system::RawOrigin::Signed(1).into(), 2, 90),
 				DispatchError::Token(TokenError::Frozen)
 			);
 		});
@@ -86,7 +86,7 @@ fn freeze_behavior_when_consumer_limit_fully_exhausted() {
 			Balances::make_free_balance_be(&1, 100);
 
 			// Fill up all consumer refs.
-			let max_consumers: u32 = <Test as frame_system::Config>::MaxConsumers::get();
+			let max_consumers: u32 = <Test as topsoil_system::Config>::MaxConsumers::get();
 			for _ in 0..max_consumers {
 				assert_ok!(System::inc_consumers(&1));
 			}
@@ -117,7 +117,7 @@ fn hold_behavior_when_consumer_limit_fully_exhausted() {
 			Balances::make_free_balance_be(&1, 100);
 
 			// Fill up all consumer refs.
-			let max_consumers: u32 = <Test as frame_system::Config>::MaxConsumers::get();
+			let max_consumers: u32 = <Test as topsoil_system::Config>::MaxConsumers::get();
 			for _ in 0..max_consumers {
 				assert_ok!(System::inc_consumers(&1));
 			}
@@ -141,7 +141,7 @@ fn reserve_behavior_when_consumer_limit_fully_exhausted() {
 			Balances::make_free_balance_be(&1, 100);
 
 			// Fill up all 16 consumer refs.
-			let max_consumers: u32 = <Test as frame_system::Config>::MaxConsumers::get();
+			let max_consumers: u32 = <Test as topsoil_system::Config>::MaxConsumers::get();
 			for _ in 0..max_consumers {
 				assert_ok!(System::inc_consumers(&1));
 			}

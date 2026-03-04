@@ -18,13 +18,13 @@
 //! Mock helpers for Session.
 
 use super::*;
-use crate as pallet_session;
+use crate as topsoil_session;
 #[cfg(feature = "historical")]
 use crate::historical as pallet_session_historical;
 
 use codec::Encode;
-use frame_support::{derive_impl, parameter_types, traits::ConstU64};
-use pallet_balances::{self, AccountData};
+use topsoil_support::{derive_impl, parameter_types, traits::ConstU64};
+use topsoil_balances::{self, AccountData};
 use soil_core::crypto::key_types::DUMMY;
 use soil_runtime::{
 	impl_opaque_keys,
@@ -76,26 +76,26 @@ impl OpaqueKeys for PreUpgradeMockSessionKeys {
 	}
 }
 
-type Block = frame_system::mocking::MockBlock<Test>;
+type Block = topsoil_system::mocking::MockBlock<Test>;
 
 #[cfg(feature = "historical")]
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub enum Test
 	{
-		System: frame_system,
-		Session: pallet_session,
-		Balances: pallet_balances,
+		System: topsoil_system,
+		Session: topsoil_session,
+		Balances: topsoil_balances,
 		Historical: pallet_session_historical,
 	}
 );
 
 #[cfg(not(feature = "historical"))]
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub enum Test
 	{
-		System: frame_system,
-		Session: pallet_session,
-		Balances: pallet_balances,
+		System: topsoil_system,
+		Session: topsoil_session,
+		Balances: topsoil_balances,
 	}
 );
 
@@ -219,24 +219,24 @@ parameter_types! {
 	pub static LastSessionEventIndex: usize = 0;
 }
 
-pub fn session_events_since_last_call() -> Vec<pallet_session::Event<Test>> {
-	let events = System::read_events_for_pallet::<pallet_session::Event<Test>>();
+pub fn session_events_since_last_call() -> Vec<topsoil_session::Event<Test>> {
+	let events = System::read_events_for_pallet::<topsoil_session::Event<Test>>();
 	let already_seen = LastSessionEventIndex::get();
 	LastSessionEventIndex::set(events.len());
 	events.into_iter().skip(already_seen).collect()
 }
 
 pub fn session_hold(who: u64) -> u64 {
-	<Balances as frame_support::traits::fungible::InspectHold<_>>::balance_on_hold(
+	<Balances as topsoil_support::traits::fungible::InspectHold<_>>::balance_on_hold(
 		&crate::HoldReason::Keys.into(),
 		&who,
 	)
 }
 
 pub fn new_test_ext() -> soil_io::TestExternalities {
-	let mut t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
-	let ed = <Test as pallet_balances::Config>::ExistentialDeposit::get();
-	pallet_balances::GenesisConfig::<Test> {
+	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let ed = <Test as topsoil_balances::Config>::ExistentialDeposit::get();
+	topsoil_balances::GenesisConfig::<Test> {
 		balances: vec![
 			(1, (KeyDeposit::get() * 10).max(ed)),
 			(2, (KeyDeposit::get() * 10).max(ed)),
@@ -257,7 +257,7 @@ pub fn new_test_ext() -> soil_io::TestExternalities {
 		.cloned()
 		.map(|i| (i, i, UintAuthorityId(i).into()))
 		.collect();
-	pallet_session::GenesisConfig::<Test> { keys, ..Default::default() }
+	topsoil_session::GenesisConfig::<Test> { keys, ..Default::default() }
 		.assimilate_storage(&mut t)
 		.unwrap();
 
@@ -266,14 +266,14 @@ pub fn new_test_ext() -> soil_io::TestExternalities {
 	soil_io::TestExternalities::new(t)
 }
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
 	type Block = Block;
 	type AccountData = AccountData<u64>;
 	type RuntimeEvent = RuntimeEvent;
 }
 
-impl pallet_timestamp::Config for Test {
+impl topsoil_timestamp::Config for Test {
 	type Moment = u64;
 	type OnTimestampSet = ();
 	type MinimumPeriod = ConstU64<5>;
@@ -311,7 +311,7 @@ impl Config for Test {
 	type DisablingStrategy =
 		disabling::UpToLimitWithReEnablingDisablingStrategy<DISABLING_LIMIT_FACTOR>;
 	type WeightInfo = ();
-	type Currency = pallet_balances::Pallet<Test>;
+	type Currency = topsoil_balances::Pallet<Test>;
 	type KeyDeposit = KeyDeposit;
 }
 
@@ -322,8 +322,8 @@ impl crate::historical::Config for Test {
 	type FullIdentificationOf = soil_runtime::traits::ConvertInto;
 }
 
-#[derive_impl(pallet_balances::config_preludes::TestDefaultConfig as pallet_balances::DefaultConfig)]
-impl pallet_balances::Config for Test {
+#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig as topsoil_balances::DefaultConfig)]
+impl topsoil_balances::Config for Test {
 	type AccountStore = System;
 	type RuntimeEvent = RuntimeEvent;
 }

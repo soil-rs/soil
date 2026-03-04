@@ -19,21 +19,21 @@
 
 use crate::{mock::*, Event, SystemConfig, *};
 use enumflags2::BitFlags;
-use frame_support::{
+use topsoil_support::{
 	assert_noop, assert_ok,
 	traits::{
 		tokens::nonfungibles_v2::{Create, Destroy, Inspect, Mutate},
 		Currency, Get,
 	},
 };
-use pallet_balances::Error as BalancesError;
+use topsoil_balances::Error as BalancesError;
 use soil_core::{bounded::BoundedVec, Pair};
 use soil_runtime::{
 	traits::{Dispatchable, IdentifyAccount},
 	MultiSignature, MultiSigner,
 };
 
-type AccountIdOf<Test> = <Test as frame_system::Config>::AccountId;
+type AccountIdOf<Test> = <Test as topsoil_system::Config>::AccountId;
 
 fn account(id: u8) -> AccountIdOf<Test> {
 	[id; 32].into()

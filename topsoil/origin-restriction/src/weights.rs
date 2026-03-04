@@ -20,7 +20,7 @@
 #![allow(unused_parens)]
 #![allow(unused_imports)]
 
-use frame_support::weights::Weight;
+use topsoil_support::weights::Weight;
 
 /// Weight functions needed for pallet origins restriction.
 pub trait WeightInfo {

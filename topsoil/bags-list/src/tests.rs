@@ -15,10 +15,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use frame_support::{assert_noop, assert_ok, assert_storage_noop, traits::IntegrityTest};
+use topsoil_support::{assert_noop, assert_ok, assert_storage_noop, traits::IntegrityTest};
 
 use super::*;
-use frame_election_provider_support::{SortedListProvider, VoteWeight};
+use topsoil_election_provider_support::{SortedListProvider, VoteWeight};
 use list::Bag;
 use mock::{test_utils::*, *};
 use substrate_test_utils::assert_eq_uvec;
@@ -774,14 +774,14 @@ mod sorted_list_provider {
 
 mod on_idle {
 	use super::*;
-	use frame_support::traits::OnIdle;
+	use topsoil_support::traits::OnIdle;
 
 	fn run_to_block(n: u64, on_idle_weight: Weight) -> Weight {
 		let mut total_weight = Weight::zero();
 
 		System::run_to_block_with::<AllPalletsWithSystem>(
 			n,
-			frame_system::RunToBlockHooks::default().after_initialize(|bn| {
+			topsoil_system::RunToBlockHooks::default().after_initialize(|bn| {
 				let w = AllPalletsWithSystem::on_idle(bn, on_idle_weight);
 				total_weight = total_weight.saturating_add(w);
 			}),

@@ -16,7 +16,7 @@
 // limitations under the License.
 
 use core::any::TypeId;
-use frame_support::{
+use topsoil_support::{
 	derive_impl,
 	dispatch::{DispatchClass, DispatchInfo, GetDispatchInfo, Pays},
 	pallet_prelude::ValueQuery,
@@ -35,22 +35,22 @@ use soil_io::{
 };
 use soil_runtime::{DispatchError, ModuleError};
 
-#[frame_support::pallet(dev_mode)]
+#[topsoil_support::pallet(dev_mode)]
 pub mod pallet {
 	use super::*;
-	use frame_support::pallet_prelude::*;
-	use frame_system::pallet_prelude::*;
+	use topsoil_support::pallet_prelude::*;
+	use topsoil_system::pallet_prelude::*;
 
 	type BalanceOf<T, I> = <T as Config<I>>::Balance;
 
 	#[pallet::config]
-	pub trait Config<I: 'static = ()>: frame_system::Config {
+	pub trait Config<I: 'static = ()>: topsoil_system::Config {
 		#[pallet::constant]
 		type MyGetParam: Get<u32>;
 		type Balance: Parameter + Default + scale_info::StaticTypeInfo;
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self, I>>
-			+ IsType<<Self as frame_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 	}
 
 	#[pallet::pallet]
@@ -125,7 +125,7 @@ pub mod pallet {
 	#[pallet::generate_deposit(fn deposit_event)]
 	pub enum Event<T: Config<I>, I: 'static = ()> {
 		/// doc comment put in metadata
-		Proposed(<T as frame_system::Config>::AccountId),
+		Proposed(<T as topsoil_system::Config>::AccountId),
 		/// doc
 		Spending(BalanceOf<T, I>),
 		Something(u32),
@@ -192,7 +192,7 @@ pub mod pallet {
 	>;
 
 	#[pallet::genesis_config]
-	#[derive(frame_support::DefaultNoBound)]
+	#[derive(topsoil_support::DefaultNoBound)]
 	pub struct GenesisConfig<T: Config<I>, I: 'static = ()> {
 		#[serde(skip)]
 		_config: core::marker::PhantomData<(T, I)>,
@@ -252,25 +252,25 @@ pub mod pallet {
 	#[cfg_attr(feature = "std", derive(codec::Decode))]
 	pub enum InherentError {}
 
-	impl frame_support::inherent::IsFatalError for InherentError {
+	impl topsoil_support::inherent::IsFatalError for InherentError {
 		fn is_fatal_error(&self) -> bool {
 			unimplemented!();
 		}
 	}
 
-	pub const INHERENT_IDENTIFIER: frame_support::inherent::InherentIdentifier = *b"testpall";
+	pub const INHERENT_IDENTIFIER: topsoil_support::inherent::InherentIdentifier = *b"testpall";
 }
 
 // Test that a instantiable pallet with a generic genesis_config is correctly handled
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet2 {
-	use frame_support::pallet_prelude::*;
+	use topsoil_support::pallet_prelude::*;
 
 	#[pallet::config]
-	pub trait Config<I: 'static = ()>: frame_system::Config {
+	pub trait Config<I: 'static = ()>: topsoil_system::Config {
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self, I>>
-			+ IsType<<Self as frame_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 	}
 
 	#[pallet::pallet]
@@ -299,9 +299,9 @@ pub mod pallet2 {
 	}
 }
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Runtime {
-	type BaseCallFilter = frame_support::traits::Everything;
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Runtime {
+	type BaseCallFilter = topsoil_support::traits::Everything;
 	type RuntimeOrigin = RuntimeOrigin;
 	type Nonce = u64;
 	type RuntimeCall = RuntimeCall;
@@ -345,11 +345,11 @@ pub type Header = soil_runtime::generic::Header<u32, soil_runtime::traits::Blake
 pub type Block = soil_runtime::generic::Block<Header, UncheckedExtrinsic>;
 pub type UncheckedExtrinsic = soil_runtime::generic::UncheckedExtrinsic<u32, RuntimeCall, (), ()>;
 
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub struct Runtime
 	{
 		// Exclude part `Storage` in order not to check its metadata in tests.
-		System: frame_system exclude_parts { Storage },
+		System: topsoil_system exclude_parts { Storage },
 		Example: pallet,
 		Instance1Example: pallet::<Instance1>,
 		Example2: pallet2,
@@ -472,23 +472,23 @@ fn instance_expand() {
 #[test]
 fn pallet_expand_deposit_event() {
 	TestExternalities::default().execute_with(|| {
-		frame_system::Pallet::<Runtime>::set_block_number(1);
+		topsoil_system::Pallet::<Runtime>::set_block_number(1);
 		pallet::Call::<Runtime>::foo { foo: 3 }
 			.dispatch_bypass_filter(None.into())
 			.unwrap();
 		assert_eq!(
-			frame_system::Pallet::<Runtime>::events()[0].event,
+			topsoil_system::Pallet::<Runtime>::events()[0].event,
 			RuntimeEvent::Example(pallet::Event::Something(3)),
 		);
 	});
 
 	TestExternalities::default().execute_with(|| {
-		frame_system::Pallet::<Runtime>::set_block_number(1);
+		topsoil_system::Pallet::<Runtime>::set_block_number(1);
 		pallet::Call::<Runtime, pallet::Instance1>::foo { foo: 3 }
 			.dispatch_bypass_filter(None.into())
 			.unwrap();
 		assert_eq!(
-			frame_system::Pallet::<Runtime>::events()[0].event,
+			topsoil_system::Pallet::<Runtime>::events()[0].event,
 			RuntimeEvent::Instance1Example(pallet::Event::Something(3)),
 		);
 	});
@@ -496,7 +496,7 @@ fn pallet_expand_deposit_event() {
 
 #[test]
 fn storage_expand() {
-	use frame_support::{pallet_prelude::*, storage::StoragePrefixedMap};
+	use topsoil_support::{pallet_prelude::*, storage::StoragePrefixedMap};
 
 	fn twox_64_concat(d: &[u8]) -> Vec<u8> {
 		let mut v = twox_64(d).to_vec();
@@ -661,13 +661,13 @@ fn storage_expand() {
 
 #[test]
 fn pallet_metadata_expands() {
-	use frame_support::traits::PalletsInfoAccess;
+	use topsoil_support::traits::PalletsInfoAccess;
 	let mut infos = AllPalletsWithSystem::infos();
 	infos.sort_by_key(|x| x.index);
 
 	assert_eq!(infos[0].index, 0);
 	assert_eq!(infos[0].name, "System");
-	assert_eq!(infos[0].module_name, "frame_system");
+	assert_eq!(infos[0].module_name, "topsoil_system");
 
 	assert_eq!(infos[1].index, 1);
 	assert_eq!(infos[1].name, "Example");
@@ -689,7 +689,7 @@ fn pallet_metadata_expands() {
 #[test]
 fn pallet_hooks_expand() {
 	TestExternalities::default().execute_with(|| {
-		frame_system::Pallet::<Runtime>::set_block_number(1);
+		topsoil_system::Pallet::<Runtime>::set_block_number(1);
 
 		assert_eq!(AllPalletsWithoutSystem::on_initialize(1), Weight::from_parts(21, 0));
 		AllPalletsWithoutSystem::on_finalize(1);
@@ -697,27 +697,27 @@ fn pallet_hooks_expand() {
 		assert_eq!(AllPalletsWithoutSystem::on_runtime_upgrade(), Weight::from_parts(61, 0));
 
 		assert_eq!(
-			frame_system::Pallet::<Runtime>::events()[0].event,
+			topsoil_system::Pallet::<Runtime>::events()[0].event,
 			RuntimeEvent::Example(pallet::Event::Something(10)),
 		);
 		assert_eq!(
-			frame_system::Pallet::<Runtime>::events()[1].event,
+			topsoil_system::Pallet::<Runtime>::events()[1].event,
 			RuntimeEvent::Instance1Example(pallet::Event::Something(11)),
 		);
 		assert_eq!(
-			frame_system::Pallet::<Runtime>::events()[2].event,
+			topsoil_system::Pallet::<Runtime>::events()[2].event,
 			RuntimeEvent::Example(pallet::Event::Something(20)),
 		);
 		assert_eq!(
-			frame_system::Pallet::<Runtime>::events()[3].event,
+			topsoil_system::Pallet::<Runtime>::events()[3].event,
 			RuntimeEvent::Instance1Example(pallet::Event::Something(21)),
 		);
 		assert_eq!(
-			frame_system::Pallet::<Runtime>::events()[4].event,
+			topsoil_system::Pallet::<Runtime>::events()[4].event,
 			RuntimeEvent::Example(pallet::Event::Something(30)),
 		);
 		assert_eq!(
-			frame_system::Pallet::<Runtime>::events()[5].event,
+			topsoil_system::Pallet::<Runtime>::events()[5].event,
 			RuntimeEvent::Instance1Example(pallet::Event::Something(31)),
 		);
 	})
@@ -740,20 +740,20 @@ fn metadata() {
 		index: 0,
 		name: "System",
 		storage: None, // The storage metadatas have been excluded.
-		calls: Some(scale_info::meta_type::<frame_system::Call<Runtime>>().into()),
+		calls: Some(scale_info::meta_type::<topsoil_system::Call<Runtime>>().into()),
 		event: Some(PalletEventMetadata {
-			ty: scale_info::meta_type::<frame_system::Event<Runtime>>(),
+			ty: scale_info::meta_type::<topsoil_system::Event<Runtime>>(),
 		}),
 		constants: vec![
 			PalletConstantMetadata {
 				name: "BlockWeights",
-				ty: scale_info::meta_type::<frame_system::limits::BlockWeights>(),
+				ty: scale_info::meta_type::<topsoil_system::limits::BlockWeights>(),
 				value: vec![],
 				docs: vec![],
 			},
 			PalletConstantMetadata {
 				name: "BlockLength",
-				ty: scale_info::meta_type::<frame_system::limits::BlockLength>(),
+				ty: scale_info::meta_type::<topsoil_system::limits::BlockLength>(),
 				value: vec![],
 				docs: vec![],
 			},
@@ -765,7 +765,7 @@ fn metadata() {
 			},
 			PalletConstantMetadata {
 				name: "DbWeight",
-				ty: scale_info::meta_type::<frame_support::weights::RuntimeDbWeight>(),
+				ty: scale_info::meta_type::<topsoil_support::weights::RuntimeDbWeight>(),
 				value: vec![],
 				docs: vec![],
 			},
@@ -783,7 +783,7 @@ fn metadata() {
 			},
 		],
 		error: Some(PalletErrorMetadata {
-			ty: scale_info::meta_type::<frame_system::Error<Runtime>>(),
+			ty: scale_info::meta_type::<topsoil_system::Error<Runtime>>(),
 		}),
 	};
 
@@ -972,28 +972,28 @@ fn metadata() {
 
 #[test]
 fn test_pallet_info_access() {
-	assert_eq!(<System as frame_support::traits::PalletInfoAccess>::name(), "System");
-	assert_eq!(<Example as frame_support::traits::PalletInfoAccess>::name(), "Example");
+	assert_eq!(<System as topsoil_support::traits::PalletInfoAccess>::name(), "System");
+	assert_eq!(<Example as topsoil_support::traits::PalletInfoAccess>::name(), "Example");
 	assert_eq!(
-		<Instance1Example as frame_support::traits::PalletInfoAccess>::name(),
+		<Instance1Example as topsoil_support::traits::PalletInfoAccess>::name(),
 		"Instance1Example"
 	);
-	assert_eq!(<Example2 as frame_support::traits::PalletInfoAccess>::name(), "Example2");
+	assert_eq!(<Example2 as topsoil_support::traits::PalletInfoAccess>::name(), "Example2");
 	assert_eq!(
-		<Instance1Example2 as frame_support::traits::PalletInfoAccess>::name(),
+		<Instance1Example2 as topsoil_support::traits::PalletInfoAccess>::name(),
 		"Instance1Example2"
 	);
 
-	assert_eq!(<System as frame_support::traits::PalletInfoAccess>::index(), 0);
-	assert_eq!(<Example as frame_support::traits::PalletInfoAccess>::index(), 1);
-	assert_eq!(<Instance1Example as frame_support::traits::PalletInfoAccess>::index(), 2);
-	assert_eq!(<Example2 as frame_support::traits::PalletInfoAccess>::index(), 3);
-	assert_eq!(<Instance1Example2 as frame_support::traits::PalletInfoAccess>::index(), 4);
+	assert_eq!(<System as topsoil_support::traits::PalletInfoAccess>::index(), 0);
+	assert_eq!(<Example as topsoil_support::traits::PalletInfoAccess>::index(), 1);
+	assert_eq!(<Instance1Example as topsoil_support::traits::PalletInfoAccess>::index(), 2);
+	assert_eq!(<Example2 as topsoil_support::traits::PalletInfoAccess>::index(), 3);
+	assert_eq!(<Instance1Example2 as topsoil_support::traits::PalletInfoAccess>::index(), 4);
 }
 
 #[test]
 fn test_storage_alias() {
-	#[frame_support::storage_alias]
+	#[topsoil_support::storage_alias]
 	type Value<T: pallet::Config<I>, I: 'static> =
 		StorageValue<pallet::Pallet<T, I>, u32, ValueQuery>;
 

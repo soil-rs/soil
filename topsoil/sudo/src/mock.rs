@@ -19,20 +19,20 @@
 
 use super::*;
 use crate as sudo;
-use frame_support::{derive_impl, traits::Contains};
+use topsoil_support::{derive_impl, traits::Contains};
 use soil_io;
 use soil_runtime::BuildStorage;
 
 // Logger module to track execution.
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod logger {
-	use frame_support::pallet_prelude::*;
-	use frame_system::pallet_prelude::*;
+	use topsoil_support::pallet_prelude::*;
+	use topsoil_system::pallet_prelude::*;
 
 	#[pallet::config]
-	pub trait Config: frame_system::Config {
+	pub trait Config: topsoil_system::Config {
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 	}
 
 	#[pallet::pallet]
@@ -87,12 +87,12 @@ pub mod logger {
 	pub(super) type I32Log<T> = StorageValue<_, BoundedVec<i32, ConstU32<1_000>>, ValueQuery>;
 }
 
-type Block = frame_system::mocking::MockBlock<Test>;
+type Block = topsoil_system::mocking::MockBlock<Test>;
 
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub enum Test
 	{
-		System: frame_system,
+		System: topsoil_system,
 		Sudo: sudo,
 		Logger: logger,
 	}
@@ -105,8 +105,8 @@ impl Contains<RuntimeCall> for BlockEverything {
 	}
 }
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
 	type BaseCallFilter = BlockEverything;
 	type Block = Block;
 }
@@ -129,7 +129,7 @@ pub type LoggerCall = logger::Call<Test>;
 
 // Build test environment by setting the root `key` for the Genesis.
 pub fn new_test_ext(root_key: u64) -> soil_io::TestExternalities {
-	let mut t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	sudo::GenesisConfig::<Test> { key: Some(root_key) }
 		.assimilate_storage(&mut t)
 		.unwrap();
@@ -140,5 +140,5 @@ pub fn new_test_ext(root_key: u64) -> soil_io::TestExternalities {
 
 #[cfg(feature = "runtime-benchmarks")]
 pub fn new_bench_ext() -> soil_io::TestExternalities {
-	frame_system::GenesisConfig::<Test>::default().build_storage().unwrap().into()
+	topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap().into()
 }

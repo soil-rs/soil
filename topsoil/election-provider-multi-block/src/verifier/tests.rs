@@ -24,8 +24,8 @@ use crate::{
 	verifier::{impls::Status, Event, FeasibilityError, Verifier, *},
 	PagedRawSolution, Snapshot, *,
 };
-use frame_election_provider_support::Support;
-use frame_support::{assert_noop, assert_ok};
+use topsoil_election_provider_support::Support;
+use topsoil_support::{assert_noop, assert_ok};
 use soil_core::bounded_vec;
 use soil_npos_elections::ElectionScore;
 use soil_runtime::{traits::Bounded, PerU16};
@@ -208,7 +208,7 @@ mod feasibility_check {
 			assert_noop!(
 				VerifierPallet::feasibility_check_page_inner(faulty_page, 0),
 				FeasibilityError::NposElection(
-					frame_election_provider_support::Error::DuplicateVoter
+					topsoil_election_provider_support::Error::DuplicateVoter
 				),
 			);
 		});
@@ -229,7 +229,7 @@ mod feasibility_check {
 			assert_noop!(
 				VerifierPallet::feasibility_check_page_inner(faulty_page, 0),
 				FeasibilityError::NposElection(
-					frame_election_provider_support::Error::DuplicateTarget
+					topsoil_election_provider_support::Error::DuplicateTarget
 				),
 			);
 		});
@@ -948,7 +948,7 @@ mod async_verification {
 
 mod multi_page_sync_verification {
 	use super::*;
-	use frame_support::hypothetically;
+	use topsoil_support::hypothetically;
 
 	#[test]
 	fn basic_sync_verification_works() {
@@ -1044,7 +1044,7 @@ mod multi_page_sync_verification {
 	fn invalid_second_page() {
 		ExtBuilder::mock_signed().build_and_execute(|| {
 			// A solution that where the second validated page is invalid.
-			use frame_election_provider_support::traits::NposSolution;
+			use topsoil_election_provider_support::traits::NposSolution;
 			roll_to_snapshot_created();
 			let mut paged = mine_solution(2).unwrap();
 			paged.solution_pages.last_mut().map(|p| p.corrupt());

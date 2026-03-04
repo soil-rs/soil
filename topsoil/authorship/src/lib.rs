@@ -21,7 +21,7 @@
 
 #![cfg_attr(not(feature = "std"), no_std)]
 
-use frame_support::traits::FindAuthor;
+use topsoil_support::traits::FindAuthor;
 
 pub use pallet::*;
 
@@ -33,14 +33,14 @@ pub trait EventHandler<Author, BlockNumber> {
 	fn note_author(author: Author);
 }
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
-	use frame_support::pallet_prelude::*;
-	use frame_system::pallet_prelude::*;
+	use topsoil_support::pallet_prelude::*;
+	use topsoil_system::pallet_prelude::*;
 
 	#[pallet::config]
-	pub trait Config: frame_system::Config {
+	pub trait Config: topsoil_system::Config {
 		/// Find the author of a block.
 		type FindAuthor: FindAuthor<Self::AccountId>;
 		/// An event handler for authored blocks.
@@ -83,7 +83,7 @@ impl<T: Config> Pallet<T> {
 			return Some(author);
 		}
 
-		let digest = <frame_system::Pallet<T>>::digest();
+		let digest = <topsoil_system::Pallet<T>>::digest();
 		let pre_runtime_digests = digest.logs.iter().filter_map(|d| d.as_pre_runtime());
 		T::FindAuthor::find_author(pre_runtime_digests).inspect(|a| {
 			<Author<T>>::put(&a);
@@ -94,26 +94,26 @@ impl<T: Config> Pallet<T> {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use crate as pallet_authorship;
+	use crate as topsoil_authorship;
 	use codec::{Decode, Encode};
-	use frame_support::{derive_impl, ConsensusEngineId};
+	use topsoil_support::{derive_impl, ConsensusEngineId};
 	use soil_core::H256;
 	use soil_runtime::{
 		generic::DigestItem, testing::Header, traits::Header as HeaderT, BuildStorage,
 	};
 
-	type Block = frame_system::mocking::MockBlock<Test>;
+	type Block = topsoil_system::mocking::MockBlock<Test>;
 
-	frame_support::construct_runtime!(
+	topsoil_support::construct_runtime!(
 		pub enum Test
 		{
-			System: frame_system,
-			Authorship: pallet_authorship,
+			System: topsoil_system,
+			Authorship: topsoil_authorship,
 		}
 	);
 
-	#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-	impl frame_system::Config for Test {
+	#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+	impl topsoil_system::Config for Test {
 		type Block = Block;
 	}
 
@@ -156,7 +156,7 @@ mod tests {
 	}
 
 	fn new_test_ext() -> soil_io::TestExternalities {
-		let t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+		let t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 		t.into()
 	}
 

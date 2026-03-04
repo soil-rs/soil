@@ -17,12 +17,12 @@
 //!
 //! This pallet allows runtimes that include it to skip payment of transaction fees for
 //! dispatchables marked by
-//! [`#[pallet::feeless_if]`](frame_support::pallet_prelude::feeless_if).
+//! [`#[pallet::feeless_if]`](topsoil_support::pallet_prelude::feeless_if).
 //!
 //! ## Overview
 //!
 //! It does this by wrapping an existing [`TransactionExtension`] implementation (e.g.
-//! `pallet-transaction-payment`) and checking if the dispatchable is feeless before applying the
+//! `topsoil-transaction-payment`) and checking if the dispatchable is feeless before applying the
 //! wrapped extension. If the dispatchable is indeed feeless, the extension is skipped and a custom
 //! event is emitted instead. Otherwise, the extension is applied as usual.
 //!
@@ -30,7 +30,7 @@
 //! ## Integration
 //!
 //! This pallet wraps an existing transaction payment pallet. This means you should both pallets
-//! in your [`construct_runtime`](frame_support::construct_runtime) macro and
+//! in your [`construct_runtime`](topsoil_support::construct_runtime) macro and
 //! include this pallet's [`TransactionExtension`] ([`SkipCheckIfFeeless`]) that would accept the
 //! existing one as an argument.
 
@@ -39,7 +39,7 @@
 extern crate alloc;
 
 use codec::{Decode, DecodeWithMemTracking, Encode};
-use frame_support::{
+use topsoil_support::{
 	dispatch::{CheckIfFeeless, DispatchResult},
 	pallet_prelude::TransactionSource,
 	traits::{IsType, OriginTrait},
@@ -61,15 +61,15 @@ mod tests;
 
 pub use pallet::*;
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
 
 	#[pallet::config]
-	pub trait Config: frame_system::Config {
+	pub trait Config: topsoil_system::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 	}
 
 	#[pallet::pallet]
@@ -123,7 +123,7 @@ use Intermediate::*;
 impl<T: Config + Send + Sync, S: TransactionExtension<T::RuntimeCall>>
 	TransactionExtension<T::RuntimeCall> for SkipCheckIfFeeless<T, S>
 where
-	T::RuntimeCall: CheckIfFeeless<Origin = frame_system::pallet_prelude::OriginFor<T>>,
+	T::RuntimeCall: CheckIfFeeless<Origin = topsoil_system::pallet_prelude::OriginFor<T>>,
 {
 	// From the outside this extension should be "invisible", because it just extends the wrapped
 	// extension with an extra check in `pre_dispatch` and `post_dispatch`. Thus, we should forward
@@ -144,7 +144,7 @@ where
 	type Pre =
 		Intermediate<S::Pre, <DispatchOriginOf<T::RuntimeCall> as OriginTrait>::PalletsOrigin>;
 
-	fn weight(&self, call: &T::RuntimeCall) -> frame_support::weights::Weight {
+	fn weight(&self, call: &T::RuntimeCall) -> topsoil_support::weights::Weight {
 		self.0.weight(call)
 	}
 

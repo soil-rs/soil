@@ -21,7 +21,7 @@
 //! token.
 //!
 //! It makes heavy use of concepts such as Holds and Freezes from the
-//! [`frame_support::traits::fungible`] traits, therefore you should read and understand those docs
+//! [`topsoil_support::traits::fungible`] traits, therefore you should read and understand those docs
 //! as a prerequisite to understanding this pallet.
 //!
 //! Also see the [`frame_tokens`] reference docs for higher level information regarding the
@@ -67,11 +67,11 @@
 //!
 //! - [`Currency`]: Functions for dealing with a fungible assets system.
 //! - [`ReservableCurrency`]
-//! - [`NamedReservableCurrency`](frame_support::traits::NamedReservableCurrency):
+//! - [`NamedReservableCurrency`](topsoil_support::traits::NamedReservableCurrency):
 //! Functions for dealing with assets that can be reserved from an account.
-//! - [`LockableCurrency`](frame_support::traits::LockableCurrency): Functions for
+//! - [`LockableCurrency`](topsoil_support::traits::LockableCurrency): Functions for
 //! dealing with accounts that allow liquidity restrictions.
-//! - [`Imbalance`](frame_support::traits::Imbalance): Functions for handling
+//! - [`Imbalance`](topsoil_support::traits::Imbalance): Functions for handling
 //! imbalances between total issuance in the system and account balances. Must be used when a
 //! function creates new funds (e.g. a reward) or destroys some funds (e.g. a system fee).
 //!
@@ -85,13 +85,13 @@
 //! `Currency`:
 //!
 //! ```
-//! use frame_support::traits::Currency;
-//! # pub trait Config: frame_system::Config {
+//! use topsoil_support::traits::Currency;
+//! # pub trait Config: topsoil_system::Config {
 //! #   type Currency: Currency<Self::AccountId>;
 //! # }
 //!
-//! pub type BalanceOf<T> = <<T as Config>::Currency as Currency<<T as frame_system::Config>::AccountId>>::Balance;
-//! pub type NegativeImbalanceOf<T> = <<T as Config>::Currency as Currency<<T as frame_system::Config>::AccountId>>::NegativeImbalance;
+//! pub type BalanceOf<T> = <<T as Config>::Currency as Currency<<T as topsoil_system::Config>::AccountId>>::Balance;
+//! pub type NegativeImbalanceOf<T> = <<T as Config>::Currency as Currency<<T as topsoil_system::Config>::AccountId>>::NegativeImbalance;
 //!
 //! # fn main() {}
 //! ```
@@ -99,14 +99,14 @@
 //! The Staking pallet uses the `LockableCurrency` trait to lock a stash account's funds:
 //!
 //! ```
-//! use frame_support::traits::{WithdrawReasons, LockableCurrency};
+//! use topsoil_support::traits::{WithdrawReasons, LockableCurrency};
 //! use soil_runtime::traits::Bounded;
-//! pub trait Config: frame_system::Config {
-//!     type Currency: LockableCurrency<Self::AccountId, Moment=frame_system::pallet_prelude::BlockNumberFor<Self>>;
+//! pub trait Config: topsoil_system::Config {
+//!     type Currency: LockableCurrency<Self::AccountId, Moment=topsoil_system::pallet_prelude::BlockNumberFor<Self>>;
 //! }
 //! # struct StakingLedger<T: Config> {
-//! #   stash: <T as frame_system::Config>::AccountId,
-//! #   total: <<T as Config>::Currency as frame_support::traits::Currency<<T as frame_system::Config>::AccountId>>::Balance,
+//! #   stash: <T as topsoil_system::Config>::AccountId,
+//! #   total: <<T as Config>::Currency as topsoil_support::traits::Currency<<T as topsoil_system::Config>::AccountId>>::Balance,
 //! #   phantom: std::marker::PhantomData<T>,
 //! # }
 //! # const STAKING_ID: [u8; 8] = *b"staking ";
@@ -159,7 +159,7 @@ use alloc::{
 };
 use codec::{Codec, MaxEncodedLen};
 use core::{cmp, fmt::Debug, mem, result};
-use frame_support::{
+use topsoil_support::{
 	ensure,
 	pallet_prelude::DispatchResult,
 	traits::{
@@ -174,7 +174,7 @@ use frame_support::{
 	},
 	BoundedSlice, WeakBoundedVec,
 };
-use frame_system as system;
+use topsoil_system as system;
 pub use impl_currency::{NegativeImbalance, PositiveImbalance};
 use scale_info::TypeInfo;
 use soil_core::{sr25519::Pair as SrPair, Pair};
@@ -198,31 +198,31 @@ const LOG_TARGET: &str = "runtime::balances";
 // Default derivation(hard) for development accounts.
 const DEFAULT_ADDRESS_URI: &str = "//Sender//{}";
 
-type AccountIdLookupOf<T> = <<T as frame_system::Config>::Lookup as StaticLookup>::Source;
+type AccountIdLookupOf<T> = <<T as topsoil_system::Config>::Lookup as StaticLookup>::Source;
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
 	use codec::HasCompact;
-	use frame_support::{
+	use topsoil_support::{
 		pallet_prelude::*,
 		traits::{fungible::Credit, tokens::Precision, VariantCount, VariantCountOf},
 	};
-	use frame_system::pallet_prelude::*;
+	use topsoil_system::pallet_prelude::*;
 
-	pub type CreditOf<T, I> = Credit<<T as frame_system::Config>::AccountId, Pallet<T, I>>;
+	pub type CreditOf<T, I> = Credit<<T as topsoil_system::Config>::AccountId, Pallet<T, I>>;
 
 	/// Default implementations of [`DefaultConfig`], which can be used to implement [`Config`].
 	pub mod config_preludes {
 		use super::*;
-		use frame_support::derive_impl;
+		use topsoil_support::derive_impl;
 
 		pub struct TestDefaultConfig;
 
-		#[derive_impl(frame_system::config_preludes::TestDefaultConfig, no_aggregated_types)]
-		impl frame_system::DefaultConfig for TestDefaultConfig {}
+		#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig, no_aggregated_types)]
+		impl topsoil_system::DefaultConfig for TestDefaultConfig {}
 
-		#[frame_support::register_default_impl(TestDefaultConfig)]
+		#[topsoil_support::register_default_impl(TestDefaultConfig)]
 		impl DefaultConfig for TestDefaultConfig {
 			#[inject_runtime_type]
 			type RuntimeEvent = ();
@@ -249,12 +249,12 @@ pub mod pallet {
 	}
 
 	#[pallet::config(with_default)]
-	pub trait Config<I: 'static = ()>: frame_system::Config {
+	pub trait Config<I: 'static = ()>: topsoil_system::Config {
 		/// The overarching event type.
 		#[pallet::no_default_bounds]
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self, I>>
-			+ IsType<<Self as frame_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// The overarching hold reason.
 		#[pallet::no_default_bounds]
@@ -336,8 +336,8 @@ pub mod pallet {
 	}
 
 	/// The in-code storage version.
-	const STORAGE_VERSION: frame_support::traits::StorageVersion =
-		frame_support::traits::StorageVersion::new(1);
+	const STORAGE_VERSION: topsoil_support::traits::StorageVersion =
+		topsoil_support::traits::StorageVersion::new(1);
 
 	#[pallet::pallet]
 	#[pallet::storage_version(STORAGE_VERSION)]
@@ -481,8 +481,8 @@ pub mod pallet {
 	/// # Example
 	///
 	/// ```nocompile
-	///  impl pallet_balances::Config for Runtime {
-	///    type AccountStore = StorageMapShim<Self::Account<Runtime>, frame_system::Provider<Runtime>, AccountId, Self::AccountData<Balance>>
+	///  impl topsoil_balances::Config for Runtime {
+	///    type AccountStore = StorageMapShim<Self::Account<Runtime>, topsoil_system::Provider<Runtime>, AccountId, Self::AccountData<Balance>>
 	///  }
 	/// ```
 	///
@@ -491,13 +491,13 @@ pub mod pallet {
 	/// # Example
 	///
 	/// ```nocompile
-	///  impl pallet_balances::Config for Runtime {
+	///  impl topsoil_balances::Config for Runtime {
 	///   type AccountStore = System
 	///  }
 	/// ```
 	///
 	/// But this comes with tradeoffs, storing account balances in the system pallet stores
-	/// `frame_system` data alongside the account data contrary to storing account balances in the
+	/// `topsoil_system` data alongside the account data contrary to storing account balances in the
 	/// `Balances` pallet, which uses a `StorageMap` to store balances data only.
 	/// NOTE: This is only used in the case that this pallet is used to store balances.
 	#[pallet::storage]
@@ -607,7 +607,7 @@ pub mod pallet {
 				);
 			}
 			for &(ref who, free) in self.balances.iter() {
-				frame_system::Pallet::<T>::inc_providers(who);
+				topsoil_system::Pallet::<T>::inc_providers(who);
 				assert!(T::AccountStore::insert(who, AccountData { free, ..Default::default() })
 					.is_ok());
 			}
@@ -1045,7 +1045,7 @@ pub mod pallet {
 		/// Returns `false` otherwise.
 		#[cfg(feature = "insecure_zero_ed")]
 		fn have_providers_or_no_zero_ed(who: &T::AccountId) -> bool {
-			frame_system::Pallet::<T>::providers(who) > 0
+			topsoil_system::Pallet::<T>::providers(who) > 0
 		}
 
 		/// Mutate an account to some new value, or delete it entirely with `None`. Will enforce
@@ -1081,35 +1081,35 @@ pub mod pallet {
 				let does_consume = !account.reserved.is_zero() || !account.frozen.is_zero();
 
 				if !did_provide && does_provide {
-					frame_system::Pallet::<T>::inc_providers(who);
+					topsoil_system::Pallet::<T>::inc_providers(who);
 				}
 				if did_consume && !does_consume {
-					frame_system::Pallet::<T>::dec_consumers(who);
+					topsoil_system::Pallet::<T>::dec_consumers(who);
 				}
 				if !did_consume && does_consume {
 					if force_consumer_bump {
 						// If we are forcing a consumer bump, we do it without limit.
-						frame_system::Pallet::<T>::inc_consumers_without_limit(who)?;
+						topsoil_system::Pallet::<T>::inc_consumers_without_limit(who)?;
 					} else {
-						frame_system::Pallet::<T>::inc_consumers(who)?;
+						topsoil_system::Pallet::<T>::inc_consumers(who)?;
 					}
 				}
-				if does_consume && frame_system::Pallet::<T>::consumers(who) == 0 {
+				if does_consume && topsoil_system::Pallet::<T>::consumers(who) == 0 {
 					// NOTE: This is a failsafe and should not happen for normal accounts. A normal
 					// account should have gotten a consumer ref in `!did_consume && does_consume`
 					// at some point.
 					log::error!(target: LOG_TARGET, "Defensively bumping a consumer ref.");
-					frame_system::Pallet::<T>::inc_consumers(who)?;
+					topsoil_system::Pallet::<T>::inc_consumers(who)?;
 				}
 				if did_provide && !does_provide {
 					// This could reap the account so must go last.
-					frame_system::Pallet::<T>::dec_providers(who).inspect_err(|_| {
+					topsoil_system::Pallet::<T>::dec_providers(who).inspect_err(|_| {
 						// best-effort revert consumer change.
 						if did_consume && !does_consume {
-							let _ = frame_system::Pallet::<T>::inc_consumers(who).defensive();
+							let _ = topsoil_system::Pallet::<T>::inc_consumers(who).defensive();
 						}
 						if !did_consume && does_consume {
-							let _ = frame_system::Pallet::<T>::dec_consumers(who);
+							let _ = topsoil_system::Pallet::<T>::dec_consumers(who);
 						}
 					})?;
 				}

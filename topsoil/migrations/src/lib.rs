@@ -18,7 +18,7 @@
 #![deny(missing_docs)]
 #![deny(rustdoc::broken_intra_doc_links)]
 
-//! # `pallet-migrations`
+//! # `topsoil-migrations`
 //!
 //! Provides multi block migrations for FRAME runtimes.
 //!
@@ -43,7 +43,7 @@
 //!
 //! Otherwise noteworthy API of this pallet include its implementation of the
 //! [`MultiStepMigrator`] trait. This must be plugged into
-//! [`frame_system::Config::MultiBlockMigrator`] for proper function.
+//! [`topsoil_system::Config::MultiBlockMigrator`] for proper function.
 //!
 //! The API contains some calls for emergency management. They are all prefixed with `force_` and
 //! should normally not be needed. Pay special attention prior to using them.
@@ -158,7 +158,7 @@ pub use weights::WeightInfo;
 use alloc::vec::Vec;
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use core::ops::ControlFlow;
-use frame_support::{
+use topsoil_support::{
 	defensive, defensive_assert,
 	migrations::*,
 	pallet_prelude::*,
@@ -166,7 +166,7 @@ use frame_support::{
 	weights::{Weight, WeightMeter},
 	BoundedVec,
 };
-use frame_system::{
+use topsoil_system::{
 	pallet_prelude::{BlockNumberFor, *},
 	Pallet as System,
 };
@@ -312,7 +312,7 @@ struct PreUpgradeBytesWrapper(pub Vec<u8>);
 ///
 /// Define this outside of the pallet so it is not confused with actual storage.
 #[cfg(feature = "try-runtime")]
-#[frame_support::storage_alias]
+#[topsoil_support::storage_alias]
 type PreUpgradeBytes<T: Config> =
 	StorageMap<Pallet<T>, Twox64Concat, IdentifierOf<T>, PreUpgradeBytesWrapper, ValueQuery>;
 
@@ -355,7 +355,7 @@ pub struct MbmProgress {
 	pub current_migration_max_steps: Option<u32>,
 }
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
 
@@ -367,11 +367,11 @@ pub mod pallet {
 	pub struct Pallet<T>(_);
 
 	#[pallet::config(with_default)]
-	pub trait Config: frame_system::Config {
+	pub trait Config: topsoil_system::Config {
 		/// The overarching event type of the runtime.
 		#[pallet::no_default_bounds]
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// All the multi-block migrations to run.
 		///
@@ -420,30 +420,30 @@ pub mod pallet {
 	/// Default implementations of [`DefaultConfig`], which can be used to implement [`Config`].
 	pub mod config_preludes {
 		use super::{inject_runtime_type, DefaultConfig};
-		use frame_support::{
+		use topsoil_support::{
 			derive_impl,
 			migrations::FreezeChainOnFailedMigration,
 			pallet_prelude::{ConstU32, *},
 		};
-		use frame_system::limits::BlockWeights;
+		use topsoil_system::limits::BlockWeights;
 
 		/// Provides a viable default config that can be used with
-		/// [`derive_impl`](`frame_support::derive_impl`) to derive a testing pallet config
+		/// [`derive_impl`](`topsoil_support::derive_impl`) to derive a testing pallet config
 		/// based on this one.
 		///
 		/// See `Test` in the `default-config` example pallet's `test.rs` for an example of
 		/// a downstream user of this particular `TestDefaultConfig`
 		pub struct TestDefaultConfig;
 
-		frame_support::parameter_types! {
+		topsoil_support::parameter_types! {
 			/// Maximal weight per block that can be spent on migrations in tests.
-			pub TestMaxServiceWeight: Weight = <<TestDefaultConfig as frame_system::DefaultConfig>::BlockWeights as Get<BlockWeights>>::get().max_block.div(2);
+			pub TestMaxServiceWeight: Weight = <<TestDefaultConfig as topsoil_system::DefaultConfig>::BlockWeights as Get<BlockWeights>>::get().max_block.div(2);
 		}
 
-		#[derive_impl(frame_system::config_preludes::TestDefaultConfig, no_aggregated_types)]
-		impl frame_system::DefaultConfig for TestDefaultConfig {}
+		#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig, no_aggregated_types)]
+		impl topsoil_system::DefaultConfig for TestDefaultConfig {}
 
-		#[frame_support::register_default_impl(TestDefaultConfig)]
+		#[topsoil_support::register_default_impl(TestDefaultConfig)]
 		impl DefaultConfig for TestDefaultConfig {
 			#[inject_runtime_type]
 			type RuntimeEvent = ();
@@ -540,15 +540,15 @@ pub mod pallet {
 		#[cfg(feature = "std")]
 		fn integrity_test() {
 			// Check that the migrations tuple is legit.
-			frame_support::assert_ok!(T::Migrations::integrity_test());
+			topsoil_support::assert_ok!(T::Migrations::integrity_test());
 
 			// Very important! Ensure that the pallet is configured in `System::Config`.
 			{
 				assert!(!Cursor::<T>::exists(), "Externalities storage should be clean");
-				assert!(!<T as frame_system::Config>::MultiBlockMigrator::ongoing());
+				assert!(!<T as topsoil_system::Config>::MultiBlockMigrator::ongoing());
 
 				Cursor::<T>::put(MigrationCursor::Stuck);
-				assert!(<T as frame_system::Config>::MultiBlockMigrator::ongoing());
+				assert!(<T as topsoil_system::Config>::MultiBlockMigrator::ongoing());
 
 				Cursor::<T>::kill();
 			}
@@ -556,7 +556,7 @@ pub mod pallet {
 			// The per-block service weight is sane.
 			{
 				let want = T::MaxServiceWeight::get();
-				let max = <T as frame_system::Config>::BlockWeights::get().max_block;
+				let max = <T as topsoil_system::Config>::BlockWeights::get().max_block;
 
 				assert!(want.all_lte(max), "Service weight is larger than a block: {want} > {max}");
 			}

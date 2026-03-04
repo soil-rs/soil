@@ -17,7 +17,7 @@
 
 use super::*;
 use alloc::{collections::btree_map::BTreeMap, vec::Vec};
-use frame_support::traits::{OnRuntimeUpgrade, UncheckedOnRuntimeUpgrade};
+use topsoil_support::traits::{OnRuntimeUpgrade, UncheckedOnRuntimeUpgrade};
 
 #[cfg(feature = "try-runtime")]
 use soil_runtime::TryRuntimeError;
@@ -27,31 +27,31 @@ pub mod versioned {
 	use super::*;
 
 	/// v8: Adds commission claim permissions to `BondedPools`.
-	pub type V7ToV8<T> = frame_support::migrations::VersionedMigration<
+	pub type V7ToV8<T> = topsoil_support::migrations::VersionedMigration<
 		7,
 		8,
 		v8::VersionUncheckedMigrateV7ToV8<T>,
 		crate::pallet::Pallet<T>,
-		<T as frame_system::Config>::DbWeight,
+		<T as topsoil_system::Config>::DbWeight,
 	>;
 
-	/// Migration V6 to V7 wrapped in a [`frame_support::migrations::VersionedMigration`], ensuring
+	/// Migration V6 to V7 wrapped in a [`topsoil_support::migrations::VersionedMigration`], ensuring
 	/// the migration is only performed when on-chain version is 6.
-	pub type V6ToV7<T> = frame_support::migrations::VersionedMigration<
+	pub type V6ToV7<T> = topsoil_support::migrations::VersionedMigration<
 		6,
 		7,
 		v7::VersionUncheckedMigrateV6ToV7<T>,
 		crate::pallet::Pallet<T>,
-		<T as frame_system::Config>::DbWeight,
+		<T as topsoil_system::Config>::DbWeight,
 	>;
 
 	/// Wrapper over `MigrateToV6` with convenience version checks.
-	pub type V5toV6<T> = frame_support::migrations::VersionedMigration<
+	pub type V5toV6<T> = topsoil_support::migrations::VersionedMigration<
 		5,
 		6,
 		v6::MigrateToV6<T>,
 		crate::pallet::Pallet<T>,
-		<T as frame_system::Config>::DbWeight,
+		<T as topsoil_system::Config>::DbWeight,
 	>;
 }
 
@@ -336,7 +336,7 @@ pub(crate) mod v7 {
 	}
 
 	// NOTE: We cannot put a V7 prefix here since that would change the storage key.
-	#[frame_support::storage_alias]
+	#[topsoil_support::storage_alias]
 	pub type BondedPools<T: Config> =
 		CountedStorageMap<Pallet<T>, Twox64Concat, PoolId, V7BondedPoolInner<T>>;
 
@@ -778,7 +778,7 @@ pub mod v2 {
 		ExtBuilder::default().build_and_execute(|| {
 			let join = |x| {
 				Currency::set_balance(&x, Balances::minimum_balance() + 10);
-				frame_support::assert_ok!(Pools::join(RuntimeOrigin::signed(x), 10, 1));
+				topsoil_support::assert_ok!(Pools::join(RuntimeOrigin::signed(x), 10, 1));
 			};
 
 			assert_eq!(BondedPool::<Runtime>::get(1).unwrap().points, 10);
@@ -1012,7 +1012,7 @@ pub mod v2 {
 			// all reward accounts must have more than ED.
 			RewardPools::<T>::iter().try_for_each(|(id, _)| -> Result<(), TryRuntimeError> {
 				ensure!(
-					<T::Currency as frame_support::traits::fungible::Inspect<T::AccountId>>::balance(&Pallet::<T>::generate_reward_account(id)) >=
+					<T::Currency as topsoil_support::traits::fungible::Inspect<T::AccountId>>::balance(&Pallet::<T>::generate_reward_account(id)) >=
 						T::Currency::minimum_balance(),
 					"Reward accounts must have greater balance than ED."
 				);
@@ -1142,7 +1142,7 @@ pub mod v1 {
 				Pallet::<T>::on_chain_storage_version() == 1,
 				"The onchain version must be updated after the migration."
 			);
-			Pallet::<T>::try_state(frame_system::Pallet::<T>::block_number())?;
+			Pallet::<T>::try_state(topsoil_system::Pallet::<T>::block_number())?;
 			Ok(())
 		}
 	}

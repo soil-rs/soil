@@ -37,7 +37,7 @@ mod storage_alias;
 mod transactional;
 mod tt_macro;
 
-use frame_support_procedural_tools::generate_access_from_frame_or_crate;
+use topsoil_support_procedural_tools::generate_access_from_frame_or_crate;
 use macro_magic::{import_tokens_attr, import_tokens_attr_verbatim};
 use proc_macro::TokenStream;
 use quote::{quote, ToTokens};
@@ -82,7 +82,7 @@ fn counter_prefix(prefix: &str) -> String {
 
 /// Construct a runtime, with the given name and the given pallets.
 ///
-/// NOTE: A new version of this macro is available at `frame_support::runtime`. This macro will
+/// NOTE: A new version of this macro is available at `topsoil_support::runtime`. This macro will
 /// soon be deprecated. Please use the new macro instead.
 ///
 /// The parameters here are specific types for `Block`, `NodeBlock`, and `UncheckedExtrinsic`
@@ -99,7 +99,7 @@ fn counter_prefix(prefix: &str) -> String {
 ///         NodeBlock = node::Block,
 ///         UncheckedExtrinsic = UncheckedExtrinsic
 ///     {
-///         System: frame_system::{Pallet, Call, Event<T>, Config<T>} = 0,
+///         System: topsoil_system::{Pallet, Call, Event<T>, Config<T>} = 0,
 ///         Test: path::to::test::{Pallet, Call} = 1,
 ///
 ///         // Pallets with instances.
@@ -132,9 +132,9 @@ fn counter_prefix(prefix: &str) -> String {
 /// * `::<InstanceN>` optional: specify the instance of the pallet to use. If not specified it will
 ///   use the default instance (or the only instance in case of non-instantiable pallets).
 ///
-/// * `::{ Part1, Part2<T>, .. }` optional if pallet declared with `frame_support::pallet`: Comma
+/// * `::{ Part1, Part2<T>, .. }` optional if pallet declared with `topsoil_support::pallet`: Comma
 ///   separated parts declared with their generic. If a pallet is declared with
-///   `frame_support::pallet` macro then the parts can be automatically derived if not explicitly
+///   `topsoil_support::pallet` macro then the parts can be automatically derived if not explicitly
 ///   provided. We provide support for the following module parts in a pallet:
 ///
 ///   - `Pallet` - Required for all pallets
@@ -187,7 +187,7 @@ fn counter_prefix(prefix: &str) -> String {
 /// # Type definitions
 ///
 /// * The macro generates a type alias for each pallet to their `Pallet`. E.g. `type System =
-///   frame_system::Pallet<Runtime>`
+///   topsoil_system::Pallet<Runtime>`
 #[proc_macro]
 pub fn construct_runtime(input: TokenStream) -> TokenStream {
 	construct_runtime::construct_runtime(input)
@@ -195,7 +195,7 @@ pub fn construct_runtime(input: TokenStream) -> TokenStream {
 
 /// ---
 ///
-/// Documentation for this macro can be found at `frame_support::pallet`.
+/// Documentation for this macro can be found at `topsoil_support::pallet`.
 #[proc_macro_attribute]
 pub fn pallet(attr: TokenStream, item: TokenStream) -> TokenStream {
 	pallet::pallet(attr, item)
@@ -204,7 +204,7 @@ pub fn pallet(attr: TokenStream, item: TokenStream) -> TokenStream {
 /// An attribute macro that can be attached to a (non-empty) module declaration. Doing so will
 /// designate that module as a benchmarking module.
 ///
-/// See `frame_benchmarking::v2` for more info.
+/// See `topsoil_benchmarking::v2` for more info.
 #[proc_macro_attribute]
 pub fn benchmarks(attr: TokenStream, tokens: TokenStream) -> TokenStream {
 	match benchmark::benchmarks(attr, tokens, false) {
@@ -216,7 +216,7 @@ pub fn benchmarks(attr: TokenStream, tokens: TokenStream) -> TokenStream {
 /// An attribute macro that can be attached to a (non-empty) module declaration. Doing so will
 /// designate that module as an instance benchmarking module.
 ///
-/// See `frame_benchmarking::v2` for more info.
+/// See `topsoil_benchmarking::v2` for more info.
 #[proc_macro_attribute]
 pub fn instance_benchmarks(attr: TokenStream, tokens: TokenStream) -> TokenStream {
 	match benchmark::benchmarks(attr, tokens, true) {
@@ -229,7 +229,7 @@ pub fn instance_benchmarks(attr: TokenStream, tokens: TokenStream) -> TokenStrea
 /// attached to a function definition containing an `#[extrinsic_call]` or `#[block]`
 /// attribute.
 ///
-/// See `frame_benchmarking::v2` for more info.
+/// See `topsoil_benchmarking::v2` for more info.
 #[proc_macro_attribute]
 pub fn benchmark(_attrs: TokenStream, _tokens: TokenStream) -> TokenStream {
 	quote!(compile_error!(
@@ -242,7 +242,7 @@ pub fn benchmark(_attrs: TokenStream, _tokens: TokenStream) -> TokenStream {
 /// used as a boundary designating where the benchmark setup code ends, and the benchmark
 /// verification code begins.
 ///
-/// See `frame_benchmarking::v2` for more info.
+/// See `topsoil_benchmarking::v2` for more info.
 #[proc_macro_attribute]
 pub fn extrinsic_call(_attrs: TokenStream, _tokens: TokenStream) -> TokenStream {
 	quote!(compile_error!(
@@ -255,7 +255,7 @@ pub fn extrinsic_call(_attrs: TokenStream, _tokens: TokenStream) -> TokenStream 
 /// enclosing benchmark function, This attribute is also used as a boundary designating where
 /// the benchmark setup code ends, and the benchmark verification code begins.
 ///
-/// See `frame_benchmarking::v2` for more info.
+/// See `topsoil_benchmarking::v2` for more info.
 #[proc_macro_attribute]
 pub fn block(_attrs: TokenStream, _tokens: TokenStream) -> TokenStream {
 	quote!(compile_error!(
@@ -291,7 +291,7 @@ pub fn transactional(attr: TokenStream, input: TokenStream) -> TokenStream {
 
 /// ---
 ///
-/// Documentation for this macro can be found at `frame_support::require_transactional`.
+/// Documentation for this macro can be found at `topsoil_support::require_transactional`.
 #[proc_macro_attribute]
 pub fn require_transactional(attr: TokenStream, input: TokenStream) -> TokenStream {
 	transactional::require_transactional(attr, input)
@@ -300,7 +300,7 @@ pub fn require_transactional(attr: TokenStream, input: TokenStream) -> TokenStre
 
 /// Derive [`Clone`] but do not bound any generic.
 ///
-/// Docs at `frame_support::CloneNoBound`.
+/// Docs at `topsoil_support::CloneNoBound`.
 #[proc_macro_derive(CloneNoBound)]
 pub fn derive_clone_no_bound(input: TokenStream) -> TokenStream {
 	no_bound::clone::derive_clone_no_bound(input)
@@ -308,7 +308,7 @@ pub fn derive_clone_no_bound(input: TokenStream) -> TokenStream {
 
 /// Derive [`Debug`] but do not bound any generics.
 ///
-/// Docs at `frame_support::DebugNoBound`.
+/// Docs at `topsoil_support::DebugNoBound`.
 #[proc_macro_derive(DebugNoBound)]
 pub fn derive_debug_no_bound(input: TokenStream) -> TokenStream {
 	no_bound::debug::derive_debug_no_bound(input)
@@ -316,7 +316,7 @@ pub fn derive_debug_no_bound(input: TokenStream) -> TokenStream {
 
 /// Derive [`PartialEq`] but do not bound any generic.
 ///
-/// Docs at `frame_support::PartialEqNoBound`.
+/// Docs at `topsoil_support::PartialEqNoBound`.
 #[proc_macro_derive(PartialEqNoBound)]
 pub fn derive_partial_eq_no_bound(input: TokenStream) -> TokenStream {
 	no_bound::partial_eq::derive_partial_eq_no_bound(input)
@@ -324,7 +324,7 @@ pub fn derive_partial_eq_no_bound(input: TokenStream) -> TokenStream {
 
 /// DeriveEq but do no bound any generic.
 ///
-/// Docs at `frame_support::EqNoBound`.
+/// Docs at `topsoil_support::EqNoBound`.
 #[proc_macro_derive(EqNoBound)]
 pub fn derive_eq_no_bound(input: TokenStream) -> TokenStream {
 	let input = syn::parse_macro_input!(input as syn::DeriveInput);
@@ -342,19 +342,19 @@ pub fn derive_eq_no_bound(input: TokenStream) -> TokenStream {
 }
 
 /// Derive [`PartialOrd`] but do not bound any generic. Docs are at
-/// `frame_support::PartialOrdNoBound`.
+/// `topsoil_support::PartialOrdNoBound`.
 #[proc_macro_derive(PartialOrdNoBound)]
 pub fn derive_partial_ord_no_bound(input: TokenStream) -> TokenStream {
 	no_bound::partial_ord::derive_partial_ord_no_bound(input)
 }
 
-/// Derive [`Ord`] but do no bound any generic. Docs are at `frame_support::OrdNoBound`.
+/// Derive [`Ord`] but do no bound any generic. Docs are at `topsoil_support::OrdNoBound`.
 #[proc_macro_derive(OrdNoBound)]
 pub fn derive_ord_no_bound(input: TokenStream) -> TokenStream {
 	no_bound::ord::derive_ord_no_bound(input)
 }
 
-/// derive `Default` but do no bound any generic. Docs are at `frame_support::DefaultNoBound`.
+/// derive `Default` but do no bound any generic. Docs are at `topsoil_support::DefaultNoBound`.
 #[proc_macro_derive(DefaultNoBound, attributes(default))]
 pub fn derive_default_no_bound(input: TokenStream) -> TokenStream {
 	no_bound::default::derive_default_no_bound(input)
@@ -372,7 +372,7 @@ pub fn crate_to_crate_version(input: TokenStream) -> TokenStream {
 /// and up to `NUMBER_OF_INSTANCE`.
 pub(crate) const NUMBER_OF_INSTANCE: u8 = 16;
 
-/// This macro is meant to be used by frame-support only.
+/// This macro is meant to be used by topsoil-support only.
 /// It implements the trait `HasKeyPrefix` and `HasReversibleKeyPrefix` for tuple of `Key`.
 #[proc_macro]
 pub fn impl_key_prefix_for_tuples(input: TokenStream) -> TokenStream {
@@ -381,7 +381,7 @@ pub fn impl_key_prefix_for_tuples(input: TokenStream) -> TokenStream {
 		.into()
 }
 
-/// Internal macro use by frame_support to generate dummy part checker for old pallet declaration
+/// Internal macro use by topsoil_support to generate dummy part checker for old pallet declaration
 #[proc_macro]
 pub fn __generate_dummy_part_checker(input: TokenStream) -> TokenStream {
 	dummy_part_checker::generate_dummy_part_checker(input)
@@ -416,7 +416,7 @@ pub fn derive_pallet_error(input: TokenStream) -> TokenStream {
 	pallet_error::derive_pallet_error(input)
 }
 
-/// Internal macro used by `frame_support` to create tt-call-compliant macros
+/// Internal macro used by `topsoil_support` to create tt-call-compliant macros
 #[proc_macro]
 pub fn __create_tt_macro(input: TokenStream) -> TokenStream {
 	tt_macro::create_tt_return_macro(input)
@@ -424,7 +424,7 @@ pub fn __create_tt_macro(input: TokenStream) -> TokenStream {
 
 /// ---
 ///
-/// Documentation for this macro can be found at `frame_support::pallet_macros::storage_alias`.
+/// Documentation for this macro can be found at `topsoil_support::pallet_macros::storage_alias`.
 #[proc_macro_attribute]
 pub fn storage_alias(attributes: TokenStream, input: TokenStream) -> TokenStream {
 	storage_alias::storage_alias(attributes.into(), input.into())
@@ -505,7 +505,7 @@ pub fn storage_alias(attributes: TokenStream, input: TokenStream) -> TokenStream
 /// `DefaultConfig` trait in the pallet in which the macro was invoked).
 ///
 /// In this case, the `#[derive_impl(..)]` attribute should be attached to an `impl` block that
-/// implements a compatible `Config` such as `frame_system::Config` for a test/mock runtime, and
+/// implements a compatible `Config` such as `topsoil_system::Config` for a test/mock runtime, and
 /// should receive as its first argument the path to a `DefaultConfig` impl that has been registered
 /// via [`#[register_default_impl]`](`macro@register_default_impl`), and as its second argument, the
 /// path to the auto-generated `DefaultConfig` for the existing pallet `Config` we want to base our
@@ -514,10 +514,10 @@ pub fn storage_alias(attributes: TokenStream, input: TokenStream) -> TokenStream
 /// The following is what the `basic` example pallet would look like with a default testing config:
 ///
 /// ```ignore
-/// #[derive_impl(frame_system::config_preludes::TestDefaultConfig as frame_system::pallet::DefaultConfig)]
-/// impl frame_system::Config for Test {
+/// #[derive_impl(topsoil_system::config_preludes::TestDefaultConfig as topsoil_system::pallet::DefaultConfig)]
+/// impl topsoil_system::Config for Test {
 ///     // These are all defined by system as mandatory.
-///     type BaseCallFilter = frame_support::traits::Everything;
+///     type BaseCallFilter = topsoil_support::traits::Everything;
 ///     type RuntimeEvent = RuntimeEvent;
 ///     type RuntimeCall = RuntimeCall;
 ///     type RuntimeOrigin = RuntimeOrigin;
@@ -525,7 +525,7 @@ pub fn storage_alias(attributes: TokenStream, input: TokenStream) -> TokenStream
 ///     type PalletInfo = PalletInfo;
 ///     type Block = Block;
 ///     // We decide to override this one.
-///     type AccountData = pallet_balances::AccountData<u64>;
+///     type AccountData = topsoil_balances::AccountData<u64>;
 /// }
 /// ```
 ///
@@ -545,30 +545,30 @@ pub fn storage_alias(attributes: TokenStream, input: TokenStream) -> TokenStream
 ///     type Hashing = soil_runtime::traits::BlakeTwo256;
 ///     type AccountId = AccountId;
 ///     type Lookup = IdentityLookup<AccountId>;
-///     type BlockHashCount = frame_support::traits::ConstU64<10>;
+///     type BlockHashCount = topsoil_support::traits::ConstU64<10>;
 ///     type AccountData = u32;
 ///     type OnNewAccount = ();
 ///     type OnKilledAccount = ();
 ///     type SystemWeightInfo = ();
 ///     type SS58Prefix = ();
-///     type MaxConsumers = frame_support::traits::ConstU32<16>;
+///     type MaxConsumers = topsoil_support::traits::ConstU32<16>;
 /// }
 /// ```
 ///
 /// The above call to `derive_impl` would expand to roughly the following:
 /// ```ignore
-/// impl frame_system::Config for Test {
-///     use frame_system::config_preludes::TestDefaultConfig;
-///     use frame_system::pallet::DefaultConfig;
+/// impl topsoil_system::Config for Test {
+///     use topsoil_system::config_preludes::TestDefaultConfig;
+///     use topsoil_system::pallet::DefaultConfig;
 ///
-///     type BaseCallFilter = frame_support::traits::Everything;
+///     type BaseCallFilter = topsoil_support::traits::Everything;
 ///     type RuntimeEvent = RuntimeEvent;
 ///     type RuntimeCall = RuntimeCall;
 ///     type RuntimeOrigin = RuntimeOrigin;
 ///     type OnSetCode = ();
 ///     type PalletInfo = PalletInfo;
 ///     type Block = Block;
-///     type AccountData = pallet_balances::AccountData<u64>;
+///     type AccountData = topsoil_balances::AccountData<u64>;
 ///     type Version = <TestDefaultConfig as DefaultConfig>::Version;
 ///     type BlockWeights = <TestDefaultConfig as DefaultConfig>::BlockWeights;
 ///     type BlockLength = <TestDefaultConfig as DefaultConfig>::BlockLength;
@@ -605,8 +605,8 @@ pub fn storage_alias(attributes: TokenStream, input: TokenStream) -> TokenStream
 /// ## Optional Conventions
 ///
 /// Note that as an optional convention, we encourage creating a `config_preludes` module inside of
-/// your pallet. This is the convention we follow for `frame_system`'s `TestDefaultConfig` which, as
-/// shown above, is located at `frame_system::config_preludes::TestDefaultConfig`. This is just a
+/// your pallet. This is the convention we follow for `topsoil_system`'s `TestDefaultConfig` which, as
+/// shown above, is located at `topsoil_system::config_preludes::TestDefaultConfig`. This is just a
 /// suggested convention -- there is nothing in the code that expects modules with these names to be
 /// in place, so there is no imperative to follow this pattern unless desired.
 ///
@@ -636,11 +636,11 @@ pub fn storage_alias(attributes: TokenStream, input: TokenStream) -> TokenStream
 #[import_tokens_attr_verbatim {
     format!(
         "{}::macro_magic",
-        match generate_access_from_frame_or_crate("frame-support") {
+        match generate_access_from_frame_or_crate("topsoil-support") {
             Ok(path) => Ok(path),
-            Err(_) => generate_access_from_frame_or_crate("polkadot-sdk-frame"),
+            Err(_) => generate_access_from_frame_or_crate("topsoil"),
         }
-        .expect("Failed to find either `frame-support` or `polkadot-sdk-frame` in `Cargo.toml` dependencies.")
+        .expect("Failed to find either `topsoil-support` or `topsoil` in `Cargo.toml` dependencies.")
         .to_token_stream()
         .to_string()
     )
@@ -663,7 +663,7 @@ pub fn derive_impl(attrs: TokenStream, input: TokenStream) -> TokenStream {
 
 /// ---
 ///
-/// Documentation for this macro can be found at `frame_support::pallet_macros::no_default`.
+/// Documentation for this macro can be found at `topsoil_support::pallet_macros::no_default`.
 #[proc_macro_attribute]
 pub fn no_default(_: TokenStream, _: TokenStream) -> TokenStream {
 	pallet_macro_stub()
@@ -671,7 +671,7 @@ pub fn no_default(_: TokenStream, _: TokenStream) -> TokenStream {
 
 /// ---
 ///
-/// Documentation for this macro can be found at `frame_support::pallet_macros::no_default_bounds`.
+/// Documentation for this macro can be found at `topsoil_support::pallet_macros::no_default_bounds`.
 #[proc_macro_attribute]
 pub fn no_default_bounds(_: TokenStream, _: TokenStream) -> TokenStream {
 	pallet_macro_stub()
@@ -696,7 +696,7 @@ pub fn no_default_bounds(_: TokenStream, _: TokenStream) -> TokenStream {
 /// 	type BlockLength = ();
 /// 	...
 /// 	type SS58Prefix = ();
-/// 	type MaxConsumers = frame_support::traits::ConstU32<16>;
+/// 	type MaxConsumers = topsoil_support::traits::ConstU32<16>;
 /// }
 /// ```
 ///
@@ -793,14 +793,14 @@ pub fn inject_runtime_type(_: TokenStream, tokens: TokenStream) -> TokenStream {
 /// outside of a pallet module
 fn pallet_macro_stub() -> TokenStream {
 	quote!(compile_error!(
-		"This attribute can only be used from within a pallet module marked with `#[frame_support::pallet]`"
+		"This attribute can only be used from within a pallet module marked with `#[topsoil_support::pallet]`"
 	))
 	.into()
 }
 
 /// ---
 ///
-/// Documentation for this macro can be found at `frame_support::pallet_macros::config`.
+/// Documentation for this macro can be found at `topsoil_support::pallet_macros::config`.
 #[proc_macro_attribute]
 pub fn config(_: TokenStream, _: TokenStream) -> TokenStream {
 	pallet_macro_stub()
@@ -808,7 +808,7 @@ pub fn config(_: TokenStream, _: TokenStream) -> TokenStream {
 
 /// ---
 ///
-/// Documentation for this macro can be found at `frame_support::pallet_macros::constant`.
+/// Documentation for this macro can be found at `topsoil_support::pallet_macros::constant`.
 #[proc_macro_attribute]
 pub fn constant(_: TokenStream, _: TokenStream) -> TokenStream {
 	pallet_macro_stub()
@@ -816,7 +816,7 @@ pub fn constant(_: TokenStream, _: TokenStream) -> TokenStream {
 
 /// ---
 ///
-/// Documentation for this macro can be found at `frame_support::pallet_macros::constant_name`.
+/// Documentation for this macro can be found at `topsoil_support::pallet_macros::constant_name`.
 #[proc_macro_attribute]
 pub fn constant_name(_: TokenStream, _: TokenStream) -> TokenStream {
 	pallet_macro_stub()
@@ -825,7 +825,7 @@ pub fn constant_name(_: TokenStream, _: TokenStream) -> TokenStream {
 /// ---
 ///
 /// Documentation for this macro can be found at
-/// `frame_support::pallet_macros::disable_frame_system_supertrait_check`.
+/// `topsoil_support::pallet_macros::disable_frame_system_supertrait_check`.
 #[proc_macro_attribute]
 pub fn disable_frame_system_supertrait_check(_: TokenStream, _: TokenStream) -> TokenStream {
 	pallet_macro_stub()
@@ -833,7 +833,7 @@ pub fn disable_frame_system_supertrait_check(_: TokenStream, _: TokenStream) -> 
 
 /// ---
 ///
-/// Documentation for this macro can be found at `frame_support::pallet_macros::storage_version`.
+/// Documentation for this macro can be found at `topsoil_support::pallet_macros::storage_version`.
 #[proc_macro_attribute]
 pub fn storage_version(_: TokenStream, _: TokenStream) -> TokenStream {
 	pallet_macro_stub()
@@ -841,7 +841,7 @@ pub fn storage_version(_: TokenStream, _: TokenStream) -> TokenStream {
 
 /// ---
 ///
-/// Documentation for this macro can be found at `frame_support::pallet_macros::hooks`.
+/// Documentation for this macro can be found at `topsoil_support::pallet_macros::hooks`.
 #[proc_macro_attribute]
 pub fn hooks(_: TokenStream, _: TokenStream) -> TokenStream {
 	pallet_macro_stub()
@@ -849,7 +849,7 @@ pub fn hooks(_: TokenStream, _: TokenStream) -> TokenStream {
 
 /// ---
 ///
-/// Documentation for this macro can be found at `frame_support::pallet_macros::weight`.
+/// Documentation for this macro can be found at `topsoil_support::pallet_macros::weight`.
 #[proc_macro_attribute]
 pub fn weight(_: TokenStream, _: TokenStream) -> TokenStream {
 	pallet_macro_stub()
@@ -857,7 +857,7 @@ pub fn weight(_: TokenStream, _: TokenStream) -> TokenStream {
 
 /// ---
 ///
-/// Documentation for this macro can be found at `frame_support::pallet_macros::compact`.
+/// Documentation for this macro can be found at `topsoil_support::pallet_macros::compact`.
 #[proc_macro_attribute]
 pub fn compact(_: TokenStream, _: TokenStream) -> TokenStream {
 	pallet_macro_stub()
@@ -865,7 +865,7 @@ pub fn compact(_: TokenStream, _: TokenStream) -> TokenStream {
 
 /// ---
 ///
-/// Documentation for this macro can be found at `frame_support::pallet_macros::call`.
+/// Documentation for this macro can be found at `topsoil_support::pallet_macros::call`.
 #[proc_macro_attribute]
 pub fn call(_: TokenStream, _: TokenStream) -> TokenStream {
 	pallet_macro_stub()
@@ -876,7 +876,7 @@ pub fn call(_: TokenStream, _: TokenStream) -> TokenStream {
 ///
 /// ---
 ///
-/// Documentation for this macro can be found at `frame_support::pallet_macros::call_index`.
+/// Documentation for this macro can be found at `topsoil_support::pallet_macros::call_index`.
 #[proc_macro_attribute]
 pub fn call_index(_: TokenStream, _: TokenStream) -> TokenStream {
 	pallet_macro_stub()
@@ -884,7 +884,7 @@ pub fn call_index(_: TokenStream, _: TokenStream) -> TokenStream {
 
 /// ---
 ///
-/// Documentation for this macro can be found at `frame_support::pallet_macros::feeless_if`.
+/// Documentation for this macro can be found at `topsoil_support::pallet_macros::feeless_if`.
 #[proc_macro_attribute]
 pub fn feeless_if(_: TokenStream, _: TokenStream) -> TokenStream {
 	pallet_macro_stub()
@@ -892,7 +892,7 @@ pub fn feeless_if(_: TokenStream, _: TokenStream) -> TokenStream {
 
 /// ---
 ///
-/// Documentation for this macro can be found at `frame_support::pallet_macros::extra_constants`.
+/// Documentation for this macro can be found at `topsoil_support::pallet_macros::extra_constants`.
 #[proc_macro_attribute]
 pub fn extra_constants(_: TokenStream, _: TokenStream) -> TokenStream {
 	pallet_macro_stub()
@@ -900,7 +900,7 @@ pub fn extra_constants(_: TokenStream, _: TokenStream) -> TokenStream {
 
 /// ---
 ///
-/// Documentation for this macro can be found at `frame_support::pallet_macros::error`.
+/// Documentation for this macro can be found at `topsoil_support::pallet_macros::error`.
 #[proc_macro_attribute]
 pub fn error(_: TokenStream, _: TokenStream) -> TokenStream {
 	pallet_macro_stub()
@@ -908,7 +908,7 @@ pub fn error(_: TokenStream, _: TokenStream) -> TokenStream {
 
 /// ---
 ///
-/// Documentation for this macro can be found at `frame_support::pallet_macros::event`.
+/// Documentation for this macro can be found at `topsoil_support::pallet_macros::event`.
 #[proc_macro_attribute]
 pub fn event(_: TokenStream, _: TokenStream) -> TokenStream {
 	pallet_macro_stub()
@@ -916,7 +916,7 @@ pub fn event(_: TokenStream, _: TokenStream) -> TokenStream {
 
 /// ---
 ///
-/// Documentation for this macro can be found at `frame_support::pallet_macros::include_metadata`.
+/// Documentation for this macro can be found at `topsoil_support::pallet_macros::include_metadata`.
 #[proc_macro_attribute]
 pub fn include_metadata(_: TokenStream, _: TokenStream) -> TokenStream {
 	pallet_macro_stub()
@@ -924,7 +924,7 @@ pub fn include_metadata(_: TokenStream, _: TokenStream) -> TokenStream {
 
 /// ---
 ///
-/// Documentation for this macro can be found at `frame_support::pallet_macros::generate_deposit`.
+/// Documentation for this macro can be found at `topsoil_support::pallet_macros::generate_deposit`.
 #[proc_macro_attribute]
 pub fn generate_deposit(_: TokenStream, _: TokenStream) -> TokenStream {
 	pallet_macro_stub()
@@ -932,7 +932,7 @@ pub fn generate_deposit(_: TokenStream, _: TokenStream) -> TokenStream {
 
 /// ---
 ///
-/// Documentation for this macro can be found at `frame_support::pallet_macros::storage`.
+/// Documentation for this macro can be found at `topsoil_support::pallet_macros::storage`.
 #[proc_macro_attribute]
 pub fn storage(_: TokenStream, _: TokenStream) -> TokenStream {
 	pallet_macro_stub()
@@ -940,7 +940,7 @@ pub fn storage(_: TokenStream, _: TokenStream) -> TokenStream {
 
 /// ---
 ///
-/// Documentation for this macro can be found at `frame_support::pallet_macros::getter`.
+/// Documentation for this macro can be found at `topsoil_support::pallet_macros::getter`.
 #[proc_macro_attribute]
 pub fn getter(_: TokenStream, _: TokenStream) -> TokenStream {
 	pallet_macro_stub()
@@ -948,7 +948,7 @@ pub fn getter(_: TokenStream, _: TokenStream) -> TokenStream {
 
 /// ---
 ///
-/// Documentation for this macro can be found at `frame_support::pallet_macros::storage_prefix`.
+/// Documentation for this macro can be found at `topsoil_support::pallet_macros::storage_prefix`.
 #[proc_macro_attribute]
 pub fn storage_prefix(_: TokenStream, _: TokenStream) -> TokenStream {
 	pallet_macro_stub()
@@ -956,7 +956,7 @@ pub fn storage_prefix(_: TokenStream, _: TokenStream) -> TokenStream {
 
 /// ---
 ///
-/// Documentation for this macro can be found at `frame_support::pallet_macros::unbounded`.
+/// Documentation for this macro can be found at `topsoil_support::pallet_macros::unbounded`.
 #[proc_macro_attribute]
 pub fn unbounded(_: TokenStream, _: TokenStream) -> TokenStream {
 	pallet_macro_stub()
@@ -964,7 +964,7 @@ pub fn unbounded(_: TokenStream, _: TokenStream) -> TokenStream {
 
 /// ---
 ///
-/// Documentation for this macro can be found at `frame_support::pallet_macros::whitelist_storage`.
+/// Documentation for this macro can be found at `topsoil_support::pallet_macros::whitelist_storage`.
 #[proc_macro_attribute]
 pub fn whitelist_storage(_: TokenStream, _: TokenStream) -> TokenStream {
 	pallet_macro_stub()
@@ -973,7 +973,7 @@ pub fn whitelist_storage(_: TokenStream, _: TokenStream) -> TokenStream {
 /// ---
 ///
 /// Documentation for this macro can be found at
-/// `frame_support::pallet_macros::disable_try_decode_storage`.
+/// `topsoil_support::pallet_macros::disable_try_decode_storage`.
 #[proc_macro_attribute]
 pub fn disable_try_decode_storage(_: TokenStream, _: TokenStream) -> TokenStream {
 	pallet_macro_stub()
@@ -981,7 +981,7 @@ pub fn disable_try_decode_storage(_: TokenStream, _: TokenStream) -> TokenStream
 
 /// ---
 ///
-/// Documentation for this macro can be found at `frame_support::pallet_macros::type_value`.
+/// Documentation for this macro can be found at `topsoil_support::pallet_macros::type_value`.
 #[proc_macro_attribute]
 pub fn type_value(_: TokenStream, _: TokenStream) -> TokenStream {
 	pallet_macro_stub()
@@ -989,7 +989,7 @@ pub fn type_value(_: TokenStream, _: TokenStream) -> TokenStream {
 
 /// ---
 ///
-/// Documentation for this macro can be found at `frame_support::pallet_macros::genesis_config`.
+/// Documentation for this macro can be found at `topsoil_support::pallet_macros::genesis_config`.
 #[proc_macro_attribute]
 pub fn genesis_config(_: TokenStream, _: TokenStream) -> TokenStream {
 	pallet_macro_stub()
@@ -997,7 +997,7 @@ pub fn genesis_config(_: TokenStream, _: TokenStream) -> TokenStream {
 
 /// ---
 ///
-/// Documentation for this macro can be found at `frame_support::pallet_macros::genesis_build`.
+/// Documentation for this macro can be found at `topsoil_support::pallet_macros::genesis_build`.
 #[proc_macro_attribute]
 pub fn genesis_build(_: TokenStream, _: TokenStream) -> TokenStream {
 	pallet_macro_stub()
@@ -1005,7 +1005,7 @@ pub fn genesis_build(_: TokenStream, _: TokenStream) -> TokenStream {
 
 /// ---
 ///
-/// Documentation for this macro can be found at `frame_support::pallet_macros::inherent`.
+/// Documentation for this macro can be found at `topsoil_support::pallet_macros::inherent`.
 #[proc_macro_attribute]
 pub fn inherent(_: TokenStream, _: TokenStream) -> TokenStream {
 	pallet_macro_stub()
@@ -1013,7 +1013,7 @@ pub fn inherent(_: TokenStream, _: TokenStream) -> TokenStream {
 
 /// ---
 ///
-/// Documentation for this macro can be found at `frame_support::pallet_macros::validate_unsigned`.
+/// Documentation for this macro can be found at `topsoil_support::pallet_macros::validate_unsigned`.
 #[proc_macro_attribute]
 pub fn validate_unsigned(_: TokenStream, _: TokenStream) -> TokenStream {
 	pallet_macro_stub()
@@ -1022,7 +1022,7 @@ pub fn validate_unsigned(_: TokenStream, _: TokenStream) -> TokenStream {
 /// ---
 ///
 /// Documentation for this macro can be found at
-/// `frame_support::pallet_macros::view_functions`.
+/// `topsoil_support::pallet_macros::view_functions`.
 #[proc_macro_attribute]
 pub fn view_functions(_: TokenStream, _: TokenStream) -> TokenStream {
 	pallet_macro_stub()
@@ -1030,7 +1030,7 @@ pub fn view_functions(_: TokenStream, _: TokenStream) -> TokenStream {
 
 /// ---
 ///
-/// Documentation for this macro can be found at `frame_support::pallet_macros::origin`.
+/// Documentation for this macro can be found at `topsoil_support::pallet_macros::origin`.
 #[proc_macro_attribute]
 pub fn origin(_: TokenStream, _: TokenStream) -> TokenStream {
 	pallet_macro_stub()
@@ -1038,7 +1038,7 @@ pub fn origin(_: TokenStream, _: TokenStream) -> TokenStream {
 
 /// ---
 ///
-/// Documentation for this macro can be found at `frame_support::pallet_macros::composite_enum`.
+/// Documentation for this macro can be found at `topsoil_support::pallet_macros::composite_enum`.
 #[proc_macro_attribute]
 pub fn composite_enum(_: TokenStream, _: TokenStream) -> TokenStream {
 	pallet_macro_stub()
@@ -1049,7 +1049,7 @@ pub fn composite_enum(_: TokenStream, _: TokenStream) -> TokenStream {
 /// The off-chain worker can then create and submit all such work items at any given time.
 ///
 /// These work items are defined as instances of the `Task` trait (found at
-/// `frame_support::traits::Task`). [`pallet:tasks_experimental`](macro@tasks_experimental) when
+/// `topsoil_support::traits::Task`). [`pallet:tasks_experimental`](macro@tasks_experimental) when
 /// attached to an `impl` block inside a pallet, will generate an enum `Task<T>` whose variants
 /// are mapped to functions inside this `impl` block.
 ///
@@ -1064,7 +1064,7 @@ pub fn composite_enum(_: TokenStream, _: TokenStream) -> TokenStream {
 /// [`construct_runtime`](macro@construct_runtime).
 ///
 /// Finally, the `RuntimeTask` can then be used by the off-chain worker to create and
-/// submit such tasks via an extrinsic defined in `frame_system` called `do_task` which accepts
+/// submit such tasks via an extrinsic defined in `topsoil_system` called `do_task` which accepts
 /// unsigned transaction from local source.
 ///
 /// When submitted as unsigned transactions, note that the tasks will be executed in a random order.
@@ -1132,7 +1132,7 @@ pub fn task_index(_: TokenStream, _: TokenStream) -> TokenStream {
 /// ---
 ///
 /// **Rust-Analyzer users**: See the documentation of the Rust item in
-/// `frame_support::pallet_macros::pallet_section`.
+/// `topsoil_support::pallet_macros::pallet_section`.
 #[proc_macro_attribute]
 pub fn pallet_section(attr: TokenStream, tokens: TokenStream) -> TokenStream {
 	let tokens_clone = tokens.clone();
@@ -1149,15 +1149,15 @@ pub fn pallet_section(attr: TokenStream, tokens: TokenStream) -> TokenStream {
 /// ---
 ///
 /// **Rust-Analyzer users**: See the documentation of the Rust item in
-/// `frame_support::pallet_macros::import_section`.
+/// `topsoil_support::pallet_macros::import_section`.
 #[import_tokens_attr {
     format!(
         "{}::macro_magic",
-        match generate_access_from_frame_or_crate("frame-support") {
+        match generate_access_from_frame_or_crate("topsoil-support") {
             Ok(path) => Ok(path),
-            Err(_) => generate_access_from_frame_or_crate("polkadot-sdk-frame"),
+            Err(_) => generate_access_from_frame_or_crate("topsoil"),
         }
-        .expect("Failed to find either `frame-support` or `polkadot-sdk-frame` in `Cargo.toml` dependencies.")
+        .expect("Failed to find either `topsoil-support` or `topsoil` in `Cargo.toml` dependencies.")
         .to_token_stream()
         .to_string()
     )
@@ -1203,7 +1203,7 @@ pub fn import_section(attr: TokenStream, tokens: TokenStream) -> TokenStream {
 ///
 /// ## Legacy Ordering
 ///
-/// An optional attribute can be defined as #[frame_support::runtime(legacy_ordering)] to
+/// An optional attribute can be defined as #[topsoil_support::runtime(legacy_ordering)] to
 /// ensure that the order of hooks is same as the order of pallets (and not based on the
 /// pallet_index). This is to support legacy runtimes and should be avoided for new ones.
 ///
@@ -1216,7 +1216,7 @@ pub fn import_section(attr: TokenStream, tokens: TokenStream) -> TokenStream {
 /// # Type definitions
 ///
 /// * The macro generates a type alias for each pallet to their `Pallet`. E.g. `type System =
-///   frame_system::Pallet<Runtime>`
+///   topsoil_system::Pallet<Runtime>`
 #[proc_macro_attribute]
 pub fn runtime(attr: TokenStream, item: TokenStream) -> TokenStream {
 	runtime::runtime(attr, item)
@@ -1224,7 +1224,7 @@ pub fn runtime(attr: TokenStream, item: TokenStream) -> TokenStream {
 
 /// Mark a module that contains dynamic parameters.
 ///
-/// See the `pallet_parameters` for a full example.
+/// See the `topsoil_parameters` for a full example.
 ///
 /// # Arguments
 ///
@@ -1249,7 +1249,7 @@ pub fn dynamic_params(attrs: TokenStream, input: TokenStream) -> TokenStream {
 
 /// Define a module inside a [`macro@dynamic_params`] module that contains dynamic parameters.
 ///
-/// See the `pallet_parameters` for a full example.
+/// See the `topsoil_parameters` for a full example.
 ///
 /// # Argument
 ///
@@ -1276,16 +1276,16 @@ pub fn dynamic_aggregated_params_internal(attrs: TokenStream, input: TokenStream
 ///
 /// This attribute allows to specify a special validation logic for a specific call.
 /// A general transaction with this specific call can then be validated by the given function,
-/// and if valid then dispatched with the origin `frame_system::Origin::Authorized`.
+/// and if valid then dispatched with the origin `topsoil_system::Origin::Authorized`.
 ///
 /// To ensure the origin of the call is the authorization process, the call must check the origin
-/// with `frame_system::ensure_authorized` function.
+/// with `topsoil_system::ensure_authorized` function.
 ///
 /// To enable the authorization process on the extrinsic, the runtime must use
-/// `frame_system::AuthorizeCall` transaction extension in the transaction extension pipeline.
+/// `topsoil_system::AuthorizeCall` transaction extension in the transaction extension pipeline.
 ///
 /// To enable the creation of authorized call from offchain worker. The runtime should implement
-/// `frame_system::CreateAuthorizedTransaction`. This trait allows to specify which transaction
+/// `topsoil_system::CreateAuthorizedTransaction`. This trait allows to specify which transaction
 /// extension to use when creating a transaction for an authorized call.
 ///
 /// # Usage in the pallet
@@ -1294,16 +1294,16 @@ pub fn dynamic_aggregated_params_internal(attrs: TokenStream, input: TokenStream
 ///
 /// ```
 /// # #[allow(unused)]
-/// #[frame_support::pallet]
+/// #[topsoil_support::pallet]
 /// pub mod pallet {
-///     use frame_support::pallet_prelude::*;
-///     use frame_system::pallet_prelude::*;
+///     use topsoil_support::pallet_prelude::*;
+///     use topsoil_system::pallet_prelude::*;
 ///
 ///     #[pallet::pallet]
 ///     pub struct Pallet<T>(_);
 ///
 ///     #[pallet::config]
-///     pub trait Config: frame_system::Config {}
+///     pub trait Config: topsoil_system::Config {}
 ///
 ///     #[pallet::call]
 ///     impl<T: Config> Pallet<T> {
@@ -1355,10 +1355,10 @@ pub fn dynamic_aggregated_params_internal(attrs: TokenStream, input: TokenStream
 ///         }
 ///     }
 ///
-///     #[frame_benchmarking::v2::benchmarks]
+///     #[topsoil_benchmarking::v2::benchmarks]
 ///     mod benchmarks {
 ///         use super::*;
-///         use frame_benchmarking::v2::BenchmarkError;
+///         use topsoil_benchmarking::v2::BenchmarkError;
 ///
 ///         #[benchmark]
 ///         fn authorize_some_call() -> Result<(), BenchmarkError> {
@@ -1366,7 +1366,7 @@ pub fn dynamic_aggregated_params_internal(attrs: TokenStream, input: TokenStream
 ///
 ///             #[block]
 ///             {
-///                 use frame_support::pallet_prelude::Authorize;
+///                 use topsoil_support::pallet_prelude::Authorize;
 ///                 call.authorize(TransactionSource::External)
 ///                     .ok_or("Call must give some authorization")??;
 ///             }
@@ -1395,7 +1395,7 @@ pub fn dynamic_aggregated_params_internal(attrs: TokenStream, input: TokenStream
 ///   The weight must be small enough so that nodes don't get DDOS by validating transactions.
 ///
 /// Then in the call it must be ensured that the origin is the authorization process. This can
-/// be done using `frame_system::ensure_authorized` function.
+/// be done using `topsoil_system::ensure_authorized` function.
 ///
 /// # The macro expansion
 ///

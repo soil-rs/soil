@@ -42,8 +42,8 @@
 /// # Examples
 ///
 /// ```
-/// # use frame_support::traits::Get;
-/// # use frame_support::parameter_types;
+/// # use topsoil_support::traits::Get;
+/// # use topsoil_support::parameter_types;
 /// // This function cannot be used in a const context.
 /// fn non_const_expression() -> u64 { 99 }
 ///
@@ -77,8 +77,8 @@
 /// # Invalid example:
 ///
 /// ```compile_fail
-/// # use frame_support::traits::Get;
-/// # use frame_support::parameter_types;
+/// # use topsoil_support::traits::Get;
+/// # use topsoil_support::parameter_types;
 /// // This function cannot be used in a const context.
 /// fn non_const_expression() -> u64 { 99 }
 ///
@@ -324,7 +324,7 @@ macro_rules! ord_parameter_types {
 /// # Example
 ///
 /// ```
-/// frame_support::runtime_print!("my value is {}", 3);
+/// topsoil_support::runtime_print!("my value is {}", 3);
 /// ```
 #[macro_export]
 macro_rules! runtime_print {
@@ -511,7 +511,7 @@ macro_rules! hypothetically_ok {
 ///     fn really_hard();
 /// }
 ///
-/// frame_support::impl_for_tuples_attr! {
+/// topsoil_support::impl_for_tuples_attr! {
 ///     impl ILoveTuples for Tuple {
 ///         fn really_hard() {
 ///             for_tuples! { #(
@@ -545,7 +545,7 @@ macro_rules! impl_for_tuples_attr {
 ///     fn really_hard();
 /// }
 ///
-/// frame_support::impl_for_tuples_attr! {
+/// topsoil_support::impl_for_tuples_attr! {
 ///     impl ILoveTuples for Tuple {
 ///         fn really_hard() {
 ///             for_tuples! { #(
@@ -579,7 +579,7 @@ macro_rules! impl_for_tuples_attr {
 ///     fn really_hard();
 /// }
 ///
-/// frame_support::impl_for_tuples_attr! {
+/// topsoil_support::impl_for_tuples_attr! {
 ///     impl ILoveTuples for Tuple {
 ///         fn really_hard() {
 ///             for_tuples! { #(

@@ -124,7 +124,7 @@ fn new_node(tokio_handle: Handle) -> node_cli::service::NewFullBase {
 
 fn extrinsic_set_time(now: u64) -> OpaqueExtrinsic {
 	let utx: kitchensink_runtime::UncheckedExtrinsic = generic::UncheckedExtrinsic::new_bare(
-		kitchensink_runtime::RuntimeCall::Timestamp(pallet_timestamp::Call::set { now }),
+		kitchensink_runtime::RuntimeCall::Timestamp(topsoil_timestamp::Call::set { now }),
 	)
 	.into();
 	utx.into()

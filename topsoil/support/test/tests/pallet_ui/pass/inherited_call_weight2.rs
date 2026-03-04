@@ -15,8 +15,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use frame_support::pallet_prelude::*;
-use frame_system::pallet_prelude::*;
+use topsoil_support::pallet_prelude::*;
+use topsoil_system::pallet_prelude::*;
 
 pub trait WeightInfo {
 	fn foo() -> Weight;
@@ -28,12 +28,12 @@ impl WeightInfo for () {
 	}
 }
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod parentheses {
 	use super::*;
 
 	#[pallet::config]
-	pub trait Config: frame_system::Config {
+	pub trait Config: topsoil_system::Config {
 	}
 
 	#[pallet::pallet]
@@ -49,12 +49,12 @@ pub mod parentheses {
 	}
 }
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod assign {
 	use super::*;
 
 	#[pallet::config]
-	pub trait Config: frame_system::Config {
+	pub trait Config: topsoil_system::Config {
 	}
 
 	#[pallet::pallet]

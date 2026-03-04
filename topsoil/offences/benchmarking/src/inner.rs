@@ -18,20 +18,20 @@
 //! Offences pallet benchmarking.
 
 use alloc::{vec, vec::Vec};
-use frame_benchmarking::v2::*;
-use frame_support::traits::Get;
-use frame_system::{Config as SystemConfig, Pallet as System, RawOrigin};
-use pallet_babe::EquivocationOffence as BabeEquivocationOffence;
-use pallet_balances::Config as BalancesConfig;
-use pallet_grandpa::{
+use topsoil_benchmarking::v2::*;
+use topsoil_support::traits::Get;
+use topsoil_system::{Config as SystemConfig, Pallet as System, RawOrigin};
+use topsoil_babe::EquivocationOffence as BabeEquivocationOffence;
+use topsoil_balances::Config as BalancesConfig;
+use topsoil_grandpa::{
 	EquivocationOffence as GrandpaEquivocationOffence, TimeSlot as GrandpaTimeSlot,
 };
-use pallet_offences::{Config as OffencesConfig, Pallet as Offences};
-use pallet_session::{
+use topsoil_offences::{Config as OffencesConfig, Pallet as Offences};
+use topsoil_session::{
 	historical::{Config as HistoricalConfig, IdentificationTuple},
 	Config as SessionConfig, Pallet as Session,
 };
-use pallet_staking::{
+use topsoil_staking::{
 	Config as StakingConfig, Exposure, IndividualExposure, MaxNominationsOf, Pallet as Staking,
 	RewardDestination, ValidatorPrefs,
 };
@@ -48,8 +48,8 @@ const MAX_NOMINATORS: u32 = 100;
 pub struct Pallet<T: Config>(Offences<T>);
 
 pub trait Config:
-	SessionConfig<ValidatorId = <Self as frame_system::Config>::AccountId>
-	+ pallet_session_benchmarking::Config
+	SessionConfig<ValidatorId = <Self as topsoil_system::Config>::AccountId>
+	+ topsoil_session_benchmarking::Config
 	+ StakingConfig
 	+ OffencesConfig
 	+ HistoricalConfig
@@ -86,7 +86,7 @@ struct Offender<T: Config> {
 }
 
 fn bond_amount<T: Config>() -> BalanceOf<T> {
-	pallet_staking::asset::existential_deposit::<T>().saturating_mul(10_000u32.into())
+	topsoil_staking::asset::existential_deposit::<T>().saturating_mul(10_000u32.into())
 }
 
 fn create_offender<T: Config>(n: u32, nominators: u32) -> Result<Offender<T>, &'static str> {
@@ -96,7 +96,7 @@ fn create_offender<T: Config>(n: u32, nominators: u32) -> Result<Offender<T>, &'
 	let amount = bond_amount::<T>();
 	// add twice as much balance to prevent the account from being killed.
 	let free_amount = amount.saturating_mul(2u32.into());
-	pallet_staking::asset::set_stakeable_balance::<T>(&stash, free_amount);
+	topsoil_staking::asset::set_stakeable_balance::<T>(&stash, free_amount);
 	Staking::<T>::bond(
 		RawOrigin::Signed(stash.clone()).into(),
 		amount,
@@ -118,7 +118,7 @@ fn create_offender<T: Config>(n: u32, nominators: u32) -> Result<Offender<T>, &'
 	for i in 0..nominators {
 		let nominator_stash: T::AccountId =
 			account("nominator stash", n * MAX_NOMINATORS + i, SEED);
-		pallet_staking::asset::set_stakeable_balance::<T>(&nominator_stash, free_amount);
+		topsoil_staking::asset::set_stakeable_balance::<T>(&nominator_stash, free_amount);
 
 		Staking::<T>::bond(
 			RawOrigin::Signed(nominator_stash.clone()).into(),
@@ -153,7 +153,7 @@ fn make_offenders<T: Config>(
 		let offender = create_offender::<T>(i + 1, num_nominators)?;
 		// add them to the session validators -- this is needed since `FullIdentificationOf` usually
 		// checks this.
-		pallet_session::Validators::<T>::mutate(|v| v.push(offender.controller.clone()));
+		topsoil_session::Validators::<T>::mutate(|v| v.push(offender.controller.clone()));
 		offenders.push(offender);
 	}
 
@@ -170,8 +170,8 @@ fn make_offenders<T: Config>(
 		})
 		.collect::<Vec<IdentificationTuple<T>>>();
 
-	if pallet_staking::ActiveEra::<T>::get().is_none() {
-		pallet_staking::ActiveEra::<T>::put(pallet_staking::ActiveEraInfo {
+	if topsoil_staking::ActiveEra::<T>::get().is_none() {
+		topsoil_staking::ActiveEra::<T>::put(topsoil_staking::ActiveEraInfo {
 			index: 0,
 			start: Some(0),
 		});
@@ -184,31 +184,31 @@ fn make_offenders<T: Config>(
 fn assert_all_slashes_applied<T>(offender_count: usize)
 where
 	T: Config,
-	<T as frame_system::Config>::RuntimeEvent: TryInto<pallet_staking::Event<T>>,
-	<T as frame_system::Config>::RuntimeEvent: TryInto<pallet_balances::Event<T>>,
-	<T as frame_system::Config>::RuntimeEvent: TryInto<pallet_offences::Event>,
-	<T as frame_system::Config>::RuntimeEvent: TryInto<frame_system::Event<T>>,
+	<T as topsoil_system::Config>::RuntimeEvent: TryInto<topsoil_staking::Event<T>>,
+	<T as topsoil_system::Config>::RuntimeEvent: TryInto<topsoil_balances::Event<T>>,
+	<T as topsoil_system::Config>::RuntimeEvent: TryInto<topsoil_offences::Event>,
+	<T as topsoil_system::Config>::RuntimeEvent: TryInto<topsoil_system::Event<T>>,
 {
 	// make sure that all slashes have been applied and TotalIssuance adjusted(BurnedDebt).
 	// deposit to reporter + reporter account endowed.
-	assert_eq!(System::<T>::read_events_for_pallet::<pallet_balances::Event<T>>().len(), 3);
+	assert_eq!(System::<T>::read_events_for_pallet::<topsoil_balances::Event<T>>().len(), 3);
 	// (n nominators + one validator) * slashed + Slash Reported + Slash Computed
 	assert_eq!(
-		System::<T>::read_events_for_pallet::<pallet_staking::Event<T>>().len(),
+		System::<T>::read_events_for_pallet::<topsoil_staking::Event<T>>().len(),
 		1 * (offender_count + 1) as usize + 1
 	);
 	// offence
-	assert_eq!(System::<T>::read_events_for_pallet::<pallet_offences::Event>().len(), 1);
+	assert_eq!(System::<T>::read_events_for_pallet::<topsoil_offences::Event>().len(), 1);
 	// reporter new account
-	assert_eq!(System::<T>::read_events_for_pallet::<frame_system::Event<T>>().len(), 1);
+	assert_eq!(System::<T>::read_events_for_pallet::<topsoil_system::Event<T>>().len(), 1);
 }
 
 #[benchmarks(
 	where
-		<T as frame_system::Config>::RuntimeEvent: TryInto<pallet_staking::Event<T>>,
-		<T as frame_system::Config>::RuntimeEvent: TryInto<pallet_balances::Event<T>>,
-		<T as frame_system::Config>::RuntimeEvent: TryInto<pallet_offences::Event>,
-		<T as frame_system::Config>::RuntimeEvent: TryInto<frame_system::Event<T>>,
+		<T as topsoil_system::Config>::RuntimeEvent: TryInto<topsoil_staking::Event<T>>,
+		<T as topsoil_system::Config>::RuntimeEvent: TryInto<topsoil_balances::Event<T>>,
+		<T as topsoil_system::Config>::RuntimeEvent: TryInto<topsoil_offences::Event>,
+		<T as topsoil_system::Config>::RuntimeEvent: TryInto<topsoil_system::Event<T>>,
 )]
 mod benchmarks {
 	use super::*;

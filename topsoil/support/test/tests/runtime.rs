@@ -22,10 +22,10 @@
 #![recursion_limit = "128"]
 
 use codec::MaxEncodedLen;
-use frame_support::{
+use topsoil_support::{
 	derive_impl, parameter_types, traits::PalletInfo as _, weights::RuntimeDbWeight,
 };
-use frame_system::{
+use topsoil_system::{
 	limits::{BlockLength, BlockWeights},
 	DispatchEventInfo,
 };
@@ -42,19 +42,19 @@ parameter_types! {
 	pub static IntegrityTestExec: u32 = 0;
 }
 
-#[frame_support::pallet(dev_mode)]
+#[topsoil_support::pallet(dev_mode)]
 mod module1 {
-	use frame_support::pallet_prelude::*;
-	use frame_system::pallet_prelude::*;
+	use topsoil_support::pallet_prelude::*;
+	use topsoil_system::pallet_prelude::*;
 
 	#[pallet::pallet]
 	pub struct Pallet<T, I = ()>(_);
 
 	#[pallet::config]
-	pub trait Config<I: 'static = ()>: frame_system::Config {
+	pub trait Config<I: 'static = ()>: topsoil_system::Config {
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self, I>>
-			+ IsType<<Self as frame_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 	}
 
 	#[pallet::call]
@@ -73,7 +73,7 @@ mod module1 {
 
 	#[pallet::event]
 	pub enum Event<T: Config<I>, I: 'static = ()> {
-		A(<T as frame_system::Config>::AccountId),
+		A(<T as topsoil_system::Config>::AccountId),
 	}
 
 	#[pallet::error]
@@ -82,19 +82,19 @@ mod module1 {
 	}
 }
 
-#[frame_support::pallet(dev_mode)]
+#[topsoil_support::pallet(dev_mode)]
 mod module2 {
 	use super::*;
-	use frame_support::pallet_prelude::*;
-	use frame_system::pallet_prelude::*;
+	use topsoil_support::pallet_prelude::*;
+	use topsoil_system::pallet_prelude::*;
 
 	#[pallet::pallet]
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
-	pub trait Config: frame_system::Config {
+	pub trait Config: topsoil_system::Config {
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 	}
 
 	#[pallet::hooks]
@@ -131,20 +131,20 @@ mod module2 {
 mod nested {
 	use super::*;
 
-	#[frame_support::pallet(dev_mode)]
+	#[topsoil_support::pallet(dev_mode)]
 	pub mod module3 {
 		use super::*;
-		use frame_support::pallet_prelude::*;
-		use frame_system::pallet_prelude::*;
+		use topsoil_support::pallet_prelude::*;
+		use topsoil_system::pallet_prelude::*;
 
 		#[pallet::pallet]
 		pub struct Pallet<T>(_);
 
 		#[pallet::config]
-		pub trait Config: frame_system::Config {
+		pub trait Config: topsoil_system::Config {
 			#[allow(deprecated)]
 			type RuntimeEvent: From<Event<Self>>
-				+ IsType<<Self as frame_system::Config>::RuntimeEvent>;
+				+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 		}
 
 		#[pallet::hooks]
@@ -186,7 +186,7 @@ mod nested {
 		}
 
 		#[pallet::genesis_config]
-		#[derive(frame_support::DefaultNoBound)]
+		#[derive(topsoil_support::DefaultNoBound)]
 		pub struct GenesisConfig<T: Config> {
 			#[serde(skip)]
 			pub _config: core::marker::PhantomData<T>,
@@ -210,19 +210,19 @@ mod nested {
 	}
 }
 
-#[frame_support::pallet(dev_mode)]
+#[topsoil_support::pallet(dev_mode)]
 pub mod module3 {
 	use super::*;
-	use frame_support::pallet_prelude::*;
-	use frame_system::pallet_prelude::*;
+	use topsoil_support::pallet_prelude::*;
+	use topsoil_system::pallet_prelude::*;
 
 	#[pallet::pallet]
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
-	pub trait Config: frame_system::Config {
+	pub trait Config: topsoil_system::Config {
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 	}
 
 	#[pallet::call]
@@ -271,7 +271,7 @@ pub mod module3 {
 	}
 
 	#[pallet::genesis_config]
-	#[derive(frame_support::DefaultNoBound)]
+	#[derive(topsoil_support::DefaultNoBound)]
 	pub struct GenesisConfig<T: Config> {
 		#[serde(skip)]
 		pub _config: core::marker::PhantomData<T>,
@@ -304,7 +304,7 @@ pub type Header = generic::Header<BlockNumber, BlakeTwo256>;
 pub type UncheckedExtrinsic = generic::UncheckedExtrinsic<u32, RuntimeCall, Signature, ()>;
 pub type Block = generic::Block<Header, UncheckedExtrinsic>;
 
-#[frame_support::runtime]
+#[topsoil_support::runtime]
 mod runtime {
 	#[runtime::runtime]
 	#[runtime::derive(
@@ -322,7 +322,7 @@ mod runtime {
 	pub struct Runtime;
 
 	#[runtime::pallet_index(30)]
-	pub type System = frame_system + Pallet + Call + Event<T> + Origin<T>;
+	pub type System = topsoil_system + Pallet + Call + Event<T> + Origin<T>;
 
 	#[runtime::pallet_index(31)]
 	pub type Module1_1 = module1<Instance1>;
@@ -364,11 +364,11 @@ mod runtime {
 	pub type Module1_9 = module1<Instance9>;
 }
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Runtime {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Runtime {
 	type AccountId = AccountId;
 	type Lookup = soil_runtime::traits::IdentityLookup<AccountId>;
-	type BaseCallFilter = frame_support::traits::Everything;
+	type BaseCallFilter = topsoil_support::traits::Everything;
 	type RuntimeOrigin = RuntimeOrigin;
 	type RuntimeCall = RuntimeCall;
 	type RuntimeEvent = RuntimeEvent;
@@ -422,7 +422,7 @@ fn test_pub() -> AccountId {
 fn check_modules_error_type() {
 	soil_io::TestExternalities::default().execute_with(|| {
 		assert_eq!(
-			Module1_1::fail(frame_system::Origin::<Runtime>::Root.into()),
+			Module1_1::fail(topsoil_system::Origin::<Runtime>::Root.into()),
 			Err(DispatchError::Module(ModuleError {
 				index: 31,
 				error: [0; 4],
@@ -430,7 +430,7 @@ fn check_modules_error_type() {
 			})),
 		);
 		assert_eq!(
-			Module2::fail(frame_system::Origin::<Runtime>::Root.into()),
+			Module2::fail(topsoil_system::Origin::<Runtime>::Root.into()),
 			Err(DispatchError::Module(ModuleError {
 				index: 32,
 				error: [0; 4],
@@ -438,7 +438,7 @@ fn check_modules_error_type() {
 			})),
 		);
 		assert_eq!(
-			Module1_2::fail(frame_system::Origin::<Runtime>::Root.into()),
+			Module1_2::fail(topsoil_system::Origin::<Runtime>::Root.into()),
 			Err(DispatchError::Module(ModuleError {
 				index: 33,
 				error: [0; 4],
@@ -446,7 +446,7 @@ fn check_modules_error_type() {
 			})),
 		);
 		assert_eq!(
-			NestedModule3::fail(frame_system::Origin::<Runtime>::Root.into()),
+			NestedModule3::fail(topsoil_system::Origin::<Runtime>::Root.into()),
 			Err(DispatchError::Module(ModuleError {
 				index: 34,
 				error: [0; 4],
@@ -454,7 +454,7 @@ fn check_modules_error_type() {
 			})),
 		);
 		assert_eq!(
-			Module1_3::fail(frame_system::Origin::<Runtime>::Root.into()),
+			Module1_3::fail(topsoil_system::Origin::<Runtime>::Root.into()),
 			Err(DispatchError::Module(ModuleError {
 				index: 6,
 				error: [0; 4],
@@ -462,7 +462,7 @@ fn check_modules_error_type() {
 			})),
 		);
 		assert_eq!(
-			Module1_4::fail(frame_system::Origin::<Runtime>::Root.into()),
+			Module1_4::fail(topsoil_system::Origin::<Runtime>::Root.into()),
 			Err(DispatchError::Module(ModuleError {
 				index: 3,
 				error: [0; 4],
@@ -470,7 +470,7 @@ fn check_modules_error_type() {
 			})),
 		);
 		assert_eq!(
-			Module1_5::fail(frame_system::Origin::<Runtime>::Root.into()),
+			Module1_5::fail(topsoil_system::Origin::<Runtime>::Root.into()),
 			Err(DispatchError::Module(ModuleError {
 				index: 4,
 				error: [0; 4],
@@ -478,7 +478,7 @@ fn check_modules_error_type() {
 			})),
 		);
 		assert_eq!(
-			Module1_6::fail(frame_system::Origin::<Runtime>::Root.into()),
+			Module1_6::fail(topsoil_system::Origin::<Runtime>::Root.into()),
 			Err(DispatchError::Module(ModuleError {
 				index: 1,
 				error: [0; 4],
@@ -486,7 +486,7 @@ fn check_modules_error_type() {
 			})),
 		);
 		assert_eq!(
-			Module1_7::fail(frame_system::Origin::<Runtime>::Root.into()),
+			Module1_7::fail(topsoil_system::Origin::<Runtime>::Root.into()),
 			Err(DispatchError::Module(ModuleError {
 				index: 2,
 				error: [0; 4],
@@ -494,7 +494,7 @@ fn check_modules_error_type() {
 			})),
 		);
 		assert_eq!(
-			Module1_8::fail(frame_system::Origin::<Runtime>::Root.into()),
+			Module1_8::fail(topsoil_system::Origin::<Runtime>::Root.into()),
 			Err(DispatchError::Module(ModuleError {
 				index: 12,
 				error: [0; 4],
@@ -502,7 +502,7 @@ fn check_modules_error_type() {
 			})),
 		);
 		assert_eq!(
-			Module1_9::fail(frame_system::Origin::<Runtime>::Root.into()),
+			Module1_9::fail(topsoil_system::Origin::<Runtime>::Root.into()),
 			Err(DispatchError::Module(ModuleError {
 				index: 13,
 				error: [0; 4],
@@ -522,7 +522,7 @@ fn integrity_test_works() {
 fn origin_codec() {
 	use codec::Encode;
 
-	let origin = OriginCaller::system(frame_system::RawOrigin::None);
+	let origin = OriginCaller::system(topsoil_system::RawOrigin::None);
 	assert_eq!(origin.encode()[0], 30);
 
 	let origin = OriginCaller::Module1_1(module1::Origin(Default::default()));
@@ -557,7 +557,7 @@ fn origin_codec() {
 fn event_codec() {
 	use codec::Encode;
 
-	let event = frame_system::Event::<Runtime>::ExtrinsicSuccess {
+	let event = topsoil_system::Event::<Runtime>::ExtrinsicSuccess {
 		dispatch_info: DispatchEventInfo {
 			weight: Default::default(),
 			class: Default::default(),
@@ -600,7 +600,7 @@ fn event_codec() {
 #[test]
 fn call_codec() {
 	use codec::Encode;
-	assert_eq!(RuntimeCall::System(frame_system::Call::remark { remark: vec![1] }).encode()[0], 30);
+	assert_eq!(RuntimeCall::System(topsoil_system::Call::remark { remark: vec![1] }).encode()[0], 30);
 	assert_eq!(RuntimeCall::Module1_1(module1::Call::fail {}).encode()[0], 31);
 	assert_eq!(RuntimeCall::Module2(module2::Call::fail {}).encode()[0], 32);
 	assert_eq!(RuntimeCall::Module1_2(module1::Call::fail {}).encode()[0], 33);
@@ -645,7 +645,7 @@ fn call_encode_is_correct_and_decode_works() {
 
 #[test]
 fn call_weight_should_attach_to_call_enum() {
-	use frame_support::{
+	use topsoil_support::{
 		dispatch::{DispatchClass, DispatchInfo, GetDispatchInfo, Pays},
 		weights::Weight,
 	};
@@ -673,14 +673,14 @@ fn call_weight_should_attach_to_call_enum() {
 
 #[test]
 fn call_name() {
-	use frame_support::traits::GetCallName;
+	use topsoil_support::traits::GetCallName;
 	let name = module3::Call::<Runtime>::aux_4 {}.get_call_name();
 	assert_eq!("aux_4", name);
 }
 
 #[test]
 fn call_metadata() {
-	use frame_support::traits::{CallMetadata, GetCallMetadata};
+	use topsoil_support::traits::{CallMetadata, GetCallMetadata};
 	let call = RuntimeCall::Module3(module3::Call::<Runtime>::aux_4 {});
 	let metadata = call.get_call_metadata();
 	let expected = CallMetadata { function_name: "aux_4".into(), pallet_name: "Module3".into() };
@@ -689,14 +689,14 @@ fn call_metadata() {
 
 #[test]
 fn get_call_names() {
-	use frame_support::traits::GetCallName;
+	use topsoil_support::traits::GetCallName;
 	let call_names = module3::Call::<Runtime>::get_call_names();
 	assert_eq!(["fail", "aux_1", "aux_2", "aux_3", "aux_4", "operational"], call_names);
 }
 
 #[test]
 fn get_module_names() {
-	use frame_support::traits::GetCallMetadata;
+	use topsoil_support::traits::GetCallMetadata;
 	let module_names = RuntimeCall::get_module_names();
 	assert_eq!(
 		[
@@ -718,7 +718,7 @@ fn get_module_names() {
 
 #[test]
 fn call_subtype_conversion() {
-	use frame_support::{dispatch::CallableCallFor, traits::IsSubType};
+	use topsoil_support::{dispatch::CallableCallFor, traits::IsSubType};
 	let call = RuntimeCall::Module3(module3::Call::<Runtime>::fail {});
 	let subcall: Option<&CallableCallFor<Module3, Runtime>> = call.is_sub_type();
 	let subcall_none: Option<&CallableCallFor<Module2, Runtime>> = call.is_sub_type();
@@ -814,8 +814,8 @@ fn test_metadata() {
 		PalletMetadata {
 			name: "System",
 			storage: None,
-			calls: Some(meta_type::<frame_system::Call<Runtime>>().into()),
-			event: Some(meta_type::<frame_system::Event<Runtime>>().into()),
+			calls: Some(meta_type::<topsoil_system::Call<Runtime>>().into()),
+			event: Some(meta_type::<topsoil_system::Event<Runtime>>().into()),
 			constants: vec![
 				PalletConstantMetadata {
 					name: "BlockWeights",
@@ -860,7 +860,7 @@ fn test_metadata() {
 					]),
 				},
 			],
-			error: Some(meta_type::<frame_system::Error<Runtime>>().into()),
+			error: Some(meta_type::<topsoil_system::Error<Runtime>>().into()),
 			index: 30,
 		},
 		PalletMetadata {
@@ -942,7 +942,7 @@ fn test_metadata() {
 fn pallet_in_runtime_is_correct() {
 	assert_eq!(PalletInfo::index::<System>().unwrap(), 30);
 	assert_eq!(PalletInfo::name::<System>().unwrap(), "System");
-	assert_eq!(PalletInfo::module_name::<System>().unwrap(), "frame_system");
+	assert_eq!(PalletInfo::module_name::<System>().unwrap(), "topsoil_system");
 	assert!(PalletInfo::crate_version::<System>().is_some());
 
 	assert_eq!(PalletInfo::index::<Module1_1>().unwrap(), 31);
@@ -1008,7 +1008,7 @@ fn pallet_in_runtime_is_correct() {
 
 #[test]
 fn test_validate_unsigned() {
-	use frame_support::pallet_prelude::*;
+	use topsoil_support::pallet_prelude::*;
 
 	let call = RuntimeCall::NestedModule3(nested::module3::Call::fail {});
 	let validity = Runtime::validate_unsigned(TransactionSource::Local, &call).unwrap_err();

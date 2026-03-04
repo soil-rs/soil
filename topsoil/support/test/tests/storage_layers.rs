@@ -15,24 +15,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use frame_support::{
+use topsoil_support::{
 	assert_noop, assert_ok, derive_impl, dispatch::DispatchResult, ensure,
 	pallet_prelude::ConstU32, storage::with_storage_layer,
 };
 use pallet::*;
 use soil_io::TestExternalities;
 
-#[frame_support::pallet(dev_mode)]
+#[topsoil_support::pallet(dev_mode)]
 pub mod pallet {
 	use super::*;
-	use frame_support::pallet_prelude::*;
-	use frame_system::pallet_prelude::*;
+	use topsoil_support::pallet_prelude::*;
+	use topsoil_system::pallet_prelude::*;
 
 	#[pallet::pallet]
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
-	pub trait Config: frame_system::Config {}
+	pub trait Config: topsoil_system::Config {}
 
 	#[pallet::storage]
 	pub type Value<T> = StorageValue<_, u32, ValueQuery>;
@@ -64,9 +64,9 @@ pub type Header = soil_runtime::generic::Header<BlockNumber, soil_runtime::trait
 pub type UncheckedExtrinsic = soil_runtime::generic::UncheckedExtrinsic<u32, RuntimeCall, (), ()>;
 pub type Block = soil_runtime::generic::Block<Header, UncheckedExtrinsic>;
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Runtime {
-	type BaseCallFilter = frame_support::traits::Everything;
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Runtime {
+	type BaseCallFilter = topsoil_support::traits::Everything;
 	type BlockWeights = ();
 	type BlockLength = ();
 	type RuntimeOrigin = RuntimeOrigin;
@@ -92,9 +92,9 @@ impl frame_system::Config for Runtime {
 
 impl Config for Runtime {}
 
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub enum Runtime {
-		System: frame_system,
+		System: topsoil_system,
 		MyPallet: pallet,
 	}
 );

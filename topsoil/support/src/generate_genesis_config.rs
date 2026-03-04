@@ -139,7 +139,7 @@ pub fn retain_initialized_fields(
 /// # Example
 ///
 /// ```rust
-/// use frame_support::build_struct_json_patch;
+/// use topsoil_support::build_struct_json_patch;
 /// #[derive(Default, serde::Serialize, serde::Deserialize)]
 /// #[serde(rename_all = "camelCase")]
 /// struct RuntimeGenesisConfig {

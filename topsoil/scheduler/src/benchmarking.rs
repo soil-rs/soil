@@ -18,25 +18,25 @@
 //! Scheduler pallet benchmarking.
 
 use alloc::vec;
-use frame_benchmarking::v2::*;
-use frame_support::{
+use topsoil_benchmarking::v2::*;
+use topsoil_support::{
 	ensure,
 	traits::{schedule::Priority, BoundedInline},
 	weights::WeightMeter,
 };
-use frame_system::{EventRecord, RawOrigin};
+use topsoil_system::{EventRecord, RawOrigin};
 
 use crate::*;
 
-type SystemCall<T> = frame_system::Call<T>;
-type SystemOrigin<T> = <T as frame_system::Config>::RuntimeOrigin;
+type SystemCall<T> = topsoil_system::Call<T>;
+type SystemOrigin<T> = <T as topsoil_system::Config>::RuntimeOrigin;
 
 const SEED: u32 = 0;
 const BLOCK_NUMBER: u32 = 2;
 
 fn assert_last_event<T: Config>(generic_event: <T as Config>::RuntimeEvent) {
-	let events = frame_system::Pallet::<T>::events();
-	let system_event: <T as frame_system::Config>::RuntimeEvent = generic_event.into();
+	let events = topsoil_system::Pallet::<T>::events();
+	let system_event: <T as topsoil_system::Config>::RuntimeEvent = generic_event.into();
 	// compare to the last event record
 	let EventRecord { event, .. } = &events[events.len() - 1];
 	assert_eq!(event, &system_event);
@@ -51,7 +51,7 @@ fn assert_last_event<T: Config>(generic_event: <T as Config>::RuntimeEvent) {
 /// - `Some(false)`: plain call
 fn fill_schedule<T: Config>(when: BlockNumberFor<T>, n: u32) -> Result<(), &'static str> {
 	let t = DispatchTime::At(when);
-	let origin: <T as Config>::PalletsOrigin = frame_system::RawOrigin::Root.into();
+	let origin: <T as Config>::PalletsOrigin = topsoil_system::RawOrigin::Root.into();
 	for i in 0..n {
 		let call = make_call::<T>(None);
 		let period = Some(((i + 100).into(), 100));
@@ -124,8 +124,8 @@ fn make_call<T: Config>(maybe_lookup_len: Option<u32>) -> BoundedCallOf<T> {
 
 fn make_origin<T: Config>(signed: bool) -> <T as Config>::PalletsOrigin {
 	match signed {
-		true => frame_system::RawOrigin::Signed(account("origin", 0, SEED)).into(),
-		false => frame_system::RawOrigin::Root.into(),
+		true => topsoil_system::RawOrigin::Signed(account("origin", 0, SEED)).into(),
+		false => topsoil_system::RawOrigin::Root.into(),
 	}
 }
 

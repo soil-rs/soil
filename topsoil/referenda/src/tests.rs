@@ -21,8 +21,8 @@ use super::*;
 use crate::mock::{RefState::*, *};
 use assert_matches::assert_matches;
 use codec::Decode;
-use frame_support::{assert_noop, assert_ok, dispatch::RawOrigin, traits::Contains};
-use pallet_balances::Error as BalancesError;
+use topsoil_support::{assert_noop, assert_ok, dispatch::RawOrigin, traits::Contains};
+use topsoil_balances::Error as BalancesError;
 use soil_runtime::DispatchError::BadOrigin;
 
 #[test]
@@ -30,7 +30,7 @@ fn params_should_work() {
 	ExtBuilder::default().build_and_execute(|| {
 		assert_eq!(ReferendumCount::<Test>::get(), 0);
 		assert_eq!(Balances::free_balance(42), 0);
-		assert_eq!(pallet_balances::TotalIssuance::<Test>::get(), 600);
+		assert_eq!(topsoil_balances::TotalIssuance::<Test>::get(), 600);
 	});
 }
 
@@ -208,7 +208,7 @@ fn queueing_works() {
 		set_tally(2, 2, 20);
 		set_tally(3, 3, 30);
 		set_tally(4, 100, 0);
-		println!("Agenda #6: {:?}", pallet_scheduler::Agenda::<Test>::get(6));
+		println!("Agenda #6: {:?}", topsoil_scheduler::Agenda::<Test>::get(6));
 		run_to(6);
 		println!("{:?}", Vec::<_>::from(TrackQueue::<Test>::get(0)));
 
@@ -578,7 +578,7 @@ fn kill_errors_works() {
 fn set_balance_proposal_is_correctly_filtered_out() {
 	for i in 0..10 {
 		let call = crate::mock::RuntimeCall::decode(&mut &set_balance_proposal(i)[..]).unwrap();
-		assert!(!<Test as frame_system::Config>::BaseCallFilter::contains(&call));
+		assert!(!<Test as topsoil_system::Config>::BaseCallFilter::contains(&call));
 	}
 }
 
@@ -601,7 +601,7 @@ fn curve_handles_all_inputs() {
 fn set_metadata_works() {
 	ExtBuilder::default().build_and_execute(|| {
 		// invalid preimage hash.
-		let invalid_hash: <Test as frame_system::Config>::Hash = [1u8; 32].into();
+		let invalid_hash: <Test as topsoil_system::Config>::Hash = [1u8; 32].into();
 		// fails to set metadata for a finished referendum.
 		assert_ok!(Referenda::submit(
 			RuntimeOrigin::signed(1),
@@ -676,7 +676,7 @@ fn detects_incorrect_len() {
 			Referenda::submit(
 				RuntimeOrigin::signed(1),
 				Box::new(RawOrigin::Root.into()),
-				frame_support::traits::Bounded::Lookup { hash, len: 3 },
+				topsoil_support::traits::Bounded::Lookup { hash, len: 3 },
 				DispatchTime::At(1),
 			),
 			Error::<Test>::PreimageStoredWithDifferentLength
@@ -693,7 +693,7 @@ fn zero_enactment_delay_executes_proposal_at_next_block() {
 			RuntimeOrigin::signed(1),
 			Box::new(RawOrigin::Signed(1).into()),
 			Preimage::bound(
-				pallet_balances::Call::transfer_keep_alive { dest: 42, value: 20 }.into()
+				topsoil_balances::Call::transfer_keep_alive { dest: 42, value: 20 }.into()
 			)
 			.unwrap(),
 			DispatchTime::After(0),

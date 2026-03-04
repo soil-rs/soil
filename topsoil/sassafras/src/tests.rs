@@ -159,7 +159,7 @@ fn slot_ticket_id_outside_in_fetch() {
 
 		// Initialize genesis slot..
 		GenesisSlot::<Test>::set(genesis_slot);
-		frame_system::Pallet::<Test>::set_block_number(One::one());
+		topsoil_system::Pallet::<Test>::set_block_number(One::one());
 
 		// Try to fetch a ticket for a slot before current epoch.
 		assert_eq!(Sassafras::slot_ticket_id(0.into()), None);
@@ -198,7 +198,7 @@ fn slot_ticket_id_outside_in_fetch() {
 #[test]
 fn slot_ticket_id_outside_in_fetch_corner_cases() {
 	new_test_ext(0).execute_with(|| {
-		frame_system::Pallet::<Test>::set_block_number(One::one());
+		topsoil_system::Pallet::<Test>::set_block_number(One::one());
 
 		let mut meta = TicketsMetadata { tickets_count: [0, 0], unsorted_tickets_count: 0 };
 		let curr_epoch_idx = EpochIndex::<Test>::get();

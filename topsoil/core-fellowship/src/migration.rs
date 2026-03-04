@@ -17,7 +17,7 @@
 
 //! Storage migrations for the core-fellowship pallet.
 use super::*;
-use frame_support::{
+use topsoil_support::{
 	pallet_prelude::*,
 	storage_alias,
 	traits::{DefensiveTruncateFrom, UncheckedOnRuntimeUpgrade},
@@ -30,7 +30,7 @@ use alloc::vec::Vec;
 use soil_runtime::TryRuntimeError;
 
 mod v0 {
-	use frame_system::pallet_prelude::BlockNumberFor;
+	use topsoil_system::pallet_prelude::BlockNumberFor;
 
 	use super::*;
 
@@ -74,12 +74,12 @@ impl<T: Config<I>, I: 'static> UncheckedOnRuntimeUpgrade for MigrateToV1<T, I> {
 	fn pre_upgrade() -> Result<Vec<u8>, TryRuntimeError> {
 		ensure!(
 			T::MaxRank::get() as usize >= v0::RANK_COUNT,
-			"pallet-core-fellowship: new bound should not truncate"
+			"topsoil-core-fellowship: new bound should not truncate"
 		);
 		Ok(Default::default())
 	}
 
-	fn on_runtime_upgrade() -> frame_support::weights::Weight {
+	fn on_runtime_upgrade() -> topsoil_support::weights::Weight {
 		// Read the old value from storage
 		let old_value = v0::Params::<T, I>::take();
 		// Write the new value to storage
@@ -100,14 +100,14 @@ impl<T: Config<I>, I: 'static> UncheckedOnRuntimeUpgrade for MigrateToV1<T, I> {
 }
 
 /// [`UncheckedOnRuntimeUpgrade`] implementation [`MigrateToV1`] wrapped in a
-/// [`VersionedMigration`](frame_support::migrations::VersionedMigration), which ensures that:
+/// [`VersionedMigration`](topsoil_support::migrations::VersionedMigration), which ensures that:
 /// - The migration only runs once when the on-chain storage version is 0
 /// - The on-chain storage version is updated to `1` after the migration executes
 /// - Reads/Writes from checking/settings the on-chain storage version are accounted for
-pub type MigrateV0ToV1<T, I> = frame_support::migrations::VersionedMigration<
+pub type MigrateV0ToV1<T, I> = topsoil_support::migrations::VersionedMigration<
 	0, // The migration will only execute when the on-chain storage version is 0
 	1, // The on-chain storage version will be set to 1 after the migration is complete
 	MigrateToV1<T, I>,
 	crate::pallet::Pallet<T, I>,
-	<T as frame_system::Config>::DbWeight,
+	<T as topsoil_system::Config>::DbWeight,
 >;

@@ -20,15 +20,15 @@
 #![cfg(test)]
 
 use super::*;
-use crate as pallet_safe_mode;
+use crate as topsoil_safe_mode;
 
-use frame::{
+use topsoil::{
 	testing_prelude::*,
 	traits::{InsideBoth, InstanceFilter, IsInVec},
 };
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
 	type BaseCallFilter = InsideBoth<Everything, SafeMode>;
 	type BlockWeights = ();
 	type BlockLength = ();
@@ -44,7 +44,7 @@ impl frame_system::Config for Test {
 	type DbWeight = ();
 	type Version = ();
 	type PalletInfo = PalletInfo;
-	type AccountData = pallet_balances::AccountData<u64>;
+	type AccountData = topsoil_balances::AccountData<u64>;
 	type OnNewAccount = ();
 	type OnKilledAccount = ();
 	type SystemWeightInfo = ();
@@ -62,13 +62,13 @@ pub enum HoldReason {
 	SafeMode,
 }
 
-#[derive_impl(pallet_balances::config_preludes::TestDefaultConfig)]
-impl pallet_balances::Config for Test {
+#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
+impl topsoil_balances::Config for Test {
 	type ExistentialDeposit = ConstU64<2>;
 	type AccountStore = System;
 }
 
-impl pallet_utility::Config for Test {
+impl topsoil_utility::Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type RuntimeCall = RuntimeCall;
 	type PalletsOrigin = OriginCaller;
@@ -109,7 +109,7 @@ impl InstanceFilter<RuntimeCall> for ProxyType {
 			ProxyType::JustTransfer => {
 				matches!(
 					c,
-					RuntimeCall::Balances(pallet_balances::Call::transfer_allow_death { .. })
+					RuntimeCall::Balances(topsoil_balances::Call::transfer_allow_death { .. })
 				)
 			},
 			ProxyType::JustUtility => matches!(c, RuntimeCall::Utility { .. }),
@@ -120,7 +120,7 @@ impl InstanceFilter<RuntimeCall> for ProxyType {
 	}
 }
 
-impl pallet_proxy::Config for Test {
+impl topsoil_proxy::Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type RuntimeCall = RuntimeCall;
 	type Currency = Balances;
@@ -133,7 +133,7 @@ impl pallet_proxy::Config for Test {
 	type MaxPending = ConstU32<2>;
 	type AnnouncementDepositBase = ConstU64<1>;
 	type AnnouncementDepositFactor = ConstU64<1>;
-	type BlockNumberProvider = frame_system::Pallet<Test>;
+	type BlockNumberProvider = topsoil_system::Pallet<Test>;
 }
 
 /// The calls that can always bypass safe-mode.
@@ -172,13 +172,13 @@ pub struct MockedNotify;
 impl SafeModeNotify for MockedNotify {
 	fn entered() {
 		let mut ns = Notifications::get();
-		ns.push((<frame_system::Pallet<Test>>::block_number(), true));
+		ns.push((<topsoil_system::Pallet<Test>>::block_number(), true));
 		Notifications::set(&ns);
 	}
 
 	fn exited() {
 		let mut ns = Notifications::get();
-		ns.push((<frame_system::Pallet<Test>>::block_number(), false));
+		ns.push((<topsoil_system::Pallet<Test>>::block_number(), false));
 		Notifications::set(&ns);
 	}
 }
@@ -206,16 +206,16 @@ impl Config for Test {
 	type WeightInfo = ();
 }
 
-type Block = frame_system::mocking::MockBlock<Test>;
+type Block = topsoil_system::mocking::MockBlock<Test>;
 
 construct_runtime!(
 	pub enum Test
 	{
-		System: frame_system,
-		Balances: pallet_balances,
-		Utility: pallet_utility,
-		Proxy: pallet_proxy,
-		SafeMode: pallet_safe_mode,
+		System: topsoil_system,
+		Balances: topsoil_balances,
+		Utility: topsoil_utility,
+		Proxy: topsoil_proxy,
+		SafeMode: topsoil_safe_mode,
 	}
 );
 
@@ -223,16 +223,16 @@ pub const BAL_ACC0: u64 = 1234;
 pub const BAL_ACC1: u64 = 5678;
 
 pub fn new_test_ext() -> TestExternalities {
-	let mut t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 
-	pallet_balances::GenesisConfig::<Test> {
+	topsoil_balances::GenesisConfig::<Test> {
 		// The 0 account is NOT a special origin, the rest may be.
 		balances: vec![(0, BAL_ACC0), (1, BAL_ACC1), (2, 5678), (3, 5678), (4, 5678)],
 		..Default::default()
 	}
 	.assimilate_storage(&mut t)
 	.unwrap();
-	pallet_safe_mode::GenesisConfig::<Test> { entered_until: None }
+	topsoil_safe_mode::GenesisConfig::<Test> { entered_until: None }
 		.assimilate_storage(&mut t)
 		.unwrap();
 

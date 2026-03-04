@@ -21,36 +21,36 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-//! Tests for pallet-example-kitchensink.
+//! Tests for topsoil-example-kitchensink.
 
 use crate::*;
-use frame_support::{assert_ok, derive_impl, parameter_types, traits::VariantCountOf};
+use topsoil_support::{assert_ok, derive_impl, parameter_types, traits::VariantCountOf};
 use soil_runtime::BuildStorage;
 // Reexport crate as its pallet name for construct_runtime.
-use crate as pallet_example_kitchensink;
+use crate as topsoil_example_kitchensink;
 
-type Block = frame_system::mocking::MockBlock<Test>;
+type Block = topsoil_system::mocking::MockBlock<Test>;
 
 // For testing the pallet, we construct a mock runtime.
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub enum Test
 	{
-		System: frame_system::{Pallet, Call, Config<T>, Storage, Event<T>},
-		Balances: pallet_balances::{Pallet, Call, Storage, Config<T>, Event<T>},
-		Kitchensink: pallet_example_kitchensink::{Pallet, Call, Storage, Config<T>, Event<T>},
+		System: topsoil_system::{Pallet, Call, Config<T>, Storage, Event<T>},
+		Balances: topsoil_balances::{Pallet, Call, Storage, Config<T>, Event<T>},
+		Kitchensink: topsoil_example_kitchensink::{Pallet, Call, Storage, Config<T>, Event<T>},
 	}
 );
 
-/// Using a default config for [`frame_system`] in tests. See `default-config` example for more
+/// Using a default config for [`topsoil_system`] in tests. See `default-config` example for more
 /// details.
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
 	type Block = Block;
-	type AccountData = pallet_balances::AccountData<u64>;
+	type AccountData = topsoil_balances::AccountData<u64>;
 }
 
-#[derive_impl(pallet_balances::config_preludes::TestDefaultConfig)]
-impl pallet_balances::Config for Test {
+#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
+impl topsoil_balances::Config for Test {
 	type AccountStore = System;
 	type WeightInfo = ();
 	type FreezeIdentifier = RuntimeFreezeReason;
@@ -83,7 +83,7 @@ pub fn new_test_ext() -> soil_io::TestExternalities {
 		// We use default for brevity, but you can configure as desired if needed.
 		system: Default::default(),
 		balances: Default::default(),
-		kitchensink: pallet_example_kitchensink::GenesisConfig { bar: 32, foo: 24 },
+		kitchensink: topsoil_example_kitchensink::GenesisConfig { bar: 32, foo: 24 },
 	}
 	.build_storage()
 	.unwrap();

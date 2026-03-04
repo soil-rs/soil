@@ -36,8 +36,8 @@
 
 use alloc::{vec, vec::Vec};
 use codec::{self as codec, Decode, Encode};
-use frame_support::traits::{Get, KeyOwnerProofSystem};
-use frame_system::pallet_prelude::{BlockNumberFor, HeaderFor};
+use topsoil_support::traits::{Get, KeyOwnerProofSystem};
+use topsoil_system::pallet_prelude::{BlockNumberFor, HeaderFor};
 use log::{error, info};
 use soil_consensus_beefy::{
 	check_commitment_signature, AncestryHelper, DoubleVotingProof, ForkVotingProof,
@@ -264,7 +264,7 @@ impl<T: Config> EquivocationEvidenceFor<T> {
 			EquivocationEvidenceFor::FutureBlockVotingProof(equivocation_proof, _) => {
 				let FutureBlockVotingProof { vote } = equivocation_proof;
 				// Check if the commitment actually targets a future block
-				if vote.commitment.block_number < frame_system::Pallet::<T>::block_number() {
+				if vote.commitment.block_number < topsoil_system::Pallet::<T>::block_number() {
 					return Err(Error::<T>::InvalidFutureBlockVotingProof);
 				}
 
@@ -291,7 +291,7 @@ impl<T: Config> EquivocationEvidenceFor<T> {
 impl<T, R, P, L> OffenceReportSystem<Option<T::AccountId>, EquivocationEvidenceFor<T>>
 	for EquivocationReportSystem<T, R, P, L>
 where
-	T: Config + pallet_authorship::Config + frame_system::offchain::CreateBare<Call<T>>,
+	T: Config + topsoil_authorship::Config + topsoil_system::offchain::CreateBare<Call<T>>,
 	R: ReportOffence<
 		T::AccountId,
 		P::IdentificationTuple,
@@ -304,7 +304,7 @@ where
 	type Longevity = L;
 
 	fn publish_evidence(evidence: EquivocationEvidenceFor<T>) -> Result<(), ()> {
-		use frame_system::offchain::SubmitTransaction;
+		use topsoil_system::offchain::SubmitTransaction;
 
 		let call: Call<T> = evidence.into();
 		let xt = T::create_bare(call.into());
@@ -335,7 +335,7 @@ where
 		evidence: EquivocationEvidenceFor<T>,
 	) -> Result<(), DispatchError> {
 		let maybe_slash_fraction = evidence.slash_fraction();
-		let reporter = reporter.or_else(|| pallet_authorship::Pallet::<T>::author());
+		let reporter = reporter.or_else(|| topsoil_authorship::Pallet::<T>::author());
 
 		// We check the equivocation within the context of its set id (and associated session).
 		let set_id = evidence.set_id();

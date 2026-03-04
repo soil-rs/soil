@@ -21,8 +21,8 @@
 use super::{
 	AuthorVrfRandomness, Config, EpochStart, NextRandomness, Randomness, RANDOMNESS_LENGTH,
 };
-use frame_support::traits::Randomness as RandomnessT;
-use frame_system::pallet_prelude::BlockNumberFor;
+use topsoil_support::traits::Randomness as RandomnessT;
+use topsoil_system::pallet_prelude::BlockNumberFor;
 use soil_runtime::traits::{Hash, One, Saturating};
 
 /// Randomness usable by consensus protocols that **depend** upon finality and take action
@@ -160,7 +160,7 @@ impl<T: Config> RandomnessT<Option<T::Hash>, BlockNumberFor<T>> for ParentBlockR
 			T::Hashing::hash(&subject[..])
 		});
 
-		(random, <frame_system::Pallet<T>>::block_number().saturating_sub(One::one()))
+		(random, <topsoil_system::Pallet<T>>::block_number().saturating_sub(One::one()))
 	}
 }
 
@@ -168,6 +168,6 @@ impl<T: Config> RandomnessT<Option<T::Hash>, BlockNumberFor<T>> for ParentBlockR
 impl<T: Config> RandomnessT<Option<T::Hash>, BlockNumberFor<T>> for CurrentBlockRandomness<T> {
 	fn random(subject: &[u8]) -> (Option<T::Hash>, BlockNumberFor<T>) {
 		let (random, _) = ParentBlockRandomness::<T>::random(subject);
-		(random, <frame_system::Pallet<T>>::block_number())
+		(random, <topsoil_system::Pallet<T>>::block_number())
 	}
 }

@@ -18,8 +18,8 @@
 //! The crate's tests.
 
 use super::*;
-use crate as pallet_democracy;
-use frame_support::{
+use crate as topsoil_democracy;
+use topsoil_support::{
 	assert_noop, assert_ok, derive_impl, ord_parameter_types, parameter_types,
 	traits::{
 		ConstU32, ConstU64, Contains, EqualPrivilegeOnly, OnInitialize, SortedMembers,
@@ -27,8 +27,8 @@ use frame_support::{
 	},
 	weights::Weight,
 };
-use frame_system::{EnsureRoot, EnsureSigned, EnsureSignedBy};
-use pallet_balances::{BalanceLock, Error as BalancesError};
+use topsoil_system::{EnsureRoot, EnsureSigned, EnsureSignedBy};
+use topsoil_balances::{BalanceLock, Error as BalancesError};
 use soil_runtime::{
 	traits::{BadOrigin, BlakeTwo256, Hash},
 	BuildStorage, Perbill,
@@ -49,16 +49,16 @@ const NAY: Vote = Vote { aye: false, conviction: Conviction::None };
 const BIG_AYE: Vote = Vote { aye: true, conviction: Conviction::Locked1x };
 const BIG_NAY: Vote = Vote { aye: false, conviction: Conviction::Locked1x };
 
-type Block = frame_system::mocking::MockBlock<Test>;
+type Block = topsoil_system::mocking::MockBlock<Test>;
 
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub enum Test
 	{
-		System: frame_system,
-		Balances: pallet_balances,
-		Preimage: pallet_preimage,
-		Scheduler: pallet_scheduler,
-		Democracy: pallet_democracy,
+		System: topsoil_system,
+		Balances: topsoil_balances,
+		Preimage: topsoil_preimage,
+		Scheduler: topsoil_scheduler,
+		Democracy: topsoil_democracy,
 	}
 );
 
@@ -66,28 +66,28 @@ frame_support::construct_runtime!(
 pub struct BaseFilter;
 impl Contains<RuntimeCall> for BaseFilter {
 	fn contains(call: &RuntimeCall) -> bool {
-		!matches!(call, &RuntimeCall::Balances(pallet_balances::Call::force_set_balance { .. }))
+		!matches!(call, &RuntimeCall::Balances(topsoil_balances::Call::force_set_balance { .. }))
 	}
 }
 
 parameter_types! {
-	pub BlockWeights: frame_system::limits::BlockWeights =
-		frame_system::limits::BlockWeights::simple_max(
-			Weight::from_parts(frame_support::weights::constants::WEIGHT_REF_TIME_PER_SECOND, u64::MAX),
+	pub BlockWeights: topsoil_system::limits::BlockWeights =
+		topsoil_system::limits::BlockWeights::simple_max(
+			Weight::from_parts(topsoil_support::weights::constants::WEIGHT_REF_TIME_PER_SECOND, u64::MAX),
 		);
 }
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
 	type BaseCallFilter = BaseFilter;
 	type Block = Block;
-	type AccountData = pallet_balances::AccountData<u64>;
+	type AccountData = topsoil_balances::AccountData<u64>;
 }
 parameter_types! {
 	pub MaximumSchedulerWeight: Weight = Perbill::from_percent(80) * BlockWeights::get().max_block;
 }
 
-impl pallet_preimage::Config for Test {
+impl topsoil_preimage::Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type WeightInfo = ();
 	type Currency = Balances;
@@ -95,7 +95,7 @@ impl pallet_preimage::Config for Test {
 	type Consideration = ();
 }
 
-impl pallet_scheduler::Config for Test {
+impl topsoil_scheduler::Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type RuntimeOrigin = RuntimeOrigin;
 	type PalletsOrigin = OriginCaller;
@@ -106,11 +106,11 @@ impl pallet_scheduler::Config for Test {
 	type WeightInfo = ();
 	type OriginPrivilegeCmp = EqualPrivilegeOnly;
 	type Preimages = ();
-	type BlockNumberProvider = frame_system::Pallet<Test>;
+	type BlockNumberProvider = topsoil_system::Pallet<Test>;
 }
 
-#[derive_impl(pallet_balances::config_preludes::TestDefaultConfig)]
-impl pallet_balances::Config for Test {
+#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
+impl topsoil_balances::Config for Test {
 	type AccountStore = System;
 }
 parameter_types! {
@@ -136,7 +136,7 @@ impl SortedMembers<u64> for OneToFive {
 
 impl Config for Test {
 	type RuntimeEvent = RuntimeEvent;
-	type Currency = pallet_balances::Pallet<Self>;
+	type Currency = topsoil_balances::Pallet<Self>;
 	type EnactmentPeriod = ConstU64<2>;
 	type LaunchPeriod = ConstU64<2>;
 	type VotingPeriod = ConstU64<2>;
@@ -167,14 +167,14 @@ impl Config for Test {
 }
 
 pub fn new_test_ext() -> soil_io::TestExternalities {
-	let mut t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
-	pallet_balances::GenesisConfig::<Test> {
+	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	topsoil_balances::GenesisConfig::<Test> {
 		balances: vec![(1, 10), (2, 20), (3, 30), (4, 40), (5, 50), (6, 60)],
 		..Default::default()
 	}
 	.assimilate_storage(&mut t)
 	.unwrap();
-	pallet_democracy::GenesisConfig::<Test>::default()
+	topsoil_democracy::GenesisConfig::<Test>::default()
 		.assimilate_storage(&mut t)
 		.unwrap();
 	let mut ext = soil_io::TestExternalities::new(t);
@@ -187,12 +187,12 @@ fn params_should_work() {
 	new_test_ext().execute_with(|| {
 		assert_eq!(ReferendumCount::<Test>::get(), 0);
 		assert_eq!(Balances::free_balance(42), 0);
-		assert_eq!(pallet_balances::TotalIssuance::<Test>::get(), 210);
+		assert_eq!(topsoil_balances::TotalIssuance::<Test>::get(), 210);
 	});
 }
 
 fn set_balance_proposal(value: u64) -> BoundedCallOf<Test> {
-	let inner = pallet_balances::Call::force_set_balance { who: 42, new_free: value };
+	let inner = topsoil_balances::Call::force_set_balance { who: 42, new_free: value };
 	let outer = RuntimeCall::Balances(inner);
 	Preimage::bound(outer).unwrap()
 }
@@ -201,7 +201,7 @@ fn set_balance_proposal(value: u64) -> BoundedCallOf<Test> {
 fn set_balance_proposal_is_correctly_filtered_out() {
 	for i in 0..10 {
 		let call = Preimage::realize(&set_balance_proposal(i)).unwrap().0;
-		assert!(!<Test as frame_system::Config>::BaseCallFilter::contains(&call));
+		assert!(!<Test as topsoil_system::Config>::BaseCallFilter::contains(&call));
 	}
 }
 
@@ -249,7 +249,7 @@ fn tally(r: ReferendumIndex) -> Tally<u64> {
 }
 
 /// note a new preimage without registering.
-fn note_preimage(who: u64) -> <Test as frame_system::Config>::Hash {
+fn note_preimage(who: u64) -> <Test as topsoil_system::Config>::Hash {
 	use std::sync::atomic::{AtomicU8, Ordering};
 	// note a new preimage on every function invoke.
 	static COUNTER: AtomicU8 = AtomicU8::new(0);

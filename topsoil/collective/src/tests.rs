@@ -16,8 +16,8 @@
 // limitations under the License.
 
 use super::{Event as CollectiveEvent, *};
-use crate as pallet_collective;
-use frame_support::{
+use crate as topsoil_collective;
+use topsoil_support::{
 	assert_noop, assert_ok, derive_impl,
 	dispatch::Pays,
 	parameter_types,
@@ -27,7 +27,7 @@ use frame_support::{
 	},
 	Hashable,
 };
-use frame_system::{EnsureRoot, EventRecord, Phase};
+use topsoil_system::{EnsureRoot, EventRecord, Phase};
 use soil_core::{ConstU128, H256};
 use soil_runtime::{
 	testing::Header,
@@ -38,33 +38,33 @@ use soil_runtime::{
 pub type Block = soil_runtime::generic::Block<Header, UncheckedExtrinsic>;
 pub type UncheckedExtrinsic = soil_runtime::generic::UncheckedExtrinsic<u32, RuntimeCall, u64, ()>;
 
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub enum Test
 	{
-		System: frame_system,
-		Balances: pallet_balances,
-		Collective: pallet_collective::<Instance1>,
-		CollectiveMajority: pallet_collective::<Instance2>,
-		DefaultCollective: pallet_collective,
+		System: topsoil_system,
+		Balances: topsoil_balances,
+		Collective: topsoil_collective::<Instance1>,
+		CollectiveMajority: topsoil_collective::<Instance2>,
+		DefaultCollective: topsoil_collective,
 		Democracy: mock_democracy,
 	}
 );
 
 mod mock_democracy {
 	pub use pallet::*;
-	#[frame_support::pallet(dev_mode)]
+	#[topsoil_support::pallet(dev_mode)]
 	pub mod pallet {
-		use frame_support::pallet_prelude::*;
-		use frame_system::pallet_prelude::*;
+		use topsoil_support::pallet_prelude::*;
+		use topsoil_system::pallet_prelude::*;
 
 		#[pallet::pallet]
 		pub struct Pallet<T>(_);
 
 		#[pallet::config]
-		pub trait Config: frame_system::Config + Sized {
+		pub trait Config: topsoil_system::Config + Sized {
 			#[allow(deprecated)]
 			type RuntimeEvent: From<Event<Self>>
-				+ IsType<<Self as frame_system::Config>::RuntimeEvent>;
+				+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 			type ExternalMajorityOrigin: EnsureOrigin<Self::RuntimeOrigin>;
 		}
 
@@ -91,19 +91,19 @@ type AccountId = u64;
 parameter_types! {
 	pub const MotionDuration: u64 = 3;
 	pub const MaxProposals: u32 = 257;
-	pub BlockWeights: frame_system::limits::BlockWeights =
-		frame_system::limits::BlockWeights::simple_max(Weight::MAX);
+	pub BlockWeights: topsoil_system::limits::BlockWeights =
+		topsoil_system::limits::BlockWeights::simple_max(Weight::MAX);
 	pub static MaxProposalWeight: Weight = default_max_proposal_weight();
 }
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
 	type Block = Block;
-	type AccountData = pallet_balances::AccountData<u64>;
+	type AccountData = topsoil_balances::AccountData<u64>;
 }
 
-#[derive_impl(pallet_balances::config_preludes::TestDefaultConfig as pallet_balances::DefaultConfig)]
-impl pallet_balances::Config for Test {
+#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig as topsoil_balances::DefaultConfig)]
+impl topsoil_balances::Config for Test {
 	type ReserveIdentifier = [u8; 8];
 	type AccountStore = System;
 	type RuntimeHoldReason = RuntimeHoldReason;
@@ -113,7 +113,7 @@ parameter_types! {
 	pub ProposalDepositBase: u64 = Balances::minimum_balance() + Balances::minimum_balance();
 	pub const ProposalDepositDelay: u32 = 2;
 	pub const ProposalHoldReason: RuntimeHoldReason =
-		RuntimeHoldReason::Collective(pallet_collective::HoldReason::ProposalSubmission);
+		RuntimeHoldReason::Collective(topsoil_collective::HoldReason::ProposalSubmission);
 }
 
 type CollectiveDeposit =
@@ -202,17 +202,17 @@ impl ExtBuilder {
 
 	pub fn build(self) -> soil_io::TestExternalities {
 		let mut ext: soil_io::TestExternalities = RuntimeGenesisConfig {
-			system: frame_system::GenesisConfig::default(),
-			// balances: pallet_balances::GenesisConfig::default(),
-			balances: pallet_balances::GenesisConfig {
+			system: topsoil_system::GenesisConfig::default(),
+			// balances: topsoil_balances::GenesisConfig::default(),
+			balances: topsoil_balances::GenesisConfig {
 				balances: vec![(1, 100), (2, 200)],
 				..Default::default()
 			},
-			collective: pallet_collective::GenesisConfig {
+			collective: topsoil_collective::GenesisConfig {
 				members: self.collective_members,
 				phantom: Default::default(),
 			},
-			collective_majority: pallet_collective::GenesisConfig {
+			collective_majority: topsoil_collective::GenesisConfig {
 				members: vec![1, 2, 3, 4, 5],
 				phantom: Default::default(),
 			},
@@ -234,7 +234,7 @@ impl ExtBuilder {
 }
 
 fn make_proposal(value: u64) -> RuntimeCall {
-	RuntimeCall::System(frame_system::Call::remark_with_event {
+	RuntimeCall::System(topsoil_system::Call::remark_with_event {
 		remark: value.to_be_bytes().to_vec(),
 	})
 }
@@ -350,8 +350,8 @@ fn close_works() {
 		assert_eq!(
 			System::events(),
 			vec![
-				record(RuntimeEvent::Balances(pallet_balances::Event::Held {
-					reason: <Test as pallet_balances::Config>::RuntimeHoldReason::Collective(
+				record(RuntimeEvent::Balances(topsoil_balances::Event::Held {
+					reason: <Test as topsoil_balances::Config>::RuntimeHoldReason::Collective(
 						HoldReason::ProposalSubmission,
 					),
 					who: 1,
@@ -497,8 +497,8 @@ fn close_with_prime_works() {
 		assert_eq!(
 			System::events(),
 			vec![
-				record(RuntimeEvent::Balances(pallet_balances::Event::Held {
-					reason: <Test as pallet_balances::Config>::RuntimeHoldReason::Collective(
+				record(RuntimeEvent::Balances(topsoil_balances::Event::Held {
+					reason: <Test as topsoil_balances::Config>::RuntimeHoldReason::Collective(
 						HoldReason::ProposalSubmission,
 					),
 					who: 1,
@@ -572,8 +572,8 @@ fn close_with_voting_prime_works() {
 		assert_eq!(
 			System::events(),
 			vec![
-				record(RuntimeEvent::Balances(pallet_balances::Event::Held {
-					reason: <Test as pallet_balances::Config>::RuntimeHoldReason::Collective(
+				record(RuntimeEvent::Balances(topsoil_balances::Event::Held {
+					reason: <Test as topsoil_balances::Config>::RuntimeHoldReason::Collective(
 						HoldReason::ProposalSubmission,
 					),
 					who: 1,
@@ -665,8 +665,8 @@ fn close_with_no_prime_but_majority_works() {
 		assert_eq!(
 			System::events(),
 			vec![
-				record(RuntimeEvent::Balances(pallet_balances::Event::Held {
-					reason: <Test as pallet_balances::Config>::RuntimeHoldReason::Collective(
+				record(RuntimeEvent::Balances(topsoil_balances::Event::Held {
+					reason: <Test as topsoil_balances::Config>::RuntimeHoldReason::Collective(
 						HoldReason::ProposalSubmission,
 					),
 					who: 5,
@@ -711,8 +711,8 @@ fn close_with_no_prime_but_majority_works() {
 					proposal_hash: hash,
 					result: Err(DispatchError::BadOrigin)
 				})),
-				record(RuntimeEvent::Balances(pallet_balances::Event::Released {
-					reason: <Test as pallet_balances::Config>::RuntimeHoldReason::Collective(
+				record(RuntimeEvent::Balances(topsoil_balances::Event::Released {
+					reason: <Test as topsoil_balances::Config>::RuntimeHoldReason::Collective(
 						HoldReason::ProposalSubmission,
 					),
 					who: 5,
@@ -856,8 +856,8 @@ fn propose_works() {
 		assert_eq!(
 			System::events(),
 			vec![
-				record(RuntimeEvent::Balances(pallet_balances::Event::Held {
-					reason: <Test as pallet_balances::Config>::RuntimeHoldReason::Collective(
+				record(RuntimeEvent::Balances(topsoil_balances::Event::Held {
+					reason: <Test as topsoil_balances::Config>::RuntimeHoldReason::Collective(
 						HoldReason::ProposalSubmission,
 					),
 					who: 1,
@@ -1051,8 +1051,8 @@ fn motions_vote_after_works() {
 		assert_eq!(
 			System::events(),
 			vec![
-				record(RuntimeEvent::Balances(pallet_balances::Event::Held {
-					reason: <Test as pallet_balances::Config>::RuntimeHoldReason::Collective(
+				record(RuntimeEvent::Balances(topsoil_balances::Event::Held {
+					reason: <Test as topsoil_balances::Config>::RuntimeHoldReason::Collective(
 						HoldReason::ProposalSubmission,
 					),
 					who: 1,
@@ -1203,8 +1203,8 @@ fn motions_approval_with_enough_votes_and_lower_voting_threshold_works() {
 		assert_eq!(
 			System::events(),
 			vec![
-				record(RuntimeEvent::Balances(pallet_balances::Event::Held {
-					reason: <Test as pallet_balances::Config>::RuntimeHoldReason::Collective(
+				record(RuntimeEvent::Balances(topsoil_balances::Event::Held {
+					reason: <Test as topsoil_balances::Config>::RuntimeHoldReason::Collective(
 						HoldReason::ProposalSubmission,
 					),
 					who: 1,
@@ -1265,8 +1265,8 @@ fn motions_approval_with_enough_votes_and_lower_voting_threshold_works() {
 		assert_eq!(
 			System::events(),
 			vec![
-				record(RuntimeEvent::Balances(pallet_balances::Event::Held {
-					reason: <Test as pallet_balances::Config>::RuntimeHoldReason::Collective(
+				record(RuntimeEvent::Balances(topsoil_balances::Event::Held {
+					reason: <Test as topsoil_balances::Config>::RuntimeHoldReason::Collective(
 						HoldReason::ProposalSubmission,
 					),
 					who: 1,
@@ -1343,8 +1343,8 @@ fn motions_disapproval_works() {
 		assert_eq!(
 			System::events(),
 			vec![
-				record(RuntimeEvent::Balances(pallet_balances::Event::Held {
-					reason: <Test as pallet_balances::Config>::RuntimeHoldReason::Collective(
+				record(RuntimeEvent::Balances(topsoil_balances::Event::Held {
+					reason: <Test as topsoil_balances::Config>::RuntimeHoldReason::Collective(
 						HoldReason::ProposalSubmission,
 					),
 					who: 1,
@@ -1409,8 +1409,8 @@ fn motions_approval_works() {
 		assert_eq!(
 			System::events(),
 			vec![
-				record(RuntimeEvent::Balances(pallet_balances::Event::Held {
-					reason: <Test as pallet_balances::Config>::RuntimeHoldReason::Collective(
+				record(RuntimeEvent::Balances(topsoil_balances::Event::Held {
+					reason: <Test as topsoil_balances::Config>::RuntimeHoldReason::Collective(
 						HoldReason::ProposalSubmission,
 					),
 					who: 1,
@@ -1466,8 +1466,8 @@ fn motion_with_no_votes_closes_with_disapproval() {
 		));
 		assert_eq!(
 			System::events()[0],
-			record(RuntimeEvent::Balances(pallet_balances::Event::Held {
-				reason: <Test as pallet_balances::Config>::RuntimeHoldReason::Collective(
+			record(RuntimeEvent::Balances(topsoil_balances::Event::Held {
+				reason: <Test as topsoil_balances::Config>::RuntimeHoldReason::Collective(
 					HoldReason::ProposalSubmission,
 				),
 				who: 1,
@@ -1574,8 +1574,8 @@ fn disapprove_proposal_works() {
 		assert_eq!(
 			System::events(),
 			vec![
-				record(RuntimeEvent::Balances(pallet_balances::Event::Held {
-					reason: <Test as pallet_balances::Config>::RuntimeHoldReason::Collective(
+				record(RuntimeEvent::Balances(topsoil_balances::Event::Held {
+					reason: <Test as topsoil_balances::Config>::RuntimeHoldReason::Collective(
 						HoldReason::ProposalSubmission,
 					),
 					who: 1,
@@ -1614,7 +1614,7 @@ fn disapprove_proposal_works() {
 fn genesis_build_panics_with_too_many_members() {
 	let max_members: u32 = MaxMembers::get();
 	let too_many_members = (1..=max_members as u64 + 1).collect::<Vec<AccountId>>();
-	pallet_collective::GenesisConfig::<Test> {
+	topsoil_collective::GenesisConfig::<Test> {
 		members: too_many_members,
 		phantom: Default::default(),
 	}
@@ -1625,7 +1625,7 @@ fn genesis_build_panics_with_too_many_members() {
 #[test]
 #[should_panic(expected = "Members cannot contain duplicate accounts.")]
 fn genesis_build_panics_with_duplicate_members() {
-	pallet_collective::GenesisConfig::<Test> {
+	topsoil_collective::GenesisConfig::<Test> {
 		members: vec![1, 2, 3, 1],
 		phantom: Default::default(),
 	}
@@ -1636,11 +1636,11 @@ fn genesis_build_panics_with_duplicate_members() {
 #[test]
 fn migration_v4() {
 	ExtBuilder::default().build_and_execute(|| {
-		use frame_support::traits::PalletInfoAccess;
+		use topsoil_support::traits::PalletInfoAccess;
 
 		let old_pallet = "OldCollective";
 		let new_pallet = <Collective as PalletInfoAccess>::name();
-		frame_support::storage::migration::move_pallet(
+		topsoil_support::storage::migration::move_pallet(
 			new_pallet.as_bytes(),
 			old_pallet.as_bytes(),
 		);
@@ -1652,7 +1652,7 @@ fn migration_v4() {
 
 		let old_pallet = "OldCollectiveMajority";
 		let new_pallet = <CollectiveMajority as PalletInfoAccess>::name();
-		frame_support::storage::migration::move_pallet(
+		topsoil_support::storage::migration::move_pallet(
 			new_pallet.as_bytes(),
 			old_pallet.as_bytes(),
 		);
@@ -1664,7 +1664,7 @@ fn migration_v4() {
 
 		let old_pallet = "OldDefaultCollective";
 		let new_pallet = <DefaultCollective as PalletInfoAccess>::name();
-		frame_support::storage::migration::move_pallet(
+		topsoil_support::storage::migration::move_pallet(
 			new_pallet.as_bytes(),
 			old_pallet.as_bytes(),
 		);
@@ -1717,8 +1717,8 @@ fn kill_proposal_with_deposit() {
 		assert_eq!(
 			System::events(),
 			vec![
-				record(RuntimeEvent::Balances(pallet_balances::Event::BurnedHeld {
-					reason: <Test as pallet_balances::Config>::RuntimeHoldReason::Collective(
+				record(RuntimeEvent::Balances(topsoil_balances::Event::BurnedHeld {
+					reason: <Test as topsoil_balances::Config>::RuntimeHoldReason::Collective(
 						HoldReason::ProposalSubmission,
 					),
 					who: 1,

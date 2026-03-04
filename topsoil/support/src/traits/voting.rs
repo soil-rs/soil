@@ -127,7 +127,7 @@ pub trait Polling<Tally> {
 	}
 }
 
-/// NoOp polling is required if pallet-referenda functionality not needed.
+/// NoOp polling is required if topsoil-referenda functionality not needed.
 pub struct NoOpPoll<Moment>(core::marker::PhantomData<Moment>);
 impl<Tally, Moment> Polling<Tally> for NoOpPoll<Moment> {
 	type Index = u8;

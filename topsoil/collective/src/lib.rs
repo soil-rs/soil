@@ -53,7 +53,7 @@ use soil_runtime::{
 	Debug, DispatchError,
 };
 
-use frame_support::{
+use topsoil_support::{
 	dispatch::{
 		DispatchResult, DispatchResultWithPostInfo, GetDispatchInfo, Pays, PostDispatchInfo,
 	},
@@ -178,8 +178,8 @@ pub struct Votes<AccountId, BlockNumber> {
 /// Types implementing various cost strategies for a given proposal count.
 ///
 /// These types implement [Convert](soil_runtime::traits::Convert) trait and can be used with types
-/// like [HoldConsideration](`frame_support::traits::fungible::HoldConsideration`) implementing
-/// [Consideration](`frame_support::traits::Consideration`) trait.
+/// like [HoldConsideration](`topsoil_support::traits::fungible::HoldConsideration`) implementing
+/// [Consideration](`topsoil_support::traits::Consideration`) trait.
 ///
 /// ### Example:
 ///
@@ -200,7 +200,7 @@ pub mod deposit {
 	impl<Deposit, Balance> Convert<u32, Balance> for Constant<Deposit>
 	where
 		Deposit: Get<Balance>,
-		Balance: frame_support::traits::tokens::Balance,
+		Balance: topsoil_support::traits::tokens::Balance,
 	{
 		fn convert(_: u32) -> Balance {
 			Deposit::get()
@@ -214,7 +214,7 @@ pub mod deposit {
 	where
 		Slope: Get<u32>,
 		Offset: Get<Balance>,
-		Balance: frame_support::traits::tokens::Balance,
+		Balance: topsoil_support::traits::tokens::Balance,
 	{
 		fn convert(proposal_count: u32) -> Balance {
 			let base: Balance = Slope::get().saturating_mul(proposal_count).into();
@@ -229,7 +229,7 @@ pub mod deposit {
 	where
 		Ratio: Get<FixedU128>,
 		Base: Get<Balance>,
-		Balance: frame_support::traits::tokens::Balance,
+		Balance: topsoil_support::traits::tokens::Balance,
 	{
 		fn convert(proposal_count: u32) -> Balance {
 			Ratio::get()
@@ -246,7 +246,7 @@ pub mod deposit {
 	where
 		Precision: Get<u32>,
 		Deposit: Convert<u32, Balance>,
-		Balance: frame_support::traits::tokens::Balance,
+		Balance: topsoil_support::traits::tokens::Balance,
 	{
 		fn convert(proposal_count: u32) -> Balance {
 			let deposit = Deposit::convert(proposal_count);
@@ -270,7 +270,7 @@ pub mod deposit {
 	where
 		Period: Get<u32>,
 		Step: Convert<u32, Balance>,
-		Balance: frame_support::traits::tokens::Balance,
+		Balance: topsoil_support::traits::tokens::Balance,
 	{
 		fn convert(proposal_count: u32) -> Balance {
 			let step_num = proposal_count / Period::get();
@@ -284,7 +284,7 @@ pub mod deposit {
 	where
 		Delay: Get<u32>,
 		Deposit: Convert<u32, Balance>,
-		Balance: frame_support::traits::tokens::Balance,
+		Balance: topsoil_support::traits::tokens::Balance,
 	{
 		fn convert(proposal_count: u32) -> Balance {
 			let delay = Delay::get();
@@ -302,7 +302,7 @@ pub mod deposit {
 	where
 		Ceil: Get<Balance>,
 		Deposit: Convert<u32, Balance>,
-		Balance: frame_support::traits::tokens::Balance,
+		Balance: topsoil_support::traits::tokens::Balance,
 	{
 		fn convert(proposal_count: u32) -> Balance {
 			Deposit::convert(proposal_count).min(Ceil::get())
@@ -310,11 +310,11 @@ pub mod deposit {
 	}
 }
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
-	use frame_support::pallet_prelude::*;
-	use frame_system::pallet_prelude::*;
+	use topsoil_support::pallet_prelude::*;
+	use topsoil_system::pallet_prelude::*;
 
 	/// The in-code storage version.
 	const STORAGE_VERSION: StorageVersion = StorageVersion::new(4);
@@ -325,7 +325,7 @@ pub mod pallet {
 	pub struct Pallet<T, I = ()>(PhantomData<(T, I)>);
 
 	#[pallet::config]
-	pub trait Config<I: 'static = ()>: frame_system::Config {
+	pub trait Config<I: 'static = ()>: topsoil_system::Config {
 		/// The runtime origin type.
 		type RuntimeOrigin: From<RawOrigin<Self::AccountId, I>>;
 
@@ -334,13 +334,13 @@ pub mod pallet {
 			+ Dispatchable<
 				RuntimeOrigin = <Self as Config<I>>::RuntimeOrigin,
 				PostInfo = PostDispatchInfo,
-			> + From<frame_system::Call<Self>>
+			> + From<topsoil_system::Call<Self>>
 			+ GetDispatchInfo;
 
 		/// The runtime event type.
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self, I>>
-			+ IsType<<Self as frame_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// The time-out for council motions.
 		type MotionDuration: Get<BlockNumberFor<Self>>;
@@ -362,7 +362,7 @@ pub mod pallet {
 		type WeightInfo: WeightInfo;
 
 		/// Origin allowed to set collective members
-		type SetMembersOrigin: EnsureOrigin<<Self as frame_system::Config>::RuntimeOrigin>;
+		type SetMembersOrigin: EnsureOrigin<<Self as topsoil_system::Config>::RuntimeOrigin>;
 
 		/// The maximum weight of a dispatch call that can be proposed and executed.
 		#[pallet::constant]
@@ -370,13 +370,13 @@ pub mod pallet {
 
 		/// Origin from which a proposal in any status may be disapproved without associated cost
 		/// for a proposer.
-		type DisapproveOrigin: EnsureOrigin<<Self as frame_system::Config>::RuntimeOrigin>;
+		type DisapproveOrigin: EnsureOrigin<<Self as topsoil_system::Config>::RuntimeOrigin>;
 
 		/// Origin from which any malicious proposal may be killed with associated cost for a
 		/// proposer.
 		///
 		/// The associated cost is set by [`Config::Consideration`] and can be none.
-		type KillOrigin: EnsureOrigin<<Self as frame_system::Config>::RuntimeOrigin>;
+		type KillOrigin: EnsureOrigin<<Self as topsoil_system::Config>::RuntimeOrigin>;
 
 		/// Mechanism to assess the necessity of some cost for publishing and storing a proposal.
 		///
@@ -391,7 +391,7 @@ pub mod pallet {
 	}
 
 	#[pallet::genesis_config]
-	#[derive(frame_support::DefaultNoBound)]
+	#[derive(topsoil_support::DefaultNoBound)]
 	pub struct GenesisConfig<T: Config<I>, I: 'static = ()> {
 		#[serde(skip)]
 		pub phantom: PhantomData<I>,
@@ -419,7 +419,7 @@ pub mod pallet {
 
 	/// Origin for the collective pallet.
 	#[pallet::origin]
-	pub type Origin<T, I = ()> = RawOrigin<<T as frame_system::Config>::AccountId, I>;
+	pub type Origin<T, I = ()> = RawOrigin<<T as topsoil_system::Config>::AccountId, I>;
 
 	/// The hashes of the active proposals.
 	#[pallet::storage]
@@ -556,7 +556,7 @@ pub mod pallet {
 		///
 		/// # WARNING:
 		///
-		/// The `pallet-collective` can also be managed by logic outside of the pallet through the
+		/// The `topsoil-collective` can also be managed by logic outside of the pallet through the
 		/// implementation of the trait [`ChangeMembers`].
 		/// Any call to `set_members` must be careful that the member set doesn't get out of sync
 		/// with other logic managing the member set.
@@ -968,7 +968,7 @@ impl<T: Config<I>, I: 'static> Pallet<T, I> {
 		<ProposalCount<T, I>>::mutate(|i| *i += 1);
 		<ProposalOf<T, I>>::insert(proposal_hash, proposal);
 		let votes = {
-			let end = frame_system::Pallet::<T>::block_number() + T::MotionDuration::get();
+			let end = topsoil_system::Pallet::<T>::block_number() + T::MotionDuration::get();
 			Votes { index, threshold, ayes: vec![], nays: vec![], end }
 		};
 		<Voting<T, I>>::insert(proposal_hash, votes);
@@ -1078,7 +1078,7 @@ impl<T: Config<I>, I: 'static> Pallet<T, I> {
 		}
 
 		// Only allow actual closing of the proposal after the voting period has ended.
-		ensure!(frame_system::Pallet::<T>::block_number() >= voting.end, Error::<T, I>::TooEarly);
+		ensure!(topsoil_system::Pallet::<T>::block_number() >= voting.end, Error::<T, I>::TooEarly);
 
 		let prime_vote = Prime::<T, I>::get().map(|who| voting.ayes.iter().any(|a| a == &who));
 

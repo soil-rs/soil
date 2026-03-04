@@ -15,23 +15,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use frame_support::derive_impl;
+use topsoil_support::derive_impl;
 
-pub type Block = frame_system::mocking::MockBlock<Runtime>;
+pub type Block = topsoil_system::mocking::MockBlock<Runtime>;
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig as frame_system::DefaultConfig)]
-impl frame_system::Config for Runtime {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig as topsoil_system::DefaultConfig)]
+impl topsoil_system::Config for Runtime {
 	type Block = Block;
 }
 
-#[frame_support::runtime]
+#[topsoil_support::runtime]
 mod runtime {
     #[runtime::runtime]
     #[runtime::derive(RuntimeCall, RuntimeEvent, RuntimeOrigin, RuntimeError, RuntimeTask, RuntimeViewFunction)]
     pub struct Runtime;
 
     #[runtime::pallet_index(0)]
-    pub type System = frame_system;
+    pub type System = topsoil_system;
 }
 
 fn main() {}

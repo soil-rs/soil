@@ -22,7 +22,7 @@
 
 use crate::benchmarks;
 use alloc::{vec, vec::Vec};
-use frame_system::Pallet as System;
+use topsoil_system::Pallet as System;
 use soil_runtime::{
 	traits::{AppVerify, Hash},
 	RuntimeAppPublic,
@@ -37,7 +37,7 @@ mod crypto {
 pub type SignerId = crypto::Public;
 
 pub struct Pallet<T: Config>(System<T>);
-pub trait Config: frame_system::Config {}
+pub trait Config: topsoil_system::Config {}
 
 benchmarks! {
 	addition {
@@ -110,24 +110,24 @@ benchmarks! {
 
 #[cfg(test)]
 pub mod mock {
-	use frame_support::derive_impl;
+	use topsoil_support::derive_impl;
 	use soil_runtime::{testing::H256, BuildStorage};
 
 	type AccountId = u64;
 	type Nonce = u32;
 
-	type Block = frame_system::mocking::MockBlock<Test>;
+	type Block = topsoil_system::mocking::MockBlock<Test>;
 
-	frame_support::construct_runtime!(
+	topsoil_support::construct_runtime!(
 		pub enum Test
 		{
-			System: frame_system,
+			System: topsoil_system,
 		}
 	);
 
-	#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-	impl frame_system::Config for Test {
-		type BaseCallFilter = frame_support::traits::Everything;
+	#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+	impl topsoil_system::Config for Test {
+		type BaseCallFilter = topsoil_support::traits::Everything;
 		type BlockWeights = ();
 		type BlockLength = ();
 		type DbWeight = ();
@@ -149,7 +149,7 @@ pub mod mock {
 		type SystemWeightInfo = ();
 		type SS58Prefix = ();
 		type OnSetCode = ();
-		type MaxConsumers = frame_support::traits::ConstU32<16>;
+		type MaxConsumers = topsoil_support::traits::ConstU32<16>;
 	}
 
 	impl super::Config for Test {}
@@ -157,7 +157,7 @@ pub mod mock {
 	pub fn new_test_ext() -> soil_io::TestExternalities {
 		use soil_keystore::{testing::MemoryKeystore, KeystoreExt};
 
-		let t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+		let t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 		let mut ext = soil_io::TestExternalities::new(t);
 		ext.register_extension(KeystoreExt::new(MemoryKeystore::new()));
 

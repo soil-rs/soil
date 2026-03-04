@@ -16,12 +16,12 @@
 // limitations under the License.
 
 //! # Running
-//! Running this fuzzer can be done with `cargo hfuzz run pallet-paged-list`. `honggfuzz` CLI
+//! Running this fuzzer can be done with `cargo hfuzz run topsoil-paged-list`. `honggfuzz` CLI
 //! options can be used by setting `HFUZZ_RUN_ARGS`, such as `-n 4` to use 4 threads.
 //!
 //! # Debugging a panic
 //! Once a panic is found, it can be debugged with
-//! `cargo hfuzz run-debug pallet-paged-list hfuzz_workspace/pallet-paged-list/*.fuzz`.
+//! `cargo hfuzz run-debug topsoil-paged-list hfuzz_workspace/topsoil-paged-list/*.fuzz`.
 //!
 //! # More information
 //! More information about `honggfuzz` can be found
@@ -30,12 +30,12 @@
 use arbitrary::Arbitrary;
 use honggfuzz::fuzz;
 
-use frame::{
+use topsoil::{
 	prelude::*, runtime::prelude::storage::storage_noop_guard::StorageNoopGuard,
 	testing_prelude::TestExternalities,
 };
 
-use pallet_paged_list::mock::{PagedList as List, *};
+use topsoil_paged_list::mock::{PagedList as List, *};
 type Meta = MetaOf<Test, ()>;
 
 fn main() {

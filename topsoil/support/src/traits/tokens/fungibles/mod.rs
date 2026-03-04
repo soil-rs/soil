@@ -15,7 +15,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//! The traits for *sets* of [`fungible`](`frame_support::traits::fungible`) tokens and any
+//! The traits for *sets* of [`fungible`](`topsoil_support::traits::fungible`) tokens and any
 //! associated types.
 //!
 //! Individual tokens in the `fungibles` set may be used when a `fungible` trait is expected using

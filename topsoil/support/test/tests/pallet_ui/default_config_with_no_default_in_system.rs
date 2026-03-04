@@ -15,12 +15,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 mod pallet {
-	use frame_support::pallet_prelude::*;
+	use topsoil_support::pallet_prelude::*;
 
 	#[pallet::config(with_default)]
-	pub trait Config: frame_system::Config {
+	pub trait Config: topsoil_system::Config {
 		#[pallet::constant]
 		type MyGetParam2: Get<Self::Block>;
 	}

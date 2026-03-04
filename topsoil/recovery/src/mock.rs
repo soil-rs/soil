@@ -20,31 +20,31 @@
 use super::*;
 
 use crate as recovery;
-use frame::{deps::soil_io, testing_prelude::*};
+use topsoil::{deps::soil_io, testing_prelude::*};
 
-type Block = frame_system::mocking::MockBlock<Test>;
+type Block = topsoil_system::mocking::MockBlock<Test>;
 
 construct_runtime!(
 	pub enum Test
 	{
-		System: frame_system,
-		Balances: pallet_balances,
+		System: topsoil_system,
+		Balances: topsoil_balances,
 		Recovery: recovery,
 	}
 );
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
 	type Block = Block;
-	type AccountData = pallet_balances::AccountData<u128>;
+	type AccountData = topsoil_balances::AccountData<u128>;
 }
 
 parameter_types! {
 	pub const ExistentialDeposit: u64 = 1;
 }
 
-#[derive_impl(pallet_balances::config_preludes::TestDefaultConfig)]
-impl pallet_balances::Config for Test {
+#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
+impl topsoil_balances::Config for Test {
 	type Balance = u128;
 	type ExistentialDeposit = ExistentialDeposit;
 	type AccountStore = System;
@@ -70,12 +70,12 @@ impl Config for Test {
 	type RecoveryDeposit = RecoveryDeposit;
 }
 
-pub type BalancesCall = pallet_balances::Call<Test>;
+pub type BalancesCall = topsoil_balances::Call<Test>;
 pub type RecoveryCall = super::Call<Test>;
 
 pub fn new_test_ext() -> soil_io::TestExternalities {
-	let mut t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
-	pallet_balances::GenesisConfig::<Test> {
+	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	topsoil_balances::GenesisConfig::<Test> {
 		balances: vec![(1, 100), (2, 100), (3, 100), (4, 100), (5, 100)],
 		..Default::default()
 	}

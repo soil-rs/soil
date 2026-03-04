@@ -15,16 +15,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::{self as frame_system, *};
-use frame_support::{derive_impl, parameter_types};
+use crate::{self as topsoil_system, *};
+use topsoil_support::{derive_impl, parameter_types};
 use soil_runtime::{type_with_default::TypeWithDefault, BuildStorage, Perbill};
 
 type Block = mocking::MockBlock<Test>;
 
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub enum Test
 	{
-		System: frame_system,
+		System: topsoil_system,
 	}
 );
 
@@ -91,7 +91,7 @@ impl Get<u64> for DefaultNonceProvider {
 	}
 }
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
 impl Config for Test {
 	type BlockWeights = RuntimeBlockWeights;
 	type BlockLength = RuntimeBlockLength;
@@ -108,7 +108,7 @@ parameter_types! {
 }
 
 pub struct MockedMigrator;
-impl frame_support::migrations::MultiStepMigrator for MockedMigrator {
+impl topsoil_support::migrations::MultiStepMigrator for MockedMigrator {
 	fn ongoing() -> bool {
 		Ongoing::get()
 	}
@@ -118,11 +118,11 @@ impl frame_support::migrations::MultiStepMigrator for MockedMigrator {
 	}
 }
 
-pub type SysEvent = frame_system::Event<Test>;
+pub type SysEvent = topsoil_system::Event<Test>;
 
 /// A simple call, which one doesn't matter.
 pub const CALL: &<Test as Config>::RuntimeCall =
-	&RuntimeCall::System(frame_system::Call::set_heap_pages { pages: 0u64 });
+	&RuntimeCall::System(topsoil_system::Call::set_heap_pages { pages: 0u64 });
 
 /// Create new externalities for `System` module tests.
 pub fn new_test_ext() -> soil_io::TestExternalities {

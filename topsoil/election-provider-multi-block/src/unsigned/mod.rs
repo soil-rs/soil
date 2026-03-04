@@ -79,7 +79,7 @@ mod benchmarking;
 /// The miner.
 pub mod miner;
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 mod pallet {
 	use super::WeightInfo;
 	use crate::{
@@ -88,8 +88,8 @@ mod pallet {
 		verifier::Verifier,
 		CommonError,
 	};
-	use frame_support::pallet_prelude::*;
-	use frame_system::{offchain::CreateBare, pallet_prelude::*};
+	use topsoil_support::pallet_prelude::*;
+	use topsoil_system::{offchain::CreateBare, pallet_prelude::*};
 	use soil_runtime::traits::SaturatedConversion;
 	use soil_std::prelude::*;
 
@@ -112,7 +112,7 @@ mod pallet {
 		type OffchainRepeat: Get<BlockNumberFor<Self>>;
 
 		/// The solver used in hte offchain worker miner
-		type OffchainSolver: frame_election_provider_support::NposSolver<
+		type OffchainSolver: topsoil_election_provider_support::NposSolver<
 			AccountId = Self::AccountId,
 		>;
 
@@ -258,7 +258,7 @@ mod pallet {
 			// This should only come useful in an **abrupt** termination of execution, otherwise the
 			// guard will be dropped upon successful execution.
 			let mut lock =
-				StorageLock::<BlockAndTime<frame_system::Pallet<T>>>::with_block_deadline(
+				StorageLock::<BlockAndTime<topsoil_system::Pallet<T>>>::with_block_deadline(
 					miner::OffchainWorkerMiner::<T>::OFFCHAIN_LOCK,
 					T::UnsignedPhase::get().saturated_into(),
 				);
@@ -371,8 +371,8 @@ mod pallet {
 
 #[cfg(test)]
 mod validate_unsigned {
-	use frame_election_provider_support::Support;
-	use frame_support::{
+	use topsoil_election_provider_support::Support;
+	use topsoil_support::{
 		pallet_prelude::InvalidTransaction,
 		unsigned::{TransactionSource, TransactionValidityError, ValidateUnsigned},
 	};

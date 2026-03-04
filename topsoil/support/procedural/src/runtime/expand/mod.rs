@@ -29,7 +29,7 @@ use crate::{
 	},
 };
 use cfg_expr::Predicate;
-use frame_support_procedural_tools::{
+use topsoil_support_procedural_tools::{
 	generate_access_from_frame_or_crate, generate_crate_access, generate_hidden_includes,
 };
 use proc_macro2::TokenStream as TokenStream2;
@@ -90,10 +90,10 @@ fn construct_runtime_implicit_to_explicit(
 	definition: ImplicitAllPalletsDeclaration,
 	legacy_ordering: bool,
 ) -> Result<TokenStream2> {
-	let frame_support = generate_access_from_frame_or_crate("frame-support")?;
+	let topsoil_support = generate_access_from_frame_or_crate("topsoil-support")?;
 	let attr = if legacy_ordering { quote!((legacy_ordering)) } else { quote!() };
 	let mut expansion = quote::quote!(
-		#[#frame_support::runtime #attr]
+		#[#topsoil_support::runtime #attr]
 		#input
 	);
 	for pallet in definition.pallet_decls.iter() {
@@ -107,10 +107,10 @@ fn construct_runtime_implicit_to_explicit(
 			(None, None) => quote::quote!(),
 		};
 		expansion = quote::quote!(
-			#frame_support::__private::tt_call! {
+			#topsoil_support::__private::tt_call! {
 				macro = [{ #pallet_path::tt_default_parts_v2 }]
-				your_tt_return = [{ #frame_support::__private::tt_return }]
-				~~> #frame_support::match_and_insert! {
+				your_tt_return = [{ #topsoil_support::__private::tt_return }]
+				~~> #topsoil_support::match_and_insert! {
 					target = [{ #expansion }]
 					pattern = [{ #pallet_name = #pallet_path #pallet_segment_and_instance }]
 				}
@@ -139,7 +139,7 @@ fn construct_runtime_final_expansion(
 			syn::Error::new(
 				pallets_name.span(),
 				"`System` pallet declaration is missing. \
-			 Please add this line: `pub type System = frame_system;`",
+			 Please add this line: `pub type System = topsoil_system;`",
 			)
 		})?;
 	if !system_pallet.cfg_pattern.is_empty() {
@@ -166,11 +166,11 @@ fn construct_runtime_final_expansion(
 		.collect::<HashSet<_>>();
 
 	let hidden_crate_name = "construct_runtime";
-	let scrate = generate_crate_access(hidden_crate_name, "frame-support");
-	let scrate_decl = generate_hidden_includes(hidden_crate_name, "frame-support");
+	let scrate = generate_crate_access(hidden_crate_name, "topsoil-support");
+	let scrate_decl = generate_hidden_includes(hidden_crate_name, "topsoil-support");
 
-	let frame_system = generate_access_from_frame_or_crate("frame-system")?;
-	let block = quote!(<#name as #frame_system::Config>::Block);
+	let topsoil_system = generate_access_from_frame_or_crate("topsoil-system")?;
+	let block = quote!(<#name as #topsoil_system::Config>::Block);
 	let unchecked_extrinsic = quote!(<#block as #scrate::soil_runtime::traits::Block>::Extrinsic);
 
 	let mut dispatch = None;

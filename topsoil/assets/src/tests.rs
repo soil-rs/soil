@@ -19,7 +19,7 @@
 
 use super::*;
 use crate::{mock::*, Error};
-use frame_support::{
+use topsoil_support::{
 	assert_noop, assert_ok,
 	dispatch::GetDispatchInfo,
 	traits::{
@@ -29,7 +29,7 @@ use frame_support::{
 	},
 	BoundedVec,
 };
-use pallet_balances::Error as BalancesError;
+use topsoil_balances::Error as BalancesError;
 use soil_io::storage;
 use soil_runtime::{
 	traits::{ConstU32, ConvertInto},
@@ -1650,7 +1650,7 @@ fn freezing_and_holds_work() {
 
 #[test]
 fn imbalances_should_work() {
-	use frame_support::traits::fungibles::Balanced;
+	use topsoil_support::traits::fungibles::Balanced;
 
 	build_and_execute(|| {
 		assert_ok!(Assets::force_create(RuntimeOrigin::root(), 0, 1, true, 1));
@@ -1874,7 +1874,7 @@ fn set_min_balance_should_work() {
 #[test]
 fn balance_conversion_should_work() {
 	build_and_execute(|| {
-		use frame_support::traits::tokens::ConversionToAssetBalance;
+		use topsoil_support::traits::tokens::ConversionToAssetBalance;
 
 		let id = 42;
 		assert_ok!(Assets::force_create(RuntimeOrigin::root(), id, 1, true, 10));
@@ -1913,7 +1913,7 @@ fn assets_from_genesis_should_exist() {
 #[test]
 fn querying_name_symbol_and_decimals_should_work() {
 	build_and_execute(|| {
-		use frame_support::traits::fungibles::metadata::Inspect;
+		use topsoil_support::traits::fungibles::metadata::Inspect;
 		assert_ok!(Assets::force_create(RuntimeOrigin::root(), 0, 1, true, 1));
 		assert_ok!(Assets::force_set_metadata(
 			RuntimeOrigin::root(),
@@ -1932,7 +1932,7 @@ fn querying_name_symbol_and_decimals_should_work() {
 #[test]
 fn querying_allowance_should_work() {
 	build_and_execute(|| {
-		use frame_support::traits::fungibles::approvals::{Inspect, Mutate};
+		use topsoil_support::traits::fungibles::approvals::{Inspect, Mutate};
 		assert_ok!(Assets::force_create(RuntimeOrigin::root(), 0, 1, true, 1));
 		assert_ok!(Assets::mint(RuntimeOrigin::signed(1), 0, 1, 100));
 		Balances::make_free_balance_be(&1, 2);
@@ -1957,7 +1957,7 @@ fn transfer_large_asset() {
 #[test]
 fn querying_roles_should_work() {
 	build_and_execute(|| {
-		use frame_support::traits::fungibles::roles::Inspect;
+		use topsoil_support::traits::fungibles::roles::Inspect;
 		assert_ok!(Assets::force_create(RuntimeOrigin::root(), 0, 1, true, 1));
 		assert_ok!(Assets::set_team(
 			RuntimeOrigin::signed(1),
@@ -2126,7 +2126,7 @@ fn asset_destroy_refund_existence_deposit() {
 #[test]
 fn increasing_or_decreasing_destroying_asset_should_not_work() {
 	build_and_execute(|| {
-		use frame_support::traits::fungibles::Inspect;
+		use topsoil_support::traits::fungibles::Inspect;
 
 		let admin = 1;
 		let admin_origin = RuntimeOrigin::signed(admin);

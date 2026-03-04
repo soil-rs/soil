@@ -21,13 +21,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-//! Tests for pallet-assets-freezer.
+//! Tests for topsoil-assets-freezer.
 
 use crate::mock::{self, *};
 
 use codec::Compact;
-use frame::testing_prelude::*;
-use pallet_assets::FrozenBalance;
+use topsoil::testing_prelude::*;
+use topsoil_assets::FrozenBalance;
 
 const WHO: AccountId = 1;
 const ASSET_ID: mock::AssetId = 1;
@@ -304,7 +304,7 @@ mod with_pallet_assets {
 			));
 			assert_noop!(
 				Assets::transfer(RuntimeOrigin::signed(WHO), Compact(ASSET_ID), 2, 81),
-				pallet_assets::Error::<Test>::BalanceLow,
+				topsoil_assets::Error::<Test>::BalanceLow,
 			);
 			assert_ok!(Assets::transfer(RuntimeOrigin::signed(WHO), Compact(ASSET_ID), 2, 80));
 		});

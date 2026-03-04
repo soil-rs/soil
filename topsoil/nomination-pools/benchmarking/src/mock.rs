@@ -16,8 +16,8 @@
 // limitations under the License.
 
 use crate::VoterBagsListInstance;
-use frame_election_provider_support::VoteWeight;
-use frame_support::{
+use topsoil_election_provider_support::VoteWeight;
+use topsoil_support::{
 	derive_impl,
 	pallet_prelude::*,
 	parameter_types,
@@ -33,15 +33,15 @@ type AccountId = u128;
 type BlockNumber = u64;
 type Balance = u128;
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Runtime {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Runtime {
 	type AccountId = AccountId;
 	type Lookup = IdentityLookup<Self::AccountId>;
 	type Block = Block;
-	type AccountData = pallet_balances::AccountData<Balance>;
+	type AccountData = topsoil_balances::AccountData<Balance>;
 }
 
-impl pallet_timestamp::Config for Runtime {
+impl topsoil_timestamp::Config for Runtime {
 	type Moment = u64;
 	type OnTimestampSet = ();
 	type MinimumPeriod = ConstU64<5>;
@@ -52,8 +52,8 @@ parameter_types! {
 	pub const ExistentialDeposit: Balance = 10;
 }
 
-#[derive_impl(pallet_balances::config_preludes::TestDefaultConfig)]
-impl pallet_balances::Config for Runtime {
+#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
+impl topsoil_balances::Config for Runtime {
 	type Balance = Balance;
 	type ExistentialDeposit = ExistentialDeposit;
 	type AccountStore = System;
@@ -63,7 +63,7 @@ impl pallet_balances::Config for Runtime {
 	type RuntimeFreezeReason = RuntimeFreezeReason;
 }
 
-pallet_staking_reward_curve::build! {
+topsoil_staking_reward_curve::build! {
 	const I_NPOS: soil_runtime::curve::PiecewiseLinear<'static> = curve!(
 		min_inflation: 0_025_000,
 		max_inflation: 0_100_000,
@@ -76,19 +76,19 @@ pallet_staking_reward_curve::build! {
 parameter_types! {
 	pub const RewardCurve: &'static soil_runtime::curve::PiecewiseLinear<'static> = &I_NPOS;
 }
-#[derive_impl(pallet_staking::config_preludes::TestDefaultConfig)]
-impl pallet_staking::Config for Runtime {
+#[derive_impl(topsoil_staking::config_preludes::TestDefaultConfig)]
+impl topsoil_staking::Config for Runtime {
 	type OldCurrency = Balances;
 	type Currency = Balances;
 	type CurrencyBalance = Balance;
-	type UnixTime = pallet_timestamp::Pallet<Self>;
-	type AdminOrigin = frame_system::EnsureRoot<Self::AccountId>;
-	type EraPayout = pallet_staking::ConvertCurve<RewardCurve>;
+	type UnixTime = topsoil_timestamp::Pallet<Self>;
+	type AdminOrigin = topsoil_system::EnsureRoot<Self::AccountId>;
+	type EraPayout = topsoil_staking::ConvertCurve<RewardCurve>;
 	type ElectionProvider =
-		frame_election_provider_support::NoElection<(AccountId, BlockNumber, Staking, (), ())>;
+		topsoil_election_provider_support::NoElection<(AccountId, BlockNumber, Staking, (), ())>;
 	type GenesisElectionProvider = Self::ElectionProvider;
 	type VoterList = VoterList;
-	type TargetList = pallet_staking::UseValidatorsMap<Self>;
+	type TargetList = topsoil_staking::UseValidatorsMap<Self>;
 	type EventListeners = (Pools, DelegatedStaking);
 }
 
@@ -96,7 +96,7 @@ parameter_types! {
 	pub static BagThresholds: &'static [VoteWeight] = &[10, 20, 30, 40, 50, 60, 1_000, 2_000, 10_000];
 }
 
-impl pallet_bags_list::Config<VoterBagsListInstance> for Runtime {
+impl topsoil_bags_list::Config<VoterBagsListInstance> for Runtime {
 	type RuntimeEvent = RuntimeEvent;
 	type WeightInfo = ();
 	type BagThresholds = BagThresholds;
@@ -125,7 +125,7 @@ parameter_types! {
 	pub const MaxPointsToBalance: u8 = 10;
 }
 
-impl pallet_nomination_pools::Config for Runtime {
+impl topsoil_nomination_pools::Config for Runtime {
 	type RuntimeEvent = RuntimeEvent;
 	type WeightInfo = ();
 	type Currency = Balances;
@@ -134,13 +134,13 @@ impl pallet_nomination_pools::Config for Runtime {
 	type BalanceToU256 = BalanceToU256;
 	type U256ToBalance = U256ToBalance;
 	type StakeAdapter =
-		pallet_nomination_pools::adapter::DelegateStake<Self, Staking, DelegatedStaking>;
+		topsoil_nomination_pools::adapter::DelegateStake<Self, Staking, DelegatedStaking>;
 	type PostUnbondingPoolsWindow = PostUnbondingPoolsWindow;
 	type MaxMetadataLen = ConstU32<256>;
 	type MaxUnbonding = ConstU32<8>;
 	type PalletId = PoolsPalletId;
 	type MaxPointsToBalance = MaxPointsToBalance;
-	type AdminOrigin = frame_system::EnsureRoot<Self::AccountId>;
+	type AdminOrigin = topsoil_system::EnsureRoot<Self::AccountId>;
 	type BlockNumberProvider = System;
 	type Filter = Nothing;
 }
@@ -149,7 +149,7 @@ parameter_types! {
 	pub const DelegatedStakingPalletId: PalletId = PalletId(*b"py/dlstk");
 	pub const SlashRewardFraction: Perbill = Perbill::from_percent(1);
 }
-impl pallet_delegated_staking::Config for Runtime {
+impl topsoil_delegated_staking::Config for Runtime {
 	type RuntimeEvent = RuntimeEvent;
 	type PalletId = DelegatedStakingPalletId;
 	type Currency = Balances;
@@ -161,23 +161,23 @@ impl pallet_delegated_staking::Config for Runtime {
 
 impl crate::Config for Runtime {}
 
-type Block = frame_system::mocking::MockBlock<Runtime>;
+type Block = topsoil_system::mocking::MockBlock<Runtime>;
 
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub enum Runtime {
-		System: frame_system,
-		Timestamp: pallet_timestamp,
-		Balances: pallet_balances,
-		Staking: pallet_staking,
-		VoterList: pallet_bags_list::<Instance1>,
-		Pools: pallet_nomination_pools,
-		DelegatedStaking: pallet_delegated_staking,
+		System: topsoil_system,
+		Timestamp: topsoil_timestamp,
+		Balances: topsoil_balances,
+		Staking: topsoil_staking,
+		VoterList: topsoil_bags_list::<Instance1>,
+		Pools: topsoil_nomination_pools,
+		DelegatedStaking: topsoil_delegated_staking,
 	}
 );
 
 pub fn new_test_ext() -> soil_io::TestExternalities {
-	let mut storage = frame_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
-	let _ = pallet_nomination_pools::GenesisConfig::<Runtime> {
+	let mut storage = topsoil_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
+	let _ = topsoil_nomination_pools::GenesisConfig::<Runtime> {
 		min_join_bond: 2,
 		min_create_bond: 2,
 		max_pools: Some(3),

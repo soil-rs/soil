@@ -51,19 +51,19 @@
 //! To get the current time for the current block in another pallet:
 //!
 //! ```
-//! use pallet_timestamp::{self as timestamp};
+//! use topsoil_timestamp::{self as timestamp};
 //!
-//! #[frame_support::pallet]
+//! #[topsoil_support::pallet]
 //! pub mod pallet {
 //! 	use super::*;
-//! 	use frame_support::pallet_prelude::*;
-//! 	use frame_system::pallet_prelude::*;
+//! 	use topsoil_support::pallet_prelude::*;
+//! 	use topsoil_system::pallet_prelude::*;
 //!
 //! 	#[pallet::pallet]
 //! 	pub struct Pallet<T>(_);
 //!
 //! 	#[pallet::config]
-//! 	pub trait Config: frame_system::Config + timestamp::Config {}
+//! 	pub trait Config: topsoil_system::Config + timestamp::Config {}
 //!
 //! 	#[pallet::call]
 //! 	impl<T: Config> Pallet<T> {
@@ -88,22 +88,22 @@
 //! included in a block.
 //!
 //! To provide inherent data to the runtime, this pallet implements
-//! [`ProvideInherent`](frame_support::inherent::ProvideInherent). It will only create an inherent
+//! [`ProvideInherent`](topsoil_support::inherent::ProvideInherent). It will only create an inherent
 //! if the [`Call::set`] dispatchable is called, using the
-//! [`inherent`](frame_support::pallet_macros::inherent) macro which enables validator nodes to call
+//! [`inherent`](topsoil_support::pallet_macros::inherent) macro which enables validator nodes to call
 //! into the runtime to check that the timestamp provided is valid.
-//! The implementation of [`ProvideInherent`](frame_support::inherent::ProvideInherent) specifies a
+//! The implementation of [`ProvideInherent`](topsoil_support::inherent::ProvideInherent) specifies a
 //! constant called `MAX_TIMESTAMP_DRIFT_MILLIS` which is used to determine the acceptable range for
 //! a valid timestamp. If a block author sets a timestamp to anything that is more than this
 //! constant, a validator node will reject the block.
 //!
 //! The pallet also ensures that a timestamp is set at the start of each block by running an
-//! assertion in the `on_finalize` runtime hook. See [`frame_support::traits::Hooks`] for more
+//! assertion in the `on_finalize` runtime hook. See [`topsoil_support::traits::Hooks`] for more
 //! information about how hooks work.
 //!
 //! Because inherents are applied to a block in the order they appear in the runtime
 //! construction, the index of this pallet in
-//! [`construct_runtime`](frame_support::construct_runtime) must always be less than any other
+//! [`construct_runtime`](topsoil_support::construct_runtime) must always be less than any other
 //! pallet that depends on it.
 //!
 //! The [`Config::OnTimestampSet`] configuration trait can be set to another pallet we want to
@@ -133,18 +133,18 @@ mod tests;
 pub mod weights;
 
 use core::{cmp, result};
-use frame_support::traits::{OnTimestampSet, Time, UnixTime};
+use topsoil_support::traits::{OnTimestampSet, Time, UnixTime};
 use soil_runtime::traits::{AtLeast32Bit, SaturatedConversion, Scale, Zero};
 use soil_timestamp::{InherentError, InherentType, INHERENT_IDENTIFIER};
 pub use weights::WeightInfo;
 
 pub use pallet::*;
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
-	use frame_support::{derive_impl, pallet_prelude::*};
-	use frame_system::pallet_prelude::*;
+	use topsoil_support::{derive_impl, pallet_prelude::*};
+	use topsoil_system::pallet_prelude::*;
 
 	/// Default preludes for [`Config`].
 	pub mod config_preludes {
@@ -153,10 +153,10 @@ pub mod pallet {
 		/// Default prelude sensible to be used in a testing environment.
 		pub struct TestDefaultConfig;
 
-		#[derive_impl(frame_system::config_preludes::TestDefaultConfig, no_aggregated_types)]
-		impl frame_system::DefaultConfig for TestDefaultConfig {}
+		#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig, no_aggregated_types)]
+		impl topsoil_system::DefaultConfig for TestDefaultConfig {}
 
-		#[frame_support::register_default_impl(TestDefaultConfig)]
+		#[topsoil_support::register_default_impl(TestDefaultConfig)]
 		impl DefaultConfig for TestDefaultConfig {
 			type Moment = u64;
 			type OnTimestampSet = ();
@@ -167,7 +167,7 @@ pub mod pallet {
 
 	/// The pallet configuration trait
 	#[pallet::config(with_default)]
-	pub trait Config: frame_system::Config {
+	pub trait Config: topsoil_system::Config {
 		/// Type used for expressing a timestamp.
 		#[pallet::no_default_bounds]
 		type Moment: Parameter
@@ -370,7 +370,7 @@ impl<T: Config> UnixTime for Pallet<T> {
 		if now == T::Moment::zero() {
 			log::error!(
 				target: "runtime::timestamp",
-				"`pallet_timestamp::UnixTime::now` is called at genesis, invalid value returned: 0",
+				"`topsoil_timestamp::UnixTime::now` is called at genesis, invalid value returned: 0",
 			);
 		}
 

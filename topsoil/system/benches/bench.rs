@@ -16,19 +16,19 @@
 // limitations under the License.
 
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
-use frame_support::{derive_impl, dispatch::DispatchClass};
+use topsoil_support::{derive_impl, dispatch::DispatchClass};
 use soil_runtime::{BuildStorage, Perbill};
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 mod module {
-	use frame_support::pallet_prelude::*;
+	use topsoil_support::pallet_prelude::*;
 
 	#[pallet::pallet]
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
-	pub trait Config: frame_system::Config {
+	pub trait Config: topsoil_system::Config {
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 	}
 
 	#[pallet::event]
@@ -38,11 +38,11 @@ mod module {
 	}
 }
 
-type Block = frame_system::mocking::MockBlock<Runtime>;
+type Block = topsoil_system::mocking::MockBlock<Runtime>;
 
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub enum Runtime {
-		System: frame_system,
+		System: topsoil_system,
 		Module: module,
 	}
 );
@@ -50,9 +50,9 @@ frame_support::construct_runtime!(
 const MAX_BLOCK_LENGTH: u32 = 4 * 1024 * 1024;
 const NORMAL_DISPATCH_RATIO: Perbill = Perbill::from_percent(75);
 
-frame_support::parameter_types! {
-	pub BlockLength: frame_system::limits::BlockLength =
-		frame_system::limits::BlockLength::builder()
+topsoil_support::parameter_types! {
+	pub BlockLength: topsoil_system::limits::BlockLength =
+		topsoil_system::limits::BlockLength::builder()
 			.max_length(MAX_BLOCK_LENGTH)
 			.modify_max_length_for_class(DispatchClass::Normal, |m| {
 				*m = NORMAL_DISPATCH_RATIO * MAX_BLOCK_LENGTH
@@ -60,8 +60,8 @@ frame_support::parameter_types! {
 			.build();
 }
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Runtime {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Runtime {
 	type Nonce = u64;
 	type Block = Block;
 }
@@ -71,7 +71,7 @@ impl module::Config for Runtime {
 }
 
 fn new_test_ext() -> soil_io::TestExternalities {
-	frame_system::GenesisConfig::<Runtime>::default()
+	topsoil_system::GenesisConfig::<Runtime>::default()
 		.build_storage()
 		.unwrap()
 		.into()

@@ -18,9 +18,9 @@
 //! Benchmarks for the nomination pools coupled with the staking and bags list pallets.
 
 use alloc::{vec, vec::Vec};
-use frame_benchmarking::v2::*;
-use frame_election_provider_support::SortedListProvider;
-use frame_support::{
+use topsoil_benchmarking::v2::*;
+use topsoil_election_provider_support::SortedListProvider;
+use topsoil_support::{
 	assert_ok, ensure,
 	traits::{
 		fungible::{Inspect, Mutate, Unbalanced},
@@ -28,39 +28,39 @@ use frame_support::{
 		Get, Imbalance,
 	},
 };
-use frame_system::RawOrigin as RuntimeOrigin;
-use pallet_nomination_pools::{
+use topsoil_system::RawOrigin as RuntimeOrigin;
+use topsoil_nomination_pools::{
 	adapter::{Member, Pool, StakeStrategy, StakeStrategyType},
 	BalanceOf, BondExtra, BondedPoolInner, BondedPools, ClaimPermission, ClaimPermissions,
 	Commission, CommissionChangeRate, CommissionClaimPermission, ConfigOp, GlobalMaxCommission,
 	MaxPoolMembers, MaxPoolMembersPerPool, MaxPools, Metadata, MinCreateBond, MinJoinBond,
 	Pallet as Pools, PoolId, PoolMembers, PoolRoles, PoolState, RewardPools, SubPoolsStorage,
 };
-use pallet_staking::MaxNominationsOf;
+use topsoil_staking::MaxNominationsOf;
 use soil_runtime::{
 	traits::{Bounded, StaticLookup, Zero},
 	Perbill,
 };
 use soil_staking::{EraIndex, StakingUnchecked};
-// `frame_benchmarking::benchmarks!` macro needs this
-use pallet_nomination_pools::Call;
+// `topsoil_benchmarking::benchmarks!` macro needs this
+use topsoil_nomination_pools::Call;
 
-type CurrencyOf<T> = <T as pallet_nomination_pools::Config>::Currency;
+type CurrencyOf<T> = <T as topsoil_nomination_pools::Config>::Currency;
 
 const USER_SEED: u32 = 0;
 const MAX_SPANS: u32 = 100;
 
-pub(crate) type VoterBagsListInstance = pallet_bags_list::Instance1;
+pub(crate) type VoterBagsListInstance = topsoil_bags_list::Instance1;
 pub trait Config:
-	pallet_nomination_pools::Config
-	+ pallet_staking::Config
-	+ pallet_bags_list::Config<VoterBagsListInstance>
+	topsoil_nomination_pools::Config
+	+ topsoil_staking::Config
+	+ topsoil_bags_list::Config<VoterBagsListInstance>
 {
 }
 
 pub struct Pallet<T: Config>(Pools<T>);
 
-fn create_funded_user_with_balance<T: pallet_nomination_pools::Config>(
+fn create_funded_user_with_balance<T: topsoil_nomination_pools::Config>(
 	string: &'static str,
 	n: u32,
 	balance: BalanceOf<T>,
@@ -72,7 +72,7 @@ fn create_funded_user_with_balance<T: pallet_nomination_pools::Config>(
 
 // Create a bonded pool account, bonding `balance` and giving the account `balance * 2` free
 // balance.
-fn create_pool_account<T: pallet_nomination_pools::Config>(
+fn create_pool_account<T: topsoil_nomination_pools::Config>(
 	n: u32,
 	balance: BalanceOf<T>,
 	commission: Option<Perbill>,
@@ -92,7 +92,7 @@ fn create_pool_account<T: pallet_nomination_pools::Config>(
 	.unwrap();
 
 	if let Some(c) = commission {
-		let pool_id = pallet_nomination_pools::LastPoolId::<T>::get();
+		let pool_id = topsoil_nomination_pools::LastPoolId::<T>::get();
 		Pools::<T>::set_commission(
 			RuntimeOrigin::Signed(pool_creator.clone()).into(),
 			pool_id,
@@ -101,7 +101,7 @@ fn create_pool_account<T: pallet_nomination_pools::Config>(
 		.expect("pool just created, commission can be set by root; qed");
 	}
 
-	let pool_account = pallet_nomination_pools::BondedPools::<T>::iter()
+	let pool_account = topsoil_nomination_pools::BondedPools::<T>::iter()
 		.find(|(_, bonded_pool)| bonded_pool.roles.depositor == pool_creator)
 		.map(|(pool_id, _)| Pools::<T>::generate_bonded_account(pool_id))
 		.expect("pool_creator created a pool above");
@@ -123,7 +123,7 @@ fn migrate_to_transfer_stake<T: Config>(pool_id: PoolId) {
 		.filter(|(_, member)| member.pool_id == pool_id)
 		.for_each(|(member_acc, member)| {
 			let member_balance = member.total_balance();
-			<T as pallet_nomination_pools::Config>::Currency::transfer(
+			<T as topsoil_nomination_pools::Config>::Currency::transfer(
 				&member_acc,
 				&pool_acc,
 				member_balance,
@@ -133,20 +133,20 @@ fn migrate_to_transfer_stake<T: Config>(pool_id: PoolId) {
 		});
 
 	// Pool needs to have ED balance free to stake so give it some.
-	// Note: we didn't require ED until pallet-staking migrated from locks to holds.
+	// Note: we didn't require ED until topsoil-staking migrated from locks to holds.
 	let _ = CurrencyOf::<T>::mint_into(&pool_acc, CurrencyOf::<T>::minimum_balance());
 
-	pallet_staking::Pallet::<T>::migrate_to_direct_staker(&pool_acc);
+	topsoil_staking::Pallet::<T>::migrate_to_direct_staker(&pool_acc);
 }
 
-fn vote_to_balance<T: pallet_nomination_pools::Config>(
+fn vote_to_balance<T: topsoil_nomination_pools::Config>(
 	vote: u64,
 ) -> Result<BalanceOf<T>, &'static str> {
 	vote.try_into().map_err(|_| "could not convert u64 to Balance")
 }
 
 #[allow(unused)]
-struct ListScenario<T: pallet_nomination_pools::Config> {
+struct ListScenario<T: topsoil_nomination_pools::Config> {
 	/// Stash/Controller that is expected to be moved.
 	origin1: T::AccountId,
 	creator1: T::AccountId,
@@ -172,7 +172,7 @@ impl<T: Config> ListScenario<T> {
 		ensure!(!origin_weight.is_zero(), "origin weight must be greater than 0");
 
 		ensure!(
-			pallet_nomination_pools::MaxPools::<T>::get().unwrap_or(0) >= 3,
+			topsoil_nomination_pools::MaxPools::<T>::get().unwrap_or(0) >= 3,
 			"must allow at least three pools for benchmarks"
 		);
 
@@ -198,7 +198,7 @@ impl<T: Config> ListScenario<T> {
 		)?;
 
 		// Find a destination weight that will trigger the worst case scenario
-		let dest_weight_as_vote = <T as pallet_staking::Config>::VoterList::score_update_worst_case(
+		let dest_weight_as_vote = <T as topsoil_staking::Config>::VoterList::score_update_worst_case(
 			&pool_origin1,
 			is_increase,
 		);
@@ -215,7 +215,7 @@ impl<T: Config> ListScenario<T> {
 			vec![account("random_validator", 0, USER_SEED)],
 		)?;
 
-		let weight_of = pallet_staking::Pallet::<T>::weight_of_fn();
+		let weight_of = topsoil_staking::Pallet::<T>::weight_of_fn();
 		assert_eq!(vote_to_balance::<T>(weight_of(&pool_origin1)).unwrap(), origin_weight);
 		assert_eq!(vote_to_balance::<T>(weight_of(&pool_origin2)).unwrap(), origin_weight);
 		assert_eq!(vote_to_balance::<T>(weight_of(&pool_dest1)).unwrap(), dest_weight);
@@ -254,7 +254,7 @@ impl<T: Config> ListScenario<T> {
 		Pools::<T>::join(RuntimeOrigin::Signed(joiner.clone()).into(), amount, 1).unwrap();
 
 		// check that the vote weight is still the same as the original bonded
-		let weight_of = pallet_staking::Pallet::<T>::weight_of_fn();
+		let weight_of = topsoil_staking::Pallet::<T>::weight_of_fn();
 		assert_eq!(vote_to_balance::<T>(weight_of(&self.origin1)).unwrap(), original_bonded);
 
 		// check the member was added correctly
@@ -268,8 +268,8 @@ impl<T: Config> ListScenario<T> {
 
 #[benchmarks(
 	where
-		T: pallet_staking::Config,
-		pallet_staking::BalanceOf<T>: From<u128>,
+		T: topsoil_staking::Config,
+		topsoil_staking::BalanceOf<T>: From<u128>,
 		BalanceOf<T>: Into<u128>,
 )]
 mod benchmarks {
@@ -442,12 +442,12 @@ mod benchmarks {
 			T::StakeAdapter::active_stake(Pool::from(pool_account.clone())),
 			min_create_bond
 		);
-		assert_eq!(pallet_staking::Ledger::<T>::get(&pool_account).unwrap().unlocking.len(), 1);
+		assert_eq!(topsoil_staking::Ledger::<T>::get(&pool_account).unwrap().unlocking.len(), 1);
 		// Set the current era
-		pallet_staking::CurrentEra::<T>::put(EraIndex::max_value());
+		topsoil_staking::CurrentEra::<T>::put(EraIndex::max_value());
 
 		// Add `s` count of slashing spans to storage.
-		pallet_staking::benchmarking::add_slashing_spans::<T>(&pool_account, s);
+		topsoil_staking::benchmarking::add_slashing_spans::<T>(&pool_account, s);
 		whitelist_account!(pool_account);
 
 		#[extrinsic_call]
@@ -456,7 +456,7 @@ mod benchmarks {
 		// The joiners funds didn't change
 		assert_eq!(CurrencyOf::<T>::balance(&joiner), min_join_bond);
 		// The unlocking chunk was removed
-		assert_eq!(pallet_staking::Ledger::<T>::get(pool_account).unwrap().unlocking.len(), 0);
+		assert_eq!(topsoil_staking::Ledger::<T>::get(pool_account).unwrap().unlocking.len(), 0);
 	}
 
 	#[benchmark]
@@ -478,7 +478,7 @@ mod benchmarks {
 		assert_eq!(CurrencyOf::<T>::balance(&joiner), min_join_bond);
 
 		// Unbond the new member
-		pallet_staking::CurrentEra::<T>::put(0);
+		topsoil_staking::CurrentEra::<T>::put(0);
 		Pools::<T>::fully_unbond(RuntimeOrigin::Signed(joiner.clone()).into(), joiner.clone())
 			.unwrap();
 
@@ -487,12 +487,12 @@ mod benchmarks {
 			T::StakeAdapter::active_stake(Pool::from(pool_account.clone())),
 			min_create_bond
 		);
-		assert_eq!(pallet_staking::Ledger::<T>::get(&pool_account).unwrap().unlocking.len(), 1);
+		assert_eq!(topsoil_staking::Ledger::<T>::get(&pool_account).unwrap().unlocking.len(), 1);
 
 		// Set the current era to ensure we can withdraw unbonded funds
-		pallet_staking::CurrentEra::<T>::put(EraIndex::max_value());
+		topsoil_staking::CurrentEra::<T>::put(EraIndex::max_value());
 
-		pallet_staking::benchmarking::add_slashing_spans::<T>(&pool_account, s);
+		topsoil_staking::benchmarking::add_slashing_spans::<T>(&pool_account, s);
 		whitelist_account!(joiner);
 
 		#[extrinsic_call]
@@ -500,7 +500,7 @@ mod benchmarks {
 
 		assert_eq!(CurrencyOf::<T>::balance(&joiner), min_join_bond * 2u32.into());
 		// The unlocking chunk was removed
-		assert_eq!(pallet_staking::Ledger::<T>::get(&pool_account).unwrap().unlocking.len(), 0);
+		assert_eq!(topsoil_staking::Ledger::<T>::get(&pool_account).unwrap().unlocking.len(), 0);
 	}
 
 	#[benchmark]
@@ -518,13 +518,13 @@ mod benchmarks {
 		.unwrap();
 
 		// Unbond the creator
-		pallet_staking::CurrentEra::<T>::put(0);
+		topsoil_staking::CurrentEra::<T>::put(0);
 		// Simulate some rewards so we can check if the rewards storage is cleaned up. We check this
 		// here to ensure the complete flow for destroying a pool works - the reward pool account
 		// should never exist by time the depositor withdraws so we test that it gets cleaned
 		// up when unbonding.
 		let reward_account = Pools::<T>::generate_reward_account(1);
-		assert!(frame_system::Account::<T>::contains_key(&reward_account));
+		assert!(topsoil_system::Account::<T>::contains_key(&reward_account));
 		Pools::<T>::fully_unbond(
 			RuntimeOrigin::Signed(depositor.clone()).into(),
 			depositor.clone(),
@@ -537,18 +537,18 @@ mod benchmarks {
 			T::StakeAdapter::total_balance(Pool::from(pool_account.clone())),
 			Some(min_create_bond)
 		);
-		assert_eq!(pallet_staking::Ledger::<T>::get(&pool_account).unwrap().unlocking.len(), 1);
+		assert_eq!(topsoil_staking::Ledger::<T>::get(&pool_account).unwrap().unlocking.len(), 1);
 
 		// Set the current era to ensure we can withdraw unbonded funds
-		pallet_staking::CurrentEra::<T>::put(EraIndex::max_value());
+		topsoil_staking::CurrentEra::<T>::put(EraIndex::max_value());
 
 		// Some last checks that storage items we expect to get cleaned up are present
-		assert!(pallet_staking::Ledger::<T>::contains_key(&pool_account));
+		assert!(topsoil_staking::Ledger::<T>::contains_key(&pool_account));
 		assert!(BondedPools::<T>::contains_key(&1));
 		assert!(SubPoolsStorage::<T>::contains_key(&1));
 		assert!(RewardPools::<T>::contains_key(&1));
 		assert!(PoolMembers::<T>::contains_key(&depositor));
-		assert!(frame_system::Account::<T>::contains_key(&reward_account));
+		assert!(topsoil_system::Account::<T>::contains_key(&reward_account));
 
 		whitelist_account!(depositor);
 
@@ -556,13 +556,13 @@ mod benchmarks {
 		withdraw_unbonded(RuntimeOrigin::Signed(depositor.clone()), depositor_lookup, s);
 
 		// Pool removal worked
-		assert!(!pallet_staking::Ledger::<T>::contains_key(&pool_account));
+		assert!(!topsoil_staking::Ledger::<T>::contains_key(&pool_account));
 		assert!(!BondedPools::<T>::contains_key(&1));
 		assert!(!SubPoolsStorage::<T>::contains_key(&1));
 		assert!(!RewardPools::<T>::contains_key(&1));
 		assert!(!PoolMembers::<T>::contains_key(&depositor));
-		assert!(!frame_system::Account::<T>::contains_key(&pool_account));
-		assert!(!frame_system::Account::<T>::contains_key(&reward_account));
+		assert!(!topsoil_system::Account::<T>::contains_key(&pool_account));
+		assert!(!topsoil_system::Account::<T>::contains_key(&reward_account));
 
 		// Funds where transferred back correctly
 		assert_eq!(
@@ -685,7 +685,7 @@ mod benchmarks {
 
 	#[benchmark]
 	fn set_metadata(
-		n: Linear<1, { <T as pallet_nomination_pools::Config>::MaxMetadataLen::get() }>,
+		n: Linear<1, { <T as topsoil_nomination_pools::Config>::MaxMetadataLen::get() }>,
 	) {
 		// Create a pool
 		let (depositor, _pool_account) =
@@ -724,7 +724,7 @@ mod benchmarks {
 
 	#[benchmark]
 	fn update_roles() {
-		let first_id = pallet_nomination_pools::LastPoolId::<T>::get() + 1;
+		let first_id = topsoil_nomination_pools::LastPoolId::<T>::get() + 1;
 		let (root, _) =
 			create_pool_account::<T>(0, Pools::<T>::depositor_min_bond() * 2u32.into(), None);
 		let random: T::AccountId =
@@ -739,8 +739,8 @@ mod benchmarks {
 			ConfigOp::Set(random.clone()),
 		);
 		assert_eq!(
-			pallet_nomination_pools::BondedPools::<T>::get(first_id).unwrap().roles,
-			pallet_nomination_pools::PoolRoles {
+			topsoil_nomination_pools::BondedPools::<T>::get(first_id).unwrap().roles,
+			topsoil_nomination_pools::PoolRoles {
 				depositor: root,
 				nominator: Some(random.clone()),
 				bouncer: Some(random.clone()),
@@ -997,11 +997,11 @@ mod benchmarks {
 		let slash_amount: u128 = deposit_amount.into() / 2;
 
 		// slash pool by half
-		pallet_staking::slashing::do_slash::<T>(
+		topsoil_staking::slashing::do_slash::<T>(
 			&pool_account,
 			slash_amount.into(),
-			&mut pallet_staking::BalanceOf::<T>::zero(),
-			&mut pallet_staking::NegativeImbalanceOf::<T>::zero(),
+			&mut topsoil_staking::BalanceOf::<T>::zero(),
+			&mut topsoil_staking::NegativeImbalanceOf::<T>::zero(),
 			EraIndex::zero(),
 		);
 
@@ -1018,7 +1018,7 @@ mod benchmarks {
 
 		// Fill member's sub pools for the worst case.
 		for i in 1..(T::MaxUnbonding::get() + 1) {
-			pallet_staking::CurrentEra::<T>::put(i);
+			topsoil_staking::CurrentEra::<T>::put(i);
 			assert!(Pools::<T>::unbond(
 				RuntimeOrigin::Signed(depositor.clone()).into(),
 				depositor_lookup.clone(),
@@ -1027,7 +1027,7 @@ mod benchmarks {
 			.is_ok());
 		}
 
-		pallet_staking::CurrentEra::<T>::put(T::MaxUnbonding::get() + 2);
+		topsoil_staking::CurrentEra::<T>::put(T::MaxUnbonding::get() + 2);
 
 		let slash_reporter =
 			create_funded_user_with_balance::<T>("slasher", 0, CurrencyOf::<T>::minimum_balance());
@@ -1063,15 +1063,15 @@ mod benchmarks {
 
 		// slash pool by half
 		let slash_amount: u128 = deposit_amount.into() / 2;
-		pallet_staking::slashing::do_slash::<T>(
+		topsoil_staking::slashing::do_slash::<T>(
 			&pool_account,
 			slash_amount.into(),
-			&mut pallet_staking::BalanceOf::<T>::zero(),
-			&mut pallet_staking::NegativeImbalanceOf::<T>::zero(),
+			&mut topsoil_staking::BalanceOf::<T>::zero(),
+			&mut topsoil_staking::NegativeImbalanceOf::<T>::zero(),
 			EraIndex::zero(),
 		);
 
-		pallet_staking::CurrentEra::<T>::put(1);
+		topsoil_staking::CurrentEra::<T>::put(1);
 
 		// new member joins the pool who should not be affected by slash.
 		let min_join_bond = MinJoinBond::<T>::get().max(CurrencyOf::<T>::minimum_balance());
@@ -1084,7 +1084,7 @@ mod benchmarks {
 
 		// Fill member's sub pools for the worst case.
 		for i in 0..T::MaxUnbonding::get() {
-			pallet_staking::CurrentEra::<T>::put(i + 2); // +2 because we already set the current era to 1.
+			topsoil_staking::CurrentEra::<T>::put(i + 2); // +2 because we already set the current era to 1.
 			assert!(Pools::<T>::unbond(
 				RuntimeOrigin::Signed(joiner.clone()).into(),
 				joiner_lookup.clone(),
@@ -1093,7 +1093,7 @@ mod benchmarks {
 			.is_ok());
 		}
 
-		pallet_staking::CurrentEra::<T>::put(T::MaxUnbonding::get() + 3);
+		topsoil_staking::CurrentEra::<T>::put(T::MaxUnbonding::get() + 3);
 		whitelist_account!(joiner);
 
 		// Since the StakeAdapter can be different based on the runtime config, the errors could be

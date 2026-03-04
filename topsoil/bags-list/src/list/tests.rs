@@ -20,8 +20,8 @@ use crate::{
 	mock::{test_utils::*, *},
 	ListBags, ListNodes,
 };
-use frame_election_provider_support::{SortedListProvider, VoteWeight};
-use frame_support::{assert_ok, assert_storage_noop};
+use topsoil_election_provider_support::{SortedListProvider, VoteWeight};
+use topsoil_support::{assert_ok, assert_storage_noop};
 use soil_runtime::TryRuntimeError;
 
 fn node(
@@ -156,7 +156,7 @@ fn migrate_works() {
 }
 
 mod list {
-	use frame_support::assert_noop;
+	use topsoil_support::assert_noop;
 
 	use super::*;
 
@@ -371,9 +371,9 @@ mod list {
 			assert_eq!(crate::ListNodes::<Runtime>::count(), 4);
 			// we do some wacky stuff here to get access to the counter, since it is (reasonably)
 			// not exposed as mutable in any sense.
-			#[frame_support::storage_alias]
+			#[topsoil_support::storage_alias]
 			type CounterForListNodes<T: Config> =
-				StorageValue<crate::Pallet<T>, u32, frame_support::pallet_prelude::ValueQuery>;
+				StorageValue<crate::Pallet<T>, u32, topsoil_support::pallet_prelude::ValueQuery>;
 			CounterForListNodes::<Runtime>::mutate(|counter| *counter += 1);
 			assert_eq!(crate::ListNodes::<Runtime>::count(), 5);
 

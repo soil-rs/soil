@@ -19,8 +19,8 @@
 
 use super::{Pallet as TransactionStorage, *};
 use crate::mock::*;
-use frame_support::{assert_noop, assert_ok};
-use frame_system::RawOrigin;
+use topsoil_support::{assert_noop, assert_ok};
+use topsoil_system::RawOrigin;
 use soil_runtime::{DispatchError, TokenError::FundsUnavailable};
 use soil_transaction_storage_proof::{registration::build_proof, CHUNK_SIZE};
 
@@ -40,9 +40,9 @@ fn discards_data() {
 			vec![0u8; 2000]
 		));
 		let proof_provider = || {
-			let block_num = frame_system::Pallet::<Test>::block_number();
+			let block_num = topsoil_system::Pallet::<Test>::block_number();
 			if block_num == 11 {
-				let parent_hash = frame_system::Pallet::<Test>::parent_hash();
+				let parent_hash = topsoil_system::Pallet::<Test>::parent_hash();
 				build_proof(parent_hash.as_ref(), vec![vec![0u8; 2000], vec![0u8; 2000]]).unwrap()
 			} else {
 				None
@@ -88,7 +88,7 @@ fn checks_proof() {
 			vec![0u8; MAX_DATA_SIZE as usize]
 		));
 		run_to_block(10, || None);
-		let parent_hash = frame_system::Pallet::<Test>::parent_hash();
+		let parent_hash = topsoil_system::Pallet::<Test>::parent_hash();
 		let proof = build_proof(parent_hash.as_ref(), vec![vec![0u8; MAX_DATA_SIZE as usize]])
 			.unwrap()
 			.unwrap();
@@ -97,7 +97,7 @@ fn checks_proof() {
 			Error::<Test>::UnexpectedProof,
 		);
 		run_to_block(11, || None);
-		let parent_hash = frame_system::Pallet::<Test>::parent_hash();
+		let parent_hash = topsoil_system::Pallet::<Test>::parent_hash();
 
 		let invalid_proof =
 			build_proof(parent_hash.as_ref(), vec![vec![0u8; 1000]]).unwrap().unwrap();
@@ -191,9 +191,9 @@ fn renews_data() {
 		));
 		assert_eq!(Balances::free_balance(1), 1_000_000_000 - 4000 * 2 - 200 * 2);
 		let proof_provider = || {
-			let block_num = frame_system::Pallet::<Test>::block_number();
+			let block_num = topsoil_system::Pallet::<Test>::block_number();
 			if block_num == 11 || block_num == 16 {
-				let parent_hash = frame_system::Pallet::<Test>::parent_hash();
+				let parent_hash = topsoil_system::Pallet::<Test>::parent_hash();
 				build_proof(parent_hash.as_ref(), vec![vec![0u8; 2000]]).unwrap()
 			} else {
 				None

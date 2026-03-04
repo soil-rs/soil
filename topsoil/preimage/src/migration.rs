@@ -19,13 +19,13 @@
 
 use super::*;
 use alloc::collections::btree_map::BTreeMap;
-use frame_support::{
+use topsoil_support::{
 	storage_alias,
 	traits::{ConstU32, OnRuntimeUpgrade},
 };
 
 #[cfg(feature = "try-runtime")]
-use frame_support::ensure;
+use topsoil_support::ensure;
 #[cfg(feature = "try-runtime")]
 use soil_runtime::TryRuntimeError;
 
@@ -46,7 +46,7 @@ mod v0 {
 	pub type PreimageFor<T: Config> = StorageMap<
 		Pallet<T>,
 		Identity,
-		<T as frame_system::Config>::Hash,
+		<T as topsoil_system::Config>::Hash,
 		BoundedVec<u8, ConstU32<MAX_SIZE>>,
 	>;
 
@@ -54,8 +54,8 @@ mod v0 {
 	pub type StatusFor<T: Config> = StorageMap<
 		Pallet<T>,
 		Identity,
-		<T as frame_system::Config>::Hash,
-		OldRequestStatus<<T as frame_system::Config>::AccountId, BalanceOf<T>>,
+		<T as topsoil_system::Config>::Hash,
+		OldRequestStatus<<T as topsoil_system::Config>::AccountId, BalanceOf<T>>,
 	>;
 
 	/// Returns the number of images or `None` if the storage is corrupted.
@@ -265,9 +265,9 @@ mod test {
 	/// Returns a preimage with a given size and its hash.
 	fn preimage<T: Config>(
 		len: usize,
-	) -> (BoundedVec<u8, ConstU32<MAX_SIZE>>, <T as frame_system::Config>::Hash) {
+	) -> (BoundedVec<u8, ConstU32<MAX_SIZE>>, <T as topsoil_system::Config>::Hash) {
 		let p = bounded_vec![1; len];
-		let h = <T as frame_system::Config>::Hashing::hash_of(&p);
+		let h = <T as topsoil_system::Config>::Hashing::hash_of(&p);
 		(p, h)
 	}
 }

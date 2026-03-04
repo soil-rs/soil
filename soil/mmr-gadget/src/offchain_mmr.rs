@@ -248,7 +248,7 @@ where
 			if first_mmr_block_num != self.first_mmr_block {
 				info!(
 					target: LOG_TARGET,
-					"pallet-mmr reset detected at block {:?} with new genesis at block {:?}",
+					"topsoil-mmr reset detected at block {:?} with new genesis at block {:?}",
 					notification.header.number(),
 					first_mmr_block_num
 				);

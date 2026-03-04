@@ -18,22 +18,22 @@
 //! Test environment for node-authorization pallet.
 
 use super::*;
-use crate as pallet_node_authorization;
+use crate as topsoil_node_authorization;
 
-use frame::testing_prelude::*;
+use topsoil::testing_prelude::*;
 
-type Block = frame_system::mocking::MockBlock<Test>;
+type Block = topsoil_system::mocking::MockBlock<Test>;
 
 construct_runtime!(
 	pub enum Test
 	{
-		System: frame_system,
-		NodeAuthorization: pallet_node_authorization,
+		System: topsoil_system,
+		NodeAuthorization: topsoil_node_authorization,
 	}
 );
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
 	type Block = Block;
 }
 
@@ -60,8 +60,8 @@ pub fn test_node(id: u8) -> PeerId {
 }
 
 pub fn new_test_ext() -> TestState {
-	let mut t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
-	pallet_node_authorization::GenesisConfig::<Test> {
+	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	topsoil_node_authorization::GenesisConfig::<Test> {
 		nodes: vec![(test_node(10), 10), (test_node(20), 20), (test_node(30), 30)],
 	}
 	.assimilate_storage(&mut t)

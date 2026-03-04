@@ -20,8 +20,8 @@
 
 use alloc::vec::Vec;
 use codec::Decode;
-use frame_benchmarking::v2::*;
-use frame_election_provider_support::{NposSolver, PhragMMS, SequentialPhragmen};
+use topsoil_benchmarking::v2::*;
+use topsoil_election_provider_support::{NposSolver, PhragMMS, SequentialPhragmen};
 use soil_runtime::Perbill;
 
 const VOTERS: [u32; 2] = [1_000, 2_000];
@@ -29,9 +29,9 @@ const TARGETS: [u32; 2] = [500, 1_000];
 const VOTES_PER_VOTER: [u32; 2] = [5, 16];
 const SEED: u32 = 999;
 
-pub trait Config: frame_system::Config {}
+pub trait Config: topsoil_system::Config {}
 
-pub struct Pallet<T: Config>(frame_system::Pallet<T>);
+pub struct Pallet<T: Config>(topsoil_system::Pallet<T>);
 
 fn set_up_voters_targets<AccountId: Decode + Clone>(
 	voters_len: u32,
@@ -40,7 +40,7 @@ fn set_up_voters_targets<AccountId: Decode + Clone>(
 ) -> (Vec<(AccountId, u64, impl Clone + IntoIterator<Item = AccountId>)>, Vec<AccountId>) {
 	// fill targets.
 	let mut targets = (0..targets_len)
-		.map(|i| frame_benchmarking::account::<AccountId>("Target", i, SEED))
+		.map(|i| topsoil_benchmarking::account::<AccountId>("Target", i, SEED))
 		.collect::<Vec<_>>();
 	assert!(targets.len() > degree, "we should always have enough voters to fill");
 	targets.truncate(degree);
@@ -48,7 +48,7 @@ fn set_up_voters_targets<AccountId: Decode + Clone>(
 	// fill voters.
 	let voters = (0..voters_len)
 		.map(|i| {
-			let voter = frame_benchmarking::account::<AccountId>("Voter", i, SEED);
+			let voter = topsoil_benchmarking::account::<AccountId>("Voter", i, SEED);
 			(voter, 1_000, targets.clone())
 		})
 		.collect::<Vec<_>>();

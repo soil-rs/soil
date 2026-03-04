@@ -17,7 +17,7 @@
 
 use alloc::vec::Vec;
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
-use frame_support::{traits::ConstU32, BoundedVec};
+use topsoil_support::{traits::ConstU32, BoundedVec};
 use scale_info::TypeInfo;
 use Debug;
 

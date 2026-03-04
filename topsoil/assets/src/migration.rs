@@ -16,7 +16,7 @@
 // limitations under the License.
 
 use super::*;
-use frame_support::traits::OnRuntimeUpgrade;
+use topsoil_support::traits::OnRuntimeUpgrade;
 use log;
 
 #[cfg(feature = "try-runtime")]
@@ -35,7 +35,7 @@ pub mod next_asset_id {
 		T::AssetId: Incrementable,
 		ID: Get<T::AssetId>,
 	{
-		fn on_runtime_upgrade() -> frame_support::weights::Weight {
+		fn on_runtime_upgrade() -> topsoil_support::weights::Weight {
 			if !NextAssetId::<T, I>::exists() {
 				NextAssetId::<T, I>::put(ID::get());
 				T::DbWeight::get().reads_writes(1, 1)
@@ -47,7 +47,7 @@ pub mod next_asset_id {
 }
 
 pub mod v1 {
-	use frame_support::{pallet_prelude::*, weights::Weight};
+	use topsoil_support::{pallet_prelude::*, weights::Weight};
 
 	use super::*;
 
@@ -121,7 +121,7 @@ pub mod v1 {
 
 		#[cfg(feature = "try-runtime")]
 		fn pre_upgrade() -> Result<Vec<u8>, TryRuntimeError> {
-			frame_support::ensure!(
+			topsoil_support::ensure!(
 				Pallet::<T>::on_chain_storage_version() == 0,
 				"must upgrade linearly"
 			);
@@ -143,7 +143,7 @@ pub mod v1 {
 			let in_code_version = Pallet::<T>::in_code_storage_version();
 			let on_chain_version = Pallet::<T>::on_chain_storage_version();
 
-			frame_support::ensure!(in_code_version == 1, "must_upgrade");
+			topsoil_support::ensure!(in_code_version == 1, "must_upgrade");
 			ensure!(
 				in_code_version == on_chain_version,
 				"after migration, the in_code_version and on_chain_version should be the same"

@@ -20,13 +20,13 @@
 #![cfg(feature = "runtime-benchmarks")]
 
 use super::*;
-use crate as pallet_bounties;
+use crate as topsoil_bounties;
 use crate::Pallet as Bounties;
 
 use alloc::{borrow::Cow, vec};
-use frame_benchmarking::{v2::*, BenchmarkError};
-use frame_support::assert_ok;
-use frame_system::RawOrigin;
+use topsoil_benchmarking::{v2::*, BenchmarkError};
+use topsoil_support::assert_ok;
+use topsoil_system::RawOrigin;
 use soil_core::crypto::FromEntropy;
 
 /// Trait describing factory functions for dispatchables' parameters.
@@ -78,15 +78,15 @@ struct BenchmarkBounty<T: Config<I>, I: 'static> {
 const SEED: u32 = 0;
 
 fn assert_last_event<T: Config<I>, I: 'static>(
-	generic_event: <T as frame_system::Config>::RuntimeEvent,
+	generic_event: <T as topsoil_system::Config>::RuntimeEvent,
 ) {
-	frame_system::Pallet::<T>::assert_last_event(generic_event.into());
+	topsoil_system::Pallet::<T>::assert_last_event(generic_event.into());
 }
 
 fn assert_has_event<T: Config<I>, I: 'static>(
-	generic_event: <T as frame_system::Config>::RuntimeEvent,
+	generic_event: <T as topsoil_system::Config>::RuntimeEvent,
 ) {
-	frame_system::Pallet::<T>::assert_has_event(generic_event.into());
+	topsoil_system::Pallet::<T>::assert_has_event(generic_event.into());
 }
 
 pub fn get_payment_id<T: Config<I>, I: 'static>(
@@ -150,7 +150,7 @@ fn create_parent_bounty<T: Config<I>, I: 'static>() -> Result<BenchmarkBounty<T,
 		Bounties::<T, I>::bounty_account(s.parent_bounty_id, s.asset_kind.clone())
 			.expect("conversion failed");
 	let curator_lookup = T::Lookup::unlookup(s.curator.clone());
-	<T as pallet_bounties::Config<I>>::Paymaster::ensure_successful(
+	<T as topsoil_bounties::Config<I>>::Paymaster::ensure_successful(
 		&funding_source_account,
 		&parent_bounty_account,
 		s.asset_kind.clone(),
@@ -165,7 +165,7 @@ fn create_parent_bounty<T: Config<I>, I: 'static>() -> Result<BenchmarkBounty<T,
 		s.metadata,
 	)?;
 
-	s.parent_bounty_id = pallet_bounties::BountyCount::<T, I>::get() - 1;
+	s.parent_bounty_id = topsoil_bounties::BountyCount::<T, I>::get() - 1;
 
 	Ok(s)
 }
@@ -187,7 +187,7 @@ fn create_active_parent_bounty<T: Config<I>, I: 'static>(
 ) -> Result<BenchmarkBounty<T, I>, BenchmarkError> {
 	let s = create_funded_bounty::<T, I>()?;
 	let curator = s.curator.clone();
-	<T as pallet_bounties::Config<I>>::Consideration::ensure_successful(&curator, s.value);
+	<T as topsoil_bounties::Config<I>>::Consideration::ensure_successful(&curator, s.value);
 
 	Bounties::<T, I>::accept_curator(RawOrigin::Signed(curator).into(), s.parent_bounty_id, None)?;
 
@@ -207,7 +207,7 @@ fn create_child_bounty<T: Config<I>, I: 'static>() -> Result<BenchmarkBounty<T, 
 		Some(child_curator_lookup),
 	)?;
 	s.child_bounty_id =
-		pallet_bounties::TotalChildBountiesPerParent::<T, I>::get(s.parent_bounty_id) - 1;
+		topsoil_bounties::TotalChildBountiesPerParent::<T, I>::get(s.parent_bounty_id) - 1;
 
 	Ok(s)
 }
@@ -233,7 +233,7 @@ fn create_active_child_bounty<T: Config<I>, I: 'static>(
 ) -> Result<BenchmarkBounty<T, I>, BenchmarkError> {
 	let s = create_funded_child_bounty::<T, I>()?;
 	let caller = s.child_curator.clone();
-	<T as pallet_bounties::Config<I>>::Consideration::ensure_successful(&caller, s.child_value);
+	<T as topsoil_bounties::Config<I>>::Consideration::ensure_successful(&caller, s.child_value);
 
 	Bounties::<T, I>::accept_curator(
 		RawOrigin::Signed(caller).into(),
@@ -266,7 +266,7 @@ pub fn set_status<T: Config<I>, I: 'static>(
 	new_payment_status: PaymentState<PaymentIdOf<T, I>>,
 ) -> Result<(), BenchmarkError> {
 	let bounty =
-		pallet_bounties::Pallet::<T, I>::get_bounty_details(parent_bounty_id, child_bounty_id)
+		topsoil_bounties::Pallet::<T, I>::get_bounty_details(parent_bounty_id, child_bounty_id)
 			.expect("no bounty");
 
 	let new_status = match bounty.3 {
@@ -286,7 +286,7 @@ pub fn set_status<T: Config<I>, I: 'static>(
 		_ => return Err(BenchmarkError::Stop("unexpected bounty status")),
 	};
 
-	let _ = pallet_bounties::Pallet::<T, I>::update_bounty_status(
+	let _ = topsoil_bounties::Pallet::<T, I>::update_bounty_status(
 		parent_bounty_id,
 		child_bounty_id,
 		new_status,
@@ -313,7 +313,7 @@ mod benchmarks {
 		let parent_bounty_account =
 			Bounties::<T, I>::bounty_account(s.parent_bounty_id, s.asset_kind.clone())
 				.expect("conversion failed");
-		<T as pallet_bounties::Config<I>>::Paymaster::ensure_successful(
+		<T as topsoil_bounties::Config<I>>::Paymaster::ensure_successful(
 			&funding_source_account,
 			&parent_bounty_account,
 			s.asset_kind.clone(),
@@ -331,7 +331,7 @@ mod benchmarks {
 			Event::Paid { index: s.parent_bounty_id, child_index: None, payment_id }.into(),
 		);
 		assert_ne!(
-			<T as pallet_bounties::Config<I>>::Paymaster::check_payment(payment_id),
+			<T as topsoil_bounties::Config<I>>::Paymaster::check_payment(payment_id),
 			PaymentStatus::Failure
 		);
 
@@ -353,7 +353,7 @@ mod benchmarks {
 		);
 
 		let child_bounty_id =
-			pallet_bounties::TotalChildBountiesPerParent::<T, I>::get(s.parent_bounty_id) - 1;
+			topsoil_bounties::TotalChildBountiesPerParent::<T, I>::get(s.parent_bounty_id) - 1;
 		assert_last_event::<T, I>(
 			Event::ChildBountyCreated { index: s.parent_bounty_id, child_index: child_bounty_id }
 				.into(),
@@ -369,7 +369,7 @@ mod benchmarks {
 			.into(),
 		);
 		assert_ne!(
-			<T as pallet_bounties::Config<I>>::Paymaster::check_payment(payment_id),
+			<T as topsoil_bounties::Config<I>>::Paymaster::check_payment(payment_id),
 			PaymentStatus::Failure
 		);
 
@@ -451,7 +451,7 @@ mod benchmarks {
 		let s = create_funded_child_bounty::<T, I>()?;
 		let caller = s.child_curator.clone();
 
-		<T as pallet_bounties::Config<I>>::Consideration::ensure_successful(&caller, s.child_value);
+		<T as topsoil_bounties::Config<I>>::Consideration::ensure_successful(&caller, s.child_value);
 
 		#[block]
 		{
@@ -542,7 +542,7 @@ mod benchmarks {
 			Event::Paid { index: s.parent_bounty_id, child_index: None, payment_id }.into(),
 		);
 		assert_ne!(
-			<T as pallet_bounties::Config<I>>::Paymaster::check_payment(payment_id),
+			<T as topsoil_bounties::Config<I>>::Paymaster::check_payment(payment_id),
 			PaymentStatus::Failure
 		);
 		assert!(Bounties::<T, I>::close_bounty(reject_origin, s.parent_bounty_id, None).is_err());
@@ -584,7 +584,7 @@ mod benchmarks {
 			.into(),
 		);
 		assert_ne!(
-			<T as pallet_bounties::Config<I>>::Paymaster::check_payment(payment_id),
+			<T as topsoil_bounties::Config<I>>::Paymaster::check_payment(payment_id),
 			PaymentStatus::Failure
 		);
 		assert!(Bounties::<T, I>::close_bounty(
@@ -604,7 +604,7 @@ mod benchmarks {
 
 		let payment_id = get_payment_id::<T, I>(s.parent_bounty_id, Some(s.child_bounty_id))
 			.expect("no payment attempt");
-		<T as pallet_bounties::Config<I>>::Paymaster::ensure_concluded(payment_id);
+		<T as topsoil_bounties::Config<I>>::Paymaster::ensure_concluded(payment_id);
 
 		#[block]
 		{
@@ -623,7 +623,7 @@ mod benchmarks {
 			.into(),
 		);
 		let child_bounty =
-			pallet_bounties::ChildBounties::<T, I>::get(s.parent_bounty_id, s.child_bounty_id)
+			topsoil_bounties::ChildBounties::<T, I>::get(s.parent_bounty_id, s.child_bounty_id)
 				.expect("no bounty");
 		assert!(matches!(child_bounty.status, BountyStatus::Funded { .. }));
 
@@ -642,7 +642,7 @@ mod benchmarks {
 		)?;
 		let payment_id = get_payment_id::<T, I>(s.parent_bounty_id, Some(s.child_bounty_id))
 			.expect("no payment attempt");
-		<T as pallet_bounties::Config<I>>::Paymaster::ensure_concluded(payment_id);
+		<T as topsoil_bounties::Config<I>>::Paymaster::ensure_concluded(payment_id);
 
 		#[block]
 		{
@@ -661,7 +661,7 @@ mod benchmarks {
 			.into(),
 		);
 		assert_eq!(
-			pallet_bounties::ChildBounties::<T, I>::get(s.parent_bounty_id, s.child_bounty_id),
+			topsoil_bounties::ChildBounties::<T, I>::get(s.parent_bounty_id, s.child_bounty_id),
 			None
 		);
 
@@ -675,7 +675,7 @@ mod benchmarks {
 
 		let payment_id = get_payment_id::<T, I>(s.parent_bounty_id, Some(s.child_bounty_id))
 			.expect("no payment attempt");
-		<T as pallet_bounties::Config<I>>::Paymaster::ensure_concluded(payment_id);
+		<T as topsoil_bounties::Config<I>>::Paymaster::ensure_concluded(payment_id);
 
 		#[block]
 		{
@@ -697,7 +697,7 @@ mod benchmarks {
 			.into(),
 		);
 		assert_eq!(
-			pallet_bounties::ChildBounties::<T, I>::get(s.parent_bounty_id, s.child_bounty_id),
+			topsoil_bounties::ChildBounties::<T, I>::get(s.parent_bounty_id, s.child_bounty_id),
 			None
 		);
 
@@ -711,7 +711,7 @@ mod benchmarks {
 
 		let payment_id = get_payment_id::<T, I>(s.parent_bounty_id, Some(s.child_bounty_id))
 			.expect("no payment attempt");
-		<T as pallet_bounties::Config<I>>::Paymaster::ensure_concluded(payment_id);
+		<T as topsoil_bounties::Config<I>>::Paymaster::ensure_concluded(payment_id);
 		set_status::<T, I>(s.parent_bounty_id, Some(s.child_bounty_id), PaymentState::Failed)?;
 
 		#[block]
@@ -756,7 +756,7 @@ mod benchmarks {
 			payment_status: PaymentState::Failed,
 			curator: Some(s.child_curator),
 		};
-		let _ = pallet_bounties::Pallet::<T, I>::update_bounty_status(
+		let _ = topsoil_bounties::Pallet::<T, I>::update_bounty_status(
 			s.parent_bounty_id,
 			Some(s.child_bounty_id),
 			new_status,
@@ -805,7 +805,7 @@ mod benchmarks {
 			curator: s.child_curator.clone(),
 			beneficiary: s.beneficiary.clone(),
 		};
-		let _ = pallet_bounties::Pallet::<T, I>::update_bounty_status(
+		let _ = topsoil_bounties::Pallet::<T, I>::update_bounty_status(
 			s.parent_bounty_id,
 			Some(s.child_bounty_id),
 			new_status,

@@ -25,7 +25,7 @@ use crate::{
 use alloc::{vec, vec::Vec};
 use codec::Encode;
 use core::iter::Peekable;
-use frame::{
+use topsoil::{
 	deps::{
 		soil_core::offchain::StorageKind,
 		soil_io::{offchain, offchain_index},
@@ -177,7 +177,7 @@ where
 
 		// Use parent hash of block adding new nodes (this block) as extra identifier
 		// in offchain DB to avoid DB collisions and overwrites in case of forks.
-		let parent_hash = <frame_system::Pallet<T>>::parent_hash();
+		let parent_hash = <topsoil_system::Pallet<T>>::parent_hash();
 		for elem in elems {
 			// On-chain we are going to only store new peaks.
 			if peaks_to_store.next_if_eq(&node_index).is_some() {
@@ -213,7 +213,7 @@ where
 {
 	fn store_to_offchain(
 		pos: NodeIndex,
-		parent_hash: <T as frame_system::Config>::Hash,
+		parent_hash: <T as topsoil_system::Config>::Hash,
 		node: &NodeOf<T, I, L>,
 	) {
 		let encoded_node = node.encode();

@@ -19,7 +19,7 @@ use crate::{BoundedAuthorityList, Pallet};
 use alloc::vec::Vec;
 use codec::Decode;
 use core::marker::PhantomData;
-use frame_support::{
+use topsoil_support::{
 	migrations::VersionedMigration,
 	storage,
 	traits::{Get, UncheckedOnRuntimeUpgrade},
@@ -63,12 +63,12 @@ impl<T: crate::Config> UncheckedOnRuntimeUpgrade for UncheckedMigrateImpl<T> {
 	fn post_upgrade(state: Vec<u8>) -> Result<(), soil_runtime::TryRuntimeError> {
 		let len = u32::decode(&mut &state[..]).unwrap();
 
-		frame_support::ensure!(
+		topsoil_support::ensure!(
 			len == crate::Pallet::<T>::grandpa_authorities().len() as u32,
 			"Grandpa: pre-migrated and post-migrated list should have the same length"
 		);
 
-		frame_support::ensure!(
+		topsoil_support::ensure!(
 			load_authority_list().is_empty(),
 			"Old authority list shouldn't exist anymore"
 		);
@@ -98,5 +98,5 @@ pub type MigrateV4ToV5<T> = VersionedMigration<
 	5,
 	UncheckedMigrateImpl<T>,
 	Pallet<T>,
-	<T as frame_system::Config>::DbWeight,
+	<T as topsoil_system::Config>::DbWeight,
 >;

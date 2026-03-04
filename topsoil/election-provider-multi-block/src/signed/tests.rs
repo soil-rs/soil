@@ -22,8 +22,8 @@ use crate::{
 	verifier::{FeasibilityError, Verifier},
 	Phase,
 };
-use frame_election_provider_support::{ElectionProvider, NposSolution};
-use frame_support::storage::unhashed;
+use topsoil_election_provider_support::{ElectionProvider, NposSolution};
+use topsoil_support::storage::unhashed;
 use soil_core::bounded_vec;
 use soil_npos_elections::ElectionScore;
 
@@ -1110,7 +1110,7 @@ mod e2e {
 }
 
 mod invulnerables {
-	use frame_support::hypothetically;
+	use topsoil_support::hypothetically;
 
 	use super::*;
 

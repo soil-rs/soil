@@ -20,17 +20,17 @@ use syn::{Ident, PathArguments};
 /// The declaration of a pallet.
 #[derive(Debug, Clone)]
 pub struct PalletDeclaration {
-	/// The name of the pallet, e.g.`System` in `pub type System = frame_system`.
+	/// The name of the pallet, e.g.`System` in `pub type System = topsoil_system`.
 	pub name: Ident,
-	/// The path of the pallet, e.g. `frame_system` in `pub type System = frame_system`.
+	/// The path of the pallet, e.g. `topsoil_system` in `pub type System = topsoil_system`.
 	pub path: syn::Path,
-	/// The segment of the pallet, e.g. `Pallet` in `pub type System = frame_system::Pallet`.
+	/// The segment of the pallet, e.g. `Pallet` in `pub type System = topsoil_system::Pallet`.
 	pub pallet_segment: Option<syn::PathSegment>,
 	/// The runtime parameter of the pallet, e.g. `Runtime` in
-	/// `pub type System = frame_system::Pallet<Runtime>`.
+	/// `pub type System = topsoil_system::Pallet<Runtime>`.
 	pub runtime_param: Option<Ident>,
 	/// The instance of the pallet, e.g. `Instance1` in `pub type Council =
-	/// pallet_collective<Instance1>`.
+	/// topsoil_collective<Instance1>`.
 	pub instance: Option<Ident>,
 }
 
@@ -99,13 +99,13 @@ fn declaration_works() {
 
 	let decl: PalletDeclaration = PalletDeclaration::try_from(
 		proc_macro2::Span::call_site(),
-		&parse_quote! { pub type System = frame_system; },
-		&parse_quote! { frame_system },
+		&parse_quote! { pub type System = topsoil_system; },
+		&parse_quote! { topsoil_system },
 	)
 	.expect("Failed to parse pallet declaration");
 
 	assert_eq!(decl.name, "System");
-	assert_eq!(decl.path, parse_quote! { frame_system });
+	assert_eq!(decl.path, parse_quote! { topsoil_system });
 	assert_eq!(decl.pallet_segment, None);
 	assert_eq!(decl.runtime_param, None);
 	assert_eq!(decl.instance, None);
@@ -117,13 +117,13 @@ fn declaration_works_with_instance() {
 
 	let decl: PalletDeclaration = PalletDeclaration::try_from(
 		proc_macro2::Span::call_site(),
-		&parse_quote! { pub type System = frame_system<Instance1>; },
-		&parse_quote! { frame_system<Instance1> },
+		&parse_quote! { pub type System = topsoil_system<Instance1>; },
+		&parse_quote! { topsoil_system<Instance1> },
 	)
 	.expect("Failed to parse pallet declaration");
 
 	assert_eq!(decl.name, "System");
-	assert_eq!(decl.path, parse_quote! { frame_system });
+	assert_eq!(decl.path, parse_quote! { topsoil_system });
 	assert_eq!(decl.pallet_segment, None);
 	assert_eq!(decl.runtime_param, None);
 	assert_eq!(decl.instance, Some(parse_quote! { Instance1 }));
@@ -135,13 +135,13 @@ fn declaration_works_with_pallet() {
 
 	let decl: PalletDeclaration = PalletDeclaration::try_from(
 		proc_macro2::Span::call_site(),
-		&parse_quote! { pub type System = frame_system::Pallet<Runtime>; },
-		&parse_quote! { frame_system::Pallet<Runtime> },
+		&parse_quote! { pub type System = topsoil_system::Pallet<Runtime>; },
+		&parse_quote! { topsoil_system::Pallet<Runtime> },
 	)
 	.expect("Failed to parse pallet declaration");
 
 	assert_eq!(decl.name, "System");
-	assert_eq!(decl.path, parse_quote! { frame_system });
+	assert_eq!(decl.path, parse_quote! { topsoil_system });
 
 	let segment: syn::PathSegment =
 		syn::PathSegment { ident: parse_quote! { Pallet }, arguments: PathArguments::None };
@@ -156,13 +156,13 @@ fn declaration_works_with_pallet_and_instance() {
 
 	let decl: PalletDeclaration = PalletDeclaration::try_from(
 		proc_macro2::Span::call_site(),
-		&parse_quote! { pub type System = frame_system::Pallet<Runtime, Instance1>; },
-		&parse_quote! { frame_system::Pallet<Runtime, Instance1> },
+		&parse_quote! { pub type System = topsoil_system::Pallet<Runtime, Instance1>; },
+		&parse_quote! { topsoil_system::Pallet<Runtime, Instance1> },
 	)
 	.expect("Failed to parse pallet declaration");
 
 	assert_eq!(decl.name, "System");
-	assert_eq!(decl.path, parse_quote! { frame_system });
+	assert_eq!(decl.path, parse_quote! { topsoil_system });
 
 	let segment: syn::PathSegment =
 		syn::PathSegment { ident: parse_quote! { Pallet }, arguments: PathArguments::None };

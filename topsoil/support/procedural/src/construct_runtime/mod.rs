@@ -21,14 +21,14 @@
 //! order to get all the pallet parts for each pallet.
 //!
 //! Pallets can define their parts:
-//!  - Implicitly: `System: frame_system`
-//!  - Explicitly: `System: frame_system::{Pallet, Call}`
+//!  - Implicitly: `System: topsoil_system`
+//!  - Explicitly: `System: topsoil_system::{Pallet, Call}`
 //!
 //! The `construct_runtime` transitions from the implicit definition to the explicit one.
 //! From the explicit state, Substrate expands the pallets with additional information
 //! that is to be included in the runtime metadata. This expansion makes visible some extra
 //! parts of the pallets, mainly the `Error` if defined. The expanded state looks like
-//! `System: frame_system expanded::{Error} ::{Pallet, Call}` and concatenates the extra expanded
+//! `System: topsoil_system expanded::{Error} ::{Pallet, Call}` and concatenates the extra expanded
 //! parts with the user-provided parts. For example, the `Pallet`, `Call` and `Error` parts are
 //! collected.
 //!
@@ -63,7 +63,7 @@
 //! # Implicit to Explicit
 //!
 //! The `construct_runtime` macro transforms the implicit declaration of each pallet
-//! `System: frame_system` to an explicit one `System: frame_system::{Pallet, Call}` using the
+//! `System: topsoil_system` to an explicit one `System: topsoil_system::{Pallet, Call}` using the
 //! `tt_default_parts` macro.
 //!
 //! The `tt_default_parts` macro exposes a comma separated list of pallet parts. For example, the
@@ -87,34 +87,34 @@
 //! construct_runtime!(
 //! 	//...
 //! 	{
-//! 		System: frame_system = 0, // Implicit definition of parts
-//! 		Balances: pallet_balances = 1, // Implicit definition of parts
+//! 		System: topsoil_system = 0, // Implicit definition of parts
+//! 		Balances: topsoil_balances = 1, // Implicit definition of parts
 //! 	}
 //! );
 //! ```
 //! This call has some implicit pallet parts, thus it will expand to:
 //! ```ignore
-//! frame_support::__private::tt_call! {
-//! 	macro = [{ pallet_balances::tt_default_parts }]
-//! 	~~> frame_support::match_and_insert! {
+//! topsoil_support::__private::tt_call! {
+//! 	macro = [{ topsoil_balances::tt_default_parts }]
+//! 	~~> topsoil_support::match_and_insert! {
 //! 		target = [{
-//! 			frame_support::__private::tt_call! {
-//! 				macro = [{ frame_system::tt_default_parts }]
-//! 				~~> frame_support::match_and_insert! {
+//! 			topsoil_support::__private::tt_call! {
+//! 				macro = [{ topsoil_system::tt_default_parts }]
+//! 				~~> topsoil_support::match_and_insert! {
 //! 					target = [{
 //! 						construct_runtime!(
 //! 							//...
 //! 							{
-//! 								System: frame_system = 0,
-//! 								Balances: pallet_balances = 1,
+//! 								System: topsoil_system = 0,
+//! 								Balances: topsoil_balances = 1,
 //! 							}
 //! 						);
 //! 					}]
-//! 					pattern = [{ System: frame_system }]
+//! 					pattern = [{ System: topsoil_system }]
 //! 				}
 //! 			}
 //! 		}]
-//! 		pattern = [{ Balances: pallet_balances }]
+//! 		pattern = [{ Balances: topsoil_balances }]
 //! 	}
 //! }
 //! ```
@@ -122,39 +122,39 @@
 //! then `tt_call` will pipe the returned pallet parts into the input of `match_and_insert`.
 //! Thus `match_and_insert` will initially receive the following inputs:
 //! ```ignore
-//! frame_support::match_and_insert! {
+//! topsoil_support::match_and_insert! {
 //! 	target = [{
-//! 		frame_support::match_and_insert! {
+//! 		topsoil_support::match_and_insert! {
 //! 			target = [{
 //! 				construct_runtime!(
 //! 					//...
 //! 					{
-//! 						System: frame_system = 0,
-//! 						Balances: pallet_balances = 1,
+//! 						System: topsoil_system = 0,
+//! 						Balances: topsoil_balances = 1,
 //! 					}
 //! 				)
 //! 			}]
-//! 			pattern = [{ System: frame_system }]
+//! 			pattern = [{ System: topsoil_system }]
 //! 			tokens = [{ ::{Pallet, Call} }]
 //! 		}
 //! 	}]
-//! 	pattern = [{ Balances: pallet_balances }]
+//! 	pattern = [{ Balances: topsoil_balances }]
 //! 	tokens = [{ ::{Pallet, Call} }]
 //! }
 //! ```
-//! After dealing with `pallet_balances`, the inner `match_and_insert` will expand to:
+//! After dealing with `topsoil_balances`, the inner `match_and_insert` will expand to:
 //! ```ignore
-//! frame_support::match_and_insert! {
+//! topsoil_support::match_and_insert! {
 //! 	target = [{
 //! 		construct_runtime!(
 //! 			//...
 //! 			{
-//! 				System: frame_system = 0, // Implicit definition of parts
-//! 				Balances: pallet_balances::{Pallet, Call} = 1, // Explicit definition of parts
+//! 				System: topsoil_system = 0, // Implicit definition of parts
+//! 				Balances: topsoil_balances::{Pallet, Call} = 1, // Explicit definition of parts
 //! 			}
 //! 		)
 //! 	}]
-//! 	pattern = [{ System: frame_system }]
+//! 	pattern = [{ System: topsoil_system }]
 //! 	tokens = [{ ::{Pallet, Call} }]
 //! }
 //! ```
@@ -164,8 +164,8 @@
 //! construct_runtime!(
 //! 	//...
 //! 	{
-//! 		System: frame_system::{Pallet, Call},
-//! 		Balances: pallet_balances::{Pallet, Call},
+//! 		System: topsoil_system::{Pallet, Call},
+//! 		Balances: topsoil_balances::{Pallet, Call},
 //! 	}
 //! )
 //! ```
@@ -200,7 +200,7 @@
 //! Users normally do not care about this transition.
 //!
 //! Similarly to the previous transition, the macro expansion transforms `System:
-//! frame_system::{Pallet, Call}` into  `System: frame_system expanded::{Error} ::{Pallet, Call}`.
+//! topsoil_system::{Pallet, Call}` into  `System: topsoil_system expanded::{Error} ::{Pallet, Call}`.
 //! The `expanded` section adds extra parts that the Substrate would like to expose for each pallet
 //! by default. This is done to expose the appropriate types for metadata construction.
 //!
@@ -213,7 +213,7 @@ pub(crate) mod parse;
 
 use crate::pallet::parse::helper::two128_str;
 use cfg_expr::Predicate;
-use frame_support_procedural_tools::{
+use topsoil_support_procedural_tools::{
 	generate_access_from_frame_or_crate, generate_crate_access, generate_hidden_includes,
 };
 use itertools::Itertools;
@@ -274,7 +274,7 @@ pub fn construct_runtime(input: TokenStream) -> TokenStream {
 	res.into()
 }
 
-/// All pallets that have implicit pallet parts (ie `System: frame_system`) are
+/// All pallets that have implicit pallet parts (ie `System: topsoil_system`) are
 /// expanded with the default parts defined by the pallet's `tt_default_parts` macro.
 ///
 /// This function transforms the [`RuntimeDeclaration::Implicit`] into
@@ -285,19 +285,19 @@ fn construct_runtime_implicit_to_explicit(
 	input: TokenStream2,
 	definition: ImplicitRuntimeDeclaration,
 ) -> Result<TokenStream2> {
-	let frame_support = generate_access_from_frame_or_crate("frame-support")?;
+	let topsoil_support = generate_access_from_frame_or_crate("topsoil-support")?;
 	let mut expansion = quote::quote!(
-		#frame_support::construct_runtime! { #input }
+		#topsoil_support::construct_runtime! { #input }
 	);
 	for pallet in definition.pallets.iter().filter(|pallet| pallet.pallet_parts.is_none()) {
 		let pallet_path = &pallet.path;
 		let pallet_name = &pallet.name;
 		let pallet_instance = pallet.instance.as_ref().map(|instance| quote::quote!(::<#instance>));
 		expansion = quote::quote!(
-			#frame_support::__private::tt_call! {
+			#topsoil_support::__private::tt_call! {
 				macro = [{ #pallet_path::tt_default_parts }]
-				your_tt_return = [{ #frame_support::__private::tt_return }]
-				~~> #frame_support::match_and_insert! {
+				your_tt_return = [{ #topsoil_support::__private::tt_return }]
+				~~> #topsoil_support::match_and_insert! {
 					target = [{ #expansion }]
 					pattern = [{ #pallet_name: #pallet_path #pallet_instance }]
 				}
@@ -309,7 +309,7 @@ fn construct_runtime_implicit_to_explicit(
 }
 
 /// All pallets that have
-///   (I): explicit pallet parts (ie `System: frame_system::{Pallet, Call}`) and
+///   (I): explicit pallet parts (ie `System: topsoil_system::{Pallet, Call}`) and
 ///   (II): are not fully expanded (ie do not include the `Error` expansion part)
 /// are fully expanded by including the parts from the pallet's `tt_extra_parts` macro.
 ///
@@ -321,19 +321,19 @@ fn construct_runtime_explicit_to_explicit_expanded(
 	input: TokenStream2,
 	definition: ExplicitRuntimeDeclaration,
 ) -> Result<TokenStream2> {
-	let frame_support = generate_access_from_frame_or_crate("frame-support")?;
+	let topsoil_support = generate_access_from_frame_or_crate("topsoil-support")?;
 	let mut expansion = quote::quote!(
-		#frame_support::construct_runtime! { #input }
+		#topsoil_support::construct_runtime! { #input }
 	);
 	for pallet in definition.pallets.iter().filter(|pallet| !pallet.is_expanded) {
 		let pallet_path = &pallet.path;
 		let pallet_name = &pallet.name;
 		let pallet_instance = pallet.instance.as_ref().map(|instance| quote::quote!(::<#instance>));
 		expansion = quote::quote!(
-			#frame_support::__private::tt_call! {
+			#topsoil_support::__private::tt_call! {
 				macro = [{ #pallet_path::tt_extra_parts }]
-				your_tt_return = [{ #frame_support::__private::tt_return }]
-				~~> #frame_support::match_and_insert! {
+				your_tt_return = [{ #topsoil_support::__private::tt_return }]
+				~~> #topsoil_support::match_and_insert! {
 					target = [{ #expansion }]
 					pattern = [{ #pallet_name: #pallet_path #pallet_instance }]
 				}
@@ -355,7 +355,7 @@ fn construct_runtime_final_expansion(
 			syn::Error::new(
 				pallets_token.span.join(),
 				"`System` pallet declaration is missing. \
-			 Please add this line: `System: frame_system,`",
+			 Please add this line: `System: topsoil_system,`",
 			)
 		})?;
 	if !system_pallet.cfg_pattern.is_empty() {
@@ -382,11 +382,11 @@ fn construct_runtime_final_expansion(
 		.collect::<HashSet<_>>();
 
 	let hidden_crate_name = "construct_runtime";
-	let scrate = generate_crate_access(hidden_crate_name, "frame-support");
-	let scrate_decl = generate_hidden_includes(hidden_crate_name, "frame-support");
+	let scrate = generate_crate_access(hidden_crate_name, "topsoil-support");
+	let scrate_decl = generate_hidden_includes(hidden_crate_name, "topsoil-support");
 
-	let frame_system = generate_access_from_frame_or_crate("frame-system")?;
-	let block = quote!(<#name as #frame_system::Config>::Block);
+	let topsoil_system = generate_access_from_frame_or_crate("topsoil-system")?;
+	let block = quote!(<#name as #topsoil_system::Config>::Block);
 	let unchecked_extrinsic = quote!(<#block as #scrate::soil_runtime::traits::Block>::Extrinsic);
 
 	let outer_event =
@@ -424,7 +424,7 @@ fn construct_runtime_final_expansion(
 			proc_macro_warning::Warning::new_deprecated("WhereSection")
 				.old("use a `where` clause in `construct_runtime`")
 				.new(
-					"use `frame_system::Config` to set the `Block` type and delete this clause.
+					"use `topsoil_system::Config` to set the `Block` type and delete this clause.
 				It is planned to be removed in December 2023",
 				)
 				.help_links(&["https://github.com/paritytech/substrate/pull/14437"])
@@ -791,7 +791,7 @@ pub(crate) fn check_pallet_number(input: TokenStream2, pallet_num: usize) -> Res
 		return Err(syn::Error::new(
 			input.span(),
 			format!(
-				"{} To increase this limit, enable the tuples-{} feature of [frame_support]. {}",
+				"{} To increase this limit, enable the tuples-{} feature of [topsoil_support]. {}",
 				"The number of pallets exceeds the maximum number of tuple elements.",
 				max_pallet_num + 32,
 				if no_feature {

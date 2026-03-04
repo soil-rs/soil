@@ -22,23 +22,23 @@
 // SOFTWARE.
 
 use crate as pallet_template;
-use frame_support::{derive_impl, soil_runtime::BuildStorage};
+use topsoil_support::{derive_impl, soil_runtime::BuildStorage};
 
-type Block = frame_system::mocking::MockBlock<Test>;
+type Block = topsoil_system::mocking::MockBlock<Test>;
 
 // Configure a mock runtime to test the pallet.
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub enum Test
 	{
-		System: frame_system,
+		System: topsoil_system,
 		TemplatePallet: pallet_template,
 	}
 );
 
-/// Using a default config for [`frame_system`] in tests. See `default-config` example for more
+/// Using a default config for [`topsoil_system`] in tests. See `default-config` example for more
 /// details.
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
 	type Block = Block;
 }
 
@@ -48,5 +48,5 @@ impl pallet_template::Config for Test {
 
 // Build genesis storage according to the mock runtime.
 pub fn new_test_ext() -> soil_io::TestExternalities {
-	frame_system::GenesisConfig::<Test>::default().build_storage().unwrap().into()
+	topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap().into()
 }

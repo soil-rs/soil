@@ -76,8 +76,8 @@ mod tests;
 // internal imports
 pub use crate::weights::traits::pallet_election_provider_multi_block_verifier::*;
 
-use frame_election_provider_support::PageIndex;
-use frame_support::weights::WeightMeter;
+use topsoil_election_provider_support::PageIndex;
+use topsoil_support::weights::WeightMeter;
 use impls::SupportsOfVerifier;
 pub use impls::{feasibility_check_page_inner_with_snapshot, pallet::*, Status};
 use soil_core::Get;

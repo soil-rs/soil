@@ -51,7 +51,7 @@
 //! * What `can_hold` returns and where is the boundary.
 
 use super::*;
-use frame_support::traits::{
+use topsoil_support::traits::{
 	fungible::{InspectHold, MutateFreeze, MutateHold},
 	Currency, LockIdentifier, LockableCurrency, ReservableCurrency, WithdrawReasons,
 };

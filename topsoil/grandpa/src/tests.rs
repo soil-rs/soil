@@ -22,12 +22,12 @@
 use super::{Call, Event, *};
 use crate::mock::*;
 use fg_primitives::ScheduledChange;
-use frame_support::{
+use topsoil_support::{
 	assert_err, assert_noop, assert_ok,
 	dispatch::{GetDispatchInfo, Pays},
 	traits::{Currency, KeyOwnerProofSystem, OnFinalize, OneSessionHandler},
 };
-use frame_system::{EventRecord, Phase};
+use topsoil_system::{EventRecord, Phase};
 use soil_core::H256;
 use soil_keyring::Ed25519Keyring;
 use soil_runtime::testing::Digest;
@@ -322,7 +322,7 @@ fn report_equivocation_current_set_works() {
 	let authorities = test_authorities();
 
 	new_test_ext_raw_authorities(authorities).execute_with(|| {
-		assert_eq!(pallet_staking::CurrentEra::<Test>::get(), Some(0));
+		assert_eq!(topsoil_staking::CurrentEra::<Test>::get(), Some(0));
 		assert_eq!(Session::current_index(), 0);
 
 		start_era(1);
@@ -337,7 +337,7 @@ fn report_equivocation_current_set_works() {
 
 			assert_eq!(
 				Staking::eras_stakers(1, &validator),
-				pallet_staking::Exposure { total: 10_000, own: 10_000, others: vec![] },
+				topsoil_staking::Exposure { total: 10_000, own: 10_000, others: vec![] },
 			);
 		}
 
@@ -375,7 +375,7 @@ fn report_equivocation_current_set_works() {
 		assert_eq!(Staking::slashable_balance_of(&equivocation_validator_id), 0);
 		assert_eq!(
 			Staking::eras_stakers(2, &equivocation_validator_id),
-			pallet_staking::Exposure { total: 0, own: 0, others: vec![] },
+			topsoil_staking::Exposure { total: 0, own: 0, others: vec![] },
 		);
 
 		// check that the balances of all other validators are left intact.
@@ -389,7 +389,7 @@ fn report_equivocation_current_set_works() {
 
 			assert_eq!(
 				Staking::eras_stakers(2, &validator),
-				pallet_staking::Exposure { total: 10_000, own: 10_000, others: vec![] },
+				topsoil_staking::Exposure { total: 10_000, own: 10_000, others: vec![] },
 			);
 		}
 	});
@@ -421,7 +421,7 @@ fn report_equivocation_old_set_works() {
 
 			assert_eq!(
 				Staking::eras_stakers(2, &validator),
-				pallet_staking::Exposure { total: 10_000, own: 10_000, others: vec![] },
+				topsoil_staking::Exposure { total: 10_000, own: 10_000, others: vec![] },
 			);
 		}
 
@@ -454,7 +454,7 @@ fn report_equivocation_old_set_works() {
 
 		assert_eq!(
 			Staking::eras_stakers(3, &equivocation_validator_id),
-			pallet_staking::Exposure { total: 0, own: 0, others: vec![] },
+			topsoil_staking::Exposure { total: 0, own: 0, others: vec![] },
 		);
 
 		// check that the balances of all other validators are left intact.
@@ -468,7 +468,7 @@ fn report_equivocation_old_set_works() {
 
 			assert_eq!(
 				Staking::eras_stakers(3, &validator),
-				pallet_staking::Exposure { total: 10_000, own: 10_000, others: vec![] },
+				topsoil_staking::Exposure { total: 10_000, own: 10_000, others: vec![] },
 			);
 		}
 	});

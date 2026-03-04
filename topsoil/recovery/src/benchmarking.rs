@@ -21,22 +21,22 @@ use super::*;
 
 use crate::Pallet;
 use alloc::{boxed::Box, vec, vec::Vec};
-use frame::benchmarking::prelude::*;
+use topsoil::benchmarking::prelude::*;
 
 const SEED: u32 = 0;
 const DEFAULT_DELAY: u32 = 0;
 
 fn assert_last_event<T: Config>(generic_event: <T as Config>::RuntimeEvent) {
-	frame_system::Pallet::<T>::assert_last_event(generic_event.into());
+	topsoil_system::Pallet::<T>::assert_last_event(generic_event.into());
 }
 
 fn assert_has_event<T: Config>(generic_event: <T as Config>::RuntimeEvent) {
-	frame_system::Pallet::<T>::assert_has_event(generic_event.into());
+	topsoil_system::Pallet::<T>::assert_has_event(generic_event.into());
 }
 
 fn get_total_deposit<T: Config>(
 	bounded_friends: &FriendsOf<T>,
-) -> Option<<<T as Config>::Currency as Currency<<T as frame_system::Config>::AccountId>>::Balance>
+) -> Option<<<T as Config>::Currency as Currency<<T as topsoil_system::Config>::AccountId>>::Balance>
 {
 	let friend_deposit = T::FriendDepositFactor::get()
 		.checked_mul(&bounded_friends.len().saturated_into())
@@ -45,7 +45,7 @@ fn get_total_deposit<T: Config>(
 	T::ConfigDepositBase::get().checked_add(&friend_deposit)
 }
 
-fn generate_friends<T: Config>(num: u32) -> Vec<<T as frame_system::Config>::AccountId> {
+fn generate_friends<T: Config>(num: u32) -> Vec<<T as topsoil_system::Config>::AccountId> {
 	// Create friends
 	let mut friends = (0..num).map(|x| account("friend", x, SEED)).collect::<Vec<_>>();
 	// Sort
@@ -65,7 +65,7 @@ fn generate_friends<T: Config>(num: u32) -> Vec<<T as frame_system::Config>::Acc
 fn add_caller_and_generate_friends<T: Config>(
 	caller: T::AccountId,
 	num: u32,
-) -> Vec<<T as frame_system::Config>::AccountId> {
+) -> Vec<<T as topsoil_system::Config>::AccountId> {
 	// Create friends
 	let mut friends = generate_friends::<T>(num - 1);
 
@@ -134,7 +134,7 @@ mod benchmarks {
 		let recovered_account: T::AccountId = account("recovered_account", 0, SEED);
 		let recovered_account_lookup = T::Lookup::unlookup(recovered_account.clone());
 		let call: <T as Config>::RuntimeCall =
-			frame_system::Call::<T>::remark { remark: vec![] }.into();
+			topsoil_system::Call::<T>::remark { remark: vec![] }.into();
 
 		Proxy::<T>::insert(&caller, &recovered_account);
 
@@ -362,9 +362,9 @@ mod benchmarks {
 		let account: T::AccountId = account("account", 0, SEED);
 		let account_lookup = T::Lookup::unlookup(account.clone());
 
-		frame_system::Pallet::<T>::inc_providers(&caller);
+		topsoil_system::Pallet::<T>::inc_providers(&caller);
 
-		frame_system::Pallet::<T>::inc_consumers(&caller)?;
+		topsoil_system::Pallet::<T>::inc_consumers(&caller)?;
 
 		Proxy::<T>::insert(&caller, &account);
 

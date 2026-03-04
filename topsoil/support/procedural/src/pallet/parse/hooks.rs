@@ -57,7 +57,7 @@ impl HooksDef {
 		if item_trait.segments.len() != 1 || item_trait.segments[0].ident != "Hooks" {
 			let msg = format!(
 				"Invalid pallet::hooks, expected trait to be `Hooks` found `{}`\
-				, you can import from `frame_support::pallet_prelude`",
+				, you can import from `topsoil_support::pallet_prelude`",
 				quote::quote!(#item_trait)
 			);
 

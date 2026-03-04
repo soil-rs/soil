@@ -20,11 +20,11 @@
 #![cfg(feature = "runtime-benchmarks")]
 
 use alloc::vec;
-use frame_benchmarking::{v2::*, BenchmarkError};
-use frame_support::ensure;
-use frame_system::RawOrigin;
-use pallet_bounties::Pallet as Bounties;
-use pallet_treasury::Pallet as Treasury;
+use topsoil_benchmarking::{v2::*, BenchmarkError};
+use topsoil_support::ensure;
+use topsoil_system::RawOrigin;
+use topsoil_bounties::Pallet as Bounties;
+use topsoil_treasury::Pallet as Treasury;
 use soil_runtime::traits::BlockNumberProvider;
 
 use crate::*;
@@ -56,7 +56,7 @@ struct BenchmarkChildBounty<T: Config> {
 }
 
 fn set_block_number<T: Config>(n: BlockNumberFor<T>) {
-	<T as pallet_treasury::Config>::BlockNumberProvider::set_block_number(n);
+	<T as topsoil_treasury::Config>::BlockNumberProvider::set_block_number(n);
 }
 
 fn setup_bounty<T: Config>(
@@ -114,13 +114,13 @@ fn activate_bounty<T: Config>(
 		child_bounty_setup.reason.clone(),
 	)?;
 
-	child_bounty_setup.bounty_id = pallet_bounties::BountyCount::<T>::get() - 1;
+	child_bounty_setup.bounty_id = topsoil_bounties::BountyCount::<T>::get() - 1;
 
 	let approve_origin =
 		T::SpendOrigin::try_successful_origin().map_err(|_| BenchmarkError::Weightless)?;
 	Bounties::<T>::approve_bounty(approve_origin, child_bounty_setup.bounty_id)?;
 	set_block_number::<T>(T::SpendPeriod::get());
-	Treasury::<T>::on_initialize(frame_system::Pallet::<T>::block_number());
+	Treasury::<T>::on_initialize(topsoil_system::Pallet::<T>::block_number());
 	Bounties::<T>::propose_curator(
 		RawOrigin::Root.into(),
 		child_bounty_setup.bounty_id,
@@ -175,7 +175,7 @@ fn setup_pot_account<T: Config>() {
 }
 
 fn assert_last_event<T: Config>(generic_event: <T as Config>::RuntimeEvent) {
-	frame_system::Pallet::<T>::assert_last_event(generic_event.into());
+	topsoil_system::Pallet::<T>::assert_last_event(generic_event.into());
 }
 
 #[benchmarks]
@@ -273,7 +273,7 @@ mod benchmarks {
 	fn unassign_curator() -> Result<(), BenchmarkError> {
 		setup_pot_account::<T>();
 		let bounty_setup = activate_child_bounty::<T>(0, T::MaximumReasonLength::get())?;
-		Treasury::<T>::on_initialize(frame_system::Pallet::<T>::block_number());
+		Treasury::<T>::on_initialize(topsoil_system::Pallet::<T>::block_number());
 		let bounty_update_period = T::BountyUpdatePeriod::get();
 		let inactivity_timeout = T::SpendPeriod::get().saturating_add(bounty_update_period);
 		set_block_number::<T>(inactivity_timeout.saturating_add(1u32.into()));
@@ -394,7 +394,7 @@ mod benchmarks {
 	fn close_child_bounty_active() -> Result<(), BenchmarkError> {
 		setup_pot_account::<T>();
 		let bounty_setup = activate_child_bounty::<T>(0, T::MaximumReasonLength::get())?;
-		Treasury::<T>::on_initialize(frame_system::Pallet::<T>::block_number());
+		Treasury::<T>::on_initialize(topsoil_system::Pallet::<T>::block_number());
 
 		#[extrinsic_call]
 		close_child_bounty(RawOrigin::Root, bounty_setup.bounty_id, bounty_setup.child_bounty_id);

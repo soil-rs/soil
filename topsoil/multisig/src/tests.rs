@@ -20,29 +20,29 @@
 #![cfg(test)]
 
 use super::*;
-use crate as pallet_multisig;
-use frame::{prelude::*, runtime::prelude::*, testing_prelude::*};
+use crate as topsoil_multisig;
+use topsoil::{prelude::*, runtime::prelude::*, testing_prelude::*};
 
-type Block = frame_system::mocking::MockBlockU32<Test>;
+type Block = topsoil_system::mocking::MockBlockU32<Test>;
 
 construct_runtime!(
 	pub struct Test {
-		System: frame_system,
-		Balances: pallet_balances,
-		Multisig: pallet_multisig,
+		System: topsoil_system,
+		Balances: topsoil_balances,
+		Multisig: topsoil_multisig,
 	}
 );
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
 	type Block = Block;
-	type AccountData = pallet_balances::AccountData<u64>;
+	type AccountData = topsoil_balances::AccountData<u64>;
 	// This pallet wishes to overwrite this.
 	type BaseCallFilter = TestBaseCallFilter;
 }
 
-#[derive_impl(pallet_balances::config_preludes::TestDefaultConfig)]
-impl pallet_balances::Config for Test {
+#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
+impl topsoil_balances::Config for Test {
 	type ReserveIdentifier = [u8; 8];
 	type AccountStore = System;
 }
@@ -53,7 +53,7 @@ impl Contains<RuntimeCall> for TestBaseCallFilter {
 		match *c {
 			RuntimeCall::Balances(_) => true,
 			// Needed for benchmarking
-			RuntimeCall::System(frame_system::Call::remark { .. }) => true,
+			RuntimeCall::System(topsoil_system::Call::remark { .. }) => true,
 			_ => false,
 		}
 	}
@@ -72,14 +72,14 @@ impl Config for Test {
 	type DepositFactor = MultisigDepositFactor;
 	type MaxSignatories = ConstU32<3>;
 	type WeightInfo = ();
-	type BlockNumberProvider = frame_system::Pallet<Test>;
+	type BlockNumberProvider = topsoil_system::Pallet<Test>;
 }
 
-use pallet_balances::{Call as BalancesCall, Error as BalancesError};
+use topsoil_balances::{Call as BalancesCall, Error as BalancesError};
 
 pub fn new_test_ext() -> TestState {
-	let mut t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
-	pallet_balances::GenesisConfig::<Test> {
+	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	topsoil_balances::GenesisConfig::<Test> {
 		balances: vec![(1, 10), (2, 10), (3, 10), (4, 5), (5, 2)],
 		..Default::default()
 	}
@@ -700,7 +700,7 @@ fn multisig_2_of_3_cannot_reissue_same_call() {
 		));
 
 		System::assert_last_event(
-			pallet_multisig::Event::MultisigExecuted {
+			topsoil_multisig::Event::MultisigExecuted {
 				approving: 3,
 				timepoint: now(),
 				multisig: multi,
@@ -1007,7 +1007,7 @@ fn multisig_1_of_3_works() {
 		));
 
 		System::assert_last_event(
-			pallet_multisig::Event::MultisigExecuted {
+			topsoil_multisig::Event::MultisigExecuted {
 				approving: 1,
 				timepoint: now(),
 				multisig: multi,
@@ -1023,10 +1023,10 @@ fn multisig_1_of_3_works() {
 #[test]
 fn multisig_filters() {
 	new_test_ext().execute_with(|| {
-		let call = Box::new(RuntimeCall::System(frame_system::Call::set_code { code: vec![] }));
+		let call = Box::new(RuntimeCall::System(topsoil_system::Call::set_code { code: vec![] }));
 		assert_noop!(
 			Multisig::as_multi_threshold_1(RuntimeOrigin::signed(1), vec![2], call.clone()),
-			DispatchError::from(frame_system::Error::<Test>::CallFiltered),
+			DispatchError::from(topsoil_system::Error::<Test>::CallFiltered),
 		);
 	});
 }

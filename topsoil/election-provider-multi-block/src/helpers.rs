@@ -22,7 +22,7 @@ use crate::{
 	unsigned::miner::MinerConfig,
 	AllVoterPagesOf, SolutionTargetIndexOf, SolutionVoterIndexOf, VoteWeight,
 };
-use frame_support::{traits::Get, BoundedVec};
+use topsoil_support::{traits::Get, BoundedVec};
 use soil_runtime::SaturatedConversion;
 use soil_std::{collections::btree_map::BTreeMap, convert::TryInto, prelude::*};
 
@@ -32,7 +32,7 @@ macro_rules! log {
 	($level:tt, $pattern:expr $(, $values:expr)* $(,)?) => {
 		log::$level!(
 			target: $crate::LOG_PREFIX,
-			concat!("[#{:?}] 🗳🗳🗳  ", $pattern), <frame_system::Pallet<T>>::block_number() $(, $values)*
+			concat!("[#{:?}] 🗳🗳🗳  ", $pattern), <topsoil_system::Pallet<T>>::block_number() $(, $values)*
 		)
 	};
 }
@@ -46,7 +46,7 @@ macro_rules! sublog {
 		#[cfg(feature = "std")]
 		log::$level!(
 			target: format!("{}::{}", $crate::LOG_PREFIX, $sub_pallet).as_ref(),
-			concat!("[#{:?}] 🗳🗳🗳  ", $pattern), <frame_system::Pallet<T>>::block_number() $(, $values )*
+			concat!("[#{:?}] 🗳🗳🗳  ", $pattern), <topsoil_system::Pallet<T>>::block_number() $(, $values )*
 		)
 	};
 }

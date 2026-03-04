@@ -17,12 +17,12 @@
 
 //! Test utilities
 
-use crate::{self as pallet_staking, *};
-use frame_election_provider_support::{
+use crate::{self as topsoil_staking, *};
+use topsoil_election_provider_support::{
 	bounds::{ElectionBounds, ElectionBoundsBuilder},
 	onchain, BoundedSupports, SequentialPhragmen, Support, VoteWeight,
 };
-use frame_support::{
+use topsoil_support::{
 	assert_ok, derive_impl, ord_parameter_types, parameter_types,
 	traits::{
 		ConstU64, EitherOfDiverse, FindAuthor, Get, Imbalance, OnUnbalanced, OneSessionHandler,
@@ -30,7 +30,7 @@ use frame_support::{
 	},
 	weights::constants::RocksDbWeight,
 };
-use frame_system::{EnsureRoot, EnsureSignedBy};
+use topsoil_system::{EnsureRoot, EnsureSignedBy};
 use soil_core::ConstBool;
 use soil_io;
 use soil_runtime::{curve::PiecewiseLinear, testing::UintAuthorityId, traits::Zero, BuildStorage};
@@ -84,19 +84,19 @@ pub fn is_disabled(controller: AccountId) -> bool {
 	Session::disabled_validators().contains(&validator_index)
 }
 
-type Block = frame_system::mocking::MockBlock<Test>;
+type Block = topsoil_system::mocking::MockBlock<Test>;
 
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub enum Test
 	{
-		System: frame_system,
-		Authorship: pallet_authorship,
-		Timestamp: pallet_timestamp,
-		Balances: pallet_balances,
-		Staking: pallet_staking,
-		Session: pallet_session,
-		Historical: pallet_session::historical,
-		VoterBagsList: pallet_bags_list::<Instance1>,
+		System: topsoil_system,
+		Authorship: topsoil_authorship,
+		Timestamp: topsoil_timestamp,
+		Balances: topsoil_balances,
+		Staking: topsoil_staking,
+		Session: topsoil_session,
+		Historical: topsoil_session::historical,
+		VoterBagsList: topsoil_bags_list::<Instance1>,
 	}
 );
 
@@ -105,7 +105,7 @@ pub struct Author11;
 impl FindAuthor<AccountId> for Author11 {
 	fn find_author<'a, I>(_digests: I) -> Option<AccountId>
 	where
-		I: 'a + IntoIterator<Item = (frame_support::ConsensusEngineId, &'a [u8])>,
+		I: 'a + IntoIterator<Item = (topsoil_support::ConsensusEngineId, &'a [u8])>,
 	{
 		Some(11)
 	}
@@ -120,15 +120,15 @@ parameter_types! {
 	pub static MaxControllersInDeprecationBatch: u32 = 5900;
 }
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
 	type DbWeight = RocksDbWeight;
 	type Block = Block;
-	type AccountData = pallet_balances::AccountData<Balance>;
+	type AccountData = topsoil_balances::AccountData<Balance>;
 }
-#[derive_impl(pallet_balances::config_preludes::TestDefaultConfig)]
-impl pallet_balances::Config for Test {
-	type MaxLocks = frame_support::traits::ConstU32<1024>;
+#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
+impl topsoil_balances::Config for Test {
+	type MaxLocks = topsoil_support::traits::ConstU32<1024>;
 	type Balance = Balance;
 	type ExistentialDeposit = ExistentialDeposit;
 	type AccountStore = System;
@@ -139,40 +139,40 @@ soil_runtime::impl_opaque_keys! {
 		pub other: OtherSessionHandler,
 	}
 }
-impl pallet_session::Config for Test {
-	type SessionManager = pallet_session::historical::NoteHistoricalRoot<Test, Staking>;
+impl topsoil_session::Config for Test {
+	type SessionManager = topsoil_session::historical::NoteHistoricalRoot<Test, Staking>;
 	type Keys = SessionKeys;
-	type ShouldEndSession = pallet_session::PeriodicSessions<Period, Offset>;
+	type ShouldEndSession = topsoil_session::PeriodicSessions<Period, Offset>;
 	type SessionHandler = (OtherSessionHandler,);
 	type RuntimeEvent = RuntimeEvent;
 	type ValidatorId = AccountId;
 	type ValidatorIdOf = soil_runtime::traits::ConvertInto;
-	type NextSessionRotation = pallet_session::PeriodicSessions<Period, Offset>;
+	type NextSessionRotation = topsoil_session::PeriodicSessions<Period, Offset>;
 	type DisablingStrategy =
-		pallet_session::disabling::UpToLimitWithReEnablingDisablingStrategy<DISABLING_LIMIT_FACTOR>;
+		topsoil_session::disabling::UpToLimitWithReEnablingDisablingStrategy<DISABLING_LIMIT_FACTOR>;
 	type WeightInfo = ();
 	type Currency = Balances;
 	type KeyDeposit = ();
 }
 
-impl pallet_session::historical::Config for Test {
+impl topsoil_session::historical::Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type FullIdentification = ();
 	type FullIdentificationOf = crate::UnitIdentificationOf<Self>;
 }
-impl pallet_authorship::Config for Test {
+impl topsoil_authorship::Config for Test {
 	type FindAuthor = Author11;
 	type EventHandler = ();
 }
 
-impl pallet_timestamp::Config for Test {
+impl topsoil_timestamp::Config for Test {
 	type Moment = u64;
 	type OnTimestampSet = ();
 	type MinimumPeriod = ConstU64<5>;
 	type WeightInfo = ();
 }
 
-pallet_staking_reward_curve::build! {
+topsoil_staking_reward_curve::build! {
 	const I_NPOS: PiecewiseLinear<'static> = curve!(
 		min_inflation: 0_025_000,
 		max_inflation: 0_100_000,
@@ -216,8 +216,8 @@ parameter_types! {
 	pub static AbsoluteMaxNominations: u32 = 16;
 }
 
-type VoterBagsListInstance = pallet_bags_list::Instance1;
-impl pallet_bags_list::Config<VoterBagsListInstance> for Test {
+type VoterBagsListInstance = topsoil_bags_list::Instance1;
+impl topsoil_bags_list::Config<VoterBagsListInstance> for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type WeightInfo = ();
 	// Staking is the source of truth for voter bags list, since they are not kept up to date.
@@ -332,7 +332,7 @@ where
 }
 
 pub(crate) type StakingCall = crate::Call<Test>;
-pub(crate) type TestCall = <Test as frame_system::Config>::RuntimeCall;
+pub(crate) type TestCall = <Test as topsoil_system::Config>::RuntimeCall;
 
 parameter_types! {
 	// if true, skips the try-state for the test running.
@@ -454,10 +454,10 @@ impl ExtBuilder {
 	}
 	fn build(self) -> soil_io::TestExternalities {
 		soil_tracing::try_init_simple();
-		let mut storage = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+		let mut storage = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 		let ed = ExistentialDeposit::get();
 
-		let _ = pallet_balances::GenesisConfig::<Test> {
+		let _ = topsoil_balances::GenesisConfig::<Test> {
 			balances: vec![
 				(1, 10 * self.balance_factor),
 				(2, 20 * self.balance_factor),
@@ -541,7 +541,7 @@ impl ExtBuilder {
 			stakers.extend(self.stakers)
 		}
 
-		let _ = pallet_staking::GenesisConfig::<Test> {
+		let _ = topsoil_staking::GenesisConfig::<Test> {
 			stakers: stakers.clone(),
 			validator_count: self.validator_count,
 			minimum_validator_count: self.minimum_validator_count,
@@ -553,7 +553,7 @@ impl ExtBuilder {
 		}
 		.assimilate_storage(&mut storage);
 
-		let _ = pallet_session::GenesisConfig::<Test> {
+		let _ = topsoil_session::GenesisConfig::<Test> {
 			keys: if self.has_stakers {
 				// set the keys for the first session.
 				stakers
@@ -596,11 +596,11 @@ impl ExtBuilder {
 }
 
 pub(crate) fn active_era() -> EraIndex {
-	pallet_staking::ActiveEra::<Test>::get().unwrap().index
+	topsoil_staking::ActiveEra::<Test>::get().unwrap().index
 }
 
 pub(crate) fn current_era() -> EraIndex {
-	pallet_staking::CurrentEra::<Test>::get().unwrap()
+	topsoil_staking::CurrentEra::<Test>::get().unwrap()
 }
 
 pub(crate) fn bond(who: AccountId, val: Balance) {
@@ -645,7 +645,7 @@ pub(crate) fn bond_virtual_nominator(
 pub(crate) fn run_to_block(n: BlockNumber) {
 	System::run_to_block_with::<AllPalletsWithSystem>(
 		n,
-		frame_system::RunToBlockHooks::default().after_initialize(|bn| {
+		topsoil_system::RunToBlockHooks::default().after_initialize(|bn| {
 			Timestamp::set_timestamp(bn * BLOCK_TIME + INIT_TIMESTAMP);
 		}),
 	);
@@ -688,8 +688,8 @@ pub(crate) fn start_active_era(era_index: EraIndex) {
 
 pub(crate) fn current_total_payout_for_duration(duration: u64) -> Balance {
 	let (payout, _rest) = <Test as Config>::EraPayout::era_payout(
-		pallet_staking::ErasTotalStake::<Test>::get(active_era()),
-		pallet_balances::TotalIssuance::<Test>::get(),
+		topsoil_staking::ErasTotalStake::<Test>::get(active_era()),
+		topsoil_balances::TotalIssuance::<Test>::get(),
 		duration,
 	);
 	assert!(payout > 0);
@@ -698,8 +698,8 @@ pub(crate) fn current_total_payout_for_duration(duration: u64) -> Balance {
 
 pub(crate) fn maximum_payout_for_duration(duration: u64) -> Balance {
 	let (payout, rest) = <Test as Config>::EraPayout::era_payout(
-		pallet_staking::ErasTotalStake::<Test>::get(active_era()),
-		pallet_balances::TotalIssuance::<Test>::get(),
+		topsoil_staking::ErasTotalStake::<Test>::get(active_era()),
+		topsoil_balances::TotalIssuance::<Test>::get(),
 		duration,
 	);
 	payout + rest
@@ -742,7 +742,7 @@ pub(crate) fn validator_controllers() -> Vec<AccountId> {
 pub(crate) fn on_offence_in_era(
 	offenders: &[OffenceDetails<
 		AccountId,
-		pallet_session::historical::IdentificationTuple<Test>,
+		topsoil_session::historical::IdentificationTuple<Test>,
 	>],
 	slash_fraction: &[Perbill],
 	era: EraIndex,
@@ -761,11 +761,11 @@ pub(crate) fn on_offence_in_era(
 		}
 	}
 
-	if pallet_staking::ActiveEra::<Test>::get().unwrap().index == era {
+	if topsoil_staking::ActiveEra::<Test>::get().unwrap().index == era {
 		let _ = <Staking as OnOffenceHandler<_, _, _>>::on_offence(
 			offenders,
 			slash_fraction,
-			pallet_staking::ErasStartSessionIndex::<Test>::get(era).unwrap(),
+			topsoil_staking::ErasStartSessionIndex::<Test>::get(era).unwrap(),
 		);
 	} else {
 		panic!("cannot slash in era {}", era);
@@ -775,18 +775,18 @@ pub(crate) fn on_offence_in_era(
 pub(crate) fn on_offence_now(
 	offenders: &[OffenceDetails<
 		AccountId,
-		pallet_session::historical::IdentificationTuple<Test>,
+		topsoil_session::historical::IdentificationTuple<Test>,
 	>],
 	slash_fraction: &[Perbill],
 ) {
-	let now = pallet_staking::ActiveEra::<Test>::get().unwrap().index;
+	let now = topsoil_staking::ActiveEra::<Test>::get().unwrap().index;
 	on_offence_in_era(offenders, slash_fraction, now)
 }
 
 pub(crate) fn offence_from(
 	offender: AccountId,
 	reporter: Option<Vec<AccountId>>,
-) -> OffenceDetails<AccountId, pallet_session::historical::IdentificationTuple<Test>> {
+) -> OffenceDetails<AccountId, topsoil_session::historical::IdentificationTuple<Test>> {
 	OffenceDetails { offender: (offender, ()), reporters: reporter.unwrap_or_default() }
 }
 
@@ -936,7 +936,7 @@ pub(crate) fn staking_events() -> Vec<crate::Event<Test>> {
 		.collect()
 }
 
-pub(crate) fn session_events() -> Vec<pallet_session::Event<Test>> {
+pub(crate) fn session_events() -> Vec<topsoil_session::Event<Test>> {
 	System::events()
 		.into_iter()
 		.map(|r| r.event)

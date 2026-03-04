@@ -50,7 +50,7 @@ use core::{
 	marker::PhantomData,
 	ops::{Deref, DerefMut},
 };
-use frame::{
+use topsoil::{
 	prelude::*,
 	traits::{BalanceStatus, Currency, ReservableCurrency},
 };
@@ -165,16 +165,16 @@ where
 
 pub use pallet::*;
 
-#[frame::pallet]
+#[topsoil::pallet]
 pub mod pallet {
 	use super::*;
 
 	/// Atomic swap's pallet configuration trait.
 	#[pallet::config]
-	pub trait Config: frame_system::Config {
+	pub trait Config: topsoil_system::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 		/// Swap action.
 		type SwapAction: SwapAction<Self::AccountId, Self> + Parameter + MaxEncodedLen;
 		/// Limit of proof size.
@@ -270,7 +270,7 @@ pub mod pallet {
 			let swap = PendingSwap {
 				source,
 				action,
-				end_block: frame_system::Pallet::<T>::block_number() + duration,
+				end_block: topsoil_system::Pallet::<T>::block_number() + duration,
 			};
 			PendingSwaps::<T>::insert(target.clone(), hashed_proof, swap.clone());
 
@@ -339,7 +339,7 @@ pub mod pallet {
 			let swap = PendingSwaps::<T>::get(&target, hashed_proof).ok_or(Error::<T>::NotExist)?;
 			ensure!(swap.source == source, Error::<T>::SourceMismatch);
 			ensure!(
-				frame_system::Pallet::<T>::block_number() >= swap.end_block,
+				topsoil_system::Pallet::<T>::block_number() >= swap.end_block,
 				Error::<T>::DurationNotPassed,
 			);
 

@@ -16,13 +16,13 @@
 // limitations under the License.
 
 use codec::{Decode, DecodeWithMemTracking, Encode};
-use frame_support::PalletError;
+use topsoil_support::PalletError;
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 #[allow(unused_imports)]
 pub mod pallet {
 	#[pallet::config]
-	pub trait Config: frame_system::Config {}
+	pub trait Config: topsoil_system::Config {}
 
 	#[pallet::pallet]
 	pub struct Pallet<T>(core::marker::PhantomData<T>);

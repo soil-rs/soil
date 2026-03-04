@@ -44,7 +44,7 @@ extern crate alloc;
 
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use core::marker::PhantomData;
-use frame_support::{
+use topsoil_support::{
 	dispatch::{DispatchResultWithPostInfo, PostDispatchInfo},
 	ensure, impl_ensure_origin_with_arg_ignoring_arg,
 	traits::{
@@ -117,7 +117,7 @@ impl<T: Config<I>, I: 'static, M: GetMaxVoters> Tally<T, I, M> {
 pub type TallyOf<T, I = ()> = Tally<T, I, Pallet<T, I>>;
 pub type PollIndexOf<T, I = ()> = <<T as Config<I>>::Polls as Polling<TallyOf<T, I>>>::Index;
 pub type ClassOf<T, I = ()> = <<T as Config<I>>::Polls as Polling<TallyOf<T, I>>>::Class;
-type AccountIdLookupOf<T> = <<T as frame_system::Config>::Lookup as StaticLookup>::Source;
+type AccountIdLookupOf<T> = <<T as topsoil_system::Config>::Lookup as StaticLookup>::Source;
 
 impl<T: Config<I>, I: 'static, M: GetMaxVoters<Class = ClassOf<T, I>>>
 	VoteTally<Votes, ClassOf<T, I>> for Tally<T, I, M>
@@ -161,7 +161,7 @@ impl<T: Config<I>, I: 'static, M: GetMaxVoters<Class = ClassOf<T, I>>>
 			let max_voters = granularity.saturating_reciprocal_mul(1u32);
 			for i in 0..max_voters {
 				let who: T::AccountId =
-					frame_benchmarking::account("ranked_collective_benchmarking", i, 0);
+					topsoil_benchmarking::account("ranked_collective_benchmarking", i, 0);
 				crate::Pallet::<T, I>::do_add_member_to_rank(
 					who,
 					T::MinRankOfClass::convert(class.clone()),
@@ -315,10 +315,10 @@ impl<T: Config<I>, I: 'static> EnsureOriginWithArg<T::RuntimeOrigin, Rank> for E
 
 	#[cfg(feature = "runtime-benchmarks")]
 	fn try_successful_origin(min_rank: &Rank) -> Result<T::RuntimeOrigin, ()> {
-		let who = frame_benchmarking::account::<T::AccountId>("successful_origin", 0, 0);
+		let who = topsoil_benchmarking::account::<T::AccountId>("successful_origin", 0, 0);
 		crate::Pallet::<T, I>::do_add_member_to_rank(who.clone(), *min_rank, true)
 			.expect("Could not add members for benchmarks");
-		Ok(frame_system::RawOrigin::Signed(who).into())
+		Ok(topsoil_system::RawOrigin::Signed(who).into())
 	}
 }
 
@@ -372,10 +372,10 @@ impl<T: Config<I>, I: 'static, const MIN_RANK: u16> EnsureOrigin<T::RuntimeOrigi
 
 	#[cfg(feature = "runtime-benchmarks")]
 	fn try_successful_origin() -> Result<T::RuntimeOrigin, ()> {
-		let who = frame_benchmarking::account::<T::AccountId>("successful_origin", 0, 0);
+		let who = topsoil_benchmarking::account::<T::AccountId>("successful_origin", 0, 0);
 		crate::Pallet::<T, I>::do_add_member_to_rank(who.clone(), MIN_RANK, true)
 			.expect("Could not add members for benchmarks");
-		Ok(frame_system::RawOrigin::Signed(who).into())
+		Ok(topsoil_system::RawOrigin::Signed(who).into())
 	}
 }
 
@@ -392,25 +392,25 @@ pub trait BenchmarkSetup<AccountId> {
 	fn ensure_member(acc: &AccountId);
 }
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
-	use frame_support::{pallet_prelude::*, storage::KeyLenOf};
-	use frame_system::pallet_prelude::*;
+	use topsoil_support::{pallet_prelude::*, storage::KeyLenOf};
+	use topsoil_system::pallet_prelude::*;
 	use soil_runtime::traits::MaybeConvert;
 
 	#[pallet::pallet]
 	pub struct Pallet<T, I = ()>(PhantomData<(T, I)>);
 
 	#[pallet::config]
-	pub trait Config<I: 'static = ()>: frame_system::Config {
+	pub trait Config<I: 'static = ()>: topsoil_system::Config {
 		/// Weight information for extrinsics in this pallet.
 		type WeightInfo: WeightInfo;
 
 		/// The runtime event type.
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self, I>>
-			+ IsType<<Self as frame_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// The origin required to add a member.
 		type AddOrigin: EnsureOrigin<Self::RuntimeOrigin>;
@@ -877,9 +877,9 @@ pub mod pallet {
 		/// Determine the rank of the account behind the `Signed` origin `o`, `None` if the account
 		/// is unknown to this collective or `o` is not `Signed`.
 		pub fn as_rank(
-			o: &<T::RuntimeOrigin as frame_support::traits::OriginTrait>::PalletsOrigin,
+			o: &<T::RuntimeOrigin as topsoil_support::traits::OriginTrait>::PalletsOrigin,
 		) -> Option<u16> {
-			use frame_support::traits::CallerTrait;
+			use topsoil_support::traits::CallerTrait;
 			o.as_signed().and_then(Self::rank_of)
 		}
 

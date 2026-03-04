@@ -76,7 +76,7 @@ extern crate alloc;
 
 use alloc::{boxed::Box, collections::btree_set::BTreeSet, vec::Vec};
 use codec::Codec;
-use frame_support::{
+use topsoil_support::{
 	traits::{
 		fungibles::{Balanced, Create, Credit, Inspect, Mutate},
 		tokens::{
@@ -98,21 +98,21 @@ use soil_runtime::{
 	DispatchError, Saturating, TokenError, TransactionOutcome,
 };
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
-	use frame_support::{pallet_prelude::*, traits::fungibles::Refund};
-	use frame_system::pallet_prelude::*;
+	use topsoil_support::{pallet_prelude::*, traits::fungibles::Refund};
+	use topsoil_system::pallet_prelude::*;
 	use soil_arithmetic::{traits::Unsigned, Permill};
 
 	#[pallet::pallet]
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
-	pub trait Config: frame_system::Config {
+	pub trait Config: topsoil_system::Config {
 		/// Overarching event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// The type in which the assets for swapping are measured.
 		type Balance: Balance;
@@ -1365,7 +1365,7 @@ soil_api::decl_runtime_apis! {
 	/// and quote prices for swaps.
 	pub trait AssetConversionApi<Balance, AssetId>
 	where
-		Balance: frame_support::traits::tokens::Balance + MaybeDisplay,
+		Balance: topsoil_support::traits::tokens::Balance + MaybeDisplay,
 		AssetId: Codec,
 	{
 		/// Provides a quote for [`Pallet::swap_tokens_for_exact_tokens`].

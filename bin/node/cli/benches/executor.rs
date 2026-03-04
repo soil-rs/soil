@@ -18,7 +18,7 @@
 
 use codec::{Decode, Encode};
 use criterion::{criterion_group, criterion_main, BatchSize, Criterion};
-use frame_support::Hashable;
+use topsoil_support::Hashable;
 use kitchensink_runtime::{
 	constants::currency::*, Block, BuildStorage, CheckedExtrinsic, Header, RuntimeCall,
 	RuntimeGenesisConfig, UncheckedExtrinsic,
@@ -146,11 +146,11 @@ fn test_blocks(
 	let mut test_ext = new_test_ext(genesis_config);
 	let mut block1_extrinsics = vec![CheckedExtrinsic {
 		format: ExtrinsicFormat::Bare,
-		function: RuntimeCall::Timestamp(pallet_timestamp::Call::set { now: 0 }),
+		function: RuntimeCall::Timestamp(topsoil_timestamp::Call::set { now: 0 }),
 	}];
 	block1_extrinsics.extend((0..20).map(|i| CheckedExtrinsic {
 		format: ExtrinsicFormat::Signed(alice(), tx_ext(i, 0)),
-		function: RuntimeCall::Balances(pallet_balances::Call::transfer_allow_death {
+		function: RuntimeCall::Balances(topsoil_balances::Call::transfer_allow_death {
 			dest: bob().into(),
 			value: 1 * DOLLARS,
 		}),

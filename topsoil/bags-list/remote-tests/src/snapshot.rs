@@ -16,43 +16,43 @@
 
 //! Test to execute the snapshot using the voter bag.
 
-use frame_election_provider_support::{
+use topsoil_election_provider_support::{
 	bounds::{CountBound, DataProviderBounds},
 	SortedListProvider,
 };
-use frame_support::traits::PalletInfoAccess;
+use topsoil_support::traits::PalletInfoAccess;
 use remote_externalities::{Builder, Mode, OnlineConfig};
 use soil_runtime::{
 	traits::{Block as BlockT, Zero},
 	DeserializeOwned,
 };
 
-/// Execute create a snapshot from pallet-staking.
+/// Execute create a snapshot from topsoil-staking.
 pub async fn execute<Runtime, Block>(voter_limit: Option<usize>, currency_unit: u64, ws_url: String)
 where
-	Runtime: crate::RuntimeT<pallet_bags_list::Instance1>,
+	Runtime: crate::RuntimeT<topsoil_bags_list::Instance1>,
 	Block: BlockT + DeserializeOwned,
 	Block::Header: DeserializeOwned,
 {
-	use frame_support::storage::generator::StorageMap;
+	use topsoil_support::storage::generator::StorageMap;
 
 	let mut ext = Builder::<Block>::new()
 		.mode(Mode::Online(OnlineConfig {
 			transport_uris: vec![ws_url.to_string()],
-			// NOTE: we don't scrape pallet-staking, this kinda ensures that the source of the data
+			// NOTE: we don't scrape topsoil-staking, this kinda ensures that the source of the data
 			// is bags-list.
-			pallets: vec![pallet_bags_list::Pallet::<Runtime, pallet_bags_list::Instance1>::name()
+			pallets: vec![topsoil_bags_list::Pallet::<Runtime, topsoil_bags_list::Instance1>::name()
 				.to_string()],
 			at: None,
 			hashed_prefixes: vec![
-				<pallet_staking::Bonded<Runtime>>::prefix_hash().to_vec(),
-				<pallet_staking::Ledger<Runtime>>::prefix_hash().to_vec(),
-				<pallet_staking::Validators<Runtime>>::map_storage_final_prefix(),
-				<pallet_staking::Nominators<Runtime>>::map_storage_final_prefix(),
+				<topsoil_staking::Bonded<Runtime>>::prefix_hash().to_vec(),
+				<topsoil_staking::Ledger<Runtime>>::prefix_hash().to_vec(),
+				<topsoil_staking::Validators<Runtime>>::map_storage_final_prefix(),
+				<topsoil_staking::Nominators<Runtime>>::map_storage_final_prefix(),
 			],
 			hashed_keys: vec![
-				<pallet_staking::Validators<Runtime>>::counter_storage_final_key().to_vec(),
-				<pallet_staking::Nominators<Runtime>>::counter_storage_final_key().to_vec(),
+				<topsoil_staking::Validators<Runtime>>::counter_storage_final_key().to_vec(),
+				<topsoil_staking::Nominators<Runtime>>::counter_storage_final_key().to_vec(),
 			],
 			..Default::default()
 		}))
@@ -61,11 +61,11 @@ where
 		.unwrap();
 
 	ext.execute_with(|| {
-		use frame_election_provider_support::ElectionDataProvider;
+		use topsoil_election_provider_support::ElectionDataProvider;
 		log::info!(
 			target: crate::LOG_TARGET,
 			"{} nodes in bags list.",
-			<Runtime as pallet_staking::Config>::VoterList::count(),
+			<Runtime as topsoil_staking::Config>::VoterList::count(),
 		);
 
 		let bounds = match voter_limit {
@@ -75,12 +75,12 @@ where
 
 		// single page voter snapshot, thus page index == 0.
 		let voters =
-			<pallet_staking::Pallet<Runtime> as ElectionDataProvider>::electing_voters(bounds, Zero::zero())
+			<topsoil_staking::Pallet<Runtime> as ElectionDataProvider>::electing_voters(bounds, Zero::zero())
 				.unwrap();
 
 		let mut voters_nominator_only = voters
 			.iter()
-			.filter(|(v, _, _)| pallet_staking::Nominators::<Runtime>::contains_key(v))
+			.filter(|(v, _, _)| topsoil_staking::Nominators::<Runtime>::contains_key(v))
 			.cloned()
 			.collect::<Vec<_>>();
 		voters_nominator_only.sort_by_key(|(_, w, _)| *w);

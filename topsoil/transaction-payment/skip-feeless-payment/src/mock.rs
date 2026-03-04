@@ -14,19 +14,19 @@
 // limitations under the License.
 
 use super::*;
-use crate as pallet_skip_feeless_payment;
+use crate as topsoil_skip_feeless_payment;
 
-use frame_support::{derive_impl, parameter_types};
-use frame_system as system;
+use topsoil_support::{derive_impl, parameter_types};
+use topsoil_system as system;
 use soil_runtime::{
 	traits::{DispatchOriginOf, TransactionExtension},
 	transaction_validity::ValidTransaction,
 };
 
-type Block = frame_system::mocking::MockBlock<Runtime>;
+type Block = topsoil_system::mocking::MockBlock<Runtime>;
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Runtime {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Runtime {
 	type Block = Block;
 }
 
@@ -79,16 +79,16 @@ impl TransactionExtension<RuntimeCall> for DummyExtension {
 	}
 }
 
-#[frame_support::pallet(dev_mode)]
+#[topsoil_support::pallet(dev_mode)]
 pub mod pallet_dummy {
-	use frame_support::pallet_prelude::*;
-	use frame_system::pallet_prelude::*;
+	use topsoil_support::pallet_prelude::*;
+	use topsoil_system::pallet_prelude::*;
 
 	#[pallet::pallet]
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
-	pub trait Config: frame_system::Config {}
+	pub trait Config: topsoil_system::Config {}
 
 	#[pallet::call]
 	impl<T: Config> Pallet<T> {
@@ -103,10 +103,10 @@ pub mod pallet_dummy {
 
 impl pallet_dummy::Config for Runtime {}
 
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub enum Runtime {
 		System: system,
-		SkipFeeless: pallet_skip_feeless_payment,
+		SkipFeeless: topsoil_skip_feeless_payment,
 		DummyPallet: pallet_dummy,
 	}
 );

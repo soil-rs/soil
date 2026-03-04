@@ -15,12 +15,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	#[pallet::config]
-	pub trait Config: frame_system::Config
+	pub trait Config: topsoil_system::Config
 	where
-		<Self as frame_system::Config>::Nonce: From<u128>,
+		<Self as topsoil_system::Config>::Nonce: From<u128>,
 	{
 	}
 
@@ -28,14 +28,14 @@ pub mod pallet {
 	pub struct Pallet<T>(core::marker::PhantomData<T>);
 
 	#[pallet::call]
-	impl<T: Config> Pallet<T> where <T as frame_system::Config>::Nonce: From<u128> {}
+	impl<T: Config> Pallet<T> where <T as topsoil_system::Config>::Nonce: From<u128> {}
 
 	impl<T: Config> Pallet<T>
 	where
-		<T as frame_system::Config>::Nonce: From<u128>,
+		<T as topsoil_system::Config>::Nonce: From<u128>,
 	{
 		pub fn foo(x: u128) {
-			let _index = <T as frame_system::Config>::Nonce::from(x);
+			let _index = <T as topsoil_system::Config>::Nonce::from(x);
 		}
 	}
 }

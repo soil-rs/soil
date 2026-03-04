@@ -16,7 +16,7 @@
 // limitations under the License.
 
 use super::*;
-use frame_support::traits::fungible::{conformance_tests, Inspect, Mutate};
+use topsoil_support::traits::fungible::{conformance_tests, Inspect, Mutate};
 use paste::paste;
 
 macro_rules! generate_tests {
@@ -27,13 +27,13 @@ macro_rules! generate_tests {
 				#[test]
 				fn [<$trait _ $scope _ $test_name _existential_deposit_ $ext_deposit _dust_trap_on >]() {
 					// Some random trap account.
-					let trap_account = <Test as frame_system::Config>::AccountId::from(65174286u64);
+					let trap_account = <Test as topsoil_system::Config>::AccountId::from(65174286u64);
 					let builder = ExtBuilder::default().existential_deposit($ext_deposit).dust_trap(trap_account);
 					builder.build_and_execute_with(|| {
 						Balances::set_balance(&trap_account, Balances::minimum_balance());
 						$base_path::$scope::$trait::$test_name::<
 							Balances,
-							<Test as frame_system::Config>::AccountId,
+							<Test as topsoil_system::Config>::AccountId,
 						>(Some(trap_account));
 					});
 				}
@@ -44,7 +44,7 @@ macro_rules! generate_tests {
 					builder.build_and_execute_with(|| {
 						$base_path::$scope::$trait::$test_name::<
 							Balances,
-							<Test as frame_system::Config>::AccountId,
+							<Test as topsoil_system::Config>::AccountId,
 						>(None);
 					});
 				}
@@ -61,7 +61,7 @@ macro_rules! generate_tests {
 					builder.build_and_execute_with(|| {
 						$base_path::$scope::$trait::$test_name::<
 							Balances,
-							<Test as frame_system::Config>::AccountId,
+							<Test as topsoil_system::Config>::AccountId,
 						>();
 					});
 				}

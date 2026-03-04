@@ -17,7 +17,7 @@
 
 use super::*;
 use core::marker::PhantomData;
-use frame_support::{
+use topsoil_support::{
 	storage_alias,
 	traits::{Get, UncheckedOnRuntimeUpgrade},
 };
@@ -26,7 +26,7 @@ use alloc::collections::BTreeSet;
 #[cfg(feature = "try-runtime")]
 use alloc::vec::Vec;
 #[cfg(feature = "try-runtime")]
-use frame_support::ensure;
+use topsoil_support::ensure;
 
 pub mod v1 {
 	use super::*;
@@ -41,17 +41,17 @@ pub mod v1 {
 	pub struct MigrateToV1Impl<T, TransferWeight>(PhantomData<(T, TransferWeight)>);
 
 	#[storage_alias]
-	type ChildBountyDescriptions<T: Config + pallet_bounties::Config> = StorageMap<
+	type ChildBountyDescriptions<T: Config + topsoil_bounties::Config> = StorageMap<
 		Pallet<T>,
 		Twox64Concat,
 		BountyIndex,
-		BoundedVec<u8, <T as pallet_bounties::Config>::MaximumReasonLength>,
+		BoundedVec<u8, <T as topsoil_bounties::Config>::MaximumReasonLength>,
 	>;
 
 	impl<T: Config, TransferWeight: Get<Weight>> UncheckedOnRuntimeUpgrade
 		for MigrateToV1Impl<T, TransferWeight>
 	{
-		fn on_runtime_upgrade() -> frame_support::weights::Weight {
+		fn on_runtime_upgrade() -> topsoil_support::weights::Weight {
 			// increment reads/writes after the action
 			let mut reads = 0u64;
 			let mut writes = 0u64;
@@ -220,10 +220,10 @@ pub mod v1 {
 }
 
 /// Migrate the pallet storage from `0` to `1`.
-pub type MigrateV0ToV1<T, TransferWeight> = frame_support::migrations::VersionedMigration<
+pub type MigrateV0ToV1<T, TransferWeight> = topsoil_support::migrations::VersionedMigration<
 	0,
 	1,
 	v1::MigrateToV1Impl<T, TransferWeight>,
 	Pallet<T>,
-	<T as frame_system::Config>::DbWeight,
+	<T as topsoil_system::Config>::DbWeight,
 >;

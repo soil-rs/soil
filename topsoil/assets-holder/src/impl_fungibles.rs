@@ -17,20 +17,20 @@
 
 use super::*;
 
-use frame_support::traits::{
+use topsoil_support::traits::{
 	fungibles::{Dust, Inspect, InspectHold, MutateHold, Unbalanced, UnbalancedHold},
 	tokens::{
 		DepositConsequence, Fortitude, Precision, Preservation, Provenance, WithdrawConsequence,
 	},
 };
-use pallet_assets::BalanceOnHold;
+use topsoil_assets::BalanceOnHold;
 use soil_runtime::{
 	traits::{CheckedAdd, CheckedSub, Zero},
 	ArithmeticError,
 };
 use storage::StorageDoubleMap;
 
-// Implements [`BalanceOnHold`] from [`pallet-assets`], so it can understand whether there's some
+// Implements [`BalanceOnHold`] from [`topsoil-assets`], so it can understand whether there's some
 // balance on hold for an asset account, and is able to signal to this pallet when to clear the
 // state of an account.
 impl<T: Config<I>, I: 'static> BalanceOnHold<T::AssetId, T::AccountId, T::Balance>
@@ -59,28 +59,28 @@ impl<T: Config<I>, I: 'static> BalanceOnHold<T::AssetId, T::AccountId, T::Balanc
 	}
 }
 
-// Implement [`fungibles::Inspect`](frame_support::traits::fungibles::Inspect) as it is bound by
-// [`fungibles::InspectHold`](frame_support::traits::fungibles::InspectHold) and
-// [`fungibles::MutateHold`](frame_support::traits::fungibles::MutateHold). To do so, we'll
-// re-export all of `pallet-assets` implementation of the same trait.
+// Implement [`fungibles::Inspect`](topsoil_support::traits::fungibles::Inspect) as it is bound by
+// [`fungibles::InspectHold`](topsoil_support::traits::fungibles::InspectHold) and
+// [`fungibles::MutateHold`](topsoil_support::traits::fungibles::MutateHold). To do so, we'll
+// re-export all of `topsoil-assets` implementation of the same trait.
 impl<T: Config<I>, I: 'static> Inspect<T::AccountId> for Pallet<T, I> {
 	type AssetId = T::AssetId;
 	type Balance = T::Balance;
 
 	fn total_issuance(asset: Self::AssetId) -> Self::Balance {
-		pallet_assets::Pallet::<T, I>::total_issuance(asset)
+		topsoil_assets::Pallet::<T, I>::total_issuance(asset)
 	}
 
 	fn minimum_balance(asset: Self::AssetId) -> Self::Balance {
-		pallet_assets::Pallet::<T, I>::minimum_balance(asset)
+		topsoil_assets::Pallet::<T, I>::minimum_balance(asset)
 	}
 
 	fn total_balance(asset: Self::AssetId, who: &T::AccountId) -> Self::Balance {
-		pallet_assets::Pallet::<T, I>::total_balance(asset, who)
+		topsoil_assets::Pallet::<T, I>::total_balance(asset, who)
 	}
 
 	fn balance(asset: Self::AssetId, who: &T::AccountId) -> Self::Balance {
-		pallet_assets::Pallet::<T, I>::balance(asset, who)
+		topsoil_assets::Pallet::<T, I>::balance(asset, who)
 	}
 
 	fn reducible_balance(
@@ -89,7 +89,7 @@ impl<T: Config<I>, I: 'static> Inspect<T::AccountId> for Pallet<T, I> {
 		preservation: Preservation,
 		force: Fortitude,
 	) -> Self::Balance {
-		pallet_assets::Pallet::<T, I>::reducible_balance(asset, who, preservation, force)
+		topsoil_assets::Pallet::<T, I>::reducible_balance(asset, who, preservation, force)
 	}
 
 	fn can_deposit(
@@ -98,7 +98,7 @@ impl<T: Config<I>, I: 'static> Inspect<T::AccountId> for Pallet<T, I> {
 		amount: Self::Balance,
 		provenance: Provenance,
 	) -> DepositConsequence {
-		pallet_assets::Pallet::<T, I>::can_deposit(asset, who, amount, provenance)
+		topsoil_assets::Pallet::<T, I>::can_deposit(asset, who, amount, provenance)
 	}
 
 	fn can_withdraw(
@@ -106,11 +106,11 @@ impl<T: Config<I>, I: 'static> Inspect<T::AccountId> for Pallet<T, I> {
 		who: &T::AccountId,
 		amount: Self::Balance,
 	) -> WithdrawConsequence<Self::Balance> {
-		pallet_assets::Pallet::<T, I>::can_withdraw(asset, who, amount)
+		topsoil_assets::Pallet::<T, I>::can_withdraw(asset, who, amount)
 	}
 
 	fn asset_exists(asset: Self::AssetId) -> bool {
-		pallet_assets::Pallet::<T, I>::asset_exists(asset)
+		topsoil_assets::Pallet::<T, I>::asset_exists(asset)
 	}
 }
 
@@ -137,7 +137,7 @@ impl<T: Config<I>, I: 'static> InspectHold<T::AccountId> for Pallet<T, I> {
 impl<T: Config<I>, I: 'static> Unbalanced<T::AccountId> for Pallet<T, I> {
 	fn handle_dust(dust: Dust<T::AccountId, Self>) {
 		let Dust(id, balance) = dust;
-		pallet_assets::Pallet::<T, I>::handle_dust(Dust(id, balance));
+		topsoil_assets::Pallet::<T, I>::handle_dust(Dust(id, balance));
 	}
 
 	fn write_balance(
@@ -145,11 +145,11 @@ impl<T: Config<I>, I: 'static> Unbalanced<T::AccountId> for Pallet<T, I> {
 		who: &T::AccountId,
 		amount: Self::Balance,
 	) -> Result<Option<Self::Balance>, DispatchError> {
-		pallet_assets::Pallet::<T, I>::write_balance(asset, who, amount)
+		topsoil_assets::Pallet::<T, I>::write_balance(asset, who, amount)
 	}
 
 	fn set_total_issuance(asset: Self::AssetId, amount: Self::Balance) {
-		pallet_assets::Pallet::<T, I>::set_total_issuance(asset, amount)
+		topsoil_assets::Pallet::<T, I>::set_total_issuance(asset, amount)
 	}
 
 	fn decrease_balance(
@@ -160,7 +160,7 @@ impl<T: Config<I>, I: 'static> Unbalanced<T::AccountId> for Pallet<T, I> {
 		preservation: Preservation,
 		force: Fortitude,
 	) -> Result<Self::Balance, DispatchError> {
-		pallet_assets::Pallet::<T, I>::decrease_balance(
+		topsoil_assets::Pallet::<T, I>::decrease_balance(
 			asset,
 			who,
 			amount,
@@ -176,7 +176,7 @@ impl<T: Config<I>, I: 'static> Unbalanced<T::AccountId> for Pallet<T, I> {
 		amount: Self::Balance,
 		precision: Precision,
 	) -> Result<Self::Balance, DispatchError> {
-		pallet_assets::Pallet::<T, I>::increase_balance(asset, who, amount, precision)
+		topsoil_assets::Pallet::<T, I>::increase_balance(asset, who, amount, precision)
 	}
 }
 

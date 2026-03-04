@@ -15,21 +15,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//! Tests mock for `pallet-assets-freezer`.
+//! Tests mock for `topsoil-assets-freezer`.
 
-use crate as pallet_assets_holder;
+use crate as topsoil_assets_holder;
 pub use crate::*;
 use codec::{Decode, Encode, MaxEncodedLen};
-use frame_support::{derive_impl, traits::AsEnsureOriginWithArg};
+use topsoil_support::{derive_impl, traits::AsEnsureOriginWithArg};
 use scale_info::TypeInfo;
 use soil_runtime::BuildStorage;
 
-pub type AccountId = <Test as frame_system::Config>::AccountId;
-pub type Balance = <Test as pallet_balances::Config>::Balance;
-pub type AssetId = <Test as pallet_assets::Config>::AssetId;
-type Block = frame_system::mocking::MockBlock<Test>;
+pub type AccountId = <Test as topsoil_system::Config>::AccountId;
+pub type Balance = <Test as topsoil_balances::Config>::Balance;
+pub type AssetId = <Test as topsoil_assets::Config>::AssetId;
+type Block = topsoil_system::mocking::MockBlock<Test>;
 
-#[frame_support::runtime]
+#[topsoil_support::runtime]
 mod runtime {
 	#[runtime::runtime]
 	#[runtime::derive(
@@ -44,31 +44,31 @@ mod runtime {
 	pub struct Test;
 
 	#[runtime::pallet_index(0)]
-	pub type System = frame_system;
+	pub type System = topsoil_system;
 	#[runtime::pallet_index(10)]
-	pub type Balances = pallet_balances;
+	pub type Balances = topsoil_balances;
 	#[runtime::pallet_index(20)]
-	pub type Assets = pallet_assets;
+	pub type Assets = topsoil_assets;
 	#[runtime::pallet_index(21)]
-	pub type AssetsHolder = pallet_assets_holder;
+	pub type AssetsHolder = topsoil_assets_holder;
 }
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
 	type Block = Block;
-	type AccountData = pallet_balances::AccountData<u64>;
+	type AccountData = topsoil_balances::AccountData<u64>;
 }
 
-#[derive_impl(pallet_balances::config_preludes::TestDefaultConfig as pallet_balances::DefaultConfig)]
-impl pallet_balances::Config for Test {
+#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig as topsoil_balances::DefaultConfig)]
+impl topsoil_balances::Config for Test {
 	type AccountStore = System;
 }
 
-#[derive_impl(pallet_assets::config_preludes::TestDefaultConfig as pallet_assets::DefaultConfig)]
-impl pallet_assets::Config for Test {
+#[derive_impl(topsoil_assets::config_preludes::TestDefaultConfig as topsoil_assets::DefaultConfig)]
+impl topsoil_assets::Config for Test {
 	// type AssetAccountDeposit = ConstU64<1>;
-	type CreateOrigin = AsEnsureOriginWithArg<frame_system::EnsureSigned<u64>>;
-	type ForceOrigin = frame_system::EnsureRoot<u64>;
+	type CreateOrigin = AsEnsureOriginWithArg<topsoil_system::EnsureSigned<u64>>;
+	type ForceOrigin = topsoil_system::EnsureRoot<u64>;
 	type Currency = Balances;
 	type Holder = AssetsHolder;
 }
@@ -105,7 +105,7 @@ impl Config for Test {
 
 pub fn new_test_ext(execute: impl FnOnce()) -> soil_io::TestExternalities {
 	let t = RuntimeGenesisConfig {
-		assets: pallet_assets::GenesisConfig {
+		assets: topsoil_assets::GenesisConfig {
 			assets: vec![(1, 0, true, 1)],
 			metadata: vec![],
 			accounts: vec![(1, 1, 100)],
@@ -121,7 +121,7 @@ pub fn new_test_ext(execute: impl FnOnce()) -> soil_io::TestExternalities {
 	ext.execute_with(|| {
 		System::set_block_number(1);
 		execute();
-		frame_support::assert_ok!(AssetsHolder::do_try_state());
+		topsoil_support::assert_ok!(AssetsHolder::do_try_state());
 	});
 
 	ext

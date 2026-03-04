@@ -42,19 +42,19 @@
 //! ## Usage
 //!
 //! ```
-//! use pallet_im_online::{self as im_online};
+//! use topsoil_im_online::{self as im_online};
 //!
-//! #[frame_support::pallet]
+//! #[topsoil_support::pallet]
 //! pub mod pallet {
 //! 	use super::*;
-//! 	use frame_support::pallet_prelude::*;
-//! 	use frame_system::pallet_prelude::*;
+//! 	use topsoil_support::pallet_prelude::*;
+//! 	use topsoil_system::pallet_prelude::*;
 //!
 //! 	#[pallet::pallet]
 //! 	pub struct Pallet<T>(_);
 //!
 //! 	#[pallet::config]
-//! 	pub trait Config: frame_system::Config + im_online::Config {}
+//! 	pub trait Config: topsoil_system::Config + im_online::Config {}
 //!
 //! 	#[pallet::call]
 //! 	impl<T: Config> Pallet<T> {
@@ -71,7 +71,7 @@
 //!
 //! ## Dependencies
 //!
-//! This pallet depends on the [Session pallet](../pallet_session/index.html).
+//! This pallet depends on the [Session pallet](../topsoil_session/index.html).
 
 // Ensure we're `no_std` when compiling for Wasm.
 #![cfg_attr(not(feature = "std"), no_std)]
@@ -86,7 +86,7 @@ extern crate alloc;
 
 use alloc::{vec, vec::Vec};
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
-use frame_support::{
+use topsoil_support::{
 	pallet_prelude::*,
 	traits::{
 		EstimateNextSessionRotation, Get, OneSessionHandler, ValidatorSet,
@@ -94,7 +94,7 @@ use frame_support::{
 	},
 	BoundedSlice, WeakBoundedVec,
 };
-use frame_system::{
+use topsoil_system::{
 	offchain::{CreateBare, SubmitTransaction},
 	pallet_prelude::*,
 };
@@ -235,7 +235,7 @@ where
 
 /// A type for representing the validator id in a session.
 pub type ValidatorId<T> = <<T as Config>::ValidatorSet as ValidatorSet<
-	<T as frame_system::Config>::AccountId,
+	<T as topsoil_system::Config>::AccountId,
 >>::ValidatorId;
 
 /// A tuple of (ValidatorId, Identification) where `Identification` is the full identification of
@@ -243,13 +243,13 @@ pub type ValidatorId<T> = <<T as Config>::ValidatorSet as ValidatorSet<
 pub type IdentificationTuple<T> = (
 	ValidatorId<T>,
 	<<T as Config>::ValidatorSet as ValidatorSetWithIdentification<
-		<T as frame_system::Config>::AccountId,
+		<T as topsoil_system::Config>::AccountId,
 	>>::Identification,
 );
 
 type OffchainResult<T, A> = Result<A, OffchainErr<BlockNumberFor<T>>>;
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
 
@@ -261,7 +261,7 @@ pub mod pallet {
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
-	pub trait Config: CreateBare<Call<Self>> + frame_system::Config {
+	pub trait Config: CreateBare<Call<Self>> + topsoil_system::Config {
 		/// The identifier type for an authority.
 		type AuthorityId: Member
 			+ Parameter
@@ -278,7 +278,7 @@ pub mod pallet {
 
 		/// The overarching event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// A type for retrieving the validators supposed to be online in a session.
 		type ValidatorSet: ValidatorSetWithIdentification<Self::AccountId>;
@@ -367,7 +367,7 @@ pub mod pallet {
 	>;
 
 	#[pallet::genesis_config]
-	#[derive(frame_support::DefaultNoBound)]
+	#[derive(topsoil_support::DefaultNoBound)]
 	pub struct GenesisConfig<T: Config> {
 		pub keys: Vec<T::AuthorityId>,
 	}
@@ -503,8 +503,8 @@ pub mod pallet {
 
 /// Keep track of number of authored blocks per authority, uncles are counted as
 /// well since they're a valid proof of being online.
-impl<T: Config + pallet_authorship::Config>
-	pallet_authorship::EventHandler<ValidatorId<T>, BlockNumberFor<T>> for Pallet<T>
+impl<T: Config + topsoil_authorship::Config>
+	topsoil_authorship::EventHandler<ValidatorId<T>, BlockNumberFor<T>> for Pallet<T>
 {
 	fn note_author(author: ValidatorId<T>) {
 		Self::note_authorship(author);
@@ -759,7 +759,7 @@ impl<T: Config> OneSessionHandler<T::AccountId> for Pallet<T> {
 		// Tell the offchain worker to start making the next session's heartbeats.
 		// Since we consider producing blocks as being online,
 		// the heartbeat is deferred a bit to prevent spamming.
-		let block_number = <frame_system::Pallet<T>>::block_number();
+		let block_number = <topsoil_system::Pallet<T>>::block_number();
 		let half_session = T::NextSessionRotation::average_session_length() / 2u32.into();
 		<HeartbeatAfter<T>>::put(block_number + half_session);
 

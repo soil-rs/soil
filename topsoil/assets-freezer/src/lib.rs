@@ -23,8 +23,8 @@
 
 //! # Assets Freezer Pallet
 //!
-//! A pallet capable of freezing fungibles from `pallet-assets`. This is an extension of
-//! `pallet-assets`, wrapping [`fungibles::Inspect`](`Inspect`).
+//! A pallet capable of freezing fungibles from `topsoil-assets`. This is an extension of
+//! `topsoil-assets`, wrapping [`fungibles::Inspect`](`Inspect`).
 //! It implements both
 //! [`fungibles::freeze::Inspect`](InspectFreeze) and
 //! [`fungibles::freeze::Mutate`](MutateFreeze). The complexity
@@ -39,15 +39,15 @@
 //!
 //! This pallet provides the following functionality:
 //!
-//! - Pallet hooks allowing `pallet-assets` to know the frozen balance for an account on a given
-//!   asset (see [`pallet_assets::FrozenBalance`]).
+//! - Pallet hooks allowing `topsoil-assets` to know the frozen balance for an account on a given
+//!   asset (see [`topsoil_assets::FrozenBalance`]).
 //! - An implementation of [`fungibles::freeze::Inspect`](InspectFreeze) and
 //!   [`fungibles::freeze::Mutate`](MutateFreeze), allowing other pallets to manage freezes for the
-//!   `pallet-assets` assets.
+//!   `topsoil-assets` assets.
 
 #![cfg_attr(not(feature = "std"), no_std)]
 
-use frame::{
+use topsoil::{
 	prelude::*,
 	traits::{
 		fungibles::{Inspect, InspectFreeze, MutateFreeze},
@@ -60,7 +60,7 @@ use frame::{
 pub use pallet::*;
 
 #[cfg(feature = "try-runtime")]
-use frame::try_runtime::TryRuntimeError;
+use topsoil::try_runtime::TryRuntimeError;
 
 #[cfg(test)]
 mod mock;
@@ -69,12 +69,12 @@ mod tests;
 
 mod impls;
 
-#[frame::pallet]
+#[topsoil::pallet]
 pub mod pallet {
 	use super::*;
 
 	#[pallet::config(with_default)]
-	pub trait Config<I: 'static = ()>: frame_system::Config + pallet_assets::Config<I> {
+	pub trait Config<I: 'static = ()>: topsoil_system::Config + topsoil_assets::Config<I> {
 		/// The overarching freeze reason.
 		#[pallet::no_default_bounds]
 		type RuntimeFreezeReason: Parameter + Member + MaxEncodedLen + Copy + VariantCount;
@@ -83,7 +83,7 @@ pub mod pallet {
 		#[pallet::no_default_bounds]
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self, I>>
-			+ IsType<<Self as frame_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 	}
 
 	#[pallet::error]

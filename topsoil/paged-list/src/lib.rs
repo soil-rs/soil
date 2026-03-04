@@ -32,9 +32,9 @@
 //!
 //! The pallet is quite unique since it does not expose any `Call`s, `Error`s or `Event`s. All
 //! interaction goes through the implemented
-//! [`StorageList`][frame::deps::frame_support::storage::StorageList] trait.
+//! [`StorageList`][topsoil::deps::topsoil_support::storage::StorageList] trait.
 //!
-//! A fuzzer for testing is provided in crate `pallet-paged-list-fuzzer`.
+//! A fuzzer for testing is provided in crate `topsoil-paged-list-fuzzer`.
 //!
 //! ## Examples
 //!
@@ -71,10 +71,10 @@ mod tests;
 extern crate alloc;
 
 use codec::FullCodec;
-use frame::{prelude::*, traits::StorageInstance};
+use topsoil::{prelude::*, traits::StorageInstance};
 pub use paged_list::StoragePagedList;
 
-#[frame::pallet]
+#[topsoil::pallet]
 pub mod pallet {
 	use super::*;
 
@@ -82,7 +82,7 @@ pub mod pallet {
 	pub struct Pallet<T, I = ()>(_);
 
 	#[pallet::config]
-	pub trait Config<I: 'static = ()>: frame_system::Config {
+	pub trait Config<I: 'static = ()>: topsoil_system::Config {
 		/// The value type that can be stored in the list.
 		type Value: FullCodec;
 

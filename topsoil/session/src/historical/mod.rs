@@ -44,7 +44,7 @@ use soil_trie::{
 	LayoutV0, MemoryDB, RandomState, Recorder, StorageProof, Trie, TrieMut, TrieRecorder,
 };
 
-use frame_support::{
+use topsoil_support::{
 	print,
 	traits::{KeyOwnerProofSystem, ValidatorSet, ValidatorSetWithIdentification},
 	Parameter,
@@ -52,15 +52,15 @@ use frame_support::{
 
 const LOG_TARGET: &'static str = "runtime::historical";
 
-use crate::{self as pallet_session, Pallet as Session};
+use crate::{self as topsoil_session, Pallet as Session};
 
 pub use pallet::*;
 use soil_trie::{accessed_nodes_tracker::AccessedNodesTracker, recorder_ext::RecorderExt};
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
-	use frame_support::pallet_prelude::*;
+	use topsoil_support::pallet_prelude::*;
 
 	/// The in-code storage version.
 	const STORAGE_VERSION: StorageVersion = StorageVersion::new(1);
@@ -71,10 +71,10 @@ pub mod pallet {
 
 	/// Config necessary for the historical pallet.
 	#[pallet::config]
-	pub trait Config: pallet_session::Config + frame_system::Config {
+	pub trait Config: topsoil_session::Config + topsoil_system::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// Full identification of the validator.
 		type FullIdentification: Parameter;
@@ -170,7 +170,7 @@ impl<T: Config> ValidatorSetWithIdentification<T::AccountId> for Pallet<T> {
 /// Specialization of the crate-level `SessionManager` which returns the set of full identification
 /// when creating a new session.
 pub trait SessionManager<ValidatorId, FullIdentification>:
-	pallet_session::SessionManager<ValidatorId>
+	topsoil_session::SessionManager<ValidatorId>
 {
 	/// If there was a validator set change, its returns the set of new validators along with their
 	/// full identifications.
@@ -227,7 +227,7 @@ impl<T: Config, I: SessionManager<T::ValidatorId, T::FullIdentification>> NoteHi
 	}
 }
 
-impl<T: Config, I> pallet_session::SessionManager<T::ValidatorId> for NoteHistoricalRoot<T, I>
+impl<T: Config, I> topsoil_session::SessionManager<T::ValidatorId> for NoteHistoricalRoot<T, I>
 where
 	I: SessionManager<T::ValidatorId, T::FullIdentification>,
 {
@@ -251,7 +251,7 @@ where
 
 /// A tuple of the validator's ID and their full identification.
 pub type IdentificationTuple<T> =
-	(<T as pallet_session::Config>::ValidatorId, <T as Config>::FullIdentification);
+	(<T as topsoil_session::Config>::ValidatorId, <T as Config>::FullIdentification);
 
 /// A trie instance for checking and generating proofs.
 pub struct ProvingTrie<T: Config> {
@@ -401,12 +401,12 @@ pub(crate) mod tests {
 	use soil_runtime::{key_types::DUMMY, testing::UintAuthorityId, BuildStorage};
 	use soil_state_machine::BasicExternalities;
 
-	use frame_support::traits::{KeyOwnerProofSystem, OnInitialize};
+	use topsoil_support::traits::{KeyOwnerProofSystem, OnInitialize};
 
 	type Historical = Pallet<Test>;
 
 	pub(crate) fn new_test_ext() -> soil_io::TestExternalities {
-		let mut t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+		let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 		let keys: Vec<_> = NextValidators::get()
 			.iter()
 			.cloned()
@@ -414,10 +414,10 @@ pub(crate) mod tests {
 			.collect();
 		BasicExternalities::execute_with_storage(&mut t, || {
 			for (ref k, ..) in &keys {
-				frame_system::Pallet::<Test>::inc_providers(k);
+				topsoil_system::Pallet::<Test>::inc_providers(k);
 			}
 		});
-		pallet_session::GenesisConfig::<Test> { keys, ..Default::default() }
+		topsoil_session::GenesisConfig::<Test> { keys, ..Default::default() }
 			.assimilate_storage(&mut t)
 			.unwrap();
 		soil_io::TestExternalities::new(t)

@@ -15,7 +15,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use frame_support_procedural_tools::generate_access_from_frame_or_crate;
+use topsoil_support_procedural_tools::generate_access_from_frame_or_crate;
 use quote::ToTokens;
 
 // Derive `PalletError`
@@ -25,11 +25,11 @@ pub fn derive_pallet_error(input: proc_macro::TokenStream) -> proc_macro::TokenS
 		Err(e) => return e.to_compile_error().into(),
 	};
 
-	let frame_support = match generate_access_from_frame_or_crate("frame-support") {
+	let topsoil_support = match generate_access_from_frame_or_crate("topsoil-support") {
 		Ok(c) => c,
 		Err(e) => return e.into_compile_error().into(),
 	};
-	let frame_support = &frame_support;
+	let topsoil_support = &topsoil_support;
 	let (impl_generics, ty_generics, where_clause) = generics.split_for_impl();
 
 	let max_encoded_size = match data {
@@ -38,7 +38,7 @@ pub fn derive_pallet_error(input: proc_macro::TokenStream) -> proc_macro::TokenS
 			syn::Fields::Unnamed(syn::FieldsUnnamed { unnamed: fields, .. }) => {
 				let maybe_field_tys = fields
 					.iter()
-					.map(|f| generate_field_types(f, &frame_support))
+					.map(|f| generate_field_types(f, &topsoil_support))
 					.collect::<syn::Result<Vec<_>>>();
 				let field_tys = match maybe_field_tys {
 					Ok(tys) => tys.into_iter().flatten(),
@@ -48,7 +48,7 @@ pub fn derive_pallet_error(input: proc_macro::TokenStream) -> proc_macro::TokenS
 					0_usize
 					#(
 						.saturating_add(<
-							#field_tys as #frame_support::traits::PalletError
+							#field_tys as #topsoil_support::traits::PalletError
 						>::MAX_ENCODED_SIZE)
 					)*
 				}
@@ -58,7 +58,7 @@ pub fn derive_pallet_error(input: proc_macro::TokenStream) -> proc_macro::TokenS
 		syn::Data::Enum(syn::DataEnum { variants, .. }) => {
 			let field_tys = variants
 				.iter()
-				.map(|variant| generate_variant_field_types(variant, &frame_support))
+				.map(|variant| generate_variant_field_types(variant, &topsoil_support))
 				.collect::<Result<Vec<Option<Vec<proc_macro2::TokenStream>>>, syn::Error>>();
 
 			let field_tys = match field_tys {
@@ -74,7 +74,7 @@ pub fn derive_pallet_error(input: proc_macro::TokenStream) -> proc_macro::TokenS
 					quote::quote! {
 						1_usize
 						#(.saturating_add(<
-							#variant_field_tys as #frame_support::traits::PalletError
+							#variant_field_tys as #topsoil_support::traits::PalletError
 						>::MAX_ENCODED_SIZE))*
 					}
 				});
@@ -100,7 +100,7 @@ pub fn derive_pallet_error(input: proc_macro::TokenStream) -> proc_macro::TokenS
 	quote::quote!(
 		#[allow(deprecated)]
 		const _: () = {
-			impl #impl_generics #frame_support::traits::PalletError
+			impl #impl_generics #topsoil_support::traits::PalletError
 				for #name #ty_generics #where_clause
 			{
 				const MAX_ENCODED_SIZE: usize = #max_encoded_size;

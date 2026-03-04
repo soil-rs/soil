@@ -86,7 +86,7 @@ impl TaskEnumDef {
 			let attrs = &self.item_enum.attrs;
 			let generics = &self.item_enum.generics;
 			let variants = &self.item_enum.variants;
-			let frame_support = &def.frame_support;
+			let topsoil_support = &def.topsoil_support;
 			let type_use_generics = &def.type_use_generics(attr.span());
 			let type_impl_generics = &def.type_impl_generics(attr.span());
 
@@ -94,13 +94,13 @@ impl TaskEnumDef {
 			quote! {
 				#(#attrs)*
 				#[derive(
-					#frame_support::CloneNoBound,
-					#frame_support::EqNoBound,
-					#frame_support::PartialEqNoBound,
-					#frame_support::pallet_prelude::Encode,
-					#frame_support::pallet_prelude::Decode,
-					#frame_support::pallet_prelude::DecodeWithMemTracking,
-					#frame_support::pallet_prelude::TypeInfo,
+					#topsoil_support::CloneNoBound,
+					#topsoil_support::EqNoBound,
+					#topsoil_support::PartialEqNoBound,
+					#topsoil_support::pallet_prelude::Encode,
+					#topsoil_support::pallet_prelude::Decode,
+					#topsoil_support::pallet_prelude::DecodeWithMemTracking,
+					#topsoil_support::pallet_prelude::TypeInfo,
 				)]
 				#[codec(encode_bound())]
 				#[codec(decode_bound())]
@@ -109,7 +109,7 @@ impl TaskEnumDef {
 					#variants
 					#[doc(hidden)]
 					#[codec(skip)]
-					__Ignore(core::marker::PhantomData<(#type_use_generics)>, #frame_support::Never),
+					__Ignore(core::marker::PhantomData<(#type_use_generics)>, #topsoil_support::Never),
 				}
 
 				impl<#type_impl_generics> core::fmt::Debug for #ident<#type_use_generics> {
@@ -127,7 +127,7 @@ impl TaskEnumDef {
 
 impl TasksDef {
 	fn expand_to_tokens(&self, def: &Def) -> TokenStream2 {
-		let frame_support = &def.frame_support;
+		let topsoil_support = &def.topsoil_support;
 		let enum_ident = syn::Ident::new("Task", self.enum_ident.span());
 		let enum_arguments = &self.enum_arguments;
 		let enum_use = quote!(#enum_ident #enum_arguments);
@@ -164,15 +164,15 @@ impl TasksDef {
 				#(#task_fn_impls)*
 			}
 
-			impl #impl_generics #frame_support::traits::Task for #enum_use
+			impl #impl_generics #topsoil_support::traits::Task for #enum_use
 			{
-				type Enumeration = #frame_support::__private::IntoIter<#enum_use>;
+				type Enumeration = #topsoil_support::__private::IntoIter<#enum_use>;
 
 				fn iter() -> Self::Enumeration {
-					let mut all_tasks = #frame_support::__private::vec![];
+					let mut all_tasks = #topsoil_support::__private::vec![];
 					#(all_tasks
 						.extend(#task_iters.map(|(#(#task_arg_names),*)| #enum_ident::#task_fn_idents { #(#task_arg_names: #task_arg_names.clone()),* })
-						.collect::<#frame_support::__private::Vec<_>>());
+						.collect::<#topsoil_support::__private::Vec<_>>());
 					)*
 					all_tasks.into_iter()
 				}
@@ -191,7 +191,7 @@ impl TasksDef {
 					}
 				}
 
-				fn run(&self) -> Result<(), #frame_support::pallet_prelude::DispatchError> {
+				fn run(&self) -> Result<(), #topsoil_support::pallet_prelude::DispatchError> {
 					match self.clone() {
 						#(#enum_ident::#task_fn_idents { #(#task_arg_names),* } => {
 							<#enum_use>::#task_fn_names(#( #task_arg_names, )* )
@@ -201,7 +201,7 @@ impl TasksDef {
 				}
 
 				#[allow(unused_variables, unused_assignments)]
-				fn weight(&self) -> #frame_support::pallet_prelude::Weight {
+				fn weight(&self) -> #topsoil_support::pallet_prelude::Weight {
 					match self.clone() {
 						#(#enum_ident::#task_fn_idents { #(#task_arg_names),* } => #task_weights,)*
 						Task::__Ignore(_, _) => unreachable!(),

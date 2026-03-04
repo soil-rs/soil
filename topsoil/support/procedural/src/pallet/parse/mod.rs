@@ -42,7 +42,7 @@ pub mod view_functions;
 pub mod tests;
 
 use composite::{keyword::CompositeKeyword, CompositeDef};
-use frame_support_procedural_tools::generate_access_from_frame_or_crate;
+use topsoil_support_procedural_tools::generate_access_from_frame_or_crate;
 use quote::ToTokens;
 use syn::spanned::Spanned;
 
@@ -68,8 +68,8 @@ pub struct Def {
 	pub extra_constants: Option<extra_constants::ExtraConstantsDef>,
 	pub composites: Vec<composite::CompositeDef>,
 	pub type_values: Vec<type_value::TypeValueDef>,
-	pub frame_system: syn::Path,
-	pub frame_support: syn::Path,
+	pub topsoil_system: syn::Path,
+	pub topsoil_support: syn::Path,
 	pub dev_mode: bool,
 	pub view_functions: Option<view_functions::ViewFunctionsImplDef>,
 	pub is_frame_system: bool,
@@ -77,8 +77,8 @@ pub struct Def {
 
 impl Def {
 	pub fn try_from(mut item: syn::ItemMod, dev_mode: bool) -> syn::Result<Self> {
-		let frame_system = generate_access_from_frame_or_crate("frame-system")?;
-		let frame_support = generate_access_from_frame_or_crate("frame-support")?;
+		let topsoil_system = generate_access_from_frame_or_crate("topsoil-system")?;
+		let topsoil_support = generate_access_from_frame_or_crate("topsoil-support")?;
 		let item_span = item.span();
 		let items = &mut item
 			.content
@@ -116,7 +116,7 @@ impl Def {
 				Some(PalletAttr::Config{ with_default, frame_system_config: is_frame_system_val, without_automatic_metadata, ..}) if config.is_none() => {
 					is_frame_system = is_frame_system_val;
 					config = Some(config::ConfigDef::try_from(
-						&frame_system,
+						&topsoil_system,
 						index,
 						item,
 						with_default,
@@ -189,7 +189,7 @@ impl Def {
 						Some(extra_constants::ExtraConstantsDef::try_from(item)?),
 				Some(PalletAttr::Composite(span)) => {
 					let composite =
-						composite::CompositeDef::try_from(span, &frame_support, item)?;
+						composite::CompositeDef::try_from(span, &topsoil_support, item)?;
 					if composites.iter().any(|def| {
 						match (&def.composite_keyword, &composite.composite_keyword) {
 							(
@@ -258,8 +258,8 @@ impl Def {
 			storages,
 			composites,
 			type_values,
-			frame_system,
-			frame_support,
+			topsoil_system,
+			topsoil_support,
 			dev_mode,
 			view_functions,
 			is_frame_system,

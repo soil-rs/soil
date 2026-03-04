@@ -16,7 +16,7 @@
 // limitations under the License.
 
 use core::str;
-use frame_support::{
+use topsoil_support::{
 	storage::{generator::StorageValue, StoragePrefixedMap},
 	traits::{
 		Get, GetStorageVersion, PalletInfoAccess, StorageVersion,
@@ -27,19 +27,19 @@ use frame_support::{
 use soil_core::hexdisplay::HexDisplay;
 use soil_io::{hashing::twox_128, storage};
 
-use crate as pallet_bounties;
+use crate as topsoil_bounties;
 
 /// Migrate the storage of the bounties pallet to a new prefix, leaving all other storage untouched
 ///
 /// This new prefix must be the same as the one set in construct_runtime. For safety, use
 /// `PalletInfo` to get it, as:
-/// `<Runtime as frame_system::Config>::PalletInfo::name::<BountiesPallet>`.
+/// `<Runtime as topsoil_system::Config>::PalletInfo::name::<BountiesPallet>`.
 ///
 /// The migration will look into the storage version in order not to trigger a migration on an up
 /// to date storage. Thus the on chain storage version must be less than 4 in order to trigger the
 /// migration.
 pub fn migrate<
-	T: pallet_bounties::Config,
+	T: topsoil_bounties::Config,
 	P: GetStorageVersion + PalletInfoAccess,
 	N: AsRef<str>,
 >(
@@ -65,32 +65,32 @@ pub fn migrate<
 	);
 
 	if on_chain_storage_version < 4 {
-		let storage_prefix = pallet_bounties::BountyCount::<T>::storage_prefix();
-		frame_support::storage::migration::move_storage_from_pallet(
+		let storage_prefix = topsoil_bounties::BountyCount::<T>::storage_prefix();
+		topsoil_support::storage::migration::move_storage_from_pallet(
 			storage_prefix,
 			old_pallet_name.as_bytes(),
 			new_pallet_name.as_bytes(),
 		);
 		log_migration("migration", storage_prefix, old_pallet_name, new_pallet_name);
 
-		let storage_prefix = pallet_bounties::Bounties::<T>::storage_prefix();
-		frame_support::storage::migration::move_storage_from_pallet(
+		let storage_prefix = topsoil_bounties::Bounties::<T>::storage_prefix();
+		topsoil_support::storage::migration::move_storage_from_pallet(
 			storage_prefix,
 			old_pallet_name.as_bytes(),
 			new_pallet_name.as_bytes(),
 		);
 		log_migration("migration", storage_prefix, old_pallet_name, new_pallet_name);
 
-		let storage_prefix = pallet_bounties::BountyDescriptions::<T>::storage_prefix();
-		frame_support::storage::migration::move_storage_from_pallet(
+		let storage_prefix = topsoil_bounties::BountyDescriptions::<T>::storage_prefix();
+		topsoil_support::storage::migration::move_storage_from_pallet(
 			storage_prefix,
 			old_pallet_name.as_bytes(),
 			new_pallet_name.as_bytes(),
 		);
 		log_migration("migration", storage_prefix, old_pallet_name, new_pallet_name);
 
-		let storage_prefix = pallet_bounties::BountyApprovals::<T>::storage_prefix();
-		frame_support::storage::migration::move_storage_from_pallet(
+		let storage_prefix = topsoil_bounties::BountyApprovals::<T>::storage_prefix();
+		topsoil_support::storage::migration::move_storage_from_pallet(
 			storage_prefix,
 			old_pallet_name.as_bytes(),
 			new_pallet_name.as_bytes(),
@@ -98,7 +98,7 @@ pub fn migrate<
 		log_migration("migration", storage_prefix, old_pallet_name, new_pallet_name);
 
 		StorageVersion::new(4).put::<P>();
-		<T as frame_system::Config>::BlockWeights::get().max_block
+		<T as topsoil_system::Config>::BlockWeights::get().max_block
 	} else {
 		log::warn!(
 			target: "runtime::bounties",
@@ -110,20 +110,20 @@ pub fn migrate<
 }
 
 /// Some checks prior to migration. This can be linked to
-/// `frame_support::traits::OnRuntimeUpgrade::pre_upgrade` for further testing.
+/// `topsoil_support::traits::OnRuntimeUpgrade::pre_upgrade` for further testing.
 ///
 /// Panics if anything goes wrong.
-pub fn pre_migration<T: pallet_bounties::Config, P: GetStorageVersion + 'static, N: AsRef<str>>(
+pub fn pre_migration<T: topsoil_bounties::Config, P: GetStorageVersion + 'static, N: AsRef<str>>(
 	old_pallet_name: N,
 	new_pallet_name: N,
 ) {
 	let old_pallet_name = old_pallet_name.as_ref();
 	let new_pallet_name = new_pallet_name.as_ref();
-	let storage_prefix_bounties_count = pallet_bounties::BountyCount::<T>::storage_prefix();
-	let storage_prefix_bounties = pallet_bounties::Bounties::<T>::storage_prefix();
+	let storage_prefix_bounties_count = topsoil_bounties::BountyCount::<T>::storage_prefix();
+	let storage_prefix_bounties = topsoil_bounties::Bounties::<T>::storage_prefix();
 	let storage_prefix_bounties_description =
-		pallet_bounties::BountyDescriptions::<T>::storage_prefix();
-	let storage_prefix_bounties_approvals = pallet_bounties::BountyApprovals::<T>::storage_prefix();
+		topsoil_bounties::BountyDescriptions::<T>::storage_prefix();
+	let storage_prefix_bounties_approvals = topsoil_bounties::BountyApprovals::<T>::storage_prefix();
 	log_migration("pre-migration", storage_prefix_bounties_count, old_pallet_name, new_pallet_name);
 	log_migration("pre-migration", storage_prefix_bounties, old_pallet_name, new_pallet_name);
 	log_migration(
@@ -164,20 +164,20 @@ pub fn pre_migration<T: pallet_bounties::Config, P: GetStorageVersion + 'static,
 }
 
 /// Some checks for after migration. This can be linked to
-/// `frame_support::traits::OnRuntimeUpgrade::post_upgrade` for further testing.
+/// `topsoil_support::traits::OnRuntimeUpgrade::post_upgrade` for further testing.
 ///
 /// Panics if anything goes wrong.
-pub fn post_migration<T: pallet_bounties::Config, P: GetStorageVersion, N: AsRef<str>>(
+pub fn post_migration<T: topsoil_bounties::Config, P: GetStorageVersion, N: AsRef<str>>(
 	old_pallet_name: N,
 	new_pallet_name: N,
 ) {
 	let old_pallet_name = old_pallet_name.as_ref();
 	let new_pallet_name = new_pallet_name.as_ref();
-	let storage_prefix_bounties_count = pallet_bounties::BountyCount::<T>::storage_prefix();
-	let storage_prefix_bounties = pallet_bounties::Bounties::<T>::storage_prefix();
+	let storage_prefix_bounties_count = topsoil_bounties::BountyCount::<T>::storage_prefix();
+	let storage_prefix_bounties = topsoil_bounties::Bounties::<T>::storage_prefix();
 	let storage_prefix_bounties_description =
-		pallet_bounties::BountyDescriptions::<T>::storage_prefix();
-	let storage_prefix_bounties_approvals = pallet_bounties::BountyApprovals::<T>::storage_prefix();
+		topsoil_bounties::BountyDescriptions::<T>::storage_prefix();
+	let storage_prefix_bounties_approvals = topsoil_bounties::BountyApprovals::<T>::storage_prefix();
 	log_migration(
 		"post-migration",
 		storage_prefix_bounties_count,

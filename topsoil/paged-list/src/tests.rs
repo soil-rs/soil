@@ -16,12 +16,12 @@
 // limitations under the License.
 
 //! Mostly pallet doc-tests. Real tests are in [`super::paged_list`] and crate
-//! `pallet-paged-list-fuzzer`.
+//! `topsoil-paged-list-fuzzer`.
 
 #![cfg(test)]
 
 use crate::{mock::*, *};
-use frame::{
+use topsoil::{
 	prelude::storage::{StorageAppender, StoragePrefixedContainer},
 	testing_prelude::*,
 };

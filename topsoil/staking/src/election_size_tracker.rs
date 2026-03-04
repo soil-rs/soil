@@ -32,7 +32,7 @@
 //! ### Example
 //!
 //! ```ignore
-//! use pallet_staking::election_size_tracker::*;
+//! use topsoil_staking::election_size_tracker::*;
 //!
 //! // instantiates a new tracker.
 //! let mut size_tracker = StaticTracker::<Staking>::default();
@@ -71,7 +71,7 @@
 //! - `num_votes` * [`Encode::size_hint`] of the `AccountId` type.
 
 use codec::Encode;
-use frame_election_provider_support::{
+use topsoil_election_provider_support::{
 	bounds::{DataProviderBounds, SizeBound},
 	ElectionDataProvider, VoterOf,
 };
@@ -175,7 +175,7 @@ mod tests {
 		mock::{AccountId, Staking, Test},
 		BoundedVec, MaxNominationsOf,
 	};
-	use frame_election_provider_support::bounds::ElectionBoundsBuilder;
+	use topsoil_election_provider_support::bounds::ElectionBoundsBuilder;
 	use soil_core::bounded_vec;
 
 	type Voters = BoundedVec<AccountId, MaxNominationsOf<Test>>;

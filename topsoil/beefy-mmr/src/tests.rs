@@ -28,7 +28,7 @@ use soil_core::H256;
 use soil_io::TestExternalities;
 use soil_runtime::{traits::Keccak256, DigestItem};
 
-use frame_support::traits::OnInitialize;
+use topsoil_support::traits::OnInitialize;
 
 use crate::mock::*;
 
@@ -44,7 +44,7 @@ pub fn beefy_log(log: ConsensusLog<BeefyId>) -> DigestItem {
 }
 
 fn read_mmr_leaf(ext: &mut TestExternalities, key: Vec<u8>) -> MmrLeaf {
-	type Node = pallet_mmr::primitives::DataOrHash<Keccak256, MmrLeaf>;
+	type Node = topsoil_mmr::primitives::DataOrHash<Keccak256, MmrLeaf>;
 	ext.persist_offchain_overlay();
 	let offchain_db = ext.offchain_db();
 	offchain_db
@@ -95,13 +95,13 @@ fn should_contain_mmr_digest() {
 #[test]
 fn should_contain_valid_leaf_data() {
 	fn node_offchain_key(pos: usize, parent_hash: H256) -> Vec<u8> {
-		(<Test as pallet_mmr::Config>::INDEXING_PREFIX, pos as u64, parent_hash).encode()
+		(<Test as topsoil_mmr::Config>::INDEXING_PREFIX, pos as u64, parent_hash).encode()
 	}
 
 	let mut ext = new_test_ext(vec![1, 2, 3, 4]);
 	let parent_hash = ext.execute_with(|| {
 		init_block(1, None);
-		frame_system::Pallet::<Test>::parent_hash()
+		topsoil_system::Pallet::<Test>::parent_hash()
 	});
 
 	let mmr_leaf = read_mmr_leaf(&mut ext, node_offchain_key(0, parent_hash));
@@ -126,7 +126,7 @@ fn should_contain_valid_leaf_data() {
 	// build second block on top
 	let parent_hash = ext.execute_with(|| {
 		init_block(2, None);
-		frame_system::Pallet::<Test>::parent_hash()
+		topsoil_system::Pallet::<Test>::parent_hash()
 	});
 
 	let mmr_leaf = read_mmr_leaf(&mut ext, node_offchain_key(1, parent_hash));

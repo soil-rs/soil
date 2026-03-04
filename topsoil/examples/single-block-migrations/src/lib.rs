@@ -97,7 +97,7 @@
 //!
 //! ### `mod v0`
 //!
-//! Here we define a [`storage_alias`](frame_support::storage_alias) for the old v0 [`Value`]
+//! Here we define a [`storage_alias`](topsoil_support::storage_alias) for the old v0 [`Value`]
 //! format.
 //!
 //! This allows reading the old v0 value from storage during the migration.
@@ -116,7 +116,7 @@
 //!
 //! Note that the storage migration logic is attached to a standalone struct implementing
 //! [`UncheckedOnRuntimeUpgrade`], rather than implementing the
-//! [`Hooks::on_runtime_upgrade`](frame_support::traits::Hooks::on_runtime_upgrade) hook directly on
+//! [`Hooks::on_runtime_upgrade`](topsoil_support::traits::Hooks::on_runtime_upgrade) hook directly on
 //! the pallet. The pallet hook is better suited for special types of logic that need to execute on
 //! every runtime upgrade, but not so much for one-off storage migrations.
 //!
@@ -131,7 +131,7 @@
 //! - The migration only runs once when the on-chain storage version is `0`
 //! - The on-chain storage version is updated to `1` after the migration executes
 //! - Reads and writes from checking and setting the on-chain storage version are accounted for in
-//!   the final [`Weight`](frame_support::weights::Weight)
+//!   the final [`Weight`](topsoil_support::weights::Weight)
 //!
 //! ### `mod test`
 //!
@@ -142,10 +142,10 @@
 //! - `post_upgrade` succeeds when given the bytes returned by `pre_upgrade`
 //! - Pallet storage is in the expected state after the migration
 //!
-//! [`VersionedMigration`]: frame_support::migrations::VersionedMigration
-//! [`GetStorageVersion`]: frame_support::traits::GetStorageVersion
-//! [`OnRuntimeUpgrade`]: frame_support::traits::OnRuntimeUpgrade
-//! [`UncheckedOnRuntimeUpgrade`]: frame_support::traits::UncheckedOnRuntimeUpgrade
+//! [`VersionedMigration`]: topsoil_support::migrations::VersionedMigration
+//! [`GetStorageVersion`]: topsoil_support::traits::GetStorageVersion
+//! [`OnRuntimeUpgrade`]: topsoil_support::traits::OnRuntimeUpgrade
+//! [`UncheckedOnRuntimeUpgrade`]: topsoil_support::traits::UncheckedOnRuntimeUpgrade
 //! [`MigrateV0ToV1`]: crate::migrations::v1::MigrateV0ToV1
 
 // We make sure this pallet uses `no_std` for compiling to Wasm.
@@ -164,7 +164,7 @@ mod mock;
 extern crate alloc;
 
 use codec::{Decode, Encode, MaxEncodedLen};
-use frame_support::traits::StorageVersion;
+use topsoil_support::traits::StorageVersion;
 
 /// Example struct holding the most recently set [`u32`] and the
 /// second most recently set [`u32`] (if one existed).
@@ -178,11 +178,11 @@ pub struct CurrentAndPreviousValue {
 }
 
 // Pallet for demonstrating storage migrations.
-#[frame_support::pallet(dev_mode)]
+#[topsoil_support::pallet(dev_mode)]
 pub mod pallet {
 	use super::*;
-	use frame_support::pallet_prelude::*;
-	use frame_system::pallet_prelude::*;
+	use topsoil_support::pallet_prelude::*;
+	use topsoil_system::pallet_prelude::*;
 
 	/// Define the current [`StorageVersion`] of the pallet.
 	const STORAGE_VERSION: StorageVersion = StorageVersion::new(1);
@@ -192,7 +192,7 @@ pub mod pallet {
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
-	pub trait Config: frame_system::Config {}
+	pub trait Config: topsoil_system::Config {}
 
 	/// [`StorageVersion`] V1 of [`Value`].
 	///

@@ -16,8 +16,8 @@
 // limitations under the License.
 
 use crate::{self as fast_unstake};
-use frame_election_provider_support::PageIndex;
-use frame_support::{
+use topsoil_election_provider_support::PageIndex;
+use topsoil_support::{
 	assert_ok, derive_impl,
 	pallet_prelude::*,
 	parameter_types,
@@ -26,7 +26,7 @@ use frame_support::{
 };
 use soil_runtime::{traits::IdentityLookup, BuildStorage};
 
-use pallet_staking::{Exposure, IndividualExposure, StakerStatus};
+use topsoil_staking::{Exposure, IndividualExposure, StakerStatus};
 
 pub type AccountId = u128;
 pub type BlockNumber = u64;
@@ -34,22 +34,22 @@ pub type Balance = u128;
 pub type T = Runtime;
 
 parameter_types! {
-	pub BlockWeights: frame_system::limits::BlockWeights =
-		frame_system::limits::BlockWeights::simple_max(
+	pub BlockWeights: topsoil_system::limits::BlockWeights =
+		topsoil_system::limits::BlockWeights::simple_max(
 			Weight::from_parts(2u64 * WEIGHT_REF_TIME_PER_SECOND, u64::MAX),
 		);
 }
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Runtime {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Runtime {
 	type Block = Block;
-	type AccountData = pallet_balances::AccountData<Balance>;
+	type AccountData = topsoil_balances::AccountData<Balance>;
 	// we use U128 account id in order to get a better iteration order out of a map.
 	type AccountId = AccountId;
 	type Lookup = IdentityLookup<Self::AccountId>;
 }
 
-impl pallet_timestamp::Config for Runtime {
+impl topsoil_timestamp::Config for Runtime {
 	type Moment = u64;
 	type OnTimestampSet = ();
 	type MinimumPeriod = ConstU64<5>;
@@ -60,14 +60,14 @@ parameter_types! {
 	pub static ExistentialDeposit: Balance = 1;
 }
 
-#[derive_impl(pallet_balances::config_preludes::TestDefaultConfig)]
-impl pallet_balances::Config for Runtime {
+#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
+impl topsoil_balances::Config for Runtime {
 	type Balance = Balance;
 	type ExistentialDeposit = ExistentialDeposit;
 	type AccountStore = System;
 }
 
-pallet_staking_reward_curve::build! {
+topsoil_staking_reward_curve::build! {
 	const I_NPOS: soil_runtime::curve::PiecewiseLinear<'static> = curve!(
 		min_inflation: 0_025_000,
 		max_inflation: 0_100_000,
@@ -87,7 +87,7 @@ parameter_types! {
 
 pub struct MockElection;
 
-impl frame_election_provider_support::ElectionProvider for MockElection {
+impl topsoil_election_provider_support::ElectionProvider for MockElection {
 	type BlockNumber = BlockNumber;
 	type AccountId = AccountId;
 	type DataProvider = Staking;
@@ -99,7 +99,7 @@ impl frame_election_provider_support::ElectionProvider for MockElection {
 
 	fn elect(
 		_remaining_pages: PageIndex,
-	) -> Result<frame_election_provider_support::BoundedSupportsOf<Self>, Self::Error> {
+	) -> Result<topsoil_election_provider_support::BoundedSupportsOf<Self>, Self::Error> {
 		Err(())
 	}
 
@@ -120,18 +120,18 @@ impl frame_election_provider_support::ElectionProvider for MockElection {
 	}
 }
 
-#[derive_impl(pallet_staking::config_preludes::TestDefaultConfig)]
-impl pallet_staking::Config for Runtime {
+#[derive_impl(topsoil_staking::config_preludes::TestDefaultConfig)]
+impl topsoil_staking::Config for Runtime {
 	type OldCurrency = Balances;
 	type Currency = Balances;
-	type UnixTime = pallet_timestamp::Pallet<Self>;
-	type AdminOrigin = frame_system::EnsureRoot<Self::AccountId>;
+	type UnixTime = topsoil_timestamp::Pallet<Self>;
+	type AdminOrigin = topsoil_system::EnsureRoot<Self::AccountId>;
 	type BondingDuration = BondingDuration;
-	type EraPayout = pallet_staking::ConvertCurve<RewardCurve>;
+	type EraPayout = topsoil_staking::ConvertCurve<RewardCurve>;
 	type ElectionProvider = MockElection;
 	type GenesisElectionProvider = Self::ElectionProvider;
-	type VoterList = pallet_staking::UseNominatorsAndValidatorsMap<Self>;
-	type TargetList = pallet_staking::UseValidatorsMap<Self>;
+	type VoterList = topsoil_staking::UseNominatorsAndValidatorsMap<Self>;
+	type TargetList = topsoil_staking::UseValidatorsMap<Self>;
 }
 
 parameter_types! {
@@ -144,20 +144,20 @@ impl fast_unstake::Config for Runtime {
 	type Deposit = Deposit;
 	type Currency = Balances;
 	type Staking = Staking;
-	type ControlOrigin = frame_system::EnsureRoot<Self::AccountId>;
+	type ControlOrigin = topsoil_system::EnsureRoot<Self::AccountId>;
 	type BatchSize = BatchSize;
 	type WeightInfo = ();
 	type MaxErasToCheckPerBlock = ConstU32<16>;
 }
 
-type Block = frame_system::mocking::MockBlock<Runtime>;
+type Block = topsoil_system::mocking::MockBlock<Runtime>;
 
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub enum Runtime {
-		System: frame_system,
-		Timestamp: pallet_timestamp,
-		Balances: pallet_balances,
-		Staking: pallet_staking,
+		System: topsoil_system,
+		Timestamp: topsoil_timestamp,
+		Balances: topsoil_balances,
+		Staking: topsoil_staking,
 		FastUnstake: fast_unstake,
 	}
 );
@@ -217,7 +217,7 @@ impl ExtBuilder {
 				(v, Exposure { total: 0, own: 0, others })
 			})
 			.for_each(|(validator, exposure)| {
-				pallet_staking::EraInfo::<T>::set_exposure(era, &validator, exposure);
+				topsoil_staking::EraInfo::<T>::set_exposure(era, &validator, exposure);
 			});
 	}
 
@@ -229,13 +229,13 @@ impl ExtBuilder {
 	pub(crate) fn build(self) -> soil_io::TestExternalities {
 		soil_tracing::try_init_simple();
 		let mut storage =
-			frame_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
+			topsoil_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
 
 		let validators_range = VALIDATOR_PREFIX..VALIDATOR_PREFIX + VALIDATORS_PER_ERA;
 		let nominators_range =
 			NOMINATOR_PREFIX..NOMINATOR_PREFIX + NOMINATORS_PER_VALIDATOR_PER_ERA;
 
-		let _ = pallet_balances::GenesisConfig::<Runtime> {
+		let _ = topsoil_balances::GenesisConfig::<Runtime> {
 			balances: self
 				.unexposed
 				.clone()
@@ -249,11 +249,11 @@ impl ExtBuilder {
 		}
 		.assimilate_storage(&mut storage);
 
-		let _ = pallet_staking::GenesisConfig::<Runtime> {
+		let _ = topsoil_staking::GenesisConfig::<Runtime> {
 			stakers: self
 				.unexposed
 				.into_iter()
-				.map(|(x, y, z)| (x, y, z, pallet_staking::StakerStatus::Nominator(vec![42])))
+				.map(|(x, y, z)| (x, y, z, topsoil_staking::StakerStatus::Nominator(vec![42])))
 				.chain(validators_range.map(|x| (x, x, 100, StakerStatus::Validator)))
 				.chain(nominators_range.map(|x| (x, x, 100, StakerStatus::Nominator(vec![x]))))
 				.collect::<Vec<_>>(),
@@ -265,14 +265,14 @@ impl ExtBuilder {
 
 		ext.execute_with(|| {
 			// for events to be deposited.
-			frame_system::Pallet::<Runtime>::set_block_number(1);
+			topsoil_system::Pallet::<Runtime>::set_block_number(1);
 
 			for era in 0..=(BondingDuration::get()) {
 				Self::register_stakers_for_era(era);
 			}
 
 			// because we read this value as a measure of how many validators we have.
-			pallet_staking::ValidatorCount::<Runtime>::put(VALIDATORS_PER_ERA as u32);
+			topsoil_staking::ValidatorCount::<Runtime>::put(VALIDATORS_PER_ERA as u32);
 		});
 
 		ext
@@ -288,7 +288,7 @@ impl ExtBuilder {
 pub(crate) fn run_to_block(n: u64, on_idle: bool) {
 	System::run_to_block_with::<AllPalletsWithSystem>(
 		n,
-		frame_system::RunToBlockHooks::default()
+		topsoil_system::RunToBlockHooks::default()
 			.before_finalize(|_| {
 				// Satisfy the timestamp pallet.
 				Timestamp::set_timestamp(0);
@@ -307,23 +307,23 @@ pub(crate) fn next_block(on_idle: bool) {
 }
 
 pub fn assert_unstaked(stash: &AccountId) {
-	assert!(!pallet_staking::Bonded::<T>::contains_key(stash));
-	assert!(!pallet_staking::Payee::<T>::contains_key(stash));
-	assert!(!pallet_staking::Validators::<T>::contains_key(stash));
-	assert!(!pallet_staking::Nominators::<T>::contains_key(stash));
+	assert!(!topsoil_staking::Bonded::<T>::contains_key(stash));
+	assert!(!topsoil_staking::Payee::<T>::contains_key(stash));
+	assert!(!topsoil_staking::Validators::<T>::contains_key(stash));
+	assert!(!topsoil_staking::Nominators::<T>::contains_key(stash));
 }
 
 pub fn create_exposed_nominator(exposed: AccountId, era: u32) {
 	// create an exposed nominator in passed era
-	let mut exposure = pallet_staking::EraInfo::<T>::get_full_exposure(era, &VALIDATORS_PER_ERA);
+	let mut exposure = topsoil_staking::EraInfo::<T>::get_full_exposure(era, &VALIDATORS_PER_ERA);
 	exposure.others.push(IndividualExposure { who: exposed, value: 0 as Balance });
-	pallet_staking::EraInfo::<T>::set_exposure(era, &VALIDATORS_PER_ERA, exposure);
+	topsoil_staking::EraInfo::<T>::set_exposure(era, &VALIDATORS_PER_ERA, exposure);
 
 	Balances::make_free_balance_be(&exposed, 100);
 	assert_ok!(Staking::bond(
 		RuntimeOrigin::signed(exposed),
 		10,
-		pallet_staking::RewardDestination::Staked
+		topsoil_staking::RewardDestination::Staked
 	));
 	assert_ok!(Staking::nominate(RuntimeOrigin::signed(exposed), vec![exposed]));
 	// register the exposed one.

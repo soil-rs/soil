@@ -59,11 +59,11 @@ use soil_runtime::traits::Saturating;
 /// Declaring a counted map:
 ///
 /// ```
-/// #[frame_support::pallet]
+/// #[topsoil_support::pallet]
 /// mod pallet {
-/// # 	use frame_support::pallet_prelude::*;
+/// # 	use topsoil_support::pallet_prelude::*;
 /// # 	#[pallet::config]
-/// # 	pub trait Config: frame_system::Config {}
+/// # 	pub trait Config: topsoil_system::Config {}
 /// # 	#[pallet::pallet]
 /// # 	pub struct Pallet<T>(_);
 /// 	/// A kitchen-sink CountedStorageMap, with all possible additional attributes.

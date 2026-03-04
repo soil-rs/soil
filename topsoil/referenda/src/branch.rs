@@ -19,7 +19,7 @@
 
 use super::Config;
 use crate::weights::WeightInfo;
-use frame_support::weights::Weight;
+use topsoil_support::weights::Weight;
 
 /// Branches within the `begin_deciding` function.
 pub enum BeginDecidingBranch {
@@ -60,7 +60,7 @@ impl From<BeginDecidingBranch> for ServiceBranch {
 
 impl ServiceBranch {
 	/// Return the weight of the `nudge` function when it takes the branch denoted by `self`.
-	pub fn weight_of_nudge<T: Config<I>, I: 'static>(self) -> frame_support::weights::Weight {
+	pub fn weight_of_nudge<T: Config<I>, I: 'static>(self) -> topsoil_support::weights::Weight {
 		use ServiceBranch::*;
 		match self {
 			NoDeposit => T::WeightInfo::nudge_referendum_no_deposit(),
@@ -82,7 +82,7 @@ impl ServiceBranch {
 	}
 
 	/// Return the maximum possible weight of the `nudge` function.
-	pub fn max_weight_of_nudge<T: Config<I>, I: 'static>() -> frame_support::weights::Weight {
+	pub fn max_weight_of_nudge<T: Config<I>, I: 'static>() -> topsoil_support::weights::Weight {
 		Weight::zero()
 			.max(T::WeightInfo::nudge_referendum_no_deposit())
 			.max(T::WeightInfo::nudge_referendum_preparing())
@@ -105,7 +105,7 @@ impl ServiceBranch {
 	/// by `self`.
 	pub fn weight_of_deposit<T: Config<I>, I: 'static>(
 		self,
-	) -> Option<frame_support::weights::Weight> {
+	) -> Option<topsoil_support::weights::Weight> {
 		use ServiceBranch::*;
 		let ref_time_weight = match self {
 			Preparing => T::WeightInfo::place_decision_deposit_preparing(),
@@ -130,7 +130,7 @@ impl ServiceBranch {
 	}
 
 	/// Return the maximum possible weight of the `place_decision_deposit` function.
-	pub fn max_weight_of_deposit<T: Config<I>, I: 'static>() -> frame_support::weights::Weight {
+	pub fn max_weight_of_deposit<T: Config<I>, I: 'static>() -> topsoil_support::weights::Weight {
 		Weight::zero()
 			.max(T::WeightInfo::place_decision_deposit_preparing())
 			.max(T::WeightInfo::place_decision_deposit_queued())
@@ -161,7 +161,7 @@ impl From<BeginDecidingBranch> for OneFewerDecidingBranch {
 impl OneFewerDecidingBranch {
 	/// Return the weight of the `one_fewer_deciding` function when it takes the branch denoted
 	/// by `self`.
-	pub fn weight<T: Config<I>, I: 'static>(self) -> frame_support::weights::Weight {
+	pub fn weight<T: Config<I>, I: 'static>(self) -> topsoil_support::weights::Weight {
 		use OneFewerDecidingBranch::*;
 		match self {
 			QueueEmpty => T::WeightInfo::one_fewer_deciding_queue_empty(),
@@ -171,7 +171,7 @@ impl OneFewerDecidingBranch {
 	}
 
 	/// Return the maximum possible weight of the `one_fewer_deciding` function.
-	pub fn max_weight<T: Config<I>, I: 'static>() -> frame_support::weights::Weight {
+	pub fn max_weight<T: Config<I>, I: 'static>() -> topsoil_support::weights::Weight {
 		Weight::zero()
 			.max(T::WeightInfo::one_fewer_deciding_queue_empty())
 			.max(T::WeightInfo::one_fewer_deciding_passing())

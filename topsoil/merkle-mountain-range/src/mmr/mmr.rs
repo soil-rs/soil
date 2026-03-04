@@ -27,7 +27,7 @@ use crate::{
 	Config, HashOf, HashingOf,
 };
 use alloc::vec::Vec;
-use frame::prelude::*;
+use topsoil::prelude::*;
 
 /// Stateless verification of the proof for a batch of leaves.
 /// Note, the leaves should be sorted such that corresponding leaves and leaf indices have the
@@ -65,7 +65,7 @@ where
 
 pub fn is_ancestry_proof_optimal<H>(ancestry_proof: &AncestryProof<H::Output>) -> bool
 where
-	H: frame::traits::Hash,
+	H: topsoil::traits::Hash,
 {
 	let prev_mmr_size = NodesUtils::new(ancestry_proof.prev_leaf_count).size();
 	let mmr_size = NodesUtils::new(ancestry_proof.leaf_count).size();

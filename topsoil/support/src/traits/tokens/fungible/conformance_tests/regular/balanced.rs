@@ -20,7 +20,7 @@ use crate::traits::{
 	tokens::{imbalance::Imbalance as ImbalanceT, Fortitude, Precision, Preservation},
 };
 use core::fmt::Debug;
-use frame_support::traits::tokens::fungible::imbalance::{Credit, Debt};
+use topsoil_support::traits::tokens::fungible::imbalance::{Credit, Debt};
 use soil_arithmetic::{traits::AtLeast8BitUnsigned, ArithmeticError};
 use soil_runtime::{traits::Bounded, TokenError};
 

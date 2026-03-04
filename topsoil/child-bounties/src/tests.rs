@@ -20,9 +20,9 @@
 #![cfg(test)]
 
 use super::*;
-use crate as pallet_child_bounties;
+use crate as topsoil_child_bounties;
 
-use frame_support::{
+use topsoil_support::{
 	assert_noop, assert_ok, derive_impl, parameter_types,
 	traits::{
 		tokens::{PayFromAccount, UnityAssetBalanceConversion},
@@ -39,23 +39,23 @@ use soil_runtime::{
 
 use super::Event as ChildBountiesEvent;
 
-type Block = frame_system::mocking::MockBlock<Test>;
-type BountiesError = pallet_bounties::Error<Test>;
+type Block = topsoil_system::mocking::MockBlock<Test>;
+type BountiesError = topsoil_bounties::Error<Test>;
 
 // This function directly jumps to a block number, and calls `on_initialize`.
 fn go_to_block(n: u64) {
-	<Test as pallet_treasury::Config>::BlockNumberProvider::set_block_number(n);
+	<Test as topsoil_treasury::Config>::BlockNumberProvider::set_block_number(n);
 	<Treasury as OnInitialize<u64>>::on_initialize(n);
 }
 
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub enum Test
 	{
-		System: frame_system,
-		Balances: pallet_balances,
-		Bounties: pallet_bounties,
-		Treasury: pallet_treasury,
-		ChildBounties: pallet_child_bounties,
+		System: topsoil_system,
+		Balances: topsoil_balances,
+		Bounties: topsoil_bounties,
+		Treasury: topsoil_treasury,
+		ChildBounties: topsoil_child_bounties,
 	}
 );
 
@@ -73,16 +73,16 @@ fn account_id(id: u8) -> AccountId {
 	soil_core::U256::from(id)
 }
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
 	type AccountId = AccountId;
 	type Lookup = IdentityLookup<Self::AccountId>;
 	type Block = Block;
-	type AccountData = pallet_balances::AccountData<u64>;
+	type AccountData = topsoil_balances::AccountData<u64>;
 }
 
-#[derive_impl(pallet_balances::config_preludes::TestDefaultConfig)]
-impl pallet_balances::Config for Test {
+#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
+impl topsoil_balances::Config for Test {
 	type AccountStore = System;
 }
 parameter_types! {
@@ -92,10 +92,10 @@ parameter_types! {
 	pub const SpendLimit: Balance = u64::MAX;
 }
 
-impl pallet_treasury::Config for Test {
+impl topsoil_treasury::Config for Test {
 	type PalletId = TreasuryPalletId;
-	type Currency = pallet_balances::Pallet<Test>;
-	type RejectOrigin = frame_system::EnsureRoot<AccountId>;
+	type Currency = topsoil_balances::Pallet<Test>;
+	type RejectOrigin = topsoil_system::EnsureRoot<AccountId>;
 	type RuntimeEvent = RuntimeEvent;
 	type SpendPeriod = ConstU64<2>;
 	type Burn = Burn;
@@ -103,7 +103,7 @@ impl pallet_treasury::Config for Test {
 	type WeightInfo = ();
 	type SpendFunds = Bounties;
 	type MaxApprovals = ConstU32<100>;
-	type SpendOrigin = frame_system::EnsureRootWithSuccess<Self::AccountId, SpendLimit>;
+	type SpendOrigin = topsoil_system::EnsureRootWithSuccess<Self::AccountId, SpendLimit>;
 	type AssetKind = ();
 	type Beneficiary = Self::AccountId;
 	type BeneficiaryLookup = IdentityLookup<Self::Beneficiary>;
@@ -121,7 +121,7 @@ parameter_types! {
 	pub const CuratorDepositMin: Balance = 3;
 
 }
-impl pallet_bounties::Config for Test {
+impl topsoil_bounties::Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type BountyDepositBase = ConstU64<80>;
 	type BountyDepositPayoutDelay = ConstU64<3>;
@@ -137,7 +137,7 @@ impl pallet_bounties::Config for Test {
 	type OnSlash = ();
 	type TransferAllAssets = ();
 }
-impl pallet_child_bounties::Config for Test {
+impl topsoil_child_bounties::Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type MaxActiveChildBountyCount = ConstU32<2>;
 	type ChildBountyValueMinimum = ConstU64<1>;
@@ -145,15 +145,15 @@ impl pallet_child_bounties::Config for Test {
 }
 
 pub fn new_test_ext() -> soil_io::TestExternalities {
-	let mut t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
-	pallet_balances::GenesisConfig::<Test> {
+	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	topsoil_balances::GenesisConfig::<Test> {
 		// Total issuance will be 200 with treasury account initialized at ED.
 		balances: vec![(account_id(0), 100), (account_id(1), 98), (account_id(2), 1)],
 		..Default::default()
 	}
 	.assimilate_storage(&mut t)
 	.unwrap();
-	pallet_treasury::GenesisConfig::<Test>::default()
+	topsoil_treasury::GenesisConfig::<Test>::default()
 		.assimilate_storage(&mut t)
 		.unwrap();
 	t.into()
@@ -282,7 +282,7 @@ fn add_child_bounty() {
 		// DB check.
 		// Check the child-bounty status.
 		assert_eq!(
-			pallet_child_bounties::ChildBounties::<Test>::get(0, 0).unwrap(),
+			topsoil_child_bounties::ChildBounties::<Test>::get(0, 0).unwrap(),
 			ChildBounty {
 				parent_bounty: 0,
 				value: 10,
@@ -293,11 +293,11 @@ fn add_child_bounty() {
 		);
 
 		// Check the child-bounty count.
-		assert_eq!(pallet_child_bounties::ParentChildBounties::<Test>::get(0), 1);
+		assert_eq!(topsoil_child_bounties::ParentChildBounties::<Test>::get(0), 1);
 
 		// Check the child-bounty description status.
 		assert_eq!(
-			pallet_child_bounties::ChildBountyDescriptionsV1::<Test>::get(0, 0).unwrap(),
+			topsoil_child_bounties::ChildBountyDescriptionsV1::<Test>::get(0, 0).unwrap(),
 			b"12345-p1".to_vec(),
 		);
 	});
@@ -370,7 +370,7 @@ fn child_bounty_assign_curator() {
 		));
 
 		assert_eq!(
-			pallet_child_bounties::ChildBounties::<Test>::get(0, 0).unwrap(),
+			topsoil_child_bounties::ChildBounties::<Test>::get(0, 0).unwrap(),
 			ChildBounty {
 				parent_bounty: 0,
 				value: 10,
@@ -394,7 +394,7 @@ fn child_bounty_assign_curator() {
 		let expected_child_deposit = CuratorDepositMultiplier::get() * fee;
 
 		assert_eq!(
-			pallet_child_bounties::ChildBounties::<Test>::get(0, 0).unwrap(),
+			topsoil_child_bounties::ChildBounties::<Test>::get(0, 0).unwrap(),
 			ChildBounty {
 				parent_bounty: 0,
 				value: 10,
@@ -490,7 +490,7 @@ fn award_claim_child_bounty() {
 
 		let expected_deposit = CuratorDepositMultiplier::get() * fee;
 		assert_eq!(
-			pallet_child_bounties::ChildBounties::<Test>::get(0, 0).unwrap(),
+			topsoil_child_bounties::ChildBounties::<Test>::get(0, 0).unwrap(),
 			ChildBounty {
 				parent_bounty: 0,
 				value: 10,
@@ -528,7 +528,7 @@ fn award_claim_child_bounty() {
 		assert_eq!(Balances::reserved_balance(ChildBounties::child_bounty_account_id(0, 0)), 0);
 
 		// Check the child-bounty count.
-		assert_eq!(pallet_child_bounties::ParentChildBounties::<Test>::get(0), 0);
+		assert_eq!(topsoil_child_bounties::ParentChildBounties::<Test>::get(0), 0);
 	});
 }
 
@@ -586,7 +586,7 @@ fn close_child_bounty_added() {
 		assert_ok!(ChildBounties::close_child_bounty(RuntimeOrigin::signed(account_id(4)), 0, 0));
 
 		// Check the child-bounty count.
-		assert_eq!(pallet_child_bounties::ParentChildBounties::<Test>::get(0), 0);
+		assert_eq!(topsoil_child_bounties::ParentChildBounties::<Test>::get(0), 0);
 
 		// Parent-bounty account status.
 		assert_eq!(Balances::free_balance(Bounties::bounty_account_id(0)), 50);
@@ -649,7 +649,7 @@ fn close_child_bounty_active() {
 		assert_ok!(ChildBounties::close_child_bounty(RuntimeOrigin::signed(account_id(4)), 0, 0));
 
 		// Check the child-bounty count.
-		assert_eq!(pallet_child_bounties::ParentChildBounties::<Test>::get(0), 0);
+		assert_eq!(topsoil_child_bounties::ParentChildBounties::<Test>::get(0), 0);
 
 		// Ensure child-bounty curator balance is unreserved.
 		assert_eq!(Balances::free_balance(account_id(8)), 101);
@@ -728,7 +728,7 @@ fn close_child_bounty_pending() {
 		);
 
 		// Check the child-bounty count.
-		assert_eq!(pallet_child_bounties::ParentChildBounties::<Test>::get(0), 1);
+		assert_eq!(topsoil_child_bounties::ParentChildBounties::<Test>::get(0), 1);
 
 		// Ensure no changes in child-bounty curator balance.
 		assert_eq!(Balances::reserved_balance(account_id(8)), expected_child_deposit);
@@ -832,7 +832,7 @@ fn child_bounty_curator_proposed_unassign_curator() {
 		));
 
 		assert_eq!(
-			pallet_child_bounties::ChildBounties::<Test>::get(0, 0).unwrap(),
+			topsoil_child_bounties::ChildBounties::<Test>::get(0, 0).unwrap(),
 			ChildBounty {
 				parent_bounty: 0,
 				value: 10,
@@ -853,7 +853,7 @@ fn child_bounty_curator_proposed_unassign_curator() {
 
 		// Verify updated child-bounty status.
 		assert_eq!(
-			pallet_child_bounties::ChildBounties::<Test>::get(0, 0).unwrap(),
+			topsoil_child_bounties::ChildBounties::<Test>::get(0, 0).unwrap(),
 			ChildBounty {
 				parent_bounty: 0,
 				value: 10,
@@ -924,7 +924,7 @@ fn child_bounty_active_unassign_curator() {
 		let expected_child_deposit = CuratorDepositMultiplier::get() * fee;
 
 		assert_eq!(
-			pallet_child_bounties::ChildBounties::<Test>::get(0, 0).unwrap(),
+			topsoil_child_bounties::ChildBounties::<Test>::get(0, 0).unwrap(),
 			ChildBounty {
 				parent_bounty: 0,
 				value: 10,
@@ -941,7 +941,7 @@ fn child_bounty_active_unassign_curator() {
 
 		// Verify updated child-bounty status.
 		assert_eq!(
-			pallet_child_bounties::ChildBounties::<Test>::get(0, 0).unwrap(),
+			topsoil_child_bounties::ChildBounties::<Test>::get(0, 0).unwrap(),
 			ChildBounty {
 				parent_bounty: 0,
 				value: 10,
@@ -968,7 +968,7 @@ fn child_bounty_active_unassign_curator() {
 		let expected_child_deposit = CuratorDepositMin::get();
 
 		assert_eq!(
-			pallet_child_bounties::ChildBounties::<Test>::get(0, 0).unwrap(),
+			topsoil_child_bounties::ChildBounties::<Test>::get(0, 0).unwrap(),
 			ChildBounty {
 				parent_bounty: 0,
 				value: 10,
@@ -985,7 +985,7 @@ fn child_bounty_active_unassign_curator() {
 
 		// Verify updated child-bounty status.
 		assert_eq!(
-			pallet_child_bounties::ChildBounties::<Test>::get(0, 0).unwrap(),
+			topsoil_child_bounties::ChildBounties::<Test>::get(0, 0).unwrap(),
 			ChildBounty {
 				parent_bounty: 0,
 				value: 10,
@@ -1010,7 +1010,7 @@ fn child_bounty_active_unassign_curator() {
 		assert_ok!(ChildBounties::accept_curator(RuntimeOrigin::signed(account_id(6)), 0, 0));
 
 		assert_eq!(
-			pallet_child_bounties::ChildBounties::<Test>::get(0, 0).unwrap(),
+			topsoil_child_bounties::ChildBounties::<Test>::get(0, 0).unwrap(),
 			ChildBounty {
 				parent_bounty: 0,
 				value: 10,
@@ -1027,7 +1027,7 @@ fn child_bounty_active_unassign_curator() {
 
 		// Verify updated child-bounty status.
 		assert_eq!(
-			pallet_child_bounties::ChildBounties::<Test>::get(0, 0).unwrap(),
+			topsoil_child_bounties::ChildBounties::<Test>::get(0, 0).unwrap(),
 			ChildBounty {
 				parent_bounty: 0,
 				value: 10,
@@ -1054,7 +1054,7 @@ fn child_bounty_active_unassign_curator() {
 		let expected_child_deposit = CuratorDepositMin::get();
 
 		assert_eq!(
-			pallet_child_bounties::ChildBounties::<Test>::get(0, 0).unwrap(),
+			topsoil_child_bounties::ChildBounties::<Test>::get(0, 0).unwrap(),
 			ChildBounty {
 				parent_bounty: 0,
 				value: 10,
@@ -1080,7 +1080,7 @@ fn child_bounty_active_unassign_curator() {
 
 		// Verify updated child-bounty status.
 		assert_eq!(
-			pallet_child_bounties::ChildBounties::<Test>::get(0, 0).unwrap(),
+			topsoil_child_bounties::ChildBounties::<Test>::get(0, 0).unwrap(),
 			ChildBounty {
 				parent_bounty: 0,
 				value: 10,
@@ -1150,7 +1150,7 @@ fn parent_bounty_inactive_unassign_curator_child_bounty() {
 		let expected_child_deposit = CuratorDepositMultiplier::get() * fee;
 
 		assert_eq!(
-			pallet_child_bounties::ChildBounties::<Test>::get(0, 0).unwrap(),
+			topsoil_child_bounties::ChildBounties::<Test>::get(0, 0).unwrap(),
 			ChildBounty {
 				parent_bounty: 0,
 				value: 10,
@@ -1179,7 +1179,7 @@ fn parent_bounty_inactive_unassign_curator_child_bounty() {
 
 		// Verify updated child-bounty status.
 		assert_eq!(
-			pallet_child_bounties::ChildBounties::<Test>::get(0, 0).unwrap(),
+			topsoil_child_bounties::ChildBounties::<Test>::get(0, 0).unwrap(),
 			ChildBounty {
 				parent_bounty: 0,
 				value: 10,
@@ -1214,7 +1214,7 @@ fn parent_bounty_inactive_unassign_curator_child_bounty() {
 		let expected_deposit = CuratorDepositMin::get();
 
 		assert_eq!(
-			pallet_child_bounties::ChildBounties::<Test>::get(0, 0).unwrap(),
+			topsoil_child_bounties::ChildBounties::<Test>::get(0, 0).unwrap(),
 			ChildBounty {
 				parent_bounty: 0,
 				value: 10,
@@ -1241,7 +1241,7 @@ fn parent_bounty_inactive_unassign_curator_child_bounty() {
 
 		// Verify updated child-bounty status.
 		assert_eq!(
-			pallet_child_bounties::ChildBounties::<Test>::get(0, 0).unwrap(),
+			topsoil_child_bounties::ChildBounties::<Test>::get(0, 0).unwrap(),
 			ChildBounty {
 				parent_bounty: 0,
 				value: 10,
@@ -1316,15 +1316,15 @@ fn close_parent_with_child_bounty() {
 		assert_ok!(ChildBounties::close_child_bounty(RuntimeOrigin::root(), 0, 0));
 
 		// Check the child-bounty count.
-		assert_eq!(pallet_child_bounties::ParentChildBounties::<Test>::get(0), 0);
-		assert_eq!(pallet_child_bounties::ParentTotalChildBounties::<Test>::get(0), 1);
+		assert_eq!(topsoil_child_bounties::ParentChildBounties::<Test>::get(0), 0);
+		assert_eq!(topsoil_child_bounties::ParentTotalChildBounties::<Test>::get(0), 1);
 
 		// Try close parent-bounty again.
 		// Should pass this time.
 		assert_ok!(Bounties::close_bounty(RuntimeOrigin::root(), 0));
 
 		// Check the total count is removed after the parent bounty removal.
-		assert_eq!(pallet_child_bounties::ParentTotalChildBounties::<Test>::get(0), 0);
+		assert_eq!(topsoil_child_bounties::ParentTotalChildBounties::<Test>::get(0), 0);
 	});
 }
 
@@ -1377,7 +1377,7 @@ fn children_curator_fee_calculation_test() {
 			fee
 		));
 		// Check curator fee added to the sum.
-		assert_eq!(pallet_child_bounties::ChildrenCuratorFees::<Test>::get(0), fee);
+		assert_eq!(topsoil_child_bounties::ChildrenCuratorFees::<Test>::get(0), fee);
 		// Accept curator for child-bounty.
 		assert_ok!(ChildBounties::accept_curator(RuntimeOrigin::signed(account_id(8)), 0, 0));
 		// Award child-bounty.
@@ -1391,7 +1391,7 @@ fn children_curator_fee_calculation_test() {
 		let expected_child_deposit = CuratorDepositMultiplier::get() * fee;
 
 		assert_eq!(
-			pallet_child_bounties::ChildBounties::<Test>::get(0, 0).unwrap(),
+			topsoil_child_bounties::ChildBounties::<Test>::get(0, 0).unwrap(),
 			ChildBounty {
 				parent_bounty: 0,
 				value: 10,
@@ -1411,7 +1411,7 @@ fn children_curator_fee_calculation_test() {
 		assert_ok!(ChildBounties::claim_child_bounty(RuntimeOrigin::signed(account_id(7)), 0, 0));
 
 		// Check the child-bounty count.
-		assert_eq!(pallet_child_bounties::ParentChildBounties::<Test>::get(0), 0);
+		assert_eq!(topsoil_child_bounties::ParentChildBounties::<Test>::get(0), 0);
 
 		// Award the parent bounty.
 		assert_ok!(Bounties::award_bounty(RuntimeOrigin::signed(account_id(4)), 0, account_id(9)));
@@ -1419,13 +1419,13 @@ fn children_curator_fee_calculation_test() {
 		go_to_block(15);
 
 		// Check the total count.
-		assert_eq!(pallet_child_bounties::ParentTotalChildBounties::<Test>::get(0), 1);
+		assert_eq!(topsoil_child_bounties::ParentTotalChildBounties::<Test>::get(0), 1);
 
 		// Claim the parent bounty.
 		assert_ok!(Bounties::claim_bounty(RuntimeOrigin::signed(account_id(9)), 0));
 
 		// Check the total count after the parent bounty removal.
-		assert_eq!(pallet_child_bounties::ParentTotalChildBounties::<Test>::get(0), 0);
+		assert_eq!(topsoil_child_bounties::ParentTotalChildBounties::<Test>::get(0), 0);
 
 		// Ensure parent-bounty curator received correctly reduced fee.
 		assert_eq!(Balances::free_balance(account_id(4)), 101 + 6 - fee); // 101 + 6 - 2
@@ -1644,7 +1644,7 @@ fn max_active_child_bounty_count_is_strictly_enforced() {
 			10,
 			b"child-1".to_vec()
 		));
-		assert_eq!(pallet_child_bounties::ParentChildBounties::<Test>::get(0), 1);
+		assert_eq!(topsoil_child_bounties::ParentChildBounties::<Test>::get(0), 1);
 
 		// Create second child bounty - should succeed (at limit).
 		assert_ok!(ChildBounties::add_child_bounty(
@@ -1653,7 +1653,7 @@ fn max_active_child_bounty_count_is_strictly_enforced() {
 			10,
 			b"child-2".to_vec()
 		));
-		assert_eq!(pallet_child_bounties::ParentChildBounties::<Test>::get(0), 2);
+		assert_eq!(topsoil_child_bounties::ParentChildBounties::<Test>::get(0), 2);
 
 		// Attempt to create third child bounty - should fail with TooManyChildBounties.
 		assert_noop!(
@@ -1667,11 +1667,11 @@ fn max_active_child_bounty_count_is_strictly_enforced() {
 		);
 
 		// Verify count hasn't increased.
-		assert_eq!(pallet_child_bounties::ParentChildBounties::<Test>::get(0), 2);
+		assert_eq!(topsoil_child_bounties::ParentChildBounties::<Test>::get(0), 2);
 
 		// Close one child bounty and verify we can add a new one.
 		assert_ok!(ChildBounties::close_child_bounty(RuntimeOrigin::signed(account_id(4)), 0, 0));
-		assert_eq!(pallet_child_bounties::ParentChildBounties::<Test>::get(0), 1);
+		assert_eq!(topsoil_child_bounties::ParentChildBounties::<Test>::get(0), 1);
 
 		// Now we should be able to add another child bounty.
 		assert_ok!(ChildBounties::add_child_bounty(
@@ -1680,6 +1680,6 @@ fn max_active_child_bounty_count_is_strictly_enforced() {
 			10,
 			b"child-4".to_vec()
 		));
-		assert_eq!(pallet_child_bounties::ParentChildBounties::<Test>::get(0), 2);
+		assert_eq!(topsoil_child_bounties::ParentChildBounties::<Test>::get(0), 2);
 	});
 }

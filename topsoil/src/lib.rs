@@ -47,16 +47,16 @@
 //! ### Example Usage
 //!
 //! ```
-//! use polkadot_sdk_frame as frame;
+//! use topsoil as frame;
 //!
-//! #[frame::pallet]
+//! #[topsoil::pallet]
 //! pub mod pallet {
-//! 	# use polkadot_sdk_frame as frame;
-//! 	use frame::prelude::*;
+//! 	# use topsoil as frame;
+//! 	use topsoil::prelude::*;
 //! 	// ^^ using the prelude!
 //!
 //! 	#[pallet::config]
-//! 	pub trait Config: frame_system::Config {}
+//! 	pub trait Config: topsoil_system::Config {}
 //!
 //! 	#[pallet::pallet]
 //! 	pub struct Pallet<T>(_);
@@ -64,19 +64,19 @@
 //!
 //! #[cfg(test)]
 //! pub mod tests {
-//! 	# use polkadot_sdk_frame as frame;
-//! 	use frame::testing_prelude::*;
+//! 	# use topsoil as frame;
+//! 	use topsoil::testing_prelude::*;
 //! }
 //!
 //! #[cfg(feature = "runtime-benchmarks")]
 //! pub mod benchmarking {
-//! 	# use polkadot_sdk_frame as frame;
-//! 	use frame::benchmarking::prelude::*;
+//! 	# use topsoil as frame;
+//! 	use topsoil::benchmarking::prelude::*;
 //! }
 //!
 //! pub mod runtime {
-//! 	# use polkadot_sdk_frame as frame;
-//! 	use frame::runtime::prelude::*;
+//! 	# use topsoil as frame;
+//! 	use topsoil::runtime::prelude::*;
 //! }
 //! ```
 //!
@@ -86,13 +86,13 @@
 //! runtimes. For runtime development, import it as:
 //!
 //! ```text
-//! polkadot-sdk-frame = { version = "foo", features = ["runtime"] }
+//! topsoil = { version = "foo", features = ["runtime"] }
 //! ```
 //!
 //! If you just want to build a pallet instead, import it as
 //!
 //! ```text
-//! polkadot-sdk-frame = { version = "foo" }
+//! topsoil = { version = "foo" }
 //! ```
 //!
 //! ### Prelude Relationships
@@ -104,8 +104,8 @@
 //!
 //! ## Naming
 //!
-//! Please note that this crate can only be imported as `polkadot-sdk-frame` or `frame`. This is due
-//! to compatibility matters with `frame-support`.
+//! Please note that this crate can only be imported as `topsoil` or `frame`. This is due
+//! to compatibility matters with `topsoil-support`.
 //!
 //! A typical pallet's `Cargo.toml` using this crate looks like:
 //!
@@ -132,21 +132,21 @@
 //!
 //! ## Documentation
 //!
-//! For more detailed documentation and examples, see [`polkadot_sdk_frame`](https://paritytech.github.io/polkadot-sdk/master/polkadot_sdk_frame/index.html).
+//! For more detailed documentation and examples, see [`topsoil`](https://paritytech.github.io/polkadot-sdk/master/topsoil/index.html).
 
 #![cfg_attr(not(feature = "std"), no_std)]
 
 #[doc(no_inline)]
-pub use frame_support::pallet;
+pub use topsoil_support::pallet;
 
 #[doc(no_inline)]
-pub use frame_support::pallet_macros::{import_section, pallet_section};
+pub use topsoil_support::pallet_macros::{import_section, pallet_section};
 
 /// The logging library of the runtime. Can normally be the classic `log` crate.
 pub use log;
 
 #[doc(inline)]
-pub use frame_support::storage_alias;
+pub use topsoil_support::storage_alias;
 
 /// Macros used within the main [`pallet`] macro.
 ///
@@ -157,7 +157,7 @@ pub use frame_support::storage_alias;
 /// section below:
 pub mod pallet_macros {
 	#[doc(no_inline)]
-	pub use frame_support::{derive_impl, pallet, pallet_macros::*};
+	pub use topsoil_support::{derive_impl, pallet, pallet_macros::*};
 }
 
 /// The main prelude of FRAME.
@@ -165,29 +165,29 @@ pub mod pallet_macros {
 /// This prelude should almost always be the first line of code in any pallet or runtime.
 ///
 /// ```
-/// use polkadot_sdk_frame::prelude::*;
+/// use topsoil::prelude::*;
 ///
 /// // rest of your pallet..
 /// mod pallet {}
 /// ```
 pub mod prelude {
-	/// `frame_system`'s parent crate, which is mandatory in all pallets build with this crate.
+	/// `topsoil_system`'s parent crate, which is mandatory in all pallets build with this crate.
 	///
-	/// Conveniently, the keyword `frame_system` is in scope as one uses `use
-	/// polkadot_sdk_frame::prelude::*`.
+	/// Conveniently, the keyword `topsoil_system` is in scope as one uses `use
+	/// topsoil::prelude::*`.
 	#[doc(inline)]
-	pub use frame_system;
+	pub use topsoil_system;
 
-	/// Pallet prelude of `frame-support`.
+	/// Pallet prelude of `topsoil-support`.
 	///
-	/// Note: this needs to revised once `frame-support` evolves.
+	/// Note: this needs to revised once `topsoil-support` evolves.
 	#[doc(no_inline)]
-	pub use frame_support::pallet_prelude::*;
+	pub use topsoil_support::pallet_prelude::*;
 
-	/// Dispatch types from `frame-support`, other fundamental traits.
+	/// Dispatch types from `topsoil-support`, other fundamental traits.
 	#[doc(no_inline)]
-	pub use frame_support::dispatch::{GetDispatchInfo, PostDispatchInfo};
-	pub use frame_support::{
+	pub use topsoil_support::dispatch::{GetDispatchInfo, PostDispatchInfo};
+	pub use topsoil_support::{
 		defensive, defensive_assert,
 		traits::{
 			Contains, Defensive, DefensiveSaturating, EitherOf, EstimateNextSessionRotation,
@@ -198,13 +198,13 @@ pub mod prelude {
 		PalletId,
 	};
 
-	/// Pallet prelude of `frame-system`.
+	/// Pallet prelude of `topsoil-system`.
 	#[doc(no_inline)]
-	pub use frame_system::pallet_prelude::*;
+	pub use topsoil_system::pallet_prelude::*;
 
 	/// Transaction related helpers to submit transactions.
 	#[doc(no_inline)]
-	pub use frame_system::offchain::*;
+	pub use topsoil_system::offchain::*;
 
 	/// All FRAME-relevant derive macros.
 	#[doc(no_inline)]
@@ -253,20 +253,20 @@ pub mod try_runtime {
 /// It supports both the `benchmarking::v1::benchmarks` and `benchmarking::v2::benchmark` syntax.
 ///
 /// ```
-/// use polkadot_sdk_frame::benchmarking::prelude::*;
+/// use topsoil::benchmarking::prelude::*;
 /// // rest of your code.
 /// ```
 ///
-/// It already includes `polkadot_sdk_frame::prelude::*` and `polkadot_sdk_frame::testing_prelude`.
+/// It already includes `topsoil::prelude::*` and `topsoil::testing_prelude`.
 #[cfg(feature = "runtime-benchmarks")]
 pub mod benchmarking {
 	mod shared {
-		pub use frame_benchmarking::{add_benchmark, v1::account, whitelist, whitelisted_caller};
+		pub use topsoil_benchmarking::{add_benchmark, v1::account, whitelist, whitelisted_caller};
 		// all benchmarking functions.
-		pub use frame_benchmarking::benchmarking::*;
+		pub use topsoil_benchmarking::benchmarking::*;
 		// The system origin, which is very often needed in benchmarking code. Might be tricky only
 		// if the pallet defines its own `#[pallet::origin]` and call it `RawOrigin`.
-		pub use frame_system::{Pallet as System, RawOrigin};
+		pub use topsoil_system::{Pallet as System, RawOrigin};
 	}
 
 	#[deprecated(
@@ -274,35 +274,35 @@ pub mod benchmarking {
 	)]
 	pub mod v1 {
 		pub use super::shared::*;
-		pub use frame_benchmarking::benchmarks;
+		pub use topsoil_benchmarking::benchmarks;
 	}
 
 	pub mod prelude {
 		pub use crate::prelude::*;
-		pub use frame_benchmarking::{
+		pub use topsoil_benchmarking::{
 			add_benchmark, benchmarking::add_to_whitelist, v1::account, v2::*, whitelist,
 			whitelisted_caller,
 		};
-		pub use frame_support::traits::UnfilteredDispatchable;
-		pub use frame_system::{Pallet as System, RawOrigin};
+		pub use topsoil_support::traits::UnfilteredDispatchable;
+		pub use topsoil_system::{Pallet as System, RawOrigin};
 	}
 }
 
 /// Prelude to be included in the `weight.rs` of each pallet.
 ///
 /// ```
-/// pub use polkadot_sdk_frame::weights_prelude::*;
+/// pub use topsoil::weights_prelude::*;
 /// ```
 pub mod weights_prelude {
 	pub use core::marker::PhantomData;
-	pub use frame_support::{
+	pub use topsoil_support::{
 		traits::Get,
 		weights::{
 			constants::{ParityDbWeight, RocksDbWeight},
 			Weight,
 		},
 	};
-	pub use frame_system;
+	pub use topsoil_system;
 }
 
 /// The main testing prelude of FRAME.
@@ -310,12 +310,12 @@ pub mod weights_prelude {
 /// A test setup typically starts with:
 ///
 /// ```
-/// use polkadot_sdk_frame::testing_prelude::*;
+/// use topsoil::testing_prelude::*;
 /// // rest of your test setup.
 /// ```
 ///
-/// This automatically brings in `polkadot_sdk_frame::prelude::*` and
-/// `polkadot_sdk_frame::runtime::prelude::*`.
+/// This automatically brings in `topsoil::prelude::*` and
+/// `topsoil::runtime::prelude::*`.
 #[cfg(feature = "std")]
 pub mod testing_prelude {
 	pub use crate::{prelude::*, runtime::prelude::*};
@@ -324,17 +324,17 @@ pub mod testing_prelude {
 	/// well.
 	pub use super::runtime::testing_prelude::*;
 
-	/// Other helper macros from `frame_support` that help with asserting in tests.
-	pub use frame_support::{
+	/// Other helper macros from `topsoil_support` that help with asserting in tests.
+	pub use topsoil_support::{
 		assert_err, assert_err_ignore_postinfo, assert_error_encoded_size, assert_noop, assert_ok,
 		assert_storage_noop, defensive, ensure, hypothetically, hypothetically_ok, storage_alias,
 		StorageNoopGuard,
 	};
 
-	pub use frame_support::traits::Everything;
-	pub use frame_system::{self, mocking::*, RunToBlockHooks};
+	pub use topsoil_support::traits::Everything;
+	pub use topsoil_system::{self, mocking::*, RunToBlockHooks};
 
-	#[deprecated(note = "Use `frame::testing_prelude::TestState` instead.")]
+	#[deprecated(note = "Use `topsoil::testing_prelude::TestState` instead.")]
 	pub use soil_io::TestExternalities;
 
 	pub use soil_io::TestExternalities as TestState;
@@ -351,47 +351,47 @@ pub mod runtime {
 	/// A runtime typically starts with:
 	///
 	/// ```
-	/// use polkadot_sdk_frame::runtime::prelude::*;
+	/// use topsoil::runtime::prelude::*;
 	/// ```
 	///
-	/// This automatically brings in `polkadot_sdk_frame::prelude::*`.
+	/// This automatically brings in `topsoil::prelude::*`.
 	pub mod prelude {
 		pub use crate::prelude::*;
 
 		/// All of the types related to the FRAME runtime executive.
-		pub use frame_executive::*;
+		pub use topsoil_executive::*;
 
 		/// Macro to amalgamate the runtime into `struct Runtime`.
 		///
 		/// Consider using the new version of this [`frame_construct_runtime`].
-		pub use frame_support::construct_runtime;
+		pub use topsoil_support::construct_runtime;
 
 		/// Macro to amalgamate the runtime into `struct Runtime`.
 		///
 		/// This is the newer version of [`construct_runtime`].
-		pub use frame_support::runtime as frame_construct_runtime;
+		pub use topsoil_support::runtime as frame_construct_runtime;
 
 		/// Macro to easily derive the `Config` trait of various pallet for `Runtime`.
-		pub use frame_support::derive_impl;
+		pub use topsoil_support::derive_impl;
 
 		/// Macros to easily impl traits such as `Get` for types.
 		// TODO: using linking in the Get in the line above triggers an ICE :/
-		pub use frame_support::{ord_parameter_types, parameter_types};
+		pub use topsoil_support::{ord_parameter_types, parameter_types};
 
 		/// For building genesis config.
-		pub use frame_support::genesis_builder_helper::{build_state, get_preset};
+		pub use topsoil_support::genesis_builder_helper::{build_state, get_preset};
 
 		/// Const types that can easily be used in conjuncture with `Get`.
-		pub use frame_support::traits::{
+		pub use topsoil_support::traits::{
 			ConstBool, ConstI128, ConstI16, ConstI32, ConstI64, ConstI8, ConstU128, ConstU16,
 			ConstU32, ConstU64, ConstU8,
 		};
 
 		/// Used for simple fee calculation.
-		pub use frame_support::weights::{self, FixedFee, NoFee};
+		pub use topsoil_support::weights::{self, FixedFee, NoFee};
 
 		/// Primary types used to parameterize `EnsureOrigin` and `EnsureRootWithArg`.
-		pub use frame_system::{
+		pub use topsoil_system::{
 			EnsureNever, EnsureNone, EnsureRoot, EnsureRootWithSuccess, EnsureSigned,
 			EnsureSignedBy,
 		};
@@ -426,7 +426,7 @@ pub mod runtime {
 	/// A non-testing runtime should have this enabled, as such:
 	///
 	/// ```
-	/// use polkadot_sdk_frame::runtime::{prelude::*, apis::{*,}};
+	/// use topsoil::runtime::{prelude::*, apis::{*,}};
 	/// ```
 	// TODO: This is because of wildcard imports, and it should be not needed once we can avoid
 	// that. Imports like that are needed because we seem to need some unknown types in the macro
@@ -434,7 +434,7 @@ pub mod runtime {
 	// moved to file similarly.
 	#[allow(ambiguous_glob_reexports)]
 	pub mod apis {
-		pub use frame_system_rpc_runtime_api::*;
+		pub use topsoil_system_rpc_runtime_api::*;
 		pub use soil_api::{self, *};
 		pub use soil_block_builder::*;
 		pub use soil_consensus_aura::*;
@@ -455,10 +455,10 @@ pub mod runtime {
 	/// - `u32` block number.
 	/// - [`soil_runtime::MultiAddress`] and [`soil_runtime::MultiSignature`] are used as the account id
 	///   and signature types. This implies that this prelude can possibly used with an
-	///   "account-index" system (eg `pallet-indices`). And, in any case, it should be paired with
-	///   `AccountIdLookup` in [`frame_system::Config::Lookup`].
+	///   "account-index" system (eg `topsoil-indices`). And, in any case, it should be paired with
+	///   `AccountIdLookup` in [`topsoil_system::Config::Lookup`].
 	pub mod types_common {
-		use frame_system::Config as SysConfig;
+		use topsoil_system::Config as SysConfig;
 		use soil_runtime::{generic, traits, OpaqueExtrinsic};
 
 		/// A signature type compatible capably of handling multiple crypto-schemes.
@@ -468,14 +468,14 @@ pub mod runtime {
 		pub type AccountId =
 			<<Signature as traits::Verify>::Signer as traits::IdentifyAccount>::AccountId;
 
-		/// The block-number type, which should be fed into [`frame_system::Config`].
+		/// The block-number type, which should be fed into [`topsoil_system::Config`].
 		pub type BlockNumber = u32;
 
 		/// TODO: Ideally we want the hashing type to be equal to SysConfig::Hashing?
 		type HeaderInner = generic::Header<BlockNumber, traits::BlakeTwo256>;
 
 		// NOTE: `AccountIndex` is provided for future compatibility, if you want to introduce
-		// something like `pallet-indices`.
+		// something like `topsoil-indices`.
 		type ExtrinsicInner<T, Extra, AccountIndex = ()> = generic::UncheckedExtrinsic<
 			soil_runtime::MultiAddress<AccountId, AccountIndex>,
 			<T as SysConfig>::RuntimeCall,
@@ -483,9 +483,9 @@ pub mod runtime {
 			Extra,
 		>;
 
-		/// The block type, which should be fed into [`frame_system::Config`].
+		/// The block type, which should be fed into [`topsoil_system::Config`].
 		///
-		/// Should be parameterized with `T: frame_system::Config` and a tuple of
+		/// Should be parameterized with `T: topsoil_system::Config` and a tuple of
 		/// `TransactionExtension`. When in doubt, use [`SystemTransactionExtensionsOf`].
 		// Note that this cannot be dependent on `T` for block-number because it would lead to a
 		// circular dependency (self-referential generics).
@@ -497,19 +497,19 @@ pub mod runtime {
 		/// This should be provided to the client side as the extrinsic type.
 		pub type OpaqueBlock = generic::Block<HeaderInner, OpaqueExtrinsic>;
 
-		/// Default set of signed extensions exposed from the `frame_system`.
+		/// Default set of signed extensions exposed from the `topsoil_system`.
 		///
 		/// crucially, this does NOT contain any tx-payment extension.
 		pub type SystemTransactionExtensionsOf<T> = (
-			frame_system::AuthorizeCall<T>,
-			frame_system::CheckNonZeroSender<T>,
-			frame_system::CheckSpecVersion<T>,
-			frame_system::CheckTxVersion<T>,
-			frame_system::CheckGenesis<T>,
-			frame_system::CheckEra<T>,
-			frame_system::CheckNonce<T>,
-			frame_system::CheckWeight<T>,
-			frame_system::WeightReclaim<T>,
+			topsoil_system::AuthorizeCall<T>,
+			topsoil_system::CheckNonZeroSender<T>,
+			topsoil_system::CheckSpecVersion<T>,
+			topsoil_system::CheckTxVersion<T>,
+			topsoil_system::CheckGenesis<T>,
+			topsoil_system::CheckEra<T>,
+			topsoil_system::CheckNonce<T>,
+			topsoil_system::CheckWeight<T>,
+			topsoil_system::WeightReclaim<T>,
 		);
 	}
 
@@ -530,7 +530,7 @@ pub mod runtime {
 // cleaned up.
 #[allow(ambiguous_glob_reexports)]
 pub mod traits {
-	pub use frame_support::traits::*;
+	pub use topsoil_support::traits::*;
 	pub use soil_runtime::traits::*;
 }
 
@@ -543,7 +543,7 @@ pub mod arithmetic {
 
 /// All token related types and traits.
 pub mod token {
-	pub use frame_support::traits::{
+	pub use topsoil_support::traits::{
 		tokens,
 		tokens::{
 			currency, fungible, fungibles, imbalance, nonfungible, nonfungible_v2, nonfungibles,
@@ -561,7 +561,7 @@ pub mod token {
 pub mod derive {
 	pub use codec::{Decode, Encode};
 	pub use core::fmt::Debug;
-	pub use frame_support::{
+	pub use topsoil_support::{
 		CloneNoBound, DebugNoBound, DefaultNoBound, EqNoBound, OrdNoBound, PartialEqNoBound,
 		PartialOrdNoBound,
 	};
@@ -586,7 +586,7 @@ pub mod hashing {
 // Systems involved in transaction execution in the runtime.
 /// This is already part of the [`prelude`].
 pub mod transaction {
-	pub use frame_support::traits::{CallMetadata, GetCallMetadata};
+	pub use topsoil_support::traits::{CallMetadata, GetCallMetadata};
 	pub use soil_runtime::{
 		generic::ExtensionVersion,
 		impl_tx_ext_default,
@@ -602,7 +602,7 @@ pub mod transaction {
 ///
 /// This is already part of the [`prelude`].
 pub mod account {
-	pub use frame_support::traits::{
+	pub use topsoil_support::traits::{
 		AsEnsureOriginWithArg, ChangeMembers, EitherOfDiverse, InitializeMembers,
 	};
 	pub use soil_runtime::traits::{IdentifyAccount, IdentityLookup};
@@ -619,8 +619,8 @@ pub mod deps {
 	// moment to think about whether this item could have been placed in any of the other modules
 	// and preludes in this crate. In most cases, hopefully the answer is yes.
 
-	pub use frame_support;
-	pub use frame_system;
+	pub use topsoil_support;
+	pub use topsoil_system;
 
 	pub use soil_arithmetic;
 	pub use soil_core;
@@ -631,7 +631,7 @@ pub mod deps {
 	pub use scale_info;
 
 	#[cfg(feature = "runtime")]
-	pub use frame_executive;
+	pub use topsoil_executive;
 	#[cfg(feature = "runtime")]
 	pub use soil_api;
 	#[cfg(feature = "runtime")]
@@ -654,10 +654,10 @@ pub mod deps {
 	pub use soil_version;
 
 	#[cfg(feature = "runtime-benchmarks")]
-	pub use frame_benchmarking;
+	pub use topsoil_benchmarking;
 	#[cfg(feature = "runtime-benchmarks")]
-	pub use frame_system_benchmarking;
+	pub use topsoil_system_benchmarking;
 
-	#[cfg(feature = "frame-try-runtime")]
-	pub use frame_try_runtime;
+	#[cfg(feature = "topsoil-try-runtime")]
+	pub use topsoil_try_runtime;
 }

@@ -167,7 +167,7 @@ pub fn expand_tt_default_parts(def: &mut Def) -> proc_macro2::TokenStream {
 
 
 		// This macro is similar to the `tt_default_parts!`. It expands the pallets that are declared
-		// explicitly (`System: frame_system::{Pallet, Call}`) with extra parts.
+		// explicitly (`System: topsoil_system::{Pallet, Call}`) with extra parts.
 		//
 		// For example, after expansion an explicit pallet would look like:
 		// `System: expanded::{Error} ::{Pallet, Call}`.

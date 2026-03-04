@@ -19,9 +19,9 @@ use crate::{
 	verifier::{self, Verifier},
 	Config, CurrentPhase, Pallet, Phase, Snapshot,
 };
-use frame_benchmarking::v2::*;
-use frame_election_provider_support::{ElectionDataProvider, ElectionProvider};
-use frame_support::{assert_ok, pallet_prelude::*};
+use topsoil_benchmarking::v2::*;
+use topsoil_election_provider_support::{ElectionDataProvider, ElectionProvider};
+use topsoil_support::{assert_ok, pallet_prelude::*};
 
 const SNAPSHOT_NOT_BIG_ENOUGH: &'static str = "Snapshot page is not full, you should run this \
 benchmark with enough genesis stakers in staking to fill a page of voters/targets \

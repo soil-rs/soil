@@ -17,8 +17,8 @@
 //! Test to check the migration of the voter bag.
 
 use crate::{RuntimeT, LOG_TARGET};
-use frame_support::traits::PalletInfoAccess;
-use pallet_staking::Nominators;
+use topsoil_support::traits::PalletInfoAccess;
+use topsoil_staking::Nominators;
 use remote_externalities::{Builder, Mode, OnlineConfig};
 use soil_runtime::{traits::Block as BlockT, DeserializeOwned};
 
@@ -29,14 +29,14 @@ pub async fn execute<Runtime, Block>(
 	currency_name: &'static str,
 	ws_url: String,
 ) where
-	Runtime: RuntimeT<pallet_bags_list::Instance1>,
+	Runtime: RuntimeT<topsoil_bags_list::Instance1>,
 	Block: BlockT + DeserializeOwned,
 	Block::Header: DeserializeOwned,
 {
 	let mut ext = Builder::<Block>::new()
 		.mode(Mode::Online(OnlineConfig {
 			transport_uris: vec![ws_url.to_string()],
-			pallets: vec![pallet_staking::Pallet::<Runtime>::name().to_string()],
+			pallets: vec![topsoil_staking::Pallet::<Runtime>::name().to_string()],
 			..Default::default()
 		}))
 		.build()
@@ -48,16 +48,16 @@ pub async fn execute<Runtime, Block>(
 		let pre_migrate_nominator_count = <Nominators<Runtime>>::iter().count() as u32;
 		log::info!(target: LOG_TARGET, "Nominator count: {}", pre_migrate_nominator_count);
 
-		use frame_election_provider_support::SortedListProvider;
+		use topsoil_election_provider_support::SortedListProvider;
 		// run the actual migration
-		let moved = <Runtime as pallet_staking::Config>::VoterList::unsafe_regenerate(
-			pallet_staking::Nominators::<Runtime>::iter().map(|(n, _)| n),
-			Box::new(|x| Some(pallet_staking::Pallet::<Runtime>::weight_of(x))),
+		let moved = <Runtime as topsoil_staking::Config>::VoterList::unsafe_regenerate(
+			topsoil_staking::Nominators::<Runtime>::iter().map(|(n, _)| n),
+			Box::new(|x| Some(topsoil_staking::Pallet::<Runtime>::weight_of(x))),
 		);
 		log::info!(target: LOG_TARGET, "Moved {} nominators", moved);
 
-		let voter_list_len = <Runtime as pallet_staking::Config>::VoterList::iter().count() as u32;
-		let voter_list_count = <Runtime as pallet_staking::Config>::VoterList::count();
+		let voter_list_len = <Runtime as topsoil_staking::Config>::VoterList::iter().count() as u32;
+		let voter_list_count = <Runtime as topsoil_staking::Config>::VoterList::count();
 		// and confirm it is equal to the length of the `VoterList`.
 		assert_eq!(pre_migrate_nominator_count, voter_list_len);
 		assert_eq!(pre_migrate_nominator_count, voter_list_count);

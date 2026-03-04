@@ -16,34 +16,34 @@
 // limitations under the License.
 
 use super::*;
-use crate as pallet_glutton;
+use crate as topsoil_glutton;
 
-use frame_support::{assert_ok, derive_impl};
+use topsoil_support::{assert_ok, derive_impl};
 use soil_runtime::BuildStorage;
 
-type Block = frame_system::mocking::MockBlock<Test>;
+type Block = topsoil_system::mocking::MockBlock<Test>;
 
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub enum Test
 	{
-		System: frame_system,
-		Glutton: pallet_glutton,
+		System: topsoil_system,
+		Glutton: topsoil_glutton,
 	}
 );
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
 	type Block = Block;
 }
 
 impl Config for Test {
 	type RuntimeEvent = RuntimeEvent;
-	type AdminOrigin = frame_system::EnsureRoot<Self::AccountId>;
+	type AdminOrigin = topsoil_system::EnsureRoot<Self::AccountId>;
 	type WeightInfo = ();
 }
 
 pub fn new_test_ext() -> soil_io::TestExternalities {
-	let t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 
 	let mut ext = soil_io::TestExternalities::new(t);
 	ext.execute_with(|| System::set_block_number(1));

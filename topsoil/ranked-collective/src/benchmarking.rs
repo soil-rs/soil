@@ -21,22 +21,22 @@ use super::*;
 #[allow(unused_imports)]
 use crate::Pallet as RankedCollective;
 use alloc::vec::Vec;
-use frame_benchmarking::{
+use topsoil_benchmarking::{
 	v1::{account, BenchmarkError},
 	v2::*,
 };
 
-use frame_support::{assert_err, assert_ok, traits::NoOpPoll};
-use frame_system::{pallet_prelude::BlockNumberFor, RawOrigin as SystemOrigin};
+use topsoil_support::{assert_err, assert_ok, traits::NoOpPoll};
+use topsoil_system::{pallet_prelude::BlockNumberFor, RawOrigin as SystemOrigin};
 
 const SEED: u32 = 0;
 
 fn assert_last_event<T: Config<I>, I: 'static>(generic_event: <T as Config<I>>::RuntimeEvent) {
-	frame_system::Pallet::<T>::assert_last_event(generic_event.into());
+	topsoil_system::Pallet::<T>::assert_last_event(generic_event.into());
 }
 
 fn assert_has_event<T: Config<I>, I: 'static>(generic_event: <T as Config<I>>::RuntimeEvent) {
-	frame_system::Pallet::<T>::assert_has_event(generic_event.into());
+	topsoil_system::Pallet::<T>::assert_has_event(generic_event.into());
 }
 
 fn make_member<T: Config<I>, I: 'static>(rank: Rank) -> T::AccountId {
@@ -59,8 +59,8 @@ fn make_member<T: Config<I>, I: 'static>(rank: Rank) -> T::AccountId {
 
 #[instance_benchmarks(
 where
-	<<T as pallet::Config<I>>::Polls as frame_support::traits::Polling<Tally<T, I, pallet::Pallet<T, I>>>>::Index: From<u8>,
-	<T as frame_system::Config>::RuntimeEvent: TryInto<pallet::Event<T, I>>,
+	<<T as pallet::Config<I>>::Polls as topsoil_support::traits::Polling<Tally<T, I, pallet::Pallet<T, I>>>>::Index: From<u8>,
+	<T as topsoil_system::Config>::RuntimeEvent: TryInto<pallet::Event<T, I>>,
 )]
 mod benchmarks {
 	use super::*;
@@ -186,7 +186,7 @@ mod benchmarks {
 
 		// Convert the class to a rank if it exists, otherwise use the default rank.
 		let rank = class.as_ref().map_or(
-			<Pallet<T, I> as frame_support::traits::RankedMembers>::Rank::default(),
+			<Pallet<T, I> as topsoil_support::traits::RankedMembers>::Rank::default(),
 			|class| T::MinRankOfClass::convert(class.clone()),
 		);
 
@@ -230,7 +230,7 @@ mod benchmarks {
 		// If the class exists, verify the vote event and tally.
 		if let Some(_) = class {
 			// Get the actual vote weight from the latest event's VoteRecord::Nay
-			let mut events = frame_system::Pallet::<T>::events();
+			let mut events = topsoil_system::Pallet::<T>::events();
 			let last_event = events.pop().expect("At least one event should exist");
 			let event: Event<T, I> = last_event
 				.event
@@ -260,7 +260,7 @@ mod benchmarks {
 
 		// Convert the class to a rank, or use a default rank if no class exists.
 		let rank = class.as_ref().map_or(
-			<Pallet<T, I> as frame_support::traits::RankedMembers>::Rank::default(),
+			<Pallet<T, I> as topsoil_support::traits::RankedMembers>::Rank::default(),
 			|class| T::MinRankOfClass::convert(class.clone()),
 		);
 

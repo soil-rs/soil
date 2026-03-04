@@ -43,17 +43,17 @@
 //! Here's an example of a privileged function in another pallet:
 //!
 //! ```
-//! #[frame_support::pallet]
+//! #[topsoil_support::pallet]
 //! pub mod pallet {
 //! 	use super::*;
-//! 	use frame_support::pallet_prelude::*;
-//! 	use frame_system::pallet_prelude::*;
+//! 	use topsoil_support::pallet_prelude::*;
+//! 	use topsoil_system::pallet_prelude::*;
 //!
 //! 	#[pallet::pallet]
 //! 	pub struct Pallet<T>(_);
 //!
 //! 	#[pallet::config]
-//! 	pub trait Config: frame_system::Config {}
+//! 	pub trait Config: topsoil_system::Config {}
 //!
 //! 	#[pallet::call]
 //! 	impl<T: Config> Pallet<T> {
@@ -91,7 +91,7 @@
 //! accounts from spamming the transaction pool for the initial phase of a chain, during which
 //! developers may only want a sudo account to be able to make transactions.
 //!
-//! Learn more about the `Root` origin in the [`RawOrigin`](frame_system::RawOrigin) type
+//! Learn more about the `Root` origin in the [`RawOrigin`](topsoil_system::RawOrigin) type
 //! documentation.
 //!
 //! ### Examples
@@ -112,7 +112,7 @@
 //! error.
 //!
 //! Once an origin is verified, sudo calls use `dispatch_bypass_filter` from the
-//! [`UnfilteredDispatchable`](frame_support::traits::UnfilteredDispatchable) trait to allow call
+//! [`UnfilteredDispatchable`](topsoil_support::traits::UnfilteredDispatchable) trait to allow call
 //! execution without enforcing any further origin checks.
 
 #![deny(missing_docs)]
@@ -124,7 +124,7 @@ use alloc::boxed::Box;
 
 use soil_runtime::{traits::StaticLookup, DispatchResult};
 
-use frame_support::{dispatch::GetDispatchInfo, traits::UnfilteredDispatchable};
+use topsoil_support::{dispatch::GetDispatchInfo, traits::UnfilteredDispatchable};
 
 mod extension;
 #[cfg(test)]
@@ -140,26 +140,26 @@ pub use weights::WeightInfo;
 pub use extension::CheckOnlySudoAccount;
 pub use pallet::*;
 
-type AccountIdLookupOf<T> = <<T as frame_system::Config>::Lookup as StaticLookup>::Source;
+type AccountIdLookupOf<T> = <<T as topsoil_system::Config>::Lookup as StaticLookup>::Source;
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	use super::{DispatchResult, *};
-	use frame_support::pallet_prelude::*;
-	use frame_system::{pallet_prelude::*, RawOrigin};
+	use topsoil_support::pallet_prelude::*;
+	use topsoil_system::{pallet_prelude::*, RawOrigin};
 
 	/// Default preludes for [`Config`].
 	pub mod config_preludes {
 		use super::*;
-		use frame_support::derive_impl;
+		use topsoil_support::derive_impl;
 
 		/// Default prelude sensible to be used in a testing environment.
 		pub struct TestDefaultConfig;
 
-		#[derive_impl(frame_system::config_preludes::TestDefaultConfig, no_aggregated_types)]
-		impl frame_system::DefaultConfig for TestDefaultConfig {}
+		#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig, no_aggregated_types)]
+		impl topsoil_system::DefaultConfig for TestDefaultConfig {}
 
-		#[frame_support::register_default_impl(TestDefaultConfig)]
+		#[topsoil_support::register_default_impl(TestDefaultConfig)]
 		impl DefaultConfig for TestDefaultConfig {
 			type WeightInfo = ();
 			#[inject_runtime_type]
@@ -169,11 +169,11 @@ pub mod pallet {
 		}
 	}
 	#[pallet::config(with_default)]
-	pub trait Config: frame_system::Config {
+	pub trait Config: topsoil_system::Config {
 		/// The overarching event type.
 		#[pallet::no_default_bounds]
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// A sudo-able call.
 		#[pallet::no_default_bounds]
@@ -333,7 +333,7 @@ pub mod pallet {
 	pub type Key<T: Config> = StorageValue<_, T::AccountId, OptionQuery>;
 
 	#[pallet::genesis_config]
-	#[derive(frame_support::DefaultNoBound)]
+	#[derive(topsoil_support::DefaultNoBound)]
 	pub struct GenesisConfig<T: Config> {
 		/// The `AccountId` of the sudo key.
 		pub key: Option<T::AccountId>,

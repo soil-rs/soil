@@ -19,7 +19,7 @@
 //! items for the NFTs pallet.
 
 use crate::*;
-use frame_support::{pallet_prelude::*, traits::ExistenceRequirement};
+use topsoil_support::{pallet_prelude::*, traits::ExistenceRequirement};
 
 impl<T: Config<I>, I: 'static> Pallet<T, I> {
 	/// Mint a new unique item with the given `collection`, `item`, and other minting configuration

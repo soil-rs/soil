@@ -20,11 +20,11 @@
 #![cfg(test)]
 
 use crate::{
-	self as pallet_balances, AccountData, Config, CreditOf, Error, Pallet, TotalIssuance,
+	self as topsoil_balances, AccountData, Config, CreditOf, Error, Pallet, TotalIssuance,
 	DEFAULT_ADDRESS_URI,
 };
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
-use frame_support::{
+use topsoil_support::{
 	assert_err, assert_noop, assert_ok, assert_storage_noop, derive_impl,
 	dispatch::{DispatchInfo, GetDispatchInfo},
 	parameter_types,
@@ -34,8 +34,8 @@ use frame_support::{
 	},
 	weights::{IdentityFee, Weight},
 };
-use frame_system::{self as system, RawOrigin};
-use pallet_transaction_payment::{ChargeTransactionPayment, FungibleAdapter, Multiplier};
+use topsoil_system::{self as system, RawOrigin};
+use topsoil_transaction_payment::{ChargeTransactionPayment, FungibleAdapter, Multiplier};
 use scale_info::TypeInfo;
 use soil_core::{hexdisplay::HexDisplay, sr25519::Pair as SrPair, Pair};
 use soil_io;
@@ -55,7 +55,7 @@ mod fungible_tests;
 mod general_tests;
 mod reentrancy_tests;
 
-type Block = frame_system::mocking::MockBlock<Test>;
+type Block = topsoil_system::mocking::MockBlock<Test>;
 
 #[derive(
 	Encode,
@@ -81,33 +81,33 @@ impl VariantCount for TestId {
 	const VARIANT_COUNT: u32 = 3;
 }
 
-pub(crate) type AccountId = <Test as frame_system::Config>::AccountId;
+pub(crate) type AccountId = <Test as topsoil_system::Config>::AccountId;
 pub(crate) type Balance = <Test as Config>::Balance;
 
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub enum Test {
-		System: frame_system,
-		Balances: pallet_balances,
-		TransactionPayment: pallet_transaction_payment,
+		System: topsoil_system,
+		Balances: topsoil_balances,
+		TransactionPayment: topsoil_transaction_payment,
 	}
 );
 
 parameter_types! {
-	pub BlockWeights: frame_system::limits::BlockWeights =
-		frame_system::limits::BlockWeights::simple_max(
-			frame_support::weights::Weight::from_parts(1024, u64::MAX),
+	pub BlockWeights: topsoil_system::limits::BlockWeights =
+		topsoil_system::limits::BlockWeights::simple_max(
+			topsoil_support::weights::Weight::from_parts(1024, u64::MAX),
 		);
 	pub static ExistentialDeposit: u64 = 1;
 }
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
 	type Block = Block;
 	type AccountData = super::AccountData<u64>;
 }
 
-#[derive_impl(pallet_transaction_payment::config_preludes::TestDefaultConfig)]
-impl pallet_transaction_payment::Config for Test {
+#[derive_impl(topsoil_transaction_payment::config_preludes::TestDefaultConfig)]
+impl topsoil_transaction_payment::Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type OnChargeTransaction = FungibleAdapter<Pallet<Test>, ()>;
 	type OperationalFeeMultiplier = ConstU8<5>;
@@ -119,7 +119,7 @@ parameter_types! {
 	pub FooReason: TestId = TestId::Foo;
 }
 
-#[derive_impl(pallet_balances::config_preludes::TestDefaultConfig)]
+#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
 impl Config for Test {
 	type DustRemoval = DustTrap;
 	type ExistentialDeposit = ExistentialDeposit;
@@ -170,8 +170,8 @@ impl ExtBuilder {
 	}
 	pub fn build(self) -> soil_io::TestExternalities {
 		self.set_associated_consts();
-		let mut t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
-		pallet_balances::GenesisConfig::<Test> {
+		let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+		topsoil_balances::GenesisConfig::<Test> {
 			balances: if self.monied {
 				vec![
 					(1, 10 * self.existential_deposit),
@@ -239,7 +239,7 @@ parameter_types! {
 }
 
 type BalancesAccountStore = StorageMapShim<super::Account<Test>, u64, super::AccountData<u64>>;
-type SystemAccountStore = frame_system::Pallet<Test>;
+type SystemAccountStore = topsoil_system::Pallet<Test>;
 
 pub struct TestAccountStore;
 impl StoredMap<u64, super::AccountData<u64>> for TestAccountStore {
@@ -321,7 +321,7 @@ pub fn ensure_ti_valid() {
 			let derivation_string = derivation.replace("{}", &index.to_string());
 			let pair: SrPair =
 				Pair::from_string(&derivation_string, None).expect("Invalid derivation string");
-			<crate::tests::Test as frame_system::Config>::AccountId::decode(
+			<crate::tests::Test as topsoil_system::Config>::AccountId::decode(
 				&mut &pair.public().encode()[..],
 			)
 			.unwrap()
@@ -329,7 +329,7 @@ pub fn ensure_ti_valid() {
 		.collect();
 
 	// Iterate over all account keys (i.e., the account IDs).
-	for acc in frame_system::Account::<Test>::iter_keys() {
+	for acc in topsoil_system::Account::<Test>::iter_keys() {
 		// Skip dev accounts by checking if the account is in the dev_account_ids list.
 		// This also proves dev_accounts exists in storage.
 		if dev_account_ids.contains(&acc) {
@@ -338,7 +338,7 @@ pub fn ensure_ti_valid() {
 
 		// Check if we are using the system pallet or some other custom storage for accounts.
 		if UseSystem::get() {
-			let data = frame_system::Pallet::<Test>::account(acc);
+			let data = topsoil_system::Pallet::<Test>::account(acc);
 			sum += data.data.total();
 		} else {
 			let data = crate::Account::<Test>::get(acc);
@@ -381,12 +381,12 @@ pub(crate) fn get_test_account_data(who: AccountId) -> AccountData<Balance> {
 	}
 }
 
-/// Same as `get_test_account_data`, but returns a `frame_system::AccountInfo` with the data filled
+/// Same as `get_test_account_data`, but returns a `topsoil_system::AccountInfo` with the data filled
 /// in.
 pub(crate) fn get_test_account(
 	who: AccountId,
-) -> frame_system::AccountInfo<u32, AccountData<Balance>> {
-	let mut system_account = frame_system::Account::<Test>::get(&who);
+) -> topsoil_system::AccountInfo<u32, AccountData<Balance>> {
+	let mut system_account = topsoil_system::Account::<Test>::get(&who);
 	let account_data = get_test_account_data(who);
 	system_account.data = account_data;
 	system_account

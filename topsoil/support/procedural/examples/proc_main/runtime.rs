@@ -16,57 +16,57 @@
 // limitations under the License.
 #![allow(deprecated, clippy::deprecated_semver)]
 
-use super::{frame_system, Block};
+use super::{topsoil_system, Block};
 use crate::derive_impl;
 
 #[crate::pallet(dev_mode)]
 mod pallet_basic {
-	use super::frame_system;
+	use super::topsoil_system;
 
 	#[pallet::pallet]
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
-	pub trait Config: frame_system::Config {}
+	pub trait Config: topsoil_system::Config {}
 }
 
 impl pallet_basic::Config for Runtime {}
 
 #[crate::pallet(dev_mode)]
 mod pallet_with_disabled_call {
-	use super::frame_system;
+	use super::topsoil_system;
 
 	#[pallet::pallet]
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
-	pub trait Config: frame_system::Config {}
+	pub trait Config: topsoil_system::Config {}
 }
 
 impl pallet_with_disabled_call::Config for Runtime {}
 
 #[crate::pallet(dev_mode)]
 mod pallet_with_disabled_unsigned {
-	use super::frame_system;
+	use super::topsoil_system;
 
 	#[pallet::pallet]
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
-	pub trait Config: frame_system::Config {}
+	pub trait Config: topsoil_system::Config {}
 }
 
 impl pallet_with_disabled_unsigned::Config for Runtime {}
 
 #[crate::pallet]
 mod pallet_with_instance {
-	use super::frame_system;
+	use super::topsoil_system;
 
 	#[pallet::pallet]
 	pub struct Pallet<T, I = ()>(_);
 
 	#[pallet::config]
-	pub trait Config<I: 'static = ()>: frame_system::Config {}
+	pub trait Config<I: 'static = ()>: topsoil_system::Config {}
 }
 
 #[allow(unused)]
@@ -79,8 +79,8 @@ type Instance2 = pallet_with_instance::Pallet<pallet_with_instance::Instance2>;
 
 impl pallet_with_instance::Config<pallet_with_instance::Instance2> for Runtime {}
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Runtime {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Runtime {
 	type Block = Block;
 }
 
@@ -106,7 +106,7 @@ mod runtime {
 
 	// Use the concrete pallet type
 	#[runtime::pallet_index(0)]
-	pub type System = frame_system::Pallet<Runtime>;
+	pub type System = topsoil_system::Pallet<Runtime>;
 
 	// Use path to the pallet
 	#[runtime::pallet_index(1)]

@@ -15,13 +15,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//! Tests for pallet-delegated-staking.
+//! Tests for topsoil-delegated-staking.
 
 use super::*;
 use crate::mock::*;
-use frame_support::{assert_noop, assert_ok, traits::fungible::InspectHold};
-use pallet_nomination_pools::{Error as PoolsError, Event as PoolsEvent};
-use pallet_staking::{Error as StakingError, RewardDestination};
+use topsoil_support::{assert_noop, assert_ok, traits::fungible::InspectHold};
+use topsoil_nomination_pools::{Error as PoolsError, Event as PoolsEvent};
+use topsoil_staking::{Error as StakingError, RewardDestination};
 use soil_staking::{Agent, DelegationInterface, Delegator, StakerStatus};
 
 #[test]
@@ -224,7 +224,7 @@ fn apply_pending_slash() {
 
 		start_era(4);
 		// slash half of the stake
-		pallet_staking::slashing::do_slash::<T>(
+		topsoil_staking::slashing::do_slash::<T>(
 			&agent,
 			total_staked / 2,
 			&mut Default::default(),
@@ -339,7 +339,7 @@ fn allow_full_amount_to_be_delegated() {
 	});
 }
 
-/// Integration tests with pallet-staking.
+/// Integration tests with topsoil-staking.
 mod staking_integration {
 	use super::*;
 	use soil_staking::Stake;
@@ -641,7 +641,7 @@ mod staking_integration {
 			// in equal parts. lets try to migrate this nominator into delegate based stake.
 
 			// all balance currently is in 200
-			assert_eq!(pallet_staking::asset::total_balance::<T>(&agent), agent_amount);
+			assert_eq!(topsoil_staking::asset::total_balance::<T>(&agent), agent_amount);
 
 			// to migrate, nominator needs to set an account as a proxy delegator where staked funds
 			// will be moved and delegated back to this old nominator account. This should be funded
@@ -822,7 +822,7 @@ mod staking_integration {
 
 mod pool_integration {
 	use super::*;
-	use pallet_nomination_pools::{BondExtra, BondedPools, PoolState};
+	use topsoil_nomination_pools::{BondExtra, BondedPools, PoolState};
 
 	#[test]
 	fn create_pool_test() {
@@ -1213,7 +1213,7 @@ mod pool_integration {
 			assert_eq!(Pools::api_pool_pending_slash(pool_id), 0);
 
 			// slash the pool partially
-			pallet_staking::slashing::do_slash::<T>(
+			topsoil_staking::slashing::do_slash::<T>(
 				&pool_acc,
 				500,
 				&mut Default::default(),
@@ -1388,7 +1388,7 @@ mod pool_integration {
 			creator
 		));
 
-		pallet_nomination_pools::LastPoolId::<T>::get()
+		topsoil_nomination_pools::LastPoolId::<T>::get()
 	}
 
 	fn add_delegators_to_pool(pool_id: u32, delegators: Vec<AccountId>, amount: Balance) {

@@ -18,7 +18,7 @@
 //! Interfaces, types and utils for benchmarking a FRAME runtime.
 use alloc::vec::Vec;
 use codec::{Decode, Encode};
-use frame_support::{dispatch::DispatchErrorWithPostInfo, pallet_prelude::*, traits::StorageInfo};
+use topsoil_support::{dispatch::DispatchErrorWithPostInfo, pallet_prelude::*, traits::StorageInfo};
 use scale_info::TypeInfo;
 #[cfg(feature = "std")]
 use serde::{Deserialize, Serialize};
@@ -503,8 +503,8 @@ pub fn whitelisted_caller<AccountId: Decode>() -> AccountId {
 #[macro_export]
 macro_rules! whitelist_account {
 	($acc:ident) => {
-		frame_benchmarking::benchmarking::add_to_whitelist(
-			frame_system::Account::<T>::hashed_key_for(&$acc).into(),
+		topsoil_benchmarking::benchmarking::add_to_whitelist(
+			topsoil_system::Account::<T>::hashed_key_for(&$acc).into(),
 		);
 	};
 }

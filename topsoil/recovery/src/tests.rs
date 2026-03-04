@@ -18,7 +18,7 @@
 //! Tests for the module.
 
 use crate::{mock::*, *};
-use frame::{deps::soil_runtime::bounded_vec, testing_prelude::*};
+use topsoil::{deps::soil_runtime::bounded_vec, testing_prelude::*};
 
 #[test]
 fn basic_setup_works() {
@@ -780,7 +780,7 @@ fn poke_deposit_handles_insufficient_balance() {
 		// Should fail due to insufficient balance
 		assert_noop!(
 			Recovery::poke_deposit(RuntimeOrigin::signed(5), None),
-			pallet_balances::Error::<Test>::InsufficientBalance
+			topsoil_balances::Error::<Test>::InsufficientBalance
 		);
 		// Original deposit should remain unchanged
 		assert_eq!(Balances::reserved_balance(5), 13);

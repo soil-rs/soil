@@ -17,7 +17,7 @@
 
 use crate::Config;
 use codec::{Decode, DecodeWithMemTracking, Encode};
-use frame_support::dispatch::{DispatchInfo, PostDispatchInfo};
+use topsoil_support::dispatch::{DispatchInfo, PostDispatchInfo};
 use scale_info::TypeInfo;
 use soil_runtime::{
 	traits::{
@@ -98,7 +98,7 @@ where
 		_call: &T::RuntimeCall,
 		_info: &DispatchInfoOf<T::RuntimeCall>,
 		_len: usize,
-	) -> frame_support::pallet_prelude::TransactionValidity {
+	) -> topsoil_support::pallet_prelude::TransactionValidity {
 		Ok(ValidTransaction::default())
 	}
 
@@ -136,7 +136,7 @@ mod tests {
 		mock::{new_test_ext, Test},
 		BlockWeight, DispatchClass,
 	};
-	use frame_support::{assert_ok, weights::Weight};
+	use topsoil_support::{assert_ok, weights::Weight};
 
 	fn block_weights() -> crate::limits::BlockWeights {
 		<Test as crate::Config>::BlockWeights::get()

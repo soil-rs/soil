@@ -20,7 +20,7 @@
 #![allow(clippy::result_unit_err)]
 
 use super::*;
-use frame_support::{pallet_prelude::*, DefaultNoBound};
+use topsoil_support::{pallet_prelude::*, DefaultNoBound};
 
 pub type RevisionIndex = u32;
 pub type PageIndex = u32;

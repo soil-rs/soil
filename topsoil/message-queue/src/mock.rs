@@ -22,23 +22,23 @@
 pub use super::mock_helpers::*;
 use super::*;
 
-use crate as pallet_message_queue;
+use crate as topsoil_message_queue;
 use alloc::collections::btree_map::BTreeMap;
-use frame_support::{derive_impl, parameter_types};
+use topsoil_support::{derive_impl, parameter_types};
 use soil_runtime::BuildStorage;
 
-type Block = frame_system::mocking::MockBlock<Test>;
+type Block = topsoil_system::mocking::MockBlock<Test>;
 
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub enum Test
 	{
-		System: frame_system,
-		MessageQueue: pallet_message_queue,
+		System: topsoil_system,
+		MessageQueue: topsoil_message_queue,
 	}
 );
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
 	type Block = Block;
 }
 parameter_types! {
@@ -308,15 +308,15 @@ impl QueuePausedQuery<MessageOrigin> for MockedQueuePauser {
 /// Is generic since it is used by the unit test, integration tests and benchmarks.
 pub fn new_test_ext<T: Config>() -> soil_io::TestExternalities
 where
-	frame_system::pallet_prelude::BlockNumberFor<T>: From<u32>,
+	topsoil_system::pallet_prelude::BlockNumberFor<T>: From<u32>,
 {
 	soil_tracing::try_init_simple();
 	WeightForCall::take();
 	QueueChanges::take();
 	NumMessagesErrored::take();
-	let t = frame_system::GenesisConfig::<T>::default().build_storage().unwrap();
+	let t = topsoil_system::GenesisConfig::<T>::default().build_storage().unwrap();
 	let mut ext = soil_io::TestExternalities::new(t);
-	ext.execute_with(|| frame_system::Pallet::<T>::set_block_number(1.into()));
+	ext.execute_with(|| topsoil_system::Pallet::<T>::set_block_number(1.into()));
 	ext
 }
 
@@ -327,7 +327,7 @@ where
 {
 	new_test_ext::<T>().execute_with(|| {
 		test();
-		pallet_message_queue::Pallet::<T>::do_try_state()
+		topsoil_message_queue::Pallet::<T>::do_try_state()
 			.expect("All invariants must hold after a test");
 	});
 }
@@ -369,7 +369,7 @@ pub fn unknit(queue: &MessageOrigin) {
 }
 
 pub fn num_overweight_enqueued_events() -> u32 {
-	frame_system::Pallet::<Test>::events()
+	topsoil_system::Pallet::<Test>::events()
 		.into_iter()
 		.filter(|e| {
 			matches!(e.event, RuntimeEvent::MessageQueue(crate::Event::OverweightEnqueued { .. }))

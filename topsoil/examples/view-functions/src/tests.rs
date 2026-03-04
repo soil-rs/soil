@@ -15,7 +15,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//! Tests for `pallet-example-view-functions`.
+//! Tests for `topsoil-example-view-functions`.
 #![cfg(test)]
 
 use crate::{
@@ -25,7 +25,7 @@ use crate::{
 use codec::{Decode, Encode};
 use scale_info::meta_type;
 
-use frame_support::{derive_impl, pallet_prelude::PalletInfoAccess, view_functions::ViewFunction};
+use topsoil_support::{derive_impl, pallet_prelude::PalletInfoAccess, view_functions::ViewFunction};
 use soil_io::hashing::twox_128;
 use soil_metadata_ir::{
 	ItemDeprecationInfoIR, PalletViewFunctionMetadataIR, PalletViewFunctionParamMetadataIR,
@@ -35,10 +35,10 @@ use soil_runtime::testing::TestXt;
 pub type AccountId = u32;
 pub type Balance = u32;
 
-type Block = frame_system::mocking::MockBlock<Runtime>;
-frame_support::construct_runtime!(
+type Block = topsoil_system::mocking::MockBlock<Runtime>;
+topsoil_support::construct_runtime!(
 	pub enum Runtime {
-		System: frame_system,
+		System: topsoil_system,
 		ViewFunctionsExample: pallet,
 		ViewFunctionsInstance: pallet2,
 		ViewFunctionsInstance1: pallet2::<Instance1>,
@@ -47,8 +47,8 @@ frame_support::construct_runtime!(
 
 pub type Extrinsic = TestXt<RuntimeCall, ()>;
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Runtime {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Runtime {
 	type Block = Block;
 }
 

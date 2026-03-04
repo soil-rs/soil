@@ -17,7 +17,7 @@
 
 use crate::{limits::BlockWeights, Config, Pallet, LOG_TARGET};
 use codec::{Decode, DecodeWithMemTracking, Encode};
-use frame_support::{
+use topsoil_support::{
 	dispatch::{DispatchInfo, PostDispatchInfo},
 	pallet_prelude::TransactionSource,
 	traits::Get,
@@ -138,7 +138,7 @@ where
 		Ok(())
 	}
 
-	#[deprecated(note = "Use `frame_system::Pallet::reclaim_weight` instead.")]
+	#[deprecated(note = "Use `topsoil_system::Pallet::reclaim_weight` instead.")]
 	pub fn do_post_dispatch(
 		info: &DispatchInfoOf<T::RuntimeCall>,
 		post_info: &PostDispatchInfoOf<T::RuntimeCall>,
@@ -271,7 +271,7 @@ where
 		_call: &T::RuntimeCall,
 		info: &DispatchInfoOf<T::RuntimeCall>,
 		len: usize,
-	) -> frame_support::pallet_prelude::TransactionValidity {
+	) -> topsoil_support::pallet_prelude::TransactionValidity {
 		Ok(Self::do_validate(info, len)?.0)
 	}
 
@@ -314,7 +314,7 @@ mod tests {
 		BlockSize, BlockWeight, DispatchClass,
 	};
 	use core::marker::PhantomData;
-	use frame_support::{assert_err, assert_ok, dispatch::Pays, weights::Weight};
+	use topsoil_support::{assert_err, assert_ok, dispatch::Pays, weights::Weight};
 	use soil_runtime::traits::DispatchTransaction;
 
 	fn block_weights() -> crate::limits::BlockWeights {

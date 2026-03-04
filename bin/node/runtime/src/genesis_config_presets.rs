@@ -24,9 +24,9 @@ use crate::{
 	SocietyConfig, StakerStatus, StakingConfig, SudoConfig, TechnicalCommitteeConfig,
 	BABE_GENESIS_EPOCH_CONFIG,
 };
-use frame_support::build_struct_json_patch;
+use topsoil_support::build_struct_json_patch;
 use alloc::{vec, vec::Vec};
-use pallet_im_online::sr25519::AuthorityId as ImOnlineId;
+use topsoil_im_online::sr25519::AuthorityId as ImOnlineId;
 use soil_authority_discovery::AuthorityId as AuthorityDiscoveryId;
 use soil_consensus_babe::AuthorityId as BabeId;
 use soil_consensus_beefy::ecdsa_crypto::AuthorityId as BeefyId;

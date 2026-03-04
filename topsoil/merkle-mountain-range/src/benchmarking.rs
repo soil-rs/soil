@@ -20,9 +20,9 @@
 #![cfg(feature = "runtime-benchmarks")]
 
 use crate::*;
-use frame::{
+use topsoil::{
 	benchmarking::prelude::v1::benchmarks_instance_pallet,
-	deps::frame_support::traits::OnInitialize,
+	deps::topsoil_support::traits::OnInitialize,
 };
 
 benchmarks_instance_pallet! {

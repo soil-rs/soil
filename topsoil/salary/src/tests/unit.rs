@@ -17,10 +17,10 @@
 
 //! The crate's tests.
 
-use crate as pallet_salary;
+use crate as topsoil_salary;
 use crate::*;
 use core::cell::RefCell;
-use frame::{deps::soil_runtime::traits::Identity, testing_prelude::*, traits::tokens::ConvertRank};
+use topsoil::{deps::soil_runtime::traits::Identity, testing_prelude::*, traits::tokens::ConvertRank};
 use std::collections::BTreeMap;
 
 type Block = MockBlock<Test>;
@@ -28,18 +28,18 @@ type Block = MockBlock<Test>;
 construct_runtime!(
 	pub enum Test
 	{
-		System: frame_system,
-		Salary: pallet_salary,
+		System: topsoil_system,
+		Salary: topsoil_salary,
 	}
 );
 
 parameter_types! {
-	pub BlockWeights: frame_system::limits::BlockWeights =
-		frame_system::limits::BlockWeights::simple_max(Weight::from_parts(1_000_000, 0));
+	pub BlockWeights: topsoil_system::limits::BlockWeights =
+		topsoil_system::limits::BlockWeights::simple_max(Weight::from_parts(1_000_000, 0));
 }
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
 	type Block = Block;
 }
 
@@ -149,7 +149,7 @@ impl Config for Test {
 }
 
 pub fn new_test_ext() -> TestState {
-	let t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	let mut ext = TestState::new(t);
 	ext.execute_with(|| System::set_block_number(1));
 	ext

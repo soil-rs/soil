@@ -17,12 +17,12 @@
 
 use super::*;
 use crate::{self as pools};
-use frame_support::{
+use topsoil_support::{
 	assert_ok, derive_impl, ord_parameter_types, parameter_types,
 	traits::{fungible::Mutate, VariantCountOf},
 	PalletId,
 };
-use frame_system::{EnsureSignedBy, RawOrigin};
+use topsoil_system::{EnsureSignedBy, RawOrigin};
 use soil_runtime::{BuildStorage, DispatchResult, FixedU128};
 use soil_staking::{
 	Agent, DelegationInterface, DelegationMigrator, Delegator, OnStakingUpdate, Stake,
@@ -415,21 +415,21 @@ impl DelegationMigrator for DelegateMock {
 	}
 }
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Runtime {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Runtime {
 	type Nonce = u64;
 	type AccountId = AccountId;
 	type Lookup = soil_runtime::traits::IdentityLookup<Self::AccountId>;
 	type Block = Block;
-	type AccountData = pallet_balances::AccountData<Balance>;
+	type AccountData = topsoil_balances::AccountData<Balance>;
 }
 
 parameter_types! {
 	pub static ExistentialDeposit: Balance = 5;
 }
 
-#[derive_impl(pallet_balances::config_preludes::TestDefaultConfig)]
-impl pallet_balances::Config for Runtime {
+#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
+impl topsoil_balances::Config for Runtime {
 	type Balance = Balance;
 	type ExistentialDeposit = ExistentialDeposit;
 	type AccountStore = System;
@@ -483,17 +483,17 @@ impl pools::Config for Runtime {
 	type PalletId = PoolsPalletId;
 	type MaxMetadataLen = MaxMetadataLen;
 	type MaxUnbonding = MaxUnbonding;
-	type MaxPointsToBalance = frame_support::traits::ConstU8<10>;
+	type MaxPointsToBalance = topsoil_support::traits::ConstU8<10>;
 	type AdminOrigin = EnsureSignedBy<Admin, AccountId>;
 	type BlockNumberProvider = System;
 	type Filter = RestrictMock;
 }
 
-type Block = frame_system::mocking::MockBlock<Runtime>;
-frame_support::construct_runtime!(
+type Block = topsoil_system::mocking::MockBlock<Runtime>;
+topsoil_support::construct_runtime!(
 	pub enum Runtime {
-		System: frame_system,
-		Balances: pallet_balances,
+		System: topsoil_system,
+		Balances: topsoil_balances,
 		Pools: pools,
 	}
 );
@@ -562,7 +562,7 @@ impl ExtBuilder {
 	pub fn build(self) -> soil_io::TestExternalities {
 		soil_tracing::try_init_simple();
 		let mut storage =
-			frame_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
+			topsoil_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
 
 		let _ = crate::GenesisConfig::<Runtime> {
 			min_join_bond: MinJoinBondConfig::get(),
@@ -578,7 +578,7 @@ impl ExtBuilder {
 
 		ext.execute_with(|| {
 			// for events to be deposited.
-			frame_system::Pallet::<Runtime>::set_block_number(1);
+			topsoil_system::Pallet::<Runtime>::set_block_number(1);
 
 			// make a pool
 			let amount_to_bond = Pools::depositor_min_bond();
@@ -636,7 +636,7 @@ pub fn pool_events_since_last_call() -> Vec<super::Event<Runtime>> {
 }
 
 /// All events of the `Balances` pallet.
-pub fn balances_events_since_last_call() -> Vec<pallet_balances::Event<Runtime>> {
+pub fn balances_events_since_last_call() -> Vec<topsoil_balances::Event<Runtime>> {
 	let events = System::events()
 		.into_iter()
 		.map(|r| r.event)

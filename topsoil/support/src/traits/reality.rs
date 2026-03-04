@@ -20,7 +20,7 @@
 use core::marker::PhantomData;
 
 use codec::{Decode, DecodeWithMemTracking, Encode, FullCodec, MaxEncodedLen};
-use frame_support::{CloneNoBound, EqNoBound, Parameter, PartialEqNoBound};
+use topsoil_support::{CloneNoBound, EqNoBound, Parameter, PartialEqNoBound};
 use scale_info::TypeInfo;
 use soil_core::ConstU32;
 use soil_runtime::{traits::Member, BoundedVec, DispatchError, DispatchResult};

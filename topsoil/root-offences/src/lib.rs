@@ -30,15 +30,15 @@ mod tests;
 extern crate alloc;
 use alloc::{vec, vec::Vec};
 pub use pallet::*;
-use pallet_session::historical::IdentificationTuple;
+use topsoil_session::historical::IdentificationTuple;
 use soil_runtime::{traits::Convert, Perbill};
 use soil_staking::offence::{Kind, Offence, OnOffenceHandler};
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
-	use frame_support::pallet_prelude::*;
-	use frame_system::pallet_prelude::*;
+	use topsoil_support::pallet_prelude::*;
+	use topsoil_system::pallet_prelude::*;
 	use soil_staking::{offence::ReportOffence, SessionIndex};
 
 	/// Custom offence type for testing spam scenarios.
@@ -83,13 +83,13 @@ pub mod pallet {
 
 	#[pallet::config]
 	pub trait Config:
-		frame_system::Config
-		+ pallet_staking::Config
-		+ pallet_session::Config<ValidatorId = <Self as frame_system::Config>::AccountId>
-		+ pallet_session::historical::Config
+		topsoil_system::Config
+		+ topsoil_staking::Config
+		+ topsoil_session::Config<ValidatorId = <Self as topsoil_system::Config>::AccountId>
+		+ topsoil_session::historical::Config
 	{
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// The offence handler provided by the runtime.
 		///
@@ -98,7 +98,7 @@ pub mod pallet {
 
 		/// The offence report system provided by the runtime.
 		///
-		/// This is a way to give the offence to the `pallet-offences` next.
+		/// This is a way to give the offence to the `topsoil-offences` next.
 		type ReportOffence: ReportOffence<
 			Self::AccountId,
 			IdentificationTuple<Self>,
@@ -123,7 +123,7 @@ pub mod pallet {
 	}
 
 	type OffenceDetails<T> = soil_staking::offence::OffenceDetails<
-		<T as frame_system::Config>::AccountId,
+		<T as topsoil_system::Config>::AccountId,
 		IdentificationTuple<T>,
 	>;
 
@@ -169,10 +169,10 @@ pub mod pallet {
 		}
 
 		/// Same as [`Pallet::create_offence`], but it reports the offence directly to a
-		/// [`Config::ReportOffence`], aka pallet-offences first.
+		/// [`Config::ReportOffence`], aka topsoil-offences first.
 		///
 		/// This is useful for more accurate testing of the e2e offence processing pipeline, as it
-		/// won't skip the `pallet-offences` step.
+		/// won't skip the `topsoil-offences` step.
 		///
 		/// It generates an offence of type [`TestSpamOffence`], with cas a fixed `ID`, but can have
 		/// any `time_slot`, `session_index``, and `slash_fraction`. These values are the inputs of
@@ -224,7 +224,7 @@ pub mod pallet {
 			maybe_session_index: Option<SessionIndex>,
 		) {
 			let session_index = maybe_session_index.unwrap_or_else(|| {
-				<pallet_session::Pallet<T> as frame_support::traits::ValidatorSet<
+				<topsoil_session::Pallet<T> as topsoil_support::traits::ValidatorSet<
 						T::AccountId,
 					>>::session_index()
 			});

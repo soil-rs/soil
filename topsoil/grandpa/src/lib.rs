@@ -37,14 +37,14 @@ pub use soil_consensus_grandpa::{
 
 use alloc::{boxed::Box, vec::Vec};
 use codec::{Decode, Encode, MaxEncodedLen};
-use frame_support::{
+use topsoil_support::{
 	dispatch::{DispatchResultWithPostInfo, Pays},
 	pallet_prelude::Get,
 	traits::OneSessionHandler,
 	weights::Weight,
 	WeakBoundedVec,
 };
-use frame_system::pallet_prelude::BlockNumberFor;
+use topsoil_system::pallet_prelude::BlockNumberFor;
 use scale_info::TypeInfo;
 use soil_consensus_grandpa::{
 	ConsensusLog, EquivocationProof, ScheduledChange, SetId, GRANDPA_ENGINE_ID,
@@ -69,11 +69,11 @@ pub use equivocation::{EquivocationOffence, EquivocationReportSystem, TimeSlot};
 
 pub use pallet::*;
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
-	use frame_support::{dispatch::DispatchResult, pallet_prelude::*};
-	use frame_system::pallet_prelude::*;
+	use topsoil_support::{dispatch::DispatchResult, pallet_prelude::*};
+	use topsoil_system::pallet_prelude::*;
 
 	/// The in-code storage version.
 	const STORAGE_VERSION: StorageVersion = StorageVersion::new(5);
@@ -83,12 +83,12 @@ pub mod pallet {
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
-	pub trait Config: frame_system::Config {
+	pub trait Config: topsoil_system::Config {
 		/// The event type of this module.
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event>
-			+ Into<<Self as frame_system::Config>::RuntimeEvent>
-			+ IsType<<Self as frame_system::Config>::RuntimeEvent>;
+			+ Into<<Self as topsoil_system::Config>::RuntimeEvent>
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// Weights for this pallet.
 		type WeightInfo: WeightInfo;
@@ -343,7 +343,7 @@ pub mod pallet {
 	pub type Authorities<T: Config> =
 		StorageValue<_, BoundedAuthorityList<T::MaxAuthorities>, ValueQuery>;
 
-	#[derive(frame_support::DefaultNoBound)]
+	#[derive(topsoil_support::DefaultNoBound)]
 	#[pallet::genesis_config]
 	pub struct GenesisConfig<T: Config> {
 		pub authorities: AuthorityList,
@@ -474,7 +474,7 @@ impl<T: Config> Pallet<T> {
 	/// Cannot be done when already paused.
 	pub fn schedule_pause(in_blocks: BlockNumberFor<T>) -> DispatchResult {
 		if let StoredState::Live = State::<T>::get() {
-			let scheduled_at = frame_system::Pallet::<T>::block_number();
+			let scheduled_at = topsoil_system::Pallet::<T>::block_number();
 			State::<T>::put(StoredState::PendingPause { delay: in_blocks, scheduled_at });
 
 			Ok(())
@@ -486,7 +486,7 @@ impl<T: Config> Pallet<T> {
 	/// Schedule a resume of GRANDPA after pausing.
 	pub fn schedule_resume(in_blocks: BlockNumberFor<T>) -> DispatchResult {
 		if let StoredState::Paused = State::<T>::get() {
-			let scheduled_at = frame_system::Pallet::<T>::block_number();
+			let scheduled_at = topsoil_system::Pallet::<T>::block_number();
 			State::<T>::put(StoredState::PendingResume { delay: in_blocks, scheduled_at });
 
 			Ok(())
@@ -515,7 +515,7 @@ impl<T: Config> Pallet<T> {
 		forced: Option<BlockNumberFor<T>>,
 	) -> DispatchResult {
 		if !PendingChange::<T>::exists() {
-			let scheduled_at = frame_system::Pallet::<T>::block_number();
+			let scheduled_at = topsoil_system::Pallet::<T>::block_number();
 
 			if forced.is_some() {
 				if NextForced::<T>::get().map_or(false, |next| next > scheduled_at) {
@@ -551,7 +551,7 @@ impl<T: Config> Pallet<T> {
 	/// Deposit one of this module's logs.
 	fn deposit_log(log: ConsensusLog<BlockNumberFor<T>>) {
 		let log = DigestItem::Consensus(GRANDPA_ENGINE_ID, log.encode());
-		frame_system::Pallet::<T>::deposit_log(log);
+		topsoil_system::Pallet::<T>::deposit_log(log);
 	}
 
 	// Perform module initialization, abstracted so that it can be called either through genesis
@@ -597,7 +597,7 @@ impl<T: Config> soil_runtime::BoundToRuntimeAppPublic for Pallet<T> {
 
 impl<T: Config> OneSessionHandler<T::AccountId> for Pallet<T>
 where
-	T: pallet_session::Config,
+	T: topsoil_session::Config,
 {
 	type Key = AuthorityId;
 
@@ -643,7 +643,7 @@ where
 
 		// update the mapping to note that the current set corresponds to the
 		// latest equivalent session (i.e. now).
-		let session_index = pallet_session::Pallet::<T>::current_index();
+		let session_index = topsoil_session::Pallet::<T>::current_index();
 		SetIdSession::<T>::insert(current_set_id, &session_index);
 	}
 

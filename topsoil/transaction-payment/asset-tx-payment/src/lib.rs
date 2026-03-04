@@ -22,9 +22,9 @@
 
 //! It does this by extending transactions to include an optional `AssetId` that specifies the asset
 //! to be used for payment (defaulting to the native token on `None`). It expects an
-//! [`OnChargeAssetTransaction`] implementation analogously to `pallet-transaction-payment`. The
+//! [`OnChargeAssetTransaction`] implementation analogously to `topsoil-transaction-payment`. The
 //! included [`FungiblesAdapter`] (implementing [`OnChargeAssetTransaction`]) determines the fee
-//! amount by converting the fee calculated by `pallet-transaction-payment` into the desired
+//! amount by converting the fee calculated by `topsoil-transaction-payment` into the desired
 //! asset.
 //!
 //! ## Integration
@@ -36,7 +36,7 @@
 #![cfg_attr(not(feature = "std"), no_std)]
 
 use codec::{Decode, DecodeWithMemTracking, Encode};
-use frame_support::{
+use topsoil_support::{
 	dispatch::{DispatchInfo, DispatchResult, PostDispatchInfo},
 	pallet_prelude::{TransactionSource, Weight},
 	traits::{
@@ -48,7 +48,7 @@ use frame_support::{
 	},
 	DefaultNoBound,
 };
-use pallet_transaction_payment::OnChargeTransaction;
+use topsoil_transaction_payment::OnChargeTransaction;
 use scale_info::TypeInfo;
 use soil_runtime::{
 	traits::{
@@ -74,7 +74,7 @@ pub use weights::WeightInfo;
 
 /// Type aliases used for interaction with `OnChargeTransaction`.
 pub(crate) type OnChargeTransactionOf<T> =
-	<T as pallet_transaction_payment::Config>::OnChargeTransaction;
+	<T as topsoil_transaction_payment::Config>::OnChargeTransaction;
 /// Balance type alias.
 pub(crate) type BalanceOf<T> = <OnChargeTransactionOf<T> as OnChargeTransaction<T>>::Balance;
 /// Liquidity info type alias.
@@ -84,10 +84,10 @@ pub(crate) type LiquidityInfoOf<T> =
 /// Type alias used for interaction with fungibles (assets).
 /// Balance type alias.
 pub(crate) type AssetBalanceOf<T> =
-	<<T as Config>::Fungibles as Inspect<<T as frame_system::Config>::AccountId>>::Balance;
+	<<T as Config>::Fungibles as Inspect<<T as topsoil_system::Config>::AccountId>>::Balance;
 /// Asset id type alias.
 pub(crate) type AssetIdOf<T> =
-	<<T as Config>::Fungibles as Inspect<<T as frame_system::Config>::AccountId>>::AssetId;
+	<<T as Config>::Fungibles as Inspect<<T as topsoil_system::Config>::AccountId>>::AssetId;
 
 // Type aliases used for interaction with `OnChargeAssetTransaction`.
 /// Balance type alias.
@@ -114,15 +114,15 @@ pub enum InitialPayment<T: Config> {
 
 pub use pallet::*;
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
 
 	#[pallet::config]
-	pub trait Config: frame_system::Config + pallet_transaction_payment::Config {
+	pub trait Config: topsoil_system::Config + topsoil_transaction_payment::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 		/// The fungibles instance used to pay for transactions in assets.
 		type Fungibles: Balanced<Self::AccountId>;
 		/// The actual transaction charging logic that charges the fees.
@@ -168,7 +168,7 @@ pub mod pallet {
 /// Require the transactor pay for themselves and maybe include a tip to gain additional priority
 /// in the queue. Allows paying via both `Currency` as well as `fungibles::Balanced`.
 ///
-/// Wraps the transaction logic in [`pallet_transaction_payment`] and extends it with assets.
+/// Wraps the transaction logic in [`topsoil_transaction_payment`] and extends it with assets.
 /// An asset id of `None` falls back to the underlying transaction payment via the native currency.
 #[derive(Encode, Decode, DecodeWithMemTracking, Clone, Eq, PartialEq, TypeInfo)]
 #[scale_info(skip_type_params(T))]
@@ -330,12 +330,12 @@ where
 		(ValidTransaction, Self::Val, <T::RuntimeCall as Dispatchable>::RuntimeOrigin),
 		TransactionValidityError,
 	> {
-		use pallet_transaction_payment::ChargeTransactionPayment;
+		use topsoil_transaction_payment::ChargeTransactionPayment;
 		let Some(who) = origin.as_system_origin_signer() else {
 			return Ok((ValidTransaction::default(), Val::NoCharge, origin));
 		};
 		// Non-mutating call of `compute_fee` to calculate the fee used in the transaction priority.
-		let fee = pallet_transaction_payment::Pallet::<T>::compute_fee(len as u32, info, self.tip);
+		let fee = topsoil_transaction_payment::Pallet::<T>::compute_fee(len as u32, info, self.tip);
 		self.can_withdraw_fee(&who, call, info, fee)?;
 		let priority = ChargeTransactionPayment::<T>::get_priority(info, len, self.tip, fee);
 		let val = Val::Charge { tip: self.tip, who: who.clone(), fee };
@@ -392,8 +392,8 @@ where
 				let unspent_weight = extension_weight.saturating_sub(actual_ext_weight);
 				let mut actual_post_info = *post_info;
 				actual_post_info.refund(unspent_weight);
-				pallet_transaction_payment::ChargeTransactionPayment::<T>::post_dispatch_details(
-					pallet_transaction_payment::Pre::Charge { tip, who, liquidity_info },
+				topsoil_transaction_payment::ChargeTransactionPayment::<T>::post_dispatch_details(
+					topsoil_transaction_payment::Pre::Charge { tip, who, liquidity_info },
 					info,
 					&actual_post_info,
 					len,
@@ -406,7 +406,7 @@ where
 				let unspent_weight = extension_weight.saturating_sub(actual_ext_weight);
 				let mut actual_post_info = *post_info;
 				actual_post_info.refund(unspent_weight);
-				let actual_fee = pallet_transaction_payment::Pallet::<T>::compute_actual_fee(
+				let actual_fee = topsoil_transaction_payment::Pallet::<T>::compute_actual_fee(
 					len as u32,
 					info,
 					&actual_post_info,

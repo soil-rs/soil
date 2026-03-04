@@ -24,7 +24,7 @@
 //! [github]: https://img.shields.io/badge/github-8da0cb?style=for-the-badge&labelColor=555555&logo=github
 //!
 //!
-//! # Multi Asset Bounties Pallet ( `pallet-multi-asset-bounties` )
+//! # Multi Asset Bounties Pallet ( `topsoil-multi-asset-bounties` )
 //!
 //! ## Bounty
 //!
@@ -78,7 +78,7 @@ pub use weights::WeightInfo;
 
 extern crate alloc;
 use alloc::{boxed::Box, collections::btree_map::BTreeMap};
-use frame_support::{
+use topsoil_support::{
 	dispatch::{DispatchResult, DispatchResultWithPostInfo},
 	dispatch_context::with_context,
 	pallet_prelude::*,
@@ -91,7 +91,7 @@ use frame_support::{
 	},
 	PalletId,
 };
-use frame_system::pallet_prelude::{
+use topsoil_system::pallet_prelude::{
 	ensure_signed, BlockNumberFor as SystemBlockNumberFor, OriginFor,
 };
 use scale_info::TypeInfo;
@@ -105,23 +105,23 @@ pub type BeneficiaryLookupOf<T, I> = <<T as Config<I>>::BeneficiaryLookup as Sta
 /// An index of a bounty. Just a `u32`.
 pub type BountyIndex = u32;
 /// Lookup type for account addresses.
-pub type AccountIdLookupOf<T> = <<T as frame_system::Config>::Lookup as StaticLookup>::Source;
+pub type AccountIdLookupOf<T> = <<T as topsoil_system::Config>::Lookup as StaticLookup>::Source;
 /// The payment identifier type used by the [`Config::Paymaster`].
 pub type PaymentIdOf<T, I = ()> = <<T as crate::Config<I>>::Paymaster as PayWithSource>::Id;
 /// Convenience alias for `Bounty`.
 pub type BountyOf<T, I> = Bounty<
-	<T as frame_system::Config>::AccountId,
+	<T as topsoil_system::Config>::AccountId,
 	<T as Config<I>>::Balance,
 	<T as Config<I>>::AssetKind,
-	<T as frame_system::Config>::Hash,
+	<T as topsoil_system::Config>::Hash,
 	PaymentIdOf<T, I>,
 	<T as Config<I>>::Beneficiary,
 >;
 /// Convenience alias for `ChildBounty`.
 pub type ChildBountyOf<T, I> = ChildBounty<
-	<T as frame_system::Config>::AccountId,
+	<T as topsoil_system::Config>::AccountId,
 	<T as Config<I>>::Balance,
-	<T as frame_system::Config>::Hash,
+	<T as topsoil_system::Config>::Hash,
 	PaymentIdOf<T, I>,
 	<T as Config<I>>::Beneficiary,
 >;
@@ -256,7 +256,7 @@ impl<Id: Clone> PaymentState<Id> {
 	}
 }
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
 
@@ -267,7 +267,7 @@ pub mod pallet {
 	pub struct Pallet<T, I = ()>(_);
 
 	#[pallet::config]
-	pub trait Config<I: 'static = ()>: frame_system::Config {
+	pub trait Config<I: 'static = ()>: topsoil_system::Config {
 		/// The type in which the assets are measured.
 		type Balance: Balance;
 
@@ -1806,7 +1806,7 @@ pub struct CuratorDepositAmount<Mult, Min, Max, Balance>(PhantomData<(Mult, Min,
 impl<Mult, Min, Max, Balance> Convert<Balance, Balance>
 	for CuratorDepositAmount<Mult, Min, Max, Balance>
 where
-	Balance: frame_support::traits::tokens::Balance,
+	Balance: topsoil_support::traits::tokens::Balance,
 	Min: Get<Option<Balance>>,
 	Max: Get<Option<Balance>>,
 	Mult: Get<Permill>,
@@ -1833,7 +1833,7 @@ where
 /// Derives the funding `AccountId` from the `PalletId` and converts it into the
 /// bounty `Beneficiary`, used as the source of bounty funds.
 ///
-/// Used when the [`PalletId`] itself owns the funds (i.e. pallet-treasury id).
+/// Used when the [`PalletId`] itself owns the funds (i.e. topsoil-treasury id).
 /// # Type Parameters
 /// - `Id`: The pallet ID getter
 /// - `T`: The pallet configuration
@@ -1856,7 +1856,7 @@ where
 /// Derives a bounty `AccountId` from the `PalletId` and the `BountyIndex`,
 /// then converts it into the corresponding bounty `Beneficiary`.
 ///
-/// Used when the [`PalletId`] itself owns the funds (i.e. pallet-treasury id).
+/// Used when the [`PalletId`] itself owns the funds (i.e. topsoil-treasury id).
 /// # Type Parameters
 /// - `Id`: The pallet ID getter
 /// - `T`: The pallet configuration
@@ -1882,7 +1882,7 @@ where
 /// Derives a child-bounty `AccountId` from the `PalletId`, the parent index,
 /// and the child index, then converts it into the child-bounty `Beneficiary`.
 ///
-/// Used when the [`PalletId`] itself owns the funds (i.e. pallet-treasury id).
+/// Used when the [`PalletId`] itself owns the funds (i.e. topsoil-treasury id).
 /// # Type Parameters
 /// - `Id`: The pallet ID getter
 /// - `T`: The pallet configuration

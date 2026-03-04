@@ -19,12 +19,12 @@
 
 #![cfg(test)]
 
-use crate as pallet_bounties;
+use crate as topsoil_bounties;
 use crate::pallet::*;
 
 use crate::{Bounty, BountyStatus, TransferAllFungibles};
 use codec::Encode;
-use frame_support::{
+use topsoil_support::{
 	assert_noop, assert_ok, derive_impl, hypothetically, hypothetically_ok,
 	pallet_prelude::*,
 	parameter_types,
@@ -36,7 +36,7 @@ use frame_support::{
 	},
 	PalletId,
 };
-use frame_system::{pallet_prelude::*, EnsureSigned};
+use topsoil_system::{pallet_prelude::*, EnsureSigned};
 use soil_runtime::{
 	traits::{BadOrigin, IdentityLookup},
 	BuildStorage, Perbill, Permill, Storage,
@@ -44,24 +44,24 @@ use soil_runtime::{
 
 use super::Event as BountiesEvent;
 
-type Block = frame_system::mocking::MockBlock<Test>;
+type Block = topsoil_system::mocking::MockBlock<Test>;
 
 // This function directly jumps to a block number, and calls `on_initialize`.
 fn go_to_block(n: u64) {
-	<Test as pallet_treasury::Config>::BlockNumberProvider::set_block_number(n);
+	<Test as topsoil_treasury::Config>::BlockNumberProvider::set_block_number(n);
 	<Treasury as OnInitialize<u64>>::on_initialize(n);
 }
 
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub enum Test
 	{
-		System: frame_system,
-		Balances: pallet_balances,
-		Assets: pallet_assets,
-		Bounties: pallet_bounties,
-		Bounties1: pallet_bounties::<Instance1>,
-		Treasury: pallet_treasury,
-		Treasury1: pallet_treasury::<Instance1>,
+		System: topsoil_system,
+		Balances: topsoil_balances,
+		Assets: topsoil_assets,
+		Bounties: topsoil_bounties,
+		Bounties1: topsoil_bounties::<Instance1>,
+		Treasury: topsoil_treasury,
+		Treasury1: topsoil_treasury::<Instance1>,
 	}
 );
 
@@ -72,16 +72,16 @@ parameter_types! {
 type Balance = u64;
 type AccountId = u128;
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
 	type AccountId = AccountId; // u64 is not enough to hold bytes used to generate bounty account
 	type Lookup = IdentityLookup<Self::AccountId>;
 	type Block = Block;
-	type AccountData = pallet_balances::AccountData<u64>;
+	type AccountData = topsoil_balances::AccountData<u64>;
 }
 
-#[derive_impl(pallet_balances::config_preludes::TestDefaultConfig)]
-impl pallet_balances::Config for Test {
+#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
+impl topsoil_balances::Config for Test {
 	type AccountStore = System;
 }
 parameter_types! {
@@ -94,10 +94,10 @@ parameter_types! {
 	pub TreasuryInstance1Account: u128 = Treasury1::account_id();
 }
 
-impl pallet_treasury::Config for Test {
+impl topsoil_treasury::Config for Test {
 	type PalletId = TreasuryPalletId;
-	type Currency = pallet_balances::Pallet<Test>;
-	type RejectOrigin = frame_system::EnsureRoot<u128>;
+	type Currency = topsoil_balances::Pallet<Test>;
+	type RejectOrigin = topsoil_system::EnsureRoot<u128>;
 	type RuntimeEvent = RuntimeEvent;
 	type SpendPeriod = ConstU64<2>;
 	type Burn = Burn;
@@ -105,7 +105,7 @@ impl pallet_treasury::Config for Test {
 	type WeightInfo = ();
 	type SpendFunds = Bounties;
 	type MaxApprovals = ConstU32<100>;
-	type SpendOrigin = frame_system::EnsureRootWithSuccess<Self::AccountId, SpendLimit>;
+	type SpendOrigin = topsoil_system::EnsureRootWithSuccess<Self::AccountId, SpendLimit>;
 	type AssetKind = ();
 	type Beneficiary = Self::AccountId;
 	type BeneficiaryLookup = IdentityLookup<Self::Beneficiary>;
@@ -117,10 +117,10 @@ impl pallet_treasury::Config for Test {
 	type BenchmarkHelper = ();
 }
 
-impl pallet_treasury::Config<Instance1> for Test {
+impl topsoil_treasury::Config<Instance1> for Test {
 	type PalletId = TreasuryPalletId2;
-	type Currency = pallet_balances::Pallet<Test>;
-	type RejectOrigin = frame_system::EnsureRoot<u128>;
+	type Currency = topsoil_balances::Pallet<Test>;
+	type RejectOrigin = topsoil_system::EnsureRoot<u128>;
 	type RuntimeEvent = RuntimeEvent;
 	type SpendPeriod = ConstU64<2>;
 	type Burn = Burn;
@@ -128,7 +128,7 @@ impl pallet_treasury::Config<Instance1> for Test {
 	type WeightInfo = ();
 	type SpendFunds = Bounties1;
 	type MaxApprovals = ConstU32<100>;
-	type SpendOrigin = frame_system::EnsureRootWithSuccess<Self::AccountId, SpendLimit1>;
+	type SpendOrigin = topsoil_system::EnsureRootWithSuccess<Self::AccountId, SpendLimit1>;
 	type AssetKind = ();
 	type Beneficiary = Self::AccountId;
 	type BeneficiaryLookup = IdentityLookup<Self::Beneficiary>;
@@ -140,12 +140,12 @@ impl pallet_treasury::Config<Instance1> for Test {
 	type BenchmarkHelper = ();
 }
 
-#[derive_impl(pallet_assets::config_preludes::TestDefaultConfig)]
-impl pallet_assets::Config for Test {
+#[derive_impl(topsoil_assets::config_preludes::TestDefaultConfig)]
+impl topsoil_assets::Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type Currency = Balances;
 	type CreateOrigin = AsEnsureOriginWithArg<EnsureSigned<Self::AccountId>>;
-	type ForceOrigin = frame_system::EnsureRoot<Self::AccountId>;
+	type ForceOrigin = topsoil_system::EnsureRoot<Self::AccountId>;
 	type AssetDeposit = ConstU64<1>;
 	type AssetAccountDeposit = ConstU64<10>;
 	type MetadataDepositBase = ConstU64<1>;
@@ -201,8 +201,8 @@ impl Config<Instance1> for Test {
 	type TransferAllAssets = ();
 }
 
-type TreasuryError = pallet_treasury::Error<Test>;
-type TreasuryError1 = pallet_treasury::Error<Test, Instance1>;
+type TreasuryError = topsoil_treasury::Error<Test>;
+type TreasuryError1 = topsoil_treasury::Error<Test, Instance1>;
 
 pub struct ExtBuilder {}
 
@@ -215,14 +215,14 @@ impl Default for ExtBuilder {
 impl ExtBuilder {
 	pub fn build(self) -> soil_io::TestExternalities {
 		let mut ext: soil_io::TestExternalities = RuntimeGenesisConfig {
-			system: frame_system::GenesisConfig::default(),
-			balances: pallet_balances::GenesisConfig {
+			system: topsoil_system::GenesisConfig::default(),
+			balances: topsoil_balances::GenesisConfig {
 				balances: vec![(0, 100), (1, 98), (2, 1)],
 				..Default::default()
 			},
 			treasury: Default::default(),
 			treasury_1: Default::default(),
-			assets: pallet_assets::GenesisConfig {
+			assets: topsoil_assets::GenesisConfig {
 				assets: vec![
 					(0, 0, false, 5),
 					(1, 0, false, 5),
@@ -238,7 +238,7 @@ impl ExtBuilder {
 		.unwrap()
 		.into();
 		ext.execute_with(|| {
-			<Test as pallet_treasury::Config>::BlockNumberProvider::set_block_number(1)
+			<Test as topsoil_treasury::Config>::BlockNumberProvider::set_block_number(1)
 		});
 		ext
 	}
@@ -308,13 +308,13 @@ fn accepted_spend_proposal_ignored_outside_spend_period() {
 #[test]
 fn unused_pot_should_diminish() {
 	ExtBuilder::default().build_and_execute(|| {
-		let init_total_issuance = pallet_balances::TotalIssuance::<Test>::get();
+		let init_total_issuance = topsoil_balances::TotalIssuance::<Test>::get();
 		Balances::make_free_balance_be(&Treasury::account_id(), 101);
-		assert_eq!(pallet_balances::TotalIssuance::<Test>::get(), init_total_issuance + 100);
+		assert_eq!(topsoil_balances::TotalIssuance::<Test>::get(), init_total_issuance + 100);
 
 		go_to_block(2);
 		assert_eq!(Treasury::pot(), 50);
-		assert_eq!(pallet_balances::TotalIssuance::<Test>::get(), init_total_issuance + 50);
+		assert_eq!(topsoil_balances::TotalIssuance::<Test>::get(), init_total_issuance + 50);
 	});
 }
 
@@ -380,8 +380,8 @@ fn treasury_account_doesnt_get_deleted() {
 #[test]
 #[allow(deprecated)]
 fn inexistent_account_works() {
-	let mut t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
-	pallet_balances::GenesisConfig::<Test> {
+	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	topsoil_balances::GenesisConfig::<Test> {
 		balances: vec![(0, 100), (1, 99), (2, 1)],
 		..Default::default()
 	}
@@ -427,7 +427,7 @@ fn propose_bounty_works() {
 		assert_eq!(Balances::free_balance(0), 100 - deposit);
 
 		assert_eq!(
-			pallet_bounties::Bounties::<Test>::get(0).unwrap(),
+			topsoil_bounties::Bounties::<Test>::get(0).unwrap(),
 			Bounty {
 				proposer: 0,
 				fee: 0,
@@ -439,11 +439,11 @@ fn propose_bounty_works() {
 		);
 
 		assert_eq!(
-			pallet_bounties::BountyDescriptions::<Test>::get(0).unwrap(),
+			topsoil_bounties::BountyDescriptions::<Test>::get(0).unwrap(),
 			b"1234567890".to_vec()
 		);
 
-		assert_eq!(pallet_bounties::BountyCount::<Test>::get(), 1);
+		assert_eq!(topsoil_bounties::BountyCount::<Test>::get(), 1);
 	});
 }
 
@@ -492,10 +492,10 @@ fn close_bounty_works() {
 		assert_eq!(Balances::reserved_balance(0), 0);
 		assert_eq!(Balances::free_balance(0), 100 - deposit);
 
-		assert_eq!(pallet_bounties::Bounties::<Test>::get(0), None);
-		assert!(!pallet_treasury::Proposals::<Test>::contains_key(0));
+		assert_eq!(topsoil_bounties::Bounties::<Test>::get(0), None);
+		assert!(!topsoil_treasury::Proposals::<Test>::contains_key(0));
 
-		assert_eq!(pallet_bounties::BountyDescriptions::<Test>::get(0), None);
+		assert_eq!(topsoil_bounties::BountyDescriptions::<Test>::get(0), None);
 	});
 }
 
@@ -514,7 +514,7 @@ fn close_bounty_with_additional_assets_works() {
 		assert_ok!(Bounties::accept_curator(RuntimeOrigin::signed(0), 0));
 
 		assert!(matches!(
-			pallet_bounties::Bounties::<Test>::get(0).unwrap().status,
+			topsoil_bounties::Bounties::<Test>::get(0).unwrap().status,
 			BountyStatus::Active { .. }
 		));
 		// Send the Bounty account some funds
@@ -533,7 +533,7 @@ fn close_bounty_with_additional_assets_works() {
 			// Now we can close the bounty, but the account is not gone
 			assert_ok!(Bounties::close_bounty(RuntimeOrigin::root(), 0));
 			// Bounty account must exist
-			assert!(frame_system::Account::<Test>::contains_key(pot));
+			assert!(topsoil_system::Account::<Test>::contains_key(pot));
 
 			assert_eq!(Balances::total_balance(&pot), ed, "ED is preserved");
 			// This ^ was fixed by #10728. Otherwise, instead of just ED, everything would remain.
@@ -542,7 +542,7 @@ fn close_bounty_with_additional_assets_works() {
 		// Case 2: Bounty acc is not blocked and transfers our all balances
 		hypothetically!({
 			assert_ok!(Bounties::close_bounty(RuntimeOrigin::root(), 0));
-			assert!(!frame_system::Account::<Test>::contains_key(pot));
+			assert!(!topsoil_system::Account::<Test>::contains_key(pot));
 			assert_eq!(Balances::total_balance(&pot), 0, "All balances are transferred");
 		});
 
@@ -551,7 +551,7 @@ fn close_bounty_with_additional_assets_works() {
 			assert_ok!(Assets::transfer(RuntimeOrigin::signed(0), 1, pot, 10));
 
 			assert_ok!(Bounties::close_bounty(RuntimeOrigin::root(), 0));
-			assert!(!frame_system::Account::<Test>::contains_key(pot));
+			assert!(!topsoil_system::Account::<Test>::contains_key(pot));
 			assert_eq!(Balances::total_balance(&pot), 0, "All balances are transferred");
 		});
 
@@ -560,7 +560,7 @@ fn close_bounty_with_additional_assets_works() {
 			assert_ok!(Assets::transfer(RuntimeOrigin::signed(0), 2, pot, 10));
 
 			assert_ok!(Bounties::close_bounty(RuntimeOrigin::root(), 0));
-			assert!(!frame_system::Account::<Test>::contains_key(pot));
+			assert!(!topsoil_system::Account::<Test>::contains_key(pot));
 			assert_eq!(Balances::total_balance(&pot), 0, "All balances are transferred");
 		});
 
@@ -569,7 +569,7 @@ fn close_bounty_with_additional_assets_works() {
 			assert_ok!(Assets::transfer(RuntimeOrigin::signed(0), 4, pot, 10));
 
 			assert_ok!(Bounties::close_bounty(RuntimeOrigin::root(), 0));
-			assert!(frame_system::Account::<Test>::contains_key(pot));
+			assert!(topsoil_system::Account::<Test>::contains_key(pot));
 			assert_eq!(Balances::total_balance(&pot), 0, "All balances are transferred");
 			assert_eq!(Assets::balance(4, &pot), 10);
 		});
@@ -579,7 +579,7 @@ fn close_bounty_with_additional_assets_works() {
 			assert_ok!(Assets::transfer(RuntimeOrigin::signed(0), 3, pot, 10));
 
 			assert_ok!(Bounties::close_bounty(RuntimeOrigin::root(), 0));
-			assert!(frame_system::Account::<Test>::contains_key(pot));
+			assert!(topsoil_system::Account::<Test>::contains_key(pot));
 			assert_eq!(Balances::total_balance(&pot), ed, "ED is preserved");
 			assert_eq!(Assets::balance(3, &pot), 10);
 		});
@@ -601,7 +601,7 @@ fn close_bounty_with_random_references_works() {
 		assert_ok!(Bounties::accept_curator(RuntimeOrigin::signed(0), 0));
 
 		assert!(matches!(
-			pallet_bounties::Bounties::<Test>::get(0).unwrap().status,
+			topsoil_bounties::Bounties::<Test>::get(0).unwrap().status,
 			BountyStatus::Active { .. }
 		));
 		// Send some funds and assets to the bounty account
@@ -615,7 +615,7 @@ fn close_bounty_with_random_references_works() {
 		for ((s, c), p) in (0..10).zip(0..10).zip(0..10) {
 			hypothetically!({
 				// Completely mess up the account's references and check that closing still works
-				frame_system::Account::<Test>::mutate(&pot, |a| {
+				topsoil_system::Account::<Test>::mutate(&pot, |a| {
 					a.sufficients = s;
 					a.consumers = c;
 					a.providers = p;
@@ -659,7 +659,7 @@ fn approve_bounty_works() {
 		let deposit: u64 = 80 + 5;
 
 		assert_eq!(
-			pallet_bounties::Bounties::<Test>::get(0).unwrap(),
+			topsoil_bounties::Bounties::<Test>::get(0).unwrap(),
 			Bounty {
 				proposer: 0,
 				fee: 0,
@@ -669,7 +669,7 @@ fn approve_bounty_works() {
 				status: BountyStatus::Approved,
 			}
 		);
-		assert_eq!(pallet_bounties::BountyApprovals::<Test>::get(), vec![0]);
+		assert_eq!(topsoil_bounties::BountyApprovals::<Test>::get(), vec![0]);
 
 		assert_noop!(
 			Bounties::close_bounty(RuntimeOrigin::root(), 0),
@@ -687,7 +687,7 @@ fn approve_bounty_works() {
 		assert_eq!(Balances::free_balance(0), 100);
 
 		assert_eq!(
-			pallet_bounties::Bounties::<Test>::get(0).unwrap(),
+			topsoil_bounties::Bounties::<Test>::get(0).unwrap(),
 			Bounty {
 				proposer: 0,
 				fee: 0,
@@ -728,7 +728,7 @@ fn assign_curator_works() {
 		assert_ok!(Bounties::propose_curator(RuntimeOrigin::root(), 0, 4, fee));
 
 		assert_eq!(
-			pallet_bounties::Bounties::<Test>::get(0).unwrap(),
+			topsoil_bounties::Bounties::<Test>::get(0).unwrap(),
 			Bounty {
 				proposer: 0,
 				fee,
@@ -745,7 +745,7 @@ fn assign_curator_works() {
 		);
 		assert_noop!(
 			Bounties::accept_curator(RuntimeOrigin::signed(4), 0),
-			pallet_balances::Error::<Test, _>::InsufficientBalance
+			topsoil_balances::Error::<Test, _>::InsufficientBalance
 		);
 
 		Balances::make_free_balance_be(&4, 10);
@@ -755,7 +755,7 @@ fn assign_curator_works() {
 		let expected_deposit = Bounties::calculate_curator_deposit(&fee);
 
 		assert_eq!(
-			pallet_bounties::Bounties::<Test>::get(0).unwrap(),
+			topsoil_bounties::Bounties::<Test>::get(0).unwrap(),
 			Bounty {
 				proposer: 0,
 				fee,
@@ -788,7 +788,7 @@ fn unassign_curator_works() {
 		assert_ok!(Bounties::unassign_curator(RuntimeOrigin::signed(4), 0));
 
 		assert_eq!(
-			pallet_bounties::Bounties::<Test>::get(0).unwrap(),
+			topsoil_bounties::Bounties::<Test>::get(0).unwrap(),
 			Bounty {
 				proposer: 0,
 				fee,
@@ -806,7 +806,7 @@ fn unassign_curator_works() {
 		assert_ok!(Bounties::unassign_curator(RuntimeOrigin::root(), 0));
 
 		assert_eq!(
-			pallet_bounties::Bounties::<Test>::get(0).unwrap(),
+			topsoil_bounties::Bounties::<Test>::get(0).unwrap(),
 			Bounty {
 				proposer: 0,
 				fee,
@@ -848,7 +848,7 @@ fn award_and_claim_bounty_works() {
 		assert_ok!(Bounties::award_bounty(RuntimeOrigin::signed(4), 0, 3));
 
 		assert_eq!(
-			pallet_bounties::Bounties::<Test>::get(0).unwrap(),
+			topsoil_bounties::Bounties::<Test>::get(0).unwrap(),
 			Bounty {
 				proposer: 0,
 				fee,
@@ -881,8 +881,8 @@ fn award_and_claim_bounty_works() {
 		assert_eq!(Balances::free_balance(3), 56);
 		assert_eq!(Balances::free_balance(Bounties::bounty_account_id(0)), 0);
 
-		assert_eq!(pallet_bounties::Bounties::<Test>::get(0), None);
-		assert_eq!(pallet_bounties::BountyDescriptions::<Test>::get(0), None);
+		assert_eq!(topsoil_bounties::Bounties::<Test>::get(0), None);
+		assert_eq!(topsoil_bounties::BountyDescriptions::<Test>::get(0), None);
 	});
 }
 
@@ -919,8 +919,8 @@ fn claim_handles_high_fee() {
 		assert_eq!(Balances::free_balance(3), 0);
 		assert_eq!(Balances::free_balance(Bounties::bounty_account_id(0)), 0);
 
-		assert_eq!(pallet_bounties::Bounties::<Test>::get(0), None);
-		assert_eq!(pallet_bounties::BountyDescriptions::<Test>::get(0), None);
+		assert_eq!(topsoil_bounties::Bounties::<Test>::get(0), None);
+		assert_eq!(topsoil_bounties::BountyDescriptions::<Test>::get(0), None);
 	});
 }
 
@@ -942,7 +942,7 @@ fn cancel_and_refund() {
 		));
 
 		assert_eq!(
-			pallet_bounties::Bounties::<Test>::get(0).unwrap(),
+			topsoil_bounties::Bounties::<Test>::get(0).unwrap(),
 			Bounty {
 				proposer: 0,
 				fee: 0,
@@ -1000,8 +1000,8 @@ fn award_and_cancel() {
 		assert_eq!(Balances::free_balance(0), 95);
 		assert_eq!(Balances::reserved_balance(0), 0);
 
-		assert_eq!(pallet_bounties::Bounties::<Test>::get(0), None);
-		assert_eq!(pallet_bounties::BountyDescriptions::<Test>::get(0), None);
+		assert_eq!(topsoil_bounties::Bounties::<Test>::get(0), None);
+		assert_eq!(topsoil_bounties::BountyDescriptions::<Test>::get(0), None);
 	});
 }
 
@@ -1033,7 +1033,7 @@ fn expire_and_unassign() {
 		assert_ok!(Bounties::unassign_curator(RuntimeOrigin::signed(0), 0));
 
 		assert_eq!(
-			pallet_bounties::Bounties::<Test>::get(0).unwrap(),
+			topsoil_bounties::Bounties::<Test>::get(0).unwrap(),
 			Bounty {
 				proposer: 0,
 				fee: 10,
@@ -1080,7 +1080,7 @@ fn extend_expiry() {
 		assert_ok!(Bounties::extend_bounty_expiry(RuntimeOrigin::signed(4), 0, Vec::new()));
 
 		assert_eq!(
-			pallet_bounties::Bounties::<Test>::get(0).unwrap(),
+			topsoil_bounties::Bounties::<Test>::get(0).unwrap(),
 			Bounty {
 				proposer: 0,
 				fee: 10,
@@ -1094,7 +1094,7 @@ fn extend_expiry() {
 		assert_ok!(Bounties::extend_bounty_expiry(RuntimeOrigin::signed(4), 0, Vec::new()));
 
 		assert_eq!(
-			pallet_bounties::Bounties::<Test>::get(0).unwrap(),
+			topsoil_bounties::Bounties::<Test>::get(0).unwrap(),
 			Bounty {
 				proposer: 0,
 				fee: 10,
@@ -1134,11 +1134,11 @@ fn test_migration_v4() {
 	};
 
 	let data = vec![
-		(pallet_bounties::BountyCount::<Test>::hashed_key().to_vec(), 10.encode().to_vec()),
-		(pallet_bounties::Bounties::<Test>::hashed_key_for(index), bounty.encode().to_vec()),
-		(pallet_bounties::BountyDescriptions::<Test>::hashed_key_for(index), vec![0, 0]),
+		(topsoil_bounties::BountyCount::<Test>::hashed_key().to_vec(), 10.encode().to_vec()),
+		(topsoil_bounties::Bounties::<Test>::hashed_key_for(index), bounty.encode().to_vec()),
+		(topsoil_bounties::BountyDescriptions::<Test>::hashed_key_for(index), vec![0, 0]),
 		(
-			pallet_bounties::BountyApprovals::<Test>::hashed_key().to_vec(),
+			topsoil_bounties::BountyApprovals::<Test>::hashed_key().to_vec(),
 			vec![10 as u32].encode().to_vec(),
 		),
 	];
@@ -1146,8 +1146,8 @@ fn test_migration_v4() {
 	s.top = data.into_iter().collect();
 
 	soil_io::TestExternalities::new(s).execute_with(|| {
-		use frame_support::traits::PalletInfo;
-		let old_pallet_name = <Test as frame_system::Config>::PalletInfo::name::<Bounties>()
+		use topsoil_support::traits::PalletInfo;
+		let old_pallet_name = <Test as topsoil_system::Config>::PalletInfo::name::<Bounties>()
 			.expect("Bounties is part of runtime, so it has a name; qed");
 		let new_pallet_name = "NewBounties";
 
@@ -1162,16 +1162,16 @@ fn test_migration_v4() {
 
 #[test]
 fn genesis_funding_works() {
-	let mut t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	let initial_funding = 100;
-	pallet_balances::GenesisConfig::<Test> {
+	topsoil_balances::GenesisConfig::<Test> {
 		// Total issuance will be 200 with treasury account initialized with 100.
 		balances: vec![(0, 100), (Treasury::account_id(), initial_funding)],
 		..Default::default()
 	}
 	.assimilate_storage(&mut t)
 	.unwrap();
-	pallet_treasury::GenesisConfig::<Test>::default()
+	topsoil_treasury::GenesisConfig::<Test>::default()
 		.assimilate_storage(&mut t)
 		.unwrap();
 	let mut t: soil_io::TestExternalities = t.into();
@@ -1202,7 +1202,7 @@ fn unassign_curator_self() {
 		assert_ok!(Bounties::unassign_curator(RuntimeOrigin::signed(1), 0));
 
 		assert_eq!(
-			pallet_bounties::Bounties::<Test>::get(0).unwrap(),
+			topsoil_bounties::Bounties::<Test>::get(0).unwrap(),
 			Bounty {
 				proposer: 0,
 				fee: 10,
@@ -1418,12 +1418,12 @@ fn approve_bounty_with_curator_works() {
 			Error::<Test>::InvalidFee
 		);
 
-		assert_eq!(pallet_bounties::BountyApprovals::<Test>::get().len(), 0);
+		assert_eq!(topsoil_bounties::BountyApprovals::<Test>::get().len(), 0);
 		assert_ok!(Bounties::approve_bounty_with_curator(RuntimeOrigin::root(), 0, curator, 10));
-		assert_eq!(pallet_bounties::BountyApprovals::<Test>::get().len(), 1);
+		assert_eq!(topsoil_bounties::BountyApprovals::<Test>::get().len(), 1);
 
 		assert_eq!(
-			pallet_bounties::Bounties::<Test>::get(0).unwrap(),
+			topsoil_bounties::Bounties::<Test>::get(0).unwrap(),
 			Bounty {
 				proposer: 0,
 				fee,
@@ -1446,12 +1446,12 @@ fn approve_bounty_with_curator_works() {
 
 		System::set_block_number(2);
 		<Treasury as OnInitialize<u64>>::on_initialize(2);
-		assert_eq!(pallet_bounties::BountyApprovals::<Test>::get().len(), 0);
+		assert_eq!(topsoil_bounties::BountyApprovals::<Test>::get().len(), 0);
 
 		expect_events(vec![BountiesEvent::BountyBecameActive { index: 0 }]);
 
 		assert_eq!(
-			pallet_bounties::Bounties::<Test>::get(0).unwrap(),
+			topsoil_bounties::Bounties::<Test>::get(0).unwrap(),
 			Bounty {
 				proposer: 0,
 				fee,
@@ -1464,13 +1464,13 @@ fn approve_bounty_with_curator_works() {
 
 		assert_noop!(
 			Bounties::accept_curator(RuntimeOrigin::signed(curator), 0),
-			pallet_balances::Error::<Test, _>::InsufficientBalance
+			topsoil_balances::Error::<Test, _>::InsufficientBalance
 		);
 		Balances::make_free_balance_be(&curator, 6);
 		assert_ok!(Bounties::accept_curator(RuntimeOrigin::signed(curator), 0));
 
 		assert_eq!(
-			pallet_bounties::Bounties::<Test>::get(0).unwrap(),
+			topsoil_bounties::Bounties::<Test>::get(0).unwrap(),
 			Bounty {
 				proposer: 0,
 				fee,
@@ -1508,7 +1508,7 @@ fn approve_bounty_with_curator_early_unassign_works() {
 		assert_ok!(Bounties::unassign_curator(RuntimeOrigin::root(), 0));
 
 		assert_eq!(
-			pallet_bounties::Bounties::<Test>::get(0).unwrap(),
+			topsoil_bounties::Bounties::<Test>::get(0).unwrap(),
 			Bounty {
 				proposer: 0,
 				fee,
@@ -1525,7 +1525,7 @@ fn approve_bounty_with_curator_early_unassign_works() {
 		<Treasury as OnInitialize<u64>>::on_initialize(2);
 		assert_eq!(last_event(), BountiesEvent::BountyBecameActive { index: 0 });
 		assert_eq!(
-			pallet_bounties::Bounties::<Test>::get(0).unwrap(),
+			topsoil_bounties::Bounties::<Test>::get(0).unwrap(),
 			Bounty {
 				proposer: 0,
 				fee,
@@ -1542,7 +1542,7 @@ fn approve_bounty_with_curator_early_unassign_works() {
 		assert_ok!(Bounties::propose_curator(RuntimeOrigin::root(), 0, new_curator, new_fee));
 
 		assert_eq!(
-			pallet_bounties::Bounties::<Test>::get(0).unwrap(),
+			topsoil_bounties::Bounties::<Test>::get(0).unwrap(),
 			Bounty {
 				proposer: 0,
 				fee: new_fee,
@@ -1574,7 +1574,7 @@ fn approve_bounty_with_curator_proposed_unassign_works() {
 		<Treasury as OnInitialize<u64>>::on_initialize(2);
 
 		assert_eq!(
-			pallet_bounties::Bounties::<Test>::get(0).unwrap(),
+			topsoil_bounties::Bounties::<Test>::get(0).unwrap(),
 			Bounty {
 				proposer: 0,
 				fee,
@@ -1587,7 +1587,7 @@ fn approve_bounty_with_curator_proposed_unassign_works() {
 
 		assert_ok!(Bounties::unassign_curator(RuntimeOrigin::signed(curator), 0));
 		assert_eq!(
-			pallet_bounties::Bounties::<Test>::get(0).unwrap(),
+			topsoil_bounties::Bounties::<Test>::get(0).unwrap(),
 			Bounty {
 				proposer: 0,
 				fee,
@@ -1625,7 +1625,7 @@ fn accept_curator_sets_update_due_correctly() {
 
 		// Then
 		assert_eq!(
-			pallet_bounties::Bounties::<Test>::get(bounty_id).unwrap().status,
+			topsoil_bounties::Bounties::<Test>::get(bounty_id).unwrap().status,
 			BountyStatus::Active { curator, update_due: 24 }
 		);
 
@@ -1647,7 +1647,7 @@ fn accept_curator_sets_update_due_correctly() {
 
 		// Then
 		assert_eq!(
-			pallet_bounties::Bounties::<Test, Instance1>::get(bounty_id).unwrap().status,
+			topsoil_bounties::Bounties::<Test, Instance1>::get(bounty_id).unwrap().status,
 			BountyStatus::Active { curator, update_due: BlockNumberFor::<Test>::max_value() }
 		);
 
@@ -1660,7 +1660,7 @@ fn accept_curator_sets_update_due_correctly() {
 
 		// Then
 		assert_eq!(
-			pallet_bounties::Bounties::<Test, Instance1>::get(bounty_id).unwrap().status,
+			topsoil_bounties::Bounties::<Test, Instance1>::get(bounty_id).unwrap().status,
 			BountyStatus::Active { curator, update_due: BlockNumberFor::<Test>::max_value() }
 		);
 	});
@@ -1677,14 +1677,14 @@ fn poke_deposit_fails_for_insufficient_balance() {
 
 		// BountyDepositBase (80) + DataDepositPerByte (1) * description.len() (5)
 		let deposit =
-			pallet_bounties::Pallet::<Test>::calculate_bounty_deposit(&bounded_description);
+			topsoil_bounties::Pallet::<Test>::calculate_bounty_deposit(&bounded_description);
 
 		// Verify initial state
 		assert_eq!(Balances::reserved_balance(0), deposit);
 		assert_eq!(Balances::free_balance(0), 100 - deposit);
 		assert_eq!(last_event(), BountiesEvent::BountyProposed { index: 0 });
 		assert_eq!(
-			pallet_bounties::Bounties::<Test>::get(0).unwrap(),
+			topsoil_bounties::Bounties::<Test>::get(0).unwrap(),
 			Bounty {
 				proposer: 0,
 				value: 50,
@@ -1694,8 +1694,8 @@ fn poke_deposit_fails_for_insufficient_balance() {
 				status: BountyStatus::Proposed,
 			}
 		);
-		assert_eq!(pallet_bounties::BountyDescriptions::<Test>::get(0).unwrap(), description);
-		assert_eq!(pallet_bounties::BountyCount::<Test>::get(), 1);
+		assert_eq!(topsoil_bounties::BountyDescriptions::<Test>::get(0).unwrap(), description);
+		assert_eq!(topsoil_bounties::BountyCount::<Test>::get(), 1);
 
 		// Increase the DataDepositPerByte to be more than the total balance of the proposer
 		DataDepositPerByte::set(20);
@@ -1703,7 +1703,7 @@ fn poke_deposit_fails_for_insufficient_balance() {
 		// Poke deposit should fail due to insufficient balance
 		assert_noop!(
 			Bounties::poke_deposit(RuntimeOrigin::signed(0), 0),
-			pallet_balances::Error::<Test>::InsufficientBalance
+			topsoil_balances::Error::<Test>::InsufficientBalance
 		);
 	});
 }
@@ -1752,13 +1752,13 @@ fn poke_deposit_fails_for_any_status_other_than_proposed() {
 		assert_eq!(Balances::reserved_balance(1), 0);
 		assert_eq!(Balances::free_balance(proposer), 100 - deposit);
 		assert_eq!(last_event(), BountiesEvent::BountyProposed { index: bounty_id });
-		assert_eq!(pallet_bounties::Bounties::<Test>::get(0).unwrap(), bounty);
-		assert_eq!(pallet_bounties::BountyDescriptions::<Test>::get(0).unwrap(), description);
-		assert_eq!(pallet_bounties::BountyCount::<Test>::get(), 1);
+		assert_eq!(topsoil_bounties::Bounties::<Test>::get(0).unwrap(), bounty);
+		assert_eq!(topsoil_bounties::BountyDescriptions::<Test>::get(0).unwrap(), description);
+		assert_eq!(topsoil_bounties::BountyCount::<Test>::get(), 1);
 
 		// Change status to approved
 		bounty.status = BountyStatus::Approved;
-		pallet_bounties::Bounties::<Test>::insert(bounty_id, &bounty);
+		topsoil_bounties::Bounties::<Test>::insert(bounty_id, &bounty);
 		// Poke deposit should fail due to invalid status
 		assert_noop!(
 			Bounties::poke_deposit(RuntimeOrigin::signed(proposer), bounty_id),
@@ -1767,7 +1767,7 @@ fn poke_deposit_fails_for_any_status_other_than_proposed() {
 
 		// Change status to funded
 		bounty.status = BountyStatus::Funded;
-		pallet_bounties::Bounties::<Test>::insert(bounty_id, &bounty);
+		topsoil_bounties::Bounties::<Test>::insert(bounty_id, &bounty);
 		// Poke deposit should fail due to invalid status
 		assert_noop!(
 			Bounties::poke_deposit(RuntimeOrigin::signed(proposer), bounty_id),
@@ -1776,7 +1776,7 @@ fn poke_deposit_fails_for_any_status_other_than_proposed() {
 
 		// Change status to curator proposed
 		bounty.status = BountyStatus::CuratorProposed { curator };
-		pallet_bounties::Bounties::<Test>::insert(bounty_id, &bounty);
+		topsoil_bounties::Bounties::<Test>::insert(bounty_id, &bounty);
 		// Poke deposit should fail due to invalid status
 		assert_noop!(
 			Bounties::poke_deposit(RuntimeOrigin::signed(proposer), bounty_id),
@@ -1785,7 +1785,7 @@ fn poke_deposit_fails_for_any_status_other_than_proposed() {
 
 		// Change status to active
 		bounty.status = BountyStatus::Active { curator, update_due: 24 };
-		pallet_bounties::Bounties::<Test>::insert(bounty_id, &bounty);
+		topsoil_bounties::Bounties::<Test>::insert(bounty_id, &bounty);
 		// Poke deposit should fail due to invalid status
 		assert_noop!(
 			Bounties::poke_deposit(RuntimeOrigin::signed(proposer), bounty_id),
@@ -1794,7 +1794,7 @@ fn poke_deposit_fails_for_any_status_other_than_proposed() {
 
 		// Change status to PendingPayout
 		bounty.status = BountyStatus::PendingPayout { curator, beneficiary: 0, unlock_at: 24 };
-		pallet_bounties::Bounties::<Test>::insert(bounty_id, &bounty);
+		topsoil_bounties::Bounties::<Test>::insert(bounty_id, &bounty);
 		// Poke deposit should fail due to invalid status
 		assert_noop!(
 			Bounties::poke_deposit(RuntimeOrigin::signed(proposer), bounty_id),
@@ -1803,7 +1803,7 @@ fn poke_deposit_fails_for_any_status_other_than_proposed() {
 
 		// Change status to ApprovedWithCurator
 		bounty.status = BountyStatus::ApprovedWithCurator { curator };
-		pallet_bounties::Bounties::<Test>::insert(bounty_id, &bounty);
+		topsoil_bounties::Bounties::<Test>::insert(bounty_id, &bounty);
 		// Poke deposit should fail due to invalid status
 		assert_noop!(
 			Bounties::poke_deposit(RuntimeOrigin::signed(proposer), bounty_id),
@@ -1838,9 +1838,9 @@ fn poke_deposit_works_and_charges_fee_for_unchanged_deposit() {
 		assert_eq!(Balances::reserved_balance(proposer), deposit);
 		assert_eq!(Balances::free_balance(proposer), 100 - deposit);
 		assert_eq!(last_event(), BountiesEvent::BountyProposed { index: bounty_id });
-		assert_eq!(pallet_bounties::Bounties::<Test>::get(0).unwrap(), bounty);
-		assert_eq!(pallet_bounties::BountyDescriptions::<Test>::get(0).unwrap(), description);
-		assert_eq!(pallet_bounties::BountyCount::<Test>::get(), 1);
+		assert_eq!(topsoil_bounties::Bounties::<Test>::get(0).unwrap(), bounty);
+		assert_eq!(topsoil_bounties::BountyDescriptions::<Test>::get(0).unwrap(), description);
+		assert_eq!(topsoil_bounties::BountyCount::<Test>::get(), 1);
 
 		// Poke deposit should charge fee
 		let result = Bounties::poke_deposit(RuntimeOrigin::signed(proposer), bounty_id);
@@ -1849,9 +1849,9 @@ fn poke_deposit_works_and_charges_fee_for_unchanged_deposit() {
 
 		// Verify final state
 		assert_eq!(Balances::reserved_balance(proposer), deposit);
-		assert_eq!(pallet_bounties::Bounties::<Test>::get(0).unwrap(), bounty);
-		assert_eq!(pallet_bounties::BountyDescriptions::<Test>::get(0).unwrap(), description);
-		assert_eq!(pallet_bounties::BountyCount::<Test>::get(), 1);
+		assert_eq!(topsoil_bounties::Bounties::<Test>::get(0).unwrap(), bounty);
+		assert_eq!(topsoil_bounties::BountyDescriptions::<Test>::get(0).unwrap(), description);
+		assert_eq!(topsoil_bounties::BountyCount::<Test>::get(), 1);
 		assert_eq!(last_event(), BountiesEvent::BountyProposed { index: bounty_id });
 	});
 }
@@ -1882,9 +1882,9 @@ fn poke_deposit_works_for_deposit_increase() {
 		assert_eq!(Balances::reserved_balance(proposer), deposit);
 		assert_eq!(Balances::free_balance(proposer), 100 - deposit);
 		assert_eq!(last_event(), BountiesEvent::BountyProposed { index: bounty_id });
-		assert_eq!(pallet_bounties::Bounties::<Test>::get(0).unwrap(), bounty);
-		assert_eq!(pallet_bounties::BountyDescriptions::<Test>::get(0).unwrap(), description);
-		assert_eq!(pallet_bounties::BountyCount::<Test>::get(), 1);
+		assert_eq!(topsoil_bounties::Bounties::<Test>::get(0).unwrap(), bounty);
+		assert_eq!(topsoil_bounties::BountyDescriptions::<Test>::get(0).unwrap(), description);
+		assert_eq!(topsoil_bounties::BountyCount::<Test>::get(), 1);
 
 		// Increase the DataDepositPerByte
 		DataDepositPerByte::set(2);
@@ -1904,9 +1904,9 @@ fn poke_deposit_works_for_deposit_increase() {
 			BountiesEvent::DepositPoked { bounty_id, proposer, old_deposit: deposit, new_deposit }
 		);
 		bounty.bond = new_deposit;
-		assert_eq!(pallet_bounties::Bounties::<Test>::get(0).unwrap(), bounty);
-		assert_eq!(pallet_bounties::BountyDescriptions::<Test>::get(0).unwrap(), description);
-		assert_eq!(pallet_bounties::BountyCount::<Test>::get(), 1);
+		assert_eq!(topsoil_bounties::Bounties::<Test>::get(0).unwrap(), bounty);
+		assert_eq!(topsoil_bounties::BountyDescriptions::<Test>::get(0).unwrap(), description);
+		assert_eq!(topsoil_bounties::BountyCount::<Test>::get(), 1);
 	});
 }
 
@@ -1938,9 +1938,9 @@ fn poke_deposit_works_for_deposit_decrease() {
 		assert_eq!(Balances::reserved_balance(proposer), deposit);
 		assert_eq!(Balances::free_balance(proposer), 100 - deposit);
 		assert_eq!(last_event(), BountiesEvent::BountyProposed { index: bounty_id });
-		assert_eq!(pallet_bounties::Bounties::<Test>::get(0).unwrap(), bounty);
-		assert_eq!(pallet_bounties::BountyDescriptions::<Test>::get(0).unwrap(), description);
-		assert_eq!(pallet_bounties::BountyCount::<Test>::get(), 1);
+		assert_eq!(topsoil_bounties::Bounties::<Test>::get(0).unwrap(), bounty);
+		assert_eq!(topsoil_bounties::BountyDescriptions::<Test>::get(0).unwrap(), description);
+		assert_eq!(topsoil_bounties::BountyCount::<Test>::get(), 1);
 
 		// Decrease the DataDepositPerByte
 		DataDepositPerByte::set(1);
@@ -1960,9 +1960,9 @@ fn poke_deposit_works_for_deposit_decrease() {
 			BountiesEvent::DepositPoked { bounty_id, proposer, old_deposit: deposit, new_deposit }
 		);
 		bounty.bond = new_deposit;
-		assert_eq!(pallet_bounties::Bounties::<Test>::get(0).unwrap(), bounty);
-		assert_eq!(pallet_bounties::BountyDescriptions::<Test>::get(0).unwrap(), description);
-		assert_eq!(pallet_bounties::BountyCount::<Test>::get(), 1);
+		assert_eq!(topsoil_bounties::Bounties::<Test>::get(0).unwrap(), bounty);
+		assert_eq!(topsoil_bounties::BountyDescriptions::<Test>::get(0).unwrap(), description);
+		assert_eq!(topsoil_bounties::BountyCount::<Test>::get(), 1);
 	});
 }
 
@@ -1995,9 +1995,9 @@ fn poke_deposit_works_for_non_proposer() {
 		assert_eq!(Balances::reserved_balance(proposer), deposit);
 		assert_eq!(Balances::free_balance(proposer), 100 - deposit);
 		assert_eq!(last_event(), BountiesEvent::BountyProposed { index: bounty_id });
-		assert_eq!(pallet_bounties::Bounties::<Test>::get(0).unwrap(), bounty);
-		assert_eq!(pallet_bounties::BountyDescriptions::<Test>::get(0).unwrap(), description);
-		assert_eq!(pallet_bounties::BountyCount::<Test>::get(), 1);
+		assert_eq!(topsoil_bounties::Bounties::<Test>::get(0).unwrap(), bounty);
+		assert_eq!(topsoil_bounties::BountyDescriptions::<Test>::get(0).unwrap(), description);
+		assert_eq!(topsoil_bounties::BountyCount::<Test>::get(), 1);
 
 		// Decrease the DataDepositPerByte
 		DataDepositPerByte::set(1);
@@ -2017,8 +2017,8 @@ fn poke_deposit_works_for_non_proposer() {
 			BountiesEvent::DepositPoked { bounty_id, proposer, old_deposit: deposit, new_deposit }
 		);
 		bounty.bond = new_deposit;
-		assert_eq!(pallet_bounties::Bounties::<Test>::get(0).unwrap(), bounty);
-		assert_eq!(pallet_bounties::BountyDescriptions::<Test>::get(0).unwrap(), description);
-		assert_eq!(pallet_bounties::BountyCount::<Test>::get(), 1);
+		assert_eq!(topsoil_bounties::Bounties::<Test>::get(0).unwrap(), bounty);
+		assert_eq!(topsoil_bounties::BountyDescriptions::<Test>::get(0).unwrap(), description);
+		assert_eq!(topsoil_bounties::BountyCount::<Test>::get(), 1);
 	});
 }

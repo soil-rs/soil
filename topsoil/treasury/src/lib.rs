@@ -94,7 +94,7 @@ use soil_runtime::{
 	Debug, PerThing, Permill,
 };
 
-use frame_support::{
+use topsoil_support::{
 	dispatch::{DispatchResult, DispatchResultWithPostInfo},
 	ensure, print,
 	traits::{
@@ -104,21 +104,21 @@ use frame_support::{
 	weights::Weight,
 	BoundedVec, PalletId,
 };
-use frame_system::pallet_prelude::BlockNumberFor as SystemBlockNumberFor;
+use topsoil_system::pallet_prelude::BlockNumberFor as SystemBlockNumberFor;
 
 pub use pallet::*;
 pub use weights::WeightInfo;
 
 pub type BalanceOf<T, I = ()> =
-	<<T as Config<I>>::Currency as Currency<<T as frame_system::Config>::AccountId>>::Balance;
+	<<T as Config<I>>::Currency as Currency<<T as topsoil_system::Config>::AccountId>>::Balance;
 pub type AssetBalanceOf<T, I> = <<T as Config<I>>::Paymaster as Pay>::Balance;
 pub type PositiveImbalanceOf<T, I = ()> = <<T as Config<I>>::Currency as Currency<
-	<T as frame_system::Config>::AccountId,
+	<T as topsoil_system::Config>::AccountId,
 >>::PositiveImbalance;
 pub type NegativeImbalanceOf<T, I = ()> = <<T as Config<I>>::Currency as Currency<
-	<T as frame_system::Config>::AccountId,
+	<T as topsoil_system::Config>::AccountId,
 >>::NegativeImbalance;
-type AccountIdLookupOf<T> = <<T as frame_system::Config>::Lookup as StaticLookup>::Source;
+type AccountIdLookupOf<T> = <<T as topsoil_system::Config>::Lookup as StaticLookup>::Source;
 type BeneficiaryLookupOf<T, I> = <<T as Config<I>>::BeneficiaryLookup as StaticLookup>::Source;
 pub type BlockNumberFor<T, I = ()> =
 	<<T as Config<I>>::BlockNumberProvider as BlockNumberProvider>::BlockNumber;
@@ -200,21 +200,21 @@ pub struct SpendStatus<AssetKind, AssetBalance, Beneficiary, BlockNumber, Paymen
 /// Index of an approved treasury spend.
 pub type SpendIndex = u32;
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
-	use frame_support::{
+	use topsoil_support::{
 		dispatch_context::with_context,
 		pallet_prelude::*,
 		traits::tokens::{ConversionFromAssetBalance, PaymentStatus},
 	};
-	use frame_system::pallet_prelude::{ensure_signed, OriginFor};
+	use topsoil_system::pallet_prelude::{ensure_signed, OriginFor};
 
 	#[pallet::pallet]
 	pub struct Pallet<T, I = ()>(PhantomData<(T, I)>);
 
 	#[pallet::config]
-	pub trait Config<I: 'static = ()>: frame_system::Config {
+	pub trait Config<I: 'static = ()>: topsoil_system::Config {
 		/// The staking balance.
 		type Currency: Currency<Self::AccountId> + ReservableCurrency<Self::AccountId>;
 
@@ -224,7 +224,7 @@ pub mod pallet {
 		/// The overarching event type.
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self, I>>
-			+ IsType<<Self as frame_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// Period between successive spends.
 		#[pallet::constant]
@@ -290,7 +290,7 @@ pub mod pallet {
 		#[cfg(feature = "runtime-benchmarks")]
 		type BenchmarkHelper: ArgumentsFactory<Self::AssetKind, Self::Beneficiary>;
 
-		/// Provider for the block number. Normally this is the `frame_system` pallet.
+		/// Provider for the block number. Normally this is the `topsoil_system` pallet.
 		type BlockNumberProvider: BlockNumberProvider;
 	}
 
@@ -361,7 +361,7 @@ pub mod pallet {
 	pub type LastSpendPeriod<T, I = ()> = StorageValue<_, BlockNumberFor<T, I>, OptionQuery>;
 
 	#[pallet::genesis_config]
-	#[derive(frame_support::DefaultNoBound)]
+	#[derive(topsoil_support::DefaultNoBound)]
 	pub struct GenesisConfig<T: Config<I>, I: 'static = ()> {
 		#[serde(skip)]
 		_config: core::marker::PhantomData<(T, I)>,
@@ -1099,7 +1099,7 @@ impl<R> soil_runtime::traits::TypedGet for TreasuryAccountId<R>
 where
 	R: crate::Config,
 {
-	type Type = <R as frame_system::Config>::AccountId;
+	type Type = <R as topsoil_system::Config>::AccountId;
 	fn get() -> Self::Type {
 		crate::Pallet::<R>::account_id()
 	}

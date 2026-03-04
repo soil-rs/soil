@@ -19,7 +19,7 @@
 
 use crate::{Conviction, Delegations};
 use codec::{Decode, DecodeWithMemTracking, Encode, EncodeLike, Input, MaxEncodedLen, Output};
-use frame_support::{pallet_prelude::Get, BoundedVec};
+use topsoil_support::{pallet_prelude::Get, BoundedVec};
 use scale_info::TypeInfo;
 use soil_runtime::{
 	traits::{Saturating, Zero},

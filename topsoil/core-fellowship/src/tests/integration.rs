@@ -19,14 +19,14 @@
 
 #![allow(deprecated)]
 
-use frame_support::{
+use topsoil_support::{
 	assert_noop, assert_ok, derive_impl, hypothetically, hypothetically_ok, ord_parameter_types,
 	pallet_prelude::Weight,
 	parameter_types,
 	traits::{ConstU16, EitherOf, IsInVec, MapSuccess, NoOpPoll, TryMapSuccess},
 };
-use frame_system::{pallet_prelude::BlockNumberFor, EnsureSignedBy};
-use pallet_ranked_collective::{EnsureRanked, Geometric, Rank};
+use topsoil_system::{pallet_prelude::BlockNumberFor, EnsureSignedBy};
+use topsoil_ranked_collective::{EnsureRanked, Geometric, Rank};
 use soil_core::Get;
 use soil_runtime::{
 	bounded_vec,
@@ -35,27 +35,27 @@ use soil_runtime::{
 };
 type Class = Rank;
 
-use crate as pallet_core_fellowship;
+use crate as topsoil_core_fellowship;
 use crate::*;
 
-type Block = frame_system::mocking::MockBlock<Test>;
+type Block = topsoil_system::mocking::MockBlock<Test>;
 
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub enum Test
 	{
-		System: frame_system,
-		CoreFellowship: pallet_core_fellowship,
-		Club: pallet_ranked_collective,
+		System: topsoil_system,
+		CoreFellowship: topsoil_core_fellowship,
+		Club: topsoil_ranked_collective,
 	}
 );
 
 parameter_types! {
-	pub BlockWeights: frame_system::limits::BlockWeights =
-		frame_system::limits::BlockWeights::simple_max(Weight::from_parts(1_000_000, u64::max_value()));
+	pub BlockWeights: topsoil_system::limits::BlockWeights =
+		topsoil_system::limits::BlockWeights::simple_max(Weight::from_parts(1_000_000, u64::max_value()));
 }
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
 	type Block = Block;
 }
 
@@ -94,26 +94,26 @@ impl<Delta: Get<Rank>> Convert<Class, Rank> for MinRankOfClass<Delta> {
 	}
 }
 
-impl pallet_ranked_collective::Config for Test {
+impl topsoil_ranked_collective::Config for Test {
 	type WeightInfo = ();
 	type RuntimeEvent = RuntimeEvent;
 	type PromoteOrigin = EitherOf<
 		// Root can promote arbitrarily.
-		frame_system::EnsureRootWithSuccess<Self::AccountId, ConstU16<65535>>,
+		topsoil_system::EnsureRootWithSuccess<Self::AccountId, ConstU16<65535>>,
 		// Members can promote up to the rank of 2 below them.
 		MapSuccess<EnsureRanked<Test, (), 2>, ReduceBy<ConstU16<2>>>,
 	>;
 	type AddOrigin = MapSuccess<Self::PromoteOrigin, ReplaceWithDefault<()>>;
 	type DemoteOrigin = EitherOf<
 		// Root can demote arbitrarily.
-		frame_system::EnsureRootWithSuccess<Self::AccountId, ConstU16<65535>>,
+		topsoil_system::EnsureRootWithSuccess<Self::AccountId, ConstU16<65535>>,
 		// Members can demote up to the rank of 3 below them.
 		MapSuccess<EnsureRanked<Test, (), 3>, ReduceBy<ConstU16<3>>>,
 	>;
 	type RemoveOrigin = Self::DemoteOrigin;
 	type ExchangeOrigin = EitherOf<
 		// Root can exchange arbitrarily.
-		frame_system::EnsureRootWithSuccess<Self::AccountId, ConstU16<65535>>,
+		topsoil_system::EnsureRootWithSuccess<Self::AccountId, ConstU16<65535>>,
 		// Members can exchange up to the rank of 2 below them.
 		MapSuccess<EnsureRanked<Test, (), 2>, ReduceBy<ConstU16<2>>>,
 	>;
@@ -127,7 +127,7 @@ impl pallet_ranked_collective::Config for Test {
 }
 
 pub fn new_test_ext() -> soil_io::TestExternalities {
-	let t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	let mut ext = soil_io::TestExternalities::new(t);
 	ext.execute_with(|| {
 		assert_ok!(Club::add_member(RuntimeOrigin::root(), 100));
@@ -156,9 +156,9 @@ fn signed(who: u64) -> RuntimeOrigin {
 }
 
 fn assert_last_event(generic_event: <Test as Config>::RuntimeEvent) {
-	let events = frame_system::Pallet::<Test>::events();
-	let system_event: <Test as frame_system::Config>::RuntimeEvent = generic_event.into();
-	let frame_system::EventRecord { event, .. } = events.last().expect("Event expected");
+	let events = topsoil_system::Pallet::<Test>::events();
+	let system_event: <Test as topsoil_system::Config>::RuntimeEvent = generic_event.into();
+	let topsoil_system::EventRecord { event, .. } = events.last().expect("Event expected");
 	assert_eq!(event, &system_event.into());
 }
 
@@ -270,12 +270,12 @@ fn swap_bad_noops() {
 		// Swapping for another member is a noop:
 		assert_noop!(
 			Club::exchange_member(RuntimeOrigin::root(), 0, 1),
-			pallet_ranked_collective::Error::<Test>::AlreadyMember
+			topsoil_ranked_collective::Error::<Test>::AlreadyMember
 		);
 		// Swapping for the same member is a noop:
 		assert_noop!(
 			Club::exchange_member(RuntimeOrigin::root(), 0, 0),
-			pallet_ranked_collective::Error::<Test>::SameMember
+			topsoil_ranked_collective::Error::<Test>::SameMember
 		);
 	});
 }

@@ -35,7 +35,7 @@
 //!
 //! __NOTE:__ Instead of using the filter contained in the origin to call `fn schedule`, scheduled
 //! runtime calls will be dispatched with the default filter for the origin: namely
-//! `frame_system::Config::BaseCallFilter` for all origin types (except root which will get no
+//! `topsoil_system::Config::BaseCallFilter` for all origin types (except root which will get no
 //! filter).
 //!
 //! If a call is scheduled using proxy or whatever mechanism which adds filter, then those filter
@@ -69,7 +69,7 @@
 //!     * Could lead to undefined behavior, such as executing another runtime call with the same
 //!       index.
 //!
-//! [`on_initialize`]: frame_support::traits::Hooks::on_initialize
+//! [`on_initialize`]: topsoil_support::traits::Hooks::on_initialize
 
 // Ensure we're `no_std` when compiling for Wasm.
 #![cfg_attr(not(feature = "std"), no_std)]
@@ -88,7 +88,7 @@ extern crate alloc;
 use alloc::{boxed::Box, vec::Vec};
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use core::{borrow::Borrow, cmp::Ordering, marker::PhantomData};
-use frame_support::{
+use topsoil_support::{
 	dispatch::{DispatchResult, GetDispatchInfo, Parameter, RawOrigin},
 	ensure,
 	traits::{
@@ -98,7 +98,7 @@ use frame_support::{
 	},
 	weights::{Weight, WeightMeter},
 };
-use frame_system::{self as system};
+use topsoil_system::{self as system};
 use scale_info::TypeInfo;
 use soil_io::hashing::blake2_256;
 use soil_runtime::{
@@ -115,10 +115,10 @@ pub type PeriodicIndex = u32;
 pub type TaskAddress<BlockNumber> = (BlockNumber, u32);
 
 pub type CallOrHashOf<T> =
-	MaybeHashed<<T as Config>::RuntimeCall, <T as frame_system::Config>::Hash>;
+	MaybeHashed<<T as Config>::RuntimeCall, <T as topsoil_system::Config>::Hash>;
 
 pub type BoundedCallOf<T> =
-	Bounded<<T as Config>::RuntimeCall, <T as frame_system::Config>::Hashing>;
+	Bounded<<T as Config>::RuntimeCall, <T as topsoil_system::Config>::Hashing>;
 
 pub type BlockNumberFor<T> =
 	<<T as Config>::BlockNumberProvider as BlockNumberProvider>::BlockNumber;
@@ -200,7 +200,7 @@ pub type ScheduledV2Of<T> = ScheduledV2<
 	<T as Config>::RuntimeCall,
 	BlockNumberFor<T>,
 	<T as Config>::PalletsOrigin,
-	<T as frame_system::Config>::AccountId,
+	<T as topsoil_system::Config>::AccountId,
 >;
 
 pub type ScheduledV3Of<T> = ScheduledV3<
@@ -208,7 +208,7 @@ pub type ScheduledV3Of<T> = ScheduledV3<
 	CallOrHashOf<T>,
 	BlockNumberFor<T>,
 	<T as Config>::PalletsOrigin,
-	<T as frame_system::Config>::AccountId,
+	<T as topsoil_system::Config>::AccountId,
 >;
 
 pub type ScheduledOf<T> = Scheduled<
@@ -216,7 +216,7 @@ pub type ScheduledOf<T> = Scheduled<
 	BoundedCallOf<T>,
 	BlockNumberFor<T>,
 	<T as Config>::PalletsOrigin,
-	<T as frame_system::Config>::AccountId,
+	<T as topsoil_system::Config>::AccountId,
 >;
 
 pub(crate) trait MarginalWeightInfo: WeightInfo {
@@ -237,11 +237,11 @@ pub(crate) trait MarginalWeightInfo: WeightInfo {
 }
 impl<T: WeightInfo> MarginalWeightInfo for T {}
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
-	use frame_support::{dispatch::PostDispatchInfo, pallet_prelude::*};
-	use frame_system::pallet_prelude::{BlockNumberFor as SystemBlockNumberFor, OriginFor};
+	use topsoil_support::{dispatch::PostDispatchInfo, pallet_prelude::*};
+	use topsoil_system::pallet_prelude::{BlockNumberFor as SystemBlockNumberFor, OriginFor};
 
 	/// The in-code storage version.
 	const STORAGE_VERSION: StorageVersion = StorageVersion::new(4);
@@ -252,10 +252,10 @@ pub mod pallet {
 
 	/// `system::Config` should always be included in our implied traits.
 	#[pallet::config]
-	pub trait Config: frame_system::Config {
+	pub trait Config: topsoil_system::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// The aggregated origin which the dispatch will take.
 		type RuntimeOrigin: OriginTrait<PalletsOrigin = Self::PalletsOrigin>
@@ -287,7 +287,7 @@ pub mod pallet {
 		/// This will be used when canceling a task, to ensure that the origin that tries
 		/// to cancel has greater or equal privileges as the origin that created the scheduled task.
 		///
-		/// For simplicity the [`EqualPrivilegeOnly`](frame_support::traits::EqualPrivilegeOnly) can
+		/// For simplicity the [`EqualPrivilegeOnly`](topsoil_support::traits::EqualPrivilegeOnly) can
 		/// be used. This will only check if two given origins are equal.
 		type OriginPrivilegeCmp: PrivilegeCmp<Self::PalletsOrigin>;
 
@@ -315,14 +315,14 @@ pub mod pallet {
 		/// use their local block number provider.
 		///
 		/// Can be configured to return either:
-		/// - the local block number of the runtime via `frame_system::Pallet`
+		/// - the local block number of the runtime via `topsoil_system::Pallet`
 		/// - a remote block number, eg from the relay chain through `RelaychainDataProvider`
 		/// - an arbitrary value through a custom implementation of the trait
 		///
 		/// Suggested values:
-		/// - Solo- and Relay-chains should use `frame_system::Pallet`. There are no concerns with
+		/// - Solo- and Relay-chains should use `topsoil_system::Pallet`. There are no concerns with
 		///   this configuration.
-		/// - Parachains should also use `frame_system::Pallet` for the time being. The scheduler
+		/// - Parachains should also use `topsoil_system::Pallet` for the time being. The scheduler
 		///   pallet is not yet ready for the case that big numbers of blocks are skipped. In an
 		///   *Agile Coretime* chain with relay chain number provider configured, it could otherwise
 		///   happen that the scheduler will not be able to catch up to its agendas, since too many
@@ -422,7 +422,7 @@ pub mod pallet {
 		/// Execute the scheduled calls
 		fn on_initialize(_now: SystemBlockNumberFor<T>) -> Weight {
 			let now = T::BlockNumberProvider::current_block_number();
-			let mut weight_counter = frame_system::Pallet::<T>::remaining_block_weight()
+			let mut weight_counter = topsoil_system::Pallet::<T>::remaining_block_weight()
 				.limit_to(T::MaximumWeight::get());
 			Self::service_agendas(&mut weight_counter, now, u32::MAX);
 			weight_counter.consumed()
@@ -738,7 +738,7 @@ impl<T: Config> Pallet<T> {
 		});
 
 		#[allow(deprecated)]
-		frame_support::storage::migration::remove_storage_prefix(
+		topsoil_support::storage::migration::remove_storage_prefix(
 			Self::name().as_bytes(),
 			b"StorageVersion",
 			&[],
@@ -803,7 +803,7 @@ impl<T: Config> Pallet<T> {
 		});
 
 		#[allow(deprecated)]
-		frame_support::storage::migration::remove_storage_prefix(
+		topsoil_support::storage::migration::remove_storage_prefix(
 			Self::name().as_bytes(),
 			b"StorageVersion",
 			&[],
@@ -913,7 +913,7 @@ impl<T: Config> Pallet<T> {
 		});
 
 		#[allow(deprecated)]
-		frame_support::storage::migration::remove_storage_prefix(
+		topsoil_support::storage::migration::remove_storage_prefix(
 			Self::name().as_bytes(),
 			b"StorageVersion",
 			&[],

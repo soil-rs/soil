@@ -19,14 +19,14 @@
 
 use alloc::{vec, vec::Vec};
 use codec::Encode;
-use frame_benchmarking::v2::*;
-use frame_support::{dispatch::DispatchClass, storage, traits::Get};
-use frame_system::{Call, Pallet as System, RawOrigin};
+use topsoil_benchmarking::v2::*;
+use topsoil_support::{dispatch::DispatchClass, storage, traits::Get};
+use topsoil_system::{Call, Pallet as System, RawOrigin};
 use soil_core::storage::well_known_keys;
 use soil_runtime::traits::Hash;
 
 pub struct Pallet<T: Config>(System<T>);
-pub trait Config: frame_system::Config {
+pub trait Config: topsoil_system::Config {
 	/// Adds ability to the Runtime to test against their sample code.
 	///
 	/// Default is `../res/kitchensink_runtime.compact.compressed.wasm`.
@@ -43,7 +43,7 @@ pub trait Config: frame_system::Config {
 	///
 	/// Default is checking for `CodeUpdated` event .
 	fn verify_set_code() {
-		System::<Self>::assert_last_event(frame_system::Event::<Self>::CodeUpdated.into());
+		System::<Self>::assert_last_event(topsoil_system::Event::<Self>::CodeUpdated.into());
 	}
 }
 
@@ -76,7 +76,7 @@ mod benchmarks {
 		remark_with_event(RawOrigin::Signed(caller.clone()), remark_message);
 
 		System::<T>::assert_last_event(
-			frame_system::Event::<T>::Remarked { sender: caller, hash }.into(),
+			topsoil_system::Event::<T>::Remarked { sender: caller, hash }.into(),
 		);
 		Ok(())
 	}

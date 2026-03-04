@@ -16,7 +16,7 @@
 // limitations under the License.
 
 use super::helper;
-use frame_support_procedural_tools::get_doc_literals;
+use topsoil_support_procedural_tools::get_doc_literals;
 use quote::ToTokens;
 use std::collections::HashMap;
 use syn::spanned::Spanned;

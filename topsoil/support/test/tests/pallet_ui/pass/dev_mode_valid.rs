@@ -17,14 +17,14 @@
 
 #![cfg_attr(not(feature = "std"), no_std)]
 
-use frame_support::{derive_impl, traits::ConstU32};
+use topsoil_support::{derive_impl, traits::ConstU32};
 
 pub use pallet::*;
 
-#[frame_support::pallet(dev_mode)]
+#[topsoil_support::pallet(dev_mode)]
 pub mod pallet {
-	use frame_support::pallet_prelude::*;
-	use frame_system::pallet_prelude::*;
+	use topsoil_support::pallet_prelude::*;
+	use topsoil_system::pallet_prelude::*;
 
 	// The struct on which we build all of our Pallet logic.
 	#[pallet::pallet]
@@ -32,7 +32,7 @@ pub mod pallet {
 
 	// Your Pallet's configuration trait, representing custom external types and interfaces.
 	#[pallet::config]
-	pub trait Config: frame_system::Config {}
+	pub trait Config: topsoil_system::Config {}
 
 	// The MEL requirement for bounded pallets is skipped by `dev_mode`.
 	#[pallet::storage]
@@ -70,9 +70,9 @@ pub mod pallet {
 	impl<T: Config> Pallet<T> {}
 }
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Runtime {
-	type BaseCallFilter = frame_support::traits::Everything;
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Runtime {
+	type BaseCallFilter = topsoil_support::traits::Everything;
 	type RuntimeOrigin = RuntimeOrigin;
 	type Nonce = u64;
 	type RuntimeCall = RuntimeCall;
@@ -100,11 +100,11 @@ pub type Header = soil_runtime::generic::Header<u32, soil_runtime::traits::Blake
 pub type Block = soil_runtime::generic::Block<Header, UncheckedExtrinsic>;
 pub type UncheckedExtrinsic = soil_runtime::generic::UncheckedExtrinsic<u32, RuntimeCall, (), ()>;
 
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub struct Runtime
 	{
 		// Exclude part `Storage` in order not to check its metadata in tests.
-		System: frame_system exclude_parts { Pallet, Storage },
+		System: topsoil_system exclude_parts { Pallet, Storage },
 		Example: pallet,
 	}
 );
@@ -112,7 +112,7 @@ frame_support::construct_runtime!(
 impl pallet::Config for Runtime {}
 
 fn main() {
-	use frame_support::pallet_prelude::*;
+	use topsoil_support::pallet_prelude::*;
 	use soil_io::{
 		hashing::{blake2_128, twox_128},
 		TestExternalities,

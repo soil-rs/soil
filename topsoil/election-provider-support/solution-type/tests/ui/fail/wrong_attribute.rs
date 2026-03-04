@@ -15,7 +15,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use frame_election_provider_solution_type::generate_solution_type;
+use topsoil_election_provider_solution_type::generate_solution_type;
 
 generate_solution_type!(
 	#[pages(1)] pub struct TestSolution::<

@@ -19,7 +19,7 @@ use crate::{
 	construct_runtime::parse::{Pallet, PalletPart, PalletPartKeyword, PalletPath},
 	runtime::parse::PalletDeclaration,
 };
-use frame_support_procedural_tools::get_doc_literals;
+use topsoil_support_procedural_tools::get_doc_literals;
 use quote::ToTokens;
 use syn::{punctuated::Punctuated, spanned::Spanned, token, Error};
 
@@ -111,7 +111,7 @@ fn pallet_parsing_works() {
 	use syn::{parse_quote, ItemType};
 
 	let item: ItemType = parse_quote! {
-		pub type System = frame_system + Call;
+		pub type System = topsoil_system + Call;
 	};
 	let ItemType { ty, .. } = item.clone();
 	let syn::Type::TraitObject(syn::TypeTraitObject { bounds, .. }) = *ty else {
@@ -125,7 +125,7 @@ fn pallet_parsing_works() {
 
 	assert_eq!(pallet.name.to_string(), "System");
 	assert_eq!(pallet.index, index);
-	assert_eq!(pallet.path.to_token_stream().to_string(), "frame_system");
+	assert_eq!(pallet.path.to_token_stream().to_string(), "topsoil_system");
 	assert_eq!(pallet.instance, None);
 }
 
@@ -134,7 +134,7 @@ fn pallet_parsing_works_with_instance() {
 	use syn::{parse_quote, ItemType};
 
 	let item: ItemType = parse_quote! {
-		pub type System = frame_system<Instance1> + Call;
+		pub type System = topsoil_system<Instance1> + Call;
 	};
 	let ItemType { ty, .. } = item.clone();
 	let syn::Type::TraitObject(syn::TypeTraitObject { bounds, .. }) = *ty else {
@@ -148,7 +148,7 @@ fn pallet_parsing_works_with_instance() {
 
 	assert_eq!(pallet.name.to_string(), "System");
 	assert_eq!(pallet.index, index);
-	assert_eq!(pallet.path.to_token_stream().to_string(), "frame_system");
+	assert_eq!(pallet.path.to_token_stream().to_string(), "topsoil_system");
 	assert_eq!(pallet.instance, Some(parse_quote! { Instance1 }));
 }
 
@@ -157,7 +157,7 @@ fn pallet_parsing_works_with_pallet() {
 	use syn::{parse_quote, ItemType};
 
 	let item: ItemType = parse_quote! {
-		pub type System = frame_system::Pallet<Runtime> + Call;
+		pub type System = topsoil_system::Pallet<Runtime> + Call;
 	};
 	let ItemType { ty, .. } = item.clone();
 	let syn::Type::TraitObject(syn::TypeTraitObject { bounds, .. }) = *ty else {
@@ -171,7 +171,7 @@ fn pallet_parsing_works_with_pallet() {
 
 	assert_eq!(pallet.name.to_string(), "System");
 	assert_eq!(pallet.index, index);
-	assert_eq!(pallet.path.to_token_stream().to_string(), "frame_system");
+	assert_eq!(pallet.path.to_token_stream().to_string(), "topsoil_system");
 	assert_eq!(pallet.instance, None);
 }
 
@@ -180,7 +180,7 @@ fn pallet_parsing_works_with_instance_and_pallet() {
 	use syn::{parse_quote, ItemType};
 
 	let item: ItemType = parse_quote! {
-		pub type System = frame_system::Pallet<Runtime, Instance1> + Call;
+		pub type System = topsoil_system::Pallet<Runtime, Instance1> + Call;
 	};
 	let ItemType { ty, .. } = item.clone();
 	let syn::Type::TraitObject(syn::TypeTraitObject { bounds, .. }) = *ty else {
@@ -194,6 +194,6 @@ fn pallet_parsing_works_with_instance_and_pallet() {
 
 	assert_eq!(pallet.name.to_string(), "System");
 	assert_eq!(pallet.index, index);
-	assert_eq!(pallet.path.to_token_stream().to_string(), "frame_system");
+	assert_eq!(pallet.path.to_token_stream().to_string(), "topsoil_system");
 	assert_eq!(pallet.instance, Some(parse_quote! { Instance1 }));
 }

@@ -15,14 +15,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//! Stress tests pallet-message-queue. Defines its own runtime config to use larger constants for
+//! Stress tests topsoil-message-queue. Defines its own runtime config to use larger constants for
 //! `HeapSize` and `MaxStale`.
 //!
 //! The tests in this file are ignored by default, since they are quite slow. You can run them
 //! manually like this:
 //!
 //! ```sh
-//! RUST_LOG=info cargo test -p pallet-message-queue --profile testnet -- --ignored
+//! RUST_LOG=info cargo test -p topsoil-message-queue --profile testnet -- --ignored
 //! ```
 
 #![cfg(test)]
@@ -36,24 +36,24 @@ use crate::{
 	*,
 };
 
-use crate as pallet_message_queue;
-use frame_support::{derive_impl, parameter_types};
+use crate as topsoil_message_queue;
+use topsoil_support::{derive_impl, parameter_types};
 use rand::{rngs::StdRng, Rng, SeedableRng};
 use rand_distr::Pareto;
 use std::collections::{BTreeMap, BTreeSet};
 
-type Block = frame_system::mocking::MockBlock<Test>;
+type Block = topsoil_system::mocking::MockBlock<Test>;
 
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub enum Test
 	{
-		System: frame_system,
-		MessageQueue: pallet_message_queue,
+		System: topsoil_system,
+		MessageQueue: topsoil_message_queue,
 	}
 );
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
 	type Block = Block;
 }
 

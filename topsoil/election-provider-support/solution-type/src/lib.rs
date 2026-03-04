@@ -63,9 +63,9 @@ pub(crate) fn syn_err(message: &'static str) -> syn::Error {
 /// type, `u8` target type and `Perbill` accuracy with maximum of 4 edges per voter.
 ///
 /// ```
-/// # use frame_election_provider_solution_type::generate_solution_type;
+/// # use topsoil_election_provider_solution_type::generate_solution_type;
 /// # use soil_arithmetic::per_things::Perbill;
-/// # use frame_support::traits::ConstU32;
+/// # use topsoil_support::traits::ConstU32;
 /// generate_solution_type!(pub struct TestSolution::<
 ///     VoterIndex = u16,
 ///     TargetIndex = u8,
@@ -96,7 +96,7 @@ pub(crate) fn syn_err(message: &'static str) -> syn::Error {
 /// ```
 ///
 /// The given struct provides function to convert from/to `Assignment` as part of
-/// `frame_election_provider_support::NposSolution` trait:
+/// `topsoil_election_provider_support::NposSolution` trait:
 ///
 /// - `fn from_assignment<..>(..)`
 /// - `fn into_assignment<..>(..)`
@@ -108,10 +108,10 @@ pub(crate) fn syn_err(message: &'static str) -> syn::Error {
 /// for numbers will be used, similar to how `parity-scale-codec`'s `Compact` works.
 ///
 /// ```
-/// # use frame_election_provider_solution_type::generate_solution_type;
-/// # use frame_election_provider_support::NposSolution;
+/// # use topsoil_election_provider_solution_type::generate_solution_type;
+/// # use topsoil_election_provider_support::NposSolution;
 /// # use soil_arithmetic::per_things::Perbill;
-/// # use frame_support::traits::ConstU32;
+/// # use topsoil_support::traits::ConstU32;
 /// generate_solution_type!(
 ///     #[compact]
 ///     pub struct TestSolutionCompact::<
@@ -251,13 +251,13 @@ where
 }
 
 fn imports() -> Result<TokenStream2> {
-	match crate_name("frame-election-provider-support") {
+	match crate_name("topsoil-election-provider-support") {
 		Ok(FoundCrate::Itself) => Ok(quote! {
 			use crate as _feps;
 			use _feps::private as _fepsp;
 		}),
-		Ok(FoundCrate::Name(frame_election_provider_support)) => {
-			let ident = syn::Ident::new(&frame_election_provider_support, Span::call_site());
+		Ok(FoundCrate::Name(topsoil_election_provider_support)) => {
+			let ident = syn::Ident::new(&topsoil_election_provider_support, Span::call_site());
 			Ok(quote!(
 					use #ident as _feps;
 					use _feps::private as _fepsp;
@@ -267,7 +267,7 @@ fn imports() -> Result<TokenStream2> {
 			Ok(FoundCrate::Name(polkadot_sdk)) => {
 				let ident = syn::Ident::new(&polkadot_sdk, Span::call_site());
 				Ok(quote!(
-					use #ident::frame_election_provider_support as _feps;
+					use #ident::topsoil_election_provider_support as _feps;
 					use _feps::private as _fepsp;
 				))
 			},

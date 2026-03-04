@@ -41,14 +41,14 @@
 //! In this example, aside from the [AuthorizeCoownership](extensions::AuthorizeCoownership)
 //! extension, we use the following pallets:
 //! - [pallet_coownership] - provides a coowner origin and the functionality to authorize it.
-//! - [pallet_assets] - a dummy asset pallet that tracks assets, identified by an
-//!   [AssetId](pallet_assets::AssetId), and their respective owners, which can be either an
-//!   [account](pallet_assets::Owner::Single) or a [pair of owners](pallet_assets::Owner::Double).
+//! - [topsoil_assets] - a dummy asset pallet that tracks assets, identified by an
+//!   [AssetId](topsoil_assets::AssetId), and their respective owners, which can be either an
+//!   [account](topsoil_assets::Owner::Single) or a [pair of owners](topsoil_assets::Owner::Double).
 //!
-//! Assets are created in [pallet_assets] using the
-//! [create_asset](pallet_assets::Call::create_asset) call, which accepts traditionally signed
+//! Assets are created in [topsoil_assets] using the
+//! [create_asset](topsoil_assets::Call::create_asset) call, which accepts traditionally signed
 //! origins (a single account) or coowner origins, authorized through the
-//! [CoownerOrigin](pallet_assets::Config::CoownerOrigin) type.
+//! [CoownerOrigin](topsoil_assets::Config::CoownerOrigin) type.
 //!
 //! ### Example runtime setup
 #![doc = docify::embed!("src/mock.rs", example_runtime)]
@@ -70,20 +70,20 @@ mod tests;
 
 extern crate alloc;
 
-use frame_support::pallet_prelude::*;
-use frame_system::pallet_prelude::*;
+use topsoil_support::pallet_prelude::*;
+use topsoil_system::pallet_prelude::*;
 
-#[frame_support::pallet(dev_mode)]
+#[topsoil_support::pallet(dev_mode)]
 pub mod pallet_coownership {
 	use super::*;
-	use frame_support::traits::OriginTrait;
+	use topsoil_support::traits::OriginTrait;
 
 	#[pallet::config]
-	pub trait Config: frame_system::Config {
+	pub trait Config: topsoil_system::Config {
 		/// The aggregated origin which the dispatch will take.
 		type RuntimeOrigin: OriginTrait<PalletsOrigin = Self::PalletsOrigin>
 			+ From<Self::PalletsOrigin>
-			+ IsType<<Self as frame_system::Config>::RuntimeOrigin>;
+			+ IsType<<Self as topsoil_system::Config>::RuntimeOrigin>;
 
 		/// The caller origin, overarching type of all pallets origins.
 		type PalletsOrigin: From<Origin<Self>> + TryInto<Origin<Self>, Error = Self::PalletsOrigin>;
@@ -103,8 +103,8 @@ pub mod pallet_coownership {
 	}
 }
 
-#[frame_support::pallet(dev_mode)]
-pub mod pallet_assets {
+#[topsoil_support::pallet(dev_mode)]
+pub mod topsoil_assets {
 	use super::*;
 
 	pub type AssetId = u32;
@@ -117,7 +117,7 @@ pub mod pallet_assets {
 	}
 
 	#[pallet::config]
-	pub trait Config: frame_system::Config {
+	pub trait Config: topsoil_system::Config {
 		/// Type that can authorize an account pair coowner origin.
 		type CoownerOrigin: EnsureOrigin<
 			Self::RuntimeOrigin,
@@ -128,7 +128,7 @@ pub mod pallet_assets {
 	/// Map that holds the owner information for each asset it manages.
 	#[pallet::storage]
 	pub type AssetOwners<T> =
-		StorageMap<_, Blake2_128Concat, AssetId, Owner<<T as frame_system::Config>::AccountId>>;
+		StorageMap<_, Blake2_128Concat, AssetId, Owner<<T as topsoil_system::Config>::AccountId>>;
 
 	#[pallet::pallet]
 	pub struct Pallet<T>(_);

@@ -18,23 +18,23 @@
 //! Test utilities
 
 use super::*;
-use crate as pallet_scored_pool;
+use crate as topsoil_scored_pool;
 
-use frame_support::{
+use topsoil_support::{
 	construct_runtime, derive_impl, ord_parameter_types, parameter_types,
 	traits::{ConstU32, ConstU64},
 };
-use frame_system::EnsureSignedBy;
+use topsoil_system::EnsureSignedBy;
 use soil_runtime::{bounded_vec, BuildStorage};
 
-type Block = frame_system::mocking::MockBlock<Test>;
+type Block = topsoil_system::mocking::MockBlock<Test>;
 
 construct_runtime!(
 	pub enum Test
 	{
-		System: frame_system,
-		Balances: pallet_balances,
-		ScoredPool: pallet_scored_pool,
+		System: topsoil_system,
+		Balances: topsoil_balances,
+		ScoredPool: topsoil_scored_pool,
 	}
 );
 
@@ -46,14 +46,14 @@ ord_parameter_types! {
 	pub const ScoreOrigin: u64 = 3;
 }
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
 	type Block = Block;
-	type AccountData = pallet_balances::AccountData<u64>;
+	type AccountData = topsoil_balances::AccountData<u64>;
 }
 
-#[derive_impl(pallet_balances::config_preludes::TestDefaultConfig)]
-impl pallet_balances::Config for Test {
+#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
+impl topsoil_balances::Config for Test {
 	type AccountStore = System;
 }
 
@@ -100,7 +100,7 @@ impl Config for Test {
 }
 
 pub fn new_test_ext() -> soil_io::TestExternalities {
-	let mut t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	let mut balances = vec![];
 	for i in 1..31 {
 		balances.push((i, 500_000));
@@ -109,10 +109,10 @@ pub fn new_test_ext() -> soil_io::TestExternalities {
 	balances.push((40, 500_000));
 	balances.push((99, 1));
 
-	pallet_balances::GenesisConfig::<Test> { balances, ..Default::default() }
+	topsoil_balances::GenesisConfig::<Test> { balances, ..Default::default() }
 		.assimilate_storage(&mut t)
 		.unwrap();
-	pallet_scored_pool::GenesisConfig::<Test> {
+	topsoil_scored_pool::GenesisConfig::<Test> {
 		pool: bounded_vec![(10, Some(1)), (20, Some(2)), (31, Some(2)), (40, Some(3)), (5, None)],
 		member_count: 2,
 	}

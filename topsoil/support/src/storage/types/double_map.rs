@@ -28,7 +28,7 @@ use crate::{
 };
 use alloc::{vec, vec::Vec};
 use codec::{Decode, Encode, EncodeLike, FullCodec, MaxEncodedLen};
-use frame_support::storage::StorageDecodeNonDedupLength;
+use topsoil_support::storage::StorageDecodeNonDedupLength;
 use soil_arithmetic::traits::SaturatedConversion;
 use soil_metadata_ir::{StorageEntryMetadataIR, StorageEntryTypeIR};
 
@@ -36,12 +36,12 @@ use soil_metadata_ir::{StorageEntryMetadataIR, StorageEntryTypeIR};
 /// value of a specified type stored on-chain.
 ///
 /// A double map with keys `k1` and `k2` can be likened to a
-/// [`StorageMap`](frame_support::storage::types::StorageMap) with a key of type `(k1, k2)`.
+/// [`StorageMap`](topsoil_support::storage::types::StorageMap) with a key of type `(k1, k2)`.
 /// However, a double map offers functions specific to each key, enabling partial iteration and
 /// deletion based on one key alone.
 ///
 /// Also, conceptually, a double map is a special case of a
-/// [`StorageNMap`](frame_support::storage::types::StorageNMap) using two keys.
+/// [`StorageNMap`](topsoil_support::storage::types::StorageNMap) using two keys.
 ///
 /// For general information regarding the `#[pallet::storage]` attribute, refer to
 /// [`crate::pallet_macros::storage`].
@@ -51,11 +51,11 @@ use soil_metadata_ir::{StorageEntryMetadataIR, StorageEntryTypeIR};
 /// ### Kitchen-sink
 ///
 /// ```
-/// #[frame_support::pallet]
+/// #[topsoil_support::pallet]
 /// mod pallet {
-/// # 	use frame_support::pallet_prelude::*;
+/// # 	use topsoil_support::pallet_prelude::*;
 /// # 	#[pallet::config]
-/// # 	pub trait Config: frame_system::Config {}
+/// # 	pub trait Config: topsoil_system::Config {}
 /// # 	#[pallet::pallet]
 /// # 	pub struct Pallet<T>(_);
 ///     /// A kitchen-sink StorageDoubleMap, with all possible additional attributes.
@@ -89,7 +89,7 @@ use soil_metadata_ir::{StorageEntryMetadataIR, StorageEntryTypeIR};
 /// ### Partial Iteration & Removal
 ///
 /// When `Hasher1` and `Hasher2` implement the
-/// [`ReversibleStorageHasher`](frame_support::ReversibleStorageHasher) trait, the first key `k1`
+/// [`ReversibleStorageHasher`](topsoil_support::ReversibleStorageHasher) trait, the first key `k1`
 /// can be used to partially iterate over keys and values of the double map, and to delete items.
 #[doc = docify::embed!("src/storage/types/double_map.rs", example_double_map_partial_operations)]
 pub struct StorageDoubleMap<

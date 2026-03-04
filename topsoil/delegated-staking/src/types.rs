@@ -18,7 +18,7 @@
 //! Basic types used in delegated staking.
 
 use super::*;
-use frame_support::traits::DefensiveSaturating;
+use topsoil_support::traits::DefensiveSaturating;
 
 /// The type of pot account being created.
 #[derive(Encode, Decode)]
@@ -73,12 +73,12 @@ impl<T: Config> Delegation<T> {
 			if self.amount == Zero::zero() {
 				<Delegators<T>>::remove(key);
 				// Remove provider if no delegation left.
-				let _ = frame_system::Pallet::<T>::dec_providers(key).defensive();
+				let _ = topsoil_system::Pallet::<T>::dec_providers(key).defensive();
 				return;
 			}
 		} else {
 			// this is a new delegation. Provide for this account.
-			frame_system::Pallet::<T>::inc_providers(key);
+			topsoil_system::Pallet::<T>::inc_providers(key);
 		}
 
 		<Delegators<T>>::insert(key, self);

@@ -16,7 +16,7 @@
 // limitations under the License.
 
 use crate::pallet::{expand::merge_where_clauses, Def};
-use frame_support_procedural_tools::get_doc_literals;
+use topsoil_support_procedural_tools::get_doc_literals;
 
 /// * Add derive trait on Pallet
 /// * Implement GetStorageVersion on Pallet
@@ -27,15 +27,15 @@ use frame_support_procedural_tools::get_doc_literals;
 /// * implementation of `PalletInfoAccess` information
 /// * implementation of `StorageInfoTrait` on Pallet
 pub fn expand_pallet_struct(def: &mut Def) -> proc_macro2::TokenStream {
-	let frame_support = &def.frame_support;
-	let frame_system = &def.frame_system;
+	let topsoil_support = &def.topsoil_support;
+	let topsoil_system = &def.topsoil_system;
 	let type_impl_gen = &def.type_impl_generics(def.pallet_struct.attr_span);
 	let type_use_gen = &def.type_use_generics(def.pallet_struct.attr_span);
 	let type_decl_gen = &def.type_decl_generics(def.pallet_struct.attr_span);
 	let pallet_ident = &def.pallet_struct.pallet;
 	let config_where_clause = &def.config.where_clause;
 	let deprecation_status =
-		match crate::deprecation::get_deprecation(&quote::quote! {#frame_support}, &def.item.attrs)
+		match crate::deprecation::get_deprecation(&quote::quote! {#topsoil_support}, &def.item.attrs)
 		{
 			Ok(deprecation) => deprecation,
 			Err(e) => return e.into_compile_error(),
@@ -75,10 +75,10 @@ pub fn expand_pallet_struct(def: &mut Def) -> proc_macro2::TokenStream {
 
 	pallet_item.attrs.push(syn::parse_quote!(
 		#[derive(
-			#frame_support::CloneNoBound,
-			#frame_support::EqNoBound,
-			#frame_support::PartialEqNoBound,
-			#frame_support::DebugNoBound,
+			#topsoil_support::CloneNoBound,
+			#topsoil_support::EqNoBound,
+			#topsoil_support::PartialEqNoBound,
+			#topsoil_support::DebugNoBound,
 		)]
 	));
 
@@ -88,7 +88,7 @@ pub fn expand_pallet_struct(def: &mut Def) -> proc_macro2::TokenStream {
 			impl<#type_impl_gen> #pallet_ident<#type_use_gen> #config_where_clause {
 				#[doc(hidden)]
 				#[allow(deprecated)]
-				pub fn error_metadata() -> Option<#frame_support::__private::metadata_ir::PalletErrorMetadataIR> {
+				pub fn error_metadata() -> Option<#topsoil_support::__private::metadata_ir::PalletErrorMetadataIR> {
 					Some(<#error_ident<#type_use_gen>>::error_metadata())
 				}
 			}
@@ -97,7 +97,7 @@ pub fn expand_pallet_struct(def: &mut Def) -> proc_macro2::TokenStream {
 		quote::quote_spanned!(def.pallet_struct.attr_span =>
 			impl<#type_impl_gen> #pallet_ident<#type_use_gen> #config_where_clause {
 				#[doc(hidden)]
-				pub fn error_metadata() -> Option<#frame_support::__private::metadata_ir::PalletErrorMetadataIR> {
+				pub fn error_metadata() -> Option<#topsoil_support::__private::metadata_ir::PalletErrorMetadataIR> {
 					None
 				}
 			}
@@ -142,15 +142,15 @@ pub fn expand_pallet_struct(def: &mut Def) -> proc_macro2::TokenStream {
 		.collect::<Vec<_>>();
 
 	let storage_info = quote::quote_spanned!(storage_info_span =>
-		impl<#type_impl_gen> #frame_support::traits::StorageInfoTrait
+		impl<#type_impl_gen> #topsoil_support::traits::StorageInfoTrait
 			for #pallet_ident<#type_use_gen>
 			#storages_where_clauses
 		{
 			fn storage_info()
-				-> #frame_support::__private::Vec<#frame_support::traits::StorageInfo>
+				-> #topsoil_support::__private::Vec<#topsoil_support::traits::StorageInfo>
 			{
 				#[allow(unused_mut)]
-				let mut res = #frame_support::__private::vec![];
+				let mut res = #topsoil_support::__private::vec![];
 
 				#(
 					#(#storage_cfg_attrs)*
@@ -158,7 +158,7 @@ pub fn expand_pallet_struct(def: &mut Def) -> proc_macro2::TokenStream {
 					{
 						let mut storage_info = <
 							#storage_names<#type_use_gen>
-							as #frame_support::traits::#storage_info_traits
+							as #topsoil_support::traits::#storage_info_traits
 						>::#storage_info_methods();
 						res.append(&mut storage_info);
 					}
@@ -171,11 +171,11 @@ pub fn expand_pallet_struct(def: &mut Def) -> proc_macro2::TokenStream {
 
 	let (storage_version, in_code_storage_version_ty) =
 		if let Some(v) = def.pallet_struct.storage_version.as_ref() {
-			(quote::quote! { #v }, quote::quote! { #frame_support::traits::StorageVersion })
+			(quote::quote! { #v }, quote::quote! { #topsoil_support::traits::StorageVersion })
 		} else {
 			(
 				quote::quote! { core::default::Default::default() },
-				quote::quote! { #frame_support::traits::NoStorageVersionSet },
+				quote::quote! { #topsoil_support::traits::NoStorageVersionSet },
 			)
 		};
 
@@ -186,10 +186,10 @@ pub fn expand_pallet_struct(def: &mut Def) -> proc_macro2::TokenStream {
 		.collect();
 
 	let whitelisted_storage_keys_impl = quote::quote![
-		use #frame_support::traits::{StorageInfoTrait, TrackedStorageKey, WhitelistedStorageKeys};
+		use #topsoil_support::traits::{StorageInfoTrait, TrackedStorageKey, WhitelistedStorageKeys};
 		impl<#type_impl_gen> WhitelistedStorageKeys for #pallet_ident<#type_use_gen> #storages_where_clauses {
-			fn whitelisted_storage_keys() -> #frame_support::__private::Vec<TrackedStorageKey> {
-				use #frame_support::__private::vec;
+			fn whitelisted_storage_keys() -> #topsoil_support::__private::Vec<TrackedStorageKey> {
+				use #topsoil_support::__private::vec;
 				vec![#(
 					TrackedStorageKey::new(#whitelisted_storage_idents::<#type_use_gen>::hashed_key().to_vec())
 				),*]
@@ -208,7 +208,7 @@ pub fn expand_pallet_struct(def: &mut Def) -> proc_macro2::TokenStream {
 		pub type Module<#type_decl_gen> = #pallet_ident<#type_use_gen>;
 
 		// Implement `GetStorageVersion` for `Pallet`
-		impl<#type_impl_gen> #frame_support::traits::GetStorageVersion
+		impl<#type_impl_gen> #topsoil_support::traits::GetStorageVersion
 			for #pallet_ident<#type_use_gen>
 			#config_where_clause
 		{
@@ -218,30 +218,30 @@ pub fn expand_pallet_struct(def: &mut Def) -> proc_macro2::TokenStream {
 				#storage_version
 			}
 
-			fn on_chain_storage_version() -> #frame_support::traits::StorageVersion {
-				#frame_support::traits::StorageVersion::get::<Self>()
+			fn on_chain_storage_version() -> #topsoil_support::traits::StorageVersion {
+				#topsoil_support::traits::StorageVersion::get::<Self>()
 			}
 		}
 
 		// Implement `OnGenesis` for `Pallet`
-		impl<#type_impl_gen> #frame_support::traits::OnGenesis
+		impl<#type_impl_gen> #topsoil_support::traits::OnGenesis
 			for #pallet_ident<#type_use_gen>
 			#config_where_clause
 		{
 			fn on_genesis() {
-				let storage_version: #frame_support::traits::StorageVersion = #storage_version;
+				let storage_version: #topsoil_support::traits::StorageVersion = #storage_version;
 				storage_version.put::<Self>();
 			}
 		}
 
 		// Implement `PalletInfoAccess` for `Pallet`
-		impl<#type_impl_gen> #frame_support::traits::PalletInfoAccess
+		impl<#type_impl_gen> #topsoil_support::traits::PalletInfoAccess
 			for #pallet_ident<#type_use_gen>
 			#config_where_clause
 		{
 			fn index() -> usize {
 				<
-					<T as #frame_system::Config>::PalletInfo as #frame_support::traits::PalletInfo
+					<T as #topsoil_system::Config>::PalletInfo as #topsoil_support::traits::PalletInfo
 				>::index::<Self>()
 					.expect("Pallet is part of the runtime because pallet `Config` trait is \
 						implemented by the runtime")
@@ -249,7 +249,7 @@ pub fn expand_pallet_struct(def: &mut Def) -> proc_macro2::TokenStream {
 
 			fn name() -> &'static str {
 				<
-					<T as #frame_system::Config>::PalletInfo as #frame_support::traits::PalletInfo
+					<T as #topsoil_system::Config>::PalletInfo as #topsoil_support::traits::PalletInfo
 				>::name::<Self>()
 					.expect("Pallet is part of the runtime because pallet `Config` trait is \
 						implemented by the runtime")
@@ -257,7 +257,7 @@ pub fn expand_pallet_struct(def: &mut Def) -> proc_macro2::TokenStream {
 
 			fn name_hash() -> [u8; 16] {
 				<
-					<T as #frame_system::Config>::PalletInfo as #frame_support::traits::PalletInfo
+					<T as #topsoil_system::Config>::PalletInfo as #topsoil_support::traits::PalletInfo
 				>::name_hash::<Self>()
 					.expect("Pallet is part of the runtime because pallet `Config` trait is \
 						implemented by the runtime")
@@ -265,31 +265,31 @@ pub fn expand_pallet_struct(def: &mut Def) -> proc_macro2::TokenStream {
 
 			fn module_name() -> &'static str {
 				<
-					<T as #frame_system::Config>::PalletInfo as #frame_support::traits::PalletInfo
+					<T as #topsoil_system::Config>::PalletInfo as #topsoil_support::traits::PalletInfo
 				>::module_name::<Self>()
 					.expect("Pallet is part of the runtime because pallet `Config` trait is \
 						implemented by the runtime")
 			}
 
-			fn crate_version() -> #frame_support::traits::CrateVersion {
-				#frame_support::crate_to_crate_version!()
+			fn crate_version() -> #topsoil_support::traits::CrateVersion {
+				#topsoil_support::crate_to_crate_version!()
 			}
 		}
 
-		impl<#type_impl_gen> #frame_support::traits::PalletsInfoAccess
+		impl<#type_impl_gen> #topsoil_support::traits::PalletsInfoAccess
 			for #pallet_ident<#type_use_gen>
 			#config_where_clause
 		{
 			fn count() -> usize { 1 }
-			fn infos() -> #frame_support::__private::Vec<#frame_support::traits::PalletInfoData> {
-				use #frame_support::traits::PalletInfoAccess;
-				let item = #frame_support::traits::PalletInfoData {
+			fn infos() -> #topsoil_support::__private::Vec<#topsoil_support::traits::PalletInfoData> {
+				use #topsoil_support::traits::PalletInfoAccess;
+				let item = #topsoil_support::traits::PalletInfoData {
 					index: Self::index(),
 					name: Self::name(),
 					module_name: Self::module_name(),
 					crate_version: Self::crate_version(),
 				};
-				#frame_support::__private::vec![item]
+				#topsoil_support::__private::vec![item]
 			}
 		}
 
@@ -299,7 +299,7 @@ pub fn expand_pallet_struct(def: &mut Def) -> proc_macro2::TokenStream {
 		impl<#type_use_gen> #pallet_ident<#type_use_gen> {
 			#[allow(dead_code)]
 			#[doc(hidden)]
-			pub fn deprecation_info() -> #frame_support::__private::metadata_ir::ItemDeprecationInfoIR {
+			pub fn deprecation_info() -> #topsoil_support::__private::metadata_ir::ItemDeprecationInfoIR {
 				#deprecation_status
 			}
 		}

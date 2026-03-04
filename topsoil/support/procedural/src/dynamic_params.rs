@@ -18,7 +18,7 @@
 //! Code for the `#[dynamic_params]`, `#[dynamic_pallet_params]` and
 //! `#[dynamic_aggregated_params_internal]` macros.
 
-use frame_support_procedural_tools::generate_access_from_frame_or_crate;
+use topsoil_support_procedural_tools::generate_access_from_frame_or_crate;
 use inflector::Inflector;
 use proc_macro2::{Span, TokenStream};
 use quote::{format_ident, quote, ToTokens};
@@ -569,5 +569,5 @@ impl ToTokens for DynamicParamAggregatedEnum {
 
 /// Get access to the current crate and convert the error to a compile error.
 fn crate_access() -> core::result::Result<syn::Path, TokenStream> {
-	generate_access_from_frame_or_crate("frame-support").map_err(|e| e.to_compile_error())
+	generate_access_from_frame_or_crate("topsoil-support").map_err(|e| e.to_compile_error())
 }

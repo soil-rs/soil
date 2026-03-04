@@ -15,11 +15,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//! # Bounties Module ( pallet-bounties )
+//! # Bounties Module ( topsoil-bounties )
 //!
 //! ## Bounty
 //!
-//! > NOTE: This pallet is tightly coupled with pallet-treasury.
+//! > NOTE: This pallet is tightly coupled with topsoil-treasury.
 //!
 //! A Bounty Spending is a reward for a specified body of work - or specified set of objectives -
 //! that needs to be executed for a predefined Treasury amount to be paid out. A curator is assigned
@@ -95,7 +95,7 @@ extern crate alloc;
 
 use alloc::vec::Vec;
 
-use frame_support::traits::{
+use topsoil_support::traits::{
 	fungibles::{Inspect as FungiblesInspect, Mutate as FungiblesMutate},
 	tokens::{Fortitude, Preservation},
 	Currency,
@@ -108,10 +108,10 @@ use soil_runtime::{
 	Debug, DispatchResult, Permill,
 };
 
-use frame_support::{
+use topsoil_support::{
 	dispatch::DispatchResultWithPostInfo, pallet_prelude::*, traits::EnsureOrigin,
 };
-use frame_system::pallet_prelude::{
+use topsoil_system::pallet_prelude::{
 	ensure_signed, BlockNumberFor as SystemBlockNumberFor, OriginFor,
 };
 use scale_info::TypeInfo;
@@ -119,17 +119,17 @@ pub use weights::WeightInfo;
 
 pub use pallet::*;
 
-type BalanceOf<T, I = ()> = pallet_treasury::BalanceOf<T, I>;
+type BalanceOf<T, I = ()> = topsoil_treasury::BalanceOf<T, I>;
 
-type PositiveImbalanceOf<T, I = ()> = pallet_treasury::PositiveImbalanceOf<T, I>;
+type PositiveImbalanceOf<T, I = ()> = topsoil_treasury::PositiveImbalanceOf<T, I>;
 
 /// An index of a bounty. Just a `u32`.
 pub type BountyIndex = u32;
 
-type AccountIdLookupOf<T> = <<T as frame_system::Config>::Lookup as StaticLookup>::Source;
+type AccountIdLookupOf<T> = <<T as topsoil_system::Config>::Lookup as StaticLookup>::Source;
 
 type BlockNumberFor<T, I = ()> =
-	<<T as pallet_treasury::Config<I>>::BlockNumberProvider as BlockNumberProvider>::BlockNumber;
+	<<T as topsoil_treasury::Config<I>>::BlockNumberProvider as BlockNumberProvider>::BlockNumber;
 
 /// A bounty proposal.
 #[derive(
@@ -262,7 +262,7 @@ where
 	}
 }
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
 
@@ -273,7 +273,7 @@ pub mod pallet {
 	pub struct Pallet<T, I = ()>(_);
 
 	#[pallet::config]
-	pub trait Config<I: 'static = ()>: frame_system::Config + pallet_treasury::Config<I> {
+	pub trait Config<I: 'static = ()>: topsoil_system::Config + topsoil_treasury::Config<I> {
 		/// The amount held on deposit for placing a bounty proposal.
 		#[pallet::constant]
 		type BountyDepositBase: Get<BalanceOf<Self, I>>;
@@ -317,7 +317,7 @@ pub mod pallet {
 		/// The overarching event type.
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self, I>>
-			+ IsType<<Self as frame_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// Maximum acceptable reason length.
 		///
@@ -332,7 +332,7 @@ pub mod pallet {
 		type ChildBountyManager: ChildBountyManager<BalanceOf<Self, I>>;
 
 		/// Handler for the unbalanced decrease when slashing for a rejected bounty.
-		type OnSlash: OnUnbalanced<pallet_treasury::NegativeImbalanceOf<Self, I>>;
+		type OnSlash: OnUnbalanced<topsoil_treasury::NegativeImbalanceOf<Self, I>>;
 
 		/// Means to transfer all assets from one account to another.
 		///
@@ -472,7 +472,7 @@ pub mod pallet {
 				let bounty = maybe_bounty.as_mut().ok_or(Error::<T, I>::InvalidIndex)?;
 				ensure!(
 					bounty.value <= max_amount,
-					pallet_treasury::Error::<T, I>::InsufficientPermission
+					topsoil_treasury::Error::<T, I>::InsufficientPermission
 				);
 				ensure!(bounty.status == BountyStatus::Proposed, Error::<T, I>::UnexpectedStatus);
 
@@ -509,7 +509,7 @@ pub mod pallet {
 				let bounty = maybe_bounty.as_mut().ok_or(Error::<T, I>::InvalidIndex)?;
 				ensure!(
 					bounty.value <= max_amount,
-					pallet_treasury::Error::<T, I>::InsufficientPermission
+					topsoil_treasury::Error::<T, I>::InsufficientPermission
 				);
 				match bounty.status {
 					BountyStatus::Funded => {},
@@ -938,7 +938,7 @@ pub mod pallet {
 				let bounty = maybe_bounty.as_mut().ok_or(Error::<T, I>::InvalidIndex)?;
 				ensure!(
 					bounty.value <= max_amount,
-					pallet_treasury::Error::<T, I>::InsufficientPermission
+					topsoil_treasury::Error::<T, I>::InsufficientPermission
 				);
 				ensure!(bounty.status == BountyStatus::Proposed, Error::<T, I>::UnexpectedStatus);
 				ensure!(fee < bounty.value, Error::<T, I>::InvalidFee);
@@ -1041,7 +1041,7 @@ impl<T: Config<I>, I: 'static> Pallet<T, I> {
 	///
 	/// It may be configured to use the relay chain block number on a parachain.
 	pub fn treasury_block_number() -> BlockNumberFor<T, I> {
-		<T as pallet_treasury::Config<I>>::BlockNumberProvider::current_block_number()
+		<T as topsoil_treasury::Config<I>>::BlockNumberProvider::current_block_number()
 	}
 
 	/// Calculate the deposit required for a curator.
@@ -1160,7 +1160,7 @@ impl<T: Config<I>, I: 'static> Pallet<T, I> {
 	}
 }
 
-impl<T: Config<I>, I: 'static> pallet_treasury::SpendFunds<T, I> for Pallet<T, I> {
+impl<T: Config<I>, I: 'static> topsoil_treasury::SpendFunds<T, I> for Pallet<T, I> {
 	fn spend_funds(
 		budget_remaining: &mut BalanceOf<T, I>,
 		imbalance: &mut PositiveImbalanceOf<T, I>,

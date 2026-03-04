@@ -21,23 +21,23 @@
 //!
 //! This runtime is for testing only and should *never* be used in production. Please see the
 //! comments on the specific config items. The core part of this runtime is the
-//! [`pallet_migrations::Config`] implementation, where you define the migrations you want to run
+//! [`topsoil_migrations::Config`] implementation, where you define the migrations you want to run
 //! using the [`Migrations`] type.
 
-use frame_support::{
+use topsoil_support::{
 	construct_runtime, derive_impl, migrations::MultiStepMigrator, pallet_prelude::Weight,
 };
 
-type Block = frame_system::mocking::MockBlock<Runtime>;
+type Block = topsoil_system::mocking::MockBlock<Runtime>;
 
 impl crate::Config for Runtime {}
 
-frame_support::parameter_types! {
+topsoil_support::parameter_types! {
 	pub storage MigratorServiceWeight: Weight = Weight::from_parts(100, 100); // do not use in prod
 }
 
-#[derive_impl(pallet_migrations::config_preludes::TestDefaultConfig)]
-impl pallet_migrations::Config for Runtime {
+#[derive_impl(topsoil_migrations::config_preludes::TestDefaultConfig)]
+impl topsoil_migrations::Config for Runtime {
 	// Here we inject the actual MBMs. Currently there is just one, but it accepts a tuple.
 	//
 	// # Example
@@ -52,23 +52,23 @@ impl pallet_migrations::Config for Runtime {
 		>,
 	);
 	#[cfg(feature = "runtime-benchmarks")]
-	type Migrations = pallet_migrations::mock_helpers::MockedMigrations;
+	type Migrations = topsoil_migrations::mock_helpers::MockedMigrations;
 	type MaxServiceWeight = MigratorServiceWeight;
 }
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Runtime {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Runtime {
 	type Block = Block;
 	type MultiBlockMigrator = Migrator;
 }
 
-// Construct the runtime using the `construct_runtime` macro, specifying the pallet_migrations.
+// Construct the runtime using the `construct_runtime` macro, specifying the topsoil_migrations.
 construct_runtime! {
 	pub struct Runtime
 	{
-		System: frame_system,
+		System: topsoil_system,
 		Pallet: crate,
-		Migrator: pallet_migrations,
+		Migrator: topsoil_migrations,
 	}
 }
 
@@ -80,9 +80,9 @@ pub fn new_test_ext() -> soil_io::TestExternalities {
 pub fn run_to_block(n: u64) {
 	System::run_to_block_with::<AllPalletsWithSystem>(
 		n,
-		frame_system::RunToBlockHooks::default().after_initialize(|_| {
+		topsoil_system::RunToBlockHooks::default().after_initialize(|_| {
 			// Done by Executive:
-			<Runtime as frame_system::Config>::MultiBlockMigrator::step();
+			<Runtime as topsoil_system::Config>::MultiBlockMigrator::step();
 		}),
 	);
 }

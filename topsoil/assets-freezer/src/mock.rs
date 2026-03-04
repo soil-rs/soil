@@ -21,31 +21,31 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-//! Tests mock for `pallet-assets-freezer`.
+//! Tests mock for `topsoil-assets-freezer`.
 
-use crate as pallet_assets_freezer;
+use crate as topsoil_assets_freezer;
 pub use crate::*;
 use codec::{Compact, Decode, Encode, MaxEncodedLen};
-use frame::testing_prelude::*;
+use topsoil::testing_prelude::*;
 use scale_info::TypeInfo;
 
 pub type AccountId = u64;
 pub type Balance = u64;
 pub type AssetId = u32;
-type Block = frame_system::mocking::MockBlock<Test>;
+type Block = topsoil_system::mocking::MockBlock<Test>;
 
 construct_runtime!(
 	pub enum Test
 	{
-		System: frame_system,
-		Assets: pallet_assets,
-		AssetsFreezer: pallet_assets_freezer,
-		Balances: pallet_balances,
+		System: topsoil_system,
+		Assets: topsoil_assets,
+		AssetsFreezer: topsoil_assets_freezer,
+		Balances: topsoil_balances,
 	}
 );
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
 	type BaseCallFilter = Everything;
 	type BlockWeights = ();
 	type BlockLength = ();
@@ -62,7 +62,7 @@ impl frame_system::Config for Test {
 	type BlockHashCount = ConstU64<250>;
 	type Version = ();
 	type PalletInfo = PalletInfo;
-	type AccountData = pallet_balances::AccountData<u64>;
+	type AccountData = topsoil_balances::AccountData<u64>;
 	type OnNewAccount = ();
 	type OnKilledAccount = ();
 	type SystemWeightInfo = ();
@@ -71,7 +71,7 @@ impl frame_system::Config for Test {
 	type MaxConsumers = ConstU32<16>;
 }
 
-impl pallet_balances::Config for Test {
+impl topsoil_balances::Config for Test {
 	type MaxLocks = ();
 	type MaxReserves = ();
 	type ReserveIdentifier = [u8; 8];
@@ -88,7 +88,7 @@ impl pallet_balances::Config for Test {
 	type DoneSlashHandler = ();
 }
 
-impl pallet_assets::Config for Test {
+impl topsoil_assets::Config for Test {
 	type AssetId = AssetId;
 	type AssetIdParameter = Compact<AssetId>;
 	type ReserveData = ();
@@ -98,8 +98,8 @@ impl pallet_assets::Config for Test {
 	type MetadataDepositBase = ();
 	type MetadataDepositPerByte = ();
 	type ApprovalDeposit = ();
-	type CreateOrigin = AsEnsureOriginWithArg<frame_system::EnsureSigned<u64>>;
-	type ForceOrigin = frame_system::EnsureRoot<u64>;
+	type CreateOrigin = AsEnsureOriginWithArg<topsoil_system::EnsureSigned<u64>>;
+	type ForceOrigin = topsoil_system::EnsureRoot<u64>;
 	type StringLimit = ConstU32<32>;
 	type Extra = ();
 	type RemoveItemsLimit = ConstU32<10>;
@@ -145,7 +145,7 @@ impl Config for Test {
 
 pub fn new_test_ext(execute: impl FnOnce()) -> TestExternalities {
 	let t = RuntimeGenesisConfig {
-		assets: pallet_assets::GenesisConfig {
+		assets: topsoil_assets::GenesisConfig {
 			assets: vec![(1, 0, true, 1)],
 			metadata: vec![],
 			accounts: vec![(1, 1, 100)],

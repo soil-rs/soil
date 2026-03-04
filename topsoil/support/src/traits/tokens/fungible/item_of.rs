@@ -17,7 +17,7 @@
 
 //! Adapter to use `fungibles::*` implementations as `fungible::*`.
 //!
-//! This allows for a `fungibles` asset, e.g. from the `pallet_assets` pallet, to be used when a
+//! This allows for a `fungibles` asset, e.g. from the `topsoil_assets` pallet, to be used when a
 //! `fungible` asset is expected.
 //!
 //! See the [`crate::traits::fungible`] doc for more information about fungible traits.
@@ -30,7 +30,7 @@ use crate::traits::{
 		WithdrawConsequence,
 	},
 };
-use frame_support::traits::fungible::hold::DoneSlash;
+use topsoil_support::traits::fungible::hold::DoneSlash;
 use soil_core::Get;
 use soil_runtime::{DispatchError, DispatchResult};
 

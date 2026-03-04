@@ -19,7 +19,7 @@ trait Config {
 	type C;
 }
 
-#[derive(frame_support::PartialEqNoBound)]
+#[derive(topsoil_support::PartialEqNoBound)]
 struct Foo<T: Config> {
 	c: T::C,
 }

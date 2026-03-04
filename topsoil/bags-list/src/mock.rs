@@ -15,16 +15,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//! Mock runtime for pallet-bags-lists tests.
+//! Mock runtime for topsoil-bags-lists tests.
 
 use super::*;
 use crate::{self as bags_list};
-use frame_election_provider_support::VoteWeight;
-use frame_support::{derive_impl, parameter_types};
+use topsoil_election_provider_support::VoteWeight;
+use topsoil_support::{derive_impl, parameter_types};
 use soil_runtime::BuildStorage;
 use std::collections::HashMap;
 
-pub type AccountId = <Runtime as frame_system::Config>::AccountId;
+pub type AccountId = <Runtime as topsoil_system::Config>::AccountId;
 pub type Balance = u32;
 
 parameter_types! {
@@ -40,17 +40,17 @@ impl ScoreProvider<AccountId> for StakingMock {
 		NextVoteWeightMap::get().get(id).cloned()
 	}
 
-	frame_election_provider_support::runtime_benchmarks_or_std_enabled! {
+	topsoil_election_provider_support::runtime_benchmarks_or_std_enabled! {
 		fn set_score_of(id: &AccountId, weight: Self::Score) {
 			NEXT_VOTE_WEIGHT_MAP.with(|m| m.borrow_mut().insert(*id, weight));
 		}
 	}
 }
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Runtime {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Runtime {
 	type Block = Block;
-	type AccountData = pallet_balances::AccountData<Balance>;
+	type AccountData = topsoil_balances::AccountData<Balance>;
 }
 
 parameter_types! {
@@ -67,10 +67,10 @@ impl bags_list::Config for Runtime {
 	type Score = VoteWeight;
 }
 
-type Block = frame_system::mocking::MockBlock<Runtime>;
-frame_support::construct_runtime!(
+type Block = topsoil_system::mocking::MockBlock<Runtime>;
+topsoil_support::construct_runtime!(
 	pub enum Runtime {
-		System: frame_system,
+		System: topsoil_system,
 		BagsList: bags_list,
 	}
 );
@@ -103,7 +103,7 @@ impl ExtBuilder {
 
 	pub(crate) fn build(self) -> soil_io::TestExternalities {
 		soil_tracing::try_init_simple();
-		let storage = frame_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
+		let storage = topsoil_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
 
 		let ids_with_weight: Vec<_> = if self.skip_genesis_ids {
 			self.ids.iter().collect()
@@ -114,7 +114,7 @@ impl ExtBuilder {
 		let mut ext = soil_io::TestExternalities::from(storage);
 		ext.execute_with(|| {
 			for (id, weight) in ids_with_weight {
-				frame_support::assert_ok!(List::<Runtime>::insert(*id, *weight));
+				topsoil_support::assert_ok!(List::<Runtime>::insert(*id, *weight));
 				StakingMock::set_score_of(id, *weight);
 			}
 		});

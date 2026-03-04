@@ -18,9 +18,9 @@
 //! Preimage pallet benchmarking.
 
 use alloc::vec;
-use frame_benchmarking::v2::*;
-use frame_support::assert_ok;
-use frame_system::RawOrigin;
+use topsoil_benchmarking::v2::*;
+use topsoil_support::assert_ok;
+use topsoil_system::RawOrigin;
 use soil_runtime::traits::Bounded;
 
 use crate::*;
@@ -38,17 +38,17 @@ fn preimage_and_hash<T: Config>() -> (Vec<u8>, T::Hash) {
 fn sized_preimage_and_hash<T: Config>(size: u32) -> (Vec<u8>, T::Hash) {
 	let mut preimage = vec![];
 	preimage.resize(size as usize, 0);
-	let hash = <T as frame_system::Config>::Hashing::hash(&preimage[..]);
+	let hash = <T as topsoil_system::Config>::Hashing::hash(&preimage[..]);
 	(preimage, hash)
 }
 
-fn insert_old_unrequested<T: Config>(s: u32) -> <T as frame_system::Config>::Hash {
+fn insert_old_unrequested<T: Config>(s: u32) -> <T as topsoil_system::Config>::Hash {
 	let acc = account("old", s, 0);
 	T::Currency::make_free_balance_be(&acc, BalanceOf::<T>::max_value() / 2u32.into());
 
 	// The preimage size does not matter here as it is not touched.
 	let preimage = s.to_le_bytes();
-	let hash = <T as frame_system::Config>::Hashing::hash(&preimage[..]);
+	let hash = <T as topsoil_system::Config>::Hashing::hash(&preimage[..]);
 
 	#[allow(deprecated)]
 	StatusFor::<T>::insert(

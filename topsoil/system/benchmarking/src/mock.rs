@@ -20,20 +20,20 @@
 #![cfg(test)]
 
 use codec::Encode;
-use frame_support::{derive_impl, weights::Weight};
+use topsoil_support::{derive_impl, weights::Weight};
 use soil_runtime::BuildStorage;
 
-type Block = frame_system::mocking::MockBlock<Test>;
+type Block = topsoil_system::mocking::MockBlock<Test>;
 
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub enum Test
 	{
-		System: frame_system,
+		System: topsoil_system,
 	}
 );
 
 pub struct MockWeights;
-impl frame_system::ExtensionsWeightInfo for MockWeights {
+impl topsoil_system::ExtensionsWeightInfo for MockWeights {
 	fn check_genesis() -> Weight {
 		Weight::from_parts(10, 0)
 	}
@@ -71,8 +71,8 @@ impl frame_system::ExtensionsWeightInfo for MockWeights {
 	}
 }
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
 	type Block = Block;
 	type ExtensionsWeightInfo = MockWeights;
 }
@@ -92,7 +92,7 @@ impl soil_core::traits::ReadRuntimeVersion for MockedReadRuntimeVersion {
 }
 
 pub fn new_test_ext() -> soil_io::TestExternalities {
-	let t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 
 	let version = soil_version::RuntimeVersion {
 		spec_name: "spec_name".into(),

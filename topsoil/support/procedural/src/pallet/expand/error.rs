@@ -23,7 +23,7 @@ use crate::{
 	},
 	COUNTER,
 };
-use frame_support_procedural_tools::get_doc_literals;
+use topsoil_support_procedural_tools::get_doc_literals;
 use quote::ToTokens;
 use syn::spanned::Spanned;
 
@@ -33,8 +33,8 @@ pub fn expand_error(def: &mut Def) -> proc_macro2::TokenStream {
 	let error_token_unique_id =
 		syn::Ident::new(&format!("__tt_error_token_{}", count), def.item.span());
 
-	let frame_support = &def.frame_support;
-	let frame_system = &def.frame_system;
+	let topsoil_support = &def.topsoil_support;
+	let topsoil_system = &def.topsoil_system;
 	let config_where_clause = &def.config.where_clause;
 
 	let error = if let Some(error) = &def.error {
@@ -67,7 +67,7 @@ pub fn expand_error(def: &mut Def) -> proc_macro2::TokenStream {
 		#[codec(skip)]
 		__Ignore(
 			core::marker::PhantomData<(#type_use_gen)>,
-			#frame_support::Never,
+			#topsoil_support::Never,
 		)
 	);
 
@@ -104,7 +104,7 @@ pub fn expand_error(def: &mut Def) -> proc_macro2::TokenStream {
 	let capture_docs = if cfg!(feature = "no-metadata-docs") { "never" } else { "always" };
 
 	let deprecation = match crate::deprecation::get_deprecation_enum(
-		&quote::quote! {#frame_support},
+		&quote::quote! {#topsoil_support},
 		error_item.variants.iter().enumerate().map(|(index, item)| {
 			let index = crate::deprecation::variant_index_for_deprecation(index as u8, item);
 
@@ -118,11 +118,11 @@ pub fn expand_error(def: &mut Def) -> proc_macro2::TokenStream {
 	// derive TypeInfo for error metadata
 	error_item.attrs.push(syn::parse_quote! {
 		#[derive(
-			#frame_support::__private::codec::Encode,
-			#frame_support::__private::codec::Decode,
-			#frame_support::__private::codec::DecodeWithMemTracking,
-			#frame_support::__private::scale_info::TypeInfo,
-			#frame_support::PalletError,
+			#topsoil_support::__private::codec::Encode,
+			#topsoil_support::__private::codec::Decode,
+			#topsoil_support::__private::codec::DecodeWithMemTracking,
+			#topsoil_support::__private::scale_info::TypeInfo,
+			#topsoil_support::PalletError,
 		)]
 	});
 	error_item.attrs.push(syn::parse_quote!(
@@ -173,20 +173,20 @@ pub fn expand_error(def: &mut Def) -> proc_macro2::TokenStream {
 
 		#(#maybe_allow_attrs)*
 		impl<#type_impl_gen> From<#error_ident<#type_use_gen>>
-			for #frame_support::soil_runtime::DispatchError
+			for #topsoil_support::soil_runtime::DispatchError
 			#config_where_clause
 		{
 			fn from(err: #error_ident<#type_use_gen>) -> Self {
-				use #frame_support::__private::codec::Encode;
+				use #topsoil_support::__private::codec::Encode;
 				let index = <
-					<T as #frame_system::Config>::PalletInfo
-					as #frame_support::traits::PalletInfo
+					<T as #topsoil_system::Config>::PalletInfo
+					as #topsoil_support::traits::PalletInfo
 				>::index::<Pallet<#type_use_gen>>()
 					.expect("Every active module has an index in the runtime; qed") as u8;
 				let mut encoded = err.encode();
-				encoded.resize(#frame_support::MAX_MODULE_ERROR_ENCODED_SIZE, 0);
+				encoded.resize(#topsoil_support::MAX_MODULE_ERROR_ENCODED_SIZE, 0);
 
-				#frame_support::soil_runtime::DispatchError::Module(#frame_support::soil_runtime::ModuleError {
+				#topsoil_support::soil_runtime::DispatchError::Module(#topsoil_support::soil_runtime::ModuleError {
 					index,
 					error: TryInto::try_into(encoded).expect("encoded error is resized to be equal to the maximum encoded error size; qed"),
 					message: Some(err.as_str()),
@@ -214,10 +214,10 @@ pub fn expand_error(def: &mut Def) -> proc_macro2::TokenStream {
 		impl<#type_impl_gen> #error_ident<#type_use_gen> #config_where_clause {
 			#[allow(dead_code)]
 			#[doc(hidden)]
-			pub fn error_metadata() -> #frame_support::__private::metadata_ir::PalletErrorMetadataIR {
+			pub fn error_metadata() -> #topsoil_support::__private::metadata_ir::PalletErrorMetadataIR {
 				#(#maybe_allow_attrs)*
-				#frame_support::__private::metadata_ir::PalletErrorMetadataIR {
-					ty: #frame_support::__private::scale_info::meta_type::<#error_ident<#type_use_gen>>(),
+				#topsoil_support::__private::metadata_ir::PalletErrorMetadataIR {
+					ty: #topsoil_support::__private::scale_info::meta_type::<#error_ident<#type_use_gen>>(),
 					deprecation_info: #deprecation,
 				}
 			}

@@ -46,7 +46,7 @@ use soil_runtime::{
 };
 
 use codec::{Decode, Encode, MaxEncodedLen};
-use frame_support::{
+use topsoil_support::{
 	dispatch::Pays,
 	ensure,
 	pallet_prelude::Get,
@@ -59,8 +59,8 @@ use frame_support::{
 use scale_info::TypeInfo;
 pub use weights::WeightInfo;
 
-use frame_support::pallet_prelude::*;
-use frame_system::pallet_prelude::*;
+use topsoil_support::pallet_prelude::*;
+use topsoil_system::pallet_prelude::*;
 
 pub use pallet::*;
 
@@ -93,7 +93,7 @@ pub enum RequestStatus<AccountId, Ticket> {
 }
 
 pub type BalanceOf<T> =
-	<<T as Config>::Currency as Currency<<T as frame_system::Config>::AccountId>>::Balance;
+	<<T as Config>::Currency as Currency<<T as topsoil_system::Config>::AccountId>>::Balance;
 pub type TicketOf<T> = <T as Config>::Consideration;
 
 /// Maximum size of preimage we can store is 4mb.
@@ -103,7 +103,7 @@ pub const MAX_SIZE: u32 = 4 * 1024 * 1024;
 /// Exists only for benchmarking purposes.
 pub const MAX_HASH_UPGRADE_BULK_COUNT: u32 = 1024;
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 #[allow(deprecated)]
 pub mod pallet {
 	use super::*;
@@ -112,10 +112,10 @@ pub mod pallet {
 	const STORAGE_VERSION: StorageVersion = StorageVersion::new(1);
 
 	#[pallet::config]
-	pub trait Config: frame_system::Config {
+	pub trait Config: topsoil_system::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// The Weight information for this pallet.
 		type WeightInfo: weights::WeightInfo;

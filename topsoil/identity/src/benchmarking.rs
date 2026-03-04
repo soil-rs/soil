@@ -23,33 +23,33 @@ use super::*;
 
 use crate::{migration::v2::LazyMigrationV1ToV2, Pallet as Identity};
 use alloc::{vec, vec::Vec};
-use frame_benchmarking::{account, v2::*, whitelisted_caller, BenchmarkError};
-use frame_support::{
+use topsoil_benchmarking::{account, v2::*, whitelisted_caller, BenchmarkError};
+use topsoil_support::{
 	assert_ok, ensure,
 	traits::{EnsureOrigin, Get, OnFinalize, OnInitialize},
 };
-use frame_system::RawOrigin;
+use topsoil_system::RawOrigin;
 use soil_runtime::traits::{Bounded, One};
 
 const SEED: u32 = 0;
 
 fn assert_has_event<T: Config>(generic_event: <T as Config>::RuntimeEvent) {
-	frame_system::Pallet::<T>::assert_has_event(generic_event.into());
+	topsoil_system::Pallet::<T>::assert_has_event(generic_event.into());
 }
 
 fn assert_last_event<T: Config>(generic_event: <T as Config>::RuntimeEvent) {
-	frame_system::Pallet::<T>::assert_last_event(generic_event.into());
+	topsoil_system::Pallet::<T>::assert_last_event(generic_event.into());
 }
 
-fn run_to_block<T: Config>(n: frame_system::pallet_prelude::BlockNumberFor<T>) {
-	while frame_system::Pallet::<T>::block_number() < n {
-		crate::Pallet::<T>::on_finalize(frame_system::Pallet::<T>::block_number());
-		frame_system::Pallet::<T>::on_finalize(frame_system::Pallet::<T>::block_number());
-		frame_system::Pallet::<T>::set_block_number(
-			frame_system::Pallet::<T>::block_number() + One::one(),
+fn run_to_block<T: Config>(n: topsoil_system::pallet_prelude::BlockNumberFor<T>) {
+	while topsoil_system::Pallet::<T>::block_number() < n {
+		crate::Pallet::<T>::on_finalize(topsoil_system::Pallet::<T>::block_number());
+		topsoil_system::Pallet::<T>::on_finalize(topsoil_system::Pallet::<T>::block_number());
+		topsoil_system::Pallet::<T>::set_block_number(
+			topsoil_system::Pallet::<T>::block_number() + One::one(),
 		);
-		frame_system::Pallet::<T>::on_initialize(frame_system::Pallet::<T>::block_number());
-		crate::Pallet::<T>::on_initialize(frame_system::Pallet::<T>::block_number());
+		topsoil_system::Pallet::<T>::on_initialize(topsoil_system::Pallet::<T>::block_number());
+		crate::Pallet::<T>::on_initialize(topsoil_system::Pallet::<T>::block_number());
 	}
 }
 
@@ -152,7 +152,7 @@ mod benchmarks {
 
 		let caller: T::AccountId = whitelisted_caller();
 		let caller_lookup = T::Lookup::unlookup(caller.clone());
-		let caller_origin: <T as frame_system::Config>::RuntimeOrigin =
+		let caller_origin: <T as topsoil_system::Config>::RuntimeOrigin =
 			RawOrigin::Signed(caller.clone()).into();
 		let _ = T::Currency::make_free_balance_be(&caller, BalanceOf::<T>::max_value());
 
@@ -230,7 +230,7 @@ mod benchmarks {
 	) -> Result<(), BenchmarkError> {
 		let caller: T::AccountId = whitelisted_caller();
 		let caller_origin =
-			<T as frame_system::Config>::RuntimeOrigin::from(RawOrigin::Signed(caller.clone()));
+			<T as topsoil_system::Config>::RuntimeOrigin::from(RawOrigin::Signed(caller.clone()));
 		let caller_lookup = <T::Lookup as StaticLookup>::unlookup(caller.clone());
 		let _ = T::Currency::make_free_balance_be(&caller, BalanceOf::<T>::max_value());
 
@@ -280,7 +280,7 @@ mod benchmarks {
 		// Create their main identity with x additional fields
 		let info = T::IdentityInformation::create_identity_info();
 		let caller_origin =
-			<T as frame_system::Config>::RuntimeOrigin::from(RawOrigin::Signed(caller.clone()));
+			<T as topsoil_system::Config>::RuntimeOrigin::from(RawOrigin::Signed(caller.clone()));
 		Identity::<T>::set_identity(caller_origin.clone(), Box::new(info))?;
 
 		#[extrinsic_call]
@@ -304,7 +304,7 @@ mod benchmarks {
 		// Create their main identity with x additional fields
 		let info = T::IdentityInformation::create_identity_info();
 		let caller_origin =
-			<T as frame_system::Config>::RuntimeOrigin::from(RawOrigin::Signed(caller.clone()));
+			<T as topsoil_system::Config>::RuntimeOrigin::from(RawOrigin::Signed(caller.clone()));
 		Identity::<T>::set_identity(caller_origin.clone(), Box::new(info))?;
 
 		Identity::<T>::request_judgement(caller_origin.clone(), r - 1, 10u32.into())?;
@@ -412,7 +412,7 @@ mod benchmarks {
 		// The user
 		let user: T::AccountId = account("user", r, SEED);
 		let user_origin =
-			<T as frame_system::Config>::RuntimeOrigin::from(RawOrigin::Signed(user.clone()));
+			<T as topsoil_system::Config>::RuntimeOrigin::from(RawOrigin::Signed(user.clone()));
 		let user_lookup = <T::Lookup as StaticLookup>::unlookup(user.clone());
 		let _ = T::Currency::make_free_balance_be(&user, BalanceOf::<T>::max_value());
 
@@ -449,7 +449,7 @@ mod benchmarks {
 		add_registrars::<T>(r)?;
 
 		let target: T::AccountId = account("target", 0, SEED);
-		let target_origin: <T as frame_system::Config>::RuntimeOrigin =
+		let target_origin: <T as topsoil_system::Config>::RuntimeOrigin =
 			RawOrigin::Signed(target.clone()).into();
 		let target_lookup = T::Lookup::unlookup(target.clone());
 		let _ = T::Currency::make_free_balance_be(&target, BalanceOf::<T>::max_value());
@@ -706,7 +706,7 @@ mod benchmarks {
 		Identity::<T>::queue_acceptance(&caller, username.clone(), provider);
 
 		let expected_expiration =
-			frame_system::Pallet::<T>::block_number() + T::PendingUsernameExpiration::get();
+			topsoil_system::Pallet::<T>::block_number() + T::PendingUsernameExpiration::get();
 
 		run_to_block::<T>(expected_expiration + One::one());
 
@@ -796,11 +796,11 @@ mod benchmarks {
 			username.clone(),
 			Provider::AuthorityDeposit(username_deposit),
 		);
-		let now = frame_system::Pallet::<T>::block_number();
+		let now = topsoil_system::Pallet::<T>::block_number();
 		let expiry = now + T::UsernameGracePeriod::get();
 		UnbindingUsernames::<T>::insert(&username, expiry);
 
-		frame_system::Pallet::<T>::set_block_number(expiry);
+		topsoil_system::Pallet::<T>::set_block_number(expiry);
 
 		#[extrinsic_call]
 		_(RawOrigin::Signed(caller), username.clone());
@@ -839,7 +839,7 @@ mod benchmarks {
 			_ => unreachable!(),
 		};
 		Identity::<T>::insert_username(&caller, username.clone(), provider);
-		UnbindingUsernames::<T>::insert(&username, frame_system::Pallet::<T>::block_number());
+		UnbindingUsernames::<T>::insert(&username, topsoil_system::Pallet::<T>::block_number());
 
 		#[extrinsic_call]
 		_(RawOrigin::Root, username.clone());

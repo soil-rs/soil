@@ -15,7 +15,7 @@
 // See the License for the specific language governsing permissions and
 // limitations under the License.
 
-use frame_support_procedural_tools::get_doc_literals;
+use topsoil_support_procedural_tools::get_doc_literals;
 use inflector::Inflector;
 use syn::spanned::Spanned;
 

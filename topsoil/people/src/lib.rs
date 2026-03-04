@@ -136,7 +136,7 @@ use core::{
 	cmp::{self},
 	ops::Range,
 };
-use frame_support::{
+use topsoil_support::{
 	dispatch::{
 		extract_actual_weight, DispatchInfo, DispatchResultWithPostInfo, GetDispatchInfo,
 		PostDispatchInfo,
@@ -162,11 +162,11 @@ use verifiable::{Alias, GenerateVerifiable};
 #[cfg(feature = "runtime-benchmarks")]
 pub use benchmarking::BenchmarkHelper;
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
-	use frame_support::{pallet_prelude::*, traits::Contains};
-	use frame_system::pallet_prelude::{BlockNumberFor, *};
+	use topsoil_support::{pallet_prelude::*, traits::Contains};
+	use topsoil_system::pallet_prelude::{BlockNumberFor, *};
 
 	const LOG_TARGET: &str = "runtime::people";
 
@@ -175,7 +175,7 @@ pub mod pallet {
 
 	#[pallet::config]
 	pub trait Config:
-		frame_system::Config<
+		topsoil_system::Config<
 		RuntimeOrigin: From<Origin>
 		                   + From<<Self::RuntimeOrigin as OriginTrait>::PalletsOrigin>
 		                   + OriginTrait<
@@ -200,7 +200,7 @@ pub mod pallet {
 
 		/// The runtime event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// Trait allowing cryptographic proof of membership without exposing the underlying member.
 		/// Normally a Ring-VRF.
@@ -302,7 +302,7 @@ pub mod pallet {
 		_,
 		Blake2_128Concat,
 		ContextualAlias,
-		<T as frame_system::Config>::AccountId,
+		<T as topsoil_system::Config>::AccountId,
 		OptionQuery,
 	>;
 
@@ -311,7 +311,7 @@ pub mod pallet {
 	pub type AccountToAlias<T> = StorageMap<
 		_,
 		Blake2_128Concat,
-		<T as frame_system::Config>::AccountId,
+		<T as topsoil_system::Config>::AccountId,
 		RevisedContextualAlias,
 		OptionQuery,
 	>;
@@ -324,7 +324,7 @@ pub mod pallet {
 	pub type AccountToPersonalId<T> = StorageMap<
 		_,
 		Blake2_128Concat,
-		<T as frame_system::Config>::AccountId,
+		<T as topsoil_system::Config>::AccountId,
 		PersonalId,
 		OptionQuery,
 	>;
@@ -885,7 +885,7 @@ pub mod pallet {
 		#[pallet::weight(T::WeightInfo::under_alias().saturating_add(call.get_dispatch_info().call_weight))]
 		pub fn under_alias(
 			origin: OriginFor<T>,
-			call: Box<<T as frame_system::Config>::RuntimeCall>,
+			call: Box<<T as topsoil_system::Config>::RuntimeCall>,
 		) -> DispatchResultWithPostInfo {
 			let account = ensure_signed(origin.clone())?;
 			let rev_ca = AccountToAlias::<T>::get(&account).ok_or(Error::<T>::InvalidAccount)?;
@@ -915,7 +915,7 @@ pub mod pallet {
 			call_valid_at: BlockNumberFor<T>,
 		) -> DispatchResultWithPostInfo {
 			let rev_ca = Self::ensure_revised_personal_alias(origin)?;
-			let now = frame_system::Pallet::<T>::block_number();
+			let now = topsoil_system::Pallet::<T>::block_number();
 			let time_tolerance = Self::account_setup_time_tolerance();
 			ensure!(
 				call_valid_at <= now && now <= call_valid_at.saturating_add(time_tolerance),
@@ -944,10 +944,10 @@ pub mod pallet {
 			if old_account.as_ref() != Some(&account) {
 				ensure!(!AccountToAlias::<T>::contains_key(&account), Error::<T>::AccountInUse);
 				if let Some(old_account) = &old_account {
-					frame_system::Pallet::<T>::dec_sufficients(old_account);
+					topsoil_system::Pallet::<T>::dec_sufficients(old_account);
 					AccountToAlias::<T>::remove(old_account);
 				}
-				frame_system::Pallet::<T>::inc_sufficients(&account);
+				topsoil_system::Pallet::<T>::inc_sufficients(&account);
 			}
 
 			AccountToAlias::<T>::insert(&account, &rev_ca);
@@ -966,7 +966,7 @@ pub mod pallet {
 			let alias = Self::ensure_personal_alias(origin)?;
 			let account = AliasToAccount::<T>::take(&alias).ok_or(Error::<T>::InvalidAccount)?;
 			AccountToAlias::<T>::remove(&account);
-			frame_system::Pallet::<T>::dec_sufficients(&account);
+			topsoil_system::Pallet::<T>::dec_sufficients(&account);
 
 			Ok(())
 		}
@@ -1012,7 +1012,7 @@ pub mod pallet {
 			call_valid_at: BlockNumberFor<T>,
 		) -> DispatchResultWithPostInfo {
 			let id = Self::ensure_personal_identity(origin)?;
-			let now = frame_system::Pallet::<T>::block_number();
+			let now = topsoil_system::Pallet::<T>::block_number();
 			let time_tolerance = Self::account_setup_time_tolerance();
 			ensure!(
 				call_valid_at <= now && now <= call_valid_at.saturating_add(time_tolerance),
@@ -1022,14 +1022,14 @@ pub mod pallet {
 			ensure!(!AccountToAlias::<T>::contains_key(&account), Error::<T>::AccountInUse);
 			let mut record = People::<T>::get(id).ok_or(Error::<T>::NotPerson)?;
 			let pays = if let Some(old_account) = record.account {
-				frame_system::Pallet::<T>::dec_sufficients(&old_account);
+				topsoil_system::Pallet::<T>::dec_sufficients(&old_account);
 				AccountToPersonalId::<T>::remove(&old_account);
 				Pays::Yes
 			} else {
 				Pays::No
 			};
 			record.account = Some(account.clone());
-			frame_system::Pallet::<T>::inc_sufficients(&account);
+			topsoil_system::Pallet::<T>::inc_sufficients(&account);
 			AccountToPersonalId::<T>::insert(&account, id);
 			People::<T>::insert(id, &record);
 
@@ -1043,7 +1043,7 @@ pub mod pallet {
 			let mut record = People::<T>::get(id).ok_or(Error::<T>::NotPerson)?;
 			let account = record.account.take().ok_or(Error::<T>::InvalidAccount)?;
 			AccountToPersonalId::<T>::take(&account).ok_or(Error::<T>::InvalidAccount)?;
-			frame_system::Pallet::<T>::dec_sufficients(&account);
+			topsoil_system::Pallet::<T>::dec_sufficients(&account);
 			People::<T>::insert(id, &record);
 
 			Ok(Pays::Yes.into())
@@ -1403,7 +1403,7 @@ pub mod pallet {
 		fn derivative_call(
 			mut origin: OriginFor<T>,
 			local_origin: Origin,
-			call: <T as frame_system::Config>::RuntimeCall,
+			call: <T as topsoil_system::Config>::RuntimeCall,
 			derivation_weight: Weight,
 		) -> DispatchResultWithPostInfo {
 			origin.set_caller_from(<T::RuntimeOrigin as OriginTrait>::PalletsOrigin::from(
@@ -1899,7 +1899,7 @@ pub mod pallet {
 		}
 	}
 
-	frame_support::impl_ensure_origin_with_arg_ignoring_arg! {
+	topsoil_support::impl_ensure_origin_with_arg_ignoring_arg! {
 		impl<{ T: Config, A }>
 			EnsureOriginWithArg< OriginFor<T>, A> for EnsurePersonalIdentity<T>
 		{}
@@ -1932,7 +1932,7 @@ pub mod pallet {
 		}
 	}
 
-	frame_support::impl_ensure_origin_with_arg_ignoring_arg! {
+	topsoil_support::impl_ensure_origin_with_arg_ignoring_arg! {
 		impl<{ T: Config, A }>
 			EnsureOriginWithArg< OriginFor<T>, A> for EnsurePersonalAlias<T>
 		{}
@@ -2014,7 +2014,7 @@ pub mod pallet {
 		}
 	}
 
-	frame_support::impl_ensure_origin_with_arg_ignoring_arg! {
+	topsoil_support::impl_ensure_origin_with_arg_ignoring_arg! {
 		impl<{ T: Config, A }>
 			EnsureOriginWithArg< OriginFor<T>, A> for EnsureRevisedPersonalAlias<T>
 		{}

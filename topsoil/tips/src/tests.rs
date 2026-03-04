@@ -26,7 +26,7 @@ use soil_runtime::{
 };
 use soil_storage::Storage;
 
-use frame_support::{
+use topsoil_support::{
 	assert_noop, assert_ok, derive_impl, parameter_types,
 	storage::StoragePrefixedMap,
 	traits::{
@@ -37,19 +37,19 @@ use frame_support::{
 };
 
 use super::*;
-use crate::{self as pallet_tips, Event as TipEvent};
+use crate::{self as topsoil_tips, Event as TipEvent};
 
-type Block = frame_system::mocking::MockBlock<Test>;
+type Block = topsoil_system::mocking::MockBlock<Test>;
 
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub enum Test
 	{
-		System: frame_system,
-		Balances: pallet_balances,
-		Treasury: pallet_treasury,
-		Treasury1: pallet_treasury::<Instance1>,
-		Tips: pallet_tips,
-		Tips1: pallet_tips::<Instance1>,
+		System: topsoil_system,
+		Balances: topsoil_balances,
+		Treasury: topsoil_treasury,
+		Treasury1: topsoil_treasury::<Instance1>,
+		Tips: topsoil_tips,
+		Tips1: topsoil_tips::<Instance1>,
 	}
 );
 
@@ -57,16 +57,16 @@ parameter_types! {
 	pub const AvailableBlockRatio: Perbill = Perbill::one();
 }
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
 	type AccountId = u128; // u64 is not enough to hold bytes used to generate bounty account
 	type Lookup = IdentityLookup<Self::AccountId>;
 	type Block = Block;
-	type AccountData = pallet_balances::AccountData<u64>;
+	type AccountData = topsoil_balances::AccountData<u64>;
 }
 
-#[derive_impl(pallet_balances::config_preludes::TestDefaultConfig)]
-impl pallet_balances::Config for Test {
+#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
+impl topsoil_balances::Config for Test {
 	type AccountStore = System;
 }
 parameter_types! {
@@ -101,10 +101,10 @@ parameter_types! {
 	pub TreasuryInstance1Account: u128 = Treasury1::account_id();
 }
 
-impl pallet_treasury::Config for Test {
+impl topsoil_treasury::Config for Test {
 	type PalletId = TreasuryPalletId;
-	type Currency = pallet_balances::Pallet<Test>;
-	type RejectOrigin = frame_system::EnsureRoot<u128>;
+	type Currency = topsoil_balances::Pallet<Test>;
+	type RejectOrigin = topsoil_system::EnsureRoot<u128>;
 	type RuntimeEvent = RuntimeEvent;
 	type SpendPeriod = ConstU64<2>;
 	type Burn = Burn;
@@ -112,7 +112,7 @@ impl pallet_treasury::Config for Test {
 	type WeightInfo = ();
 	type SpendFunds = ();
 	type MaxApprovals = ConstU32<100>;
-	type SpendOrigin = frame_support::traits::NeverEnsureOrigin<u64>;
+	type SpendOrigin = topsoil_support::traits::NeverEnsureOrigin<u64>;
 	type AssetKind = ();
 	type Beneficiary = Self::AccountId;
 	type BeneficiaryLookup = IdentityLookup<Self::Beneficiary>;
@@ -124,10 +124,10 @@ impl pallet_treasury::Config for Test {
 	type BenchmarkHelper = ();
 }
 
-impl pallet_treasury::Config<Instance1> for Test {
+impl topsoil_treasury::Config<Instance1> for Test {
 	type PalletId = TreasuryPalletId2;
-	type Currency = pallet_balances::Pallet<Test>;
-	type RejectOrigin = frame_system::EnsureRoot<u128>;
+	type Currency = topsoil_balances::Pallet<Test>;
+	type RejectOrigin = topsoil_system::EnsureRoot<u128>;
 	type RuntimeEvent = RuntimeEvent;
 	type SpendPeriod = ConstU64<2>;
 	type Burn = Burn;
@@ -135,7 +135,7 @@ impl pallet_treasury::Config<Instance1> for Test {
 	type WeightInfo = ();
 	type SpendFunds = ();
 	type MaxApprovals = ConstU32<100>;
-	type SpendOrigin = frame_support::traits::NeverEnsureOrigin<u64>;
+	type SpendOrigin = topsoil_support::traits::NeverEnsureOrigin<u64>;
 	type AssetKind = ();
 	type Beneficiary = Self::AccountId;
 	type BeneficiaryLookup = IdentityLookup<Self::Beneficiary>;
@@ -179,8 +179,8 @@ impl Config<Instance1> for Test {
 
 pub fn new_test_ext() -> soil_io::TestExternalities {
 	let mut ext: soil_io::TestExternalities = RuntimeGenesisConfig {
-		system: frame_system::GenesisConfig::default(),
-		balances: pallet_balances::GenesisConfig {
+		system: topsoil_system::GenesisConfig::default(),
+		balances: topsoil_balances::GenesisConfig {
 			balances: vec![(0, 100), (1, 98), (2, 1)],
 			..Default::default()
 		},
@@ -482,20 +482,20 @@ fn test_last_reward_migration() {
 	};
 
 	let data = vec![
-		(pallet_tips::Tips::<Test>::hashed_key_for(hash1), old_tip_finder.encode().to_vec()),
-		(pallet_tips::Tips::<Test>::hashed_key_for(hash2), old_tip_no_finder.encode().to_vec()),
+		(topsoil_tips::Tips::<Test>::hashed_key_for(hash1), old_tip_finder.encode().to_vec()),
+		(topsoil_tips::Tips::<Test>::hashed_key_for(hash2), old_tip_no_finder.encode().to_vec()),
 	];
 
 	s.top = data.into_iter().collect();
 
 	soil_io::TestExternalities::new(s).execute_with(|| {
-		let module = pallet_tips::Tips::<Test>::pallet_prefix();
-		let item = pallet_tips::Tips::<Test>::storage_prefix();
+		let module = topsoil_tips::Tips::<Test>::pallet_prefix();
+		let item = topsoil_tips::Tips::<Test>::storage_prefix();
 		Tips::migrate_retract_tip_for_tip_new(module, item);
 
 		// Test w/ finder
 		assert_eq!(
-			pallet_tips::Tips::<Test>::get(hash1),
+			topsoil_tips::Tips::<Test>::get(hash1),
 			Some(OpenTip {
 				reason: reason1,
 				who: 10,
@@ -509,7 +509,7 @@ fn test_last_reward_migration() {
 
 		// Test w/o finder
 		assert_eq!(
-			pallet_tips::Tips::<Test>::get(hash2),
+			topsoil_tips::Tips::<Test>::get(hash2),
 			Some(OpenTip {
 				reason: reason2,
 				who: 20,
@@ -539,19 +539,19 @@ fn test_migration_v4() {
 	};
 
 	let data = vec![
-		(pallet_tips::Reasons::<Test>::hashed_key_for(hash1), reason1.encode().to_vec()),
-		(pallet_tips::Tips::<Test>::hashed_key_for(hash1), tip.encode().to_vec()),
+		(topsoil_tips::Reasons::<Test>::hashed_key_for(hash1), reason1.encode().to_vec()),
+		(topsoil_tips::Tips::<Test>::hashed_key_for(hash1), tip.encode().to_vec()),
 	];
 
 	let mut s = Storage::default();
 	s.top = data.into_iter().collect();
 
 	soil_io::TestExternalities::new(s).execute_with(|| {
-		use frame_support::traits::PalletInfoAccess;
+		use topsoil_support::traits::PalletInfoAccess;
 
 		let old_pallet = "Treasury";
 		let new_pallet = <Tips as PalletInfoAccess>::name();
-		frame_support::storage::migration::move_pallet(
+		topsoil_support::storage::migration::move_pallet(
 			new_pallet.as_bytes(),
 			old_pallet.as_bytes(),
 		);
@@ -563,11 +563,11 @@ fn test_migration_v4() {
 	});
 
 	soil_io::TestExternalities::new(Storage::default()).execute_with(|| {
-		use frame_support::traits::PalletInfoAccess;
+		use topsoil_support::traits::PalletInfoAccess;
 
 		let old_pallet = "Treasury";
 		let new_pallet = <Tips as PalletInfoAccess>::name();
-		frame_support::storage::migration::move_pallet(
+		topsoil_support::storage::migration::move_pallet(
 			new_pallet.as_bytes(),
 			old_pallet.as_bytes(),
 		);
@@ -581,16 +581,16 @@ fn test_migration_v4() {
 
 #[test]
 fn genesis_funding_works() {
-	let mut t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	let initial_funding = 100;
-	pallet_balances::GenesisConfig::<Test> {
+	topsoil_balances::GenesisConfig::<Test> {
 		// Total issuance will be 200 with treasury account initialized with 100.
 		balances: vec![(0, 100), (Treasury::account_id(), initial_funding)],
 		..Default::default()
 	}
 	.assimilate_storage(&mut t)
 	.unwrap();
-	pallet_treasury::GenesisConfig::<Test>::default()
+	topsoil_treasury::GenesisConfig::<Test>::default()
 		.assimilate_storage(&mut t)
 		.unwrap();
 	let mut t: soil_io::TestExternalities = t.into();
@@ -637,7 +637,7 @@ fn report_awesome_and_tip_works_second_instance() {
 #[test]
 fn equal_entries_invariant() {
 	new_test_ext().execute_with(|| {
-		use frame_support::pallet_prelude::DispatchError::Other;
+		use topsoil_support::pallet_prelude::DispatchError::Other;
 
 		Balances::make_free_balance_be(&Treasury::account_id(), 101);
 
@@ -657,7 +657,7 @@ fn equal_entries_invariant() {
 		};
 
 		// Breaks invariant by adding an entry to only `Tips` Storage.
-		pallet_tips::Tips::<Test>::insert(hash1, tip);
+		topsoil_tips::Tips::<Test>::insert(hash1, tip);
 
 		// Invariant violated
 		assert_eq!(
@@ -670,7 +670,7 @@ fn equal_entries_invariant() {
 #[test]
 fn finders_fee_invariant() {
 	new_test_ext().execute_with(|| {
-		use frame_support::pallet_prelude::DispatchError::Other;
+		use topsoil_support::pallet_prelude::DispatchError::Other;
 
 		// Breaks invariant by having a zero deposit.
 		TipReportDepositBase::set(0);
@@ -690,20 +690,20 @@ fn finders_fee_invariant() {
 #[test]
 fn reasons_invariant() {
 	new_test_ext().execute_with(|| {
-		use frame_support::pallet_prelude::DispatchError::Other;
+		use topsoil_support::pallet_prelude::DispatchError::Other;
 
 		Balances::make_free_balance_be(&Treasury::account_id(), 101);
 
 		assert_ok!(Tips::report_awesome(RuntimeOrigin::signed(0), b"awesome.dot".to_vec(), 0));
 
-		let hash: Vec<_> = pallet_tips::Tips::<Test>::iter_keys().collect();
+		let hash: Vec<_> = topsoil_tips::Tips::<Test>::iter_keys().collect();
 
-		let mut open_tip = pallet_tips::Tips::<Test>::take(hash[0]).unwrap();
+		let mut open_tip = topsoil_tips::Tips::<Test>::take(hash[0]).unwrap();
 
 		// Breaks invariant by changing value `open_tip.reason` in `Tips` Storage.
-		open_tip.reason = <Test as frame_system::Config>::Hashing::hash(&b"".to_vec());
+		open_tip.reason = <Test as topsoil_system::Config>::Hashing::hash(&b"".to_vec());
 
-		pallet_tips::Tips::<Test>::insert(hash[0], open_tip);
+		topsoil_tips::Tips::<Test>::insert(hash[0], open_tip);
 
 		// Invariant violated
 		assert_eq!(Tips::do_try_state(), Err(Other("no reason for this tip")));

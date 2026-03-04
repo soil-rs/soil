@@ -18,38 +18,38 @@
 //! Test environment for transaction-storage pallet.
 
 use crate::{
-	self as pallet_transaction_storage, TransactionStorageProof, DEFAULT_MAX_BLOCK_TRANSACTIONS,
+	self as topsoil_transaction_storage, TransactionStorageProof, DEFAULT_MAX_BLOCK_TRANSACTIONS,
 	DEFAULT_MAX_TRANSACTION_SIZE,
 };
-use frame_support::{derive_impl, traits::ConstU32};
+use topsoil_support::{derive_impl, traits::ConstU32};
 use soil_runtime::{traits::IdentityLookup, BuildStorage};
 
-pub type Block = frame_system::mocking::MockBlock<Test>;
+pub type Block = topsoil_system::mocking::MockBlock<Test>;
 
 // Configure a mock runtime to test the pallet.
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub enum Test
 	{
-		System: frame_system,
-		Balances: pallet_balances,
-		TransactionStorage: pallet_transaction_storage,
+		System: topsoil_system,
+		Balances: topsoil_balances,
+		TransactionStorage: topsoil_transaction_storage,
 	}
 );
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
 	type Block = Block;
-	type AccountData = pallet_balances::AccountData<u64>;
+	type AccountData = topsoil_balances::AccountData<u64>;
 	type AccountId = u64;
 	type Lookup = IdentityLookup<Self::AccountId>;
 }
 
-#[derive_impl(pallet_balances::config_preludes::TestDefaultConfig)]
-impl pallet_balances::Config for Test {
+#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
+impl topsoil_balances::Config for Test {
 	type AccountStore = System;
 }
 
-impl pallet_transaction_storage::Config for Test {
+impl topsoil_transaction_storage::Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type RuntimeCall = RuntimeCall;
 	type Currency = Balances;
@@ -63,11 +63,11 @@ impl pallet_transaction_storage::Config for Test {
 pub fn new_test_ext() -> soil_io::TestExternalities {
 	let t = RuntimeGenesisConfig {
 		system: Default::default(),
-		balances: pallet_balances::GenesisConfig::<Test> {
+		balances: topsoil_balances::GenesisConfig::<Test> {
 			balances: vec![(1, 1000000000), (2, 100), (3, 100), (4, 100)],
 			..Default::default()
 		},
-		transaction_storage: pallet_transaction_storage::GenesisConfig::<Test> {
+		transaction_storage: topsoil_transaction_storage::GenesisConfig::<Test> {
 			retention_period: 10,
 			byte_fee: 2,
 			entry_fee: 200,
@@ -81,7 +81,7 @@ pub fn new_test_ext() -> soil_io::TestExternalities {
 pub fn run_to_block(n: u64, f: impl Fn() -> Option<TransactionStorageProof> + 'static) {
 	System::run_to_block_with::<AllPalletsWithSystem>(
 		n,
-		frame_system::RunToBlockHooks::default().before_finalize(|_| {
+		topsoil_system::RunToBlockHooks::default().before_finalize(|_| {
 			if let Some(proof) = f() {
 				TransactionStorage::check_proof(RuntimeOrigin::none(), proof).unwrap();
 			}

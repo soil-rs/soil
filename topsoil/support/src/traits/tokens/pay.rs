@@ -103,7 +103,7 @@ where
 /// Simple implementation of `Pay` for assets which makes a payment from a "pot" - i.e. a single
 /// account.
 pub struct PayAssetFromAccount<F, A>(core::marker::PhantomData<(F, A)>);
-impl<A, F> frame_support::traits::tokens::Pay for PayAssetFromAccount<F, A>
+impl<A, F> topsoil_support::traits::tokens::Pay for PayAssetFromAccount<F, A>
 where
 	A: TypedGet,
 	F: fungibles::Mutate<A::Type> + fungibles::Create<A::Type>,
@@ -180,9 +180,9 @@ pub trait PayWithSource {
 }
 
 /// Implementation of the `PayWithSource` trait using multiple fungible asset classes (e.g.,
-/// `pallet_assets`)
+/// `topsoil_assets`)
 pub struct PayWithFungibles<F, A>(core::marker::PhantomData<(F, A)>);
-impl<A, F> frame_support::traits::tokens::PayWithSource for PayWithFungibles<F, A>
+impl<A, F> topsoil_support::traits::tokens::PayWithSource for PayWithFungibles<F, A>
 where
 	A: Eq + Clone,
 	F: fungibles::Mutate<A> + fungibles::Create<A>,

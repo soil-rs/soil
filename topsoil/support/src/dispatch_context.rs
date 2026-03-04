@@ -27,7 +27,7 @@
 //! # FRAME integration
 //!
 //! The FRAME macros implement
-//! [`UnfilteredDispatchable`](frame_support::traits::UnfilteredDispatchable) for each pallet `Call`
+//! [`UnfilteredDispatchable`](topsoil_support::traits::UnfilteredDispatchable) for each pallet `Call`
 //! enum. Part of this implementation is the call to [`run_in_context`], so that each call to
 //! [`UnfilteredDispatchable::dispatch_bypass_filter`](crate::traits::UnfilteredDispatchable::dispatch_bypass_filter)
 //! or [`Dispatchable::dispatch`](soil_runtime::traits::Dispatchable::dispatch) will run in a dispatch
@@ -36,7 +36,7 @@
 //! # Example
 //!
 //! ```
-//! use frame_support::dispatch_context::{with_context, run_in_context};
+//! use topsoil_support::dispatch_context::{with_context, run_in_context};
 //!
 //! // Not executed in a dispatch context, so it should return `None`.
 //! assert!(with_context::<(), _>(|_| println!("Hello")).is_none());

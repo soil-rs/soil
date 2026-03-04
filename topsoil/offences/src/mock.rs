@@ -22,7 +22,7 @@
 use crate as offences;
 use crate::Config;
 use codec::Encode;
-use frame_support::{
+use topsoil_support::{
 	derive_impl, parameter_types,
 	traits::ConstU32,
 	weights::{constants::RocksDbWeight, Weight},
@@ -60,17 +60,17 @@ pub fn with_on_offence_fractions<R, F: FnOnce(&mut Vec<Perbill>) -> R>(f: F) -> 
 	OnOffencePerbill::mutate(|fractions| f(fractions))
 }
 
-type Block = frame_system::mocking::MockBlock<Runtime>;
+type Block = topsoil_system::mocking::MockBlock<Runtime>;
 
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub enum Runtime {
-		System: frame_system,
+		System: topsoil_system,
 		Offences: offences,
 	}
 );
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Runtime {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Runtime {
 	type Nonce = u64;
 	type Lookup = IdentityLookup<Self::AccountId>;
 	type Block = Block;
@@ -86,7 +86,7 @@ impl Config for Runtime {
 }
 
 pub fn new_test_ext() -> soil_io::TestExternalities {
-	let t = frame_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
+	let t = topsoil_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
 	let mut ext = soil_io::TestExternalities::new(t);
 	ext.execute_with(|| System::set_block_number(1));
 	ext

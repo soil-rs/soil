@@ -21,24 +21,24 @@
 use alloc::vec::Vec;
 use soil_runtime::traits::{One, StaticLookup};
 
-use frame_benchmarking::v2::*;
-use frame_support::{
+use topsoil_benchmarking::v2::*;
+use topsoil_support::{
 	assert_ok,
 	traits::{Get, KeyOwnerProofSystem, OnInitialize},
 };
-use frame_system::{pallet_prelude::BlockNumberFor, RawOrigin};
-use pallet_session::{historical::Pallet as Historical, Pallet as Session, *};
-use pallet_staking::{
+use topsoil_system::{pallet_prelude::BlockNumberFor, RawOrigin};
+use topsoil_session::{historical::Pallet as Historical, Pallet as Session, *};
+use topsoil_staking::{
 	benchmarking::create_validator_with_nominators, testing_utils::create_validators,
 	MaxNominationsOf, RewardDestination,
 };
 
 const MAX_VALIDATORS: u32 = 1000;
 
-pub struct Pallet<T: Config>(pallet_session::Pallet<T>);
-/// Configuration trait for the benchmarking of `pallet-session`.
+pub struct Pallet<T: Config>(topsoil_session::Pallet<T>);
+/// Configuration trait for the benchmarking of `topsoil-session`.
 pub trait Config:
-	pallet_session::Config + pallet_session::historical::Config + pallet_staking::Config
+	topsoil_session::Config + topsoil_session::historical::Config + topsoil_staking::Config
 {
 	/// Generate a session key and a proof of ownership.
 	///
@@ -49,8 +49,8 @@ pub trait Config:
 }
 
 impl<T: Config> OnInitialize<BlockNumberFor<T>> for Pallet<T> {
-	fn on_initialize(n: BlockNumberFor<T>) -> frame_support::weights::Weight {
-		pallet_session::Pallet::<T>::on_initialize(n)
+	fn on_initialize(n: BlockNumberFor<T>) -> topsoil_support::weights::Weight {
+		topsoil_session::Pallet::<T>::on_initialize(n)
 	}
 }
 
@@ -68,12 +68,12 @@ mod benchmarks {
 			true,
 			RewardDestination::Staked,
 		)?;
-		let v_controller = pallet_staking::Pallet::<T>::bonded(&v_stash).ok_or("not stash")?;
+		let v_controller = topsoil_staking::Pallet::<T>::bonded(&v_stash).ok_or("not stash")?;
 
 		let (keys, proof) = T::generate_session_keys_and_proof(v_controller.clone());
 		// Whitelist controller account from further DB operations.
-		let v_controller_key = frame_system::Account::<T>::hashed_key_for(&v_controller);
-		frame_benchmarking::benchmarking::add_to_whitelist(v_controller_key.into());
+		let v_controller_key = topsoil_system::Account::<T>::hashed_key_for(&v_controller);
+		topsoil_benchmarking::benchmarking::add_to_whitelist(v_controller_key.into());
 		assert_ok!(Session::<T>::ensure_can_pay_key_deposit(&v_controller));
 
 		#[extrinsic_call]
@@ -92,13 +92,13 @@ mod benchmarks {
 			true,
 			RewardDestination::Staked,
 		)?;
-		let v_controller = pallet_staking::Pallet::<T>::bonded(&v_stash).ok_or("not stash")?;
+		let v_controller = topsoil_staking::Pallet::<T>::bonded(&v_stash).ok_or("not stash")?;
 		let (keys, proof) = T::generate_session_keys_and_proof(v_controller.clone());
 		assert_ok!(Session::<T>::ensure_can_pay_key_deposit(&v_controller));
 		Session::<T>::set_keys(RawOrigin::Signed(v_controller.clone()).into(), keys, proof)?;
 		// Whitelist controller account from further DB operations.
-		let v_controller_key = frame_system::Account::<T>::hashed_key_for(&v_controller);
-		frame_benchmarking::benchmarking::add_to_whitelist(v_controller_key.into());
+		let v_controller_key = topsoil_system::Account::<T>::hashed_key_for(&v_controller);
+		topsoil_benchmarking::benchmarking::add_to_whitelist(v_controller_key.into());
 
 		#[extrinsic_call]
 		_(RawOrigin::Signed(v_controller));
@@ -151,14 +151,14 @@ mod benchmarks {
 fn check_membership_proof_setup<T: Config>(
 	n: u32,
 ) -> ((soil_runtime::KeyTypeId, &'static [u8; 32]), soil_session::MembershipProof) {
-	pallet_staking::ValidatorCount::<T>::put(n);
+	topsoil_staking::ValidatorCount::<T>::put(n);
 
 	// create validators and set random session keys
 	for (n, who) in create_validators::<T>(n, 1000).unwrap().into_iter().enumerate() {
 		use rand::{RngCore, SeedableRng};
 
 		let validator = T::Lookup::lookup(who).unwrap();
-		let controller = pallet_staking::Pallet::<T>::bonded(&validator).unwrap();
+		let controller = topsoil_staking::Pallet::<T>::bonded(&validator).unwrap();
 
 		let _keys = {
 			let mut keys = [0u8; 128];
@@ -179,7 +179,7 @@ fn check_membership_proof_setup<T: Config>(
 		Session::<T>::set_keys(RawOrigin::Signed(controller).into(), keys, proof).unwrap();
 	}
 
-	Pallet::<T>::on_initialize(frame_system::pallet_prelude::BlockNumberFor::<T>::one());
+	Pallet::<T>::on_initialize(topsoil_system::pallet_prelude::BlockNumberFor::<T>::one());
 
 	// skip sessions until the new validator set is enacted
 	while Validators::<T>::get().len() < n as usize {

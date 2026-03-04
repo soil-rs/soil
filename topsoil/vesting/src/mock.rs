@@ -15,31 +15,31 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use frame_support::{derive_impl, parameter_types, traits::WithdrawReasons};
+use topsoil_support::{derive_impl, parameter_types, traits::WithdrawReasons};
 use soil_runtime::{traits::Identity, BuildStorage};
 
 use super::*;
-use crate as pallet_vesting;
+use crate as topsoil_vesting;
 
-type Block = frame_system::mocking::MockBlock<Test>;
+type Block = topsoil_system::mocking::MockBlock<Test>;
 
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub enum Test
 	{
-		System: frame_system,
-		Balances: pallet_balances,
-		Vesting: pallet_vesting,
+		System: topsoil_system,
+		Balances: topsoil_balances,
+		Vesting: topsoil_vesting,
 	}
 );
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
-	type AccountData = pallet_balances::AccountData<u64>;
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
+	type AccountData = topsoil_balances::AccountData<u64>;
 	type Block = Block;
 }
 
-#[derive_impl(pallet_balances::config_preludes::TestDefaultConfig)]
-impl pallet_balances::Config for Test {
+#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
+impl topsoil_balances::Config for Test {
 	type AccountStore = System;
 	type ExistentialDeposit = ExistentialDeposit;
 }
@@ -84,8 +84,8 @@ impl ExtBuilder {
 
 	pub fn build(self) -> soil_io::TestExternalities {
 		EXISTENTIAL_DEPOSIT.with(|v| *v.borrow_mut() = self.existential_deposit);
-		let mut t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
-		pallet_balances::GenesisConfig::<Test> {
+		let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+		topsoil_balances::GenesisConfig::<Test> {
 			balances: vec![
 				(1, 10 * self.existential_deposit),
 				(2, 20 * self.existential_deposit),
@@ -109,7 +109,7 @@ impl ExtBuilder {
 			]
 		};
 
-		pallet_vesting::GenesisConfig::<Test> { vesting }
+		topsoil_vesting::GenesisConfig::<Test> { vesting }
 			.assimilate_storage(&mut t)
 			.unwrap();
 		let mut ext = soil_io::TestExternalities::new(t);
@@ -122,8 +122,8 @@ parameter_types! {
 	static ObservedEventsVesting: usize = 0;
 }
 
-pub(crate) fn vesting_events_since_last_call() -> Vec<pallet_vesting::Event<Test>> {
-	let events = System::read_events_for_pallet::<pallet_vesting::Event<Test>>();
+pub(crate) fn vesting_events_since_last_call() -> Vec<topsoil_vesting::Event<Test>> {
+	let events = System::read_events_for_pallet::<topsoil_vesting::Event<Test>>();
 	let already_seen = ObservedEventsVesting::get();
 	ObservedEventsVesting::set(events.len());
 	events.into_iter().skip(already_seen).collect()

@@ -19,7 +19,7 @@
 
 use super::*;
 use crate::{Event, NegativeImbalance};
-use frame_support::{
+use topsoil_support::{
 	traits::{
 		BalanceStatus::{Free, Reserved},
 		Currency,
@@ -29,13 +29,13 @@ use frame_support::{
 	},
 	StorageNoopGuard,
 };
-use frame_system::Event as SysEvent;
+use topsoil_system::Event as SysEvent;
 use soil_runtime::traits::DispatchTransaction;
 
 const ID_1: LockIdentifier = *b"1       ";
 const ID_2: LockIdentifier = *b"2       ";
 
-pub const CALL: &<Test as frame_system::Config>::RuntimeCall =
+pub const CALL: &<Test as topsoil_system::Config>::RuntimeCall =
 	&RuntimeCall::Balances(crate::Call::transfer_allow_death { dest: 0, value: 0 });
 
 #[test]
@@ -118,7 +118,7 @@ fn account_should_be_reaped() {
 			assert_eq!(System::providers(&1), 0);
 			assert_eq!(System::consumers(&1), 0);
 			// Check that the account is dead.
-			assert!(!frame_system::Account::<Test>::contains_key(&1));
+			assert!(!topsoil_system::Account::<Test>::contains_key(&1));
 		});
 }
 
@@ -139,7 +139,7 @@ fn reap_failed_due_to_provider_and_consumer() {
 			assert_eq!(Balances::free_balance(1), 10);
 
 			// SCENARIO: more than one provider, but will not kill account due to other provider.
-			assert_eq!(System::inc_providers(&1), frame_system::IncRefStatus::Existed);
+			assert_eq!(System::inc_providers(&1), topsoil_system::IncRefStatus::Existed);
 			assert_eq!(System::providers(&1), 2);
 			assert!(System::can_dec_provider(&1));
 			assert_ok!(<Balances as Currency<_>>::transfer(&1, &2, 10, AllowDeath));
@@ -250,7 +250,7 @@ fn lock_should_work_reserve() {
 		.existential_deposit(1)
 		.monied(true)
 		.build_and_execute_with(|| {
-			pallet_transaction_payment::NextFeeMultiplier::<Test>::put(
+			topsoil_transaction_payment::NextFeeMultiplier::<Test>::put(
 				Multiplier::saturating_from_integer(1),
 			);
 			Balances::set_lock(ID_1, &1, 10, WithdrawReasons::RESERVE);
@@ -457,7 +457,7 @@ fn reward_should_work() {
 			]
 		);
 		assert_eq!(Balances::total_balance(&1), 20);
-		assert_eq!(pallet_balances::TotalIssuance::<Test>::get(), 120);
+		assert_eq!(topsoil_balances::TotalIssuance::<Test>::get(), 120);
 	});
 }
 
@@ -523,7 +523,7 @@ fn slashing_balance_should_work() {
 		assert!(Balances::slash(&1, 42).1.is_zero());
 		assert_eq!(Balances::free_balance(1), 1);
 		assert_eq!(Balances::reserved_balance(1), 69);
-		assert_eq!(pallet_balances::TotalIssuance::<Test>::get(), 70);
+		assert_eq!(topsoil_balances::TotalIssuance::<Test>::get(), 70);
 	});
 }
 
@@ -538,7 +538,7 @@ fn withdrawing_balance_should_work() {
 			amount: 11,
 		}));
 		assert_eq!(Balances::free_balance(2), 100);
-		assert_eq!(pallet_balances::TotalIssuance::<Test>::get(), 100);
+		assert_eq!(topsoil_balances::TotalIssuance::<Test>::get(), 100);
 	});
 }
 
@@ -569,7 +569,7 @@ fn slashing_incomplete_balance_should_work() {
 		assert_eq!(Balances::slash(&1, 69).1, 49);
 		assert_eq!(Balances::free_balance(1), 1);
 		assert_eq!(Balances::reserved_balance(1), 21);
-		assert_eq!(pallet_balances::TotalIssuance::<Test>::get(), 22);
+		assert_eq!(topsoil_balances::TotalIssuance::<Test>::get(), 22);
 	});
 }
 
@@ -592,7 +592,7 @@ fn slashing_reserved_balance_should_work() {
 		assert_eq!(Balances::slash_reserved(&1, 42).1, 0);
 		assert_eq!(Balances::reserved_balance(1), 69);
 		assert_eq!(Balances::free_balance(1), 1);
-		assert_eq!(pallet_balances::TotalIssuance::<Test>::get(), 70);
+		assert_eq!(topsoil_balances::TotalIssuance::<Test>::get(), 70);
 	});
 }
 
@@ -604,7 +604,7 @@ fn slashing_incomplete_reserved_balance_should_work() {
 		assert_eq!(Balances::slash_reserved(&1, 69).1, 27);
 		assert_eq!(Balances::free_balance(1), 69);
 		assert_eq!(Balances::reserved_balance(1), 0);
-		assert_eq!(pallet_balances::TotalIssuance::<Test>::get(), 69);
+		assert_eq!(topsoil_balances::TotalIssuance::<Test>::get(), 69);
 	});
 }
 
@@ -704,12 +704,12 @@ fn transferring_too_high_value_should_not_panic() {
 fn account_create_on_free_too_low_with_other() {
 	ExtBuilder::default().existential_deposit(100).build_and_execute_with(|| {
 		let _ = Balances::deposit_creating(&1, 100);
-		assert_eq!(pallet_balances::TotalIssuance::<Test>::get(), 100);
+		assert_eq!(topsoil_balances::TotalIssuance::<Test>::get(), 100);
 
 		// No-op.
 		let _ = Balances::deposit_creating(&2, 50);
 		assert_eq!(Balances::free_balance(2), 0);
-		assert_eq!(pallet_balances::TotalIssuance::<Test>::get(), 100);
+		assert_eq!(topsoil_balances::TotalIssuance::<Test>::get(), 100);
 	})
 }
 
@@ -719,14 +719,14 @@ fn account_create_on_free_too_low() {
 		// No-op.
 		let _ = Balances::deposit_creating(&2, 50);
 		assert_eq!(Balances::free_balance(2), 0);
-		assert_eq!(pallet_balances::TotalIssuance::<Test>::get(), 0);
+		assert_eq!(topsoil_balances::TotalIssuance::<Test>::get(), 0);
 	})
 }
 
 #[test]
 fn account_removal_on_free_too_low() {
 	ExtBuilder::default().existential_deposit(100).build_and_execute_with(|| {
-		assert_eq!(pallet_balances::TotalIssuance::<Test>::get(), 0);
+		assert_eq!(topsoil_balances::TotalIssuance::<Test>::get(), 0);
 
 		// Setup two accounts with free balance above the existential threshold.
 		let _ = Balances::deposit_creating(&1, 110);
@@ -734,7 +734,7 @@ fn account_removal_on_free_too_low() {
 
 		assert_eq!(Balances::free_balance(1), 110);
 		assert_eq!(Balances::free_balance(2), 110);
-		assert_eq!(pallet_balances::TotalIssuance::<Test>::get(), 220);
+		assert_eq!(topsoil_balances::TotalIssuance::<Test>::get(), 220);
 
 		// Transfer funds from account 1 of such amount that after this transfer
 		// the balance of account 1 will be below the existential threshold.
@@ -746,18 +746,18 @@ fn account_removal_on_free_too_low() {
 		assert_eq!(Balances::free_balance(2), 130);
 
 		// Verify that TotalIssuance tracks balance removal when free balance is too low.
-		assert_eq!(pallet_balances::TotalIssuance::<Test>::get(), 130);
+		assert_eq!(topsoil_balances::TotalIssuance::<Test>::get(), 130);
 	});
 }
 
 #[test]
 fn burn_must_work() {
 	ExtBuilder::default().monied(true).build_and_execute_with(|| {
-		let init_total_issuance = pallet_balances::TotalIssuance::<Test>::get();
+		let init_total_issuance = topsoil_balances::TotalIssuance::<Test>::get();
 		let imbalance = <Balances as Currency<_>>::burn(10);
-		assert_eq!(pallet_balances::TotalIssuance::<Test>::get(), init_total_issuance - 10);
+		assert_eq!(topsoil_balances::TotalIssuance::<Test>::get(), init_total_issuance - 10);
 		drop(imbalance);
-		assert_eq!(pallet_balances::TotalIssuance::<Test>::get(), init_total_issuance);
+		assert_eq!(topsoil_balances::TotalIssuance::<Test>::get(), init_total_issuance);
 	});
 }
 
@@ -765,7 +765,7 @@ fn burn_must_work() {
 #[should_panic = "the balance of any account should always be at least the existential deposit."]
 fn cannot_set_genesis_value_below_ed() {
 	EXISTENTIAL_DEPOSIT.with(|v| *v.borrow_mut() = 11);
-	let mut t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	let _ = crate::GenesisConfig::<Test> { balances: vec![(1, 10)], ..Default::default() }
 		.assimilate_storage(&mut t)
 		.unwrap();
@@ -774,7 +774,7 @@ fn cannot_set_genesis_value_below_ed() {
 #[test]
 #[should_panic = "duplicate balances in genesis."]
 fn cannot_set_genesis_value_twice() {
-	let mut t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	let _ = crate::GenesisConfig::<Test> {
 		balances: vec![(1, 10), (2, 20), (1, 15)],
 		..Default::default()
@@ -1162,7 +1162,7 @@ fn operations_on_dead_account_should_not_change_state() {
 	// These functions all use `mutate_account` which may introduce a storage change when
 	// the account never existed to begin with, and shouldn't exist in the end.
 	ExtBuilder::default().existential_deposit(1).build_and_execute_with(|| {
-		assert!(!frame_system::Account::<Test>::contains_key(&1337));
+		assert!(!topsoil_system::Account::<Test>::contains_key(&1337));
 
 		// Unreserve
 		assert_storage_noop!(assert_eq!(Balances::unreserve(&1337, 42), 42));
@@ -1184,7 +1184,7 @@ fn operations_on_dead_account_should_not_change_state() {
 #[should_panic = "The existential deposit must be greater than zero!"]
 #[cfg(not(feature = "insecure_zero_ed"))]
 fn zero_ed_is_prohibited() {
-	use frame_support::traits::Hooks;
+	use topsoil_support::traits::Hooks;
 	// These functions all use `mutate_account` which may introduce a storage change when
 	// the account never existed to begin with, and shouldn't exist in the end.
 	ExtBuilder::default().existential_deposit(0).build_and_execute_with(|| {
@@ -1458,7 +1458,7 @@ fn freezing_and_locking_should_work() {
 #[test]
 fn self_transfer_noop() {
 	ExtBuilder::default().existential_deposit(100).build_and_execute_with(|| {
-		assert_eq!(pallet_balances::TotalIssuance::<Test>::get(), 0);
+		assert_eq!(topsoil_balances::TotalIssuance::<Test>::get(), 0);
 		let _ = Balances::deposit_creating(&1, 100);
 
 		// The account is set up properly:
@@ -1472,7 +1472,7 @@ fn self_transfer_noop() {
 			]
 		);
 		assert_eq!(Balances::free_balance(1), 100);
-		assert_eq!(pallet_balances::TotalIssuance::<Test>::get(), 100);
+		assert_eq!(topsoil_balances::TotalIssuance::<Test>::get(), 100);
 
 		// Transfers to self are No-OPs:
 		let _g = StorageNoopGuard::new();
@@ -1488,7 +1488,7 @@ fn self_transfer_noop() {
 			assert!(events().is_empty());
 			assert_eq!(Balances::free_balance(1), 100, "Balance unchanged by self transfer");
 			assert_eq!(
-				pallet_balances::TotalIssuance::<Test>::get(),
+				topsoil_balances::TotalIssuance::<Test>::get(),
 				100,
 				"TI unchanged by self transfers"
 			);

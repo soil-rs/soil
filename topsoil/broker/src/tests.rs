@@ -18,12 +18,12 @@
 #![cfg(test)]
 
 use crate::{core_mask::*, mock::*, *};
-use frame_support::{
+use topsoil_support::{
 	assert_err, assert_noop, assert_ok,
 	traits::nonfungible::{Inspect as NftInspect, Mutate, Transfer},
 	BoundedVec,
 };
-use frame_system::RawOrigin::Root;
+use topsoil_system::RawOrigin::Root;
 use pretty_assertions::assert_eq;
 use soil_runtime::{
 	traits::{BadOrigin, Get},

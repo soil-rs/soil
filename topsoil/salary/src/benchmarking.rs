@@ -22,7 +22,7 @@
 use super::*;
 use crate::Pallet as Salary;
 
-use frame::benchmarking::prelude::*;
+use topsoil::benchmarking::prelude::*;
 const SEED: u32 = 0;
 
 fn ensure_member_with_salary<T: Config<I>, I: 'static>(who: &T::AccountId) {

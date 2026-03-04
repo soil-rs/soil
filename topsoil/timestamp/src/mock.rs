@@ -18,25 +18,25 @@
 //! Tests Utilities.
 
 use super::*;
-use crate as pallet_timestamp;
+use crate as topsoil_timestamp;
 
-use frame_support::{derive_impl, parameter_types, traits::ConstU64};
+use topsoil_support::{derive_impl, parameter_types, traits::ConstU64};
 use soil_io::TestExternalities;
 use soil_runtime::BuildStorage;
 
-type Block = frame_system::mocking::MockBlock<Test>;
+type Block = topsoil_system::mocking::MockBlock<Test>;
 type Moment = u64;
 
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub enum Test
 	{
-		System: frame_system,
-		Timestamp: pallet_timestamp,
+		System: topsoil_system,
+		Timestamp: topsoil_timestamp,
 	}
 );
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
 	type Block = Block;
 }
 
@@ -67,7 +67,7 @@ pub(crate) fn get_captured_moment() -> Option<Moment> {
 }
 
 pub(crate) fn new_test_ext() -> TestExternalities {
-	let t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	clear_captured_moment();
 	TestExternalities::new(t)
 }

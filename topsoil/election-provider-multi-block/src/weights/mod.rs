@@ -27,7 +27,7 @@ mod pallet_election_provider_multi_block_signed_ksm_size;
 mod pallet_election_provider_multi_block_unsigned_ksm_size;
 mod pallet_election_provider_multi_block_verifier_ksm_size;
 
-use frame_support::pallet_prelude::Weight;
+use topsoil_support::pallet_prelude::Weight;
 
 pub mod traits {
 	use super::*;
@@ -70,7 +70,7 @@ pub mod traits {
 	pub mod pallet_election_provider_multi_block_unsigned {
 		use super::*;
 
-		/// Weight functions needed for `pallet_election_provider_multi_block::unsigned`.
+		/// Weight functions needed for `topsoil_election_provider_multi_block::unsigned`.
 		pub trait WeightInfo {
 			fn validate_unsigned() -> Weight;
 			fn submit_unsigned() -> Weight;
@@ -119,10 +119,10 @@ pub mod traits {
 		}
 	}
 
-	pub mod pallet_election_provider_multi_block {
+	pub mod topsoil_election_provider_multi_block {
 		use super::*;
 
-		/// Weight functions needed for `pallet_election_provider_multi_block`.
+		/// Weight functions needed for `topsoil_election_provider_multi_block`.
 		pub trait WeightInfo {
 			fn per_block_nothing() -> Weight;
 			fn per_block_snapshot_msp() -> Weight;

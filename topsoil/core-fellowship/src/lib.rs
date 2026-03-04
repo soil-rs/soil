@@ -67,7 +67,7 @@ use core::{fmt::Debug, marker::PhantomData};
 use scale_info::TypeInfo;
 use soil_arithmetic::traits::{Saturating, Zero};
 
-use frame_support::{
+use topsoil_support::{
 	defensive,
 	dispatch::DispatchResultWithPostInfo,
 	ensure, impl_ensure_origin_with_arg_ignoring_arg,
@@ -180,15 +180,15 @@ pub struct MemberStatus<BlockNumber> {
 	last_proof: BlockNumber,
 }
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
-	use frame_support::{
+	use topsoil_support::{
 		dispatch::Pays,
 		pallet_prelude::*,
 		traits::{tokens::GetSalary, EnsureOrigin},
 	};
-	use frame_system::{ensure_root, pallet_prelude::*};
+	use topsoil_system::{ensure_root, pallet_prelude::*};
 	/// The in-code storage version.
 	const STORAGE_VERSION: StorageVersion = StorageVersion::new(1);
 
@@ -197,18 +197,18 @@ pub mod pallet {
 	pub struct Pallet<T, I = ()>(PhantomData<(T, I)>);
 
 	#[pallet::config]
-	pub trait Config<I: 'static = ()>: frame_system::Config {
+	pub trait Config<I: 'static = ()>: topsoil_system::Config {
 		/// Weight information for extrinsics in this pallet.
 		type WeightInfo: WeightInfo;
 
 		/// The runtime event type.
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self, I>>
-			+ IsType<<Self as frame_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// The current membership of the fellowship.
 		type Members: RankedMembers<
-			AccountId = <Self as frame_system::Config>::AccountId,
+			AccountId = <Self as topsoil_system::Config>::AccountId,
 			Rank = u16,
 		>;
 
@@ -370,7 +370,7 @@ pub mod pallet {
 			let demotion_block = member.last_proof.saturating_add(demotion_period);
 
 			// Ensure enough time has passed.
-			let now = frame_system::Pallet::<T>::block_number();
+			let now = topsoil_system::Pallet::<T>::block_number();
 			if now >= demotion_block {
 				T::Members::demote(&who)?;
 				let maybe_to_rank = T::Members::rank_of(&who);
@@ -449,7 +449,7 @@ pub mod pallet {
 			ensure!(rank == at_rank, Error::<T, I>::UnexpectedRank);
 			let mut member = Member::<T, I>::get(&who).ok_or(Error::<T, I>::NotTracked)?;
 
-			member.last_proof = frame_system::Pallet::<T>::block_number();
+			member.last_proof = topsoil_system::Pallet::<T>::block_number();
 			Member::<T, I>::insert(&who, &member);
 
 			Self::dispose_evidence(who.clone(), at_rank, Some(at_rank));
@@ -473,7 +473,7 @@ pub mod pallet {
 			ensure!(T::Members::rank_of(&who).is_none(), Error::<T, I>::Ranked);
 
 			T::Members::induct(&who)?;
-			let now = frame_system::Pallet::<T>::block_number();
+			let now = topsoil_system::Pallet::<T>::block_number();
 			Member::<T, I>::insert(
 				&who,
 				MemberStatus { is_active: true, last_promotion: now, last_proof: now },
@@ -506,7 +506,7 @@ pub mod pallet {
 			);
 
 			let mut member = Member::<T, I>::get(&who).ok_or(Error::<T, I>::NotTracked)?;
-			let now = frame_system::Pallet::<T>::block_number();
+			let now = topsoil_system::Pallet::<T>::block_number();
 
 			let params = Params::<T, I>::get();
 			let rank_index = Self::rank_to_index(to_rank).ok_or(Error::<T, I>::InvalidRank)?;
@@ -549,7 +549,7 @@ pub mod pallet {
 			ensure!(to_rank > curr_rank, Error::<T, I>::UnexpectedRank);
 
 			let mut member = Member::<T, I>::get(&who).ok_or(Error::<T, I>::NotTracked)?;
-			let now = frame_system::Pallet::<T>::block_number();
+			let now = topsoil_system::Pallet::<T>::block_number();
 			member.last_promotion = now;
 			member.last_proof = now;
 
@@ -708,7 +708,7 @@ pub mod pallet {
 			ensure!(!Member::<T, I>::contains_key(&who), Error::<T, I>::AlreadyInducted);
 			let rank = T::Members::rank_of(&who).ok_or(Error::<T, I>::Unranked)?;
 
-			let now = frame_system::Pallet::<T>::block_number();
+			let now = topsoil_system::Pallet::<T>::block_number();
 			Member::<T, I>::insert(
 				&who,
 				MemberStatus { is_active: true, last_promotion: 0u32.into(), last_proof: now },
@@ -765,16 +765,16 @@ impl<T: Config<I>, I: 'static, const MIN_RANK: u16> EnsureOrigin<T::RuntimeOrigi
 	type Success = T::AccountId;
 
 	fn try_origin(o: T::RuntimeOrigin) -> Result<Self::Success, T::RuntimeOrigin> {
-		let who = <frame_system::EnsureSigned<_> as EnsureOrigin<_>>::try_origin(o)?;
+		let who = <topsoil_system::EnsureSigned<_> as EnsureOrigin<_>>::try_origin(o)?;
 		match T::Members::rank_of(&who) {
 			Some(rank) if rank >= MIN_RANK && Member::<T, I>::contains_key(&who) => Ok(who),
-			_ => Err(frame_system::RawOrigin::Signed(who).into()),
+			_ => Err(topsoil_system::RawOrigin::Signed(who).into()),
 		}
 	}
 
 	#[cfg(feature = "runtime-benchmarks")]
 	fn try_successful_origin() -> Result<T::RuntimeOrigin, ()> {
-		let who = frame_benchmarking::account::<T::AccountId>("successful_origin", 0, 0);
+		let who = topsoil_benchmarking::account::<T::AccountId>("successful_origin", 0, 0);
 		if T::Members::rank_of(&who).is_none() {
 			T::Members::induct(&who).map_err(|_| ())?;
 		}
@@ -783,7 +783,7 @@ impl<T: Config<I>, I: 'static, const MIN_RANK: u16> EnsureOrigin<T::RuntimeOrigi
 				T::Members::promote(&who).map_err(|_| ())?;
 			}
 		}
-		Ok(frame_system::RawOrigin::Signed(who).into())
+		Ok(topsoil_system::RawOrigin::Signed(who).into())
 	}
 }
 
@@ -821,10 +821,10 @@ impl<T: Config<I>, I: 'static> RankedMembersSwapHandler<T::AccountId, u16> for P
 
 #[cfg(feature = "runtime-benchmarks")]
 impl<T: Config<I>, I: 'static>
-	pallet_ranked_collective::BenchmarkSetup<<T as frame_system::Config>::AccountId> for Pallet<T, I>
+	topsoil_ranked_collective::BenchmarkSetup<<T as topsoil_system::Config>::AccountId> for Pallet<T, I>
 {
-	fn ensure_member(who: &<T as frame_system::Config>::AccountId) {
+	fn ensure_member(who: &<T as topsoil_system::Config>::AccountId) {
 		#[allow(deprecated)]
-		Self::import(frame_system::RawOrigin::Signed(who.clone()).into()).unwrap();
+		Self::import(topsoil_system::RawOrigin::Signed(who.clone()).into()).unwrap();
 	}
 }

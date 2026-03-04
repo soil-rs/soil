@@ -15,13 +15,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#[frame_support::pallet(dev_mode)]
+#[topsoil_support::pallet(dev_mode)]
 pub mod pallet {
-	use frame_support::pallet_prelude::DispatchResult;
-	use frame_system::pallet_prelude::OriginFor;
+	use topsoil_support::pallet_prelude::DispatchResult;
+	use topsoil_system::pallet_prelude::OriginFor;
 
 	#[pallet::config]
-	pub trait Config: frame_system::Config {}
+	pub trait Config: topsoil_system::Config {}
 
 	#[pallet::pallet]
 	pub struct Pallet<T>(core::marker::PhantomData<T>);

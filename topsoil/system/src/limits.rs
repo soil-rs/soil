@@ -21,11 +21,11 @@
 //! - Weight (execution cost/time)
 //! - Length (block size)
 //!
-//! `frame_system` tracks consumption of each of these resources separately for each
+//! `topsoil_system` tracks consumption of each of these resources separately for each
 //! `DispatchClass`. This module contains configuration object for both resources,
-//! which should be passed to `frame_system` configuration when runtime is being set up.
+//! which should be passed to `topsoil_system` configuration when runtime is being set up.
 
-use frame_support::{
+use topsoil_support::{
 	dispatch::{DispatchClass, OneOrMany, PerDispatchClass},
 	weights::{constants, Weight},
 };

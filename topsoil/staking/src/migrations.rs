@@ -18,7 +18,7 @@
 //! [CHANGELOG.md](https://github.com/paritytech/polkadot-sdk/blob/master/substrate/frame/staking/CHANGELOG.md).
 
 use super::*;
-use frame_support::{
+use topsoil_support::{
 	migrations::VersionedMigration,
 	pallet_prelude::ValueQuery,
 	storage_alias,
@@ -53,16 +53,16 @@ impl Default for ObsoleteReleases {
 #[storage_alias]
 type StorageVersion<T: Config> = StorageValue<Pallet<T>, ObsoleteReleases, ValueQuery>;
 
-/// Supports the migration of Validator Disabling from pallet-staking to pallet-session
+/// Supports the migration of Validator Disabling from topsoil-staking to topsoil-session
 pub mod v17 {
 	use super::*;
 
-	#[frame_support::storage_alias]
+	#[topsoil_support::storage_alias]
 	pub type DisabledValidators<T: Config> =
 		StorageValue<Pallet<T>, BoundedVec<(u32, OffenceSeverity), ConstU32<333>>, ValueQuery>;
 
 	pub struct MigrateDisabledToSession<T>(core::marker::PhantomData<T>);
-	impl<T: Config> pallet_session::migrations::v1::MigrateDisabledValidators
+	impl<T: Config> topsoil_session::migrations::v1::MigrateDisabledValidators
 		for MigrateDisabledToSession<T>
 	{
 		#[cfg(feature = "try-runtime")]
@@ -82,7 +82,7 @@ pub mod v16 {
 	use super::*;
 	use soil_staking::offence::OffenceSeverity;
 
-	#[frame_support::storage_alias]
+	#[topsoil_support::storage_alias]
 	pub(crate) type DisabledValidators<T: Config> =
 		StorageValue<Pallet<T>, Vec<(u32, OffenceSeverity)>, ValueQuery>;
 
@@ -120,7 +120,7 @@ pub mod v16 {
 			let new_disabled_validators = v17::DisabledValidators::<T>::get();
 
 			// Compare lengths
-			frame_support::ensure!(
+			topsoil_support::ensure!(
 				old_disabled_validators.len() == new_disabled_validators.len(),
 				"DisabledValidators length mismatch"
 			);
@@ -128,7 +128,7 @@ pub mod v16 {
 			// Compare contents
 			let new_disabled_validators =
 				new_disabled_validators.into_iter().map(|(v, _)| v).collect::<Vec<_>>();
-			frame_support::ensure!(
+			topsoil_support::ensure!(
 				old_disabled_validators == new_disabled_validators,
 				"DisabledValidator ids mismatch"
 			);
@@ -137,7 +137,7 @@ pub mod v16 {
 			let max_severity = OffenceSeverity(Perbill::from_percent(100));
 			let new_disabled_validators = v17::DisabledValidators::<T>::get();
 			for (_, severity) in new_disabled_validators {
-				frame_support::ensure!(severity == max_severity, "Severity mismatch");
+				topsoil_support::ensure!(severity == max_severity, "Severity mismatch");
 			}
 
 			Ok(())
@@ -149,7 +149,7 @@ pub mod v16 {
 		16,
 		VersionUncheckedMigrateV15ToV16<T>,
 		Pallet<T>,
-		<T as frame_system::Config>::DbWeight,
+		<T as topsoil_system::Config>::DbWeight,
 	>;
 }
 
@@ -158,7 +158,7 @@ pub mod v15 {
 	use super::*;
 
 	// The disabling strategy used by staking pallet
-	type DefaultDisablingStrategy = pallet_session::disabling::UpToLimitDisablingStrategy;
+	type DefaultDisablingStrategy = topsoil_session::disabling::UpToLimitDisablingStrategy;
 
 	#[storage_alias]
 	pub(crate) type DisabledValidators<T: Config> = StorageValue<Pallet<T>, Vec<u32>, ValueQuery>;
@@ -185,7 +185,7 @@ pub mod v15 {
 
 		#[cfg(feature = "try-runtime")]
 		fn post_upgrade(_state: Vec<u8>) -> Result<(), TryRuntimeError> {
-			frame_support::ensure!(
+			topsoil_support::ensure!(
 				v14::OffendingValidators::<T>::decode_len().is_none(),
 				"OffendingValidators is not empty after the migration"
 			);
@@ -198,7 +198,7 @@ pub mod v15 {
 		15,
 		VersionUncheckedMigrateV14ToV15<T>,
 		Pallet<T>,
-		<T as frame_system::Config>::DbWeight,
+		<T as topsoil_system::Config>::DbWeight,
 	>;
 }
 
@@ -207,7 +207,7 @@ pub mod v15 {
 pub mod v14 {
 	use super::*;
 
-	#[frame_support::storage_alias]
+	#[topsoil_support::storage_alias]
 	pub(crate) type OffendingValidators<T: Config> =
 		StorageValue<Pallet<T>, Vec<(u32, bool)>, ValueQuery>;
 
@@ -230,7 +230,7 @@ pub mod v14 {
 
 		#[cfg(feature = "try-runtime")]
 		fn post_upgrade(_state: Vec<u8>) -> Result<(), TryRuntimeError> {
-			frame_support::ensure!(
+			topsoil_support::ensure!(
 				Pallet::<T>::on_chain_storage_version() >= 14,
 				"v14 not applied"
 			);
@@ -246,7 +246,7 @@ pub mod v13 {
 	impl<T: Config> OnRuntimeUpgrade for MigrateToV13<T> {
 		#[cfg(feature = "try-runtime")]
 		fn pre_upgrade() -> Result<Vec<u8>, TryRuntimeError> {
-			frame_support::ensure!(
+			topsoil_support::ensure!(
 				StorageVersion::<T>::get() == ObsoleteReleases::V12_0_0,
 				"Required v12 before upgrading to v13"
 			);
@@ -272,12 +272,12 @@ pub mod v13 {
 
 		#[cfg(feature = "try-runtime")]
 		fn post_upgrade(_state: Vec<u8>) -> Result<(), TryRuntimeError> {
-			frame_support::ensure!(
+			topsoil_support::ensure!(
 				Pallet::<T>::on_chain_storage_version() == 13,
 				"v13 not applied"
 			);
 
-			frame_support::ensure!(
+			topsoil_support::ensure!(
 				!StorageVersion::<T>::exists(),
 				"Storage version not migrated correctly"
 			);
@@ -289,7 +289,7 @@ pub mod v13 {
 
 pub mod v12 {
 	use super::*;
-	use frame_support::{pallet_prelude::ValueQuery, storage_alias};
+	use topsoil_support::{pallet_prelude::ValueQuery, storage_alias};
 
 	#[storage_alias]
 	type HistoryDepth<T: Config> = StorageValue<Pallet<T>, u32, ValueQuery>;
@@ -302,13 +302,13 @@ pub mod v12 {
 	impl<T: Config> OnRuntimeUpgrade for MigrateToV12<T> {
 		#[cfg(feature = "try-runtime")]
 		fn pre_upgrade() -> Result<Vec<u8>, TryRuntimeError> {
-			frame_support::ensure!(
+			topsoil_support::ensure!(
 				StorageVersion::<T>::get() == ObsoleteReleases::V11_0_0,
 				"Expected v11 before upgrading to v12"
 			);
 
 			if HistoryDepth::<T>::exists() {
-				frame_support::ensure!(
+				topsoil_support::ensure!(
 					T::HistoryDepth::get() == HistoryDepth::<T>::get(),
 					"Provided value of HistoryDepth should be same as the existing storage value"
 				);
@@ -319,7 +319,7 @@ pub mod v12 {
 			Ok(Default::default())
 		}
 
-		fn on_runtime_upgrade() -> frame_support::weights::Weight {
+		fn on_runtime_upgrade() -> topsoil_support::weights::Weight {
 			if StorageVersion::<T>::get() == ObsoleteReleases::V11_0_0 {
 				HistoryDepth::<T>::kill();
 				StorageVersion::<T>::put(ObsoleteReleases::V12_0_0);
@@ -334,7 +334,7 @@ pub mod v12 {
 
 		#[cfg(feature = "try-runtime")]
 		fn post_upgrade(_state: Vec<u8>) -> Result<(), TryRuntimeError> {
-			frame_support::ensure!(
+			topsoil_support::ensure!(
 				StorageVersion::<T>::get() == ObsoleteReleases::V12_0_0,
 				"v12 not applied"
 			);
@@ -345,7 +345,7 @@ pub mod v12 {
 
 pub mod v11 {
 	use super::*;
-	use frame_support::{
+	use topsoil_support::{
 		storage::migration::move_pallet,
 		traits::{GetStorageVersion, PalletInfoAccess},
 	};
@@ -358,13 +358,13 @@ pub mod v11 {
 	{
 		#[cfg(feature = "try-runtime")]
 		fn pre_upgrade() -> Result<Vec<u8>, TryRuntimeError> {
-			frame_support::ensure!(
+			topsoil_support::ensure!(
 				StorageVersion::<T>::get() == ObsoleteReleases::V10_0_0,
 				"must upgrade linearly"
 			);
 			let old_pallet_prefix = twox_128(N::get().as_bytes());
 
-			frame_support::ensure!(
+			topsoil_support::ensure!(
 				soil_io::storage::next_key(&old_pallet_prefix).is_some(),
 				"no data for the old pallet name has been detected"
 			);
@@ -376,7 +376,7 @@ pub mod v11 {
 		///
 		/// This new prefix must be the same as the one set in construct_runtime. For safety, use
 		/// `PalletInfo` to get it, as:
-		/// `<Runtime as frame_system::Config>::PalletInfo::name::<VoterBagsList>`.
+		/// `<Runtime as topsoil_system::Config>::PalletInfo::name::<VoterBagsList>`.
 		///
 		/// The migration will look into the storage version in order to avoid triggering a
 		/// migration on an up to date storage.
@@ -398,7 +398,7 @@ pub mod v11 {
 				}
 
 				move_pallet(old_pallet_name.as_bytes(), new_pallet_name.as_bytes());
-				<T as frame_system::Config>::BlockWeights::get().max_block
+				<T as topsoil_system::Config>::BlockWeights::get().max_block
 			} else {
 				log!(warn, "v11::migrate should be removed.");
 				T::DbWeight::get().reads(1)
@@ -407,7 +407,7 @@ pub mod v11 {
 
 		#[cfg(feature = "try-runtime")]
 		fn post_upgrade(_state: Vec<u8>) -> Result<(), TryRuntimeError> {
-			frame_support::ensure!(
+			topsoil_support::ensure!(
 				StorageVersion::<T>::get() == ObsoleteReleases::V11_0_0,
 				"wrong version after the upgrade"
 			);
@@ -421,14 +421,14 @@ pub mod v11 {
 			}
 
 			let old_pallet_prefix = twox_128(N::get().as_bytes());
-			frame_support::ensure!(
+			topsoil_support::ensure!(
 				soil_io::storage::next_key(&old_pallet_prefix).is_none(),
 				"old pallet data hasn't been removed"
 			);
 
 			let new_pallet_name = <P as PalletInfoAccess>::name();
 			let new_pallet_prefix = twox_128(new_pallet_name.as_bytes());
-			frame_support::ensure!(
+			topsoil_support::ensure!(
 				soil_io::storage::next_key(&new_pallet_prefix).is_some(),
 				"new pallet data hasn't been created"
 			);

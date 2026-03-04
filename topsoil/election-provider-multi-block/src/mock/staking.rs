@@ -17,16 +17,16 @@
 
 use super::{AccountId, MaxVotesPerVoter, Runtime};
 use crate::VoterOf;
-use frame_election_provider_support::{
+use topsoil_election_provider_support::{
 	data_provider, DataProviderBounds, ElectionDataProvider, PageIndex, VoteWeight,
 };
-use frame_support::pallet_prelude::*;
+use topsoil_support::pallet_prelude::*;
 use soil_core::bounded_vec;
 use soil_std::prelude::*;
 
 pub type T = Runtime;
 
-frame_support::parameter_types! {
+topsoil_support::parameter_types! {
 	pub static Targets: Vec<AccountId> = vec![10, 20, 30, 40];
 	pub static Voters: Vec<VoterOf<Runtime>> = vec![
 		// page 2:
@@ -136,7 +136,7 @@ impl ElectionDataProvider for MockStaking {
 
 	#[cfg(feature = "runtime-benchmarks")]
 	fn fetch_page(page: PageIndex) {
-		use frame_election_provider_support::ElectionProvider;
+		use topsoil_election_provider_support::ElectionProvider;
 		super::MultiBlock::elect(page).unwrap();
 	}
 

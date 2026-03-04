@@ -19,16 +19,16 @@
 //! bonding validators, nominators, and generating different types of solutions.
 
 use crate::{Pallet as Staking, *};
-use frame_benchmarking::account;
-use frame_system::RawOrigin;
+use topsoil_benchmarking::account;
+use topsoil_system::RawOrigin;
 use rand_chacha::{
 	rand_core::{RngCore, SeedableRng},
 	ChaChaRng,
 };
 use soil_io::hashing::blake2_256;
 
-use frame_election_provider_support::SortedListProvider;
-use frame_support::pallet_prelude::*;
+use topsoil_election_provider_support::SortedListProvider;
+use topsoil_support::pallet_prelude::*;
 use soil_runtime::{traits::StaticLookup, Perbill};
 
 const SEED: u32 = 0;
@@ -240,7 +240,7 @@ pub fn current_era<T: Config>() -> EraIndex {
 }
 
 pub fn migrate_to_old_currency<T: Config>(who: T::AccountId) {
-	use frame_support::traits::LockableCurrency;
+	use topsoil_support::traits::LockableCurrency;
 	let staked = asset::staked::<T>(&who);
 
 	// apply locks (this also adds a consumer).
@@ -248,11 +248,11 @@ pub fn migrate_to_old_currency<T: Config>(who: T::AccountId) {
 		STAKING_ID,
 		&who,
 		staked,
-		frame_support::traits::WithdrawReasons::all(),
+		topsoil_support::traits::WithdrawReasons::all(),
 	);
 	// remove holds.
 	asset::kill_stake::<T>(&who).expect("remove hold failed");
 
 	// replicate old behaviour of explicit increment of consumer.
-	frame_system::Pallet::<T>::inc_consumers(&who).expect("increment consumer failed");
+	topsoil_system::Pallet::<T>::inc_consumers(&who).expect("increment consumer failed");
 }

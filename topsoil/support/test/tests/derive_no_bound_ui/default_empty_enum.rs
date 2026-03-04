@@ -15,7 +15,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#[derive(frame_support::DefaultNoBound)]
+#[derive(topsoil_support::DefaultNoBound)]
 enum Empty {}
 
 fn main() {}

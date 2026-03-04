@@ -85,7 +85,7 @@ pub trait EnsureOrigin<OuterOrigin> {
 /// # Example
 ///
 /// ```rust
-/// # use frame_support::traits::{EnsureOriginEqualOrHigherPrivilege, PrivilegeCmp, EnsureOrigin as _};
+/// # use topsoil_support::traits::{EnsureOriginEqualOrHigherPrivilege, PrivilegeCmp, EnsureOrigin as _};
 /// # use soil_runtime::traits::{parameter_types, Get};
 /// # use core::cmp::Ordering;
 ///
@@ -444,7 +444,7 @@ impl<
 /// Implemented for pallet dispatchable type by `decl_module` and for runtime dispatchable by
 /// `construct_runtime`.
 pub trait UnfilteredDispatchable {
-	/// The origin type of the runtime, (i.e. `frame_system::Config::RuntimeOrigin`).
+	/// The origin type of the runtime, (i.e. `topsoil_system::Config::RuntimeOrigin`).
 	type RuntimeOrigin;
 
 	/// Dispatch this call but do not check the filter in origin.
@@ -478,9 +478,9 @@ pub trait CallerTrait<AccountId>: Parameter + Member + From<RawOrigin<AccountId>
 	}
 }
 
-/// Methods available on `frame_system::Config::RuntimeOrigin`.
+/// Methods available on `topsoil_system::Config::RuntimeOrigin`.
 pub trait OriginTrait: Sized {
-	/// Runtime call type, as in `frame_system::Config::Call`
+	/// Runtime call type, as in `topsoil_system::Config::Call`
 	type Call;
 
 	/// The caller origin, overarching type of all pallets origins.
@@ -492,7 +492,7 @@ pub trait OriginTrait: Sized {
 	/// Add a filter to the origin.
 	fn add_filter(&mut self, filter: impl Fn(&Self::Call) -> bool + 'static);
 
-	/// Reset origin filters to default one, i.e `frame_system::1fig::BaseCallFilter`.
+	/// Reset origin filters to default one, i.e `topsoil_system::1fig::BaseCallFilter`.
 	fn reset_filter(&mut self);
 
 	/// Replace the caller with caller from the other origin
@@ -524,13 +524,13 @@ pub trait OriginTrait: Sized {
 		f: impl FnOnce(Self::PalletsOrigin) -> Result<R, Self::PalletsOrigin>,
 	) -> Result<R, Self>;
 
-	/// Create with system none origin and `frame_system::Config::BaseCallFilter`.
+	/// Create with system none origin and `topsoil_system::Config::BaseCallFilter`.
 	fn none() -> Self;
 
-	/// Create with system root origin and `frame_system::Config::BaseCallFilter`.
+	/// Create with system root origin and `topsoil_system::Config::BaseCallFilter`.
 	fn root() -> Self;
 
-	/// Create with system signed origin and `frame_system::Config::BaseCallFilter`.
+	/// Create with system signed origin and `topsoil_system::Config::BaseCallFilter`.
 	fn signed(by: Self::AccountId) -> Self;
 
 	/// Extract the signer from the message if it is a `Signed` origin.
@@ -570,7 +570,7 @@ pub trait OriginTrait: Sized {
 /// A trait to allow calls to authorize themselves from the origin `None`.
 ///
 /// It is implemented by the [`crate::pallet`] macro and used by the
-/// `frame_system::AuthorizeCall` transaction extension.
+/// `topsoil_system::AuthorizeCall` transaction extension.
 ///
 /// Pallet writers can declare the authorization logic for a call using the call attribute:
 /// [`crate::pallet_macros::authorize`].

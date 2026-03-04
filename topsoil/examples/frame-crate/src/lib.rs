@@ -21,14 +21,14 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-use frame::prelude::*;
+use topsoil::prelude::*;
 
-#[frame::pallet(dev_mode)]
+#[topsoil::pallet(dev_mode)]
 pub mod pallet {
 	use super::*;
 
 	#[pallet::config]
-	pub trait Config: frame_system::Config {}
+	pub trait Config: topsoil_system::Config {}
 
 	#[pallet::pallet]
 	pub struct Pallet<T>(_);
@@ -50,17 +50,17 @@ pub mod pallet {
 #[cfg(test)]
 mod tests {
 	use crate::pallet as my_pallet;
-	use frame::testing_prelude::*;
+	use topsoil::testing_prelude::*;
 
 	construct_runtime!(
 		pub enum Runtime {
-			System: frame_system,
+			System: topsoil_system,
 			MyPallet: my_pallet,
 		}
 	);
 
-	#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-	impl frame_system::Config for Runtime {
+	#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+	impl topsoil_system::Config for Runtime {
 		type Block = MockBlock<Self>;
 	}
 

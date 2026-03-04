@@ -25,7 +25,7 @@ use crate::mock::{
 	Test, Timestamp,
 };
 use codec::Encode;
-use frame_support::traits::Hooks;
+use topsoil_support::traits::Hooks;
 use soil_consensus_aura::{Slot, AURA_ENGINE_ID};
 use soil_runtime::{Digest, DigestItem, TryRuntimeError};
 
@@ -140,7 +140,7 @@ fn try_state_validates_timestamp_slot_consistency() {
 
 		// Setting timestamp to a value that doesn't match the slot should fail.
 		// Timestamp 12 / slot_duration 2 = slot 6, but current slot is 5.
-		pallet_timestamp::Now::<Test>::put(12u64);
+		topsoil_timestamp::Now::<Test>::put(12u64);
 		assert_eq!(
 			Aura::do_try_state(),
 			Err(TryRuntimeError::Other("Timestamp slot must match CurrentSlot."))
@@ -150,10 +150,10 @@ fn try_state_validates_timestamp_slot_consistency() {
 
 #[test]
 fn integrity_test_passes_with_valid_config() {
-	use frame_support::traits::Hooks;
+	use topsoil_support::traits::Hooks;
 	build_ext(vec![0, 1, 2, 3]).execute_with(|| {
 		// This should not panic with valid configuration
-		<Aura as Hooks<frame_system::pallet_prelude::BlockNumberFor<Test>>>::integrity_test();
+		<Aura as Hooks<topsoil_system::pallet_prelude::BlockNumberFor<Test>>>::integrity_test();
 	});
 }
 
@@ -161,7 +161,7 @@ fn integrity_test_passes_with_valid_config() {
 fn increase_slot_duration() {
 	build_ext(vec![0, 1, 2, 3]).execute_with(|| {
 		// Running with slot_duration=2: timestamp=100, slot=50.
-		pallet_timestamp::Now::<Test>::put(100u64);
+		topsoil_timestamp::Now::<Test>::put(100u64);
 		pallet::CurrentSlot::<Test>::put(Slot::from(50u64));
 
 		// Increase slot duration from 2 to 4.
@@ -189,7 +189,7 @@ fn increase_slot_duration() {
 fn decrease_slot_duration() {
 	build_ext(vec![0, 1, 2, 3]).execute_with(|| {
 		// Running with slot_duration=4: timestamp=100, slot=25.
-		pallet_timestamp::Now::<Test>::put(100u64);
+		topsoil_timestamp::Now::<Test>::put(100u64);
 		pallet::CurrentSlot::<Test>::put(Slot::from(25u64));
 
 		// Decrease slot duration from 4 to 2.

@@ -18,7 +18,7 @@
 use std::collections::BTreeSet;
 
 use crate::{mock::*, ReservedIds};
-use frame_support::{
+use topsoil_support::{
 	assert_ok,
 	traits::reality::{AddOnlyPeopleTrait, PersonalId},
 };
@@ -30,7 +30,7 @@ fn id_registration_works() {
 		assert_ok!(DummyDim::reserve_ids(RuntimeOrigin::root(), 100));
 		let dummy_ids: BTreeSet<_> = ReservedIds::<Test>::iter_keys().collect();
 		let people_ids: BTreeSet<_> =
-			pallet_people::ReservedPersonalId::<Test>::iter_keys().collect();
+			topsoil_people::ReservedPersonalId::<Test>::iter_keys().collect();
 		assert_eq!(dummy_ids, people_ids);
 		let mut independent_ids = vec![];
 		for _ in 0..100 {
@@ -75,7 +75,7 @@ fn personhood_recognition_and_suspension_works() {
 		));
 		for (id, key) in ids_and_keys {
 			assert_eq!(key, crate::People::<Test>::get(id).unwrap().key);
-			assert!(pallet_people::Keys::<Test>::contains_key(key));
+			assert!(topsoil_people::Keys::<Test>::contains_key(key));
 		}
 
 		let new_ids_and_keys: Vec<_> = (100..150)
@@ -87,7 +87,7 @@ fn personhood_recognition_and_suspension_works() {
 		));
 		for (id, key) in new_ids_and_keys {
 			assert_eq!(key, crate::People::<Test>::get(id).unwrap().key);
-			assert!(pallet_people::Keys::<Test>::contains_key(key));
+			assert!(topsoil_people::Keys::<Test>::contains_key(key));
 		}
 
 		assert_ok!(DummyDim::start_mutation_session(RuntimeOrigin::root()));
@@ -99,15 +99,15 @@ fn personhood_recognition_and_suspension_works() {
 		));
 		for id in (0..50).chain(125..150) {
 			assert!(!crate::People::<Test>::get(id).unwrap().suspended);
-			assert!(!pallet_people::People::<Test>::get(id).unwrap().position.suspended());
+			assert!(!topsoil_people::People::<Test>::get(id).unwrap().position.suspended());
 		}
 		for id in 50..125 {
 			assert!(crate::People::<Test>::get(id).unwrap().suspended);
-			assert!(pallet_people::People::<Test>::get(id).unwrap().position.suspended());
+			assert!(topsoil_people::People::<Test>::get(id).unwrap().position.suspended());
 		}
 
 		assert_ok!(DummyDim::end_mutation_session(RuntimeOrigin::root()));
-		pallet_people::RingsState::<Test>::mutate(|s| *s = s.clone().end_key_migration().unwrap());
+		topsoil_people::RingsState::<Test>::mutate(|s| *s = s.clone().end_key_migration().unwrap());
 		assert_ok!(DummyDim::start_mutation_session(RuntimeOrigin::root()));
 
 		for id in 50..100 {
@@ -116,11 +116,11 @@ fn personhood_recognition_and_suspension_works() {
 
 		for id in (0..100).chain(125..150) {
 			assert!(!crate::People::<Test>::get(id).unwrap().suspended);
-			assert!(!pallet_people::People::<Test>::get(id).unwrap().position.suspended());
+			assert!(!topsoil_people::People::<Test>::get(id).unwrap().position.suspended());
 		}
 		for id in 100..125 {
 			assert!(crate::People::<Test>::get(id).unwrap().suspended);
-			assert!(pallet_people::People::<Test>::get(id).unwrap().position.suspended());
+			assert!(topsoil_people::People::<Test>::get(id).unwrap().position.suspended());
 		}
 
 		assert_ok!(DummyDim::end_mutation_session(RuntimeOrigin::root()));

@@ -90,7 +90,7 @@ pub use pallet::*;
 pub use weights::WeightInfo;
 
 use alloc::{vec, vec::Vec};
-use frame::prelude::*;
+use topsoil::prelude::*;
 use fungible::{
 	Balanced as FunBalanced, Inspect as FunInspect, Mutate as FunMutate,
 	MutateHold as FunMutateHold,
@@ -173,29 +173,29 @@ impl BenchmarkSetup for () {
 	fn create_counterpart_asset() {}
 }
 
-#[frame::pallet]
+#[topsoil::pallet]
 pub mod pallet {
 	use super::*;
 
 	type BalanceOf<T> =
-		<<T as Config>::Currency as FunInspect<<T as frame_system::Config>::AccountId>>::Balance;
+		<<T as Config>::Currency as FunInspect<<T as topsoil_system::Config>::AccountId>>::Balance;
 	type DebtOf<T> =
-		fungible::Debt<<T as frame_system::Config>::AccountId, <T as Config>::Currency>;
+		fungible::Debt<<T as topsoil_system::Config>::AccountId, <T as Config>::Currency>;
 	type ReceiptRecordOf<T> =
-		ReceiptRecord<<T as frame_system::Config>::AccountId, BlockNumberFor<T>, BalanceOf<T>>;
+		ReceiptRecord<<T as topsoil_system::Config>::AccountId, BlockNumberFor<T>, BalanceOf<T>>;
 	type IssuanceInfoOf<T> = IssuanceInfo<BalanceOf<T>>;
 	type SummaryRecordOf<T> = SummaryRecord<BlockNumberFor<T>, BalanceOf<T>>;
-	type BidOf<T> = Bid<BalanceOf<T>, <T as frame_system::Config>::AccountId>;
+	type BidOf<T> = Bid<BalanceOf<T>, <T as topsoil_system::Config>::AccountId>;
 	type QueueTotalsTypeOf<T> = BoundedVec<(u32, BalanceOf<T>), <T as Config>::QueueCount>;
 
 	#[pallet::config]
-	pub trait Config: frame_system::Config {
+	pub trait Config: topsoil_system::Config {
 		/// Information on runtime weights.
 		type WeightInfo: WeightInfo;
 
 		/// Overarching event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// The treasury's pallet id, used for deriving its sovereign account ID.
 		#[pallet::constant]
@@ -668,7 +668,7 @@ pub mod pallet {
 			let (owner, mut on_hold) = receipt.owner.ok_or(Error::<T>::AlreadyCommunal)?;
 			ensure!(owner == who, Error::<T>::NotOwner);
 
-			let now = frame_system::Pallet::<T>::block_number();
+			let now = topsoil_system::Pallet::<T>::block_number();
 			ensure!(now >= receipt.expiry, Error::<T>::NotExpired);
 
 			let mut summary: SummaryRecordOf<T> = Summary::<T>::get();
@@ -775,7 +775,7 @@ pub mod pallet {
 				Receipts::<T>::get(index).ok_or(Error::<T>::UnknownReceipt)?;
 			// If found, check it is actually communal.
 			ensure!(receipt.owner.is_none(), Error::<T>::NotOwner);
-			let now = frame_system::Pallet::<T>::block_number();
+			let now = topsoil_system::Pallet::<T>::block_number();
 			ensure!(now >= receipt.expiry, Error::<T>::NotExpired);
 
 			let mut summary: SummaryRecordOf<T> = Summary::<T>::get();
@@ -1007,7 +1007,7 @@ pub mod pallet {
 				return;
 			}
 
-			let now = frame_system::Pallet::<T>::block_number();
+			let now = topsoil_system::Pallet::<T>::block_number();
 			let our_account = Self::account_id();
 			let issuance: IssuanceInfoOf<T> = Self::issuance_with(&our_account, &summary);
 			let mut remaining = target.saturating_sub(summary.proportion_owed) * issuance.effective;

@@ -50,36 +50,36 @@ pub use weights::*;
 
 extern crate alloc;
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
-	use frame_support::pallet_prelude::*;
-	use frame_system::pallet_prelude::*;
+	use topsoil_support::pallet_prelude::*;
+	use topsoil_system::pallet_prelude::*;
 
 	/// The config trait of the pallet. You can basically do anything with the config trait that you
 	/// can do with a normal rust trait: import items consisting of types, constants and functions.
 	///
 	/// A very common pattern is for a pallet to import implementations of traits such as
-	/// [`frame_support::traits::Currency`], [`frame_support::traits::fungibles::Inspect`] and
-	/// [`frame_support::traits::Get`]. These are all types that the pallet is delegating to the top
+	/// [`topsoil_support::traits::Currency`], [`topsoil_support::traits::fungibles::Inspect`] and
+	/// [`topsoil_support::traits::Get`]. These are all types that the pallet is delegating to the top
 	/// level runtime to provide to it.
 	///
 	/// The `FRAME`-specific syntax are:
 	///
-	/// * the use of `#[pallet::constant]`([`frame_support::procedural`]), which places a `Get`
+	/// * the use of `#[pallet::constant]`([`topsoil_support::procedural`]), which places a `Get`
 	///   implementation in the metadata.
 	/// * `type RuntimeEvent`, which is mandatory if your pallet has events. See TODO.
-	/// * Needless to say, because [`Config`] is bounded by [`frame_system::Config`], you can use
-	///   all the items from [`frame_system::Config`] as well, such as `AccountId`.
+	/// * Needless to say, because [`Config`] is bounded by [`topsoil_system::Config`], you can use
+	///   all the items from [`topsoil_system::Config`] as well, such as `AccountId`.
 	/// * `#[pallet::disable_frame_system_supertrait_check]` would remove the need for
-	///   `frame_system::Config` to exist, which you should almost never need.
+	///   `topsoil_system::Config` to exist, which you should almost never need.
 	#[pallet::config]
-	pub trait Config: frame_system::Config {
+	pub trait Config: topsoil_system::Config {
 		/// Type representing the weight of this pallet
 		type WeightInfo: WeightInfo;
 
 		/// This is a normal Rust type, nothing specific to FRAME here.
-		type Currency: frame_support::traits::fungible::Inspect<Self::AccountId>;
+		type Currency: topsoil_support::traits::fungible::Inspect<Self::AccountId>;
 
 		/// Similarly, let the runtime decide this.
 		fn some_function() -> u32;
@@ -107,7 +107,7 @@ pub mod pallet {
 		}
 	}
 
-	const STORAGE_VERSION: frame_support::traits::StorageVersion = StorageVersion::new(1);
+	const STORAGE_VERSION: topsoil_support::traits::StorageVersion = StorageVersion::new(1);
 
 	/// The pallet struct. There's nothing special to FRAME about this; it can implement functions
 	/// in an impl blocks, traits and so on.
@@ -118,7 +118,7 @@ pub mod pallet {
 
 	/// Allows you to define some origin for the pallet.
 	#[pallet::origin]
-	pub type Origin<T> = frame_system::RawOrigin<<T as frame_system::Config>::AccountId>;
+	pub type Origin<T> = topsoil_system::RawOrigin<<T as topsoil_system::Config>::AccountId>;
 
 	// first, we showcase all the possible storage types, with most of their details.
 
@@ -265,14 +265,14 @@ pub mod pallet {
 	/// The `generate_deposit` macro generates a function on `Pallet` called `deposit_event` which
 	/// will properly convert the error type of your pallet into `RuntimeEvent` (recall `type
 	/// RuntimeEvent: From<Event<Self>>`, so it can be converted) and deposit it via
-	/// `frame_system::Pallet::deposit_event`.
+	/// `topsoil_system::Pallet::deposit_event`.
 	#[pallet::event]
 	#[pallet::generate_deposit(pub fn deposit_event)]
 	pub enum Event<T: Config> {
 		/// A simple tuple style variant.
 		SomethingHappened(u32),
 		/// A simple struct-style variant. Note that we use `AccountId` from `T` because `T:
-		/// Config`, which by extension implies `T: frame_system::Config`.
+		/// Config`, which by extension implies `T: topsoil_system::Config`.
 		SomethingDetailedHappened { at: u32, to: T::AccountId },
 		/// Another variant.
 		SomeoneJoined(T::AccountId),
@@ -285,7 +285,7 @@ pub mod pallet {
 		SomethingBroke,
 	}
 
-	/// All the possible hooks that a pallet can have. See [`frame_support::traits::Hooks`] for more
+	/// All the possible hooks that a pallet can have. See [`topsoil_support::traits::Hooks`] for more
 	/// info.
 	#[pallet::hooks]
 	impl<T: Config> Hooks<BlockNumberFor<T>> for Pallet<T> {
@@ -334,7 +334,7 @@ pub mod pallet {
 		Staking,
 	}
 
-	/// Allows the pallet to provide some inherent. See [`frame_support::inherent::ProvideInherent`]
+	/// Allows the pallet to provide some inherent. See [`topsoil_support::inherent::ProvideInherent`]
 	/// for more info.
 	#[pallet::inherent]
 	impl<T: Config> ProvideInherent for Pallet<T> {

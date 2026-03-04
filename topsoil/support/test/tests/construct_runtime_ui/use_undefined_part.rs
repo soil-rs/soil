@@ -15,16 +15,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use frame_support::construct_runtime;
+use topsoil_support::construct_runtime;
 use soil_runtime::{generic, traits::BlakeTwo256};
 use soil_core::sr25519;
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 mod pallet {
-	use frame_support::pallet_prelude::*;
+	use topsoil_support::pallet_prelude::*;
 
 	#[pallet::config]
-	pub trait Config: frame_system::Config {}
+	pub trait Config: topsoil_system::Config {}
 
 	#[pallet::pallet]
 	pub struct Pallet<T>(_);

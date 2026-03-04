@@ -16,7 +16,7 @@
 // limitations under the License.
 
 use super::*;
-use crate as pallet_transaction_payment;
+use crate as topsoil_transaction_payment;
 
 use codec::Encode;
 
@@ -27,15 +27,15 @@ use soil_runtime::{
 	BuildStorage,
 };
 
-use frame_support::{
+use topsoil_support::{
 	assert_ok,
 	dispatch::{DispatchClass, DispatchInfo, GetDispatchInfo, PostDispatchInfo},
 	traits::{Currency, OriginTrait},
 	weights::Weight,
 };
-use frame_system as system;
+use topsoil_system as system;
 use mock::*;
-use pallet_balances::Call as BalancesCall;
+use topsoil_balances::Call as BalancesCall;
 
 pub struct ExtBuilder {
 	balance_factor: u64,
@@ -85,8 +85,8 @@ impl ExtBuilder {
 	}
 	pub fn build(self) -> soil_io::TestExternalities {
 		self.set_constants();
-		let mut t = frame_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
-		pallet_balances::GenesisConfig::<Runtime> {
+		let mut t = topsoil_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
+		topsoil_balances::GenesisConfig::<Runtime> {
 			balances: if self.balance_factor > 0 {
 				vec![
 					(1, 10 * self.balance_factor),
@@ -211,7 +211,7 @@ fn transaction_extension_transaction_payment_is_bounded() {
 		// fee will be proportional to what is the actual maximum weight in the runtime.
 		assert_eq!(
 			Balances::free_balance(&1),
-			(10000 - <Runtime as frame_system::Config>::BlockWeights::get().max_block.ref_time())
+			(10000 - <Runtime as topsoil_system::Config>::BlockWeights::get().max_block.ref_time())
 				as u64
 		);
 	});
@@ -544,7 +544,7 @@ fn refund_does_not_recreate_account() {
 				.unwrap();
 			assert_eq!(Balances::free_balance(2), 0);
 			// Transfer Event
-			System::assert_has_event(RuntimeEvent::Balances(pallet_balances::Event::Transfer {
+			System::assert_has_event(RuntimeEvent::Balances(topsoil_balances::Event::Transfer {
 				from: 2,
 				to: 3,
 				amount: 80,
@@ -601,7 +601,7 @@ fn zero_transfer_on_free_transaction() {
 			assert_eq!(Balances::total_balance(&user), 0);
 			// TransactionFeePaid Event
 			System::assert_has_event(RuntimeEvent::TransactionPayment(
-				pallet_transaction_payment::Event::TransactionFeePaid {
+				topsoil_transaction_payment::Event::TransactionFeePaid {
 					who: user,
 					actual_fee: 0,
 					tip: 0,
@@ -855,13 +855,13 @@ fn no_fee_and_no_weight_for_other_origins() {
 
 		let len = CALL.encoded_size();
 
-		let origin = frame_system::RawOrigin::Root.into();
+		let origin = topsoil_system::RawOrigin::Root.into();
 		let (pre, origin) = ext.validate_and_prepare(origin, CALL, &info, len, 0).unwrap();
 
 		assert!(origin.as_system_ref().unwrap().is_root());
 
 		let pd_res = Ok(());
-		let mut post_info = frame_support::dispatch::PostDispatchInfo {
+		let mut post_info = topsoil_support::dispatch::PostDispatchInfo {
 			actual_weight: Some(info.total_weight()),
 			pays_fee: Default::default(),
 		};
@@ -910,7 +910,7 @@ fn fungible_adapter_no_zero_refund_action() {
 		let events = System::events();
 		assert!(!events
 			.iter()
-			.any(|record| matches!(record.event, RuntimeEvent::Balances(pallet_balances::Event::Deposit { amount, .. }) if amount.is_zero())),
+			.any(|record| matches!(record.event, RuntimeEvent::Balances(topsoil_balances::Event::Deposit { amount, .. }) if amount.is_zero())),
     		"No zero amount deposit amount event should be emitted.",
 		);
 	});

@@ -37,8 +37,8 @@
 
 use alloc::{boxed::Box, vec, vec::Vec};
 use codec::{self as codec, Decode, Encode};
-use frame_support::traits::{Get, KeyOwnerProofSystem};
-use frame_system::pallet_prelude::BlockNumberFor;
+use topsoil_support::traits::{Get, KeyOwnerProofSystem};
+use topsoil_system::pallet_prelude::BlockNumberFor;
 use log::{error, info};
 use soil_consensus_grandpa::{AuthorityId, EquivocationProof, RoundNumber, SetId, KEY_TYPE};
 use soil_runtime::{
@@ -122,7 +122,7 @@ impl<T, R, P, L>
 		(EquivocationProof<T::Hash, BlockNumberFor<T>>, T::KeyOwnerProof),
 	> for EquivocationReportSystem<T, R, P, L>
 where
-	T: Config + pallet_authorship::Config + frame_system::offchain::CreateBare<Call<T>>,
+	T: Config + topsoil_authorship::Config + topsoil_system::offchain::CreateBare<Call<T>>,
 	R: ReportOffence<
 		T::AccountId,
 		P::IdentificationTuple,
@@ -137,7 +137,7 @@ where
 	fn publish_evidence(
 		evidence: (EquivocationProof<T::Hash, BlockNumberFor<T>>, T::KeyOwnerProof),
 	) -> Result<(), ()> {
-		use frame_system::offchain::SubmitTransaction;
+		use topsoil_system::offchain::SubmitTransaction;
 		let (equivocation_proof, key_owner_proof) = evidence;
 
 		let call = Call::report_equivocation_unsigned {
@@ -177,7 +177,7 @@ where
 		evidence: (EquivocationProof<T::Hash, BlockNumberFor<T>>, T::KeyOwnerProof),
 	) -> Result<(), DispatchError> {
 		let (equivocation_proof, key_owner_proof) = evidence;
-		let reporter = reporter.or_else(|| pallet_authorship::Pallet::<T>::author());
+		let reporter = reporter.or_else(|| topsoil_authorship::Pallet::<T>::author());
 		let offender = equivocation_proof.offender().clone();
 
 		// We check the equivocation within the context of its set id (and

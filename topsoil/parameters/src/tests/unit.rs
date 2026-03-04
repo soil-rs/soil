@@ -25,7 +25,7 @@ use crate::tests::mock::{
 	RuntimeParametersValue,
 };
 use codec::Encode;
-use frame_support::{assert_noop, assert_ok, traits::dynamic_params::AggregatedKeyValue};
+use topsoil_support::{assert_noop, assert_ok, traits::dynamic_params::AggregatedKeyValue};
 use soil_core::Get;
 use soil_runtime::DispatchError;
 
@@ -159,7 +159,7 @@ fn set_parameters_to_default_emits_events_works() {
 			Origin::root(),
 			Pallet1(pallet1::Parameters::Key3(pallet1::Key3, Some(2))),
 		));
-		assert_eq!(frame_system::Pallet::<Runtime>::events().len(), 2);
+		assert_eq!(topsoil_system::Pallet::<Runtime>::events().len(), 2);
 	});
 }
 
@@ -199,14 +199,14 @@ fn set_parameters_wrong_origin_errors() {
 #[test]
 fn get_through_external_pallet_works() {
 	new_test_ext().execute_with(|| {
-		assert_eq!(<Runtime as pallet_example_basic::Config>::MagicNumber::get(), 0);
+		assert_eq!(<Runtime as topsoil_example_basic::Config>::MagicNumber::get(), 0);
 
 		assert_ok!(PalletParameters::set_parameter(
 			Origin::root(),
 			Pallet1(pallet1::Parameters::Key1(pallet1::Key1, Some(123))),
 		));
 
-		assert_eq!(<Runtime as pallet_example_basic::Config>::MagicNumber::get(), 123);
+		assert_eq!(<Runtime as topsoil_example_basic::Config>::MagicNumber::get(), 123);
 	});
 }
 

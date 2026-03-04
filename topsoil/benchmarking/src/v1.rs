@@ -23,8 +23,8 @@ pub use super::*;
 #[macro_export]
 macro_rules! whitelist {
 	($acc:ident) => {
-		frame_benchmarking::benchmarking::add_to_whitelist(
-			frame_system::Account::<T>::hashed_key_for(&$acc).into(),
+		topsoil_benchmarking::benchmarking::add_to_whitelist(
+			topsoil_system::Account::<T>::hashed_key_for(&$acc).into(),
 		);
 	};
 }
@@ -188,7 +188,7 @@ macro_rules! benchmarks {
 
 /// Same as [`benchmarks`] but for instantiable module.
 ///
-/// NOTE: For pallet declared with [`frame_support::pallet`], use [`benchmarks_instance_pallet`].
+/// NOTE: For pallet declared with [`topsoil_support::pallet`], use [`benchmarks_instance_pallet`].
 #[macro_export]
 macro_rules! benchmarks_instance {
 	(
@@ -207,7 +207,7 @@ macro_rules! benchmarks_instance {
 	}
 }
 
-/// Same as [`benchmarks`] but for instantiable pallet declared [`frame_support::pallet`].
+/// Same as [`benchmarks`] but for instantiable pallet declared [`topsoil_support::pallet`].
 ///
 /// NOTE: For pallet declared with `decl_module!`, use [`benchmarks_instance`].
 #[macro_export]
@@ -646,7 +646,7 @@ macro_rules! to_origin {
 		$origin.into()
 	};
 	($origin:expr, $origin_type:ty) => {
-		<<T as frame_system::Config>::RuntimeOrigin as From<$origin_type>>::from($origin)
+		<<T as topsoil_system::Config>::RuntimeOrigin as From<$origin_type>>::from($origin)
 	};
 }
 
@@ -993,7 +993,7 @@ macro_rules! impl_benchmark {
 		#[cfg(any(feature = "runtime-benchmarks", test))]
 		impl<T: Config $(<$instance>, $instance: $instance_bound )? >
 			$crate::Benchmarking for Pallet<T $(, $instance)? >
-			where T: frame_system::Config, $( $where_clause )*
+			where T: topsoil_system::Config, $( $where_clause )*
 		{
 			fn benchmarks(extra: bool) -> $crate::__private::Vec<$crate::BenchmarkMetadata> {
 				$($crate::validate_pov_mode!(
@@ -1051,7 +1051,7 @@ macro_rules! impl_benchmark {
 				// Add whitelist to DB including whitelisted caller
 				let mut whitelist = whitelist.to_vec();
 				let whitelisted_caller_key =
-					<frame_system::Account::<T> as $crate::__private::storage::StorageMap<_,_>>::hashed_key_for(
+					<topsoil_system::Account::<T> as $crate::__private::storage::StorageMap<_,_>>::hashed_key_for(
 						$crate::whitelisted_caller::<T::AccountId>()
 					);
 				whitelist.push(whitelisted_caller_key.into());
@@ -1076,8 +1076,8 @@ macro_rules! impl_benchmark {
 				let mut results: $crate::__private::Vec<$crate::BenchmarkResult> = $crate::__private::Vec::new();
 				let on_before_start = || {
 					// Set the block number to at least 1 so events are deposited.
-					if $crate::__private::Zero::is_zero(&frame_system::Pallet::<T>::block_number()) {
-						frame_system::Pallet::<T>::set_block_number(1u32.into());
+					if $crate::__private::Zero::is_zero(&topsoil_system::Pallet::<T>::block_number()) {
+						topsoil_system::Pallet::<T>::set_block_number(1u32.into());
 					}
 
 					// Commit the externalities to the database, flushing the DB cache.
@@ -1166,7 +1166,7 @@ macro_rules! impl_benchmark {
 		#[cfg(test)]
 		impl<T: Config $(<$instance>, $instance: $instance_bound )? >
 			Pallet<T $(, $instance)? >
-		where T: frame_system::Config, $( $where_clause )*
+		where T: topsoil_system::Config, $( $where_clause )*
 		{
 			/// Test a particular benchmark by name.
 			///
@@ -1209,7 +1209,7 @@ macro_rules! impl_benchmark_test {
 			#[cfg(test)]
 			impl<T: Config $(<$instance>, $instance: $instance_bound )? >
 				Pallet<T $(, $instance)? >
-			where T: frame_system::Config, $( $where_clause )*
+			where T: topsoil_system::Config, $( $where_clause )*
 			{
 				#[allow(unused)]
 				fn [<test_benchmark_ $name>] () -> Result<(), $crate::BenchmarkError> {
@@ -1226,8 +1226,8 @@ macro_rules! impl_benchmark_test {
 
 						let on_before_start = || {
 							// Set the block number to at least 1 so events are deposited.
-							if $crate::__private::Zero::is_zero(&frame_system::Pallet::<T>::block_number()) {
-								frame_system::Pallet::<T>::set_block_number(1u32.into());
+							if $crate::__private::Zero::is_zero(&topsoil_system::Pallet::<T>::block_number()) {
+								topsoil_system::Pallet::<T>::set_block_number(1u32.into());
 							}
 						};
 
@@ -1293,7 +1293,7 @@ macro_rules! impl_benchmark_test {
 
 /// This creates a test suite which runs the module's benchmarks.
 ///
-/// When called in `pallet_example_basic` as
+/// When called in `topsoil_example_basic` as
 ///
 /// ```rust,ignore
 /// impl_benchmark_test_suite!(Pallet, crate::tests::new_test_ext(), crate::tests::Test);
@@ -1306,7 +1306,7 @@ macro_rules! impl_benchmark_test {
 /// mod tests {
 /// 	use super::*;
 /// 	use crate::tests::{new_test_ext, Test};
-/// 	use frame_support::assert_ok;
+/// 	use topsoil_support::assert_ok;
 ///
 /// 	#[test]
 /// 	fn test_benchmarks() {
@@ -1319,7 +1319,7 @@ macro_rules! impl_benchmark_test {
 /// }
 /// ```
 ///
-/// When called inside the `benchmarks` macro of the `pallet_example_basic` as
+/// When called inside the `benchmarks` macro of the `topsoil_example_basic` as
 ///
 /// ```rust,ignore
 /// benchmarks! {
@@ -1336,7 +1336,7 @@ macro_rules! impl_benchmark_test {
 /// mod benchmarking {
 /// 	use super::*;
 /// 	use crate::tests::{new_test_ext, Test};
-/// 	use frame_support::assert_ok;
+/// 	use topsoil_support::assert_ok;
 ///
 /// 	#[test]
 /// 	fn bench_accumulate_dummy() {
@@ -1375,7 +1375,7 @@ macro_rules! impl_benchmark_test {
 /// will generally take the form:
 ///
 /// ```rust,ignore
-/// frame_support::construct_runtime!(
+/// topsoil_support::construct_runtime!(
 /// 	pub enum Test where ...
 /// 	{ ... }
 /// );
@@ -1791,9 +1791,9 @@ pub fn show_benchmark_debug_info(
 /// module struct:
 ///
 /// ```ignore
-/// add_benchmark!(params, batches, pallet_balances, Balances);
-/// add_benchmark!(params, batches, pallet_session, SessionBench::<Runtime>);
-/// add_benchmark!(params, batches, frame_system, SystemBench::<Runtime>);
+/// add_benchmark!(params, batches, topsoil_balances, Balances);
+/// add_benchmark!(params, batches, topsoil_session, SessionBench::<Runtime>);
+/// add_benchmark!(params, batches, topsoil_system, SystemBench::<Runtime>);
 /// ...
 /// ```
 ///
@@ -1804,16 +1804,16 @@ pub fn show_benchmark_debug_info(
 /// example:
 ///
 /// ```ignore
-/// add_benchmark!(params, batches, pallet_balances, Balances); // pallet_balances.rs
-/// add_benchmark!(params, batches, pallet_collective, Council); // pallet_collective_council.rs
-/// add_benchmark!(params, batches, pallet_collective, TechnicalCommittee); // pallet_collective_technical_committee.rs
+/// add_benchmark!(params, batches, topsoil_balances, Balances); // topsoil_balances.rs
+/// add_benchmark!(params, batches, topsoil_collective, Council); // pallet_collective_council.rs
+/// add_benchmark!(params, batches, topsoil_collective, TechnicalCommittee); // pallet_collective_technical_committee.rs
 /// ```
 ///
 /// You can manipulate this suffixed string by using a type alias if needed. For example:
 ///
 /// ```ignore
 /// type Council2 = TechnicalCommittee;
-/// add_benchmark!(params, batches, pallet_collective, Council2); // pallet_collective_council_2.rs
+/// add_benchmark!(params, batches, topsoil_collective, Council2); // pallet_collective_council_2.rs
 /// ```
 #[macro_export]
 macro_rules! add_benchmark {
@@ -1906,9 +1906,9 @@ macro_rules! add_benchmark {
 /// pallet struct:
 ///
 /// ```ignore
-/// list_benchmark!(list, extra, pallet_balances, Balances);
-/// list_benchmark!(list, extra, pallet_session, SessionBench::<Runtime>);
-/// list_benchmark!(list, extra, frame_system, SystemBench::<Runtime>);
+/// list_benchmark!(list, extra, topsoil_balances, Balances);
+/// list_benchmark!(list, extra, topsoil_session, SessionBench::<Runtime>);
+/// list_benchmark!(list, extra, topsoil_system, SystemBench::<Runtime>);
 /// ```
 ///
 /// This should match what exists with the `add_benchmark!` macro.

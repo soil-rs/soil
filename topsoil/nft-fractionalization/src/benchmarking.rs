@@ -20,14 +20,14 @@
 #![cfg(feature = "runtime-benchmarks")]
 
 use super::*;
-use frame::benchmarking::prelude::*;
+use topsoil::benchmarking::prelude::*;
 
-use frame::deps::frame_support::assert_ok;
+use topsoil::deps::topsoil_support::assert_ok;
 use fungible::{Inspect as InspectFungible, Mutate as MutateFungible};
 use nonfungibles_v2::{Create, Mutate};
 
-use frame_system::RawOrigin as SystemOrigin;
-use pallet_nfts::{CollectionConfig, CollectionSettings, ItemConfig, MintSettings};
+use topsoil_system::RawOrigin as SystemOrigin;
+use topsoil_nfts::{CollectionConfig, CollectionSettings, ItemConfig, MintSettings};
 
 use crate::Pallet as NftFractionalization;
 
@@ -66,10 +66,10 @@ where
 }
 
 fn assert_last_event<T: Config>(generic_event: <T as Config>::RuntimeEvent) {
-	let events = frame_system::Pallet::<T>::events();
-	let system_event: <T as frame_system::Config>::RuntimeEvent = generic_event.into();
+	let events = topsoil_system::Pallet::<T>::events();
+	let system_event: <T as topsoil_system::Config>::RuntimeEvent = generic_event.into();
 	// compare to the last event record
-	let frame_system::EventRecord { event, .. } = &events[events.len() - 1];
+	let topsoil_system::EventRecord { event, .. } = &events[events.len() - 1];
 	assert_eq!(event, &system_event);
 }
 
@@ -79,7 +79,7 @@ fn assert_last_event<T: Config>(generic_event: <T as Config>::RuntimeEvent) {
 			Create<
 				T::AccountId,
 				CollectionConfig<BalanceOf<T>,
-				frame_system::pallet_prelude::BlockNumberFor::<T>,
+				topsoil_system::pallet_prelude::BlockNumberFor::<T>,
 				T::NftCollectionId>
 			>
 			+ Mutate<T::AccountId, ItemConfig>,

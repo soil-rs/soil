@@ -23,12 +23,12 @@
 //! Once a panic is found, it can be debugged with
 //! `cargo hfuzz run-debug per_thing_rational hfuzz_workspace/call/*.fuzz`.
 
-use frame_support::{
+use topsoil_support::{
 	assert_ok,
 	traits::{Currency, GetCallName, UnfilteredDispatchable},
 };
 use honggfuzz::fuzz;
-use pallet_nomination_pools::{
+use topsoil_nomination_pools::{
 	log,
 	mock::*,
 	pallet as pools,
@@ -282,7 +282,7 @@ fn main() {
 					.into_iter()
 					.map(|r| r.event)
 					.filter_map(|e| {
-						if let pallet_nomination_pools::mock::RuntimeEvent::Pools(inner) = e {
+						if let topsoil_nomination_pools::mock::RuntimeEvent::Pools(inner) = e {
 							Some(inner)
 						} else {
 							None

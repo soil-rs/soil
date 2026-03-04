@@ -17,13 +17,13 @@
 
 #![cfg_attr(not(feature = "std"), no_std)]
 
-use frame_support::derive_impl;
+use topsoil_support::derive_impl;
 
 pub use pallet::*;
 
-#[frame_support::pallet(dev_mode)]
+#[topsoil_support::pallet(dev_mode)]
 pub mod pallet {
-	use frame_support::pallet_prelude::*;
+	use topsoil_support::pallet_prelude::*;
 
 	// The struct on which we build all of our Pallet logic.
 	#[pallet::pallet]
@@ -31,7 +31,7 @@ pub mod pallet {
 
 	// Your Pallet's configuration trait, representing custom external types and interfaces.
 	#[pallet::config]
-	pub trait Config<I: 'static = ()>: frame_system::Config {}
+	pub trait Config<I: 'static = ()>: topsoil_system::Config {}
 	
 	#[pallet::composite_enum]
 	pub enum HoldReason<I: 'static = ()> {
@@ -54,8 +54,8 @@ pub mod pallet {
 	}
 }
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Runtime {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Runtime {
 	type Block = Block;
 }
 
@@ -63,11 +63,11 @@ pub type Header = soil_runtime::generic::Header<u64, soil_runtime::traits::Blake
 pub type UncheckedExtrinsic = soil_runtime::generic::UncheckedExtrinsic<u64, RuntimeCall, (), ()>;
 pub type Block = soil_runtime::generic::Block<Header, UncheckedExtrinsic>;
 
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub enum Runtime
 	{
 		// Exclude part `Storage` in order not to check its metadata in tests.
-		System: frame_system,
+		System: topsoil_system,
 		Pallet1: pallet,
 		Pallet2: pallet::<Instance2>,
 	}

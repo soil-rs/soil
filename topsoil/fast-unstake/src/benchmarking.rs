@@ -15,18 +15,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//! Benchmarking for pallet-fast-unstake.
+//! Benchmarking for topsoil-fast-unstake.
 
 #![cfg(feature = "runtime-benchmarks")]
 
 use crate::{types::*, *};
 use alloc::vec::Vec;
-use frame_benchmarking::v2::*;
-use frame_support::{
+use topsoil_benchmarking::v2::*;
+use topsoil_support::{
 	assert_ok,
 	traits::{Currency, EnsureOrigin, Get, Hooks},
 };
-use frame_system::RawOrigin;
+use topsoil_system::RawOrigin;
 use soil_runtime::traits::Zero;
 use soil_staking::{EraIndex, StakingInterface};
 
@@ -38,7 +38,7 @@ fn create_unexposed_batch<T: Config>(batch_size: u32) -> Vec<T::AccountId> {
 	(0..batch_size)
 		.map(|i| {
 			let account =
-				frame_benchmarking::account::<T::AccountId>("unexposed_nominator", i, USER_SEED);
+				topsoil_benchmarking::account::<T::AccountId>("unexposed_nominator", i, USER_SEED);
 			fund_and_bond_account::<T>(&account);
 			account
 		})
@@ -58,7 +58,7 @@ fn fund_and_bond_account<T: Config>(account: &T::AccountId) {
 }
 
 pub(crate) fn fast_unstake_events<T: Config>() -> Vec<crate::Event<T>> {
-	frame_system::Pallet::<T>::events()
+	topsoil_system::Pallet::<T>::events()
 		.into_iter()
 		.map(|r| r.event)
 		.filter_map(|e| <T as Config>::RuntimeEvent::from(e).try_into().ok())
@@ -73,13 +73,13 @@ fn setup_staking<T: Config>(v: u32, until: EraIndex) {
 	// our validators don't actually need to registered in staking -- just generate `v` random
 	// accounts.
 	let validators = (0..v)
-		.map(|x| frame_benchmarking::account::<T::AccountId>("validator", x, USER_SEED))
+		.map(|x| topsoil_benchmarking::account::<T::AccountId>("validator", x, USER_SEED))
 		.collect::<Vec<_>>();
 
 	for era in 0..=until {
 		let others = (0..T::Staking::max_exposure_page_size())
 			.map(|s| {
-				let who = frame_benchmarking::account::<T::AccountId>("nominator", era, s.into());
+				let who = topsoil_benchmarking::account::<T::AccountId>("nominator", era, s.into());
 				let value = ed;
 				(who, value)
 			})
@@ -91,7 +91,7 @@ fn setup_staking<T: Config>(v: u32, until: EraIndex) {
 }
 
 fn on_idle_full_block<T: Config>() {
-	let remaining_weight = <T as frame_system::Config>::BlockWeights::get().max_block;
+	let remaining_weight = <T as topsoil_system::Config>::BlockWeights::get().max_block;
 	Pallet::<T>::on_idle(Zero::zero(), remaining_weight);
 }
 

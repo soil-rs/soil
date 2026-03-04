@@ -23,15 +23,15 @@ mod mock;
 
 pub(crate) const LOG_TARGET: &str = "tests::e2e-epm";
 
-use frame_support::{assert_err, assert_ok};
+use topsoil_support::{assert_err, assert_ok};
 use mock::*;
-use pallet_timestamp::Now;
+use topsoil_timestamp::Now;
 use soil_core::Get;
 use soil_runtime::Perbill;
 
 use crate::mock::RuntimeOrigin;
 
-use pallet_election_provider_multi_phase::CurrentPhase;
+use topsoil_election_provider_multi_phase::CurrentPhase;
 
 // syntactic sugar for logging.
 #[macro_export]
@@ -50,7 +50,7 @@ fn log_current_time() {
 		"block: {:?}, session: {:?}, era: {:?}, EPM phase: {:?} ts: {:?}",
 		System::block_number(),
 		Session::current_index(),
-		pallet_staking::CurrentEra::<Runtime>::get(),
+		topsoil_staking::CurrentEra::<Runtime>::get(),
 		CurrentPhase::<Runtime>::get(),
 		Now::<Runtime>::get()
 	);
@@ -94,7 +94,7 @@ fn block_progression_works() {
 
 #[test]
 fn offchainify_works() {
-	use pallet_election_provider_multi_phase::QueuedSolution;
+	use topsoil_election_provider_multi_phase::QueuedSolution;
 
 	let staking_builder = StakingExtBuilder::default();
 	let epm_builder = EpmExtBuilder::default();
@@ -146,7 +146,7 @@ fn mass_slash_doesnt_enter_emergency_phase() {
 		.build_offchainify();
 
 	ext.execute_with(|| {
-		assert_eq!(pallet_staking::ForceEra::<Runtime>::get(), pallet_staking::Forcing::NotForcing);
+		assert_eq!(topsoil_staking::ForceEra::<Runtime>::get(), topsoil_staking::Forcing::NotForcing);
 
 		let active_set_size_before_slash = Session::validators().len();
 
@@ -173,12 +173,12 @@ fn mass_slash_doesnt_enter_emergency_phase() {
 		}
 
 		// Ensure no more than disabling limit of validators (default 1/3) is disabled
-		let disabling_limit = pallet_session::disabling::UpToLimitWithReEnablingDisablingStrategy::<
+		let disabling_limit = topsoil_session::disabling::UpToLimitWithReEnablingDisablingStrategy::<
 			SLASHING_DISABLING_FACTOR,
 		>::disable_limit(active_set_size_before_slash);
 		assert!(disabled.len() == disabling_limit);
 
-		assert_eq!(pallet_staking::ForceEra::<Runtime>::get(), pallet_staking::Forcing::NotForcing);
+		assert_eq!(topsoil_staking::ForceEra::<Runtime>::get(), topsoil_staking::Forcing::NotForcing);
 	});
 }
 
@@ -245,7 +245,7 @@ fn continuous_slashes_below_offending_threshold() {
 ///
 /// Related to <https://github.com/paritytech/substrate/issues/14246>.
 fn ledger_consistency_active_balance_below_ed() {
-	use pallet_staking::{Error, Event};
+	use topsoil_staking::{Error, Event};
 
 	let (ext, pool_state, _) =
 		ExtBuilder::default().staking(StakingExtBuilder::default()).build_offchainify();
@@ -283,7 +283,7 @@ fn ledger_consistency_active_balance_below_ed() {
 		// after advancing `BondingDuration` eras, the `withdraw_unbonded` will unlock the
 		// chunks and the ledger entry will be cleared, since the ledger active balance is 0.
 		advance_eras(
-			<Runtime as pallet_staking::Config>::BondingDuration::get() as usize,
+			<Runtime as topsoil_staking::Config>::BondingDuration::get() as usize,
 			pool_state,
 		);
 		assert_ok!(Staking::withdraw_unbonded(RuntimeOrigin::signed(11), 0));
@@ -299,7 +299,7 @@ fn ledger_consistency_active_balance_below_ed() {
 /// member or operator calling explicitly `Call::withdraw*`. This test verifies that the member's
 /// are eventually paid and the `TotalValueLocked` is kept in sync in those cases.
 fn automatic_unbonding_pools() {
-	use pallet_nomination_pools::TotalValueLocked;
+	use topsoil_nomination_pools::TotalValueLocked;
 
 	// closure to fetch the staking unlocking chunks of an account.
 	let unlocking_chunks_of = |account: AccountId| -> usize {
@@ -315,9 +315,9 @@ fn automatic_unbonding_pools() {
 		.build_offchainify();
 
 	execute_with(ext, || {
-		assert_eq!(<Runtime as pallet_staking::Config>::MaxUnlockingChunks::get(), 1);
-		assert_eq!(<Runtime as pallet_staking::Config>::BondingDuration::get(), 2);
-		assert_eq!(<Runtime as pallet_nomination_pools::Config>::MaxUnbonding::get(), 1);
+		assert_eq!(<Runtime as topsoil_staking::Config>::MaxUnlockingChunks::get(), 1);
+		assert_eq!(<Runtime as topsoil_staking::Config>::BondingDuration::get(), 2);
+		assert_eq!(<Runtime as topsoil_nomination_pools::Config>::MaxUnbonding::get(), 1);
 
 		// init state of pool members.
 		let init_free_balance_2 = Balances::free_balance(2);
@@ -358,13 +358,13 @@ fn automatic_unbonding_pools() {
 		// duration.
 		assert_err!(
 			Pools::unbond(RuntimeOrigin::signed(3), 3, 10),
-			pallet_staking::Error::<Runtime>::NoMoreChunks
+			topsoil_staking::Error::<Runtime>::NoMoreChunks
 		);
 
 		assert_eq!(current_era(), 0);
 
 		// progress over bonding duration.
-		for _ in 0..=<Runtime as pallet_staking::Config>::BondingDuration::get() {
+		for _ in 0..=<Runtime as topsoil_staking::Config>::BondingDuration::get() {
 			start_next_active_era(pool_state.clone()).unwrap();
 		}
 		assert_eq!(current_era(), 3);
@@ -383,8 +383,8 @@ fn automatic_unbonding_pools() {
 			[
 				// auto-withdraw happened as expected to release 2's unbonding funds, but the funds
 				// were not transferred to 2 and stay in the pool's transferrable balance instead.
-				pallet_staking::Event::Withdrawn { stash: pool_bonded_account, amount: 10 },
-				pallet_staking::Event::Unbonded { stash: pool_bonded_account, amount: 10 }
+				topsoil_staking::Event::Withdrawn { stash: pool_bonded_account, amount: 10 },
+				topsoil_staking::Event::Unbonded { stash: pool_bonded_account, amount: 10 }
 			]
 		);
 
@@ -409,11 +409,11 @@ fn automatic_unbonding_pools() {
 		// 3 cannot withdraw yet.
 		assert_err!(
 			Pools::withdraw_unbonded(RuntimeOrigin::signed(3), 3, 10),
-			pallet_nomination_pools::Error::<Runtime>::CannotWithdrawAny
+			topsoil_nomination_pools::Error::<Runtime>::CannotWithdrawAny
 		);
 
 		// progress over bonding duration.
-		for _ in 0..=<Runtime as pallet_staking::Config>::BondingDuration::get() {
+		for _ in 0..=<Runtime as topsoil_staking::Config>::BondingDuration::get() {
 			start_next_active_era(pool_state.clone()).unwrap();
 		}
 		assert_eq!(current_era(), 6);

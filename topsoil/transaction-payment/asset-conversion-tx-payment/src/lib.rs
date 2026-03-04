@@ -22,9 +22,9 @@
 //!
 //! This pallet provides a `TransactionExtension` with an optional `AssetId` that specifies the
 //! asset to be used for payment (defaulting to the native token on `None`). It expects an
-//! [`OnChargeAssetTransaction`] implementation analogous to `pallet-transaction-payment`. The
+//! [`OnChargeAssetTransaction`] implementation analogous to `topsoil-transaction-payment`. The
 //! included [`SwapAssetAdapter`] (implementing [`OnChargeAssetTransaction`]) determines the
-//! fee amount by converting the fee calculated by `pallet-transaction-payment` in the native
+//! fee amount by converting the fee calculated by `topsoil-transaction-payment` in the native
 //! asset into the amount required of the specified asset.
 //!
 //! ## Pallet API
@@ -45,13 +45,13 @@
 extern crate alloc;
 
 use codec::{Decode, DecodeWithMemTracking, Encode};
-use frame_support::{
+use topsoil_support::{
 	dispatch::{DispatchInfo, DispatchResult, PostDispatchInfo},
 	pallet_prelude::TransactionSource,
 	traits::IsType,
 	DefaultNoBound,
 };
-use pallet_transaction_payment::{ChargeTransactionPayment, OnChargeTransaction};
+use topsoil_transaction_payment::{ChargeTransactionPayment, OnChargeTransaction};
 use scale_info::TypeInfo;
 use soil_runtime::{
 	traits::{
@@ -71,7 +71,7 @@ pub mod weights;
 mod benchmarking;
 
 mod payment;
-use frame_support::{pallet_prelude::Weight, traits::tokens::AssetId};
+use topsoil_support::{pallet_prelude::Weight, traits::tokens::AssetId};
 pub use payment::*;
 pub use weights::WeightInfo;
 
@@ -80,7 +80,7 @@ pub(crate) type BalanceOf<T> = <OnChargeTransactionOf<T> as OnChargeTransaction<
 
 /// Type aliases used for interaction with `OnChargeTransaction`.
 pub(crate) type OnChargeTransactionOf<T> =
-	<T as pallet_transaction_payment::Config>::OnChargeTransaction;
+	<T as topsoil_transaction_payment::Config>::OnChargeTransaction;
 
 /// Liquidity info type alias for the chain's native asset.
 pub(crate) type NativeLiquidityInfoOf<T> =
@@ -104,15 +104,15 @@ pub enum InitialPayment<T: Config> {
 
 pub use pallet::*;
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
 
 	#[pallet::config]
-	pub trait Config: frame_system::Config + pallet_transaction_payment::Config {
+	pub trait Config: topsoil_system::Config + topsoil_transaction_payment::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 		/// The asset ID type that can be used for transaction payments in addition to a
 		/// native asset.
 		type AssetId: AssetId;
@@ -165,13 +165,13 @@ pub mod pallet {
 /// Require payment for transaction inclusion and optionally include a tip to gain additional
 /// priority in the queue.
 ///
-/// Wraps the transaction logic in [`pallet_transaction_payment`] and extends it with assets.
+/// Wraps the transaction logic in [`topsoil_transaction_payment`] and extends it with assets.
 /// An asset ID of `None` falls back to the underlying transaction payment logic via the native
 /// currency.
 ///
 /// Transaction payments are processed using different handlers based on the asset type:
 /// - Payments with a native asset are charged by
-///   [pallet_transaction_payment::Config::OnChargeTransaction].
+///   [topsoil_transaction_payment::Config::OnChargeTransaction].
 /// - Payments with other assets are charged by [Config::OnChargeAssetTransaction].
 #[derive(Encode, Decode, DecodeWithMemTracking, Clone, Eq, PartialEq, TypeInfo)]
 #[scale_info(skip_type_params(T))]
@@ -191,7 +191,7 @@ where
 	}
 
 	/// Fee withdrawal logic that dispatches to either [`Config::OnChargeAssetTransaction`] or
-	/// [`pallet_transaction_payment::Config::OnChargeTransaction`].
+	/// [`topsoil_transaction_payment::Config::OnChargeTransaction`].
 	fn withdraw_fee(
 		&self,
 		who: &T::AccountId,
@@ -316,7 +316,7 @@ where
 			return Ok((ValidTransaction::default(), Val::NoCharge, origin));
 		};
 		// Non-mutating call of `compute_fee` to calculate the fee used in the transaction priority.
-		let fee = pallet_transaction_payment::Pallet::<T>::compute_fee(len as u32, info, self.tip);
+		let fee = topsoil_transaction_payment::Pallet::<T>::compute_fee(len as u32, info, self.tip);
 		self.can_withdraw_fee(&who, call, info, fee)?;
 		let priority = ChargeTransactionPayment::<T>::get_priority(info, len, self.tip, fee);
 		let validity = ValidTransaction { priority, ..Default::default() };
@@ -367,7 +367,7 @@ where
 				let unspent_weight = extension_weight.saturating_sub(actual_ext_weight);
 				let mut actual_post_info = *post_info;
 				actual_post_info.refund(unspent_weight);
-				let actual_fee = pallet_transaction_payment::Pallet::<T>::compute_actual_fee(
+				let actual_fee = topsoil_transaction_payment::Pallet::<T>::compute_actual_fee(
 					len as u32,
 					info,
 					&actual_post_info,
@@ -381,7 +381,7 @@ where
 					tip,
 					already_withdrawn,
 				)?;
-				pallet_transaction_payment::Pallet::<T>::deposit_fee_paid_event(
+				topsoil_transaction_payment::Pallet::<T>::deposit_fee_paid_event(
 					who, actual_fee, tip,
 				);
 				Ok(unspent_weight)
@@ -393,7 +393,7 @@ where
 				let unspent_weight = extension_weight.saturating_sub(actual_ext_weight);
 				let mut actual_post_info = *post_info;
 				actual_post_info.refund(unspent_weight);
-				let actual_fee = pallet_transaction_payment::Pallet::<T>::compute_actual_fee(
+				let actual_fee = topsoil_transaction_payment::Pallet::<T>::compute_actual_fee(
 					len as u32,
 					info,
 					&actual_post_info,

@@ -20,9 +20,9 @@
 #![cfg(feature = "runtime-benchmarks")]
 
 use crate::*;
-use frame_benchmarking::v2::*;
-use frame_support::traits::Get;
-use frame_system::RawOrigin;
+use topsoil_benchmarking::v2::*;
+use topsoil_support::traits::Get;
+use topsoil_system::RawOrigin;
 use soil_runtime::traits::Bounded;
 
 const SEED: u32 = 0;

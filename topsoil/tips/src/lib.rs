@@ -15,9 +15,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//! # Tipping Pallet ( pallet-tips )
+//! # Tipping Pallet ( topsoil-tips )
 //!
-//! > NOTE: This pallet is tightly coupled with pallet-treasury.
+//! > NOTE: This pallet is tightly coupled with topsoil-treasury.
 //!
 //! A subsystem to allow for an agile "tipping" process, whereby a reward may be given without first
 //! having a pre-determined stakeholder group come to consensus on how much should be paid.
@@ -69,7 +69,7 @@ use soil_runtime::{
 
 use alloc::{vec, vec::Vec};
 use codec::{Decode, Encode};
-use frame_support::{
+use topsoil_support::{
 	ensure,
 	traits::{
 		ContainsLengthBound, Currency, EnsureOrigin, ExistenceRequirement::KeepAlive, Get,
@@ -77,7 +77,7 @@ use frame_support::{
 	},
 	Parameter,
 };
-use frame_system::pallet_prelude::BlockNumberFor;
+use topsoil_system::pallet_prelude::BlockNumberFor;
 
 #[cfg(any(feature = "try-runtime", test))]
 use soil_runtime::TryRuntimeError;
@@ -87,9 +87,9 @@ pub use weights::WeightInfo;
 
 const LOG_TARGET: &str = "runtime::tips";
 
-pub type BalanceOf<T, I = ()> = pallet_treasury::BalanceOf<T, I>;
-pub type NegativeImbalanceOf<T, I = ()> = pallet_treasury::NegativeImbalanceOf<T, I>;
-type AccountIdLookupOf<T> = <<T as frame_system::Config>::Lookup as StaticLookup>::Source;
+pub type BalanceOf<T, I = ()> = topsoil_treasury::BalanceOf<T, I>;
+pub type NegativeImbalanceOf<T, I = ()> = topsoil_treasury::NegativeImbalanceOf<T, I>;
+type AccountIdLookupOf<T> = <<T as topsoil_system::Config>::Lookup as StaticLookup>::Source;
 
 /// An open tipping "motion". Retains all details of a tip including information on the finder
 /// and the members who have voted.
@@ -118,11 +118,11 @@ pub struct OpenTip<
 	finders_fee: bool,
 }
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
-	use frame_support::pallet_prelude::*;
-	use frame_system::pallet_prelude::*;
+	use topsoil_support::pallet_prelude::*;
+	use topsoil_system::pallet_prelude::*;
 
 	/// The in-code storage version.
 	const STORAGE_VERSION: StorageVersion = StorageVersion::new(4);
@@ -133,11 +133,11 @@ pub mod pallet {
 	pub struct Pallet<T, I = ()>(_);
 
 	#[pallet::config]
-	pub trait Config<I: 'static = ()>: frame_system::Config + pallet_treasury::Config<I> {
+	pub trait Config<I: 'static = ()>: topsoil_system::Config + topsoil_treasury::Config<I> {
 		/// The overarching event type.
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self, I>>
-			+ IsType<<Self as frame_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// Maximum acceptable reason length.
 		///
@@ -435,7 +435,7 @@ pub mod pallet {
 
 			let tip = Tips::<T, I>::get(hash).ok_or(Error::<T, I>::UnknownTip)?;
 			let n = tip.closes.as_ref().ok_or(Error::<T, I>::StillOpen)?;
-			ensure!(frame_system::Pallet::<T>::block_number() >= *n, Error::<T, I>::Premature);
+			ensure!(topsoil_system::Pallet::<T>::block_number() >= *n, Error::<T, I>::Premature);
 			// closed.
 			Reasons::<T, I>::remove(&tip.reason);
 			Tips::<T, I>::remove(hash);
@@ -529,7 +529,7 @@ impl<T: Config<I>, I: 'static> Pallet<T, I> {
 		Self::retain_active_tips(&mut tip.tips);
 		let threshold = T::Tippers::count().div_ceil(2);
 		if tip.tips.len() >= threshold && tip.closes.is_none() {
-			tip.closes = Some(frame_system::Pallet::<T>::block_number() + T::TipCountdown::get());
+			tip.closes = Some(topsoil_system::Pallet::<T>::block_number() + T::TipCountdown::get());
 			true
 		} else {
 			false
@@ -570,7 +570,7 @@ impl<T: Config<I>, I: 'static> Pallet<T, I> {
 		tips.sort_by_key(|i| i.1);
 
 		let treasury = Self::account_id();
-		let max_payout = pallet_treasury::Pallet::<T, I>::pot();
+		let max_payout = topsoil_treasury::Pallet::<T, I>::pot();
 
 		let mut payout = tips[tips.len() / 2].1.min(max_payout);
 		if !tip.deposit.is_zero() {
@@ -618,7 +618,7 @@ impl<T: Config<I>, I: 'static> Pallet<T, I> {
 			tips: Vec<(AccountId, Balance)>,
 		}
 
-		use frame_support::{migration::storage_key_iter, Twox64Concat};
+		use topsoil_support::{migration::storage_key_iter, Twox64Concat};
 
 		let zero_account = T::AccountId::decode(&mut TrailingZeroInput::new(&[][..]))
 			.expect("infinite input; qed");

@@ -19,7 +19,7 @@ trait Config {
 	type C;
 }
 
-#[derive(frame_support::CloneNoBound)]
+#[derive(topsoil_support::CloneNoBound)]
 struct Foo<T: Config> {
 	c: T::C,
 }

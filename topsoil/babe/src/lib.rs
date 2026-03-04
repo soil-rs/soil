@@ -25,14 +25,14 @@ extern crate alloc;
 
 use alloc::{boxed::Box, vec, vec::Vec};
 use codec::{Decode, Encode};
-use frame_support::{
+use topsoil_support::{
 	dispatch::{DispatchResultWithPostInfo, Pays},
 	ensure,
 	traits::{ConstU32, DisabledValidators, FindAuthor, Get, OnTimestampSet, OneSessionHandler},
 	weights::Weight,
 	BoundedVec, WeakBoundedVec,
 };
-use frame_system::pallet_prelude::{BlockNumberFor, HeaderFor};
+use topsoil_system::pallet_prelude::{BlockNumberFor, HeaderFor};
 use soil_consensus_babe::{
 	digests::{NextConfigDescriptor, NextEpochDescriptor, PreDigest},
 	AllowedSlots, BabeAuthorityWeight, BabeEpochConfiguration, ConsensusLog, Epoch,
@@ -85,7 +85,7 @@ pub trait EpochChangeTrigger {
 }
 
 /// A type signifying to BABE that an external trigger
-/// for epoch changes (e.g. pallet-session) is used.
+/// for epoch changes (e.g. topsoil-session) is used.
 pub struct ExternalTrigger;
 
 impl EpochChangeTrigger for ExternalTrigger {
@@ -109,11 +109,11 @@ impl EpochChangeTrigger for SameAuthoritiesForever {
 
 const UNDER_CONSTRUCTION_SEGMENT_LENGTH: u32 = 256;
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
-	use frame_support::pallet_prelude::*;
-	use frame_system::pallet_prelude::*;
+	use topsoil_support::pallet_prelude::*;
+	use topsoil_system::pallet_prelude::*;
 
 	/// The BABE Pallet
 	#[pallet::pallet]
@@ -121,7 +121,7 @@ pub mod pallet {
 
 	#[pallet::config]
 	#[pallet::disable_frame_system_supertrait_check]
-	pub trait Config: pallet_timestamp::Config {
+	pub trait Config: topsoil_timestamp::Config {
 		/// The amount of time, in slots, that each epoch should last.
 		/// NOTE: Currently it is not possible to change the epoch duration after
 		/// the chain has started. Attempting to do so will brick block production.
@@ -311,7 +311,7 @@ pub mod pallet {
 	pub type SkippedEpochs<T> =
 		StorageValue<_, BoundedVec<(u64, SessionIndex), ConstU32<100>>, ValueQuery>;
 
-	#[derive(frame_support::DefaultNoBound)]
+	#[derive(topsoil_support::DefaultNoBound)]
 	#[pallet::genesis_config]
 	pub struct GenesisConfig<T: Config> {
 		pub authorities: Vec<(AuthorityId, BabeAuthorityWeight)>,
@@ -506,7 +506,7 @@ impl<T: Config> IsMember<AuthorityId> for Pallet<T> {
 	}
 }
 
-impl<T: Config> pallet_session::ShouldEndSession<BlockNumberFor<T>> for Pallet<T> {
+impl<T: Config> topsoil_session::ShouldEndSession<BlockNumberFor<T>> for Pallet<T> {
 	fn should_end_session(now: BlockNumberFor<T>) -> bool {
 		// it might be (and it is in current implementation) that session module is calling
 		// `should_end_session` from it's own `on_initialize` handler, in which case it's
@@ -563,7 +563,7 @@ impl<T: Config> Pallet<T> {
 	pub fn slot_duration() -> T::Moment {
 		// we double the minimum block-period so each author can always propose within
 		// the majority of their slot.
-		<T as pallet_timestamp::Config>::MinimumPeriod::get().saturating_mul(2u32.into())
+		<T as topsoil_timestamp::Config>::MinimumPeriod::get().saturating_mul(2u32.into())
 	}
 
 	/// Determine whether an epoch change should take place at this block.
@@ -611,7 +611,7 @@ impl<T: Config> Pallet<T> {
 	/// has returned `true`, and the caller is the only caller of this function.
 	///
 	/// Typically, this is not handled directly by the user, but by higher-level validator-set
-	/// manager logic like `pallet-session`.
+	/// manager logic like `topsoil-session`.
 	///
 	/// This doesn't do anything if `authorities` is empty.
 	pub fn enact_epoch_change(
@@ -690,7 +690,7 @@ impl<T: Config> Pallet<T> {
 		// Update the start blocks of the previous and new current epoch.
 		EpochStart::<T>::mutate(|(previous_epoch_start_block, current_epoch_start_block)| {
 			*previous_epoch_start_block = core::mem::take(current_epoch_start_block);
-			*current_epoch_start_block = <frame_system::Pallet<T>>::block_number();
+			*current_epoch_start_block = <topsoil_system::Pallet<T>>::block_number();
 		});
 
 		// After we update the current epoch, we signal the *next* epoch change
@@ -771,7 +771,7 @@ impl<T: Config> Pallet<T> {
 
 	fn deposit_consensus<U: Encode>(new: U) {
 		let log = DigestItem::Consensus(BABE_ENGINE_ID, new.encode());
-		<frame_system::Pallet<T>>::deposit_log(log)
+		<topsoil_system::Pallet<T>>::deposit_log(log)
 	}
 
 	fn deposit_randomness(randomness: &BabeRandomness) {
@@ -828,7 +828,7 @@ impl<T: Config> Pallet<T> {
 		}
 
 		let pre_digest =
-			<frame_system::Pallet<T>>::digest()
+			<topsoil_system::Pallet<T>>::digest()
 				.logs
 				.iter()
 				.filter_map(|s| s.as_pre_runtime())
@@ -943,7 +943,7 @@ impl<T: Config> OnTimestampSet<T::Moment> for Pallet<T> {
 	}
 }
 
-impl<T: Config> frame_support::traits::EstimateNextSessionRotation<BlockNumberFor<T>>
+impl<T: Config> topsoil_support::traits::EstimateNextSessionRotation<BlockNumberFor<T>>
 	for Pallet<T>
 {
 	fn average_session_length() -> BlockNumberFor<T> {
@@ -971,7 +971,7 @@ impl<T: Config> frame_support::traits::EstimateNextSessionRotation<BlockNumberFo
 	}
 }
 
-impl<T: Config> frame_support::traits::Lateness<BlockNumberFor<T>> for Pallet<T> {
+impl<T: Config> topsoil_support::traits::Lateness<BlockNumberFor<T>> for Pallet<T> {
 	fn lateness(&self) -> BlockNumberFor<T> {
 		Lateness::<T>::get()
 	}
@@ -983,7 +983,7 @@ impl<T: Config> soil_runtime::BoundToRuntimeAppPublic for Pallet<T> {
 
 impl<T: Config> OneSessionHandler<T::AccountId> for Pallet<T>
 where
-	T: pallet_session::Config,
+	T: topsoil_session::Config,
 {
 	type Key = AuthorityId;
 
@@ -1017,7 +1017,7 @@ where
 			),
 		);
 
-		let session_index = <pallet_session::Pallet<T>>::current_index();
+		let session_index = <topsoil_session::Pallet<T>>::current_index();
 
 		Self::enact_epoch_change(bounded_authorities, next_bounded_authorities, Some(session_index))
 	}
@@ -1050,7 +1050,7 @@ fn compute_randomness(
 
 pub mod migrations {
 	use super::*;
-	use frame_support::pallet_prelude::{StorageValue, ValueQuery};
+	use topsoil_support::pallet_prelude::{StorageValue, ValueQuery};
 
 	/// Something that can return the storage prefix of the `Babe` pallet.
 	pub trait BabePalletPrefix: Config {
@@ -1058,7 +1058,7 @@ pub mod migrations {
 	}
 
 	struct __OldNextEpochConfig<T>(core::marker::PhantomData<T>);
-	impl<T: BabePalletPrefix> frame_support::traits::StorageInstance for __OldNextEpochConfig<T> {
+	impl<T: BabePalletPrefix> topsoil_support::traits::StorageInstance for __OldNextEpochConfig<T> {
 		fn pallet_prefix() -> &'static str {
 			T::pallet_prefix()
 		}

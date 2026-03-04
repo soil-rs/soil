@@ -43,7 +43,7 @@ use soil_runtime::{
 
 use alloc::vec::Vec;
 use codec::Decode;
-use pallet_mmr::{primitives::AncestryProof, LeafDataProvider, NodesUtils, ParentNumberAndHash};
+use topsoil_mmr::{primitives::AncestryProof, LeafDataProvider, NodesUtils, ParentNumberAndHash};
 use soil_consensus_beefy::{
 	known_payloads,
 	mmr::{BeefyAuthoritySet, BeefyDataProvider, BeefyNextAuthoritySet, MmrLeaf, MmrLeafVersion},
@@ -51,8 +51,8 @@ use soil_consensus_beefy::{
 	ValidatorSet as BeefyValidatorSet,
 };
 
-use frame_support::{crypto::ecdsa::ECDSAExt, pallet_prelude::Weight, traits::Get};
-use frame_system::pallet_prelude::{BlockNumberFor, HeaderFor};
+use topsoil_support::{crypto::ecdsa::ECDSAExt, pallet_prelude::Weight, traits::Get};
+use topsoil_system::pallet_prelude::{BlockNumberFor, HeaderFor};
 
 pub use pallet::*;
 pub use weights::WeightInfo;
@@ -67,19 +67,19 @@ mod weights;
 /// A BEEFY consensus digest item with MMR root hash.
 pub struct DepositBeefyDigest<T>(core::marker::PhantomData<T>);
 
-impl<T> pallet_mmr::primitives::OnNewRoot<soil_consensus_beefy::MmrRootHash> for DepositBeefyDigest<T>
+impl<T> topsoil_mmr::primitives::OnNewRoot<soil_consensus_beefy::MmrRootHash> for DepositBeefyDigest<T>
 where
-	T: pallet_mmr::Config<Hashing = soil_consensus_beefy::MmrHashing>,
-	T: pallet_beefy::Config,
+	T: topsoil_mmr::Config<Hashing = soil_consensus_beefy::MmrHashing>,
+	T: topsoil_beefy::Config,
 {
 	fn on_new_root(root: &soil_consensus_beefy::MmrRootHash) {
 		let digest = soil_runtime::generic::DigestItem::Consensus(
 			soil_consensus_beefy::BEEFY_ENGINE_ID,
 			codec::Encode::encode(&soil_consensus_beefy::ConsensusLog::<
-				<T as pallet_beefy::Config>::BeefyId,
+				<T as topsoil_beefy::Config>::BeefyId,
 			>::MmrRoot(*root)),
 		);
-		frame_system::Pallet::<T>::deposit_log(digest);
+		topsoil_system::Pallet::<T>::deposit_log(digest);
 	}
 }
 
@@ -97,14 +97,14 @@ impl Convert<soil_consensus_beefy::ecdsa_crypto::AuthorityId, Vec<u8>> for Beefy
 	}
 }
 
-type MerkleRootOf<T> = <<T as pallet_mmr::Config>::Hashing as soil_runtime::traits::Hash>::Output;
+type MerkleRootOf<T> = <<T as topsoil_mmr::Config>::Hashing as soil_runtime::traits::Hash>::Output;
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	#![allow(missing_docs)]
 
 	use super::*;
-	use frame_support::pallet_prelude::*;
+	use topsoil_support::pallet_prelude::*;
 
 	/// BEEFY-MMR pallet.
 	#[pallet::pallet]
@@ -113,7 +113,7 @@ pub mod pallet {
 	/// The module's configuration trait.
 	#[pallet::config]
 	#[pallet::disable_frame_system_supertrait_check]
-	pub trait Config: pallet_mmr::Config + pallet_beefy::Config {
+	pub trait Config: topsoil_mmr::Config + topsoil_beefy::Config {
 		/// Current leaf version.
 		///
 		/// Specifies the version number added to every leaf that get's appended to the MMR.
@@ -126,7 +126,7 @@ pub mod pallet {
 		/// and later to Ethereum Addresses (160 bits) to simplify using them on Ethereum chain,
 		/// but the rest of the Substrate codebase is storing them compressed (33 bytes) for
 		/// efficiency reasons.
-		type BeefyAuthorityToMerkleLeaf: Convert<<Self as pallet_beefy::Config>::BeefyId, Vec<u8>>;
+		type BeefyAuthorityToMerkleLeaf: Convert<<Self as topsoil_beefy::Config>::BeefyId, Vec<u8>>;
 
 		/// The type expected for the leaf extra data
 		type LeafExtra: Member + codec::FullCodec;
@@ -153,7 +153,7 @@ pub mod pallet {
 impl<T: Config> LeafDataProvider for Pallet<T> {
 	type LeafData = MmrLeaf<
 		BlockNumberFor<T>,
-		<T as frame_system::Config>::Hash,
+		<T as topsoil_system::Config>::Hash,
 		MerkleRootOf<T>,
 		T::LeafExtra,
 	>;
@@ -168,14 +168,14 @@ impl<T: Config> LeafDataProvider for Pallet<T> {
 	}
 }
 
-impl<T> soil_consensus_beefy::OnNewValidatorSet<<T as pallet_beefy::Config>::BeefyId> for Pallet<T>
+impl<T> soil_consensus_beefy::OnNewValidatorSet<<T as topsoil_beefy::Config>::BeefyId> for Pallet<T>
 where
 	T: pallet::Config,
 {
 	/// Compute and cache BEEFY authority sets based on updated BEEFY validator sets.
 	fn on_new_validator_set(
-		current_set: &BeefyValidatorSet<<T as pallet_beefy::Config>::BeefyId>,
-		next_set: &BeefyValidatorSet<<T as pallet_beefy::Config>::BeefyId>,
+		current_set: &BeefyValidatorSet<<T as topsoil_beefy::Config>::BeefyId>,
+		next_set: &BeefyValidatorSet<<T as topsoil_beefy::Config>::BeefyId>,
 	) {
 		let current = Pallet::<T>::compute_authority_set(current_set);
 		let next = Pallet::<T>::compute_authority_set(next_set);
@@ -187,13 +187,13 @@ where
 
 impl<T: Config> AncestryHelper<HeaderFor<T>> for Pallet<T>
 where
-	T: pallet_mmr::Config<Hashing = soil_consensus_beefy::MmrHashing>,
+	T: topsoil_mmr::Config<Hashing = soil_consensus_beefy::MmrHashing>,
 {
 	type Proof = AncestryProof<MerkleRootOf<T>>;
 	type ValidationContext = MerkleRootOf<T>;
 
 	fn is_proof_optimal(proof: &Self::Proof) -> bool {
-		let is_proof_optimal = pallet_mmr::Pallet::<T>::is_ancestry_proof_optimal(proof);
+		let is_proof_optimal = topsoil_mmr::Pallet::<T>::is_ancestry_proof_optimal(proof);
 
 		// We don't check the proof size when running benchmarks, since we use mock proofs
 		// which would cause the test to fail.
@@ -206,7 +206,7 @@ where
 
 	fn extract_validation_context(header: HeaderFor<T>) -> Option<Self::ValidationContext> {
 		// Check if the provided header is canonical.
-		let expected_hash = frame_system::Pallet::<T>::block_hash(header.number());
+		let expected_hash = topsoil_system::Pallet::<T>::block_hash(header.number());
 		if expected_hash != header.hash() {
 			return None;
 		}
@@ -214,7 +214,7 @@ where
 		// Extract the MMR root from the header digest
 		header.digest().convert_first(|l| {
 			l.try_to(OpaqueDigestItemId::Consensus(&soil_consensus_beefy::BEEFY_ENGINE_ID))
-				.and_then(|log: ConsensusLog<<T as pallet_beefy::Config>::BeefyId>| match log {
+				.and_then(|log: ConsensusLog<<T as topsoil_beefy::Config>::BeefyId>| match log {
 					ConsensusLog::MmrRoot(mmr_root) => Some(mmr_root),
 					_ => None,
 				})
@@ -227,7 +227,7 @@ where
 		context: Self::ValidationContext,
 	) -> bool {
 		let commitment_leaf_count =
-			match pallet_mmr::Pallet::<T>::block_num_to_leaf_count(commitment.block_number) {
+			match topsoil_mmr::Pallet::<T>::block_num_to_leaf_count(commitment.block_number) {
 				Ok(commitment_leaf_count) => commitment_leaf_count,
 				Err(_) => {
 					// We can't prove that the commitment is non-canonical if the
@@ -243,7 +243,7 @@ where
 
 		let canonical_mmr_root = context;
 		let canonical_prev_root =
-			match pallet_mmr::Pallet::<T>::verify_ancestry_proof(canonical_mmr_root, proof) {
+			match topsoil_mmr::Pallet::<T>::verify_ancestry_proof(canonical_mmr_root, proof) {
 				Ok(canonical_prev_root) => canonical_prev_root,
 				Err(_) => {
 					// Can't prove that the commitment is non-canonical if the proof
@@ -284,7 +284,7 @@ where
 
 impl<T: Config> AncestryHelperWeightInfo<HeaderFor<T>> for Pallet<T>
 where
-	T: pallet_mmr::Config<Hashing = soil_consensus_beefy::MmrHashing>,
+	T: topsoil_mmr::Config<Hashing = soil_consensus_beefy::MmrHashing>,
 {
 	fn is_proof_optimal(proof: &<Self as AncestryHelper<HeaderFor<T>>>::Proof) -> Weight {
 		<T as Config>::WeightInfo::n_leafs_proof_is_optimal(proof.leaf_count.saturated_into())
@@ -327,7 +327,7 @@ impl<T: Config> Pallet<T> {
 	/// constructed from uncompressed secp256k1 public keys converted to Ethereum addresses
 	/// of the next BEEFY authority set.
 	fn compute_authority_set(
-		validator_set: &BeefyValidatorSet<<T as pallet_beefy::Config>::BeefyId>,
+		validator_set: &BeefyValidatorSet<<T as topsoil_beefy::Config>::BeefyId>,
 	) -> BeefyAuthoritySet<MerkleRootOf<T>> {
 		let id = validator_set.id();
 		let beefy_addresses = validator_set
@@ -351,7 +351,7 @@ impl<T: Config> Pallet<T> {
 			);
 		}
 		let keyset_commitment = binary_merkle_tree::merkle_root::<
-			<T as pallet_mmr::Config>::Hashing,
+			<T as topsoil_mmr::Config>::Hashing,
 			_,
 		>(beefy_addresses)
 		.into();

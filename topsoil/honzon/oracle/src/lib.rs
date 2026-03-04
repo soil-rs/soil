@@ -77,7 +77,7 @@ use codec::{Decode, Encode, MaxEncodedLen};
 
 use serde::{Deserialize, Serialize};
 
-use frame_support::{
+use topsoil_support::{
 	dispatch::Pays,
 	ensure,
 	pallet_prelude::*,
@@ -85,7 +85,7 @@ use frame_support::{
 	weights::Weight,
 	PalletId, Parameter,
 };
-use frame_system::pallet_prelude::*;
+use topsoil_system::pallet_prelude::*;
 use scale_info::TypeInfo;
 use soil_runtime::{
 	traits::{AccountIdConversion, Member},
@@ -127,7 +127,7 @@ impl<OracleKey, OracleValue, L: Get<u32>> BenchmarkHelper<OracleKey, OracleValue
 	}
 }
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
 
@@ -159,7 +159,7 @@ pub mod pallet {
 	}
 
 	#[pallet::config]
-	pub trait Config<I: 'static = ()>: frame_system::Config {
+	pub trait Config<I: 'static = ()>: topsoil_system::Config {
 		/// A hook to be called when new data is received.
 		///
 		/// This hook is triggered whenever an oracle operator successfully submits new data.

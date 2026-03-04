@@ -17,29 +17,29 @@
 
 //! The crate's tests.
 
-use crate as pallet_salary;
+use crate as topsoil_salary;
 use crate::*;
-use frame::{deps::soil_io, testing_prelude::*};
-use pallet_ranked_collective::{EnsureRanked, Geometric};
+use topsoil::{deps::soil_io, testing_prelude::*};
+use topsoil_ranked_collective::{EnsureRanked, Geometric};
 
 type Rank = u16;
-type Block = frame_system::mocking::MockBlock<Test>;
+type Block = topsoil_system::mocking::MockBlock<Test>;
 
 construct_runtime!(
 	pub struct Test {
-		System: frame_system,
-		Salary: pallet_salary,
-		Club: pallet_ranked_collective,
+		System: topsoil_system,
+		Salary: topsoil_salary,
+		Club: topsoil_ranked_collective,
 	}
 );
 
 parameter_types! {
-	pub BlockWeights: frame_system::limits::BlockWeights =
-		frame_system::limits::BlockWeights::simple_max(Weight::from_parts(1_000_000, 0));
+	pub BlockWeights: topsoil_system::limits::BlockWeights =
+		topsoil_system::limits::BlockWeights::simple_max(Weight::from_parts(1_000_000, 0));
 }
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Test {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Test {
 	type Block = Block;
 }
 
@@ -102,26 +102,26 @@ parameter_types! {
 	pub static MinRankOfClassDelta: Rank = 0;
 }
 
-impl pallet_ranked_collective::Config for Test {
+impl topsoil_ranked_collective::Config for Test {
 	type WeightInfo = ();
 	type RuntimeEvent = RuntimeEvent;
 	type PromoteOrigin = EitherOf<
 		// Root can promote arbitrarily.
-		frame_system::EnsureRootWithSuccess<Self::AccountId, ConstU16<65535>>,
+		topsoil_system::EnsureRootWithSuccess<Self::AccountId, ConstU16<65535>>,
 		// Members can promote up to the rank of 2 below them.
 		MapSuccess<EnsureRanked<Test, (), 2>, ReduceBy<ConstU16<2>>>,
 	>;
 	type AddOrigin = MapSuccess<Self::PromoteOrigin, ReplaceWithDefault<()>>;
 	type DemoteOrigin = EitherOf<
 		// Root can demote arbitrarily.
-		frame_system::EnsureRootWithSuccess<Self::AccountId, ConstU16<65535>>,
+		topsoil_system::EnsureRootWithSuccess<Self::AccountId, ConstU16<65535>>,
 		// Members can demote up to the rank of 3 below them.
 		MapSuccess<EnsureRanked<Test, (), 3>, ReduceBy<ConstU16<3>>>,
 	>;
 	type RemoveOrigin = Self::DemoteOrigin;
 	type ExchangeOrigin = EitherOf<
 		// Root can exchange arbitrarily.
-		frame_system::EnsureRootWithSuccess<Self::AccountId, ConstU16<65535>>,
+		topsoil_system::EnsureRootWithSuccess<Self::AccountId, ConstU16<65535>>,
 		// Members can exchange up to the rank of 2 below them.
 		MapSuccess<EnsureRanked<Test, (), 2>, ReduceBy<ConstU16<2>>>,
 	>;
@@ -135,16 +135,16 @@ impl pallet_ranked_collective::Config for Test {
 }
 
 pub fn new_test_ext() -> TestState {
-	let t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	let mut ext = TestState::new(t);
 	ext.execute_with(|| System::set_block_number(1));
 	ext
 }
 
 fn assert_last_event(generic_event: <Test as Config>::RuntimeEvent) {
-	let events = frame_system::Pallet::<Test>::events();
-	let system_event: <Test as frame_system::Config>::RuntimeEvent = generic_event.into();
-	let frame_system::EventRecord { event, .. } = events.last().expect("Event expected");
+	let events = topsoil_system::Pallet::<Test>::events();
+	let system_event: <Test as topsoil_system::Config>::RuntimeEvent = generic_event.into();
+	let topsoil_system::EventRecord { event, .. } = events.last().expect("Event expected");
 	assert_eq!(event, &system_event.into());
 }
 
@@ -219,12 +219,12 @@ fn swap_bad_noops() {
 		// Swapping for another member is a noop:
 		assert_noop!(
 			Club::exchange_member(RuntimeOrigin::root(), 0, 1),
-			pallet_ranked_collective::Error::<Test>::AlreadyMember
+			topsoil_ranked_collective::Error::<Test>::AlreadyMember
 		);
 		// Swapping for the same member is a noop:
 		assert_noop!(
 			Club::exchange_member(RuntimeOrigin::root(), 0, 0),
-			pallet_ranked_collective::Error::<Test>::SameMember
+			topsoil_ranked_collective::Error::<Test>::SameMember
 		);
 	});
 }

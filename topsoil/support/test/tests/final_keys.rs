@@ -16,8 +16,8 @@
 // limitations under the License.
 
 use codec::Encode;
-use frame_support::{derive_impl, storage::unhashed, StoragePrefixedMap};
-use frame_system::pallet_prelude::BlockNumberFor;
+use topsoil_support::{derive_impl, storage::unhashed, StoragePrefixedMap};
+use topsoil_system::pallet_prelude::BlockNumberFor;
 
 use soil_core::sr25519;
 use soil_io::{
@@ -29,16 +29,16 @@ use soil_runtime::{
 	traits::{BlakeTwo256, Verify},
 };
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 mod no_instance {
 	use super::*;
-	use frame_support::pallet_prelude::*;
+	use topsoil_support::pallet_prelude::*;
 
 	#[pallet::pallet]
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
-	pub trait Config: frame_system::Config {}
+	pub trait Config: topsoil_system::Config {}
 
 	#[pallet::call]
 	impl<T: Config> Pallet<T> {}
@@ -102,16 +102,16 @@ mod no_instance {
 	}
 }
 
-#[frame_support::pallet]
+#[topsoil_support::pallet]
 mod instance {
 	use super::*;
-	use frame_support::pallet_prelude::*;
+	use topsoil_support::pallet_prelude::*;
 
 	#[pallet::pallet]
 	pub struct Pallet<T, I = ()>(PhantomData<(T, I)>);
 
 	#[pallet::config]
-	pub trait Config<I: 'static = ()>: frame_system::Config {}
+	pub trait Config<I: 'static = ()>: topsoil_system::Config {}
 
 	#[pallet::call]
 	impl<T: Config<I>, I: 'static> Pallet<T, I> {}
@@ -199,19 +199,19 @@ pub type Header = generic::Header<BlockNumber, BlakeTwo256>;
 pub type UncheckedExtrinsic = generic::UncheckedExtrinsic<u32, RuntimeCall, Signature, ()>;
 pub type Block = generic::Block<Header, UncheckedExtrinsic>;
 
-frame_support::construct_runtime!(
+topsoil_support::construct_runtime!(
 	pub enum Runtime
 	{
-		System: frame_system,
+		System: topsoil_system,
 		FinalKeysNone: no_instance,
 		FinalKeysSome: instance,
 		Instance2FinalKeysSome: instance::<Instance2>,
 	}
 );
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::Config for Runtime {
-	type BaseCallFilter = frame_support::traits::Everything;
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::Config for Runtime {
+	type BaseCallFilter = topsoil_support::traits::Everything;
 	type Block = Block;
 	type RuntimeOrigin = RuntimeOrigin;
 	type RuntimeCall = RuntimeCall;

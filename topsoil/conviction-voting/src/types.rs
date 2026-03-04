@@ -19,7 +19,7 @@
 
 use codec::{Codec, Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use core::{fmt::Debug, marker::PhantomData};
-use frame_support::{traits::VoteTally, CloneNoBound, DebugNoBound, EqNoBound, PartialEqNoBound};
+use topsoil_support::{traits::VoteTally, CloneNoBound, DebugNoBound, EqNoBound, PartialEqNoBound};
 use scale_info::TypeInfo;
 use soil_runtime::traits::{Saturating, Zero};
 
