@@ -10719,42 +10719,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "sc-authority-discovery"
-version = "0.34.0"
-dependencies = [
- "async-trait",
- "futures",
- "futures-timer",
- "hex",
- "ip_network",
- "linked_hash_set",
- "log",
- "parity-scale-codec",
- "prost 0.12.6",
- "prost-build 0.13.5",
- "quickcheck",
- "rand 0.8.5",
- "sc-client-api",
- "sc-network",
- "sc-network-types",
- "sc-service",
- "serde",
- "serde_json",
- "soil-api",
- "soil-authority-discovery",
- "soil-blockchain",
- "soil-core",
- "soil-keystore",
- "soil-runtime",
- "soil-tracing",
- "substrate-prometheus-endpoint",
- "substrate-test-runtime-client",
- "tempfile",
- "thiserror 1.0.69",
- "tokio",
-]
-
-[[package]]
 name = "sc-basic-authorship"
 version = "0.34.0"
 dependencies = [
@@ -13011,11 +12975,37 @@ dependencies = [
 name = "soil-authority-discovery"
 version = "26.0.0"
 dependencies = [
+ "async-trait",
+ "futures",
+ "futures-timer",
+ "hex",
+ "ip_network",
+ "linked_hash_set",
+ "log",
  "parity-scale-codec",
+ "prost 0.12.6",
+ "prost-build 0.13.5",
+ "quickcheck",
+ "rand 0.8.5",
+ "sc-client-api",
+ "sc-network",
+ "sc-network-types",
+ "sc-service",
  "scale-info",
+ "serde",
+ "serde_json",
  "soil-api",
  "soil-application-crypto",
+ "soil-blockchain",
+ "soil-core",
+ "soil-keystore",
  "soil-runtime",
+ "soil-tracing",
+ "substrate-prometheus-endpoint",
+ "substrate-test-runtime-client",
+ "tempfile",
+ "thiserror 1.0.69",
+ "tokio",
 ]
 
 [[package]]
@@ -14041,9 +14031,7 @@ dependencies = [
  "rand 0.8.5",
  "regex",
  "sc-allocator",
- "sc-authority-discovery",
  "sc-basic-authorship",
- "sc-block-builder",
  "sc-chain-spec",
  "sc-cli",
  "sc-client-api",
@@ -14097,6 +14085,7 @@ dependencies = [
  "soil-api",
  "soil-application-crypto",
  "soil-authority-discovery",
+ "soil-block-builder",
  "soil-blockchain",
  "soil-consensus",
  "soil-consensus-babe",

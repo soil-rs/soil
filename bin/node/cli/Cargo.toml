@@ -75,9 +75,8 @@ pallet-im-online = { workspace = true, default-features = true }
 pallet-skip-feeless-payment = { workspace = true, default-features = true }
 pallet-transaction-payment-rpc = { workspace = true, default-features = true }
 sc-allocator = { workspace = true, default-features = true }
-sc-authority-discovery = { workspace = true, default-features = true }
 sc-basic-authorship = { workspace = true, default-features = true }
-sc-block-builder = { workspace = true, default-features = true }
+soil-block-builder = { workspace = true, default-features = true }
 sc-chain-spec = { workspace = true, default-features = true }
 sc-cli = { workspace = true, default-features = true }
 sc-client-api = { workspace = true, default-features = true }

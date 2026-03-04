@@ -27,7 +27,7 @@ use futures::{
 
 use sc_network::Multiaddr;
 use sc_network_types::PeerId;
-use soil_authority_discovery::AuthorityId;
+use crate::AuthorityId;
 
 /// Service to interact with the [`crate::Worker`].
 #[derive(Clone)]

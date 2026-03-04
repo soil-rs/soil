@@ -21,7 +21,7 @@ use log::{info, warn};
 use sc_network::{multiaddr::Protocol, Multiaddr};
 use sc_network_types::PeerId;
 use serde::{Deserialize, Serialize};
-use soil_authority_discovery::AuthorityId;
+use crate::AuthorityId;
 use soil_runtime::DeserializeOwned;
 use std::{
 	collections::{hash_map::Entry, HashMap, HashSet},
@@ -303,7 +303,7 @@ mod tests {
 	use quickcheck::{Arbitrary, Gen, QuickCheck, TestResult};
 	use sc_network_types::multihash::{Code, Multihash};
 
-	use soil_authority_discovery::{AuthorityId, AuthorityPair};
+	use crate::{AuthorityId, AuthorityPair};
 	use soil_core::crypto::Pair;
 
 	#[derive(Clone, Debug)]

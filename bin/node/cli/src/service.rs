@@ -662,7 +662,7 @@ pub fn new_full_base<N: NetworkBackend<Block, <Block as BlockT>::Hash>>(
 	// Spawn authority discovery module.
 	if role.is_authority() {
 		let authority_discovery_role =
-			sc_authority_discovery::Role::PublishAndDiscover(keystore_container.keystore());
+			soil_authority_discovery::Role::PublishAndDiscover(keystore_container.keystore());
 		let dht_event_stream =
 			network.event_stream("authority-discovery").filter_map(|e| async move {
 				match e {
@@ -671,8 +671,8 @@ pub fn new_full_base<N: NetworkBackend<Block, <Block as BlockT>::Hash>>(
 				}
 			});
 		let (authority_discovery_worker, _service) =
-			sc_authority_discovery::new_worker_and_service_with_config(
-				sc_authority_discovery::WorkerConfig {
+			soil_authority_discovery::new_worker_and_service_with_config(
+				soil_authority_discovery::WorkerConfig {
 					publish_non_global_ips: auth_disc_publish_non_global_ips,
 					public_addresses: auth_disc_public_addresses,
 					persisted_cache_directory: net_config_path,

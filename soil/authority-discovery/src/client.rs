@@ -16,16 +16,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-#![warn(missing_docs)]
-#![recursion_limit = "1024"]
-
-//! Substrate authority discovery.
-//!
-//! This crate enables Substrate authorities to discover and directly connect to
-//! other authorities. It is split into two components the [`Worker`] and the
-//! [`Service`].
-//!
-//! See [`Worker`] and [`Service`] for more documentation.
+//! Client-side authority discovery implementation.
 
 pub use crate::{
 	error::Error,
@@ -42,17 +33,10 @@ use futures::{
 
 use sc_network::{event::DhtEvent, Multiaddr};
 use sc_network_types::PeerId;
-use soil_authority_discovery::AuthorityId;
+use crate::AuthorityId;
 use soil_blockchain::HeaderBackend;
 use soil_core::traits::SpawnNamed;
 use soil_runtime::traits::Block as BlockT;
-mod error;
-mod interval;
-mod service;
-mod worker;
-
-#[cfg(test)]
-mod tests;
 
 /// Configuration of [`Worker`].
 pub struct WorkerConfig {

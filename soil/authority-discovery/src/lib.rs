@@ -39,6 +39,23 @@ pub type AuthorityId = app::Public;
 /// An authority discovery authority signature.
 pub type AuthoritySignature = app::Signature;
 
+#[cfg(feature = "std")]
+mod client;
+#[cfg(feature = "std")]
+mod error;
+#[cfg(feature = "std")]
+mod interval;
+#[cfg(feature = "std")]
+mod service;
+#[cfg(feature = "std")]
+mod worker;
+
+#[cfg(feature = "std")]
+pub use client::*;
+
+#[cfg(test)]
+mod tests;
+
 soil_api::decl_runtime_apis! {
 	/// The authority discovery api.
 	///

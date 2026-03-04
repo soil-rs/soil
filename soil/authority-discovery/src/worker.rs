@@ -50,7 +50,7 @@ use sc_network::{
 use sc_network_types::{multihash::Code, PeerId};
 use schema::PeerSignature;
 use soil_api::{ApiError, ProvideRuntimeApi};
-use soil_authority_discovery::{
+use crate::{
 	AuthorityDiscoveryApi, AuthorityId, AuthorityPair, AuthoritySignature,
 };
 use soil_blockchain::HeaderBackend;
@@ -213,7 +213,7 @@ struct RecordInfo {
 	record: Record,
 }
 
-/// Wrapper for [`AuthorityDiscoveryApi`](soil_authority_discovery::AuthorityDiscoveryApi). Can be
+/// Wrapper for [`AuthorityDiscoveryApi`](crate::AuthorityDiscoveryApi). Can be
 /// be implemented by any struct without dependency on the runtime.
 #[async_trait::async_trait]
 pub trait AuthorityDiscovery<Block: BlockT> {

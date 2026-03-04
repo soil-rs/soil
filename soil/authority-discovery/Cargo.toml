@@ -8,6 +8,7 @@ license = "Apache-2.0"
 homepage.workspace = true
 repository.workspace = true
 readme = "README.md"
+build = "build.rs"
 
 [lints]
 workspace = true
@@ -22,6 +23,38 @@ soil-api = { workspace = true }
 soil-application-crypto = { workspace = true }
 soil-runtime = { workspace = true }
 
+# std-only deps (former sc-authority-discovery)
+async-trait = { optional = true, workspace = true }
+futures = { optional = true, workspace = true }
+futures-timer = { optional = true, workspace = true }
+ip_network = { optional = true, workspace = true }
+linked_hash_set = { optional = true, workspace = true }
+log = { optional = true, workspace = true, default-features = true }
+prometheus-endpoint = { optional = true, workspace = true, default-features = true }
+prost = { optional = true, workspace = true }
+rand = { optional = true, workspace = true, default-features = true }
+sc-client-api = { optional = true, workspace = true, default-features = true }
+sc-network = { optional = true, workspace = true, default-features = true }
+sc-network-types = { optional = true, workspace = true, default-features = true }
+sc-service = { optional = true, workspace = true }
+serde = { optional = true, workspace = true }
+serde_json = { optional = true, workspace = true }
+soil-blockchain = { optional = true, workspace = true, default-features = true }
+soil-core = { optional = true, workspace = true, default-features = true }
+soil-keystore = { optional = true, workspace = true, default-features = true }
+thiserror = { optional = true, workspace = true }
+tokio = { optional = true, workspace = true }
+
+[dev-dependencies]
+hex = { workspace = true }
+quickcheck = { workspace = true }
+soil-tracing = { workspace = true, default-features = true }
+substrate-test-runtime-client = { workspace = true }
+tempfile = { workspace = true }
+
+[build-dependencies]
+prost-build = { optional = true, workspace = true }
+
 [features]
 default = ["std"]
 std = [
@@ -30,6 +63,27 @@ std = [
 	"soil-api/std",
 	"soil-application-crypto/std",
 	"soil-runtime/std",
+	"dep:async-trait",
+	"dep:futures",
+	"dep:futures-timer",
+	"dep:ip_network",
+	"dep:linked_hash_set",
+	"dep:log",
+	"dep:prometheus-endpoint",
+	"dep:prost",
+	"dep:prost-build",
+	"dep:rand",
+	"dep:sc-client-api",
+	"dep:sc-network",
+	"dep:sc-network-types",
+	"dep:sc-service",
+	"dep:serde",
+	"dep:serde_json",
+	"dep:soil-blockchain",
+	"dep:soil-core",
+	"dep:soil-keystore",
+	"dep:thiserror",
+	"dep:tokio",
 ]
 serde = [
 	"scale-info/serde",

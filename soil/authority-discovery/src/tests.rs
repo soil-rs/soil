@@ -30,7 +30,7 @@ use sc_network_types::ed25519;
 use std::{collections::HashSet, sync::Arc};
 
 use sc_network::{multiaddr::Protocol, Multiaddr, PeerId};
-use soil_authority_discovery::AuthorityId;
+use crate::AuthorityId;
 use soil_core::{crypto::key_types, testing::TaskExecutor, traits::SpawnNamed};
 use soil_keystore::{testing::MemoryKeystore, Keystore};
 
