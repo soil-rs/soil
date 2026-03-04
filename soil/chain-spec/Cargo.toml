@@ -16,30 +16,62 @@ workspace = true
 targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
-array-bytes = { workspace = true, default-features = true }
+array-bytes = { workspace = true, default-features = true, optional = true}
 clap = { features = ["derive"], optional = true, workspace = true }
-codec = { features = ["derive"], workspace = true }
-docify = { workspace = true }
-memmap2 = { workspace = true }
-soil-chain-spec-derive = { workspace = true, default-features = true }
-soil-client-api = { workspace = true, default-features = true }
-soil-executor = { workspace = true, default-features = true }
-soil-network = { workspace = true, default-features = true }
-soil-telemetry = { workspace = true, default-features = true }
-serde = { features = ["derive"], workspace = true, default-features = true }
-serde_json = { workspace = true, default-features = true }
-soil-blockchain = { workspace = true, default-features = true }
-soil-core = { workspace = true, default-features = true }
-soil-crypto-hashing = { workspace = true, default-features = true }
-soil-genesis-builder = { workspace = true, default-features = true }
-soil-io = { workspace = true }
-soil-runtime = { workspace = true, default-features = true }
-soil-state-machine = { workspace = true, default-features = true }
-soil-tracing = { workspace = true, default-features = true }
+codec = { features = ["derive"], workspace = true, optional = true}
+docify = { workspace = true, optional = true}
+memmap2 = { workspace = true, optional = true}
+soil-chain-spec-derive = { workspace = true, default-features = true, optional = true}
+soil-client-api = { workspace = true, default-features = true, optional = true}
+soil-executor = { workspace = true, default-features = true, optional = true}
+soil-network = { workspace = true, default-features = true, optional = true}
+soil-telemetry = { workspace = true, default-features = true, optional = true}
+serde = { features = ["derive"], workspace = true, default-features = true, optional = true}
+serde_json = { workspace = true, default-features = true, optional = true}
+soil-blockchain = { workspace = true, default-features = true, optional = true}
+soil-core = { workspace = true, default-features = true, optional = true}
+soil-crypto-hashing = { workspace = true, default-features = true, optional = true}
+soil-genesis-builder = { workspace = true, default-features = true, optional = true}
+soil-io = { workspace = true, optional = true}
+soil-runtime = { workspace = true, default-features = true, optional = true}
+soil-state-machine = { workspace = true, default-features = true, optional = true}
+soil-tracing = { workspace = true, default-features = true, optional = true}
 
 [features]
 default = ["std"]
-std = []
+std = [
+	"array-bytes",
+	"clap",
+	"codec",
+	"docify",
+	"memmap2",
+	"serde",
+	"serde_json",
+	"soil-blockchain",
+	"soil-chain-spec-derive",
+	"soil-client-api",
+	"soil-core",
+	"soil-crypto-hashing",
+	"soil-executor",
+	"soil-genesis-builder",
+	"soil-io",
+	"soil-network",
+	"soil-runtime",
+	"soil-state-machine",
+	"soil-telemetry",
+	"soil-tracing",
+	"soil-client-api/std",
+	"soil-core/std",
+	"soil-crypto-hashing/std",
+	"soil-executor/std",
+	"soil-genesis-builder/std",
+	"soil-io/std",
+	"soil-network/std",
+	"soil-runtime/std",
+	"soil-state-machine/std",
+	"soil-telemetry/std",
+	"soil-tracing/std",
+]
 
 [dev-dependencies]
 pretty_assertions = { workspace = true }

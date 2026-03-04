@@ -15,19 +15,36 @@ workspace = true
 targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
-codec = { workspace = true, default-features = true }
-jsonrpsee = { features = ["client-core", "macros", "server-core"], workspace = true }
-soil-chain-spec = { workspace = true, default-features = true }
-soil-client-api = { workspace = true, default-features = true }
-sc-consensus-babe = { workspace = true, default-features = true }
-soil-consensus-epochs = { workspace = true, default-features = true }
-sc-consensus-grandpa = { workspace = true, default-features = true }
-serde = { features = ["derive"], workspace = true, default-features = true }
-serde_json = { workspace = true, default-features = true }
-soil-blockchain = { workspace = true, default-features = true }
-soil-runtime = { workspace = true, default-features = true }
-thiserror = { workspace = true }
+codec = { workspace = true, default-features = true, optional = true}
+jsonrpsee = { features = ["client-core", "macros", "server-core"], workspace = true, optional = true}
+soil-chain-spec = { workspace = true, default-features = true, optional = true}
+soil-client-api = { workspace = true, default-features = true, optional = true}
+sc-consensus-babe = { workspace = true, default-features = true, optional = true}
+soil-consensus-epochs = { workspace = true, default-features = true, optional = true}
+sc-consensus-grandpa = { workspace = true, default-features = true, optional = true}
+serde = { features = ["derive"], workspace = true, default-features = true, optional = true}
+serde_json = { workspace = true, default-features = true, optional = true}
+soil-blockchain = { workspace = true, default-features = true, optional = true}
+soil-runtime = { workspace = true, default-features = true, optional = true}
+thiserror = { workspace = true, optional = true}
 
 [features]
 default = ["std"]
-std = []
+std = [
+	"codec",
+	"jsonrpsee",
+	"sc-consensus-babe",
+	"sc-consensus-grandpa",
+	"serde",
+	"serde_json",
+	"soil-blockchain",
+	"soil-chain-spec",
+	"soil-client-api",
+	"soil-consensus-epochs",
+	"soil-runtime",
+	"thiserror",
+	"soil-chain-spec/std",
+	"soil-client-api/std",
+	"soil-consensus-epochs/std",
+	"soil-runtime/std",
+]

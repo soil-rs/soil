@@ -15,36 +15,80 @@ workspace = true
 targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
-array-bytes = { workspace = true, default-features = true }
-async-channel = { workspace = true }
-codec = { workspace = true, default-features = true }
-fdlimit = { workspace = true }
-futures = { workspace = true }
-log = { workspace = true, default-features = true }
-parking_lot = { workspace = true, default-features = true }
-sc-block-builder = { workspace = true, default-features = true }
-soil-client-api = { workspace = true, default-features = true }
-soil-client-db = { workspace = true }
-sc-consensus = { workspace = true, default-features = true }
-soil-executor = { workspace = true, default-features = true }
-soil-network = { workspace = true, default-features = true }
-soil-network-sync = { workspace = true, default-features = true }
-soil-service = { workspace = true, default-features = true }
-soil-transaction-pool-api = { workspace = true, default-features = true }
-soil-api = { workspace = true, default-features = true }
-soil-blockchain = { workspace = true, default-features = true }
-soil-consensus = { workspace = true, default-features = true }
-soil-core = { workspace = true, default-features = true }
-soil-io = { workspace = true, default-features = true }
-soil-runtime = { workspace = true, default-features = true }
-soil-state-machine = { workspace = true, default-features = true }
-soil-storage = { workspace = true, default-features = true }
-soil-tracing = { workspace = true, default-features = true }
-substrate-test-runtime = { workspace = true }
-substrate-test-runtime-client = { workspace = true }
-tempfile = { workspace = true }
-tokio = { features = ["time"], workspace = true, default-features = true }
+array-bytes = { workspace = true, default-features = true, optional = true}
+async-channel = { workspace = true, optional = true}
+codec = { workspace = true, default-features = true, optional = true}
+fdlimit = { workspace = true, optional = true}
+futures = { workspace = true, optional = true}
+log = { workspace = true, default-features = true, optional = true}
+parking_lot = { workspace = true, default-features = true, optional = true}
+sc-block-builder = { workspace = true, default-features = true, optional = true}
+soil-client-api = { workspace = true, default-features = true, optional = true}
+soil-client-db = { workspace = true, optional = true}
+sc-consensus = { workspace = true, default-features = true, optional = true}
+soil-executor = { workspace = true, default-features = true, optional = true}
+soil-network = { workspace = true, default-features = true, optional = true}
+soil-network-sync = { workspace = true, default-features = true, optional = true}
+soil-service = { workspace = true, default-features = true, optional = true}
+soil-transaction-pool-api = { workspace = true, default-features = true, optional = true}
+soil-api = { workspace = true, default-features = true, optional = true}
+soil-blockchain = { workspace = true, default-features = true, optional = true}
+soil-consensus = { workspace = true, default-features = true, optional = true}
+soil-core = { workspace = true, default-features = true, optional = true}
+soil-io = { workspace = true, default-features = true, optional = true}
+soil-runtime = { workspace = true, default-features = true, optional = true}
+soil-state-machine = { workspace = true, default-features = true, optional = true}
+soil-storage = { workspace = true, default-features = true, optional = true}
+soil-tracing = { workspace = true, default-features = true, optional = true}
+substrate-test-runtime = { workspace = true, optional = true}
+substrate-test-runtime-client = { workspace = true, optional = true}
+tempfile = { workspace = true, optional = true}
+tokio = { features = ["time"], workspace = true, default-features = true, optional = true}
 
 [features]
 default = ["std"]
-std = []
+std = [
+	"array-bytes",
+	"async-channel",
+	"codec",
+	"fdlimit",
+	"futures",
+	"log",
+	"parking_lot",
+	"sc-block-builder",
+	"sc-consensus",
+	"soil-api",
+	"soil-blockchain",
+	"soil-client-api",
+	"soil-client-db",
+	"soil-consensus",
+	"soil-core",
+	"soil-executor",
+	"soil-io",
+	"soil-network",
+	"soil-network-sync",
+	"soil-runtime",
+	"soil-service",
+	"soil-state-machine",
+	"soil-storage",
+	"soil-tracing",
+	"soil-transaction-pool-api",
+	"substrate-test-runtime",
+	"substrate-test-runtime-client",
+	"tempfile",
+	"tokio",
+	"soil-api/std",
+	"soil-client-api/std",
+	"soil-client-db/std",
+	"soil-core/std",
+	"soil-executor/std",
+	"soil-io/std",
+	"soil-network/std",
+	"soil-network-sync/std",
+	"soil-runtime/std",
+	"soil-service/std",
+	"soil-state-machine/std",
+	"soil-storage/std",
+	"soil-tracing/std",
+	"soil-transaction-pool-api/std",
+]

@@ -16,16 +16,30 @@ workspace = true
 targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
-console = { workspace = true }
-futures = { workspace = true }
-futures-timer = { workspace = true }
-log = { workspace = true, default-features = true }
-soil-client-api = { workspace = true, default-features = true }
-soil-network = { workspace = true, default-features = true }
-soil-network-sync = { workspace = true, default-features = true }
-soil-blockchain = { workspace = true, default-features = true }
-soil-runtime = { workspace = true, default-features = true }
+console = { workspace = true, optional = true}
+futures = { workspace = true, optional = true}
+futures-timer = { workspace = true, optional = true}
+log = { workspace = true, default-features = true, optional = true}
+soil-client-api = { workspace = true, default-features = true, optional = true}
+soil-network = { workspace = true, default-features = true, optional = true}
+soil-network-sync = { workspace = true, default-features = true, optional = true}
+soil-blockchain = { workspace = true, default-features = true, optional = true}
+soil-runtime = { workspace = true, default-features = true, optional = true}
 
 [features]
 default = ["std"]
-std = []
+std = [
+	"console",
+	"futures",
+	"futures-timer",
+	"log",
+	"soil-blockchain",
+	"soil-client-api",
+	"soil-network",
+	"soil-network-sync",
+	"soil-runtime",
+	"soil-client-api/std",
+	"soil-network/std",
+	"soil-network-sync/std",
+	"soil-runtime/std",
+]

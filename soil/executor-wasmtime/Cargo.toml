@@ -16,16 +16,16 @@ workspace = true
 targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
-log = { workspace = true, default-features = true }
-parking_lot = { workspace = true, default-features = true }
+log = { workspace = true, default-features = true, optional = true}
+parking_lot = { workspace = true, default-features = true, optional = true}
 
 # When bumping wasmtime do not forget to also bump rustix
 # to exactly the same version as used by wasmtime!
-anyhow = { workspace = true }
-soil-allocator = { workspace = true, default-features = true }
-soil-executor-common = { workspace = true, default-features = true }
-soil-runtime-interface = { workspace = true, default-features = true }
-soil-wasm-interface = { features = ["wasmtime"], workspace = true, default-features = true }
+anyhow = { workspace = true, optional = true}
+soil-allocator = { workspace = true, default-features = true, optional = true}
+soil-executor-common = { workspace = true, default-features = true, optional = true}
+soil-runtime-interface = { workspace = true, default-features = true, optional = true}
+soil-wasm-interface = { features = ["wasmtime"], workspace = true, default-features = true, optional = true}
 wasmtime = { features = [
 	"addr2line",
 	"cache",
@@ -37,7 +37,7 @@ wasmtime = { features = [
 	"pooling-allocator",
 	"profiling",
 	"threads",
-], workspace = true }
+], workspace = true, optional = true }
 
 # Here we include the rustix crate in the exactly same semver-compatible version as used by
 # wasmtime and enable its 'use-libc' flag.
@@ -45,11 +45,25 @@ wasmtime = { features = [
 # By default rustix directly calls the appropriate syscalls completely bypassing libc;
 # this doesn't have any actual benefits for us besides making it harder to debug memory
 # problems (since then `mmap` etc. cannot be easily hooked into).
-rustix = { features = ["fs", "mm", "param", "std", "use-libc"], workspace = true }
+rustix = { features = ["fs", "mm", "param", "std", "use-libc"], workspace = true, optional = true}
 
 [features]
 default = ["std"]
-std = []
+std = [
+	"anyhow",
+	"log",
+	"parking_lot",
+	"rustix",
+	"soil-allocator",
+	"soil-executor-common",
+	"soil-runtime-interface",
+	"soil-wasm-interface",
+	"wasmtime",
+	"soil-allocator/std",
+	"soil-executor-common/std",
+	"soil-runtime-interface/std",
+	"soil-wasm-interface/std",
+]
 
 [dev-dependencies]
 cargo_metadata = { workspace = true }

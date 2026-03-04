@@ -10,24 +10,37 @@ repository.workspace = true
 documentation = "https://docs.rs/soil-network-types"
 
 [dependencies]
-bs58 = { workspace = true, default-features = true }
-bytes = { workspace = true, default-features = false }
-ed25519-dalek = { workspace = true, default-features = true }
-libp2p-identity = { features = ["ed25519", "peerid", "rand"], workspace = true }
-libp2p-kad = { workspace = true, default-features = false }
-litep2p = { workspace = true }
-log = { workspace = true, default-features = true }
-multiaddr = { workspace = true }
-multihash = { workspace = true }
-rand = { workspace = true, default-features = true }
+bs58 = { workspace = true, default-features = true, optional = true}
+bytes = { workspace = true, default-features = false, optional = true}
+ed25519-dalek = { workspace = true, default-features = true, optional = true}
+libp2p-identity = { features = ["ed25519", "peerid", "rand"], workspace = true, optional = true}
+libp2p-kad = { workspace = true, default-features = false, optional = true}
+litep2p = { workspace = true, optional = true}
+log = { workspace = true, default-features = true, optional = true}
+multiaddr = { workspace = true, optional = true}
+multihash = { workspace = true, optional = true}
+rand = { workspace = true, default-features = true, optional = true}
 serde.workspace = true
 serde_with.workspace = true
-thiserror = { workspace = true }
-zeroize = { workspace = true }
+thiserror = { workspace = true, optional = true}
+zeroize = { workspace = true, optional = true}
 
 [features]
 default = ["std"]
-std = []
+std = [
+	"bs58",
+	"bytes",
+	"ed25519-dalek",
+	"libp2p-identity",
+	"libp2p-kad",
+	"litep2p",
+	"log",
+	"multiaddr",
+	"multihash",
+	"rand",
+	"thiserror",
+	"zeroize",
+]
 
 [dev-dependencies]
 quickcheck = { workspace = true, default-features = true }

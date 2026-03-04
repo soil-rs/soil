@@ -16,70 +16,157 @@ workspace = true
 targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
-async-trait = { workspace = true }
-codec = { workspace = true, default-features = true }
-directories = { workspace = true }
-exit-future = { workspace = true }
-futures = { workspace = true }
-futures-timer = { workspace = true }
-jsonrpsee = { features = ["server"], workspace = true }
-log = { workspace = true, default-features = true }
-parking_lot = { workspace = true, default-features = true }
-pin-project = { workspace = true }
-prometheus-endpoint = { workspace = true, default-features = true }
-rand = { workspace = true, default-features = true }
-soil-chain-spec = { workspace = true, default-features = true }
-soil-client-api = { workspace = true, default-features = true }
-soil-client-db = { workspace = true }
-sc-consensus = { workspace = true, default-features = true }
-soil-executor = { workspace = true, default-features = true }
-soil-informant = { workspace = true, default-features = true }
-sc-keystore = { workspace = true, default-features = true }
-soil-network = { workspace = true, default-features = true }
-soil-network-common = { workspace = true, default-features = true }
-soil-network-light = { workspace = true, default-features = true }
-soil-network-sync = { workspace = true, default-features = true }
-soil-network-transactions = { workspace = true, default-features = true }
-soil-network-types = { workspace = true, default-features = true }
-sc-rpc = { workspace = true, default-features = true }
-soil-rpc-server = { workspace = true, default-features = true }
-soil-rpc-spec-v2 = { workspace = true, default-features = true }
-soil-sysinfo = { workspace = true, default-features = true }
-soil-telemetry = { workspace = true, default-features = true }
-sc-tracing = { workspace = true, default-features = true }
-sc-transaction-pool = { workspace = true, default-features = true }
-soil-transaction-pool-api = { workspace = true, default-features = true }
-soil-utils = { workspace = true, default-features = true }
-schnellru = { workspace = true }
-serde = { workspace = true, default-features = true }
-serde_json = { workspace = true, default-features = true }
-soil-api = { workspace = true, default-features = true }
-soil-blockchain = { workspace = true, default-features = true }
-soil-consensus = { workspace = true, default-features = true }
-soil-core = { workspace = true, default-features = true }
-soil-externalities = { workspace = true, default-features = true }
-soil-keystore = { workspace = true, default-features = true }
-soil-runtime = { workspace = true, default-features = true }
-soil-session = { workspace = true, default-features = true }
-soil-state-machine = { workspace = true, default-features = true }
-soil-storage = { workspace = true, default-features = true }
-soil-transaction-pool = { workspace = true, default-features = true }
-soil-transaction-storage-proof = { workspace = true, default-features = true }
-soil-trie = { workspace = true, default-features = true }
-soil-version = { workspace = true, default-features = true }
-static_init = { workspace = true }
-tempfile = { workspace = true }
-thiserror = { workspace = true }
-tokio = { features = ["parking_lot", "rt-multi-thread", "time"], workspace = true, default-features = true }
-tracing = { workspace = true, default-features = true }
-tracing-futures = { workspace = true }
+async-trait = { workspace = true, optional = true}
+codec = { workspace = true, default-features = true, optional = true}
+directories = { workspace = true, optional = true}
+exit-future = { workspace = true, optional = true}
+futures = { workspace = true, optional = true}
+futures-timer = { workspace = true, optional = true}
+jsonrpsee = { features = ["server"], workspace = true, optional = true}
+log = { workspace = true, default-features = true, optional = true}
+parking_lot = { workspace = true, default-features = true, optional = true}
+pin-project = { workspace = true, optional = true}
+prometheus-endpoint = { workspace = true, default-features = true, optional = true}
+rand = { workspace = true, default-features = true, optional = true}
+soil-chain-spec = { workspace = true, default-features = true, optional = true}
+soil-client-api = { workspace = true, default-features = true, optional = true}
+soil-client-db = { workspace = true, optional = true}
+sc-consensus = { workspace = true, default-features = true, optional = true}
+soil-executor = { workspace = true, default-features = true, optional = true}
+soil-informant = { workspace = true, default-features = true, optional = true}
+sc-keystore = { workspace = true, default-features = true, optional = true}
+soil-network = { workspace = true, default-features = true, optional = true}
+soil-network-common = { workspace = true, default-features = true, optional = true}
+soil-network-light = { workspace = true, default-features = true, optional = true}
+soil-network-sync = { workspace = true, default-features = true, optional = true}
+soil-network-transactions = { workspace = true, default-features = true, optional = true}
+soil-network-types = { workspace = true, default-features = true, optional = true}
+sc-rpc = { workspace = true, default-features = true, optional = true}
+soil-rpc-server = { workspace = true, default-features = true, optional = true}
+soil-rpc-spec-v2 = { workspace = true, default-features = true, optional = true}
+soil-sysinfo = { workspace = true, default-features = true, optional = true}
+soil-telemetry = { workspace = true, default-features = true, optional = true}
+sc-tracing = { workspace = true, default-features = true, optional = true}
+sc-transaction-pool = { workspace = true, default-features = true, optional = true}
+soil-transaction-pool-api = { workspace = true, default-features = true, optional = true}
+soil-utils = { workspace = true, default-features = true, optional = true}
+schnellru = { workspace = true, optional = true}
+serde = { workspace = true, default-features = true, optional = true}
+serde_json = { workspace = true, default-features = true, optional = true}
+soil-api = { workspace = true, default-features = true, optional = true}
+soil-blockchain = { workspace = true, default-features = true, optional = true}
+soil-consensus = { workspace = true, default-features = true, optional = true}
+soil-core = { workspace = true, default-features = true, optional = true}
+soil-externalities = { workspace = true, default-features = true, optional = true}
+soil-keystore = { workspace = true, default-features = true, optional = true}
+soil-runtime = { workspace = true, default-features = true, optional = true}
+soil-session = { workspace = true, default-features = true, optional = true}
+soil-state-machine = { workspace = true, default-features = true, optional = true}
+soil-storage = { workspace = true, default-features = true, optional = true}
+soil-transaction-pool = { workspace = true, default-features = true, optional = true}
+soil-transaction-storage-proof = { workspace = true, default-features = true, optional = true}
+soil-trie = { workspace = true, default-features = true, optional = true}
+soil-version = { workspace = true, default-features = true, optional = true}
+static_init = { workspace = true, optional = true}
+tempfile = { workspace = true, optional = true}
+thiserror = { workspace = true, optional = true}
+tokio = { features = ["parking_lot", "rt-multi-thread", "time"], workspace = true, default-features = true, optional = true}
+tracing = { workspace = true, default-features = true, optional = true}
+tracing-futures = { workspace = true, optional = true}
 
 [dev-dependencies]
 substrate-test-runtime = { workspace = true }
 substrate-test-runtime-client = { workspace = true }
 
 [features]
-std = []
+std = [
+	"async-trait",
+	"codec",
+	"directories",
+	"exit-future",
+	"futures",
+	"futures-timer",
+	"jsonrpsee",
+	"log",
+	"parking_lot",
+	"pin-project",
+	"prometheus-endpoint",
+	"rand",
+	"sc-consensus",
+	"sc-keystore",
+	"sc-rpc",
+	"sc-tracing",
+	"sc-transaction-pool",
+	"schnellru",
+	"serde",
+	"serde_json",
+	"soil-api",
+	"soil-blockchain",
+	"soil-chain-spec",
+	"soil-client-api",
+	"soil-client-db",
+	"soil-consensus",
+	"soil-core",
+	"soil-executor",
+	"soil-externalities",
+	"soil-informant",
+	"soil-keystore",
+	"soil-network",
+	"soil-network-common",
+	"soil-network-light",
+	"soil-network-sync",
+	"soil-network-transactions",
+	"soil-network-types",
+	"soil-rpc-server",
+	"soil-rpc-spec-v2",
+	"soil-runtime",
+	"soil-session",
+	"soil-state-machine",
+	"soil-storage",
+	"soil-sysinfo",
+	"soil-telemetry",
+	"soil-transaction-pool",
+	"soil-transaction-pool-api",
+	"soil-transaction-storage-proof",
+	"soil-trie",
+	"soil-utils",
+	"soil-version",
+	"static_init",
+	"tempfile",
+	"thiserror",
+	"tokio",
+	"tracing",
+	"tracing-futures",
+	"soil-api/std",
+	"soil-chain-spec/std",
+	"soil-client-api/std",
+	"soil-client-db/std",
+	"soil-core/std",
+	"soil-executor/std",
+	"soil-externalities/std",
+	"soil-informant/std",
+	"soil-keystore/std",
+	"soil-network/std",
+	"soil-network-common/std",
+	"soil-network-light/std",
+	"soil-network-sync/std",
+	"soil-network-transactions/std",
+	"soil-network-types/std",
+	"soil-rpc-server/std",
+	"soil-rpc-spec-v2/std",
+	"soil-runtime/std",
+	"soil-session/std",
+	"soil-state-machine/std",
+	"soil-storage/std",
+	"soil-sysinfo/std",
+	"soil-telemetry/std",
+	"soil-transaction-pool/std",
+	"soil-transaction-pool-api/std",
+	"soil-transaction-storage-proof/std",
+	"soil-trie/std",
+	"soil-utils/std",
+	"soil-version/std",
+]
 default = ["std", "rocksdb"]
 # The RocksDB feature activates the RocksDB database backend. If it is not activated, and you pass
 # a path to a database, an error will be produced at runtime.

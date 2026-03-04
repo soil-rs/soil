@@ -21,23 +21,23 @@ name = "bench"
 harness = false
 
 [dependencies]
-parking_lot = { workspace = true, default-features = true }
-schnellru = { workspace = true }
-tracing = { workspace = true, default-features = true }
+parking_lot = { workspace = true, default-features = true, optional = true}
+schnellru = { workspace = true, optional = true}
+tracing = { workspace = true, default-features = true, optional = true}
 
-codec = { workspace = true, default-features = true }
-soil-executor-common = { workspace = true, default-features = true }
-soil-executor-polkavm = { workspace = true, default-features = true }
-soil-executor-wasmtime = { workspace = true, default-features = true }
-soil-api = { workspace = true, default-features = true }
-soil-core = { workspace = true, default-features = true }
-soil-externalities = { workspace = true, default-features = true }
-soil-io = { workspace = true, default-features = true }
-soil-panic-handler = { workspace = true, default-features = true }
-soil-runtime-interface = { workspace = true, default-features = true }
-soil-trie = { workspace = true, default-features = true }
-soil-version = { workspace = true, default-features = true }
-soil-wasm-interface = { workspace = true, default-features = true }
+codec = { workspace = true, default-features = true, optional = true}
+soil-executor-common = { workspace = true, default-features = true, optional = true}
+soil-executor-polkavm = { workspace = true, default-features = true, optional = true}
+soil-executor-wasmtime = { workspace = true, default-features = true, optional = true}
+soil-api = { workspace = true, default-features = true, optional = true}
+soil-core = { workspace = true, default-features = true, optional = true}
+soil-externalities = { workspace = true, default-features = true, optional = true}
+soil-io = { workspace = true, default-features = true, optional = true}
+soil-panic-handler = { workspace = true, default-features = true, optional = true}
+soil-runtime-interface = { workspace = true, default-features = true, optional = true}
+soil-trie = { workspace = true, default-features = true, optional = true}
+soil-version = { workspace = true, default-features = true, optional = true}
+soil-wasm-interface = { workspace = true, default-features = true, optional = true}
 
 [dev-dependencies]
 array-bytes = { workspace = true, default-features = true }
@@ -61,18 +61,32 @@ wat = { workspace = true }
 default = ["std"]
 # This crate does not have `no_std` support, we just require this for tests
 std = [
-	"soil-runtime-test/std",
+	"codec",
+	"parking_lot",
+	"schnellru",
+	"soil-api",
+	"soil-core",
+	"soil-executor-common",
+	"soil-executor-polkavm",
+	"soil-executor-wasmtime",
+	"soil-externalities",
+	"soil-io",
+	"soil-panic-handler",
+	"soil-runtime-interface",
+	"soil-trie",
+	"soil-version",
+	"soil-wasm-interface",
+	"tracing",
 	"soil-api/std",
 	"soil-core/std",
 	"soil-externalities/std",
 	"soil-io/std",
 	"soil-runtime-interface/std",
-	"soil-runtime/std",
-	"soil-state-machine/std",
-	"soil-tracing/std",
 	"soil-trie/std",
 	"soil-version/std",
 	"soil-wasm-interface/std",
-	"substrate-test-runtime/std",
+	"soil-executor-common/std",
+	"soil-executor-polkavm/std",
+	"soil-executor-wasmtime/std",
 ]
 wasm-extern-trace = []

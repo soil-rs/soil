@@ -12,21 +12,35 @@ description = "Transaction pool client facing API."
 workspace = true
 
 [dependencies]
-async-trait = { workspace = true }
-codec = { workspace = true, default-features = true }
-futures = { workspace = true }
-indexmap = { workspace = true }
-log = { workspace = true, default-features = true }
-serde = { features = ["derive"], workspace = true, default-features = true }
-soil-blockchain = { workspace = true, default-features = true }
-soil-core = { workspace = true }
-soil-runtime = { workspace = true }
-strum = { workspace = true, features = ["derive"] }
-thiserror = { workspace = true }
+async-trait = { workspace = true, optional = true}
+codec = { workspace = true, default-features = true, optional = true}
+futures = { workspace = true, optional = true}
+indexmap = { workspace = true, optional = true}
+log = { workspace = true, default-features = true, optional = true}
+serde = { features = ["derive"], workspace = true, default-features = true, optional = true}
+soil-blockchain = { workspace = true, default-features = true, optional = true}
+soil-core = { workspace = true, optional = true}
+soil-runtime = { workspace = true, optional = true}
+strum = { workspace = true, features = ["derive"], optional = true}
+thiserror = { workspace = true, optional = true}
 
 [features]
 default = ["std"]
-std = []
+std = [
+	"async-trait",
+	"codec",
+	"futures",
+	"indexmap",
+	"log",
+	"serde",
+	"soil-blockchain",
+	"soil-core",
+	"soil-runtime",
+	"strum",
+	"thiserror",
+	"soil-core/std",
+	"soil-runtime/std",
+]
 
 [dev-dependencies]
 serde_json = { workspace = true, default-features = true }

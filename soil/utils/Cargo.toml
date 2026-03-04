@@ -13,18 +13,27 @@ readme = "README.md"
 workspace = true
 
 [dependencies]
-async-channel = { workspace = true }
-futures = { workspace = true }
-futures-timer = { workspace = true }
-log = { workspace = true, default-features = true }
-parking_lot = { workspace = true, default-features = true }
-prometheus = { workspace = true }
-soil-arithmetic = { workspace = true }
+async-channel = { workspace = true, optional = true}
+futures = { workspace = true, optional = true}
+futures-timer = { workspace = true, optional = true}
+log = { workspace = true, default-features = true, optional = true}
+parking_lot = { workspace = true, default-features = true, optional = true}
+prometheus = { workspace = true, optional = true}
+soil-arithmetic = { workspace = true, optional = true}
 
 [dev-dependencies]
 tokio-test = { workspace = true }
 
 [features]
-std = []
+std = [
+	"async-channel",
+	"futures",
+	"futures-timer",
+	"log",
+	"parking_lot",
+	"prometheus",
+	"soil-arithmetic",
+	"soil-arithmetic/std",
+]
 default = ["std", "metered"]
 metered = []
