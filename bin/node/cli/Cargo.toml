@@ -90,7 +90,6 @@ sc-consensus-epochs = { workspace = true, default-features = true }
 sc-consensus-grandpa = { workspace = true, default-features = true }
 sc-consensus-grandpa-rpc = { workspace = true, default-features = true }
 sc-consensus-manual-seal = { workspace = true, default-features = true }
-sc-consensus-pow = { workspace = true, default-features = true }
 soil-consensus-slots = { workspace = true, default-features = true }
 sc-executor = { workspace = true, default-features = true }
 sc-executor-common = { workspace = true, default-features = true }

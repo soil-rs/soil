@@ -32,7 +32,6 @@ members = [
 	"client/consensus/grandpa",
 	"client/consensus/grandpa/rpc",
 	"client/consensus/manual-seal",
-	"client/consensus/pow",
 	"client/db",
 	"client/executor",
 	"client/executor/common",
@@ -503,7 +502,6 @@ sc-consensus-epochs = { path = "client/consensus/epochs", default-features = fal
 sc-consensus-grandpa = { path = "client/consensus/grandpa", default-features = false }
 sc-consensus-grandpa-rpc = { path = "client/consensus/grandpa/rpc", default-features = false }
 sc-consensus-manual-seal = { path = "client/consensus/manual-seal", default-features = false }
-sc-consensus-pow = { path = "client/consensus/pow", default-features = false }
 sc-executor = { path = "client/executor", default-features = false }
 sc-executor-common = { path = "client/executor/common", default-features = false }
 sc-executor-polkavm = { path = "client/executor/polkavm", default-features = false }
