@@ -1,0 +1,23 @@
+[package]
+name = "soil-allocator"
+version = "23.0.0"
+authors.workspace = true
+edition.workspace = true
+license = "Apache-2.0"
+homepage.workspace = true
+repository.workspace = true
+description = "Collection of allocator implementations."
+documentation = "https://docs.rs/sc-allocator"
+readme = "README.md"
+
+[lints]
+workspace = true
+
+[package.metadata.docs.rs]
+targets = ["x86_64-unknown-linux-gnu"]
+
+[dependencies]
+log = { workspace = true, default-features = true }
+soil-core = { workspace = true, default-features = true }
+soil-wasm-interface = { workspace = true, default-features = true }
+thiserror = { workspace = true }

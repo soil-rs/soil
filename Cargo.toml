@@ -18,66 +18,66 @@ members = [
 	"bin/node/testing",
 	"bin/utils/chain-spec-builder",
 	"bin/utils/subkey",
-	"client/allocator",
-	"client/api",
+	"soil/allocator",
+	"soil/client-api",
 	"client/authority-discovery",
-	"client/basic-authorship",
+	"soil/basic-authorship",
 	"client/block-builder",
-	"client/chain-spec",
-	"client/chain-spec/derive",
-	"client/cli",
+	"soil/chain-spec",
+	"soil/chain-spec-derive",
+	"soil/cli",
 	"client/consensus/aura",
 	"client/consensus/babe",
-	"client/consensus/babe/rpc",
+	"soil/consensus-babe-rpc",
 	"client/consensus/beefy",
-	"client/consensus/beefy/rpc",
+	"soil/consensus-beefy-rpc",
 	"client/consensus/common",
-	"client/consensus/epochs",
+	"soil/consensus-epochs",
 	"client/consensus/grandpa",
-	"client/consensus/grandpa/rpc",
-	"client/consensus/manual-seal",
+	"soil/consensus-grandpa-rpc",
+	"soil/consensus-manual-seal",
 	"client/consensus/pow",
 	"client/consensus/slots",
-	"client/db",
-	"client/executor",
-	"client/executor/common",
-	"client/executor/polkavm",
-	"client/executor/runtime-test",
-	"client/executor/wasmtime",
-	"client/informant",
+	"soil/client-db",
+	"soil/executor",
+	"soil/executor-common",
+	"soil/executor-polkavm",
+	"soil/runtime-test",
+	"soil/executor-wasmtime",
+	"soil/informant",
 	"client/keystore",
-	"client/merkle-mountain-range",
-	"client/merkle-mountain-range/rpc",
+	"soil/mmr-gadget",
+	"soil/mmr-rpc",
 	"client/mixnet",
-	"client/network",
-	"client/network-gossip",
-	"client/network/common",
-	"client/network/light",
-	"client/network/statement",
-	"client/network/sync",
-	"client/network/test",
-	"client/network/transactions",
-	"client/network/types",
+	"soil/network",
+	"soil/network-gossip",
+	"soil/network-common",
+	"soil/network-light",
+	"soil/network-statement",
+	"soil/network-sync",
+	"soil/network-test",
+	"soil/network-transactions",
+	"soil/network-types",
 	"client/offchain",
-	"client/proposer-metrics",
+	"soil/proposer-metrics",
 	"client/rpc",
-	"client/rpc-api",
-	"client/rpc-servers",
-	"client/rpc-spec-v2",
-	"client/runtime-utilities",
-	"client/service",
-	"client/service/test",
-	"client/state-db",
+	"soil/rpc-api",
+	"soil/rpc-server",
+	"soil/rpc-spec-v2",
+	"soil/runtime-utilities",
+	"soil/service",
+	"soil/service-test",
+	"soil/state-db",
 	"client/statement-store",
-	"client/storage-monitor",
-	"client/sync-state-rpc",
-	"client/sysinfo",
-	"client/telemetry",
+	"soil/storage-monitor",
+	"soil/sync-state-rpc",
+	"soil/sysinfo",
+	"soil/telemetry",
 	"client/tracing",
-	"client/tracing/proc-macro",
+	"soil/tracing-proc-macro",
 	"client/transaction-pool",
-	"client/transaction-pool/api",
-	"client/utils",
+	"soil/transaction-pool-api",
+	"soil/utils",
 	"deprecated/hashing",
 	"deprecated/hashing/proc-macro",
 	"frame",
@@ -373,8 +373,8 @@ frame-system-rpc-runtime-api = { path = "frame/system/rpc/runtime-api", default-
 frame-try-runtime = { path = "frame/try-runtime", default-features = false }
 generate-bags = { path = "utils/frame/generate-bags", default-features = false }
 kitchensink-runtime = { path = "bin/node/runtime" }
-mmr-gadget = { path = "client/merkle-mountain-range", default-features = false }
-mmr-rpc = { path = "client/merkle-mountain-range/rpc", default-features = false }
+soil-mmr-gadget = { path = "soil/mmr-gadget", default-features = false }
+soil-mmr-rpc = { path = "soil/mmr-rpc", default-features = false }
 node-cli = { path = "bin/node/cli", package = "staging-node-cli" }
 node-inspect = { path = "bin/node/inspect", default-features = false, package = "staging-node-inspect" }
 node-primitives = { path = "bin/node/primitives", default-features = false }
@@ -497,64 +497,64 @@ pallet-vesting = { path = "frame/vesting", default-features = false }
 pallet-whitelist = { path = "frame/whitelist", default-features = false }
 prometheus-endpoint = { path = "utils/prometheus", default-features = false, package = "substrate-prometheus-endpoint" }
 remote-externalities = { path = "utils/frame/remote-externalities", default-features = false, package = "frame-remote-externalities" }
-sc-allocator = { path = "client/allocator", default-features = false }
+soil-allocator = { path = "soil/allocator", default-features = false }
 sc-authority-discovery = { path = "client/authority-discovery", default-features = false }
-sc-basic-authorship = { path = "client/basic-authorship", default-features = false }
+soil-basic-authorship = { path = "soil/basic-authorship", default-features = false }
 sc-block-builder = { path = "client/block-builder", default-features = false }
-sc-chain-spec = { path = "client/chain-spec", default-features = false }
-sc-chain-spec-derive = { path = "client/chain-spec/derive", default-features = false }
-sc-cli = { path = "client/cli", default-features = false }
-sc-client-api = { path = "client/api", default-features = false }
-sc-client-db = { path = "client/db", default-features = false }
+soil-chain-spec = { path = "soil/chain-spec", default-features = false }
+soil-chain-spec-derive = { path = "soil/chain-spec-derive", default-features = false }
+soil-cli = { path = "soil/cli", default-features = false }
+soil-client-api = { path = "soil/client-api", default-features = false }
+soil-client-db = { path = "soil/client-db", default-features = false }
 sc-consensus = { path = "client/consensus/common", default-features = false }
 sc-consensus-aura = { path = "client/consensus/aura", default-features = false }
 sc-consensus-babe = { path = "client/consensus/babe", default-features = false }
-sc-consensus-babe-rpc = { path = "client/consensus/babe/rpc", default-features = false }
+soil-consensus-babe-rpc = { path = "soil/consensus-babe-rpc", default-features = false }
 sc-consensus-beefy = { path = "client/consensus/beefy", default-features = false }
-sc-consensus-beefy-rpc = { path = "client/consensus/beefy/rpc", default-features = false }
-sc-consensus-epochs = { path = "client/consensus/epochs", default-features = false }
+soil-consensus-beefy-rpc = { path = "soil/consensus-beefy-rpc", default-features = false }
+soil-consensus-epochs = { path = "soil/consensus-epochs", default-features = false }
 sc-consensus-grandpa = { path = "client/consensus/grandpa", default-features = false }
-sc-consensus-grandpa-rpc = { path = "client/consensus/grandpa/rpc", default-features = false }
-sc-consensus-manual-seal = { path = "client/consensus/manual-seal", default-features = false }
+soil-consensus-grandpa-rpc = { path = "soil/consensus-grandpa-rpc", default-features = false }
+soil-consensus-manual-seal = { path = "soil/consensus-manual-seal", default-features = false }
 sc-consensus-pow = { path = "client/consensus/pow", default-features = false }
 sc-consensus-slots = { path = "client/consensus/slots", default-features = false }
-sc-executor = { path = "client/executor", default-features = false }
-sc-executor-common = { path = "client/executor/common", default-features = false }
-sc-executor-polkavm = { path = "client/executor/polkavm", default-features = false }
-sc-executor-wasmtime = { path = "client/executor/wasmtime", default-features = false }
-sc-informant = { path = "client/informant", default-features = false }
+soil-executor = { path = "soil/executor", default-features = false }
+soil-executor-common = { path = "soil/executor-common", default-features = false }
+soil-executor-polkavm = { path = "soil/executor-polkavm", default-features = false }
+soil-executor-wasmtime = { path = "soil/executor-wasmtime", default-features = false }
+soil-informant = { path = "soil/informant", default-features = false }
 sc-keystore = { path = "client/keystore", default-features = false }
 sc-mixnet = { path = "client/mixnet", default-features = false }
-sc-network = { path = "client/network", default-features = false }
-sc-network-common = { path = "client/network/common", default-features = false }
-sc-network-gossip = { path = "client/network-gossip", default-features = false }
-sc-network-light = { path = "client/network/light", default-features = false }
-sc-network-statement = { default-features = false, path = "client/network/statement" }
-sc-network-sync = { path = "client/network/sync", default-features = false }
-sc-network-test = { path = "client/network/test" }
-sc-network-transactions = { path = "client/network/transactions", default-features = false }
-sc-network-types = { path = "client/network/types", default-features = false }
+soil-network = { path = "soil/network", default-features = false }
+soil-network-common = { path = "soil/network-common", default-features = false }
+soil-network-gossip = { path = "soil/network-gossip", default-features = false }
+soil-network-light = { path = "soil/network-light", default-features = false }
+soil-network-statement = { default-features = false, path = "soil/network-statement" }
+soil-network-sync = { path = "soil/network-sync", default-features = false }
+soil-network-test = { path = "soil/network-test" }
+soil-network-transactions = { path = "soil/network-transactions", default-features = false }
+soil-network-types = { path = "soil/network-types", default-features = false }
 sc-offchain = { path = "client/offchain", default-features = false }
-sc-proposer-metrics = { path = "client/proposer-metrics", default-features = false }
+soil-proposer-metrics = { path = "soil/proposer-metrics", default-features = false }
 sc-rpc = { path = "client/rpc", default-features = false }
-sc-rpc-api = { path = "client/rpc-api", default-features = false }
-sc-rpc-server = { path = "client/rpc-servers", default-features = false }
-sc-rpc-spec-v2 = { path = "client/rpc-spec-v2", default-features = false }
-sc-runtime-test = { path = "client/executor/runtime-test" }
-sc-runtime-utilities = { path = "client/runtime-utilities", default-features = true }
-sc-service = { path = "client/service", default-features = false }
-sc-service-test = { path = "client/service/test" }
-sc-state-db = { path = "client/state-db", default-features = false }
+soil-rpc-api = { path = "soil/rpc-api", default-features = false }
+soil-rpc-server = { path = "soil/rpc-server", default-features = false }
+soil-rpc-spec-v2 = { path = "soil/rpc-spec-v2", default-features = false }
+soil-runtime-test = { path = "soil/runtime-test" }
+soil-runtime-utilities = { path = "soil/runtime-utilities", default-features = true }
+soil-service = { path = "soil/service", default-features = false }
+soil-service-test = { path = "soil/service-test" }
+soil-state-db = { path = "soil/state-db", default-features = false }
 sc-statement-store = { default-features = false, path = "client/statement-store" }
-sc-storage-monitor = { path = "client/storage-monitor", default-features = false }
-sc-sync-state-rpc = { path = "client/sync-state-rpc", default-features = false }
-sc-sysinfo = { path = "client/sysinfo", default-features = false }
-sc-telemetry = { path = "client/telemetry", default-features = false }
+soil-storage-monitor = { path = "soil/storage-monitor", default-features = false }
+soil-sync-state-rpc = { path = "soil/sync-state-rpc", default-features = false }
+soil-sysinfo = { path = "soil/sysinfo", default-features = false }
+soil-telemetry = { path = "soil/telemetry", default-features = false }
 sc-tracing = { path = "client/tracing", default-features = false }
-sc-tracing-proc-macro = { path = "client/tracing/proc-macro", default-features = false }
+soil-tracing-proc-macro = { path = "soil/tracing-proc-macro", default-features = false }
 sc-transaction-pool = { path = "client/transaction-pool", default-features = false }
-sc-transaction-pool-api = { path = "client/transaction-pool/api", default-features = false }
-sc-utils = { path = "client/utils", default-features = false }
+soil-transaction-pool-api = { path = "soil/transaction-pool-api", default-features = false }
+soil-utils = { path = "soil/utils", default-features = false }
 soil-api = { path = "soil/api", default-features = false }
 soil-api-proc-macro = { path = "soil/api-proc-macro", default-features = false }
 soil-application-crypto = { path = "soil/application-crypto", default-features = false }
