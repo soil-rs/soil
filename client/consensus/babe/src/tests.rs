@@ -24,7 +24,7 @@ use soil_block_builder::{client::BlockBuilder, BlockBuilderBuilder};
 use sc_client_api::{BlockchainEvents, Finalizer};
 use sc_consensus::{BoxBlockImport, BoxJustificationImport};
 use sc_consensus_epochs::{EpochIdentifier, EpochIdentifierPosition};
-use sc_consensus_slots::BackoffAuthoringOnFinalizedHeadLagging;
+use soil_consensus_slots::BackoffAuthoringOnFinalizedHeadLagging;
 use sc_network_test::{Block as TestBlock, *};
 use sc_transaction_pool_api::RejectAllTxPool;
 use soil_application_crypto::key_types::BABE;

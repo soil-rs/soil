@@ -37,7 +37,7 @@ use futures::prelude::*;
 
 use sc_client_api::{backend::AuxStore, BlockOf};
 use sc_consensus::{BlockImport, BlockImportParams, ForkChoiceStrategy, StateAction};
-use sc_consensus_slots::{
+use soil_consensus_slots::{
 	BackoffAuthoringBlocksStrategy, InherentDataProviderExt, SimpleSlotWorkerToSlotWorker,
 	SlotInfo, StorageChanges,
 };
@@ -62,7 +62,7 @@ pub use import_queue::{
 	build_verifier, import_queue, AuraVerifier, BuildVerifierParams, CheckForEquivocation,
 	ImportQueueParams,
 };
-pub use sc_consensus_slots::SlotProportion;
+pub use soil_consensus_slots::SlotProportion;
 pub use soil_consensus::SyncOracle;
 pub use soil_consensus_aura::{
 	digests::CompatibleDigestItem,
@@ -205,7 +205,7 @@ where
 		compatibility_mode,
 	});
 
-	Ok(sc_consensus_slots::start_slot_worker(
+	Ok(soil_consensus_slots::start_slot_worker(
 		slot_duration,
 		select_chain,
 		SimpleSlotWorkerToSlotWorker(worker),
@@ -267,7 +267,7 @@ pub fn build_aura_worker<P, B, C, PF, I, SO, L, BS, Error>(
 		force_authoring,
 		compatibility_mode,
 	}: BuildAuraWorkerParams<C, I, PF, SO, L, BS, NumberFor<B>>,
-) -> impl sc_consensus_slots::SimpleSlotWorker<
+) -> impl soil_consensus_slots::SimpleSlotWorker<
 	B,
 	Proposer = PF::Proposer,
 	BlockImport = I,
@@ -325,7 +325,7 @@ struct AuraWorker<C, E, I, P, SO, L, BS, N> {
 }
 
 #[async_trait::async_trait]
-impl<B, C, E, I, P, Error, SO, L, BS> sc_consensus_slots::SimpleSlotWorker<B>
+impl<B, C, E, I, P, Error, SO, L, BS> soil_consensus_slots::SimpleSlotWorker<B>
 	for AuraWorker<C, E, I, P, SO, L, BS, NumberFor<B>>
 where
 	B: BlockT,
@@ -448,12 +448,12 @@ where
 	fn proposing_remaining_duration(&self, slot_info: &SlotInfo<B>) -> std::time::Duration {
 		let parent_slot = find_pre_digest::<B, P::Signature>(&slot_info.chain_head).ok();
 
-		sc_consensus_slots::proposing_remaining_duration(
+		soil_consensus_slots::proposing_remaining_duration(
 			parent_slot,
 			slot_info,
 			&self.block_proposal_slot_portion,
 			self.max_block_proposal_slot_portion.as_ref(),
-			sc_consensus_slots::SlotLenienceType::Exponential,
+			soil_consensus_slots::SlotLenienceType::Exponential,
 			self.logging_target(),
 		)
 	}
@@ -551,7 +551,7 @@ mod tests {
 	use soil_block_builder::BlockBuilderBuilder;
 	use sc_client_api::BlockchainEvents;
 	use sc_consensus::BoxJustificationImport;
-	use sc_consensus_slots::{BackoffAuthoringOnFinalizedHeadLagging, SimpleSlotWorker};
+	use soil_consensus_slots::{BackoffAuthoringOnFinalizedHeadLagging, SimpleSlotWorker};
 	use soil_keystore::LocalKeystore;
 	use sc_network_test::{Block as TestBlock, *};
 	use soil_application_crypto::{key_types::AURA, AppCrypto};

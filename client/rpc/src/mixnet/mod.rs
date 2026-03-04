@@ -19,7 +19,7 @@
 //! Substrate mixnet API.
 
 use jsonrpsee::core::async_trait;
-use sc_mixnet::Api;
+use soil_mixnet::Api;
 use sc_rpc_api::mixnet::error::Error;
 pub use sc_rpc_api::mixnet::MixnetApiServer;
 use soil_core::Bytes;

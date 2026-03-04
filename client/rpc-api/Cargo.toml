@@ -19,7 +19,7 @@ targets = ["x86_64-unknown-linux-gnu"]
 codec = { workspace = true, default-features = true }
 jsonrpsee = { features = ["client-core", "macros", "server-core"], workspace = true }
 sc-chain-spec = { workspace = true, default-features = true }
-sc-mixnet = { workspace = true, default-features = true }
+soil-mixnet = { workspace = true, default-features = true }
 sc-transaction-pool-api = { workspace = true, default-features = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { features = ["derive"], workspace = true, default-features = true }

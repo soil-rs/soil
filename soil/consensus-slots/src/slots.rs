@@ -20,7 +20,9 @@
 //!
 //! This is used instead of `futures_timer::Interval` because it was unreliable.
 
-use super::{InherentDataProviderExt, Slot, LOG_TARGET};
+use crate::{InherentDataProviderExt, Slot};
+
+const LOG_TARGET: &str = "slots";
 use soil_consensus::{SelectChain, SyncOracle};
 use soil_inherents::{CreateInherentDataProviders, InherentDataProvider};
 use soil_runtime::traits::{Block as BlockT, HashingFor, Header as HeaderT};

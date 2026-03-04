@@ -92,13 +92,12 @@ sc-consensus-grandpa = { workspace = true, default-features = true }
 sc-consensus-grandpa-rpc = { workspace = true, default-features = true }
 sc-consensus-manual-seal = { workspace = true, default-features = true }
 sc-consensus-pow = { workspace = true, default-features = true }
-sc-consensus-slots = { workspace = true, default-features = true }
+soil-consensus-slots = { workspace = true, default-features = true }
 sc-executor = { workspace = true, default-features = true }
 sc-executor-common = { workspace = true, default-features = true }
 sc-executor-polkavm = { workspace = true, default-features = true }
 sc-executor-wasmtime = { workspace = true, default-features = true }
 sc-informant = { workspace = true, default-features = true }
-sc-mixnet = { workspace = true, default-features = true }
 sc-network = { workspace = true, default-features = true }
 sc-network-common = { workspace = true, default-features = true }
 sc-network-gossip = { workspace = true, default-features = true }

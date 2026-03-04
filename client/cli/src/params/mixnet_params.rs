@@ -20,7 +20,7 @@ use clap::Args;
 use soil_core::H256;
 use std::str::FromStr;
 
-fn parse_kx_secret(s: &str) -> Result<sc_mixnet::KxSecret, String> {
+fn parse_kx_secret(s: &str) -> Result<soil_mixnet::KxSecret, String> {
 	H256::from_str(s).map(H256::to_fixed_bytes).map_err(|err| err.to_string())
 }
 
@@ -41,15 +41,15 @@ pub struct MixnetParams {
 	/// WARNING: Secrets provided as command-line arguments are easily exposed. Use of this option
 	/// should be limited to development and testing.
 	#[arg(long, value_name = "SECRET", value_parser = parse_kx_secret)]
-	pub mixnet_session_0_kx_secret: Option<sc_mixnet::KxSecret>,
+	pub mixnet_session_0_kx_secret: Option<soil_mixnet::KxSecret>,
 }
 
 impl MixnetParams {
 	/// Returns the mixnet configuration, or `None` if the mixnet is disabled.
-	pub fn config(&self, is_authority: bool) -> Option<sc_mixnet::Config> {
+	pub fn config(&self, is_authority: bool) -> Option<soil_mixnet::Config> {
 		self.mixnet.then(|| {
-			let mut config = sc_mixnet::Config {
-				core: sc_mixnet::CoreConfig {
+			let mut config = soil_mixnet::Config {
+				core: soil_mixnet::CoreConfig {
 					session_0_kx_secret: self.mixnet_session_0_kx_secret,
 					..Default::default()
 				},

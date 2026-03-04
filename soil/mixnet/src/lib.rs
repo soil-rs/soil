@@ -24,3 +24,38 @@ extern crate alloc;
 
 pub mod runtime_api;
 pub mod types;
+
+// std-only modules (former sc-mixnet)
+#[cfg(feature = "std")]
+mod api;
+#[cfg(feature = "std")]
+mod config;
+#[cfg(feature = "std")]
+mod error;
+#[cfg(feature = "std")]
+mod extrinsic_queue;
+#[cfg(feature = "std")]
+mod maybe_inf_delay;
+#[cfg(feature = "std")]
+mod packet_dispatcher;
+#[cfg(feature = "std")]
+mod peer_id;
+#[cfg(feature = "std")]
+mod protocol;
+#[cfg(feature = "std")]
+mod request;
+#[cfg(feature = "std")]
+mod run;
+#[cfg(feature = "std")]
+mod sync_with_runtime;
+
+#[cfg(feature = "std")]
+pub use self::{
+	api::{Api, ApiBackend},
+	config::{Config, CoreConfig, SubstrateConfig},
+	error::{Error, RemoteErr},
+	protocol::{peers_set_config, protocol_name},
+	run::run,
+};
+#[cfg(feature = "std")]
+pub use mixnet::core::{KxSecret, PostErr, TopologyErr};

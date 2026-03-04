@@ -32,7 +32,7 @@ regex = { workspace = true }
 rpassword = { workspace = true }
 sc-client-api = { workspace = true, default-features = true }
 sc-client-db = { workspace = true, default-features = false }
-sc-mixnet = { workspace = true, default-features = true }
+soil-mixnet = { workspace = true, default-features = true }
 sc-network = { workspace = true, default-features = true }
 sc-service = { workspace = true, default-features = false }
 sc-telemetry = { workspace = true, default-features = true }

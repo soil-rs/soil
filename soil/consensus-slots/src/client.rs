@@ -22,15 +22,11 @@
 //! time during which certain events can and/or must occur.  This crate
 //! provides generic functionality for slots.
 
-#![forbid(unsafe_code)]
-#![warn(missing_docs)]
 
-mod aux_schema;
-mod slots;
 
-pub use aux_schema::{check_equivocation, MAX_SLOT_CAPACITY, PRUNING_BOUND};
-use slots::Slots;
-pub use slots::{time_until_next_slot, SlotInfo};
+pub use crate::aux_schema::{check_equivocation, MAX_SLOT_CAPACITY, PRUNING_BOUND};
+use crate::slots::Slots;
+pub use crate::slots::{time_until_next_slot, SlotInfo};
 
 use futures::{future::Either, Future, TryFutureExt};
 use futures_timer::Delay;
@@ -39,7 +35,7 @@ use sc_consensus::{BlockImport, JustificationSyncLink};
 use sc_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG, CONSENSUS_INFO, CONSENSUS_WARN};
 use soil_arithmetic::traits::BaseArithmetic;
 use soil_consensus::{Proposal, ProposeArgs, Proposer, SelectChain, SyncOracle};
-use soil_consensus_slots::{Slot, SlotDuration};
+use crate::{Slot, SlotDuration};
 use soil_inherents::CreateInherentDataProviders;
 use soil_runtime::traits::{Block as BlockT, HashingFor, Header as HeaderT};
 use std::{

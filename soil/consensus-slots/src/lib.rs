@@ -19,6 +19,16 @@
 
 #![cfg_attr(not(feature = "std"), no_std)]
 
+#[cfg(feature = "std")]
+mod aux_schema;
+#[cfg(feature = "std")]
+mod client;
+#[cfg(feature = "std")]
+mod slots;
+
+#[cfg(feature = "std")]
+pub use client::*;
+
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;
 use soil_timestamp::Timestamp;

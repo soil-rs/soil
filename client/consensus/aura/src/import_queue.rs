@@ -30,7 +30,7 @@ use sc_consensus::{
 	block_import::{BlockImport, BlockImportParams, ForkChoiceStrategy},
 	import_queue::{BasicQueue, BoxJustificationImport, DefaultImportQueue, Verifier},
 };
-use sc_consensus_slots::{check_equivocation, CheckedHeader, InherentDataProviderExt};
+use soil_consensus_slots::{check_equivocation, CheckedHeader, InherentDataProviderExt};
 use sc_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG, CONSENSUS_TRACE};
 use soil_api::{ApiExt, ProvideRuntimeApi};
 use soil_block_builder::BlockBuilder as BlockBuilderApi;

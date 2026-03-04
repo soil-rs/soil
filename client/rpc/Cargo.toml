@@ -25,7 +25,7 @@ parking_lot = { workspace = true, default-features = true }
 soil-block-builder = { workspace = true, default-features = true }
 sc-chain-spec = { workspace = true, default-features = true }
 sc-client-api = { workspace = true, default-features = true }
-sc-mixnet = { workspace = true, default-features = true }
+soil-mixnet = { workspace = true, default-features = true }
 sc-rpc-api = { workspace = true, default-features = true }
 sc-statement-store = { workspace = true, default-features = true }
 sc-tracing = { workspace = true, default-features = true }
