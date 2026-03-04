@@ -1,0 +1,51 @@
+//! Client-side keystore error types.
+
+use crate::Error as TraitError;
+use soil_core::crypto::KeyTypeId;
+use std::io;
+
+/// Keystore error.
+#[derive(Debug, thiserror::Error)]
+pub enum Error {
+	/// IO error.
+	#[error(transparent)]
+	Io(#[from] io::Error),
+	/// JSON error.
+	#[error(transparent)]
+	Json(#[from] serde_json::Error),
+	/// Invalid password.
+	#[error(
+		"Requested public key and public key of the loaded private key do not match. \n
+			This means either that the keystore password is incorrect or that the private key was stored under a wrong public key."
+	)]
+	PublicKeyMismatch,
+	/// Invalid BIP39 phrase
+	#[error("Invalid recovery phrase (BIP39) data")]
+	InvalidPhrase,
+	/// Invalid seed
+	#[error("Invalid seed")]
+	InvalidSeed,
+	/// Public key type is not supported
+	#[error("Key crypto type is not supported")]
+	KeyNotSupported(KeyTypeId),
+	/// Keystore unavailable
+	#[error("Keystore unavailable")]
+	Unavailable,
+}
+
+/// Keystore Result
+pub type Result<T> = std::result::Result<T, Error>;
+
+impl From<Error> for TraitError {
+	fn from(error: Error) -> Self {
+		match error {
+			Error::KeyNotSupported(id) => TraitError::KeyNotSupported(id),
+			Error::InvalidSeed | Error::InvalidPhrase | Error::PublicKeyMismatch => {
+				TraitError::ValidationError(error.to_string())
+			},
+			Error::Unavailable => TraitError::Unavailable,
+			Error::Io(e) => TraitError::Other(e.to_string()),
+			Error::Json(e) => TraitError::Other(e.to_string()),
+		}
+	}
+}

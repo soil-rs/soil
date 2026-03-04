@@ -136,6 +136,26 @@ pub use client::*;
 
 Under `no_std`, the crate compiles as an empty library.
 
+### Handling cyclic dependencies during merges
+
+When merging an `sp-*` / `sc-*` pair into a single `soil-*` crate, the merge may
+introduce a dependency cycle that didn't exist before (because the two halves
+were separate crates). For example, merging `sc-keystore` into `soil-keystore`
+created the cycle `soil-keystore → soil-application-crypto → soil-io →
+soil-keystore`.
+
+**Policy: refactor to break the cycle.** A cycle exposed by a merge means the
+prior code structure was poorly layered. Rather than working around it (e.g.
+keeping the crate separate, using weak dependencies, or feature-gating the dep),
+prefer to move the offending logic to its proper home in the dependency graph.
+This refactoring would be needed eventually regardless — the merge simply
+surfaces the issue earlier.
+
+Example: `AppCrypto` / `AppPair` / `AppPublic` / `AppSignature` traits were
+defined in `soil-application-crypto` but only depended on types from `soil-core`.
+Moving them to `soil-core::crypto` broke the cycle cleanly with no new
+dependencies.
+
 ### Dependency invariant
 
 ```

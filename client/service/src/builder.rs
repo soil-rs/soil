@@ -41,7 +41,7 @@ use sc_executor::{
 	soil_wasm_interface::HostFunctions, HeapAllocStrategy, NativeExecutionDispatch, RuntimeVersionOf,
 	WasmExecutor, DEFAULT_HEAP_ALLOC_STRATEGY,
 };
-use sc_keystore::LocalKeystore;
+use soil_keystore::LocalKeystore;
 use sc_network::{
 	config::{FullNetworkConfiguration, ProtocolId, SyncMode},
 	multiaddr::Protocol,

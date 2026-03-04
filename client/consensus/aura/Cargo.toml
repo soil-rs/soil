@@ -42,7 +42,6 @@ soil-runtime = { workspace = true, default-features = true }
 thiserror = { workspace = true }
 
 [dev-dependencies]
-sc-keystore = { workspace = true, default-features = true }
 sc-network = { workspace = true, default-features = true }
 sc-network-test = { workspace = true }
 soil-keyring = { workspace = true, default-features = true }

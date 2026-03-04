@@ -552,7 +552,7 @@ mod tests {
 	use sc_client_api::BlockchainEvents;
 	use sc_consensus::BoxJustificationImport;
 	use sc_consensus_slots::{BackoffAuthoringOnFinalizedHeadLagging, SimpleSlotWorker};
-	use sc_keystore::LocalKeystore;
+	use soil_keystore::LocalKeystore;
 	use sc_network_test::{Block as TestBlock, *};
 	use soil_application_crypto::{key_types::AURA, AppCrypto};
 	use soil_consensus::{NoNetwork as DummyOracle, Proposal, ProposeArgs};

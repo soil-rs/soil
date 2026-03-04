@@ -10859,7 +10859,6 @@ dependencies = [
  "rpassword",
  "sc-client-api",
  "sc-client-db",
- "sc-keystore",
  "sc-mixnet",
  "sc-network",
  "sc-service",
@@ -10979,7 +10978,6 @@ dependencies = [
  "sc-client-api",
  "sc-consensus",
  "sc-consensus-slots",
- "sc-keystore",
  "sc-network",
  "sc-network-test",
  "sc-telemetry",
@@ -11404,20 +11402,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "sc-keystore"
-version = "25.0.0"
-dependencies = [
- "array-bytes 6.2.3",
- "parking_lot 0.12.5",
- "serde_json",
- "soil-application-crypto",
- "soil-core",
- "soil-keystore",
- "tempfile",
- "thiserror 1.0.69",
-]
-
-[[package]]
 name = "sc-mixnet"
 version = "0.4.0"
 dependencies = [
@@ -11568,7 +11552,6 @@ dependencies = [
  "governor",
  "log",
  "parity-scale-codec",
- "sc-keystore",
  "sc-network",
  "sc-network-common",
  "sc-network-sync",
@@ -11579,6 +11562,7 @@ dependencies = [
  "soil-consensus",
  "soil-core",
  "soil-keyring",
+ "soil-keystore",
  "soil-runtime",
  "soil-statement-store",
  "substrate-prometheus-endpoint",
@@ -11761,7 +11745,6 @@ dependencies = [
  "sc-block-builder",
  "sc-chain-spec",
  "sc-client-api",
- "sc-keystore",
  "sc-mixnet",
  "sc-network",
  "sc-rpc-api",
@@ -11926,7 +11909,6 @@ dependencies = [
  "sc-consensus",
  "sc-executor",
  "sc-informant",
- "sc-keystore",
  "sc-network",
  "sc-network-common",
  "sc-network-light",
@@ -12027,12 +12009,12 @@ dependencies = [
  "parity-db",
  "parking_lot 0.12.5",
  "sc-client-api",
- "sc-keystore",
  "sc-network-statement",
  "sc-utils",
  "soil-api",
  "soil-blockchain",
  "soil-core",
+ "soil-keystore",
  "soil-runtime",
  "soil-statement-store",
  "soil-storage",
@@ -13406,10 +13388,15 @@ dependencies = [
 name = "soil-keystore"
 version = "0.34.0"
 dependencies = [
+ "array-bytes 6.2.3",
  "parity-scale-codec",
  "parking_lot 0.12.5",
+ "serde_json",
+ "soil-application-crypto",
  "soil-core",
  "soil-externalities",
+ "tempfile",
+ "thiserror 1.0.69",
 ]
 
 [[package]]
@@ -14088,7 +14075,6 @@ dependencies = [
  "sc-executor-polkavm",
  "sc-executor-wasmtime",
  "sc-informant",
- "sc-keystore",
  "sc-mixnet",
  "sc-network",
  "sc-network-common",

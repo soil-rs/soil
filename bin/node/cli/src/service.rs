@@ -893,7 +893,7 @@ mod tests {
 	use sc_consensus::{BlockImport, BlockImportParams, ForkChoiceStrategy};
 	use sc_consensus_babe::{BabeIntermediate, CompatibleDigestItem, INTERMEDIATE_KEY};
 	use sc_consensus_epochs::descendent_query;
-	use sc_keystore::LocalKeystore;
+	use soil_keystore::LocalKeystore;
 	use sc_service_test::TestNetNode;
 	use sc_transaction_pool_api::ChainEvent;
 	use soil_consensus::{BlockOrigin, Environment, Proposer};

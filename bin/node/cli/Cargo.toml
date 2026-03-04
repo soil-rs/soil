@@ -99,7 +99,6 @@ sc-executor-common = { workspace = true, default-features = true }
 sc-executor-polkavm = { workspace = true, default-features = true }
 sc-executor-wasmtime = { workspace = true, default-features = true }
 sc-informant = { workspace = true, default-features = true }
-sc-keystore = { workspace = true, default-features = true }
 sc-mixnet = { workspace = true, default-features = true }
 sc-network = { workspace = true, default-features = true }
 sc-network-common = { workspace = true, default-features = true }

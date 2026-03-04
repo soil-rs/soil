@@ -85,7 +85,7 @@ async fn subscribe_works() {
 		temp_dir.path(),
 		Default::default(),
 		Arc::clone(&client) as Arc<_>,
-		Arc::new(sc_keystore::LocalKeystore::in_memory()),
+		Arc::new(soil_keystore::LocalKeystore::in_memory()),
 		None,
 		Box::new(executor.as_ref().clone()),
 	)
@@ -223,7 +223,7 @@ async fn subscribe_works_with_raw_json() {
 		temp_dir.path(),
 		Default::default(),
 		Arc::clone(&client) as Arc<_>,
-		Arc::new(sc_keystore::LocalKeystore::in_memory()),
+		Arc::new(soil_keystore::LocalKeystore::in_memory()),
 		None,
 		Box::new(executor.as_ref().clone()),
 	)
@@ -255,7 +255,7 @@ async fn subscribe_rejects_more_than_4_topics_in_match_all() {
 		temp_dir.path(),
 		Default::default(),
 		Arc::clone(&client) as Arc<_>,
-		Arc::new(sc_keystore::LocalKeystore::in_memory()),
+		Arc::new(soil_keystore::LocalKeystore::in_memory()),
 		None,
 		Box::new(executor.as_ref().clone()),
 	)

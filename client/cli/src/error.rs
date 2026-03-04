@@ -69,7 +69,7 @@ pub enum Error {
 	KeystoreOperation,
 
 	#[error("Key storage issue encountered")]
-	KeyStorage(#[from] sc_keystore::Error),
+	KeyStorage(#[from] soil_keystore::LocalError),
 
 	#[error("Invalid hexadecimal string data, {0:?}")]
 	HexDataConversion(array_bytes::Error),

@@ -20,61 +20,10 @@ use scale_info::TypeInfo;
 
 use alloc::vec::Vec;
 use core::fmt::Debug;
-use soil_core::crypto::{CryptoType, CryptoTypeId, IsWrappedBy, KeyTypeId, Pair, Public, Signature};
+use soil_core::crypto::KeyTypeId;
 
-/// Application-specific cryptographic object.
-///
-/// Combines all the core types and constants that are defined by a particular
-/// cryptographic scheme when it is used in a specific application domain.
-///
-/// Typically, the implementers of this trait are its associated types themselves.
-/// This provides a convenient way to access generic information about the scheme
-/// given any of the associated types.
-pub trait AppCrypto: 'static + Sized + CryptoType {
-	/// Identifier for application-specific key type.
-	const ID: KeyTypeId;
-
-	/// Identifier of the crypto type of this application-specific key type.
-	const CRYPTO_ID: CryptoTypeId;
-
-	/// The corresponding public key type in this application scheme.
-	type Public: AppPublic;
-
-	/// The corresponding signature type in this application scheme.
-	type Signature: AppSignature;
-
-	/// The corresponding proof of possession type in this application scheme.
-	type ProofOfPossession: AppSignature;
-
-	/// The corresponding key pair type in this application scheme.
-	type Pair: AppPair;
-}
-
-/// Type which implements Hash in std, not when no-std (std variant).
-pub trait MaybeHash: core::hash::Hash {}
-impl<T: core::hash::Hash> MaybeHash for T {}
-
-/// Application-specific key pair.
-pub trait AppPair:
-	AppCrypto + Pair<Public = <Self as AppCrypto>::Public, Signature = <Self as AppCrypto>::Signature>
-{
-	/// The wrapped type which is just a plain instance of `Pair`.
-	type Generic: IsWrappedBy<Self>
-		+ Pair<Public = <<Self as AppCrypto>::Public as AppPublic>::Generic>
-		+ Pair<Signature = <<Self as AppCrypto>::Signature as AppSignature>::Generic>;
-}
-
-/// Application-specific public key.
-pub trait AppPublic: AppCrypto + Public + Debug + MaybeHash + Codec {
-	/// The wrapped type which is just a plain instance of `Public`.
-	type Generic: IsWrappedBy<Self> + Public + Debug + MaybeHash + Codec;
-}
-
-/// Application-specific signature and Proof Of Possession
-pub trait AppSignature: AppCrypto + Signature + Eq + PartialEq + Debug + Clone {
-	/// The wrapped type which is just a plain instance of `Signature`.
-	type Generic: IsWrappedBy<Self> + Signature + Eq + PartialEq + Debug;
-}
+// Re-export from soil-core where these traits are now defined.
+pub use soil_core::crypto::{AppCrypto, AppPair, AppPublic, AppSignature, MaybeHash};
 
 /// Runtime interface for a public key.
 pub trait RuntimePublic: Sized {

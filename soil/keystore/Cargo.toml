@@ -16,14 +16,29 @@ workspace = true
 targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
+array-bytes = { optional = true, workspace = true, default-features = true }
 codec = { features = ["derive"], workspace = true }
 parking_lot = { optional = true, workspace = true }
+serde_json = { optional = true, workspace = true, default-features = true }
 soil-core = { workspace = true }
 soil-externalities = { workspace = true }
+thiserror = { optional = true, workspace = true }
+
+[dev-dependencies]
+soil-application-crypto = { workspace = true, default-features = true }
+tempfile = { workspace = true }
 
 [features]
 default = ["std"]
-std = ["codec/std", "dep:parking_lot", "soil-core/std", "soil-externalities/std"]
+std = [
+	"codec/std",
+	"dep:array-bytes",
+	"dep:parking_lot",
+	"dep:serde_json",
+	"dep:thiserror",
+	"soil-core/std",
+	"soil-externalities/std",
+]
 
 # This feature adds BLS crypto primitives.
 # It should not be used in production since the implementation and interface may still

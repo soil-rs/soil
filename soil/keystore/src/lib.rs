@@ -24,6 +24,18 @@ extern crate alloc;
 #[cfg(feature = "std")]
 pub mod testing;
 
+#[cfg(feature = "std")]
+mod local;
+#[cfg(feature = "std")]
+pub use local::LocalKeystore;
+
+#[cfg(feature = "std")]
+pub mod client;
+#[cfg(feature = "std")]
+pub use client::Error as LocalError;
+#[cfg(feature = "std")]
+pub use client::Result as LocalResult;
+
 #[cfg(feature = "bandersnatch-experimental")]
 use soil_core::bandersnatch;
 #[cfg(feature = "bls-experimental")]
