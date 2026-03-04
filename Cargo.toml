@@ -961,7 +961,7 @@ wasm-instrument = { version = "0.4", default-features = false }
 wasm-opt = { version = "0.116" }
 wasm-timer = { version = "0.2.5" }
 wasmi = { version = "0.32.3", default-features = false }
-wasmtime = { version = "35.0.0", default-features = false }
+wasmtime = { version = "36.0.6", default-features = false }
 wat = { version = "1.0.0" }
 x25519-dalek = { version = "2.0" }
 zeroize = { version = "1.7.0", default-features = false }
