@@ -21,14 +21,14 @@ codec = { features = ["derive"], workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 
 # FRAME
-frame-benchmarking = { workspace = true }
-frame-election-provider-support = { workspace = true }
-frame-support = { workspace = true }
-frame-system = { workspace = true }
-pallet-bags-list = { workspace = true }
-pallet-delegated-staking = { workspace = true }
-pallet-nomination-pools = { workspace = true }
-pallet-staking = { workspace = true }
+topsoil-benchmarking = { workspace = true }
+topsoil-election-provider-support = { workspace = true }
+topsoil-support = { workspace = true }
+topsoil-system = { workspace = true }
+topsoil-bags-list = { workspace = true }
+topsoil-delegated-staking = { workspace = true }
+topsoil-nomination-pools = { workspace = true }
+topsoil-staking = { workspace = true }
 
 # Substrate Primitives
 soil-runtime = { workspace = true }
@@ -36,9 +36,9 @@ soil-runtime-interface = { workspace = true }
 soil-staking = { workspace = true }
 
 [dev-dependencies]
-pallet-balances = { workspace = true }
-pallet-staking-reward-curve = { workspace = true, default-features = true }
-pallet-timestamp = { workspace = true, default-features = true }
+topsoil-balances = { workspace = true }
+topsoil-staking-reward-curve = { workspace = true, default-features = true }
+topsoil-timestamp = { workspace = true, default-features = true }
 soil-core = { workspace = true, default-features = true }
 soil-io = { workspace = true, default-features = true }
 
@@ -46,16 +46,16 @@ soil-io = { workspace = true, default-features = true }
 default = ["std"]
 std = [
 	"codec/std",
-	"frame-benchmarking/std",
-	"frame-election-provider-support/std",
-	"frame-support/std",
-	"frame-system/std",
-	"pallet-bags-list/std",
-	"pallet-balances/std",
-	"pallet-delegated-staking/std",
-	"pallet-nomination-pools/std",
-	"pallet-staking/std",
-	"pallet-timestamp/std",
+	"topsoil-benchmarking/std",
+	"topsoil-election-provider-support/std",
+	"topsoil-support/std",
+	"topsoil-system/std",
+	"topsoil-bags-list/std",
+	"topsoil-balances/std",
+	"topsoil-delegated-staking/std",
+	"topsoil-nomination-pools/std",
+	"topsoil-staking/std",
+	"topsoil-timestamp/std",
 	"scale-info/std",
 	"soil-core/std",
 	"soil-io/std",
@@ -64,16 +64,16 @@ std = [
 	"soil-staking/std",
 ]
 runtime-benchmarks = [
-	"frame-benchmarking/runtime-benchmarks",
-	"frame-election-provider-support/runtime-benchmarks",
-	"frame-support/runtime-benchmarks",
-	"frame-system/runtime-benchmarks",
-	"pallet-bags-list/runtime-benchmarks",
-	"pallet-balances/runtime-benchmarks",
-	"pallet-delegated-staking/runtime-benchmarks",
-	"pallet-nomination-pools/runtime-benchmarks",
-	"pallet-staking/runtime-benchmarks",
-	"pallet-timestamp/runtime-benchmarks",
+	"topsoil-benchmarking/runtime-benchmarks",
+	"topsoil-election-provider-support/runtime-benchmarks",
+	"topsoil-support/runtime-benchmarks",
+	"topsoil-system/runtime-benchmarks",
+	"topsoil-bags-list/runtime-benchmarks",
+	"topsoil-balances/runtime-benchmarks",
+	"topsoil-delegated-staking/runtime-benchmarks",
+	"topsoil-nomination-pools/runtime-benchmarks",
+	"topsoil-staking/runtime-benchmarks",
+	"topsoil-timestamp/runtime-benchmarks",
 	"soil-runtime/runtime-benchmarks",
 	"soil-staking/runtime-benchmarks",
 ]

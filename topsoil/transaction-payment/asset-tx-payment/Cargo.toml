@@ -20,10 +20,10 @@ targets = ["x86_64-unknown-linux-gnu"]
 soil-io = { workspace = true }
 soil-runtime = { workspace = true }
 
-frame-benchmarking = { optional = true, workspace = true }
-frame-support = { workspace = true }
-frame-system = { workspace = true }
-pallet-transaction-payment = { workspace = true }
+topsoil-benchmarking = { optional = true, workspace = true }
+topsoil-support = { workspace = true }
+topsoil-system = { workspace = true }
+topsoil-transaction-payment = { workspace = true }
 
 # Other dependencies
 codec = { features = ["derive"], workspace = true }
@@ -31,38 +31,38 @@ scale-info = { features = ["derive"], workspace = true }
 serde = { optional = true, workspace = true, default-features = true }
 
 [dev-dependencies]
-pallet-assets = { workspace = true, default-features = true }
-pallet-authorship = { workspace = true, default-features = true }
-pallet-balances = { workspace = true, default-features = true }
+topsoil-assets = { workspace = true, default-features = true }
+topsoil-authorship = { workspace = true, default-features = true }
+topsoil-balances = { workspace = true, default-features = true }
 
 [features]
 default = ["std"]
 std = [
 	"codec/std",
-	"frame-benchmarking?/std",
-	"frame-support/std",
-	"frame-system/std",
-	"pallet-transaction-payment/std",
+	"topsoil-benchmarking?/std",
+	"topsoil-support/std",
+	"topsoil-system/std",
+	"topsoil-transaction-payment/std",
 	"scale-info/std",
 	"serde",
 	"soil-io/std",
 	"soil-runtime/std",
 ]
 runtime-benchmarks = [
-	"frame-benchmarking/runtime-benchmarks",
-	"frame-support/runtime-benchmarks",
-	"frame-system/runtime-benchmarks",
-	"pallet-assets/runtime-benchmarks",
-	"pallet-balances/runtime-benchmarks",
-	"pallet-transaction-payment/runtime-benchmarks",
+	"topsoil-benchmarking/runtime-benchmarks",
+	"topsoil-support/runtime-benchmarks",
+	"topsoil-system/runtime-benchmarks",
+	"topsoil-assets/runtime-benchmarks",
+	"topsoil-balances/runtime-benchmarks",
+	"topsoil-transaction-payment/runtime-benchmarks",
 	"soil-runtime/runtime-benchmarks",
 ]
 try-runtime = [
-	"frame-support/try-runtime",
-	"frame-system/try-runtime",
-	"pallet-assets/try-runtime",
-	"pallet-authorship/try-runtime",
-	"pallet-balances/try-runtime",
-	"pallet-transaction-payment/try-runtime",
+	"topsoil-support/try-runtime",
+	"topsoil-system/try-runtime",
+	"topsoil-assets/try-runtime",
+	"topsoil-authorship/try-runtime",
+	"topsoil-balances/try-runtime",
+	"topsoil-transaction-payment/try-runtime",
 	"soil-runtime/try-runtime",
 ]

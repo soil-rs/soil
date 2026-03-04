@@ -30,6 +30,6 @@ soil-arithmetic = { workspace = true, default-features = true }
 # used by generate_solution_type:
 # NOTE: we have to explicitly specify `std` because of trybuild
 # https://github.com/paritytech/polkadot-sdk/pull/5167
-frame-election-provider-support = { workspace = true, default-features = true, features = ["std"] }
-frame-support = { workspace = true, default-features = true }
+topsoil-election-provider-support = { workspace = true, default-features = true, features = ["std"] }
+topsoil-support = { workspace = true, default-features = true }
 trybuild = { workspace = true }

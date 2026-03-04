@@ -13,10 +13,10 @@ workspace = true
 
 [dependencies]
 # FRAME
-frame-election-provider-support = { workspace = true, default-features = true }
-frame-support = { workspace = true, default-features = true }
-frame-system = { workspace = true, default-features = true }
-pallet-staking = { workspace = true, default-features = true }
+topsoil-election-provider-support = { workspace = true, default-features = true }
+topsoil-support = { workspace = true, default-features = true }
+topsoil-system = { workspace = true, default-features = true }
+topsoil-staking = { workspace = true, default-features = true }
 soil-staking = { workspace = true, default-features = true }
 
 # third party

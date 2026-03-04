@@ -20,8 +20,8 @@ codec = { features = ["derive"], workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 
 # FRAME
-frame-support = { workspace = true }
-frame-system = { workspace = true }
+topsoil-support = { workspace = true }
+topsoil-system = { workspace = true }
 log = { workspace = true }
 soil-core = { workspace = true }
 soil-io = { workspace = true }
@@ -29,22 +29,22 @@ soil-runtime = { workspace = true }
 soil-staking = { workspace = true }
 
 # Optional: use for testing and/or fuzzing
-pallet-balances = { optional = true, workspace = true }
+topsoil-balances = { optional = true, workspace = true }
 soil-tracing = { optional = true, workspace = true }
 
 [dev-dependencies]
-pallet-balances = { workspace = true, default-features = true }
+topsoil-balances = { workspace = true, default-features = true }
 soil-tracing = { workspace = true, default-features = true }
 
 [features]
 default = ["std"]
-fuzzing = ["pallet-balances", "soil-tracing"]
+fuzzing = ["topsoil-balances", "soil-tracing"]
 std = [
 	"codec/std",
-	"frame-support/std",
-	"frame-system/std",
+	"topsoil-support/std",
+	"topsoil-system/std",
 	"log/std",
-	"pallet-balances?/std",
+	"topsoil-balances?/std",
 	"scale-info/std",
 	"soil-core/std",
 	"soil-io/std",
@@ -53,15 +53,15 @@ std = [
 	"soil-tracing?/std",
 ]
 runtime-benchmarks = [
-	"frame-support/runtime-benchmarks",
-	"frame-system/runtime-benchmarks",
-	"pallet-balances?/runtime-benchmarks",
+	"topsoil-support/runtime-benchmarks",
+	"topsoil-system/runtime-benchmarks",
+	"topsoil-balances?/runtime-benchmarks",
 	"soil-runtime/runtime-benchmarks",
 	"soil-staking/runtime-benchmarks",
 ]
 try-runtime = [
-	"frame-support/try-runtime",
-	"frame-system/try-runtime",
-	"pallet-balances?/try-runtime",
+	"topsoil-support/try-runtime",
+	"topsoil-system/try-runtime",
+	"topsoil-balances?/try-runtime",
 	"soil-runtime/try-runtime",
 ]

@@ -16,42 +16,42 @@ workspace = true
 targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
-pallet-default-config-example = { workspace = true }
-pallet-dev-mode = { workspace = true }
-pallet-example-authorization-tx-extension = { workspace = true }
-pallet-example-basic = { workspace = true }
-pallet-example-frame-crate = { workspace = true }
-pallet-example-kitchensink = { workspace = true }
-pallet-example-offchain-worker = { workspace = true }
-pallet-example-single-block-migrations = { workspace = true }
-pallet-example-split = { workspace = true }
-pallet-example-tasks = { workspace = true }
-pallet-example-view-functions = { workspace = true }
+topsoil-default-config-example = { workspace = true }
+topsoil-dev-mode = { workspace = true }
+topsoil-example-authorization-tx-extension = { workspace = true }
+topsoil-example-basic = { workspace = true }
+topsoil-example-frame-crate = { workspace = true }
+topsoil-example-kitchensink = { workspace = true }
+topsoil-example-offchain-worker = { workspace = true }
+topsoil-example-single-block-migrations = { workspace = true }
+topsoil-example-split = { workspace = true }
+topsoil-example-tasks = { workspace = true }
+topsoil-example-view-functions = { workspace = true }
 
 [features]
 default = ["std"]
 std = [
-	"pallet-default-config-example/std",
-	"pallet-dev-mode/std",
-	"pallet-example-authorization-tx-extension/std",
-	"pallet-example-basic/std",
-	"pallet-example-frame-crate/std",
-	"pallet-example-kitchensink/std",
-	"pallet-example-offchain-worker/std",
-	"pallet-example-single-block-migrations/std",
-	"pallet-example-split/std",
-	"pallet-example-tasks/std",
-	"pallet-example-view-functions/std",
+	"topsoil-default-config-example/std",
+	"topsoil-dev-mode/std",
+	"topsoil-example-authorization-tx-extension/std",
+	"topsoil-example-basic/std",
+	"topsoil-example-frame-crate/std",
+	"topsoil-example-kitchensink/std",
+	"topsoil-example-offchain-worker/std",
+	"topsoil-example-single-block-migrations/std",
+	"topsoil-example-split/std",
+	"topsoil-example-tasks/std",
+	"topsoil-example-view-functions/std",
 ]
 try-runtime = [
-	"pallet-default-config-example/try-runtime",
-	"pallet-dev-mode/try-runtime",
-	"pallet-example-authorization-tx-extension/try-runtime",
-	"pallet-example-basic/try-runtime",
-	"pallet-example-kitchensink/try-runtime",
-	"pallet-example-offchain-worker/try-runtime",
-	"pallet-example-single-block-migrations/try-runtime",
-	"pallet-example-split/try-runtime",
-	"pallet-example-tasks/try-runtime",
-	"pallet-example-view-functions/try-runtime",
+	"topsoil-default-config-example/try-runtime",
+	"topsoil-dev-mode/try-runtime",
+	"topsoil-example-authorization-tx-extension/try-runtime",
+	"topsoil-example-basic/try-runtime",
+	"topsoil-example-kitchensink/try-runtime",
+	"topsoil-example-offchain-worker/try-runtime",
+	"topsoil-example-single-block-migrations/try-runtime",
+	"topsoil-example-split/try-runtime",
+	"topsoil-example-tasks/try-runtime",
+	"topsoil-example-view-functions/try-runtime",
 ]

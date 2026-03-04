@@ -13,11 +13,11 @@ targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
 codec = { workspace = true, features = ["derive"] }
-frame-benchmarking = { workspace = true, optional = true }
-frame-support = { workspace = true }
-frame-system = { workspace = true }
+topsoil-benchmarking = { workspace = true, optional = true }
+topsoil-support = { workspace = true }
+topsoil-system = { workspace = true }
 log = { workspace = true }
-pallet-transaction-payment = { workspace = true }
+topsoil-transaction-payment = { workspace = true }
 scale-info = { workspace = true, features = ["derive"] }
 soil-arithmetic = { workspace = true }
 soil-core = { workspace = true }
@@ -28,11 +28,11 @@ soil-runtime = { workspace = true }
 default = ["std"]
 std = [
 	"codec/std",
-	"frame-benchmarking?/std",
-	"frame-support/std",
-	"frame-system/std",
+	"topsoil-benchmarking?/std",
+	"topsoil-support/std",
+	"topsoil-system/std",
 	"log/std",
-	"pallet-transaction-payment/std",
+	"topsoil-transaction-payment/std",
 	"scale-info/std",
 	"soil-arithmetic/std",
 	"soil-core/std",
@@ -40,15 +40,15 @@ std = [
 	"soil-runtime/std",
 ]
 runtime-benchmarks = [
-	"frame-benchmarking/runtime-benchmarks",
-	"frame-support/runtime-benchmarks",
-	"frame-system/runtime-benchmarks",
-	"pallet-transaction-payment/runtime-benchmarks",
+	"topsoil-benchmarking/runtime-benchmarks",
+	"topsoil-support/runtime-benchmarks",
+	"topsoil-system/runtime-benchmarks",
+	"topsoil-transaction-payment/runtime-benchmarks",
 	"soil-runtime/runtime-benchmarks",
 ]
 try-runtime = [
-	"frame-support/try-runtime",
-	"frame-system/try-runtime",
-	"pallet-transaction-payment/try-runtime",
+	"topsoil-support/try-runtime",
+	"topsoil-system/try-runtime",
+	"topsoil-transaction-payment/try-runtime",
 	"soil-runtime/try-runtime",
 ]

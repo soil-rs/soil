@@ -18,9 +18,9 @@ targets = ["x86_64-unknown-linux-gnu"]
 [dependencies]
 aquamarine = { workspace = true }
 codec = { features = ["derive"], workspace = true }
-frame-support = { workspace = true }
-frame-system = { workspace = true }
-frame-try-runtime = { optional = true, workspace = true }
+topsoil-support = { workspace = true }
+topsoil-system = { workspace = true }
+topsoil-try-runtime = { optional = true, workspace = true }
 log = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 soil-core = { workspace = true }
@@ -30,8 +30,8 @@ soil-tracing = { workspace = true }
 
 [dev-dependencies]
 array-bytes = { workspace = true, default-features = true }
-pallet-balances = { workspace = true, default-features = true }
-pallet-transaction-payment = { workspace = true, default-features = true }
+topsoil-balances = { workspace = true, default-features = true }
+topsoil-transaction-payment = { workspace = true, default-features = true }
 soil-core = { workspace = true, default-features = true }
 soil-inherents = { workspace = true, default-features = true }
 soil-io = { workspace = true, default-features = true }
@@ -43,13 +43,13 @@ default = ["std"]
 with-tracing = ["soil-tracing/with-tracing"]
 std = [
 	"codec/std",
-	"frame-support/experimental",
-	"frame-support/std",
-	"frame-system/std",
-	"frame-try-runtime/std",
+	"topsoil-support/experimental",
+	"topsoil-support/std",
+	"topsoil-system/std",
+	"topsoil-try-runtime/std",
 	"log/std",
-	"pallet-balances/std",
-	"pallet-transaction-payment/std",
+	"topsoil-balances/std",
+	"topsoil-transaction-payment/std",
 	"scale-info/std",
 	"soil-core/std",
 	"soil-inherents/std",
@@ -59,10 +59,10 @@ std = [
 	"soil-version/std",
 ]
 try-runtime = [
-	"frame-support/try-runtime",
-	"frame-system/try-runtime",
-	"frame-try-runtime/try-runtime",
-	"pallet-balances/try-runtime",
-	"pallet-transaction-payment/try-runtime",
+	"topsoil-support/try-runtime",
+	"topsoil-system/try-runtime",
+	"topsoil-try-runtime/try-runtime",
+	"topsoil-balances/try-runtime",
+	"topsoil-transaction-payment/try-runtime",
 	"soil-runtime/try-runtime",
 ]

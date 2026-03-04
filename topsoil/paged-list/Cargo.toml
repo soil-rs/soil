@@ -17,7 +17,7 @@ targets = ["x86_64-unknown-linux-gnu"]
 [dependencies]
 codec = { features = ["derive"], workspace = true }
 docify = { workspace = true }
-frame = { workspace = true, features = ["runtime"] }
+topsoil = { workspace = true, features = ["runtime"] }
 scale-info = { features = ["derive"], workspace = true }
 soil-metadata-ir = { optional = true, workspace = true }
 
@@ -26,17 +26,17 @@ default = ["std"]
 
 std = [
 	"codec/std",
-	"frame/std",
+	"topsoil/std",
 	"scale-info/std",
 	"soil-metadata-ir/std",
 ]
 
 runtime-benchmarks = [
-	"frame/runtime-benchmarks",
+	"topsoil/runtime-benchmarks",
 ]
 
 try-runtime = [
-	"frame/try-runtime",
+	"topsoil/try-runtime",
 ]
 
 frame-metadata = ["soil-metadata-ir"]

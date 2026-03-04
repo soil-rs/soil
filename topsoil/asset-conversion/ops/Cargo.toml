@@ -16,11 +16,11 @@ targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
 codec = { workspace = true }
-frame-benchmarking = { optional = true, workspace = true }
-frame-support = { workspace = true }
-frame-system = { workspace = true }
+topsoil-benchmarking = { optional = true, workspace = true }
+topsoil-support = { workspace = true }
+topsoil-system = { workspace = true }
 log = { workspace = true }
-pallet-asset-conversion = { workspace = true }
+topsoil-asset-conversion = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 soil-arithmetic = { workspace = true }
 soil-core = { workspace = true }
@@ -28,21 +28,21 @@ soil-io = { workspace = true }
 soil-runtime = { workspace = true }
 
 [dev-dependencies]
-pallet-assets = { workspace = true, default-features = true }
-pallet-balances = { workspace = true, default-features = true }
+topsoil-assets = { workspace = true, default-features = true }
+topsoil-balances = { workspace = true, default-features = true }
 primitive-types = { features = ["codec", "num-traits", "scale-info"], workspace = true }
 
 [features]
 default = ["std"]
 std = [
 	"codec/std",
-	"frame-benchmarking?/std",
-	"frame-support/std",
-	"frame-system/std",
+	"topsoil-benchmarking?/std",
+	"topsoil-support/std",
+	"topsoil-system/std",
 	"log/std",
-	"pallet-asset-conversion/std",
-	"pallet-assets/std",
-	"pallet-balances/std",
+	"topsoil-asset-conversion/std",
+	"topsoil-assets/std",
+	"topsoil-balances/std",
 	"primitive-types/std",
 	"scale-info/std",
 	"soil-arithmetic/std",
@@ -51,19 +51,19 @@ std = [
 	"soil-runtime/std",
 ]
 runtime-benchmarks = [
-	"frame-benchmarking/runtime-benchmarks",
-	"frame-support/runtime-benchmarks",
-	"frame-system/runtime-benchmarks",
-	"pallet-asset-conversion/runtime-benchmarks",
-	"pallet-assets/runtime-benchmarks",
-	"pallet-balances/runtime-benchmarks",
+	"topsoil-benchmarking/runtime-benchmarks",
+	"topsoil-support/runtime-benchmarks",
+	"topsoil-system/runtime-benchmarks",
+	"topsoil-asset-conversion/runtime-benchmarks",
+	"topsoil-assets/runtime-benchmarks",
+	"topsoil-balances/runtime-benchmarks",
 	"soil-runtime/runtime-benchmarks",
 ]
 try-runtime = [
-	"frame-support/try-runtime",
-	"frame-system/try-runtime",
-	"pallet-asset-conversion/try-runtime",
-	"pallet-assets/try-runtime",
-	"pallet-balances/try-runtime",
+	"topsoil-support/try-runtime",
+	"topsoil-system/try-runtime",
+	"topsoil-asset-conversion/try-runtime",
+	"topsoil-assets/try-runtime",
+	"topsoil-balances/try-runtime",
 	"soil-runtime/try-runtime",
 ]

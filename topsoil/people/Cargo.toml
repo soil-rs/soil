@@ -14,9 +14,9 @@ targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
 codec = { workspace = true, features = ["derive"] }
-frame-benchmarking = { workspace = true, optional = true }
-frame-support = { workspace = true }
-frame-system = { workspace = true }
+topsoil-benchmarking = { workspace = true, optional = true }
+topsoil-support = { workspace = true }
+topsoil-system = { workspace = true }
 log = { workspace = true }
 scale-info = { workspace = true, features = ["derive"] }
 soil-arithmetic = { workspace = true }
@@ -30,9 +30,9 @@ verifiable = { workspace = true, features = ["small-ring"] }
 default = ["std"]
 std = [
 	"codec/std",
-	"frame-benchmarking?/std",
-	"frame-support/std",
-	"frame-system/std",
+	"topsoil-benchmarking?/std",
+	"topsoil-support/std",
+	"topsoil-system/std",
 	"log/std",
 	"scale-info/std",
 	"soil-arithmetic/std",
@@ -42,14 +42,14 @@ std = [
 	"verifiable/std",
 ]
 runtime-benchmarks = [
-	"frame-benchmarking/runtime-benchmarks",
-	"frame-support/runtime-benchmarks",
-	"frame-system/runtime-benchmarks",
+	"topsoil-benchmarking/runtime-benchmarks",
+	"topsoil-support/runtime-benchmarks",
+	"topsoil-system/runtime-benchmarks",
 	"soil-runtime/runtime-benchmarks",
 	"verifiable/no-std-prover",
 ]
 try-runtime = [
-	"frame-support/try-runtime",
-	"frame-system/try-runtime",
+	"topsoil-support/try-runtime",
+	"topsoil-system/try-runtime",
 	"soil-runtime/try-runtime",
 ]

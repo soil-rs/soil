@@ -17,18 +17,18 @@ docify = { workspace = true }
 scale-info = { workspace = true, features = ["derive"] }
 serde = { features = ["derive"], optional = true, workspace = true }
 
-frame-benchmarking = { workspace = true, optional = true }
-frame-support = { workspace = true }
-frame-system = { workspace = true }
+topsoil-benchmarking = { workspace = true, optional = true }
+topsoil-support = { workspace = true }
+topsoil-system = { workspace = true }
 soil-core = { workspace = true }
 soil-io = { workspace = true }
 soil-runtime = { workspace = true }
 soil-std = { workspace = true }
 
 [dev-dependencies]
-pallet-balances = { workspace = true, default-features = true }
-pallet-transaction-payment = { workspace = true, default-features = true }
-pallet-verify-signature = { workspace = true, default-features = true }
+topsoil-balances = { workspace = true, default-features = true }
+topsoil-transaction-payment = { workspace = true, default-features = true }
+topsoil-verify-signature = { workspace = true, default-features = true }
 soil-keyring = { workspace = true, default-features = true }
 soil-keystore = { workspace = true, default-features = true }
 
@@ -36,9 +36,9 @@ soil-keystore = { workspace = true, default-features = true }
 default = ["std"]
 std = [
 	"codec/std",
-	"frame-benchmarking?/std",
-	"frame-support/std",
-	"frame-system/std",
+	"topsoil-benchmarking?/std",
+	"topsoil-support/std",
+	"topsoil-system/std",
 	"scale-info/std",
 	"serde?/std",
 	"soil-core/std",
@@ -47,19 +47,19 @@ std = [
 	"soil-std/std",
 ]
 runtime-benchmarks = [
-	"frame-benchmarking/runtime-benchmarks",
-	"frame-support/runtime-benchmarks",
-	"frame-system/runtime-benchmarks",
-	"pallet-balances/runtime-benchmarks",
-	"pallet-transaction-payment/runtime-benchmarks",
-	"pallet-verify-signature/runtime-benchmarks",
+	"topsoil-benchmarking/runtime-benchmarks",
+	"topsoil-support/runtime-benchmarks",
+	"topsoil-system/runtime-benchmarks",
+	"topsoil-balances/runtime-benchmarks",
+	"topsoil-transaction-payment/runtime-benchmarks",
+	"topsoil-verify-signature/runtime-benchmarks",
 	"soil-runtime/runtime-benchmarks",
 ]
 try-runtime = [
-	"frame-support/try-runtime",
-	"frame-system/try-runtime",
-	"pallet-balances/try-runtime",
-	"pallet-transaction-payment/try-runtime",
-	"pallet-verify-signature/try-runtime",
+	"topsoil-support/try-runtime",
+	"topsoil-system/try-runtime",
+	"topsoil-balances/try-runtime",
+	"topsoil-transaction-payment/try-runtime",
+	"topsoil-verify-signature/try-runtime",
 	"soil-runtime/try-runtime",
 ]

@@ -26,7 +26,7 @@ cfg-expr = { workspace = true }
 derive-syn-parse = { workspace = true }
 docify = { workspace = true }
 expander = { workspace = true }
-frame-support-procedural-tools = { workspace = true, default-features = true }
+topsoil-support-procedural-tools = { workspace = true, default-features = true }
 itertools = { workspace = true }
 macro_magic = { features = ["proc_support"], workspace = true }
 proc-macro-warning = { workspace = true }
@@ -37,9 +37,9 @@ syn = { features = ["full", "parsing", "visit-mut"], workspace = true }
 
 [dev-dependencies]
 codec = { features = ["derive", "max-encoded-len"], workspace = true, default-features = true }
-frame-benchmarking = { workspace = true, default-features = true }
-frame-support = { workspace = true, default-features = true }
-frame-system = { workspace = true, default-features = true }
+topsoil-benchmarking = { workspace = true, default-features = true }
+topsoil-support = { workspace = true, default-features = true }
+topsoil-system = { workspace = true, default-features = true }
 pretty_assertions = { workspace = true }
 regex = { workspace = true }
 scale-info = { features = ["derive"], workspace = true, default-features = true }
@@ -51,9 +51,9 @@ soil-runtime = { features = ["serde"], workspace = true, default-features = true
 default = ["std"]
 std = [
 	"codec/std",
-	"frame-benchmarking/std",
-	"frame-support/std",
-	"frame-system/std",
+	"topsoil-benchmarking/std",
+	"topsoil-support/std",
+	"topsoil-system/std",
 	"scale-info/std",
 	"soil-crypto-hashing/std",
 	"soil-metadata-ir/std",

@@ -52,7 +52,7 @@ soil-version = { optional = true, workspace = true, default-features = true }
 metadata-hash = [
 	"array-bytes",
 	"codec",
-	"frame-metadata",
+	"topsoil-metadata",
 	"merkleized-metadata",
 	"soil-executor",
 	"soil-core",

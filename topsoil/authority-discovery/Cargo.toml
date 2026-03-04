@@ -17,16 +17,16 @@ targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
 codec = { features = ["derive"], workspace = true }
-frame-support = { workspace = true }
-frame-system = { workspace = true }
-pallet-session = { features = ["historical"], workspace = true }
+topsoil-support = { workspace = true }
+topsoil-system = { workspace = true }
+topsoil-session = { features = ["historical"], workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 soil-application-crypto = { workspace = true }
 soil-authority-discovery = { workspace = true }
 soil-runtime = { workspace = true }
 
 [dev-dependencies]
-pallet-balances = { workspace = true }
+topsoil-balances = { workspace = true }
 soil-core = { workspace = true, default-features = true }
 soil-io = { workspace = true, default-features = true }
 
@@ -34,10 +34,10 @@ soil-io = { workspace = true, default-features = true }
 default = ["std"]
 std = [
 	"codec/std",
-	"frame-support/std",
-	"frame-system/std",
-	"pallet-balances/std",
-	"pallet-session/std",
+	"topsoil-support/std",
+	"topsoil-system/std",
+	"topsoil-balances/std",
+	"topsoil-session/std",
 	"scale-info/std",
 	"soil-application-crypto/std",
 	"soil-authority-discovery/std",
@@ -46,9 +46,9 @@ std = [
 	"soil-runtime/std",
 ]
 try-runtime = [
-	"frame-support/try-runtime",
-	"frame-system/try-runtime",
-	"pallet-balances/try-runtime",
-	"pallet-session/try-runtime",
+	"topsoil-support/try-runtime",
+	"topsoil-system/try-runtime",
+	"topsoil-balances/try-runtime",
+	"topsoil-session/try-runtime",
 	"soil-runtime/try-runtime",
 ]

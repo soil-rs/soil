@@ -17,26 +17,26 @@ targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
 codec = { workspace = true }
-frame-benchmarking = { workspace = true }
-frame-election-provider-support = { workspace = true }
-frame-support = { workspace = true }
-frame-system = { workspace = true }
+topsoil-benchmarking = { workspace = true }
+topsoil-election-provider-support = { workspace = true }
+topsoil-support = { workspace = true }
+topsoil-system = { workspace = true }
 log = { workspace = true }
-pallet-babe = { workspace = true }
-pallet-balances = { workspace = true }
-pallet-grandpa = { workspace = true }
-pallet-im-online = { workspace = true }
-pallet-offences = { workspace = true }
-pallet-session = { workspace = true }
-pallet-session-benchmarking = { workspace = true }
-pallet-staking = { workspace = true }
+topsoil-babe = { workspace = true }
+topsoil-balances = { workspace = true }
+topsoil-grandpa = { workspace = true }
+topsoil-im-online = { workspace = true }
+topsoil-offences = { workspace = true }
+topsoil-session = { workspace = true }
+topsoil-session-benchmarking = { workspace = true }
+topsoil-staking = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 soil-runtime = { workspace = true }
 soil-staking = { workspace = true }
 
 [dev-dependencies]
-pallet-staking-reward-curve = { workspace = true, default-features = true }
-pallet-timestamp = { workspace = true, default-features = true }
+topsoil-staking-reward-curve = { workspace = true, default-features = true }
+topsoil-timestamp = { workspace = true, default-features = true }
 soil-core = { workspace = true, default-features = true }
 soil-io = { workspace = true, default-features = true }
 soil-tracing = { workspace = true, default-features = true }
@@ -45,20 +45,20 @@ soil-tracing = { workspace = true, default-features = true }
 default = ["std"]
 std = [
 	"codec/std",
-	"frame-benchmarking/std",
-	"frame-election-provider-support/std",
-	"frame-support/std",
-	"frame-system/std",
+	"topsoil-benchmarking/std",
+	"topsoil-election-provider-support/std",
+	"topsoil-support/std",
+	"topsoil-system/std",
 	"log/std",
-	"pallet-babe/std",
-	"pallet-balances/std",
-	"pallet-grandpa/std",
-	"pallet-im-online/std",
-	"pallet-offences/std",
-	"pallet-session-benchmarking/std",
-	"pallet-session/std",
-	"pallet-staking/std",
-	"pallet-timestamp/std",
+	"topsoil-babe/std",
+	"topsoil-balances/std",
+	"topsoil-grandpa/std",
+	"topsoil-im-online/std",
+	"topsoil-offences/std",
+	"topsoil-session-benchmarking/std",
+	"topsoil-session/std",
+	"topsoil-staking/std",
+	"topsoil-timestamp/std",
 	"scale-info/std",
 	"soil-core/std",
 	"soil-io/std",
@@ -66,19 +66,19 @@ std = [
 	"soil-staking/std",
 ]
 runtime-benchmarks = [
-	"frame-benchmarking/runtime-benchmarks",
-	"frame-election-provider-support/runtime-benchmarks",
-	"frame-support/runtime-benchmarks",
-	"frame-system/runtime-benchmarks",
-	"pallet-babe/runtime-benchmarks",
-	"pallet-balances/runtime-benchmarks",
-	"pallet-grandpa/runtime-benchmarks",
-	"pallet-im-online/runtime-benchmarks",
-	"pallet-offences/runtime-benchmarks",
-	"pallet-session-benchmarking/runtime-benchmarks",
-	"pallet-session/runtime-benchmarks",
-	"pallet-staking/runtime-benchmarks",
-	"pallet-timestamp/runtime-benchmarks",
+	"topsoil-benchmarking/runtime-benchmarks",
+	"topsoil-election-provider-support/runtime-benchmarks",
+	"topsoil-support/runtime-benchmarks",
+	"topsoil-system/runtime-benchmarks",
+	"topsoil-babe/runtime-benchmarks",
+	"topsoil-balances/runtime-benchmarks",
+	"topsoil-grandpa/runtime-benchmarks",
+	"topsoil-im-online/runtime-benchmarks",
+	"topsoil-offences/runtime-benchmarks",
+	"topsoil-session-benchmarking/runtime-benchmarks",
+	"topsoil-session/runtime-benchmarks",
+	"topsoil-staking/runtime-benchmarks",
+	"topsoil-timestamp/runtime-benchmarks",
 	"soil-runtime/runtime-benchmarks",
 	"soil-staking/runtime-benchmarks",
 ]

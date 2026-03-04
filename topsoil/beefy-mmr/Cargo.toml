@@ -15,13 +15,13 @@ workspace = true
 array-bytes = { optional = true, workspace = true, default-features = true }
 binary-merkle-tree = { workspace = true }
 codec = { features = ["derive"], workspace = true }
-frame-benchmarking = { optional = true, workspace = true }
-frame-support = { workspace = true }
-frame-system = { workspace = true }
+topsoil-benchmarking = { optional = true, workspace = true }
+topsoil-support = { workspace = true }
+topsoil-system = { workspace = true }
 log = { workspace = true }
-pallet-beefy = { workspace = true }
-pallet-mmr = { workspace = true }
-pallet-session = { workspace = true }
+topsoil-beefy = { workspace = true }
+topsoil-mmr = { workspace = true }
+topsoil-session = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { optional = true, workspace = true, default-features = true }
 soil-api = { workspace = true }
@@ -33,7 +33,7 @@ soil-state-machine = { workspace = true }
 
 [dev-dependencies]
 array-bytes = { workspace = true, default-features = true }
-pallet-balances = { workspace = true }
+topsoil-balances = { workspace = true }
 soil-staking = { workspace = true, default-features = true }
 
 [features]
@@ -42,14 +42,14 @@ std = [
 	"array-bytes",
 	"binary-merkle-tree/std",
 	"codec/std",
-	"frame-benchmarking/std",
-	"frame-support/std",
-	"frame-system/std",
+	"topsoil-benchmarking/std",
+	"topsoil-support/std",
+	"topsoil-system/std",
 	"log/std",
-	"pallet-balances/std",
-	"pallet-beefy/std",
-	"pallet-mmr/std",
-	"pallet-session/std",
+	"topsoil-balances/std",
+	"topsoil-beefy/std",
+	"topsoil-mmr/std",
+	"topsoil-session/std",
 	"scale-info/std",
 	"serde",
 	"soil-api/std",
@@ -61,21 +61,21 @@ std = [
 	"soil-state-machine/std",
 ]
 try-runtime = [
-	"frame-support/try-runtime",
-	"frame-system/try-runtime",
-	"pallet-balances/try-runtime",
-	"pallet-beefy/try-runtime",
-	"pallet-mmr/try-runtime",
-	"pallet-session/try-runtime",
+	"topsoil-support/try-runtime",
+	"topsoil-system/try-runtime",
+	"topsoil-balances/try-runtime",
+	"topsoil-beefy/try-runtime",
+	"topsoil-mmr/try-runtime",
+	"topsoil-session/try-runtime",
 	"soil-runtime/try-runtime",
 ]
 runtime-benchmarks = [
-	"frame-benchmarking/runtime-benchmarks",
-	"frame-support/runtime-benchmarks",
-	"frame-system/runtime-benchmarks",
-	"pallet-balances/runtime-benchmarks",
-	"pallet-mmr/runtime-benchmarks",
-	"pallet-session/runtime-benchmarks",
+	"topsoil-benchmarking/runtime-benchmarks",
+	"topsoil-support/runtime-benchmarks",
+	"topsoil-system/runtime-benchmarks",
+	"topsoil-balances/runtime-benchmarks",
+	"topsoil-mmr/runtime-benchmarks",
+	"topsoil-session/runtime-benchmarks",
 	"soil-runtime/runtime-benchmarks",
 	"soil-staking/runtime-benchmarks",
 ]

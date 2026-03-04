@@ -27,8 +27,8 @@ soil-io = { workspace = true }
 soil-runtime = { workspace = true }
 
 # frame deps, for developing FRAME pallets.
-frame-support = { workspace = true }
-frame-system = { workspace = true }
+topsoil-support = { workspace = true }
+topsoil-system = { workspace = true }
 
 # primitive types used for developing FRAME runtimes.
 soil-api = { optional = true, workspace = true }
@@ -44,15 +44,15 @@ soil-storage = { optional = true, workspace = true }
 soil-transaction-pool = { optional = true, workspace = true }
 soil-version = { optional = true, workspace = true }
 
-frame-executive = { optional = true, workspace = true }
-frame-system-rpc-runtime-api = { optional = true, workspace = true }
+topsoil-executive = { optional = true, workspace = true }
+topsoil-system-rpc-runtime-api = { optional = true, workspace = true }
 
 # Used for runtime benchmarking
-frame-benchmarking = { optional = true, workspace = true }
-frame-system-benchmarking = { optional = true, workspace = true }
+topsoil-benchmarking = { optional = true, workspace = true }
+topsoil-system-benchmarking = { optional = true, workspace = true }
 
 # Used for try-runtime
-frame-try-runtime = { optional = true, workspace = true }
+topsoil-try-runtime = { optional = true, workspace = true }
 
 docify = { workspace = true }
 log = { workspace = true }
@@ -61,13 +61,13 @@ log = { workspace = true }
 default = ["runtime", "std"]
 std = [
 	"codec/std",
-	"frame-benchmarking?/std",
-	"frame-executive?/std",
-	"frame-support/std",
-	"frame-system-benchmarking?/std",
-	"frame-system-rpc-runtime-api?/std",
-	"frame-system/std",
-	"frame-try-runtime?/std",
+	"topsoil-benchmarking?/std",
+	"topsoil-executive?/std",
+	"topsoil-support/std",
+	"topsoil-system-benchmarking?/std",
+	"topsoil-system-rpc-runtime-api?/std",
+	"topsoil-system/std",
+	"topsoil-try-runtime?/std",
 	"log/std",
 	"scale-info/std",
 	"serde/std",
@@ -89,23 +89,23 @@ std = [
 	"soil-version?/std",
 ]
 runtime-benchmarks = [
-	"frame-benchmarking/runtime-benchmarks",
-	"frame-support/runtime-benchmarks",
-	"frame-system-benchmarking/runtime-benchmarks",
-	"frame-system/runtime-benchmarks",
+	"topsoil-benchmarking/runtime-benchmarks",
+	"topsoil-support/runtime-benchmarks",
+	"topsoil-system-benchmarking/runtime-benchmarks",
+	"topsoil-system/runtime-benchmarks",
 	"soil-runtime/runtime-benchmarks",
 ]
 try-runtime = [
-	"frame-executive/try-runtime",
-	"frame-support/try-runtime",
-	"frame-system/try-runtime",
-	"frame-try-runtime/try-runtime",
+	"topsoil-executive/try-runtime",
+	"topsoil-support/try-runtime",
+	"topsoil-system/try-runtime",
+	"topsoil-try-runtime/try-runtime",
 	"soil-runtime/try-runtime",
 ]
-experimental = ["frame-support/experimental"]
+experimental = ["topsoil-support/experimental"]
 runtime = [
-	"frame-executive",
-	"frame-system-rpc-runtime-api",
+	"topsoil-executive",
+	"topsoil-system-rpc-runtime-api",
 	"soil-api",
 	"soil-block-builder",
 	"soil-consensus-aura",

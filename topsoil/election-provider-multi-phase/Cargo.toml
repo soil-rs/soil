@@ -19,10 +19,10 @@ codec = { features = ["derive"], workspace = true }
 log = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 
-frame-support = { workspace = true }
-frame-system = { workspace = true }
+topsoil-support = { workspace = true }
+topsoil-system = { workspace = true }
 
-frame-election-provider-support = { workspace = true }
+topsoil-election-provider-support = { workspace = true }
 soil-arithmetic = { workspace = true }
 soil-core = { workspace = true }
 soil-io = { workspace = true }
@@ -30,7 +30,7 @@ soil-npos-elections = { workspace = true }
 soil-runtime = { workspace = true }
 
 # Optional imports for benchmarking
-frame-benchmarking = { optional = true, workspace = true }
+topsoil-benchmarking = { optional = true, workspace = true }
 rand = { features = ["alloc", "small_rng"], optional = true, workspace = true }
 strum = { features = ["derive"], optional = true, workspace = true }
 
@@ -40,8 +40,8 @@ remote-externalities = { workspace = true, default-features = true, optional = t
 tokio = { features = ["macros"], workspace = true, default-features = true, optional = true }
 
 [dev-dependencies]
-frame-benchmarking = { workspace = true, default-features = true }
-pallet-balances = { workspace = true, default-features = true }
+topsoil-benchmarking = { workspace = true, default-features = true }
+topsoil-balances = { workspace = true, default-features = true }
 parking_lot = { workspace = true, default-features = true }
 rand = { workspace = true, default-features = true }
 soil-tracing = { workspace = true, default-features = true }
@@ -52,12 +52,12 @@ remote-mining = ["hex", "remote-externalities", "tokio"]
 default = ["std"]
 std = [
 	"codec/std",
-	"frame-benchmarking?/std",
-	"frame-election-provider-support/std",
-	"frame-support/std",
-	"frame-system/std",
+	"topsoil-benchmarking?/std",
+	"topsoil-election-provider-support/std",
+	"topsoil-support/std",
+	"topsoil-system/std",
 	"log/std",
-	"pallet-balances/std",
+	"topsoil-balances/std",
 	"rand/std",
 	"scale-info/std",
 	"soil-arithmetic/std",
@@ -69,19 +69,19 @@ std = [
 	"strum/std",
 ]
 runtime-benchmarks = [
-	"frame-benchmarking/runtime-benchmarks",
-	"frame-election-provider-support/runtime-benchmarks",
-	"frame-support/runtime-benchmarks",
-	"frame-system/runtime-benchmarks",
-	"pallet-balances/runtime-benchmarks",
+	"topsoil-benchmarking/runtime-benchmarks",
+	"topsoil-election-provider-support/runtime-benchmarks",
+	"topsoil-support/runtime-benchmarks",
+	"topsoil-system/runtime-benchmarks",
+	"topsoil-balances/runtime-benchmarks",
 	"rand",
 	"soil-runtime/runtime-benchmarks",
 	"strum",
 ]
 try-runtime = [
-	"frame-election-provider-support/try-runtime",
-	"frame-support/try-runtime",
-	"frame-system/try-runtime",
-	"pallet-balances/try-runtime",
+	"topsoil-election-provider-support/try-runtime",
+	"topsoil-support/try-runtime",
+	"topsoil-system/try-runtime",
+	"topsoil-balances/try-runtime",
 	"soil-runtime/try-runtime",
 ]

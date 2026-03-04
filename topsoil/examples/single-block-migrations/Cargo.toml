@@ -15,10 +15,10 @@ targets = ["x86_64-unknown-linux-gnu"]
 [dependencies]
 codec = { features = ["derive"], workspace = true }
 docify = { workspace = true }
-frame-support = { workspace = true }
-frame-system = { workspace = true }
+topsoil-support = { workspace = true }
+topsoil-system = { workspace = true }
 log = { workspace = true }
-pallet-balances = { workspace = true }
+topsoil-balances = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 soil-core = { workspace = true }
 soil-io = { workspace = true }
@@ -29,10 +29,10 @@ soil-version = { workspace = true }
 default = ["std"]
 std = [
 	"codec/std",
-	"frame-support/std",
-	"frame-system/std",
+	"topsoil-support/std",
+	"topsoil-system/std",
 	"log/std",
-	"pallet-balances/std",
+	"topsoil-balances/std",
 	"scale-info/std",
 	"soil-core/std",
 	"soil-io/std",
@@ -40,14 +40,14 @@ std = [
 	"soil-version/std",
 ]
 runtime-benchmarks = [
-	"frame-support/runtime-benchmarks",
-	"frame-system/runtime-benchmarks",
-	"pallet-balances/runtime-benchmarks",
+	"topsoil-support/runtime-benchmarks",
+	"topsoil-system/runtime-benchmarks",
+	"topsoil-balances/runtime-benchmarks",
 	"soil-runtime/runtime-benchmarks",
 ]
 try-runtime = [
-	"frame-support/try-runtime",
-	"frame-system/try-runtime",
-	"pallet-balances/try-runtime",
+	"topsoil-support/try-runtime",
+	"topsoil-system/try-runtime",
+	"topsoil-balances/try-runtime",
 	"soil-runtime/try-runtime",
 ]

@@ -13,8 +13,8 @@ targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
 codec = { features = ["derive"], workspace = true }
-frame-support = { workspace = true }
-frame-system = { workspace = true }
+topsoil-support = { workspace = true }
+topsoil-system = { workspace = true }
 log = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 soil-io = { workspace = true }
@@ -22,12 +22,12 @@ soil-runtime = { workspace = true }
 soil-staking = { workspace = true }
 
 [dev-dependencies]
-frame-election-provider-support = { workspace = true }
-pallet-balances = { workspace = true, default-features = true }
-pallet-nomination-pools = { workspace = true, default-features = true }
-pallet-staking = { workspace = true, default-features = true }
-pallet-staking-reward-curve = { workspace = true, default-features = true }
-pallet-timestamp = { workspace = true, default-features = true }
+topsoil-election-provider-support = { workspace = true }
+topsoil-balances = { workspace = true, default-features = true }
+topsoil-nomination-pools = { workspace = true, default-features = true }
+topsoil-staking = { workspace = true, default-features = true }
+topsoil-staking-reward-curve = { workspace = true, default-features = true }
+topsoil-timestamp = { workspace = true, default-features = true }
 soil-core = { workspace = true, default-features = true }
 soil-tracing = { workspace = true, default-features = true }
 
@@ -35,14 +35,14 @@ soil-tracing = { workspace = true, default-features = true }
 default = ["std"]
 std = [
 	"codec/std",
-	"frame-election-provider-support/std",
-	"frame-support/std",
-	"frame-system/std",
+	"topsoil-election-provider-support/std",
+	"topsoil-support/std",
+	"topsoil-system/std",
 	"log/std",
-	"pallet-balances/std",
-	"pallet-nomination-pools/std",
-	"pallet-staking/std",
-	"pallet-timestamp/std",
+	"topsoil-balances/std",
+	"topsoil-nomination-pools/std",
+	"topsoil-staking/std",
+	"topsoil-timestamp/std",
 	"scale-info/std",
 	"soil-core/std",
 	"soil-io/std",
@@ -50,23 +50,23 @@ std = [
 	"soil-staking/std",
 ]
 runtime-benchmarks = [
-	"frame-election-provider-support/runtime-benchmarks",
-	"frame-support/runtime-benchmarks",
-	"frame-system/runtime-benchmarks",
-	"pallet-balances/runtime-benchmarks",
-	"pallet-nomination-pools/runtime-benchmarks",
-	"pallet-staking/runtime-benchmarks",
-	"pallet-timestamp/runtime-benchmarks",
+	"topsoil-election-provider-support/runtime-benchmarks",
+	"topsoil-support/runtime-benchmarks",
+	"topsoil-system/runtime-benchmarks",
+	"topsoil-balances/runtime-benchmarks",
+	"topsoil-nomination-pools/runtime-benchmarks",
+	"topsoil-staking/runtime-benchmarks",
+	"topsoil-timestamp/runtime-benchmarks",
 	"soil-runtime/runtime-benchmarks",
 	"soil-staking/runtime-benchmarks",
 ]
 try-runtime = [
-	"frame-election-provider-support/try-runtime",
-	"frame-support/try-runtime",
-	"frame-system/try-runtime",
-	"pallet-balances/try-runtime",
-	"pallet-nomination-pools/try-runtime",
-	"pallet-staking/try-runtime",
-	"pallet-timestamp/try-runtime",
+	"topsoil-election-provider-support/try-runtime",
+	"topsoil-support/try-runtime",
+	"topsoil-system/try-runtime",
+	"topsoil-balances/try-runtime",
+	"topsoil-nomination-pools/try-runtime",
+	"topsoil-staking/try-runtime",
+	"topsoil-timestamp/try-runtime",
 	"soil-runtime/try-runtime",
 ]

@@ -16,9 +16,9 @@ targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
 codec = { features = ["derive"], workspace = true }
-frame-benchmarking = { optional = true, workspace = true }
-frame-election-provider-support = { workspace = true }
-frame-system = { workspace = true }
+topsoil-benchmarking = { optional = true, workspace = true }
+topsoil-election-provider-support = { workspace = true }
+topsoil-system = { workspace = true }
 soil-npos-elections = { workspace = true }
 soil-runtime = { workspace = true }
 
@@ -26,15 +26,15 @@ soil-runtime = { workspace = true }
 default = ["std"]
 std = [
 	"codec/std",
-	"frame-benchmarking?/std",
-	"frame-election-provider-support/std",
-	"frame-system/std",
+	"topsoil-benchmarking?/std",
+	"topsoil-election-provider-support/std",
+	"topsoil-system/std",
 	"soil-npos-elections/std",
 	"soil-runtime/std",
 ]
 runtime-benchmarks = [
-	"frame-benchmarking/runtime-benchmarks",
-	"frame-election-provider-support/runtime-benchmarks",
-	"frame-system/runtime-benchmarks",
+	"topsoil-benchmarking/runtime-benchmarks",
+	"topsoil-election-provider-support/runtime-benchmarks",
+	"topsoil-system/runtime-benchmarks",
 	"soil-runtime/runtime-benchmarks",
 ]

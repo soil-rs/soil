@@ -13,9 +13,9 @@ workspace = true
 
 [dependencies]
 codec = { features = ["derive"], workspace = true }
-frame-benchmarking = { optional = true, workspace = true }
-frame-support = { workspace = true }
-frame-system = { workspace = true }
+topsoil-benchmarking = { optional = true, workspace = true }
+topsoil-support = { workspace = true }
+topsoil-system = { workspace = true }
 log = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 soil-core = { optional = true, workspace = true }
@@ -23,34 +23,34 @@ soil-io = { workspace = true }
 soil-runtime = { workspace = true }
 
 [dev-dependencies]
-pallet-balances = { workspace = true, default-features = true }
+topsoil-balances = { workspace = true, default-features = true }
 soil-core = { workspace = true, default-features = true }
 
 [features]
 default = ["std"]
 runtime-benchmarks = [
-	"frame-benchmarking",
-	"frame-benchmarking/runtime-benchmarks",
-	"frame-support/runtime-benchmarks",
-	"frame-system/runtime-benchmarks",
-	"pallet-balances/runtime-benchmarks",
+	"topsoil-benchmarking",
+	"topsoil-benchmarking/runtime-benchmarks",
+	"topsoil-support/runtime-benchmarks",
+	"topsoil-system/runtime-benchmarks",
+	"topsoil-balances/runtime-benchmarks",
 	"soil-runtime/runtime-benchmarks",
 ]
 std = [
 	"codec/std",
-	"frame-benchmarking?/std",
-	"frame-support/std",
-	"frame-system/std",
+	"topsoil-benchmarking?/std",
+	"topsoil-support/std",
+	"topsoil-system/std",
 	"log/std",
-	"pallet-balances/std",
+	"topsoil-balances/std",
 	"scale-info/std",
 	"soil-core/std",
 	"soil-io/std",
 	"soil-runtime/std",
 ]
 try-runtime = [
-	"frame-support/try-runtime",
-	"frame-system/try-runtime",
-	"pallet-balances/try-runtime",
+	"topsoil-support/try-runtime",
+	"topsoil-system/try-runtime",
+	"topsoil-balances/try-runtime",
 	"soil-runtime/try-runtime",
 ]

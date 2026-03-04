@@ -17,10 +17,10 @@ targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
 codec = { features = ["derive", "max-encoded-len"], workspace = true }
-frame-support = { workspace = true }
-frame-system = { workspace = true }
+topsoil-support = { workspace = true }
+topsoil-system = { workspace = true }
 log = { workspace = true }
-pallet-timestamp = { workspace = true }
+topsoil-timestamp = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 soil-application-crypto = { workspace = true }
 soil-consensus-aura = { workspace = true }
@@ -34,10 +34,10 @@ soil-io = { workspace = true, default-features = true }
 default = ["std"]
 std = [
 	"codec/std",
-	"frame-support/std",
-	"frame-system/std",
+	"topsoil-support/std",
+	"topsoil-system/std",
 	"log/std",
-	"pallet-timestamp/std",
+	"topsoil-timestamp/std",
 	"scale-info/std",
 	"soil-application-crypto/std",
 	"soil-consensus-aura/std",
@@ -46,8 +46,8 @@ std = [
 	"soil-runtime/std",
 ]
 try-runtime = [
-	"frame-support/try-runtime",
-	"frame-system/try-runtime",
-	"pallet-timestamp/try-runtime",
+	"topsoil-support/try-runtime",
+	"topsoil-system/try-runtime",
+	"topsoil-timestamp/try-runtime",
 	"soil-runtime/try-runtime",
 ]

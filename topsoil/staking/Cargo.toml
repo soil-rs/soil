@@ -17,12 +17,12 @@ targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
 codec = { features = ["derive"], workspace = true }
-frame-election-provider-support = { workspace = true }
-frame-support = { workspace = true }
-frame-system = { workspace = true }
+topsoil-election-provider-support = { workspace = true }
+topsoil-support = { workspace = true }
+topsoil-system = { workspace = true }
 log = { workspace = true }
-pallet-authorship = { workspace = true }
-pallet-session = { features = ["historical"], workspace = true }
+topsoil-authorship = { workspace = true }
+topsoil-session = { features = ["historical"], workspace = true }
 scale-info = { features = ["derive", "serde"], workspace = true }
 serde = { features = ["alloc", "derive"], workspace = true }
 soil-application-crypto = { features = ["serde"], workspace = true }
@@ -31,17 +31,17 @@ soil-runtime = { features = ["serde"], workspace = true }
 soil-staking = { features = ["serde"], workspace = true }
 
 # Optional imports for benchmarking
-frame-benchmarking = { optional = true, workspace = true }
+topsoil-benchmarking = { optional = true, workspace = true }
 rand_chacha = { optional = true, workspace = true }
 
 [dev-dependencies]
-frame-benchmarking = { workspace = true, default-features = true }
-frame-election-provider-support = { workspace = true, default-features = true }
-frame-support = { features = ["experimental"], workspace = true, default-features = true }
-pallet-bags-list = { workspace = true, default-features = true }
-pallet-balances = { workspace = true, default-features = true }
-pallet-staking-reward-curve = { workspace = true, default-features = true }
-pallet-timestamp = { workspace = true, default-features = true }
+topsoil-benchmarking = { workspace = true, default-features = true }
+topsoil-election-provider-support = { workspace = true, default-features = true }
+topsoil-support = { features = ["experimental"], workspace = true, default-features = true }
+topsoil-bags-list = { workspace = true, default-features = true }
+topsoil-balances = { workspace = true, default-features = true }
+topsoil-staking-reward-curve = { workspace = true, default-features = true }
+topsoil-timestamp = { workspace = true, default-features = true }
 rand_chacha = { workspace = true, default-features = true }
 soil-core = { workspace = true, default-features = true }
 soil-npos-elections = { workspace = true, default-features = true }
@@ -52,16 +52,16 @@ substrate-test-utils = { workspace = true }
 default = ["std"]
 std = [
 	"codec/std",
-	"frame-benchmarking?/std",
-	"frame-election-provider-support/std",
-	"frame-support/std",
-	"frame-system/std",
+	"topsoil-benchmarking?/std",
+	"topsoil-election-provider-support/std",
+	"topsoil-support/std",
+	"topsoil-system/std",
 	"log/std",
-	"pallet-authorship/std",
-	"pallet-bags-list/std",
-	"pallet-balances/std",
-	"pallet-session/std",
-	"pallet-timestamp/std",
+	"topsoil-authorship/std",
+	"topsoil-bags-list/std",
+	"topsoil-balances/std",
+	"topsoil-session/std",
+	"topsoil-timestamp/std",
 	"scale-info/std",
 	"serde/std",
 	"soil-application-crypto/std",
@@ -72,26 +72,26 @@ std = [
 	"soil-tracing/std",
 ]
 runtime-benchmarks = [
-	"frame-benchmarking/runtime-benchmarks",
-	"frame-election-provider-support/runtime-benchmarks",
-	"frame-support/runtime-benchmarks",
-	"frame-system/runtime-benchmarks",
-	"pallet-bags-list/runtime-benchmarks",
-	"pallet-balances/runtime-benchmarks",
-	"pallet-session/runtime-benchmarks",
-	"pallet-timestamp/runtime-benchmarks",
+	"topsoil-benchmarking/runtime-benchmarks",
+	"topsoil-election-provider-support/runtime-benchmarks",
+	"topsoil-support/runtime-benchmarks",
+	"topsoil-system/runtime-benchmarks",
+	"topsoil-bags-list/runtime-benchmarks",
+	"topsoil-balances/runtime-benchmarks",
+	"topsoil-session/runtime-benchmarks",
+	"topsoil-timestamp/runtime-benchmarks",
 	"rand_chacha",
 	"soil-runtime/runtime-benchmarks",
 	"soil-staking/runtime-benchmarks",
 ]
 try-runtime = [
-	"frame-election-provider-support/try-runtime",
-	"frame-support/try-runtime",
-	"frame-system/try-runtime",
-	"pallet-authorship/try-runtime",
-	"pallet-bags-list/try-runtime",
-	"pallet-balances/try-runtime",
-	"pallet-session/try-runtime",
-	"pallet-timestamp/try-runtime",
+	"topsoil-election-provider-support/try-runtime",
+	"topsoil-support/try-runtime",
+	"topsoil-system/try-runtime",
+	"topsoil-authorship/try-runtime",
+	"topsoil-bags-list/try-runtime",
+	"topsoil-balances/try-runtime",
+	"topsoil-session/try-runtime",
+	"topsoil-timestamp/try-runtime",
 	"soil-runtime/try-runtime",
 ]

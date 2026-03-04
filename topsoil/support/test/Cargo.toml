@@ -16,11 +16,11 @@ targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
 codec = { features = ["derive"], workspace = true }
-frame-benchmarking = { workspace = true }
-frame-executive = { workspace = true }
+topsoil-benchmarking = { workspace = true }
+topsoil-executive = { workspace = true }
 frame-metadata = { features = ["current", "unstable"], workspace = true }
-frame-support = { features = ["experimental"], workspace = true }
-frame-system = { workspace = true }
+topsoil-support = { features = ["experimental"], workspace = true }
+topsoil-system = { workspace = true }
 pretty_assertions = { workspace = true }
 rustversion = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
@@ -42,11 +42,11 @@ test-pallet = { workspace = true }
 default = ["std"]
 std = [
 	"codec/std",
-	"frame-benchmarking/std",
-	"frame-executive/std",
-	"frame-metadata/std",
-	"frame-support/std",
-	"frame-system/std",
+	"topsoil-benchmarking/std",
+	"topsoil-executive/std",
+	"topsoil-metadata/std",
+	"topsoil-support/std",
+	"topsoil-system/std",
 	"scale-info/std",
 	"serde/std",
 	"soil-api/std",
@@ -59,17 +59,17 @@ std = [
 	"soil-version/std",
 	"test-pallet/std",
 ]
-experimental = ["frame-support/experimental", "frame-system/experimental"]
+experimental = ["topsoil-support/experimental", "topsoil-system/experimental"]
 runtime-benchmarks = [
-	"frame-benchmarking/runtime-benchmarks",
-	"frame-support/runtime-benchmarks",
-	"frame-system/runtime-benchmarks",
+	"topsoil-benchmarking/runtime-benchmarks",
+	"topsoil-support/runtime-benchmarks",
+	"topsoil-system/runtime-benchmarks",
 	"soil-runtime/runtime-benchmarks",
 ]
 try-runtime = [
-	"frame-executive/try-runtime",
-	"frame-support/try-runtime",
-	"frame-system/try-runtime",
+	"topsoil-executive/try-runtime",
+	"topsoil-support/try-runtime",
+	"topsoil-system/try-runtime",
 	"soil-runtime/try-runtime",
 ]
 # WARNING:
@@ -79,4 +79,4 @@ frame-feature-testing = []
 frame-feature-testing-2 = []
 # Disable ui tests
 disable-ui-tests = []
-no-metadata-docs = ["frame-support/no-metadata-docs"]
+no-metadata-docs = ["topsoil-support/no-metadata-docs"]

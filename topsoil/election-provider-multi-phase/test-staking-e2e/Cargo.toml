@@ -28,31 +28,31 @@ soil-runtime = { workspace = true, default-features = true }
 soil-staking = { workspace = true, default-features = true }
 soil-tracing = { workspace = true, default-features = true }
 
-frame-election-provider-support = { workspace = true, default-features = true }
-frame-support = { workspace = true, default-features = true }
-frame-system = { workspace = true, default-features = true }
+topsoil-election-provider-support = { workspace = true, default-features = true }
+topsoil-support = { workspace = true, default-features = true }
+topsoil-system = { workspace = true, default-features = true }
 
-pallet-bags-list = { workspace = true, default-features = true }
-pallet-balances = { workspace = true, default-features = true }
-pallet-delegated-staking = { workspace = true, default-features = true }
-pallet-election-provider-multi-phase = { workspace = true, default-features = true }
-pallet-nomination-pools = { workspace = true, default-features = true }
-pallet-session = { workspace = true, default-features = true }
-pallet-staking = { workspace = true, default-features = true }
-pallet-timestamp = { workspace = true, default-features = true }
+topsoil-bags-list = { workspace = true, default-features = true }
+topsoil-balances = { workspace = true, default-features = true }
+topsoil-delegated-staking = { workspace = true, default-features = true }
+topsoil-election-provider-multi-phase = { workspace = true, default-features = true }
+topsoil-nomination-pools = { workspace = true, default-features = true }
+topsoil-session = { workspace = true, default-features = true }
+topsoil-staking = { workspace = true, default-features = true }
+topsoil-timestamp = { workspace = true, default-features = true }
 
 [features]
 try-runtime = [
-	"frame-election-provider-support/try-runtime",
-	"frame-support/try-runtime",
-	"frame-system/try-runtime",
-	"pallet-bags-list/try-runtime",
-	"pallet-balances/try-runtime",
-	"pallet-delegated-staking/try-runtime",
-	"pallet-election-provider-multi-phase/try-runtime",
-	"pallet-nomination-pools/try-runtime",
-	"pallet-session/try-runtime",
-	"pallet-staking/try-runtime",
-	"pallet-timestamp/try-runtime",
+	"topsoil-election-provider-support/try-runtime",
+	"topsoil-support/try-runtime",
+	"topsoil-system/try-runtime",
+	"topsoil-bags-list/try-runtime",
+	"topsoil-balances/try-runtime",
+	"topsoil-delegated-staking/try-runtime",
+	"topsoil-election-provider-multi-phase/try-runtime",
+	"topsoil-nomination-pools/try-runtime",
+	"topsoil-session/try-runtime",
+	"topsoil-staking/try-runtime",
+	"topsoil-timestamp/try-runtime",
 	"soil-runtime/try-runtime",
 ]

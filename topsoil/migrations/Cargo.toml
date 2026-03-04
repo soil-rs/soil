@@ -17,16 +17,16 @@ impl-trait-for-tuples = { workspace = true }
 log = { workspace = true, default-features = true }
 scale-info = { features = ["derive"], workspace = true }
 
-frame = { workspace = true, features = ["runtime"] }
-frame-benchmarking = { optional = true, workspace = true }
-frame-support = { workspace = true }
-frame-system = { workspace = true }
+topsoil = { workspace = true, features = ["runtime"] }
+topsoil-benchmarking = { optional = true, workspace = true }
+topsoil-support = { workspace = true }
+topsoil-system = { workspace = true }
 soil-core = { workspace = true }
 soil-io = { workspace = true }
 soil-runtime = { workspace = true }
 
 [dev-dependencies]
-frame-executive = { workspace = true, default-features = true }
+topsoil-executive = { workspace = true, default-features = true }
 soil-tracing = { features = ["std"], workspace = true, default-features = true }
 
 pretty_assertions = { workspace = true }
@@ -35,10 +35,10 @@ pretty_assertions = { workspace = true }
 default = ["std"]
 std = [
 	"codec/std",
-	"frame-benchmarking?/std",
-	"frame-support/std",
-	"frame-system/std",
-	"frame/std",
+	"topsoil-benchmarking?/std",
+	"topsoil-support/std",
+	"topsoil-system/std",
+	"topsoil/std",
 	"log/std",
 	"scale-info/std",
 	"soil-core/std",
@@ -47,17 +47,17 @@ std = [
 ]
 
 runtime-benchmarks = [
-	"frame-benchmarking/runtime-benchmarks",
-	"frame-support/runtime-benchmarks",
-	"frame-system/runtime-benchmarks",
-	"frame/runtime-benchmarks",
+	"topsoil-benchmarking/runtime-benchmarks",
+	"topsoil-support/runtime-benchmarks",
+	"topsoil-system/runtime-benchmarks",
+	"topsoil/runtime-benchmarks",
 	"soil-runtime/runtime-benchmarks",
 ]
 
 try-runtime = [
-	"frame-executive/try-runtime",
-	"frame-support/try-runtime",
-	"frame-system/try-runtime",
-	"frame/try-runtime",
+	"topsoil-executive/try-runtime",
+	"topsoil-support/try-runtime",
+	"topsoil-system/try-runtime",
+	"topsoil/try-runtime",
 	"soil-runtime/try-runtime",
 ]

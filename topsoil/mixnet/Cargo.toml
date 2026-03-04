@@ -17,7 +17,7 @@ targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
 codec = { features = ["derive", "max-encoded-len"], workspace = true }
-frame = { workspace = true, features = ["runtime"] }
+topsoil = { workspace = true, features = ["runtime"] }
 log = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { features = ["derive"], workspace = true }
@@ -28,7 +28,7 @@ soil-mixnet = { workspace = true }
 default = ["std"]
 std = [
 	"codec/std",
-	"frame/std",
+	"topsoil/std",
 	"log/std",
 	"scale-info/std",
 	"serde/std",
@@ -36,5 +36,5 @@ std = [
 	"soil-mixnet/std",
 ]
 try-runtime = [
-	"frame/try-runtime",
+	"topsoil/try-runtime",
 ]

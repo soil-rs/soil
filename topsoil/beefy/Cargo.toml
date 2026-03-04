@@ -13,11 +13,11 @@ workspace = true
 
 [dependencies]
 codec = { features = ["derive"], workspace = true }
-frame-support = { workspace = true }
-frame-system = { workspace = true }
+topsoil-support = { workspace = true }
+topsoil-system = { workspace = true }
 log = { workspace = true }
-pallet-authorship = { workspace = true }
-pallet-session = { workspace = true }
+topsoil-authorship = { workspace = true }
+topsoil-session = { workspace = true }
 scale-info = { features = ["derive", "serde"], workspace = true }
 serde = { optional = true, workspace = true, default-features = true }
 soil-consensus-beefy = { features = ["serde"], workspace = true }
@@ -26,12 +26,12 @@ soil-session = { workspace = true }
 soil-staking = { features = ["serde"], workspace = true }
 
 [dev-dependencies]
-frame-election-provider-support = { workspace = true, default-features = true }
-pallet-balances = { workspace = true, default-features = true }
-pallet-offences = { workspace = true, default-features = true }
-pallet-staking = { workspace = true, default-features = true }
-pallet-staking-reward-curve = { workspace = true, default-features = true }
-pallet-timestamp = { workspace = true, default-features = true }
+topsoil-election-provider-support = { workspace = true, default-features = true }
+topsoil-balances = { workspace = true, default-features = true }
+topsoil-offences = { workspace = true, default-features = true }
+topsoil-staking = { workspace = true, default-features = true }
+topsoil-staking-reward-curve = { workspace = true, default-features = true }
+topsoil-timestamp = { workspace = true, default-features = true }
 soil-core = { workspace = true, default-features = true }
 soil-io = { workspace = true, default-features = true }
 soil-staking = { workspace = true, default-features = true }
@@ -42,16 +42,16 @@ soil-tracing = { workspace = true, default-features = true }
 default = ["std"]
 std = [
 	"codec/std",
-	"frame-election-provider-support/std",
-	"frame-support/std",
-	"frame-system/std",
+	"topsoil-election-provider-support/std",
+	"topsoil-support/std",
+	"topsoil-system/std",
 	"log/std",
-	"pallet-authorship/std",
-	"pallet-balances/std",
-	"pallet-offences/std",
-	"pallet-session/std",
-	"pallet-staking/std",
-	"pallet-timestamp/std",
+	"topsoil-authorship/std",
+	"topsoil-balances/std",
+	"topsoil-offences/std",
+	"topsoil-session/std",
+	"topsoil-staking/std",
+	"topsoil-timestamp/std",
 	"scale-info/std",
 	"serde/std",
 	"soil-consensus-beefy/std",
@@ -63,14 +63,14 @@ std = [
 	"soil-state-machine/std",
 ]
 try-runtime = [
-	"frame-election-provider-support/try-runtime",
-	"frame-support/try-runtime",
-	"frame-system/try-runtime",
-	"pallet-authorship/try-runtime",
-	"pallet-balances/try-runtime",
-	"pallet-offences/try-runtime",
-	"pallet-session/try-runtime",
-	"pallet-staking/try-runtime",
-	"pallet-timestamp/try-runtime",
+	"topsoil-election-provider-support/try-runtime",
+	"topsoil-support/try-runtime",
+	"topsoil-system/try-runtime",
+	"topsoil-authorship/try-runtime",
+	"topsoil-balances/try-runtime",
+	"topsoil-offences/try-runtime",
+	"topsoil-session/try-runtime",
+	"topsoil-staking/try-runtime",
+	"topsoil-timestamp/try-runtime",
 	"soil-runtime/try-runtime",
 ]

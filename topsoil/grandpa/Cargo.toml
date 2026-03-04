@@ -17,12 +17,12 @@ targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
 codec = { features = ["derive"], workspace = true }
-frame-benchmarking = { optional = true, workspace = true }
-frame-support = { workspace = true }
-frame-system = { workspace = true }
+topsoil-benchmarking = { optional = true, workspace = true }
+topsoil-support = { workspace = true }
+topsoil-system = { workspace = true }
 log = { workspace = true }
-pallet-authorship = { workspace = true }
-pallet-session = { workspace = true }
+topsoil-authorship = { workspace = true }
+topsoil-session = { workspace = true }
 scale-info = { features = ["derive", "serde"], workspace = true }
 soil-application-crypto = { features = ["serde"], workspace = true }
 soil-consensus-grandpa = { features = ["serde"], workspace = true }
@@ -34,13 +34,13 @@ soil-staking = { features = ["serde"], workspace = true }
 
 [dev-dependencies]
 finality-grandpa = { features = ["derive-codec"], workspace = true, default-features = true }
-frame-benchmarking = { workspace = true, default-features = true }
-frame-election-provider-support = { workspace = true, default-features = true }
-pallet-balances = { workspace = true, default-features = true }
-pallet-offences = { workspace = true, default-features = true }
-pallet-staking = { workspace = true, default-features = true }
-pallet-staking-reward-curve = { workspace = true, default-features = true }
-pallet-timestamp = { workspace = true, default-features = true }
+topsoil-benchmarking = { workspace = true, default-features = true }
+topsoil-election-provider-support = { workspace = true, default-features = true }
+topsoil-balances = { workspace = true, default-features = true }
+topsoil-offences = { workspace = true, default-features = true }
+topsoil-staking = { workspace = true, default-features = true }
+topsoil-staking-reward-curve = { workspace = true, default-features = true }
+topsoil-timestamp = { workspace = true, default-features = true }
 soil-keyring = { workspace = true, default-features = true }
 soil-tracing = { workspace = true, default-features = true }
 
@@ -48,17 +48,17 @@ soil-tracing = { workspace = true, default-features = true }
 default = ["std"]
 std = [
 	"codec/std",
-	"frame-benchmarking?/std",
-	"frame-election-provider-support/std",
-	"frame-support/std",
-	"frame-system/std",
+	"topsoil-benchmarking?/std",
+	"topsoil-election-provider-support/std",
+	"topsoil-support/std",
+	"topsoil-system/std",
 	"log/std",
-	"pallet-authorship/std",
-	"pallet-balances/std",
-	"pallet-offences/std",
-	"pallet-session/std",
-	"pallet-staking/std",
-	"pallet-timestamp/std",
+	"topsoil-authorship/std",
+	"topsoil-balances/std",
+	"topsoil-offences/std",
+	"topsoil-session/std",
+	"topsoil-staking/std",
+	"topsoil-timestamp/std",
 	"scale-info/std",
 	"soil-application-crypto/std",
 	"soil-consensus-grandpa/std",
@@ -69,27 +69,27 @@ std = [
 	"soil-staking/std",
 ]
 runtime-benchmarks = [
-	"frame-benchmarking/runtime-benchmarks",
-	"frame-election-provider-support/runtime-benchmarks",
-	"frame-support/runtime-benchmarks",
-	"frame-system/runtime-benchmarks",
-	"pallet-balances/runtime-benchmarks",
-	"pallet-offences/runtime-benchmarks",
-	"pallet-session/runtime-benchmarks",
-	"pallet-staking/runtime-benchmarks",
-	"pallet-timestamp/runtime-benchmarks",
+	"topsoil-benchmarking/runtime-benchmarks",
+	"topsoil-election-provider-support/runtime-benchmarks",
+	"topsoil-support/runtime-benchmarks",
+	"topsoil-system/runtime-benchmarks",
+	"topsoil-balances/runtime-benchmarks",
+	"topsoil-offences/runtime-benchmarks",
+	"topsoil-session/runtime-benchmarks",
+	"topsoil-staking/runtime-benchmarks",
+	"topsoil-timestamp/runtime-benchmarks",
 	"soil-runtime/runtime-benchmarks",
 	"soil-staking/runtime-benchmarks",
 ]
 try-runtime = [
-	"frame-election-provider-support/try-runtime",
-	"frame-support/try-runtime",
-	"frame-system/try-runtime",
-	"pallet-authorship/try-runtime",
-	"pallet-balances/try-runtime",
-	"pallet-offences/try-runtime",
-	"pallet-session/try-runtime",
-	"pallet-staking/try-runtime",
-	"pallet-timestamp/try-runtime",
+	"topsoil-election-provider-support/try-runtime",
+	"topsoil-support/try-runtime",
+	"topsoil-system/try-runtime",
+	"topsoil-authorship/try-runtime",
+	"topsoil-balances/try-runtime",
+	"topsoil-offences/try-runtime",
+	"topsoil-session/try-runtime",
+	"topsoil-staking/try-runtime",
+	"topsoil-timestamp/try-runtime",
 	"soil-runtime/try-runtime",
 ]

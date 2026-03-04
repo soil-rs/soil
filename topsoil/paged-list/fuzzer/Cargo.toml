@@ -13,18 +13,18 @@ publish = false
 workspace = true
 
 [[bin]]
-name = "pallet-paged-list-fuzzer"
+name = "topsoil-paged-list-fuzzer"
 path = "src/paged_list.rs"
 
 [dependencies]
 arbitrary = { workspace = true }
-frame = { workspace = true, features = ["runtime"] }
+topsoil = { workspace = true, features = ["runtime"] }
 honggfuzz = { workspace = true }
-pallet-paged-list = { features = ["std"], workspace = true }
+topsoil-paged-list = { features = ["std"], workspace = true }
 
 [features]
 default = ["std"]
 std = [
-	"frame/std",
-	"pallet-paged-list/std",
+	"topsoil/std",
+	"topsoil-paged-list/std",
 ]

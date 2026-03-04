@@ -1,5 +1,5 @@
 [package]
-name = "frame-remote-externalities"
+name = "topsoil-remote-externalities"
 version = "0.35.0"
 authors.workspace = true
 edition.workspace = true
@@ -36,7 +36,7 @@ tokio = { features = [
 ], workspace = true, default-features = true }
 
 [dev-dependencies]
-frame-support = { workspace = true, default-features = true }
+topsoil-support = { workspace = true, default-features = true }
 jsonrpsee = { features = [
 	"http-client",
 	"server",

@@ -20,9 +20,9 @@ codec = { features = ["derive"], workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { workspace = true }
 
-frame-benchmarking = { workspace = true, optional = true }
-frame-support = { workspace = true }
-frame-system = { workspace = true }
+topsoil-benchmarking = { workspace = true, optional = true }
+topsoil-support = { workspace = true }
+topsoil-system = { workspace = true }
 impl-trait-for-tuples = { workspace = true }
 soil-application-crypto = { workspace = true }
 soil-io = { workspace = true }
@@ -33,9 +33,9 @@ soil-std = { workspace = true }
 default = ["std"]
 std = [
 	"codec/std",
-	"frame-benchmarking?/std",
-	"frame-support/std",
-	"frame-system/std",
+	"topsoil-benchmarking?/std",
+	"topsoil-support/std",
+	"topsoil-system/std",
 	"scale-info/std",
 	"serde/std",
 	"soil-application-crypto/std",
@@ -44,13 +44,13 @@ std = [
 	"soil-std/std",
 ]
 runtime-benchmarks = [
-	"frame-benchmarking/runtime-benchmarks",
-	"frame-support/runtime-benchmarks",
-	"frame-system/runtime-benchmarks",
+	"topsoil-benchmarking/runtime-benchmarks",
+	"topsoil-support/runtime-benchmarks",
+	"topsoil-system/runtime-benchmarks",
 	"soil-runtime/runtime-benchmarks",
 ]
 try-runtime = [
-	"frame-support/try-runtime",
-	"frame-system/try-runtime",
+	"topsoil-support/try-runtime",
+	"topsoil-system/try-runtime",
 	"soil-runtime/try-runtime",
 ]

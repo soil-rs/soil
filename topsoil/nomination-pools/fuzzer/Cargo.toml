@@ -23,10 +23,10 @@ path = "src/call.rs"
 [dependencies]
 honggfuzz = { workspace = true }
 
-pallet-nomination-pools = { features = ["fuzzing"], workspace = true, default-features = true }
+topsoil-nomination-pools = { features = ["fuzzing"], workspace = true, default-features = true }
 
-frame-support = { workspace = true, default-features = true }
-frame-system = { workspace = true, default-features = true }
+topsoil-support = { workspace = true, default-features = true }
+topsoil-system = { workspace = true, default-features = true }
 
 soil-io = { workspace = true, default-features = true }
 soil-runtime = { workspace = true, default-features = true }

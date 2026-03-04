@@ -20,8 +20,8 @@ frame-metadata = { features = ["current"], workspace = true }
 log = { workspace = true }
 scale-info = { default-features = false, features = ["derive"], workspace = true }
 
-frame-support = { default-features = false, workspace = true }
-frame-system = { default-features = false, workspace = true }
+topsoil-support = { default-features = false, workspace = true }
+topsoil-system = { default-features = false, workspace = true }
 
 soil-core = { default-features = false, workspace = true }
 soil-io = { default-features = false, workspace = true }
@@ -35,9 +35,9 @@ pretty_assertions = { workspace = true }
 default = ["std"]
 std = [
 	"codec/std",
-	"frame-metadata/std",
-	"frame-support/std",
-	"frame-system/std",
+	"topsoil-metadata/std",
+	"topsoil-support/std",
+	"topsoil-system/std",
 	"log/std",
 	"scale-info/std",
 	"soil-core/std",
@@ -46,12 +46,12 @@ std = [
 	"soil-runtime/std",
 ]
 runtime-benchmarks = [
-	"frame-support/runtime-benchmarks",
-	"frame-system/runtime-benchmarks",
+	"topsoil-support/runtime-benchmarks",
+	"topsoil-system/runtime-benchmarks",
 	"soil-runtime/runtime-benchmarks",
 ]
 try-runtime = [
-	"frame-support/try-runtime",
-	"frame-system/try-runtime",
+	"topsoil-support/try-runtime",
+	"topsoil-system/try-runtime",
 	"soil-runtime/try-runtime",
 ]

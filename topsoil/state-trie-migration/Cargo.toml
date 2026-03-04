@@ -16,9 +16,9 @@ targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
 codec = { workspace = true }
-frame-benchmarking = { optional = true, workspace = true }
-frame-support = { workspace = true }
-frame-system = { workspace = true }
+topsoil-benchmarking = { optional = true, workspace = true }
+topsoil-support = { workspace = true }
+topsoil-system = { workspace = true }
 log = { workspace = true }
 remote-externalities = { optional = true, workspace = true, default-features = true }
 scale-info = { features = ["derive"], workspace = true }
@@ -31,7 +31,7 @@ thousands = { optional = true, workspace = true }
 zstd = { optional = true, workspace = true }
 
 [dev-dependencies]
-pallet-balances = { workspace = true, default-features = true }
+topsoil-balances = { workspace = true, default-features = true }
 soil-tracing = { workspace = true, default-features = true }
 tokio = { features = ["macros"], workspace = true, default-features = true }
 
@@ -39,11 +39,11 @@ tokio = { features = ["macros"], workspace = true, default-features = true }
 default = ["std"]
 std = [
 	"codec/std",
-	"frame-benchmarking?/std",
-	"frame-support/std",
-	"frame-system/std",
+	"topsoil-benchmarking?/std",
+	"topsoil-support/std",
+	"topsoil-system/std",
 	"log/std",
-	"pallet-balances/std",
+	"topsoil-balances/std",
 	"scale-info/std",
 	"soil-core/std",
 	"soil-io/std",
@@ -51,17 +51,17 @@ std = [
 	"soil-tracing/std",
 ]
 runtime-benchmarks = [
-	"frame-benchmarking",
-	"frame-benchmarking/runtime-benchmarks",
-	"frame-support/runtime-benchmarks",
-	"frame-system/runtime-benchmarks",
-	"pallet-balances/runtime-benchmarks",
+	"topsoil-benchmarking",
+	"topsoil-benchmarking/runtime-benchmarks",
+	"topsoil-support/runtime-benchmarks",
+	"topsoil-system/runtime-benchmarks",
+	"topsoil-balances/runtime-benchmarks",
 	"soil-runtime/runtime-benchmarks",
 ]
 try-runtime = [
-	"frame-support/try-runtime",
-	"frame-system/try-runtime",
-	"pallet-balances/try-runtime",
+	"topsoil-support/try-runtime",
+	"topsoil-system/try-runtime",
+	"topsoil-balances/try-runtime",
 	"soil-runtime/try-runtime",
 ]
 remote-test = [

@@ -21,15 +21,15 @@ docify = { workspace = true }
 log = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 
-frame-benchmarking = { optional = true, workspace = true }
-frame-support = { features = ["experimental"], workspace = true }
-frame-system = { workspace = true }
+topsoil-benchmarking = { optional = true, workspace = true }
+topsoil-support = { features = ["experimental"], workspace = true }
+topsoil-system = { workspace = true }
 
 soil-io = { workspace = true }
 soil-runtime = { workspace = true }
 
 [dev-dependencies]
-pallet-verify-signature = { workspace = true }
+topsoil-verify-signature = { workspace = true }
 soil-core = { workspace = true }
 soil-keyring = { workspace = true, default-features = true }
 
@@ -37,26 +37,26 @@ soil-keyring = { workspace = true, default-features = true }
 default = ["std"]
 std = [
 	"codec/std",
-	"frame-benchmarking?/std",
-	"frame-support/std",
-	"frame-system/std",
+	"topsoil-benchmarking?/std",
+	"topsoil-support/std",
+	"topsoil-system/std",
 	"log/std",
-	"pallet-verify-signature/std",
+	"topsoil-verify-signature/std",
 	"scale-info/std",
 	"soil-core/std",
 	"soil-io/std",
 	"soil-runtime/std",
 ]
 runtime-benchmarks = [
-	"frame-benchmarking/runtime-benchmarks",
-	"frame-support/runtime-benchmarks",
-	"frame-system/runtime-benchmarks",
-	"pallet-verify-signature/runtime-benchmarks",
+	"topsoil-benchmarking/runtime-benchmarks",
+	"topsoil-support/runtime-benchmarks",
+	"topsoil-system/runtime-benchmarks",
+	"topsoil-verify-signature/runtime-benchmarks",
 	"soil-runtime/runtime-benchmarks",
 ]
 try-runtime = [
-	"frame-support/try-runtime",
-	"frame-system/try-runtime",
-	"pallet-verify-signature/try-runtime",
+	"topsoil-support/try-runtime",
+	"topsoil-system/try-runtime",
+	"topsoil-verify-signature/try-runtime",
 	"soil-runtime/try-runtime",
 ]

@@ -23,9 +23,9 @@ scale-info = { features = ["derive"], workspace = true }
 soil-runtime = { workspace = true }
 
 # FRAME
-frame-election-provider-support = { workspace = true }
-frame-support = { workspace = true }
-frame-system = { workspace = true }
+topsoil-election-provider-support = { workspace = true }
+topsoil-support = { workspace = true }
+topsoil-system = { workspace = true }
 
 # third party
 aquamarine = { workspace = true }
@@ -33,16 +33,16 @@ docify = { workspace = true }
 log = { workspace = true }
 
 # Optional imports for benchmarking
-frame-benchmarking = { optional = true, workspace = true }
-pallet-balances = { optional = true, workspace = true }
+topsoil-benchmarking = { optional = true, workspace = true }
+topsoil-balances = { optional = true, workspace = true }
 soil-core = { optional = true, workspace = true }
 soil-io = { optional = true, workspace = true }
 soil-tracing = { optional = true, workspace = true }
 
 [dev-dependencies]
-frame-benchmarking = { workspace = true, default-features = true }
-frame-election-provider-support = { workspace = true, default-features = true }
-pallet-balances = { workspace = true, default-features = true }
+topsoil-benchmarking = { workspace = true, default-features = true }
+topsoil-election-provider-support = { workspace = true, default-features = true }
+topsoil-balances = { workspace = true, default-features = true }
 soil-core = { workspace = true, default-features = true }
 soil-io = { workspace = true, default-features = true }
 soil-tracing = { workspace = true, default-features = true }
@@ -52,12 +52,12 @@ substrate-test-utils = { workspace = true }
 default = ["std"]
 std = [
 	"codec/std",
-	"frame-benchmarking?/std",
-	"frame-election-provider-support/std",
-	"frame-support/std",
-	"frame-system/std",
+	"topsoil-benchmarking?/std",
+	"topsoil-election-provider-support/std",
+	"topsoil-support/std",
+	"topsoil-system/std",
 	"log/std",
-	"pallet-balances?/std",
+	"topsoil-balances?/std",
 	"scale-info/std",
 	"soil-core?/std",
 	"soil-io?/std",
@@ -65,27 +65,27 @@ std = [
 	"soil-tracing?/std",
 ]
 runtime-benchmarks = [
-	"frame-benchmarking/runtime-benchmarks",
-	"frame-election-provider-support/runtime-benchmarks",
-	"frame-support/runtime-benchmarks",
-	"frame-system/runtime-benchmarks",
-	"pallet-balances/runtime-benchmarks",
+	"topsoil-benchmarking/runtime-benchmarks",
+	"topsoil-election-provider-support/runtime-benchmarks",
+	"topsoil-support/runtime-benchmarks",
+	"topsoil-system/runtime-benchmarks",
+	"topsoil-balances/runtime-benchmarks",
 	"soil-core",
 	"soil-io",
 	"soil-runtime/runtime-benchmarks",
 	"soil-tracing",
 ]
 fuzz = [
-	"frame-election-provider-support/fuzz",
-	"pallet-balances",
+	"topsoil-election-provider-support/fuzz",
+	"topsoil-balances",
 	"soil-core",
 	"soil-io",
 	"soil-tracing",
 ]
 try-runtime = [
-	"frame-election-provider-support/try-runtime",
-	"frame-support/try-runtime",
-	"frame-system/try-runtime",
-	"pallet-balances?/try-runtime",
+	"topsoil-election-provider-support/try-runtime",
+	"topsoil-support/try-runtime",
+	"topsoil-system/try-runtime",
+	"topsoil-balances?/try-runtime",
 	"soil-runtime/try-runtime",
 ]

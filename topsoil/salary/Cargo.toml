@@ -17,25 +17,25 @@ targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
 codec = { features = ["derive"], workspace = true }
-frame = { workspace = true, features = ["runtime"] }
+topsoil = { workspace = true, features = ["runtime"] }
 log = { workspace = true }
-pallet-ranked-collective = { optional = true, workspace = true }
+topsoil-ranked-collective = { optional = true, workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 
 [features]
 default = ["std"]
 std = [
 	"codec/std",
-	"frame/std",
+	"topsoil/std",
 	"log/std",
-	"pallet-ranked-collective/std",
+	"topsoil-ranked-collective/std",
 	"scale-info/std",
 ]
 runtime-benchmarks = [
-	"frame/runtime-benchmarks",
-	"pallet-ranked-collective/runtime-benchmarks",
+	"topsoil/runtime-benchmarks",
+	"topsoil-ranked-collective/runtime-benchmarks",
 ]
 try-runtime = [
-	"frame/try-runtime",
-	"pallet-ranked-collective?/try-runtime",
+	"topsoil/try-runtime",
+	"topsoil-ranked-collective?/try-runtime",
 ]

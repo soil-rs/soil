@@ -17,15 +17,15 @@ targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
 codec = { features = ["derive"], workspace = true }
-frame-executive = { workspace = true }
-frame-metadata-hash-extension = { workspace = true }
-frame-support = { workspace = true }
-frame-system = { workspace = true }
-frame-system-rpc-runtime-api = { workspace = true }
-pallet-babe = { workspace = true }
-pallet-balances = { workspace = true }
-pallet-timestamp = { workspace = true }
-pallet-utility = { workspace = true }
+topsoil-executive = { workspace = true }
+topsoil-metadata-hash-extension = { workspace = true }
+topsoil-support = { workspace = true }
+topsoil-system = { workspace = true }
+topsoil-system-rpc-runtime-api = { workspace = true }
+topsoil-babe = { workspace = true }
+topsoil-balances = { workspace = true }
+topsoil-timestamp = { workspace = true }
+topsoil-utility = { workspace = true }
 soil-service = { optional = true, workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 soil-api = { workspace = true }
@@ -79,16 +79,16 @@ default = ["std"]
 std = [
 	"array-bytes",
 	"codec/std",
-	"frame-executive/std",
-	"frame-metadata-hash-extension/std",
-	"frame-support/std",
-	"frame-system-rpc-runtime-api/std",
-	"frame-system/std",
+	"topsoil-executive/std",
+	"topsoil-metadata-hash-extension/std",
+	"topsoil-support/std",
+	"topsoil-system-rpc-runtime-api/std",
+	"topsoil-system/std",
 	"log/std",
-	"pallet-babe/std",
-	"pallet-balances/std",
-	"pallet-timestamp/std",
-	"pallet-utility/std",
+	"topsoil-babe/std",
+	"topsoil-balances/std",
+	"topsoil-timestamp/std",
+	"topsoil-utility/std",
 	"soil-executor/std",
 	"soil-service",
 	"scale-info/std",
