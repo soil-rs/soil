@@ -27,3 +27,7 @@ serde_json = { workspace = true, default-features = true }
 soil-blockchain = { workspace = true, default-features = true }
 soil-runtime = { workspace = true, default-features = true }
 thiserror = { workspace = true }
+
+[features]
+default = ["std"]
+std = []

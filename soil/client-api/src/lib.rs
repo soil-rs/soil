@@ -19,35 +19,59 @@
 //! Substrate client interfaces.
 #![warn(missing_docs)]
 
+#![cfg_attr(not(feature = "std"), no_std)]
+
+#[cfg(feature = "std")]
 pub mod backend;
+#[cfg(feature = "std")]
 pub mod call_executor;
+#[cfg(feature = "std")]
 pub mod client;
+#[cfg(feature = "std")]
 pub mod execution_extensions;
+#[cfg(feature = "std")]
 pub mod in_mem;
+#[cfg(feature = "std")]
 pub mod leaves;
+#[cfg(feature = "std")]
 pub mod notifications;
+#[cfg(feature = "std")]
 pub mod proof_provider;
 
+#[cfg(feature = "std")]
 pub use backend::*;
+#[cfg(feature = "std")]
 pub use call_executor::*;
+#[cfg(feature = "std")]
 pub use client::*;
+#[cfg(feature = "std")]
 pub use notifications::*;
+#[cfg(feature = "std")]
 pub use proof_provider::*;
+#[cfg(feature = "std")]
 pub use soil_blockchain as blockchain;
+#[cfg(feature = "std")]
 pub use soil_blockchain::HeaderBackend;
 
+#[cfg(feature = "std")]
 pub use soil_state_machine::{CompactProof, StorageProof};
+#[cfg(feature = "std")]
 pub use soil_storage::{ChildInfo, PrefixedStorageKey, StorageData, StorageKey};
 
 /// Usage Information Provider interface
+#[cfg(feature = "std")]
 pub trait UsageProvider<Block: soil_runtime::traits::Block> {
 	/// Get usage info about current client.
+#[cfg(feature = "std")]
 	fn usage_info(&self) -> ClientInfo<Block>;
 }
 
 /// Utility methods for the client.
+#[cfg(feature = "std")]
 pub mod utils {
+#[cfg(feature = "std")]
 	use soil_blockchain::{Error, HeaderBackend, HeaderMetadata};
+#[cfg(feature = "std")]
 	use soil_runtime::traits::Block as BlockT;
 
 	/// Returns a function for checking block ancestry, the returned function will
@@ -56,6 +80,7 @@ pub mod utils {
 	/// represent the current block `hash` and its `parent hash`, if given the
 	/// function that's returned will assume that `hash` isn't part of the local DB
 	/// yet, and all searches in the DB will instead reference the parent.
+#[cfg(feature = "std")]
 	pub fn is_descendent_of<Block: BlockT, T>(
 		client: &T,
 		current: Option<(Block::Hash, Block::Hash)>,

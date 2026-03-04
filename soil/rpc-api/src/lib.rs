@@ -22,17 +22,31 @@
 
 #![warn(missing_docs)]
 
+#![cfg_attr(not(feature = "std"), no_std)]
+
+#[cfg(feature = "std")]
 mod error;
+#[cfg(feature = "std")]
 mod policy;
 
+#[cfg(feature = "std")]
 pub use policy::{check_if_safe, DenyUnsafe, UnsafeRpcError};
 
+#[cfg(feature = "std")]
 pub mod author;
+#[cfg(feature = "std")]
 pub mod chain;
+#[cfg(feature = "std")]
 pub mod child_state;
+#[cfg(feature = "std")]
 pub mod dev;
+#[cfg(feature = "std")]
 pub mod mixnet;
+#[cfg(feature = "std")]
 pub mod offchain;
+#[cfg(feature = "std")]
 pub mod state;
+#[cfg(feature = "std")]
 pub mod statement;
+#[cfg(feature = "std")]
 pub mod system;

@@ -47,6 +47,10 @@ wasmtime = { features = [
 # problems (since then `mmap` etc. cannot be easily hooked into).
 rustix = { features = ["fs", "mm", "param", "std", "use-libc"], workspace = true }
 
+[features]
+default = ["std"]
+std = []
+
 [dev-dependencies]
 cargo_metadata = { workspace = true }
 codec = { workspace = true, default-features = true }

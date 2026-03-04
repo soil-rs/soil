@@ -79,6 +79,7 @@ substrate-test-runtime = { workspace = true }
 substrate-test-runtime-client = { workspace = true }
 
 [features]
+std = []
 default = ["rocksdb"]
 # The RocksDB feature activates the RocksDB database backend. If it is not activated, and you pass
 # a path to a database, an error will be produced at runtime.

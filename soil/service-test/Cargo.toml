@@ -44,3 +44,7 @@ substrate-test-runtime = { workspace = true }
 substrate-test-runtime-client = { workspace = true }
 tempfile = { workspace = true }
 tokio = { features = ["time"], workspace = true, default-features = true }
+
+[features]
+default = ["std"]
+std = []

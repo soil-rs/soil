@@ -20,33 +20,49 @@
 
 //! Node-specific RPC methods for interaction with Merkle Mountain Range pallet.
 
+#![cfg_attr(not(feature = "std"), no_std)]
+
+#[cfg(feature = "std")]
 use std::{marker::PhantomData, sync::Arc};
 
+#[cfg(feature = "std")]
 use codec::{Codec, Decode, Encode};
+#[cfg(feature = "std")]
 use jsonrpsee::{
 	core::{async_trait, RpcResult},
 	proc_macros::rpc,
+#[cfg(feature = "std")]
 	types::{error::ErrorObject, ErrorObjectOwned},
 };
+#[cfg(feature = "std")]
 use serde::{Deserialize, Serialize};
 
+#[cfg(feature = "std")]
 use soil_api::{ApiExt, ProvideRuntimeApi};
+#[cfg(feature = "std")]
 use soil_blockchain::HeaderBackend;
+#[cfg(feature = "std")]
 use soil_core::{
 	offchain::{storage::OffchainDb, OffchainDbExt, OffchainStorage},
 	Bytes,
 };
+#[cfg(feature = "std")]
 use soil_mmr_primitives::{AncestryProof as MmrAncestryProof, Error as MmrError, LeafProof};
+#[cfg(feature = "std")]
 use soil_runtime::traits::{Block as BlockT, NumberFor};
 
+#[cfg(feature = "std")]
 pub use soil_mmr_primitives::MmrApi as MmrRuntimeApi;
 
+#[cfg(feature = "std")]
 const RUNTIME_ERROR: i32 = 8000;
+#[cfg(feature = "std")]
 const MMR_ERROR: i32 = 8010;
 
 /// Retrieved MMR leaves and their proof.
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 #[serde(rename_all = "camelCase")]
+#[cfg(feature = "std")]
 pub struct LeavesProof<BlockHash> {
 	/// Block hash the proof was generated for.
 	pub block_hash: BlockHash,
@@ -56,9 +72,11 @@ pub struct LeavesProof<BlockHash> {
 	pub proof: Bytes,
 }
 
+#[cfg(feature = "std")]
 impl<BlockHash> LeavesProof<BlockHash> {
 	/// Create new `LeavesProof` from a given vector of `Leaf` and a
 	/// [soil_mmr_primitives::LeafProof].
+#[cfg(feature = "std")]
 	pub fn new<Leaf, MmrHash>(
 		block_hash: BlockHash,
 		leaves: Vec<Leaf>,
@@ -74,9 +92,11 @@ impl<BlockHash> LeavesProof<BlockHash> {
 
 /// MMR RPC methods.
 #[rpc(client, server)]
+#[cfg(feature = "std")]
 pub trait MmrApi<BlockHash, BlockNumber, MmrHash> {
 	/// Get the MMR root hash for the current best block.
 	#[method(name = "mmr_root")]
+#[cfg(feature = "std")]
 	fn mmr_root(&self, at: Option<BlockHash>) -> RpcResult<MmrHash>;
 
 	/// Generate an MMR proof for the given `block_numbers`.
@@ -99,6 +119,7 @@ pub trait MmrApi<BlockHash, BlockNumber, MmrHash> {
 	/// The order of entries in the `leaves` field of the returned struct
 	/// is the same as the order of the entries in `block_numbers` supplied
 	#[method(name = "mmr_generateProof")]
+#[cfg(feature = "std")]
 	fn generate_proof(
 		&self,
 		block_numbers: Vec<BlockNumber>,
@@ -125,6 +146,7 @@ pub trait MmrApi<BlockHash, BlockNumber, MmrHash> {
 	/// of the best block specified. The order of entries in the `leaves` field of the returned
 	/// struct is the same as the order of the entries in `block_numbers` supplied
 	#[method(name = "mmr_generateAncestryProof")]
+#[cfg(feature = "std")]
 	fn generate_ancestry_proof(
 		&self,
 		prev_block_number: BlockNumber,
@@ -139,6 +161,7 @@ pub trait MmrApi<BlockHash, BlockNumber, MmrHash> {
 	///
 	/// Returns `true` if the proof is valid, else returns the verification error.
 	#[method(name = "mmr_verifyProof")]
+#[cfg(feature = "std")]
 	fn verify_proof(&self, proof: LeavesProof<BlockHash>) -> RpcResult<bool>;
 
 	/// Verify an MMR `proof` statelessly given an `mmr_root`.
@@ -148,6 +171,7 @@ pub trait MmrApi<BlockHash, BlockNumber, MmrHash> {
 	///
 	/// Returns `true` if the proof is valid, else returns the verification error.
 	#[method(name = "mmr_verifyProofStateless")]
+#[cfg(feature = "std")]
 	fn verify_proof_stateless(
 		&self,
 		mmr_root: MmrHash,
@@ -156,20 +180,24 @@ pub trait MmrApi<BlockHash, BlockNumber, MmrHash> {
 }
 
 /// MMR RPC methods.
+#[cfg(feature = "std")]
 pub struct Mmr<Client, Block, S> {
 	client: Arc<Client>,
 	offchain_db: OffchainDb<S>,
 	_marker: PhantomData<Block>,
 }
 
+#[cfg(feature = "std")]
 impl<C, B, S> Mmr<C, B, S> {
 	/// Create new `Mmr` with the given reference to the client.
+#[cfg(feature = "std")]
 	pub fn new(client: Arc<C>, offchain_storage: S) -> Self {
 		Self { client, _marker: Default::default(), offchain_db: OffchainDb::new(offchain_storage) }
 	}
 }
 
 #[async_trait]
+#[cfg(feature = "std")]
 impl<Client, Block, MmrHash, S> MmrApiServer<<Block as BlockT>::Hash, NumberFor<Block>, MmrHash>
 	for Mmr<Client, (Block, MmrHash), S>
 where
@@ -179,6 +207,7 @@ where
 	MmrHash: Codec + Send + Sync + 'static,
 	S: OffchainStorage + 'static,
 {
+#[cfg(feature = "std")]
 	fn mmr_root(&self, at: Option<<Block as BlockT>::Hash>) -> RpcResult<MmrHash> {
 		let block_hash = at.unwrap_or_else(||
 			// If the block hash is not supplied assume the best block.
@@ -191,6 +220,7 @@ where
 		Ok(mmr_root)
 	}
 
+#[cfg(feature = "std")]
 	fn generate_proof(
 		&self,
 		block_numbers: Vec<NumberFor<Block>>,
@@ -212,6 +242,7 @@ where
 		Ok(LeavesProof::new(block_hash, leaves, proof))
 	}
 
+#[cfg(feature = "std")]
 	fn generate_ancestry_proof(
 		&self,
 		prev_block_number: NumberFor<Block>,
@@ -233,6 +264,7 @@ where
 		Ok(proof)
 	}
 
+#[cfg(feature = "std")]
 	fn verify_proof(&self, proof: LeavesProof<<Block as BlockT>::Hash>) -> RpcResult<bool> {
 		let mut api = self.client.runtime_api();
 
@@ -249,6 +281,7 @@ where
 		Ok(true)
 	}
 
+#[cfg(feature = "std")]
 	fn verify_proof_stateless(
 		&self,
 		mmr_root: MmrHash,
@@ -269,6 +302,7 @@ where
 }
 
 /// Converts an mmr-specific error into a [`CallError`].
+#[cfg(feature = "std")]
 fn mmr_error_into_rpc_error(err: MmrError) -> ErrorObjectOwned {
 	let error_code = MMR_ERROR +
 		match err {
@@ -284,10 +318,12 @@ fn mmr_error_into_rpc_error(err: MmrError) -> ErrorObjectOwned {
 }
 
 /// Converts a runtime trap into a [`CallError`].
+#[cfg(feature = "std")]
 fn runtime_error_into_rpc_error(err: impl std::fmt::Debug) -> ErrorObjectOwned {
 	ErrorObject::owned(RUNTIME_ERROR, "Runtime trapped", Some(format!("{:?}", err)))
 }
 
+#[cfg(feature = "std")]
 fn invalid_params(e: impl std::error::Error) -> ErrorObjectOwned {
 	ErrorObject::owned(
 		jsonrpsee::types::error::ErrorCode::InvalidParams.code(),
@@ -297,11 +333,15 @@ fn invalid_params(e: impl std::error::Error) -> ErrorObjectOwned {
 }
 
 #[cfg(test)]
+#[cfg(feature = "std")]
 mod tests {
+#[cfg(feature = "std")]
 	use super::*;
+#[cfg(feature = "std")]
 	use soil_core::H256;
 
 	#[test]
+#[cfg(feature = "std")]
 	fn should_serialize_leaf_proof() {
 		// given
 		let leaf = vec![1_u8, 2, 3, 4];
@@ -324,6 +364,7 @@ mod tests {
 	}
 
 	#[test]
+#[cfg(feature = "std")]
 	fn should_serialize_leaves_proof() {
 		// given
 		let leaf_a = vec![1_u8, 2, 3, 4];
@@ -347,6 +388,7 @@ mod tests {
 	}
 
 	#[test]
+#[cfg(feature = "std")]
 	fn should_deserialize_leaf_proof() {
 		// given
 		let expected = LeavesProof {
@@ -374,6 +416,7 @@ mod tests {
 	}
 
 	#[test]
+#[cfg(feature = "std")]
 	fn should_deserialize_leaves_proof() {
 		// given
 		let expected = LeavesProof {

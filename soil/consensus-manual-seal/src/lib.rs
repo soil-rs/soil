@@ -19,31 +19,50 @@
 //! A manual sealing engine: the engine listens for rpc calls to seal blocks and create forks.
 //! This is suitable for a testing environment.
 
+#![cfg_attr(not(feature = "std"), no_std)]
+
+#[cfg(feature = "std")]
 use futures::prelude::*;
+#[cfg(feature = "std")]
 use futures_timer::Delay;
+#[cfg(feature = "std")]
 use prometheus_endpoint::Registry;
+#[cfg(feature = "std")]
 use soil_client_api::{
 	backend::{Backend as ClientBackend, Finalizer},
 	client::BlockchainEvents,
 };
+#[cfg(feature = "std")]
 use sc_consensus::{
 	block_import::{BlockImport, BlockImportParams, ForkChoiceStrategy},
 	import_queue::{BasicQueue, BoxBlockImport, Verifier},
 };
+#[cfg(feature = "std")]
 use soil_blockchain::HeaderBackend;
+#[cfg(feature = "std")]
 use soil_consensus::{Environment, Proposer, SelectChain};
+#[cfg(feature = "std")]
 use soil_core::traits::SpawnNamed;
+#[cfg(feature = "std")]
 use soil_inherents::CreateInherentDataProviders;
+#[cfg(feature = "std")]
 use soil_runtime::{traits::Block as BlockT, ConsensusEngineId};
+#[cfg(feature = "std")]
 use std::{marker::PhantomData, sync::Arc, time::Duration};
 
+#[cfg(feature = "std")]
 mod error;
+#[cfg(feature = "std")]
 mod finalize_block;
+#[cfg(feature = "std")]
 mod seal_block;
 
+#[cfg(feature = "std")]
 pub mod consensus;
+#[cfg(feature = "std")]
 pub mod rpc;
 
+#[cfg(feature = "std")]
 pub use self::{
 	consensus::ConsensusDataProvider,
 	error::Error,
@@ -51,18 +70,24 @@ pub use self::{
 	rpc::{CreatedBlock, EngineCommand},
 	seal_block::{seal_block, SealBlockParams, MAX_PROPOSAL_DURATION},
 };
+#[cfg(feature = "std")]
 use soil_transaction_pool_api::TransactionPool;
+#[cfg(feature = "std")]
 use soil_api::ProvideRuntimeApi;
 
+#[cfg(feature = "std")]
 const LOG_TARGET: &str = "manual-seal";
 
 /// The `ConsensusEngineId` of Manual Seal.
+#[cfg(feature = "std")]
 pub const MANUAL_SEAL_ENGINE_ID: ConsensusEngineId = [b'm', b'a', b'n', b'l'];
 
 /// The verifier for the manual seal engine; instantly finalizes.
+#[cfg(feature = "std")]
 struct ManualSealVerifier;
 
 #[async_trait::async_trait]
+#[cfg(feature = "std")]
 impl<B: BlockT> Verifier<B> for ManualSealVerifier {
 	async fn verify(
 		&self,
@@ -75,6 +100,7 @@ impl<B: BlockT> Verifier<B> for ManualSealVerifier {
 }
 
 /// Instantiate the import queue for the manual seal consensus engine.
+#[cfg(feature = "std")]
 pub fn import_queue<Block>(
 	block_import: BoxBlockImport<Block>,
 	spawner: &impl soil_core::traits::SpawnEssentialNamed,
@@ -87,6 +113,7 @@ where
 }
 
 /// Params required to start the manual sealing authorship task.
+#[cfg(feature = "std")]
 pub struct ManualSealParams<B: BlockT, BI, E, C: ProvideRuntimeApi<B>, TP, SC, CS, CIDP> {
 	/// Block import instance.
 	pub block_import: BI,
@@ -115,6 +142,7 @@ pub struct ManualSealParams<B: BlockT, BI, E, C: ProvideRuntimeApi<B>, TP, SC, C
 }
 
 /// Params required to start the instant sealing authorship task.
+#[cfg(feature = "std")]
 pub struct InstantSealParams<B: BlockT, BI, E, C: ProvideRuntimeApi<B>, TP, SC, CIDP> {
 	/// Block import instance for well. importing blocks.
 	pub block_import: BI,
@@ -139,6 +167,7 @@ pub struct InstantSealParams<B: BlockT, BI, E, C: ProvideRuntimeApi<B>, TP, SC, 
 }
 
 /// Params required to start the delayed finalization task.
+#[cfg(feature = "std")]
 pub struct DelayedFinalizeParams<C, S> {
 	/// Block import instance.
 	pub client: Arc<C>,
@@ -341,35 +370,52 @@ pub async fn run_delayed_finalize<B, CB, C, S>(
 }
 
 #[cfg(test)]
+#[cfg(feature = "std")]
 mod tests {
+#[cfg(feature = "std")]
 	use super::*;
+#[cfg(feature = "std")]
 	use assert_matches::assert_matches;
+#[cfg(feature = "std")]
 	use soil_basic_authorship::ProposerFactory;
+#[cfg(feature = "std")]
 	use sc_consensus::ImportedAux;
+#[cfg(feature = "std")]
 	use sc_transaction_pool::{BasicPool, FullChainApi, Options, RevalidationType};
+#[cfg(feature = "std")]
 	use soil_transaction_pool_api::{MaintainedTransactionPool, TransactionPool, TransactionSource};
+#[cfg(feature = "std")]
 	use soil_api::StorageProof;
+#[cfg(feature = "std")]
 	use soil_inherents::InherentData;
+#[cfg(feature = "std")]
 	use soil_runtime::generic::{Digest, DigestItem};
+#[cfg(feature = "std")]
 	use substrate_test_runtime_client::{
 		DefaultTestClientBuilderExt, Sr25519Keyring::*, TestClientBuilder, TestClientBuilderExt,
 	};
+#[cfg(feature = "std")]
 	use substrate_test_runtime_transaction_pool::{uxt, TestApi};
 
+#[cfg(feature = "std")]
 	fn api() -> Arc<TestApi> {
 		Arc::new(TestApi::empty())
 	}
 
+#[cfg(feature = "std")]
 	const SOURCE: TransactionSource = TransactionSource::External;
 
+#[cfg(feature = "std")]
 	struct TestDigestProvider<C> {
 		_client: Arc<C>,
 	}
+#[cfg(feature = "std")]
 	impl<B, C> ConsensusDataProvider<B> for TestDigestProvider<C>
 	where
 		B: BlockT,
 		C: ProvideRuntimeApi<B> + Send + Sync,
 	{
+#[cfg(feature = "std")]
 		fn create_digest(
 			&self,
 			_parent: &B::Header,
@@ -378,6 +424,7 @@ mod tests {
 			Ok(Digest { logs: vec![] })
 		}
 
+#[cfg(feature = "std")]
 		fn append_block_import(
 			&self,
 			_parent: &B::Header,

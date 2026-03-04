@@ -19,15 +19,22 @@
 //! This crate contains the code necessary to gather basic hardware
 //! and software telemetry information about the node on which we're running.
 
+#![cfg_attr(not(feature = "std"), no_std)]
+
+#[cfg(feature = "std")]
 use futures::prelude::*;
 use std::time::Duration;
 
+#[cfg(feature = "std")]
 mod sysinfo;
 #[cfg(target_os = "freebsd")]
+#[cfg(feature = "std")]
 mod sysinfo_freebsd;
 #[cfg(target_os = "linux")]
+#[cfg(feature = "std")]
 mod sysinfo_linux;
 
+#[cfg(feature = "std")]
 pub use sysinfo::{
 	benchmark_cpu, benchmark_cpu_parallelism, benchmark_disk_random_writes,
 	benchmark_disk_sequential_writes, benchmark_memory, benchmark_sr25519_verify, gather_hwbench,
@@ -36,16 +43,20 @@ pub use sysinfo::{
 };
 
 /// The operating system part of the current target triplet.
+#[cfg(feature = "std")]
 pub const TARGET_OS: &str = include_str!(concat!(env!("OUT_DIR"), "/target_os.txt"));
 
 /// The CPU ISA architecture part of the current target triplet.
+#[cfg(feature = "std")]
 pub const TARGET_ARCH: &str = include_str!(concat!(env!("OUT_DIR"), "/target_arch.txt"));
 
 /// The environment part of the current target triplet.
+#[cfg(feature = "std")]
 pub const TARGET_ENV: &str = include_str!(concat!(env!("OUT_DIR"), "/target_env.txt"));
 
 /// Hardware benchmark results for the node.
 #[derive(Clone, Debug, serde::Serialize)]
+#[cfg(feature = "std")]
 pub struct HwBench {
 	/// The CPU speed, as measured in how many MB/s it can hash using the BLAKE2b-256 hash.
 	#[serde(serialize_with = "serialize_throughput")]
@@ -75,6 +86,7 @@ pub struct HwBench {
 
 #[derive(Copy, Clone, Debug)]
 /// Limit the execution time of a benchmark.
+#[cfg(feature = "std")]
 pub enum ExecutionLimit {
 	/// Limit by the maximal duration.
 	MaxDuration(Duration),
@@ -86,13 +98,16 @@ pub enum ExecutionLimit {
 	Both { max_iterations: usize, max_duration: Duration },
 }
 
+#[cfg(feature = "std")]
 impl ExecutionLimit {
 	/// Creates a new execution limit with the passed seconds as duration limit.
+#[cfg(feature = "std")]
 	pub fn from_secs_f32(secs: f32) -> Self {
 		Self::MaxDuration(Duration::from_secs_f32(secs))
 	}
 
 	/// Returns the duration limit or `MAX` if none is present.
+#[cfg(feature = "std")]
 	pub fn max_duration(&self) -> Duration {
 		match self {
 			Self::MaxDuration(d) => *d,
@@ -102,6 +117,7 @@ impl ExecutionLimit {
 	}
 
 	/// Returns the iterations limit or `MAX` if none is present.
+#[cfg(feature = "std")]
 	pub fn max_iterations(&self) -> usize {
 		match self {
 			Self::MaxIterations(d) => *d,
@@ -112,6 +128,7 @@ impl ExecutionLimit {
 }
 
 /// Prints out the system software/hardware information in the logs.
+#[cfg(feature = "std")]
 pub fn print_sysinfo(sysinfo: &soil_telemetry::SysInfo) {
 	log::info!("💻 Operating system: {}", TARGET_OS);
 	log::info!("💻 CPU architecture: {}", TARGET_ARCH);
@@ -140,6 +157,7 @@ pub fn print_sysinfo(sysinfo: &soil_telemetry::SysInfo) {
 }
 
 /// Prints out the results of the hardware benchmarks in the logs.
+#[cfg(feature = "std")]
 pub fn print_hwbench(hwbench: &HwBench) {
 	log::info!(
 		"🏁 CPU single core score: {}, parallelism score: {} with expected cores: {}",
@@ -158,6 +176,7 @@ pub fn print_hwbench(hwbench: &HwBench) {
 }
 
 /// Initializes the hardware benchmarks telemetry.
+#[cfg(feature = "std")]
 pub fn initialize_hwbench_telemetry(
 	telemetry_handle: soil_telemetry::TelemetryHandle,
 	hwbench: HwBench,

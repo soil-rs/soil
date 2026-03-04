@@ -16,28 +16,39 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
+#![cfg_attr(not(feature = "std"), no_std)]
+
+#[cfg(feature = "std")]
 use polkavm::{CallError, Caller, Reg};
+#[cfg(feature = "std")]
 use soil_executor_common::{
 	error::{Error, WasmError},
 	wasm_runtime::{AllocationStats, WasmInstance, WasmModule},
 };
+#[cfg(feature = "std")]
 use soil_wasm_interface::{
 	Function, FunctionContext, HostFunctions, Pointer, Value, ValueType, WordSize,
 };
 
 #[repr(transparent)]
+#[cfg(feature = "std")]
 pub struct InstancePre(polkavm::InstancePre<(), String>);
 
 #[repr(transparent)]
+#[cfg(feature = "std")]
 pub struct Instance(polkavm::Instance<(), String>);
 
+#[cfg(feature = "std")]
 impl WasmModule for InstancePre {
+#[cfg(feature = "std")]
 	fn new_instance(&self) -> Result<Box<dyn WasmInstance>, Error> {
 		Ok(Box::new(Instance(self.0.instantiate()?)))
 	}
 }
 
+#[cfg(feature = "std")]
 impl WasmInstance for Instance {
+#[cfg(feature = "std")]
 	fn call_with_allocation_stats(
 		&mut self,
 		name: &str,
@@ -129,9 +140,12 @@ impl WasmInstance for Instance {
 	}
 }
 
+#[cfg(feature = "std")]
 struct Context<'r, 'a>(&'r mut polkavm::Caller<'a, ()>);
 
+#[cfg(feature = "std")]
 impl<'r, 'a> FunctionContext for Context<'r, 'a> {
+#[cfg(feature = "std")]
 	fn read_memory_into(
 		&self,
 		address: Pointer<u8>,
@@ -144,6 +158,7 @@ impl<'r, 'a> FunctionContext for Context<'r, 'a> {
 			.map(|_| ())
 	}
 
+#[cfg(feature = "std")]
 	fn write_memory(&mut self, address: Pointer<u8>, data: &[u8]) -> soil_wasm_interface::Result<()> {
 		self.0
 			.instance
@@ -151,6 +166,7 @@ impl<'r, 'a> FunctionContext for Context<'r, 'a> {
 			.map_err(|error| error.to_string())
 	}
 
+#[cfg(feature = "std")]
 	fn allocate_memory(&mut self, size: WordSize) -> soil_wasm_interface::Result<Pointer<u8>> {
 		let pointer = match self.0.instance.sbrk(0) {
 			Ok(pointer) => pointer.expect("fetching the current heap pointer never fails"),
@@ -167,16 +183,19 @@ impl<'r, 'a> FunctionContext for Context<'r, 'a> {
 		Ok(Pointer::new(pointer))
 	}
 
+#[cfg(feature = "std")]
 	fn deallocate_memory(&mut self, _ptr: Pointer<u8>) -> soil_wasm_interface::Result<()> {
 		// This is only used by the allocator host function, which is unused under PolkaVM.
 		unimplemented!("'deallocate_memory' is never used when running under PolkaVM");
 	}
 
+#[cfg(feature = "std")]
 	fn register_panic_error_message(&mut self, _message: &str) {
 		unimplemented!("'register_panic_error_message' is never used when running under PolkaVM");
 	}
 }
 
+#[cfg(feature = "std")]
 fn call_host_function(caller: &mut Caller<()>, function: &dyn Function) -> Result<(), String> {
 	let mut args = [Value::I64(0); Reg::ARG_REGS.len()];
 	let mut nth_reg = 0;
@@ -268,10 +287,12 @@ fn call_host_function(caller: &mut Caller<()>, function: &dyn Function) -> Resul
 	Ok(())
 }
 
+#[cfg(feature = "std")]
 pub fn create_runtime<H>(blob: &polkavm::ProgramBlob) -> Result<Box<dyn WasmModule>, WasmError>
 where
 	H: HostFunctions,
 {
+#[cfg(feature = "std")]
 	static ENGINE: std::sync::OnceLock<Result<polkavm::Engine, polkavm::Error>> =
 		std::sync::OnceLock::new();
 

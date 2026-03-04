@@ -31,5 +31,9 @@ soil-core = { workspace = true, default-features = true }
 soil-crypto-hashing = { workspace = true, default-features = true }
 soil-io = { workspace = true, default-features = true }
 
+[features]
+default = ["std"]
+std = []
+
 [dev-dependencies]
 soil-runtime = { workspace = true, default-features = true }

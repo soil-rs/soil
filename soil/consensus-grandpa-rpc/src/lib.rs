@@ -19,33 +19,51 @@
 //! RPC API for GRANDPA.
 #![warn(missing_docs)]
 
+#![cfg_attr(not(feature = "std"), no_std)]
+
+#[cfg(feature = "std")]
 use futures::StreamExt;
+#[cfg(feature = "std")]
 use log::warn;
+#[cfg(feature = "std")]
 use std::sync::Arc;
 
+#[cfg(feature = "std")]
 use jsonrpsee::{
 	core::{async_trait, server::PendingSubscriptionSink},
 	proc_macros::rpc,
 };
 
+#[cfg(feature = "std")]
 mod error;
+#[cfg(feature = "std")]
 mod finality;
+#[cfg(feature = "std")]
 mod notification;
+#[cfg(feature = "std")]
 mod report;
 
+#[cfg(feature = "std")]
 use error::Error;
+#[cfg(feature = "std")]
 use finality::{EncodedFinalityProof, RpcFinalityProofProvider};
+#[cfg(feature = "std")]
 use notification::JustificationNotification;
+#[cfg(feature = "std")]
 use report::{ReportAuthoritySet, ReportVoterState, ReportedRoundStates};
+#[cfg(feature = "std")]
 use sc_consensus_grandpa::GrandpaJustificationStream;
+#[cfg(feature = "std")]
 use sc_rpc::{
 	utils::{BoundedVecDeque, PendingSubscription},
 	SubscriptionTaskExecutor,
 };
+#[cfg(feature = "std")]
 use soil_runtime::traits::{Block as BlockT, NumberFor};
 
 /// Provides RPC methods for interacting with GRANDPA.
 #[rpc(client, server)]
+#[cfg(feature = "std")]
 pub trait GrandpaApi<Notification, Hash, Number> {
 	/// Returns the state of the current best round state as well as the
 	/// ongoing background rounds.
@@ -59,6 +77,7 @@ pub trait GrandpaApi<Notification, Hash, Number> {
 		unsubscribe = "grandpa_unsubscribeJustifications",
 		item = Notification
 	)]
+#[cfg(feature = "std")]
 	fn subscribe_justifications(&self);
 
 	/// Prove finality for the given block number by returning the Justification for the last block
@@ -68,6 +87,7 @@ pub trait GrandpaApi<Notification, Hash, Number> {
 }
 
 /// Provides RPC methods for interacting with GRANDPA.
+#[cfg(feature = "std")]
 pub struct Grandpa<AuthoritySet, VoterState, Block: BlockT, ProofProvider> {
 	executor: SubscriptionTaskExecutor,
 	authority_set: AuthoritySet,
@@ -75,10 +95,12 @@ pub struct Grandpa<AuthoritySet, VoterState, Block: BlockT, ProofProvider> {
 	justification_stream: GrandpaJustificationStream<Block>,
 	finality_proof_provider: Arc<ProofProvider>,
 }
+#[cfg(feature = "std")]
 impl<AuthoritySet, VoterState, Block: BlockT, ProofProvider>
 	Grandpa<AuthoritySet, VoterState, Block, ProofProvider>
 {
 	/// Prepare a new [`Grandpa`] Rpc handler.
+#[cfg(feature = "std")]
 	pub fn new(
 		executor: SubscriptionTaskExecutor,
 		authority_set: AuthoritySet,
@@ -91,6 +113,7 @@ impl<AuthoritySet, VoterState, Block: BlockT, ProofProvider>
 }
 
 #[async_trait]
+#[cfg(feature = "std")]
 impl<AuthoritySet, VoterState, Block, ProofProvider>
 	GrandpaApiServer<JustificationNotification, Block::Hash, NumberFor<Block>>
 	for Grandpa<AuthoritySet, VoterState, Block, ProofProvider>
@@ -104,6 +127,7 @@ where
 		ReportedRoundStates::from(&self.authority_set, &self.voter_state)
 	}
 
+#[cfg(feature = "std")]
 	fn subscribe_justifications(&self, pending: PendingSubscriptionSink) {
 		let stream = self.justification_stream.subscribe(100_000).map(
 			|x: sc_consensus_grandpa::GrandpaJustification<Block>| {
@@ -129,34 +153,51 @@ where
 }
 
 #[cfg(test)]
+#[cfg(feature = "std")]
 mod tests {
+#[cfg(feature = "std")]
 	use super::*;
 	use std::{collections::HashSet, sync::Arc};
 
+#[cfg(feature = "std")]
 	use codec::{Decode, Encode};
+#[cfg(feature = "std")]
 	use jsonrpsee::{core::EmptyServerParams as EmptyParams, types::SubscriptionId, RpcModule};
+#[cfg(feature = "std")]
 	use sc_block_builder::BlockBuilderBuilder;
+#[cfg(feature = "std")]
 	use sc_consensus_grandpa::{
 		report, AuthorityId, FinalityProof, GrandpaJustification, GrandpaJustificationSender,
 	};
+#[cfg(feature = "std")]
 	use sc_rpc::testing::test_executor;
+#[cfg(feature = "std")]
 	use soil_blockchain::HeaderBackend;
+#[cfg(feature = "std")]
 	use soil_core::crypto::ByteArray;
+#[cfg(feature = "std")]
 	use soil_keyring::Ed25519Keyring;
+#[cfg(feature = "std")]
 	use soil_runtime::traits::{Block as BlockT, Header as HeaderT};
+#[cfg(feature = "std")]
 	use substrate_test_runtime_client::{
 		runtime::{Block, Header, H256},
 		DefaultTestClientBuilderExt, TestClientBuilder, TestClientBuilderExt,
 	};
 
+#[cfg(feature = "std")]
 	struct TestAuthoritySet;
+#[cfg(feature = "std")]
 	struct TestVoterState;
+#[cfg(feature = "std")]
 	struct EmptyVoterState;
 
+#[cfg(feature = "std")]
 	struct TestFinalityProofProvider {
 		finality_proof: Option<FinalityProof<Header>>,
 	}
 
+#[cfg(feature = "std")]
 	fn voters() -> HashSet<AuthorityId> {
 		let voter_id_1 = AuthorityId::from_slice(&[1; 32]).unwrap();
 		let voter_id_2 = AuthorityId::from_slice(&[2; 32]).unwrap();
@@ -164,18 +205,23 @@ mod tests {
 		vec![voter_id_1, voter_id_2].into_iter().collect()
 	}
 
+#[cfg(feature = "std")]
 	impl ReportAuthoritySet for TestAuthoritySet {
+#[cfg(feature = "std")]
 		fn get(&self) -> (u64, HashSet<AuthorityId>) {
 			(1, voters())
 		}
 	}
 
+#[cfg(feature = "std")]
 	impl ReportVoterState for EmptyVoterState {
+#[cfg(feature = "std")]
 		fn get(&self) -> Option<report::VoterState<AuthorityId>> {
 			None
 		}
 	}
 
+#[cfg(feature = "std")]
 	fn header(number: u64) -> Header {
 		let parent_hash = match number {
 			0 => Default::default(),
@@ -190,7 +236,9 @@ mod tests {
 		)
 	}
 
+#[cfg(feature = "std")]
 	impl<Block: BlockT> RpcFinalityProofProvider<Block> for TestFinalityProofProvider {
+#[cfg(feature = "std")]
 		fn rpc_prove_finality(
 			&self,
 			_block: NumberFor<Block>,
@@ -205,7 +253,9 @@ mod tests {
 		}
 	}
 
+#[cfg(feature = "std")]
 	impl ReportVoterState for TestVoterState {
+#[cfg(feature = "std")]
 		fn get(&self) -> Option<report::VoterState<AuthorityId>> {
 			let voter_id_1 = AuthorityId::from_slice(&[1; 32]).unwrap();
 			let voters_best: HashSet<_> = vec![voter_id_1].into_iter().collect();
@@ -234,6 +284,7 @@ mod tests {
 		}
 	}
 
+#[cfg(feature = "std")]
 	fn setup_io_handler<VoterState>(
 		voter_state: VoterState,
 	) -> (
@@ -246,6 +297,7 @@ mod tests {
 		setup_io_handler_with_finality_proofs(voter_state, None)
 	}
 
+#[cfg(feature = "std")]
 	fn setup_io_handler_with_finality_proofs<VoterState>(
 		voter_state: VoterState,
 		finality_proof: Option<FinalityProof<Header>>,
@@ -326,6 +378,7 @@ mod tests {
 		assert_eq!(response, expected);
 	}
 
+#[cfg(feature = "std")]
 	fn create_justification() -> GrandpaJustification<Block> {
 		let peers = &[Ed25519Keyring::Alice];
 

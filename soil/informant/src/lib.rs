@@ -18,15 +18,27 @@
 
 //! Console informant. Prints sync progress and block events. Runs on the calling thread.
 
+#![cfg_attr(not(feature = "std"), no_std)]
+
+#[cfg(feature = "std")]
 use console::style;
+#[cfg(feature = "std")]
 use futures::prelude::*;
+#[cfg(feature = "std")]
 use futures_timer::Delay;
+#[cfg(feature = "std")]
 use log::{debug, info, log_enabled, trace};
+#[cfg(feature = "std")]
 use soil_client_api::{BlockchainEvents, UsageProvider};
+#[cfg(feature = "std")]
 use soil_network::NetworkStatusProvider;
+#[cfg(feature = "std")]
 use soil_network_sync::{SyncStatusProvider, SyncingService};
+#[cfg(feature = "std")]
 use soil_blockchain::HeaderMetadata;
+#[cfg(feature = "std")]
 use soil_runtime::traits::{Block as BlockT, Header};
+#[cfg(feature = "std")]
 use std::{
 	collections::VecDeque,
 	fmt::{Debug, Display},
@@ -34,9 +46,11 @@ use std::{
 	time::Duration,
 };
 
+#[cfg(feature = "std")]
 mod display;
 
 /// Creates a stream that returns a new value every `duration`.
+#[cfg(feature = "std")]
 fn interval(duration: Duration) -> impl Stream<Item = ()> + Unpin {
 	futures::stream::unfold((), move |_| Delay::new(duration).map(|_| Some(((), ())))).map(drop)
 }
@@ -84,9 +98,12 @@ where
 }
 
 /// Print the full hash when debug logging is enabled.
+#[cfg(feature = "std")]
 struct PrintFullHashOnDebugLogging<'a, H>(&'a H);
 
+#[cfg(feature = "std")]
 impl<H: Debug + Display> Display for PrintFullHashOnDebugLogging<'_, H> {
+#[cfg(feature = "std")]
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		if log_enabled!(log::Level::Debug) {
 			Debug::fmt(&self.0, f)

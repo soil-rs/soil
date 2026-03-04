@@ -37,28 +37,46 @@
 
 #![warn(missing_docs)]
 
+#![cfg_attr(not(feature = "std"), no_std)]
+
+#[cfg(feature = "std")]
 mod aux_schema;
+#[cfg(feature = "std")]
 mod offchain_mmr;
 #[cfg(test)]
+#[cfg(feature = "std")]
 pub mod test_utils;
 
+#[cfg(feature = "std")]
 use crate::offchain_mmr::OffchainMmr;
+#[cfg(feature = "std")]
 use futures::StreamExt;
+#[cfg(feature = "std")]
 use log::{debug, error, trace, warn};
+#[cfg(feature = "std")]
 use soil_client_api::{Backend, BlockchainEvents, FinalityNotification, FinalityNotifications};
+#[cfg(feature = "std")]
 use sc_offchain::OffchainDb;
+#[cfg(feature = "std")]
 use soil_api::ProvideRuntimeApi;
+#[cfg(feature = "std")]
 use soil_blockchain::{HeaderBackend, HeaderMetadata};
+#[cfg(feature = "std")]
 use soil_consensus_beefy::MmrRootHash;
+#[cfg(feature = "std")]
 use soil_mmr_primitives::{utils, LeafIndex, MmrApi};
+#[cfg(feature = "std")]
 use soil_runtime::traits::{Block, Header, NumberFor};
+#[cfg(feature = "std")]
 use std::{marker::PhantomData, sync::Arc};
 
 /// Logging target for the mmr gadget.
+#[cfg(feature = "std")]
 pub const LOG_TARGET: &str = "mmr";
 
 /// A convenience MMR client trait that defines all the type bounds a MMR client
 /// has to satisfy and defines some helper methods.
+#[cfg(feature = "std")]
 pub trait MmrClient<B, BE>:
 	BlockchainEvents<B> + HeaderBackend<B> + HeaderMetadata<B> + ProvideRuntimeApi<B>
 where
@@ -67,6 +85,7 @@ where
 	Self::Api: MmrApi<B, MmrRootHash, NumberFor<B>>,
 {
 	/// Get the block number where the mmr pallet was added to the runtime.
+#[cfg(feature = "std")]
 	fn first_mmr_block_num(&self, notification: &FinalityNotification<B>) -> Option<NumberFor<B>> {
 		let best_block_hash = notification.header.hash();
 		let best_block_number = *notification.header.number();
@@ -104,6 +123,7 @@ where
 	}
 }
 
+#[cfg(feature = "std")]
 impl<B, BE, T> MmrClient<B, BE> for T
 where
 	B: Block,
@@ -114,6 +134,7 @@ where
 	// empty
 }
 
+#[cfg(feature = "std")]
 struct OffchainMmrBuilder<B: Block, BE: Backend<B>, C> {
 	backend: Arc<BE>,
 	client: Arc<C>,
@@ -123,6 +144,7 @@ struct OffchainMmrBuilder<B: Block, BE: Backend<B>, C> {
 	_phantom: PhantomData<B>,
 }
 
+#[cfg(feature = "std")]
 impl<B, BE, C> OffchainMmrBuilder<B, BE, C>
 where
 	B: Block,
@@ -163,12 +185,14 @@ where
 }
 
 /// A MMR Gadget.
+#[cfg(feature = "std")]
 pub struct MmrGadget<B: Block, BE: Backend<B>, C> {
 	finality_notifications: FinalityNotifications<B>,
 
 	_phantom: PhantomData<(B, BE, C)>,
 }
 
+#[cfg(feature = "std")]
 impl<B, BE, C> MmrGadget<B, BE, C>
 where
 	B: Block,
@@ -219,12 +243,16 @@ where
 }
 
 #[cfg(test)]
+#[cfg(feature = "std")]
 mod tests {
+#[cfg(feature = "std")]
 	use crate::test_utils::run_test_with_mmr_gadget;
+#[cfg(feature = "std")]
 	use soil_runtime::generic::BlockId;
 	use std::time::Duration;
 
 	#[test]
+#[cfg(feature = "std")]
 	fn mmr_first_block_is_computed_correctly() {
 		// Check the case where the first block is also the first block with MMR.
 		run_test_with_mmr_gadget(|client| async move {
@@ -264,6 +292,7 @@ mod tests {
 	}
 
 	#[test]
+#[cfg(feature = "std")]
 	fn does_not_panic_on_invalid_num_mmr_blocks() {
 		run_test_with_mmr_gadget(|client| async move {
 			// G -> A1

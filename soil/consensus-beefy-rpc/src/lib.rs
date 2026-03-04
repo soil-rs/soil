@@ -20,34 +20,49 @@
 
 #![warn(missing_docs)]
 
+#![cfg_attr(not(feature = "std"), no_std)]
+
+#[cfg(feature = "std")]
 use parking_lot::RwLock;
+#[cfg(feature = "std")]
 use soil_consensus_beefy::AuthorityIdBound;
+#[cfg(feature = "std")]
 use std::sync::Arc;
 
+#[cfg(feature = "std")]
 use sc_rpc::{
 	utils::{BoundedVecDeque, PendingSubscription},
 	SubscriptionTaskExecutor,
 };
+#[cfg(feature = "std")]
 use soil_application_crypto::RuntimeAppPublic;
+#[cfg(feature = "std")]
 use soil_runtime::traits::Block as BlockT;
 
+#[cfg(feature = "std")]
 use futures::{task::SpawnError, FutureExt, StreamExt};
+#[cfg(feature = "std")]
 use jsonrpsee::{
 	core::async_trait,
 	proc_macros::rpc,
+#[cfg(feature = "std")]
 	types::{ErrorObject, ErrorObjectOwned},
 	PendingSubscriptionSink,
 };
+#[cfg(feature = "std")]
 use log::warn;
 
+#[cfg(feature = "std")]
 use sc_consensus_beefy::communication::notification::{
 	BeefyBestBlockStream, BeefyVersionedFinalityProofStream,
 };
 
+#[cfg(feature = "std")]
 mod notification;
 
 #[derive(Debug, thiserror::Error)]
 /// Top-level error type for the RPC handler
+#[cfg(feature = "std")]
 pub enum Error {
 	/// The BEEFY RPC endpoint is not ready.
 	#[error("BEEFY RPC endpoint not ready")]
@@ -58,6 +73,7 @@ pub enum Error {
 }
 
 /// The error codes returned by jsonrpc.
+#[cfg(feature = "std")]
 pub enum ErrorCode {
 	/// Returned when BEEFY RPC endpoint is not ready.
 	NotReady = 1,
@@ -65,7 +81,9 @@ pub enum ErrorCode {
 	TaskFailure = 2,
 }
 
+#[cfg(feature = "std")]
 impl From<Error> for ErrorCode {
+#[cfg(feature = "std")]
 	fn from(error: Error) -> Self {
 		match error {
 			Error::EndpointNotReady => ErrorCode::NotReady,
@@ -74,7 +92,9 @@ impl From<Error> for ErrorCode {
 	}
 }
 
+#[cfg(feature = "std")]
 impl From<Error> for ErrorObjectOwned {
+#[cfg(feature = "std")]
 	fn from(error: Error) -> Self {
 		let message = error.to_string();
 		let code = ErrorCode::from(error);
@@ -84,6 +104,7 @@ impl From<Error> for ErrorObjectOwned {
 
 // Provides RPC methods for interacting with BEEFY.
 #[rpc(client, server)]
+#[cfg(feature = "std")]
 pub trait BeefyApi<Notification, Hash> {
 	/// Returns the block most recently finalized by BEEFY, alongside its justification.
 	#[subscription(
@@ -91,6 +112,7 @@ pub trait BeefyApi<Notification, Hash> {
 		unsubscribe = "beefy_unsubscribeJustifications",
 		item = Notification,
 	)]
+#[cfg(feature = "std")]
 	fn subscribe_justifications(&self);
 
 	/// Returns hash of the latest BEEFY finalized block as seen by this client.
@@ -103,18 +125,21 @@ pub trait BeefyApi<Notification, Hash> {
 }
 
 /// Implements the BeefyApi RPC trait for interacting with BEEFY.
+#[cfg(feature = "std")]
 pub struct Beefy<Block: BlockT, AuthorityId: AuthorityIdBound> {
 	finality_proof_stream: BeefyVersionedFinalityProofStream<Block, AuthorityId>,
 	beefy_best_block: Arc<RwLock<Option<Block::Hash>>>,
 	executor: SubscriptionTaskExecutor,
 }
 
+#[cfg(feature = "std")]
 impl<Block, AuthorityId> Beefy<Block, AuthorityId>
 where
 	Block: BlockT,
 	AuthorityId: AuthorityIdBound,
 {
 	/// Creates a new Beefy Rpc handler instance.
+#[cfg(feature = "std")]
 	pub fn new(
 		finality_proof_stream: BeefyVersionedFinalityProofStream<Block, AuthorityId>,
 		best_block_stream: BeefyBestBlockStream<Block>,
@@ -135,6 +160,7 @@ where
 }
 
 #[async_trait]
+#[cfg(feature = "std")]
 impl<Block, AuthorityId> BeefyApiServer<notification::EncodedVersionedFinalityProof, Block::Hash>
 	for Beefy<Block, AuthorityId>
 where
@@ -142,6 +168,7 @@ where
 	AuthorityId: AuthorityIdBound,
 	<AuthorityId as RuntimeAppPublic>::Signature: Send + Sync,
 {
+#[cfg(feature = "std")]
 	fn subscribe_justifications(&self, pending: PendingSubscriptionSink) {
 		let stream = self
 			.finality_proof_stream
@@ -160,19 +187,28 @@ where
 }
 
 #[cfg(test)]
+#[cfg(feature = "std")]
 mod tests {
+#[cfg(feature = "std")]
 	use super::*;
 
+#[cfg(feature = "std")]
 	use codec::{Decode, Encode};
+#[cfg(feature = "std")]
 	use jsonrpsee::{core::EmptyServerParams as EmptyParams, RpcModule};
+#[cfg(feature = "std")]
 	use sc_consensus_beefy::{
 		communication::notification::BeefyVersionedFinalityProofSender,
 		justification::BeefyVersionedFinalityProof,
 	};
+#[cfg(feature = "std")]
 	use soil_consensus_beefy::{ecdsa_crypto, known_payloads, Payload, SignedCommitment};
+#[cfg(feature = "std")]
 	use soil_runtime::traits::{BlakeTwo256, Hash};
+#[cfg(feature = "std")]
 	use substrate_test_runtime_client::runtime::Block;
 
+#[cfg(feature = "std")]
 	fn setup_io_handler() -> (
 		RpcModule<Beefy<Block, ecdsa_crypto::AuthorityId>>,
 		BeefyVersionedFinalityProofSender<Block, ecdsa_crypto::AuthorityId>,
@@ -181,6 +217,7 @@ mod tests {
 		setup_io_handler_with_best_block_stream(stream)
 	}
 
+#[cfg(feature = "std")]
 	fn setup_io_handler_with_best_block_stream(
 		best_block_stream: BeefyBestBlockStream<Block>,
 	) -> (
@@ -267,6 +304,7 @@ mod tests {
 		assert_eq!(response, expected);
 	}
 
+#[cfg(feature = "std")]
 	fn create_finality_proof() -> BeefyVersionedFinalityProof<Block, ecdsa_crypto::AuthorityId> {
 		let payload =
 			Payload::from_single_entry(known_payloads::MMR_ROOT_ID, "Hello World!".encode());

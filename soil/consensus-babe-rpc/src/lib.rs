@@ -18,33 +18,53 @@
 
 //! RPC api for babe.
 
+#![cfg_attr(not(feature = "std"), no_std)]
+
+#[cfg(feature = "std")]
 use std::{collections::HashMap, sync::Arc};
 
+#[cfg(feature = "std")]
 use futures::TryFutureExt;
+#[cfg(feature = "std")]
 use jsonrpsee::{
 	core::async_trait,
 	proc_macros::rpc,
+#[cfg(feature = "std")]
 	types::{ErrorObject, ErrorObjectOwned},
 	Extensions,
 };
+#[cfg(feature = "std")]
 use serde::{Deserialize, Serialize};
 
+#[cfg(feature = "std")]
 use sc_consensus_babe::{authorship, BabeWorkerHandle};
+#[cfg(feature = "std")]
 use soil_consensus_epochs::Epoch as EpochT;
+#[cfg(feature = "std")]
 use soil_rpc_api::{check_if_safe, UnsafeRpcError};
+#[cfg(feature = "std")]
 use soil_api::ProvideRuntimeApi;
+#[cfg(feature = "std")]
 use soil_application_crypto::AppCrypto;
+#[cfg(feature = "std")]
 use soil_blockchain::{Error as BlockChainError, HeaderBackend, HeaderMetadata};
+#[cfg(feature = "std")]
 use soil_consensus::{Error as ConsensusError, SelectChain};
+#[cfg(feature = "std")]
 use soil_consensus_babe::{digests::PreDigest, AuthorityId, BabeApi as BabeRuntimeApi};
+#[cfg(feature = "std")]
 use soil_core::crypto::ByteArray;
+#[cfg(feature = "std")]
 use soil_keystore::KeystorePtr;
+#[cfg(feature = "std")]
 use soil_runtime::traits::{Block as BlockT, Header as _};
 
+#[cfg(feature = "std")]
 const BABE_ERROR: i32 = 9000;
 
 /// Provides rpc methods for interacting with Babe.
 #[rpc(client, server)]
+#[cfg(feature = "std")]
 pub trait BabeApi {
 	/// Returns data about which slots (primary or secondary) can be claimed in the current epoch
 	/// with the keys in the keystore.
@@ -53,6 +73,7 @@ pub trait BabeApi {
 }
 
 /// Provides RPC methods for interacting with Babe.
+#[cfg(feature = "std")]
 pub struct Babe<B: BlockT, C, SC> {
 	/// shared reference to the client.
 	client: Arc<C>,
@@ -64,8 +85,10 @@ pub struct Babe<B: BlockT, C, SC> {
 	select_chain: SC,
 }
 
+#[cfg(feature = "std")]
 impl<B: BlockT, C, SC> Babe<B, C, SC> {
 	/// Creates a new instance of the Babe Rpc handler.
+#[cfg(feature = "std")]
 	pub fn new(
 		client: Arc<C>,
 		babe_worker_handle: BabeWorkerHandle<B>,
@@ -77,6 +100,7 @@ impl<B: BlockT, C, SC> Babe<B, C, SC> {
 }
 
 #[async_trait]
+#[cfg(feature = "std")]
 impl<B: BlockT, C, SC> BabeApiServer for Babe<B, C, SC>
 where
 	B: BlockT,
@@ -149,6 +173,7 @@ where
 
 /// Holds information about the `slot`'s that can be claimed by a given key.
 #[derive(Clone, Default, Debug, Deserialize, Serialize)]
+#[cfg(feature = "std")]
 pub struct EpochAuthorship {
 	/// the array of primary slots that can be claimed
 	primary: Vec<u64>,
@@ -160,6 +185,7 @@ pub struct EpochAuthorship {
 
 /// Top-level error type for the RPC handler.
 #[derive(Debug, thiserror::Error)]
+#[cfg(feature = "std")]
 pub enum Error {
 	/// Failed to fetch the current best header.
 	#[error("Failed to fetch the current best header: {0}")]
@@ -178,7 +204,9 @@ pub enum Error {
 	UnsafeRpcCalled(#[from] UnsafeRpcError),
 }
 
+#[cfg(feature = "std")]
 impl From<Error> for ErrorObjectOwned {
+#[cfg(feature = "std")]
 	fn from(error: Error) -> Self {
 		match error {
 			Error::SelectChain(e) => ErrorObject::owned(BABE_ERROR + 1, e.to_string(), None::<()>),
@@ -191,20 +219,31 @@ impl From<Error> for ErrorObjectOwned {
 }
 
 #[cfg(test)]
+#[cfg(feature = "std")]
 mod tests {
+#[cfg(feature = "std")]
 	use super::*;
+#[cfg(feature = "std")]
 	use sc_consensus_babe::ImportQueueParams;
+#[cfg(feature = "std")]
 	use soil_rpc_api::DenyUnsafe;
+#[cfg(feature = "std")]
 	use soil_transaction_pool_api::{OffchainTransactionPoolFactory, RejectAllTxPool};
+#[cfg(feature = "std")]
 	use soil_consensus_babe::inherents::InherentDataProvider;
+#[cfg(feature = "std")]
 	use soil_core::{crypto::key_types::BABE, testing::TaskExecutor};
+#[cfg(feature = "std")]
 	use soil_keyring::Sr25519Keyring;
+#[cfg(feature = "std")]
 	use soil_keystore::{testing::MemoryKeystore, Keystore};
+#[cfg(feature = "std")]
 	use substrate_test_runtime_client::{
 		runtime::Block, Backend, DefaultTestClientBuilderExt, TestClient, TestClientBuilder,
 		TestClientBuilderExt,
 	};
 
+#[cfg(feature = "std")]
 	fn create_keystore(authority: Sr25519Keyring) -> KeystorePtr {
 		let keystore = MemoryKeystore::new();
 		keystore
@@ -213,6 +252,7 @@ mod tests {
 		keystore.into()
 	}
 
+#[cfg(feature = "std")]
 	fn test_babe_rpc_module() -> Babe<Block, TestClient, sc_consensus::LongestChain<Backend, Block>>
 	{
 		let builder = TestClientBuilder::new();

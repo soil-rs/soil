@@ -18,6 +18,9 @@
 
 //! Prometheus basic proposer metrics.
 
+#![cfg_attr(not(feature = "std"), no_std)]
+
+#[cfg(feature = "std")]
 use prometheus_endpoint::{
 	prometheus::CounterVec, register, Gauge, Histogram, HistogramOpts, Opts, PrometheusError,
 	Registry, U64,
@@ -25,9 +28,12 @@ use prometheus_endpoint::{
 
 /// Optional shareable link to basic authorship metrics.
 #[derive(Clone, Default)]
+#[cfg(feature = "std")]
 pub struct MetricsLink(Option<Metrics>);
 
+#[cfg(feature = "std")]
 impl MetricsLink {
+#[cfg(feature = "std")]
 	pub fn new(registry: Option<&Registry>) -> Self {
 		Self(registry.and_then(|registry| {
 			Metrics::register(registry)
@@ -38,6 +44,7 @@ impl MetricsLink {
 		}))
 	}
 
+#[cfg(feature = "std")]
 	pub fn report<O>(&self, do_this: impl FnOnce(&Metrics) -> O) -> Option<O> {
 		self.0.as_ref().map(do_this)
 	}
@@ -45,6 +52,7 @@ impl MetricsLink {
 
 /// The reason why proposing a block ended.
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
+#[cfg(feature = "std")]
 pub enum EndProposingReason {
 	NoMoreTransactions,
 	HitDeadline,
@@ -56,6 +64,7 @@ pub enum EndProposingReason {
 
 /// Authorship metrics.
 #[derive(Clone)]
+#[cfg(feature = "std")]
 pub struct Metrics {
 	pub block_constructed: Histogram,
 	pub number_of_transactions: Gauge<U64>,
@@ -64,7 +73,9 @@ pub struct Metrics {
 	pub create_block_proposal_time: Histogram,
 }
 
+#[cfg(feature = "std")]
 impl Metrics {
+#[cfg(feature = "std")]
 	pub fn register(registry: &Registry) -> Result<Self, PrometheusError> {
 		Ok(Self {
 			block_constructed: register(
@@ -109,6 +120,7 @@ impl Metrics {
 	}
 
 	/// Report the reason why the proposing ended.
+#[cfg(feature = "std")]
 	pub fn report_end_proposing_reason(&self, reason: EndProposingReason) {
 		let reason = match reason {
 			EndProposingReason::HitDeadline => "hit_deadline",

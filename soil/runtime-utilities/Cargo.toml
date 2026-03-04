@@ -27,6 +27,10 @@ soil-wasm-interface = { workspace = true, default-features = true }
 
 thiserror = { workspace = true }
 
+[features]
+default = ["std"]
+std = []
+
 [dev-dependencies]
 soil-io = { workspace = true, default-features = true }
 soil-version = { workspace = true, default-features = true }

@@ -87,4 +87,5 @@ criterion = { workspace = true, default-features = true, features = ["async_toki
 prost-build = { workspace = true }
 
 [features]
+std = []
 default = []

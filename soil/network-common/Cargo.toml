@@ -19,3 +19,7 @@ targets = ["x86_64-unknown-linux-gnu"]
 bitflags = { workspace = true }
 codec = { features = ["derive"], workspace = true, default-features = true }
 soil-runtime = { workspace = true, default-features = true }
+
+[features]
+default = ["std"]
+std = []

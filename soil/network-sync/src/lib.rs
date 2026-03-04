@@ -18,27 +18,49 @@
 
 //! Blockchain syncing implementation in Substrate.
 
+#![cfg_attr(not(feature = "std"), no_std)]
+
+#[cfg(feature = "std")]
 pub use schema::v1::*;
+#[cfg(feature = "std")]
 pub use service::syncing_service::SyncingService;
+#[cfg(feature = "std")]
 pub use strategy::warp::{WarpSyncConfig, WarpSyncPhase, WarpSyncProgress};
+#[cfg(feature = "std")]
 pub use types::{SyncEvent, SyncEventStream, SyncState, SyncStatus, SyncStatusProvider};
 
+#[cfg(feature = "std")]
 mod block_announce_validator;
+#[cfg(feature = "std")]
 mod futures_stream;
+#[cfg(feature = "std")]
 mod justification_requests;
+#[cfg(feature = "std")]
 mod pending_responses;
+#[cfg(feature = "std")]
 mod schema;
+#[cfg(feature = "std")]
 pub mod types;
 
+#[cfg(feature = "std")]
 pub mod block_relay_protocol;
+#[cfg(feature = "std")]
 pub mod block_request_handler;
+#[cfg(feature = "std")]
 pub mod blocks;
+#[cfg(feature = "std")]
 pub mod engine;
+#[cfg(feature = "std")]
 pub mod mock;
+#[cfg(feature = "std")]
 pub mod service;
+#[cfg(feature = "std")]
 pub mod state_request_handler;
+#[cfg(feature = "std")]
 pub mod strategy;
+#[cfg(feature = "std")]
 pub mod warp_request_handler;
 
 /// Log target for this crate.
+#[cfg(feature = "std")]
 const LOG_TARGET: &str = "sync";

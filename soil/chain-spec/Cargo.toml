@@ -37,6 +37,10 @@ soil-runtime = { workspace = true, default-features = true }
 soil-state-machine = { workspace = true, default-features = true }
 soil-tracing = { workspace = true, default-features = true }
 
+[features]
+default = ["std"]
+std = []
+
 [dev-dependencies]
 pretty_assertions = { workspace = true }
 regex = { workspace = true }

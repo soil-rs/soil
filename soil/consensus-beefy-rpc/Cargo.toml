@@ -26,6 +26,10 @@ soil-core = { workspace = true, default-features = true }
 soil-runtime = { workspace = true, default-features = true }
 thiserror = { workspace = true }
 
+[features]
+default = ["std"]
+std = []
+
 [dev-dependencies]
 sc-rpc = { features = ["test-helpers"], workspace = true, default-features = true }
 substrate-test-runtime-client = { workspace = true }

@@ -25,5 +25,6 @@ soil-arithmetic = { workspace = true }
 tokio-test = { workspace = true }
 
 [features]
+std = []
 default = ["metered"]
 metered = []

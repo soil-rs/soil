@@ -46,6 +46,10 @@ soil-timestamp = { workspace = true, default-features = true }
 soil-trie = { workspace = true, default-features = true }
 thiserror = { workspace = true }
 
+[features]
+default = ["std"]
+std = []
+
 [dev-dependencies]
 assert_matches = { workspace = true }
 soil-basic-authorship = { workspace = true, default-features = true }

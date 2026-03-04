@@ -29,9 +29,17 @@
 //! | entity       | Name of channel passed to `tracing_unbounded` |
 //! | action       | One of `send`/`received`/`dropped`            |
 
+#![cfg_attr(not(feature = "std"), no_std)]
+
+#[cfg(feature = "std")]
 pub mod id_sequence;
+#[cfg(feature = "std")]
 pub mod metrics;
+#[cfg(feature = "std")]
 pub mod mpsc;
+#[cfg(feature = "std")]
 pub mod notification;
+#[cfg(feature = "std")]
 pub mod pubsub;
+#[cfg(feature = "std")]
 pub mod status_sinks;

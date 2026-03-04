@@ -45,6 +45,10 @@ thiserror = { workspace = true }
 tokio = { features = ["sync"], workspace = true, default-features = true }
 tokio-stream = { features = ["sync"], workspace = true }
 
+[features]
+default = ["std"]
+std = []
+
 [dev-dependencies]
 assert_matches = { workspace = true }
 async-trait = { workspace = true }

@@ -43,6 +43,10 @@ thiserror = { workspace = true }
 tokio = { features = ["macros", "time"], workspace = true, default-features = true }
 tokio-stream = { workspace = true }
 
+[features]
+default = ["std"]
+std = []
+
 [dev-dependencies]
 quickcheck = { workspace = true }
 sc-block-builder = { workspace = true, default-features = true }

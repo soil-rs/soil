@@ -71,7 +71,12 @@
 //! println!("Generated block: {:?}", block.block);
 //! ```
 
+#![cfg_attr(not(feature = "std"), no_std)]
+
+#[cfg(feature = "std")]
 mod basic_authorship;
 
+#[cfg(feature = "std")]
 pub use crate::basic_authorship::{Proposer, ProposerFactory, DEFAULT_BLOCK_SIZE_LIMIT};
+#[cfg(feature = "std")]
 pub use soil_consensus::ProposeArgs;

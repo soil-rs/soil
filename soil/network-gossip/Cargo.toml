@@ -30,6 +30,10 @@ schnellru = { workspace = true }
 soil-runtime = { workspace = true, default-features = true }
 tracing = { workspace = true, default-features = true }
 
+[features]
+default = ["std"]
+std = []
+
 [dev-dependencies]
 async-trait = { workspace = true }
 codec = { features = ["derive"], workspace = true, default-features = true }

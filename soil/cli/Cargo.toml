@@ -58,5 +58,6 @@ soil-tracing = { workspace = true, default-features = true }
 tempfile = { workspace = true }
 
 [features]
+std = []
 default = ["rocksdb"]
 rocksdb = ["soil-client-db/rocksdb"]

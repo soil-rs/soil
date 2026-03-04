@@ -23,19 +23,29 @@
 #![warn(missing_docs)]
 #![deny(unused_crate_dependencies)]
 
+#![cfg_attr(not(feature = "std"), no_std)]
+
+#[cfg(feature = "std")]
 use soil_core::hexdisplay::{AsBytesRef, HexDisplay};
 
+#[cfg(feature = "std")]
 mod common;
 
+#[cfg(feature = "std")]
 pub mod archive;
+#[cfg(feature = "std")]
 pub mod chain_head;
+#[cfg(feature = "std")]
 pub mod chain_spec;
+#[cfg(feature = "std")]
 pub mod transaction;
 
 /// Task executor that is being used by RPC subscriptions.
+#[cfg(feature = "std")]
 pub type SubscriptionTaskExecutor = std::sync::Arc<dyn soil_core::traits::SpawnNamed>;
 
 /// Util function to encode a value as a hex string
+#[cfg(feature = "std")]
 pub fn hex_string<Data: AsBytesRef>(data: &Data) -> String {
 	format!("0x{:?}", HexDisplay::from(data))
 }

@@ -18,3 +18,7 @@ log = { workspace = true, default-features = true }
 soil-core = { workspace = true, default-features = true }
 thiserror = { workspace = true }
 tokio = { features = ["time"], workspace = true, default-features = true }
+
+[features]
+default = ["std"]
+std = []

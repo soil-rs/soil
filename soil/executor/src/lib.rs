@@ -30,33 +30,50 @@
 
 #![warn(missing_docs)]
 
+#![cfg_attr(not(feature = "std"), no_std)]
+
 #[macro_use]
+#[cfg(feature = "std")]
 mod executor;
 #[cfg(test)]
+#[cfg(feature = "std")]
 mod integration_tests;
+#[cfg(feature = "std")]
 mod wasm_runtime;
 
+#[cfg(feature = "std")]
 pub use codec::Codec;
 #[allow(deprecated)]
+#[cfg(feature = "std")]
 pub use executor::NativeElseWasmExecutor;
+#[cfg(feature = "std")]
 pub use executor::{with_externalities_safe, NativeExecutionDispatch, WasmExecutor};
 #[doc(hidden)]
+#[cfg(feature = "std")]
 pub use soil_core::traits::Externalities;
+#[cfg(feature = "std")]
 pub use soil_version::{NativeVersion, RuntimeVersion};
 #[doc(hidden)]
+#[cfg(feature = "std")]
 pub use soil_wasm_interface;
+#[cfg(feature = "std")]
 pub use soil_wasm_interface::HostFunctions;
+#[cfg(feature = "std")]
 pub use wasm_runtime::{read_embedded_version, WasmExecutionMethod};
 
+#[cfg(feature = "std")]
 pub use soil_executor_common::{
 	error,
 	wasm_runtime::{HeapAllocStrategy, DEFAULT_HEAP_ALLOC_PAGES, DEFAULT_HEAP_ALLOC_STRATEGY},
 };
+#[cfg(feature = "std")]
 pub use soil_executor_wasmtime::InstantiationStrategy as WasmtimeInstantiationStrategy;
 
 /// Extracts the runtime version of a given runtime code.
+#[cfg(feature = "std")]
 pub trait RuntimeVersionOf {
 	/// Extract [`RuntimeVersion`] of the given `runtime_code`.
+#[cfg(feature = "std")]
 	fn runtime_version(
 		&self,
 		ext: &mut dyn Externalities,
@@ -65,13 +82,19 @@ pub trait RuntimeVersionOf {
 }
 
 #[cfg(test)]
+#[cfg(feature = "std")]
 mod tests {
+#[cfg(feature = "std")]
 	use super::*;
+#[cfg(feature = "std")]
 	use soil_executor_common::runtime_blob::RuntimeBlob;
+#[cfg(feature = "std")]
 	use soil_runtime_test::wasm_binary_unwrap;
+#[cfg(feature = "std")]
 	use soil_io::TestExternalities;
 
 	#[test]
+#[cfg(feature = "std")]
 	fn call_in_interpreted_wasm_works() {
 		let mut ext = TestExternalities::default();
 		let mut ext = ext.ext();

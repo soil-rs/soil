@@ -25,5 +25,9 @@ serde_with.workspace = true
 thiserror = { workspace = true }
 zeroize = { workspace = true }
 
+[features]
+default = ["std"]
+std = []
+
 [dev-dependencies]
 quickcheck = { workspace = true, default-features = true }

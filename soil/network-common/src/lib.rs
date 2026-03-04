@@ -18,13 +18,21 @@
 
 //! Common data structures of the networking layer.
 
+#![cfg_attr(not(feature = "std"), no_std)]
+
+#[cfg(feature = "std")]
 pub mod message;
+#[cfg(feature = "std")]
 pub mod role;
+#[cfg(feature = "std")]
 pub mod sync;
+#[cfg(feature = "std")]
 pub mod types;
 
 /// Minimum Requirements for a Hash within Networking
+#[cfg(feature = "std")]
 pub trait ExHashT: std::hash::Hash + Eq + std::fmt::Debug + Clone + Send + Sync + 'static {}
 
+#[cfg(feature = "std")]
 impl<T> ExHashT for T where T: std::hash::Hash + Eq + std::fmt::Debug + Clone + Send + Sync + 'static
 {}

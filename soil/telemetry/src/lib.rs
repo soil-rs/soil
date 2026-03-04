@@ -36,11 +36,19 @@
 
 #![warn(missing_docs)]
 
+#![cfg_attr(not(feature = "std"), no_std)]
+
+#[cfg(feature = "std")]
 use futures::{channel::mpsc, prelude::*};
+#[cfg(feature = "std")]
 use libp2p::Multiaddr;
+#[cfg(feature = "std")]
 use log::{error, warn};
+#[cfg(feature = "std")]
 use parking_lot::Mutex;
+#[cfg(feature = "std")]
 use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
+#[cfg(feature = "std")]
 use serde::Serialize;
 use std::{
 	collections::{
@@ -50,34 +58,51 @@ use std::{
 	sync::{atomic, Arc},
 };
 
+#[cfg(feature = "std")]
 pub use log;
+#[cfg(feature = "std")]
 pub use serde_json;
 
+#[cfg(feature = "std")]
 mod endpoints;
+#[cfg(feature = "std")]
 mod error;
+#[cfg(feature = "std")]
 mod node;
+#[cfg(feature = "std")]
 mod transport;
 
+#[cfg(feature = "std")]
 pub use endpoints::*;
+#[cfg(feature = "std")]
 pub use error::*;
+#[cfg(feature = "std")]
 use node::*;
+#[cfg(feature = "std")]
 use transport::*;
 
 /// Substrate DEBUG log level.
+#[cfg(feature = "std")]
 pub const SUBSTRATE_DEBUG: VerbosityLevel = 9;
 /// Substrate INFO log level.
+#[cfg(feature = "std")]
 pub const SUBSTRATE_INFO: VerbosityLevel = 0;
 
 /// Consensus TRACE log level.
+#[cfg(feature = "std")]
 pub const CONSENSUS_TRACE: VerbosityLevel = 9;
 /// Consensus DEBUG log level.
+#[cfg(feature = "std")]
 pub const CONSENSUS_DEBUG: VerbosityLevel = 5;
 /// Consensus WARN log level.
+#[cfg(feature = "std")]
 pub const CONSENSUS_WARN: VerbosityLevel = 4;
 /// Consensus INFO log level.
+#[cfg(feature = "std")]
 pub const CONSENSUS_INFO: VerbosityLevel = 1;
 
 /// Telemetry message verbosity.
+#[cfg(feature = "std")]
 pub type VerbosityLevel = u8;
 
 pub(crate) type Id = u64;
@@ -86,10 +111,12 @@ pub(crate) type TelemetryMessage = (Id, VerbosityLevel, TelemetryPayload);
 
 /// Message sent when the connection (re-)establishes.
 #[derive(Debug, Serialize)]
+#[cfg(feature = "std")]
 pub struct ConnectionMessage {
 	/// Node's name.
 	pub name: String,
 	/// Node's implementation.
+#[cfg(feature = "std")]
 	pub implementation: String,
 	/// Node's version.
 	pub version: String,
@@ -124,6 +151,7 @@ pub struct ConnectionMessage {
 /// Gathering most of this information is highly OS-specific,
 /// so most of the fields here are optional.
 #[derive(Debug, Serialize)]
+#[cfg(feature = "std")]
 pub struct SysInfo {
 	/// The exact CPU model.
 	pub cpu: Option<String>,
@@ -145,6 +173,7 @@ pub struct SysInfo {
 /// will consume the object and any further attempts of initializing a new telemetry through its
 /// handle will fail (without being fatal).
 #[derive(Debug)]
+#[cfg(feature = "std")]
 pub struct TelemetryWorker {
 	message_receiver: mpsc::Receiver<TelemetryMessage>,
 	message_sender: mpsc::Sender<TelemetryMessage>,
@@ -153,10 +182,12 @@ pub struct TelemetryWorker {
 	id_counter: Arc<atomic::AtomicU64>,
 }
 
+#[cfg(feature = "std")]
 impl TelemetryWorker {
 	/// Instantiate a new [`TelemetryWorker`] which can run in background.
 	///
 	/// Only one is needed per process.
+#[cfg(feature = "std")]
 	pub fn new(buffer_size: usize) -> Result<Self> {
 		// Let's try to initialize a transport to get an early return.
 		// Later transport will be initialized multiple times in
@@ -179,6 +210,7 @@ impl TelemetryWorker {
 	/// Get a new [`TelemetryWorkerHandle`].
 	///
 	/// This is used when you want to register with the [`TelemetryWorker`].
+#[cfg(feature = "std")]
 	pub fn handle(&self) -> TelemetryWorkerHandle {
 		TelemetryWorkerHandle {
 			message_sender: self.message_sender.clone(),
@@ -360,14 +392,17 @@ impl TelemetryWorker {
 
 /// Handle to the [`TelemetryWorker`] thats allows initializing the telemetry for a Substrate node.
 #[derive(Debug, Clone)]
+#[cfg(feature = "std")]
 pub struct TelemetryWorkerHandle {
 	message_sender: mpsc::Sender<TelemetryMessage>,
 	register_sender: TracingUnboundedSender<Register>,
 	id_counter: Arc<atomic::AtomicU64>,
 }
 
+#[cfg(feature = "std")]
 impl TelemetryWorkerHandle {
 	/// Instantiate a new [`Telemetry`] object.
+#[cfg(feature = "std")]
 	pub fn new_telemetry(&mut self, endpoints: TelemetryEndpoints) -> Telemetry {
 		let addresses = endpoints.0.iter().map(|(addr, _)| addr.clone()).collect();
 
@@ -386,6 +421,7 @@ impl TelemetryWorkerHandle {
 
 /// A telemetry instance that can be used to send telemetry messages.
 #[derive(Debug)]
+#[cfg(feature = "std")]
 pub struct Telemetry {
 	message_sender: mpsc::Sender<TelemetryMessage>,
 	register_sender: TracingUnboundedSender<Register>,
@@ -394,6 +430,7 @@ pub struct Telemetry {
 	endpoints: Option<TelemetryEndpoints>,
 }
 
+#[cfg(feature = "std")]
 impl Telemetry {
 	/// Initialize the telemetry with the endpoints provided in argument for the current substrate
 	/// node.
@@ -405,6 +442,7 @@ impl Telemetry {
 	///
 	/// The `connection_message` argument is a JSON object that is sent every time the connection
 	/// (re-)establishes.
+#[cfg(feature = "std")]
 	pub fn start_telemetry(&mut self, connection_message: ConnectionMessage) -> Result<()> {
 		let endpoints = self.endpoints.take().ok_or(Error::TelemetryAlreadyInitialized)?;
 
@@ -414,6 +452,7 @@ impl Telemetry {
 	}
 
 	/// Make a new clonable handle to this [`Telemetry`]. This is used for reporting telemetries.
+#[cfg(feature = "std")]
 	pub fn handle(&self) -> TelemetryHandle {
 		TelemetryHandle {
 			message_sender: Arc::new(Mutex::new(self.message_sender.clone())),
@@ -427,14 +466,17 @@ impl Telemetry {
 ///
 /// Used to report telemetry messages.
 #[derive(Debug, Clone)]
+#[cfg(feature = "std")]
 pub struct TelemetryHandle {
 	message_sender: Arc<Mutex<mpsc::Sender<TelemetryMessage>>>,
 	id: Id,
 	connection_notifier: TelemetryConnectionNotifier,
 }
 
+#[cfg(feature = "std")]
 impl TelemetryHandle {
 	/// Send telemetry messages.
+#[cfg(feature = "std")]
 	pub fn send_telemetry(&self, verbosity: VerbosityLevel, payload: TelemetryPayload) {
 		match self.message_sender.lock().try_send((self.id, verbosity, payload)) {
 			Ok(()) => {},
@@ -453,6 +495,7 @@ impl TelemetryHandle {
 	///
 	/// This function will return an error if the telemetry has already been started by
 	/// [`Telemetry::start_telemetry`].
+#[cfg(feature = "std")]
 	pub fn on_connect_stream(&self) -> ConnectionNotifierReceiver {
 		self.connection_notifier.on_connect_stream()
 	}
@@ -461,12 +504,15 @@ impl TelemetryHandle {
 /// Used to create a stream of events with only one event: when a telemetry connection
 /// (re-)establishes.
 #[derive(Clone, Debug)]
+#[cfg(feature = "std")]
 pub struct TelemetryConnectionNotifier {
 	register_sender: TracingUnboundedSender<Register>,
 	addresses: Vec<Multiaddr>,
 }
 
+#[cfg(feature = "std")]
 impl TelemetryConnectionNotifier {
+#[cfg(feature = "std")]
 	fn on_connect_stream(&self) -> ConnectionNotifierReceiver {
 		let (message_sender, message_receiver) = connection_notifier_channel();
 		if let Err(err) = self.register_sender.unbounded_send(Register::Notifier {
@@ -485,6 +531,7 @@ impl TelemetryConnectionNotifier {
 }
 
 #[derive(Debug)]
+#[cfg(feature = "std")]
 enum Register {
 	Telemetry { id: Id, endpoints: TelemetryEndpoints, connection_message: ConnectionMessage },
 	Notifier { addresses: Vec<Multiaddr>, connection_notifier: ConnectionNotifierSender },
@@ -514,6 +561,7 @@ enum Register {
 /// );
 /// ```
 #[macro_export(local_inner_macros)]
+#[cfg(feature = "std")]
 macro_rules! telemetry {
 	( $telemetry:expr; $verbosity:expr; $msg:expr; $( $t:tt )* ) => {{
 		if let Some(telemetry) = $telemetry.as_ref() {
@@ -537,6 +585,7 @@ macro_rules! telemetry {
 
 #[macro_export(local_inner_macros)]
 #[doc(hidden)]
+#[cfg(feature = "std")]
 macro_rules! format_fields_to_json {
 	( $k:literal => $v:expr $(,)? $(, $($t:tt)+ )? ) => {{
 		$crate::serde_json::to_value(&$v)

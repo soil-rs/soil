@@ -19,18 +19,29 @@
 //! Transaction pool client facing API.
 #![warn(missing_docs)]
 
+#![cfg_attr(not(feature = "std"), no_std)]
+
+#[cfg(feature = "std")]
 pub mod error;
 
+#[cfg(feature = "std")]
 use async_trait::async_trait;
+#[cfg(feature = "std")]
 use codec::Codec;
+#[cfg(feature = "std")]
 use futures::Stream;
+#[cfg(feature = "std")]
 use serde::{de::DeserializeOwned, Deserialize, Serialize};
+#[cfg(feature = "std")]
 use soil_core::offchain::TransactionPoolExt;
+#[cfg(feature = "std")]
 use soil_runtime::traits::{Block as BlockT, Member};
 use std::{collections::HashMap, hash::Hash, marker::PhantomData, pin::Pin, sync::Arc};
 
+#[cfg(feature = "std")]
 const LOG_TARGET: &str = "txpool::api";
 
+#[cfg(feature = "std")]
 pub use soil_runtime::transaction_validity::{
 	TransactionLongevity, TransactionPriority, TransactionSource, TransactionTag,
 	TransactionValidityError,
@@ -38,6 +49,7 @@ pub use soil_runtime::transaction_validity::{
 
 /// Transaction pool status.
 #[derive(Debug, Clone)]
+#[cfg(feature = "std")]
 pub struct PoolStatus {
 	/// Number of transactions in the ready queue.
 	pub ready: usize,
@@ -49,8 +61,10 @@ pub struct PoolStatus {
 	pub future_bytes: usize,
 }
 
+#[cfg(feature = "std")]
 impl PoolStatus {
 	/// Returns true if there are no transactions in the pool.
+#[cfg(feature = "std")]
 	pub fn is_empty(&self) -> bool {
 		self.ready == 0 && self.future == 0
 	}
@@ -129,6 +143,7 @@ impl PoolStatus {
 /// See [`TransactionStatus::is_retriable`] for more details.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
+#[cfg(feature = "std")]
 pub enum TransactionStatus<Hash, BlockHash> {
 	/// Transaction is part of the future queue.
 	Future,
@@ -157,8 +172,10 @@ pub enum TransactionStatus<Hash, BlockHash> {
 	Invalid,
 }
 
+#[cfg(feature = "std")]
 impl<Hash, BlockHash> TransactionStatus<Hash, BlockHash> {
 	/// Returns true if this is the last event emitted by [`TransactionStatusStream`].
+#[cfg(feature = "std")]
 	pub fn is_final(&self) -> bool {
 		// The state must be kept in sync with `crate::graph::Sender`.
 		match self {
@@ -175,6 +192,7 @@ impl<Hash, BlockHash> TransactionStatus<Hash, BlockHash> {
 	///
 	/// For example, `TransactionStatus::Dropped` is retriable, because the transaction
 	/// may enter the pool if there is space for it in the future.
+#[cfg(feature = "std")]
 	pub fn is_retriable(&self) -> bool {
 		match self {
 			// The number of finality watchers has been reached.
@@ -190,67 +208,91 @@ impl<Hash, BlockHash> TransactionStatus<Hash, BlockHash> {
 }
 
 /// The stream of transaction events.
+#[cfg(feature = "std")]
 pub type TransactionStatusStream<Hash, BlockHash> =
 	dyn Stream<Item = TransactionStatus<Hash, BlockHash>> + Send;
 
 /// The import notification event stream.
+#[cfg(feature = "std")]
 pub type ImportNotificationStream<H> = futures::channel::mpsc::Receiver<H>;
 
 /// Transaction hash type for a pool.
+#[cfg(feature = "std")]
 pub type TxHash<P> = <P as TransactionPool>::Hash;
 /// Block hash type for a pool.
+#[cfg(feature = "std")]
 pub type BlockHash<P> = <<P as TransactionPool>::Block as BlockT>::Hash;
 /// Transaction type for a pool.
+#[cfg(feature = "std")]
 pub type TransactionFor<P> = <<P as TransactionPool>::Block as BlockT>::Extrinsic;
 /// Type of transactions event stream for a pool.
+#[cfg(feature = "std")]
 pub type TransactionStatusStreamFor<P> = TransactionStatusStream<TxHash<P>, BlockHash<P>>;
 /// Transaction type for a local pool.
+#[cfg(feature = "std")]
 pub type LocalTransactionFor<P> = <<P as LocalTransactionPool>::Block as BlockT>::Extrinsic;
 /// Transaction's index within the block in which it was included.
+#[cfg(feature = "std")]
 pub type TxIndex = usize;
 /// Map containing validity errors associated with transaction hashes. Used to report invalid
 /// transactions to the pool.
+#[cfg(feature = "std")]
 pub type TxInvalidityReportMap<H> = indexmap::IndexMap<H, Option<TransactionValidityError>>;
 
 /// In-pool transaction interface.
 ///
 /// The pool is container of transactions that are implementing this trait.
 /// See `soil_runtime::ValidTransaction` for details about every field.
+#[cfg(feature = "std")]
 pub trait InPoolTransaction {
 	/// Transaction type.
+#[cfg(feature = "std")]
 	type Transaction;
 	/// Transaction hash type.
+#[cfg(feature = "std")]
 	type Hash;
 
 	/// Get the reference to the transaction data.
+#[cfg(feature = "std")]
 	fn data(&self) -> &Self::Transaction;
 	/// Get hash of the transaction.
+#[cfg(feature = "std")]
 	fn hash(&self) -> &Self::Hash;
 	/// Get priority of the transaction.
+#[cfg(feature = "std")]
 	fn priority(&self) -> &TransactionPriority;
 	/// Get longevity of the transaction.
+#[cfg(feature = "std")]
 	fn longevity(&self) -> &TransactionLongevity;
 	/// Get transaction dependencies.
+#[cfg(feature = "std")]
 	fn requires(&self) -> &[TransactionTag];
 	/// Get tags that transaction provides.
+#[cfg(feature = "std")]
 	fn provides(&self) -> &[TransactionTag];
 	/// Return a flag indicating if the transaction should be propagated to other peers.
+#[cfg(feature = "std")]
 	fn is_propagable(&self) -> bool;
 }
 
 /// Transaction pool interface.
 #[async_trait]
+#[cfg(feature = "std")]
 pub trait TransactionPool: Send + Sync {
 	/// Block type.
+#[cfg(feature = "std")]
 	type Block: BlockT;
 	/// Transaction hash type.
+#[cfg(feature = "std")]
 	type Hash: Hash + Eq + Member + Serialize + DeserializeOwned + Codec;
 	/// In-pool transaction type.
+#[cfg(feature = "std")]
 	type InPoolTransaction: InPoolTransaction<
 		Transaction = Arc<TransactionFor<Self>>,
 		Hash = TxHash<Self>,
 	>;
 	/// Error type.
+#[cfg(feature = "std")]
 	type Error: From<crate::error::Error> + crate::error::IntoPoolError;
 
 	// *** RPC
@@ -291,6 +333,7 @@ pub trait TransactionPool: Send + Sync {
 	) -> Box<dyn ReadyTransactions<Item = Arc<Self::InPoolTransaction>> + Send>;
 
 	/// Get an iterator for ready transactions ordered by priority.
+#[cfg(feature = "std")]
 	fn ready(&self) -> Box<dyn ReadyTransactions<Item = Arc<Self::InPoolTransaction>> + Send>;
 
 	// *** Block production
@@ -319,23 +362,29 @@ pub trait TransactionPool: Send + Sync {
 
 	// *** logging
 	/// Get futures transaction list.
+#[cfg(feature = "std")]
 	fn futures(&self) -> Vec<Self::InPoolTransaction>;
 
 	/// Returns pool status.
+#[cfg(feature = "std")]
 	fn status(&self) -> PoolStatus;
 
 	// *** logging / RPC / networking
 	/// Return an event stream of transactions imported to the pool.
+#[cfg(feature = "std")]
 	fn import_notification_stream(&self) -> ImportNotificationStream<TxHash<Self>>;
 
 	// *** networking
 	/// Notify the pool about transactions broadcast.
+#[cfg(feature = "std")]
 	fn on_broadcasted(&self, propagations: HashMap<TxHash<Self>, Vec<String>>);
 
 	/// Returns transaction hash
+#[cfg(feature = "std")]
 	fn hash_of(&self, xt: &TransactionFor<Self>) -> TxHash<Self>;
 
 	/// Return specific ready transaction by hash, if there is one.
+#[cfg(feature = "std")]
 	fn ready_transaction(&self, hash: &TxHash<Self>) -> Option<Arc<Self::InPoolTransaction>>;
 
 	/// Asynchronously returns a set of ready transaction at given block within given timeout.
@@ -357,21 +406,26 @@ pub trait TransactionPool: Send + Sync {
 /// The implementation is then allowed, for performance reasons, to change the elements
 /// returned next, by e.g.  skipping elements that are known to depend on the reported
 /// transaction, which yields them invalid as well.
+#[cfg(feature = "std")]
 pub trait ReadyTransactions: Iterator {
 	/// Report given transaction as invalid.
 	///
 	/// This might affect subsequent elements returned by the iterator, so dependent transactions
 	/// are skipped for performance reasons.
+#[cfg(feature = "std")]
 	fn report_invalid(&mut self, _tx: &Self::Item);
 }
 
 /// A no-op implementation for an empty iterator.
+#[cfg(feature = "std")]
 impl<T> ReadyTransactions for std::iter::Empty<T> {
+#[cfg(feature = "std")]
 	fn report_invalid(&mut self, _tx: &T) {}
 }
 
 /// Events that the transaction pool listens for.
 #[derive(Debug)]
+#[cfg(feature = "std")]
 pub enum ChainEvent<B: BlockT> {
 	/// New best block have been added to the chain.
 	NewBestBlock {
@@ -391,8 +445,10 @@ pub enum ChainEvent<B: BlockT> {
 	},
 }
 
+#[cfg(feature = "std")]
 impl<B: BlockT> ChainEvent<B> {
 	/// Returns the block hash associated to the event.
+#[cfg(feature = "std")]
 	pub fn hash(&self) -> B::Hash {
 		match self {
 			Self::NewBestBlock { hash, .. } | Self::Finalized { hash, .. } => *hash,
@@ -400,6 +456,7 @@ impl<B: BlockT> ChainEvent<B> {
 	}
 
 	/// Is `self == Self::Finalized`?
+#[cfg(feature = "std")]
 	pub fn is_finalized(&self) -> bool {
 		matches!(self, Self::Finalized { .. })
 	}
@@ -407,6 +464,7 @@ impl<B: BlockT> ChainEvent<B> {
 
 /// Trait for transaction pool maintenance.
 #[async_trait]
+#[cfg(feature = "std")]
 pub trait MaintainedTransactionPool: TransactionPool {
 	/// Perform maintenance
 	async fn maintain(&self, event: ChainEvent<Self::Block>);
@@ -414,12 +472,16 @@ pub trait MaintainedTransactionPool: TransactionPool {
 
 /// Transaction pool interface for submitting local transactions that exposes a
 /// blocking interface for submission.
+#[cfg(feature = "std")]
 pub trait LocalTransactionPool: Send + Sync {
 	/// Block type.
+#[cfg(feature = "std")]
 	type Block: BlockT;
 	/// Transaction hash type.
+#[cfg(feature = "std")]
 	type Hash: Hash + Eq + Member + Serialize;
 	/// Error type.
+#[cfg(feature = "std")]
 	type Error: From<crate::error::Error> + crate::error::IntoPoolError;
 
 	/// Submits the given local unverified transaction to the pool blocking the
@@ -427,6 +489,7 @@ pub trait LocalTransactionPool: Send + Sync {
 	/// NOTE: It MUST NOT be used for transactions that originate from the
 	/// network or RPC, since the validation is performed with
 	/// `TransactionSource::Local`.
+#[cfg(feature = "std")]
 	fn submit_local(
 		&self,
 		at: <Self::Block as BlockT>::Hash,
@@ -434,13 +497,18 @@ pub trait LocalTransactionPool: Send + Sync {
 	) -> Result<Self::Hash, Self::Error>;
 }
 
+#[cfg(feature = "std")]
 impl<T: LocalTransactionPool> LocalTransactionPool for Arc<T> {
+#[cfg(feature = "std")]
 	type Block = T::Block;
 
+#[cfg(feature = "std")]
 	type Hash = T::Hash;
 
+#[cfg(feature = "std")]
 	type Error = T::Error;
 
+#[cfg(feature = "std")]
 	fn submit_local(
 		&self,
 		at: <Self::Block as BlockT>::Hash,
@@ -455,14 +523,18 @@ impl<T: LocalTransactionPool> LocalTransactionPool for Arc<T> {
 /// We want to use a transaction pool in [`OffchainTransactionPoolFactory`] in a `Arc` without
 /// bleeding the associated types besides the `Block`. Thus, this abstraction here exists to achieve
 /// the wrapping in a `Arc`.
+#[cfg(feature = "std")]
 trait OffchainSubmitTransaction<Block: BlockT>: Send + Sync {
 	/// Submit transaction.
 	///
 	/// The transaction will end up in the pool and be propagated to others.
+#[cfg(feature = "std")]
 	fn submit_at(&self, at: Block::Hash, extrinsic: Block::Extrinsic) -> Result<(), ()>;
 }
 
+#[cfg(feature = "std")]
 impl<TPool: LocalTransactionPool> OffchainSubmitTransaction<TPool::Block> for TPool {
+#[cfg(feature = "std")]
 	fn submit_at(
 		&self,
 		at: <TPool::Block as BlockT>::Hash,
@@ -491,12 +563,15 @@ impl<TPool: LocalTransactionPool> OffchainSubmitTransaction<TPool::Block> for TP
 /// This provides an easy way for creating [`TransactionPoolExt`] extensions for registering them in
 /// the wasm execution environment to send transactions from an offchain call to the  runtime.
 #[derive(Clone)]
+#[cfg(feature = "std")]
 pub struct OffchainTransactionPoolFactory<Block: BlockT> {
 	pool: Arc<dyn OffchainSubmitTransaction<Block>>,
 }
 
+#[cfg(feature = "std")]
 impl<Block: BlockT> OffchainTransactionPoolFactory<Block> {
 	/// Creates a new instance using the given `tx_pool`.
+#[cfg(feature = "std")]
 	pub fn new<T: LocalTransactionPool<Block = Block> + 'static>(tx_pool: T) -> Self {
 		Self { pool: Arc::new(tx_pool) as Arc<_> }
 	}
@@ -505,18 +580,22 @@ impl<Block: BlockT> OffchainTransactionPoolFactory<Block> {
 	///
 	/// Transactions that are being submitted by this instance will be submitted with `block_hash`
 	/// as context for validation.
+#[cfg(feature = "std")]
 	pub fn offchain_transaction_pool(&self, block_hash: Block::Hash) -> TransactionPoolExt {
 		TransactionPoolExt::new(OffchainTransactionPool { pool: self.pool.clone(), block_hash })
 	}
 }
 
 /// Wraps a `pool` and `block_hash` to implement [`soil_core::offchain::TransactionPool`].
+#[cfg(feature = "std")]
 struct OffchainTransactionPool<Block: BlockT> {
 	block_hash: Block::Hash,
 	pool: Arc<dyn OffchainSubmitTransaction<Block>>,
 }
 
+#[cfg(feature = "std")]
 impl<Block: BlockT> soil_core::offchain::TransactionPool for OffchainTransactionPool<Block> {
+#[cfg(feature = "std")]
 	fn submit_transaction(&mut self, extrinsic: Vec<u8>) -> Result<(), ()> {
 		let extrinsic = match codec::Decode::decode(&mut &extrinsic[..]) {
 			Ok(t) => t,
@@ -535,9 +614,12 @@ impl<Block: BlockT> soil_core::offchain::TransactionPool for OffchainTransaction
 }
 
 /// Wrapper functions to keep the API backwards compatible over the wire for the old RPC spec.
+#[cfg(feature = "std")]
 mod v1_compatible {
+#[cfg(feature = "std")]
 	use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
+#[cfg(feature = "std")]
 	pub fn serialize<S, H>(data: &(H, usize), serializer: S) -> Result<S::Ok, S::Error>
 	where
 		S: Serializer,
@@ -547,6 +629,7 @@ mod v1_compatible {
 		serde::Serialize::serialize(&hash, serializer)
 	}
 
+#[cfg(feature = "std")]
 	pub fn deserialize<'de, D, H>(deserializer: D) -> Result<(H, usize), D::Error>
 	where
 		D: Deserializer<'de>,
@@ -560,31 +643,42 @@ mod v1_compatible {
 /// Transaction pool that rejects all submitted transactions.
 ///
 /// Could be used for example in tests.
+#[cfg(feature = "std")]
 pub struct RejectAllTxPool<Block>(PhantomData<Block>);
 
+#[cfg(feature = "std")]
 impl<Block> Default for RejectAllTxPool<Block> {
+#[cfg(feature = "std")]
 	fn default() -> Self {
 		Self(PhantomData)
 	}
 }
 
+#[cfg(feature = "std")]
 impl<Block: BlockT> LocalTransactionPool for RejectAllTxPool<Block> {
+#[cfg(feature = "std")]
 	type Block = Block;
 
+#[cfg(feature = "std")]
 	type Hash = Block::Hash;
 
+#[cfg(feature = "std")]
 	type Error = error::Error;
 
+#[cfg(feature = "std")]
 	fn submit_local(&self, _: Block::Hash, _: Block::Extrinsic) -> Result<Self::Hash, Self::Error> {
 		Err(error::Error::ImmediatelyDropped)
 	}
 }
 
 #[cfg(test)]
+#[cfg(feature = "std")]
 mod tests {
+#[cfg(feature = "std")]
 	use super::*;
 
 	#[test]
+#[cfg(feature = "std")]
 	fn tx_status_compatibility() {
 		let event: TransactionStatus<u8, u8> = TransactionStatus::InBlock((1, 2));
 		let ser = serde_json::to_string(&event).unwrap();

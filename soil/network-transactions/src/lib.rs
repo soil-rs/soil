@@ -26,31 +26,47 @@
 //! - Use [`TransactionsHandlerPrototype::build`] then [`TransactionsHandler::run`] to obtain a
 //! `Future` that processes transactions.
 
+#![cfg_attr(not(feature = "std"), no_std)]
+
+#[cfg(feature = "std")]
 use crate::config::*;
 
+#[cfg(feature = "std")]
 use codec::{Decode, Encode};
+#[cfg(feature = "std")]
 use futures::{prelude::*, stream::FuturesUnordered};
+#[cfg(feature = "std")]
 use log::{debug, trace, warn};
 
+#[cfg(feature = "std")]
 use prometheus_endpoint::{register, Counter, PrometheusError, Registry, U64};
+#[cfg(feature = "std")]
 use soil_network::{
 	config::{NonReservedPeerMode, ProtocolId, SetConfig},
 	error, multiaddr,
 	peer_store::PeerStoreProvider,
 	service::{
+#[cfg(feature = "std")]
 		traits::{NotificationEvent, NotificationService, ValidationResult},
 		NotificationMetrics,
 	},
+#[cfg(feature = "std")]
 	types::ProtocolName,
 	utils::{interval, LruHashSet},
 	NetworkBackend, NetworkEventStream, NetworkPeers,
 };
+#[cfg(feature = "std")]
 use soil_network_common::{role::ObservedRole, ExHashT};
+#[cfg(feature = "std")]
 use soil_network_sync::{SyncEvent, SyncEventStream};
+#[cfg(feature = "std")]
 use soil_network_types::PeerId;
+#[cfg(feature = "std")]
 use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
+#[cfg(feature = "std")]
 use soil_runtime::traits::Block as BlockT;
 
+#[cfg(feature = "std")]
 use std::{
 	collections::{hash_map::Entry, HashMap},
 	iter,
@@ -60,34 +76,46 @@ use std::{
 	task::Poll,
 };
 
+#[cfg(feature = "std")]
 pub mod config;
 
 /// A set of transactions.
+#[cfg(feature = "std")]
 pub type Transactions<E> = Vec<E>;
 
 /// Logging target for the file.
+#[cfg(feature = "std")]
 const LOG_TARGET: &str = "sync";
 
+#[cfg(feature = "std")]
 mod rep {
+#[cfg(feature = "std")]
 	use soil_network::ReputationChange as Rep;
 	/// Reputation change when a peer sends us any transaction.
 	///
 	/// This forces node to verify it, thus the negative value here. Once transaction is verified,
 	/// reputation change should be refunded with `ANY_TRANSACTION_REFUND`
+#[cfg(feature = "std")]
 	pub const ANY_TRANSACTION: Rep = Rep::new(-(1 << 4), "Any transaction");
 	/// Reputation change when a peer sends us any transaction that is not invalid.
+#[cfg(feature = "std")]
 	pub const ANY_TRANSACTION_REFUND: Rep = Rep::new(1 << 4, "Any transaction (refund)");
 	/// Reputation change when a peer sends us an transaction that we didn't know about.
+#[cfg(feature = "std")]
 	pub const GOOD_TRANSACTION: Rep = Rep::new(1 << 7, "Good transaction");
 	/// Reputation change when a peer sends us a bad transaction.
+#[cfg(feature = "std")]
 	pub const BAD_TRANSACTION: Rep = Rep::new(-(1 << 12), "Bad transaction");
 }
 
+#[cfg(feature = "std")]
 struct Metrics {
 	propagated_transactions: Counter<U64>,
 }
 
+#[cfg(feature = "std")]
 impl Metrics {
+#[cfg(feature = "std")]
 	fn register(r: &Registry) -> Result<Self, PrometheusError> {
 		Ok(Self {
 			propagated_transactions: register(
@@ -101,16 +129,21 @@ impl Metrics {
 	}
 }
 
+#[cfg(feature = "std")]
 struct PendingTransaction<H> {
 	validation: TransactionImportFuture,
 	tx_hash: H,
 }
 
+#[cfg(feature = "std")]
 impl<H> Unpin for PendingTransaction<H> {}
 
+#[cfg(feature = "std")]
 impl<H: ExHashT> Future for PendingTransaction<H> {
+#[cfg(feature = "std")]
 	type Output = (H, TransactionImport);
 
+#[cfg(feature = "std")]
 	fn poll(mut self: Pin<&mut Self>, cx: &mut std::task::Context<'_>) -> Poll<Self::Output> {
 		if let Poll::Ready(import_result) = self.validation.poll_unpin(cx) {
 			return Poll::Ready((self.tx_hash.clone(), import_result));
@@ -121,6 +154,7 @@ impl<H: ExHashT> Future for PendingTransaction<H> {
 }
 
 /// Prototype for a [`TransactionsHandler`].
+#[cfg(feature = "std")]
 pub struct TransactionsHandlerPrototype {
 	/// Name of the transaction protocol.
 	protocol_name: ProtocolName,
@@ -129,8 +163,10 @@ pub struct TransactionsHandlerPrototype {
 	notification_service: Box<dyn NotificationService>,
 }
 
+#[cfg(feature = "std")]
 impl TransactionsHandlerPrototype {
 	/// Create a new instance.
+#[cfg(feature = "std")]
 	pub fn new<
 		Hash: AsRef<[u8]>,
 		Block: BlockT,
@@ -172,6 +208,7 @@ impl TransactionsHandlerPrototype {
 	///
 	/// Important: the transactions handler is initially disabled and doesn't gossip transactions.
 	/// Gossiping is enabled when major syncing is done.
+#[cfg(feature = "std")]
 	pub fn build<
 		B: BlockT + 'static,
 		H: ExHashT,
@@ -215,15 +252,18 @@ impl TransactionsHandlerPrototype {
 }
 
 /// Controls the behaviour of a [`TransactionsHandler`] it is connected to.
+#[cfg(feature = "std")]
 pub struct TransactionsHandlerController<H: ExHashT> {
 	to_handler: TracingUnboundedSender<ToHandler<H>>,
 }
 
+#[cfg(feature = "std")]
 impl<H: ExHashT> TransactionsHandlerController<H> {
 	/// You may call this when new transactions are imported by the transaction pool.
 	///
 	/// All transactions will be fetched from the `TransactionPool` that was passed at
 	/// initialization as part of the configuration and propagated to peers.
+#[cfg(feature = "std")]
 	pub fn propagate_transactions(&self) {
 		let _ = self.to_handler.unbounded_send(ToHandler::PropagateTransactions);
 	}
@@ -232,17 +272,20 @@ impl<H: ExHashT> TransactionsHandlerController<H> {
 	///
 	/// This transaction will be fetched from the `TransactionPool` that was passed at
 	/// initialization as part of the configuration and propagated to peers.
+#[cfg(feature = "std")]
 	pub fn propagate_transaction(&self, hash: H) {
 		let _ = self.to_handler.unbounded_send(ToHandler::PropagateTransaction(hash));
 	}
 }
 
+#[cfg(feature = "std")]
 enum ToHandler<H: ExHashT> {
 	PropagateTransactions,
 	PropagateTransaction(H),
 }
 
 /// Handler for transactions. Call [`TransactionsHandler::run`] to start the processing.
+#[cfg(feature = "std")]
 pub struct TransactionsHandler<
 	B: BlockT + 'static,
 	H: ExHashT,
@@ -277,12 +320,14 @@ pub struct TransactionsHandler<
 
 /// Peer information
 #[derive(Debug)]
+#[cfg(feature = "std")]
 struct Peer<H: ExHashT> {
 	/// Holds a set of transactions known to this peer.
 	known_transactions: LruHashSet<H>,
 	role: ObservedRole,
 }
 
+#[cfg(feature = "std")]
 impl<B, H, N, S> TransactionsHandler<B, H, N, S>
 where
 	B: BlockT + 'static,
@@ -331,6 +376,7 @@ where
 		}
 	}
 
+#[cfg(feature = "std")]
 	fn handle_notification_event(&mut self, event: NotificationEvent) {
 		match event {
 			NotificationEvent::ValidateInboundSubstream { peer, handshake, result_tx, .. } => {
@@ -375,6 +421,7 @@ where
 		}
 	}
 
+#[cfg(feature = "std")]
 	fn handle_sync_event(&mut self, event: SyncEvent) {
 		match event {
 			SyncEvent::PeerConnected(remote) => {
@@ -401,6 +448,7 @@ where
 	}
 
 	/// Called when peer sends us new transactions
+#[cfg(feature = "std")]
 	fn on_transactions(&mut self, who: PeerId, transactions: Transactions<B::Extrinsic>) {
 		// Accept transactions only when node is not major syncing
 		if self.sync.is_major_syncing() {
@@ -441,6 +489,7 @@ where
 		}
 	}
 
+#[cfg(feature = "std")]
 	fn on_handle_transaction_import(&mut self, who: PeerId, import: TransactionImport) {
 		match import {
 			TransactionImport::KnownGood => {
@@ -453,6 +502,7 @@ where
 	}
 
 	/// Propagate one transaction.
+#[cfg(feature = "std")]
 	pub fn propagate_transaction(&mut self, hash: &H) {
 		// Accept transactions only when node is not major syncing
 		if self.sync.is_major_syncing() {
@@ -468,6 +518,7 @@ where
 		}
 	}
 
+#[cfg(feature = "std")]
 	fn do_propagate_transactions(
 		&mut self,
 		transactions: &[(H, Arc<B::Extrinsic>)],
@@ -519,6 +570,7 @@ where
 	}
 
 	/// Call when we must propagate ready transactions to peers.
+#[cfg(feature = "std")]
 	fn propagate_transactions(&mut self) {
 		// Accept transactions only when node is not major syncing
 		if self.sync.is_major_syncing() {

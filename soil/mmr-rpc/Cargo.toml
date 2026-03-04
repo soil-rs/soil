@@ -24,5 +24,9 @@ soil-core = { workspace = true, default-features = true }
 soil-mmr-primitives = { workspace = true, default-features = true }
 soil-runtime = { workspace = true, default-features = true }
 
+[features]
+default = ["std"]
+std = []
+
 [dev-dependencies]
 serde_json = { workspace = true, default-features = true }

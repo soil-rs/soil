@@ -40,25 +40,36 @@
 
 #![deny(unused_crate_dependencies)]
 
+#![cfg_attr(not(feature = "std"), no_std)]
+
+#[cfg(feature = "std")]
 use std::sync::Arc;
 
+#[cfg(feature = "std")]
 use jsonrpsee::{
 	core::async_trait,
 	proc_macros::rpc,
+#[cfg(feature = "std")]
 	types::{ErrorObject, ErrorObjectOwned},
 };
 
+#[cfg(feature = "std")]
 use soil_client_api::StorageData;
+#[cfg(feature = "std")]
 use sc_consensus_babe::{BabeWorkerHandle, Error as BabeError};
+#[cfg(feature = "std")]
 use soil_blockchain::HeaderBackend;
+#[cfg(feature = "std")]
 use soil_runtime::traits::{Block as BlockT, NumberFor};
 
+#[cfg(feature = "std")]
 type SharedAuthoritySet<TBl> =
 	sc_consensus_grandpa::SharedAuthoritySet<<TBl as BlockT>::Hash, NumberFor<TBl>>;
 
 /// Error type used by this crate.
 #[derive(Debug, thiserror::Error)]
 #[allow(missing_docs)]
+#[cfg(feature = "std")]
 pub enum Error<Block: BlockT> {
 	#[error(transparent)]
 	Blockchain(#[from] soil_blockchain::Error),
@@ -79,7 +90,9 @@ pub enum Error<Block: BlockT> {
 	LightSyncStateExtensionNotFound,
 }
 
+#[cfg(feature = "std")]
 impl<Block: BlockT> From<Error<Block>> for ErrorObjectOwned {
+#[cfg(feature = "std")]
 	fn from(error: Error<Block>) -> Self {
 		let message = match error {
 			Error::JsonRpc(s) => s,
@@ -90,6 +103,7 @@ impl<Block: BlockT> From<Error<Block>> for ErrorObjectOwned {
 }
 
 /// Serialize the given `val` by encoding it with SCALE codec and serializing it as hex.
+#[cfg(feature = "std")]
 fn serialize_encoded<S: serde::Serializer, T: codec::Encode>(
 	val: &T,
 	s: S,
@@ -102,12 +116,14 @@ fn serialize_encoded<S: serde::Serializer, T: codec::Encode>(
 ///
 /// This represents a JSON serialized [`LightSyncState`]. It is required to be added to the
 /// chain-spec as an extension.
+#[cfg(feature = "std")]
 pub type LightSyncStateExtension = Option<serde_json::Value>;
 
 /// Hardcoded information that allows light clients to sync quickly.
 #[derive(serde::Serialize, Clone)]
 #[serde(rename_all = "camelCase")]
 #[serde(deny_unknown_fields)]
+#[cfg(feature = "std")]
 pub struct LightSyncState<Block: BlockT> {
 	/// The header of the best finalized block.
 	#[serde(serialize_with = "serialize_encoded")]
@@ -125,6 +141,7 @@ pub struct LightSyncState<Block: BlockT> {
 
 /// An api for sync state RPC calls.
 #[rpc(client, server)]
+#[cfg(feature = "std")]
 pub trait SyncStateApi<B: BlockT> {
 	/// Returns the JSON serialized chainspec running the node, with a sync state.
 	#[method(name = "sync_state_genSyncSpec")]
@@ -132,6 +149,7 @@ pub trait SyncStateApi<B: BlockT> {
 }
 
 /// An api for sync state RPC calls.
+#[cfg(feature = "std")]
 pub struct SyncState<Block: BlockT, Client> {
 	chain_spec: Box<dyn soil_chain_spec::ChainSpec>,
 	client: Arc<Client>,
@@ -139,12 +157,14 @@ pub struct SyncState<Block: BlockT, Client> {
 	babe_worker_handle: BabeWorkerHandle<Block>,
 }
 
+#[cfg(feature = "std")]
 impl<Block, Client> SyncState<Block, Client>
 where
 	Block: BlockT,
 	Client: HeaderBackend<Block> + soil_client_api::AuxStore + 'static,
 {
 	/// Create a new sync state RPC helper.
+#[cfg(feature = "std")]
 	pub fn new(
 		chain_spec: Box<dyn soil_chain_spec::ChainSpec>,
 		client: Arc<Client>,
@@ -187,6 +207,7 @@ where
 }
 
 #[async_trait]
+#[cfg(feature = "std")]
 impl<Block, Backend> SyncStateApiServer<Block> for SyncState<Block, Backend>
 where
 	Block: BlockT,

@@ -57,6 +57,7 @@ substrate-test-runtime-client = { workspace = true }
 tempfile = { workspace = true }
 
 [features]
+std = []
 default = []
 test-helpers = []
 runtime-benchmarks = [

@@ -30,3 +30,7 @@ soil-runtime = { workspace = true, default-features = true }
 soil-statement-store = { features = ["serde"], workspace = true, default-features = true }
 soil-version = { workspace = true, default-features = true }
 thiserror = { workspace = true }
+
+[features]
+default = ["std"]
+std = []

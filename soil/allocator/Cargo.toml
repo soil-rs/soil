@@ -21,3 +21,7 @@ log = { workspace = true, default-features = true }
 soil-core = { workspace = true, default-features = true }
 soil-wasm-interface = { workspace = true, default-features = true }
 thiserror = { workspace = true }
+
+[features]
+default = ["std"]
+std = []

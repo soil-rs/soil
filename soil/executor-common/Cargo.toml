@@ -25,4 +25,5 @@ thiserror = { workspace = true }
 wasm-instrument = { workspace = true, default-features = true }
 
 [features]
+std = []
 default = []

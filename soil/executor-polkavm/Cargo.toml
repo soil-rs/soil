@@ -21,3 +21,7 @@ polkavm = { workspace = true }
 
 soil-executor-common = { workspace = true, default-features = true }
 soil-wasm-interface = { workspace = true, default-features = true }
+
+[features]
+default = ["std"]
+std = []

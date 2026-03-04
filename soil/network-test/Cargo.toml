@@ -42,3 +42,7 @@ soil-tracing = { workspace = true, default-features = true }
 substrate-test-runtime = { workspace = true }
 substrate-test-runtime-client = { workspace = true }
 tokio = { workspace = true, default-features = true }
+
+[features]
+default = ["std"]
+std = []

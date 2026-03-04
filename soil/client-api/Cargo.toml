@@ -37,5 +37,9 @@ soil-state-machine = { workspace = true, default-features = true }
 soil-storage = { workspace = true, default-features = true }
 soil-trie = { workspace = true, default-features = true }
 
+[features]
+default = ["std"]
+std = []
+
 [dev-dependencies]
 substrate-test-runtime = { workspace = true }
