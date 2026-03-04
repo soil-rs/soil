@@ -26,7 +26,7 @@ use sc_client_api::{BlockchainEvents, UsageProvider};
 use sc_network::NetworkStatusProvider;
 use sc_network_sync::{SyncStatusProvider, SyncingService};
 use sp_blockchain::HeaderMetadata;
-use sp_runtime::traits::{Block as BlockT, Header};
+use soil_runtime::traits::{Block as BlockT, Header};
 use std::{
 	collections::VecDeque,
 	fmt::{Debug, Display},

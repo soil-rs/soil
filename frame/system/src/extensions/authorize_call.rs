@@ -24,7 +24,7 @@ use frame_support::{
 	traits::Authorize,
 	CloneNoBound, DebugNoBound, EqNoBound, PartialEqNoBound,
 };
-use sp_runtime::{
+use soil_runtime::{
 	traits::{
 		AsTransactionAuthorizedOrigin, Dispatchable, Implication, PostDispatchInfoOf,
 		TransactionExtension, ValidateResult,
@@ -120,7 +120,7 @@ mod tests {
 		derive_impl, dispatch::GetDispatchInfo, pallet_prelude::TransactionSource,
 		traits::OriginTrait,
 	};
-	use sp_runtime::{
+	use soil_runtime::{
 		testing::UintAuthorityId,
 		traits::{Applyable, Checkable, TransactionExtension as _, TxBaseImplication},
 		transaction_validity::{
@@ -197,9 +197,9 @@ mod tests {
 
 	pub type TransactionExtension = (frame_system::AuthorizeCall<Runtime>,);
 
-	pub type Header = sp_runtime::generic::Header<u32, sp_runtime::traits::BlakeTwo256>;
-	pub type Block = sp_runtime::generic::Block<Header, UncheckedExtrinsic>;
-	pub type UncheckedExtrinsic = sp_runtime::generic::UncheckedExtrinsic<
+	pub type Header = soil_runtime::generic::Header<u32, soil_runtime::traits::BlakeTwo256>;
+	pub type Block = soil_runtime::generic::Block<Header, UncheckedExtrinsic>;
+	pub type UncheckedExtrinsic = soil_runtime::generic::UncheckedExtrinsic<
 		u64,
 		RuntimeCall,
 		UintAuthorityId,
@@ -213,7 +213,7 @@ mod tests {
 
 	impl pallet1::Config for Runtime {}
 
-	pub fn new_test_ext() -> sp_io::TestExternalities {
+	pub fn new_test_ext() -> soil_io::TestExternalities {
 		let t = RuntimeGenesisConfig { ..Default::default() }.build_storage().unwrap();
 		t.into()
 	}

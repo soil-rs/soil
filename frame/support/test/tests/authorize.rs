@@ -21,7 +21,7 @@ use frame_support::{
 	dispatch::GetDispatchInfo,
 	pallet_prelude::{TransactionSource, Weight},
 };
-use sp_runtime::{
+use soil_runtime::{
 	testing::UintAuthorityId,
 	traits::{Applyable, Checkable},
 	transaction_validity::{
@@ -136,7 +136,7 @@ pub mod pallet1 {
 
 			let _ = valid;
 
-			Err(sp_runtime::DispatchErrorWithPostInfo {
+			Err(soil_runtime::DispatchErrorWithPostInfo {
 				post_info: Some(CALL_3_REFUND).into(),
 				error: DispatchError::Other("Call3 failed"),
 			})
@@ -274,9 +274,9 @@ impl pallet4::Config for Runtime {}
 
 pub type TransactionExtension = frame_system::AuthorizeCall<Runtime>;
 
-pub type Header = sp_runtime::generic::Header<u32, sp_runtime::traits::BlakeTwo256>;
-pub type Block = sp_runtime::generic::Block<Header, UncheckedExtrinsic>;
-pub type UncheckedExtrinsic = sp_runtime::generic::UncheckedExtrinsic<
+pub type Header = soil_runtime::generic::Header<u32, soil_runtime::traits::BlakeTwo256>;
+pub type Block = soil_runtime::generic::Block<Header, UncheckedExtrinsic>;
+pub type UncheckedExtrinsic = soil_runtime::generic::UncheckedExtrinsic<
 	u64,
 	RuntimeCall,
 	UintAuthorityId,
@@ -296,7 +296,7 @@ frame_support::construct_runtime!(
 	}
 );
 
-pub fn new_test_ext() -> sp_io::TestExternalities {
+pub fn new_test_ext() -> soil_io::TestExternalities {
 	let t = RuntimeGenesisConfig { ..Default::default() }.build_storage().unwrap();
 	t.into()
 }

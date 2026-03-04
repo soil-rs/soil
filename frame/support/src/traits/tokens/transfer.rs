@@ -21,7 +21,7 @@ use crate::pallet_prelude::{Decode, Encode};
 use core::fmt::Debug;
 use frame_support::traits::tokens::PaymentStatus;
 use scale_info::TypeInfo;
-use sp_runtime::codec::{FullCodec, MaxEncodedLen};
+use soil_runtime::codec::{FullCodec, MaxEncodedLen};
 
 /// Is intended to be implemented using a `fungible` impl, but can also be implemented with
 /// XCM/Asset and made generic over assets.

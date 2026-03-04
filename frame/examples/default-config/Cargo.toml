@@ -23,8 +23,8 @@ frame-system = { workspace = true }
 log = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 
-sp-io = { workspace = true }
-sp-runtime = { workspace = true }
+soil-io = { workspace = true }
+soil-runtime = { workspace = true }
 
 [features]
 default = ["std"]
@@ -34,11 +34,11 @@ std = [
 	"frame-system/std",
 	"log/std",
 	"scale-info/std",
-	"sp-io/std",
-	"sp-runtime/std",
+	"soil-io/std",
+	"soil-runtime/std",
 ]
 try-runtime = [
 	"frame-support/try-runtime",
 	"frame-system/try-runtime",
-	"sp-runtime/try-runtime",
+	"soil-runtime/try-runtime",
 ]

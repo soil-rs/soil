@@ -23,9 +23,9 @@ use core::{marker::PhantomData, mem, ops::Drop};
 use frame_support::CloneNoBound;
 use impl_trait_for_tuples::impl_for_tuples;
 use scale_info::TypeInfo;
-pub use sp_core::storage::TrackedStorageKey;
-use sp_core::Get;
-use sp_runtime::{
+pub use soil_core::storage::TrackedStorageKey;
+use soil_core::Get;
+use soil_runtime::{
 	traits::{Convert, Member},
 	Debug, DispatchError,
 };
@@ -67,7 +67,7 @@ pub trait StorageInstance {
 	/// NOTE: This hash must be `twox_128(pallet_prefix())`.
 	/// Should not impl this function by hand. Only use the default or macro generated impls.
 	fn pallet_prefix_hash() -> [u8; 16] {
-		sp_io::hashing::twox_128(Self::pallet_prefix().as_bytes())
+		soil_io::hashing::twox_128(Self::pallet_prefix().as_bytes())
 	}
 
 	/// Prefix given to a storage to isolate from other storages in the pallet.
@@ -77,7 +77,7 @@ pub trait StorageInstance {
 	///
 	/// NOTE: This hash must be `twox_128(STORAGE_PREFIX)`.
 	fn storage_prefix_hash() -> [u8; 16] {
-		sp_io::hashing::twox_128(Self::STORAGE_PREFIX.as_bytes())
+		soil_io::hashing::twox_128(Self::STORAGE_PREFIX.as_bytes())
 	}
 
 	/// Return the prefix hash of instance.
@@ -193,7 +193,7 @@ impl<Base, Slope, Balance> Convert<Footprint, Balance> for LinearStoragePrice<Ba
 where
 	Base: Get<Balance>,
 	Slope: Get<Balance>,
-	Balance: From<u64> + sp_runtime::Saturating,
+	Balance: From<u64> + soil_runtime::Saturating,
 {
 	fn convert(a: Footprint) -> Balance {
 		let s: Balance = (a.count.saturating_mul(a.size)).into();
@@ -206,7 +206,7 @@ pub struct ConstantStoragePrice<Price, Balance>(PhantomData<(Price, Balance)>);
 impl<Price, Balance> Convert<Footprint, Balance> for ConstantStoragePrice<Price, Balance>
 where
 	Price: Get<Balance>,
-	Balance: From<u64> + sp_runtime::Saturating,
+	Balance: From<u64> + soil_runtime::Saturating,
 {
 	fn convert(_: Footprint) -> Balance {
 		Price::get()
@@ -420,7 +420,7 @@ mod sealed {
 mod tests {
 	use super::*;
 	use crate::BoundedVec;
-	use sp_core::{ConstU32, ConstU64};
+	use soil_core::{ConstU32, ConstU64};
 
 	#[test]
 	fn incrementable_works() {

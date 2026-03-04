@@ -25,7 +25,7 @@ use frame_support::{
 	traits::{ConstU32, ConstU64},
 };
 use frame_system::EnsureSignedBy;
-use sp_runtime::{bounded_vec, BuildStorage};
+use soil_runtime::{bounded_vec, BuildStorage};
 
 type Block = frame_system::mocking::MockBlock<Test>;
 
@@ -99,7 +99,7 @@ impl Config for Test {
 	type MaximumMembers = ConstU32<10>;
 }
 
-pub fn new_test_ext() -> sp_io::TestExternalities {
+pub fn new_test_ext() -> soil_io::TestExternalities {
 	let mut t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	let mut balances = vec![];
 	for i in 1..31 {

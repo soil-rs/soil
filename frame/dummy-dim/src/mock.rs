@@ -17,8 +17,8 @@
 
 use frame_support::derive_impl;
 use frame_system::{offchain::CreateTransactionBase, pallet_prelude::ExtrinsicFor, EnsureRoot};
-use sp_core::{ConstU16, ConstU32, ConstU64, H256};
-use sp_runtime::{
+use soil_core::{ConstU16, ConstU32, ConstU64, H256};
+use soil_runtime::{
 	traits::{BlakeTwo256, IdentityLookup},
 	BuildStorage,
 };
@@ -112,7 +112,7 @@ impl TestExt {
 	}
 }
 
-pub fn new_test_ext() -> sp_io::TestExternalities {
+pub fn new_test_ext() -> soil_io::TestExternalities {
 	let c = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
-	sp_io::TestExternalities::from(c)
+	soil_io::TestExternalities::from(c)
 }

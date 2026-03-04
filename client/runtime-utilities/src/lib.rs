@@ -25,11 +25,11 @@
 use codec::{Decode, Encode};
 use error::{Error, Result};
 use sc_executor::WasmExecutor;
-use sp_core::{
+use soil_core::{
 	traits::{CallContext, CodeExecutor, FetchRuntimeCode, RuntimeCode},
 	OpaqueMetadata,
 };
-use sp_state_machine::BasicExternalities;
+use soil_state_machine::BasicExternalities;
 use soil_wasm_interface::HostFunctions;
 use std::borrow::Cow;
 

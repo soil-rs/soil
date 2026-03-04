@@ -26,8 +26,8 @@ pub(crate) const LOG_TARGET: &str = "tests::e2e-epm";
 use frame_support::{assert_err, assert_ok};
 use mock::*;
 use pallet_timestamp::Now;
-use sp_core::Get;
-use sp_runtime::Perbill;
+use soil_core::Get;
+use soil_runtime::Perbill;
 
 use crate::mock::RuntimeOrigin;
 

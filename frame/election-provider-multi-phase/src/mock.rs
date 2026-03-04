@@ -30,7 +30,7 @@ use frame_support::{
 };
 use multi_phase::unsigned::{IndexAssignmentOf, VoterOf};
 use parking_lot::RwLock;
-use sp_core::{
+use soil_core::{
 	offchain::{
 		testing::{PoolState, TestOffchainExt, TestTransactionPoolExt},
 		OffchainDbExt, OffchainWorkerExt, TransactionPoolExt,
@@ -41,7 +41,7 @@ use sp_npos_elections::{
 	assignment_ratio_to_staked_normalized, seq_phragmen, to_supports, BalancingConfig,
 	ElectionResult, EvaluateSupport,
 };
-use sp_runtime::{
+use soil_runtime::{
 	bounded_vec,
 	testing::Header,
 	traits::{BlakeTwo256, Convert, IdentityLookup},
@@ -49,9 +49,9 @@ use sp_runtime::{
 };
 use std::sync::Arc;
 
-pub type Block = sp_runtime::generic::Block<Header, UncheckedExtrinsic>;
+pub type Block = soil_runtime::generic::Block<Header, UncheckedExtrinsic>;
 pub type UncheckedExtrinsic =
-	sp_runtime::generic::UncheckedExtrinsic<AccountId, RuntimeCall, (), ()>;
+	soil_runtime::generic::UncheckedExtrinsic<AccountId, RuntimeCall, (), ()>;
 
 frame_support::construct_runtime!(
 	pub enum Runtime {
@@ -471,7 +471,7 @@ where
 	}
 }
 
-pub type Extrinsic = sp_runtime::testing::TestXt<RuntimeCall, ()>;
+pub type Extrinsic = soil_runtime::testing::TestXt<RuntimeCall, ()>;
 
 parameter_types! {
 	pub MaxNominations: u32 = <TestNposSolution as NposSolution>::LIMIT as u32;
@@ -629,7 +629,7 @@ impl ExtBuilder {
 		MaxBackersPerWinner::set(max);
 		self
 	}
-	pub fn build(self) -> sp_io::TestExternalities {
+	pub fn build(self) -> soil_io::TestExternalities {
 		soil_tracing::try_init_simple();
 		let mut storage =
 			frame_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
@@ -651,13 +651,13 @@ impl ExtBuilder {
 		}
 		.assimilate_storage(&mut storage);
 
-		sp_io::TestExternalities::from(storage)
+		soil_io::TestExternalities::from(storage)
 	}
 
 	pub fn build_offchainify(
 		self,
 		iters: u32,
-	) -> (sp_io::TestExternalities, Arc<RwLock<PoolState>>) {
+	) -> (soil_io::TestExternalities, Arc<RwLock<PoolState>>) {
 		let mut ext = self.build();
 		let (offchain, offchain_state) = TestOffchainExt::new();
 		let (pool, pool_state) = TestTransactionPoolExt::new();

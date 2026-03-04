@@ -26,7 +26,7 @@ use frame_support::{
 };
 use frame_support_test::TestRandomness;
 use frame_system::EnsureSignedBy;
-use sp_runtime::{traits::IdentityLookup, BuildStorage};
+use soil_runtime::{traits::IdentityLookup, BuildStorage};
 
 use RuntimeOrigin as Origin;
 
@@ -123,7 +123,7 @@ impl EnvBuilder {
 		pallet_society::GenesisConfig::<Test> { pot: self.pot }
 			.assimilate_storage(&mut t)
 			.unwrap();
-		let mut ext: sp_io::TestExternalities = t.into();
+		let mut ext: soil_io::TestExternalities = t.into();
 		ext.execute_with(|| {
 			// Initialize the block number to 1 for event registration
 			System::set_block_number(1);

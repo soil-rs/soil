@@ -23,9 +23,9 @@ use frame_support::{
 	traits::{GetStorageVersion, PalletInfoAccess},
 	weights::WeightMeter,
 };
-use sp_core::{twox_128, Get};
-use sp_io::{storage::clear_prefix, KillStorageResult};
-use sp_runtime::SaturatedConversion;
+use soil_core::{twox_128, Get};
+use soil_io::{storage::clear_prefix, KillStorageResult};
+use soil_runtime::SaturatedConversion;
 
 /// Remove all of a pallet's state and re-initializes it to the current in-code storage version.
 ///
@@ -107,14 +107,14 @@ where
 	}
 
 	#[cfg(feature = "try-runtime")]
-	fn pre_upgrade() -> Result<alloc::vec::Vec<u8>, sp_runtime::TryRuntimeError> {
+	fn pre_upgrade() -> Result<alloc::vec::Vec<u8>, soil_runtime::TryRuntimeError> {
 		let num_keys: u64 = Self::num_keys();
 		log::info!("ResetPallet<{}>: Trying to remove {num_keys} keys.", P::name());
 		Ok(num_keys.encode())
 	}
 
 	#[cfg(feature = "try-runtime")]
-	fn post_upgrade(state: alloc::vec::Vec<u8>) -> Result<(), sp_runtime::TryRuntimeError> {
+	fn post_upgrade(state: alloc::vec::Vec<u8>) -> Result<(), soil_runtime::TryRuntimeError> {
 		use codec::Decode;
 		let keys_before = u64::decode(&mut state.as_ref()).expect("We encoded as u64 above; qed");
 		let keys_now = Self::num_keys();

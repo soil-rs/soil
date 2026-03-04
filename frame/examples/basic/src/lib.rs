@@ -53,7 +53,7 @@
 //!   as demonstrated by [`Call::set_dummy`].
 //! - A private function that performs a storage update.
 //! - A simple transaction extension implementation (see:
-//!   [`sp_runtime::traits::TransactionExtension`]) which increases the priority of the
+//!   [`soil_runtime::traits::TransactionExtension`]) which increases the priority of the
 //!   [`Call::set_dummy`] if it's present and drops any transaction with an encoded length higher
 //!   than 200 bytes.
 
@@ -74,7 +74,7 @@ use frame_support::{
 use frame_system::ensure_signed;
 use log::info;
 use scale_info::TypeInfo;
-use sp_runtime::{
+use soil_runtime::{
 	impl_tx_ext_default,
 	traits::{
 		Bounded, DispatchInfoOf, DispatchOriginOf, SaturatedConversion, Saturating,
@@ -198,7 +198,7 @@ pub mod pallet {
 		fn offchain_worker(_n: BlockNumberFor<T>) {
 			// We don't do anything here.
 			// but we could dispatch extrinsic (transaction/unsigned/inherent) using
-			// sp_io::submit_extrinsic.
+			// soil_io::submit_extrinsic.
 			// To see example on offchain worker, please refer to example-offchain-worker pallet
 			// accompanied in this repository.
 		}
@@ -339,7 +339,7 @@ pub mod pallet {
 
 			// Print out log or debug message in the console via log::{error, warn, info, debug,
 			// trace}, accepting format strings similar to `println!`.
-			// https://paritytech.github.io/substrate/master/sp_io/logging/fn.log.html
+			// https://paritytech.github.io/substrate/master/soil_io/logging/fn.log.html
 			// https://paritytech.github.io/substrate/master/frame_support/constant.LOG_TARGET.html
 			info!("New value is now: {:?}", new_value);
 
@@ -522,7 +522,7 @@ where
 		// check for `set_dummy`
 		let validity = match call.is_sub_type() {
 			Some(Call::set_dummy { .. }) => {
-				sp_runtime::print("set_dummy was received.");
+				soil_runtime::print("set_dummy was received.");
 
 				let valid_tx =
 					ValidTransaction { priority: Bounded::max_value(), ..Default::default() };

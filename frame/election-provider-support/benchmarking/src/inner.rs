@@ -22,7 +22,7 @@ use alloc::vec::Vec;
 use codec::Decode;
 use frame_benchmarking::v2::*;
 use frame_election_provider_support::{NposSolver, PhragMMS, SequentialPhragmen};
-use sp_runtime::Perbill;
+use soil_runtime::Perbill;
 
 const VOTERS: [u32; 2] = [1_000, 2_000];
 const TARGETS: [u32; 2] = [500, 1_000];

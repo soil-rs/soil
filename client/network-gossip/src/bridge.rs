@@ -35,7 +35,7 @@ use futures::{
 use log::trace;
 use prometheus_endpoint::Registry;
 use sc_network_types::PeerId;
-use sp_runtime::traits::Block as BlockT;
+use soil_runtime::traits::Block as BlockT;
 use std::{
 	collections::{HashMap, VecDeque},
 	pin::Pin,
@@ -365,7 +365,7 @@ mod tests {
 	use sc_network_common::role::ObservedRole;
 	use sc_network_sync::SyncEventStream;
 	use sc_network_types::multiaddr::Multiaddr;
-	use sp_runtime::{
+	use soil_runtime::{
 		testing::H256,
 		traits::{Block as BlockT, NumberFor},
 	};

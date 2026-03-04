@@ -32,7 +32,7 @@ use sp_authority_discovery::AuthorityId as AuthorityDiscoveryId;
 use sp_consensus_babe::AuthorityId as BabeId;
 use sp_consensus_beefy::ecdsa_crypto::AuthorityId as BeefyId;
 use sp_consensus_grandpa::AuthorityId as GrandpaId;
-use sp_core::crypto::UncheckedInto;
+use soil_core::crypto::UncheckedInto;
 use sp_mixnet::types::AuthorityId as MixnetId;
 
 pub use kitchensink_runtime::RuntimeGenesisConfig;
@@ -426,7 +426,7 @@ pub(crate) mod tests {
 	use crate::service::{new_full_base, NewFullBase};
 	use kitchensink_runtime::genesis_config_presets::well_known_including_eth_accounts;
 	use sc_service_test;
-	use sp_runtime::{AccountId32, BuildStorage};
+	use soil_runtime::{AccountId32, BuildStorage};
 
 	/// Local testnet config (single validator - Alice).
 	pub fn integration_test_config_with_single_authority() -> ChainSpec {

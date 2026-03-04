@@ -30,7 +30,7 @@ use crate::{ecdsa_crypto::AuthorityId, ConsensusLog, MmrRootHash, BEEFY_ENGINE_I
 use alloc::vec::Vec;
 use codec::{Decode, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;
-use sp_runtime::{
+use soil_runtime::{
 	generic::OpaqueDigestItemId,
 	traits::{Block, Header},
 };
@@ -155,7 +155,7 @@ mod mmr_root_provider {
 	use core::marker::PhantomData;
 	use sp_api::ProvideRuntimeApi;
 	use sp_mmr_primitives::MmrApi;
-	use sp_runtime::traits::NumberFor;
+	use soil_runtime::traits::NumberFor;
 
 	/// A [`crate::Payload`] provider where payload is Merkle Mountain Range root hash.
 	///
@@ -208,7 +208,7 @@ mod mmr_root_provider {
 mod tests {
 	use super::*;
 	use crate::H256;
-	use sp_runtime::{traits::BlakeTwo256, Digest, DigestItem, OpaqueExtrinsic};
+	use soil_runtime::{traits::BlakeTwo256, Digest, DigestItem, OpaqueExtrinsic};
 
 	#[test]
 	fn should_construct_version_correctly() {
@@ -235,8 +235,8 @@ mod tests {
 
 	#[test]
 	fn extract_mmr_root_digest() {
-		type Header = sp_runtime::generic::Header<u64, BlakeTwo256>;
-		type Block = sp_runtime::generic::Block<Header, OpaqueExtrinsic>;
+		type Header = soil_runtime::generic::Header<u64, BlakeTwo256>;
+		type Block = soil_runtime::generic::Block<Header, OpaqueExtrinsic>;
 		let mut header = Header::new(
 			1u64,
 			Default::default(),

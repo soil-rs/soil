@@ -21,7 +21,7 @@ use frame_support::{
 	traits::{Get, PalletInfoAccess},
 };
 use remote_externalities::{Builder, Mode, OnlineConfig};
-use sp_runtime::{traits::Block as BlockT, DeserializeOwned};
+use soil_runtime::{traits::Block as BlockT, DeserializeOwned};
 
 /// Execute the sanity check of the bags-list.
 pub async fn execute<Runtime, Block>(
@@ -49,7 +49,7 @@ pub async fn execute<Runtime, Block>(
 		.unwrap();
 
 	ext.execute_with(|| {
-		sp_core::crypto::set_default_ss58_version(Runtime::SS58Prefix::get().try_into().unwrap());
+		soil_core::crypto::set_default_ss58_version(Runtime::SS58Prefix::get().try_into().unwrap());
 
 		pallet_bags_list::Pallet::<Runtime, pallet_bags_list::Instance1>::do_try_state().unwrap();
 

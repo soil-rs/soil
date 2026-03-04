@@ -17,7 +17,7 @@
 
 use crate::{CombineData, Config, MomentOf, TimestampedValueOf};
 use frame_support::traits::{Get, Time};
-use sp_runtime::traits::Saturating;
+use soil_runtime::traits::Saturating;
 use soil_std::{marker, prelude::*};
 
 /// Sort by value and returns median timestamped value.

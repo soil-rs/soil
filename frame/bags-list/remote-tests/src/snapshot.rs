@@ -22,7 +22,7 @@ use frame_election_provider_support::{
 };
 use frame_support::traits::PalletInfoAccess;
 use remote_externalities::{Builder, Mode, OnlineConfig};
-use sp_runtime::{
+use soil_runtime::{
 	traits::{Block as BlockT, Zero},
 	DeserializeOwned,
 };

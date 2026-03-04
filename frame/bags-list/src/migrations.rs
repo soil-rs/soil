@@ -25,7 +25,7 @@ use frame_support::traits::OnRuntimeUpgrade;
 #[cfg(feature = "try-runtime")]
 use frame_support::ensure;
 #[cfg(feature = "try-runtime")]
-use sp_runtime::TryRuntimeError;
+use soil_runtime::TryRuntimeError;
 
 #[cfg(feature = "try-runtime")]
 use alloc::vec::Vec;

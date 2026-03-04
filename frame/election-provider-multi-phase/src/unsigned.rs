@@ -40,7 +40,7 @@ use sp_npos_elections::{
 	assignment_ratio_to_staked_normalized, assignment_staked_to_ratio_normalized, ElectionResult,
 	ElectionScore, EvaluateSupport,
 };
-use sp_runtime::{
+use soil_runtime::{
 	offchain::storage::{MutateStorageError, StorageValueRef},
 	DispatchError, SaturatedConversion,
 };
@@ -1108,7 +1108,7 @@ mod tests {
 	use frame_election_provider_support::IndexAssignment;
 	use frame_support::{assert_noop, assert_ok, traits::OffchainWorker};
 	use sp_npos_elections::ElectionScore;
-	use sp_runtime::{
+	use soil_runtime::{
 		bounded_vec,
 		offchain::storage_lock::{BlockAndTime, StorageLock},
 		traits::{Dispatchable, ValidateUnsigned, Zero},

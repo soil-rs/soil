@@ -20,7 +20,7 @@
 
 use sc_network::ReputationChange;
 use sc_network_types::PeerId;
-use sp_runtime::traits::{Block, NumberFor, Zero};
+use soil_runtime::traits::{Block, NumberFor, Zero};
 use std::collections::{HashMap, VecDeque};
 
 /// Report specifying a reputation change for a given peer.

@@ -29,7 +29,7 @@ use std::{
 
 use sc_network_types::PeerId;
 use sc_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
-use sp_runtime::traits::{Block as BlockT, NumberFor};
+use soil_runtime::traits::{Block as BlockT, NumberFor};
 
 use super::gossip::{GossipMessage, NeighborPacket};
 use crate::LOG_TARGET;

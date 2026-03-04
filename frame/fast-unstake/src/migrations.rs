@@ -28,7 +28,7 @@ pub mod v1 {
 	#[cfg(feature = "try-runtime")]
 	use frame_support::ensure;
 	#[cfg(feature = "try-runtime")]
-	use sp_runtime::TryRuntimeError;
+	use soil_runtime::TryRuntimeError;
 
 	pub struct MigrateToV1<T>(core::marker::PhantomData<T>);
 	impl<T: Config> OnRuntimeUpgrade for MigrateToV1<T> {

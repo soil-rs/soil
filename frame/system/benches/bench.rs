@@ -17,7 +17,7 @@
 
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
 use frame_support::{derive_impl, dispatch::DispatchClass};
-use sp_runtime::{BuildStorage, Perbill};
+use soil_runtime::{BuildStorage, Perbill};
 #[frame_support::pallet]
 mod module {
 	use frame_support::pallet_prelude::*;
@@ -70,7 +70,7 @@ impl module::Config for Runtime {
 	type RuntimeEvent = RuntimeEvent;
 }
 
-fn new_test_ext() -> sp_io::TestExternalities {
+fn new_test_ext() -> soil_io::TestExternalities {
 	frame_system::GenesisConfig::<Runtime>::default()
 		.build_storage()
 		.unwrap()

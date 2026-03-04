@@ -29,7 +29,7 @@ use alloc::vec::Vec;
 use codec::{Decode, DecodeWithMemTracking, Encode};
 use core::fmt;
 use scale_info::TypeInfo;
-use sp_runtime::traits;
+use soil_runtime::traits;
 
 pub mod utils;
 
@@ -109,7 +109,7 @@ pub struct OpaqueLeaf(
 	/// Raw bytes of the leaf type encoded in its compact form.
 	///
 	/// NOTE it DOES NOT include length prefix (like `Vec<u8>` encoding would).
-	#[cfg_attr(feature = "serde", serde(with = "sp_core::bytes"))]
+	#[cfg_attr(feature = "serde", serde(with = "soil_core::bytes"))]
 	pub Vec<u8>,
 );
 
@@ -485,8 +485,8 @@ mod tests {
 	use super::*;
 
 	use codec::Decode;
-	use sp_core::H256;
-	use sp_runtime::traits::Keccak256;
+	use soil_core::H256;
+	use soil_runtime::traits::Keccak256;
 
 	pub(crate) fn hex(s: &str) -> H256 {
 		s.parse().unwrap()

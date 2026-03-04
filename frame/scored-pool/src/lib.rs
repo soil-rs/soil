@@ -111,7 +111,7 @@ use frame_support::{
 	BoundedVec,
 };
 pub use pallet::*;
-use sp_runtime::traits::{AtLeast32Bit, StaticLookup, Zero};
+use soil_runtime::traits::{AtLeast32Bit, StaticLookup, Zero};
 
 type BalanceOf<T, I> =
 	<<T as Config<I>>::Currency as Currency<<T as frame_system::Config>::AccountId>>::Balance;

@@ -29,7 +29,7 @@ use sc_utils::mpsc::{tracing_unbounded, TracingUnboundedSender};
 use sp_api::{CallApiAt, CallApiAtParams};
 use sp_blockchain::{BlockStatus, CachedHeaderMetadata, HeaderBackend, HeaderMetadata, Info};
 use sp_consensus::BlockOrigin;
-use sp_runtime::{
+use soil_runtime::{
 	generic::SignedBlock,
 	traits::{Block as BlockT, Header as HeaderT, NumberFor},
 	Justifications,
@@ -252,7 +252,7 @@ impl<Block: BlockT, Client: CallApiAt<Block>> CallApiAt<Block> for ChainHeadMock
 	fn initialize_extensions(
 		&self,
 		at: <Block as BlockT>::Hash,
-		extensions: &mut sp_externalities::Extensions,
+		extensions: &mut soil_externalities::Extensions,
 	) -> Result<(), sp_api::ApiError> {
 		self.client.initialize_extensions(at, extensions)
 	}
@@ -329,7 +329,7 @@ impl<Block: BlockT, Client: HeaderMetadata<Block> + Send + Sync> HeaderMetadata<
 impl<Block: BlockT<Hash = H256>, Client: HeaderBackend<Block> + Send + Sync> HeaderBackend<Block>
 	for ChainHeadMockClient<Client>
 where
-	<<Block as sp_runtime::traits::Block>::Header as HeaderT>::Number: From<u64>,
+	<<Block as soil_runtime::traits::Block>::Header as HeaderT>::Number: From<u64>,
 {
 	fn header(
 		&self,

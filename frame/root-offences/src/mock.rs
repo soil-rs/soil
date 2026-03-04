@@ -28,7 +28,7 @@ use frame_support::{
 	traits::{ConstBool, ConstU32, ConstU64, OneSessionHandler},
 };
 use pallet_staking::{BalanceOf, StakerStatus};
-use sp_runtime::{curve::PiecewiseLinear, testing::UintAuthorityId, traits::Zero, BuildStorage};
+use soil_runtime::{curve::PiecewiseLinear, testing::UintAuthorityId, traits::Zero, BuildStorage};
 use sp_staking::{EraIndex, SessionIndex};
 
 type Block = frame_system::mocking::MockBlock<Test>;
@@ -74,7 +74,7 @@ impl OneSessionHandler<AccountId> for OtherSessionHandler {
 	fn on_disabled(_validator_index: u32) {}
 }
 
-impl sp_runtime::BoundToRuntimeAppPublic for OtherSessionHandler {
+impl soil_runtime::BoundToRuntimeAppPublic for OtherSessionHandler {
 	type Public = UintAuthorityId;
 }
 
@@ -151,7 +151,7 @@ impl pallet_session::historical::Config for Test {
 	type FullIdentificationOf = pallet_staking::UnitIdentificationOf<Self>;
 }
 
-sp_runtime::impl_opaque_keys! {
+soil_runtime::impl_opaque_keys! {
 	pub struct SessionKeys {
 		pub other: OtherSessionHandler,
 	}
@@ -164,7 +164,7 @@ impl pallet_session::Config for Test {
 	type SessionHandler = (OtherSessionHandler,);
 	type RuntimeEvent = RuntimeEvent;
 	type ValidatorId = AccountId;
-	type ValidatorIdOf = sp_runtime::traits::ConvertInto;
+	type ValidatorIdOf = soil_runtime::traits::ConvertInto;
 	type NextSessionRotation = pallet_session::PeriodicSessions<Period, Offset>;
 	type DisablingStrategy = ();
 	type WeightInfo = ();
@@ -204,7 +204,7 @@ impl Default for ExtBuilder {
 }
 
 impl ExtBuilder {
-	fn build(self) -> sp_io::TestExternalities {
+	fn build(self) -> soil_io::TestExternalities {
 		let mut storage = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 
 		pallet_balances::GenesisConfig::<Test> {

@@ -59,11 +59,11 @@ use sp_blockchain::{
 use sp_consensus::{BlockOrigin, BlockStatus, Error as ConsensusError};
 
 use sc_utils::mpsc::{tracing_unbounded, TracingUnboundedSender};
-use sp_core::{
+use soil_core::{
 	storage::{ChildInfo, ChildType, PrefixedStorageKey, StorageChild, StorageData, StorageKey},
 	traits::{CallContext, SpawnNamed},
 };
-use sp_runtime::{
+use soil_runtime::{
 	generic::{BlockId, SignedBlock},
 	traits::{
 		Block as BlockT, BlockIdTo, HashingFor, Header as HeaderT, NumberFor, One,
@@ -71,13 +71,13 @@ use sp_runtime::{
 	},
 	Justification, Justifications, StateVersion,
 };
-use sp_state_machine::{
+use soil_state_machine::{
 	prove_child_read, prove_range_read_with_child_with_size, prove_read,
 	read_range_proof_check_with_child_on_proving_backend, Backend as StateBackend,
 	ChildStorageCollection, KeyValueStates, KeyValueStorageLevel, StorageCollection,
 	MAX_NESTED_TRIE_DEPTH,
 };
-use sp_trie::{proof_size_extension::ProofSizeExt, CompactProof, MerkleValue, StorageProof};
+use soil_trie::{proof_size_extension::ProofSizeExt, CompactProof, MerkleValue, StorageProof};
 use std::{
 	collections::{HashMap, HashSet},
 	marker::PhantomData,
@@ -86,7 +86,7 @@ use std::{
 };
 
 use super::call_executor::LocalCallExecutor;
-use sp_core::traits::CodeExecutor;
+use soil_core::traits::CodeExecutor;
 
 type NotificationSinks<T> = Mutex<Vec<TracingUnboundedSender<T>>>;
 
@@ -617,7 +617,7 @@ where
 						Some((main_sc, child_sc))
 					},
 					sc_consensus::StorageChanges::Import(changes) => {
-						let mut storage = sp_storage::Storage::default();
+						let mut storage = soil_storage::Storage::default();
 						for state in changes.state.0.into_iter() {
 							if state.parent_storage_keys.is_empty() && state.state_root.is_empty() {
 								for (key, value) in state.key_values.into_iter() {
@@ -1339,7 +1339,7 @@ where
 				total_size += size;
 
 				if current_child.is_none() &&
-					sp_core::storage::well_known_keys::is_child_storage_key(next_key.as_slice()) &&
+					soil_core::storage::well_known_keys::is_child_storage_key(next_key.as_slice()) &&
 					!child_roots.contains(value.as_slice())
 				{
 					child_roots.insert(value.clone());
@@ -1382,15 +1382,15 @@ where
 		proof: CompactProof,
 		start_key: &[Vec<u8>],
 	) -> sp_blockchain::Result<(KeyValueStates, usize)> {
-		let mut db = sp_state_machine::MemoryDB::<HashingFor<Block>>::new(&[]);
+		let mut db = soil_state_machine::MemoryDB::<HashingFor<Block>>::new(&[]);
 		// Compact encoding
-		sp_trie::decode_compact::<sp_state_machine::LayoutV0<HashingFor<Block>>, _, _>(
+		soil_trie::decode_compact::<soil_state_machine::LayoutV0<HashingFor<Block>>, _, _>(
 			&mut db,
 			proof.iter_compact_encoded_nodes(),
 			Some(&root),
 		)
 		.map_err(|e| sp_blockchain::Error::from_state(Box::new(e)))?;
-		let proving_backend = sp_state_machine::TrieBackendBuilder::new(db, root).build();
+		let proving_backend = soil_state_machine::TrieBackendBuilder::new(db, root).build();
 		let state = read_range_proof_check_with_child_on_proving_backend::<HashingFor<Block>>(
 			&proving_backend,
 			start_key,
@@ -1698,7 +1698,7 @@ where
 	fn initialize_extensions(
 		&self,
 		at: Block::Hash,
-		extensions: &mut sp_externalities::Extensions,
+		extensions: &mut soil_externalities::Extensions,
 	) -> Result<(), sp_api::ApiError> {
 		let block_number = self.expect_block_number_from_id(&BlockId::Hash(at))?;
 

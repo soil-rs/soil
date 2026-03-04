@@ -19,7 +19,7 @@
 
 use core::marker::PhantomData;
 use frame_support::traits::{fungible, fungibles, misc::TryDrop};
-use sp_core::TypedGet;
+use soil_core::TypedGet;
 
 /// Handler for when some currency "account" decreased in balance for
 /// some reason.

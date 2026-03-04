@@ -21,10 +21,10 @@
 use codec::{Decode, Encode};
 use sp_blockchain::{Error, Result};
 use soil_database::{Database, Transaction};
-use sp_runtime::traits::AtLeast32Bit;
+use soil_runtime::traits::AtLeast32Bit;
 use std::{cmp::Reverse, collections::BTreeMap};
 
-type DbHash = sp_core::H256;
+type DbHash = soil_core::H256;
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 struct LeafSetItem<H, N> {

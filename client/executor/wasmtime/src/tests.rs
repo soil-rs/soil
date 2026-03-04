@@ -26,7 +26,7 @@ use sc_runtime_test::wasm_binary_unwrap;
 
 use crate::InstantiationStrategy;
 
-type HostFunctions = sp_io::SubstrateHostFunctions;
+type HostFunctions = soil_io::SubstrateHostFunctions;
 
 #[macro_export]
 macro_rules! test_wasm_execution {

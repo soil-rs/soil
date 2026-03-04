@@ -27,9 +27,9 @@ use sc_client_api::{Backend, FinalityNotification};
 use sc_offchain::OffchainDb;
 use sp_blockchain::CachedHeaderMetadata;
 use sp_consensus_beefy::MmrRootHash;
-use sp_core::offchain::{DbExternalities, StorageKind};
+use soil_core::offchain::{DbExternalities, StorageKind};
 use sp_mmr_primitives::{utils, utils::NodesUtils, MmrApi, NodeIndex};
-use sp_runtime::{
+use soil_runtime::{
 	traits::{Block, Header, NumberFor, One},
 	Saturating,
 };
@@ -281,7 +281,7 @@ where
 mod tests {
 	use crate::test_utils::{run_test_with_mmr_gadget, run_test_with_mmr_gadget_pre_post};
 	use parking_lot::Mutex;
-	use sp_runtime::generic::BlockId;
+	use soil_runtime::generic::BlockId;
 	use std::{sync::Arc, time::Duration};
 
 	#[test]

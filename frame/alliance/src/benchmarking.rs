@@ -20,7 +20,7 @@
 #![cfg(feature = "runtime-benchmarks")]
 
 use core::{cmp, mem::size_of};
-use sp_runtime::traits::{Bounded, Hash, StaticLookup};
+use soil_runtime::traits::{Bounded, Hash, StaticLookup};
 
 use frame_benchmarking::{account, v2::*, BenchmarkError};
 use frame_support::traits::{EnsureOrigin, Get, UnfilteredDispatchable};

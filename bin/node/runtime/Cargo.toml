@@ -151,7 +151,7 @@ sc-chain-spec-derive = { workspace = true }
 sc-tracing-proc-macro = { workspace = true }
 sp-api = { workspace = true }
 soil-api-proc-macro = { workspace = true }
-sp-application-crypto = { workspace = true }
+soil-application-crypto = { workspace = true }
 soil-arithmetic = { workspace = true }
 sp-authority-discovery = { workspace = true }
 sp-block-builder = { workspace = true }
@@ -161,39 +161,39 @@ sp-consensus-beefy = { workspace = true }
 sp-consensus-grandpa = { workspace = true }
 sp-consensus-pow = { workspace = true }
 sp-consensus-slots = { workspace = true }
-sp-core = { workspace = true }
-sp-crypto-ec-utils = { workspace = true }
+soil-core = { workspace = true }
+soil-crypto-ec-utils = { workspace = true }
 soil-crypto-hashing = { workspace = true }
-sp-crypto-hashing-proc-macro = { workspace = true }
-sp-externalities = { workspace = true }
+soil-crypto-hashing-proc-macro = { workspace = true }
+soil-externalities = { workspace = true }
 sp-genesis-builder = { workspace = true }
 sp-inherents = { workspace = true }
-sp-io = { workspace = true }
+soil-io = { workspace = true }
 sp-keyring = { workspace = true }
-sp-keystore = { workspace = true }
+soil-keystore = { workspace = true }
 soil-metadata-ir = { workspace = true }
 sp-mixnet = { workspace = true }
 sp-mmr-primitives = { workspace = true }
 sp-npos-elections = { workspace = true }
 sp-offchain = { workspace = true }
-sp-runtime = { workspace = true }
-sp-runtime-interface = { workspace = true }
+soil-runtime = { workspace = true }
+soil-runtime-interface = { workspace = true }
 soil-runtime-interface-proc-macro = { workspace = true }
 sp-session = { workspace = true }
 sp-staking = { workspace = true }
-sp-state-machine = { workspace = true }
+soil-state-machine = { workspace = true }
 sp-statement-store = { workspace = true }
 soil-std = { workspace = true }
-sp-storage = { workspace = true }
+soil-storage = { workspace = true }
 sp-timestamp = { workspace = true }
 soil-tracing = { workspace = true }
 sp-transaction-pool = { workspace = true }
 sp-transaction-storage-proof = { workspace = true }
-sp-trie = { workspace = true }
+soil-trie = { workspace = true }
 sp-version = { workspace = true }
 soil-version-proc-macro = { workspace = true }
 soil-wasm-interface = { workspace = true }
-sp-weights = { workspace = true }
+soil-weights = { workspace = true }
 substrate-bip39 = { workspace = true }
 
 # shared code between runtime and node
@@ -210,7 +210,7 @@ substrate-wasm-builder = { optional = true, workspace = true, default-features =
 default = ["std"]
 with-tracing = [
 	"frame-executive/with-tracing",
-	"sp-io/with-tracing",
+	"soil-io/with-tracing",
 	"soil-tracing/with-tracing",
 ]
 std = [
@@ -337,7 +337,7 @@ std = [
 	"serde_json/std",
 	"sp-api/std",
 	"soil-api-proc-macro/std",
-	"sp-application-crypto/std",
+	"soil-application-crypto/std",
 	"soil-arithmetic/std",
 	"sp-authority-discovery/std",
 	"sp-block-builder/std",
@@ -347,37 +347,37 @@ std = [
 	"sp-consensus-grandpa/std",
 	"sp-consensus-pow/std",
 	"sp-consensus-slots/std",
-	"sp-core/std",
-	"sp-crypto-ec-utils/std",
+	"soil-core/std",
+	"soil-crypto-ec-utils/std",
 	"soil-crypto-hashing/std",
 	"soil-debug-derive/std",
-	"sp-externalities/std",
+	"soil-externalities/std",
 	"sp-genesis-builder/std",
 	"sp-inherents/std",
-	"sp-io/std",
+	"soil-io/std",
 	"sp-keyring/std",
-	"sp-keystore/std",
+	"soil-keystore/std",
 	"soil-metadata-ir/std",
 	"sp-mixnet/std",
 	"sp-mmr-primitives/std",
 	"sp-npos-elections/std",
 	"sp-offchain/std",
-	"sp-runtime/std",
-	"sp-runtime-interface/std",
+	"soil-runtime/std",
+	"soil-runtime-interface/std",
 	"sp-session/std",
 	"sp-staking/std",
-	"sp-state-machine/std",
+	"soil-state-machine/std",
 	"sp-statement-store/std",
 	"soil-std/std",
-	"sp-storage/std",
+	"soil-storage/std",
 	"sp-timestamp/std",
 	"soil-tracing/std",
 	"sp-transaction-pool/std",
 	"sp-transaction-storage-proof/std",
-	"sp-trie/std",
+	"soil-trie/std",
 	"sp-version/std",
 	"soil-wasm-interface/std",
-	"sp-weights/std",
+	"soil-weights/std",
 	"substrate-bip39/std",
 	"substrate-wasm-builder",
 ]
@@ -474,7 +474,7 @@ runtime-benchmarks = [
 	"pallet-whitelist/runtime-benchmarks",
 	"rand",
 	"rand_pcg",
-	"sp-runtime/runtime-benchmarks",
+	"soil-runtime/runtime-benchmarks",
 	"sp-staking/runtime-benchmarks",
 ]
 try-runtime = [
@@ -576,7 +576,7 @@ try-runtime = [
 	"pallet-verify-signature/try-runtime",
 	"pallet-vesting/try-runtime",
 	"pallet-whitelist/try-runtime",
-	"sp-runtime/try-runtime",
+	"soil-runtime/try-runtime",
 ]
 experimental = [
 	"pallet-example-tasks/experimental",

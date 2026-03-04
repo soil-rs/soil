@@ -171,7 +171,7 @@ fn construct_runtime_final_expansion(
 
 	let frame_system = generate_access_from_frame_or_crate("frame-system")?;
 	let block = quote!(<#name as #frame_system::Config>::Block);
-	let unchecked_extrinsic = quote!(<#block as #scrate::sp_runtime::traits::Block>::Extrinsic);
+	let unchecked_extrinsic = quote!(<#block as #scrate::soil_runtime::traits::Block>::Extrinsic);
 
 	let mut dispatch = None;
 	let mut outer_event = None;
@@ -262,7 +262,7 @@ fn construct_runtime_final_expansion(
 			#scrate::__private::scale_info::TypeInfo
 		)]
 		pub struct #name;
-		impl #scrate::sp_runtime::traits::GetRuntimeBlockType for #name {
+		impl #scrate::soil_runtime::traits::GetRuntimeBlockType for #name {
 			type RuntimeBlock = #block;
 		}
 

@@ -25,8 +25,8 @@ use frame_support::{
 	migrations::*,
 	weights::{Weight, WeightMeter},
 };
-use sp_core::ConstU32;
-use sp_runtime::BoundedVec;
+use soil_core::ConstU32;
+use soil_runtime::BoundedVec;
 
 /// Opaque identifier of a migration.
 pub type MockedIdentifier = BoundedVec<u8, ConstU32<256>>;
@@ -130,7 +130,7 @@ impl SteppedMigrations for MockedMigrations {
 	}
 
 	#[cfg(feature = "try-runtime")]
-	fn nth_pre_upgrade(n: u32) -> Option<Result<Vec<u8>, sp_runtime::TryRuntimeError>> {
+	fn nth_pre_upgrade(n: u32) -> Option<Result<Vec<u8>, soil_runtime::TryRuntimeError>> {
 		let (kind, _) = MIGRATIONS::get()[n as usize];
 
 		if let PreUpgradeFail = kind {
@@ -144,7 +144,7 @@ impl SteppedMigrations for MockedMigrations {
 	fn nth_post_upgrade(
 		n: u32,
 		_state: Vec<u8>,
-	) -> Option<Result<(), sp_runtime::TryRuntimeError>> {
+	) -> Option<Result<(), soil_runtime::TryRuntimeError>> {
 		let (kind, _) = MIGRATIONS::get()[n as usize];
 
 		if let PostUpgradeFail = kind {

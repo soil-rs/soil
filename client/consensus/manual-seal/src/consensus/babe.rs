@@ -29,7 +29,7 @@ use sc_consensus_babe::{
 use sc_consensus_epochs::{
 	descendent_query, EpochHeader, SharedEpochChanges, ViableEpochDescriptor,
 };
-use sp_keystore::KeystorePtr;
+use soil_keystore::KeystorePtr;
 use std::sync::Arc;
 
 use sc_consensus::{BlockImportParams, ForkChoiceStrategy, Verifier};
@@ -42,7 +42,7 @@ use sp_consensus_babe::{
 };
 use sp_consensus_slots::Slot;
 use sp_inherents::InherentData;
-use sp_runtime::{
+use soil_runtime::{
 	generic::Digest,
 	traits::{Block as BlockT, Header},
 	DigestItem,

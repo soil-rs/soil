@@ -21,9 +21,9 @@ use crate::{
 	ecdsa_crypto, AuthorityIdBound, Commitment, DoubleVotingProof, ForkVotingProof,
 	FutureBlockVotingProof, Payload, ValidatorSetId, VoteMessage,
 };
-use sp_application_crypto::{AppCrypto, AppPair, RuntimeAppPublic, Wraps};
-use sp_core::{ecdsa, Pair};
-use sp_runtime::traits::{BlockNumber, Header as HeaderT};
+use soil_application_crypto::{AppCrypto, AppPair, RuntimeAppPublic, Wraps};
+use soil_core::{ecdsa, Pair};
+use soil_runtime::traits::{BlockNumber, Header as HeaderT};
 
 use codec::Encode;
 use soil_crypto_hashing::keccak_256;
@@ -111,7 +111,7 @@ static PUBLIC_KEYS: LazyLock<HashMap<Keyring<ecdsa_crypto::AuthorityId>, ecdsa_c
 	LazyLock::new(|| {
 		PRIVATE_KEYS
 			.iter()
-			.map(|(name, pair)| (name.clone(), sp_application_crypto::Pair::public(pair)))
+			.map(|(name, pair)| (name.clone(), soil_application_crypto::Pair::public(pair)))
 			.collect()
 	});
 

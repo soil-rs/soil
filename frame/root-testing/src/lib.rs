@@ -24,7 +24,7 @@
 
 #![cfg_attr(not(feature = "std"), no_std)]
 
-use frame_support::{dispatch::DispatchResult, sp_runtime::Perbill};
+use frame_support::{dispatch::DispatchResult, soil_runtime::Perbill};
 
 pub use pallet::*;
 

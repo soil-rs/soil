@@ -18,7 +18,7 @@
 use codec::EncodeLike;
 use frame_support::{assert_noop, assert_ok, assert_storage_noop};
 use frame_system::RawOrigin;
-use sp_runtime::{
+use soil_runtime::{
 	traits::{BadOrigin, Identity},
 	TokenError,
 };

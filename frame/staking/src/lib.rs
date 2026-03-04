@@ -322,7 +322,7 @@ use frame_support::{
 	BoundedVec, CloneNoBound, DebugNoBound, EqNoBound, PartialEqNoBound,
 };
 use scale_info::TypeInfo;
-use sp_runtime::{
+use soil_runtime::{
 	curve::PiecewiseLinear,
 	traits::{AtLeast32BitUnsigned, Convert, StaticLookup, Zero},
 	Debug, Perbill, Perquintill, Rounding, Saturating,
@@ -676,7 +676,7 @@ impl<T: Config> StakingLedger<T> {
 			return Zero::zero();
 		}
 
-		use sp_runtime::PerThing as _;
+		use soil_runtime::PerThing as _;
 		let mut remaining_slash = slash_amount;
 		let pre_slash_total = self.total;
 

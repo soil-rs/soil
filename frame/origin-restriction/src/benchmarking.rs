@@ -19,7 +19,7 @@
 
 use super::*;
 use frame_benchmarking::{v2::*, BenchmarkError};
-use sp_runtime::traits::DispatchTransaction;
+use soil_runtime::traits::DispatchTransaction;
 
 fn assert_last_event<T: Config>(generic_event: <T as Config>::RuntimeEvent) {
 	frame_system::Pallet::<T>::assert_last_event(generic_event.into());

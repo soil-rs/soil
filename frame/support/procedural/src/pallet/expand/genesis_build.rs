@@ -17,7 +17,7 @@
 
 use crate::pallet::Def;
 
-/// * implement the trait `sp_runtime::BuildStorage`
+/// * implement the trait `soil_runtime::BuildStorage`
 pub fn expand_genesis_build(def: &mut Def) -> proc_macro2::TokenStream {
 	let genesis_config = if let Some(genesis_config) = &def.genesis_config {
 		genesis_config
@@ -35,9 +35,9 @@ pub fn expand_genesis_build(def: &mut Def) -> proc_macro2::TokenStream {
 
 	quote::quote_spanned!(genesis_build.attr_span =>
 		#frame_support::std_enabled! {
-			impl<#type_impl_gen> #frame_support::sp_runtime::BuildStorage for #gen_cfg_ident<#gen_cfg_use_gen> #where_clause
+			impl<#type_impl_gen> #frame_support::soil_runtime::BuildStorage for #gen_cfg_ident<#gen_cfg_use_gen> #where_clause
 			{
-				fn assimilate_storage(&self, storage: &mut #frame_support::sp_runtime::Storage) -> std::result::Result<(), std::string::String> {
+				fn assimilate_storage(&self, storage: &mut #frame_support::soil_runtime::Storage) -> std::result::Result<(), std::string::String> {
 					#frame_support::__private::BasicExternalities::execute_with_storage(storage, || {
 						self.build();
 						Ok(())

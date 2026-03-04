@@ -19,8 +19,8 @@
 use crate::{ExecutionLimit, HwBench};
 
 use sc_telemetry::SysInfo;
-use sp_core::{sr25519, Pair};
-use sp_io::crypto::sr25519_verify;
+use soil_core::{sr25519, Pair};
+use soil_io::crypto::sr25519_verify;
 
 use core::f64;
 use derive_more::From;
@@ -800,7 +800,7 @@ impl Requirements {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use sp_runtime::assert_eq_error_rate_float;
+	use soil_runtime::assert_eq_error_rate_float;
 
 	#[cfg(target_os = "linux")]
 	#[test]

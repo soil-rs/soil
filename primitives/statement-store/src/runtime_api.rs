@@ -21,7 +21,7 @@ use crate::{Hash, Statement, Topic};
 use alloc::vec::Vec;
 use codec::{Decode, Encode};
 use scale_info::TypeInfo;
-use sp_runtime_interface::{
+use soil_runtime_interface::{
 	pass_by::{
 		AllocateAndReturnByCodec, PassFatPointerAndDecode, PassFatPointerAndDecodeSlice,
 		PassPointerAndRead, PassPointerAndReadCopy, ReturnAs,
@@ -31,7 +31,7 @@ use sp_runtime_interface::{
 use Debug;
 
 #[cfg(feature = "std")]
-use sp_externalities::ExternalitiesExt;
+use soil_externalities::ExternalitiesExt;
 
 /// The source of the statement.
 ///
@@ -58,7 +58,7 @@ impl StatementSource {
 }
 
 #[cfg(feature = "std")]
-sp_externalities::decl_extension! {
+soil_externalities::decl_extension! {
 	/// The offchain database extension that will be registered at the Substrate externalities.
 	pub struct StatementStoreExt(std::sync::Arc<dyn crate::StatementStore>);
 }

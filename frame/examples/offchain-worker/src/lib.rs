@@ -66,8 +66,8 @@ use frame_system::{
 	pallet_prelude::BlockNumberFor,
 };
 use lite_json::json::JsonValue;
-use sp_core::crypto::KeyTypeId;
-use sp_runtime::{
+use soil_core::crypto::KeyTypeId;
+use soil_runtime::{
 	offchain::{
 		http,
 		storage::{MutateStorageError, StorageRetrievalError, StorageValueRef},
@@ -98,8 +98,8 @@ pub const KEY_TYPE: KeyTypeId = KeyTypeId(*b"btc!");
 /// the types with this pallet-specific identifier.
 pub mod crypto {
 	use super::KEY_TYPE;
-	use sp_core::sr25519::Signature as Sr25519Signature;
-	use sp_runtime::{
+	use soil_core::sr25519::Signature as Sr25519Signature;
+	use soil_runtime::{
 		app_crypto::{app_crypto, sr25519},
 		traits::Verify,
 		MultiSignature, MultiSigner,
@@ -110,8 +110,8 @@ pub mod crypto {
 
 	impl frame_system::offchain::AppCrypto<MultiSigner, MultiSignature> for TestAuthId {
 		type RuntimeAppPublic = Public;
-		type GenericSignature = sp_core::sr25519::Signature;
-		type GenericPublic = sp_core::sr25519::Public;
+		type GenericSignature = soil_core::sr25519::Signature;
+		type GenericPublic = soil_core::sr25519::Public;
 	}
 
 	// implemented for mock runtime in test
@@ -119,8 +119,8 @@ pub mod crypto {
 		for TestAuthId
 	{
 		type RuntimeAppPublic = Public;
-		type GenericSignature = sp_core::sr25519::Signature;
-		type GenericPublic = sp_core::sr25519::Public;
+		type GenericSignature = soil_core::sr25519::Signature;
+		type GenericPublic = soil_core::sr25519::Public;
 	}
 }
 
@@ -191,7 +191,7 @@ pub mod pallet {
 		/// This test validates that the Block type's Extrinsic includes the necessary
 		/// transaction extension structure by checking the type name.
 		fn integrity_test() {
-			use sp_runtime::traits::Block as BlockT;
+			use soil_runtime::traits::Block as BlockT;
 
 			// Get the full type name of the Block's Extrinsic type
 			let extrinsic_type_name = core::any::type_name::<<T::Block as BlockT>::Extrinsic>();
@@ -650,10 +650,10 @@ impl<T: Config> Pallet<T> {
 		// deadline to 2s to complete the external call.
 		// You can also wait indefinitely for the response, however you may still get a timeout
 		// coming from the host machine.
-		let deadline = sp_io::offchain::timestamp().add(Duration::from_millis(2_000));
+		let deadline = soil_io::offchain::timestamp().add(Duration::from_millis(2_000));
 		// Initiate an external HTTP GET request.
-		// This is using high-level wrappers from `sp_runtime`, for the low-level calls that
-		// you can find in `sp_io`. The API is trying to be similar to `request`, but
+		// This is using high-level wrappers from `soil_runtime`, for the low-level calls that
+		// you can find in `soil_io`. The API is trying to be similar to `request`, but
 		// since we are running in a custom WASM execution environment we can't simply
 		// import the library here.
 		let request =

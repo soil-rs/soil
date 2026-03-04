@@ -29,10 +29,10 @@ use frame_support::{
 	dispatch::{DispatchInfo, GetDispatchInfo},
 	traits::{ConstU64, OnInitialize},
 };
-use sp_core::H256;
+use soil_core::H256;
 // The testing primitives are very useful for avoiding having to work with signatures
 // or public keys. `u64` is used as the `AccountId` and no `Signature`s are required.
-use sp_runtime::{
+use soil_runtime::{
 	traits::{BlakeTwo256, DispatchTransaction, IdentityLookup},
 	transaction_validity::TransactionSource::External,
 	BuildStorage,
@@ -90,7 +90,7 @@ impl Config for Test {
 
 // This function basically just builds a genesis storage key/value store according to
 // our desired mockup.
-pub fn new_test_ext() -> sp_io::TestExternalities {
+pub fn new_test_ext() -> soil_io::TestExternalities {
 	let t = RuntimeGenesisConfig {
 		// We use default for brevity, but you can configure as desired if needed.
 		system: Default::default(),

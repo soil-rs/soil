@@ -97,7 +97,7 @@ use sc_network_types::PeerId;
 use sc_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG};
 use sc_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
 use sp_consensus_grandpa::AuthorityId;
-use sp_runtime::traits::{Block as BlockT, NumberFor, Zero};
+use soil_runtime::traits::{Block as BlockT, NumberFor, Zero};
 
 use super::{benefit, cost, Round, SetId, NEIGHBOR_REBROADCAST_PERIOD};
 use crate::{environment, CatchUp, CompactCommit, SignedMessage, LOG_TARGET};
@@ -1677,7 +1677,7 @@ mod tests {
 	use crate::communication;
 	use sc_network::config::Role;
 	use sc_network_gossip::Validator as GossipValidatorT;
-	use sp_core::{crypto::UncheckedFrom, H256};
+	use soil_core::{crypto::UncheckedFrom, H256};
 	use std::time::Instant;
 	use substrate_test_runtime_client::runtime::{Block, Header};
 

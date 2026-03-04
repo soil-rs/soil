@@ -22,7 +22,7 @@
 use frame_benchmarking::{v2::*, BenchmarkError};
 use frame_support::assert_ok;
 use frame_system::{pallet_prelude::BlockNumberFor, RawOrigin};
-use sp_runtime::traits::{Bounded, CheckedDiv, CheckedMul};
+use soil_runtime::traits::{Bounded, CheckedDiv, CheckedMul};
 
 use crate::*;
 

@@ -31,7 +31,7 @@ use frame_support::{
 };
 use frame_system::EnsureRoot;
 use pallet_collective::{EnsureProportionAtLeast, Instance1};
-use sp_runtime::{
+use soil_runtime::{
 	traits::{BadOrigin, BlakeTwo256, Dispatchable, Hash},
 	BuildStorage, DispatchError, TokenError,
 };
@@ -176,7 +176,7 @@ parameter_types! {
 	pub const MotionDuration: BlockNumber = MOTION_DURATION_IN_BLOCKS;
 	pub const MaxProposals: u32 = 100;
 	pub const MaxMembers: u32 = 100;
-	pub MaxProposalWeight: Weight = sp_runtime::Perbill::from_percent(50) * BlockWeights::get().max_block;
+	pub MaxProposalWeight: Weight = soil_runtime::Perbill::from_percent(50) * BlockWeights::get().max_block;
 }
 
 type CouncilCollective = pallet_collective::Instance1;
@@ -234,7 +234,7 @@ use pallet_balances::Call as BalancesCall;
 use pallet_root_testing::Call as RootTestingCall;
 use pallet_timestamp::Call as TimestampCall;
 
-pub fn new_test_ext() -> sp_io::TestExternalities {
+pub fn new_test_ext() -> soil_io::TestExternalities {
 	let mut t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	pallet_balances::GenesisConfig::<Test> {
 		balances: vec![(1, 10), (2, 10), (3, 10), (4, 10), (5, 2)],
@@ -250,7 +250,7 @@ pub fn new_test_ext() -> sp_io::TestExternalities {
 	.assimilate_storage(&mut t)
 	.unwrap();
 
-	let mut ext = sp_io::TestExternalities::new(t);
+	let mut ext = soil_io::TestExternalities::new(t);
 	ext.execute_with(|| System::set_block_number(1));
 	ext
 }
@@ -461,7 +461,7 @@ fn batch_early_exit_works() {
 
 #[test]
 fn batch_weight_calculation_doesnt_overflow() {
-	use sp_runtime::Perbill;
+	use soil_runtime::Perbill;
 	new_test_ext().execute_with(|| {
 		let big_call = RuntimeCall::RootTesting(RootTestingCall::fill_block {
 			ratio: Perbill::from_percent(50),

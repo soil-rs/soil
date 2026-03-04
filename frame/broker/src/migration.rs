@@ -20,7 +20,7 @@ use crate::types::RegionRecord;
 use codec::{Decode, Encode};
 use core::marker::PhantomData;
 use frame_support::traits::{Get, UncheckedOnRuntimeUpgrade};
-use sp_runtime::Saturating;
+use soil_runtime::Saturating;
 
 #[cfg(feature = "try-runtime")]
 use alloc::vec::Vec;
@@ -62,12 +62,12 @@ mod v1 {
 		}
 
 		#[cfg(feature = "try-runtime")]
-		fn pre_upgrade() -> Result<Vec<u8>, sp_runtime::TryRuntimeError> {
+		fn pre_upgrade() -> Result<Vec<u8>, soil_runtime::TryRuntimeError> {
 			Ok((Regions::<T>::iter_keys().count() as u32).encode())
 		}
 
 		#[cfg(feature = "try-runtime")]
-		fn post_upgrade(state: Vec<u8>) -> Result<(), sp_runtime::TryRuntimeError> {
+		fn post_upgrade(state: Vec<u8>) -> Result<(), soil_runtime::TryRuntimeError> {
 			let old_count = u32::decode(&mut &state[..]).expect("Known good");
 			let new_count = Regions::<T>::iter_values().count() as u32;
 
@@ -113,12 +113,12 @@ mod v2 {
 		}
 
 		#[cfg(feature = "try-runtime")]
-		fn pre_upgrade() -> Result<Vec<u8>, sp_runtime::TryRuntimeError> {
+		fn pre_upgrade() -> Result<Vec<u8>, soil_runtime::TryRuntimeError> {
 			Ok((AllowedRenewals::<T>::iter_keys().count() as u32).encode())
 		}
 
 		#[cfg(feature = "try-runtime")]
-		fn post_upgrade(state: Vec<u8>) -> Result<(), sp_runtime::TryRuntimeError> {
+		fn post_upgrade(state: Vec<u8>) -> Result<(), soil_runtime::TryRuntimeError> {
 			let old_count = u32::decode(&mut &state[..]).expect("Known good");
 			let new_count = PotentialRenewals::<T>::iter_values().count() as u32;
 
@@ -149,12 +149,12 @@ mod v3 {
 		}
 
 		#[cfg(feature = "try-runtime")]
-		fn pre_upgrade() -> Result<Vec<u8>, sp_runtime::TryRuntimeError> {
+		fn pre_upgrade() -> Result<Vec<u8>, soil_runtime::TryRuntimeError> {
 			Ok(System::<T>::providers(&Pallet::<T>::account_id()).encode())
 		}
 
 		#[cfg(feature = "try-runtime")]
-		fn post_upgrade(state: Vec<u8>) -> Result<(), sp_runtime::TryRuntimeError> {
+		fn post_upgrade(state: Vec<u8>) -> Result<(), soil_runtime::TryRuntimeError> {
 			let old_providers = u32::decode(&mut &state[..]).expect("Known good");
 			let new_providers = System::<T>::providers(&Pallet::<T>::account_id()) as u32;
 
@@ -249,7 +249,7 @@ pub mod v4 {
 		for MigrateToV4Impl<T, BlockConversion>
 	{
 		#[cfg(feature = "try-runtime")]
-		fn pre_upgrade() -> Result<Vec<u8>, sp_runtime::TryRuntimeError> {
+		fn pre_upgrade() -> Result<Vec<u8>, soil_runtime::TryRuntimeError> {
 			let (interlude_length, configuration_leadin_length) =
 				if let Some(config_record) = v3::Configuration::<T>::get() {
 					(config_record.interlude_length, config_record.leadin_length)
@@ -336,7 +336,7 @@ pub mod v4 {
 		}
 
 		#[cfg(feature = "try-runtime")]
-		fn post_upgrade(state: Vec<u8>) -> Result<(), sp_runtime::TryRuntimeError> {
+		fn post_upgrade(state: Vec<u8>) -> Result<(), soil_runtime::TryRuntimeError> {
 			let (
 				old_interlude_length,
 				old_configuration_leadin_length,

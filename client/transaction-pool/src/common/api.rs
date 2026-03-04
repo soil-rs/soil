@@ -30,8 +30,8 @@ use prometheus_endpoint::Registry as PrometheusRegistry;
 use sc_client_api::{blockchain::HeaderBackend, BlockBackend};
 use sp_api::{ApiExt, ProvideRuntimeApi};
 use sp_blockchain::{HeaderMetadata, TreeRoute};
-use sp_core::traits::SpawnEssentialNamed;
-use sp_runtime::{
+use soil_core::traits::SpawnEssentialNamed;
+use soil_runtime::{
 	generic::BlockId,
 	traits::{self, Block as BlockT, BlockIdTo},
 	transaction_validity::{TransactionSource, TransactionValidity},
@@ -360,8 +360,8 @@ where
 					)?;
 
 				// The old versions require us to call `initialize_block` before.
-				runtime_api.initialize_block(at, &sp_runtime::traits::Header::new(
-					block_number + sp_runtime::traits::One::one(),
+				runtime_api.initialize_block(at, &soil_runtime::traits::Header::new(
+					block_number + soil_runtime::traits::One::one(),
 					Default::default(),
 					Default::default(),
 					at,

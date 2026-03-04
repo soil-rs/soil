@@ -264,7 +264,7 @@ use soil_arithmetic::{
 	UpperOf,
 };
 use sp_npos_elections::{ElectionScore, IdentifierT, Supports, VoteWeight};
-use sp_runtime::{
+use soil_runtime::{
 	transaction_validity::{
 		InvalidTransaction, TransactionPriority, TransactionSource, TransactionValidity,
 		TransactionValidityError, ValidTransaction,
@@ -273,7 +273,7 @@ use sp_runtime::{
 };
 
 #[cfg(feature = "try-runtime")]
-use sp_runtime::TryRuntimeError;
+use soil_runtime::TryRuntimeError;
 
 #[cfg(feature = "runtime-benchmarks")]
 mod benchmarking;
@@ -596,7 +596,7 @@ pub mod pallet {
 	use frame_election_provider_support::{InstantElectionProvider, NposSolver};
 	use frame_support::{pallet_prelude::*, traits::EstimateCallFee};
 	use frame_system::pallet_prelude::*;
-	use sp_runtime::traits::Convert;
+	use soil_runtime::traits::Convert;
 
 	#[pallet::config]
 	pub trait Config: frame_system::Config + CreateBare<Call<Self>> {
@@ -848,7 +848,7 @@ pub mod pallet {
 		}
 
 		fn offchain_worker(now: BlockNumberFor<T>) {
-			use sp_runtime::offchain::storage_lock::{BlockAndTime, StorageLock};
+			use soil_runtime::offchain::storage_lock::{BlockAndTime, StorageLock};
 
 			// Create a lock with the maximum deadline of number of blocks in the unsigned phase.
 			// This should only come useful in an **abrupt** termination of execution, otherwise the
@@ -1378,7 +1378,7 @@ impl<T: Config> SnapshotWrapper<T> {
 	pub fn set(metadata: SolutionOrSnapshotSize, desired_targets: u32, buffer: &[u8]) {
 		SnapshotMetadata::<T>::put(metadata);
 		DesiredTargets::<T>::put(desired_targets);
-		sp_io::storage::set(&Snapshot::<T>::hashed_key(), &buffer);
+		soil_io::storage::set(&Snapshot::<T>::hashed_key(), &buffer);
 	}
 
 	/// Check if all of the storage items exist at the same time or all of the storage items do not
@@ -1788,7 +1788,7 @@ impl<T: Config> ElectionProvider for Pallet<T> {
 	type MaxWinnersPerPage = T::MaxWinners;
 	type MaxBackersPerWinner = T::MaxBackersPerWinner;
 	type MaxBackersPerWinnerFinal = T::MaxBackersPerWinner;
-	type Pages = sp_core::ConstU32<1>;
+	type Pages = soil_core::ConstU32<1>;
 	type DataProvider = T::DataProvider;
 
 	fn elect(page: PageIndex) -> Result<BoundedSupportsOf<Self>, Self::Error> {

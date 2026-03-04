@@ -45,7 +45,7 @@ use sc_network::{
 use sc_network_common::sync::message::{BlockAttributes, BlockData, BlockRequest, FromBlock};
 use sc_network_types::PeerId;
 use sp_blockchain::HeaderBackend;
-use sp_runtime::{
+use soil_runtime::{
 	generic::BlockId,
 	traits::{Block as BlockT, Header, One, Zero},
 };

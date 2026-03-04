@@ -33,11 +33,11 @@ use sp_consensus_babe::{
 	make_vrf_sign_data, AuthorityPair, AuthoritySignature,
 };
 use sp_consensus_slots::Slot;
-use sp_core::{
+use soil_core::{
 	crypto::{VrfPublic, Wraps},
 	Pair,
 };
-use sp_runtime::{traits::Header, DigestItem};
+use soil_runtime::{traits::Header, DigestItem};
 
 /// BABE verification parameters
 pub(super) struct VerificationParams<'a, B: 'a + BlockT> {

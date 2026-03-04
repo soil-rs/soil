@@ -30,7 +30,7 @@ use frame_support::{
 		Currency, Get,
 	},
 };
-use sp_runtime::traits::Bounded;
+use soil_runtime::traits::Bounded;
 
 use crate::Pallet as ConvictionVoting;
 

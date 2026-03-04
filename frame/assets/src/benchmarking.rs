@@ -29,7 +29,7 @@ use frame_benchmarking::{
 };
 use frame_support::traits::{EnsureOrigin, Get, UnfilteredDispatchable};
 use frame_system::RawOrigin as SystemOrigin;
-use sp_runtime::{traits::Bounded, Weight};
+use soil_runtime::{traits::Bounded, Weight};
 
 use crate::Pallet as Assets;
 

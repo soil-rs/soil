@@ -27,7 +27,7 @@ use frame_support::{
 	traits::{Currency, EnsureOrigin, Get, Hooks},
 };
 use frame_system::RawOrigin;
-use sp_runtime::traits::Zero;
+use soil_runtime::traits::Zero;
 use sp_staking::{EraIndex, StakingInterface};
 
 const USER_SEED: u32 = 0;

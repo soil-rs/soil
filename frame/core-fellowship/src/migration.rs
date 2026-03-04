@@ -27,7 +27,7 @@ use frame_support::{
 #[cfg(feature = "try-runtime")]
 use alloc::vec::Vec;
 #[cfg(feature = "try-runtime")]
-use sp_runtime::TryRuntimeError;
+use soil_runtime::TryRuntimeError;
 
 mod v0 {
 	use frame_system::pallet_prelude::BlockNumberFor;

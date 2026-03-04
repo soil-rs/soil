@@ -19,7 +19,7 @@ use super::*;
 use codec::{Decode, Encode, MaxEncodedLen};
 use core::marker::PhantomData;
 use scale_info::TypeInfo;
-use sp_runtime::traits::TryConvert;
+use soil_runtime::traits::TryConvert;
 
 /// Represents a swap path with associated asset amounts indicating how much of the asset needs to
 /// be deposited to get the following asset's amount withdrawn (this is inclusive of fees).
@@ -152,7 +152,7 @@ where
 	Seed: Get<PalletId>,
 {
 	fn try_convert(id: &PoolId) -> Result<AccountId, &PoolId> {
-		sp_io::hashing::blake2_256(&Encode::encode(&(Seed::get(), id))[..])
+		soil_io::hashing::blake2_256(&Encode::encode(&(Seed::get(), id))[..])
 			.using_encoded(|e| Decode::decode(&mut TrailingZeroInput::new(e)).map_err(|_| id))
 	}
 }
@@ -165,7 +165,7 @@ where
 	AccountId: Decode,
 {
 	fn try_convert(id: &PoolId) -> Result<AccountId, &PoolId> {
-		sp_io::hashing::blake2_256(&Encode::encode(id)[..])
+		soil_io::hashing::blake2_256(&Encode::encode(id)[..])
 			.using_encoded(|e| Decode::decode(&mut TrailingZeroInput::new(e)).map_err(|_| id))
 	}
 }

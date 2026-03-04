@@ -16,8 +16,8 @@
 // limitations under the License.
 
 use frame_support::{construct_runtime, derive_impl};
-use sp_core::sr25519;
-use sp_runtime::{generic, traits::BlakeTwo256};
+use soil_core::sr25519;
+use soil_runtime::{generic, traits::BlakeTwo256};
 
 pub type Signature = sr25519::Signature;
 pub type BlockNumber = u32;
@@ -33,10 +33,10 @@ impl frame_system::Config for Runtime {
 	type RuntimeOrigin = RuntimeOrigin;
 	type Nonce = u64;
 	type RuntimeCall = RuntimeCall;
-	type Hash = sp_runtime::testing::H256;
-	type Hashing = sp_runtime::traits::BlakeTwo256;
+	type Hash = soil_runtime::testing::H256;
+	type Hashing = soil_runtime::traits::BlakeTwo256;
 	type AccountId = u64;
-	type Lookup = sp_runtime::traits::IdentityLookup<Self::AccountId>;
+	type Lookup = soil_runtime::traits::IdentityLookup<Self::AccountId>;
 	type Block = Block;
 	type RuntimeEvent = RuntimeEvent;
 	type BlockHashCount = frame_support::traits::ConstU32<250>;

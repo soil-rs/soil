@@ -35,7 +35,7 @@ use sp_consensus_beefy::{
 	},
 	Payload, ValidatorSet, ValidatorSetId, KEY_TYPE as BEEFY_KEY_TYPE,
 };
-use sp_runtime::{DigestItem, Perbill};
+use soil_runtime::{DigestItem, Perbill};
 use sp_session::MembershipProof;
 
 use crate::{self as beefy, mock::*, Call, Config, Error, WeightInfoExt};
@@ -729,7 +729,7 @@ fn report_double_voting_invalid_equivocation_proof() {
 
 #[test]
 fn report_double_voting_validate_unsigned_prevents_duplicates() {
-	use sp_runtime::transaction_validity::{
+	use soil_runtime::transaction_validity::{
 		InvalidTransaction, TransactionPriority, TransactionSource, TransactionValidity,
 		ValidTransaction,
 	};
@@ -765,7 +765,7 @@ fn report_double_voting_validate_unsigned_prevents_duplicates() {
 
 		// only local/inblock reports are allowed
 		assert_eq!(
-			<Beefy as sp_runtime::traits::ValidateUnsigned>::validate_unsigned(
+			<Beefy as soil_runtime::traits::ValidateUnsigned>::validate_unsigned(
 				TransactionSource::External,
 				&call,
 			),
@@ -776,7 +776,7 @@ fn report_double_voting_validate_unsigned_prevents_duplicates() {
 		let tx_tag = (equivocation_key, set_id, 3u64);
 
 		assert_eq!(
-			<Beefy as sp_runtime::traits::ValidateUnsigned>::validate_unsigned(
+			<Beefy as soil_runtime::traits::ValidateUnsigned>::validate_unsigned(
 				TransactionSource::Local,
 				&call,
 			),
@@ -790,7 +790,7 @@ fn report_double_voting_validate_unsigned_prevents_duplicates() {
 		);
 
 		// the pre dispatch checks should also pass
-		assert_ok!(<Beefy as sp_runtime::traits::ValidateUnsigned>::pre_dispatch(&call));
+		assert_ok!(<Beefy as soil_runtime::traits::ValidateUnsigned>::pre_dispatch(&call));
 
 		// we submit the report
 		Beefy::report_double_voting_unsigned(
@@ -803,7 +803,7 @@ fn report_double_voting_validate_unsigned_prevents_duplicates() {
 		// the report should now be considered stale and the transaction is invalid
 		// the check for staleness should be done on both `validate_unsigned` and on `pre_dispatch`
 		assert_err!(
-			<Beefy as sp_runtime::traits::ValidateUnsigned>::validate_unsigned(
+			<Beefy as soil_runtime::traits::ValidateUnsigned>::validate_unsigned(
 				TransactionSource::Local,
 				&call,
 			),
@@ -811,7 +811,7 @@ fn report_double_voting_validate_unsigned_prevents_duplicates() {
 		);
 
 		assert_err!(
-			<Beefy as sp_runtime::traits::ValidateUnsigned>::pre_dispatch(&call),
+			<Beefy as soil_runtime::traits::ValidateUnsigned>::pre_dispatch(&call),
 			InvalidTransaction::Stale,
 		);
 	});

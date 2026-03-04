@@ -35,7 +35,7 @@
 
 extern crate alloc;
 
-use sp_runtime::{
+use soil_runtime::{
 	generic::OpaqueDigestItemId,
 	traits::{Convert, Header, Member},
 	SaturatedConversion,
@@ -73,7 +73,7 @@ where
 	T: pallet_beefy::Config,
 {
 	fn on_new_root(root: &sp_consensus_beefy::MmrRootHash) {
-		let digest = sp_runtime::generic::DigestItem::Consensus(
+		let digest = soil_runtime::generic::DigestItem::Consensus(
 			sp_consensus_beefy::BEEFY_ENGINE_ID,
 			codec::Encode::encode(&sp_consensus_beefy::ConsensusLog::<
 				<T as pallet_beefy::Config>::BeefyId,
@@ -87,7 +87,7 @@ where
 pub struct BeefyEcdsaToEthereum;
 impl Convert<sp_consensus_beefy::ecdsa_crypto::AuthorityId, Vec<u8>> for BeefyEcdsaToEthereum {
 	fn convert(beefy_id: sp_consensus_beefy::ecdsa_crypto::AuthorityId) -> Vec<u8> {
-		sp_core::ecdsa::Public::from(beefy_id)
+		soil_core::ecdsa::Public::from(beefy_id)
 			.to_eth_address()
 			.map(|v| v.to_vec())
 			.map_err(|_| {
@@ -97,7 +97,7 @@ impl Convert<sp_consensus_beefy::ecdsa_crypto::AuthorityId, Vec<u8>> for BeefyEc
 	}
 }
 
-type MerkleRootOf<T> = <<T as pallet_mmr::Config>::Hashing as sp_runtime::traits::Hash>::Output;
+type MerkleRootOf<T> = <<T as pallet_mmr::Config>::Hashing as soil_runtime::traits::Hash>::Output;
 
 #[frame_support::pallet]
 pub mod pallet {

@@ -18,8 +18,8 @@ targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
 sp-api = { workspace = true }
-sp-runtime = { workspace = true }
+soil-runtime = { workspace = true }
 
 [features]
 default = ["std"]
-std = ["sp-api/std", "sp-runtime/std"]
+std = ["sp-api/std", "soil-runtime/std"]

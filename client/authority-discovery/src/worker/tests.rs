@@ -45,8 +45,8 @@ use sc_network_types::{
 	PeerId,
 };
 use sp_api::{ApiRef, ProvideRuntimeApi};
-use sp_keystore::{testing::MemoryKeystore, Keystore};
-use sp_runtime::traits::{Block as BlockT, NumberFor, Zero};
+use soil_keystore::{testing::MemoryKeystore, Keystore};
+use soil_runtime::traits::{Block as BlockT, NumberFor, Zero};
 use substrate_test_runtime_client::runtime::Block;
 
 #[derive(Clone)]
@@ -615,13 +615,13 @@ async fn dont_stop_polling_dht_event_stream_after_bogus_event() {
 
 struct DhtValueFoundTester {
 	pub remote_key_store: MemoryKeystore,
-	pub remote_authority_public: sp_core::sr25519::Public,
+	pub remote_authority_public: soil_core::sr25519::Public,
 	pub remote_node_key: Keypair,
 	pub local_worker: Option<
 		Worker<
 			TestApi,
-			sp_runtime::generic::Block<
-				sp_runtime::generic::Header<u64, sp_runtime::traits::BlakeTwo256>,
+			soil_runtime::generic::Block<
+				soil_runtime::generic::Header<u64, soil_runtime::traits::BlakeTwo256>,
 				substrate_test_runtime_client::runtime::Extrinsic,
 			>,
 			std::pin::Pin<Box<futures::channel::mpsc::Receiver<DhtEvent>>>,

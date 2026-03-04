@@ -32,14 +32,14 @@ use sc_executor::WasmExecutor;
 use sc_service::client::{new_with_backend, Client, LocalCallExecutor};
 use sp_api::ProvideRuntimeApi;
 use sp_consensus::{BlockOrigin, Error as ConsensusError, SelectChain};
-use sp_core::{testing::TaskExecutor, traits::CallContext, H256};
-use sp_runtime::{
+use soil_core::{testing::TaskExecutor, traits::CallContext, H256};
+use soil_runtime::{
 	generic::BlockId,
 	traits::{BlakeTwo256, Block as BlockT, Header as HeaderT},
 	ConsensusEngineId, Justifications, StateVersion,
 };
-use sp_state_machine::{backend::Backend as _, InMemoryBackend, OverlayedChanges, StateMachine};
-use sp_storage::{ChildInfo, StorageKey};
+use soil_state_machine::{backend::Backend as _, InMemoryBackend, OverlayedChanges, StateMachine};
+use soil_storage::{ChildInfo, StorageKey};
 use std::{collections::HashSet, sync::Arc};
 use substrate_test_runtime::TestAPI;
 use substrate_test_runtime_client::{
@@ -72,7 +72,7 @@ fn construct_block(
 		digest: Digest { logs: vec![] },
 	};
 	let mut overlay = OverlayedChanges::default();
-	let backend_runtime_code = sp_state_machine::backend::BackendRuntimeCode::new(backend);
+	let backend_runtime_code = soil_state_machine::backend::BackendRuntimeCode::new(backend);
 	let runtime_code = backend_runtime_code.runtime_code().expect("Code is part of the backend");
 
 	StateMachine::new(
@@ -168,7 +168,7 @@ fn construct_genesis_should_work_with_native() {
 
 	let backend = InMemoryBackend::from((storage, StateVersion::default()));
 	let b1data = block1(genesis_hash, &backend);
-	let backend_runtime_code = sp_state_machine::backend::BackendRuntimeCode::new(&backend);
+	let backend_runtime_code = soil_state_machine::backend::BackendRuntimeCode::new(&backend);
 	let runtime_code = backend_runtime_code.runtime_code().expect("Code is part of the backend");
 
 	let mut overlay = OverlayedChanges::default();
@@ -199,7 +199,7 @@ fn construct_genesis_should_work_with_wasm() {
 
 	let backend = InMemoryBackend::from((storage, StateVersion::default()));
 	let b1data = block1(genesis_hash, &backend);
-	let backend_runtime_code = sp_state_machine::backend::BackendRuntimeCode::new(&backend);
+	let backend_runtime_code = soil_state_machine::backend::BackendRuntimeCode::new(&backend);
 	let runtime_code = backend_runtime_code.runtime_code().expect("Code is part of the backend");
 
 	let mut overlay = OverlayedChanges::default();
@@ -2249,18 +2249,18 @@ fn reorg_triggers_a_notification_even_for_sources_that_should_not_trigger_notifi
 
 #[test]
 fn use_dalek_ext_works() {
-	fn zero_ed_pub() -> sp_core::ed25519::Public {
-		sp_core::ed25519::Public::default()
+	fn zero_ed_pub() -> soil_core::ed25519::Public {
+		soil_core::ed25519::Public::default()
 	}
 
-	fn zero_ed_sig() -> sp_core::ed25519::Signature {
-		sp_core::ed25519::Signature::default()
+	fn zero_ed_sig() -> soil_core::ed25519::Signature {
+		soil_core::ed25519::Signature::default()
 	}
 
 	let client = TestClientBuilder::new().build();
 
 	client.execution_extensions().set_extensions_factory(
-		sc_client_api::execution_extensions::ExtensionBeforeBlock::<Block, sp_io::UseDalekExt>::new(
+		sc_client_api::execution_extensions::ExtensionBeforeBlock::<Block, soil_io::UseDalekExt>::new(
 			1,
 		),
 	);

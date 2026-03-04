@@ -20,7 +20,7 @@ frame-benchmarking = { optional = true, workspace = true }
 frame-election-provider-support = { workspace = true }
 frame-system = { workspace = true }
 sp-npos-elections = { workspace = true }
-sp-runtime = { workspace = true }
+soil-runtime = { workspace = true }
 
 [features]
 default = ["std"]
@@ -30,11 +30,11 @@ std = [
 	"frame-election-provider-support/std",
 	"frame-system/std",
 	"sp-npos-elections/std",
-	"sp-runtime/std",
+	"soil-runtime/std",
 ]
 runtime-benchmarks = [
 	"frame-benchmarking/runtime-benchmarks",
 	"frame-election-provider-support/runtime-benchmarks",
 	"frame-system/runtime-benchmarks",
-	"sp-runtime/runtime-benchmarks",
+	"soil-runtime/runtime-benchmarks",
 ]

@@ -19,7 +19,7 @@
 //! Substrate child state API
 use crate::state::{Error, ReadProof};
 use jsonrpsee::proc_macros::rpc;
-use sp_core::storage::{PrefixedStorageKey, StorageData, StorageKey};
+use soil_core::storage::{PrefixedStorageKey, StorageData, StorageKey};
 
 /// Substrate child state API
 ///

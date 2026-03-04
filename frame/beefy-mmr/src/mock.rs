@@ -23,21 +23,21 @@ use frame_support::{
 	traits::{ConstU32, ConstU64},
 };
 use sp_consensus_beefy::mmr::MmrLeafVersion;
-use sp_io::TestExternalities;
-use sp_runtime::{
+use soil_io::TestExternalities;
+use soil_runtime::{
 	app_crypto::ecdsa::Public,
 	impl_opaque_keys,
 	traits::{ConvertInto, Keccak256, OpaqueKeys},
 	BuildStorage,
 };
-use sp_state_machine::BasicExternalities;
+use soil_state_machine::BasicExternalities;
 
 use crate as pallet_beefy_mmr;
 
 pub use sp_consensus_beefy::{
 	ecdsa_crypto::AuthorityId as BeefyId, mmr::BeefyDataProvider, ConsensusLog, BEEFY_ENGINE_ID,
 };
-use sp_core::offchain::{testing::TestOffchainExt, OffchainDbExt, OffchainWorkerExt};
+use soil_core::offchain::{testing::TestOffchainExt, OffchainDbExt, OffchainWorkerExt};
 
 impl_opaque_keys! {
 	pub struct MockSessionKeys {
@@ -116,7 +116,7 @@ impl pallet_beefy::Config for Test {
 	type OnNewValidatorSet = BeefyMmr;
 	type AncestryHelper = BeefyMmr;
 	type WeightInfo = ();
-	type KeyOwnerProof = sp_core::Void;
+	type KeyOwnerProof = soil_core::Void;
 	type EquivocationReportSystem = ();
 }
 

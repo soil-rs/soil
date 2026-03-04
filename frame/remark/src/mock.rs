@@ -19,7 +19,7 @@
 
 use crate as pallet_remark;
 use frame_support::derive_impl;
-use sp_runtime::BuildStorage;
+use soil_runtime::BuildStorage;
 
 pub type Block = frame_system::mocking::MockBlock<Test>;
 
@@ -42,7 +42,7 @@ impl pallet_remark::Config for Test {
 	type WeightInfo = ();
 }
 
-pub fn new_test_ext() -> sp_io::TestExternalities {
+pub fn new_test_ext() -> soil_io::TestExternalities {
 	let t = RuntimeGenesisConfig { system: Default::default() }.build_storage().unwrap();
 	t.into()
 }

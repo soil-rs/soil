@@ -20,7 +20,7 @@
 #![cfg(test)]
 
 use frame_support::{derive_impl, traits::ConstU32};
-use sp_runtime::{
+use soil_runtime::{
 	testing::H256,
 	traits::{BlakeTwo256, IdentityLookup},
 	BuildStorage,
@@ -135,7 +135,7 @@ impl pallet_test::OtherConfig for Test {
 	type OtherEvent = RuntimeEvent;
 }
 
-fn new_test_ext() -> sp_io::TestExternalities {
+fn new_test_ext() -> soil_io::TestExternalities {
 	RuntimeGenesisConfig::default().build_storage().unwrap().into()
 }
 
@@ -144,7 +144,7 @@ mod benchmarks {
 	use crate::account;
 	use frame_support::ensure;
 	use frame_system::RawOrigin;
-	use sp_core::Get;
+	use soil_core::Get;
 
 	// Additional used internally by the benchmark macro.
 	use super::pallet_test::{Call, Config, Pallet};
@@ -217,7 +217,7 @@ fn ensure_correct_instance_is_selected() {
 	};
 	let params = (&config, &whitelist);
 
-	let state = sc_client_db::BenchmarkingState::<sp_runtime::traits::BlakeTwo256>::new(
+	let state = sc_client_db::BenchmarkingState::<soil_runtime::traits::BlakeTwo256>::new(
 		Default::default(),
 		None,
 		false,
@@ -226,8 +226,8 @@ fn ensure_correct_instance_is_selected() {
 	.unwrap();
 
 	let mut overlay = Default::default();
-	let mut ext = sp_state_machine::Ext::new(&mut overlay, &state, None);
-	sp_externalities::set_and_run_with_externalities(&mut ext, || {
+	let mut ext = soil_state_machine::Ext::new(&mut overlay, &state, None);
+	soil_externalities::set_and_run_with_externalities(&mut ext, || {
 		add_benchmarks!(params, batches);
 		Ok::<_, crate::BenchmarkError>(())
 	})

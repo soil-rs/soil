@@ -31,7 +31,7 @@ use frame_support::{
 	traits::{Len, OnIdle, OnPoll},
 };
 use frame_system::RawOrigin as SystemOrigin;
-use sp_runtime::{
+use soil_runtime::{
 	generic::ExtensionVersion,
 	traits::{AppendZerosInput, AsTransactionAuthorizedOrigin, DispatchTransaction},
 	Weight,
@@ -943,7 +943,7 @@ mod benches {
 				T::Crypto::open(member, members.iter().map(|(_, m)| m.clone())).unwrap(),
 				secret,
 				&context[..],
-				&sp_io::hashing::blake2_256(msg),
+				&soil_io::hashing::blake2_256(msg),
 			)
 			.map(|(p, _)| p)
 			.expect("should create proof")
@@ -992,7 +992,7 @@ mod benches {
 		let call: <T as frame_system::Config>::RuntimeCall = inner.into();
 		let ext_version: ExtensionVersion = 0;
 		let signature = (ext_version, &call).using_encoded(|msg| {
-			<T::Crypto as GenerateVerifiable>::sign(secret, &sp_io::hashing::blake2_256(msg))
+			<T::Crypto as GenerateVerifiable>::sign(secret, &soil_io::hashing::blake2_256(msg))
 				.expect("failed to create signature")
 		});
 

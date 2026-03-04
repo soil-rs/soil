@@ -18,4 +18,4 @@ targets = ["x86_64-unknown-linux-gnu"]
 [dependencies]
 bitflags = { workspace = true }
 codec = { features = ["derive"], workspace = true, default-features = true }
-sp-runtime = { workspace = true, default-features = true }
+soil-runtime = { workspace = true, default-features = true }

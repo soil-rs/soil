@@ -36,7 +36,7 @@ use sc_network::{
 	request_responses::{IncomingRequest, OutgoingResponse},
 	NetworkBackend, MAX_RESPONSE_SIZE,
 };
-use sp_runtime::traits::Block as BlockT;
+use soil_runtime::traits::Block as BlockT;
 
 use std::{
 	hash::{Hash, Hasher},
@@ -249,11 +249,11 @@ where
 				response.entries.get(0).and_then(|top| top
 					.entries
 					.first()
-					.map(|e| sp_core::hexdisplay::HexDisplay::from(&e.key))),
+					.map(|e| soil_core::hexdisplay::HexDisplay::from(&e.key))),
 				response.entries.get(0).and_then(|top| top
 					.entries
 					.last()
-					.map(|e| sp_core::hexdisplay::HexDisplay::from(&e.key))),
+					.map(|e| soil_core::hexdisplay::HexDisplay::from(&e.key))),
 			);
 			if let Some(value) = self.seen_requests.get(&key) {
 				// If this is the first time we have processed this request, we need to change

@@ -24,8 +24,8 @@ use frame_support::{
 	},
 	weights::Weight,
 };
-use sp_core::hexdisplay::HexDisplay;
-use sp_io::{hashing::twox_128, storage};
+use soil_core::hexdisplay::HexDisplay;
+use soil_io::{hashing::twox_128, storage};
 
 use crate as pallet_bounties;
 
@@ -158,7 +158,7 @@ pub fn pre_migration<T: pallet_bounties::Config, P: GetStorageVersion + 'static,
 		),
 		"unexpected next_key({}) = {:?}",
 		new_pallet_name,
-		HexDisplay::from(&sp_io::storage::next_key(&new_pallet_prefix).unwrap()),
+		HexDisplay::from(&soil_io::storage::next_key(&new_pallet_prefix).unwrap()),
 	);
 	assert!(<P as GetStorageVersion>::on_chain_storage_version() < 4);
 }

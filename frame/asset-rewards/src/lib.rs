@@ -94,8 +94,8 @@ use frame_support::{
 	PalletId,
 };
 use scale_info::TypeInfo;
-use sp_core::Get;
-use sp_runtime::{
+use soil_core::Get;
+use soil_runtime::{
 	traits::{BadOrigin, BlockNumberProvider, EnsureAdd, MaybeDisplay, Zero},
 	DispatchError, DispatchResult,
 };
@@ -190,7 +190,7 @@ pub mod pallet {
 	use frame_system::pallet_prelude::{
 		ensure_signed, BlockNumberFor as SystemBlockNumberFor, OriginFor,
 	};
-	use sp_runtime::{
+	use soil_runtime::{
 		traits::{
 			AccountIdConversion, BadOrigin, EnsureAdd, EnsureAddAssign, EnsureDiv, EnsureMul,
 			EnsureSub, EnsureSubAssign,

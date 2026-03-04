@@ -86,7 +86,7 @@ use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;
 
 use alloc::{boxed::Box, collections::btree_map::BTreeMap};
-use sp_runtime::{
+use soil_runtime::{
 	traits::{
 		AccountIdConversion, BlockNumberProvider, CheckedAdd, One, Saturating, StaticLookup,
 		UniqueSaturatedInto, Zero,
@@ -489,7 +489,7 @@ pub mod pallet {
 		}
 
 		#[cfg(feature = "try-runtime")]
-		fn try_state(_: SystemBlockNumberFor<T>) -> Result<(), sp_runtime::TryRuntimeError> {
+		fn try_state(_: SystemBlockNumberFor<T>) -> Result<(), soil_runtime::TryRuntimeError> {
 			Self::do_try_state()?;
 			Ok(())
 		}
@@ -1004,7 +1004,7 @@ impl<T: Config<I>, I: 'static> Pallet<T, I> {
 
 	/// Ensure the correctness of the state of this pallet.
 	#[cfg(any(feature = "try-runtime", test))]
-	fn do_try_state() -> Result<(), sp_runtime::TryRuntimeError> {
+	fn do_try_state() -> Result<(), soil_runtime::TryRuntimeError> {
 		Self::try_state_proposals()?;
 		Self::try_state_spends()?;
 
@@ -1019,7 +1019,7 @@ impl<T: Config<I>, I: 'static> Pallet<T, I> {
 	/// 3. Each [`ProposalIndex`] contained in [`Approvals`] should exist in [`Proposals`].
 	/// Note, that this automatically implies [`Approvals`].count() <= [`Proposals`].count().
 	#[cfg(any(feature = "try-runtime", test))]
-	fn try_state_proposals() -> Result<(), sp_runtime::TryRuntimeError> {
+	fn try_state_proposals() -> Result<(), soil_runtime::TryRuntimeError> {
 		let current_proposal_count = ProposalCount::<T, I>::get();
 		ensure!(
 			current_proposal_count as usize >= Proposals::<T, I>::iter().count(),
@@ -1055,7 +1055,7 @@ impl<T: Config<I>, I: 'static> Pallet<T, I> {
 	/// 3. For each spend entry contained in [`Spends`] we should have spend.expire_at
 	/// > spend.valid_from.
 	#[cfg(any(feature = "try-runtime", test))]
-	fn try_state_spends() -> Result<(), sp_runtime::TryRuntimeError> {
+	fn try_state_spends() -> Result<(), soil_runtime::TryRuntimeError> {
 		let current_spend_count = SpendCount::<T, I>::get();
 		ensure!(
 			current_spend_count as usize >= Spends::<T, I>::iter().count(),
@@ -1095,7 +1095,7 @@ impl<T: Config<I>, I: 'static> OnUnbalanced<NegativeImbalanceOf<T, I>> for Palle
 
 /// TypedGet implementation to get the AccountId of the Treasury.
 pub struct TreasuryAccountId<R>(PhantomData<R>);
-impl<R> sp_runtime::traits::TypedGet for TreasuryAccountId<R>
+impl<R> soil_runtime::traits::TypedGet for TreasuryAccountId<R>
 where
 	R: crate::Config,
 {

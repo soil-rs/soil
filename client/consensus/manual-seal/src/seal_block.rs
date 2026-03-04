@@ -26,10 +26,10 @@ use sc_transaction_pool_api::TransactionPool;
 use sp_api::{ProofRecorder, ProvideRuntimeApi};
 use sp_blockchain::HeaderBackend;
 use sp_consensus::{self, BlockOrigin, Environment, ProposeArgs, Proposer, SelectChain};
-use sp_externalities::Extensions;
+use soil_externalities::Extensions;
 use sp_inherents::{CreateInherentDataProviders, InherentDataProvider};
-use sp_runtime::traits::{Block as BlockT, Header as HeaderT};
-use sp_trie::proof_size_extension::ProofSizeExt;
+use soil_runtime::traits::{Block as BlockT, Header as HeaderT};
+use soil_trie::proof_size_extension::ProofSizeExt;
 use std::{sync::Arc, time::Duration};
 
 /// max duration for creating a proposal in secs

@@ -29,7 +29,7 @@ use sc_network_sync::strategy::warp::{
 };
 use sp_blockchain::{Backend as BlockchainBackend, HeaderBackend};
 use sp_consensus_grandpa::{AuthorityList, SetId, GRANDPA_ENGINE_ID};
-use sp_runtime::{
+use soil_runtime::{
 	generic::BlockId,
 	traits::{Block as BlockT, Header as HeaderT, NumberFor, One},
 	Justifications,
@@ -441,7 +441,7 @@ mod tests {
 					.map(|keyring| (keyring.public().into(), 1))
 					.collect::<Vec<_>>();
 
-				let digest = sp_runtime::generic::DigestItem::Consensus(
+				let digest = soil_runtime::generic::DigestItem::Consensus(
 					sp_consensus_grandpa::GRANDPA_ENGINE_ID,
 					sp_consensus_grandpa::ConsensusLog::ScheduledChange(
 						sp_consensus_grandpa::ScheduledChange { delay: 0u64, next_authorities },

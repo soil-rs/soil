@@ -25,7 +25,7 @@ use jsonrpsee::{core::EmptyServerParams as EmptyParams, MethodsError as RpcError
 use sc_rpc_api::DenyUnsafe;
 use sc_transaction_pool::{BasicPool, FullChainApi};
 use sc_transaction_pool_api::TransactionStatus;
-use sp_core::{
+use soil_core::{
 	bytes::to_hex,
 	crypto::{ByteArray, Pair},
 	ed25519,
@@ -33,8 +33,8 @@ use sp_core::{
 	H256,
 };
 use soil_crypto_hashing::blake2_256;
-use sp_keystore::{testing::MemoryKeystore, Keystore};
-use sp_runtime::Perbill;
+use soil_keystore::{testing::MemoryKeystore, Keystore};
+use soil_runtime::Perbill;
 use std::sync::Arc;
 use substrate_test_runtime_client::{
 	self,
@@ -65,7 +65,7 @@ impl Default for TestSetup {
 		let keystore = Arc::new(MemoryKeystore::new());
 		let client = Arc::new(substrate_test_runtime_client::TestClientBuilder::new().build());
 
-		let spawner = sp_core::testing::TaskExecutor::new();
+		let spawner = soil_core::testing::TaskExecutor::new();
 		let pool = Arc::from(BasicPool::new_full(
 			Default::default(),
 			true.into(),

@@ -73,12 +73,12 @@ use sp_blockchain::{
 	Backend as _, CachedHeaderMetadata, DisplacedLeavesAfterFinalization, Error as ClientError,
 	HeaderBackend, HeaderMetadata, HeaderMetadataCache, Result as ClientResult,
 };
-use sp_core::{
+use soil_core::{
 	offchain::OffchainOverlayedChange,
 	storage::{well_known_keys, ChildInfo},
 };
 use soil_database::Transaction;
-use sp_runtime::{
+use soil_runtime::{
 	generic::BlockId,
 	traits::{
 		Block as BlockT, Hash, HashingFor, Header as HeaderT, NumberFor, One, SaturatedConversion,
@@ -86,13 +86,13 @@ use sp_runtime::{
 	},
 	Justification, Justifications, StateVersion, Storage,
 };
-use sp_state_machine::{
+use soil_state_machine::{
 	backend::{AsTrieBackend, Backend as StateBackend},
 	BackendTransaction, ChildStorageCollection, DBValue, IndexOperation, IterArgs,
 	OffchainChangesCollection, StateMachineStats, StorageCollection, StorageIterator, StorageKey,
 	StorageValue, UsageInfo as StateUsageInfo,
 };
-use sp_trie::{cache::SharedTrieCache, prefixed_key, MemoryDB, MerkleValue, PrefixedMemoryDB};
+use soil_trie::{cache::SharedTrieCache, prefixed_key, MemoryDB, MerkleValue, PrefixedMemoryDB};
 use utils::BLOCK_GAP_CURRENT_VERSION;
 
 // Re-export the Database trait so that one can pass an implementation of it.
@@ -124,17 +124,17 @@ where
 const CACHE_HEADERS: usize = 8;
 
 /// DB-backed patricia trie state, transaction type is an overlay of changes to commit.
-pub type DbState<H> = sp_state_machine::TrieBackend<Arc<dyn sp_state_machine::Storage<H>>, H>;
+pub type DbState<H> = soil_state_machine::TrieBackend<Arc<dyn soil_state_machine::Storage<H>>, H>;
 
 /// Builder for [`DbState`].
 pub type DbStateBuilder<Hasher> =
-	sp_state_machine::TrieBackendBuilder<Arc<dyn sp_state_machine::Storage<Hasher>>, Hasher>;
+	soil_state_machine::TrieBackendBuilder<Arc<dyn soil_state_machine::Storage<Hasher>>, Hasher>;
 
 /// Length of a [`DbHash`].
 const DB_HASH_LEN: usize = 32;
 
 /// Hash type that this backend uses for the database.
-pub type DbHash = sp_core::H256;
+pub type DbHash = soil_core::H256;
 
 /// An extrinsic entry in the database.
 #[derive(Debug, Encode, Decode)]
@@ -314,7 +314,7 @@ impl<B: BlockT> AsTrieBackend<HashingFor<B>> for RefTrackingState<B> {
 
 	fn as_trie_backend(
 		&self,
-	) -> &sp_state_machine::TrieBackend<Self::TrieBackendStorage, HashingFor<B>> {
+	) -> &soil_state_machine::TrieBackend<Self::TrieBackendStorage, HashingFor<B>> {
 		&self.state.as_trie_backend()
 	}
 }
@@ -1049,7 +1049,7 @@ struct StorageDb<Block: BlockT> {
 	prefix_keys: bool,
 }
 
-impl<Block: BlockT> sp_state_machine::Storage<HashingFor<Block>> for StorageDb<Block> {
+impl<Block: BlockT> soil_state_machine::Storage<HashingFor<Block>> for StorageDb<Block> {
 	fn get(&self, key: &Block::Hash, prefix: Prefix) -> Result<Option<DBValue>, String> {
 		if self.prefix_keys {
 			let key = prefixed_key::<HashingFor<Block>>(key, prefix);
@@ -1081,7 +1081,7 @@ impl<Block: BlockT> DbGenesisStorage<Block> {
 	}
 }
 
-impl<Block: BlockT> sp_state_machine::Storage<HashingFor<Block>> for DbGenesisStorage<Block> {
+impl<Block: BlockT> soil_state_machine::Storage<HashingFor<Block>> for DbGenesisStorage<Block> {
 	fn get(&self, key: &Block::Hash, prefix: Prefix) -> Result<Option<DBValue>, String> {
 		use hash_db::HashDB;
 		Ok(self.storage.get(key, prefix))
@@ -1095,13 +1095,13 @@ impl<Block: BlockT> EmptyStorage<Block> {
 		let mut root = Block::Hash::default();
 		let mut mdb = MemoryDB::<HashingFor<Block>>::default();
 		// both triedbmut are the same on empty storage.
-		sp_trie::trie_types::TrieDBMutBuilderV1::<HashingFor<Block>>::new(&mut mdb, &mut root)
+		soil_trie::trie_types::TrieDBMutBuilderV1::<HashingFor<Block>>::new(&mut mdb, &mut root)
 			.build();
 		EmptyStorage(root)
 	}
 }
 
-impl<Block: BlockT> sp_state_machine::Storage<HashingFor<Block>> for EmptyStorage<Block> {
+impl<Block: BlockT> soil_state_machine::Storage<HashingFor<Block>> for EmptyStorage<Block> {
 	fn get(&self, _key: &Block::Hash, _prefix: Prefix) -> Result<Option<DBValue>, String> {
 		Ok(None)
 	}
@@ -1163,7 +1163,7 @@ pub struct Backend<Block: BlockT> {
 	io_stats: FrozenForDuration<(kvdb::IoStats, StateUsageInfo)>,
 	state_usage: Arc<StateUsageStats>,
 	genesis_state: RwLock<Option<Arc<DbGenesisStorage<Block>>>>,
-	shared_trie_cache: Option<sp_trie::cache::SharedTrieCache<HashingFor<Block>>>,
+	shared_trie_cache: Option<soil_trie::cache::SharedTrieCache<HashingFor<Block>>>,
 	pruning_filters: Vec<Arc<dyn PruningFilter>>,
 }
 
@@ -1269,7 +1269,7 @@ impl<Block: BlockT> Backend<Block> {
 	///
 	/// Should only be needed for benchmarking.
 	#[cfg(feature = "runtime-benchmarks")]
-	pub fn expose_storage(&self) -> Arc<dyn sp_state_machine::Storage<HashingFor<Block>>> {
+	pub fn expose_storage(&self) -> Arc<dyn soil_state_machine::Storage<HashingFor<Block>>> {
 		self.storage.clone()
 	}
 
@@ -1279,7 +1279,7 @@ impl<Block: BlockT> Backend<Block> {
 	#[cfg(feature = "runtime-benchmarks")]
 	pub fn expose_shared_trie_cache(
 		&self,
-	) -> Option<sp_trie::cache::SharedTrieCache<HashingFor<Block>>> {
+	) -> Option<soil_trie::cache::SharedTrieCache<HashingFor<Block>>> {
 		self.shared_trie_cache.clone()
 	}
 
@@ -1327,7 +1327,7 @@ impl<Block: BlockT> Backend<Block> {
 				);
 			}
 
-			SharedTrieCache::new(sp_trie::cache::CacheSize::new(maximum_size), config.metrics_registry.as_ref())
+			SharedTrieCache::new(soil_trie::cache::CacheSize::new(maximum_size), config.metrics_registry.as_ref())
 		});
 
 		let backend = Backend {
@@ -2223,7 +2223,7 @@ fn apply_index_ops<Block: BlockT>(
 
 fn apply_indexed_body<Block: BlockT>(transaction: &mut Transaction<DbHash>, body: Vec<Vec<u8>>) {
 	for extrinsic in body {
-		let hash = sp_runtime::traits::BlakeTwo256::hash(&extrinsic);
+		let hash = soil_runtime::traits::BlakeTwo256::hash(&extrinsic);
 		transaction.store(columns::TRANSACTION, DbHash::from_slice(hash.as_ref()), extrinsic);
 	}
 }
@@ -2712,7 +2712,7 @@ impl<Block: BlockT> sc_client_api::backend::Backend<Block> for Backend<Block> {
 	fn have_state_at(&self, hash: Block::Hash, number: NumberFor<Block>) -> bool {
 		if self.is_archive {
 			match self.blockchain.header_metadata(hash) {
-				Ok(header) => sp_state_machine::Storage::get(
+				Ok(header) => soil_state_machine::Storage::get(
 					self.storage.as_ref(),
 					&header.state_root,
 					(&[], None),
@@ -2726,7 +2726,7 @@ impl<Block: BlockT> sc_client_api::backend::Backend<Block> for Backend<Block> {
 				IsPruned::Pruned => false,
 				IsPruned::NotPruned => true,
 				IsPruned::MaybePruned => match self.blockchain.header_metadata(hash) {
-					Ok(header) => sp_state_machine::Storage::get(
+					Ok(header) => soil_state_machine::Storage::get(
 						self.storage.as_ref(),
 						&header.state_root,
 						(&[], None),
@@ -2804,8 +2804,8 @@ pub(crate) mod tests {
 		blockchain::Backend as BLBTrait,
 	};
 	use sp_blockchain::{lowest_common_ancestor, tree_route};
-	use sp_core::H256;
-	use sp_runtime::{
+	use soil_core::H256;
+	use soil_runtime::{
 		testing::{Block as RawBlock, Header, MockCallU64, TestXt},
 		traits::{BlakeTwo256, Hash},
 		ConsensusEngineId, StateVersion,
@@ -2837,7 +2837,7 @@ pub(crate) mod tests {
 		body: Vec<UncheckedXt>,
 		transaction_index: Option<Vec<IndexOperation>>,
 	) -> Result<H256, sp_blockchain::Error> {
-		use sp_runtime::testing::Digest;
+		use soil_runtime::testing::Digest;
 
 		let digest = Digest::default();
 		let mut header =
@@ -2873,7 +2873,7 @@ pub(crate) mod tests {
 		extrinsics_root: H256,
 		best: bool,
 	) -> H256 {
-		use sp_runtime::testing::Digest;
+		use soil_runtime::testing::Digest;
 
 		let digest = Digest::default();
 		let header =
@@ -2902,7 +2902,7 @@ pub(crate) mod tests {
 		parent_hash: H256,
 		extrinsics_root: H256,
 	) -> H256 {
-		use sp_runtime::testing::Digest;
+		use soil_runtime::testing::Digest;
 
 		let digest = Digest::default();
 		let mut header =
@@ -3103,7 +3103,7 @@ pub(crate) mod tests {
 				backend
 					.storage
 					.db
-					.get(columns::STATE, &sp_trie::prefixed_key::<BlakeTwo256>(&key, EMPTY_PREFIX))
+					.get(columns::STATE, &soil_trie::prefixed_key::<BlakeTwo256>(&key, EMPTY_PREFIX))
 					.unwrap(),
 				&b"hello"[..]
 			);
@@ -3140,7 +3140,7 @@ pub(crate) mod tests {
 				backend
 					.storage
 					.db
-					.get(columns::STATE, &sp_trie::prefixed_key::<BlakeTwo256>(&key, EMPTY_PREFIX))
+					.get(columns::STATE, &soil_trie::prefixed_key::<BlakeTwo256>(&key, EMPTY_PREFIX))
 					.unwrap(),
 				&b"hello"[..]
 			);
@@ -3176,7 +3176,7 @@ pub(crate) mod tests {
 			assert!(backend
 				.storage
 				.db
-				.get(columns::STATE, &sp_trie::prefixed_key::<BlakeTwo256>(&key, EMPTY_PREFIX))
+				.get(columns::STATE, &soil_trie::prefixed_key::<BlakeTwo256>(&key, EMPTY_PREFIX))
 				.is_some());
 			hash
 		};
@@ -3235,7 +3235,7 @@ pub(crate) mod tests {
 			assert!(backend
 				.storage
 				.db
-				.get(columns::STATE, &sp_trie::prefixed_key::<BlakeTwo256>(&key, EMPTY_PREFIX))
+				.get(columns::STATE, &soil_trie::prefixed_key::<BlakeTwo256>(&key, EMPTY_PREFIX))
 				.is_none());
 			hash
 		};
@@ -3247,7 +3247,7 @@ pub(crate) mod tests {
 		assert!(backend
 			.storage
 			.db
-			.get(columns::STATE, &sp_trie::prefixed_key::<BlakeTwo256>(&key, EMPTY_PREFIX))
+			.get(columns::STATE, &soil_trie::prefixed_key::<BlakeTwo256>(&key, EMPTY_PREFIX))
 			.is_none());
 	}
 
@@ -3545,7 +3545,7 @@ pub(crate) mod tests {
 		                        state: NewBlockState,
 		                        register_as_leaf: bool|
 		 -> H256 {
-			use sp_runtime::testing::Digest;
+			use soil_runtime::testing::Digest;
 			let digest = Digest::default();
 			let header = Header {
 				number,
@@ -4316,8 +4316,8 @@ pub(crate) mod tests {
 
 		let x0 = UncheckedXt::new_transaction(0.into(), ()).encode();
 		let x1 = UncheckedXt::new_transaction(1.into(), ()).encode();
-		let x0_hash = <HashingFor<Block> as sp_core::Hasher>::hash(&x0[1..]);
-		let x1_hash = <HashingFor<Block> as sp_core::Hasher>::hash(&x1[1..]);
+		let x0_hash = <HashingFor<Block> as soil_core::Hasher>::hash(&x0[1..]);
+		let x1_hash = <HashingFor<Block> as soil_core::Hasher>::hash(&x1[1..]);
 		let index = vec![
 			IndexOperation::Insert {
 				extrinsic: 0,
@@ -4364,8 +4364,8 @@ pub(crate) mod tests {
 		let x0 = UncheckedXt::new_transaction(0.into(), ()).encode();
 		let x1 = UncheckedXt::new_transaction(1.into(), ()).encode();
 
-		let x0_hash = <HashingFor<Block> as sp_core::Hasher>::hash(&x0[..]);
-		let x1_hash = <HashingFor<Block> as sp_core::Hasher>::hash(&x1[..]);
+		let x0_hash = <HashingFor<Block> as soil_core::Hasher>::hash(&x0[..]);
+		let x1_hash = <HashingFor<Block> as soil_core::Hasher>::hash(&x1[..]);
 		let index = vec![
 			IndexOperation::Insert {
 				extrinsic: 0,
@@ -4402,7 +4402,7 @@ pub(crate) mod tests {
 		let mut blocks = Vec::new();
 		let mut prev_hash = Default::default();
 		let x1 = UncheckedXt::new_transaction(0.into(), ()).encode();
-		let x1_hash = <HashingFor<Block> as sp_core::Hasher>::hash(&x1[1..]);
+		let x1_hash = <HashingFor<Block> as soil_core::Hasher>::hash(&x1[1..]);
 		for i in 0..10 {
 			let mut index = Vec::new();
 			if i == 0 {
@@ -4469,7 +4469,7 @@ pub(crate) mod tests {
 				2,
 				blocks[1],
 				None,
-				sp_core::H256::random(),
+				soil_core::H256::random(),
 				vec![UncheckedXt::new_transaction(i.into(), ())],
 				None,
 			)
@@ -4483,7 +4483,7 @@ pub(crate) mod tests {
 			1,
 			blocks[0],
 			None,
-			sp_core::H256::random(),
+			soil_core::H256::random(),
 			vec![UncheckedXt::new_transaction(42.into(), ())],
 			None,
 		)

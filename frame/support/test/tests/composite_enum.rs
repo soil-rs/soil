@@ -22,8 +22,8 @@
 
 use codec::Encode;
 use frame_support::{derive_impl, traits::VariantCount};
-use sp_core::sr25519;
-use sp_runtime::{
+use soil_core::sr25519;
+use soil_runtime::{
 	generic,
 	traits::{BlakeTwo256, Verify},
 };

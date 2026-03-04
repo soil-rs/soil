@@ -30,7 +30,7 @@ use frame_support::{
 	traits::{ChangeMembers, Contains, ContainsLengthBound, Get, InitializeMembers, SortedMembers},
 	BoundedVec,
 };
-use sp_runtime::traits::{StaticLookup, UniqueSaturatedInto};
+use soil_runtime::traits::{StaticLookup, UniqueSaturatedInto};
 
 pub mod migrations;
 pub mod weights;

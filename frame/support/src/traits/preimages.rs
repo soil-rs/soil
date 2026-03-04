@@ -20,7 +20,7 @@
 use alloc::borrow::Cow;
 use codec::{Decode, DecodeWithMemTracking, Encode, EncodeLike, MaxEncodedLen};
 use scale_info::TypeInfo;
-use sp_runtime::{
+use soil_runtime::{
 	traits::{ConstU32, Hash},
 	DispatchError,
 };
@@ -51,7 +51,7 @@ impl<T, H: Hash> Bounded<T, H> {
 	///
 	/// # Examples
 	/// ```
-	/// use frame_support::{traits::Bounded, sp_runtime::traits::BlakeTwo256};
+	/// use frame_support::{traits::Bounded, soil_runtime::traits::BlakeTwo256};
 	///
 	/// // Transmute from `String` to `&str`.
 	/// let x: Bounded<String, BlakeTwo256> = Bounded::Inline(Default::default());
@@ -137,20 +137,20 @@ pub trait QueryPreimage {
 	type H: Hash;
 
 	/// Returns whether a preimage exists for a given hash and if so its length.
-	fn len(hash: &<Self::H as sp_core::Hasher>::Out) -> Option<u32>;
+	fn len(hash: &<Self::H as soil_core::Hasher>::Out) -> Option<u32>;
 
 	/// Returns the preimage for a given hash. If given, `len` must be the size of the preimage.
-	fn fetch(hash: &<Self::H as sp_core::Hasher>::Out, len: Option<u32>) -> FetchResult;
+	fn fetch(hash: &<Self::H as soil_core::Hasher>::Out, len: Option<u32>) -> FetchResult;
 
 	/// Returns whether a preimage request exists for a given hash.
-	fn is_requested(hash: &<Self::H as sp_core::Hasher>::Out) -> bool;
+	fn is_requested(hash: &<Self::H as soil_core::Hasher>::Out) -> bool;
 
 	/// Request that someone report a preimage. Providers use this to optimise the economics for
 	/// preimage reporting.
-	fn request(hash: &<Self::H as sp_core::Hasher>::Out);
+	fn request(hash: &<Self::H as soil_core::Hasher>::Out);
 
 	/// Cancel a previous preimage request.
-	fn unrequest(hash: &<Self::H as sp_core::Hasher>::Out);
+	fn unrequest(hash: &<Self::H as soil_core::Hasher>::Out);
 
 	/// Request that the data required for decoding the given `bounded` value is made available.
 	fn hold<T>(bounded: &Bounded<T, Self::H>) {
@@ -186,7 +186,7 @@ pub trait QueryPreimage {
 	/// It also directly requests the given `hash` using [`Self::request`].
 	///
 	/// This may not be `peek`-able or `realize`-able.
-	fn pick<T>(hash: <Self::H as sp_core::Hasher>::Out, len: u32) -> Bounded<T, Self::H> {
+	fn pick<T>(hash: <Self::H as soil_core::Hasher>::Out, len: u32) -> Bounded<T, Self::H> {
 		Self::request(&hash);
 		Bounded::Lookup { hash, len }
 	}
@@ -238,11 +238,11 @@ pub trait StorePreimage: QueryPreimage {
 	/// Request and attempt to store the bytes of a preimage on chain.
 	///
 	/// May return `DispatchError::Exhausted` if the preimage is just too big.
-	fn note(bytes: Cow<[u8]>) -> Result<<Self::H as sp_core::Hasher>::Out, DispatchError>;
+	fn note(bytes: Cow<[u8]>) -> Result<<Self::H as soil_core::Hasher>::Out, DispatchError>;
 
 	/// Attempt to clear a previously noted preimage. Exactly the same as `unrequest` but is
 	/// provided for symmetry.
-	fn unnote(hash: &<Self::H as sp_core::Hasher>::Out) {
+	fn unnote(hash: &<Self::H as soil_core::Hasher>::Out) {
 		Self::unrequest(hash)
 	}
 
@@ -263,24 +263,24 @@ pub trait StorePreimage: QueryPreimage {
 }
 
 impl QueryPreimage for () {
-	type H = sp_runtime::traits::BlakeTwo256;
+	type H = soil_runtime::traits::BlakeTwo256;
 
-	fn len(_: &sp_core::H256) -> Option<u32> {
+	fn len(_: &soil_core::H256) -> Option<u32> {
 		None
 	}
-	fn fetch(_: &sp_core::H256, _: Option<u32>) -> FetchResult {
+	fn fetch(_: &soil_core::H256, _: Option<u32>) -> FetchResult {
 		Err(DispatchError::Unavailable)
 	}
-	fn is_requested(_: &sp_core::H256) -> bool {
+	fn is_requested(_: &soil_core::H256) -> bool {
 		false
 	}
-	fn request(_: &sp_core::H256) {}
-	fn unrequest(_: &sp_core::H256) {}
+	fn request(_: &soil_core::H256) {}
+	fn unrequest(_: &soil_core::H256) {}
 }
 
 impl StorePreimage for () {
 	const MAX_LENGTH: usize = 0;
-	fn note(_: Cow<[u8]>) -> Result<sp_core::H256, DispatchError> {
+	fn note(_: Cow<[u8]>) -> Result<soil_core::H256, DispatchError> {
 		Err(DispatchError::Exhausted)
 	}
 }
@@ -289,7 +289,7 @@ impl StorePreimage for () {
 mod tests {
 	use super::*;
 	use crate::BoundedVec;
-	use sp_runtime::{bounded_vec, traits::BlakeTwo256};
+	use soil_runtime::{bounded_vec, traits::BlakeTwo256};
 
 	#[test]
 	fn bounded_size_is_correct() {

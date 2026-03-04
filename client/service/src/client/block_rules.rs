@@ -20,7 +20,7 @@
 
 use std::collections::{HashMap, HashSet};
 
-use sp_runtime::traits::{Block as BlockT, NumberFor};
+use soil_runtime::traits::{Block as BlockT, NumberFor};
 
 use sc_client_api::{BadBlocks, ForkBlocks};
 

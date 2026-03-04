@@ -34,20 +34,20 @@ serde = { features = ["alloc", "derive"], workspace = true }
 serde_json = { features = ["alloc"], workspace = true }
 sp-api = { features = ["frame-metadata"], workspace = true }
 soil-arithmetic = { workspace = true }
-sp-core = { workspace = true }
-sp-crypto-hashing-proc-macro = { workspace = true, default-features = true }
+soil-core = { workspace = true }
+soil-crypto-hashing-proc-macro = { workspace = true, default-features = true }
 soil-debug-derive = { workspace = true }
 sp-genesis-builder = { workspace = true }
 sp-inherents = { workspace = true }
-sp-io = { workspace = true }
+soil-io = { workspace = true }
 soil-metadata-ir = { workspace = true }
-sp-runtime = { features = ["serde"], workspace = true }
+soil-runtime = { features = ["serde"], workspace = true }
 sp-staking = { workspace = true }
-sp-state-machine = { optional = true, workspace = true }
+soil-state-machine = { optional = true, workspace = true }
 soil-std = { workspace = true }
 soil-tracing = { workspace = true }
-sp-trie = { workspace = true }
-sp-weights = { workspace = true }
+soil-trie = { workspace = true }
+soil-weights = { workspace = true }
 tt-call = { workspace = true }
 
 aquamarine = { workspace = true }
@@ -75,28 +75,28 @@ std = [
 	"serde_json/std",
 	"sp-api/std",
 	"soil-arithmetic/std",
-	"sp-core/std",
+	"soil-core/std",
 	"soil-debug-derive/std",
 	"sp-genesis-builder/std",
 	"sp-inherents/std",
-	"sp-io/std",
+	"soil-io/std",
 	"soil-metadata-ir/std",
-	"sp-runtime/std",
+	"soil-runtime/std",
 	"sp-staking/std",
-	"sp-state-machine/std",
+	"soil-state-machine/std",
 	"soil-std/std",
 	"soil-tracing/std",
-	"sp-trie/std",
-	"sp-weights/std",
+	"soil-trie/std",
+	"soil-weights/std",
 ]
 runtime-benchmarks = [
 	"frame-system/runtime-benchmarks",
-	"sp-runtime/runtime-benchmarks",
+	"soil-runtime/runtime-benchmarks",
 	"sp-staking/runtime-benchmarks",
 ]
 try-runtime = [
 	"frame-system/try-runtime",
-	"sp-runtime/try-runtime",
+	"soil-runtime/try-runtime",
 ]
 experimental = ["frame-support-procedural/experimental"]
 # By default some types have documentation, `no-metadata-docs` allows to reduce the documentation

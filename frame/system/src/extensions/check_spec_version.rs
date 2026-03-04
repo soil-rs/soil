@@ -18,7 +18,7 @@
 use crate::{Config, Pallet};
 use codec::{Decode, DecodeWithMemTracking, Encode};
 use scale_info::TypeInfo;
-use sp_runtime::{
+use soil_runtime::{
 	impl_tx_ext_default, traits::TransactionExtension,
 	transaction_validity::TransactionValidityError,
 };
@@ -62,7 +62,7 @@ impl<T: Config + Send + Sync> TransactionExtension<<T as Config>::RuntimeCall>
 	}
 	type Val = ();
 	type Pre = ();
-	fn weight(&self, _: &<T as Config>::RuntimeCall) -> sp_weights::Weight {
+	fn weight(&self, _: &<T as Config>::RuntimeCall) -> soil_weights::Weight {
 		<T::ExtensionsWeightInfo as super::WeightInfo>::check_spec_version()
 	}
 	impl_tx_ext_default!(<T as Config>::RuntimeCall; validate prepare);

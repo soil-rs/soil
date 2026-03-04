@@ -27,8 +27,8 @@ use codec::Encode;
 use core::iter::Peekable;
 use frame::{
 	deps::{
-		sp_core::offchain::StorageKind,
-		sp_io::{offchain, offchain_index},
+		soil_core::offchain::StorageKind,
+		soil_io::{offchain, offchain_index},
 	},
 	prelude::*,
 };

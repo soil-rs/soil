@@ -32,9 +32,9 @@ use frame_support::{
 };
 use pallet_session::historical as pallet_session_historical;
 use sp_consensus_grandpa::{RoundNumber, SetId, GRANDPA_ENGINE_ID};
-use sp_core::{ConstBool, H256};
+use soil_core::{ConstBool, H256};
 use sp_keyring::Ed25519Keyring;
-use sp_runtime::{
+use soil_runtime::{
 	curve::PiecewiseLinear,
 	impl_opaque_keys,
 	testing::{TestXt, UintAuthorityId},
@@ -98,7 +98,7 @@ parameter_types! {
 impl pallet_session::Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type ValidatorId = u64;
-	type ValidatorIdOf = sp_runtime::traits::ConvertInto;
+	type ValidatorIdOf = soil_runtime::traits::ConvertInto;
 	type ShouldEndSession = pallet_session::PeriodicSessions<ConstU64<1>, ConstU64<0>>;
 	type NextSessionRotation = pallet_session::PeriodicSessions<ConstU64<1>, ConstU64<0>>;
 	type SessionManager = pallet_session::historical::NoteHistoricalRoot<Self, Staking>;
@@ -224,11 +224,11 @@ pub fn extract_keyring(id: &AuthorityId) -> Ed25519Keyring {
 	Ed25519Keyring::from_raw_public(raw_public).unwrap()
 }
 
-pub fn new_test_ext(vec: Vec<(u64, u64)>) -> sp_io::TestExternalities {
+pub fn new_test_ext(vec: Vec<(u64, u64)>) -> soil_io::TestExternalities {
 	new_test_ext_raw_authorities(to_authorities(vec))
 }
 
-pub fn new_test_ext_raw_authorities(authorities: AuthorityList) -> sp_io::TestExternalities {
+pub fn new_test_ext_raw_authorities(authorities: AuthorityList) -> soil_io::TestExternalities {
 	soil_tracing::try_init_simple();
 	let mut t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 

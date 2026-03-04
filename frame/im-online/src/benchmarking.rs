@@ -22,7 +22,7 @@
 use frame_benchmarking::v2::*;
 use frame_support::{traits::UnfilteredDispatchable, WeakBoundedVec};
 use frame_system::RawOrigin;
-use sp_runtime::{
+use soil_runtime::{
 	traits::{ValidateUnsigned, Zero},
 	transaction_validity::TransactionSource,
 };

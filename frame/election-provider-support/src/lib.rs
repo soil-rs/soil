@@ -88,7 +88,7 @@
 //! # use frame_election_provider_support::{*, data_provider};
 //! # use sp_npos_elections::{Support, Assignment};
 //! # use frame_support::traits::ConstU32;
-//! # use sp_runtime::bounded_vec;
+//! # use soil_runtime::bounded_vec;
 //!
 //! type AccountId = u64;
 //! type Balance = u64;
@@ -132,7 +132,7 @@
 //!
 //! mod generic_election_provider {
 //!     use super::*;
-//!     use sp_runtime::traits::Zero;
+//!     use soil_runtime::traits::Zero;
 //! 	use frame_support::pallet_prelude::Weight;
 //!
 //!     pub struct GenericElectionProvider<T: Config>(std::marker::PhantomData<T>);
@@ -208,8 +208,8 @@ extern crate alloc;
 use alloc::{boxed::Box, vec::Vec};
 use core::fmt::Debug;
 use frame_support::traits::{Defensive, DefensiveResult};
-use sp_core::ConstU32;
-use sp_runtime::traits::{Bounded, Saturating, Zero};
+use soil_core::ConstU32;
+use soil_runtime::traits::{Bounded, Saturating, Zero};
 
 pub use bounds::DataProviderBounds;
 pub use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
@@ -226,7 +226,7 @@ pub use sp_npos_elections::{
 pub use traits::NposSolution;
 
 #[cfg(feature = "try-runtime")]
-use sp_runtime::TryRuntimeError;
+use soil_runtime::TryRuntimeError;
 
 // re-export for the solution macro, with the dependencies of the macro.
 #[doc(hidden)]
@@ -1225,13 +1225,13 @@ pub type BoundedSupportsOf<E> = BoundedSupports<
 	<E as ElectionProvider>::MaxBackersPerWinner,
 >;
 
-sp_core::generate_feature_enabled_macro!(
+soil_core::generate_feature_enabled_macro!(
 	runtime_benchmarks_enabled,
 	feature = "runtime-benchmarks",
 	$
 );
 
-sp_core::generate_feature_enabled_macro!(
+soil_core::generate_feature_enabled_macro!(
 	runtime_benchmarks_or_std_enabled,
 	any(feature = "runtime-benchmarks", feature = "std"),
 	$

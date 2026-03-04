@@ -20,7 +20,7 @@
 
 use crate::{self as pallet_example_tasks};
 use frame_support::derive_impl;
-use sp_runtime::testing::TestXt;
+use soil_runtime::testing::TestXt;
 
 pub type AccountId = u32;
 pub type Balance = u32;

@@ -22,7 +22,7 @@ use crate::{
 	DEFAULT_MAX_TRANSACTION_SIZE,
 };
 use frame_support::{derive_impl, traits::ConstU32};
-use sp_runtime::{traits::IdentityLookup, BuildStorage};
+use soil_runtime::{traits::IdentityLookup, BuildStorage};
 
 pub type Block = frame_system::mocking::MockBlock<Test>;
 
@@ -60,7 +60,7 @@ impl pallet_transaction_storage::Config for Test {
 	type MaxTransactionSize = ConstU32<{ DEFAULT_MAX_TRANSACTION_SIZE }>;
 }
 
-pub fn new_test_ext() -> sp_io::TestExternalities {
+pub fn new_test_ext() -> soil_io::TestExternalities {
 	let t = RuntimeGenesisConfig {
 		system: Default::default(),
 		balances: pallet_balances::GenesisConfig::<Test> {

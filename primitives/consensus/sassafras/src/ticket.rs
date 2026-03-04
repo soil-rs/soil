@@ -21,7 +21,7 @@ use crate::vrf::RingVrfSignature;
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;
 
-pub use sp_core::ed25519::{Public as EphemeralPublic, Signature as EphemeralSignature};
+pub use soil_core::ed25519::{Public as EphemeralPublic, Signature as EphemeralSignature};
 
 /// Ticket identifier.
 ///

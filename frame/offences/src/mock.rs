@@ -27,7 +27,7 @@ use frame_support::{
 	traits::ConstU32,
 	weights::{constants::RocksDbWeight, Weight},
 };
-use sp_runtime::{traits::IdentityLookup, BuildStorage, Perbill};
+use soil_runtime::{traits::IdentityLookup, BuildStorage, Perbill};
 use sp_staking::{
 	offence::{self, Kind, OffenceDetails},
 	SessionIndex,
@@ -85,9 +85,9 @@ impl Config for Runtime {
 	type OnOffenceHandler = OnOffenceHandler;
 }
 
-pub fn new_test_ext() -> sp_io::TestExternalities {
+pub fn new_test_ext() -> soil_io::TestExternalities {
 	let t = frame_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
-	let mut ext = sp_io::TestExternalities::new(t);
+	let mut ext = soil_io::TestExternalities::new(t);
 	ext.execute_with(|| System::set_block_number(1));
 	ext
 }

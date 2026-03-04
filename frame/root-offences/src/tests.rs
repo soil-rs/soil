@@ -25,7 +25,7 @@ use pallet_staking::asset;
 
 #[test]
 fn create_offence_fails_given_signed_origin() {
-	use sp_runtime::traits::BadOrigin;
+	use soil_runtime::traits::BadOrigin;
 	ExtBuilder::default().build_and_execute(|| {
 		let offenders = (&[]).to_vec();
 		assert_err!(

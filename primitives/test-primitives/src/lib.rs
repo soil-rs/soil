@@ -23,12 +23,12 @@ extern crate alloc;
 
 use codec::{Decode, DecodeWithMemTracking, Encode};
 
-pub use sp_application_crypto;
-use sp_application_crypto::sr25519;
+pub use soil_application_crypto;
+use soil_application_crypto::sr25519;
 
 use alloc::vec::Vec;
-pub use sp_core::hash::H256;
-use sp_runtime::{
+pub use soil_core::hash::H256;
+use soil_runtime::{
 	traits::{BlakeTwo256, ExtrinsicLike, LazyExtrinsic, Verify},
 	OpaqueExtrinsic,
 };
@@ -93,10 +93,10 @@ pub type BlockNumber = u64;
 /// Index of a transaction.
 pub type Nonce = u64;
 /// The item of a block digest.
-pub type DigestItem = sp_runtime::generic::DigestItem;
+pub type DigestItem = soil_runtime::generic::DigestItem;
 /// The digest of a block.
-pub type Digest = sp_runtime::generic::Digest;
+pub type Digest = soil_runtime::generic::Digest;
 /// A test block.
-pub type Block = sp_runtime::generic::Block<Header, Extrinsic>;
+pub type Block = soil_runtime::generic::Block<Header, Extrinsic>;
 /// A test block's header.
-pub type Header = sp_runtime::generic::Header<BlockNumber, BlakeTwo256>;
+pub type Header = soil_runtime::generic::Header<BlockNumber, BlakeTwo256>;

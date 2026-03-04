@@ -32,11 +32,11 @@ use frame_support::{
 	pallet_prelude::TransactionSource,
 };
 use frame_system::{Call as SystemCall, RawOrigin};
-use sp_io::{
+use soil_io::{
 	crypto::{sr25519_generate, sr25519_sign},
 	hashing::blake2_256,
 };
-use sp_runtime::{
+use soil_runtime::{
 	generic::ExtensionVersion,
 	traits::{AsTransactionAuthorizedOrigin, DispatchTransaction, Dispatchable, IdentifyAccount},
 	AccountId32, MultiSignature, MultiSigner,

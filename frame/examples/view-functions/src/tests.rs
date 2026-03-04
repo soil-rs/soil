@@ -26,11 +26,11 @@ use codec::{Decode, Encode};
 use scale_info::meta_type;
 
 use frame_support::{derive_impl, pallet_prelude::PalletInfoAccess, view_functions::ViewFunction};
-use sp_io::hashing::twox_128;
+use soil_io::hashing::twox_128;
 use soil_metadata_ir::{
 	ItemDeprecationInfoIR, PalletViewFunctionMetadataIR, PalletViewFunctionParamMetadataIR,
 };
-use sp_runtime::testing::TestXt;
+use soil_runtime::testing::TestXt;
 
 pub type AccountId = u32;
 pub type Balance = u32;
@@ -57,8 +57,8 @@ impl pallet2::Config<pallet2::Instance1> for Runtime {}
 
 impl pallet2::Config for Runtime {}
 
-pub fn new_test_ext() -> sp_io::TestExternalities {
-	use sp_runtime::BuildStorage;
+pub fn new_test_ext() -> soil_io::TestExternalities {
+	use soil_runtime::BuildStorage;
 
 	let t = RuntimeGenesisConfig { system: Default::default() }.build_storage().unwrap();
 	t.into()

@@ -23,16 +23,16 @@ use hash_db::{Hasher as DbHasher, Prefix};
 use kvdb::{DBTransaction, KeyValueDB};
 use linked_hash_map::LinkedHashMap;
 use parking_lot::Mutex;
-use sp_core::{
+use soil_core::{
 	hexdisplay::HexDisplay,
 	storage::{ChildInfo, TrackedStorageKey},
 };
-use sp_runtime::{traits::Hash, StateVersion, Storage};
-use sp_state_machine::{
+use soil_runtime::{traits::Hash, StateVersion, Storage};
+use soil_state_machine::{
 	backend::Backend as StateBackend, BackendTransaction, ChildStorageCollection, DBValue,
 	IterArgs, StorageCollection, StorageIterator, StorageKey, StorageValue,
 };
-use sp_trie::{
+use soil_trie::{
 	cache::{CacheSize, SharedTrieCache},
 	prefixed_key, MemoryDB, MerkleValue,
 };
@@ -49,7 +49,7 @@ struct StorageDb<Hasher> {
 	_phantom: std::marker::PhantomData<Hasher>,
 }
 
-impl<Hasher: Hash> sp_state_machine::Storage<Hasher> for StorageDb<Hasher> {
+impl<Hasher: Hash> soil_state_machine::Storage<Hasher> for StorageDb<Hasher> {
 	fn get(&self, key: &Hasher::Output, prefix: Prefix) -> Result<Option<DBValue>, String> {
 		let prefixed_key = prefixed_key::<Hasher>(key, prefix);
 		self.db
@@ -81,7 +81,7 @@ pub struct BenchmarkingState<Hasher: Hash> {
 	record: Cell<Vec<Vec<u8>>>,
 	key_tracker: Arc<Mutex<KeyTracker>>,
 	whitelist: RefCell<Vec<TrackedStorageKey>>,
-	proof_recorder: Option<sp_trie::recorder::Recorder<Hasher>>,
+	proof_recorder: Option<soil_trie::recorder::Recorder<Hasher>>,
 	proof_recorder_root: Cell<Hasher::Output>,
 	shared_trie_cache: SharedTrieCache<Hasher>,
 }
@@ -133,10 +133,10 @@ impl<Hasher: Hash> BenchmarkingState<Hasher> {
 		record_proof: bool,
 		enable_tracking: bool,
 	) -> Result<Self, String> {
-		let state_version = sp_runtime::StateVersion::default();
+		let state_version = soil_runtime::StateVersion::default();
 		let mut root = Default::default();
 		let mut mdb = MemoryDB::<Hasher>::default();
-		sp_trie::trie_types::TrieDBMutBuilderV1::<Hasher>::new(&mut mdb, &mut root).build();
+		soil_trie::trie_types::TrieDBMutBuilderV1::<Hasher>::new(&mut mdb, &mut root).build();
 
 		let mut state = BenchmarkingState {
 			state: RefCell::new(None),
@@ -180,7 +180,7 @@ impl<Hasher: Hash> BenchmarkingState<Hasher> {
 	}
 
 	/// Get the proof recorder for this state
-	pub fn recorder(&self) -> Option<sp_trie::recorder::Recorder<Hasher>> {
+	pub fn recorder(&self) -> Option<soil_trie::recorder::Recorder<Hasher>> {
 		self.proof_recorder.clone()
 	}
 
@@ -613,15 +613,15 @@ impl<Hasher: Hash> StateBackend<Hasher> for BenchmarkingState<Hasher> {
 			.collect::<Vec<_>>()
 	}
 
-	fn register_overlay_stats(&self, stats: &sp_state_machine::StateMachineStats) {
+	fn register_overlay_stats(&self, stats: &soil_state_machine::StateMachineStats) {
 		self.state.borrow().as_ref().map(|s| s.register_overlay_stats(stats));
 	}
 
-	fn usage_info(&self) -> sp_state_machine::UsageInfo {
+	fn usage_info(&self) -> soil_state_machine::UsageInfo {
 		self.state
 			.borrow()
 			.as_ref()
-			.map_or(sp_state_machine::UsageInfo::empty(), |s| s.usage_info())
+			.map_or(soil_state_machine::UsageInfo::empty(), |s| s.usage_info())
 	}
 
 	fn proof_size(&self) -> Option<u32> {
@@ -664,8 +664,8 @@ impl<Hasher: Hash> std::fmt::Debug for BenchmarkingState<Hasher> {
 #[cfg(test)]
 mod test {
 	use crate::bench::BenchmarkingState;
-	use sp_runtime::traits::HashingFor;
-	use sp_state_machine::backend::Backend as _;
+	use soil_runtime::traits::HashingFor;
+	use soil_state_machine::backend::Backend as _;
 
 	fn hex(hex: &str) -> Vec<u8> {
 		array_bytes::hex2bytes(hex).unwrap()
@@ -673,14 +673,14 @@ mod test {
 
 	#[test]
 	fn iteration_is_also_counted_in_rw_counts() {
-		let storage = sp_runtime::Storage {
+		let storage = soil_runtime::Storage {
 			top: vec![(
 				hex("ce6e1397e668c7fcf47744350dc59688455a2c2dbd2e2a649df4e55d93cd7158"),
 				hex("0102030405060708"),
 			)]
 			.into_iter()
 			.collect(),
-			..sp_runtime::Storage::default()
+			..soil_runtime::Storage::default()
 		};
 		let bench_state =
 			BenchmarkingState::<HashingFor<crate::tests::Block>>::new(storage, None, false, true)
@@ -702,8 +702,8 @@ mod test {
 		.unwrap();
 
 		for _ in 0..2 {
-			let child1 = sp_core::storage::ChildInfo::new_default(b"child1");
-			let child2 = sp_core::storage::ChildInfo::new_default(b"child2");
+			let child1 = soil_core::storage::ChildInfo::new_default(b"child1");
+			let child2 = soil_core::storage::ChildInfo::new_default(b"child2");
 
 			bench_state.storage(b"foo").unwrap();
 			bench_state.child_storage(&child1, b"foo").unwrap();

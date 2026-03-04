@@ -47,8 +47,8 @@ use alloc::{boxed::Box, vec, vec::Vec};
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use core::{marker::PhantomData, result};
 use scale_info::TypeInfo;
-use sp_io::storage;
-use sp_runtime::{
+use soil_io::storage;
+use soil_runtime::{
 	traits::{Dispatchable, Hash},
 	Debug, DispatchError,
 };
@@ -66,7 +66,7 @@ use frame_support::{
 };
 
 #[cfg(any(feature = "try-runtime", test))]
-use sp_runtime::TryRuntimeError;
+use soil_runtime::TryRuntimeError;
 
 #[cfg(test)]
 mod tests;
@@ -177,7 +177,7 @@ pub struct Votes<AccountId, BlockNumber> {
 
 /// Types implementing various cost strategies for a given proposal count.
 ///
-/// These types implement [Convert](sp_runtime::traits::Convert) trait and can be used with types
+/// These types implement [Convert](soil_runtime::traits::Convert) trait and can be used with types
 /// like [HoldConsideration](`frame_support::traits::fungible::HoldConsideration`) implementing
 /// [Consideration](`frame_support::traits::Consideration`) trait.
 ///
@@ -191,8 +191,8 @@ pub struct Votes<AccountId, BlockNumber> {
 #[doc = docify::embed!("src/tests.rs", deposit_round_with_geometric_work)]
 pub mod deposit {
 	use core::marker::PhantomData;
-	use sp_core::Get;
-	use sp_runtime::{traits::Convert, FixedPointNumber, FixedU128, Saturating};
+	use soil_core::Get;
+	use soil_runtime::{traits::Convert, FixedPointNumber, FixedU128, Saturating};
 
 	/// Constant deposit amount regardless of current proposal count.
 	/// Returns `None` if configured with zero deposit.
@@ -1400,7 +1400,7 @@ where
 	#[cfg(feature = "runtime-benchmarks")]
 	fn try_successful_origin() -> Result<O, ()> {
 		let zero_account_id =
-			AccountId::decode(&mut sp_runtime::traits::TrailingZeroInput::zeroes())
+			AccountId::decode(&mut soil_runtime::traits::TrailingZeroInput::zeroes())
 				.expect("infinite length input; no invalid inputs for type; qed");
 		Ok(O::from(RawOrigin::Member(zero_account_id)))
 	}

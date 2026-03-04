@@ -26,7 +26,7 @@ use codec::{Decode, DecodeWithMemTracking, Encode};
 #[cfg(feature = "std")]
 use sp_api::ProvideRuntimeApi;
 #[cfg(feature = "std")]
-use sp_runtime::traits::Block as BlockT;
+use soil_runtime::traits::Block as BlockT;
 
 use alloc::vec::Vec;
 use sp_staking::SessionIndex;
@@ -77,13 +77,13 @@ pub trait GetValidatorCount {
 	fn validator_count(&self) -> ValidatorCount;
 }
 
-impl GetSessionNumber for sp_core::Void {
+impl GetSessionNumber for soil_core::Void {
 	fn session(&self) -> SessionIndex {
 		Default::default()
 	}
 }
 
-impl GetValidatorCount for sp_core::Void {
+impl GetValidatorCount for soil_core::Void {
 	fn validator_count(&self) -> ValidatorCount {
 		Default::default()
 	}
@@ -108,7 +108,7 @@ pub fn generate_initial_session_keys<Block, T>(
 	client: std::sync::Arc<T>,
 	at: Block::Hash,
 	seeds: Vec<String>,
-	keystore: sp_keystore::KeystorePtr,
+	keystore: soil_keystore::KeystorePtr,
 ) -> Result<(), sp_api::ApiError>
 where
 	Block: BlockT,
@@ -127,7 +127,7 @@ where
 		ApiError::Application(Box::from("Could not find `SessionKeys` runtime api"))
 	})?;
 
-	runtime_api.register_extension(sp_keystore::KeystoreExt::from(keystore));
+	runtime_api.register_extension(soil_keystore::KeystoreExt::from(keystore));
 
 	for seed in seeds {
 		let seed = Some(seed.as_bytes().to_vec());

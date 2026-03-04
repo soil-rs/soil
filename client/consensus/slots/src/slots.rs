@@ -23,8 +23,8 @@
 use super::{InherentDataProviderExt, Slot, LOG_TARGET};
 use sp_consensus::{SelectChain, SyncOracle};
 use sp_inherents::{CreateInherentDataProviders, InherentDataProvider};
-use sp_runtime::traits::{Block as BlockT, HashingFor, Header as HeaderT};
-use sp_trie::recorder::Recorder;
+use soil_runtime::traits::{Block as BlockT, HashingFor, Header as HeaderT};
+use soil_trie::recorder::Recorder;
 
 use futures_timer::Delay;
 use std::time::{Duration, Instant};

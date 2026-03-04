@@ -27,7 +27,7 @@ use sc_network::{
 };
 use sc_network_common::role::ObservedRole;
 use sc_network_types::{multiaddr::Multiaddr, PeerId};
-use sp_runtime::traits::{Block as BlockT, NumberFor};
+use soil_runtime::traits::{Block as BlockT, NumberFor};
 
 use std::collections::HashSet;
 

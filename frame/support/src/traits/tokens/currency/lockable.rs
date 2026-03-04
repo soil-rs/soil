@@ -165,6 +165,6 @@ impl<AccountId, C: Currency<AccountId>> VestedTransfer<AccountId> for NoVestedTr
 		_per_block: <Self::Currency as Currency<AccountId>>::Balance,
 		_starting_block: Self::Moment,
 	) -> DispatchResult {
-		Err(sp_runtime::DispatchError::Unavailable.into())
+		Err(soil_runtime::DispatchError::Unavailable.into())
 	}
 }

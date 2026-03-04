@@ -31,7 +31,7 @@ use frame_support::{
 	PalletId,
 };
 use frame_system::EnsureSigned;
-use sp_runtime::{traits::IdentityLookup, BuildStorage};
+use soil_runtime::{traits::IdentityLookup, BuildStorage};
 
 #[cfg(feature = "runtime-benchmarks")]
 use self::benchmarking::BenchmarkHelper;
@@ -173,7 +173,7 @@ impl Config for MockRuntime {
 	type BenchmarkHelper = AssetRewardsBenchmarkHelper;
 }
 
-pub(crate) fn new_test_ext() -> sp_io::TestExternalities {
+pub(crate) fn new_test_ext() -> soil_io::TestExternalities {
 	let mut t = frame_system::GenesisConfig::<MockRuntime>::default().build_storage().unwrap();
 
 	pallet_assets::GenesisConfig::<MockRuntime, Instance1> {
@@ -220,7 +220,7 @@ pub(crate) fn new_test_ext() -> sp_io::TestExternalities {
 	.assimilate_storage(&mut t)
 	.unwrap();
 
-	let mut ext = sp_io::TestExternalities::new(t);
+	let mut ext = soil_io::TestExternalities::new(t);
 	ext.execute_with(|| System::set_block_number(1));
 	ext
 }

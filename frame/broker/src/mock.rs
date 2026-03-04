@@ -31,8 +31,8 @@ use frame_support::{
 };
 use frame_system::{EnsureRoot, EnsureSignedBy};
 use soil_arithmetic::Perbill;
-use sp_core::{ConstU32, ConstU64, Get};
-use sp_runtime::{
+use soil_core::{ConstU32, ConstU64, Get};
+use soil_runtime::{
 	traits::{BlockNumberProvider, Identity, MaybeConvert},
 	BuildStorage, Saturating,
 };
@@ -349,7 +349,7 @@ impl TestExt {
 	}
 }
 
-pub fn new_test_ext() -> sp_io::TestExternalities {
+pub fn new_test_ext() -> soil_io::TestExternalities {
 	let c = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
-	sp_io::TestExternalities::from(c)
+	soil_io::TestExternalities::from(c)
 }

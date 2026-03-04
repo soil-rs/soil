@@ -29,8 +29,8 @@ use crate::SubscriptionTaskExecutor;
 
 use jsonrpsee::{core::async_trait, PendingSubscriptionSink};
 use sc_client_api::BlockchainEvents;
-use sp_rpc::{list::ListOrValue, number::NumberOrHex};
-use sp_runtime::{
+use soil_rpc::{list::ListOrValue, number::NumberOrHex};
+use soil_runtime::{
 	generic::SignedBlock,
 	traits::{Block as BlockT, NumberFor},
 };

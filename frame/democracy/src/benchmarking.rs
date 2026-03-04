@@ -27,7 +27,7 @@ use frame_support::{
 	traits::{Currency, EnsureOrigin, Get, OnInitialize, UnfilteredDispatchable},
 };
 use frame_system::{pallet_prelude::BlockNumberFor, RawOrigin};
-use sp_runtime::{traits::Bounded, BoundedVec};
+use soil_runtime::{traits::Bounded, BoundedVec};
 
 use crate::Pallet as Democracy;
 

@@ -25,12 +25,12 @@ use std::{
 
 use sc_block_builder::BlockBuilderBuilder;
 use sp_api::{ApiExt, Core, ProofRecorder, ProvideRuntimeApi};
-use sp_externalities::{decl_extension, TransactionType};
-use sp_runtime::{
+use soil_externalities::{decl_extension, TransactionType};
+use soil_runtime::{
 	traits::{HashingFor, Header as HeaderT},
 	TransactionOutcome,
 };
-use sp_state_machine::{create_proof_check_backend, execution_proof_check_on_trie_backend};
+use soil_state_machine::{create_proof_check_backend, execution_proof_check_on_trie_backend};
 
 use substrate_test_runtime_client::{
 	prelude::*,
@@ -95,8 +95,8 @@ fn record_proof_works() {
 	let storage_root =
 		*futures::executor::block_on(longest_chain.best_chain()).unwrap().state_root();
 
-	let runtime_code = sp_core::traits::RuntimeCode {
-		code_fetcher: &sp_core::traits::WrappedRuntimeCode(
+	let runtime_code = soil_core::traits::RuntimeCode {
+		code_fetcher: &soil_core::traits::WrappedRuntimeCode(
 			client.code_at(client.chain_info().best_hash).unwrap().into(),
 		),
 		hash: vec![1],

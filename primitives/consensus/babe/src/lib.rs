@@ -31,19 +31,19 @@ use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;
 #[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
-use sp_runtime::{traits::Header, ConsensusEngineId};
+use soil_runtime::{traits::Header, ConsensusEngineId};
 
 use crate::digests::{NextConfigDescriptor, NextEpochDescriptor};
 
-pub use sp_core::sr25519::vrf::{
+pub use soil_core::sr25519::vrf::{
 	VrfInput, VrfPreOutput, VrfProof, VrfSignData, VrfSignature, VrfTranscript,
 };
 
 /// Key type for BABE module.
-pub const KEY_TYPE: sp_core::crypto::KeyTypeId = sp_application_crypto::key_types::BABE;
+pub const KEY_TYPE: soil_core::crypto::KeyTypeId = soil_application_crypto::key_types::BABE;
 
 mod app {
-	use sp_application_crypto::{app_crypto, key_types::BABE, sr25519};
+	use soil_application_crypto::{app_crypto, key_types::BABE, sr25519};
 	app_crypto!(sr25519, BABE);
 }
 
@@ -284,7 +284,7 @@ where
 	H: Header,
 {
 	use digests::*;
-	use sp_application_crypto::RuntimeAppPublic;
+	use soil_application_crypto::RuntimeAppPublic;
 
 	let find_pre_digest =
 		|header: &H| header.digest().logs().iter().find_map(|log| log.as_babe_pre_digest());

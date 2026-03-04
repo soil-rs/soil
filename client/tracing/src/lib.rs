@@ -439,10 +439,10 @@ impl TraceHandler for LogTraceHandler {
 	}
 }
 
-impl From<TraceEvent> for sp_rpc::tracing::Event {
+impl From<TraceEvent> for soil_rpc::tracing::Event {
 	fn from(trace_event: TraceEvent) -> Self {
-		let data = sp_rpc::tracing::Data { string_values: trace_event.values.string_values };
-		sp_rpc::tracing::Event {
+		let data = soil_rpc::tracing::Data { string_values: trace_event.values.string_values };
+		soil_rpc::tracing::Event {
 			target: trace_event.target,
 			data,
 			parent_id: trace_event.parent_id.map(|id| id.into_u64()),
@@ -450,10 +450,10 @@ impl From<TraceEvent> for sp_rpc::tracing::Event {
 	}
 }
 
-impl From<SpanDatum> for sp_rpc::tracing::Span {
+impl From<SpanDatum> for soil_rpc::tracing::Span {
 	fn from(span_datum: SpanDatum) -> Self {
 		let wasm = span_datum.values.bool_values.get("wasm").is_some();
-		sp_rpc::tracing::Span {
+		soil_rpc::tracing::Span {
 			id: span_datum.id.into_u64(),
 			parent_id: span_datum.parent_id.map(|id| id.into_u64()),
 			name: span_datum.name,

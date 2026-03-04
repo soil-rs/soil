@@ -25,7 +25,7 @@ use soil_arithmetic::{
 	traits::{CheckedAdd, CheckedSub},
 	ArithmeticError,
 };
-use sp_runtime::{DispatchResult, TokenError};
+use soil_runtime::{DispatchResult, TokenError};
 
 use crate::{ensure, traits::tokens::Fortitude};
 

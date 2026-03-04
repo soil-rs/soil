@@ -27,7 +27,7 @@ use frame_support::{
 	traits::{Contains, GetStorageVersion, OnInitialize, QueryPreimage, StorePreimage},
 	Hashable,
 };
-use sp_runtime::traits::Hash;
+use soil_runtime::traits::Hash;
 use substrate_test_utils::assert_eq_uvec;
 
 #[test]

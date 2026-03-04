@@ -61,7 +61,7 @@ pub type BalanceOf<T> =
 #[frame_support::pallet]
 pub mod pallet {
 	use super::*;
-	use frame_support::{sp_runtime::traits::AccountIdConversion, traits::StorageVersion};
+	use frame_support::{soil_runtime::traits::AccountIdConversion, traits::StorageVersion};
 
 	/// The in-code storage version.
 	const STORAGE_VERSION: StorageVersion = StorageVersion::new(1);

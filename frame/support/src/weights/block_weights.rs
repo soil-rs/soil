@@ -35,8 +35,8 @@
 //   --warmup=10
 //   --repeat=100
 
-use sp_core::parameter_types;
-use sp_weights::{constants::WEIGHT_REF_TIME_PER_NANOS, Weight};
+use soil_core::parameter_types;
+use soil_weights::{constants::WEIGHT_REF_TIME_PER_NANOS, Weight};
 
 parameter_types! {
 	/// Weight of executing an empty block.
@@ -58,7 +58,7 @@ parameter_types! {
 
 #[cfg(test)]
 mod test_weights {
-	use sp_weights::constants;
+	use soil_weights::constants;
 
 	/// Checks that the weight exists and is sane.
 	// NOTE: If this test fails but you are sure that the generated values are fine,

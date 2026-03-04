@@ -24,9 +24,9 @@ use sp_consensus_beefy::{
 	AncestryHelper, Commitment, Payload, ValidatorSet,
 };
 
-use sp_core::H256;
-use sp_io::TestExternalities;
-use sp_runtime::{traits::Keccak256, DigestItem};
+use soil_core::H256;
+use soil_io::TestExternalities;
+use soil_runtime::{traits::Keccak256, DigestItem};
 
 use frame_support::traits::OnInitialize;
 

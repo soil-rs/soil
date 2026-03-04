@@ -81,7 +81,7 @@ use libp2p::{
 };
 use linked_hash_set::LinkedHashSet;
 use log::{debug, error, info, trace, warn};
-use sp_core::hexdisplay::HexDisplay;
+use soil_core::hexdisplay::HexDisplay;
 use std::{
 	cmp,
 	collections::{hash_map::Entry, HashMap, HashSet, VecDeque},
@@ -1330,7 +1330,7 @@ mod tests {
 	use super::{kademlia_protocol_name, legacy_kademlia_protocol_name, DiscoveryConfig};
 	use crate::config::ProtocolId;
 	use libp2p::{identity::Keypair, Multiaddr};
-	use sp_core::hash::H256;
+	use soil_core::hash::H256;
 
 	#[cfg(ignore_flaky_test)] // https://github.com/paritytech/polkadot-sdk/issues/48
 	#[tokio::test]

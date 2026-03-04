@@ -19,7 +19,7 @@
 
 use crate::{mock::*, *};
 
-use frame::{deps::sp_runtime::ModuleError, testing_prelude::*};
+use frame::{deps::soil_runtime::ModuleError, testing_prelude::*};
 use fungible::{hold::Inspect as InspectHold, Mutate as MutateFungible};
 use fungibles::{metadata::Inspect, InspectEnumerable};
 use TokenError::FundsUnavailable;

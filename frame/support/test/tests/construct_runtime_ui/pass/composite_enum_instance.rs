@@ -59,9 +59,9 @@ impl frame_system::Config for Runtime {
 	type Block = Block;
 }
 
-pub type Header = sp_runtime::generic::Header<u64, sp_runtime::traits::BlakeTwo256>;
-pub type UncheckedExtrinsic = sp_runtime::generic::UncheckedExtrinsic<u64, RuntimeCall, (), ()>;
-pub type Block = sp_runtime::generic::Block<Header, UncheckedExtrinsic>;
+pub type Header = soil_runtime::generic::Header<u64, soil_runtime::traits::BlakeTwo256>;
+pub type UncheckedExtrinsic = soil_runtime::generic::UncheckedExtrinsic<u64, RuntimeCall, (), ()>;
+pub type Block = soil_runtime::generic::Block<Header, UncheckedExtrinsic>;
 
 frame_support::construct_runtime!(
 	pub enum Runtime

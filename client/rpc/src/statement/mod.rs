@@ -26,7 +26,7 @@ use jsonrpsee::{
 };
 /// Re-export the API for backward compatibility.
 pub use sc_rpc_api::statement::{error::Error, StatementApiServer};
-use sp_core::Bytes;
+use soil_core::Bytes;
 use sp_statement_store::{
 	OptimizedTopicFilter, StatementEvent, StatementSource, SubmitResult, TopicFilter,
 };

@@ -36,11 +36,11 @@ pub use proof_provider::*;
 pub use sp_blockchain as blockchain;
 pub use sp_blockchain::HeaderBackend;
 
-pub use sp_state_machine::{CompactProof, StorageProof};
-pub use sp_storage::{ChildInfo, PrefixedStorageKey, StorageData, StorageKey};
+pub use soil_state_machine::{CompactProof, StorageProof};
+pub use soil_storage::{ChildInfo, PrefixedStorageKey, StorageData, StorageKey};
 
 /// Usage Information Provider interface
-pub trait UsageProvider<Block: sp_runtime::traits::Block> {
+pub trait UsageProvider<Block: soil_runtime::traits::Block> {
 	/// Get usage info about current client.
 	fn usage_info(&self) -> ClientInfo<Block>;
 }
@@ -48,7 +48,7 @@ pub trait UsageProvider<Block: sp_runtime::traits::Block> {
 /// Utility methods for the client.
 pub mod utils {
 	use sp_blockchain::{Error, HeaderBackend, HeaderMetadata};
-	use sp_runtime::traits::Block as BlockT;
+	use soil_runtime::traits::Block as BlockT;
 
 	/// Returns a function for checking block ancestry, the returned function will
 	/// return `true` if the given hash (second parameter) is a descendent of the

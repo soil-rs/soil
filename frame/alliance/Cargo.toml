@@ -22,10 +22,10 @@ log = { workspace = true }
 codec = { features = ["derive"], workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 
-sp-core = { workspace = true }
+soil-core = { workspace = true }
 soil-crypto-hashing = { optional = true, workspace = true }
-sp-io = { workspace = true }
-sp-runtime = { workspace = true }
+soil-io = { workspace = true }
+soil-runtime = { workspace = true }
 
 frame-benchmarking = { optional = true, workspace = true }
 frame-support = { workspace = true }
@@ -52,10 +52,10 @@ std = [
 	"pallet-collective?/std",
 	"pallet-identity/std",
 	"scale-info/std",
-	"sp-core/std",
+	"soil-core/std",
 	"soil-crypto-hashing?/std",
-	"sp-io/std",
-	"sp-runtime/std",
+	"soil-io/std",
+	"soil-runtime/std",
 ]
 runtime-benchmarks = [
 	"array-bytes",
@@ -66,7 +66,7 @@ runtime-benchmarks = [
 	"pallet-collective/runtime-benchmarks",
 	"pallet-identity/runtime-benchmarks",
 	"soil-crypto-hashing",
-	"sp-runtime/runtime-benchmarks",
+	"soil-runtime/runtime-benchmarks",
 ]
 try-runtime = [
 	"frame-support/try-runtime",
@@ -74,5 +74,5 @@ try-runtime = [
 	"pallet-balances/try-runtime",
 	"pallet-collective?/try-runtime",
 	"pallet-identity/try-runtime",
-	"sp-runtime/try-runtime",
+	"soil-runtime/try-runtime",
 ]

@@ -84,11 +84,11 @@ fn initialize(
 				std::fs::write(&path, &precompiled_blob).unwrap();
 				unsafe {
 					sc_executor_wasmtime::create_runtime_from_artifact::<
-						sp_io::SubstrateHostFunctions,
+						soil_io::SubstrateHostFunctions,
 					>(&path, config)
 				}
 			} else {
-				sc_executor_wasmtime::create_runtime::<sp_io::SubstrateHostFunctions>(blob, config)
+				sc_executor_wasmtime::create_runtime::<soil_io::SubstrateHostFunctions>(blob, config)
 			}
 			.map(|runtime| -> Box<dyn WasmModule> { Box::new(runtime) })
 		},

@@ -19,11 +19,11 @@
 use codec::Encode;
 use sc_consensus_grandpa::GrandpaJustification;
 use serde::{Deserialize, Serialize};
-use sp_runtime::traits::Block as BlockT;
+use soil_runtime::traits::Block as BlockT;
 
 /// An encoded justification proving that the given header has been finalized
 #[derive(Clone, Serialize, Deserialize)]
-pub struct JustificationNotification(sp_core::Bytes);
+pub struct JustificationNotification(soil_core::Bytes);
 
 impl<Block: BlockT> From<GrandpaJustification<Block>> for JustificationNotification {
 	fn from(notification: GrandpaJustification<Block>) -> Self {

@@ -30,8 +30,8 @@ pub mod command;
 use codec::{Decode, Encode};
 use sc_client_api::BlockBackend;
 use sp_blockchain::HeaderBackend;
-use sp_core::hexdisplay::HexDisplay;
-use sp_runtime::{
+use soil_core::hexdisplay::HexDisplay;
+use soil_runtime::{
 	generic::BlockId,
 	traits::{Block, Hash, HashingFor, NumberFor},
 };
@@ -218,7 +218,7 @@ impl<Hash: FromStr, Number: FromStr> FromStr for BlockAddress<Hash, Number> {
 		}
 
 		// then assume it's bytes (hex-encoded)
-		sp_core::bytes::from_hex(s).map(Self::Bytes).map_err(|e| {
+		soil_core::bytes::from_hex(s).map(Self::Bytes).map_err(|e| {
 			format!(
 				"Given string does not look like hash or number. It could not be parsed as bytes either: {}",
 				e
@@ -241,7 +241,7 @@ impl<Hash: FromStr + Debug, Number: FromStr + Debug> FromStr for ExtrinsicAddres
 
 	fn from_str(s: &str) -> Result<Self, Self::Err> {
 		// first try raw bytes
-		if let Ok(bytes) = sp_core::bytes::from_hex(s).map(Self::Bytes) {
+		if let Ok(bytes) = soil_core::bytes::from_hex(s).map(Self::Bytes) {
 			return Ok(bytes);
 		}
 
@@ -265,7 +265,7 @@ impl<Hash: FromStr + Debug, Number: FromStr + Debug> FromStr for ExtrinsicAddres
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use sp_core::hash::H160 as Hash;
+	use soil_core::hash::H160 as Hash;
 
 	#[test]
 	fn should_parse_block_strings() {

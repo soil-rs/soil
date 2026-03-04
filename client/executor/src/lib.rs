@@ -41,7 +41,7 @@ pub use codec::Codec;
 pub use executor::NativeElseWasmExecutor;
 pub use executor::{with_externalities_safe, NativeExecutionDispatch, WasmExecutor};
 #[doc(hidden)]
-pub use sp_core::traits::Externalities;
+pub use soil_core::traits::Externalities;
 pub use sp_version::{NativeVersion, RuntimeVersion};
 #[doc(hidden)]
 pub use soil_wasm_interface;
@@ -60,7 +60,7 @@ pub trait RuntimeVersionOf {
 	fn runtime_version(
 		&self,
 		ext: &mut dyn Externalities,
-		runtime_code: &sp_core::traits::RuntimeCode,
+		runtime_code: &soil_core::traits::RuntimeCode,
 	) -> error::Result<RuntimeVersion>;
 }
 
@@ -69,14 +69,14 @@ mod tests {
 	use super::*;
 	use sc_executor_common::runtime_blob::RuntimeBlob;
 	use sc_runtime_test::wasm_binary_unwrap;
-	use sp_io::TestExternalities;
+	use soil_io::TestExternalities;
 
 	#[test]
 	fn call_in_interpreted_wasm_works() {
 		let mut ext = TestExternalities::default();
 		let mut ext = ext.ext();
 
-		let executor = WasmExecutor::<sp_io::SubstrateHostFunctions>::builder().build();
+		let executor = WasmExecutor::<soil_io::SubstrateHostFunctions>::builder().build();
 		let res = executor
 			.uncached_call(
 				RuntimeBlob::uncompress_if_needed(wasm_binary_unwrap()).unwrap(),

@@ -49,7 +49,7 @@ use sc_network_common::{role::ObservedRole, ExHashT};
 use sc_network_sync::{SyncEvent, SyncEventStream};
 use sc_network_types::PeerId;
 use sc_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
-use sp_runtime::traits::Block as BlockT;
+use soil_runtime::traits::Block as BlockT;
 
 use std::{
 	collections::{hash_map::Entry, HashMap},

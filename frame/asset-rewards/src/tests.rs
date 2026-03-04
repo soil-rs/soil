@@ -25,7 +25,7 @@ use frame_support::{
 		tokens::{Fortitude, Preservation},
 	},
 };
-use sp_runtime::{traits::BadOrigin, ArithmeticError, TokenError};
+use soil_runtime::{traits::BadOrigin, ArithmeticError, TokenError};
 
 const DEFAULT_STAKED_ASSET_ID: NativeOrWithId<u32> = NativeOrWithId::<u32>::WithId(1);
 const DEFAULT_REWARD_ASSET_ID: NativeOrWithId<u32> = NativeOrWithId::<u32>::Native;

@@ -31,7 +31,7 @@ use frame_support::{
 		tokens::Precision,
 	},
 };
-use sp_runtime::DispatchError;
+use soil_runtime::DispatchError;
 
 /// There are some accounts that have one consumer ref too few. These accounts are at risk of losing
 /// their held (reserved) balance. They do not just lose it - it is also not accounted for in the

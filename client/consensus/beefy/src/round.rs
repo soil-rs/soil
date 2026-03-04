@@ -20,12 +20,12 @@ use crate::LOG_TARGET;
 
 use codec::{Decode, Encode};
 use log::{debug, info};
-use sp_application_crypto::RuntimeAppPublic;
+use soil_application_crypto::RuntimeAppPublic;
 use sp_consensus_beefy::{
 	AuthorityIdBound, Commitment, DoubleVotingProof, SignedCommitment, ValidatorSet,
 	ValidatorSetId, VoteMessage,
 };
-use sp_runtime::traits::{Block, NumberFor};
+use soil_runtime::traits::{Block, NumberFor};
 use std::collections::BTreeMap;
 
 /// Tracks for each round which validators have voted/signed and

@@ -94,7 +94,7 @@ impl<T: Config> DelegationInterface for Pallet<T> {
 		delegator: Delegator<Self::AccountId>,
 		value: Self::Balance,
 		maybe_reporter: Option<Self::AccountId>,
-	) -> sp_runtime::DispatchResult {
+	) -> soil_runtime::DispatchResult {
 		Pallet::<T>::do_slash(agent, delegator, value, maybe_reporter)
 	}
 }

@@ -78,7 +78,7 @@ use sc_client_api::BlockBackend;
 use sc_network_common::{role::Roles, ExHashT};
 use sc_network_types::PeerId;
 use sc_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver};
-use sp_runtime::traits::Block as BlockT;
+use soil_runtime::traits::Block as BlockT;
 
 use std::{
 	cmp,

@@ -56,7 +56,7 @@
 //! `Executive` type declaration from the node template.
 //!
 //! ```
-//! # use sp_runtime::generic;
+//! # use soil_runtime::generic;
 //! # use frame_executive as executive;
 //! # pub struct UncheckedExtrinsic {};
 //! # pub struct Header {};
@@ -65,10 +65,10 @@
 //! # pub type Balances = u64;
 //! # pub type AllPalletsWithSystem = u64;
 //! # pub enum Runtime {};
-//! # use sp_runtime::transaction_validity::{
+//! # use soil_runtime::transaction_validity::{
 //! #    TransactionValidity, UnknownTransaction, TransactionSource,
 //! # };
-//! # use sp_runtime::traits::ValidateUnsigned;
+//! # use soil_runtime::traits::ValidateUnsigned;
 //! # impl ValidateUnsigned for Runtime {
 //! #     type Call = ();
 //! #
@@ -131,7 +131,7 @@ use frame_support::{
 	MAX_EXTRINSIC_DEPTH,
 };
 use frame_system::pallet_prelude::BlockNumberFor;
-use sp_runtime::{
+use soil_runtime::{
 	generic::Digest,
 	traits::{
 		self, Applyable, CheckEqual, Checkable, Dispatchable, Header, LazyBlock, NumberFor, One,
@@ -149,7 +149,7 @@ use ::{
 	},
 	frame_try_runtime::{TryStateSelect, UpgradeCheckSelect},
 	log,
-	sp_runtime::TryRuntimeError,
+	soil_runtime::TryRuntimeError,
 };
 
 #[allow(dead_code)]
@@ -601,7 +601,7 @@ where
 	pub fn initialize_block(
 		header: &frame_system::pallet_prelude::HeaderFor<System>,
 	) -> ExtrinsicInclusionMode {
-		sp_io::init_tracing();
+		soil_io::init_tracing();
 		soil_tracing::enter_span!(soil_tracing::Level::TRACE, "init_block");
 		let digests = Self::extract_pre_digest(header);
 		Self::initialize_block_impl(header.number(), header.parent_hash(), &digests);
@@ -693,7 +693,7 @@ where
 
 	/// Actually execute all transitions for `block`.
 	pub fn execute_block(block: Block::LazyBlock) {
-		sp_io::init_tracing();
+		soil_io::init_tracing();
 		soil_tracing::within_span! {
 			soil_tracing::info_span!("execute_block", ?block);
 			// Execute `on_runtime_upgrade` and `on_initialize`.
@@ -786,7 +786,7 @@ where
 	/// except state-root.
 	// Note: Only used by the block builder - not Executive itself.
 	pub fn finalize_block() -> frame_system::pallet_prelude::HeaderFor<System> {
-		sp_io::init_tracing();
+		soil_io::init_tracing();
 		soil_tracing::enter_span!(soil_tracing::Level::TRACE, "finalize_block");
 
 		// In this case there were no transactions to trigger this state transition:
@@ -865,11 +865,11 @@ where
 			&Context,
 		) -> Result<CheckedOf<Block::Extrinsic, Context>, TransactionValidityError>,
 	) -> ApplyExtrinsicResult {
-		sp_io::init_tracing();
+		soil_io::init_tracing();
 		let encoded = uxt.encode();
 		let encoded_len = encoded.len();
 		soil_tracing::enter_span!(soil_tracing::info_span!("apply_extrinsic",
-			ext=?sp_core::hexdisplay::HexDisplay::from(&encoded)));
+			ext=?soil_core::hexdisplay::HexDisplay::from(&encoded)));
 
 		let uxt = <Block::Extrinsic as codec::DecodeLimit>::decode_all_with_depth_limit(
 			MAX_EXTRINSIC_DEPTH,
@@ -955,7 +955,7 @@ where
 		uxt: Block::Extrinsic,
 		block_hash: Block::Hash,
 	) -> TransactionValidity {
-		sp_io::init_tracing();
+		soil_io::init_tracing();
 		use soil_tracing::{enter_span, within_span};
 
 		<frame_system::Pallet<System>>::initialize(
@@ -996,7 +996,7 @@ where
 
 	/// Start an offchain worker and generate extrinsics.
 	pub fn offchain_worker(header: &frame_system::pallet_prelude::HeaderFor<System>) {
-		sp_io::init_tracing();
+		soil_io::init_tracing();
 		// We need to keep events available for offchain workers,
 		// hence we initialize the block manually.
 		// OffchainWorker RuntimeApi should skip initialization.

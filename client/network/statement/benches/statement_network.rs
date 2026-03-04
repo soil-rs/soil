@@ -33,7 +33,7 @@ use sc_network_statement::{
 use sc_network_sync::{SyncEvent, SyncEventStream};
 use sc_network_types::PeerId;
 use sc_statement_store::Store;
-use sp_core::Pair;
+use soil_core::Pair;
 use sp_statement_store::{Statement, StatementSource, StatementStore};
 use std::{
 	collections::HashMap,
@@ -176,7 +176,7 @@ impl NotificationService for TestNotificationService {
 	}
 }
 
-fn create_signed_statement(id: usize, keypair: &sp_core::ed25519::Pair) -> Statement {
+fn create_signed_statement(id: usize, keypair: &soil_core::ed25519::Pair) -> Statement {
 	let mut statement = Statement::new();
 	let mut data = vec![0u8; STATEMENT_DATA_SIZE];
 	data[0..8].copy_from_slice(&id.to_le_bytes());
@@ -212,7 +212,7 @@ fn build_handler(
 		client,
 		keystore,
 		None,
-		Box::new(sp_core::testing::TaskExecutor::new()),
+		Box::new(soil_core::testing::TaskExecutor::new()),
 	)
 	.unwrap();
 	let statement_store = Arc::new(statement_store);
@@ -307,7 +307,7 @@ fn bench_on_statements(c: &mut Criterion) {
 	let max_runtime_instances = 8;
 	let executor_types = [("blocking", true), ("non_blocking", false)];
 
-	let keypair = sp_core::ed25519::Pair::from_string("//Bench", None).unwrap();
+	let keypair = soil_core::ed25519::Pair::from_string("//Bench", None).unwrap();
 	let runtime = tokio::runtime::Runtime::new().expect("Failed to create tokio runtime");
 	let handle = runtime.handle();
 

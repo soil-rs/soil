@@ -35,7 +35,7 @@ use frame_support::{
 };
 use frame_system::{EnsureSigned, EnsureSignedBy};
 use soil_arithmetic::Permill;
-use sp_runtime::{
+use soil_runtime::{
 	traits::{AccountIdConversion, IdentityLookup},
 	BuildStorage,
 };
@@ -141,7 +141,7 @@ pub type WithFirstAssetLocator =
 impl Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type Balance = <Self as pallet_balances::Config>::Balance;
-	type HigherPrecisionBalance = sp_core::U256;
+	type HigherPrecisionBalance = soil_core::U256;
 	type AssetKind = NativeOrWithId<u32>;
 	type Assets = NativeAndAssets;
 	type PoolId = (Self::AssetKind, Self::AssetKind);
@@ -161,7 +161,7 @@ impl Config for Test {
 	type BenchmarkHelper = ();
 }
 
-pub(crate) fn new_test_ext() -> sp_io::TestExternalities {
+pub(crate) fn new_test_ext() -> soil_io::TestExternalities {
 	let mut t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 
 	pallet_balances::GenesisConfig::<Test> {
@@ -171,7 +171,7 @@ pub(crate) fn new_test_ext() -> sp_io::TestExternalities {
 	.assimilate_storage(&mut t)
 	.unwrap();
 
-	let mut ext = sp_io::TestExternalities::new(t);
+	let mut ext = soil_io::TestExternalities::new(t);
 	ext.execute_with(|| System::set_block_number(1));
 	ext
 }

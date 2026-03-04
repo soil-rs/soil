@@ -218,7 +218,7 @@ use soil_arithmetic::{
 	PerThing, UpperOf,
 };
 use sp_npos_elections::{EvaluateSupport, VoteWeight};
-use sp_runtime::{
+use soil_runtime::{
 	traits::{Hash, Saturating},
 	SaturatedConversion,
 };
@@ -838,7 +838,7 @@ pub mod pallet {
 		}
 
 		#[cfg(feature = "try-runtime")]
-		fn try_state(now: BlockNumberFor<T>) -> Result<(), sp_runtime::TryRuntimeError> {
+		fn try_state(now: BlockNumberFor<T>) -> Result<(), soil_runtime::TryRuntimeError> {
 			Self::do_try_state(now).map_err(Into::into)
 		}
 	}
@@ -1026,7 +1026,7 @@ pub mod pallet {
 			debug_assert_eq!(buffer, data.encode());
 			// buffer should have not re-allocated since.
 			debug_assert!(buffer.len() == size && size == buffer.capacity());
-			sp_io::storage::set(key, &buffer);
+			soil_io::storage::set(key, &buffer);
 
 			hash
 		}
@@ -1173,12 +1173,12 @@ pub mod pallet {
 	#[cfg(test)]
 	impl<T: Config> Snapshot<T> {
 		pub(crate) fn voter_pages() -> PageIndex {
-			use sp_runtime::SaturatedConversion;
+			use soil_runtime::SaturatedConversion;
 			PagedVoterSnapshot::<T>::iter().count().saturated_into::<PageIndex>()
 		}
 
 		pub(crate) fn target_pages() -> PageIndex {
-			use sp_runtime::SaturatedConversion;
+			use soil_runtime::SaturatedConversion;
 			PagedTargetSnapshot::<T>::iter().count().saturated_into::<PageIndex>()
 		}
 
@@ -1604,8 +1604,8 @@ impl<T: Config> Pallet<T> {
 		op_name: &str,
 		op_weight: Weight,
 		limit_weight: Weight,
-		maybe_max_ratio: Option<sp_runtime::Percent>,
-		maybe_max_warn_ratio: Option<sp_runtime::Percent>,
+		maybe_max_ratio: Option<soil_runtime::Percent>,
+		maybe_max_warn_ratio: Option<soil_runtime::Percent>,
 	) {
 		use frame_support::weights::constants::{
 			WEIGHT_PROOF_SIZE_PER_KB, WEIGHT_REF_TIME_PER_MILLIS,
@@ -1613,10 +1613,10 @@ impl<T: Config> Pallet<T> {
 
 		let ref_time_ms = op_weight.ref_time() / WEIGHT_REF_TIME_PER_MILLIS;
 		let ref_time_ratio =
-			sp_runtime::Percent::from_rational(op_weight.ref_time(), limit_weight.ref_time());
+			soil_runtime::Percent::from_rational(op_weight.ref_time(), limit_weight.ref_time());
 		let proof_size_kb = op_weight.proof_size() / WEIGHT_PROOF_SIZE_PER_KB;
 		let proof_size_ratio =
-			sp_runtime::Percent::from_rational(op_weight.proof_size(), limit_weight.proof_size());
+			soil_runtime::Percent::from_rational(op_weight.proof_size(), limit_weight.proof_size());
 		let limit_ms = limit_weight.ref_time() / WEIGHT_REF_TIME_PER_MILLIS;
 		let limit_kb = limit_weight.proof_size() / WEIGHT_PROOF_SIZE_PER_KB;
 		log::info!(
@@ -1658,8 +1658,8 @@ impl<T: Config> Pallet<T> {
 	/// A reasonable value for `maybe_max_weight` would be 75%, and 50% for `maybe_max_warn_ratio`.
 	pub fn check_all_weights(
 		limit_weight: Weight,
-		maybe_max_ratio: Option<sp_runtime::Percent>,
-		maybe_max_warn_ratio: Option<sp_runtime::Percent>,
+		maybe_max_ratio: Option<soil_runtime::Percent>,
+		maybe_max_warn_ratio: Option<soil_runtime::Percent>,
 	) where
 		T: crate::verifier::Config + crate::signed::Config + crate::unsigned::Config,
 	{

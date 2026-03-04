@@ -24,9 +24,9 @@ use frame_support::{
 	PalletId,
 };
 use frame_system::EnsureRoot;
-use sp_core::{ConstBool, ConstU32, Get};
+use soil_core::{ConstBool, ConstU32, Get};
 use sp_npos_elections::{ElectionScore, VoteWeight};
-use sp_runtime::{
+use soil_runtime::{
 	offchain::{
 		testing::{OffchainState, PoolState, TestOffchainExt, TestTransactionPoolExt},
 		OffchainDbExt, OffchainWorkerExt, TransactionPoolExt,
@@ -61,7 +61,7 @@ pub const INIT_TIMESTAMP: BlockNumber = 30_000;
 pub const BLOCK_TIME: BlockNumber = 1000;
 
 type Block = frame_system::mocking::MockBlockU32<Runtime>;
-type Extrinsic = sp_runtime::testing::TestXt<RuntimeCall, ()>;
+type Extrinsic = soil_runtime::testing::TestXt<RuntimeCall, ()>;
 
 frame_support::construct_runtime!(
 	pub enum Runtime {
@@ -91,7 +91,7 @@ impl frame_system::Config for Runtime {
 	type AccountId = AccountId;
 	type Block = Block;
 	type AccountData = pallet_balances::AccountData<Balance>;
-	type Lookup = sp_runtime::traits::IdentityLookup<Self::AccountId>;
+	type Lookup = soil_runtime::traits::IdentityLookup<Self::AccountId>;
 }
 
 const NORMAL_DISPATCH_RATIO: Perbill = Perbill::from_percent(75);
@@ -126,7 +126,7 @@ parameter_types! {
 	pub static Offset: u32 = 0;
 }
 
-sp_runtime::impl_opaque_keys! {
+soil_runtime::impl_opaque_keys! {
 	pub struct SessionKeys {
 		pub other: OtherSessionHandler,
 	}
@@ -140,7 +140,7 @@ impl pallet_session::Config for Runtime {
 	type SessionHandler = (OtherSessionHandler,);
 	type RuntimeEvent = RuntimeEvent;
 	type ValidatorId = AccountId;
-	type ValidatorIdOf = sp_runtime::traits::ConvertInto;
+	type ValidatorIdOf = soil_runtime::traits::ConvertInto;
 	type DisablingStrategy = pallet_session::disabling::UpToLimitWithReEnablingDisablingStrategy<
 		SLASHING_DISABLING_FACTOR,
 	>;
@@ -258,15 +258,15 @@ impl pallet_bags_list::Config for Runtime {
 }
 
 pub struct BalanceToU256;
-impl sp_runtime::traits::Convert<Balance, sp_core::U256> for BalanceToU256 {
-	fn convert(n: Balance) -> sp_core::U256 {
+impl soil_runtime::traits::Convert<Balance, soil_core::U256> for BalanceToU256 {
+	fn convert(n: Balance) -> soil_core::U256 {
 		n.into()
 	}
 }
 
 pub struct U256ToBalance;
-impl sp_runtime::traits::Convert<sp_core::U256, Balance> for U256ToBalance {
-	fn convert(n: sp_core::U256) -> Balance {
+impl soil_runtime::traits::Convert<soil_core::U256, Balance> for U256ToBalance {
+	fn convert(n: soil_core::U256) -> Balance {
 		n.try_into().unwrap()
 	}
 }
@@ -281,7 +281,7 @@ impl pallet_nomination_pools::Config for Runtime {
 	type WeightInfo = ();
 	type Currency = Balances;
 	type RuntimeFreezeReason = RuntimeFreezeReason;
-	type RewardCounter = sp_runtime::FixedU128;
+	type RewardCounter = soil_runtime::FixedU128;
 	type BalanceToU256 = BalanceToU256;
 	type U256ToBalance = U256ToBalance;
 	type StakeAdapter =
@@ -418,7 +418,7 @@ impl traits::OneSessionHandler<AccountId> for OtherSessionHandler {
 	fn on_disabled(_validator_index: u32) {}
 }
 
-impl sp_runtime::BoundToRuntimeAppPublic for OtherSessionHandler {
+impl soil_runtime::BoundToRuntimeAppPublic for OtherSessionHandler {
 	type Public = testing::UintAuthorityId;
 }
 
@@ -577,7 +577,7 @@ impl Default for ExtBuilder {
 }
 
 impl ExtBuilder {
-	pub fn build(&self) -> sp_io::TestExternalities {
+	pub fn build(&self) -> soil_io::TestExternalities {
 		soil_tracing::try_init_simple();
 		let mut storage =
 			frame_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
@@ -626,7 +626,7 @@ impl ExtBuilder {
 		}
 		.assimilate_storage(&mut storage);
 
-		let mut ext = sp_io::TestExternalities::from(storage);
+		let mut ext = soil_io::TestExternalities::from(storage);
 
 		// We consider all test to start after timestamp is initialized This must be ensured by
 		// having `timestamp::on_initialize` called before `staking::on_initialize`.
@@ -662,7 +662,7 @@ impl ExtBuilder {
 
 	pub fn build_offchainify(
 		self,
-	) -> (sp_io::TestExternalities, Arc<RwLock<PoolState>>, Arc<RwLock<OffchainState>>) {
+	) -> (soil_io::TestExternalities, Arc<RwLock<PoolState>>, Arc<RwLock<OffchainState>>) {
 		// add offchain and pool externality extensions.
 		let mut ext = self.build();
 		let (offchain, offchain_state) = TestOffchainExt::new();
@@ -676,7 +676,7 @@ impl ExtBuilder {
 	}
 }
 
-pub(crate) fn execute_with(mut ext: sp_io::TestExternalities, test: impl FnOnce() -> ()) {
+pub(crate) fn execute_with(mut ext: soil_io::TestExternalities, test: impl FnOnce() -> ()) {
 	ext.execute_with(test);
 
 	#[cfg(feature = "try-runtime")]

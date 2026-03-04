@@ -23,7 +23,7 @@ use crate::{
 	AllVoterPagesOf, SolutionTargetIndexOf, SolutionVoterIndexOf, VoteWeight,
 };
 use frame_support::{traits::Get, BoundedVec};
-use sp_runtime::SaturatedConversion;
+use soil_runtime::SaturatedConversion;
 use soil_std::{collections::btree_map::BTreeMap, convert::TryInto, prelude::*};
 
 /// Emit a log specific to this pallet, setting the target to [`crate::LOG_PREFIX`]

@@ -18,9 +18,9 @@
 
 //! Proof utilities
 use crate::{CompactProof, StorageProof};
-use sp_runtime::traits::Block as BlockT;
-use sp_state_machine::{KeyValueStates, KeyValueStorageLevel};
-use sp_storage::ChildInfo;
+use soil_runtime::traits::Block as BlockT;
+use soil_state_machine::{KeyValueStates, KeyValueStorageLevel};
+use soil_storage::ChildInfo;
 
 /// Interface for providing block proving utilities.
 pub trait ProofProvider<Block: BlockT> {

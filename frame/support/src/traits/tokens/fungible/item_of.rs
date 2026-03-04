@@ -31,8 +31,8 @@ use crate::traits::{
 	},
 };
 use frame_support::traits::fungible::hold::DoneSlash;
-use sp_core::Get;
-use sp_runtime::{DispatchError, DispatchResult};
+use soil_core::Get;
+use soil_runtime::{DispatchError, DispatchResult};
 
 /// Convert a `fungibles` trait implementation into a `fungible` trait implementation by identifying
 /// a single item.

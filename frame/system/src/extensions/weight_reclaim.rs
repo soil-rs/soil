@@ -19,14 +19,14 @@ use crate::Config;
 use codec::{Decode, DecodeWithMemTracking, Encode};
 use frame_support::dispatch::{DispatchInfo, PostDispatchInfo};
 use scale_info::TypeInfo;
-use sp_runtime::{
+use soil_runtime::{
 	traits::{
 		DispatchInfoOf, Dispatchable, PostDispatchInfoOf, TransactionExtension, ValidateResult,
 	},
 	transaction_validity::{TransactionSource, TransactionValidityError, ValidTransaction},
 	DispatchResult,
 };
-use sp_weights::Weight;
+use soil_weights::Weight;
 
 /// Reclaim the unused weight using the post dispatch information
 ///

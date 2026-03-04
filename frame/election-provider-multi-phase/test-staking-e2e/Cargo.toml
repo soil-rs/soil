@@ -21,10 +21,10 @@ log = { workspace = true }
 parking_lot = { workspace = true, default-features = true }
 scale-info = { features = ["derive"], workspace = true, default-features = true }
 
-sp-core = { workspace = true, default-features = true }
-sp-io = { workspace = true, default-features = true }
+soil-core = { workspace = true, default-features = true }
+soil-io = { workspace = true, default-features = true }
 sp-npos-elections = { workspace = true }
-sp-runtime = { workspace = true, default-features = true }
+soil-runtime = { workspace = true, default-features = true }
 sp-staking = { workspace = true, default-features = true }
 soil-tracing = { workspace = true, default-features = true }
 
@@ -54,5 +54,5 @@ try-runtime = [
 	"pallet-session/try-runtime",
 	"pallet-staking/try-runtime",
 	"pallet-timestamp/try-runtime",
-	"sp-runtime/try-runtime",
+	"soil-runtime/try-runtime",
 ]

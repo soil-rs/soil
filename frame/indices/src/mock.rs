@@ -21,7 +21,7 @@
 
 use crate::{self as pallet_indices, Config};
 use frame_support::{derive_impl, parameter_types};
-use sp_runtime::BuildStorage;
+use soil_runtime::BuildStorage;
 
 type Block = frame_system::mocking::MockBlock<Test>;
 
@@ -59,7 +59,7 @@ impl Config for Test {
 	type WeightInfo = ();
 }
 
-pub fn new_test_ext() -> sp_io::TestExternalities {
+pub fn new_test_ext() -> soil_io::TestExternalities {
 	let mut t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	pallet_balances::GenesisConfig::<Test> {
 		balances: vec![(1, 10), (2, 20), (3, 30), (4, 40), (5, 50), (6, 60)],
@@ -67,7 +67,7 @@ pub fn new_test_ext() -> sp_io::TestExternalities {
 	}
 	.assimilate_storage(&mut t)
 	.unwrap();
-	let mut ext: sp_io::TestExternalities = t.into();
+	let mut ext: soil_io::TestExternalities = t.into();
 	// Initialize the block number to 1 for event registration
 	ext.execute_with(|| System::set_block_number(1));
 	ext

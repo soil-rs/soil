@@ -28,7 +28,7 @@ use frame_support::{
 	},
 };
 use frame_system::{Pallet as System, RawOrigin};
-use sp_runtime::{traits::One, Saturating};
+use soil_runtime::{traits::One, Saturating};
 use soil_std::prelude::*;
 
 /// Benchmark Helper

@@ -22,26 +22,26 @@ use codec::{Decode, Encode};
 pub use sc_executor::soil_wasm_interface::HostFunctions;
 use sc_executor::{error::Result, WasmExecutor};
 use serde_json::{from_slice, Value};
-use sp_core::{
+use soil_core::{
 	storage::Storage,
 	traits::{CallContext, CodeExecutor, Externalities, FetchRuntimeCode, RuntimeCode},
 };
 use sp_genesis_builder::{PresetId, Result as BuildResult};
 pub use sp_genesis_builder::{DEV_RUNTIME_PRESET, LOCAL_TESTNET_RUNTIME_PRESET};
-use sp_state_machine::BasicExternalities;
+use soil_state_machine::BasicExternalities;
 use std::borrow::Cow;
 
 /// A utility that facilitates calling the GenesisBuilder API from the runtime wasm code blob.
 ///
 /// `EHF` type allows to specify the extended host function required for building runtime's genesis
-/// config. The type will be combined with default `sp_io::SubstrateHostFunctions`.
+/// config. The type will be combined with default `soil_io::SubstrateHostFunctions`.
 pub struct GenesisConfigBuilderRuntimeCaller<'a, EHF = ()>
 where
 	EHF: HostFunctions,
 {
 	code: Cow<'a, [u8]>,
 	code_hash: Vec<u8>,
-	executor: WasmExecutor<(sp_io::SubstrateHostFunctions, EHF)>,
+	executor: WasmExecutor<(soil_io::SubstrateHostFunctions, EHF)>,
 }
 
 impl<'a, EHF> FetchRuntimeCode for GenesisConfigBuilderRuntimeCaller<'a, EHF>
@@ -64,7 +64,7 @@ where
 		GenesisConfigBuilderRuntimeCaller {
 			code: code.into(),
 			code_hash: soil_crypto_hashing::blake2_256(code).to_vec(),
-			executor: WasmExecutor::<(sp_io::SubstrateHostFunctions, EHF)>::builder()
+			executor: WasmExecutor::<(soil_io::SubstrateHostFunctions, EHF)>::builder()
 				.with_allow_missing_host_functions(true)
 				.build(),
 		}

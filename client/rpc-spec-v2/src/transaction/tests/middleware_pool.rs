@@ -27,7 +27,7 @@ use sc_transaction_pool_api::{
 use crate::hex_string;
 use futures::StreamExt;
 
-use sp_runtime::traits::Block as BlockT;
+use soil_runtime::traits::Block as BlockT;
 use std::{collections::HashMap, pin::Pin, sync::Arc};
 use substrate_test_runtime_transaction_pool::TestApi;
 use tokio::sync::mpsc;

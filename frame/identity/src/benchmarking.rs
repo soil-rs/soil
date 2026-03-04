@@ -29,7 +29,7 @@ use frame_support::{
 	traits::{EnsureOrigin, Get, OnFinalize, OnInitialize},
 };
 use frame_system::RawOrigin;
-use sp_runtime::traits::{Bounded, One};
+use soil_runtime::traits::{Bounded, One};
 
 const SEED: u32 = 0;
 

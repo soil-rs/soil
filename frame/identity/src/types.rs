@@ -27,7 +27,7 @@ use scale_info::{
 	build::{Fields, Variants},
 	Path, Type, TypeInfo,
 };
-use sp_runtime::traits::{Member, Zero};
+use soil_runtime::traits::{Member, Zero};
 
 /// An identifier for a single name registrar/identity verification service.
 pub type RegistrarIndex = u32;

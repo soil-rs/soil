@@ -19,7 +19,7 @@
 //! Substrate state API.
 
 use jsonrpsee::proc_macros::rpc;
-use sp_core::{
+use soil_core::{
 	storage::{StorageChangeSet, StorageData, StorageKey},
 	Bytes,
 };
@@ -299,5 +299,5 @@ pub trait StateApi<Hash> {
 		targets: Option<String>,
 		storage_keys: Option<String>,
 		methods: Option<String>,
-	) -> Result<sp_rpc::tracing::TraceBlockResponse, Error>;
+	) -> Result<soil_rpc::tracing::TraceBlockResponse, Error>;
 }

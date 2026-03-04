@@ -100,7 +100,7 @@ use alloc::{boxed::Box, vec, vec::Vec};
 use codec::{Decode, Encode, MaxEncodedLen};
 use frame_support::pallet_prelude::*;
 use frame_system::pallet_prelude::*;
-use sp_runtime::{
+use soil_runtime::{
 	traits::{Dispatchable, Saturating, StaticLookup, Zero},
 	Debug, DispatchError,
 };
@@ -413,7 +413,7 @@ pub mod pallet {
 	#[pallet::hooks]
 	impl<T: Config<I>, I: 'static> Hooks<BlockNumberFor<T>> for Pallet<T, I> {
 		#[cfg(feature = "try-runtime")]
-		fn try_state(_n: BlockNumberFor<T>) -> Result<(), sp_runtime::TryRuntimeError> {
+		fn try_state(_n: BlockNumberFor<T>) -> Result<(), soil_runtime::TryRuntimeError> {
 			Self::do_try_state()
 		}
 	}
@@ -1129,7 +1129,7 @@ impl<T: Config<I>, I: 'static> Pallet<T, I> {
 	/// Ensure the correctness of the state of this pallet.
 	///
 	/// This should be valid before or after each state transition of this pallet.
-	pub fn do_try_state() -> Result<(), sp_runtime::TryRuntimeError> {
+	pub fn do_try_state() -> Result<(), soil_runtime::TryRuntimeError> {
 		Self::try_state_members_are_disjoint()?;
 		Self::try_state_members_are_sorted()?;
 		Self::try_state_retiring_members_are_consistent()?;
@@ -1143,7 +1143,7 @@ impl<T: Config<I>, I: 'static> Pallet<T, I> {
 	///
 	/// * The sets of `Fellows`, and `Allies` members must be mutually exclusive. An account cannot
 	///   hold more than one role at a time.
-	fn try_state_members_are_disjoint() -> Result<(), sp_runtime::TryRuntimeError> {
+	fn try_state_members_are_disjoint() -> Result<(), soil_runtime::TryRuntimeError> {
 		let fellows = Members::<T, I>::get(MemberRole::Fellow);
 		let allies = Members::<T, I>::get(MemberRole::Ally);
 
@@ -1158,7 +1158,7 @@ impl<T: Config<I>, I: 'static> Pallet<T, I> {
 	///
 	/// * The list of members for each role (`Fellow`, `Ally`, `Retiring`) must be sorted by
 	///   `AccountId`. This is crucial for efficient lookups using binary search.
-	fn try_state_members_are_sorted() -> Result<(), sp_runtime::TryRuntimeError> {
+	fn try_state_members_are_sorted() -> Result<(), soil_runtime::TryRuntimeError> {
 		let roles = [MemberRole::Fellow, MemberRole::Ally, MemberRole::Retiring];
 		for role in roles.iter() {
 			let members = Members::<T, I>::get(role);
@@ -1173,7 +1173,7 @@ impl<T: Config<I>, I: 'static> Pallet<T, I> {
 	///
 	/// * The set of accounts in `RetiringMembers` storage must be identical to the set of members
 	///   with the `Retiring` role.
-	fn try_state_retiring_members_are_consistent() -> Result<(), sp_runtime::TryRuntimeError> {
+	fn try_state_retiring_members_are_consistent() -> Result<(), soil_runtime::TryRuntimeError> {
 		let retiring_in_members = Members::<T, I>::get(MemberRole::Retiring);
 		let retiring_keys_count = RetiringMembers::<T, I>::iter_keys().count();
 
@@ -1196,7 +1196,7 @@ impl<T: Config<I>, I: 'static> Pallet<T, I> {
 	///
 	/// * Every account that has a deposit stored in `DepositOf` must be a member of the alliance
 	///   (either a `Fellow`, `Ally`, or `Retiring`).
-	fn try_state_deposit_of_is_consistent() -> Result<(), sp_runtime::TryRuntimeError> {
+	fn try_state_deposit_of_is_consistent() -> Result<(), soil_runtime::TryRuntimeError> {
 		for (who, _) in DepositOf::<T, I>::iter() {
 			ensure!(Self::is_member(&who), "Account with deposit is not an alliance member");
 		}
@@ -1207,7 +1207,7 @@ impl<T: Config<I>, I: 'static> Pallet<T, I> {
 	///
 	/// * The lists of `UnscrupulousAccounts` and `UnscrupulousWebsites` must be sorted. This allows
 	///   for efficient binary search lookups.
-	fn try_state_unscrupulous_items_are_sorted() -> Result<(), sp_runtime::TryRuntimeError> {
+	fn try_state_unscrupulous_items_are_sorted() -> Result<(), soil_runtime::TryRuntimeError> {
 		let accounts = UnscrupulousAccounts::<T, I>::get();
 		let mut sorted_accounts = accounts.clone();
 		sorted_accounts.sort();
@@ -1225,7 +1225,7 @@ impl<T: Config<I>, I: 'static> Pallet<T, I> {
 	///
 	/// * The list of `Announcements` must be sorted. This is necessary because
 	///   `remove_announcement` uses binary search.
-	fn try_state_announcements_are_sorted() -> Result<(), sp_runtime::TryRuntimeError> {
+	fn try_state_announcements_are_sorted() -> Result<(), soil_runtime::TryRuntimeError> {
 		let announcements = Announcements::<T, I>::get();
 		let mut sorted_announcements = announcements.clone();
 		sorted_announcements.sort();

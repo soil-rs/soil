@@ -28,15 +28,15 @@ use frame_support::{
 	Hashable,
 };
 use frame_system::{EnsureRoot, EventRecord, Phase};
-use sp_core::{ConstU128, H256};
-use sp_runtime::{
+use soil_core::{ConstU128, H256};
+use soil_runtime::{
 	testing::Header,
 	traits::{BlakeTwo256, Convert, Zero},
 	BuildStorage, FixedU128,
 };
 
-pub type Block = sp_runtime::generic::Block<Header, UncheckedExtrinsic>;
-pub type UncheckedExtrinsic = sp_runtime::generic::UncheckedExtrinsic<u32, RuntimeCall, u64, ()>;
+pub type Block = soil_runtime::generic::Block<Header, UncheckedExtrinsic>;
+pub type UncheckedExtrinsic = soil_runtime::generic::UncheckedExtrinsic<u32, RuntimeCall, u64, ()>;
 
 frame_support::construct_runtime!(
 	pub enum Test
@@ -200,8 +200,8 @@ impl ExtBuilder {
 		self
 	}
 
-	pub fn build(self) -> sp_io::TestExternalities {
-		let mut ext: sp_io::TestExternalities = RuntimeGenesisConfig {
+	pub fn build(self) -> soil_io::TestExternalities {
+		let mut ext: soil_io::TestExternalities = RuntimeGenesisConfig {
 			system: frame_system::GenesisConfig::default(),
 			// balances: pallet_balances::GenesisConfig::default(),
 			balances: pallet_balances::GenesisConfig {
@@ -244,7 +244,7 @@ fn record(event: RuntimeEvent) -> EventRecord<RuntimeEvent, H256> {
 }
 
 fn default_max_proposal_weight() -> Weight {
-	sp_runtime::Perbill::from_percent(80) * BlockWeights::get().max_block
+	soil_runtime::Perbill::from_percent(80) * BlockWeights::get().max_block
 }
 
 #[test]

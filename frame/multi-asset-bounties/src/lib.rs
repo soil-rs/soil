@@ -95,7 +95,7 @@ use frame_system::pallet_prelude::{
 	ensure_signed, BlockNumberFor as SystemBlockNumberFor, OriginFor,
 };
 use scale_info::TypeInfo;
-use sp_runtime::{
+use soil_runtime::{
 	traits::{AccountIdConversion, BadOrigin, Convert, Saturating, StaticLookup, TryConvert, Zero},
 	Debug, Permill,
 };
@@ -1385,7 +1385,7 @@ pub mod pallet {
 	#[pallet::hooks]
 	impl<T: Config<I>, I: 'static> Hooks<SystemBlockNumberFor<T>> for Pallet<T, I> {
 		#[cfg(feature = "try-runtime")]
-		fn try_state(_n: SystemBlockNumberFor<T>) -> Result<(), sp_runtime::TryRuntimeError> {
+		fn try_state(_n: SystemBlockNumberFor<T>) -> Result<(), soil_runtime::TryRuntimeError> {
 			Self::do_try_state()
 		}
 	}
@@ -1396,7 +1396,7 @@ impl<T: Config<I>, I: 'static> Pallet<T, I> {
 	/// Ensure the correctness of the state of this pallet.
 	///
 	/// This should be valid before or after each state transition of this pallet.
-	pub fn do_try_state() -> Result<(), sp_runtime::TryRuntimeError> {
+	pub fn do_try_state() -> Result<(), soil_runtime::TryRuntimeError> {
 		Self::try_state_bounties_count()?;
 
 		for parent_bounty_id in Bounties::<T, I>::iter_keys() {
@@ -1410,7 +1410,7 @@ impl<T: Config<I>, I: 'static> Pallet<T, I> {
 	///
 	/// * `BountyCount` should be greater or equals to the length of the number of items in
 	///   `Bounties`.
-	fn try_state_bounties_count() -> Result<(), sp_runtime::TryRuntimeError> {
+	fn try_state_bounties_count() -> Result<(), soil_runtime::TryRuntimeError> {
 		let bounties_length = Bounties::<T, I>::iter().count() as u32;
 
 		ensure!(
@@ -1427,7 +1427,7 @@ impl<T: Config<I>, I: 'static> Pallet<T, I> {
 	///   `ChildBounties`.
 	fn try_state_child_bounties_count(
 		parent_bounty_id: BountyIndex,
-	) -> Result<(), sp_runtime::TryRuntimeError> {
+	) -> Result<(), soil_runtime::TryRuntimeError> {
 		let child_bounties_length =
 			ChildBounties::<T, I>::iter_prefix(parent_bounty_id).count() as u32;
 

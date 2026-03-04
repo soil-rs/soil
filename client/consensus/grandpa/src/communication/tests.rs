@@ -41,7 +41,7 @@ use sc_network_types::PeerId;
 use sc_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
 use sp_consensus_grandpa::AuthorityList;
 use sp_keyring::Ed25519Keyring;
-use sp_runtime::traits::NumberFor;
+use soil_runtime::traits::NumberFor;
 use std::{collections::HashSet, pin::Pin, sync::Arc, task::Poll};
 
 #[derive(Debug)]
@@ -308,7 +308,7 @@ fn voter_set_state() -> SharedVoterSetState<Block> {
 	use crate::{authorities::AuthoritySet, environment::VoterSetState};
 	use finality_grandpa::round::State as RoundState;
 	use sp_consensus_grandpa::AuthorityId;
-	use sp_core::{crypto::ByteArray, H256};
+	use soil_core::{crypto::ByteArray, H256};
 
 	let state = RoundState::genesis((H256::zero(), 0));
 	let base = state.prevote_ghost.unwrap();
@@ -705,7 +705,7 @@ fn grandpa_protocol_name() {
 	let chain_spec = local_chain_spec();
 
 	// Create protocol name using random genesis hash.
-	let genesis_hash = sp_core::H256::random();
+	let genesis_hash = soil_core::H256::random();
 	let expected = format!("/{}/grandpa/1", array_bytes::bytes2hex("", genesis_hash));
 	let proto_name = grandpa_protocol_name::standard_name(&genesis_hash, &chain_spec);
 	assert_eq!(proto_name.to_string(), expected);

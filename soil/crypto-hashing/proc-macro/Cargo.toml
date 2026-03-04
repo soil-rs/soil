@@ -1,5 +1,5 @@
 [package]
-name = "sp-crypto-hashing-proc-macro"
+name = "soil-crypto-hashing-proc-macro"
 version = "0.1.0"
 authors.workspace = true
 edition.workspace = true

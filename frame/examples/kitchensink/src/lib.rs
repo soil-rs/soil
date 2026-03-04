@@ -43,7 +43,7 @@ mod tests;
 mod benchmarking;
 
 #[cfg(feature = "try-runtime")]
-use sp_runtime::TryRuntimeError;
+use soil_runtime::TryRuntimeError;
 
 pub mod weights;
 pub use weights::*;

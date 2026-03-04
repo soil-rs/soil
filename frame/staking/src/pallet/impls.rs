@@ -35,7 +35,7 @@ use frame_support::{
 };
 use frame_system::{pallet_prelude::BlockNumberFor, RawOrigin};
 use pallet_session::historical;
-use sp_runtime::{
+use soil_runtime::{
 	traits::{
 		Bounded, CheckedAdd, Convert, One, SaturatedConversion, Saturating, StaticLookup, Zero,
 	},
@@ -62,7 +62,7 @@ use super::pallet::*;
 #[cfg(feature = "try-runtime")]
 use frame_support::ensure;
 #[cfg(any(test, feature = "try-runtime"))]
-use sp_runtime::TryRuntimeError;
+use soil_runtime::TryRuntimeError;
 
 /// The maximum number of iterations that we do whilst iterating over `T::VoterList` in
 /// `get_npos_voters`.
@@ -2072,7 +2072,7 @@ impl<T: Config> StakingInterface for Pallet<T> {
 		T::ElectionProvider::status().is_ok()
 	}
 
-	fn force_unstake(who: Self::AccountId) -> sp_runtime::DispatchResult {
+	fn force_unstake(who: Self::AccountId) -> soil_runtime::DispatchResult {
 		let num_slashing_spans =
 			SlashingSpans::<T>::get(&who).map_or(0, |s| s.iter().count() as u32);
 		Self::force_unstake(RawOrigin::Root.into(), who.clone(), num_slashing_spans)

@@ -25,7 +25,7 @@ use log::{debug, error, trace, warn};
 use sc_network_common::sync::message::BlockAnnounce;
 use sc_network_types::PeerId;
 use sp_consensus::block_validation::Validation;
-use sp_runtime::traits::{Block as BlockT, Header, Zero};
+use soil_runtime::traits::{Block as BlockT, Header, Zero};
 use std::{
 	collections::{hash_map::Entry, HashMap},
 	default::Default,

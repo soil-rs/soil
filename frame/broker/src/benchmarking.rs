@@ -31,8 +31,8 @@ use frame_support::{
 };
 use frame_system::{Pallet as System, RawOrigin};
 use soil_arithmetic::{FixedU64, Perbill};
-use sp_core::Get;
-use sp_runtime::{
+use soil_core::Get;
+use soil_runtime::{
 	traits::{BlockNumberProvider, MaybeConvert},
 	FixedPointNumber, Saturating,
 };

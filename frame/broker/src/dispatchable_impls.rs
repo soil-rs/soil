@@ -23,7 +23,7 @@ use frame_support::{
 	traits::{fungible::Mutate, tokens::Preservation::Expendable, DefensiveResult},
 };
 use soil_arithmetic::traits::{CheckedDiv, Saturating, Zero};
-use sp_runtime::traits::{BlockNumberProvider, Convert};
+use soil_runtime::traits::{BlockNumberProvider, Convert};
 use CompletionStatus::{Complete, Partial};
 
 impl<T: Config> Pallet<T> {

@@ -37,7 +37,7 @@ use pallet_nomination_pools::{
 	Pallet as Pools, PoolId, PoolMembers, PoolRoles, PoolState, RewardPools, SubPoolsStorage,
 };
 use pallet_staking::MaxNominationsOf;
-use sp_runtime::{
+use soil_runtime::{
 	traits::{Bounded, StaticLookup, Zero},
 	Perbill,
 };

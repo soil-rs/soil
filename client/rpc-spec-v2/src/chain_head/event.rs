@@ -74,7 +74,7 @@ impl From<RuntimeVersion> for ChainHeadRuntimeVersion {
 			apis: val
 				.apis
 				.into_iter()
-				.map(|(api, version)| (sp_core::bytes::to_hex(api, false), *version))
+				.map(|(api, version)| (soil_core::bytes::to_hex(api, false), *version))
 				.collect(),
 			transaction_version: val.transaction_version,
 		}

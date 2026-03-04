@@ -20,9 +20,9 @@ serde = { features = ["derive"], optional = true, workspace = true }
 frame-benchmarking = { workspace = true, optional = true }
 frame-support = { workspace = true }
 frame-system = { workspace = true }
-sp-core = { workspace = true }
-sp-io = { workspace = true }
-sp-runtime = { workspace = true }
+soil-core = { workspace = true }
+soil-io = { workspace = true }
+soil-runtime = { workspace = true }
 soil-std = { workspace = true }
 
 [dev-dependencies]
@@ -30,7 +30,7 @@ pallet-balances = { workspace = true, default-features = true }
 pallet-transaction-payment = { workspace = true, default-features = true }
 pallet-verify-signature = { workspace = true, default-features = true }
 sp-keyring = { workspace = true, default-features = true }
-sp-keystore = { workspace = true, default-features = true }
+soil-keystore = { workspace = true, default-features = true }
 
 [features]
 default = ["std"]
@@ -41,9 +41,9 @@ std = [
 	"frame-system/std",
 	"scale-info/std",
 	"serde?/std",
-	"sp-core/std",
-	"sp-io/std",
-	"sp-runtime/std",
+	"soil-core/std",
+	"soil-io/std",
+	"soil-runtime/std",
 	"soil-std/std",
 ]
 runtime-benchmarks = [
@@ -53,7 +53,7 @@ runtime-benchmarks = [
 	"pallet-balances/runtime-benchmarks",
 	"pallet-transaction-payment/runtime-benchmarks",
 	"pallet-verify-signature/runtime-benchmarks",
-	"sp-runtime/runtime-benchmarks",
+	"soil-runtime/runtime-benchmarks",
 ]
 try-runtime = [
 	"frame-support/try-runtime",
@@ -61,5 +61,5 @@ try-runtime = [
 	"pallet-balances/try-runtime",
 	"pallet-transaction-payment/try-runtime",
 	"pallet-verify-signature/try-runtime",
-	"sp-runtime/try-runtime",
+	"soil-runtime/try-runtime",
 ]

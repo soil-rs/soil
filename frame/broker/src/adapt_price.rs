@@ -19,8 +19,8 @@
 
 use crate::{CoreIndex, SaleInfoRecord};
 use soil_arithmetic::{traits::One, FixedU64};
-use sp_core::Get;
-use sp_runtime::{FixedPointNumber, FixedPointOperand, Saturating};
+use soil_core::Get;
+use soil_runtime::{FixedPointNumber, FixedPointOperand, Saturating};
 
 /// Performance of a past sale.
 #[derive(Copy, Clone)]
@@ -167,7 +167,7 @@ impl<Balance: FixedPointOperand, MinPrice: Get<Balance>> AdaptPrice<Balance>
 
 #[cfg(test)]
 mod tests {
-	use sp_core::ConstU64;
+	use soil_core::ConstU64;
 
 	use super::*;
 

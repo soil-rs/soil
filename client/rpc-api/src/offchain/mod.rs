@@ -22,7 +22,7 @@ pub mod error;
 
 use error::Error;
 use jsonrpsee::proc_macros::rpc;
-use sp_core::{offchain::StorageKind, Bytes};
+use soil_core::{offchain::StorageKind, Bytes};
 
 /// Substrate offchain RPC API
 #[rpc(client, server)]

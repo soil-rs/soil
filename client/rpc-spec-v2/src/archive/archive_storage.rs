@@ -25,7 +25,7 @@ use std::{
 
 use itertools::Itertools;
 use sc_client_api::{Backend, ChildInfo, StorageKey, StorageProvider};
-use sp_runtime::traits::Block as BlockT;
+use soil_runtime::traits::Block as BlockT;
 
 use super::error::Error as ArchiveError;
 use crate::{

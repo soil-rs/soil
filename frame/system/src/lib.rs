@@ -104,10 +104,10 @@ use core::{fmt::Debug, marker::PhantomData};
 use pallet_prelude::{BlockNumberFor, HeaderFor};
 #[cfg(feature = "std")]
 use serde::Serialize;
-use sp_io::hashing::blake2_256;
+use soil_io::hashing::blake2_256;
 #[cfg(feature = "runtime-benchmarks")]
-use sp_runtime::traits::TrailingZeroInput;
-use sp_runtime::{
+use soil_runtime::traits::TrailingZeroInput;
+use soil_runtime::{
 	generic,
 	traits::{
 		self, AsTransactionAuthorizedOrigin, AtLeast32Bit, BadOrigin, BlockNumberProvider, Bounded,
@@ -143,15 +143,15 @@ use frame_support::{
 	Parameter,
 };
 use scale_info::TypeInfo;
-use sp_core::storage::well_known_keys;
-use sp_runtime::{
+use soil_core::storage::well_known_keys;
+use soil_runtime::{
 	traits::{DispatchInfoOf, PostDispatchInfoOf},
 	transaction_validity::TransactionValidityError,
 };
-use sp_weights::{RuntimeDbWeight, Weight, WeightMeter};
+use soil_weights::{RuntimeDbWeight, Weight, WeightMeter};
 
 #[cfg(any(feature = "std", test))]
-use sp_io::TestExternalities;
+use soil_io::TestExternalities;
 
 pub mod limits;
 #[cfg(test)]
@@ -185,7 +185,7 @@ pub use extensions::{
 pub use extensions::check_mortality::CheckMortality as CheckEra;
 pub use frame_support::dispatch::RawOrigin;
 use frame_support::traits::{Authorize, PostInherents, PostTransactions, PreInherents};
-use sp_core::storage::StateVersion;
+use soil_core::storage::StateVersion;
 pub use weights::WeightInfo;
 
 const LOG_TARGET: &str = "runtime::system";
@@ -330,10 +330,10 @@ pub mod pallet {
 		#[frame_support::register_default_impl(TestDefaultConfig)]
 		impl DefaultConfig for TestDefaultConfig {
 			type Nonce = u32;
-			type Hash = sp_core::hash::H256;
-			type Hashing = sp_runtime::traits::BlakeTwo256;
+			type Hash = soil_core::hash::H256;
+			type Hashing = soil_runtime::traits::BlakeTwo256;
 			type AccountId = u64;
-			type Lookup = sp_runtime::traits::IdentityLookup<Self::AccountId>;
+			type Lookup = soil_runtime::traits::IdentityLookup<Self::AccountId>;
 			type MaxConsumers = frame_support::traits::ConstU32<16>;
 			type AccountData = ();
 			type OnNewAccount = ();
@@ -386,16 +386,16 @@ pub mod pallet {
 			type Nonce = u32;
 
 			/// The default type for hashing blocks and tries.
-			type Hash = sp_core::hash::H256;
+			type Hash = soil_core::hash::H256;
 
 			/// The default hashing algorithm used.
-			type Hashing = sp_runtime::traits::BlakeTwo256;
+			type Hashing = soil_runtime::traits::BlakeTwo256;
 
 			/// The default identifier used to distinguish between accounts.
-			type AccountId = sp_runtime::AccountId32;
+			type AccountId = soil_runtime::AccountId32;
 
 			/// The lookup mechanism to get account ID from whatever is passed in dispatchers.
-			type Lookup = sp_runtime::traits::AccountIdLookup<Self::AccountId, ()>;
+			type Lookup = soil_runtime::traits::AccountIdLookup<Self::AccountId, ()>;
 
 			/// The maximum number of consumers allowed on a single account. Using 128 as default.
 			type MaxConsumers = frame_support::traits::ConstU32<128>;
@@ -1123,12 +1123,12 @@ pub mod pallet {
 			<UpgradedToU32RefCount<T>>::put(true);
 			<UpgradedToTripleRefCount<T>>::put(true);
 
-			sp_io::storage::set(well_known_keys::EXTRINSIC_INDEX, &0u32.encode());
+			soil_io::storage::set(well_known_keys::EXTRINSIC_INDEX, &0u32.encode());
 		}
 	}
 
 	#[pallet::validate_unsigned]
-	impl<T: Config> sp_runtime::traits::ValidateUnsigned for Pallet<T> {
+	impl<T: Config> soil_runtime::traits::ValidateUnsigned for Pallet<T> {
 		type Call = Call<T>;
 		fn validate_unsigned(source: TransactionSource, call: &Self::Call) -> TransactionValidity {
 			if let Call::apply_authorized_upgrade { ref code } = call {
@@ -1977,42 +1977,42 @@ impl<T: Config> Pallet<T> {
 			Self::block_number(),
 			Self::extrinsic_count(),
 			Self::block_size(),
-			sp_runtime::Percent::from_rational(
+			soil_runtime::Percent::from_rational(
 				Self::block_size(),
 				*T::BlockLength::get().max.get(DispatchClass::Normal)
 			).deconstruct(),
-			sp_runtime::Percent::from_rational(
+			soil_runtime::Percent::from_rational(
 				Self::block_size(),
 				*T::BlockLength::get().max.get(DispatchClass::Operational)
 			).deconstruct(),
-			sp_runtime::Percent::from_rational(
+			soil_runtime::Percent::from_rational(
 				Self::block_size(),
 				*T::BlockLength::get().max.get(DispatchClass::Mandatory)
 			).deconstruct(),
 			Self::block_weight().get(DispatchClass::Normal),
-			sp_runtime::Percent::from_rational(
+			soil_runtime::Percent::from_rational(
 				Self::block_weight().get(DispatchClass::Normal).ref_time(),
 				T::BlockWeights::get().get(DispatchClass::Normal).max_total.unwrap_or(Bounded::max_value()).ref_time()
 			).deconstruct(),
-			sp_runtime::Percent::from_rational(
+			soil_runtime::Percent::from_rational(
 				Self::block_weight().get(DispatchClass::Normal).proof_size(),
 				T::BlockWeights::get().get(DispatchClass::Normal).max_total.unwrap_or(Bounded::max_value()).proof_size()
 			).deconstruct(),
 			Self::block_weight().get(DispatchClass::Operational),
-			sp_runtime::Percent::from_rational(
+			soil_runtime::Percent::from_rational(
 				Self::block_weight().get(DispatchClass::Operational).ref_time(),
 				T::BlockWeights::get().get(DispatchClass::Operational).max_total.unwrap_or(Bounded::max_value()).ref_time()
 			).deconstruct(),
-			sp_runtime::Percent::from_rational(
+			soil_runtime::Percent::from_rational(
 				Self::block_weight().get(DispatchClass::Operational).proof_size(),
 				T::BlockWeights::get().get(DispatchClass::Operational).max_total.unwrap_or(Bounded::max_value()).proof_size()
 			).deconstruct(),
 			Self::block_weight().get(DispatchClass::Mandatory),
-			sp_runtime::Percent::from_rational(
+			soil_runtime::Percent::from_rational(
 				Self::block_weight().get(DispatchClass::Mandatory).ref_time(),
 				T::BlockWeights::get().get(DispatchClass::Mandatory).max_total.unwrap_or(Bounded::max_value()).ref_time()
 			).deconstruct(),
-			sp_runtime::Percent::from_rational(
+			soil_runtime::Percent::from_rational(
 				Self::block_weight().get(DispatchClass::Mandatory).proof_size(),
 				T::BlockWeights::get().get(DispatchClass::Mandatory).max_total.unwrap_or(Bounded::max_value()).proof_size()
 			).deconstruct(),
@@ -2059,7 +2059,7 @@ impl<T: Config> Pallet<T> {
 		}
 
 		let version = T::Version::get().state_version();
-		let storage_root = T::Hash::decode(&mut &sp_io::storage::root(version)[..])
+		let storage_root = T::Hash::decode(&mut &soil_io::storage::root(version)[..])
 			.expect("Node is configured to use the same hash; qed");
 
 		HeaderFor::<T>::new(number, extrinsics_root, storage_root, parent_hash, digest)
@@ -2079,7 +2079,7 @@ impl<T: Config> Pallet<T> {
 	/// Get the basic externalities for this pallet, useful for tests.
 	#[cfg(any(feature = "std", test))]
 	pub fn externalities() -> TestExternalities {
-		TestExternalities::new(sp_core::storage::Storage {
+		TestExternalities::new(soil_core::storage::Storage {
 			top: [
 				(<BlockHash<T>>::hashed_key_for(BlockNumberFor::<T>::zero()), [69u8; 32].encode()),
 				(<Number<T>>::hashed_key().to_vec(), BlockNumberFor::<T>::one().encode()),
@@ -2369,7 +2369,7 @@ impl<T: Config> Pallet<T> {
 
 		if check_version {
 			let current_version = T::Version::get();
-			let Some(new_version) = sp_io::misc::runtime_version(code)
+			let Some(new_version) = soil_io::misc::runtime_version(code)
 				.and_then(|v| RuntimeVersion::decode(&mut &v[..]).ok())
 			else {
 				return CanSetCodeResult::InvalidVersion(Error::<T>::FailedToExtractRuntimeVersion);
@@ -2451,9 +2451,9 @@ impl<T: Config> Pallet<T> {
 /// as a facility to reduce the potential for precalculating results.
 pub fn unique(entropy: impl Encode) -> [u8; 32] {
 	let mut last = [0u8; 32];
-	sp_io::storage::read(well_known_keys::INTRABLOCK_ENTROPY, &mut last[..], 0);
+	soil_io::storage::read(well_known_keys::INTRABLOCK_ENTROPY, &mut last[..], 0);
 	let next = (b"frame_system::unique", entropy, last).using_encoded(blake2_256);
-	sp_io::storage::set(well_known_keys::INTRABLOCK_ENTROPY, &next);
+	soil_io::storage::set(well_known_keys::INTRABLOCK_ENTROPY, &next);
 	next
 }
 
@@ -2641,14 +2641,14 @@ pub mod pallet_prelude {
 
 	/// Type alias for the `Header`.
 	pub type HeaderFor<T> =
-		<<T as crate::Config>::Block as sp_runtime::traits::HeaderProvider>::HeaderT;
+		<<T as crate::Config>::Block as soil_runtime::traits::HeaderProvider>::HeaderT;
 
 	/// Type alias for the `BlockNumber` associated type of system config.
-	pub type BlockNumberFor<T> = <HeaderFor<T> as sp_runtime::traits::Header>::Number;
+	pub type BlockNumberFor<T> = <HeaderFor<T> as soil_runtime::traits::Header>::Number;
 
 	/// Type alias for the `Extrinsic` associated type of system config.
 	pub type ExtrinsicFor<T> =
-		<<T as crate::Config>::Block as sp_runtime::traits::Block>::Extrinsic;
+		<<T as crate::Config>::Block as soil_runtime::traits::Block>::Extrinsic;
 
 	/// Type alias for the `RuntimeCall` associated type of system config.
 	pub type RuntimeCallFor<T> = <T as crate::Config>::RuntimeCall;

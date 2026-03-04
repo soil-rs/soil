@@ -20,7 +20,7 @@
 use super::*;
 use crate as pallet_membership;
 
-use sp_runtime::{bounded_vec, BuildStorage};
+use soil_runtime::{bounded_vec, BuildStorage};
 
 use frame_support::{derive_impl, ord_parameter_types, parameter_types, traits::ConstU32};
 use frame_system::EnsureSignedBy;
@@ -93,7 +93,7 @@ impl Config for Test {
 	type WeightInfo = ();
 }
 
-pub(crate) fn new_test_ext() -> sp_io::TestExternalities {
+pub(crate) fn new_test_ext() -> soil_io::TestExternalities {
 	let mut t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	// We use default for brevity, but you can configure as desired if needed.
 	pallet_membership::GenesisConfig::<Test> {
@@ -106,7 +106,7 @@ pub(crate) fn new_test_ext() -> sp_io::TestExternalities {
 }
 
 #[cfg(feature = "runtime-benchmarks")]
-pub(crate) fn new_bench_ext() -> sp_io::TestExternalities {
+pub(crate) fn new_bench_ext() -> soil_io::TestExternalities {
 	frame_system::GenesisConfig::<Test>::default().build_storage().unwrap().into()
 }
 

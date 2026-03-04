@@ -27,7 +27,7 @@ use alloc::{borrow::Cow, vec};
 use frame_benchmarking::{v2::*, BenchmarkError};
 use frame_support::assert_ok;
 use frame_system::RawOrigin;
-use sp_core::crypto::FromEntropy;
+use soil_core::crypto::FromEntropy;
 
 /// Trait describing factory functions for dispatchables' parameters.
 pub trait ArgumentsFactory<AssetKind, Beneficiary, Balance> {

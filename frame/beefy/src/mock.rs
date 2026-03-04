@@ -27,8 +27,8 @@ use frame_support::{
 use frame_system::pallet_prelude::HeaderFor;
 use pallet_session::historical as pallet_session_historical;
 use scale_info::TypeInfo;
-use sp_core::{crypto::KeyTypeId, ConstBool, ConstU128};
-use sp_runtime::{
+use soil_core::{crypto::KeyTypeId, ConstBool, ConstU128};
+use soil_runtime::{
 	app_crypto::ecdsa::Public,
 	curve::PiecewiseLinear,
 	impl_opaque_keys,
@@ -37,7 +37,7 @@ use sp_runtime::{
 	BuildStorage, Perbill,
 };
 use sp_staking::{EraIndex, SessionIndex};
-use sp_state_machine::BasicExternalities;
+use soil_state_machine::BasicExternalities;
 
 use crate as pallet_beefy;
 
@@ -171,7 +171,7 @@ parameter_types! {
 impl pallet_session::Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type ValidatorId = u64;
-	type ValidatorIdOf = sp_runtime::traits::ConvertInto;
+	type ValidatorIdOf = soil_runtime::traits::ConvertInto;
 	type ShouldEndSession = pallet_session::PeriodicSessions<ConstU64<1>, ConstU64<0>>;
 	type NextSessionRotation = pallet_session::PeriodicSessions<ConstU64<1>, ConstU64<0>>;
 	type SessionManager = pallet_session::historical::NoteHistoricalRoot<Self, Staking>;
@@ -274,7 +274,7 @@ impl ExtBuilder {
 		self
 	}
 
-	pub fn build(self) -> sp_io::TestExternalities {
+	pub fn build(self) -> soil_io::TestExternalities {
 		soil_tracing::try_init_simple();
 		let mut t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 

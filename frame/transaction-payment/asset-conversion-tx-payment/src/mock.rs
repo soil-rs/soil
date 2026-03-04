@@ -38,7 +38,7 @@ use frame_system as system;
 use frame_system::{EnsureRoot, EnsureSignedBy};
 use pallet_asset_conversion::{Ascending, Chain, WithFirstAsset};
 use pallet_transaction_payment::FungibleAdapter;
-use sp_runtime::{
+use soil_runtime::{
 	traits::{AccountIdConversion, IdentityLookup, SaturatedConversion},
 	Permill,
 };
@@ -306,7 +306,7 @@ impl Config for Runtime {
 }
 
 #[cfg(feature = "runtime-benchmarks")]
-pub fn new_test_ext() -> sp_io::TestExternalities {
+pub fn new_test_ext() -> soil_io::TestExternalities {
 	let base_weight = 5;
 	let balance_factor = 100;
 	crate::tests::ExtBuilder::default()
@@ -326,7 +326,7 @@ impl BenchmarkHelperTrait<u64, NativeOrWithId<u32>, NativeOrWithId<u32>> for Hel
 
 	fn setup_balances_and_pool(asset_id: NativeOrWithId<u32>, account: u64) {
 		use frame_support::{assert_ok, traits::fungibles::Mutate};
-		use sp_runtime::traits::StaticLookup;
+		use soil_runtime::traits::StaticLookup;
 		let NativeOrWithId::WithId(asset_idx) = asset_id.clone() else { unimplemented!() };
 		assert_ok!(Assets::force_create(
 			RuntimeOrigin::root(),

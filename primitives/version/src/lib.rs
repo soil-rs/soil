@@ -47,12 +47,12 @@ pub use alloc::borrow::Cow;
 use codec::{Decode, Encode, Input};
 use scale_info::TypeInfo;
 #[allow(deprecated)]
-pub use sp_runtime::{create_runtime_str, StateVersion};
+pub use soil_runtime::{create_runtime_str, StateVersion};
 #[doc(hidden)]
 pub use soil_std;
 
 #[cfg(feature = "std")]
-use sp_runtime::traits::Block as BlockT;
+use soil_runtime::traits::Block as BlockT;
 
 #[cfg(feature = "std")]
 pub mod embed;
@@ -703,7 +703,7 @@ fn has_api_with<P: Fn(u32) -> bool>(apis: &ApisVec, id: &ApiId, predicate: P) ->
 
 /// Returns the version of the `Core` runtime api.
 pub fn core_version_from_apis(apis: &ApisVec) -> Option<u32> {
-	let id = sp_crypto_hashing_proc_macro::blake2b_64!(b"Core");
+	let id = soil_crypto_hashing_proc_macro::blake2b_64!(b"Core");
 	apis.iter().find(|(s, _v)| s == &id).map(|(_s, v)| *v)
 }
 

@@ -31,9 +31,9 @@ use jsonrpsee::{
 use pallet_transaction_payment_rpc_runtime_api::{FeeDetails, InclusionFee, RuntimeDispatchInfo};
 use sp_api::ProvideRuntimeApi;
 use sp_blockchain::HeaderBackend;
-use sp_core::Bytes;
-use sp_rpc::number::NumberOrHex;
-use sp_runtime::traits::{Block as BlockT, MaybeDisplay};
+use soil_core::Bytes;
+use soil_rpc::number::NumberOrHex;
+use soil_runtime::traits::{Block as BlockT, MaybeDisplay};
 
 pub use pallet_transaction_payment_rpc_runtime_api::TransactionPaymentApi as TransactionPaymentRuntimeApi;
 
@@ -84,7 +84,7 @@ impl From<Error> for i32 {
 impl<C, Block, Balance>
 	TransactionPaymentApiServer<
 		<Block as BlockT>::Hash,
-		RuntimeDispatchInfo<Balance, sp_weights::Weight>,
+		RuntimeDispatchInfo<Balance, soil_weights::Weight>,
 	> for TransactionPayment<C, Block>
 where
 	Block: BlockT,
@@ -96,7 +96,7 @@ where
 		&self,
 		encoded_xt: Bytes,
 		at: Option<Block::Hash>,
-	) -> RpcResult<RuntimeDispatchInfo<Balance, sp_weights::Weight>> {
+	) -> RpcResult<RuntimeDispatchInfo<Balance, soil_weights::Weight>> {
 		let api = self.client.runtime_api();
 		let at_hash = at.unwrap_or_else(|| self.client.info().best_hash);
 

@@ -27,7 +27,7 @@ use frame_support::{
 	weights::RuntimeDbWeight,
 	Parameter, Twox64Concat,
 };
-use sp_runtime::{traits::Zero, Saturating};
+use soil_runtime::{traits::Zero, Saturating};
 
 #[cfg(feature = "try-runtime")]
 const LOG_TARGET: &str = "runtime::tips::migrations::unreserve_deposits";
@@ -48,16 +48,16 @@ pub trait UnlockConfig<I>: 'static {
 	/// Base deposit to report a tip.
 	///
 	/// Should match the currency type previously used for the pallet, if applicable.
-	type TipReportDepositBase: sp_core::Get<BalanceOf<Self, I>>;
+	type TipReportDepositBase: soil_core::Get<BalanceOf<Self, I>>;
 	/// Deposit per byte to report a tip.
 	///
 	/// Should match the currency type previously used for the pallet, if applicable.
-	type DataDepositPerByte: sp_core::Get<BalanceOf<Self, I>>;
+	type DataDepositPerByte: soil_core::Get<BalanceOf<Self, I>>;
 	/// The name of the pallet as previously configured in
 	/// [`construct_runtime!`](frame_support::construct_runtime).
-	type PalletName: sp_core::Get<&'static str>;
+	type PalletName: soil_core::Get<&'static str>;
 	/// The DB weight as configured in the runtime to calculate the correct weight.
-	type DbWeight: sp_core::Get<RuntimeDbWeight>;
+	type DbWeight: soil_core::Get<RuntimeDbWeight>;
 	/// The block number as configured in the runtime.
 	type BlockNumber: Parameter + Zero + Copy + Ord;
 }
@@ -97,7 +97,7 @@ impl<T: UnlockConfig<I>, I: 'static> UnreserveDeposits<T, I> {
 	///   reserved balance by this pallet
 	/// * `frame_support::weights::Weight`: The weight of this operation.
 	fn get_deposits() -> (BTreeMap<T::AccountId, BalanceOf<T, I>>, frame_support::weights::Weight) {
-		use sp_core::Get;
+		use soil_core::Get;
 
 		let mut tips_len = 0;
 		let account_deposits: BTreeMap<T::AccountId, BalanceOf<T, I>> = Tips::<T, I>::iter()
@@ -133,7 +133,7 @@ where
 	/// Fails with a `TryRuntimeError` if somehow the amount reserved by this pallet is greater than
 	/// the actual total reserved amount for any accounts.
 	#[cfg(feature = "try-runtime")]
-	fn pre_upgrade() -> Result<alloc::vec::Vec<u8>, sp_runtime::TryRuntimeError> {
+	fn pre_upgrade() -> Result<alloc::vec::Vec<u8>, soil_runtime::TryRuntimeError> {
 		use codec::Encode;
 		use frame_support::ensure;
 
@@ -190,7 +190,7 @@ where
 	#[cfg(feature = "try-runtime")]
 	fn post_upgrade(
 		account_reserved_before_bytes: alloc::vec::Vec<u8>,
-	) -> Result<(), sp_runtime::TryRuntimeError> {
+	) -> Result<(), soil_runtime::TryRuntimeError> {
 		use codec::Decode;
 
 		let account_reserved_before = BTreeMap::<T::AccountId, BalanceOf<T, I>>::decode(
@@ -236,7 +236,7 @@ mod test {
 	};
 	use frame_support::{assert_ok, parameter_types, traits::TypedGet};
 	use frame_system::pallet_prelude::BlockNumberFor;
-	use sp_core::ConstU64;
+	use soil_core::ConstU64;
 
 	parameter_types! {
 		const PalletName: &'static str = "Tips";
@@ -247,7 +247,7 @@ mod test {
 		type Currency = Balances;
 		type TipReportDepositBase = ConstU64<1>;
 		type DataDepositPerByte = ConstU64<1>;
-		type Hash = sp_core::H256;
+		type Hash = soil_core::H256;
 		type AccountId = u128;
 		type BlockNumber = BlockNumberFor<Test>;
 		type DbWeight = ();

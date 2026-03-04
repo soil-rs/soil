@@ -51,7 +51,7 @@ use frame_support::traits::{
 	tokens::Locker, BalanceStatus::Reserved, Currency, EnsureOriginWithArg, ReservableCurrency,
 };
 use frame_system::Config as SystemConfig;
-use sp_runtime::{
+use soil_runtime::{
 	traits::{Saturating, StaticLookup, Zero},
 	ArithmeticError, Debug,
 };

@@ -80,9 +80,9 @@ use frame_election_provider_support::PageIndex;
 use frame_support::weights::WeightMeter;
 use impls::SupportsOfVerifier;
 pub use impls::{feasibility_check_page_inner_with_snapshot, pallet::*, Status};
-use sp_core::Get;
+use soil_core::Get;
 use sp_npos_elections::ElectionScore;
-use sp_runtime::Weight;
+use soil_runtime::Weight;
 use soil_std::{fmt::Debug, prelude::*};
 
 /// Errors that can happen in the feasibility check.

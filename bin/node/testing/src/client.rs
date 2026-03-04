@@ -18,7 +18,7 @@
 
 //! Utilities to build a `TestClient` for `kitchensink-runtime`.
 
-use sp_runtime::BuildStorage;
+use soil_runtime::BuildStorage;
 /// Re-export test-client utilities.
 pub use substrate_test_client::*;
 
@@ -44,7 +44,7 @@ impl substrate_test_client::GenesisInit for GenesisParameters {
 	fn genesis_storage(&self) -> Storage {
 		let mut storage = crate::genesis::config().build_storage().unwrap();
 		storage.top.insert(
-			sp_core::storage::well_known_keys::CODE.to_vec(),
+			soil_core::storage::well_known_keys::CODE.to_vec(),
 			kitchensink_runtime::wasm_binary_unwrap().into(),
 		);
 		storage

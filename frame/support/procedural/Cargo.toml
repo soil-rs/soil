@@ -43,9 +43,9 @@ frame-system = { workspace = true, default-features = true }
 pretty_assertions = { workspace = true }
 regex = { workspace = true }
 scale-info = { features = ["derive"], workspace = true, default-features = true }
-sp-io = { workspace = true, default-features = true }
+soil-io = { workspace = true, default-features = true }
 soil-metadata-ir = { workspace = true, default-features = true }
-sp-runtime = { features = ["serde"], workspace = true, default-features = true }
+soil-runtime = { features = ["serde"], workspace = true, default-features = true }
 
 [features]
 default = ["std"]
@@ -57,7 +57,7 @@ std = [
 	"scale-info/std",
 	"soil-crypto-hashing/std",
 	"soil-metadata-ir/std",
-	"sp-runtime/std",
+	"soil-runtime/std",
 ]
 no-metadata-docs = []
 experimental = []

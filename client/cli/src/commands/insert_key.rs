@@ -24,8 +24,8 @@ use crate::{
 use clap::Parser;
 use sc_keystore::LocalKeystore;
 use sc_service::config::{BasePath, KeystoreConfig};
-use sp_core::crypto::{KeyTypeId, SecretString};
-use sp_keystore::KeystorePtr;
+use soil_core::crypto::{KeyTypeId, SecretString};
+use soil_keystore::KeystorePtr;
 
 /// The `insert` command
 #[derive(Debug, Clone, Parser)]
@@ -86,7 +86,7 @@ impl InsertKeyCmd {
 	}
 }
 
-fn to_vec<P: sp_core::Pair>(uri: &str, pass: Option<SecretString>) -> Result<Vec<u8>, Error> {
+fn to_vec<P: soil_core::Pair>(uri: &str, pass: Option<SecretString>) -> Result<Vec<u8>, Error> {
 	let p = utils::pair_from_suri::<P>(uri, pass)?;
 	Ok(p.public().as_ref().to_vec())
 }
@@ -95,8 +95,8 @@ fn to_vec<P: sp_core::Pair>(uri: &str, pass: Option<SecretString>) -> Result<Vec
 mod tests {
 	use super::*;
 	use sc_service::{ChainSpec, ChainType, GenericChainSpec, NoExtension};
-	use sp_core::{sr25519::Pair, ByteArray, Pair as _};
-	use sp_keystore::Keystore;
+	use soil_core::{sr25519::Pair, ByteArray, Pair as _};
+	use soil_keystore::Keystore;
 	use tempfile::TempDir;
 
 	struct Cli;

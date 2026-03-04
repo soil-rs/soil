@@ -20,7 +20,7 @@ use codec::{Decode, Encode};
 use frame_metadata::{RuntimeMetadata, RuntimeMetadataPrefixed};
 use merkleized_metadata::{generate_metadata_digest, ExtraInfo};
 use sc_executor::WasmExecutor;
-use sp_core::traits::{CallContext, CodeExecutor, RuntimeCode, WrappedRuntimeCode};
+use soil_core::traits::{CallContext, CodeExecutor, RuntimeCode, WrappedRuntimeCode};
 use std::path::Path;
 
 /// The host functions that we provide when calling into the wasm file.
@@ -28,15 +28,15 @@ use std::path::Path;
 /// Any other host function will return an error.
 type HostFunctions = (
 	// The allocator functions.
-	sp_io::allocator::HostFunctions,
+	soil_io::allocator::HostFunctions,
 	// Logging is good to have for debugging issues.
-	sp_io::logging::HostFunctions,
+	soil_io::logging::HostFunctions,
 	// Give access to the "state", actually the state will be empty, but some chains put constants
 	// into the state and this would panic at metadata generation. Thus, we give them an empty
 	// state to not panic.
-	sp_io::storage::HostFunctions,
+	soil_io::storage::HostFunctions,
 	// The hashing functions.
-	sp_io::hashing::HostFunctions,
+	soil_io::hashing::HostFunctions,
 );
 
 /// Generate the metadata hash.
@@ -63,7 +63,7 @@ pub fn generate_metadata_hash(wasm: &Path, extra_info: MetadataExtraInfo) -> [u8
 
 	let metadata = executor
 		.call(
-			&mut sp_io::TestExternalities::default().ext(),
+			&mut soil_io::TestExternalities::default().ext(),
 			&runtime_code,
 			"Metadata_metadata_at_version",
 			&15u32.encode(),
@@ -83,7 +83,7 @@ pub fn generate_metadata_hash(wasm: &Path, extra_info: MetadataExtraInfo) -> [u8
 
 	let runtime_version = executor
 		.call(
-			&mut sp_io::TestExternalities::default().ext(),
+			&mut soil_io::TestExternalities::default().ext(),
 			&runtime_code,
 			"Core_version",
 			&[],

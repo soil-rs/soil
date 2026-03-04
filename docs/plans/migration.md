@@ -64,14 +64,14 @@ Migrate one tier at a time up the critical path. Each tier unlocks the next.
 
 | Tier | Crates | Status |
 |------|--------|--------|
-| 1 | `sp-crypto-hashing-proc-macro`, `sp-storage`, `sp-weights` | TODO |
-| 2 | `sp-externalities` | TODO |
-| 3 | `sp-core`, `sp-runtime-interface` | TODO |
-| 4 | `sp-crypto-ec-utils`, `sp-keystore`, `sp-rpc`, `sp-trie` | TODO |
-| 5 | `sp-state-machine` | TODO |
-| 6 | `sp-io` | TODO |
-| 7 | `sp-application-crypto` | TODO |
-| 8 | `sp-runtime` | TODO |
+| 1 | `sp-crypto-hashing-proc-macro`, `sp-storage`, `sp-weights` | DONE |
+| 2 | `sp-externalities` | DONE |
+| 3 | `sp-core`, `sp-runtime-interface` | DONE |
+| 4 | `sp-crypto-ec-utils`, `sp-keystore`, `sp-rpc`, `sp-trie` | DONE |
+| 5 | `sp-state-machine` | DONE |
+| 6 | `sp-io` | DONE |
+| 7 | `sp-application-crypto` | DONE |
+| 8 | `sp-runtime` | DONE |
 
 ### Phase 3 — Tiers 9-12 (remaining sp-* → soil-*)
 

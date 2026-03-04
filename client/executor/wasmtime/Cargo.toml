@@ -24,7 +24,7 @@ parking_lot = { workspace = true, default-features = true }
 anyhow = { workspace = true }
 sc-allocator = { workspace = true, default-features = true }
 sc-executor-common = { workspace = true, default-features = true }
-sp-runtime-interface = { workspace = true, default-features = true }
+soil-runtime-interface = { workspace = true, default-features = true }
 soil-wasm-interface = { features = ["wasmtime"], workspace = true, default-features = true }
 wasmtime = { features = [
 	"addr2line",
@@ -52,6 +52,6 @@ cargo_metadata = { workspace = true }
 codec = { workspace = true, default-features = true }
 paste = { workspace = true, default-features = true }
 sc-runtime-test = { workspace = true }
-sp-io = { workspace = true, default-features = true }
+soil-io = { workspace = true, default-features = true }
 tempfile = { workspace = true }
 wat = { workspace = true }

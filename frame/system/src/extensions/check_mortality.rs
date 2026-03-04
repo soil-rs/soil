@@ -19,7 +19,7 @@ use crate::{pallet_prelude::BlockNumberFor, BlockHash, Config, Pallet};
 use codec::{Decode, DecodeWithMemTracking, Encode};
 use frame_support::pallet_prelude::TransactionSource;
 use scale_info::TypeInfo;
-use sp_runtime::{
+use soil_runtime::{
 	generic::Era,
 	impl_tx_ext_default,
 	traits::{DispatchInfoOf, SaturatedConversion, TransactionExtension, ValidateResult},
@@ -73,7 +73,7 @@ impl<T: Config + Send + Sync> TransactionExtension<T::RuntimeCall> for CheckMort
 	type Pre = ();
 	type Val = ();
 
-	fn weight(&self, _: &T::RuntimeCall) -> sp_weights::Weight {
+	fn weight(&self, _: &T::RuntimeCall) -> soil_weights::Weight {
 		if self.0.is_immortal() {
 			// All immortal transactions will always read the hash of the genesis block, so to avoid
 			// charging this multiple times in a block we manually set the proof size to 0.
@@ -116,8 +116,8 @@ mod tests {
 		dispatch::{DispatchClass, DispatchInfo, Pays},
 		weights::Weight,
 	};
-	use sp_core::H256;
-	use sp_runtime::{
+	use soil_core::H256;
+	use soil_runtime::{
 		traits::DispatchTransaction, transaction_validity::TransactionSource::External,
 	};
 

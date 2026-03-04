@@ -31,9 +31,9 @@ use sc_service::{
 	BasePath, Configuration, Role,
 };
 use sc_transaction_pool_api::{TransactionSource, TransactionStatus};
-use sp_core::{crypto::Pair, sr25519};
+use soil_core::{crypto::Pair, sr25519};
 use sp_keyring::Sr25519Keyring;
-use sp_runtime::OpaqueExtrinsic;
+use soil_runtime::OpaqueExtrinsic;
 use staging_node_cli as node_cli;
 use tokio::runtime::Handle;
 

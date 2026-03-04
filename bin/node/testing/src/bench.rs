@@ -47,12 +47,12 @@ use sc_executor::{WasmExecutionMethod, WasmtimeInstantiationStrategy};
 use sp_api::ProvideRuntimeApi;
 use sp_block_builder::BlockBuilder;
 use sp_consensus::BlockOrigin;
-use sp_core::{
+use soil_core::{
 	crypto::get_public_from_string_or_panic, ed25519, sr25519, traits::SpawnNamed, Pair,
 };
 use soil_crypto_hashing::blake2_256;
 use sp_inherents::InherentData;
-use sp_runtime::{
+use soil_runtime::{
 	generic::{self, ExtrinsicFormat, Preamble},
 	traits::{Block as BlockT, IdentifyAccount, Verify},
 	OpaqueExtrinsic,
@@ -306,13 +306,13 @@ impl<'a> Iterator for BlockContentIterator<'a> {
 				function: match self.content.block_type {
 					BlockType::RandomTransfersKeepAlive => {
 						RuntimeCall::Balances(BalancesCall::transfer_keep_alive {
-							dest: sp_runtime::MultiAddress::Id(receiver),
+							dest: soil_runtime::MultiAddress::Id(receiver),
 							value: kitchensink_runtime::ExistentialDeposit::get() + 1,
 						})
 					},
 					BlockType::RandomTransfersReaping => {
 						RuntimeCall::Balances(BalancesCall::transfer_allow_death {
-							dest: sp_runtime::MultiAddress::Id(receiver),
+							dest: soil_runtime::MultiAddress::Id(receiver),
 							// Transfer so that ending balance would be 1 less than existential
 							// deposit so that we kill the sender account.
 							value: 100 * DOLLARS -
@@ -596,7 +596,7 @@ impl BenchKeyring {
 				});
 				generic::UncheckedExtrinsic::new_signed(
 					payload.0,
-					sp_runtime::MultiAddress::Id(signed),
+					soil_runtime::MultiAddress::Id(signed),
 					signature,
 					tx_ext,
 				)
@@ -615,15 +615,15 @@ impl BenchKeyring {
 
 	/// Generate genesis with accounts from this keyring endowed with some balance and
 	/// kitchensink_runtime code blob.
-	pub fn as_storage_builder(&self) -> &dyn sp_runtime::BuildStorage {
+	pub fn as_storage_builder(&self) -> &dyn soil_runtime::BuildStorage {
 		self
 	}
 }
 
-impl sp_runtime::BuildStorage for BenchKeyring {
-	fn assimilate_storage(&self, storage: &mut sp_core::storage::Storage) -> Result<(), String> {
+impl soil_runtime::BuildStorage for BenchKeyring {
+	fn assimilate_storage(&self, storage: &mut soil_core::storage::Storage) -> Result<(), String> {
 		storage.top.insert(
-			sp_core::storage::well_known_keys::CODE.to_vec(),
+			soil_core::storage::well_known_keys::CODE.to_vec(),
 			kitchensink_runtime::wasm_binary_unwrap().into(),
 		);
 		crate::genesis::config_endowed(self.collect_account_ids()).assimilate_storage(storage)

@@ -29,13 +29,13 @@ use alloc::vec::Vec;
 use core::cmp::Ordering;
 use frame::{
 	deps::{
-		sp_io::{self, MultiRemovalResults},
-		sp_runtime,
+		soil_io::{self, MultiRemovalResults},
+		soil_runtime,
 	},
 	prelude::*,
 };
 use serde::{Deserialize, Serialize};
-use sp_application_crypto::RuntimeAppPublic;
+use soil_application_crypto::RuntimeAppPublic;
 use sp_mixnet::types::{
 	AuthorityId, AuthoritySignature, KxPublic, Mixnode, MixnodesErr, PeerId, SessionIndex,
 	SessionPhase, SessionStatus, KX_PUBLIC_SIZE,
@@ -165,7 +165,7 @@ fn twox<BlockNumber: UniqueSaturatedInto<u64>>(
 	let mut data = [0; 8 + KX_PUBLIC_SIZE];
 	data[..8].copy_from_slice(&block_number.to_le_bytes());
 	data[8..].copy_from_slice(kx_public);
-	u64::from_le_bytes(sp_io::hashing::twox_64(&data))
+	u64::from_le_bytes(soil_io::hashing::twox_64(&data))
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -546,7 +546,7 @@ impl<T: Config> Pallet<T> {
 	}
 }
 
-impl<T: Config> sp_runtime::BoundToRuntimeAppPublic for Pallet<T> {
+impl<T: Config> soil_runtime::BoundToRuntimeAppPublic for Pallet<T> {
 	type Public = AuthorityId;
 }
 

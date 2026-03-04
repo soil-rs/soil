@@ -38,7 +38,7 @@ use sc_network::{IfDisconnected, ProtocolName};
 use sc_network_common::sync::message::BlockAnnounce;
 use sc_network_types::PeerId;
 use sp_consensus::BlockOrigin;
-use sp_runtime::{
+use soil_runtime::{
 	traits::{Block as BlockT, Header, NumberFor},
 	Justifications, SaturatedConversion,
 };
@@ -402,8 +402,8 @@ mod test {
 	use sc_block_builder::BlockBuilderBuilder;
 	use sc_client_api::KeyValueStates;
 	use sc_consensus::{ImportedAux, ImportedState};
-	use sp_core::H256;
-	use sp_runtime::traits::Zero;
+	use soil_core::H256;
+	use soil_runtime::traits::Zero;
 	use substrate_test_runtime_client::{
 		runtime::{Block, Hash},
 		BlockBuilderExt, DefaultTestClientBuilderExt, TestClientBuilder, TestClientBuilderExt,

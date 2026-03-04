@@ -23,12 +23,12 @@ use frame_support::{
 	traits::ConstU32,
 };
 use frame_system::pallet_prelude::BlockNumberFor;
-use sp_core::sr25519;
+use soil_core::sr25519;
 use soil_metadata_ir::{
 	PalletStorageMetadataIR, StorageEntryMetadataIR, StorageEntryModifierIR, StorageEntryTypeIR,
 	StorageHasherIR,
 };
-use sp_runtime::{
+use soil_runtime::{
 	generic,
 	traits::{BlakeTwo256, Verify},
 	BuildStorage,
@@ -343,7 +343,7 @@ impl module3::Config for Runtime {
 	type Currency2 = Module2_3;
 }
 
-fn new_test_ext() -> sp_io::TestExternalities {
+fn new_test_ext() -> soil_io::TestExternalities {
 	RuntimeGenesisConfig {
 		system: Default::default(),
 		module_1_1: module1::GenesisConfig { value: 3, test: 2 },
@@ -368,11 +368,11 @@ fn new_test_ext() -> sp_io::TestExternalities {
 
 #[test]
 fn storage_instance_independence() {
-	let mut storage = sp_core::storage::Storage {
+	let mut storage = soil_core::storage::Storage {
 		top: std::collections::BTreeMap::new(),
 		children_default: std::collections::HashMap::new(),
 	};
-	sp_state_machine::BasicExternalities::execute_with_storage(&mut storage, || {
+	soil_state_machine::BasicExternalities::execute_with_storage(&mut storage, || {
 		module2::Value::<Runtime>::put(0);
 		module2::Value::<Runtime, module2::Instance1>::put(0);
 		module2::Value::<Runtime, module2::Instance2>::put(0);

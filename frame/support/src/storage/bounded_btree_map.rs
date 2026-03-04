@@ -18,7 +18,7 @@
 //! Traits, types and structs to support a bounded BTreeMap.
 
 use crate::storage::StorageDecodeLength;
-pub use sp_runtime::BoundedBTreeMap;
+pub use soil_runtime::BoundedBTreeMap;
 
 impl<K, V, S> StorageDecodeLength for BoundedBTreeMap<K, V, S> {}
 
@@ -28,7 +28,7 @@ pub mod test {
 	use crate::Twox128;
 	use alloc::collections::btree_map::BTreeMap;
 	use frame_support::traits::{ConstU32, Get};
-	use sp_io::TestExternalities;
+	use soil_io::TestExternalities;
 
 	#[crate::storage_alias]
 	type Foo = StorageValue<Prefix, BoundedBTreeMap<u32, (), ConstU32<7>>>;

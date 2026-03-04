@@ -28,7 +28,7 @@ use sc_network::{
 };
 use sc_network_types::PeerId;
 use sp_consensus_beefy::{AuthorityIdBound, ValidatorSet};
-use sp_runtime::traits::{Block, NumberFor};
+use soil_runtime::traits::{Block, NumberFor};
 use std::{collections::VecDeque, result::Result, sync::Arc};
 
 use crate::{

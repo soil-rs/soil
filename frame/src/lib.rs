@@ -227,25 +227,25 @@ pub mod prelude {
 
 	/// Runtime traits
 	#[doc(no_inline)]
-	pub use sp_runtime::traits::{
+	pub use soil_runtime::traits::{
 		AccountIdConversion, BlockNumberProvider, Bounded, Convert, ConvertBack, DispatchInfoOf,
 		Dispatchable, ReduceBy, ReplaceWithDefault, SaturatedConversion, Saturating, StaticLookup,
 		TrailingZeroInput,
 	};
 
 	/// Bounded storage related types.
-	pub use sp_runtime::{BoundedSlice, BoundedVec};
+	pub use soil_runtime::{BoundedSlice, BoundedVec};
 
 	/// Other error/result types for runtime
 	#[doc(no_inline)]
-	pub use sp_runtime::{
+	pub use soil_runtime::{
 		BoundToRuntimeAppPublic, DispatchErrorWithPostInfo, DispatchResultWithInfo, TokenError,
 	};
 }
 
 #[cfg(any(feature = "try-runtime", test))]
 pub mod try_runtime {
-	pub use sp_runtime::TryRuntimeError;
+	pub use soil_runtime::TryRuntimeError;
 }
 
 /// Prelude to be included in the `benchmarking.rs` of a pallet.
@@ -335,12 +335,12 @@ pub mod testing_prelude {
 	pub use frame_system::{self, mocking::*, RunToBlockHooks};
 
 	#[deprecated(note = "Use `frame::testing_prelude::TestState` instead.")]
-	pub use sp_io::TestExternalities;
+	pub use soil_io::TestExternalities;
 
-	pub use sp_io::TestExternalities as TestState;
+	pub use soil_io::TestExternalities as TestState;
 
 	/// Commonly used runtime traits for testing.
-	pub use sp_runtime::{traits::BadOrigin, StateVersion};
+	pub use soil_runtime::{traits::BadOrigin, StateVersion};
 }
 
 /// All of the types and tools needed to build FRAME-based runtimes.
@@ -409,14 +409,14 @@ pub mod runtime {
 		pub use sp_api::impl_runtime_apis;
 
 		// Types often used in the runtime APIs.
-		pub use sp_core::OpaqueMetadata;
+		pub use soil_core::OpaqueMetadata;
 		pub use sp_genesis_builder::{
 			PresetId, Result as GenesisBuilderResult, DEV_RUNTIME_PRESET,
 			LOCAL_TESTNET_RUNTIME_PRESET,
 		};
 		pub use sp_inherents::{CheckInherentsResult, InherentData};
 		pub use sp_keyring::Sr25519Keyring;
-		pub use sp_runtime::{ApplyExtrinsicResult, ExtrinsicInclusionMode};
+		pub use soil_runtime::{ApplyExtrinsicResult, ExtrinsicInclusionMode};
 	}
 
 	/// Types and traits for runtimes that implement runtime APIs.
@@ -453,16 +453,16 @@ pub mod runtime {
 	/// Some note-worthy opinions in this prelude:
 	///
 	/// - `u32` block number.
-	/// - [`sp_runtime::MultiAddress`] and [`sp_runtime::MultiSignature`] are used as the account id
+	/// - [`soil_runtime::MultiAddress`] and [`soil_runtime::MultiSignature`] are used as the account id
 	///   and signature types. This implies that this prelude can possibly used with an
 	///   "account-index" system (eg `pallet-indices`). And, in any case, it should be paired with
 	///   `AccountIdLookup` in [`frame_system::Config::Lookup`].
 	pub mod types_common {
 		use frame_system::Config as SysConfig;
-		use sp_runtime::{generic, traits, OpaqueExtrinsic};
+		use soil_runtime::{generic, traits, OpaqueExtrinsic};
 
 		/// A signature type compatible capably of handling multiple crypto-schemes.
-		pub type Signature = sp_runtime::MultiSignature;
+		pub type Signature = soil_runtime::MultiSignature;
 
 		/// The corresponding account-id type of [`Signature`].
 		pub type AccountId =
@@ -477,7 +477,7 @@ pub mod runtime {
 		// NOTE: `AccountIndex` is provided for future compatibility, if you want to introduce
 		// something like `pallet-indices`.
 		type ExtrinsicInner<T, Extra, AccountIndex = ()> = generic::UncheckedExtrinsic<
-			sp_runtime::MultiAddress<AccountId, AccountIndex>,
+			soil_runtime::MultiAddress<AccountId, AccountIndex>,
 			<T as SysConfig>::RuntimeCall,
 			Signature,
 			Extra,
@@ -492,7 +492,7 @@ pub mod runtime {
 		pub type BlockOf<T, Extra = ()> = generic::Block<HeaderInner, ExtrinsicInner<T, Extra>>;
 
 		/// The opaque block type. This is the same [`BlockOf`], but it has
-		/// [`sp_runtime::OpaqueExtrinsic`] as its final extrinsic type.
+		/// [`soil_runtime::OpaqueExtrinsic`] as its final extrinsic type.
 		///
 		/// This should be provided to the client side as the extrinsic type.
 		pub type OpaqueBlock = generic::Block<HeaderInner, OpaqueExtrinsic>;
@@ -518,8 +518,8 @@ pub mod runtime {
 	/// counter part of `runtime::prelude`.
 	#[cfg(feature = "std")]
 	pub mod testing_prelude {
-		pub use sp_core::storage::Storage;
-		pub use sp_runtime::{BuildStorage, DispatchError};
+		pub use soil_core::storage::Storage;
+		pub use soil_runtime::{BuildStorage, DispatchError};
 	}
 }
 
@@ -531,7 +531,7 @@ pub mod runtime {
 #[allow(ambiguous_glob_reexports)]
 pub mod traits {
 	pub use frame_support::traits::*;
-	pub use sp_runtime::traits::*;
+	pub use soil_runtime::traits::*;
 }
 
 /// The arithmetic types used for safe math.
@@ -579,15 +579,15 @@ pub mod derive {
 ///
 /// This is already part of the main [`prelude`].
 pub mod hashing {
-	pub use sp_core::{hashing::*, H160, H256, H512, U256, U512};
-	pub use sp_runtime::traits::{BlakeTwo256, Hash, Keccak256};
+	pub use soil_core::{hashing::*, H160, H256, H512, U256, U512};
+	pub use soil_runtime::traits::{BlakeTwo256, Hash, Keccak256};
 }
 
 // Systems involved in transaction execution in the runtime.
 /// This is already part of the [`prelude`].
 pub mod transaction {
 	pub use frame_support::traits::{CallMetadata, GetCallMetadata};
-	pub use sp_runtime::{
+	pub use soil_runtime::{
 		generic::ExtensionVersion,
 		impl_tx_ext_default,
 		traits::{
@@ -605,7 +605,7 @@ pub mod account {
 	pub use frame_support::traits::{
 		AsEnsureOriginWithArg, ChangeMembers, EitherOfDiverse, InitializeMembers,
 	};
-	pub use sp_runtime::traits::{IdentifyAccount, IdentityLookup};
+	pub use soil_runtime::traits::{IdentifyAccount, IdentityLookup};
 }
 
 /// Access to all of the dependencies of this crate. In case the prelude re-exports are not enough,
@@ -623,9 +623,9 @@ pub mod deps {
 	pub use frame_system;
 
 	pub use soil_arithmetic;
-	pub use sp_core;
-	pub use sp_io;
-	pub use sp_runtime;
+	pub use soil_core;
+	pub use soil_io;
+	pub use soil_runtime;
 
 	pub use codec;
 	pub use scale_info;
@@ -649,7 +649,7 @@ pub mod deps {
 	#[cfg(feature = "runtime")]
 	pub use sp_offchain;
 	#[cfg(feature = "runtime")]
-	pub use sp_storage;
+	pub use soil_storage;
 	#[cfg(feature = "runtime")]
 	pub use sp_version;
 

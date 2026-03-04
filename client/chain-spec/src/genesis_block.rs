@@ -23,8 +23,8 @@ use std::{marker::PhantomData, sync::Arc};
 use codec::Encode;
 use sc_client_api::{backend::Backend, BlockImportOperation};
 use sc_executor::RuntimeVersionOf;
-use sp_core::storage::{well_known_keys, StateVersion, Storage};
-use sp_runtime::{
+use soil_core::storage::{well_known_keys, StateVersion, Storage};
+use soil_runtime::{
 	traits::{Block as BlockT, Hash as HashT, HashingFor, Header as HeaderT, Zero},
 	BuildStorage,
 };
@@ -39,10 +39,10 @@ where
 	H: HashT,
 {
 	if let Some(wasm) = storage.top.get(well_known_keys::CODE) {
-		let mut ext = sp_state_machine::BasicExternalities::new_empty(); // just to read runtime version.
+		let mut ext = soil_state_machine::BasicExternalities::new_empty(); // just to read runtime version.
 
-		let code_fetcher = sp_core::traits::WrappedRuntimeCode(wasm.as_slice().into());
-		let runtime_code = sp_core::traits::RuntimeCode {
+		let code_fetcher = soil_core::traits::WrappedRuntimeCode(wasm.as_slice().into());
+		let runtime_code = soil_core::traits::RuntimeCode {
 			code_fetcher: &code_fetcher,
 			heap_pages: None,
 			hash: <H as HashT>::hash(wasm).encode(),

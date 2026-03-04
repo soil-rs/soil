@@ -32,7 +32,7 @@
 //! state consistency.
 
 use frame_support::{defensive, ensure, traits::Defensive};
-use sp_runtime::DispatchResult;
+use soil_runtime::DispatchResult;
 use sp_staking::{StakingAccount, StakingInterface};
 
 use crate::{
@@ -41,7 +41,7 @@ use crate::{
 };
 
 #[cfg(any(feature = "runtime-benchmarks", test))]
-use sp_runtime::traits::Zero;
+use soil_runtime::traits::Zero;
 
 impl<T: Config> StakingLedger<T> {
 	#[cfg(any(feature = "runtime-benchmarks", test))]

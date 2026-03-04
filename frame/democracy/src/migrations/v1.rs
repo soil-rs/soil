@@ -20,7 +20,7 @@
 use crate::*;
 use frame_support::{pallet_prelude::*, storage_alias, traits::OnRuntimeUpgrade, BoundedVec};
 use frame_system::pallet_prelude::BlockNumberFor;
-use sp_core::H256;
+use soil_core::H256;
 
 /// The log target.
 const TARGET: &'static str = "runtime::democracy::migration::v1";
@@ -58,7 +58,7 @@ pub mod v1 {
 
 	impl<T: Config + frame_system::Config<Hash = H256>> OnRuntimeUpgrade for Migration<T> {
 		#[cfg(feature = "try-runtime")]
-		fn pre_upgrade() -> Result<Vec<u8>, sp_runtime::TryRuntimeError> {
+		fn pre_upgrade() -> Result<Vec<u8>, soil_runtime::TryRuntimeError> {
 			ensure!(StorageVersion::get::<Pallet<T>>() == 0, "can only upgrade from version 0");
 
 			let props_count = v0::PublicProps::<T>::get().len();
@@ -132,7 +132,7 @@ pub mod v1 {
 		}
 
 		#[cfg(feature = "try-runtime")]
-		fn post_upgrade(state: Vec<u8>) -> Result<(), sp_runtime::TryRuntimeError> {
+		fn post_upgrade(state: Vec<u8>) -> Result<(), soil_runtime::TryRuntimeError> {
 			ensure!(StorageVersion::get::<Pallet<T>>() == 1, "must upgrade");
 
 			let (old_props_count, old_ref_count): (u32, u32) =
@@ -161,7 +161,7 @@ mod test {
 		tests::{Test as T, *},
 		types::*,
 	};
-	use sp_runtime::bounded_vec;
+	use soil_runtime::bounded_vec;
 
 	#[allow(deprecated)]
 	#[test]

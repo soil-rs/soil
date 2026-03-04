@@ -29,12 +29,12 @@ use frame_support::{
 };
 use pallet_session::historical as pallet_session_historical;
 use sp_consensus_babe::{AuthorityId, AuthorityPair, Randomness, Slot, VrfSignature};
-use sp_core::{
+use soil_core::{
 	crypto::{Pair, VrfSecret},
 	ConstBool, U256,
 };
-use sp_io;
-use sp_runtime::{
+use soil_io;
+use soil_runtime::{
 	curve::PiecewiseLinear,
 	impl_opaque_keys,
 	testing::{Digest, DigestItem, Header, TestXt},
@@ -94,7 +94,7 @@ impl_opaque_keys! {
 impl pallet_session::Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type ValidatorId = <Self as frame_system::Config>::AccountId;
-	type ValidatorIdOf = sp_runtime::traits::ConvertInto;
+	type ValidatorIdOf = soil_runtime::traits::ConvertInto;
 	type ShouldEndSession = Babe;
 	type NextSessionRotation = Babe;
 	type SessionManager = pallet_session::historical::NoteHistoricalRoot<Self, Staking>;
@@ -300,13 +300,13 @@ pub fn make_vrf_signature_and_randomness(
 	(signature, randomness)
 }
 
-pub fn new_test_ext(authorities_len: usize) -> sp_io::TestExternalities {
+pub fn new_test_ext(authorities_len: usize) -> soil_io::TestExternalities {
 	new_test_ext_with_pairs(authorities_len).1
 }
 
 pub fn new_test_ext_with_pairs(
 	authorities_len: usize,
-) -> (Vec<AuthorityPair>, sp_io::TestExternalities) {
+) -> (Vec<AuthorityPair>, soil_io::TestExternalities) {
 	let pairs = (0..authorities_len)
 		.map(|i| AuthorityPair::from_seed(&U256::from(i).to_little_endian()))
 		.collect::<Vec<_>>();
@@ -316,7 +316,7 @@ pub fn new_test_ext_with_pairs(
 	(pairs, new_test_ext_raw_authorities(public))
 }
 
-pub fn new_test_ext_raw_authorities(authorities: Vec<AuthorityId>) -> sp_io::TestExternalities {
+pub fn new_test_ext_raw_authorities(authorities: Vec<AuthorityId>) -> soil_io::TestExternalities {
 	soil_tracing::try_init_simple();
 	let mut t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 
@@ -384,7 +384,7 @@ pub fn generate_equivocation_proof(
 			Timestamp::set_timestamp(*current_slot * Babe::slot_duration());
 			let header = System::finalize();
 
-			sp_runtime::TransactionOutcome::Rollback(Ok::<_, DispatchError>(header))
+			soil_runtime::TransactionOutcome::Rollback(Ok::<_, DispatchError>(header))
 		})
 		.unwrap()
 	};

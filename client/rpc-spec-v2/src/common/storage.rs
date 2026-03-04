@@ -21,7 +21,7 @@
 use std::{marker::PhantomData, sync::Arc};
 
 use sc_client_api::{Backend, ChildInfo, StorageKey, StorageProvider};
-use sp_runtime::traits::Block as BlockT;
+use soil_runtime::traits::Block as BlockT;
 use tokio::sync::mpsc;
 
 use super::events::{StorageQuery, StorageQueryType, StorageResult, StorageResultType};

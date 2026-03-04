@@ -46,14 +46,14 @@ use frame_system::{
 	CheckNonce, CheckWeight,
 };
 use scale_info::TypeInfo;
-use sp_application_crypto::{ecdsa, ed25519, sr25519, RuntimeAppPublic, Ss58Codec};
+use soil_application_crypto::{ecdsa, ed25519, sr25519, RuntimeAppPublic, Ss58Codec};
 use sp_keyring::Sr25519Keyring;
 
 #[cfg(feature = "bls-experimental")]
-use sp_application_crypto::{bls381, ecdsa_bls381};
+use soil_application_crypto::{bls381, ecdsa_bls381};
 
-use sp_core::OpaqueMetadata;
-use sp_trie::{
+use soil_core::OpaqueMetadata;
+use soil_trie::{
 	trie_types::{TrieDBBuilder, TrieDBMutBuilderV1},
 	PrefixedMemoryDB, StorageProof,
 };
@@ -61,10 +61,10 @@ use trie_db::{Trie, TrieMut};
 
 use serde_json::json;
 use sp_api::{decl_runtime_apis, impl_runtime_apis};
-pub use sp_core::hash::H256;
+pub use soil_core::hash::H256;
 use sp_genesis_builder::PresetId;
 use sp_inherents::{CheckInherentsResult, InherentData};
-use sp_runtime::{
+use soil_runtime::{
 	impl_opaque_keys, impl_tx_ext_default,
 	traits::{BlakeTwo256, Block as BlockT, DispatchInfoOf, Dispatchable, NumberFor, Verify},
 	transaction_validity::{
@@ -147,10 +147,10 @@ pub struct TransferData {
 }
 
 /// The address format for describing accounts.
-pub type Address = sp_core::sr25519::Public;
+pub type Address = soil_core::sr25519::Public;
 pub type Signature = sr25519::Signature;
 #[cfg(feature = "std")]
-pub type Pair = sp_core::sr25519::Pair;
+pub type Pair = soil_core::sr25519::Pair;
 
 // TODO: Remove after the Checks are migrated to TxExtension.
 /// The extension to the basic transaction logic.
@@ -161,10 +161,10 @@ pub type TxExtension = (
 	frame_system::WeightReclaim<Runtime>,
 );
 /// The payload being signed in transactions.
-pub type SignedPayload = sp_runtime::generic::SignedPayload<RuntimeCall, TxExtension>;
+pub type SignedPayload = soil_runtime::generic::SignedPayload<RuntimeCall, TxExtension>;
 /// Unchecked extrinsic type as expected by this runtime.
 pub type Extrinsic =
-	sp_runtime::generic::UncheckedExtrinsic<Address, RuntimeCall, Signature, TxExtension>;
+	soil_runtime::generic::UncheckedExtrinsic<Address, RuntimeCall, Signature, TxExtension>;
 
 /// An identifier for an account on this system.
 pub type AccountId = <Signature as Verify>::Signer;
@@ -177,19 +177,19 @@ pub type BlockNumber = u64;
 /// Index of a transaction.
 pub type Nonce = u64;
 /// The item of a block digest.
-pub type DigestItem = sp_runtime::generic::DigestItem;
+pub type DigestItem = soil_runtime::generic::DigestItem;
 /// The digest of a block.
-pub type Digest = sp_runtime::generic::Digest;
+pub type Digest = soil_runtime::generic::Digest;
 /// A test block.
-pub type Block = sp_runtime::generic::Block<Header, Extrinsic>;
+pub type Block = soil_runtime::generic::Block<Header, Extrinsic>;
 /// A test block's header.
-pub type Header = sp_runtime::generic::Header<BlockNumber, Hashing>;
+pub type Header = soil_runtime::generic::Header<BlockNumber, Hashing>;
 /// Balance of an account.
 pub type Balance = u64;
 
 #[cfg(feature = "bls-experimental")]
 mod bls {
-	use sp_application_crypto::{bls381, ecdsa_bls381};
+	use soil_application_crypto::{bls381, ecdsa_bls381};
 	pub type Bls381Public = bls381::AppPublic;
 	pub type Bls381Pop = bls381::AppProofOfPossession;
 	pub type EcdsaBls381Public = ecdsa_bls381::AppPublic;
@@ -276,22 +276,22 @@ pub type Executive = frame_executive::Executive<
 #[derive(Copy, Clone, PartialEq, Eq, Encode, Decode, DecodeWithMemTracking, Debug, TypeInfo)]
 pub struct CheckSubstrateCall;
 
-impl sp_runtime::traits::Printable for CheckSubstrateCall {
+impl soil_runtime::traits::Printable for CheckSubstrateCall {
 	fn print(&self) {
 		"CheckSubstrateCall".print()
 	}
 }
 
-impl sp_runtime::traits::RefundWeight for CheckSubstrateCall {
+impl soil_runtime::traits::RefundWeight for CheckSubstrateCall {
 	fn refund(&mut self, _weight: frame_support::weights::Weight) {}
 }
-impl sp_runtime::traits::ExtensionPostDispatchWeightHandler<CheckSubstrateCall>
+impl soil_runtime::traits::ExtensionPostDispatchWeightHandler<CheckSubstrateCall>
 	for CheckSubstrateCall
 {
 	fn set_extension_weight(&mut self, _info: &CheckSubstrateCall) {}
 }
 
-impl sp_runtime::traits::Dispatchable for CheckSubstrateCall {
+impl soil_runtime::traits::Dispatchable for CheckSubstrateCall {
 	type RuntimeOrigin = RuntimeOrigin;
 	type Config = CheckSubstrateCall;
 	type Info = CheckSubstrateCall;
@@ -300,12 +300,12 @@ impl sp_runtime::traits::Dispatchable for CheckSubstrateCall {
 	fn dispatch(
 		self,
 		_origin: Self::RuntimeOrigin,
-	) -> sp_runtime::DispatchResultWithInfo<Self::PostInfo> {
+	) -> soil_runtime::DispatchResultWithInfo<Self::PostInfo> {
 		panic!("This implementation should not be used for actual dispatch.");
 	}
 }
 
-impl sp_runtime::traits::TransactionExtension<RuntimeCall> for CheckSubstrateCall {
+impl soil_runtime::traits::TransactionExtension<RuntimeCall> for CheckSubstrateCall {
 	const IDENTIFIER: &'static str = "CheckSubstrateCall";
 	type Implicit = ();
 	type Pre = ();
@@ -393,7 +393,7 @@ impl frame_system::pallet::Config for Runtime {
 	type BlockWeights = RuntimeBlockWeights;
 	type Nonce = Nonce;
 	type AccountId = AccountId;
-	type Lookup = sp_runtime::traits::IdentityLookup<Self::AccountId>;
+	type Lookup = soil_runtime::traits::IdentityLookup<Self::AccountId>;
 	type Block = Block;
 	type AccountData = pallet_balances::AccountData<Balance>;
 }
@@ -456,7 +456,7 @@ impl pallet_babe::Config for Runtime {
 	type ExpectedBlockTime = ConstU64<10_000>;
 	type EpochChangeTrigger = pallet_babe::SameAuthoritiesForever;
 	type DisabledValidators = ();
-	type KeyOwnerProof = sp_core::Void;
+	type KeyOwnerProof = soil_core::Void;
 	type EquivocationReportSystem = ();
 	type WeightInfo = ();
 	type MaxAuthorities = ConstU32<10>;
@@ -670,11 +670,11 @@ impl_runtime_apis! {
 		}
 
 		fn verify_ed25519(sig: ed25519::Signature, public: ed25519::Public, message: Vec<u8>) -> bool {
-			sp_io::crypto::ed25519_verify(&sig, &message, &public)
+			soil_io::crypto::ed25519_verify(&sig, &message, &public)
 		}
 
 		fn write_key_value(key: Vec<u8>, value: Vec<u8>, panic: bool) {
-			sp_io::storage::set(&key, &value);
+			soil_io::storage::set(&key, &value);
 
 			if panic {
 				panic!("I'm just following my master");
@@ -742,7 +742,7 @@ impl_runtime_apis! {
 					value:Some(header.number.encode())
 				}.into(),
 			);
-			sp_io::offchain::submit_transaction(ext.encode()).unwrap();
+			soil_io::offchain::submit_transaction(ext.encode()).unwrap();
 			Executive::offchain_worker(header);
 		}
 	}
@@ -754,7 +754,7 @@ impl_runtime_apis! {
 
 		fn decode_session_keys(
 			encoded: Vec<u8>,
-		) -> Option<Vec<(Vec<u8>, sp_core::crypto::KeyTypeId)>> {
+		) -> Option<Vec<(Vec<u8>, soil_core::crypto::KeyTypeId)>> {
 			SessionKeys::decode_into_raw_public_keys(&encoded)
 		}
 	}
@@ -916,15 +916,15 @@ fn test_ecdsa_bls381_crypto() -> (EcdsaBls381Pop, EcdsaBls381Public) {
 
 fn test_read_storage() {
 	const KEY: &[u8] = b":read_storage";
-	sp_io::storage::set(KEY, b"test");
+	soil_io::storage::set(KEY, b"test");
 
 	let mut v = [0u8; 4];
-	let r = sp_io::storage::read(KEY, &mut v, 0);
+	let r = soil_io::storage::read(KEY, &mut v, 0);
 	assert_eq!(r, Some(4));
 	assert_eq!(&v, b"test");
 
 	let mut v = [0u8; 4];
-	let r = sp_io::storage::read(KEY, &mut v, 4);
+	let r = soil_io::storage::read(KEY, &mut v, 4);
 	assert_eq!(r, Some(0));
 	assert_eq!(&v, &[0, 0, 0, 0]);
 }
@@ -932,25 +932,25 @@ fn test_read_storage() {
 fn test_read_child_storage() {
 	const STORAGE_KEY: &[u8] = b"unique_id_1";
 	const KEY: &[u8] = b":read_child_storage";
-	sp_io::default_child_storage::set(STORAGE_KEY, KEY, b"test");
+	soil_io::default_child_storage::set(STORAGE_KEY, KEY, b"test");
 
 	let mut v = [0u8; 4];
-	let r = sp_io::default_child_storage::read(STORAGE_KEY, KEY, &mut v, 0);
+	let r = soil_io::default_child_storage::read(STORAGE_KEY, KEY, &mut v, 0);
 	assert_eq!(r, Some(4));
 	assert_eq!(&v, b"test");
 
 	let mut v = [0u8; 4];
-	let r = sp_io::default_child_storage::read(STORAGE_KEY, KEY, &mut v, 8);
+	let r = soil_io::default_child_storage::read(STORAGE_KEY, KEY, &mut v, 8);
 	assert_eq!(r, Some(0));
 	assert_eq!(&v, &[0, 0, 0, 0]);
 }
 
 fn test_witness(proof: StorageProof, root: crate::Hash) {
-	use sp_externalities::Externalities;
-	let db: sp_trie::MemoryDB<crate::Hashing> = proof.into_memory_db();
-	let backend = sp_state_machine::TrieBackendBuilder::<_, crate::Hashing>::new(db, root).build();
-	let mut overlay = sp_state_machine::OverlayedChanges::default();
-	let mut ext = sp_state_machine::Ext::new(
+	use soil_externalities::Externalities;
+	let db: soil_trie::MemoryDB<crate::Hashing> = proof.into_memory_db();
+	let backend = soil_state_machine::TrieBackendBuilder::<_, crate::Hashing>::new(db, root).build();
+	let mut overlay = soil_state_machine::OverlayedChanges::default();
+	let mut ext = soil_state_machine::Ext::new(
 		&mut overlay,
 		&backend,
 		#[cfg(feature = "std")]
@@ -968,7 +968,7 @@ fn test_witness(proof: StorageProof, root: crate::Hash) {
 #[cfg(feature = "std")]
 pub mod storage_key_generator {
 	use super::*;
-	use sp_core::Pair;
+	use soil_core::Pair;
 
 	/// Generate hex string without prefix
 	pub(super) fn hex<T>(x: T) -> String
@@ -1153,8 +1153,8 @@ mod tests {
 	use sc_block_builder::BlockBuilderBuilder;
 	use sp_api::{ApiExt, ProvideRuntimeApi};
 	use sp_consensus::BlockOrigin;
-	use sp_core::{storage::well_known_keys::HEAP_PAGES, traits::CallContext};
-	use sp_runtime::{
+	use soil_core::{storage::well_known_keys::HEAP_PAGES, traits::CallContext};
+	use soil_runtime::{
 		traits::{DispatchTransaction, Hash as _},
 		transaction_validity::{InvalidTransaction, TransactionSource::External, ValidTransaction},
 	};
@@ -1216,12 +1216,12 @@ mod tests {
 		runtime_api.test_storage(best_hash).unwrap();
 	}
 
-	fn witness_backend() -> (sp_trie::MemoryDB<crate::Hashing>, crate::Hash) {
+	fn witness_backend() -> (soil_trie::MemoryDB<crate::Hashing>, crate::Hash) {
 		let mut root = crate::Hash::default();
-		let mut mdb = sp_trie::MemoryDB::<crate::Hashing>::default();
+		let mut mdb = soil_trie::MemoryDB::<crate::Hashing>::default();
 		{
 			let mut trie =
-				sp_trie::trie_types::TrieDBMutBuilderV1::new(&mut mdb, &mut root).build();
+				soil_trie::trie_types::TrieDBMutBuilderV1::new(&mut mdb, &mut root).build();
 			trie.insert(b"value3", &[142]).expect("insert failed");
 			trie.insert(b"value4", &[124]).expect("insert failed");
 		};
@@ -1232,8 +1232,8 @@ mod tests {
 	fn witness_backend_works() {
 		let (db, root) = witness_backend();
 		let backend =
-			sp_state_machine::TrieBackendBuilder::<_, crate::Hashing>::new(db, root).build();
-		let proof = sp_state_machine::prove_read(backend, vec![b"value3"]).unwrap();
+			soil_state_machine::TrieBackendBuilder::<_, crate::Hashing>::new(db, root).build();
+		let proof = soil_state_machine::prove_read(backend, vec![b"value3"]).unwrap();
 		let client = TestClientBuilder::new().build();
 		let runtime_api = client.runtime_api();
 		let best_hash = client.chain_info().best_hash;
@@ -1241,7 +1241,7 @@ mod tests {
 		runtime_api.test_witness(best_hash, proof, root).unwrap();
 	}
 
-	pub fn new_test_ext() -> sp_io::TestExternalities {
+	pub fn new_test_ext() -> soil_io::TestExternalities {
 		genesismap::GenesisStorageBuilder::new(
 			vec![Sr25519Keyring::One.public().into(), Sr25519Keyring::Two.public().into()],
 			vec![Sr25519Keyring::One.into(), Sr25519Keyring::Two.into()],
@@ -1285,7 +1285,7 @@ mod tests {
 
 			for call in failing_calls {
 				assert_eq!(
-					<SubstrateTest as sp_runtime::traits::ValidateUnsigned>::validate_unsigned(
+					<SubstrateTest as soil_runtime::traits::ValidateUnsigned>::validate_unsigned(
 						TransactionSource::External,
 						&call,
 					),
@@ -1295,7 +1295,7 @@ mod tests {
 
 			for call in succeeding_calls {
 				assert_eq!(
-					<SubstrateTest as sp_runtime::traits::ValidateUnsigned>::validate_unsigned(
+					<SubstrateTest as soil_runtime::traits::ValidateUnsigned>::validate_unsigned(
 						TransactionSource::External,
 						&call,
 					),
@@ -1356,10 +1356,10 @@ mod tests {
 		use sc_executor::{error::Result, WasmExecutor};
 		use sc_executor_common::runtime_blob::RuntimeBlob;
 		use serde_json::json;
-		use sp_application_crypto::Ss58Codec;
-		use sp_core::traits::Externalities;
+		use soil_application_crypto::Ss58Codec;
+		use soil_core::traits::Externalities;
 		use sp_genesis_builder::Result as BuildResult;
-		use sp_state_machine::BasicExternalities;
+		use soil_state_machine::BasicExternalities;
 		use std::{fs, io::Write};
 		use storage_key_generator::hex;
 
@@ -1368,7 +1368,7 @@ mod tests {
 			method: &str,
 			data: &[u8],
 		) -> Result<Vec<u8>> {
-			let executor = WasmExecutor::<sp_io::SubstrateHostFunctions>::builder().build();
+			let executor = WasmExecutor::<soil_io::SubstrateHostFunctions>::builder().build();
 			executor.uncached_call(
 				RuntimeBlob::uncompress_if_needed(wasm_binary_unwrap()).unwrap(),
 				ext,
@@ -1613,7 +1613,7 @@ mod tests {
 				"00771836bebdd29870ff246d305c578c5e0621c4869aa60c02be9adcc98a0d1d",
 			);
 			let authority_key_vec =
-				Vec::<sp_core::sr25519::Public>::decode(&mut &value[..]).unwrap();
+				Vec::<soil_core::sr25519::Public>::decode(&mut &value[..]).unwrap();
 			assert_eq!(authority_key_vec.len(), 2);
 			assert_eq!(authority_key_vec[0], Sr25519Keyring::Ferdie.public());
 			assert_eq!(authority_key_vec[1], Sr25519Keyring::Alice.public());

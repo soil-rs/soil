@@ -255,7 +255,7 @@ pub fn expand_hooks(def: &mut Def) -> proc_macro2::TokenStream {
 			}
 
 			#frame_support::try_runtime_enabled! {
-				fn pre_upgrade() -> Result<#frame_support::__private::Vec<u8>, #frame_support::sp_runtime::TryRuntimeError> {
+				fn pre_upgrade() -> Result<#frame_support::__private::Vec<u8>, #frame_support::soil_runtime::TryRuntimeError> {
 					<
 						Self
 						as
@@ -263,7 +263,7 @@ pub fn expand_hooks(def: &mut Def) -> proc_macro2::TokenStream {
 					>::pre_upgrade()
 				}
 
-				fn post_upgrade(state: #frame_support::__private::Vec<u8>) -> Result<(), #frame_support::sp_runtime::TryRuntimeError> {
+				fn post_upgrade(state: #frame_support::__private::Vec<u8>) -> Result<(), #frame_support::soil_runtime::TryRuntimeError> {
 					#post_storage_version_check
 
 					<
@@ -295,7 +295,7 @@ pub fn expand_hooks(def: &mut Def) -> proc_macro2::TokenStream {
 			for #pallet_ident<#type_use_gen> #where_clause
 			{
 				fn integrity_test() {
-					#frame_support::__private::sp_io::TestExternalities::default().execute_with(|| {
+					#frame_support::__private::soil_io::TestExternalities::default().execute_with(|| {
 						<
 							Self as #frame_support::traits::Hooks<
 								#frame_system::pallet_prelude::BlockNumberFor::<T>
@@ -314,7 +314,7 @@ pub fn expand_hooks(def: &mut Def) -> proc_macro2::TokenStream {
 				fn try_state(
 					n: #frame_system::pallet_prelude::BlockNumberFor::<T>,
 					_s: #frame_support::traits::TryStateSelect
-				) -> Result<(), #frame_support::sp_runtime::TryRuntimeError> {
+				) -> Result<(), #frame_support::soil_runtime::TryRuntimeError> {
 					#frame_support::__private::log::info!(
 						target: #frame_support::LOG_TARGET,
 						"🩺 Running {:?} try-state checks",

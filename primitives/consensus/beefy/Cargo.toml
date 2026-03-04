@@ -19,14 +19,14 @@ codec = { features = ["derive"], workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { optional = true, features = ["alloc", "derive"], workspace = true }
 sp-api = { workspace = true }
-sp-application-crypto = { workspace = true }
-sp-core = { workspace = true }
+soil-application-crypto = { workspace = true }
+soil-core = { workspace = true }
 soil-crypto-hashing = { workspace = true }
-sp-io = { workspace = true }
-sp-keystore = { workspace = true }
+soil-io = { workspace = true }
+soil-keystore = { workspace = true }
 sp-mmr-primitives = { workspace = true }
-sp-runtime = { workspace = true }
-sp-weights = { workspace = true }
+soil-runtime = { workspace = true }
+soil-weights = { workspace = true }
 strum = { features = ["derive"], workspace = true }
 
 [dev-dependencies]
@@ -40,14 +40,14 @@ std = [
 	"scale-info/std",
 	"serde/std",
 	"sp-api/std",
-	"sp-application-crypto/std",
-	"sp-core/std",
+	"soil-application-crypto/std",
+	"soil-core/std",
 	"soil-crypto-hashing/std",
-	"sp-io/std",
-	"sp-keystore/std",
+	"soil-io/std",
+	"soil-keystore/std",
 	"sp-mmr-primitives/std",
-	"sp-runtime/std",
-	"sp-weights/std",
+	"soil-runtime/std",
+	"soil-weights/std",
 	"strum/std",
 ]
 
@@ -55,14 +55,14 @@ std = [
 serde = [
 	"dep:serde",
 	"scale-info/serde",
-	"sp-application-crypto/serde",
-	"sp-core/serde",
-	"sp-runtime/serde",
+	"soil-application-crypto/serde",
+	"soil-core/serde",
+	"soil-runtime/serde",
 ]
 
 # This feature adds BLS crypto primitives. It should not be used in production since
 # the BLS implementation and interface may still be subject to significant change.
 bls-experimental = [
-	"sp-application-crypto/bls-experimental",
-	"sp-core/bls-experimental",
+	"soil-application-crypto/bls-experimental",
+	"soil-core/bls-experimental",
 ]

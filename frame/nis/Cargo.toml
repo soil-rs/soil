@@ -22,7 +22,7 @@ scale-info = { features = ["derive"], workspace = true }
 
 [dev-dependencies]
 pallet-balances = { workspace = true, default-features = true }
-sp-io = { workspace = true, default-features = true }
+soil-io = { workspace = true, default-features = true }
 
 [features]
 default = ["std"]

@@ -24,7 +24,7 @@ use futures::Future;
 pub use http::SharedClient;
 use sc_network::Multiaddr;
 use sc_network_types::PeerId;
-use sp_core::{
+use soil_core::{
 	offchain::{
 		self, HttpError, HttpRequestId, HttpRequestStatus, OpaqueMultiaddr, OpaqueNetworkState,
 		Timestamp,
@@ -225,7 +225,7 @@ mod tests {
 		config::MultiaddrWithPeerId, types::ProtocolName, NetworkPeers, NetworkStateInfo,
 		ObservedRole, ReputationChange,
 	};
-	use sp_core::offchain::{storage::OffchainDb, DbExternalities, Externalities, StorageKind};
+	use soil_core::offchain::{storage::OffchainDb, DbExternalities, Externalities, StorageKind};
 	use std::time::SystemTime;
 
 	pub(super) struct TestNetwork();
@@ -362,7 +362,7 @@ mod tests {
 
 		// Arrange.
 		let now = api.timestamp();
-		let delta = sp_core::offchain::Duration::from_millis(100);
+		let delta = soil_core::offchain::Duration::from_millis(100);
 		let deadline = now.add(delta);
 
 		// Act.

@@ -27,17 +27,17 @@ use sc_consensus_epochs::{EpochIdentifier, EpochIdentifierPosition};
 use sc_consensus_slots::BackoffAuthoringOnFinalizedHeadLagging;
 use sc_network_test::{Block as TestBlock, *};
 use sc_transaction_pool_api::RejectAllTxPool;
-use sp_application_crypto::key_types::BABE;
+use soil_application_crypto::key_types::BABE;
 use sp_consensus::{NoNetwork as DummyOracle, Proposal, ProposeArgs};
 use sp_consensus_babe::{
 	inherents::{BabeCreateInherentDataProviders, InherentDataProvider},
 	make_vrf_sign_data, AllowedSlots, AuthorityId, AuthorityPair, Slot,
 };
 use sp_consensus_slots::SlotDuration;
-use sp_core::crypto::Pair;
+use soil_core::crypto::Pair;
 use sp_keyring::Sr25519Keyring;
-use sp_keystore::{testing::MemoryKeystore, Keystore};
-use sp_runtime::{
+use soil_keystore::{testing::MemoryKeystore, Keystore};
+use soil_runtime::{
 	generic::{Digest, DigestItem},
 	traits::Block as BlockT,
 };
@@ -618,7 +618,7 @@ async fn propose_and_import_block(
 		parent_pre_digest.slot() + 1
 	});
 
-	let pre_digest = sp_runtime::generic::Digest {
+	let pre_digest = soil_runtime::generic::Digest {
 		logs: vec![Item::babe_pre_digest(PreDigest::SecondaryPlain(SecondaryPlainPreDigest {
 			authority_index: 0,
 			slot,

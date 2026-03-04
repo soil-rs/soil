@@ -28,12 +28,12 @@ use sp_consensus_sassafras::{
 	vrf::{RingProver, VrfSignature},
 	AuthorityIndex, AuthorityPair, EpochConfiguration, Slot, TicketBody, TicketEnvelope, TicketId,
 };
-use sp_core::{
+use soil_core::{
 	crypto::{ByteArray, Pair, UncheckedFrom, VrfSecret, Wraps},
 	ed25519::Public as EphemeralPublic,
 	H256, U256,
 };
-use sp_runtime::{
+use soil_runtime::{
 	testing::{Digest, DigestItem, Header},
 	BuildStorage,
 };
@@ -87,7 +87,7 @@ pub const TEST_EPOCH_CONFIGURATION: EpochConfiguration =
 	EpochConfiguration { redundancy_factor: u32::MAX, attempts_number: 5 };
 
 /// Build and returns test storage externalities
-pub fn new_test_ext(authorities_len: usize) -> sp_io::TestExternalities {
+pub fn new_test_ext(authorities_len: usize) -> soil_io::TestExternalities {
 	new_test_ext_with_pairs(authorities_len, false).1
 }
 
@@ -96,7 +96,7 @@ pub fn new_test_ext(authorities_len: usize) -> sp_io::TestExternalities {
 pub fn new_test_ext_with_pairs(
 	authorities_len: usize,
 	with_ring_context: bool,
-) -> (Vec<AuthorityPair>, sp_io::TestExternalities) {
+) -> (Vec<AuthorityPair>, soil_io::TestExternalities) {
 	let pairs = (0..authorities_len)
 		.map(|i| AuthorityPair::from_seed(&U256::from(i).to_big_endian()))
 		.collect::<Vec<_>>();
@@ -113,7 +113,7 @@ pub fn new_test_ext_with_pairs(
 	.assimilate_storage(&mut storage)
 	.unwrap();
 
-	let mut ext: sp_io::TestExternalities = storage.into();
+	let mut ext: soil_io::TestExternalities = storage.into();
 
 	if with_ring_context {
 		ext.execute_with(|| {
@@ -164,7 +164,7 @@ pub fn make_prover(pair: &AuthorityPair) -> RingProver {
 
 	let ring_ctx = RingContext::<Test>::get().unwrap();
 
-	let pks: Vec<sp_core::bandersnatch::Public> = Authorities::<Test>::get()
+	let pks: Vec<soil_core::bandersnatch::Public> = Authorities::<Test>::get()
 		.iter()
 		.enumerate()
 		.map(|(idx, auth)| {

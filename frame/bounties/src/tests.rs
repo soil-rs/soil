@@ -37,7 +37,7 @@ use frame_support::{
 	PalletId,
 };
 use frame_system::{pallet_prelude::*, EnsureSigned};
-use sp_runtime::{
+use soil_runtime::{
 	traits::{BadOrigin, IdentityLookup},
 	BuildStorage, Perbill, Permill, Storage,
 };
@@ -213,8 +213,8 @@ impl Default for ExtBuilder {
 }
 
 impl ExtBuilder {
-	pub fn build(self) -> sp_io::TestExternalities {
-		let mut ext: sp_io::TestExternalities = RuntimeGenesisConfig {
+	pub fn build(self) -> soil_io::TestExternalities {
+		let mut ext: soil_io::TestExternalities = RuntimeGenesisConfig {
 			system: frame_system::GenesisConfig::default(),
 			balances: pallet_balances::GenesisConfig {
 				balances: vec![(0, 100), (1, 98), (2, 1)],
@@ -388,7 +388,7 @@ fn inexistent_account_works() {
 	.assimilate_storage(&mut t)
 	.unwrap();
 	// Treasury genesis config is not build thus treasury account does not exist
-	let mut t: sp_io::TestExternalities = t.into();
+	let mut t: soil_io::TestExternalities = t.into();
 
 	t.execute_with(|| {
 		assert_eq!(Balances::free_balance(Treasury::account_id()), 0); // Account does not exist
@@ -1145,7 +1145,7 @@ fn test_migration_v4() {
 
 	s.top = data.into_iter().collect();
 
-	sp_io::TestExternalities::new(s).execute_with(|| {
+	soil_io::TestExternalities::new(s).execute_with(|| {
 		use frame_support::traits::PalletInfo;
 		let old_pallet_name = <Test as frame_system::Config>::PalletInfo::name::<Bounties>()
 			.expect("Bounties is part of runtime, so it has a name; qed");
@@ -1174,7 +1174,7 @@ fn genesis_funding_works() {
 	pallet_treasury::GenesisConfig::<Test>::default()
 		.assimilate_storage(&mut t)
 		.unwrap();
-	let mut t: sp_io::TestExternalities = t.into();
+	let mut t: soil_io::TestExternalities = t.into();
 
 	t.execute_with(|| {
 		assert_eq!(Balances::free_balance(Treasury::account_id()), initial_funding);

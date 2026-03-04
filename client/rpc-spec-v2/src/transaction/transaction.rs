@@ -39,8 +39,8 @@ use sc_transaction_pool_api::{
 	TransactionStatus,
 };
 use sp_blockchain::HeaderBackend;
-use sp_core::Bytes;
-use sp_runtime::traits::Block as BlockT;
+use soil_core::Bytes;
+use soil_runtime::traits::Block as BlockT;
 use std::sync::Arc;
 
 pub(crate) const LOG_TARGET: &str = "rpc-spec-v2";

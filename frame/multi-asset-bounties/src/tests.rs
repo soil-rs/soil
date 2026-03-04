@@ -27,7 +27,7 @@ use frame_support::{
 	assert_err_ignore_postinfo, assert_noop, assert_ok,
 	traits::{fungible::Mutate, Currency},
 };
-use sp_runtime::{traits::Dispatchable, TokenError};
+use soil_runtime::{traits::Dispatchable, TokenError};
 
 type UtilityCall = pallet_utility::Call<Test>;
 type BountiesCall = crate::Call<Test>;

@@ -28,8 +28,8 @@ use sc_rpc::{
 	utils::{BoundedVecDeque, PendingSubscription},
 	SubscriptionTaskExecutor,
 };
-use sp_application_crypto::RuntimeAppPublic;
-use sp_runtime::traits::Block as BlockT;
+use soil_application_crypto::RuntimeAppPublic;
+use soil_runtime::traits::Block as BlockT;
 
 use futures::{task::SpawnError, FutureExt, StreamExt};
 use jsonrpsee::{
@@ -170,7 +170,7 @@ mod tests {
 		justification::BeefyVersionedFinalityProof,
 	};
 	use sp_consensus_beefy::{ecdsa_crypto, known_payloads, Payload, SignedCommitment};
-	use sp_runtime::traits::{BlakeTwo256, Hash};
+	use soil_runtime::traits::{BlakeTwo256, Hash};
 	use substrate_test_runtime_client::runtime::Block;
 
 	fn setup_io_handler() -> (
@@ -296,7 +296,7 @@ mod tests {
 		r.unwrap();
 
 		// Inspect what we received
-		let (bytes, recv_sub_id) = sub.next::<sp_core::Bytes>().await.unwrap().unwrap();
+		let (bytes, recv_sub_id) = sub.next::<soil_core::Bytes>().await.unwrap().unwrap();
 		let recv_finality_proof: BeefyVersionedFinalityProof<Block, ecdsa_crypto::AuthorityId> =
 			Decode::decode(&mut &bytes[..]).unwrap();
 		assert_eq!(&recv_sub_id, sub.subscription_id());

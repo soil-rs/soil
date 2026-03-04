@@ -21,7 +21,7 @@ use crate::types::Delegations;
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use core::result::Result;
 use scale_info::TypeInfo;
-use sp_runtime::{
+use soil_runtime::{
 	traits::{Bounded, CheckedDiv, CheckedMul, Zero},
 	Debug,
 };

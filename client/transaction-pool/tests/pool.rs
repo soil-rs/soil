@@ -32,7 +32,7 @@ use sc_transaction_pool_api::{
 };
 use sp_blockchain::HeaderBackend;
 use sp_consensus::BlockOrigin;
-use sp_runtime::{
+use soil_runtime::{
 	generic::BlockId,
 	traits::Block as _,
 	transaction_validity::{TransactionSource, ValidTransaction},
@@ -1021,7 +1021,7 @@ fn import_notification_to_pool_maintain_works() {
 			Arc::new(FullChainApi::new(
 				client.clone(),
 				None,
-				&sp_core::testing::TaskExecutor::new(),
+				&soil_core::testing::TaskExecutor::new(),
 			)),
 			best_hash,
 			finalized_hash,

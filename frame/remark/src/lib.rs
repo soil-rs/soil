@@ -70,10 +70,10 @@ pub mod pallet {
 		pub fn store(origin: OriginFor<T>, remark: Vec<u8>) -> DispatchResultWithPostInfo {
 			ensure!(!remark.is_empty(), Error::<T>::Empty);
 			let sender = ensure_signed(origin)?;
-			let content_hash = sp_io::hashing::blake2_256(&remark);
+			let content_hash = soil_io::hashing::blake2_256(&remark);
 			let extrinsic_index = <frame_system::Pallet<T>>::extrinsic_index()
 				.ok_or_else(|| Error::<T>::BadContext)?;
-			sp_io::transaction_index::index(extrinsic_index, remark.len() as u32, content_hash);
+			soil_io::transaction_index::index(extrinsic_index, remark.len() as u32, content_hash);
 			Self::deposit_event(Event::Stored { sender, content_hash: content_hash.into() });
 			Ok(().into())
 		}
@@ -83,6 +83,6 @@ pub mod pallet {
 	#[pallet::generate_deposit(pub(super) fn deposit_event)]
 	pub enum Event<T: Config> {
 		/// Stored data off chain.
-		Stored { sender: T::AccountId, content_hash: sp_core::H256 },
+		Stored { sender: T::AccountId, content_hash: soil_core::H256 },
 	}
 }

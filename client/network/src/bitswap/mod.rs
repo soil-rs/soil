@@ -37,7 +37,7 @@ use schema::bitswap::{
 	message::{wantlist::WantType, Block as MessageBlock, BlockPresence, BlockPresenceType},
 	Message as BitswapMessage,
 };
-use sp_runtime::traits::Block as BlockT;
+use soil_runtime::traits::Block as BlockT;
 use std::{io, sync::Arc, time::Duration};
 use unsigned_varint::encode as varint_encode;
 
@@ -302,7 +302,7 @@ mod tests {
 		Message as BitswapMessage,
 	};
 	use sp_consensus::BlockOrigin;
-	use sp_runtime::codec::Encode;
+	use soil_runtime::codec::Encode;
 	use substrate_test_runtime::ExtrinsicBuilder;
 	use substrate_test_runtime_client::{self, prelude::*, TestClientBuilder};
 

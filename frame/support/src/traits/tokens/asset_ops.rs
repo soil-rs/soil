@@ -125,7 +125,7 @@
 //! ```
 
 use core::marker::PhantomData;
-use sp_runtime::DispatchError;
+use soil_runtime::DispatchError;
 use soil_std::vec::Vec;
 
 pub mod common_ops;

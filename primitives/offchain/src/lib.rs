@@ -21,7 +21,7 @@
 #![warn(missing_docs)]
 
 /// Re-export of parent module scope storage prefix.
-pub use sp_core::offchain::STORAGE_PREFIX;
+pub use soil_core::offchain::STORAGE_PREFIX;
 
 sp_api::decl_runtime_apis! {
 	/// The offchain worker api.
@@ -29,7 +29,7 @@ sp_api::decl_runtime_apis! {
 	pub trait OffchainWorkerApi {
 		/// Starts the off-chain task for given block number.
 		#[changed_in(2)]
-		fn offchain_worker(number: sp_runtime::traits::NumberFor<Block>);
+		fn offchain_worker(number: soil_runtime::traits::NumberFor<Block>);
 
 		/// Starts the off-chain task for given block header.
 		fn offchain_worker(header: &Block::Header);

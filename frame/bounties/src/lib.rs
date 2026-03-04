@@ -103,7 +103,7 @@ use frame_support::traits::{
 	Get, Imbalance, OnUnbalanced, ReservableCurrency,
 };
 
-use sp_runtime::{
+use soil_runtime::{
 	traits::{AccountIdConversion, BadOrigin, BlockNumberProvider, Saturating, StaticLookup, Zero},
 	Debug, DispatchResult, Permill,
 };
@@ -990,7 +990,7 @@ pub mod pallet {
 	#[pallet::hooks]
 	impl<T: Config<I>, I: 'static> Hooks<SystemBlockNumberFor<T>> for Pallet<T, I> {
 		#[cfg(feature = "try-runtime")]
-		fn try_state(_n: SystemBlockNumberFor<T>) -> Result<(), sp_runtime::TryRuntimeError> {
+		fn try_state(_n: SystemBlockNumberFor<T>) -> Result<(), soil_runtime::TryRuntimeError> {
 			Self::do_try_state()
 		}
 	}
@@ -1001,7 +1001,7 @@ impl<T: Config<I>, I: 'static> Pallet<T, I> {
 	/// Ensure the correctness of the state of this pallet.
 	///
 	/// This should be valid before or after each state transition of this pallet.
-	pub fn do_try_state() -> Result<(), sp_runtime::TryRuntimeError> {
+	pub fn do_try_state() -> Result<(), soil_runtime::TryRuntimeError> {
 		Self::try_state_bounties_count()?;
 
 		Ok(())
@@ -1014,7 +1014,7 @@ impl<T: Config<I>, I: 'static> Pallet<T, I> {
 	/// * `BountyCount` should be greater or equals to the length of the number of items in
 	///   `BountyDescriptions`.
 	/// * Number of items in `Bounties` should be the same as `BountyDescriptions` length.
-	fn try_state_bounties_count() -> Result<(), sp_runtime::TryRuntimeError> {
+	fn try_state_bounties_count() -> Result<(), soil_runtime::TryRuntimeError> {
 		let bounties_length = Bounties::<T, I>::iter().count() as u32;
 
 		ensure!(

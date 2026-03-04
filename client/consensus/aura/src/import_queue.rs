@@ -38,9 +38,9 @@ use sp_blockchain::{HeaderBackend, HeaderMetadata};
 use sp_consensus::Error as ConsensusError;
 use sp_consensus_aura::{inherents::AuraInherentData, AuraApi};
 use sp_consensus_slots::Slot;
-use sp_core::crypto::Pair;
+use soil_core::crypto::Pair;
 use sp_inherents::{CreateInherentDataProviders, InherentDataProvider as _};
-use sp_runtime::{
+use soil_runtime::{
 	traits::{Block as BlockT, Header, NumberFor},
 	DigestItem,
 };
@@ -338,7 +338,7 @@ where
 	P: Pair + 'static,
 	P::Public: Codec + Debug,
 	P::Signature: Codec,
-	S: sp_core::traits::SpawnEssentialNamed,
+	S: soil_core::traits::SpawnEssentialNamed,
 	CIDP: CreateInherentDataProviders<Block, ()> + Sync + Send + 'static,
 	CIDP::InherentDataProviders: InherentDataProviderExt + Send + Sync,
 {

@@ -19,9 +19,9 @@
 
 use crate::{self as pallet_dap, Config};
 use frame_support::{
-	derive_impl, parameter_types, sp_runtime::traits::AccountIdConversion, PalletId,
+	derive_impl, parameter_types, soil_runtime::traits::AccountIdConversion, PalletId,
 };
-use sp_runtime::BuildStorage;
+use soil_runtime::BuildStorage;
 
 type Block = frame_system::mocking::MockBlock<Test>;
 
@@ -55,7 +55,7 @@ impl Config for Test {
 	type PalletId = DapPalletId;
 }
 
-pub fn new_test_ext(fund_buffer: bool) -> sp_io::TestExternalities {
+pub fn new_test_ext(fund_buffer: bool) -> soil_io::TestExternalities {
 	let mut balances = vec![(1, 100), (2, 200), (3, 300)];
 
 	if fund_buffer {

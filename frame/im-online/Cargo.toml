@@ -23,10 +23,10 @@ frame-system = { workspace = true }
 log = { workspace = true }
 pallet-authorship = { workspace = true }
 scale-info = { features = ["derive", "serde"], workspace = true }
-sp-application-crypto = { features = ["serde"], workspace = true }
-sp-core = { features = ["serde"], workspace = true }
-sp-io = { workspace = true }
-sp-runtime = { features = ["serde"], workspace = true }
+soil-application-crypto = { features = ["serde"], workspace = true }
+soil-core = { features = ["serde"], workspace = true }
+soil-io = { workspace = true }
+soil-runtime = { features = ["serde"], workspace = true }
 sp-staking = { features = ["serde"], workspace = true }
 
 [dev-dependencies]
@@ -45,10 +45,10 @@ std = [
 	"pallet-balances/std",
 	"pallet-session/std",
 	"scale-info/std",
-	"sp-application-crypto/std",
-	"sp-core/std",
-	"sp-io/std",
-	"sp-runtime/std",
+	"soil-application-crypto/std",
+	"soil-core/std",
+	"soil-io/std",
+	"soil-runtime/std",
 	"sp-staking/std",
 ]
 runtime-benchmarks = [
@@ -57,7 +57,7 @@ runtime-benchmarks = [
 	"frame-system/runtime-benchmarks",
 	"pallet-balances/runtime-benchmarks",
 	"pallet-session/runtime-benchmarks",
-	"sp-runtime/runtime-benchmarks",
+	"soil-runtime/runtime-benchmarks",
 	"sp-staking/runtime-benchmarks",
 ]
 try-runtime = [
@@ -66,5 +66,5 @@ try-runtime = [
 	"pallet-authorship/try-runtime",
 	"pallet-balances/try-runtime",
 	"pallet-session/try-runtime",
-	"sp-runtime/try-runtime",
+	"soil-runtime/try-runtime",
 ]

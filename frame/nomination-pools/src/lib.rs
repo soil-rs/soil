@@ -369,8 +369,8 @@ use frame_support::{
 	DefaultNoBound, PalletError,
 };
 use scale_info::TypeInfo;
-use sp_core::U256;
-use sp_runtime::{
+use soil_core::U256;
+use soil_runtime::{
 	traits::{
 		AccountIdConversion, Bounded, CheckedAdd, CheckedSub, Convert, Saturating, StaticLookup,
 		Zero,
@@ -380,7 +380,7 @@ use sp_runtime::{
 use sp_staking::{EraIndex, StakingInterface};
 
 #[cfg(any(feature = "try-runtime", feature = "fuzzing", test, debug_assertions))]
-use sp_runtime::TryRuntimeError;
+use soil_runtime::TryRuntimeError;
 
 /// The log target of this pallet.
 pub const LOG_TARGET: &str = "runtime::nomination-pools";
@@ -405,7 +405,7 @@ pub mod migration;
 pub mod weights;
 
 pub use pallet::*;
-use sp_runtime::traits::BlockNumberProvider;
+use soil_runtime::traits::BlockNumberProvider;
 pub use weights::WeightInfo;
 
 /// The balance type used by the currency system.
@@ -1653,7 +1653,7 @@ pub mod pallet {
 	use frame_system::pallet_prelude::{
 		ensure_root, ensure_signed, BlockNumberFor as SystemBlockNumberFor, OriginFor,
 	};
-	use sp_runtime::Perbill;
+	use soil_runtime::Perbill;
 
 	/// The in-code storage version.
 	const STORAGE_VERSION: StorageVersion = StorageVersion::new(8);
@@ -1687,7 +1687,7 @@ pub mod pallet {
 		/// a PITA to do).
 		///
 		/// See the inline code docs of `Member::pending_rewards` and `RewardPool::update_recorded`
-		/// for example analysis. A [`sp_runtime::FixedU128`] should be fine for chains with balance
+		/// for example analysis. A [`soil_runtime::FixedU128`] should be fine for chains with balance
 		/// types similar to that of Polkadot and Kusama, in the absence of severe slashing (or
 		/// prevented via a reasonable `MaxPointsToBalance`), for many many years to come.
 		type RewardCounter: FixedPointNumber + MaxEncodedLen + TypeInfo + Default + codec::FullCodec;
@@ -2800,7 +2800,7 @@ pub mod pallet {
 		) -> DispatchResult {
 			let mut bonded_pool = match ensure_root(origin.clone()) {
 				Ok(()) => BondedPool::<T>::get(pool_id).ok_or(Error::<T>::PoolNotFound)?,
-				Err(sp_runtime::traits::BadOrigin) => {
+				Err(soil_runtime::traits::BadOrigin) => {
 					let who = ensure_signed(origin)?;
 					let bonded_pool =
 						BondedPool::<T>::get(pool_id).ok_or(Error::<T>::PoolNotFound)?;

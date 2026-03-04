@@ -114,14 +114,14 @@ use frame_support::{
 use log;
 use scale_info::TypeInfo;
 use sp_npos_elections::{ElectionResult, ExtendedBalance};
-use sp_runtime::{
+use soil_runtime::{
 	traits::{Saturating, StaticLookup, Zero},
 	Debug, DispatchError, Perbill,
 };
 use sp_staking::currency_to_vote::CurrencyToVote;
 
 #[cfg(any(feature = "try-runtime", test))]
-use sp_runtime::TryRuntimeError;
+use soil_runtime::TryRuntimeError;
 
 mod benchmarking;
 pub mod weights;
@@ -1312,7 +1312,7 @@ mod tests {
 		traits::{ConstU32, OnInitialize},
 	};
 	use frame_system::ensure_signed;
-	use sp_runtime::{testing::Header, BuildStorage};
+	use soil_runtime::{testing::Header, BuildStorage};
 	use substrate_test_utils::assert_eq_uvec;
 
 	#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
@@ -1408,9 +1408,9 @@ mod tests {
 		type MaxCandidates = PhragmenMaxCandidates;
 	}
 
-	pub type Block = sp_runtime::generic::Block<Header, UncheckedExtrinsic>;
+	pub type Block = soil_runtime::generic::Block<Header, UncheckedExtrinsic>;
 	pub type UncheckedExtrinsic =
-		sp_runtime::generic::UncheckedExtrinsic<u32, RuntimeCall, u64, ()>;
+		soil_runtime::generic::UncheckedExtrinsic<u32, RuntimeCall, u64, ()>;
 
 	frame_support::construct_runtime!(
 		pub enum Test
@@ -1467,7 +1467,7 @@ mod tests {
 			MEMBERS.with(|m| {
 				*m.borrow_mut() = self.genesis_members.iter().map(|(m, _)| *m).collect::<Vec<_>>()
 			});
-			let mut ext: sp_io::TestExternalities = RuntimeGenesisConfig {
+			let mut ext: soil_io::TestExternalities = RuntimeGenesisConfig {
 				system: frame_system::GenesisConfig::default(),
 				balances: pallet_balances::GenesisConfig::<Test> {
 					balances: vec![
@@ -1564,7 +1564,7 @@ mod tests {
 		Elections::do_try_state().unwrap();
 	}
 
-	fn submit_candidacy(origin: RuntimeOrigin) -> sp_runtime::DispatchResult {
+	fn submit_candidacy(origin: RuntimeOrigin) -> soil_runtime::DispatchResult {
 		Elections::submit_candidacy(origin, Candidates::<Test>::get().len() as u32)
 	}
 

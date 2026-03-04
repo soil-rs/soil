@@ -16,7 +16,7 @@
 // limitations under the License.
 
 use frame_support::{derive_impl, parameter_types, traits::WithdrawReasons};
-use sp_runtime::{traits::Identity, BuildStorage};
+use soil_runtime::{traits::Identity, BuildStorage};
 
 use super::*;
 use crate as pallet_vesting;
@@ -82,7 +82,7 @@ impl ExtBuilder {
 		self
 	}
 
-	pub fn build(self) -> sp_io::TestExternalities {
+	pub fn build(self) -> soil_io::TestExternalities {
 		EXISTENTIAL_DEPOSIT.with(|v| *v.borrow_mut() = self.existential_deposit);
 		let mut t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 		pallet_balances::GenesisConfig::<Test> {
@@ -112,7 +112,7 @@ impl ExtBuilder {
 		pallet_vesting::GenesisConfig::<Test> { vesting }
 			.assimilate_storage(&mut t)
 			.unwrap();
-		let mut ext = sp_io::TestExternalities::new(t);
+		let mut ext = soil_io::TestExternalities::new(t);
 		ext.execute_with(|| System::set_block_number(1));
 		ext
 	}

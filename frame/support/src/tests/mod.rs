@@ -17,12 +17,12 @@
 #![allow(clippy::deprecated_semver)]
 
 use super::*;
-use sp_io::{MultiRemovalResults, TestExternalities};
+use soil_io::{MultiRemovalResults, TestExternalities};
 use soil_metadata_ir::{
 	PalletStorageMetadataIR, StorageEntryMetadataIR, StorageEntryModifierIR, StorageEntryTypeIR,
 	StorageHasherIR,
 };
-use sp_runtime::{generic, traits::BlakeTwo256, BuildStorage};
+use soil_runtime::{generic, traits::BlakeTwo256, BuildStorage};
 
 pub use self::frame_system::{pallet_prelude::*, Config, Pallet};
 
@@ -62,7 +62,7 @@ pub mod frame_system {
 	#[pallet::disable_frame_system_supertrait_check]
 	pub trait Config: 'static {
 		#[pallet::no_default]
-		type Block: Parameter + sp_runtime::traits::Block;
+		type Block: Parameter + soil_runtime::traits::Block;
 		type AccountId;
 		#[pallet::no_default_bounds]
 		type BaseCallFilter: crate::traits::Contains<Self::RuntimeCall>;
@@ -219,9 +219,9 @@ pub mod frame_system {
 		pub type OriginFor<T> = <T as super::Config>::RuntimeOrigin;
 
 		pub type HeaderFor<T> =
-			<<T as super::Config>::Block as sp_runtime::traits::HeaderProvider>::HeaderT;
+			<<T as super::Config>::Block as soil_runtime::traits::HeaderProvider>::HeaderT;
 
-		pub type BlockNumberFor<T> = <HeaderFor<T> as sp_runtime::traits::Header>::Number;
+		pub type BlockNumberFor<T> = <HeaderFor<T> as soil_runtime::traits::Header>::Number;
 	}
 }
 
@@ -761,7 +761,7 @@ parameter_types! {
 #[test]
 fn check_storage_parameter_type_works() {
 	TestExternalities::default().execute_with(|| {
-		assert_eq!(sp_io::hashing::twox_128(b":StorageParameter:"), StorageParameter::key());
+		assert_eq!(soil_io::hashing::twox_128(b":StorageParameter:"), StorageParameter::key());
 
 		assert_eq!(10, StorageParameter::get());
 

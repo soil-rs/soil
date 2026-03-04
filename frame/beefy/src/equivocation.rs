@@ -43,7 +43,7 @@ use sp_consensus_beefy::{
 	check_commitment_signature, AncestryHelper, DoubleVotingProof, ForkVotingProof,
 	FutureBlockVotingProof, ValidatorSetId, KEY_TYPE as BEEFY_KEY_TYPE,
 };
-use sp_runtime::{
+use soil_runtime::{
 	transaction_validity::{
 		InvalidTransaction, TransactionPriority, TransactionSource, TransactionValidity,
 		TransactionValidityError, ValidTransaction,

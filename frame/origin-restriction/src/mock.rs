@@ -26,8 +26,8 @@ use frame_support::{
 	weights::IdentityFee,
 };
 use pallet_transaction_payment::ConstFeeMultiplier;
-use sp_core::{ConstU64, H256};
-use sp_runtime::{
+use soil_core::{ConstU64, H256};
+use soil_runtime::{
 	testing::UintAuthorityId,
 	traits::{Applyable, BlakeTwo256, Checkable, ConstUint, IdentityLookup},
 	transaction_validity::{InvalidTransaction, TransactionSource},
@@ -39,12 +39,12 @@ pub type BlockNumber = u64;
 
 pub type TransactionExtension = (RestrictOrigin<Test>,);
 
-pub type Header = sp_runtime::generic::Header<BlockNumber, BlakeTwo256>;
-pub type Block = sp_runtime::generic::Block<Header, UncheckedExtrinsic>;
-pub type UncheckedExtrinsic = sp_runtime::generic::UncheckedExtrinsic<
+pub type Header = soil_runtime::generic::Header<BlockNumber, BlakeTwo256>;
+pub type Block = soil_runtime::generic::Block<Header, UncheckedExtrinsic>;
+pub type UncheckedExtrinsic = soil_runtime::generic::UncheckedExtrinsic<
 	AccountId,
 	RuntimeCall,
-	sp_runtime::testing::UintAuthorityId,
+	soil_runtime::testing::UintAuthorityId,
 	TransactionExtension,
 >;
 
@@ -260,14 +260,14 @@ pub fn advance_by(b: BlockNumber) {
 }
 
 /// Builds a new `TestExternalities`.
-pub fn new_test_ext() -> sp_io::TestExternalities {
+pub fn new_test_ext() -> soil_io::TestExternalities {
 	let storage = RuntimeGenesisConfig {
 		system: Default::default(),
 		transaction_payment: Default::default(),
 	}
 	.build_storage()
 	.unwrap();
-	sp_io::TestExternalities::from(storage)
+	soil_io::TestExternalities::from(storage)
 }
 
 /// We gather both error into a single type in order to do `assert_ok` and `assert_err` safely.

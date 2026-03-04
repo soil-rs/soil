@@ -22,13 +22,13 @@
 #![deny(missing_docs)]
 
 use crate::{impl_for_tuples_attr, weights::Weight};
-use sp_runtime::traits::AtLeast32BitUnsigned;
-use sp_weights::WeightMeter;
+use soil_runtime::traits::AtLeast32BitUnsigned;
+use soil_weights::WeightMeter;
 
 #[cfg(feature = "try-runtime")]
 use alloc::vec::Vec;
 #[cfg(feature = "try-runtime")]
-use sp_runtime::TryRuntimeError;
+use soil_runtime::TryRuntimeError;
 
 /// Provides a callback to execute logic before the all inherents.
 pub trait PreInherents {
@@ -540,7 +540,7 @@ pub trait Hooks<BlockNumber> {
 	/// details on this.
 	///
 	/// Moreover, the code in this function has access to a wider range of host functions in
-	/// [`sp_io`], namely [`sp_io::offchain`]. This includes exotic operations such as HTTP calls
+	/// [`soil_io`], namely [`soil_io::offchain`]. This includes exotic operations such as HTTP calls
 	/// that are not really possible in the rest of the runtime code.
 	///
 	/// The execution of this hook is entirely optional and is left at the discretion of the
@@ -560,14 +560,14 @@ pub trait Hooks<BlockNumber> {
 	/// checks can be asserted upon here.
 	///
 	/// Note that this hook is executed in an externality environment, provided by
-	/// `sp_io::TestExternalities`. This makes it possible to access the storage.
+	/// `soil_io::TestExternalities`. This makes it possible to access the storage.
 	fn integrity_test() {}
 }
 
 /// A trait to define the build function of a genesis config for both runtime and pallets.
 ///
 /// Replaces deprecated [`GenesisBuild<T,I>`].
-pub trait BuildGenesisConfig: sp_runtime::traits::MaybeSerializeDeserialize {
+pub trait BuildGenesisConfig: soil_runtime::traits::MaybeSerializeDeserialize {
 	/// The build function puts initial `GenesisConfig` keys/values pairs into the storage.
 	fn build(&self);
 }
@@ -581,14 +581,14 @@ impl BuildGenesisConfig for () {
 #[deprecated(
 	note = "GenesisBuild is planned to be removed in December 2023. Use BuildGenesisConfig instead of it."
 )]
-pub trait GenesisBuild<T, I = ()>: sp_runtime::traits::MaybeSerializeDeserialize {
+pub trait GenesisBuild<T, I = ()>: soil_runtime::traits::MaybeSerializeDeserialize {
 	/// The build function is called within an externalities allowing storage APIs.
 	/// Thus one can write to storage using regular pallet storages.
 	fn build(&self);
 
 	/// Build the storage using `build` inside default storage.
 	#[cfg(feature = "std")]
-	fn build_storage(&self) -> Result<sp_runtime::Storage, String> {
+	fn build_storage(&self) -> Result<soil_runtime::Storage, String> {
 		let mut storage = Default::default();
 		self.assimilate_storage(&mut storage)?;
 		Ok(storage)
@@ -596,8 +596,8 @@ pub trait GenesisBuild<T, I = ()>: sp_runtime::traits::MaybeSerializeDeserialize
 
 	/// Assimilate the storage for this module into pre-existing overlays.
 	#[cfg(feature = "std")]
-	fn assimilate_storage(&self, storage: &mut sp_runtime::Storage) -> Result<(), String> {
-		sp_state_machine::BasicExternalities::execute_with_storage(storage, || {
+	fn assimilate_storage(&self, storage: &mut soil_runtime::Storage) -> Result<(), String> {
+		soil_state_machine::BasicExternalities::execute_with_storage(storage, || {
 			self.build();
 			Ok(())
 		})
@@ -617,7 +617,7 @@ mod tests {
 	use super::*;
 	use crate::parameter_types;
 	use alloc::vec::Vec;
-	use sp_io::TestExternalities;
+	use soil_io::TestExternalities;
 
 	#[cfg(feature = "try-runtime")]
 	#[test]

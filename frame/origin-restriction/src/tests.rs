@@ -17,7 +17,7 @@
 
 use crate::{mock::*, *};
 use frame_support::{assert_noop, assert_ok};
-use sp_runtime::{testing::UintAuthorityId, transaction_validity::InvalidTransaction};
+use soil_runtime::{testing::UintAuthorityId, transaction_validity::InvalidTransaction};
 
 /// Test that a non-restricted origin (`NON_RESTRICTED_ORIGIN`) is never tracked, i.e., no usage.
 #[test]
@@ -239,7 +239,7 @@ fn restrict_origin_extension_disabled_behavior() {
 		// because the pallet explicitly forbids restricted origins if the extension is off.
 		assert_noop!(
 			exec_signed_tx_disabled(RESTRICTED_ORIGIN_1, MockPalletCall::do_something {}),
-			sp_runtime::transaction_validity::InvalidTransaction::Call
+			soil_runtime::transaction_validity::InvalidTransaction::Call
 		);
 
 		// 2) Attempt from non-restricted origin => Should succeed and also

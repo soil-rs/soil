@@ -26,8 +26,8 @@ extern crate alloc;
 use alloc::vec::Vec;
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;
-use sp_core::crypto::KeyTypeId;
-use sp_runtime::ConsensusEngineId;
+use soil_core::crypto::KeyTypeId;
+use soil_runtime::ConsensusEngineId;
 
 pub use sp_consensus_slots::{Slot, SlotDuration};
 
@@ -44,12 +44,12 @@ pub use ticket::{
 };
 
 mod app {
-	use sp_application_crypto::{app_crypto, bandersnatch, key_types::SASSAFRAS};
+	use soil_application_crypto::{app_crypto, bandersnatch, key_types::SASSAFRAS};
 	app_crypto!(bandersnatch, SASSAFRAS);
 }
 
 /// Key type identifier.
-pub const KEY_TYPE: KeyTypeId = sp_application_crypto::key_types::SASSAFRAS;
+pub const KEY_TYPE: KeyTypeId = soil_application_crypto::key_types::SASSAFRAS;
 
 /// Consensus engine identifier.
 pub const SASSAFRAS_ENGINE_ID: ConsensusEngineId = *b"SASS";

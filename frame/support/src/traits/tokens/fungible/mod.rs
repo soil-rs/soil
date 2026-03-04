@@ -166,7 +166,7 @@ use core::marker::PhantomData;
 use frame_support_procedural::{CloneNoBound, DebugNoBound, EqNoBound, PartialEqNoBound};
 use scale_info::TypeInfo;
 #[cfg(feature = "runtime-benchmarks")]
-use sp_runtime::Saturating;
+use soil_runtime::Saturating;
 
 use super::{
 	Fortitude::{Force, Polite},
@@ -183,8 +183,8 @@ pub use regular::{
 	Balanced, DecreaseIssuance, Dust, IncreaseIssuance, Inspect, Mutate, Unbalanced,
 };
 use soil_arithmetic::traits::Zero;
-use sp_core::Get;
-use sp_runtime::{traits::Convert, DispatchError};
+use soil_core::Get;
+use soil_runtime::{traits::Convert, DispatchError};
 pub use union_of::{NativeFromLeft, NativeOrWithId, UnionOf};
 
 #[cfg(feature = "experimental")]

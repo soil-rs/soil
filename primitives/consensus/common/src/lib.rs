@@ -25,8 +25,8 @@ use std::{sync::Arc, time::Duration};
 
 use futures::prelude::*;
 use sp_api::ProofRecorder;
-use sp_externalities::Extensions;
-use sp_runtime::{
+use soil_externalities::Extensions;
+use soil_runtime::{
 	traits::{Block as BlockT, HashingFor},
 	Digest,
 };
@@ -38,7 +38,7 @@ mod select_chain;
 pub use self::error::Error;
 pub use select_chain::SelectChain;
 pub use sp_inherents::InherentData;
-pub use sp_state_machine::Backend as StateBackend;
+pub use soil_state_machine::Backend as StateBackend;
 
 /// Block status.
 #[derive(Debug, PartialEq, Eq, Clone)]
@@ -108,7 +108,7 @@ pub struct Proposal<Block: BlockT> {
 	/// The block that was build.
 	pub block: Block,
 	/// The storage changes while building this block.
-	pub storage_changes: sp_state_machine::StorageChanges<HashingFor<Block>>,
+	pub storage_changes: soil_state_machine::StorageChanges<HashingFor<Block>>,
 }
 
 /// Arguments for [`Proposer::propose`].

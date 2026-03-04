@@ -206,7 +206,7 @@ where
 		unhashed::kill(&Self::storage_double_map_final_key(k1, k2))
 	}
 
-	fn remove_prefix<KArg1>(k1: KArg1, maybe_limit: Option<u32>) -> sp_io::KillStorageResult
+	fn remove_prefix<KArg1>(k1: KArg1, maybe_limit: Option<u32>) -> soil_io::KillStorageResult
 	where
 		KArg1: EncodeLike<K1>,
 	{
@@ -218,7 +218,7 @@ where
 		k1: KArg1,
 		limit: u32,
 		maybe_cursor: Option<&[u8]>,
-	) -> sp_io::MultiRemovalResults
+	) -> soil_io::MultiRemovalResults
 	where
 		KArg1: EncodeLike<K1>,
 	{
@@ -318,7 +318,7 @@ where
 		V: StorageAppend<Item>,
 	{
 		let final_key = Self::storage_double_map_final_key(k1, k2);
-		sp_io::storage::append(&final_key, item.encode());
+		soil_io::storage::append(&final_key, item.encode());
 	}
 
 	fn migrate_keys<
@@ -469,7 +469,7 @@ where
 		let prefix = G::prefix_hash().to_vec();
 		let mut previous_key = prefix.clone();
 		while let Some(next) =
-			sp_io::storage::next_key(&previous_key).filter(|n| n.starts_with(&prefix))
+			soil_io::storage::next_key(&previous_key).filter(|n| n.starts_with(&prefix))
 		{
 			previous_key = next;
 			let value = match unhashed::get::<O>(&previous_key) {
@@ -520,7 +520,7 @@ mod test_iterators {
 
 	#[test]
 	fn double_map_iter_from() {
-		sp_io::TestExternalities::default().execute_with(|| {
+		soil_io::TestExternalities::default().execute_with(|| {
 			use crate::hash::Identity;
 			#[crate::storage_alias]
 			type MyDoubleMap = StorageDoubleMap<MyModule, Identity, u64, Identity, u64, u64>;
@@ -554,7 +554,7 @@ mod test_iterators {
 
 	#[test]
 	fn double_map_reversible_reversible_iteration() {
-		sp_io::TestExternalities::default().execute_with(|| {
+		soil_io::TestExternalities::default().execute_with(|| {
 			type DoubleMap = self::frame_system::DoubleMap<Runtime>;
 
 			// All map iterator

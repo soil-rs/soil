@@ -30,7 +30,7 @@ use crate::{
 use futures::stream::StreamExt;
 use sc_transaction_pool_api::TransactionStatus;
 use sc_utils::mpsc;
-use sp_runtime::traits::Block as BlockT;
+use soil_runtime::traits::Block as BlockT;
 use std::{
 	collections::{
 		hash_map::{Entry, OccupiedEntry},
@@ -442,7 +442,7 @@ mod dropped_watcher_tests {
 	use super::*;
 	use crate::common::tests::TestApi;
 	use futures::{stream::pending, FutureExt, StreamExt};
-	use sp_core::H256;
+	use soil_core::H256;
 
 	type MultiViewDroppedWatcher = super::MultiViewDroppedWatcherController<TestApi>;
 

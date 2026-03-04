@@ -24,21 +24,21 @@ use parking_lot::RwLock;
 
 use sp_api::CallContext;
 use sp_consensus::BlockOrigin;
-use sp_core::offchain::OffchainStorage;
-use sp_runtime::{
+use soil_core::offchain::OffchainStorage;
+use soil_runtime::{
 	traits::{Block as BlockT, HashingFor, NumberFor},
 	Justification, Justifications, StateVersion, Storage,
 };
-use sp_state_machine::{
+use soil_state_machine::{
 	backend::AsTrieBackend, ChildStorageCollection, IndexOperation, IterArgs,
 	OffchainChangesCollection, StorageCollection, StorageIterator,
 };
-use sp_storage::{ChildInfo, StorageData, StorageKey};
-pub use sp_trie::MerkleValue;
+use soil_storage::{ChildInfo, StorageData, StorageKey};
+pub use soil_trie::MerkleValue;
 
 use crate::{blockchain::Backend as BlockchainBackend, UsageInfo};
 
-pub use sp_state_machine::{Backend as StateBackend, BackendTransaction, KeyValueStates};
+pub use soil_state_machine::{Backend as StateBackend, BackendTransaction, KeyValueStates};
 
 /// Extracts the state backend type for the given backend.
 pub type StateBackendFor<B, Block> = <B as Backend<Block>>::State;

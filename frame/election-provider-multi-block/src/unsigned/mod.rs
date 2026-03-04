@@ -90,7 +90,7 @@ mod pallet {
 	};
 	use frame_support::pallet_prelude::*;
 	use frame_system::{offchain::CreateBare, pallet_prelude::*};
-	use sp_runtime::traits::SaturatedConversion;
+	use soil_runtime::traits::SaturatedConversion;
 	use soil_std::prelude::*;
 
 	/// convert a [`crate::CommonError`] to a custom InvalidTransaction with the inner code being
@@ -247,12 +247,12 @@ mod pallet {
 		}
 
 		#[cfg(feature = "try-runtime")]
-		fn try_state(now: BlockNumberFor<T>) -> Result<(), sp_runtime::TryRuntimeError> {
+		fn try_state(now: BlockNumberFor<T>) -> Result<(), soil_runtime::TryRuntimeError> {
 			Self::do_try_state(now)
 		}
 
 		fn offchain_worker(now: BlockNumberFor<T>) {
-			use sp_runtime::offchain::storage_lock::{BlockAndTime, StorageLock};
+			use soil_runtime::offchain::storage_lock::{BlockAndTime, StorageLock};
 
 			// Create a lock with the maximum deadline of number of blocks in the unsigned phase.
 			// This should only come useful in an **abrupt** termination of execution, otherwise the
@@ -363,7 +363,7 @@ mod pallet {
 		#[cfg(any(test, feature = "runtime-benchmarks", feature = "try-runtime"))]
 		pub(crate) fn do_try_state(
 			_now: BlockNumberFor<T>,
-		) -> Result<(), sp_runtime::TryRuntimeError> {
+		) -> Result<(), soil_runtime::TryRuntimeError> {
 			Ok(())
 		}
 	}

@@ -20,13 +20,13 @@ use crate::{error::Error, keystore::BeefyKeystore, round::Rounds, LOG_TARGET};
 use log::{debug, error, warn};
 use sc_client_api::Backend;
 use sp_api::ProvideRuntimeApi;
-use sp_application_crypto::RuntimeAppPublic;
+use soil_application_crypto::RuntimeAppPublic;
 use sp_blockchain::HeaderBackend;
 use sp_consensus_beefy::{
 	check_double_voting_proof, AuthorityIdBound, BeefyApi, DoubleVotingProof,
 	OpaqueKeyOwnershipProof, ValidatorSetId,
 };
-use sp_runtime::{
+use soil_runtime::{
 	generic::BlockId,
 	traits::{Block, NumberFor},
 };

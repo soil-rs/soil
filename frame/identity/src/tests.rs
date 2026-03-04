@@ -30,10 +30,10 @@ use frame_support::{
 	BoundedVec,
 };
 use frame_system::EnsureRoot;
-use sp_core::H256;
-use sp_io::crypto::{sr25519_generate, sr25519_sign};
-use sp_keystore::{testing::MemoryKeystore, KeystoreExt};
-use sp_runtime::{
+use soil_core::H256;
+use soil_io::crypto::{sr25519_generate, sr25519_sign};
+use soil_keystore::{testing::MemoryKeystore, KeystoreExt};
+use soil_runtime::{
 	traits::{BadOrigin, BlakeTwo256, IdentifyAccount, IdentityLookup, Verify},
 	BuildStorage, MultiSignature, MultiSigner,
 };
@@ -96,7 +96,7 @@ impl pallet_identity::Config for Test {
 	type WeightInfo = ();
 }
 
-pub fn new_test_ext() -> sp_io::TestExternalities {
+pub fn new_test_ext() -> soil_io::TestExternalities {
 	let mut t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	pallet_balances::GenesisConfig::<Test> {
 		balances: vec![
@@ -111,7 +111,7 @@ pub fn new_test_ext() -> sp_io::TestExternalities {
 	}
 	.assimilate_storage(&mut t)
 	.unwrap();
-	let mut ext = sp_io::TestExternalities::new(t);
+	let mut ext = soil_io::TestExternalities::new(t);
 	ext.register_extension(KeystoreExt::new(MemoryKeystore::new()));
 	ext.execute_with(|| System::set_block_number(1));
 	ext

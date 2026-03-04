@@ -61,7 +61,7 @@ use frame_support::{
 	traits::{Defensive, DefensiveSaturating, Imbalance, OnUnbalanced},
 };
 use scale_info::TypeInfo;
-use sp_runtime::{
+use soil_runtime::{
 	traits::{Saturating, Zero},
 	Debug, DispatchResult,
 };

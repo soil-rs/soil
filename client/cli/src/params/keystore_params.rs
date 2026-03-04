@@ -19,7 +19,7 @@
 use crate::{error, error::Result};
 use clap::Args;
 use sc_service::config::KeystoreConfig;
-use sp_core::crypto::SecretString;
+use soil_core::crypto::SecretString;
 use std::{
 	fs,
 	path::{Path, PathBuf},

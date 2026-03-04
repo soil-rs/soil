@@ -22,12 +22,12 @@ mod extrinsic_weights;
 mod paritydb_weights;
 mod rocksdb_weights;
 
-pub use sp_weights::*;
+pub use soil_weights::*;
 
 /// These constants are specific to FRAME, and the current implementation of its various components.
 /// For example: FRAME System, FRAME Executive, our FRAME support libraries, etc...
 pub mod constants {
-	pub use sp_weights::constants::*;
+	pub use soil_weights::constants::*;
 
 	// Expose the Block and Extrinsic base weights.
 	pub use super::{block_weights::BlockExecutionWeight, extrinsic_weights::ExtrinsicBaseWeight};

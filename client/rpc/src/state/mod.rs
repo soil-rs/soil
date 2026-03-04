@@ -33,11 +33,11 @@ use sc_rpc_api::{check_if_safe, DenyUnsafe};
 use sc_tracing::block::TracingExecuteBlock;
 use sp_api::{CallApiAt, Metadata, ProvideRuntimeApi};
 use sp_blockchain::{HeaderBackend, HeaderMetadata};
-use sp_core::{
+use soil_core::{
 	storage::{PrefixedStorageKey, StorageChangeSet, StorageData, StorageKey},
 	Bytes,
 };
-use sp_runtime::traits::Block as BlockT;
+use soil_runtime::traits::Block as BlockT;
 use sp_version::RuntimeVersion;
 use std::sync::Arc;
 
@@ -147,7 +147,7 @@ where
 		targets: Option<String>,
 		storage_keys: Option<String>,
 		methods: Option<String>,
-	) -> Result<sp_rpc::tracing::TraceBlockResponse, Error>;
+	) -> Result<soil_rpc::tracing::TraceBlockResponse, Error>;
 
 	/// New runtime version subscription
 	fn subscribe_runtime_version(&self, pending: PendingSubscriptionSink);
@@ -324,7 +324,7 @@ where
 		targets: Option<String>,
 		storage_keys: Option<String>,
 		methods: Option<String>,
-	) -> Result<sp_rpc::tracing::TraceBlockResponse, Error> {
+	) -> Result<soil_rpc::tracing::TraceBlockResponse, Error> {
 		check_if_safe(ext)?;
 		self.backend
 			.trace_block(block, targets, storage_keys, methods)

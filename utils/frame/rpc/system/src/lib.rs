@@ -31,8 +31,8 @@ use sc_transaction_pool_api::{InPoolTransaction, TransactionPool};
 use sp_api::ApiExt;
 use sp_block_builder::BlockBuilder;
 use sp_blockchain::HeaderBackend;
-use sp_core::{hexdisplay::HexDisplay, Bytes};
-use sp_runtime::{legacy, traits};
+use soil_core::{hexdisplay::HexDisplay, Bytes};
+use soil_runtime::{legacy, traits};
 
 pub use frame_system_rpc_runtime_api::AccountNonceApi;
 
@@ -220,7 +220,7 @@ mod tests {
 	use futures::executor::block_on;
 	use sc_rpc_api::DenyUnsafe;
 	use sc_transaction_pool::BasicPool;
-	use sp_runtime::{
+	use soil_runtime::{
 		transaction_validity::{InvalidTransaction, TransactionValidityError},
 		ApplyExtrinsicResult,
 	};
@@ -244,7 +244,7 @@ mod tests {
 
 		// given
 		let client = Arc::new(substrate_test_runtime_client::new());
-		let spawner = sp_core::testing::TaskExecutor::new();
+		let spawner = soil_core::testing::TaskExecutor::new();
 		let pool = Arc::from(BasicPool::new_full(
 			Default::default(),
 			true.into(),
@@ -253,7 +253,7 @@ mod tests {
 			client.clone(),
 		));
 
-		let source = sp_runtime::transaction_validity::TransactionSource::External;
+		let source = soil_runtime::transaction_validity::TransactionSource::External;
 		let new_transaction = |nonce: u64| {
 			let t = Transfer {
 				from: Sr25519Keyring::Alice.into(),
@@ -285,7 +285,7 @@ mod tests {
 
 		// given
 		let client = Arc::new(substrate_test_runtime_client::new());
-		let spawner = sp_core::testing::TaskExecutor::new();
+		let spawner = soil_core::testing::TaskExecutor::new();
 		let pool = Arc::from(BasicPool::new_full(
 			Default::default(),
 			true.into(),
@@ -309,7 +309,7 @@ mod tests {
 
 		// given
 		let client = Arc::new(substrate_test_runtime_client::new());
-		let spawner = sp_core::testing::TaskExecutor::new();
+		let spawner = soil_core::testing::TaskExecutor::new();
 		let pool = Arc::from(BasicPool::new_full(
 			Default::default(),
 			true.into(),
@@ -345,7 +345,7 @@ mod tests {
 
 		// given
 		let client = Arc::new(substrate_test_runtime_client::new());
-		let spawner = sp_core::testing::TaskExecutor::new();
+		let spawner = soil_core::testing::TaskExecutor::new();
 		let pool = Arc::from(BasicPool::new_full(
 			Default::default(),
 			true.into(),

@@ -19,7 +19,7 @@
 use jsonrpsee::ConnectionId;
 use parking_lot::RwLock;
 use sc_client_api::Backend;
-use sp_runtime::traits::Block as BlockT;
+use soil_runtime::traits::Block as BlockT;
 use std::{sync::Arc, time::Duration};
 
 mod error;

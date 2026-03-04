@@ -31,16 +31,16 @@ pallet-nomination-pools = { workspace = true }
 pallet-staking = { workspace = true }
 
 # Substrate Primitives
-sp-runtime = { workspace = true }
-sp-runtime-interface = { workspace = true }
+soil-runtime = { workspace = true }
+soil-runtime-interface = { workspace = true }
 sp-staking = { workspace = true }
 
 [dev-dependencies]
 pallet-balances = { workspace = true }
 pallet-staking-reward-curve = { workspace = true, default-features = true }
 pallet-timestamp = { workspace = true, default-features = true }
-sp-core = { workspace = true, default-features = true }
-sp-io = { workspace = true, default-features = true }
+soil-core = { workspace = true, default-features = true }
+soil-io = { workspace = true, default-features = true }
 
 [features]
 default = ["std"]
@@ -57,10 +57,10 @@ std = [
 	"pallet-staking/std",
 	"pallet-timestamp/std",
 	"scale-info/std",
-	"sp-core/std",
-	"sp-io/std",
-	"sp-runtime-interface/std",
-	"sp-runtime/std",
+	"soil-core/std",
+	"soil-io/std",
+	"soil-runtime-interface/std",
+	"soil-runtime/std",
 	"sp-staking/std",
 ]
 runtime-benchmarks = [
@@ -74,6 +74,6 @@ runtime-benchmarks = [
 	"pallet-nomination-pools/runtime-benchmarks",
 	"pallet-staking/runtime-benchmarks",
 	"pallet-timestamp/runtime-benchmarks",
-	"sp-runtime/runtime-benchmarks",
+	"soil-runtime/runtime-benchmarks",
 	"sp-staking/runtime-benchmarks",
 ]

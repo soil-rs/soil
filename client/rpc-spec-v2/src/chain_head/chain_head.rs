@@ -48,9 +48,9 @@ use sc_client_api::{
 use sc_rpc::utils::Subscription;
 use sp_api::CallApiAt;
 use sp_blockchain::{Error as BlockChainError, HeaderBackend, HeaderMetadata};
-use sp_core::{traits::CallContext, Bytes};
-use sp_rpc::list::ListOrValue;
-use sp_runtime::traits::Block as BlockT;
+use soil_core::{traits::CallContext, Bytes};
+use soil_rpc::list::ListOrValue;
+use soil_runtime::traits::Block as BlockT;
 use std::{marker::PhantomData, sync::Arc, time::Duration};
 use tokio::sync::mpsc;
 

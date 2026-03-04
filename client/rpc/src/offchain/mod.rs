@@ -27,7 +27,7 @@ use parking_lot::RwLock;
 use sc_rpc_api::check_if_safe;
 /// Re-export the API for backward compatibility.
 pub use sc_rpc_api::offchain::*;
-use sp_core::{
+use soil_core::{
 	offchain::{OffchainStorage, StorageKind},
 	Bytes,
 };

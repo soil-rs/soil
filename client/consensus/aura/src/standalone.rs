@@ -26,13 +26,13 @@ use codec::Codec;
 
 use sc_client_api::UsageProvider;
 use sp_api::{Core, ProvideRuntimeApi};
-use sp_application_crypto::{AppCrypto, AppPublic};
+use soil_application_crypto::{AppCrypto, AppPublic};
 use sp_blockchain::Result as CResult;
 use sp_consensus::Error as ConsensusError;
 use sp_consensus_slots::Slot;
-use sp_core::crypto::{ByteArray, Pair};
-use sp_keystore::KeystorePtr;
-use sp_runtime::{
+use soil_core::crypto::{ByteArray, Pair};
+use soil_keystore::KeystorePtr;
+use soil_runtime::{
 	traits::{Block as BlockT, Header, NumberFor, Zero},
 	DigestItem,
 };
@@ -95,7 +95,7 @@ pub async fn claim_slot<P: Pair>(
 ) -> Option<P::Public> {
 	let expected_author = slot_author::<P>(slot, authorities);
 	expected_author.and_then(|p| {
-		if keystore.has_keys(&[(p.to_raw_vec(), sp_application_crypto::key_types::AURA)]) {
+		if keystore.has_keys(&[(p.to_raw_vec(), soil_application_crypto::key_types::AURA)]) {
 			Some(p.clone())
 		} else {
 			None
@@ -107,7 +107,7 @@ pub async fn claim_slot<P: Pair>(
 ///
 /// This is intended to be put into the block header prior to runtime execution,
 /// so the runtime can read the slot in this way.
-pub fn pre_digest<P: Pair>(slot: Slot) -> sp_runtime::DigestItem
+pub fn pre_digest<P: Pair>(slot: Slot) -> soil_runtime::DigestItem
 where
 	P::Signature: Codec,
 {
@@ -121,7 +121,7 @@ pub fn seal<Hash, P>(
 	header_hash: &Hash,
 	public: &P::Public,
 	keystore: &KeystorePtr,
-) -> Result<sp_runtime::DigestItem, ConsensusError>
+) -> Result<soil_runtime::DigestItem, ConsensusError>
 where
 	Hash: AsRef<[u8]>,
 	P: Pair,

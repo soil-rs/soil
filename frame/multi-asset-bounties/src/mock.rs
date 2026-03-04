@@ -34,7 +34,7 @@ use frame_support::{
 	weights::constants::ParityDbWeight,
 	PalletId,
 };
-use sp_runtime::{
+use soil_runtime::{
 	traits::{BlakeTwo256, Convert, Hash, Identity, IdentityLookup},
 	BuildStorage, Perbill,
 };
@@ -243,8 +243,8 @@ impl Default for ExtBuilder {
 }
 
 impl ExtBuilder {
-	pub fn build(self) -> sp_io::TestExternalities {
-		let mut ext: sp_io::TestExternalities = RuntimeGenesisConfig {
+	pub fn build(self) -> soil_io::TestExternalities {
+		let mut ext: soil_io::TestExternalities = RuntimeGenesisConfig {
 			system: frame_system::GenesisConfig::default(),
 			balances: pallet_balances::GenesisConfig {
 				balances: vec![(0, 100), (1, 98), (2, 1)],

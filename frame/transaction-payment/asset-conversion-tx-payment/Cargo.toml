@@ -24,12 +24,12 @@ frame-system = { workspace = true }
 pallet-asset-conversion = { workspace = true }
 pallet-transaction-payment = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
-sp-runtime = { workspace = true }
+soil-runtime = { workspace = true }
 
 [dev-dependencies]
 pallet-assets = { workspace = true, default-features = true }
 pallet-balances = { workspace = true, default-features = true }
-sp-io = { workspace = true, default-features = true }
+soil-io = { workspace = true, default-features = true }
 
 [features]
 default = ["std"]
@@ -41,7 +41,7 @@ std = [
 	"pallet-asset-conversion/std",
 	"pallet-transaction-payment/std",
 	"scale-info/std",
-	"sp-runtime/std",
+	"soil-runtime/std",
 ]
 runtime-benchmarks = [
 	"frame-benchmarking/runtime-benchmarks",
@@ -51,7 +51,7 @@ runtime-benchmarks = [
 	"pallet-assets/runtime-benchmarks",
 	"pallet-balances/runtime-benchmarks",
 	"pallet-transaction-payment/runtime-benchmarks",
-	"sp-runtime/runtime-benchmarks",
+	"soil-runtime/runtime-benchmarks",
 ]
 try-runtime = [
 	"frame-support/try-runtime",
@@ -60,5 +60,5 @@ try-runtime = [
 	"pallet-assets/try-runtime",
 	"pallet-balances/try-runtime",
 	"pallet-transaction-payment/try-runtime",
-	"sp-runtime/try-runtime",
+	"soil-runtime/try-runtime",
 ]

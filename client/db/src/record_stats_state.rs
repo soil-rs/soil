@@ -19,16 +19,16 @@
 //! Provides [`RecordStatsState`] for recording stats about state access.
 
 use crate::stats::StateUsageStats;
-use sp_core::storage::ChildInfo;
-use sp_runtime::{
+use soil_core::storage::ChildInfo;
+use soil_runtime::{
 	traits::{Block as BlockT, HashingFor},
 	StateVersion,
 };
-use sp_state_machine::{
+use soil_state_machine::{
 	backend::{AsTrieBackend, Backend as StateBackend},
 	BackendTransaction, IterArgs, StorageIterator, StorageKey, StorageValue, TrieBackend,
 };
-use sp_trie::MerkleValue;
+use soil_trie::MerkleValue;
 use std::sync::Arc;
 
 /// State abstraction for recording stats about state access.
@@ -36,7 +36,7 @@ pub struct RecordStatsState<S, B: BlockT> {
 	/// Usage statistics
 	usage: StateUsageStats,
 	/// State machine registered stats
-	overlay_stats: sp_state_machine::StateMachineStats,
+	overlay_stats: soil_state_machine::StateMachineStats,
 	/// Backing state.
 	state: S,
 	/// The hash of the block is state belongs to.
@@ -66,7 +66,7 @@ impl<S: StateBackend<HashingFor<B>>, B: BlockT> RecordStatsState<S, B> {
 	) -> Self {
 		RecordStatsState {
 			usage: StateUsageStats::new(),
-			overlay_stats: sp_state_machine::StateMachineStats::default(),
+			overlay_stats: soil_state_machine::StateMachineStats::default(),
 			state,
 			block_hash,
 			state_usage,
@@ -205,11 +205,11 @@ impl<S: StateBackend<HashingFor<B>>, B: BlockT> StateBackend<HashingFor<B>>
 		self.state.raw_iter(args).map(|inner| RawIter { inner })
 	}
 
-	fn register_overlay_stats(&self, stats: &sp_state_machine::StateMachineStats) {
+	fn register_overlay_stats(&self, stats: &soil_state_machine::StateMachineStats) {
 		self.overlay_stats.add(stats);
 	}
 
-	fn usage_info(&self) -> sp_state_machine::UsageInfo {
+	fn usage_info(&self) -> soil_state_machine::UsageInfo {
 		let mut info = self.usage.take();
 		info.include_state_machine_states(&self.overlay_stats);
 		info

@@ -31,9 +31,9 @@ use crate::{
 };
 use alloc::{vec, vec::Vec};
 use codec::{Decode, Encode, EncodeLike, FullCodec, MaxEncodedLen, Ref};
-use sp_io::MultiRemovalResults;
+use soil_io::MultiRemovalResults;
 use soil_metadata_ir::StorageEntryMetadataIR;
-use sp_runtime::traits::Saturating;
+use soil_runtime::traits::Saturating;
 
 /// A wrapper around a [`StorageMap`] and a [`StorageValue`] (with the value being `u32`) to keep
 /// track of how many items are in a map, without needing to iterate all the values.
@@ -338,7 +338,7 @@ where
 
 	/// Attempt to remove all items from the map.
 	///
-	/// Returns [`MultiRemovalResults`](sp_io::MultiRemovalResults) to inform about the result. Once
+	/// Returns [`MultiRemovalResults`](soil_io::MultiRemovalResults) to inform about the result. Once
 	/// the resultant `maybe_cursor` field is `None`, then no further items remain to be deleted.
 	///
 	/// NOTE: After the initial call for any given map, it is important that no further items
@@ -414,7 +414,7 @@ where
 		if current < bound {
 			CounterFor::<Prefix>::mutate(|value| value.saturating_inc());
 			let key = <Self as MapWrapper>::Map::hashed_key_for(key);
-			sp_io::storage::append(&key, item.encode());
+			soil_io::storage::append(&key, item.encode());
 			Ok(())
 		} else {
 			Err(())
@@ -569,7 +569,7 @@ mod test {
 		storage::{bounded_vec::BoundedVec, types::ValueQuery},
 		traits::ConstU32,
 	};
-	use sp_io::{hashing::twox_128, TestExternalities};
+	use soil_io::{hashing::twox_128, TestExternalities};
 	use soil_metadata_ir::{StorageEntryModifierIR, StorageEntryTypeIR, StorageHasherIR};
 
 	struct Prefix;

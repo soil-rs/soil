@@ -37,11 +37,11 @@ use sc_rpc::testing::TokioTestExecutor;
 use sc_service::client::new_with_backend;
 use sp_blockchain::HeaderBackend;
 use sp_consensus::BlockOrigin;
-use sp_core::{
+use soil_core::{
 	storage::well_known_keys::{self, CODE},
 	Blake2Hasher, Hasher,
 };
-use sp_runtime::traits::Block as BlockT;
+use soil_runtime::traits::Block as BlockT;
 use sp_version::RuntimeVersion;
 use std::{
 	collections::{HashMap, HashSet, VecDeque},

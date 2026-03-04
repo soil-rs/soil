@@ -19,7 +19,7 @@ use super::*;
 use alloc::{vec, vec::Vec};
 use frame_support::{pallet_prelude::*, traits::defensive_prelude::*, weights::WeightMeter};
 use soil_arithmetic::traits::{One, SaturatedConversion, Saturating, Zero};
-use sp_runtime::traits::{BlockNumberProvider, ConvertBack, MaybeConvert};
+use soil_runtime::traits::{BlockNumberProvider, ConvertBack, MaybeConvert};
 use CompletionStatus::Complete;
 
 impl<T: Config> Pallet<T> {

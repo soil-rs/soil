@@ -110,7 +110,7 @@ use sc_consensus_slots::{
 use sc_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG, CONSENSUS_TRACE};
 use sc_transaction_pool_api::OffchainTransactionPoolFactory;
 use sp_api::{ApiExt, ProvideRuntimeApi};
-use sp_application_crypto::AppCrypto;
+use soil_application_crypto::AppCrypto;
 use sp_block_builder::BlockBuilder as BlockBuilderApi;
 use sp_blockchain::{
 	Backend as _, BlockStatus, Error as ClientError, HeaderBackend, HeaderMetadata,
@@ -119,10 +119,10 @@ use sp_blockchain::{
 use sp_consensus::{BlockOrigin, Environment, Error as ConsensusError, Proposer, SelectChain};
 use sp_consensus_babe::{inherents::BabeInherentData, SlotDuration};
 use sp_consensus_slots::Slot;
-use sp_core::traits::SpawnEssentialNamed;
+use soil_core::traits::SpawnEssentialNamed;
 use sp_inherents::{CreateInherentDataProviders, InherentDataProvider};
-use sp_keystore::KeystorePtr;
-use sp_runtime::{
+use soil_keystore::KeystorePtr;
+use soil_runtime::{
 	generic::OpaqueDigestItemId,
 	traits::{Block as BlockT, Header, NumberFor, SaturatedConversion, Zero},
 	DigestItem,
@@ -803,7 +803,7 @@ where
 		});
 	}
 
-	fn pre_digest_data(&self, _slot: Slot, claim: &Self::Claim) -> Vec<sp_runtime::DigestItem> {
+	fn pre_digest_data(&self, _slot: Slot, claim: &Self::Claim) -> Vec<soil_runtime::DigestItem> {
 		vec![<DigestItem as CompatibleDigestItem>::babe_pre_digest(claim.0.clone())]
 	}
 

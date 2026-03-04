@@ -37,7 +37,7 @@ use frame_support::{
 		ReservableCurrency, WithdrawReasons,
 	},
 };
-use sp_runtime::{
+use soil_runtime::{
 	traits::{AtLeast32BitUnsigned, Saturating, StaticLookup, Zero},
 	ArithmeticError, DispatchError, Perbill,
 };
@@ -56,7 +56,7 @@ pub use self::{
 	vote::{AccountVote, Casting, Delegating, Vote, Voting},
 	weights::WeightInfo,
 };
-use sp_runtime::traits::BlockNumberProvider;
+use soil_runtime::traits::BlockNumberProvider;
 
 #[cfg(test)]
 mod tests;
@@ -100,7 +100,7 @@ pub mod pallet {
 		Twox64Concat,
 	};
 	use frame_system::pallet_prelude::{ensure_signed, OriginFor};
-	use sp_runtime::BoundedVec;
+	use soil_runtime::BoundedVec;
 
 	#[pallet::pallet]
 	pub struct Pallet<T, I = ()>(_);

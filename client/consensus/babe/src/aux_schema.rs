@@ -29,7 +29,7 @@ use sc_consensus_epochs::{
 };
 use sp_blockchain::{Error as ClientError, Result as ClientResult};
 use sp_consensus_babe::{BabeBlockWeight, BabeConfiguration};
-use sp_runtime::traits::Block as BlockT;
+use soil_runtime::traits::Block as BlockT;
 
 const BABE_EPOCH_CHANGES_VERSION: &[u8] = b"babe_epoch_changes_version";
 const BABE_EPOCH_CHANGES_KEY: &[u8] = b"babe_epoch_changes";
@@ -148,8 +148,8 @@ mod test {
 	use sc_network_test::Block as TestBlock;
 	use sp_consensus::Error as ConsensusError;
 	use sp_consensus_babe::AllowedSlots;
-	use sp_core::H256;
-	use sp_runtime::traits::NumberFor;
+	use soil_core::H256;
+	use soil_runtime::traits::NumberFor;
 	use substrate_test_runtime_client;
 
 	#[test]

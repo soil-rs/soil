@@ -19,9 +19,9 @@ use crate::*;
 use core::ops::Add;
 use frame_support::traits::tokens::fungible::Inspect;
 use mock::*;
-use sp_io::hashing::blake2_256;
+use soil_io::hashing::blake2_256;
 use sp_keyring::Sr25519Keyring;
-use sp_runtime::{
+use soil_runtime::{
 	generic::Era,
 	traits::{Applyable, Checkable, Hash, IdentityLookup},
 	DispatchErrorWithPostInfo, MultiSignature,
@@ -401,7 +401,7 @@ fn meta_tx_call_fails() {
 					actual_weight: Some(meta_tx_weight),
 					pays_fee: Pays::Yes,
 				},
-				error: sp_runtime::DispatchError::Token(sp_runtime::TokenError::FundsUnavailable),
+				error: soil_runtime::DispatchError::Token(soil_runtime::TokenError::FundsUnavailable),
 			}),
 		}));
 

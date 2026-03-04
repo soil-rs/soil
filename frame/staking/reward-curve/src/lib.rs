@@ -57,7 +57,7 @@ use syn::parse::{Parse, ParseStream};
 ///
 /// ```
 /// # fn main() {}
-/// use sp_runtime::curve::PiecewiseLinear;
+/// use soil_runtime::curve::PiecewiseLinear;
 ///
 /// pallet_staking_reward_curve::build! {
 ///     const I_NPOS: PiecewiseLinear<'static> = curve!(
@@ -79,19 +79,19 @@ pub fn build(input: TokenStream) -> TokenStream {
 	let declaration = generate_piecewise_linear(points);
 	let test_module = generate_test_module(&input);
 
-	let imports = match crate_name("sp-runtime") {
+	let imports = match crate_name("soil-runtime") {
 		Ok(FoundCrate::Itself) => quote!(
 			#[doc(hidden)]
-			pub use sp_runtime as _sp_runtime;
+			pub use soil_runtime as _sp_runtime;
 		),
-		Ok(FoundCrate::Name(sp_runtime)) => {
-			let ident = syn::Ident::new(&sp_runtime, Span::call_site());
+		Ok(FoundCrate::Name(soil_runtime)) => {
+			let ident = syn::Ident::new(&soil_runtime, Span::call_site());
 			quote!( #[doc(hidden)] pub use #ident as _sp_runtime; )
 		},
 		Err(e) => match crate_name("polkadot-sdk") {
 			Ok(FoundCrate::Name(polkadot_sdk)) => {
 				let ident = syn::Ident::new(&polkadot_sdk, Span::call_site());
-				quote!( #[doc(hidden)] pub use #ident::sp_runtime as _sp_runtime; )
+				quote!( #[doc(hidden)] pub use #ident::soil_runtime as _sp_runtime; )
 			},
 			_ => syn::Error::new(Span::call_site(), e).to_compile_error(),
 		},

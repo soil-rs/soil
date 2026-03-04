@@ -26,7 +26,7 @@ use std::{marker::PhantomData, pin::Pin, sync::Arc};
 use crate::{graph::ChainApi, LOG_TARGET};
 use sc_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
 use sp_blockchain::HashAndNumber;
-use sp_runtime::traits::Block as BlockT;
+use soil_runtime::traits::Block as BlockT;
 
 use super::{tx_mem_pool::TxMemPool, view_store::ViewStore};
 use futures::prelude::*;

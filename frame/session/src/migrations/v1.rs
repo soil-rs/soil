@@ -23,7 +23,7 @@ use frame_support::{
 use sp_staking::offence::OffenceSeverity;
 
 #[cfg(feature = "try-runtime")]
-use sp_runtime::TryRuntimeError;
+use soil_runtime::TryRuntimeError;
 
 #[cfg(feature = "try-runtime")]
 use frame_support::ensure;

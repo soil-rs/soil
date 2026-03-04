@@ -29,7 +29,7 @@ use crate::{
 use alloc::{vec, vec::Vec};
 use codec::{Decode, DecodeAll, FullCodec};
 use impl_trait_for_tuples::impl_for_tuples;
-use sp_core::Get;
+use soil_core::Get;
 
 /// Decode the entire data under the given storage type.
 ///
@@ -111,7 +111,7 @@ fn decode_storage_info<V: Decode>(
 ) -> Result<usize, Vec<TryDecodeEntireStorageError>> {
 	let mut decoded = 0;
 
-	let decode_key = |key: &[u8]| match sp_io::storage::get(key) {
+	let decode_key = |key: &[u8]| match soil_io::storage::get(key) {
 		None => Ok(0),
 		Some(bytes) => {
 			let len = bytes.len();
@@ -138,7 +138,7 @@ fn decode_storage_info<V: Decode>(
 					},
 					Err(e) => errors.push(e),
 				};
-				next_key = sp_io::storage::next_key(&key);
+				next_key = soil_io::storage::next_key(&key);
 			},
 			_ => break,
 		}
@@ -342,7 +342,7 @@ mod tests {
 
 	#[test]
 	fn try_decode_entire_state_value_works() {
-		sp_io::TestExternalities::new_empty().execute_with(|| {
+		soil_io::TestExternalities::new_empty().execute_with(|| {
 			assert_eq!(Value::try_decode_entire_state(), Ok(0));
 
 			Value::put(42);
@@ -352,14 +352,14 @@ mod tests {
 			assert_eq!(Value::try_decode_entire_state(), Ok(0));
 
 			// two bytes, cannot be decoded into u32.
-			sp_io::storage::set(&Value::hashed_key(), &[0u8, 1]);
+			soil_io::storage::set(&Value::hashed_key(), &[0u8, 1]);
 			assert!(Value::try_decode_entire_state().is_err());
 		})
 	}
 
 	#[test]
 	fn try_decode_entire_state_map_works() {
-		sp_io::TestExternalities::new_empty().execute_with(|| {
+		soil_io::TestExternalities::new_empty().execute_with(|| {
 			assert_eq!(Map::try_decode_entire_state(), Ok(0));
 
 			Map::insert(0, 42);
@@ -375,12 +375,12 @@ mod tests {
 			assert_eq!(Map::try_decode_entire_state(), Ok(4));
 
 			// two bytes, cannot be decoded into u32.
-			sp_io::storage::set(&Map::hashed_key_for(2), &[0u8, 1]);
+			soil_io::storage::set(&Map::hashed_key_for(2), &[0u8, 1]);
 			assert!(Map::try_decode_entire_state().is_err());
 			assert_eq!(Map::try_decode_entire_state().unwrap_err().len(), 1);
 
 			// multiple errs in the same map are be detected
-			sp_io::storage::set(&Map::hashed_key_for(3), &[0u8, 1]);
+			soil_io::storage::set(&Map::hashed_key_for(3), &[0u8, 1]);
 			assert!(Map::try_decode_entire_state().is_err());
 			assert_eq!(Map::try_decode_entire_state().unwrap_err().len(), 2);
 		})
@@ -388,7 +388,7 @@ mod tests {
 
 	#[test]
 	fn try_decode_entire_state_counted_map_works() {
-		sp_io::TestExternalities::new_empty().execute_with(|| {
+		soil_io::TestExternalities::new_empty().execute_with(|| {
 			// counter is not even initialized;
 			assert_eq!(CMap::try_decode_entire_state(), Ok(0 + 0));
 
@@ -412,14 +412,14 @@ mod tests {
 			assert_eq!(CMap::try_decode_entire_state(), Ok(0 + 0));
 
 			// 1 bytes, cannot be decoded into u16.
-			sp_io::storage::set(&CMap::hashed_key_for(2), &[0u8]);
+			soil_io::storage::set(&CMap::hashed_key_for(2), &[0u8]);
 			assert!(CMap::try_decode_entire_state().is_err());
 		})
 	}
 
 	#[test]
 	fn try_decode_entire_state_double_works() {
-		sp_io::TestExternalities::new_empty().execute_with(|| {
+		soil_io::TestExternalities::new_empty().execute_with(|| {
 			assert_eq!(DMap::try_decode_entire_state(), Ok(0));
 
 			DMap::insert(0, 0, 42);
@@ -438,14 +438,14 @@ mod tests {
 			assert_eq!(DMap::try_decode_entire_state(), Ok(8));
 
 			// two bytes, cannot be decoded into u32.
-			sp_io::storage::set(&DMap::hashed_key_for(1, 1), &[0u8, 1]);
+			soil_io::storage::set(&DMap::hashed_key_for(1, 1), &[0u8, 1]);
 			assert!(DMap::try_decode_entire_state().is_err());
 		})
 	}
 
 	#[test]
 	fn try_decode_entire_state_n_map_works() {
-		sp_io::TestExternalities::new_empty().execute_with(|| {
+		soil_io::TestExternalities::new_empty().execute_with(|| {
 			assert_eq!(NMap::try_decode_entire_state(), Ok(0));
 
 			let value_size = std::mem::size_of::<u128>();
@@ -466,15 +466,15 @@ mod tests {
 			assert_eq!(NMap::try_decode_entire_state(), Ok(value_size * 2));
 
 			// two bytes, cannot be decoded into u128.
-			sp_io::storage::set(&NMap::hashed_key_for((1, 1)), &[0u8, 1]);
+			soil_io::storage::set(&NMap::hashed_key_for((1, 1)), &[0u8, 1]);
 			assert!(NMap::try_decode_entire_state().is_err());
 		})
 	}
 
 	#[test]
 	fn try_decode_entire_state_counted_n_map_works() {
-		sp_io::TestExternalities::new_empty().execute_with(|| {
-			sp_io::TestExternalities::new_empty().execute_with(|| {
+		soil_io::TestExternalities::new_empty().execute_with(|| {
+			soil_io::TestExternalities::new_empty().execute_with(|| {
 				assert_eq!(NMap::try_decode_entire_state(), Ok(0));
 
 				let value_size = std::mem::size_of::<u128>();
@@ -496,7 +496,7 @@ mod tests {
 				assert_eq!(CNMap::try_decode_entire_state(), Ok(value_size * 2 + counter));
 
 				// two bytes, cannot be decoded into u128.
-				sp_io::storage::set(&CNMap::hashed_key_for((1, 1)), &[0u8, 1]);
+				soil_io::storage::set(&CNMap::hashed_key_for((1, 1)), &[0u8, 1]);
 				assert!(CNMap::try_decode_entire_state().is_err());
 			})
 		})
@@ -504,18 +504,18 @@ mod tests {
 
 	#[test]
 	fn extra_bytes_are_rejected() {
-		sp_io::TestExternalities::new_empty().execute_with(|| {
+		soil_io::TestExternalities::new_empty().execute_with(|| {
 			assert_eq!(Map::try_decode_entire_state(), Ok(0));
 
 			// 6bytes, too many to fit in u32, should be rejected.
-			sp_io::storage::set(&Map::hashed_key_for(2), &[0u8, 1, 3, 4, 5, 6]);
+			soil_io::storage::set(&Map::hashed_key_for(2), &[0u8, 1, 3, 4, 5, 6]);
 			assert!(Map::try_decode_entire_state().is_err());
 		})
 	}
 
 	#[test]
 	fn try_decode_entire_state_tuple_of_storage_works() {
-		sp_io::TestExternalities::new_empty().execute_with(|| {
+		soil_io::TestExternalities::new_empty().execute_with(|| {
 			assert_eq!(<(Value, Map) as TryDecodeEntireStorage>::try_decode_entire_state(), Ok(0));
 
 			Value::put(42);

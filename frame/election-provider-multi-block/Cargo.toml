@@ -28,10 +28,10 @@ frame-support = { workspace = true }
 frame-system = { workspace = true }
 
 soil-arithmetic = { workspace = true }
-sp-core = { workspace = true }
-sp-io = { workspace = true }
+soil-core = { workspace = true }
+soil-io = { workspace = true }
 sp-npos-elections = { features = ["serde"], workspace = true }
-sp-runtime = { workspace = true }
+soil-runtime = { workspace = true }
 soil-std = { workspace = true }
 
 # Optional imports for benchmarking
@@ -42,7 +42,7 @@ rand = { features = ["alloc", "small_rng"], optional = true, workspace = true }
 frame-benchmarking = { workspace = true, default-features = true }
 pallet-balances = { workspace = true, default-features = true }
 parking_lot = { workspace = true, default-features = true }
-sp-io = { workspace = true, default-features = true }
+soil-io = { workspace = true, default-features = true }
 soil-tracing = { workspace = true, default-features = true }
 
 [features]
@@ -58,10 +58,10 @@ std = [
 	"rand/std",
 	"scale-info/std",
 	"soil-arithmetic/std",
-	"sp-core/std",
-	"sp-io/std",
+	"soil-core/std",
+	"soil-io/std",
 	"sp-npos-elections/std",
-	"sp-runtime/std",
+	"soil-runtime/std",
 	"soil-std/std",
 	"soil-tracing/std",
 ]
@@ -72,12 +72,12 @@ runtime-benchmarks = [
 	"frame-system/runtime-benchmarks",
 	"pallet-balances/runtime-benchmarks",
 	"rand",
-	"sp-runtime/runtime-benchmarks",
+	"soil-runtime/runtime-benchmarks",
 ]
 try-runtime = [
 	"frame-election-provider-support/try-runtime",
 	"frame-support/try-runtime",
 	"frame-system/try-runtime",
 	"pallet-balances/try-runtime",
-	"sp-runtime/try-runtime",
+	"soil-runtime/try-runtime",
 ]

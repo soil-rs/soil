@@ -39,10 +39,10 @@ use sp_consensus::{BlockOrigin, Error as ConsensusError, SelectChain};
 use sp_consensus_grandpa::{
 	AuthorityList, EquivocationProof, GrandpaApi, OpaqueKeyOwnershipProof, GRANDPA_ENGINE_ID,
 };
-use sp_core::H256;
+use soil_core::H256;
 use sp_keyring::Ed25519Keyring;
-use sp_keystore::{testing::MemoryKeystore, Keystore, KeystorePtr};
-use sp_runtime::{
+use soil_keystore::{testing::MemoryKeystore, Keystore, KeystorePtr};
+use soil_runtime::{
 	codec::Encode,
 	generic::{BlockId, DigestItem},
 	traits::{Block as BlockT, Header as HeaderT},
@@ -56,7 +56,7 @@ use authorities::AuthoritySet;
 use communication::grandpa_protocol_name;
 use sc_block_builder::{BlockBuilder, BlockBuilderBuilder};
 use sc_consensus::LongestChain;
-use sp_application_crypto::key_types::GRANDPA;
+use soil_application_crypto::key_types::GRANDPA;
 
 type TestLinkHalf =
 	LinkHalf<Block, PeersFullClient, LongestChain<substrate_test_runtime_client::Backend, Block>>;
@@ -2004,7 +2004,7 @@ async fn grandpa_environment_never_overwrites_round_voter_state() {
 
 #[tokio::test]
 async fn justification_with_equivocation() {
-	use sp_application_crypto::Pair;
+	use soil_application_crypto::Pair;
 
 	// we have 100 authorities
 	let pairs = (0..100).map(|n| AuthorityPair::from_seed(&[n; 32])).collect::<Vec<_>>();

@@ -19,8 +19,8 @@ targets = ["x86_64-unknown-linux-gnu"]
 codec = { features = ["derive"], workspace = true }
 pallet-transaction-payment = { workspace = true }
 sp-api = { workspace = true }
-sp-runtime = { workspace = true }
-sp-weights = { workspace = true }
+soil-runtime = { workspace = true }
+soil-weights = { workspace = true }
 
 [features]
 default = ["std"]
@@ -28,6 +28,6 @@ std = [
 	"codec/std",
 	"pallet-transaction-payment/std",
 	"sp-api/std",
-	"sp-runtime/std",
-	"sp-weights/std",
+	"soil-runtime/std",
+	"soil-weights/std",
 ]

@@ -19,11 +19,11 @@
 use codec::Decode;
 use frame_system::offchain::{SendSignedTransaction, Signer, SubmitTransaction};
 use kitchensink_runtime::{Executive, ExistentialDeposit, Indices, Runtime, UncheckedExtrinsic};
-use sp_application_crypto::AppCrypto;
-use sp_core::offchain::{testing::TestTransactionPoolExt, TransactionPoolExt};
+use soil_application_crypto::AppCrypto;
+use soil_core::offchain::{testing::TestTransactionPoolExt, TransactionPoolExt};
 use sp_keyring::sr25519::Keyring::Alice;
-use sp_keystore::{testing::MemoryKeystore, Keystore, KeystoreExt};
-use sp_runtime::generic;
+use soil_keystore::{testing::MemoryKeystore, Keystore, KeystoreExt};
+use soil_runtime::generic;
 
 pub mod common;
 use self::common::*;
@@ -201,7 +201,7 @@ fn should_submit_signed_twice_from_all_accounts() {
 #[test]
 fn submitted_transaction_should_be_valid() {
 	use codec::Encode;
-	use sp_runtime::{
+	use soil_runtime::{
 		traits::StaticLookup,
 		transaction_validity::{TransactionSource, TransactionTag},
 	};

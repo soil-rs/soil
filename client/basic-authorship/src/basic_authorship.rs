@@ -35,9 +35,9 @@ use sc_transaction_pool_api::{InPoolTransaction, TransactionPool, TxInvalidityRe
 use sp_api::{ApiExt, CallApiAt, ProvideRuntimeApi};
 use sp_blockchain::{ApplyExtrinsicFailed::Validity, Error::ApplyExtrinsicFailed, HeaderBackend};
 use sp_consensus::{Proposal, ProposeArgs};
-use sp_core::traits::SpawnNamed;
+use soil_core::traits::SpawnNamed;
 use sp_inherents::InherentData;
-use sp_runtime::{
+use soil_runtime::{
 	traits::{BlakeTwo256, Block as BlockT, Hash as HashT, Header as HeaderT},
 	ExtrinsicInclusionMode, Percent, SaturatedConversion,
 };
@@ -588,7 +588,7 @@ mod tests {
 	use sp_api::Core;
 	use sp_blockchain::HeaderBackend;
 	use sp_consensus::{BlockOrigin, Environment};
-	use sp_runtime::{generic::BlockId, traits::NumberFor, Perbill};
+	use soil_runtime::{generic::BlockId, traits::NumberFor, Perbill};
 	use substrate_test_runtime_client::{
 		prelude::*,
 		runtime::{Block as TestBlock, Extrinsic, ExtrinsicBuilder, Transfer},
@@ -624,7 +624,7 @@ mod tests {
 	fn should_cease_building_block_when_deadline_is_reached() {
 		// given
 		let client = Arc::new(substrate_test_runtime_client::new());
-		let spawner = sp_core::testing::TaskExecutor::new();
+		let spawner = soil_core::testing::TaskExecutor::new();
 		let txpool = Arc::from(BasicPool::new_full(
 			Default::default(),
 			true.into(),
@@ -678,7 +678,7 @@ mod tests {
 	#[test]
 	fn should_not_panic_when_deadline_is_reached() {
 		let client = Arc::new(substrate_test_runtime_client::new());
-		let spawner = sp_core::testing::TaskExecutor::new();
+		let spawner = soil_core::testing::TaskExecutor::new();
 		let txpool = Arc::from(BasicPool::new_full(
 			Default::default(),
 			true.into(),
@@ -717,7 +717,7 @@ mod tests {
 	fn proposed_storage_changes_should_match_execute_block_storage_changes() {
 		let (client, backend) = TestClientBuilder::new().build_with_backend();
 		let client = Arc::new(client);
-		let spawner = sp_core::testing::TaskExecutor::new();
+		let spawner = soil_core::testing::TaskExecutor::new();
 		let txpool = Arc::from(BasicPool::new_full(
 			Default::default(),
 			true.into(),
@@ -774,7 +774,7 @@ mod tests {
 	fn should_not_remove_invalid_transactions_from_the_same_sender_after_one_was_invalid() {
 		// given
 		let client = Arc::new(substrate_test_runtime_client::new());
-		let spawner = sp_core::testing::TaskExecutor::new();
+		let spawner = soil_core::testing::TaskExecutor::new();
 		let txpool = Arc::from(BasicPool::new_full(
 			Default::default(),
 			true.into(),
@@ -884,7 +884,7 @@ mod tests {
 	#[test]
 	fn should_cease_building_block_when_block_limit_is_reached() {
 		let client = Arc::new(substrate_test_runtime_client::new());
-		let spawner = sp_core::testing::TaskExecutor::new();
+		let spawner = soil_core::testing::TaskExecutor::new();
 		let txpool = Arc::from(BasicPool::new_full(
 			Default::default(),
 			true.into(),
@@ -984,7 +984,7 @@ mod tests {
 	fn should_keep_adding_transactions_after_exhausts_resources_before_soft_deadline() {
 		// given
 		let client = Arc::new(substrate_test_runtime_client::new());
-		let spawner = sp_core::testing::TaskExecutor::new();
+		let spawner = soil_core::testing::TaskExecutor::new();
 		let txpool = Arc::from(BasicPool::new_full(
 			Default::default(),
 			true.into(),
@@ -1054,7 +1054,7 @@ mod tests {
 	fn should_only_skip_up_to_some_limit_after_soft_deadline() {
 		// given
 		let client = Arc::new(substrate_test_runtime_client::new());
-		let spawner = sp_core::testing::TaskExecutor::new();
+		let spawner = soil_core::testing::TaskExecutor::new();
 		let txpool = Arc::from(BasicPool::new_full(
 			Default::default(),
 			true.into(),

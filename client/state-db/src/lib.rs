@@ -715,7 +715,7 @@ mod tests {
 		test::{make_changeset, make_db, TestDb},
 		Constraints, Error, IsPruned, PruningMode, StateDb, StateDbError,
 	};
-	use sp_core::H256;
+	use soil_core::H256;
 
 	fn make_test_db(settings: PruningMode) -> (TestDb, StateDb<H256, H256, TestDb>) {
 		let mut db = make_db(&[91, 921, 922, 93, 94]);

@@ -176,7 +176,7 @@ mod tests {
 		BoundedVec, MaxNominationsOf,
 	};
 	use frame_election_provider_support::bounds::ElectionBoundsBuilder;
-	use sp_core::bounded_vec;
+	use soil_core::bounded_vec;
 
 	type Voters = BoundedVec<AccountId, MaxNominationsOf<Test>>;
 

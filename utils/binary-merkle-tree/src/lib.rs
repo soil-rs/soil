@@ -416,8 +416,8 @@ where
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use sp_core::H256;
-	use sp_runtime::traits::Keccak256;
+	use soil_core::H256;
+	use soil_runtime::traits::Keccak256;
 
 	#[test]
 	fn should_generate_empty_root() {

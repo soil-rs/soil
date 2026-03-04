@@ -30,7 +30,7 @@ use frame_support::{
 	StorageNoopGuard,
 };
 use frame_system::Event as SysEvent;
-use sp_runtime::traits::DispatchTransaction;
+use soil_runtime::traits::DispatchTransaction;
 
 const ID_1: LockIdentifier = *b"1       ";
 const ID_2: LockIdentifier = *b"2       ";

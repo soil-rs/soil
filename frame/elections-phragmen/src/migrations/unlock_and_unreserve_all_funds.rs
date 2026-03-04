@@ -27,8 +27,8 @@ use frame_support::{
 	weights::RuntimeDbWeight,
 	Parameter, Twox64Concat,
 };
-use sp_core::Get;
-use sp_runtime::traits::Zero;
+use soil_core::Get;
+use soil_runtime::traits::Zero;
 
 const LOG_TARGET: &str = "elections_phragmen::migrations::unlock_and_unreserve_all_funds";
 
@@ -121,7 +121,7 @@ impl<T: UnlockConfig> UnlockAndUnreserveAllFunds<T> {
 		BTreeMap<T::AccountId, BalanceOf<T>>,
 		frame_support::weights::Weight,
 	) {
-		use sp_runtime::Saturating;
+		use soil_runtime::Saturating;
 
 		let members = Members::<T>::get();
 		let runner_ups = RunnersUp::<T>::get();
@@ -186,7 +186,7 @@ where
 	/// Fails with a `TryRuntimeError` if there's a discrepancy between the amount
 	/// reported as staked by the pallet and the amount actually locked in `Balances`.
 	#[cfg(feature = "try-runtime")]
-	fn pre_upgrade() -> Result<Vec<u8>, sp_runtime::TryRuntimeError> {
+	fn pre_upgrade() -> Result<Vec<u8>, soil_runtime::TryRuntimeError> {
 		use alloc::collections::btree_set::BTreeSet;
 		use codec::Encode;
 
@@ -282,9 +282,9 @@ where
 	#[cfg(feature = "try-runtime")]
 	fn post_upgrade(
 		account_reserved_before_bytes: Vec<u8>,
-	) -> Result<(), sp_runtime::TryRuntimeError> {
+	) -> Result<(), soil_runtime::TryRuntimeError> {
 		use codec::Decode;
-		use sp_runtime::Saturating;
+		use soil_runtime::Saturating;
 
 		let account_reserved_before =
 			BTreeMap::<T::AccountId, BalanceOf<T>>::decode(&mut &account_reserved_before_bytes[..])

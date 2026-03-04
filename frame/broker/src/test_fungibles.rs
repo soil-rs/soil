@@ -28,8 +28,8 @@ use frame_support::{
 };
 use scale_info::TypeInfo;
 use soil_arithmetic::traits::Zero;
-use sp_core::{Get, TypedGet};
-use sp_runtime::{DispatchError, DispatchResult};
+use soil_core::{Get, TypedGet};
+use soil_runtime::{DispatchError, DispatchResult};
 
 parameter_types! {
 	static TestAssetOf: BTreeMap<(u32, Vec<u8>), Vec<u8>> = Default::default();

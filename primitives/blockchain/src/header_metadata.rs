@@ -20,8 +20,8 @@
 
 use parking_lot::Mutex;
 use schnellru::{ByLength, LruMap};
-use sp_core::U256;
-use sp_runtime::{
+use soil_core::U256;
+use soil_runtime::{
 	traits::{Block as BlockT, Header, NumberFor, One},
 	Saturating,
 };

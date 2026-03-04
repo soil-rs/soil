@@ -18,7 +18,7 @@
 //! Traits for managing reward pools.
 
 use crate::traits::schedule::DispatchTime;
-use sp_runtime::{DispatchError, DispatchResult};
+use soil_runtime::{DispatchError, DispatchResult};
 
 /// A trait for managing a rewards pool.
 pub trait RewardsPool<AccountId> {

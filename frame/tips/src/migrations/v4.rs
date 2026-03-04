@@ -16,7 +16,7 @@
 // limitations under the License.
 
 use core::str;
-use sp_io::hashing::twox_128;
+use soil_io::hashing::twox_128;
 
 use super::super::LOG_TARGET;
 use frame_support::{

@@ -29,7 +29,7 @@ use jsonrpsee::{
 use sc_rpc_api::check_if_safe;
 use sc_tracing::logging;
 use sc_utils::mpsc::TracingUnboundedSender;
-use sp_runtime::traits::{self, Header as HeaderT};
+use soil_runtime::traits::{self, Header as HeaderT};
 
 pub use self::helpers::{Health, NodeRole, PeerInfo, SyncState, SystemInfo};
 pub use sc_rpc_api::system::*;

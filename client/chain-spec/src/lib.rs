@@ -192,7 +192,7 @@
 //!
 //! This interaction involves passing the runtime genesis config JSON blob to the runtime using the
 //! [`sp_genesis_builder::GenesisBuilder::build_state`] function. During this operation, the
-//! runtime converts the JSON representation of the genesis config into [`sp_io::storage`] items. It
+//! runtime converts the JSON representation of the genesis config into [`soil_io::storage`] items. It
 //! is a crucial step for computing the storage root hash, which is a key component in determining
 //! the genesis hash.
 //!
@@ -356,8 +356,8 @@ pub use sc_chain_spec_derive::{ChainSpecExtension, ChainSpecGroup};
 
 use sc_network::config::MultiaddrWithPeerId;
 use sc_telemetry::TelemetryEndpoints;
-use sp_core::storage::Storage;
-use sp_runtime::BuildStorage;
+use soil_core::storage::Storage;
+use soil_runtime::BuildStorage;
 
 /// The type of chain.
 ///
