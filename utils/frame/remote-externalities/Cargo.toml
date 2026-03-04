@@ -36,7 +36,7 @@ tokio = { features = [
 ], workspace = true, default-features = true }
 
 [dev-dependencies]
-frame-support = { workspace = true, default-features = true }
+topsoil-support = { workspace = true, default-features = true }
 jsonrpsee = { features = [
 	"http-client",
 	"server",

@@ -1,0 +1,65 @@
+[package]
+authors.workspace = true
+edition.workspace = true
+name = "topsoil-message-queue"
+version = "31.0.0"
+license = "Apache-2.0"
+homepage.workspace = true
+repository.workspace = true
+description = "FRAME pallet to queue and process messages"
+
+[lints]
+workspace = true
+
+[dependencies]
+codec = { features = ["derive"], workspace = true }
+environmental = { workspace = true }
+log = { workspace = true }
+scale-info = { features = ["derive"], workspace = true }
+serde = { optional = true, features = ["derive"], workspace = true, default-features = true }
+
+soil-arithmetic = { workspace = true }
+soil-core = { workspace = true }
+soil-io = { workspace = true }
+soil-runtime = { workspace = true }
+soil-weights = { workspace = true }
+
+topsoil-benchmarking = { optional = true, workspace = true }
+topsoil-support = { workspace = true }
+topsoil-system = { workspace = true }
+
+[dev-dependencies]
+topsoil-support = { workspace = true, features = ["experimental"] }
+rand = { workspace = true, default-features = true }
+rand_distr = { workspace = true }
+soil-crypto-hashing = { workspace = true, default-features = true }
+soil-tracing = { workspace = true, default-features = true }
+
+[features]
+default = ["std"]
+std = [
+	"codec/std",
+	"environmental/std",
+	"topsoil-benchmarking?/std",
+	"topsoil-support/std",
+	"topsoil-system/std",
+	"log/std",
+	"scale-info/std",
+	"soil-arithmetic/std",
+	"soil-core/std",
+	"soil-io/std",
+	"soil-runtime/std",
+	"soil-tracing/std",
+	"soil-weights/std",
+]
+runtime-benchmarks = [
+	"topsoil-benchmarking/runtime-benchmarks",
+	"topsoil-support/runtime-benchmarks",
+	"topsoil-system/runtime-benchmarks",
+	"soil-runtime/runtime-benchmarks",
+]
+try-runtime = [
+	"topsoil-support/try-runtime",
+	"topsoil-system/try-runtime",
+	"soil-runtime/try-runtime",
+]

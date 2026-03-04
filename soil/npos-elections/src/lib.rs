@@ -109,7 +109,7 @@ pub use pjr::*;
 pub use reduce::reduce;
 pub use traits::{IdentifierT, PerThing128};
 
-/// The errors that might occur in this crate and `frame-election-provider-solution-type`.
+/// The errors that might occur in this crate and `topsoil-election-provider-solution-type`.
 #[derive(
 	Eq,
 	PartialEq,

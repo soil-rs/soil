@@ -15,14 +15,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//! Combines [soil_rpc_api::state::StateApiClient] with [frame_support::storage::generator] traits
+//! Combines [soil_rpc_api::state::StateApiClient] with [topsoil_support::storage::generator] traits
 //! to provide strongly typed chain state queries over rpc.
 
 #![warn(missing_docs)]
 
 use codec::{DecodeAll, FullCodec, FullEncode};
 use core::marker::PhantomData;
-use frame_support::storage::generator::{StorageDoubleMap, StorageMap, StorageValue};
+use topsoil_support::storage::generator::{StorageDoubleMap, StorageMap, StorageValue};
 use jsonrpsee::core::ClientError as RpcError;
 use soil_rpc_api::state::StateApiClient;
 use serde::{de::DeserializeOwned, Serialize};
@@ -34,7 +34,7 @@ use soil_storage::{StorageData, StorageKey};
 /// # use jsonrpsee::core::ClientError as RpcError;
 /// # use jsonrpsee::ws_client::WsClientBuilder;
 /// # use codec::Encode;
-/// # use frame_support::{construct_runtime, derive_impl, traits::ConstU32};
+/// # use topsoil_support::{construct_runtime, derive_impl, traits::ConstU32};
 /// # use substrate_frame_rpc_support::StorageQuery;
 /// # use soil_rpc_api::state::StateApiClient;
 /// # use soil_runtime::{traits::{BlakeTwo256, IdentityLookup}, testing::Header};
@@ -42,15 +42,15 @@ use soil_storage::{StorageData, StorageKey};
 /// # construct_runtime!(
 /// # 	pub enum TestRuntime
 /// # 	{
-/// # 		System: frame_system,
+/// # 		System: topsoil_system,
 /// # 		Test: pallet_test,
 /// # 	}
 /// # );
 /// #
 /// # type Hash = soil_core::H256;
 /// #
-/// # #[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-/// # impl frame_system::Config for TestRuntime {
+/// # #[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+/// # impl topsoil_system::Config for TestRuntime {
 /// # 	type BaseCallFilter = ();
 /// # 	type BlockWeights = ();
 /// # 	type BlockLength = ();
@@ -61,7 +61,7 @@ use soil_storage::{StorageData, StorageKey};
 /// # 	type Hashing = BlakeTwo256;
 /// # 	type AccountId = u64;
 /// # 	type Lookup = IdentityLookup<Self::AccountId>;
-/// # 	type Block = frame_system::mocking::MockBlock<TestRuntime>;
+/// # 	type Block = topsoil_system::mocking::MockBlock<TestRuntime>;
 /// # 	type RuntimeEvent = RuntimeEvent;
 /// # 	type RuntimeTask = RuntimeTask;
 /// # 	type BlockHashCount = ();
@@ -86,16 +86,16 @@ use soil_storage::{StorageData, StorageKey};
 /// // Note that all fields are marked pub.
 /// pub use self::pallet_test::*;
 ///
-/// #[frame_support::pallet]
+/// #[topsoil_support::pallet]
 /// mod pallet_test {
 /// 	use super::*;
-/// 	use frame_support::pallet_prelude::*;
+/// 	use topsoil_support::pallet_prelude::*;
 ///
 /// 	#[pallet::pallet]
 /// 	pub struct Pallet<T>(_);
 ///
 /// 	#[pallet::config]
-/// 	pub trait Config: frame_system::Config {}
+/// 	pub trait Config: topsoil_system::Config {}
 ///
 /// 	#[pallet::storage]
 /// 	pub type LastActionId<T> = StorageValue<_, u64, ValueQuery>;
@@ -161,7 +161,7 @@ impl<V: FullCodec> StorageQuery<V> {
 
 	/// Send this query over RPC, await the typed result.
 	///
-	/// Hash should be `<YourRuntime as frame_system::Config>::Hash`.
+	/// Hash should be `<YourRuntime as topsoil_system::Config>::Hash`.
 	///
 	/// # Arguments
 	///

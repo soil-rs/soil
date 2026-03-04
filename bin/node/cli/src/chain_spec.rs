@@ -23,7 +23,7 @@ use kitchensink_runtime::{
 	genesis_config_presets::{Staker, ENDOWMENT, STASH},
 	wasm_binary_unwrap, Block, MaxNominations, StakerStatus,
 };
-use pallet_im_online::sr25519::AuthorityId as ImOnlineId;
+use topsoil_im_online::sr25519::AuthorityId as ImOnlineId;
 use soil_chain_spec::ChainSpecExtension;
 use soil_service::ChainType;
 use soil_telemetry::TelemetryEndpoints;

@@ -61,19 +61,19 @@ serde_json = { workspace = true, default-features = true }
 subxt-signer = { workspace = true, features = ["unstable-eth"] }
 
 # Substrate dependencies (formerly via polkadot-sdk umbrella):
-frame-metadata-hash-extension = { workspace = true, default-features = true }
-frame-system = { workspace = true, default-features = true }
-frame-system-rpc-runtime-api = { workspace = true, default-features = true }
+topsoil-metadata-hash-extension = { workspace = true, default-features = true }
+topsoil-system = { workspace = true, default-features = true }
+topsoil-system-rpc-runtime-api = { workspace = true, default-features = true }
 fork-tree = { workspace = true, default-features = true }
 remote-externalities = { workspace = true, default-features = true }
-frame-support-procedural-tools = { workspace = true, default-features = true }
+topsoil-support-procedural-tools = { workspace = true, default-features = true }
 generate-bags = { workspace = true, default-features = true }
 soil-mmr-gadget = { workspace = true, default-features = true }
 soil-mmr-rpc = { workspace = true, default-features = true }
-pallet-asset-conversion-tx-payment = { workspace = true, default-features = true }
-pallet-im-online = { workspace = true, default-features = true }
-pallet-skip-feeless-payment = { workspace = true, default-features = true }
-pallet-transaction-payment-rpc = { workspace = true, default-features = true }
+topsoil-asset-conversion-tx-payment = { workspace = true, default-features = true }
+topsoil-im-online = { workspace = true, default-features = true }
+topsoil-skip-feeless-payment = { workspace = true, default-features = true }
+topsoil-transaction-payment-rpc = { workspace = true, default-features = true }
 soil-allocator = { workspace = true, default-features = true }
 sc-authority-discovery = { workspace = true, default-features = true }
 soil-basic-authorship = { workspace = true, default-features = true }
@@ -166,14 +166,14 @@ node-rpc = { workspace = true }
 
 [dev-dependencies]
 assert_cmd = { workspace = true }
-frame-support = { workspace = true, default-features = true }
-pallet-bags-list = { workspace = true, default-features = true }
-pallet-balances = { workspace = true, default-features = true }
-pallet-root-testing = { workspace = true, default-features = true }
-pallet-sudo = { workspace = true, default-features = true }
-pallet-timestamp = { workspace = true, default-features = true }
-pallet-transaction-payment = { workspace = true, default-features = true }
-pallet-treasury = { workspace = true, default-features = true }
+topsoil-support = { workspace = true, default-features = true }
+topsoil-bags-list = { workspace = true, default-features = true }
+topsoil-balances = { workspace = true, default-features = true }
+topsoil-root-testing = { workspace = true, default-features = true }
+topsoil-sudo = { workspace = true, default-features = true }
+topsoil-timestamp = { workspace = true, default-features = true }
+topsoil-transaction-payment = { workspace = true, default-features = true }
+topsoil-treasury = { workspace = true, default-features = true }
 soil-crypto-hashing = { workspace = true, default-features = true }
 soil-tracing = { workspace = true, default-features = true }
 soil-application-crypto = { workspace = true, default-features = true }

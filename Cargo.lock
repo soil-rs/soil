@@ -3233,48 +3233,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "28dd6caf6059519a65843af8fe2a3ae298b14b80179855aeb4adc2c1934ee619"
 
 [[package]]
-name = "frame-benchmarking"
-version = "28.0.0"
-dependencies = [
- "array-bytes 6.2.3",
- "frame-support",
- "frame-support-procedural",
- "frame-system",
- "linregress",
- "log",
- "parity-scale-codec",
- "paste",
- "rusty-fork",
- "scale-info",
- "serde",
- "soil-api",
- "soil-application-crypto",
- "soil-client-db",
- "soil-core",
- "soil-externalities",
- "soil-io",
- "soil-keystore",
- "soil-runtime",
- "soil-runtime-interface",
- "soil-state-machine",
- "soil-storage",
- "static_assertions",
-]
-
-[[package]]
-name = "frame-benchmarking-pallet-pov"
-version = "18.0.0"
-dependencies = [
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "parity-scale-codec",
- "scale-info",
- "soil-io",
- "soil-runtime",
-]
-
-[[package]]
 name = "frame-decode"
 version = "0.9.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3291,76 +3249,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "frame-election-provider-solution-type"
-version = "13.0.0"
-dependencies = [
- "frame-election-provider-support",
- "frame-support",
- "parity-scale-codec",
- "proc-macro-crate 3.4.0",
- "proc-macro2",
- "quote",
- "scale-info",
- "soil-arithmetic",
- "syn 2.0.117",
- "trybuild",
-]
-
-[[package]]
-name = "frame-election-provider-support"
-version = "28.0.0"
-dependencies = [
- "frame-election-provider-solution-type",
- "frame-support",
- "frame-system",
- "parity-scale-codec",
- "rand 0.8.5",
- "scale-info",
- "soil-arithmetic",
- "soil-core",
- "soil-io",
- "soil-npos-elections",
- "soil-runtime",
- "soil-std",
-]
-
-[[package]]
-name = "frame-election-solution-type-fuzzer"
-version = "2.0.0-alpha.5"
-dependencies = [
- "frame-election-provider-solution-type",
- "frame-election-provider-support",
- "frame-support",
- "honggfuzz",
- "parity-scale-codec",
- "soil-arithmetic",
- "soil-runtime",
-]
-
-[[package]]
-name = "frame-executive"
-version = "28.0.0"
-dependencies = [
- "aquamarine",
- "array-bytes 6.2.3",
- "frame-support",
- "frame-system",
- "frame-try-runtime",
- "log",
- "pallet-balances",
- "pallet-transaction-payment",
- "parity-scale-codec",
- "scale-info",
- "soil-core",
- "soil-inherents",
- "soil-io",
- "soil-runtime",
- "soil-tracing",
- "soil-version",
- "substrate-test-runtime-client",
-]
-
-[[package]]
 name = "frame-metadata"
 version = "23.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3373,32 +3261,9 @@ dependencies = [
 ]
 
 [[package]]
-name = "frame-metadata-hash-extension"
-version = "0.1.0"
-dependencies = [
- "array-bytes 6.2.3",
- "const-hex",
- "docify",
- "frame-metadata",
- "frame-support",
- "frame-system",
- "log",
- "merkleized-metadata",
- "parity-scale-codec",
- "scale-info",
- "soil-api",
- "soil-runtime",
- "soil-tracing",
- "soil-transaction-pool",
- "substrate-test-runtime-client",
- "substrate-wasm-builder",
-]
-
-[[package]]
 name = "frame-remote-externalities"
 version = "0.35.0"
 dependencies = [
- "frame-support",
  "futures",
  "indicatif",
  "jsonrpsee",
@@ -3415,218 +3280,7 @@ dependencies = [
  "spinners",
  "substrate-rpc-client",
  "tokio",
-]
-
-[[package]]
-name = "frame-support"
-version = "28.0.0"
-dependencies = [
- "Inflector",
- "aquamarine",
- "array-bytes 6.2.3",
- "binary-merkle-tree",
- "bitflags 1.3.2",
- "docify",
- "environmental",
- "frame-metadata",
- "frame-support-procedural",
- "frame-system",
- "impl-trait-for-tuples",
- "k256",
- "log",
- "macro_magic",
- "parity-scale-codec",
- "paste",
- "pretty_assertions",
- "scale-info",
- "serde",
- "serde_json",
- "soil-api",
- "soil-arithmetic",
- "soil-core",
- "soil-crypto-hashing",
- "soil-crypto-hashing-proc-macro",
- "soil-debug-derive",
- "soil-genesis-builder",
- "soil-inherents",
- "soil-io",
- "soil-metadata-ir",
- "soil-runtime",
- "soil-staking",
- "soil-state-machine",
- "soil-std",
- "soil-timestamp",
- "soil-tracing",
- "soil-trie",
- "soil-weights",
- "tt-call",
-]
-
-[[package]]
-name = "frame-support-procedural"
-version = "23.0.0"
-dependencies = [
- "Inflector",
- "cfg-expr",
- "derive-syn-parse",
- "docify",
- "expander",
- "frame-benchmarking",
- "frame-support",
- "frame-support-procedural-tools",
- "frame-system",
- "itertools 0.11.0",
- "macro_magic",
- "parity-scale-codec",
- "pretty_assertions",
- "proc-macro-warning",
- "proc-macro2",
- "quote",
- "regex",
- "scale-info",
- "soil-crypto-hashing",
- "soil-io",
- "soil-metadata-ir",
- "soil-runtime",
- "syn 2.0.117",
-]
-
-[[package]]
-name = "frame-support-procedural-tools"
-version = "10.0.0"
-dependencies = [
- "frame-support-procedural-tools-derive",
- "proc-macro-crate 3.4.0",
- "proc-macro2",
- "quote",
- "syn 2.0.117",
-]
-
-[[package]]
-name = "frame-support-procedural-tools-derive"
-version = "11.0.0"
-dependencies = [
- "proc-macro2",
- "quote",
- "syn 2.0.117",
-]
-
-[[package]]
-name = "frame-support-test"
-version = "3.0.0"
-dependencies = [
- "frame-benchmarking",
- "frame-executive",
- "frame-metadata",
- "frame-support",
- "frame-support-test-pallet",
- "frame-system",
- "parity-scale-codec",
- "pretty_assertions",
- "rustversion",
- "scale-info",
- "serde",
- "soil-api",
- "soil-arithmetic",
- "soil-core",
- "soil-io",
- "soil-metadata-ir",
- "soil-runtime",
- "soil-state-machine",
- "soil-version",
- "static_assertions",
- "trybuild",
-]
-
-[[package]]
-name = "frame-support-test-compile-pass"
-version = "4.0.0-dev"
-dependencies = [
- "frame-support",
- "frame-system",
- "parity-scale-codec",
- "scale-info",
- "soil-core",
- "soil-runtime",
- "soil-version",
-]
-
-[[package]]
-name = "frame-support-test-pallet"
-version = "4.0.0-dev"
-dependencies = [
- "frame-support",
- "frame-system",
- "parity-scale-codec",
- "scale-info",
- "serde",
- "soil-runtime",
-]
-
-[[package]]
-name = "frame-support-test-stg-frame-crate"
-version = "0.1.0"
-dependencies = [
- "parity-scale-codec",
- "polkadot-sdk-frame",
- "scale-info",
-]
-
-[[package]]
-name = "frame-system"
-version = "28.0.0"
-dependencies = [
- "cfg-if",
- "criterion",
- "docify",
- "frame-support",
- "log",
- "parity-scale-codec",
- "scale-info",
- "serde",
- "soil-core",
- "soil-externalities",
- "soil-io",
- "soil-runtime",
- "soil-tracing",
- "soil-version",
- "soil-weights",
- "substrate-test-runtime-client",
-]
-
-[[package]]
-name = "frame-system-benchmarking"
-version = "28.0.0"
-dependencies = [
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "parity-scale-codec",
- "scale-info",
- "soil-core",
- "soil-externalities",
- "soil-io",
- "soil-runtime",
- "soil-version",
-]
-
-[[package]]
-name = "frame-system-rpc-runtime-api"
-version = "26.0.0"
-dependencies = [
- "docify",
- "parity-scale-codec",
- "soil-api",
-]
-
-[[package]]
-name = "frame-try-runtime"
-version = "0.34.0"
-dependencies = [
- "frame-support",
- "parity-scale-codec",
- "soil-api",
- "soil-runtime",
+ "topsoil-support",
 ]
 
 [[package]]
@@ -3825,12 +3479,12 @@ name = "generate-bags"
 version = "28.0.0"
 dependencies = [
  "chrono",
- "frame-election-provider-support",
- "frame-support",
- "frame-system",
  "num-format",
- "pallet-staking",
  "soil-staking",
+ "topsoil-election-provider-support",
+ "topsoil-staking",
+ "topsoil-support",
+ "topsoil-system",
 ]
 
 [[package]]
@@ -5141,125 +4795,9 @@ version = "3.0.0-dev"
 dependencies = [
  "array-bytes 6.2.3",
  "binary-merkle-tree",
- "frame-benchmarking",
- "frame-benchmarking-pallet-pov",
- "frame-election-provider-solution-type",
- "frame-election-provider-support",
- "frame-executive",
- "frame-metadata-hash-extension",
- "frame-support",
- "frame-support-procedural",
- "frame-support-procedural-tools-derive",
- "frame-system",
- "frame-system-benchmarking",
- "frame-system-rpc-runtime-api",
- "frame-try-runtime",
  "log",
  "node-primitives",
- "pallet-alliance",
- "pallet-asset-conversion",
- "pallet-asset-conversion-ops",
- "pallet-asset-conversion-tx-payment",
- "pallet-asset-rate",
- "pallet-asset-rewards",
- "pallet-asset-tx-payment",
- "pallet-assets",
- "pallet-assets-freezer",
- "pallet-assets-holder",
- "pallet-atomic-swap",
- "pallet-aura",
- "pallet-authority-discovery",
- "pallet-authorship",
- "pallet-babe",
- "pallet-bags-list",
- "pallet-balances",
- "pallet-beefy",
- "pallet-beefy-mmr",
- "pallet-bounties",
- "pallet-broker",
- "pallet-child-bounties",
- "pallet-collective",
- "pallet-conviction-voting",
- "pallet-core-fellowship",
- "pallet-dap",
- "pallet-delegated-staking",
- "pallet-democracy",
- "pallet-dev-mode",
- "pallet-dummy-dim",
- "pallet-election-provider-multi-phase",
- "pallet-election-provider-support-benchmarking",
- "pallet-elections-phragmen",
- "pallet-example-mbm",
- "pallet-example-tasks",
- "pallet-fast-unstake",
- "pallet-glutton",
- "pallet-grandpa",
- "pallet-identity",
- "pallet-im-online",
- "pallet-indices",
- "pallet-insecure-randomness-collective-flip",
- "pallet-lottery",
- "pallet-membership",
- "pallet-message-queue",
- "pallet-meta-tx",
- "pallet-migrations",
- "pallet-mixnet",
- "pallet-mmr",
- "pallet-multi-asset-bounties",
- "pallet-multisig",
- "pallet-nft-fractionalization",
- "pallet-nfts",
- "pallet-nfts-runtime-api",
- "pallet-nis",
- "pallet-node-authorization",
- "pallet-nomination-pools",
- "pallet-nomination-pools-benchmarking",
- "pallet-nomination-pools-runtime-api",
- "pallet-offences",
- "pallet-offences-benchmarking",
- "pallet-oracle",
- "pallet-oracle-runtime-api",
- "pallet-origin-restriction",
- "pallet-paged-list",
- "pallet-parameters",
- "pallet-people",
- "pallet-preimage",
- "pallet-proxy",
- "pallet-ranked-collective",
- "pallet-recovery",
- "pallet-referenda",
- "pallet-remark",
- "pallet-root-offences",
- "pallet-root-testing",
- "pallet-safe-mode",
- "pallet-salary",
- "pallet-scheduler",
- "pallet-scored-pool",
- "pallet-session",
- "pallet-session-benchmarking",
- "pallet-skip-feeless-payment",
- "pallet-society",
- "pallet-staking",
- "pallet-staking-reward-curve",
- "pallet-staking-reward-fn",
- "pallet-staking-runtime-api",
- "pallet-state-trie-migration",
- "pallet-statement",
- "pallet-sudo",
- "pallet-timestamp",
- "pallet-tips",
- "pallet-transaction-payment",
- "pallet-transaction-payment-rpc-runtime-api",
- "pallet-transaction-storage",
- "pallet-treasury",
- "pallet-tx-pause",
- "pallet-uniques",
- "pallet-utility",
- "pallet-verify-signature",
- "pallet-vesting",
- "pallet-whitelist",
  "parity-scale-codec",
- "polkadot-sdk-frame",
  "primitive-types",
  "rand 0.8.5",
  "rand_pcg",
@@ -5316,6 +4854,122 @@ dependencies = [
  "static_assertions",
  "substrate-bip39",
  "substrate-wasm-builder",
+ "topsoil",
+ "topsoil-alliance",
+ "topsoil-asset-conversion",
+ "topsoil-asset-conversion-ops",
+ "topsoil-asset-conversion-tx-payment",
+ "topsoil-asset-rate",
+ "topsoil-asset-rewards",
+ "topsoil-asset-tx-payment",
+ "topsoil-assets",
+ "topsoil-assets-freezer",
+ "topsoil-assets-holder",
+ "topsoil-atomic-swap",
+ "topsoil-aura",
+ "topsoil-authority-discovery",
+ "topsoil-authorship",
+ "topsoil-babe",
+ "topsoil-bags-list",
+ "topsoil-balances",
+ "topsoil-beefy",
+ "topsoil-beefy-mmr",
+ "topsoil-benchmarking",
+ "topsoil-benchmarking-pallet-pov",
+ "topsoil-bounties",
+ "topsoil-broker",
+ "topsoil-child-bounties",
+ "topsoil-collective",
+ "topsoil-conviction-voting",
+ "topsoil-core-fellowship",
+ "topsoil-dap",
+ "topsoil-delegated-staking",
+ "topsoil-democracy",
+ "topsoil-dev-mode",
+ "topsoil-dummy-dim",
+ "topsoil-election-provider-multi-phase",
+ "topsoil-election-provider-solution-type",
+ "topsoil-election-provider-support",
+ "topsoil-election-provider-support-benchmarking",
+ "topsoil-elections-phragmen",
+ "topsoil-example-mbm",
+ "topsoil-example-tasks",
+ "topsoil-executive",
+ "topsoil-fast-unstake",
+ "topsoil-glutton",
+ "topsoil-grandpa",
+ "topsoil-identity",
+ "topsoil-im-online",
+ "topsoil-indices",
+ "topsoil-insecure-randomness-collective-flip",
+ "topsoil-lottery",
+ "topsoil-membership",
+ "topsoil-message-queue",
+ "topsoil-meta-tx",
+ "topsoil-metadata-hash-extension",
+ "topsoil-migrations",
+ "topsoil-mixnet",
+ "topsoil-mmr",
+ "topsoil-multi-asset-bounties",
+ "topsoil-multisig",
+ "topsoil-nft-fractionalization",
+ "topsoil-nfts",
+ "topsoil-nfts-runtime-api",
+ "topsoil-nis",
+ "topsoil-node-authorization",
+ "topsoil-nomination-pools",
+ "topsoil-nomination-pools-benchmarking",
+ "topsoil-nomination-pools-runtime-api",
+ "topsoil-offences",
+ "topsoil-offences-benchmarking",
+ "topsoil-oracle",
+ "topsoil-oracle-runtime-api",
+ "topsoil-origin-restriction",
+ "topsoil-paged-list",
+ "topsoil-parameters",
+ "topsoil-people",
+ "topsoil-preimage",
+ "topsoil-proxy",
+ "topsoil-ranked-collective",
+ "topsoil-recovery",
+ "topsoil-referenda",
+ "topsoil-remark",
+ "topsoil-root-offences",
+ "topsoil-root-testing",
+ "topsoil-safe-mode",
+ "topsoil-salary",
+ "topsoil-scheduler",
+ "topsoil-scored-pool",
+ "topsoil-session",
+ "topsoil-session-benchmarking",
+ "topsoil-skip-feeless-payment",
+ "topsoil-society",
+ "topsoil-staking",
+ "topsoil-staking-reward-curve",
+ "topsoil-staking-reward-fn",
+ "topsoil-staking-runtime-api",
+ "topsoil-state-trie-migration",
+ "topsoil-statement",
+ "topsoil-sudo",
+ "topsoil-support",
+ "topsoil-support-procedural",
+ "topsoil-support-procedural-tools-derive",
+ "topsoil-system",
+ "topsoil-system-benchmarking",
+ "topsoil-system-rpc-runtime-api",
+ "topsoil-timestamp",
+ "topsoil-tips",
+ "topsoil-transaction-payment",
+ "topsoil-transaction-payment-rpc-runtime-api",
+ "topsoil-transaction-storage",
+ "topsoil-treasury",
+ "topsoil-try-runtime",
+ "topsoil-tx-pause",
+ "topsoil-uniques",
+ "topsoil-utility",
+ "topsoil-verify-signature",
+ "topsoil-vesting",
+ "topsoil-whitelist",
 ]
 
 [[package]]
@@ -6639,7 +6293,6 @@ version = "3.0.0-dev"
 dependencies = [
  "jsonrpsee",
  "node-primitives",
- "pallet-transaction-payment-rpc",
  "sc-consensus-babe",
  "sc-consensus-beefy",
  "sc-consensus-grandpa",
@@ -6664,6 +6317,7 @@ dependencies = [
  "soil-transaction-pool-api",
  "substrate-frame-rpc-system",
  "substrate-state-trie-migration-rpc",
+ "topsoil-transaction-payment-rpc",
 ]
 
 [[package]]
@@ -6693,16 +6347,11 @@ dependencies = [
 name = "node-testing"
 version = "3.0.0-dev"
 dependencies = [
- "frame-metadata-hash-extension",
- "frame-system",
  "fs_extra",
  "futures",
  "kitchensink-runtime",
  "log",
  "node-primitives",
- "pallet-asset-conversion",
- "pallet-asset-conversion-tx-payment",
- "pallet-skip-feeless-payment",
  "parity-scale-codec",
  "sc-block-builder",
  "sc-consensus",
@@ -6723,6 +6372,11 @@ dependencies = [
  "staging-node-cli",
  "substrate-test-client",
  "tempfile",
+ "topsoil-asset-conversion",
+ "topsoil-asset-conversion-tx-payment",
+ "topsoil-metadata-hash-extension",
+ "topsoil-skip-feeless-payment",
+ "topsoil-system",
 ]
 
 [[package]]
@@ -6993,2014 +6647,6 @@ name = "overload"
 version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b15813163c1d831bf4a13c3610c05c0d03b39feb07f7e09fa234dac9b15aaf39"
-
-[[package]]
-name = "pallet-alliance"
-version = "27.0.0"
-dependencies = [
- "array-bytes 6.2.3",
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "log",
- "pallet-balances",
- "pallet-collective",
- "pallet-identity",
- "parity-scale-codec",
- "scale-info",
- "soil-core",
- "soil-crypto-hashing",
- "soil-io",
- "soil-runtime",
-]
-
-[[package]]
-name = "pallet-asset-conversion"
-version = "10.0.0"
-dependencies = [
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "log",
- "pallet-assets",
- "pallet-balances",
- "parity-scale-codec",
- "primitive-types",
- "scale-info",
- "soil-api",
- "soil-arithmetic",
- "soil-core",
- "soil-io",
- "soil-runtime",
-]
-
-[[package]]
-name = "pallet-asset-conversion-ops"
-version = "0.1.0"
-dependencies = [
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "log",
- "pallet-asset-conversion",
- "pallet-assets",
- "pallet-balances",
- "parity-scale-codec",
- "primitive-types",
- "scale-info",
- "soil-arithmetic",
- "soil-core",
- "soil-io",
- "soil-runtime",
-]
-
-[[package]]
-name = "pallet-asset-conversion-tx-payment"
-version = "10.0.0"
-dependencies = [
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "pallet-asset-conversion",
- "pallet-assets",
- "pallet-balances",
- "pallet-transaction-payment",
- "parity-scale-codec",
- "scale-info",
- "soil-io",
- "soil-runtime",
-]
-
-[[package]]
-name = "pallet-asset-rate"
-version = "7.0.0"
-dependencies = [
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "pallet-balances",
- "parity-scale-codec",
- "scale-info",
- "soil-core",
- "soil-io",
- "soil-runtime",
-]
-
-[[package]]
-name = "pallet-asset-rewards"
-version = "0.1.0"
-dependencies = [
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "pallet-assets",
- "pallet-assets-freezer",
- "pallet-balances",
- "parity-scale-codec",
- "primitive-types",
- "scale-info",
- "soil-api",
- "soil-arithmetic",
- "soil-core",
- "soil-io",
- "soil-runtime",
- "soil-std",
-]
-
-[[package]]
-name = "pallet-asset-tx-payment"
-version = "28.0.0"
-dependencies = [
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "pallet-assets",
- "pallet-authorship",
- "pallet-balances",
- "pallet-transaction-payment",
- "parity-scale-codec",
- "scale-info",
- "serde",
- "soil-io",
- "soil-runtime",
-]
-
-[[package]]
-name = "pallet-assets"
-version = "29.1.0"
-dependencies = [
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "impl-trait-for-tuples",
- "log",
- "pallet-balances",
- "parity-scale-codec",
- "scale-info",
- "soil-core",
- "soil-io",
- "soil-runtime",
-]
-
-[[package]]
-name = "pallet-assets-freezer"
-version = "0.1.0"
-dependencies = [
- "log",
- "pallet-assets",
- "pallet-balances",
- "parity-scale-codec",
- "polkadot-sdk-frame",
- "scale-info",
-]
-
-[[package]]
-name = "pallet-assets-holder"
-version = "0.1.0"
-dependencies = [
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "log",
- "pallet-assets",
- "pallet-balances",
- "parity-scale-codec",
- "scale-info",
- "soil-core",
- "soil-io",
- "soil-runtime",
-]
-
-[[package]]
-name = "pallet-atomic-swap"
-version = "28.0.0"
-dependencies = [
- "pallet-balances",
- "parity-scale-codec",
- "polkadot-sdk-frame",
- "scale-info",
-]
-
-[[package]]
-name = "pallet-aura"
-version = "27.0.0"
-dependencies = [
- "frame-support",
- "frame-system",
- "log",
- "pallet-timestamp",
- "parity-scale-codec",
- "scale-info",
- "soil-application-crypto",
- "soil-consensus-aura",
- "soil-core",
- "soil-io",
- "soil-runtime",
-]
-
-[[package]]
-name = "pallet-authority-discovery"
-version = "28.0.0"
-dependencies = [
- "frame-support",
- "frame-system",
- "pallet-balances",
- "pallet-session",
- "parity-scale-codec",
- "scale-info",
- "soil-application-crypto",
- "soil-authority-discovery",
- "soil-core",
- "soil-io",
- "soil-runtime",
-]
-
-[[package]]
-name = "pallet-authorship"
-version = "28.0.0"
-dependencies = [
- "frame-support",
- "frame-system",
- "impl-trait-for-tuples",
- "parity-scale-codec",
- "scale-info",
- "soil-core",
- "soil-io",
- "soil-runtime",
-]
-
-[[package]]
-name = "pallet-babe"
-version = "28.0.0"
-dependencies = [
- "frame-benchmarking",
- "frame-election-provider-support",
- "frame-support",
- "frame-system",
- "log",
- "pallet-authorship",
- "pallet-balances",
- "pallet-offences",
- "pallet-session",
- "pallet-staking",
- "pallet-staking-reward-curve",
- "pallet-timestamp",
- "parity-scale-codec",
- "scale-info",
- "soil-application-crypto",
- "soil-consensus-babe",
- "soil-core",
- "soil-io",
- "soil-runtime",
- "soil-session",
- "soil-staking",
- "soil-tracing",
-]
-
-[[package]]
-name = "pallet-bags-list"
-version = "27.0.0"
-dependencies = [
- "aquamarine",
- "docify",
- "frame-benchmarking",
- "frame-election-provider-support",
- "frame-support",
- "frame-system",
- "log",
- "pallet-balances",
- "parity-scale-codec",
- "scale-info",
- "soil-core",
- "soil-io",
- "soil-runtime",
- "soil-tracing",
- "substrate-test-utils",
-]
-
-[[package]]
-name = "pallet-bags-list-fuzzer"
-version = "4.0.0-dev"
-dependencies = [
- "frame-election-provider-support",
- "honggfuzz",
- "pallet-bags-list",
-]
-
-[[package]]
-name = "pallet-bags-list-remote-tests"
-version = "4.0.0-dev"
-dependencies = [
- "frame-election-provider-support",
- "frame-remote-externalities",
- "frame-support",
- "frame-system",
- "log",
- "pallet-bags-list",
- "pallet-staking",
- "soil-core",
- "soil-runtime",
-]
-
-[[package]]
-name = "pallet-balances"
-version = "28.0.0"
-dependencies = [
- "docify",
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "log",
- "pallet-transaction-payment",
- "parity-scale-codec",
- "paste",
- "scale-info",
- "soil-core",
- "soil-io",
- "soil-runtime",
-]
-
-[[package]]
-name = "pallet-beefy"
-version = "28.0.0"
-dependencies = [
- "frame-election-provider-support",
- "frame-support",
- "frame-system",
- "log",
- "pallet-authorship",
- "pallet-balances",
- "pallet-offences",
- "pallet-session",
- "pallet-staking",
- "pallet-staking-reward-curve",
- "pallet-timestamp",
- "parity-scale-codec",
- "scale-info",
- "serde",
- "soil-consensus-beefy",
- "soil-core",
- "soil-io",
- "soil-runtime",
- "soil-session",
- "soil-staking",
- "soil-state-machine",
- "soil-tracing",
-]
-
-[[package]]
-name = "pallet-beefy-mmr"
-version = "28.0.0"
-dependencies = [
- "array-bytes 6.2.3",
- "binary-merkle-tree",
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "log",
- "pallet-balances",
- "pallet-beefy",
- "pallet-mmr",
- "pallet-session",
- "parity-scale-codec",
- "scale-info",
- "serde",
- "soil-api",
- "soil-consensus-beefy",
- "soil-core",
- "soil-io",
- "soil-runtime",
- "soil-staking",
- "soil-state-machine",
-]
-
-[[package]]
-name = "pallet-bounties"
-version = "27.0.0"
-dependencies = [
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "log",
- "pallet-assets",
- "pallet-balances",
- "pallet-treasury",
- "parity-scale-codec",
- "scale-info",
- "soil-core",
- "soil-io",
- "soil-runtime",
-]
-
-[[package]]
-name = "pallet-broker"
-version = "0.6.0"
-dependencies = [
- "bitvec",
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "log",
- "parity-scale-codec",
- "pretty_assertions",
- "scale-info",
- "soil-api",
- "soil-arithmetic",
- "soil-core",
- "soil-io",
- "soil-runtime",
- "soil-tracing",
-]
-
-[[package]]
-name = "pallet-child-bounties"
-version = "27.0.0"
-dependencies = [
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "log",
- "pallet-balances",
- "pallet-bounties",
- "pallet-treasury",
- "parity-scale-codec",
- "scale-info",
- "soil-core",
- "soil-io",
- "soil-runtime",
-]
-
-[[package]]
-name = "pallet-collective"
-version = "28.0.0"
-dependencies = [
- "docify",
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "log",
- "pallet-balances",
- "parity-scale-codec",
- "scale-info",
- "soil-core",
- "soil-io",
- "soil-runtime",
-]
-
-[[package]]
-name = "pallet-conviction-voting"
-version = "28.0.0"
-dependencies = [
- "assert_matches",
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "pallet-balances",
- "parity-scale-codec",
- "scale-info",
- "serde",
- "soil-core",
- "soil-io",
- "soil-runtime",
-]
-
-[[package]]
-name = "pallet-core-fellowship"
-version = "12.0.0"
-dependencies = [
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "log",
- "pallet-ranked-collective",
- "parity-scale-codec",
- "scale-info",
- "soil-arithmetic",
- "soil-core",
- "soil-io",
- "soil-runtime",
-]
-
-[[package]]
-name = "pallet-dap"
-version = "0.1.0"
-dependencies = [
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "log",
- "pallet-balances",
- "parity-scale-codec",
- "scale-info",
- "soil-core",
- "soil-io",
- "soil-runtime",
-]
-
-[[package]]
-name = "pallet-default-config-example"
-version = "10.0.0"
-dependencies = [
- "frame-support",
- "frame-system",
- "log",
- "parity-scale-codec",
- "scale-info",
- "soil-io",
- "soil-runtime",
-]
-
-[[package]]
-name = "pallet-delegated-staking"
-version = "1.0.0"
-dependencies = [
- "frame-election-provider-support",
- "frame-support",
- "frame-system",
- "log",
- "pallet-balances",
- "pallet-nomination-pools",
- "pallet-staking",
- "pallet-staking-reward-curve",
- "pallet-timestamp",
- "parity-scale-codec",
- "scale-info",
- "soil-core",
- "soil-io",
- "soil-runtime",
- "soil-staking",
- "soil-tracing",
-]
-
-[[package]]
-name = "pallet-democracy"
-version = "28.0.0"
-dependencies = [
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "log",
- "pallet-balances",
- "pallet-preimage",
- "pallet-scheduler",
- "parity-scale-codec",
- "scale-info",
- "serde",
- "soil-core",
- "soil-io",
- "soil-runtime",
-]
-
-[[package]]
-name = "pallet-dev-mode"
-version = "10.0.0"
-dependencies = [
- "frame-support",
- "frame-system",
- "log",
- "pallet-balances",
- "parity-scale-codec",
- "scale-info",
- "soil-core",
- "soil-io",
- "soil-runtime",
-]
-
-[[package]]
-name = "pallet-dummy-dim"
-version = "1.0.0"
-dependencies = [
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "log",
- "pallet-people",
- "parity-scale-codec",
- "scale-info",
- "soil-api",
- "soil-arithmetic",
- "soil-core",
- "soil-io",
- "soil-runtime",
- "verifiable",
-]
-
-[[package]]
-name = "pallet-election-provider-e2e-test"
-version = "1.0.0"
-dependencies = [
- "frame-election-provider-support",
- "frame-support",
- "frame-system",
- "log",
- "pallet-bags-list",
- "pallet-balances",
- "pallet-delegated-staking",
- "pallet-election-provider-multi-phase",
- "pallet-nomination-pools",
- "pallet-session",
- "pallet-staking",
- "pallet-timestamp",
- "parity-scale-codec",
- "parking_lot 0.12.5",
- "scale-info",
- "soil-core",
- "soil-io",
- "soil-npos-elections",
- "soil-runtime",
- "soil-staking",
- "soil-tracing",
-]
-
-[[package]]
-name = "pallet-election-provider-multi-block"
-version = "0.9.0"
-dependencies = [
- "frame-benchmarking",
- "frame-election-provider-support",
- "frame-support",
- "frame-system",
- "log",
- "pallet-balances",
- "parity-scale-codec",
- "parking_lot 0.12.5",
- "rand 0.8.5",
- "scale-info",
- "soil-arithmetic",
- "soil-core",
- "soil-io",
- "soil-npos-elections",
- "soil-runtime",
- "soil-std",
- "soil-tracing",
-]
-
-[[package]]
-name = "pallet-election-provider-multi-phase"
-version = "27.0.0"
-dependencies = [
- "frame-benchmarking",
- "frame-election-provider-support",
- "frame-remote-externalities",
- "frame-support",
- "frame-system",
- "hex",
- "log",
- "pallet-balances",
- "parity-scale-codec",
- "parking_lot 0.12.5",
- "rand 0.8.5",
- "scale-info",
- "soil-arithmetic",
- "soil-core",
- "soil-io",
- "soil-npos-elections",
- "soil-runtime",
- "soil-tracing",
- "strum 0.26.3",
- "tokio",
-]
-
-[[package]]
-name = "pallet-election-provider-support-benchmarking"
-version = "27.0.0"
-dependencies = [
- "frame-benchmarking",
- "frame-election-provider-support",
- "frame-system",
- "parity-scale-codec",
- "soil-npos-elections",
- "soil-runtime",
-]
-
-[[package]]
-name = "pallet-elections-phragmen"
-version = "29.0.0"
-dependencies = [
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "log",
- "pallet-balances",
- "parity-scale-codec",
- "scale-info",
- "soil-core",
- "soil-io",
- "soil-npos-elections",
- "soil-runtime",
- "soil-staking",
- "soil-tracing",
- "substrate-test-utils",
-]
-
-[[package]]
-name = "pallet-example-authorization-tx-extension"
-version = "1.0.0"
-dependencies = [
- "docify",
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "log",
- "pallet-verify-signature",
- "parity-scale-codec",
- "scale-info",
- "soil-core",
- "soil-io",
- "soil-keyring",
- "soil-runtime",
-]
-
-[[package]]
-name = "pallet-example-basic"
-version = "27.0.0"
-dependencies = [
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "log",
- "pallet-balances",
- "parity-scale-codec",
- "scale-info",
- "soil-core",
- "soil-io",
- "soil-runtime",
-]
-
-[[package]]
-name = "pallet-example-frame-crate"
-version = "0.0.1"
-dependencies = [
- "parity-scale-codec",
- "polkadot-sdk-frame",
- "scale-info",
-]
-
-[[package]]
-name = "pallet-example-kitchensink"
-version = "4.0.0-dev"
-dependencies = [
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "log",
- "pallet-balances",
- "parity-scale-codec",
- "scale-info",
- "soil-core",
- "soil-io",
- "soil-runtime",
-]
-
-[[package]]
-name = "pallet-example-mbm"
-version = "0.1.0"
-dependencies = [
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "log",
- "pallet-migrations",
- "parity-scale-codec",
- "scale-info",
- "soil-io",
-]
-
-[[package]]
-name = "pallet-example-offchain-worker"
-version = "28.0.0"
-dependencies = [
- "frame-support",
- "frame-system",
- "lite-json",
- "log",
- "parity-scale-codec",
- "scale-info",
- "soil-core",
- "soil-io",
- "soil-keystore",
- "soil-runtime",
-]
-
-[[package]]
-name = "pallet-example-single-block-migrations"
-version = "0.0.1"
-dependencies = [
- "docify",
- "frame-support",
- "frame-system",
- "log",
- "pallet-balances",
- "parity-scale-codec",
- "scale-info",
- "soil-core",
- "soil-io",
- "soil-runtime",
- "soil-version",
-]
-
-[[package]]
-name = "pallet-example-split"
-version = "10.0.0"
-dependencies = [
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "log",
- "parity-scale-codec",
- "scale-info",
- "soil-core",
- "soil-io",
-]
-
-[[package]]
-name = "pallet-example-tasks"
-version = "1.0.0"
-dependencies = [
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "log",
- "parity-scale-codec",
- "scale-info",
- "soil-core",
- "soil-io",
- "soil-runtime",
-]
-
-[[package]]
-name = "pallet-example-view-functions"
-version = "1.0.0"
-dependencies = [
- "frame-metadata",
- "frame-support",
- "frame-system",
- "log",
- "parity-scale-codec",
- "pretty_assertions",
- "scale-info",
- "soil-core",
- "soil-io",
- "soil-metadata-ir",
- "soil-runtime",
-]
-
-[[package]]
-name = "pallet-examples"
-version = "4.0.0-dev"
-dependencies = [
- "pallet-default-config-example",
- "pallet-dev-mode",
- "pallet-example-authorization-tx-extension",
- "pallet-example-basic",
- "pallet-example-frame-crate",
- "pallet-example-kitchensink",
- "pallet-example-offchain-worker",
- "pallet-example-single-block-migrations",
- "pallet-example-split",
- "pallet-example-tasks",
- "pallet-example-view-functions",
-]
-
-[[package]]
-name = "pallet-fast-unstake"
-version = "27.0.0"
-dependencies = [
- "docify",
- "frame-benchmarking",
- "frame-election-provider-support",
- "frame-support",
- "frame-system",
- "log",
- "pallet-balances",
- "pallet-staking",
- "pallet-staking-reward-curve",
- "pallet-timestamp",
- "parity-scale-codec",
- "scale-info",
- "soil-core",
- "soil-io",
- "soil-runtime",
- "soil-staking",
- "soil-tracing",
-]
-
-[[package]]
-name = "pallet-glutton"
-version = "14.0.0"
-dependencies = [
- "blake2 0.10.6",
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "log",
- "parity-scale-codec",
- "scale-info",
- "soil-core",
- "soil-inherents",
- "soil-io",
- "soil-runtime",
-]
-
-[[package]]
-name = "pallet-grandpa"
-version = "28.0.0"
-dependencies = [
- "finality-grandpa",
- "frame-benchmarking",
- "frame-election-provider-support",
- "frame-support",
- "frame-system",
- "log",
- "pallet-authorship",
- "pallet-balances",
- "pallet-offences",
- "pallet-session",
- "pallet-staking",
- "pallet-staking-reward-curve",
- "pallet-timestamp",
- "parity-scale-codec",
- "scale-info",
- "soil-application-crypto",
- "soil-consensus-grandpa",
- "soil-core",
- "soil-io",
- "soil-keyring",
- "soil-runtime",
- "soil-session",
- "soil-staking",
- "soil-tracing",
-]
-
-[[package]]
-name = "pallet-identity"
-version = "29.0.0"
-dependencies = [
- "enumflags2",
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "log",
- "pallet-balances",
- "parity-scale-codec",
- "scale-info",
- "soil-core",
- "soil-io",
- "soil-keystore",
- "soil-runtime",
-]
-
-[[package]]
-name = "pallet-im-online"
-version = "27.0.0"
-dependencies = [
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "log",
- "pallet-authorship",
- "pallet-balances",
- "pallet-session",
- "parity-scale-codec",
- "scale-info",
- "soil-application-crypto",
- "soil-core",
- "soil-io",
- "soil-runtime",
- "soil-staking",
-]
-
-[[package]]
-name = "pallet-indices"
-version = "28.0.0"
-dependencies = [
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "pallet-balances",
- "parity-scale-codec",
- "scale-info",
- "soil-core",
- "soil-io",
- "soil-runtime",
-]
-
-[[package]]
-name = "pallet-insecure-randomness-collective-flip"
-version = "16.0.0"
-dependencies = [
- "parity-scale-codec",
- "polkadot-sdk-frame",
- "safe-mix",
- "scale-info",
-]
-
-[[package]]
-name = "pallet-lottery"
-version = "28.0.0"
-dependencies = [
- "frame-benchmarking",
- "frame-support",
- "frame-support-test",
- "frame-system",
- "pallet-balances",
- "parity-scale-codec",
- "scale-info",
- "soil-core",
- "soil-io",
- "soil-runtime",
-]
-
-[[package]]
-name = "pallet-membership"
-version = "28.0.0"
-dependencies = [
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "log",
- "parity-scale-codec",
- "scale-info",
- "soil-core",
- "soil-io",
- "soil-runtime",
-]
-
-[[package]]
-name = "pallet-message-queue"
-version = "31.0.0"
-dependencies = [
- "environmental",
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "log",
- "parity-scale-codec",
- "rand 0.8.5",
- "rand_distr",
- "scale-info",
- "serde",
- "soil-arithmetic",
- "soil-core",
- "soil-crypto-hashing",
- "soil-io",
- "soil-runtime",
- "soil-tracing",
- "soil-weights",
-]
-
-[[package]]
-name = "pallet-meta-tx"
-version = "0.1.0"
-dependencies = [
- "docify",
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "pallet-balances",
- "pallet-transaction-payment",
- "pallet-verify-signature",
- "parity-scale-codec",
- "scale-info",
- "serde",
- "soil-core",
- "soil-io",
- "soil-keyring",
- "soil-keystore",
- "soil-runtime",
- "soil-std",
-]
-
-[[package]]
-name = "pallet-migrations"
-version = "1.0.0"
-dependencies = [
- "docify",
- "frame-benchmarking",
- "frame-executive",
- "frame-support",
- "frame-system",
- "impl-trait-for-tuples",
- "log",
- "parity-scale-codec",
- "polkadot-sdk-frame",
- "pretty_assertions",
- "scale-info",
- "soil-core",
- "soil-io",
- "soil-runtime",
- "soil-tracing",
-]
-
-[[package]]
-name = "pallet-mixnet"
-version = "0.4.0"
-dependencies = [
- "log",
- "parity-scale-codec",
- "polkadot-sdk-frame",
- "scale-info",
- "serde",
- "soil-application-crypto",
- "soil-mixnet",
-]
-
-[[package]]
-name = "pallet-mmr"
-version = "27.0.0"
-dependencies = [
- "itertools 0.11.0",
- "log",
- "parity-scale-codec",
- "polkadot-sdk-frame",
- "scale-info",
- "soil-mmr-primitives",
- "soil-tracing",
-]
-
-[[package]]
-name = "pallet-multi-asset-bounties"
-version = "1.0.0"
-dependencies = [
- "docify",
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "log",
- "pallet-balances",
- "pallet-preimage",
- "pallet-utility",
- "parity-scale-codec",
- "scale-info",
- "soil-core",
- "soil-io",
- "soil-runtime",
-]
-
-[[package]]
-name = "pallet-multisig"
-version = "28.0.0"
-dependencies = [
- "log",
- "pallet-balances",
- "parity-scale-codec",
- "polkadot-sdk-frame",
- "scale-info",
-]
-
-[[package]]
-name = "pallet-nft-fractionalization"
-version = "10.0.0"
-dependencies = [
- "log",
- "pallet-assets",
- "pallet-balances",
- "pallet-nfts",
- "parity-scale-codec",
- "polkadot-sdk-frame",
- "scale-info",
-]
-
-[[package]]
-name = "pallet-nfts"
-version = "22.0.0"
-dependencies = [
- "enumflags2",
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "log",
- "pallet-balances",
- "parity-scale-codec",
- "scale-info",
- "soil-core",
- "soil-io",
- "soil-keystore",
- "soil-runtime",
-]
-
-[[package]]
-name = "pallet-nfts-runtime-api"
-version = "14.0.0"
-dependencies = [
- "parity-scale-codec",
- "soil-api",
-]
-
-[[package]]
-name = "pallet-nis"
-version = "28.0.0"
-dependencies = [
- "pallet-balances",
- "parity-scale-codec",
- "polkadot-sdk-frame",
- "scale-info",
- "soil-io",
-]
-
-[[package]]
-name = "pallet-node-authorization"
-version = "28.0.0"
-dependencies = [
- "log",
- "parity-scale-codec",
- "polkadot-sdk-frame",
- "scale-info",
-]
-
-[[package]]
-name = "pallet-nomination-pools"
-version = "25.0.0"
-dependencies = [
- "frame-support",
- "frame-system",
- "log",
- "pallet-balances",
- "parity-scale-codec",
- "scale-info",
- "soil-core",
- "soil-io",
- "soil-runtime",
- "soil-staking",
- "soil-tracing",
-]
-
-[[package]]
-name = "pallet-nomination-pools-benchmarking"
-version = "26.0.0"
-dependencies = [
- "frame-benchmarking",
- "frame-election-provider-support",
- "frame-support",
- "frame-system",
- "pallet-bags-list",
- "pallet-balances",
- "pallet-delegated-staking",
- "pallet-nomination-pools",
- "pallet-staking",
- "pallet-staking-reward-curve",
- "pallet-timestamp",
- "parity-scale-codec",
- "scale-info",
- "soil-core",
- "soil-io",
- "soil-runtime",
- "soil-runtime-interface",
- "soil-staking",
-]
-
-[[package]]
-name = "pallet-nomination-pools-fuzzer"
-version = "2.0.0"
-dependencies = [
- "frame-support",
- "frame-system",
- "honggfuzz",
- "log",
- "pallet-nomination-pools",
- "rand 0.8.5",
- "soil-io",
- "soil-runtime",
- "soil-tracing",
-]
-
-[[package]]
-name = "pallet-nomination-pools-runtime-api"
-version = "23.0.0"
-dependencies = [
- "pallet-nomination-pools",
- "parity-scale-codec",
- "soil-api",
-]
-
-[[package]]
-name = "pallet-offences"
-version = "27.0.0"
-dependencies = [
- "frame-support",
- "frame-system",
- "log",
- "parity-scale-codec",
- "scale-info",
- "serde",
- "soil-core",
- "soil-io",
- "soil-runtime",
- "soil-staking",
-]
-
-[[package]]
-name = "pallet-offences-benchmarking"
-version = "28.0.0"
-dependencies = [
- "frame-benchmarking",
- "frame-election-provider-support",
- "frame-support",
- "frame-system",
- "log",
- "pallet-babe",
- "pallet-balances",
- "pallet-grandpa",
- "pallet-im-online",
- "pallet-offences",
- "pallet-session",
- "pallet-session-benchmarking",
- "pallet-staking",
- "pallet-staking-reward-curve",
- "pallet-timestamp",
- "parity-scale-codec",
- "scale-info",
- "soil-core",
- "soil-io",
- "soil-runtime",
- "soil-staking",
- "soil-tracing",
-]
-
-[[package]]
-name = "pallet-oracle"
-version = "1.0.0"
-dependencies = [
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "impl-trait-for-tuples",
- "parity-scale-codec",
- "scale-info",
- "serde",
- "soil-application-crypto",
- "soil-io",
- "soil-runtime",
- "soil-std",
-]
-
-[[package]]
-name = "pallet-oracle-runtime-api"
-version = "1.0.0"
-dependencies = [
- "parity-scale-codec",
- "scale-info",
- "soil-api",
- "soil-std",
-]
-
-[[package]]
-name = "pallet-origin-restriction"
-version = "1.0.0"
-dependencies = [
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "log",
- "pallet-transaction-payment",
- "parity-scale-codec",
- "scale-info",
- "soil-arithmetic",
- "soil-core",
- "soil-io",
- "soil-runtime",
-]
-
-[[package]]
-name = "pallet-paged-list"
-version = "0.6.0"
-dependencies = [
- "docify",
- "parity-scale-codec",
- "polkadot-sdk-frame",
- "scale-info",
- "soil-metadata-ir",
-]
-
-[[package]]
-name = "pallet-paged-list-fuzzer"
-version = "0.1.0"
-dependencies = [
- "arbitrary",
- "honggfuzz",
- "pallet-paged-list",
- "polkadot-sdk-frame",
-]
-
-[[package]]
-name = "pallet-parameters"
-version = "0.1.0"
-dependencies = [
- "docify",
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "pallet-balances",
- "pallet-example-basic",
- "parity-scale-codec",
- "paste",
- "scale-info",
- "serde",
- "soil-core",
- "soil-io",
- "soil-runtime",
-]
-
-[[package]]
-name = "pallet-people"
-version = "1.0.0"
-dependencies = [
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "log",
- "parity-scale-codec",
- "scale-info",
- "soil-arithmetic",
- "soil-core",
- "soil-io",
- "soil-runtime",
- "verifiable",
-]
-
-[[package]]
-name = "pallet-preimage"
-version = "28.0.0"
-dependencies = [
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "log",
- "pallet-balances",
- "parity-scale-codec",
- "scale-info",
- "soil-core",
- "soil-io",
- "soil-runtime",
-]
-
-[[package]]
-name = "pallet-proxy"
-version = "28.0.0"
-dependencies = [
- "pallet-balances",
- "pallet-utility",
- "parity-scale-codec",
- "polkadot-sdk-frame",
- "scale-info",
-]
-
-[[package]]
-name = "pallet-ranked-collective"
-version = "28.0.0"
-dependencies = [
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "impl-trait-for-tuples",
- "log",
- "parity-scale-codec",
- "scale-info",
- "soil-arithmetic",
- "soil-core",
- "soil-io",
- "soil-runtime",
-]
-
-[[package]]
-name = "pallet-recovery"
-version = "28.0.0"
-dependencies = [
- "pallet-balances",
- "parity-scale-codec",
- "polkadot-sdk-frame",
- "scale-info",
-]
-
-[[package]]
-name = "pallet-referenda"
-version = "28.0.0"
-dependencies = [
- "assert_matches",
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "log",
- "pallet-balances",
- "pallet-preimage",
- "pallet-scheduler",
- "parity-scale-codec",
- "scale-info",
- "serde",
- "soil-arithmetic",
- "soil-core",
- "soil-io",
- "soil-runtime",
-]
-
-[[package]]
-name = "pallet-remark"
-version = "28.0.0"
-dependencies = [
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "parity-scale-codec",
- "scale-info",
- "serde",
- "soil-core",
- "soil-io",
- "soil-runtime",
-]
-
-[[package]]
-name = "pallet-root-offences"
-version = "25.0.0"
-dependencies = [
- "frame-election-provider-support",
- "frame-support",
- "frame-system",
- "pallet-balances",
- "pallet-session",
- "pallet-staking",
- "pallet-staking-reward-curve",
- "pallet-timestamp",
- "parity-scale-codec",
- "scale-info",
- "soil-core",
- "soil-io",
- "soil-runtime",
- "soil-staking",
-]
-
-[[package]]
-name = "pallet-root-testing"
-version = "4.0.0"
-dependencies = [
- "frame-support",
- "frame-system",
- "parity-scale-codec",
- "scale-info",
- "soil-io",
- "soil-runtime",
-]
-
-[[package]]
-name = "pallet-safe-mode"
-version = "9.0.0"
-dependencies = [
- "docify",
- "pallet-balances",
- "pallet-proxy",
- "pallet-utility",
- "parity-scale-codec",
- "polkadot-sdk-frame",
- "scale-info",
-]
-
-[[package]]
-name = "pallet-salary"
-version = "13.0.0"
-dependencies = [
- "log",
- "pallet-ranked-collective",
- "parity-scale-codec",
- "polkadot-sdk-frame",
- "scale-info",
-]
-
-[[package]]
-name = "pallet-sassafras"
-version = "0.3.5-dev"
-dependencies = [
- "array-bytes 6.2.3",
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "log",
- "parity-scale-codec",
- "scale-info",
- "soil-consensus-sassafras",
- "soil-core",
- "soil-crypto-hashing",
- "soil-io",
- "soil-runtime",
-]
-
-[[package]]
-name = "pallet-scheduler"
-version = "29.0.0"
-dependencies = [
- "docify",
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "log",
- "pallet-preimage",
- "parity-scale-codec",
- "scale-info",
- "soil-core",
- "soil-io",
- "soil-runtime",
- "soil-weights",
- "substrate-test-utils",
-]
-
-[[package]]
-name = "pallet-scored-pool"
-version = "28.0.0"
-dependencies = [
- "frame-support",
- "frame-system",
- "pallet-balances",
- "parity-scale-codec",
- "scale-info",
- "soil-io",
- "soil-runtime",
-]
-
-[[package]]
-name = "pallet-session"
-version = "28.0.0"
-dependencies = [
- "frame-support",
- "frame-system",
- "impl-trait-for-tuples",
- "log",
- "pallet-balances",
- "pallet-timestamp",
- "parity-scale-codec",
- "scale-info",
- "soil-core",
- "soil-io",
- "soil-runtime",
- "soil-session",
- "soil-staking",
- "soil-state-machine",
- "soil-trie",
-]
-
-[[package]]
-name = "pallet-session-benchmarking"
-version = "28.0.0"
-dependencies = [
- "frame-benchmarking",
- "frame-election-provider-support",
- "frame-support",
- "frame-system",
- "pallet-balances",
- "pallet-session",
- "pallet-staking",
- "pallet-staking-reward-curve",
- "pallet-timestamp",
- "parity-scale-codec",
- "rand 0.8.5",
- "scale-info",
- "soil-io",
- "soil-runtime",
- "soil-session",
- "soil-staking",
-]
-
-[[package]]
-name = "pallet-skip-feeless-payment"
-version = "3.0.0"
-dependencies = [
- "frame-support",
- "frame-system",
- "parity-scale-codec",
- "scale-info",
- "soil-runtime",
-]
-
-[[package]]
-name = "pallet-society"
-version = "28.0.0"
-dependencies = [
- "frame-benchmarking",
- "frame-support",
- "frame-support-test",
- "frame-system",
- "log",
- "pallet-balances",
- "parity-scale-codec",
- "rand_chacha 0.3.1",
- "scale-info",
- "soil-arithmetic",
- "soil-crypto-hashing",
- "soil-io",
- "soil-runtime",
-]
-
-[[package]]
-name = "pallet-staking"
-version = "28.0.0"
-dependencies = [
- "frame-benchmarking",
- "frame-election-provider-support",
- "frame-support",
- "frame-system",
- "log",
- "pallet-authorship",
- "pallet-bags-list",
- "pallet-balances",
- "pallet-session",
- "pallet-staking-reward-curve",
- "pallet-timestamp",
- "parity-scale-codec",
- "rand_chacha 0.3.1",
- "scale-info",
- "serde",
- "soil-application-crypto",
- "soil-core",
- "soil-io",
- "soil-npos-elections",
- "soil-runtime",
- "soil-staking",
- "soil-tracing",
- "substrate-test-utils",
-]
-
-[[package]]
-name = "pallet-staking-reward-curve"
-version = "11.0.0"
-dependencies = [
- "proc-macro-crate 3.4.0",
- "proc-macro2",
- "quote",
- "soil-runtime",
- "syn 2.0.117",
-]
-
-[[package]]
-name = "pallet-staking-reward-fn"
-version = "19.0.0"
-dependencies = [
- "log",
- "soil-arithmetic",
-]
-
-[[package]]
-name = "pallet-staking-runtime-api"
-version = "14.0.0"
-dependencies = [
- "parity-scale-codec",
- "soil-api",
- "soil-staking",
-]
-
-[[package]]
-name = "pallet-state-trie-migration"
-version = "29.0.0"
-dependencies = [
- "frame-benchmarking",
- "frame-remote-externalities",
- "frame-support",
- "frame-system",
- "log",
- "pallet-balances",
- "parity-scale-codec",
- "scale-info",
- "serde",
- "soil-core",
- "soil-io",
- "soil-runtime",
- "soil-tracing",
- "substrate-state-trie-migration-rpc",
- "thousands",
- "tokio",
- "zstd 0.12.4",
-]
-
-[[package]]
-name = "pallet-statement"
-version = "10.0.0"
-dependencies = [
- "frame-support",
- "frame-system",
- "log",
- "parity-scale-codec",
- "scale-info",
- "soil-api",
- "soil-core",
- "soil-io",
- "soil-runtime",
- "soil-statement-store",
-]
-
-[[package]]
-name = "pallet-sudo"
-version = "28.0.0"
-dependencies = [
- "docify",
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "parity-scale-codec",
- "scale-info",
- "soil-io",
- "soil-runtime",
-]
-
-[[package]]
-name = "pallet-timestamp"
-version = "27.0.0"
-dependencies = [
- "docify",
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "log",
- "parity-scale-codec",
- "scale-info",
- "soil-inherents",
- "soil-io",
- "soil-runtime",
- "soil-storage",
- "soil-timestamp",
-]
-
-[[package]]
-name = "pallet-tips"
-version = "27.0.0"
-dependencies = [
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "log",
- "pallet-balances",
- "pallet-treasury",
- "parity-scale-codec",
- "scale-info",
- "serde",
- "soil-core",
- "soil-io",
- "soil-runtime",
- "soil-storage",
-]
-
-[[package]]
-name = "pallet-transaction-payment"
-version = "28.0.0"
-dependencies = [
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "log",
- "pallet-balances",
- "parity-scale-codec",
- "scale-info",
- "serde",
- "serde_json",
- "soil-io",
- "soil-runtime",
-]
-
-[[package]]
-name = "pallet-transaction-payment-rpc"
-version = "30.0.0"
-dependencies = [
- "jsonrpsee",
- "pallet-transaction-payment-rpc-runtime-api",
- "parity-scale-codec",
- "soil-api",
- "soil-blockchain",
- "soil-core",
- "soil-rpc",
- "soil-runtime",
- "soil-weights",
-]
-
-[[package]]
-name = "pallet-transaction-payment-rpc-runtime-api"
-version = "28.0.0"
-dependencies = [
- "pallet-transaction-payment",
- "parity-scale-codec",
- "soil-api",
- "soil-runtime",
- "soil-weights",
-]
-
-[[package]]
-name = "pallet-transaction-storage"
-version = "27.0.0"
-dependencies = [
- "array-bytes 6.2.3",
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "pallet-balances",
- "parity-scale-codec",
- "scale-info",
- "serde",
- "soil-inherents",
- "soil-io",
- "soil-runtime",
- "soil-transaction-storage-proof",
- "tracing",
-]
-
-[[package]]
-name = "pallet-treasury"
-version = "27.0.0"
-dependencies = [
- "docify",
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "impl-trait-for-tuples",
- "log",
- "pallet-balances",
- "pallet-utility",
- "parity-scale-codec",
- "scale-info",
- "serde",
- "soil-core",
- "soil-io",
- "soil-runtime",
-]
-
-[[package]]
-name = "pallet-tx-pause"
-version = "9.0.0"
-dependencies = [
- "docify",
- "pallet-balances",
- "pallet-proxy",
- "pallet-utility",
- "parity-scale-codec",
- "polkadot-sdk-frame",
- "scale-info",
-]
-
-[[package]]
-name = "pallet-uniques"
-version = "28.0.0"
-dependencies = [
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "log",
- "pallet-balances",
- "parity-scale-codec",
- "scale-info",
- "soil-io",
- "soil-runtime",
-]
-
-[[package]]
-name = "pallet-utility"
-version = "28.0.0"
-dependencies = [
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "pallet-balances",
- "pallet-collective",
- "pallet-root-testing",
- "pallet-timestamp",
- "parity-scale-codec",
- "scale-info",
- "soil-core",
- "soil-io",
- "soil-runtime",
-]
-
-[[package]]
-name = "pallet-verify-signature"
-version = "1.0.0"
-dependencies = [
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "parity-scale-codec",
- "scale-info",
- "soil-io",
- "soil-runtime",
- "soil-weights",
-]
-
-[[package]]
-name = "pallet-vesting"
-version = "28.0.0"
-dependencies = [
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "log",
- "pallet-balances",
- "parity-scale-codec",
- "scale-info",
- "soil-io",
- "soil-runtime",
-]
-
-[[package]]
-name = "pallet-whitelist"
-version = "27.0.0"
-dependencies = [
- "pallet-balances",
- "pallet-preimage",
- "parity-scale-codec",
- "polkadot-sdk-frame",
- "scale-info",
-]
 
 [[package]]
 name = "parity-db"
@@ -9299,40 +6945,6 @@ checksum = "221c71b432b38e494a0fdedb5f720e4cb974edf03a0af09e5b2238dbac7e6947"
 dependencies = [
  "cfg-if",
  "itertools 0.10.5",
-]
-
-[[package]]
-name = "polkadot-sdk-frame"
-version = "0.1.0"
-dependencies = [
- "docify",
- "frame-benchmarking",
- "frame-executive",
- "frame-support",
- "frame-system",
- "frame-system-benchmarking",
- "frame-system-rpc-runtime-api",
- "frame-try-runtime",
- "log",
- "parity-scale-codec",
- "scale-info",
- "serde",
- "soil-api",
- "soil-arithmetic",
- "soil-block-builder",
- "soil-consensus-aura",
- "soil-consensus-grandpa",
- "soil-core",
- "soil-genesis-builder",
- "soil-inherents",
- "soil-io",
- "soil-keyring",
- "soil-offchain",
- "soil-runtime",
- "soil-session",
- "soil-storage",
- "soil-transaction-pool",
- "soil-version",
 ]
 
 [[package]]
@@ -13513,7 +11125,6 @@ dependencies = [
  "aes-gcm",
  "curve25519-dalek",
  "ed25519-dalek",
- "frame-support",
  "hkdf",
  "parity-scale-codec",
  "rand 0.8.5",
@@ -13528,6 +11139,7 @@ dependencies = [
  "soil-runtime",
  "soil-runtime-interface",
  "thiserror 1.0.69",
+ "topsoil-support",
  "x25519-dalek",
 ]
 
@@ -14031,12 +11643,7 @@ dependencies = [
  "clap_complete",
  "criterion",
  "fork-tree",
- "frame-metadata-hash-extension",
  "frame-remote-externalities",
- "frame-support",
- "frame-support-procedural-tools",
- "frame-system",
- "frame-system-rpc-runtime-api",
  "futures",
  "generate-bags",
  "jsonrpsee",
@@ -14046,17 +11653,6 @@ dependencies = [
  "node-primitives",
  "node-rpc",
  "node-testing",
- "pallet-asset-conversion-tx-payment",
- "pallet-bags-list",
- "pallet-balances",
- "pallet-im-online",
- "pallet-root-testing",
- "pallet-skip-feeless-payment",
- "pallet-sudo",
- "pallet-timestamp",
- "pallet-transaction-payment",
- "pallet-transaction-payment-rpc",
- "pallet-treasury",
  "parity-scale-codec",
  "pretty_assertions",
  "rand 0.8.5",
@@ -14166,6 +11762,22 @@ dependencies = [
  "tempfile",
  "tokio",
  "tokio-util",
+ "topsoil-asset-conversion-tx-payment",
+ "topsoil-bags-list",
+ "topsoil-balances",
+ "topsoil-im-online",
+ "topsoil-metadata-hash-extension",
+ "topsoil-root-testing",
+ "topsoil-skip-feeless-payment",
+ "topsoil-sudo",
+ "topsoil-support",
+ "topsoil-support-procedural-tools",
+ "topsoil-system",
+ "topsoil-system-rpc-runtime-api",
+ "topsoil-timestamp",
+ "topsoil-transaction-payment",
+ "topsoil-transaction-payment-rpc",
+ "topsoil-treasury",
  "wat",
 ]
 
@@ -14316,8 +11928,6 @@ dependencies = [
 name = "substrate-frame-rpc-support"
 version = "29.0.0"
 dependencies = [
- "frame-support",
- "frame-system",
  "jsonrpsee",
  "parity-scale-codec",
  "scale-info",
@@ -14327,6 +11937,8 @@ dependencies = [
  "soil-runtime",
  "soil-storage",
  "tokio",
+ "topsoil-support",
+ "topsoil-system",
 ]
 
 [[package]]
@@ -14335,7 +11947,6 @@ version = "28.0.0"
 dependencies = [
  "assert_matches",
  "docify",
- "frame-system-rpc-runtime-api",
  "futures",
  "jsonrpsee",
  "log",
@@ -14351,6 +11962,7 @@ dependencies = [
  "soil-transaction-pool-api",
  "substrate-test-runtime-client",
  "tokio",
+ "topsoil-system-rpc-runtime-api",
 ]
 
 [[package]]
@@ -14425,17 +12037,8 @@ name = "substrate-test-runtime"
 version = "2.0.0"
 dependencies = [
  "array-bytes 6.2.3",
- "frame-executive",
- "frame-metadata-hash-extension",
- "frame-support",
- "frame-system",
- "frame-system-rpc-runtime-api",
  "futures",
  "log",
- "pallet-babe",
- "pallet-balances",
- "pallet-timestamp",
- "pallet-utility",
  "parity-scale-codec",
  "pretty_assertions",
  "sc-block-builder",
@@ -14472,6 +12075,15 @@ dependencies = [
  "soil-version",
  "substrate-test-runtime-client",
  "substrate-wasm-builder",
+ "topsoil-babe",
+ "topsoil-balances",
+ "topsoil-executive",
+ "topsoil-metadata-hash-extension",
+ "topsoil-support",
+ "topsoil-system",
+ "topsoil-system-rpc-runtime-api",
+ "topsoil-timestamp",
+ "topsoil-utility",
  "tracing",
  "trie-db",
 ]
@@ -15282,6 +12894,2394 @@ name = "toml_writer"
 version = "1.0.6+spec-1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ab16f14aed21ee8bfd8ec22513f7287cd4a91aa92e44edfe2c17ddd004e92607"
+
+[[package]]
+name = "topsoil"
+version = "0.1.0"
+dependencies = [
+ "docify",
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "serde",
+ "soil-api",
+ "soil-arithmetic",
+ "soil-block-builder",
+ "soil-consensus-aura",
+ "soil-consensus-grandpa",
+ "soil-core",
+ "soil-genesis-builder",
+ "soil-inherents",
+ "soil-io",
+ "soil-keyring",
+ "soil-offchain",
+ "soil-runtime",
+ "soil-session",
+ "soil-storage",
+ "soil-transaction-pool",
+ "soil-version",
+ "topsoil-benchmarking",
+ "topsoil-executive",
+ "topsoil-support",
+ "topsoil-system",
+ "topsoil-system-benchmarking",
+ "topsoil-system-rpc-runtime-api",
+ "topsoil-try-runtime",
+]
+
+[[package]]
+name = "topsoil-alliance"
+version = "27.0.0"
+dependencies = [
+ "array-bytes 6.2.3",
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "soil-core",
+ "soil-crypto-hashing",
+ "soil-io",
+ "soil-runtime",
+ "topsoil-balances",
+ "topsoil-benchmarking",
+ "topsoil-collective",
+ "topsoil-identity",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-asset-conversion"
+version = "10.0.0"
+dependencies = [
+ "log",
+ "parity-scale-codec",
+ "primitive-types",
+ "scale-info",
+ "soil-api",
+ "soil-arithmetic",
+ "soil-core",
+ "soil-io",
+ "soil-runtime",
+ "topsoil-assets",
+ "topsoil-balances",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-asset-conversion-ops"
+version = "0.1.0"
+dependencies = [
+ "log",
+ "parity-scale-codec",
+ "primitive-types",
+ "scale-info",
+ "soil-arithmetic",
+ "soil-core",
+ "soil-io",
+ "soil-runtime",
+ "topsoil-asset-conversion",
+ "topsoil-assets",
+ "topsoil-balances",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-asset-conversion-tx-payment"
+version = "10.0.0"
+dependencies = [
+ "parity-scale-codec",
+ "scale-info",
+ "soil-io",
+ "soil-runtime",
+ "topsoil-asset-conversion",
+ "topsoil-assets",
+ "topsoil-balances",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
+ "topsoil-transaction-payment",
+]
+
+[[package]]
+name = "topsoil-asset-rate"
+version = "7.0.0"
+dependencies = [
+ "parity-scale-codec",
+ "scale-info",
+ "soil-core",
+ "soil-io",
+ "soil-runtime",
+ "topsoil-balances",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-asset-rewards"
+version = "0.1.0"
+dependencies = [
+ "parity-scale-codec",
+ "primitive-types",
+ "scale-info",
+ "soil-api",
+ "soil-arithmetic",
+ "soil-core",
+ "soil-io",
+ "soil-runtime",
+ "soil-std",
+ "topsoil-assets",
+ "topsoil-assets-freezer",
+ "topsoil-balances",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-asset-tx-payment"
+version = "28.0.0"
+dependencies = [
+ "parity-scale-codec",
+ "scale-info",
+ "serde",
+ "soil-io",
+ "soil-runtime",
+ "topsoil-assets",
+ "topsoil-authorship",
+ "topsoil-balances",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
+ "topsoil-transaction-payment",
+]
+
+[[package]]
+name = "topsoil-assets"
+version = "29.1.0"
+dependencies = [
+ "impl-trait-for-tuples",
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "soil-core",
+ "soil-io",
+ "soil-runtime",
+ "topsoil-balances",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-assets-freezer"
+version = "0.1.0"
+dependencies = [
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "topsoil",
+ "topsoil-assets",
+ "topsoil-balances",
+]
+
+[[package]]
+name = "topsoil-assets-holder"
+version = "0.1.0"
+dependencies = [
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "soil-core",
+ "soil-io",
+ "soil-runtime",
+ "topsoil-assets",
+ "topsoil-balances",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-atomic-swap"
+version = "28.0.0"
+dependencies = [
+ "parity-scale-codec",
+ "scale-info",
+ "topsoil",
+ "topsoil-balances",
+]
+
+[[package]]
+name = "topsoil-aura"
+version = "27.0.0"
+dependencies = [
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "soil-application-crypto",
+ "soil-consensus-aura",
+ "soil-core",
+ "soil-io",
+ "soil-runtime",
+ "topsoil-support",
+ "topsoil-system",
+ "topsoil-timestamp",
+]
+
+[[package]]
+name = "topsoil-authority-discovery"
+version = "28.0.0"
+dependencies = [
+ "parity-scale-codec",
+ "scale-info",
+ "soil-application-crypto",
+ "soil-authority-discovery",
+ "soil-core",
+ "soil-io",
+ "soil-runtime",
+ "topsoil-balances",
+ "topsoil-session",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-authorship"
+version = "28.0.0"
+dependencies = [
+ "impl-trait-for-tuples",
+ "parity-scale-codec",
+ "scale-info",
+ "soil-core",
+ "soil-io",
+ "soil-runtime",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-babe"
+version = "28.0.0"
+dependencies = [
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "soil-application-crypto",
+ "soil-consensus-babe",
+ "soil-core",
+ "soil-io",
+ "soil-runtime",
+ "soil-session",
+ "soil-staking",
+ "soil-tracing",
+ "topsoil-authorship",
+ "topsoil-balances",
+ "topsoil-benchmarking",
+ "topsoil-election-provider-support",
+ "topsoil-offences",
+ "topsoil-session",
+ "topsoil-staking",
+ "topsoil-staking-reward-curve",
+ "topsoil-support",
+ "topsoil-system",
+ "topsoil-timestamp",
+]
+
+[[package]]
+name = "topsoil-bags-list"
+version = "27.0.0"
+dependencies = [
+ "aquamarine",
+ "docify",
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "soil-core",
+ "soil-io",
+ "soil-runtime",
+ "soil-tracing",
+ "substrate-test-utils",
+ "topsoil-balances",
+ "topsoil-benchmarking",
+ "topsoil-election-provider-support",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-bags-list-fuzzer"
+version = "4.0.0-dev"
+dependencies = [
+ "honggfuzz",
+ "topsoil-bags-list",
+ "topsoil-election-provider-support",
+]
+
+[[package]]
+name = "topsoil-bags-list-remote-tests"
+version = "4.0.0-dev"
+dependencies = [
+ "frame-remote-externalities",
+ "log",
+ "soil-core",
+ "soil-runtime",
+ "topsoil-bags-list",
+ "topsoil-election-provider-support",
+ "topsoil-staking",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-balances"
+version = "28.0.0"
+dependencies = [
+ "docify",
+ "log",
+ "parity-scale-codec",
+ "paste",
+ "scale-info",
+ "soil-core",
+ "soil-io",
+ "soil-runtime",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
+ "topsoil-transaction-payment",
+]
+
+[[package]]
+name = "topsoil-beefy"
+version = "28.0.0"
+dependencies = [
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "serde",
+ "soil-consensus-beefy",
+ "soil-core",
+ "soil-io",
+ "soil-runtime",
+ "soil-session",
+ "soil-staking",
+ "soil-state-machine",
+ "soil-tracing",
+ "topsoil-authorship",
+ "topsoil-balances",
+ "topsoil-election-provider-support",
+ "topsoil-offences",
+ "topsoil-session",
+ "topsoil-staking",
+ "topsoil-staking-reward-curve",
+ "topsoil-support",
+ "topsoil-system",
+ "topsoil-timestamp",
+]
+
+[[package]]
+name = "topsoil-beefy-mmr"
+version = "28.0.0"
+dependencies = [
+ "array-bytes 6.2.3",
+ "binary-merkle-tree",
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "serde",
+ "soil-api",
+ "soil-consensus-beefy",
+ "soil-core",
+ "soil-io",
+ "soil-runtime",
+ "soil-staking",
+ "soil-state-machine",
+ "topsoil-balances",
+ "topsoil-beefy",
+ "topsoil-benchmarking",
+ "topsoil-mmr",
+ "topsoil-session",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-benchmarking"
+version = "28.0.0"
+dependencies = [
+ "array-bytes 6.2.3",
+ "linregress",
+ "log",
+ "parity-scale-codec",
+ "paste",
+ "rusty-fork",
+ "scale-info",
+ "serde",
+ "soil-api",
+ "soil-application-crypto",
+ "soil-client-db",
+ "soil-core",
+ "soil-externalities",
+ "soil-io",
+ "soil-keystore",
+ "soil-runtime",
+ "soil-runtime-interface",
+ "soil-state-machine",
+ "soil-storage",
+ "static_assertions",
+ "topsoil-support",
+ "topsoil-support-procedural",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-benchmarking-pallet-pov"
+version = "18.0.0"
+dependencies = [
+ "parity-scale-codec",
+ "scale-info",
+ "soil-io",
+ "soil-runtime",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-bounties"
+version = "27.0.0"
+dependencies = [
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "soil-core",
+ "soil-io",
+ "soil-runtime",
+ "topsoil-assets",
+ "topsoil-balances",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
+ "topsoil-treasury",
+]
+
+[[package]]
+name = "topsoil-broker"
+version = "0.6.0"
+dependencies = [
+ "bitvec",
+ "log",
+ "parity-scale-codec",
+ "pretty_assertions",
+ "scale-info",
+ "soil-api",
+ "soil-arithmetic",
+ "soil-core",
+ "soil-io",
+ "soil-runtime",
+ "soil-tracing",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-child-bounties"
+version = "27.0.0"
+dependencies = [
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "soil-core",
+ "soil-io",
+ "soil-runtime",
+ "topsoil-balances",
+ "topsoil-benchmarking",
+ "topsoil-bounties",
+ "topsoil-support",
+ "topsoil-system",
+ "topsoil-treasury",
+]
+
+[[package]]
+name = "topsoil-collective"
+version = "28.0.0"
+dependencies = [
+ "docify",
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "soil-core",
+ "soil-io",
+ "soil-runtime",
+ "topsoil-balances",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-conviction-voting"
+version = "28.0.0"
+dependencies = [
+ "assert_matches",
+ "parity-scale-codec",
+ "scale-info",
+ "serde",
+ "soil-core",
+ "soil-io",
+ "soil-runtime",
+ "topsoil-balances",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-core-fellowship"
+version = "12.0.0"
+dependencies = [
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "soil-arithmetic",
+ "soil-core",
+ "soil-io",
+ "soil-runtime",
+ "topsoil-benchmarking",
+ "topsoil-ranked-collective",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-dap"
+version = "0.1.0"
+dependencies = [
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "soil-core",
+ "soil-io",
+ "soil-runtime",
+ "topsoil-balances",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-default-config-example"
+version = "10.0.0"
+dependencies = [
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "soil-io",
+ "soil-runtime",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-delegated-staking"
+version = "1.0.0"
+dependencies = [
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "soil-core",
+ "soil-io",
+ "soil-runtime",
+ "soil-staking",
+ "soil-tracing",
+ "topsoil-balances",
+ "topsoil-election-provider-support",
+ "topsoil-nomination-pools",
+ "topsoil-staking",
+ "topsoil-staking-reward-curve",
+ "topsoil-support",
+ "topsoil-system",
+ "topsoil-timestamp",
+]
+
+[[package]]
+name = "topsoil-democracy"
+version = "28.0.0"
+dependencies = [
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "serde",
+ "soil-core",
+ "soil-io",
+ "soil-runtime",
+ "topsoil-balances",
+ "topsoil-benchmarking",
+ "topsoil-preimage",
+ "topsoil-scheduler",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-dev-mode"
+version = "10.0.0"
+dependencies = [
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "soil-core",
+ "soil-io",
+ "soil-runtime",
+ "topsoil-balances",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-dummy-dim"
+version = "1.0.0"
+dependencies = [
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "soil-api",
+ "soil-arithmetic",
+ "soil-core",
+ "soil-io",
+ "soil-runtime",
+ "topsoil-benchmarking",
+ "topsoil-people",
+ "topsoil-support",
+ "topsoil-system",
+ "verifiable",
+]
+
+[[package]]
+name = "topsoil-election-provider-e2e-test"
+version = "1.0.0"
+dependencies = [
+ "log",
+ "parity-scale-codec",
+ "parking_lot 0.12.5",
+ "scale-info",
+ "soil-core",
+ "soil-io",
+ "soil-npos-elections",
+ "soil-runtime",
+ "soil-staking",
+ "soil-tracing",
+ "topsoil-bags-list",
+ "topsoil-balances",
+ "topsoil-delegated-staking",
+ "topsoil-election-provider-multi-phase",
+ "topsoil-election-provider-support",
+ "topsoil-nomination-pools",
+ "topsoil-session",
+ "topsoil-staking",
+ "topsoil-support",
+ "topsoil-system",
+ "topsoil-timestamp",
+]
+
+[[package]]
+name = "topsoil-election-provider-multi-block"
+version = "0.9.0"
+dependencies = [
+ "log",
+ "parity-scale-codec",
+ "parking_lot 0.12.5",
+ "rand 0.8.5",
+ "scale-info",
+ "soil-arithmetic",
+ "soil-core",
+ "soil-io",
+ "soil-npos-elections",
+ "soil-runtime",
+ "soil-std",
+ "soil-tracing",
+ "topsoil-balances",
+ "topsoil-benchmarking",
+ "topsoil-election-provider-support",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-election-provider-multi-phase"
+version = "27.0.0"
+dependencies = [
+ "frame-remote-externalities",
+ "hex",
+ "log",
+ "parity-scale-codec",
+ "parking_lot 0.12.5",
+ "rand 0.8.5",
+ "scale-info",
+ "soil-arithmetic",
+ "soil-core",
+ "soil-io",
+ "soil-npos-elections",
+ "soil-runtime",
+ "soil-tracing",
+ "strum 0.26.3",
+ "tokio",
+ "topsoil-balances",
+ "topsoil-benchmarking",
+ "topsoil-election-provider-support",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-election-provider-solution-type"
+version = "13.0.0"
+dependencies = [
+ "parity-scale-codec",
+ "proc-macro-crate 3.4.0",
+ "proc-macro2",
+ "quote",
+ "scale-info",
+ "soil-arithmetic",
+ "syn 2.0.117",
+ "topsoil-election-provider-support",
+ "topsoil-support",
+ "trybuild",
+]
+
+[[package]]
+name = "topsoil-election-provider-support"
+version = "28.0.0"
+dependencies = [
+ "parity-scale-codec",
+ "rand 0.8.5",
+ "scale-info",
+ "soil-arithmetic",
+ "soil-core",
+ "soil-io",
+ "soil-npos-elections",
+ "soil-runtime",
+ "soil-std",
+ "topsoil-election-provider-solution-type",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-election-provider-support-benchmarking"
+version = "27.0.0"
+dependencies = [
+ "parity-scale-codec",
+ "soil-npos-elections",
+ "soil-runtime",
+ "topsoil-benchmarking",
+ "topsoil-election-provider-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-election-solution-type-fuzzer"
+version = "2.0.0-alpha.5"
+dependencies = [
+ "honggfuzz",
+ "parity-scale-codec",
+ "soil-arithmetic",
+ "soil-runtime",
+ "topsoil-election-provider-solution-type",
+ "topsoil-election-provider-support",
+ "topsoil-support",
+]
+
+[[package]]
+name = "topsoil-elections-phragmen"
+version = "29.0.0"
+dependencies = [
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "soil-core",
+ "soil-io",
+ "soil-npos-elections",
+ "soil-runtime",
+ "soil-staking",
+ "soil-tracing",
+ "substrate-test-utils",
+ "topsoil-balances",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-example-authorization-tx-extension"
+version = "1.0.0"
+dependencies = [
+ "docify",
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "soil-core",
+ "soil-io",
+ "soil-keyring",
+ "soil-runtime",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
+ "topsoil-verify-signature",
+]
+
+[[package]]
+name = "topsoil-example-basic"
+version = "27.0.0"
+dependencies = [
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "soil-core",
+ "soil-io",
+ "soil-runtime",
+ "topsoil-balances",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-example-frame-crate"
+version = "0.0.1"
+dependencies = [
+ "parity-scale-codec",
+ "scale-info",
+ "topsoil",
+]
+
+[[package]]
+name = "topsoil-example-kitchensink"
+version = "4.0.0-dev"
+dependencies = [
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "soil-core",
+ "soil-io",
+ "soil-runtime",
+ "topsoil-balances",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-example-mbm"
+version = "0.1.0"
+dependencies = [
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "soil-io",
+ "topsoil-benchmarking",
+ "topsoil-migrations",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-example-offchain-worker"
+version = "28.0.0"
+dependencies = [
+ "lite-json",
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "soil-core",
+ "soil-io",
+ "soil-keystore",
+ "soil-runtime",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-example-single-block-migrations"
+version = "0.0.1"
+dependencies = [
+ "docify",
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "soil-core",
+ "soil-io",
+ "soil-runtime",
+ "soil-version",
+ "topsoil-balances",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-example-split"
+version = "10.0.0"
+dependencies = [
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "soil-core",
+ "soil-io",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-example-tasks"
+version = "1.0.0"
+dependencies = [
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "soil-core",
+ "soil-io",
+ "soil-runtime",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-example-view-functions"
+version = "1.0.0"
+dependencies = [
+ "frame-metadata",
+ "log",
+ "parity-scale-codec",
+ "pretty_assertions",
+ "scale-info",
+ "soil-core",
+ "soil-io",
+ "soil-metadata-ir",
+ "soil-runtime",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-examples"
+version = "4.0.0-dev"
+dependencies = [
+ "topsoil-default-config-example",
+ "topsoil-dev-mode",
+ "topsoil-example-authorization-tx-extension",
+ "topsoil-example-basic",
+ "topsoil-example-frame-crate",
+ "topsoil-example-kitchensink",
+ "topsoil-example-offchain-worker",
+ "topsoil-example-single-block-migrations",
+ "topsoil-example-split",
+ "topsoil-example-tasks",
+ "topsoil-example-view-functions",
+]
+
+[[package]]
+name = "topsoil-executive"
+version = "28.0.0"
+dependencies = [
+ "aquamarine",
+ "array-bytes 6.2.3",
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "soil-core",
+ "soil-inherents",
+ "soil-io",
+ "soil-runtime",
+ "soil-tracing",
+ "soil-version",
+ "substrate-test-runtime-client",
+ "topsoil-balances",
+ "topsoil-support",
+ "topsoil-system",
+ "topsoil-transaction-payment",
+ "topsoil-try-runtime",
+]
+
+[[package]]
+name = "topsoil-fast-unstake"
+version = "27.0.0"
+dependencies = [
+ "docify",
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "soil-core",
+ "soil-io",
+ "soil-runtime",
+ "soil-staking",
+ "soil-tracing",
+ "topsoil-balances",
+ "topsoil-benchmarking",
+ "topsoil-election-provider-support",
+ "topsoil-staking",
+ "topsoil-staking-reward-curve",
+ "topsoil-support",
+ "topsoil-system",
+ "topsoil-timestamp",
+]
+
+[[package]]
+name = "topsoil-glutton"
+version = "14.0.0"
+dependencies = [
+ "blake2 0.10.6",
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "soil-core",
+ "soil-inherents",
+ "soil-io",
+ "soil-runtime",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-grandpa"
+version = "28.0.0"
+dependencies = [
+ "finality-grandpa",
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "soil-application-crypto",
+ "soil-consensus-grandpa",
+ "soil-core",
+ "soil-io",
+ "soil-keyring",
+ "soil-runtime",
+ "soil-session",
+ "soil-staking",
+ "soil-tracing",
+ "topsoil-authorship",
+ "topsoil-balances",
+ "topsoil-benchmarking",
+ "topsoil-election-provider-support",
+ "topsoil-offences",
+ "topsoil-session",
+ "topsoil-staking",
+ "topsoil-staking-reward-curve",
+ "topsoil-support",
+ "topsoil-system",
+ "topsoil-timestamp",
+]
+
+[[package]]
+name = "topsoil-identity"
+version = "29.0.0"
+dependencies = [
+ "enumflags2",
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "soil-core",
+ "soil-io",
+ "soil-keystore",
+ "soil-runtime",
+ "topsoil-balances",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-im-online"
+version = "27.0.0"
+dependencies = [
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "soil-application-crypto",
+ "soil-core",
+ "soil-io",
+ "soil-runtime",
+ "soil-staking",
+ "topsoil-authorship",
+ "topsoil-balances",
+ "topsoil-benchmarking",
+ "topsoil-session",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-indices"
+version = "28.0.0"
+dependencies = [
+ "parity-scale-codec",
+ "scale-info",
+ "soil-core",
+ "soil-io",
+ "soil-runtime",
+ "topsoil-balances",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-insecure-randomness-collective-flip"
+version = "16.0.0"
+dependencies = [
+ "parity-scale-codec",
+ "safe-mix",
+ "scale-info",
+ "topsoil",
+]
+
+[[package]]
+name = "topsoil-lottery"
+version = "28.0.0"
+dependencies = [
+ "parity-scale-codec",
+ "scale-info",
+ "soil-core",
+ "soil-io",
+ "soil-runtime",
+ "topsoil-balances",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-support-test",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-membership"
+version = "28.0.0"
+dependencies = [
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "soil-core",
+ "soil-io",
+ "soil-runtime",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-message-queue"
+version = "31.0.0"
+dependencies = [
+ "environmental",
+ "log",
+ "parity-scale-codec",
+ "rand 0.8.5",
+ "rand_distr",
+ "scale-info",
+ "serde",
+ "soil-arithmetic",
+ "soil-core",
+ "soil-crypto-hashing",
+ "soil-io",
+ "soil-runtime",
+ "soil-tracing",
+ "soil-weights",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-meta-tx"
+version = "0.1.0"
+dependencies = [
+ "docify",
+ "parity-scale-codec",
+ "scale-info",
+ "serde",
+ "soil-core",
+ "soil-io",
+ "soil-keyring",
+ "soil-keystore",
+ "soil-runtime",
+ "soil-std",
+ "topsoil-balances",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
+ "topsoil-transaction-payment",
+ "topsoil-verify-signature",
+]
+
+[[package]]
+name = "topsoil-metadata-hash-extension"
+version = "0.1.0"
+dependencies = [
+ "array-bytes 6.2.3",
+ "const-hex",
+ "docify",
+ "frame-metadata",
+ "log",
+ "merkleized-metadata",
+ "parity-scale-codec",
+ "scale-info",
+ "soil-api",
+ "soil-runtime",
+ "soil-tracing",
+ "soil-transaction-pool",
+ "substrate-test-runtime-client",
+ "substrate-wasm-builder",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-migrations"
+version = "1.0.0"
+dependencies = [
+ "docify",
+ "impl-trait-for-tuples",
+ "log",
+ "parity-scale-codec",
+ "pretty_assertions",
+ "scale-info",
+ "soil-core",
+ "soil-io",
+ "soil-runtime",
+ "soil-tracing",
+ "topsoil",
+ "topsoil-benchmarking",
+ "topsoil-executive",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-mixnet"
+version = "0.4.0"
+dependencies = [
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "serde",
+ "soil-application-crypto",
+ "soil-mixnet",
+ "topsoil",
+]
+
+[[package]]
+name = "topsoil-mmr"
+version = "27.0.0"
+dependencies = [
+ "itertools 0.11.0",
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "soil-mmr-primitives",
+ "soil-tracing",
+ "topsoil",
+]
+
+[[package]]
+name = "topsoil-multi-asset-bounties"
+version = "1.0.0"
+dependencies = [
+ "docify",
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "soil-core",
+ "soil-io",
+ "soil-runtime",
+ "topsoil-balances",
+ "topsoil-benchmarking",
+ "topsoil-preimage",
+ "topsoil-support",
+ "topsoil-system",
+ "topsoil-utility",
+]
+
+[[package]]
+name = "topsoil-multisig"
+version = "28.0.0"
+dependencies = [
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "topsoil",
+ "topsoil-balances",
+]
+
+[[package]]
+name = "topsoil-nft-fractionalization"
+version = "10.0.0"
+dependencies = [
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "topsoil",
+ "topsoil-assets",
+ "topsoil-balances",
+ "topsoil-nfts",
+]
+
+[[package]]
+name = "topsoil-nfts"
+version = "22.0.0"
+dependencies = [
+ "enumflags2",
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "soil-core",
+ "soil-io",
+ "soil-keystore",
+ "soil-runtime",
+ "topsoil-balances",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-nfts-runtime-api"
+version = "14.0.0"
+dependencies = [
+ "parity-scale-codec",
+ "soil-api",
+]
+
+[[package]]
+name = "topsoil-nis"
+version = "28.0.0"
+dependencies = [
+ "parity-scale-codec",
+ "scale-info",
+ "soil-io",
+ "topsoil",
+ "topsoil-balances",
+]
+
+[[package]]
+name = "topsoil-node-authorization"
+version = "28.0.0"
+dependencies = [
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "topsoil",
+]
+
+[[package]]
+name = "topsoil-nomination-pools"
+version = "25.0.0"
+dependencies = [
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "soil-core",
+ "soil-io",
+ "soil-runtime",
+ "soil-staking",
+ "soil-tracing",
+ "topsoil-balances",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-nomination-pools-benchmarking"
+version = "26.0.0"
+dependencies = [
+ "parity-scale-codec",
+ "scale-info",
+ "soil-core",
+ "soil-io",
+ "soil-runtime",
+ "soil-runtime-interface",
+ "soil-staking",
+ "topsoil-bags-list",
+ "topsoil-balances",
+ "topsoil-benchmarking",
+ "topsoil-delegated-staking",
+ "topsoil-election-provider-support",
+ "topsoil-nomination-pools",
+ "topsoil-staking",
+ "topsoil-staking-reward-curve",
+ "topsoil-support",
+ "topsoil-system",
+ "topsoil-timestamp",
+]
+
+[[package]]
+name = "topsoil-nomination-pools-fuzzer"
+version = "2.0.0"
+dependencies = [
+ "honggfuzz",
+ "log",
+ "rand 0.8.5",
+ "soil-io",
+ "soil-runtime",
+ "soil-tracing",
+ "topsoil-nomination-pools",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-nomination-pools-runtime-api"
+version = "23.0.0"
+dependencies = [
+ "parity-scale-codec",
+ "soil-api",
+ "topsoil-nomination-pools",
+]
+
+[[package]]
+name = "topsoil-offences"
+version = "27.0.0"
+dependencies = [
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "serde",
+ "soil-core",
+ "soil-io",
+ "soil-runtime",
+ "soil-staking",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-offences-benchmarking"
+version = "28.0.0"
+dependencies = [
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "soil-core",
+ "soil-io",
+ "soil-runtime",
+ "soil-staking",
+ "soil-tracing",
+ "topsoil-babe",
+ "topsoil-balances",
+ "topsoil-benchmarking",
+ "topsoil-election-provider-support",
+ "topsoil-grandpa",
+ "topsoil-im-online",
+ "topsoil-offences",
+ "topsoil-session",
+ "topsoil-session-benchmarking",
+ "topsoil-staking",
+ "topsoil-staking-reward-curve",
+ "topsoil-support",
+ "topsoil-system",
+ "topsoil-timestamp",
+]
+
+[[package]]
+name = "topsoil-oracle"
+version = "1.0.0"
+dependencies = [
+ "impl-trait-for-tuples",
+ "parity-scale-codec",
+ "scale-info",
+ "serde",
+ "soil-application-crypto",
+ "soil-io",
+ "soil-runtime",
+ "soil-std",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-oracle-runtime-api"
+version = "1.0.0"
+dependencies = [
+ "parity-scale-codec",
+ "scale-info",
+ "soil-api",
+ "soil-std",
+]
+
+[[package]]
+name = "topsoil-origin-restriction"
+version = "1.0.0"
+dependencies = [
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "soil-arithmetic",
+ "soil-core",
+ "soil-io",
+ "soil-runtime",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
+ "topsoil-transaction-payment",
+]
+
+[[package]]
+name = "topsoil-paged-list"
+version = "0.6.0"
+dependencies = [
+ "docify",
+ "parity-scale-codec",
+ "scale-info",
+ "soil-metadata-ir",
+ "topsoil",
+]
+
+[[package]]
+name = "topsoil-paged-list-fuzzer"
+version = "0.1.0"
+dependencies = [
+ "arbitrary",
+ "honggfuzz",
+ "topsoil",
+ "topsoil-paged-list",
+]
+
+[[package]]
+name = "topsoil-parameters"
+version = "0.1.0"
+dependencies = [
+ "docify",
+ "parity-scale-codec",
+ "paste",
+ "scale-info",
+ "serde",
+ "soil-core",
+ "soil-io",
+ "soil-runtime",
+ "topsoil-balances",
+ "topsoil-benchmarking",
+ "topsoil-example-basic",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-people"
+version = "1.0.0"
+dependencies = [
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "soil-arithmetic",
+ "soil-core",
+ "soil-io",
+ "soil-runtime",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
+ "verifiable",
+]
+
+[[package]]
+name = "topsoil-preimage"
+version = "28.0.0"
+dependencies = [
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "soil-core",
+ "soil-io",
+ "soil-runtime",
+ "topsoil-balances",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-proxy"
+version = "28.0.0"
+dependencies = [
+ "parity-scale-codec",
+ "scale-info",
+ "topsoil",
+ "topsoil-balances",
+ "topsoil-utility",
+]
+
+[[package]]
+name = "topsoil-ranked-collective"
+version = "28.0.0"
+dependencies = [
+ "impl-trait-for-tuples",
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "soil-arithmetic",
+ "soil-core",
+ "soil-io",
+ "soil-runtime",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-recovery"
+version = "28.0.0"
+dependencies = [
+ "parity-scale-codec",
+ "scale-info",
+ "topsoil",
+ "topsoil-balances",
+]
+
+[[package]]
+name = "topsoil-referenda"
+version = "28.0.0"
+dependencies = [
+ "assert_matches",
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "serde",
+ "soil-arithmetic",
+ "soil-core",
+ "soil-io",
+ "soil-runtime",
+ "topsoil-balances",
+ "topsoil-benchmarking",
+ "topsoil-preimage",
+ "topsoil-scheduler",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-remark"
+version = "28.0.0"
+dependencies = [
+ "parity-scale-codec",
+ "scale-info",
+ "serde",
+ "soil-core",
+ "soil-io",
+ "soil-runtime",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-root-offences"
+version = "25.0.0"
+dependencies = [
+ "parity-scale-codec",
+ "scale-info",
+ "soil-core",
+ "soil-io",
+ "soil-runtime",
+ "soil-staking",
+ "topsoil-balances",
+ "topsoil-election-provider-support",
+ "topsoil-session",
+ "topsoil-staking",
+ "topsoil-staking-reward-curve",
+ "topsoil-support",
+ "topsoil-system",
+ "topsoil-timestamp",
+]
+
+[[package]]
+name = "topsoil-root-testing"
+version = "4.0.0"
+dependencies = [
+ "parity-scale-codec",
+ "scale-info",
+ "soil-io",
+ "soil-runtime",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-safe-mode"
+version = "9.0.0"
+dependencies = [
+ "docify",
+ "parity-scale-codec",
+ "scale-info",
+ "topsoil",
+ "topsoil-balances",
+ "topsoil-proxy",
+ "topsoil-utility",
+]
+
+[[package]]
+name = "topsoil-salary"
+version = "13.0.0"
+dependencies = [
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "topsoil",
+ "topsoil-ranked-collective",
+]
+
+[[package]]
+name = "topsoil-sassafras"
+version = "0.3.5-dev"
+dependencies = [
+ "array-bytes 6.2.3",
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "soil-consensus-sassafras",
+ "soil-core",
+ "soil-crypto-hashing",
+ "soil-io",
+ "soil-runtime",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-scheduler"
+version = "29.0.0"
+dependencies = [
+ "docify",
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "soil-core",
+ "soil-io",
+ "soil-runtime",
+ "soil-weights",
+ "substrate-test-utils",
+ "topsoil-benchmarking",
+ "topsoil-preimage",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-scored-pool"
+version = "28.0.0"
+dependencies = [
+ "parity-scale-codec",
+ "scale-info",
+ "soil-io",
+ "soil-runtime",
+ "topsoil-balances",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-session"
+version = "28.0.0"
+dependencies = [
+ "impl-trait-for-tuples",
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "soil-core",
+ "soil-io",
+ "soil-runtime",
+ "soil-session",
+ "soil-staking",
+ "soil-state-machine",
+ "soil-trie",
+ "topsoil-balances",
+ "topsoil-support",
+ "topsoil-system",
+ "topsoil-timestamp",
+]
+
+[[package]]
+name = "topsoil-session-benchmarking"
+version = "28.0.0"
+dependencies = [
+ "parity-scale-codec",
+ "rand 0.8.5",
+ "scale-info",
+ "soil-io",
+ "soil-runtime",
+ "soil-session",
+ "soil-staking",
+ "topsoil-balances",
+ "topsoil-benchmarking",
+ "topsoil-election-provider-support",
+ "topsoil-session",
+ "topsoil-staking",
+ "topsoil-staking-reward-curve",
+ "topsoil-support",
+ "topsoil-system",
+ "topsoil-timestamp",
+]
+
+[[package]]
+name = "topsoil-skip-feeless-payment"
+version = "3.0.0"
+dependencies = [
+ "parity-scale-codec",
+ "scale-info",
+ "soil-runtime",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-society"
+version = "28.0.0"
+dependencies = [
+ "log",
+ "parity-scale-codec",
+ "rand_chacha 0.3.1",
+ "scale-info",
+ "soil-arithmetic",
+ "soil-crypto-hashing",
+ "soil-io",
+ "soil-runtime",
+ "topsoil-balances",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-support-test",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-staking"
+version = "28.0.0"
+dependencies = [
+ "log",
+ "parity-scale-codec",
+ "rand_chacha 0.3.1",
+ "scale-info",
+ "serde",
+ "soil-application-crypto",
+ "soil-core",
+ "soil-io",
+ "soil-npos-elections",
+ "soil-runtime",
+ "soil-staking",
+ "soil-tracing",
+ "substrate-test-utils",
+ "topsoil-authorship",
+ "topsoil-bags-list",
+ "topsoil-balances",
+ "topsoil-benchmarking",
+ "topsoil-election-provider-support",
+ "topsoil-session",
+ "topsoil-staking-reward-curve",
+ "topsoil-support",
+ "topsoil-system",
+ "topsoil-timestamp",
+]
+
+[[package]]
+name = "topsoil-staking-reward-curve"
+version = "11.0.0"
+dependencies = [
+ "proc-macro-crate 3.4.0",
+ "proc-macro2",
+ "quote",
+ "soil-runtime",
+ "syn 2.0.117",
+]
+
+[[package]]
+name = "topsoil-staking-reward-fn"
+version = "19.0.0"
+dependencies = [
+ "log",
+ "soil-arithmetic",
+]
+
+[[package]]
+name = "topsoil-staking-runtime-api"
+version = "14.0.0"
+dependencies = [
+ "parity-scale-codec",
+ "soil-api",
+ "soil-staking",
+]
+
+[[package]]
+name = "topsoil-state-trie-migration"
+version = "29.0.0"
+dependencies = [
+ "frame-remote-externalities",
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "serde",
+ "soil-core",
+ "soil-io",
+ "soil-runtime",
+ "soil-tracing",
+ "substrate-state-trie-migration-rpc",
+ "thousands",
+ "tokio",
+ "topsoil-balances",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
+ "zstd 0.12.4",
+]
+
+[[package]]
+name = "topsoil-statement"
+version = "10.0.0"
+dependencies = [
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "soil-api",
+ "soil-core",
+ "soil-io",
+ "soil-runtime",
+ "soil-statement-store",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-sudo"
+version = "28.0.0"
+dependencies = [
+ "docify",
+ "parity-scale-codec",
+ "scale-info",
+ "soil-io",
+ "soil-runtime",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-support"
+version = "28.0.0"
+dependencies = [
+ "Inflector",
+ "aquamarine",
+ "array-bytes 6.2.3",
+ "binary-merkle-tree",
+ "bitflags 1.3.2",
+ "docify",
+ "environmental",
+ "frame-metadata",
+ "impl-trait-for-tuples",
+ "k256",
+ "log",
+ "macro_magic",
+ "parity-scale-codec",
+ "paste",
+ "pretty_assertions",
+ "scale-info",
+ "serde",
+ "serde_json",
+ "soil-api",
+ "soil-arithmetic",
+ "soil-core",
+ "soil-crypto-hashing",
+ "soil-crypto-hashing-proc-macro",
+ "soil-debug-derive",
+ "soil-genesis-builder",
+ "soil-inherents",
+ "soil-io",
+ "soil-metadata-ir",
+ "soil-runtime",
+ "soil-staking",
+ "soil-state-machine",
+ "soil-std",
+ "soil-timestamp",
+ "soil-tracing",
+ "soil-trie",
+ "soil-weights",
+ "topsoil-support-procedural",
+ "topsoil-system",
+ "tt-call",
+]
+
+[[package]]
+name = "topsoil-support-procedural"
+version = "23.0.0"
+dependencies = [
+ "Inflector",
+ "cfg-expr",
+ "derive-syn-parse",
+ "docify",
+ "expander",
+ "itertools 0.11.0",
+ "macro_magic",
+ "parity-scale-codec",
+ "pretty_assertions",
+ "proc-macro-warning",
+ "proc-macro2",
+ "quote",
+ "regex",
+ "scale-info",
+ "soil-crypto-hashing",
+ "soil-io",
+ "soil-metadata-ir",
+ "soil-runtime",
+ "syn 2.0.117",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-support-procedural-tools",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-support-procedural-tools"
+version = "10.0.0"
+dependencies = [
+ "proc-macro-crate 3.4.0",
+ "proc-macro2",
+ "quote",
+ "syn 2.0.117",
+ "topsoil-support-procedural-tools-derive",
+]
+
+[[package]]
+name = "topsoil-support-procedural-tools-derive"
+version = "11.0.0"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 2.0.117",
+]
+
+[[package]]
+name = "topsoil-support-test"
+version = "3.0.0"
+dependencies = [
+ "frame-metadata",
+ "parity-scale-codec",
+ "pretty_assertions",
+ "rustversion",
+ "scale-info",
+ "serde",
+ "soil-api",
+ "soil-arithmetic",
+ "soil-core",
+ "soil-io",
+ "soil-metadata-ir",
+ "soil-runtime",
+ "soil-state-machine",
+ "soil-version",
+ "static_assertions",
+ "topsoil-benchmarking",
+ "topsoil-executive",
+ "topsoil-support",
+ "topsoil-support-test-pallet",
+ "topsoil-system",
+ "trybuild",
+]
+
+[[package]]
+name = "topsoil-support-test-compile-pass"
+version = "4.0.0-dev"
+dependencies = [
+ "parity-scale-codec",
+ "scale-info",
+ "soil-core",
+ "soil-runtime",
+ "soil-version",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-support-test-pallet"
+version = "4.0.0-dev"
+dependencies = [
+ "parity-scale-codec",
+ "scale-info",
+ "serde",
+ "soil-runtime",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-support-test-stg-frame-crate"
+version = "0.1.0"
+dependencies = [
+ "parity-scale-codec",
+ "scale-info",
+ "topsoil",
+]
+
+[[package]]
+name = "topsoil-system"
+version = "28.0.0"
+dependencies = [
+ "cfg-if",
+ "criterion",
+ "docify",
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "serde",
+ "soil-core",
+ "soil-externalities",
+ "soil-io",
+ "soil-runtime",
+ "soil-tracing",
+ "soil-version",
+ "soil-weights",
+ "substrate-test-runtime-client",
+ "topsoil-support",
+]
+
+[[package]]
+name = "topsoil-system-benchmarking"
+version = "28.0.0"
+dependencies = [
+ "parity-scale-codec",
+ "scale-info",
+ "soil-core",
+ "soil-externalities",
+ "soil-io",
+ "soil-runtime",
+ "soil-version",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-system-rpc-runtime-api"
+version = "26.0.0"
+dependencies = [
+ "docify",
+ "parity-scale-codec",
+ "soil-api",
+]
+
+[[package]]
+name = "topsoil-timestamp"
+version = "27.0.0"
+dependencies = [
+ "docify",
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "soil-inherents",
+ "soil-io",
+ "soil-runtime",
+ "soil-storage",
+ "soil-timestamp",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-tips"
+version = "27.0.0"
+dependencies = [
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "serde",
+ "soil-core",
+ "soil-io",
+ "soil-runtime",
+ "soil-storage",
+ "topsoil-balances",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
+ "topsoil-treasury",
+]
+
+[[package]]
+name = "topsoil-transaction-payment"
+version = "28.0.0"
+dependencies = [
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "serde",
+ "serde_json",
+ "soil-io",
+ "soil-runtime",
+ "topsoil-balances",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-transaction-payment-rpc"
+version = "30.0.0"
+dependencies = [
+ "jsonrpsee",
+ "parity-scale-codec",
+ "soil-api",
+ "soil-blockchain",
+ "soil-core",
+ "soil-rpc",
+ "soil-runtime",
+ "soil-weights",
+ "topsoil-transaction-payment-rpc-runtime-api",
+]
+
+[[package]]
+name = "topsoil-transaction-payment-rpc-runtime-api"
+version = "28.0.0"
+dependencies = [
+ "parity-scale-codec",
+ "soil-api",
+ "soil-runtime",
+ "soil-weights",
+ "topsoil-transaction-payment",
+]
+
+[[package]]
+name = "topsoil-transaction-storage"
+version = "27.0.0"
+dependencies = [
+ "array-bytes 6.2.3",
+ "parity-scale-codec",
+ "scale-info",
+ "serde",
+ "soil-inherents",
+ "soil-io",
+ "soil-runtime",
+ "soil-transaction-storage-proof",
+ "topsoil-balances",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
+ "tracing",
+]
+
+[[package]]
+name = "topsoil-treasury"
+version = "27.0.0"
+dependencies = [
+ "docify",
+ "impl-trait-for-tuples",
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "serde",
+ "soil-core",
+ "soil-io",
+ "soil-runtime",
+ "topsoil-balances",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
+ "topsoil-utility",
+]
+
+[[package]]
+name = "topsoil-try-runtime"
+version = "0.34.0"
+dependencies = [
+ "parity-scale-codec",
+ "soil-api",
+ "soil-runtime",
+ "topsoil-support",
+]
+
+[[package]]
+name = "topsoil-tx-pause"
+version = "9.0.0"
+dependencies = [
+ "docify",
+ "parity-scale-codec",
+ "scale-info",
+ "topsoil",
+ "topsoil-balances",
+ "topsoil-proxy",
+ "topsoil-utility",
+]
+
+[[package]]
+name = "topsoil-uniques"
+version = "28.0.0"
+dependencies = [
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "soil-io",
+ "soil-runtime",
+ "topsoil-balances",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-utility"
+version = "28.0.0"
+dependencies = [
+ "parity-scale-codec",
+ "scale-info",
+ "soil-core",
+ "soil-io",
+ "soil-runtime",
+ "topsoil-balances",
+ "topsoil-benchmarking",
+ "topsoil-collective",
+ "topsoil-root-testing",
+ "topsoil-support",
+ "topsoil-system",
+ "topsoil-timestamp",
+]
+
+[[package]]
+name = "topsoil-verify-signature"
+version = "1.0.0"
+dependencies = [
+ "parity-scale-codec",
+ "scale-info",
+ "soil-io",
+ "soil-runtime",
+ "soil-weights",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-vesting"
+version = "28.0.0"
+dependencies = [
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "soil-io",
+ "soil-runtime",
+ "topsoil-balances",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "topsoil-whitelist"
+version = "27.0.0"
+dependencies = [
+ "parity-scale-codec",
+ "scale-info",
+ "topsoil",
+ "topsoil-balances",
+ "topsoil-preimage",
+]
 
 [[package]]
 name = "tower"

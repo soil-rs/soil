@@ -378,7 +378,7 @@ scale-info = { version = "2.5.0", default-features = false, features = ["derive"
 [dependencies]
 scale-info = { version = "2.5.0", default-features = false, features = ["derive"] }
 sp-io = { version = "7.0.0", path = "../../../../primitives/io" }
-frame-system = { version = "4.0.0-dev", default-features = false, path = "../../../../frame/system" }
+topsoil-system = { version = "4.0.0-dev", default-features = false, path = "../../../../frame/system" }
 "#;
 		let mut cargo_toml = toml.parse::<CargoToml>().expect("invalid doc");
 		let actual_deps = update_git_dependencies(&mut cargo_toml, |_| true);
@@ -395,9 +395,9 @@ frame-system = { version = "4.0.0-dev", default-features = false, path = "../../
 			}
 		);
 		assert_eq!(
-			actual_deps.get("dependencies").unwrap().get("frame-system").unwrap(),
+			actual_deps.get("dependencies").unwrap().get("topsoil-system").unwrap(),
 			&Dependency {
-				name: "frame-system".into(),
+				name: "topsoil-system".into(),
 				version: Some("4.0.0-dev".into()),
 				default_features: Some(false),
 			}
@@ -410,7 +410,7 @@ scale-info = { version = "2.5.0", default-features = false, features = ["derive"
 [dependencies]
 scale-info = { version = "2.5.0", default-features = false, features = ["derive"] }
 sp-io = { workspace = true }
-frame-system = { workspace = true }
+topsoil-system = { workspace = true }
 "#;
 		assert_eq!(cargo_toml.to_string(), expected_toml);
 	}
@@ -434,9 +434,9 @@ frame-system = { workspace = true }
 							},
 						),
 						(
-							"frame-system".into(),
+							"topsoil-system".into(),
 							Dependency {
-								name: "frame-system".into(),
+								name: "topsoil-system".into(),
 								version: Some("4.0.0-dev".into()),
 								default_features: Some(true),
 							},
@@ -457,8 +457,8 @@ members = ["node", "pallets/template", "runtime"]
 edition = "2021"
 
 [workspace.dependencies]
-frame-system = { version = "4.0.0-dev", default-features = true, git = "https://github.com/paritytech/polkadot-sdk.git", rev = "commit_id" }
 sp-io = { version = "7.0.0", git = "https://github.com/paritytech/polkadot-sdk.git", rev = "commit_id" }
+topsoil-system = { version = "4.0.0-dev", default-features = true, git = "https://github.com/paritytech/polkadot-sdk.git", rev = "commit_id" }
 
 [workspace.lints]
 

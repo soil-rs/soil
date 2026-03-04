@@ -2559,13 +2559,13 @@ pub trait BlockNumberProvider {
 	/// Provides an abstraction over an arbitrary way of providing the
 	/// current block number.
 	///
-	/// In case of using crate `soil_runtime` with the crate `frame-system`,
+	/// In case of using crate `soil_runtime` with the crate `topsoil-system`,
 	/// it is already implemented for
-	/// `frame_system::Pallet<T: Config>` as:
+	/// `topsoil_system::Pallet<T: Config>` as:
 	///
 	/// ```ignore
 	/// fn current_block_number() -> Self {
-	///     frame_system::Pallet<Config>::block_number()
+	///     topsoil_system::Pallet<Config>::block_number()
 	/// }
 	/// ```
 	/// .

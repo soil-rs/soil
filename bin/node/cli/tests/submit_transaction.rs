@@ -17,7 +17,7 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 use codec::Decode;
-use frame_system::offchain::{SendSignedTransaction, Signer, SubmitTransaction};
+use topsoil_system::offchain::{SendSignedTransaction, Signer, SubmitTransaction};
 use kitchensink_runtime::{Executive, ExistentialDeposit, Indices, Runtime, UncheckedExtrinsic};
 use soil_application_crypto::AppCrypto;
 use soil_core::offchain::{testing::TestTransactionPoolExt, TransactionPoolExt};
@@ -36,17 +36,17 @@ fn should_submit_unsigned_transaction() {
 
 	t.execute_with(|| {
 		let signature =
-			pallet_im_online::sr25519::AuthoritySignature::try_from(vec![0; 64]).unwrap();
-		let heartbeat_data = pallet_im_online::Heartbeat {
+			topsoil_im_online::sr25519::AuthoritySignature::try_from(vec![0; 64]).unwrap();
+		let heartbeat_data = topsoil_im_online::Heartbeat {
 			block_number: 1,
 			session_index: 1,
 			authority_index: 0,
 			validators_len: 0,
 		};
 
-		let call = pallet_im_online::Call::heartbeat { heartbeat: heartbeat_data, signature };
+		let call = topsoil_im_online::Call::heartbeat { heartbeat: heartbeat_data, signature };
 		let xt = generic::UncheckedExtrinsic::new_bare(call.into()).into();
-		SubmitTransaction::<Runtime, pallet_im_online::Call<Runtime>>::submit_transaction(xt)
+		SubmitTransaction::<Runtime, topsoil_im_online::Call<Runtime>>::submit_transaction(xt)
 			.unwrap();
 
 		assert_eq!(state.read().transactions.len(), 1)
@@ -76,7 +76,7 @@ fn should_submit_signed_transaction() {
 	t.execute_with(|| {
 		let results =
 			Signer::<Runtime, TestAuthorityId>::all_accounts().send_signed_transaction(|_| {
-				pallet_balances::Call::transfer_allow_death {
+				topsoil_balances::Call::transfer_allow_death {
 					dest: Alice.to_account_id().into(),
 					value: Default::default(),
 				}
@@ -107,7 +107,7 @@ fn should_submit_signed_twice_from_the_same_account() {
 	t.execute_with(|| {
 		let result =
 			Signer::<Runtime, TestAuthorityId>::any_account().send_signed_transaction(|_| {
-				pallet_balances::Call::transfer_allow_death {
+				topsoil_balances::Call::transfer_allow_death {
 					dest: Alice.to_account_id().into(),
 					value: Default::default(),
 				}
@@ -119,7 +119,7 @@ fn should_submit_signed_twice_from_the_same_account() {
 		// submit another one from the same account. The nonce should be incremented.
 		let result =
 			Signer::<Runtime, TestAuthorityId>::any_account().send_signed_transaction(|_| {
-				pallet_balances::Call::transfer_allow_death {
+				topsoil_balances::Call::transfer_allow_death {
 					dest: Alice.to_account_id().into(),
 					value: Default::default(),
 				}
@@ -130,7 +130,7 @@ fn should_submit_signed_twice_from_the_same_account() {
 
 		// now check that the transaction nonces are not equal
 		let s = state.read();
-		fn nonce(tx: UncheckedExtrinsic) -> frame_system::CheckNonce<Runtime> {
+		fn nonce(tx: UncheckedExtrinsic) -> topsoil_system::CheckNonce<Runtime> {
 			let extra = tx.preamble.to_signed().unwrap().2;
 			extra.6
 		}
@@ -158,7 +158,7 @@ fn should_submit_signed_twice_from_all_accounts() {
 	t.execute_with(|| {
 		let results = Signer::<Runtime, TestAuthorityId>::all_accounts()
 			.send_signed_transaction(|_| {
-				pallet_balances::Call::transfer_allow_death { dest: Alice.to_account_id().into(), value: Default::default() }
+				topsoil_balances::Call::transfer_allow_death { dest: Alice.to_account_id().into(), value: Default::default() }
 			});
 
 		let len = results.len();
@@ -169,7 +169,7 @@ fn should_submit_signed_twice_from_all_accounts() {
 		// submit another one from the same account. The nonce should be incremented.
 		let results = Signer::<Runtime, TestAuthorityId>::all_accounts()
 			.send_signed_transaction(|_| {
-				pallet_balances::Call::transfer_allow_death { dest: Alice.to_account_id().into(), value: Default::default() }
+				topsoil_balances::Call::transfer_allow_death { dest: Alice.to_account_id().into(), value: Default::default() }
 			});
 
 		let len = results.len();
@@ -179,7 +179,7 @@ fn should_submit_signed_twice_from_all_accounts() {
 
 		// now check that the transaction nonces are not equal
 		let s = state.read();
-		fn nonce(tx: UncheckedExtrinsic) -> frame_system::CheckNonce<Runtime> {
+		fn nonce(tx: UncheckedExtrinsic) -> topsoil_system::CheckNonce<Runtime> {
 			let extra = tx.preamble.to_signed().unwrap().2;
 			extra.6
 		}
@@ -219,7 +219,7 @@ fn submitted_transaction_should_be_valid() {
 	t.execute_with(|| {
 		let results =
 			Signer::<Runtime, TestAuthorityId>::all_accounts().send_signed_transaction(|_| {
-				pallet_balances::Call::transfer_allow_death {
+				topsoil_balances::Call::transfer_allow_death {
 					dest: Alice.to_account_id().into(),
 					value: Default::default(),
 				}
@@ -239,18 +239,18 @@ fn submitted_transaction_should_be_valid() {
 		// add balance to the account
 		let author = extrinsic.preamble.clone().to_signed().clone().unwrap().0;
 		let address = Indices::lookup(author).unwrap();
-		let data = pallet_balances::AccountData {
+		let data = topsoil_balances::AccountData {
 			free: ExistentialDeposit::get() * 10,
 			..Default::default()
 		};
-		let account = frame_system::AccountInfo { providers: 1, data, ..Default::default() };
-		<frame_system::Account<Runtime>>::insert(&address, account);
+		let account = topsoil_system::AccountInfo { providers: 1, data, ..Default::default() };
+		<topsoil_system::Account<Runtime>>::insert(&address, account);
 
 		// check validity
 		let res = Executive::validate_transaction(
 			source,
 			extrinsic,
-			frame_system::BlockHash::<Runtime>::get(0),
+			topsoil_system::BlockHash::<Runtime>::get(0),
 		)
 		.unwrap();
 

@@ -22,7 +22,7 @@
 //! of them requires signing. Refer to `pallet::Call` for further details.
 
 use alloc::{vec, vec::Vec};
-use frame_support::{pallet_prelude::*, storage};
+use topsoil_support::{pallet_prelude::*, storage};
 use soil_core::sr25519::Public;
 use soil_runtime::{
 	traits::Hash,
@@ -35,11 +35,11 @@ pub use self::pallet::*;
 
 const LOG_TARGET: &str = "substrate_test_pallet";
 
-#[frame_support::pallet(dev_mode)]
+#[topsoil_support::pallet(dev_mode)]
 pub mod pallet {
 	use super::*;
 	use crate::TransferData;
-	use frame_system::pallet_prelude::*;
+	use topsoil_system::pallet_prelude::*;
 	use soil_core::storage::well_known_keys;
 	use soil_runtime::{traits::BlakeTwo256, transaction_validity::TransactionPriority, Perbill};
 
@@ -48,14 +48,14 @@ pub mod pallet {
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
-	pub trait Config: frame_system::Config {}
+	pub trait Config: topsoil_system::Config {}
 
 	#[pallet::storage]
 	#[pallet::getter(fn authorities)]
 	pub type Authorities<T> = StorageValue<_, Vec<Public>, ValueQuery>;
 
 	#[pallet::genesis_config]
-	#[derive(frame_support::DefaultNoBound)]
+	#[derive(topsoil_support::DefaultNoBound)]
 	pub struct GenesisConfig<T: Config> {
 		pub authorities: Vec<Public>,
 		#[serde(skip)]
@@ -82,7 +82,7 @@ pub mod pallet {
 		#[pallet::call_index(1)]
 		#[pallet::weight(100)]
 		pub fn include_data(origin: OriginFor<T>, _data: Vec<u8>) -> DispatchResult {
-			frame_system::ensure_signed(origin)?;
+			topsoil_system::ensure_signed(origin)?;
 			Ok(())
 		}
 
@@ -109,7 +109,7 @@ pub mod pallet {
 			key: Vec<u8>,
 			value: Vec<u8>,
 		) -> DispatchResult {
-			frame_system::ensure_signed(origin)?;
+			topsoil_system::ensure_signed(origin)?;
 			soil_io::offchain_index::set(&key, &value);
 			Ok(())
 		}
@@ -118,7 +118,7 @@ pub mod pallet {
 		#[pallet::call_index(4)]
 		#[pallet::weight(100)]
 		pub fn offchain_index_clear(origin: OriginFor<T>, key: Vec<u8>) -> DispatchResult {
-			frame_system::ensure_signed(origin)?;
+			topsoil_system::ensure_signed(origin)?;
 			soil_io::offchain_index::clear(&key);
 			Ok(())
 		}
@@ -127,7 +127,7 @@ pub mod pallet {
 		#[pallet::call_index(5)]
 		#[pallet::weight(100)]
 		pub fn indexed_call(origin: OriginFor<T>, data: Vec<u8>) -> DispatchResult {
-			frame_system::ensure_signed(origin)?;
+			topsoil_system::ensure_signed(origin)?;
 			let content_hash = soil_io::hashing::blake2_256(&data);
 			let extrinsic_index: u32 =
 				storage::unhashed::get(well_known_keys::EXTRINSIC_INDEX).unwrap();
@@ -143,7 +143,7 @@ pub mod pallet {
 			_origin: OriginFor<T>,
 			log: soil_runtime::generic::DigestItem,
 		) -> DispatchResult {
-			<frame_system::Pallet<T>>::deposit_log(log);
+			<topsoil_system::Pallet<T>>::deposit_log(log);
 			Ok(())
 		}
 

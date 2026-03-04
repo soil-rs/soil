@@ -144,7 +144,7 @@ where
 		+ 'static,
 	C::Api: substrate_frame_rpc_system::AccountNonceApi<Block, AccountId, Nonce>,
 	C::Api: soil_mmr_rpc::MmrRuntimeApi<Block, <Block as soil_runtime::traits::Block>::Hash, BlockNumber>,
-	C::Api: pallet_transaction_payment_rpc::TransactionPaymentRuntimeApi<Block, Balance>,
+	C::Api: topsoil_transaction_payment_rpc::TransactionPaymentRuntimeApi<Block, Balance>,
 	C::Api: BabeApi<Block>,
 	C::Api: BlockBuilder<Block>,
 	P: TransactionPool + 'static,
@@ -155,7 +155,7 @@ where
 	<AuthorityId as RuntimeAppPublic>::Signature: Send + Sync,
 {
 	use soil_mmr_rpc::{Mmr, MmrApiServer};
-	use pallet_transaction_payment_rpc::{TransactionPayment, TransactionPaymentApiServer};
+	use topsoil_transaction_payment_rpc::{TransactionPayment, TransactionPaymentApiServer};
 	use soil_consensus_babe_rpc::{Babe, BabeApiServer};
 	use soil_consensus_beefy_rpc::{Beefy, BeefyApiServer};
 	use soil_consensus_grandpa_rpc::{Grandpa, GrandpaApiServer};

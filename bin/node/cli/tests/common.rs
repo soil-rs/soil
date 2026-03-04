@@ -17,8 +17,8 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 use codec::{Decode, Encode};
-use frame_support::Hashable;
-use frame_system::offchain::AppCrypto;
+use topsoil_support::Hashable;
+use topsoil_system::offchain::AppCrypto;
 use soil_executor::error::Result;
 use soil_consensus_babe::{
 	digests::{PreDigest, SecondaryPlainPreDigest},
@@ -87,8 +87,8 @@ pub fn sign(xt: CheckedExtrinsic) -> UncheckedExtrinsic {
 	node_testing::keyring::sign(xt, SPEC_VERSION, TRANSACTION_VERSION, GENESIS_HASH, None)
 }
 
-pub fn default_transfer_call() -> pallet_balances::Call<Runtime> {
-	pallet_balances::Call::<Runtime>::transfer_allow_death {
+pub fn default_transfer_call() -> topsoil_balances::Call<Runtime> {
+	topsoil_balances::Call::<Runtime>::transfer_allow_death {
 		dest: bob().into(),
 		value: 69 * DOLLARS,
 	}

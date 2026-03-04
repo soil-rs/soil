@@ -30,7 +30,7 @@ pub mod substrate_test_pallet;
 #[cfg(not(feature = "std"))]
 use alloc::{vec, vec::Vec};
 use codec::{Decode, DecodeWithMemTracking, Encode};
-use frame_support::{
+use topsoil_support::{
 	construct_runtime, derive_impl,
 	dispatch::DispatchClass,
 	genesis_builder_helper::{build_state, get_preset},
@@ -41,7 +41,7 @@ use frame_support::{
 		Weight,
 	},
 };
-use frame_system::{
+use topsoil_system::{
 	limits::{BlockLength, BlockWeights},
 	CheckNonce, CheckWeight,
 };
@@ -78,8 +78,8 @@ use soil_version::RuntimeVersion;
 
 pub use soil_consensus_babe::{AllowedSlots, BabeEpochConfiguration, Slot};
 
-pub use pallet_balances::Call as BalancesCall;
-pub use pallet_utility::Call as UtilityCall;
+pub use topsoil_balances::Call as BalancesCall;
+pub use topsoil_utility::Call as UtilityCall;
 
 pub type AuraId = soil_consensus_aura::sr25519::AuthorityId;
 #[cfg(feature = "std")]
@@ -157,8 +157,8 @@ pub type Pair = soil_core::sr25519::Pair;
 pub type TxExtension = (
 	(CheckNonce<Runtime>, CheckWeight<Runtime>),
 	CheckSubstrateCall,
-	frame_metadata_hash_extension::CheckMetadataHash<Runtime>,
-	frame_system::WeightReclaim<Runtime>,
+	topsoil_metadata_hash_extension::CheckMetadataHash<Runtime>,
+	topsoil_system::WeightReclaim<Runtime>,
 );
 /// The payload being signed in transactions.
 pub type SignedPayload = soil_runtime::generic::SignedPayload<RuntimeCall, TxExtension>;
@@ -265,10 +265,10 @@ decl_runtime_apis! {
 	}
 }
 
-pub type Executive = frame_executive::Executive<
+pub type Executive = topsoil_executive::Executive<
 	Runtime,
 	Block,
-	frame_system::ChainContext<Runtime>,
+	topsoil_system::ChainContext<Runtime>,
 	Runtime,
 	AllPalletsWithSystem,
 >;
@@ -283,7 +283,7 @@ impl soil_runtime::traits::Printable for CheckSubstrateCall {
 }
 
 impl soil_runtime::traits::RefundWeight for CheckSubstrateCall {
-	fn refund(&mut self, _weight: frame_support::weights::Weight) {}
+	fn refund(&mut self, _weight: topsoil_support::weights::Weight) {}
 }
 impl soil_runtime::traits::ExtensionPostDispatchWeightHandler<CheckSubstrateCall>
 	for CheckSubstrateCall
@@ -339,11 +339,11 @@ impl soil_runtime::traits::TransactionExtension<RuntimeCall> for CheckSubstrateC
 construct_runtime!(
 	pub enum Runtime
 	{
-		System: frame_system,
-		Babe: pallet_babe,
+		System: topsoil_system,
+		Babe: topsoil_babe,
 		SubstrateTest: substrate_test_pallet::pallet,
-		Utility: pallet_utility,
-		Balances: pallet_balances,
+		Utility: topsoil_utility,
+		Balances: topsoil_balances,
 	}
 );
 
@@ -388,14 +388,14 @@ parameter_types! {
 		.build_or_panic();
 }
 
-#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
-impl frame_system::pallet::Config for Runtime {
+#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+impl topsoil_system::pallet::Config for Runtime {
 	type BlockWeights = RuntimeBlockWeights;
 	type Nonce = Nonce;
 	type AccountId = AccountId;
 	type Lookup = soil_runtime::traits::IdentityLookup<Self::AccountId>;
 	type Block = Block;
-	type AccountData = pallet_balances::AccountData<Balance>;
+	type AccountData = topsoil_balances::AccountData<Balance>;
 }
 
 pub mod currency {
@@ -413,7 +413,7 @@ parameter_types! {
 	pub const MaxReserves: u32 = 50;
 }
 
-impl pallet_balances::Config for Runtime {
+impl topsoil_balances::Config for Runtime {
 	type MaxLocks = MaxLocks;
 	type MaxReserves = MaxReserves;
 	type ReserveIdentifier = [u8; 8];
@@ -422,7 +422,7 @@ impl pallet_balances::Config for Runtime {
 	type RuntimeEvent = RuntimeEvent;
 	type ExistentialDeposit = ExistentialDeposit;
 	type AccountStore = System;
-	type WeightInfo = pallet_balances::weights::SubstrateWeight<Runtime>;
+	type WeightInfo = topsoil_balances::weights::SubstrateWeight<Runtime>;
 	type FreezeIdentifier = ();
 	type MaxFreezes = ();
 	type RuntimeHoldReason = RuntimeHoldReason;
@@ -430,7 +430,7 @@ impl pallet_balances::Config for Runtime {
 	type DoneSlashHandler = ();
 }
 
-impl pallet_utility::Config for Runtime {
+impl topsoil_utility::Config for Runtime {
 	type RuntimeEvent = RuntimeEvent;
 	type PalletsOrigin = OriginCaller;
 	type RuntimeCall = RuntimeCall;
@@ -439,22 +439,22 @@ impl pallet_utility::Config for Runtime {
 
 impl substrate_test_pallet::Config for Runtime {}
 
-// Required for `pallet_babe::Config`.
-impl pallet_timestamp::Config for Runtime {
+// Required for `topsoil_babe::Config`.
+impl topsoil_timestamp::Config for Runtime {
 	type Moment = u64;
 	type OnTimestampSet = Babe;
 	type MinimumPeriod = ConstU64<500>;
-	type WeightInfo = pallet_timestamp::weights::SubstrateWeight<Runtime>;
+	type WeightInfo = topsoil_timestamp::weights::SubstrateWeight<Runtime>;
 }
 
 parameter_types! {
 	pub const EpochDuration: u64 = 6;
 }
 
-impl pallet_babe::Config for Runtime {
+impl topsoil_babe::Config for Runtime {
 	type EpochDuration = EpochDuration;
 	type ExpectedBlockTime = ConstU64<10_000>;
-	type EpochChangeTrigger = pallet_babe::SameAuthoritiesForever;
+	type EpochChangeTrigger = topsoil_babe::SameAuthoritiesForever;
 	type DisabledValidators = ();
 	type KeyOwnerProof = soil_core::Void;
 	type EquivocationReportSystem = ();
@@ -570,7 +570,7 @@ impl_runtime_apis! {
 		}
 	}
 
-	impl frame_system_rpc_runtime_api::AccountNonceApi<Block, AccountId, Nonce> for Runtime {
+	impl topsoil_system_rpc_runtime_api::AccountNonceApi<Block, AccountId, Nonce> for Runtime {
 		fn account_nonce(account: AccountId) -> Nonce {
 			System::account_nonce(account)
 		}
@@ -1148,7 +1148,7 @@ pub mod storage_key_generator {
 mod tests {
 	use super::*;
 	use codec::Encode;
-	use frame_support::dispatch::DispatchInfo;
+	use topsoil_support::dispatch::DispatchInfo;
 	use pretty_assertions::assert_eq;
 	use sc_block_builder::BlockBuilderBuilder;
 	use soil_api::{ApiExt, ProvideRuntimeApi};

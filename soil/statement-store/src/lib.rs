@@ -181,27 +181,27 @@ pub fn statement_allowance_key(account_id: impl AsRef<[u8]>) -> Vec<u8> {
 /// Increase the statement allowance by the given amount.
 pub fn increase_allowance_by(account_id: impl AsRef<[u8]>, by: StatementAllowance) {
 	let key = statement_allowance_key(account_id);
-	let mut allowance: StatementAllowance = frame_support::storage::unhashed::get_or_default(&key);
+	let mut allowance: StatementAllowance = topsoil_support::storage::unhashed::get_or_default(&key);
 	allowance = allowance.saturating_add(by);
-	frame_support::storage::unhashed::put(&key, &allowance);
+	topsoil_support::storage::unhashed::put(&key, &allowance);
 }
 
 /// Decrease the statement allowance by the given amount.
 pub fn decrease_allowance_by(account_id: impl AsRef<[u8]>, by: StatementAllowance) {
 	let key = statement_allowance_key(account_id);
-	let mut allowance: StatementAllowance = frame_support::storage::unhashed::get_or_default(&key);
+	let mut allowance: StatementAllowance = topsoil_support::storage::unhashed::get_or_default(&key);
 	allowance = allowance.saturating_sub(by);
 	if allowance.is_depleted() {
-		frame_support::storage::unhashed::kill(&key);
+		topsoil_support::storage::unhashed::kill(&key);
 	} else {
-		frame_support::storage::unhashed::put(&key, &allowance);
+		topsoil_support::storage::unhashed::put(&key, &allowance);
 	}
 }
 
 /// Get the statement allowance for the given account.
 pub fn get_allowance(account_id: impl AsRef<[u8]>) -> StatementAllowance {
 	let key = statement_allowance_key(account_id);
-	frame_support::storage::unhashed::get_or_default(&key)
+	topsoil_support::storage::unhashed::get_or_default(&key)
 }
 
 #[cfg(feature = "std")]

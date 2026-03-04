@@ -1,0 +1,56 @@
+[package]
+name = "topsoil-preimage"
+version = "28.0.0"
+authors.workspace = true
+edition.workspace = true
+license = "Apache-2.0"
+homepage.workspace = true
+repository.workspace = true
+description = "FRAME pallet for storing preimages of hashes"
+
+[lints]
+workspace = true
+
+[dependencies]
+codec = { features = ["derive"], workspace = true }
+topsoil-benchmarking = { optional = true, workspace = true }
+topsoil-support = { workspace = true }
+topsoil-system = { workspace = true }
+log = { workspace = true }
+scale-info = { features = ["derive"], workspace = true }
+soil-core = { optional = true, workspace = true }
+soil-io = { workspace = true }
+soil-runtime = { workspace = true }
+
+[dev-dependencies]
+topsoil-balances = { workspace = true, default-features = true }
+soil-core = { workspace = true, default-features = true }
+
+[features]
+default = ["std"]
+runtime-benchmarks = [
+	"topsoil-benchmarking",
+	"topsoil-benchmarking/runtime-benchmarks",
+	"topsoil-support/runtime-benchmarks",
+	"topsoil-system/runtime-benchmarks",
+	"topsoil-balances/runtime-benchmarks",
+	"soil-runtime/runtime-benchmarks",
+]
+std = [
+	"codec/std",
+	"topsoil-benchmarking?/std",
+	"topsoil-support/std",
+	"topsoil-system/std",
+	"log/std",
+	"topsoil-balances/std",
+	"scale-info/std",
+	"soil-core/std",
+	"soil-io/std",
+	"soil-runtime/std",
+]
+try-runtime = [
+	"topsoil-support/try-runtime",
+	"topsoil-system/try-runtime",
+	"topsoil-balances/try-runtime",
+	"soil-runtime/try-runtime",
+]

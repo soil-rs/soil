@@ -15,7 +15,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//! Make the set of bag thresholds to be used with pallet-bags-list.
+//! Make the set of bag thresholds to be used with topsoil-bags-list.
 
 use clap::Parser;
 use generate_bags::generate_thresholds;

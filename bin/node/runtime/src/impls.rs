@@ -18,16 +18,16 @@
 //! Some configurable implementations as associated type for the substrate runtime.
 
 use alloc::boxed::Box;
-use frame_support::{
+use topsoil_support::{
 	pallet_prelude::*,
 	traits::{
 		fungibles::{Balanced, Credit},
 		Currency, OnUnbalanced,
 	},
 };
-use pallet_alliance::{IdentityVerifier, ProposalIndex, ProposalProvider};
-use pallet_asset_tx_payment::HandleCredit;
-use pallet_identity::legacy::IdentityField;
+use topsoil_alliance::{IdentityVerifier, ProposalIndex, ProposalProvider};
+use topsoil_asset_tx_payment::HandleCredit;
+use topsoil_identity::legacy::IdentityField;
 
 use crate::{
 	AccountId, AllianceCollective, AllianceMotion, Assets, Authorship, Balances, Hash,
@@ -48,7 +48,7 @@ impl OnUnbalanced<NegativeImbalance> for Author {
 pub struct CreditToBlockAuthor;
 impl HandleCredit<AccountId, Assets> for CreditToBlockAuthor {
 	fn handle_credit(credit: Credit<AccountId, Assets>) {
-		if let Some(author) = pallet_authorship::Pallet::<Runtime>::author() {
+		if let Some(author) = topsoil_authorship::Pallet::<Runtime>::author() {
 			// Drop the result which will trigger the `OnDrop` of the imbalance in case of error.
 			let _ = Assets::resolve(&author, credit);
 		}
@@ -62,7 +62,7 @@ impl IdentityVerifier<AccountId> for AllianceIdentityVerifier {
 	}
 
 	fn has_good_judgement(who: &AccountId) -> bool {
-		use pallet_identity::{IdentityOf, Judgement};
+		use topsoil_identity::{IdentityOf, Judgement};
 		IdentityOf::<Runtime>::get(who)
 			.map(|registration| registration.judgements)
 			.map_or(false, |judgements| {
@@ -73,7 +73,7 @@ impl IdentityVerifier<AccountId> for AllianceIdentityVerifier {
 	}
 
 	fn super_account_id(who: &AccountId) -> Option<AccountId> {
-		use pallet_identity::SuperOf;
+		use topsoil_identity::SuperOf;
 		SuperOf::<Runtime>::get(who).map(|parent| parent.0)
 	}
 }
@@ -108,17 +108,17 @@ impl ProposalProvider<AccountId, Hash, RuntimeCall> for AllianceProposalProvider
 	}
 
 	fn proposal_of(proposal_hash: Hash) -> Option<RuntimeCall> {
-		pallet_collective::ProposalOf::<Runtime, AllianceCollective>::get(proposal_hash)
+		topsoil_collective::ProposalOf::<Runtime, AllianceCollective>::get(proposal_hash)
 	}
 }
 
 #[cfg(test)]
 mod multiplier_tests {
-	use frame_support::{
+	use topsoil_support::{
 		dispatch::DispatchClass,
 		weights::{Weight, WeightToFee},
 	};
-	use pallet_transaction_payment::{Multiplier, TargetedFeeAdjustment};
+	use topsoil_transaction_payment::{Multiplier, TargetedFeeAdjustment};
 	use soil_runtime::{
 		assert_eq_error_rate,
 		traits::{Convert, One, Zero},
@@ -199,7 +199,7 @@ mod multiplier_tests {
 	where
 		F: Fn() -> (),
 	{
-		let mut t: soil_io::TestExternalities = frame_system::GenesisConfig::<Runtime>::default()
+		let mut t: soil_io::TestExternalities = topsoil_system::GenesisConfig::<Runtime>::default()
 			.build_storage()
 			.unwrap()
 			.into();
@@ -309,7 +309,7 @@ mod multiplier_tests {
 			Weight::from_parts(100, 0);
 
 		// Default substrate weight.
-		let tx_weight = frame_support::weights::constants::ExtrinsicBaseWeight::get();
+		let tx_weight = topsoil_support::weights::constants::ExtrinsicBaseWeight::get();
 
 		run_with_system_weight(block_weight, || {
 			// initial value configured on module
@@ -326,7 +326,7 @@ mod multiplier_tests {
 				fm = next;
 				iterations += 1;
 				let fee =
-					<Runtime as pallet_transaction_payment::Config>::WeightToFee::weight_to_fee(
+					<Runtime as topsoil_transaction_payment::Config>::WeightToFee::weight_to_fee(
 						&tx_weight,
 					);
 				let adjusted_fee = fm.saturating_mul_acc_int(fee);
