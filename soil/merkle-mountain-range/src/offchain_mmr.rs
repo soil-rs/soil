@@ -19,16 +19,13 @@
 //! Logic for canonicalizing MMR offchain entries for finalized forks,
 //! and for pruning MMR offchain entries for stale forks.
 
-#![warn(missing_docs)]
-
-use crate::{aux_schema, MmrClient, LOG_TARGET};
+use super::{aux_schema, client::MmrClient, client::LOG_TARGET};
 use log::{debug, error, info, warn};
 use sc_client_api::{Backend, FinalityNotification};
 use soil_offchain::OffchainDb;
 use soil_blockchain::CachedHeaderMetadata;
-use soil_consensus_beefy::MmrRootHash;
-use soil_core::offchain::{DbExternalities, StorageKind};
-use soil_mmr_primitives::{utils, utils::NodesUtils, MmrApi, NodeIndex};
+use soil_core::{offchain::{DbExternalities, StorageKind}, H256 as MmrRootHash};
+use crate::{utils, utils::NodesUtils, MmrApi, NodeIndex};
 use soil_runtime::{
 	traits::{Block, Header, NumberFor, One},
 	Saturating,
@@ -279,7 +276,7 @@ where
 
 #[cfg(test)]
 mod tests {
-	use crate::test_utils::{run_test_with_mmr_gadget, run_test_with_mmr_gadget_pre_post};
+	use super::test_utils::{run_test_with_mmr_gadget, run_test_with_mmr_gadget_pre_post};
 	use parking_lot::Mutex;
 	use soil_runtime::generic::BlockId;
 	use std::{sync::Arc, time::Duration};

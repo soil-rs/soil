@@ -35,22 +35,15 @@
 //! offchain db, and moving finalized forks under a "canonical" key based solely on node `pos`
 //! in the MMR.
 
-#![warn(missing_docs)]
-
-mod aux_schema;
-mod offchain_mmr;
-#[cfg(test)]
-pub mod test_utils;
-
-use crate::offchain_mmr::OffchainMmr;
+use super::offchain_mmr::OffchainMmr;
 use futures::StreamExt;
 use log::{debug, error, trace, warn};
 use sc_client_api::{Backend, BlockchainEvents, FinalityNotification, FinalityNotifications};
 use soil_offchain::OffchainDb;
 use soil_api::ProvideRuntimeApi;
 use soil_blockchain::{HeaderBackend, HeaderMetadata};
-use soil_consensus_beefy::MmrRootHash;
-use soil_mmr_primitives::{utils, LeafIndex, MmrApi};
+use soil_core::H256 as MmrRootHash;
+use crate::{utils, LeafIndex, MmrApi};
 use soil_runtime::traits::{Block, Header, NumberFor};
 use std::{marker::PhantomData, sync::Arc};
 
@@ -220,7 +213,7 @@ where
 
 #[cfg(test)]
 mod tests {
-	use crate::test_utils::run_test_with_mmr_gadget;
+	use super::test_utils::run_test_with_mmr_gadget;
 	use soil_runtime::generic::BlockId;
 	use std::time::Duration;
 

@@ -33,6 +33,19 @@ use soil_runtime::traits;
 
 pub mod utils;
 
+// std-only modules (former mmr-gadget)
+#[cfg(feature = "std")]
+mod aux_schema;
+#[cfg(feature = "std")]
+mod client;
+#[cfg(feature = "std")]
+mod offchain_mmr;
+#[cfg(test)]
+pub(crate) mod test_utils;
+
+#[cfg(feature = "std")]
+pub use client::*;
+
 /// Prefix for elements stored in the Off-chain DB via Indexing API.
 pub const INDEXING_PREFIX: &'static [u8] = b"mmr";
 

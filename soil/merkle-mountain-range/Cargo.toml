@@ -26,21 +26,38 @@ soil-debug-derive = { workspace = true }
 soil-runtime = { workspace = true }
 thiserror = { optional = true, workspace = true }
 
+# Client-side dependencies (former mmr-gadget)
+futures = { optional = true, workspace = true }
+sc-client-api = { optional = true, workspace = true, default-features = true }
+soil-blockchain = { optional = true, workspace = true, default-features = true }
+soil-consensus = { optional = true, workspace = true, default-features = true }
+soil-offchain = { optional = true, workspace = true, default-features = true }
+
 [dev-dependencies]
 array-bytes = { workspace = true, default-features = true }
+parking_lot = { workspace = true, default-features = true }
+soil-block-builder = { workspace = true, default-features = true }
+soil-tracing = { workspace = true }
+substrate-test-runtime-client = { workspace = true }
+tokio = { workspace = true, default-features = true }
 
 [features]
 default = ["std"]
 std = [
 	"codec/std",
 	"dep:thiserror",
+	"futures",
 	"log/std",
 	"mmr-lib/std",
+	"sc-client-api",
 	"scale-info/std",
 	"serde/std",
 	"soil-api/std",
+	"soil-blockchain",
+	"soil-consensus",
 	"soil-core/std",
 	"soil-debug-derive/std",
+	"soil-offchain",
 	"soil-runtime/std",
 ]
 

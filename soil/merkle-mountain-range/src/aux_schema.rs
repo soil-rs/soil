@@ -18,7 +18,7 @@
 
 //! Schema for MMR-gadget state persisted in the aux-db.
 
-use crate::LOG_TARGET;
+use super::client::LOG_TARGET;
 use codec::{Decode, Encode};
 use log::{info, trace};
 use sc_client_api::backend::AuxStore;
@@ -105,7 +105,7 @@ where
 #[cfg(test)]
 pub(crate) mod tests {
 	use super::*;
-	use crate::test_utils::{run_test_with_mmr_gadget_pre_post_using_client, MmrBlock, MockClient};
+	use super::test_utils::{run_test_with_mmr_gadget_pre_post_using_client, MmrBlock, MockClient};
 	use parking_lot::Mutex;
 	use soil_runtime::generic::BlockId;
 	use std::{sync::Arc, time::Duration};

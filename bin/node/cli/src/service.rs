@@ -20,7 +20,7 @@
 
 //! Service implementation. Specialized wrapper over substrate service.
 
-use sc_consensus_grandpa as grandpa;
+use soil_consensus_grandpa as grandpa;
 use soil_consensus_babe::inherents::BabeCreateInherentDataProviders;
 use soil_consensus_beefy as beefy;
 use soil_consensus_beefy as beefy_primitives;
@@ -731,7 +731,7 @@ pub fn new_full_base<N: NetworkBackend<Block, <Block as BlockT>::Hash>>(
 		task_manager.spawn_essential_handle().spawn_blocking(
 			"mmr-gadget",
 			None,
-			mmr_gadget::MmrGadget::start(
+			soil_mmr_primitives::MmrGadget::start(
 				client.clone(),
 				backend.clone(),
 				soil_mmr_primitives::INDEXING_PREFIX.to_vec(),
