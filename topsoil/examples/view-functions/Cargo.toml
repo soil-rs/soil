@@ -35,7 +35,7 @@ pretty_assertions = { workspace = true }
 default = ["std"]
 std = [
 	"codec/std",
-	"topsoil-metadata/std",
+	"frame-metadata/std",
 	"topsoil-support/std",
 	"topsoil-system/std",
 	"log/std",

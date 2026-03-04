@@ -32,7 +32,7 @@ paste = { workspace = true, default-features = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { features = ["alloc", "derive"], workspace = true }
 serde_json = { features = ["alloc"], workspace = true }
-soil-api = { features = ["topsoil-metadata"], workspace = true }
+soil-api = { features = ["frame-metadata"], workspace = true }
 soil-arithmetic = { workspace = true }
 soil-core = { workspace = true }
 soil-crypto-hashing-proc-macro = { workspace = true, default-features = true }
@@ -65,7 +65,7 @@ std = [
 	"binary-merkle-tree/std",
 	"codec/std",
 	"environmental/std",
-	"topsoil-metadata/std",
+	"frame-metadata/std",
 	"topsoil-support-procedural/std",
 	"topsoil-system/std",
 	"k256/std",

@@ -44,7 +44,7 @@ std = [
 	"codec/std",
 	"topsoil-benchmarking/std",
 	"topsoil-executive/std",
-	"topsoil-metadata/std",
+	"frame-metadata/std",
 	"topsoil-support/std",
 	"topsoil-system/std",
 	"scale-info/std",

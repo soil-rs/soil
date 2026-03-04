@@ -30,7 +30,7 @@ use codec::{Decode, Encode};
 #[cfg(feature = "try-runtime")]
 use soil_runtime::TryRuntimeError;
 
-pub const PALLET_MIGRATIONS_ID: &[u8; 15] = b"topsoil-identity";
+pub const PALLET_MIGRATIONS_ID: &[u8; 16] = b"topsoil-identity";
 
 pub mod versioned {
 	use super::*;
@@ -233,7 +233,7 @@ pub mod v2 {
 	pub struct LazyMigrationV1ToV2<T: Config>(PhantomData<T>);
 	impl<T: Config> SteppedMigration for LazyMigrationV1ToV2<T> {
 		type Cursor = MigrationState<T::AccountId, Username<T>, Suffix<T>>;
-		type Identifier = MigrationId<15>;
+		type Identifier = MigrationId<16>;
 
 		fn id() -> Self::Identifier {
 			MigrationId { pallet_id: *PALLET_MIGRATIONS_ID, version_from: 1, version_to: 2 }

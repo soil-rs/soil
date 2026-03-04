@@ -66,7 +66,7 @@ pub struct LazyMigrationV1<T: Config, W: weights::WeightInfo>(PhantomData<(T, W)
 impl<T: Config, W: weights::WeightInfo> SteppedMigration for LazyMigrationV1<T, W> {
 	type Cursor = u32;
 	// Without the explicit length here the construction of the ID would not be infallible.
-	type Identifier = MigrationId<18>;
+	type Identifier = MigrationId<19>;
 
 	/// The identifier of this migration. Which should be globally unique.
 	fn id() -> Self::Identifier {
