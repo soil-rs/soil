@@ -10912,42 +10912,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "sc-consensus-aura"
-version = "0.34.0"
-dependencies = [
- "async-trait",
- "fork-tree",
- "futures",
- "log",
- "parity-scale-codec",
- "parking_lot 0.12.5",
- "sc-client-api",
- "sc-consensus",
- "sc-network",
- "sc-network-test",
- "sc-telemetry",
- "soil-api",
- "soil-application-crypto",
- "soil-block-builder",
- "soil-blockchain",
- "soil-consensus",
- "soil-consensus-aura",
- "soil-consensus-slots",
- "soil-core",
- "soil-inherents",
- "soil-keyring",
- "soil-keystore",
- "soil-runtime",
- "soil-timestamp",
- "soil-tracing",
- "substrate-prometheus-endpoint",
- "substrate-test-runtime-client",
- "tempfile",
- "thiserror 1.0.69",
- "tokio",
-]
-
-[[package]]
 name = "sc-consensus-babe"
 version = "0.34.0"
 dependencies = [
@@ -11173,7 +11137,6 @@ dependencies = [
  "sc-basic-authorship",
  "sc-client-api",
  "sc-consensus",
- "sc-consensus-aura",
  "sc-consensus-babe",
  "sc-consensus-epochs",
  "sc-transaction-pool",
@@ -12990,14 +12953,35 @@ name = "soil-consensus-aura"
 version = "0.32.0"
 dependencies = [
  "async-trait",
+ "fork-tree",
+ "futures",
+ "log",
  "parity-scale-codec",
+ "parking_lot 0.12.5",
+ "sc-client-api",
+ "sc-consensus",
+ "sc-network",
+ "sc-network-test",
+ "sc-telemetry",
  "scale-info",
  "soil-api",
  "soil-application-crypto",
+ "soil-block-builder",
+ "soil-blockchain",
+ "soil-consensus",
  "soil-consensus-slots",
+ "soil-core",
  "soil-inherents",
+ "soil-keyring",
+ "soil-keystore",
  "soil-runtime",
  "soil-timestamp",
+ "soil-tracing",
+ "substrate-prometheus-endpoint",
+ "substrate-test-runtime-client",
+ "tempfile",
+ "thiserror 1.0.69",
+ "tokio",
 ]
 
 [[package]]
@@ -14005,7 +13989,6 @@ dependencies = [
  "sc-client-api",
  "sc-client-db",
  "sc-consensus",
- "sc-consensus-aura",
  "sc-consensus-babe",
  "sc-consensus-babe-rpc",
  "sc-consensus-beefy",
@@ -14054,6 +14037,7 @@ dependencies = [
  "soil-block-builder",
  "soil-blockchain",
  "soil-consensus",
+ "soil-consensus-aura",
  "soil-consensus-babe",
  "soil-consensus-beefy",
  "soil-consensus-grandpa",

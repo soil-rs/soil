@@ -21,6 +21,18 @@
 
 extern crate alloc;
 
+#[cfg(feature = "std")]
+mod authorities_tracker;
+#[cfg(feature = "std")]
+mod client;
+#[cfg(feature = "std")]
+pub mod import_queue;
+#[cfg(feature = "std")]
+pub mod standalone;
+
+#[cfg(feature = "std")]
+pub use client::*;
+
 use alloc::vec::Vec;
 use codec::{Codec, Decode, Encode};
 use soil_runtime::ConsensusEngineId;

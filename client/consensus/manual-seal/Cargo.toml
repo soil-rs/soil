@@ -25,7 +25,6 @@ log = { workspace = true, default-features = true }
 prometheus-endpoint = { workspace = true, default-features = true }
 sc-client-api = { workspace = true, default-features = true }
 sc-consensus = { workspace = true, default-features = true }
-sc-consensus-aura = { workspace = true, default-features = true }
 sc-consensus-babe = { workspace = true, default-features = true }
 sc-consensus-epochs = { workspace = true, default-features = true }
 sc-transaction-pool = { workspace = true, default-features = true }
