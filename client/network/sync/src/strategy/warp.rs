@@ -788,7 +788,7 @@ where
 mod test {
 	use super::*;
 	use crate::{mock::MockBlockDownloader, service::network::NetworkServiceProvider};
-	use sc_block_builder::BlockBuilderBuilder;
+	use soil_block_builder::BlockBuilderBuilder;
 	use soil_blockchain::{BlockStatus, Error as BlockchainError, HeaderBackend, Info};
 	use soil_core::H256;
 	use soil_runtime::{

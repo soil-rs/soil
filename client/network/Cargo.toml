@@ -71,7 +71,7 @@ zeroize = { workspace = true, default-features = true }
 assert_matches = { workspace = true }
 cid = { workspace = true }
 multistream-select = { workspace = true }
-sc-block-builder = { workspace = true, default-features = true }
+soil-block-builder = { workspace = true, default-features = true }
 soil-consensus = { workspace = true, default-features = true }
 soil-crypto-hashing = { workspace = true, default-features = true }
 soil-tracing = { workspace = true, default-features = true }

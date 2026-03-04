@@ -21,7 +21,6 @@ members = [
 	"client/allocator",
 	"client/api",
 	"client/basic-authorship",
-	"client/block-builder",
 	"client/chain-spec",
 	"client/chain-spec/derive",
 	"client/cli",
@@ -496,7 +495,6 @@ prometheus-endpoint = { path = "utils/prometheus", default-features = false, pac
 remote-externalities = { path = "utils/frame/remote-externalities", default-features = false, package = "frame-remote-externalities" }
 sc-allocator = { path = "client/allocator", default-features = false }
 sc-basic-authorship = { path = "client/basic-authorship", default-features = false }
-sc-block-builder = { path = "client/block-builder", default-features = false }
 sc-chain-spec = { path = "client/chain-spec", default-features = false }
 sc-chain-spec-derive = { path = "client/chain-spec/derive", default-features = false }
 sc-cli = { path = "client/cli", default-features = false }

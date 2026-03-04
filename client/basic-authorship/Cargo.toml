@@ -20,7 +20,7 @@ codec = { workspace = true, default-features = true }
 futures = { workspace = true }
 log = { workspace = true, default-features = true }
 prometheus-endpoint = { workspace = true, default-features = true }
-sc-block-builder = { workspace = true, default-features = true }
+soil-block-builder = { workspace = true, default-features = true }
 sc-proposer-metrics = { workspace = true, default-features = true }
 sc-telemetry = { workspace = true, default-features = true }
 sc-transaction-pool-api = { workspace = true, default-features = true }

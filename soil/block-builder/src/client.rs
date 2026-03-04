@@ -16,15 +16,10 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-//! Substrate block builder
+//! Block builder utility.
 //!
-//! This crate provides the [`BlockBuilder`] utility and the corresponding runtime api
-//! [`BlockBuilder`](soil_block_builder::BlockBuilder).
-//!
-//! The block builder utility is used in the node as an abstraction over the runtime api to
-//! initialize a block, to push extrinsics and to finalize a block.
-
-#![warn(missing_docs)]
+//! This module provides the [`BlockBuilder`] struct used in the node as an abstraction over the
+//! runtime API to initialize a block, push extrinsics, and finalize a block.
 
 use codec::Encode;
 
@@ -42,7 +37,7 @@ use soil_runtime::{
 };
 use std::marker::PhantomData;
 
-pub use soil_block_builder::BlockBuilder as BlockBuilderApi;
+pub use crate::BlockBuilder as BlockBuilderApi;
 
 /// A builder for creating an instance of [`BlockBuilder`].
 pub struct BlockBuilderBuilder<'a, B, C> {

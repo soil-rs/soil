@@ -291,7 +291,7 @@ where
 mod tests {
 	use super::*;
 	use futures::executor::block_on;
-	use sc_block_builder::BlockBuilderBuilder;
+	use soil_block_builder::BlockBuilderBuilder;
 	use sc_client_api::Backend as _;
 	use sc_network::{
 		config::MultiaddrWithPeerId, types::ProtocolName, Multiaddr, ObservedRole, ReputationChange,

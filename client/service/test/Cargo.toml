@@ -22,7 +22,7 @@ fdlimit = { workspace = true }
 futures = { workspace = true }
 log = { workspace = true, default-features = true }
 parking_lot = { workspace = true, default-features = true }
-sc-block-builder = { workspace = true, default-features = true }
+soil-block-builder = { workspace = true, default-features = true }
 sc-client-api = { workspace = true, default-features = true }
 sc-client-db = { workspace = true }
 sc-consensus = { workspace = true, default-features = true }

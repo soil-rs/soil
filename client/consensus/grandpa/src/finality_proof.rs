@@ -261,7 +261,7 @@ mod tests {
 	use super::*;
 	use crate::{authorities::AuthoritySetChanges, BlockNumberOps, ClientError, SetId};
 	use futures::executor::block_on;
-	use sc_block_builder::BlockBuilderBuilder;
+	use soil_block_builder::BlockBuilderBuilder;
 	use sc_client_api::{apply_aux, LockImportRun};
 	use soil_consensus::BlockOrigin;
 	use soil_consensus_grandpa::GRANDPA_ENGINE_ID as ID;

@@ -47,7 +47,7 @@ tracing = { optional = true, workspace = true, default-features = true }
 
 [dev-dependencies]
 async-trait = { workspace = true }
-sc-block-builder = { workspace = true, default-features = true }
+soil-block-builder = { workspace = true, default-features = true }
 sc-client-db = { default-features = true, workspace = true }
 sc-transaction-pool = { workspace = true, default-features = true }
 soil-consensus = { workspace = true, default-features = true }

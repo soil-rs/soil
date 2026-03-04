@@ -54,7 +54,7 @@ use tokio::runtime::Handle;
 
 use authorities::AuthoritySet;
 use communication::grandpa_protocol_name;
-use sc_block_builder::{BlockBuilder, BlockBuilderBuilder};
+use soil_block_builder::{client::BlockBuilder, BlockBuilderBuilder};
 use sc_consensus::LongestChain;
 use soil_application_crypto::key_types::GRANDPA;
 

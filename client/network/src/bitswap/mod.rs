@@ -296,7 +296,7 @@ mod tests {
 	use super::*;
 	use futures::channel::oneshot;
 	use litep2p::types::multihash::Code;
-	use sc_block_builder::BlockBuilderBuilder;
+	use soil_block_builder::BlockBuilderBuilder;
 	use schema::bitswap::{
 		message::{wantlist::Entry, Wantlist},
 		Message as BitswapMessage,

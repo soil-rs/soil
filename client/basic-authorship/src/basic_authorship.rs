@@ -28,7 +28,7 @@ use futures::{
 };
 use log::{debug, error, info, log_enabled, trace, warn, Level};
 use prometheus_endpoint::Registry as PrometheusRegistry;
-use sc_block_builder::{BlockBuilderApi, BlockBuilderBuilder};
+use soil_block_builder::{BlockBuilderApi, BlockBuilderBuilder};
 use sc_proposer_metrics::{EndProposingReason, MetricsLink as PrometheusMetrics};
 use sc_telemetry::{telemetry, TelemetryHandle, CONSENSUS_INFO};
 use sc_transaction_pool_api::{InPoolTransaction, TransactionPool, TxInvalidityReportMap};
@@ -319,7 +319,7 @@ where
 	/// Apply all inherents to the block.
 	fn apply_inherents(
 		&self,
-		block_builder: &mut sc_block_builder::BlockBuilder<'_, Block, C>,
+		block_builder: &mut soil_block_builder::client::BlockBuilder<'_, Block, C>,
 		inherent_data: InherentData,
 	) -> Result<(), soil_blockchain::Error> {
 		let create_inherents_start = time::Instant::now();
@@ -373,7 +373,7 @@ where
 	/// Apply as many extrinsics as possible to the block.
 	async fn apply_extrinsics(
 		&self,
-		block_builder: &mut sc_block_builder::BlockBuilder<'_, Block, C>,
+		block_builder: &mut soil_block_builder::client::BlockBuilder<'_, Block, C>,
 		deadline: time::Instant,
 		block_size_limit: Option<usize>,
 	) -> Result<EndProposingReason, soil_blockchain::Error> {
@@ -453,7 +453,7 @@ where
 			}
 
 			trace!(target: LOG_TARGET, "[{:?}] Pushing to the block.", pending_tx_hash);
-			match sc_block_builder::BlockBuilder::push(block_builder, pending_tx_data) {
+			match soil_block_builder::client::BlockBuilder::push(block_builder, pending_tx_data) {
 				Ok(()) => {
 					transaction_pushed = true;
 					limit_hit_reason = None;

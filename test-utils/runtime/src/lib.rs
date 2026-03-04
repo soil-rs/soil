@@ -1150,7 +1150,7 @@ mod tests {
 	use codec::Encode;
 	use frame_support::dispatch::DispatchInfo;
 	use pretty_assertions::assert_eq;
-	use sc_block_builder::BlockBuilderBuilder;
+	use soil_block_builder::BlockBuilderBuilder;
 	use soil_api::{ApiExt, ProvideRuntimeApi};
 	use soil_consensus::BlockOrigin;
 	use soil_core::{storage::well_known_keys::HEAP_PAGES, traits::CallContext};

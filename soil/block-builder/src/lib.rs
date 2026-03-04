@@ -23,9 +23,18 @@ extern crate alloc;
 
 #[cfg(feature = "std")]
 mod client_side;
+#[cfg(feature = "std")]
+pub mod client;
 
 #[cfg(feature = "std")]
 pub use client_side::*;
+
+// Re-export non-colliding client items at crate root for convenience.
+// `client::BlockBuilder` (the struct) is NOT re-exported here because it would
+// collide with the `BlockBuilder` runtime API trait defined below.
+// Access the struct via `soil_block_builder::client::BlockBuilder`.
+#[cfg(feature = "std")]
+pub use client::{BlockBuilderBuilder, BlockBuilderBuilderStage1, BlockBuilderBuilderStage2, BuiltBlock};
 
 use soil_inherents::{CheckInherentsResult, InherentData};
 use soil_runtime::{traits::Block as BlockT, ApplyExtrinsicResult};
@@ -58,3 +67,8 @@ soil_api::decl_runtime_apis! {
 		fn check_inherents(block: <Block as BlockT>::LazyBlock, data: InherentData) -> CheckInherentsResult;
 	}
 }
+
+/// Alias for the [`BlockBuilder`] runtime API trait, to avoid confusion with the
+/// [`client::BlockBuilder`] struct.
+#[cfg(feature = "std")]
+pub use BlockBuilder as BlockBuilderApi;

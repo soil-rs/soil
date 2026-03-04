@@ -31,7 +31,7 @@ use jsonrpsee::{
 	},
 	rpc_params, MethodsError as Error, RpcModule,
 };
-use sc_block_builder::BlockBuilderBuilder;
+use soil_block_builder::BlockBuilderBuilder;
 use sc_client_api::ChildInfo;
 use sc_rpc::testing::TokioTestExecutor;
 use sc_service::client::new_with_backend;

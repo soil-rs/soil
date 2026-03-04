@@ -26,7 +26,7 @@ use crate::{
 	BlockBuilderExt, ClientBlockImportExt, Sr25519Keyring, TestClientBuilder, TestClientBuilderExt,
 };
 use futures::executor::block_on;
-use sc_block_builder::BlockBuilderBuilder;
+use soil_block_builder::BlockBuilderBuilder;
 use sc_client_api::{
 	backend,
 	blockchain::{Backend as BlockChainBackendT, HeaderBackend},

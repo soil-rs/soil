@@ -24,7 +24,7 @@ use crate::{
 	service::network::NetworkServiceProvider,
 };
 use futures::{channel::oneshot::Canceled, executor::block_on};
-use sc_block_builder::BlockBuilderBuilder;
+use soil_block_builder::BlockBuilderBuilder;
 use sc_network::RequestFailure;
 use sc_network_common::sync::message::{BlockAnnounce, BlockData, BlockState, FromBlock};
 use soil_blockchain::HeaderBackend;

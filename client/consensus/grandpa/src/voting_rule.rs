@@ -330,7 +330,7 @@ where
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use sc_block_builder::BlockBuilderBuilder;
+	use soil_block_builder::BlockBuilderBuilder;
 	use soil_consensus::BlockOrigin;
 	use soil_runtime::traits::Header as _;
 

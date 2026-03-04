@@ -23,7 +23,7 @@ use std::{
 	},
 };
 
-use sc_block_builder::BlockBuilderBuilder;
+use soil_block_builder::BlockBuilderBuilder;
 use soil_api::{ApiExt, Core, ProofRecorder, ProvideRuntimeApi};
 use soil_externalities::{decl_extension, TransactionType};
 use soil_runtime::{

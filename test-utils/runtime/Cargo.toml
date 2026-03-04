@@ -61,7 +61,6 @@ tracing = { workspace = true, default-features = false }
 [dev-dependencies]
 futures = { workspace = true }
 pretty_assertions = { workspace = true }
-sc-block-builder = { workspace = true, default-features = true }
 sc-chain-spec = { workspace = true, default-features = true }
 sc-executor = { workspace = true, default-features = true }
 sc-executor-common = { workspace = true, default-features = true }

@@ -49,7 +49,6 @@ soil-timestamp = { workspace = true, default-features = true }
 thiserror = { workspace = true }
 
 [dev-dependencies]
-sc-block-builder = { workspace = true, default-features = true }
 sc-network-test = { workspace = true }
 soil-keyring = { workspace = true, default-features = true }
 soil-tracing = { workspace = true, default-features = true }

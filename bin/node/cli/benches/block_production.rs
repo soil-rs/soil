@@ -21,7 +21,7 @@ use criterion::{criterion_group, criterion_main, BatchSize, Criterion, Throughpu
 use kitchensink_runtime::{constants::currency::*, BalancesCall};
 use node_cli::service::{create_extrinsic, FullClient};
 use sc_service::config::{ExecutorConfiguration, RpcConfiguration};
-use sc_block_builder::{BlockBuilderBuilder, BuiltBlock};
+use soil_block_builder::{BlockBuilderBuilder, BuiltBlock};
 use sc_consensus::{
 	block_import::{BlockImportParams, ForkChoiceStrategy},
 	BlockImport, StateAction,
