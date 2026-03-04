@@ -17,31 +17,76 @@ targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
 async-trait = { optional = true, workspace = true }
-codec = { workspace = true }
+codec = { features = ["derive"], workspace = true }
+fork-tree = { optional = true, workspace = true, default-features = true }
+futures = { optional = true, workspace = true }
+log = { optional = true, workspace = true, default-features = true }
+num-bigint = { optional = true, workspace = true }
+num-rational = { optional = true, workspace = true }
+num-traits = { optional = true, workspace = true, default-features = true }
+parking_lot = { optional = true, workspace = true, default-features = true }
+prometheus-endpoint = { optional = true, workspace = true, default-features = true }
+sc-client-api = { optional = true, workspace = true, default-features = true }
+sc-consensus = { optional = true, workspace = true, default-features = true }
+sc-consensus-epochs = { optional = true, workspace = true, default-features = true }
+sc-telemetry = { optional = true, workspace = true, default-features = true }
+sc-transaction-pool-api = { optional = true, workspace = true, default-features = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { features = ["alloc", "derive"], optional = true, workspace = true }
 soil-api = { workspace = true }
 soil-application-crypto = { workspace = true }
+soil-block-builder = { optional = true, workspace = true, default-features = true }
+soil-blockchain = { optional = true, workspace = true, default-features = true }
+soil-consensus = { optional = true, workspace = true, default-features = true }
 soil-consensus-slots = { workspace = true }
 soil-core = { workspace = true }
+soil-crypto-hashing = { optional = true, workspace = true, default-features = true }
 soil-inherents = { workspace = true }
+soil-keystore = { optional = true, workspace = true, default-features = true }
 soil-runtime = { workspace = true }
 soil-timestamp = { optional = true, workspace = true }
+thiserror = { optional = true, workspace = true }
+
+[dev-dependencies]
+sc-network-test = { workspace = true }
+soil-keyring = { workspace = true, default-features = true }
+soil-tracing = { workspace = true, default-features = true }
+substrate-test-runtime-client = { workspace = true }
+tokio = { workspace = true, default-features = true }
 
 [features]
 default = ["std"]
 std = [
 	"async-trait",
 	"codec/std",
+	"fork-tree",
+	"futures",
+	"log",
+	"num-bigint",
+	"num-rational",
+	"num-traits",
+	"parking_lot",
+	"prometheus-endpoint",
+	"sc-client-api",
+	"sc-consensus",
+	"sc-consensus-epochs",
+	"sc-telemetry",
+	"sc-transaction-pool-api",
 	"scale-info/std",
 	"serde/std",
 	"soil-api/std",
 	"soil-application-crypto/std",
+	"soil-block-builder",
+	"soil-blockchain",
+	"soil-consensus",
 	"soil-consensus-slots/std",
 	"soil-core/std",
+	"soil-crypto-hashing",
 	"soil-inherents/std",
+	"soil-keystore",
 	"soil-runtime/std",
 	"soil-timestamp/std",
+	"thiserror",
 ]
 
 # Serde support without relying on std features.

@@ -16,11 +16,36 @@
 // limitations under the License.
 
 //! Primitives for BABE.
-#![deny(warnings)]
-#![forbid(unsafe_code, missing_docs, unused_variables, unused_imports)]
+#![forbid(unsafe_code)]
+#![warn(missing_docs)]
 #![cfg_attr(not(feature = "std"), no_std)]
 
 extern crate alloc;
+
+#[cfg(feature = "std")]
+mod migration;
+#[cfg(feature = "std")]
+mod verification;
+#[cfg(feature = "std")]
+pub mod authorship;
+#[cfg(feature = "std")]
+pub mod aux_schema;
+#[cfg(feature = "std")]
+pub mod client;
+#[cfg(feature = "std")]
+#[cfg(test)]
+#[path = "babe_tests.rs"]
+mod babe_tests;
+
+// Re-export client items at crate root (except Epoch which conflicts with primitives Epoch).
+// The client Epoch is at soil_consensus_babe::client::Epoch.
+#[cfg(feature = "std")]
+pub use client::{
+	block_import, block_weight, configuration, contains_epoch_change, find_next_epoch_digest,
+	find_pre_digest, import_queue, revert, start_babe, BabeBlockImport, BabeIntermediate,
+	BabeLink, BabeParams, BabeVerifier, BabeWorker, BabeWorkerHandle, Error, ImportQueueParams,
+	SlotProportion, SyncOracle, INTERMEDIATE_KEY,
+};
 
 pub mod digests;
 pub mod inherents;
