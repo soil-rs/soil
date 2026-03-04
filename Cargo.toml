@@ -357,7 +357,6 @@ ethereum-standards = { path = "primitives/ethereum-standards" }
 fork-tree = { path = "utils/fork-tree", default-features = false }
 frame = { path = "frame", default-features = false, package = "polkadot-sdk-frame" }
 frame-benchmarking = { path = "frame/benchmarking", default-features = false }
-frame-benchmarking-cli = { path = "utils/frame/benchmarking-cli", default-features = false }
 frame-benchmarking-pallet-pov = { default-features = false, path = "frame/benchmarking/pov" }
 frame-election-provider-solution-type = { path = "frame/election-provider-support/solution-type", default-features = false }
 frame-election-provider-support = { path = "frame/election-provider-support", default-features = false }
