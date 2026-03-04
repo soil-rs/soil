@@ -166,6 +166,22 @@ node-rpc = { workspace = true }
 
 [dev-dependencies]
 assert_cmd = { workspace = true }
+frame-support = { workspace = true, default-features = true }
+pallet-bags-list = { workspace = true, default-features = true }
+pallet-balances = { workspace = true, default-features = true }
+pallet-root-testing = { workspace = true, default-features = true }
+pallet-sudo = { workspace = true, default-features = true }
+pallet-timestamp = { workspace = true, default-features = true }
+pallet-transaction-payment = { workspace = true, default-features = true }
+pallet-treasury = { workspace = true, default-features = true }
+soil-crypto-hashing = { workspace = true, default-features = true }
+soil-tracing = { workspace = true, default-features = true }
+sp-application-crypto = { workspace = true, default-features = true }
+sp-externalities = { workspace = true, default-features = true }
+sp-inherents = { workspace = true, default-features = true }
+sp-keystore = { workspace = true, default-features = true }
+sp-state-machine = { workspace = true, default-features = true }
+sp-trie = { workspace = true, default-features = true }
 criterion = { features = ["async_tokio"], workspace = true, default-features = true }
 nix = { features = ["signal"], workspace = true }
 pretty_assertions.workspace = true
