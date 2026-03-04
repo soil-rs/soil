@@ -26,5 +26,5 @@ tokio-test = { workspace = true }
 
 [features]
 std = []
-default = ["metered"]
+default = ["std", "metered"]
 metered = []

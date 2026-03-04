@@ -85,7 +85,6 @@ where
 	Self::Api: MmrApi<B, MmrRootHash, NumberFor<B>>,
 {
 	/// Get the block number where the mmr pallet was added to the runtime.
-#[cfg(feature = "std")]
 	fn first_mmr_block_num(&self, notification: &FinalityNotification<B>) -> Option<NumberFor<B>> {
 		let best_block_hash = notification.header.hash();
 		let best_block_number = *notification.header.number();
@@ -245,14 +244,11 @@ where
 #[cfg(test)]
 #[cfg(feature = "std")]
 mod tests {
-#[cfg(feature = "std")]
 	use crate::test_utils::run_test_with_mmr_gadget;
-#[cfg(feature = "std")]
 	use soil_runtime::generic::BlockId;
 	use std::time::Duration;
 
 	#[test]
-#[cfg(feature = "std")]
 	fn mmr_first_block_is_computed_correctly() {
 		// Check the case where the first block is also the first block with MMR.
 		run_test_with_mmr_gadget(|client| async move {
@@ -292,7 +288,6 @@ mod tests {
 	}
 
 	#[test]
-#[cfg(feature = "std")]
 	fn does_not_panic_on_invalid_num_mmr_blocks() {
 		run_test_with_mmr_gadget(|client| async move {
 			// G -> A1

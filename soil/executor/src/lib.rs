@@ -73,7 +73,6 @@ pub use soil_executor_wasmtime::InstantiationStrategy as WasmtimeInstantiationSt
 #[cfg(feature = "std")]
 pub trait RuntimeVersionOf {
 	/// Extract [`RuntimeVersion`] of the given `runtime_code`.
-#[cfg(feature = "std")]
 	fn runtime_version(
 		&self,
 		ext: &mut dyn Externalities,
@@ -84,17 +83,12 @@ pub trait RuntimeVersionOf {
 #[cfg(test)]
 #[cfg(feature = "std")]
 mod tests {
-#[cfg(feature = "std")]
 	use super::*;
-#[cfg(feature = "std")]
 	use soil_executor_common::runtime_blob::RuntimeBlob;
-#[cfg(feature = "std")]
 	use soil_runtime_test::wasm_binary_unwrap;
-#[cfg(feature = "std")]
 	use soil_io::TestExternalities;
 
 	#[test]
-#[cfg(feature = "std")]
 	fn call_in_interpreted_wasm_works() {
 		let mut ext = TestExternalities::default();
 		let mut ext = ext.ext();

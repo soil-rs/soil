@@ -58,7 +58,7 @@ tempfile = { workspace = true }
 
 [features]
 std = []
-default = []
+default = ["std"]
 test-helpers = []
 runtime-benchmarks = [
 	"soil-runtime/runtime-benchmarks",

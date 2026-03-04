@@ -77,7 +77,6 @@ pub trait GrandpaApi<Notification, Hash, Number> {
 		unsubscribe = "grandpa_unsubscribeJustifications",
 		item = Notification
 	)]
-#[cfg(feature = "std")]
 	fn subscribe_justifications(&self);
 
 	/// Prove finality for the given block number by returning the Justification for the last block
@@ -100,7 +99,6 @@ impl<AuthoritySet, VoterState, Block: BlockT, ProofProvider>
 	Grandpa<AuthoritySet, VoterState, Block, ProofProvider>
 {
 	/// Prepare a new [`Grandpa`] Rpc handler.
-#[cfg(feature = "std")]
 	pub fn new(
 		executor: SubscriptionTaskExecutor,
 		authority_set: AuthoritySet,
@@ -127,7 +125,6 @@ where
 		ReportedRoundStates::from(&self.authority_set, &self.voter_state)
 	}
 
-#[cfg(feature = "std")]
 	fn subscribe_justifications(&self, pending: PendingSubscriptionSink) {
 		let stream = self.justification_stream.subscribe(100_000).map(
 			|x: sc_consensus_grandpa::GrandpaJustification<Block>| {
@@ -155,49 +152,33 @@ where
 #[cfg(test)]
 #[cfg(feature = "std")]
 mod tests {
-#[cfg(feature = "std")]
 	use super::*;
 	use std::{collections::HashSet, sync::Arc};
 
-#[cfg(feature = "std")]
 	use codec::{Decode, Encode};
-#[cfg(feature = "std")]
 	use jsonrpsee::{core::EmptyServerParams as EmptyParams, types::SubscriptionId, RpcModule};
-#[cfg(feature = "std")]
 	use sc_block_builder::BlockBuilderBuilder;
-#[cfg(feature = "std")]
 	use sc_consensus_grandpa::{
 		report, AuthorityId, FinalityProof, GrandpaJustification, GrandpaJustificationSender,
 	};
-#[cfg(feature = "std")]
 	use sc_rpc::testing::test_executor;
-#[cfg(feature = "std")]
 	use soil_blockchain::HeaderBackend;
-#[cfg(feature = "std")]
 	use soil_core::crypto::ByteArray;
-#[cfg(feature = "std")]
 	use soil_keyring::Ed25519Keyring;
-#[cfg(feature = "std")]
 	use soil_runtime::traits::{Block as BlockT, Header as HeaderT};
-#[cfg(feature = "std")]
 	use substrate_test_runtime_client::{
 		runtime::{Block, Header, H256},
 		DefaultTestClientBuilderExt, TestClientBuilder, TestClientBuilderExt,
 	};
 
-#[cfg(feature = "std")]
 	struct TestAuthoritySet;
-#[cfg(feature = "std")]
 	struct TestVoterState;
-#[cfg(feature = "std")]
 	struct EmptyVoterState;
 
-#[cfg(feature = "std")]
 	struct TestFinalityProofProvider {
 		finality_proof: Option<FinalityProof<Header>>,
 	}
 
-#[cfg(feature = "std")]
 	fn voters() -> HashSet<AuthorityId> {
 		let voter_id_1 = AuthorityId::from_slice(&[1; 32]).unwrap();
 		let voter_id_2 = AuthorityId::from_slice(&[2; 32]).unwrap();
@@ -205,23 +186,18 @@ mod tests {
 		vec![voter_id_1, voter_id_2].into_iter().collect()
 	}
 
-#[cfg(feature = "std")]
 	impl ReportAuthoritySet for TestAuthoritySet {
-#[cfg(feature = "std")]
 		fn get(&self) -> (u64, HashSet<AuthorityId>) {
 			(1, voters())
 		}
 	}
 
-#[cfg(feature = "std")]
 	impl ReportVoterState for EmptyVoterState {
-#[cfg(feature = "std")]
 		fn get(&self) -> Option<report::VoterState<AuthorityId>> {
 			None
 		}
 	}
 
-#[cfg(feature = "std")]
 	fn header(number: u64) -> Header {
 		let parent_hash = match number {
 			0 => Default::default(),
@@ -236,9 +212,7 @@ mod tests {
 		)
 	}
 
-#[cfg(feature = "std")]
 	impl<Block: BlockT> RpcFinalityProofProvider<Block> for TestFinalityProofProvider {
-#[cfg(feature = "std")]
 		fn rpc_prove_finality(
 			&self,
 			_block: NumberFor<Block>,
@@ -253,9 +227,7 @@ mod tests {
 		}
 	}
 
-#[cfg(feature = "std")]
 	impl ReportVoterState for TestVoterState {
-#[cfg(feature = "std")]
 		fn get(&self) -> Option<report::VoterState<AuthorityId>> {
 			let voter_id_1 = AuthorityId::from_slice(&[1; 32]).unwrap();
 			let voters_best: HashSet<_> = vec![voter_id_1].into_iter().collect();
@@ -284,7 +256,6 @@ mod tests {
 		}
 	}
 
-#[cfg(feature = "std")]
 	fn setup_io_handler<VoterState>(
 		voter_state: VoterState,
 	) -> (
@@ -297,7 +268,6 @@ mod tests {
 		setup_io_handler_with_finality_proofs(voter_state, None)
 	}
 
-#[cfg(feature = "std")]
 	fn setup_io_handler_with_finality_proofs<VoterState>(
 		voter_state: VoterState,
 		finality_proof: Option<FinalityProof<Header>>,
@@ -378,7 +348,6 @@ mod tests {
 		assert_eq!(response, expected);
 	}
 
-#[cfg(feature = "std")]
 	fn create_justification() -> GrandpaJustification<Block> {
 		let peers = &[Ed25519Keyring::Alice];
 

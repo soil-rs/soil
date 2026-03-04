@@ -88,4 +88,4 @@ prost-build = { workspace = true }
 
 [features]
 std = []
-default = []
+default = ["std"]

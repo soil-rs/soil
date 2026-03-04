@@ -116,7 +116,6 @@ pub struct ConnectionMessage {
 	/// Node's name.
 	pub name: String,
 	/// Node's implementation.
-#[cfg(feature = "std")]
 	pub implementation: String,
 	/// Node's version.
 	pub version: String,
@@ -187,7 +186,6 @@ impl TelemetryWorker {
 	/// Instantiate a new [`TelemetryWorker`] which can run in background.
 	///
 	/// Only one is needed per process.
-#[cfg(feature = "std")]
 	pub fn new(buffer_size: usize) -> Result<Self> {
 		// Let's try to initialize a transport to get an early return.
 		// Later transport will be initialized multiple times in
@@ -210,7 +208,6 @@ impl TelemetryWorker {
 	/// Get a new [`TelemetryWorkerHandle`].
 	///
 	/// This is used when you want to register with the [`TelemetryWorker`].
-#[cfg(feature = "std")]
 	pub fn handle(&self) -> TelemetryWorkerHandle {
 		TelemetryWorkerHandle {
 			message_sender: self.message_sender.clone(),
@@ -402,7 +399,6 @@ pub struct TelemetryWorkerHandle {
 #[cfg(feature = "std")]
 impl TelemetryWorkerHandle {
 	/// Instantiate a new [`Telemetry`] object.
-#[cfg(feature = "std")]
 	pub fn new_telemetry(&mut self, endpoints: TelemetryEndpoints) -> Telemetry {
 		let addresses = endpoints.0.iter().map(|(addr, _)| addr.clone()).collect();
 
@@ -442,7 +438,6 @@ impl Telemetry {
 	///
 	/// The `connection_message` argument is a JSON object that is sent every time the connection
 	/// (re-)establishes.
-#[cfg(feature = "std")]
 	pub fn start_telemetry(&mut self, connection_message: ConnectionMessage) -> Result<()> {
 		let endpoints = self.endpoints.take().ok_or(Error::TelemetryAlreadyInitialized)?;
 
@@ -452,7 +447,6 @@ impl Telemetry {
 	}
 
 	/// Make a new clonable handle to this [`Telemetry`]. This is used for reporting telemetries.
-#[cfg(feature = "std")]
 	pub fn handle(&self) -> TelemetryHandle {
 		TelemetryHandle {
 			message_sender: Arc::new(Mutex::new(self.message_sender.clone())),
@@ -476,7 +470,6 @@ pub struct TelemetryHandle {
 #[cfg(feature = "std")]
 impl TelemetryHandle {
 	/// Send telemetry messages.
-#[cfg(feature = "std")]
 	pub fn send_telemetry(&self, verbosity: VerbosityLevel, payload: TelemetryPayload) {
 		match self.message_sender.lock().try_send((self.id, verbosity, payload)) {
 			Ok(()) => {},
@@ -495,7 +488,6 @@ impl TelemetryHandle {
 	///
 	/// This function will return an error if the telemetry has already been started by
 	/// [`Telemetry::start_telemetry`].
-#[cfg(feature = "std")]
 	pub fn on_connect_stream(&self) -> ConnectionNotifierReceiver {
 		self.connection_notifier.on_connect_stream()
 	}
@@ -512,7 +504,6 @@ pub struct TelemetryConnectionNotifier {
 
 #[cfg(feature = "std")]
 impl TelemetryConnectionNotifier {
-#[cfg(feature = "std")]
 	fn on_connect_stream(&self) -> ConnectionNotifierReceiver {
 		let (message_sender, message_receiver) = connection_notifier_channel();
 		if let Err(err) = self.register_sender.unbounded_send(Register::Notifier {

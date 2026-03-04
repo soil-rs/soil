@@ -55,11 +55,9 @@ use soil_network::{
 	error, multiaddr,
 	peer_store::PeerStoreProvider,
 	service::{
-#[cfg(feature = "std")]
 		traits::{NotificationEvent, NotificationService, ValidationResult},
 		NotificationMetrics,
 	},
-#[cfg(feature = "std")]
 	types::ProtocolName,
 	utils::{interval, LruHashSet},
 	NetworkBackend, NetworkEventStream, NetworkPeers,
@@ -97,28 +95,21 @@ pub type StatementImportFuture = oneshot::Receiver<SubmitResult>;
 
 #[cfg(feature = "std")]
 mod rep {
-#[cfg(feature = "std")]
 	use soil_network::ReputationChange as Rep;
 	/// Reputation change when a peer sends us any statement.
 	///
 	/// This forces node to verify it, thus the negative value here. Once statement is verified,
 	/// reputation change should be refunded with `ANY_STATEMENT_REFUND`
-#[cfg(feature = "std")]
 	pub const ANY_STATEMENT: Rep = Rep::new(-(1 << 4), "Any statement");
 	/// Reputation change when a peer sends us any statement that is not invalid.
-#[cfg(feature = "std")]
 	pub const ANY_STATEMENT_REFUND: Rep = Rep::new(1 << 4, "Any statement (refund)");
 	/// Reputation change when a peer sends us an statement that we didn't know about.
-#[cfg(feature = "std")]
 	pub const GOOD_STATEMENT: Rep = Rep::new(1 << 8, "Good statement");
 	/// Reputation change when a peer sends us an invalid statement.
-#[cfg(feature = "std")]
 	pub const INVALID_STATEMENT: Rep = Rep::new(-(1 << 12), "Invalid statement");
 	/// Reputation change when a peer sends us a duplicate statement.
-#[cfg(feature = "std")]
 	pub const DUPLICATE_STATEMENT: Rep = Rep::new(-(1 << 7), "Duplicate statement");
 	/// Reputation change when a peer floods us with statements.
-#[cfg(feature = "std")]
 	pub const STATEMENT_FLOODING: Rep = Rep::new_fatal("Statement flooding");
 }
 
@@ -153,7 +144,6 @@ struct Metrics {
 
 #[cfg(feature = "std")]
 impl Metrics {
-#[cfg(feature = "std")]
 	fn register(r: &Registry) -> Result<Self, PrometheusError> {
 		Ok(Self {
 			propagated_statements: register(
@@ -292,7 +282,6 @@ pub struct StatementHandlerPrototype {
 #[cfg(feature = "std")]
 impl StatementHandlerPrototype {
 	/// Create a new instance.
-#[cfg(feature = "std")]
 	pub fn new<
 		Hash: AsRef<[u8]>,
 		Block: BlockT,
@@ -331,7 +320,6 @@ impl StatementHandlerPrototype {
 	///
 	/// Important: the statements handler is initially disabled and doesn't gossip statements.
 	/// Gossiping is enabled when major syncing is done.
-#[cfg(feature = "std")]
 	pub fn build<
 		N: NetworkPeers + NetworkEventStream,
 		S: SyncEventStream + soil_consensus::SyncOracle,
@@ -476,14 +464,12 @@ struct PeerRateLimiter {
 
 #[cfg(feature = "std")]
 impl PeerRateLimiter {
-#[cfg(feature = "std")]
 	fn new(statements_per_second: NonZeroU32, burst: NonZeroU32) -> Self {
 		let quota = Quota::per_second(statements_per_second).allow_burst(burst);
 		Self { limiter: RateLimiter::direct(quota) }
 	}
 
 	/// Check if receiving `count` statements would exceed the rate limit.
-#[cfg(feature = "std")]
 	fn is_flooding(&self, count: usize) -> bool {
 		if count > u32::MAX as usize {
 			return true;
@@ -590,7 +576,6 @@ fn find_sendable_chunk(statements: &[&Statement]) -> ChunkResult {
 impl Peer {
 	/// Create a new peer for testing/benchmarking purposes.
 	#[cfg(any(test, feature = "test-helpers"))]
-#[cfg(feature = "std")]
 	pub fn new_for_testing(
 		known_statements: LruHashSet<Hash>,
 		statements_per_second: NonZeroU32,
@@ -608,7 +593,6 @@ where
 {
 	/// Create a new `StatementHandler` for testing/benchmarking purposes.
 	#[cfg(any(test, feature = "test-helpers"))]
-#[cfg(feature = "std")]
 	pub fn new_for_testing(
 		protocol_name: ProtocolName,
 		notification_service: Box<dyn NotificationService>,
@@ -643,7 +627,6 @@ where
 
 	/// Get mutable access to pending statements for testing/benchmarking.
 	#[cfg(any(test, feature = "test-helpers"))]
-#[cfg(feature = "std")]
 	pub fn pending_statements_mut(
 		&mut self,
 	) -> &mut FuturesUnordered<Pin<Box<dyn Future<Output = (Hash, Option<SubmitResult>)> + Send>>>
@@ -741,7 +724,6 @@ where
 		}
 	}
 
-#[cfg(feature = "std")]
 	fn handle_sync_event(&mut self, event: SyncEvent) {
 		match event {
 			SyncEvent::PeerConnected(remote) => {
@@ -856,7 +838,6 @@ where
 
 	/// Called when peer sends us new statements
 	#[cfg_attr(not(any(test, feature = "test-helpers")), doc(hidden))]
-#[cfg(feature = "std")]
 	pub fn on_statements(&mut self, who: PeerId, statements: Statements) {
 		log::trace!(target: LOG_TARGET, "Received {} statements from {}", statements.len(), who);
 
@@ -965,7 +946,6 @@ where
 		}
 	}
 
-#[cfg(feature = "std")]
 	fn on_handle_statement_import(&mut self, who: PeerId, import: &SubmitResult) {
 		match import {
 			SubmitResult::New => self.network.report_peer(who, rep::GOOD_STATEMENT),
@@ -1052,7 +1032,6 @@ where
 	}
 
 	/// Record initial sync completion metrics for a peer being removed.
-#[cfg(feature = "std")]
 	fn record_initial_sync_completion(&self, started_at: Instant) {
 		self.metrics.as_ref().map(|metrics| {
 			metrics.initial_sync_peers_active.dec();
@@ -1154,20 +1133,16 @@ where
 #[cfg(feature = "std")]
 mod tests {
 
-#[cfg(feature = "std")]
 	use super::*;
 	use std::sync::Mutex;
 
 	#[derive(Clone)]
-#[cfg(feature = "std")]
 	struct TestNetwork {
 		reported_peers: Arc<Mutex<Vec<(PeerId, soil_network::ReputationChange)>>>,
 		disconnected_peers: Arc<Mutex<Vec<PeerId>>>,
 	}
 
-#[cfg(feature = "std")]
 	impl TestNetwork {
-#[cfg(feature = "std")]
 		fn new() -> Self {
 			Self {
 				reported_peers: Arc::new(Mutex::new(Vec::new())),
@@ -1175,61 +1150,49 @@ mod tests {
 			}
 		}
 
-#[cfg(feature = "std")]
 		fn get_reports(&self) -> Vec<(PeerId, soil_network::ReputationChange)> {
 			self.reported_peers.lock().unwrap().clone()
 		}
 
-#[cfg(feature = "std")]
 		fn get_disconnected_peers(&self) -> Vec<PeerId> {
 			self.disconnected_peers.lock().unwrap().clone()
 		}
 	}
 
 	#[async_trait::async_trait]
-#[cfg(feature = "std")]
 	impl NetworkPeers for TestNetwork {
-#[cfg(feature = "std")]
 		fn set_authorized_peers(&self, _: std::collections::HashSet<PeerId>) {
 			unimplemented!()
 		}
 
-#[cfg(feature = "std")]
 		fn set_authorized_only(&self, _: bool) {
 			unimplemented!()
 		}
 
-#[cfg(feature = "std")]
 		fn add_known_address(&self, _: PeerId, _: soil_network::Multiaddr) {
 			unimplemented!()
 		}
 
-#[cfg(feature = "std")]
 		fn report_peer(&self, peer_id: PeerId, cost_benefit: soil_network::ReputationChange) {
 			self.reported_peers.lock().unwrap().push((peer_id, cost_benefit));
 		}
 
-#[cfg(feature = "std")]
 		fn peer_reputation(&self, _: &PeerId) -> i32 {
 			unimplemented!()
 		}
 
-#[cfg(feature = "std")]
 		fn disconnect_peer(&self, peer: PeerId, _: soil_network::ProtocolName) {
 			self.disconnected_peers.lock().unwrap().push(peer);
 		}
 
-#[cfg(feature = "std")]
 		fn accept_unreserved_peers(&self) {
 			unimplemented!()
 		}
 
-#[cfg(feature = "std")]
 		fn deny_unreserved_peers(&self) {
 			unimplemented!()
 		}
 
-#[cfg(feature = "std")]
 		fn add_reserved_peer(
 			&self,
 			_: soil_network::config::MultiaddrWithPeerId,
@@ -1237,12 +1200,10 @@ mod tests {
 			unimplemented!()
 		}
 
-#[cfg(feature = "std")]
 		fn remove_reserved_peer(&self, _: PeerId) {
 			unimplemented!()
 		}
 
-#[cfg(feature = "std")]
 		fn set_reserved_peers(
 			&self,
 			_: soil_network::ProtocolName,
@@ -1251,7 +1212,6 @@ mod tests {
 			unimplemented!()
 		}
 
-#[cfg(feature = "std")]
 		fn add_peers_to_reserved_set(
 			&self,
 			_: soil_network::ProtocolName,
@@ -1260,7 +1220,6 @@ mod tests {
 			unimplemented!()
 		}
 
-#[cfg(feature = "std")]
 		fn remove_peers_from_reserved_set(
 			&self,
 			_: soil_network::ProtocolName,
@@ -1269,12 +1228,10 @@ mod tests {
 			unimplemented!()
 		}
 
-#[cfg(feature = "std")]
 		fn sync_num_connected(&self) -> usize {
 			unimplemented!()
 		}
 
-#[cfg(feature = "std")]
 		fn peer_role(&self, _: PeerId, _: Vec<u8>) -> Option<soil_network::ObservedRole> {
 			unimplemented!()
 		}
@@ -1284,12 +1241,9 @@ mod tests {
 		}
 	}
 
-#[cfg(feature = "std")]
 	struct TestSync {}
 
-#[cfg(feature = "std")]
 	impl SyncEventStream for TestSync {
-#[cfg(feature = "std")]
 		fn event_stream(
 			&self,
 			_name: &'static str,
@@ -1298,22 +1252,17 @@ mod tests {
 		}
 	}
 
-#[cfg(feature = "std")]
 	impl soil_consensus::SyncOracle for TestSync {
-#[cfg(feature = "std")]
 		fn is_major_syncing(&self) -> bool {
 			false
 		}
 
-#[cfg(feature = "std")]
 		fn is_offline(&self) -> bool {
 			unimplemented!()
 		}
 	}
 
-#[cfg(feature = "std")]
 	impl NetworkEventStream for TestNetwork {
-#[cfg(feature = "std")]
 		fn event_stream(
 			&self,
 			_name: &'static str,
@@ -1323,26 +1272,21 @@ mod tests {
 	}
 
 	#[derive(Debug, Clone)]
-#[cfg(feature = "std")]
 	struct TestNotificationService {
 		sent_notifications: Arc<Mutex<Vec<(PeerId, Vec<u8>)>>>,
 	}
 
-#[cfg(feature = "std")]
 	impl TestNotificationService {
-#[cfg(feature = "std")]
 		fn new() -> Self {
 			Self { sent_notifications: Arc::new(Mutex::new(Vec::new())) }
 		}
 
-#[cfg(feature = "std")]
 		fn get_sent_notifications(&self) -> Vec<(PeerId, Vec<u8>)> {
 			self.sent_notifications.lock().unwrap().clone()
 		}
 	}
 
 	#[async_trait::async_trait]
-#[cfg(feature = "std")]
 	impl NotificationService for TestNotificationService {
 		async fn open_substream(&mut self, _peer: PeerId) -> Result<(), ()> {
 			unimplemented!()
@@ -1352,7 +1296,6 @@ mod tests {
 			unimplemented!()
 		}
 
-#[cfg(feature = "std")]
 		fn send_sync_notification(&mut self, peer: &PeerId, notification: Vec<u8>) {
 			self.sent_notifications.lock().unwrap().push((*peer, notification));
 		}
@@ -1370,7 +1313,6 @@ mod tests {
 			unimplemented!()
 		}
 
-#[cfg(feature = "std")]
 		fn try_set_handshake(&mut self, _handshake: Vec<u8>) -> Result<(), ()> {
 			unimplemented!()
 		}
@@ -1379,17 +1321,14 @@ mod tests {
 			None
 		}
 
-#[cfg(feature = "std")]
 		fn clone(&mut self) -> Result<Box<dyn NotificationService>, ()> {
 			unimplemented!()
 		}
 
-#[cfg(feature = "std")]
 		fn protocol(&self) -> &soil_network::types::ProtocolName {
 			unimplemented!()
 		}
 
-#[cfg(feature = "std")]
 		fn message_sink(
 			&self,
 			_peer: &PeerId,
@@ -1399,24 +1338,19 @@ mod tests {
 	}
 
 	#[derive(Clone)]
-#[cfg(feature = "std")]
 	struct TestStatementStore {
 		statements: Arc<Mutex<HashMap<soil_statement_store::Hash, soil_statement_store::Statement>>>,
 		recent_statements:
 			Arc<Mutex<HashMap<soil_statement_store::Hash, soil_statement_store::Statement>>>,
 	}
 
-#[cfg(feature = "std")]
 	impl TestStatementStore {
-#[cfg(feature = "std")]
 		fn new() -> Self {
 			Self { statements: Default::default(), recent_statements: Default::default() }
 		}
 	}
 
-#[cfg(feature = "std")]
 	impl StatementStore for TestStatementStore {
-#[cfg(feature = "std")]
 		fn statements(
 			&self,
 		) -> soil_statement_store::Result<
@@ -1425,7 +1359,6 @@ mod tests {
 			Ok(self.statements.lock().unwrap().iter().map(|(h, s)| (*h, s.clone())).collect())
 		}
 
-#[cfg(feature = "std")]
 		fn take_recent_statements(
 			&self,
 		) -> soil_statement_store::Result<
@@ -1434,7 +1367,6 @@ mod tests {
 			Ok(self.recent_statements.lock().unwrap().drain().collect())
 		}
 
-#[cfg(feature = "std")]
 		fn statement(
 			&self,
 			_hash: &soil_statement_store::Hash,
@@ -1442,17 +1374,14 @@ mod tests {
 			unimplemented!()
 		}
 
-#[cfg(feature = "std")]
 		fn has_statement(&self, hash: &soil_statement_store::Hash) -> bool {
 			self.statements.lock().unwrap().contains_key(hash)
 		}
 
-#[cfg(feature = "std")]
 		fn statement_hashes(&self) -> Vec<soil_statement_store::Hash> {
 			self.statements.lock().unwrap().keys().cloned().collect()
 		}
 
-#[cfg(feature = "std")]
 		fn statements_by_hashes(
 			&self,
 			hashes: &[soil_statement_store::Hash],
@@ -1488,7 +1417,6 @@ mod tests {
 			Ok((result, processed))
 		}
 
-#[cfg(feature = "std")]
 		fn broadcasts(
 			&self,
 			_match_all_topics: &[soil_statement_store::Topic],
@@ -1496,7 +1424,6 @@ mod tests {
 			unimplemented!()
 		}
 
-#[cfg(feature = "std")]
 		fn posted(
 			&self,
 			_match_all_topics: &[soil_statement_store::Topic],
@@ -1505,7 +1432,6 @@ mod tests {
 			unimplemented!()
 		}
 
-#[cfg(feature = "std")]
 		fn posted_clear(
 			&self,
 			_match_all_topics: &[soil_statement_store::Topic],
@@ -1514,7 +1440,6 @@ mod tests {
 			unimplemented!()
 		}
 
-#[cfg(feature = "std")]
 		fn broadcasts_stmt(
 			&self,
 			_match_all_topics: &[soil_statement_store::Topic],
@@ -1522,7 +1447,6 @@ mod tests {
 			unimplemented!()
 		}
 
-#[cfg(feature = "std")]
 		fn posted_stmt(
 			&self,
 			_match_all_topics: &[soil_statement_store::Topic],
@@ -1531,7 +1455,6 @@ mod tests {
 			unimplemented!()
 		}
 
-#[cfg(feature = "std")]
 		fn posted_clear_stmt(
 			&self,
 			_match_all_topics: &[soil_statement_store::Topic],
@@ -1540,7 +1463,6 @@ mod tests {
 			unimplemented!()
 		}
 
-#[cfg(feature = "std")]
 		fn submit(
 			&self,
 			_statement: soil_statement_store::Statement,
@@ -1549,18 +1471,15 @@ mod tests {
 			unimplemented!()
 		}
 
-#[cfg(feature = "std")]
 		fn remove(&self, _hash: &soil_statement_store::Hash) -> soil_statement_store::Result<()> {
 			unimplemented!()
 		}
 
-#[cfg(feature = "std")]
 		fn remove_by(&self, _who: [u8; 32]) -> soil_statement_store::Result<()> {
 			unimplemented!()
 		}
 	}
 
-#[cfg(feature = "std")]
 	fn build_handler() -> (
 		StatementHandler<TestNetwork, TestSync>,
 		TestStatementStore,
@@ -1785,7 +1704,6 @@ mod tests {
 		assert_eq!(sent_hashes, expected_hashes, "Only small statements should be sent");
 	}
 
-#[cfg(feature = "std")]
 	fn build_handler_no_peers() -> (
 		StatementHandler<TestNetwork, TestSync>,
 		TestStatementStore,

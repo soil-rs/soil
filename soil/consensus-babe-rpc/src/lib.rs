@@ -29,7 +29,6 @@ use futures::TryFutureExt;
 use jsonrpsee::{
 	core::async_trait,
 	proc_macros::rpc,
-#[cfg(feature = "std")]
 	types::{ErrorObject, ErrorObjectOwned},
 	Extensions,
 };
@@ -88,7 +87,6 @@ pub struct Babe<B: BlockT, C, SC> {
 #[cfg(feature = "std")]
 impl<B: BlockT, C, SC> Babe<B, C, SC> {
 	/// Creates a new instance of the Babe Rpc handler.
-#[cfg(feature = "std")]
 	pub fn new(
 		client: Arc<C>,
 		babe_worker_handle: BabeWorkerHandle<B>,
@@ -206,7 +204,6 @@ pub enum Error {
 
 #[cfg(feature = "std")]
 impl From<Error> for ErrorObjectOwned {
-#[cfg(feature = "std")]
 	fn from(error: Error) -> Self {
 		match error {
 			Error::SelectChain(e) => ErrorObject::owned(BABE_ERROR + 1, e.to_string(), None::<()>),
@@ -221,29 +218,19 @@ impl From<Error> for ErrorObjectOwned {
 #[cfg(test)]
 #[cfg(feature = "std")]
 mod tests {
-#[cfg(feature = "std")]
 	use super::*;
-#[cfg(feature = "std")]
 	use sc_consensus_babe::ImportQueueParams;
-#[cfg(feature = "std")]
 	use soil_rpc_api::DenyUnsafe;
-#[cfg(feature = "std")]
 	use soil_transaction_pool_api::{OffchainTransactionPoolFactory, RejectAllTxPool};
-#[cfg(feature = "std")]
 	use soil_consensus_babe::inherents::InherentDataProvider;
-#[cfg(feature = "std")]
 	use soil_core::{crypto::key_types::BABE, testing::TaskExecutor};
-#[cfg(feature = "std")]
 	use soil_keyring::Sr25519Keyring;
-#[cfg(feature = "std")]
 	use soil_keystore::{testing::MemoryKeystore, Keystore};
-#[cfg(feature = "std")]
 	use substrate_test_runtime_client::{
 		runtime::Block, Backend, DefaultTestClientBuilderExt, TestClient, TestClientBuilder,
 		TestClientBuilderExt,
 	};
 
-#[cfg(feature = "std")]
 	fn create_keystore(authority: Sr25519Keyring) -> KeystorePtr {
 		let keystore = MemoryKeystore::new();
 		keystore
@@ -252,7 +239,6 @@ mod tests {
 		keystore.into()
 	}
 
-#[cfg(feature = "std")]
 	fn test_babe_rpc_module() -> Babe<Block, TestClient, sc_consensus::LongestChain<Backend, Block>>
 	{
 		let builder = TestClientBuilder::new();

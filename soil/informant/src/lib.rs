@@ -103,7 +103,6 @@ struct PrintFullHashOnDebugLogging<'a, H>(&'a H);
 
 #[cfg(feature = "std")]
 impl<H: Debug + Display> Display for PrintFullHashOnDebugLogging<'_, H> {
-#[cfg(feature = "std")]
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		if log_enabled!(log::Level::Debug) {
 			Debug::fmt(&self.0, f)

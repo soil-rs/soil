@@ -72,20 +72,17 @@ pub struct Server {
 #[cfg(feature = "std")]
 impl Server {
 	/// Creates a new Server.
-#[cfg(feature = "std")]
 	pub fn new(handle: ServerHandle, listen_addrs: Vec<SocketAddr>) -> Server {
 		Server { handle, listen_addrs }
 	}
 
 	/// Returns the `jsonrpsee::server::ServerHandle` for this Server. Can be used to stop the
 	/// server.
-#[cfg(feature = "std")]
 	pub fn handle(&self) -> &ServerHandle {
 		&self.handle
 	}
 
 	/// The listen address for the running RPC service.
-#[cfg(feature = "std")]
 	pub fn listen_addrs(&self) -> &[SocketAddr] {
 		&self.listen_addrs
 	}
@@ -93,7 +90,6 @@ impl Server {
 
 #[cfg(feature = "std")]
 impl Drop for Server {
-#[cfg(feature = "std")]
 	fn drop(&mut self) {
 		// This doesn't not wait for the server to be stopped but fires the signal.
 		let _ = self.handle.stop();

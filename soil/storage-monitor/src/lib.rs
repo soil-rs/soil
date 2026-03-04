@@ -78,7 +78,6 @@ pub struct StorageMonitorService {
 #[cfg(feature = "std")]
 impl StorageMonitorService {
 	/// Creates new StorageMonitorService for given client config
-#[cfg(feature = "std")]
 	pub fn try_spawn(
 		parameters: StorageMonitorParams,
 		path: PathBuf,
@@ -126,7 +125,6 @@ impl StorageMonitorService {
 	}
 
 	/// Returns free space in MiB, or error if statvfs failed.
-#[cfg(feature = "std")]
 	fn free_space(path: &Path) -> Result<u64> {
 		Ok(fs4::available_space(path).map(|s| s / 1024 / 1024)?)
 	}
@@ -134,7 +132,6 @@ impl StorageMonitorService {
 	/// Checks if the amount of free space for given `path` is above given `threshold` in MiB.
 	/// If it dropped below, error is returned.
 	/// System errors are silently ignored.
-#[cfg(feature = "std")]
 	fn check_free_space(path: &Path, threshold: u64) -> Result<()> {
 		match StorageMonitorService::free_space(path) {
 			Ok(available_space) => {

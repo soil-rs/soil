@@ -3245,11 +3245,11 @@ dependencies = [
  "parity-scale-codec",
  "paste",
  "rusty-fork",
- "sc-client-db",
  "scale-info",
  "serde",
  "soil-api",
  "soil-application-crypto",
+ "soil-client-db",
  "soil-core",
  "soil-externalities",
  "soil-io",
@@ -5263,8 +5263,6 @@ dependencies = [
  "primitive-types",
  "rand 0.8.5",
  "rand_pcg",
- "sc-chain-spec-derive",
- "sc-tracing-proc-macro",
  "scale-info",
  "serde_json",
  "soil-api",
@@ -5273,6 +5271,7 @@ dependencies = [
  "soil-arithmetic",
  "soil-authority-discovery",
  "soil-block-builder",
+ "soil-chain-spec-derive",
  "soil-consensus-aura",
  "soil-consensus-babe",
  "soil-consensus-beefy",
@@ -5306,6 +5305,7 @@ dependencies = [
  "soil-storage",
  "soil-timestamp",
  "soil-tracing",
+ "soil-tracing-proc-macro",
  "soil-transaction-pool",
  "soil-transaction-storage-proof",
  "soil-trie",
@@ -6318,44 +6318,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "mmr-gadget"
-version = "29.0.0"
-dependencies = [
- "futures",
- "log",
- "parity-scale-codec",
- "parking_lot 0.12.5",
- "sc-block-builder",
- "sc-client-api",
- "sc-offchain",
- "soil-api",
- "soil-blockchain",
- "soil-consensus",
- "soil-consensus-beefy",
- "soil-core",
- "soil-mmr-primitives",
- "soil-runtime",
- "soil-tracing",
- "substrate-test-runtime-client",
- "tokio",
-]
-
-[[package]]
-name = "mmr-rpc"
-version = "28.0.0"
-dependencies = [
- "jsonrpsee",
- "parity-scale-codec",
- "serde",
- "serde_json",
- "soil-api",
- "soil-blockchain",
- "soil-core",
- "soil-mmr-primitives",
- "soil-runtime",
-]
-
-[[package]]
 name = "mockall"
 version = "0.13.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -6646,12 +6608,11 @@ dependencies = [
  "node-testing",
  "parity-db",
  "rand 0.8.5",
- "sc-basic-authorship",
- "sc-client-api",
  "sc-transaction-pool",
- "sc-transaction-pool-api",
  "serde",
  "serde_json",
+ "soil-basic-authorship",
+ "soil-client-api",
  "soil-consensus",
  "soil-core",
  "soil-inherents",
@@ -6659,6 +6620,7 @@ dependencies = [
  "soil-state-machine",
  "soil-timestamp",
  "soil-tracing",
+ "soil-transaction-pool-api",
  "soil-trie",
  "tempfile",
 ]
@@ -6676,30 +6638,30 @@ name = "node-rpc"
 version = "3.0.0-dev"
 dependencies = [
  "jsonrpsee",
- "mmr-rpc",
  "node-primitives",
  "pallet-transaction-payment-rpc",
- "sc-chain-spec",
- "sc-client-api",
  "sc-consensus-babe",
- "sc-consensus-babe-rpc",
  "sc-consensus-beefy",
- "sc-consensus-beefy-rpc",
  "sc-consensus-grandpa",
- "sc-consensus-grandpa-rpc",
  "sc-mixnet",
  "sc-rpc",
- "sc-sync-state-rpc",
- "sc-transaction-pool-api",
  "soil-api",
  "soil-application-crypto",
  "soil-block-builder",
  "soil-blockchain",
+ "soil-chain-spec",
+ "soil-client-api",
  "soil-consensus",
  "soil-consensus-babe",
+ "soil-consensus-babe-rpc",
  "soil-consensus-beefy",
+ "soil-consensus-beefy-rpc",
+ "soil-consensus-grandpa-rpc",
  "soil-keystore",
+ "soil-mmr-rpc",
  "soil-runtime",
+ "soil-sync-state-rpc",
+ "soil-transaction-pool-api",
  "substrate-frame-rpc-system",
  "substrate-state-trie-migration-rpc",
 ]
@@ -6743,20 +6705,20 @@ dependencies = [
  "pallet-skip-feeless-payment",
  "parity-scale-codec",
  "sc-block-builder",
- "sc-client-api",
- "sc-client-db",
  "sc-consensus",
- "sc-executor",
- "sc-service",
  "soil-api",
  "soil-block-builder",
  "soil-blockchain",
+ "soil-client-api",
+ "soil-client-db",
  "soil-consensus",
  "soil-core",
  "soil-crypto-hashing",
+ "soil-executor",
  "soil-inherents",
  "soil-keyring",
  "soil-runtime",
+ "soil-service",
  "soil-timestamp",
  "staging-node-cli",
  "substrate-test-client",
@@ -10709,16 +10671,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "sc-allocator"
-version = "23.0.0"
-dependencies = [
- "log",
- "soil-core",
- "soil-wasm-interface",
- "thiserror 1.0.69",
-]
-
-[[package]]
 name = "sc-authority-discovery"
 version = "0.34.0"
 dependencies = [
@@ -10734,50 +10686,24 @@ dependencies = [
  "prost-build 0.13.5",
  "quickcheck",
  "rand 0.8.5",
- "sc-client-api",
- "sc-network",
- "sc-network-types",
- "sc-service",
  "serde",
  "serde_json",
  "soil-api",
  "soil-authority-discovery",
  "soil-blockchain",
+ "soil-client-api",
  "soil-core",
  "soil-keystore",
+ "soil-network",
+ "soil-network-types",
  "soil-runtime",
+ "soil-service",
  "soil-tracing",
  "substrate-prometheus-endpoint",
  "substrate-test-runtime-client",
  "tempfile",
  "thiserror 1.0.69",
  "tokio",
-]
-
-[[package]]
-name = "sc-basic-authorship"
-version = "0.34.0"
-dependencies = [
- "futures",
- "log",
- "parity-scale-codec",
- "parking_lot 0.12.5",
- "sc-block-builder",
- "sc-client-api",
- "sc-proposer-metrics",
- "sc-telemetry",
- "sc-transaction-pool",
- "sc-transaction-pool-api",
- "soil-api",
- "soil-blockchain",
- "soil-consensus",
- "soil-core",
- "soil-inherents",
- "soil-runtime",
- "soil-state-machine",
- "soil-trie",
- "substrate-prometheus-endpoint",
- "substrate-test-runtime-client",
 ]
 
 [[package]]
@@ -10797,152 +10723,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "sc-chain-spec"
-version = "28.0.0"
-dependencies = [
- "array-bytes 6.2.3",
- "clap",
- "docify",
- "memmap2 0.9.10",
- "parity-scale-codec",
- "pretty_assertions",
- "regex",
- "sc-chain-spec-derive",
- "sc-client-api",
- "sc-executor",
- "sc-network",
- "sc-telemetry",
- "serde",
- "serde_json",
- "soil-application-crypto",
- "soil-blockchain",
- "soil-consensus-babe",
- "soil-core",
- "soil-crypto-hashing",
- "soil-genesis-builder",
- "soil-io",
- "soil-keyring",
- "soil-runtime",
- "soil-state-machine",
- "soil-tracing",
- "substrate-test-runtime",
-]
-
-[[package]]
-name = "sc-chain-spec-derive"
-version = "11.0.0"
-dependencies = [
- "proc-macro-crate 3.4.0",
- "proc-macro2",
- "quote",
- "syn 2.0.117",
-]
-
-[[package]]
-name = "sc-cli"
-version = "0.36.0"
-dependencies = [
- "array-bytes 6.2.3",
- "bip39",
- "chrono",
- "clap",
- "fdlimit",
- "futures",
- "futures-timer",
- "itertools 0.11.0",
- "libp2p-identity",
- "log",
- "names",
- "parity-scale-codec",
- "rand 0.8.5",
- "regex",
- "rpassword",
- "sc-client-api",
- "sc-client-db",
- "sc-keystore",
- "sc-mixnet",
- "sc-network",
- "sc-service",
- "sc-telemetry",
- "sc-tracing",
- "sc-transaction-pool",
- "sc-utils",
- "serde",
- "serde_json",
- "soil-blockchain",
- "soil-core",
- "soil-keyring",
- "soil-keystore",
- "soil-panic-handler",
- "soil-runtime",
- "soil-tracing",
- "soil-version",
- "tempfile",
- "thiserror 1.0.69",
- "tokio",
-]
-
-[[package]]
-name = "sc-client-api"
-version = "28.0.0"
-dependencies = [
- "fnv",
- "futures",
- "log",
- "parity-scale-codec",
- "parking_lot 0.12.5",
- "sc-executor",
- "sc-transaction-pool-api",
- "sc-utils",
- "soil-api",
- "soil-blockchain",
- "soil-consensus",
- "soil-core",
- "soil-database",
- "soil-externalities",
- "soil-runtime",
- "soil-state-machine",
- "soil-storage",
- "soil-trie",
- "substrate-prometheus-endpoint",
- "substrate-test-runtime",
-]
-
-[[package]]
-name = "sc-client-db"
-version = "0.35.0"
-dependencies = [
- "array-bytes 6.2.3",
- "criterion",
- "hash-db",
- "kitchensink-runtime",
- "kvdb",
- "kvdb-memorydb",
- "kvdb-rocksdb",
- "linked-hash-map",
- "log",
- "parity-db",
- "parity-scale-codec",
- "parking_lot 0.12.5",
- "rand 0.8.5",
- "sc-client-api",
- "sc-state-db",
- "schnellru",
- "soil-arithmetic",
- "soil-blockchain",
- "soil-core",
- "soil-database",
- "soil-runtime",
- "soil-state-machine",
- "soil-tracing",
- "soil-trie",
- "substrate-prometheus-endpoint",
- "substrate-test-runtime-client",
- "sysinfo",
- "tempfile",
-]
-
-[[package]]
 name = "sc-consensus"
 version = "0.33.0"
 dependencies = [
@@ -10951,16 +10731,16 @@ dependencies = [
  "log",
  "mockall",
  "parking_lot 0.12.5",
- "sc-client-api",
- "sc-network-types",
- "sc-utils",
  "serde",
  "soil-blockchain",
+ "soil-client-api",
  "soil-consensus",
  "soil-core",
+ "soil-network-types",
  "soil-runtime",
  "soil-state-machine",
  "soil-test-primitives",
+ "soil-utils",
  "substrate-prometheus-endpoint",
  "thiserror 1.0.69",
 ]
@@ -10976,17 +10756,14 @@ dependencies = [
  "parity-scale-codec",
  "parking_lot 0.12.5",
  "sc-block-builder",
- "sc-client-api",
  "sc-consensus",
  "sc-consensus-slots",
  "sc-keystore",
- "sc-network",
- "sc-network-test",
- "sc-telemetry",
  "soil-api",
  "soil-application-crypto",
  "soil-block-builder",
  "soil-blockchain",
+ "soil-client-api",
  "soil-consensus",
  "soil-consensus-aura",
  "soil-consensus-slots",
@@ -10994,7 +10771,10 @@ dependencies = [
  "soil-inherents",
  "soil-keyring",
  "soil-keystore",
+ "soil-network",
+ "soil-network-test",
  "soil-runtime",
+ "soil-telemetry",
  "soil-timestamp",
  "soil-tracing",
  "substrate-prometheus-endpoint",
@@ -11018,55 +10798,29 @@ dependencies = [
  "parity-scale-codec",
  "parking_lot 0.12.5",
  "sc-block-builder",
- "sc-client-api",
  "sc-consensus",
- "sc-consensus-epochs",
  "sc-consensus-slots",
- "sc-network-test",
- "sc-telemetry",
- "sc-transaction-pool-api",
  "soil-api",
  "soil-application-crypto",
  "soil-block-builder",
  "soil-blockchain",
+ "soil-client-api",
  "soil-consensus",
  "soil-consensus-babe",
+ "soil-consensus-epochs",
  "soil-consensus-slots",
  "soil-core",
  "soil-crypto-hashing",
  "soil-inherents",
  "soil-keyring",
  "soil-keystore",
+ "soil-network-test",
  "soil-runtime",
+ "soil-telemetry",
  "soil-timestamp",
  "soil-tracing",
+ "soil-transaction-pool-api",
  "substrate-prometheus-endpoint",
- "substrate-test-runtime-client",
- "thiserror 1.0.69",
- "tokio",
-]
-
-[[package]]
-name = "sc-consensus-babe-rpc"
-version = "0.34.0"
-dependencies = [
- "futures",
- "jsonrpsee",
- "sc-consensus",
- "sc-consensus-babe",
- "sc-consensus-epochs",
- "sc-rpc-api",
- "sc-transaction-pool-api",
- "serde",
- "soil-api",
- "soil-application-crypto",
- "soil-blockchain",
- "soil-consensus",
- "soil-consensus-babe",
- "soil-core",
- "soil-keyring",
- "soil-keystore",
- "soil-runtime",
  "substrate-test-runtime-client",
  "thiserror 1.0.69",
  "tokio",
@@ -11084,64 +10838,31 @@ dependencies = [
  "parity-scale-codec",
  "parking_lot 0.12.5",
  "sc-block-builder",
- "sc-client-api",
  "sc-consensus",
- "sc-network",
- "sc-network-gossip",
- "sc-network-sync",
- "sc-network-test",
- "sc-network-types",
- "sc-utils",
  "serde",
  "soil-api",
  "soil-application-crypto",
  "soil-arithmetic",
  "soil-blockchain",
+ "soil-client-api",
  "soil-consensus",
  "soil-consensus-beefy",
  "soil-core",
  "soil-keystore",
  "soil-mmr-primitives",
+ "soil-network",
+ "soil-network-gossip",
+ "soil-network-sync",
+ "soil-network-test",
+ "soil-network-types",
  "soil-runtime",
  "soil-tracing",
+ "soil-utils",
  "substrate-prometheus-endpoint",
  "substrate-test-runtime-client",
  "thiserror 1.0.69",
  "tokio",
  "wasm-timer",
-]
-
-[[package]]
-name = "sc-consensus-beefy-rpc"
-version = "13.0.0"
-dependencies = [
- "futures",
- "jsonrpsee",
- "log",
- "parity-scale-codec",
- "parking_lot 0.12.5",
- "sc-consensus-beefy",
- "sc-rpc",
- "serde",
- "soil-application-crypto",
- "soil-consensus-beefy",
- "soil-core",
- "soil-runtime",
- "substrate-test-runtime-client",
- "thiserror 1.0.69",
- "tokio",
-]
-
-[[package]]
-name = "sc-consensus-epochs"
-version = "0.33.0"
-dependencies = [
- "fork-tree",
- "parity-scale-codec",
- "sc-client-api",
- "sc-consensus",
- "soil-blockchain",
- "soil-runtime",
 ]
 
 [[package]]
@@ -11162,98 +10883,34 @@ dependencies = [
  "parking_lot 0.12.5",
  "rand 0.8.5",
  "sc-block-builder",
- "sc-chain-spec",
- "sc-client-api",
- "sc-client-db",
  "sc-consensus",
- "sc-network",
- "sc-network-common",
- "sc-network-gossip",
- "sc-network-sync",
- "sc-network-test",
- "sc-network-types",
- "sc-telemetry",
- "sc-transaction-pool-api",
- "sc-utils",
  "serde_json",
  "soil-api",
  "soil-application-crypto",
  "soil-arithmetic",
  "soil-blockchain",
+ "soil-chain-spec",
+ "soil-client-api",
+ "soil-client-db",
  "soil-consensus",
  "soil-consensus-grandpa",
  "soil-core",
  "soil-crypto-hashing",
  "soil-keyring",
  "soil-keystore",
+ "soil-network",
+ "soil-network-common",
+ "soil-network-gossip",
+ "soil-network-sync",
+ "soil-network-test",
+ "soil-network-types",
  "soil-runtime",
+ "soil-telemetry",
  "soil-tracing",
+ "soil-transaction-pool-api",
+ "soil-utils",
  "substrate-prometheus-endpoint",
  "substrate-test-runtime-client",
- "thiserror 1.0.69",
- "tokio",
-]
-
-[[package]]
-name = "sc-consensus-grandpa-rpc"
-version = "0.19.0"
-dependencies = [
- "finality-grandpa",
- "futures",
- "jsonrpsee",
- "log",
- "parity-scale-codec",
- "sc-block-builder",
- "sc-client-api",
- "sc-consensus-grandpa",
- "sc-rpc",
- "serde",
- "soil-blockchain",
- "soil-consensus-grandpa",
- "soil-core",
- "soil-keyring",
- "soil-runtime",
- "substrate-test-runtime-client",
- "thiserror 1.0.69",
- "tokio",
-]
-
-[[package]]
-name = "sc-consensus-manual-seal"
-version = "0.35.0"
-dependencies = [
- "assert_matches",
- "async-trait",
- "futures",
- "futures-timer",
- "jsonrpsee",
- "log",
- "parity-scale-codec",
- "sc-basic-authorship",
- "sc-client-api",
- "sc-consensus",
- "sc-consensus-aura",
- "sc-consensus-babe",
- "sc-consensus-epochs",
- "sc-transaction-pool",
- "sc-transaction-pool-api",
- "serde",
- "soil-api",
- "soil-blockchain",
- "soil-consensus",
- "soil-consensus-aura",
- "soil-consensus-babe",
- "soil-consensus-slots",
- "soil-core",
- "soil-externalities",
- "soil-inherents",
- "soil-keystore",
- "soil-runtime",
- "soil-timestamp",
- "soil-trie",
- "substrate-prometheus-endpoint",
- "substrate-test-runtime-client",
- "substrate-test-runtime-transaction-pool",
  "thiserror 1.0.69",
  "tokio",
 ]
@@ -11268,11 +10925,11 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "parking_lot 0.12.5",
- "sc-client-api",
  "sc-consensus",
  "soil-api",
  "soil-block-builder",
  "soil-blockchain",
+ "soil-client-api",
  "soil-consensus",
  "soil-consensus-pow",
  "soil-core",
@@ -11291,116 +10948,19 @@ dependencies = [
  "futures-timer",
  "log",
  "parity-scale-codec",
- "sc-client-api",
  "sc-consensus",
- "sc-telemetry",
  "soil-arithmetic",
  "soil-blockchain",
+ "soil-client-api",
  "soil-consensus",
  "soil-consensus-slots",
  "soil-core",
  "soil-inherents",
  "soil-runtime",
  "soil-state-machine",
+ "soil-telemetry",
  "soil-trie",
  "substrate-test-runtime-client",
-]
-
-[[package]]
-name = "sc-executor"
-version = "0.32.0"
-dependencies = [
- "array-bytes 6.2.3",
- "assert_matches",
- "criterion",
- "num_cpus",
- "parity-scale-codec",
- "parking_lot 0.12.5",
- "paste",
- "sc-executor-common",
- "sc-executor-polkavm",
- "sc-executor-wasmtime",
- "sc-runtime-test",
- "sc-tracing",
- "schnellru",
- "soil-api",
- "soil-core",
- "soil-crypto-hashing",
- "soil-externalities",
- "soil-io",
- "soil-maybe-compressed-blob",
- "soil-panic-handler",
- "soil-runtime",
- "soil-runtime-interface",
- "soil-state-machine",
- "soil-tracing",
- "soil-trie",
- "soil-version",
- "soil-wasm-interface",
- "substrate-test-runtime",
- "tempfile",
- "tracing",
- "tracing-subscriber",
- "wat",
-]
-
-[[package]]
-name = "sc-executor-common"
-version = "0.29.0"
-dependencies = [
- "polkavm",
- "sc-allocator",
- "soil-maybe-compressed-blob",
- "soil-wasm-interface",
- "thiserror 1.0.69",
- "wasm-instrument",
-]
-
-[[package]]
-name = "sc-executor-polkavm"
-version = "0.29.0"
-dependencies = [
- "log",
- "polkavm",
- "sc-executor-common",
- "soil-wasm-interface",
-]
-
-[[package]]
-name = "sc-executor-wasmtime"
-version = "0.29.0"
-dependencies = [
- "anyhow",
- "cargo_metadata",
- "log",
- "parity-scale-codec",
- "parking_lot 0.12.5",
- "paste",
- "rustix 1.1.4",
- "sc-allocator",
- "sc-executor-common",
- "sc-runtime-test",
- "soil-io",
- "soil-runtime-interface",
- "soil-wasm-interface",
- "tempfile",
- "wasmtime",
- "wat",
-]
-
-[[package]]
-name = "sc-informant"
-version = "0.33.0"
-dependencies = [
- "console",
- "futures",
- "futures-timer",
- "log",
- "sc-client-api",
- "sc-network",
- "sc-network-sync",
- "soil-blockchain",
- "soil-runtime",
 ]
 
 [[package]]
@@ -11431,269 +10991,17 @@ dependencies = [
  "mixnet",
  "parity-scale-codec",
  "parking_lot 0.12.5",
- "sc-client-api",
- "sc-network",
- "sc-network-types",
- "sc-transaction-pool-api",
  "soil-api",
+ "soil-client-api",
  "soil-consensus",
  "soil-core",
  "soil-keystore",
  "soil-mixnet",
+ "soil-network",
+ "soil-network-types",
  "soil-runtime",
+ "soil-transaction-pool-api",
  "thiserror 1.0.69",
-]
-
-[[package]]
-name = "sc-network"
-version = "0.34.0"
-dependencies = [
- "array-bytes 6.2.3",
- "assert_matches",
- "async-channel 1.9.0",
- "async-trait",
- "asynchronous-codec 0.6.2",
- "bytes",
- "cid",
- "criterion",
- "either",
- "fnv",
- "futures",
- "futures-timer",
- "ip_network",
- "libp2p",
- "linked_hash_set",
- "litep2p",
- "log",
- "mockall",
- "multistream-select",
- "parity-scale-codec",
- "parking_lot 0.12.5",
- "partial_sort",
- "pin-project",
- "prost 0.12.6",
- "prost-build 0.13.5",
- "rand 0.8.5",
- "sc-block-builder",
- "sc-client-api",
- "sc-network-common",
- "sc-network-types",
- "sc-utils",
- "schnellru",
- "serde",
- "serde_json",
- "smallvec",
- "soil-arithmetic",
- "soil-blockchain",
- "soil-consensus",
- "soil-core",
- "soil-crypto-hashing",
- "soil-runtime",
- "soil-tracing",
- "substrate-prometheus-endpoint",
- "substrate-test-runtime",
- "substrate-test-runtime-client",
- "tempfile",
- "thiserror 1.0.69",
- "tokio",
- "tokio-stream",
- "tokio-util",
- "unsigned-varint 0.7.2",
- "void",
- "wasm-timer",
- "zeroize",
-]
-
-[[package]]
-name = "sc-network-common"
-version = "0.33.0"
-dependencies = [
- "bitflags 1.3.2",
- "parity-scale-codec",
- "soil-runtime",
-]
-
-[[package]]
-name = "sc-network-gossip"
-version = "0.34.0"
-dependencies = [
- "ahash 0.8.12",
- "async-trait",
- "futures",
- "futures-timer",
- "log",
- "parity-scale-codec",
- "quickcheck",
- "sc-network",
- "sc-network-common",
- "sc-network-sync",
- "sc-network-types",
- "schnellru",
- "soil-runtime",
- "substrate-prometheus-endpoint",
- "substrate-test-runtime-client",
- "tokio",
- "tracing",
-]
-
-[[package]]
-name = "sc-network-light"
-version = "0.33.0"
-dependencies = [
- "array-bytes 6.2.3",
- "async-channel 1.9.0",
- "futures",
- "log",
- "parity-scale-codec",
- "prost 0.12.6",
- "prost-build 0.13.5",
- "sc-client-api",
- "sc-network",
- "sc-network-types",
- "soil-blockchain",
- "soil-core",
- "soil-runtime",
- "thiserror 1.0.69",
-]
-
-[[package]]
-name = "sc-network-statement"
-version = "0.16.0"
-dependencies = [
- "array-bytes 6.2.3",
- "async-channel 1.9.0",
- "async-trait",
- "criterion",
- "futures",
- "governor",
- "log",
- "parity-scale-codec",
- "sc-keystore",
- "sc-network",
- "sc-network-common",
- "sc-network-sync",
- "sc-network-types",
- "sc-statement-store",
- "soil-api",
- "soil-blockchain",
- "soil-consensus",
- "soil-core",
- "soil-keyring",
- "soil-runtime",
- "soil-statement-store",
- "substrate-prometheus-endpoint",
- "substrate-test-runtime-client",
- "tempfile",
- "tokio",
-]
-
-[[package]]
-name = "sc-network-sync"
-version = "0.33.0"
-dependencies = [
- "array-bytes 6.2.3",
- "async-channel 1.9.0",
- "async-trait",
- "fork-tree",
- "futures",
- "log",
- "mockall",
- "parity-scale-codec",
- "prost 0.12.6",
- "prost-build 0.13.5",
- "quickcheck",
- "sc-block-builder",
- "sc-client-api",
- "sc-consensus",
- "sc-network",
- "sc-network-common",
- "sc-network-types",
- "sc-utils",
- "schnellru",
- "smallvec",
- "soil-arithmetic",
- "soil-blockchain",
- "soil-consensus",
- "soil-core",
- "soil-runtime",
- "soil-test-primitives",
- "soil-tracing",
- "substrate-prometheus-endpoint",
- "substrate-test-runtime-client",
- "thiserror 1.0.69",
- "tokio",
- "tokio-stream",
-]
-
-[[package]]
-name = "sc-network-test"
-version = "0.8.0"
-dependencies = [
- "async-channel 1.9.0",
- "async-trait",
- "futures",
- "futures-timer",
- "libp2p",
- "log",
- "parking_lot 0.12.5",
- "rand 0.8.5",
- "sc-block-builder",
- "sc-client-api",
- "sc-consensus",
- "sc-network",
- "sc-network-common",
- "sc-network-light",
- "sc-network-sync",
- "sc-network-types",
- "sc-service",
- "sc-utils",
- "soil-blockchain",
- "soil-consensus",
- "soil-core",
- "soil-runtime",
- "soil-tracing",
- "substrate-test-runtime",
- "substrate-test-runtime-client",
- "tokio",
-]
-
-[[package]]
-name = "sc-network-transactions"
-version = "0.33.0"
-dependencies = [
- "array-bytes 6.2.3",
- "futures",
- "log",
- "parity-scale-codec",
- "sc-network",
- "sc-network-common",
- "sc-network-sync",
- "sc-network-types",
- "sc-utils",
- "soil-consensus",
- "soil-runtime",
- "substrate-prometheus-endpoint",
-]
-
-[[package]]
-name = "sc-network-types"
-version = "0.10.0"
-dependencies = [
- "bs58",
- "bytes",
- "ed25519-dalek",
- "libp2p-identity",
- "libp2p-kad",
- "litep2p",
- "log",
- "multiaddr 0.18.2",
- "multihash 0.19.3",
- "quickcheck",
- "rand 0.8.5",
- "serde",
- "serde_with",
- "thiserror 1.0.69",
- "zeroize",
 ]
 
 [[package]]
@@ -11716,33 +11024,25 @@ dependencies = [
  "rand 0.8.5",
  "rustls",
  "sc-block-builder",
- "sc-client-api",
- "sc-client-db",
- "sc-network",
- "sc-network-types",
  "sc-transaction-pool",
- "sc-transaction-pool-api",
- "sc-utils",
  "soil-api",
+ "soil-client-api",
+ "soil-client-db",
  "soil-consensus",
  "soil-core",
  "soil-externalities",
  "soil-keystore",
+ "soil-network",
+ "soil-network-types",
  "soil-offchain",
  "soil-runtime",
  "soil-tracing",
+ "soil-transaction-pool-api",
+ "soil-utils",
  "substrate-test-runtime-client",
  "threadpool",
  "tokio",
  "tracing",
-]
-
-[[package]]
-name = "sc-proposer-metrics"
-version = "0.17.0"
-dependencies = [
- "log",
- "substrate-prometheus-endpoint",
 ]
 
 [[package]]
@@ -11759,260 +11059,33 @@ dependencies = [
  "parking_lot 0.12.5",
  "pretty_assertions",
  "sc-block-builder",
- "sc-chain-spec",
- "sc-client-api",
  "sc-keystore",
  "sc-mixnet",
- "sc-network",
- "sc-rpc-api",
  "sc-statement-store",
  "sc-tracing",
  "sc-transaction-pool",
- "sc-transaction-pool-api",
- "sc-utils",
  "serde_json",
  "soil-api",
  "soil-blockchain",
+ "soil-chain-spec",
+ "soil-client-api",
  "soil-consensus",
  "soil-core",
  "soil-crypto-hashing",
  "soil-keystore",
+ "soil-network",
  "soil-offchain",
  "soil-rpc",
+ "soil-rpc-api",
  "soil-runtime",
  "soil-session",
  "soil-statement-store",
+ "soil-transaction-pool-api",
+ "soil-utils",
  "soil-version",
  "substrate-test-runtime-client",
  "tempfile",
  "tokio",
-]
-
-[[package]]
-name = "sc-rpc-api"
-version = "0.33.0"
-dependencies = [
- "jsonrpsee",
- "parity-scale-codec",
- "sc-chain-spec",
- "sc-mixnet",
- "sc-transaction-pool-api",
- "scale-info",
- "serde",
- "serde_json",
- "soil-core",
- "soil-rpc",
- "soil-runtime",
- "soil-statement-store",
- "soil-version",
- "thiserror 1.0.69",
-]
-
-[[package]]
-name = "sc-rpc-server"
-version = "11.0.0"
-dependencies = [
- "dyn-clone",
- "forwarded-header-value",
- "futures",
- "governor",
- "http 1.4.0",
- "http-body-util",
- "hyper 1.8.1",
- "ip_network",
- "jsonrpsee",
- "log",
- "sc-rpc-api",
- "serde",
- "serde_json",
- "substrate-prometheus-endpoint",
- "tokio",
- "tower",
- "tower-http",
-]
-
-[[package]]
-name = "sc-rpc-spec-v2"
-version = "0.34.0"
-dependencies = [
- "array-bytes 6.2.3",
- "assert_matches",
- "async-trait",
- "futures",
- "futures-util",
- "hex",
- "itertools 0.11.0",
- "jsonrpsee",
- "log",
- "parity-scale-codec",
- "parking_lot 0.12.5",
- "pretty_assertions",
- "rand 0.8.5",
- "sc-block-builder",
- "sc-chain-spec",
- "sc-client-api",
- "sc-rpc",
- "sc-service",
- "sc-transaction-pool",
- "sc-transaction-pool-api",
- "sc-utils",
- "schnellru",
- "serde",
- "serde_json",
- "soil-api",
- "soil-blockchain",
- "soil-consensus",
- "soil-core",
- "soil-externalities",
- "soil-maybe-compressed-blob",
- "soil-rpc",
- "soil-runtime",
- "soil-version",
- "substrate-prometheus-endpoint",
- "substrate-test-runtime",
- "substrate-test-runtime-client",
- "substrate-test-runtime-transaction-pool",
- "thiserror 1.0.69",
- "tokio",
- "tokio-stream",
-]
-
-[[package]]
-name = "sc-runtime-test"
-version = "2.0.0"
-dependencies = [
- "soil-core",
- "soil-io",
- "soil-runtime",
- "soil-runtime-interface",
- "substrate-wasm-builder",
-]
-
-[[package]]
-name = "sc-runtime-utilities"
-version = "0.1.0"
-dependencies = [
- "parity-scale-codec",
- "sc-executor",
- "sc-executor-common",
- "soil-core",
- "soil-crypto-hashing",
- "soil-io",
- "soil-state-machine",
- "soil-version",
- "soil-wasm-interface",
- "subxt",
- "thiserror 1.0.69",
-]
-
-[[package]]
-name = "sc-service"
-version = "0.35.0"
-dependencies = [
- "async-trait",
- "directories",
- "exit-future",
- "futures",
- "futures-timer",
- "jsonrpsee",
- "log",
- "parity-scale-codec",
- "parking_lot 0.12.5",
- "pin-project",
- "rand 0.8.5",
- "sc-chain-spec",
- "sc-client-api",
- "sc-client-db",
- "sc-consensus",
- "sc-executor",
- "sc-informant",
- "sc-keystore",
- "sc-network",
- "sc-network-common",
- "sc-network-light",
- "sc-network-sync",
- "sc-network-transactions",
- "sc-network-types",
- "sc-rpc",
- "sc-rpc-server",
- "sc-rpc-spec-v2",
- "sc-sysinfo",
- "sc-telemetry",
- "sc-tracing",
- "sc-transaction-pool",
- "sc-transaction-pool-api",
- "sc-utils",
- "schnellru",
- "serde",
- "serde_json",
- "soil-api",
- "soil-blockchain",
- "soil-consensus",
- "soil-core",
- "soil-externalities",
- "soil-keystore",
- "soil-runtime",
- "soil-session",
- "soil-state-machine",
- "soil-storage",
- "soil-transaction-pool",
- "soil-transaction-storage-proof",
- "soil-trie",
- "soil-version",
- "static_init",
- "substrate-prometheus-endpoint",
- "substrate-test-runtime",
- "substrate-test-runtime-client",
- "tempfile",
- "thiserror 1.0.69",
- "tokio",
- "tracing",
- "tracing-futures",
-]
-
-[[package]]
-name = "sc-service-test"
-version = "2.0.0"
-dependencies = [
- "array-bytes 6.2.3",
- "async-channel 1.9.0",
- "fdlimit",
- "futures",
- "log",
- "parity-scale-codec",
- "parking_lot 0.12.5",
- "sc-block-builder",
- "sc-client-api",
- "sc-client-db",
- "sc-consensus",
- "sc-executor",
- "sc-network",
- "sc-network-sync",
- "sc-service",
- "sc-transaction-pool-api",
- "soil-api",
- "soil-blockchain",
- "soil-consensus",
- "soil-core",
- "soil-io",
- "soil-runtime",
- "soil-state-machine",
- "soil-storage",
- "soil-tracing",
- "substrate-test-runtime",
- "substrate-test-runtime-client",
- "tempfile",
- "tokio",
-]
-
-[[package]]
-name = "sc-state-db"
-version = "0.30.0"
-dependencies = [
- "log",
- "parity-scale-codec",
- "parking_lot 0.12.5",
- "soil-core",
 ]
 
 [[package]]
@@ -12026,88 +11099,20 @@ dependencies = [
  "log",
  "parity-db",
  "parking_lot 0.12.5",
- "sc-client-api",
  "sc-keystore",
- "sc-network-statement",
- "sc-utils",
  "soil-api",
  "soil-blockchain",
+ "soil-client-api",
  "soil-core",
+ "soil-network-statement",
  "soil-runtime",
  "soil-statement-store",
  "soil-storage",
  "soil-tracing",
+ "soil-utils",
  "substrate-prometheus-endpoint",
  "tempfile",
  "tokio",
-]
-
-[[package]]
-name = "sc-storage-monitor"
-version = "0.16.0"
-dependencies = [
- "clap",
- "fs4",
- "log",
- "soil-core",
- "thiserror 1.0.69",
- "tokio",
-]
-
-[[package]]
-name = "sc-sync-state-rpc"
-version = "0.34.0"
-dependencies = [
- "jsonrpsee",
- "parity-scale-codec",
- "sc-chain-spec",
- "sc-client-api",
- "sc-consensus-babe",
- "sc-consensus-epochs",
- "sc-consensus-grandpa",
- "serde",
- "serde_json",
- "soil-blockchain",
- "soil-runtime",
- "thiserror 1.0.69",
-]
-
-[[package]]
-name = "sc-sysinfo"
-version = "27.0.0"
-dependencies = [
- "derive_more 0.99.20",
- "futures",
- "libc",
- "log",
- "rand 0.8.5",
- "rand_pcg",
- "regex",
- "sc-telemetry",
- "serde",
- "serde_json",
- "soil-core",
- "soil-crypto-hashing",
- "soil-io",
- "soil-runtime",
-]
-
-[[package]]
-name = "sc-telemetry"
-version = "15.0.0"
-dependencies = [
- "chrono",
- "futures",
- "libp2p",
- "log",
- "parking_lot 0.12.5",
- "pin-project",
- "rand 0.8.5",
- "sc-utils",
- "serde",
- "serde_json",
- "thiserror 1.0.69",
- "wasm-timer",
 ]
 
 [[package]]
@@ -12124,29 +11129,19 @@ dependencies = [
  "parking_lot 0.12.5",
  "regex",
  "rustc-hash 1.1.0",
- "sc-client-api",
- "sc-tracing-proc-macro",
  "serde",
  "soil-api",
  "soil-blockchain",
+ "soil-client-api",
  "soil-core",
  "soil-rpc",
  "soil-runtime",
  "soil-tracing",
+ "soil-tracing-proc-macro",
  "thiserror 1.0.69",
  "tracing",
  "tracing-log",
  "tracing-subscriber",
-]
-
-[[package]]
-name = "sc-tracing-proc-macro"
-version = "11.0.0"
-dependencies = [
- "proc-macro-crate 3.4.0",
- "proc-macro2",
- "quote",
- "syn 2.0.117",
 ]
 
 [[package]]
@@ -12168,19 +11163,19 @@ dependencies = [
  "parking_lot 0.12.5",
  "rstest",
  "sc-block-builder",
- "sc-client-api",
- "sc-transaction-pool-api",
- "sc-utils",
  "serde",
  "serde_json",
  "soil-api",
  "soil-blockchain",
+ "soil-client-api",
  "soil-consensus",
  "soil-core",
  "soil-crypto-hashing",
  "soil-runtime",
  "soil-tracing",
  "soil-transaction-pool",
+ "soil-transaction-pool-api",
+ "soil-utils",
  "strum 0.26.3",
  "substrate-prometheus-endpoint",
  "substrate-test-runtime",
@@ -12191,38 +11186,6 @@ dependencies = [
  "tokio-stream",
  "tracing",
  "tracing-subscriber",
-]
-
-[[package]]
-name = "sc-transaction-pool-api"
-version = "28.0.0"
-dependencies = [
- "async-trait",
- "futures",
- "indexmap",
- "log",
- "parity-scale-codec",
- "serde",
- "serde_json",
- "soil-blockchain",
- "soil-core",
- "soil-runtime",
- "strum 0.26.3",
- "thiserror 1.0.69",
-]
-
-[[package]]
-name = "sc-utils"
-version = "14.0.0"
-dependencies = [
- "async-channel 1.9.0",
- "futures",
- "futures-timer",
- "log",
- "parking_lot 0.12.5",
- "prometheus",
- "soil-arithmetic",
- "tokio-test",
 ]
 
 [[package]]
@@ -13003,6 +11966,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "soil-allocator"
+version = "23.0.0"
+dependencies = [
+ "log",
+ "soil-core",
+ "soil-wasm-interface",
+ "thiserror 1.0.69",
+]
+
+[[package]]
 name = "soil-api"
 version = "26.0.0"
 dependencies = [
@@ -13078,6 +12051,32 @@ dependencies = [
 ]
 
 [[package]]
+name = "soil-basic-authorship"
+version = "0.34.0"
+dependencies = [
+ "futures",
+ "log",
+ "parity-scale-codec",
+ "parking_lot 0.12.5",
+ "sc-block-builder",
+ "sc-transaction-pool",
+ "soil-api",
+ "soil-blockchain",
+ "soil-client-api",
+ "soil-consensus",
+ "soil-core",
+ "soil-inherents",
+ "soil-proposer-metrics",
+ "soil-runtime",
+ "soil-state-machine",
+ "soil-telemetry",
+ "soil-transaction-pool-api",
+ "soil-trie",
+ "substrate-prometheus-endpoint",
+ "substrate-test-runtime-client",
+]
+
+[[package]]
 name = "soil-block-builder"
 version = "26.0.0"
 dependencies = [
@@ -13102,6 +12101,152 @@ dependencies = [
  "soil-state-machine",
  "thiserror 1.0.69",
  "tracing",
+]
+
+[[package]]
+name = "soil-chain-spec"
+version = "28.0.0"
+dependencies = [
+ "array-bytes 6.2.3",
+ "clap",
+ "docify",
+ "memmap2 0.9.10",
+ "parity-scale-codec",
+ "pretty_assertions",
+ "regex",
+ "serde",
+ "serde_json",
+ "soil-application-crypto",
+ "soil-blockchain",
+ "soil-chain-spec-derive",
+ "soil-client-api",
+ "soil-consensus-babe",
+ "soil-core",
+ "soil-crypto-hashing",
+ "soil-executor",
+ "soil-genesis-builder",
+ "soil-io",
+ "soil-keyring",
+ "soil-network",
+ "soil-runtime",
+ "soil-state-machine",
+ "soil-telemetry",
+ "soil-tracing",
+ "substrate-test-runtime",
+]
+
+[[package]]
+name = "soil-chain-spec-derive"
+version = "11.0.0"
+dependencies = [
+ "proc-macro-crate 3.4.0",
+ "proc-macro2",
+ "quote",
+ "syn 2.0.117",
+]
+
+[[package]]
+name = "soil-cli"
+version = "0.36.0"
+dependencies = [
+ "array-bytes 6.2.3",
+ "bip39",
+ "chrono",
+ "clap",
+ "fdlimit",
+ "futures",
+ "futures-timer",
+ "itertools 0.11.0",
+ "libp2p-identity",
+ "log",
+ "names",
+ "parity-scale-codec",
+ "rand 0.8.5",
+ "regex",
+ "rpassword",
+ "sc-keystore",
+ "sc-mixnet",
+ "sc-tracing",
+ "sc-transaction-pool",
+ "serde",
+ "serde_json",
+ "soil-blockchain",
+ "soil-client-api",
+ "soil-client-db",
+ "soil-core",
+ "soil-keyring",
+ "soil-keystore",
+ "soil-network",
+ "soil-panic-handler",
+ "soil-runtime",
+ "soil-service",
+ "soil-telemetry",
+ "soil-tracing",
+ "soil-utils",
+ "soil-version",
+ "tempfile",
+ "thiserror 1.0.69",
+ "tokio",
+]
+
+[[package]]
+name = "soil-client-api"
+version = "28.0.0"
+dependencies = [
+ "fnv",
+ "futures",
+ "log",
+ "parity-scale-codec",
+ "parking_lot 0.12.5",
+ "soil-api",
+ "soil-blockchain",
+ "soil-consensus",
+ "soil-core",
+ "soil-database",
+ "soil-executor",
+ "soil-externalities",
+ "soil-runtime",
+ "soil-state-machine",
+ "soil-storage",
+ "soil-transaction-pool-api",
+ "soil-trie",
+ "soil-utils",
+ "substrate-prometheus-endpoint",
+ "substrate-test-runtime",
+]
+
+[[package]]
+name = "soil-client-db"
+version = "0.35.0"
+dependencies = [
+ "array-bytes 6.2.3",
+ "criterion",
+ "hash-db",
+ "kitchensink-runtime",
+ "kvdb",
+ "kvdb-memorydb",
+ "kvdb-rocksdb",
+ "linked-hash-map",
+ "log",
+ "parity-db",
+ "parity-scale-codec",
+ "parking_lot 0.12.5",
+ "rand 0.8.5",
+ "schnellru",
+ "soil-arithmetic",
+ "soil-blockchain",
+ "soil-client-api",
+ "soil-core",
+ "soil-database",
+ "soil-runtime",
+ "soil-state-db",
+ "soil-state-machine",
+ "soil-tracing",
+ "soil-trie",
+ "substrate-prometheus-endpoint",
+ "substrate-test-runtime-client",
+ "sysinfo",
+ "tempfile",
 ]
 
 [[package]]
@@ -13153,6 +12298,32 @@ dependencies = [
 ]
 
 [[package]]
+name = "soil-consensus-babe-rpc"
+version = "0.34.0"
+dependencies = [
+ "futures",
+ "jsonrpsee",
+ "sc-consensus",
+ "sc-consensus-babe",
+ "serde",
+ "soil-api",
+ "soil-application-crypto",
+ "soil-blockchain",
+ "soil-consensus",
+ "soil-consensus-babe",
+ "soil-consensus-epochs",
+ "soil-core",
+ "soil-keyring",
+ "soil-keystore",
+ "soil-rpc-api",
+ "soil-runtime",
+ "soil-transaction-pool-api",
+ "substrate-test-runtime-client",
+ "thiserror 1.0.69",
+ "tokio",
+]
+
+[[package]]
 name = "soil-consensus-beefy"
 version = "13.0.0"
 dependencies = [
@@ -13174,6 +12345,39 @@ dependencies = [
 ]
 
 [[package]]
+name = "soil-consensus-beefy-rpc"
+version = "13.0.0"
+dependencies = [
+ "futures",
+ "jsonrpsee",
+ "log",
+ "parity-scale-codec",
+ "parking_lot 0.12.5",
+ "sc-consensus-beefy",
+ "sc-rpc",
+ "serde",
+ "soil-application-crypto",
+ "soil-consensus-beefy",
+ "soil-core",
+ "soil-runtime",
+ "substrate-test-runtime-client",
+ "thiserror 1.0.69",
+ "tokio",
+]
+
+[[package]]
+name = "soil-consensus-epochs"
+version = "0.33.0"
+dependencies = [
+ "fork-tree",
+ "parity-scale-codec",
+ "sc-consensus",
+ "soil-blockchain",
+ "soil-client-api",
+ "soil-runtime",
+]
+
+[[package]]
 name = "soil-consensus-grandpa"
 version = "13.0.0"
 dependencies = [
@@ -13187,6 +12391,70 @@ dependencies = [
  "soil-core",
  "soil-keystore",
  "soil-runtime",
+]
+
+[[package]]
+name = "soil-consensus-grandpa-rpc"
+version = "0.19.0"
+dependencies = [
+ "finality-grandpa",
+ "futures",
+ "jsonrpsee",
+ "log",
+ "parity-scale-codec",
+ "sc-block-builder",
+ "sc-consensus-grandpa",
+ "sc-rpc",
+ "serde",
+ "soil-blockchain",
+ "soil-client-api",
+ "soil-consensus-grandpa",
+ "soil-core",
+ "soil-keyring",
+ "soil-runtime",
+ "substrate-test-runtime-client",
+ "thiserror 1.0.69",
+ "tokio",
+]
+
+[[package]]
+name = "soil-consensus-manual-seal"
+version = "0.35.0"
+dependencies = [
+ "assert_matches",
+ "async-trait",
+ "futures",
+ "futures-timer",
+ "jsonrpsee",
+ "log",
+ "parity-scale-codec",
+ "sc-consensus",
+ "sc-consensus-aura",
+ "sc-consensus-babe",
+ "sc-transaction-pool",
+ "serde",
+ "soil-api",
+ "soil-basic-authorship",
+ "soil-blockchain",
+ "soil-client-api",
+ "soil-consensus",
+ "soil-consensus-aura",
+ "soil-consensus-babe",
+ "soil-consensus-epochs",
+ "soil-consensus-slots",
+ "soil-core",
+ "soil-externalities",
+ "soil-inherents",
+ "soil-keystore",
+ "soil-runtime",
+ "soil-timestamp",
+ "soil-transaction-pool-api",
+ "soil-trie",
+ "substrate-prometheus-endpoint",
+ "substrate-test-runtime-client",
+ "substrate-test-runtime-transaction-pool",
+ "thiserror 1.0.69",
+ "tokio",
 ]
 
 [[package]]
@@ -13336,6 +12604,88 @@ dependencies = [
 ]
 
 [[package]]
+name = "soil-executor"
+version = "0.32.0"
+dependencies = [
+ "array-bytes 6.2.3",
+ "assert_matches",
+ "criterion",
+ "num_cpus",
+ "parity-scale-codec",
+ "parking_lot 0.12.5",
+ "paste",
+ "sc-tracing",
+ "schnellru",
+ "soil-api",
+ "soil-core",
+ "soil-crypto-hashing",
+ "soil-executor-common",
+ "soil-executor-polkavm",
+ "soil-executor-wasmtime",
+ "soil-externalities",
+ "soil-io",
+ "soil-maybe-compressed-blob",
+ "soil-panic-handler",
+ "soil-runtime",
+ "soil-runtime-interface",
+ "soil-runtime-test",
+ "soil-state-machine",
+ "soil-tracing",
+ "soil-trie",
+ "soil-version",
+ "soil-wasm-interface",
+ "substrate-test-runtime",
+ "tempfile",
+ "tracing",
+ "tracing-subscriber",
+ "wat",
+]
+
+[[package]]
+name = "soil-executor-common"
+version = "0.29.0"
+dependencies = [
+ "polkavm",
+ "soil-allocator",
+ "soil-maybe-compressed-blob",
+ "soil-wasm-interface",
+ "thiserror 1.0.69",
+ "wasm-instrument",
+]
+
+[[package]]
+name = "soil-executor-polkavm"
+version = "0.29.0"
+dependencies = [
+ "log",
+ "polkavm",
+ "soil-executor-common",
+ "soil-wasm-interface",
+]
+
+[[package]]
+name = "soil-executor-wasmtime"
+version = "0.29.0"
+dependencies = [
+ "anyhow",
+ "cargo_metadata",
+ "log",
+ "parity-scale-codec",
+ "parking_lot 0.12.5",
+ "paste",
+ "rustix 1.1.4",
+ "soil-allocator",
+ "soil-executor-common",
+ "soil-io",
+ "soil-runtime-interface",
+ "soil-runtime-test",
+ "soil-wasm-interface",
+ "tempfile",
+ "wasmtime",
+ "wat",
+]
+
+[[package]]
 name = "soil-externalities"
 version = "0.25.0"
 dependencies = [
@@ -13352,6 +12702,21 @@ dependencies = [
  "scale-info",
  "serde_json",
  "soil-api",
+ "soil-runtime",
+]
+
+[[package]]
+name = "soil-informant"
+version = "0.33.0"
+dependencies = [
+ "console",
+ "futures",
+ "futures-timer",
+ "log",
+ "soil-blockchain",
+ "soil-client-api",
+ "soil-network",
+ "soil-network-sync",
  "soil-runtime",
 ]
 
@@ -13440,6 +12805,29 @@ dependencies = [
 ]
 
 [[package]]
+name = "soil-mmr-gadget"
+version = "29.0.0"
+dependencies = [
+ "futures",
+ "log",
+ "parity-scale-codec",
+ "parking_lot 0.12.5",
+ "sc-block-builder",
+ "sc-offchain",
+ "soil-api",
+ "soil-blockchain",
+ "soil-client-api",
+ "soil-consensus",
+ "soil-consensus-beefy",
+ "soil-core",
+ "soil-mmr-primitives",
+ "soil-runtime",
+ "soil-tracing",
+ "substrate-test-runtime-client",
+ "tokio",
+]
+
+[[package]]
 name = "soil-mmr-primitives"
 version = "26.0.0"
 dependencies = [
@@ -13454,6 +12842,273 @@ dependencies = [
  "soil-debug-derive",
  "soil-runtime",
  "thiserror 1.0.69",
+]
+
+[[package]]
+name = "soil-mmr-rpc"
+version = "28.0.0"
+dependencies = [
+ "jsonrpsee",
+ "parity-scale-codec",
+ "serde",
+ "serde_json",
+ "soil-api",
+ "soil-blockchain",
+ "soil-core",
+ "soil-mmr-primitives",
+ "soil-runtime",
+]
+
+[[package]]
+name = "soil-network"
+version = "0.34.0"
+dependencies = [
+ "array-bytes 6.2.3",
+ "assert_matches",
+ "async-channel 1.9.0",
+ "async-trait",
+ "asynchronous-codec 0.6.2",
+ "bytes",
+ "cid",
+ "criterion",
+ "either",
+ "fnv",
+ "futures",
+ "futures-timer",
+ "ip_network",
+ "libp2p",
+ "linked_hash_set",
+ "litep2p",
+ "log",
+ "mockall",
+ "multistream-select",
+ "parity-scale-codec",
+ "parking_lot 0.12.5",
+ "partial_sort",
+ "pin-project",
+ "prost 0.12.6",
+ "prost-build 0.13.5",
+ "rand 0.8.5",
+ "sc-block-builder",
+ "schnellru",
+ "serde",
+ "serde_json",
+ "smallvec",
+ "soil-arithmetic",
+ "soil-blockchain",
+ "soil-client-api",
+ "soil-consensus",
+ "soil-core",
+ "soil-crypto-hashing",
+ "soil-network-common",
+ "soil-network-types",
+ "soil-runtime",
+ "soil-tracing",
+ "soil-utils",
+ "substrate-prometheus-endpoint",
+ "substrate-test-runtime",
+ "substrate-test-runtime-client",
+ "tempfile",
+ "thiserror 1.0.69",
+ "tokio",
+ "tokio-stream",
+ "tokio-util",
+ "unsigned-varint 0.7.2",
+ "void",
+ "wasm-timer",
+ "zeroize",
+]
+
+[[package]]
+name = "soil-network-common"
+version = "0.33.0"
+dependencies = [
+ "bitflags 1.3.2",
+ "parity-scale-codec",
+ "soil-runtime",
+]
+
+[[package]]
+name = "soil-network-gossip"
+version = "0.34.0"
+dependencies = [
+ "ahash 0.8.12",
+ "async-trait",
+ "futures",
+ "futures-timer",
+ "log",
+ "parity-scale-codec",
+ "quickcheck",
+ "schnellru",
+ "soil-network",
+ "soil-network-common",
+ "soil-network-sync",
+ "soil-network-types",
+ "soil-runtime",
+ "substrate-prometheus-endpoint",
+ "substrate-test-runtime-client",
+ "tokio",
+ "tracing",
+]
+
+[[package]]
+name = "soil-network-light"
+version = "0.33.0"
+dependencies = [
+ "array-bytes 6.2.3",
+ "async-channel 1.9.0",
+ "futures",
+ "log",
+ "parity-scale-codec",
+ "prost 0.12.6",
+ "prost-build 0.13.5",
+ "soil-blockchain",
+ "soil-client-api",
+ "soil-core",
+ "soil-network",
+ "soil-network-types",
+ "soil-runtime",
+ "thiserror 1.0.69",
+]
+
+[[package]]
+name = "soil-network-statement"
+version = "0.16.0"
+dependencies = [
+ "array-bytes 6.2.3",
+ "async-channel 1.9.0",
+ "async-trait",
+ "criterion",
+ "futures",
+ "governor",
+ "log",
+ "parity-scale-codec",
+ "sc-keystore",
+ "sc-statement-store",
+ "soil-api",
+ "soil-blockchain",
+ "soil-consensus",
+ "soil-core",
+ "soil-keyring",
+ "soil-network",
+ "soil-network-common",
+ "soil-network-sync",
+ "soil-network-types",
+ "soil-runtime",
+ "soil-statement-store",
+ "substrate-prometheus-endpoint",
+ "substrate-test-runtime-client",
+ "tempfile",
+ "tokio",
+]
+
+[[package]]
+name = "soil-network-sync"
+version = "0.33.0"
+dependencies = [
+ "array-bytes 6.2.3",
+ "async-channel 1.9.0",
+ "async-trait",
+ "fork-tree",
+ "futures",
+ "log",
+ "mockall",
+ "parity-scale-codec",
+ "prost 0.12.6",
+ "prost-build 0.13.5",
+ "quickcheck",
+ "sc-block-builder",
+ "sc-consensus",
+ "schnellru",
+ "smallvec",
+ "soil-arithmetic",
+ "soil-blockchain",
+ "soil-client-api",
+ "soil-consensus",
+ "soil-core",
+ "soil-network",
+ "soil-network-common",
+ "soil-network-types",
+ "soil-runtime",
+ "soil-test-primitives",
+ "soil-tracing",
+ "soil-utils",
+ "substrate-prometheus-endpoint",
+ "substrate-test-runtime-client",
+ "thiserror 1.0.69",
+ "tokio",
+ "tokio-stream",
+]
+
+[[package]]
+name = "soil-network-test"
+version = "0.8.0"
+dependencies = [
+ "async-channel 1.9.0",
+ "async-trait",
+ "futures",
+ "futures-timer",
+ "libp2p",
+ "log",
+ "parking_lot 0.12.5",
+ "rand 0.8.5",
+ "sc-block-builder",
+ "sc-consensus",
+ "soil-blockchain",
+ "soil-client-api",
+ "soil-consensus",
+ "soil-core",
+ "soil-network",
+ "soil-network-common",
+ "soil-network-light",
+ "soil-network-sync",
+ "soil-network-types",
+ "soil-runtime",
+ "soil-service",
+ "soil-tracing",
+ "soil-utils",
+ "substrate-test-runtime",
+ "substrate-test-runtime-client",
+ "tokio",
+]
+
+[[package]]
+name = "soil-network-transactions"
+version = "0.33.0"
+dependencies = [
+ "array-bytes 6.2.3",
+ "futures",
+ "log",
+ "parity-scale-codec",
+ "soil-consensus",
+ "soil-network",
+ "soil-network-common",
+ "soil-network-sync",
+ "soil-network-types",
+ "soil-runtime",
+ "soil-utils",
+ "substrate-prometheus-endpoint",
+]
+
+[[package]]
+name = "soil-network-types"
+version = "0.10.0"
+dependencies = [
+ "bs58",
+ "bytes",
+ "ed25519-dalek",
+ "libp2p-identity",
+ "libp2p-kad",
+ "litep2p",
+ "log",
+ "multiaddr 0.18.2",
+ "multihash 0.19.3",
+ "quickcheck",
+ "rand 0.8.5",
+ "serde",
+ "serde_with",
+ "thiserror 1.0.69",
+ "zeroize",
 ]
 
 [[package]]
@@ -13487,6 +13142,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "soil-proposer-metrics"
+version = "0.17.0"
+dependencies = [
+ "log",
+ "substrate-prometheus-endpoint",
+]
+
+[[package]]
 name = "soil-rpc"
 version = "26.0.0"
 dependencies = [
@@ -13494,6 +13157,95 @@ dependencies = [
  "serde",
  "serde_json",
  "soil-core",
+]
+
+[[package]]
+name = "soil-rpc-api"
+version = "0.33.0"
+dependencies = [
+ "jsonrpsee",
+ "parity-scale-codec",
+ "sc-mixnet",
+ "scale-info",
+ "serde",
+ "serde_json",
+ "soil-chain-spec",
+ "soil-core",
+ "soil-rpc",
+ "soil-runtime",
+ "soil-statement-store",
+ "soil-transaction-pool-api",
+ "soil-version",
+ "thiserror 1.0.69",
+]
+
+[[package]]
+name = "soil-rpc-server"
+version = "11.0.0"
+dependencies = [
+ "dyn-clone",
+ "forwarded-header-value",
+ "futures",
+ "governor",
+ "http 1.4.0",
+ "http-body-util",
+ "hyper 1.8.1",
+ "ip_network",
+ "jsonrpsee",
+ "log",
+ "serde",
+ "serde_json",
+ "soil-rpc-api",
+ "substrate-prometheus-endpoint",
+ "tokio",
+ "tower",
+ "tower-http",
+]
+
+[[package]]
+name = "soil-rpc-spec-v2"
+version = "0.34.0"
+dependencies = [
+ "array-bytes 6.2.3",
+ "assert_matches",
+ "async-trait",
+ "futures",
+ "futures-util",
+ "hex",
+ "itertools 0.11.0",
+ "jsonrpsee",
+ "log",
+ "parity-scale-codec",
+ "parking_lot 0.12.5",
+ "pretty_assertions",
+ "rand 0.8.5",
+ "sc-block-builder",
+ "sc-rpc",
+ "sc-transaction-pool",
+ "schnellru",
+ "serde",
+ "serde_json",
+ "soil-api",
+ "soil-blockchain",
+ "soil-chain-spec",
+ "soil-client-api",
+ "soil-consensus",
+ "soil-core",
+ "soil-externalities",
+ "soil-maybe-compressed-blob",
+ "soil-rpc",
+ "soil-runtime",
+ "soil-service",
+ "soil-transaction-pool-api",
+ "soil-utils",
+ "soil-version",
+ "substrate-prometheus-endpoint",
+ "substrate-test-runtime",
+ "substrate-test-runtime-client",
+ "substrate-test-runtime-transaction-pool",
+ "thiserror 1.0.69",
+ "tokio",
+ "tokio-stream",
 ]
 
 [[package]]
@@ -13568,6 +13320,134 @@ dependencies = [
 ]
 
 [[package]]
+name = "soil-runtime-test"
+version = "2.0.0"
+dependencies = [
+ "soil-core",
+ "soil-io",
+ "soil-runtime",
+ "soil-runtime-interface",
+ "substrate-wasm-builder",
+]
+
+[[package]]
+name = "soil-runtime-utilities"
+version = "0.1.0"
+dependencies = [
+ "parity-scale-codec",
+ "soil-core",
+ "soil-crypto-hashing",
+ "soil-executor",
+ "soil-executor-common",
+ "soil-io",
+ "soil-state-machine",
+ "soil-version",
+ "soil-wasm-interface",
+ "subxt",
+ "thiserror 1.0.69",
+]
+
+[[package]]
+name = "soil-service"
+version = "0.35.0"
+dependencies = [
+ "async-trait",
+ "directories",
+ "exit-future",
+ "futures",
+ "futures-timer",
+ "jsonrpsee",
+ "log",
+ "parity-scale-codec",
+ "parking_lot 0.12.5",
+ "pin-project",
+ "rand 0.8.5",
+ "sc-consensus",
+ "sc-keystore",
+ "sc-rpc",
+ "sc-tracing",
+ "sc-transaction-pool",
+ "schnellru",
+ "serde",
+ "serde_json",
+ "soil-api",
+ "soil-blockchain",
+ "soil-chain-spec",
+ "soil-client-api",
+ "soil-client-db",
+ "soil-consensus",
+ "soil-core",
+ "soil-executor",
+ "soil-externalities",
+ "soil-informant",
+ "soil-keystore",
+ "soil-network",
+ "soil-network-common",
+ "soil-network-light",
+ "soil-network-sync",
+ "soil-network-transactions",
+ "soil-network-types",
+ "soil-rpc-server",
+ "soil-rpc-spec-v2",
+ "soil-runtime",
+ "soil-session",
+ "soil-state-machine",
+ "soil-storage",
+ "soil-sysinfo",
+ "soil-telemetry",
+ "soil-transaction-pool",
+ "soil-transaction-pool-api",
+ "soil-transaction-storage-proof",
+ "soil-trie",
+ "soil-utils",
+ "soil-version",
+ "static_init",
+ "substrate-prometheus-endpoint",
+ "substrate-test-runtime",
+ "substrate-test-runtime-client",
+ "tempfile",
+ "thiserror 1.0.69",
+ "tokio",
+ "tracing",
+ "tracing-futures",
+]
+
+[[package]]
+name = "soil-service-test"
+version = "2.0.0"
+dependencies = [
+ "array-bytes 6.2.3",
+ "async-channel 1.9.0",
+ "fdlimit",
+ "futures",
+ "log",
+ "parity-scale-codec",
+ "parking_lot 0.12.5",
+ "sc-block-builder",
+ "sc-consensus",
+ "soil-api",
+ "soil-blockchain",
+ "soil-client-api",
+ "soil-client-db",
+ "soil-consensus",
+ "soil-core",
+ "soil-executor",
+ "soil-io",
+ "soil-network",
+ "soil-network-sync",
+ "soil-runtime",
+ "soil-service",
+ "soil-state-machine",
+ "soil-storage",
+ "soil-tracing",
+ "soil-transaction-pool-api",
+ "substrate-test-runtime",
+ "substrate-test-runtime-client",
+ "tempfile",
+ "tokio",
+]
+
+[[package]]
 name = "soil-session"
 version = "27.0.0"
 dependencies = [
@@ -13590,6 +13470,16 @@ dependencies = [
  "serde",
  "soil-core",
  "soil-runtime",
+]
+
+[[package]]
+name = "soil-state-db"
+version = "0.30.0"
+dependencies = [
+ "log",
+ "parity-scale-codec",
+ "parking_lot 0.12.5",
+ "soil-core",
 ]
 
 [[package]]
@@ -13657,6 +13547,74 @@ dependencies = [
 ]
 
 [[package]]
+name = "soil-storage-monitor"
+version = "0.16.0"
+dependencies = [
+ "clap",
+ "fs4",
+ "log",
+ "soil-core",
+ "thiserror 1.0.69",
+ "tokio",
+]
+
+[[package]]
+name = "soil-sync-state-rpc"
+version = "0.34.0"
+dependencies = [
+ "jsonrpsee",
+ "parity-scale-codec",
+ "sc-consensus-babe",
+ "sc-consensus-grandpa",
+ "serde",
+ "serde_json",
+ "soil-blockchain",
+ "soil-chain-spec",
+ "soil-client-api",
+ "soil-consensus-epochs",
+ "soil-runtime",
+ "thiserror 1.0.69",
+]
+
+[[package]]
+name = "soil-sysinfo"
+version = "27.0.0"
+dependencies = [
+ "derive_more 0.99.20",
+ "futures",
+ "libc",
+ "log",
+ "rand 0.8.5",
+ "rand_pcg",
+ "regex",
+ "serde",
+ "serde_json",
+ "soil-core",
+ "soil-crypto-hashing",
+ "soil-io",
+ "soil-runtime",
+ "soil-telemetry",
+]
+
+[[package]]
+name = "soil-telemetry"
+version = "15.0.0"
+dependencies = [
+ "chrono",
+ "futures",
+ "libp2p",
+ "log",
+ "parking_lot 0.12.5",
+ "pin-project",
+ "rand 0.8.5",
+ "serde",
+ "serde_json",
+ "soil-utils",
+ "thiserror 1.0.69",
+ "wasm-timer",
+]
+
+[[package]]
 name = "soil-test-primitives"
 version = "2.0.0"
 dependencies = [
@@ -13691,11 +13649,39 @@ dependencies = [
 ]
 
 [[package]]
+name = "soil-tracing-proc-macro"
+version = "11.0.0"
+dependencies = [
+ "proc-macro-crate 3.4.0",
+ "proc-macro2",
+ "quote",
+ "syn 2.0.117",
+]
+
+[[package]]
 name = "soil-transaction-pool"
 version = "26.0.0"
 dependencies = [
  "soil-api",
  "soil-runtime",
+]
+
+[[package]]
+name = "soil-transaction-pool-api"
+version = "28.0.0"
+dependencies = [
+ "async-trait",
+ "futures",
+ "indexmap",
+ "log",
+ "parity-scale-codec",
+ "serde",
+ "serde_json",
+ "soil-blockchain",
+ "soil-core",
+ "soil-runtime",
+ "strum 0.26.3",
+ "thiserror 1.0.69",
 ]
 
 [[package]]
@@ -13739,6 +13725,20 @@ dependencies = [
  "trie-db",
  "trie-root",
  "trie-standardmap",
+]
+
+[[package]]
+name = "soil-utils"
+version = "14.0.0"
+dependencies = [
+ "async-channel 1.9.0",
+ "futures",
+ "futures-timer",
+ "log",
+ "parking_lot 0.12.5",
+ "prometheus",
+ "soil-arithmetic",
+ "tokio-test",
 ]
 
 [[package]]
@@ -13910,8 +13910,8 @@ dependencies = [
 name = "sp-runtime-interface-test"
 version = "2.0.0"
 dependencies = [
- "sc-executor",
- "sc-executor-common",
+ "soil-executor",
+ "soil-executor-common",
  "soil-io",
  "soil-runtime",
  "soil-runtime-interface",
@@ -14014,9 +14014,9 @@ dependencies = [
  "cmd_lib",
  "docify",
  "pretty_assertions",
- "sc-chain-spec",
  "serde",
  "serde_json",
+ "soil-chain-spec",
  "soil-tracing",
  "substrate-test-runtime",
 ]
@@ -14042,8 +14042,6 @@ dependencies = [
  "jsonrpsee",
  "kitchensink-runtime",
  "log",
- "mmr-gadget",
- "mmr-rpc",
  "nix 0.29.0",
  "node-primitives",
  "node-rpc",
@@ -14063,91 +14061,93 @@ dependencies = [
  "pretty_assertions",
  "rand 0.8.5",
  "regex",
- "sc-allocator",
  "sc-authority-discovery",
- "sc-basic-authorship",
  "sc-block-builder",
- "sc-chain-spec",
- "sc-cli",
- "sc-client-api",
- "sc-client-db",
  "sc-consensus",
  "sc-consensus-aura",
  "sc-consensus-babe",
- "sc-consensus-babe-rpc",
  "sc-consensus-beefy",
- "sc-consensus-beefy-rpc",
- "sc-consensus-epochs",
  "sc-consensus-grandpa",
- "sc-consensus-grandpa-rpc",
- "sc-consensus-manual-seal",
  "sc-consensus-pow",
  "sc-consensus-slots",
- "sc-executor",
- "sc-executor-common",
- "sc-executor-polkavm",
- "sc-executor-wasmtime",
- "sc-informant",
  "sc-keystore",
  "sc-mixnet",
- "sc-network",
- "sc-network-common",
- "sc-network-gossip",
- "sc-network-light",
- "sc-network-statement",
- "sc-network-sync",
- "sc-network-transactions",
- "sc-network-types",
  "sc-offchain",
- "sc-proposer-metrics",
  "sc-rpc",
- "sc-rpc-api",
- "sc-rpc-server",
- "sc-rpc-spec-v2",
- "sc-service",
- "sc-service-test",
- "sc-state-db",
  "sc-statement-store",
- "sc-storage-monitor",
- "sc-sync-state-rpc",
- "sc-sysinfo",
- "sc-telemetry",
  "sc-tracing",
  "sc-transaction-pool",
- "sc-transaction-pool-api",
- "sc-utils",
  "scale-info",
  "serde",
  "serde_json",
+ "soil-allocator",
  "soil-api",
  "soil-application-crypto",
  "soil-authority-discovery",
+ "soil-basic-authorship",
  "soil-blockchain",
+ "soil-chain-spec",
+ "soil-cli",
+ "soil-client-api",
+ "soil-client-db",
  "soil-consensus",
  "soil-consensus-babe",
+ "soil-consensus-babe-rpc",
  "soil-consensus-beefy",
+ "soil-consensus-beefy-rpc",
+ "soil-consensus-epochs",
  "soil-consensus-grandpa",
+ "soil-consensus-grandpa-rpc",
+ "soil-consensus-manual-seal",
  "soil-core",
  "soil-crypto-hashing",
  "soil-database",
+ "soil-executor",
+ "soil-executor-common",
+ "soil-executor-polkavm",
+ "soil-executor-wasmtime",
  "soil-externalities",
  "soil-genesis-builder",
+ "soil-informant",
  "soil-inherents",
  "soil-io",
  "soil-keyring",
  "soil-keystore",
  "soil-maybe-compressed-blob",
  "soil-mixnet",
+ "soil-mmr-gadget",
  "soil-mmr-primitives",
+ "soil-mmr-rpc",
+ "soil-network",
+ "soil-network-common",
+ "soil-network-gossip",
+ "soil-network-light",
+ "soil-network-statement",
+ "soil-network-sync",
+ "soil-network-transactions",
+ "soil-network-types",
  "soil-panic-handler",
+ "soil-proposer-metrics",
  "soil-rpc",
+ "soil-rpc-api",
+ "soil-rpc-server",
+ "soil-rpc-spec-v2",
  "soil-runtime",
+ "soil-service",
+ "soil-service-test",
+ "soil-state-db",
  "soil-state-machine",
  "soil-statement-store",
+ "soil-storage-monitor",
+ "soil-sync-state-rpc",
+ "soil-sysinfo",
+ "soil-telemetry",
  "soil-timestamp",
  "soil-tracing",
+ "soil-transaction-pool-api",
  "soil-transaction-storage-proof",
  "soil-trie",
+ "soil-utils",
  "soketto",
  "sp-core-hashing",
  "sp-core-hashing-proc-macro",
@@ -14175,13 +14175,13 @@ version = "0.12.0"
 dependencies = [
  "clap",
  "parity-scale-codec",
- "sc-cli",
- "sc-client-api",
- "sc-service",
  "soil-blockchain",
+ "soil-cli",
+ "soil-client-api",
  "soil-core",
  "soil-io",
  "soil-runtime",
+ "soil-service",
  "soil-statement-store",
  "thiserror 1.0.69",
 ]
@@ -14275,7 +14275,7 @@ name = "subkey"
 version = "9.0.0"
 dependencies = [
  "clap",
- "sc-cli",
+ "soil-cli",
 ]
 
 [[package]]
@@ -14304,9 +14304,9 @@ dependencies = [
  "nix 0.29.0",
  "node-primitives",
  "regex",
- "sc-cli",
- "sc-service",
+ "soil-cli",
  "soil-rpc",
+ "soil-service",
  "staging-node-cli",
  "substrate-rpc-client",
  "tokio",
@@ -14320,10 +14320,10 @@ dependencies = [
  "frame-system",
  "jsonrpsee",
  "parity-scale-codec",
- "sc-rpc-api",
  "scale-info",
  "serde",
  "soil-core",
+ "soil-rpc-api",
  "soil-runtime",
  "soil-storage",
  "tokio",
@@ -14340,15 +14340,15 @@ dependencies = [
  "jsonrpsee",
  "log",
  "parity-scale-codec",
- "sc-rpc-api",
  "sc-transaction-pool",
- "sc-transaction-pool-api",
  "soil-api",
  "soil-block-builder",
  "soil-blockchain",
  "soil-core",
+ "soil-rpc-api",
  "soil-runtime",
  "soil-tracing",
+ "soil-transaction-pool-api",
  "substrate-test-runtime-client",
  "tokio",
 ]
@@ -14373,9 +14373,9 @@ dependencies = [
  "async-trait",
  "jsonrpsee",
  "log",
- "sc-rpc-api",
  "serde",
  "soil-core",
+ "soil-rpc-api",
  "soil-runtime",
  "tokio",
 ]
@@ -14386,10 +14386,10 @@ version = "27.0.0"
 dependencies = [
  "jsonrpsee",
  "parity-scale-codec",
- "sc-client-api",
- "sc-rpc-api",
  "serde",
+ "soil-client-api",
  "soil-core",
+ "soil-rpc-api",
  "soil-runtime",
  "soil-state-machine",
  "soil-trie",
@@ -14404,19 +14404,19 @@ dependencies = [
  "async-trait",
  "futures",
  "parity-scale-codec",
- "sc-client-api",
- "sc-client-db",
  "sc-consensus",
- "sc-executor",
- "sc-service",
  "serde",
  "serde_json",
  "soil-blockchain",
+ "soil-client-api",
+ "soil-client-db",
  "soil-consensus",
  "soil-core",
+ "soil-executor",
  "soil-keyring",
  "soil-keystore",
  "soil-runtime",
+ "soil-service",
  "tokio",
 ]
 
@@ -14439,16 +14439,13 @@ dependencies = [
  "parity-scale-codec",
  "pretty_assertions",
  "sc-block-builder",
- "sc-chain-spec",
- "sc-executor",
- "sc-executor-common",
- "sc-service",
  "scale-info",
  "serde",
  "serde_json",
  "soil-api",
  "soil-application-crypto",
  "soil-block-builder",
+ "soil-chain-spec",
  "soil-consensus",
  "soil-consensus-aura",
  "soil-consensus-babe",
@@ -14456,6 +14453,8 @@ dependencies = [
  "soil-core",
  "soil-crypto-hashing",
  "soil-debug-derive",
+ "soil-executor",
+ "soil-executor-common",
  "soil-externalities",
  "soil-genesis-builder",
  "soil-inherents",
@@ -14463,6 +14462,7 @@ dependencies = [
  "soil-keyring",
  "soil-offchain",
  "soil-runtime",
+ "soil-service",
  "soil-session",
  "soil-state-machine",
  "soil-statement-store",
@@ -14482,10 +14482,10 @@ version = "2.0.0"
 dependencies = [
  "futures",
  "sc-block-builder",
- "sc-client-api",
  "sc-consensus",
  "soil-api",
  "soil-blockchain",
+ "soil-client-api",
  "soil-consensus",
  "soil-core",
  "soil-runtime",
@@ -14503,9 +14503,9 @@ dependencies = [
  "parity-scale-codec",
  "parking_lot 0.12.5",
  "sc-transaction-pool",
- "sc-transaction-pool-api",
  "soil-blockchain",
  "soil-runtime",
+ "soil-transaction-pool-api",
  "substrate-test-runtime-client",
  "thiserror 1.0.69",
 ]
@@ -14529,9 +14529,9 @@ dependencies = [
  "parity-scale-codec",
  "parity-wasm",
  "polkavm-linker",
- "sc-executor",
  "shlex",
  "soil-core",
+ "soil-executor",
  "soil-io",
  "soil-maybe-compressed-blob",
  "soil-tracing",

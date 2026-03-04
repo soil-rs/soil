@@ -106,7 +106,6 @@ use soil_database::Transaction;
 #[cfg(feature = "std")]
 use soil_runtime::{
 	generic::BlockId,
-#[cfg(feature = "std")]
 	traits::{
 		Block as BlockT, Hash, HashingFor, Header as HeaderT, NumberFor, One, SaturatedConversion,
 		Zero,
@@ -143,7 +142,6 @@ pub trait PruningFilter: Send + Sync {
 	/// Check if a block with the given justifications should be preserved.
 	///
 	/// Returns `true` to preserve the block, `false` to allow pruning.
-#[cfg(feature = "std")]
 	fn should_retain(&self, justifications: &Justifications) -> bool;
 }
 
@@ -152,7 +150,6 @@ impl<F> PruningFilter for F
 where
 	F: Fn(&Justifications) -> bool + Send + Sync,
 {
-#[cfg(feature = "std")]
 	fn should_retain(&self, justifications: &Justifications) -> bool {
 		(self)(justifications)
 	}
@@ -206,7 +203,6 @@ pub struct RefTrackingState<Block: BlockT> {
 
 #[cfg(feature = "std")]
 impl<B: BlockT> RefTrackingState<B> {
-#[cfg(feature = "std")]
 	fn new(
 		state: DbState<HashingFor<B>>,
 		storage: Arc<StorageDb<B>>,
@@ -218,7 +214,6 @@ impl<B: BlockT> RefTrackingState<B> {
 
 #[cfg(feature = "std")]
 impl<B: BlockT> Drop for RefTrackingState<B> {
-#[cfg(feature = "std")]
 	fn drop(&mut self) {
 		if let Some(hash) = &self.parent_hash {
 			self.storage.state_db.unpin(hash);
@@ -228,7 +223,6 @@ impl<B: BlockT> Drop for RefTrackingState<B> {
 
 #[cfg(feature = "std")]
 impl<Block: BlockT> std::fmt::Debug for RefTrackingState<Block> {
-#[cfg(feature = "std")]
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		write!(f, "Block {:?}", self.parent_hash)
 	}
@@ -242,17 +236,13 @@ pub struct RawIter<B: BlockT> {
 
 #[cfg(feature = "std")]
 impl<B: BlockT> StorageIterator<HashingFor<B>> for RawIter<B> {
-#[cfg(feature = "std")]
 	type Backend = RefTrackingState<B>;
-#[cfg(feature = "std")]
 	type Error = <DbState<HashingFor<B>> as StateBackend<HashingFor<B>>>::Error;
 
-#[cfg(feature = "std")]
 	fn next_key(&mut self, backend: &Self::Backend) -> Option<Result<StorageKey, Self::Error>> {
 		self.inner.next_key(&backend.state)
 	}
 
-#[cfg(feature = "std")]
 	fn next_pair(
 		&mut self,
 		backend: &Self::Backend,
@@ -260,7 +250,6 @@ impl<B: BlockT> StorageIterator<HashingFor<B>> for RawIter<B> {
 		self.inner.next_pair(&backend.state)
 	}
 
-#[cfg(feature = "std")]
 	fn was_complete(&self) -> bool {
 		self.inner.was_complete()
 	}
@@ -268,25 +257,19 @@ impl<B: BlockT> StorageIterator<HashingFor<B>> for RawIter<B> {
 
 #[cfg(feature = "std")]
 impl<B: BlockT> StateBackend<HashingFor<B>> for RefTrackingState<B> {
-#[cfg(feature = "std")]
 	type Error = <DbState<HashingFor<B>> as StateBackend<HashingFor<B>>>::Error;
-#[cfg(feature = "std")]
 	type TrieBackendStorage =
 		<DbState<HashingFor<B>> as StateBackend<HashingFor<B>>>::TrieBackendStorage;
-#[cfg(feature = "std")]
 	type RawIter = RawIter<B>;
 
-#[cfg(feature = "std")]
 	fn storage(&self, key: &[u8]) -> Result<Option<Vec<u8>>, Self::Error> {
 		self.state.storage(key)
 	}
 
-#[cfg(feature = "std")]
 	fn storage_hash(&self, key: &[u8]) -> Result<Option<B::Hash>, Self::Error> {
 		self.state.storage_hash(key)
 	}
 
-#[cfg(feature = "std")]
 	fn child_storage(
 		&self,
 		child_info: &ChildInfo,
@@ -295,7 +278,6 @@ impl<B: BlockT> StateBackend<HashingFor<B>> for RefTrackingState<B> {
 		self.state.child_storage(child_info, key)
 	}
 
-#[cfg(feature = "std")]
 	fn child_storage_hash(
 		&self,
 		child_info: &ChildInfo,
@@ -304,7 +286,6 @@ impl<B: BlockT> StateBackend<HashingFor<B>> for RefTrackingState<B> {
 		self.state.child_storage_hash(child_info, key)
 	}
 
-#[cfg(feature = "std")]
 	fn closest_merkle_value(
 		&self,
 		key: &[u8],
@@ -312,7 +293,6 @@ impl<B: BlockT> StateBackend<HashingFor<B>> for RefTrackingState<B> {
 		self.state.closest_merkle_value(key)
 	}
 
-#[cfg(feature = "std")]
 	fn child_closest_merkle_value(
 		&self,
 		child_info: &ChildInfo,
@@ -321,12 +301,10 @@ impl<B: BlockT> StateBackend<HashingFor<B>> for RefTrackingState<B> {
 		self.state.child_closest_merkle_value(child_info, key)
 	}
 
-#[cfg(feature = "std")]
 	fn exists_storage(&self, key: &[u8]) -> Result<bool, Self::Error> {
 		self.state.exists_storage(key)
 	}
 
-#[cfg(feature = "std")]
 	fn exists_child_storage(
 		&self,
 		child_info: &ChildInfo,
@@ -335,12 +313,10 @@ impl<B: BlockT> StateBackend<HashingFor<B>> for RefTrackingState<B> {
 		self.state.exists_child_storage(child_info, key)
 	}
 
-#[cfg(feature = "std")]
 	fn next_storage_key(&self, key: &[u8]) -> Result<Option<Vec<u8>>, Self::Error> {
 		self.state.next_storage_key(key)
 	}
 
-#[cfg(feature = "std")]
 	fn next_child_storage_key(
 		&self,
 		child_info: &ChildInfo,
@@ -349,7 +325,6 @@ impl<B: BlockT> StateBackend<HashingFor<B>> for RefTrackingState<B> {
 		self.state.next_child_storage_key(child_info, key)
 	}
 
-#[cfg(feature = "std")]
 	fn storage_root<'a>(
 		&self,
 		delta: impl Iterator<Item = (&'a [u8], Option<&'a [u8]>)>,
@@ -358,7 +333,6 @@ impl<B: BlockT> StateBackend<HashingFor<B>> for RefTrackingState<B> {
 		self.state.storage_root(delta, state_version)
 	}
 
-#[cfg(feature = "std")]
 	fn child_storage_root<'a>(
 		&self,
 		child_info: &ChildInfo,
@@ -368,17 +342,14 @@ impl<B: BlockT> StateBackend<HashingFor<B>> for RefTrackingState<B> {
 		self.state.child_storage_root(child_info, delta, state_version)
 	}
 
-#[cfg(feature = "std")]
 	fn raw_iter(&self, args: IterArgs) -> Result<Self::RawIter, Self::Error> {
 		self.state.raw_iter(args).map(|inner| RawIter { inner })
 	}
 
-#[cfg(feature = "std")]
 	fn register_overlay_stats(&self, stats: &StateMachineStats) {
 		self.state.register_overlay_stats(stats);
 	}
 
-#[cfg(feature = "std")]
 	fn usage_info(&self) -> StateUsageInfo {
 		self.state.usage_info()
 	}
@@ -386,11 +357,9 @@ impl<B: BlockT> StateBackend<HashingFor<B>> for RefTrackingState<B> {
 
 #[cfg(feature = "std")]
 impl<B: BlockT> AsTrieBackend<HashingFor<B>> for RefTrackingState<B> {
-#[cfg(feature = "std")]
 	type TrieBackendStorage =
 		<DbState<HashingFor<B>> as StateBackend<HashingFor<B>>>::TrieBackendStorage;
 
-#[cfg(feature = "std")]
 	fn as_trie_backend(
 		&self,
 	) -> &soil_state_machine::TrieBackend<Self::TrieBackendStorage, HashingFor<B>> {
@@ -438,7 +407,6 @@ pub enum BlocksPruning {
 #[cfg(feature = "std")]
 impl BlocksPruning {
 	/// True if this is an archive pruning mode (either KeepAll or KeepFinalized).
-#[cfg(feature = "std")]
 	pub fn is_archive(&self) -> bool {
 		match *self {
 			BlocksPruning::KeepAll | BlocksPruning::KeepFinalized => true,
@@ -489,7 +457,6 @@ pub enum DatabaseSource {
 #[cfg(feature = "std")]
 impl DatabaseSource {
 	/// Return path for databases that are stored on disk.
-#[cfg(feature = "std")]
 	pub fn path(&self) -> Option<&Path> {
 		match self {
 			// as per https://github.com/paritytech/substrate/pull/9500#discussion_r684312550
@@ -505,7 +472,6 @@ impl DatabaseSource {
 	}
 
 	/// Set path for databases that are stored on disk.
-#[cfg(feature = "std")]
 	pub fn set_path(&mut self, p: &Path) -> bool {
 		match self {
 			DatabaseSource::Auto { ref mut paritydb_path, .. } => {
@@ -528,7 +494,6 @@ impl DatabaseSource {
 
 #[cfg(feature = "std")]
 impl std::fmt::Display for DatabaseSource {
-#[cfg(feature = "std")]
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		let name = match self {
 			DatabaseSource::Auto { .. } => "Auto",
@@ -543,30 +508,19 @@ impl std::fmt::Display for DatabaseSource {
 
 #[cfg(feature = "std")]
 pub(crate) mod columns {
-#[cfg(feature = "std")]
 	pub const META: u32 = crate::utils::COLUMN_META;
-#[cfg(feature = "std")]
 	pub const STATE: u32 = 1;
-#[cfg(feature = "std")]
 	pub const STATE_META: u32 = 2;
 	/// maps hashes to lookup keys and numbers to canon hashes.
-#[cfg(feature = "std")]
 	pub const KEY_LOOKUP: u32 = 3;
-#[cfg(feature = "std")]
 	pub const HEADER: u32 = 4;
-#[cfg(feature = "std")]
 	pub const BODY: u32 = 5;
-#[cfg(feature = "std")]
 	pub const JUSTIFICATIONS: u32 = 6;
-#[cfg(feature = "std")]
 	pub const AUX: u32 = 8;
 	/// Offchain workers local storage
-#[cfg(feature = "std")]
 	pub const OFFCHAIN: u32 = 9;
 	/// Transactions
-#[cfg(feature = "std")]
 	pub const TRANSACTION: u32 = 11;
-#[cfg(feature = "std")]
 	pub const BODY_INDEX: u32 = 12;
 }
 
@@ -587,10 +541,8 @@ struct StateMetaDb(Arc<dyn Database<DbHash>>);
 
 #[cfg(feature = "std")]
 impl soil_state_db::MetaDb for StateMetaDb {
-#[cfg(feature = "std")]
 	type Error = soil_database::error::DatabaseError;
 
-#[cfg(feature = "std")]
 	fn get_meta(&self, key: &[u8]) -> Result<Option<Vec<u8>>, Self::Error> {
 		Ok(self.0.get(columns::STATE_META, key))
 	}
@@ -630,7 +582,6 @@ pub struct BlockchainDb<Block: BlockT> {
 
 #[cfg(feature = "std")]
 impl<Block: BlockT> BlockchainDb<Block> {
-#[cfg(feature = "std")]
 	fn new(db: Arc<dyn Database<DbHash>>) -> ClientResult<Self> {
 		let meta = read_meta::<Block>(&*db, columns::HEADER)?;
 		let leaves = LeafSet::read_from_db(&*db, columns::META, meta_keys::LEAF_PREFIX)?;
@@ -644,7 +595,6 @@ impl<Block: BlockT> BlockchainDb<Block> {
 		})
 	}
 
-#[cfg(feature = "std")]
 	fn update_meta(&self, update: MetaUpdate<Block>) {
 		let MetaUpdate { hash, number, is_best, is_finalized, with_state } = update;
 		let mut meta = self.meta.write();
@@ -666,14 +616,12 @@ impl<Block: BlockT> BlockchainDb<Block> {
 		}
 	}
 
-#[cfg(feature = "std")]
 	fn update_block_gap(&self, gap: Option<BlockGap<NumberFor<Block>>>) {
 		let mut meta = self.meta.write();
 		meta.block_gap = gap;
 	}
 
 	/// Empty the cache of pinned items.
-#[cfg(feature = "std")]
 	fn clear_pinning_cache(&self) {
 		self.pinned_blocks_cache.write().clear();
 	}
@@ -681,7 +629,6 @@ impl<Block: BlockT> BlockchainDb<Block> {
 	/// Load a justification into the cache of pinned items.
 	/// Reference count of the item will not be increased. Use this
 	/// to load values for items into the cache which have already been pinned.
-#[cfg(feature = "std")]
 	fn insert_justifications_if_pinned(&self, hash: Block::Hash, justification: Justification) {
 		let mut cache = self.pinned_blocks_cache.write();
 		if !cache.contains(hash) {
@@ -695,7 +642,6 @@ impl<Block: BlockT> BlockchainDb<Block> {
 	/// Load a justification from the db into the cache of pinned items.
 	/// Reference count of the item will not be increased. Use this
 	/// to load values for items into the cache which have already been pinned.
-#[cfg(feature = "std")]
 	fn insert_persisted_justifications_if_pinned(&self, hash: Block::Hash) -> ClientResult<()> {
 		let mut cache = self.pinned_blocks_cache.write();
 		if !cache.contains(hash) {
@@ -710,7 +656,6 @@ impl<Block: BlockT> BlockchainDb<Block> {
 	/// Load a block body from the db into the cache of pinned items.
 	/// Reference count of the item will not be increased. Use this
 	/// to load values for items items into the cache which have already been pinned.
-#[cfg(feature = "std")]
 	fn insert_persisted_body_if_pinned(&self, hash: Block::Hash) -> ClientResult<()> {
 		let mut cache = self.pinned_blocks_cache.write();
 		if !cache.contains(hash) {
@@ -723,18 +668,15 @@ impl<Block: BlockT> BlockchainDb<Block> {
 	}
 
 	/// Bump reference count for pinned item.
-#[cfg(feature = "std")]
 	fn bump_ref(&self, hash: Block::Hash) {
 		self.pinned_blocks_cache.write().pin(hash);
 	}
 
 	/// Decrease reference count for pinned item and remove if reference count is 0.
-#[cfg(feature = "std")]
 	fn unpin(&self, hash: Block::Hash) {
 		self.pinned_blocks_cache.write().unpin(hash);
 	}
 
-#[cfg(feature = "std")]
 	fn justifications_uncached(&self, hash: Block::Hash) -> ClientResult<Option<Justifications>> {
 		match read_db(
 			&*self.db,
@@ -754,7 +696,6 @@ impl<Block: BlockT> BlockchainDb<Block> {
 		}
 	}
 
-#[cfg(feature = "std")]
 	fn body_uncached(&self, hash: Block::Hash) -> ClientResult<Option<Vec<Block::Extrinsic>>> {
 		if let Some(body) =
 			read_db(&*self.db, columns::KEY_LOOKUP, columns::BODY, BlockId::Hash::<Block>(hash))?
@@ -822,7 +763,6 @@ impl<Block: BlockT> BlockchainDb<Block> {
 
 #[cfg(feature = "std")]
 impl<Block: BlockT> soil_client_api::blockchain::HeaderBackend<Block> for BlockchainDb<Block> {
-#[cfg(feature = "std")]
 	fn header(&self, hash: Block::Hash) -> ClientResult<Option<Block::Header>> {
 		let mut cache = self.header_cache.lock();
 		if let Some(result) = cache.get_refresh(&hash) {
@@ -838,7 +778,6 @@ impl<Block: BlockT> soil_client_api::blockchain::HeaderBackend<Block> for Blockc
 		Ok(header)
 	}
 
-#[cfg(feature = "std")]
 	fn info(&self) -> soil_client_api::blockchain::Info<Block> {
 		let meta = self.meta.read();
 		soil_client_api::blockchain::Info {
@@ -853,7 +792,6 @@ impl<Block: BlockT> soil_client_api::blockchain::HeaderBackend<Block> for Blockc
 		}
 	}
 
-#[cfg(feature = "std")]
 	fn status(&self, hash: Block::Hash) -> ClientResult<soil_client_api::blockchain::BlockStatus> {
 		match self.header(hash)?.is_some() {
 			true => Ok(soil_client_api::blockchain::BlockStatus::InChain),
@@ -861,12 +799,10 @@ impl<Block: BlockT> soil_client_api::blockchain::HeaderBackend<Block> for Blockc
 		}
 	}
 
-#[cfg(feature = "std")]
 	fn number(&self, hash: Block::Hash) -> ClientResult<Option<NumberFor<Block>>> {
 		Ok(self.header_metadata(hash).ok().map(|header_metadata| header_metadata.number))
 	}
 
-#[cfg(feature = "std")]
 	fn hash(&self, number: NumberFor<Block>) -> ClientResult<Option<Block::Hash>> {
 		Ok(utils::read_header::<Block>(
 			&*self.db,
@@ -880,7 +816,6 @@ impl<Block: BlockT> soil_client_api::blockchain::HeaderBackend<Block> for Blockc
 
 #[cfg(feature = "std")]
 impl<Block: BlockT> soil_client_api::blockchain::Backend<Block> for BlockchainDb<Block> {
-#[cfg(feature = "std")]
 	fn body(&self, hash: Block::Hash) -> ClientResult<Option<Vec<Block::Extrinsic>>> {
 		let cache = self.pinned_blocks_cache.read();
 		if let Some(result) = cache.body(&hash) {
@@ -890,7 +825,6 @@ impl<Block: BlockT> soil_client_api::blockchain::Backend<Block> for BlockchainDb
 		self.body_uncached(hash)
 	}
 
-#[cfg(feature = "std")]
 	fn justifications(&self, hash: Block::Hash) -> ClientResult<Option<Justifications>> {
 		let cache = self.pinned_blocks_cache.read();
 		if let Some(result) = cache.justifications(&hash) {
@@ -900,32 +834,26 @@ impl<Block: BlockT> soil_client_api::blockchain::Backend<Block> for BlockchainDb
 		self.justifications_uncached(hash)
 	}
 
-#[cfg(feature = "std")]
 	fn last_finalized(&self) -> ClientResult<Block::Hash> {
 		Ok(self.meta.read().finalized_hash)
 	}
 
-#[cfg(feature = "std")]
 	fn leaves(&self) -> ClientResult<Vec<Block::Hash>> {
 		Ok(self.leaves.read().hashes())
 	}
 
-#[cfg(feature = "std")]
 	fn children(&self, parent_hash: Block::Hash) -> ClientResult<Vec<Block::Hash>> {
 		children::read_children(&*self.db, columns::META, meta_keys::CHILDREN_PREFIX, parent_hash)
 	}
 
-#[cfg(feature = "std")]
 	fn indexed_transaction(&self, hash: Block::Hash) -> ClientResult<Option<Vec<u8>>> {
 		Ok(self.db.get(columns::TRANSACTION, hash.as_ref()))
 	}
 
-#[cfg(feature = "std")]
 	fn has_indexed_transaction(&self, hash: Block::Hash) -> ClientResult<bool> {
 		Ok(self.db.contains(columns::TRANSACTION, hash.as_ref()))
 	}
 
-#[cfg(feature = "std")]
 	fn block_indexed_body(&self, hash: Block::Hash) -> ClientResult<Option<Vec<Vec<u8>>>> {
 		let body = match read_db(
 			&*self.db,
@@ -962,10 +890,8 @@ impl<Block: BlockT> soil_client_api::blockchain::Backend<Block> for BlockchainDb
 
 #[cfg(feature = "std")]
 impl<Block: BlockT> HeaderMetadata<Block> for BlockchainDb<Block> {
-#[cfg(feature = "std")]
 	type Error = soil_blockchain::Error;
 
-#[cfg(feature = "std")]
 	fn header_metadata(
 		&self,
 		hash: Block::Hash,
@@ -989,12 +915,10 @@ impl<Block: BlockT> HeaderMetadata<Block> for BlockchainDb<Block> {
 		)
 	}
 
-#[cfg(feature = "std")]
 	fn insert_header_metadata(&self, hash: Block::Hash, metadata: CachedHeaderMetadata<Block>) {
 		self.header_metadata_cache.insert_header_metadata(hash, metadata)
 	}
 
-#[cfg(feature = "std")]
 	fn remove_header_metadata(&self, hash: Block::Hash) {
 		self.header_cache.lock().remove(&hash);
 		self.header_metadata_cache.remove_header_metadata(hash);
@@ -1021,7 +945,6 @@ pub struct BlockImportOperation<Block: BlockT> {
 
 #[cfg(feature = "std")]
 impl<Block: BlockT> BlockImportOperation<Block> {
-#[cfg(feature = "std")]
 	fn apply_offchain(&mut self, transaction: &mut Transaction<DbHash>) {
 		let mut count = 0;
 		for ((prefix, key), value_operation) in self.offchain_storage_updates.drain(..) {
@@ -1040,7 +963,6 @@ impl<Block: BlockT> BlockImportOperation<Block> {
 		}
 	}
 
-#[cfg(feature = "std")]
 	fn apply_aux(&mut self, transaction: &mut Transaction<DbHash>) {
 		for (key, maybe_val) in self.aux_ops.drain(..) {
 			match maybe_val {
@@ -1050,7 +972,6 @@ impl<Block: BlockT> BlockImportOperation<Block> {
 		}
 	}
 
-#[cfg(feature = "std")]
 	fn apply_new_state(
 		&mut self,
 		storage: Storage,
@@ -1082,15 +1003,12 @@ impl<Block: BlockT> BlockImportOperation<Block> {
 impl<Block: BlockT> soil_client_api::backend::BlockImportOperation<Block>
 	for BlockImportOperation<Block>
 {
-#[cfg(feature = "std")]
 	type State = RecordStatsState<RefTrackingState<Block>, Block>;
 
-#[cfg(feature = "std")]
 	fn state(&self) -> ClientResult<Option<&Self::State>> {
 		Ok(Some(&self.old_state))
 	}
 
-#[cfg(feature = "std")]
 	fn set_block_data(
 		&mut self,
 		header: Block::Header,
@@ -1112,7 +1030,6 @@ impl<Block: BlockT> soil_client_api::backend::BlockImportOperation<Block>
 		Ok(())
 	}
 
-#[cfg(feature = "std")]
 	fn update_db_storage(
 		&mut self,
 		update: PrefixedMemoryDB<HashingFor<Block>>,
@@ -1121,7 +1038,6 @@ impl<Block: BlockT> soil_client_api::backend::BlockImportOperation<Block>
 		Ok(())
 	}
 
-#[cfg(feature = "std")]
 	fn reset_storage(
 		&mut self,
 		storage: Storage,
@@ -1133,7 +1049,6 @@ impl<Block: BlockT> soil_client_api::backend::BlockImportOperation<Block>
 		Ok(root)
 	}
 
-#[cfg(feature = "std")]
 	fn set_genesis_state(
 		&mut self,
 		storage: Storage,
@@ -1145,7 +1060,6 @@ impl<Block: BlockT> soil_client_api::backend::BlockImportOperation<Block>
 		Ok(root)
 	}
 
-#[cfg(feature = "std")]
 	fn insert_aux<I>(&mut self, ops: I) -> ClientResult<()>
 	where
 		I: IntoIterator<Item = (Vec<u8>, Option<Vec<u8>>)>,
@@ -1154,7 +1068,6 @@ impl<Block: BlockT> soil_client_api::backend::BlockImportOperation<Block>
 		Ok(())
 	}
 
-#[cfg(feature = "std")]
 	fn update_storage(
 		&mut self,
 		update: StorageCollection,
@@ -1165,7 +1078,6 @@ impl<Block: BlockT> soil_client_api::backend::BlockImportOperation<Block>
 		Ok(())
 	}
 
-#[cfg(feature = "std")]
 	fn update_offchain_storage(
 		&mut self,
 		offchain_update: OffchainChangesCollection,
@@ -1174,7 +1086,6 @@ impl<Block: BlockT> soil_client_api::backend::BlockImportOperation<Block>
 		Ok(())
 	}
 
-#[cfg(feature = "std")]
 	fn mark_finalized(
 		&mut self,
 		block: Block::Hash,
@@ -1184,20 +1095,17 @@ impl<Block: BlockT> soil_client_api::backend::BlockImportOperation<Block>
 		Ok(())
 	}
 
-#[cfg(feature = "std")]
 	fn mark_head(&mut self, hash: Block::Hash) -> ClientResult<()> {
 		assert!(self.set_head.is_none(), "Only one set head per operation is allowed");
 		self.set_head = Some(hash);
 		Ok(())
 	}
 
-#[cfg(feature = "std")]
 	fn update_transaction_index(&mut self, index_ops: Vec<IndexOperation>) -> ClientResult<()> {
 		self.index_ops = index_ops;
 		Ok(())
 	}
 
-#[cfg(feature = "std")]
 	fn set_create_gap(&mut self, create_gap: bool) {
 		self.create_gap = create_gap;
 	}
@@ -1212,7 +1120,6 @@ struct StorageDb<Block: BlockT> {
 
 #[cfg(feature = "std")]
 impl<Block: BlockT> soil_state_machine::Storage<HashingFor<Block>> for StorageDb<Block> {
-#[cfg(feature = "std")]
 	fn get(&self, key: &Block::Hash, prefix: Prefix) -> Result<Option<DBValue>, String> {
 		if self.prefix_keys {
 			let key = prefixed_key::<HashingFor<Block>>(key, prefix);
@@ -1226,12 +1133,9 @@ impl<Block: BlockT> soil_state_machine::Storage<HashingFor<Block>> for StorageDb
 
 #[cfg(feature = "std")]
 impl<Block: BlockT> soil_state_db::NodeDb for StorageDb<Block> {
-#[cfg(feature = "std")]
 	type Error = io::Error;
-#[cfg(feature = "std")]
 	type Key = [u8];
 
-#[cfg(feature = "std")]
 	fn get(&self, key: &[u8]) -> Result<Option<Vec<u8>>, Self::Error> {
 		Ok(self.db.get(columns::STATE, key))
 	}
@@ -1245,7 +1149,6 @@ struct DbGenesisStorage<Block: BlockT> {
 
 #[cfg(feature = "std")]
 impl<Block: BlockT> DbGenesisStorage<Block> {
-#[cfg(feature = "std")]
 	pub fn new(root: Block::Hash, storage: PrefixedMemoryDB<HashingFor<Block>>) -> Self {
 		DbGenesisStorage { root, storage }
 	}
@@ -1253,9 +1156,7 @@ impl<Block: BlockT> DbGenesisStorage<Block> {
 
 #[cfg(feature = "std")]
 impl<Block: BlockT> soil_state_machine::Storage<HashingFor<Block>> for DbGenesisStorage<Block> {
-#[cfg(feature = "std")]
 	fn get(&self, key: &Block::Hash, prefix: Prefix) -> Result<Option<DBValue>, String> {
-#[cfg(feature = "std")]
 		use hash_db::HashDB;
 		Ok(self.storage.get(key, prefix))
 	}
@@ -1266,7 +1167,6 @@ struct EmptyStorage<Block: BlockT>(pub Block::Hash);
 
 #[cfg(feature = "std")]
 impl<Block: BlockT> EmptyStorage<Block> {
-#[cfg(feature = "std")]
 	pub fn new() -> Self {
 		let mut root = Block::Hash::default();
 		let mut mdb = MemoryDB::<HashingFor<Block>>::default();
@@ -1279,7 +1179,6 @@ impl<Block: BlockT> EmptyStorage<Block> {
 
 #[cfg(feature = "std")]
 impl<Block: BlockT> soil_state_machine::Storage<HashingFor<Block>> for EmptyStorage<Block> {
-#[cfg(feature = "std")]
 	fn get(&self, _key: &Block::Hash, _prefix: Prefix) -> Result<Option<DBValue>, String> {
 		Ok(None)
 	}
@@ -1299,6 +1198,7 @@ struct Frozen<T: Clone> {
 /// If time `duration` not passed since the value was instantiated,
 /// current frozen value is returned. Otherwise, you have to provide
 /// a new value which will be again frozen for `duration`.
+#[cfg(feature = "std")]
 pub(crate) struct FrozenForDuration<T: Clone> {
 	duration: std::time::Duration,
 	value: parking_lot::Mutex<Frozen<T>>,
@@ -1306,12 +1206,10 @@ pub(crate) struct FrozenForDuration<T: Clone> {
 
 #[cfg(feature = "std")]
 impl<T: Clone> FrozenForDuration<T> {
-#[cfg(feature = "std")]
 	fn new(duration: std::time::Duration) -> Self {
 		Self { duration, value: Frozen { at: std::time::Instant::now(), value: None }.into() }
 	}
 
-#[cfg(feature = "std")]
 	fn take_or_else<F>(&self, f: F) -> T
 	where
 		F: FnOnce() -> T,
@@ -1355,9 +1253,7 @@ impl<Block: BlockT> Backend<Block> {
 	/// Create a new instance of database backend.
 	///
 	/// The pruning window is how old a block must be before the state is pruned.
-#[cfg(feature = "std")]
 	pub fn new(db_config: DatabaseSettings, canonicalization_delay: u64) -> ClientResult<Self> {
-#[cfg(feature = "std")]
 		use utils::OpenDbError;
 
 		let db_source = &db_config.source;
@@ -1377,7 +1273,6 @@ impl<Block: BlockT> Backend<Block> {
 	}
 
 	/// Reset the shared trie cache.
-#[cfg(feature = "std")]
 	pub fn reset_trie_cache(&self) {
 		if let Some(cache) = &self.shared_trie_cache {
 			cache.reset();
@@ -1386,14 +1281,12 @@ impl<Block: BlockT> Backend<Block> {
 
 	/// Create new memory-backed client backend for tests.
 	#[cfg(any(test, feature = "test-helpers"))]
-#[cfg(feature = "std")]
 	pub fn new_test(blocks_pruning: u32, canonicalization_delay: u64) -> Self {
 		Self::new_test_with_tx_storage(BlocksPruning::Some(blocks_pruning), canonicalization_delay)
 	}
 
 	/// Create new memory-backed client backend for tests with custom pruning filters.
 	#[cfg(any(test, feature = "test-helpers"))]
-#[cfg(feature = "std")]
 	pub fn new_test_with_pruning_filters(
 		blocks_pruning: u32,
 		canonicalization_delay: u64,
@@ -1408,7 +1301,6 @@ impl<Block: BlockT> Backend<Block> {
 
 	/// Create new memory-backed client backend for tests.
 	#[cfg(any(test, feature = "test-helpers"))]
-#[cfg(feature = "std")]
 	pub fn new_test_with_tx_storage(
 		blocks_pruning: BlocksPruning,
 		canonicalization_delay: u64,
@@ -1422,7 +1314,6 @@ impl<Block: BlockT> Backend<Block> {
 
 	/// Create new memory-backed client backend for tests with custom pruning filters.
 	#[cfg(any(test, feature = "test-helpers"))]
-#[cfg(feature = "std")]
 	pub fn new_test_with_tx_storage_and_filters(
 		blocks_pruning: BlocksPruning,
 		canonicalization_delay: u64,
@@ -1452,7 +1343,6 @@ impl<Block: BlockT> Backend<Block> {
 	///
 	/// Should only be needed for benchmarking.
 	#[cfg(feature = "runtime-benchmarks")]
-#[cfg(feature = "std")]
 	pub fn expose_db(&self) -> (Arc<dyn soil_database::Database<DbHash>>, soil_database::ColumnId) {
 		(self.storage.db.clone(), columns::STATE)
 	}
@@ -1461,7 +1351,6 @@ impl<Block: BlockT> Backend<Block> {
 	///
 	/// Should only be needed for benchmarking.
 	#[cfg(feature = "runtime-benchmarks")]
-#[cfg(feature = "std")]
 	pub fn expose_storage(&self) -> Arc<dyn soil_state_machine::Storage<HashingFor<Block>>> {
 		self.storage.clone()
 	}
@@ -1470,14 +1359,12 @@ impl<Block: BlockT> Backend<Block> {
 	///
 	/// Should only be needed for benchmarking.
 	#[cfg(feature = "runtime-benchmarks")]
-#[cfg(feature = "std")]
 	pub fn expose_shared_trie_cache(
 		&self,
 	) -> Option<soil_trie::cache::SharedTrieCache<HashingFor<Block>>> {
 		self.shared_trie_cache.clone()
 	}
 
-#[cfg(feature = "std")]
 	fn from_database(
 		db: Arc<dyn Database<DbHash>>,
 		canonicalization_delay: u64,
@@ -1570,7 +1457,6 @@ impl<Block: BlockT> Backend<Block> {
 	/// In the case where the new best block is a block to be imported, `route_to`
 	/// should be the parent of `best_to`. In the case where we set an existing block
 	/// to be best, `route_to` should equal to `best_to`.
-#[cfg(feature = "std")]
 	fn set_head_with_transaction(
 		&self,
 		transaction: &mut Transaction<DbHash>,
@@ -1637,7 +1523,6 @@ impl<Block: BlockT> Backend<Block> {
 		Ok((enacted, retracted))
 	}
 
-#[cfg(feature = "std")]
 	fn ensure_sequential_finalization(
 		&self,
 		header: &Block::Header,
@@ -1658,7 +1543,6 @@ impl<Block: BlockT> Backend<Block> {
 
 	/// `remove_displaced` can be set to `false` if this is not the last of many subsequent calls
 	/// for performance reasons.
-#[cfg(feature = "std")]
 	fn finalize_block_with_transaction(
 		&self,
 		transaction: &mut Transaction<DbHash>,
@@ -1695,7 +1579,6 @@ impl<Block: BlockT> Backend<Block> {
 	}
 
 	// performs forced canonicalization with a delay after importing a non-finalized block.
-#[cfg(feature = "std")]
 	fn force_delayed_canonicalize(
 		&self,
 		transaction: &mut Transaction<DbHash>,
@@ -1745,7 +1628,6 @@ impl<Block: BlockT> Backend<Block> {
 		Ok(())
 	}
 
-#[cfg(feature = "std")]
 	fn try_commit_operation(&self, mut operation: BlockImportOperation<Block>) -> ClientResult<()> {
 		let mut transaction = Transaction::new();
 
@@ -2165,7 +2047,6 @@ impl<Block: BlockT> Backend<Block> {
 	// blocks. Fails if called with a block which was not a child of the last finalized block.
 	/// `remove_displaced` can be set to `false` if this is not the last of many subsequent calls
 	/// for performance reasons.
-#[cfg(feature = "std")]
 	fn note_finalized(
 		&self,
 		transaction: &mut Transaction<DbHash>,
@@ -2219,7 +2100,6 @@ impl<Block: BlockT> Backend<Block> {
 		Ok(())
 	}
 
-#[cfg(feature = "std")]
 	fn prune_blocks(
 		&self,
 		transaction: &mut Transaction<DbHash>,
@@ -2275,7 +2155,6 @@ impl<Block: BlockT> Backend<Block> {
 		Ok(())
 	}
 
-#[cfg(feature = "std")]
 	fn prune_displaced_branches(
 		&self,
 		transaction: &mut Transaction<DbHash>,
@@ -2289,7 +2168,6 @@ impl<Block: BlockT> Backend<Block> {
 		Ok(())
 	}
 
-#[cfg(feature = "std")]
 	fn prune_block(
 		&self,
 		transaction: &mut Transaction<DbHash>,
@@ -2338,7 +2216,6 @@ impl<Block: BlockT> Backend<Block> {
 		Ok(())
 	}
 
-#[cfg(feature = "std")]
 	fn empty_state(&self) -> RecordStatsState<RefTrackingState<Block>, Block> {
 		let root = EmptyStorage::<Block>::new().0; // Empty trie
 		let db_state = DbStateBuilder::<HashingFor<Block>>::new(self.storage.clone(), root)
@@ -2441,7 +2318,6 @@ impl<Block> soil_client_api::backend::AuxStore for Backend<Block>
 where
 	Block: BlockT,
 {
-#[cfg(feature = "std")]
 	fn insert_aux<
 		'a,
 		'b: 'a,
@@ -2464,7 +2340,6 @@ where
 		Ok(())
 	}
 
-#[cfg(feature = "std")]
 	fn get_aux(&self, key: &[u8]) -> ClientResult<Option<Vec<u8>>> {
 		Ok(self.storage.db.get(columns::AUX, key))
 	}
@@ -2472,16 +2347,11 @@ where
 
 #[cfg(feature = "std")]
 impl<Block: BlockT> soil_client_api::backend::Backend<Block> for Backend<Block> {
-#[cfg(feature = "std")]
 	type BlockImportOperation = BlockImportOperation<Block>;
-#[cfg(feature = "std")]
 	type Blockchain = BlockchainDb<Block>;
-#[cfg(feature = "std")]
 	type State = RecordStatsState<RefTrackingState<Block>, Block>;
-#[cfg(feature = "std")]
 	type OffchainStorage = offchain::LocalStorage;
 
-#[cfg(feature = "std")]
 	fn begin_operation(&self) -> ClientResult<Self::BlockImportOperation> {
 		Ok(BlockImportOperation {
 			pending_block: None,
@@ -2500,7 +2370,6 @@ impl<Block: BlockT> soil_client_api::backend::Backend<Block> for Backend<Block> 
 		})
 	}
 
-#[cfg(feature = "std")]
 	fn begin_state_operation(
 		&self,
 		operation: &mut Self::BlockImportOperation,
@@ -2516,7 +2385,6 @@ impl<Block: BlockT> soil_client_api::backend::Backend<Block> for Backend<Block> 
 		Ok(())
 	}
 
-#[cfg(feature = "std")]
 	fn commit_operation(&self, operation: Self::BlockImportOperation) -> ClientResult<()> {
 		let usage = operation.old_state.usage_info();
 		self.state_usage.merge_sm(usage);
@@ -2535,7 +2403,6 @@ impl<Block: BlockT> soil_client_api::backend::Backend<Block> for Backend<Block> 
 		}
 	}
 
-#[cfg(feature = "std")]
 	fn finalize_block(
 		&self,
 		hash: Block::Hash,
@@ -2560,7 +2427,6 @@ impl<Block: BlockT> soil_client_api::backend::Backend<Block> for Backend<Block> 
 		Ok(())
 	}
 
-#[cfg(feature = "std")]
 	fn append_justification(
 		&self,
 		hash: Block::Hash,
@@ -2603,12 +2469,10 @@ impl<Block: BlockT> soil_client_api::backend::Backend<Block> for Backend<Block> 
 		Ok(())
 	}
 
-#[cfg(feature = "std")]
 	fn offchain_storage(&self) -> Option<Self::OffchainStorage> {
 		Some(self.offchain_storage.clone())
 	}
 
-#[cfg(feature = "std")]
 	fn usage_info(&self) -> Option<UsageInfo> {
 		let (io_stats, state_stats) = self.io_stats.take_or_else(|| {
 			(
@@ -2640,7 +2504,6 @@ impl<Block: BlockT> soil_client_api::backend::Backend<Block> for Backend<Block> 
 		})
 	}
 
-#[cfg(feature = "std")]
 	fn revert(
 		&self,
 		n: NumberFor<Block>,
@@ -2807,7 +2670,6 @@ impl<Block: BlockT> soil_client_api::backend::Backend<Block> for Backend<Block> 
 		Ok((reverted, reverted_finalized))
 	}
 
-#[cfg(feature = "std")]
 	fn remove_leaf_block(&self, hash: Block::Hash) -> ClientResult<()> {
 		let best_hash = self.blockchain.info().best_hash;
 
@@ -2872,12 +2734,10 @@ impl<Block: BlockT> soil_client_api::backend::Backend<Block> for Backend<Block> 
 		Ok(())
 	}
 
-#[cfg(feature = "std")]
 	fn blockchain(&self) -> &BlockchainDb<Block> {
 		&self.blockchain
 	}
 
-#[cfg(feature = "std")]
 	fn state_at(
 		&self,
 		hash: Block::Hash,
@@ -2936,7 +2796,6 @@ impl<Block: BlockT> soil_client_api::backend::Backend<Block> for Backend<Block> 
 		}
 	}
 
-#[cfg(feature = "std")]
 	fn have_state_at(&self, hash: Block::Hash, number: NumberFor<Block>) -> bool {
 		if self.is_archive {
 			match self.blockchain.header_metadata(hash) {
@@ -2967,12 +2826,10 @@ impl<Block: BlockT> soil_client_api::backend::Backend<Block> for Backend<Block> 
 		}
 	}
 
-#[cfg(feature = "std")]
 	fn get_import_lock(&self) -> &RwLock<()> {
 		&self.import_lock
 	}
 
-#[cfg(feature = "std")]
 	fn requires_full_sync(&self) -> bool {
 		matches!(
 			self.storage.state_db.pruning_mode(),
@@ -2980,7 +2837,6 @@ impl<Block: BlockT> soil_client_api::backend::Backend<Block> for Backend<Block> 
 		)
 	}
 
-#[cfg(feature = "std")]
 	fn pin_block(&self, hash: <Block as BlockT>::Hash) -> soil_blockchain::Result<()> {
 		let hint = || {
 			let header_metadata = self.blockchain.header_metadata(hash);
@@ -3014,7 +2870,6 @@ impl<Block: BlockT> soil_client_api::backend::Backend<Block> for Backend<Block> 
 		Ok(())
 	}
 
-#[cfg(feature = "std")]
 	fn unpin_block(&self, hash: <Block as BlockT>::Hash) {
 		self.storage.state_db.unpin(&hash);
 
@@ -3030,39 +2885,27 @@ impl<Block: BlockT> soil_client_api::backend::LocalBackend<Block> for Backend<Bl
 #[cfg(test)]
 #[cfg(feature = "std")]
 pub(crate) mod tests {
-#[cfg(feature = "std")]
 	use super::*;
-#[cfg(feature = "std")]
 	use crate::{columns, utils::number_and_hash_to_lookup_key};
-#[cfg(feature = "std")]
 	use hash_db::{HashDB, EMPTY_PREFIX};
-#[cfg(feature = "std")]
 	use soil_client_api::{
 		backend::{Backend as BTrait, BlockImportOperation as Op},
 		blockchain::Backend as BLBTrait,
 	};
-#[cfg(feature = "std")]
 	use soil_blockchain::{lowest_common_ancestor, tree_route};
-#[cfg(feature = "std")]
 	use soil_core::H256;
-#[cfg(feature = "std")]
 	use soil_runtime::{
 		testing::{Block as RawBlock, Header, MockCallU64, TestXt},
-#[cfg(feature = "std")]
 		traits::{BlakeTwo256, Hash},
 		ConsensusEngineId, StateVersion,
 	};
 
-#[cfg(feature = "std")]
 	const CONS0_ENGINE_ID: ConsensusEngineId = *b"CON0";
-#[cfg(feature = "std")]
 	const CONS1_ENGINE_ID: ConsensusEngineId = *b"CON1";
 
-#[cfg(feature = "std")]
 	type UncheckedXt = TestXt<MockCallU64, ()>;
 	pub(crate) type Block = RawBlock<UncheckedXt>;
 
-#[cfg(feature = "std")]
 	pub fn insert_header(
 		backend: &Backend<Block>,
 		number: u64,
@@ -3074,7 +2917,6 @@ pub(crate) mod tests {
 			.unwrap()
 	}
 
-#[cfg(feature = "std")]
 	pub fn insert_block(
 		backend: &Backend<Block>,
 		number: u64,
@@ -3084,7 +2926,6 @@ pub(crate) mod tests {
 		body: Vec<UncheckedXt>,
 		transaction_index: Option<Vec<IndexOperation>>,
 	) -> Result<H256, soil_blockchain::Error> {
-#[cfg(feature = "std")]
 		use soil_runtime::testing::Digest;
 
 		let digest = Digest::default();
@@ -3114,7 +2955,6 @@ pub(crate) mod tests {
 		Ok(header.hash())
 	}
 
-#[cfg(feature = "std")]
 	pub fn insert_disconnected_header(
 		backend: &Backend<Block>,
 		number: u64,
@@ -3122,7 +2962,6 @@ pub(crate) mod tests {
 		extrinsics_root: H256,
 		best: bool,
 	) -> H256 {
-#[cfg(feature = "std")]
 		use soil_runtime::testing::Digest;
 
 		let digest = Digest::default();
@@ -3146,14 +2985,12 @@ pub(crate) mod tests {
 		header.hash()
 	}
 
-#[cfg(feature = "std")]
 	pub fn insert_header_no_head(
 		backend: &Backend<Block>,
 		number: u64,
 		parent_hash: H256,
 		extrinsics_root: H256,
 	) -> H256 {
-#[cfg(feature = "std")]
 		use soil_runtime::testing::Digest;
 
 		let digest = Digest::default();
@@ -3185,7 +3022,6 @@ pub(crate) mod tests {
 	}
 
 	#[test]
-#[cfg(feature = "std")]
 	fn block_hash_inserted_correctly() {
 		let backing = {
 			let db = Backend::<Block>::new_test(1, 0);
@@ -3238,12 +3074,10 @@ pub(crate) mod tests {
 	}
 
 	#[test]
-#[cfg(feature = "std")]
 	fn set_state_data() {
 		set_state_data_inner(StateVersion::V0);
 		set_state_data_inner(StateVersion::V1);
 	}
-#[cfg(feature = "std")]
 	fn set_state_data_inner(state_version: StateVersion) {
 		let db = Backend::<Block>::new_test(2, 0);
 		let hash = {
@@ -3322,7 +3156,6 @@ pub(crate) mod tests {
 	}
 
 	#[test]
-#[cfg(feature = "std")]
 	fn delete_only_when_negative_rc() {
 		soil_tracing::try_init_simple();
 		let state_version = StateVersion::default();
@@ -3508,7 +3341,6 @@ pub(crate) mod tests {
 	}
 
 	#[test]
-#[cfg(feature = "std")]
 	fn tree_route_works() {
 		let backend = Backend::<Block>::new_test(1000, 100);
 		let blockchain = backend.blockchain();
@@ -3577,7 +3409,6 @@ pub(crate) mod tests {
 	}
 
 	#[test]
-#[cfg(feature = "std")]
 	fn tree_route_child() {
 		let backend = Backend::<Block>::new_test(1000, 100);
 		let blockchain = backend.blockchain();
@@ -3598,7 +3429,6 @@ pub(crate) mod tests {
 	}
 
 	#[test]
-#[cfg(feature = "std")]
 	fn lowest_common_ancestor_works() {
 		let backend = Backend::<Block>::new_test(1000, 100);
 		let blockchain = backend.blockchain();
@@ -3657,7 +3487,6 @@ pub(crate) mod tests {
 	}
 
 	#[test]
-#[cfg(feature = "std")]
 	fn displaced_leaves_after_finalizing_works_with_disconnect() {
 		// In this test we will create a situation that can typically happen after warp sync.
 		// The situation looks like this:
@@ -3782,7 +3611,6 @@ pub(crate) mod tests {
 	}
 
 	#[test]
-#[cfg(feature = "std")]
 	fn disconnected_blocks_do_not_become_leaves_and_warp_sync_scenario() {
 		// Simulate a realistic case:
 		//
@@ -3806,7 +3634,6 @@ pub(crate) mod tests {
 		                        state: NewBlockState,
 		                        register_as_leaf: bool|
 		 -> H256 {
-#[cfg(feature = "std")]
 			use soil_runtime::testing::Digest;
 			let digest = Digest::default();
 			let header = Header {
@@ -3935,7 +3762,6 @@ pub(crate) mod tests {
 	}
 
 	#[test]
-#[cfg(feature = "std")]
 	fn displaced_leaves_after_finalizing_works() {
 		let backend = Backend::<Block>::new_test(1000, 100);
 		let blockchain = backend.blockchain();
@@ -4071,7 +3897,6 @@ pub(crate) mod tests {
 	}
 
 	#[test]
-#[cfg(feature = "std")]
 	fn test_tree_route_regression() {
 		// NOTE: this is a test for a regression introduced in #3665, the result
 		// of tree_route would be erroneously computed, since it was taking into
@@ -4106,7 +3931,6 @@ pub(crate) mod tests {
 	}
 
 	#[test]
-#[cfg(feature = "std")]
 	fn test_leaves_with_complex_block_tree() {
 		let backend: Arc<Backend<substrate_test_runtime_client::runtime::Block>> =
 			Arc::new(Backend::new_test(20, 20));
@@ -4114,7 +3938,6 @@ pub(crate) mod tests {
 	}
 
 	#[test]
-#[cfg(feature = "std")]
 	fn test_children_with_complex_block_tree() {
 		let backend: Arc<Backend<substrate_test_runtime_client::runtime::Block>> =
 			Arc::new(Backend::new_test(20, 20));
@@ -4122,7 +3945,6 @@ pub(crate) mod tests {
 	}
 
 	#[test]
-#[cfg(feature = "std")]
 	fn test_blockchain_query_by_number_gets_canonical() {
 		let backend: Arc<Backend<substrate_test_runtime_client::runtime::Block>> =
 			Arc::new(Backend::new_test(20, 20));
@@ -4132,7 +3954,6 @@ pub(crate) mod tests {
 	}
 
 	#[test]
-#[cfg(feature = "std")]
 	fn test_leaves_pruned_on_finality() {
 		//   / 1b - 2b - 3b
 		// 0 - 1a - 2a
@@ -4161,7 +3982,6 @@ pub(crate) mod tests {
 	}
 
 	#[test]
-#[cfg(feature = "std")]
 	fn test_aux() {
 		let backend: Backend<substrate_test_runtime_client::runtime::Block> =
 			Backend::new_test(0, 0);
@@ -4173,9 +3993,7 @@ pub(crate) mod tests {
 	}
 
 	#[test]
-#[cfg(feature = "std")]
 	fn test_finalize_block_with_justification() {
-#[cfg(feature = "std")]
 		use soil_client_api::blockchain::Backend as BlockChainBackend;
 
 		let backend = Backend::<Block>::new_test(10, 10);
@@ -4193,9 +4011,7 @@ pub(crate) mod tests {
 	}
 
 	#[test]
-#[cfg(feature = "std")]
 	fn test_append_justification_to_finalized_block() {
-#[cfg(feature = "std")]
 		use soil_client_api::blockchain::Backend as BlockChainBackend;
 
 		let backend = Backend::<Block>::new_test(10, 10);
@@ -4224,7 +4040,6 @@ pub(crate) mod tests {
 	}
 
 	#[test]
-#[cfg(feature = "std")]
 	fn test_finalize_multiple_blocks_in_single_op() {
 		let backend = Backend::<Block>::new_test(10, 10);
 
@@ -4250,7 +4065,6 @@ pub(crate) mod tests {
 	}
 
 	#[test]
-#[cfg(feature = "std")]
 	fn storage_hash_is_cached_correctly() {
 		let state_version = StateVersion::default();
 		let backend = Backend::<Block>::new_test(10, 10);
@@ -4344,7 +4158,6 @@ pub(crate) mod tests {
 	}
 
 	#[test]
-#[cfg(feature = "std")]
 	fn test_finalize_non_sequential() {
 		let backend = Backend::<Block>::new_test(10, 10);
 
@@ -4360,7 +4173,6 @@ pub(crate) mod tests {
 	}
 
 	#[test]
-#[cfg(feature = "std")]
 	fn prune_blocks_on_finalize() {
 		let pruning_modes =
 			vec![BlocksPruning::Some(2), BlocksPruning::KeepFinalized, BlocksPruning::KeepAll];
@@ -4418,7 +4230,6 @@ pub(crate) mod tests {
 	}
 
 	#[test]
-#[cfg(feature = "std")]
 	fn prune_blocks_on_finalize_with_fork() {
 		soil_tracing::try_init_simple();
 
@@ -4525,7 +4336,6 @@ pub(crate) mod tests {
 	}
 
 	#[test]
-#[cfg(feature = "std")]
 	fn prune_blocks_on_finalize_and_reorg() {
 		// 	0 - 1b
 		// 	\ - 1a - 2a - 3a
@@ -4590,7 +4400,6 @@ pub(crate) mod tests {
 	}
 
 	#[test]
-#[cfg(feature = "std")]
 	fn indexed_data_block_body() {
 		let backend = Backend::<Block>::new_test_with_tx_storage(BlocksPruning::Some(1), 10);
 
@@ -4638,7 +4447,6 @@ pub(crate) mod tests {
 	}
 
 	#[test]
-#[cfg(feature = "std")]
 	fn index_invalid_size() {
 		let backend = Backend::<Block>::new_test_with_tx_storage(BlocksPruning::Some(1), 10);
 
@@ -4678,7 +4486,6 @@ pub(crate) mod tests {
 	}
 
 	#[test]
-#[cfg(feature = "std")]
 	fn renew_transaction_storage() {
 		let backend = Backend::<Block>::new_test_with_tx_storage(BlocksPruning::Some(2), 10);
 		let mut blocks = Vec::new();
@@ -4726,7 +4533,6 @@ pub(crate) mod tests {
 	}
 
 	#[test]
-#[cfg(feature = "std")]
 	fn remove_leaf_block_works() {
 		let backend = Backend::<Block>::new_test_with_tx_storage(BlocksPruning::Some(2), 10);
 		let mut blocks = Vec::new();
@@ -4804,7 +4610,6 @@ pub(crate) mod tests {
 	}
 
 	#[test]
-#[cfg(feature = "std")]
 	fn test_import_existing_block_as_new_head() {
 		let backend: Backend<Block> = Backend::new_test(10, 3);
 		let block0 = insert_header(&backend, 0, Default::default(), None, Default::default());
@@ -4837,7 +4642,6 @@ pub(crate) mod tests {
 	}
 
 	#[test]
-#[cfg(feature = "std")]
 	fn test_import_existing_block_as_final() {
 		let backend: Backend<Block> = Backend::new_test(10, 10);
 		let block0 = insert_header(&backend, 0, Default::default(), None, Default::default());
@@ -4857,7 +4661,6 @@ pub(crate) mod tests {
 	}
 
 	#[test]
-#[cfg(feature = "std")]
 	fn test_import_existing_state_fails() {
 		let backend: Backend<Block> = Backend::new_test(10, 10);
 		let genesis =
@@ -4875,7 +4678,6 @@ pub(crate) mod tests {
 	}
 
 	#[test]
-#[cfg(feature = "std")]
 	fn test_leaves_not_created_for_ancient_blocks() {
 		let backend: Backend<Block> = Backend::new_test(10, 10);
 		let block0 = insert_header(&backend, 0, Default::default(), None, Default::default());
@@ -4891,7 +4693,6 @@ pub(crate) mod tests {
 	}
 
 	#[test]
-#[cfg(feature = "std")]
 	fn revert_non_best_blocks() {
 		let backend = Backend::<Block>::new_test(10, 10);
 
@@ -5029,7 +4830,6 @@ pub(crate) mod tests {
 	}
 
 	#[test]
-#[cfg(feature = "std")]
 	fn revert_finalized_blocks() {
 		let pruning_modes = [BlocksPruning::Some(10), BlocksPruning::KeepAll];
 
@@ -5063,7 +4863,6 @@ pub(crate) mod tests {
 	}
 
 	#[test]
-#[cfg(feature = "std")]
 	fn test_no_duplicated_leaves_allowed() {
 		let backend: Backend<Block> = Backend::new_test(10, 10);
 		let block0 = insert_header(&backend, 0, Default::default(), None, Default::default());
@@ -5080,7 +4879,6 @@ pub(crate) mod tests {
 	}
 
 	#[test]
-#[cfg(feature = "std")]
 	fn force_delayed_canonicalize_waiting_for_blocks_to_be_finalized() {
 		let pruning_modes =
 			[BlocksPruning::Some(10), BlocksPruning::KeepAll, BlocksPruning::KeepFinalized];
@@ -5283,7 +5081,6 @@ pub(crate) mod tests {
 	}
 
 	#[test]
-#[cfg(feature = "std")]
 	fn test_pinned_blocks_on_finalize() {
 		let backend = Backend::<Block>::new_test_with_tx_storage(BlocksPruning::Some(1), 10);
 		let mut blocks = Vec::new();
@@ -5489,7 +5286,6 @@ pub(crate) mod tests {
 	}
 
 	#[test]
-#[cfg(feature = "std")]
 	fn test_pinned_blocks_on_finalize_with_fork() {
 		let backend = Backend::<Block>::new_test_with_tx_storage(BlocksPruning::Some(1), 10);
 		let mut blocks = Vec::new();
@@ -5605,7 +5401,6 @@ pub(crate) mod tests {
 	}
 
 	#[test]
-#[cfg(feature = "std")]
 	fn prune_blocks_with_empty_predicates_prunes_all() {
 		// Test backward compatibility: empty predicates means all blocks are pruned
 		let backend = Backend::<Block>::new_test_with_tx_storage_and_filters(
@@ -5660,7 +5455,6 @@ pub(crate) mod tests {
 	}
 
 	#[test]
-#[cfg(feature = "std")]
 	fn prune_blocks_multiple_filters_or_logic() {
 		// Test that multiple filters use OR logic: if ANY filter matches, block is kept
 		let backend = Backend::<Block>::new_test_with_tx_storage_and_filters(
@@ -5734,7 +5528,6 @@ pub(crate) mod tests {
 	}
 
 	#[test]
-#[cfg(feature = "std")]
 	fn prune_blocks_filter_only_matches_specific_engine() {
 		// Test that a filter for one engine ID does NOT preserve blocks with a different engine ID
 		let backend = Backend::<Block>::new_test_with_tx_storage_and_filters(

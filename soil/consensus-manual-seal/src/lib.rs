@@ -372,50 +372,34 @@ pub async fn run_delayed_finalize<B, CB, C, S>(
 #[cfg(test)]
 #[cfg(feature = "std")]
 mod tests {
-#[cfg(feature = "std")]
 	use super::*;
-#[cfg(feature = "std")]
 	use assert_matches::assert_matches;
-#[cfg(feature = "std")]
 	use soil_basic_authorship::ProposerFactory;
-#[cfg(feature = "std")]
 	use sc_consensus::ImportedAux;
-#[cfg(feature = "std")]
 	use sc_transaction_pool::{BasicPool, FullChainApi, Options, RevalidationType};
-#[cfg(feature = "std")]
 	use soil_transaction_pool_api::{MaintainedTransactionPool, TransactionPool, TransactionSource};
-#[cfg(feature = "std")]
 	use soil_api::StorageProof;
-#[cfg(feature = "std")]
 	use soil_inherents::InherentData;
-#[cfg(feature = "std")]
 	use soil_runtime::generic::{Digest, DigestItem};
-#[cfg(feature = "std")]
 	use substrate_test_runtime_client::{
 		DefaultTestClientBuilderExt, Sr25519Keyring::*, TestClientBuilder, TestClientBuilderExt,
 	};
-#[cfg(feature = "std")]
 	use substrate_test_runtime_transaction_pool::{uxt, TestApi};
 
-#[cfg(feature = "std")]
 	fn api() -> Arc<TestApi> {
 		Arc::new(TestApi::empty())
 	}
 
-#[cfg(feature = "std")]
 	const SOURCE: TransactionSource = TransactionSource::External;
 
-#[cfg(feature = "std")]
 	struct TestDigestProvider<C> {
 		_client: Arc<C>,
 	}
-#[cfg(feature = "std")]
 	impl<B, C> ConsensusDataProvider<B> for TestDigestProvider<C>
 	where
 		B: BlockT,
 		C: ProvideRuntimeApi<B> + Send + Sync,
 	{
-#[cfg(feature = "std")]
 		fn create_digest(
 			&self,
 			_parent: &B::Header,
@@ -424,7 +408,6 @@ mod tests {
 			Ok(Digest { logs: vec![] })
 		}
 
-#[cfg(feature = "std")]
 		fn append_block_import(
 			&self,
 			_parent: &B::Header,

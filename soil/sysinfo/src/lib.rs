@@ -101,13 +101,11 @@ pub enum ExecutionLimit {
 #[cfg(feature = "std")]
 impl ExecutionLimit {
 	/// Creates a new execution limit with the passed seconds as duration limit.
-#[cfg(feature = "std")]
 	pub fn from_secs_f32(secs: f32) -> Self {
 		Self::MaxDuration(Duration::from_secs_f32(secs))
 	}
 
 	/// Returns the duration limit or `MAX` if none is present.
-#[cfg(feature = "std")]
 	pub fn max_duration(&self) -> Duration {
 		match self {
 			Self::MaxDuration(d) => *d,
@@ -117,7 +115,6 @@ impl ExecutionLimit {
 	}
 
 	/// Returns the iterations limit or `MAX` if none is present.
-#[cfg(feature = "std")]
 	pub fn max_iterations(&self) -> usize {
 		match self {
 			Self::MaxIterations(d) => *d,

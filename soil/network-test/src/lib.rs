@@ -77,7 +77,6 @@ use soil_network::{
 	},
 	peer_store::PeerStore,
 	request_responses::ProtocolConfig as RequestResponseConfig,
-#[cfg(feature = "std")]
 	types::ProtocolName,
 	NetworkBlock, NetworkService, NetworkStateInfo, NetworkSyncForkRequest, NetworkWorker,
 	NotificationMetrics, NotificationService,
@@ -119,7 +118,6 @@ use soil_core::H256;
 use soil_runtime::{
 	codec::{Decode, Encode},
 	generic::BlockId,
-#[cfg(feature = "std")]
 	traits::{Block as BlockT, Header as HeaderT, NumberFor, Zero},
 	Digest, Justification, Justifications,
 };
@@ -146,7 +144,6 @@ impl PassThroughVerifier {
 	/// Create a new instance.
 	///
 	/// Every verified block will use `finalized` for the `BlockImportParams`.
-#[cfg(feature = "std")]
 	pub fn new(finalized: bool) -> Self {
 		Self { finalized }
 	}
@@ -185,32 +182,26 @@ pub struct PeersClient {
 
 #[cfg(feature = "std")]
 impl PeersClient {
-#[cfg(feature = "std")]
 	pub fn as_client(&self) -> Arc<PeersFullClient> {
 		self.client.clone()
 	}
 
-#[cfg(feature = "std")]
 	pub fn as_backend(&self) -> Arc<substrate_test_runtime_client::Backend> {
 		self.backend.clone()
 	}
 
-#[cfg(feature = "std")]
 	pub fn as_block_import(&self) -> BlockImportAdapter<Self> {
 		BlockImportAdapter::new(self.clone())
 	}
 
-#[cfg(feature = "std")]
 	pub fn get_aux(&self, key: &[u8]) -> ClientResult<Option<Vec<u8>>> {
 		self.client.get_aux(key)
 	}
 
-#[cfg(feature = "std")]
 	pub fn info(&self) -> BlockchainInfo<Block> {
 		self.client.info()
 	}
 
-#[cfg(feature = "std")]
 	pub fn header(
 		&self,
 		hash: <Block as BlockT>::Hash,
@@ -218,7 +209,6 @@ impl PeersClient {
 		self.client.header(hash)
 	}
 
-#[cfg(feature = "std")]
 	pub fn has_state_at(&self, block: &BlockId<Block>) -> bool {
 		let (number, hash) = match *block {
 			BlockId::Hash(h) => match self.as_client().number(h) {
@@ -233,7 +223,6 @@ impl PeersClient {
 		self.backend.have_state_at(hash, number)
 	}
 
-#[cfg(feature = "std")]
 	pub fn justifications(
 		&self,
 		hash: <Block as BlockT>::Hash,
@@ -241,17 +230,14 @@ impl PeersClient {
 		self.client.justifications(hash)
 	}
 
-#[cfg(feature = "std")]
 	pub fn finality_notification_stream(&self) -> FinalityNotifications<Block> {
 		self.client.finality_notification_stream()
 	}
 
-#[cfg(feature = "std")]
 	pub fn import_notification_stream(&self) -> ImportNotifications<Block> {
 		self.client.import_notification_stream()
 	}
 
-#[cfg(feature = "std")]
 	pub fn finalize_block(
 		&self,
 		hash: <Block as BlockT>::Hash,
@@ -265,7 +251,6 @@ impl PeersClient {
 #[async_trait::async_trait]
 #[cfg(feature = "std")]
 impl BlockImport<Block> for PeersClient {
-#[cfg(feature = "std")]
 	type Error = ConsensusError;
 
 	async fn check_block(
@@ -309,19 +294,16 @@ where
 	B: BlockImport<Block, Error = ConsensusError> + Send + Sync,
 {
 	/// Get this peer ID.
-#[cfg(feature = "std")]
 	pub fn id(&self) -> PeerId {
 		self.network.service().local_peer_id().into()
 	}
 
 	/// Returns true if we're major syncing.
-#[cfg(feature = "std")]
 	pub fn is_major_syncing(&self) -> bool {
 		self.sync_service.is_major_syncing()
 	}
 
 	// Returns a clone of the local SelectChain, only available on full nodes
-#[cfg(feature = "std")]
 	pub fn select_chain(
 		&self,
 	) -> Option<LongestChain<substrate_test_runtime_client::Backend, Block>> {
@@ -339,25 +321,21 @@ where
 	}
 
 	/// Returns true if we have no peer.
-#[cfg(feature = "std")]
 	pub fn is_offline(&self) -> bool {
 		self.sync_service.is_offline()
 	}
 
 	/// Request a justification for the given block.
-#[cfg(feature = "std")]
 	pub fn request_justification(&self, hash: &<Block as BlockT>::Hash, number: NumberFor<Block>) {
 		self.sync_service.request_justification(hash, number);
 	}
 
 	/// Announces an important block on the network.
-#[cfg(feature = "std")]
 	pub fn announce_block(&self, hash: <Block as BlockT>::Hash, data: Option<Vec<u8>>) {
 		self.sync_service.announce_block(hash, data);
 	}
 
 	/// Request explicit fork sync.
-#[cfg(feature = "std")]
 	pub fn set_sync_fork_request(
 		&self,
 		peers: Vec<PeerId>,
@@ -372,7 +350,6 @@ where
 	}
 
 	/// Add blocks to the peer -- edit the block before adding
-#[cfg(feature = "std")]
 	pub fn generate_blocks<F>(
 		&mut self,
 		count: usize,
@@ -396,7 +373,6 @@ where
 	}
 
 	/// Add blocks to the peer -- edit the block before adding and use custom fork choice rule.
-#[cfg(feature = "std")]
 	pub fn generate_blocks_with_fork_choice<F>(
 		&mut self,
 		count: usize,
@@ -422,7 +398,6 @@ where
 
 	/// Add blocks to the peer -- edit the block before adding. The chain will
 	/// start at the given block iD.
-#[cfg(feature = "std")]
 	pub fn generate_blocks_at<F>(
 		&mut self,
 		at: BlockId<Block>,
@@ -450,7 +425,6 @@ where
 		)
 	}
 
-#[cfg(feature = "std")]
 	pub fn generate_blocks_at_with_inherent_digests<F, G>(
 		&mut self,
 		at: BlockId<Block>,
@@ -514,14 +488,12 @@ where
 	}
 
 	/// Push blocks to the peer (simplified: with or without a TX)
-#[cfg(feature = "std")]
 	pub fn push_blocks(&mut self, count: usize, with_tx: bool) -> Vec<H256> {
 		let best_hash = self.client.info().best_hash;
 		self.push_blocks_at(BlockId::Hash(best_hash), count, with_tx)
 	}
 
 	/// Push blocks to the peer (simplified: with or without a TX)
-#[cfg(feature = "std")]
 	pub fn push_headers(&mut self, count: usize) -> Vec<H256> {
 		let best_hash = self.client.info().best_hash;
 		self.generate_tx_blocks_at(BlockId::Hash(best_hash), count, false, true, true, true)
@@ -529,14 +501,12 @@ where
 
 	/// Push blocks to the peer (simplified: with or without a TX) starting from
 	/// given hash.
-#[cfg(feature = "std")]
 	pub fn push_blocks_at(&mut self, at: BlockId<Block>, count: usize, with_tx: bool) -> Vec<H256> {
 		self.generate_tx_blocks_at(at, count, with_tx, false, true, true)
 	}
 
 	/// Push blocks to the peer (simplified: with or without a TX) starting from
 	/// given hash without informing the sync protocol about the new best block.
-#[cfg(feature = "std")]
 	pub fn push_blocks_at_without_informing_sync(
 		&mut self,
 		at: BlockId<Block>,
@@ -549,7 +519,6 @@ where
 
 	/// Push blocks to the peer (simplified: with or without a TX) starting from
 	/// given hash without announcing the block.
-#[cfg(feature = "std")]
 	pub fn push_blocks_at_without_announcing(
 		&mut self,
 		at: BlockId<Block>,
@@ -561,7 +530,6 @@ where
 
 	/// Push blocks/headers to the peer (simplified: with or without a TX) starting from
 	/// given hash.
-#[cfg(feature = "std")]
 	fn generate_tx_blocks_at(
 		&mut self,
 		at: BlockId<Block>,
@@ -608,25 +576,21 @@ where
 	}
 
 	/// Get a reference to the client.
-#[cfg(feature = "std")]
 	pub fn client(&self) -> &PeersClient {
 		&self.client
 	}
 
 	/// Get a reference to the network service.
-#[cfg(feature = "std")]
 	pub fn network_service(&self) -> &Arc<NetworkService<Block, <Block as BlockT>::Hash>> {
 		self.network.service()
 	}
 
 	/// Get `SyncingService`.
-#[cfg(feature = "std")]
 	pub fn sync_service(&self) -> &Arc<SyncingService<Block>> {
 		&self.sync_service
 	}
 
 	/// Take notification handle for enabled protocol.
-#[cfg(feature = "std")]
 	pub fn take_notification_service(
 		&mut self,
 		protocol: &ProtocolName,
@@ -635,14 +599,12 @@ where
 	}
 
 	/// Get a reference to the network worker.
-#[cfg(feature = "std")]
 	pub fn network(&self) -> &NetworkWorker<Block, <Block as BlockT>::Hash> {
 		&self.network
 	}
 
 	/// Test helper to compare the blockchain state of multiple (networked)
 	/// clients.
-#[cfg(feature = "std")]
 	pub fn blockchain_canon_equals(&self, other: &Self) -> bool {
 		if let (Some(mine), Some(others)) = (self.backend.clone(), other.backend.clone()) {
 			mine.blockchain().info().best_hash == others.blockchain().info().best_hash
@@ -652,7 +614,6 @@ where
 	}
 
 	/// Count the total number of imported blocks.
-#[cfg(feature = "std")]
 	pub fn blocks_count(&self) -> u64 {
 		self.backend
 			.as_ref()
@@ -661,18 +622,15 @@ where
 	}
 
 	/// Return a collection of block hashes that failed verification
-#[cfg(feature = "std")]
 	pub fn failed_verifications(&self) -> HashMap<<Block as BlockT>::Hash, String> {
 		self.verifier.failed_verifications.lock().clone()
 	}
 
 	/// Returns the number of errors while importing blocks.
-#[cfg(feature = "std")]
 	pub fn import_error_count(&self) -> u32 {
 		self.block_import.import_error_count()
 	}
 
-#[cfg(feature = "std")]
 	pub fn has_block(&self, hash: H256) -> bool {
 		self.backend
 			.as_ref()
@@ -680,7 +638,6 @@ where
 			.unwrap_or(false)
 	}
 
-#[cfg(feature = "std")]
 	pub fn has_body(&self, hash: H256) -> bool {
 		self.backend
 			.as_ref()
@@ -716,13 +673,11 @@ pub struct BlockImportAdapter<I> {
 #[cfg(feature = "std")]
 impl<I> BlockImportAdapter<I> {
 	/// Create a new instance of `Self::Full`.
-#[cfg(feature = "std")]
 	pub fn new(inner: I) -> Self {
 		Self { inner, import_errors: Default::default() }
 	}
 
 	/// Returns the number of errors while importing blocks.
-#[cfg(feature = "std")]
 	pub fn import_error_count(&self) -> u32 {
 		self.import_errors.load(Ordering::Relaxed)
 	}
@@ -734,7 +689,6 @@ impl<I> BlockImport<Block> for BlockImportAdapter<I>
 where
 	I: BlockImport<Block, Error = ConsensusError> + Send + Sync,
 {
-#[cfg(feature = "std")]
 	type Error = ConsensusError;
 
 	async fn check_block(
@@ -783,7 +737,6 @@ impl<B: BlockT> Verifier<B> for VerifierAdapter<B> {
 
 #[cfg(feature = "std")]
 impl<B: BlockT> Clone for VerifierAdapter<B> {
-#[cfg(feature = "std")]
 	fn clone(&self) -> Self {
 		Self {
 			verifier: self.verifier.clone(),
@@ -794,7 +747,6 @@ impl<B: BlockT> Clone for VerifierAdapter<B> {
 
 #[cfg(feature = "std")]
 impl<B: BlockT> VerifierAdapter<B> {
-#[cfg(feature = "std")]
 	fn new(verifier: impl Verifier<B> + 'static) -> Self {
 		VerifierAdapter {
 			verifier: Arc::new(futures::lock::Mutex::new(Box::new(verifier))),
@@ -813,7 +765,6 @@ struct TestVerifier<B: BlockT> {
 
 #[cfg(feature = "std")]
 impl<B: BlockT> WarpVerifier<B> for TestVerifier<B> {
-#[cfg(feature = "std")]
 	fn verify(
 		&mut self,
 		proof: &EncodedProof,
@@ -823,12 +774,10 @@ impl<B: BlockT> WarpVerifier<B> for TestVerifier<B> {
 		Ok(VerificationResult::Complete(header, Default::default()))
 	}
 
-#[cfg(feature = "std")]
 	fn next_proof_context(&self) -> B::Hash {
 		self.genesis_hash
 	}
 
-#[cfg(feature = "std")]
 	fn status(&self) -> Option<String> {
 		None
 	}
@@ -836,7 +785,6 @@ impl<B: BlockT> WarpVerifier<B> for TestVerifier<B> {
 
 #[cfg(feature = "std")]
 impl<B: BlockT> WarpSyncProvider<B> for TestWarpSyncProvider<B> {
-#[cfg(feature = "std")]
 	fn generate(
 		&self,
 		_start: B::Hash,
@@ -846,7 +794,6 @@ impl<B: BlockT> WarpSyncProvider<B> for TestWarpSyncProvider<B> {
 		Ok(EncodedProof(best_header.encode()))
 	}
 
-#[cfg(feature = "std")]
 	fn create_verifier(&self) -> Box<dyn WarpVerifier<B>> {
 		let genesis_hash = self.0.info().genesis_hash;
 		Box::new(TestVerifier { genesis_hash })
@@ -888,32 +835,23 @@ pub struct FullPeerConfig {
 #[async_trait::async_trait]
 #[cfg(feature = "std")]
 pub trait TestNetFactory: Default + Sized + Send {
-#[cfg(feature = "std")]
 	type Verifier: 'static + Verifier<Block>;
-#[cfg(feature = "std")]
 	type BlockImport: BlockImport<Block, Error = ConsensusError> + Clone + Send + Sync + 'static;
-#[cfg(feature = "std")]
 	type PeerData: Default + Send;
 
 	/// This one needs to be implemented!
-#[cfg(feature = "std")]
 	fn make_verifier(&self, client: PeersClient, peer_data: &Self::PeerData) -> Self::Verifier;
 
 	/// Get reference to peer.
-#[cfg(feature = "std")]
 	fn peer(&mut self, i: usize) -> &mut Peer<Self::PeerData, Self::BlockImport>;
-#[cfg(feature = "std")]
 	fn peers(&self) -> &Vec<Peer<Self::PeerData, Self::BlockImport>>;
-#[cfg(feature = "std")]
 	fn peers_mut(&mut self) -> &mut Vec<Peer<Self::PeerData, Self::BlockImport>>;
-#[cfg(feature = "std")]
 	fn mut_peers<F: FnOnce(&mut Vec<Peer<Self::PeerData, Self::BlockImport>>)>(
 		&mut self,
 		closure: F,
 	);
 
 	/// Get custom block import handle for fresh client, along with peer data.
-#[cfg(feature = "std")]
 	fn make_block_import(
 		&self,
 		client: PeersClient,
@@ -924,7 +862,6 @@ pub trait TestNetFactory: Default + Sized + Send {
 	);
 
 	/// Create new test network with this many peers.
-#[cfg(feature = "std")]
 	fn new(n: usize) -> Self {
 		trace!(target: "test_network", "Creating test network");
 		let mut net = Self::default();
@@ -936,13 +873,11 @@ pub trait TestNetFactory: Default + Sized + Send {
 		net
 	}
 
-#[cfg(feature = "std")]
 	fn add_full_peer(&mut self) {
 		self.add_full_peer_with_config(Default::default())
 	}
 
 	/// Add a full peer.
-#[cfg(feature = "std")]
 	fn add_full_peer_with_config(&mut self, config: FullPeerConfig) {
 		let mut test_client_builder = match (config.blocks_pruning, config.storage_chain) {
 			(Some(blocks_pruning), true) => TestClientBuilder::with_tx_storage(blocks_pruning),
@@ -1219,7 +1154,6 @@ pub trait TestNetFactory: Default + Sized + Send {
 	}
 
 	/// Used to spawn background tasks, e.g. the block request protocol handler.
-#[cfg(feature = "std")]
 	fn spawn_task(&self, f: BoxFuture<'static, ()>) {
 		tokio::spawn(f);
 	}
@@ -1323,7 +1257,6 @@ pub trait TestNetFactory: Default + Sized + Send {
 	}
 
 	/// Polls the testnet. Processes all the pending actions.
-#[cfg(feature = "std")]
 	fn poll(&mut self, cx: &mut FutureContext) {
 		self.mut_peers(|peers| {
 			for (i, peer) in peers.iter_mut().enumerate() {
@@ -1368,19 +1301,14 @@ pub struct TestNet {
 
 #[cfg(feature = "std")]
 impl TestNetFactory for TestNet {
-#[cfg(feature = "std")]
 	type Verifier = PassThroughVerifier;
-#[cfg(feature = "std")]
 	type PeerData = ();
-#[cfg(feature = "std")]
 	type BlockImport = PeersClient;
 
-#[cfg(feature = "std")]
 	fn make_verifier(&self, _client: PeersClient, _peer_data: &()) -> Self::Verifier {
 		PassThroughVerifier::new(false)
 	}
 
-#[cfg(feature = "std")]
 	fn make_block_import(
 		&self,
 		client: PeersClient,
@@ -1392,22 +1320,18 @@ impl TestNetFactory for TestNet {
 		(client.as_block_import(), None, ())
 	}
 
-#[cfg(feature = "std")]
 	fn peer(&mut self, i: usize) -> &mut Peer<(), Self::BlockImport> {
 		&mut self.peers[i]
 	}
 
-#[cfg(feature = "std")]
 	fn peers(&self) -> &Vec<Peer<(), Self::BlockImport>> {
 		&self.peers
 	}
 
-#[cfg(feature = "std")]
 	fn peers_mut(&mut self) -> &mut Vec<Peer<(), Self::BlockImport>> {
 		&mut self.peers
 	}
 
-#[cfg(feature = "std")]
 	fn mut_peers<F: FnOnce(&mut Vec<Peer<(), Self::BlockImport>>)>(&mut self, closure: F) {
 		closure(&mut self.peers);
 	}
@@ -1419,7 +1343,6 @@ pub struct ForceFinalized(PeersClient);
 #[async_trait::async_trait]
 #[cfg(feature = "std")]
 impl JustificationImport<Block> for ForceFinalized {
-#[cfg(feature = "std")]
 	type Error = ConsensusError;
 
 	async fn on_start(&mut self) -> Vec<(H256, NumberFor<Block>)> {
@@ -1444,34 +1367,26 @@ pub struct JustificationTestNet(TestNet);
 
 #[cfg(feature = "std")]
 impl TestNetFactory for JustificationTestNet {
-#[cfg(feature = "std")]
 	type Verifier = PassThroughVerifier;
-#[cfg(feature = "std")]
 	type PeerData = ();
-#[cfg(feature = "std")]
 	type BlockImport = PeersClient;
 
-#[cfg(feature = "std")]
 	fn make_verifier(&self, client: PeersClient, peer_data: &()) -> Self::Verifier {
 		self.0.make_verifier(client, peer_data)
 	}
 
-#[cfg(feature = "std")]
 	fn peer(&mut self, i: usize) -> &mut Peer<Self::PeerData, Self::BlockImport> {
 		self.0.peer(i)
 	}
 
-#[cfg(feature = "std")]
 	fn peers(&self) -> &Vec<Peer<Self::PeerData, Self::BlockImport>> {
 		self.0.peers()
 	}
 
-#[cfg(feature = "std")]
 	fn peers_mut(&mut self) -> &mut Vec<Peer<Self::PeerData, Self::BlockImport>> {
 		self.0.peers_mut()
 	}
 
-#[cfg(feature = "std")]
 	fn mut_peers<F: FnOnce(&mut Vec<Peer<Self::PeerData, Self::BlockImport>>)>(
 		&mut self,
 		closure: F,
@@ -1479,7 +1394,6 @@ impl TestNetFactory for JustificationTestNet {
 		self.0.mut_peers(closure)
 	}
 
-#[cfg(feature = "std")]
 	fn make_block_import(
 		&self,
 		client: PeersClient,

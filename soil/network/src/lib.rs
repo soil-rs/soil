@@ -294,7 +294,6 @@ pub use request_responses::{Config, IfDisconnected, RequestFailure};
 #[cfg(feature = "std")]
 pub use soil_network_common::{
 	role::{ObservedRole, Roles},
-#[cfg(feature = "std")]
 	types::ReputationChange,
 };
 #[cfg(feature = "std")]
@@ -306,7 +305,6 @@ pub use soil_network_types::{
 pub use service::{
 	metrics::NotificationMetrics,
 	signature::Signature,
-#[cfg(feature = "std")]
 	traits::{
 		KademliaKey, MessageSink, NetworkBackend, NetworkBlock, NetworkDHTProvider,
 		NetworkEventStream, NetworkPeers, NetworkRequest, NetworkSigner, NetworkStateInfo,

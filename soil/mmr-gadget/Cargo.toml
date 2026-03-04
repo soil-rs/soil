@@ -1,5 +1,5 @@
 [package]
-name = "soil-soil-mmr-gadget"
+name = "soil-mmr-gadget"
 version = "29.0.0"
 authors.workspace = true
 edition.workspace = true

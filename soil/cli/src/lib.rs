@@ -79,7 +79,6 @@ pub use soil_version::RuntimeVersion;
 #[cfg(feature = "std")]
 pub trait SubstrateCli: Sized {
 	/// Implementation name.
-#[cfg(feature = "std")]
 	fn impl_name() -> String;
 
 	/// Implementation version.
@@ -89,14 +88,12 @@ pub trait SubstrateCli: Sized {
 	/// `2.0.0-b950f731c`
 	///
 	/// Where the hash is the short hash of the commit in the Git repository.
-#[cfg(feature = "std")]
 	fn impl_version() -> String;
 
 	/// Executable file name.
 	///
 	/// Extracts the file name from `std::env::current_exe()`.
 	/// Resorts to the env var `CARGO_PKG_NAME` in case of Error.
-#[cfg(feature = "std")]
 	fn executable_name() -> String {
 		std::env::current_exe()
 			.ok()
@@ -106,23 +103,18 @@ pub trait SubstrateCli: Sized {
 	}
 
 	/// Executable file description.
-#[cfg(feature = "std")]
 	fn description() -> String;
 
 	/// Executable file author.
-#[cfg(feature = "std")]
 	fn author() -> String;
 
 	/// Support URL.
-#[cfg(feature = "std")]
 	fn support_url() -> String;
 
 	/// Copyright starting year (x-current year)
-#[cfg(feature = "std")]
 	fn copyright_start_year() -> i32;
 
 	/// Chain spec factory
-#[cfg(feature = "std")]
 	fn load_spec(&self, id: &str) -> std::result::Result<Box<dyn ChainSpec>, String>;
 
 	/// Helper function used to parse the command line arguments. This is the equivalent of
@@ -134,7 +126,6 @@ pub trait SubstrateCli: Sized {
 	///
 	/// Creates `Self` from the command line arguments. Print the
 	/// error message and quit the program in case of failure.
-#[cfg(feature = "std")]
 	fn from_args() -> Self
 	where
 		Self: Parser + Sized,
@@ -151,7 +142,6 @@ pub trait SubstrateCli: Sized {
 	///
 	/// Creates `Self` from any iterator over arguments.
 	/// Print the error message and quit the program in case of failure.
-#[cfg(feature = "std")]
 	fn from_iter<I>(iter: I) -> Self
 	where
 		Self: Parser + Sized,
@@ -180,7 +170,6 @@ pub trait SubstrateCli: Sized {
 	/// used. It will return a [`clap::Error`], where the [`clap::Error::kind`] is a
 	/// [`clap::error::ErrorKind::DisplayHelp`] or [`clap::error::ErrorKind::DisplayVersion`]
 	/// respectively. You must call [`clap::Error::exit`] or perform a [`std::process::exit`].
-#[cfg(feature = "std")]
 	fn try_from_iter<I>(iter: I) -> clap::error::Result<Self>
 	where
 		Self: Parser + Sized,
@@ -196,13 +185,11 @@ pub trait SubstrateCli: Sized {
 	}
 
 	/// Returns the client ID: `{impl_name}/v{impl_version}`
-#[cfg(feature = "std")]
 	fn client_id() -> String {
 		format!("{}/v{}", Self::impl_name(), Self::impl_version())
 	}
 
 	/// Only create a Configuration for the command provided in argument
-#[cfg(feature = "std")]
 	fn create_configuration<T: CliConfiguration<DVC>, DVC: DefaultConfigurationValues>(
 		&self,
 		command: &T,
@@ -213,7 +200,6 @@ pub trait SubstrateCli: Sized {
 
 	/// Create a runner for the command provided in argument. This will create a Configuration and
 	/// a tokio runtime
-#[cfg(feature = "std")]
 	fn create_runner<T: CliConfiguration<DVC>, DVC: DefaultConfigurationValues>(
 		&self,
 		command: &T,
@@ -240,7 +226,6 @@ pub trait SubstrateCli: Sized {
 	/// 	}
 	/// }
 	/// ```
-#[cfg(feature = "std")]
 	fn create_runner_with_logger_hook<
 		T: CliConfiguration<DVC>,
 		DVC: DefaultConfigurationValues,
@@ -272,7 +257,6 @@ pub trait SubstrateCli: Sized {
 	///
 	/// This is used internally in `from_iter`, `try_from_iter` and can be used externally
 	/// to manually set up a command with Substrate CLI defaults.
-#[cfg(feature = "std")]
 	fn setup_command(mut cmd: clap::Command) -> clap::Command {
 		let mut full_version = Self::impl_version();
 		full_version.push('\n');

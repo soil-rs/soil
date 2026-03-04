@@ -99,7 +99,6 @@ pub use builder::new_native_or_wasm_executor;
 
 #[cfg(feature = "std")]
 pub use soil_chain_spec::{
-#[cfg(feature = "std")]
 	construct_genesis_block, resolve_state_version_from_wasm, BuildGenesisBlock,
 	GenesisBlockBuilder,
 };
@@ -166,7 +165,6 @@ pub struct RpcHandlers {
 #[cfg(feature = "std")]
 impl RpcHandlers {
 	/// Create PRC handlers instance.
-#[cfg(feature = "std")]
 	pub fn new(rpc_module: Arc<RpcModule<()>>, listen_addresses: Vec<Multiaddr>) -> Self {
 		Self { rpc_module, listen_addresses }
 	}
@@ -188,20 +186,17 @@ impl RpcHandlers {
 		// it will panic if it's set to usize::MAX.
 		//
 		// This limit is used to prevent panics and is large enough.
-#[cfg(feature = "std")]
 		const TOKIO_MPSC_MAX_SIZE: usize = tokio::sync::Semaphore::MAX_PERMITS;
 
 		self.rpc_module.raw_json_request(json_query, TOKIO_MPSC_MAX_SIZE).await
 	}
 
 	/// Provides access to the underlying `RpcModule`
-#[cfg(feature = "std")]
 	pub fn handle(&self) -> Arc<RpcModule<()>> {
 		self.rpc_module.clone()
 	}
 
 	/// Provides access to listen addresses
-#[cfg(feature = "std")]
 	pub fn listen_addresses(&self) -> &[Multiaddr] {
 		&self.listen_addresses[..]
 	}
@@ -402,7 +397,6 @@ pub async fn build_system_rpc_future<
 					sender.send(reserved_peers.iter().map(|peer_id| peer_id.to_base58()).collect());
 			},
 			sc_rpc::system::Request::NodeRoles(sender) => {
-#[cfg(feature = "std")]
 				use sc_rpc::system::NodeRole;
 
 				let node_role = match role {
@@ -413,7 +407,6 @@ pub async fn build_system_rpc_future<
 				let _ = sender.send(vec![node_role]);
 			},
 			sc_rpc::system::Request::SyncState(sender) => {
-#[cfg(feature = "std")]
 				use sc_rpc::system::SyncState;
 
 				match sync_service.status().await.map(|status| status.best_seen_block) {
@@ -525,7 +518,6 @@ pub struct TransactionPoolAdapter<C, P> {
 #[cfg(feature = "std")]
 impl<C, P> TransactionPoolAdapter<C, P> {
 	/// Constructs a new instance of [`TransactionPoolAdapter`].
-#[cfg(feature = "std")]
 	pub fn new(pool: Arc<P>, client: Arc<C>) -> Self {
 		Self { pool, client }
 	}
@@ -568,17 +560,14 @@ where
 	H: std::hash::Hash + Eq + soil_runtime::traits::Member + soil_runtime::traits::MaybeSerialize,
 	E: 'static + IntoPoolError + From<soil_transaction_pool_api::error::Error>,
 {
-#[cfg(feature = "std")]
 	fn transactions(&self) -> Vec<(H, Arc<B::Extrinsic>)> {
 		transactions_to_propagate(&*self.pool)
 	}
 
-#[cfg(feature = "std")]
 	fn hash_of(&self, transaction: &B::Extrinsic) -> H {
 		self.pool.hash_of(transaction)
 	}
 
-#[cfg(feature = "std")]
 	fn import(&self, transaction: B::Extrinsic) -> TransactionImportFuture {
 		let encoded = transaction.encode();
 		let uxt = match Decode::decode(&mut &encoded[..]) {
@@ -621,12 +610,10 @@ where
 		})
 	}
 
-#[cfg(feature = "std")]
 	fn on_broadcasted(&self, propagations: HashMap<H, Vec<String>>) {
 		self.pool.on_broadcasted(propagations)
 	}
 
-#[cfg(feature = "std")]
 	fn transaction(&self, hash: &H) -> Option<Arc<B::Extrinsic>> {
 		self.pool.ready_transaction(hash).and_then(
 			// Only propagable transactions should be resolved for network service.
@@ -638,22 +625,16 @@ where
 #[cfg(test)]
 #[cfg(feature = "std")]
 mod tests {
-#[cfg(feature = "std")]
 	use super::*;
-#[cfg(feature = "std")]
 	use futures::executor::block_on;
-#[cfg(feature = "std")]
 	use sc_transaction_pool::BasicPool;
-#[cfg(feature = "std")]
 	use soil_consensus::SelectChain;
-#[cfg(feature = "std")]
 	use substrate_test_runtime_client::{
 		prelude::*,
 		runtime::{ExtrinsicBuilder, Transfer, TransferData},
 	};
 
 	#[test]
-#[cfg(feature = "std")]
 	fn should_not_propagate_transactions_that_are_marked_as_such() {
 		// given
 		let (client, longest_chain) = TestClientBuilder::new().build_with_longest_chain();

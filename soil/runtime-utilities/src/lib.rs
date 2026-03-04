@@ -32,7 +32,6 @@ use error::{Error, Result};
 use soil_executor::WasmExecutor;
 #[cfg(feature = "std")]
 use soil_core::{
-#[cfg(feature = "std")]
 	traits::{CallContext, CodeExecutor, FetchRuntimeCode, RuntimeCode},
 	OpaqueMetadata,
 };
@@ -86,7 +85,6 @@ struct BasicCodeFetcher<'a> {
 
 #[cfg(feature = "std")]
 impl<'a> FetchRuntimeCode for BasicCodeFetcher<'a> {
-#[cfg(feature = "std")]
 	fn fetch_runtime_code(&self) -> Option<Cow<'_, [u8]>> {
 		Some(self.code.as_ref().into())
 	}
@@ -94,12 +92,10 @@ impl<'a> FetchRuntimeCode for BasicCodeFetcher<'a> {
 
 #[cfg(feature = "std")]
 impl<'a> BasicCodeFetcher<'a> {
-#[cfg(feature = "std")]
 	fn new(code: Cow<'a, [u8]>) -> Self {
 		Self { hash: soil_crypto_hashing::blake2_256(&code).to_vec(), code }
 	}
 
-#[cfg(feature = "std")]
 	fn runtime_code(&'a self) -> RuntimeCode<'a> {
 		RuntimeCode {
 			code_fetcher: self as &'a dyn FetchRuntimeCode,
@@ -119,14 +115,12 @@ pub struct RuntimeCaller<'a, 'b, HF: HostFunctions> {
 #[cfg(feature = "std")]
 impl<'a, 'b, HF: HostFunctions> RuntimeCaller<'a, 'b, HF> {
 	/// Instantiate a new runtime caller.
-#[cfg(feature = "std")]
 	pub fn new(executor: &'b WasmExecutor<HF>, code_bytes: Cow<'a, [u8]>) -> Self {
 		Self { executor, code_fetcher: BasicCodeFetcher::new(code_bytes) }
 	}
 
 	/// Calls a runtime function represented by a `method` name and `parity-scale-codec`
 	/// encodable arguments that will be passed to it.
-#[cfg(feature = "std")]
 	pub fn call(&self, method: &str, data: impl Encode) -> Result<Vec<u8>> {
 		let mut ext = BasicExternalities::default();
 		self.executor
@@ -141,4 +135,3 @@ impl<'a, 'b, HF: HostFunctions> RuntimeCaller<'a, 'b, HF> {
 			.map_err(Into::into)
 	}
 }
-

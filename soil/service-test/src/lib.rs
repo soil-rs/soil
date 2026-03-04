@@ -78,7 +78,6 @@ struct TestNet<E, F, U> {
 
 #[cfg(feature = "std")]
 impl<E, F, U> Drop for TestNet<E, F, U> {
-#[cfg(feature = "std")]
 	fn drop(&mut self) {
 		// Drop the nodes before dropping the runtime, as the runtime otherwise waits for all
 		// futures to be ended and we run into a dead lock.
@@ -89,26 +88,16 @@ impl<E, F, U> Drop for TestNet<E, F, U> {
 
 #[cfg(feature = "std")]
 pub trait TestNetNode: Clone + Future<Output = Result<(), Error>> + Send + 'static {
-#[cfg(feature = "std")]
 	type Block: BlockT;
-#[cfg(feature = "std")]
 	type Backend: Backend<Self::Block>;
-#[cfg(feature = "std")]
 	type Executor: CallExecutor<Self::Block> + Send + Sync;
-#[cfg(feature = "std")]
 	type RuntimeApi: Send + Sync;
-#[cfg(feature = "std")]
 	type TransactionPool: TransactionPool<Block = Self::Block>;
 
-#[cfg(feature = "std")]
 	fn client(&self) -> Arc<Client<Self::Backend, Self::Executor, Self::Block, Self::RuntimeApi>>;
-#[cfg(feature = "std")]
 	fn transaction_pool(&self) -> Arc<Self::TransactionPool>;
-#[cfg(feature = "std")]
 	fn network(&self) -> Arc<dyn soil_network::service::traits::NetworkService>;
-#[cfg(feature = "std")]
 	fn sync(&self) -> &Arc<SyncingService<Self::Block>>;
-#[cfg(feature = "std")]
 	fn spawn_handle(&self) -> SpawnTaskHandle;
 }
 
@@ -125,7 +114,6 @@ pub struct TestNetComponents<TBl: BlockT, TBackend, TExec, TRtApi, TExPool> {
 impl<TBl: BlockT, TBackend, TExec, TRtApi, TExPool>
 	TestNetComponents<TBl, TBackend, TExec, TRtApi, TExPool>
 {
-#[cfg(feature = "std")]
 	pub fn new(
 		task_manager: TaskManager,
 		client: Arc<Client<TBackend, TExec, TBl, TRtApi>>,
@@ -147,7 +135,6 @@ impl<TBl: BlockT, TBackend, TExec, TRtApi, TExPool>
 impl<TBl: BlockT, TBackend, TExec, TRtApi, TExPool> Clone
 	for TestNetComponents<TBl, TBackend, TExec, TRtApi, TExPool>
 {
-#[cfg(feature = "std")]
 	fn clone(&self) -> Self {
 		Self {
 			task_manager: self.task_manager.clone(),
@@ -163,10 +150,8 @@ impl<TBl: BlockT, TBackend, TExec, TRtApi, TExPool> Clone
 impl<TBl: BlockT, TBackend, TExec, TRtApi, TExPool> Future
 	for TestNetComponents<TBl, TBackend, TExec, TRtApi, TExPool>
 {
-#[cfg(feature = "std")]
 	type Output = Result<(), Error>;
 
-#[cfg(feature = "std")]
 	fn poll(self: Pin<&mut Self>, cx: &mut Context) -> Poll<Self::Output> {
 		Pin::new(&mut self.task_manager.lock().future()).poll(cx)
 	}
@@ -182,34 +167,24 @@ where
 	TRtApi: Send + Sync + 'static,
 	TExPool: TransactionPool<Block = TBl> + Send + Sync + 'static,
 {
-#[cfg(feature = "std")]
 	type Block = TBl;
-#[cfg(feature = "std")]
 	type Backend = TBackend;
-#[cfg(feature = "std")]
 	type Executor = TExec;
-#[cfg(feature = "std")]
 	type RuntimeApi = TRtApi;
-#[cfg(feature = "std")]
 	type TransactionPool = TExPool;
 
-#[cfg(feature = "std")]
 	fn client(&self) -> Arc<Client<Self::Backend, Self::Executor, Self::Block, Self::RuntimeApi>> {
 		self.client.clone()
 	}
-#[cfg(feature = "std")]
 	fn transaction_pool(&self) -> Arc<Self::TransactionPool> {
 		self.transaction_pool.clone()
 	}
-#[cfg(feature = "std")]
 	fn network(&self) -> Arc<dyn soil_network::service::traits::NetworkService> {
 		self.network.clone()
 	}
-#[cfg(feature = "std")]
 	fn sync(&self) -> &Arc<SyncingService<Self::Block>> {
 		&self.sync
 	}
-#[cfg(feature = "std")]
 	fn spawn_handle(&self) -> SpawnTaskHandle {
 		self.task_manager.lock().spawn_handle()
 	}
@@ -221,7 +196,6 @@ where
 	F: Clone + Send + 'static,
 	U: Clone + Send + 'static,
 {
-#[cfg(feature = "std")]
 	pub fn run_until_all_full<FP>(&mut self, full_predicate: FP)
 	where
 		FP: Send + Fn(usize, &F) -> bool + 'static,
@@ -279,9 +253,7 @@ fn node_config<E: ChainSpecExtension + Clone + 'static + Send + Sync>(
 		TransportConfig::Normal { enable_mdns: false, allow_private_ip: true };
 
 	Configuration {
-#[cfg(feature = "std")]
 		impl_name: String::from("network-test-impl"),
-#[cfg(feature = "std")]
 		impl_version: String::from("0.1"),
 		role,
 		tokio_handle,
@@ -333,7 +305,6 @@ where
 	F: TestNetNode,
 	E: ChainSpecExtension + Clone + 'static + Send + Sync,
 {
-#[cfg(feature = "std")]
 	fn new(
 		temp: &TempDir,
 		spec: GenericChainSpec<E>,
@@ -356,7 +327,6 @@ where
 		net
 	}
 
-#[cfg(feature = "std")]
 	fn insert_nodes(
 		&mut self,
 		temp: &TempDir,
@@ -430,7 +400,6 @@ where
 	Fb: Fn(Configuration) -> Result<F, Error>,
 	F: TestNetNode,
 {
-#[cfg(feature = "std")]
 	const NUM_FULL_NODES: usize = 5;
 
 	let expected_full_connections = NUM_FULL_NODES - 1;
@@ -515,9 +484,7 @@ pub fn sync<E, Fb, F, B, ExF, U>(
 	U: Clone + Send + 'static,
 	E: ChainSpecExtension + Clone + 'static + Send + Sync,
 {
-#[cfg(feature = "std")]
 	const NUM_FULL_NODES: usize = 10;
-#[cfg(feature = "std")]
 	const NUM_BLOCKS: usize = 512;
 	let temp = tempdir_with_prefix("substrate-sync-test");
 	let mut network = TestNet::new(
@@ -584,9 +551,7 @@ pub fn consensus<E, Fb, F>(
 	F: TestNetNode,
 	E: ChainSpecExtension + Clone + 'static + Send + Sync,
 {
-#[cfg(feature = "std")]
 	const NUM_FULL_NODES: usize = 10;
-#[cfg(feature = "std")]
 	const NUM_BLOCKS: usize = 10; // 10 * 2 sec block production time = ~20 seconds
 	let temp = tempdir_with_prefix("substrate-consensus-test");
 	let mut network = TestNet::new(

@@ -26,4 +26,4 @@ wasm-instrument = { workspace = true, default-features = true }
 
 [features]
 std = []
-default = []
+default = ["std"]

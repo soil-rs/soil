@@ -352,7 +352,6 @@ pub use self::{
 	},
 	extension::{get_extension, get_extension_mut, Extension, Fork, Forks, GetExtension, Group},
 	genesis_block::{
-#[cfg(feature = "std")]
 		construct_genesis_block, resolve_state_version_from_wasm, BuildGenesisBlock,
 		GenesisBlockBuilder,
 	},
@@ -394,7 +393,6 @@ pub enum ChainType {
 
 #[cfg(feature = "std")]
 impl Default for ChainType {
-#[cfg(feature = "std")]
 	fn default() -> Self {
 		Self::Live
 	}
@@ -408,62 +406,45 @@ pub type Properties = serde_json::map::Map<String, serde_json::Value>;
 #[cfg(feature = "std")]
 pub trait ChainSpec: BuildStorage + Send + Sync {
 	/// Spec name.
-#[cfg(feature = "std")]
 	fn name(&self) -> &str;
 	/// Spec id.
-#[cfg(feature = "std")]
 	fn id(&self) -> &str;
 	/// Type of the chain.
-#[cfg(feature = "std")]
 	fn chain_type(&self) -> ChainType;
 	/// A list of bootnode addresses.
-#[cfg(feature = "std")]
 	fn boot_nodes(&self) -> &[MultiaddrWithPeerId];
 	/// Telemetry endpoints (if any)
-#[cfg(feature = "std")]
 	fn telemetry_endpoints(&self) -> &Option<TelemetryEndpoints>;
 	/// Network protocol id.
-#[cfg(feature = "std")]
 	fn protocol_id(&self) -> Option<&str>;
 	/// Optional network fork identifier. `None` by default.
-#[cfg(feature = "std")]
 	fn fork_id(&self) -> Option<&str>;
 	/// Additional loosely-typed properties of the chain.
 	///
 	/// Returns an empty JSON object if 'properties' not defined in config
-#[cfg(feature = "std")]
 	fn properties(&self) -> Properties;
 	/// Returns a reference to the defined chain spec extensions.
-#[cfg(feature = "std")]
 	fn extensions(&self) -> &dyn GetExtension;
 	/// Returns a mutable reference to the defined chain spec extensions.
-#[cfg(feature = "std")]
 	fn extensions_mut(&mut self) -> &mut dyn GetExtension;
 	/// Add a bootnode to the list.
-#[cfg(feature = "std")]
 	fn add_boot_node(&mut self, addr: MultiaddrWithPeerId);
 	/// Return spec as JSON.
-#[cfg(feature = "std")]
 	fn as_json(&self, raw: bool) -> Result<String, String>;
 	/// Return StorageBuilder for this spec.
-#[cfg(feature = "std")]
 	fn as_storage_builder(&self) -> &dyn BuildStorage;
 	/// Returns a cloned `Box<dyn ChainSpec>`.
-#[cfg(feature = "std")]
 	fn cloned_box(&self) -> Box<dyn ChainSpec>;
 	/// Set the storage that should be used by this chain spec.
 	///
 	/// This will be used as storage at genesis.
-#[cfg(feature = "std")]
 	fn set_storage(&mut self, storage: Storage);
 	/// Returns code substitutes that should be used for the on chain wasm.
-#[cfg(feature = "std")]
 	fn code_substitutes(&self) -> std::collections::BTreeMap<String, Vec<u8>>;
 }
 
 #[cfg(feature = "std")]
 impl std::fmt::Debug for dyn ChainSpec {
-#[cfg(feature = "std")]
 	fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 		write!(f, "ChainSpec(name = {:?}, id = {:?})", self.name(), self.id())
 	}

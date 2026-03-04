@@ -49,7 +49,6 @@ use std::sync::Arc;
 use jsonrpsee::{
 	core::async_trait,
 	proc_macros::rpc,
-#[cfg(feature = "std")]
 	types::{ErrorObject, ErrorObjectOwned},
 };
 
@@ -92,7 +91,6 @@ pub enum Error<Block: BlockT> {
 
 #[cfg(feature = "std")]
 impl<Block: BlockT> From<Error<Block>> for ErrorObjectOwned {
-#[cfg(feature = "std")]
 	fn from(error: Error<Block>) -> Self {
 		let message = match error {
 			Error::JsonRpc(s) => s,
@@ -164,7 +162,6 @@ where
 	Client: HeaderBackend<Block> + soil_client_api::AuxStore + 'static,
 {
 	/// Create a new sync state RPC helper.
-#[cfg(feature = "std")]
 	pub fn new(
 		chain_spec: Box<dyn soil_chain_spec::ChainSpec>,
 		client: Arc<Client>,

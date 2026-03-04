@@ -44,11 +44,9 @@ use std::{
 #[cfg(feature = "std")]
 pub trait IsDescendentOfBuilder<Hash> {
 	/// The error returned by the function.
-#[cfg(feature = "std")]
 	type Error: std::error::Error;
 	/// A function that can tell you if the second parameter is a descendent of
 	/// the first.
-#[cfg(feature = "std")]
 	type IsDescendentOf: Fn(&Hash, &Hash) -> Result<bool, Self::Error>;
 
 	/// Build an `is_descendent_of` function.
@@ -57,7 +55,6 @@ pub trait IsDescendentOfBuilder<Hash> {
 	/// details aren't yet stored, but its parent is.
 	///
 	/// The format of `current` when `Some` is `(current, current_parent)`.
-#[cfg(feature = "std")]
 	fn build_is_descendent_of(&self, current: Option<(Hash, Hash)>) -> Self::IsDescendentOf;
 }
 
@@ -79,12 +76,9 @@ where
 	H: HeaderBackend<Block> + HeaderMetadata<Block, Error = ClientError>,
 	Block: BlockT,
 {
-#[cfg(feature = "std")]
 	type Error = ClientError;
-#[cfg(feature = "std")]
 	type IsDescendentOf = Box<dyn Fn(&Block::Hash, &Block::Hash) -> Result<bool, ClientError> + 'a>;
 
-#[cfg(feature = "std")]
 	fn build_is_descendent_of(
 		&self,
 		current: Option<(Block::Hash, Block::Hash)>,
@@ -100,27 +94,21 @@ where
 #[cfg(feature = "std")]
 pub trait Epoch: std::fmt::Debug {
 	/// Descriptor for the next epoch.
-#[cfg(feature = "std")]
 	type NextEpochDescriptor;
 	/// Type of the slot number.
-#[cfg(feature = "std")]
 	type Slot: Ord + Copy + std::fmt::Debug;
 
 	/// The starting slot of the epoch.
-#[cfg(feature = "std")]
 	fn start_slot(&self) -> Self::Slot;
 	/// Produce the "end slot" of the epoch. This is NOT inclusive to the epoch,
 	/// i.e. the slots covered by the epoch are `self.start_slot() .. self.end_slot()`.
-#[cfg(feature = "std")]
 	fn end_slot(&self) -> Self::Slot;
 	/// Increment the epoch data, using the next epoch descriptor.
-#[cfg(feature = "std")]
 	fn increment(&self, descriptor: Self::NextEpochDescriptor) -> Self;
 }
 
 #[cfg(feature = "std")]
 impl<'a, E: Epoch> From<&'a E> for EpochHeader<E> {
-#[cfg(feature = "std")]
 	fn from(epoch: &'a E) -> EpochHeader<E> {
 		Self { start_slot: epoch.start_slot(), end_slot: epoch.end_slot() }
 	}
@@ -139,7 +127,6 @@ pub struct EpochHeader<E: Epoch> {
 
 #[cfg(feature = "std")]
 impl<E: Epoch> Clone for EpochHeader<E> {
-#[cfg(feature = "std")]
 	fn clone(&self) -> Self {
 		Self { start_slot: self.start_slot, end_slot: self.end_slot }
 	}
@@ -186,7 +173,6 @@ impl<E, ERef> AsRef<E> for ViableEpoch<E, ERef>
 where
 	ERef: Borrow<E>,
 {
-#[cfg(feature = "std")]
 	fn as_ref(&self) -> &E {
 		match *self {
 			ViableEpoch::UnimportedGenesis(ref e) => e,
@@ -200,7 +186,6 @@ impl<E, ERef> AsMut<E> for ViableEpoch<E, ERef>
 where
 	ERef: BorrowMut<E>,
 {
-#[cfg(feature = "std")]
 	fn as_mut(&mut self) -> &mut E {
 		match *self {
 			ViableEpoch::UnimportedGenesis(ref mut e) => e,
@@ -217,7 +202,6 @@ where
 {
 	/// Extract the underlying epoch, disregarding the fact that a genesis
 	/// epoch may be unimported.
-#[cfg(feature = "std")]
 	pub fn into_cloned_inner(self) -> E {
 		match self {
 			ViableEpoch::UnimportedGenesis(e) => e,
@@ -226,7 +210,6 @@ where
 	}
 
 	/// Get cloned value for the viable epoch.
-#[cfg(feature = "std")]
 	pub fn into_cloned(self) -> ViableEpoch<E, E> {
 		match self {
 			ViableEpoch::UnimportedGenesis(e) => ViableEpoch::UnimportedGenesis(e),
@@ -236,7 +219,6 @@ where
 
 	/// Increment the epoch, yielding an `IncrementedEpoch` to be imported
 	/// into the fork-tree.
-#[cfg(feature = "std")]
 	pub fn increment(&self, next_descriptor: E::NextEpochDescriptor) -> IncrementedEpoch<E> {
 		let next = self.as_ref().increment(next_descriptor);
 		let to_persist = match *self {
@@ -263,7 +245,6 @@ pub enum ViableEpochDescriptor<Hash, Number, E: Epoch> {
 #[cfg(feature = "std")]
 impl<Hash, Number, E: Epoch> ViableEpochDescriptor<Hash, Number, E> {
 	/// Start slot of the descriptor.
-#[cfg(feature = "std")]
 	pub fn start_slot(&self) -> E::Slot {
 		match self {
 			Self::UnimportedGenesis(start_slot) => *start_slot,
@@ -285,7 +266,6 @@ pub enum PersistedEpoch<E> {
 #[cfg(feature = "std")]
 impl<E> PersistedEpoch<E> {
 	/// Returns if this is a genesis epoch.
-#[cfg(feature = "std")]
 	pub fn is_genesis(&self) -> bool {
 		matches!(self, Self::Genesis(_, _))
 	}
@@ -293,7 +273,6 @@ impl<E> PersistedEpoch<E> {
 
 #[cfg(feature = "std")]
 impl<'a, E: Epoch> From<&'a PersistedEpoch<E>> for PersistedEpochHeader<E> {
-#[cfg(feature = "std")]
 	fn from(epoch: &'a PersistedEpoch<E>) -> Self {
 		match epoch {
 			PersistedEpoch::Genesis(ref epoch_0, ref epoch_1) => {
@@ -307,7 +286,6 @@ impl<'a, E: Epoch> From<&'a PersistedEpoch<E>> for PersistedEpochHeader<E> {
 #[cfg(feature = "std")]
 impl<E: Epoch> PersistedEpoch<E> {
 	/// Map the epoch to a different type using a conversion function.
-#[cfg(feature = "std")]
 	pub fn map<B, F, Hash, Number>(self, h: &Hash, n: &Number, f: &mut F) -> PersistedEpoch<B>
 	where
 		B: Epoch<Slot = E::Slot>,
@@ -334,7 +312,6 @@ pub enum PersistedEpochHeader<E: Epoch> {
 
 #[cfg(feature = "std")]
 impl<E: Epoch> Clone for PersistedEpochHeader<E> {
-#[cfg(feature = "std")]
 	fn clone(&self) -> Self {
 		match self {
 			Self::Genesis(epoch_0, epoch_1) => Self::Genesis(epoch_0.clone(), epoch_1.clone()),
@@ -346,7 +323,6 @@ impl<E: Epoch> Clone for PersistedEpochHeader<E> {
 #[cfg(feature = "std")]
 impl<E: Epoch> PersistedEpochHeader<E> {
 	/// Map the epoch header to a different type.
-#[cfg(feature = "std")]
 	pub fn map<B>(self) -> PersistedEpochHeader<B>
 	where
 		B: Epoch<Slot = E::Slot>,
@@ -373,7 +349,6 @@ pub struct IncrementedEpoch<E: Epoch>(PersistedEpoch<E>);
 
 #[cfg(feature = "std")]
 impl<E: Epoch> AsRef<E> for IncrementedEpoch<E> {
-#[cfg(feature = "std")]
 	fn as_ref(&self) -> &E {
 		match self.0 {
 			PersistedEpoch::Genesis(_, ref epoch_1) => epoch_1,
@@ -420,7 +395,6 @@ where
 	Hash: PartialEq + Ord,
 	Number: Ord,
 {
-#[cfg(feature = "std")]
 	fn default() -> Self {
 		EpochChanges { inner: ForkTree::new(), epochs: BTreeMap::new() }
 	}
@@ -433,20 +407,17 @@ where
 	Number: Ord + One + Zero + Add<Output = Number> + Sub<Output = Number> + Copy + std::fmt::Debug,
 {
 	/// Create a new epoch change.
-#[cfg(feature = "std")]
 	pub fn new() -> Self {
 		Self::default()
 	}
 
 	/// Rebalances the tree of epoch changes so that it is sorted by length of
 	/// fork (longest fork first).
-#[cfg(feature = "std")]
 	pub fn rebalance(&mut self) {
 		self.inner.rebalance()
 	}
 
 	/// Map the epoch changes from one storing data to a different one.
-#[cfg(feature = "std")]
 	pub fn map<B, F>(self, mut f: F) -> EpochChanges<Hash, Number, B>
 	where
 		B: Epoch<Slot = E::Slot>,
@@ -465,7 +436,6 @@ where
 	/// Prune out finalized epochs, except for the ancestor of the finalized
 	/// block. The given slot should be the slot number at which the finalized
 	/// block was authored.
-#[cfg(feature = "std")]
 	pub fn prune_finalized<D: IsDescendentOfBuilder<Hash>>(
 		&mut self,
 		descendent_of_builder: D,
@@ -493,7 +463,6 @@ where
 	}
 
 	/// Get a reference to an epoch with given identifier.
-#[cfg(feature = "std")]
 	pub fn epoch(&self, id: &EpochIdentifier<Hash, Number>) -> Option<&E> {
 		self.epochs.get(&(id.hash, id.number)).and_then(|v| match v {
 			PersistedEpoch::Genesis(ref epoch_0, _)
@@ -516,7 +485,6 @@ where
 	}
 
 	/// Get a reference to a viable epoch with given descriptor.
-#[cfg(feature = "std")]
 	pub fn viable_epoch<G>(
 		&self,
 		descriptor: &ViableEpochDescriptor<Hash, Number, E>,
@@ -536,7 +504,6 @@ where
 	}
 
 	/// Get a mutable reference to an epoch with given identifier.
-#[cfg(feature = "std")]
 	pub fn epoch_mut(&mut self, id: &EpochIdentifier<Hash, Number>) -> Option<&mut E> {
 		self.epochs.get_mut(&(id.hash, id.number)).and_then(|v| match v {
 			PersistedEpoch::Genesis(ref mut epoch_0, _)
@@ -559,7 +526,6 @@ where
 	}
 
 	/// Get a mutable reference to a viable epoch with given descriptor.
-#[cfg(feature = "std")]
 	pub fn viable_epoch_mut<G>(
 		&mut self,
 		descriptor: &ViableEpochDescriptor<Hash, Number, E>,
@@ -582,7 +548,6 @@ where
 	///
 	/// Note that this function ignores the fact that an genesis epoch might need to be imported.
 	/// Mostly useful for testing.
-#[cfg(feature = "std")]
 	pub fn epoch_data<G>(
 		&self,
 		descriptor: &ViableEpochDescriptor<Hash, Number, E>,
@@ -603,7 +568,6 @@ where
 	///
 	/// Note that this function ignores the fact that an genesis epoch might need to be imported.
 	/// Mostly useful for testing.
-#[cfg(feature = "std")]
 	pub fn epoch_data_for_child_of<D: IsDescendentOfBuilder<Hash>, G>(
 		&self,
 		descendent_of_builder: D,
@@ -630,7 +594,6 @@ where
 	///
 	/// If the returned epoch is an `UnimportedGenesis` epoch, it should be imported into the
 	/// tree.
-#[cfg(feature = "std")]
 	pub fn epoch_descriptor_for_child_of<D: IsDescendentOfBuilder<Hash>>(
 		&self,
 		descendent_of_builder: D,
@@ -704,7 +667,6 @@ where
 	/// This assumes that the given block is prospective (i.e. has not been
 	/// imported yet), but its parent has. This is why the parent hash needs
 	/// to be provided.
-#[cfg(feature = "std")]
 	pub fn import<D: IsDescendentOfBuilder<Hash>>(
 		&mut self,
 		descendent_of_builder: D,
@@ -731,7 +693,6 @@ where
 
 	/// Reset to a specified pair of epochs, as if they were announced at blocks `parent_hash` and
 	/// `hash`.
-#[cfg(feature = "std")]
 	pub fn reset(&mut self, parent_hash: Hash, hash: Hash, number: Number, current: E, next: E) {
 		self.inner = ForkTree::new();
 		self.epochs.clear();
@@ -753,7 +714,6 @@ where
 	/// Revert to a specified block given its `hash` and `number`.
 	/// This removes all the epoch changes information that were announced by
 	/// all the given block descendants.
-#[cfg(feature = "std")]
 	pub fn revert<D: IsDescendentOfBuilder<Hash>>(
 		&mut self,
 		descendent_of_builder: D,
@@ -783,7 +743,6 @@ where
 	}
 
 	/// Return the inner fork tree (mostly useful for testing)
-#[cfg(feature = "std")]
 	pub fn tree(&self) -> &ForkTree<Hash, Number, PersistedEpochHeader<E>> {
 		&self.inner
 	}
@@ -802,35 +761,26 @@ pub type SharedEpochChanges<Block, Epoch> =
 #[cfg(test)]
 #[cfg(feature = "std")]
 mod tests {
-#[cfg(feature = "std")]
 	use super::{Epoch as EpochT, *};
 
 	#[derive(Debug, PartialEq)]
-#[cfg(feature = "std")]
 	pub struct TestError;
 
-#[cfg(feature = "std")]
 	impl std::fmt::Display for TestError {
-#[cfg(feature = "std")]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			write!(f, "TestError")
 		}
 	}
 
-#[cfg(feature = "std")]
 	impl std::error::Error for TestError {}
 
-#[cfg(feature = "std")]
 	impl<'a, F: 'a, H: 'a + PartialEq + std::fmt::Debug> IsDescendentOfBuilder<H> for &'a F
 	where
 		F: Fn(&H, &H) -> Result<bool, TestError>,
 	{
-#[cfg(feature = "std")]
 		type Error = TestError;
-#[cfg(feature = "std")]
 		type IsDescendentOf = Box<dyn Fn(&H, &H) -> Result<bool, TestError> + 'a>;
 
-#[cfg(feature = "std")]
 		fn build_is_descendent_of(&self, current: Option<(H, H)>) -> Self::IsDescendentOf {
 			let f = *self;
 			Box::new(move |base, head| {
@@ -851,43 +801,33 @@ mod tests {
 		}
 	}
 
-#[cfg(feature = "std")]
 	type Hash = [u8; 1];
-#[cfg(feature = "std")]
 	type Slot = u64;
 
 	#[derive(Debug, Clone, Eq, PartialEq)]
-#[cfg(feature = "std")]
 	struct Epoch {
 		start_slot: Slot,
 		duration: Slot,
 	}
 
-#[cfg(feature = "std")]
 	impl EpochT for Epoch {
-#[cfg(feature = "std")]
 		type NextEpochDescriptor = ();
-#[cfg(feature = "std")]
 		type Slot = Slot;
 
-#[cfg(feature = "std")]
 		fn increment(&self, _: ()) -> Self {
 			Epoch { start_slot: self.start_slot + self.duration, duration: self.duration }
 		}
 
-#[cfg(feature = "std")]
 		fn end_slot(&self) -> Slot {
 			self.start_slot + self.duration
 		}
 
-#[cfg(feature = "std")]
 		fn start_slot(&self) -> Slot {
 			self.start_slot
 		}
 	}
 
 	#[test]
-#[cfg(feature = "std")]
 	fn genesis_epoch_is_created_but_not_imported() {
 		// A - B
 		//  \
@@ -929,7 +869,6 @@ mod tests {
 	}
 
 	#[test]
-#[cfg(feature = "std")]
 	fn epoch_changes_between_blocks() {
 		// A - B
 		//  \
@@ -1008,7 +947,6 @@ mod tests {
 	}
 
 	#[test]
-#[cfg(feature = "std")]
 	fn two_block_ones_dont_conflict() {
 		//     X - Y
 		//   /
@@ -1092,7 +1030,6 @@ mod tests {
 	}
 
 	#[test]
-#[cfg(feature = "std")]
 	fn prune_removes_stale_nodes() {
 		//     +---D       +-------F
 		//     |           |
@@ -1176,7 +1113,6 @@ mod tests {
 	}
 
 	#[test]
-#[cfg(feature = "std")]
 	fn near_genesis_prune_works() {
 		// [X]: announces next epoch change (i.e. adds a node in the epoch changes tree)
 		//
