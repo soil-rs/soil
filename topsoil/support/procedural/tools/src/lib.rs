@@ -59,7 +59,7 @@ pub fn generate_crate_access(unique_id: &str, def_crate: &str) -> TokenStream {
 pub fn is_using_frame_crate(path: &syn::Path) -> bool {
 	path.segments
 		.first()
-		.map(|s| s.ident == "topsoil" || s.ident == "frame")
+		.map(|s| s.ident == "topsoil")
 		.unwrap_or(false)
 }
 
@@ -128,7 +128,7 @@ pub fn generate_hidden_includes(unique_id: &str, def_crate: &str) -> TokenStream
 fn get_frame_crate_path(def_crate: &str) -> Option<syn::Path> {
 	// This does not work if the frame crate is renamed.
 	if let Ok(FoundCrate::Name(name)) =
-		crate_name(&"topsoil").or_else(|_| crate_name(&"frame"))
+		crate_name(&"topsoil")
 	{
 		let path = format!("{}::deps::{}", name, def_crate.to_string().replace("-", "_"));
 		Some(syn::parse_str::<syn::Path>(&path).expect("is a valid path; qed"))

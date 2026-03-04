@@ -47,11 +47,11 @@
 //! ### Example Usage
 //!
 //! ```
-//! use topsoil as frame;
+//! use topsoil;
 //!
 //! #[topsoil::pallet]
 //! pub mod pallet {
-//! 	# use topsoil as frame;
+//! 	# use topsoil;
 //! 	use topsoil::prelude::*;
 //! 	// ^^ using the prelude!
 //!
@@ -64,18 +64,18 @@
 //!
 //! #[cfg(test)]
 //! pub mod tests {
-//! 	# use topsoil as frame;
+//! 	# use topsoil;
 //! 	use topsoil::testing_prelude::*;
 //! }
 //!
 //! #[cfg(feature = "runtime-benchmarks")]
 //! pub mod benchmarking {
-//! 	# use topsoil as frame;
+//! 	# use topsoil;
 //! 	use topsoil::benchmarking::prelude::*;
 //! }
 //!
 //! pub mod runtime {
-//! 	# use topsoil as frame;
+//! 	# use topsoil;
 //! 	use topsoil::runtime::prelude::*;
 //! }
 //! ```
@@ -104,7 +104,7 @@
 //!
 //! ## Naming
 //!
-//! Please note that this crate can only be imported as `topsoil` or `frame`. This is due
+//! Please note that this crate can only be imported as `topsoil`. This is due
 //! to compatibility matters with `topsoil-support`.
 //!
 //! A typical pallet's `Cargo.toml` using this crate looks like:
@@ -113,20 +113,20 @@
 //! [dependencies]
 //! codec = { features = ["max-encoded-len"], workspace = true }
 //! scale-info = { features = ["derive"], workspace = true }
-//! frame = { workspace = true, features = ["runtime"] }
+//! topsoil = { workspace = true, features = ["runtime"] }
 //!
 //! [features]
 //! default = ["std"]
 //! std = [
 //! 	"codec/std",
 //! 	"scale-info/std",
-//! 	"frame/std",
+//! 	"topsoil/std",
 //! ]
 //! runtime-benchmarks = [
-//! 	"frame/runtime-benchmarks",
+//! 	"topsoil/runtime-benchmarks",
 //! ]
 //! try-runtime = [
-//! 	"frame/try-runtime",
+//! 	"topsoil/try-runtime",
 //! ]
 //! ```
 //!
