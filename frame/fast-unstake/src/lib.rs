@@ -129,7 +129,7 @@ pub mod weights;
 #[cfg(doc)]
 pub use frame_support::traits::Hooks;
 #[cfg(doc)]
-pub use sp_staking::StakingInterface;
+pub use soil_staking::StakingInterface;
 
 /// The logging target of this pallet.
 pub const LOG_TARGET: &'static str = "runtime::fast-unstake";
@@ -155,7 +155,7 @@ pub mod pallet {
 	};
 	use frame_system::pallet_prelude::*;
 	use soil_runtime::{traits::Zero, DispatchResult};
-	use sp_staking::{EraIndex, StakingInterface};
+	use soil_staking::{EraIndex, StakingInterface};
 	pub use weights::WeightInfo;
 
 	#[cfg(feature = "try-runtime")]

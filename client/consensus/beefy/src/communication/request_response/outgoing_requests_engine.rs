@@ -27,7 +27,7 @@ use sc_network::{
 	NetworkRequest, ProtocolName,
 };
 use sc_network_types::PeerId;
-use sp_consensus_beefy::{AuthorityIdBound, ValidatorSet};
+use soil_consensus_beefy::{AuthorityIdBound, ValidatorSet};
 use soil_runtime::traits::{Block, NumberFor};
 use std::{collections::VecDeque, result::Result, sync::Arc};
 

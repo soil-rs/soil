@@ -29,8 +29,8 @@ use sc_network_types::{
 	multiaddr::{multiaddr, Multiaddr, Protocol},
 	PeerId,
 };
-use sp_api::{ApiError, ApiRef};
-use sp_mixnet::{
+use soil_api::{ApiError, ApiRef};
+use soil_mixnet::{
 	runtime_api::MixnetApi,
 	types::{
 		Mixnode as RuntimeMixnode, MixnodesErr as RuntimeMixnodesErr,

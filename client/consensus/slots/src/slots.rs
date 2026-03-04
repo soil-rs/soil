@@ -21,8 +21,8 @@
 //! This is used instead of `futures_timer::Interval` because it was unreliable.
 
 use super::{InherentDataProviderExt, Slot, LOG_TARGET};
-use sp_consensus::{SelectChain, SyncOracle};
-use sp_inherents::{CreateInherentDataProviders, InherentDataProvider};
+use soil_consensus::{SelectChain, SyncOracle};
+use soil_inherents::{CreateInherentDataProviders, InherentDataProvider};
 use soil_runtime::traits::{Block as BlockT, HashingFor, Header as HeaderT};
 use soil_trie::recorder::Recorder;
 
@@ -61,7 +61,7 @@ pub struct SlotInfo<B: BlockT> {
 	pub chain_head: B::Header,
 	/// Some potential block size limit for the block to be authored at this slot.
 	///
-	/// For more information see [`Proposer::propose`](sp_consensus::Proposer::propose).
+	/// For more information see [`Proposer::propose`](soil_consensus::Proposer::propose).
 	pub block_size_limit: Option<usize>,
 	/// Optional [`Recorder`] to use when build the block.
 	pub storage_proof_recorder: Option<Recorder<HashingFor<B>>>,

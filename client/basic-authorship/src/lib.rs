@@ -22,7 +22,7 @@
 //!
 //! ```
 //! # use sc_basic_authorship::ProposerFactory;
-//! # use sp_consensus::{Environment, Proposer, ProposeArgs};
+//! # use soil_consensus::{Environment, Proposer, ProposeArgs};
 //! # use soil_runtime::generic::BlockId;
 //! # use std::{sync::Arc, time::Duration};
 //! # use substrate_test_runtime_client::{
@@ -74,4 +74,4 @@
 mod basic_authorship;
 
 pub use crate::basic_authorship::{Proposer, ProposerFactory, DEFAULT_BLOCK_SIZE_LIMIT};
-pub use sp_consensus::ProposeArgs;
+pub use soil_consensus::ProposeArgs;

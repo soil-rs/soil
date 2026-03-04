@@ -91,14 +91,14 @@ use pallet_transaction_payment::{FeeDetails, RuntimeDispatchInfo};
 pub use pallet_transaction_payment::{FungibleAdapter, Multiplier, TargetedFeeAdjustment};
 use frame_support::weights::IdentityFee;
 use pallet_tx_pause::RuntimeCallNameOf;
-use sp_authority_discovery::AuthorityId as AuthorityDiscoveryId;
-use sp_consensus_beefy::{
+use soil_authority_discovery::AuthorityId as AuthorityDiscoveryId;
+use soil_consensus_beefy::{
 	ecdsa_crypto::{AuthorityId as BeefyId, Signature as BeefySignature},
 	mmr::MmrLeafVersion,
 };
-use sp_consensus_grandpa::AuthorityId as GrandpaId;
+use soil_consensus_grandpa::AuthorityId as GrandpaId;
 use soil_core::{crypto::KeyTypeId, OpaqueMetadata};
-use sp_inherents::{CheckInherentsResult, InherentData};
+use soil_inherents::{CheckInherentsResult, InherentData};
 use soil_runtime::{
 	curve::PiecewiseLinear,
 	generic, impl_opaque_keys, str_array as s,
@@ -112,8 +112,8 @@ use soil_runtime::{
 };
 use soil_std::{borrow::Cow, prelude::*};
 #[cfg(any(feature = "std", test))]
-use sp_version::NativeVersion;
-use sp_version::RuntimeVersion;
+use soil_version::NativeVersion;
+use soil_version::RuntimeVersion;
 use static_assertions::const_assert;
 
 #[cfg(any(feature = "std", test))]
@@ -167,7 +167,7 @@ pub fn wasm_binary_unwrap() -> &'static [u8] {
 }
 
 /// Runtime version.
-#[sp_version::runtime_version]
+#[soil_version::runtime_version]
 pub const VERSION: RuntimeVersion = RuntimeVersion {
 	spec_name: alloc::borrow::Cow::Borrowed("node"),
 	impl_name: alloc::borrow::Cow::Borrowed("substrate-node"),
@@ -184,10 +184,10 @@ pub const VERSION: RuntimeVersion = RuntimeVersion {
 };
 
 /// The BABE epoch configuration at genesis.
-pub const BABE_GENESIS_EPOCH_CONFIG: sp_consensus_babe::BabeEpochConfiguration =
-	sp_consensus_babe::BabeEpochConfiguration {
+pub const BABE_GENESIS_EPOCH_CONFIG: soil_consensus_babe::BabeEpochConfiguration =
+	soil_consensus_babe::BabeEpochConfiguration {
 		c: PRIMARY_PROBABILITY,
-		allowed_slots: sp_consensus_babe::AllowedSlots::PrimaryAndSecondaryPlainSlots,
+		allowed_slots: soil_consensus_babe::AllowedSlots::PrimaryAndSecondaryPlainSlots,
 	};
 
 /// Native version.
@@ -559,7 +559,7 @@ impl pallet_babe::Config for Runtime {
 	type WeightInfo = ();
 	type MaxAuthorities = MaxAuthorities;
 	type MaxNominators = MaxNominators;
-	type KeyOwnerProof = sp_session::MembershipProof;
+	type KeyOwnerProof = soil_session::MembershipProof;
 	type EquivocationReportSystem =
 		pallet_babe::EquivocationReportSystem<Self, Offences, Historical, ReportLongevity>;
 }
@@ -710,9 +710,9 @@ pallet_staking_reward_curve::build! {
 }
 
 parameter_types! {
-	pub const SessionsPerEra: sp_staking::SessionIndex = 6;
-	pub const BondingDuration: sp_staking::EraIndex = 24 * 28;
-	pub const SlashDeferDuration: sp_staking::EraIndex = 24 * 7; // 1/4 the bonding duration.
+	pub const SessionsPerEra: soil_staking::SessionIndex = 6;
+	pub const BondingDuration: soil_staking::EraIndex = 24 * 28;
+	pub const SlashDeferDuration: soil_staking::EraIndex = 24 * 7; // 1/4 the bonding duration.
 	pub const RewardCurve: &'static PiecewiseLinear<'static> = &REWARD_CURVE;
 	pub const MaxNominators: u32 = 64;
 	pub const MaxControllersInDeprecationBatch: u32 = 5900;
@@ -734,7 +734,7 @@ impl pallet_staking::Config for Runtime {
 	type Currency = Balances;
 	type CurrencyBalance = Balance;
 	type UnixTime = Timestamp;
-	type CurrencyToVote = sp_staking::currency_to_vote::U128CurrencyToVote;
+	type CurrencyToVote = soil_staking::currency_to_vote::U128CurrencyToVote;
 	type RewardRemainder = ResolveTo<TreasuryAccount, Balances>;
 	type RuntimeEvent = RuntimeEvent;
 	type RuntimeHoldReason = RuntimeHoldReason;
@@ -1238,7 +1238,7 @@ impl pallet_elections_phragmen::Config for Runtime {
 	// NOTE: this implies that council's genesis members cannot be set directly and must come from
 	// this module.
 	type InitializeMembers = Council;
-	type CurrencyToVote = sp_staking::currency_to_vote::U128CurrencyToVote;
+	type CurrencyToVote = soil_staking::currency_to_vote::U128CurrencyToVote;
 	type CandidacyBond = CandidacyBond;
 	type VotingBondBase = VotingBondBase;
 	type VotingBondFactor = VotingBondFactor;
@@ -1628,7 +1628,7 @@ impl pallet_grandpa::Config for Runtime {
 	type MaxAuthorities = MaxAuthorities;
 	type MaxNominators = MaxNominators;
 	type MaxSetIdSessionEntries = MaxSetIdSessionEntries;
-	type KeyOwnerProof = sp_session::MembershipProof;
+	type KeyOwnerProof = soil_session::MembershipProof;
 	type EquivocationReportSystem =
 		pallet_grandpa::EquivocationReportSystem<Self, Offences, Historical, ReportLongevity>;
 }
@@ -2857,7 +2857,7 @@ impl pallet_beefy::Config for Runtime {
 	type OnNewValidatorSet = MmrLeaf;
 	type AncestryHelper = MmrLeaf;
 	type WeightInfo = ();
-	type KeyOwnerProof = sp_session::MembershipProof;
+	type KeyOwnerProof = soil_session::MembershipProof;
 	type EquivocationReportSystem =
 		pallet_beefy::EquivocationReportSystem<Self, Offences, Historical, ReportLongevity>;
 }
@@ -3062,8 +3062,8 @@ mod benches {
 	);
 }
 
-sp_api::impl_runtime_apis! {
-	impl sp_api::Core<Block> for Runtime {
+soil_api::impl_runtime_apis! {
+	impl soil_api::Core<Block> for Runtime {
 		fn version() -> RuntimeVersion {
 			VERSION
 		}
@@ -3077,7 +3077,7 @@ sp_api::impl_runtime_apis! {
 		}
 	}
 
-	impl sp_api::Metadata<Block> for Runtime {
+	impl soil_api::Metadata<Block> for Runtime {
 		fn metadata() -> OpaqueMetadata {
 			OpaqueMetadata::new(Runtime::metadata().into())
 		}
@@ -3097,7 +3097,7 @@ sp_api::impl_runtime_apis! {
 		}
 	}
 
-	impl sp_block_builder::BlockBuilder<Block> for Runtime {
+	impl soil_block_builder::BlockBuilder<Block> for Runtime {
 		fn apply_extrinsic(extrinsic: <Block as BlockT>::Extrinsic) -> ApplyExtrinsicResult {
 			Executive::apply_extrinsic(extrinsic)
 		}
@@ -3115,7 +3115,7 @@ sp_api::impl_runtime_apis! {
 		}
 	}
 
-	impl sp_transaction_pool::runtime_api::TaggedTransactionQueue<Block> for Runtime {
+	impl soil_transaction_pool::runtime_api::TaggedTransactionQueue<Block> for Runtime {
 		fn validate_transaction(
 			source: TransactionSource,
 			tx: <Block as BlockT>::Extrinsic,
@@ -3125,27 +3125,27 @@ sp_api::impl_runtime_apis! {
 		}
 	}
 
-	impl sp_offchain::OffchainWorkerApi<Block> for Runtime {
+	impl soil_offchain::OffchainWorkerApi<Block> for Runtime {
 		fn offchain_worker(header: &<Block as BlockT>::Header) {
 			Executive::offchain_worker(header)
 		}
 	}
 
-	impl sp_consensus_grandpa::GrandpaApi<Block> for Runtime {
-		fn grandpa_authorities() -> sp_consensus_grandpa::AuthorityList {
+	impl soil_consensus_grandpa::GrandpaApi<Block> for Runtime {
+		fn grandpa_authorities() -> soil_consensus_grandpa::AuthorityList {
 			Grandpa::grandpa_authorities()
 		}
 
-		fn current_set_id() -> sp_consensus_grandpa::SetId {
+		fn current_set_id() -> soil_consensus_grandpa::SetId {
 			pallet_grandpa::CurrentSetId::<Runtime>::get()
 		}
 
 		fn submit_report_equivocation_unsigned_extrinsic(
-			equivocation_proof: sp_consensus_grandpa::EquivocationProof<
+			equivocation_proof: soil_consensus_grandpa::EquivocationProof<
 				<Block as BlockT>::Hash,
 				NumberFor<Block>,
 			>,
-			key_owner_proof: sp_consensus_grandpa::OpaqueKeyOwnershipProof,
+			key_owner_proof: soil_consensus_grandpa::OpaqueKeyOwnershipProof,
 		) -> Option<()> {
 			let key_owner_proof = key_owner_proof.decode()?;
 
@@ -3156,14 +3156,14 @@ sp_api::impl_runtime_apis! {
 		}
 
 		fn generate_key_ownership_proof(
-			_set_id: sp_consensus_grandpa::SetId,
+			_set_id: soil_consensus_grandpa::SetId,
 			authority_id: GrandpaId,
-		) -> Option<sp_consensus_grandpa::OpaqueKeyOwnershipProof> {
+		) -> Option<soil_consensus_grandpa::OpaqueKeyOwnershipProof> {
 			use codec::Encode;
 
-			Historical::prove((sp_consensus_grandpa::KEY_TYPE, authority_id))
+			Historical::prove((soil_consensus_grandpa::KEY_TYPE, authority_id))
 				.map(|p| p.encode())
-				.map(sp_consensus_grandpa::OpaqueKeyOwnershipProof::new)
+				.map(soil_consensus_grandpa::OpaqueKeyOwnershipProof::new)
 		}
 	}
 
@@ -3214,19 +3214,19 @@ sp_api::impl_runtime_apis! {
 			Staking::api_nominations_quota(balance)
 		}
 
-		fn eras_stakers_page_count(era: sp_staking::EraIndex, account: AccountId) -> sp_staking::Page {
+		fn eras_stakers_page_count(era: soil_staking::EraIndex, account: AccountId) -> soil_staking::Page {
 			Staking::api_eras_stakers_page_count(era, account)
 		}
 
-		fn pending_rewards(era: sp_staking::EraIndex, account: AccountId) -> bool {
+		fn pending_rewards(era: soil_staking::EraIndex, account: AccountId) -> bool {
 			Staking::api_pending_rewards(era, account)
 		}
 	}
 
-	impl sp_consensus_babe::BabeApi<Block> for Runtime {
-		fn configuration() -> sp_consensus_babe::BabeConfiguration {
+	impl soil_consensus_babe::BabeApi<Block> for Runtime {
+		fn configuration() -> soil_consensus_babe::BabeConfiguration {
 			let epoch_config = Babe::epoch_config().unwrap_or(BABE_GENESIS_EPOCH_CONFIG);
-			sp_consensus_babe::BabeConfiguration {
+			soil_consensus_babe::BabeConfiguration {
 				slot_duration: Babe::slot_duration(),
 				epoch_length: EpochDuration::get(),
 				c: epoch_config.c,
@@ -3236,32 +3236,32 @@ sp_api::impl_runtime_apis! {
 			}
 		}
 
-		fn current_epoch_start() -> sp_consensus_babe::Slot {
+		fn current_epoch_start() -> soil_consensus_babe::Slot {
 			Babe::current_epoch_start()
 		}
 
-		fn current_epoch() -> sp_consensus_babe::Epoch {
+		fn current_epoch() -> soil_consensus_babe::Epoch {
 			Babe::current_epoch()
 		}
 
-		fn next_epoch() -> sp_consensus_babe::Epoch {
+		fn next_epoch() -> soil_consensus_babe::Epoch {
 			Babe::next_epoch()
 		}
 
 		fn generate_key_ownership_proof(
-			_slot: sp_consensus_babe::Slot,
-			authority_id: sp_consensus_babe::AuthorityId,
-		) -> Option<sp_consensus_babe::OpaqueKeyOwnershipProof> {
+			_slot: soil_consensus_babe::Slot,
+			authority_id: soil_consensus_babe::AuthorityId,
+		) -> Option<soil_consensus_babe::OpaqueKeyOwnershipProof> {
 			use codec::Encode;
 
-			Historical::prove((sp_consensus_babe::KEY_TYPE, authority_id))
+			Historical::prove((soil_consensus_babe::KEY_TYPE, authority_id))
 				.map(|p| p.encode())
-				.map(sp_consensus_babe::OpaqueKeyOwnershipProof::new)
+				.map(soil_consensus_babe::OpaqueKeyOwnershipProof::new)
 		}
 
 		fn submit_report_equivocation_unsigned_extrinsic(
-			equivocation_proof: sp_consensus_babe::EquivocationProof<<Block as BlockT>::Header>,
-			key_owner_proof: sp_consensus_babe::OpaqueKeyOwnershipProof,
+			equivocation_proof: soil_consensus_babe::EquivocationProof<<Block as BlockT>::Header>,
+			key_owner_proof: soil_consensus_babe::OpaqueKeyOwnershipProof,
 		) -> Option<()> {
 			let key_owner_proof = key_owner_proof.decode()?;
 
@@ -3272,7 +3272,7 @@ sp_api::impl_runtime_apis! {
 		}
 	}
 
-	impl sp_authority_discovery::AuthorityDiscoveryApi<Block> for Runtime {
+	impl soil_authority_discovery::AuthorityDiscoveryApi<Block> for Runtime {
 		fn authorities() -> Vec<AuthorityDiscoveryId> {
 			AuthorityDiscovery::authorities()
 		}
@@ -3409,22 +3409,22 @@ sp_api::impl_runtime_apis! {
 	}
 
 	#[api_version(6)]
-	impl sp_consensus_beefy::BeefyApi<Block, BeefyId> for Runtime {
+	impl soil_consensus_beefy::BeefyApi<Block, BeefyId> for Runtime {
 		fn beefy_genesis() -> Option<BlockNumber> {
 			pallet_beefy::GenesisBlock::<Runtime>::get()
 		}
 
-		fn validator_set() -> Option<sp_consensus_beefy::ValidatorSet<BeefyId>> {
+		fn validator_set() -> Option<soil_consensus_beefy::ValidatorSet<BeefyId>> {
 			Beefy::validator_set()
 		}
 
 		fn submit_report_double_voting_unsigned_extrinsic(
-			equivocation_proof: sp_consensus_beefy::DoubleVotingProof<
+			equivocation_proof: soil_consensus_beefy::DoubleVotingProof<
 				BlockNumber,
 				BeefyId,
 				BeefySignature,
 			>,
-			key_owner_proof: sp_consensus_beefy::OpaqueKeyOwnershipProof,
+			key_owner_proof: soil_consensus_beefy::OpaqueKeyOwnershipProof,
 		) -> Option<()> {
 			let key_owner_proof = key_owner_proof.decode()?;
 
@@ -3436,12 +3436,12 @@ sp_api::impl_runtime_apis! {
 
 		fn submit_report_fork_voting_unsigned_extrinsic(
 			equivocation_proof:
-				sp_consensus_beefy::ForkVotingProof<
+				soil_consensus_beefy::ForkVotingProof<
 					<Block as BlockT>::Header,
 					BeefyId,
 					soil_runtime::OpaqueValue
 				>,
-			key_owner_proof: sp_consensus_beefy::OpaqueKeyOwnershipProof,
+			key_owner_proof: soil_consensus_beefy::OpaqueKeyOwnershipProof,
 		) -> Option<()> {
 			Beefy::submit_unsigned_fork_voting_report(
 				equivocation_proof.try_into()?,
@@ -3450,8 +3450,8 @@ sp_api::impl_runtime_apis! {
 		}
 
 		fn submit_report_future_block_voting_unsigned_extrinsic(
-			equivocation_proof: sp_consensus_beefy::FutureBlockVotingProof<BlockNumber, BeefyId>,
-			key_owner_proof: sp_consensus_beefy::OpaqueKeyOwnershipProof,
+			equivocation_proof: soil_consensus_beefy::FutureBlockVotingProof<BlockNumber, BeefyId>,
+			key_owner_proof: soil_consensus_beefy::OpaqueKeyOwnershipProof,
 		) -> Option<()> {
 			Beefy::submit_unsigned_future_block_voting_report(
 				equivocation_proof,
@@ -3460,12 +3460,12 @@ sp_api::impl_runtime_apis! {
 		}
 
 		fn generate_key_ownership_proof(
-			_set_id: sp_consensus_beefy::ValidatorSetId,
+			_set_id: soil_consensus_beefy::ValidatorSetId,
 			authority_id: BeefyId,
-		) -> Option<sp_consensus_beefy::OpaqueKeyOwnershipProof> {
-			Historical::prove((sp_consensus_beefy::KEY_TYPE, authority_id))
+		) -> Option<soil_consensus_beefy::OpaqueKeyOwnershipProof> {
+			Historical::prove((soil_consensus_beefy::KEY_TYPE, authority_id))
 				.map(|p| p.encode())
-				.map(sp_consensus_beefy::OpaqueKeyOwnershipProof::new)
+				.map(soil_consensus_beefy::OpaqueKeyOwnershipProof::new)
 		}
 	}
 
@@ -3527,26 +3527,26 @@ sp_api::impl_runtime_apis! {
 		}
 	}
 
-	impl sp_mixnet::runtime_api::MixnetApi<Block> for Runtime {
-		fn session_status() -> sp_mixnet::types::SessionStatus {
+	impl soil_mixnet::runtime_api::MixnetApi<Block> for Runtime {
+		fn session_status() -> soil_mixnet::types::SessionStatus {
 			Mixnet::session_status()
 		}
 
-		fn prev_mixnodes() -> Result<Vec<sp_mixnet::types::Mixnode>, sp_mixnet::types::MixnodesErr> {
+		fn prev_mixnodes() -> Result<Vec<soil_mixnet::types::Mixnode>, soil_mixnet::types::MixnodesErr> {
 			Mixnet::prev_mixnodes()
 		}
 
-		fn current_mixnodes() -> Result<Vec<sp_mixnet::types::Mixnode>, sp_mixnet::types::MixnodesErr> {
+		fn current_mixnodes() -> Result<Vec<soil_mixnet::types::Mixnode>, soil_mixnet::types::MixnodesErr> {
 			Mixnet::current_mixnodes()
 		}
 
-		fn maybe_register(session_index: sp_mixnet::types::SessionIndex, mixnode: sp_mixnet::types::Mixnode) -> bool {
+		fn maybe_register(session_index: soil_mixnet::types::SessionIndex, mixnode: soil_mixnet::types::Mixnode) -> bool {
 			Mixnet::maybe_register(session_index, mixnode)
 		}
 	}
 
-	impl sp_session::SessionKeys<Block> for Runtime {
-		fn generate_session_keys(owner: Vec<u8>, seed: Option<Vec<u8>>) -> sp_session::OpaqueGeneratedSessionKeys {
+	impl soil_session::SessionKeys<Block> for Runtime {
+		fn generate_session_keys(owner: Vec<u8>, seed: Option<Vec<u8>>) -> soil_session::OpaqueGeneratedSessionKeys {
 			SessionKeys::generate(&owner, seed).into()
 		}
 
@@ -3563,7 +3563,7 @@ sp_api::impl_runtime_apis! {
 		}
 	}
 
-	impl sp_transaction_storage_proof::runtime_api::TransactionStorageApi<Block> for Runtime {
+	impl soil_transaction_storage_proof::runtime_api::TransactionStorageApi<Block> for Runtime {
 		fn retention_period() -> NumberFor<Block> {
 			TransactionStorage::retention_period()
 		}
@@ -3666,16 +3666,16 @@ sp_api::impl_runtime_apis! {
 		}
 	}
 
-	impl sp_genesis_builder::GenesisBuilder<Block> for Runtime {
-		fn build_state(config: Vec<u8>) -> sp_genesis_builder::Result {
+	impl soil_genesis_builder::GenesisBuilder<Block> for Runtime {
+		fn build_state(config: Vec<u8>) -> soil_genesis_builder::Result {
 			build_state::<RuntimeGenesisConfig>(config)
 		}
 
-		fn get_preset(id: &Option<sp_genesis_builder::PresetId>) -> Option<Vec<u8>> {
+		fn get_preset(id: &Option<soil_genesis_builder::PresetId>) -> Option<Vec<u8>> {
 			get_preset::<RuntimeGenesisConfig>(id, &genesis_config_presets::get_preset)
 		}
 
-		fn preset_names() -> Vec<sp_genesis_builder::PresetId> {
+		fn preset_names() -> Vec<soil_genesis_builder::PresetId> {
 			genesis_config_presets::preset_names()
 		}
 	}

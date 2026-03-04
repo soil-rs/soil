@@ -44,12 +44,12 @@ sc-telemetry = { workspace = true, default-features = true }
 sc-transaction-pool-api = { workspace = true, default-features = true }
 sc-utils = { workspace = true, default-features = true }
 serde_json = { workspace = true, default-features = true }
-sp-api = { workspace = true, default-features = true }
+soil-api = { workspace = true, default-features = true }
 soil-application-crypto = { workspace = true, default-features = true }
 soil-arithmetic = { workspace = true, default-features = true }
-sp-blockchain = { workspace = true, default-features = true }
-sp-consensus = { workspace = true, default-features = true }
-sp-consensus-grandpa = { workspace = true, default-features = true }
+soil-blockchain = { workspace = true, default-features = true }
+soil-consensus = { workspace = true, default-features = true }
+soil-consensus-grandpa = { workspace = true, default-features = true }
 soil-core = { workspace = true, default-features = true }
 soil-crypto-hashing = { workspace = true, default-features = true }
 soil-keystore = { workspace = true, default-features = true }
@@ -60,7 +60,7 @@ thiserror = { workspace = true }
 assert_matches = { workspace = true }
 finality-grandpa = { features = ["derive-codec", "test-helpers"], workspace = true, default-features = true }
 sc-network-test = { workspace = true }
-sp-keyring = { workspace = true, default-features = true }
+soil-keyring = { workspace = true, default-features = true }
 soil-tracing = { workspace = true, default-features = true }
 substrate-test-runtime-client = { workspace = true }
 tokio = { workspace = true, default-features = true }

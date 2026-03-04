@@ -28,7 +28,7 @@ serde = { features = ["alloc", "derive"], workspace = true }
 soil-application-crypto = { features = ["serde"], workspace = true }
 soil-io = { workspace = true }
 soil-runtime = { features = ["serde"], workspace = true }
-sp-staking = { features = ["serde"], workspace = true }
+soil-staking = { features = ["serde"], workspace = true }
 
 # Optional imports for benchmarking
 frame-benchmarking = { optional = true, workspace = true }
@@ -44,7 +44,7 @@ pallet-staking-reward-curve = { workspace = true, default-features = true }
 pallet-timestamp = { workspace = true, default-features = true }
 rand_chacha = { workspace = true, default-features = true }
 soil-core = { workspace = true, default-features = true }
-sp-npos-elections = { workspace = true, default-features = true }
+soil-npos-elections = { workspace = true, default-features = true }
 soil-tracing = { workspace = true, default-features = true }
 substrate-test-utils = { workspace = true }
 
@@ -66,9 +66,9 @@ std = [
 	"serde/std",
 	"soil-application-crypto/std",
 	"soil-io/std",
-	"sp-npos-elections/std",
+	"soil-npos-elections/std",
 	"soil-runtime/std",
-	"sp-staking/std",
+	"soil-staking/std",
 	"soil-tracing/std",
 ]
 runtime-benchmarks = [
@@ -82,7 +82,7 @@ runtime-benchmarks = [
 	"pallet-timestamp/runtime-benchmarks",
 	"rand_chacha",
 	"soil-runtime/runtime-benchmarks",
-	"sp-staking/runtime-benchmarks",
+	"soil-staking/runtime-benchmarks",
 ]
 try-runtime = [
 	"frame-election-provider-support/try-runtime",

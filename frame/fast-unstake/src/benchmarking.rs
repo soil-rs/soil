@@ -28,7 +28,7 @@ use frame_support::{
 };
 use frame_system::RawOrigin;
 use soil_runtime::traits::Zero;
-use sp_staking::{EraIndex, StakingInterface};
+use soil_staking::{EraIndex, StakingInterface};
 
 const USER_SEED: u32 = 0;
 

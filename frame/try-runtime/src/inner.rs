@@ -20,7 +20,7 @@
 pub use frame_support::traits::{TryStateSelect, UpgradeCheckSelect};
 use frame_support::weights::Weight;
 
-sp_api::decl_runtime_apis! {
+soil_api::decl_runtime_apis! {
 	/// Runtime api for testing the execution of a runtime upgrade.
 	pub trait TryRuntime {
 		/// dry-run runtime upgrades, returning the total weight consumed.

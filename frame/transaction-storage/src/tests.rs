@@ -22,7 +22,7 @@ use crate::mock::*;
 use frame_support::{assert_noop, assert_ok};
 use frame_system::RawOrigin;
 use soil_runtime::{DispatchError, TokenError::FundsUnavailable};
-use sp_transaction_storage_proof::{registration::build_proof, CHUNK_SIZE};
+use soil_transaction_storage_proof::{registration::build_proof, CHUNK_SIZE};
 
 const MAX_DATA_SIZE: u32 = DEFAULT_MAX_TRANSACTION_SIZE;
 

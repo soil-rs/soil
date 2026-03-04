@@ -26,8 +26,8 @@ use soil_core::{
 	storage::Storage,
 	traits::{CallContext, CodeExecutor, Externalities, FetchRuntimeCode, RuntimeCode},
 };
-use sp_genesis_builder::{PresetId, Result as BuildResult};
-pub use sp_genesis_builder::{DEV_RUNTIME_PRESET, LOCAL_TESTNET_RUNTIME_PRESET};
+use soil_genesis_builder::{PresetId, Result as BuildResult};
+pub use soil_genesis_builder::{DEV_RUNTIME_PRESET, LOCAL_TESTNET_RUNTIME_PRESET};
 use soil_state_machine::BasicExternalities;
 use std::borrow::Cow;
 
@@ -85,7 +85,7 @@ where
 	/// Returns a json representation of the default `RuntimeGenesisConfig` provided by the
 	/// `runtime`.
 	///
-	/// Calls [`GenesisBuilder::get_preset`](sp_genesis_builder::GenesisBuilder::get_preset) in the
+	/// Calls [`GenesisBuilder::get_preset`](soil_genesis_builder::GenesisBuilder::get_preset) in the
 	/// `runtime` with `None` argument.
 	pub fn get_default_config(&self) -> core::result::Result<Value, String> {
 		self.get_named_preset(None)
@@ -93,7 +93,7 @@ where
 
 	/// Returns a JSON blob representation of the builtin `GenesisConfig` identified by `id`.
 	///
-	/// Calls [`GenesisBuilder::get_preset`](sp_genesis_builder::GenesisBuilder::get_preset)
+	/// Calls [`GenesisBuilder::get_preset`](soil_genesis_builder::GenesisBuilder::get_preset)
 	/// provided by the `runtime`.
 	pub fn get_named_preset(&self, id: Option<&String>) -> core::result::Result<Value, String> {
 		let mut t = BasicExternalities::new_empty();
@@ -111,7 +111,7 @@ where
 		}
 	}
 
-	/// Calls [`sp_genesis_builder::GenesisBuilder::build_state`] provided by runtime.
+	/// Calls [`soil_genesis_builder::GenesisBuilder::build_state`] provided by runtime.
 	pub fn get_storage_for_config(&self, config: Value) -> core::result::Result<Storage, String> {
 		let mut ext = BasicExternalities::new_empty();
 
@@ -177,8 +177,8 @@ where
 mod tests {
 	use super::*;
 	use serde_json::{from_str, json};
-	pub use sp_consensus_babe::{AllowedSlots, BabeEpochConfiguration};
-	pub use sp_genesis_builder::PresetId;
+	pub use soil_consensus_babe::{AllowedSlots, BabeEpochConfiguration};
+	pub use soil_genesis_builder::PresetId;
 
 	#[test]
 	fn list_presets_works() {

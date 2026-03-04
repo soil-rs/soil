@@ -19,7 +19,7 @@
 //! Helper for managing the set of available leaves in the chain for DB implementations.
 
 use codec::{Decode, Encode};
-use sp_blockchain::{Error, Result};
+use soil_blockchain::{Error, Result};
 use soil_database::{Database, Transaction};
 use soil_runtime::traits::AtLeast32Bit;
 use std::{cmp::Reverse, collections::BTreeMap};

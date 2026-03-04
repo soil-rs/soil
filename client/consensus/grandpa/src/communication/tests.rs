@@ -39,8 +39,8 @@ use sc_network_sync::{SyncEvent as SyncStreamEvent, SyncEventStream};
 use sc_network_test::{Block, Hash};
 use sc_network_types::PeerId;
 use sc_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
-use sp_consensus_grandpa::AuthorityList;
-use sp_keyring::Ed25519Keyring;
+use soil_consensus_grandpa::AuthorityList;
+use soil_keyring::Ed25519Keyring;
 use soil_runtime::traits::NumberFor;
 use std::{collections::HashSet, pin::Pin, sync::Arc, task::Poll};
 
@@ -307,7 +307,7 @@ fn config() -> crate::Config {
 fn voter_set_state() -> SharedVoterSetState<Block> {
 	use crate::{authorities::AuthoritySet, environment::VoterSetState};
 	use finality_grandpa::round::State as RoundState;
-	use sp_consensus_grandpa::AuthorityId;
+	use soil_consensus_grandpa::AuthorityId;
 	use soil_core::{crypto::ByteArray, H256};
 
 	let state = RoundState::genesis((H256::zero(), 0));
@@ -378,7 +378,7 @@ fn good_commit_leads_to_relay() {
 		let target_number = 500;
 
 		let precommit = finality_grandpa::Precommit { target_hash, target_number };
-		let payload = sp_consensus_grandpa::localized_payload(
+		let payload = soil_consensus_grandpa::localized_payload(
 			round,
 			set_id,
 			&finality_grandpa::Message::Precommit(precommit.clone()),
@@ -390,7 +390,7 @@ fn good_commit_leads_to_relay() {
 		for (i, key) in private.iter().enumerate() {
 			precommits.push(precommit.clone());
 
-			let signature = sp_consensus_grandpa::AuthoritySignature::from(key.sign(&payload[..]));
+			let signature = soil_consensus_grandpa::AuthoritySignature::from(key.sign(&payload[..]));
 			auth_data.push((signature, public[i].0.clone()))
 		}
 
@@ -529,7 +529,7 @@ fn bad_commit_leads_to_report() {
 		let target_number = 500;
 
 		let precommit = finality_grandpa::Precommit { target_hash, target_number };
-		let payload = sp_consensus_grandpa::localized_payload(
+		let payload = soil_consensus_grandpa::localized_payload(
 			round,
 			set_id,
 			&finality_grandpa::Message::Precommit(precommit.clone()),
@@ -541,7 +541,7 @@ fn bad_commit_leads_to_report() {
 		for (i, key) in private.iter().enumerate() {
 			precommits.push(precommit.clone());
 
-			let signature = sp_consensus_grandpa::AuthoritySignature::from(key.sign(&payload[..]));
+			let signature = soil_consensus_grandpa::AuthoritySignature::from(key.sign(&payload[..]));
 			auth_data.push((signature, public[i].0.clone()))
 		}
 

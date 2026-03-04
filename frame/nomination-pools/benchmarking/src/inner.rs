@@ -41,7 +41,7 @@ use soil_runtime::{
 	traits::{Bounded, StaticLookup, Zero},
 	Perbill,
 };
-use sp_staking::{EraIndex, StakingUnchecked};
+use soil_staking::{EraIndex, StakingUnchecked};
 // `frame_benchmarking::benchmarks!` macro needs this
 use pallet_nomination_pools::Call;
 

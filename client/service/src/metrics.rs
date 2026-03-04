@@ -24,7 +24,7 @@ use sc_network_sync::{SyncStatus, SyncStatusProvider};
 use sc_telemetry::{telemetry, TelemetryHandle, SUBSTRATE_INFO};
 use sc_transaction_pool_api::{MaintainedTransactionPool, PoolStatus};
 use sc_utils::metrics::register_globals;
-use sp_api::ProvideRuntimeApi;
+use soil_api::ProvideRuntimeApi;
 use soil_runtime::traits::{Block, NumberFor, SaturatedConversion, UniqueSaturatedInto};
 use std::{
 	sync::Arc,

@@ -38,8 +38,8 @@ use jsonrpsee::{
 use sc_block_builder::BlockBuilderBuilder;
 use sc_client_api::ChildInfo;
 use sc_rpc::testing::TokioTestExecutor;
-use sp_blockchain::HeaderBackend;
-use sp_consensus::BlockOrigin;
+use soil_blockchain::HeaderBackend;
+use soil_consensus::BlockOrigin;
 use soil_core::{Blake2Hasher, Hasher};
 use soil_runtime::{
 	traits::{Block as BlockT, Header as HeaderT},

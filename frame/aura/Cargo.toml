@@ -23,7 +23,7 @@ log = { workspace = true }
 pallet-timestamp = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 soil-application-crypto = { workspace = true }
-sp-consensus-aura = { workspace = true }
+soil-consensus-aura = { workspace = true }
 soil-runtime = { workspace = true }
 
 [dev-dependencies]
@@ -40,7 +40,7 @@ std = [
 	"pallet-timestamp/std",
 	"scale-info/std",
 	"soil-application-crypto/std",
-	"sp-consensus-aura/std",
+	"soil-consensus-aura/std",
 	"soil-core/std",
 	"soil-io/std",
 	"soil-runtime/std",

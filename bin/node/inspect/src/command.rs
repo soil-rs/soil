@@ -27,7 +27,7 @@ use sc_service::Configuration;
 use soil_runtime::traits::Block;
 
 type HostFunctions =
-	(soil_io::SubstrateHostFunctions, sp_statement_store::runtime_api::HostFunctions);
+	(soil_io::SubstrateHostFunctions, soil_statement_store::runtime_api::HostFunctions);
 
 impl InspectCmd {
 	/// Run the inspect command, passing the inspector.

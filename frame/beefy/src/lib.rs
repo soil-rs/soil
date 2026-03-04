@@ -41,7 +41,7 @@ use frame_system::{
 	ensure_none, ensure_signed,
 	pallet_prelude::{BlockNumberFor, HeaderFor, OriginFor},
 };
-use sp_consensus_beefy::{
+use soil_consensus_beefy::{
 	AncestryHelper, AncestryHelperWeightInfo, AuthorityIndex, BeefyAuthorityId, ConsensusLog,
 	DoubleVotingProof, ForkVotingProof, FutureBlockVotingProof, OnNewValidatorSet, ValidatorSet,
 	BEEFY_ENGINE_ID, GENESIS_AUTHORITY_SET_ID,
@@ -51,8 +51,8 @@ use soil_runtime::{
 	traits::{IsMember, Member, One},
 	RuntimeAppPublic,
 };
-use sp_session::{GetSessionNumber, GetValidatorCount};
-use sp_staking::{offence::OffenceReportSystem, SessionIndex};
+use soil_session::{GetSessionNumber, GetValidatorCount};
+use soil_staking::{offence::OffenceReportSystem, SessionIndex};
 
 use crate::equivocation::EquivocationEvidenceFor;
 pub use crate::equivocation::{EquivocationOffence, EquivocationReportSystem, TimeSlot};
@@ -130,7 +130,7 @@ pub mod pallet {
 	/// The current validator set id
 	#[pallet::storage]
 	pub type ValidatorSetId<T: Config> =
-		StorageValue<_, sp_consensus_beefy::ValidatorSetId, ValueQuery>;
+		StorageValue<_, soil_consensus_beefy::ValidatorSetId, ValueQuery>;
 
 	/// Authorities set scheduled to be used with the next session
 	#[pallet::storage]
@@ -149,7 +149,7 @@ pub mod pallet {
 	/// TWOX-NOTE: `ValidatorSetId` is not under user control.
 	#[pallet::storage]
 	pub type SetIdSession<T: Config> =
-		StorageMap<_, Twox64Concat, sp_consensus_beefy::ValidatorSetId, SessionIndex>;
+		StorageMap<_, Twox64Concat, soil_consensus_beefy::ValidatorSetId, SessionIndex>;
 
 	/// Block number where BEEFY consensus is enabled/started.
 	/// By changing this (through privileged `set_new_genesis()`), BEEFY consensus is effectively
@@ -540,7 +540,7 @@ impl<T: Config> Pallet<T> {
 	/// Return the current active BEEFY validator set.
 	pub fn validator_set() -> Option<ValidatorSet<T::BeefyId>> {
 		let validators: BoundedVec<T::BeefyId, T::MaxAuthorities> = Authorities::<T>::get();
-		let id: sp_consensus_beefy::ValidatorSetId = ValidatorSetId::<T>::get();
+		let id: soil_consensus_beefy::ValidatorSetId = ValidatorSetId::<T>::get();
 		ValidatorSet::<T::BeefyId>::new(validators, id)
 	}
 

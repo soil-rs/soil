@@ -18,7 +18,7 @@ futures = { workspace = true }
 indexmap = { workspace = true }
 log = { workspace = true, default-features = true }
 serde = { features = ["derive"], workspace = true, default-features = true }
-sp-blockchain = { workspace = true, default-features = true }
+soil-blockchain = { workspace = true, default-features = true }
 soil-core = { workspace = true }
 soil-runtime = { workspace = true }
 strum = { workspace = true, features = ["derive"] }

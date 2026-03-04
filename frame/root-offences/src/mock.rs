@@ -29,7 +29,7 @@ use frame_support::{
 };
 use pallet_staking::{BalanceOf, StakerStatus};
 use soil_runtime::{curve::PiecewiseLinear, testing::UintAuthorityId, traits::Zero, BuildStorage};
-use sp_staking::{EraIndex, SessionIndex};
+use soil_staking::{EraIndex, SessionIndex};
 
 type Block = frame_system::mocking::MockBlock<Test>;
 type AccountId = u64;

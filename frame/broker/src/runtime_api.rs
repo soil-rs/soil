@@ -20,7 +20,7 @@
 use codec::Codec;
 use soil_runtime::DispatchError;
 
-sp_api::decl_runtime_apis! {
+soil_api::decl_runtime_apis! {
 	pub trait BrokerApi<Balance>
 	where
 		Balance: Codec

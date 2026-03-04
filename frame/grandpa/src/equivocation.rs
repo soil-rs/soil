@@ -40,7 +40,7 @@ use codec::{self as codec, Decode, Encode};
 use frame_support::traits::{Get, KeyOwnerProofSystem};
 use frame_system::pallet_prelude::BlockNumberFor;
 use log::{error, info};
-use sp_consensus_grandpa::{AuthorityId, EquivocationProof, RoundNumber, SetId, KEY_TYPE};
+use soil_consensus_grandpa::{AuthorityId, EquivocationProof, RoundNumber, SetId, KEY_TYPE};
 use soil_runtime::{
 	transaction_validity::{
 		InvalidTransaction, TransactionPriority, TransactionSource, TransactionValidity,
@@ -48,8 +48,8 @@ use soil_runtime::{
 	},
 	DispatchError, KeyTypeId, Perbill,
 };
-use sp_session::{GetSessionNumber, GetValidatorCount};
-use sp_staking::{
+use soil_session::{GetSessionNumber, GetValidatorCount};
+use soil_staking::{
 	offence::{Kind, Offence, OffenceReportSystem, ReportOffence},
 	SessionIndex,
 };
@@ -190,7 +190,7 @@ where
 		let validator_set_count = key_owner_proof.validator_count();
 
 		// Validate equivocation proof (check votes are different and signatures are valid).
-		if !sp_consensus_grandpa::check_equivocation_proof(equivocation_proof) {
+		if !soil_consensus_grandpa::check_equivocation_proof(equivocation_proof) {
 			return Err(Error::<T>::InvalidEquivocationProof.into());
 		}
 

@@ -25,7 +25,7 @@ log = { workspace = true }
 paste = { workspace = true, default-features = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { optional = true, workspace = true, default-features = true }
-sp-api = { workspace = true }
+soil-api = { workspace = true }
 soil-application-crypto = { workspace = true }
 soil-core = { workspace = true }
 soil-io = { workspace = true }
@@ -53,7 +53,7 @@ std = [
 	"log/std",
 	"scale-info/std",
 	"serde",
-	"sp-api/std",
+	"soil-api/std",
 	"soil-application-crypto/std",
 	"soil-core/std",
 	"soil-externalities/std",

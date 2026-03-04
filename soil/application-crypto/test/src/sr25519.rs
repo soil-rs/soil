@@ -17,7 +17,7 @@
 
 //! Integration tests for sr25519
 
-use sp_api::{ApiExt, ProvideRuntimeApi};
+use soil_api::{ApiExt, ProvideRuntimeApi};
 use soil_application_crypto::{sr25519::AppPair, RuntimePublic};
 use soil_core::{
 	crypto::{ByteArray, Pair},

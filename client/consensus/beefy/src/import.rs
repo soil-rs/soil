@@ -20,9 +20,9 @@ use std::sync::Arc;
 
 use log::debug;
 
-use sp_api::ProvideRuntimeApi;
-use sp_consensus::Error as ConsensusError;
-use sp_consensus_beefy::{AuthorityIdBound, BeefyApi, BEEFY_ENGINE_ID};
+use soil_api::ProvideRuntimeApi;
+use soil_consensus::Error as ConsensusError;
+use soil_consensus_beefy::{AuthorityIdBound, BeefyApi, BEEFY_ENGINE_ID};
 use soil_runtime::{
 	traits::{Block as BlockT, Header as HeaderT, NumberFor},
 	EncodedJustification,

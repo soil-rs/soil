@@ -34,7 +34,7 @@ use frame_system::{EnsureRoot, EnsureSignedBy};
 use soil_core::ConstBool;
 use soil_io;
 use soil_runtime::{curve::PiecewiseLinear, testing::UintAuthorityId, traits::Zero, BuildStorage};
-use sp_staking::{
+use soil_staking::{
 	offence::{OffenceDetails, OnOffenceHandler},
 	OnStakingUpdate, StakingAccount,
 };
@@ -202,11 +202,11 @@ impl OnUnbalanced<NegativeImbalanceOf<Test>> for RewardRemainderMock {
 	}
 }
 
-const THRESHOLDS: [sp_npos_elections::VoteWeight; 9] =
+const THRESHOLDS: [soil_npos_elections::VoteWeight; 9] =
 	[10, 20, 30, 40, 50, 60, 1_000, 2_000, 10_000];
 
 parameter_types! {
-	pub static BagThresholds: &'static [sp_npos_elections::VoteWeight] = &THRESHOLDS;
+	pub static BagThresholds: &'static [soil_npos_elections::VoteWeight] = &THRESHOLDS;
 	pub static HistoryDepth: u32 = 80;
 	pub static MaxExposurePageSize: u32 = 64;
 	pub static MaxUnlockingChunks: u32 = 32;
@@ -633,7 +633,7 @@ pub(crate) fn bond_virtual_nominator(
 	target: Vec<AccountId>,
 ) {
 	// Bond who virtually.
-	assert_ok!(<Staking as sp_staking::StakingUnchecked>::virtual_bond(&who, val, &payee));
+	assert_ok!(<Staking as soil_staking::StakingUnchecked>::virtual_bond(&who, val, &payee));
 	assert_ok!(Staking::nominate(RuntimeOrigin::signed(who), target));
 }
 

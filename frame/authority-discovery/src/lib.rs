@@ -30,7 +30,7 @@ use frame_support::{
 	traits::{Get, OneSessionHandler},
 	WeakBoundedVec,
 };
-use sp_authority_discovery::AuthorityId;
+use soil_authority_discovery::AuthorityId;
 
 pub use pallet::*;
 
@@ -216,7 +216,7 @@ mod tests {
 	use alloc::vec;
 	use frame_support::{derive_impl, parameter_types, traits::ConstU32};
 	use soil_application_crypto::Pair;
-	use sp_authority_discovery::AuthorityPair;
+	use soil_authority_discovery::AuthorityPair;
 	use soil_core::crypto::key_types;
 	use soil_io::TestExternalities;
 	use soil_runtime::{

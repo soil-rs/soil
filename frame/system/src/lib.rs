@@ -120,7 +120,7 @@ use soil_runtime::{
 	},
 	DispatchError,
 };
-use sp_version::RuntimeVersion;
+use soil_version::RuntimeVersion;
 
 use codec::{Decode, DecodeWithMemTracking, Encode, EncodeLike, FullCodec, MaxEncodedLen};
 #[cfg(feature = "std")]

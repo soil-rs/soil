@@ -31,7 +31,7 @@ use soil_runtime::{
 	generic,
 	traits::{BlakeTwo256, IdentityLookup, Verify},
 };
-use sp_version::RuntimeVersion;
+use soil_version::RuntimeVersion;
 
 pub const VERSION: RuntimeVersion = RuntimeVersion {
 	spec_name: alloc::borrow::Cow::Borrowed("frame-support-test-compile-pass"),
@@ -39,7 +39,7 @@ pub const VERSION: RuntimeVersion = RuntimeVersion {
 	authoring_version: 0,
 	spec_version: 0,
 	impl_version: 0,
-	apis: sp_version::create_apis_vec!([]),
+	apis: soil_version::create_apis_vec!([]),
 	transaction_version: 0,
 	system_version: 0,
 };

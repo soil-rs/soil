@@ -35,12 +35,12 @@ sc-rpc = { workspace = true, default-features = true }
 sc-transaction-pool-api = { workspace = true, default-features = true }
 schnellru = { workspace = true }
 serde = { workspace = true, default-features = true }
-sp-api = { workspace = true, default-features = true }
-sp-blockchain = { workspace = true, default-features = true }
+soil-api = { workspace = true, default-features = true }
+soil-blockchain = { workspace = true, default-features = true }
 soil-core = { workspace = true, default-features = true }
 soil-rpc = { workspace = true, default-features = true }
 soil-runtime = { workspace = true, default-features = true }
-sp-version = { workspace = true, default-features = true }
+soil-version = { workspace = true, default-features = true }
 thiserror = { workspace = true }
 tokio = { features = ["sync"], workspace = true, default-features = true }
 tokio-stream = { features = ["sync"], workspace = true }
@@ -56,7 +56,7 @@ sc-service = { workspace = true, default-features = true }
 sc-transaction-pool = { workspace = true, default-features = true }
 sc-utils = { workspace = true, default-features = true }
 serde_json = { workspace = true, default-features = true }
-sp-consensus = { workspace = true, default-features = true }
+soil-consensus = { workspace = true, default-features = true }
 soil-externalities = { workspace = true, default-features = true }
 soil-maybe-compressed-blob = { workspace = true, default-features = true }
 substrate-test-runtime = { workspace = true }

@@ -38,7 +38,7 @@ use parking_lot::RwLock;
 use sc_transaction_pool_api::{
 	error::Error as PoolError, PoolStatus, TransactionTag as Tag, TxInvalidityReportMap,
 };
-use sp_blockchain::{HashAndNumber, TreeRoute};
+use soil_blockchain::{HashAndNumber, TreeRoute};
 use soil_runtime::{
 	generic::BlockId,
 	traits::{Block as BlockT, Header, One, Saturating},

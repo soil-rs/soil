@@ -37,7 +37,7 @@ use frame_election_provider_support::{ExtendedBalance, NposSolver, Support, Vote
 use frame_support::{traits::Get, BoundedVec};
 use frame_system::pallet_prelude::*;
 use scale_info::TypeInfo;
-use sp_npos_elections::EvaluateSupport;
+use soil_npos_elections::EvaluateSupport;
 use soil_runtime::{
 	offchain::storage::{MutateStorageError, StorageValueRef},
 	traits::{SaturatedConversion, Saturating, Zero},
@@ -70,7 +70,7 @@ pub(crate) type MinerSolverErrorOf<T> = <<T as MinerConfig>::Solver as NposSolve
 )]
 pub enum MinerError<T: MinerConfig> {
 	/// An internal error in the NPoS elections crate.
-	NposElections(sp_npos_elections::Error),
+	NposElections(soil_npos_elections::Error),
 	/// An internal error in the generic solver.
 	Solver(MinerSolverErrorOf<T>),
 	/// Snapshot data was unavailable unexpectedly.
@@ -87,8 +87,8 @@ pub enum MinerError<T: MinerConfig> {
 	Defensive(&'static str),
 }
 
-impl<T: MinerConfig> From<sp_npos_elections::Error> for MinerError<T> {
-	fn from(e: sp_npos_elections::Error) -> Self {
+impl<T: MinerConfig> From<soil_npos_elections::Error> for MinerError<T> {
+	fn from(e: soil_npos_elections::Error) -> Self {
 		MinerError::NposElections(e)
 	}
 }
@@ -314,7 +314,7 @@ impl<T: MinerConfig> BaseMiner<T> {
 			// assignments -> staked assignments -> reduce -> supports -> trim supports -> staked
 			// assignments -> final assignments
 			// This is by no means the most performant, but is the clear and correct.
-			use sp_npos_elections::{
+			use soil_npos_elections::{
 				assignment_ratio_to_staked_normalized, assignment_staked_to_ratio_normalized,
 				reduce, supports_to_staked_assignment, to_supports, EvaluateSupport,
 			};
@@ -514,7 +514,7 @@ impl<T: MinerConfig> BaseMiner<T> {
 		page_voters: &VoterPageOf<T>,
 		page: PageIndex,
 	) -> Result<Vec<AssignmentOf<T>>, MinerError<T>> {
-		use sp_npos_elections::{
+		use soil_npos_elections::{
 			assignment_ratio_to_staked_normalized, assignment_staked_to_ratio_normalized,
 			supports_to_staked_assignment, to_supports,
 		};
@@ -1005,7 +1005,7 @@ mod trimming {
 	use super::*;
 	use crate::{mock::*, verifier::Verifier};
 	use frame_election_provider_support::TryFromUnboundedPagedSupports;
-	use sp_npos_elections::Support;
+	use soil_npos_elections::Support;
 
 	#[test]
 	fn solution_without_any_trimming() {
@@ -1400,7 +1400,7 @@ mod base_miner {
 	use super::*;
 	use crate::{mock::*, Snapshot};
 	use frame_election_provider_support::TryFromUnboundedPagedSupports;
-	use sp_npos_elections::Support;
+	use soil_npos_elections::Support;
 	use soil_runtime::PerU16;
 
 	#[test]

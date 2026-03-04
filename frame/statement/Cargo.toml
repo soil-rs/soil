@@ -20,11 +20,11 @@ frame-support = { workspace = true }
 frame-system = { workspace = true }
 log = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
-sp-api = { workspace = true }
+soil-api = { workspace = true }
 soil-core = { workspace = true }
 soil-io = { workspace = true }
 soil-runtime = { workspace = true }
-sp-statement-store = { workspace = true }
+soil-statement-store = { workspace = true }
 
 [features]
 default = ["std"]
@@ -34,11 +34,11 @@ std = [
 	"frame-system/std",
 	"log/std",
 	"scale-info/std",
-	"sp-api/std",
+	"soil-api/std",
 	"soil-core/std",
 	"soil-io/std",
 	"soil-runtime/std",
-	"sp-statement-store/std",
+	"soil-statement-store/std",
 ]
 try-runtime = [
 	"frame-support/try-runtime",

@@ -22,7 +22,7 @@ frame-system = { workspace = true }
 pallet-session = { features = ["historical"], workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 soil-application-crypto = { workspace = true }
-sp-authority-discovery = { workspace = true }
+soil-authority-discovery = { workspace = true }
 soil-runtime = { workspace = true }
 
 [dev-dependencies]
@@ -40,7 +40,7 @@ std = [
 	"pallet-session/std",
 	"scale-info/std",
 	"soil-application-crypto/std",
-	"sp-authority-discovery/std",
+	"soil-authority-discovery/std",
 	"soil-core/std",
 	"soil-io/std",
 	"soil-runtime/std",

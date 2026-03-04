@@ -80,7 +80,7 @@ pub mod v17 {
 /// severity for re-enabling purposes.
 pub mod v16 {
 	use super::*;
-	use sp_staking::offence::OffenceSeverity;
+	use soil_staking::offence::OffenceSeverity;
 
 	#[frame_support::storage_alias]
 	pub(crate) type DisabledValidators<T: Config> =

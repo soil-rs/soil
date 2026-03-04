@@ -96,7 +96,7 @@ use sc_network_gossip::{MessageIntent, ValidatorContext};
 use sc_network_types::PeerId;
 use sc_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG};
 use sc_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
-use sp_consensus_grandpa::AuthorityId;
+use soil_consensus_grandpa::AuthorityId;
 use soil_runtime::traits::{Block as BlockT, NumberFor, Zero};
 
 use super::{benefit, cost, Round, SetId, NEIGHBOR_REBROADCAST_PERIOD};
@@ -924,7 +924,7 @@ impl<Block: BlockT> Inner<Block> {
 			return Action::Discard(cost::UNKNOWN_VOTER);
 		}
 
-		if !sp_consensus_grandpa::check_message_signature(
+		if !soil_consensus_grandpa::check_message_signature(
 			&full.message.message,
 			&full.message.id,
 			&full.message.signature,

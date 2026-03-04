@@ -26,16 +26,16 @@ use frame_benchmarking::v2::*;
 use frame_support::traits::Hooks;
 use frame_system::{Config as SystemConfig, Pallet as System};
 use pallet_mmr::{Nodes, Pallet as Mmr};
-use sp_consensus_beefy::Payload;
+use soil_consensus_beefy::Payload;
 use soil_runtime::traits::One;
 
 pub trait Config:
-	pallet_mmr::Config<Hashing = sp_consensus_beefy::MmrHashing> + crate::Config
+	pallet_mmr::Config<Hashing = soil_consensus_beefy::MmrHashing> + crate::Config
 {
 }
 
 impl<T> Config for T where
-	T: pallet_mmr::Config<Hashing = sp_consensus_beefy::MmrHashing> + crate::Config
+	T: pallet_mmr::Config<Hashing = soil_consensus_beefy::MmrHashing> + crate::Config
 {
 }
 

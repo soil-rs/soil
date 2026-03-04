@@ -30,8 +30,8 @@ use sc_consensus::{
 };
 use sc_executor::WasmExecutor;
 use sc_service::client::{new_with_backend, Client, LocalCallExecutor};
-use sp_api::ProvideRuntimeApi;
-use sp_consensus::{BlockOrigin, Error as ConsensusError, SelectChain};
+use soil_api::ProvideRuntimeApi;
+use soil_consensus::{BlockOrigin, Error as ConsensusError, SelectChain};
 use soil_core::{testing::TaskExecutor, traits::CallContext, H256};
 use soil_runtime::{
 	generic::BlockId,
@@ -1578,7 +1578,7 @@ fn doesnt_import_blocks_that_revert_finality() {
 
 	let import_err = block_on(client.import(BlockOrigin::Own, b3)).err().unwrap();
 	let expected_err =
-		ConsensusError::ClientImport(sp_blockchain::Error::NotInFinalizedChain.to_string());
+		ConsensusError::ClientImport(soil_blockchain::Error::NotInFinalizedChain.to_string());
 
 	assert_eq!(import_err.to_string(), expected_err.to_string());
 
@@ -1602,7 +1602,7 @@ fn doesnt_import_blocks_that_revert_finality() {
 
 	let import_err = block_on(client.import(BlockOrigin::Own, c1)).err().unwrap();
 	let expected_err =
-		ConsensusError::ClientImport(sp_blockchain::Error::NotInFinalizedChain.to_string());
+		ConsensusError::ClientImport(soil_blockchain::Error::NotInFinalizedChain.to_string());
 
 	assert_eq!(import_err.to_string(), expected_err.to_string());
 
@@ -1759,7 +1759,7 @@ fn respects_block_rules() {
 
 #[test]
 fn returns_status_for_pruned_blocks() {
-	use sp_consensus::BlockStatus;
+	use soil_consensus::BlockStatus;
 	soil_tracing::try_init_simple();
 	let tmp = tempfile::tempdir().unwrap();
 

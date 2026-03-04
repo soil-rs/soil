@@ -53,20 +53,20 @@ sc-utils = { workspace = true, default-features = true }
 schnellru = { workspace = true }
 serde = { workspace = true, default-features = true }
 serde_json = { workspace = true, default-features = true }
-sp-api = { workspace = true, default-features = true }
-sp-blockchain = { workspace = true, default-features = true }
-sp-consensus = { workspace = true, default-features = true }
+soil-api = { workspace = true, default-features = true }
+soil-blockchain = { workspace = true, default-features = true }
+soil-consensus = { workspace = true, default-features = true }
 soil-core = { workspace = true, default-features = true }
 soil-externalities = { workspace = true, default-features = true }
 soil-keystore = { workspace = true, default-features = true }
 soil-runtime = { workspace = true, default-features = true }
-sp-session = { workspace = true, default-features = true }
+soil-session = { workspace = true, default-features = true }
 soil-state-machine = { workspace = true, default-features = true }
 soil-storage = { workspace = true, default-features = true }
-sp-transaction-pool = { workspace = true, default-features = true }
-sp-transaction-storage-proof = { workspace = true, default-features = true }
+soil-transaction-pool = { workspace = true, default-features = true }
+soil-transaction-storage-proof = { workspace = true, default-features = true }
 soil-trie = { workspace = true, default-features = true }
-sp-version = { workspace = true, default-features = true }
+soil-version = { workspace = true, default-features = true }
 static_init = { workspace = true }
 tempfile = { workspace = true }
 thiserror = { workspace = true }

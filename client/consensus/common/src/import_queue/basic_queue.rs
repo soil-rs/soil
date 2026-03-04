@@ -22,7 +22,7 @@ use futures::{
 use log::{debug, trace};
 use prometheus_endpoint::Registry;
 use sc_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
-use sp_consensus::BlockOrigin;
+use soil_consensus::BlockOrigin;
 use soil_runtime::{
 	traits::{Block as BlockT, Header as HeaderT, NumberFor},
 	Justification, Justifications,
@@ -362,7 +362,7 @@ impl<B: BlockT> BlockImportWorker<B> {
 				});
 				match result {
 					Ok(()) => JustificationImportResult::Success,
-					Err(sp_consensus::Error::OutdatedJustification) => {
+					Err(soil_consensus::Error::OutdatedJustification) => {
 						JustificationImportResult::OutdatedJustification
 					},
 					Err(_) => JustificationImportResult::Failure,
@@ -513,7 +513,7 @@ mod tests {
 	};
 	use futures::{executor::block_on, Future};
 	use parking_lot::Mutex;
-	use sp_test_primitives::{Block, BlockNumber, Hash, Header};
+	use soil_test_primitives::{Block, BlockNumber, Hash, Header};
 
 	#[async_trait::async_trait]
 	impl Verifier<Block> for () {
@@ -527,7 +527,7 @@ mod tests {
 
 	#[async_trait::async_trait]
 	impl BlockImport<Block> for () {
-		type Error = sp_consensus::Error;
+		type Error = soil_consensus::Error;
 
 		async fn check_block(
 			&self,
@@ -546,7 +546,7 @@ mod tests {
 
 	#[async_trait::async_trait]
 	impl JustificationImport<Block> for () {
-		type Error = sp_consensus::Error;
+		type Error = soil_consensus::Error;
 
 		async fn on_start(&mut self) -> Vec<(Hash, BlockNumber)> {
 			Vec::new()

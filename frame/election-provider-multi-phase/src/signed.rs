@@ -37,7 +37,7 @@ use frame_support::traits::{
 use frame_system::pallet_prelude::BlockNumberFor;
 use soil_arithmetic::traits::SaturatedConversion;
 use soil_core::bounded::BoundedVec;
-use sp_npos_elections::ElectionScore;
+use soil_npos_elections::ElectionScore;
 use soil_runtime::{
 	traits::{Convert, Saturating, Zero},
 	Debug, FixedPointNumber, FixedPointOperand, FixedU128, Percent,

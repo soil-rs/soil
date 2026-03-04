@@ -23,7 +23,7 @@ use soil_core::{
 	storage::{StorageChangeSet, StorageData, StorageKey},
 	Bytes,
 };
-use sp_version::RuntimeVersion;
+use soil_version::RuntimeVersion;
 
 pub mod error;
 pub mod helpers;

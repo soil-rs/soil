@@ -767,7 +767,7 @@ mod externally_set_keys_tracking {
 mod disabling_byzantine_threshold {
 	use super::*;
 	use crate::disabling::{DisablingStrategy, UpToLimitDisablingStrategy};
-	use sp_staking::offence::OffenceSeverity;
+	use soil_staking::offence::OffenceSeverity;
 
 	// Common test data - the stash of the offending validator, the era of the offence and the
 	// active set
@@ -848,7 +848,7 @@ mod disabling_byzantine_threshold {
 mod disabling_with_reenabling {
 	use super::*;
 	use crate::disabling::{DisablingStrategy, UpToLimitWithReEnablingDisablingStrategy};
-	use sp_staking::offence::OffenceSeverity;
+	use soil_staking::offence::OffenceSeverity;
 
 	// Common test data - the stash of the offending validator, the era of the offence and the
 	// active set

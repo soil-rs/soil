@@ -30,7 +30,7 @@ use frame_support::{
 	pallet_prelude::{InvalidTransaction, TransactionValidityError},
 };
 use pallet_verify_signature::VerifySignature;
-use sp_keyring::Sr25519Keyring;
+use soil_keyring::Sr25519Keyring;
 use soil_runtime::{
 	generic::ExtensionVersion,
 	traits::{Applyable, Checkable, IdentityLookup, TransactionExtension},

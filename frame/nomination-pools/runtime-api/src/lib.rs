@@ -23,7 +23,7 @@
 use codec::Codec;
 use pallet_nomination_pools::PoolId;
 
-sp_api::decl_runtime_apis! {
+soil_api::decl_runtime_apis! {
 	/// Runtime api for accessing information about nomination pools.
 	pub trait NominationPoolsApi<AccountId, Balance>
 		where

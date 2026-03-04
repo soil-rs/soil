@@ -17,7 +17,7 @@
 
 //! A proc-macro that generates a custom wasm section from a given RuntimeVersion declaration
 //!
-//! This macro is re-exported from the `sp_version::runtime_version` and intended to be used from
+//! This macro is re-exported from the `soil_version::runtime_version` and intended to be used from
 //! there. Documentation can also be found there.
 
 #![recursion_limit = "512"]

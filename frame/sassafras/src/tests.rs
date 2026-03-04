@@ -20,7 +20,7 @@
 use crate::*;
 use mock::*;
 
-use sp_consensus_sassafras::Slot;
+use soil_consensus_sassafras::Slot;
 
 fn h2b<const N: usize>(hex: &str) -> [u8; N] {
 	array_bytes::hex2array_unchecked(hex)
@@ -288,8 +288,8 @@ fn on_first_block_after_genesis() {
 		assert_eq!(header.digest.logs[0], digest.logs[0]);
 
 		// Genesis epoch start deposits consensus
-		let consensus_log = sp_consensus_sassafras::digests::ConsensusLog::NextEpochData(
-			sp_consensus_sassafras::digests::NextEpochDescriptor {
+		let consensus_log = soil_consensus_sassafras::digests::ConsensusLog::NextEpochData(
+			soil_consensus_sassafras::digests::NextEpochDescriptor {
 				authorities: NextAuthorities::<Test>::get().into_inner(),
 				randomness: NextRandomness::<Test>::get(),
 				config: None,
@@ -426,8 +426,8 @@ fn produce_epoch_change_digest_no_config() {
 		assert_eq!(header.digest.logs.len(), 2);
 		assert_eq!(header.digest.logs[0], digest.logs[0]);
 		// Deposits consensus log on epoch change
-		let consensus_log = sp_consensus_sassafras::digests::ConsensusLog::NextEpochData(
-			sp_consensus_sassafras::digests::NextEpochDescriptor {
+		let consensus_log = soil_consensus_sassafras::digests::ConsensusLog::NextEpochData(
+			soil_consensus_sassafras::digests::NextEpochDescriptor {
 				authorities: NextAuthorities::<Test>::get().into_inner(),
 				randomness: NextRandomness::<Test>::get(),
 				config: None,
@@ -465,8 +465,8 @@ fn produce_epoch_change_digest_with_config() {
 		assert_eq!(header.digest.logs.len(), 2);
 		assert_eq!(header.digest.logs[0], digest.logs[0]);
 		// Deposits consensus log on epoch change
-		let consensus_log = sp_consensus_sassafras::digests::ConsensusLog::NextEpochData(
-			sp_consensus_sassafras::digests::NextEpochDescriptor {
+		let consensus_log = soil_consensus_sassafras::digests::ConsensusLog::NextEpochData(
+			soil_consensus_sassafras::digests::NextEpochDescriptor {
 				authorities: NextAuthorities::<Test>::get().into_inner(),
 				randomness: NextRandomness::<Test>::get(),
 				config: Some(config),

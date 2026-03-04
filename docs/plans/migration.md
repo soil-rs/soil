@@ -77,10 +77,10 @@ Migrate one tier at a time up the critical path. Each tier unlocks the next.
 
 | Tier | Crates | Status |
 |------|--------|--------|
-| 9 | `sp-inherents`, `sp-keyring`, `sp-npos-elections`, `sp-staking`, `sp-test-primitives`, `sp-version` | TODO |
-| 10 | `sp-api`, `sp-timestamp` | TODO |
-| 11 | `sp-authority-discovery`, `sp-block-builder`, `sp-consensus`, `sp-consensus-grandpa`, `sp-consensus-pow`, `sp-consensus-slots`, `sp-genesis-builder`, `sp-mixnet`, `sp-mmr-primitives`, `sp-offchain`, `sp-session`, `sp-statement-store`, `sp-transaction-pool`, `sp-transaction-storage-proof` | TODO |
-| 12 | `sp-blockchain`, `sp-consensus-aura`, `sp-consensus-babe`, `sp-consensus-beefy`, `sp-consensus-sassafras` | TODO |
+| 9 | `sp-inherents`, `sp-keyring`, `sp-npos-elections`, `sp-staking`, `sp-test-primitives`, `sp-version` | DONE |
+| 10 | `sp-api`, `sp-timestamp` | DONE |
+| 11 | `sp-authority-discovery`, `sp-block-builder`, `sp-consensus`, `sp-consensus-grandpa`, `sp-consensus-pow`, `sp-consensus-slots`, `sp-genesis-builder`, `sp-mixnet`, `sp-mmr-primitives`, `sp-offchain`, `sp-session`, `sp-statement-store`, `sp-transaction-pool`, `sp-transaction-storage-proof` | DONE |
+| 12 | `sp-blockchain`, `sp-consensus-aura`, `sp-consensus-babe`, `sp-consensus-beefy`, `sp-consensus-sassafras` | DONE |
 
 ### Phase 4 — Merge sp-*/sc-* pairs into soil-*
 

@@ -23,7 +23,7 @@ log = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { optional = true, workspace = true, default-features = true }
 soil-runtime = { workspace = true }
-sp-staking = { workspace = true }
+soil-staking = { workspace = true }
 
 [dev-dependencies]
 soil-core = { workspace = true, default-features = true }
@@ -41,13 +41,13 @@ std = [
 	"soil-core/std",
 	"soil-io/std",
 	"soil-runtime/std",
-	"sp-staking/std",
+	"soil-staking/std",
 ]
 runtime-benchmarks = [
 	"frame-support/runtime-benchmarks",
 	"frame-system/runtime-benchmarks",
 	"soil-runtime/runtime-benchmarks",
-	"sp-staking/runtime-benchmarks",
+	"soil-staking/runtime-benchmarks",
 ]
 try-runtime = [
 	"frame-support/try-runtime",

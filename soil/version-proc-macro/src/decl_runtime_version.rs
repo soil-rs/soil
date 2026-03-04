@@ -54,8 +54,8 @@ fn decl_runtime_version_impl_inner(item: ItemConst) -> Result<TokenStream> {
 	})
 }
 
-/// This is a duplicate of `sp_version::RuntimeVersion`. We cannot unfortunately use the original
-/// declaration, because if we directly depend on `sp_version` from this proc-macro cargo will
+/// This is a duplicate of `soil_version::RuntimeVersion`. We cannot unfortunately use the original
+/// declaration, because if we directly depend on `soil_version` from this proc-macro cargo will
 /// enable `std` feature even for `no_std` wasm runtime builds.
 ///
 /// One difference from the original definition is the `apis` field. Since we don't actually parse
@@ -296,9 +296,9 @@ mod tests {
 		.encode();
 
 		assert_eq!(
-			sp_version::RuntimeVersion::decode_with_version_hint(&mut &version_bytes[..], Some(4))
+			soil_version::RuntimeVersion::decode_with_version_hint(&mut &version_bytes[..], Some(4))
 				.unwrap(),
-			sp_version::RuntimeVersion {
+			soil_version::RuntimeVersion {
 				spec_name: "hello".into(),
 				impl_name: "world".into(),
 				authoring_version: 10,

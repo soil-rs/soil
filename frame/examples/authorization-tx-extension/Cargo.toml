@@ -31,7 +31,7 @@ soil-runtime = { workspace = true }
 [dev-dependencies]
 pallet-verify-signature = { workspace = true }
 soil-core = { workspace = true }
-sp-keyring = { workspace = true, default-features = true }
+soil-keyring = { workspace = true, default-features = true }
 
 [features]
 default = ["std"]

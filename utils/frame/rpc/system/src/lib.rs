@@ -28,9 +28,9 @@ use jsonrpsee::{
 };
 
 use sc_transaction_pool_api::{InPoolTransaction, TransactionPool};
-use sp_api::ApiExt;
-use sp_block_builder::BlockBuilder;
-use sp_blockchain::HeaderBackend;
+use soil_api::ApiExt;
+use soil_block_builder::BlockBuilder;
+use soil_blockchain::HeaderBackend;
 use soil_core::{hexdisplay::HexDisplay, Bytes};
 use soil_runtime::{legacy, traits};
 
@@ -88,7 +88,7 @@ impl<P: TransactionPool, C, B> System<P, C, B> {
 impl<P, C, Block, AccountId, Nonce>
 	SystemApiServer<<Block as traits::Block>::Hash, AccountId, Nonce> for System<P, C, Block>
 where
-	C: sp_api::ProvideRuntimeApi<Block>,
+	C: soil_api::ProvideRuntimeApi<Block>,
 	C: HeaderBackend<Block>,
 	C: Send + Sync + 'static,
 	C::Api: AccountNonceApi<Block, AccountId, Nonce>,

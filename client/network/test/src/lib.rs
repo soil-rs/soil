@@ -82,10 +82,10 @@ use sc_network_sync::{
 };
 use sc_network_types::{build_multiaddr, multiaddr::Multiaddr};
 use sc_service::client::Client;
-use sp_blockchain::{
+use soil_blockchain::{
 	Backend as BlockchainBackend, HeaderBackend, Info as BlockchainInfo, Result as ClientResult,
 };
-use sp_consensus::{
+use soil_consensus::{
 	block_validation::{BlockAnnounceValidator, DefaultBlockAnnounceValidator},
 	BlockOrigin, Error as ConsensusError, SyncOracle,
 };

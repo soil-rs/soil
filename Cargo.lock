@@ -3248,6 +3248,7 @@ dependencies = [
  "sc-client-db",
  "scale-info",
  "serde",
+ "soil-api",
  "soil-application-crypto",
  "soil-core",
  "soil-externalities",
@@ -3257,7 +3258,6 @@ dependencies = [
  "soil-runtime-interface",
  "soil-state-machine",
  "soil-storage",
- "sp-api",
  "static_assertions",
 ]
 
@@ -3319,9 +3319,9 @@ dependencies = [
  "soil-arithmetic",
  "soil-core",
  "soil-io",
+ "soil-npos-elections",
  "soil-runtime",
  "soil-std",
- "sp-npos-elections",
 ]
 
 [[package]]
@@ -3352,11 +3352,11 @@ dependencies = [
  "parity-scale-codec",
  "scale-info",
  "soil-core",
+ "soil-inherents",
  "soil-io",
  "soil-runtime",
  "soil-tracing",
- "sp-inherents",
- "sp-version",
+ "soil-version",
  "substrate-test-runtime-client",
 ]
 
@@ -3386,10 +3386,10 @@ dependencies = [
  "merkleized-metadata",
  "parity-scale-codec",
  "scale-info",
+ "soil-api",
  "soil-runtime",
  "soil-tracing",
- "sp-api",
- "sp-transaction-pool",
+ "soil-transaction-pool",
  "substrate-test-runtime-client",
  "substrate-wasm-builder",
 ]
@@ -3441,24 +3441,24 @@ dependencies = [
  "scale-info",
  "serde",
  "serde_json",
+ "soil-api",
  "soil-arithmetic",
  "soil-core",
  "soil-crypto-hashing",
  "soil-crypto-hashing-proc-macro",
  "soil-debug-derive",
+ "soil-genesis-builder",
+ "soil-inherents",
  "soil-io",
  "soil-metadata-ir",
  "soil-runtime",
+ "soil-staking",
  "soil-state-machine",
  "soil-std",
+ "soil-timestamp",
  "soil-tracing",
  "soil-trie",
  "soil-weights",
- "sp-api",
- "sp-genesis-builder",
- "sp-inherents",
- "sp-staking",
- "sp-timestamp",
  "tt-call",
 ]
 
@@ -3526,14 +3526,14 @@ dependencies = [
  "rustversion",
  "scale-info",
  "serde",
+ "soil-api",
  "soil-arithmetic",
  "soil-core",
  "soil-io",
  "soil-metadata-ir",
  "soil-runtime",
  "soil-state-machine",
- "sp-api",
- "sp-version",
+ "soil-version",
  "static_assertions",
  "trybuild",
 ]
@@ -3548,7 +3548,7 @@ dependencies = [
  "scale-info",
  "soil-core",
  "soil-runtime",
- "sp-version",
+ "soil-version",
 ]
 
 [[package]]
@@ -3589,8 +3589,8 @@ dependencies = [
  "soil-io",
  "soil-runtime",
  "soil-tracing",
+ "soil-version",
  "soil-weights",
- "sp-version",
  "substrate-test-runtime-client",
 ]
 
@@ -3607,7 +3607,7 @@ dependencies = [
  "soil-externalities",
  "soil-io",
  "soil-runtime",
- "sp-version",
+ "soil-version",
 ]
 
 [[package]]
@@ -3616,7 +3616,7 @@ version = "26.0.0"
 dependencies = [
  "docify",
  "parity-scale-codec",
- "sp-api",
+ "soil-api",
 ]
 
 [[package]]
@@ -3625,8 +3625,8 @@ version = "0.34.0"
 dependencies = [
  "frame-support",
  "parity-scale-codec",
+ "soil-api",
  "soil-runtime",
- "sp-api",
 ]
 
 [[package]]
@@ -3830,7 +3830,7 @@ dependencies = [
  "frame-system",
  "num-format",
  "pallet-staking",
- "sp-staking",
+ "soil-staking",
 ]
 
 [[package]]
@@ -5267,52 +5267,52 @@ dependencies = [
  "sc-tracing-proc-macro",
  "scale-info",
  "serde_json",
+ "soil-api",
  "soil-api-proc-macro",
  "soil-application-crypto",
  "soil-arithmetic",
+ "soil-authority-discovery",
+ "soil-block-builder",
+ "soil-consensus-aura",
+ "soil-consensus-babe",
+ "soil-consensus-beefy",
+ "soil-consensus-grandpa",
+ "soil-consensus-pow",
+ "soil-consensus-slots",
  "soil-core",
  "soil-crypto-ec-utils",
  "soil-crypto-hashing",
  "soil-crypto-hashing-proc-macro",
  "soil-debug-derive",
  "soil-externalities",
+ "soil-genesis-builder",
+ "soil-inherents",
  "soil-io",
+ "soil-keyring",
  "soil-keystore",
  "soil-metadata-ir",
+ "soil-mixnet",
+ "soil-mmr-primitives",
+ "soil-npos-elections",
+ "soil-offchain",
  "soil-runtime",
  "soil-runtime-interface",
  "soil-runtime-interface-proc-macro",
+ "soil-session",
+ "soil-staking",
  "soil-state-machine",
+ "soil-statement-store",
  "soil-std",
  "soil-storage",
+ "soil-timestamp",
  "soil-tracing",
+ "soil-transaction-pool",
+ "soil-transaction-storage-proof",
  "soil-trie",
+ "soil-version",
  "soil-version-proc-macro",
  "soil-wasm-interface",
  "soil-weights",
- "sp-api",
- "sp-authority-discovery",
- "sp-block-builder",
- "sp-consensus-aura",
- "sp-consensus-babe",
- "sp-consensus-beefy",
- "sp-consensus-grandpa",
- "sp-consensus-pow",
- "sp-consensus-slots",
- "sp-genesis-builder",
- "sp-inherents",
- "sp-keyring",
- "sp-mixnet",
- "sp-mmr-primitives",
- "sp-npos-elections",
- "sp-offchain",
- "sp-session",
- "sp-staking",
- "sp-statement-store",
- "sp-timestamp",
- "sp-transaction-pool",
- "sp-transaction-storage-proof",
- "sp-version",
  "static_assertions",
  "substrate-bip39",
  "substrate-wasm-builder",
@@ -6328,14 +6328,14 @@ dependencies = [
  "sc-block-builder",
  "sc-client-api",
  "sc-offchain",
+ "soil-api",
+ "soil-blockchain",
+ "soil-consensus",
+ "soil-consensus-beefy",
  "soil-core",
+ "soil-mmr-primitives",
  "soil-runtime",
  "soil-tracing",
- "sp-api",
- "sp-blockchain",
- "sp-consensus",
- "sp-consensus-beefy",
- "sp-mmr-primitives",
  "substrate-test-runtime-client",
  "tokio",
 ]
@@ -6348,11 +6348,11 @@ dependencies = [
  "parity-scale-codec",
  "serde",
  "serde_json",
+ "soil-api",
+ "soil-blockchain",
  "soil-core",
+ "soil-mmr-primitives",
  "soil-runtime",
- "sp-api",
- "sp-blockchain",
- "sp-mmr-primitives",
 ]
 
 [[package]]
@@ -6652,14 +6652,14 @@ dependencies = [
  "sc-transaction-pool-api",
  "serde",
  "serde_json",
+ "soil-consensus",
  "soil-core",
+ "soil-inherents",
  "soil-runtime",
  "soil-state-machine",
+ "soil-timestamp",
  "soil-tracing",
  "soil-trie",
- "sp-consensus",
- "sp-inherents",
- "sp-timestamp",
  "tempfile",
 ]
 
@@ -6691,15 +6691,15 @@ dependencies = [
  "sc-rpc",
  "sc-sync-state-rpc",
  "sc-transaction-pool-api",
+ "soil-api",
  "soil-application-crypto",
+ "soil-block-builder",
+ "soil-blockchain",
+ "soil-consensus",
+ "soil-consensus-babe",
+ "soil-consensus-beefy",
  "soil-keystore",
  "soil-runtime",
- "sp-api",
- "sp-block-builder",
- "sp-blockchain",
- "sp-consensus",
- "sp-consensus-babe",
- "sp-consensus-beefy",
  "substrate-frame-rpc-system",
  "substrate-state-trie-migration-rpc",
 ]
@@ -6748,16 +6748,16 @@ dependencies = [
  "sc-consensus",
  "sc-executor",
  "sc-service",
+ "soil-api",
+ "soil-block-builder",
+ "soil-blockchain",
+ "soil-consensus",
  "soil-core",
  "soil-crypto-hashing",
+ "soil-inherents",
+ "soil-keyring",
  "soil-runtime",
- "sp-api",
- "sp-block-builder",
- "sp-blockchain",
- "sp-consensus",
- "sp-inherents",
- "sp-keyring",
- "sp-timestamp",
+ "soil-timestamp",
  "staging-node-cli",
  "substrate-test-client",
  "tempfile",
@@ -7065,11 +7065,11 @@ dependencies = [
  "parity-scale-codec",
  "primitive-types",
  "scale-info",
+ "soil-api",
  "soil-arithmetic",
  "soil-core",
  "soil-io",
  "soil-runtime",
- "sp-api",
 ]
 
 [[package]]
@@ -7137,12 +7137,12 @@ dependencies = [
  "parity-scale-codec",
  "primitive-types",
  "scale-info",
+ "soil-api",
  "soil-arithmetic",
  "soil-core",
  "soil-io",
  "soil-runtime",
  "soil-std",
- "sp-api",
 ]
 
 [[package]]
@@ -7230,10 +7230,10 @@ dependencies = [
  "parity-scale-codec",
  "scale-info",
  "soil-application-crypto",
+ "soil-consensus-aura",
  "soil-core",
  "soil-io",
  "soil-runtime",
- "sp-consensus-aura",
 ]
 
 [[package]]
@@ -7247,10 +7247,10 @@ dependencies = [
  "parity-scale-codec",
  "scale-info",
  "soil-application-crypto",
+ "soil-authority-discovery",
  "soil-core",
  "soil-io",
  "soil-runtime",
- "sp-authority-discovery",
 ]
 
 [[package]]
@@ -7286,13 +7286,13 @@ dependencies = [
  "parity-scale-codec",
  "scale-info",
  "soil-application-crypto",
+ "soil-consensus-babe",
  "soil-core",
  "soil-io",
  "soil-runtime",
+ "soil-session",
+ "soil-staking",
  "soil-tracing",
- "sp-consensus-babe",
- "sp-session",
- "sp-staking",
 ]
 
 [[package]]
@@ -7376,14 +7376,14 @@ dependencies = [
  "parity-scale-codec",
  "scale-info",
  "serde",
+ "soil-consensus-beefy",
  "soil-core",
  "soil-io",
  "soil-runtime",
+ "soil-session",
+ "soil-staking",
  "soil-state-machine",
  "soil-tracing",
- "sp-consensus-beefy",
- "sp-session",
- "sp-staking",
 ]
 
 [[package]]
@@ -7403,13 +7403,13 @@ dependencies = [
  "parity-scale-codec",
  "scale-info",
  "serde",
+ "soil-api",
+ "soil-consensus-beefy",
  "soil-core",
  "soil-io",
  "soil-runtime",
+ "soil-staking",
  "soil-state-machine",
- "sp-api",
- "sp-consensus-beefy",
- "sp-staking",
 ]
 
 [[package]]
@@ -7442,12 +7442,12 @@ dependencies = [
  "parity-scale-codec",
  "pretty_assertions",
  "scale-info",
+ "soil-api",
  "soil-arithmetic",
  "soil-core",
  "soil-io",
  "soil-runtime",
  "soil-tracing",
- "sp-api",
 ]
 
 [[package]]
@@ -7566,8 +7566,8 @@ dependencies = [
  "soil-core",
  "soil-io",
  "soil-runtime",
+ "soil-staking",
  "soil-tracing",
- "sp-staking",
 ]
 
 [[package]]
@@ -7615,11 +7615,11 @@ dependencies = [
  "pallet-people",
  "parity-scale-codec",
  "scale-info",
+ "soil-api",
  "soil-arithmetic",
  "soil-core",
  "soil-io",
  "soil-runtime",
- "sp-api",
  "verifiable",
 ]
 
@@ -7644,10 +7644,10 @@ dependencies = [
  "scale-info",
  "soil-core",
  "soil-io",
+ "soil-npos-elections",
  "soil-runtime",
+ "soil-staking",
  "soil-tracing",
- "sp-npos-elections",
- "sp-staking",
 ]
 
 [[package]]
@@ -7667,10 +7667,10 @@ dependencies = [
  "soil-arithmetic",
  "soil-core",
  "soil-io",
+ "soil-npos-elections",
  "soil-runtime",
  "soil-std",
  "soil-tracing",
- "sp-npos-elections",
 ]
 
 [[package]]
@@ -7692,9 +7692,9 @@ dependencies = [
  "soil-arithmetic",
  "soil-core",
  "soil-io",
+ "soil-npos-elections",
  "soil-runtime",
  "soil-tracing",
- "sp-npos-elections",
  "strum 0.26.3",
  "tokio",
 ]
@@ -7707,8 +7707,8 @@ dependencies = [
  "frame-election-provider-support",
  "frame-system",
  "parity-scale-codec",
+ "soil-npos-elections",
  "soil-runtime",
- "sp-npos-elections",
 ]
 
 [[package]]
@@ -7724,10 +7724,10 @@ dependencies = [
  "scale-info",
  "soil-core",
  "soil-io",
+ "soil-npos-elections",
  "soil-runtime",
+ "soil-staking",
  "soil-tracing",
- "sp-npos-elections",
- "sp-staking",
  "substrate-test-utils",
 ]
 
@@ -7745,8 +7745,8 @@ dependencies = [
  "scale-info",
  "soil-core",
  "soil-io",
+ "soil-keyring",
  "soil-runtime",
- "sp-keyring",
 ]
 
 [[package]]
@@ -7834,7 +7834,7 @@ dependencies = [
  "soil-core",
  "soil-io",
  "soil-runtime",
- "sp-version",
+ "soil-version",
 ]
 
 [[package]]
@@ -7919,8 +7919,8 @@ dependencies = [
  "soil-core",
  "soil-io",
  "soil-runtime",
+ "soil-staking",
  "soil-tracing",
- "sp-staking",
 ]
 
 [[package]]
@@ -7935,9 +7935,9 @@ dependencies = [
  "parity-scale-codec",
  "scale-info",
  "soil-core",
+ "soil-inherents",
  "soil-io",
  "soil-runtime",
- "sp-inherents",
 ]
 
 [[package]]
@@ -7960,14 +7960,14 @@ dependencies = [
  "parity-scale-codec",
  "scale-info",
  "soil-application-crypto",
+ "soil-consensus-grandpa",
  "soil-core",
  "soil-io",
+ "soil-keyring",
  "soil-runtime",
+ "soil-session",
+ "soil-staking",
  "soil-tracing",
- "sp-consensus-grandpa",
- "sp-keyring",
- "sp-session",
- "sp-staking",
 ]
 
 [[package]]
@@ -8005,7 +8005,7 @@ dependencies = [
  "soil-core",
  "soil-io",
  "soil-runtime",
- "sp-staking",
+ "soil-staking",
 ]
 
 [[package]]
@@ -8103,10 +8103,10 @@ dependencies = [
  "serde",
  "soil-core",
  "soil-io",
+ "soil-keyring",
  "soil-keystore",
  "soil-runtime",
  "soil-std",
- "sp-keyring",
 ]
 
 [[package]]
@@ -8140,7 +8140,7 @@ dependencies = [
  "scale-info",
  "serde",
  "soil-application-crypto",
- "sp-mixnet",
+ "soil-mixnet",
 ]
 
 [[package]]
@@ -8152,8 +8152,8 @@ dependencies = [
  "parity-scale-codec",
  "polkadot-sdk-frame",
  "scale-info",
+ "soil-mmr-primitives",
  "soil-tracing",
- "sp-mmr-primitives",
 ]
 
 [[package]]
@@ -8222,7 +8222,7 @@ name = "pallet-nfts-runtime-api"
 version = "14.0.0"
 dependencies = [
  "parity-scale-codec",
- "sp-api",
+ "soil-api",
 ]
 
 [[package]]
@@ -8259,8 +8259,8 @@ dependencies = [
  "soil-core",
  "soil-io",
  "soil-runtime",
+ "soil-staking",
  "soil-tracing",
- "sp-staking",
 ]
 
 [[package]]
@@ -8284,7 +8284,7 @@ dependencies = [
  "soil-io",
  "soil-runtime",
  "soil-runtime-interface",
- "sp-staking",
+ "soil-staking",
 ]
 
 [[package]]
@@ -8308,7 +8308,7 @@ version = "23.0.0"
 dependencies = [
  "pallet-nomination-pools",
  "parity-scale-codec",
- "sp-api",
+ "soil-api",
 ]
 
 [[package]]
@@ -8324,7 +8324,7 @@ dependencies = [
  "soil-core",
  "soil-io",
  "soil-runtime",
- "sp-staking",
+ "soil-staking",
 ]
 
 [[package]]
@@ -8351,8 +8351,8 @@ dependencies = [
  "soil-core",
  "soil-io",
  "soil-runtime",
+ "soil-staking",
  "soil-tracing",
- "sp-staking",
 ]
 
 [[package]]
@@ -8378,8 +8378,8 @@ version = "1.0.0"
 dependencies = [
  "parity-scale-codec",
  "scale-info",
+ "soil-api",
  "soil-std",
- "sp-api",
 ]
 
 [[package]]
@@ -8563,7 +8563,7 @@ dependencies = [
  "soil-core",
  "soil-io",
  "soil-runtime",
- "sp-staking",
+ "soil-staking",
 ]
 
 [[package]]
@@ -8613,11 +8613,11 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "scale-info",
+ "soil-consensus-sassafras",
  "soil-core",
  "soil-crypto-hashing",
  "soil-io",
  "soil-runtime",
- "sp-consensus-sassafras",
 ]
 
 [[package]]
@@ -8667,10 +8667,10 @@ dependencies = [
  "soil-core",
  "soil-io",
  "soil-runtime",
+ "soil-session",
+ "soil-staking",
  "soil-state-machine",
  "soil-trie",
- "sp-session",
- "sp-staking",
 ]
 
 [[package]]
@@ -8691,8 +8691,8 @@ dependencies = [
  "scale-info",
  "soil-io",
  "soil-runtime",
- "sp-session",
- "sp-staking",
+ "soil-session",
+ "soil-staking",
 ]
 
 [[package]]
@@ -8747,10 +8747,10 @@ dependencies = [
  "soil-application-crypto",
  "soil-core",
  "soil-io",
+ "soil-npos-elections",
  "soil-runtime",
+ "soil-staking",
  "soil-tracing",
- "sp-npos-elections",
- "sp-staking",
  "substrate-test-utils",
 ]
 
@@ -8778,8 +8778,8 @@ name = "pallet-staking-runtime-api"
 version = "14.0.0"
 dependencies = [
  "parity-scale-codec",
- "sp-api",
- "sp-staking",
+ "soil-api",
+ "soil-staking",
 ]
 
 [[package]]
@@ -8814,11 +8814,11 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "scale-info",
+ "soil-api",
  "soil-core",
  "soil-io",
  "soil-runtime",
- "sp-api",
- "sp-statement-store",
+ "soil-statement-store",
 ]
 
 [[package]]
@@ -8846,11 +8846,11 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "scale-info",
+ "soil-inherents",
  "soil-io",
  "soil-runtime",
  "soil-storage",
- "sp-inherents",
- "sp-timestamp",
+ "soil-timestamp",
 ]
 
 [[package]]
@@ -8896,12 +8896,12 @@ dependencies = [
  "jsonrpsee",
  "pallet-transaction-payment-rpc-runtime-api",
  "parity-scale-codec",
+ "soil-api",
+ "soil-blockchain",
  "soil-core",
  "soil-rpc",
  "soil-runtime",
  "soil-weights",
- "sp-api",
- "sp-blockchain",
 ]
 
 [[package]]
@@ -8910,9 +8910,9 @@ version = "28.0.0"
 dependencies = [
  "pallet-transaction-payment",
  "parity-scale-codec",
+ "soil-api",
  "soil-runtime",
  "soil-weights",
- "sp-api",
 ]
 
 [[package]]
@@ -8927,10 +8927,10 @@ dependencies = [
  "parity-scale-codec",
  "scale-info",
  "serde",
+ "soil-inherents",
  "soil-io",
  "soil-runtime",
- "sp-inherents",
- "sp-transaction-storage-proof",
+ "soil-transaction-storage-proof",
  "tracing",
 ]
 
@@ -9355,22 +9355,22 @@ dependencies = [
  "parity-scale-codec",
  "scale-info",
  "serde",
+ "soil-api",
  "soil-arithmetic",
+ "soil-block-builder",
+ "soil-consensus-aura",
+ "soil-consensus-grandpa",
  "soil-core",
+ "soil-genesis-builder",
+ "soil-inherents",
  "soil-io",
+ "soil-keyring",
+ "soil-offchain",
  "soil-runtime",
+ "soil-session",
  "soil-storage",
- "sp-api",
- "sp-block-builder",
- "sp-consensus-aura",
- "sp-consensus-grandpa",
- "sp-genesis-builder",
- "sp-inherents",
- "sp-keyring",
- "sp-offchain",
- "sp-session",
- "sp-transaction-pool",
- "sp-version",
+ "soil-transaction-pool",
+ "soil-version",
 ]
 
 [[package]]
@@ -10740,13 +10740,13 @@ dependencies = [
  "sc-service",
  "serde",
  "serde_json",
+ "soil-api",
+ "soil-authority-discovery",
+ "soil-blockchain",
  "soil-core",
  "soil-keystore",
  "soil-runtime",
  "soil-tracing",
- "sp-api",
- "sp-authority-discovery",
- "sp-blockchain",
  "substrate-prometheus-endpoint",
  "substrate-test-runtime-client",
  "tempfile",
@@ -10768,14 +10768,14 @@ dependencies = [
  "sc-telemetry",
  "sc-transaction-pool",
  "sc-transaction-pool-api",
+ "soil-api",
+ "soil-blockchain",
+ "soil-consensus",
  "soil-core",
+ "soil-inherents",
  "soil-runtime",
  "soil-state-machine",
  "soil-trie",
- "sp-api",
- "sp-blockchain",
- "sp-consensus",
- "sp-inherents",
  "substrate-prometheus-endpoint",
  "substrate-test-runtime-client",
 ]
@@ -10785,14 +10785,14 @@ name = "sc-block-builder"
 version = "0.33.0"
 dependencies = [
  "parity-scale-codec",
+ "soil-api",
+ "soil-block-builder",
+ "soil-blockchain",
  "soil-core",
  "soil-externalities",
+ "soil-inherents",
  "soil-runtime",
  "soil-state-machine",
- "sp-api",
- "sp-block-builder",
- "sp-blockchain",
- "sp-inherents",
  "substrate-test-runtime-client",
 ]
 
@@ -10815,16 +10815,16 @@ dependencies = [
  "serde",
  "serde_json",
  "soil-application-crypto",
+ "soil-blockchain",
+ "soil-consensus-babe",
  "soil-core",
  "soil-crypto-hashing",
+ "soil-genesis-builder",
  "soil-io",
+ "soil-keyring",
  "soil-runtime",
  "soil-state-machine",
  "soil-tracing",
- "sp-blockchain",
- "sp-consensus-babe",
- "sp-genesis-builder",
- "sp-keyring",
  "substrate-test-runtime",
 ]
 
@@ -10869,14 +10869,14 @@ dependencies = [
  "sc-utils",
  "serde",
  "serde_json",
+ "soil-blockchain",
  "soil-core",
+ "soil-keyring",
  "soil-keystore",
  "soil-panic-handler",
  "soil-runtime",
  "soil-tracing",
- "sp-blockchain",
- "sp-keyring",
- "sp-version",
+ "soil-version",
  "tempfile",
  "thiserror 1.0.69",
  "tokio",
@@ -10894,6 +10894,9 @@ dependencies = [
  "sc-executor",
  "sc-transaction-pool-api",
  "sc-utils",
+ "soil-api",
+ "soil-blockchain",
+ "soil-consensus",
  "soil-core",
  "soil-database",
  "soil-externalities",
@@ -10901,9 +10904,6 @@ dependencies = [
  "soil-state-machine",
  "soil-storage",
  "soil-trie",
- "sp-api",
- "sp-blockchain",
- "sp-consensus",
  "substrate-prometheus-endpoint",
  "substrate-test-runtime",
 ]
@@ -10929,13 +10929,13 @@ dependencies = [
  "sc-state-db",
  "schnellru",
  "soil-arithmetic",
+ "soil-blockchain",
  "soil-core",
  "soil-database",
  "soil-runtime",
  "soil-state-machine",
  "soil-tracing",
  "soil-trie",
- "sp-blockchain",
  "substrate-prometheus-endpoint",
  "substrate-test-runtime-client",
  "sysinfo",
@@ -10955,12 +10955,12 @@ dependencies = [
  "sc-network-types",
  "sc-utils",
  "serde",
+ "soil-blockchain",
+ "soil-consensus",
  "soil-core",
  "soil-runtime",
  "soil-state-machine",
- "sp-blockchain",
- "sp-consensus",
- "sp-test-primitives",
+ "soil-test-primitives",
  "substrate-prometheus-endpoint",
  "thiserror 1.0.69",
 ]
@@ -10983,20 +10983,20 @@ dependencies = [
  "sc-network",
  "sc-network-test",
  "sc-telemetry",
+ "soil-api",
  "soil-application-crypto",
+ "soil-block-builder",
+ "soil-blockchain",
+ "soil-consensus",
+ "soil-consensus-aura",
+ "soil-consensus-slots",
  "soil-core",
+ "soil-inherents",
+ "soil-keyring",
  "soil-keystore",
  "soil-runtime",
+ "soil-timestamp",
  "soil-tracing",
- "sp-api",
- "sp-block-builder",
- "sp-blockchain",
- "sp-consensus",
- "sp-consensus-aura",
- "sp-consensus-slots",
- "sp-inherents",
- "sp-keyring",
- "sp-timestamp",
  "substrate-prometheus-endpoint",
  "substrate-test-runtime-client",
  "tempfile",
@@ -11025,21 +11025,21 @@ dependencies = [
  "sc-network-test",
  "sc-telemetry",
  "sc-transaction-pool-api",
+ "soil-api",
  "soil-application-crypto",
+ "soil-block-builder",
+ "soil-blockchain",
+ "soil-consensus",
+ "soil-consensus-babe",
+ "soil-consensus-slots",
  "soil-core",
  "soil-crypto-hashing",
+ "soil-inherents",
+ "soil-keyring",
  "soil-keystore",
  "soil-runtime",
+ "soil-timestamp",
  "soil-tracing",
- "sp-api",
- "sp-block-builder",
- "sp-blockchain",
- "sp-consensus",
- "sp-consensus-babe",
- "sp-consensus-slots",
- "sp-inherents",
- "sp-keyring",
- "sp-timestamp",
  "substrate-prometheus-endpoint",
  "substrate-test-runtime-client",
  "thiserror 1.0.69",
@@ -11058,15 +11058,15 @@ dependencies = [
  "sc-rpc-api",
  "sc-transaction-pool-api",
  "serde",
+ "soil-api",
  "soil-application-crypto",
+ "soil-blockchain",
+ "soil-consensus",
+ "soil-consensus-babe",
  "soil-core",
+ "soil-keyring",
  "soil-keystore",
  "soil-runtime",
- "sp-api",
- "sp-blockchain",
- "sp-consensus",
- "sp-consensus-babe",
- "sp-keyring",
  "substrate-test-runtime-client",
  "thiserror 1.0.69",
  "tokio",
@@ -11093,17 +11093,17 @@ dependencies = [
  "sc-network-types",
  "sc-utils",
  "serde",
+ "soil-api",
  "soil-application-crypto",
  "soil-arithmetic",
+ "soil-blockchain",
+ "soil-consensus",
+ "soil-consensus-beefy",
  "soil-core",
  "soil-keystore",
+ "soil-mmr-primitives",
  "soil-runtime",
  "soil-tracing",
- "sp-api",
- "sp-blockchain",
- "sp-consensus",
- "sp-consensus-beefy",
- "sp-mmr-primitives",
  "substrate-prometheus-endpoint",
  "substrate-test-runtime-client",
  "thiserror 1.0.69",
@@ -11124,9 +11124,9 @@ dependencies = [
  "sc-rpc",
  "serde",
  "soil-application-crypto",
+ "soil-consensus-beefy",
  "soil-core",
  "soil-runtime",
- "sp-consensus-beefy",
  "substrate-test-runtime-client",
  "thiserror 1.0.69",
  "tokio",
@@ -11140,8 +11140,8 @@ dependencies = [
  "parity-scale-codec",
  "sc-client-api",
  "sc-consensus",
+ "soil-blockchain",
  "soil-runtime",
- "sp-blockchain",
 ]
 
 [[package]]
@@ -11176,18 +11176,18 @@ dependencies = [
  "sc-transaction-pool-api",
  "sc-utils",
  "serde_json",
+ "soil-api",
  "soil-application-crypto",
  "soil-arithmetic",
+ "soil-blockchain",
+ "soil-consensus",
+ "soil-consensus-grandpa",
  "soil-core",
  "soil-crypto-hashing",
+ "soil-keyring",
  "soil-keystore",
  "soil-runtime",
  "soil-tracing",
- "sp-api",
- "sp-blockchain",
- "sp-consensus",
- "sp-consensus-grandpa",
- "sp-keyring",
  "substrate-prometheus-endpoint",
  "substrate-test-runtime-client",
  "thiserror 1.0.69",
@@ -11208,11 +11208,11 @@ dependencies = [
  "sc-consensus-grandpa",
  "sc-rpc",
  "serde",
+ "soil-blockchain",
+ "soil-consensus-grandpa",
  "soil-core",
+ "soil-keyring",
  "soil-runtime",
- "sp-blockchain",
- "sp-consensus-grandpa",
- "sp-keyring",
  "substrate-test-runtime-client",
  "thiserror 1.0.69",
  "tokio",
@@ -11238,19 +11238,19 @@ dependencies = [
  "sc-transaction-pool",
  "sc-transaction-pool-api",
  "serde",
+ "soil-api",
+ "soil-blockchain",
+ "soil-consensus",
+ "soil-consensus-aura",
+ "soil-consensus-babe",
+ "soil-consensus-slots",
  "soil-core",
  "soil-externalities",
+ "soil-inherents",
  "soil-keystore",
  "soil-runtime",
+ "soil-timestamp",
  "soil-trie",
- "sp-api",
- "sp-blockchain",
- "sp-consensus",
- "sp-consensus-aura",
- "sp-consensus-babe",
- "sp-consensus-slots",
- "sp-inherents",
- "sp-timestamp",
  "substrate-prometheus-endpoint",
  "substrate-test-runtime-client",
  "substrate-test-runtime-transaction-pool",
@@ -11270,14 +11270,14 @@ dependencies = [
  "parking_lot 0.12.5",
  "sc-client-api",
  "sc-consensus",
+ "soil-api",
+ "soil-block-builder",
+ "soil-blockchain",
+ "soil-consensus",
+ "soil-consensus-pow",
  "soil-core",
+ "soil-inherents",
  "soil-runtime",
- "sp-api",
- "sp-block-builder",
- "sp-blockchain",
- "sp-consensus",
- "sp-consensus-pow",
- "sp-inherents",
  "substrate-prometheus-endpoint",
  "thiserror 1.0.69",
 ]
@@ -11295,14 +11295,14 @@ dependencies = [
  "sc-consensus",
  "sc-telemetry",
  "soil-arithmetic",
+ "soil-blockchain",
+ "soil-consensus",
+ "soil-consensus-slots",
  "soil-core",
+ "soil-inherents",
  "soil-runtime",
  "soil-state-machine",
  "soil-trie",
- "sp-blockchain",
- "sp-consensus",
- "sp-consensus-slots",
- "sp-inherents",
  "substrate-test-runtime-client",
 ]
 
@@ -11323,6 +11323,7 @@ dependencies = [
  "sc-runtime-test",
  "sc-tracing",
  "schnellru",
+ "soil-api",
  "soil-core",
  "soil-crypto-hashing",
  "soil-externalities",
@@ -11334,9 +11335,8 @@ dependencies = [
  "soil-state-machine",
  "soil-tracing",
  "soil-trie",
+ "soil-version",
  "soil-wasm-interface",
- "sp-api",
- "sp-version",
  "substrate-test-runtime",
  "tempfile",
  "tracing",
@@ -11399,8 +11399,8 @@ dependencies = [
  "sc-client-api",
  "sc-network",
  "sc-network-sync",
+ "soil-blockchain",
  "soil-runtime",
- "sp-blockchain",
 ]
 
 [[package]]
@@ -11435,12 +11435,12 @@ dependencies = [
  "sc-network",
  "sc-network-types",
  "sc-transaction-pool-api",
+ "soil-api",
+ "soil-consensus",
  "soil-core",
  "soil-keystore",
+ "soil-mixnet",
  "soil-runtime",
- "sp-api",
- "sp-consensus",
- "sp-mixnet",
  "thiserror 1.0.69",
 ]
 
@@ -11484,12 +11484,12 @@ dependencies = [
  "serde_json",
  "smallvec",
  "soil-arithmetic",
+ "soil-blockchain",
+ "soil-consensus",
  "soil-core",
  "soil-crypto-hashing",
  "soil-runtime",
  "soil-tracing",
- "sp-blockchain",
- "sp-consensus",
  "substrate-prometheus-endpoint",
  "substrate-test-runtime",
  "substrate-test-runtime-client",
@@ -11550,9 +11550,9 @@ dependencies = [
  "sc-client-api",
  "sc-network",
  "sc-network-types",
+ "soil-blockchain",
  "soil-core",
  "soil-runtime",
- "sp-blockchain",
  "thiserror 1.0.69",
 ]
 
@@ -11574,13 +11574,13 @@ dependencies = [
  "sc-network-sync",
  "sc-network-types",
  "sc-statement-store",
+ "soil-api",
+ "soil-blockchain",
+ "soil-consensus",
  "soil-core",
+ "soil-keyring",
  "soil-runtime",
- "sp-api",
- "sp-blockchain",
- "sp-consensus",
- "sp-keyring",
- "sp-statement-store",
+ "soil-statement-store",
  "substrate-prometheus-endpoint",
  "substrate-test-runtime-client",
  "tempfile",
@@ -11612,12 +11612,12 @@ dependencies = [
  "schnellru",
  "smallvec",
  "soil-arithmetic",
+ "soil-blockchain",
+ "soil-consensus",
  "soil-core",
  "soil-runtime",
+ "soil-test-primitives",
  "soil-tracing",
- "sp-blockchain",
- "sp-consensus",
- "sp-test-primitives",
  "substrate-prometheus-endpoint",
  "substrate-test-runtime-client",
  "thiserror 1.0.69",
@@ -11647,11 +11647,11 @@ dependencies = [
  "sc-network-types",
  "sc-service",
  "sc-utils",
+ "soil-blockchain",
+ "soil-consensus",
  "soil-core",
  "soil-runtime",
  "soil-tracing",
- "sp-blockchain",
- "sp-consensus",
  "substrate-test-runtime",
  "substrate-test-runtime-client",
  "tokio",
@@ -11670,8 +11670,8 @@ dependencies = [
  "sc-network-sync",
  "sc-network-types",
  "sc-utils",
+ "soil-consensus",
  "soil-runtime",
- "sp-consensus",
  "substrate-prometheus-endpoint",
 ]
 
@@ -11723,14 +11723,14 @@ dependencies = [
  "sc-transaction-pool",
  "sc-transaction-pool-api",
  "sc-utils",
+ "soil-api",
+ "soil-consensus",
  "soil-core",
  "soil-externalities",
  "soil-keystore",
+ "soil-offchain",
  "soil-runtime",
  "soil-tracing",
- "sp-api",
- "sp-consensus",
- "sp-offchain",
  "substrate-test-runtime-client",
  "threadpool",
  "tokio",
@@ -11771,18 +11771,18 @@ dependencies = [
  "sc-transaction-pool-api",
  "sc-utils",
  "serde_json",
+ "soil-api",
+ "soil-blockchain",
+ "soil-consensus",
  "soil-core",
  "soil-crypto-hashing",
  "soil-keystore",
+ "soil-offchain",
  "soil-rpc",
  "soil-runtime",
- "sp-api",
- "sp-blockchain",
- "sp-consensus",
- "sp-offchain",
- "sp-session",
- "sp-statement-store",
- "sp-version",
+ "soil-session",
+ "soil-statement-store",
+ "soil-version",
  "substrate-test-runtime-client",
  "tempfile",
  "tokio",
@@ -11803,8 +11803,8 @@ dependencies = [
  "soil-core",
  "soil-rpc",
  "soil-runtime",
- "sp-statement-store",
- "sp-version",
+ "soil-statement-store",
+ "soil-version",
  "thiserror 1.0.69",
 ]
 
@@ -11859,15 +11859,15 @@ dependencies = [
  "schnellru",
  "serde",
  "serde_json",
+ "soil-api",
+ "soil-blockchain",
+ "soil-consensus",
  "soil-core",
  "soil-externalities",
  "soil-maybe-compressed-blob",
  "soil-rpc",
  "soil-runtime",
- "sp-api",
- "sp-blockchain",
- "sp-consensus",
- "sp-version",
+ "soil-version",
  "substrate-prometheus-endpoint",
  "substrate-test-runtime",
  "substrate-test-runtime-client",
@@ -11899,8 +11899,8 @@ dependencies = [
  "soil-crypto-hashing",
  "soil-io",
  "soil-state-machine",
+ "soil-version",
  "soil-wasm-interface",
- "sp-version",
  "subxt",
  "thiserror 1.0.69",
 ]
@@ -11945,20 +11945,20 @@ dependencies = [
  "schnellru",
  "serde",
  "serde_json",
+ "soil-api",
+ "soil-blockchain",
+ "soil-consensus",
  "soil-core",
  "soil-externalities",
  "soil-keystore",
  "soil-runtime",
+ "soil-session",
  "soil-state-machine",
  "soil-storage",
+ "soil-transaction-pool",
+ "soil-transaction-storage-proof",
  "soil-trie",
- "sp-api",
- "sp-blockchain",
- "sp-consensus",
- "sp-session",
- "sp-transaction-pool",
- "sp-transaction-storage-proof",
- "sp-version",
+ "soil-version",
  "static_init",
  "substrate-prometheus-endpoint",
  "substrate-test-runtime",
@@ -11990,15 +11990,15 @@ dependencies = [
  "sc-network-sync",
  "sc-service",
  "sc-transaction-pool-api",
+ "soil-api",
+ "soil-blockchain",
+ "soil-consensus",
  "soil-core",
  "soil-io",
  "soil-runtime",
  "soil-state-machine",
  "soil-storage",
  "soil-tracing",
- "sp-api",
- "sp-blockchain",
- "sp-consensus",
  "substrate-test-runtime",
  "substrate-test-runtime-client",
  "tempfile",
@@ -12030,13 +12030,13 @@ dependencies = [
  "sc-keystore",
  "sc-network-statement",
  "sc-utils",
+ "soil-api",
+ "soil-blockchain",
  "soil-core",
  "soil-runtime",
+ "soil-statement-store",
  "soil-storage",
  "soil-tracing",
- "sp-api",
- "sp-blockchain",
- "sp-statement-store",
  "substrate-prometheus-endpoint",
  "tempfile",
  "tokio",
@@ -12067,8 +12067,8 @@ dependencies = [
  "sc-consensus-grandpa",
  "serde",
  "serde_json",
+ "soil-blockchain",
  "soil-runtime",
- "sp-blockchain",
  "thiserror 1.0.69",
 ]
 
@@ -12127,12 +12127,12 @@ dependencies = [
  "sc-client-api",
  "sc-tracing-proc-macro",
  "serde",
+ "soil-api",
+ "soil-blockchain",
  "soil-core",
  "soil-rpc",
  "soil-runtime",
  "soil-tracing",
- "sp-api",
- "sp-blockchain",
  "thiserror 1.0.69",
  "tracing",
  "tracing-log",
@@ -12173,14 +12173,14 @@ dependencies = [
  "sc-utils",
  "serde",
  "serde_json",
+ "soil-api",
+ "soil-blockchain",
+ "soil-consensus",
  "soil-core",
  "soil-crypto-hashing",
  "soil-runtime",
  "soil-tracing",
- "sp-api",
- "sp-blockchain",
- "sp-consensus",
- "sp-transaction-pool",
+ "soil-transaction-pool",
  "strum 0.26.3",
  "substrate-prometheus-endpoint",
  "substrate-test-runtime",
@@ -12204,9 +12204,9 @@ dependencies = [
  "parity-scale-codec",
  "serde",
  "serde_json",
+ "soil-blockchain",
  "soil-core",
  "soil-runtime",
- "sp-blockchain",
  "strum 0.26.3",
  "thiserror 1.0.69",
 ]
@@ -13003,6 +13003,28 @@ dependencies = [
 ]
 
 [[package]]
+name = "soil-api"
+version = "26.0.0"
+dependencies = [
+ "docify",
+ "hash-db",
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "soil-api-proc-macro",
+ "soil-core",
+ "soil-externalities",
+ "soil-metadata-ir",
+ "soil-runtime",
+ "soil-runtime-interface",
+ "soil-state-machine",
+ "soil-test-primitives",
+ "soil-trie",
+ "soil-version",
+ "thiserror 1.0.69",
+]
+
+[[package]]
 name = "soil-api-proc-macro"
 version = "15.0.0"
 dependencies = [
@@ -13042,6 +13064,163 @@ dependencies = [
  "serde",
  "soil-crypto-hashing",
  "static_assertions",
+]
+
+[[package]]
+name = "soil-authority-discovery"
+version = "26.0.0"
+dependencies = [
+ "parity-scale-codec",
+ "scale-info",
+ "soil-api",
+ "soil-application-crypto",
+ "soil-runtime",
+]
+
+[[package]]
+name = "soil-block-builder"
+version = "26.0.0"
+dependencies = [
+ "soil-api",
+ "soil-inherents",
+ "soil-runtime",
+]
+
+[[package]]
+name = "soil-blockchain"
+version = "28.0.0"
+dependencies = [
+ "futures",
+ "parity-scale-codec",
+ "parking_lot 0.12.5",
+ "schnellru",
+ "soil-api",
+ "soil-consensus",
+ "soil-core",
+ "soil-database",
+ "soil-runtime",
+ "soil-state-machine",
+ "thiserror 1.0.69",
+ "tracing",
+]
+
+[[package]]
+name = "soil-consensus"
+version = "0.32.0"
+dependencies = [
+ "async-trait",
+ "futures",
+ "log",
+ "soil-api",
+ "soil-externalities",
+ "soil-inherents",
+ "soil-runtime",
+ "soil-state-machine",
+ "soil-trie",
+ "thiserror 1.0.69",
+]
+
+[[package]]
+name = "soil-consensus-aura"
+version = "0.32.0"
+dependencies = [
+ "async-trait",
+ "parity-scale-codec",
+ "scale-info",
+ "soil-api",
+ "soil-application-crypto",
+ "soil-consensus-slots",
+ "soil-inherents",
+ "soil-runtime",
+ "soil-timestamp",
+]
+
+[[package]]
+name = "soil-consensus-babe"
+version = "0.32.0"
+dependencies = [
+ "async-trait",
+ "parity-scale-codec",
+ "scale-info",
+ "serde",
+ "soil-api",
+ "soil-application-crypto",
+ "soil-consensus-slots",
+ "soil-core",
+ "soil-inherents",
+ "soil-runtime",
+ "soil-timestamp",
+]
+
+[[package]]
+name = "soil-consensus-beefy"
+version = "13.0.0"
+dependencies = [
+ "array-bytes 6.2.3",
+ "parity-scale-codec",
+ "scale-info",
+ "serde",
+ "soil-api",
+ "soil-application-crypto",
+ "soil-core",
+ "soil-crypto-hashing",
+ "soil-io",
+ "soil-keystore",
+ "soil-mmr-primitives",
+ "soil-runtime",
+ "soil-weights",
+ "strum 0.26.3",
+ "w3f-bls",
+]
+
+[[package]]
+name = "soil-consensus-grandpa"
+version = "13.0.0"
+dependencies = [
+ "finality-grandpa",
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "serde",
+ "soil-api",
+ "soil-application-crypto",
+ "soil-core",
+ "soil-keystore",
+ "soil-runtime",
+]
+
+[[package]]
+name = "soil-consensus-pow"
+version = "0.32.0"
+dependencies = [
+ "parity-scale-codec",
+ "soil-api",
+ "soil-core",
+ "soil-runtime",
+]
+
+[[package]]
+name = "soil-consensus-sassafras"
+version = "0.3.4-dev"
+dependencies = [
+ "parity-scale-codec",
+ "scale-info",
+ "serde",
+ "soil-api",
+ "soil-application-crypto",
+ "soil-consensus-slots",
+ "soil-core",
+ "soil-runtime",
+]
+
+[[package]]
+name = "soil-consensus-slots"
+version = "0.32.0"
+dependencies = [
+ "parity-scale-codec",
+ "scale-info",
+ "serde",
+ "soil-timestamp",
 ]
 
 [[package]]
@@ -13166,6 +13345,30 @@ dependencies = [
 ]
 
 [[package]]
+name = "soil-genesis-builder"
+version = "0.8.0"
+dependencies = [
+ "parity-scale-codec",
+ "scale-info",
+ "serde_json",
+ "soil-api",
+ "soil-runtime",
+]
+
+[[package]]
+name = "soil-inherents"
+version = "26.0.0"
+dependencies = [
+ "async-trait",
+ "futures",
+ "impl-trait-for-tuples",
+ "parity-scale-codec",
+ "scale-info",
+ "soil-runtime",
+ "thiserror 1.0.69",
+]
+
+[[package]]
 name = "soil-io"
 version = "30.0.0"
 dependencies = [
@@ -13188,6 +13391,15 @@ dependencies = [
  "soil-trie",
  "tracing",
  "tracing-core",
+]
+
+[[package]]
+name = "soil-keyring"
+version = "31.0.0"
+dependencies = [
+ "soil-core",
+ "soil-runtime",
+ "strum 0.26.3",
 ]
 
 [[package]]
@@ -13215,6 +13427,55 @@ dependencies = [
  "frame-metadata",
  "parity-scale-codec",
  "scale-info",
+]
+
+[[package]]
+name = "soil-mixnet"
+version = "0.4.0"
+dependencies = [
+ "parity-scale-codec",
+ "scale-info",
+ "soil-api",
+ "soil-application-crypto",
+]
+
+[[package]]
+name = "soil-mmr-primitives"
+version = "26.0.0"
+dependencies = [
+ "array-bytes 6.2.3",
+ "log",
+ "parity-scale-codec",
+ "polkadot-ckb-merkle-mountain-range",
+ "scale-info",
+ "serde",
+ "soil-api",
+ "soil-core",
+ "soil-debug-derive",
+ "soil-runtime",
+ "thiserror 1.0.69",
+]
+
+[[package]]
+name = "soil-npos-elections"
+version = "26.0.0"
+dependencies = [
+ "parity-scale-codec",
+ "scale-info",
+ "serde",
+ "soil-arithmetic",
+ "soil-core",
+ "soil-runtime",
+ "substrate-test-utils",
+]
+
+[[package]]
+name = "soil-offchain"
+version = "26.0.0"
+dependencies = [
+ "soil-api",
+ "soil-core",
+ "soil-runtime",
 ]
 
 [[package]]
@@ -13254,6 +13515,7 @@ dependencies = [
  "serde",
  "serde_json",
  "simple-mermaid",
+ "soil-api",
  "soil-application-crypto",
  "soil-arithmetic",
  "soil-core",
@@ -13264,7 +13526,6 @@ dependencies = [
  "soil-tracing",
  "soil-trie",
  "soil-weights",
- "sp-api",
  "strum 0.26.3",
  "substrate-test-runtime-client",
  "tracing",
@@ -13307,6 +13568,31 @@ dependencies = [
 ]
 
 [[package]]
+name = "soil-session"
+version = "27.0.0"
+dependencies = [
+ "parity-scale-codec",
+ "scale-info",
+ "soil-api",
+ "soil-core",
+ "soil-keystore",
+ "soil-runtime",
+ "soil-staking",
+]
+
+[[package]]
+name = "soil-staking"
+version = "26.0.0"
+dependencies = [
+ "impl-trait-for-tuples",
+ "parity-scale-codec",
+ "scale-info",
+ "serde",
+ "soil-core",
+ "soil-runtime",
+]
+
+[[package]]
 name = "soil-state-machine"
 version = "0.35.0"
 dependencies = [
@@ -13331,6 +13617,31 @@ dependencies = [
 ]
 
 [[package]]
+name = "soil-statement-store"
+version = "10.0.0"
+dependencies = [
+ "aes-gcm",
+ "curve25519-dalek",
+ "ed25519-dalek",
+ "frame-support",
+ "hkdf",
+ "parity-scale-codec",
+ "rand 0.8.5",
+ "scale-info",
+ "serde",
+ "sha2 0.10.9",
+ "soil-api",
+ "soil-application-crypto",
+ "soil-core",
+ "soil-crypto-hashing",
+ "soil-externalities",
+ "soil-runtime",
+ "soil-runtime-interface",
+ "thiserror 1.0.69",
+ "x25519-dalek",
+]
+
+[[package]]
 name = "soil-std"
 version = "14.0.0"
 
@@ -13346,6 +13657,29 @@ dependencies = [
 ]
 
 [[package]]
+name = "soil-test-primitives"
+version = "2.0.0"
+dependencies = [
+ "parity-scale-codec",
+ "scale-info",
+ "serde",
+ "soil-application-crypto",
+ "soil-core",
+ "soil-runtime",
+]
+
+[[package]]
+name = "soil-timestamp"
+version = "26.0.0"
+dependencies = [
+ "async-trait",
+ "parity-scale-codec",
+ "soil-inherents",
+ "soil-runtime",
+ "thiserror 1.0.69",
+]
+
+[[package]]
 name = "soil-tracing"
 version = "16.0.0"
 dependencies = [
@@ -13354,6 +13688,28 @@ dependencies = [
  "tracing",
  "tracing-core",
  "tracing-subscriber",
+]
+
+[[package]]
+name = "soil-transaction-pool"
+version = "26.0.0"
+dependencies = [
+ "soil-api",
+ "soil-runtime",
+]
+
+[[package]]
+name = "soil-transaction-storage-proof"
+version = "26.0.0"
+dependencies = [
+ "async-trait",
+ "parity-scale-codec",
+ "scale-info",
+ "soil-api",
+ "soil-core",
+ "soil-inherents",
+ "soil-runtime",
+ "soil-trie",
 ]
 
 [[package]]
@@ -13386,6 +13742,22 @@ dependencies = [
 ]
 
 [[package]]
+name = "soil-version"
+version = "29.0.0"
+dependencies = [
+ "impl-serde",
+ "parity-scale-codec",
+ "parity-wasm",
+ "scale-info",
+ "serde",
+ "soil-crypto-hashing-proc-macro",
+ "soil-runtime",
+ "soil-std",
+ "soil-version-proc-macro",
+ "thiserror 1.0.69",
+]
+
+[[package]]
 name = "soil-version-proc-macro"
 version = "13.0.0"
 dependencies = [
@@ -13393,7 +13765,7 @@ dependencies = [
  "proc-macro-warning",
  "proc-macro2",
  "quote",
- "sp-version",
+ "soil-version",
  "syn 2.0.117",
 ]
 
@@ -13439,28 +13811,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "sp-api"
-version = "26.0.0"
-dependencies = [
- "docify",
- "hash-db",
- "log",
- "parity-scale-codec",
- "scale-info",
- "soil-api-proc-macro",
- "soil-core",
- "soil-externalities",
- "soil-metadata-ir",
- "soil-runtime",
- "soil-runtime-interface",
- "soil-state-machine",
- "soil-trie",
- "sp-test-primitives",
- "sp-version",
- "thiserror 1.0.69",
-]
-
-[[package]]
 name = "sp-api-test"
 version = "2.0.1"
 dependencies = [
@@ -13471,15 +13821,15 @@ dependencies = [
  "rustversion",
  "sc-block-builder",
  "scale-info",
+ "soil-api",
+ "soil-consensus",
  "soil-core",
  "soil-externalities",
  "soil-metadata-ir",
  "soil-runtime",
  "soil-state-machine",
  "soil-tracing",
- "sp-api",
- "sp-consensus",
- "sp-version",
+ "soil-version",
  "static_assertions",
  "substrate-test-runtime-client",
  "trybuild",
@@ -13489,11 +13839,11 @@ dependencies = [
 name = "sp-application-crypto-test"
 version = "2.0.0"
 dependencies = [
+ "soil-api",
  "soil-application-crypto",
  "soil-core",
  "soil-keystore",
  "soil-tracing",
- "sp-api",
  "substrate-test-runtime-client",
 ]
 
@@ -13506,163 +13856,6 @@ dependencies = [
  "honggfuzz",
  "num-bigint",
  "soil-arithmetic",
-]
-
-[[package]]
-name = "sp-authority-discovery"
-version = "26.0.0"
-dependencies = [
- "parity-scale-codec",
- "scale-info",
- "soil-application-crypto",
- "soil-runtime",
- "sp-api",
-]
-
-[[package]]
-name = "sp-block-builder"
-version = "26.0.0"
-dependencies = [
- "soil-runtime",
- "sp-api",
- "sp-inherents",
-]
-
-[[package]]
-name = "sp-blockchain"
-version = "28.0.0"
-dependencies = [
- "futures",
- "parity-scale-codec",
- "parking_lot 0.12.5",
- "schnellru",
- "soil-core",
- "soil-database",
- "soil-runtime",
- "soil-state-machine",
- "sp-api",
- "sp-consensus",
- "thiserror 1.0.69",
- "tracing",
-]
-
-[[package]]
-name = "sp-consensus"
-version = "0.32.0"
-dependencies = [
- "async-trait",
- "futures",
- "log",
- "soil-externalities",
- "soil-runtime",
- "soil-state-machine",
- "soil-trie",
- "sp-api",
- "sp-inherents",
- "thiserror 1.0.69",
-]
-
-[[package]]
-name = "sp-consensus-aura"
-version = "0.32.0"
-dependencies = [
- "async-trait",
- "parity-scale-codec",
- "scale-info",
- "soil-application-crypto",
- "soil-runtime",
- "sp-api",
- "sp-consensus-slots",
- "sp-inherents",
- "sp-timestamp",
-]
-
-[[package]]
-name = "sp-consensus-babe"
-version = "0.32.0"
-dependencies = [
- "async-trait",
- "parity-scale-codec",
- "scale-info",
- "serde",
- "soil-application-crypto",
- "soil-core",
- "soil-runtime",
- "sp-api",
- "sp-consensus-slots",
- "sp-inherents",
- "sp-timestamp",
-]
-
-[[package]]
-name = "sp-consensus-beefy"
-version = "13.0.0"
-dependencies = [
- "array-bytes 6.2.3",
- "parity-scale-codec",
- "scale-info",
- "serde",
- "soil-application-crypto",
- "soil-core",
- "soil-crypto-hashing",
- "soil-io",
- "soil-keystore",
- "soil-runtime",
- "soil-weights",
- "sp-api",
- "sp-mmr-primitives",
- "strum 0.26.3",
- "w3f-bls",
-]
-
-[[package]]
-name = "sp-consensus-grandpa"
-version = "13.0.0"
-dependencies = [
- "finality-grandpa",
- "log",
- "parity-scale-codec",
- "scale-info",
- "serde",
- "soil-application-crypto",
- "soil-core",
- "soil-keystore",
- "soil-runtime",
- "sp-api",
-]
-
-[[package]]
-name = "sp-consensus-pow"
-version = "0.32.0"
-dependencies = [
- "parity-scale-codec",
- "soil-core",
- "soil-runtime",
- "sp-api",
-]
-
-[[package]]
-name = "sp-consensus-sassafras"
-version = "0.3.4-dev"
-dependencies = [
- "parity-scale-codec",
- "scale-info",
- "serde",
- "soil-application-crypto",
- "soil-core",
- "soil-runtime",
- "sp-api",
- "sp-consensus-slots",
-]
-
-[[package]]
-name = "sp-consensus-slots"
-version = "0.32.0"
-dependencies = [
- "parity-scale-codec",
- "scale-info",
- "serde",
- "sp-timestamp",
 ]
 
 [[package]]
@@ -13703,96 +13896,14 @@ dependencies = [
 ]
 
 [[package]]
-name = "sp-genesis-builder"
-version = "0.8.0"
-dependencies = [
- "parity-scale-codec",
- "scale-info",
- "serde_json",
- "soil-runtime",
- "sp-api",
-]
-
-[[package]]
-name = "sp-inherents"
-version = "26.0.0"
-dependencies = [
- "async-trait",
- "futures",
- "impl-trait-for-tuples",
- "parity-scale-codec",
- "scale-info",
- "soil-runtime",
- "thiserror 1.0.69",
-]
-
-[[package]]
-name = "sp-keyring"
-version = "31.0.0"
-dependencies = [
- "soil-core",
- "soil-runtime",
- "strum 0.26.3",
-]
-
-[[package]]
-name = "sp-mixnet"
-version = "0.4.0"
-dependencies = [
- "parity-scale-codec",
- "scale-info",
- "soil-application-crypto",
- "sp-api",
-]
-
-[[package]]
-name = "sp-mmr-primitives"
-version = "26.0.0"
-dependencies = [
- "array-bytes 6.2.3",
- "log",
- "parity-scale-codec",
- "polkadot-ckb-merkle-mountain-range",
- "scale-info",
- "serde",
- "soil-core",
- "soil-debug-derive",
- "soil-runtime",
- "sp-api",
- "thiserror 1.0.69",
-]
-
-[[package]]
-name = "sp-npos-elections"
-version = "26.0.0"
-dependencies = [
- "parity-scale-codec",
- "scale-info",
- "serde",
- "soil-arithmetic",
- "soil-core",
- "soil-runtime",
- "substrate-test-utils",
-]
-
-[[package]]
 name = "sp-npos-elections-fuzzer"
 version = "2.0.0-alpha.5"
 dependencies = [
  "clap",
  "honggfuzz",
  "rand 0.8.5",
+ "soil-npos-elections",
  "soil-runtime",
- "sp-npos-elections",
-]
-
-[[package]]
-name = "sp-offchain"
-version = "26.0.0"
-dependencies = [
- "soil-core",
- "soil-runtime",
- "sp-api",
 ]
 
 [[package]]
@@ -13830,117 +13941,6 @@ dependencies = [
  "soil-io",
  "soil-runtime-interface",
  "substrate-wasm-builder",
-]
-
-[[package]]
-name = "sp-session"
-version = "27.0.0"
-dependencies = [
- "parity-scale-codec",
- "scale-info",
- "soil-core",
- "soil-keystore",
- "soil-runtime",
- "sp-api",
- "sp-staking",
-]
-
-[[package]]
-name = "sp-staking"
-version = "26.0.0"
-dependencies = [
- "impl-trait-for-tuples",
- "parity-scale-codec",
- "scale-info",
- "serde",
- "soil-core",
- "soil-runtime",
-]
-
-[[package]]
-name = "sp-statement-store"
-version = "10.0.0"
-dependencies = [
- "aes-gcm",
- "curve25519-dalek",
- "ed25519-dalek",
- "frame-support",
- "hkdf",
- "parity-scale-codec",
- "rand 0.8.5",
- "scale-info",
- "serde",
- "sha2 0.10.9",
- "soil-application-crypto",
- "soil-core",
- "soil-crypto-hashing",
- "soil-externalities",
- "soil-runtime",
- "soil-runtime-interface",
- "sp-api",
- "thiserror 1.0.69",
- "x25519-dalek",
-]
-
-[[package]]
-name = "sp-test-primitives"
-version = "2.0.0"
-dependencies = [
- "parity-scale-codec",
- "scale-info",
- "serde",
- "soil-application-crypto",
- "soil-core",
- "soil-runtime",
-]
-
-[[package]]
-name = "sp-timestamp"
-version = "26.0.0"
-dependencies = [
- "async-trait",
- "parity-scale-codec",
- "soil-runtime",
- "sp-inherents",
- "thiserror 1.0.69",
-]
-
-[[package]]
-name = "sp-transaction-pool"
-version = "26.0.0"
-dependencies = [
- "soil-runtime",
- "sp-api",
-]
-
-[[package]]
-name = "sp-transaction-storage-proof"
-version = "26.0.0"
-dependencies = [
- "async-trait",
- "parity-scale-codec",
- "scale-info",
- "soil-core",
- "soil-runtime",
- "soil-trie",
- "sp-api",
- "sp-inherents",
-]
-
-[[package]]
-name = "sp-version"
-version = "29.0.0"
-dependencies = [
- "impl-serde",
- "parity-scale-codec",
- "parity-wasm",
- "scale-info",
- "serde",
- "soil-crypto-hashing-proc-macro",
- "soil-runtime",
- "soil-std",
- "soil-version-proc-macro",
- "thiserror 1.0.69",
 ]
 
 [[package]]
@@ -14119,38 +14119,38 @@ dependencies = [
  "scale-info",
  "serde",
  "serde_json",
+ "soil-api",
  "soil-application-crypto",
+ "soil-authority-discovery",
+ "soil-blockchain",
+ "soil-consensus",
+ "soil-consensus-babe",
+ "soil-consensus-beefy",
+ "soil-consensus-grandpa",
  "soil-core",
  "soil-crypto-hashing",
  "soil-database",
  "soil-externalities",
+ "soil-genesis-builder",
+ "soil-inherents",
  "soil-io",
+ "soil-keyring",
  "soil-keystore",
  "soil-maybe-compressed-blob",
+ "soil-mixnet",
+ "soil-mmr-primitives",
  "soil-panic-handler",
  "soil-rpc",
  "soil-runtime",
  "soil-state-machine",
+ "soil-statement-store",
+ "soil-timestamp",
  "soil-tracing",
+ "soil-transaction-storage-proof",
  "soil-trie",
  "soketto",
- "sp-api",
- "sp-authority-discovery",
- "sp-blockchain",
- "sp-consensus",
- "sp-consensus-babe",
- "sp-consensus-beefy",
- "sp-consensus-grandpa",
  "sp-core-hashing",
  "sp-core-hashing-proc-macro",
- "sp-genesis-builder",
- "sp-inherents",
- "sp-keyring",
- "sp-mixnet",
- "sp-mmr-primitives",
- "sp-statement-store",
- "sp-timestamp",
- "sp-transaction-storage-proof",
  "staging-chain-spec-builder",
  "staging-node-inspect",
  "subkey",
@@ -14178,11 +14178,11 @@ dependencies = [
  "sc-cli",
  "sc-client-api",
  "sc-service",
+ "soil-blockchain",
  "soil-core",
  "soil-io",
  "soil-runtime",
- "sp-blockchain",
- "sp-statement-store",
+ "soil-statement-store",
  "thiserror 1.0.69",
 ]
 
@@ -14343,12 +14343,12 @@ dependencies = [
  "sc-rpc-api",
  "sc-transaction-pool",
  "sc-transaction-pool-api",
+ "soil-api",
+ "soil-block-builder",
+ "soil-blockchain",
  "soil-core",
  "soil-runtime",
  "soil-tracing",
- "sp-api",
- "sp-block-builder",
- "sp-blockchain",
  "substrate-test-runtime-client",
  "tokio",
 ]
@@ -14411,12 +14411,12 @@ dependencies = [
  "sc-service",
  "serde",
  "serde_json",
+ "soil-blockchain",
+ "soil-consensus",
  "soil-core",
+ "soil-keyring",
  "soil-keystore",
  "soil-runtime",
- "sp-blockchain",
- "sp-consensus",
- "sp-keyring",
  "tokio",
 ]
 
@@ -14446,30 +14446,30 @@ dependencies = [
  "scale-info",
  "serde",
  "serde_json",
+ "soil-api",
  "soil-application-crypto",
+ "soil-block-builder",
+ "soil-consensus",
+ "soil-consensus-aura",
+ "soil-consensus-babe",
+ "soil-consensus-grandpa",
  "soil-core",
  "soil-crypto-hashing",
  "soil-debug-derive",
  "soil-externalities",
+ "soil-genesis-builder",
+ "soil-inherents",
  "soil-io",
+ "soil-keyring",
+ "soil-offchain",
  "soil-runtime",
+ "soil-session",
  "soil-state-machine",
+ "soil-statement-store",
  "soil-tracing",
+ "soil-transaction-pool",
  "soil-trie",
- "sp-api",
- "sp-block-builder",
- "sp-consensus",
- "sp-consensus-aura",
- "sp-consensus-babe",
- "sp-consensus-grandpa",
- "sp-genesis-builder",
- "sp-inherents",
- "sp-keyring",
- "sp-offchain",
- "sp-session",
- "sp-statement-store",
- "sp-transaction-pool",
- "sp-version",
+ "soil-version",
  "substrate-test-runtime-client",
  "substrate-wasm-builder",
  "tracing",
@@ -14484,11 +14484,11 @@ dependencies = [
  "sc-block-builder",
  "sc-client-api",
  "sc-consensus",
+ "soil-api",
+ "soil-blockchain",
+ "soil-consensus",
  "soil-core",
  "soil-runtime",
- "sp-api",
- "sp-blockchain",
- "sp-consensus",
  "substrate-test-client",
  "substrate-test-runtime",
 ]
@@ -14504,8 +14504,8 @@ dependencies = [
  "parking_lot 0.12.5",
  "sc-transaction-pool",
  "sc-transaction-pool-api",
+ "soil-blockchain",
  "soil-runtime",
- "sp-blockchain",
  "substrate-test-runtime-client",
  "thiserror 1.0.69",
 ]
@@ -14535,7 +14535,7 @@ dependencies = [
  "soil-io",
  "soil-maybe-compressed-blob",
  "soil-tracing",
- "sp-version",
+ "soil-version",
  "strum 0.26.3",
  "tempfile",
  "toml 0.8.23",

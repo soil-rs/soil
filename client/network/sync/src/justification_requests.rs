@@ -30,7 +30,7 @@ use prometheus_endpoint::{
 	prometheus::core::GenericGauge, register, GaugeVec, Opts, PrometheusError, Registry, U64,
 };
 use sc_network_types::PeerId;
-use sp_blockchain::Error as ClientError;
+use soil_blockchain::Error as ClientError;
 use soil_runtime::traits::{Block as BlockT, NumberFor, Zero};
 use std::{
 	collections::{HashMap, HashSet, VecDeque},
@@ -442,8 +442,8 @@ mod tests {
 	use super::*;
 	use crate::strategy::chain_sync::PeerSync;
 	use quickcheck::{Arbitrary, Gen, QuickCheck};
-	use sp_blockchain::Error as ClientError;
-	use sp_test_primitives::{Block, BlockNumber, Hash};
+	use soil_blockchain::Error as ClientError;
+	use soil_test_primitives::{Block, BlockNumber, Hash};
 	use std::collections::{HashMap, HashSet};
 
 	#[test]

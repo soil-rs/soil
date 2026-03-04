@@ -62,8 +62,8 @@ use sc_network_common::{
 };
 use sc_network_types::PeerId;
 use sc_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
-use sp_blockchain::{Error as ClientError, HeaderMetadata};
-use sp_consensus::{block_validation::BlockAnnounceValidator, BlockOrigin};
+use soil_blockchain::{Error as ClientError, HeaderMetadata};
+use soil_consensus::{block_validation::BlockAnnounceValidator, BlockOrigin};
 use soil_runtime::{
 	traits::{Block as BlockT, Header, NumberFor, Zero},
 	Justifications,
@@ -267,7 +267,7 @@ where
 	B: BlockT,
 	Client: HeaderBackend<B>
 		+ BlockBackend<B>
-		+ HeaderMetadata<B, Error = sp_blockchain::Error>
+		+ HeaderMetadata<B, Error = soil_blockchain::Error>
 		+ ProofProvider<B>
 		+ Send
 		+ Sync

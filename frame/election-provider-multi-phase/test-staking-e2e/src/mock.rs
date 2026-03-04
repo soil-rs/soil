@@ -25,7 +25,7 @@ use frame_support::{
 };
 use frame_system::EnsureRoot;
 use soil_core::{ConstBool, ConstU32, Get};
-use sp_npos_elections::{ElectionScore, VoteWeight};
+use soil_npos_elections::{ElectionScore, VoteWeight};
 use soil_runtime::{
 	offchain::{
 		testing::{OffchainState, PoolState, TestOffchainExt, TestTransactionPoolExt},
@@ -35,7 +35,7 @@ use soil_runtime::{
 	traits::Zero,
 	transaction_validity, BuildStorage, PerU16, Perbill, Percent,
 };
-use sp_staking::{
+use soil_staking::{
 	offence::{OffenceDetails, OnOffenceHandler},
 	Agent, DelegationInterface, EraIndex, SessionIndex, StakingInterface,
 };
@@ -242,10 +242,10 @@ impl MinerConfig for Runtime {
 const THRESHOLDS: [VoteWeight; 9] = [10, 20, 30, 40, 50, 60, 1_000, 2_000, 10_000];
 
 parameter_types! {
-	pub static BagThresholds: &'static [sp_npos_elections::VoteWeight] = &THRESHOLDS;
-	pub const SessionsPerEra: sp_staking::SessionIndex = 2;
-	pub static BondingDuration: sp_staking::EraIndex = 28;
-	pub const SlashDeferDuration: sp_staking::EraIndex = 7; // 1/4 the bonding duration.
+	pub static BagThresholds: &'static [soil_npos_elections::VoteWeight] = &THRESHOLDS;
+	pub const SessionsPerEra: soil_staking::SessionIndex = 2;
+	pub static BondingDuration: soil_staking::EraIndex = 28;
+	pub const SlashDeferDuration: soil_staking::EraIndex = 7; // 1/4 the bonding duration.
 }
 
 impl pallet_bags_list::Config for Runtime {

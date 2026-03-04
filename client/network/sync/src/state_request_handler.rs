@@ -288,7 +288,7 @@ enum HandleRequestError {
 	InvalidHash(#[from] codec::Error),
 
 	#[error(transparent)]
-	Client(#[from] sp_blockchain::Error),
+	Client(#[from] soil_blockchain::Error),
 
 	#[error("Failed to send response.")]
 	SendResponse,

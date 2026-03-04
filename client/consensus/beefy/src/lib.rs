@@ -40,10 +40,10 @@ use sc_consensus::BlockImport;
 use sc_network::{NetworkRequest, NotificationService, ProtocolName};
 use sc_network_gossip::{GossipEngine, Network as GossipNetwork, Syncing as GossipSyncing};
 use sc_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver};
-use sp_api::ProvideRuntimeApi;
-use sp_blockchain::{Backend as BlockchainBackend, HeaderBackend};
-use sp_consensus::{Error as ConsensusError, SyncOracle};
-use sp_consensus_beefy::{
+use soil_api::ProvideRuntimeApi;
+use soil_blockchain::{Backend as BlockchainBackend, HeaderBackend};
+use soil_consensus::{Error as ConsensusError, SyncOracle};
+use soil_consensus_beefy::{
 	AuthorityIdBound, BeefyApi, ConsensusLog, PayloadProvider, ValidatorSet, BEEFY_ENGINE_ID,
 };
 use soil_keystore::KeystorePtr;

@@ -82,10 +82,10 @@ pub struct JustificationRequest<B: Block> {
 #[derive(Debug, thiserror::Error)]
 pub enum Error {
 	#[error(transparent)]
-	Client(#[from] sp_blockchain::Error),
+	Client(#[from] soil_blockchain::Error),
 
 	#[error(transparent)]
-	RuntimeApi(#[from] sp_api::ApiError),
+	RuntimeApi(#[from] soil_api::ApiError),
 
 	/// Decoding failed, we were able to change the peer's reputation accordingly.
 	#[error("Decoding request failed for peer {0}.")]

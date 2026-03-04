@@ -42,7 +42,7 @@ pub use executor::NativeElseWasmExecutor;
 pub use executor::{with_externalities_safe, NativeExecutionDispatch, WasmExecutor};
 #[doc(hidden)]
 pub use soil_core::traits::Externalities;
-pub use sp_version::{NativeVersion, RuntimeVersion};
+pub use soil_version::{NativeVersion, RuntimeVersion};
 #[doc(hidden)]
 pub use soil_wasm_interface;
 pub use soil_wasm_interface::HostFunctions;

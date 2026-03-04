@@ -44,14 +44,14 @@ use sc_client_api::{execution_extensions::ExecutionExtensions, UsageProvider};
 use sc_client_db::PruningMode;
 use sc_consensus::{BlockImport, BlockImportParams, ForkChoiceStrategy, ImportResult, ImportedAux};
 use sc_executor::{WasmExecutionMethod, WasmtimeInstantiationStrategy};
-use sp_api::ProvideRuntimeApi;
-use sp_block_builder::BlockBuilder;
-use sp_consensus::BlockOrigin;
+use soil_api::ProvideRuntimeApi;
+use soil_block_builder::BlockBuilder;
+use soil_consensus::BlockOrigin;
 use soil_core::{
 	crypto::get_public_from_string_or_panic, ed25519, sr25519, traits::SpawnNamed, Pair,
 };
 use soil_crypto_hashing::blake2_256;
-use sp_inherents::InherentData;
+use soil_inherents::InherentData;
 use soil_runtime::{
 	generic::{self, ExtrinsicFormat, Preamble},
 	traits::{Block as BlockT, IdentifyAccount, Verify},
@@ -437,7 +437,7 @@ impl BenchDb {
 		let timestamp = 1 * MinimumPeriod::get();
 
 		inherent_data
-			.put_data(sp_timestamp::INHERENT_IDENTIFIER, &timestamp)
+			.put_data(soil_timestamp::INHERENT_IDENTIFIER, &timestamp)
 			.expect("Put timestamp failed");
 
 		client
@@ -481,8 +481,8 @@ impl BenchDb {
 		let start = std::time::Instant::now();
 		for opaque in self.block_content(content, &client) {
 			match block.push(opaque) {
-				Err(sp_blockchain::Error::ApplyExtrinsicFailed(
-					sp_blockchain::ApplyExtrinsicFailed::Validity(e),
+				Err(soil_blockchain::Error::ApplyExtrinsicFailed(
+					soil_blockchain::ApplyExtrinsicFailed::Validity(e),
 				)) if e.exhausted_resources() => break,
 				Err(err) => panic!("Error pushing transaction: {:?}", err),
 				Ok(_) => {},

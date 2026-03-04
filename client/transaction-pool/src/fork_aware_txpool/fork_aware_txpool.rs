@@ -61,7 +61,7 @@ use sc_transaction_pool_api::{
 	MaintainedTransactionPool, PoolStatus, TransactionFor, TransactionPool, TransactionSource,
 	TransactionStatusStreamFor, TxHash, TxInvalidityReportMap,
 };
-use sp_blockchain::{HashAndNumber, TreeRoute};
+use soil_blockchain::{HashAndNumber, TreeRoute};
 use soil_core::traits::SpawnEssentialNamed;
 use soil_runtime::{
 	generic::BlockId,
@@ -2069,17 +2069,17 @@ where
 impl<Block, Client> ForkAwareTxPool<FullChainApi<Client, Block>, Block>
 where
 	Block: BlockT,
-	Client: sp_api::ProvideRuntimeApi<Block>
+	Client: soil_api::ProvideRuntimeApi<Block>
 		+ sc_client_api::BlockBackend<Block>
 		+ sc_client_api::blockchain::HeaderBackend<Block>
 		+ soil_runtime::traits::BlockIdTo<Block>
 		+ sc_client_api::ExecutorProvider<Block>
 		+ sc_client_api::UsageProvider<Block>
-		+ sp_blockchain::HeaderMetadata<Block, Error = sp_blockchain::Error>
+		+ soil_blockchain::HeaderMetadata<Block, Error = soil_blockchain::Error>
 		+ Send
 		+ Sync
 		+ 'static,
-	Client::Api: sp_transaction_pool::runtime_api::TaggedTransactionQueue<Block>,
+	Client::Api: soil_transaction_pool::runtime_api::TaggedTransactionQueue<Block>,
 	<Block as BlockT>::Hash: std::marker::Unpin,
 {
 	/// Create new fork aware transaction pool for a full node with the provided api.

@@ -31,7 +31,7 @@
 extern crate alloc;
 
 // Re-export since this is necessary for `impl_apis` in runtime.
-pub use sp_consensus_grandpa::{
+pub use soil_consensus_grandpa::{
 	self as fg_primitives, AuthorityId, AuthorityList, AuthorityWeight,
 };
 
@@ -46,13 +46,13 @@ use frame_support::{
 };
 use frame_system::pallet_prelude::BlockNumberFor;
 use scale_info::TypeInfo;
-use sp_consensus_grandpa::{
+use soil_consensus_grandpa::{
 	ConsensusLog, EquivocationProof, ScheduledChange, SetId, GRANDPA_ENGINE_ID,
 	RUNTIME_LOG_TARGET as LOG_TARGET,
 };
 use soil_runtime::{generic::DigestItem, traits::Zero, DispatchResult};
-use sp_session::{GetSessionNumber, GetValidatorCount};
-use sp_staking::{offence::OffenceReportSystem, SessionIndex};
+use soil_session::{GetSessionNumber, GetValidatorCount};
+use soil_staking::{offence::OffenceReportSystem, SessionIndex};
 
 mod default_weights;
 mod equivocation;

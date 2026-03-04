@@ -28,14 +28,14 @@ use sc_consensus_slots::BackoffAuthoringOnFinalizedHeadLagging;
 use sc_network_test::{Block as TestBlock, *};
 use sc_transaction_pool_api::RejectAllTxPool;
 use soil_application_crypto::key_types::BABE;
-use sp_consensus::{NoNetwork as DummyOracle, Proposal, ProposeArgs};
-use sp_consensus_babe::{
+use soil_consensus::{NoNetwork as DummyOracle, Proposal, ProposeArgs};
+use soil_consensus_babe::{
 	inherents::{BabeCreateInherentDataProviders, InherentDataProvider},
 	make_vrf_sign_data, AllowedSlots, AuthorityId, AuthorityPair, Slot,
 };
-use sp_consensus_slots::SlotDuration;
+use soil_consensus_slots::SlotDuration;
 use soil_core::crypto::Pair;
-use sp_keyring::Sr25519Keyring;
+use soil_keyring::Sr25519Keyring;
 use soil_keystore::{testing::MemoryKeystore, Keystore};
 use soil_runtime::{
 	generic::{Digest, DigestItem},
@@ -46,7 +46,7 @@ use substrate_test_runtime_client::DefaultTestClientBuilderExt;
 
 type Item = DigestItem;
 
-type Error = sp_blockchain::Error;
+type Error = soil_blockchain::Error;
 
 type TestClient = substrate_test_runtime_client::client::Client<
 	substrate_test_runtime_client::Backend,
@@ -219,7 +219,7 @@ impl TestNetFactory for BabeTestNet {
 			client.clone(),
 			client.clone(),
 			Arc::new(move |_, _| async {
-				let timestamp = sp_timestamp::InherentDataProvider::from_system_time();
+				let timestamp = soil_timestamp::InherentDataProvider::from_system_time();
 				let slot = InherentDataProvider::from_timestamp_and_slot_duration(
 					*timestamp,
 					SlotDuration::from_millis(SLOT_DURATION_MS),
@@ -494,7 +494,7 @@ fn claim_epoch_slots() {
 	let authority = Sr25519Keyring::Alice;
 	let keystore = create_keystore(authority);
 
-	let mut epoch: Epoch = sp_consensus_babe::Epoch {
+	let mut epoch: Epoch = soil_consensus_babe::Epoch {
 		start_slot: 0.into(),
 		authorities: vec![(authority.public().into(), 1)],
 		randomness: [0; 32],
@@ -545,7 +545,7 @@ fn claim_vrf_check() {
 
 	let public = authority.public();
 
-	let epoch: Epoch = sp_consensus_babe::Epoch {
+	let epoch: Epoch = soil_consensus_babe::Epoch {
 		start_slot: 0.into(),
 		authorities: vec![(public.into(), 1)],
 		randomness: [0; 32],

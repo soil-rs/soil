@@ -22,7 +22,7 @@ use frame_support::{
 	construct_runtime, derive_impl, parameter_types,
 	traits::{ConstU32, ConstU64},
 };
-use sp_consensus_beefy::mmr::MmrLeafVersion;
+use soil_consensus_beefy::mmr::MmrLeafVersion;
 use soil_io::TestExternalities;
 use soil_runtime::{
 	app_crypto::ecdsa::Public,
@@ -34,7 +34,7 @@ use soil_state_machine::BasicExternalities;
 
 use crate as pallet_beefy_mmr;
 
-pub use sp_consensus_beefy::{
+pub use soil_consensus_beefy::{
 	ecdsa_crypto::AuthorityId as BeefyId, mmr::BeefyDataProvider, ConsensusLog, BEEFY_ENGINE_ID,
 };
 use soil_core::offchain::{testing::TestOffchainExt, OffchainDbExt, OffchainWorkerExt};
@@ -84,7 +84,7 @@ impl pallet_session::Config for Test {
 	type KeyDeposit = ();
 }
 
-pub type MmrLeaf = sp_consensus_beefy::mmr::MmrLeaf<
+pub type MmrLeaf = soil_consensus_beefy::mmr::MmrLeaf<
 	frame_system::pallet_prelude::BlockNumberFor<Test>,
 	<Test as frame_system::Config>::Hash,
 	crate::MerkleRootOf<Test>,
@@ -150,9 +150,9 @@ impl BeefyDataProvider<Vec<u8>> for DummyDataProvider {
 
 pub struct MockSessionManager;
 impl pallet_session::SessionManager<u64> for MockSessionManager {
-	fn end_session(_: sp_staking::SessionIndex) {}
-	fn start_session(_: sp_staking::SessionIndex) {}
-	fn new_session(idx: sp_staking::SessionIndex) -> Option<Vec<u64>> {
+	fn end_session(_: soil_staking::SessionIndex) {}
+	fn start_session(_: soil_staking::SessionIndex) {}
+	fn new_session(idx: soil_staking::SessionIndex) -> Option<Vec<u64>> {
 		if idx == 0 || idx == 1 {
 			Some(vec![1, 2])
 		} else if idx == 2 {

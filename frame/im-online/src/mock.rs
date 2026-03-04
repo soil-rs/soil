@@ -26,7 +26,7 @@ use frame_support::{
 };
 use pallet_session::historical as pallet_session_historical;
 use soil_runtime::{testing::UintAuthorityId, traits::ConvertInto, BuildStorage, Permill};
-use sp_staking::{
+use soil_staking::{
 	offence::{OffenceError, ReportOffence},
 	SessionIndex,
 };

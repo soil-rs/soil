@@ -268,7 +268,7 @@ pub enum BitswapError {
 
 	/// Client backend error.
 	#[error(transparent)]
-	Client(#[from] sp_blockchain::Error),
+	Client(#[from] soil_blockchain::Error),
 
 	/// Error parsing CID
 	#[error(transparent)]
@@ -301,7 +301,7 @@ mod tests {
 		message::{wantlist::Entry, Wantlist},
 		Message as BitswapMessage,
 	};
-	use sp_consensus::BlockOrigin;
+	use soil_consensus::BlockOrigin;
 	use soil_runtime::codec::Encode;
 	use substrate_test_runtime::ExtrinsicBuilder;
 	use substrate_test_runtime_client::{self, prelude::*, TestClientBuilder};

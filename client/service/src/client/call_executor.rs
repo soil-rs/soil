@@ -22,7 +22,7 @@ use sc_client_api::{
 	TrieCacheContext,
 };
 use sc_executor::{RuntimeVersion, RuntimeVersionOf};
-use sp_api::ProofRecorder;
+use soil_api::ProofRecorder;
 use soil_core::traits::{CallContext, CodeExecutor};
 use soil_externalities::Extensions;
 use soil_runtime::{
@@ -52,7 +52,7 @@ where
 		executor: E,
 		client_config: ClientConfig<Block>,
 		execution_extensions: ExecutionExtensions<Block>,
-	) -> sp_blockchain::Result<Self> {
+	) -> soil_blockchain::Result<Self> {
 		let code_provider = CodeProvider::new(&client_config, executor.clone(), backend.clone())?;
 
 		Ok(LocalCallExecutor {
@@ -98,7 +98,7 @@ where
 		method: &str,
 		call_data: &[u8],
 		context: CallContext,
-	) -> sp_blockchain::Result<Vec<u8>> {
+	) -> soil_blockchain::Result<Vec<u8>> {
 		let mut changes = OverlayedChanges::default();
 		let at_number =
 			self.backend.blockchain().expect_block_number_from_id(&BlockId::Hash(at_hash))?;
@@ -106,7 +106,7 @@ where
 
 		let state_runtime_code = soil_state_machine::backend::BackendRuntimeCode::new(&state);
 		let runtime_code =
-			state_runtime_code.runtime_code().map_err(sp_blockchain::Error::RuntimeCode)?;
+			state_runtime_code.runtime_code().map_err(soil_blockchain::Error::RuntimeCode)?;
 
 		let runtime_code = self.code_provider.maybe_override_code(runtime_code, &state, at_hash)?.0;
 
@@ -136,7 +136,7 @@ where
 		recorder: &Option<ProofRecorder<Block>>,
 		call_context: CallContext,
 		extensions: &RefCell<Extensions>,
-	) -> Result<Vec<u8>, sp_blockchain::Error> {
+	) -> Result<Vec<u8>, soil_blockchain::Error> {
 		let state = self.backend.state_at(at_hash, call_context.into())?;
 
 		let changes = &mut *changes.borrow_mut();
@@ -147,7 +147,7 @@ where
 		let state_runtime_code = soil_state_machine::backend::BackendRuntimeCode::new(&state);
 
 		let runtime_code =
-			state_runtime_code.runtime_code().map_err(sp_blockchain::Error::RuntimeCode)?;
+			state_runtime_code.runtime_code().map_err(soil_blockchain::Error::RuntimeCode)?;
 		let runtime_code = self.code_provider.maybe_override_code(runtime_code, &state, at_hash)?.0;
 		let mut extensions = extensions.borrow_mut();
 
@@ -190,12 +190,12 @@ where
 		.map_err(Into::into)
 	}
 
-	fn runtime_version(&self, at_hash: Block::Hash) -> sp_blockchain::Result<RuntimeVersion> {
+	fn runtime_version(&self, at_hash: Block::Hash) -> soil_blockchain::Result<RuntimeVersion> {
 		let state = self.backend.state_at(at_hash, backend::TrieCacheContext::Untrusted)?;
 		let state_runtime_code = soil_state_machine::backend::BackendRuntimeCode::new(&state);
 
 		let runtime_code =
-			state_runtime_code.runtime_code().map_err(sp_blockchain::Error::RuntimeCode)?;
+			state_runtime_code.runtime_code().map_err(soil_blockchain::Error::RuntimeCode)?;
 		self.code_provider
 			.maybe_override_code(runtime_code, &state, at_hash)
 			.map(|(_, v)| v)
@@ -206,7 +206,7 @@ where
 		at_hash: Block::Hash,
 		method: &str,
 		call_data: &[u8],
-	) -> sp_blockchain::Result<(Vec<u8>, StorageProof)> {
+	) -> soil_blockchain::Result<(Vec<u8>, StorageProof)> {
 		let at_number =
 			self.backend.blockchain().expect_block_number_from_id(&BlockId::Hash(at_hash))?;
 		let state = self.backend.state_at(at_hash, TrieCacheContext::Untrusted)?;
@@ -215,7 +215,7 @@ where
 
 		let state_runtime_code = soil_state_machine::backend::BackendRuntimeCode::new(trie_backend);
 		let runtime_code =
-			state_runtime_code.runtime_code().map_err(sp_blockchain::Error::RuntimeCode)?;
+			state_runtime_code.runtime_code().map_err(soil_blockchain::Error::RuntimeCode)?;
 		let runtime_code = self.code_provider.maybe_override_code(runtime_code, &state, at_hash)?.0;
 
 		soil_state_machine::prove_execution_on_trie_backend(
@@ -240,29 +240,29 @@ where
 		&self,
 		ext: &mut dyn soil_externalities::Externalities,
 		runtime_code: &soil_core::traits::RuntimeCode,
-	) -> Result<sp_version::RuntimeVersion, sc_executor::error::Error> {
+	) -> Result<soil_version::RuntimeVersion, sc_executor::error::Error> {
 		RuntimeVersionOf::runtime_version(&self.executor, ext, runtime_code)
 	}
 }
 
-impl<Block, B, E> sp_version::GetRuntimeVersionAt<Block> for LocalCallExecutor<Block, B, E>
+impl<Block, B, E> soil_version::GetRuntimeVersionAt<Block> for LocalCallExecutor<Block, B, E>
 where
 	B: backend::Backend<Block>,
 	E: CodeExecutor + RuntimeVersionOf + Clone + 'static,
 	Block: BlockT,
 {
-	fn runtime_version(&self, at: Block::Hash) -> Result<sp_version::RuntimeVersion, String> {
+	fn runtime_version(&self, at: Block::Hash) -> Result<soil_version::RuntimeVersion, String> {
 		CallExecutor::runtime_version(self, at).map_err(|e| e.to_string())
 	}
 }
 
-impl<Block, B, E> sp_version::GetNativeVersion for LocalCallExecutor<Block, B, E>
+impl<Block, B, E> soil_version::GetNativeVersion for LocalCallExecutor<Block, B, E>
 where
 	B: backend::Backend<Block>,
-	E: CodeExecutor + sp_version::GetNativeVersion + Clone + 'static,
+	E: CodeExecutor + soil_version::GetNativeVersion + Clone + 'static,
 	Block: BlockT,
 {
-	fn native_version(&self) -> &sp_version::NativeVersion {
+	fn native_version(&self) -> &soil_version::NativeVersion {
 		self.executor.native_version()
 	}
 }

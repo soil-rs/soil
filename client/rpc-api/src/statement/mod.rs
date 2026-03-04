@@ -20,7 +20,7 @@
 
 use jsonrpsee::{core::RpcResult, proc_macros::rpc};
 use soil_core::Bytes;
-use sp_statement_store::{StatementEvent, SubmitResult, TopicFilter};
+use soil_statement_store::{StatementEvent, SubmitResult, TopicFilter};
 
 pub mod error;
 

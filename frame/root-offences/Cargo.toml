@@ -26,7 +26,7 @@ frame-support = { workspace = true }
 frame-system = { workspace = true }
 soil-core = { workspace = true }
 soil-runtime = { workspace = true }
-sp-staking = { workspace = true }
+soil-staking = { workspace = true }
 
 [dev-dependencies]
 pallet-balances = { workspace = true, default-features = true }
@@ -52,7 +52,7 @@ std = [
 	"soil-core/std",
 	"soil-io/std",
 	"soil-runtime/std",
-	"sp-staking/std",
+	"soil-staking/std",
 ]
 runtime-benchmarks = [
 	"frame-election-provider-support/runtime-benchmarks",
@@ -63,7 +63,7 @@ runtime-benchmarks = [
 	"pallet-staking/runtime-benchmarks",
 	"pallet-timestamp/runtime-benchmarks",
 	"soil-runtime/runtime-benchmarks",
-	"sp-staking/runtime-benchmarks",
+	"soil-staking/runtime-benchmarks",
 ]
 try-runtime = [
 	"frame-election-provider-support/try-runtime",

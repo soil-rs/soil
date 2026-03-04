@@ -150,7 +150,7 @@ mod benchmarks {
 /// proof for the first authority and returns its key and the proof.
 fn check_membership_proof_setup<T: Config>(
 	n: u32,
-) -> ((soil_runtime::KeyTypeId, &'static [u8; 32]), sp_session::MembershipProof) {
+) -> ((soil_runtime::KeyTypeId, &'static [u8; 32]), soil_session::MembershipProof) {
 	pallet_staking::ValidatorCount::<T>::put(n);
 
 	// create validators and set random session keys

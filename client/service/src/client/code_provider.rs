@@ -57,7 +57,7 @@ where
 		client_config: &ClientConfig<Block>,
 		executor: Executor,
 		backend: Arc<Backend>,
-	) -> sp_blockchain::Result<Self> {
+	) -> soil_blockchain::Result<Self> {
 		let wasm_override = client_config
 			.wasm_runtime_overrides
 			.as_ref()
@@ -78,17 +78,17 @@ where
 	/// Returns the `:code` for the given `block`.
 	///
 	/// This takes into account potential overrides/substitutes.
-	pub fn code_at_ignoring_overrides(&self, block: Block::Hash) -> sp_blockchain::Result<Vec<u8>> {
+	pub fn code_at_ignoring_overrides(&self, block: Block::Hash) -> soil_blockchain::Result<Vec<u8>> {
 		let state = self.backend.state_at(block, TrieCacheContext::Untrusted)?;
 
 		let state_runtime_code = soil_state_machine::backend::BackendRuntimeCode::new(&state);
 		let runtime_code =
-			state_runtime_code.runtime_code().map_err(sp_blockchain::Error::RuntimeCode)?;
+			state_runtime_code.runtime_code().map_err(soil_blockchain::Error::RuntimeCode)?;
 
 		self.maybe_override_code_internal(runtime_code, &state, block, true)
 			.and_then(|r| {
 				r.0.fetch_runtime_code().map(Into::into).ok_or_else(|| {
-					sp_blockchain::Error::Backend("Could not find `:code` in backend.".into())
+					soil_blockchain::Error::Backend("Could not find `:code` in backend.".into())
 				})
 			})
 	}
@@ -101,7 +101,7 @@ where
 		onchain_code: RuntimeCode<'a>,
 		state: &Backend::State,
 		hash: Block::Hash,
-	) -> sp_blockchain::Result<(RuntimeCode<'a>, RuntimeVersion)> {
+	) -> soil_blockchain::Result<(RuntimeCode<'a>, RuntimeVersion)> {
 		self.maybe_override_code_internal(onchain_code, state, hash, false)
 	}
 
@@ -114,7 +114,7 @@ where
 		state: &Backend::State,
 		hash: Block::Hash,
 		ignore_overrides: bool,
-	) -> sp_blockchain::Result<(RuntimeCode<'a>, RuntimeVersion)> {
+	) -> soil_blockchain::Result<(RuntimeCode<'a>, RuntimeVersion)> {
 		let on_chain_version = self.on_chain_runtime_version(&onchain_code, state)?;
 		let code_and_version = if let Some(d) = self.wasm_override.as_ref().as_ref().and_then(|o| {
 			if ignore_overrides {
@@ -152,14 +152,14 @@ where
 		&self,
 		code: &RuntimeCode,
 		state: &Backend::State,
-	) -> sp_blockchain::Result<RuntimeVersion> {
+	) -> soil_blockchain::Result<RuntimeVersion> {
 		let mut overlay = OverlayedChanges::default();
 
 		let mut ext = Ext::new(&mut overlay, state, None);
 
 		self.executor
 			.runtime_version(&mut ext, code)
-			.map_err(|e| sp_blockchain::Error::VersionInvalid(e.to_string()))
+			.map_err(|e| soil_blockchain::Error::VersionInvalid(e.to_string()))
 	}
 }
 
@@ -310,9 +310,9 @@ mod tests {
 		let backend = Arc::new(in_mem::Backend::<runtime::Block>::new());
 
 		// Let's only override the `spec_name` for our testing purposes.
-		let substitute = sp_version::embed::embed_runtime_version(
+		let substitute = soil_version::embed::embed_runtime_version(
 			&substrate_test_runtime::WASM_BINARY_BLOATY.unwrap(),
-			sp_version::RuntimeVersion {
+			soil_version::RuntimeVersion {
 				spec_name: SUBSTITUTE_SPEC_NAME.into(),
 				..substrate_test_runtime::VERSION
 			},

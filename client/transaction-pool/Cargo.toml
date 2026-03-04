@@ -33,13 +33,13 @@ sc-client-api = { workspace = true, default-features = true }
 sc-transaction-pool-api = { workspace = true, default-features = true }
 sc-utils = { workspace = true, default-features = true }
 serde = { features = ["derive"], workspace = true, default-features = true }
-sp-api = { workspace = true, default-features = true }
-sp-blockchain = { workspace = true, default-features = true }
+soil-api = { workspace = true, default-features = true }
+soil-blockchain = { workspace = true, default-features = true }
 soil-core = { workspace = true, default-features = true }
 soil-crypto-hashing = { workspace = true, default-features = true }
 soil-runtime = { workspace = true, default-features = true }
 soil-tracing = { workspace = true, default-features = true }
-sp-transaction-pool = { workspace = true, default-features = true }
+soil-transaction-pool = { workspace = true, default-features = true }
 strum = { workspace = true, features = ["derive"] }
 thiserror = { workspace = true }
 tokio = { workspace = true, default-features = true, features = ["macros", "time"] }
@@ -56,7 +56,7 @@ rstest = { workspace = true }
 sc-block-builder = { workspace = true, default-features = true }
 serde = { workspace = true }
 serde_json = { workspace = true }
-sp-consensus = { workspace = true, default-features = true }
+soil-consensus = { workspace = true, default-features = true }
 substrate-test-runtime = { workspace = true }
 substrate-test-runtime-client = { workspace = true }
 substrate-test-runtime-transaction-pool = { workspace = true }

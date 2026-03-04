@@ -36,13 +36,13 @@ use soil_runtime::{
 	traits::{Header as HeaderT, OpaqueKeys},
 	BuildStorage, Perbill,
 };
-use sp_staking::{EraIndex, SessionIndex};
+use soil_staking::{EraIndex, SessionIndex};
 use soil_state_machine::BasicExternalities;
 
 use crate as pallet_beefy;
 
-pub use sp_consensus_beefy::{ecdsa_crypto::AuthorityId as BeefyId, ConsensusLog, BEEFY_ENGINE_ID};
-use sp_consensus_beefy::{AncestryHelper, AncestryHelperWeightInfo, Commitment};
+pub use soil_consensus_beefy::{ecdsa_crypto::AuthorityId as BeefyId, ConsensusLog, BEEFY_ENGINE_ID};
+use soil_consensus_beefy::{AncestryHelper, AncestryHelperWeightInfo, Commitment};
 
 impl_opaque_keys! {
 	pub struct MockSessionKeys {

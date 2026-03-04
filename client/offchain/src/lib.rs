@@ -45,7 +45,7 @@ use parking_lot::Mutex;
 use sc_client_api::BlockchainEvents;
 use sc_network::{NetworkPeers, NetworkStateInfo};
 use sc_transaction_pool_api::OffchainTransactionPoolFactory;
-use sp_api::{ApiExt, ProvideRuntimeApi};
+use soil_api::{ApiExt, ProvideRuntimeApi};
 use soil_core::{offchain, traits::SpawnNamed};
 use soil_externalities::Extension;
 use soil_keystore::{KeystoreExt, KeystorePtr};
@@ -55,7 +55,7 @@ use threadpool::ThreadPool;
 mod api;
 
 pub use soil_core::offchain::storage::OffchainDb;
-pub use sp_offchain::{OffchainWorkerApi, STORAGE_PREFIX};
+pub use soil_offchain::{OffchainWorkerApi, STORAGE_PREFIX};
 
 const LOG_TARGET: &str = "offchain-worker";
 
@@ -335,7 +335,7 @@ mod tests {
 	use sc_network_types::PeerId;
 	use sc_transaction_pool::BasicPool;
 	use sc_transaction_pool_api::{InPoolTransaction, TransactionPool};
-	use sp_consensus::BlockOrigin;
+	use soil_consensus::BlockOrigin;
 	use soil_runtime::traits::Block as BlockT;
 	use std::{collections::HashSet, sync::Arc};
 	use substrate_test_runtime_client::{
@@ -503,7 +503,7 @@ mod tests {
 		let block = block_builder.build().unwrap().block;
 		block_on(client.import(BlockOrigin::Own, block.clone())).unwrap();
 
-		assert_eq!(value, &offchain_db.get(sp_offchain::STORAGE_PREFIX, &key).unwrap());
+		assert_eq!(value, &offchain_db.get(soil_offchain::STORAGE_PREFIX, &key).unwrap());
 
 		let mut block_builder = BlockBuilderBuilder::new(&*client)
 			.on_parent_block(block.hash())
@@ -516,6 +516,6 @@ mod tests {
 		let block = block_builder.build().unwrap().block;
 		block_on(client.import(BlockOrigin::Own, block)).unwrap();
 
-		assert!(offchain_db.get(sp_offchain::STORAGE_PREFIX, &key).is_none());
+		assert!(offchain_db.get(soil_offchain::STORAGE_PREFIX, &key).is_none());
 	}
 }

@@ -32,7 +32,7 @@ pallet-session-benchmarking = { workspace = true }
 pallet-staking = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 soil-runtime = { workspace = true }
-sp-staking = { workspace = true }
+soil-staking = { workspace = true }
 
 [dev-dependencies]
 pallet-staking-reward-curve = { workspace = true, default-features = true }
@@ -63,7 +63,7 @@ std = [
 	"soil-core/std",
 	"soil-io/std",
 	"soil-runtime/std",
-	"sp-staking/std",
+	"soil-staking/std",
 ]
 runtime-benchmarks = [
 	"frame-benchmarking/runtime-benchmarks",
@@ -80,5 +80,5 @@ runtime-benchmarks = [
 	"pallet-staking/runtime-benchmarks",
 	"pallet-timestamp/runtime-benchmarks",
 	"soil-runtime/runtime-benchmarks",
-	"sp-staking/runtime-benchmarks",
+	"soil-staking/runtime-benchmarks",
 ]

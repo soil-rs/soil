@@ -73,7 +73,7 @@ use frame_support::{
 use frame_system::{ensure_signed, pallet_prelude::*};
 use scale_info::TypeInfo;
 use soil_io::MultiRemovalResults;
-use sp_npos_elections::ElectionScore;
+use soil_npos_elections::ElectionScore;
 use soil_runtime::{traits::Saturating, Perbill};
 use soil_std::prelude::*;
 

@@ -23,7 +23,7 @@ use crate::{
 };
 use frame_support::traits::ConstU32;
 use rand::SeedableRng;
-use sp_npos_elections::{Support, Supports};
+use soil_npos_elections::{Support, Supports};
 
 mod solution_type {
 	use super::*;

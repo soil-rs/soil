@@ -25,14 +25,14 @@ use crate::{
 use log::{debug, trace};
 use sc_consensus_epochs::Epoch as EpochT;
 use sc_consensus_slots::CheckedHeader;
-use sp_consensus_babe::{
+use soil_consensus_babe::{
 	digests::{
 		CompatibleDigestItem, PreDigest, PrimaryPreDigest, SecondaryPlainPreDigest,
 		SecondaryVRFPreDigest,
 	},
 	make_vrf_sign_data, AuthorityPair, AuthoritySignature,
 };
-use sp_consensus_slots::Slot;
+use soil_consensus_slots::Slot;
 use soil_core::{
 	crypto::{VrfPublic, Wraps},
 	Pair,

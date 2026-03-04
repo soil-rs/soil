@@ -26,7 +26,7 @@ use async_trait::async_trait;
 use codec::Encode;
 use parking_lot::Mutex;
 use sc_transaction_pool_api::error;
-use sp_blockchain::{HashAndNumber, TreeRoute};
+use soil_blockchain::{HashAndNumber, TreeRoute};
 use soil_runtime::{
 	generic::BlockId,
 	traits::{Block as BlockT, Hash},

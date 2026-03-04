@@ -17,7 +17,7 @@
 
 use crate::*;
 use frame_support::traits::tokens::{Fortitude::Polite, Preservation::Expendable};
-use sp_staking::{Agent, DelegationInterface, DelegationMigrator, Delegator};
+use soil_staking::{Agent, DelegationInterface, DelegationMigrator, Delegator};
 
 /// Types of stake strategies.
 ///

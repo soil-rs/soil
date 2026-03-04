@@ -44,7 +44,7 @@ use sc_network::{
 };
 use sc_network_common::sync::message::{BlockAttributes, BlockData, BlockRequest, FromBlock};
 use sc_network_types::PeerId;
-use sp_blockchain::HeaderBackend;
+use soil_blockchain::HeaderBackend;
 use soil_runtime::{
 	generic::BlockId,
 	traits::{Block as BlockT, Header, One, Zero},
@@ -503,7 +503,7 @@ enum HandleRequestError {
 	#[error("Failed to parse BlockRequest::direction.")]
 	ParseDirection,
 	#[error(transparent)]
-	Client(#[from] sp_blockchain::Error),
+	Client(#[from] soil_blockchain::Error),
 	#[error("Failed to send response.")]
 	SendResponse,
 }

@@ -33,12 +33,12 @@ use sc_transaction_pool_api::{
 	error::IntoPoolError, BlockHash, InPoolTransaction, TransactionFor, TransactionPool,
 	TransactionSource, TxHash, TxInvalidityReportMap,
 };
-use sp_api::{ApiExt, ProvideRuntimeApi};
-use sp_blockchain::HeaderBackend;
+use soil_api::{ApiExt, ProvideRuntimeApi};
+use soil_blockchain::HeaderBackend;
 use soil_core::Bytes;
 use soil_keystore::{KeystoreExt, KeystorePtr};
 use soil_runtime::traits::Block as BlockT;
-use sp_session::SessionKeys;
+use soil_session::SessionKeys;
 use std::sync::Arc;
 
 /// Re-export the API for backward compatibility.

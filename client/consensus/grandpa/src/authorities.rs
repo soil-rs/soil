@@ -27,7 +27,7 @@ use log::debug;
 use parking_lot::MappedMutexGuard;
 use sc_consensus::shared_data::{SharedData, SharedDataLocked};
 use sc_telemetry::{telemetry, TelemetryHandle, CONSENSUS_INFO};
-use sp_consensus_grandpa::{AuthorityId, AuthorityList};
+use soil_consensus_grandpa::{AuthorityId, AuthorityList};
 
 use crate::{SetId, LOG_TARGET};
 

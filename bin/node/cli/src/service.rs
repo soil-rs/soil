@@ -22,8 +22,8 @@
 
 use sc_consensus_beefy as beefy;
 use sc_consensus_grandpa as grandpa;
-use sp_consensus_babe::inherents::BabeCreateInherentDataProviders;
-use sp_consensus_beefy as beefy_primitives;
+use soil_consensus_babe::inherents::BabeCreateInherentDataProviders;
+use soil_consensus_beefy as beefy_primitives;
 
 use crate::Cli;
 use codec::Encode;
@@ -43,22 +43,22 @@ use sc_statement_store::Store as StatementStore;
 use sc_telemetry::{Telemetry, TelemetryWorker};
 use sc_transaction_pool::TransactionPoolHandle;
 use sc_transaction_pool_api::OffchainTransactionPoolFactory;
-use sp_api::ProvideRuntimeApi;
+use soil_api::ProvideRuntimeApi;
 use soil_core::crypto::Pair;
 use soil_runtime::{generic, traits::Block as BlockT, SaturatedConversion};
-use sp_transaction_storage_proof::runtime_api::TransactionStorageApi;
+use soil_transaction_storage_proof::runtime_api::TransactionStorageApi;
 use std::{path::Path, sync::Arc};
 
 /// Host functions required for kitchensink runtime and Substrate node.
 #[cfg(not(feature = "runtime-benchmarks"))]
 pub type HostFunctions =
-	(soil_io::SubstrateHostFunctions, sp_statement_store::runtime_api::HostFunctions);
+	(soil_io::SubstrateHostFunctions, soil_statement_store::runtime_api::HostFunctions);
 
 /// Host functions required for kitchensink runtime and Substrate node.
 #[cfg(feature = "runtime-benchmarks")]
 pub type HostFunctions = (
 	soil_io::SubstrateHostFunctions,
-	sp_statement_store::runtime_api::HostFunctions,
+	soil_statement_store::runtime_api::HostFunctions,
 	frame_benchmarking::benchmarking::HostFunctions,
 );
 
@@ -270,9 +270,9 @@ pub fn new_partial(
 		beefy_block_import,
 		client.clone(),
 		Arc::new(move |_, _| async move {
-			let timestamp = sp_timestamp::InherentDataProvider::from_system_time();
+			let timestamp = soil_timestamp::InherentDataProvider::from_system_time();
 			let slot =
-			sp_consensus_babe::inherents::InherentDataProvider::from_timestamp_and_slot_duration(
+			soil_consensus_babe::inherents::InherentDataProvider::from_timestamp_and_slot_duration(
 				*timestamp,
 				slot_duration,
 			);
@@ -624,16 +624,16 @@ pub fn new_full_base<N: NetworkBackend<Block, <Block as BlockT>::Hash>>(
 			create_inherent_data_providers: move |parent, ()| {
 				let client_clone = client_clone.clone();
 				async move {
-					let timestamp = sp_timestamp::InherentDataProvider::from_system_time();
+					let timestamp = soil_timestamp::InherentDataProvider::from_system_time();
 
 					let slot =
-						sp_consensus_babe::inherents::InherentDataProvider::from_timestamp_and_slot_duration(
+						soil_consensus_babe::inherents::InherentDataProvider::from_timestamp_and_slot_duration(
 							*timestamp,
 							slot_duration,
 						);
 
 					let storage_proof =
-						sp_transaction_storage_proof::registration::new_data_provider(
+						soil_transaction_storage_proof::registration::new_data_provider(
 							&*client_clone,
 							&parent,
 							// Use `unwrap_or` in case the runtime api is not available.
@@ -709,7 +709,7 @@ pub fn new_full_base<N: NetworkBackend<Block, <Block as BlockT>::Hash>>(
 	let beefy_params = beefy::BeefyParams {
 		client: client.clone(),
 		backend: backend.clone(),
-		payload_provider: sp_consensus_beefy::mmr::MmrRootProvider::new(client.clone()),
+		payload_provider: soil_consensus_beefy::mmr::MmrRootProvider::new(client.clone()),
 		runtime: client.clone(),
 		key_store: keystore.clone(),
 		network_params,
@@ -734,7 +734,7 @@ pub fn new_full_base<N: NetworkBackend<Block, <Block as BlockT>::Hash>>(
 			mmr_gadget::MmrGadget::start(
 				client.clone(),
 				backend.clone(),
-				sp_mmr_primitives::INDEXING_PREFIX.to_vec(),
+				soil_mmr_primitives::INDEXING_PREFIX.to_vec(),
 			),
 		);
 	}
@@ -896,10 +896,10 @@ mod tests {
 	use sc_keystore::LocalKeystore;
 	use sc_service_test::TestNetNode;
 	use sc_transaction_pool_api::ChainEvent;
-	use sp_consensus::{BlockOrigin, Environment, Proposer};
+	use soil_consensus::{BlockOrigin, Environment, Proposer};
 	use soil_core::crypto::Pair;
-	use sp_inherents::InherentDataProvider;
-	use sp_keyring::Sr25519Keyring;
+	use soil_inherents::InherentDataProvider;
+	use soil_keyring::Sr25519Keyring;
 	use soil_keystore::KeystorePtr;
 	use soil_runtime::{
 		generic::{self, Digest, Era, SignedPayload},
@@ -907,7 +907,7 @@ mod tests {
 		traits::{Block as BlockT, Header as HeaderT, IdentifyAccount, Verify},
 		RuntimeAppPublic,
 	};
-	use sp_timestamp;
+	use soil_timestamp;
 	use std::sync::Arc;
 
 	type AccountPublic = <Signature as Verify>::Signer;
@@ -923,7 +923,7 @@ mod tests {
 		let keystore: KeystorePtr = LocalKeystore::open(keystore_path.path(), None)
 			.expect("Creates keystore")
 			.into();
-		let alice: sp_consensus_babe::AuthorityId = keystore
+		let alice: soil_consensus_babe::AuthorityId = keystore
 			.sr25519_generate_new(BABE, Some("//Alice"))
 			.expect("Creates authority pair")
 			.into();
@@ -1018,10 +1018,10 @@ mod tests {
 
 				let inherent_data = futures::executor::block_on(
 					(
-						sp_timestamp::InherentDataProvider::new(
+						soil_timestamp::InherentDataProvider::new(
 							std::time::Duration::from_millis(SLOT_DURATION * slot).into(),
 						),
-						sp_consensus_babe::inherents::InherentDataProvider::new(slot.into()),
+						soil_consensus_babe::inherents::InherentDataProvider::new(slot.into()),
 					)
 						.create_inherent_data(),
 				)
@@ -1033,7 +1033,7 @@ mod tests {
 					let proposer = proposer_factory.init(&parent_header).await.unwrap();
 					Proposer::propose(
 						proposer,
-						sp_consensus::ProposeArgs {
+						soil_consensus::ProposeArgs {
 							inherent_data,
 							inherent_digests: digest,
 							max_duration: std::time::Duration::from_secs(1),
@@ -1053,7 +1053,7 @@ mod tests {
 				// add it to a digest item.
 				let to_sign = pre_hash.encode();
 				let signature = keystore
-					.sr25519_sign(sp_consensus_babe::AuthorityId::ID, alice.as_ref(), &to_sign)
+					.sr25519_sign(soil_consensus_babe::AuthorityId::ID, alice.as_ref(), &to_sign)
 					.unwrap()
 					.unwrap();
 				let item = <DigestItem as CompatibleDigestItem>::babe_seal(signature.into());

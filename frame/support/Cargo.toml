@@ -32,17 +32,17 @@ paste = { workspace = true, default-features = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { features = ["alloc", "derive"], workspace = true }
 serde_json = { features = ["alloc"], workspace = true }
-sp-api = { features = ["frame-metadata"], workspace = true }
+soil-api = { features = ["frame-metadata"], workspace = true }
 soil-arithmetic = { workspace = true }
 soil-core = { workspace = true }
 soil-crypto-hashing-proc-macro = { workspace = true, default-features = true }
 soil-debug-derive = { workspace = true }
-sp-genesis-builder = { workspace = true }
-sp-inherents = { workspace = true }
+soil-genesis-builder = { workspace = true }
+soil-inherents = { workspace = true }
 soil-io = { workspace = true }
 soil-metadata-ir = { workspace = true }
 soil-runtime = { features = ["serde"], workspace = true }
-sp-staking = { workspace = true }
+soil-staking = { workspace = true }
 soil-state-machine = { optional = true, workspace = true }
 soil-std = { workspace = true }
 soil-tracing = { workspace = true }
@@ -57,7 +57,7 @@ Inflector = { workspace = true }
 frame-system = { workspace = true, default-features = true }
 pretty_assertions = { workspace = true }
 soil-crypto-hashing = { workspace = true, default-features = true }
-sp-timestamp = { workspace = true, default-features = true }
+soil-timestamp = { workspace = true, default-features = true }
 
 [features]
 default = ["std"]
@@ -73,16 +73,16 @@ std = [
 	"scale-info/std",
 	"serde/std",
 	"serde_json/std",
-	"sp-api/std",
+	"soil-api/std",
 	"soil-arithmetic/std",
 	"soil-core/std",
 	"soil-debug-derive/std",
-	"sp-genesis-builder/std",
-	"sp-inherents/std",
+	"soil-genesis-builder/std",
+	"soil-inherents/std",
 	"soil-io/std",
 	"soil-metadata-ir/std",
 	"soil-runtime/std",
-	"sp-staking/std",
+	"soil-staking/std",
 	"soil-state-machine/std",
 	"soil-std/std",
 	"soil-tracing/std",
@@ -92,7 +92,7 @@ std = [
 runtime-benchmarks = [
 	"frame-system/runtime-benchmarks",
 	"soil-runtime/runtime-benchmarks",
-	"sp-staking/runtime-benchmarks",
+	"soil-staking/runtime-benchmarks",
 ]
 try-runtime = [
 	"frame-system/try-runtime",
@@ -103,7 +103,7 @@ experimental = ["frame-support-procedural/experimental"]
 # in the metadata.
 no-metadata-docs = [
 	"frame-support-procedural/no-metadata-docs",
-	"sp-api/no-metadata-docs",
+	"soil-api/no-metadata-docs",
 ]
 # By default some types have documentation, `full-metadata-docs` allows to add documentation to
 # more types in the metadata.

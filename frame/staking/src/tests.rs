@@ -41,7 +41,7 @@ use soil_runtime::{
 	traits::{BadOrigin, Dispatchable},
 	Perbill, Percent, Perquintill, Rounding, TokenError,
 };
-use sp_staking::{
+use soil_staking::{
 	offence::{OffenceDetails, OnOffenceHandler},
 	SessionIndex, StakingAccount,
 };
@@ -3596,7 +3596,7 @@ fn test_multi_page_payout_stakers_by_page() {
 
 		// verify we clean up history as we go
 		for era in 0..15 {
-			assert_eq!(ClaimedRewards::<Test>::get(era, &11), Vec::<sp_staking::Page>::new());
+			assert_eq!(ClaimedRewards::<Test>::get(era, &11), Vec::<soil_staking::Page>::new());
 		}
 
 		// verify only page 0 is marked as claimed
@@ -3862,7 +3862,7 @@ fn test_multi_page_payout_stakers_backward_compatible() {
 
 		// verify we clean up history as we go
 		for era in 0..15 {
-			assert_eq!(ClaimedRewards::<Test>::get(era, &11), Vec::<sp_staking::Page>::new());
+			assert_eq!(ClaimedRewards::<Test>::get(era, &11), Vec::<soil_staking::Page>::new());
 		}
 
 		// verify only page 0 is marked as claimed
@@ -6564,11 +6564,11 @@ fn test_validator_exposure_is_backward_compatible_with_non_paged_rewards_payout(
 		assert_eq!(EraInfo::<Test>::get_page_count(1, &11), 2);
 
 		// validator is exposed
-		assert!(<Staking as sp_staking::StakingInterface>::is_exposed_in_era(&11, &1));
+		assert!(<Staking as soil_staking::StakingInterface>::is_exposed_in_era(&11, &1));
 		// nominators are exposed
 		for i in 10..15 {
 			let who: AccountId = 1000 + i;
-			assert!(<Staking as sp_staking::StakingInterface>::is_exposed_in_era(&who, &1));
+			assert!(<Staking as soil_staking::StakingInterface>::is_exposed_in_era(&who, &1));
 		}
 
 		// case 2: exposure exist in ErasStakers and ErasStakersClipped (legacy).
@@ -6607,11 +6607,11 @@ fn test_validator_exposure_is_backward_compatible_with_non_paged_rewards_payout(
 		assert_eq!(actual_exposure_full.total, total_exposure);
 
 		// validator is exposed
-		assert!(<Staking as sp_staking::StakingInterface>::is_exposed_in_era(&11, &1));
+		assert!(<Staking as soil_staking::StakingInterface>::is_exposed_in_era(&11, &1));
 		// nominators are exposed
 		for i in 10..15 {
 			let who: AccountId = 1000 + i;
-			assert!(<Staking as sp_staking::StakingInterface>::is_exposed_in_era(&who, &1));
+			assert!(<Staking as soil_staking::StakingInterface>::is_exposed_in_era(&who, &1));
 		}
 
 		// for pages other than 0, clipped storage returns empty exposure
@@ -6739,7 +6739,7 @@ fn test_runtime_api_pending_rewards() {
 
 mod staking_interface {
 	use frame_support::storage::with_storage_layer;
-	use sp_staking::StakingInterface;
+	use soil_staking::StakingInterface;
 
 	use super::*;
 
@@ -6860,7 +6860,7 @@ mod staking_interface {
 }
 
 mod staking_unchecked {
-	use sp_staking::{Stake, StakingInterface, StakingUnchecked};
+	use soil_staking::{Stake, StakingInterface, StakingUnchecked};
 
 	use super::*;
 
@@ -7171,7 +7171,7 @@ mod staking_unchecked {
 }
 mod ledger {
 	use super::*;
-	use sp_staking::StakingAccount;
+	use soil_staking::StakingAccount;
 
 	#[test]
 	fn paired_account_works() {
@@ -8475,7 +8475,7 @@ mod getters {
 		Forcing, Nominations, Nominators, Perbill, SlashRewardFraction, SlashingSpans,
 		ValidatorPrefs, Validators,
 	};
-	use sp_staking::{EraIndex, Exposure, IndividualExposure, Page, SessionIndex};
+	use soil_staking::{EraIndex, Exposure, IndividualExposure, Page, SessionIndex};
 
 	#[test]
 	fn get_validator_count_returns_value_from_storage() {
@@ -8801,7 +8801,7 @@ mod getters {
 mod hold_migration {
 	use super::*;
 	use frame_support::traits::fungible::Mutate;
-	use sp_staking::{Stake, StakingInterface};
+	use soil_staking::{Stake, StakingInterface};
 
 	#[test]
 	fn ledger_update_creates_hold() {

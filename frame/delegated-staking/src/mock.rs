@@ -34,7 +34,7 @@ use frame_support::dispatch::RawOrigin;
 use pallet_staking::{ActiveEra, ActiveEraInfo, CurrentEra};
 use soil_core::{ConstBool, U256};
 use soil_runtime::traits::Convert;
-use sp_staking::{Agent, Stake, StakingInterface};
+use soil_staking::{Agent, Stake, StakingInterface};
 
 pub type T = Runtime;
 type Block = frame_system::mocking::MockBlock<Runtime>;
@@ -203,19 +203,19 @@ impl ExtBuilder {
 				GENESIS_VALIDATOR,
 				GENESIS_VALIDATOR,
 				1000,
-				sp_staking::StakerStatus::<AccountId>::Validator,
+				soil_staking::StakerStatus::<AccountId>::Validator,
 			),
 			(
 				GENESIS_NOMINATOR_ONE,
 				GENESIS_NOMINATOR_ONE,
 				100,
-				sp_staking::StakerStatus::<AccountId>::Nominator(vec![1]),
+				soil_staking::StakerStatus::<AccountId>::Nominator(vec![1]),
 			),
 			(
 				GENESIS_NOMINATOR_TWO,
 				GENESIS_NOMINATOR_TWO,
 				200,
-				sp_staking::StakerStatus::<AccountId>::Nominator(vec![1]),
+				soil_staking::StakerStatus::<AccountId>::Nominator(vec![1]),
 			),
 		];
 
@@ -298,7 +298,7 @@ pub(crate) fn setup_delegation_stake(
 	delegated_amount
 }
 
-pub(crate) fn start_era(era: sp_staking::EraIndex) {
+pub(crate) fn start_era(era: soil_staking::EraIndex) {
 	CurrentEra::<T>::set(Some(era));
 	ActiveEra::<T>::set(Some(ActiveEraInfo { index: era, start: None }));
 }

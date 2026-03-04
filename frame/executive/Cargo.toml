@@ -33,9 +33,9 @@ array-bytes = { workspace = true, default-features = true }
 pallet-balances = { workspace = true, default-features = true }
 pallet-transaction-payment = { workspace = true, default-features = true }
 soil-core = { workspace = true, default-features = true }
-sp-inherents = { workspace = true, default-features = true }
+soil-inherents = { workspace = true, default-features = true }
 soil-io = { workspace = true, default-features = true }
-sp-version = { workspace = true, default-features = true }
+soil-version = { workspace = true, default-features = true }
 substrate-test-runtime-client = { workspace = true }
 
 [features]
@@ -52,11 +52,11 @@ std = [
 	"pallet-transaction-payment/std",
 	"scale-info/std",
 	"soil-core/std",
-	"sp-inherents/std",
+	"soil-inherents/std",
 	"soil-io/std",
 	"soil-runtime/std",
 	"soil-tracing/std",
-	"sp-version/std",
+	"soil-version/std",
 ]
 try-runtime = [
 	"frame-support/try-runtime",

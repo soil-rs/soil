@@ -32,11 +32,11 @@ use sc_block_builder::{BlockBuilderApi, BlockBuilderBuilder};
 use sc_proposer_metrics::{EndProposingReason, MetricsLink as PrometheusMetrics};
 use sc_telemetry::{telemetry, TelemetryHandle, CONSENSUS_INFO};
 use sc_transaction_pool_api::{InPoolTransaction, TransactionPool, TxInvalidityReportMap};
-use sp_api::{ApiExt, CallApiAt, ProvideRuntimeApi};
-use sp_blockchain::{ApplyExtrinsicFailed::Validity, Error::ApplyExtrinsicFailed, HeaderBackend};
-use sp_consensus::{Proposal, ProposeArgs};
+use soil_api::{ApiExt, CallApiAt, ProvideRuntimeApi};
+use soil_blockchain::{ApplyExtrinsicFailed::Validity, Error::ApplyExtrinsicFailed, HeaderBackend};
+use soil_consensus::{Proposal, ProposeArgs};
 use soil_core::traits::SpawnNamed;
-use sp_inherents::InherentData;
+use soil_inherents::InherentData;
 use soil_runtime::{
 	traits::{BlakeTwo256, Block as BlockT, Hash as HashT, Header as HeaderT},
 	ExtrinsicInclusionMode, Percent, SaturatedConversion,
@@ -67,7 +67,7 @@ pub struct ProposerFactory<A, C> {
 	metrics: PrometheusMetrics,
 	/// The default block size limit.
 	///
-	/// If no `block_size_limit` is passed to [`sp_consensus::Proposer::propose`], this block size
+	/// If no `block_size_limit` is passed to [`soil_consensus::Proposer::propose`], this block size
 	/// limit will be used.
 	default_block_size_limit: usize,
 	/// Soft deadline percentage of hard deadline.
@@ -132,7 +132,7 @@ impl<A, C> ProposerFactory<A, C> {
 	/// The default value for the block size limit is:
 	/// [`DEFAULT_BLOCK_SIZE_LIMIT`].
 	///
-	/// If there is no block size limit passed to [`sp_consensus::Proposer::propose`], this value
+	/// If there is no block size limit passed to [`soil_consensus::Proposer::propose`], this value
 	/// will be used.
 	pub fn set_default_block_size_limit(&mut self, limit: usize) {
 		self.default_block_size_limit = limit;
@@ -192,7 +192,7 @@ where
 	}
 }
 
-impl<A, Block, C> sp_consensus::Environment<Block> for ProposerFactory<A, C>
+impl<A, Block, C> soil_consensus::Environment<Block> for ProposerFactory<A, C>
 where
 	A: TransactionPool<Block = Block> + 'static,
 	Block: BlockT,
@@ -201,7 +201,7 @@ where
 {
 	type CreateProposer = future::Ready<Result<Self::Proposer, Self::Error>>;
 	type Proposer = Proposer<Block, C, A>;
-	type Error = sp_blockchain::Error;
+	type Error = soil_blockchain::Error;
 
 	fn init(&mut self, parent_header: &<Block as BlockT>::Header) -> Self::CreateProposer {
 		future::ready(Ok(self.init_with_now(parent_header, Box::new(time::Instant::now))))
@@ -222,7 +222,7 @@ pub struct Proposer<Block: BlockT, C, A: TransactionPool> {
 	telemetry: Option<TelemetryHandle>,
 }
 
-impl<A, Block, C> sp_consensus::Proposer<Block> for Proposer<Block, C, A>
+impl<A, Block, C> soil_consensus::Proposer<Block> for Proposer<Block, C, A>
 where
 	A: TransactionPool<Block = Block> + 'static,
 	Block: BlockT,
@@ -230,7 +230,7 @@ where
 	C::Api: ApiExt<Block> + BlockBuilderApi<Block>,
 {
 	type Proposal = Pin<Box<dyn Future<Output = Result<Proposal<Block>, Self::Error>> + Send>>;
-	type Error = sp_blockchain::Error;
+	type Error = soil_blockchain::Error;
 
 	fn propose(self, args: ProposeArgs<Block>) -> Self::Proposal {
 		Self::propose_block(self, args).boxed()
@@ -253,7 +253,7 @@ where
 	pub async fn propose_block(
 		self,
 		args: ProposeArgs<Block>,
-	) -> Result<Proposal<Block>, sp_blockchain::Error> {
+	) -> Result<Proposal<Block>, soil_blockchain::Error> {
 		let (tx, rx) = oneshot::channel();
 		let spawn_handle = self.spawn_handle.clone();
 
@@ -279,7 +279,7 @@ where
 	async fn propose_with(
 		self,
 		args: ProposeArgs<Block>,
-	) -> Result<Proposal<Block>, sp_blockchain::Error> {
+	) -> Result<Proposal<Block>, soil_blockchain::Error> {
 		let ProposeArgs {
 			inherent_data,
 			inherent_digests,
@@ -321,7 +321,7 @@ where
 		&self,
 		block_builder: &mut sc_block_builder::BlockBuilder<'_, Block, C>,
 		inherent_data: InherentData,
-	) -> Result<(), sp_blockchain::Error> {
+	) -> Result<(), soil_blockchain::Error> {
 		let create_inherents_start = time::Instant::now();
 
 		let inherent_identifiers = log_enabled!(target: LOG_TARGET, Level::Debug).then(|| {
@@ -376,7 +376,7 @@ where
 		block_builder: &mut sc_block_builder::BlockBuilder<'_, Block, C>,
 		deadline: time::Instant,
 		block_size_limit: Option<usize>,
-	) -> Result<EndProposingReason, sp_blockchain::Error> {
+	) -> Result<EndProposingReason, soil_blockchain::Error> {
 		// proceed with transactions
 		// We calculate soft deadline used only in case we start skipping transactions.
 		let now = (self.now)();
@@ -585,9 +585,9 @@ mod tests {
 	use sc_client_api::{Backend, TrieCacheContext};
 	use sc_transaction_pool::BasicPool;
 	use sc_transaction_pool_api::{ChainEvent, MaintainedTransactionPool, TransactionSource};
-	use sp_api::Core;
-	use sp_blockchain::HeaderBackend;
-	use sp_consensus::{BlockOrigin, Environment};
+	use soil_api::Core;
+	use soil_blockchain::HeaderBackend;
+	use soil_consensus::{BlockOrigin, Environment};
 	use soil_runtime::{generic::BlockId, traits::NumberFor, Perbill};
 	use substrate_test_runtime_client::{
 		prelude::*,

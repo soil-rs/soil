@@ -49,11 +49,11 @@ use sc_network::{
 };
 use sc_network_types::{multihash::Code, PeerId};
 use schema::PeerSignature;
-use sp_api::{ApiError, ProvideRuntimeApi};
-use sp_authority_discovery::{
+use soil_api::{ApiError, ProvideRuntimeApi};
+use soil_authority_discovery::{
 	AuthorityDiscoveryApi, AuthorityId, AuthorityPair, AuthoritySignature,
 };
-use sp_blockchain::HeaderBackend;
+use soil_blockchain::HeaderBackend;
 use soil_core::{
 	crypto::{key_types, ByteArray, Pair},
 	traits::SpawnNamed,
@@ -213,7 +213,7 @@ struct RecordInfo {
 	record: Record,
 }
 
-/// Wrapper for [`AuthorityDiscoveryApi`](sp_authority_discovery::AuthorityDiscoveryApi). Can be
+/// Wrapper for [`AuthorityDiscoveryApi`](soil_authority_discovery::AuthorityDiscoveryApi). Can be
 /// be implemented by any struct without dependency on the runtime.
 #[async_trait::async_trait]
 pub trait AuthorityDiscovery<Block: BlockT> {

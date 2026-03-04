@@ -25,7 +25,7 @@ use crate::{
 use frame_election_provider_support::{ElectionProvider, NposSolution};
 use frame_support::storage::unhashed;
 use soil_core::bounded_vec;
-use sp_npos_elections::ElectionScore;
+use soil_npos_elections::ElectionScore;
 
 pub type T = Runtime;
 
@@ -925,7 +925,7 @@ mod e2e {
 						crate::verifier::Event::VerificationFailed(
 							1,
 							FeasibilityError::NposElection(
-								sp_npos_elections::Error::SolutionInvalidIndex
+								soil_npos_elections::Error::SolutionInvalidIndex
 							)
 						),
 					]

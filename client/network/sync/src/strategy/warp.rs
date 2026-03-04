@@ -19,7 +19,7 @@
 //! Warp syncing strategy. Bootstraps chain by downloading warp proofs and state.
 
 use sc_consensus::IncomingBlock;
-use sp_consensus::BlockOrigin;
+use soil_consensus::BlockOrigin;
 
 use crate::{
 	block_relay_protocol::{BlockDownloader, BlockResponseError},
@@ -39,7 +39,7 @@ use sc_network_common::sync::message::{
 	BlockAnnounce, BlockAttributes, BlockData, BlockRequest, Direction, FromBlock,
 };
 use sc_network_types::PeerId;
-use sp_blockchain::HeaderBackend;
+use soil_blockchain::HeaderBackend;
 use soil_runtime::{
 	traits::{Block as BlockT, Header, NumberFor, Zero},
 	Justifications, SaturatedConversion,
@@ -789,7 +789,7 @@ mod test {
 	use super::*;
 	use crate::{mock::MockBlockDownloader, service::network::NetworkServiceProvider};
 	use sc_block_builder::BlockBuilderBuilder;
-	use sp_blockchain::{BlockStatus, Error as BlockchainError, HeaderBackend, Info};
+	use soil_blockchain::{BlockStatus, Error as BlockchainError, HeaderBackend, Info};
 	use soil_core::H256;
 	use soil_runtime::{
 		traits::{Block as BlockT, Header as HeaderT, NumberFor},

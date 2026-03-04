@@ -18,7 +18,7 @@
 
 //! Disk-backed statement store.
 //!
-//! This module contains an implementation of `sp_statement_store::StatementStore` which is backed
+//! This module contains an implementation of `soil_statement_store::StatementStore` which is backed
 //! by a database.
 //!
 //! Constraint management.
@@ -57,16 +57,16 @@ use parking_lot::{lock_api::RwLockUpgradableReadGuard, RwLock};
 use prometheus_endpoint::Registry as PrometheusRegistry;
 use sc_client_api::{backend::StorageProvider, Backend, StorageKey};
 use sc_keystore::LocalKeystore;
-use sp_blockchain::HeaderBackend;
+use soil_blockchain::HeaderBackend;
 use soil_core::{crypto::UncheckedFrom, hexdisplay::HexDisplay, traits::SpawnNamed, Decode, Encode};
 use soil_runtime::traits::Block as BlockT;
-use sp_statement_store::{
+use soil_statement_store::{
 	runtime_api::{StatementSource, StatementStoreExt},
 	AccountId, BlockHash, Channel, DecryptionKey, FilterDecision, Hash, InvalidReason,
 	OptimizedTopicFilter, Proof, RejectionReason, Result, SignatureVerificationResult, Statement,
 	StatementAllowance, StatementEvent, SubmitResult, Topic,
 };
-pub use sp_statement_store::{Error, StatementStore, MAX_TOPICS};
+pub use soil_statement_store::{Error, StatementStore, MAX_TOPICS};
 use std::{
 	collections::{BTreeMap, HashMap, HashSet},
 	sync::Arc,
@@ -221,7 +221,7 @@ where
 		account_id: &AccountId,
 		block_hash: Option<Block::Hash>,
 	) -> Result<Option<StatementAllowance>> {
-		use sp_statement_store::{statement_allowance_key, StatementAllowance};
+		use soil_statement_store::{statement_allowance_key, StatementAllowance};
 
 		let block_hash = block_hash.unwrap_or(self.client.info().finalized_hash);
 		let key = statement_allowance_key(account_id);
@@ -1052,8 +1052,8 @@ impl Store {
 			|statement| {
 				if let (Some(key), Some(_)) = (statement.decryption_key(), statement.data()) {
 					let public: soil_core::ed25519::Public = UncheckedFrom::unchecked_from(key);
-					let public: sp_statement_store::ed25519::Public = public.into();
-					match self.keystore.key_pair::<sp_statement_store::ed25519::Pair>(&public) {
+					let public: soil_statement_store::ed25519::Public = public.into();
+					match self.keystore.key_pair::<soil_statement_store::ed25519::Pair>(&public) {
 						Err(e) => {
 							log::debug!(
 								target: LOG_TARGET,
@@ -1495,7 +1495,7 @@ mod tests {
 	use crate::{col, Store};
 	use sc_keystore::Keystore;
 	use soil_core::{Decode, Encode, Pair};
-	use sp_statement_store::{
+	use soil_statement_store::{
 		AccountId, Channel, DecryptionKey, InvalidReason, Proof, Statement, StatementSource,
 		StatementStore, SubmitResult, Topic,
 	};
@@ -1519,8 +1519,8 @@ mod tests {
 			&self,
 			_hash: Hash,
 			key: &sc_client_api::StorageKey,
-		) -> sp_blockchain::Result<Option<sc_client_api::StorageData>> {
-			use sp_statement_store::StatementAllowance;
+		) -> soil_blockchain::Result<Option<sc_client_api::StorageData>> {
+			use soil_statement_store::StatementAllowance;
 
 			assert_eq!(&key.0[0..21], b":statement_allowance:" as &[u8],);
 
@@ -1544,7 +1544,7 @@ mod tests {
 			&self,
 			_hash: Hash,
 			_key: &sc_client_api::StorageKey,
-		) -> sp_blockchain::Result<Option<Hash>> {
+		) -> soil_blockchain::Result<Option<Hash>> {
 			unimplemented!()
 		}
 
@@ -1553,7 +1553,7 @@ mod tests {
 			_hash: Hash,
 			_prefix: Option<&sc_client_api::StorageKey>,
 			_start_key: Option<&sc_client_api::StorageKey>,
-		) -> sp_blockchain::Result<
+		) -> soil_blockchain::Result<
 			sc_client_api::backend::KeysIter<
 				<TestBackend as sc_client_api::Backend<Block>>::State,
 				Block,
@@ -1567,7 +1567,7 @@ mod tests {
 			_hash: Hash,
 			_prefix: Option<&sc_client_api::StorageKey>,
 			_start_key: Option<&sc_client_api::StorageKey>,
-		) -> sp_blockchain::Result<
+		) -> soil_blockchain::Result<
 			sc_client_api::backend::PairsIter<
 				<TestBackend as sc_client_api::Backend<Block>>::State,
 				Block,
@@ -1581,7 +1581,7 @@ mod tests {
 			_hash: Hash,
 			_child_info: &sc_client_api::ChildInfo,
 			_key: &sc_client_api::StorageKey,
-		) -> sp_blockchain::Result<Option<sc_client_api::StorageData>> {
+		) -> soil_blockchain::Result<Option<sc_client_api::StorageData>> {
 			unimplemented!()
 		}
 
@@ -1591,7 +1591,7 @@ mod tests {
 			_child_info: sc_client_api::ChildInfo,
 			_prefix: Option<&sc_client_api::StorageKey>,
 			_start_key: Option<&sc_client_api::StorageKey>,
-		) -> sp_blockchain::Result<
+		) -> soil_blockchain::Result<
 			sc_client_api::backend::KeysIter<
 				<TestBackend as sc_client_api::Backend<Block>>::State,
 				Block,
@@ -1605,7 +1605,7 @@ mod tests {
 			_hash: Hash,
 			_child_info: &sc_client_api::ChildInfo,
 			_key: &sc_client_api::StorageKey,
-		) -> sp_blockchain::Result<Option<Hash>> {
+		) -> soil_blockchain::Result<Option<Hash>> {
 			unimplemented!()
 		}
 
@@ -1613,7 +1613,7 @@ mod tests {
 			&self,
 			_hash: Hash,
 			_key: &sc_client_api::StorageKey,
-		) -> sp_blockchain::Result<Option<sc_client_api::MerkleValue<Hash>>> {
+		) -> soil_blockchain::Result<Option<sc_client_api::MerkleValue<Hash>>> {
 			unimplemented!()
 		}
 
@@ -1622,17 +1622,17 @@ mod tests {
 			_hash: Hash,
 			_child_info: &sc_client_api::ChildInfo,
 			_key: &sc_client_api::StorageKey,
-		) -> sp_blockchain::Result<Option<sc_client_api::MerkleValue<Hash>>> {
+		) -> soil_blockchain::Result<Option<sc_client_api::MerkleValue<Hash>>> {
 			unimplemented!()
 		}
 	}
 
-	impl sp_blockchain::HeaderBackend<Block> for TestClient {
-		fn header(&self, _hash: Hash) -> sp_blockchain::Result<Option<Header>> {
+	impl soil_blockchain::HeaderBackend<Block> for TestClient {
+		fn header(&self, _hash: Hash) -> soil_blockchain::Result<Option<Header>> {
 			unimplemented!()
 		}
-		fn info(&self) -> sp_blockchain::Info<Block> {
-			sp_blockchain::Info {
+		fn info(&self) -> soil_blockchain::Info<Block> {
+			soil_blockchain::Info {
 				best_hash: CORRECT_BLOCK_HASH.into(),
 				best_number: 0,
 				genesis_hash: Default::default(),
@@ -1643,13 +1643,13 @@ mod tests {
 				block_gap: None,
 			}
 		}
-		fn status(&self, _hash: Hash) -> sp_blockchain::Result<sp_blockchain::BlockStatus> {
+		fn status(&self, _hash: Hash) -> soil_blockchain::Result<soil_blockchain::BlockStatus> {
 			unimplemented!()
 		}
-		fn number(&self, _hash: Hash) -> sp_blockchain::Result<Option<BlockNumber>> {
+		fn number(&self, _hash: Hash) -> soil_blockchain::Result<Option<BlockNumber>> {
 			unimplemented!()
 		}
-		fn hash(&self, _number: BlockNumber) -> sp_blockchain::Result<Option<Hash>> {
+		fn hash(&self, _number: BlockNumber) -> soil_blockchain::Result<Option<Hash>> {
 			unimplemented!()
 		}
 	}
@@ -2212,7 +2212,7 @@ mod tests {
 
 	#[test]
 	fn remove_by_covers_various_situations() {
-		use sp_statement_store::{StatementSource, StatementStore, SubmitResult};
+		use soil_statement_store::{StatementSource, StatementStore, SubmitResult};
 
 		// Use a fresh store and fixed time so we can control purging.
 		let (mut store, _temp) = test_store();

@@ -29,7 +29,7 @@ pub mod command;
 
 use codec::{Decode, Encode};
 use sc_client_api::BlockBackend;
-use sp_blockchain::HeaderBackend;
+use soil_blockchain::HeaderBackend;
 use soil_core::hexdisplay::HexDisplay;
 use soil_runtime::{
 	generic::BlockId,
@@ -85,7 +85,7 @@ pub enum Error {
 	Codec(#[from] codec::Error),
 	/// Error accessing blockchain DB.
 	#[error(transparent)]
-	Blockchain(#[from] sp_blockchain::Error),
+	Blockchain(#[from] soil_blockchain::Error),
 	/// Given block has not been found.
 	#[error("{0}")]
 	NotFound(String),
@@ -97,7 +97,7 @@ pub trait ChainAccess<TBlock: Block>: HeaderBackend<TBlock> + BlockBackend<TBloc
 impl<T, TBlock> ChainAccess<TBlock> for T
 where
 	TBlock: Block,
-	T: sp_blockchain::HeaderBackend<TBlock> + sc_client_api::BlockBackend<TBlock>,
+	T: soil_blockchain::HeaderBackend<TBlock> + sc_client_api::BlockBackend<TBlock>,
 {
 }
 

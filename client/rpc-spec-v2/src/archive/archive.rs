@@ -42,8 +42,8 @@ use sc_client_api::{
 	StorageProvider,
 };
 use sc_rpc::utils::Subscription;
-use sp_api::{CallApiAt, CallContext};
-use sp_blockchain::{
+use soil_api::{CallApiAt, CallContext};
+use soil_blockchain::{
 	Backend as BlockChainBackend, Error as BlockChainError, HeaderBackend, HeaderMetadata,
 };
 use soil_core::{Bytes, U256};

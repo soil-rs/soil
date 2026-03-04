@@ -20,8 +20,8 @@
 use super::Error;
 
 use sc_consensus::BlockImportParams;
-use sp_api::StorageProof;
-use sp_inherents::InherentData;
+use soil_api::StorageProof;
+use soil_inherents::InherentData;
 use soil_runtime::{traits::Block as BlockT, Digest};
 
 pub mod aura;

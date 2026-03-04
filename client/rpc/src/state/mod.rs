@@ -31,14 +31,14 @@ use sc_client_api::{
 };
 use sc_rpc_api::{check_if_safe, DenyUnsafe};
 use sc_tracing::block::TracingExecuteBlock;
-use sp_api::{CallApiAt, Metadata, ProvideRuntimeApi};
-use sp_blockchain::{HeaderBackend, HeaderMetadata};
+use soil_api::{CallApiAt, Metadata, ProvideRuntimeApi};
+use soil_blockchain::{HeaderBackend, HeaderMetadata};
 use soil_core::{
 	storage::{PrefixedStorageKey, StorageChangeSet, StorageData, StorageKey},
 	Bytes,
 };
 use soil_runtime::traits::Block as BlockT;
-use sp_version::RuntimeVersion;
+use soil_version::RuntimeVersion;
 use std::sync::Arc;
 
 pub use sc_rpc_api::{child_state::*, state::*};
@@ -174,7 +174,7 @@ where
 	Client: ExecutorProvider<Block>
 		+ StorageProvider<Block, BE>
 		+ ProofProvider<Block>
-		+ HeaderMetadata<Block, Error = sp_blockchain::Error>
+		+ HeaderMetadata<Block, Error = soil_blockchain::Error>
 		+ BlockchainEvents<Block>
 		+ CallApiAt<Block>
 		+ HeaderBackend<Block>
@@ -497,6 +497,6 @@ where
 	}
 }
 
-fn client_err(err: sp_blockchain::Error) -> Error {
+fn client_err(err: soil_blockchain::Error) -> Error {
 	Error::Client(Box::new(err))
 }

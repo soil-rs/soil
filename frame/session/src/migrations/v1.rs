@@ -20,7 +20,7 @@ use frame_support::{
 	pallet_prelude::{Get, ValueQuery, Weight},
 	traits::UncheckedOnRuntimeUpgrade,
 };
-use sp_staking::offence::OffenceSeverity;
+use soil_staking::offence::OffenceSeverity;
 
 #[cfg(feature = "try-runtime")]
 use soil_runtime::TryRuntimeError;

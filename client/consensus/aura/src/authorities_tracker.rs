@@ -23,9 +23,9 @@ use std::{fmt::Debug, sync::Arc};
 use codec::Codec;
 use fork_tree::ForkTree;
 use parking_lot::RwLock;
-use sp_api::ProvideRuntimeApi;
-use sp_blockchain::{HeaderBackend, HeaderMetadata};
-use sp_consensus_aura::{AuraApi, ConsensusLog, AURA_ENGINE_ID};
+use soil_api::ProvideRuntimeApi;
+use soil_blockchain::{HeaderBackend, HeaderMetadata};
+use soil_consensus_aura::{AuraApi, ConsensusLog, AURA_ENGINE_ID};
 use soil_core::Pair;
 use soil_runtime::{
 	generic::OpaqueDigestItemId,
@@ -54,7 +54,7 @@ impl<P, B, C> AuthoritiesTracker<P, B, C>
 where
 	P: Pair,
 	B: Block,
-	C: HeaderBackend<B> + HeaderMetadata<B, Error = sp_blockchain::Error> + ProvideRuntimeApi<B>,
+	C: HeaderBackend<B> + HeaderMetadata<B, Error = soil_blockchain::Error> + ProvideRuntimeApi<B>,
 	P::Public: Codec + Debug,
 	C::Api: AuraApi<B, AuthorityId<P>>,
 {

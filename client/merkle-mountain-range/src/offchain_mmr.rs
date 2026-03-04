@@ -25,10 +25,10 @@ use crate::{aux_schema, MmrClient, LOG_TARGET};
 use log::{debug, error, info, warn};
 use sc_client_api::{Backend, FinalityNotification};
 use sc_offchain::OffchainDb;
-use sp_blockchain::CachedHeaderMetadata;
-use sp_consensus_beefy::MmrRootHash;
+use soil_blockchain::CachedHeaderMetadata;
+use soil_consensus_beefy::MmrRootHash;
 use soil_core::offchain::{DbExternalities, StorageKind};
-use sp_mmr_primitives::{utils, utils::NodesUtils, MmrApi, NodeIndex};
+use soil_mmr_primitives::{utils, utils::NodesUtils, MmrApi, NodeIndex};
 use soil_runtime::{
 	traits::{Block, Header, NumberFor, One},
 	Saturating,

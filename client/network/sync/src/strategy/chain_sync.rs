@@ -57,8 +57,8 @@ use sc_network_common::sync::message::{
 };
 use sc_network_types::PeerId;
 use soil_arithmetic::traits::Saturating;
-use sp_blockchain::{Error as ClientError, HeaderBackend, HeaderMetadata};
-use sp_consensus::{BlockOrigin, BlockStatus};
+use soil_blockchain::{Error as ClientError, HeaderBackend, HeaderMetadata};
+use soil_consensus::{BlockOrigin, BlockStatus};
 use soil_runtime::{
 	traits::{
 		Block as BlockT, CheckedSub, Header as HeaderT, NumberFor, One, SaturatedConversion, Zero,
@@ -440,7 +440,7 @@ where
 	B: BlockT,
 	Client: HeaderBackend<B>
 		+ BlockBackend<B>
-		+ HeaderMetadata<B, Error = sp_blockchain::Error>
+		+ HeaderMetadata<B, Error = soil_blockchain::Error>
 		+ ProofProvider<B>
 		+ Send
 		+ Sync
@@ -1045,7 +1045,7 @@ where
 	B: BlockT,
 	Client: HeaderBackend<B>
 		+ BlockBackend<B>
-		+ HeaderMetadata<B, Error = sp_blockchain::Error>
+		+ HeaderMetadata<B, Error = soil_blockchain::Error>
 		+ ProofProvider<B>
 		+ Send
 		+ Sync
@@ -2474,16 +2474,16 @@ fn is_descendent_of<Block, T>(
 	client: &T,
 	base: &Block::Hash,
 	block: &Block::Hash,
-) -> sp_blockchain::Result<bool>
+) -> soil_blockchain::Result<bool>
 where
 	Block: BlockT,
-	T: HeaderMetadata<Block, Error = sp_blockchain::Error> + ?Sized,
+	T: HeaderMetadata<Block, Error = soil_blockchain::Error> + ?Sized,
 {
 	if base == block {
 		return Ok(false);
 	}
 
-	let ancestor = sp_blockchain::lowest_common_ancestor(client, *block, *base)?;
+	let ancestor = soil_blockchain::lowest_common_ancestor(client, *block, *base)?;
 
 	Ok(ancestor.hash == *base)
 }

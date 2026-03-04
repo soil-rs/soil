@@ -21,7 +21,7 @@ use frame_system::offchain::{SendSignedTransaction, Signer, SubmitTransaction};
 use kitchensink_runtime::{Executive, ExistentialDeposit, Indices, Runtime, UncheckedExtrinsic};
 use soil_application_crypto::AppCrypto;
 use soil_core::offchain::{testing::TestTransactionPoolExt, TransactionPoolExt};
-use sp_keyring::sr25519::Keyring::Alice;
+use soil_keyring::sr25519::Keyring::Alice;
 use soil_keystore::{testing::MemoryKeystore, Keystore, KeystoreExt};
 use soil_runtime::generic;
 

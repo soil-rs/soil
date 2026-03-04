@@ -29,7 +29,7 @@ soil-std = { workspace = true }
 pallet-balances = { workspace = true, default-features = true }
 pallet-transaction-payment = { workspace = true, default-features = true }
 pallet-verify-signature = { workspace = true, default-features = true }
-sp-keyring = { workspace = true, default-features = true }
+soil-keyring = { workspace = true, default-features = true }
 soil-keystore = { workspace = true, default-features = true }
 
 [features]

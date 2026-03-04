@@ -36,7 +36,7 @@ use soil_runtime::{
 	traits::{BlakeTwo256, ValidateUnsigned, Verify},
 	DispatchError, ModuleError,
 };
-use sp_version::RuntimeVersion;
+use soil_version::RuntimeVersion;
 
 parameter_types! {
 	pub static IntegrityTestExec: u32 = 0;

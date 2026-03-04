@@ -38,9 +38,9 @@ use log::{debug, info, warn};
 use sc_consensus::{BlockImport, JustificationSyncLink};
 use sc_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG, CONSENSUS_INFO, CONSENSUS_WARN};
 use soil_arithmetic::traits::BaseArithmetic;
-use sp_consensus::{Proposal, ProposeArgs, Proposer, SelectChain, SyncOracle};
-use sp_consensus_slots::{Slot, SlotDuration};
-use sp_inherents::CreateInherentDataProviders;
+use soil_consensus::{Proposal, ProposeArgs, Proposer, SelectChain, SyncOracle};
+use soil_consensus_slots::{Slot, SlotDuration};
+use soil_inherents::CreateInherentDataProviders;
 use soil_runtime::traits::{Block as BlockT, HashingFor, Header as HeaderT};
 use std::{
 	ops::Deref,
@@ -84,7 +84,7 @@ pub trait SimpleSlotWorker<B: BlockT> {
 	type JustificationSyncLink: JustificationSyncLink<B>;
 
 	/// The type of future resolving to the proposer.
-	type CreateProposer: Future<Output = Result<Self::Proposer, sp_consensus::Error>>
+	type CreateProposer: Future<Output = Result<Self::Proposer, soil_consensus::Error>>
 		+ Send
 		+ Unpin
 		+ 'static;
@@ -109,7 +109,7 @@ pub trait SimpleSlotWorker<B: BlockT> {
 		&self,
 		header: &B::Header,
 		slot: Slot,
-	) -> Result<Self::AuxData, sp_consensus::Error>;
+	) -> Result<Self::AuxData, soil_consensus::Error>;
 
 	/// Returns the number of authorities.
 	/// None indicate that the authorities information is incomplete.
@@ -139,7 +139,7 @@ pub trait SimpleSlotWorker<B: BlockT> {
 		storage_changes: StorageChanges<B>,
 		public: Self::Claim,
 		aux_data: Self::AuxData,
-	) -> Result<sc_consensus::BlockImportParams<B>, sp_consensus::Error>;
+	) -> Result<sc_consensus::BlockImportParams<B>, soil_consensus::Error>;
 
 	/// Whether to force authoring if offline.
 	fn force_authoring(&self) -> bool;
@@ -202,7 +202,7 @@ pub trait SimpleSlotWorker<B: BlockT> {
 
 		let proposing = proposer
 			.propose(propose_args)
-			.map_err(|e| sp_consensus::Error::ClientImport(e.to_string()));
+			.map_err(|e| soil_consensus::Error::ClientImport(e.to_string()));
 
 		let proposal = match futures::future::select(
 			proposing,
@@ -246,7 +246,7 @@ pub trait SimpleSlotWorker<B: BlockT> {
 		slot_info: &SlotInfo<B>,
 		logging_target: &str,
 		end_proposing_at: Instant,
-	) -> Option<sp_inherents::InherentData> {
+	) -> Option<soil_inherents::InherentData> {
 		let remaining_duration = end_proposing_at.saturating_duration_since(Instant::now());
 		let delay = Delay::new(remaining_duration);
 		let cid = slot_info.create_inherent_data.create_inherent_data();
@@ -458,7 +458,7 @@ impl<T: SimpleSlotWorker<B> + Send + Sync, B: BlockT> SlotWorker<B>
 
 /// Slot specific extension that the inherent data provider needs to implement.
 pub trait InherentDataProviderExt {
-	/// The current slot that will be found in the [`InherentData`](`sp_inherents::InherentData`).
+	/// The current slot that will be found in the [`InherentData`](`soil_inherents::InherentData`).
 	fn slot(&self) -> Slot;
 }
 

@@ -29,8 +29,8 @@ use jsonrpsee::{
 	},
 };
 use pallet_transaction_payment_rpc_runtime_api::{FeeDetails, InclusionFee, RuntimeDispatchInfo};
-use sp_api::ProvideRuntimeApi;
-use sp_blockchain::HeaderBackend;
+use soil_api::ProvideRuntimeApi;
+use soil_blockchain::HeaderBackend;
 use soil_core::Bytes;
 use soil_rpc::number::NumberOrHex;
 use soil_runtime::traits::{Block as BlockT, MaybeDisplay};

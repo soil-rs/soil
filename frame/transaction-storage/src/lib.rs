@@ -43,7 +43,7 @@ use frame_support::{
 };
 use frame_system::pallet_prelude::BlockNumberFor;
 use soil_runtime::traits::{BlakeTwo256, Dispatchable, Hash, One, Saturating, Zero};
-use sp_transaction_storage_proof::{
+use soil_transaction_storage_proof::{
 	encode_index, num_chunks, random_chunk, ChunkIndex, InherentError, TransactionStorageProof,
 	CHUNK_SIZE, INHERENT_IDENTIFIER,
 };

@@ -35,7 +35,7 @@ use futures::{future::join_all, FutureExt};
 use itertools::Itertools;
 use parking_lot::RwLock;
 use sc_transaction_pool_api::{error::IntoMetricsLabel, TransactionPriority, TransactionSource};
-use sp_blockchain::HashAndNumber;
+use soil_blockchain::HashAndNumber;
 use soil_runtime::{
 	traits::Block as BlockT,
 	transaction_validity::{InvalidTransaction, TransactionValidityError},

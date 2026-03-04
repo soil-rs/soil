@@ -38,7 +38,7 @@ pub enum Error {
 	HashingAuthorityId(#[from] sc_network_types::multihash::Error),
 
 	#[error("Failed calling into the Substrate runtime: {0}")]
-	CallingRuntime(#[from] sp_blockchain::Error),
+	CallingRuntime(#[from] soil_blockchain::Error),
 
 	#[error("Received a dht record with a key that does not match any in-flight awaited keys.")]
 	ReceivingUnexpectedRecord,

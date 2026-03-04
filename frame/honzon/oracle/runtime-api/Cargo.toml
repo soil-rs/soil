@@ -11,7 +11,7 @@ description = "Runtime API for the oracle pallet."
 [dependencies]
 codec = { workspace = true, features = ["derive"] }
 scale-info = { workspace = true }
-sp-api = { workspace = true }
+soil-api = { workspace = true }
 soil-std = { workspace = true }
 
 
@@ -20,6 +20,6 @@ default = ["std"]
 std = [
 	"codec/std",
 	"scale-info/std",
-	"sp-api/std",
+	"soil-api/std",
 	"soil-std/std",
 ]

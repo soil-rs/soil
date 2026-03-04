@@ -27,14 +27,14 @@ use crate::{
 use frame_support::build_struct_json_patch;
 use alloc::{vec, vec::Vec};
 use pallet_im_online::sr25519::AuthorityId as ImOnlineId;
-use sp_authority_discovery::AuthorityId as AuthorityDiscoveryId;
-use sp_consensus_babe::AuthorityId as BabeId;
-use sp_consensus_beefy::ecdsa_crypto::AuthorityId as BeefyId;
-use sp_consensus_grandpa::AuthorityId as GrandpaId;
+use soil_authority_discovery::AuthorityId as AuthorityDiscoveryId;
+use soil_consensus_babe::AuthorityId as BabeId;
+use soil_consensus_beefy::ecdsa_crypto::AuthorityId as BeefyId;
+use soil_consensus_grandpa::AuthorityId as GrandpaId;
 use soil_core::{crypto::get_public_from_string_or_panic, sr25519};
-use sp_genesis_builder::PresetId;
-use sp_keyring::Sr25519Keyring;
-use sp_mixnet::types::AuthorityId as MixnetId;
+use soil_genesis_builder::PresetId;
+use soil_keyring::Sr25519Keyring;
+use soil_mixnet::types::AuthorityId as MixnetId;
 use soil_runtime::Perbill;
 
 pub const ENDOWMENT: Balance = 10_000_000 * DOLLARS;
@@ -106,7 +106,7 @@ pub fn get_preset(id: &PresetId) -> Option<Vec<u8>> {
 	let endowed = well_known_including_eth_accounts();
 
 	let patch = match id.as_ref() {
-		sp_genesis_builder::DEV_RUNTIME_PRESET => kitchensink_genesis(
+		soil_genesis_builder::DEV_RUNTIME_PRESET => kitchensink_genesis(
 			// Use stash as controller account, otherwise grandpa can't load the authority set at
 			// genesis.
 			vec![(alice_stash.clone(), alice_stash.clone(), alice_session_keys)],
@@ -114,7 +114,7 @@ pub fn get_preset(id: &PresetId) -> Option<Vec<u8>> {
 			endowed,
 			vec![validator(alice_stash.clone())],
 		),
-		sp_genesis_builder::LOCAL_TESTNET_RUNTIME_PRESET => kitchensink_genesis(
+		soil_genesis_builder::LOCAL_TESTNET_RUNTIME_PRESET => kitchensink_genesis(
 			vec![
 				// Use stash as controller account, otherwise grandpa can't load the authority set
 				// at genesis.
@@ -138,8 +138,8 @@ pub fn get_preset(id: &PresetId) -> Option<Vec<u8>> {
 /// List of supported presets.
 pub fn preset_names() -> Vec<PresetId> {
 	vec![
-		PresetId::from(sp_genesis_builder::DEV_RUNTIME_PRESET),
-		PresetId::from(sp_genesis_builder::LOCAL_TESTNET_RUNTIME_PRESET),
+		PresetId::from(soil_genesis_builder::DEV_RUNTIME_PRESET),
+		PresetId::from(soil_genesis_builder::LOCAL_TESTNET_RUNTIME_PRESET),
 	]
 }
 

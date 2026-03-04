@@ -26,7 +26,7 @@ frame-election-provider-support = { workspace = true }
 soil-arithmetic = { workspace = true }
 soil-core = { workspace = true }
 soil-io = { workspace = true }
-sp-npos-elections = { workspace = true }
+soil-npos-elections = { workspace = true }
 soil-runtime = { workspace = true }
 
 # Optional imports for benchmarking
@@ -63,7 +63,7 @@ std = [
 	"soil-arithmetic/std",
 	"soil-core/std",
 	"soil-io/std",
-	"sp-npos-elections/std",
+	"soil-npos-elections/std",
 	"soil-runtime/std",
 	"soil-tracing/std",
 	"strum/std",

@@ -23,7 +23,7 @@ scale-info = { features = ["derive"], workspace = true }
 soil-core = { workspace = true }
 soil-io = { workspace = true }
 soil-runtime = { workspace = true }
-sp-version = { workspace = true }
+soil-version = { workspace = true }
 
 [features]
 default = ["std"]
@@ -37,7 +37,7 @@ std = [
 	"soil-core/std",
 	"soil-io/std",
 	"soil-runtime/std",
-	"sp-version/std",
+	"soil-version/std",
 ]
 runtime-benchmarks = [
 	"frame-support/runtime-benchmarks",

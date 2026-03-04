@@ -31,18 +31,18 @@ frame-support = { workspace = true }
 frame-system = { workspace = true }
 
 # primitive types used for developing FRAME runtimes.
-sp-api = { optional = true, workspace = true }
-sp-block-builder = { optional = true, workspace = true }
-sp-consensus-aura = { optional = true, workspace = true }
-sp-consensus-grandpa = { optional = true, workspace = true }
-sp-genesis-builder = { optional = true, workspace = true }
-sp-inherents = { optional = true, workspace = true }
-sp-keyring = { optional = true, workspace = true }
-sp-offchain = { optional = true, workspace = true }
-sp-session = { optional = true, workspace = true }
+soil-api = { optional = true, workspace = true }
+soil-block-builder = { optional = true, workspace = true }
+soil-consensus-aura = { optional = true, workspace = true }
+soil-consensus-grandpa = { optional = true, workspace = true }
+soil-genesis-builder = { optional = true, workspace = true }
+soil-inherents = { optional = true, workspace = true }
+soil-keyring = { optional = true, workspace = true }
+soil-offchain = { optional = true, workspace = true }
+soil-session = { optional = true, workspace = true }
 soil-storage = { optional = true, workspace = true }
-sp-transaction-pool = { optional = true, workspace = true }
-sp-version = { optional = true, workspace = true }
+soil-transaction-pool = { optional = true, workspace = true }
+soil-version = { optional = true, workspace = true }
 
 frame-executive = { optional = true, workspace = true }
 frame-system-rpc-runtime-api = { optional = true, workspace = true }
@@ -71,22 +71,22 @@ std = [
 	"log/std",
 	"scale-info/std",
 	"serde/std",
-	"sp-api?/std",
+	"soil-api?/std",
 	"soil-arithmetic/std",
-	"sp-block-builder?/std",
-	"sp-consensus-aura?/std",
-	"sp-consensus-grandpa?/std",
+	"soil-block-builder?/std",
+	"soil-consensus-aura?/std",
+	"soil-consensus-grandpa?/std",
 	"soil-core/std",
-	"sp-genesis-builder?/std",
-	"sp-inherents?/std",
+	"soil-genesis-builder?/std",
+	"soil-inherents?/std",
 	"soil-io/std",
-	"sp-keyring?/std",
-	"sp-offchain?/std",
+	"soil-keyring?/std",
+	"soil-offchain?/std",
 	"soil-runtime/std",
-	"sp-session?/std",
+	"soil-session?/std",
 	"soil-storage/std",
-	"sp-transaction-pool?/std",
-	"sp-version?/std",
+	"soil-transaction-pool?/std",
+	"soil-version?/std",
 ]
 runtime-benchmarks = [
 	"frame-benchmarking/runtime-benchmarks",
@@ -106,16 +106,16 @@ experimental = ["frame-support/experimental"]
 runtime = [
 	"frame-executive",
 	"frame-system-rpc-runtime-api",
-	"sp-api",
-	"sp-block-builder",
-	"sp-consensus-aura",
-	"sp-consensus-grandpa",
-	"sp-genesis-builder",
-	"sp-inherents",
-	"sp-keyring",
-	"sp-offchain",
-	"sp-session",
+	"soil-api",
+	"soil-block-builder",
+	"soil-consensus-aura",
+	"soil-consensus-grandpa",
+	"soil-genesis-builder",
+	"soil-inherents",
+	"soil-keyring",
+	"soil-offchain",
+	"soil-session",
 	"soil-storage",
-	"sp-transaction-pool",
-	"sp-version",
+	"soil-transaction-pool",
+	"soil-version",
 ]

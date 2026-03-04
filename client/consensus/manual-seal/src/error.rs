@@ -22,9 +22,9 @@
 use futures::channel::{mpsc::SendError, oneshot};
 use jsonrpsee::types::error::{ErrorObject, ErrorObjectOwned};
 use sc_consensus::ImportResult;
-use sp_blockchain::Error as BlockchainError;
-use sp_consensus::Error as ConsensusError;
-use sp_inherents::Error as InherentsError;
+use soil_blockchain::Error as BlockchainError;
+use soil_consensus::Error as ConsensusError;
+use soil_inherents::Error as InherentsError;
 
 /// Error code for rpc
 mod codes {

@@ -39,7 +39,7 @@ use soil_runtime::{
 	traits::{Convert, Saturating, StaticLookup},
 	Perbill,
 };
-use sp_staking::offence::ReportOffence;
+use soil_staking::offence::ReportOffence;
 
 const SEED: u32 = 0;
 

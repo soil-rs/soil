@@ -20,7 +20,7 @@ use codec::{Decode, Encode};
 use frame_support::Hashable;
 use frame_system::offchain::AppCrypto;
 use sc_executor::error::Result;
-use sp_consensus_babe::{
+use soil_consensus_babe::{
 	digests::{PreDigest, SecondaryPlainPreDigest},
 	Slot, BABE_ENGINE_ID,
 };

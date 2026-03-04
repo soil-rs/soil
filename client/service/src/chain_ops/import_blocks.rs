@@ -27,7 +27,7 @@ use sc_consensus::import_queue::{
 	BlockImportError, BlockImportStatus, ImportQueue, IncomingBlock, Link,
 };
 use serde_json::{de::IoRead as JsonIoRead, Deserializer, StreamDeserializer};
-use sp_consensus::BlockOrigin;
+use soil_consensus::BlockOrigin;
 use soil_runtime::{
 	generic::SignedBlock,
 	traits::{
