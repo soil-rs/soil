@@ -6681,7 +6681,6 @@ dependencies = [
  "pallet-transaction-payment-rpc",
  "sc-chain-spec",
  "sc-client-api",
- "sc-consensus-babe",
  "sc-consensus-babe-rpc",
  "sc-consensus-beefy",
  "sc-consensus-beefy-rpc",
@@ -10912,53 +10911,12 @@ dependencies = [
 ]
 
 [[package]]
-name = "sc-consensus-babe"
-version = "0.34.0"
-dependencies = [
- "async-trait",
- "fork-tree",
- "futures",
- "log",
- "num-bigint",
- "num-rational",
- "num-traits",
- "parity-scale-codec",
- "parking_lot 0.12.5",
- "sc-client-api",
- "sc-consensus",
- "sc-consensus-epochs",
- "sc-network-test",
- "sc-telemetry",
- "sc-transaction-pool-api",
- "soil-api",
- "soil-application-crypto",
- "soil-block-builder",
- "soil-blockchain",
- "soil-consensus",
- "soil-consensus-babe",
- "soil-consensus-slots",
- "soil-core",
- "soil-crypto-hashing",
- "soil-inherents",
- "soil-keyring",
- "soil-keystore",
- "soil-runtime",
- "soil-timestamp",
- "soil-tracing",
- "substrate-prometheus-endpoint",
- "substrate-test-runtime-client",
- "thiserror 1.0.69",
- "tokio",
-]
-
-[[package]]
 name = "sc-consensus-babe-rpc"
 version = "0.34.0"
 dependencies = [
  "futures",
  "jsonrpsee",
  "sc-consensus",
- "sc-consensus-babe",
  "sc-consensus-epochs",
  "sc-rpc-api",
  "sc-transaction-pool-api",
@@ -11137,7 +11095,6 @@ dependencies = [
  "sc-basic-authorship",
  "sc-client-api",
  "sc-consensus",
- "sc-consensus-babe",
  "sc-consensus-epochs",
  "sc-transaction-pool",
  "sc-transaction-pool-api",
@@ -11829,12 +11786,12 @@ dependencies = [
  "parity-scale-codec",
  "sc-chain-spec",
  "sc-client-api",
- "sc-consensus-babe",
  "sc-consensus-epochs",
  "sc-consensus-grandpa",
  "serde",
  "serde_json",
  "soil-blockchain",
+ "soil-consensus-babe",
  "soil-runtime",
  "thiserror 1.0.69",
 ]
@@ -14000,7 +13957,6 @@ dependencies = [
  "sc-client-api",
  "sc-client-db",
  "sc-consensus",
- "sc-consensus-babe",
  "sc-consensus-babe-rpc",
  "sc-consensus-beefy",
  "sc-consensus-beefy-rpc",

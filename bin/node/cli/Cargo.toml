@@ -83,7 +83,6 @@ sc-client-api = { workspace = true, default-features = true }
 sc-client-db = { workspace = true, default-features = true }
 sc-consensus = { workspace = true, default-features = true }
 soil-consensus-aura = { workspace = true, default-features = true }
-sc-consensus-babe = { workspace = true, default-features = true }
 sc-consensus-babe-rpc = { workspace = true, default-features = true }
 sc-consensus-beefy = { workspace = true, default-features = true }
 sc-consensus-beefy-rpc = { workspace = true, default-features = true }

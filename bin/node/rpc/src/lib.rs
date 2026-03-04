@@ -36,7 +36,7 @@ use std::sync::Arc;
 use jsonrpsee::RpcModule;
 use node_primitives::{AccountId, Balance, Block, BlockNumber, Hash, Nonce};
 use sc_client_api::AuxStore;
-use sc_consensus_babe::BabeWorkerHandle;
+use soil_consensus_babe::client::BabeWorkerHandle;
 use sc_consensus_beefy::communication::notification::{
 	BeefyBestBlockStream, BeefyVersionedFinalityProofStream,
 };

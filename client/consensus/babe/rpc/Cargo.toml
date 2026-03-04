@@ -18,7 +18,6 @@ targets = ["x86_64-unknown-linux-gnu"]
 [dependencies]
 futures = { workspace = true }
 jsonrpsee = { features = ["client-core", "macros", "server-core"], workspace = true }
-sc-consensus-babe = { workspace = true, default-features = true }
 sc-consensus-epochs = { workspace = true, default-features = true }
 sc-rpc-api = { workspace = true, default-features = true }
 serde = { features = ["derive"], workspace = true, default-features = true }

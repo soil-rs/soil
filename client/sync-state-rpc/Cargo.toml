@@ -19,7 +19,7 @@ codec = { workspace = true, default-features = true }
 jsonrpsee = { features = ["client-core", "macros", "server-core"], workspace = true }
 sc-chain-spec = { workspace = true, default-features = true }
 sc-client-api = { workspace = true, default-features = true }
-sc-consensus-babe = { workspace = true, default-features = true }
+soil-consensus-babe = { workspace = true, default-features = true }
 sc-consensus-epochs = { workspace = true, default-features = true }
 sc-consensus-grandpa = { workspace = true, default-features = true }
 serde = { features = ["derive"], workspace = true, default-features = true }

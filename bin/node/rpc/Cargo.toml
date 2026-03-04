@@ -22,7 +22,6 @@ node-primitives = { workspace = true, default-features = true }
 pallet-transaction-payment-rpc = { workspace = true, default-features = true }
 sc-chain-spec = { workspace = true, default-features = true }
 sc-client-api = { workspace = true, default-features = true }
-sc-consensus-babe = { workspace = true, default-features = true }
 sc-consensus-babe-rpc = { workspace = true, default-features = true }
 sc-consensus-beefy = { workspace = true, default-features = true }
 sc-consensus-beefy-rpc = { workspace = true, default-features = true }

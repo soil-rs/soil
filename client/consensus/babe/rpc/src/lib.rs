@@ -29,7 +29,8 @@ use jsonrpsee::{
 };
 use serde::{Deserialize, Serialize};
 
-use sc_consensus_babe::{authorship, BabeWorkerHandle};
+use soil_consensus_babe::authorship;
+use soil_consensus_babe::client::BabeWorkerHandle;
 use sc_consensus_epochs::Epoch as EpochT;
 use sc_rpc_api::{check_if_safe, UnsafeRpcError};
 use soil_api::ProvideRuntimeApi;
@@ -193,7 +194,7 @@ impl From<Error> for ErrorObjectOwned {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use sc_consensus_babe::ImportQueueParams;
+	use soil_consensus_babe::client::ImportQueueParams;
 	use sc_rpc_api::DenyUnsafe;
 	use sc_transaction_pool_api::{OffchainTransactionPoolFactory, RejectAllTxPool};
 	use soil_consensus_babe::inherents::InherentDataProvider;
@@ -221,10 +222,10 @@ mod tests {
 		let task_executor = TaskExecutor::new();
 		let keystore = create_keystore(Sr25519Keyring::Alice);
 
-		let config = sc_consensus_babe::configuration(&*client).expect("config available");
+		let config = soil_consensus_babe::client::configuration(&*client).expect("config available");
 		let slot_duration = config.slot_duration();
 
-		let (block_import, link) = sc_consensus_babe::block_import(
+		let (block_import, link) = soil_consensus_babe::client::block_import(
 			config.clone(),
 			client.clone(),
 			client.clone(),
@@ -239,7 +240,7 @@ mod tests {
 		)
 		.expect("can initialize block-import");
 
-		let (_, babe_worker_handle) = sc_consensus_babe::import_queue(ImportQueueParams {
+		let (_, babe_worker_handle) = soil_consensus_babe::client::import_queue(ImportQueueParams {
 			link: link.clone(),
 			block_import: block_import.clone(),
 			justification_import: None,

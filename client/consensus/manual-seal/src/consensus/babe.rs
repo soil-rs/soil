@@ -23,8 +23,9 @@ use super::ConsensusDataProvider;
 use crate::{Error, LOG_TARGET};
 use codec::Encode;
 use sc_client_api::{AuxStore, UsageProvider};
-use sc_consensus_babe::{
-	authorship, find_pre_digest, BabeIntermediate, CompatibleDigestItem, Epoch, INTERMEDIATE_KEY,
+use soil_consensus_babe::{
+	authorship, client::Epoch, digests::CompatibleDigestItem, find_pre_digest, BabeIntermediate,
+	INTERMEDIATE_KEY,
 };
 use sc_consensus_epochs::{
 	descendent_query, EpochHeader, SharedEpochChanges, ViableEpochDescriptor,
@@ -150,7 +151,7 @@ where
 			return Err(Error::StringError("Cannot supply empty authority set!".into()));
 		}
 
-		let config = sc_consensus_babe::configuration(&*client)?;
+		let config = soil_consensus_babe::client::configuration(&*client)?;
 
 		Ok(Self { config, client, keystore, epoch_changes, authorities })
 	}
