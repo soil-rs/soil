@@ -1,5 +1,5 @@
 [package]
-name = "pallet-election-provider-multi-phase"
+name = "topsoil-election-provider-multi-phase"
 version = "27.0.0"
 authors.workspace = true
 edition.workspace = true

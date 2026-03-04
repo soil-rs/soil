@@ -1,5 +1,5 @@
 [package]
-name = "pallet-bags-list-fuzzer"
+name = "topsoil-bags-list-fuzzer"
 version = "4.0.0-dev"
 authors.workspace = true
 edition.workspace = true

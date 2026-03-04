@@ -1,5 +1,5 @@
 [package]
-name = "pallet-skip-feeless-payment"
+name = "topsoil-skip-feeless-payment"
 version = "3.0.0"
 authors.workspace = true
 edition.workspace = true

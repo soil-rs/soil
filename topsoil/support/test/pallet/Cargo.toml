@@ -1,5 +1,5 @@
 [package]
-name = "frame-support-test-pallet"
+name = "topsoil-support-test-pallet"
 version = "4.0.0-dev"
 authors.workspace = true
 edition.workspace = true

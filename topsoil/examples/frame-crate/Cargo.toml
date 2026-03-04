@@ -1,5 +1,5 @@
 [package]
-name = "pallet-example-frame-crate"
+name = "topsoil-example-frame-crate"
 version = "0.0.1"
 authors = ["Parity Technologies <admin@parity.io>"]
 edition.workspace = true

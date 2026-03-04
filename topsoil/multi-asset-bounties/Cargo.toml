@@ -1,5 +1,5 @@
 [package]
-name = "pallet-multi-asset-bounties"
+name = "topsoil-multi-asset-bounties"
 version = "1.0.0"
 authors.workspace = true
 edition.workspace = true

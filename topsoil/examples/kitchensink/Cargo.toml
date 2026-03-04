@@ -1,5 +1,5 @@
 [package]
-name = "pallet-example-kitchensink"
+name = "topsoil-example-kitchensink"
 version = "4.0.0-dev"
 authors.workspace = true
 edition.workspace = true

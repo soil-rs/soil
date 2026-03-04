@@ -1,5 +1,5 @@
 [package]
-name = "pallet-staking"
+name = "topsoil-staking"
 version = "28.0.0"
 authors.workspace = true
 edition.workspace = true

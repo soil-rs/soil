@@ -1,5 +1,5 @@
 [package]
-name = "frame-benchmarking"
+name = "topsoil-benchmarking"
 version = "28.0.0"
 authors.workspace = true
 edition.workspace = true

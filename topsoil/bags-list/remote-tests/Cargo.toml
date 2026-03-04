@@ -1,5 +1,5 @@
 [package]
-name = "pallet-bags-list-remote-tests"
+name = "topsoil-bags-list-remote-tests"
 version = "4.0.0-dev"
 authors.workspace = true
 edition.workspace = true

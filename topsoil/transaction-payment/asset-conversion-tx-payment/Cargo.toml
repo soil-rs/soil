@@ -1,5 +1,5 @@
 [package]
-name = "pallet-asset-conversion-tx-payment"
+name = "topsoil-asset-conversion-tx-payment"
 version = "10.0.0"
 authors.workspace = true
 edition.workspace = true

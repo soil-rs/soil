@@ -1,5 +1,5 @@
 [package]
-name = "pallet-elections-phragmen"
+name = "topsoil-elections-phragmen"
 version = "29.0.0"
 authors.workspace = true
 edition.workspace = true

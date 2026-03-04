@@ -1,5 +1,5 @@
 [package]
-name = "pallet-core-fellowship"
+name = "topsoil-core-fellowship"
 version = "12.0.0"
 authors.workspace = true
 edition.workspace = true

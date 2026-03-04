@@ -1,5 +1,5 @@
 [package]
-name = "pallet-paged-list"
+name = "topsoil-paged-list"
 version = "0.6.0"
 description = "FRAME pallet that provides a paged list data structure."
 authors.workspace = true

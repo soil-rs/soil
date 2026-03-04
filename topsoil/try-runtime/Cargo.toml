@@ -1,5 +1,5 @@
 [package]
-name = "frame-try-runtime"
+name = "topsoil-try-runtime"
 version = "0.34.0"
 authors.workspace = true
 edition.workspace = true

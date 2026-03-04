@@ -1,5 +1,5 @@
 [package]
-name = "frame-support-procedural-tools-derive"
+name = "topsoil-support-procedural-tools-derive"
 version = "11.0.0"
 authors.workspace = true
 edition.workspace = true

@@ -1,5 +1,5 @@
 [package]
-name = "pallet-balances"
+name = "topsoil-balances"
 version = "28.0.0"
 authors.workspace = true
 edition.workspace = true

@@ -1,5 +1,5 @@
 [package]
-name = "pallet-example-single-block-migrations"
+name = "topsoil-example-single-block-migrations"
 version = "0.0.1"
 authors.workspace = true
 edition.workspace = true

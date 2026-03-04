@@ -1,5 +1,5 @@
 [package]
-name = "pallet-election-provider-multi-block"
+name = "topsoil-election-provider-multi-block"
 version = "0.9.0"
 authors.workspace = true
 edition.workspace = true

@@ -1,5 +1,5 @@
 [package]
-name = "pallet-tips"
+name = "topsoil-tips"
 version = "27.0.0"
 authors.workspace = true
 edition.workspace = true

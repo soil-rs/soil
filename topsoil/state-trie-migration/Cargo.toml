@@ -1,5 +1,5 @@
 [package]
-name = "pallet-state-trie-migration"
+name = "topsoil-state-trie-migration"
 version = "29.0.0"
 authors.workspace = true
 edition.workspace = true

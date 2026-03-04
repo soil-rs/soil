@@ -1,5 +1,5 @@
 [package]
-name = "pallet-example-split"
+name = "topsoil-example-split"
 version = "10.0.0"
 authors.workspace = true
 edition.workspace = true

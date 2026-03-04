@@ -1,5 +1,5 @@
 [package]
-name = "pallet-identity"
+name = "topsoil-identity"
 version = "29.0.0"
 authors.workspace = true
 edition.workspace = true

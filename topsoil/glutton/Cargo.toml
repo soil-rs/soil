@@ -1,5 +1,5 @@
 [package]
-name = "pallet-glutton"
+name = "topsoil-glutton"
 version = "14.0.0"
 authors.workspace = true
 edition.workspace = true

@@ -1,5 +1,5 @@
 [package]
-name = "pallet-nomination-pools-runtime-api"
+name = "topsoil-nomination-pools-runtime-api"
 version = "23.0.0"
 authors.workspace = true
 edition.workspace = true

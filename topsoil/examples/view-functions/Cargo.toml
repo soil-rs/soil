@@ -1,5 +1,5 @@
 [package]
-name = "pallet-example-view-functions"
+name = "topsoil-example-view-functions"
 version = "1.0.0"
 authors.workspace = true
 edition.workspace = true

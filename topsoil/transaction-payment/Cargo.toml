@@ -1,5 +1,5 @@
 [package]
-name = "pallet-transaction-payment"
+name = "topsoil-transaction-payment"
 version = "28.0.0"
 authors.workspace = true
 edition.workspace = true

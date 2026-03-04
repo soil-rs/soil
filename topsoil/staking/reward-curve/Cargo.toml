@@ -1,5 +1,5 @@
 [package]
-name = "pallet-staking-reward-curve"
+name = "topsoil-staking-reward-curve"
 version = "11.0.0"
 authors.workspace = true
 edition.workspace = true

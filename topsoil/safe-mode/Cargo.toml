@@ -1,5 +1,5 @@
 [package]
-name = "pallet-safe-mode"
+name = "topsoil-safe-mode"
 version = "9.0.0"
 authors.workspace = true
 edition.workspace = true

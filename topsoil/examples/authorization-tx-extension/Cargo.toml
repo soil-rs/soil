@@ -1,5 +1,5 @@
 [package]
-name = "pallet-example-authorization-tx-extension"
+name = "topsoil-example-authorization-tx-extension"
 version = "1.0.0"
 authors.workspace = true
 edition.workspace = true

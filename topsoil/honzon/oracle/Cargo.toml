@@ -1,5 +1,5 @@
 [package]
-name = "pallet-oracle"
+name = "topsoil-oracle"
 version = "1.0.0"
 authors = ["Acala Developers", "Parity Technologies <admin@parity.io>"]
 edition.workspace = true

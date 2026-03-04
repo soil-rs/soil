@@ -1,5 +1,5 @@
 [package]
-name = "pallet-oracle-runtime-api"
+name = "topsoil-oracle-runtime-api"
 version = "1.0.0"
 authors = ["Acala Developers", "Parity Technologies <admin@parity.io>"]
 edition.workspace = true

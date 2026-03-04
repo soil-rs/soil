@@ -1,5 +1,5 @@
 [package]
-name = "frame-election-solution-type-fuzzer"
+name = "topsoil-election-solution-type-fuzzer"
 version = "2.0.0-alpha.5"
 authors.workspace = true
 edition.workspace = true

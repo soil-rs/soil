@@ -1,5 +1,5 @@
 [package]
-name = "frame-election-provider-solution-type"
+name = "topsoil-election-provider-solution-type"
 version = "13.0.0"
 authors.workspace = true
 edition.workspace = true

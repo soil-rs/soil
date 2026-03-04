@@ -1,5 +1,5 @@
 [package]
-name = "pallet-tx-pause"
+name = "topsoil-tx-pause"
 version = "9.0.0"
 authors.workspace = true
 edition.workspace = true

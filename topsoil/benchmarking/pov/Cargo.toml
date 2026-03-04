@@ -1,5 +1,5 @@
 [package]
-name = "frame-benchmarking-pallet-pov"
+name = "topsoil-benchmarking-pallet-pov"
 version = "18.0.0"
 authors.workspace = true
 edition.workspace = true

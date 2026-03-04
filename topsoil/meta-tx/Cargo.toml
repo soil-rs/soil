@@ -1,5 +1,5 @@
 [package]
-name = "pallet-meta-tx"
+name = "topsoil-meta-tx"
 description = "FRAME pallet enabling meta transactions."
 license = "Apache-2.0"
 version = "0.1.0"

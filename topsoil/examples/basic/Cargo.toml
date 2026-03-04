@@ -1,5 +1,5 @@
 [package]
-name = "pallet-example-basic"
+name = "topsoil-example-basic"
 version = "27.0.0"
 authors.workspace = true
 edition.workspace = true

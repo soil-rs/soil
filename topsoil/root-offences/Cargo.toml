@@ -1,5 +1,5 @@
 [package]
-name = "pallet-root-offences"
+name = "topsoil-root-offences"
 version = "25.0.0"
 authors.workspace = true
 edition.workspace = true

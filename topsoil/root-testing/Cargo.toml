@@ -1,5 +1,5 @@
 [package]
-name = "pallet-root-testing"
+name = "topsoil-root-testing"
 version = "4.0.0"
 authors.workspace = true
 edition.workspace = true

@@ -1,5 +1,5 @@
 [package]
-name = "pallet-dev-mode"
+name = "topsoil-dev-mode"
 version = "10.0.0"
 authors.workspace = true
 edition.workspace = true
