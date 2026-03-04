@@ -80,7 +80,7 @@ members = [
 	"crates/soil/utils",
 	"deprecated/hashing",
 	"deprecated/hashing/proc-macro",
-	"crates/topsoil",
+	"crates/topsoil/topsoil",
 	"crates/topsoil/alliance",
 	"crates/topsoil/asset-conversion",
 	"crates/topsoil/asset-conversion/ops",
@@ -355,7 +355,7 @@ binary-merkle-tree = { path = "utils/binary-merkle-tree", default-features = fal
 chain-spec-builder = { path = "bin/utils/chain-spec-builder", default-features = false, package = "staging-chain-spec-builder" }
 ethereum-standards = { path = "primitives/ethereum-standards" }
 fork-tree = { path = "utils/fork-tree", default-features = false }
-topsoil = { path = "crates/topsoil", default-features = false }
+topsoil = { path = "crates/topsoil/topsoil", default-features = false }
 topsoil-benchmarking = { path = "crates/topsoil/benchmarking", default-features = false }
 topsoil-benchmarking-pallet-pov = { default-features = false, path = "crates/topsoil/benchmarking/pov" }
 topsoil-election-provider-solution-type = { path = "crates/topsoil/election-provider-support/solution-type", default-features = false }
