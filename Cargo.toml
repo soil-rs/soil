@@ -57,7 +57,6 @@ members = [
 	"client/network/test",
 	"client/network/transactions",
 	"client/network/types",
-	"client/offchain",
 	"client/proposer-metrics",
 	"client/rpc",
 	"client/rpc-api",
@@ -532,7 +531,6 @@ sc-network-sync = { path = "client/network/sync", default-features = false }
 sc-network-test = { path = "client/network/test" }
 sc-network-transactions = { path = "client/network/transactions", default-features = false }
 sc-network-types = { path = "client/network/types", default-features = false }
-sc-offchain = { path = "client/offchain", default-features = false }
 sc-proposer-metrics = { path = "client/proposer-metrics", default-features = false }
 sc-rpc = { path = "client/rpc", default-features = false }
 sc-rpc-api = { path = "client/rpc-api", default-features = false }

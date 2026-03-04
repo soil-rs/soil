@@ -108,7 +108,6 @@ sc-network-statement = { workspace = true, default-features = true }
 sc-network-sync = { workspace = true, default-features = true }
 sc-network-transactions = { workspace = true, default-features = true }
 sc-network-types = { workspace = true, default-features = true }
-sc-offchain = { workspace = true, default-features = true }
 sc-proposer-metrics = { workspace = true, default-features = true }
 sc-rpc = { workspace = true, default-features = true }
 sc-rpc-api = { workspace = true, default-features = true }
@@ -141,6 +140,7 @@ soil-io = { workspace = true, default-features = true }
 soil-maybe-compressed-blob = { workspace = true, default-features = true }
 soil-mixnet = { workspace = true, default-features = true }
 soil-mmr-primitives = { workspace = true, default-features = true }
+soil-offchain = { workspace = true, default-features = true }
 soil-panic-handler = { workspace = true, default-features = true }
 soil-rpc = { workspace = true, default-features = true }
 soil-runtime = { workspace = true, default-features = true }

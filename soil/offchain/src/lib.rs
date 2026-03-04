@@ -23,6 +23,14 @@
 /// Re-export of parent module scope storage prefix.
 pub use soil_core::offchain::STORAGE_PREFIX;
 
+// std-only (former sc-offchain)
+#[cfg(feature = "std")]
+mod api;
+#[cfg(feature = "std")]
+mod client;
+#[cfg(feature = "std")]
+pub use client::*;
+
 soil_api::decl_runtime_apis! {
 	/// The offchain worker api.
 	#[api_version(2)]

@@ -24,7 +24,7 @@
 use crate::{aux_schema, MmrClient, LOG_TARGET};
 use log::{debug, error, info, warn};
 use sc_client_api::{Backend, FinalityNotification};
-use sc_offchain::OffchainDb;
+use soil_offchain::OffchainDb;
 use soil_blockchain::CachedHeaderMetadata;
 use soil_consensus_beefy::MmrRootHash;
 use soil_core::offchain::{DbExternalities, StorageKind};

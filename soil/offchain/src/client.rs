@@ -1,39 +1,4 @@
-// This file is part of Substrate.
-
-// Copyright (C) Parity Technologies (UK) Ltd.
-// SPDX-License-Identifier: GPL-3.0-or-later WITH Classpath-exception-2.0
-
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-// GNU General Public License for more details.
-
-// You should have received a copy of the GNU General Public License
-// along with this program. If not, see <https://www.gnu.org/licenses/>.
-
-//! Substrate offchain workers.
-//!
-//! The offchain workers is a special function of the runtime that
-//! gets executed after block is imported. During execution
-//! it's able to asynchronously submit extrinsics that will either
-//! be propagated to other nodes or added to the next block
-//! produced by the node as unsigned transactions.
-//!
-//! Offchain workers can be used for computation-heavy tasks
-//! that are not feasible for execution during regular block processing.
-//! It can either be tasks that no consensus is required for,
-//! or some form of consensus over the data can be built on-chain
-//! for instance via:
-//! 1. Challenge period for incorrect computations
-//! 2. Majority voting for results
-//! 3. etc
-
-#![warn(missing_docs)]
+//! Client-side offchain worker implementation.
 
 use std::{fmt, sync::Arc};
 
@@ -52,10 +17,9 @@ use soil_keystore::{KeystoreExt, KeystorePtr};
 use soil_runtime::traits::{self, Header};
 use threadpool::ThreadPool;
 
-mod api;
-
+use crate::api;
+pub use crate::OffchainWorkerApi;
 pub use soil_core::offchain::storage::OffchainDb;
-pub use soil_offchain::{OffchainWorkerApi, STORAGE_PREFIX};
 
 const LOG_TARGET: &str = "offchain-worker";
 
@@ -503,7 +467,7 @@ mod tests {
 		let block = block_builder.build().unwrap().block;
 		block_on(client.import(BlockOrigin::Own, block.clone())).unwrap();
 
-		assert_eq!(value, &offchain_db.get(soil_offchain::STORAGE_PREFIX, &key).unwrap());
+		assert_eq!(value, &offchain_db.get(crate::STORAGE_PREFIX, &key).unwrap());
 
 		let mut block_builder = BlockBuilderBuilder::new(&*client)
 			.on_parent_block(block.hash())
@@ -516,6 +480,6 @@ mod tests {
 		let block = block_builder.build().unwrap().block;
 		block_on(client.import(BlockOrigin::Own, block)).unwrap();
 
-		assert!(offchain_db.get(soil_offchain::STORAGE_PREFIX, &key).is_none());
+		assert!(offchain_db.get(crate::STORAGE_PREFIX, &key).is_none());
 	}
 }

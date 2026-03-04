@@ -20,6 +20,68 @@ soil-api = { workspace = true }
 soil-core = { workspace = true }
 soil-runtime = { workspace = true }
 
+# std-only deps (former sc-offchain)
+bytes = { optional = true, workspace = true, default-features = true }
+codec = { optional = true, features = ["derive"], workspace = true, default-features = true }
+fnv = { optional = true, workspace = true }
+futures = { optional = true, workspace = true }
+futures-timer = { optional = true, workspace = true }
+http-body-util = { optional = true, workspace = true }
+hyper = { optional = true, features = ["http1", "http2"], workspace = true, default-features = true }
+hyper-rustls = { optional = true, workspace = true }
+hyper-util = { optional = true, features = ["client-legacy", "http1", "http2"], workspace = true }
+num_cpus = { optional = true, workspace = true }
+once_cell = { optional = true, workspace = true }
+parking_lot = { optional = true, workspace = true, default-features = true }
+rand = { optional = true, workspace = true, default-features = true }
+rustls = { optional = true, workspace = true }
+sc-client-api = { optional = true, workspace = true, default-features = true }
+sc-network = { optional = true, workspace = true, default-features = true }
+sc-network-types = { optional = true, workspace = true, default-features = true }
+sc-transaction-pool-api = { optional = true, workspace = true, default-features = true }
+sc-utils = { optional = true, workspace = true, default-features = true }
+soil-externalities = { optional = true, workspace = true, default-features = true }
+soil-keystore = { optional = true, workspace = true, default-features = true }
+threadpool = { optional = true, workspace = true }
+tracing = { optional = true, workspace = true, default-features = true }
+
+[dev-dependencies]
+async-trait = { workspace = true }
+sc-block-builder = { workspace = true, default-features = true }
+sc-client-db = { default-features = true, workspace = true }
+sc-transaction-pool = { workspace = true, default-features = true }
+soil-consensus = { workspace = true, default-features = true }
+soil-tracing = { workspace = true, default-features = true }
+substrate-test-runtime-client = { workspace = true }
+tokio = { workspace = true, default-features = true }
+
 [features]
 default = ["std"]
-std = ["soil-api/std", "soil-core/std", "soil-runtime/std"]
+std = [
+	"soil-api/std",
+	"soil-core/std",
+	"soil-runtime/std",
+	"dep:bytes",
+	"dep:codec",
+	"dep:fnv",
+	"dep:futures",
+	"dep:futures-timer",
+	"dep:http-body-util",
+	"dep:hyper",
+	"dep:hyper-rustls",
+	"dep:hyper-util",
+	"dep:num_cpus",
+	"dep:once_cell",
+	"dep:parking_lot",
+	"dep:rand",
+	"dep:rustls",
+	"dep:sc-client-api",
+	"dep:sc-network",
+	"dep:sc-network-types",
+	"dep:sc-transaction-pool-api",
+	"dep:sc-utils",
+	"dep:soil-externalities",
+	"dep:soil-keystore",
+	"dep:threadpool",
+	"dep:tracing",
+]

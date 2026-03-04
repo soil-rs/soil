@@ -46,7 +46,7 @@ use crate::offchain_mmr::OffchainMmr;
 use futures::StreamExt;
 use log::{debug, error, trace, warn};
 use sc_client_api::{Backend, BlockchainEvents, FinalityNotification, FinalityNotifications};
-use sc_offchain::OffchainDb;
+use soil_offchain::OffchainDb;
 use soil_api::ProvideRuntimeApi;
 use soil_blockchain::{HeaderBackend, HeaderMetadata};
 use soil_consensus_beefy::MmrRootHash;
