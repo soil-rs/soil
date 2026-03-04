@@ -253,9 +253,9 @@ async fn should_send_initial_storage_changes_and_notifications() {
 		let (api, _child) = new_full(client.clone(), test_executor(), None);
 
 		let alice_balance_key = [
-			sp_crypto_hashing::twox_128(b"System"),
-			sp_crypto_hashing::twox_128(b"Account"),
-			sp_crypto_hashing::blake2_128(&Sr25519Keyring::Alice.public()),
+			soil_crypto_hashing::twox_128(b"System"),
+			soil_crypto_hashing::twox_128(b"Account"),
+			soil_crypto_hashing::blake2_128(&Sr25519Keyring::Alice.public()),
 		]
 		.concat()
 		.iter()

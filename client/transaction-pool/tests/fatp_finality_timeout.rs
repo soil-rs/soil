@@ -33,7 +33,7 @@ use substrate_test_runtime_transaction_pool::uxt;
 
 #[test]
 fn fatp_finality_timeout_works() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	const FINALITY_TIMEOUT_THRESHOLD: usize = 10;
 
@@ -104,7 +104,7 @@ fn fatp_finality_timeout_works() {
 
 #[test]
 fn fatp_finalized_still_works_after_finality_stall() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	const FINALITY_TIMEOUT_THRESHOLD: usize = 10;
 
@@ -190,7 +190,7 @@ fn fatp_finalized_still_works_after_finality_stall() {
 
 #[test]
 fn fatp_finality_timeout_works_for_txs_included_before_finalized() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	const FINALITY_TIMEOUT_THRESHOLD: usize = 10;
 

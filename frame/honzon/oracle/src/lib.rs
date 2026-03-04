@@ -91,7 +91,7 @@ use sp_runtime::{
 	traits::{AccountIdConversion, Member},
 	Debug, DispatchResult,
 };
-use sp_std::{prelude::*, vec};
+use soil_std::{prelude::*, vec};
 
 #[cfg(feature = "runtime-benchmarks")]
 mod benchmarking;

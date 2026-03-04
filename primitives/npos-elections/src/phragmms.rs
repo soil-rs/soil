@@ -26,7 +26,7 @@ use crate::{
 	IdentifierT, PerThing128, VoteWeight, Voter,
 };
 use alloc::{rc::Rc, vec, vec::Vec};
-use sp_arithmetic::{traits::Bounded, PerThing, Rational128};
+use soil_arithmetic::{traits::Bounded, PerThing, Rational128};
 
 /// Execute the phragmms method.
 ///

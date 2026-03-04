@@ -26,7 +26,7 @@ use frame_support::{
 	Parameter,
 };
 use scale_info::{Type, TypeInfo};
-use sp_arithmetic::{Rounding::*, SignedRounding::*};
+use soil_arithmetic::{Rounding::*, SignedRounding::*};
 use sp_runtime::{FixedI64, PerThing};
 
 pub type BalanceOf<T, I = ()> =

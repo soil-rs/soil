@@ -42,6 +42,6 @@ sp-inherents = { workspace = true, default-features = true }
 sp-runtime = { workspace = true, default-features = true }
 sp-state-machine = { workspace = true, default-features = true }
 sp-timestamp = { workspace = true }
-sp-tracing = { workspace = true, default-features = true }
+soil-tracing = { workspace = true, default-features = true }
 sp-trie = { workspace = true, default-features = true }
 tempfile = { workspace = true }

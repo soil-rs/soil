@@ -113,7 +113,7 @@ pub mod ecdsa_crypto {
 	use sp_core::crypto::Wraps;
 	#[cfg(feature = "std")]
 	use sp_core::ByteArray;
-	use sp_crypto_hashing::keccak_256;
+	use soil_crypto_hashing::keccak_256;
 	#[cfg(feature = "std")]
 	use sp_keystore::KeystorePtr;
 
@@ -618,7 +618,7 @@ mod tests {
 	use super::*;
 	use sp_application_crypto::ecdsa::{self, Public};
 	use sp_core::crypto::{Pair, Wraps};
-	use sp_crypto_hashing::keccak_256;
+	use soil_crypto_hashing::keccak_256;
 
 	#[test]
 	fn validator_set() {

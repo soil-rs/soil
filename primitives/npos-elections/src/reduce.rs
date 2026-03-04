@@ -56,7 +56,7 @@ use alloc::{
 	vec,
 	vec::Vec,
 };
-use sp_arithmetic::traits::{Bounded, Zero};
+use soil_arithmetic::traits::{Bounded, Zero};
 
 /// Map type used for reduce_4. Can be easily swapped with HashMap.
 type Map<A> = BTreeMap<(A, A), A>;

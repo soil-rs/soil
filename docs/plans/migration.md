@@ -44,19 +44,19 @@ crates can be migrated in parallel since they have no internal dependencies.
 
 | Old Crate                          | New Crate                          | Status |
 |------------------------------------|------------------------------------|--------|
-| `sp-api-proc-macro`               | `soil-api-proc-macro`              | TODO   |
-| `sp-arithmetic`                   | `soil-arithmetic`                  | TODO   |
-| `sp-crypto-hashing`               | `soil-crypto-hashing`              | TODO   |
-| `sp-database`                     | `soil-database`                    | TODO   |
-| `sp-debug-derive`                 | `soil-debug-derive`                | TODO   |
-| `sp-maybe-compressed-blob`        | `soil-maybe-compressed-blob`       | TODO   |
-| `sp-metadata-ir`                  | `soil-metadata-ir`                 | TODO   |
-| `sp-panic-handler`                | `soil-panic-handler`               | TODO   |
-| `sp-runtime-interface-proc-macro` | `soil-runtime-interface-proc-macro` | TODO   |
-| `sp-std`                          | `soil-std`                         | TODO   |
-| `sp-tracing`                      | `soil-tracing`                     | TODO   |
-| `sp-version-proc-macro`           | `soil-version-proc-macro`          | TODO   |
-| `sp-wasm-interface`               | `soil-wasm-interface`              | TODO   |
+| `sp-api-proc-macro`               | `soil-api-proc-macro`              | DONE   |
+| `sp-arithmetic`                   | `soil-arithmetic`                  | DONE   |
+| `sp-crypto-hashing`               | `soil-crypto-hashing`              | DONE   |
+| `sp-database`                     | `soil-database`                    | DONE   |
+| `sp-debug-derive`                 | `soil-debug-derive`                | DONE   |
+| `sp-maybe-compressed-blob`        | `soil-maybe-compressed-blob`       | DONE   |
+| `sp-metadata-ir`                  | `soil-metadata-ir`                 | DONE   |
+| `sp-panic-handler`                | `soil-panic-handler`               | DONE   |
+| `sp-runtime-interface-proc-macro` | `soil-runtime-interface-proc-macro` | DONE   |
+| `sp-std`                          | `soil-std`                         | DONE   |
+| `sp-tracing`                      | `soil-tracing`                     | DONE   |
+| `sp-version-proc-macro`           | `soil-version-proc-macro`          | DONE   |
+| `sp-wasm-interface`               | `soil-wasm-interface`              | DONE   |
 
 ### Phase 2 — Tiers 1-8 (sp-* → soil-*, critical path)
 

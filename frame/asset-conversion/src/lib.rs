@@ -103,7 +103,7 @@ pub mod pallet {
 	use super::*;
 	use frame_support::{pallet_prelude::*, traits::fungibles::Refund};
 	use frame_system::pallet_prelude::*;
-	use sp_arithmetic::{traits::Unsigned, Permill};
+	use soil_arithmetic::{traits::Unsigned, Permill};
 
 	#[pallet::pallet]
 	pub struct Pallet<T>(_);

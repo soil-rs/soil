@@ -110,7 +110,7 @@ use sp_runtime::{
 	ApplyExtrinsicResult, Debug, FixedPointNumber, FixedU128, MultiSignature, MultiSigner, Perbill,
 	Percent, Permill, Perquintill,
 };
-use sp_std::{borrow::Cow, prelude::*};
+use soil_std::{borrow::Cow, prelude::*};
 #[cfg(any(feature = "std", test))]
 use sp_version::NativeVersion;
 use sp_version::RuntimeVersion;

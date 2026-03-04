@@ -27,7 +27,7 @@ sp-runtime = { workspace = true }
 
 [dev-dependencies]
 frame-executive = { workspace = true, default-features = true }
-sp-tracing = { features = ["std"], workspace = true, default-features = true }
+soil-tracing = { features = ["std"], workspace = true, default-features = true }
 
 pretty_assertions = { workspace = true }
 

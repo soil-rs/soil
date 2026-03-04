@@ -17,7 +17,7 @@
 
 use frame_support::{derive_impl, traits::ConstU32};
 use scale_info::meta_type;
-use sp_metadata_ir::PalletAssociatedTypeMetadataIR;
+use soil_metadata_ir::PalletAssociatedTypeMetadataIR;
 
 pub type BlockNumber = u64;
 pub type Header = sp_runtime::generic::Header<u32, sp_runtime::traits::BlakeTwo256>;

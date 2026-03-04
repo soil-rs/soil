@@ -41,9 +41,9 @@ rand = { features = ["small_rng"], optional = true, workspace = true, default-fe
 scale-info = { features = ["derive"], workspace = true }
 secrecy = { features = ["alloc"], workspace = true }
 serde = { optional = true, features = ["alloc", "derive"], workspace = true }
-sp-debug-derive = { workspace = true }
+soil-debug-derive = { workspace = true }
 sp-externalities = { optional = true, workspace = true }
-sp-std = { workspace = true }
+soil-std = { workspace = true }
 sp-storage = { workspace = true }
 ss58-registry = { workspace = true }
 substrate-bip39 = { workspace = true }
@@ -58,7 +58,7 @@ ed25519-zebra = { workspace = true }
 libsecp256k1 = { features = ["static-context"], workspace = true }
 merlin = { workspace = true }
 schnorrkel = { features = ["preaudit_deprecated"], workspace = true }
-sp-crypto-hashing = { workspace = true }
+soil-crypto-hashing = { workspace = true }
 # k256 crate, better portability, intended to be used in substrate-runtimes (no-std)
 k256 = { features = ["alloc", "ecdsa"], workspace = true }
 # secp256k1 crate, better performance, intended to be used on host side (std)
@@ -115,10 +115,10 @@ std = [
 	"secp256k1/std",
 	"serde/std",
 	"sha2?/std",
-	"sp-crypto-hashing/std",
-	"sp-debug-derive/std",
+	"soil-crypto-hashing/std",
+	"soil-debug-derive/std",
 	"sp-externalities/std",
-	"sp-std/std",
+	"soil-std/std",
 	"sp-storage/std",
 	"ss58-registry/std",
 	"substrate-bip39/std",

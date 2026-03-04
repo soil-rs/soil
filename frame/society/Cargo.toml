@@ -24,14 +24,14 @@ scale-info = { features = ["derive"], workspace = true }
 frame-benchmarking = { optional = true, workspace = true }
 frame-support = { workspace = true }
 frame-system = { workspace = true }
-sp-arithmetic = { workspace = true }
+soil-arithmetic = { workspace = true }
 sp-io = { workspace = true }
 sp-runtime = { workspace = true }
 
 [dev-dependencies]
 frame-support-test = { workspace = true }
 pallet-balances = { workspace = true, default-features = true }
-sp-crypto-hashing = { workspace = true, default-features = true }
+soil-crypto-hashing = { workspace = true, default-features = true }
 
 [features]
 default = ["std"]
@@ -45,7 +45,7 @@ std = [
 	"pallet-balances/std",
 	"rand_chacha/std",
 	"scale-info/std",
-	"sp-arithmetic/std",
+	"soil-arithmetic/std",
 	"sp-io/std",
 	"sp-runtime/std",
 ]

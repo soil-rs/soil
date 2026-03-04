@@ -36,7 +36,7 @@ use impl_trait_for_tuples::impl_for_tuples;
 #[cfg(feature = "serde")]
 use serde::{de::DeserializeOwned, Deserialize, Serialize};
 use sp_application_crypto::AppCrypto;
-pub use sp_arithmetic::traits::{
+pub use soil_arithmetic::traits::{
 	checked_pow, ensure_pow, AtLeast32Bit, AtLeast32BitUnsigned, Bounded, CheckedAdd, CheckedDiv,
 	CheckedMul, CheckedShl, CheckedShr, CheckedSub, Ensure, EnsureAdd, EnsureAddAssign, EnsureDiv,
 	EnsureDivAssign, EnsureFixedPointNumber, EnsureFrom, EnsureInto, EnsureMul, EnsureMulAssign,
@@ -403,7 +403,7 @@ impl<T1, T2, T3, T4> Morph<(T1, T2, T3, T4)> for TakeFirst {
 ///
 /// ```
 /// # use sp_runtime::{morph_types, traits::{Morph, TryMorph, TypedGet, ConstU32}};
-/// # use sp_arithmetic::traits::CheckedSub;
+/// # use soil_arithmetic::traits::CheckedSub;
 ///
 /// morph_types! {
 ///    /// Replace by some other value; produce both `Morph` and `TryMorph` implementations
@@ -2180,7 +2180,7 @@ macro_rules! impl_opaque_keys_inner {
 			#[allow(dead_code)]
 			pub fn generate(
 				owner: &[u8],
-				seed: Option<$crate::sp_std::vec::Vec<u8>>,
+				seed: Option<$crate::soil_std::vec::Vec<u8>>,
 			) -> $crate::traits::GeneratedSessionKeys<
 				Self,
 				(
@@ -2257,7 +2257,7 @@ macro_rules! impl_opaque_keys_inner {
 			pub fn create_ownership_proof(
 				&mut self,
 				owner: &[u8],
-			) -> $crate::sp_std::result::Result<
+			) -> $crate::soil_std::result::Result<
 				(
 					$(
 						<

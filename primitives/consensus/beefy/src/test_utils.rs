@@ -26,7 +26,7 @@ use sp_core::{ecdsa, Pair};
 use sp_runtime::traits::{BlockNumber, Header as HeaderT};
 
 use codec::Encode;
-use sp_crypto_hashing::keccak_256;
+use soil_crypto_hashing::keccak_256;
 use std::{collections::HashMap, marker::PhantomData, sync::LazyLock};
 use strum::IntoEnumIterator;
 

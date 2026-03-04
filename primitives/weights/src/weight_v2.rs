@@ -17,7 +17,7 @@
 
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use core::ops::{Add, AddAssign, Div, Mul, Sub, SubAssign};
-use sp_arithmetic::traits::{Bounded, CheckedAdd, CheckedSub, Zero};
+use soil_arithmetic::traits::{Bounded, CheckedAdd, CheckedSub, Zero};
 
 use super::*;
 
@@ -483,11 +483,11 @@ macro_rules! weight_mul_per_impl {
 	}
 }
 weight_mul_per_impl!(
-	sp_arithmetic::Percent,
-	sp_arithmetic::PerU16,
-	sp_arithmetic::Permill,
-	sp_arithmetic::Perbill,
-	sp_arithmetic::Perquintill,
+	soil_arithmetic::Percent,
+	soil_arithmetic::PerU16,
+	soil_arithmetic::Permill,
+	soil_arithmetic::Perbill,
+	soil_arithmetic::Perquintill,
 );
 
 macro_rules! weight_mul_primitive_impl {

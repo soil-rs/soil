@@ -22,7 +22,7 @@ use crate::{
 use frame_benchmarking::v2::*;
 use frame_election_provider_support::{ElectionProvider, NposSolution};
 use frame_support::pallet_prelude::*;
-use sp_std::prelude::*;
+use soil_std::prelude::*;
 
 #[benchmarks(where
 	T: crate::Config + crate::signed::Config + crate::unsigned::Config,

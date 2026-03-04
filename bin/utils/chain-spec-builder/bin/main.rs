@@ -29,7 +29,7 @@ fn main() {
 }
 
 fn inner_main() -> Result<(), String> {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	let builder = ChainSpecBuilder::parse();
 	builder.run()

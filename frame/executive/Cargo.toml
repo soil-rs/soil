@@ -26,7 +26,7 @@ scale-info = { features = ["derive"], workspace = true }
 sp-core = { workspace = true }
 sp-io = { workspace = true }
 sp-runtime = { workspace = true }
-sp-tracing = { workspace = true }
+soil-tracing = { workspace = true }
 
 [dev-dependencies]
 array-bytes = { workspace = true, default-features = true }
@@ -40,7 +40,7 @@ substrate-test-runtime-client = { workspace = true }
 
 [features]
 default = ["std"]
-with-tracing = ["sp-tracing/with-tracing"]
+with-tracing = ["soil-tracing/with-tracing"]
 std = [
 	"codec/std",
 	"frame-support/experimental",
@@ -55,7 +55,7 @@ std = [
 	"sp-inherents/std",
 	"sp-io/std",
 	"sp-runtime/std",
-	"sp-tracing/std",
+	"soil-tracing/std",
 	"sp-version/std",
 ]
 try-runtime = [

@@ -32,7 +32,7 @@ zstd = { optional = true, workspace = true }
 
 [dev-dependencies]
 pallet-balances = { workspace = true, default-features = true }
-sp-tracing = { workspace = true, default-features = true }
+soil-tracing = { workspace = true, default-features = true }
 tokio = { features = ["macros"], workspace = true, default-features = true }
 
 [features]
@@ -48,7 +48,7 @@ std = [
 	"sp-core/std",
 	"sp-io/std",
 	"sp-runtime/std",
-	"sp-tracing/std",
+	"soil-tracing/std",
 ]
 runtime-benchmarks = [
 	"frame-benchmarking",

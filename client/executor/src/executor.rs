@@ -38,7 +38,7 @@ use sc_executor_common::{
 };
 use sp_core::traits::{CallContext, CodeExecutor, Externalities, RuntimeCode};
 use sp_version::{GetNativeVersion, NativeVersion, RuntimeVersion};
-use sp_wasm_interface::{ExtendedHostFunctions, HostFunctions};
+use soil_wasm_interface::{ExtendedHostFunctions, HostFunctions};
 
 /// Set up the externalities and safe calling environment to execute runtime calls.
 ///
@@ -50,7 +50,7 @@ where
 	sp_externalities::set_and_run_with_externalities(ext, move || {
 		// Substrate uses custom panic hook that terminates process on panic. Disable
 		// termination for the native call.
-		let _guard = sp_panic_handler::AbortGuard::force_unwind();
+		let _guard = soil_panic_handler::AbortGuard::force_unwind();
 		std::panic::catch_unwind(f).map_err(|e| {
 			if let Some(err) = e.downcast_ref::<String>() {
 				Error::RuntimePanicked(err.clone())
@@ -789,7 +789,7 @@ mod tests {
 
 		fn extract_host_functions<H>(
 			_: &WasmExecutor<H>,
-		) -> Vec<&'static dyn sp_wasm_interface::Function>
+		) -> Vec<&'static dyn soil_wasm_interface::Function>
 		where
 			H: HostFunctions,
 		{

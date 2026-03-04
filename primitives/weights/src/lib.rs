@@ -30,7 +30,7 @@ use scale_info::TypeInfo;
 #[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
 use smallvec::SmallVec;
-use sp_arithmetic::{
+use soil_arithmetic::{
 	traits::{BaseArithmetic, SaturatedConversion, Unsigned},
 	Perbill,
 };

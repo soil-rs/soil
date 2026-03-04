@@ -898,7 +898,7 @@ where
 		online_config.pallets.iter().for_each(|p| {
 			online_config
 				.hashed_prefixes
-				.push(sp_crypto_hashing::twox_128(p.as_bytes()).to_vec())
+				.push(soil_crypto_hashing::twox_128(p.as_bytes()).to_vec())
 		});
 
 		if online_config.child_trie {
@@ -1118,7 +1118,7 @@ mod test_prelude {
 	pub(crate) type Block = RawBlock<UncheckedXt>;
 
 	pub(crate) fn init_logger() {
-		sp_tracing::try_init_simple();
+		soil_tracing::try_init_simple();
 	}
 }
 

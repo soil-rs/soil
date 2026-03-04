@@ -16,8 +16,8 @@ targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
 log = { workspace = true }
-sp-arithmetic = { workspace = true }
+soil-arithmetic = { workspace = true }
 
 [features]
 default = ["std"]
-std = ["log/std", "sp-arithmetic/std"]
+std = ["log/std", "soil-arithmetic/std"]

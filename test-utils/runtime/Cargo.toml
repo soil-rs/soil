@@ -35,8 +35,8 @@ sp-consensus-aura = { features = ["serde"], workspace = true }
 sp-consensus-babe = { features = ["serde"], workspace = true }
 sp-consensus-grandpa = { features = ["serde"], workspace = true }
 sp-core = { features = ["serde"], workspace = true }
-sp-crypto-hashing = { workspace = true }
-sp-debug-derive = { workspace = true, default-features = false }
+soil-crypto-hashing = { workspace = true }
+soil-debug-derive = { workspace = true, default-features = false }
 sp-externalities = { workspace = true }
 sp-genesis-builder = { workspace = true }
 sp-inherents = { workspace = true }
@@ -67,7 +67,7 @@ sc-executor = { workspace = true, default-features = true }
 sc-executor-common = { workspace = true, default-features = true }
 serde = { features = ["alloc", "derive"], workspace = true }
 sp-consensus = { workspace = true, default-features = true }
-sp-tracing = { workspace = true, default-features = true }
+soil-tracing = { workspace = true, default-features = true }
 substrate-test-runtime-client = { workspace = true }
 
 [build-dependencies]
@@ -101,8 +101,8 @@ std = [
 	"sp-consensus-babe/std",
 	"sp-consensus-grandpa/std",
 	"sp-core/std",
-	"sp-crypto-hashing/std",
-	"sp-debug-derive/std",
+	"soil-crypto-hashing/std",
+	"soil-debug-derive/std",
 	"sp-externalities/std",
 	"sp-genesis-builder/std",
 	"sp-inherents/std",
@@ -113,7 +113,7 @@ std = [
 	"sp-session/std",
 	"sp-state-machine/std",
 	"sp-statement-store/std",
-	"sp-tracing/std",
+	"soil-tracing/std",
 	"sp-transaction-pool/std",
 	"sp-trie/std",
 	"sp-version/std",

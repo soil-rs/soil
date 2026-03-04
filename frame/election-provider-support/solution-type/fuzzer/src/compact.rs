@@ -17,7 +17,7 @@
 
 use frame_election_provider_solution_type::generate_solution_type;
 use honggfuzz::fuzz;
-use sp_arithmetic::Percent;
+use soil_arithmetic::Percent;
 use sp_runtime::codec::{Encode, Error};
 
 fn main() {

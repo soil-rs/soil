@@ -23,7 +23,7 @@ sp-mmr-primitives = { workspace = true }
 
 [dev-dependencies]
 itertools = { workspace = true }
-sp-tracing = { workspace = true, default-features = true }
+soil-tracing = { workspace = true, default-features = true }
 
 [features]
 default = ["std"]

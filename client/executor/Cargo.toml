@@ -33,11 +33,11 @@ sp-api = { workspace = true, default-features = true }
 sp-core = { workspace = true, default-features = true }
 sp-externalities = { workspace = true, default-features = true }
 sp-io = { workspace = true, default-features = true }
-sp-panic-handler = { workspace = true, default-features = true }
+soil-panic-handler = { workspace = true, default-features = true }
 sp-runtime-interface = { workspace = true, default-features = true }
 sp-trie = { workspace = true, default-features = true }
 sp-version = { workspace = true, default-features = true }
-sp-wasm-interface = { workspace = true, default-features = true }
+soil-wasm-interface = { workspace = true, default-features = true }
 
 [dev-dependencies]
 array-bytes = { workspace = true, default-features = true }
@@ -47,11 +47,11 @@ num_cpus = { workspace = true }
 paste = { workspace = true, default-features = true }
 sc-runtime-test = { workspace = true }
 sc-tracing = { workspace = true, default-features = true }
-sp-crypto-hashing = { workspace = true, default-features = true }
-sp-maybe-compressed-blob = { workspace = true, default-features = true }
+soil-crypto-hashing = { workspace = true, default-features = true }
+soil-maybe-compressed-blob = { workspace = true, default-features = true }
 sp-runtime = { workspace = true, default-features = true }
 sp-state-machine = { workspace = true, default-features = true }
-sp-tracing = { workspace = true, default-features = true }
+soil-tracing = { workspace = true, default-features = true }
 substrate-test-runtime = { workspace = true }
 tempfile = { workspace = true }
 tracing-subscriber = { workspace = true }
@@ -69,10 +69,10 @@ std = [
 	"sp-runtime-interface/std",
 	"sp-runtime/std",
 	"sp-state-machine/std",
-	"sp-tracing/std",
+	"soil-tracing/std",
 	"sp-trie/std",
 	"sp-version/std",
-	"sp-wasm-interface/std",
+	"soil-wasm-interface/std",
 	"substrate-test-runtime/std",
 ]
 wasm-extern-trace = []

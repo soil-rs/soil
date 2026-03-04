@@ -24,7 +24,7 @@ use sp_runtime_interface_test_wasm::{test_api::HostFunctions, wasm_binary_unwrap
 use sp_runtime_interface_test_wasm_deprecated::wasm_binary_unwrap as wasm_binary_deprecated_unwrap;
 
 use sc_executor_common::{runtime_blob::RuntimeBlob, wasm_runtime::AllocationStats};
-use sp_wasm_interface::{ExtendedHostFunctions, HostFunctions as HostFunctionsT};
+use soil_wasm_interface::{ExtendedHostFunctions, HostFunctions as HostFunctionsT};
 
 use std::{
 	collections::HashSet,

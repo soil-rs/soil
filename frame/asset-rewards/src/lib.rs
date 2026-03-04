@@ -99,7 +99,7 @@ use sp_runtime::{
 	traits::{BadOrigin, BlockNumberProvider, EnsureAdd, MaybeDisplay, Zero},
 	DispatchError, DispatchResult,
 };
-use sp_std::boxed::Box;
+use soil_std::boxed::Box;
 
 #[cfg(feature = "runtime-benchmarks")]
 pub mod benchmarking;

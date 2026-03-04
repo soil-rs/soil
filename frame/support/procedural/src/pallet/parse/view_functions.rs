@@ -121,7 +121,7 @@ impl ViewFunctionDef {
 		);
 
 		// hash the signature string
-		let hash = sp_crypto_hashing::twox_128(view_fn_signature.as_bytes());
+		let hash = soil_crypto_hashing::twox_128(view_fn_signature.as_bytes());
 		output.copy_from_slice(&hash[..]);
 		Ok(output)
 	}

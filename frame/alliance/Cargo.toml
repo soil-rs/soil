@@ -23,7 +23,7 @@ codec = { features = ["derive"], workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 
 sp-core = { workspace = true }
-sp-crypto-hashing = { optional = true, workspace = true }
+soil-crypto-hashing = { optional = true, workspace = true }
 sp-io = { workspace = true }
 sp-runtime = { workspace = true }
 
@@ -38,7 +38,7 @@ pallet-identity = { workspace = true }
 array-bytes = { workspace = true, default-features = true }
 pallet-balances = { workspace = true, default-features = true }
 pallet-collective = { workspace = true, default-features = true }
-sp-crypto-hashing = { workspace = true }
+soil-crypto-hashing = { workspace = true }
 
 [features]
 default = ["std"]
@@ -53,7 +53,7 @@ std = [
 	"pallet-identity/std",
 	"scale-info/std",
 	"sp-core/std",
-	"sp-crypto-hashing?/std",
+	"soil-crypto-hashing?/std",
 	"sp-io/std",
 	"sp-runtime/std",
 ]
@@ -65,7 +65,7 @@ runtime-benchmarks = [
 	"pallet-balances/runtime-benchmarks",
 	"pallet-collective/runtime-benchmarks",
 	"pallet-identity/runtime-benchmarks",
-	"sp-crypto-hashing",
+	"soil-crypto-hashing",
 	"sp-runtime/runtime-benchmarks",
 ]
 try-runtime = [

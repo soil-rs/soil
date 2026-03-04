@@ -201,8 +201,8 @@ pub(crate) fn generate(def: crate::SolutionDef) -> Result<TokenStream2> {
 			fn corrupt(&mut self) {
 				self.votes1.push(
 					(
-						_fepsp::sp_arithmetic::traits::Bounded::max_value(),
-						_fepsp::sp_arithmetic::traits::Bounded::max_value()
+						_fepsp::soil_arithmetic::traits::Bounded::max_value(),
+						_fepsp::soil_arithmetic::traits::Bounded::max_value()
 					)
 				)
 			}
@@ -280,7 +280,7 @@ fn remove_weakest_sorted_impl(count: usize) -> TokenStream2 {
 			let filed_value = self.#filed
 				.last()
 				.map(|(x, ..)| voter_stake(x))
-				.unwrap_or_else(|| _fepsp::sp_arithmetic::traits::Bounded::max_value());
+				.unwrap_or_else(|| _fepsp::soil_arithmetic::traits::Bounded::max_value());
 			if filed_value < minimum {
 				minimum = filed_value;
 				minimum_filed = #c
@@ -302,7 +302,7 @@ fn remove_weakest_sorted_impl(count: usize) -> TokenStream2 {
 		let mut minimum = self.#first_filed
 			.last()
 			.map(|(x, ..)| voter_stake(x))
-			.unwrap_or_else(|| _fepsp::sp_arithmetic::traits::Bounded::max_value());
+			.unwrap_or_else(|| _fepsp::soil_arithmetic::traits::Bounded::max_value());
 
 		#( #check_minimum )*
 
@@ -462,7 +462,7 @@ pub(crate) fn into_impl(
 							} else {
 								targets_seen.insert(t_idx);
 							}
-							sum = _fepsp::sp_arithmetic::traits::Saturating::saturating_add(sum, *p);
+							sum = _fepsp::soil_arithmetic::traits::Saturating::saturating_add(sum, *p);
 							let target = target_at(*t_idx).or_invalid_index()?;
 							Ok((target, *p))
 						})
@@ -480,7 +480,7 @@ pub(crate) fn into_impl(
 					}
 
 					// defensive only. Since Percent doesn't have `Sub`.
-					let p_last = _fepsp::sp_arithmetic::traits::Saturating::saturating_sub(
+					let p_last = _fepsp::soil_arithmetic::traits::Saturating::saturating_sub(
 						#per_thing::one(),
 						sum,
 					);

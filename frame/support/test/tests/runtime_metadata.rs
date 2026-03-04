@@ -18,7 +18,7 @@
 
 use frame_support::{derive_impl, traits::ConstU32};
 use scale_info::{form::MetaForm, meta_type};
-use sp_metadata_ir::{
+use soil_metadata_ir::{
 	ItemDeprecationInfoIR, RuntimeApiMetadataIR, RuntimeApiMethodMetadataIR,
 	RuntimeApiMethodParamMetadataIR,
 };

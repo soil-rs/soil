@@ -34,7 +34,7 @@ sc-network-types = { workspace = true, default-features = true }
 sc-utils = { workspace = true, default-features = true }
 schnellru = { workspace = true }
 smallvec = { workspace = true, default-features = true }
-sp-arithmetic = { workspace = true, default-features = true }
+soil-arithmetic = { workspace = true, default-features = true }
 sp-blockchain = { workspace = true, default-features = true }
 sp-consensus = { workspace = true, default-features = true }
 sp-core = { workspace = true, default-features = true }
@@ -47,7 +47,7 @@ tokio-stream = { workspace = true }
 quickcheck = { workspace = true }
 sc-block-builder = { workspace = true, default-features = true }
 sp-test-primitives = { workspace = true }
-sp-tracing = { workspace = true, default-features = true }
+soil-tracing = { workspace = true, default-features = true }
 substrate-test-runtime-client = { workspace = true }
 
 [build-dependencies]

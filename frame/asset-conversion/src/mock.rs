@@ -34,7 +34,7 @@ use frame_support::{
 	PalletId,
 };
 use frame_system::{EnsureSigned, EnsureSignedBy};
-use sp_arithmetic::Permill;
+use soil_arithmetic::Permill;
 use sp_runtime::{
 	traits::{AccountIdConversion, IdentityLookup},
 	BuildStorage,

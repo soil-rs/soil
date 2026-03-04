@@ -442,7 +442,7 @@ mod tests {
 
 	#[test]
 	fn should_call_into_runtime_and_produce_extrinsic() {
-		sp_tracing::try_init_simple();
+		soil_tracing::try_init_simple();
 
 		let client = Arc::new(substrate_test_runtime_client::new());
 		let spawner = sp_core::testing::TaskExecutor::new();
@@ -482,7 +482,7 @@ mod tests {
 	fn offchain_index_set_and_clear_works() {
 		use sp_core::offchain::OffchainStorage;
 
-		sp_tracing::try_init_simple();
+		soil_tracing::try_init_simple();
 
 		let (client, backend) = substrate_test_runtime_client::TestClientBuilder::new()
 			.enable_offchain_indexing_api()

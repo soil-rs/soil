@@ -22,7 +22,7 @@ use crate::traits::{
 	},
 };
 use core::fmt::Debug;
-use sp_arithmetic::traits::AtLeast8BitUnsigned;
+use soil_arithmetic::traits::AtLeast8BitUnsigned;
 use sp_runtime::traits::{Bounded, Zero};
 
 /// Test [`Mutate::mint_into`] for successful token minting.

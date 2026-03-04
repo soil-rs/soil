@@ -31,7 +31,7 @@ use sp_core::{
 	traits::Externalities,
 	Pair,
 };
-use sp_crypto_hashing::{blake2_128, blake2_256, sha2_256, twox_128, twox_256};
+use soil_crypto_hashing::{blake2_128, blake2_256, sha2_256, twox_128, twox_256};
 use sp_runtime::traits::BlakeTwo256;
 use sp_state_machine::TestExternalities as CoreTestExternalities;
 use sp_trie::{LayoutV1 as Layout, TrieConfiguration};
@@ -50,7 +50,7 @@ macro_rules! test_wasm_execution {
 		paste::item! {
 			#[test]
 			fn [<$method_name _compiled_recreate_instance_cow>]() {
-				let _ = sp_tracing::try_init_simple();
+				let _ = soil_tracing::try_init_simple();
 				$method_name(WasmExecutionMethod::Compiled {
 					instantiation_strategy: sc_executor_wasmtime::InstantiationStrategy::RecreateInstanceCopyOnWrite
 				});
@@ -58,7 +58,7 @@ macro_rules! test_wasm_execution {
 
 			#[test]
 			fn [<$method_name _compiled_recreate_instance_vanilla>]() {
-				let _ = sp_tracing::try_init_simple();
+				let _ = soil_tracing::try_init_simple();
 				$method_name(WasmExecutionMethod::Compiled {
 					instantiation_strategy: sc_executor_wasmtime::InstantiationStrategy::RecreateInstance
 				});
@@ -66,7 +66,7 @@ macro_rules! test_wasm_execution {
 
 			#[test]
 			fn [<$method_name _compiled_pooling_cow>]() {
-				let _ = sp_tracing::try_init_simple();
+				let _ = soil_tracing::try_init_simple();
 				$method_name(WasmExecutionMethod::Compiled {
 					instantiation_strategy: sc_executor_wasmtime::InstantiationStrategy::PoolingCopyOnWrite
 				});
@@ -74,7 +74,7 @@ macro_rules! test_wasm_execution {
 
 			#[test]
 			fn [<$method_name _compiled_pooling_vanilla>]() {
-				let _ = sp_tracing::try_init_simple();
+				let _ = soil_tracing::try_init_simple();
 				$method_name(WasmExecutionMethod::Compiled {
 					instantiation_strategy: sc_executor_wasmtime::InstantiationStrategy::Pooling
 				});

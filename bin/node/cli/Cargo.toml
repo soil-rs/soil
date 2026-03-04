@@ -136,13 +136,13 @@ sp-consensus-grandpa = { workspace = true, default-features = true }
 sp-core = { workspace = true, default-features = true }
 sp-core-hashing = { workspace = true, default-features = true }
 sp-core-hashing-proc-macro = { workspace = true, default-features = true }
-sp-database = { workspace = true, default-features = true }
+soil-database = { workspace = true, default-features = true }
 sp-genesis-builder = { workspace = true, default-features = true }
 sp-io = { workspace = true, default-features = true }
-sp-maybe-compressed-blob = { workspace = true, default-features = true }
+soil-maybe-compressed-blob = { workspace = true, default-features = true }
 sp-mixnet = { workspace = true, default-features = true }
 sp-mmr-primitives = { workspace = true, default-features = true }
-sp-panic-handler = { workspace = true, default-features = true }
+soil-panic-handler = { workspace = true, default-features = true }
 sp-rpc = { workspace = true, default-features = true }
 sp-runtime = { workspace = true, default-features = true }
 sp-statement-store = { workspace = true, default-features = true }
@@ -166,6 +166,22 @@ node-rpc = { workspace = true }
 
 [dev-dependencies]
 assert_cmd = { workspace = true }
+frame-support = { workspace = true, default-features = true }
+pallet-bags-list = { workspace = true, default-features = true }
+pallet-balances = { workspace = true, default-features = true }
+pallet-root-testing = { workspace = true, default-features = true }
+pallet-sudo = { workspace = true, default-features = true }
+pallet-timestamp = { workspace = true, default-features = true }
+pallet-transaction-payment = { workspace = true, default-features = true }
+pallet-treasury = { workspace = true, default-features = true }
+soil-crypto-hashing = { workspace = true, default-features = true }
+soil-tracing = { workspace = true, default-features = true }
+sp-application-crypto = { workspace = true, default-features = true }
+sp-externalities = { workspace = true, default-features = true }
+sp-inherents = { workspace = true, default-features = true }
+sp-keystore = { workspace = true, default-features = true }
+sp-state-machine = { workspace = true, default-features = true }
+sp-trie = { workspace = true, default-features = true }
 criterion = { features = ["async_tokio"], workspace = true, default-features = true }
 nix = { features = ["signal"], workspace = true }
 pretty_assertions.workspace = true

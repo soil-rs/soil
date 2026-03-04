@@ -32,7 +32,7 @@ use sp_core::{
 	testing::{ED25519, SR25519},
 	H256,
 };
-use sp_crypto_hashing::blake2_256;
+use soil_crypto_hashing::blake2_256;
 use sp_keystore::{testing::MemoryKeystore, Keystore};
 use sp_runtime::Perbill;
 use std::sync::Arc;

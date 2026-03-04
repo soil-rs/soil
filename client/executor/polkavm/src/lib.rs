@@ -21,7 +21,7 @@ use sc_executor_common::{
 	error::{Error, WasmError},
 	wasm_runtime::{AllocationStats, WasmInstance, WasmModule},
 };
-use sp_wasm_interface::{
+use soil_wasm_interface::{
 	Function, FunctionContext, HostFunctions, Pointer, Value, ValueType, WordSize,
 };
 
@@ -136,7 +136,7 @@ impl<'r, 'a> FunctionContext for Context<'r, 'a> {
 		&self,
 		address: Pointer<u8>,
 		dest: &mut [u8],
-	) -> sp_wasm_interface::Result<()> {
+	) -> soil_wasm_interface::Result<()> {
 		self.0
 			.instance
 			.read_memory_into(u32::from(address), dest)
@@ -144,14 +144,14 @@ impl<'r, 'a> FunctionContext for Context<'r, 'a> {
 			.map(|_| ())
 	}
 
-	fn write_memory(&mut self, address: Pointer<u8>, data: &[u8]) -> sp_wasm_interface::Result<()> {
+	fn write_memory(&mut self, address: Pointer<u8>, data: &[u8]) -> soil_wasm_interface::Result<()> {
 		self.0
 			.instance
 			.write_memory(u32::from(address), data)
 			.map_err(|error| error.to_string())
 	}
 
-	fn allocate_memory(&mut self, size: WordSize) -> sp_wasm_interface::Result<Pointer<u8>> {
+	fn allocate_memory(&mut self, size: WordSize) -> soil_wasm_interface::Result<Pointer<u8>> {
 		let pointer = match self.0.instance.sbrk(0) {
 			Ok(pointer) => pointer.expect("fetching the current heap pointer never fails"),
 			Err(err) => return Err(format!("sbrk failed: {err}")),
@@ -167,7 +167,7 @@ impl<'r, 'a> FunctionContext for Context<'r, 'a> {
 		Ok(Pointer::new(pointer))
 	}
 
-	fn deallocate_memory(&mut self, _ptr: Pointer<u8>) -> sp_wasm_interface::Result<()> {
+	fn deallocate_memory(&mut self, _ptr: Pointer<u8>) -> soil_wasm_interface::Result<()> {
 		// This is only used by the allocator host function, which is unused under PolkaVM.
 		unimplemented!("'deallocate_memory' is never used when running under PolkaVM");
 	}

@@ -22,7 +22,7 @@ use frame_support::{
 	pallet_prelude::*,
 	traits::{fungible::Mutate, tokens::Preservation::Expendable, DefensiveResult},
 };
-use sp_arithmetic::traits::{CheckedDiv, Saturating, Zero};
+use soil_arithmetic::traits::{CheckedDiv, Saturating, Zero};
 use sp_runtime::traits::{BlockNumberProvider, Convert};
 use CompletionStatus::{Complete, Partial};
 

@@ -310,7 +310,7 @@ pub fn new_test_ext<T: Config>() -> sp_io::TestExternalities
 where
 	frame_system::pallet_prelude::BlockNumberFor<T>: From<u32>,
 {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 	WeightForCall::take();
 	QueueChanges::take();
 	NumMessagesErrored::take();

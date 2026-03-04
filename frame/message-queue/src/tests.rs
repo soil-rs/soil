@@ -25,7 +25,7 @@ use frame_support::{
 	assert_noop, assert_ok, assert_storage_noop, traits::BatchFootprint, StorageNoopGuard,
 };
 use rand::{rngs::StdRng, Rng, SeedableRng};
-use sp_crypto_hashing::blake2_256;
+use soil_crypto_hashing::blake2_256;
 
 #[test]
 fn mocked_weight_works() {

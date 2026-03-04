@@ -32,7 +32,7 @@ use substrate_test_runtime_transaction_pool::uxt;
 use tracing::info;
 #[test]
 fn fatp_prio_ready_higher_evicts_lower() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	let builder = TestPoolBuilder::new();
 	let (pool, api, _) = builder.with_mempool_count_limit(3).with_ready_count(2).build();
@@ -61,7 +61,7 @@ fn fatp_prio_ready_higher_evicts_lower() {
 
 #[test]
 fn fatp_prio_watcher_ready_higher_evicts_lower() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	let builder = TestPoolBuilder::new();
 	let (pool, api, _) = builder.with_mempool_count_limit(3).with_ready_count(2).build();
@@ -98,7 +98,7 @@ fn fatp_prio_watcher_ready_higher_evicts_lower() {
 
 #[test]
 fn fatp_prio_watcher_future_higher_evicts_lower() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	let builder = TestPoolBuilder::new();
 	let (pool, api, _) = builder.with_mempool_count_limit(3).with_ready_count(3).build();
@@ -140,7 +140,7 @@ fn fatp_prio_watcher_future_higher_evicts_lower() {
 
 #[test]
 fn fatp_prio_watcher_ready_lower_prio_gets_dropped_from_all_views() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	let builder = TestPoolBuilder::new();
 	let (pool, api, _) = builder.with_mempool_count_limit(3).with_ready_count(2).build();
@@ -191,7 +191,7 @@ fn fatp_prio_watcher_ready_lower_prio_gets_dropped_from_all_views() {
 
 #[test]
 fn fatp_prio_watcher_future_lower_prio_gets_dropped_from_all_views() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	let builder = TestPoolBuilder::new();
 	let (pool, api, _) = builder.with_mempool_count_limit(3).with_ready_count(2).build();
@@ -253,7 +253,7 @@ fn fatp_prio_watcher_future_lower_prio_gets_dropped_from_all_views() {
 
 #[test]
 fn fatp_prios_watcher_full_mempool_higher_prio_is_accepted() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	let builder = TestPoolBuilder::new();
 	let (pool, api, _) = builder.with_mempool_count_limit(4).with_ready_count(2).build();
@@ -322,7 +322,7 @@ fn fatp_prios_watcher_full_mempool_higher_prio_is_accepted() {
 
 #[test]
 fn fatp_prios_watcher_full_mempool_higher_prio_is_accepted_with_subtree() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	let builder = TestPoolBuilder::new();
 	let (pool, api, _) = builder.with_mempool_count_limit(4).with_ready_count(4).build();
@@ -367,7 +367,7 @@ fn fatp_prios_watcher_full_mempool_higher_prio_is_accepted_with_subtree() {
 
 #[test]
 fn fatp_prios_watcher_full_mempool_higher_prio_is_accepted_with_subtree2() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	let builder = TestPoolBuilder::new();
 	let (pool, api, _) = builder.with_mempool_count_limit(4).with_ready_count(4).build();
@@ -416,7 +416,7 @@ fn fatp_prios_watcher_full_mempool_higher_prio_is_accepted_with_subtree2() {
 
 #[test]
 fn fatp_prios_watcher_full_mempool_lower_prio_gets_rejected() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	let builder = TestPoolBuilder::new();
 	let (pool, api, _) = builder.with_mempool_count_limit(2).with_ready_count(2).build();
@@ -463,7 +463,7 @@ fn fatp_prios_watcher_full_mempool_lower_prio_gets_rejected() {
 
 #[test]
 fn fatp_prios_watcher_full_mempool_does_not_keep_dropped_transaction() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	let builder = TestPoolBuilder::new();
 	let (pool, api, _) = builder.with_mempool_count_limit(4).with_ready_count(2).build();
@@ -501,7 +501,7 @@ fn fatp_prios_watcher_full_mempool_does_not_keep_dropped_transaction() {
 
 #[test]
 fn fatp_prios_submit_local_full_mempool_higher_prio_is_accepted() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	let builder = TestPoolBuilder::new();
 	let (pool, api, _) = builder.with_mempool_count_limit(4).with_ready_count(2).build();

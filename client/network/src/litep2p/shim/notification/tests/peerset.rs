@@ -101,7 +101,7 @@ async fn inbound_substream_for_outbound_peer() {
 // was fully closed, the peer got banned
 #[tokio::test]
 async fn canceled_peer_gets_banned() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	let peerstore_handle = Arc::new(peerstore_handle_test());
 	let peers = HashSet::from_iter([PeerId::random(), PeerId::random(), PeerId::random()]);
@@ -157,7 +157,7 @@ async fn canceled_peer_gets_banned() {
 
 #[tokio::test]
 async fn peer_added_and_removed_from_peerset() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	let peerstore_handle = Arc::new(peerstore_handle_test());
 	let (mut peerset, to_peerset) = Peerset::new(
@@ -279,7 +279,7 @@ async fn peer_added_and_removed_from_peerset() {
 
 #[tokio::test]
 async fn set_reserved_peers() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	let reserved = HashSet::from_iter([PeerId::random(), PeerId::random(), PeerId::random()]);
 	let (mut peerset, to_peerset) = Peerset::new(
@@ -362,7 +362,7 @@ async fn set_reserved_peers() {
 
 #[tokio::test]
 async fn set_reserved_peers_one_peer_already_in_the_set() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	let reserved = HashSet::from_iter([PeerId::random(), PeerId::random(), PeerId::random()]);
 	let common_peer = *reserved.iter().next().unwrap();
@@ -459,7 +459,7 @@ async fn set_reserved_peers_one_peer_already_in_the_set() {
 
 #[tokio::test]
 async fn add_reserved_peers_one_peer_already_in_the_set() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	let peerstore_handle = Arc::new(peerstore_handle_test());
 	let reserved = (0..3)
@@ -551,7 +551,7 @@ async fn add_reserved_peers_one_peer_already_in_the_set() {
 
 #[tokio::test]
 async fn opening_peer_gets_canceled_and_disconnected() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	let peerstore_handle = Arc::new(peerstore_handle_test());
 	let _known_peers = (0..1)
@@ -631,7 +631,7 @@ async fn opening_peer_gets_canceled_and_disconnected() {
 
 #[tokio::test]
 async fn open_failure_for_canceled_peer() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	let peerstore_handle = Arc::new(peerstore_handle_test());
 	let _known_peers = (0..1)
@@ -702,7 +702,7 @@ async fn open_failure_for_canceled_peer() {
 
 #[tokio::test]
 async fn peer_disconnected_when_being_validated_then_rejected() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	let peerstore_handle = Arc::new(peerstore_handle_test());
 	let (mut peerset, _to_peerset) = Peerset::new(
@@ -732,7 +732,7 @@ async fn peer_disconnected_when_being_validated_then_rejected() {
 
 #[tokio::test]
 async fn removed_reserved_peer_kept_due_to_free_slots() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	let peerstore_handle = Arc::new(peerstore_handle_test());
 	let peers = HashSet::from_iter([PeerId::random(), PeerId::random(), PeerId::random()]);
@@ -791,7 +791,7 @@ async fn removed_reserved_peer_kept_due_to_free_slots() {
 
 #[tokio::test]
 async fn set_reserved_peers_but_available_slots() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	let peerstore_handle = Arc::new(peerstore_handle_test());
 	let known_peers = (0..3)
@@ -894,7 +894,7 @@ async fn set_reserved_peers_but_available_slots() {
 
 #[tokio::test]
 async fn set_reserved_peers_move_previously_reserved() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	let peerstore_handle = Arc::new(peerstore_handle_test());
 	let known_peers = (0..3)
@@ -1032,7 +1032,7 @@ async fn set_reserved_peers_move_previously_reserved() {
 
 #[tokio::test]
 async fn set_reserved_peers_cannot_move_previously_reserved() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	let peerstore_handle = Arc::new(peerstore_handle_test());
 	let known_peers = (0..3)
@@ -1143,7 +1143,7 @@ async fn set_reserved_peers_cannot_move_previously_reserved() {
 
 #[tokio::test]
 async fn reserved_only_rejects_non_reserved_peers() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	let peerstore_handle = Arc::new(peerstore_handle_test());
 	let reserved_peers = HashSet::from_iter([PeerId::random(), PeerId::random(), PeerId::random()]);

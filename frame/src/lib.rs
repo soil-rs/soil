@@ -538,7 +538,7 @@ pub mod traits {
 ///
 /// This is already part of the main [`prelude`].
 pub mod arithmetic {
-	pub use sp_arithmetic::{traits::*, *};
+	pub use soil_arithmetic::{traits::*, *};
 }
 
 /// All token related types and traits.
@@ -622,7 +622,7 @@ pub mod deps {
 	pub use frame_support;
 	pub use frame_system;
 
-	pub use sp_arithmetic;
+	pub use soil_arithmetic;
 	pub use sp_core;
 	pub use sp_io;
 	pub use sp_runtime;

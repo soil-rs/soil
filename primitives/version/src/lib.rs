@@ -49,7 +49,7 @@ use scale_info::TypeInfo;
 #[allow(deprecated)]
 pub use sp_runtime::{create_runtime_str, StateVersion};
 #[doc(hidden)]
-pub use sp_std;
+pub use soil_std;
 
 #[cfg(feature = "std")]
 use sp_runtime::traits::Block as BlockT;
@@ -119,7 +119,7 @@ pub mod embed;
 ///
 /// Including this macro in the context where there is no "std" feature and the code is not
 /// compiled to wasm can lead to cryptic linking errors.
-pub use sp_version_proc_macro::runtime_version;
+pub use soil_version_proc_macro::runtime_version;
 
 /// The identity of a particular API interface that the runtime might provide.
 ///

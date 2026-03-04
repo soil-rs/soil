@@ -19,4 +19,4 @@
 //!
 //! Removal scheduled after June 2024.
 
-pub use sp_crypto_hashing::*;
+pub use soil_crypto_hashing::*;

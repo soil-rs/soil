@@ -100,8 +100,8 @@ impl RIType for HostcallResult {
 impl sp_runtime_interface::host::IntoFFIValue for HostcallResult {
 	fn into_ffi_value(
 		value: Self::Inner,
-		_context: &mut dyn sp_runtime_interface::sp_wasm_interface::FunctionContext,
-	) -> sp_runtime_interface::sp_wasm_interface::Result<Self::FFIType> {
+		_context: &mut dyn sp_runtime_interface::soil_wasm_interface::FunctionContext,
+	) -> sp_runtime_interface::soil_wasm_interface::Result<Self::FFIType> {
 		Ok(match value {
 			Ok(()) => 0,
 			Err(e) => e as u32,

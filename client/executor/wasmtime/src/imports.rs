@@ -18,7 +18,7 @@
 
 use crate::{host::HostContext, runtime::StoreData};
 use sc_executor_common::error::WasmError;
-use sp_wasm_interface::{FunctionContext, HostFunctions};
+use soil_wasm_interface::{FunctionContext, HostFunctions};
 use std::collections::HashMap;
 use wasmtime::{ExternType, FuncType, ImportType, Linker, Module};
 
@@ -93,7 +93,7 @@ struct Registry<'a, 'b> {
 	pending_func_imports: HashMap<String, (ImportType<'b>, FuncType)>,
 }
 
-impl<'a, 'b> sp_wasm_interface::HostFunctionRegistry for Registry<'a, 'b> {
+impl<'a, 'b> soil_wasm_interface::HostFunctionRegistry for Registry<'a, 'b> {
 	type State = StoreData;
 	type Error = WasmError;
 	type FunctionContext = HostContext<'a>;

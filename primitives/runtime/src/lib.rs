@@ -58,12 +58,12 @@ pub use scale_info;
 #[doc(hidden)]
 pub use serde;
 #[doc(hidden)]
-pub use sp_std;
+pub use soil_std;
 
 #[doc(hidden)]
 pub use paste;
 #[doc(hidden)]
-pub use sp_arithmetic::traits::Saturating;
+pub use soil_arithmetic::traits::Saturating;
 
 #[doc(hidden)]
 pub use sp_application_crypto as app_crypto;
@@ -119,11 +119,11 @@ pub use sp_core::{bounded_btree_map, bounded_vec};
 pub use core::fmt::Debug;
 
 /// Re-export big_uint stuff.
-pub use sp_arithmetic::biguint;
+pub use soil_arithmetic::biguint;
 /// Re-export 128 bit helpers.
-pub use sp_arithmetic::helpers_128bit;
+pub use soil_arithmetic::helpers_128bit;
 /// Re-export top-level arithmetic stuff.
-pub use sp_arithmetic::{
+pub use soil_arithmetic::{
 	traits::SaturatedConversion, ArithmeticError, FixedI128, FixedI64, FixedPointNumber,
 	FixedPointOperand, FixedU128, FixedU64, InnerOf, PerThing, PerU16, Perbill, Percent, Permill,
 	Perquintill, Rational128, Rounding, UpperOf,

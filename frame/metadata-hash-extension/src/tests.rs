@@ -77,7 +77,7 @@ fn generate_metadata_hash(metadata: RuntimeMetadataPrefixed) -> [u8; 32] {
 
 #[test]
 fn ensure_check_metadata_works_on_real_extrinsics() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	let client = TestClientBuilder::new().build();
 	let runtime_api = client.runtime_api();

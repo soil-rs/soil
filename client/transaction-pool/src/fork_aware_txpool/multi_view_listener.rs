@@ -830,7 +830,7 @@ mod tests {
 
 	#[tokio::test]
 	async fn test01() {
-		sp_tracing::try_init_simple();
+		soil_tracing::try_init_simple();
 		let (listener, terminate_listener, listener_task) = create_multi_view_listener();
 
 		let block_hash = H256::repeat_byte(0x01);
@@ -859,7 +859,7 @@ mod tests {
 
 	#[tokio::test]
 	async fn test02() {
-		sp_tracing::try_init_simple();
+		soil_tracing::try_init_simple();
 		let (listener, terminate_listener, listener_task) = create_multi_view_listener();
 
 		let block_hash0 = H256::repeat_byte(0x01);
@@ -908,7 +908,7 @@ mod tests {
 
 	#[tokio::test]
 	async fn test03() {
-		sp_tracing::try_init_simple();
+		soil_tracing::try_init_simple();
 		let (listener, terminate_listener, listener_task) = create_multi_view_listener();
 
 		let block_hash0 = H256::repeat_byte(0x01);
@@ -955,7 +955,7 @@ mod tests {
 	//
 	#[tokio::test]
 	async fn test032() {
-		sp_tracing::try_init_simple();
+		soil_tracing::try_init_simple();
 		let (listener, terminate_listener, listener_task) = create_multi_view_listener();
 
 		let block_hash0 = H256::repeat_byte(0x01);
@@ -1028,7 +1028,7 @@ mod tests {
 
 	#[tokio::test]
 	async fn test04() {
-		sp_tracing::try_init_simple();
+		soil_tracing::try_init_simple();
 		let (listener, terminate_listener, listener_task) = create_multi_view_listener();
 
 		let block_hash0 = H256::repeat_byte(0x01);
@@ -1077,7 +1077,7 @@ mod tests {
 
 	#[tokio::test]
 	async fn test05() {
-		sp_tracing::try_init_simple();
+		soil_tracing::try_init_simple();
 		let (listener, terminate_listener, listener_task) = create_multi_view_listener();
 
 		let block_hash0 = H256::repeat_byte(0x01);

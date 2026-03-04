@@ -32,7 +32,7 @@ macro_magic = { features = ["proc_support"], workspace = true }
 proc-macro-warning = { workspace = true }
 proc-macro2 = { workspace = true }
 quote = { workspace = true }
-sp-crypto-hashing = { workspace = true }
+soil-crypto-hashing = { workspace = true }
 syn = { features = ["full", "parsing", "visit-mut"], workspace = true }
 
 [dev-dependencies]
@@ -44,7 +44,7 @@ pretty_assertions = { workspace = true }
 regex = { workspace = true }
 scale-info = { features = ["derive"], workspace = true, default-features = true }
 sp-io = { workspace = true, default-features = true }
-sp-metadata-ir = { workspace = true, default-features = true }
+soil-metadata-ir = { workspace = true, default-features = true }
 sp-runtime = { features = ["serde"], workspace = true, default-features = true }
 
 [features]
@@ -55,8 +55,8 @@ std = [
 	"frame-support/std",
 	"frame-system/std",
 	"scale-info/std",
-	"sp-crypto-hashing/std",
-	"sp-metadata-ir/std",
+	"soil-crypto-hashing/std",
+	"soil-metadata-ir/std",
 	"sp-runtime/std",
 ]
 no-metadata-docs = []

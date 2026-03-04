@@ -19,7 +19,7 @@
 
 use super::Weight;
 
-use sp_arithmetic::Perbill;
+use soil_arithmetic::Perbill;
 
 /// Meters consumed weight and a hard limit for the maximal consumable weight.
 ///
@@ -94,7 +94,7 @@ impl WeightMeter {
 	/// # Example
 	/// ```rust
 	/// use sp_weights::{Weight, WeightMeter};
-	/// use sp_arithmetic::Perbill;
+	/// use soil_arithmetic::Perbill;
 	///
 	/// let mut meter = WeightMeter::with_limit(Weight::from_parts(10, 20));
 	/// // Nothing consumed so far:
@@ -158,7 +158,7 @@ impl WeightMeter {
 #[cfg(test)]
 mod tests {
 	use crate::*;
-	use sp_arithmetic::traits::Zero;
+	use soil_arithmetic::traits::Zero;
 
 	#[test]
 	fn weight_meter_remaining_works() {

@@ -50,7 +50,7 @@ pub use impl_serde::serialize as bytes;
 	since = "27.0.0",
 	note = "`sp-crypto-hashing` re-exports will be removed after June 2024. Use `sp-crypto-hashing` instead."
 )]
-pub use sp_crypto_hashing::{self as hashing, *};
+pub use soil_crypto_hashing::{self as hashing, *};
 
 pub mod const_hex2array;
 pub mod crypto;
@@ -106,7 +106,7 @@ pub use bounded_collections::{
 pub use sp_storage as storage;
 
 #[doc(hidden)]
-pub use sp_std;
+pub use soil_std;
 
 /// Hex-serialized shim for `Vec<u8>`.
 #[derive(PartialEq, Eq, Clone, Debug)]

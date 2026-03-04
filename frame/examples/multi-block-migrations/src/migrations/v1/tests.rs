@@ -34,7 +34,7 @@ use pallet_migrations::WeightInfo as _;
 #[test]
 fn lazy_migration_works() {
 	new_test_ext().execute_with(|| {
-		frame_support::__private::sp_tracing::try_init_simple();
+		frame_support::__private::soil_tracing::try_init_simple();
 		// Insert some values into the old storage map.
 		for i in 0..1024 {
 			v1::v0::MyMap::<T>::insert(i, i);

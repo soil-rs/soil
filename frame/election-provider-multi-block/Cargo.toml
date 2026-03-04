@@ -27,12 +27,12 @@ frame-election-provider-support = { workspace = true }
 frame-support = { workspace = true }
 frame-system = { workspace = true }
 
-sp-arithmetic = { workspace = true }
+soil-arithmetic = { workspace = true }
 sp-core = { workspace = true }
 sp-io = { workspace = true }
 sp-npos-elections = { features = ["serde"], workspace = true }
 sp-runtime = { workspace = true }
-sp-std = { workspace = true }
+soil-std = { workspace = true }
 
 # Optional imports for benchmarking
 frame-benchmarking = { optional = true, workspace = true }
@@ -43,7 +43,7 @@ frame-benchmarking = { workspace = true, default-features = true }
 pallet-balances = { workspace = true, default-features = true }
 parking_lot = { workspace = true, default-features = true }
 sp-io = { workspace = true, default-features = true }
-sp-tracing = { workspace = true, default-features = true }
+soil-tracing = { workspace = true, default-features = true }
 
 [features]
 default = ["std"]
@@ -57,13 +57,13 @@ std = [
 	"pallet-balances/std",
 	"rand/std",
 	"scale-info/std",
-	"sp-arithmetic/std",
+	"soil-arithmetic/std",
 	"sp-core/std",
 	"sp-io/std",
 	"sp-npos-elections/std",
 	"sp-runtime/std",
-	"sp-std/std",
-	"sp-tracing/std",
+	"soil-std/std",
+	"soil-tracing/std",
 ]
 runtime-benchmarks = [
 	"frame-benchmarking/runtime-benchmarks",

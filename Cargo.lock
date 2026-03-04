@@ -3286,7 +3286,7 @@ dependencies = [
  "scale-encode",
  "scale-info",
  "scale-type-resolver",
- "sp-crypto-hashing 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "sp-crypto-hashing",
  "thiserror 2.0.18",
 ]
 
@@ -3301,7 +3301,7 @@ dependencies = [
  "proc-macro2",
  "quote",
  "scale-info",
- "sp-arithmetic",
+ "soil-arithmetic",
  "syn 2.0.117",
  "trybuild",
 ]
@@ -3316,12 +3316,12 @@ dependencies = [
  "parity-scale-codec",
  "rand 0.8.5",
  "scale-info",
- "sp-arithmetic",
+ "soil-arithmetic",
+ "soil-std",
  "sp-core",
  "sp-io",
  "sp-npos-elections",
  "sp-runtime",
- "sp-std",
 ]
 
 [[package]]
@@ -3333,7 +3333,7 @@ dependencies = [
  "frame-support",
  "honggfuzz",
  "parity-scale-codec",
- "sp-arithmetic",
+ "soil-arithmetic",
  "sp-runtime",
 ]
 
@@ -3351,11 +3351,11 @@ dependencies = [
  "pallet-transaction-payment",
  "parity-scale-codec",
  "scale-info",
+ "soil-tracing",
  "sp-core",
  "sp-inherents",
  "sp-io",
  "sp-runtime",
- "sp-tracing",
  "sp-version",
  "substrate-test-runtime-client",
 ]
@@ -3386,9 +3386,9 @@ dependencies = [
  "merkleized-metadata",
  "parity-scale-codec",
  "scale-info",
+ "soil-tracing",
  "sp-api",
  "sp-runtime",
- "sp-tracing",
  "sp-transaction-pool",
  "substrate-test-runtime-client",
  "substrate-wasm-builder",
@@ -3406,12 +3406,12 @@ dependencies = [
  "parity-scale-codec",
  "rand 0.8.5",
  "serde",
+ "soil-crypto-hashing",
+ "soil-tracing",
  "sp-core",
- "sp-crypto-hashing 0.1.0",
  "sp-io",
  "sp-runtime",
  "sp-state-machine",
- "sp-tracing",
  "spinners",
  "substrate-rpc-client",
  "tokio",
@@ -3441,22 +3441,22 @@ dependencies = [
  "scale-info",
  "serde",
  "serde_json",
+ "soil-arithmetic",
+ "soil-crypto-hashing",
+ "soil-debug-derive",
+ "soil-metadata-ir",
+ "soil-std",
+ "soil-tracing",
  "sp-api",
- "sp-arithmetic",
  "sp-core",
- "sp-crypto-hashing 0.1.0",
  "sp-crypto-hashing-proc-macro",
- "sp-debug-derive",
  "sp-genesis-builder",
  "sp-inherents",
  "sp-io",
- "sp-metadata-ir",
  "sp-runtime",
  "sp-staking",
  "sp-state-machine",
- "sp-std",
  "sp-timestamp",
- "sp-tracing",
  "sp-trie",
  "sp-weights",
  "tt-call",
@@ -3484,9 +3484,9 @@ dependencies = [
  "quote",
  "regex",
  "scale-info",
- "sp-crypto-hashing 0.1.0",
+ "soil-crypto-hashing",
+ "soil-metadata-ir",
  "sp-io",
- "sp-metadata-ir",
  "sp-runtime",
  "syn 2.0.117",
 ]
@@ -3526,11 +3526,11 @@ dependencies = [
  "rustversion",
  "scale-info",
  "serde",
+ "soil-arithmetic",
+ "soil-metadata-ir",
  "sp-api",
- "sp-arithmetic",
  "sp-core",
  "sp-io",
- "sp-metadata-ir",
  "sp-runtime",
  "sp-state-machine",
  "sp-version",
@@ -3584,11 +3584,11 @@ dependencies = [
  "parity-scale-codec",
  "scale-info",
  "serde",
+ "soil-tracing",
  "sp-core",
  "sp-externalities",
  "sp-io",
  "sp-runtime",
- "sp-tracing",
  "sp-version",
  "sp-weights",
  "substrate-test-runtime-client",
@@ -5267,10 +5267,18 @@ dependencies = [
  "sc-tracing-proc-macro",
  "scale-info",
  "serde_json",
+ "soil-api-proc-macro",
+ "soil-arithmetic",
+ "soil-crypto-hashing",
+ "soil-debug-derive",
+ "soil-metadata-ir",
+ "soil-runtime-interface-proc-macro",
+ "soil-std",
+ "soil-tracing",
+ "soil-version-proc-macro",
+ "soil-wasm-interface",
  "sp-api",
- "sp-api-proc-macro",
  "sp-application-crypto",
- "sp-arithmetic",
  "sp-authority-discovery",
  "sp-block-builder",
  "sp-consensus-aura",
@@ -5281,37 +5289,29 @@ dependencies = [
  "sp-consensus-slots",
  "sp-core",
  "sp-crypto-ec-utils",
- "sp-crypto-hashing 0.1.0",
  "sp-crypto-hashing-proc-macro",
- "sp-debug-derive",
  "sp-externalities",
  "sp-genesis-builder",
  "sp-inherents",
  "sp-io",
  "sp-keyring",
  "sp-keystore",
- "sp-metadata-ir",
  "sp-mixnet",
  "sp-mmr-primitives",
  "sp-npos-elections",
  "sp-offchain",
  "sp-runtime",
  "sp-runtime-interface",
- "sp-runtime-interface-proc-macro",
  "sp-session",
  "sp-staking",
  "sp-state-machine",
  "sp-statement-store",
- "sp-std",
  "sp-storage",
  "sp-timestamp",
- "sp-tracing",
  "sp-transaction-pool",
  "sp-transaction-storage-proof",
  "sp-trie",
  "sp-version",
- "sp-version-proc-macro",
- "sp-wasm-interface",
  "sp-weights",
  "static_assertions",
  "substrate-bip39",
@@ -6328,6 +6328,7 @@ dependencies = [
  "sc-block-builder",
  "sc-client-api",
  "sc-offchain",
+ "soil-tracing",
  "sp-api",
  "sp-blockchain",
  "sp-consensus",
@@ -6335,7 +6336,6 @@ dependencies = [
  "sp-core",
  "sp-mmr-primitives",
  "sp-runtime",
- "sp-tracing",
  "substrate-test-runtime-client",
  "tokio",
 ]
@@ -6652,13 +6652,13 @@ dependencies = [
  "sc-transaction-pool-api",
  "serde",
  "serde_json",
+ "soil-tracing",
  "sp-consensus",
  "sp-core",
  "sp-inherents",
  "sp-runtime",
  "sp-state-machine",
  "sp-timestamp",
- "sp-tracing",
  "sp-trie",
  "tempfile",
 ]
@@ -6748,12 +6748,12 @@ dependencies = [
  "sc-consensus",
  "sc-executor",
  "sc-service",
+ "soil-crypto-hashing",
  "sp-api",
  "sp-block-builder",
  "sp-blockchain",
  "sp-consensus",
  "sp-core",
- "sp-crypto-hashing 0.1.0",
  "sp-inherents",
  "sp-keyring",
  "sp-runtime",
@@ -7046,8 +7046,8 @@ dependencies = [
  "pallet-identity",
  "parity-scale-codec",
  "scale-info",
+ "soil-crypto-hashing",
  "sp-core",
- "sp-crypto-hashing 0.1.0",
  "sp-io",
  "sp-runtime",
 ]
@@ -7065,8 +7065,8 @@ dependencies = [
  "parity-scale-codec",
  "primitive-types",
  "scale-info",
+ "soil-arithmetic",
  "sp-api",
- "sp-arithmetic",
  "sp-core",
  "sp-io",
  "sp-runtime",
@@ -7086,7 +7086,7 @@ dependencies = [
  "parity-scale-codec",
  "primitive-types",
  "scale-info",
- "sp-arithmetic",
+ "soil-arithmetic",
  "sp-core",
  "sp-io",
  "sp-runtime",
@@ -7137,12 +7137,12 @@ dependencies = [
  "parity-scale-codec",
  "primitive-types",
  "scale-info",
+ "soil-arithmetic",
+ "soil-std",
  "sp-api",
- "sp-arithmetic",
  "sp-core",
  "sp-io",
  "sp-runtime",
- "sp-std",
 ]
 
 [[package]]
@@ -7285,6 +7285,7 @@ dependencies = [
  "pallet-timestamp",
  "parity-scale-codec",
  "scale-info",
+ "soil-tracing",
  "sp-application-crypto",
  "sp-consensus-babe",
  "sp-core",
@@ -7292,7 +7293,6 @@ dependencies = [
  "sp-runtime",
  "sp-session",
  "sp-staking",
- "sp-tracing",
 ]
 
 [[package]]
@@ -7309,10 +7309,10 @@ dependencies = [
  "pallet-balances",
  "parity-scale-codec",
  "scale-info",
+ "soil-tracing",
  "sp-core",
  "sp-io",
  "sp-runtime",
- "sp-tracing",
  "substrate-test-utils",
 ]
 
@@ -7376,6 +7376,7 @@ dependencies = [
  "parity-scale-codec",
  "scale-info",
  "serde",
+ "soil-tracing",
  "sp-consensus-beefy",
  "sp-core",
  "sp-io",
@@ -7383,7 +7384,6 @@ dependencies = [
  "sp-session",
  "sp-staking",
  "sp-state-machine",
- "sp-tracing",
 ]
 
 [[package]]
@@ -7442,12 +7442,12 @@ dependencies = [
  "parity-scale-codec",
  "pretty_assertions",
  "scale-info",
+ "soil-arithmetic",
+ "soil-tracing",
  "sp-api",
- "sp-arithmetic",
  "sp-core",
  "sp-io",
  "sp-runtime",
- "sp-tracing",
 ]
 
 [[package]]
@@ -7513,7 +7513,7 @@ dependencies = [
  "pallet-ranked-collective",
  "parity-scale-codec",
  "scale-info",
- "sp-arithmetic",
+ "soil-arithmetic",
  "sp-core",
  "sp-io",
  "sp-runtime",
@@ -7563,11 +7563,11 @@ dependencies = [
  "pallet-timestamp",
  "parity-scale-codec",
  "scale-info",
+ "soil-tracing",
  "sp-core",
  "sp-io",
  "sp-runtime",
  "sp-staking",
- "sp-tracing",
 ]
 
 [[package]]
@@ -7615,8 +7615,8 @@ dependencies = [
  "pallet-people",
  "parity-scale-codec",
  "scale-info",
+ "soil-arithmetic",
  "sp-api",
- "sp-arithmetic",
  "sp-core",
  "sp-io",
  "sp-runtime",
@@ -7642,12 +7642,12 @@ dependencies = [
  "parity-scale-codec",
  "parking_lot 0.12.5",
  "scale-info",
+ "soil-tracing",
  "sp-core",
  "sp-io",
  "sp-npos-elections",
  "sp-runtime",
  "sp-staking",
- "sp-tracing",
 ]
 
 [[package]]
@@ -7664,13 +7664,13 @@ dependencies = [
  "parking_lot 0.12.5",
  "rand 0.8.5",
  "scale-info",
- "sp-arithmetic",
+ "soil-arithmetic",
+ "soil-std",
+ "soil-tracing",
  "sp-core",
  "sp-io",
  "sp-npos-elections",
  "sp-runtime",
- "sp-std",
- "sp-tracing",
 ]
 
 [[package]]
@@ -7689,12 +7689,12 @@ dependencies = [
  "parking_lot 0.12.5",
  "rand 0.8.5",
  "scale-info",
- "sp-arithmetic",
+ "soil-arithmetic",
+ "soil-tracing",
  "sp-core",
  "sp-io",
  "sp-npos-elections",
  "sp-runtime",
- "sp-tracing",
  "strum 0.26.3",
  "tokio",
 ]
@@ -7722,12 +7722,12 @@ dependencies = [
  "pallet-balances",
  "parity-scale-codec",
  "scale-info",
+ "soil-tracing",
  "sp-core",
  "sp-io",
  "sp-npos-elections",
  "sp-runtime",
  "sp-staking",
- "sp-tracing",
  "substrate-test-utils",
 ]
 
@@ -7877,9 +7877,9 @@ dependencies = [
  "parity-scale-codec",
  "pretty_assertions",
  "scale-info",
+ "soil-metadata-ir",
  "sp-core",
  "sp-io",
- "sp-metadata-ir",
  "sp-runtime",
 ]
 
@@ -7916,11 +7916,11 @@ dependencies = [
  "pallet-timestamp",
  "parity-scale-codec",
  "scale-info",
+ "soil-tracing",
  "sp-core",
  "sp-io",
  "sp-runtime",
  "sp-staking",
- "sp-tracing",
 ]
 
 [[package]]
@@ -7959,6 +7959,7 @@ dependencies = [
  "pallet-timestamp",
  "parity-scale-codec",
  "scale-info",
+ "soil-tracing",
  "sp-application-crypto",
  "sp-consensus-grandpa",
  "sp-core",
@@ -7967,7 +7968,6 @@ dependencies = [
  "sp-runtime",
  "sp-session",
  "sp-staking",
- "sp-tracing",
 ]
 
 [[package]]
@@ -8078,12 +8078,12 @@ dependencies = [
  "rand_distr",
  "scale-info",
  "serde",
- "sp-arithmetic",
+ "soil-arithmetic",
+ "soil-crypto-hashing",
+ "soil-tracing",
  "sp-core",
- "sp-crypto-hashing 0.1.0",
  "sp-io",
  "sp-runtime",
- "sp-tracing",
  "sp-weights",
 ]
 
@@ -8101,12 +8101,12 @@ dependencies = [
  "parity-scale-codec",
  "scale-info",
  "serde",
+ "soil-std",
  "sp-core",
  "sp-io",
  "sp-keyring",
  "sp-keystore",
  "sp-runtime",
- "sp-std",
 ]
 
 [[package]]
@@ -8124,10 +8124,10 @@ dependencies = [
  "polkadot-sdk-frame",
  "pretty_assertions",
  "scale-info",
+ "soil-tracing",
  "sp-core",
  "sp-io",
  "sp-runtime",
- "sp-tracing",
 ]
 
 [[package]]
@@ -8152,8 +8152,8 @@ dependencies = [
  "parity-scale-codec",
  "polkadot-sdk-frame",
  "scale-info",
+ "soil-tracing",
  "sp-mmr-primitives",
- "sp-tracing",
 ]
 
 [[package]]
@@ -8256,11 +8256,11 @@ dependencies = [
  "pallet-balances",
  "parity-scale-codec",
  "scale-info",
+ "soil-tracing",
  "sp-core",
  "sp-io",
  "sp-runtime",
  "sp-staking",
- "sp-tracing",
 ]
 
 [[package]]
@@ -8297,9 +8297,9 @@ dependencies = [
  "log",
  "pallet-nomination-pools",
  "rand 0.8.5",
+ "soil-tracing",
  "sp-io",
  "sp-runtime",
- "sp-tracing",
 ]
 
 [[package]]
@@ -8348,11 +8348,11 @@ dependencies = [
  "pallet-timestamp",
  "parity-scale-codec",
  "scale-info",
+ "soil-tracing",
  "sp-core",
  "sp-io",
  "sp-runtime",
  "sp-staking",
- "sp-tracing",
 ]
 
 [[package]]
@@ -8366,10 +8366,10 @@ dependencies = [
  "parity-scale-codec",
  "scale-info",
  "serde",
+ "soil-std",
  "sp-application-crypto",
  "sp-io",
  "sp-runtime",
- "sp-std",
 ]
 
 [[package]]
@@ -8378,8 +8378,8 @@ version = "1.0.0"
 dependencies = [
  "parity-scale-codec",
  "scale-info",
+ "soil-std",
  "sp-api",
- "sp-std",
 ]
 
 [[package]]
@@ -8393,7 +8393,7 @@ dependencies = [
  "pallet-transaction-payment",
  "parity-scale-codec",
  "scale-info",
- "sp-arithmetic",
+ "soil-arithmetic",
  "sp-core",
  "sp-io",
  "sp-runtime",
@@ -8407,7 +8407,7 @@ dependencies = [
  "parity-scale-codec",
  "polkadot-sdk-frame",
  "scale-info",
- "sp-metadata-ir",
+ "soil-metadata-ir",
 ]
 
 [[package]]
@@ -8449,7 +8449,7 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "scale-info",
- "sp-arithmetic",
+ "soil-arithmetic",
  "sp-core",
  "sp-io",
  "sp-runtime",
@@ -8494,7 +8494,7 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "scale-info",
- "sp-arithmetic",
+ "soil-arithmetic",
  "sp-core",
  "sp-io",
  "sp-runtime",
@@ -8525,7 +8525,7 @@ dependencies = [
  "parity-scale-codec",
  "scale-info",
  "serde",
- "sp-arithmetic",
+ "soil-arithmetic",
  "sp-core",
  "sp-io",
  "sp-runtime",
@@ -8613,9 +8613,9 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "scale-info",
+ "soil-crypto-hashing",
  "sp-consensus-sassafras",
  "sp-core",
- "sp-crypto-hashing 0.1.0",
  "sp-io",
  "sp-runtime",
 ]
@@ -8719,8 +8719,8 @@ dependencies = [
  "parity-scale-codec",
  "rand_chacha 0.3.1",
  "scale-info",
- "sp-arithmetic",
- "sp-crypto-hashing 0.1.0",
+ "soil-arithmetic",
+ "soil-crypto-hashing",
  "sp-io",
  "sp-runtime",
 ]
@@ -8744,13 +8744,13 @@ dependencies = [
  "rand_chacha 0.3.1",
  "scale-info",
  "serde",
+ "soil-tracing",
  "sp-application-crypto",
  "sp-core",
  "sp-io",
  "sp-npos-elections",
  "sp-runtime",
  "sp-staking",
- "sp-tracing",
  "substrate-test-utils",
 ]
 
@@ -8770,7 +8770,7 @@ name = "pallet-staking-reward-fn"
 version = "19.0.0"
 dependencies = [
  "log",
- "sp-arithmetic",
+ "soil-arithmetic",
 ]
 
 [[package]]
@@ -8795,10 +8795,10 @@ dependencies = [
  "parity-scale-codec",
  "scale-info",
  "serde",
+ "soil-tracing",
  "sp-core",
  "sp-io",
  "sp-runtime",
- "sp-tracing",
  "substrate-state-trie-migration-rpc",
  "thousands",
  "tokio",
@@ -9355,8 +9355,8 @@ dependencies = [
  "parity-scale-codec",
  "scale-info",
  "serde",
+ "soil-arithmetic",
  "sp-api",
- "sp-arithmetic",
  "sp-block-builder",
  "sp-consensus-aura",
  "sp-consensus-grandpa",
@@ -10713,8 +10713,8 @@ name = "sc-allocator"
 version = "23.0.0"
 dependencies = [
  "log",
+ "soil-wasm-interface",
  "sp-core",
- "sp-wasm-interface",
  "thiserror 1.0.69",
 ]
 
@@ -10740,13 +10740,13 @@ dependencies = [
  "sc-service",
  "serde",
  "serde_json",
+ "soil-tracing",
  "sp-api",
  "sp-authority-discovery",
  "sp-blockchain",
  "sp-core",
  "sp-keystore",
  "sp-runtime",
- "sp-tracing",
  "substrate-prometheus-endpoint",
  "substrate-test-runtime-client",
  "tempfile",
@@ -10814,17 +10814,17 @@ dependencies = [
  "sc-telemetry",
  "serde",
  "serde_json",
+ "soil-crypto-hashing",
+ "soil-tracing",
  "sp-application-crypto",
  "sp-blockchain",
  "sp-consensus-babe",
  "sp-core",
- "sp-crypto-hashing 0.1.0",
  "sp-genesis-builder",
  "sp-io",
  "sp-keyring",
  "sp-runtime",
  "sp-state-machine",
- "sp-tracing",
  "substrate-test-runtime",
 ]
 
@@ -10869,13 +10869,13 @@ dependencies = [
  "sc-utils",
  "serde",
  "serde_json",
+ "soil-panic-handler",
+ "soil-tracing",
  "sp-blockchain",
  "sp-core",
  "sp-keyring",
  "sp-keystore",
- "sp-panic-handler",
  "sp-runtime",
- "sp-tracing",
  "sp-version",
  "tempfile",
  "thiserror 1.0.69",
@@ -10894,11 +10894,11 @@ dependencies = [
  "sc-executor",
  "sc-transaction-pool-api",
  "sc-utils",
+ "soil-database",
  "sp-api",
  "sp-blockchain",
  "sp-consensus",
  "sp-core",
- "sp-database",
  "sp-externalities",
  "sp-runtime",
  "sp-state-machine",
@@ -10928,13 +10928,13 @@ dependencies = [
  "sc-client-api",
  "sc-state-db",
  "schnellru",
- "sp-arithmetic",
+ "soil-arithmetic",
+ "soil-database",
+ "soil-tracing",
  "sp-blockchain",
  "sp-core",
- "sp-database",
  "sp-runtime",
  "sp-state-machine",
- "sp-tracing",
  "sp-trie",
  "substrate-prometheus-endpoint",
  "substrate-test-runtime-client",
@@ -10983,6 +10983,7 @@ dependencies = [
  "sc-network",
  "sc-network-test",
  "sc-telemetry",
+ "soil-tracing",
  "sp-api",
  "sp-application-crypto",
  "sp-block-builder",
@@ -10996,7 +10997,6 @@ dependencies = [
  "sp-keystore",
  "sp-runtime",
  "sp-timestamp",
- "sp-tracing",
  "substrate-prometheus-endpoint",
  "substrate-test-runtime-client",
  "tempfile",
@@ -11025,6 +11025,8 @@ dependencies = [
  "sc-network-test",
  "sc-telemetry",
  "sc-transaction-pool-api",
+ "soil-crypto-hashing",
+ "soil-tracing",
  "sp-api",
  "sp-application-crypto",
  "sp-block-builder",
@@ -11033,13 +11035,11 @@ dependencies = [
  "sp-consensus-babe",
  "sp-consensus-slots",
  "sp-core",
- "sp-crypto-hashing 0.1.0",
  "sp-inherents",
  "sp-keyring",
  "sp-keystore",
  "sp-runtime",
  "sp-timestamp",
- "sp-tracing",
  "substrate-prometheus-endpoint",
  "substrate-test-runtime-client",
  "thiserror 1.0.69",
@@ -11093,9 +11093,10 @@ dependencies = [
  "sc-network-types",
  "sc-utils",
  "serde",
+ "soil-arithmetic",
+ "soil-tracing",
  "sp-api",
  "sp-application-crypto",
- "sp-arithmetic",
  "sp-blockchain",
  "sp-consensus",
  "sp-consensus-beefy",
@@ -11103,7 +11104,6 @@ dependencies = [
  "sp-keystore",
  "sp-mmr-primitives",
  "sp-runtime",
- "sp-tracing",
  "substrate-prometheus-endpoint",
  "substrate-test-runtime-client",
  "thiserror 1.0.69",
@@ -11176,18 +11176,18 @@ dependencies = [
  "sc-transaction-pool-api",
  "sc-utils",
  "serde_json",
+ "soil-arithmetic",
+ "soil-crypto-hashing",
+ "soil-tracing",
  "sp-api",
  "sp-application-crypto",
- "sp-arithmetic",
  "sp-blockchain",
  "sp-consensus",
  "sp-consensus-grandpa",
  "sp-core",
- "sp-crypto-hashing 0.1.0",
  "sp-keyring",
  "sp-keystore",
  "sp-runtime",
- "sp-tracing",
  "substrate-prometheus-endpoint",
  "substrate-test-runtime-client",
  "thiserror 1.0.69",
@@ -11294,7 +11294,7 @@ dependencies = [
  "sc-client-api",
  "sc-consensus",
  "sc-telemetry",
- "sp-arithmetic",
+ "soil-arithmetic",
  "sp-blockchain",
  "sp-consensus",
  "sp-consensus-slots",
@@ -11323,20 +11323,20 @@ dependencies = [
  "sc-runtime-test",
  "sc-tracing",
  "schnellru",
+ "soil-crypto-hashing",
+ "soil-maybe-compressed-blob",
+ "soil-panic-handler",
+ "soil-tracing",
+ "soil-wasm-interface",
  "sp-api",
  "sp-core",
- "sp-crypto-hashing 0.1.0",
  "sp-externalities",
  "sp-io",
- "sp-maybe-compressed-blob",
- "sp-panic-handler",
  "sp-runtime",
  "sp-runtime-interface",
  "sp-state-machine",
- "sp-tracing",
  "sp-trie",
  "sp-version",
- "sp-wasm-interface",
  "substrate-test-runtime",
  "tempfile",
  "tracing",
@@ -11350,8 +11350,8 @@ version = "0.29.0"
 dependencies = [
  "polkavm",
  "sc-allocator",
- "sp-maybe-compressed-blob",
- "sp-wasm-interface",
+ "soil-maybe-compressed-blob",
+ "soil-wasm-interface",
  "thiserror 1.0.69",
  "wasm-instrument",
 ]
@@ -11363,7 +11363,7 @@ dependencies = [
  "log",
  "polkavm",
  "sc-executor-common",
- "sp-wasm-interface",
+ "soil-wasm-interface",
 ]
 
 [[package]]
@@ -11380,9 +11380,9 @@ dependencies = [
  "sc-allocator",
  "sc-executor-common",
  "sc-runtime-test",
+ "soil-wasm-interface",
  "sp-io",
  "sp-runtime-interface",
- "sp-wasm-interface",
  "tempfile",
  "wasmtime",
  "wat",
@@ -11483,13 +11483,13 @@ dependencies = [
  "serde",
  "serde_json",
  "smallvec",
- "sp-arithmetic",
+ "soil-arithmetic",
+ "soil-crypto-hashing",
+ "soil-tracing",
  "sp-blockchain",
  "sp-consensus",
  "sp-core",
- "sp-crypto-hashing 0.1.0",
  "sp-runtime",
- "sp-tracing",
  "substrate-prometheus-endpoint",
  "substrate-test-runtime",
  "substrate-test-runtime-client",
@@ -11611,13 +11611,13 @@ dependencies = [
  "sc-utils",
  "schnellru",
  "smallvec",
- "sp-arithmetic",
+ "soil-arithmetic",
+ "soil-tracing",
  "sp-blockchain",
  "sp-consensus",
  "sp-core",
  "sp-runtime",
  "sp-test-primitives",
- "sp-tracing",
  "substrate-prometheus-endpoint",
  "substrate-test-runtime-client",
  "thiserror 1.0.69",
@@ -11647,11 +11647,11 @@ dependencies = [
  "sc-network-types",
  "sc-service",
  "sc-utils",
+ "soil-tracing",
  "sp-blockchain",
  "sp-consensus",
  "sp-core",
  "sp-runtime",
- "sp-tracing",
  "substrate-test-runtime",
  "substrate-test-runtime-client",
  "tokio",
@@ -11723,6 +11723,7 @@ dependencies = [
  "sc-transaction-pool",
  "sc-transaction-pool-api",
  "sc-utils",
+ "soil-tracing",
  "sp-api",
  "sp-consensus",
  "sp-core",
@@ -11730,7 +11731,6 @@ dependencies = [
  "sp-keystore",
  "sp-offchain",
  "sp-runtime",
- "sp-tracing",
  "substrate-test-runtime-client",
  "threadpool",
  "tokio",
@@ -11771,11 +11771,11 @@ dependencies = [
  "sc-transaction-pool-api",
  "sc-utils",
  "serde_json",
+ "soil-crypto-hashing",
  "sp-api",
  "sp-blockchain",
  "sp-consensus",
  "sp-core",
- "sp-crypto-hashing 0.1.0",
  "sp-keystore",
  "sp-offchain",
  "sp-rpc",
@@ -11859,12 +11859,12 @@ dependencies = [
  "schnellru",
  "serde",
  "serde_json",
+ "soil-maybe-compressed-blob",
  "sp-api",
  "sp-blockchain",
  "sp-consensus",
  "sp-core",
  "sp-externalities",
- "sp-maybe-compressed-blob",
  "sp-rpc",
  "sp-runtime",
  "sp-version",
@@ -11895,12 +11895,12 @@ dependencies = [
  "parity-scale-codec",
  "sc-executor",
  "sc-executor-common",
+ "soil-crypto-hashing",
+ "soil-wasm-interface",
  "sp-core",
- "sp-crypto-hashing 0.1.0",
  "sp-io",
  "sp-state-machine",
  "sp-version",
- "sp-wasm-interface",
  "subxt",
  "thiserror 1.0.69",
 ]
@@ -11990,6 +11990,7 @@ dependencies = [
  "sc-network-sync",
  "sc-service",
  "sc-transaction-pool-api",
+ "soil-tracing",
  "sp-api",
  "sp-blockchain",
  "sp-consensus",
@@ -11998,7 +11999,6 @@ dependencies = [
  "sp-runtime",
  "sp-state-machine",
  "sp-storage",
- "sp-tracing",
  "substrate-test-runtime",
  "substrate-test-runtime-client",
  "tempfile",
@@ -12030,13 +12030,13 @@ dependencies = [
  "sc-keystore",
  "sc-network-statement",
  "sc-utils",
+ "soil-tracing",
  "sp-api",
  "sp-blockchain",
  "sp-core",
  "sp-runtime",
  "sp-statement-store",
  "sp-storage",
- "sp-tracing",
  "substrate-prometheus-endpoint",
  "tempfile",
  "tokio",
@@ -12086,8 +12086,8 @@ dependencies = [
  "sc-telemetry",
  "serde",
  "serde_json",
+ "soil-crypto-hashing",
  "sp-core",
- "sp-crypto-hashing 0.1.0",
  "sp-io",
  "sp-runtime",
 ]
@@ -12127,12 +12127,12 @@ dependencies = [
  "sc-client-api",
  "sc-tracing-proc-macro",
  "serde",
+ "soil-tracing",
  "sp-api",
  "sp-blockchain",
  "sp-core",
  "sp-rpc",
  "sp-runtime",
- "sp-tracing",
  "thiserror 1.0.69",
  "tracing",
  "tracing-log",
@@ -12173,13 +12173,13 @@ dependencies = [
  "sc-utils",
  "serde",
  "serde_json",
+ "soil-crypto-hashing",
+ "soil-tracing",
  "sp-api",
  "sp-blockchain",
  "sp-consensus",
  "sp-core",
- "sp-crypto-hashing 0.1.0",
  "sp-runtime",
- "sp-tracing",
  "sp-transaction-pool",
  "strum 0.26.3",
  "substrate-prometheus-endpoint",
@@ -12221,7 +12221,7 @@ dependencies = [
  "log",
  "parking_lot 0.12.5",
  "prometheus",
- "sp-arithmetic",
+ "soil-arithmetic",
  "tokio-test",
 ]
 
@@ -13003,6 +13003,145 @@ dependencies = [
 ]
 
 [[package]]
+name = "soil-api-proc-macro"
+version = "15.0.0"
+dependencies = [
+ "Inflector",
+ "assert_matches",
+ "blake2 0.10.6",
+ "expander",
+ "proc-macro-crate 3.4.0",
+ "proc-macro2",
+ "quote",
+ "syn 2.0.117",
+]
+
+[[package]]
+name = "soil-arithmetic"
+version = "23.0.0"
+dependencies = [
+ "criterion",
+ "docify",
+ "integer-sqrt",
+ "num-traits",
+ "parity-scale-codec",
+ "primitive-types",
+ "rand 0.8.5",
+ "scale-info",
+ "serde",
+ "soil-crypto-hashing",
+ "static_assertions",
+]
+
+[[package]]
+name = "soil-crypto-hashing"
+version = "0.1.0"
+dependencies = [
+ "blake2b_simd",
+ "byteorder",
+ "criterion",
+ "digest 0.10.7",
+ "sha2 0.10.9",
+ "sha3",
+ "sp-crypto-hashing-proc-macro",
+ "twox-hash 1.6.3",
+]
+
+[[package]]
+name = "soil-database"
+version = "10.0.0"
+dependencies = [
+ "kvdb",
+ "kvdb-rocksdb",
+ "parking_lot 0.12.5",
+]
+
+[[package]]
+name = "soil-debug-derive"
+version = "14.0.0"
+dependencies = [
+ "proc-macro-warning",
+ "proc-macro2",
+ "quote",
+ "syn 2.0.117",
+]
+
+[[package]]
+name = "soil-maybe-compressed-blob"
+version = "11.0.0"
+dependencies = [
+ "thiserror 1.0.69",
+ "zstd 0.12.4",
+]
+
+[[package]]
+name = "soil-metadata-ir"
+version = "0.6.0"
+dependencies = [
+ "frame-metadata",
+ "parity-scale-codec",
+ "scale-info",
+]
+
+[[package]]
+name = "soil-panic-handler"
+version = "13.0.0"
+dependencies = [
+ "backtrace",
+ "regex",
+]
+
+[[package]]
+name = "soil-runtime-interface-proc-macro"
+version = "17.0.0"
+dependencies = [
+ "Inflector",
+ "expander",
+ "proc-macro-crate 3.4.0",
+ "proc-macro2",
+ "quote",
+ "syn 2.0.117",
+]
+
+[[package]]
+name = "soil-std"
+version = "14.0.0"
+
+[[package]]
+name = "soil-tracing"
+version = "16.0.0"
+dependencies = [
+ "parity-scale-codec",
+ "regex",
+ "tracing",
+ "tracing-core",
+ "tracing-subscriber",
+]
+
+[[package]]
+name = "soil-version-proc-macro"
+version = "13.0.0"
+dependencies = [
+ "parity-scale-codec",
+ "proc-macro-warning",
+ "proc-macro2",
+ "quote",
+ "sp-version",
+ "syn 2.0.117",
+]
+
+[[package]]
+name = "soil-wasm-interface"
+version = "20.0.0"
+dependencies = [
+ "anyhow",
+ "impl-trait-for-tuples",
+ "log",
+ "parity-scale-codec",
+ "wasmtime",
+]
+
+[[package]]
 name = "soketto"
 version = "0.8.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -13027,10 +13166,10 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "scale-info",
- "sp-api-proc-macro",
+ "soil-api-proc-macro",
+ "soil-metadata-ir",
  "sp-core",
  "sp-externalities",
- "sp-metadata-ir",
  "sp-runtime",
  "sp-runtime-interface",
  "sp-state-machine",
@@ -13038,20 +13177,6 @@ dependencies = [
  "sp-trie",
  "sp-version",
  "thiserror 1.0.69",
-]
-
-[[package]]
-name = "sp-api-proc-macro"
-version = "15.0.0"
-dependencies = [
- "Inflector",
- "assert_matches",
- "blake2 0.10.6",
- "expander",
- "proc-macro-crate 3.4.0",
- "proc-macro2",
- "quote",
- "syn 2.0.117",
 ]
 
 [[package]]
@@ -13065,14 +13190,14 @@ dependencies = [
  "rustversion",
  "sc-block-builder",
  "scale-info",
+ "soil-metadata-ir",
+ "soil-tracing",
  "sp-api",
  "sp-consensus",
  "sp-core",
  "sp-externalities",
- "sp-metadata-ir",
  "sp-runtime",
  "sp-state-machine",
- "sp-tracing",
  "sp-version",
  "static_assertions",
  "substrate-test-runtime-client",
@@ -13094,29 +13219,12 @@ dependencies = [
 name = "sp-application-crypto-test"
 version = "2.0.0"
 dependencies = [
+ "soil-tracing",
  "sp-api",
  "sp-application-crypto",
  "sp-core",
  "sp-keystore",
- "sp-tracing",
  "substrate-test-runtime-client",
-]
-
-[[package]]
-name = "sp-arithmetic"
-version = "23.0.0"
-dependencies = [
- "criterion",
- "docify",
- "integer-sqrt",
- "num-traits",
- "parity-scale-codec",
- "primitive-types",
- "rand 0.8.5",
- "scale-info",
- "serde",
- "sp-crypto-hashing 0.1.0",
- "static_assertions",
 ]
 
 [[package]]
@@ -13127,7 +13235,7 @@ dependencies = [
  "fraction",
  "honggfuzz",
  "num-bigint",
- "sp-arithmetic",
+ "soil-arithmetic",
 ]
 
 [[package]]
@@ -13158,10 +13266,10 @@ dependencies = [
  "parity-scale-codec",
  "parking_lot 0.12.5",
  "schnellru",
+ "soil-database",
  "sp-api",
  "sp-consensus",
  "sp-core",
- "sp-database",
  "sp-runtime",
  "sp-state-machine",
  "thiserror 1.0.69",
@@ -13224,10 +13332,10 @@ dependencies = [
  "parity-scale-codec",
  "scale-info",
  "serde",
+ "soil-crypto-hashing",
  "sp-api",
  "sp-application-crypto",
  "sp-core",
- "sp-crypto-hashing 0.1.0",
  "sp-io",
  "sp-keystore",
  "sp-mmr-primitives",
@@ -13323,10 +13431,10 @@ dependencies = [
  "serde",
  "serde_json",
  "sha2 0.10.9",
- "sp-crypto-hashing 0.1.0",
- "sp-debug-derive",
+ "soil-crypto-hashing",
+ "soil-debug-derive",
+ "soil-std",
  "sp-externalities",
- "sp-std",
  "sp-storage",
  "ss58-registry",
  "substrate-bip39",
@@ -13349,7 +13457,7 @@ dependencies = [
 name = "sp-core-hashing"
 version = "15.0.0"
 dependencies = [
- "sp-crypto-hashing 0.1.0",
+ "soil-crypto-hashing",
 ]
 
 [[package]]
@@ -13383,20 +13491,6 @@ dependencies = [
 [[package]]
 name = "sp-crypto-hashing"
 version = "0.1.0"
-dependencies = [
- "blake2b_simd",
- "byteorder",
- "criterion",
- "digest 0.10.7",
- "sha2 0.10.9",
- "sha3",
- "sp-crypto-hashing-proc-macro",
- "twox-hash 1.6.3",
-]
-
-[[package]]
-name = "sp-crypto-hashing"
-version = "0.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "bc9927a7f81334ed5b8a98a4a978c81324d12bd9713ec76b5c68fd410174c5eb"
 dependencies = [
@@ -13413,26 +13507,7 @@ name = "sp-crypto-hashing-proc-macro"
 version = "0.1.0"
 dependencies = [
  "quote",
- "sp-crypto-hashing 0.1.0",
- "syn 2.0.117",
-]
-
-[[package]]
-name = "sp-database"
-version = "10.0.0"
-dependencies = [
- "kvdb",
- "kvdb-rocksdb",
- "parking_lot 0.12.5",
-]
-
-[[package]]
-name = "sp-debug-derive"
-version = "14.0.0"
-dependencies = [
- "proc-macro-warning",
- "proc-macro2",
- "quote",
+ "soil-crypto-hashing",
  "syn 2.0.117",
 ]
 
@@ -13482,13 +13557,13 @@ dependencies = [
  "polkavm-derive",
  "rustversion",
  "secp256k1 0.28.2",
+ "soil-crypto-hashing",
+ "soil-tracing",
  "sp-core",
- "sp-crypto-hashing 0.1.0",
  "sp-externalities",
  "sp-keystore",
  "sp-runtime-interface",
  "sp-state-machine",
- "sp-tracing",
  "sp-trie",
  "tracing",
  "tracing-core",
@@ -13514,23 +13589,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "sp-maybe-compressed-blob"
-version = "11.0.0"
-dependencies = [
- "thiserror 1.0.69",
- "zstd 0.12.4",
-]
-
-[[package]]
-name = "sp-metadata-ir"
-version = "0.6.0"
-dependencies = [
- "frame-metadata",
- "parity-scale-codec",
- "scale-info",
-]
-
-[[package]]
 name = "sp-mixnet"
 version = "0.4.0"
 dependencies = [
@@ -13550,9 +13608,9 @@ dependencies = [
  "polkadot-ckb-merkle-mountain-range",
  "scale-info",
  "serde",
+ "soil-debug-derive",
  "sp-api",
  "sp-core",
- "sp-debug-derive",
  "sp-runtime",
  "thiserror 1.0.69",
 ]
@@ -13564,7 +13622,7 @@ dependencies = [
  "parity-scale-codec",
  "scale-info",
  "serde",
- "sp-arithmetic",
+ "soil-arithmetic",
  "sp-core",
  "sp-runtime",
  "substrate-test-utils",
@@ -13588,14 +13646,6 @@ dependencies = [
  "sp-api",
  "sp-core",
  "sp-runtime",
-]
-
-[[package]]
-name = "sp-panic-handler"
-version = "13.0.0"
-dependencies = [
- "backtrace",
- "regex",
 ]
 
 [[package]]
@@ -13627,15 +13677,15 @@ dependencies = [
  "serde",
  "serde_json",
  "simple-mermaid",
+ "soil-arithmetic",
+ "soil-std",
+ "soil-tracing",
  "sp-api",
  "sp-application-crypto",
- "sp-arithmetic",
  "sp-core",
  "sp-io",
  "sp-keystore",
  "sp-state-machine",
- "sp-std",
- "sp-tracing",
  "sp-trie",
  "sp-weights",
  "strum 0.26.3",
@@ -13654,29 +13704,17 @@ dependencies = [
  "parity-scale-codec",
  "polkavm-derive",
  "rustversion",
+ "soil-runtime-interface-proc-macro",
+ "soil-std",
+ "soil-tracing",
+ "soil-wasm-interface",
  "sp-externalities",
  "sp-io",
- "sp-runtime-interface-proc-macro",
  "sp-runtime-interface-test-wasm",
  "sp-state-machine",
- "sp-std",
  "sp-storage",
- "sp-tracing",
- "sp-wasm-interface",
  "static_assertions",
  "trybuild",
-]
-
-[[package]]
-name = "sp-runtime-interface-proc-macro"
-version = "17.0.0"
-dependencies = [
- "Inflector",
- "expander",
- "proc-macro-crate 3.4.0",
- "proc-macro2",
- "quote",
- "syn 2.0.117",
 ]
 
 [[package]]
@@ -13755,9 +13793,9 @@ dependencies = [
  "pretty_assertions",
  "rand 0.8.5",
  "smallvec",
+ "soil-panic-handler",
  "sp-core",
  "sp-externalities",
- "sp-panic-handler",
  "sp-runtime",
  "sp-trie",
  "thiserror 1.0.69",
@@ -13779,20 +13817,16 @@ dependencies = [
  "scale-info",
  "serde",
  "sha2 0.10.9",
+ "soil-crypto-hashing",
  "sp-api",
  "sp-application-crypto",
  "sp-core",
- "sp-crypto-hashing 0.1.0",
  "sp-externalities",
  "sp-runtime",
  "sp-runtime-interface",
  "thiserror 1.0.69",
  "x25519-dalek",
 ]
-
-[[package]]
-name = "sp-std"
-version = "14.0.0"
 
 [[package]]
 name = "sp-storage"
@@ -13802,7 +13836,7 @@ dependencies = [
  "parity-scale-codec",
  "ref-cast",
  "serde",
- "sp-debug-derive",
+ "soil-debug-derive",
 ]
 
 [[package]]
@@ -13826,17 +13860,6 @@ dependencies = [
  "sp-inherents",
  "sp-runtime",
  "thiserror 1.0.69",
-]
-
-[[package]]
-name = "sp-tracing"
-version = "16.0.0"
-dependencies = [
- "parity-scale-codec",
- "regex",
- "tracing",
- "tracing-core",
- "tracing-subscriber",
 ]
 
 [[package]]
@@ -13899,34 +13922,11 @@ dependencies = [
  "parity-wasm",
  "scale-info",
  "serde",
+ "soil-std",
+ "soil-version-proc-macro",
  "sp-crypto-hashing-proc-macro",
  "sp-runtime",
- "sp-std",
- "sp-version-proc-macro",
  "thiserror 1.0.69",
-]
-
-[[package]]
-name = "sp-version-proc-macro"
-version = "13.0.0"
-dependencies = [
- "parity-scale-codec",
- "proc-macro-warning",
- "proc-macro2",
- "quote",
- "sp-version",
- "syn 2.0.117",
-]
-
-[[package]]
-name = "sp-wasm-interface"
-version = "20.0.0"
-dependencies = [
- "anyhow",
- "impl-trait-for-tuples",
- "log",
- "parity-scale-codec",
- "wasmtime",
 ]
 
 [[package]]
@@ -13939,8 +13939,8 @@ dependencies = [
  "schemars",
  "serde",
  "smallvec",
- "sp-arithmetic",
- "sp-debug-derive",
+ "soil-arithmetic",
+ "soil-debug-derive",
 ]
 
 [[package]]
@@ -14017,7 +14017,7 @@ dependencies = [
  "sc-chain-spec",
  "serde",
  "serde_json",
- "sp-tracing",
+ "soil-tracing",
  "substrate-test-runtime",
 ]
 
@@ -14033,6 +14033,7 @@ dependencies = [
  "fork-tree",
  "frame-metadata-hash-extension",
  "frame-remote-externalities",
+ "frame-support",
  "frame-support-procedural-tools",
  "frame-system",
  "frame-system-rpc-runtime-api",
@@ -14048,9 +14049,16 @@ dependencies = [
  "node-rpc",
  "node-testing",
  "pallet-asset-conversion-tx-payment",
+ "pallet-bags-list",
+ "pallet-balances",
  "pallet-im-online",
+ "pallet-root-testing",
  "pallet-skip-feeless-payment",
+ "pallet-sudo",
+ "pallet-timestamp",
+ "pallet-transaction-payment",
  "pallet-transaction-payment-rpc",
+ "pallet-treasury",
  "parity-scale-codec",
  "pretty_assertions",
  "rand 0.8.5",
@@ -14111,8 +14119,14 @@ dependencies = [
  "scale-info",
  "serde",
  "serde_json",
+ "soil-crypto-hashing",
+ "soil-database",
+ "soil-maybe-compressed-blob",
+ "soil-panic-handler",
+ "soil-tracing",
  "soketto",
  "sp-api",
+ "sp-application-crypto",
  "sp-authority-discovery",
  "sp-blockchain",
  "sp-consensus",
@@ -14122,19 +14136,21 @@ dependencies = [
  "sp-core",
  "sp-core-hashing",
  "sp-core-hashing-proc-macro",
- "sp-database",
+ "sp-externalities",
  "sp-genesis-builder",
+ "sp-inherents",
  "sp-io",
  "sp-keyring",
- "sp-maybe-compressed-blob",
+ "sp-keystore",
  "sp-mixnet",
  "sp-mmr-primitives",
- "sp-panic-handler",
  "sp-rpc",
  "sp-runtime",
+ "sp-state-machine",
  "sp-statement-store",
  "sp-timestamp",
  "sp-transaction-storage-proof",
+ "sp-trie",
  "staging-chain-spec-builder",
  "staging-node-inspect",
  "subkey",
@@ -14327,12 +14343,12 @@ dependencies = [
  "sc-rpc-api",
  "sc-transaction-pool",
  "sc-transaction-pool-api",
+ "soil-tracing",
  "sp-api",
  "sp-block-builder",
  "sp-blockchain",
  "sp-core",
  "sp-runtime",
- "sp-tracing",
  "substrate-test-runtime-client",
  "tokio",
 ]
@@ -14430,6 +14446,9 @@ dependencies = [
  "scale-info",
  "serde",
  "serde_json",
+ "soil-crypto-hashing",
+ "soil-debug-derive",
+ "soil-tracing",
  "sp-api",
  "sp-application-crypto",
  "sp-block-builder",
@@ -14438,8 +14457,6 @@ dependencies = [
  "sp-consensus-babe",
  "sp-consensus-grandpa",
  "sp-core",
- "sp-crypto-hashing 0.1.0",
- "sp-debug-derive",
  "sp-externalities",
  "sp-genesis-builder",
  "sp-inherents",
@@ -14450,7 +14467,6 @@ dependencies = [
  "sp-session",
  "sp-state-machine",
  "sp-statement-store",
- "sp-tracing",
  "sp-transaction-pool",
  "sp-trie",
  "sp-version",
@@ -14515,10 +14531,10 @@ dependencies = [
  "polkavm-linker",
  "sc-executor",
  "shlex",
+ "soil-maybe-compressed-blob",
+ "soil-tracing",
  "sp-core",
  "sp-io",
- "sp-maybe-compressed-blob",
- "sp-tracing",
  "sp-version",
  "strum 0.26.3",
  "tempfile",
@@ -14566,7 +14582,7 @@ dependencies = [
  "scale-value",
  "serde",
  "serde_json",
- "sp-crypto-hashing 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "sp-crypto-hashing",
  "subxt-core",
  "subxt-lightclient",
  "subxt-macro",
@@ -14621,7 +14637,7 @@ dependencies = [
  "scale-value",
  "serde",
  "serde_json",
- "sp-crypto-hashing 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "sp-crypto-hashing",
  "subxt-metadata",
  "thiserror 2.0.18",
  "tracing",
@@ -14672,7 +14688,7 @@ dependencies = [
  "hashbrown 0.14.5",
  "parity-scale-codec",
  "scale-info",
- "sp-crypto-hashing 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "sp-crypto-hashing",
  "thiserror 2.0.18",
 ]
 
@@ -14723,7 +14739,7 @@ dependencies = [
  "serde",
  "serde_json",
  "sha2 0.10.9",
- "sp-crypto-hashing 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "sp-crypto-hashing",
  "subxt-core",
  "thiserror 2.0.18",
  "zeroize",

@@ -50,7 +50,7 @@ use sp_consensus::BlockOrigin;
 use sp_core::{
 	crypto::get_public_from_string_or_panic, ed25519, sr25519, traits::SpawnNamed, Pair,
 };
-use sp_crypto_hashing::blake2_256;
+use soil_crypto_hashing::blake2_256;
 use sp_inherents::InherentData;
 use sp_runtime::{
 	generic::{self, ExtrinsicFormat, Preamble},

@@ -148,7 +148,7 @@ fn run_benchmark(
 }
 
 fn bench_call_instance(c: &mut Criterion) {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	let strategies = [
 		(

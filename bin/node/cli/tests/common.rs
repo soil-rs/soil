@@ -113,15 +113,15 @@ pub fn executor_call(
 	let heap_pages = t.storage(sp_core::storage::well_known_keys::HEAP_PAGES);
 	let runtime_code = RuntimeCode {
 		code_fetcher: &sp_core::traits::WrappedRuntimeCode(code.as_slice().into()),
-		hash: sp_crypto_hashing::blake2_256(&code).to_vec(),
+		hash: soil_crypto_hashing::blake2_256(&code).to_vec(),
 		heap_pages: heap_pages.and_then(|hp| Decode::decode(&mut &hp[..]).ok()),
 	};
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 	executor().call(&mut t, &runtime_code, method, data, CallContext::Onchain)
 }
 
 pub fn new_test_ext(code: &[u8]) -> TestExternalities<BlakeTwo256> {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 	let ext = TestExternalities::new_with_code(
 		code,
 		node_testing::genesis::config().build_storage().unwrap(),

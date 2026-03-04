@@ -22,8 +22,8 @@ scale-info = { features = ["derive"], workspace = true }
 schemars = { optional = true, workspace = true }
 serde = { optional = true, features = ["alloc", "derive"], workspace = true }
 smallvec = { workspace = true, default-features = true }
-sp-arithmetic = { workspace = true }
-sp-debug-derive = { workspace = true }
+soil-arithmetic = { workspace = true }
+soil-debug-derive = { workspace = true }
 
 [features]
 default = ["std"]
@@ -32,8 +32,8 @@ std = [
 	"codec/std",
 	"scale-info/std",
 	"serde/std",
-	"sp-arithmetic/std",
-	"sp-debug-derive/std",
+	"soil-arithmetic/std",
+	"soil-debug-derive/std",
 ]
 # By default some types have documentation, `full-metadata-docs` allows to add documentation to
 # more types in the metadata.
@@ -44,7 +44,7 @@ serde = [
 	"bounded-collections/serde",
 	"dep:serde",
 	"scale-info/serde",
-	"sp-arithmetic/serde",
+	"soil-arithmetic/serde",
 ]
 
 json-schema = ["dep:schemars"]

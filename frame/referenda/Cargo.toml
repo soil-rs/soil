@@ -24,7 +24,7 @@ frame-system = { workspace = true }
 log = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { features = ["derive"], optional = true, workspace = true, default-features = true }
-sp-arithmetic = { workspace = true }
+soil-arithmetic = { workspace = true }
 sp-io = { workspace = true }
 sp-runtime = { workspace = true }
 
@@ -48,7 +48,7 @@ std = [
 	"pallet-scheduler/std",
 	"scale-info/std",
 	"serde",
-	"sp-arithmetic/std",
+	"soil-arithmetic/std",
 	"sp-core/std",
 	"sp-io/std",
 	"sp-runtime/std",

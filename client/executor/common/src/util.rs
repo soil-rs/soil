@@ -19,7 +19,7 @@
 //! Utilities used by all backends
 
 use crate::error::Result;
-use sp_wasm_interface::Pointer;
+use soil_wasm_interface::Pointer;
 use std::ops::Range;
 
 /// Construct a range from an offset to a data length after the offset.

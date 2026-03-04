@@ -26,10 +26,10 @@ scale-info = { features = ["derive"], workspace = true }
 sp-api = { workspace = true, default-features = true }
 sp-consensus = { workspace = true, default-features = true }
 sp-externalities = { workspace = true, default-features = true }
-sp-metadata-ir = { workspace = true, default-features = true }
+soil-metadata-ir = { workspace = true, default-features = true }
 sp-runtime = { workspace = true, default-features = true }
 sp-state-machine = { workspace = true, default-features = true }
-sp-tracing = { workspace = true, default-features = true }
+soil-tracing = { workspace = true, default-features = true }
 sp-version = { workspace = true, default-features = true }
 substrate-test-runtime-client = { workspace = true }
 trybuild = { workspace = true }

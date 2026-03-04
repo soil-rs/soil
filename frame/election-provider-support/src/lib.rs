@@ -218,7 +218,7 @@ pub use frame_election_provider_solution_type::generate_solution_type;
 pub use frame_support::{traits::Get, weights::Weight, BoundedVec, DefaultNoBound};
 use scale_info::TypeInfo;
 /// Re-export some type as they are used in the interface.
-pub use sp_arithmetic::PerThing;
+pub use soil_arithmetic::PerThing;
 pub use sp_npos_elections::{
 	Assignment, BalancingConfig, ElectionResult, Error, ExtendedBalance, IdentifierT, PerThing128,
 	Support, Supports, VoteWeight,
@@ -237,7 +237,7 @@ pub mod private {
 	};
 	pub use codec;
 	pub use scale_info;
-	pub use sp_arithmetic;
+	pub use soil_arithmetic;
 
 	// Simple Extension trait to easily convert `None` from index closures to `Err`.
 	//
@@ -810,7 +810,7 @@ impl<AccountId: IdentifierT, Accuracy: PerThing128> NposSolver
 			impl Clone + IntoIterator<Item = Self::AccountId>,
 		)>,
 	) -> Result<ElectionResult<Self::AccountId, Self::Accuracy>, Self::Error> {
-		use sp_std::collections::btree_map::BTreeMap;
+		use soil_std::collections::btree_map::BTreeMap;
 
 		if to_elect > targets.len() {
 			return Err("to_elect is greater than the number of targets.");
@@ -1115,7 +1115,7 @@ impl<AccountId, BOuter: Get<u32>, BInner: Get<u32>> sp_npos_elections::EvaluateS
 	}
 }
 
-impl<AccountId, BOuter: Get<u32>, BInner: Get<u32>> sp_std::ops::DerefMut
+impl<AccountId, BOuter: Get<u32>, BInner: Get<u32>> soil_std::ops::DerefMut
 	for BoundedSupports<AccountId, BOuter, BInner>
 {
 	fn deref_mut(&mut self) -> &mut Self::Target {
@@ -1168,7 +1168,7 @@ impl<AccountId: Clone, BOuter: Get<u32>, BInner: Get<u32>> Clone
 	}
 }
 
-impl<AccountId, BOuter: Get<u32>, BInner: Get<u32>> sp_std::ops::Deref
+impl<AccountId, BOuter: Get<u32>, BInner: Get<u32>> soil_std::ops::Deref
 	for BoundedSupports<AccountId, BOuter, BInner>
 {
 	type Target = BoundedVec<(AccountId, BoundedSupport<AccountId, BInner>), BOuter>;
@@ -1182,7 +1182,7 @@ impl<AccountId, BOuter: Get<u32>, BInner: Get<u32>> IntoIterator
 	for BoundedSupports<AccountId, BOuter, BInner>
 {
 	type Item = (AccountId, BoundedSupport<AccountId, BInner>);
-	type IntoIter = sp_std::vec::IntoIter<Self::Item>;
+	type IntoIter = soil_std::vec::IntoIter<Self::Item>;
 
 	fn into_iter(self) -> Self::IntoIter {
 		self.0.into_iter()

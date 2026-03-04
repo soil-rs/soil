@@ -182,7 +182,7 @@ pub use item_of::ItemOf;
 pub use regular::{
 	Balanced, DecreaseIssuance, Dust, IncreaseIssuance, Inspect, Mutate, Unbalanced,
 };
-use sp_arithmetic::traits::Zero;
+use soil_arithmetic::traits::Zero;
 use sp_core::Get;
 use sp_runtime::{traits::Convert, DispatchError};
 pub use union_of::{NativeFromLeft, NativeOrWithId, UnionOf};

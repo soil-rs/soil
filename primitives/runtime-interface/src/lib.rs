@@ -64,13 +64,13 @@ extern crate self as sp_runtime_interface;
 
 #[doc(hidden)]
 #[cfg(not(substrate_runtime))]
-pub use sp_wasm_interface;
+pub use soil_wasm_interface;
 
 #[doc(hidden)]
-pub use sp_tracing;
+pub use soil_tracing;
 
 #[doc(hidden)]
-pub use sp_std;
+pub use soil_std;
 
 /// Attribute macro for transforming a trait declaration into a runtime interface.
 ///
@@ -341,7 +341,7 @@ pub use sp_std;
 /// for the case when that would create a circular dependency. You usually _do not_ want to add
 /// this flag, as tracing doesn't cost you anything by default anyways (it is added as a no-op)
 /// but is super useful for debugging later.
-pub use sp_runtime_interface_proc_macro::runtime_interface;
+pub use soil_runtime_interface_proc_macro::runtime_interface;
 
 #[doc(hidden)]
 #[cfg(not(substrate_runtime))]
@@ -375,9 +375,9 @@ pub use util::{pack_ptr_and_len, unpack_ptr_and_len};
 pub trait RIType: Sized {
 	/// The raw FFI type that is used to pass `Self` through the host <-> runtime boundary.
 	#[cfg(not(substrate_runtime))]
-	type FFIType: sp_wasm_interface::IntoValue
-		+ sp_wasm_interface::TryFromValue
-		+ sp_wasm_interface::WasmTy;
+	type FFIType: soil_wasm_interface::IntoValue
+		+ soil_wasm_interface::TryFromValue
+		+ soil_wasm_interface::WasmTy;
 
 	#[cfg(substrate_runtime)]
 	type FFIType;
@@ -392,4 +392,4 @@ pub type Pointer<T> = *mut T;
 
 /// A raw pointer that can be used in a runtime interface function signature.
 #[cfg(not(substrate_runtime))]
-pub type Pointer<T> = sp_wasm_interface::Pointer<T>;
+pub type Pointer<T> = soil_wasm_interface::Pointer<T>;

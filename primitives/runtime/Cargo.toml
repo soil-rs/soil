@@ -31,10 +31,10 @@ rand = { optional = true, workspace = true, default-features = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { features = ["alloc", "derive"], optional = true, workspace = true }
 sp-application-crypto = { workspace = true }
-sp-arithmetic = { workspace = true }
+soil-arithmetic = { workspace = true }
 sp-core = { workspace = true }
 sp-io = { workspace = true }
-sp-std = { workspace = true }
+soil-std = { workspace = true }
 sp-trie = { workspace = true }
 sp-weights = { workspace = true }
 strum = { workspace = true, features = ["derive"] }
@@ -49,7 +49,7 @@ serde_json = { workspace = true, default-features = true }
 sp-api = { workspace = true, default-features = true }
 sp-keystore = { workspace = true, default-features = true }
 sp-state-machine = { workspace = true, default-features = true }
-sp-tracing = { workspace = true, default-features = true }
+soil-tracing = { workspace = true, default-features = true }
 substrate-test-runtime-client = { workspace = true }
 zstd = { workspace = true }
 
@@ -72,12 +72,12 @@ std = [
 	"simple-mermaid",
 	"sp-api/std",
 	"sp-application-crypto/std",
-	"sp-arithmetic/std",
+	"soil-arithmetic/std",
 	"sp-core/std",
 	"sp-io/std",
 	"sp-state-machine/std",
-	"sp-std/std",
-	"sp-tracing/std",
+	"soil-std/std",
+	"soil-tracing/std",
 	"sp-trie/std",
 	"sp-weights/std",
 	"strum/std",
@@ -90,7 +90,7 @@ serde = [
 	"dep:serde",
 	"scale-info/serde",
 	"sp-application-crypto/serde",
-	"sp-arithmetic/serde",
+	"soil-arithmetic/serde",
 	"sp-core/serde",
 	"sp-weights/serde",
 ]

@@ -1334,7 +1334,7 @@ fn try_execute_block_works() {
 fn try_runtime_upgrade_works() {
 	use frame_support::traits::OnGenesis;
 
-	sp_tracing::init_for_tests();
+	soil_tracing::init_for_tests();
 
 	type ExecutiveWithoutMigrations = super::Executive<
 		Runtime,

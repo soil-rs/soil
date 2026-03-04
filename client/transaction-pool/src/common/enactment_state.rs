@@ -494,7 +494,7 @@ mod enactment_state_tests {
 
 	#[test]
 	fn test_enactment_helper() {
-		sp_tracing::try_init_simple();
+		soil_tracing::try_init_simple();
 		let mut es = EnactmentState::new(a().hash, a().hash);
 
 		//   B1-C1-D1-E1
@@ -554,7 +554,7 @@ mod enactment_state_tests {
 
 	#[test]
 	fn test_enactment_helper_2() {
-		sp_tracing::try_init_simple();
+		soil_tracing::try_init_simple();
 		let mut es = EnactmentState::new(a().hash, a().hash);
 
 		// A-B1-C1-D1-E1
@@ -586,7 +586,7 @@ mod enactment_state_tests {
 
 	#[test]
 	fn test_enactment_helper_3() {
-		sp_tracing::try_init_simple();
+		soil_tracing::try_init_simple();
 		let mut es = EnactmentState::new(a().hash, a().hash);
 
 		// A-B1-C1-D1-E1
@@ -602,7 +602,7 @@ mod enactment_state_tests {
 
 	#[test]
 	fn test_enactment_helper_4() {
-		sp_tracing::try_init_simple();
+		soil_tracing::try_init_simple();
 		let mut es = EnactmentState::new(a().hash, a().hash);
 
 		// A-B1-C1-D1-E1
@@ -618,7 +618,7 @@ mod enactment_state_tests {
 
 	#[test]
 	fn test_enactment_helper_5() {
-		sp_tracing::try_init_simple();
+		soil_tracing::try_init_simple();
 		let mut es = EnactmentState::new(a().hash, a().hash);
 
 		//   B1-C1-D1-E1
@@ -638,7 +638,7 @@ mod enactment_state_tests {
 
 	#[test]
 	fn test_enactment_helper_6() {
-		sp_tracing::try_init_simple();
+		soil_tracing::try_init_simple();
 		let mut es = EnactmentState::new(a().hash, a().hash);
 
 		// A-B1-C1-D1-E1
@@ -662,7 +662,7 @@ mod enactment_state_tests {
 
 	#[test]
 	fn test_enactment_forced_update_best_block() {
-		sp_tracing::try_init_simple();
+		soil_tracing::try_init_simple();
 		let mut es = EnactmentState::new(a().hash, a().hash);
 
 		es.force_update(&ChainEvent::NewBestBlock { hash: b1().hash, tree_route: None });
@@ -671,7 +671,7 @@ mod enactment_state_tests {
 
 	#[test]
 	fn test_enactment_forced_update_finalize() {
-		sp_tracing::try_init_simple();
+		soil_tracing::try_init_simple();
 		let mut es = EnactmentState::new(a().hash, a().hash);
 
 		es.force_update(&ChainEvent::Finalized { hash: b1().hash, tree_route: Arc::from([]) });
@@ -680,7 +680,7 @@ mod enactment_state_tests {
 
 	#[test]
 	fn test_enactment_skip_long_enacted_path() {
-		sp_tracing::try_init_simple();
+		soil_tracing::try_init_simple();
 		let mut es = EnactmentState::new(a().hash, a().hash);
 
 		// A-B1-C1-..-X1
@@ -691,7 +691,7 @@ mod enactment_state_tests {
 
 	#[test]
 	fn test_enactment_proceed_with_enacted_path_at_threshold() {
-		sp_tracing::try_init_simple();
+		soil_tracing::try_init_simple();
 		let mut es = EnactmentState::new(b1().hash, b1().hash);
 
 		// A-B1-C1-..-X1

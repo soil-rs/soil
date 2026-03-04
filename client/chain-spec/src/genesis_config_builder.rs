@@ -19,7 +19,7 @@
 //! A helper module for calling the GenesisBuilder API from arbitrary runtime wasm blobs.
 
 use codec::{Decode, Encode};
-pub use sc_executor::sp_wasm_interface::HostFunctions;
+pub use sc_executor::soil_wasm_interface::HostFunctions;
 use sc_executor::{error::Result, WasmExecutor};
 use serde_json::{from_slice, Value};
 use sp_core::{
@@ -63,7 +63,7 @@ where
 	pub fn new(code: &'a [u8]) -> Self {
 		GenesisConfigBuilderRuntimeCaller {
 			code: code.into(),
-			code_hash: sp_crypto_hashing::blake2_256(code).to_vec(),
+			code_hash: soil_crypto_hashing::blake2_256(code).to_vec(),
 			executor: WasmExecutor::<(sp_io::SubstrateHostFunctions, EHF)>::builder()
 				.with_allow_missing_host_functions(true)
 				.build(),
@@ -182,7 +182,7 @@ mod tests {
 
 	#[test]
 	fn list_presets_works() {
-		sp_tracing::try_init_simple();
+		soil_tracing::try_init_simple();
 		let presets =
 			<GenesisConfigBuilderRuntimeCaller>::new(substrate_test_runtime::wasm_binary_unwrap())
 				.preset_names()
@@ -202,7 +202,7 @@ mod tests {
 
 	#[test]
 	fn get_named_preset_works() {
-		sp_tracing::try_init_simple();
+		soil_tracing::try_init_simple();
 		let config =
 			<GenesisConfigBuilderRuntimeCaller>::new(substrate_test_runtime::wasm_binary_unwrap())
 				.get_named_preset(Some(&"foobar".to_string()))

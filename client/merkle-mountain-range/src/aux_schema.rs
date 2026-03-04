@@ -130,7 +130,7 @@ pub(crate) mod tests {
 
 	#[test]
 	fn should_persist_progress_across_runs() {
-		sp_tracing::try_init_simple();
+		soil_tracing::try_init_simple();
 
 		let client = Arc::new(MockClient::new());
 		let backend = client.backend.clone();
@@ -180,7 +180,7 @@ pub(crate) mod tests {
 
 	#[test]
 	fn should_resume_from_persisted_state() {
-		sp_tracing::try_init_simple();
+		soil_tracing::try_init_simple();
 
 		let client = Arc::new(MockClient::new());
 		let blocks = Arc::new(Mutex::new(Vec::<MmrBlock>::new()));

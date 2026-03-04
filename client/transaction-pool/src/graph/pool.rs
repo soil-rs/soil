@@ -648,7 +648,7 @@ mod tests {
 
 	#[test]
 	fn submit_at_preserves_order() {
-		sp_tracing::try_init_simple();
+		soil_tracing::try_init_simple();
 		// given
 		let (pool, api) = pool();
 
@@ -892,7 +892,7 @@ mod tests {
 
 	#[test]
 	fn should_limit_futures() {
-		sp_tracing::try_init_simple();
+		soil_tracing::try_init_simple();
 
 		let xt = uxt(Transfer {
 			from: Alice.into(),

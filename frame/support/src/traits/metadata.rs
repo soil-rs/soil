@@ -326,7 +326,7 @@ pub trait GetStorageVersion {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use sp_crypto_hashing::twox_128;
+	use soil_crypto_hashing::twox_128;
 
 	#[allow(dead_code)]
 	struct Pallet1;
