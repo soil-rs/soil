@@ -28,6 +28,7 @@ members = [
 	"client/consensus/beefy/rpc",
 	"client/consensus/common",
 	"client/consensus/epochs",
+	"client/consensus/grandpa",
 	"client/consensus/grandpa/rpc",
 	"client/consensus/manual-seal",
 	"client/db",
@@ -493,6 +494,7 @@ sc-consensus = { path = "client/consensus/common", default-features = false }
 sc-consensus-babe-rpc = { path = "client/consensus/babe/rpc", default-features = false }
 sc-consensus-beefy-rpc = { path = "client/consensus/beefy/rpc", default-features = false }
 sc-consensus-epochs = { path = "client/consensus/epochs", default-features = false }
+sc-consensus-grandpa = { path = "client/consensus/grandpa", default-features = false }
 sc-consensus-grandpa-rpc = { path = "client/consensus/grandpa/rpc", default-features = false }
 sc-consensus-manual-seal = { path = "client/consensus/manual-seal", default-features = false }
 sc-executor = { path = "client/executor", default-features = false }
