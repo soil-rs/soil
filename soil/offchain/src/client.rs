@@ -9,7 +9,7 @@ use futures::{
 use parking_lot::Mutex;
 use sc_client_api::BlockchainEvents;
 use sc_network::{NetworkPeers, NetworkStateInfo};
-use sc_transaction_pool_api::OffchainTransactionPoolFactory;
+use soil_transaction_pool::OffchainTransactionPoolFactory;
 use soil_api::{ApiExt, ProvideRuntimeApi};
 use soil_core::{offchain, traits::SpawnNamed};
 use soil_externalities::Extension;
@@ -298,7 +298,7 @@ mod tests {
 	};
 	use sc_network_types::PeerId;
 	use sc_transaction_pool::BasicPool;
-	use sc_transaction_pool_api::{InPoolTransaction, TransactionPool};
+	use soil_transaction_pool::{InPoolTransaction, TransactionPool};
 	use soil_consensus::BlockOrigin;
 	use soil_runtime::traits::Block as BlockT;
 	use std::{collections::HashSet, sync::Arc};

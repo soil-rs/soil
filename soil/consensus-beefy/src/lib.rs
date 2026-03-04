@@ -43,6 +43,37 @@ pub mod witness;
 #[cfg(feature = "std")]
 pub mod test_utils;
 
+#[cfg(feature = "std")]
+mod aux_schema;
+#[cfg(feature = "std")]
+mod error;
+#[cfg(feature = "std")]
+mod fisherman;
+#[cfg(feature = "std")]
+mod keystore;
+#[cfg(feature = "std")]
+mod metrics;
+#[cfg(feature = "std")]
+mod round;
+#[cfg(feature = "std")]
+mod worker;
+#[cfg(feature = "std")]
+mod client;
+
+#[cfg(feature = "std")]
+pub mod communication;
+#[cfg(feature = "std")]
+pub mod import;
+#[cfg(feature = "std")]
+pub mod justification;
+
+#[cfg(feature = "std")]
+#[cfg(test)]
+mod tests;
+
+#[cfg(feature = "std")]
+pub use client::*;
+
 pub use commitment::{Commitment, KnownSignature, SignedCommitment, VersionedFinalityProof};
 pub use payload::{known_payloads, BeefyPayloadId, Payload, PayloadProvider};
 

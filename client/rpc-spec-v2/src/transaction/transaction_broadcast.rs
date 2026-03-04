@@ -32,7 +32,7 @@ use jsonrpsee::{
 use parking_lot::RwLock;
 use rand::{distributions::Alphanumeric, Rng};
 use sc_client_api::BlockchainEvents;
-use sc_transaction_pool_api::{
+use soil_transaction_pool::{
 	error::IntoPoolError, TransactionFor, TransactionPool, TransactionSource,
 };
 use soil_blockchain::HeaderBackend;

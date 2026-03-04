@@ -25,7 +25,7 @@ use crate::{
 	ChainApi, FullChainApi, ReadyIteratorFor,
 };
 use async_trait::async_trait;
-use sc_transaction_pool_api::{
+use soil_transaction_pool::{
 	ChainEvent, ImportNotificationStream, LocalTransactionFor, LocalTransactionPool,
 	MaintainedTransactionPool, PoolStatus, ReadyTransactions, TransactionFor, TransactionPool,
 	TransactionSource, TransactionStatusStreamFor, TxHash, TxInvalidityReportMap,

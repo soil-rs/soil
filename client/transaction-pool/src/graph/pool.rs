@@ -20,7 +20,7 @@ use crate::{common::tracing_log_xt::log_xt_trace, LOG_TARGET};
 use async_trait::async_trait;
 use futures::channel::mpsc::Receiver;
 use indexmap::IndexMap;
-use sc_transaction_pool_api::error;
+use soil_transaction_pool::error;
 use soil_blockchain::{HashAndNumber, TreeRoute};
 use soil_runtime::{
 	generic::BlockId,
@@ -609,7 +609,7 @@ mod tests {
 	use codec::Encode;
 	use futures::executor::block_on;
 	use parking_lot::Mutex;
-	use sc_transaction_pool_api::TransactionStatus;
+	use soil_transaction_pool::TransactionStatus;
 	use soil_runtime::transaction_validity::TransactionSource;
 	use std::{collections::HashMap, time::Instant};
 	use substrate_test_runtime::{AccountId, ExtrinsicBuilder, Transfer, H256};
@@ -1246,7 +1246,7 @@ mod tests {
 					block_on(pool.submit_one(&api.expect_hash_and_number(1), SOURCE, xt.into()));
 				assert!(matches!(
 					result,
-					Err(sc_transaction_pool_api::error::Error::ImmediatelyDropped)
+					Err(soil_transaction_pool::error::Error::ImmediatelyDropped)
 				));
 			}
 			{

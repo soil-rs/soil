@@ -31,7 +31,7 @@ use prometheus_endpoint::Registry as PrometheusRegistry;
 use soil_block_builder::{BlockBuilderApi, BlockBuilderBuilder};
 use sc_proposer_metrics::{EndProposingReason, MetricsLink as PrometheusMetrics};
 use sc_telemetry::{telemetry, TelemetryHandle, CONSENSUS_INFO};
-use sc_transaction_pool_api::{InPoolTransaction, TransactionPool, TxInvalidityReportMap};
+use soil_transaction_pool::{InPoolTransaction, TransactionPool, TxInvalidityReportMap};
 use soil_api::{ApiExt, CallApiAt, ProvideRuntimeApi};
 use soil_blockchain::{ApplyExtrinsicFailed::Validity, Error::ApplyExtrinsicFailed, HeaderBackend};
 use soil_consensus::{Proposal, ProposeArgs};
@@ -584,7 +584,7 @@ mod tests {
 	use parking_lot::Mutex;
 	use sc_client_api::{Backend, TrieCacheContext};
 	use sc_transaction_pool::BasicPool;
-	use sc_transaction_pool_api::{ChainEvent, MaintainedTransactionPool, TransactionSource};
+	use soil_transaction_pool::{ChainEvent, MaintainedTransactionPool, TransactionSource};
 	use soil_api::Core;
 	use soil_blockchain::HeaderBackend;
 	use soil_consensus::{BlockOrigin, Environment};

@@ -38,7 +38,7 @@ rustls = { optional = true, workspace = true }
 sc-client-api = { optional = true, workspace = true, default-features = true }
 sc-network = { optional = true, workspace = true, default-features = true }
 sc-network-types = { optional = true, workspace = true, default-features = true }
-sc-transaction-pool-api = { optional = true, workspace = true, default-features = true }
+soil-transaction-pool = { optional = true, workspace = true, default-features = true }
 sc-utils = { optional = true, workspace = true, default-features = true }
 soil-externalities = { optional = true, workspace = true, default-features = true }
 soil-keystore = { optional = true, workspace = true, default-features = true }
@@ -78,7 +78,7 @@ std = [
 	"dep:sc-client-api",
 	"dep:sc-network",
 	"dep:sc-network-types",
-	"dep:sc-transaction-pool-api",
+	"dep:soil-transaction-pool",
 	"dep:sc-utils",
 	"dep:soil-externalities",
 	"dep:soil-keystore",

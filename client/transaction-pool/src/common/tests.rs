@@ -25,7 +25,7 @@ use crate::{
 use async_trait::async_trait;
 use codec::Encode;
 use parking_lot::Mutex;
-use sc_transaction_pool_api::error;
+use soil_transaction_pool::error;
 use soil_blockchain::{HashAndNumber, TreeRoute};
 use soil_runtime::{
 	generic::BlockId,

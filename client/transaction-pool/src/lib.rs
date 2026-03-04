@@ -45,7 +45,7 @@ pub use single_state_txpool::{BasicPool, RevalidationType};
 pub use transaction_pool_wrapper::TransactionPoolWrapper;
 
 type BoxedReadyIterator<Hash, Data> = Box<
-	dyn sc_transaction_pool_api::ReadyTransactions<
+	dyn soil_transaction_pool::ReadyTransactions<
 			Item = Arc<graph::base_pool::Transaction<Hash, Data>>,
 		> + Send,
 >;

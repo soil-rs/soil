@@ -27,7 +27,7 @@ use futures::{
 use soil_block_builder::BlockBuilderBuilder;
 use sc_client_api::client::BlockchainEvents;
 use sc_transaction_pool::*;
-use sc_transaction_pool_api::{
+use soil_transaction_pool::{
 	ChainEvent, MaintainedTransactionPool, TransactionPool, TransactionStatus,
 };
 use soil_blockchain::HeaderBackend;

@@ -32,7 +32,7 @@ pub enum Error {
 	Client(Box<dyn std::error::Error + Send + Sync>),
 	/// Transaction pool error,
 	#[error("Transaction pool error: {}", .0)]
-	Pool(#[from] sc_transaction_pool_api::error::Error),
+	Pool(#[from] soil_transaction_pool::error::Error),
 	/// Verification error
 	#[error("Extrinsic verification error: {}", .0)]
 	Verification(Box<dyn std::error::Error + Send + Sync>),
@@ -91,7 +91,7 @@ const OTHER_ERR: i32 = BASE_ERROR + 40;
 
 impl From<Error> for ErrorObjectOwned {
 	fn from(e: Error) -> ErrorObjectOwned {
-		use sc_transaction_pool_api::error::Error as PoolError;
+		use soil_transaction_pool::error::Error as PoolError;
 
 		match e {
 			Error::BadFormat(e) => ErrorObject::owned(

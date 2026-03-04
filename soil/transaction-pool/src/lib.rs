@@ -23,3 +23,12 @@
 extern crate alloc;
 
 pub mod runtime_api;
+
+// std-only modules (former sc-transaction-pool-api)
+#[cfg(feature = "std")]
+mod client;
+#[cfg(feature = "std")]
+pub mod error;
+
+#[cfg(feature = "std")]
+pub use client::*;

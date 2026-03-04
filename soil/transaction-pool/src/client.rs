@@ -17,9 +17,6 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 //! Transaction pool client facing API.
-#![warn(missing_docs)]
-
-pub mod error;
 
 use async_trait::async_trait;
 use codec::Codec;
@@ -573,10 +570,10 @@ impl<Block: BlockT> LocalTransactionPool for RejectAllTxPool<Block> {
 
 	type Hash = Block::Hash;
 
-	type Error = error::Error;
+	type Error = super::error::Error;
 
 	fn submit_local(&self, _: Block::Hash, _: Block::Extrinsic) -> Result<Self::Hash, Self::Error> {
-		Err(error::Error::ImmediatelyDropped)
+		Err(super::error::Error::ImmediatelyDropped)
 	}
 }
 

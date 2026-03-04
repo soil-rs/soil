@@ -22,7 +22,7 @@ use sc_client_api::{ClientInfo, UsageProvider};
 use sc_network::{config::Role, NetworkStatus, NetworkStatusProvider};
 use sc_network_sync::{SyncStatus, SyncStatusProvider};
 use sc_telemetry::{telemetry, TelemetryHandle, SUBSTRATE_INFO};
-use sc_transaction_pool_api::{MaintainedTransactionPool, PoolStatus};
+use soil_transaction_pool::{MaintainedTransactionPool, PoolStatus};
 use sc_utils::metrics::register_globals;
 use soil_api::ProvideRuntimeApi;
 use soil_runtime::traits::{Block, NumberFor, SaturatedConversion, UniqueSaturatedInto};

@@ -26,7 +26,7 @@ use sc_consensus::{BoxBlockImport, BoxJustificationImport};
 use sc_consensus_epochs::{EpochIdentifier, EpochIdentifierPosition};
 use soil_consensus_slots::BackoffAuthoringOnFinalizedHeadLagging;
 use sc_network_test::{Block as TestBlock, *};
-use sc_transaction_pool_api::RejectAllTxPool;
+use soil_transaction_pool::RejectAllTxPool;
 use soil_application_crypto::key_types::BABE;
 use soil_consensus::{NoNetwork as DummyOracle, Proposal, ProposeArgs};
 use soil_consensus_babe::{

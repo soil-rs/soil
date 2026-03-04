@@ -30,7 +30,7 @@ sc-client-api = { optional = true, workspace = true, default-features = true }
 sc-consensus = { optional = true, workspace = true, default-features = true }
 sc-consensus-epochs = { optional = true, workspace = true, default-features = true }
 sc-telemetry = { optional = true, workspace = true, default-features = true }
-sc-transaction-pool-api = { optional = true, workspace = true, default-features = true }
+soil-transaction-pool = { optional = true, workspace = true, default-features = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { features = ["alloc", "derive"], optional = true, workspace = true }
 soil-api = { workspace = true }
@@ -71,7 +71,7 @@ std = [
 	"sc-consensus",
 	"sc-consensus-epochs",
 	"sc-telemetry",
-	"sc-transaction-pool-api",
+	"soil-transaction-pool",
 	"scale-info/std",
 	"serde/std",
 	"soil-api/std",

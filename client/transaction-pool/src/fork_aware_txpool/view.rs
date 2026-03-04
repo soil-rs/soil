@@ -35,7 +35,7 @@ use crate::{
 };
 use indexmap::IndexMap;
 use parking_lot::Mutex;
-use sc_transaction_pool_api::{error::Error as TxPoolError, PoolStatus, TransactionStatus};
+use soil_transaction_pool::{error::Error as TxPoolError, PoolStatus, TransactionStatus};
 use sc_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
 use soil_blockchain::HashAndNumber;
 use soil_runtime::{
@@ -363,7 +363,7 @@ where
 			.api()
 			.validate_transaction_blocking(
 				self.at.hash,
-				sc_transaction_pool_api::TransactionSource::Local,
+				soil_transaction_pool::TransactionSource::Local,
 				Arc::from(xt.clone()),
 			)?
 			.map_err(|e| {

@@ -25,7 +25,6 @@ members = [
 	"client/chain-spec/derive",
 	"client/cli",
 	"client/consensus/babe/rpc",
-	"client/consensus/beefy",
 	"client/consensus/beefy/rpc",
 	"client/consensus/common",
 	"client/consensus/epochs",
@@ -66,7 +65,6 @@ members = [
 	"client/tracing",
 	"client/tracing/proc-macro",
 	"client/transaction-pool",
-	"client/transaction-pool/api",
 	"client/utils",
 	"deprecated/hashing",
 	"deprecated/hashing/proc-macro",
@@ -496,7 +494,6 @@ sc-client-api = { path = "client/api", default-features = false }
 sc-client-db = { path = "client/db", default-features = false }
 sc-consensus = { path = "client/consensus/common", default-features = false }
 sc-consensus-babe-rpc = { path = "client/consensus/babe/rpc", default-features = false }
-sc-consensus-beefy = { path = "client/consensus/beefy", default-features = false }
 sc-consensus-beefy-rpc = { path = "client/consensus/beefy/rpc", default-features = false }
 sc-consensus-epochs = { path = "client/consensus/epochs", default-features = false }
 sc-consensus-grandpa = { path = "client/consensus/grandpa", default-features = false }
@@ -533,7 +530,6 @@ sc-telemetry = { path = "client/telemetry", default-features = false }
 sc-tracing = { path = "client/tracing", default-features = false }
 sc-tracing-proc-macro = { path = "client/tracing/proc-macro", default-features = false }
 sc-transaction-pool = { path = "client/transaction-pool", default-features = false }
-sc-transaction-pool-api = { path = "client/transaction-pool/api", default-features = false }
 sc-utils = { path = "client/utils", default-features = false }
 soil-api = { path = "soil/api", default-features = false }
 soil-api-proc-macro = { path = "soil/api-proc-macro", default-features = false }

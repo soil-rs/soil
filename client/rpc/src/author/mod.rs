@@ -29,7 +29,7 @@ use crate::{
 use codec::{Decode, Encode};
 use jsonrpsee::{core::async_trait, types::ErrorObject, Extensions, PendingSubscriptionSink};
 use sc_rpc_api::check_if_safe;
-use sc_transaction_pool_api::{
+use soil_transaction_pool::{
 	error::IntoPoolError, BlockHash, InPoolTransaction, TransactionFor, TransactionPool,
 	TransactionSource, TxHash, TxInvalidityReportMap,
 };

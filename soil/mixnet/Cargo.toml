@@ -29,7 +29,7 @@ parking_lot = { optional = true, workspace = true }
 sc-client-api = { optional = true, workspace = true }
 sc-network = { optional = true, workspace = true }
 sc-network-types = { optional = true, workspace = true }
-sc-transaction-pool-api = { optional = true, workspace = true }
+soil-transaction-pool = { optional = true, workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 soil-api = { workspace = true }
 soil-application-crypto = { workspace = true }
@@ -55,7 +55,7 @@ std = [
 	"sc-client-api",
 	"sc-network",
 	"sc-network-types",
-	"sc-transaction-pool-api",
+	"soil-transaction-pool",
 	"scale-info/std",
 	"soil-api/std",
 	"soil-application-crypto/std",

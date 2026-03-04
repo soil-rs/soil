@@ -23,7 +23,7 @@ futures = { workspace = true }
 jsonrpsee = { features = ["client-core", "macros", "server-core"], workspace = true }
 log = { workspace = true, default-features = true }
 sc-rpc-api = { workspace = true, default-features = true }
-sc-transaction-pool-api = { workspace = true, default-features = true }
+soil-transaction-pool = { workspace = true, default-features = true }
 soil-api = { workspace = true, default-features = true }
 soil-block-builder = { workspace = true, default-features = true }
 soil-blockchain = { workspace = true, default-features = true }

@@ -33,7 +33,7 @@ use sc_network_test::{
 	Block, BlockImportAdapter, FullPeerConfig, Hash, PassThroughVerifier, Peer, PeersClient,
 	PeersFullClient, TestClient, TestNetFactory,
 };
-use sc_transaction_pool_api::RejectAllTxPool;
+use soil_transaction_pool::RejectAllTxPool;
 use soil_api::{ApiRef, ProvideRuntimeApi};
 use soil_consensus::{BlockOrigin, Error as ConsensusError, SelectChain};
 use soil_consensus_grandpa::{

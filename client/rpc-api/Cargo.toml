@@ -20,7 +20,7 @@ codec = { workspace = true, default-features = true }
 jsonrpsee = { features = ["client-core", "macros", "server-core"], workspace = true }
 sc-chain-spec = { workspace = true, default-features = true }
 soil-mixnet = { workspace = true, default-features = true }
-sc-transaction-pool-api = { workspace = true, default-features = true }
+soil-transaction-pool = { workspace = true, default-features = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { features = ["derive"], workspace = true, default-features = true }
 serde_json = { workspace = true, default-features = true }

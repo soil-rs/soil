@@ -40,7 +40,7 @@ use jsonrpsee::{
 };
 use log::warn;
 
-use sc_consensus_beefy::communication::notification::{
+use soil_consensus_beefy::communication::notification::{
 	BeefyBestBlockStream, BeefyVersionedFinalityProofStream,
 };
 
@@ -165,7 +165,7 @@ mod tests {
 
 	use codec::{Decode, Encode};
 	use jsonrpsee::{core::EmptyServerParams as EmptyParams, RpcModule};
-	use sc_consensus_beefy::{
+	use soil_consensus_beefy::{
 		communication::notification::BeefyVersionedFinalityProofSender,
 		justification::BeefyVersionedFinalityProof,
 	};

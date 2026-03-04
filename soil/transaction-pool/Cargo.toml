@@ -20,6 +20,34 @@ targets = ["x86_64-unknown-linux-gnu"]
 soil-api = { workspace = true }
 soil-runtime = { workspace = true }
 
+# Client-side dependencies (former sc-transaction-pool-api)
+async-trait = { optional = true, workspace = true }
+codec = { optional = true, workspace = true, default-features = true }
+futures = { optional = true, workspace = true }
+indexmap = { optional = true, workspace = true }
+log = { optional = true, workspace = true, default-features = true }
+serde = { optional = true, features = ["derive"], workspace = true, default-features = true }
+soil-blockchain = { optional = true, workspace = true, default-features = true }
+soil-core = { optional = true, workspace = true }
+strum = { optional = true, workspace = true, features = ["derive"] }
+thiserror = { optional = true, workspace = true }
+
+[dev-dependencies]
+serde_json = { workspace = true, default-features = true }
+
 [features]
 default = ["std"]
-std = ["soil-api/std", "soil-runtime/std"]
+std = [
+	"async-trait",
+	"codec",
+	"futures",
+	"indexmap",
+	"log",
+	"serde",
+	"soil-api/std",
+	"soil-blockchain",
+	"soil-core",
+	"soil-runtime/std",
+	"strum",
+	"thiserror",
+]

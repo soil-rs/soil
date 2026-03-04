@@ -106,7 +106,7 @@ use soil_consensus_slots::{
 	SlotInfo, StorageChanges,
 };
 use sc_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG, CONSENSUS_TRACE};
-use sc_transaction_pool_api::OffchainTransactionPoolFactory;
+use soil_transaction_pool::OffchainTransactionPoolFactory;
 use soil_api::{ApiExt, ProvideRuntimeApi};
 use soil_application_crypto::AppCrypto;
 use soil_block_builder::BlockBuilder as BlockBuilderApi;

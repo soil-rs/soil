@@ -20,9 +20,9 @@
 
 //! Service implementation. Specialized wrapper over substrate service.
 
-use sc_consensus_beefy as beefy;
 use sc_consensus_grandpa as grandpa;
 use soil_consensus_babe::inherents::BabeCreateInherentDataProviders;
+use soil_consensus_beefy as beefy;
 use soil_consensus_beefy as beefy_primitives;
 
 use crate::Cli;
@@ -42,7 +42,7 @@ use sc_service::{config::Configuration, error::Error as ServiceError, RpcHandler
 use soil_statement_store::Store as StatementStore;
 use sc_telemetry::{Telemetry, TelemetryWorker};
 use sc_transaction_pool::TransactionPoolHandle;
-use sc_transaction_pool_api::OffchainTransactionPoolFactory;
+use soil_transaction_pool::OffchainTransactionPoolFactory;
 use soil_api::ProvideRuntimeApi;
 use soil_core::crypto::Pair;
 use soil_runtime::{generic, traits::Block as BlockT, SaturatedConversion};
@@ -888,14 +888,14 @@ mod tests {
 		Address, BalancesCall, RuntimeCall, TxExtension,
 	};
 	use node_primitives::{Block, DigestItem, Signature};
-	use sc_transaction_pool_api::MaintainedTransactionPool;
+	use soil_transaction_pool::MaintainedTransactionPool;
 	use sc_client_api::BlockBackend;
 	use sc_consensus::{BlockImport, BlockImportParams, ForkChoiceStrategy};
 	use soil_consensus_babe::client::{BabeIntermediate, CompatibleDigestItem, INTERMEDIATE_KEY};
 	use sc_consensus_epochs::descendent_query;
 	use soil_keystore::LocalKeystore;
 	use sc_service_test::TestNetNode;
-	use sc_transaction_pool_api::ChainEvent;
+	use soil_transaction_pool::ChainEvent;
 	use soil_consensus::{BlockOrigin, Environment, Proposer};
 	use soil_core::crypto::Pair;
 	use soil_inherents::InherentDataProvider;

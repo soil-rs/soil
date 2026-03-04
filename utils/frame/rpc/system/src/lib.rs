@@ -27,7 +27,7 @@ use jsonrpsee::{
 	Extensions,
 };
 
-use sc_transaction_pool_api::{InPoolTransaction, TransactionPool};
+use soil_transaction_pool::{InPoolTransaction, TransactionPool};
 use soil_api::ApiExt;
 use soil_block_builder::BlockBuilder;
 use soil_blockchain::HeaderBackend;

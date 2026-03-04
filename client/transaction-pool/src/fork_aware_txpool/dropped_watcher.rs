@@ -28,7 +28,7 @@ use crate::{
 	LOG_TARGET,
 };
 use futures::stream::StreamExt;
-use sc_transaction_pool_api::TransactionStatus;
+use soil_transaction_pool::TransactionStatus;
 use sc_utils::mpsc;
 use soil_runtime::traits::Block as BlockT;
 use std::{

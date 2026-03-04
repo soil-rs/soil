@@ -47,7 +47,7 @@ use sc_network::{
 	service::traits::{NetworkService, NotificationEvent, ValidationResult},
 	NetworkPeers, NetworkStateInfo, NotificationService, ProtocolName,
 };
-use sc_transaction_pool_api::{
+use soil_transaction_pool::{
 	LocalTransactionPool, OffchainTransactionPoolFactory, TransactionPool,
 };
 use soil_api::{ApiExt, ProvideRuntimeApi};

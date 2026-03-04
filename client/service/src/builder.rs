@@ -82,7 +82,7 @@ use sc_rpc_spec_v2::{
 };
 use sc_telemetry::{telemetry, ConnectionMessage, Telemetry, TelemetryHandle, SUBSTRATE_INFO};
 use sc_tracing::block::TracingExecuteBlock;
-use sc_transaction_pool_api::{MaintainedTransactionPool, TransactionPool};
+use soil_transaction_pool::{MaintainedTransactionPool, TransactionPool};
 use sc_utils::mpsc::{tracing_unbounded, TracingUnboundedSender};
 use soil_api::{CallApiAt, ProvideRuntimeApi};
 use soil_blockchain::{HeaderBackend, HeaderMetadata};

@@ -35,7 +35,7 @@ use crate::{
 	blockchain::Info, notifications::StorageEventStream, FinalizeSummary, ImportSummary, StaleBlock,
 };
 
-use sc_transaction_pool_api::ChainEvent;
+use soil_transaction_pool::ChainEvent;
 use sc_utils::mpsc::{TracingUnboundedReceiver, TracingUnboundedSender};
 use soil_blockchain;
 

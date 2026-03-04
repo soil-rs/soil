@@ -30,7 +30,7 @@ pub struct EncodedVersionedFinalityProof(soil_core::Bytes);
 
 impl EncodedVersionedFinalityProof {
 	pub fn new<Block, AuthorityId>(
-		finality_proof: sc_consensus_beefy::justification::BeefyVersionedFinalityProof<
+		finality_proof: soil_consensus_beefy::justification::BeefyVersionedFinalityProof<
 			Block,
 			AuthorityId,
 		>,

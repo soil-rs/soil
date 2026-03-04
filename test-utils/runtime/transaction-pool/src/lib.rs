@@ -23,7 +23,7 @@ use async_trait::async_trait;
 use codec::Encode;
 use parking_lot::RwLock;
 use sc_transaction_pool::{ChainApi, ValidateTransactionPriority};
-use sc_transaction_pool_api::error::IntoMetricsLabel;
+use soil_transaction_pool::error::IntoMetricsLabel;
 use soil_blockchain::{CachedHeaderMetadata, HashAndNumber, TreeRoute};
 use soil_runtime::{
 	generic::{self, BlockId},
@@ -50,10 +50,10 @@ use substrate_test_runtime_client::{
 /// Error type used by [`TestApi`].
 #[derive(Debug, thiserror::Error)]
 #[error(transparent)]
-pub struct Error(#[from] pub sc_transaction_pool_api::error::Error);
+pub struct Error(#[from] pub soil_transaction_pool::error::Error);
 
-impl sc_transaction_pool_api::error::IntoPoolError for Error {
-	fn into_pool_error(self) -> Result<sc_transaction_pool_api::error::Error, Self> {
+impl soil_transaction_pool::error::IntoPoolError for Error {
+	fn into_pool_error(self) -> Result<soil_transaction_pool::error::Error, Self> {
 		Ok(self.0)
 	}
 }

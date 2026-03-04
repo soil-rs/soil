@@ -25,7 +25,7 @@ use crate::{
 use futures::channel::mpsc::{channel, Sender};
 use indexmap::IndexMap;
 use parking_lot::{Mutex, RwLock};
-use sc_transaction_pool_api::{error, PoolStatus, ReadyTransactions, TransactionPriority};
+use soil_transaction_pool::{error, PoolStatus, ReadyTransactions, TransactionPriority};
 use soil_blockchain::HashAndNumber;
 use soil_runtime::{
 	traits::SaturatedConversion,

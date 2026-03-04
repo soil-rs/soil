@@ -35,7 +35,7 @@ use crate::{
 };
 use itertools::Itertools;
 use parking_lot::RwLock;
-use sc_transaction_pool_api::{
+use soil_transaction_pool::{
 	error::Error as PoolError, PoolStatus, TransactionTag as Tag, TxInvalidityReportMap,
 };
 use soil_blockchain::{HashAndNumber, TreeRoute};

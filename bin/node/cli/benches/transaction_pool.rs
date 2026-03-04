@@ -22,7 +22,7 @@ use kitchensink_runtime::{constants::currency::*, BalancesCall, SudoCall};
 use node_cli::service::{create_extrinsic, fetch_nonce, FullClient, TransactionPool};
 use node_primitives::AccountId;
 use sc_service::config::{ExecutorConfiguration, RpcConfiguration};
-use sc_transaction_pool_api::TransactionPool as _;
+use soil_transaction_pool::TransactionPool as _;
 use sc_service::{
 	config::{
 		BlocksPruning, DatabaseSource, KeystoreConfig, NetworkConfiguration, OffchainWorkerConfig,
@@ -30,7 +30,7 @@ use sc_service::{
 	},
 	BasePath, Configuration, Role,
 };
-use sc_transaction_pool_api::{TransactionSource, TransactionStatus};
+use soil_transaction_pool::{TransactionSource, TransactionStatus};
 use soil_core::{crypto::Pair, sr25519};
 use soil_keyring::Sr25519Keyring;
 use soil_runtime::OpaqueExtrinsic;

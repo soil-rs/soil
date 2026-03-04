@@ -38,7 +38,7 @@ pub async fn notification_future<Client, Pool, Block>(client: Arc<Client>, txpoo
 where
 	Block: soil_runtime::traits::Block,
 	Client: sc_client_api::BlockchainEvents<Block>,
-	Pool: sc_transaction_pool_api::MaintainedTransactionPool<Block = Block>,
+	Pool: soil_transaction_pool::MaintainedTransactionPool<Block = Block>,
 {
 	let import_stream = client
 		.import_notification_stream()

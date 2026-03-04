@@ -95,7 +95,7 @@ pub use sc_network_transactions::config::{TransactionImport, TransactionImportFu
 pub use sc_rpc::{RandomIntegerSubscriptionId, RandomStringSubscriptionId};
 pub use sc_tracing::TracingReceiver;
 pub use sc_transaction_pool::TransactionPoolOptions;
-pub use sc_transaction_pool_api::{error::IntoPoolError, InPoolTransaction, TransactionPool};
+pub use soil_transaction_pool::{error::IntoPoolError, InPoolTransaction, TransactionPool};
 #[doc(hidden)]
 pub use std::{ops::Deref, result::Result, sync::Arc};
 pub use task_manager::{
@@ -481,7 +481,7 @@ where
 	Pool: TransactionPool<Block = B, Hash = H, Error = E>,
 	B: BlockT,
 	H: std::hash::Hash + Eq + soil_runtime::traits::Member + soil_runtime::traits::MaybeSerialize,
-	E: IntoPoolError + From<sc_transaction_pool_api::error::Error>,
+	E: IntoPoolError + From<soil_transaction_pool::error::Error>,
 {
 	pool.ready()
 		.filter(|t| t.is_propagable())
@@ -506,7 +506,7 @@ where
 	Pool: 'static + TransactionPool<Block = B, Hash = H, Error = E>,
 	B: BlockT,
 	H: std::hash::Hash + Eq + soil_runtime::traits::Member + soil_runtime::traits::MaybeSerialize,
-	E: 'static + IntoPoolError + From<sc_transaction_pool_api::error::Error>,
+	E: 'static + IntoPoolError + From<soil_transaction_pool::error::Error>,
 {
 	fn transactions(&self) -> Vec<(H, Arc<B::Extrinsic>)> {
 		transactions_to_propagate(&*self.pool)
@@ -533,7 +533,7 @@ where
 			match pool
 				.submit_one(
 					client.info().best_hash,
-					sc_transaction_pool_api::TransactionSource::External,
+					soil_transaction_pool::TransactionSource::External,
 					uxt,
 				)
 				.await
@@ -544,7 +544,7 @@ where
 					TransactionImport::NewGood
 				},
 				Err(e) => match e.into_pool_error() {
-					Ok(sc_transaction_pool_api::error::Error::AlreadyImported(_)) => {
+					Ok(soil_transaction_pool::error::Error::AlreadyImported(_)) => {
 						TransactionImport::KnownGood
 					},
 					Ok(_) => TransactionImport::Bad,

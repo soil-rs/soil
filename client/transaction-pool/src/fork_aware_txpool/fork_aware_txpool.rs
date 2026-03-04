@@ -56,7 +56,7 @@ use futures::{
 };
 use parking_lot::Mutex;
 use prometheus_endpoint::Registry as PrometheusRegistry;
-use sc_transaction_pool_api::{
+use soil_transaction_pool::{
 	error::Error as TxPoolApiError, ChainEvent, ImportNotificationStream,
 	MaintainedTransactionPool, PoolStatus, TransactionFor, TransactionPool, TransactionSource,
 	TransactionStatusStreamFor, TxHash, TxInvalidityReportMap,
@@ -1148,7 +1148,7 @@ where
 	}
 }
 
-impl<ChainApi, Block> sc_transaction_pool_api::LocalTransactionPool
+impl<ChainApi, Block> soil_transaction_pool::LocalTransactionPool
 	for ForkAwareTxPool<ChainApi, Block>
 where
 	Block: BlockT,
@@ -1162,7 +1162,7 @@ where
 	fn submit_local(
 		&self,
 		at: Block::Hash,
-		xt: sc_transaction_pool_api::LocalTransactionFor<Self>,
+		xt: soil_transaction_pool::LocalTransactionFor<Self>,
 	) -> Result<Self::Hash, Self::Error> {
 		trace!(
 			target: LOG_TARGET,

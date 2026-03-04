@@ -196,7 +196,7 @@ mod tests {
 	use super::*;
 	use soil_consensus_babe::client::ImportQueueParams;
 	use sc_rpc_api::DenyUnsafe;
-	use sc_transaction_pool_api::{OffchainTransactionPoolFactory, RejectAllTxPool};
+	use soil_transaction_pool::{OffchainTransactionPoolFactory, RejectAllTxPool};
 	use soil_consensus_babe::inherents::InherentDataProvider;
 	use soil_core::{crypto::key_types::BABE, testing::TaskExecutor};
 	use soil_keyring::Sr25519Keyring;

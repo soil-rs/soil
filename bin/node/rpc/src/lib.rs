@@ -37,14 +37,14 @@ use jsonrpsee::RpcModule;
 use node_primitives::{AccountId, Balance, Block, BlockNumber, Hash, Nonce};
 use sc_client_api::AuxStore;
 use soil_consensus_babe::client::BabeWorkerHandle;
-use sc_consensus_beefy::communication::notification::{
+use soil_consensus_beefy::communication::notification::{
 	BeefyBestBlockStream, BeefyVersionedFinalityProofStream,
 };
 use sc_consensus_grandpa::{
 	FinalityProofProvider, GrandpaJustificationStream, SharedAuthoritySet, SharedVoterState,
 };
 pub use sc_rpc::SubscriptionTaskExecutor;
-use sc_transaction_pool_api::TransactionPool;
+use soil_transaction_pool::TransactionPool;
 use soil_api::ProvideRuntimeApi;
 use soil_application_crypto::RuntimeAppPublic;
 use soil_block_builder::BlockBuilder;

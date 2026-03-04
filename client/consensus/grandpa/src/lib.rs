@@ -69,7 +69,7 @@ use sc_client_api::{
 use sc_consensus::BlockImport;
 use sc_network::{types::ProtocolName, NetworkBackend, NotificationService};
 use sc_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG, CONSENSUS_INFO};
-use sc_transaction_pool_api::OffchainTransactionPoolFactory;
+use soil_transaction_pool::OffchainTransactionPoolFactory;
 use sc_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver};
 use soil_api::ProvideRuntimeApi;
 use soil_application_crypto::AppCrypto;

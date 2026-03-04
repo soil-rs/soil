@@ -24,7 +24,7 @@ use codec::Encode;
 use jsonrpsee::{core::EmptyServerParams as EmptyParams, MethodsError as RpcError, RpcModule};
 use sc_rpc_api::DenyUnsafe;
 use sc_transaction_pool::{BasicPool, FullChainApi};
-use sc_transaction_pool_api::TransactionStatus;
+use soil_transaction_pool::TransactionStatus;
 use soil_core::{
 	bytes::to_hex,
 	crypto::{ByteArray, Pair},

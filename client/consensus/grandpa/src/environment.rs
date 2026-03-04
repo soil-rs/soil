@@ -39,7 +39,7 @@ use sc_client_api::{
 	utils::is_descendent_of,
 };
 use sc_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG, CONSENSUS_INFO};
-use sc_transaction_pool_api::OffchainTransactionPoolFactory;
+use soil_transaction_pool::OffchainTransactionPoolFactory;
 use soil_api::ApiExt;
 use soil_blockchain::HeaderMetadata;
 use soil_consensus::SelectChain as SelectChainT;
