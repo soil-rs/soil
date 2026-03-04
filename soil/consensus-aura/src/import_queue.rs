@@ -36,7 +36,7 @@ use soil_api::{ApiExt, ProvideRuntimeApi};
 use soil_block_builder::BlockBuilder as BlockBuilderApi;
 use soil_blockchain::{HeaderBackend, HeaderMetadata};
 use soil_consensus::Error as ConsensusError;
-use soil_consensus_aura::{inherents::AuraInherentData, AuraApi};
+use crate::{inherents::AuraInherentData, AuraApi};
 use soil_consensus_slots::Slot;
 use soil_core::crypto::Pair;
 use soil_inherents::{CreateInherentDataProviders, InherentDataProvider as _};

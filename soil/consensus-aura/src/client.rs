@@ -29,7 +29,6 @@
 //! far in the future they are.
 //!
 //! NOTE: Aura itself is designed to be generic over the crypto used.
-#![forbid(missing_docs, unsafe_code)]
 use std::{fmt::Debug, marker::PhantomData, pin::Pin, sync::Arc};
 
 use codec::Codec;
@@ -52,27 +51,24 @@ use soil_inherents::CreateInherentDataProviders;
 use soil_keystore::KeystorePtr;
 use soil_runtime::traits::{Block as BlockT, Header, Member, NumberFor};
 
-mod authorities_tracker;
-mod import_queue;
-pub mod standalone;
 
 pub use crate::standalone::{find_pre_digest, slot_duration};
-pub use authorities_tracker::AuthoritiesTracker;
-pub use import_queue::{
+pub use crate::authorities_tracker::AuthoritiesTracker;
+pub use crate::import_queue::{
 	build_verifier, import_queue, AuraVerifier, BuildVerifierParams, CheckForEquivocation,
 	ImportQueueParams,
 };
 pub use soil_consensus_slots::SlotProportion;
 pub use soil_consensus::SyncOracle;
-pub use soil_consensus_aura::{
+pub use crate::{
 	digests::CompatibleDigestItem,
 	inherents::{InherentDataProvider, InherentType as AuraInherent, INHERENT_IDENTIFIER},
 	AuraApi, ConsensusLog, SlotDuration, AURA_ENGINE_ID,
 };
 
-const LOG_TARGET: &str = "aura";
+pub const LOG_TARGET: &str = "aura";
 
-type AuthorityId<P> = <P as Pair>::Public;
+pub type AuthorityId<P> = <P as Pair>::Public;
 
 /// Run `AURA` in a compatibility mode.
 ///
@@ -503,7 +499,7 @@ impl<B: BlockT> From<crate::standalone::PreDigestLookupError> for Error<B> {
 	}
 }
 
-fn fetch_authorities_from_runtime<A, B, C>(
+pub fn fetch_authorities_from_runtime<A, B, C>(
 	client: &C,
 	parent_hash: B::Hash,
 	context_block_number: NumberFor<B>,
@@ -556,7 +552,7 @@ mod tests {
 	use sc_network_test::{Block as TestBlock, *};
 	use soil_application_crypto::{key_types::AURA, AppCrypto};
 	use soil_consensus::{NoNetwork as DummyOracle, Proposal, ProposeArgs};
-	use soil_consensus_aura::sr25519::AuthorityPair;
+	use crate::sr25519::AuthorityPair;
 	use soil_keyring::sr25519::Keyring;
 	use soil_keystore::Keystore;
 	use soil_runtime::traits::{Block as BlockT, Header as _};
