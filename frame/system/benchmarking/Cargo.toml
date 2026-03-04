@@ -21,12 +21,12 @@ frame-benchmarking = { workspace = true }
 frame-support = { workspace = true }
 frame-system = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
-sp-core = { workspace = true }
-sp-runtime = { workspace = true }
+soil-core = { workspace = true }
+soil-runtime = { workspace = true }
 
 [dev-dependencies]
-sp-externalities = { workspace = true, default-features = true }
-sp-io = { workspace = true, default-features = true }
+soil-externalities = { workspace = true, default-features = true }
+soil-io = { workspace = true, default-features = true }
 sp-version = { workspace = true, default-features = true }
 
 [features]
@@ -37,13 +37,13 @@ std = [
 	"frame-support/std",
 	"frame-system/std",
 	"scale-info/std",
-	"sp-core/std",
-	"sp-runtime/std",
+	"soil-core/std",
+	"soil-runtime/std",
 ]
 
 runtime-benchmarks = [
 	"frame-benchmarking/runtime-benchmarks",
 	"frame-support/runtime-benchmarks",
 	"frame-system/runtime-benchmarks",
-	"sp-runtime/runtime-benchmarks",
+	"soil-runtime/runtime-benchmarks",
 ]

@@ -17,7 +17,7 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 use schnellru::{Limiter, LruMap};
-use sp_runtime::{traits::Block as BlockT, Justifications};
+use soil_runtime::{traits::Block as BlockT, Justifications};
 
 const LOG_TARGET: &str = "db::pin";
 const PINNING_CACHE_SIZE: usize = 2048;

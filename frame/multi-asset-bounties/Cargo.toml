@@ -22,9 +22,9 @@ frame-support = { features = ["experimental"], workspace = true }
 frame-system = { workspace = true }
 log = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
-sp-core = { workspace = true }
-sp-io = { workspace = true }
-sp-runtime = { workspace = true }
+soil-core = { workspace = true }
+soil-io = { workspace = true }
+soil-runtime = { workspace = true }
 
 [dev-dependencies]
 pallet-balances = { workspace = true, default-features = true }
@@ -42,9 +42,9 @@ std = [
 	"pallet-balances/std",
 	"pallet-preimage/std",
 	"scale-info/std",
-	"sp-core/std",
-	"sp-io/std",
-	"sp-runtime/std",
+	"soil-core/std",
+	"soil-io/std",
+	"soil-runtime/std",
 ]
 runtime-benchmarks = [
 	"frame-benchmarking/runtime-benchmarks",
@@ -53,7 +53,7 @@ runtime-benchmarks = [
 	"pallet-balances/runtime-benchmarks",
 	"pallet-preimage/runtime-benchmarks",
 	"pallet-utility/runtime-benchmarks",
-	"sp-runtime/runtime-benchmarks",
+	"soil-runtime/runtime-benchmarks",
 ]
 try-runtime = [
 	"frame-support/try-runtime",
@@ -61,5 +61,5 @@ try-runtime = [
 	"pallet-balances/try-runtime",
 	"pallet-preimage/try-runtime",
 	"pallet-utility/try-runtime",
-	"sp-runtime/try-runtime",
+	"soil-runtime/try-runtime",
 ]

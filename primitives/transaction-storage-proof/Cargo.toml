@@ -20,10 +20,10 @@ async-trait = { optional = true, workspace = true }
 codec = { features = ["derive"], workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 sp-api = { workspace = true }
-sp-core = { optional = true, workspace = true }
+soil-core = { optional = true, workspace = true }
 sp-inherents = { workspace = true }
-sp-runtime = { workspace = true }
-sp-trie = { optional = true, workspace = true }
+soil-runtime = { workspace = true }
+soil-trie = { optional = true, workspace = true }
 
 [features]
 default = ["std"]
@@ -32,8 +32,8 @@ std = [
 	"codec/std",
 	"scale-info/std",
 	"sp-api/std",
-	"sp-core/std",
+	"soil-core/std",
 	"sp-inherents/std",
-	"sp-runtime/std",
-	"sp-trie/std",
+	"soil-runtime/std",
+	"soil-trie/std",
 ]

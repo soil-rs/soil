@@ -40,7 +40,7 @@ use sc_network::ProtocolName;
 use sc_network_common::sync::{message::BlockAnnounce, SyncMode};
 use sc_network_types::PeerId;
 use sp_blockchain::{Error as ClientError, HeaderBackend, HeaderMetadata};
-use sp_runtime::traits::{Block as BlockT, Header, NumberFor};
+use soil_runtime::traits::{Block as BlockT, Header, NumberFor};
 use std::{any::Any, collections::HashMap, sync::Arc};
 
 /// Corresponding `ChainSync` mode.

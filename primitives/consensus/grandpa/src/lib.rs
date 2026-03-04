@@ -28,8 +28,8 @@ use alloc::vec::Vec;
 use codec::{Codec, Decode, DecodeWithMemTracking, Encode};
 use scale_info::TypeInfo;
 #[cfg(feature = "std")]
-use sp_keystore::KeystorePtr;
-use sp_runtime::{
+use soil_keystore::KeystorePtr;
+use soil_runtime::{
 	traits::{Header as HeaderT, NumberFor},
 	ConsensusEngineId, Debug, OpaqueValue,
 };
@@ -40,14 +40,14 @@ pub const CLIENT_LOG_TARGET: &str = "grandpa";
 pub const RUNTIME_LOG_TARGET: &str = "runtime::grandpa";
 
 /// Key type for GRANDPA module.
-pub const KEY_TYPE: sp_core::crypto::KeyTypeId = sp_application_crypto::key_types::GRANDPA;
+pub const KEY_TYPE: soil_core::crypto::KeyTypeId = soil_application_crypto::key_types::GRANDPA;
 
 mod app {
-	use sp_application_crypto::{app_crypto, ed25519, key_types::GRANDPA};
+	use soil_application_crypto::{app_crypto, ed25519, key_types::GRANDPA};
 	app_crypto!(ed25519, GRANDPA);
 }
 
-sp_application_crypto::with_pair! {
+soil_application_crypto::with_pair! {
 	/// The grandpa crypto scheme defined via the keypair type.
 	pub type AuthorityPair = app::Pair;
 }
@@ -467,7 +467,7 @@ where
 	H: Encode,
 	N: Encode,
 {
-	use sp_application_crypto::RuntimeAppPublic;
+	use soil_application_crypto::RuntimeAppPublic;
 
 	localized_payload_with_buffer(round, set_id, message, buf);
 
@@ -514,7 +514,7 @@ where
 	H: Encode,
 	N: Encode,
 {
-	use sp_application_crypto::AppCrypto;
+	use soil_application_crypto::AppCrypto;
 
 	let encoded = localized_payload(round, set_id, &message);
 	let signature = keystore

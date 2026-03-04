@@ -28,7 +28,7 @@ use frame_support::{
 	assert_ok, dispatch::PostDispatchInfo, parameter_types, traits::EstimateCallFee,
 };
 use sp_npos_elections::ElectionScore;
-use sp_runtime::{traits::Zero, Perbill};
+use soil_runtime::{traits::Zero, Perbill};
 
 parameter_types! {
 	pub static MockSignedNextSolution: Option<Vec<SolutionOf<Runtime>>> = None;

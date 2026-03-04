@@ -62,8 +62,8 @@ use sc_transaction_pool_api::{
 	TransactionStatusStreamFor, TxHash, TxInvalidityReportMap,
 };
 use sp_blockchain::{HashAndNumber, TreeRoute};
-use sp_core::traits::SpawnEssentialNamed;
-use sp_runtime::{
+use soil_core::traits::SpawnEssentialNamed;
+use soil_runtime::{
 	generic::BlockId,
 	traits::{Block as BlockT, NumberFor},
 	transaction_validity::{TransactionTag as Tag, TransactionValidityError, ValidTransaction},
@@ -2072,7 +2072,7 @@ where
 	Client: sp_api::ProvideRuntimeApi<Block>
 		+ sc_client_api::BlockBackend<Block>
 		+ sc_client_api::blockchain::HeaderBackend<Block>
-		+ sp_runtime::traits::BlockIdTo<Block>
+		+ soil_runtime::traits::BlockIdTo<Block>
 		+ sc_client_api::ExecutorProvider<Block>
 		+ sc_client_api::UsageProvider<Block>
 		+ sp_blockchain::HeaderMetadata<Block, Error = sp_blockchain::Error>
@@ -2108,7 +2108,7 @@ where
 #[cfg(test)]
 mod reduce_multiview_result_tests {
 	use super::*;
-	use sp_core::H256;
+	use soil_core::H256;
 	#[derive(Debug, PartialEq, Clone)]
 	enum Error {
 		Custom(u8),

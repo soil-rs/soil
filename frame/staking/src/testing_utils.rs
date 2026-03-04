@@ -25,11 +25,11 @@ use rand_chacha::{
 	rand_core::{RngCore, SeedableRng},
 	ChaChaRng,
 };
-use sp_io::hashing::blake2_256;
+use soil_io::hashing::blake2_256;
 
 use frame_election_provider_support::SortedListProvider;
 use frame_support::pallet_prelude::*;
-use sp_runtime::{traits::StaticLookup, Perbill};
+use soil_runtime::{traits::StaticLookup, Perbill};
 
 const SEED: u32 = 0;
 

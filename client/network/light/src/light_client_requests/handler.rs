@@ -34,11 +34,11 @@ use sc_network::{
 	NetworkBackend, ReputationChange,
 };
 use sc_network_types::PeerId;
-use sp_core::{
+use soil_core::{
 	hexdisplay::HexDisplay,
 	storage::{ChildInfo, ChildType, PrefixedStorageKey},
 };
-use sp_runtime::traits::Block;
+use soil_runtime::traits::Block;
 use std::{marker::PhantomData, sync::Arc};
 
 const LOG_TARGET: &str = "light-client-request-handler";

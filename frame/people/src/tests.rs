@@ -28,7 +28,7 @@ use frame_support::{
 	weights::RuntimeDbWeight,
 	BoundedVec,
 };
-use sp_runtime::{
+use soil_runtime::{
 	transaction_validity::InvalidTransaction::{self, BadSigner},
 	DispatchResult, Weight,
 };
@@ -325,7 +325,7 @@ fn force_recognize_personhood_works() {
 		// Fails for non-root origin.
 		assert_noop!(
 			PeoplePallet::force_recognize_personhood(RuntimeOrigin::signed(0), keys.clone()),
-			sp_runtime::DispatchError::BadOrigin
+			soil_runtime::DispatchError::BadOrigin
 		);
 
 		// Fails for duplicate keys.
@@ -426,7 +426,7 @@ fn test_set_personal_id_account() {
 		let origin = RuntimeOrigin::signed(44);
 		assert_noop!(
 			PeoplePallet::set_personal_id_account(origin, 44, 0),
-			sp_runtime::DispatchError::BadOrigin
+			soil_runtime::DispatchError::BadOrigin
 		);
 
 		// Test that trying to use an account that is already in use fails.
@@ -765,7 +765,7 @@ mod manual_tasks {
 mod chunks {
 	use super::*;
 	use frame_support::traits::Get;
-	use sp_runtime::BoundedVec;
+	use soil_runtime::BoundedVec;
 
 	#[test]
 	#[should_panic]
@@ -2764,7 +2764,7 @@ fn test_under_alias_revision_check() {
 		// Attempt `under_alias` again with the *outdated* revision=0 from storage => should fail.
 		assert_noop!(
 			PeoplePallet::under_alias(RuntimeOrigin::signed(alias_account), dummy_call),
-			sp_runtime::DispatchError::BadOrigin,
+			soil_runtime::DispatchError::BadOrigin,
 		);
 	});
 }
@@ -2843,7 +2843,7 @@ fn replay_protection_for_identity() {
 			let other_tx_ext = (frame_system::CheckNonce::<Test>::from(0),);
 			// Here we simply ignore implicit as they are null.
 			let msg = (&EXTENSION_VERSION, &call, &other_tx_ext)
-				.using_encoded(sp_io::hashing::blake2_256);
+				.using_encoded(soil_io::hashing::blake2_256);
 			let signature = Simple::sign(&alice_sec, &msg).unwrap();
 			(
 				AsPerson::<Test>::new(Some(AsPersonInfo::AsPersonalIdentityWithProof(
@@ -2918,7 +2918,7 @@ fn replay_protection_for_alias() {
 			let other_tx_ext = (frame_system::CheckNonce::<Test>::from(0),);
 			// The message is the hash over the extension version, call, and other extensions.
 			let msg = (&EXTENSION_VERSION, &call, &other_tx_ext)
-				.using_encoded(sp_io::hashing::blake2_256);
+				.using_encoded(soil_io::hashing::blake2_256);
 			// Open a commitment (using Alice’s public key and public data)
 			let commitment = Simple::open(&alice_pub, Some(alice_pub).into_iter()).unwrap();
 			// Create a VRF proof and compute the alias output from the call message.

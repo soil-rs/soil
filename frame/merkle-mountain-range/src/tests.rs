@@ -20,7 +20,7 @@ use crate::{mock::*, *};
 use crate::primitives::{mmr_lib::helper, utils, Compact, LeafProof};
 
 use frame::{
-	deps::sp_core::{
+	deps::soil_core::{
 		offchain::{testing::TestOffchainExt, OffchainDbExt, OffchainWorkerExt},
 		H256,
 	},

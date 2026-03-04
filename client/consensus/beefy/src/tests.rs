@@ -55,7 +55,7 @@ use sc_network_test::{
 };
 use sc_utils::{mpsc::TracingUnboundedReceiver, notification::NotificationReceiver};
 use sp_api::{ApiRef, ProvideRuntimeApi};
-use sp_application_crypto::key_types::BEEFY as BEEFY_KEY_TYPE;
+use soil_application_crypto::key_types::BEEFY as BEEFY_KEY_TYPE;
 use sp_consensus::BlockOrigin;
 use sp_consensus_beefy::{
 	ecdsa_crypto,
@@ -67,10 +67,10 @@ use sp_consensus_beefy::{
 	Payload, SignedCommitment, ValidatorSet, ValidatorSetId, VersionedFinalityProof, VoteMessage,
 	BEEFY_ENGINE_ID,
 };
-use sp_core::H256;
-use sp_keystore::{testing::MemoryKeystore, Keystore, KeystorePtr};
+use soil_core::H256;
+use soil_keystore::{testing::MemoryKeystore, Keystore, KeystorePtr};
 use sp_mmr_primitives::{Error as MmrError, MmrApi};
-use sp_runtime::{
+use soil_runtime::{
 	codec::{Decode, Encode},
 	traits::{Header as HeaderT, NumberFor},
 	DigestItem, EncodedJustification, Justifications,

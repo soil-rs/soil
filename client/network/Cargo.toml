@@ -57,8 +57,8 @@ serde_json = { workspace = true, default-features = true }
 smallvec = { workspace = true, default-features = true }
 soil-arithmetic = { workspace = true, default-features = true }
 sp-blockchain = { workspace = true, default-features = true }
-sp-core = { workspace = true, default-features = true }
-sp-runtime = { workspace = true, default-features = true }
+soil-core = { workspace = true, default-features = true }
+soil-runtime = { workspace = true, default-features = true }
 thiserror = { workspace = true }
 tokio = { features = ["macros", "sync"], workspace = true, default-features = true }
 tokio-stream = { workspace = true }

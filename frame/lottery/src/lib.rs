@@ -67,7 +67,7 @@ use frame_support::{
 	PalletId,
 };
 pub use pallet::*;
-use sp_runtime::{
+use soil_runtime::{
 	traits::{AccountIdConversion, Dispatchable, Saturating, Zero},
 	ArithmeticError, Debug, DispatchError,
 };

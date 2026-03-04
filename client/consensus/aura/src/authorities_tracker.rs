@@ -26,8 +26,8 @@ use parking_lot::RwLock;
 use sp_api::ProvideRuntimeApi;
 use sp_blockchain::{HeaderBackend, HeaderMetadata};
 use sp_consensus_aura::{AuraApi, ConsensusLog, AURA_ENGINE_ID};
-use sp_core::Pair;
-use sp_runtime::{
+use soil_core::Pair;
+use soil_runtime::{
 	generic::OpaqueDigestItemId,
 	traits::{Block, Header, NumberFor},
 };

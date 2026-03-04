@@ -21,7 +21,7 @@
 
 use codec::Encode;
 use frame_support::{derive_impl, weights::Weight};
-use sp_runtime::BuildStorage;
+use soil_runtime::BuildStorage;
 
 type Block = frame_system::mocking::MockBlock<Test>;
 
@@ -81,17 +81,17 @@ impl crate::Config for Test {}
 
 struct MockedReadRuntimeVersion(Vec<u8>);
 
-impl sp_core::traits::ReadRuntimeVersion for MockedReadRuntimeVersion {
+impl soil_core::traits::ReadRuntimeVersion for MockedReadRuntimeVersion {
 	fn read_runtime_version(
 		&self,
 		_wasm_code: &[u8],
-		_ext: &mut dyn sp_externalities::Externalities,
+		_ext: &mut dyn soil_externalities::Externalities,
 	) -> Result<Vec<u8>, String> {
 		Ok(self.0.clone())
 	}
 }
 
-pub fn new_test_ext() -> sp_io::TestExternalities {
+pub fn new_test_ext() -> soil_io::TestExternalities {
 	let t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 
 	let version = sp_version::RuntimeVersion {
@@ -101,7 +101,7 @@ pub fn new_test_ext() -> sp_io::TestExternalities {
 		..Default::default()
 	};
 	let read_runtime_version = MockedReadRuntimeVersion(version.encode());
-	let mut ext = sp_io::TestExternalities::new(t);
-	ext.register_extension(sp_core::traits::ReadRuntimeVersionExt::new(read_runtime_version));
+	let mut ext = soil_io::TestExternalities::new(t);
+	ext.register_extension(soil_core::traits::ReadRuntimeVersionExt::new(read_runtime_version));
 	ext
 }

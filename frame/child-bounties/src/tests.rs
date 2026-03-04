@@ -32,7 +32,7 @@ use frame_support::{
 	PalletId,
 };
 
-use sp_runtime::{
+use soil_runtime::{
 	traits::{BadOrigin, IdentityLookup},
 	BuildStorage, Perbill, Permill, TokenError,
 };
@@ -67,10 +67,10 @@ parameter_types! {
 
 type Balance = u64;
 // must be at least 20 bytes long because of child-bounty account derivation.
-type AccountId = sp_core::U256;
+type AccountId = soil_core::U256;
 
 fn account_id(id: u8) -> AccountId {
-	sp_core::U256::from(id)
+	soil_core::U256::from(id)
 }
 
 #[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
@@ -144,7 +144,7 @@ impl pallet_child_bounties::Config for Test {
 	type WeightInfo = ();
 }
 
-pub fn new_test_ext() -> sp_io::TestExternalities {
+pub fn new_test_ext() -> soil_io::TestExternalities {
 	let mut t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	pallet_balances::GenesisConfig::<Test> {
 		// Total issuance will be 200 with treasury account initialized at ED.

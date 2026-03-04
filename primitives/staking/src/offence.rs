@@ -20,8 +20,8 @@
 
 use alloc::vec::Vec;
 use codec::{Decode, Encode, MaxEncodedLen};
-use sp_core::Get;
-use sp_runtime::{transaction_validity::TransactionValidityError, DispatchError, Perbill};
+use soil_core::Get;
+use soil_runtime::{transaction_validity::TransactionValidityError, DispatchError, Perbill};
 
 use crate::SessionIndex;
 
@@ -96,7 +96,7 @@ pub enum OffenceError {
 	Other(u8),
 }
 
-impl sp_runtime::traits::Printable for OffenceError {
+impl soil_runtime::traits::Printable for OffenceError {
 	fn print(&self) {
 		"OffenceError".print();
 		match self {

@@ -24,8 +24,8 @@ use super::{
 
 #[cfg(not(feature = "std"))]
 use alloc::vec::Vec;
-use sp_core::sr25519::vrf::VrfSignature;
-use sp_runtime::DigestItem;
+use soil_core::sr25519::vrf::VrfSignature;
+use soil_runtime::DigestItem;
 
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;

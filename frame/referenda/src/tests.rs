@@ -23,7 +23,7 @@ use assert_matches::assert_matches;
 use codec::Decode;
 use frame_support::{assert_noop, assert_ok, dispatch::RawOrigin, traits::Contains};
 use pallet_balances::Error as BalancesError;
-use sp_runtime::DispatchError::BadOrigin;
+use soil_runtime::DispatchError::BadOrigin;
 
 #[test]
 fn params_should_work() {

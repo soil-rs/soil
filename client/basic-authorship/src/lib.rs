@@ -23,7 +23,7 @@
 //! ```
 //! # use sc_basic_authorship::ProposerFactory;
 //! # use sp_consensus::{Environment, Proposer, ProposeArgs};
-//! # use sp_runtime::generic::BlockId;
+//! # use soil_runtime::generic::BlockId;
 //! # use std::{sync::Arc, time::Duration};
 //! # use substrate_test_runtime_client::{
 //! #     runtime::Transfer, Sr25519Keyring,
@@ -31,7 +31,7 @@
 //! # };
 //! # use sc_transaction_pool::{BasicPool, FullChainApi};
 //! # let client = Arc::new(substrate_test_runtime_client::new());
-//! # let spawner = sp_core::testing::TaskExecutor::new();
+//! # let spawner = soil_core::testing::TaskExecutor::new();
 //! # let txpool = Arc::from(BasicPool::new_full(
 //! #     Default::default(),
 //! #     true.into(),

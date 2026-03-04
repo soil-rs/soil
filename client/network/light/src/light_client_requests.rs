@@ -21,7 +21,7 @@
 use sc_network::{
 	config::ProtocolId, request_responses::IncomingRequest, NetworkBackend, MAX_RESPONSE_SIZE,
 };
-use sp_runtime::traits::Block;
+use soil_runtime::traits::Block;
 
 use std::time::Duration;
 

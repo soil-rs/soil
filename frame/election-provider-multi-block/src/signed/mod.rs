@@ -72,9 +72,9 @@ use frame_support::{
 };
 use frame_system::{ensure_signed, pallet_prelude::*};
 use scale_info::TypeInfo;
-use sp_io::MultiRemovalResults;
+use soil_io::MultiRemovalResults;
 use sp_npos_elections::ElectionScore;
-use sp_runtime::{traits::Saturating, Perbill};
+use soil_runtime::{traits::Saturating, Perbill};
 use soil_std::prelude::*;
 
 /// Explore all weights
@@ -957,7 +957,7 @@ pub mod pallet {
 	#[pallet::hooks]
 	impl<T: Config> Hooks<BlockNumberFor<T>> for Pallet<T> {
 		#[cfg(feature = "try-runtime")]
-		fn try_state(n: BlockNumberFor<T>) -> Result<(), sp_runtime::TryRuntimeError> {
+		fn try_state(n: BlockNumberFor<T>) -> Result<(), soil_runtime::TryRuntimeError> {
 			Self::do_try_state(n)
 		}
 	}
@@ -965,7 +965,7 @@ pub mod pallet {
 
 impl<T: Config> Pallet<T> {
 	#[cfg(any(feature = "try-runtime", test, feature = "runtime-benchmarks"))]
-	pub(crate) fn do_try_state(_n: BlockNumberFor<T>) -> Result<(), sp_runtime::TryRuntimeError> {
+	pub(crate) fn do_try_state(_n: BlockNumberFor<T>) -> Result<(), soil_runtime::TryRuntimeError> {
 		Submissions::<T>::sanity_check_round(Self::current_round())
 	}
 

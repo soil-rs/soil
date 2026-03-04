@@ -40,8 +40,8 @@ use sc_client_api::ChildInfo;
 use sc_rpc::testing::TokioTestExecutor;
 use sp_blockchain::HeaderBackend;
 use sp_consensus::BlockOrigin;
-use sp_core::{Blake2Hasher, Hasher};
-use sp_runtime::{
+use soil_core::{Blake2Hasher, Hasher};
+use soil_runtime::{
 	traits::{Block as BlockT, Header as HeaderT},
 	SaturatedConversion,
 };

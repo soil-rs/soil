@@ -20,7 +20,7 @@ use crate as pallet_transaction_payment;
 
 use codec::Encode;
 
-use sp_runtime::{
+use soil_runtime::{
 	generic::UncheckedExtrinsic,
 	traits::{DispatchTransaction, One},
 	transaction_validity::{InvalidTransaction, TransactionSource::External},
@@ -83,7 +83,7 @@ impl ExtBuilder {
 		TRANSACTION_BYTE_FEE.with(|v| *v.borrow_mut() = self.byte_fee);
 		WEIGHT_TO_FEE.with(|v| *v.borrow_mut() = self.weight_to_fee);
 	}
-	pub fn build(self) -> sp_io::TestExternalities {
+	pub fn build(self) -> soil_io::TestExternalities {
 		self.set_constants();
 		let mut t = frame_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
 		pallet_balances::GenesisConfig::<Runtime> {

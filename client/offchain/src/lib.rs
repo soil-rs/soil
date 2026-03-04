@@ -46,15 +46,15 @@ use sc_client_api::BlockchainEvents;
 use sc_network::{NetworkPeers, NetworkStateInfo};
 use sc_transaction_pool_api::OffchainTransactionPoolFactory;
 use sp_api::{ApiExt, ProvideRuntimeApi};
-use sp_core::{offchain, traits::SpawnNamed};
-use sp_externalities::Extension;
-use sp_keystore::{KeystoreExt, KeystorePtr};
-use sp_runtime::traits::{self, Header};
+use soil_core::{offchain, traits::SpawnNamed};
+use soil_externalities::Extension;
+use soil_keystore::{KeystoreExt, KeystorePtr};
+use soil_runtime::traits::{self, Header};
 use threadpool::ThreadPool;
 
 mod api;
 
-pub use sp_core::offchain::storage::OffchainDb;
+pub use soil_core::offchain::storage::OffchainDb;
 pub use sp_offchain::{OffchainWorkerApi, STORAGE_PREFIX};
 
 const LOG_TARGET: &str = "offchain-worker";
@@ -336,7 +336,7 @@ mod tests {
 	use sc_transaction_pool::BasicPool;
 	use sc_transaction_pool_api::{InPoolTransaction, TransactionPool};
 	use sp_consensus::BlockOrigin;
-	use sp_runtime::traits::Block as BlockT;
+	use soil_runtime::traits::Block as BlockT;
 	use std::{collections::HashSet, sync::Arc};
 	use substrate_test_runtime_client::{
 		runtime::{
@@ -445,7 +445,7 @@ mod tests {
 		soil_tracing::try_init_simple();
 
 		let client = Arc::new(substrate_test_runtime_client::new());
-		let spawner = sp_core::testing::TaskExecutor::new();
+		let spawner = soil_core::testing::TaskExecutor::new();
 		let pool = Arc::from(BasicPool::new_full(
 			Default::default(),
 			true.into(),
@@ -480,7 +480,7 @@ mod tests {
 
 	#[test]
 	fn offchain_index_set_and_clear_works() {
-		use sp_core::offchain::OffchainStorage;
+		use soil_core::offchain::OffchainStorage;
 
 		soil_tracing::try_init_simple();
 

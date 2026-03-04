@@ -135,7 +135,7 @@ where
 	T: frame_system::Config,
 {
 	fn random(subject: &[u8]) -> (Output, BlockNumberFor<T>) {
-		use sp_runtime::traits::TrailingZeroInput;
+		use soil_runtime::traits::TrailingZeroInput;
 
 		(
 			Output::decode(&mut TrailingZeroInput::new(subject)).unwrap_or_default(),

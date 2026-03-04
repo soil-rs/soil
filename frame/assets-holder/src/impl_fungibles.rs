@@ -24,7 +24,7 @@ use frame_support::traits::{
 	},
 };
 use pallet_assets::BalanceOnHold;
-use sp_runtime::{
+use soil_runtime::{
 	traits::{CheckedAdd, CheckedSub, Zero},
 	ArithmeticError,
 };

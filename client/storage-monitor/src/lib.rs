@@ -17,7 +17,7 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 use clap::Args;
-use sp_core::traits::SpawnEssentialNamed;
+use soil_core::traits::SpawnEssentialNamed;
 use std::{
 	io,
 	path::{Path, PathBuf},

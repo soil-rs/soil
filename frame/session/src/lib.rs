@@ -137,7 +137,7 @@ use frame_support::{
 	Parameter,
 };
 use frame_system::pallet_prelude::BlockNumberFor;
-use sp_runtime::{
+use soil_runtime::{
 	traits::{AtLeast32BitUnsigned, Convert, Member, One, OpaqueKeys, Zero},
 	ConsensusEngineId, DispatchError, KeyTypeId, Permill, RuntimeAppPublic,
 };
@@ -147,7 +147,7 @@ pub use pallet::*;
 pub use weights::WeightInfo;
 
 #[cfg(any(feature = "try-runtime"))]
-use sp_runtime::TryRuntimeError;
+use soil_runtime::TryRuntimeError;
 
 pub(crate) const LOG_TARGET: &str = "runtime::session";
 
@@ -380,7 +380,7 @@ impl<AId> SessionHandler<AId> for Tuple {
 /// `SessionHandler` for tests that use `UintAuthorityId` as `Keys`.
 pub struct TestSessionHandler;
 impl<AId> SessionHandler<AId> for TestSessionHandler {
-	const KEY_TYPE_IDS: &'static [KeyTypeId] = &[sp_runtime::key_types::DUMMY];
+	const KEY_TYPE_IDS: &'static [KeyTypeId] = &[soil_runtime::key_types::DUMMY];
 	fn on_genesis_session<Ks: OpaqueKeys>(_: &[(AId, Ks)]) {}
 	fn on_new_session<Ks: OpaqueKeys>(_: bool, _: &[(AId, Ks)], _: &[(AId, Ks)]) {}
 	fn on_before_session_ending() {}
@@ -469,7 +469,7 @@ pub mod pallet {
 		///
 		/// It is also a means to check that an account id is eligible to set session keys, through
 		/// being associated with a validator id. To disable this check, use
-		/// [`sp_runtime::traits::ConvertInto`].
+		/// [`soil_runtime::traits::ConvertInto`].
 		///
 		/// Its cost must be at most one storage read.
 		type ValidatorIdOf: Convert<Self::AccountId, Option<Self::ValidatorId>>;
@@ -697,7 +697,7 @@ pub mod pallet {
 		/// - `keys`: The new session keys to set. These are the public keys of all sessions keys
 		///   setup in the runtime.
 		/// - `proof`: The proof that `origin` has access to the private keys of `keys`. See
-		///   [`impl_opaque_keys`](sp_runtime::impl_opaque_keys) for more information about the
+		///   [`impl_opaque_keys`](soil_runtime::impl_opaque_keys) for more information about the
 		///   proof format.
 		#[pallet::call_index(0)]
 		#[pallet::weight(T::WeightInfo::set_keys())]
@@ -1138,7 +1138,7 @@ impl<T: Config> Pallet<T> {
 	}
 
 	#[cfg(any(test, feature = "try-runtime"))]
-	pub fn do_try_state() -> Result<(), sp_runtime::TryRuntimeError> {
+	pub fn do_try_state() -> Result<(), soil_runtime::TryRuntimeError> {
 		// Ensure that the validators are sorted
 		ensure!(
 			DisabledValidators::<T>::get().windows(2).all(|pair| pair[0].0 <= pair[1].0),

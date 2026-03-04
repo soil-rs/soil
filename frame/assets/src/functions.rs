@@ -20,7 +20,7 @@
 use super::*;
 use alloc::vec;
 use frame_support::{defensive, traits::Get, BoundedVec};
-use sp_runtime::traits::ConstU32;
+use soil_runtime::traits::ConstU32;
 
 #[must_use]
 pub(super) enum DeadConsequence {

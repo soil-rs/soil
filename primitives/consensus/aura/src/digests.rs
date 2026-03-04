@@ -23,7 +23,7 @@
 use crate::AURA_ENGINE_ID;
 use codec::{Codec, Encode};
 use sp_consensus_slots::Slot;
-use sp_runtime::generic::DigestItem;
+use soil_runtime::generic::DigestItem;
 
 /// A digest item which is usable with aura consensus.
 pub trait CompatibleDigestItem<Signature>: Sized {

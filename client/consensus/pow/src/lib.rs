@@ -61,7 +61,7 @@ use sp_consensus::{
 };
 use sp_consensus_pow::{Seal, TotalDifficulty, POW_ENGINE_ID};
 use sp_inherents::{CreateInherentDataProviders, InherentDataProvider};
-use sp_runtime::{
+use soil_runtime::{
 	generic::{BlockId, Digest, DigestItem},
 	traits::{Block as BlockT, Header as HeaderT},
 };
@@ -463,7 +463,7 @@ pub fn import_queue<B, Algorithm>(
 	block_import: BoxBlockImport<B>,
 	justification_import: Option<BoxJustificationImport<B>>,
 	algorithm: Algorithm,
-	spawner: &impl sp_core::traits::SpawnEssentialNamed,
+	spawner: &impl soil_core::traits::SpawnEssentialNamed,
 	registry: Option<&Registry>,
 ) -> Result<PowImportQueue<B>, sp_consensus::Error>
 where

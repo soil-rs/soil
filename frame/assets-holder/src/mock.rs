@@ -22,7 +22,7 @@ pub use crate::*;
 use codec::{Decode, Encode, MaxEncodedLen};
 use frame_support::{derive_impl, traits::AsEnsureOriginWithArg};
 use scale_info::TypeInfo;
-use sp_runtime::BuildStorage;
+use soil_runtime::BuildStorage;
 
 pub type AccountId = <Test as frame_system::Config>::AccountId;
 pub type Balance = <Test as pallet_balances::Config>::Balance;
@@ -103,7 +103,7 @@ impl Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 }
 
-pub fn new_test_ext(execute: impl FnOnce()) -> sp_io::TestExternalities {
+pub fn new_test_ext(execute: impl FnOnce()) -> soil_io::TestExternalities {
 	let t = RuntimeGenesisConfig {
 		assets: pallet_assets::GenesisConfig {
 			assets: vec![(1, 0, true, 1)],
@@ -117,7 +117,7 @@ pub fn new_test_ext(execute: impl FnOnce()) -> sp_io::TestExternalities {
 	}
 	.build_storage()
 	.unwrap();
-	let mut ext: sp_io::TestExternalities = t.into();
+	let mut ext: soil_io::TestExternalities = t.into();
 	ext.execute_with(|| {
 		System::set_block_number(1);
 		execute();

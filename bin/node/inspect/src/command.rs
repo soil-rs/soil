@@ -24,10 +24,10 @@ use crate::{
 };
 use sc_cli::{CliConfiguration, ImportParams, Result, SharedParams};
 use sc_service::Configuration;
-use sp_runtime::traits::Block;
+use soil_runtime::traits::Block;
 
 type HostFunctions =
-	(sp_io::SubstrateHostFunctions, sp_statement_store::runtime_api::HostFunctions);
+	(soil_io::SubstrateHostFunctions, sp_statement_store::runtime_api::HostFunctions);
 
 impl InspectCmd {
 	/// Run the inspect command, passing the inspector.

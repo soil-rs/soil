@@ -22,8 +22,8 @@ use sc_client_api::{
 	Backend as _, BlockImportOperation, NewBlockState, StateBackend, TrieCacheContext,
 };
 use sc_client_db::{Backend, BlocksPruning, DatabaseSettings, DatabaseSource, PruningMode};
-use sp_core::H256;
-use sp_runtime::{
+use soil_core::H256;
+use soil_runtime::{
 	testing::{Block as RawBlock, Header, MockCallU64, TestXt},
 	StateVersion, Storage,
 };
@@ -45,7 +45,7 @@ fn insert_blocks(db: &Backend<Block>, storage: Vec<(Vec<u8>, Vec<u8>)>) -> H256 
 		.set_genesis_state(
 			Storage {
 				top: vec![(
-					sp_core::storage::well_known_keys::CODE.to_vec(),
+					soil_core::storage::well_known_keys::CODE.to_vec(),
 					kitchensink_runtime::wasm_binary_unwrap().to_vec(),
 				)]
 				.into_iter()
@@ -297,7 +297,7 @@ fn state_access_benchmarks(c: &mut Criterion) {
 				|| backend.state_at(block_hash, TrieCacheContext::Trusted).expect("Creates state"),
 				|state| {
 					let _ = state
-						.storage_hash(sp_core::storage::well_known_keys::CODE)
+						.storage_hash(soil_core::storage::well_known_keys::CODE)
 						.expect("Doesn't fail")
 						.unwrap();
 				},

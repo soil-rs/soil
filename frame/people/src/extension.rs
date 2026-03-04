@@ -26,8 +26,8 @@ use frame_support::{
 };
 use frame_system::{CheckNonce, ValidNonceInfo};
 use scale_info::TypeInfo;
-use sp_core::twox_64;
-use sp_runtime::{
+use soil_core::twox_64;
+use soil_runtime::{
 	traits::{DispatchInfoOf, TransactionExtension, ValidateResult},
 	transaction_validity::{InvalidTransaction, TransactionValidityError, ValidTransaction},
 	Saturating,
@@ -210,7 +210,7 @@ impl<T: Config + Send + Sync> TransactionExtension<<T as frame_system::Config>::
 					return Err(InvalidTransaction::Stale.into());
 				}
 
-				let msg = inherited_implication.using_encoded(sp_io::hashing::blake2_256);
+				let msg = inherited_implication.using_encoded(soil_io::hashing::blake2_256);
 
 				let alias = T::Crypto::validate(proof, &ring.root, &context[..], &msg[..])
 					.map_err(|_| InvalidTransaction::BadProof)?;
@@ -265,7 +265,7 @@ impl<T: Config + Send + Sync> TransactionExtension<<T as frame_system::Config>::
 					.map(|record| record.key)
 					.ok_or(InvalidTransaction::BadSigner)?;
 
-				let msg = inherited_implication.using_encoded(sp_io::hashing::blake2_256);
+				let msg = inherited_implication.using_encoded(soil_io::hashing::blake2_256);
 
 				if !T::Crypto::verify_signature(signature, &msg[..], &key) {
 					return Err(InvalidTransaction::BadProof.into());

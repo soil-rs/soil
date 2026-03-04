@@ -64,7 +64,7 @@ use sc_network_types::PeerId;
 use sc_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
 use sp_blockchain::{Error as ClientError, HeaderMetadata};
 use sp_consensus::{block_validation::BlockAnnounceValidator, BlockOrigin};
-use sp_runtime::{
+use soil_runtime::{
 	traits::{Block as BlockT, Header, NumberFor, Zero},
 	Justifications,
 };

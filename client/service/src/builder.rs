@@ -89,10 +89,10 @@ use sp_blockchain::{HeaderBackend, HeaderMetadata};
 use sp_consensus::block_validation::{
 	BlockAnnounceValidator, Chain, DefaultBlockAnnounceValidator,
 };
-use sp_core::traits::{CodeExecutor, SpawnNamed};
-use sp_keystore::KeystorePtr;
-use sp_runtime::traits::{Block as BlockT, BlockIdTo, NumberFor, Zero};
-use sp_storage::{ChildInfo, ChildType, PrefixedStorageKey};
+use soil_core::traits::{CodeExecutor, SpawnNamed};
+use soil_keystore::KeystorePtr;
+use soil_runtime::traits::{Block as BlockT, BlockIdTo, NumberFor, Zero};
+use soil_storage::{ChildInfo, ChildType, PrefixedStorageKey};
 use std::{
 	str::FromStr,
 	sync::Arc,
@@ -318,7 +318,7 @@ fn warm_up_trie_cache<TBl: BlockT>(
 	storage_root: TBl::Hash,
 ) -> Result<(), Error> {
 	use sc_client_api::backend::Backend;
-	use sp_state_machine::Backend as StateBackend;
+	use soil_state_machine::Backend as StateBackend;
 
 	let untrusted_state = || backend.state_at(storage_root, TrieCacheContext::Untrusted);
 	let trusted_state = || backend.state_at(storage_root, TrieCacheContext::Trusted);

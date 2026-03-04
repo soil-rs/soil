@@ -54,12 +54,12 @@ use sp_authority_discovery::{
 	AuthorityDiscoveryApi, AuthorityId, AuthorityPair, AuthoritySignature,
 };
 use sp_blockchain::HeaderBackend;
-use sp_core::{
+use soil_core::{
 	crypto::{key_types, ByteArray, Pair},
 	traits::SpawnNamed,
 };
-use sp_keystore::{Keystore, KeystorePtr};
-use sp_runtime::traits::Block as BlockT;
+use soil_keystore::{Keystore, KeystorePtr};
+use soil_runtime::traits::Block as BlockT;
 
 mod addr_cache;
 /// Dht payload schemas generated from Protobuf definitions via Prost crate in build.rs.

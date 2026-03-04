@@ -23,7 +23,7 @@ use codec::{Decode, Encode};
 use frame_support::traits::{Defensive, DefensiveOption, Instance, UncheckedOnRuntimeUpgrade};
 
 #[cfg(feature = "try-runtime")]
-use sp_runtime::TryRuntimeError;
+use soil_runtime::TryRuntimeError;
 
 /// The log target.
 const TARGET: &'static str = "runtime::society::migration";

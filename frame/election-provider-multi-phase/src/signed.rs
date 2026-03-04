@@ -36,9 +36,9 @@ use frame_support::traits::{
 };
 use frame_system::pallet_prelude::BlockNumberFor;
 use soil_arithmetic::traits::SaturatedConversion;
-use sp_core::bounded::BoundedVec;
+use soil_core::bounded::BoundedVec;
 use sp_npos_elections::ElectionScore;
-use sp_runtime::{
+use soil_runtime::{
 	traits::{Convert, Saturating, Zero},
 	Debug, FixedPointNumber, FixedPointOperand, FixedU128, Percent,
 };
@@ -570,7 +570,7 @@ mod tests {
 	};
 	use frame_election_provider_support::bounds::ElectionBoundsBuilder;
 	use frame_support::{assert_noop, assert_ok, assert_storage_noop};
-	use sp_runtime::Percent;
+	use soil_runtime::Percent;
 
 	#[test]
 	fn cannot_submit_on_different_round() {

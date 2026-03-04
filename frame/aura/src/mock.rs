@@ -25,7 +25,7 @@ use frame_support::{
 	traits::{ConstU32, ConstU64, DisabledValidators},
 };
 use sp_consensus_aura::{ed25519::AuthorityId, AuthorityIndex};
-use sp_runtime::{testing::UintAuthorityId, BuildStorage};
+use soil_runtime::{testing::UintAuthorityId, BuildStorage};
 
 type Block = frame_system::mocking::MockBlock<Test>;
 
@@ -88,7 +88,7 @@ impl pallet_aura::Config for Test {
 	type SlotDuration = SlotDurationValue;
 }
 
-pub fn build_ext(authorities: Vec<u64>) -> sp_io::TestExternalities {
+pub fn build_ext(authorities: Vec<u64>) -> soil_io::TestExternalities {
 	let mut storage = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	pallet_aura::GenesisConfig::<Test> {
 		authorities: authorities.into_iter().map(|a| UintAuthorityId(a).to_public_key()).collect(),

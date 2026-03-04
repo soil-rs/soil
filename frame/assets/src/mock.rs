@@ -25,8 +25,8 @@ use frame_support::{
 	assert_ok, construct_runtime, derive_impl, parameter_types,
 	traits::{AsEnsureOriginWithArg, ConstU32},
 };
-use sp_io::storage;
-use sp_runtime::BuildStorage;
+use soil_io::storage;
+use soil_runtime::BuildStorage;
 
 type Block = frame_system::mocking::MockBlock<Test>;
 
@@ -215,7 +215,7 @@ pub(crate) fn take_hooks() -> Vec<Hook> {
 	Hooks::take()
 }
 
-pub(crate) fn new_test_ext() -> sp_io::TestExternalities {
+pub(crate) fn new_test_ext() -> soil_io::TestExternalities {
 	let mut storage = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 
 	let config: pallet_assets::GenesisConfig<Test> = pallet_assets::GenesisConfig {
@@ -237,7 +237,7 @@ pub(crate) fn new_test_ext() -> sp_io::TestExternalities {
 
 	config.assimilate_storage(&mut storage).unwrap();
 
-	let mut ext: sp_io::TestExternalities = storage.into();
+	let mut ext: soil_io::TestExternalities = storage.into();
 	// Clear thread local vars for https://github.com/paritytech/substrate/issues/10479.
 	ext.execute_with(|| take_hooks());
 	ext.execute_with(|| System::set_block_number(1));

@@ -26,8 +26,8 @@ use frame_support::{
 	construct_runtime, derive_impl, parameter_types,
 	traits::{ConstU16, ConstU32, ConstU64, Everything},
 };
-use sp_core::{sr25519, H256};
-use sp_runtime::{
+use soil_core::{sr25519, H256};
+use soil_runtime::{
 	generic,
 	traits::{BlakeTwo256, IdentityLookup, Verify},
 };

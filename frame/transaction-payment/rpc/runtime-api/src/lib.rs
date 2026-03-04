@@ -20,7 +20,7 @@
 #![cfg_attr(not(feature = "std"), no_std)]
 
 use codec::Codec;
-use sp_runtime::traits::MaybeDisplay;
+use soil_runtime::traits::MaybeDisplay;
 
 pub use pallet_transaction_payment::{FeeDetails, InclusionFee, RuntimeDispatchInfo};
 
@@ -31,7 +31,7 @@ sp_api::decl_runtime_apis! {
 	{
 		fn query_info(uxt: Block::Extrinsic, len: u32) -> RuntimeDispatchInfo<Balance>;
 		fn query_fee_details(uxt: Block::Extrinsic, len: u32) -> FeeDetails<Balance>;
-		fn query_weight_to_fee(weight: sp_weights::Weight) -> Balance;
+		fn query_weight_to_fee(weight: soil_weights::Weight) -> Balance;
 		fn query_length_to_fee(length: u32) -> Balance;
 	}
 
@@ -48,7 +48,7 @@ sp_api::decl_runtime_apis! {
 		fn query_call_fee_details(call: Call, len: u32) -> FeeDetails<Balance>;
 
 		/// Query the output of the current `WeightToFee` given some input.
-		fn query_weight_to_fee(weight: sp_weights::Weight) -> Balance;
+		fn query_weight_to_fee(weight: soil_weights::Weight) -> Balance;
 
 		/// Query the output of the current `LengthToFee` given some input.
 		fn query_length_to_fee(length: u32) -> Balance;

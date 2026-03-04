@@ -21,7 +21,7 @@
 use error::Error;
 use jsonrpsee::proc_macros::rpc;
 use sc_transaction_pool_api::TransactionStatus;
-use sp_core::Bytes;
+use soil_core::Bytes;
 
 pub mod error;
 pub mod hash;

@@ -19,7 +19,7 @@
 //! Test utils
 
 use crate::{ChangeSet, CommitSet, DBValue, MetaDb, NodeDb};
-use sp_core::H256;
+use soil_core::H256;
 use std::{
 	collections::HashMap,
 	sync::{Arc, RwLock},

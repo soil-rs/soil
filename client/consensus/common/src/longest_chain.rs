@@ -21,7 +21,7 @@
 use sc_client_api::backend;
 use sp_blockchain::{Backend, HeaderBackend};
 use sp_consensus::{Error as ConsensusError, SelectChain};
-use sp_runtime::traits::{Block as BlockT, Header, NumberFor};
+use soil_runtime::traits::{Block as BlockT, Header, NumberFor};
 use std::{marker::PhantomData, sync::Arc};
 
 /// Implement Longest Chain Select implementation

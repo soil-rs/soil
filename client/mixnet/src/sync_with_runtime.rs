@@ -37,7 +37,7 @@ use sp_mixnet::{
 		SessionPhase as RuntimeSessionPhase, SessionStatus as RuntimeSessionStatus,
 	},
 };
-use sp_runtime::traits::Block;
+use soil_runtime::traits::Block;
 
 const LOG_TARGET: &str = "mixnet";
 

@@ -65,7 +65,7 @@ pub mod pallet {
 		PalletId,
 	};
 	use frame_system::pallet_prelude::*;
-	use sp_runtime::traits::{Convert, ConvertBack, MaybeConvert};
+	use soil_runtime::traits::{Convert, ConvertBack, MaybeConvert};
 
 	const STORAGE_VERSION: StorageVersion = StorageVersion::new(4);
 

@@ -37,9 +37,9 @@ use frame_support::{
 use frame_system::{self as system, RawOrigin};
 use pallet_transaction_payment::{ChargeTransactionPayment, FungibleAdapter, Multiplier};
 use scale_info::TypeInfo;
-use sp_core::{hexdisplay::HexDisplay, sr25519::Pair as SrPair, Pair};
-use sp_io;
-use sp_runtime::{
+use soil_core::{hexdisplay::HexDisplay, sr25519::Pair as SrPair, Pair};
+use soil_io;
+use soil_runtime::{
 	traits::{BadOrigin, Zero},
 	ArithmeticError, BuildStorage, Debug, DispatchError, DispatchResult, FixedPointNumber,
 	TokenError,
@@ -168,7 +168,7 @@ impl ExtBuilder {
 		DUST_TRAP_TARGET.with(|v| v.replace(self.dust_trap));
 		EXISTENTIAL_DEPOSIT.with(|v| v.replace(self.existential_deposit));
 	}
-	pub fn build(self) -> sp_io::TestExternalities {
+	pub fn build(self) -> soil_io::TestExternalities {
 		self.set_associated_consts();
 		let mut t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 		pallet_balances::GenesisConfig::<Test> {
@@ -192,7 +192,7 @@ impl ExtBuilder {
 		.assimilate_storage(&mut t)
 		.unwrap();
 
-		let mut ext = sp_io::TestExternalities::new(t);
+		let mut ext = soil_io::TestExternalities::new(t);
 		ext.execute_with(|| System::set_block_number(1));
 		ext
 	}

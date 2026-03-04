@@ -41,7 +41,7 @@ pub use sc_network_types::{
 	multiaddr::Multiaddr,
 	PeerId,
 };
-use sp_runtime::traits::Block as BlockT;
+use soil_runtime::traits::Block as BlockT;
 
 use std::{
 	collections::HashSet,

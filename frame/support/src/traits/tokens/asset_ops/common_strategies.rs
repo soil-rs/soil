@@ -20,7 +20,7 @@
 use super::*;
 use codec::{Decode, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;
-use sp_runtime::traits::Convert;
+use soil_runtime::traits::Convert;
 use Debug;
 
 /// The `CheckState` is a strategy that accepts an `Inspect` value and the `Inner` strategy.

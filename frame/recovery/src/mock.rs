@@ -20,7 +20,7 @@
 use super::*;
 
 use crate as recovery;
-use frame::{deps::sp_io, testing_prelude::*};
+use frame::{deps::soil_io, testing_prelude::*};
 
 type Block = frame_system::mocking::MockBlock<Test>;
 
@@ -73,7 +73,7 @@ impl Config for Test {
 pub type BalancesCall = pallet_balances::Call<Test>;
 pub type RecoveryCall = super::Call<Test>;
 
-pub fn new_test_ext() -> sp_io::TestExternalities {
+pub fn new_test_ext() -> soil_io::TestExternalities {
 	let mut t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	pallet_balances::GenesisConfig::<Test> {
 		balances: vec![(1, 100), (2, 100), (3, 100), (4, 100), (5, 100)],
@@ -81,7 +81,7 @@ pub fn new_test_ext() -> sp_io::TestExternalities {
 	}
 	.assimilate_storage(&mut t)
 	.unwrap();
-	let mut ext: sp_io::TestExternalities = t.into();
+	let mut ext: soil_io::TestExternalities = t.into();
 	ext.execute_with(|| System::set_block_number(1));
 	ext
 }

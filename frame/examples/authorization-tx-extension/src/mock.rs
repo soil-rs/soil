@@ -27,7 +27,7 @@ use extensions::AuthorizeCoownership;
 use frame_support::derive_impl;
 use frame_system::{CheckEra, CheckGenesis, CheckNonce, CheckTxVersion};
 use pallet_verify_signature::VerifySignature;
-use sp_runtime::{
+use soil_runtime::{
 	generic,
 	traits::{BlakeTwo256, IdentifyAccount, IdentityLookup, Verify},
 	BuildStorage, MultiSignature, MultiSigner,
@@ -124,7 +124,7 @@ mod example_runtime {
 
 // This function basically just builds a genesis storage key/value store according to
 // our desired mockup.
-pub fn new_test_ext() -> sp_io::TestExternalities {
+pub fn new_test_ext() -> soil_io::TestExternalities {
 	let t = RuntimeGenesisConfig {
 		// We use default for brevity, but you can configure as desired if needed.
 		system: Default::default(),

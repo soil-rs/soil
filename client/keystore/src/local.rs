@@ -19,12 +19,12 @@
 //! Local keystore implementation
 
 use parking_lot::RwLock;
-use sp_application_crypto::{AppCrypto, AppPair, IsWrappedBy};
-use sp_core::{
+use soil_application_crypto::{AppCrypto, AppPair, IsWrappedBy};
+use soil_core::{
 	crypto::{ByteArray, ExposeSecret, KeyTypeId, Pair as CorePair, SecretString, VrfSecret},
 	ecdsa, ed25519, sr25519,
 };
-use sp_keystore::{Error as TraitError, Keystore, KeystorePtr};
+use soil_keystore::{Error as TraitError, Keystore, KeystorePtr};
 use std::{
 	collections::HashMap,
 	fs::{self, File},
@@ -33,12 +33,12 @@ use std::{
 	sync::Arc,
 };
 
-sp_keystore::bandersnatch_experimental_enabled! {
-use sp_core::bandersnatch;
+soil_keystore::bandersnatch_experimental_enabled! {
+use soil_core::bandersnatch;
 }
 
-sp_keystore::bls_experimental_enabled! {
-use sp_core::{bls381, ecdsa_bls381, KeccakHasher, proof_of_possession::ProofOfPossessionGenerator};
+soil_keystore::bls_experimental_enabled! {
+use soil_core::{bls381, ecdsa_bls381, KeccakHasher, proof_of_possession::ProofOfPossessionGenerator};
 }
 
 use crate::{Error, Result};
@@ -54,7 +54,7 @@ impl LocalKeystore {
 	///
 	/// NOTE: Even when passing a `password`, the keys on disk appear to look like normal secret
 	/// uris. However, without having the correct password the secret uri will not generate the
-	/// correct private key. See [`SecretUri`](sp_core::crypto::SecretUri) for more information.
+	/// correct private key. See [`SecretUri`](soil_core::crypto::SecretUri) for more information.
 	pub fn open<T: Into<PathBuf>>(path: T, password: Option<SecretString>) -> Result<Self> {
 		let inner = KeystoreInner::open(path, password)?;
 		Ok(Self(RwLock::new(inner)))
@@ -142,7 +142,7 @@ impl LocalKeystore {
 		Ok(pre_output)
 	}
 
-	sp_keystore::bls_experimental_enabled! {
+	soil_keystore::bls_experimental_enabled! {
 		fn generate_proof_of_possession<T: CorePair + ProofOfPossessionGenerator>(
 			&self,
 			key_type: KeyTypeId,
@@ -163,7 +163,7 @@ impl Keystore for LocalKeystore {
 	/// Insert a new secret key.
 	///
 	/// WARNING: if the secret keypair has been manually generated using a password
-	/// (e.g. using methods such as [`sp_core::crypto::Pair::from_phrase`]) then such
+	/// (e.g. using methods such as [`soil_core::crypto::Pair::from_phrase`]) then such
 	/// a password must match the one used to open the keystore via [`LocalKeystore::open`].
 	/// If the passwords doesn't match then the inserted key ends up being unusable under
 	/// the current keystore instance.
@@ -290,7 +290,7 @@ impl Keystore for LocalKeystore {
 		Ok(sig)
 	}
 
-	sp_keystore::bandersnatch_experimental_enabled! {
+	soil_keystore::bandersnatch_experimental_enabled! {
 		fn bandersnatch_public_keys(&self, key_type: KeyTypeId) -> Vec<bandersnatch::Public> {
 			self.public_keys::<bandersnatch::Pair>(key_type)
 		}
@@ -349,7 +349,7 @@ impl Keystore for LocalKeystore {
 		}
 	}
 
-	sp_keystore::bls_experimental_enabled! {
+	soil_keystore::bls_experimental_enabled! {
 		fn bls381_public_keys(&self, key_type: KeyTypeId) -> Vec<bls381::Public> {
 			self.public_keys::<bls381::Pair>(key_type)
 		}
@@ -652,8 +652,8 @@ impl KeystoreInner {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use sp_application_crypto::{ed25519, sr25519, AppPublic};
-	use sp_core::{crypto::Ss58Codec, testing::SR25519, Pair};
+	use soil_application_crypto::{ed25519, sr25519, AppPublic};
+	use soil_core::{crypto::Ss58Codec, testing::SR25519, Pair};
 	use std::{fs, str::FromStr};
 	use tempfile::TempDir;
 
@@ -863,7 +863,7 @@ mod tests {
 	#[test]
 	#[cfg(feature = "bls-experimental")]
 	fn ecdsa_bls381_generate_with_none_works() {
-		use sp_core::testing::ECDSA_BLS381;
+		use soil_core::testing::ECDSA_BLS381;
 
 		let store = LocalKeystore::in_memory();
 		let ecdsa_bls381_key =
@@ -891,7 +891,7 @@ mod tests {
 	#[test]
 	#[cfg(feature = "bls-experimental")]
 	fn ecdsa_bls381_generate_with_seed_works() {
-		use sp_core::testing::ECDSA_BLS381;
+		use soil_core::testing::ECDSA_BLS381;
 
 		let store = LocalKeystore::in_memory();
 		let ecdsa_bls381_key = store

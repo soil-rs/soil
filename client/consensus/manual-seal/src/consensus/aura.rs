@@ -29,7 +29,7 @@ use sp_consensus_aura::{
 	AuraApi, Slot, SlotDuration,
 };
 use sp_inherents::InherentData;
-use sp_runtime::{traits::Block as BlockT, Digest, DigestItem};
+use soil_runtime::{traits::Block as BlockT, Digest, DigestItem};
 use sp_timestamp::TimestampInherentData;
 use std::{marker::PhantomData, sync::Arc};
 

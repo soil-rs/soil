@@ -19,7 +19,7 @@
 //! Substrate state API helpers.
 
 use serde::{Deserialize, Serialize};
-use sp_core::Bytes;
+use soil_core::Bytes;
 
 /// ReadProof struct returned by the RPC
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]

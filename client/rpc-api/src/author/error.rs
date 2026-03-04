@@ -19,7 +19,7 @@
 //! Authoring RPC module errors.
 
 use jsonrpsee::types::error::{ErrorObject, ErrorObjectOwned};
-use sp_runtime::transaction_validity::InvalidTransaction;
+use soil_runtime::transaction_validity::InvalidTransaction;
 
 /// Author RPC Result type.
 pub type Result<T> = std::result::Result<T, Error>;

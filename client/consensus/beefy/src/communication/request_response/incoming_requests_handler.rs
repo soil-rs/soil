@@ -27,7 +27,7 @@ use sc_network::{
 };
 use sc_network_types::PeerId;
 use sp_consensus_beefy::BEEFY_ENGINE_ID;
-use sp_runtime::traits::Block;
+use soil_runtime::traits::Block;
 use std::{marker::PhantomData, sync::Arc};
 
 use crate::{

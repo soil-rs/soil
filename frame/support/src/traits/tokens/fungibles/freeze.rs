@@ -25,7 +25,7 @@ use soil_arithmetic::{
 	traits::{CheckedAdd, CheckedSub},
 	ArithmeticError,
 };
-use sp_runtime::{DispatchResult, TokenError};
+use soil_runtime::{DispatchResult, TokenError};
 
 /// Trait for inspecting a fungible asset which can be frozen. Freezing is essentially setting a
 /// minimum balance below which the total balance (inclusive of any funds placed on hold) may not

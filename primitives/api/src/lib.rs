@@ -44,7 +44,7 @@
 //! # Logging
 //!
 //! Substrate supports logging from the runtime in native and in wasm. For that purpose it provides
-//! the [`RuntimeLogger`](sp_runtime::runtime_logger::RuntimeLogger). This runtime logger is
+//! the [`RuntimeLogger`](soil_runtime::runtime_logger::RuntimeLogger). This runtime logger is
 //! automatically enabled for each call into the runtime through the runtime api. As logging
 //! introduces extra code that isn't actually required for the logic of your runtime and also
 //! increases the final wasm blob size, it is recommended to disable the logging for on-chain
@@ -80,10 +80,10 @@ pub mod __private {
 	#[cfg(feature = "std")]
 	mod std_imports {
 		pub use hash_db::Hasher;
-		pub use sp_core::traits::CallContext;
-		pub use sp_externalities::{Extension, Extensions, TransactionType};
-		pub use sp_runtime::StateVersion;
-		pub use sp_state_machine::{
+		pub use soil_core::traits::CallContext;
+		pub use soil_externalities::{Extension, Extensions, TransactionType};
+		pub use soil_runtime::StateVersion;
+		pub use soil_state_machine::{
 			Backend as StateBackend, InMemoryBackend, OverlayedChanges, StorageProof, TrieBackend,
 			TrieBackendBuilder,
 		};
@@ -96,12 +96,12 @@ pub mod __private {
 	pub use codec::{self, Decode, DecodeLimit, Encode};
 	pub use core::{mem, slice};
 	pub use scale_info;
-	pub use sp_core::offchain;
+	pub use soil_core::offchain;
 	#[cfg(not(feature = "std"))]
-	pub use sp_core::to_substrate_wasm_fn_return_value;
+	pub use soil_core::to_substrate_wasm_fn_return_value;
 	#[cfg(feature = "frame-metadata")]
 	pub use soil_metadata_ir::{self as metadata_ir, frame_metadata as metadata};
-	pub use sp_runtime::{
+	pub use soil_runtime::{
 		generic::BlockId,
 		traits::{Block as BlockT, Hash as HashT, HashingFor, Header as HeaderT, NumberFor},
 		transaction_validity::TransactionValidity,
@@ -110,23 +110,23 @@ pub mod __private {
 	pub use sp_version::{create_apis_vec, ApiId, ApisVec, RuntimeVersion};
 
 	#[cfg(all(any(target_arch = "riscv32", target_arch = "riscv64"), substrate_runtime))]
-	pub use sp_runtime_interface::polkavm::{polkavm_abi, polkavm_export};
+	pub use soil_runtime_interface::polkavm::{polkavm_abi, polkavm_export};
 }
 
 #[cfg(feature = "std")]
-pub use sp_core::traits::CallContext;
-use sp_core::OpaqueMetadata;
+pub use soil_core::traits::CallContext;
+use soil_core::OpaqueMetadata;
 #[cfg(feature = "std")]
-use sp_externalities::{Extension, Extensions};
+use soil_externalities::{Extension, Extensions};
 #[cfg(feature = "std")]
-use sp_runtime::traits::HashingFor;
+use soil_runtime::traits::HashingFor;
 #[cfg(feature = "std")]
-pub use sp_runtime::TransactionOutcome;
-use sp_runtime::{traits::Block as BlockT, ExtrinsicInclusionMode};
+pub use soil_runtime::TransactionOutcome;
+use soil_runtime::{traits::Block as BlockT, ExtrinsicInclusionMode};
 #[cfg(feature = "std")]
-pub use sp_state_machine::StorageProof;
+pub use soil_state_machine::StorageProof;
 #[cfg(feature = "std")]
-use sp_state_machine::{backend::AsTrieBackend, Backend as StateBackend, OverlayedChanges};
+use soil_state_machine::{backend::AsTrieBackend, Backend as StateBackend, OverlayedChanges};
 use sp_version::RuntimeVersion;
 #[cfg(feature = "std")]
 use std::cell::RefCell;
@@ -285,7 +285,7 @@ pub use soil_api_proc_macro::decl_runtime_apis;
 /// ```rust
 /// extern crate alloc;
 /// #
-/// # use sp_runtime::{ExtrinsicInclusionMode, traits::Block as BlockT};
+/// # use soil_runtime::{ExtrinsicInclusionMode, traits::Block as BlockT};
 /// # use sp_test_primitives::Block;
 /// #
 /// # /// The declaration of the `Runtime` type is done by the `construct_runtime!` macro
@@ -428,7 +428,7 @@ pub use soil_api_proc_macro::impl_runtime_apis;
 /// # Example
 ///
 /// ```rust
-/// # use sp_runtime::traits::Block as BlockT;
+/// # use soil_runtime::traits::Block as BlockT;
 /// # use sp_test_primitives::Block;
 /// #
 /// # sp_api::decl_runtime_apis! {
@@ -473,7 +473,7 @@ pub use soil_api_proc_macro::impl_runtime_apis;
 ///
 /// This attribute can be placed above individual function in the mock implementation to
 /// request more control over the function declaration. From the client side each runtime api
-/// function is called with the `at` parameter that is a [`Hash`](sp_runtime::traits::Hash).
+/// function is called with the `at` parameter that is a [`Hash`](soil_runtime::traits::Hash).
 /// When using the `advanced` attribute, the macro expects that the first parameter of the
 /// function is this `at` parameter. Besides that the macro also doesn't do the automatic
 /// return value rewrite, which means that full return value must be specified. The full return
@@ -482,7 +482,7 @@ pub use soil_api_proc_macro::impl_runtime_apis;
 ///
 /// ## Example
 /// ```rust
-/// # use sp_runtime::traits::Block as BlockT;
+/// # use soil_runtime::traits::Block as BlockT;
 /// # use sp_test_primitives::Block;
 /// # use codec;
 /// #
@@ -522,13 +522,13 @@ pub use soil_api_proc_macro::mock_impl_runtime_apis;
 
 /// A type that records all accessed trie nodes and generates a proof out of it.
 #[cfg(feature = "std")]
-pub type ProofRecorder<B> = sp_trie::recorder::Recorder<HashingFor<B>>;
+pub type ProofRecorder<B> = soil_trie::recorder::Recorder<HashingFor<B>>;
 
 #[cfg(feature = "std")]
-pub type ProofRecorderIgnoredNodes<B> = sp_trie::recorder::IgnoredNodes<<B as BlockT>::Hash>;
+pub type ProofRecorderIgnoredNodes<B> = soil_trie::recorder::IgnoredNodes<<B as BlockT>::Hash>;
 
 #[cfg(feature = "std")]
-pub type StorageChanges<Block> = sp_state_machine::StorageChanges<HashingFor<Block>>;
+pub type StorageChanges<Block> = soil_state_machine::StorageChanges<HashingFor<Block>>;
 
 /// Something that can be constructed to a runtime api.
 #[cfg(feature = "std")]
@@ -541,10 +541,10 @@ pub trait ConstructRuntimeApi<Block: BlockT, C: CallApiAt<Block>> {
 }
 
 #[docify::export]
-/// Init the [`RuntimeLogger`](sp_runtime::runtime_logger::RuntimeLogger).
+/// Init the [`RuntimeLogger`](soil_runtime::runtime_logger::RuntimeLogger).
 pub fn init_runtime_logger() {
 	#[cfg(not(feature = "disable-logging"))]
-	sp_runtime::runtime_logger::RuntimeLogger::init();
+	soil_runtime::runtime_logger::RuntimeLogger::init();
 }
 
 /// An error describing which API call failed.
@@ -852,6 +852,6 @@ decl_runtime_apis! {
 	}
 }
 
-sp_core::generate_feature_enabled_macro!(std_enabled, feature = "std", $);
-sp_core::generate_feature_enabled_macro!(std_disabled, not(feature = "std"), $);
-sp_core::generate_feature_enabled_macro!(frame_metadata_enabled, feature = "frame-metadata", $);
+soil_core::generate_feature_enabled_macro!(std_enabled, feature = "std", $);
+soil_core::generate_feature_enabled_macro!(std_disabled, not(feature = "std"), $);
+soil_core::generate_feature_enabled_macro!(frame_metadata_enabled, feature = "frame-metadata", $);

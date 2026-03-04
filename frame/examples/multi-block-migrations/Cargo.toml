@@ -20,7 +20,7 @@ frame-system = { workspace = true }
 log = { workspace = true }
 pallet-migrations = { workspace = true }
 scale-info = { workspace = true }
-sp-io = { workspace = true }
+soil-io = { workspace = true }
 
 [features]
 default = ["std"]
@@ -32,7 +32,7 @@ std = [
 	"log/std",
 	"pallet-migrations/std",
 	"scale-info/std",
-	"sp-io/std",
+	"soil-io/std",
 ]
 runtime-benchmarks = [
 	"frame-benchmarking/runtime-benchmarks",

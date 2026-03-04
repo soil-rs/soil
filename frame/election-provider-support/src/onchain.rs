@@ -189,7 +189,7 @@ impl<T: Config> ElectionProvider for OnChainExecution<T> {
 	type MaxBackersPerWinner = T::MaxBackersPerWinner;
 	// can support any number of pages, as this is meant to be called "instantly". We don't care
 	// about this value here.
-	type Pages = sp_core::ConstU32<1>;
+	type Pages = soil_core::ConstU32<1>;
 	type DataProvider = T::DataProvider;
 
 	fn elect(page: PageIndex) -> Result<BoundedSupportsOf<Self>, Self::Error> {
@@ -203,10 +203,10 @@ impl<T: Config> ElectionProvider for OnChainExecution<T> {
 	}
 
 	fn duration() -> Self::BlockNumber {
-		sp_runtime::traits::Zero::zero()
+		soil_runtime::traits::Zero::zero()
 	}
 
-	fn status() -> Result<Option<sp_runtime::Weight>, ()> {
+	fn status() -> Result<Option<soil_runtime::Weight>, ()> {
 		Ok(Some(Default::default()))
 	}
 }
@@ -216,16 +216,16 @@ mod tests {
 	use super::*;
 	use crate::{ElectionProvider, PhragMMS, SequentialPhragmen};
 	use frame_support::{assert_noop, derive_impl, parameter_types};
-	use sp_io::TestExternalities;
+	use soil_io::TestExternalities;
 	use sp_npos_elections::Support;
-	use sp_runtime::Perbill;
+	use soil_runtime::Perbill;
 	type AccountId = u64;
 	type Nonce = u64;
 	type BlockNumber = u64;
 
-	pub type Header = sp_runtime::generic::Header<BlockNumber, sp_runtime::traits::BlakeTwo256>;
-	pub type UncheckedExtrinsic = sp_runtime::generic::UncheckedExtrinsic<AccountId, (), (), ()>;
-	pub type Block = sp_runtime::generic::Block<Header, UncheckedExtrinsic>;
+	pub type Header = soil_runtime::generic::Header<BlockNumber, soil_runtime::traits::BlakeTwo256>;
+	pub type UncheckedExtrinsic = soil_runtime::generic::UncheckedExtrinsic<AccountId, (), (), ()>;
+	pub type Block = soil_runtime::generic::Block<Header, UncheckedExtrinsic>;
 
 	frame_support::construct_runtime!(
 		pub enum Runtime {
@@ -240,10 +240,10 @@ mod tests {
 		type RuntimeOrigin = RuntimeOrigin;
 		type Nonce = Nonce;
 		type RuntimeCall = RuntimeCall;
-		type Hash = sp_core::H256;
-		type Hashing = sp_runtime::traits::BlakeTwo256;
+		type Hash = soil_core::H256;
+		type Hashing = soil_runtime::traits::BlakeTwo256;
 		type AccountId = AccountId;
-		type Lookup = sp_runtime::traits::IdentityLookup<Self::AccountId>;
+		type Lookup = soil_runtime::traits::IdentityLookup<Self::AccountId>;
 		type Block = Block;
 		type RuntimeEvent = ();
 		type BlockHashCount = ();
@@ -297,7 +297,7 @@ mod tests {
 		use super::*;
 		use crate::{data_provider, DataProviderBounds, PageIndex, VoterOf};
 		use frame_support::traits::ConstU32;
-		use sp_runtime::bounded_vec;
+		use soil_runtime::bounded_vec;
 
 		pub struct DataProvider;
 		impl ElectionDataProvider for DataProvider {

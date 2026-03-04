@@ -43,14 +43,14 @@ use sc_consensus_slots::{
 };
 use sc_telemetry::TelemetryHandle;
 use sp_api::{Core, ProvideRuntimeApi};
-use sp_application_crypto::AppPublic;
+use soil_application_crypto::AppPublic;
 use sp_blockchain::HeaderBackend;
 use sp_consensus::{BlockOrigin, Environment, Error as ConsensusError, Proposer, SelectChain};
 use sp_consensus_slots::Slot;
-use sp_core::crypto::Pair;
+use soil_core::crypto::Pair;
 use sp_inherents::CreateInherentDataProviders;
-use sp_keystore::KeystorePtr;
-use sp_runtime::traits::{Block as BlockT, Header, Member, NumberFor};
+use soil_keystore::KeystorePtr;
+use soil_runtime::traits::{Block as BlockT, Header, Member, NumberFor};
 
 mod authorities_tracker;
 mod import_queue;
@@ -381,7 +381,7 @@ where
 		crate::standalone::claim_slot::<P>(slot, authorities, &self.keystore).await
 	}
 
-	fn pre_digest_data(&self, slot: Slot, _claim: &Self::Claim) -> Vec<sp_runtime::DigestItem> {
+	fn pre_digest_data(&self, slot: Slot, _claim: &Self::Claim) -> Vec<soil_runtime::DigestItem> {
 		vec![crate::standalone::pre_digest::<P>(slot)]
 	}
 
@@ -554,12 +554,12 @@ mod tests {
 	use sc_consensus_slots::{BackoffAuthoringOnFinalizedHeadLagging, SimpleSlotWorker};
 	use sc_keystore::LocalKeystore;
 	use sc_network_test::{Block as TestBlock, *};
-	use sp_application_crypto::{key_types::AURA, AppCrypto};
+	use soil_application_crypto::{key_types::AURA, AppCrypto};
 	use sp_consensus::{NoNetwork as DummyOracle, Proposal, ProposeArgs};
 	use sp_consensus_aura::sr25519::AuthorityPair;
 	use sp_keyring::sr25519::Keyring;
-	use sp_keystore::Keystore;
-	use sp_runtime::traits::{Block as BlockT, Header as _};
+	use soil_keystore::Keystore;
+	use soil_runtime::traits::{Block as BlockT, Header as _};
 	use sp_timestamp::Timestamp;
 	use std::{
 		task::Poll,

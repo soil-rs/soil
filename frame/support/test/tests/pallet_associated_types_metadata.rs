@@ -20,9 +20,9 @@ use scale_info::meta_type;
 use soil_metadata_ir::PalletAssociatedTypeMetadataIR;
 
 pub type BlockNumber = u64;
-pub type Header = sp_runtime::generic::Header<u32, sp_runtime::traits::BlakeTwo256>;
-pub type Block = sp_runtime::generic::Block<Header, UncheckedExtrinsic>;
-pub type UncheckedExtrinsic = sp_runtime::generic::UncheckedExtrinsic<u32, RuntimeCall, (), ()>;
+pub type Header = soil_runtime::generic::Header<u32, soil_runtime::traits::BlakeTwo256>;
+pub type Block = soil_runtime::generic::Block<Header, UncheckedExtrinsic>;
+pub type UncheckedExtrinsic = soil_runtime::generic::UncheckedExtrinsic<u32, RuntimeCall, (), ()>;
 
 /// Pallet without collectable associated types.
 #[frame_support::pallet]
@@ -149,10 +149,10 @@ impl frame_system::Config for Runtime {
 	type RuntimeOrigin = RuntimeOrigin;
 	type Nonce = u64;
 	type RuntimeCall = RuntimeCall;
-	type Hash = sp_runtime::testing::H256;
-	type Hashing = sp_runtime::traits::BlakeTwo256;
+	type Hash = soil_runtime::testing::H256;
+	type Hashing = soil_runtime::traits::BlakeTwo256;
 	type AccountId = u64;
-	type Lookup = sp_runtime::traits::IdentityLookup<Self::AccountId>;
+	type Lookup = soil_runtime::traits::IdentityLookup<Self::AccountId>;
 	type Block = Block;
 	type RuntimeEvent = RuntimeEvent;
 	type Version = ();
@@ -238,12 +238,12 @@ fn associated_types_metadata() {
 			},
 			PalletAssociatedTypeMetadataIR {
 				name: "Hash",
-				ty: meta_type::<sp_runtime::testing::H256>(),
+				ty: meta_type::<soil_runtime::testing::H256>(),
 				docs: maybe_docs(vec![" The output of the `Hashing` function."]),
 			},
             PalletAssociatedTypeMetadataIR {
 				name: "Hashing",
-				ty: meta_type::<sp_runtime::traits::BlakeTwo256>(),
+				ty: meta_type::<soil_runtime::traits::BlakeTwo256>(),
 				docs: maybe_docs(vec![" The hashing system (algorithm) being used in the runtime (e.g. Blake2)."]),
 			},
             PalletAssociatedTypeMetadataIR {

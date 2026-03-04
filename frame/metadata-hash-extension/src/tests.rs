@@ -24,7 +24,7 @@ use frame_support::{
 };
 use merkleized_metadata::{generate_metadata_digest, ExtraInfo};
 use sp_api::{Metadata, ProvideRuntimeApi};
-use sp_runtime::{
+use soil_runtime::{
 	traits::{ExtrinsicLike, TransactionExtension},
 	transaction_validity::{TransactionSource, UnknownTransaction},
 };
@@ -155,7 +155,7 @@ mod docs {
 
 		/// Unchecked extrinsic type as expected by this runtime.
 		pub type UncheckedExtrinsic =
-			sp_runtime::generic::UncheckedExtrinsic<Address, RuntimeCall, Signature, TxExtension>;
+			soil_runtime::generic::UncheckedExtrinsic<Address, RuntimeCall, Signature, TxExtension>;
 	}
 
 	// Put here to not have it in the docs as well.

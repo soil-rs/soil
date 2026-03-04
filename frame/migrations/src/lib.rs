@@ -170,7 +170,7 @@ use frame_system::{
 	pallet_prelude::{BlockNumberFor, *},
 	Pallet as System,
 };
-use sp_runtime::{SaturatedConversion, Saturating};
+use soil_runtime::{SaturatedConversion, Saturating};
 
 /// Points to the next migration to execute.
 #[derive(
@@ -618,7 +618,7 @@ pub mod pallet {
 			ensure_root(origin)?;
 
 			let started_at = started_at.unwrap_or(
-				System::<T>::block_number().saturating_add(sp_runtime::traits::One::one()),
+				System::<T>::block_number().saturating_add(soil_runtime::traits::One::one()),
 			);
 			Cursor::<T>::put(MigrationCursor::Active(ActiveCursor {
 				index,

@@ -41,8 +41,8 @@ use alloc::{vec, vec::Vec};
 use blake2::{Blake2b512, Digest};
 use frame_support::{pallet_prelude::*, weights::WeightMeter, DefaultNoBound};
 use frame_system::pallet_prelude::*;
-use sp_io::hashing::twox_256;
-use sp_runtime::{traits::Zero, FixedPointNumber, FixedU64};
+use soil_io::hashing::twox_256;
+use soil_runtime::{traits::Zero, FixedPointNumber, FixedU64};
 
 pub use pallet::*;
 pub use weights::WeightInfo;

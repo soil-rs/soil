@@ -18,7 +18,7 @@
 //! Tests for the module.
 
 use crate::{mock::*, *};
-use frame::{deps::sp_runtime::bounded_vec, testing_prelude::*};
+use frame::{deps::soil_runtime::bounded_vec, testing_prelude::*};
 
 #[test]
 fn basic_setup_works() {

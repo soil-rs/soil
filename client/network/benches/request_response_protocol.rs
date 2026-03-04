@@ -30,8 +30,8 @@ use sc_network::{
 	NotificationMetrics, NotificationService, PeerId, Roles,
 };
 use sc_network_common::{sync::message::BlockAnnouncesHandshake, ExHashT};
-use sp_core::H256;
-use sp_runtime::traits::{Block as BlockT, Zero};
+use soil_core::H256;
+use soil_runtime::traits::{Block as BlockT, Zero};
 use std::{sync::Arc, time::Duration};
 use substrate_test_runtime_client::runtime;
 use tokio::{sync::Mutex, task::JoinHandle};

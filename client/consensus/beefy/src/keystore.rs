@@ -18,9 +18,9 @@
 use codec::Decode;
 use log::warn;
 
-use sp_application_crypto::{key_types::BEEFY as BEEFY_KEY_TYPE, RuntimeAppPublic};
+use soil_application_crypto::{key_types::BEEFY as BEEFY_KEY_TYPE, RuntimeAppPublic};
 
-use sp_keystore::KeystorePtr;
+use soil_keystore::KeystorePtr;
 use std::marker::PhantomData;
 
 use sp_consensus_beefy::{AuthorityIdBound, BeefyAuthorityId};
@@ -28,7 +28,7 @@ use sp_consensus_beefy::{AuthorityIdBound, BeefyAuthorityId};
 use crate::{error, LOG_TARGET};
 
 /// A BEEFY specific keystore implemented as a `Newtype`. This is basically a
-/// wrapper around [`sp_keystore::Keystore`] and allows to customize
+/// wrapper around [`soil_keystore::Keystore`] and allows to customize
 /// common cryptographic functionality.
 pub(crate) struct BeefyKeystore<AuthorityId: AuthorityIdBound>(
 	Option<KeystorePtr>,
@@ -133,7 +133,7 @@ impl<AuthorityId: AuthorityIdBound> From<Option<KeystorePtr>> for BeefyKeystore<
 
 #[cfg(test)]
 pub mod tests {
-	use sp_application_crypto::AppCrypto;
+	use soil_application_crypto::AppCrypto;
 	#[cfg(feature = "bls-experimental")]
 	use sp_consensus_beefy::ecdsa_bls_crypto;
 	use sp_consensus_beefy::{
@@ -141,9 +141,9 @@ pub mod tests {
 		test_utils::{BeefySignerAuthority, Keyring},
 	};
 	#[cfg(feature = "bls-experimental")]
-	use sp_core::ecdsa_bls381;
-	use sp_core::{ecdsa, Pair as PairT};
-	use sp_keystore::{testing::MemoryKeystore, Keystore};
+	use soil_core::ecdsa_bls381;
+	use soil_core::{ecdsa, Pair as PairT};
+	use soil_keystore::{testing::MemoryKeystore, Keystore};
 
 	use super::*;
 	use crate::error::Error;
@@ -156,7 +156,7 @@ pub mod tests {
 		AuthorityId: AuthorityIdBound + From<<<AuthorityId as AppCrypto>::Pair as AppCrypto>::Public>,
 	>()
 	where
-		<AuthorityId as sp_runtime::RuntimeAppPublic>::Signature:
+		<AuthorityId as soil_runtime::RuntimeAppPublic>::Signature:
 			Send + Sync + From<<<AuthorityId as AppCrypto>::Pair as AppCrypto>::Signature>,
 		<AuthorityId as AppCrypto>::Pair: BeefySignerAuthority,
 	{
@@ -189,7 +189,7 @@ pub mod tests {
 	/// Generate key pair in the given store using the provided seed
 	fn generate_in_store<AuthorityId>(
 		store: KeystorePtr,
-		key_type: sp_application_crypto::KeyTypeId,
+		key_type: soil_application_crypto::KeyTypeId,
 		owner: Option<Keyring<AuthorityId>>,
 	) -> AuthorityId
 	where
@@ -233,7 +233,7 @@ pub mod tests {
 		AuthorityId: AuthorityIdBound + From<<<AuthorityId as AppCrypto>::Pair as AppCrypto>::Public>,
 	>()
 	where
-		<AuthorityId as sp_runtime::RuntimeAppPublic>::Signature:
+		<AuthorityId as soil_runtime::RuntimeAppPublic>::Signature:
 			Send + Sync + From<<<AuthorityId as AppCrypto>::Pair as AppCrypto>::Signature>,
 		<AuthorityId as AppCrypto>::Pair: BeefySignerAuthority,
 	{
@@ -301,7 +301,7 @@ pub mod tests {
 		AuthorityId: AuthorityIdBound + From<<<AuthorityId as AppCrypto>::Pair as AppCrypto>::Public>,
 	>()
 	where
-		<AuthorityId as sp_runtime::RuntimeAppPublic>::Signature:
+		<AuthorityId as soil_runtime::RuntimeAppPublic>::Signature:
 			Send + Sync + From<<<AuthorityId as AppCrypto>::Pair as AppCrypto>::Signature>,
 		<AuthorityId as AppCrypto>::Pair: BeefySignerAuthority,
 	{
@@ -342,7 +342,7 @@ pub mod tests {
 		AuthorityId: AuthorityIdBound + From<<<AuthorityId as AppCrypto>::Pair as AppCrypto>::Public>,
 	>()
 	where
-		<AuthorityId as sp_runtime::RuntimeAppPublic>::Signature:
+		<AuthorityId as soil_runtime::RuntimeAppPublic>::Signature:
 			Send + Sync + From<<<AuthorityId as AppCrypto>::Pair as AppCrypto>::Signature>,
 		<AuthorityId as AppCrypto>::Pair: BeefySignerAuthority,
 	{
@@ -378,7 +378,7 @@ pub mod tests {
 	>(
 		expected_error_message: &str,
 	) where
-		<AuthorityId as sp_runtime::RuntimeAppPublic>::Signature:
+		<AuthorityId as soil_runtime::RuntimeAppPublic>::Signature:
 			Send + Sync + From<<<AuthorityId as AppCrypto>::Pair as AppCrypto>::Signature>,
 		<AuthorityId as AppCrypto>::Pair: BeefySignerAuthority,
 	{
@@ -428,7 +428,7 @@ pub mod tests {
 		AuthorityId: AuthorityIdBound + From<<<AuthorityId as AppCrypto>::Pair as AppCrypto>::Public>,
 	>()
 	where
-		<AuthorityId as sp_runtime::RuntimeAppPublic>::Signature:
+		<AuthorityId as soil_runtime::RuntimeAppPublic>::Signature:
 			Send + Sync + From<<<AuthorityId as AppCrypto>::Pair as AppCrypto>::Signature>,
 		<AuthorityId as AppCrypto>::Pair: BeefySignerAuthority,
 	{
@@ -467,12 +467,12 @@ pub mod tests {
 		AuthorityId: AuthorityIdBound + From<<<AuthorityId as AppCrypto>::Pair as AppCrypto>::Public>,
 	>()
 	where
-		<AuthorityId as sp_runtime::RuntimeAppPublic>::Signature:
+		<AuthorityId as soil_runtime::RuntimeAppPublic>::Signature:
 			Send + Sync + From<<<AuthorityId as AppCrypto>::Pair as AppCrypto>::Signature>,
 		<AuthorityId as AppCrypto>::Pair: BeefySignerAuthority,
 	{
-		const TEST_TYPE: sp_application_crypto::KeyTypeId =
-			sp_application_crypto::KeyTypeId(*b"test");
+		const TEST_TYPE: soil_application_crypto::KeyTypeId =
+			soil_application_crypto::KeyTypeId(*b"test");
 
 		let store = keystore();
 

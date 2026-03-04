@@ -23,7 +23,7 @@ use super::{
 };
 use frame_support::traits::Randomness as RandomnessT;
 use frame_system::pallet_prelude::BlockNumberFor;
-use sp_runtime::traits::{Hash, One, Saturating};
+use soil_runtime::traits::{Hash, One, Saturating};
 
 /// Randomness usable by consensus protocols that **depend** upon finality and take action
 /// based upon on-chain commitments made during the epoch before the previous epoch.

@@ -46,7 +46,7 @@ use frame_support::{
 	weights::Weight,
 };
 use scale_info::{StaticTypeInfo, TypeInfo};
-use sp_runtime::{
+use soil_runtime::{
 	traits::{
 		DispatchInfoOf, DispatchOriginOf, Implication, PostDispatchInfoOf, TransactionExtension,
 		ValidateResult,
@@ -132,7 +132,7 @@ where
 	const IDENTIFIER: &'static str = S::IDENTIFIER;
 	type Implicit = S::Implicit;
 
-	fn metadata() -> alloc::vec::Vec<sp_runtime::traits::TransactionExtensionMetadata> {
+	fn metadata() -> alloc::vec::Vec<soil_runtime::traits::TransactionExtensionMetadata> {
 		S::metadata()
 	}
 

@@ -16,8 +16,8 @@
 // limitations under the License.
 
 use frame_support::construct_runtime;
-use sp_runtime::{generic, traits::BlakeTwo256};
-use sp_core::sr25519;
+use soil_runtime::{generic, traits::BlakeTwo256};
+use soil_core::sr25519;
 
 #[frame_support::pallet]
 mod pallet {

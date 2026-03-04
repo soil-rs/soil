@@ -161,10 +161,10 @@ pub mod tests {
 
 		// type Nonce = u32;
 		// type BlockNumber = u32;
-		// type Hash = sp_core::hash::H256;
-		// type Hashing = sp_runtime::traits::BlakeTwo256;
+		// type Hash = soil_core::hash::H256;
+		// type Hashing = soil_runtime::traits::BlakeTwo256;
 		// type AccountId = u64;
-		// type Lookup = sp_runtime::traits::IdentityLookup<u64>;
+		// type Lookup = soil_runtime::traits::IdentityLookup<u64>;
 		// type BlockHashCount = frame_support::traits::ConstU32<10>;
 		// type MaxConsumers = frame_support::traits::ConstU32<16>;
 		// type AccountData = ();

@@ -119,7 +119,7 @@ mod multiplier_tests {
 		weights::{Weight, WeightToFee},
 	};
 	use pallet_transaction_payment::{Multiplier, TargetedFeeAdjustment};
-	use sp_runtime::{
+	use soil_runtime::{
 		assert_eq_error_rate,
 		traits::{Convert, One, Zero},
 		BuildStorage, FixedPointNumber,
@@ -199,7 +199,7 @@ mod multiplier_tests {
 	where
 		F: Fn() -> (),
 	{
-		let mut t: sp_io::TestExternalities = frame_system::GenesisConfig::<Runtime>::default()
+		let mut t: soil_io::TestExternalities = frame_system::GenesisConfig::<Runtime>::default()
 			.build_storage()
 			.unwrap()
 			.into();

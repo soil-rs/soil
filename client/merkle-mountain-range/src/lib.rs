@@ -51,7 +51,7 @@ use sp_api::ProvideRuntimeApi;
 use sp_blockchain::{HeaderBackend, HeaderMetadata};
 use sp_consensus_beefy::MmrRootHash;
 use sp_mmr_primitives::{utils, LeafIndex, MmrApi};
-use sp_runtime::traits::{Block, Header, NumberFor};
+use soil_runtime::traits::{Block, Header, NumberFor};
 use std::{marker::PhantomData, sync::Arc};
 
 /// Logging target for the mmr gadget.
@@ -221,7 +221,7 @@ where
 #[cfg(test)]
 mod tests {
 	use crate::test_utils::run_test_with_mmr_gadget;
-	use sp_runtime::generic::BlockId;
+	use soil_runtime::generic::BlockId;
 	use std::time::Duration;
 
 	#[test]

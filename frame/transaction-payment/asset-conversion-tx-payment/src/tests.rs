@@ -30,7 +30,7 @@ use frame_support::{
 use frame_system as system;
 use mock::{ExtrinsicBaseWeight, *};
 use pallet_balances::Call as BalancesCall;
-use sp_runtime::{
+use soil_runtime::{
 	traits::{DispatchTransaction, StaticLookup},
 	BuildStorage,
 };
@@ -70,7 +70,7 @@ impl ExtBuilder {
 		TRANSACTION_BYTE_FEE.with(|v| *v.borrow_mut() = self.byte_fee);
 		WEIGHT_TO_FEE.with(|v| *v.borrow_mut() = self.weight_to_fee);
 	}
-	pub fn build(self) -> sp_io::TestExternalities {
+	pub fn build(self) -> soil_io::TestExternalities {
 		self.set_constants();
 		let mut t = frame_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
 		pallet_balances::GenesisConfig::<Runtime> {
@@ -969,7 +969,7 @@ fn transaction_payment_rejects_reduced_to_zero_in_native_asset() {
 				CALL,
 				&info,
 				len,
-				sp_runtime::transaction_validity::TransactionSource::External,
+				soil_runtime::transaction_validity::TransactionSource::External,
 				0,
 			);
 
@@ -1042,7 +1042,7 @@ fn transaction_payment_rejects_reduced_to_zero_in_asset() {
 				CALL,
 				&info,
 				len,
-				sp_runtime::transaction_validity::TransactionSource::External,
+				soil_runtime::transaction_validity::TransactionSource::External,
 				0,
 			);
 

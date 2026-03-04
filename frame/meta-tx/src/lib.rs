@@ -39,7 +39,7 @@
 //! ## Low-Level / Implementation Details
 //!
 //! The structure of a meta transaction is identical to the
-//! [`General`](sp_runtime::generic::Preamble::General) transaction.
+//! [`General`](soil_runtime::generic::Preamble::General) transaction.
 //! It contains the target call along with a configurable set of extensions and its associated
 //! version. Typically, these extensions include type like
 //! `pallet_verify_signature::VerifySignature`, which provides the signer address
@@ -69,7 +69,7 @@ use frame_support::{
 	pallet_prelude::*,
 };
 use frame_system::{pallet_prelude::*, RawOrigin as SystemOrigin};
-use sp_runtime::{
+use soil_runtime::{
 	generic::ExtensionVersion,
 	traits::{
 		AsTransactionAuthorizedOrigin, DispatchTransaction, Dispatchable, TransactionExtension,

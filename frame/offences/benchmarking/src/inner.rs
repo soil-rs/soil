@@ -35,7 +35,7 @@ use pallet_staking::{
 	Config as StakingConfig, Exposure, IndividualExposure, MaxNominationsOf, Pallet as Staking,
 	RewardDestination, ValidatorPrefs,
 };
-use sp_runtime::{
+use soil_runtime::{
 	traits::{Convert, Saturating, StaticLookup},
 	Perbill,
 };

@@ -22,12 +22,12 @@ use soil_metadata_ir::{
 	ItemDeprecationInfoIR, RuntimeApiMetadataIR, RuntimeApiMethodMetadataIR,
 	RuntimeApiMethodParamMetadataIR,
 };
-use sp_runtime::traits::Block as BlockT;
+use soil_runtime::traits::Block as BlockT;
 
 pub type BlockNumber = u64;
-pub type Header = sp_runtime::generic::Header<u32, sp_runtime::traits::BlakeTwo256>;
-pub type Block = sp_runtime::generic::Block<Header, UncheckedExtrinsic>;
-pub type UncheckedExtrinsic = sp_runtime::generic::UncheckedExtrinsic<u32, RuntimeCall, (), ()>;
+pub type Header = soil_runtime::generic::Header<u32, soil_runtime::traits::BlakeTwo256>;
+pub type Block = soil_runtime::generic::Block<Header, UncheckedExtrinsic>;
+pub type UncheckedExtrinsic = soil_runtime::generic::UncheckedExtrinsic<u32, RuntimeCall, (), ()>;
 
 #[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
 impl frame_system::Config for Runtime {
@@ -38,10 +38,10 @@ impl frame_system::Config for Runtime {
 	type RuntimeOrigin = RuntimeOrigin;
 	type Nonce = u64;
 	type RuntimeCall = RuntimeCall;
-	type Hash = sp_runtime::testing::H256;
-	type Hashing = sp_runtime::traits::BlakeTwo256;
+	type Hash = soil_runtime::testing::H256;
+	type Hashing = soil_runtime::traits::BlakeTwo256;
 	type AccountId = u64;
-	type Lookup = sp_runtime::traits::IdentityLookup<Self::AccountId>;
+	type Lookup = soil_runtime::traits::IdentityLookup<Self::AccountId>;
 	type Block = Block;
 	type RuntimeEvent = RuntimeEvent;
 	type Version = ();
@@ -111,7 +111,7 @@ mod apis {
 			fn execute_block(_: <Block as BlockT>::LazyBlock) {
 				unimplemented!()
 			}
-			fn initialize_block(_: &<Block as BlockT>::Header) -> sp_runtime::ExtrinsicInclusionMode {
+			fn initialize_block(_: &<Block as BlockT>::Header) -> soil_runtime::ExtrinsicInclusionMode {
 				unimplemented!()
 			}
 		}
@@ -231,7 +231,7 @@ fn runtime_metadata() {
 						name: "header",
 						ty: meta_type::<&<Block as BlockT>::Header>(),
 					}],
-					output: meta_type::<sp_runtime::ExtrinsicInclusionMode>(),
+					output: meta_type::<soil_runtime::ExtrinsicInclusionMode>(),
 					docs: maybe_docs(vec![" Initialize a block with the given header and return the runtime executive mode."]),
 					deprecation_info: ItemDeprecationInfoIR::NotDeprecated,
 				},

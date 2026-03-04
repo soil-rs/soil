@@ -153,8 +153,8 @@ use frame_support::{
 		Defensive, DefensiveOption, Imbalance, OnUnbalanced,
 	},
 };
-use sp_io::hashing::blake2_256;
-use sp_runtime::{
+use soil_io::hashing::blake2_256;
+use soil_runtime::{
 	traits::{CheckedAdd, CheckedSub, TrailingZeroInput, Zero},
 	ArithmeticError, Debug, DispatchResult, Perbill, Saturating,
 };
@@ -453,7 +453,7 @@ pub mod pallet {
 	#[pallet::hooks]
 	impl<T: Config> Hooks<BlockNumberFor<T>> for Pallet<T> {
 		#[cfg(feature = "try-runtime")]
-		fn try_state(_n: BlockNumberFor<T>) -> Result<(), sp_runtime::TryRuntimeError> {
+		fn try_state(_n: BlockNumberFor<T>) -> Result<(), soil_runtime::TryRuntimeError> {
 			Self::do_try_state()
 		}
 	}
@@ -766,7 +766,7 @@ use alloc::collections::btree_map::BTreeMap;
 
 #[cfg(any(test, feature = "try-runtime"))]
 impl<T: Config> Pallet<T> {
-	pub(crate) fn do_try_state() -> Result<(), sp_runtime::TryRuntimeError> {
+	pub(crate) fn do_try_state() -> Result<(), soil_runtime::TryRuntimeError> {
 		// build map to avoid reading storage multiple times.
 		let delegation_map = Delegators::<T>::iter().collect::<BTreeMap<_, _>>();
 		let ledger_map = Agents::<T>::iter().collect::<BTreeMap<_, _>>();
@@ -779,7 +779,7 @@ impl<T: Config> Pallet<T> {
 
 	fn check_delegates(
 		ledgers: BTreeMap<T::AccountId, AgentLedger<T>>,
-	) -> Result<(), sp_runtime::TryRuntimeError> {
+	) -> Result<(), soil_runtime::TryRuntimeError> {
 		for (agent, ledger) in ledgers {
 			let staked_value = ledger.stakeable_balance();
 
@@ -806,7 +806,7 @@ impl<T: Config> Pallet<T> {
 	fn check_delegators(
 		delegations: BTreeMap<T::AccountId, Delegation<T>>,
 		ledger: BTreeMap<T::AccountId, AgentLedger<T>>,
-	) -> Result<(), sp_runtime::TryRuntimeError> {
+	) -> Result<(), soil_runtime::TryRuntimeError> {
 		let mut delegation_aggregation = BTreeMap::<T::AccountId, BalanceOf<T>>::new();
 		for (delegator, delegation) in delegations.iter() {
 			ensure!(!Self::is_agent(delegator), "delegator cannot be an agent");

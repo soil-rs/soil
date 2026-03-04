@@ -23,13 +23,13 @@ use sc_client_api::{
 };
 use sc_executor::{RuntimeVersion, RuntimeVersionOf};
 use sp_api::ProofRecorder;
-use sp_core::traits::{CallContext, CodeExecutor};
-use sp_externalities::Extensions;
-use sp_runtime::{
+use soil_core::traits::{CallContext, CodeExecutor};
+use soil_externalities::Extensions;
+use soil_runtime::{
 	generic::BlockId,
 	traits::{Block as BlockT, HashingFor},
 };
-use sp_state_machine::{backend::AsTrieBackend, OverlayedChanges, StateMachine, StorageProof};
+use soil_state_machine::{backend::AsTrieBackend, OverlayedChanges, StateMachine, StorageProof};
 use std::{cell::RefCell, sync::Arc};
 
 /// Call executor that executes methods locally, querying all required
@@ -104,7 +104,7 @@ where
 			self.backend.blockchain().expect_block_number_from_id(&BlockId::Hash(at_hash))?;
 		let state = self.backend.state_at(at_hash, context.into())?;
 
-		let state_runtime_code = sp_state_machine::backend::BackendRuntimeCode::new(&state);
+		let state_runtime_code = soil_state_machine::backend::BackendRuntimeCode::new(&state);
 		let runtime_code =
 			state_runtime_code.runtime_code().map_err(sp_blockchain::Error::RuntimeCode)?;
 
@@ -144,7 +144,7 @@ where
 		// It is important to extract the runtime code here before we create the proof
 		// recorder to not record it. We also need to fetch the runtime code from `state` to
 		// make sure we use the caching layers.
-		let state_runtime_code = sp_state_machine::backend::BackendRuntimeCode::new(&state);
+		let state_runtime_code = soil_state_machine::backend::BackendRuntimeCode::new(&state);
 
 		let runtime_code =
 			state_runtime_code.runtime_code().map_err(sp_blockchain::Error::RuntimeCode)?;
@@ -155,7 +155,7 @@ where
 			Some(recorder) => {
 				let trie_state = state.as_trie_backend();
 
-				let backend = sp_state_machine::TrieBackendBuilder::wrap(&trie_state)
+				let backend = soil_state_machine::TrieBackendBuilder::wrap(&trie_state)
 					.with_recorder(recorder.clone())
 					.build();
 
@@ -192,7 +192,7 @@ where
 
 	fn runtime_version(&self, at_hash: Block::Hash) -> sp_blockchain::Result<RuntimeVersion> {
 		let state = self.backend.state_at(at_hash, backend::TrieCacheContext::Untrusted)?;
-		let state_runtime_code = sp_state_machine::backend::BackendRuntimeCode::new(&state);
+		let state_runtime_code = soil_state_machine::backend::BackendRuntimeCode::new(&state);
 
 		let runtime_code =
 			state_runtime_code.runtime_code().map_err(sp_blockchain::Error::RuntimeCode)?;
@@ -213,12 +213,12 @@ where
 
 		let trie_backend = state.as_trie_backend();
 
-		let state_runtime_code = sp_state_machine::backend::BackendRuntimeCode::new(trie_backend);
+		let state_runtime_code = soil_state_machine::backend::BackendRuntimeCode::new(trie_backend);
 		let runtime_code =
 			state_runtime_code.runtime_code().map_err(sp_blockchain::Error::RuntimeCode)?;
 		let runtime_code = self.code_provider.maybe_override_code(runtime_code, &state, at_hash)?.0;
 
-		sp_state_machine::prove_execution_on_trie_backend(
+		soil_state_machine::prove_execution_on_trie_backend(
 			trie_backend,
 			&mut Default::default(),
 			&self.executor,
@@ -238,8 +238,8 @@ where
 {
 	fn runtime_version(
 		&self,
-		ext: &mut dyn sp_externalities::Externalities,
-		runtime_code: &sp_core::traits::RuntimeCode,
+		ext: &mut dyn soil_externalities::Externalities,
+		runtime_code: &soil_core::traits::RuntimeCode,
 	) -> Result<sp_version::RuntimeVersion, sc_executor::error::Error> {
 		RuntimeVersionOf::runtime_version(&self.executor, ext, runtime_code)
 	}

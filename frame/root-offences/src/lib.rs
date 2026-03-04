@@ -31,7 +31,7 @@ extern crate alloc;
 use alloc::{vec, vec::Vec};
 pub use pallet::*;
 use pallet_session::historical::IdentificationTuple;
-use sp_runtime::{traits::Convert, Perbill};
+use soil_runtime::{traits::Convert, Perbill};
 use sp_staking::offence::{Kind, Offence, OnOffenceHandler};
 
 #[frame_support::pallet]

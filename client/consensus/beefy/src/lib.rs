@@ -46,8 +46,8 @@ use sp_consensus::{Error as ConsensusError, SyncOracle};
 use sp_consensus_beefy::{
 	AuthorityIdBound, BeefyApi, ConsensusLog, PayloadProvider, ValidatorSet, BEEFY_ENGINE_ID,
 };
-use sp_keystore::KeystorePtr;
-use sp_runtime::traits::{Block, Header as HeaderT, NumberFor, Zero};
+use soil_keystore::KeystorePtr;
+use soil_runtime::traits::{Block, Header as HeaderT, NumberFor, Zero};
 use std::{
 	collections::{BTreeMap, VecDeque},
 	future::Future,
@@ -80,7 +80,7 @@ use crate::{
 pub use communication::beefy_protocol_name::{
 	gossip_protocol_name, justifications_protocol_name as justifs_protocol_name,
 };
-use sp_runtime::generic::OpaqueDigestItemId;
+use soil_runtime::generic::OpaqueDigestItemId;
 
 mod fisherman;
 #[cfg(test)]

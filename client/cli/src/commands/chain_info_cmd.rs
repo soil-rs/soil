@@ -20,7 +20,7 @@ use crate::{CliConfiguration, DatabaseParams, PruningParams, Result as CliResult
 use codec::{Decode, Encode};
 use sc_client_api::{backend::Backend as BackendT, blockchain::HeaderBackend};
 use sp_blockchain::Info;
-use sp_runtime::traits::{Block as BlockT, Header as HeaderT};
+use soil_runtime::traits::{Block as BlockT, Header as HeaderT};
 use std::{fmt::Debug, io};
 
 /// The `chain-info` subcommand used to output db meta columns information.

@@ -23,7 +23,7 @@ use crate::*;
 use frame_benchmarking::v2::*;
 use frame_support::traits::Get;
 use frame_system::RawOrigin;
-use sp_runtime::traits::Bounded;
+use soil_runtime::traits::Bounded;
 
 const SEED: u32 = 0;
 

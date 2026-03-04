@@ -19,7 +19,7 @@
 //!
 //! See the [`crate::traits::fungibles`] doc for more information about fungibles traits.
 
-use sp_runtime::DispatchResult;
+use soil_runtime::DispatchResult;
 
 pub trait Inspect<AccountId>: super::Inspect<AccountId> {
 	// Get owner for an AssetId.

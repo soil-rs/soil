@@ -22,7 +22,7 @@ use frame_support::{
 	ensure,
 	traits::{ExistenceRequirement, Get},
 };
-use sp_runtime::{DispatchError, DispatchResult};
+use soil_runtime::{DispatchError, DispatchResult};
 
 impl<T: Config<I>, I: 'static> Pallet<T, I> {
 	/// Perform a transfer of an item from one account to another within a collection.

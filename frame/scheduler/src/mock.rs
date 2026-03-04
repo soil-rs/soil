@@ -25,8 +25,8 @@ use frame_support::{
 	traits::{ConstU32, Contains, EitherOfDiverse, EqualPrivilegeOnly},
 };
 use frame_system::{EnsureRoot, EnsureSignedBy};
-use sp_runtime::{BuildStorage, Perbill};
-use sp_weights::constants::WEIGHT_REF_TIME_PER_SECOND;
+use soil_runtime::{BuildStorage, Perbill};
+use soil_weights::constants::WEIGHT_REF_TIME_PER_SECOND;
 
 // Logger module to track execution.
 #[frame_support::pallet]
@@ -235,7 +235,7 @@ impl Config for Test {
 
 pub type LoggerCall = logger::Call<Test>;
 
-pub fn new_test_ext() -> sp_io::TestExternalities {
+pub fn new_test_ext() -> soil_io::TestExternalities {
 	let t = system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	t.into()
 }

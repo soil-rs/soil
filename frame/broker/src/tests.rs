@@ -25,7 +25,7 @@ use frame_support::{
 };
 use frame_system::RawOrigin::Root;
 use pretty_assertions::assert_eq;
-use sp_runtime::{
+use soil_runtime::{
 	traits::{BadOrigin, Get},
 	DispatchError, Perbill, TokenError,
 };

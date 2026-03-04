@@ -19,7 +19,7 @@
 // This is separated into its own crate due to cyclic dependency issues.
 
 use alloc::vec::Vec;
-use sp_runtime::traits::{One, StaticLookup};
+use soil_runtime::traits::{One, StaticLookup};
 
 use frame_benchmarking::v2::*;
 use frame_support::{
@@ -150,7 +150,7 @@ mod benchmarks {
 /// proof for the first authority and returns its key and the proof.
 fn check_membership_proof_setup<T: Config>(
 	n: u32,
-) -> ((sp_runtime::KeyTypeId, &'static [u8; 32]), sp_session::MembershipProof) {
+) -> ((soil_runtime::KeyTypeId, &'static [u8; 32]), sp_session::MembershipProof) {
 	pallet_staking::ValidatorCount::<T>::put(n);
 
 	// create validators and set random session keys
@@ -186,7 +186,7 @@ fn check_membership_proof_setup<T: Config>(
 		Session::<T>::rotate_session();
 	}
 
-	let key = (sp_runtime::KeyTypeId(*b"babe"), &[0u8; 32]);
+	let key = (soil_runtime::KeyTypeId(*b"babe"), &[0u8; 32]);
 
 	(key, Historical::<T>::prove(key).unwrap())
 }

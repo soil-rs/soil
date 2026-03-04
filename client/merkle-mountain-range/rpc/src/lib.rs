@@ -32,12 +32,12 @@ use serde::{Deserialize, Serialize};
 
 use sp_api::{ApiExt, ProvideRuntimeApi};
 use sp_blockchain::HeaderBackend;
-use sp_core::{
+use soil_core::{
 	offchain::{storage::OffchainDb, OffchainDbExt, OffchainStorage},
 	Bytes,
 };
 use sp_mmr_primitives::{AncestryProof as MmrAncestryProof, Error as MmrError, LeafProof};
-use sp_runtime::traits::{Block as BlockT, NumberFor};
+use soil_runtime::traits::{Block as BlockT, NumberFor};
 
 pub use sp_mmr_primitives::MmrApi as MmrRuntimeApi;
 
@@ -299,7 +299,7 @@ fn invalid_params(e: impl std::error::Error) -> ErrorObjectOwned {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use sp_core::H256;
+	use soil_core::H256;
 
 	#[test]
 	fn should_serialize_leaf_proof() {

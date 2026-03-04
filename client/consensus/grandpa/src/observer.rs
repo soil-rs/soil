@@ -34,8 +34,8 @@ use sc_utils::mpsc::TracingUnboundedReceiver;
 use sp_blockchain::HeaderMetadata;
 use sp_consensus::SelectChain;
 use sp_consensus_grandpa::AuthorityId;
-use sp_keystore::KeystorePtr;
-use sp_runtime::traits::{Block as BlockT, NumberFor};
+use soil_keystore::KeystorePtr;
+use soil_runtime::traits::{Block as BlockT, NumberFor};
 
 use crate::{
 	authorities::SharedAuthoritySet,

@@ -22,8 +22,8 @@ use codec::Encode;
 use frame_benchmarking::v2::*;
 use frame_support::{dispatch::DispatchClass, storage, traits::Get};
 use frame_system::{Call, Pallet as System, RawOrigin};
-use sp_core::storage::well_known_keys;
-use sp_runtime::traits::Hash;
+use soil_core::storage::well_known_keys;
+use soil_runtime::traits::Hash;
 
 pub struct Pallet<T: Config>(System<T>);
 pub trait Config: frame_system::Config {

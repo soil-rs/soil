@@ -43,7 +43,7 @@ use codec::{Decode, Encode};
 use sc_client_api::backend::Backend;
 use sp_blockchain::{Backend as BlockchainBackend, HeaderBackend};
 use sp_consensus_grandpa::GRANDPA_ENGINE_ID;
-use sp_runtime::{
+use soil_runtime::{
 	generic::BlockId,
 	traits::{Block as BlockT, Header as HeaderT, NumberFor, One},
 };
@@ -265,7 +265,7 @@ mod tests {
 	use sc_client_api::{apply_aux, LockImportRun};
 	use sp_consensus::BlockOrigin;
 	use sp_consensus_grandpa::GRANDPA_ENGINE_ID as ID;
-	use sp_core::crypto::UncheckedFrom;
+	use soil_core::crypto::UncheckedFrom;
 	use sp_keyring::Ed25519Keyring;
 	use substrate_test_runtime_client::{
 		runtime::{Block, Header, H256},
@@ -437,8 +437,8 @@ mod tests {
 		auth: &[Ed25519Keyring],
 	) -> finality_grandpa::Commit<H256, u64, S, Id>
 	where
-		Id: From<sp_core::ed25519::Public>,
-		S: From<sp_core::ed25519::Signature>,
+		Id: From<soil_core::ed25519::Public>,
+		S: From<soil_core::ed25519::Signature>,
 	{
 		let mut precommits = Vec::new();
 

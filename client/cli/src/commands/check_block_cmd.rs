@@ -23,7 +23,7 @@ use crate::{
 };
 use clap::Parser;
 use sc_client_api::{BlockBackend, HeaderBackend};
-use sp_runtime::traits::{Block as BlockT, Header as HeaderT};
+use soil_runtime::traits::{Block as BlockT, Header as HeaderT};
 use std::{fmt::Debug, str::FromStr, sync::Arc};
 
 /// The `check-block` command used to validate blocks.

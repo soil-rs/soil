@@ -31,7 +31,7 @@ use fungible::{
 	FreezeConsideration, HoldConsideration, Inspect, InspectFreeze, InspectHold,
 	LoneFreezeConsideration, LoneHoldConsideration, Mutate, MutateFreeze, MutateHold, Unbalanced,
 };
-use sp_core::ConstU64;
+use soil_core::ConstU64;
 
 #[test]
 fn inspect_trait_reducible_balance_basic_works() {

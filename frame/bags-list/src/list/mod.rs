@@ -38,7 +38,7 @@ use frame_support::{
 	CloneNoBound, DebugNoBound, DefaultNoBound, EqNoBound, PalletError, PartialEqNoBound,
 };
 use scale_info::TypeInfo;
-use sp_runtime::traits::{Bounded, Zero};
+use soil_runtime::traits::{Bounded, Zero};
 
 #[cfg(any(
 	test,
@@ -49,7 +49,7 @@ use sp_runtime::traits::{Bounded, Zero};
 ))]
 use alloc::vec::Vec;
 #[cfg(any(test, feature = "try-runtime", feature = "fuzz"))]
-use sp_runtime::TryRuntimeError;
+use soil_runtime::TryRuntimeError;
 
 #[derive(
 	Debug,

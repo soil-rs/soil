@@ -21,9 +21,9 @@
 use sc_client_api::backend;
 use sc_executor::RuntimeVersionOf;
 use sp_blockchain::{HeaderBackend, Result};
-use sp_core::traits::{FetchRuntimeCode, RuntimeCode, WrappedRuntimeCode};
-use sp_runtime::traits::{Block as BlockT, NumberFor};
-use sp_state_machine::BasicExternalities;
+use soil_core::traits::{FetchRuntimeCode, RuntimeCode, WrappedRuntimeCode};
+use soil_runtime::traits::{Block as BlockT, NumberFor};
+use soil_state_machine::BasicExternalities;
 use sp_version::RuntimeVersion;
 use std::{
 	collections::{hash_map::DefaultHasher, HashMap},

@@ -34,9 +34,9 @@ use frame_support::{
 	weights::constants::{WEIGHT_PROOF_SIZE_PER_MB, WEIGHT_REF_TIME_PER_SECOND},
 };
 use remote_externalities::{Builder, Mode, OnlineConfig};
-use sp_core::{ConstU32, H256};
+use soil_core::{ConstU32, H256};
 use sp_npos_elections::BalancingConfig;
-use sp_runtime::{Perbill, Weight};
+use soil_runtime::{Perbill, Weight};
 
 pub mod polkadot {
 	use super::*;
@@ -58,14 +58,14 @@ pub mod polkadot {
 		pub struct PolkadotSolution::<
 			VoterIndex = u32,
 			TargetIndex = u16,
-			Accuracy = sp_runtime::PerU16,
+			Accuracy = soil_runtime::PerU16,
 			MaxVoters = ConstU32<22_500>,
 		>(16)
 	);
 
 	/// Some configs are a bit inconsistent, but we don't care about them for now.
 	impl crate::MinerConfig for MinerConfig {
-		type AccountId = sp_runtime::AccountId32;
+		type AccountId = soil_runtime::AccountId32;
 		type MaxBackersPerWinner = ConstU32<1024>;
 		type MaxLength = ConstU32<{ 4 * 1024 * 1024 }>;
 		type MaxVotesPerVoter = ConstU32<16>;
@@ -103,14 +103,14 @@ pub mod kusama {
 		pub struct PolkadotSolution::<
 			VoterIndex = u32,
 			TargetIndex = u16,
-			Accuracy = sp_runtime::PerU16,
+			Accuracy = soil_runtime::PerU16,
 			MaxVoters = ConstU32<12_500>,
 		>(24)
 	);
 
 	/// Some configs are a bit inconsistent, but we don't care about them for now.
 	impl crate::MinerConfig for MinerConfig {
-		type AccountId = sp_runtime::AccountId32;
+		type AccountId = soil_runtime::AccountId32;
 		type MaxBackersPerWinner = ConstU32<1024>;
 		type MaxLength = ConstU32<{ 4 * 1024 * 1024 }>;
 		type MaxVotesPerVoter = ConstU32<24>;
@@ -145,8 +145,8 @@ impl<T: MinerConfig> HackyGetSnapshot<T> {
 		UntypedSnapshotOf<T>: Decode,
 	{
 		let key = [
-			sp_core::hashing::twox_128(b"ElectionProviderMultiPhase"),
-			sp_core::hashing::twox_128(b"Snapshot"),
+			soil_core::hashing::twox_128(b"ElectionProviderMultiPhase"),
+			soil_core::hashing::twox_128(b"Snapshot"),
 		]
 		.concat();
 		frame_support::storage::unhashed::get::<UntypedSnapshotOf<T>>(&key).unwrap()
@@ -154,15 +154,15 @@ impl<T: MinerConfig> HackyGetSnapshot<T> {
 
 	fn desired_targets() -> u32 {
 		let key = [
-			sp_core::hashing::twox_128(b"ElectionProviderMultiPhase"),
-			sp_core::hashing::twox_128(b"DesiredTargets"),
+			soil_core::hashing::twox_128(b"ElectionProviderMultiPhase"),
+			soil_core::hashing::twox_128(b"DesiredTargets"),
 		]
 		.concat();
 		frame_support::storage::unhashed::get::<u32>(&key).unwrap()
 	}
 }
 
-pub type FakeBlock = sp_runtime::testing::Block<sp_runtime::testing::TestXt<(), ()>>;
+pub type FakeBlock = soil_runtime::testing::Block<soil_runtime::testing::TestXt<(), ()>>;
 
 pub struct Balancing;
 impl Get<Option<BalancingConfig>> for Balancing {

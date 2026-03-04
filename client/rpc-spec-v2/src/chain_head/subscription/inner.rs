@@ -19,7 +19,7 @@
 use futures::channel::oneshot;
 use parking_lot::Mutex;
 use sc_client_api::Backend;
-use sp_runtime::traits::Block as BlockT;
+use soil_runtime::traits::Block as BlockT;
 use std::{
 	collections::{hash_map::Entry, HashMap, HashSet},
 	sync::Arc,
@@ -786,7 +786,7 @@ mod tests {
 	use sc_block_builder::BlockBuilderBuilder;
 	use sc_service::client::new_with_backend;
 	use sp_consensus::BlockOrigin;
-	use sp_core::{testing::TaskExecutor, H256};
+	use soil_core::{testing::TaskExecutor, H256};
 	use substrate_test_runtime_client::{
 		prelude::*,
 		runtime::{Block, RuntimeApi},

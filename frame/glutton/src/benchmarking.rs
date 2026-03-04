@@ -23,7 +23,7 @@
 use frame_benchmarking::v2::*;
 use frame_support::{pallet_prelude::*, weights::constants::*};
 use frame_system::RawOrigin;
-use sp_runtime::{traits::One, Perbill};
+use soil_runtime::{traits::One, Perbill};
 
 use crate::*;
 

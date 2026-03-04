@@ -23,14 +23,14 @@ use frame_support::{
 	traits::Get,
 };
 use scale_info::TypeInfo;
-use sp_runtime::{
+use soil_runtime::{
 	traits::{
 		DispatchInfoOf, Dispatchable, PostDispatchInfoOf, TransactionExtension, ValidateResult,
 	},
 	transaction_validity::{InvalidTransaction, TransactionValidityError, ValidTransaction},
 	DispatchResult,
 };
-use sp_weights::Weight;
+use soil_weights::Weight;
 
 /// Block resource (weight) limit check.
 ///
@@ -315,7 +315,7 @@ mod tests {
 	};
 	use core::marker::PhantomData;
 	use frame_support::{assert_err, assert_ok, dispatch::Pays, weights::Weight};
-	use sp_runtime::traits::DispatchTransaction;
+	use soil_runtime::traits::DispatchTransaction;
 
 	fn block_weights() -> crate::limits::BlockWeights {
 		<Test as crate::Config>::BlockWeights::get()

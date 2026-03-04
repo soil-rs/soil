@@ -42,7 +42,7 @@ use codec::{Decode, DecodeWithMemTracking, Encode};
 use frame_support::{pallet_prelude::Weight, DebugNoBound};
 use frame_system::Config;
 use scale_info::TypeInfo;
-use sp_runtime::{
+use soil_runtime::{
 	impl_tx_ext_default,
 	traits::TransactionExtension,
 	transaction_validity::{TransactionValidityError, UnknownTransaction},

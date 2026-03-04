@@ -23,7 +23,7 @@ use crate::Config;
 use codec::{Decode, DecodeWithMemTracking, Encode};
 use frame_support::{dispatch::DispatchInfo, pallet_prelude::TransactionSource, DebugNoBound};
 use scale_info::TypeInfo;
-use sp_runtime::{
+use soil_runtime::{
 	traits::{
 		AsSystemOriginSigner, CheckedAdd, DispatchInfoOf, Dispatchable, One, PostDispatchInfoOf,
 		TransactionExtension, ValidateResult, Zero,
@@ -33,7 +33,7 @@ use sp_runtime::{
 	},
 	DispatchResult, Saturating,
 };
-use sp_weights::Weight;
+use soil_weights::Weight;
 
 /// Nonce check and increment to give replay protection for transactions.
 ///
@@ -146,7 +146,7 @@ where
 	type Val = Val<T>;
 	type Pre = Pre;
 
-	fn weight(&self, _: &T::RuntimeCall) -> sp_weights::Weight {
+	fn weight(&self, _: &T::RuntimeCall) -> soil_weights::Weight {
 		<T::ExtensionsWeightInfo as super::WeightInfo>::check_nonce()
 	}
 
@@ -212,7 +212,7 @@ mod tests {
 	use frame_support::{
 		assert_ok, assert_storage_noop, dispatch::GetDispatchInfo, traits::OriginTrait,
 	};
-	use sp_runtime::{
+	use soil_runtime::{
 		traits::{AsTransactionAuthorizedOrigin, DispatchTransaction, TxBaseImplication},
 		transaction_validity::TransactionSource::External,
 	};

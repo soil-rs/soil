@@ -41,7 +41,7 @@
 use crate::import_queue::{JustificationImportResult, Link, RuntimeOrigin};
 use futures::prelude::*;
 use sc_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
-use sp_runtime::traits::{Block as BlockT, NumberFor};
+use soil_runtime::traits::{Block as BlockT, NumberFor};
 use std::{
 	pin::Pin,
 	task::{Context, Poll},

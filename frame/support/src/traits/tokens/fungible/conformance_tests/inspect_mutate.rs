@@ -23,7 +23,7 @@ use crate::traits::{
 };
 use core::fmt::Debug;
 use soil_arithmetic::traits::AtLeast8BitUnsigned;
-use sp_runtime::traits::{Bounded, Zero};
+use soil_runtime::traits::{Bounded, Zero};
 
 /// Test the `mint_into` function for successful token minting.
 ///

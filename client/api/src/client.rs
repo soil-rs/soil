@@ -19,8 +19,8 @@
 //! A set of APIs supported by the client along with their primitives.
 
 use sp_consensus::BlockOrigin;
-use sp_core::storage::StorageKey;
-use sp_runtime::{
+use soil_core::storage::StorageKey;
+use soil_runtime::{
 	generic::SignedBlock,
 	traits::{Block as BlockT, NumberFor},
 	Justifications,

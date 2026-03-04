@@ -33,9 +33,9 @@ use sp_api::{
 	TransactionOutcome,
 };
 use sp_blockchain::{ApplyExtrinsicFailed, Error, HeaderBackend};
-use sp_core::traits::CallContext;
-use sp_externalities::Extensions;
-use sp_runtime::{
+use soil_core::traits::CallContext;
+use soil_externalities::Extensions;
+use soil_runtime::{
 	legacy,
 	traits::{Block as BlockT, Hash, HashingFor, Header as HeaderT, NumberFor, One},
 	Digest, ExtrinsicInclusionMode,
@@ -381,8 +381,8 @@ where
 mod tests {
 	use super::*;
 	use sp_blockchain::HeaderBackend;
-	use sp_core::Blake2Hasher;
-	use sp_state_machine::Backend;
+	use soil_core::Blake2Hasher;
+	use soil_state_machine::Backend;
 	use substrate_test_runtime_client::{
 		runtime::{Block, ExtrinsicBuilder},
 		DefaultTestClientBuilderExt, TestClientBuilderExt,
@@ -410,11 +410,11 @@ mod tests {
 		let genesis_state_root = client.header(genesis_hash).unwrap().unwrap().state_root;
 
 		let backend =
-			sp_state_machine::create_proof_check_backend::<Blake2Hasher>(genesis_state_root, proof)
+			soil_state_machine::create_proof_check_backend::<Blake2Hasher>(genesis_state_root, proof)
 				.unwrap();
 
 		assert!(backend
-			.storage(&sp_core::storage::well_known_keys::CODE)
+			.storage(&soil_core::storage::well_known_keys::CODE)
 			.unwrap_err()
 			.contains("Database missing expected key"),);
 	}

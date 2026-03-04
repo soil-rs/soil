@@ -27,14 +27,14 @@ use crate::{Database, DatabaseSource, DbHash};
 use codec::Decode;
 use sc_client_api::blockchain::{BlockGap, BlockGapType};
 use soil_database::Transaction;
-use sp_runtime::{
+use soil_runtime::{
 	generic::BlockId,
 	traits::{
 		Block as BlockT, Header as HeaderT, NumberFor, UniqueSaturatedFrom, UniqueSaturatedInto,
 		Zero,
 	},
 };
-use sp_trie::DBValue;
+use soil_trie::DBValue;
 
 /// Number of columns in the db. Must be the same for both full && light dbs.
 /// Otherwise RocksDb will fail to open database && check its type.
@@ -172,7 +172,7 @@ pub fn block_id_to_lookup_key<Block>(
 ) -> Result<Option<Vec<u8>>, sp_blockchain::Error>
 where
 	Block: BlockT,
-	::sp_runtime::traits::NumberFor<Block>: UniqueSaturatedFrom<u64> + UniqueSaturatedInto<u64>,
+	::soil_runtime::traits::NumberFor<Block>: UniqueSaturatedFrom<u64> + UniqueSaturatedInto<u64>,
 {
 	Ok(match id {
 		BlockId::Number(n) => db.get(key_lookup_col, number_index_key(n)?.as_ref()),
@@ -619,7 +619,7 @@ impl<'a, 'b> codec::Input for JoinInput<'a, 'b> {
 mod tests {
 	use super::*;
 	use codec::Input;
-	use sp_runtime::testing::{Block as RawBlock, MockCallU64, TestXt};
+	use soil_runtime::testing::{Block as RawBlock, MockCallU64, TestXt};
 
 	pub type UncheckedXt = TestXt<MockCallU64, ()>;
 	type Block = RawBlock<UncheckedXt>;

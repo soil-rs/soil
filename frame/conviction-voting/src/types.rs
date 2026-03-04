@@ -21,7 +21,7 @@ use codec::{Codec, Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use core::{fmt::Debug, marker::PhantomData};
 use frame_support::{traits::VoteTally, CloneNoBound, DebugNoBound, EqNoBound, PartialEqNoBound};
 use scale_info::TypeInfo;
-use sp_runtime::traits::{Saturating, Zero};
+use soil_runtime::traits::{Saturating, Zero};
 
 use super::*;
 use crate::{AccountVote, Conviction, Vote};

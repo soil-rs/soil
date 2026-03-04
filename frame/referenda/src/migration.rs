@@ -23,7 +23,7 @@ use frame_support::{pallet_prelude::*, storage_alias, traits::OnRuntimeUpgrade};
 use log;
 
 #[cfg(feature = "try-runtime")]
-use sp_runtime::TryRuntimeError;
+use soil_runtime::TryRuntimeError;
 
 type SystemBlockNumberFor<T> = frame_system::pallet_prelude::BlockNumberFor<T>;
 
@@ -326,7 +326,7 @@ pub mod test {
 	#[test]
 	pub fn referendum_status_v0() {
 		// make sure the bytes of the encoded referendum v0 is decodable.
-		let ongoing_encoded = sp_core::Bytes::from_str("0x00000000012c01082a0000000000000004000100000000000000010000000000000001000000000000000a00000000000000000000000000000000000100").unwrap();
+		let ongoing_encoded = soil_core::Bytes::from_str("0x00000000012c01082a0000000000000004000100000000000000010000000000000001000000000000000a00000000000000000000000000000000000100").unwrap();
 		let ongoing_dec = v0::ReferendumInfoOf::<T, ()>::decode(&mut &*ongoing_encoded).unwrap();
 		let ongoing = v0::ReferendumInfoOf::<T, ()>::Ongoing(create_status_v0());
 		assert_eq!(ongoing, ongoing_dec);

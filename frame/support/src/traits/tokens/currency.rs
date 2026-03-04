@@ -25,7 +25,7 @@ use super::{
 	misc::{Balance, ExistenceRequirement, WithdrawReasons},
 };
 use crate::{dispatch::DispatchResult, traits::Get};
-use sp_runtime::{traits::MaybeSerializeDeserialize, DispatchError};
+use soil_runtime::{traits::MaybeSerializeDeserialize, DispatchError};
 
 mod reservable;
 pub use reservable::{NamedReservableCurrency, ReservableCurrency, ReservableWithName};

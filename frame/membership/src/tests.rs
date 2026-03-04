@@ -20,7 +20,7 @@
 use crate as pallet_membership;
 use crate::{mock::*, *};
 
-use sp_runtime::{bounded_vec, traits::BadOrigin, BuildStorage};
+use soil_runtime::{bounded_vec, traits::BadOrigin, BuildStorage};
 
 use frame_support::{assert_noop, assert_ok, assert_storage_noop, traits::StorageVersion};
 

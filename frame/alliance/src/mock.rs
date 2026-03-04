@@ -17,9 +17,9 @@
 
 //! Test utilities
 
-pub use sp_core::H256;
-use sp_runtime::traits::Hash;
-pub use sp_runtime::{
+pub use soil_core::H256;
+use soil_runtime::traits::Hash;
+pub use soil_runtime::{
 	traits::{BlakeTwo256, IdentifyAccount, Lazy, Verify},
 	BuildStorage,
 };
@@ -63,7 +63,7 @@ parameter_types! {
 	pub const MotionDuration: BlockNumber = MOTION_DURATION_IN_BLOCKS;
 	pub const MaxProposals: u32 = 100;
 	pub const MaxMembers: u32 = 100;
-	pub MaxProposalWeight: Weight = sp_runtime::Perbill::from_percent(50) * BlockWeights::get().max_block;
+	pub MaxProposalWeight: Weight = soil_runtime::Perbill::from_percent(50) * BlockWeights::get().max_block;
 }
 type AllianceCollective = pallet_collective::Instance1;
 impl pallet_collective::Config<AllianceCollective> for Test {
@@ -281,7 +281,7 @@ pub(super) fn test_identity_info_deposit() -> <Test as pallet_balances::Config>:
 	byte_deposit * test_identity_info().encoded_size() as u64 + basic_deposit
 }
 
-pub fn new_test_ext() -> sp_io::TestExternalities {
+pub fn new_test_ext() -> soil_io::TestExternalities {
 	let mut t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 
 	pallet_balances::GenesisConfig::<Test> {
@@ -309,7 +309,7 @@ pub fn new_test_ext() -> sp_io::TestExternalities {
 	.assimilate_storage(&mut t)
 	.unwrap();
 
-	let mut ext = sp_io::TestExternalities::new(t);
+	let mut ext = soil_io::TestExternalities::new(t);
 	ext.execute_with(|| {
 		assert_ok!(Identity::add_registrar(RuntimeOrigin::signed(1), 1));
 
@@ -393,7 +393,7 @@ pub fn build_and_execute(test: impl FnOnce()) {
 }
 
 #[cfg(feature = "runtime-benchmarks")]
-pub fn new_bench_ext() -> sp_io::TestExternalities {
+pub fn new_bench_ext() -> soil_io::TestExternalities {
 	RuntimeGenesisConfig::default().build_storage().unwrap().into()
 }
 

@@ -73,7 +73,7 @@ use sc_network_types::{
 	multiaddr::{Multiaddr, Protocol},
 	PeerId,
 };
-use sp_runtime::traits::{Block as BlockT, NumberFor};
+use soil_runtime::traits::{Block as BlockT, NumberFor};
 use std::iter;
 
 mod bridge;

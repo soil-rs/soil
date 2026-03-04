@@ -36,11 +36,11 @@ sc-network-types = { workspace = true, default-features = true }
 sc-transaction-pool-api = { workspace = true, default-features = true }
 sc-utils = { workspace = true, default-features = true }
 sp-api = { workspace = true, default-features = true }
-sp-core = { workspace = true, default-features = true }
-sp-externalities = { workspace = true, default-features = true }
-sp-keystore = { workspace = true, default-features = true }
+soil-core = { workspace = true, default-features = true }
+soil-externalities = { workspace = true, default-features = true }
+soil-keystore = { workspace = true, default-features = true }
 sp-offchain = { workspace = true, default-features = true }
-sp-runtime = { workspace = true, default-features = true }
+soil-runtime = { workspace = true, default-features = true }
 threadpool = { workspace = true }
 tracing = { workspace = true, default-features = true }
 

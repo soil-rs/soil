@@ -31,7 +31,7 @@ use prometheus_endpoint::{
 };
 use sc_network_types::PeerId;
 use sp_blockchain::Error as ClientError;
-use sp_runtime::traits::{Block as BlockT, NumberFor, Zero};
+use soil_runtime::traits::{Block as BlockT, NumberFor, Zero};
 use std::{
 	collections::{HashMap, HashSet, VecDeque},
 	time::{Duration, Instant},

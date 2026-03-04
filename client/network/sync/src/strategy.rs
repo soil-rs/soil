@@ -40,7 +40,7 @@ use sc_network_common::sync::message::BlockAnnounce;
 use sc_network_types::PeerId;
 use sp_blockchain::Error as ClientError;
 use sp_consensus::BlockOrigin;
-use sp_runtime::{
+use soil_runtime::{
 	traits::{Block as BlockT, NumberFor},
 	Justifications,
 };

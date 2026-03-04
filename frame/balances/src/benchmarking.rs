@@ -24,7 +24,7 @@ use crate::Pallet as Balances;
 
 use frame_benchmarking::v2::*;
 use frame_system::RawOrigin;
-use sp_runtime::traits::Bounded;
+use soil_runtime::traits::Bounded;
 use types::ExtraFlags;
 
 const SEED: u32 = 0;

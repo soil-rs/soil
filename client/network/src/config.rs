@@ -52,7 +52,7 @@ pub use sc_network_common::{
 	ExHashT,
 };
 
-use sp_runtime::traits::Block as BlockT;
+use soil_runtime::traits::Block as BlockT;
 
 use std::{
 	error::Error,

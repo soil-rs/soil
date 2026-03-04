@@ -28,8 +28,8 @@ use frame_support::{
 	weights::RuntimeDbWeight,
 	Parameter, Twox64Concat,
 };
-use sp_core::Get;
-use sp_runtime::{traits::Zero, BoundedVec, Saturating};
+use soil_core::Get;
+use soil_runtime::{traits::Zero, BoundedVec, Saturating};
 
 const LOG_TARGET: &str = "runtime::democracy::migrations::unlock_and_unreserve_all_funds";
 
@@ -169,7 +169,7 @@ where
 	/// Fails with a `TryRuntimeError` if somehow the amount reserved by this pallet is greater than
 	/// the actual total reserved amount for any accounts.
 	#[cfg(feature = "try-runtime")]
-	fn pre_upgrade() -> Result<Vec<u8>, sp_runtime::TryRuntimeError> {
+	fn pre_upgrade() -> Result<Vec<u8>, soil_runtime::TryRuntimeError> {
 		use alloc::collections::btree_set::BTreeSet;
 		use codec::Encode;
 
@@ -257,7 +257,7 @@ where
 	#[cfg(feature = "try-runtime")]
 	fn post_upgrade(
 		account_reserved_before_bytes: Vec<u8>,
-	) -> Result<(), sp_runtime::TryRuntimeError> {
+	) -> Result<(), soil_runtime::TryRuntimeError> {
 		use codec::Decode;
 
 		let account_reserved_before =
@@ -302,7 +302,7 @@ mod test {
 		BoundedVec,
 	};
 	use frame_system::pallet_prelude::BlockNumberFor;
-	use sp_core::ConstU32;
+	use soil_core::ConstU32;
 
 	parameter_types! {
 		const PalletName: &'static str = "Democracy";

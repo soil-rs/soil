@@ -22,8 +22,8 @@ use std::{
 	sync::Arc,
 };
 
-use sp_core::hexdisplay::HexDisplay;
-use sp_runtime::transaction_validity::TransactionTag as Tag;
+use soil_core::hexdisplay::HexDisplay;
+use soil_runtime::transaction_validity::TransactionTag as Tag;
 use std::time::Instant;
 
 use super::base_pool::Transaction;

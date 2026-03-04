@@ -30,7 +30,7 @@ use sp_consensus_aura::{
 use sp_consensus_babe::BabeApi;
 use sp_consensus_slots::{Slot, SlotDuration};
 use sp_inherents::{InherentData, InherentDataProvider, InherentIdentifier};
-use sp_runtime::traits::{Block as BlockT, Zero};
+use soil_runtime::traits::{Block as BlockT, Zero};
 use sp_timestamp::{InherentType, INHERENT_IDENTIFIER};
 use std::{
 	sync::{atomic, Arc},

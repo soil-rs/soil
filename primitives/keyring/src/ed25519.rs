@@ -17,16 +17,16 @@
 
 //! Support code for the runtime. A set of test accounts.
 
-pub use sp_core::ed25519;
+pub use soil_core::ed25519;
 
 use crate::ParseKeyringError;
 #[cfg(feature = "std")]
-use sp_core::ed25519::Signature;
-use sp_core::{
+use soil_core::ed25519::Signature;
+use soil_core::{
 	ed25519::{Pair, Public},
 	hex2array, ByteArray, Pair as PairT, H256,
 };
-use sp_runtime::AccountId32;
+use soil_runtime::AccountId32;
 
 extern crate alloc;
 use alloc::{format, str::FromStr, string::String, vec::Vec};
@@ -138,9 +138,9 @@ impl From<Keyring> for &'static str {
 	}
 }
 
-impl From<Keyring> for sp_runtime::MultiSigner {
+impl From<Keyring> for soil_runtime::MultiSigner {
 	fn from(x: Keyring) -> Self {
-		sp_runtime::MultiSigner::Ed25519(x.into())
+		soil_runtime::MultiSigner::Ed25519(x.into())
 	}
 }
 
@@ -244,7 +244,7 @@ impl From<Keyring> for H256 {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use sp_core::{ed25519::Pair, Pair as PairT};
+	use soil_core::{ed25519::Pair, Pair as PairT};
 
 	#[test]
 	fn should_work() {

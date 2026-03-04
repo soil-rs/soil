@@ -21,7 +21,7 @@ use crate::traits::{
 };
 use core::fmt::Debug;
 use soil_arithmetic::{traits::AtLeast8BitUnsigned, ArithmeticError};
-use sp_runtime::{traits::Bounded, TokenError};
+use soil_runtime::{traits::Bounded, TokenError};
 
 /// Tests [`Unbalanced::write_balance`].
 ///

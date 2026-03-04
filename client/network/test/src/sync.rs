@@ -19,7 +19,7 @@
 use super::*;
 use futures::Future;
 use sp_consensus::{block_validation::Validation, BlockOrigin};
-use sp_runtime::Justifications;
+use soil_runtime::Justifications;
 use substrate_test_runtime::Header;
 
 async fn test_ancestor_search_when_common_is(n: usize) {
@@ -1071,26 +1071,26 @@ async fn syncs_state() {
 	soil_tracing::try_init_simple();
 	for skip_proofs in &[false, true] {
 		let mut net = TestNet::new(0);
-		let mut genesis_storage: sp_core::storage::Storage = Default::default();
+		let mut genesis_storage: soil_core::storage::Storage = Default::default();
 		genesis_storage.top.insert(b"additional_key".to_vec(), vec![1]);
 		let mut child_data: std::collections::BTreeMap<Vec<u8>, Vec<u8>> = Default::default();
 		for i in 0u8..16 {
 			child_data.insert(vec![i; 5], vec![i; 33]);
 		}
-		let child1 = sp_core::storage::StorageChild {
+		let child1 = soil_core::storage::StorageChild {
 			data: child_data.clone(),
-			child_info: sp_core::storage::ChildInfo::new_default(b"child1"),
+			child_info: soil_core::storage::ChildInfo::new_default(b"child1"),
 		};
-		let child3 = sp_core::storage::StorageChild {
+		let child3 = soil_core::storage::StorageChild {
 			data: child_data.clone(),
-			child_info: sp_core::storage::ChildInfo::new_default(b"child3"),
+			child_info: soil_core::storage::ChildInfo::new_default(b"child3"),
 		};
 		for i in 22u8..33 {
 			child_data.insert(vec![i; 5], vec![i; 33]);
 		}
-		let child2 = sp_core::storage::StorageChild {
+		let child2 = soil_core::storage::StorageChild {
 			data: child_data.clone(),
-			child_info: sp_core::storage::ChildInfo::new_default(b"child2"),
+			child_info: soil_core::storage::ChildInfo::new_default(b"child2"),
 		};
 		genesis_storage
 			.children_default
@@ -1143,7 +1143,7 @@ async fn syncs_state() {
 
 #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
 async fn syncs_indexed_blocks() {
-	use sp_runtime::traits::Hash;
+	use soil_runtime::traits::Hash;
 	soil_tracing::try_init_simple();
 	let mut net = TestNet::new(0);
 	let mut n: u64 = 0;
@@ -1168,7 +1168,7 @@ async fn syncs_indexed_blocks() {
 		true,
 		ForkChoiceStrategy::LongestChain,
 	);
-	let indexed_key = sp_runtime::traits::BlakeTwo256::hash(&42u64.to_le_bytes());
+	let indexed_key = soil_runtime::traits::BlakeTwo256::hash(&42u64.to_le_bytes());
 	assert!(net
 		.peer(0)
 		.client()
@@ -1365,8 +1365,8 @@ async fn warp_sync_to_target_block() {
 
 #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
 async fn syncs_huge_blocks() {
-	use sp_core::storage::well_known_keys::HEAP_PAGES;
-	use sp_runtime::codec::Encode;
+	use soil_core::storage::well_known_keys::HEAP_PAGES;
+	use soil_runtime::codec::Encode;
 	use substrate_test_runtime_client::BlockBuilderExt;
 
 	soil_tracing::try_init_simple();
@@ -1398,7 +1398,7 @@ async fn syncs_huge_blocks() {
 #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
 async fn syncs_blocks_with_large_headers() {
 	use sc_consensus::ForkChoiceStrategy;
-	use sp_runtime::{
+	use soil_runtime::{
 		generic::{BlockId, DigestItem},
 		Digest,
 	};

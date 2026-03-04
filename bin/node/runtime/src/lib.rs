@@ -30,7 +30,7 @@ use pallet_multi_asset_bounties::ArgumentsFactory as PalletMultiAssetBountiesArg
 #[cfg(feature = "runtime-benchmarks")]
 use pallet_treasury::ArgumentsFactory as PalletTreasuryArgumentsFactory;
 #[cfg(feature = "runtime-benchmarks")]
-use sp_core::crypto::FromEntropy;
+use soil_core::crypto::FromEntropy;
 
 
 use alloc::{vec, vec::Vec};
@@ -97,9 +97,9 @@ use sp_consensus_beefy::{
 	mmr::MmrLeafVersion,
 };
 use sp_consensus_grandpa::AuthorityId as GrandpaId;
-use sp_core::{crypto::KeyTypeId, OpaqueMetadata};
+use soil_core::{crypto::KeyTypeId, OpaqueMetadata};
 use sp_inherents::{CheckInherentsResult, InherentData};
-use sp_runtime::{
+use soil_runtime::{
 	curve::PiecewiseLinear,
 	generic, impl_opaque_keys, str_array as s,
 	traits::{
@@ -123,7 +123,7 @@ pub use pallet_balances::Call as BalancesCall;
 #[cfg(any(feature = "std", test))]
 pub use pallet_sudo::Call as SudoCall;
 #[cfg(any(feature = "std", test))]
-pub use sp_runtime::BuildStorage;
+pub use soil_runtime::BuildStorage;
 
 pub use pallet_staking::StakerStatus;
 
@@ -136,7 +136,7 @@ use impls::AllianceProposalProvider;
 /// Constant values used within the runtime.
 pub mod constants;
 use constants::{currency::*, time::*};
-use sp_runtime::generic::Era;
+use soil_runtime::generic::Era;
 
 /// Generated voter bag information.
 mod voter_bags;
@@ -680,7 +680,7 @@ impl_opaque_keys! {
 impl pallet_session::Config for Runtime {
 	type RuntimeEvent = RuntimeEvent;
 	type ValidatorId = <Self as frame_system::Config>::AccountId;
-	type ValidatorIdOf = sp_runtime::traits::ConvertInto;
+	type ValidatorIdOf = soil_runtime::traits::ConvertInto;
 	type ShouldEndSession = Babe;
 	type NextSessionRotation = Babe;
 	type SessionManager = pallet_session::historical::NoteHistoricalRoot<Self, Staking>;
@@ -807,7 +807,7 @@ frame_election_provider_support::generate_solution_type!(
 	pub struct NposSolution16::<
 		VoterIndex = u32,
 		TargetIndex = u16,
-		Accuracy = sp_runtime::PerU16,
+		Accuracy = soil_runtime::PerU16,
 		MaxVoters = MaxElectingVotersSolution,
 	>(16)
 );
@@ -849,11 +849,11 @@ pub const MINER_MAX_ITERATIONS: u32 = 10;
 pub struct OffchainRandomBalancing;
 impl Get<Option<BalancingConfig>> for OffchainRandomBalancing {
 	fn get() -> Option<BalancingConfig> {
-		use sp_runtime::traits::TrailingZeroInput;
+		use soil_runtime::traits::TrailingZeroInput;
 		let iterations = match MINER_MAX_ITERATIONS {
 			0 => 0,
 			max => {
-				let seed = sp_io::offchain::random_seed();
+				let seed = soil_io::offchain::random_seed();
 				let random = <u32>::decode(&mut TrailingZeroInput::new(&seed))
 					.expect("input is padded with zeroes; qed") %
 					max.saturating_add(1);
@@ -969,16 +969,16 @@ parameter_types! {
 	pub const MaxPointsToBalance: u8 = 10;
 }
 
-use sp_runtime::traits::{Convert, Keccak256};
+use soil_runtime::traits::{Convert, Keccak256};
 pub struct BalanceToU256;
-impl Convert<Balance, sp_core::U256> for BalanceToU256 {
-	fn convert(balance: Balance) -> sp_core::U256 {
-		sp_core::U256::from(balance)
+impl Convert<Balance, soil_core::U256> for BalanceToU256 {
+	fn convert(balance: Balance) -> soil_core::U256 {
+		soil_core::U256::from(balance)
 	}
 }
 pub struct U256ToBalance;
-impl Convert<sp_core::U256, Balance> for U256ToBalance {
-	fn convert(n: sp_core::U256) -> Balance {
+impl Convert<soil_core::U256, Balance> for U256ToBalance {
+	fn convert(n: soil_core::U256) -> Balance {
 		n.try_into().unwrap_or(Balance::max_value())
 	}
 }
@@ -1429,17 +1429,17 @@ impl pallet_multi_asset_bounties::Config for Runtime {
 	type FundingSource = pallet_multi_asset_bounties::PalletIdAsFundingSource<
 		TreasuryPalletId,
 		Runtime,
-		sp_runtime::traits::Identity,
+		soil_runtime::traits::Identity,
 	>;
 	type BountySource = pallet_multi_asset_bounties::BountySourceFromPalletId<
 		TreasuryPalletId,
 		Runtime,
-		sp_runtime::traits::Identity,
+		soil_runtime::traits::Identity,
 	>;
 	type ChildBountySource = pallet_multi_asset_bounties::ChildBountySourceFromPalletId<
 		TreasuryPalletId,
 		Runtime,
-		sp_runtime::traits::Identity,
+		soil_runtime::traits::Identity,
 	>;
 	type Paymaster = PayWithFungibles<NativeAndAssets, AccountId>;
 	type BalanceConverter = AssetRate;
@@ -1857,7 +1857,7 @@ pub type NativeAndAssets =
 impl pallet_asset_conversion::Config for Runtime {
 	type RuntimeEvent = RuntimeEvent;
 	type Balance = u128;
-	type HigherPrecisionBalance = sp_core::U256;
+	type HigherPrecisionBalance = soil_core::U256;
 	type AssetKind = NativeOrWithId<u32>;
 	type Assets = NativeAndAssets;
 	type PoolId = (Self::AssetKind, Self::AssetKind);
@@ -2000,7 +2000,7 @@ impl pallet_nis::BenchmarkSetup for SetupAsset {
 		let _ = Assets::force_create(
 			RuntimeOrigin::root(),
 			9u32.into(),
-			sp_runtime::MultiAddress::Id(owner),
+			soil_runtime::MultiAddress::Id(owner),
 			true,
 			1,
 		);
@@ -2783,7 +2783,7 @@ mod runtime {
 }
 
 /// The address format for describing accounts.
-pub type Address = sp_runtime::MultiAddress<AccountId, AccountIndex>;
+pub type Address = soil_runtime::MultiAddress<AccountId, AccountIndex>;
 /// Block header type as expected by this runtime.
 pub type Header = generic::Header<BlockNumber, BlakeTwo256>;
 /// Block type as expected by this runtime.
@@ -2923,7 +2923,7 @@ mod mmr {
 	pub use pallet_mmr::primitives::*;
 
 	pub type Leaf = <<Runtime as pallet_mmr::Config>::LeafData as LeafDataProvider>::LeafData;
-	pub type Hash = <Hashing as sp_runtime::traits::Hash>::Output;
+	pub type Hash = <Hashing as soil_runtime::traits::Hash>::Output;
 	pub type Hashing = <Runtime as pallet_mmr::Config>::Hashing;
 }
 
@@ -3072,7 +3072,7 @@ sp_api::impl_runtime_apis! {
 			Executive::execute_block(block);
 		}
 
-		fn initialize_block(header: &<Block as BlockT>::Header) -> sp_runtime::ExtrinsicInclusionMode {
+		fn initialize_block(header: &<Block as BlockT>::Header) -> soil_runtime::ExtrinsicInclusionMode {
 			Executive::initialize_block(header)
 		}
 	}
@@ -3439,7 +3439,7 @@ sp_api::impl_runtime_apis! {
 				sp_consensus_beefy::ForkVotingProof<
 					<Block as BlockT>::Header,
 					BeefyId,
-					sp_runtime::OpaqueValue
+					soil_runtime::OpaqueValue
 				>,
 			key_owner_proof: sp_consensus_beefy::OpaqueKeyOwnershipProof,
 		) -> Option<()> {
@@ -3624,7 +3624,7 @@ sp_api::impl_runtime_apis! {
 			config: frame_benchmarking::BenchmarkConfig
 		) -> Result<Vec<frame_benchmarking::BenchmarkBatch>, alloc::string::String> {
 			use frame_benchmarking::{baseline, BenchmarkBatch};
-			use sp_storage::TrackedStorageKey;
+			use soil_storage::TrackedStorageKey;
 
 			// Trying to add benchmarks directly to the Session Pallet caused cyclic dependency
 			// issues. To get around that, we separated the Session benchmarks into its own crate,

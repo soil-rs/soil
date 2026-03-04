@@ -22,7 +22,7 @@ use sc_network::{multiaddr::Protocol, Multiaddr};
 use sc_network_types::PeerId;
 use serde::{Deserialize, Serialize};
 use sp_authority_discovery::AuthorityId;
-use sp_runtime::DeserializeOwned;
+use soil_runtime::DeserializeOwned;
 use std::{
 	collections::{hash_map::Entry, HashMap, HashSet},
 	fs::File,
@@ -304,7 +304,7 @@ mod tests {
 	use sc_network_types::multihash::{Code, Multihash};
 
 	use sp_authority_discovery::{AuthorityId, AuthorityPair};
-	use sp_core::crypto::Pair;
+	use soil_core::crypto::Pair;
 
 	#[derive(Clone, Debug)]
 	struct TestAuthorityId(AuthorityId);

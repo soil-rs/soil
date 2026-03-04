@@ -38,8 +38,8 @@
 
 use sc_executor::RuntimeVersionOf;
 use sp_blockchain::Result;
-use sp_core::traits::{FetchRuntimeCode, RuntimeCode, WrappedRuntimeCode};
-use sp_state_machine::BasicExternalities;
+use soil_core::traits::{FetchRuntimeCode, RuntimeCode, WrappedRuntimeCode};
+use soil_state_machine::BasicExternalities;
 use sp_version::RuntimeVersion;
 use std::{
 	collections::{hash_map::DefaultHasher, HashMap},

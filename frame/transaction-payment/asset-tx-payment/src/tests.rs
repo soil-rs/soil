@@ -25,7 +25,7 @@ use frame_support::{
 use frame_system as system;
 use mock::{ExtrinsicBaseWeight, *};
 use pallet_balances::Call as BalancesCall;
-use sp_runtime::{
+use soil_runtime::{
 	traits::{DispatchTransaction, StaticLookup},
 	BuildStorage,
 };
@@ -65,7 +65,7 @@ impl ExtBuilder {
 		TRANSACTION_BYTE_FEE.with(|v| *v.borrow_mut() = self.byte_fee);
 		WEIGHT_TO_FEE.with(|v| *v.borrow_mut() = self.weight_to_fee);
 	}
-	pub fn build(self) -> sp_io::TestExternalities {
+	pub fn build(self) -> soil_io::TestExternalities {
 		self.set_constants();
 		let mut t = frame_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
 		pallet_balances::GenesisConfig::<Runtime> {

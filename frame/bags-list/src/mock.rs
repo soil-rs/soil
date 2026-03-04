@@ -21,7 +21,7 @@ use super::*;
 use crate::{self as bags_list};
 use frame_election_provider_support::VoteWeight;
 use frame_support::{derive_impl, parameter_types};
-use sp_runtime::BuildStorage;
+use soil_runtime::BuildStorage;
 use std::collections::HashMap;
 
 pub type AccountId = <Runtime as frame_system::Config>::AccountId;
@@ -101,7 +101,7 @@ impl ExtBuilder {
 		self
 	}
 
-	pub(crate) fn build(self) -> sp_io::TestExternalities {
+	pub(crate) fn build(self) -> soil_io::TestExternalities {
 		soil_tracing::try_init_simple();
 		let storage = frame_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
 
@@ -111,7 +111,7 @@ impl ExtBuilder {
 			GENESIS_IDS.iter().chain(self.ids.iter()).collect()
 		};
 
-		let mut ext = sp_io::TestExternalities::from(storage);
+		let mut ext = soil_io::TestExternalities::from(storage);
 		ext.execute_with(|| {
 			for (id, weight) in ids_with_weight {
 				frame_support::assert_ok!(List::<Runtime>::insert(*id, *weight));

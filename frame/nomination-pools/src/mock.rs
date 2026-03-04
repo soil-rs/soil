@@ -23,7 +23,7 @@ use frame_support::{
 	PalletId,
 };
 use frame_system::{EnsureSignedBy, RawOrigin};
-use sp_runtime::{BuildStorage, DispatchResult, FixedU128};
+use soil_runtime::{BuildStorage, DispatchResult, FixedU128};
 use sp_staking::{
 	Agent, DelegationInterface, DelegationMigrator, Delegator, OnStakingUpdate, Stake,
 };
@@ -144,7 +144,7 @@ impl sp_staking::StakingInterface for StakingMock {
 		unimplemented!("method currently not used in testing")
 	}
 
-	fn chill(_: &Self::AccountId) -> sp_runtime::DispatchResult {
+	fn chill(_: &Self::AccountId) -> soil_runtime::DispatchResult {
 		Ok(())
 	}
 
@@ -213,7 +213,7 @@ impl sp_staking::StakingInterface for StakingMock {
 		unimplemented!("method currently not used in testing")
 	}
 
-	fn force_unstake(_who: Self::AccountId) -> sp_runtime::DispatchResult {
+	fn force_unstake(_who: Self::AccountId) -> soil_runtime::DispatchResult {
 		unimplemented!("method currently not used in testing")
 	}
 
@@ -419,7 +419,7 @@ impl DelegationMigrator for DelegateMock {
 impl frame_system::Config for Runtime {
 	type Nonce = u64;
 	type AccountId = AccountId;
-	type Lookup = sp_runtime::traits::IdentityLookup<Self::AccountId>;
+	type Lookup = soil_runtime::traits::IdentityLookup<Self::AccountId>;
 	type Block = Block;
 	type AccountData = pallet_balances::AccountData<Balance>;
 }
@@ -559,7 +559,7 @@ impl ExtBuilder {
 		self
 	}
 
-	pub fn build(self) -> sp_io::TestExternalities {
+	pub fn build(self) -> soil_io::TestExternalities {
 		soil_tracing::try_init_simple();
 		let mut storage =
 			frame_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
@@ -574,7 +574,7 @@ impl ExtBuilder {
 		}
 		.assimilate_storage(&mut storage);
 
-		let mut ext = sp_io::TestExternalities::from(storage);
+		let mut ext = soil_io::TestExternalities::from(storage);
 
 		ext.execute_with(|| {
 			// for events to be deposited.
@@ -679,7 +679,7 @@ pub enum RewardImbalance {
 	Deficit(Balance),
 }
 
-pub fn pool_pending_rewards(pool: PoolId) -> Result<BalanceOf<T>, sp_runtime::DispatchError> {
+pub fn pool_pending_rewards(pool: PoolId) -> Result<BalanceOf<T>, soil_runtime::DispatchError> {
 	let bonded_pool = BondedPools::<T>::get(pool).ok_or(Error::<T>::PoolNotFound)?;
 	let reward_pool = RewardPools::<T>::get(pool).ok_or(Error::<T>::PoolNotFound)?;
 

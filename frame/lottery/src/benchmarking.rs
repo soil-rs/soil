@@ -32,7 +32,7 @@ use frame_support::{
 	traits::{EnsureOrigin, OnInitialize},
 };
 use frame_system::RawOrigin;
-use sp_runtime::traits::{Bounded, Zero};
+use soil_runtime::traits::{Bounded, Zero};
 
 // Set up and start a lottery
 fn setup_lottery<T: Config>(repeat: bool) -> Result<(), &'static str> {

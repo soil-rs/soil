@@ -99,7 +99,7 @@ pub fn expand_runtime_metadata(
 						<#extrinsic as #scrate::traits::SignedTransactionBuilder>::Address
 					>();
 				let call_ty = #scrate::__private::scale_info::meta_type::<
-						<#extrinsic as #scrate::sp_runtime::traits::ExtrinsicCall>::Call
+						<#extrinsic as #scrate::soil_runtime::traits::ExtrinsicCall>::Call
 					>();
 				let signature_ty = #scrate::__private::scale_info::meta_type::<
 						<#extrinsic as #scrate::traits::SignedTransactionBuilder>::Signature
@@ -114,17 +114,17 @@ pub fn expand_runtime_metadata(
 					pallets: #scrate::__private::vec![ #(#pallets),* ],
 					extrinsic: #scrate::__private::metadata_ir::ExtrinsicMetadataIR {
 						ty,
-						versions: <#extrinsic as #scrate::sp_runtime::traits::ExtrinsicMetadata>::VERSIONS.into_iter().map(|ref_version| *ref_version).collect(),
+						versions: <#extrinsic as #scrate::soil_runtime::traits::ExtrinsicMetadata>::VERSIONS.into_iter().map(|ref_version| *ref_version).collect(),
 						address_ty,
 						call_ty,
 						signature_ty,
 						extra_ty,
 						extensions: <
 								<
-									#extrinsic as #scrate::sp_runtime::traits::ExtrinsicMetadata
+									#extrinsic as #scrate::soil_runtime::traits::ExtrinsicMetadata
 								>::TransactionExtensions
 								as
-								#scrate::sp_runtime::traits::TransactionExtension::<
+								#scrate::soil_runtime::traits::TransactionExtension::<
 									<#runtime as #system_path::Config>::RuntimeCall
 								>
 							>::metadata()

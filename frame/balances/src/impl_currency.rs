@@ -34,7 +34,7 @@ use frame_support::{
 };
 use frame_system::pallet_prelude::BlockNumberFor;
 pub use imbalances::{NegativeImbalance, PositiveImbalance};
-use sp_runtime::traits::Bounded;
+use soil_runtime::traits::Bounded;
 
 // wrapping these imbalances in a private module is necessary to ensure absolute privacy
 // of the inner member.

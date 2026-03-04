@@ -22,7 +22,7 @@ use crate::{
 	storage::{StorageDecodeLength, StorageTryAppend},
 	traits::Get,
 };
-pub use sp_runtime::WeakBoundedVec;
+pub use soil_runtime::WeakBoundedVec;
 
 impl<T, S> StorageDecodeLength for WeakBoundedVec<T, S> {}
 
@@ -37,7 +37,7 @@ pub mod test {
 	use super::*;
 	use crate::Twox128;
 	use frame_support::traits::ConstU32;
-	use sp_io::TestExternalities;
+	use soil_io::TestExternalities;
 
 	#[crate::storage_alias]
 	type Foo = StorageValue<Prefix, WeakBoundedVec<u32, ConstU32<7>>>;

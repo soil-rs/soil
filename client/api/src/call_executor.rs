@@ -19,10 +19,10 @@
 //! A method call executor interface.
 
 use sc_executor::{RuntimeVersion, RuntimeVersionOf};
-use sp_core::traits::CallContext;
-use sp_externalities::Extensions;
-use sp_runtime::traits::{Block as BlockT, HashingFor};
-use sp_state_machine::{OverlayedChanges, StorageProof};
+use soil_core::traits::CallContext;
+use soil_externalities::Extensions;
+use soil_runtime::traits::{Block as BlockT, HashingFor};
+use soil_state_machine::{OverlayedChanges, StorageProof};
 use std::cell::RefCell;
 
 use crate::execution_extensions::ExecutionExtensions;
@@ -43,7 +43,7 @@ pub trait ExecutorProvider<Block: BlockT> {
 /// Method call executor.
 pub trait CallExecutor<B: BlockT>: RuntimeVersionOf {
 	/// Externalities error type.
-	type Error: sp_state_machine::Error;
+	type Error: soil_state_machine::Error;
 
 	/// The backend used by the node.
 	type Backend: crate::backend::Backend<B>;

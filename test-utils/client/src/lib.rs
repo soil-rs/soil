@@ -28,15 +28,15 @@ pub use sc_executor::{self, WasmExecutionMethod, WasmExecutor};
 pub use sc_service::{client, RpcHandlers};
 pub use sp_consensus;
 pub use sp_keyring::{Ed25519Keyring, Sr25519Keyring};
-pub use sp_keystore::{Keystore, KeystorePtr};
-pub use sp_runtime::{Storage, StorageChild};
+pub use soil_keystore::{Keystore, KeystorePtr};
+pub use soil_runtime::{Storage, StorageChild};
 
 use futures::{future::Future, stream::StreamExt};
 use sc_client_api::BlockchainEvents;
 use sc_service::client::{ClientConfig, LocalCallExecutor};
 use serde::Deserialize;
-use sp_core::{storage::ChildInfo, testing::TaskExecutor};
-use sp_runtime::{
+use soil_core::{storage::ChildInfo, testing::TaskExecutor};
+use soil_runtime::{
 	codec::Encode,
 	traits::{Block as BlockT, Header},
 	OpaqueExtrinsic,

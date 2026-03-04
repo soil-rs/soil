@@ -35,7 +35,7 @@ use sc_transaction_pool_api::{
 };
 use sp_consensus::{Environment, ProposeArgs, Proposer};
 use sp_inherents::InherentDataProvider;
-use sp_runtime::OpaqueExtrinsic;
+use soil_runtime::OpaqueExtrinsic;
 
 use crate::{
 	common::SizeType,

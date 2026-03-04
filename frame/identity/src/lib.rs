@@ -129,7 +129,7 @@ use frame_support::{
 };
 use frame_system::pallet_prelude::*;
 pub use pallet::*;
-use sp_runtime::traits::{
+use soil_runtime::traits::{
 	AppendZerosInput, Hash, IdentifyAccount, Saturating, StaticLookup, Verify, Zero,
 };
 pub use types::{
@@ -155,11 +155,11 @@ pub mod pallet {
 		fn sign_message(message: &[u8]) -> (Public, Signature);
 	}
 	#[cfg(feature = "runtime-benchmarks")]
-	impl BenchmarkHelper<sp_runtime::MultiSigner, sp_runtime::MultiSignature> for () {
-		fn sign_message(message: &[u8]) -> (sp_runtime::MultiSigner, sp_runtime::MultiSignature) {
-			let public = sp_io::crypto::sr25519_generate(0.into(), None);
-			let signature = sp_runtime::MultiSignature::Sr25519(
-				sp_io::crypto::sr25519_sign(
+	impl BenchmarkHelper<soil_runtime::MultiSigner, soil_runtime::MultiSignature> for () {
+		fn sign_message(message: &[u8]) -> (soil_runtime::MultiSigner, soil_runtime::MultiSignature) {
+			let public = soil_io::crypto::sr25519_generate(0.into(), None);
+			let signature = soil_runtime::MultiSignature::Sr25519(
+				soil_io::crypto::sr25519_sign(
 					0.into(),
 					&public.into_account().try_into().unwrap(),
 					message,

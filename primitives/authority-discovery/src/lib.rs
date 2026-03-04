@@ -24,11 +24,11 @@ extern crate alloc;
 use alloc::vec::Vec;
 
 mod app {
-	use sp_application_crypto::{app_crypto, key_types::AUTHORITY_DISCOVERY, sr25519};
+	use soil_application_crypto::{app_crypto, key_types::AUTHORITY_DISCOVERY, sr25519};
 	app_crypto!(sr25519, AUTHORITY_DISCOVERY);
 }
 
-sp_application_crypto::with_pair! {
+soil_application_crypto::with_pair! {
 	/// An authority discovery authority keypair.
 	pub type AuthorityPair = app::Pair;
 }

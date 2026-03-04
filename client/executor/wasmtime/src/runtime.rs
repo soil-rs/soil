@@ -32,7 +32,7 @@ use sc_executor_common::{
 	util::checked_range,
 	wasm_runtime::{HeapAllocStrategy, WasmInstance, WasmModule},
 };
-use sp_runtime_interface::unpack_ptr_and_len;
+use soil_runtime_interface::unpack_ptr_and_len;
 use soil_wasm_interface::{HostFunctions, Pointer, WordSize};
 use std::{
 	path::{Path, PathBuf},

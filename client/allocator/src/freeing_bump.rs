@@ -68,7 +68,7 @@
 //!   sizes.
 
 use crate::{Error, Memory, MAX_WASM_PAGES, PAGE_SIZE};
-pub use sp_core::MAX_POSSIBLE_ALLOCATION;
+pub use soil_core::MAX_POSSIBLE_ALLOCATION;
 use soil_wasm_interface::{Pointer, WordSize};
 use std::{
 	cmp::{max, min},

@@ -18,7 +18,7 @@
 
 //! Helper methods dedicated to timestamps.
 
-use sp_core::offchain::Timestamp;
+use soil_core::offchain::Timestamp;
 use std::time::{Duration, SystemTime};
 
 /// Returns the current time as a `Timestamp`.

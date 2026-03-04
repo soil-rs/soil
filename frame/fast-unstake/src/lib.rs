@@ -154,12 +154,12 @@ pub mod pallet {
 		traits::{Defensive, ReservableCurrency, StorageVersion},
 	};
 	use frame_system::pallet_prelude::*;
-	use sp_runtime::{traits::Zero, DispatchResult};
+	use soil_runtime::{traits::Zero, DispatchResult};
 	use sp_staking::{EraIndex, StakingInterface};
 	pub use weights::WeightInfo;
 
 	#[cfg(feature = "try-runtime")]
-	use sp_runtime::TryRuntimeError;
+	use soil_runtime::TryRuntimeError;
 
 	const STORAGE_VERSION: StorageVersion = StorageVersion::new(1);
 

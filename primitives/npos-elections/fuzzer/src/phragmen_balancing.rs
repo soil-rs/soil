@@ -66,7 +66,7 @@ fn main() {
 
 			if iterations > 0 {
 				let config = BalancingConfig { iterations, tolerance: 0 };
-				let balanced: ElectionResult<AccountId, sp_runtime::Perbill> =
+				let balanced: ElectionResult<AccountId, soil_runtime::Perbill> =
 					seq_phragmen(to_elect, candidates, voters, Some(config)).unwrap();
 
 				let balanced_score = {

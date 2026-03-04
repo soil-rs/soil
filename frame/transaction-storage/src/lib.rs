@@ -42,7 +42,7 @@ use frame_support::{
 	},
 };
 use frame_system::pallet_prelude::BlockNumberFor;
-use sp_runtime::traits::{BlakeTwo256, Dispatchable, Hash, One, Saturating, Zero};
+use soil_runtime::traits::{BlakeTwo256, Dispatchable, Hash, One, Saturating, Zero};
 use sp_transaction_storage_proof::{
 	encode_index, num_chunks, random_chunk, ChunkIndex, InherentError, TransactionStorageProof,
 	CHUNK_SIZE, INHERENT_IDENTIFIER,
@@ -301,12 +301,12 @@ pub mod pallet {
 			let chunks: Vec<_> = data.chunks(CHUNK_SIZE).map(|c| c.to_vec()).collect();
 			let chunk_count = chunks.len() as u32;
 			debug_assert_eq!(chunk_count, num_chunks(data.len() as u32));
-			let root = sp_io::trie::blake2_256_ordered_root(chunks, sp_runtime::StateVersion::V1);
+			let root = soil_io::trie::blake2_256_ordered_root(chunks, soil_runtime::StateVersion::V1);
 
-			let content_hash = sp_io::hashing::blake2_256(&data);
+			let content_hash = soil_io::hashing::blake2_256(&data);
 			let extrinsic_index =
 				frame_system::Pallet::<T>::extrinsic_index().ok_or(Error::<T>::BadContext)?;
-			sp_io::transaction_index::index(extrinsic_index, data.len() as u32, content_hash);
+			soil_io::transaction_index::index(extrinsic_index, data.len() as u32, content_hash);
 
 			let mut index = 0;
 			BlockTransactions::<T>::mutate(|transactions| {
@@ -356,7 +356,7 @@ pub mod pallet {
 				frame_system::Pallet::<T>::extrinsic_index().ok_or(Error::<T>::BadContext)?;
 			Self::apply_fee(sender, info.size)?;
 			let content_hash = info.content_hash.into();
-			sp_io::transaction_index::renew(extrinsic_index, content_hash);
+			soil_io::transaction_index::renew(extrinsic_index, content_hash);
 
 			let mut index = 0;
 			BlockTransactions::<T>::mutate(|transactions| {
@@ -618,12 +618,12 @@ pub mod pallet {
 
 			// Verify the tx chunk proof.
 			ensure!(
-				sp_io::trie::blake2_256_verify_proof(
+				soil_io::trie::blake2_256_verify_proof(
 					tx_info.chunk_root,
 					&proof.proof,
 					&encode_index(tx_chunk_index),
 					&proof.chunk,
-					sp_runtime::StateVersion::V1,
+					soil_runtime::StateVersion::V1,
 				),
 				Error::<T>::InvalidProof
 			);

@@ -23,7 +23,7 @@ use frame_support::{
 	traits::{ConstU32, SortedMembers, Time},
 	PalletId,
 };
-use sp_runtime::{traits::IdentityLookup, BuildStorage};
+use soil_runtime::{traits::IdentityLookup, BuildStorage};
 
 pub type AccountId = u128;
 type Key = u32;
@@ -106,10 +106,10 @@ pub fn set_members(members: Vec<AccountId>) {
 
 // This function basically just builds a genesis storage key/value store
 // according to our desired mockup.
-pub fn new_test_ext() -> sp_io::TestExternalities {
+pub fn new_test_ext() -> soil_io::TestExternalities {
 	let storage = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 
-	let mut t: sp_io::TestExternalities = storage.into();
+	let mut t: soil_io::TestExternalities = storage.into();
 
 	t.execute_with(|| {
 		Timestamp::set_timestamp(12345);

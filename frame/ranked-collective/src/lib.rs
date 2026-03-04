@@ -55,7 +55,7 @@ use frame_support::{
 };
 use scale_info::TypeInfo;
 use soil_arithmetic::traits::Saturating;
-use sp_runtime::{
+use soil_runtime::{
 	traits::{Convert, StaticLookup},
 	ArithmeticError::Overflow,
 	Debug, DispatchError, Perbill,
@@ -397,7 +397,7 @@ pub mod pallet {
 	use super::*;
 	use frame_support::{pallet_prelude::*, storage::KeyLenOf};
 	use frame_system::pallet_prelude::*;
-	use sp_runtime::traits::MaybeConvert;
+	use soil_runtime::traits::MaybeConvert;
 
 	#[pallet::pallet]
 	pub struct Pallet<T, I = ()>(PhantomData<(T, I)>);
@@ -749,7 +749,7 @@ pub mod pallet {
 	#[pallet::hooks]
 	impl<T: Config<I>, I: 'static> Hooks<BlockNumberFor<T>> for Pallet<T, I> {
 		#[cfg(feature = "try-runtime")]
-		fn try_state(_n: BlockNumberFor<T>) -> Result<(), sp_runtime::TryRuntimeError> {
+		fn try_state(_n: BlockNumberFor<T>) -> Result<(), soil_runtime::TryRuntimeError> {
 			Self::do_try_state()
 		}
 	}
@@ -896,7 +896,7 @@ pub mod pallet {
 	#[cfg(any(feature = "try-runtime", test))]
 	impl<T: Config<I>, I: 'static> Pallet<T, I> {
 		/// Ensure the correctness of the state of this pallet.
-		pub fn do_try_state() -> Result<(), sp_runtime::TryRuntimeError> {
+		pub fn do_try_state() -> Result<(), soil_runtime::TryRuntimeError> {
 			Self::try_state_members()?;
 			Self::try_state_index()?;
 
@@ -910,7 +910,7 @@ pub mod pallet {
 		/// [`Rank`] in Members should be in [`MemberCount`]
 		/// [`Sum`] of [`MemberCount`] index should be the same as the sum of all the index attained
 		/// for rank possessed by [`Members`]
-		fn try_state_members() -> Result<(), sp_runtime::TryRuntimeError> {
+		fn try_state_members() -> Result<(), soil_runtime::TryRuntimeError> {
 			MemberCount::<T, I>::iter().try_for_each(|(_, member_index)| -> DispatchResult {
 				let total_members = Members::<T, I>::iter().count();
 				ensure!(
@@ -947,7 +947,7 @@ pub mod pallet {
 		/// [`Rank`] in [`IdToIndex`] should be the same as the the [`Rank`] in  [`IndexToId`]
 		/// [`Rank`] of the member [`who`] in [`IdToIndex`] should be the same as the [`Rank`] of
 		/// the member [`who`] in [`Members`]
-		fn try_state_index() -> Result<(), sp_runtime::TryRuntimeError> {
+		fn try_state_index() -> Result<(), soil_runtime::TryRuntimeError> {
 			IdToIndex::<T, I>::iter().try_for_each(
 				|(rank, who, member_index)| -> DispatchResult {
 					let who_from_index = IndexToId::<T, I>::get(rank, member_index).unwrap();

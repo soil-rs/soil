@@ -182,7 +182,7 @@ where
 		unhashed::kill(&Self::storage_n_map_final_key::<K, _>(key));
 	}
 
-	fn remove_prefix<KP>(partial_key: KP, limit: Option<u32>) -> sp_io::KillStorageResult
+	fn remove_prefix<KP>(partial_key: KP, limit: Option<u32>) -> soil_io::KillStorageResult
 	where
 		K: HasKeyPrefix<KP>,
 	{
@@ -193,7 +193,7 @@ where
 		partial_key: KP,
 		limit: u32,
 		maybe_cursor: Option<&[u8]>,
-	) -> sp_io::MultiRemovalResults
+	) -> soil_io::MultiRemovalResults
 	where
 		K: HasKeyPrefix<KP>,
 	{
@@ -287,7 +287,7 @@ where
 		V: StorageAppend<Item>,
 	{
 		let final_key = Self::storage_n_map_final_key::<K, _>(key);
-		sp_io::storage::append(&final_key, item.encode());
+		soil_io::storage::append(&final_key, item.encode());
 	}
 
 	fn migrate_keys<KArg>(key: KArg, hash_fns: K::HArg) -> Option<V>
@@ -425,7 +425,7 @@ impl<K: ReversibleKeyGenerator, V: FullCodec, G: StorageNMap<K, V>>
 		let prefix = G::prefix_hash().to_vec();
 		let mut previous_key = prefix.clone();
 		while let Some(next) =
-			sp_io::storage::next_key(&previous_key).filter(|n| n.starts_with(&prefix))
+			soil_io::storage::next_key(&previous_key).filter(|n| n.starts_with(&prefix))
 		{
 			previous_key = next;
 			let value = match unhashed::get::<O>(&previous_key) {
@@ -467,7 +467,7 @@ mod test_iterators {
 
 	#[test]
 	fn n_map_iter_from() {
-		sp_io::TestExternalities::default().execute_with(|| {
+		soil_io::TestExternalities::default().execute_with(|| {
 			use crate::{hash::Identity, storage::Key as NMapKey};
 			#[crate::storage_alias]
 			type MyNMap = StorageNMap<
@@ -509,7 +509,7 @@ mod test_iterators {
 
 	#[test]
 	fn n_map_double_map_identical_key() {
-		sp_io::TestExternalities::default().execute_with(|| {
+		soil_io::TestExternalities::default().execute_with(|| {
 			use crate::hash::{Blake2_128Concat, Twox64Concat};
 
 			type NMap = self::frame_system::NMap<Runtime>;
@@ -529,7 +529,7 @@ mod test_iterators {
 
 	#[test]
 	fn n_map_reversible_reversible_iteration() {
-		sp_io::TestExternalities::default().execute_with(|| {
+		soil_io::TestExternalities::default().execute_with(|| {
 			type NMap = self::frame_system::NMap<Runtime>;
 
 			// All map iterator

@@ -24,7 +24,7 @@ use sc_executor_common::{
 	wasm_runtime::{HeapAllocStrategy, WasmModule},
 };
 use sc_runtime_test::wasm_binary_unwrap;
-use sp_core::{
+use soil_core::{
 	ed25519, map,
 	offchain::{testing, OffchainDbExt, OffchainWorkerExt},
 	sr25519,
@@ -32,16 +32,16 @@ use sp_core::{
 	Pair,
 };
 use soil_crypto_hashing::{blake2_128, blake2_256, sha2_256, twox_128, twox_256};
-use sp_runtime::traits::BlakeTwo256;
-use sp_state_machine::TestExternalities as CoreTestExternalities;
-use sp_trie::{LayoutV1 as Layout, TrieConfiguration};
+use soil_runtime::traits::BlakeTwo256;
+use soil_state_machine::TestExternalities as CoreTestExternalities;
+use soil_trie::{LayoutV1 as Layout, TrieConfiguration};
 use std::sync::Arc;
 use tracing_subscriber::layer::SubscriberExt;
 
 use crate::WasmExecutionMethod;
 
 pub type TestExternalities = CoreTestExternalities<BlakeTwo256>;
-type HostFunctions = sp_io::SubstrateHostFunctions;
+type HostFunctions = soil_io::SubstrateHostFunctions;
 
 /// Simple macro that runs a given method as test with the available wasm execution methods.
 #[macro_export]
@@ -180,7 +180,7 @@ fn storage_should_work(wasm_method: WasmExecutionMethod) {
 		assert_eq!(output, b"all ok!".to_vec().encode());
 	}
 
-	let mut expected = TestExternalities::new(sp_core::storage::Storage {
+	let mut expected = TestExternalities::new(soil_core::storage::Storage {
 		top: map![
 			b"input".to_vec() => value,
 			b"foo".to_vec() => b"bar".to_vec(),
@@ -210,7 +210,7 @@ fn clear_prefix_should_work(wasm_method: WasmExecutionMethod) {
 		assert_eq!(output, b"all ok!".to_vec().encode());
 	}
 
-	let mut expected = TestExternalities::new(sp_core::storage::Storage {
+	let mut expected = TestExternalities::new(soil_core::storage::Storage {
 		top: map![
 			b"aaa".to_vec() => b"1".to_vec(),
 			b"aab".to_vec() => b"2".to_vec(),
@@ -365,12 +365,12 @@ fn offchain_index(wasm_method: WasmExecutionMethod) {
 	ext.register_extension(OffchainWorkerExt::new(offchain));
 	call_in_wasm("test_offchain_index_set", &[0], wasm_method, &mut ext.ext()).unwrap();
 
-	use sp_core::offchain::OffchainOverlayedChange;
+	use soil_core::offchain::OffchainOverlayedChange;
 	let data = ext
 		.overlayed_changes()
 		.clone()
 		.offchain_drain_committed()
-		.find(|(k, _v)| k == &(sp_core::offchain::STORAGE_PREFIX.to_vec(), b"k".to_vec()));
+		.find(|(k, _v)| k == &(soil_core::offchain::STORAGE_PREFIX.to_vec(), b"k".to_vec()));
 	assert_eq!(data.map(|data| data.1), Some(OffchainOverlayedChange::SetValue(b"v".to_vec())));
 }
 
@@ -630,7 +630,7 @@ fn memory_is_cleared_between_invocations(wasm_method: WasmExecutionMethod) {
 	//        COUNTER += 1;
 	//        COUNTER as u64
 	//     };
-	//     sp_core::to_substrate_wasm_fn_return_value(&output)
+	//     soil_core::to_substrate_wasm_fn_return_value(&output)
 	// }
 	// ```
 	//

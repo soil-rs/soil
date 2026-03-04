@@ -54,8 +54,8 @@ impl pallet_balances::Config for MockRuntime {
 
 impl Config for MockRuntime {}
 
-pub fn new_test_ext() -> sp_io::TestExternalities {
-	use sp_runtime::BuildStorage;
+pub fn new_test_ext() -> soil_io::TestExternalities {
+	use soil_runtime::BuildStorage;
 
 	let t = RuntimeGenesisConfig { system: Default::default(), balances: Default::default() }
 		.build_storage()

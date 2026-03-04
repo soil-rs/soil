@@ -28,7 +28,7 @@ use std::time::Duration;
 use codec::{Decode, Encode, Error as CodecError};
 use sc_network::NetworkBackend;
 use sc_network_types::PeerId;
-use sp_runtime::traits::{Block, NumberFor};
+use soil_runtime::traits::{Block, NumberFor};
 
 use crate::communication::{beefy_protocol_name::justifications_protocol_name, peers::PeerReport};
 use incoming_requests_handler::IncomingRequestReceiver;

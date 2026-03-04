@@ -34,7 +34,7 @@ use frame_support::{
 	BoundedSlice,
 };
 use frame_system::ensure_signed;
-use sp_runtime::DispatchError;
+use soil_runtime::DispatchError;
 
 pub struct Item<PalletInstance>(PhantomData<PalletInstance>);
 

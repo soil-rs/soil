@@ -38,11 +38,11 @@ sc-state-db = { workspace = true, default-features = true }
 schnellru = { workspace = true }
 soil-arithmetic = { workspace = true, default-features = true }
 sp-blockchain = { workspace = true, default-features = true }
-sp-core = { workspace = true, default-features = true }
+soil-core = { workspace = true, default-features = true }
 soil-database = { workspace = true, default-features = true }
-sp-runtime = { workspace = true, default-features = true }
-sp-state-machine = { workspace = true, default-features = true }
-sp-trie = { workspace = true, default-features = true }
+soil-runtime = { workspace = true, default-features = true }
+soil-state-machine = { workspace = true, default-features = true }
+soil-trie = { workspace = true, default-features = true }
 sysinfo = { workspace = true }
 
 [dev-dependencies]
@@ -60,7 +60,7 @@ tempfile = { workspace = true }
 default = []
 test-helpers = []
 runtime-benchmarks = [
-	"sp-runtime/runtime-benchmarks",
+	"soil-runtime/runtime-benchmarks",
 ]
 rocksdb = ["kvdb-rocksdb", "soil-database/rocksdb"]
 jemalloc-allocator = ["kvdb-rocksdb?/jemalloc"]

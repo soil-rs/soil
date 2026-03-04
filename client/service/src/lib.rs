@@ -52,7 +52,7 @@ use sc_rpc_server::Server;
 use sc_utils::mpsc::TracingUnboundedReceiver;
 use sp_blockchain::HeaderMetadata;
 use sp_consensus::SyncOracle;
-use sp_runtime::traits::{Block as BlockT, Header as HeaderT};
+use soil_runtime::traits::{Block as BlockT, Header as HeaderT};
 
 pub use self::{
 	builder::{
@@ -480,7 +480,7 @@ fn transactions_to_propagate<Pool, B, H, E>(pool: &Pool) -> Vec<(H, Arc<B::Extri
 where
 	Pool: TransactionPool<Block = B, Hash = H, Error = E>,
 	B: BlockT,
-	H: std::hash::Hash + Eq + sp_runtime::traits::Member + sp_runtime::traits::MaybeSerialize,
+	H: std::hash::Hash + Eq + soil_runtime::traits::Member + soil_runtime::traits::MaybeSerialize,
 	E: IntoPoolError + From<sc_transaction_pool_api::error::Error>,
 {
 	pool.ready()
@@ -505,7 +505,7 @@ where
 		+ 'static,
 	Pool: 'static + TransactionPool<Block = B, Hash = H, Error = E>,
 	B: BlockT,
-	H: std::hash::Hash + Eq + sp_runtime::traits::Member + sp_runtime::traits::MaybeSerialize,
+	H: std::hash::Hash + Eq + soil_runtime::traits::Member + soil_runtime::traits::MaybeSerialize,
 	E: 'static + IntoPoolError + From<sc_transaction_pool_api::error::Error>,
 {
 	fn transactions(&self) -> Vec<(H, Arc<B::Extrinsic>)> {
@@ -586,7 +586,7 @@ mod tests {
 		// given
 		let (client, longest_chain) = TestClientBuilder::new().build_with_longest_chain();
 		let client = Arc::new(client);
-		let spawner = sp_core::testing::TaskExecutor::new();
+		let spawner = soil_core::testing::TaskExecutor::new();
 		let pool = Arc::from(BasicPool::new_full(
 			Default::default(),
 			true.into(),
@@ -594,7 +594,7 @@ mod tests {
 			spawner,
 			client.clone(),
 		));
-		let source = sp_runtime::transaction_validity::TransactionSource::External;
+		let source = soil_runtime::transaction_validity::TransactionSource::External;
 		let best = block_on(longest_chain.best_chain()).unwrap();
 		let transaction = Transfer {
 			amount: 5,

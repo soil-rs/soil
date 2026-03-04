@@ -20,7 +20,7 @@
 #![cfg(test)]
 
 use frame_support::{derive_impl, parameter_types, traits::ConstU32};
-use sp_runtime::{
+use soil_runtime::{
 	testing::H256,
 	traits::{BlakeTwo256, IdentityLookup},
 	BuildStorage,
@@ -111,7 +111,7 @@ impl pallet_test::Config for Test {
 	type MaybeItem = MaybeItem;
 }
 
-fn new_test_ext() -> sp_io::TestExternalities {
+fn new_test_ext() -> soil_io::TestExternalities {
 	RuntimeGenesisConfig::default().build_storage().unwrap().into()
 }
 

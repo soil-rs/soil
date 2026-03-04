@@ -30,7 +30,7 @@ use frame_support::{
 	},
 };
 use frame_system::RawOrigin as SystemOrigin;
-use sp_core::Get;
+use soil_core::Get;
 
 /// Benchmark Helper
 pub trait BenchmarkHelper<AssetKind> {

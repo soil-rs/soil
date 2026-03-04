@@ -58,8 +58,8 @@ use prometheus_endpoint::Registry as PrometheusRegistry;
 use sc_client_api::{backend::StorageProvider, Backend, StorageKey};
 use sc_keystore::LocalKeystore;
 use sp_blockchain::HeaderBackend;
-use sp_core::{crypto::UncheckedFrom, hexdisplay::HexDisplay, traits::SpawnNamed, Decode, Encode};
-use sp_runtime::traits::Block as BlockT;
+use soil_core::{crypto::UncheckedFrom, hexdisplay::HexDisplay, traits::SpawnNamed, Decode, Encode};
+use soil_runtime::traits::Block as BlockT;
 use sp_statement_store::{
 	runtime_api::{StatementSource, StatementStoreExt},
 	AccountId, BlockHash, Channel, DecryptionKey, FilterDecision, Hash, InvalidReason,
@@ -1051,7 +1051,7 @@ impl Store {
 			&OptimizedTopicFilter::MatchAll(match_all_topics.iter().cloned().collect()),
 			|statement| {
 				if let (Some(key), Some(_)) = (statement.decryption_key(), statement.data()) {
-					let public: sp_core::ed25519::Public = UncheckedFrom::unchecked_from(key);
+					let public: soil_core::ed25519::Public = UncheckedFrom::unchecked_from(key);
 					let public: sp_statement_store::ed25519::Public = public.into();
 					match self.keystore.key_pair::<sp_statement_store::ed25519::Pair>(&public) {
 						Err(e) => {
@@ -1494,18 +1494,18 @@ mod tests {
 
 	use crate::{col, Store};
 	use sc_keystore::Keystore;
-	use sp_core::{Decode, Encode, Pair};
+	use soil_core::{Decode, Encode, Pair};
 	use sp_statement_store::{
 		AccountId, Channel, DecryptionKey, InvalidReason, Proof, Statement, StatementSource,
 		StatementStore, SubmitResult, Topic,
 	};
 
-	type Extrinsic = sp_runtime::OpaqueExtrinsic;
-	type Hash = sp_core::H256;
-	type Hashing = sp_runtime::traits::BlakeTwo256;
+	type Extrinsic = soil_runtime::OpaqueExtrinsic;
+	type Hash = soil_core::H256;
+	type Hashing = soil_runtime::traits::BlakeTwo256;
 	type BlockNumber = u64;
-	type Header = sp_runtime::generic::Header<BlockNumber, Hashing>;
-	type Block = sp_runtime::generic::Block<Header, Extrinsic>;
+	type Header = soil_runtime::generic::Header<BlockNumber, Hashing>;
+	type Block = soil_runtime::generic::Block<Header, Extrinsic>;
 
 	const CORRECT_BLOCK_HASH: [u8; 32] = [1u8; 32];
 
@@ -1668,7 +1668,7 @@ mod tests {
 			client,
 			keystore,
 			None,
-			Box::new(sp_core::testing::TaskExecutor::new()),
+			Box::new(soil_core::testing::TaskExecutor::new()),
 		)
 		.unwrap();
 		(store, temp_dir) // return order is important. Store must be dropped before TempDir
@@ -1693,7 +1693,7 @@ mod tests {
 		if let Some(key) = dec_key {
 			statement.set_decryption_key(key);
 		}
-		let kp = sp_core::ed25519::Pair::from_string("//Alice", None).unwrap();
+		let kp = soil_core::ed25519::Pair::from_string("//Alice", None).unwrap();
 		statement.sign_ed25519_private(&kp);
 		statement
 	}
@@ -1772,7 +1772,7 @@ mod tests {
 			client,
 			keystore,
 			None,
-			Box::new(sp_core::testing::TaskExecutor::new()),
+			Box::new(soil_core::testing::TaskExecutor::new()),
 		)
 		.unwrap();
 		assert_eq!(store.statements().unwrap().len(), 3);
@@ -1984,7 +1984,7 @@ mod tests {
 			client,
 			keystore,
 			None,
-			Box::new(sp_core::testing::TaskExecutor::new()),
+			Box::new(soil_core::testing::TaskExecutor::new()),
 		)
 		.unwrap();
 		assert_eq!(store.statements().unwrap().len(), 0);
@@ -1996,7 +1996,7 @@ mod tests {
 		let (store, _temp) = test_store();
 		let public = store
 			.keystore
-			.ed25519_generate_new(sp_core::crypto::key_types::STATEMENT, None)
+			.ed25519_generate_new(soil_core::crypto::key_types::STATEMENT, None)
 			.unwrap();
 		let statement1 = statement(1, 1, None, 100);
 		let mut statement2 = statement(1, 2, None, 0);
@@ -2051,13 +2051,13 @@ mod tests {
 
 		let public1 = store
 			.keystore
-			.ed25519_generate_new(sp_core::crypto::key_types::STATEMENT, None)
+			.ed25519_generate_new(soil_core::crypto::key_types::STATEMENT, None)
 			.unwrap();
 		let dest: [u8; 32] = public1.into();
 
 		let public2 = store
 			.keystore
-			.ed25519_generate_new(sp_core::crypto::key_types::STATEMENT, None)
+			.ed25519_generate_new(soil_core::crypto::key_types::STATEMENT, None)
 			.unwrap();
 
 		// A statement that does have dec_key = dest
@@ -2094,13 +2094,13 @@ mod tests {
 
 		let public1 = store
 			.keystore
-			.ed25519_generate_new(sp_core::crypto::key_types::STATEMENT, None)
+			.ed25519_generate_new(soil_core::crypto::key_types::STATEMENT, None)
 			.unwrap();
 		let dest: [u8; 32] = public1.into();
 
 		let public2 = store
 			.keystore
-			.ed25519_generate_new(sp_core::crypto::key_types::STATEMENT, None)
+			.ed25519_generate_new(soil_core::crypto::key_types::STATEMENT, None)
 			.unwrap();
 
 		// A statement that does have dec_key = dest
@@ -2141,13 +2141,13 @@ mod tests {
 		// prepare two key-pairs
 		let public_dest = store
 			.keystore
-			.ed25519_generate_new(sp_core::crypto::key_types::STATEMENT, None)
+			.ed25519_generate_new(soil_core::crypto::key_types::STATEMENT, None)
 			.unwrap();
 		let dest: [u8; 32] = public_dest.into();
 
 		let public_other = store
 			.keystore
-			.ed25519_generate_new(sp_core::crypto::key_types::STATEMENT, None)
+			.ed25519_generate_new(soil_core::crypto::key_types::STATEMENT, None)
 			.unwrap();
 
 		// statement that SHOULD be returned (matches dest & topic 42)

@@ -17,7 +17,7 @@
 
 //! Provide types to help defining a mock environment when testing pallets.
 
-use sp_runtime::generic;
+use soil_runtime::generic;
 
 /// An unchecked extrinsic type to be used in tests.
 pub type MockUncheckedExtrinsic<T, Signature = (), Extra = ()> = generic::UncheckedExtrinsic<
@@ -27,21 +27,21 @@ pub type MockUncheckedExtrinsic<T, Signature = (), Extra = ()> = generic::Unchec
 	Extra,
 >;
 
-/// An implementation of `sp_runtime::traits::Block` to be used in tests.
+/// An implementation of `soil_runtime::traits::Block` to be used in tests.
 pub type MockBlock<T> = generic::Block<
-	generic::Header<u64, sp_runtime::traits::BlakeTwo256>,
+	generic::Header<u64, soil_runtime::traits::BlakeTwo256>,
 	MockUncheckedExtrinsic<T>,
 >;
 
-/// An implementation of `sp_runtime::traits::Block` to be used in tests with u32 BlockNumber type.
+/// An implementation of `soil_runtime::traits::Block` to be used in tests with u32 BlockNumber type.
 pub type MockBlockU32<T> = generic::Block<
-	generic::Header<u32, sp_runtime::traits::BlakeTwo256>,
+	generic::Header<u32, soil_runtime::traits::BlakeTwo256>,
 	MockUncheckedExtrinsic<T>,
 >;
 
-/// An implementation of `sp_runtime::traits::Block` to be used in tests with u128 BlockNumber
+/// An implementation of `soil_runtime::traits::Block` to be used in tests with u128 BlockNumber
 /// type.
 pub type MockBlockU128<T> = generic::Block<
-	generic::Header<u128, sp_runtime::traits::BlakeTwo256>,
+	generic::Header<u128, soil_runtime::traits::BlakeTwo256>,
 	MockUncheckedExtrinsic<T>,
 >;

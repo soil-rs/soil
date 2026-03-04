@@ -25,7 +25,7 @@ use super::StorageInstance;
 use alloc::vec::Vec;
 use impl_trait_for_tuples::impl_for_tuples;
 use soil_arithmetic::traits::AtLeast32BitUnsigned;
-use sp_runtime::TryRuntimeError;
+use soil_runtime::TryRuntimeError;
 
 /// Which state tests to execute.
 #[derive(codec::Encode, codec::Decode, Clone, scale_info::TypeInfo, PartialEq)]
@@ -215,7 +215,7 @@ impl<BlockNumber: Clone + core::fmt::Debug + AtLeast32BitUnsigned> TryState<Bloc
 					&[for_tuples!(#( Tuple::try_state ),*)];
 				let skip = n.clone() % (functions.len() as u32).into();
 				let skip: u32 =
-					skip.try_into().unwrap_or_else(|_| sp_runtime::traits::Bounded::max_value());
+					skip.try_into().unwrap_or_else(|_| soil_runtime::traits::Bounded::max_value());
 				let mut result = Ok(());
 				for try_state_fn in functions.iter().cycle().skip(skip as usize).take(len as usize)
 				{

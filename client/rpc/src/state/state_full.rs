@@ -43,14 +43,14 @@ use sp_blockchain::{
 	CachedHeaderMetadata, Error as ClientError, HeaderBackend, HeaderMetadata,
 	Result as ClientResult,
 };
-use sp_core::{
+use soil_core::{
 	storage::{
 		ChildInfo, ChildType, PrefixedStorageKey, StorageChangeSet, StorageData, StorageKey,
 	},
 	traits::CallContext,
 	Bytes,
 };
-use sp_runtime::traits::Block as BlockT;
+use soil_runtime::traits::Block as BlockT;
 use sp_version::RuntimeVersion;
 
 /// The maximum time allowed for an RPC call when running without unsafe RPC enabled.
@@ -478,7 +478,7 @@ where
 		targets: Option<String>,
 		storage_keys: Option<String>,
 		methods: Option<String>,
-	) -> std::result::Result<sp_rpc::tracing::TraceBlockResponse, Error> {
+	) -> std::result::Result<soil_rpc::tracing::TraceBlockResponse, Error> {
 		sc_tracing::block::BlockExecutor::new(
 			self.client.clone(),
 			block,

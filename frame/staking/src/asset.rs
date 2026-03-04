@@ -26,7 +26,7 @@ use frame_support::traits::{
 	},
 	tokens::{Fortitude, Precision, Preservation},
 };
-use sp_runtime::{DispatchResult, Saturating};
+use soil_runtime::{DispatchResult, Saturating};
 
 /// Existential deposit for the chain.
 pub fn existential_deposit<T: Config>() -> BalanceOf<T> {

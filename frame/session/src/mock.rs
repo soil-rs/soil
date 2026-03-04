@@ -25,8 +25,8 @@ use crate::historical as pallet_session_historical;
 use codec::Encode;
 use frame_support::{derive_impl, parameter_types, traits::ConstU64};
 use pallet_balances::{self, AccountData};
-use sp_core::crypto::key_types::DUMMY;
-use sp_runtime::{
+use soil_core::crypto::key_types::DUMMY;
+use soil_runtime::{
 	impl_opaque_keys,
 	testing::UintAuthorityId,
 	traits::{Convert, OpaqueKeys},
@@ -130,7 +130,7 @@ impl ShouldEndSession<u64> for TestShouldEndSession {
 
 pub struct TestSessionHandler;
 impl SessionHandler<u64> for TestSessionHandler {
-	const KEY_TYPE_IDS: &'static [sp_runtime::KeyTypeId] = &[UintAuthorityId::ID];
+	const KEY_TYPE_IDS: &'static [soil_runtime::KeyTypeId] = &[UintAuthorityId::ID];
 	fn on_genesis_session<T: OpaqueKeys>(_validators: &[(u64, T)]) {}
 	fn on_new_session<T: OpaqueKeys>(
 		changed: bool,
@@ -233,7 +233,7 @@ pub fn session_hold(who: u64) -> u64 {
 	)
 }
 
-pub fn new_test_ext() -> sp_io::TestExternalities {
+pub fn new_test_ext() -> soil_io::TestExternalities {
 	let mut t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	let ed = <Test as pallet_balances::Config>::ExistentialDeposit::get();
 	pallet_balances::GenesisConfig::<Test> {
@@ -263,7 +263,7 @@ pub fn new_test_ext() -> sp_io::TestExternalities {
 
 	let v = NextValidators::get().iter().map(|&i| (i, i)).collect();
 	ValidatorAccounts::mutate(|m| *m = v);
-	sp_io::TestExternalities::new(t)
+	soil_io::TestExternalities::new(t)
 }
 
 #[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
@@ -319,7 +319,7 @@ impl Config for Test {
 impl crate::historical::Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type FullIdentification = u64;
-	type FullIdentificationOf = sp_runtime::traits::ConvertInto;
+	type FullIdentificationOf = soil_runtime::traits::ConvertInto;
 }
 
 #[derive_impl(pallet_balances::config_preludes::TestDefaultConfig as pallet_balances::DefaultConfig)]

@@ -24,7 +24,7 @@ use frame_benchmarking::v1::{
 };
 use frame_support::ensure;
 use frame_system::RawOrigin;
-use sp_runtime::traits::Saturating;
+use soil_runtime::traits::Saturating;
 
 use super::*;
 use crate::Pallet as TipsMod;

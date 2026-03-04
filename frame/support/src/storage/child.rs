@@ -23,15 +23,15 @@
 
 use alloc::vec::Vec;
 use codec::{Codec, Decode, Encode};
-pub use sp_core::storage::{ChildInfo, ChildType, StateVersion};
-pub use sp_io::{KillStorageResult, MultiRemovalResults};
+pub use soil_core::storage::{ChildInfo, ChildType, StateVersion};
+pub use soil_io::{KillStorageResult, MultiRemovalResults};
 
 /// Return the value of the item in storage under `key`, or `None` if there is no explicit entry.
 pub fn get<T: Decode + Sized>(child_info: &ChildInfo, key: &[u8]) -> Option<T> {
 	match child_info.child_type() {
 		ChildType::ParentKeyId => {
 			let storage_key = child_info.storage_key();
-			sp_io::default_child_storage::get(storage_key, key).and_then(|v| {
+			soil_io::default_child_storage::get(storage_key, key).and_then(|v| {
 				Decode::decode(&mut &v[..]).map(Some).unwrap_or_else(|_| {
 					// TODO #3700: error should be handleable.
 					log::error!(
@@ -73,7 +73,7 @@ pub fn get_or_else<T: Decode + Sized, F: FnOnce() -> T>(
 pub fn put<T: Encode>(child_info: &ChildInfo, key: &[u8], value: &T) {
 	match child_info.child_type() {
 		ChildType::ParentKeyId => value.using_encoded(|slice| {
-			sp_io::default_child_storage::set(child_info.storage_key(), key, slice)
+			soil_io::default_child_storage::set(child_info.storage_key(), key, slice)
 		}),
 	}
 }
@@ -113,7 +113,7 @@ pub fn take_or_else<T: Codec + Sized, F: FnOnce() -> T>(
 pub fn exists(child_info: &ChildInfo, key: &[u8]) -> bool {
 	match child_info.child_type() {
 		ChildType::ParentKeyId => {
-			sp_io::default_child_storage::exists(child_info.storage_key(), key)
+			soil_io::default_child_storage::exists(child_info.storage_key(), key)
 		},
 	}
 }
@@ -141,7 +141,7 @@ pub fn exists(child_info: &ChildInfo, key: &[u8]) -> bool {
 pub fn kill_storage(child_info: &ChildInfo, limit: Option<u32>) -> KillStorageResult {
 	match child_info.child_type() {
 		ChildType::ParentKeyId => {
-			sp_io::default_child_storage::storage_kill(child_info.storage_key(), limit)
+			soil_io::default_child_storage::storage_kill(child_info.storage_key(), limit)
 		},
 	}
 }
@@ -185,13 +185,13 @@ pub fn clear_storage(
 ) -> MultiRemovalResults {
 	// TODO: Once the network has upgraded to include the new host functions, this code can be
 	// enabled.
-	// sp_io::default_child_storage::storage_kill(prefix, maybe_limit, maybe_cursor)
+	// soil_io::default_child_storage::storage_kill(prefix, maybe_limit, maybe_cursor)
 	let r = match child_info.child_type() {
 		ChildType::ParentKeyId => {
-			sp_io::default_child_storage::storage_kill(child_info.storage_key(), maybe_limit)
+			soil_io::default_child_storage::storage_kill(child_info.storage_key(), maybe_limit)
 		},
 	};
-	use sp_io::KillStorageResult::*;
+	use soil_io::KillStorageResult::*;
 	let (maybe_cursor, backend) = match r {
 		AllRemoved(db) => (None, db),
 		SomeRemaining(db) => (Some(child_info.storage_key().to_vec()), db),
@@ -203,7 +203,7 @@ pub fn clear_storage(
 pub fn kill(child_info: &ChildInfo, key: &[u8]) {
 	match child_info.child_type() {
 		ChildType::ParentKeyId => {
-			sp_io::default_child_storage::clear(child_info.storage_key(), key);
+			soil_io::default_child_storage::clear(child_info.storage_key(), key);
 		},
 	}
 }
@@ -211,7 +211,7 @@ pub fn kill(child_info: &ChildInfo, key: &[u8]) {
 /// Get a Vec of bytes from storage.
 pub fn get_raw(child_info: &ChildInfo, key: &[u8]) -> Option<Vec<u8>> {
 	match child_info.child_type() {
-		ChildType::ParentKeyId => sp_io::default_child_storage::get(child_info.storage_key(), key),
+		ChildType::ParentKeyId => soil_io::default_child_storage::get(child_info.storage_key(), key),
 	}
 }
 
@@ -219,7 +219,7 @@ pub fn get_raw(child_info: &ChildInfo, key: &[u8]) -> Option<Vec<u8>> {
 pub fn put_raw(child_info: &ChildInfo, key: &[u8], value: &[u8]) {
 	match child_info.child_type() {
 		ChildType::ParentKeyId => {
-			sp_io::default_child_storage::set(child_info.storage_key(), key, value)
+			soil_io::default_child_storage::set(child_info.storage_key(), key, value)
 		},
 	}
 }
@@ -228,7 +228,7 @@ pub fn put_raw(child_info: &ChildInfo, key: &[u8], value: &[u8]) {
 pub fn root(child_info: &ChildInfo, version: StateVersion) -> Vec<u8> {
 	match child_info.child_type() {
 		ChildType::ParentKeyId => {
-			sp_io::default_child_storage::root(child_info.storage_key(), version)
+			soil_io::default_child_storage::root(child_info.storage_key(), version)
 		},
 	}
 }
@@ -238,7 +238,7 @@ pub fn len(child_info: &ChildInfo, key: &[u8]) -> Option<u32> {
 	match child_info.child_type() {
 		ChildType::ParentKeyId => {
 			let mut buffer = [0; 0];
-			sp_io::default_child_storage::read(child_info.storage_key(), key, &mut buffer, 0)
+			soil_io::default_child_storage::read(child_info.storage_key(), key, &mut buffer, 0)
 		},
 	}
 }

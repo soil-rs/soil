@@ -44,20 +44,20 @@ use sc_telemetry::{Telemetry, TelemetryWorker};
 use sc_transaction_pool::TransactionPoolHandle;
 use sc_transaction_pool_api::OffchainTransactionPoolFactory;
 use sp_api::ProvideRuntimeApi;
-use sp_core::crypto::Pair;
-use sp_runtime::{generic, traits::Block as BlockT, SaturatedConversion};
+use soil_core::crypto::Pair;
+use soil_runtime::{generic, traits::Block as BlockT, SaturatedConversion};
 use sp_transaction_storage_proof::runtime_api::TransactionStorageApi;
 use std::{path::Path, sync::Arc};
 
 /// Host functions required for kitchensink runtime and Substrate node.
 #[cfg(not(feature = "runtime-benchmarks"))]
 pub type HostFunctions =
-	(sp_io::SubstrateHostFunctions, sp_statement_store::runtime_api::HostFunctions);
+	(soil_io::SubstrateHostFunctions, sp_statement_store::runtime_api::HostFunctions);
 
 /// Host functions required for kitchensink runtime and Substrate node.
 #[cfg(feature = "runtime-benchmarks")]
 pub type HostFunctions = (
-	sp_io::SubstrateHostFunctions,
+	soil_io::SubstrateHostFunctions,
 	sp_statement_store::runtime_api::HostFunctions,
 	frame_benchmarking::benchmarking::HostFunctions,
 );
@@ -90,7 +90,7 @@ const GRANDPA_JUSTIFICATION_PERIOD: u32 = 512;
 /// Fetch the nonce of the given `account` from the chain state.
 ///
 /// Note: Should only be used for tests.
-pub fn fetch_nonce(client: &FullClient, account: sp_core::sr25519::Pair) -> u32 {
+pub fn fetch_nonce(client: &FullClient, account: soil_core::sr25519::Pair) -> u32 {
 	let best_hash = client.chain_info().best_hash;
 	client
 		.runtime_api()
@@ -106,7 +106,7 @@ pub fn fetch_nonce(client: &FullClient, account: sp_core::sr25519::Pair) -> u32 
 /// Note: Should only be used for tests.
 pub fn create_extrinsic(
 	client: &FullClient,
-	sender: sp_core::sr25519::Pair,
+	sender: soil_core::sr25519::Pair,
 	function: impl Into<kitchensink_runtime::RuntimeCall>,
 	nonce: Option<u32>,
 ) -> kitchensink_runtime::UncheckedExtrinsic {
@@ -164,7 +164,7 @@ pub fn create_extrinsic(
 
 	generic::UncheckedExtrinsic::new_signed(
 		function,
-		sp_runtime::AccountId32::from(sender.public()).into(),
+		soil_runtime::AccountId32::from(sender.public()).into(),
 		kitchensink_runtime::Signature::Sr25519(signature),
 		tx_ext,
 	)
@@ -897,11 +897,11 @@ mod tests {
 	use sc_service_test::TestNetNode;
 	use sc_transaction_pool_api::ChainEvent;
 	use sp_consensus::{BlockOrigin, Environment, Proposer};
-	use sp_core::crypto::Pair;
+	use soil_core::crypto::Pair;
 	use sp_inherents::InherentDataProvider;
 	use sp_keyring::Sr25519Keyring;
-	use sp_keystore::KeystorePtr;
-	use sp_runtime::{
+	use soil_keystore::KeystorePtr;
+	use soil_runtime::{
 		generic::{self, Digest, Era, SignedPayload},
 		key_types::BABE,
 		traits::{Block as BlockT, Header as HeaderT, IdentifyAccount, Verify},

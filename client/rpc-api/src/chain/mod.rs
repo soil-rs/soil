@@ -22,7 +22,7 @@ pub mod error;
 
 use error::Error;
 use jsonrpsee::proc_macros::rpc;
-use sp_rpc::{list::ListOrValue, number::NumberOrHex};
+use soil_rpc::{list::ListOrValue, number::NumberOrHex};
 
 #[rpc(client, server)]
 pub trait ChainApi<Number, Hash, Header, SignedBlock> {

@@ -48,7 +48,7 @@ pub mod generic {
 	use codec::{Decode, Encode, Input};
 	use sc_client_api::StorageProof;
 	use sc_network_common::{message::RequestId, role::Roles};
-	use sp_runtime::ConsensusEngineId;
+	use soil_runtime::ConsensusEngineId;
 
 	/// Consensus is mostly opaque to us
 	#[derive(Debug, PartialEq, Eq, Clone, Encode, Decode)]

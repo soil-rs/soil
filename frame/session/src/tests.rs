@@ -27,8 +27,8 @@ use crate::mock::{
 };
 
 use codec::Encode;
-use sp_core::crypto::key_types::DUMMY;
-use sp_runtime::{testing::UintAuthorityId, Perbill};
+use soil_core::crypto::key_types::DUMMY;
+use soil_runtime::{testing::UintAuthorityId, Perbill};
 
 use frame_support::{
 	assert_err, assert_noop, assert_ok,
@@ -410,7 +410,7 @@ fn session_keys_generate_output_works_as_set_keys_input() {
 #[test]
 fn upgrade_keys() {
 	use frame_support::storage;
-	use sp_core::crypto::key_types::DUMMY;
+	use soil_core::crypto::key_types::DUMMY;
 
 	// This test assumes certain mocks.
 	assert_eq!(mock::NextValidators::get().clone(), vec![1, 2, 3]);
@@ -528,7 +528,7 @@ fn set_keys_should_fail_with_insufficient_funds() {
 				keys,
 				create_set_keys_proof(account_id, &UintAuthorityId(account_id)),
 			),
-			sp_runtime::TokenError::FundsUnavailable
+			soil_runtime::TokenError::FundsUnavailable
 		);
 	});
 }
@@ -779,7 +779,7 @@ mod disabling_byzantine_threshold {
 
 	#[test]
 	fn disable_when_below_byzantine_threshold() {
-		sp_io::TestExternalities::default().execute_with(|| {
+		soil_io::TestExternalities::default().execute_with(|| {
 			let initially_disabled = vec![(1, MAX_OFFENDER_SEVERITY)];
 			Validators::<Test>::put(ACTIVE_SET.to_vec());
 
@@ -796,7 +796,7 @@ mod disabling_byzantine_threshold {
 
 	#[test]
 	fn disable_when_below_custom_byzantine_threshold() {
-		sp_io::TestExternalities::default().execute_with(|| {
+		soil_io::TestExternalities::default().execute_with(|| {
 			let initially_disabled = vec![(1, MAX_OFFENDER_SEVERITY), (2, MAX_OFFENDER_SEVERITY)];
 			Validators::<Test>::put(ACTIVE_SET.to_vec());
 
@@ -813,7 +813,7 @@ mod disabling_byzantine_threshold {
 
 	#[test]
 	fn non_slashable_offences_still_disable() {
-		sp_io::TestExternalities::default().execute_with(|| {
+		soil_io::TestExternalities::default().execute_with(|| {
 			let initially_disabled = vec![(1, MAX_OFFENDER_SEVERITY)];
 			Validators::<Test>::put(ACTIVE_SET.to_vec());
 
@@ -830,7 +830,7 @@ mod disabling_byzantine_threshold {
 
 	#[test]
 	fn dont_disable_beyond_byzantine_threshold() {
-		sp_io::TestExternalities::default().execute_with(|| {
+		soil_io::TestExternalities::default().execute_with(|| {
 			let initially_disabled = vec![(1, MIN_OFFENDER_SEVERITY), (2, MAX_OFFENDER_SEVERITY)];
 			Validators::<Test>::put(ACTIVE_SET.to_vec());
 			let disabling_decision =
@@ -860,7 +860,7 @@ mod disabling_with_reenabling {
 
 	#[test]
 	fn disable_when_below_byzantine_threshold() {
-		sp_io::TestExternalities::default().execute_with(|| {
+		soil_io::TestExternalities::default().execute_with(|| {
 			let initially_disabled = vec![(0, MAX_OFFENDER_SEVERITY)];
 			Validators::<Test>::put(ACTIVE_SET.to_vec());
 
@@ -879,7 +879,7 @@ mod disabling_with_reenabling {
 
 	#[test]
 	fn reenable_arbitrary_on_equal_severity() {
-		sp_io::TestExternalities::default().execute_with(|| {
+		soil_io::TestExternalities::default().execute_with(|| {
 			let initially_disabled = vec![(0, MAX_OFFENDER_SEVERITY), (1, MAX_OFFENDER_SEVERITY)];
 			Validators::<Test>::put(ACTIVE_SET.to_vec());
 
@@ -899,7 +899,7 @@ mod disabling_with_reenabling {
 
 	#[test]
 	fn do_not_reenable_higher_offenders() {
-		sp_io::TestExternalities::default().execute_with(|| {
+		soil_io::TestExternalities::default().execute_with(|| {
 			let initially_disabled = vec![(0, MAX_OFFENDER_SEVERITY), (1, MAX_OFFENDER_SEVERITY)];
 			Validators::<Test>::put(ACTIVE_SET.to_vec());
 
@@ -918,7 +918,7 @@ mod disabling_with_reenabling {
 
 	#[test]
 	fn reenable_lower_offenders() {
-		sp_io::TestExternalities::default().execute_with(|| {
+		soil_io::TestExternalities::default().execute_with(|| {
 			let initially_disabled = vec![(0, LOW_OFFENDER_SEVERITY), (1, LOW_OFFENDER_SEVERITY)];
 			Validators::<Test>::put(ACTIVE_SET.to_vec());
 
@@ -940,7 +940,7 @@ mod disabling_with_reenabling {
 
 	#[test]
 	fn reenable_lower_offenders_unordered() {
-		sp_io::TestExternalities::default().execute_with(|| {
+		soil_io::TestExternalities::default().execute_with(|| {
 			let initially_disabled = vec![(0, MAX_OFFENDER_SEVERITY), (1, LOW_OFFENDER_SEVERITY)];
 			Validators::<Test>::put(ACTIVE_SET.to_vec());
 
@@ -960,7 +960,7 @@ mod disabling_with_reenabling {
 
 	#[test]
 	fn update_severity() {
-		sp_io::TestExternalities::default().execute_with(|| {
+		soil_io::TestExternalities::default().execute_with(|| {
 			let initially_disabled =
 				vec![(OFFENDER_VALIDATOR_IDX, LOW_OFFENDER_SEVERITY), (0, MAX_OFFENDER_SEVERITY)];
 			Validators::<Test>::put(ACTIVE_SET.to_vec());
@@ -980,7 +980,7 @@ mod disabling_with_reenabling {
 
 	#[test]
 	fn update_cannot_lower_severity() {
-		sp_io::TestExternalities::default().execute_with(|| {
+		soil_io::TestExternalities::default().execute_with(|| {
 			let initially_disabled =
 				vec![(OFFENDER_VALIDATOR_IDX, MAX_OFFENDER_SEVERITY), (0, MAX_OFFENDER_SEVERITY)];
 			Validators::<Test>::put(ACTIVE_SET.to_vec());
@@ -998,7 +998,7 @@ mod disabling_with_reenabling {
 
 	#[test]
 	fn no_accidental_reenablement_on_repeated_offence() {
-		sp_io::TestExternalities::default().execute_with(|| {
+		soil_io::TestExternalities::default().execute_with(|| {
 			let initially_disabled =
 				vec![(OFFENDER_VALIDATOR_IDX, MAX_OFFENDER_SEVERITY), (0, LOW_OFFENDER_SEVERITY)];
 			Validators::<Test>::put(ACTIVE_SET.to_vec());

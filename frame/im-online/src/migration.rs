@@ -24,7 +24,7 @@ use frame_support::{storage_alias, traits::OnRuntimeUpgrade};
 #[cfg(feature = "try-runtime")]
 use frame_support::ensure;
 #[cfg(feature = "try-runtime")]
-use sp_runtime::TryRuntimeError;
+use soil_runtime::TryRuntimeError;
 
 /// The log target.
 const TARGET: &str = "runtime::im-online::migration::v1";
@@ -128,7 +128,7 @@ pub fn clear_offchain_storage(validator_set_size: u32) {
 			key.extend(idx.encode());
 			key
 		};
-		sp_runtime::offchain::storage::StorageValueRef::persistent(&key).clear();
+		soil_runtime::offchain::storage::StorageValueRef::persistent(&key).clear();
 	});
 }
 

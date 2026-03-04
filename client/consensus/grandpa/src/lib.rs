@@ -72,15 +72,15 @@ use sc_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG, CONSENSUS_INFO};
 use sc_transaction_pool_api::OffchainTransactionPoolFactory;
 use sc_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver};
 use sp_api::ProvideRuntimeApi;
-use sp_application_crypto::AppCrypto;
+use soil_application_crypto::AppCrypto;
 use sp_blockchain::{Error as ClientError, HeaderBackend, HeaderMetadata, Result as ClientResult};
 use sp_consensus::SelectChain;
 use sp_consensus_grandpa::{
 	AuthorityList, AuthoritySignature, SetId, CLIENT_LOG_TARGET as LOG_TARGET,
 };
-use sp_core::{crypto::ByteArray, traits::CallContext};
-use sp_keystore::KeystorePtr;
-use sp_runtime::{
+use soil_core::{crypto::ByteArray, traits::CallContext};
+use soil_keystore::KeystorePtr;
+use soil_runtime::{
 	generic::BlockId,
 	traits::{Block as BlockT, NumberFor, Zero},
 };
@@ -161,7 +161,7 @@ use std::marker::PhantomData;
 pub struct GrandpaPruningFilter;
 
 impl sc_client_db::PruningFilter for GrandpaPruningFilter {
-	fn should_retain(&self, justifications: &sp_runtime::Justifications) -> bool {
+	fn should_retain(&self, justifications: &soil_runtime::Justifications) -> bool {
 		justifications.get(GRANDPA_ENGINE_ID).is_some()
 	}
 }

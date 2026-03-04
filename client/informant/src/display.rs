@@ -21,7 +21,7 @@ use log::info;
 use sc_client_api::ClientInfo;
 use sc_network::NetworkStatus;
 use sc_network_sync::{SyncState, SyncStatus, WarpSyncPhase, WarpSyncProgress};
-use sp_runtime::traits::{Block as BlockT, CheckedDiv, NumberFor, Saturating, Zero};
+use soil_runtime::traits::{Block as BlockT, CheckedDiv, NumberFor, Saturating, Zero};
 use std::{fmt, time::Instant};
 
 use crate::PrintFullHashOnDebugLogging;

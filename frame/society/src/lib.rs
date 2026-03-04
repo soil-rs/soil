@@ -279,7 +279,7 @@ use rand_chacha::{
 	ChaChaRng,
 };
 use scale_info::TypeInfo;
-use sp_runtime::{
+use soil_runtime::{
 	traits::{
 		AccountIdConversion, CheckedAdd, CheckedSub, Hash, Saturating, StaticLookup,
 		TrailingZeroInput, Zero,
@@ -291,7 +291,7 @@ use sp_runtime::{
 pub use weights::WeightInfo;
 
 pub use pallet::*;
-use sp_runtime::traits::BlockNumberProvider;
+use soil_runtime::traits::BlockNumberProvider;
 
 pub type BlockNumberFor<T, I> =
 	<<T as Config<I>>::BlockNumberProvider as BlockNumberProvider>::BlockNumber;

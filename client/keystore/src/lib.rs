@@ -19,14 +19,14 @@
 //! Keystore (and session key management) for ed25519 based chains like Polkadot.
 
 #![warn(missing_docs)]
-use sp_core::crypto::KeyTypeId;
-use sp_keystore::Error as TraitError;
+use soil_core::crypto::KeyTypeId;
+use soil_keystore::Error as TraitError;
 use std::io;
 
 /// Local keystore implementation
 mod local;
 pub use local::LocalKeystore;
-pub use sp_keystore::Keystore;
+pub use soil_keystore::Keystore;
 
 /// Keystore error.
 #[derive(Debug, thiserror::Error)]

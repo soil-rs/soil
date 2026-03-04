@@ -183,7 +183,7 @@ macro_rules! parameter_types {
 		impl< $($ty_params),* > $name< $($ty_params),* > {
 			/// Returns the key for this parameter type.
 			pub fn key() -> [u8; 16] {
-				$crate::__private::sp_crypto_hashing_proc_macro::twox_128!(b":", $name, b":")
+				$crate::__private::soil_crypto_hashing_proc_macro::twox_128!(b":", $name, b":")
 			}
 
 			/// Set the value of this parameter type in the storage.
@@ -333,7 +333,7 @@ macro_rules! runtime_print {
 			use core::fmt::Write;
 			let mut msg = $crate::__private::String::default();
 			let _ = core::write!(&mut msg, $($arg)+);
-			$crate::__private::sp_io::misc::print_utf8(msg.as_bytes())
+			$crate::__private::soil_io::misc::print_utf8(msg.as_bytes())
 		}
 	}
 }

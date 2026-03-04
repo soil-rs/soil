@@ -19,7 +19,7 @@
 
 use frame_support::{assert_noop, assert_ok};
 use frame_system::{EventRecord, Phase};
-use sp_runtime::traits::BadOrigin;
+use soil_runtime::traits::BadOrigin;
 
 use super::*;
 use crate::{self as alliance, mock::*};

@@ -26,7 +26,7 @@ use frame_support::{
 };
 
 #[cfg(feature = "try-runtime")]
-use sp_runtime::TryRuntimeError;
+use soil_runtime::TryRuntimeError;
 
 /// Used for release versioning up to v12.
 ///
@@ -89,7 +89,7 @@ pub mod v16 {
 	pub struct VersionUncheckedMigrateV15ToV16<T>(core::marker::PhantomData<T>);
 	impl<T: Config> UncheckedOnRuntimeUpgrade for VersionUncheckedMigrateV15ToV16<T> {
 		#[cfg(feature = "try-runtime")]
-		fn pre_upgrade() -> Result<Vec<u8>, sp_runtime::TryRuntimeError> {
+		fn pre_upgrade() -> Result<Vec<u8>, soil_runtime::TryRuntimeError> {
 			let old_disabled_validators = v15::DisabledValidators::<T>::get();
 			Ok(old_disabled_validators.encode())
 		}
@@ -350,7 +350,7 @@ pub mod v11 {
 		traits::{GetStorageVersion, PalletInfoAccess},
 	};
 	#[cfg(feature = "try-runtime")]
-	use sp_io::hashing::twox_128;
+	use soil_io::hashing::twox_128;
 
 	pub struct MigrateToV11<T, P, N>(core::marker::PhantomData<(T, P, N)>);
 	impl<T: Config, P: GetStorageVersion + PalletInfoAccess, N: Get<&'static str>> OnRuntimeUpgrade
@@ -365,7 +365,7 @@ pub mod v11 {
 			let old_pallet_prefix = twox_128(N::get().as_bytes());
 
 			frame_support::ensure!(
-				sp_io::storage::next_key(&old_pallet_prefix).is_some(),
+				soil_io::storage::next_key(&old_pallet_prefix).is_some(),
 				"no data for the old pallet name has been detected"
 			);
 
@@ -422,14 +422,14 @@ pub mod v11 {
 
 			let old_pallet_prefix = twox_128(N::get().as_bytes());
 			frame_support::ensure!(
-				sp_io::storage::next_key(&old_pallet_prefix).is_none(),
+				soil_io::storage::next_key(&old_pallet_prefix).is_none(),
 				"old pallet data hasn't been removed"
 			);
 
 			let new_pallet_name = <P as PalletInfoAccess>::name();
 			let new_pallet_prefix = twox_128(new_pallet_name.as_bytes());
 			frame_support::ensure!(
-				sp_io::storage::next_key(&new_pallet_prefix).is_some(),
+				soil_io::storage::next_key(&new_pallet_prefix).is_some(),
 				"new pallet data hasn't been created"
 			);
 

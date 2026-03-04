@@ -97,8 +97,8 @@ mod tests {
 	use crate as pallet_authorship;
 	use codec::{Decode, Encode};
 	use frame_support::{derive_impl, ConsensusEngineId};
-	use sp_core::H256;
-	use sp_runtime::{
+	use soil_core::H256;
+	use soil_runtime::{
 		generic::DigestItem, testing::Header, traits::Header as HeaderT, BuildStorage,
 	};
 
@@ -155,7 +155,7 @@ mod tests {
 		Header::new(number, Default::default(), state_root, parent_hash, Default::default())
 	}
 
-	fn new_test_ext() -> sp_io::TestExternalities {
+	fn new_test_ext() -> soil_io::TestExternalities {
 		let t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 		t.into()
 	}

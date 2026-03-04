@@ -27,7 +27,7 @@ use frame_support::{
 	weights::constants::RocksDbWeight,
 };
 use frame_system::Config;
-use sp_runtime::BuildStorage;
+use soil_runtime::BuildStorage;
 
 type Block = frame_system::mocking::MockBlock<Test>;
 
@@ -81,9 +81,9 @@ impl frame_system::Config for Test {
 	type OnSetCode = ();
 }
 
-pub(crate) fn new_test_ext() -> sp_io::TestExternalities {
+pub(crate) fn new_test_ext() -> soil_io::TestExternalities {
 	let storage = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
-	let mut ext: sp_io::TestExternalities = sp_io::TestExternalities::from(storage);
+	let mut ext: soil_io::TestExternalities = soil_io::TestExternalities::from(storage);
 	ext.execute_with(|| System::set_block_number(1));
 	ext
 }
@@ -106,7 +106,7 @@ parameter_types! {
 impl<T: dummy_pallet::Config, const S: u32> UncheckedOnRuntimeUpgrade
 	for SomeUnversionedMigration<T, S>
 {
-	fn pre_upgrade() -> Result<Vec<u8>, sp_runtime::TryRuntimeError> {
+	fn pre_upgrade() -> Result<Vec<u8>, soil_runtime::TryRuntimeError> {
 		PreUpgradeCalled::set(true);
 		Ok(PreUpgradeReturnBytes::get().to_vec())
 	}
@@ -116,7 +116,7 @@ impl<T: dummy_pallet::Config, const S: u32> UncheckedOnRuntimeUpgrade
 		RocksDbWeight::get().reads_writes(UpgradeReads::get(), UpgradeWrites::get())
 	}
 
-	fn post_upgrade(state: Vec<u8>) -> Result<(), sp_runtime::TryRuntimeError> {
+	fn post_upgrade(state: Vec<u8>) -> Result<(), soil_runtime::TryRuntimeError> {
 		PostUpgradeCalled::set(true);
 		PostUpgradeCalledWith::set(state);
 		Ok(())

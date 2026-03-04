@@ -27,8 +27,8 @@ use crate::{
 use alloc::{collections::btree_set::BTreeSet, vec::Vec};
 use codec::{Decode, Encode, EncodeLike, FullCodec, FullEncode};
 use core::marker::PhantomData;
-use sp_core::storage::ChildInfo;
-use sp_runtime::generic::{Digest, DigestItem};
+use soil_core::storage::ChildInfo;
+use soil_runtime::generic::{Digest, DigestItem};
 
 pub use self::{
 	stream_iter::StorageStreamIter,
@@ -37,7 +37,7 @@ pub use self::{
 	},
 	types::StorageEntryMetadataBuilder,
 };
-pub use sp_runtime::TransactionOutcome;
+pub use soil_runtime::TransactionOutcome;
 pub use types::Key;
 
 pub mod bounded_btree_map;
@@ -684,7 +684,7 @@ pub trait StorageDoubleMap<K1: FullEncode, K2: FullEncode, V: FullCodec> {
 	/// removed and the same result being returned. This happens because the keys to delete in the
 	/// overlay are not taken into account when deleting keys in the backend.
 	#[deprecated = "Use `clear_prefix` instead"]
-	fn remove_prefix<KArg1>(k1: KArg1, limit: Option<u32>) -> sp_io::KillStorageResult
+	fn remove_prefix<KArg1>(k1: KArg1, limit: Option<u32>) -> soil_io::KillStorageResult
 	where
 		KArg1: ?Sized + EncodeLike<K1>;
 
@@ -707,7 +707,7 @@ pub trait StorageDoubleMap<K1: FullEncode, K2: FullEncode, V: FullCodec> {
 		k1: KArg1,
 		limit: u32,
 		maybe_cursor: Option<&[u8]>,
-	) -> sp_io::MultiRemovalResults
+	) -> soil_io::MultiRemovalResults
 	where
 		KArg1: ?Sized + EncodeLike<K1>;
 
@@ -879,13 +879,13 @@ pub trait StorageNMap<K: KeyGenerator, V: FullCodec> {
 	/// removed and the same result being returned. This happens because the keys to delete in the
 	/// overlay are not taken into account when deleting keys in the backend.
 	#[deprecated = "Use `clear_prefix` instead"]
-	fn remove_prefix<KP>(partial_key: KP, limit: Option<u32>) -> sp_io::KillStorageResult
+	fn remove_prefix<KP>(partial_key: KP, limit: Option<u32>) -> soil_io::KillStorageResult
 	where
 		K: HasKeyPrefix<KP>;
 
 	/// Attempt to remove items from the map matching a `partial_key` prefix.
 	///
-	/// Returns [`MultiRemovalResults`](sp_io::MultiRemovalResults) to inform about the result. Once
+	/// Returns [`MultiRemovalResults`](soil_io::MultiRemovalResults) to inform about the result. Once
 	/// the resultant `maybe_cursor` field is `None`, then no further items remain to be deleted.
 	///
 	/// NOTE: After the initial call for any given map, it is important that no further items
@@ -910,7 +910,7 @@ pub trait StorageNMap<K: KeyGenerator, V: FullCodec> {
 		partial_key: KP,
 		limit: u32,
 		maybe_cursor: Option<&[u8]>,
-	) -> sp_io::MultiRemovalResults
+	) -> soil_io::MultiRemovalResults
 	where
 		K: HasKeyPrefix<KP>;
 
@@ -1089,7 +1089,7 @@ impl<T, OnRemoval: PrefixIteratorOnRemoval> Iterator for PrefixIterator<T, OnRem
 
 	fn next(&mut self) -> Option<Self::Item> {
 		loop {
-			let maybe_next = sp_io::storage::next_key(&self.previous_key)
+			let maybe_next = soil_io::storage::next_key(&self.previous_key)
 				.filter(|n| n.starts_with(&self.prefix));
 			break match maybe_next {
 				Some(next) => {
@@ -1185,7 +1185,7 @@ impl<T> Iterator for KeyPrefixIterator<T> {
 
 	fn next(&mut self) -> Option<Self::Item> {
 		loop {
-			let maybe_next = sp_io::storage::next_key(&self.previous_key)
+			let maybe_next = soil_io::storage::next_key(&self.previous_key)
 				.filter(|n| n.starts_with(&self.prefix));
 
 			if let Some(next) = maybe_next {
@@ -1298,7 +1298,7 @@ impl<T> Iterator for ChildTriePrefixIterator<T> {
 				self.fetch_previous_key = false;
 				Some(self.previous_key.clone())
 			} else {
-				sp_io::default_child_storage::next_key(
+				soil_io::default_child_storage::next_key(
 					self.child_info.storage_key(),
 					&self.previous_key,
 				)
@@ -1385,13 +1385,13 @@ pub trait StoragePrefixedMap<Value: FullCodec> {
 	/// removed and the same result being returned. This happens because the keys to delete in the
 	/// overlay are not taken into account when deleting keys in the backend.
 	#[deprecated = "Use `clear` instead"]
-	fn remove_all(limit: Option<u32>) -> sp_io::KillStorageResult {
+	fn remove_all(limit: Option<u32>) -> soil_io::KillStorageResult {
 		unhashed::clear_prefix(&Self::final_prefix(), limit, None).into()
 	}
 
 	/// Attempt to remove all items from the map.
 	///
-	/// Returns [`MultiRemovalResults`](sp_io::MultiRemovalResults) to inform about the result. Once
+	/// Returns [`MultiRemovalResults`](soil_io::MultiRemovalResults) to inform about the result. Once
 	/// the resultant `maybe_cursor` field is `None`, then no further items remain to be deleted.
 	///
 	/// NOTE: After the initial call for any given map, it is important that no further items
@@ -1412,7 +1412,7 @@ pub trait StoragePrefixedMap<Value: FullCodec> {
 	/// passed once (in the initial call) for any given storage map. Subsequent calls
 	/// operating on the same map should always pass `Some`, and this should be equal to the
 	/// previous call result's `maybe_cursor` field.
-	fn clear(limit: u32, maybe_cursor: Option<&[u8]>) -> sp_io::MultiRemovalResults {
+	fn clear(limit: u32, maybe_cursor: Option<&[u8]>) -> soil_io::MultiRemovalResults {
 		unhashed::clear_prefix(&Self::final_prefix(), Some(limit), maybe_cursor)
 	}
 
@@ -1447,7 +1447,7 @@ pub trait StoragePrefixedMap<Value: FullCodec> {
 		let prefix = Self::final_prefix();
 		let mut previous_key = prefix.clone().to_vec();
 		while let Some(next) =
-			sp_io::storage::next_key(&previous_key).filter(|n| n.starts_with(&prefix))
+			soil_io::storage::next_key(&previous_key).filter(|n| n.starts_with(&prefix))
 		{
 			previous_key = next;
 			let maybe_value = unhashed::get::<OldValue>(&previous_key);
@@ -1484,7 +1484,7 @@ pub trait StorageDecodeLength: private::Sealed + codec::DecodeLength {
 	fn decode_len(key: &[u8]) -> Option<usize> {
 		// `Compact<u32>` is 5 bytes in maximum.
 		let mut data = [0u8; 5];
-		let len = sp_io::storage::read(key, &mut data, 0)?;
+		let len = soil_io::storage::read(key, &mut data, 0)?;
 		let len = data.len().min(len as usize);
 		<Self as codec::DecodeLength>::len(&data[..len]).ok()
 	}
@@ -1507,7 +1507,7 @@ pub trait StorageDecodeNonDedupLength: private::Sealed + codec::DecodeLength {
 	/// Returns `None` if the storage value does not exist or the decoding failed.
 	fn decode_non_dedup_len(key: &[u8]) -> Option<usize> {
 		let mut data = [0u8; 5];
-		let len = sp_io::storage::read(key, &mut data, 0)?;
+		let len = soil_io::storage::read(key, &mut data, 0)?;
 		let len = data.len().min(len as usize);
 		<Self as codec::DecodeLength>::len(&data[..len]).ok()
 	}
@@ -1606,7 +1606,7 @@ where
 			// NOTE: we cannot reuse the implementation for `Vec<T>` here because we never want to
 			// mark `BoundedVec<T, S>` as `StorageAppend`.
 			let key = Self::storage_value_final_key();
-			sp_io::storage::append(&key, item.encode());
+			soil_io::storage::append(&key, item.encode());
 			Ok(())
 		} else {
 			Err(())
@@ -1640,7 +1640,7 @@ where
 		let current = Self::decode_len(key.clone()).unwrap_or_default();
 		if current < bound {
 			let key = Self::storage_map_final_key(key);
-			sp_io::storage::append(&key, item.encode());
+			soil_io::storage::append(&key, item.encode());
 			Ok(())
 		} else {
 			Err(())
@@ -1685,7 +1685,7 @@ where
 		let current = Self::decode_len(key1.clone(), key2.clone()).unwrap_or_default();
 		if current < bound {
 			let double_map_key = Self::storage_double_map_final_key(key1, key2);
-			sp_io::storage::append(&double_map_key, item.encode());
+			soil_io::storage::append(&double_map_key, item.encode());
 			Ok(())
 		} else {
 			Err(())
@@ -1725,7 +1725,7 @@ where
 		let current = Self::decode_len(key.clone()).unwrap_or_default();
 		if current < bound {
 			let key = Self::storage_n_map_final_key::<K, _>(key);
-			sp_io::storage::append(&key, item.encode());
+			soil_io::storage::append(&key, item.encode());
 			Ok(())
 		} else {
 			Err(())
@@ -1737,8 +1737,8 @@ where
 ///
 /// The storage prefix is `concat(twox_128(pallet_name), twox_128(storage_name))`.
 pub fn storage_prefix(pallet_name: &[u8], storage_name: &[u8]) -> [u8; 32] {
-	let pallet_hash = sp_io::hashing::twox_128(pallet_name);
-	let storage_hash = sp_io::hashing::twox_128(storage_name);
+	let pallet_hash = soil_io::hashing::twox_128(pallet_name);
+	let storage_hash = soil_io::hashing::twox_128(storage_name);
 
 	let mut final_key = [0u8; 32];
 	final_key[..16].copy_from_slice(&pallet_hash);
@@ -1755,7 +1755,7 @@ mod test {
 	use frame_support::traits::ConstU32;
 	use generator::StorageValue as _;
 	use soil_crypto_hashing::twox_128;
-	use sp_io::TestExternalities;
+	use soil_io::TestExternalities;
 	use weak_bounded_vec::WeakBoundedVec;
 
 	#[test]

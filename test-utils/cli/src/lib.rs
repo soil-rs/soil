@@ -24,7 +24,7 @@ use nix::{
 };
 use node_primitives::{Hash, Header};
 use regex::Regex;
-use sp_rpc::{list::ListOrValue, number::NumberOrHex};
+use soil_rpc::{list::ListOrValue, number::NumberOrHex};
 use std::{
 	io::{BufRead, BufReader, Read},
 	ops::{Deref, DerefMut},

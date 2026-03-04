@@ -215,7 +215,7 @@ impl<Hash> From<TransactionEventIR<Hash>> for TransactionEvent<Hash> {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use sp_core::H256;
+	use soil_core::H256;
 
 	#[test]
 	fn validated_event() {

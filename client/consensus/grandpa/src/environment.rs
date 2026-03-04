@@ -47,7 +47,7 @@ use sp_consensus_grandpa::{
 	AuthorityId, AuthoritySignature, Equivocation, EquivocationProof, GrandpaApi, RoundNumber,
 	SetId, GRANDPA_ENGINE_ID,
 };
-use sp_runtime::traits::{Block as BlockT, Header as HeaderT, NumberFor, Zero};
+use soil_runtime::traits::{Block as BlockT, Header as HeaderT, NumberFor, Zero};
 
 use crate::{
 	authorities::{AuthoritySet, SharedAuthoritySet},

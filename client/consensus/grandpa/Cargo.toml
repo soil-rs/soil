@@ -45,15 +45,15 @@ sc-transaction-pool-api = { workspace = true, default-features = true }
 sc-utils = { workspace = true, default-features = true }
 serde_json = { workspace = true, default-features = true }
 sp-api = { workspace = true, default-features = true }
-sp-application-crypto = { workspace = true, default-features = true }
+soil-application-crypto = { workspace = true, default-features = true }
 soil-arithmetic = { workspace = true, default-features = true }
 sp-blockchain = { workspace = true, default-features = true }
 sp-consensus = { workspace = true, default-features = true }
 sp-consensus-grandpa = { workspace = true, default-features = true }
-sp-core = { workspace = true, default-features = true }
+soil-core = { workspace = true, default-features = true }
 soil-crypto-hashing = { workspace = true, default-features = true }
-sp-keystore = { workspace = true, default-features = true }
-sp-runtime = { workspace = true, default-features = true }
+soil-keystore = { workspace = true, default-features = true }
+soil-runtime = { workspace = true, default-features = true }
 thiserror = { workspace = true }
 
 [dev-dependencies]

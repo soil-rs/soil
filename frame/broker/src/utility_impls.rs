@@ -28,7 +28,7 @@ use soil_arithmetic::{
 	traits::{SaturatedConversion, Saturating},
 	FixedPointNumber, FixedU64,
 };
-use sp_runtime::traits::{AccountIdConversion, BlockNumberProvider};
+use soil_runtime::traits::{AccountIdConversion, BlockNumberProvider};
 
 impl<T: Config> Pallet<T> {
 	pub fn current_timeslice() -> Timeslice {

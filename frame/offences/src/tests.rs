@@ -25,8 +25,8 @@ use crate::mock::{
 	RuntimeEvent, System, KIND,
 };
 use frame_system::{EventRecord, Phase};
-use sp_core::H256;
-use sp_runtime::Perbill;
+use soil_core::H256;
+use soil_runtime::Perbill;
 
 #[test]
 fn should_get_reports_with_storagemap_getter_and_function_getter() {

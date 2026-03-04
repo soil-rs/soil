@@ -59,21 +59,21 @@ pub mod __private {
 	pub use scale_info;
 	pub use serde;
 	pub use serde_json;
-	pub use sp_core::{Get, OpaqueMetadata, Void};
-	pub use sp_crypto_hashing_proc_macro;
+	pub use soil_core::{Get, OpaqueMetadata, Void};
+	pub use soil_crypto_hashing_proc_macro;
 	pub use sp_inherents;
 	#[cfg(feature = "std")]
-	pub use sp_io::TestExternalities;
-	pub use sp_io::{self, hashing, storage::root as storage_root};
+	pub use soil_io::TestExternalities;
+	pub use soil_io::{self, hashing, storage::root as storage_root};
 	pub use soil_metadata_ir as metadata_ir;
 	#[cfg(feature = "std")]
-	pub use sp_runtime::{bounded_btree_map, bounded_vec};
-	pub use sp_runtime::{
+	pub use soil_runtime::{bounded_btree_map, bounded_vec};
+	pub use soil_runtime::{
 		traits::{AsSystemOriginSigner, AsTransactionAuthorizedOrigin, Dispatchable},
 		DispatchError, StateVersion, TransactionOutcome,
 	};
 	#[cfg(feature = "std")]
-	pub use sp_state_machine::BasicExternalities;
+	pub use soil_state_machine::BasicExternalities;
 	pub use soil_std;
 	pub use soil_tracing;
 	pub use tt_call::*;
@@ -97,9 +97,9 @@ pub mod weights;
 #[doc(hidden)]
 pub mod unsigned {
 	#[doc(hidden)]
-	pub use crate::sp_runtime::traits::ValidateUnsigned;
+	pub use crate::soil_runtime::traits::ValidateUnsigned;
 	#[doc(hidden)]
-	pub use crate::sp_runtime::transaction_validity::{
+	pub use crate::soil_runtime::transaction_validity::{
 		TransactionSource, TransactionValidity, TransactionValidityError, UnknownTransaction,
 	};
 }
@@ -122,13 +122,13 @@ pub use self::{
 		StorageMap, StorageNMap, StoragePrefixedMap, StorageValue,
 	},
 };
-pub use sp_runtime::{
+pub use soil_runtime::{
 	self, print, traits::Printable, ConsensusEngineId, MAX_MODULE_ERROR_ENCODED_SIZE,
 };
 
 use codec::{Decode, Encode};
 use scale_info::TypeInfo;
-use sp_runtime::TypeId;
+use soil_runtime::TypeId;
 
 /// A unified log target for support operations.
 pub const LOG_TARGET: &str = "runtime::frame-support";
@@ -408,7 +408,7 @@ pub mod testing_prelude {
 		assert_storage_noop, parameter_types,
 	};
 	pub use soil_arithmetic::assert_eq_error_rate;
-	pub use sp_runtime::{bounded_btree_map, bounded_vec};
+	pub use soil_runtime::{bounded_btree_map, bounded_vec};
 }
 
 /// Prelude to be used alongside pallet macro, for ease of use.
@@ -444,7 +444,7 @@ pub mod pallet_prelude {
 	pub use frame_support_procedural::{inject_runtime_type, register_default_impl};
 	pub use scale_info::TypeInfo;
 	pub use sp_inherents::MakeFatalError;
-	pub use sp_runtime::{
+	pub use soil_runtime::{
 		traits::{
 			CheckedAdd, CheckedConversion, CheckedDiv, CheckedMul, CheckedShl, CheckedShr,
 			CheckedSub, MaybeSerializeDeserialize, Member, One, ValidateResult, ValidateUnsigned,
@@ -457,7 +457,7 @@ pub mod pallet_prelude {
 		},
 		Debug, DispatchError, MAX_MODULE_ERROR_ENCODED_SIZE,
 	};
-	pub use sp_weights::Weight;
+	pub use soil_weights::Weight;
 }
 
 /// The pallet macro has 2 purposes:
@@ -1226,7 +1226,7 @@ pub mod pallet_macros {
 	/// 	pub struct Pallet<T>(_);
 	///
 	/// 	#[pallet::validate_unsigned]
-	/// 	impl<T: Config> sp_runtime::traits::ValidateUnsigned for Pallet<T> {
+	/// 	impl<T: Config> soil_runtime::traits::ValidateUnsigned for Pallet<T> {
 	/// 		type Call = Call<T>;
 	///
 	/// 		fn validate_unsigned(_source: TransactionSource, _call: &Self::Call) -> TransactionValidity {
@@ -1244,7 +1244,7 @@ pub mod pallet_macros {
 	/// [`ValidateUnsigned`](frame_support::pallet_prelude::ValidateUnsigned) for
 	/// type `Pallet<T>`, and some optional where clause.
 	///
-	/// NOTE: There is also the [`sp_runtime::traits::TransactionExtension`] trait that can be
+	/// NOTE: There is also the [`soil_runtime::traits::TransactionExtension`] trait that can be
 	/// used to add some specific logic for transaction validation.
 	///
 	/// ## Macro expansion
@@ -1319,7 +1319,7 @@ pub mod pallet_macros {
 	/// ```
 	/// #[frame_support::pallet]
 	/// mod pallet {
-	/// # 	use sp_runtime::FixedU128;
+	/// # 	use soil_runtime::FixedU128;
 	/// # 	use frame_support::pallet_prelude::*;
 	/// #
 	/// 	#[pallet::pallet]
@@ -1645,12 +1645,12 @@ pub mod pallet_macros {
 	/// pallet.
 	///
 	/// > The exact definition of **extrinsic** can be found in
-	/// > [`sp_runtime::generic::UncheckedExtrinsic`].
+	/// > [`soil_runtime::generic::UncheckedExtrinsic`].
 	///
 	/// A **dispatchable** is a common term in FRAME, referring to process of constructing a
 	/// function, and dispatching it with the correct inputs. This is commonly used with
 	/// extrinsics, for example "an extrinsic has been dispatched". See
-	/// [`sp_runtime::traits::Dispatchable`] and [`crate::traits::UnfilteredDispatchable`].
+	/// [`soil_runtime::traits::Dispatchable`] and [`crate::traits::UnfilteredDispatchable`].
 	///
 	/// ## Call Enum
 	///
@@ -1982,7 +1982,7 @@ pub mod pallet_macros {
 	/// specific key. The exact key is dependent on the type of the storage.
 	///
 	/// > From the perspective of this pallet, the entire blockchain state is abstracted behind
-	/// > a key-value api, namely [`sp_io::storage`].
+	/// > a key-value api, namely [`soil_io::storage`].
 	///
 	/// ## Storage Types
 	///
@@ -2147,7 +2147,7 @@ pub mod pallet_macros {
 	///
 	/// Internally, every storage type generates a "prefix". This prefix serves as the initial
 	/// segment of the key utilized to store values in the on-chain state (i.e., the final key
-	/// used in [`sp_io::storage`](sp_io::storage)). For all storage types, the following rule
+	/// used in [`soil_io::storage`](soil_io::storage)). For all storage types, the following rule
 	/// applies:
 	///
 	/// > The storage prefix begins with `twox128(pallet_prefix) ++ twox128(STORAGE_PREFIX)`,
@@ -2268,21 +2268,21 @@ pub mod pallet_macros {
 	pub use frame_support_procedural::origin;
 }
 
-#[deprecated(note = "Will be removed after July 2023; Use `sp_runtime::traits` directly instead.")]
+#[deprecated(note = "Will be removed after July 2023; Use `soil_runtime::traits` directly instead.")]
 pub mod error {
 	#[doc(hidden)]
-	pub use sp_runtime::traits::{BadOrigin, LookupError};
+	pub use soil_runtime::traits::{BadOrigin, LookupError};
 }
 
 #[doc(inline)]
 pub use frame_support_procedural::register_default_impl;
 
 // Generate a macro that will enable/disable code based on `std` feature being active.
-sp_core::generate_feature_enabled_macro!(std_enabled, feature = "std", $);
+soil_core::generate_feature_enabled_macro!(std_enabled, feature = "std", $);
 // Generate a macro that will enable/disable code based on `try-runtime` feature being active.
-sp_core::generate_feature_enabled_macro!(try_runtime_enabled, feature = "try-runtime", $);
-sp_core::generate_feature_enabled_macro!(try_runtime_or_std_enabled, any(feature = "try-runtime", feature = "std"), $);
-sp_core::generate_feature_enabled_macro!(try_runtime_and_std_not_enabled, all(not(feature = "try-runtime"), not(feature = "std")), $);
+soil_core::generate_feature_enabled_macro!(try_runtime_enabled, feature = "try-runtime", $);
+soil_core::generate_feature_enabled_macro!(try_runtime_or_std_enabled, any(feature = "try-runtime", feature = "std"), $);
+soil_core::generate_feature_enabled_macro!(try_runtime_and_std_not_enabled, all(not(feature = "try-runtime"), not(feature = "std")), $);
 
 /// Helper for implementing GenesisBuilder runtime API
 pub mod genesis_builder_helper;
@@ -2299,7 +2299,7 @@ mod test {
 		traits::{ConstU32, StorageInstance},
 		BoundedVec,
 	};
-	use sp_io::{hashing::twox_128, TestExternalities};
+	use soil_io::{hashing::twox_128, TestExternalities};
 
 	struct Prefix;
 	impl StorageInstance for Prefix {

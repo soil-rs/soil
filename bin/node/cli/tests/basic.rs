@@ -23,8 +23,8 @@ use frame_support::{
 	weights::Weight,
 };
 use frame_system::{self, AccountInfo, DispatchEventInfo, EventRecord, Phase};
-use sp_core::{storage::well_known_keys, traits::Externalities};
-use sp_runtime::{
+use soil_core::{storage::well_known_keys, traits::Externalities};
+use soil_runtime::{
 	traits::Hash as HashT, transaction_validity::InvalidTransaction, ApplyExtrinsicResult,
 };
 
@@ -73,7 +73,7 @@ fn transfer_fee_with_refund(extrinsic: &UncheckedExtrinsic, weight_refund: Weigh
 
 fn xt() -> UncheckedExtrinsic {
 	sign(CheckedExtrinsic {
-		format: sp_runtime::generic::ExtrinsicFormat::Signed(alice(), tx_ext(0, 0)),
+		format: soil_runtime::generic::ExtrinsicFormat::Signed(alice(), tx_ext(0, 0)),
 		function: RuntimeCall::Balances(default_transfer_call()),
 	})
 }
@@ -90,11 +90,11 @@ fn changes_trie_block() -> (Vec<u8>, Hash) {
 		GENESIS_HASH.into(),
 		vec![
 			CheckedExtrinsic {
-				format: sp_runtime::generic::ExtrinsicFormat::Bare,
+				format: soil_runtime::generic::ExtrinsicFormat::Bare,
 				function: RuntimeCall::Timestamp(pallet_timestamp::Call::set { now: time }),
 			},
 			CheckedExtrinsic {
-				format: sp_runtime::generic::ExtrinsicFormat::Signed(alice(), tx_ext(0, 0)),
+				format: soil_runtime::generic::ExtrinsicFormat::Signed(alice(), tx_ext(0, 0)),
 				function: RuntimeCall::Balances(pallet_balances::Call::transfer_allow_death {
 					dest: bob().into(),
 					value: 69 * DOLLARS,
@@ -117,11 +117,11 @@ fn blocks() -> ((Vec<u8>, Hash), (Vec<u8>, Hash)) {
 		GENESIS_HASH.into(),
 		vec![
 			CheckedExtrinsic {
-				format: sp_runtime::generic::ExtrinsicFormat::Bare,
+				format: soil_runtime::generic::ExtrinsicFormat::Bare,
 				function: RuntimeCall::Timestamp(pallet_timestamp::Call::set { now: time1 }),
 			},
 			CheckedExtrinsic {
-				format: sp_runtime::generic::ExtrinsicFormat::Signed(alice(), tx_ext(0, 0)),
+				format: soil_runtime::generic::ExtrinsicFormat::Signed(alice(), tx_ext(0, 0)),
 				function: RuntimeCall::Balances(pallet_balances::Call::transfer_allow_death {
 					dest: bob().into(),
 					value: 69 * DOLLARS,
@@ -137,18 +137,18 @@ fn blocks() -> ((Vec<u8>, Hash), (Vec<u8>, Hash)) {
 		block1.1,
 		vec![
 			CheckedExtrinsic {
-				format: sp_runtime::generic::ExtrinsicFormat::Bare,
+				format: soil_runtime::generic::ExtrinsicFormat::Bare,
 				function: RuntimeCall::Timestamp(pallet_timestamp::Call::set { now: time2 }),
 			},
 			CheckedExtrinsic {
-				format: sp_runtime::generic::ExtrinsicFormat::Signed(bob(), tx_ext(0, 0)),
+				format: soil_runtime::generic::ExtrinsicFormat::Signed(bob(), tx_ext(0, 0)),
 				function: RuntimeCall::Balances(pallet_balances::Call::transfer_allow_death {
 					dest: alice().into(),
 					value: 5 * DOLLARS,
 				}),
 			},
 			CheckedExtrinsic {
-				format: sp_runtime::generic::ExtrinsicFormat::Signed(alice(), tx_ext(1, 0)),
+				format: soil_runtime::generic::ExtrinsicFormat::Signed(alice(), tx_ext(1, 0)),
 				function: RuntimeCall::Balances(pallet_balances::Call::transfer_allow_death {
 					dest: bob().into(),
 					value: 15 * DOLLARS,
@@ -172,11 +172,11 @@ fn block_with_size(time: u64, nonce: u32, size: usize) -> (Vec<u8>, Hash) {
 		GENESIS_HASH.into(),
 		vec![
 			CheckedExtrinsic {
-				format: sp_runtime::generic::ExtrinsicFormat::Bare,
+				format: soil_runtime::generic::ExtrinsicFormat::Bare,
 				function: RuntimeCall::Timestamp(pallet_timestamp::Call::set { now: time * 1000 }),
 			},
 			CheckedExtrinsic {
-				format: sp_runtime::generic::ExtrinsicFormat::Signed(alice(), tx_ext(nonce, 0)),
+				format: soil_runtime::generic::ExtrinsicFormat::Signed(alice(), tx_ext(nonce, 0)),
 				function: RuntimeCall::System(frame_system::Call::remark { remark: vec![0; size] }),
 			},
 		],

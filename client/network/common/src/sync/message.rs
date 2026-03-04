@@ -24,7 +24,7 @@ use crate::role::Roles;
 use bitflags::bitflags;
 use codec::{Decode, Encode, Error, Input, Output};
 pub use generic::{BlockAnnounce, FromBlock};
-use sp_runtime::traits::{Block as BlockT, Header as HeaderT, NumberFor};
+use soil_runtime::traits::{Block as BlockT, Header as HeaderT, NumberFor};
 
 /// Type alias for using the block request type using block type parameters.
 pub type BlockRequest<B> =
@@ -128,7 +128,7 @@ pub mod generic {
 	use super::{BlockAttributes, BlockState, Direction};
 	use crate::message::RequestId;
 	use codec::{Decode, Encode, Input, Output};
-	use sp_runtime::{EncodedJustification, Justifications};
+	use soil_runtime::{EncodedJustification, Justifications};
 
 	/// Block data sent in the response.
 	#[derive(Debug, PartialEq, Eq, Clone, Encode, Decode)]

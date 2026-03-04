@@ -62,7 +62,7 @@ pub mod weights;
 
 extern crate alloc;
 
-use sp_runtime::{
+use soil_runtime::{
 	traits::{AccountIdConversion, BadOrigin, Hash, StaticLookup, TrailingZeroInput, Zero},
 	Debug, Percent,
 };
@@ -80,7 +80,7 @@ use frame_support::{
 use frame_system::pallet_prelude::BlockNumberFor;
 
 #[cfg(any(feature = "try-runtime", test))]
-use sp_runtime::TryRuntimeError;
+use soil_runtime::TryRuntimeError;
 
 pub use pallet::*;
 pub use weights::WeightInfo;

@@ -22,7 +22,7 @@ use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use core::ops::BitOr;
 use frame_support::traits::{Imbalance, LockIdentifier, OnUnbalanced, WithdrawReasons};
 use scale_info::TypeInfo;
-use sp_runtime::Saturating;
+use soil_runtime::Saturating;
 
 /// Simplified reasons for withdrawing balance.
 #[derive(

@@ -45,9 +45,9 @@ use frame_support::{
 };
 use frame_system::pallet_prelude::BlockNumberFor;
 use scale_info::TypeInfo;
-use sp_core::Get;
+use soil_core::Get;
 pub use sp_npos_elections::{ElectionResult, ElectionScore};
-use sp_runtime::{
+use soil_runtime::{
 	traits::{CheckedSub, One, Zero},
 	SaturatedConversion, Saturating,
 };

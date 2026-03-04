@@ -24,10 +24,10 @@ frame-system = { workspace = true }
 
 frame-election-provider-support = { workspace = true }
 soil-arithmetic = { workspace = true }
-sp-core = { workspace = true }
-sp-io = { workspace = true }
+soil-core = { workspace = true }
+soil-io = { workspace = true }
 sp-npos-elections = { workspace = true }
-sp-runtime = { workspace = true }
+soil-runtime = { workspace = true }
 
 # Optional imports for benchmarking
 frame-benchmarking = { optional = true, workspace = true }
@@ -61,10 +61,10 @@ std = [
 	"rand/std",
 	"scale-info/std",
 	"soil-arithmetic/std",
-	"sp-core/std",
-	"sp-io/std",
+	"soil-core/std",
+	"soil-io/std",
 	"sp-npos-elections/std",
-	"sp-runtime/std",
+	"soil-runtime/std",
 	"soil-tracing/std",
 	"strum/std",
 ]
@@ -75,7 +75,7 @@ runtime-benchmarks = [
 	"frame-system/runtime-benchmarks",
 	"pallet-balances/runtime-benchmarks",
 	"rand",
-	"sp-runtime/runtime-benchmarks",
+	"soil-runtime/runtime-benchmarks",
 	"strum",
 ]
 try-runtime = [
@@ -83,5 +83,5 @@ try-runtime = [
 	"frame-support/try-runtime",
 	"frame-system/try-runtime",
 	"pallet-balances/try-runtime",
-	"sp-runtime/try-runtime",
+	"soil-runtime/try-runtime",
 ]

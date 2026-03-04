@@ -38,7 +38,7 @@ use log::{debug, warn};
 use codec::DecodeAll;
 use sc_network_common::{role::Roles, types::ReputationChange};
 use sc_utils::mpsc::TracingUnboundedReceiver;
-use sp_runtime::traits::Block as BlockT;
+use soil_runtime::traits::Block as BlockT;
 
 use std::{collections::HashSet, iter, sync::Arc, task::Poll};
 

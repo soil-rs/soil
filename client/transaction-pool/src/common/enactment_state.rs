@@ -21,7 +21,7 @@
 use crate::LOG_TARGET;
 use sc_transaction_pool_api::ChainEvent;
 use sp_blockchain::TreeRoute;
-use sp_runtime::traits::{Block as BlockT, NumberFor, Saturating};
+use soil_runtime::traits::{Block as BlockT, NumberFor, Saturating};
 use tracing::{debug, trace};
 
 /// The threshold since the last update where we will skip any maintenance for blocks.
@@ -193,7 +193,7 @@ mod enactment_state_tests {
 	use super::{EnactmentAction, EnactmentState};
 	use sc_transaction_pool_api::ChainEvent;
 	use sp_blockchain::{HashAndNumber, TreeRoute};
-	use sp_runtime::traits::NumberFor;
+	use soil_runtime::traits::NumberFor;
 	use std::sync::Arc;
 	use substrate_test_runtime_client::runtime::{Block, Hash};
 

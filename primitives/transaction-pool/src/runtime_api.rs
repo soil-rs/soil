@@ -17,7 +17,7 @@
 
 //! Tagged Transaction Queue Runtime API.
 
-use sp_runtime::{
+use soil_runtime::{
 	traits::Block as BlockT,
 	transaction_validity::{TransactionSource, TransactionValidity},
 };

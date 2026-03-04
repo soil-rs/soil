@@ -30,7 +30,7 @@ use frame_support::{
 };
 use pallet_staking::{CurrentEra, RewardDestination};
 
-use sp_runtime::traits::BadOrigin;
+use soil_runtime::traits::BadOrigin;
 use sp_staking::StakingInterface;
 
 #[test]

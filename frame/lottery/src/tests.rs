@@ -22,7 +22,7 @@ use crate::{
 	*,
 };
 use frame_support::{assert_noop, assert_ok, assert_storage_noop};
-use sp_runtime::{traits::BadOrigin, TokenError};
+use soil_runtime::{traits::BadOrigin, TokenError};
 
 #[test]
 fn initial_state() {

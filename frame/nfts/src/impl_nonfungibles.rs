@@ -24,7 +24,7 @@ use frame_support::{
 	traits::{tokens::nonfungibles_v2::*, Get},
 	BoundedSlice,
 };
-use sp_runtime::{DispatchError, DispatchResult};
+use soil_runtime::{DispatchError, DispatchResult};
 
 impl<T: Config<I>, I: 'static> Inspect<<T as SystemConfig>::AccountId> for Pallet<T, I> {
 	type ItemId = T::ItemId;

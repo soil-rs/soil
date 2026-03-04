@@ -24,7 +24,7 @@
 //!
 //! ```no_run
 //! # use substrate_rpc_client::{ws_client, StateApi};
-//! # use sp_core::{H256, storage::StorageKey};
+//! # use soil_core::{H256, storage::StorageKey};
 //!
 //! #[tokio::main]
 //! async fn main() {
@@ -39,7 +39,7 @@
 
 use async_trait::async_trait;
 use serde::de::DeserializeOwned;
-use sp_runtime::traits::{Block as BlockT, Header as HeaderT};
+use soil_runtime::traits::{Block as BlockT, Header as HeaderT};
 use std::collections::VecDeque;
 
 pub use jsonrpsee::{
@@ -199,7 +199,7 @@ where
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use sp_runtime::testing::{Block as TBlock, Header, MockCallU64, TestXt, H256};
+	use soil_runtime::testing::{Block as TBlock, Header, MockCallU64, TestXt, H256};
 	use std::sync::Arc;
 	use tokio::sync::Mutex;
 

@@ -34,7 +34,7 @@ use frame_support::{
 	BoundedVec,
 };
 use frame_system::{ensure_root, ensure_signed, pallet_prelude::*};
-use sp_runtime::{
+use soil_runtime::{
 	traits::{SaturatedConversion, StaticLookup, Zero},
 	ArithmeticError, Perbill, Percent,
 };
@@ -112,7 +112,7 @@ pub mod pallet {
 
 		/// Just the `Currency::Balance` type; we have this item to allow us to constrain it to
 		/// `From<u64>`.
-		type CurrencyBalance: sp_runtime::traits::AtLeast32BitUnsigned
+		type CurrencyBalance: soil_runtime::traits::AtLeast32BitUnsigned
 			+ codec::FullCodec
 			+ DecodeWithMemTracking
 			+ HasCompact<Type: DecodeWithMemTracking>
@@ -1004,7 +1004,7 @@ pub mod pallet {
 		}
 
 		#[cfg(feature = "try-runtime")]
-		fn try_state(n: BlockNumberFor<T>) -> Result<(), sp_runtime::TryRuntimeError> {
+		fn try_state(n: BlockNumberFor<T>) -> Result<(), soil_runtime::TryRuntimeError> {
 			Self::do_try_state(n)
 		}
 	}

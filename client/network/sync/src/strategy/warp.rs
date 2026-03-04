@@ -40,7 +40,7 @@ use sc_network_common::sync::message::{
 };
 use sc_network_types::PeerId;
 use sp_blockchain::HeaderBackend;
-use sp_runtime::{
+use soil_runtime::{
 	traits::{Block as BlockT, Header, NumberFor, Zero},
 	Justifications, SaturatedConversion,
 };
@@ -790,8 +790,8 @@ mod test {
 	use crate::{mock::MockBlockDownloader, service::network::NetworkServiceProvider};
 	use sc_block_builder::BlockBuilderBuilder;
 	use sp_blockchain::{BlockStatus, Error as BlockchainError, HeaderBackend, Info};
-	use sp_core::H256;
-	use sp_runtime::{
+	use soil_core::H256;
+	use soil_runtime::{
 		traits::{Block as BlockT, Header as HeaderT, NumberFor},
 		ConsensusEngineId,
 	};

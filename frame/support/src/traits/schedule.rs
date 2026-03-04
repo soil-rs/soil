@@ -23,7 +23,7 @@ use alloc::vec::Vec;
 use codec::{Codec, Decode, DecodeWithMemTracking, Encode, EncodeLike, MaxEncodedLen};
 use core::{fmt::Debug, result::Result};
 use scale_info::TypeInfo;
-use sp_runtime::{traits::Saturating, DispatchError};
+use soil_runtime::{traits::Saturating, DispatchError};
 
 /// Information relating to the period of a scheduled task. First item is the length of the
 /// period and the second is the number of times it should be executed in total before the task
@@ -413,7 +413,7 @@ pub mod v3 {
 		/// An address which can be used for removing a scheduled task.
 		type Address: Codec + MaxEncodedLen + Clone + Eq + EncodeLike + Debug + TypeInfo;
 		/// The hasher used in the runtime.
-		type Hasher: sp_runtime::traits::Hash;
+		type Hasher: soil_runtime::traits::Hash;
 
 		/// Schedule a dispatch to happen at the beginning of some block in the future.
 		///
@@ -462,7 +462,7 @@ pub mod v3 {
 		/// An address which can be used for removing a scheduled task.
 		type Address: Codec + MaxEncodedLen + Clone + Eq + EncodeLike + core::fmt::Debug;
 		/// The hasher used in the runtime.
-		type Hasher: sp_runtime::traits::Hash;
+		type Hasher: soil_runtime::traits::Hash;
 
 		/// Schedule a dispatch to happen at the beginning of some block in the future.
 		///

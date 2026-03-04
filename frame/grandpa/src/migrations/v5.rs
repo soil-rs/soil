@@ -41,7 +41,7 @@ pub struct UncheckedMigrateImpl<T>(PhantomData<T>);
 
 impl<T: crate::Config> UncheckedOnRuntimeUpgrade for UncheckedMigrateImpl<T> {
 	#[cfg(feature = "try-runtime")]
-	fn pre_upgrade() -> Result<Vec<u8>, sp_runtime::TryRuntimeError> {
+	fn pre_upgrade() -> Result<Vec<u8>, soil_runtime::TryRuntimeError> {
 		use codec::Encode;
 
 		let authority_list_len = load_authority_list().len() as u32;
@@ -60,7 +60,7 @@ impl<T: crate::Config> UncheckedOnRuntimeUpgrade for UncheckedMigrateImpl<T> {
 	}
 
 	#[cfg(feature = "try-runtime")]
-	fn post_upgrade(state: Vec<u8>) -> Result<(), sp_runtime::TryRuntimeError> {
+	fn post_upgrade(state: Vec<u8>) -> Result<(), soil_runtime::TryRuntimeError> {
 		let len = u32::decode(&mut &state[..]).unwrap();
 
 		frame_support::ensure!(

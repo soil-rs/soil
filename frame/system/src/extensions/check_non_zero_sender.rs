@@ -20,7 +20,7 @@ use codec::{Decode, DecodeWithMemTracking, Encode};
 use core::marker::PhantomData;
 use frame_support::{pallet_prelude::TransactionSource, traits::OriginTrait, DefaultNoBound};
 use scale_info::TypeInfo;
-use sp_runtime::{
+use soil_runtime::{
 	impl_tx_ext_default,
 	traits::{DispatchInfoOf, TransactionExtension},
 	transaction_validity::InvalidTransaction,
@@ -56,7 +56,7 @@ impl<T: Config + Send + Sync> TransactionExtension<T::RuntimeCall> for CheckNonZ
 	type Val = ();
 	type Pre = ();
 
-	fn weight(&self, _: &T::RuntimeCall) -> sp_weights::Weight {
+	fn weight(&self, _: &T::RuntimeCall) -> soil_weights::Weight {
 		<T::ExtensionsWeightInfo as super::WeightInfo>::check_non_zero_sender()
 	}
 
@@ -69,7 +69,7 @@ impl<T: Config + Send + Sync> TransactionExtension<T::RuntimeCall> for CheckNonZ
 		_self_implicit: Self::Implicit,
 		_inherited_implication: &impl Encode,
 		_source: TransactionSource,
-	) -> sp_runtime::traits::ValidateResult<Self::Val, T::RuntimeCall> {
+	) -> soil_runtime::traits::ValidateResult<Self::Val, T::RuntimeCall> {
 		if let Some(who) = origin.as_signer() {
 			if who.using_encoded(|d| d.iter().all(|x| *x == 0)) {
 				return Err(InvalidTransaction::BadSigner.into());
@@ -85,7 +85,7 @@ mod tests {
 	use super::*;
 	use crate::mock::{new_test_ext, Test, CALL};
 	use frame_support::{assert_ok, dispatch::DispatchInfo};
-	use sp_runtime::{
+	use soil_runtime::{
 		traits::{AsTransactionAuthorizedOrigin, DispatchTransaction, TxBaseImplication},
 		transaction_validity::{TransactionSource::External, TransactionValidityError},
 	};

@@ -29,7 +29,7 @@ use kitchensink_runtime::{
 };
 use node_primitives::Balance;
 use node_testing::keyring::*;
-use sp_runtime::{traits::One, Perbill};
+use soil_runtime::{traits::One, Perbill};
 
 pub mod common;
 use self::common::{sign, *};
@@ -55,11 +55,11 @@ fn fee_multiplier_increases_and_decreases_on_big_weight() {
 		GENESIS_HASH.into(),
 		vec![
 			CheckedExtrinsic {
-				format: sp_runtime::generic::ExtrinsicFormat::Bare,
+				format: soil_runtime::generic::ExtrinsicFormat::Bare,
 				function: RuntimeCall::Timestamp(pallet_timestamp::Call::set { now: time1 }),
 			},
 			CheckedExtrinsic {
-				format: sp_runtime::generic::ExtrinsicFormat::Signed(charlie(), tx_ext(0, 0)),
+				format: soil_runtime::generic::ExtrinsicFormat::Signed(charlie(), tx_ext(0, 0)),
 				function: RuntimeCall::Sudo(pallet_sudo::Call::sudo {
 					call: Box::new(RuntimeCall::RootTesting(
 						pallet_root_testing::Call::fill_block { ratio: Perbill::from_percent(60) },
@@ -78,11 +78,11 @@ fn fee_multiplier_increases_and_decreases_on_big_weight() {
 		block1.1,
 		vec![
 			CheckedExtrinsic {
-				format: sp_runtime::generic::ExtrinsicFormat::Bare,
+				format: soil_runtime::generic::ExtrinsicFormat::Bare,
 				function: RuntimeCall::Timestamp(pallet_timestamp::Call::set { now: time2 }),
 			},
 			CheckedExtrinsic {
-				format: sp_runtime::generic::ExtrinsicFormat::Signed(charlie(), tx_ext(1, 0)),
+				format: soil_runtime::generic::ExtrinsicFormat::Signed(charlie(), tx_ext(1, 0)),
 				function: RuntimeCall::System(frame_system::Call::remark { remark: vec![0; 1] }),
 			},
 		],
@@ -148,7 +148,7 @@ fn transaction_fee_is_correct() {
 
 	let tip = 1_000_000;
 	let xt = sign(CheckedExtrinsic {
-		format: sp_runtime::generic::ExtrinsicFormat::Signed(alice(), tx_ext(0, tip)),
+		format: soil_runtime::generic::ExtrinsicFormat::Signed(alice(), tx_ext(0, tip)),
 		function: RuntimeCall::Balances(default_transfer_call()),
 	});
 

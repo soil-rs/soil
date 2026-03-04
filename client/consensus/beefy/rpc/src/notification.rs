@@ -20,13 +20,13 @@ use codec::Encode;
 use serde::{Deserialize, Serialize};
 
 use sp_consensus_beefy::AuthorityIdBound;
-use sp_runtime::traits::Block as BlockT;
+use soil_runtime::traits::Block as BlockT;
 
 /// An encoded finality proof proving that the given header has been finalized.
 /// The given bytes should be the SCALE-encoded representation of a
 /// `sp_consensus_beefy::VersionedFinalityProof`.
 #[derive(Clone, Serialize, Deserialize)]
-pub struct EncodedVersionedFinalityProof(sp_core::Bytes);
+pub struct EncodedVersionedFinalityProof(soil_core::Bytes);
 
 impl EncodedVersionedFinalityProof {
 	pub fn new<Block, AuthorityId>(

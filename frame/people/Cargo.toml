@@ -20,9 +20,9 @@ frame-system = { workspace = true }
 log = { workspace = true }
 scale-info = { workspace = true, features = ["derive"] }
 soil-arithmetic = { workspace = true }
-sp-core = { workspace = true }
-sp-io = { workspace = true }
-sp-runtime = { workspace = true }
+soil-core = { workspace = true }
+soil-io = { workspace = true }
+soil-runtime = { workspace = true }
 verifiable = { workspace = true, features = ["small-ring"] }
 
 
@@ -36,20 +36,20 @@ std = [
 	"log/std",
 	"scale-info/std",
 	"soil-arithmetic/std",
-	"sp-core/std",
-	"sp-io/std",
-	"sp-runtime/std",
+	"soil-core/std",
+	"soil-io/std",
+	"soil-runtime/std",
 	"verifiable/std",
 ]
 runtime-benchmarks = [
 	"frame-benchmarking/runtime-benchmarks",
 	"frame-support/runtime-benchmarks",
 	"frame-system/runtime-benchmarks",
-	"sp-runtime/runtime-benchmarks",
+	"soil-runtime/runtime-benchmarks",
 	"verifiable/no-std-prover",
 ]
 try-runtime = [
 	"frame-support/try-runtime",
 	"frame-system/try-runtime",
-	"sp-runtime/try-runtime",
+	"soil-runtime/try-runtime",
 ]

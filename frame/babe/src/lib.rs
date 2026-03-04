@@ -39,8 +39,8 @@ use sp_consensus_babe::{
 	EquivocationProof, Randomness as BabeRandomness, Slot, BABE_ENGINE_ID, RANDOMNESS_LENGTH,
 	RANDOMNESS_VRF_CONTEXT,
 };
-use sp_core::crypto::Wraps;
-use sp_runtime::{
+use soil_core::crypto::Wraps;
+use soil_runtime::{
 	generic::DigestItem,
 	traits::{IsMember, One, SaturatedConversion, Saturating, Zero},
 	ConsensusEngineId, Permill,
@@ -369,7 +369,7 @@ pub mod pallet {
 							// execution. We don't run the verification again here to avoid slowing
 							// down the runtime.
 							debug_assert!({
-								use sp_core::crypto::VrfPublic;
+								use soil_core::crypto::VrfPublic;
 								public.vrf_verify(&transcript.clone().into_sign_data(), &signature)
 							});
 
@@ -977,7 +977,7 @@ impl<T: Config> frame_support::traits::Lateness<BlockNumberFor<T>> for Pallet<T>
 	}
 }
 
-impl<T: Config> sp_runtime::BoundToRuntimeAppPublic for Pallet<T> {
+impl<T: Config> soil_runtime::BoundToRuntimeAppPublic for Pallet<T> {
 	type Public = AuthorityId;
 }
 
@@ -1045,7 +1045,7 @@ fn compute_randomness(
 		s.extend_from_slice(&vrf_output[..]);
 	}
 
-	sp_io::hashing::blake2_256(&s)
+	soil_io::hashing::blake2_256(&s)
 }
 
 pub mod migrations {

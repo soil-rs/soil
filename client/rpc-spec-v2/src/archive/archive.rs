@@ -46,8 +46,8 @@ use sp_api::{CallApiAt, CallContext};
 use sp_blockchain::{
 	Backend as BlockChainBackend, Error as BlockChainError, HeaderBackend, HeaderMetadata,
 };
-use sp_core::{Bytes, U256};
-use sp_runtime::{
+use soil_core::{Bytes, U256};
+use soil_runtime::{
 	traits::{Block as BlockT, Header as HeaderT, NumberFor},
 	SaturatedConversion,
 };

@@ -38,7 +38,7 @@ use frame_support::{traits::Get, BoundedVec};
 use frame_system::pallet_prelude::*;
 use scale_info::TypeInfo;
 use sp_npos_elections::EvaluateSupport;
-use sp_runtime::{
+use soil_runtime::{
 	offchain::storage::{MutateStorageError, StorageValueRef},
 	traits::{SaturatedConversion, Saturating, Zero},
 };
@@ -1401,7 +1401,7 @@ mod base_miner {
 	use crate::{mock::*, Snapshot};
 	use frame_election_provider_support::TryFromUnboundedPagedSupports;
 	use sp_npos_elections::Support;
-	use sp_runtime::PerU16;
+	use soil_runtime::PerU16;
 
 	#[test]
 	fn pagination_does_not_affect_score() {
@@ -1857,7 +1857,7 @@ mod base_miner {
 mod offchain_worker_miner {
 	use crate::{verifier::Verifier, CommonError};
 	use frame_support::traits::Hooks;
-	use sp_runtime::offchain::storage_lock::{BlockAndTime, StorageLock};
+	use soil_runtime::offchain::storage_lock::{BlockAndTime, StorageLock};
 
 	use super::*;
 	use crate::mock::*;

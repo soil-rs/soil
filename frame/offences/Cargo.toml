@@ -22,12 +22,12 @@ frame-system = { workspace = true }
 log = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { optional = true, workspace = true, default-features = true }
-sp-runtime = { workspace = true }
+soil-runtime = { workspace = true }
 sp-staking = { workspace = true }
 
 [dev-dependencies]
-sp-core = { workspace = true, default-features = true }
-sp-io = { workspace = true, default-features = true }
+soil-core = { workspace = true, default-features = true }
+soil-io = { workspace = true, default-features = true }
 
 [features]
 default = ["std"]
@@ -38,19 +38,19 @@ std = [
 	"log/std",
 	"scale-info/std",
 	"serde",
-	"sp-core/std",
-	"sp-io/std",
-	"sp-runtime/std",
+	"soil-core/std",
+	"soil-io/std",
+	"soil-runtime/std",
 	"sp-staking/std",
 ]
 runtime-benchmarks = [
 	"frame-support/runtime-benchmarks",
 	"frame-system/runtime-benchmarks",
-	"sp-runtime/runtime-benchmarks",
+	"soil-runtime/runtime-benchmarks",
 	"sp-staking/runtime-benchmarks",
 ]
 try-runtime = [
 	"frame-support/try-runtime",
 	"frame-system/try-runtime",
-	"sp-runtime/try-runtime",
+	"soil-runtime/try-runtime",
 ]

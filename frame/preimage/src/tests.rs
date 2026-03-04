@@ -27,7 +27,7 @@ use frame_support::{
 	traits::{fungible::InspectHold, Bounded, BoundedInline},
 	StorageNoopGuard,
 };
-use sp_runtime::{bounded_vec, TokenError};
+use soil_runtime::{bounded_vec, TokenError};
 
 /// Returns one `Inline`, `Lookup` and `Legacy` item each with different data and hash.
 pub fn make_bounded_values() -> (

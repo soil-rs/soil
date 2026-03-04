@@ -69,10 +69,10 @@ pub fn expand_outer_config(
 		}
 
 		#[cfg(any(feature = "std", test))]
-		impl #scrate::sp_runtime::BuildStorage for RuntimeGenesisConfig {
+		impl #scrate::soil_runtime::BuildStorage for RuntimeGenesisConfig {
 			fn assimilate_storage(
 				&self,
-				storage: &mut #scrate::sp_runtime::Storage,
+				storage: &mut #scrate::soil_runtime::Storage,
 			) -> std::result::Result<(), String> {
 				#scrate::__private::BasicExternalities::execute_with_storage(storage, || {
 					<Self as #scrate::traits::BuildGenesisConfig>::build(&self);
@@ -92,7 +92,7 @@ pub fn expand_outer_config(
 		#[cfg(test)]
 		#[test]
 		fn test_genesis_config_builds() {
-			#scrate::__private::sp_io::TestExternalities::default().execute_with(|| {
+			#scrate::__private::soil_io::TestExternalities::default().execute_with(|| {
 				<RuntimeGenesisConfig as #scrate::traits::BuildGenesisConfig>::build(
 					&RuntimeGenesisConfig::default()
 				);

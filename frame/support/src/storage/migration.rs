@@ -68,7 +68,7 @@ impl<T: Decode + Sized> Iterator for StorageIterator<T> {
 
 	fn next(&mut self) -> Option<(Vec<u8>, T)> {
 		loop {
-			let maybe_next = sp_io::storage::next_key(&self.previous_key)
+			let maybe_next = soil_io::storage::next_key(&self.previous_key)
 				.filter(|n| n.starts_with(&self.prefix));
 			break match maybe_next {
 				Some(next) => {
@@ -133,7 +133,7 @@ impl<K: Decode + Sized, T: Decode + Sized, H: ReversibleStorageHasher> Iterator
 
 	fn next(&mut self) -> Option<(K, T)> {
 		loop {
-			let maybe_next = sp_io::storage::next_key(&self.previous_key)
+			let maybe_next = soil_io::storage::next_key(&self.previous_key)
 				.filter(|n| n.starts_with(&self.prefix));
 			break match maybe_next {
 				Some(next) => {
@@ -283,7 +283,7 @@ pub fn clear_storage_prefix(
 	hash: &[u8],
 	maybe_limit: Option<u32>,
 	maybe_cursor: Option<&[u8]>,
-) -> sp_io::MultiRemovalResults {
+) -> soil_io::MultiRemovalResults {
 	let mut key = vec![0u8; 32 + hash.len()];
 	let storage_prefix = storage_prefix(module, item);
 	key[0..32].copy_from_slice(&storage_prefix);
@@ -315,7 +315,7 @@ pub fn take_storage_item<K: Encode + Sized, T: Decode + Sized, H: StorageHasher>
 /// "my_new_example_name", a migration can be:
 /// ```
 /// # use frame_support::storage::migration::move_storage_from_pallet;
-/// # sp_io::TestExternalities::new_empty().execute_with(|| {
+/// # soil_io::TestExternalities::new_empty().execute_with(|| {
 /// move_storage_from_pallet(b"Foo", b"my_example", b"my_new_example_name");
 /// move_storage_from_pallet(b"Bar", b"my_example", b"my_new_example_name");
 /// # })
@@ -352,7 +352,7 @@ pub fn move_storage_from_pallet(
 /// "my_new_example_name", a migration can be:
 /// ```
 /// # use frame_support::storage::migration::move_pallet;
-/// # sp_io::TestExternalities::new_empty().execute_with(|| {
+/// # soil_io::TestExternalities::new_empty().execute_with(|| {
 /// move_pallet(b"my_example", b"my_new_example_name");
 /// # })
 /// ```
@@ -394,7 +394,7 @@ mod tests {
 		hash::StorageHasher,
 		pallet_prelude::{StorageMap, StorageValue, Twox128, Twox64Concat},
 	};
-	use sp_io::TestExternalities;
+	use soil_io::TestExternalities;
 
 	struct OldPalletStorageValuePrefix;
 	impl frame_support::traits::StorageInstance for OldPalletStorageValuePrefix {

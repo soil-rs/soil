@@ -72,9 +72,9 @@ mod my_pallet_2 {
 
 type BlockNumber = u32;
 type AccountId = u64;
-type Header = sp_runtime::generic::Header<BlockNumber, sp_runtime::traits::BlakeTwo256>;
-type UncheckedExtrinsic = sp_runtime::generic::UncheckedExtrinsic<u32, RuntimeCall, (), ()>;
-type Block = sp_runtime::generic::Block<Header, UncheckedExtrinsic>;
+type Header = soil_runtime::generic::Header<BlockNumber, soil_runtime::traits::BlakeTwo256>;
+type UncheckedExtrinsic = soil_runtime::generic::UncheckedExtrinsic<u32, RuntimeCall, (), ()>;
+type Block = soil_runtime::generic::Block<Header, UncheckedExtrinsic>;
 
 frame_support::construct_runtime!(
 	pub enum Runtime
@@ -105,8 +105,8 @@ impl my_pallet::Config<frame_support::instances::Instance3> for Runtime {}
 
 impl my_pallet_2::Config<frame_support::instances::Instance1> for Runtime {}
 
-fn new_test_ext() -> sp_io::TestExternalities {
-	use sp_runtime::BuildStorage;
+fn new_test_ext() -> soil_io::TestExternalities {
+	use soil_runtime::BuildStorage;
 
 	RuntimeGenesisConfig::default().build_storage().unwrap().into()
 }

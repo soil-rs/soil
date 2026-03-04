@@ -44,7 +44,7 @@ use frame_support::{
 use frame_system::EnsureRoot;
 use parking_lot::RwLock;
 pub use signed::*;
-use sp_core::{
+use soil_core::{
 	offchain::{
 		testing::{PoolState, TestOffchainExt, TestTransactionPoolExt},
 		OffchainDbExt, OffchainWorkerExt, TransactionPoolExt,
@@ -52,7 +52,7 @@ use sp_core::{
 	ConstBool,
 };
 use sp_npos_elections::EvaluateSupport;
-use sp_runtime::{
+use soil_runtime::{
 	bounded_vec,
 	traits::{BlakeTwo256, IdentityLookup},
 	BuildStorage, PerU16, Perbill,
@@ -60,7 +60,7 @@ use sp_runtime::{
 pub use staking::*;
 use std::{sync::Arc, vec};
 
-pub type Extrinsic = sp_runtime::testing::TestXt<RuntimeCall, ()>;
+pub type Extrinsic = soil_runtime::testing::TestXt<RuntimeCall, ()>;
 
 pub type Balance = u64;
 pub type AccountId = u64;
@@ -250,7 +250,7 @@ impl onchain::Config for Runtime {
 	type MaxBackersPerWinner = MaxBackersPerWinner;
 	type MaxWinnersPerPage = MaxWinnersPerPage;
 	type Sort = ConstBool<true>;
-	type Solver = SequentialPhragmen<AccountId, sp_runtime::PerU16, ()>;
+	type Solver = SequentialPhragmen<AccountId, soil_runtime::PerU16, ()>;
 	type System = Runtime;
 	type WeightInfo = ();
 	type Bounds = OnChainElectionBounds;
@@ -428,7 +428,7 @@ impl ExtBuilder {
 		AreWeDone::set(mode);
 		self
 	}
-	pub(crate) fn build_unchecked(self) -> sp_io::TestExternalities {
+	pub(crate) fn build_unchecked(self) -> soil_io::TestExternalities {
 		soil_tracing::try_init_simple();
 		let mut storage =
 			frame_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
@@ -452,11 +452,11 @@ impl ExtBuilder {
 		}
 		.assimilate_storage(&mut storage);
 
-		sp_io::TestExternalities::from(storage)
+		soil_io::TestExternalities::from(storage)
 	}
 
 	/// Warning: this does not execute the post-sanity-checks.
-	pub(crate) fn build_offchainify(self) -> (sp_io::TestExternalities, Arc<RwLock<PoolState>>) {
+	pub(crate) fn build_offchainify(self) -> (soil_io::TestExternalities, Arc<RwLock<PoolState>>) {
 		let mut ext = self.build_unchecked();
 		let (offchain, _offchain_state) = TestOffchainExt::new();
 		let (pool, pool_state) = TestTransactionPoolExt::new();
@@ -479,7 +479,7 @@ pub trait ExecuteWithSanityChecks {
 	fn execute_with_sanity_checks(&mut self, test: impl FnOnce() -> ());
 }
 
-impl ExecuteWithSanityChecks for sp_io::TestExternalities {
+impl ExecuteWithSanityChecks for soil_io::TestExternalities {
 	fn execute_with_sanity_checks(&mut self, test: impl FnOnce() -> ()) {
 		self.execute_with(all_pallets_integrity_test);
 		self.execute_with(test);
@@ -749,7 +749,7 @@ pub fn roll_to_unsigned_open_with_ocw(maybe_pool: Option<Arc<RwLock<PoolState>>>
 
 /// proceed block number to `n`, while running all offchain workers as well.
 pub fn roll_to_with_ocw(n: BlockNumber, maybe_pool: Option<Arc<RwLock<PoolState>>>) {
-	use sp_runtime::traits::Dispatchable;
+	use soil_runtime::traits::Dispatchable;
 	let now = System::block_number();
 	for i in now + 1..=n {
 		// check the offchain transaction pool, and if anything's there, submit it.

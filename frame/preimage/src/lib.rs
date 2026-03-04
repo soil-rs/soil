@@ -40,7 +40,7 @@ pub mod weights;
 extern crate alloc;
 
 use alloc::{borrow::Cow, vec::Vec};
-use sp_runtime::{
+use soil_runtime::{
 	traits::{BadOrigin, Hash, Saturating},
 	Perbill,
 };

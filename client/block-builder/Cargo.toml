@@ -20,11 +20,11 @@ codec = { features = ["derive"], workspace = true, default-features = true }
 sp-api = { workspace = true, default-features = true }
 sp-block-builder = { workspace = true, default-features = true }
 sp-blockchain = { workspace = true, default-features = true }
-sp-core = { workspace = true, default-features = true }
-sp-externalities = { workspace = true, default-features = true }
+soil-core = { workspace = true, default-features = true }
+soil-externalities = { workspace = true, default-features = true }
 sp-inherents = { workspace = true, default-features = true }
-sp-runtime = { workspace = true, default-features = true }
+soil-runtime = { workspace = true, default-features = true }
 
 [dev-dependencies]
-sp-state-machine = { workspace = true, default-features = true }
+soil-state-machine = { workspace = true, default-features = true }
 substrate-test-runtime-client = { workspace = true }

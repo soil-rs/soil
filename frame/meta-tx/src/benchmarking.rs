@@ -20,12 +20,12 @@
 use super::*;
 use frame_benchmarking::v2::*;
 use frame_support::traits::UnfilteredDispatchable;
-use sp_runtime::impl_tx_ext_default;
+use soil_runtime::impl_tx_ext_default;
 
 pub mod types {
 	use super::*;
 	use frame_support::traits::OriginTrait;
-	use sp_runtime::traits::DispatchInfoOf;
+	use soil_runtime::traits::DispatchInfoOf;
 
 	type CallOf<T> = <T as frame_system::Config>::RuntimeCall;
 

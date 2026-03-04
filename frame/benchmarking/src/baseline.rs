@@ -23,13 +23,13 @@
 use crate::benchmarks;
 use alloc::{vec, vec::Vec};
 use frame_system::Pallet as System;
-use sp_runtime::{
+use soil_runtime::{
 	traits::{AppVerify, Hash},
 	RuntimeAppPublic,
 };
 
 mod crypto {
-	use sp_application_crypto::{app_crypto, sr25519, KeyTypeId};
+	use soil_application_crypto::{app_crypto, sr25519, KeyTypeId};
 
 	pub const TEST_KEY_TYPE_ID: KeyTypeId = KeyTypeId(*b"test");
 	app_crypto!(sr25519, TEST_KEY_TYPE_ID);
@@ -111,7 +111,7 @@ benchmarks! {
 #[cfg(test)]
 pub mod mock {
 	use frame_support::derive_impl;
-	use sp_runtime::{testing::H256, BuildStorage};
+	use soil_runtime::{testing::H256, BuildStorage};
 
 	type AccountId = u64;
 	type Nonce = u32;
@@ -135,9 +135,9 @@ pub mod mock {
 		type Nonce = Nonce;
 		type RuntimeCall = RuntimeCall;
 		type Hash = H256;
-		type Hashing = ::sp_runtime::traits::BlakeTwo256;
+		type Hashing = ::soil_runtime::traits::BlakeTwo256;
 		type AccountId = AccountId;
-		type Lookup = sp_runtime::traits::IdentityLookup<Self::AccountId>;
+		type Lookup = soil_runtime::traits::IdentityLookup<Self::AccountId>;
 		type Block = Block;
 		type RuntimeEvent = RuntimeEvent;
 		type BlockHashCount = ();
@@ -154,11 +154,11 @@ pub mod mock {
 
 	impl super::Config for Test {}
 
-	pub fn new_test_ext() -> sp_io::TestExternalities {
-		use sp_keystore::{testing::MemoryKeystore, KeystoreExt};
+	pub fn new_test_ext() -> soil_io::TestExternalities {
+		use soil_keystore::{testing::MemoryKeystore, KeystoreExt};
 
 		let t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
-		let mut ext = sp_io::TestExternalities::new(t);
+		let mut ext = soil_io::TestExternalities::new(t);
 		ext.register_extension(KeystoreExt::new(MemoryKeystore::new()));
 
 		ext

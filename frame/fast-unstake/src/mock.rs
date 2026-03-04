@@ -24,7 +24,7 @@ use frame_support::{
 	traits::{ConstU64, Currency},
 	weights::constants::WEIGHT_REF_TIME_PER_SECOND,
 };
-use sp_runtime::{traits::IdentityLookup, BuildStorage};
+use soil_runtime::{traits::IdentityLookup, BuildStorage};
 
 use pallet_staking::{Exposure, IndividualExposure, StakerStatus};
 
@@ -68,7 +68,7 @@ impl pallet_balances::Config for Runtime {
 }
 
 pallet_staking_reward_curve::build! {
-	const I_NPOS: sp_runtime::curve::PiecewiseLinear<'static> = curve!(
+	const I_NPOS: soil_runtime::curve::PiecewiseLinear<'static> = curve!(
 		min_inflation: 0_025_000,
 		max_inflation: 0_100_000,
 		ideal_stake: 0_500_000,
@@ -79,7 +79,7 @@ pallet_staking_reward_curve::build! {
 }
 
 parameter_types! {
-	pub const RewardCurve: &'static sp_runtime::curve::PiecewiseLinear<'static> = &I_NPOS;
+	pub const RewardCurve: &'static soil_runtime::curve::PiecewiseLinear<'static> = &I_NPOS;
 	pub static BondingDuration: u32 = 3;
 	pub static CurrentEra: u32 = 0;
 	pub static Ongoing: bool = false;
@@ -226,7 +226,7 @@ impl ExtBuilder {
 		self
 	}
 
-	pub(crate) fn build(self) -> sp_io::TestExternalities {
+	pub(crate) fn build(self) -> soil_io::TestExternalities {
 		soil_tracing::try_init_simple();
 		let mut storage =
 			frame_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
@@ -261,7 +261,7 @@ impl ExtBuilder {
 		}
 		.assimilate_storage(&mut storage);
 
-		let mut ext = sp_io::TestExternalities::from(storage);
+		let mut ext = soil_io::TestExternalities::from(storage);
 
 		ext.execute_with(|| {
 			// for events to be deposited.

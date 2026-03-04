@@ -20,7 +20,7 @@ codec = { features = ["derive"], workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 
 # primitives
-sp-runtime = { workspace = true }
+soil-runtime = { workspace = true }
 
 # FRAME
 frame-election-provider-support = { workspace = true }
@@ -35,16 +35,16 @@ log = { workspace = true }
 # Optional imports for benchmarking
 frame-benchmarking = { optional = true, workspace = true }
 pallet-balances = { optional = true, workspace = true }
-sp-core = { optional = true, workspace = true }
-sp-io = { optional = true, workspace = true }
+soil-core = { optional = true, workspace = true }
+soil-io = { optional = true, workspace = true }
 soil-tracing = { optional = true, workspace = true }
 
 [dev-dependencies]
 frame-benchmarking = { workspace = true, default-features = true }
 frame-election-provider-support = { workspace = true, default-features = true }
 pallet-balances = { workspace = true, default-features = true }
-sp-core = { workspace = true, default-features = true }
-sp-io = { workspace = true, default-features = true }
+soil-core = { workspace = true, default-features = true }
+soil-io = { workspace = true, default-features = true }
 soil-tracing = { workspace = true, default-features = true }
 substrate-test-utils = { workspace = true }
 
@@ -59,9 +59,9 @@ std = [
 	"log/std",
 	"pallet-balances?/std",
 	"scale-info/std",
-	"sp-core?/std",
-	"sp-io?/std",
-	"sp-runtime/std",
+	"soil-core?/std",
+	"soil-io?/std",
+	"soil-runtime/std",
 	"soil-tracing?/std",
 ]
 runtime-benchmarks = [
@@ -70,16 +70,16 @@ runtime-benchmarks = [
 	"frame-support/runtime-benchmarks",
 	"frame-system/runtime-benchmarks",
 	"pallet-balances/runtime-benchmarks",
-	"sp-core",
-	"sp-io",
-	"sp-runtime/runtime-benchmarks",
+	"soil-core",
+	"soil-io",
+	"soil-runtime/runtime-benchmarks",
 	"soil-tracing",
 ]
 fuzz = [
 	"frame-election-provider-support/fuzz",
 	"pallet-balances",
-	"sp-core",
-	"sp-io",
+	"soil-core",
+	"soil-io",
 	"soil-tracing",
 ]
 try-runtime = [
@@ -87,5 +87,5 @@ try-runtime = [
 	"frame-support/try-runtime",
 	"frame-system/try-runtime",
 	"pallet-balances?/try-runtime",
-	"sp-runtime/try-runtime",
+	"soil-runtime/try-runtime",
 ]

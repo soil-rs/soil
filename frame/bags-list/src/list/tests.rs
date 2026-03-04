@@ -22,7 +22,7 @@ use crate::{
 };
 use frame_election_provider_support::{SortedListProvider, VoteWeight};
 use frame_support::{assert_ok, assert_storage_noop};
-use sp_runtime::TryRuntimeError;
+use soil_runtime::TryRuntimeError;
 
 fn node(
 	id: AccountId,

@@ -17,7 +17,7 @@
 
 use crate::{self as frame_system, *};
 use frame_support::{derive_impl, parameter_types};
-use sp_runtime::{type_with_default::TypeWithDefault, BuildStorage, Perbill};
+use soil_runtime::{type_with_default::TypeWithDefault, BuildStorage, Perbill};
 
 type Block = mocking::MockBlock<Test>;
 
@@ -125,11 +125,11 @@ pub const CALL: &<Test as Config>::RuntimeCall =
 	&RuntimeCall::System(frame_system::Call::set_heap_pages { pages: 0u64 });
 
 /// Create new externalities for `System` module tests.
-pub fn new_test_ext() -> sp_io::TestExternalities {
+pub fn new_test_ext() -> soil_io::TestExternalities {
 	// Initialize logging
 	soil_tracing::try_init_simple();
 
-	let mut ext: sp_io::TestExternalities =
+	let mut ext: soil_io::TestExternalities =
 		RuntimeGenesisConfig::default().build_storage().unwrap().into();
 	// Add to each test the initial weight of a block
 	ext.execute_with(|| {

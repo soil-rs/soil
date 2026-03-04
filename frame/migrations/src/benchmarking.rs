@@ -22,9 +22,9 @@ use super::*;
 use core::array;
 use frame_benchmarking::{v2::*, BenchmarkError};
 use frame_system::{Pallet as System, RawOrigin};
-use sp_core::{twox_128, Get};
-use sp_io::{storage, KillStorageResult};
-use sp_runtime::traits::One;
+use soil_core::{twox_128, Get};
+use soil_io::{storage, KillStorageResult};
+use soil_runtime::traits::One;
 
 fn assert_has_event<T: Config>(generic_event: <T as Config>::RuntimeEvent) {
 	frame_system::Pallet::<T>::assert_has_event(generic_event.into());

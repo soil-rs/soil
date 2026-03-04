@@ -23,7 +23,7 @@ use crate::{mock_helpers::*, Event, Historic};
 
 use frame_support::{derive_impl, migrations::*, weights::Weight};
 use frame_system::EventRecord;
-use sp_core::H256;
+use soil_core::H256;
 
 type Block = frame_system::mocking::MockBlock<Test>;
 
@@ -98,8 +98,8 @@ pub fn upgrades_started_completed_failed() -> (u32, u32, u32) {
 }
 
 /// Build genesis storage according to the mock runtime.
-pub fn new_test_ext() -> sp_io::TestExternalities {
-	sp_io::TestExternalities::new(Default::default())
+pub fn new_test_ext() -> soil_io::TestExternalities {
+	soil_io::TestExternalities::new(Default::default())
 }
 
 /// Run this closure in test externalities.

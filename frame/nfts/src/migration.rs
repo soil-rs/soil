@@ -20,7 +20,7 @@ use frame_support::traits::OnRuntimeUpgrade;
 use log;
 
 #[cfg(feature = "try-runtime")]
-use sp_runtime::TryRuntimeError;
+use soil_runtime::TryRuntimeError;
 
 pub mod v1 {
 	use frame_support::{pallet_prelude::*, weights::Weight};

@@ -37,7 +37,7 @@ use sc_network_sync::{
 	strategy::polkadot::{PolkadotSyncingStrategy, PolkadotSyncingStrategyConfig},
 };
 use sp_blockchain::HeaderBackend;
-use sp_runtime::traits::{Block as BlockT, Zero};
+use soil_runtime::traits::{Block as BlockT, Zero};
 use substrate_test_runtime_client::{
 	runtime::{Block as TestBlock, Hash as TestHash},
 	TestClientBuilder, TestClientBuilderExt as _,
@@ -149,7 +149,7 @@ impl TestNetworkBuilder {
 				PassThroughVerifier(false),
 				Box::new(client.clone()),
 				None,
-				&sp_core::testing::TaskExecutor::new(),
+				&soil_core::testing::TaskExecutor::new(),
 				None,
 			)));
 

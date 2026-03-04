@@ -22,7 +22,7 @@ use super::*;
 use alloc::{vec, vec::Vec};
 use frame_benchmarking::v2::*;
 use frame_system::{pallet_prelude::BlockNumberFor as SystemBlockNumberFor, RawOrigin};
-use sp_runtime::traits::{BlockNumberProvider, Bounded};
+use soil_runtime::traits::{BlockNumberProvider, Bounded};
 
 use crate::Pallet as Bounties;
 use pallet_treasury::Pallet as Treasury;

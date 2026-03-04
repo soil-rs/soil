@@ -30,7 +30,7 @@ use sc_transaction_pool_api::{
 	error::{Error as TxPoolError, IntoPoolError},
 	MaintainedTransactionPool, TransactionPool, TransactionStatus,
 };
-use sp_runtime::transaction_validity::{InvalidTransaction, TransactionValidityError};
+use soil_runtime::transaction_validity::{InvalidTransaction, TransactionValidityError};
 use substrate_test_runtime_client::Sr25519Keyring::*;
 use substrate_test_runtime_transaction_pool::uxt;
 use tracing::debug;

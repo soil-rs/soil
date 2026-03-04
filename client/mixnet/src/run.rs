@@ -52,9 +52,9 @@ use sc_transaction_pool_api::{
 };
 use sp_api::{ApiExt, ProvideRuntimeApi};
 use sp_consensus::SyncOracle;
-use sp_keystore::{KeystoreExt, KeystorePtr};
+use soil_keystore::{KeystoreExt, KeystorePtr};
 use sp_mixnet::{runtime_api::MixnetApi, types::Mixnode};
-use sp_runtime::{
+use soil_runtime::{
 	traits::{Block, Header},
 	transaction_validity::TransactionSource,
 	Saturating,

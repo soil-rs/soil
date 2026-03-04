@@ -23,7 +23,7 @@
 #![warn(missing_docs)]
 #![deny(unused_crate_dependencies)]
 
-use sp_core::hexdisplay::{AsBytesRef, HexDisplay};
+use soil_core::hexdisplay::{AsBytesRef, HexDisplay};
 
 mod common;
 
@@ -33,7 +33,7 @@ pub mod chain_spec;
 pub mod transaction;
 
 /// Task executor that is being used by RPC subscriptions.
-pub type SubscriptionTaskExecutor = std::sync::Arc<dyn sp_core::traits::SpawnNamed>;
+pub type SubscriptionTaskExecutor = std::sync::Arc<dyn soil_core::traits::SpawnNamed>;
 
 /// Util function to encode a value as a hex string
 pub fn hex_string<Data: AsBytesRef>(data: &Data) -> String {

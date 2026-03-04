@@ -26,9 +26,9 @@ use crate::{
 };
 use frame_election_provider_support::Support;
 use frame_support::{assert_noop, assert_ok};
-use sp_core::bounded_vec;
+use soil_core::bounded_vec;
 use sp_npos_elections::ElectionScore;
-use sp_runtime::{traits::Bounded, PerU16};
+use soil_runtime::{traits::Bounded, PerU16};
 
 mod feasibility_check {
 	use super::*;
@@ -282,7 +282,7 @@ mod feasibility_check {
 
 mod async_verification {
 	use super::*;
-	use sp_core::bounded_vec;
+	use soil_core::bounded_vec;
 	// disambiguate event
 	use crate::verifier::Event;
 

@@ -38,9 +38,9 @@ use crate::{SpanDatum, TraceEvent, Values};
 use sc_client_api::BlockBackend;
 use sp_api::{Core, ProvideRuntimeApi};
 use sp_blockchain::HeaderBackend;
-use sp_core::hexdisplay::HexDisplay;
-use sp_rpc::tracing::{BlockTrace, Span, TraceBlockResponse};
-use sp_runtime::{
+use soil_core::hexdisplay::HexDisplay;
+use soil_rpc::tracing::{BlockTrace, Span, TraceBlockResponse};
+use soil_runtime::{
 	generic::BlockId,
 	traits::{Block as BlockT, Header},
 };

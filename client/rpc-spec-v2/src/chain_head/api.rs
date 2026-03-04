@@ -27,7 +27,7 @@ use crate::{
 	common::events::StorageQuery,
 };
 use jsonrpsee::{proc_macros::rpc, server::ResponsePayload};
-pub use sp_rpc::list::ListOrValue;
+pub use soil_rpc::list::ListOrValue;
 
 #[rpc(client, server)]
 pub trait ChainHeadApi<Hash> {

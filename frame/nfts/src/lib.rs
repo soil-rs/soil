@@ -57,7 +57,7 @@ use frame_support::traits::{
 	ReservableCurrency,
 };
 use frame_system::Config as SystemConfig;
-use sp_runtime::{
+use soil_runtime::{
 	traits::{BlockNumberProvider, IdentifyAccount, Saturating, StaticLookup, Verify, Zero},
 	Debug,
 };
@@ -97,9 +97,9 @@ pub mod pallet {
 		BenchmarkHelper<
 			CollectionId,
 			ItemId,
-			sp_runtime::MultiSigner,
-			sp_runtime::AccountId32,
-			sp_runtime::MultiSignature,
+			soil_runtime::MultiSigner,
+			soil_runtime::AccountId32,
+			soil_runtime::MultiSignature,
 		> for ()
 	where
 		CollectionId: From<u16>,
@@ -111,14 +111,14 @@ pub mod pallet {
 		fn item(i: u16) -> ItemId {
 			i.into()
 		}
-		fn signer() -> (sp_runtime::MultiSigner, sp_runtime::AccountId32) {
-			let public = sp_io::crypto::sr25519_generate(0.into(), None);
-			let account = sp_runtime::MultiSigner::Sr25519(public).into_account();
+		fn signer() -> (soil_runtime::MultiSigner, soil_runtime::AccountId32) {
+			let public = soil_io::crypto::sr25519_generate(0.into(), None);
+			let account = soil_runtime::MultiSigner::Sr25519(public).into_account();
 			(public.into(), account)
 		}
-		fn sign(signer: &sp_runtime::MultiSigner, message: &[u8]) -> sp_runtime::MultiSignature {
-			sp_runtime::MultiSignature::Sr25519(
-				sp_io::crypto::sr25519_sign(0.into(), &signer.clone().try_into().unwrap(), message)
+		fn sign(signer: &soil_runtime::MultiSigner, message: &[u8]) -> soil_runtime::MultiSignature {
+			soil_runtime::MultiSignature::Sr25519(
+				soil_io::crypto::sr25519_sign(0.into(), &signer.clone().try_into().unwrap(), message)
 					.unwrap(),
 			)
 		}
@@ -1935,4 +1935,4 @@ pub mod pallet {
 	}
 }
 
-sp_core::generate_feature_enabled_macro!(runtime_benchmarks_enabled, feature = "runtime-benchmarks", $);
+soil_core::generate_feature_enabled_macro!(runtime_benchmarks_enabled, feature = "runtime-benchmarks", $);

@@ -18,7 +18,7 @@
 //! Runtime API definition for the FRAME Broker pallet.
 
 use codec::Codec;
-use sp_runtime::DispatchError;
+use soil_runtime::DispatchError;
 
 sp_api::decl_runtime_apis! {
 	pub trait BrokerApi<Balance>

@@ -17,8 +17,8 @@
 
 use alloc::vec::Vec;
 use codec::{Decode, Encode};
-pub use sp_core::crypto::KeyTypeId;
-use sp_runtime::traits::GeneratedSessionKeys;
+pub use soil_core::crypto::KeyTypeId;
+use soil_runtime::traits::GeneratedSessionKeys;
 
 /// Opaque [`GeneratedSessionKeys`].
 #[derive(Debug, Default, Decode, Encode, scale_info::TypeInfo)]

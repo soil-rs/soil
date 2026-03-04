@@ -78,7 +78,7 @@ pub mod pallet {
 	#[pallet::hooks]
 	impl<T: Config> Hooks<BlockNumberFor<T>> for Pallet<T> {
 		#[cfg(feature = "try-runtime")]
-		fn try_state(_n: BlockNumberFor<T>) -> Result<(), sp_runtime::TryRuntimeError> {
+		fn try_state(_n: BlockNumberFor<T>) -> Result<(), soil_runtime::TryRuntimeError> {
 			Self::do_try_state()
 		}
 	}
@@ -122,7 +122,7 @@ impl<T: Config> Pallet<T> {
 	}
 }
 
-impl<T: Config> sp_runtime::BoundToRuntimeAppPublic for Pallet<T> {
+impl<T: Config> soil_runtime::BoundToRuntimeAppPublic for Pallet<T> {
 	type Public = AuthorityId;
 }
 
@@ -185,7 +185,7 @@ impl<T: Config> Pallet<T> {
 	/// * `NextKeys` must not exceed `MaxAuthorities`.
 	/// * `Keys` should not contain duplicates.
 	/// * `NextKeys` should not contain duplicates.
-	pub fn do_try_state() -> Result<(), sp_runtime::TryRuntimeError> {
+	pub fn do_try_state() -> Result<(), soil_runtime::TryRuntimeError> {
 		use frame_support::ensure;
 		let keys = Keys::<T>::get();
 		ensure!(keys.len() as u32 <= T::MaxAuthorities::get(), "Keys exceeds MaxAuthorities");
@@ -215,11 +215,11 @@ mod tests {
 	use crate as pallet_authority_discovery;
 	use alloc::vec;
 	use frame_support::{derive_impl, parameter_types, traits::ConstU32};
-	use sp_application_crypto::Pair;
+	use soil_application_crypto::Pair;
 	use sp_authority_discovery::AuthorityPair;
-	use sp_core::crypto::key_types;
-	use sp_io::TestExternalities;
-	use sp_runtime::{
+	use soil_core::crypto::key_types;
+	use soil_io::TestExternalities;
+	use soil_runtime::{
 		testing::UintAuthorityId,
 		traits::{ConvertInto, IdentityLookup, OpaqueKeys},
 		BuildStorage, KeyTypeId, Perbill,

@@ -28,7 +28,7 @@ use sc_network::{
 };
 
 use sc_network_common::sync::message::BlockAnnouncesHandshake;
-use sp_runtime::traits::Zero;
+use soil_runtime::traits::Zero;
 use std::{sync::Arc, time::Duration};
 use substrate_test_runtime_client::runtime;
 use tokio::sync::Mutex;

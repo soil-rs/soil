@@ -28,7 +28,7 @@ use frame_support::{
 	derive_impl, parameter_types,
 	traits::{ConstU32, ConstU64},
 };
-use sp_runtime::{traits::IdentityLookup, BuildStorage, KeyTypeId};
+use soil_runtime::{traits::IdentityLookup, BuildStorage, KeyTypeId};
 
 type AccountId = u64;
 type Nonce = u32;
@@ -73,9 +73,9 @@ impl pallet_session::historical::Config for Test {
 	type FullIdentificationOf = pallet_staking::UnitIdentificationOf<Self>;
 }
 
-sp_runtime::impl_opaque_keys! {
+soil_runtime::impl_opaque_keys! {
 	pub struct SessionKeys {
-		pub foo: sp_runtime::testing::UintAuthorityId,
+		pub foo: soil_runtime::testing::UintAuthorityId,
 	}
 }
 
@@ -84,9 +84,9 @@ impl pallet_session::SessionHandler<AccountId> for TestSessionHandler {
 	// corresponds to the opaque key id above
 	const KEY_TYPE_IDS: &'static [KeyTypeId] = &[KeyTypeId([100u8, 117u8, 109u8, 121u8])];
 
-	fn on_genesis_session<Ks: sp_runtime::traits::OpaqueKeys>(_validators: &[(AccountId, Ks)]) {}
+	fn on_genesis_session<Ks: soil_runtime::traits::OpaqueKeys>(_validators: &[(AccountId, Ks)]) {}
 
-	fn on_new_session<Ks: sp_runtime::traits::OpaqueKeys>(
+	fn on_new_session<Ks: soil_runtime::traits::OpaqueKeys>(
 		_: bool,
 		_: &[(AccountId, Ks)],
 		_: &[(AccountId, Ks)],
@@ -104,7 +104,7 @@ impl pallet_session::Config for Test {
 	type SessionHandler = TestSessionHandler;
 	type RuntimeEvent = RuntimeEvent;
 	type ValidatorId = AccountId;
-	type ValidatorIdOf = sp_runtime::traits::ConvertInto;
+	type ValidatorIdOf = soil_runtime::traits::ConvertInto;
 	type DisablingStrategy = ();
 	type WeightInfo = ();
 	type Currency = Balances;
@@ -113,7 +113,7 @@ impl pallet_session::Config for Test {
 	type KeyDeposit = ConstU64<2000000000>;
 }
 pallet_staking_reward_curve::build! {
-	const I_NPOS: sp_runtime::curve::PiecewiseLinear<'static> = curve!(
+	const I_NPOS: soil_runtime::curve::PiecewiseLinear<'static> = curve!(
 		min_inflation: 0_025_000,
 		max_inflation: 0_100_000,
 		ideal_stake: 0_500_000,
@@ -123,7 +123,7 @@ pallet_staking_reward_curve::build! {
 	);
 }
 parameter_types! {
-	pub const RewardCurve: &'static sp_runtime::curve::PiecewiseLinear<'static> = &I_NPOS;
+	pub const RewardCurve: &'static soil_runtime::curve::PiecewiseLinear<'static> = &I_NPOS;
 	pub static ElectionsBounds: ElectionBounds = ElectionBoundsBuilder::default().build();
 	pub const Sort: bool = true;
 }
@@ -131,7 +131,7 @@ parameter_types! {
 pub struct OnChainSeqPhragmen;
 impl onchain::Config for OnChainSeqPhragmen {
 	type System = Test;
-	type Solver = SequentialPhragmen<AccountId, sp_runtime::Perbill>;
+	type Solver = SequentialPhragmen<AccountId, soil_runtime::Perbill>;
 	type DataProvider = Staking;
 	type WeightInfo = ();
 	type MaxWinnersPerPage = ConstU32<100>;
@@ -164,7 +164,7 @@ impl crate::Config for Test {
 	}
 }
 
-pub fn new_test_ext() -> sp_io::TestExternalities {
+pub fn new_test_ext() -> soil_io::TestExternalities {
 	let t = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
-	sp_io::TestExternalities::new(t)
+	soil_io::TestExternalities::new(t)
 }

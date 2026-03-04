@@ -31,11 +31,11 @@ use sp_authority_discovery::AuthorityId as AuthorityDiscoveryId;
 use sp_consensus_babe::AuthorityId as BabeId;
 use sp_consensus_beefy::ecdsa_crypto::AuthorityId as BeefyId;
 use sp_consensus_grandpa::AuthorityId as GrandpaId;
-use sp_core::{crypto::get_public_from_string_or_panic, sr25519};
+use soil_core::{crypto::get_public_from_string_or_panic, sr25519};
 use sp_genesis_builder::PresetId;
 use sp_keyring::Sr25519Keyring;
 use sp_mixnet::types::AuthorityId as MixnetId;
-use sp_runtime::Perbill;
+use soil_runtime::Perbill;
 
 pub const ENDOWMENT: Balance = 10_000_000 * DOLLARS;
 pub const STASH: Balance = ENDOWMENT / 1000;

@@ -125,7 +125,7 @@ impl<T: Config, W: weights::WeightInfo> SteppedMigration for LazyMigrationV1<T, 
 	}
 
 	#[cfg(feature = "try-runtime")]
-	fn pre_upgrade() -> Result<Vec<u8>, frame_support::sp_runtime::TryRuntimeError> {
+	fn pre_upgrade() -> Result<Vec<u8>, frame_support::soil_runtime::TryRuntimeError> {
 		use codec::Encode;
 
 		// Return the state of the storage before the migration.
@@ -133,7 +133,7 @@ impl<T: Config, W: weights::WeightInfo> SteppedMigration for LazyMigrationV1<T, 
 	}
 
 	#[cfg(feature = "try-runtime")]
-	fn post_upgrade(prev: Vec<u8>) -> Result<(), frame_support::sp_runtime::TryRuntimeError> {
+	fn post_upgrade(prev: Vec<u8>) -> Result<(), frame_support::soil_runtime::TryRuntimeError> {
 		use codec::Decode;
 
 		// Check the state of the storage after the migration.

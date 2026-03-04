@@ -22,7 +22,7 @@
 // SOFTWARE.
 
 use crate as pallet_template;
-use frame_support::{derive_impl, sp_runtime::BuildStorage};
+use frame_support::{derive_impl, soil_runtime::BuildStorage};
 
 type Block = frame_system::mocking::MockBlock<Test>;
 
@@ -47,6 +47,6 @@ impl pallet_template::Config for Test {
 }
 
 // Build genesis storage according to the mock runtime.
-pub fn new_test_ext() -> sp_io::TestExternalities {
+pub fn new_test_ext() -> soil_io::TestExternalities {
 	frame_system::GenesisConfig::<Test>::default().build_storage().unwrap().into()
 }

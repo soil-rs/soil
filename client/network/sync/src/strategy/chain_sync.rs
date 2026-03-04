@@ -59,7 +59,7 @@ use sc_network_types::PeerId;
 use soil_arithmetic::traits::Saturating;
 use sp_blockchain::{Error as ClientError, HeaderBackend, HeaderMetadata};
 use sp_consensus::{BlockOrigin, BlockStatus};
-use sp_runtime::{
+use soil_runtime::{
 	traits::{
 		Block as BlockT, CheckedSub, Header as HeaderT, NumberFor, One, SaturatedConversion, Zero,
 	},

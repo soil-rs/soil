@@ -24,7 +24,7 @@ use frame_support::{
 	traits::{ConstU64, Nothing, VariantCountOf},
 	PalletId,
 };
-use sp_runtime::{
+use soil_runtime::{
 	traits::{Convert, IdentityLookup},
 	BuildStorage, FixedU128, Perbill,
 };
@@ -64,7 +64,7 @@ impl pallet_balances::Config for Runtime {
 }
 
 pallet_staking_reward_curve::build! {
-	const I_NPOS: sp_runtime::curve::PiecewiseLinear<'static> = curve!(
+	const I_NPOS: soil_runtime::curve::PiecewiseLinear<'static> = curve!(
 		min_inflation: 0_025_000,
 		max_inflation: 0_100_000,
 		ideal_stake: 0_500_000,
@@ -74,7 +74,7 @@ pallet_staking_reward_curve::build! {
 	);
 }
 parameter_types! {
-	pub const RewardCurve: &'static sp_runtime::curve::PiecewiseLinear<'static> = &I_NPOS;
+	pub const RewardCurve: &'static soil_runtime::curve::PiecewiseLinear<'static> = &I_NPOS;
 }
 #[derive_impl(pallet_staking::config_preludes::TestDefaultConfig)]
 impl pallet_staking::Config for Runtime {
@@ -106,15 +106,15 @@ impl pallet_bags_list::Config<VoterBagsListInstance> for Runtime {
 }
 
 pub struct BalanceToU256;
-impl Convert<Balance, sp_core::U256> for BalanceToU256 {
-	fn convert(n: Balance) -> sp_core::U256 {
+impl Convert<Balance, soil_core::U256> for BalanceToU256 {
+	fn convert(n: Balance) -> soil_core::U256 {
 		n.into()
 	}
 }
 
 pub struct U256ToBalance;
-impl Convert<sp_core::U256, Balance> for U256ToBalance {
-	fn convert(n: sp_core::U256) -> Balance {
+impl Convert<soil_core::U256, Balance> for U256ToBalance {
+	fn convert(n: soil_core::U256) -> Balance {
 		n.try_into().unwrap()
 	}
 }
@@ -175,7 +175,7 @@ frame_support::construct_runtime!(
 	}
 );
 
-pub fn new_test_ext() -> sp_io::TestExternalities {
+pub fn new_test_ext() -> soil_io::TestExternalities {
 	let mut storage = frame_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
 	let _ = pallet_nomination_pools::GenesisConfig::<Runtime> {
 		min_join_bond: 2,
@@ -186,5 +186,5 @@ pub fn new_test_ext() -> sp_io::TestExternalities {
 		global_max_commission: Some(Perbill::from_percent(50)),
 	}
 	.assimilate_storage(&mut storage);
-	sp_io::TestExternalities::from(storage)
+	soil_io::TestExternalities::from(storage)
 }

@@ -20,15 +20,15 @@
 
 use parking_lot::RwLock;
 use sp_blockchain::{CachedHeaderMetadata, HeaderMetadata};
-use sp_core::{
+use soil_core::{
 	offchain::storage::InMemOffchainStorage as OffchainStorage, storage::well_known_keys,
 };
-use sp_runtime::{
+use soil_runtime::{
 	generic::BlockId,
 	traits::{Block as BlockT, HashingFor, Header as HeaderT, NumberFor, Zero},
 	Justification, Justifications, StateVersion, Storage,
 };
-use sp_state_machine::{
+use soil_state_machine::{
 	Backend as StateBackend, BackendTransaction, ChildStorageCollection, InMemoryBackend,
 	IndexOperation, StorageCollection,
 };
@@ -820,7 +820,7 @@ pub fn check_genesis_storage(storage: &Storage) -> sp_blockchain::Result<()> {
 mod tests {
 	use crate::{in_mem::Blockchain, NewBlockState};
 	use sp_blockchain::Backend;
-	use sp_runtime::{traits::Header as HeaderT, ConsensusEngineId, Justifications};
+	use soil_runtime::{traits::Header as HeaderT, ConsensusEngineId, Justifications};
 	use substrate_test_runtime::{Block, Header, H256};
 
 	pub const ID1: ConsensusEngineId = *b"TST1";

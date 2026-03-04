@@ -23,7 +23,7 @@ use serde::{Deserialize, Serialize};
 
 use scale_info::TypeInfo;
 
-use sp_runtime::traits::{AtLeast32BitUnsigned, Zero};
+use soil_runtime::traits::{AtLeast32BitUnsigned, Zero};
 
 use frame_support::dispatch::DispatchClass;
 

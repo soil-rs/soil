@@ -24,7 +24,7 @@ use log::{debug, trace, warn};
 use sc_client_api::{backend::AuxStore, Backend};
 use sp_blockchain::{Error as ClientError, Result as ClientResult};
 use sp_consensus_beefy::AuthorityIdBound;
-use sp_runtime::traits::Block as BlockT;
+use soil_runtime::traits::Block as BlockT;
 
 const VERSION_KEY: &[u8] = b"beefy_auxschema_version";
 const WORKER_STATE_KEY: &[u8] = b"beefy_voter_state";

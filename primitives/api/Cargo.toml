@@ -22,13 +22,13 @@ hash-db = { optional = true, workspace = true, default-features = true }
 log = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 soil-api-proc-macro = { workspace = true }
-sp-core = { workspace = true }
-sp-externalities = { optional = true, workspace = true }
+soil-core = { workspace = true }
+soil-externalities = { optional = true, workspace = true }
 soil-metadata-ir = { optional = true, workspace = true }
-sp-runtime = { workspace = true }
-sp-runtime-interface = { workspace = true }
-sp-state-machine = { optional = true, workspace = true }
-sp-trie = { optional = true, workspace = true }
+soil-runtime = { workspace = true }
+soil-runtime-interface = { workspace = true }
+soil-state-machine = { optional = true, workspace = true }
+soil-trie = { optional = true, workspace = true }
 sp-version = { workspace = true }
 thiserror = { optional = true, workspace = true }
 
@@ -43,15 +43,15 @@ std = [
 	"log/std",
 	"scale-info/std",
 	"soil-api-proc-macro/std",
-	"sp-core/std",
-	"sp-externalities",
-	"sp-externalities?/std",
+	"soil-core/std",
+	"soil-externalities",
+	"soil-externalities?/std",
 	"soil-metadata-ir?/std",
-	"sp-runtime-interface/std",
-	"sp-runtime/std",
-	"sp-state-machine/std",
+	"soil-runtime-interface/std",
+	"soil-runtime/std",
+	"soil-state-machine/std",
 	"sp-test-primitives/std",
-	"sp-trie/std",
+	"soil-trie/std",
 	"sp-version/std",
 	"thiserror",
 ]

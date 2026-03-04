@@ -30,7 +30,7 @@ use futures::{Future, FutureExt, Stream, StreamExt};
 use parking_lot::RwLock;
 use sc_transaction_pool_api::{TransactionStatus, TransactionStatusStream, TxIndex};
 use sc_utils::mpsc;
-use sp_runtime::traits::Block as BlockT;
+use soil_runtime::traits::Block as BlockT;
 use std::{
 	collections::{hash_map::Entry, HashMap, HashSet},
 	pin::Pin,
@@ -806,7 +806,7 @@ mod tests {
 	use super::*;
 	use crate::common::tests::TestApi;
 	use futures::{stream, StreamExt};
-	use sp_core::H256;
+	use soil_core::H256;
 	use tokio::{select, task::JoinHandle};
 	use tracing::debug;
 

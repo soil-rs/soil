@@ -31,7 +31,7 @@ use crate::{
 	round::{Rounds, VoteImportResult},
 	BeefyComms, BeefyVoterLinks, UnpinnedFinalityNotification, LOG_TARGET,
 };
-use sp_application_crypto::RuntimeAppPublic;
+use soil_application_crypto::RuntimeAppPublic;
 
 use codec::{Codec, Decode, DecodeAll, Encode};
 use futures::{stream::Fuse, FutureExt, StreamExt};
@@ -45,7 +45,7 @@ use sp_consensus_beefy::{
 	AuthorityIdBound, BeefyApi, Commitment, DoubleVotingProof, PayloadProvider, ValidatorSet,
 	VersionedFinalityProof, VoteMessage, BEEFY_ENGINE_ID,
 };
-use sp_runtime::{
+use soil_runtime::{
 	generic::BlockId,
 	traits::{Block, Header, NumberFor, Zero},
 	SaturatedConversion,
@@ -1050,7 +1050,7 @@ pub(crate) mod tests {
 		test_utils::{generate_double_voting_proof, Keyring},
 		ConsensusLog, Payload, SignedCommitment,
 	};
-	use sp_runtime::traits::{Header as HeaderT, One};
+	use soil_runtime::traits::{Header as HeaderT, One};
 	use substrate_test_runtime_client::{
 		runtime::{Block, Digest, DigestItem, Header},
 		Backend,

@@ -36,7 +36,7 @@ use soil_arithmetic::{
 	traits::{CheckedAdd, CheckedSub, Zero},
 	ArithmeticError,
 };
-use sp_runtime::{DispatchError, DispatchResult, Saturating, TokenError};
+use soil_runtime::{DispatchError, DispatchResult, Saturating, TokenError};
 
 use super::*;
 

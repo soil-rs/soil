@@ -28,7 +28,7 @@ use alloc::collections::BTreeMap;
 #[cfg(feature = "try-runtime")]
 use codec::{Decode, Encode};
 #[cfg(feature = "try-runtime")]
-use sp_runtime::TryRuntimeError;
+use soil_runtime::TryRuntimeError;
 
 pub const PALLET_MIGRATIONS_ID: &[u8; 15] = b"pallet-identity";
 
@@ -334,7 +334,7 @@ pub mod v2 {
 		}
 
 		#[cfg(feature = "try-runtime")]
-		fn pre_upgrade() -> Result<Vec<u8>, sp_runtime::TryRuntimeError> {
+		fn pre_upgrade() -> Result<Vec<u8>, soil_runtime::TryRuntimeError> {
 			let authorities: BTreeMap<Suffix<T>, (T::AccountId, u32)> =
 				types_v1::UsernameAuthorities::<T>::iter()
 					.map(|(account, authority_properties)| {
@@ -368,7 +368,7 @@ pub mod v2 {
 		}
 
 		#[cfg(feature = "try-runtime")]
-		fn post_upgrade(state: Vec<u8>) -> Result<(), sp_runtime::TryRuntimeError> {
+		fn post_upgrade(state: Vec<u8>) -> Result<(), soil_runtime::TryRuntimeError> {
 			let mut prev_state: TryRuntimeState<T> = TryRuntimeState::<T>::decode(&mut &state[..])
 				.expect("Failed to decode the previous storage state");
 

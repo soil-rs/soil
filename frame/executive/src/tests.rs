@@ -30,8 +30,8 @@ use frame_support::{
 use frame_system::{pallet_prelude::*, ChainContext, LastRuntimeUpgrade, LastRuntimeUpgradeInfo};
 use pallet_balances::Call as BalancesCall;
 use pallet_transaction_payment::FungibleAdapter;
-use sp_core::H256;
-use sp_runtime::{
+use soil_core::H256;
+use soil_runtime::{
 	generic::{DigestItem, Era},
 	testing::{Block, Digest, Header},
 	traits::{Block as BlockT, Header as HeaderT, TransactionExtension},
@@ -71,7 +71,7 @@ mod custom {
 		fn on_finalize(_: BlockNumberFor<T>) {}
 
 		fn on_runtime_upgrade() -> Weight {
-			sp_io::storage::set(super::TEST_KEY, "module".as_bytes());
+			soil_io::storage::set(super::TEST_KEY, "module".as_bytes());
 			Weight::from_parts(200, 0)
 		}
 
@@ -116,8 +116,8 @@ mod custom {
 		}
 
 		pub fn calculate_storage_root(_origin: OriginFor<T>) -> DispatchResult {
-			let root = sp_io::storage::root(sp_runtime::StateVersion::V1);
-			sp_io::storage::set("storage_root".as_bytes(), &root);
+			let root = soil_io::storage::root(soil_runtime::StateVersion::V1);
+			soil_io::storage::set("storage_root".as_bytes(), &root);
 			Ok(())
 		}
 	}
@@ -201,7 +201,7 @@ mod custom2 {
 		}
 
 		fn on_runtime_upgrade() -> Weight {
-			sp_io::storage::set(super::TEST_KEY, "module".as_bytes());
+			soil_io::storage::set(super::TEST_KEY, "module".as_bytes());
 			Weight::from_parts(0, 0)
 		}
 	}
@@ -470,10 +470,10 @@ type TxExtension = (
 	pallet_transaction_payment::ChargeTransactionPayment<Runtime>,
 	frame_system::WeightReclaim<Runtime>,
 );
-type UncheckedXt = sp_runtime::generic::UncheckedExtrinsic<
+type UncheckedXt = soil_runtime::generic::UncheckedExtrinsic<
 	u64,
 	RuntimeCall,
-	sp_runtime::testing::UintAuthorityId,
+	soil_runtime::testing::UintAuthorityId,
 	TxExtension,
 >;
 type TestBlock = Block<UncheckedXt>;
@@ -484,9 +484,9 @@ const CUSTOM_ON_RUNTIME_KEY: &[u8] = b":custom:on_runtime";
 pub struct CustomOnRuntimeUpgrade;
 impl OnRuntimeUpgrade for CustomOnRuntimeUpgrade {
 	fn on_runtime_upgrade() -> Weight {
-		sp_io::storage::set(TEST_KEY, "custom_upgrade".as_bytes());
-		sp_io::storage::set(TEST_KEY_2, "try_runtime_upgrade_works".as_bytes());
-		sp_io::storage::set(CUSTOM_ON_RUNTIME_KEY, &true.encode());
+		soil_io::storage::set(TEST_KEY, "custom_upgrade".as_bytes());
+		soil_io::storage::set(TEST_KEY_2, "try_runtime_upgrade_works".as_bytes());
+		soil_io::storage::set(CUSTOM_ON_RUNTIME_KEY, &true.encode());
 		System::deposit_event(frame_system::Event::CodeUpdated);
 
 		assert_eq!(0, System::last_runtime_upgrade_spec_version());
@@ -496,7 +496,7 @@ impl OnRuntimeUpgrade for CustomOnRuntimeUpgrade {
 
 	#[cfg(feature = "try-runtime")]
 	fn post_upgrade(_state: Vec<u8>) -> Result<(), TryRuntimeError> {
-		assert_eq!(&sp_io::storage::get(TEST_KEY_2).unwrap()[..], *b"try_runtime_upgrade_works");
+		assert_eq!(&soil_io::storage::get(TEST_KEY_2).unwrap()[..], *b"try_runtime_upgrade_works");
 		Ok(())
 	}
 }
@@ -611,7 +611,7 @@ fn balance_transfer_dispatch_works() {
 			.base_extrinsic;
 	let fee: Balance =
 		<Runtime as pallet_transaction_payment::Config>::WeightToFee::weight_to_fee(&weight);
-	let mut t = sp_io::TestExternalities::new(t);
+	let mut t = soil_io::TestExternalities::new(t);
 	t.execute_with(|| {
 		Executive::initialize_block(&Header::new_from_number(1));
 		let r = Executive::apply_extrinsic(xt);
@@ -621,7 +621,7 @@ fn balance_transfer_dispatch_works() {
 	});
 }
 
-fn new_test_ext(balance_factor: Balance) -> sp_io::TestExternalities {
+fn new_test_ext(balance_factor: Balance) -> soil_io::TestExternalities {
 	let mut t = frame_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
 	pallet_balances::GenesisConfig::<Runtime> {
 		balances: vec![(1, 111 * balance_factor)],
@@ -629,14 +629,14 @@ fn new_test_ext(balance_factor: Balance) -> sp_io::TestExternalities {
 	}
 	.assimilate_storage(&mut t)
 	.unwrap();
-	let mut ext: sp_io::TestExternalities = t.into();
+	let mut ext: soil_io::TestExternalities = t.into();
 	ext.execute_with(|| {
 		SystemCallbacksCalled::set(0);
 	});
 	ext
 }
 
-fn new_test_ext_v0(balance_factor: Balance) -> sp_io::TestExternalities {
+fn new_test_ext_v0(balance_factor: Balance) -> soil_io::TestExternalities {
 	let mut t = frame_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
 	pallet_balances::GenesisConfig::<Runtime> {
 		balances: vec![(1, 111 * balance_factor)],
@@ -644,7 +644,7 @@ fn new_test_ext_v0(balance_factor: Balance) -> sp_io::TestExternalities {
 	}
 	.assimilate_storage(&mut t)
 	.unwrap();
-	(t, sp_runtime::StateVersion::V0).into()
+	(t, soil_runtime::StateVersion::V0).into()
 }
 
 #[test]
@@ -662,7 +662,7 @@ fn block_import_works() {
 		),
 	);
 }
-fn block_import_works_inner(mut ext: sp_io::TestExternalities, state_root: H256) {
+fn block_import_works_inner(mut ext: soil_io::TestExternalities, state_root: H256) {
 	ext.execute_with(|| {
 		Executive::execute_block(
 			Block {
@@ -1007,8 +1007,8 @@ fn custom_runtime_upgrade_is_called_before_modules() {
 
 		Executive::initialize_block(&Header::new_from_number(1));
 
-		assert_eq!(&sp_io::storage::get(TEST_KEY).unwrap()[..], *b"module");
-		assert_eq!(sp_io::storage::get(CUSTOM_ON_RUNTIME_KEY).unwrap(), true.encode());
+		assert_eq!(&soil_io::storage::get(TEST_KEY).unwrap()[..], *b"module");
+		assert_eq!(soil_io::storage::get(CUSTOM_ON_RUNTIME_KEY).unwrap(), true.encode());
 		assert_eq!(
 			Some(RuntimeVersionTestValues::get().into()),
 			LastRuntimeUpgrade::<Runtime>::get(),
@@ -1072,8 +1072,8 @@ fn custom_runtime_upgrade_is_called_when_using_execute_block_trait() {
 			Block::new(header, vec![xt]).into(),
 		);
 
-		assert_eq!(&sp_io::storage::get(TEST_KEY).unwrap()[..], *b"module");
-		assert_eq!(sp_io::storage::get(CUSTOM_ON_RUNTIME_KEY).unwrap(), true.encode());
+		assert_eq!(&soil_io::storage::get(TEST_KEY).unwrap()[..], *b"module");
+		assert_eq!(soil_io::storage::get(CUSTOM_ON_RUNTIME_KEY).unwrap(), true.encode());
 	});
 }
 
@@ -1114,7 +1114,7 @@ fn all_weights_are_recorded_correctly() {
 #[test]
 fn offchain_worker_works_as_expected() {
 	new_test_ext(1).execute_with(|| {
-		let parent_hash = sp_core::H256::from([69u8; 32]);
+		let parent_hash = soil_core::H256::from([69u8; 32]);
 
 		// Emulate block production before running the offchain worker.
 		System::initialize(&1, &parent_hash, &Digest::default());
@@ -1349,12 +1349,12 @@ fn try_runtime_upgrade_works() {
 		AllPalletsWithSystem::on_genesis();
 
 		// Make sure the test storages are un-set
-		assert!(&sp_io::storage::get(TEST_KEY_2).is_none());
+		assert!(&soil_io::storage::get(TEST_KEY_2).is_none());
 
 		ExecutiveWithoutMigrations::try_runtime_upgrade(UpgradeCheckSelect::All).unwrap();
 
 		// Make sure the test storages were set
-		assert_eq!(&sp_io::storage::get(TEST_KEY_2).unwrap()[..], *b"try_runtime_upgrade_works");
+		assert_eq!(&soil_io::storage::get(TEST_KEY_2).unwrap()[..], *b"try_runtime_upgrade_works");
 	});
 }
 

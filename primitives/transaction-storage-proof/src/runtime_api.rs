@@ -17,7 +17,7 @@
 
 //! Runtime API definition for the transaction storage proof processing.
 
-use sp_runtime::traits::NumberFor;
+use soil_runtime::traits::NumberFor;
 
 sp_api::decl_runtime_apis! {
 	/// Runtime API trait for transaction storage support.

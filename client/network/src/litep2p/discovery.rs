@@ -813,7 +813,7 @@ mod tests {
 		peer_store::{PeerStore, PeerStoreProvider},
 	};
 	use futures::{stream::FuturesUnordered, StreamExt};
-	use sp_core::H256;
+	use soil_core::H256;
 	use soil_tracing::tracing_subscriber;
 
 	use litep2p::{

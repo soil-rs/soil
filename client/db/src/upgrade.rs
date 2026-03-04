@@ -27,7 +27,7 @@ use std::{
 use crate::{columns, utils::DatabaseType};
 use codec::{Decode, Encode};
 use kvdb_rocksdb::{Database, DatabaseConfig};
-use sp_runtime::traits::Block as BlockT;
+use soil_runtime::traits::Block as BlockT;
 
 /// Version file name.
 const VERSION_FILE_NAME: &str = "db_version";
@@ -141,7 +141,7 @@ fn migrate_2_to_3<Block: BlockT>(db_path: &Path, _db_type: DatabaseType) -> Upgr
 			// call encode on it.
 			let justification = Vec::<u8>::decode(&mut &justification[..])
 				.map_err(|_| UpgradeError::DecodingJustificationBlock)?;
-			let justifications = sp_runtime::Justifications::from((*b"FRNK", justification));
+			let justifications = soil_runtime::Justifications::from((*b"FRNK", justification));
 			transaction.put_vec(columns::JUSTIFICATIONS, &key, justifications.encode());
 		}
 	}

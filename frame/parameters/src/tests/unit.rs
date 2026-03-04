@@ -26,8 +26,8 @@ use crate::tests::mock::{
 };
 use codec::Encode;
 use frame_support::{assert_noop, assert_ok, traits::dynamic_params::AggregatedKeyValue};
-use sp_core::Get;
-use sp_runtime::DispatchError;
+use soil_core::Get;
+use soil_runtime::DispatchError;
 
 #[docify::export]
 #[test]

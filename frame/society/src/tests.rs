@@ -23,7 +23,7 @@ use mock::*;
 
 use frame_support::{assert_noop, assert_ok};
 use soil_crypto_hashing::blake2_256;
-use sp_runtime::traits::BadOrigin;
+use soil_runtime::traits::BadOrigin;
 use BidKind::*;
 use VouchingStatus::*;
 

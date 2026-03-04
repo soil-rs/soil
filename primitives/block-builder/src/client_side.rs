@@ -18,7 +18,7 @@
 use crate::BlockBuilder;
 
 use sp_inherents::{InherentData, InherentDataProvider, InherentIdentifier};
-use sp_runtime::traits::Block as BlockT;
+use soil_runtime::traits::Block as BlockT;
 
 /// Errors that occur when creating and checking on the client side.
 #[derive(Debug)]

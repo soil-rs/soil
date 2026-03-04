@@ -23,9 +23,9 @@
 //! extensions to support APIs for particular execution context & capabilities.
 
 use parking_lot::RwLock;
-use sp_core::traits::{ReadRuntimeVersion, ReadRuntimeVersionExt};
-use sp_externalities::{Extension, Extensions};
-use sp_runtime::traits::{Block as BlockT, NumberFor};
+use soil_core::traits::{ReadRuntimeVersion, ReadRuntimeVersionExt};
+use soil_externalities::{Extension, Extensions};
+use soil_runtime::traits::{Block as BlockT, NumberFor};
 use std::{marker::PhantomData, sync::Arc};
 
 /// Generate the starting set of [`Extensions`].

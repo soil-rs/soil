@@ -87,7 +87,7 @@ use frame_support::{
 };
 use frame_system::pallet_prelude::*;
 use scale_info::TypeInfo;
-use sp_runtime::{
+use soil_runtime::{
 	traits::{AccountIdConversion, Member},
 	Debug, DispatchResult,
 };

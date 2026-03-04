@@ -24,7 +24,7 @@ use crate::{
 use clap::Parser;
 use sc_client_api::{Backend, UsageProvider};
 use sc_service::chain_ops::revert_chain;
-use sp_runtime::traits::{Block as BlockT, Header as HeaderT, NumberFor};
+use soil_runtime::traits::{Block as BlockT, Header as HeaderT, NumberFor};
 use std::{fmt::Debug, str::FromStr, sync::Arc};
 
 /// The `revert` command used revert the chain to a previous state.
