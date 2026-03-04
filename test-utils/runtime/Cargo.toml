@@ -26,7 +26,7 @@ pallet-babe = { workspace = true }
 pallet-balances = { workspace = true }
 pallet-timestamp = { workspace = true }
 pallet-utility = { workspace = true }
-sc-service = { optional = true, workspace = true }
+soil-service = { optional = true, workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 soil-api = { workspace = true }
 soil-application-crypto = { features = ["serde"], workspace = true }
@@ -62,9 +62,9 @@ tracing = { workspace = true, default-features = false }
 futures = { workspace = true }
 pretty_assertions = { workspace = true }
 sc-block-builder = { workspace = true, default-features = true }
-sc-chain-spec = { workspace = true, default-features = true }
-sc-executor = { workspace = true, default-features = true }
-sc-executor-common = { workspace = true, default-features = true }
+soil-chain-spec = { workspace = true, default-features = true }
+soil-executor = { workspace = true, default-features = true }
+soil-executor-common = { workspace = true, default-features = true }
 serde = { features = ["alloc", "derive"], workspace = true }
 soil-consensus = { workspace = true, default-features = true }
 soil-tracing = { workspace = true, default-features = true }
@@ -89,8 +89,8 @@ std = [
 	"pallet-balances/std",
 	"pallet-timestamp/std",
 	"pallet-utility/std",
-	"sc-executor/std",
-	"sc-service",
+	"soil-executor/std",
+	"soil-service",
 	"scale-info/std",
 	"serde/std",
 	"serde_json/std",

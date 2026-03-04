@@ -18,8 +18,8 @@ targets = ["x86_64-unknown-linux-gnu"]
 [dependencies]
 codec = { workspace = true, default-features = true }
 
-sc-executor = { workspace = true, default-features = true }
-sc-executor-common = { workspace = true, default-features = true }
+soil-executor = { workspace = true, default-features = true }
+soil-executor-common = { workspace = true, default-features = true }
 soil-core = { workspace = true, default-features = true }
 soil-crypto-hashing = { workspace = true, default-features = true }
 soil-state-machine = { workspace = true, default-features = true }

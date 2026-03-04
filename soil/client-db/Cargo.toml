@@ -33,8 +33,8 @@ log = { workspace = true, default-features = true }
 parity-db = { workspace = true }
 parking_lot = { workspace = true, default-features = true }
 prometheus-endpoint = { workspace = true, default-features = true }
-sc-client-api = { workspace = true, default-features = true }
-sc-state-db = { workspace = true, default-features = true }
+soil-client-api = { workspace = true, default-features = true }
+soil-state-db = { workspace = true, default-features = true }
 schnellru = { workspace = true }
 soil-arithmetic = { workspace = true, default-features = true }
 soil-blockchain = { workspace = true, default-features = true }

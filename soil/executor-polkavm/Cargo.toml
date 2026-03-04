@@ -19,5 +19,5 @@ targets = ["x86_64-unknown-linux-gnu"]
 log = { workspace = true }
 polkavm = { workspace = true }
 
-sc-executor-common = { workspace = true, default-features = true }
+soil-executor-common = { workspace = true, default-features = true }
 soil-wasm-interface = { workspace = true, default-features = true }

@@ -30,16 +30,16 @@ names = { workspace = true }
 rand = { workspace = true, default-features = true }
 regex = { workspace = true }
 rpassword = { workspace = true }
-sc-client-api = { workspace = true, default-features = true }
-sc-client-db = { workspace = true, default-features = false }
+soil-client-api = { workspace = true, default-features = true }
+soil-client-db = { workspace = true, default-features = false }
 sc-keystore = { workspace = true, default-features = true }
 sc-mixnet = { workspace = true, default-features = true }
-sc-network = { workspace = true, default-features = true }
-sc-service = { workspace = true, default-features = false }
-sc-telemetry = { workspace = true, default-features = true }
+soil-network = { workspace = true, default-features = true }
+soil-service = { workspace = true, default-features = false }
+soil-telemetry = { workspace = true, default-features = true }
 sc-tracing = { workspace = true, default-features = true }
 sc-transaction-pool = { workspace = true, default-features = true }
-sc-utils = { workspace = true, default-features = true }
+soil-utils = { workspace = true, default-features = true }
 serde = { workspace = true, default-features = true }
 serde_json = { workspace = true, default-features = true }
 soil-blockchain = { workspace = true, default-features = true }
@@ -59,4 +59,4 @@ tempfile = { workspace = true }
 
 [features]
 default = ["rocksdb"]
-rocksdb = ["sc-client-db/rocksdb"]
+rocksdb = ["soil-client-db/rocksdb"]

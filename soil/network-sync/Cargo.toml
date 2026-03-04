@@ -7,7 +7,7 @@ authors.workspace = true
 edition.workspace = true
 homepage.workspace = true
 repository.workspace = true
-documentation = "https://docs.rs/sc-network-sync"
+documentation = "https://docs.rs/soil-network-sync"
 
 [lints]
 workspace = true
@@ -26,12 +26,12 @@ log = { workspace = true, default-features = true }
 mockall = { workspace = true }
 prometheus-endpoint = { workspace = true, default-features = true }
 prost = { workspace = true }
-sc-client-api = { workspace = true, default-features = true }
+soil-client-api = { workspace = true, default-features = true }
 sc-consensus = { workspace = true, default-features = true }
-sc-network = { workspace = true, default-features = true }
-sc-network-common = { workspace = true, default-features = true }
-sc-network-types = { workspace = true, default-features = true }
-sc-utils = { workspace = true, default-features = true }
+soil-network = { workspace = true, default-features = true }
+soil-network-common = { workspace = true, default-features = true }
+soil-network-types = { workspace = true, default-features = true }
+soil-utils = { workspace = true, default-features = true }
 schnellru = { workspace = true }
 smallvec = { workspace = true, default-features = true }
 soil-arithmetic = { workspace = true, default-features = true }

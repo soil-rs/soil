@@ -7,7 +7,7 @@ license = "Apache-2.0"
 homepage.workspace = true
 repository.workspace = true
 description = "Collection of allocator implementations."
-documentation = "https://docs.rs/sc-allocator"
+documentation = "https://docs.rs/soil-allocator"
 readme = "README.md"
 
 [lints]

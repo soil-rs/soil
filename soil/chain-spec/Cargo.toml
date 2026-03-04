@@ -21,11 +21,11 @@ clap = { features = ["derive"], optional = true, workspace = true }
 codec = { features = ["derive"], workspace = true }
 docify = { workspace = true }
 memmap2 = { workspace = true }
-sc-chain-spec-derive = { workspace = true, default-features = true }
-sc-client-api = { workspace = true, default-features = true }
-sc-executor = { workspace = true, default-features = true }
-sc-network = { workspace = true, default-features = true }
-sc-telemetry = { workspace = true, default-features = true }
+soil-chain-spec-derive = { workspace = true, default-features = true }
+soil-client-api = { workspace = true, default-features = true }
+soil-executor = { workspace = true, default-features = true }
+soil-network = { workspace = true, default-features = true }
+soil-telemetry = { workspace = true, default-features = true }
 serde = { features = ["derive"], workspace = true, default-features = true }
 serde_json = { workspace = true, default-features = true }
 soil-blockchain = { workspace = true, default-features = true }

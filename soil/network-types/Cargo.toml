@@ -7,7 +7,7 @@ authors.workspace = true
 edition.workspace = true
 homepage.workspace = true
 repository.workspace = true
-documentation = "https://docs.rs/sc-network-types"
+documentation = "https://docs.rs/soil-network-types"
 
 [dependencies]
 bs58 = { workspace = true, default-features = true }

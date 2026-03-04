@@ -1,5 +1,5 @@
 [package]
-name = "soil-mmr-gadget"
+name = "soil-soil-mmr-gadget"
 version = "29.0.0"
 authors.workspace = true
 edition.workspace = true
@@ -17,7 +17,7 @@ workspace = true
 codec = { workspace = true, default-features = true }
 futures = { workspace = true }
 log = { workspace = true, default-features = true }
-sc-client-api = { workspace = true, default-features = true }
+soil-client-api = { workspace = true, default-features = true }
 sc-offchain = { workspace = true, default-features = true }
 soil-api = { workspace = true, default-features = true }
 soil-blockchain = { workspace = true, default-features = true }

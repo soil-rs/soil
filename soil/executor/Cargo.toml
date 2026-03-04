@@ -7,7 +7,7 @@ license = "GPL-3.0-or-later WITH Classpath-exception-2.0"
 homepage.workspace = true
 repository.workspace = true
 description = "A crate that provides means of executing/dispatching calls into the runtime."
-documentation = "https://docs.rs/sc-executor"
+documentation = "https://docs.rs/soil-executor"
 readme = "README.md"
 
 [lints]
@@ -26,9 +26,9 @@ schnellru = { workspace = true }
 tracing = { workspace = true, default-features = true }
 
 codec = { workspace = true, default-features = true }
-sc-executor-common = { workspace = true, default-features = true }
-sc-executor-polkavm = { workspace = true, default-features = true }
-sc-executor-wasmtime = { workspace = true, default-features = true }
+soil-executor-common = { workspace = true, default-features = true }
+soil-executor-polkavm = { workspace = true, default-features = true }
+soil-executor-wasmtime = { workspace = true, default-features = true }
 soil-api = { workspace = true, default-features = true }
 soil-core = { workspace = true, default-features = true }
 soil-externalities = { workspace = true, default-features = true }
@@ -45,7 +45,7 @@ assert_matches = { workspace = true }
 criterion = { workspace = true, default-features = true }
 num_cpus = { workspace = true }
 paste = { workspace = true, default-features = true }
-sc-runtime-test = { workspace = true }
+soil-runtime-test = { workspace = true }
 sc-tracing = { workspace = true, default-features = true }
 soil-crypto-hashing = { workspace = true, default-features = true }
 soil-maybe-compressed-blob = { workspace = true, default-features = true }
@@ -61,7 +61,7 @@ wat = { workspace = true }
 default = ["std"]
 # This crate does not have `no_std` support, we just require this for tests
 std = [
-	"sc-runtime-test/std",
+	"soil-runtime-test/std",
 	"soil-api/std",
 	"soil-core/std",
 	"soil-externalities/std",

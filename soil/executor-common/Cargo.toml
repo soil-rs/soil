@@ -7,7 +7,7 @@ license = "GPL-3.0-or-later WITH Classpath-exception-2.0"
 homepage.workspace = true
 repository.workspace = true
 description = "A set of common definitions that are needed for defining execution engines."
-documentation = "https://docs.rs/sc-executor-common/"
+documentation = "https://docs.rs/soil-executor-common/"
 readme = "README.md"
 
 [lints]
@@ -18,7 +18,7 @@ targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
 polkavm = { workspace = true }
-sc-allocator = { workspace = true, default-features = true }
+soil-allocator = { workspace = true, default-features = true }
 soil-maybe-compressed-blob = { workspace = true, default-features = true }
 soil-wasm-interface = { workspace = true, default-features = true }
 thiserror = { workspace = true }

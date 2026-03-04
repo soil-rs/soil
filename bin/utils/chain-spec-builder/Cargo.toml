@@ -30,7 +30,7 @@ doctest = false
 [dependencies]
 clap = { features = ["derive"], workspace = true }
 docify = { workspace = true }
-sc-chain-spec = { features = ["clap"], workspace = true, default-features = true }
+soil-chain-spec = { features = ["clap"], workspace = true, default-features = true }
 serde = { workspace = true, default-features = true }
 serde_json = { workspace = true, default-features = true }
 soil-tracing = { workspace = true, default-features = true }

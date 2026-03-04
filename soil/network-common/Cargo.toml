@@ -7,7 +7,7 @@ authors.workspace = true
 edition.workspace = true
 homepage.workspace = true
 repository.workspace = true
-documentation = "https://docs.rs/sc-network-sync"
+documentation = "https://docs.rs/soil-network-sync"
 
 [lints]
 workspace = true

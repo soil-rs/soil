@@ -23,14 +23,14 @@ futures = { workspace = true }
 log = { workspace = true, default-features = true }
 parking_lot = { workspace = true, default-features = true }
 sc-block-builder = { workspace = true, default-features = true }
-sc-client-api = { workspace = true, default-features = true }
-sc-client-db = { workspace = true }
+soil-client-api = { workspace = true, default-features = true }
+soil-client-db = { workspace = true }
 sc-consensus = { workspace = true, default-features = true }
-sc-executor = { workspace = true, default-features = true }
-sc-network = { workspace = true, default-features = true }
-sc-network-sync = { workspace = true, default-features = true }
-sc-service = { workspace = true, default-features = true }
-sc-transaction-pool-api = { workspace = true, default-features = true }
+soil-executor = { workspace = true, default-features = true }
+soil-network = { workspace = true, default-features = true }
+soil-network-sync = { workspace = true, default-features = true }
+soil-service = { workspace = true, default-features = true }
+soil-transaction-pool-api = { workspace = true, default-features = true }
 soil-api = { workspace = true, default-features = true }
 soil-blockchain = { workspace = true, default-features = true }
 soil-consensus = { workspace = true, default-features = true }

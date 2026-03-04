@@ -19,8 +19,8 @@ targets = ["x86_64-unknown-linux-gnu"]
 futures = { workspace = true }
 jsonrpsee = { features = ["client-core", "macros", "server-core"], workspace = true }
 sc-consensus-babe = { workspace = true, default-features = true }
-sc-consensus-epochs = { workspace = true, default-features = true }
-sc-rpc-api = { workspace = true, default-features = true }
+soil-consensus-epochs = { workspace = true, default-features = true }
+soil-rpc-api = { workspace = true, default-features = true }
 serde = { features = ["derive"], workspace = true, default-features = true }
 soil-api = { workspace = true, default-features = true }
 soil-application-crypto = { workspace = true, default-features = true }
@@ -34,7 +34,7 @@ thiserror = { workspace = true }
 
 [dev-dependencies]
 sc-consensus = { workspace = true, default-features = true }
-sc-transaction-pool-api = { workspace = true, default-features = true }
+soil-transaction-pool-api = { workspace = true, default-features = true }
 soil-keyring = { workspace = true, default-features = true }
 substrate-test-runtime-client = { workspace = true }
 tokio = { workspace = true, default-features = true }

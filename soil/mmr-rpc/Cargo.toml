@@ -1,5 +1,5 @@
 [package]
-name = "soil-mmr-rpc"
+name = "soil-soil-mmr-rpc"
 version = "28.0.0"
 authors.workspace = true
 edition.workspace = true

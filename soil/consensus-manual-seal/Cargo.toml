@@ -23,13 +23,13 @@ futures-timer = { workspace = true }
 jsonrpsee = { features = ["client-core", "macros", "server-core"], workspace = true }
 log = { workspace = true, default-features = true }
 prometheus-endpoint = { workspace = true, default-features = true }
-sc-client-api = { workspace = true, default-features = true }
+soil-client-api = { workspace = true, default-features = true }
 sc-consensus = { workspace = true, default-features = true }
 sc-consensus-aura = { workspace = true, default-features = true }
 sc-consensus-babe = { workspace = true, default-features = true }
-sc-consensus-epochs = { workspace = true, default-features = true }
+soil-consensus-epochs = { workspace = true, default-features = true }
 sc-transaction-pool = { workspace = true, default-features = true }
-sc-transaction-pool-api = { workspace = true, default-features = true }
+soil-transaction-pool-api = { workspace = true, default-features = true }
 serde = { features = ["derive"], workspace = true, default-features = true }
 soil-api = { workspace = true, default-features = true }
 soil-blockchain = { workspace = true, default-features = true }
@@ -48,7 +48,7 @@ thiserror = { workspace = true }
 
 [dev-dependencies]
 assert_matches = { workspace = true }
-sc-basic-authorship = { workspace = true, default-features = true }
+soil-basic-authorship = { workspace = true, default-features = true }
 substrate-test-runtime-client = { workspace = true }
 substrate-test-runtime-transaction-pool = { workspace = true }
 tokio = { features = ["macros", "rt-multi-thread"], workspace = true, default-features = true }

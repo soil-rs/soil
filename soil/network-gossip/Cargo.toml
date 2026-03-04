@@ -7,7 +7,7 @@ authors.workspace = true
 edition.workspace = true
 homepage.workspace = true
 repository.workspace = true
-documentation = "https://docs.rs/sc-network-gossip"
+documentation = "https://docs.rs/soil-network-gossip"
 readme = "README.md"
 
 [lints]
@@ -22,10 +22,10 @@ futures = { workspace = true }
 futures-timer = { workspace = true }
 log = { workspace = true, default-features = true }
 prometheus-endpoint = { workspace = true, default-features = true }
-sc-network = { workspace = true, default-features = true }
-sc-network-common = { workspace = true, default-features = true }
-sc-network-sync = { workspace = true, default-features = true }
-sc-network-types = { workspace = true, default-features = true }
+soil-network = { workspace = true, default-features = true }
+soil-network-common = { workspace = true, default-features = true }
+soil-network-sync = { workspace = true, default-features = true }
+soil-network-types = { workspace = true, default-features = true }
 schnellru = { workspace = true }
 soil-runtime = { workspace = true, default-features = true }
 tracing = { workspace = true, default-features = true }
