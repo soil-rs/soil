@@ -80,146 +80,146 @@ members = [
 	"soil/utils",
 	"deprecated/hashing",
 	"deprecated/hashing/proc-macro",
-	"frame",
-	"frame/alliance",
-	"frame/asset-conversion",
-	"frame/asset-conversion/ops",
-	"frame/asset-rate",
-	"frame/asset-rewards",
-	"frame/assets",
-	"frame/assets-freezer",
-	"frame/assets-holder",
-	"frame/atomic-swap",
-	"frame/aura",
-	"frame/authority-discovery",
-	"frame/authorship",
-	"frame/babe",
-	"frame/bags-list",
-	"frame/bags-list/fuzzer",
-	"frame/bags-list/remote-tests",
-	"frame/balances",
-	"frame/beefy",
-	"frame/beefy-mmr",
-	"frame/benchmarking",
-	"frame/benchmarking/pov",
-	"frame/bounties",
-	"frame/broker",
-	"frame/child-bounties",
-	"frame/collective",
-	"frame/conviction-voting",
-	"frame/core-fellowship",
-	"frame/dap",
-	"frame/delegated-staking",
-	"frame/democracy",
-	"frame/dummy-dim",
-	"frame/election-provider-multi-block",
-	"frame/election-provider-multi-phase",
-	"frame/election-provider-multi-phase/test-staking-e2e",
-	"frame/election-provider-support",
-	"frame/election-provider-support/benchmarking",
-	"frame/election-provider-support/solution-type",
-	"frame/election-provider-support/solution-type/fuzzer",
-	"frame/elections-phragmen",
-	"frame/examples",
-	"frame/examples/authorization-tx-extension",
-	"frame/examples/basic",
-	"frame/examples/default-config",
-	"frame/examples/dev-mode",
-	"frame/examples/frame-crate",
-	"frame/examples/kitchensink",
-	"frame/examples/multi-block-migrations",
-	"frame/examples/offchain-worker",
-	"frame/examples/single-block-migrations",
-	"frame/examples/split",
-	"frame/examples/tasks",
-	"frame/examples/view-functions",
-	"frame/executive",
-	"frame/fast-unstake",
-	"frame/glutton",
-	"frame/grandpa",
-	"frame/honzon/oracle",
-	"frame/honzon/oracle/runtime-api",
-	"frame/identity",
-	"frame/im-online",
-	"frame/indices",
-	"frame/insecure-randomness-collective-flip",
-	"frame/lottery",
-	"frame/membership",
-	"frame/merkle-mountain-range",
-	"frame/message-queue",
-	"frame/meta-tx",
-	"frame/metadata-hash-extension",
-	"frame/migrations",
-	"frame/mixnet",
-	"frame/multi-asset-bounties",
-	"frame/multisig",
-	"frame/nft-fractionalization",
-	"frame/nfts",
-	"frame/nfts/runtime-api",
-	"frame/nis",
-	"frame/node-authorization",
-	"frame/nomination-pools",
-	"frame/nomination-pools/benchmarking",
-	"frame/nomination-pools/fuzzer",
-	"frame/nomination-pools/runtime-api",
-	"frame/offences",
-	"frame/offences/benchmarking",
-	"frame/origin-restriction",
-	"frame/paged-list",
-	"frame/paged-list/fuzzer",
-	"frame/parameters",
-	"frame/people",
-	"frame/preimage",
-	"frame/proxy",
-	"frame/ranked-collective",
-	"frame/recovery",
-	"frame/referenda",
-	"frame/remark",
-	"frame/root-offences",
-	"frame/root-testing",
-	"frame/safe-mode",
-	"frame/salary",
-	"frame/sassafras",
-	"frame/scheduler",
-	"frame/scored-pool",
-	"frame/session",
-	"frame/session/benchmarking",
-	"frame/society",
-	"frame/staking",
-	"frame/staking/reward-curve",
-	"frame/staking/reward-fn",
-	"frame/staking/runtime-api",
-	"frame/state-trie-migration",
-	"frame/statement",
-	"frame/sudo",
-	"frame/support",
-	"frame/support/procedural",
-	"frame/support/procedural/tools",
-	"frame/support/procedural/tools/derive",
-	"frame/support/test",
-	"frame/support/test/compile_pass",
-	"frame/support/test/pallet",
-	"frame/support/test/stg_frame_crate",
-	"frame/system",
-	"frame/system/benchmarking",
-	"frame/system/rpc/runtime-api",
-	"frame/timestamp",
-	"frame/tips",
-	"frame/transaction-payment",
-	"frame/transaction-payment/asset-conversion-tx-payment",
-	"frame/transaction-payment/asset-tx-payment",
-	"frame/transaction-payment/rpc",
-	"frame/transaction-payment/rpc/runtime-api",
-	"frame/transaction-payment/skip-feeless-payment",
-	"frame/transaction-storage",
-	"frame/treasury",
-	"frame/try-runtime",
-	"frame/tx-pause",
-	"frame/uniques",
-	"frame/utility",
-	"frame/verify-signature",
-	"frame/vesting",
-	"frame/whitelist",
+	"topsoil",
+	"topsoil/alliance",
+	"topsoil/asset-conversion",
+	"topsoil/asset-conversion/ops",
+	"topsoil/asset-rate",
+	"topsoil/asset-rewards",
+	"topsoil/assets",
+	"topsoil/assets-freezer",
+	"topsoil/assets-holder",
+	"topsoil/atomic-swap",
+	"topsoil/aura",
+	"topsoil/authority-discovery",
+	"topsoil/authorship",
+	"topsoil/babe",
+	"topsoil/bags-list",
+	"topsoil/bags-list/fuzzer",
+	"topsoil/bags-list/remote-tests",
+	"topsoil/balances",
+	"topsoil/beefy",
+	"topsoil/beefy-mmr",
+	"topsoil/benchmarking",
+	"topsoil/benchmarking/pov",
+	"topsoil/bounties",
+	"topsoil/broker",
+	"topsoil/child-bounties",
+	"topsoil/collective",
+	"topsoil/conviction-voting",
+	"topsoil/core-fellowship",
+	"topsoil/dap",
+	"topsoil/delegated-staking",
+	"topsoil/democracy",
+	"topsoil/dummy-dim",
+	"topsoil/election-provider-multi-block",
+	"topsoil/election-provider-multi-phase",
+	"topsoil/election-provider-multi-phase/test-staking-e2e",
+	"topsoil/election-provider-support",
+	"topsoil/election-provider-support/benchmarking",
+	"topsoil/election-provider-support/solution-type",
+	"topsoil/election-provider-support/solution-type/fuzzer",
+	"topsoil/elections-phragmen",
+	"topsoil/examples",
+	"topsoil/examples/authorization-tx-extension",
+	"topsoil/examples/basic",
+	"topsoil/examples/default-config",
+	"topsoil/examples/dev-mode",
+	"topsoil/examples/frame-crate",
+	"topsoil/examples/kitchensink",
+	"topsoil/examples/multi-block-migrations",
+	"topsoil/examples/offchain-worker",
+	"topsoil/examples/single-block-migrations",
+	"topsoil/examples/split",
+	"topsoil/examples/tasks",
+	"topsoil/examples/view-functions",
+	"topsoil/executive",
+	"topsoil/fast-unstake",
+	"topsoil/glutton",
+	"topsoil/grandpa",
+	"topsoil/honzon/oracle",
+	"topsoil/honzon/oracle/runtime-api",
+	"topsoil/identity",
+	"topsoil/im-online",
+	"topsoil/indices",
+	"topsoil/insecure-randomness-collective-flip",
+	"topsoil/lottery",
+	"topsoil/membership",
+	"topsoil/merkle-mountain-range",
+	"topsoil/message-queue",
+	"topsoil/meta-tx",
+	"topsoil/metadata-hash-extension",
+	"topsoil/migrations",
+	"topsoil/mixnet",
+	"topsoil/multi-asset-bounties",
+	"topsoil/multisig",
+	"topsoil/nft-fractionalization",
+	"topsoil/nfts",
+	"topsoil/nfts/runtime-api",
+	"topsoil/nis",
+	"topsoil/node-authorization",
+	"topsoil/nomination-pools",
+	"topsoil/nomination-pools/benchmarking",
+	"topsoil/nomination-pools/fuzzer",
+	"topsoil/nomination-pools/runtime-api",
+	"topsoil/offences",
+	"topsoil/offences/benchmarking",
+	"topsoil/origin-restriction",
+	"topsoil/paged-list",
+	"topsoil/paged-list/fuzzer",
+	"topsoil/parameters",
+	"topsoil/people",
+	"topsoil/preimage",
+	"topsoil/proxy",
+	"topsoil/ranked-collective",
+	"topsoil/recovery",
+	"topsoil/referenda",
+	"topsoil/remark",
+	"topsoil/root-offences",
+	"topsoil/root-testing",
+	"topsoil/safe-mode",
+	"topsoil/salary",
+	"topsoil/sassafras",
+	"topsoil/scheduler",
+	"topsoil/scored-pool",
+	"topsoil/session",
+	"topsoil/session/benchmarking",
+	"topsoil/society",
+	"topsoil/staking",
+	"topsoil/staking/reward-curve",
+	"topsoil/staking/reward-fn",
+	"topsoil/staking/runtime-api",
+	"topsoil/state-trie-migration",
+	"topsoil/statement",
+	"topsoil/sudo",
+	"topsoil/support",
+	"topsoil/support/procedural",
+	"topsoil/support/procedural/tools",
+	"topsoil/support/procedural/tools/derive",
+	"topsoil/support/test",
+	"topsoil/support/test/compile_pass",
+	"topsoil/support/test/pallet",
+	"topsoil/support/test/stg_frame_crate",
+	"topsoil/system",
+	"topsoil/system/benchmarking",
+	"topsoil/system/rpc/runtime-api",
+	"topsoil/timestamp",
+	"topsoil/tips",
+	"topsoil/transaction-payment",
+	"topsoil/transaction-payment/asset-conversion-tx-payment",
+	"topsoil/transaction-payment/asset-tx-payment",
+	"topsoil/transaction-payment/rpc",
+	"topsoil/transaction-payment/rpc/runtime-api",
+	"topsoil/transaction-payment/skip-feeless-payment",
+	"topsoil/transaction-storage",
+	"topsoil/treasury",
+	"topsoil/try-runtime",
+	"topsoil/tx-pause",
+	"topsoil/uniques",
+	"topsoil/utility",
+	"topsoil/verify-signature",
+	"topsoil/vesting",
+	"topsoil/whitelist",
 	"soil/api",
 	"soil/api-proc-macro",
 	"soil/api/test",
@@ -355,22 +355,22 @@ binary-merkle-tree = { path = "utils/binary-merkle-tree", default-features = fal
 chain-spec-builder = { path = "bin/utils/chain-spec-builder", default-features = false, package = "staging-chain-spec-builder" }
 ethereum-standards = { path = "primitives/ethereum-standards" }
 fork-tree = { path = "utils/fork-tree", default-features = false }
-frame = { path = "frame", default-features = false, package = "polkadot-sdk-frame" }
-frame-benchmarking = { path = "frame/benchmarking", default-features = false }
-frame-benchmarking-pallet-pov = { default-features = false, path = "frame/benchmarking/pov" }
-frame-election-provider-solution-type = { path = "frame/election-provider-support/solution-type", default-features = false }
-frame-election-provider-support = { path = "frame/election-provider-support", default-features = false }
-frame-executive = { path = "frame/executive", default-features = false }
-frame-metadata-hash-extension = { path = "frame/metadata-hash-extension", default-features = false }
-frame-support = { path = "frame/support", default-features = false }
-frame-support-procedural = { path = "frame/support/procedural", default-features = false }
-frame-support-procedural-tools = { path = "frame/support/procedural/tools", default-features = false }
-frame-support-procedural-tools-derive = { path = "frame/support/procedural/tools/derive", default-features = false }
-frame-support-test = { path = "frame/support/test" }
-frame-system = { path = "frame/system", default-features = false }
-frame-system-benchmarking = { path = "frame/system/benchmarking", default-features = false }
-frame-system-rpc-runtime-api = { path = "frame/system/rpc/runtime-api", default-features = false }
-frame-try-runtime = { path = "frame/try-runtime", default-features = false }
+topsoil = { path = "topsoil", default-features = false }
+topsoil-benchmarking = { path = "topsoil/benchmarking", default-features = false }
+topsoil-benchmarking-pallet-pov = { default-features = false, path = "topsoil/benchmarking/pov" }
+topsoil-election-provider-solution-type = { path = "topsoil/election-provider-support/solution-type", default-features = false }
+topsoil-election-provider-support = { path = "topsoil/election-provider-support", default-features = false }
+topsoil-executive = { path = "topsoil/executive", default-features = false }
+topsoil-metadata-hash-extension = { path = "topsoil/metadata-hash-extension", default-features = false }
+topsoil-support = { path = "topsoil/support", default-features = false }
+topsoil-support-procedural = { path = "topsoil/support/procedural", default-features = false }
+topsoil-support-procedural-tools = { path = "topsoil/support/procedural/tools", default-features = false }
+topsoil-support-procedural-tools-derive = { path = "topsoil/support/procedural/tools/derive", default-features = false }
+topsoil-support-test = { path = "topsoil/support/test" }
+topsoil-system = { path = "topsoil/system", default-features = false }
+topsoil-system-benchmarking = { path = "topsoil/system/benchmarking", default-features = false }
+topsoil-system-rpc-runtime-api = { path = "topsoil/system/rpc/runtime-api", default-features = false }
+topsoil-try-runtime = { path = "topsoil/try-runtime", default-features = false }
 generate-bags = { path = "utils/frame/generate-bags", default-features = false }
 kitchensink-runtime = { path = "bin/node/runtime" }
 soil-mmr-gadget = { path = "soil/mmr-gadget", default-features = false }
@@ -380,121 +380,121 @@ node-inspect = { path = "bin/node/inspect", default-features = false, package = 
 node-primitives = { path = "bin/node/primitives", default-features = false }
 node-rpc = { path = "bin/node/rpc" }
 node-testing = { path = "bin/node/testing" }
-pallet-alliance = { path = "frame/alliance", default-features = false }
-pallet-asset-conversion = { path = "frame/asset-conversion", default-features = false }
-pallet-asset-conversion-ops = { path = "frame/asset-conversion/ops", default-features = false }
-pallet-asset-conversion-tx-payment = { path = "frame/transaction-payment/asset-conversion-tx-payment", default-features = false }
-pallet-asset-rate = { path = "frame/asset-rate", default-features = false }
-pallet-asset-rewards = { path = "frame/asset-rewards", default-features = false }
-pallet-asset-tx-payment = { path = "frame/transaction-payment/asset-tx-payment", default-features = false }
-pallet-assets = { path = "frame/assets", default-features = false }
-pallet-assets-freezer = { path = "frame/assets-freezer", default-features = false }
-pallet-assets-holder = { path = "frame/assets-holder", default-features = false }
-pallet-atomic-swap = { default-features = false, path = "frame/atomic-swap" }
-pallet-aura = { path = "frame/aura", default-features = false }
-pallet-authority-discovery = { path = "frame/authority-discovery", default-features = false }
-pallet-authorship = { path = "frame/authorship", default-features = false }
-pallet-babe = { path = "frame/babe", default-features = false }
-pallet-bags-list = { path = "frame/bags-list", default-features = false }
-pallet-bags-list-remote-tests = { path = "frame/bags-list/remote-tests" }
-pallet-balances = { path = "frame/balances", default-features = false }
-pallet-beefy = { path = "frame/beefy", default-features = false }
-pallet-beefy-mmr = { path = "frame/beefy-mmr", default-features = false }
-pallet-bounties = { path = "frame/bounties", default-features = false }
-pallet-broker = { path = "frame/broker", default-features = false }
-pallet-child-bounties = { path = "frame/child-bounties", default-features = false }
-pallet-collective = { path = "frame/collective", default-features = false }
-pallet-conviction-voting = { path = "frame/conviction-voting", default-features = false }
-pallet-core-fellowship = { path = "frame/core-fellowship", default-features = false }
-pallet-dap = { path = "frame/dap", default-features = false }
-pallet-default-config-example = { path = "frame/examples/default-config", default-features = false }
-pallet-delegated-staking = { path = "frame/delegated-staking", default-features = false }
-pallet-democracy = { path = "frame/democracy", default-features = false }
-pallet-dev-mode = { path = "frame/examples/dev-mode", default-features = false }
-pallet-dummy-dim = { path = "frame/dummy-dim", default-features = false }
-pallet-election-provider-multi-block = { path = "frame/election-provider-multi-block", default-features = false }
-pallet-election-provider-multi-phase = { path = "frame/election-provider-multi-phase", default-features = false }
-pallet-election-provider-support-benchmarking = { path = "frame/election-provider-support/benchmarking", default-features = false }
-pallet-elections-phragmen = { path = "frame/elections-phragmen", default-features = false }
-pallet-example-authorization-tx-extension = { path = "frame/examples/authorization-tx-extension", default-features = false }
-pallet-example-basic = { path = "frame/examples/basic", default-features = false }
-pallet-example-frame-crate = { path = "frame/examples/frame-crate", default-features = false }
-pallet-example-kitchensink = { path = "frame/examples/kitchensink", default-features = false }
-pallet-example-mbm = { path = "frame/examples/multi-block-migrations", default-features = false }
-pallet-example-offchain-worker = { path = "frame/examples/offchain-worker", default-features = false }
-pallet-example-single-block-migrations = { path = "frame/examples/single-block-migrations", default-features = false }
-pallet-example-split = { path = "frame/examples/split", default-features = false }
-pallet-example-tasks = { path = "frame/examples/tasks", default-features = false }
-pallet-example-view-functions = { path = "frame/examples/view-functions", default-features = false }
-pallet-examples = { path = "frame/examples" }
-pallet-fast-unstake = { path = "frame/fast-unstake", default-features = false }
-pallet-glutton = { path = "frame/glutton", default-features = false }
-pallet-grandpa = { path = "frame/grandpa", default-features = false }
-pallet-identity = { path = "frame/identity", default-features = false }
-pallet-im-online = { path = "frame/im-online", default-features = false }
-pallet-indices = { path = "frame/indices", default-features = false }
-pallet-insecure-randomness-collective-flip = { path = "frame/insecure-randomness-collective-flip", default-features = false }
-pallet-lottery = { default-features = false, path = "frame/lottery" }
-pallet-membership = { path = "frame/membership", default-features = false }
-pallet-message-queue = { path = "frame/message-queue", default-features = false }
-pallet-meta-tx = { path = "frame/meta-tx", default-features = false }
-pallet-migrations = { path = "frame/migrations", default-features = false }
-pallet-mixnet = { default-features = false, path = "frame/mixnet" }
-pallet-mmr = { path = "frame/merkle-mountain-range", default-features = false }
-pallet-multi-asset-bounties = { path = "frame/multi-asset-bounties", default-features = false }
-pallet-multisig = { path = "frame/multisig", default-features = false }
-pallet-nft-fractionalization = { path = "frame/nft-fractionalization", default-features = false }
-pallet-nfts = { path = "frame/nfts", default-features = false }
-pallet-nfts-runtime-api = { path = "frame/nfts/runtime-api", default-features = false }
-pallet-nis = { path = "frame/nis", default-features = false }
-pallet-node-authorization = { default-features = false, path = "frame/node-authorization" }
-pallet-nomination-pools = { path = "frame/nomination-pools", default-features = false }
-pallet-nomination-pools-benchmarking = { path = "frame/nomination-pools/benchmarking", default-features = false }
-pallet-nomination-pools-runtime-api = { path = "frame/nomination-pools/runtime-api", default-features = false }
-pallet-offences = { path = "frame/offences", default-features = false }
-pallet-offences-benchmarking = { path = "frame/offences/benchmarking", default-features = false }
-pallet-oracle = { path = "frame/honzon/oracle", default-features = false }
-pallet-oracle-runtime-api = { path = "frame/honzon/oracle/runtime-api", default-features = false }
-pallet-origin-restriction = { path = "frame/origin-restriction", default-features = false }
-pallet-paged-list = { path = "frame/paged-list", default-features = false }
-pallet-parameters = { path = "frame/parameters", default-features = false }
-pallet-people = { path = "frame/people", default-features = false }
-pallet-preimage = { path = "frame/preimage", default-features = false }
-pallet-proxy = { path = "frame/proxy", default-features = false }
-pallet-ranked-collective = { path = "frame/ranked-collective", default-features = false }
-pallet-recovery = { path = "frame/recovery", default-features = false }
-pallet-referenda = { path = "frame/referenda", default-features = false }
-pallet-remark = { default-features = false, path = "frame/remark" }
-pallet-root-offences = { default-features = false, path = "frame/root-offences" }
-pallet-root-testing = { path = "frame/root-testing", default-features = false }
-pallet-safe-mode = { default-features = false, path = "frame/safe-mode" }
-pallet-salary = { path = "frame/salary", default-features = false }
-pallet-scheduler = { path = "frame/scheduler", default-features = false }
-pallet-scored-pool = { default-features = false, path = "frame/scored-pool" }
-pallet-session = { path = "frame/session", default-features = false }
-pallet-session-benchmarking = { path = "frame/session/benchmarking", default-features = false }
-pallet-skip-feeless-payment = { path = "frame/transaction-payment/skip-feeless-payment", default-features = false }
-pallet-society = { path = "frame/society", default-features = false }
-pallet-staking = { path = "frame/staking", default-features = false }
-pallet-staking-reward-curve = { path = "frame/staking/reward-curve", default-features = false }
-pallet-staking-reward-fn = { path = "frame/staking/reward-fn", default-features = false }
-pallet-staking-runtime-api = { path = "frame/staking/runtime-api", default-features = false }
-pallet-state-trie-migration = { path = "frame/state-trie-migration", default-features = false }
-pallet-statement = { default-features = false, path = "frame/statement" }
-pallet-sudo = { path = "frame/sudo", default-features = false }
-pallet-timestamp = { path = "frame/timestamp", default-features = false }
-pallet-tips = { path = "frame/tips", default-features = false }
-pallet-transaction-payment = { path = "frame/transaction-payment", default-features = false }
-pallet-transaction-payment-rpc = { path = "frame/transaction-payment/rpc", default-features = false }
-pallet-transaction-payment-rpc-runtime-api = { path = "frame/transaction-payment/rpc/runtime-api", default-features = false }
-pallet-transaction-storage = { default-features = false, path = "frame/transaction-storage" }
-pallet-treasury = { path = "frame/treasury", default-features = false }
-pallet-tx-pause = { default-features = false, path = "frame/tx-pause" }
-pallet-uniques = { path = "frame/uniques", default-features = false }
-pallet-utility = { path = "frame/utility", default-features = false }
-pallet-verify-signature = { path = "frame/verify-signature", default-features = false }
-pallet-vesting = { path = "frame/vesting", default-features = false }
-pallet-whitelist = { path = "frame/whitelist", default-features = false }
+topsoil-alliance = { path = "topsoil/alliance", default-features = false }
+topsoil-asset-conversion = { path = "topsoil/asset-conversion", default-features = false }
+topsoil-asset-conversion-ops = { path = "topsoil/asset-conversion/ops", default-features = false }
+topsoil-asset-conversion-tx-payment = { path = "topsoil/transaction-payment/asset-conversion-tx-payment", default-features = false }
+topsoil-asset-rate = { path = "topsoil/asset-rate", default-features = false }
+topsoil-asset-rewards = { path = "topsoil/asset-rewards", default-features = false }
+topsoil-asset-tx-payment = { path = "topsoil/transaction-payment/asset-tx-payment", default-features = false }
+topsoil-assets = { path = "topsoil/assets", default-features = false }
+topsoil-assets-freezer = { path = "topsoil/assets-freezer", default-features = false }
+topsoil-assets-holder = { path = "topsoil/assets-holder", default-features = false }
+topsoil-atomic-swap = { default-features = false, path = "topsoil/atomic-swap" }
+topsoil-aura = { path = "topsoil/aura", default-features = false }
+topsoil-authority-discovery = { path = "topsoil/authority-discovery", default-features = false }
+topsoil-authorship = { path = "topsoil/authorship", default-features = false }
+topsoil-babe = { path = "topsoil/babe", default-features = false }
+topsoil-bags-list = { path = "topsoil/bags-list", default-features = false }
+topsoil-bags-list-remote-tests = { path = "topsoil/bags-list/remote-tests" }
+topsoil-balances = { path = "topsoil/balances", default-features = false }
+topsoil-beefy = { path = "topsoil/beefy", default-features = false }
+topsoil-beefy-mmr = { path = "topsoil/beefy-mmr", default-features = false }
+topsoil-bounties = { path = "topsoil/bounties", default-features = false }
+topsoil-broker = { path = "topsoil/broker", default-features = false }
+topsoil-child-bounties = { path = "topsoil/child-bounties", default-features = false }
+topsoil-collective = { path = "topsoil/collective", default-features = false }
+topsoil-conviction-voting = { path = "topsoil/conviction-voting", default-features = false }
+topsoil-core-fellowship = { path = "topsoil/core-fellowship", default-features = false }
+topsoil-dap = { path = "topsoil/dap", default-features = false }
+topsoil-default-config-example = { path = "topsoil/examples/default-config", default-features = false }
+topsoil-delegated-staking = { path = "topsoil/delegated-staking", default-features = false }
+topsoil-democracy = { path = "topsoil/democracy", default-features = false }
+topsoil-dev-mode = { path = "topsoil/examples/dev-mode", default-features = false }
+topsoil-dummy-dim = { path = "topsoil/dummy-dim", default-features = false }
+topsoil-election-provider-multi-block = { path = "topsoil/election-provider-multi-block", default-features = false }
+topsoil-election-provider-multi-phase = { path = "topsoil/election-provider-multi-phase", default-features = false }
+topsoil-election-provider-support-benchmarking = { path = "topsoil/election-provider-support/benchmarking", default-features = false }
+topsoil-elections-phragmen = { path = "topsoil/elections-phragmen", default-features = false }
+topsoil-example-authorization-tx-extension = { path = "topsoil/examples/authorization-tx-extension", default-features = false }
+topsoil-example-basic = { path = "topsoil/examples/basic", default-features = false }
+topsoil-example-frame-crate = { path = "topsoil/examples/frame-crate", default-features = false }
+topsoil-example-kitchensink = { path = "topsoil/examples/kitchensink", default-features = false }
+topsoil-example-mbm = { path = "topsoil/examples/multi-block-migrations", default-features = false }
+topsoil-example-offchain-worker = { path = "topsoil/examples/offchain-worker", default-features = false }
+topsoil-example-single-block-migrations = { path = "topsoil/examples/single-block-migrations", default-features = false }
+topsoil-example-split = { path = "topsoil/examples/split", default-features = false }
+topsoil-example-tasks = { path = "topsoil/examples/tasks", default-features = false }
+topsoil-example-view-functions = { path = "topsoil/examples/view-functions", default-features = false }
+topsoil-examples = { path = "topsoil/examples" }
+topsoil-fast-unstake = { path = "topsoil/fast-unstake", default-features = false }
+topsoil-glutton = { path = "topsoil/glutton", default-features = false }
+topsoil-grandpa = { path = "topsoil/grandpa", default-features = false }
+topsoil-identity = { path = "topsoil/identity", default-features = false }
+topsoil-im-online = { path = "topsoil/im-online", default-features = false }
+topsoil-indices = { path = "topsoil/indices", default-features = false }
+topsoil-insecure-randomness-collective-flip = { path = "topsoil/insecure-randomness-collective-flip", default-features = false }
+topsoil-lottery = { default-features = false, path = "topsoil/lottery" }
+topsoil-membership = { path = "topsoil/membership", default-features = false }
+topsoil-message-queue = { path = "topsoil/message-queue", default-features = false }
+topsoil-meta-tx = { path = "topsoil/meta-tx", default-features = false }
+topsoil-migrations = { path = "topsoil/migrations", default-features = false }
+topsoil-mixnet = { default-features = false, path = "topsoil/mixnet" }
+topsoil-mmr = { path = "topsoil/merkle-mountain-range", default-features = false }
+topsoil-multi-asset-bounties = { path = "topsoil/multi-asset-bounties", default-features = false }
+topsoil-multisig = { path = "topsoil/multisig", default-features = false }
+topsoil-nft-fractionalization = { path = "topsoil/nft-fractionalization", default-features = false }
+topsoil-nfts = { path = "topsoil/nfts", default-features = false }
+topsoil-nfts-runtime-api = { path = "topsoil/nfts/runtime-api", default-features = false }
+topsoil-nis = { path = "topsoil/nis", default-features = false }
+topsoil-node-authorization = { default-features = false, path = "topsoil/node-authorization" }
+topsoil-nomination-pools = { path = "topsoil/nomination-pools", default-features = false }
+topsoil-nomination-pools-benchmarking = { path = "topsoil/nomination-pools/benchmarking", default-features = false }
+topsoil-nomination-pools-runtime-api = { path = "topsoil/nomination-pools/runtime-api", default-features = false }
+topsoil-offences = { path = "topsoil/offences", default-features = false }
+topsoil-offences-benchmarking = { path = "topsoil/offences/benchmarking", default-features = false }
+topsoil-oracle = { path = "topsoil/honzon/oracle", default-features = false }
+topsoil-oracle-runtime-api = { path = "topsoil/honzon/oracle/runtime-api", default-features = false }
+topsoil-origin-restriction = { path = "topsoil/origin-restriction", default-features = false }
+topsoil-paged-list = { path = "topsoil/paged-list", default-features = false }
+topsoil-parameters = { path = "topsoil/parameters", default-features = false }
+topsoil-people = { path = "topsoil/people", default-features = false }
+topsoil-preimage = { path = "topsoil/preimage", default-features = false }
+topsoil-proxy = { path = "topsoil/proxy", default-features = false }
+topsoil-ranked-collective = { path = "topsoil/ranked-collective", default-features = false }
+topsoil-recovery = { path = "topsoil/recovery", default-features = false }
+topsoil-referenda = { path = "topsoil/referenda", default-features = false }
+topsoil-remark = { default-features = false, path = "topsoil/remark" }
+topsoil-root-offences = { default-features = false, path = "topsoil/root-offences" }
+topsoil-root-testing = { path = "topsoil/root-testing", default-features = false }
+topsoil-safe-mode = { default-features = false, path = "topsoil/safe-mode" }
+topsoil-salary = { path = "topsoil/salary", default-features = false }
+topsoil-scheduler = { path = "topsoil/scheduler", default-features = false }
+topsoil-scored-pool = { default-features = false, path = "topsoil/scored-pool" }
+topsoil-session = { path = "topsoil/session", default-features = false }
+topsoil-session-benchmarking = { path = "topsoil/session/benchmarking", default-features = false }
+topsoil-skip-feeless-payment = { path = "topsoil/transaction-payment/skip-feeless-payment", default-features = false }
+topsoil-society = { path = "topsoil/society", default-features = false }
+topsoil-staking = { path = "topsoil/staking", default-features = false }
+topsoil-staking-reward-curve = { path = "topsoil/staking/reward-curve", default-features = false }
+topsoil-staking-reward-fn = { path = "topsoil/staking/reward-fn", default-features = false }
+topsoil-staking-runtime-api = { path = "topsoil/staking/runtime-api", default-features = false }
+topsoil-state-trie-migration = { path = "topsoil/state-trie-migration", default-features = false }
+topsoil-statement = { default-features = false, path = "topsoil/statement" }
+topsoil-sudo = { path = "topsoil/sudo", default-features = false }
+topsoil-timestamp = { path = "topsoil/timestamp", default-features = false }
+topsoil-tips = { path = "topsoil/tips", default-features = false }
+topsoil-transaction-payment = { path = "topsoil/transaction-payment", default-features = false }
+topsoil-transaction-payment-rpc = { path = "topsoil/transaction-payment/rpc", default-features = false }
+topsoil-transaction-payment-rpc-runtime-api = { path = "topsoil/transaction-payment/rpc/runtime-api", default-features = false }
+topsoil-transaction-storage = { default-features = false, path = "topsoil/transaction-storage" }
+topsoil-treasury = { path = "topsoil/treasury", default-features = false }
+topsoil-tx-pause = { default-features = false, path = "topsoil/tx-pause" }
+topsoil-uniques = { path = "topsoil/uniques", default-features = false }
+topsoil-utility = { path = "topsoil/utility", default-features = false }
+topsoil-verify-signature = { path = "topsoil/verify-signature", default-features = false }
+topsoil-vesting = { path = "topsoil/vesting", default-features = false }
+topsoil-whitelist = { path = "topsoil/whitelist", default-features = false }
 prometheus-endpoint = { path = "utils/prometheus", default-features = false, package = "substrate-prometheus-endpoint" }
 remote-externalities = { path = "utils/frame/remote-externalities", default-features = false, package = "frame-remote-externalities" }
 soil-allocator = { path = "soil/allocator", default-features = false }
@@ -627,7 +627,7 @@ substrate-test-runtime-client = { path = "test-utils/runtime/client" }
 substrate-test-runtime-transaction-pool = { path = "test-utils/runtime/transaction-pool" }
 substrate-test-utils = { path = "test-utils" }
 substrate-wasm-builder = { path = "utils/wasm-builder", default-features = false }
-test-pallet = { path = "frame/support/test/pallet", default-features = false, package = "frame-support-test-pallet" }
+test-pallet = { path = "topsoil/support/test/pallet", default-features = false, package = "topsoil-support-test-pallet" }
 
 # External dependencies
 Inflector = { version = "0.11.4" }
@@ -734,7 +734,7 @@ fnv = { version = "1.0.6" }
 foldhash = { version = "0.1.5", default-features = false }
 forwarded-header-value = { version = "0.1.1" }
 fraction = { version = "0.13.1" }
-frame-metadata = { version = "23.0.1", default-features = false }
+topsoil-metadata = { version = "23.0.1", default-features = false }
 fs4 = { version = "0.7.0" }
 fs_extra = { version = "1.3.0" }
 futures = { version = "0.3.31" }
