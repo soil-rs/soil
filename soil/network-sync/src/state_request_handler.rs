@@ -27,11 +27,11 @@ use codec::{Decode, Encode};
 use futures::{channel::oneshot, stream::StreamExt};
 use log::{debug, trace};
 use prost::Message;
-use sc_network_types::PeerId;
+use soil_network_types::PeerId;
 use schnellru::{ByLength, LruMap};
 
-use sc_client_api::{BlockBackend, ProofProvider};
-use sc_network::{
+use soil_client_api::{BlockBackend, ProofProvider};
+use soil_network::{
 	config::ProtocolId,
 	request_responses::{IncomingRequest, OutgoingResponse},
 	NetworkBackend, MAX_RESPONSE_SIZE,
@@ -48,7 +48,7 @@ const MAX_RESPONSE_BYTES: usize = 2 * 1024 * 1024; // Actual reponse may be bigg
 const MAX_NUMBER_OF_SAME_REQUESTS_PER_PEER: usize = 2;
 
 mod rep {
-	use sc_network::ReputationChange as Rep;
+	use soil_network::ReputationChange as Rep;
 
 	/// Reputation change when a peer sent us the same request multiple times.
 	pub const SAME_REQUEST: Rep = Rep::new(i32::MIN, "Same state request multiple times");

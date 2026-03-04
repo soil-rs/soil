@@ -26,7 +26,7 @@
 
 use clap::{CommandFactory, FromArgMatches, Parser};
 use log::warn;
-use sc_service::Configuration;
+use soil_service::Configuration;
 
 pub mod arg_enums;
 pub mod commands;
@@ -43,7 +43,7 @@ pub use config::*;
 pub use error::*;
 pub use params::*;
 pub use runner::*;
-pub use sc_service::{ChainSpec, Role};
+pub use soil_service::{ChainSpec, Role};
 pub use sc_tracing::logging::LoggerBuilder;
 pub use signals::Signals;
 pub use soil_version::RuntimeVersion;
@@ -196,7 +196,7 @@ pub trait SubstrateCli: Sized {
 	/// 		fn handle_event(&self, _event: &TraceEvent) {}
 	/// };
 	///
-	/// fn logger_hook() -> impl FnOnce(&mut sc_cli::LoggerBuilder, &sc_service::Configuration) -> () {
+	/// fn logger_hook() -> impl FnOnce(&mut soil_cli::LoggerBuilder, &soil_service::Configuration) -> () {
 	/// 	|logger_builder, config| {
 	/// 			logger_builder.with_custom_profiling(Box::new(TestProfiler{}));
 	/// 	}

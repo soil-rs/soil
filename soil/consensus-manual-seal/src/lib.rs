@@ -22,7 +22,7 @@
 use futures::prelude::*;
 use futures_timer::Delay;
 use prometheus_endpoint::Registry;
-use sc_client_api::{
+use soil_client_api::{
 	backend::{Backend as ClientBackend, Finalizer},
 	client::BlockchainEvents,
 };
@@ -51,7 +51,7 @@ pub use self::{
 	rpc::{CreatedBlock, EngineCommand},
 	seal_block::{seal_block, SealBlockParams, MAX_PROPOSAL_DURATION},
 };
-use sc_transaction_pool_api::TransactionPool;
+use soil_transaction_pool_api::TransactionPool;
 use soil_api::ProvideRuntimeApi;
 
 const LOG_TARGET: &str = "manual-seal";
@@ -344,10 +344,10 @@ pub async fn run_delayed_finalize<B, CB, C, S>(
 mod tests {
 	use super::*;
 	use assert_matches::assert_matches;
-	use sc_basic_authorship::ProposerFactory;
+	use soil_basic_authorship::ProposerFactory;
 	use sc_consensus::ImportedAux;
 	use sc_transaction_pool::{BasicPool, FullChainApi, Options, RevalidationType};
-	use sc_transaction_pool_api::{MaintainedTransactionPool, TransactionPool, TransactionSource};
+	use soil_transaction_pool_api::{MaintainedTransactionPool, TransactionPool, TransactionSource};
 	use soil_api::StorageProof;
 	use soil_inherents::InherentData;
 	use soil_runtime::generic::{Digest, DigestItem};
@@ -713,7 +713,7 @@ mod tests {
 
 		let header = client.header(created_block.hash).expect("db error").expect("imported above");
 		assert_eq!(header.number, 1);
-		pool.maintain(sc_transaction_pool_api::ChainEvent::NewBestBlock {
+		pool.maintain(soil_transaction_pool_api::ChainEvent::NewBestBlock {
 			hash: header.hash(),
 			tree_route: None,
 		})

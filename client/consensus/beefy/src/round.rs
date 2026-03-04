@@ -219,7 +219,7 @@ where
 
 #[cfg(test)]
 mod tests {
-	use sc_network_test::Block;
+	use soil_network_test::Block;
 
 	use soil_consensus_beefy::{
 		ecdsa_crypto, known_payloads::MMR_ROOT_ID, test_utils::Keyring, Commitment,

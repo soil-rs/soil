@@ -47,7 +47,7 @@ use litep2p::{
 	PeerId, ProtocolName,
 };
 use parking_lot::RwLock;
-use sc_network_types::kad::Key as KademliaKey;
+use soil_network_types::kad::Key as KademliaKey;
 use schnellru::{ByLength, LruMap};
 
 use std::{
@@ -430,7 +430,7 @@ impl Discovery {
 	pub async fn put_value_to_peers(
 		&mut self,
 		record: Record,
-		peers: Vec<sc_network_types::PeerId>,
+		peers: Vec<soil_network_types::PeerId>,
 		update_local_storage: bool,
 	) -> QueryId {
 		self.kademlia_handle
@@ -450,7 +450,7 @@ impl Discovery {
 		&mut self,
 		key: KademliaKey,
 		value: Vec<u8>,
-		publisher: Option<sc_network_types::PeerId>,
+		publisher: Option<soil_network_types::PeerId>,
 		expires: Option<Instant>,
 	) {
 		log::debug!(

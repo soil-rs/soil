@@ -18,8 +18,8 @@
 
 use crate::error::Error;
 use log::{info, warn};
-use sc_network::{multiaddr::Protocol, Multiaddr};
-use sc_network_types::PeerId;
+use soil_network::{multiaddr::Protocol, Multiaddr};
+use soil_network_types::PeerId;
 use serde::{Deserialize, Serialize};
 use soil_authority_discovery::AuthorityId;
 use soil_runtime::DeserializeOwned;
@@ -301,7 +301,7 @@ mod tests {
 	use super::*;
 
 	use quickcheck::{Arbitrary, Gen, QuickCheck, TestResult};
-	use sc_network_types::multihash::{Code, Multihash};
+	use soil_network_types::multihash::{Code, Multihash};
 
 	use soil_authority_discovery::{AuthorityId, AuthorityPair};
 	use soil_core::crypto::Pair;

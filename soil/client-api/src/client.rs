@@ -35,8 +35,8 @@ use crate::{
 	blockchain::Info, notifications::StorageEventStream, FinalizeSummary, ImportSummary, StaleBlock,
 };
 
-use sc_transaction_pool_api::ChainEvent;
-use sc_utils::mpsc::{TracingUnboundedReceiver, TracingUnboundedSender};
+use soil_transaction_pool_api::ChainEvent;
+use soil_utils::mpsc::{TracingUnboundedReceiver, TracingUnboundedSender};
 use soil_blockchain;
 
 /// Type that implements `futures::Stream` of block import events.

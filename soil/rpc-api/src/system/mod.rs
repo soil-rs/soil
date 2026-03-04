@@ -43,11 +43,11 @@ pub trait SystemApi<Hash, Number> {
 
 	/// Get the chain's type.
 	#[method(name = "system_chainType")]
-	fn system_type(&self) -> Result<sc_chain_spec::ChainType, Error>;
+	fn system_type(&self) -> Result<soil_chain_spec::ChainType, Error>;
 
 	/// Get a custom set of properties as a JSON object, defined in the chain spec.
 	#[method(name = "system_properties")]
-	fn system_properties(&self) -> Result<sc_chain_spec::Properties, Error>;
+	fn system_properties(&self) -> Result<soil_chain_spec::Properties, Error>;
 
 	/// Return health status of the node.
 	///

@@ -18,7 +18,7 @@
 
 use crate::{ExecutionLimit, HwBench};
 
-use sc_telemetry::SysInfo;
+use soil_telemetry::SysInfo;
 use soil_core::{sr25519, Pair};
 use soil_io::crypto::sr25519_verify;
 

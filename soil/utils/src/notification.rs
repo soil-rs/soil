@@ -23,7 +23,7 @@
 //! exposed is safe or not and we want to lazily build the RPC extension
 //! whenever we bind the service to an interface.
 //!
-//! See `sc_service::builder::RpcExtensionBuilder` for more details.
+//! See `soil_service::builder::RpcExtensionBuilder` for more details.
 
 use futures::stream::{FusedStream, Stream};
 use std::{

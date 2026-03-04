@@ -41,7 +41,7 @@ impl PublicKey {
 	}
 
 	/// Get `PeerId` of the [`PublicKey`].
-	pub fn to_peer_id(&self) -> sc_network_types::PeerId {
+	pub fn to_peer_id(&self) -> soil_network_types::PeerId {
 		match self {
 			Self::Libp2p(public) => public.to_peer_id().into(),
 			Self::Litep2p(public) => public.to_peer_id().into(),

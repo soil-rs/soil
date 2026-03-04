@@ -29,9 +29,9 @@ use futures::{
 use log::{debug, error, info, log_enabled, trace, warn, Level};
 use prometheus_endpoint::Registry as PrometheusRegistry;
 use sc_block_builder::{BlockBuilderApi, BlockBuilderBuilder};
-use sc_proposer_metrics::{EndProposingReason, MetricsLink as PrometheusMetrics};
-use sc_telemetry::{telemetry, TelemetryHandle, CONSENSUS_INFO};
-use sc_transaction_pool_api::{InPoolTransaction, TransactionPool, TxInvalidityReportMap};
+use soil_proposer_metrics::{EndProposingReason, MetricsLink as PrometheusMetrics};
+use soil_telemetry::{telemetry, TelemetryHandle, CONSENSUS_INFO};
+use soil_transaction_pool_api::{InPoolTransaction, TransactionPool, TxInvalidityReportMap};
 use soil_api::{ApiExt, CallApiAt, ProvideRuntimeApi};
 use soil_blockchain::{ApplyExtrinsicFailed::Validity, Error::ApplyExtrinsicFailed, HeaderBackend};
 use soil_consensus::{Proposal, ProposeArgs};
@@ -582,9 +582,9 @@ mod tests {
 	use super::*;
 	use futures::executor::block_on;
 	use parking_lot::Mutex;
-	use sc_client_api::{Backend, TrieCacheContext};
+	use soil_client_api::{Backend, TrieCacheContext};
 	use sc_transaction_pool::BasicPool;
-	use sc_transaction_pool_api::{ChainEvent, MaintainedTransactionPool, TransactionSource};
+	use soil_transaction_pool_api::{ChainEvent, MaintainedTransactionPool, TransactionSource};
 	use soil_api::Core;
 	use soil_blockchain::HeaderBackend;
 	use soil_consensus::{BlockOrigin, Environment};

@@ -18,8 +18,8 @@
 
 //! Logic for keeping track of BEEFY peers.
 
-use sc_network::ReputationChange;
-use sc_network_types::PeerId;
+use soil_network::ReputationChange;
+use soil_network_types::PeerId;
 use soil_runtime::traits::{Block, NumberFor, Zero};
 use std::collections::{HashMap, VecDeque};
 
@@ -89,7 +89,7 @@ mod tests {
 	#[test]
 	fn should_track_known_peers_progress() {
 		let (alice, bob, charlie) = (PeerId::random(), PeerId::random(), PeerId::random());
-		let mut peers = KnownPeers::<sc_network_test::Block>::new();
+		let mut peers = KnownPeers::<soil_network_test::Block>::new();
 		assert!(peers.live.is_empty());
 
 		// 'Tracked' Bob seen voting for 5.

@@ -31,7 +31,7 @@ use futures::{
 	stream::{self, Stream, StreamExt, TryStreamExt},
 };
 use log::debug;
-use sc_client_api::{
+use soil_client_api::{
 	Backend, BlockBackend, BlockImportNotification, BlockchainEvents, FinalityNotification,
 	StaleBlock,
 };

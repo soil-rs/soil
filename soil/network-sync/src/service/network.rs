@@ -17,18 +17,18 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 use futures::{channel::oneshot, StreamExt};
-use sc_network_types::PeerId;
+use soil_network_types::PeerId;
 
-use sc_network::{
+use soil_network::{
 	request_responses::{IfDisconnected, RequestFailure},
 	types::ProtocolName,
 	NetworkPeers, NetworkRequest, ReputationChange,
 };
-use sc_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
+use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
 
 use std::sync::Arc;
 
-/// Network-related services required by `sc-network-sync`
+/// Network-related services required by `soil-network-sync`
 pub trait Network: NetworkPeers + NetworkRequest {}
 
 impl<T> Network for T where T: NetworkPeers + NetworkRequest {}
@@ -148,7 +148,7 @@ mod tests {
 		let peer = PeerId::random();
 		let proto = ProtocolName::from("test-protocol");
 		let proto_clone = proto.clone();
-		let change = sc_network::ReputationChange::new_fatal("test-change");
+		let change = soil_network::ReputationChange::new_fatal("test-change");
 
 		let mut mock_network = MockNetwork::new();
 		mock_network

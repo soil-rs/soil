@@ -18,7 +18,7 @@
 
 //! A method call executor interface.
 
-use sc_executor::{RuntimeVersion, RuntimeVersionOf};
+use soil_executor::{RuntimeVersion, RuntimeVersionOf};
 use soil_core::traits::CallContext;
 use soil_externalities::Extensions;
 use soil_runtime::traits::{Block as BlockT, HashingFor};

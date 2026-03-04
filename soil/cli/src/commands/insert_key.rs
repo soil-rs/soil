@@ -23,7 +23,7 @@ use crate::{
 };
 use clap::Parser;
 use sc_keystore::LocalKeystore;
-use sc_service::config::{BasePath, KeystoreConfig};
+use soil_service::config::{BasePath, KeystoreConfig};
 use soil_core::crypto::{KeyTypeId, SecretString};
 use soil_keystore::KeystorePtr;
 
@@ -94,7 +94,7 @@ fn to_vec<P: soil_core::Pair>(uri: &str, pass: Option<SecretString>) -> Result<V
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use sc_service::{ChainSpec, ChainType, GenericChainSpec, NoExtension};
+	use soil_service::{ChainSpec, ChainType, GenericChainSpec, NoExtension};
 	use soil_core::{sr25519::Pair, ByteArray, Pair as _};
 	use soil_keystore::Keystore;
 	use tempfile::TempDir;

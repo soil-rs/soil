@@ -16,7 +16,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-//! Shim for litep2p's Bitswap implementation to make it work with `sc-network`.
+//! Shim for litep2p's Bitswap implementation to make it work with `soil-network`.
 
 use crate::bitswap::is_cid_supported;
 use futures::StreamExt;
@@ -24,7 +24,7 @@ use litep2p::protocol::libp2p::bitswap::{
 	BitswapEvent, BitswapHandle, BlockPresenceType, Config, ResponseType, WantType,
 };
 
-use sc_client_api::BlockBackend;
+use soil_client_api::BlockBackend;
 use soil_runtime::traits::Block as BlockT;
 
 use std::{future::Future, pin::Pin, sync::Arc};

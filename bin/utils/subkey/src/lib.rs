@@ -309,7 +309,7 @@
 //! address that contains the chain `alice` will be much smaller.
 
 use clap::Parser;
-use sc_cli::{
+use soil_cli::{
 	Error, GenerateCmd, GenerateKeyCmdCommon, InspectKeyCmd, InspectNodeKeyCmd, SignCmd, VanityCmd,
 	VerifyCmd,
 };

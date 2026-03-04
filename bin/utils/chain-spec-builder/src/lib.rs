@@ -20,7 +20,7 @@
 docify::compile_markdown!("README.docify.md", "README.md");
 
 use clap::{Parser, Subcommand};
-use sc_chain_spec::{
+use soil_chain_spec::{
 	json_patch, set_code_substitute_in_json_chain_spec, update_code_in_json_chain_spec, ChainType,
 	GenericChainSpec, GenesisConfigBuilderRuntimeCaller,
 };
@@ -340,7 +340,7 @@ impl ChainSpecBuilder {
 fn process_action<T: Serialize + Clone + Sync + 'static>(
 	cmd: &CreateCmd,
 	code: &[u8],
-	builder: sc_chain_spec::ChainSpecBuilder<T>,
+	builder: soil_chain_spec::ChainSpecBuilder<T>,
 ) -> Result<String, String> {
 	let builder = match cmd.action {
 		GenesisBuildAction::NamedPreset(NamedPresetCmd { ref preset_name }) => {
@@ -399,7 +399,7 @@ impl CreateCmd {
 }
 
 /// Parses chain properties passed as a comma-separated KEY=VALUE pairs.
-fn parse_properties(raw: &String, props: &mut sc_chain_spec::Properties) -> Result<(), String> {
+fn parse_properties(raw: &String, props: &mut soil_chain_spec::Properties) -> Result<(), String> {
 	for pair in raw.split(',') {
 		let mut iter = pair.splitn(2, '=');
 		let key = iter
@@ -432,7 +432,7 @@ pub fn generate_chain_spec_for_runtime(cmd: &CreateCmd) -> Result<String, String
 
 	let chain_type = &cmd.chain_type;
 
-	let mut properties = sc_chain_spec::Properties::new();
+	let mut properties = soil_chain_spec::Properties::new();
 	for raw in &cmd.properties {
 		parse_properties(raw, &mut properties)?;
 	}

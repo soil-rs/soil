@@ -22,8 +22,8 @@ use crate::{
 	extension::GetExtension, genesis_config_builder::HostFunctions, json_merge, ChainType,
 	GenesisConfigBuilderRuntimeCaller as RuntimeCaller, Properties,
 };
-use sc_network::config::MultiaddrWithPeerId;
-use sc_telemetry::TelemetryEndpoints;
+use soil_network::config::MultiaddrWithPeerId;
+use soil_telemetry::TelemetryEndpoints;
 use serde::{Deserialize, Serialize};
 use serde_json as json;
 use soil_core::{

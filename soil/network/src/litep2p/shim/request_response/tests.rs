@@ -36,8 +36,8 @@ use litep2p::{
 	Litep2p, Litep2pEvent,
 };
 
-use sc_network_types::PeerId;
-use sc_utils::mpsc::tracing_unbounded;
+use soil_network_types::PeerId;
+use soil_utils::mpsc::tracing_unbounded;
 
 use std::{collections::HashMap, sync::Arc, task::Poll};
 

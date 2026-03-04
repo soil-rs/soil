@@ -20,12 +20,12 @@ use criterion::{criterion_group, criterion_main, Criterion};
 
 use codec::Encode;
 
-use sc_executor_common::{
+use soil_executor_common::{
 	runtime_blob::RuntimeBlob,
 	wasm_runtime::{WasmInstance, WasmModule, DEFAULT_HEAP_ALLOC_STRATEGY},
 };
-use sc_executor_wasmtime::InstantiationStrategy;
-use sc_runtime_test::wasm_binary_unwrap as test_runtime;
+use soil_executor_wasmtime::InstantiationStrategy;
+use soil_runtime_test::wasm_binary_unwrap as test_runtime;
 use std::sync::{
 	atomic::{AtomicBool, AtomicUsize, Ordering},
 	Arc,
@@ -54,10 +54,10 @@ fn initialize(
 
 	match method {
 		Method::Compiled { instantiation_strategy, precompile } => {
-			let config = sc_executor_wasmtime::Config {
+			let config = soil_executor_wasmtime::Config {
 				allow_missing_func_imports,
 				cache_path: None,
-				semantics: sc_executor_wasmtime::Semantics {
+				semantics: soil_executor_wasmtime::Semantics {
 					heap_alloc_strategy: DEFAULT_HEAP_ALLOC_STRATEGY,
 					instantiation_strategy,
 					deterministic_stack_limit: None,
@@ -72,7 +72,7 @@ fn initialize(
 
 			if precompile {
 				let precompiled_blob =
-					sc_executor_wasmtime::prepare_runtime_artifact(blob, &config.semantics)
+					soil_executor_wasmtime::prepare_runtime_artifact(blob, &config.semantics)
 						.unwrap();
 
 				// Create a fresh temporary directory to make absolutely sure
@@ -83,12 +83,12 @@ fn initialize(
 				let path = tmpdir.path().join("module.bin");
 				std::fs::write(&path, &precompiled_blob).unwrap();
 				unsafe {
-					sc_executor_wasmtime::create_runtime_from_artifact::<
+					soil_executor_wasmtime::create_runtime_from_artifact::<
 						soil_io::SubstrateHostFunctions,
 					>(&path, config)
 				}
 			} else {
-				sc_executor_wasmtime::create_runtime::<soil_io::SubstrateHostFunctions>(blob, config)
+				soil_executor_wasmtime::create_runtime::<soil_io::SubstrateHostFunctions>(blob, config)
 			}
 			.map(|runtime| -> Box<dyn WasmModule> { Box::new(runtime) })
 		},

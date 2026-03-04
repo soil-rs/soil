@@ -23,7 +23,7 @@ use crate::{
 };
 use clap::Parser;
 use log::info;
-use sc_client_api::{HeaderBackend, StorageProvider, UsageProvider};
+use soil_client_api::{HeaderBackend, StorageProvider, UsageProvider};
 use soil_runtime::traits::{Block as BlockT, Header as HeaderT};
 use std::{fmt::Debug, io::Write, str::FromStr, sync::Arc};
 
@@ -53,12 +53,12 @@ impl ExportStateCmd {
 	pub async fn run<B, BA, C>(
 		&self,
 		client: Arc<C>,
-		mut input_spec: Box<dyn sc_service::ChainSpec>,
+		mut input_spec: Box<dyn soil_service::ChainSpec>,
 	) -> error::Result<()>
 	where
 		B: BlockT,
 		C: UsageProvider<B> + StorageProvider<B, BA> + HeaderBackend<B>,
-		BA: sc_client_api::backend::Backend<B>,
+		BA: soil_client_api::backend::Backend<B>,
 		<B::Hash as FromStr>::Err: Debug,
 		<<B::Header as HeaderT>::Number as FromStr>::Err: Debug,
 	{
@@ -68,11 +68,11 @@ impl ExportStateCmd {
 			Some(id) => client.expect_block_hash_from_id(&id)?,
 			None => client.usage_info().chain.best_hash,
 		};
-		let raw_state = sc_service::chain_ops::export_raw_state(client, hash)?;
+		let raw_state = soil_service::chain_ops::export_raw_state(client, hash)?;
 		input_spec.set_storage(raw_state);
 
 		info!("Generating new chain spec...");
-		let json = sc_service::chain_ops::build_spec(&*input_spec, true)?;
+		let json = soil_service::chain_ops::build_spec(&*input_spec, true)?;
 		if std::io::stdout().write_all(json.as_bytes()).is_err() {
 			let _ = std::io::stderr().write_all(b"Error writing to stdout\n");
 		}

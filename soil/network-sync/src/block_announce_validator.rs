@@ -22,8 +22,8 @@
 use crate::{futures_stream::FuturesStream, LOG_TARGET};
 use futures::{stream::FusedStream, Future, FutureExt, Stream, StreamExt};
 use log::{debug, error, trace, warn};
-use sc_network_common::sync::message::BlockAnnounce;
-use sc_network_types::PeerId;
+use soil_network_common::sync::message::BlockAnnounce;
+use soil_network_types::PeerId;
 use soil_consensus::block_validation::Validation;
 use soil_runtime::traits::{Block as BlockT, Header, Zero};
 use std::{
@@ -310,7 +310,7 @@ impl<B: BlockT> FusedStream for BlockAnnounceValidator<B> {
 mod tests {
 	use super::*;
 	use crate::block_announce_validator::AllocateSlotForBlockAnnounceValidation;
-	use sc_network_types::PeerId;
+	use soil_network_types::PeerId;
 	use soil_consensus::block_validation::DefaultBlockAnnounceValidator;
 	use substrate_test_runtime_client::runtime::Block;
 

@@ -25,7 +25,7 @@ use crate::error::{Error, WasmError};
 
 use codec::Decode;
 use parking_lot::Mutex;
-use sc_executor_common::{
+use soil_executor_common::{
 	runtime_blob::RuntimeBlob,
 	wasm_runtime::{HeapAllocStrategy, WasmInstance, WasmModule},
 };
@@ -46,14 +46,14 @@ pub enum WasmExecutionMethod {
 	/// Uses the Wasmtime compiled runtime.
 	Compiled {
 		/// The instantiation strategy to use.
-		instantiation_strategy: sc_executor_wasmtime::InstantiationStrategy,
+		instantiation_strategy: soil_executor_wasmtime::InstantiationStrategy,
 	},
 }
 
 impl Default for WasmExecutionMethod {
 	fn default() -> Self {
 		Self::Compiled {
-			instantiation_strategy: sc_executor_wasmtime::InstantiationStrategy::PoolingCopyOnWrite,
+			instantiation_strategy: soil_executor_wasmtime::InstantiationStrategy::PoolingCopyOnWrite,
 		}
 	}
 }
@@ -298,17 +298,17 @@ where
 	H: HostFunctions,
 {
 	if let Some(blob) = blob.as_polkavm_blob() {
-		return sc_executor_polkavm::create_runtime::<H>(blob);
+		return soil_executor_polkavm::create_runtime::<H>(blob);
 	}
 
 	match wasm_method {
 		WasmExecutionMethod::Compiled { instantiation_strategy } => {
-			sc_executor_wasmtime::create_runtime::<H>(
+			soil_executor_wasmtime::create_runtime::<H>(
 				blob,
-				sc_executor_wasmtime::Config {
+				soil_executor_wasmtime::Config {
 					allow_missing_func_imports,
 					cache_path: cache_path.map(ToOwned::to_owned),
-					semantics: sc_executor_wasmtime::Semantics {
+					semantics: soil_executor_wasmtime::Semantics {
 						heap_alloc_strategy,
 						instantiation_strategy,
 						deterministic_stack_limit: None,
@@ -396,7 +396,7 @@ where
 {
 	// The incoming code may be actually compressed. We decompress it here and then work with
 	// the uncompressed code from now on.
-	let blob = sc_executor_common::runtime_blob::RuntimeBlob::uncompress_if_needed(code)?;
+	let blob = soil_executor_common::runtime_blob::RuntimeBlob::uncompress_if_needed(code)?;
 
 	// Use the runtime blob to scan if there is any metadata embedded into the wasm binary
 	// pertaining to runtime version. We do it before consuming the runtime blob for creating the

@@ -332,22 +332,22 @@
 //! [`vp::enforce_limits`]: ../graph/validated_pool/struct.ValidatedPool.html#method.enforce_limits
 //! [`create_dropped_by_limits_stream`]: ../graph/validated_pool/struct.ValidatedPool.html#method.create_dropped_by_limits_stream
 //! [`create_aggregated_stream`]: ../graph/validated_pool/struct.ValidatedPool.html#method.create_aggregated_stream
-//! [`ChainEvent`]: sc_transaction_pool_api::ChainEvent
-//! [`TransactionStatusStreamFor`]: sc_transaction_pool_api::TransactionStatusStreamFor
-//! [`api_submit`]: sc_transaction_pool_api::TransactionPool::submit_at
-//! [`api_submit_and_watch`]: sc_transaction_pool_api::TransactionPool::submit_and_watch
-//! [`ready_at_with_timeout`]: sc_transaction_pool_api::TransactionPool::ready_at_with_timeout
-//! [`TransactionSource`]: sc_transaction_pool_api::TransactionSource
-//! [TransactionPool API]: sc_transaction_pool_api::TransactionPool
-//! [`TransactionStatus`]:sc_transaction_pool_api::TransactionStatus
-//! [`Ready`]:sc_transaction_pool_api::TransactionStatus::Ready
-//! [`Future`]:sc_transaction_pool_api::TransactionStatus::Future
-//! [`Broadcast`]:sc_transaction_pool_api::TransactionStatus::Broadcast
-//! [`Invalid`]:sc_transaction_pool_api::TransactionStatus::Invalid
-//! [`InBlock`]:sc_transaction_pool_api::TransactionStatus::InBlock
-//! [`Finalized`]:sc_transaction_pool_api::TransactionStatus::Finalized
-//! [`Dropped`]:sc_transaction_pool_api::TransactionStatus::Dropped
-//! [`ReadyTransactions`]:sc_transaction_pool_api::ReadyTransactions
+//! [`ChainEvent`]: soil_transaction_pool_api::ChainEvent
+//! [`TransactionStatusStreamFor`]: soil_transaction_pool_api::TransactionStatusStreamFor
+//! [`api_submit`]: soil_transaction_pool_api::TransactionPool::submit_at
+//! [`api_submit_and_watch`]: soil_transaction_pool_api::TransactionPool::submit_and_watch
+//! [`ready_at_with_timeout`]: soil_transaction_pool_api::TransactionPool::ready_at_with_timeout
+//! [`TransactionSource`]: soil_transaction_pool_api::TransactionSource
+//! [TransactionPool API]: soil_transaction_pool_api::TransactionPool
+//! [`TransactionStatus`]:soil_transaction_pool_api::TransactionStatus
+//! [`Ready`]:soil_transaction_pool_api::TransactionStatus::Ready
+//! [`Future`]:soil_transaction_pool_api::TransactionStatus::Future
+//! [`Broadcast`]:soil_transaction_pool_api::TransactionStatus::Broadcast
+//! [`Invalid`]:soil_transaction_pool_api::TransactionStatus::Invalid
+//! [`InBlock`]:soil_transaction_pool_api::TransactionStatus::InBlock
+//! [`Finalized`]:soil_transaction_pool_api::TransactionStatus::Finalized
+//! [`Dropped`]:soil_transaction_pool_api::TransactionStatus::Dropped
+//! [`ReadyTransactions`]:soil_transaction_pool_api::ReadyTransactions
 //! [`dropped_monitor_task`]: ForkAwareTxPool::dropped_monitor_task
 //! [`ready_poll`]: ForkAwareTxPool::ready_poll
 //! [`ready_at_light`]: ForkAwareTxPool::ready_at_light

@@ -17,7 +17,7 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 use regex::Regex;
-use sc_telemetry::SysInfo;
+use soil_telemetry::SysInfo;
 use std::collections::HashSet;
 
 fn read_file(path: &str) -> Option<String> {

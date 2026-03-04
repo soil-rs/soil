@@ -34,11 +34,11 @@ use crate::{
 use codec::{Decode, Encode};
 use futures::{channel::oneshot, FutureExt};
 use log::{debug, error, trace, warn};
-use sc_network::{IfDisconnected, ProtocolName};
-use sc_network_common::sync::message::{
+use soil_network::{IfDisconnected, ProtocolName};
+use soil_network_common::sync::message::{
 	BlockAnnounce, BlockAttributes, BlockData, BlockRequest, Direction, FromBlock,
 };
-use sc_network_types::PeerId;
+use soil_network_types::PeerId;
 use soil_blockchain::HeaderBackend;
 use soil_runtime::{
 	traits::{Block as BlockT, Header, NumberFor, Zero},
@@ -93,7 +93,7 @@ pub trait WarpSyncProvider<Block: BlockT>: Send + Sync {
 }
 
 mod rep {
-	use sc_network::ReputationChange as Rep;
+	use soil_network::ReputationChange as Rep;
 
 	/// Unexpected response received form a peer
 	pub const UNEXPECTED_RESPONSE: Rep = Rep::new(-(1 << 29), "Unexpected response");

@@ -21,7 +21,7 @@ use futures::{
 };
 use log::{debug, trace};
 use prometheus_endpoint::Registry;
-use sc_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
+use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
 use soil_consensus::BlockOrigin;
 use soil_runtime::{
 	traits::{Block as BlockT, Header as HeaderT, NumberFor},
@@ -640,7 +640,7 @@ mod tests {
 			let hash = Hash::random();
 			finality_sender
 				.unbounded_send(worker_messages::ImportJustification(
-					sc_network_types::PeerId::random(),
+					soil_network_types::PeerId::random(),
 					hash,
 					1,
 					(*b"TEST", Vec::new()),

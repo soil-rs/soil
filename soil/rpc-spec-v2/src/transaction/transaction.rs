@@ -34,7 +34,7 @@ use jsonrpsee::{core::async_trait, PendingSubscriptionSink};
 use super::metrics::{InstanceMetrics, Metrics};
 
 use sc_rpc::utils::{RingBuffer, Subscription};
-use sc_transaction_pool_api::{
+use soil_transaction_pool_api::{
 	error::IntoPoolError, BlockHash, TransactionFor, TransactionPool, TransactionSource,
 	TransactionStatus,
 };

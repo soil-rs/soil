@@ -17,7 +17,7 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 use crate::{runtime::StoreData, InstantiationStrategy};
-use sc_executor_common::{
+use soil_executor_common::{
 	error::{Error, Result},
 	util::checked_range,
 };

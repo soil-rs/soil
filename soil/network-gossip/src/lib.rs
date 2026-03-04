@@ -33,7 +33,7 @@
 //! # Usage
 //!
 //! - Implement the [`Network`] trait, representing the low-level networking primitives. It is
-//!   already implemented on `sc_network::NetworkService`.
+//!   already implemented on `soil_network::NetworkService`.
 //! - Implement the [`Validator`] trait. See the section below.
 //! - Decide on a protocol name. Each gossiping protocol should have a different one.
 //! - Build a [`GossipEngine`] using these three elements.
@@ -42,7 +42,7 @@
 //!
 //! The [`GossipEngine`] will automatically use [`Network::add_set_reserved`] and
 //! [`NetworkPeers::remove_peers_from_reserved_set`] to maintain a set of peers equal to the set of
-//! peers the node is syncing from. See the documentation of `sc-network` for more explanations
+//! peers the node is syncing from. See the documentation of `soil-network` for more explanations
 //! about the concepts of peer sets.
 //!
 //! # What is a validator?
@@ -67,9 +67,9 @@ pub use self::{
 	validator::{DiscardAll, MessageIntent, ValidationResult, Validator, ValidatorContext},
 };
 
-use sc_network::{types::ProtocolName, NetworkBlock, NetworkEventStream, NetworkPeers};
-use sc_network_sync::SyncEventStream;
-use sc_network_types::{
+use soil_network::{types::ProtocolName, NetworkBlock, NetworkEventStream, NetworkPeers};
+use soil_network_sync::SyncEventStream;
+use soil_network_types::{
 	multiaddr::{Multiaddr, Protocol},
 	PeerId,
 };

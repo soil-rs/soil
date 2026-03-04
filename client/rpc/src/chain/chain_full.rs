@@ -30,7 +30,7 @@ use futures::{
 	stream::{self, Stream, StreamExt},
 };
 use jsonrpsee::{core::async_trait, PendingSubscriptionSink};
-use sc_client_api::{BlockBackend, BlockchainEvents};
+use soil_client_api::{BlockBackend, BlockchainEvents};
 use soil_blockchain::HeaderBackend;
 use soil_runtime::{generic::SignedBlock, traits::Block as BlockT};
 

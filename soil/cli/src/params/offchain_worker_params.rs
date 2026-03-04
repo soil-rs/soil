@@ -24,8 +24,8 @@
 //! a reasonable abstraction.
 
 use clap::{ArgAction, Args};
-use sc_network::config::Role;
-use sc_service::config::OffchainWorkerConfig;
+use soil_network::config::Role;
+use soil_service::config::OffchainWorkerConfig;
 
 use crate::{error, OffchainWorkerEnabled};
 

@@ -40,7 +40,7 @@ use log::{trace, warn};
 use std::sync::Arc;
 
 use codec::{Decode, Encode};
-use sc_client_api::backend::Backend;
+use soil_client_api::backend::Backend;
 use soil_blockchain::{Backend as BlockchainBackend, HeaderBackend};
 use soil_consensus_grandpa::GRANDPA_ENGINE_ID;
 use soil_runtime::{
@@ -262,7 +262,7 @@ mod tests {
 	use crate::{authorities::AuthoritySetChanges, BlockNumberOps, ClientError, SetId};
 	use futures::executor::block_on;
 	use sc_block_builder::BlockBuilderBuilder;
-	use sc_client_api::{apply_aux, LockImportRun};
+	use soil_client_api::{apply_aux, LockImportRun};
 	use soil_consensus::BlockOrigin;
 	use soil_consensus_grandpa::GRANDPA_ENGINE_ID as ID;
 	use soil_core::crypto::UncheckedFrom;

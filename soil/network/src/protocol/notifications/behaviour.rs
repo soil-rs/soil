@@ -46,7 +46,7 @@ use libp2p::{
 use log::{debug, error, trace, warn};
 use parking_lot::RwLock;
 use rand::distributions::{Distribution as _, Uniform};
-use sc_utils::mpsc::TracingUnboundedReceiver;
+use soil_utils::mpsc::TracingUnboundedReceiver;
 use smallvec::SmallVec;
 use tokio::sync::oneshot::error::RecvError;
 use tokio_stream::StreamMap;
@@ -2407,7 +2407,7 @@ mod tests {
 		protocol_controller::{IncomingIndex, ProtoSetConfig, ProtocolController},
 	};
 	use libp2p::core::ConnectedPoint;
-	use sc_utils::mpsc::tracing_unbounded;
+	use soil_utils::mpsc::tracing_unbounded;
 	use std::{collections::HashSet, iter};
 
 	impl PartialEq for ConnectionState {

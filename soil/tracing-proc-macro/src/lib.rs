@@ -23,7 +23,7 @@ use syn::{Error, Expr, ItemFn, Path, Result};
 
 /// This prefixes all the log lines with `[<name>]` (after the timestamp). It works by making a
 /// tracing's span that is propagated to all the child calls and child tasks (futures) if they are
-/// spawned properly with the `SpawnHandle` (see `TaskManager` in sc-cli) or if the futures use
+/// spawned properly with the `SpawnHandle` (see `TaskManager` in soil-cli) or if the futures use
 /// `.in_current_span()` (see tracing-futures).
 ///
 /// See Tokio's [tracing documentation](https://docs.rs/tracing-core/) and
@@ -37,10 +37,10 @@ use syn::{Error, Expr, ItemFn, Path, Result};
 ///
 /// ```ignore
 /// Builds a new service for a light client.
-/// #[sc_cli::prefix_logs_with("light")]
+/// #[soil_cli::prefix_logs_with("light")]
 /// pub fn new_light(config: Configuration) -> Result<TaskManager, ServiceError> {
 ///     let (client, backend, keystore, mut task_manager, on_demand) =
-///         sc_service::new_light_parts::<Block, RuntimeApi, Executor>(&config)?;
+///         soil_service::new_light_parts::<Block, RuntimeApi, Executor>(&config)?;
 ///
 ///        ...
 /// }
@@ -71,10 +71,10 @@ use syn::{Error, Expr, ItemFn, Path, Result};
 ///
 /// ```ignore
 /// Builds a new service for a light client.
-/// #[sc_cli::prefix_logs_with(config.network.node_name.as_str())]
+/// #[soil_cli::prefix_logs_with(config.network.node_name.as_str())]
 /// pub fn new_light(config: Configuration) -> Result<TaskManager, ServiceError> {
 ///     let (client, backend, keystore, mut task_manager, on_demand) =
-///         sc_service::new_light_parts::<Block, RuntimeApi, Executor>(&config)?;
+///         soil_service::new_light_parts::<Block, RuntimeApi, Executor>(&config)?;
 ///
 ///        ...
 /// }

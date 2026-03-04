@@ -30,8 +30,8 @@ use jsonrpsee::{
 use serde::{Deserialize, Serialize};
 
 use sc_consensus_babe::{authorship, BabeWorkerHandle};
-use sc_consensus_epochs::Epoch as EpochT;
-use sc_rpc_api::{check_if_safe, UnsafeRpcError};
+use soil_consensus_epochs::Epoch as EpochT;
+use soil_rpc_api::{check_if_safe, UnsafeRpcError};
 use soil_api::ProvideRuntimeApi;
 use soil_application_crypto::AppCrypto;
 use soil_blockchain::{Error as BlockChainError, HeaderBackend, HeaderMetadata};
@@ -194,8 +194,8 @@ impl From<Error> for ErrorObjectOwned {
 mod tests {
 	use super::*;
 	use sc_consensus_babe::ImportQueueParams;
-	use sc_rpc_api::DenyUnsafe;
-	use sc_transaction_pool_api::{OffchainTransactionPoolFactory, RejectAllTxPool};
+	use soil_rpc_api::DenyUnsafe;
+	use soil_transaction_pool_api::{OffchainTransactionPoolFactory, RejectAllTxPool};
 	use soil_consensus_babe::inherents::InherentDataProvider;
 	use soil_core::{crypto::key_types::BABE, testing::TaskExecutor};
 	use soil_keyring::Sr25519Keyring;

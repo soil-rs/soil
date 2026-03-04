@@ -42,9 +42,9 @@ use prometheus_endpoint::{
 use schnellru::{ByLength, LruMap};
 use tokio::time::{Interval, MissedTickBehavior};
 
-use sc_client_api::{BlockBackend, HeaderBackend, ProofProvider};
+use soil_client_api::{BlockBackend, HeaderBackend, ProofProvider};
 use sc_consensus::{import_queue::ImportQueueService, IncomingBlock};
-use sc_network::{
+use soil_network::{
 	config::{FullNetworkConfiguration, NotificationHandshake, ProtocolId, SetConfig},
 	peer_store::PeerStoreProvider,
 	request_responses::{OutboundFailure, RequestFailure},
@@ -56,12 +56,12 @@ use sc_network::{
 	utils::LruHashSet,
 	NetworkBackend, NotificationService, ReputationChange,
 };
-use sc_network_common::{
+use soil_network_common::{
 	role::Roles,
 	sync::message::{BlockAnnounce, BlockAnnouncesHandshake, BlockState},
 };
-use sc_network_types::PeerId;
-use sc_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
+use soil_network_types::PeerId;
+use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
 use soil_blockchain::{Error as ClientError, HeaderMetadata};
 use soil_consensus::{block_validation::BlockAnnounceValidator, BlockOrigin};
 use soil_runtime::{
@@ -89,7 +89,7 @@ const MAX_KNOWN_BLOCKS: usize = 1024; // ~32kb per peer + LruHashSet overhead
 const MAX_BLOCK_ANNOUNCE_SIZE: u64 = 1024 * 1024;
 
 mod rep {
-	use sc_network::ReputationChange as Rep;
+	use soil_network::ReputationChange as Rep;
 	/// Peer has different genesis.
 	pub const GENESIS_MISMATCH: Rep = Rep::new_fatal("Genesis mismatch");
 	/// Peer send us a block announcement that failed at validation.
@@ -249,7 +249,7 @@ pub struct SyncingEngine<B: BlockT, Client> {
 	/// Prometheus metrics.
 	metrics: Option<Metrics>,
 
-	/// Handle that is used to communicate with `sc_network::Notifications`.
+	/// Handle that is used to communicate with `soil_network::Notifications`.
 	notification_service: Box<dyn NotificationService>,
 
 	/// Handle to `PeerStore`.

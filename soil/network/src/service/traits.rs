@@ -18,7 +18,7 @@
 //
 // If you read this, you are very thorough, congratulations.
 
-//! Traits defined by `sc-network`.
+//! Traits defined by `soil-network`.
 
 use crate::{
 	config::{IncomingRequest, MultiaddrWithPeerId, NotificationHandshake, Params, SetConfig},
@@ -34,9 +34,9 @@ use crate::{
 use futures::{channel::oneshot, Stream};
 use prometheus_endpoint::Registry;
 
-use sc_client_api::BlockBackend;
-use sc_network_common::{role::ObservedRole, ExHashT};
-pub use sc_network_types::{
+use soil_client_api::BlockBackend;
+use soil_network_common::{role::ObservedRole, ExHashT};
+pub use soil_network_types::{
 	kad::{Key as KademliaKey, Record},
 	multiaddr::Multiaddr,
 	PeerId,
@@ -119,7 +119,7 @@ pub trait NetworkBackend<B: BlockT + 'static, H: ExHashT>: Send + 'static {
 
 	/// Type implementing `NetworkService` for the networking backend.
 	///
-	/// `NetworkService` allows other subsystems of the blockchain to interact with `sc-network`
+	/// `NetworkService` allows other subsystems of the blockchain to interact with `soil-network`
 	/// using `NetworkService`.
 	type NetworkService<Block, Hash>: NetworkService + Clone;
 
@@ -186,7 +186,7 @@ pub trait NetworkSigner {
 	/// Returns `Err(())` if public cannot be parsed into a valid ed25519 public key.
 	fn verify(
 		&self,
-		peer_id: sc_network_types::PeerId,
+		peer_id: soil_network_types::PeerId,
 		public_key: &Vec<u8>,
 		signature: &Vec<u8>,
 		message: &Vec<u8>,
@@ -204,7 +204,7 @@ where
 
 	fn verify(
 		&self,
-		peer_id: sc_network_types::PeerId,
+		peer_id: soil_network_types::PeerId,
 		public_key: &Vec<u8>,
 		signature: &Vec<u8>,
 		message: &Vec<u8>,

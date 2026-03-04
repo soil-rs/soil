@@ -18,7 +18,7 @@
 
 use super::*;
 use jsonrpsee::{core::EmptyServerParams as EmptyParams, RpcModule};
-use sc_chain_spec::Properties;
+use soil_chain_spec::Properties;
 
 const CHAIN_NAME: &'static str = "TEST_CHAIN_NAME";
 const CHAIN_GENESIS: [u8; 32] = [0; 32];

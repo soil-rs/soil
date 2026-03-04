@@ -24,15 +24,15 @@
 //! To use the light sync state, it needs to be added as an extension to the chain spec:
 //!
 //! ```
-//! use sc_sync_state_rpc::LightSyncStateExtension;
+//! use soil_sync_state_rpc::LightSyncStateExtension;
 //!
-//! #[derive(Default, Clone, serde::Serialize, serde::Deserialize, sc_chain_spec::ChainSpecExtension)]
+//! #[derive(Default, Clone, serde::Serialize, serde::Deserialize, soil_chain_spec::ChainSpecExtension)]
 //! #[serde(rename_all = "camelCase")]
 //! pub struct Extensions {
 //!    light_sync_state: LightSyncStateExtension,
 //! }
 //!
-//! type ChainSpec = sc_chain_spec::GenericChainSpec<(), Extensions>;
+//! type ChainSpec = soil_chain_spec::GenericChainSpec<(), Extensions>;
 //! ```
 //!
 //! If the [`LightSyncStateExtension`] is not added as an extension to the chain spec,
@@ -48,7 +48,7 @@ use jsonrpsee::{
 	types::{ErrorObject, ErrorObjectOwned},
 };
 
-use sc_client_api::StorageData;
+use soil_client_api::StorageData;
 use sc_consensus_babe::{BabeWorkerHandle, Error as BabeError};
 use soil_blockchain::HeaderBackend;
 use soil_runtime::traits::{Block as BlockT, NumberFor};
@@ -74,7 +74,7 @@ pub enum Error<Block: BlockT> {
 
 	#[error(
 		"The light sync state extension is not provided by the chain spec. \
-		Read the `sc-sync-state-rpc` crate docs on how to do this!"
+		Read the `soil-sync-state-rpc` crate docs on how to do this!"
 	)]
 	LightSyncStateExtensionNotFound,
 }
@@ -114,7 +114,7 @@ pub struct LightSyncState<Block: BlockT> {
 	pub finalized_block_header: <Block as BlockT>::Header,
 	/// The epoch changes tree for babe.
 	#[serde(serialize_with = "serialize_encoded")]
-	pub babe_epoch_changes: sc_consensus_epochs::EpochChangesFor<Block, sc_consensus_babe::Epoch>,
+	pub babe_epoch_changes: soil_consensus_epochs::EpochChangesFor<Block, sc_consensus_babe::Epoch>,
 	/// The babe weight of the finalized block.
 	pub babe_finalized_block_weight: sc_consensus_babe::BabeBlockWeight,
 	/// The authority set for grandpa.
@@ -133,7 +133,7 @@ pub trait SyncStateApi<B: BlockT> {
 
 /// An api for sync state RPC calls.
 pub struct SyncState<Block: BlockT, Client> {
-	chain_spec: Box<dyn sc_chain_spec::ChainSpec>,
+	chain_spec: Box<dyn soil_chain_spec::ChainSpec>,
 	client: Arc<Client>,
 	shared_authority_set: SharedAuthoritySet<Block>,
 	babe_worker_handle: BabeWorkerHandle<Block>,
@@ -142,16 +142,16 @@ pub struct SyncState<Block: BlockT, Client> {
 impl<Block, Client> SyncState<Block, Client>
 where
 	Block: BlockT,
-	Client: HeaderBackend<Block> + sc_client_api::AuxStore + 'static,
+	Client: HeaderBackend<Block> + soil_client_api::AuxStore + 'static,
 {
 	/// Create a new sync state RPC helper.
 	pub fn new(
-		chain_spec: Box<dyn sc_chain_spec::ChainSpec>,
+		chain_spec: Box<dyn soil_chain_spec::ChainSpec>,
 		client: Arc<Client>,
 		shared_authority_set: SharedAuthoritySet<Block>,
 		babe_worker_handle: BabeWorkerHandle<Block>,
 	) -> Result<Self, Error<Block>> {
-		if sc_chain_spec::get_extension::<LightSyncStateExtension>(chain_spec.extensions())
+		if soil_chain_spec::get_extension::<LightSyncStateExtension>(chain_spec.extensions())
 			.is_some()
 		{
 			Ok(Self { chain_spec, client, shared_authority_set, babe_worker_handle })
@@ -190,13 +190,13 @@ where
 impl<Block, Backend> SyncStateApiServer<Block> for SyncState<Block, Backend>
 where
 	Block: BlockT,
-	Backend: HeaderBackend<Block> + sc_client_api::AuxStore + 'static,
+	Backend: HeaderBackend<Block> + soil_client_api::AuxStore + 'static,
 {
 	async fn system_gen_sync_spec(&self, raw: bool) -> Result<serde_json::Value, Error<Block>> {
 		let current_sync_state = self.build_sync_state().await?;
 		let mut chain_spec = self.chain_spec.cloned_box();
 
-		let extension = sc_chain_spec::get_extension_mut::<LightSyncStateExtension>(
+		let extension = soil_chain_spec::get_extension_mut::<LightSyncStateExtension>(
 			chain_spec.extensions_mut(),
 		)
 		.ok_or(Error::<Block>::LightSyncStateExtensionNotFound)?;

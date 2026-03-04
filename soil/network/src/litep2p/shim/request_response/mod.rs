@@ -16,7 +16,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-//! Shim for litep2p's request-response implementation to make it work with `sc_network`'s
+//! Shim for litep2p's request-response implementation to make it work with `soil_network`'s
 //! request-response API.
 
 use crate::{
@@ -37,8 +37,8 @@ use litep2p::{
 	types::RequestId,
 };
 
-use sc_network_types::PeerId;
-use sc_utils::mpsc::{TracingUnboundedReceiver, TracingUnboundedSender};
+use soil_network_types::PeerId;
+use soil_utils::mpsc::{TracingUnboundedReceiver, TracingUnboundedSender};
 
 use std::{
 	collections::HashMap,

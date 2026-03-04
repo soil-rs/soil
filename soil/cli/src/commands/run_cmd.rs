@@ -26,13 +26,13 @@ use crate::{
 };
 use clap::Parser;
 use regex::Regex;
-use sc_service::{
+use soil_service::{
 	config::{
 		BasePath, IpNetwork, PrometheusConfig, RpcBatchRequestConfig, TransactionPoolOptions,
 	},
 	ChainSpec, Role,
 };
-use sc_telemetry::TelemetryEndpoints;
+use soil_telemetry::TelemetryEndpoints;
 use std::num::NonZeroU32;
 
 /// The `run` command used to run a node.
@@ -294,7 +294,7 @@ impl CliConfiguration for RunCmd {
 		self.rpc_params.rpc_addr(self.is_dev()?, self.validator, default_listen_port)
 	}
 
-	fn rpc_methods(&self) -> Result<sc_service::config::RpcMethods> {
+	fn rpc_methods(&self) -> Result<soil_service::config::RpcMethods> {
 		Ok(self.rpc_params.rpc_methods.into())
 	}
 

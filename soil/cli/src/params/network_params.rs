@@ -21,14 +21,14 @@ use crate::{
 	params::node_key_params::NodeKeyParams,
 };
 use clap::Args;
-use sc_network::{
+use soil_network::{
 	config::{
 		NetworkConfiguration, NodeKeyConfig, NonReservedPeerMode, SetConfig, TransportConfig,
 		DEFAULT_IDLE_CONNECTION_TIMEOUT,
 	},
 	multiaddr::Protocol,
 };
-use sc_service::{
+use soil_service::{
 	config::{Multiaddr, MultiaddrWithPeerId},
 	ChainSpec, ChainType,
 };

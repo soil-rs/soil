@@ -18,9 +18,9 @@
 
 use std::{collections::BTreeSet, sync::Arc, time::Duration};
 
-use sc_network::{NetworkPeers, ReputationChange};
-use sc_network_gossip::{MessageIntent, ValidationResult, Validator, ValidatorContext};
-use sc_network_types::PeerId;
+use soil_network::{NetworkPeers, ReputationChange};
+use soil_network_gossip::{MessageIntent, ValidationResult, Validator, ValidatorContext};
+use soil_network_types::PeerId;
 use soil_runtime::traits::{Block, Hash, Header, NumberFor};
 
 use codec::{Decode, DecodeAll, Encode};
@@ -494,7 +494,7 @@ where
 pub(crate) mod tests {
 	use super::*;
 	use crate::{communication::peers::PeerReport, keystore::BeefyKeystore};
-	use sc_network_test::Block;
+	use soil_network_test::Block;
 	use soil_application_crypto::key_types::BEEFY as BEEFY_KEY_TYPE;
 	use soil_consensus_beefy::{
 		ecdsa_crypto, known_payloads, test_utils::Keyring, Commitment, MmrRootHash, Payload,
@@ -524,7 +524,7 @@ pub(crate) mod tests {
 			unimplemented!()
 		}
 
-		fn add_known_address(&self, _: PeerId, _: sc_network::Multiaddr) {
+		fn add_known_address(&self, _: PeerId, _: soil_network::Multiaddr) {
 			unimplemented!()
 		}
 
@@ -536,7 +536,7 @@ pub(crate) mod tests {
 			unimplemented!()
 		}
 
-		fn disconnect_peer(&self, _: PeerId, _: sc_network::ProtocolName) {
+		fn disconnect_peer(&self, _: PeerId, _: soil_network::ProtocolName) {
 			unimplemented!()
 		}
 
@@ -550,7 +550,7 @@ pub(crate) mod tests {
 
 		fn add_reserved_peer(
 			&self,
-			_: sc_network::config::MultiaddrWithPeerId,
+			_: soil_network::config::MultiaddrWithPeerId,
 		) -> Result<(), String> {
 			unimplemented!()
 		}
@@ -561,23 +561,23 @@ pub(crate) mod tests {
 
 		fn set_reserved_peers(
 			&self,
-			_: sc_network::ProtocolName,
-			_: std::collections::HashSet<sc_network::Multiaddr>,
+			_: soil_network::ProtocolName,
+			_: std::collections::HashSet<soil_network::Multiaddr>,
 		) -> Result<(), String> {
 			unimplemented!()
 		}
 
 		fn add_peers_to_reserved_set(
 			&self,
-			_: sc_network::ProtocolName,
-			_: std::collections::HashSet<sc_network::Multiaddr>,
+			_: soil_network::ProtocolName,
+			_: std::collections::HashSet<soil_network::Multiaddr>,
 		) -> Result<(), String> {
 			unimplemented!()
 		}
 
 		fn remove_peers_from_reserved_set(
 			&self,
-			_: sc_network::ProtocolName,
+			_: soil_network::ProtocolName,
 			_: Vec<PeerId>,
 		) -> Result<(), String> {
 			unimplemented!()
@@ -587,7 +587,7 @@ pub(crate) mod tests {
 			unimplemented!()
 		}
 
-		fn peer_role(&self, _: PeerId, _: Vec<u8>) -> Option<sc_network::ObservedRole> {
+		fn peer_role(&self, _: PeerId, _: Vec<u8>) -> Option<soil_network::ObservedRole> {
 			unimplemented!()
 		}
 
@@ -604,11 +604,11 @@ pub(crate) mod tests {
 
 		fn broadcast_message(&mut self, _topic: B::Hash, _message: Vec<u8>, _force: bool) {}
 
-		fn send_message(&mut self, _who: &sc_network_types::PeerId, _message: Vec<u8>) {
+		fn send_message(&mut self, _who: &soil_network_types::PeerId, _message: Vec<u8>) {
 			unimplemented!()
 		}
 
-		fn send_topic(&mut self, _who: &sc_network_types::PeerId, _topic: B::Hash, _force: bool) {
+		fn send_topic(&mut self, _who: &soil_network_types::PeerId, _topic: B::Hash, _force: bool) {
 			unimplemented!()
 		}
 	}
@@ -798,7 +798,7 @@ pub(crate) mod tests {
 			Arc::new(TestNetwork::new().0),
 		);
 		gv.update_filter(GossipFilterCfg { start: 0, end: 10, validator_set: &validator_set });
-		let sender = sc_network_types::PeerId::random();
+		let sender = soil_network_types::PeerId::random();
 		let topic = Default::default();
 		let intent = MessageIntent::Broadcast;
 
@@ -891,7 +891,7 @@ pub(crate) mod tests {
 			Arc::new(TestNetwork::new().0),
 		);
 		gv.update_filter(GossipFilterCfg { start: 0, end: 10, validator_set: &validator_set });
-		let sender = sc_network_types::PeerId::random();
+		let sender = soil_network_types::PeerId::random();
 		let topic = Default::default();
 
 		let vote = dummy_vote(1);

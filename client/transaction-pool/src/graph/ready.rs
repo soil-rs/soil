@@ -24,7 +24,7 @@ use std::{
 };
 
 use crate::LOG_TARGET;
-use sc_transaction_pool_api::error;
+use soil_transaction_pool_api::error;
 use serde::Serialize;
 use soil_runtime::{traits::Member, transaction_validity::TransactionTag as Tag};
 use tracing::trace;
@@ -503,7 +503,7 @@ impl<Hash: hash::Hash + Member, Ex> BestIterator<Hash, Ex> {
 	}
 }
 
-impl<Hash: hash::Hash + Member, Ex> sc_transaction_pool_api::ReadyTransactions
+impl<Hash: hash::Hash + Member, Ex> soil_transaction_pool_api::ReadyTransactions
 	for BestIterator<Hash, Ex>
 {
 	fn report_invalid(&mut self, tx: &Self::Item) {

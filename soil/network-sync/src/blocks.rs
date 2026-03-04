@@ -18,8 +18,8 @@
 
 use crate::LOG_TARGET;
 use log::trace;
-use sc_network_common::sync::message;
-use sc_network_types::PeerId;
+use soil_network_common::sync::message;
+use soil_network_types::PeerId;
 use soil_runtime::traits::{Block as BlockT, NumberFor, One};
 use std::{
 	cmp,
@@ -268,8 +268,8 @@ impl<B: BlockT> BlockCollection<B> {
 #[cfg(test)]
 mod test {
 	use super::{BlockCollection, BlockData, BlockRangeState};
-	use sc_network_common::sync::message;
-	use sc_network_types::PeerId;
+	use soil_network_common::sync::message;
+	use soil_network_types::PeerId;
 	use soil_core::H256;
 	use soil_runtime::testing::{Block as RawBlock, MockCallU64, TestXt};
 

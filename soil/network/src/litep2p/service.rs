@@ -40,17 +40,17 @@ use litep2p::{
 	types::multiaddr::Multiaddr as LiteP2pMultiaddr,
 };
 use parking_lot::RwLock;
-use sc_network_types::kad::{Key as KademliaKey, Record};
+use soil_network_types::kad::{Key as KademliaKey, Record};
 
-use sc_network_common::{
+use soil_network_common::{
 	role::{ObservedRole, Roles},
 	types::ReputationChange,
 };
-use sc_network_types::{
+use soil_network_types::{
 	multiaddr::{Multiaddr, Protocol},
 	PeerId,
 };
-use sc_utils::mpsc::TracingUnboundedSender;
+use soil_utils::mpsc::TracingUnboundedSender;
 
 use std::{
 	collections::{HashMap, HashSet},
@@ -91,7 +91,7 @@ pub enum NetworkServiceCommand {
 		/// Record.
 		record: Record,
 		/// Peers we want to put the record.
-		peers: Vec<sc_network_types::PeerId>,
+		peers: Vec<soil_network_types::PeerId>,
 		/// If we should update the local storage or not.
 		update_local_storage: bool,
 	},
@@ -292,7 +292,7 @@ impl NetworkDHTProvider for Litep2pNetworkService {
 				key: record.key.to_vec().into(),
 				value: record.value,
 				publisher: record.publisher.map(|peer_id| {
-					let peer_id: sc_network_types::PeerId = peer_id.into();
+					let peer_id: soil_network_types::PeerId = peer_id.into();
 					peer_id.into()
 				}),
 				expires: record.expires,

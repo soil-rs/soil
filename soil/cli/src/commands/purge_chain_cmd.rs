@@ -22,7 +22,7 @@ use crate::{
 	CliConfiguration,
 };
 use clap::Parser;
-use sc_service::DatabaseSource;
+use soil_service::DatabaseSource;
 use std::{
 	fmt::Debug,
 	fs,

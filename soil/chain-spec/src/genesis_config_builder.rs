@@ -19,8 +19,8 @@
 //! A helper module for calling the GenesisBuilder API from arbitrary runtime wasm blobs.
 
 use codec::{Decode, Encode};
-pub use sc_executor::soil_wasm_interface::HostFunctions;
-use sc_executor::{error::Result, WasmExecutor};
+pub use soil_executor::soil_wasm_interface::HostFunctions;
+use soil_executor::{error::Result, WasmExecutor};
 use serde_json::{from_slice, Value};
 use soil_core::{
 	storage::Storage,

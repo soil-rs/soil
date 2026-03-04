@@ -41,7 +41,7 @@ use jsonrpsee::{
 	MethodResponseFuture, PendingSubscriptionSink,
 };
 use log::debug;
-use sc_client_api::{
+use soil_client_api::{
 	Backend, BlockBackend, BlockchainEvents, CallExecutor, ChildInfo, ExecutorProvider, StorageKey,
 	StorageProvider,
 };

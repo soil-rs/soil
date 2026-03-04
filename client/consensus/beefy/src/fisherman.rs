@@ -18,7 +18,7 @@
 
 use crate::{error::Error, keystore::BeefyKeystore, round::Rounds, LOG_TARGET};
 use log::{debug, error, warn};
-use sc_client_api::Backend;
+use soil_client_api::Backend;
 use soil_api::ProvideRuntimeApi;
 use soil_application_crypto::RuntimeAppPublic;
 use soil_blockchain::HeaderBackend;

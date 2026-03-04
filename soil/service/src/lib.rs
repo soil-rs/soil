@@ -41,15 +41,15 @@ use codec::{Decode, Encode};
 use futures::{pin_mut, FutureExt, StreamExt};
 use jsonrpsee::RpcModule;
 use log::{debug, error, trace, warn};
-use sc_client_api::{blockchain::HeaderBackend, BlockBackend, BlockchainEvents, ProofProvider};
-use sc_network::{
+use soil_client_api::{blockchain::HeaderBackend, BlockBackend, BlockchainEvents, ProofProvider};
+use soil_network::{
 	config::MultiaddrWithPeerId, service::traits::NetworkService, NetworkBackend, NetworkBlock,
 	NetworkPeers, NetworkStateInfo,
 };
-use sc_network_sync::SyncingService;
-use sc_network_types::PeerId;
-use sc_rpc_server::Server;
-use sc_utils::mpsc::TracingUnboundedReceiver;
+use soil_network_sync::SyncingService;
+use soil_network_types::PeerId;
+use soil_rpc_server::Server;
+use soil_utils::mpsc::TracingUnboundedReceiver;
 use soil_blockchain::HeaderMetadata;
 use soil_consensus::SyncOracle;
 use soil_runtime::traits::{Block as BlockT, Header as HeaderT};
@@ -71,7 +71,7 @@ pub use self::{
 #[allow(deprecated)]
 pub use builder::new_native_or_wasm_executor;
 
-pub use sc_chain_spec::{
+pub use soil_chain_spec::{
 	construct_genesis_block, resolve_state_version_from_wasm, BuildGenesisBlock,
 	GenesisBlockBuilder,
 };
@@ -79,23 +79,23 @@ pub use sc_chain_spec::{
 pub use config::{
 	BasePath, BlocksPruning, Configuration, DatabaseSource, PruningMode, Role, RpcMethods, TaskType,
 };
-pub use sc_chain_spec::{
+pub use soil_chain_spec::{
 	ChainSpec, ChainType, Extension as ChainSpecExtension, GenericChainSpec, NoExtension,
 	Properties,
 };
-pub use sc_client_db::PruningFilter;
+pub use soil_client_db::PruningFilter;
 
 use crate::config::RpcConfiguration;
 use prometheus_endpoint::Registry;
 pub use sc_consensus::ImportQueue;
-pub use sc_executor::NativeExecutionDispatch;
-pub use sc_network_sync::WarpSyncConfig;
+pub use soil_executor::NativeExecutionDispatch;
+pub use soil_network_sync::WarpSyncConfig;
 #[doc(hidden)]
-pub use sc_network_transactions::config::{TransactionImport, TransactionImportFuture};
+pub use soil_network_transactions::config::{TransactionImport, TransactionImportFuture};
 pub use sc_rpc::{RandomIntegerSubscriptionId, RandomStringSubscriptionId};
 pub use sc_tracing::TracingReceiver;
 pub use sc_transaction_pool::TransactionPoolOptions;
-pub use sc_transaction_pool_api::{error::IntoPoolError, InPoolTransaction, TransactionPool};
+pub use soil_transaction_pool_api::{error::IntoPoolError, InPoolTransaction, TransactionPool};
 #[doc(hidden)]
 pub use std::{ops::Deref, result::Result, sync::Arc};
 pub use task_manager::{
@@ -187,7 +187,7 @@ async fn build_network_future<
 		+ Send
 		+ Sync
 		+ 'static,
-	H: sc_network_common::ExHashT,
+	H: soil_network_common::ExHashT,
 	N: NetworkBackend<B, <B as BlockT>::Hash>,
 >(
 	network: N,
@@ -254,7 +254,7 @@ pub async fn build_system_rpc_future<
 		+ Send
 		+ Sync
 		+ 'static,
-	H: sc_network_common::ExHashT,
+	H: soil_network_common::ExHashT,
 >(
 	role: Role,
 	network_service: Arc<dyn NetworkService>,
@@ -289,7 +289,7 @@ pub async fn build_system_rpc_future<
 			},
 			sc_rpc::system::Request::LocalListenAddresses(sender) => {
 				let peer_id = (network_service.local_peer_id()).into();
-				let p2p_proto_suffix = sc_network::multiaddr::Protocol::P2p(peer_id);
+				let p2p_proto_suffix = soil_network::multiaddr::Protocol::P2p(peer_id);
 				let addresses = network_service
 					.listen_addresses()
 					.iter()
@@ -386,12 +386,12 @@ pub fn start_rpc_servers<R>(
 	registry: Option<&Registry>,
 	tokio_handle: &Handle,
 	gen_rpc_module: R,
-	rpc_id_provider: Option<Box<dyn sc_rpc_server::SubscriptionIdProvider>>,
+	rpc_id_provider: Option<Box<dyn soil_rpc_server::SubscriptionIdProvider>>,
 ) -> Result<Server, error::Error>
 where
 	R: Fn() -> Result<RpcModule<()>, Error>,
 {
-	let endpoints: Vec<sc_rpc_server::RpcEndpoint> = if let Some(endpoints) =
+	let endpoints: Vec<soil_rpc_server::RpcEndpoint> = if let Some(endpoints) =
 		rpc_configuration.addr.as_ref()
 	{
 		endpoints.clone()
@@ -401,7 +401,7 @@ where
 		let ipv4 = SocketAddr::V4(SocketAddrV4::new(Ipv4Addr::LOCALHOST, rpc_configuration.port));
 
 		vec![
-			sc_rpc_server::RpcEndpoint {
+			soil_rpc_server::RpcEndpoint {
 				batch_config: rpc_configuration.batch_config,
 				cors: rpc_configuration.cors.clone(),
 				listen_addr: ipv4,
@@ -417,7 +417,7 @@ where
 				retry_random_port: true,
 				is_optional: false,
 			},
-			sc_rpc_server::RpcEndpoint {
+			soil_rpc_server::RpcEndpoint {
 				batch_config: rpc_configuration.batch_config,
 				cors: rpc_configuration.cors.clone(),
 				listen_addr: ipv6,
@@ -436,10 +436,10 @@ where
 		]
 	};
 
-	let metrics = sc_rpc_server::RpcMetrics::new(registry)?;
+	let metrics = soil_rpc_server::RpcMetrics::new(registry)?;
 	let rpc_api = gen_rpc_module()?;
 
-	let server_config = sc_rpc_server::Config {
+	let server_config = soil_rpc_server::Config {
 		endpoints,
 		rpc_api,
 		metrics,
@@ -453,7 +453,7 @@ where
 	// `block_in_place` is a hack to allow callers to call `block_on` prior to
 	// calling `start_rpc_servers`.
 	match tokio::task::block_in_place(|| {
-		tokio_handle.block_on(sc_rpc_server::start_server(server_config))
+		tokio_handle.block_on(soil_rpc_server::start_server(server_config))
 	}) {
 		Ok(server) => Ok(server),
 		Err(e) => Err(Error::Application(e)),
@@ -481,7 +481,7 @@ where
 	Pool: TransactionPool<Block = B, Hash = H, Error = E>,
 	B: BlockT,
 	H: std::hash::Hash + Eq + soil_runtime::traits::Member + soil_runtime::traits::MaybeSerialize,
-	E: IntoPoolError + From<sc_transaction_pool_api::error::Error>,
+	E: IntoPoolError + From<soil_transaction_pool_api::error::Error>,
 {
 	pool.ready()
 		.filter(|t| t.is_propagable())
@@ -493,7 +493,7 @@ where
 		.collect()
 }
 
-impl<B, H, C, Pool, E> sc_network_transactions::config::TransactionPool<H, B>
+impl<B, H, C, Pool, E> soil_network_transactions::config::TransactionPool<H, B>
 	for TransactionPoolAdapter<C, Pool>
 where
 	C: HeaderBackend<B>
@@ -506,7 +506,7 @@ where
 	Pool: 'static + TransactionPool<Block = B, Hash = H, Error = E>,
 	B: BlockT,
 	H: std::hash::Hash + Eq + soil_runtime::traits::Member + soil_runtime::traits::MaybeSerialize,
-	E: 'static + IntoPoolError + From<sc_transaction_pool_api::error::Error>,
+	E: 'static + IntoPoolError + From<soil_transaction_pool_api::error::Error>,
 {
 	fn transactions(&self) -> Vec<(H, Arc<B::Extrinsic>)> {
 		transactions_to_propagate(&*self.pool)
@@ -533,7 +533,7 @@ where
 			match pool
 				.submit_one(
 					client.info().best_hash,
-					sc_transaction_pool_api::TransactionSource::External,
+					soil_transaction_pool_api::TransactionSource::External,
 					uxt,
 				)
 				.await
@@ -544,7 +544,7 @@ where
 					TransactionImport::NewGood
 				},
 				Err(e) => match e.into_pool_error() {
-					Ok(sc_transaction_pool_api::error::Error::AlreadyImported(_)) => {
+					Ok(soil_transaction_pool_api::error::Error::AlreadyImported(_)) => {
 						TransactionImport::KnownGood
 					},
 					Ok(_) => TransactionImport::Bad,

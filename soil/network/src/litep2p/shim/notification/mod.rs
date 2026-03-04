@@ -36,7 +36,7 @@ use litep2p::protocol::notification::{
 };
 use tokio::sync::oneshot;
 
-use sc_network_types::PeerId;
+use soil_network_types::PeerId;
 
 use std::{collections::HashSet, fmt};
 

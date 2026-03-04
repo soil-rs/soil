@@ -16,7 +16,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-use sc_network::{
+use soil_network::{
 	config::{
 		FullNetworkConfiguration, IncomingRequest, MultiaddrWithPeerId, NetworkConfiguration,
 		NonReservedPeerMode, NotificationHandshake, OutgoingResponse, Params, ProtocolId, Role,
@@ -27,7 +27,7 @@ use sc_network::{
 	Roles,
 };
 
-use sc_network_common::sync::message::BlockAnnouncesHandshake;
+use soil_network_common::sync::message::BlockAnnouncesHandshake;
 use soil_runtime::traits::Zero;
 use std::{sync::Arc, time::Duration};
 use substrate_test_runtime_client::runtime;
@@ -201,7 +201,7 @@ pub async fn connect_notifications(left: &NetworkBackendClient, right: &NetworkB
 						}
 					},
 					NotificationEvent::ValidateInboundSubstream { result_tx, .. } => {
-						result_tx.send(sc_network::service::traits::ValidationResult::Accept).unwrap();
+						result_tx.send(soil_network::service::traits::ValidationResult::Accept).unwrap();
 					},
 					_ => {},
 				};
@@ -209,7 +209,7 @@ pub async fn connect_notifications(left: &NetworkBackendClient, right: &NetworkB
 			Some(event) = notifications_right.next_event() => {
 				match event {
 					NotificationEvent::ValidateInboundSubstream { result_tx, .. } => {
-						result_tx.send(sc_network::service::traits::ValidationResult::Accept).unwrap();
+						result_tx.send(soil_network::service::traits::ValidationResult::Accept).unwrap();
 					},
 					NotificationEvent::NotificationStreamOpened { .. } => {
 						opened += 1;

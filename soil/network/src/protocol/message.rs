@@ -20,8 +20,8 @@
 //! payload.
 
 use codec::{Decode, Encode};
-use sc_client_api::StorageProof;
-use sc_network_common::message::RequestId;
+use soil_client_api::StorageProof;
+use soil_network_common::message::RequestId;
 
 /// Remote call response.
 #[derive(Debug, PartialEq, Eq, Clone, Encode, Decode)]
@@ -46,8 +46,8 @@ pub struct RemoteReadResponse {
 /// Generic types.
 pub mod generic {
 	use codec::{Decode, Encode, Input};
-	use sc_client_api::StorageProof;
-	use sc_network_common::{message::RequestId, role::Roles};
+	use soil_client_api::StorageProof;
+	use soil_network_common::{message::RequestId, role::Roles};
 	use soil_runtime::ConsensusEngineId;
 
 	/// Consensus is mostly opaque to us

@@ -18,9 +18,9 @@
 //! Block relay protocol related definitions.
 
 use futures::channel::oneshot;
-use sc_network::{request_responses::RequestFailure, NetworkBackend, ProtocolName};
-use sc_network_common::sync::message::{BlockData, BlockRequest};
-use sc_network_types::PeerId;
+use soil_network::{request_responses::RequestFailure, NetworkBackend, ProtocolName};
+use soil_network_common::sync::message::{BlockData, BlockRequest};
+use soil_network_types::PeerId;
 use soil_runtime::traits::Block as BlockT;
 use std::{fmt, sync::Arc};
 
@@ -68,7 +68,7 @@ pub enum BlockResponseError {
 }
 
 /// Block relay specific params for network creation, specified in
-/// ['sc_service::BuildNetworkParams'].
+/// ['soil_service::BuildNetworkParams'].
 pub struct BlockRelayParams<Block: BlockT, N: NetworkBackend<Block, <Block as BlockT>::Hash>> {
 	pub server: Box<dyn BlockServer<Block>>,
 	pub downloader: Arc<dyn BlockDownloader<Block>>,

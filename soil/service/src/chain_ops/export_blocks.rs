@@ -25,7 +25,7 @@ use soil_runtime::{
 	traits::{Block as BlockT, NumberFor, One, SaturatedConversion, Zero},
 };
 
-use sc_client_api::{BlockBackend, HeaderBackend, UsageProvider};
+use soil_client_api::{BlockBackend, HeaderBackend, UsageProvider};
 use std::{io::Write, pin::Pin, sync::Arc, task::Poll};
 
 /// Performs the blocks export.

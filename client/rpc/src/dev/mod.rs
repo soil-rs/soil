@@ -23,8 +23,8 @@
 mod tests;
 
 use jsonrpsee::Extensions;
-use sc_client_api::{BlockBackend, HeaderBackend};
-use sc_rpc_api::{check_if_safe, dev::error::Error};
+use soil_client_api::{BlockBackend, HeaderBackend};
+use soil_rpc_api::{check_if_safe, dev::error::Error};
 use soil_api::{ApiExt, Core, ProvideRuntimeApi};
 use soil_core::Encode;
 use soil_runtime::{
@@ -36,7 +36,7 @@ use std::{
 	sync::Arc,
 };
 
-pub use sc_rpc_api::dev::{BlockStats, DevApiServer};
+pub use soil_rpc_api::dev::{BlockStats, DevApiServer};
 
 type HasherOf<Block> = <<Block as BlockT>::Header as Header>::Hashing;
 

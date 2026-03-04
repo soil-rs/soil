@@ -35,13 +35,13 @@ use std::{fmt::Debug, marker::PhantomData, pin::Pin, sync::Arc};
 use codec::Codec;
 use futures::prelude::*;
 
-use sc_client_api::{backend::AuxStore, BlockOf};
+use soil_client_api::{backend::AuxStore, BlockOf};
 use sc_consensus::{BlockImport, BlockImportParams, ForkChoiceStrategy, StateAction};
 use sc_consensus_slots::{
 	BackoffAuthoringBlocksStrategy, InherentDataProviderExt, SimpleSlotWorkerToSlotWorker,
 	SlotInfo, StorageChanges,
 };
-use sc_telemetry::TelemetryHandle;
+use soil_telemetry::TelemetryHandle;
 use soil_api::{Core, ProvideRuntimeApi};
 use soil_application_crypto::AppPublic;
 use soil_blockchain::HeaderBackend;
@@ -549,11 +549,11 @@ mod tests {
 	use super::*;
 	use parking_lot::Mutex;
 	use sc_block_builder::BlockBuilderBuilder;
-	use sc_client_api::BlockchainEvents;
+	use soil_client_api::BlockchainEvents;
 	use sc_consensus::BoxJustificationImport;
 	use sc_consensus_slots::{BackoffAuthoringOnFinalizedHeadLagging, SimpleSlotWorker};
 	use sc_keystore::LocalKeystore;
-	use sc_network_test::{Block as TestBlock, *};
+	use soil_network_test::{Block as TestBlock, *};
 	use soil_application_crypto::{key_types::AURA, AppCrypto};
 	use soil_consensus::{NoNetwork as DummyOracle, Proposal, ProposeArgs};
 	use soil_consensus_aura::sr25519::AuthorityPair;

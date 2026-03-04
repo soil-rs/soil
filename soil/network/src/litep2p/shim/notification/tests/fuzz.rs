@@ -35,8 +35,8 @@ use rand::{
 	seq::IteratorRandom,
 };
 
-use sc_network_common::types::ReputationChange;
-use sc_network_types::PeerId;
+use soil_network_common::types::ReputationChange;
+use soil_network_types::PeerId;
 
 use std::{
 	collections::{HashMap, HashSet},

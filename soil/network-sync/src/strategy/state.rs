@@ -32,11 +32,11 @@ use crate::{
 use futures::{channel::oneshot, FutureExt};
 use log::{debug, error, trace};
 use prost::Message;
-use sc_client_api::ProofProvider;
+use soil_client_api::ProofProvider;
 use sc_consensus::{BlockImportError, BlockImportStatus, IncomingBlock};
-use sc_network::{IfDisconnected, ProtocolName};
-use sc_network_common::sync::message::BlockAnnounce;
-use sc_network_types::PeerId;
+use soil_network::{IfDisconnected, ProtocolName};
+use soil_network_common::sync::message::BlockAnnounce;
+use soil_network_types::PeerId;
 use soil_consensus::BlockOrigin;
 use soil_runtime::{
 	traits::{Block as BlockT, Header, NumberFor},
@@ -45,7 +45,7 @@ use soil_runtime::{
 use std::{any::Any, collections::HashMap, sync::Arc};
 
 mod rep {
-	use sc_network::ReputationChange as Rep;
+	use soil_network::ReputationChange as Rep;
 
 	/// Peer response data does not have requested bits.
 	pub const BAD_RESPONSE: Rep = Rep::new(-(1 << 12), "Incomplete response");
@@ -400,7 +400,7 @@ mod test {
 	};
 	use codec::Decode;
 	use sc_block_builder::BlockBuilderBuilder;
-	use sc_client_api::KeyValueStates;
+	use soil_client_api::KeyValueStates;
 	use sc_consensus::{ImportedAux, ImportedState};
 	use soil_core::H256;
 	use soil_runtime::traits::Zero;

@@ -21,7 +21,7 @@ use proc_macro_crate::{crate_name, FoundCrate};
 use quote::quote;
 use syn::{DeriveInput, Error, Ident, Path};
 
-const CRATE_NAME: &str = "sc-chain-spec";
+const CRATE_NAME: &str = "soil-chain-spec";
 const ATTRIBUTE_NAME: &str = "forks";
 
 /// Implements `Extension's` `Group` accessor.

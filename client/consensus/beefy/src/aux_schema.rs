@@ -21,7 +21,7 @@
 use crate::{error::Error, worker::PersistedState, LOG_TARGET};
 use codec::{Decode, Encode};
 use log::{debug, trace, warn};
-use sc_client_api::{backend::AuxStore, Backend};
+use soil_client_api::{backend::AuxStore, Backend};
 use soil_blockchain::{Error as ClientError, Result as ClientResult};
 use soil_consensus_beefy::AuthorityIdBound;
 use soil_runtime::traits::Block as BlockT;
@@ -89,7 +89,7 @@ where
 pub(crate) mod tests {
 	use super::*;
 	use crate::tests::BeefyTestNet;
-	use sc_network_test::TestNetFactory;
+	use soil_network_test::TestNetFactory;
 	use soil_consensus_beefy::ecdsa_crypto;
 
 	// also used in tests.rs

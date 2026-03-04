@@ -22,9 +22,9 @@ use console::style;
 use futures::prelude::*;
 use futures_timer::Delay;
 use log::{debug, info, log_enabled, trace};
-use sc_client_api::{BlockchainEvents, UsageProvider};
-use sc_network::NetworkStatusProvider;
-use sc_network_sync::{SyncStatusProvider, SyncingService};
+use soil_client_api::{BlockchainEvents, UsageProvider};
+use soil_network::NetworkStatusProvider;
+use soil_network_sync::{SyncStatusProvider, SyncingService};
 use soil_blockchain::HeaderMetadata;
 use soil_runtime::traits::{Block as BlockT, Header};
 use std::{

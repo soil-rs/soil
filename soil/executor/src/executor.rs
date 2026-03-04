@@ -30,7 +30,7 @@ use std::{
 };
 
 use codec::Encode;
-use sc_executor_common::{
+use soil_executor_common::{
 	runtime_blob::RuntimeBlob,
 	wasm_runtime::{
 		AllocationStats, HeapAllocStrategy, WasmInstance, WasmModule, DEFAULT_HEAP_ALLOC_STRATEGY,

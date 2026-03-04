@@ -549,9 +549,9 @@ impl std::str::FromStr for RpcEndpoint {
 	}
 }
 
-impl Into<sc_service::config::RpcEndpoint> for RpcEndpoint {
-	fn into(self) -> sc_service::config::RpcEndpoint {
-		sc_service::config::RpcEndpoint {
+impl Into<soil_service::config::RpcEndpoint> for RpcEndpoint {
+	fn into(self) -> soil_service::config::RpcEndpoint {
+		soil_service::config::RpcEndpoint {
 			batch_config: self.batch_config,
 			listen_addr: self.listen_addr,
 			max_buffer_capacity_per_connection: self.max_buffer_capacity_per_connection,

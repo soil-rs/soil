@@ -25,7 +25,7 @@ use kitchensink_runtime::{
 };
 use node_primitives::{BlockNumber, Hash};
 use node_testing::keyring::*;
-use sc_executor::{Externalities, RuntimeVersionOf};
+use soil_executor::{Externalities, RuntimeVersionOf};
 use soil_core::{
 	storage::well_known_keys,
 	traits::{CallContext, CodeExecutor, RuntimeCode},

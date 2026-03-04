@@ -20,7 +20,7 @@
 
 use std::{marker::PhantomData, sync::Arc};
 
-use sc_client_api::{Backend, ChildInfo, StorageKey, StorageProvider};
+use soil_client_api::{Backend, ChildInfo, StorageKey, StorageProvider};
 use soil_runtime::traits::Block as BlockT;
 use tokio::sync::mpsc;
 
@@ -141,8 +141,8 @@ where
 			.map(|opt| {
 				QueryResult::Ok(opt.map(|storage_data| {
 					let result = match &storage_data {
-						sc_client_api::MerkleValue::Node(data) => hex_string(&data.as_slice()),
-						sc_client_api::MerkleValue::Hash(hash) => hex_string(&hash.as_ref()),
+						soil_client_api::MerkleValue::Node(data) => hex_string(&data.as_slice()),
+						soil_client_api::MerkleValue::Hash(hash) => hex_string(&hash.as_ref()),
 					};
 
 					StorageResult {

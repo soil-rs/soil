@@ -476,7 +476,7 @@ impl DiscoveryBehaviour {
 	pub fn put_record_to(
 		&mut self,
 		record: Record,
-		peers: HashSet<sc_network_types::PeerId>,
+		peers: HashSet<soil_network_types::PeerId>,
 		update_local_storage: bool,
 	) {
 		if let Some(kad) = self.kademlia.as_mut() {
@@ -624,7 +624,7 @@ pub enum DiscoveryOut {
 	PutRecordRequest(
 		RecordKey,
 		Vec<u8>,
-		Option<sc_network_types::PeerId>,
+		Option<soil_network_types::PeerId>,
 		Option<std::time::Instant>,
 	),
 

@@ -23,8 +23,8 @@ use jsonrpsee::{
 	types::error::{ErrorCode, ErrorObject, ErrorObjectOwned},
 	Extensions,
 };
-use sc_client_api::TrieCacheContext;
-use sc_rpc_api::check_if_safe;
+use soil_client_api::TrieCacheContext;
+use soil_rpc_api::check_if_safe;
 use serde::{Deserialize, Serialize};
 use soil_runtime::traits::Block as BlockT;
 use std::sync::Arc;
@@ -157,8 +157,8 @@ impl<C, B, BA> StateMigration<C, B, BA> {
 impl<C, B, BA> StateMigrationApiServer<<B as BlockT>::Hash> for StateMigration<C, B, BA>
 where
 	B: BlockT,
-	C: Send + Sync + 'static + sc_client_api::HeaderBackend<B>,
-	BA: 'static + sc_client_api::backend::Backend<B>,
+	C: Send + Sync + 'static + soil_client_api::HeaderBackend<B>,
+	BA: 'static + soil_client_api::backend::Backend<B>,
 {
 	fn call(
 		&self,

@@ -27,13 +27,13 @@ use codec::{self, Decode, Encode};
 use futures::prelude::*;
 use log::{debug, trace};
 use prost::Message;
-use sc_client_api::{BlockBackend, ProofProvider};
-use sc_network::{
+use soil_client_api::{BlockBackend, ProofProvider};
+use soil_network::{
 	config::ProtocolId,
 	request_responses::{IncomingRequest, OutgoingResponse},
 	NetworkBackend, ReputationChange,
 };
-use sc_network_types::PeerId;
+use soil_network_types::PeerId;
 use soil_core::{
 	hexdisplay::HexDisplay,
 	storage::{ChildInfo, ChildType, PrefixedStorageKey},

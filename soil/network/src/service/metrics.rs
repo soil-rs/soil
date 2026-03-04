@@ -40,7 +40,7 @@ pub fn register(registry: &Registry, sources: MetricSources) -> Result<Metrics, 
 	Metrics::register(registry)
 }
 
-// Register `sc-network` metrics without bandwidth/connected peer sources.
+// Register `soil-network` metrics without bandwidth/connected peer sources.
 pub fn register_without_sources(registry: &Registry) -> Result<Metrics, PrometheusError> {
 	Metrics::register(registry)
 }

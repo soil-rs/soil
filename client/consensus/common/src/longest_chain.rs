@@ -18,7 +18,7 @@
 
 //! Longest chain implementation
 
-use sc_client_api::backend;
+use soil_client_api::backend;
 use soil_blockchain::{Backend, HeaderBackend};
 use soil_consensus::{Error as ConsensusError, SelectChain};
 use soil_runtime::traits::{Block as BlockT, Header, NumberFor};

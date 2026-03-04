@@ -36,7 +36,7 @@ use jsonrpsee::{
 };
 
 use sc_block_builder::BlockBuilderBuilder;
-use sc_client_api::ChildInfo;
+use soil_client_api::ChildInfo;
 use sc_rpc::testing::TokioTestExecutor;
 use soil_blockchain::HeaderBackend;
 use soil_consensus::BlockOrigin;

@@ -29,20 +29,20 @@ use futures::{select, FutureExt, StreamExt};
 use jsonrpsee::RpcModule;
 use log::{debug, error, info};
 use prometheus_endpoint::Registry;
-use sc_chain_spec::{get_extension, ChainSpec};
-use sc_client_api::{
+use soil_chain_spec::{get_extension, ChainSpec};
+use soil_client_api::{
 	execution_extensions::ExecutionExtensions, proof_provider::ProofProvider, BadBlocks,
 	BlockBackend, BlockchainEvents, ExecutorProvider, ForkBlocks, KeysIter, StorageProvider,
 	TrieCacheContext, UsageProvider,
 };
-use sc_client_db::{Backend, BlocksPruning, DatabaseSettings, PruningMode};
+use soil_client_db::{Backend, BlocksPruning, DatabaseSettings, PruningMode};
 use sc_consensus::import_queue::{ImportQueue, ImportQueueService};
-use sc_executor::{
+use soil_executor::{
 	soil_wasm_interface::HostFunctions, HeapAllocStrategy, NativeExecutionDispatch, RuntimeVersionOf,
 	WasmExecutor, DEFAULT_HEAP_ALLOC_STRATEGY,
 };
 use sc_keystore::LocalKeystore;
-use sc_network::{
+use soil_network::{
 	config::{FullNetworkConfiguration, ProtocolId, SyncMode},
 	multiaddr::Protocol,
 	service::{
@@ -51,9 +51,9 @@ use sc_network::{
 	},
 	NetworkBackend, NetworkStateInfo,
 };
-use sc_network_common::role::{Role, Roles};
-use sc_network_light::light_client_requests::handler::LightClientRequestHandler;
-use sc_network_sync::{
+use soil_network_common::role::{Role, Roles};
+use soil_network_light::light_client_requests::handler::LightClientRequestHandler;
+use soil_network_sync::{
 	block_relay_protocol::{BlockDownloader, BlockRelayParams},
 	block_request_handler::BlockRequestHandler,
 	engine::SyncingEngine,
@@ -74,16 +74,16 @@ use sc_rpc::{
 	system::SystemApiServer,
 	DenyUnsafe, SubscriptionTaskExecutor,
 };
-use sc_rpc_spec_v2::{
+use soil_rpc_spec_v2::{
 	archive::ArchiveApiServer,
 	chain_head::ChainHeadApiServer,
 	chain_spec::ChainSpecApiServer,
 	transaction::{TransactionApiServer, TransactionBroadcastApiServer},
 };
-use sc_telemetry::{telemetry, ConnectionMessage, Telemetry, TelemetryHandle, SUBSTRATE_INFO};
+use soil_telemetry::{telemetry, ConnectionMessage, Telemetry, TelemetryHandle, SUBSTRATE_INFO};
 use sc_tracing::block::TracingExecuteBlock;
-use sc_transaction_pool_api::{MaintainedTransactionPool, TransactionPool};
-use sc_utils::mpsc::{tracing_unbounded, TracingUnboundedSender};
+use soil_transaction_pool_api::{MaintainedTransactionPool, TransactionPool};
+use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedSender};
 use soil_api::{CallApiAt, ProvideRuntimeApi};
 use soil_blockchain::{HeaderBackend, HeaderMetadata};
 use soil_consensus::block_validation::{
@@ -144,7 +144,7 @@ pub fn new_full_client<TBl, TRtApi, TExec>(
 	config: &Configuration,
 	telemetry: Option<TelemetryHandle>,
 	executor: TExec,
-	pruning_filters: Vec<Arc<dyn sc_client_db::PruningFilter>>,
+	pruning_filters: Vec<Arc<dyn soil_client_db::PruningFilter>>,
 ) -> Result<TFullClient<TBl, TRtApi, TExec>, Error>
 where
 	TBl: BlockT,
@@ -162,7 +162,7 @@ pub fn new_full_parts_record_import<TBl, TRtApi, TExec>(
 	telemetry: Option<TelemetryHandle>,
 	executor: TExec,
 	enable_import_proof_recording: bool,
-	pruning_filters: Vec<Arc<dyn sc_client_db::PruningFilter>>,
+	pruning_filters: Vec<Arc<dyn soil_client_db::PruningFilter>>,
 ) -> Result<TFullParts<TBl, TRtApi, TExec>, Error>
 where
 	TBl: BlockT,
@@ -197,7 +197,7 @@ pub fn new_full_parts<TBl, TRtApi, TExec>(
 	config: &Configuration,
 	telemetry: Option<TelemetryHandle>,
 	executor: TExec,
-	pruning_filters: Vec<Arc<dyn sc_client_db::PruningFilter>>,
+	pruning_filters: Vec<Arc<dyn soil_client_db::PruningFilter>>,
 ) -> Result<TFullParts<TBl, TRtApi, TExec>, Error>
 where
 	TBl: BlockT,
@@ -220,7 +220,7 @@ where
 	TExec: CodeExecutor + RuntimeVersionOf + Clone,
 	TBuildGenesisBlock: BuildGenesisBlock<
 		TBl,
-		BlockImportOperation = <Backend<TBl> as sc_client_api::backend::Backend<TBl>>::BlockImportOperation
+		BlockImportOperation = <Backend<TBl> as soil_client_api::backend::Backend<TBl>>::BlockImportOperation
 	>,
 {
 	let keystore_container = KeystoreContainer::new(&config.keystore)?;
@@ -317,7 +317,7 @@ fn warm_up_trie_cache<TBl: BlockT>(
 	backend: Arc<TFullBackend<TBl>>,
 	storage_root: TBl::Hash,
 ) -> Result<(), Error> {
-	use sc_client_api::backend::Backend;
+	use soil_client_api::backend::Backend;
 	use soil_state_machine::Backend as StateBackend;
 
 	let untrusted_state = || backend.state_at(storage_root, TrieCacheContext::Untrusted);
@@ -362,15 +362,15 @@ fn warm_up_trie_cache<TBl: BlockT>(
 	Ok(())
 }
 
-/// Creates a [`NativeElseWasmExecutor`](sc_executor::NativeElseWasmExecutor) according to
+/// Creates a [`NativeElseWasmExecutor`](soil_executor::NativeElseWasmExecutor) according to
 /// [`Configuration`].
 #[deprecated(note = "Please switch to `new_wasm_executor`. Will be removed at end of 2024.")]
 #[allow(deprecated)]
 pub fn new_native_or_wasm_executor<D: NativeExecutionDispatch>(
 	config: &Configuration,
-) -> sc_executor::NativeElseWasmExecutor<D> {
+) -> soil_executor::NativeElseWasmExecutor<D> {
 	#[allow(deprecated)]
-	sc_executor::NativeElseWasmExecutor::new_with_wasm_executor(new_wasm_executor(&config.executor))
+	soil_executor::NativeElseWasmExecutor::new_with_wasm_executor(new_wasm_executor(&config.executor))
 }
 
 /// Creates a [`WasmExecutor`] according to [`ExecutorConfiguration`].
@@ -428,7 +428,7 @@ where
 	E: CodeExecutor + RuntimeVersionOf,
 	G: BuildGenesisBlock<
 		Block,
-		BlockImportOperation = <Backend<Block> as sc_client_api::backend::Backend<Block>>::BlockImportOperation
+		BlockImportOperation = <Backend<Block> as soil_client_api::backend::Backend<Block>>::BlockImportOperation
 	>,
 {
 	let executor = crate::client::LocalCallExecutor::new(
@@ -468,12 +468,12 @@ pub struct SpawnTasksParams<'a, TBl: BlockT, TCl, TExPool, TRpc, Backend> {
 	/// Builds additional [`RpcModule`]s that should be added to the server
 	pub rpc_builder: Box<dyn Fn(SubscriptionTaskExecutor) -> Result<RpcModule<TRpc>, Error>>,
 	/// A shared network instance.
-	pub network: Arc<dyn sc_network::service::traits::NetworkService>,
+	pub network: Arc<dyn soil_network::service::traits::NetworkService>,
 	/// A Sender for RPC requests.
 	pub system_rpc_tx: TracingUnboundedSender<sc_rpc::system::Request<TBl>>,
 	/// Controller for transactions handlers
 	pub tx_handler_controller:
-		sc_network_transactions::TransactionsHandlerController<<TBl as BlockT>::Hash>,
+		soil_network_transactions::TransactionsHandlerController<<TBl as BlockT>::Hash>,
 	/// Syncing service.
 	pub sync_service: Arc<SyncingService<TBl>>,
 	/// Telemetry instance for this node.
@@ -524,7 +524,7 @@ where
 	TBl: BlockT,
 	TBl::Hash: Unpin,
 	TBl::Header: Unpin,
-	TBackend: 'static + sc_client_api::backend::Backend<TBl> + Send,
+	TBackend: 'static + soil_client_api::backend::Backend<TBl> + Send,
 	TExPool: MaintainedTransactionPool<Block = TBl, Hash = <TBl as BlockT>::Hash> + 'static,
 {
 	let chain_info = client.usage_info().chain;
@@ -537,8 +537,8 @@ where
 	)
 	.map_err(|e| Error::Application(Box::new(e)))?;
 
-	let sysinfo = sc_sysinfo::gather_sysinfo();
-	sc_sysinfo::print_sysinfo(&sysinfo);
+	let sysinfo = soil_sysinfo::gather_sysinfo();
+	soil_sysinfo::print_sysinfo(&sysinfo);
 
 	let telemetry = telemetry
 		.map(|telemetry| {
@@ -619,7 +619,7 @@ where
 	// RPC).
 	let rpc_v2_metrics = config
 		.prometheus_registry()
-		.map(|registry| sc_rpc_spec_v2::transaction::TransactionMetrics::new(registry))
+		.map(|registry| soil_rpc_spec_v2::transaction::TransactionMetrics::new(registry))
 		.transpose()?;
 
 	let gen_rpc_module = || {
@@ -671,7 +671,7 @@ where
 	spawn_handle.spawn(
 		"informant",
 		None,
-		sc_informant::build(client.clone(), network, sync_service.clone()),
+		soil_informant::build(client.clone(), network, sync_service.clone()),
 	);
 
 	task_manager.keep_alive((config.base_path, rpc_server_handle));
@@ -682,7 +682,7 @@ where
 /// Returns a future that forwards imported transactions to the transaction networking protocol.
 pub async fn propagate_transaction_notifications<Block, ExPool>(
 	transaction_pool: Arc<ExPool>,
-	tx_handler_controller: sc_network_transactions::TransactionsHandlerController<
+	tx_handler_controller: soil_network_transactions::TransactionsHandlerController<
 		<Block as BlockT>::Hash,
 	>,
 	telemetry: Option<TelemetryHandle>,
@@ -738,8 +738,8 @@ pub fn init_telemetry<Block, Client, Network>(
 	network: Network,
 	client: Arc<Client>,
 	telemetry: &mut Telemetry,
-	sysinfo: Option<sc_telemetry::SysInfo>,
-) -> sc_telemetry::Result<TelemetryHandle>
+	sysinfo: Option<soil_telemetry::SysInfo>,
+) -> soil_telemetry::Result<TelemetryHandle>
 where
 	Block: BlockT,
 	Client: BlockBackend<Block>,
@@ -750,9 +750,9 @@ where
 		name,
 		implementation,
 		version,
-		target_os: sc_sysinfo::TARGET_OS.into(),
-		target_arch: sc_sysinfo::TARGET_ARCH.into(),
-		target_env: sc_sysinfo::TARGET_ENV.into(),
+		target_os: soil_sysinfo::TARGET_OS.into(),
+		target_arch: soil_sysinfo::TARGET_ARCH.into(),
+		target_env: soil_sysinfo::TARGET_ENV.into(),
 		config: String::new(),
 		chain,
 		genesis_hash: format!("{:?}", genesis_hash),
@@ -798,7 +798,7 @@ pub struct GenRpcModuleParams<'a, TBl: BlockT, TBackend, TCl, TRpc, TExPool> {
 	/// RPC builder.
 	pub rpc_builder: &'a dyn Fn(SubscriptionTaskExecutor) -> Result<RpcModule<TRpc>, Error>,
 	/// Transaction metrics handle.
-	pub metrics: Option<sc_rpc_spec_v2::transaction::TransactionMetrics>,
+	pub metrics: Option<soil_rpc_spec_v2::transaction::TransactionMetrics>,
 	/// Optional [`TracingExecuteBlock`] handle.
 	///
 	/// Will be used by the `trace_block` RPC to execute the actual block.
@@ -838,7 +838,7 @@ where
 		+ Send
 		+ Sync
 		+ 'static,
-	TBackend: sc_client_api::backend::Backend<TBl> + 'static,
+	TBackend: soil_client_api::backend::Backend<TBl> + 'static,
 	<TCl as ProvideRuntimeApi<TBl>>::Api: soil_session::SessionKeys<TBl> + soil_api::Metadata<TBl>,
 	TExPool: MaintainedTransactionPool<Block = TBl, Hash = <TBl as BlockT>::Hash> + 'static,
 	TBl::Hash: Unpin,
@@ -867,7 +867,7 @@ where
 
 	const MAX_TRANSACTION_PER_CONNECTION: usize = 16;
 
-	let transaction_broadcast_rpc_v2 = sc_rpc_spec_v2::transaction::TransactionBroadcast::new(
+	let transaction_broadcast_rpc_v2 = soil_rpc_spec_v2::transaction::TransactionBroadcast::new(
 		client.clone(),
 		transaction_pool.clone(),
 		task_executor.clone(),
@@ -875,7 +875,7 @@ where
 	)
 	.into_rpc();
 
-	let transaction_v2 = sc_rpc_spec_v2::transaction::Transaction::new(
+	let transaction_v2 = soil_rpc_spec_v2::transaction::Transaction::new(
 		client.clone(),
 		transaction_pool.clone(),
 		task_executor.clone(),
@@ -883,12 +883,12 @@ where
 	)
 	.into_rpc();
 
-	let chain_head_v2 = sc_rpc_spec_v2::chain_head::ChainHead::new(
+	let chain_head_v2 = soil_rpc_spec_v2::chain_head::ChainHead::new(
 		client.clone(),
 		backend.clone(),
 		task_executor.clone(),
 		// Defaults to sensible limits for the `ChainHead`.
-		sc_rpc_spec_v2::chain_head::ChainHeadConfig::default(),
+		soil_rpc_spec_v2::chain_head::ChainHeadConfig::default(),
 	)
 	.into_rpc();
 
@@ -900,7 +900,7 @@ where
 		blocks_pruning.is_archive();
 	let genesis_hash = client.hash(Zero::zero()).ok().flatten().expect("Genesis block exists; qed");
 	if is_archive_node {
-		let archive_v2 = sc_rpc_spec_v2::archive::Archive::new(
+		let archive_v2 = soil_rpc_spec_v2::archive::Archive::new(
 			client.clone(),
 			backend.clone(),
 			genesis_hash,
@@ -911,7 +911,7 @@ where
 	}
 
 	// ChainSpec RPC-v2.
-	let chain_spec_v2 = sc_rpc_spec_v2::chain_spec::ChainSpec::new(
+	let chain_spec_v2 = soil_rpc_spec_v2::chain_spec::ChainSpec::new(
 		chain_spec.name().into(),
 		genesis_hash,
 		chain_spec.properties(),
@@ -993,9 +993,9 @@ pub fn build_network<Block, Net, TxPool, IQ, Client>(
 	params: BuildNetworkParams<Block, Net, TxPool, IQ, Client>,
 ) -> Result<
 	(
-		Arc<dyn sc_network::service::traits::NetworkService>,
+		Arc<dyn soil_network::service::traits::NetworkService>,
 		TracingUnboundedSender<sc_rpc::system::Request<Block>>,
-		sc_network_transactions::TransactionsHandlerController<<Block as BlockT>::Hash>,
+		soil_network_transactions::TransactionsHandlerController<<Block as BlockT>::Hash>,
 		Arc<SyncingService<Block>>,
 	),
 	Error,
@@ -1159,9 +1159,9 @@ pub fn build_network_advanced<Block, Net, TxPool, IQ, Client>(
 	params: BuildNetworkAdvancedParams<Block, Net, TxPool, IQ, Client>,
 ) -> Result<
 	(
-		Arc<dyn sc_network::service::traits::NetworkService>,
+		Arc<dyn soil_network::service::traits::NetworkService>,
 		TracingUnboundedSender<sc_rpc::system::Request<Block>>,
-		sc_network_transactions::TransactionsHandlerController<<Block as BlockT>::Hash>,
+		soil_network_transactions::TransactionsHandlerController<<Block as BlockT>::Hash>,
 		Arc<SyncingService<Block>>,
 	),
 	Error,
@@ -1222,7 +1222,7 @@ where
 
 	// Create transactions protocol and add it to the list of supported protocols of
 	let (transactions_handler_proto, transactions_config) =
-		sc_network_transactions::TransactionsHandlerPrototype::new::<_, Block, Net>(
+		soil_network_transactions::TransactionsHandlerPrototype::new::<_, Block, Net>(
 			protocol_id.clone(),
 			genesis_hash,
 			fork_id,
@@ -1237,7 +1237,7 @@ where
 
 	let sync_service = Arc::new(sync_service);
 
-	let network_params = sc_network::config::Params::<Block, <Block as BlockT>::Hash, Net> {
+	let network_params = soil_network::config::Params::<Block, <Block as BlockT>::Hash, Net> {
 		role,
 		executor: {
 			let spawn_handle = Clone::clone(&spawn_handle);

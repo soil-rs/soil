@@ -40,7 +40,7 @@ use futures::{Stream, StreamExt};
 use itertools::Itertools;
 
 use crate::LOG_TARGET;
-use sc_utils::id_sequence::SeqID;
+use soil_utils::id_sequence::SeqID;
 use soil_core::{traits::SpawnNamed, Bytes, Encode};
 pub use soil_statement_store::StatementStore;
 use soil_statement_store::{

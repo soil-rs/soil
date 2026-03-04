@@ -19,12 +19,12 @@
 use crate::{MessageIntent, Network, ValidationResult, Validator, ValidatorContext};
 
 use ahash::AHashSet;
-use sc_network_types::PeerId;
+use soil_network_types::PeerId;
 use schnellru::{ByLength, LruMap};
 
 use prometheus_endpoint::{register, Counter, PrometheusError, Registry, U64};
-use sc_network::{types::ProtocolName, NotificationService};
-use sc_network_common::role::ObservedRole;
+use soil_network::{types::ProtocolName, NotificationService};
+use soil_network_common::role::ObservedRole;
 use soil_runtime::traits::{Block as BlockT, Hash, HashingFor};
 use std::{collections::HashMap, iter, sync::Arc, time, time::Instant};
 
@@ -44,7 +44,7 @@ const REBROADCAST_INTERVAL: time::Duration = time::Duration::from_millis(750);
 pub(crate) const PERIODIC_MAINTENANCE_INTERVAL: time::Duration = time::Duration::from_millis(1100);
 
 mod rep {
-	use sc_network::ReputationChange as Rep;
+	use soil_network::ReputationChange as Rep;
 	/// Reputation change when a peer sends us a gossip message that we didn't know about.
 	pub const GOSSIP_SUCCESS: Rep = Rep::new(1 << 4, "Successful gossip");
 	/// Reputation change when a peer sends us a gossip message that we already knew about.
@@ -544,11 +544,11 @@ impl Metrics {
 mod tests {
 	use super::*;
 	use futures::prelude::*;
-	use sc_network::{
+	use soil_network::{
 		config::MultiaddrWithPeerId, event::Event, service::traits::NotificationEvent, MessageSink,
 		NetworkBlock, NetworkEventStream, NetworkPeers, ReputationChange,
 	};
-	use sc_network_types::multiaddr::Multiaddr;
+	use soil_network_types::multiaddr::Multiaddr;
 	use soil_runtime::{
 		testing::{Block as RawBlock, MockCallU64, TestXt, H256},
 		traits::NumberFor,
@@ -732,7 +732,7 @@ mod tests {
 			&mut self,
 			_peer: &PeerId,
 			_notification: Vec<u8>,
-		) -> Result<(), sc_network::error::Error> {
+		) -> Result<(), soil_network::error::Error> {
 			unimplemented!();
 		}
 

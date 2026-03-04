@@ -22,8 +22,8 @@ use crate::{
 	CliConfiguration,
 };
 use clap::Parser;
-use sc_client_api::HeaderBackend;
-use sc_service::chain_ops::import_blocks;
+use soil_client_api::HeaderBackend;
+use soil_service::chain_ops::import_blocks;
 use soil_runtime::traits::Block as BlockT;
 use std::{
 	fmt::Debug,
@@ -64,7 +64,7 @@ impl ImportBlocksCmd {
 	where
 		C: HeaderBackend<B> + Send + Sync + 'static,
 		B: BlockT + for<'de> serde::Deserialize<'de>,
-		IQ: sc_service::ImportQueue<B> + 'static,
+		IQ: soil_service::ImportQueue<B> + 'static,
 	{
 		let file: Box<dyn Read + Send> = match &self.input {
 			Some(filename) => Box::new(fs::File::open(filename)?),

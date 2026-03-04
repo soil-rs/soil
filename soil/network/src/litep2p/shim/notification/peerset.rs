@@ -35,7 +35,7 @@
 //! [`Peerset`] may also contain "slots", both inbound and outbound, which mark how many incoming
 //! and outgoing connections it should maintain at all times. Peers for the inbound slots are filled
 //! by remote peers opening inbound substreams towards the local node and peers for the outbound
-//! slots are filled by querying the `Peerstore` which contains all peers known to `sc-network`.
+//! slots are filled by querying the `Peerstore` which contains all peers known to `soil-network`.
 //! Peers for outbound slots are selected in a decreasing order of reputation.
 
 use crate::{
@@ -48,8 +48,8 @@ use futures::{channel::oneshot, future::BoxFuture, stream::FuturesUnordered, Str
 use futures_timer::Delay;
 use litep2p::protocol::notification::NotificationError;
 
-use sc_network_types::PeerId;
-use sc_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
+use soil_network_types::PeerId;
+use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
 
 use std::{
 	collections::{HashMap, HashSet},

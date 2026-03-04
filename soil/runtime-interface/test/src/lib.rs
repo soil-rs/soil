@@ -23,7 +23,7 @@ use soil_runtime_interface::*;
 use sp_runtime_interface_test_wasm::{test_api::HostFunctions, wasm_binary_unwrap};
 use sp_runtime_interface_test_wasm_deprecated::wasm_binary_unwrap as wasm_binary_deprecated_unwrap;
 
-use sc_executor_common::{runtime_blob::RuntimeBlob, wasm_runtime::AllocationStats};
+use soil_executor_common::{runtime_blob::RuntimeBlob, wasm_runtime::AllocationStats};
 use soil_wasm_interface::{ExtendedHostFunctions, HostFunctions as HostFunctionsT};
 
 use std::{
@@ -40,7 +40,7 @@ fn call_wasm_method_with_result<HF: HostFunctionsT>(
 	let mut ext = TestExternalities::default();
 	let mut ext_ext = ext.ext();
 
-	let executor = sc_executor::WasmExecutor::<
+	let executor = soil_executor::WasmExecutor::<
 		ExtendedHostFunctions<soil_io::SubstrateHostFunctions, HF>,
 	>::builder()
 	.build();

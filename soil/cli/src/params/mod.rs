@@ -33,7 +33,7 @@ mod transaction_pool_params;
 
 use crate::arg_enums::{CryptoScheme, OutputType};
 use clap::Args;
-use sc_service::config::{IpNetwork, RpcBatchRequestConfig};
+use soil_service::config::{IpNetwork, RpcBatchRequestConfig};
 use soil_core::crypto::{Ss58AddressFormat, Ss58AddressFormatRegistry};
 use soil_runtime::{
 	generic::BlockId,

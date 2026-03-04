@@ -19,7 +19,7 @@
 //! API trait of the chain spec.
 
 use jsonrpsee::{core::RpcResult, proc_macros::rpc};
-use sc_chain_spec::Properties;
+use soil_chain_spec::Properties;
 
 #[rpc(client, server)]
 pub trait ChainSpecApi {

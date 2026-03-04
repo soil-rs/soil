@@ -24,7 +24,7 @@
 
 use codec::{Decode, Encode};
 use error::{Error, Result};
-use sc_executor::WasmExecutor;
+use soil_executor::WasmExecutor;
 use soil_core::{
 	traits::{CallContext, CodeExecutor, FetchRuntimeCode, RuntimeCode},
 	OpaqueMetadata,

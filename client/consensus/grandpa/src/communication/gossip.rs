@@ -90,12 +90,12 @@ use codec::{Decode, DecodeAll, Encode};
 use log::{debug, trace};
 use prometheus_endpoint::{register, CounterVec, Opts, PrometheusError, Registry, U64};
 use rand::seq::SliceRandom;
-use sc_network::ReputationChange;
-use sc_network_common::role::ObservedRole;
-use sc_network_gossip::{MessageIntent, ValidatorContext};
-use sc_network_types::PeerId;
-use sc_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG};
-use sc_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
+use soil_network::ReputationChange;
+use soil_network_common::role::ObservedRole;
+use soil_network_gossip::{MessageIntent, ValidatorContext};
+use soil_network_types::PeerId;
+use soil_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG};
+use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
 use soil_consensus_grandpa::AuthorityId;
 use soil_runtime::traits::{Block as BlockT, NumberFor, Zero};
 
@@ -1492,7 +1492,7 @@ impl<Block: BlockT> GossipValidator<Block> {
 	}
 }
 
-impl<Block: BlockT> sc_network_gossip::Validator<Block> for GossipValidator<Block> {
+impl<Block: BlockT> soil_network_gossip::Validator<Block> for GossipValidator<Block> {
 	fn new_peer(
 		&self,
 		context: &mut dyn ValidatorContext<Block>,
@@ -1525,7 +1525,7 @@ impl<Block: BlockT> sc_network_gossip::Validator<Block> for GossipValidator<Bloc
 		context: &mut dyn ValidatorContext<Block>,
 		who: &PeerId,
 		data: &[u8],
-	) -> sc_network_gossip::ValidationResult<Block::Hash> {
+	) -> soil_network_gossip::ValidationResult<Block::Hash> {
 		let (action, broadcast_topics, peer_reply) = self.do_validate(who, data);
 
 		// not with lock held!
@@ -1541,15 +1541,15 @@ impl<Block: BlockT> sc_network_gossip::Validator<Block> for GossipValidator<Bloc
 			Action::Keep(topic, cb) => {
 				self.report(*who, cb);
 				context.broadcast_message(topic, data.to_vec(), false);
-				sc_network_gossip::ValidationResult::ProcessAndKeep(topic)
+				soil_network_gossip::ValidationResult::ProcessAndKeep(topic)
 			},
 			Action::ProcessAndDiscard(topic, cb) => {
 				self.report(*who, cb);
-				sc_network_gossip::ValidationResult::ProcessAndDiscard(topic)
+				soil_network_gossip::ValidationResult::ProcessAndDiscard(topic)
 			},
 			Action::Discard(cb) => {
 				self.report(*who, cb);
-				sc_network_gossip::ValidationResult::Discard
+				soil_network_gossip::ValidationResult::Discard
 			},
 		}
 	}
@@ -1675,8 +1675,8 @@ pub(super) struct PeerReport {
 mod tests {
 	use super::{super::NEIGHBOR_REBROADCAST_PERIOD, environment::SharedVoterSetState, *};
 	use crate::communication;
-	use sc_network::config::Role;
-	use sc_network_gossip::Validator as GossipValidatorT;
+	use soil_network::config::Role;
+	use soil_network_gossip::Validator as GossipValidatorT;
 	use soil_core::{crypto::UncheckedFrom, H256};
 	use std::time::Instant;
 	use substrate_test_runtime_client::runtime::{Block, Header};

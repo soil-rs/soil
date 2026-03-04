@@ -18,12 +18,12 @@
 
 use assert_matches::assert_matches;
 use codec::{Decode, Encode};
-use sc_executor_common::{
+use soil_executor_common::{
 	error::Error,
 	runtime_blob::RuntimeBlob,
 	wasm_runtime::{HeapAllocStrategy, WasmModule},
 };
-use sc_runtime_test::wasm_binary_unwrap;
+use soil_runtime_test::wasm_binary_unwrap;
 use soil_core::{
 	ed25519, map,
 	offchain::{testing, OffchainDbExt, OffchainWorkerExt},
@@ -52,7 +52,7 @@ macro_rules! test_wasm_execution {
 			fn [<$method_name _compiled_recreate_instance_cow>]() {
 				let _ = soil_tracing::try_init_simple();
 				$method_name(WasmExecutionMethod::Compiled {
-					instantiation_strategy: sc_executor_wasmtime::InstantiationStrategy::RecreateInstanceCopyOnWrite
+					instantiation_strategy: soil_executor_wasmtime::InstantiationStrategy::RecreateInstanceCopyOnWrite
 				});
 			}
 
@@ -60,7 +60,7 @@ macro_rules! test_wasm_execution {
 			fn [<$method_name _compiled_recreate_instance_vanilla>]() {
 				let _ = soil_tracing::try_init_simple();
 				$method_name(WasmExecutionMethod::Compiled {
-					instantiation_strategy: sc_executor_wasmtime::InstantiationStrategy::RecreateInstance
+					instantiation_strategy: soil_executor_wasmtime::InstantiationStrategy::RecreateInstance
 				});
 			}
 
@@ -68,7 +68,7 @@ macro_rules! test_wasm_execution {
 			fn [<$method_name _compiled_pooling_cow>]() {
 				let _ = soil_tracing::try_init_simple();
 				$method_name(WasmExecutionMethod::Compiled {
-					instantiation_strategy: sc_executor_wasmtime::InstantiationStrategy::PoolingCopyOnWrite
+					instantiation_strategy: soil_executor_wasmtime::InstantiationStrategy::PoolingCopyOnWrite
 				});
 			}
 
@@ -76,7 +76,7 @@ macro_rules! test_wasm_execution {
 			fn [<$method_name _compiled_pooling_vanilla>]() {
 				let _ = soil_tracing::try_init_simple();
 				$method_name(WasmExecutionMethod::Compiled {
-					instantiation_strategy: sc_executor_wasmtime::InstantiationStrategy::Pooling
+					instantiation_strategy: soil_executor_wasmtime::InstantiationStrategy::Pooling
 				});
 			}
 		}

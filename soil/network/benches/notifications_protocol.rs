@@ -20,7 +20,7 @@ use criterion::{
 	criterion_group, criterion_main, AxisScale, BenchmarkId, Criterion, PlotConfiguration,
 	Throughput,
 };
-use sc_network::{
+use soil_network::{
 	config::{
 		FullNetworkConfiguration, MultiaddrWithPeerId, NetworkConfiguration, NonReservedPeerMode,
 		NotificationHandshake, Params, ProtocolId, Role, SetConfig,
@@ -29,7 +29,7 @@ use sc_network::{
 	Litep2pNetworkBackend, NetworkBackend, NetworkWorker, NotificationMetrics, NotificationService,
 	PeerId, Roles,
 };
-use sc_network_common::{sync::message::BlockAnnouncesHandshake, ExHashT};
+use soil_network_common::{sync::message::BlockAnnouncesHandshake, ExHashT};
 use soil_core::H256;
 use soil_runtime::traits::{Block as BlockT, Zero};
 use std::{sync::Arc, time::Duration};
@@ -125,7 +125,7 @@ where
 
 	let (worker1, network_service1, notification_service1) = create_network_worker::<B, H, N>();
 	let (worker2, network_service2, notification_service2) = create_network_worker::<B, H, N>();
-	let peer_id2: sc_network::PeerId = network_service2.local_peer_id().into();
+	let peer_id2: soil_network::PeerId = network_service2.local_peer_id().into();
 	let handle1 = tokio::spawn(worker1.run());
 	let handle2 = tokio::spawn(worker2.run());
 
@@ -160,7 +160,7 @@ where
 					Some(event) = notification_service2.next_event() => {
 						match event {
 							NotificationEvent::ValidateInboundSubstream { result_tx, .. } => {
-								result_tx.send(sc_network::service::traits::ValidationResult::Accept).unwrap();
+								result_tx.send(soil_network::service::traits::ValidationResult::Accept).unwrap();
 							},
 							NotificationEvent::NotificationReceived { .. } => {
 								break;

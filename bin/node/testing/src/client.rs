@@ -26,7 +26,7 @@ pub use substrate_test_client::*;
 use node_cli::service::RuntimeExecutor;
 
 /// Default backend type.
-pub type Backend = sc_client_db::Backend<node_primitives::Block>;
+pub type Backend = soil_client_db::Backend<node_primitives::Block>;
 
 /// Test client type.
 pub type Client = client::Client<
@@ -73,7 +73,7 @@ impl TestClientBuilderExt
 	}
 	fn build(self) -> Client {
 		let executor = RuntimeExecutor::builder().build();
-		use sc_service::client::LocalCallExecutor;
+		use soil_service::client::LocalCallExecutor;
 		use std::sync::Arc;
 		let executor = LocalCallExecutor::new(
 			self.backend().clone(),

@@ -16,7 +16,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-use sc_telemetry::SysInfo;
+use soil_telemetry::SysInfo;
 use std::{process::Command, str};
 
 fn sysctl_output(name: &str) -> Option<String> {

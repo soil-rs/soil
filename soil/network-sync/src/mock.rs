@@ -21,9 +21,9 @@
 use crate::block_relay_protocol::{BlockDownloader as BlockDownloaderT, BlockResponseError};
 
 use futures::channel::oneshot;
-use sc_network::{ProtocolName, RequestFailure};
-use sc_network_common::sync::message::{BlockData, BlockRequest};
-use sc_network_types::PeerId;
+use soil_network::{ProtocolName, RequestFailure};
+use soil_network_common::sync::message::{BlockData, BlockRequest};
+use soil_network_types::PeerId;
 use soil_runtime::traits::Block as BlockT;
 
 mockall::mock! {

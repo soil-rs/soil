@@ -16,7 +16,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-//! `sc-network` utilities
+//! `soil-network` utilities
 
 use futures::{stream::unfold, FutureExt, Stream, StreamExt};
 use futures_timer::Delay;

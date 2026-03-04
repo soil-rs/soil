@@ -56,7 +56,7 @@ use futures::{
 };
 use parking_lot::Mutex;
 use prometheus_endpoint::Registry as PrometheusRegistry;
-use sc_transaction_pool_api::{
+use soil_transaction_pool_api::{
 	error::Error as TxPoolApiError, ChainEvent, ImportNotificationStream,
 	MaintainedTransactionPool, PoolStatus, TransactionFor, TransactionPool, TransactionSource,
 	TransactionStatusStreamFor, TxHash, TxInvalidityReportMap,
@@ -1148,7 +1148,7 @@ where
 	}
 }
 
-impl<ChainApi, Block> sc_transaction_pool_api::LocalTransactionPool
+impl<ChainApi, Block> soil_transaction_pool_api::LocalTransactionPool
 	for ForkAwareTxPool<ChainApi, Block>
 where
 	Block: BlockT,
@@ -1162,7 +1162,7 @@ where
 	fn submit_local(
 		&self,
 		at: Block::Hash,
-		xt: sc_transaction_pool_api::LocalTransactionFor<Self>,
+		xt: soil_transaction_pool_api::LocalTransactionFor<Self>,
 	) -> Result<Self::Hash, Self::Error> {
 		trace!(
 			target: LOG_TARGET,
@@ -2070,11 +2070,11 @@ impl<Block, Client> ForkAwareTxPool<FullChainApi<Client, Block>, Block>
 where
 	Block: BlockT,
 	Client: soil_api::ProvideRuntimeApi<Block>
-		+ sc_client_api::BlockBackend<Block>
-		+ sc_client_api::blockchain::HeaderBackend<Block>
+		+ soil_client_api::BlockBackend<Block>
+		+ soil_client_api::blockchain::HeaderBackend<Block>
 		+ soil_runtime::traits::BlockIdTo<Block>
-		+ sc_client_api::ExecutorProvider<Block>
-		+ sc_client_api::UsageProvider<Block>
+		+ soil_client_api::ExecutorProvider<Block>
+		+ soil_client_api::UsageProvider<Block>
 		+ soil_blockchain::HeaderMetadata<Block, Error = soil_blockchain::Error>
 		+ Send
 		+ Sync

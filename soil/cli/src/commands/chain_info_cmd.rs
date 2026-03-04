@@ -18,7 +18,7 @@
 
 use crate::{CliConfiguration, DatabaseParams, PruningParams, Result as CliResult, SharedParams};
 use codec::{Decode, Encode};
-use sc_client_api::{backend::Backend as BackendT, blockchain::HeaderBackend};
+use soil_client_api::{backend::Backend as BackendT, blockchain::HeaderBackend};
 use soil_blockchain::Info;
 use soil_runtime::traits::{Block as BlockT, Header as HeaderT};
 use std::{fmt::Debug, io};
@@ -68,11 +68,11 @@ impl<B: BlockT> From<Info<B>> for ChainInfo<B> {
 
 impl ChainInfoCmd {
 	/// Run the `chain-info` subcommand
-	pub fn run<B>(&self, config: &sc_service::Configuration) -> CliResult<()>
+	pub fn run<B>(&self, config: &soil_service::Configuration) -> CliResult<()>
 	where
 		B: BlockT,
 	{
-		let db_config = sc_client_db::DatabaseSettings {
+		let db_config = soil_client_db::DatabaseSettings {
 			trie_cache_maximum_size: config.trie_cache_maximum_size,
 			state_pruning: config.state_pruning.clone(),
 			source: config.database.clone(),
@@ -80,7 +80,7 @@ impl ChainInfoCmd {
 			pruning_filters: Default::default(),
 			metrics_registry: None,
 		};
-		let backend = sc_service::new_db_backend::<B>(db_config)?;
+		let backend = soil_service::new_db_backend::<B>(db_config)?;
 		let info: ChainInfo<B> = backend.blockchain().info().into();
 		let mut out = io::stdout();
 		serde_json::to_writer_pretty(&mut out, &info)

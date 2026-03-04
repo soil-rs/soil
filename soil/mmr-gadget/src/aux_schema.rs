@@ -21,7 +21,7 @@
 use crate::LOG_TARGET;
 use codec::{Decode, Encode};
 use log::{info, trace};
-use sc_client_api::backend::AuxStore;
+use soil_client_api::backend::AuxStore;
 use soil_blockchain::{Error as ClientError, Result as ClientResult};
 use soil_runtime::traits::{Block, NumberFor};
 

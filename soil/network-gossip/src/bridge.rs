@@ -21,12 +21,12 @@ use crate::{
 	Network, Syncing, Validator,
 };
 
-use sc_network::{
+use soil_network::{
 	service::traits::{NotificationEvent, ValidationResult},
 	types::ProtocolName,
 	NotificationService, ReputationChange,
 };
-use sc_network_sync::SyncEvent;
+use soil_network_sync::SyncEvent;
 
 use futures::{
 	channel::mpsc::{channel, Receiver, Sender},
@@ -34,7 +34,7 @@ use futures::{
 };
 use log::trace;
 use prometheus_endpoint::Registry;
-use sc_network_types::PeerId;
+use soil_network_types::PeerId;
 use soil_runtime::traits::Block as BlockT;
 use std::{
 	collections::{HashMap, VecDeque},
@@ -357,14 +357,14 @@ mod tests {
 		future::poll_fn,
 	};
 	use quickcheck::{Arbitrary, Gen, QuickCheck};
-	use sc_network::{
+	use soil_network::{
 		config::MultiaddrWithPeerId,
 		service::traits::{Direction, MessageSink, NotificationEvent},
 		Event, NetworkBlock, NetworkEventStream, NetworkPeers, NotificationService, Roles,
 	};
-	use sc_network_common::role::ObservedRole;
-	use sc_network_sync::SyncEventStream;
-	use sc_network_types::multiaddr::Multiaddr;
+	use soil_network_common::role::ObservedRole;
+	use soil_network_sync::SyncEventStream;
+	use soil_network_types::multiaddr::Multiaddr;
 	use soil_runtime::{
 		testing::H256,
 		traits::{Block as BlockT, NumberFor},
@@ -519,7 +519,7 @@ mod tests {
 	}
 
 	#[async_trait::async_trait]
-	impl sc_network::service::traits::NotificationService for TestNotificationService {
+	impl soil_network::service::traits::NotificationService for TestNotificationService {
 		async fn open_substream(&mut self, _peer: PeerId) -> Result<(), ()> {
 			unimplemented!();
 		}
@@ -536,7 +536,7 @@ mod tests {
 			&mut self,
 			_peer: &PeerId,
 			_notification: Vec<u8>,
-		) -> Result<(), sc_network::error::Error> {
+		) -> Result<(), soil_network::error::Error> {
 			unimplemented!();
 		}
 

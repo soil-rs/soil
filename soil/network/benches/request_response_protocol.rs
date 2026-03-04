@@ -20,7 +20,7 @@ use criterion::{
 	criterion_group, criterion_main, AxisScale, BenchmarkId, Criterion, PlotConfiguration,
 	Throughput,
 };
-use sc_network::{
+use soil_network::{
 	config::{
 		FullNetworkConfiguration, IncomingRequest, NetworkConfiguration, NonReservedPeerMode,
 		NotificationHandshake, OutgoingResponse, Params, ProtocolId, Role, SetConfig,
@@ -29,7 +29,7 @@ use sc_network::{
 	IfDisconnected, Litep2pNetworkBackend, NetworkBackend, NetworkRequest, NetworkWorker,
 	NotificationMetrics, NotificationService, PeerId, Roles,
 };
-use sc_network_common::{sync::message::BlockAnnouncesHandshake, ExHashT};
+use soil_network_common::{sync::message::BlockAnnouncesHandshake, ExHashT};
 use soil_core::H256;
 use soil_runtime::traits::{Block as BlockT, Zero};
 use std::{sync::Arc, time::Duration};

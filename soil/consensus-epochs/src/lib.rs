@@ -22,7 +22,7 @@ pub mod migration;
 
 use codec::{Decode, Encode};
 use fork_tree::{FilterAction, ForkTree};
-use sc_client_api::utils::is_descendent_of;
+use soil_client_api::utils::is_descendent_of;
 use soil_blockchain::{Error as ClientError, HeaderBackend, HeaderMetadata};
 use soil_runtime::traits::{Block as BlockT, NumberFor, One, Zero};
 use std::{

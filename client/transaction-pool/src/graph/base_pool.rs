@@ -23,7 +23,7 @@
 use std::{cmp::Ordering, collections::HashSet, fmt, hash, sync::Arc, time::Instant};
 
 use crate::LOG_TARGET;
-use sc_transaction_pool_api::{error, InPoolTransaction, PoolStatus};
+use soil_transaction_pool_api::{error, InPoolTransaction, PoolStatus};
 use serde::Serialize;
 use soil_core::hexdisplay::HexDisplay;
 use soil_runtime::{

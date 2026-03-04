@@ -19,13 +19,13 @@
 //! Test utilities.
 
 use parking_lot::Mutex;
-use sc_client_api::{
+use soil_client_api::{
 	execution_extensions::ExecutionExtensions, BlockBackend, BlockImportNotification,
 	BlockchainEvents, CallExecutor, ChildInfo, ExecutorProvider, FinalityNotification,
 	FinalityNotifications, FinalizeSummary, ImportNotifications, KeysIter, MerkleValue, PairsIter,
 	StaleBlock, StorageData, StorageEventStream, StorageKey, StorageProvider,
 };
-use sc_utils::mpsc::{tracing_unbounded, TracingUnboundedSender};
+use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedSender};
 use soil_api::{CallApiAt, CallApiAtParams};
 use soil_blockchain::{BlockStatus, CachedHeaderMetadata, HeaderBackend, HeaderMetadata, Info};
 use soil_consensus::BlockOrigin;
@@ -149,7 +149,7 @@ impl<Block: BlockT, E: CallExecutor<Block>, Client: ExecutorProvider<Block, Exec
 }
 
 impl<
-		BE: sc_client_api::backend::Backend<Block> + Send + Sync + 'static,
+		BE: soil_client_api::backend::Backend<Block> + Send + Sync + 'static,
 		Block: BlockT,
 		Client: StorageProvider<Block, BE>,
 	> StorageProvider<Block, BE> for ChainHeadMockClient<Client>
@@ -349,14 +349,14 @@ where
 		info
 	}
 
-	fn status(&self, hash: Block::Hash) -> sc_client_api::blockchain::Result<BlockStatus> {
+	fn status(&self, hash: Block::Hash) -> soil_client_api::blockchain::Result<BlockStatus> {
 		self.client.status(hash)
 	}
 
 	fn number(
 		&self,
 		hash: Block::Hash,
-	) -> sc_client_api::blockchain::Result<Option<<<Block as BlockT>::Header as HeaderT>::Number>>
+	) -> soil_client_api::blockchain::Result<Option<<<Block as BlockT>::Header as HeaderT>::Number>>
 	{
 		self.client.number(hash)
 	}

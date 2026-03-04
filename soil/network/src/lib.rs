@@ -206,8 +206,8 @@
 //! - Either party can signal that it doesn't want a notifications substream anymore by closing
 //! its writing side. The other party should respond by closing its own writing side soon after.
 //!
-//! The API of `sc-network` allows one to register user-defined notification protocols.
-//! `sc-network` automatically tries to open a substream towards each node for which the legacy
+//! The API of `soil-network` allows one to register user-defined notification protocols.
+//! `soil-network` automatically tries to open a substream towards each node for which the legacy
 //! Substream substream is open. The handshake is then performed automatically.
 //!
 //! For example, the `sc-consensus-grandpa` crate registers the `/paritytech/grandpa/1`
@@ -225,7 +225,7 @@
 //!
 //! # Usage
 //!
-//! Using the `sc-network` crate is done through the [`NetworkWorker`] struct. Create this
+//! Using the `soil-network` crate is done through the [`NetworkWorker`] struct. Create this
 //! struct by passing a [`config::Params`], then poll it as if it was a `Future`. You can extract an
 //! `Arc<NetworkService>` from the `NetworkWorker`, which can be shared amongst multiple places
 //! in order to give orders to the networking.
@@ -268,11 +268,11 @@ pub use crate::litep2p::Litep2pNetworkBackend;
 pub use event::{DhtEvent, Event};
 #[doc(inline)]
 pub use request_responses::{Config, IfDisconnected, RequestFailure};
-pub use sc_network_common::{
+pub use soil_network_common::{
 	role::{ObservedRole, Roles},
 	types::ReputationChange,
 };
-pub use sc_network_types::{
+pub use soil_network_types::{
 	multiaddr::{self, Multiaddr},
 	PeerId,
 };
@@ -291,7 +291,7 @@ pub use service::{
 };
 pub use types::ProtocolName;
 
-/// Log target for `sc-network`.
+/// Log target for `soil-network`.
 const LOG_TARGET: &str = "sub-libp2p";
 
 /// The maximum allowed number of established connections per peer.

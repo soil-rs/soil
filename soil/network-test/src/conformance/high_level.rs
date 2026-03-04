@@ -20,7 +20,7 @@ use crate::conformance::setup::{
 	connect_backends, connect_notifications, create_network_backend, NetworkBackendClient,
 };
 
-use sc_network::{
+use soil_network::{
 	request_responses::OutgoingResponse, service::traits::NotificationEvent, IfDisconnected,
 	Litep2pNetworkBackend, NetworkWorker,
 };

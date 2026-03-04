@@ -36,7 +36,7 @@
 //! required to overrides multiple runtimes, multiple WASM blobs matching each of the spec versions
 //! needed must be provided in the given directory.
 
-use sc_executor::RuntimeVersionOf;
+use soil_executor::RuntimeVersionOf;
 use soil_blockchain::Result;
 use soil_core::traits::{FetchRuntimeCode, RuntimeCode, WrappedRuntimeCode};
 use soil_state_machine::BasicExternalities;
@@ -264,7 +264,7 @@ pub fn dummy_overrides() -> WasmOverride {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use sc_executor::{HeapAllocStrategy, WasmExecutor};
+	use soil_executor::{HeapAllocStrategy, WasmExecutor};
 	use std::fs::{self, File};
 
 	fn executor() -> WasmExecutor {

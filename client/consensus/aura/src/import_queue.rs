@@ -25,13 +25,13 @@ use crate::{
 use codec::Codec;
 use log::{debug, info, trace};
 use prometheus_endpoint::Registry;
-use sc_client_api::{backend::AuxStore, BlockOf, UsageProvider};
+use soil_client_api::{backend::AuxStore, BlockOf, UsageProvider};
 use sc_consensus::{
 	block_import::{BlockImport, BlockImportParams, ForkChoiceStrategy},
 	import_queue::{BasicQueue, BoxJustificationImport, DefaultImportQueue, Verifier},
 };
 use sc_consensus_slots::{check_equivocation, CheckedHeader, InherentDataProviderExt};
-use sc_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG, CONSENSUS_TRACE};
+use soil_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG, CONSENSUS_TRACE};
 use soil_api::{ApiExt, ProvideRuntimeApi};
 use soil_block_builder::BlockBuilder as BlockBuilderApi;
 use soil_blockchain::{HeaderBackend, HeaderMetadata};
@@ -62,7 +62,7 @@ fn check_header<C, B: BlockT, P: Pair>(
 where
 	P::Public: Codec,
 	P::Signature: Codec,
-	C: sc_client_api::backend::AuxStore,
+	C: soil_client_api::backend::AuxStore,
 {
 	let check_result =
 		crate::standalone::check_header_slot_and_seal::<B, P>(slot_now, header, authorities);
@@ -137,7 +137,7 @@ where
 		+ ProvideRuntimeApi<B>
 		+ Send
 		+ Sync
-		+ sc_client_api::backend::AuxStore,
+		+ soil_client_api::backend::AuxStore,
 	C::Api: BlockBuilderApi<B> + AuraApi<B, AuthorityId<P>> + ApiExt<B>,
 	P: Pair,
 	P::Public: Codec + Debug,

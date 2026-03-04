@@ -21,7 +21,7 @@ use futures::{
 	pin_mut, select, Future,
 };
 
-use sc_service::Error as ServiceError;
+use soil_service::Error as ServiceError;
 
 /// Abstraction over OS signals to handle the shutdown of the node smoothly.
 ///

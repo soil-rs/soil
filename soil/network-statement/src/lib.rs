@@ -41,7 +41,7 @@ use prometheus_endpoint::{
 	exponential_buckets, register, Counter, Gauge, Histogram, HistogramOpts, PrometheusError,
 	Registry, U64,
 };
-use sc_network::{
+use soil_network::{
 	config::{NonReservedPeerMode, SetConfig},
 	error, multiaddr,
 	peer_store::PeerStoreProvider,
@@ -53,8 +53,8 @@ use sc_network::{
 	utils::{interval, LruHashSet},
 	NetworkBackend, NetworkEventStream, NetworkPeers,
 };
-use sc_network_sync::{SyncEvent, SyncEventStream};
-use sc_network_types::PeerId;
+use soil_network_sync::{SyncEvent, SyncEventStream};
+use soil_network_types::PeerId;
 use soil_runtime::traits::Block as BlockT;
 use soil_statement_store::{
 	FilterDecision, Hash, Statement, StatementSource, StatementStore, SubmitResult,
@@ -76,7 +76,7 @@ pub type Statements = Vec<Statement>;
 pub type StatementImportFuture = oneshot::Receiver<SubmitResult>;
 
 mod rep {
-	use sc_network::ReputationChange as Rep;
+	use soil_network::ReputationChange as Rep;
 	/// Reputation change when a peer sends us any statement.
 	///
 	/// This forces node to verify it, thus the negative value here. Once statement is verified,
@@ -1100,7 +1100,7 @@ mod tests {
 
 	#[derive(Clone)]
 	struct TestNetwork {
-		reported_peers: Arc<Mutex<Vec<(PeerId, sc_network::ReputationChange)>>>,
+		reported_peers: Arc<Mutex<Vec<(PeerId, soil_network::ReputationChange)>>>,
 		disconnected_peers: Arc<Mutex<Vec<PeerId>>>,
 	}
 
@@ -1112,7 +1112,7 @@ mod tests {
 			}
 		}
 
-		fn get_reports(&self) -> Vec<(PeerId, sc_network::ReputationChange)> {
+		fn get_reports(&self) -> Vec<(PeerId, soil_network::ReputationChange)> {
 			self.reported_peers.lock().unwrap().clone()
 		}
 
@@ -1131,11 +1131,11 @@ mod tests {
 			unimplemented!()
 		}
 
-		fn add_known_address(&self, _: PeerId, _: sc_network::Multiaddr) {
+		fn add_known_address(&self, _: PeerId, _: soil_network::Multiaddr) {
 			unimplemented!()
 		}
 
-		fn report_peer(&self, peer_id: PeerId, cost_benefit: sc_network::ReputationChange) {
+		fn report_peer(&self, peer_id: PeerId, cost_benefit: soil_network::ReputationChange) {
 			self.reported_peers.lock().unwrap().push((peer_id, cost_benefit));
 		}
 
@@ -1143,7 +1143,7 @@ mod tests {
 			unimplemented!()
 		}
 
-		fn disconnect_peer(&self, peer: PeerId, _: sc_network::ProtocolName) {
+		fn disconnect_peer(&self, peer: PeerId, _: soil_network::ProtocolName) {
 			self.disconnected_peers.lock().unwrap().push(peer);
 		}
 
@@ -1157,7 +1157,7 @@ mod tests {
 
 		fn add_reserved_peer(
 			&self,
-			_: sc_network::config::MultiaddrWithPeerId,
+			_: soil_network::config::MultiaddrWithPeerId,
 		) -> Result<(), String> {
 			unimplemented!()
 		}
@@ -1168,23 +1168,23 @@ mod tests {
 
 		fn set_reserved_peers(
 			&self,
-			_: sc_network::ProtocolName,
-			_: std::collections::HashSet<sc_network::Multiaddr>,
+			_: soil_network::ProtocolName,
+			_: std::collections::HashSet<soil_network::Multiaddr>,
 		) -> Result<(), String> {
 			unimplemented!()
 		}
 
 		fn add_peers_to_reserved_set(
 			&self,
-			_: sc_network::ProtocolName,
-			_: std::collections::HashSet<sc_network::Multiaddr>,
+			_: soil_network::ProtocolName,
+			_: std::collections::HashSet<soil_network::Multiaddr>,
 		) -> Result<(), String> {
 			unimplemented!()
 		}
 
 		fn remove_peers_from_reserved_set(
 			&self,
-			_: sc_network::ProtocolName,
+			_: soil_network::ProtocolName,
 			_: Vec<PeerId>,
 		) -> Result<(), String> {
 			unimplemented!()
@@ -1194,7 +1194,7 @@ mod tests {
 			unimplemented!()
 		}
 
-		fn peer_role(&self, _: PeerId, _: Vec<u8>) -> Option<sc_network::ObservedRole> {
+		fn peer_role(&self, _: PeerId, _: Vec<u8>) -> Option<soil_network::ObservedRole> {
 			unimplemented!()
 		}
 
@@ -1209,7 +1209,7 @@ mod tests {
 		fn event_stream(
 			&self,
 			_name: &'static str,
-		) -> Pin<Box<dyn Stream<Item = sc_network_sync::types::SyncEvent> + Send>> {
+		) -> Pin<Box<dyn Stream<Item = soil_network_sync::types::SyncEvent> + Send>> {
 			unimplemented!()
 		}
 	}
@@ -1228,7 +1228,7 @@ mod tests {
 		fn event_stream(
 			&self,
 			_name: &'static str,
-		) -> Pin<Box<dyn Stream<Item = sc_network::Event> + Send>> {
+		) -> Pin<Box<dyn Stream<Item = soil_network::Event> + Send>> {
 			unimplemented!()
 		}
 	}
@@ -1266,7 +1266,7 @@ mod tests {
 			&mut self,
 			peer: &PeerId,
 			notification: Vec<u8>,
-		) -> Result<(), sc_network::error::Error> {
+		) -> Result<(), soil_network::error::Error> {
 			self.sent_notifications.lock().unwrap().push((*peer, notification));
 			Ok(())
 		}
@@ -1279,7 +1279,7 @@ mod tests {
 			unimplemented!()
 		}
 
-		async fn next_event(&mut self) -> Option<sc_network::service::traits::NotificationEvent> {
+		async fn next_event(&mut self) -> Option<soil_network::service::traits::NotificationEvent> {
 			None
 		}
 
@@ -1287,14 +1287,14 @@ mod tests {
 			unimplemented!()
 		}
 
-		fn protocol(&self) -> &sc_network::types::ProtocolName {
+		fn protocol(&self) -> &soil_network::types::ProtocolName {
 			unimplemented!()
 		}
 
 		fn message_sink(
 			&self,
 			_peer: &PeerId,
-		) -> Option<Box<dyn sc_network::service::traits::MessageSink>> {
+		) -> Option<Box<dyn soil_network::service::traits::MessageSink>> {
 			unimplemented!()
 		}
 	}
@@ -1481,7 +1481,7 @@ mod tests {
 			network: network.clone(),
 			sync: TestSync {},
 			sync_event_stream: (Box::pin(futures::stream::pending())
-				as Pin<Box<dyn Stream<Item = sc_network_sync::types::SyncEvent> + Send>>)
+				as Pin<Box<dyn Stream<Item = soil_network_sync::types::SyncEvent> + Send>>)
 				.fuse(),
 			peers,
 			statement_store: Arc::new(statement_store.clone()),
@@ -1688,7 +1688,7 @@ mod tests {
 			network: network.clone(),
 			sync: TestSync {},
 			sync_event_stream: (Box::pin(futures::stream::pending())
-				as Pin<Box<dyn Stream<Item = sc_network_sync::types::SyncEvent> + Send>>)
+				as Pin<Box<dyn Stream<Item = soil_network_sync::types::SyncEvent> + Send>>)
 				.fuse(),
 			peers: HashMap::new(),
 			statement_store: Arc::new(statement_store.clone()),
@@ -1731,7 +1731,7 @@ mod tests {
 		handler
 			.handle_notification_event(NotificationEvent::NotificationStreamOpened {
 				peer: peer_id,
-				direction: sc_network::service::traits::Direction::Inbound,
+				direction: soil_network::service::traits::Direction::Inbound,
 				handshake: vec![],
 				negotiated_fallback: None,
 			})
@@ -1816,7 +1816,7 @@ mod tests {
 			handler
 				.handle_notification_event(NotificationEvent::NotificationStreamOpened {
 					peer,
-					direction: sc_network::service::traits::Direction::Inbound,
+					direction: soil_network::service::traits::Direction::Inbound,
 					handshake: vec![],
 					negotiated_fallback: None,
 				})
@@ -2046,7 +2046,7 @@ mod tests {
 		handler
 			.handle_notification_event(NotificationEvent::NotificationStreamOpened {
 				peer: peer_id,
-				direction: sc_network::service::traits::Direction::Inbound,
+				direction: soil_network::service::traits::Direction::Inbound,
 				handshake: vec![],
 				negotiated_fallback: None,
 			})

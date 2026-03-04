@@ -23,8 +23,8 @@ use crate::{
 };
 use clap::Parser;
 use log::info;
-use sc_client_api::{BlockBackend, HeaderBackend, UsageProvider};
-use sc_service::{chain_ops::export_blocks, config::DatabaseSource};
+use soil_client_api::{BlockBackend, HeaderBackend, UsageProvider};
+use soil_service::{chain_ops::export_blocks, config::DatabaseSource};
 use soil_runtime::traits::{Block as BlockT, Header as HeaderT};
 use std::{fmt::Debug, fs, io, path::PathBuf, str::FromStr, sync::Arc};
 

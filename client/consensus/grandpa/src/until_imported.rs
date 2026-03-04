@@ -36,8 +36,8 @@ use futures_timer::Delay;
 use log::{debug, warn};
 use parking_lot::Mutex;
 use prometheus_endpoint::{register, Gauge, PrometheusError, Registry, U64};
-use sc_client_api::{BlockImportNotification, ImportNotifications};
-use sc_utils::mpsc::TracingUnboundedReceiver;
+use soil_client_api::{BlockImportNotification, ImportNotifications};
+use soil_utils::mpsc::TracingUnboundedReceiver;
 use soil_consensus_grandpa::AuthorityId;
 use soil_runtime::traits::{Block as BlockT, Header as HeaderT, NumberFor};
 
@@ -565,8 +565,8 @@ mod tests {
 	use finality_grandpa::Precommit;
 	use futures::future::Either;
 	use futures_timer::Delay;
-	use sc_client_api::BlockImportNotification;
-	use sc_utils::mpsc::{tracing_unbounded, TracingUnboundedSender};
+	use soil_client_api::BlockImportNotification;
+	use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedSender};
 	use soil_consensus::BlockOrigin;
 	use soil_core::crypto::UncheckedFrom;
 	use substrate_test_runtime_client::runtime::{Block, Hash, Header};
@@ -632,7 +632,7 @@ mod tests {
 	impl BlockSyncRequesterT<Block> for TestBlockSyncRequester {
 		fn set_sync_fork_request(
 			&self,
-			_peers: Vec<sc_network_types::PeerId>,
+			_peers: Vec<soil_network_types::PeerId>,
 			hash: Hash,
 			number: NumberFor<Block>,
 		) {

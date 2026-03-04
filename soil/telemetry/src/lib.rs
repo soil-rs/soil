@@ -26,7 +26,7 @@
 //! remote telemetry servers.
 //!
 //! If multiple substrate nodes are running in the same process, it uses a `tracing::Span` to
-//! identify which substrate node is reporting the telemetry. Every task spawned using sc-service's
+//! identify which substrate node is reporting the telemetry. Every task spawned using soil-service's
 //! `TaskManager` automatically inherit this span.
 //!
 //! Substrate's nodes initialize/register with the [`TelemetryWorker`] using a
@@ -40,7 +40,7 @@ use futures::{channel::mpsc, prelude::*};
 use libp2p::Multiaddr;
 use log::{error, warn};
 use parking_lot::Mutex;
-use sc_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
+use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
 use serde::Serialize;
 use std::{
 	collections::{
@@ -499,7 +499,7 @@ enum Register {
 /// # Example
 ///
 /// ```no_run
-/// # use sc_telemetry::*;
+/// # use soil_telemetry::*;
 /// # let authority_id = 42_u64;
 /// # let set_id = (43_u64, 44_u64);
 /// # let authorities = vec![45_u64];

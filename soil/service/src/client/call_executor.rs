@@ -17,11 +17,11 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 use super::{code_provider::CodeProvider, ClientConfig};
-use sc_client_api::{
+use soil_client_api::{
 	backend, call_executor::CallExecutor, execution_extensions::ExecutionExtensions, HeaderBackend,
 	TrieCacheContext,
 };
-use sc_executor::{RuntimeVersion, RuntimeVersionOf};
+use soil_executor::{RuntimeVersion, RuntimeVersionOf};
 use soil_api::ProofRecorder;
 use soil_core::traits::{CallContext, CodeExecutor};
 use soil_externalities::Extensions;
@@ -240,7 +240,7 @@ where
 		&self,
 		ext: &mut dyn soil_externalities::Externalities,
 		runtime_code: &soil_core::traits::RuntimeCode,
-	) -> Result<soil_version::RuntimeVersion, sc_executor::error::Error> {
+	) -> Result<soil_version::RuntimeVersion, soil_executor::error::Error> {
 		RuntimeVersionOf::runtime_version(&self.executor, ext, runtime_code)
 	}
 }

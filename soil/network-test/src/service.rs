@@ -19,7 +19,7 @@
 use futures::prelude::*;
 
 use sc_consensus::{ImportQueue, Link};
-use sc_network::{
+use soil_network::{
 	config::{self, FullNetworkConfiguration, MultiaddrWithPeerId, ProtocolId, TransportConfig},
 	event::Event,
 	peer_store::{PeerStore, PeerStoreProvider},
@@ -27,9 +27,9 @@ use sc_network::{
 	Multiaddr, NetworkEventStream, NetworkPeers, NetworkService, NetworkStateInfo, NetworkWorker,
 	NotificationMetrics, NotificationService, PeerId,
 };
-use sc_network_common::role::Roles;
-use sc_network_light::light_client_requests::handler::LightClientRequestHandler;
-use sc_network_sync::{
+use soil_network_common::role::Roles;
+use soil_network_light::light_client_requests::handler::LightClientRequestHandler;
+use soil_network_sync::{
 	block_request_handler::BlockRequestHandler,
 	engine::SyncingEngine,
 	service::network::NetworkServiceProvider,

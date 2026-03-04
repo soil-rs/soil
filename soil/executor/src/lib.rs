@@ -48,11 +48,11 @@ pub use soil_wasm_interface;
 pub use soil_wasm_interface::HostFunctions;
 pub use wasm_runtime::{read_embedded_version, WasmExecutionMethod};
 
-pub use sc_executor_common::{
+pub use soil_executor_common::{
 	error,
 	wasm_runtime::{HeapAllocStrategy, DEFAULT_HEAP_ALLOC_PAGES, DEFAULT_HEAP_ALLOC_STRATEGY},
 };
-pub use sc_executor_wasmtime::InstantiationStrategy as WasmtimeInstantiationStrategy;
+pub use soil_executor_wasmtime::InstantiationStrategy as WasmtimeInstantiationStrategy;
 
 /// Extracts the runtime version of a given runtime code.
 pub trait RuntimeVersionOf {
@@ -67,8 +67,8 @@ pub trait RuntimeVersionOf {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use sc_executor_common::runtime_blob::RuntimeBlob;
-	use sc_runtime_test::wasm_binary_unwrap;
+	use soil_executor_common::runtime_blob::RuntimeBlob;
+	use soil_runtime_test::wasm_binary_unwrap;
 	use soil_io::TestExternalities;
 
 	#[test]

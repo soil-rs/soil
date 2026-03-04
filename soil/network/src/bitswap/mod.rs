@@ -31,8 +31,8 @@ use futures::StreamExt;
 use litep2p::types::cid::{Cid, Error as CidError, Version as CidVersion};
 use log::{debug, error, trace};
 use prost::Message;
-use sc_client_api::BlockBackend;
-use sc_network_types::PeerId;
+use soil_client_api::BlockBackend;
+use soil_network_types::PeerId;
 use schema::bitswap::{
 	message::{wantlist::WantType, Block as MessageBlock, BlockPresence, BlockPresenceType},
 	Message as BitswapMessage,

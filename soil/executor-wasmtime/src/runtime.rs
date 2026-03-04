@@ -25,8 +25,8 @@ use crate::{
 };
 
 use parking_lot::Mutex;
-use sc_allocator::{AllocationStats, FreeingBumpHeapAllocator};
-use sc_executor_common::{
+use soil_allocator::{AllocationStats, FreeingBumpHeapAllocator};
+use soil_executor_common::{
 	error::{Error, Result, WasmError},
 	runtime_blob::RuntimeBlob,
 	util::checked_range,

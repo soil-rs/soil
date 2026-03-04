@@ -17,8 +17,8 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 use super::{client::ClientConfig, wasm_override::WasmOverride, wasm_substitutes::WasmSubstitutes};
-use sc_client_api::{backend, TrieCacheContext};
-use sc_executor::{RuntimeVersion, RuntimeVersionOf};
+use soil_client_api::{backend, TrieCacheContext};
+use soil_executor::{RuntimeVersion, RuntimeVersionOf};
 use soil_core::traits::{FetchRuntimeCode, RuntimeCode};
 use soil_runtime::traits::Block as BlockT;
 use soil_state_machine::{Ext, OverlayedChanges};
@@ -167,8 +167,8 @@ where
 mod tests {
 	use super::*;
 	use backend::Backend;
-	use sc_client_api::{in_mem, HeaderBackend};
-	use sc_executor::WasmExecutor;
+	use soil_client_api::{in_mem, HeaderBackend};
+	use soil_executor::WasmExecutor;
 	use soil_core::{
 		testing::TaskExecutor,
 		traits::{FetchRuntimeCode, WrappedRuntimeCode},

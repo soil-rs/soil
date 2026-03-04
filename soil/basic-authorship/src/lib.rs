@@ -21,7 +21,7 @@
 //! # Example
 //!
 //! ```
-//! # use sc_basic_authorship::ProposerFactory;
+//! # use soil_basic_authorship::ProposerFactory;
 //! # use soil_consensus::{Environment, Proposer, ProposeArgs};
 //! # use soil_runtime::generic::BlockId;
 //! # use std::{sync::Arc, time::Duration};

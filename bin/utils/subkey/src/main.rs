@@ -18,6 +18,6 @@
 
 //! Subkey utility, based on kitchensink_runtime.
 
-fn main() -> Result<(), sc_cli::Error> {
+fn main() -> Result<(), soil_cli::Error> {
 	subkey::run()
 }

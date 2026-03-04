@@ -44,7 +44,7 @@ use libp2p::PeerId;
 use log::trace;
 use parking_lot::Mutex;
 use sc_block_builder::{BlockBuilder, BlockBuilderBuilder};
-use sc_client_api::{
+use soil_client_api::{
 	backend::{AuxStore, Backend, Finalizer},
 	BlockBackend, BlockImportNotification, BlockchainEvents, FinalityNotification,
 	FinalityNotifications, ImportNotifications,
@@ -54,7 +54,7 @@ use sc_consensus::{
 	ForkChoiceStrategy, ImportQueue, ImportResult, JustificationImport, JustificationSyncLink,
 	LongestChain, Verifier,
 };
-use sc_network::{
+use soil_network::{
 	config::{
 		FullNetworkConfiguration, MultiaddrWithPeerId, NetworkConfiguration, NonDefaultSetConfig,
 		NonReservedPeerMode, ProtocolId, Role, SyncMode, TransportConfig,
@@ -65,9 +65,9 @@ use sc_network::{
 	NetworkBlock, NetworkService, NetworkStateInfo, NetworkSyncForkRequest, NetworkWorker,
 	NotificationMetrics, NotificationService,
 };
-use sc_network_common::role::Roles;
-use sc_network_light::light_client_requests::handler::LightClientRequestHandler;
-use sc_network_sync::{
+use soil_network_common::role::Roles;
+use soil_network_light::light_client_requests::handler::LightClientRequestHandler;
+use soil_network_sync::{
 	block_request_handler::BlockRequestHandler,
 	service::{network::NetworkServiceProvider, syncing_service::SyncingService},
 	state_request_handler::StateRequestHandler,
@@ -80,8 +80,8 @@ use sc_network_sync::{
 	},
 	warp_request_handler,
 };
-use sc_network_types::{build_multiaddr, multiaddr::Multiaddr};
-use sc_service::client::Client;
+use soil_network_types::{build_multiaddr, multiaddr::Multiaddr};
+use soil_service::client::Client;
 use soil_blockchain::{
 	Backend as BlockchainBackend, HeaderBackend, Info as BlockchainInfo, Result as ClientResult,
 };
@@ -975,7 +975,7 @@ pub trait TestNetFactory: Default + Sized + Send {
 		let block_announce_validator = config
 			.block_announce_validator
 			.unwrap_or_else(|| Box::new(DefaultBlockAnnounceValidator));
-		let metrics = <NetworkWorker<_, _> as sc_network::NetworkBackend<
+		let metrics = <NetworkWorker<_, _> as soil_network::NetworkBackend<
 			Block,
 			<Block as BlockT>::Hash,
 		>>::register_notification_metrics(None);
@@ -1002,7 +1002,7 @@ pub trait TestNetFactory: Default + Sized + Send {
 		);
 
 		let (engine, sync_service, block_announce_config) =
-			sc_network_sync::engine::SyncingEngine::new(
+			soil_network_sync::engine::SyncingEngine::new(
 				Roles::from(if config.is_authority { &Role::Authority } else { &Role::Full }),
 				client.clone(),
 				None,
@@ -1037,7 +1037,7 @@ pub trait TestNetFactory: Default + Sized + Send {
 
 		let genesis_hash =
 			client.hash(Zero::zero()).ok().flatten().expect("Genesis block exists; qed");
-		let network = NetworkWorker::new(sc_network::config::Params {
+		let network = NetworkWorker::new(soil_network::config::Params {
 			role: if config.is_authority { Role::Authority } else { Role::Full },
 			executor: Box::new(|f| {
 				tokio::spawn(f);

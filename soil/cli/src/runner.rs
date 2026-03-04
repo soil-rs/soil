@@ -20,8 +20,8 @@ use crate::{error::Error as CliError, Result, Signals, SubstrateCli};
 use chrono::prelude::*;
 use futures::{future::FutureExt, Future};
 use log::info;
-use sc_service::{Configuration, Error as ServiceError, TaskManager};
-use sc_utils::metrics::{TOKIO_THREADS_ALIVE, TOKIO_THREADS_TOTAL};
+use soil_service::{Configuration, Error as ServiceError, TaskManager};
+use soil_utils::metrics::{TOKIO_THREADS_ALIVE, TOKIO_THREADS_TOTAL};
 use std::{marker::PhantomData, time::Duration};
 
 /// Build a tokio runtime with all features.
@@ -192,8 +192,8 @@ pub fn print_node_infos<C: SubstrateCli>(config: &Configuration) {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use sc_network::config::NetworkConfiguration;
-	use sc_service::{
+	use soil_network::config::NetworkConfiguration;
+	use soil_service::{
 		config::{ExecutorConfiguration, RpcConfiguration},
 		Arc, ChainType, GenericChainSpec, NoExtension,
 	};
@@ -232,7 +232,7 @@ mod tests {
 		fn load_spec(
 			&self,
 			_: &str,
-		) -> std::result::Result<Box<dyn sc_service::ChainSpec>, String> {
+		) -> std::result::Result<Box<dyn soil_service::ChainSpec>, String> {
 			Err("nope".into())
 		}
 	}
@@ -245,16 +245,16 @@ mod tests {
 			Configuration {
 				impl_name: "spec".into(),
 				impl_version: "3".into(),
-				role: sc_service::Role::Authority,
+				role: soil_service::Role::Authority,
 				tokio_handle: runtime.handle().clone(),
 				transaction_pool: Default::default(),
 				network: NetworkConfiguration::new_memory(),
-				keystore: sc_service::config::KeystoreConfig::InMemory,
-				database: sc_client_db::DatabaseSource::ParityDb { path: root.clone() },
+				keystore: soil_service::config::KeystoreConfig::InMemory,
+				database: soil_client_db::DatabaseSource::ParityDb { path: root.clone() },
 				trie_cache_maximum_size: None,
 				warm_up_trie_cache: None,
 				state_pruning: None,
-				blocks_pruning: sc_client_db::BlocksPruning::KeepAll,
+				blocks_pruning: soil_client_db::BlocksPruning::KeepAll,
 				chain_spec: Box::new(
 					GenericChainSpec::<NoExtension, ()>::builder(
 						Default::default(),
@@ -279,7 +279,7 @@ mod tests {
 					max_subs_per_conn: Default::default(),
 					message_buffer_capacity: Default::default(),
 					port: 9944,
-					batch_config: sc_service::config::RpcBatchRequestConfig::Unlimited,
+					batch_config: soil_service::config::RpcBatchRequestConfig::Unlimited,
 					rate_limit: None,
 					rate_limit_whitelisted_ips: Default::default(),
 					rate_limit_trust_proxy_headers: Default::default(),
@@ -294,7 +294,7 @@ mod tests {
 				tracing_targets: None,
 				tracing_receiver: Default::default(),
 				announce_block: true,
-				base_path: sc_service::BasePath::new(root.clone()),
+				base_path: soil_service::BasePath::new(root.clone()),
 				data_path: root,
 			},
 			runtime,
@@ -334,7 +334,7 @@ mod tests {
 					let _ = receiver.await;
 				});
 
-				Ok::<_, sc_service::Error>(task_manager)
+				Ok::<_, soil_service::Error>(task_manager)
 			})
 			.unwrap_err();
 
@@ -401,7 +401,7 @@ mod tests {
 							},
 						);
 
-						Ok::<_, sc_service::Error>(task_manager)
+						Ok::<_, soil_service::Error>(task_manager)
 					})
 					.unwrap_err();
 			},

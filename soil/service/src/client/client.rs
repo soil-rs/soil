@@ -27,8 +27,8 @@ use log::{debug, info, trace, warn};
 use parking_lot::{Mutex, RwLock};
 use prometheus_endpoint::Registry;
 use rand::Rng;
-use sc_chain_spec::{resolve_state_version_from_wasm, BuildGenesisBlock};
-use sc_client_api::{
+use soil_chain_spec::{resolve_state_version_from_wasm, BuildGenesisBlock};
+use soil_client_api::{
 	backend::{
 		self, apply_aux, BlockImportOperation, ClientImportOperation, FinalizeSummary, Finalizer,
 		ImportNotificationAction, ImportSummary, LockImportRun, NewBlockState, StorageProvider,
@@ -46,8 +46,8 @@ use sc_client_api::{
 use sc_consensus::{
 	BlockCheckParams, BlockImportParams, ForkChoiceStrategy, ImportResult, StateAction,
 };
-use sc_executor::RuntimeVersion;
-use sc_telemetry::{telemetry, TelemetryHandle, SUBSTRATE_INFO};
+use soil_executor::RuntimeVersion;
+use soil_telemetry::{telemetry, TelemetryHandle, SUBSTRATE_INFO};
 use soil_api::{
 	ApiExt, ApiRef, CallApiAt, CallApiAtParams, ConstructRuntimeApi, Core as CoreApi,
 	ProvideRuntimeApi,
@@ -58,7 +58,7 @@ use soil_blockchain::{
 };
 use soil_consensus::{BlockOrigin, BlockStatus, Error as ConsensusError};
 
-use sc_utils::mpsc::{tracing_unbounded, TracingUnboundedSender};
+use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedSender};
 use soil_core::{
 	storage::{ChildInfo, ChildType, PrefixedStorageKey, StorageChild, StorageData, StorageKey},
 	traits::{CallContext, SpawnNamed},
@@ -193,7 +193,7 @@ pub fn new_with_backend<B, E, Block, G, RA>(
 	config: ClientConfig<Block>,
 ) -> soil_blockchain::Result<Client<B, LocalCallExecutor<Block, B, E>, Block, RA>>
 where
-	E: CodeExecutor + sc_executor::RuntimeVersionOf,
+	E: CodeExecutor + soil_executor::RuntimeVersionOf,
 	G: BuildGenesisBlock<
 		Block,
 		BlockImportOperation = <B as backend::Backend<Block>>::BlockImportOperation,

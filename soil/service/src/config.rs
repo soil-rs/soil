@@ -20,10 +20,10 @@
 
 pub use jsonrpsee::server::BatchRequestConfig as RpcBatchRequestConfig;
 use prometheus_endpoint::Registry;
-use sc_chain_spec::ChainSpec;
-pub use sc_client_db::{BlocksPruning, Database, DatabaseSource, PruningMode};
-pub use sc_executor::{WasmExecutionMethod, WasmtimeInstantiationStrategy};
-pub use sc_network::{
+use soil_chain_spec::ChainSpec;
+pub use soil_client_db::{BlocksPruning, Database, DatabaseSource, PruningMode};
+pub use soil_executor::{WasmExecutionMethod, WasmtimeInstantiationStrategy};
+pub use soil_network::{
 	config::{
 		MultiaddrWithPeerId, NetworkConfiguration, NodeKeyConfig, NonDefaultSetConfig, ProtocolId,
 		Role, SetConfig, SyncMode, TransportConfig,
@@ -33,10 +33,10 @@ pub use sc_network::{
 	},
 	Multiaddr,
 };
-pub use sc_rpc_server::{
+pub use soil_rpc_server::{
 	IpNetwork, RpcEndpoint, RpcMethods, SubscriptionIdProvider as RpcSubscriptionIdProvider,
 };
-pub use sc_telemetry::TelemetryEndpoints;
+pub use soil_telemetry::TelemetryEndpoints;
 pub use sc_transaction_pool::TransactionPoolOptions;
 use soil_core::crypto::SecretString;
 use std::{
@@ -52,7 +52,7 @@ use tempfile::TempDir;
 pub struct Configuration {
 	/// Implementation name
 	pub impl_name: String,
-	/// Implementation version (see sc-cli to see an example of format)
+	/// Implementation version (see soil-cli to see an example of format)
 	pub impl_version: String,
 	/// Node role.
 	pub role: Role,
@@ -229,8 +229,8 @@ impl Configuration {
 	}
 
 	/// Returns the database config for creating the backend.
-	pub fn db_config(&self) -> sc_client_db::DatabaseSettings {
-		sc_client_db::DatabaseSettings {
+	pub fn db_config(&self) -> soil_client_db::DatabaseSettings {
+		soil_client_db::DatabaseSettings {
 			trie_cache_maximum_size: self.trie_cache_maximum_size,
 			state_pruning: self.state_pruning.clone(),
 			source: self.database.clone(),

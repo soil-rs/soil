@@ -23,8 +23,8 @@ use crate::{
 };
 use kitchensink_runtime::RuntimeApi;
 use node_primitives::Block;
-use sc_cli::{Result, SubstrateCli};
-use sc_service::PartialComponents;
+use soil_cli::{Result, SubstrateCli};
+use soil_service::PartialComponents;
 
 use std::sync::Arc;
 
@@ -53,7 +53,7 @@ impl SubstrateCli for Cli {
 		2017
 	}
 
-	fn load_spec(&self, id: &str) -> std::result::Result<Box<dyn sc_service::ChainSpec>, String> {
+	fn load_spec(&self, id: &str) -> std::result::Result<Box<dyn soil_service::ChainSpec>, String> {
 		let spec = match id {
 			"" => {
 				return Err(
@@ -81,7 +81,7 @@ pub fn run() -> Result<()> {
 		None => {
 			let runner = cli.create_runner(&cli.run)?;
 			runner.run_node_until_exit(|config| async move {
-				service::new_full(config, cli).map_err(sc_cli::Error::Service)
+				service::new_full(config, cli).map_err(soil_cli::Error::Service)
 			})
 		},
 		Some(Subcommand::Inspect(cmd)) => {

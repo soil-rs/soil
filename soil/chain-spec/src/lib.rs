@@ -59,7 +59,7 @@
 //!       <td>chainType</td>
 //!       <td>The chain type of this chain
 //!           (refer to
-//!            <a href="enum.ChainType.html" title="enum sc_chain_spec::ChainType">
+//!            <a href="enum.ChainType.html" title="enum soil_chain_spec::ChainType">
 //!              <code>ChainType</code>
 //!            </a>).
 //!       </td>
@@ -203,7 +203,7 @@
 //! which can be accessed through the [`ChainSpec::as_storage_builder`] method. There is an
 //! intermediate internal helper that facilitates this interaction,
 //! [`GenesisConfigBuilderRuntimeCaller`], which serves as a straightforward wrapper for
-//! [`sc_executor::WasmExecutor`].
+//! [`soil_executor::WasmExecutor`].
 //!
 //! In case of `raw` genesis state the node does not interact with the runtime regarding the
 //! computation of initial state.
@@ -260,7 +260,7 @@
 //! `ChainSpecExtension` macro exposed by this crate.
 //! ```rust
 //! use std::collections::HashMap;
-//! use sc_chain_spec::{GenericChainSpec, ChainSpecExtension};
+//! use soil_chain_spec::{GenericChainSpec, ChainSpecExtension};
 //!
 //! #[derive(Clone, Debug, serde::Serialize, serde::Deserialize, ChainSpecExtension)]
 //! pub struct MyExtension {
@@ -274,7 +274,7 @@
 //! structure to add such parameters to your chain spec. This will allow overriding a single
 //! parameter starting at a specific block number.
 //! ```rust
-//! use sc_chain_spec::{Forks, ChainSpecGroup, ChainSpecExtension, GenericChainSpec};
+//! use soil_chain_spec::{Forks, ChainSpecGroup, ChainSpecExtension, GenericChainSpec};
 //!
 //! #[derive(Clone, Debug, serde::Serialize, serde::Deserialize, ChainSpecGroup)]
 //! pub struct ClientParams {
@@ -306,7 +306,7 @@
 //! achieved by declaring an extension that contains [`Forks`] within it.
 //! ```rust
 //! use serde::{Serialize, Deserialize};
-//! use sc_chain_spec::{Forks, GenericChainSpec, ChainSpecGroup, ChainSpecExtension};
+//! use soil_chain_spec::{Forks, GenericChainSpec, ChainSpecGroup, ChainSpecExtension};
 //!
 //! #[derive(Clone, Debug, Serialize, Deserialize, ChainSpecGroup)]
 //! pub struct ClientParams {
@@ -352,10 +352,10 @@ pub use self::{
 	},
 	json_patch::merge as json_merge,
 };
-pub use sc_chain_spec_derive::{ChainSpecExtension, ChainSpecGroup};
+pub use soil_chain_spec_derive::{ChainSpecExtension, ChainSpecGroup};
 
-use sc_network::config::MultiaddrWithPeerId;
-use sc_telemetry::TelemetryEndpoints;
+use soil_network::config::MultiaddrWithPeerId;
+use soil_telemetry::TelemetryEndpoints;
 use soil_core::storage::Storage;
 use soil_runtime::BuildStorage;
 

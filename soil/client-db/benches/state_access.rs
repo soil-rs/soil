@@ -18,10 +18,10 @@
 
 use criterion::{criterion_group, criterion_main, BatchSize, Criterion};
 use rand::{distributions::Uniform, rngs::StdRng, Rng, SeedableRng};
-use sc_client_api::{
+use soil_client_api::{
 	Backend as _, BlockImportOperation, NewBlockState, StateBackend, TrieCacheContext,
 };
-use sc_client_db::{Backend, BlocksPruning, DatabaseSettings, DatabaseSource, PruningMode};
+use soil_client_db::{Backend, BlocksPruning, DatabaseSettings, DatabaseSource, PruningMode};
 use soil_core::H256;
 use soil_runtime::{
 	testing::{Block as RawBlock, Header, MockCallU64, TestXt},

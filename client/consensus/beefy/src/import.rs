@@ -28,7 +28,7 @@ use soil_runtime::{
 	EncodedJustification,
 };
 
-use sc_client_api::{backend::Backend, TrieCacheContext};
+use soil_client_api::{backend::Backend, TrieCacheContext};
 use sc_consensus::{BlockCheckParams, BlockImport, BlockImportParams, ImportResult};
 
 use crate::{

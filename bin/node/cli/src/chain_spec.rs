@@ -18,15 +18,15 @@
 
 //! Substrate chain configurations.
 
-use sc_service::Properties;
+use soil_service::Properties;
 use kitchensink_runtime::{
 	genesis_config_presets::{Staker, ENDOWMENT, STASH},
 	wasm_binary_unwrap, Block, MaxNominations, StakerStatus,
 };
 use pallet_im_online::sr25519::AuthorityId as ImOnlineId;
-use sc_chain_spec::ChainSpecExtension;
-use sc_service::ChainType;
-use sc_telemetry::TelemetryEndpoints;
+use soil_chain_spec::ChainSpecExtension;
+use soil_service::ChainType;
+use soil_telemetry::TelemetryEndpoints;
 use serde::{Deserialize, Serialize};
 use soil_authority_discovery::AuthorityId as AuthorityDiscoveryId;
 use soil_consensus_babe::AuthorityId as BabeId;
@@ -48,15 +48,15 @@ const STAGING_TELEMETRY_URL: &str = "wss://telemetry.polkadot.io/submit/";
 #[serde(rename_all = "camelCase")]
 pub struct Extensions {
 	/// Block numbers with known hashes.
-	pub fork_blocks: sc_client_api::ForkBlocks<Block>,
+	pub fork_blocks: soil_client_api::ForkBlocks<Block>,
 	/// Known bad block hashes.
-	pub bad_blocks: sc_client_api::BadBlocks<Block>,
+	pub bad_blocks: soil_client_api::BadBlocks<Block>,
 	/// The light sync state extension used by the sync-state rpc.
-	pub light_sync_state: sc_sync_state_rpc::LightSyncStateExtension,
+	pub light_sync_state: soil_sync_state_rpc::LightSyncStateExtension,
 }
 
 /// Specialized `ChainSpec`.
-pub type ChainSpec = sc_service::GenericChainSpec<Extensions>;
+pub type ChainSpec = soil_service::GenericChainSpec<Extensions>;
 /// Flaming Fir testnet generator
 pub fn flaming_fir_config() -> Result<ChainSpec, String> {
 	ChainSpec::from_json_bytes(&include_bytes!("../res/flaming-fir.json")[..])
@@ -425,7 +425,7 @@ pub(crate) mod tests {
 	use super::*;
 	use crate::service::{new_full_base, NewFullBase};
 	use kitchensink_runtime::genesis_config_presets::well_known_including_eth_accounts;
-	use sc_service_test;
+	use soil_service_test;
 	use soil_runtime::{AccountId32, BuildStorage};
 
 	/// Local testnet config (single validator - Alice).
@@ -460,17 +460,17 @@ pub(crate) mod tests {
 	fn test_connectivity() {
 		soil_tracing::try_init_simple();
 
-		sc_service_test::connectivity(integration_test_config_with_two_authorities(), |config| {
+		soil_service_test::connectivity(integration_test_config_with_two_authorities(), |config| {
 			let NewFullBase { task_manager, client, network, sync, transaction_pool, .. } =
-				new_full_base::<sc_network::NetworkWorker<_, _>>(
+				new_full_base::<soil_network::NetworkWorker<_, _>>(
 					config,
 					None,
 					false,
 					1,
-					sc_network_statement::config::DEFAULT_STATEMENTS_PER_SECOND,
+					soil_network_statement::config::DEFAULT_STATEMENTS_PER_SECOND,
 					|_, _| (),
 				)?;
-			Ok(sc_service_test::TestNetComponents::new(
+			Ok(soil_service_test::TestNetComponents::new(
 				task_manager,
 				client,
 				network,

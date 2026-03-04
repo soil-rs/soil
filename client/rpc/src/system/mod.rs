@@ -26,13 +26,13 @@ use jsonrpsee::{
 	core::{async_trait, JsonValue},
 	Extensions,
 };
-use sc_rpc_api::check_if_safe;
+use soil_rpc_api::check_if_safe;
 use sc_tracing::logging;
-use sc_utils::mpsc::TracingUnboundedSender;
+use soil_utils::mpsc::TracingUnboundedSender;
 use soil_runtime::traits::{self, Header as HeaderT};
 
 pub use self::helpers::{Health, NodeRole, PeerInfo, SyncState, SystemInfo};
-pub use sc_rpc_api::system::*;
+pub use soil_rpc_api::system::*;
 
 /// System API implementation
 pub struct System<B: traits::Block> {
@@ -89,11 +89,11 @@ impl<B: traits::Block> SystemApiServer<B::Hash, <B::Header as HeaderT>::Number> 
 		Ok(self.info.chain_name.clone())
 	}
 
-	fn system_type(&self) -> Result<sc_chain_spec::ChainType, Error> {
+	fn system_type(&self) -> Result<soil_chain_spec::ChainType, Error> {
 		Ok(self.info.chain_type.clone())
 	}
 
-	fn system_properties(&self) -> Result<sc_chain_spec::Properties, Error> {
+	fn system_properties(&self) -> Result<soil_chain_spec::Properties, Error> {
 		Ok(self.info.properties.clone())
 	}
 

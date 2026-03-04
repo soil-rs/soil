@@ -40,13 +40,13 @@ pub enum Error {
 	Consensus(#[from] soil_consensus::Error),
 
 	#[error(transparent)]
-	Network(#[from] sc_network::error::Error),
+	Network(#[from] soil_network::error::Error),
 
 	#[error(transparent)]
 	Keystore(#[from] sc_keystore::Error),
 
 	#[error(transparent)]
-	Telemetry(#[from] sc_telemetry::Error),
+	Telemetry(#[from] soil_telemetry::Error),
 
 	#[error("Best chain selection strategy (SelectChain) is not provided.")]
 	SelectChainRequired,

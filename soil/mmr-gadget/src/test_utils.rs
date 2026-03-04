@@ -21,7 +21,7 @@
 use crate::MmrGadget;
 use parking_lot::Mutex;
 use sc_block_builder::BlockBuilderBuilder;
-use sc_client_api::{
+use soil_client_api::{
 	Backend as BackendT, BlockchainEvents, FinalityNotifications, ImportNotifications,
 	StorageEventStream, StorageKey,
 };
@@ -250,7 +250,7 @@ impl HeaderMetadata<Block> for MockClient {
 }
 
 impl HeaderBackend<Block> for MockClient {
-	fn header(&self, hash: Hash) -> sc_client_api::blockchain::Result<Option<Header>> {
+	fn header(&self, hash: Hash) -> soil_client_api::blockchain::Result<Option<Header>> {
 		self.client.lock().header(hash)
 	}
 
@@ -258,15 +258,15 @@ impl HeaderBackend<Block> for MockClient {
 		self.client.lock().info()
 	}
 
-	fn status(&self, hash: Hash) -> sc_client_api::blockchain::Result<BlockStatus> {
+	fn status(&self, hash: Hash) -> soil_client_api::blockchain::Result<BlockStatus> {
 		self.client.lock().status(hash)
 	}
 
-	fn number(&self, hash: Hash) -> sc_client_api::blockchain::Result<Option<BlockNumber>> {
+	fn number(&self, hash: Hash) -> soil_client_api::blockchain::Result<Option<BlockNumber>> {
 		self.client.lock().number(hash)
 	}
 
-	fn hash(&self, number: BlockNumber) -> sc_client_api::blockchain::Result<Option<Hash>> {
+	fn hash(&self, number: BlockNumber) -> soil_client_api::blockchain::Result<Option<Hash>> {
 		self.client.lock().hash(number)
 	}
 }
@@ -288,7 +288,7 @@ impl BlockchainEvents<Block> for MockClient {
 		&self,
 		_filter_keys: Option<&[StorageKey]>,
 		_child_filter_keys: Option<&[(StorageKey, Option<Vec<StorageKey>>)]>,
-	) -> sc_client_api::blockchain::Result<StorageEventStream<Hash>> {
+	) -> soil_client_api::blockchain::Result<StorageEventStream<Hash>> {
 		unimplemented!()
 	}
 }

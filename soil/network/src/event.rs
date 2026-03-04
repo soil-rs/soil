@@ -23,8 +23,8 @@ use crate::types::ProtocolName;
 
 use bytes::Bytes;
 
-use sc_network_common::role::ObservedRole;
-use sc_network_types::{
+use soil_network_common::role::ObservedRole;
+use soil_network_types::{
 	kad::{Key, PeerRecord},
 	multiaddr::Multiaddr,
 	PeerId,
@@ -89,14 +89,14 @@ pub enum Event {
 		remote: PeerId,
 		/// The concerned protocol. Each protocol uses a different substream.
 		/// This is always equal to the value of
-		/// `sc_network::config::NonDefaultSetConfig::notifications_protocol` of one of the
+		/// `soil_network::config::NonDefaultSetConfig::notifications_protocol` of one of the
 		/// configured sets.
 		protocol: ProtocolName,
 		/// If the negotiation didn't use the main name of the protocol (the one in
 		/// `notifications_protocol`), then this field contains which name has actually been
 		/// used.
 		/// Always contains a value equal to the value in
-		/// `sc_network::config::NonDefaultSetConfig::fallback_names`.
+		/// `soil_network::config::NonDefaultSetConfig::fallback_names`.
 		negotiated_fallback: Option<ProtocolName>,
 		/// Role of the remote.
 		role: ObservedRole,

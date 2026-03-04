@@ -23,8 +23,8 @@ use crate::{
 	ReputationChange,
 };
 
-use sc_network_common::role::ObservedRole;
-use sc_network_types::PeerId;
+use soil_network_common::role::ObservedRole;
+use soil_network_types::PeerId;
 
 use std::{collections::HashSet, sync::Arc};
 

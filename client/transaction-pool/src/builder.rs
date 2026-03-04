@@ -26,7 +26,7 @@ use crate::{
 	TransactionPoolWrapper, LOG_TARGET,
 };
 use prometheus_endpoint::Registry as PrometheusRegistry;
-use sc_transaction_pool_api::{LocalTransactionPool, MaintainedTransactionPool};
+use soil_transaction_pool_api::{LocalTransactionPool, MaintainedTransactionPool};
 use soil_core::traits::SpawnEssentialNamed;
 use soil_runtime::traits::Block as BlockT;
 use std::{marker::PhantomData, sync::Arc, time::Duration};
@@ -126,8 +126,8 @@ pub trait FullClientTransactionPool<Block, Client>:
 where
 	Block: BlockT,
 	Client: soil_api::ProvideRuntimeApi<Block>
-		+ sc_client_api::BlockBackend<Block>
-		+ sc_client_api::blockchain::HeaderBackend<Block>
+		+ soil_client_api::BlockBackend<Block>
+		+ soil_client_api::blockchain::HeaderBackend<Block>
 		+ soil_runtime::traits::BlockIdTo<Block>
 		+ soil_blockchain::HeaderMetadata<Block, Error = soil_blockchain::Error>
 		+ 'static,
@@ -139,8 +139,8 @@ impl<Block, Client, P> FullClientTransactionPool<Block, Client> for P
 where
 	Block: BlockT,
 	Client: soil_api::ProvideRuntimeApi<Block>
-		+ sc_client_api::BlockBackend<Block>
-		+ sc_client_api::blockchain::HeaderBackend<Block>
+		+ soil_client_api::BlockBackend<Block>
+		+ soil_client_api::blockchain::HeaderBackend<Block>
 		+ soil_runtime::traits::BlockIdTo<Block>
 		+ soil_blockchain::HeaderMetadata<Block, Error = soil_blockchain::Error>
 		+ 'static,
@@ -182,11 +182,11 @@ impl<'a, Client, Block> Builder<'a, Block, Client>
 where
 	Block: BlockT,
 	Client: soil_api::ProvideRuntimeApi<Block>
-		+ sc_client_api::BlockBackend<Block>
-		+ sc_client_api::blockchain::HeaderBackend<Block>
+		+ soil_client_api::BlockBackend<Block>
+		+ soil_client_api::blockchain::HeaderBackend<Block>
 		+ soil_runtime::traits::BlockIdTo<Block>
-		+ sc_client_api::ExecutorProvider<Block>
-		+ sc_client_api::UsageProvider<Block>
+		+ soil_client_api::ExecutorProvider<Block>
+		+ soil_client_api::UsageProvider<Block>
 		+ soil_blockchain::HeaderMetadata<Block, Error = soil_blockchain::Error>
 		+ Send
 		+ Sync

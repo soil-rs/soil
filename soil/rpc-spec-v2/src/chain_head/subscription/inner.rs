@@ -18,7 +18,7 @@
 
 use futures::channel::oneshot;
 use parking_lot::Mutex;
-use sc_client_api::Backend;
+use soil_client_api::Backend;
 use soil_runtime::traits::Block as BlockT;
 use std::{
 	collections::{hash_map::Entry, HashMap, HashSet},
@@ -784,7 +784,7 @@ mod tests {
 	use super::*;
 	use jsonrpsee::ConnectionId;
 	use sc_block_builder::BlockBuilderBuilder;
-	use sc_service::client::new_with_backend;
+	use soil_service::client::new_with_backend;
 	use soil_consensus::BlockOrigin;
 	use soil_core::{testing::TaskExecutor, H256};
 	use substrate_test_runtime_client::{
@@ -797,13 +797,13 @@ mod tests {
 	const MAX_OPERATIONS_PER_SUB: usize = 16;
 
 	fn init_backend() -> (
-		Arc<sc_client_api::in_mem::Backend<Block>>,
-		Arc<Client<sc_client_api::in_mem::Backend<Block>>>,
+		Arc<soil_client_api::in_mem::Backend<Block>>,
+		Arc<Client<soil_client_api::in_mem::Backend<Block>>>,
 	) {
-		let backend = Arc::new(sc_client_api::in_mem::Backend::new());
+		let backend = Arc::new(soil_client_api::in_mem::Backend::new());
 		let executor = substrate_test_runtime_client::WasmExecutor::default();
-		let client_config = sc_service::ClientConfig::default();
-		let genesis_block_builder = sc_service::GenesisBlockBuilder::new(
+		let client_config = soil_service::ClientConfig::default();
+		let genesis_block_builder = soil_service::GenesisBlockBuilder::new(
 			&substrate_test_runtime_client::GenesisParameters::default().genesis_storage(),
 			!client_config.no_genesis,
 			backend.clone(),
@@ -826,7 +826,7 @@ mod tests {
 	}
 
 	fn produce_blocks(
-		client: Arc<Client<sc_client_api::in_mem::Backend<Block>>>,
+		client: Arc<Client<soil_client_api::in_mem::Backend<Block>>>,
 		num_blocks: usize,
 	) -> Vec<<Block as BlockT>::Hash> {
 		let mut blocks = Vec::with_capacity(num_blocks);

@@ -19,8 +19,8 @@
 //! Configuration of the transaction protocol
 
 use futures::prelude::*;
-use sc_network::MAX_RESPONSE_SIZE;
-use sc_network_common::ExHashT;
+use soil_network::MAX_RESPONSE_SIZE;
+use soil_network_common::ExHashT;
 use soil_runtime::traits::Block as BlockT;
 use std::{collections::HashMap, future::Future, pin::Pin, sync::Arc, time};
 

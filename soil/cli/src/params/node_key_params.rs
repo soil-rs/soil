@@ -17,8 +17,8 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 use clap::Args;
-use sc_network::config::{ed25519, NodeKeyConfig};
-use sc_service::Role;
+use soil_network::config::{ed25519, NodeKeyConfig};
+use soil_service::Role;
 use soil_core::H256;
 use std::{path::PathBuf, str::FromStr};
 
@@ -121,7 +121,7 @@ impl NodeKeyParams {
 					{
 						return Err(Error::NetworkKeyNotFound(key_path));
 					}
-					sc_network::config::Secret::File(key_path)
+					soil_network::config::Secret::File(key_path)
 				};
 
 				NodeKeyConfig::Ed25519(secret)
@@ -135,11 +135,11 @@ fn invalid_node_key(e: impl std::fmt::Display) -> error::Error {
 	error::Error::Input(format!("Invalid node key: {}", e))
 }
 
-/// Parse a Ed25519 secret key from a hex string into a `sc_network::Secret`.
-fn parse_ed25519_secret(hex: &str) -> error::Result<sc_network::config::Ed25519Secret> {
+/// Parse a Ed25519 secret key from a hex string into a `soil_network::Secret`.
+fn parse_ed25519_secret(hex: &str) -> error::Result<soil_network::config::Ed25519Secret> {
 	H256::from_str(hex).map_err(invalid_node_key).and_then(|bytes| {
 		ed25519::SecretKey::try_from_bytes(bytes)
-			.map(sc_network::config::Secret::Input)
+			.map(soil_network::config::Secret::Input)
 			.map_err(invalid_node_key)
 	})
 }
@@ -148,7 +148,7 @@ fn parse_ed25519_secret(hex: &str) -> error::Result<sc_network::config::Ed25519S
 mod tests {
 	use super::*;
 	use clap::ValueEnum;
-	use sc_network::config::ed25519;
+	use soil_network::config::ed25519;
 	use std::fs::{self, File};
 	use tempfile::TempDir;
 
@@ -167,7 +167,7 @@ mod tests {
 					unsafe_force_node_key_generation: false,
 				};
 				params.node_key(net_config_dir, Role::Authority, false).and_then(|c| match c {
-					NodeKeyConfig::Ed25519(sc_network::config::Secret::Input(ref ski))
+					NodeKeyConfig::Ed25519(soil_network::config::Secret::Input(ref ski))
 						if node_key_type == NodeKeyType::Ed25519 && &sk[..] == ski.as_ref() =>
 					{
 						Ok(())
@@ -240,7 +240,7 @@ mod tests {
 					let dir = PathBuf::from(net_config_dir.clone());
 					let typ = params.node_key_type;
 					params.node_key(net_config_dir, role, is_dev).and_then(move |c| match c {
-						NodeKeyConfig::Ed25519(sc_network::config::Secret::File(ref f))
+						NodeKeyConfig::Ed25519(soil_network::config::Secret::File(ref f))
 							if typ == NodeKeyType::Ed25519 &&
 								f == &dir.join(NODE_KEY_ED25519_FILE) =>
 						{

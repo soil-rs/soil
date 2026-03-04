@@ -19,13 +19,13 @@
 use crate::types::{ExtendedPeerInfo, SyncEvent, SyncEventStream, SyncStatus, SyncStatusProvider};
 
 use futures::{channel::oneshot, Stream};
-use sc_network_types::PeerId;
+use soil_network_types::PeerId;
 
 use sc_consensus::{
 	BlockImportError, BlockImportStatus, JustificationImportResult, JustificationSyncLink, Link,
 };
-use sc_network::{NetworkBlock, NetworkSyncForkRequest};
-use sc_utils::mpsc::{tracing_unbounded, TracingUnboundedSender};
+use soil_network::{NetworkBlock, NetworkSyncForkRequest};
+use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedSender};
 use soil_runtime::traits::{Block as BlockT, NumberFor};
 
 use std::{

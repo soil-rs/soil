@@ -38,7 +38,7 @@ impl<B, Block> RpcFinalityProofProvider<Block> for FinalityProofProvider<B, Bloc
 where
 	Block: BlockT,
 	NumberFor<Block>: finality_grandpa::BlockNumberOps,
-	B: sc_client_api::backend::Backend<Block> + Send + Sync + 'static,
+	B: soil_client_api::backend::Backend<Block> + Send + Sync + 'static,
 {
 	fn rpc_prove_finality(
 		&self,

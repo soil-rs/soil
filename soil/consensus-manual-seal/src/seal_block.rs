@@ -22,7 +22,7 @@ use crate::{rpc, ConsensusDataProvider, CreatedBlock, Error};
 use codec::Encode;
 use futures::prelude::*;
 use sc_consensus::{BlockImport, BlockImportParams, ForkChoiceStrategy, ImportResult, StateAction};
-use sc_transaction_pool_api::TransactionPool;
+use soil_transaction_pool_api::TransactionPool;
 use soil_api::{ProofRecorder, ProvideRuntimeApi};
 use soil_blockchain::HeaderBackend;
 use soil_consensus::{self, BlockOrigin, Environment, ProposeArgs, Proposer, SelectChain};

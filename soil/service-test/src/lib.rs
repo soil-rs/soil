@@ -21,13 +21,13 @@
 use futures::{task::Poll, Future, TryFutureExt as _};
 use log::{debug, info};
 use parking_lot::Mutex;
-use sc_client_api::{Backend, CallExecutor};
-use sc_network::{
+use soil_client_api::{Backend, CallExecutor};
+use soil_network::{
 	config::{MultiaddrWithPeerId, NetworkConfiguration, TransportConfig},
 	multiaddr, NetworkBlock, NetworkPeers, NetworkStateInfo,
 };
-use sc_network_sync::SyncingService;
-use sc_service::{
+use soil_network_sync::SyncingService;
+use soil_service::{
 	client::Client,
 	config::{
 		BasePath, DatabaseSource, ExecutorConfiguration, KeystoreConfig, RpcBatchRequestConfig,
@@ -36,7 +36,7 @@ use sc_service::{
 	BlocksPruning, ChainSpecExtension, Configuration, Error, GenericChainSpec, Role,
 	SpawnTaskHandle, TaskManager,
 };
-use sc_transaction_pool_api::TransactionPool;
+use soil_transaction_pool_api::TransactionPool;
 use soil_blockchain::HeaderBackend;
 use soil_runtime::traits::Block as BlockT;
 use std::{iter, net::Ipv4Addr, pin::Pin, sync::Arc, task::Context, time::Duration};
@@ -76,7 +76,7 @@ pub trait TestNetNode: Clone + Future<Output = Result<(), Error>> + Send + 'stat
 
 	fn client(&self) -> Arc<Client<Self::Backend, Self::Executor, Self::Block, Self::RuntimeApi>>;
 	fn transaction_pool(&self) -> Arc<Self::TransactionPool>;
-	fn network(&self) -> Arc<dyn sc_network::service::traits::NetworkService>;
+	fn network(&self) -> Arc<dyn soil_network::service::traits::NetworkService>;
 	fn sync(&self) -> &Arc<SyncingService<Self::Block>>;
 	fn spawn_handle(&self) -> SpawnTaskHandle;
 }
@@ -85,7 +85,7 @@ pub struct TestNetComponents<TBl: BlockT, TBackend, TExec, TRtApi, TExPool> {
 	task_manager: Arc<Mutex<TaskManager>>,
 	client: Arc<Client<TBackend, TExec, TBl, TRtApi>>,
 	transaction_pool: Arc<TExPool>,
-	network: Arc<dyn sc_network::service::traits::NetworkService>,
+	network: Arc<dyn soil_network::service::traits::NetworkService>,
 	sync: Arc<SyncingService<TBl>>,
 }
 
@@ -95,7 +95,7 @@ impl<TBl: BlockT, TBackend, TExec, TRtApi, TExPool>
 	pub fn new(
 		task_manager: TaskManager,
 		client: Arc<Client<TBackend, TExec, TBl, TRtApi>>,
-		network: Arc<dyn sc_network::service::traits::NetworkService>,
+		network: Arc<dyn soil_network::service::traits::NetworkService>,
 		sync: Arc<SyncingService<TBl>>,
 		transaction_pool: Arc<TExPool>,
 	) -> Self {
@@ -137,7 +137,7 @@ impl<TBl, TBackend, TExec, TRtApi, TExPool> TestNetNode
 	for TestNetComponents<TBl, TBackend, TExec, TRtApi, TExPool>
 where
 	TBl: BlockT,
-	TBackend: sc_client_api::Backend<TBl> + Send + Sync + 'static,
+	TBackend: soil_client_api::Backend<TBl> + Send + Sync + 'static,
 	TExec: CallExecutor<TBl> + Send + Sync + 'static,
 	TRtApi: Send + Sync + 'static,
 	TExPool: TransactionPool<Block = TBl> + Send + Sync + 'static,
@@ -154,7 +154,7 @@ where
 	fn transaction_pool(&self) -> Arc<Self::TransactionPool> {
 		self.transaction_pool.clone()
 	}
-	fn network(&self) -> Arc<dyn sc_network::service::traits::NetworkService> {
+	fn network(&self) -> Arc<dyn soil_network::service::traits::NetworkService> {
 		self.network.clone()
 	}
 	fn sync(&self) -> &Arc<SyncingService<Self::Block>> {
@@ -500,7 +500,7 @@ pub fn sync<E, Fb, F, B, ExF, U>(
 	let first_user_data = &network.full_nodes[0].2;
 	let best_block = first_service.client().info().best_hash;
 	let extrinsic = extrinsic_factory(&first_service, first_user_data);
-	let source = sc_transaction_pool_api::TransactionSource::External;
+	let source = soil_transaction_pool_api::TransactionSource::External;
 
 	futures::executor::block_on(
 		first_service.transaction_pool().submit_one(best_block, source, extrinsic),

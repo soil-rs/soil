@@ -18,7 +18,7 @@
 
 use crate::error;
 use clap::Args;
-use sc_service::{BlocksPruning, PruningMode};
+use soil_service::{BlocksPruning, PruningMode};
 
 /// Parameters to define the pruning mode
 #[derive(Debug, Clone, Args)]

@@ -25,7 +25,7 @@ use crate::{
 	ChainApi, FullChainApi, ReadyIteratorFor,
 };
 use async_trait::async_trait;
-use sc_transaction_pool_api::{
+use soil_transaction_pool_api::{
 	ChainEvent, ImportNotificationStream, LocalTransactionFor, LocalTransactionPool,
 	MaintainedTransactionPool, PoolStatus, ReadyTransactions, TransactionFor, TransactionPool,
 	TransactionSource, TransactionStatusStreamFor, TxHash, TxInvalidityReportMap,
@@ -42,8 +42,8 @@ pub struct TransactionPoolWrapper<Block, Client>(
 where
 	Block: BlockT,
 	Client: soil_api::ProvideRuntimeApi<Block>
-		+ sc_client_api::BlockBackend<Block>
-		+ sc_client_api::blockchain::HeaderBackend<Block>
+		+ soil_client_api::BlockBackend<Block>
+		+ soil_client_api::blockchain::HeaderBackend<Block>
 		+ soil_runtime::traits::BlockIdTo<Block>
 		+ soil_blockchain::HeaderMetadata<Block, Error = soil_blockchain::Error>
 		+ 'static,
@@ -54,8 +54,8 @@ impl<Block, Client> TransactionPool for TransactionPoolWrapper<Block, Client>
 where
 	Block: BlockT,
 	Client: soil_api::ProvideRuntimeApi<Block>
-		+ sc_client_api::BlockBackend<Block>
-		+ sc_client_api::blockchain::HeaderBackend<Block>
+		+ soil_client_api::BlockBackend<Block>
+		+ soil_client_api::blockchain::HeaderBackend<Block>
 		+ soil_runtime::traits::BlockIdTo<Block>
 		+ soil_blockchain::HeaderMetadata<Block, Error = soil_blockchain::Error>
 		+ 'static,
@@ -153,8 +153,8 @@ impl<Block, Client> MaintainedTransactionPool for TransactionPoolWrapper<Block, 
 where
 	Block: BlockT,
 	Client: soil_api::ProvideRuntimeApi<Block>
-		+ sc_client_api::BlockBackend<Block>
-		+ sc_client_api::blockchain::HeaderBackend<Block>
+		+ soil_client_api::BlockBackend<Block>
+		+ soil_client_api::blockchain::HeaderBackend<Block>
 		+ soil_runtime::traits::BlockIdTo<Block>
 		+ soil_blockchain::HeaderMetadata<Block, Error = soil_blockchain::Error>
 		+ 'static,
@@ -169,8 +169,8 @@ impl<Block, Client> LocalTransactionPool for TransactionPoolWrapper<Block, Clien
 where
 	Block: BlockT,
 	Client: soil_api::ProvideRuntimeApi<Block>
-		+ sc_client_api::BlockBackend<Block>
-		+ sc_client_api::blockchain::HeaderBackend<Block>
+		+ soil_client_api::BlockBackend<Block>
+		+ soil_client_api::blockchain::HeaderBackend<Block>
 		+ soil_runtime::traits::BlockIdTo<Block>
 		+ soil_blockchain::HeaderMetadata<Block, Error = soil_blockchain::Error>
 		+ 'static,

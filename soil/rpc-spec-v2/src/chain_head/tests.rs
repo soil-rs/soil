@@ -32,9 +32,9 @@ use jsonrpsee::{
 	rpc_params, MethodsError as Error, RpcModule,
 };
 use sc_block_builder::BlockBuilderBuilder;
-use sc_client_api::ChildInfo;
+use soil_client_api::ChildInfo;
 use sc_rpc::testing::TokioTestExecutor;
-use sc_service::client::new_with_backend;
+use soil_service::client::new_with_backend;
 use soil_blockchain::HeaderBackend;
 use soil_consensus::BlockOrigin;
 use soil_core::{
@@ -2663,11 +2663,11 @@ async fn follow_report_multiple_pruned_block() {
 #[tokio::test]
 async fn pin_block_references() {
 	// Manually construct an in-memory backend and client.
-	let backend = Arc::new(sc_client_api::in_mem::Backend::new());
+	let backend = Arc::new(soil_client_api::in_mem::Backend::new());
 	let executor = substrate_test_runtime_client::WasmExecutor::default();
-	let client_config = sc_service::ClientConfig::default();
+	let client_config = soil_service::ClientConfig::default();
 
-	let genesis_block_builder = sc_service::GenesisBlockBuilder::new(
+	let genesis_block_builder = soil_service::GenesisBlockBuilder::new(
 		&substrate_test_runtime_client::GenesisParameters::default().genesis_storage(),
 		!client_config.no_genesis,
 		backend.clone(),
@@ -2704,7 +2704,7 @@ async fn pin_block_references() {
 	.into_rpc();
 
 	async fn wait_pinned_references<Block: BlockT>(
-		backend: &Arc<sc_client_api::in_mem::Backend<Block>>,
+		backend: &Arc<soil_client_api::in_mem::Backend<Block>>,
 		hash: &Block::Hash,
 		target: i64,
 	) {

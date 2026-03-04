@@ -698,7 +698,7 @@ async fn sending_notifications_using_notifications_sink_works() {
 #[test]
 fn try_to_get_notifications_sink_for_non_existent_peer() {
 	let (_proto, notif) = notification_service("/proto/1".into());
-	assert!(notif.message_sink(&sc_network_types::PeerId::random()).is_none());
+	assert!(notif.message_sink(&soil_network_types::PeerId::random()).is_none());
 }
 
 #[tokio::test]

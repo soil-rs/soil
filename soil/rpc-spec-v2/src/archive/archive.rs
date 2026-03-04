@@ -37,7 +37,7 @@ use crate::{
 use codec::Encode;
 use futures::FutureExt;
 use jsonrpsee::{core::async_trait, PendingSubscriptionSink};
-use sc_client_api::{
+use soil_client_api::{
 	Backend, BlockBackend, BlockchainEvents, CallExecutor, ChildInfo, ExecutorProvider, StorageKey,
 	StorageProvider,
 };

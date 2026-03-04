@@ -20,16 +20,16 @@ use async_channel::TryRecvError;
 use codec::{Decode, Encode, Joiner};
 use futures::executor::block_on;
 use sc_block_builder::BlockBuilderBuilder;
-use sc_client_api::{
+use soil_client_api::{
 	in_mem, Backend as BackendT, BlockBackend, BlockchainEvents, ExecutorProvider,
 	FinalityNotifications, HeaderBackend, StorageProvider,
 };
-use sc_client_db::{Backend, BlocksPruning, DatabaseSettings, DatabaseSource, PruningMode};
+use soil_client_db::{Backend, BlocksPruning, DatabaseSettings, DatabaseSource, PruningMode};
 use sc_consensus::{
 	BlockCheckParams, BlockImport, BlockImportParams, ForkChoiceStrategy, ImportResult,
 };
-use sc_executor::WasmExecutor;
-use sc_service::client::{new_with_backend, Client, LocalCallExecutor};
+use soil_executor::WasmExecutor;
+use soil_service::client::{new_with_backend, Client, LocalCallExecutor};
 use soil_api::ProvideRuntimeApi;
 use soil_consensus::{BlockOrigin, Error as ConsensusError, SelectChain};
 use soil_core::{testing::TaskExecutor, traits::CallContext, H256};
@@ -2099,11 +2099,11 @@ fn storage_keys_works() {
 fn cleans_up_closed_notification_sinks_on_block_import() {
 	use substrate_test_runtime_client::GenesisInit;
 
-	let backend = Arc::new(sc_client_api::in_mem::Backend::new());
+	let backend = Arc::new(soil_client_api::in_mem::Backend::new());
 	let executor = WasmExecutor::default();
-	let client_config = sc_service::ClientConfig::default();
+	let client_config = soil_service::ClientConfig::default();
 
-	let genesis_block_builder = sc_service::GenesisBlockBuilder::new(
+	let genesis_block_builder = soil_service::GenesisBlockBuilder::new(
 		&substrate_test_runtime_client::GenesisParameters::default().genesis_storage(),
 		!client_config.no_genesis,
 		backend.clone(),
@@ -2260,7 +2260,7 @@ fn use_dalek_ext_works() {
 	let client = TestClientBuilder::new().build();
 
 	client.execution_extensions().set_extensions_factory(
-		sc_client_api::execution_extensions::ExtensionBeforeBlock::<Block, soil_io::UseDalekExt>::new(
+		soil_client_api::execution_extensions::ExtensionBeforeBlock::<Block, soil_io::UseDalekExt>::new(
 			1,
 		),
 	);

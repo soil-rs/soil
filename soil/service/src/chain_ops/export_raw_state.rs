@@ -17,7 +17,7 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 use crate::error::Error;
-use sc_client_api::{StorageProvider, UsageProvider};
+use soil_client_api::{StorageProvider, UsageProvider};
 use soil_core::storage::{well_known_keys, ChildInfo, Storage, StorageChild, StorageKey, StorageMap};
 use soil_runtime::traits::Block as BlockT;
 
@@ -32,7 +32,7 @@ pub fn export_raw_state<B, BA, C>(client: Arc<C>, hash: B::Hash) -> Result<Stora
 where
 	C: UsageProvider<B> + StorageProvider<B, BA>,
 	B: BlockT,
-	BA: sc_client_api::backend::Backend<B>,
+	BA: soil_client_api::backend::Backend<B>,
 {
 	let mut top = BTreeMap::new();
 	let mut children_default = HashMap::new();

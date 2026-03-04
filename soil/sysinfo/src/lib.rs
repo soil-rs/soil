@@ -112,7 +112,7 @@ impl ExecutionLimit {
 }
 
 /// Prints out the system software/hardware information in the logs.
-pub fn print_sysinfo(sysinfo: &sc_telemetry::SysInfo) {
+pub fn print_sysinfo(sysinfo: &soil_telemetry::SysInfo) {
 	log::info!("💻 Operating system: {}", TARGET_OS);
 	log::info!("💻 CPU architecture: {}", TARGET_ARCH);
 	if !TARGET_ENV.is_empty() {
@@ -159,7 +159,7 @@ pub fn print_hwbench(hwbench: &HwBench) {
 
 /// Initializes the hardware benchmarks telemetry.
 pub fn initialize_hwbench_telemetry(
-	telemetry_handle: sc_telemetry::TelemetryHandle,
+	telemetry_handle: soil_telemetry::TelemetryHandle,
 	hwbench: HwBench,
 ) -> impl std::future::Future<Output = ()> {
 	let mut connect_stream = telemetry_handle.on_connect_stream();
@@ -172,7 +172,7 @@ pub fn initialize_hwbench_telemetry(
 		};
 		payload.insert("msg".into(), "sysinfo.hwbench".into());
 		while connect_stream.next().await.is_some() {
-			telemetry_handle.send_telemetry(sc_telemetry::SUBSTRATE_INFO, payload.clone());
+			telemetry_handle.send_telemetry(soil_telemetry::SUBSTRATE_INFO, payload.clone());
 		}
 	}
 }

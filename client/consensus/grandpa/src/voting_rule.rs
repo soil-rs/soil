@@ -26,7 +26,7 @@ use std::{future::Future, pin::Pin, sync::Arc};
 
 use dyn_clone::DynClone;
 
-use sc_client_api::blockchain::HeaderBackend;
+use soil_client_api::blockchain::HeaderBackend;
 use soil_runtime::traits::{Block as BlockT, Header, NumberFor, One, Zero};
 
 /// A future returned by a `VotingRule` to restrict a given vote, if any restriction is necessary.

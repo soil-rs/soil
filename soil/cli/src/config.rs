@@ -25,7 +25,7 @@ use crate::{
 };
 use log::warn;
 use names::{Generator, Name};
-use sc_service::{
+use soil_service::{
 	config::{
 		BasePath, Configuration, DatabaseSource, ExecutorConfiguration, IpNetwork, KeystoreConfig,
 		NetworkConfiguration, NodeKeyConfig, OffchainWorkerConfig, PrometheusConfig, PruningMode,
@@ -255,7 +255,7 @@ pub trait CliConfiguration<DCV: DefaultConfigurationValues = ()>: Sized {
 	/// Get if we should warm up the trie cache.
 	///
 	/// By default this is retrieved from `ImportParams` if it is available. Otherwise its `None`.
-	fn warm_up_trie_cache(&self) -> Result<Option<sc_service::config::TrieCacheWarmUpStrategy>> {
+	fn warm_up_trie_cache(&self) -> Result<Option<soil_service::config::TrieCacheWarmUpStrategy>> {
 		Ok(self
 			.import_params()
 			.map(|x| x.warm_up_trie_cache().map(|x| x.into()))
@@ -515,7 +515,7 @@ pub trait CliConfiguration<DCV: DefaultConfigurationValues = ()>: Sized {
 		let telemetry_endpoints = self.telemetry_endpoints(&chain_spec)?;
 		let runtime_cache_size = self.runtime_cache_size()?;
 
-		let rpc_addrs: Option<Vec<sc_service::config::RpcEndpoint>> = self
+		let rpc_addrs: Option<Vec<soil_service::config::RpcEndpoint>> = self
 			.rpc_addr(DCV::rpc_listen_port())?
 			.map(|addrs| addrs.into_iter().map(Into::into).collect());
 
@@ -628,7 +628,7 @@ pub trait CliConfiguration<DCV: DefaultConfigurationValues = ()>: Sized {
 	/// 		fn handle_event(&self, _event: &TraceEvent) {}
 	/// };
 	///
-	/// fn logger_hook() -> impl FnOnce(&mut sc_cli::LoggerBuilder, &sc_service::Configuration) -> () {
+	/// fn logger_hook() -> impl FnOnce(&mut soil_cli::LoggerBuilder, &soil_service::Configuration) -> () {
 	/// 	|logger_builder, config| {
 	/// 			logger_builder.with_custom_profiling(Box::new(TestProfiler{}));
 	/// 	}

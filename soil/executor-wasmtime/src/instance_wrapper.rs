@@ -22,7 +22,7 @@
 use std::sync::Arc;
 
 use crate::runtime::{InstanceCounter, ReleaseInstanceHandle, Store, StoreData};
-use sc_executor_common::error::{Backtrace, Error, MessageWithBacktrace, Result, WasmError};
+use soil_executor_common::error::{Backtrace, Error, MessageWithBacktrace, Result, WasmError};
 use soil_wasm_interface::{Pointer, WordSize};
 use wasmtime::{AsContext, AsContextMut, Engine, Instance, InstancePre, Memory};
 
@@ -73,10 +73,10 @@ impl EntryPoint {
 	}
 }
 
-/// Wrapper around [`Memory`] that implements [`sc_allocator::Memory`].
+/// Wrapper around [`Memory`] that implements [`soil_allocator::Memory`].
 pub(crate) struct MemoryWrapper<'a, C>(pub &'a wasmtime::Memory, pub &'a mut C);
 
-impl<C: AsContextMut> sc_allocator::Memory for MemoryWrapper<'_, C> {
+impl<C: AsContextMut> soil_allocator::Memory for MemoryWrapper<'_, C> {
 	fn with_access_mut<R>(&mut self, run: impl FnOnce(&mut [u8]) -> R) -> R {
 		run(self.0.data_mut(&mut self.1))
 	}

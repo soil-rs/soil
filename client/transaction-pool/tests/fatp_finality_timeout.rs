@@ -27,7 +27,7 @@ use fatp_common::{
 };
 use futures::{executor::block_on, FutureExt};
 use sc_transaction_pool::ChainApi;
-use sc_transaction_pool_api::{MaintainedTransactionPool, TransactionPool, TransactionStatus};
+use soil_transaction_pool_api::{MaintainedTransactionPool, TransactionPool, TransactionStatus};
 use substrate_test_runtime_client::Sr25519Keyring::*;
 use substrate_test_runtime_transaction_pool::uxt;
 

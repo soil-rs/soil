@@ -36,8 +36,8 @@ use soil_application_crypto::RuntimeAppPublic;
 use codec::{Codec, Decode, DecodeAll, Encode};
 use futures::{stream::Fuse, FutureExt, StreamExt};
 use log::{debug, error, info, trace, warn};
-use sc_client_api::{Backend, HeaderBackend};
-use sc_utils::notification::NotificationReceiver;
+use soil_client_api::{Backend, HeaderBackend};
+use soil_utils::notification::NotificationReceiver;
 use soil_api::ProvideRuntimeApi;
 use soil_arithmetic::traits::{AtLeast32Bit, Saturating};
 use soil_consensus::SyncOracle;
@@ -1038,10 +1038,10 @@ pub(crate) mod tests {
 	};
 	use futures::{future::poll_fn, task::Poll};
 	use parking_lot::Mutex;
-	use sc_client_api::{Backend as BackendT, HeaderBackend};
-	use sc_network_gossip::GossipEngine;
-	use sc_network_sync::SyncingService;
-	use sc_network_test::TestNetFactory;
+	use soil_client_api::{Backend as BackendT, HeaderBackend};
+	use soil_network_gossip::GossipEngine;
+	use soil_network_sync::SyncingService;
+	use soil_network_test::TestNetFactory;
 	use soil_blockchain::Backend as BlockchainBackendT;
 	use soil_consensus_beefy::{
 		ecdsa_crypto, known_payloads,

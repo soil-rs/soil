@@ -21,8 +21,8 @@ use codec::{Decode, IoReader as CodecIoReader};
 use futures::{future, prelude::*};
 use futures_timer::Delay;
 use log::{info, warn};
-use sc_chain_spec::ChainSpec;
-use sc_client_api::HeaderBackend;
+use soil_chain_spec::ChainSpec;
+use soil_client_api::HeaderBackend;
 use sc_consensus::import_queue::{
 	BlockImportError, BlockImportStatus, ImportQueue, IncomingBlock, Link,
 };

@@ -21,7 +21,7 @@ use assert_matches::assert_matches;
 use codec::Encode;
 use jsonrpsee::{rpc_params, MethodsError as Error};
 use sc_transaction_pool::{Options, PoolLimit};
-use sc_transaction_pool_api::{ChainEvent, MaintainedTransactionPool, TransactionPool};
+use soil_transaction_pool_api::{ChainEvent, MaintainedTransactionPool, TransactionPool};
 use std::sync::Arc;
 use substrate_test_runtime_client::Sr25519Keyring::*;
 use substrate_test_runtime_transaction_pool::uxt;

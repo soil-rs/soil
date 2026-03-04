@@ -34,16 +34,16 @@ use log::debug;
 use prost::Message;
 use schnellru::{ByLength, LruMap};
 
-use sc_client_api::BlockBackend;
-use sc_network::{
+use soil_client_api::BlockBackend;
+use soil_network::{
 	config::ProtocolId,
 	request_responses::{IfDisconnected, IncomingRequest, OutgoingResponse, RequestFailure},
 	service::traits::RequestResponseConfig,
 	types::ProtocolName,
 	NetworkBackend, MAX_RESPONSE_SIZE,
 };
-use sc_network_common::sync::message::{BlockAttributes, BlockData, BlockRequest, FromBlock};
-use sc_network_types::PeerId;
+use soil_network_common::sync::message::{BlockAttributes, BlockData, BlockRequest, FromBlock};
+use soil_network_types::PeerId;
 use soil_blockchain::HeaderBackend;
 use soil_runtime::{
 	generic::BlockId,
@@ -63,7 +63,7 @@ pub(crate) const MAX_BLOCKS_IN_RESPONSE: usize = 128;
 const MAX_NUMBER_OF_SAME_REQUESTS_PER_PEER: usize = 2;
 
 mod rep {
-	use sc_network::ReputationChange as Rep;
+	use soil_network::ReputationChange as Rep;
 
 	/// Reputation change when a peer sent us the same request multiple times.
 	pub const SAME_REQUEST: Rep = Rep::new_fatal("Same block request multiple times");

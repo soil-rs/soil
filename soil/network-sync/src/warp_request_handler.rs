@@ -25,7 +25,7 @@ use crate::{
 	strategy::warp::{EncodedProof, WarpProofRequest, WarpSyncProvider},
 	LOG_TARGET,
 };
-use sc_network::{
+use soil_network::{
 	config::ProtocolId,
 	request_responses::{IncomingRequest, OutgoingResponse},
 	NetworkBackend, MAX_RESPONSE_SIZE,

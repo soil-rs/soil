@@ -18,7 +18,7 @@
 
 //! Helpers for outgoing and incoming light client requests.
 
-use sc_network::{
+use soil_network::{
 	config::ProtocolId, request_responses::IncomingRequest, NetworkBackend, MAX_RESPONSE_SIZE,
 };
 use soil_runtime::traits::Block;

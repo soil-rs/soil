@@ -27,22 +27,22 @@ use soil_consensus_beefy as beefy_primitives;
 
 use crate::Cli;
 use codec::Encode;
-use sc_sysinfo::SUBSTRATE_REFERENCE_HARDWARE;
+use soil_sysinfo::SUBSTRATE_REFERENCE_HARDWARE;
 use frame_system_rpc_runtime_api::AccountNonceApi;
 use futures::prelude::*;
 use kitchensink_runtime::RuntimeApi;
 use node_primitives::Block;
-use sc_client_api::{Backend, BlockBackend};
+use soil_client_api::{Backend, BlockBackend};
 use sc_consensus_babe::{self, SlotProportion};
-use sc_network::{
+use soil_network::{
 	event::Event, service::traits::NetworkService, NetworkBackend, NetworkEventStream,
 };
-use sc_network_sync::{strategy::warp::WarpSyncConfig, SyncingService};
-use sc_service::{config::Configuration, error::Error as ServiceError, RpcHandlers, TaskManager};
+use soil_network_sync::{strategy::warp::WarpSyncConfig, SyncingService};
+use soil_service::{config::Configuration, error::Error as ServiceError, RpcHandlers, TaskManager};
 use sc_statement_store::Store as StatementStore;
-use sc_telemetry::{Telemetry, TelemetryWorker};
+use soil_telemetry::{Telemetry, TelemetryWorker};
 use sc_transaction_pool::TransactionPoolHandle;
-use sc_transaction_pool_api::OffchainTransactionPoolFactory;
+use soil_transaction_pool_api::OffchainTransactionPoolFactory;
 use soil_api::ProvideRuntimeApi;
 use soil_core::crypto::Pair;
 use soil_runtime::{generic, traits::Block as BlockT, SaturatedConversion};
@@ -64,11 +64,11 @@ pub type HostFunctions = (
 
 /// A specialized `WasmExecutor` intended to use across substrate node. It provides all required
 /// HostFunctions.
-pub type RuntimeExecutor = sc_executor::WasmExecutor<HostFunctions>;
+pub type RuntimeExecutor = soil_executor::WasmExecutor<HostFunctions>;
 
 /// The full client type definition.
-pub type FullClient = sc_service::TFullClient<Block, RuntimeApi, RuntimeExecutor>;
-type FullBackend = sc_service::TFullBackend<Block>;
+pub type FullClient = soil_service::TFullClient<Block, RuntimeApi, RuntimeExecutor>;
+type FullBackend = soil_service::TFullBackend<Block>;
 type FullSelectChain = sc_consensus::LongestChain<FullBackend, Block>;
 type FullGrandpaBlockImport =
 	grandpa::GrandpaBlockImport<FullBackend, Block, FullClient, FullSelectChain>;
@@ -176,7 +176,7 @@ pub fn new_partial(
 	config: &Configuration,
 	mixnet_config: Option<&sc_mixnet::Config>,
 ) -> Result<
-	sc_service::PartialComponents<
+	soil_service::PartialComponents<
 		FullClient,
 		FullBackend,
 		FullSelectChain,
@@ -185,7 +185,7 @@ pub fn new_partial(
 		(
 			impl Fn(
 				sc_rpc::SubscriptionTaskExecutor,
-			) -> Result<jsonrpsee::RpcModule<()>, sc_service::Error>,
+			) -> Result<jsonrpsee::RpcModule<()>, soil_service::Error>,
 			(
 				sc_consensus_babe::BabeBlockImport<
 					Block,
@@ -210,17 +210,17 @@ pub fn new_partial(
 		.telemetry_endpoints
 		.clone()
 		.filter(|x| !x.is_empty())
-		.map(|endpoints| -> Result<_, sc_telemetry::Error> {
+		.map(|endpoints| -> Result<_, soil_telemetry::Error> {
 			let worker = TelemetryWorker::new(16)?;
 			let telemetry = worker.handle().new_telemetry(endpoints);
 			Ok((worker, telemetry))
 		})
 		.transpose()?;
 
-	let executor = sc_service::new_wasm_executor(&config.executor);
+	let executor = soil_service::new_wasm_executor(&config.executor);
 
 	let (client, backend, keystore_container, task_manager) =
-		sc_service::new_full_parts::<Block, RuntimeApi, _>(
+		soil_service::new_full_parts::<Block, RuntimeApi, _>(
 			config,
 			telemetry.as_ref().map(|(_, telemetry)| telemetry.handle()),
 			executor,
@@ -370,7 +370,7 @@ pub fn new_partial(
 		(rpc_extensions_builder, shared_voter_state2)
 	};
 
-	Ok(sc_service::PartialComponents {
+	Ok(soil_service::PartialComponents {
 		client,
 		backend,
 		task_manager,
@@ -437,12 +437,12 @@ pub fn new_full_base<N: NetworkBackend<Block, <Block as BlockT>::Hash>>(
 		.then(|| {
 			config.database.path().map(|database_path| {
 				let _ = std::fs::create_dir_all(&database_path);
-				sc_sysinfo::gather_hwbench(Some(database_path), &SUBSTRATE_REFERENCE_HARDWARE)
+				soil_sysinfo::gather_hwbench(Some(database_path), &SUBSTRATE_REFERENCE_HARDWARE)
 			})
 		})
 		.flatten();
 
-	let sc_service::PartialComponents {
+	let soil_service::PartialComponents {
 		client,
 		backend,
 		mut task_manager,
@@ -461,7 +461,7 @@ pub fn new_full_base<N: NetworkBackend<Block, <Block as BlockT>::Hash>>(
 	let auth_disc_publish_non_global_ips = config.network.allow_non_globals_in_dht;
 	let auth_disc_public_addresses = config.network.public_addresses.clone();
 
-	let mut net_config = sc_network::config::FullNetworkConfiguration::<_, _, N>::new(
+	let mut net_config = soil_network::config::FullNetworkConfiguration::<_, _, N>::new(
 		&config.network,
 		config.prometheus_config.as_ref().map(|cfg| cfg.registry.clone()),
 	);
@@ -501,7 +501,7 @@ pub fn new_full_base<N: NetworkBackend<Block, <Block as BlockT>::Hash>>(
 	net_config.add_request_response_protocol(beefy_req_resp_cfg);
 
 	let (statement_handler_proto, statement_config) =
-		sc_network_statement::StatementHandlerPrototype::new::<_, _, N>(
+		soil_network_statement::StatementHandlerPrototype::new::<_, _, N>(
 			genesis_hash,
 			config.chain_spec.fork_id(),
 			metrics.clone(),
@@ -529,7 +529,7 @@ pub fn new_full_base<N: NetworkBackend<Block, <Block as BlockT>::Hash>>(
 	));
 
 	let (network, system_rpc_tx, tx_handler_controller, sync_service) =
-		sc_service::build_network(sc_service::BuildNetworkParams {
+		soil_service::build_network(soil_service::BuildNetworkParams {
 			config: &config,
 			net_config,
 			client: client.clone(),
@@ -560,7 +560,7 @@ pub fn new_full_base<N: NetworkBackend<Block, <Block as BlockT>::Hash>>(
 	}
 
 	let net_config_path = config.network.net_config_path.clone();
-	let rpc_handlers = sc_service::spawn_tasks(sc_service::SpawnTasksParams {
+	let rpc_handlers = soil_service::spawn_tasks(soil_service::SpawnTasksParams {
 		config,
 		backend: backend.clone(),
 		client: client.clone(),
@@ -577,7 +577,7 @@ pub fn new_full_base<N: NetworkBackend<Block, <Block as BlockT>::Hash>>(
 	})?;
 
 	if let Some(hwbench) = hwbench {
-		sc_sysinfo::print_hwbench(&hwbench);
+		soil_sysinfo::print_hwbench(&hwbench);
 		match SUBSTRATE_REFERENCE_HARDWARE.check_hardware(&hwbench, false) {
 			Err(err) if role.is_authority() => {
 				log::warn!(
@@ -593,7 +593,7 @@ pub fn new_full_base<N: NetworkBackend<Block, <Block as BlockT>::Hash>>(
 			task_manager.spawn_handle().spawn(
 				"telemetry_hwbench",
 				None,
-				sc_sysinfo::initialize_hwbench_telemetry(telemetry_handle, hwbench),
+				soil_sysinfo::initialize_hwbench_telemetry(telemetry_handle, hwbench),
 			);
 		}
 	}
@@ -602,8 +602,8 @@ pub fn new_full_base<N: NetworkBackend<Block, <Block as BlockT>::Hash>>(
 
 	(with_startup_data)(&block_import, &babe_link);
 
-	if let sc_service::config::Role::Authority { .. } = &role {
-		let proposer = sc_basic_authorship::ProposerFactory::new(
+	if let soil_service::config::Role::Authority { .. } = &role {
+		let proposer = soil_basic_authorship::ProposerFactory::new(
 			task_manager.spawn_handle(),
 			client.clone(),
 			transaction_pool.clone(),
@@ -729,9 +729,9 @@ pub fn new_full_base<N: NetworkBackend<Block, <Block as BlockT>::Hash>>(
 	// When offchain indexing is enabled, MMR gadget should also run.
 	if is_offchain_indexing_enabled {
 		task_manager.spawn_essential_handle().spawn_blocking(
-			"mmr-gadget",
+			"soil-mmr-gadget",
 			None,
-			mmr_gadget::MmrGadget::start(
+			soil_mmr_gadget::MmrGadget::start(
 				client.clone(),
 				backend.clone(),
 				soil_mmr_primitives::INDEXING_PREFIX.to_vec(),
@@ -841,8 +841,8 @@ pub fn new_full(config: Configuration, cli: Cli) -> Result<TaskManager, ServiceE
 	let database_path = config.database.path().map(Path::to_path_buf);
 
 	let task_manager = match config.network.network_backend {
-		sc_network::config::NetworkBackendType::Libp2p => {
-			let task_manager = new_full_base::<sc_network::NetworkWorker<_, _>>(
+		soil_network::config::NetworkBackendType::Libp2p => {
+			let task_manager = new_full_base::<soil_network::NetworkWorker<_, _>>(
 				config,
 				mixnet_config,
 				cli.no_hardware_benchmarks,
@@ -853,8 +853,8 @@ pub fn new_full(config: Configuration, cli: Cli) -> Result<TaskManager, ServiceE
 			.map(|NewFullBase { task_manager, .. }| task_manager)?;
 			task_manager
 		},
-		sc_network::config::NetworkBackendType::Litep2p => {
-			let task_manager = new_full_base::<sc_network::Litep2pNetworkBackend>(
+		soil_network::config::NetworkBackendType::Litep2p => {
+			let task_manager = new_full_base::<soil_network::Litep2pNetworkBackend>(
 				config,
 				mixnet_config,
 				cli.no_hardware_benchmarks,
@@ -868,7 +868,7 @@ pub fn new_full(config: Configuration, cli: Cli) -> Result<TaskManager, ServiceE
 	};
 
 	if let Some(database_path) = database_path {
-		sc_storage_monitor::StorageMonitorService::try_spawn(
+		soil_storage_monitor::StorageMonitorService::try_spawn(
 			cli.storage_monitor,
 			database_path,
 			&task_manager.spawn_essential_handle(),
@@ -888,14 +888,14 @@ mod tests {
 		Address, BalancesCall, RuntimeCall, TxExtension,
 	};
 	use node_primitives::{Block, DigestItem, Signature};
-	use sc_transaction_pool_api::MaintainedTransactionPool;
-	use sc_client_api::BlockBackend;
+	use soil_transaction_pool_api::MaintainedTransactionPool;
+	use soil_client_api::BlockBackend;
 	use sc_consensus::{BlockImport, BlockImportParams, ForkChoiceStrategy};
 	use sc_consensus_babe::{BabeIntermediate, CompatibleDigestItem, INTERMEDIATE_KEY};
-	use sc_consensus_epochs::descendent_query;
+	use soil_consensus_epochs::descendent_query;
 	use sc_keystore::LocalKeystore;
-	use sc_service_test::TestNetNode;
-	use sc_transaction_pool_api::ChainEvent;
+	use soil_service_test::TestNetNode;
+	use soil_transaction_pool_api::ChainEvent;
 	use soil_consensus::{BlockOrigin, Environment, Proposer};
 	use soil_core::crypto::Pair;
 	use soil_inherents::InherentDataProvider;
@@ -938,12 +938,12 @@ mod tests {
 		let charlie = Arc::new(Sr25519Keyring::Charlie.pair());
 		let mut index = 0;
 
-		sc_service_test::sync(
+		soil_service_test::sync(
 			chain_spec,
 			|config| {
 				let mut setup_handles = None;
 				let NewFullBase { task_manager, client, network, sync, transaction_pool, .. } =
-					new_full_base::<sc_network::NetworkWorker<_, _>>(
+					new_full_base::<soil_network::NetworkWorker<_, _>>(
 						config,
 						None,
 						false,
@@ -955,7 +955,7 @@ mod tests {
 						},
 					)?;
 
-				let node = sc_service_test::TestNetComponents::new(
+				let node = soil_service_test::TestNetComponents::new(
 					task_manager,
 					client,
 					network,
@@ -973,7 +973,7 @@ mod tests {
 					ChainEvent::NewBestBlock { hash: parent_header.hash(), tree_route: None },
 				));
 
-				let mut proposer_factory = sc_basic_authorship::ProposerFactory::new(
+				let mut proposer_factory = soil_basic_authorship::ProposerFactory::new(
 					service.spawn_handle(),
 					service.client(),
 					service.transaction_pool(),
@@ -1153,11 +1153,11 @@ mod tests {
 	fn test_consensus() {
 		soil_tracing::try_init_simple();
 
-		sc_service_test::consensus(
+		soil_service_test::consensus(
 			crate::chain_spec::tests::integration_test_config_with_two_authorities(),
 			|config| {
 				let NewFullBase { task_manager, client, network, sync, transaction_pool, .. } =
-					new_full_base::<sc_network::NetworkWorker<_, _>>(
+					new_full_base::<soil_network::NetworkWorker<_, _>>(
 						config,
 						None,
 						false,
@@ -1165,7 +1165,7 @@ mod tests {
 						50_000,
 						|_, _| (),
 					)?;
-				Ok(sc_service_test::TestNetComponents::new(
+				Ok(soil_service_test::TestNetComponents::new(
 					task_manager,
 					client,
 					network,

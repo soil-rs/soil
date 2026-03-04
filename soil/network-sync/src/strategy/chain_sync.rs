@@ -49,13 +49,13 @@ use futures::{channel::oneshot, FutureExt};
 use log::{debug, error, info, trace, warn};
 use prometheus_endpoint::{register, Gauge, PrometheusError, Registry, U64};
 use prost::Message;
-use sc_client_api::{blockchain::BlockGap, BlockBackend, ProofProvider};
+use soil_client_api::{blockchain::BlockGap, BlockBackend, ProofProvider};
 use sc_consensus::{BlockImportError, BlockImportStatus, IncomingBlock};
-use sc_network::{IfDisconnected, ProtocolName};
-use sc_network_common::sync::message::{
+use soil_network::{IfDisconnected, ProtocolName};
+use soil_network_common::sync::message::{
 	BlockAnnounce, BlockAttributes, BlockData, BlockRequest, BlockResponse, Direction, FromBlock,
 };
-use sc_network_types::PeerId;
+use soil_network_types::PeerId;
 use soil_arithmetic::traits::Saturating;
 use soil_blockchain::{Error as ClientError, HeaderBackend, HeaderMetadata};
 use soil_consensus::{BlockOrigin, BlockStatus};
@@ -98,7 +98,7 @@ const STATE_SYNC_FINALITY_THRESHOLD: u32 = 8;
 const MAJOR_SYNC_BLOCKS: u8 = 5;
 
 mod rep {
-	use sc_network::ReputationChange as Rep;
+	use soil_network::ReputationChange as Rep;
 	/// Reputation change when a peer sent us a message that led to a
 	/// database read error.
 	pub const BLOCKCHAIN_READ_ERROR: Rep = Rep::new(-(1 << 16), "DB Error");

@@ -18,7 +18,7 @@
 
 use crate::error::Result;
 use clap::Parser;
-use sc_service::{chain_ops, ChainSpec};
+use soil_service::{chain_ops, ChainSpec};
 use std::{
 	fs,
 	io::{self, Write},

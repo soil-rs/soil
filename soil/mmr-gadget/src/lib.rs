@@ -45,7 +45,7 @@ pub mod test_utils;
 use crate::offchain_mmr::OffchainMmr;
 use futures::StreamExt;
 use log::{debug, error, trace, warn};
-use sc_client_api::{Backend, BlockchainEvents, FinalityNotification, FinalityNotifications};
+use soil_client_api::{Backend, BlockchainEvents, FinalityNotification, FinalityNotifications};
 use sc_offchain::OffchainDb;
 use soil_api::ProvideRuntimeApi;
 use soil_blockchain::{HeaderBackend, HeaderMetadata};
@@ -201,12 +201,12 @@ where
 			},
 		};
 
-		let mmr_gadget = MmrGadget::<B, BE, C> {
+		let soil_mmr_gadget = MmrGadget::<B, BE, C> {
 			finality_notifications: client.finality_notification_stream(),
 
 			_phantom: Default::default(),
 		};
-		mmr_gadget
+		soil_mmr_gadget
 			.run(OffchainMmrBuilder {
 				backend,
 				client,

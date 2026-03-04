@@ -42,9 +42,9 @@ use futures::{
 	prelude::*,
 };
 use parking_lot::Mutex;
-use sc_client_api::BlockchainEvents;
-use sc_network::{NetworkPeers, NetworkStateInfo};
-use sc_transaction_pool_api::OffchainTransactionPoolFactory;
+use soil_client_api::BlockchainEvents;
+use soil_network::{NetworkPeers, NetworkStateInfo};
+use soil_transaction_pool_api::OffchainTransactionPoolFactory;
 use soil_api::{ApiExt, ProvideRuntimeApi};
 use soil_core::{offchain, traits::SpawnNamed};
 use soil_externalities::Extension;
@@ -328,13 +328,13 @@ mod tests {
 	use super::*;
 	use futures::executor::block_on;
 	use sc_block_builder::BlockBuilderBuilder;
-	use sc_client_api::Backend as _;
-	use sc_network::{
+	use soil_client_api::Backend as _;
+	use soil_network::{
 		config::MultiaddrWithPeerId, types::ProtocolName, Multiaddr, ObservedRole, ReputationChange,
 	};
-	use sc_network_types::PeerId;
+	use soil_network_types::PeerId;
 	use sc_transaction_pool::BasicPool;
-	use sc_transaction_pool_api::{InPoolTransaction, TransactionPool};
+	use soil_transaction_pool_api::{InPoolTransaction, TransactionPool};
 	use soil_consensus::BlockOrigin;
 	use soil_runtime::traits::Block as BlockT;
 	use std::{collections::HashSet, sync::Arc};

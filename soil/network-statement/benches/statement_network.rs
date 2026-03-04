@@ -18,20 +18,20 @@
 
 use criterion::{criterion_group, criterion_main, Criterion};
 use futures::{stream, Stream, StreamExt};
-use sc_network::{
+use soil_network::{
 	service::traits::{NotificationEvent, NotificationService},
 	utils::LruHashSet,
 	NetworkPeers,
 };
-use sc_network_statement::{
+use soil_network_statement::{
 	config::{
 		DEFAULT_STATEMENTS_PER_SECOND, MAX_KNOWN_STATEMENTS, MAX_PENDING_STATEMENTS,
 		STATEMENTS_BURST_COEFFICIENT,
 	},
 	Peer, StatementHandler,
 };
-use sc_network_sync::{SyncEvent, SyncEventStream};
-use sc_network_types::PeerId;
+use soil_network_sync::{SyncEvent, SyncEventStream};
+use soil_network_types::PeerId;
 use sc_statement_store::Store;
 use soil_core::Pair;
 use soil_statement_store::{Statement, StatementSource, StatementStore};
@@ -41,7 +41,7 @@ use std::{
 	pin::Pin,
 	sync::Arc,
 };
-use substrate_test_runtime_client::{sc_executor::WasmExecutor, DefaultTestClientBuilderExt};
+use substrate_test_runtime_client::{soil_executor::WasmExecutor, DefaultTestClientBuilderExt};
 
 const STATEMENT_DATA_SIZE: usize = 256;
 
@@ -58,35 +58,35 @@ impl TestNetwork {
 impl NetworkPeers for TestNetwork {
 	fn set_authorized_peers(&self, _: std::collections::HashSet<PeerId>) {}
 	fn set_authorized_only(&self, _: bool) {}
-	fn add_known_address(&self, _: PeerId, _: sc_network::Multiaddr) {}
-	fn report_peer(&self, _peer_id: PeerId, _cost_benefit: sc_network::ReputationChange) {}
+	fn add_known_address(&self, _: PeerId, _: soil_network::Multiaddr) {}
+	fn report_peer(&self, _peer_id: PeerId, _cost_benefit: soil_network::ReputationChange) {}
 	fn peer_reputation(&self, _: &PeerId) -> i32 {
 		unimplemented!()
 	}
-	fn disconnect_peer(&self, _: PeerId, _: sc_network::ProtocolName) {}
+	fn disconnect_peer(&self, _: PeerId, _: soil_network::ProtocolName) {}
 	fn accept_unreserved_peers(&self) {}
 	fn deny_unreserved_peers(&self) {}
-	fn add_reserved_peer(&self, _: sc_network::config::MultiaddrWithPeerId) -> Result<(), String> {
+	fn add_reserved_peer(&self, _: soil_network::config::MultiaddrWithPeerId) -> Result<(), String> {
 		unimplemented!()
 	}
 	fn remove_reserved_peer(&self, _: PeerId) {}
 	fn set_reserved_peers(
 		&self,
-		_: sc_network::ProtocolName,
-		_: std::collections::HashSet<sc_network::Multiaddr>,
+		_: soil_network::ProtocolName,
+		_: std::collections::HashSet<soil_network::Multiaddr>,
 	) -> Result<(), String> {
 		unimplemented!()
 	}
 	fn add_peers_to_reserved_set(
 		&self,
-		_: sc_network::ProtocolName,
-		_: std::collections::HashSet<sc_network::Multiaddr>,
+		_: soil_network::ProtocolName,
+		_: std::collections::HashSet<soil_network::Multiaddr>,
 	) -> Result<(), String> {
 		unimplemented!()
 	}
 	fn remove_peers_from_reserved_set(
 		&self,
-		_: sc_network::ProtocolName,
+		_: soil_network::ProtocolName,
 		_: Vec<PeerId>,
 	) -> Result<(), String> {
 		unimplemented!()
@@ -94,7 +94,7 @@ impl NetworkPeers for TestNetwork {
 	fn sync_num_connected(&self) -> usize {
 		unimplemented!()
 	}
-	fn peer_role(&self, _: PeerId, _: Vec<u8>) -> Option<sc_network::ObservedRole> {
+	fn peer_role(&self, _: PeerId, _: Vec<u8>) -> Option<soil_network::ObservedRole> {
 		unimplemented!()
 	}
 	async fn reserved_peers(&self) -> Result<Vec<PeerId>, ()> {
@@ -125,11 +125,11 @@ impl soil_consensus::SyncOracle for TestSync {
 	}
 }
 
-impl sc_network::NetworkEventStream for TestNetwork {
+impl soil_network::NetworkEventStream for TestNetwork {
 	fn event_stream(
 		&self,
 		_name: &'static str,
-	) -> Pin<Box<dyn Stream<Item = sc_network::Event> + Send>> {
+	) -> Pin<Box<dyn Stream<Item = soil_network::Event> + Send>> {
 		unimplemented!()
 	}
 }
@@ -150,7 +150,7 @@ impl NotificationService for TestNotificationService {
 		&mut self,
 		_peer: &PeerId,
 		_notification: Vec<u8>,
-	) -> Result<(), sc_network::error::Error> {
+	) -> Result<(), soil_network::error::Error> {
 		unimplemented!()
 	}
 	async fn set_handshake(&mut self, _handshake: Vec<u8>) -> Result<(), ()> {
@@ -165,13 +165,13 @@ impl NotificationService for TestNotificationService {
 	fn clone(&mut self) -> Result<Box<dyn NotificationService>, ()> {
 		unimplemented!()
 	}
-	fn protocol(&self) -> &sc_network::types::ProtocolName {
+	fn protocol(&self) -> &soil_network::types::ProtocolName {
 		unimplemented!()
 	}
 	fn message_sink(
 		&self,
 		_peer: &PeerId,
-	) -> Option<Box<dyn sc_network::service::traits::MessageSink>> {
+	) -> Option<Box<dyn soil_network::service::traits::MessageSink>> {
 		unimplemented!()
 	}
 }

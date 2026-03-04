@@ -20,7 +20,7 @@
 
 use crate::chain_spec::api::ChainSpecApiServer;
 use jsonrpsee::core::RpcResult;
-use sc_chain_spec::Properties;
+use soil_chain_spec::Properties;
 
 /// An API for chain spec RPC calls.
 pub struct ChainSpec {

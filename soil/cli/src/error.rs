@@ -36,7 +36,7 @@ pub enum Error {
 	Cli(#[from] clap::Error),
 
 	#[error(transparent)]
-	Service(#[from] sc_service::Error),
+	Service(#[from] soil_service::Error),
 
 	#[error(transparent)]
 	Client(#[from] soil_blockchain::Error),

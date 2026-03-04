@@ -35,7 +35,7 @@ use std::sync::Arc;
 
 use jsonrpsee::RpcModule;
 use node_primitives::{AccountId, Balance, Block, BlockNumber, Hash, Nonce};
-use sc_client_api::AuxStore;
+use soil_client_api::AuxStore;
 use sc_consensus_babe::BabeWorkerHandle;
 use sc_consensus_beefy::communication::notification::{
 	BeefyBestBlockStream, BeefyVersionedFinalityProofStream,
@@ -44,7 +44,7 @@ use sc_consensus_grandpa::{
 	FinalityProofProvider, GrandpaJustificationStream, SharedAuthoritySet, SharedVoterState,
 };
 pub use sc_rpc::SubscriptionTaskExecutor;
-use sc_transaction_pool_api::TransactionPool;
+use soil_transaction_pool_api::TransactionPool;
 use soil_api::ProvideRuntimeApi;
 use soil_application_crypto::RuntimeAppPublic;
 use soil_block_builder::BlockBuilder;
@@ -103,7 +103,7 @@ pub struct FullDeps<C, P, SC, B, AuthorityId: AuthorityIdBound> {
 	/// The SelectChain Strategy
 	pub select_chain: SC,
 	/// A copy of the chain spec.
-	pub chain_spec: Box<dyn sc_chain_spec::ChainSpec>,
+	pub chain_spec: Box<dyn soil_chain_spec::ChainSpec>,
 	/// BABE specific dependencies.
 	pub babe: BabeDeps,
 	/// GRANDPA specific dependencies.
@@ -135,7 +135,7 @@ pub fn create_full<C, P, SC, B, AuthorityId>(
 ) -> Result<RpcModule<()>, Box<dyn std::error::Error + Send + Sync>>
 where
 	C: ProvideRuntimeApi<Block>
-		+ sc_client_api::BlockBackend<Block>
+		+ soil_client_api::BlockBackend<Block>
 		+ HeaderBackend<Block>
 		+ AuxStore
 		+ HeaderMetadata<Block, Error = BlockChainError>
@@ -143,28 +143,28 @@ where
 		+ Send
 		+ 'static,
 	C::Api: substrate_frame_rpc_system::AccountNonceApi<Block, AccountId, Nonce>,
-	C::Api: mmr_rpc::MmrRuntimeApi<Block, <Block as soil_runtime::traits::Block>::Hash, BlockNumber>,
+	C::Api: soil_mmr_rpc::MmrRuntimeApi<Block, <Block as soil_runtime::traits::Block>::Hash, BlockNumber>,
 	C::Api: pallet_transaction_payment_rpc::TransactionPaymentRuntimeApi<Block, Balance>,
 	C::Api: BabeApi<Block>,
 	C::Api: BlockBuilder<Block>,
 	P: TransactionPool + 'static,
 	SC: SelectChain<Block> + 'static,
-	B: sc_client_api::Backend<Block> + Send + Sync + 'static,
-	B::State: sc_client_api::backend::StateBackend<soil_runtime::traits::HashingFor<Block>>,
+	B: soil_client_api::Backend<Block> + Send + Sync + 'static,
+	B::State: soil_client_api::backend::StateBackend<soil_runtime::traits::HashingFor<Block>>,
 	AuthorityId: AuthorityIdBound,
 	<AuthorityId as RuntimeAppPublic>::Signature: Send + Sync,
 {
-	use mmr_rpc::{Mmr, MmrApiServer};
+	use soil_mmr_rpc::{Mmr, MmrApiServer};
 	use pallet_transaction_payment_rpc::{TransactionPayment, TransactionPaymentApiServer};
-	use sc_consensus_babe_rpc::{Babe, BabeApiServer};
-	use sc_consensus_beefy_rpc::{Beefy, BeefyApiServer};
-	use sc_consensus_grandpa_rpc::{Grandpa, GrandpaApiServer};
+	use soil_consensus_babe_rpc::{Babe, BabeApiServer};
+	use soil_consensus_beefy_rpc::{Beefy, BeefyApiServer};
+	use soil_consensus_grandpa_rpc::{Grandpa, GrandpaApiServer};
 	use sc_rpc::{
 		dev::{Dev, DevApiServer},
 		mixnet::MixnetApiServer,
 		statement::StatementApiServer,
 	};
-	use sc_sync_state_rpc::{SyncState, SyncStateApiServer};
+	use soil_sync_state_rpc::{SyncState, SyncStateApiServer};
 	use substrate_frame_rpc_system::{System, SystemApiServer};
 	use substrate_state_trie_migration_rpc::{StateMigration, StateMigrationApiServer};
 

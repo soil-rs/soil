@@ -15,7 +15,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//! Combines [sc_rpc_api::state::StateApiClient] with [frame_support::storage::generator] traits
+//! Combines [soil_rpc_api::state::StateApiClient] with [frame_support::storage::generator] traits
 //! to provide strongly typed chain state queries over rpc.
 
 #![warn(missing_docs)]
@@ -24,7 +24,7 @@ use codec::{DecodeAll, FullCodec, FullEncode};
 use core::marker::PhantomData;
 use frame_support::storage::generator::{StorageDoubleMap, StorageMap, StorageValue};
 use jsonrpsee::core::ClientError as RpcError;
-use sc_rpc_api::state::StateApiClient;
+use soil_rpc_api::state::StateApiClient;
 use serde::{de::DeserializeOwned, Serialize};
 use soil_storage::{StorageData, StorageKey};
 
@@ -36,7 +36,7 @@ use soil_storage::{StorageData, StorageKey};
 /// # use codec::Encode;
 /// # use frame_support::{construct_runtime, derive_impl, traits::ConstU32};
 /// # use substrate_frame_rpc_support::StorageQuery;
-/// # use sc_rpc_api::state::StateApiClient;
+/// # use soil_rpc_api::state::StateApiClient;
 /// # use soil_runtime::{traits::{BlakeTwo256, IdentityLookup}, testing::Header};
 /// #
 /// # construct_runtime!(

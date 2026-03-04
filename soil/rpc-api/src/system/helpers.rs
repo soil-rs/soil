@@ -18,7 +18,7 @@
 
 //! Substrate system API helpers.
 
-use sc_chain_spec::{ChainType, Properties};
+use soil_chain_spec::{ChainType, Properties};
 use serde::{Deserialize, Serialize};
 use std::fmt;
 

@@ -88,7 +88,7 @@ use log::{debug, info, log, trace, warn};
 use parking_lot::Mutex;
 use prometheus_endpoint::Registry;
 
-use sc_client_api::{
+use soil_client_api::{
 	backend::AuxStore, AuxDataOperations, Backend as BackendT, FinalityNotification,
 	PreCommitActions, UsageProvider,
 };
@@ -99,7 +99,7 @@ use sc_consensus::{
 	},
 	import_queue::{BasicQueue, BoxJustificationImport, DefaultImportQueue, Verifier},
 };
-use sc_consensus_epochs::{
+use soil_consensus_epochs::{
 	descendent_query, Epoch as EpochT, EpochChangesFor, SharedEpochChanges, ViableEpoch,
 	ViableEpochDescriptor,
 };
@@ -107,8 +107,8 @@ use sc_consensus_slots::{
 	check_equivocation, BackoffAuthoringBlocksStrategy, CheckedHeader, InherentDataProviderExt,
 	SlotInfo, StorageChanges,
 };
-use sc_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG, CONSENSUS_TRACE};
-use sc_transaction_pool_api::OffchainTransactionPoolFactory;
+use soil_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG, CONSENSUS_TRACE};
+use soil_transaction_pool_api::OffchainTransactionPoolFactory;
 use soil_api::{ApiExt, ProvideRuntimeApi};
 use soil_application_crypto::AppCrypto;
 use soil_block_builder::BlockBuilder as BlockBuilderApi;

@@ -31,7 +31,7 @@ use parking_lot::Mutex;
 use prometheus_endpoint::Registry;
 use wasm_timer::Delay;
 
-use sc_network_types::PeerId;
+use soil_network_types::PeerId;
 
 use std::{
 	collections::{HashMap, HashSet},
@@ -446,9 +446,9 @@ mod tests {
 
 	#[test]
 	fn report_banned_peers() {
-		let peer_a = sc_network_types::PeerId::random();
-		let peer_b = sc_network_types::PeerId::random();
-		let peer_c = sc_network_types::PeerId::random();
+		let peer_a = soil_network_types::PeerId::random();
+		let peer_b = soil_network_types::PeerId::random();
+		let peer_c = soil_network_types::PeerId::random();
 
 		let metrics_registry = prometheus_endpoint::Registry::new();
 		let mut peerstore = Peerstore::new(
@@ -466,11 +466,11 @@ mod tests {
 		// Report 2 peers with a negative reputation.
 		handle.report_peer(
 			peer_a,
-			sc_network_common::types::ReputationChange { value: i32::MIN, reason: "test".into() },
+			soil_network_common::types::ReputationChange { value: i32::MIN, reason: "test".into() },
 		);
 		handle.report_peer(
 			peer_b,
-			sc_network_common::types::ReputationChange { value: i32::MIN, reason: "test".into() },
+			soil_network_common::types::ReputationChange { value: i32::MIN, reason: "test".into() },
 		);
 
 		// Advance time to propagate peers.

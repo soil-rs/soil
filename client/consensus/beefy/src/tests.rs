@@ -43,17 +43,17 @@ use futures::{
 };
 use parking_lot::Mutex;
 use sc_block_builder::BlockBuilderBuilder;
-use sc_client_api::{Backend as BackendT, BlockchainEvents, FinalityNotifications, HeaderBackend};
+use soil_client_api::{Backend as BackendT, BlockchainEvents, FinalityNotifications, HeaderBackend};
 use sc_consensus::{
 	BlockImport, BlockImportParams, BoxJustificationImport, ForkChoiceStrategy, ImportResult,
 	ImportedAux,
 };
-use sc_network::{config::RequestResponseConfig, ProtocolName};
-use sc_network_test::{
+use soil_network::{config::RequestResponseConfig, ProtocolName};
+use soil_network_test::{
 	Block, BlockImportAdapter, FullPeerConfig, PassThroughVerifier, Peer, PeersClient,
 	PeersFullClient, TestNetFactory,
 };
-use sc_utils::{mpsc::TracingUnboundedReceiver, notification::NotificationReceiver};
+use soil_utils::{mpsc::TracingUnboundedReceiver, notification::NotificationReceiver};
 use soil_api::{ApiRef, ProvideRuntimeApi};
 use soil_application_crypto::key_types::BEEFY as BEEFY_KEY_TYPE;
 use soil_consensus::BlockOrigin;
@@ -122,7 +122,7 @@ impl BeefyTestNet {
 			let (rx, cfg) = on_demand_justifications_protocol_config::<
 				_,
 				Block,
-				sc_network::NetworkWorker<_, _>,
+				soil_network::NetworkWorker<_, _>,
 			>(GENESIS_HASH, None);
 			let justif_protocol_name = cfg.name.clone();
 
@@ -766,7 +766,7 @@ async fn correct_beefy_payload() {
 #[tokio::test]
 async fn beefy_importing_justifications() {
 	use futures::{future::poll_fn, task::Poll};
-	use sc_client_api::BlockBackend;
+	use soil_client_api::BlockBackend;
 
 	soil_tracing::try_init_simple();
 
@@ -1490,7 +1490,7 @@ async fn gossipped_finality_proofs() {
 		end: 10,
 		validator_set: &validator_set,
 	});
-	let mut charlie_gossip_engine = sc_network_gossip::GossipEngine::new(
+	let mut charlie_gossip_engine = soil_network_gossip::GossipEngine::new(
 		charlie.network_service().clone(),
 		charlie.sync_service().clone(),
 		charlie.take_notification_service(&beefy_gossip_proto_name()).unwrap(),

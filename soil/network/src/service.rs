@@ -16,7 +16,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-//! Main entry point of the sc-network crate.
+//! Main entry point of the soil-network crate.
 //!
 //! There are two main structs in this module: [`NetworkWorker`] and [`NetworkService`].
 //! The [`NetworkWorker`] *is* the network. Network is driven by [`NetworkWorker::run`] future that
@@ -76,14 +76,14 @@ use log::{debug, error, info, trace, warn};
 use metrics::{Histogram, MetricSources, Metrics};
 use parking_lot::Mutex;
 use prometheus_endpoint::Registry;
-use sc_network_types::kad::{Key as KademliaKey, Record};
+use soil_network_types::kad::{Key as KademliaKey, Record};
 
-use sc_client_api::BlockBackend;
-use sc_network_common::{
+use soil_client_api::BlockBackend;
+use soil_network_common::{
 	role::{ObservedRole, Roles},
 	ExHashT,
 };
-use sc_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
+use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
 use soil_runtime::traits::Block as BlockT;
 
 pub use behaviour::{InboundFailure, OutboundFailure, ResponseFailure};
@@ -187,7 +187,7 @@ where
 
 	/// Create `PeerStore`.
 	fn peer_store(
-		bootnodes: Vec<sc_network_types::PeerId>,
+		bootnodes: Vec<soil_network_types::PeerId>,
 		metrics_registry: Option<Registry>,
 	) -> Self::PeerStore {
 		PeerStore::new(bootnodes.into_iter().map(From::from).collect(), metrics_registry)
@@ -842,17 +842,17 @@ where
 	H: ExHashT,
 {
 	/// Returns the local external addresses.
-	fn external_addresses(&self) -> Vec<sc_network_types::multiaddr::Multiaddr> {
+	fn external_addresses(&self) -> Vec<soil_network_types::multiaddr::Multiaddr> {
 		self.external_addresses.lock().iter().cloned().map(Into::into).collect()
 	}
 
 	/// Returns the listener addresses (without trailing `/p2p/` with our `PeerId`).
-	fn listen_addresses(&self) -> Vec<sc_network_types::multiaddr::Multiaddr> {
+	fn listen_addresses(&self) -> Vec<soil_network_types::multiaddr::Multiaddr> {
 		self.listen_addresses.lock().iter().cloned().map(Into::into).collect()
 	}
 
 	/// Returns the local Peer ID.
-	fn local_peer_id(&self) -> sc_network_types::PeerId {
+	fn local_peer_id(&self) -> soil_network_types::PeerId {
 		self.local_peer_id.into()
 	}
 }
@@ -874,7 +874,7 @@ where
 
 	fn verify(
 		&self,
-		peer_id: sc_network_types::PeerId,
+		peer_id: soil_network_types::PeerId,
 		public_key: &Vec<u8>,
 		signature: &Vec<u8>,
 		message: &Vec<u8>,
@@ -897,7 +897,7 @@ where
 	///
 	/// This will generate either a `ClosestPeersFound` or a `ClosestPeersNotFound` event and pass
 	/// it as an item on the [`NetworkWorker`] stream.
-	fn find_closest_peers(&self, target: sc_network_types::PeerId) {
+	fn find_closest_peers(&self, target: soil_network_types::PeerId) {
 		let _ = self
 			.to_worker
 			.unbounded_send(ServiceToWorkerMsg::FindClosestPeers(target.into()));
@@ -922,7 +922,7 @@ where
 	fn put_record_to(
 		&self,
 		record: Record,
-		peers: HashSet<sc_network_types::PeerId>,
+		peers: HashSet<soil_network_types::PeerId>,
 		update_local_storage: bool,
 	) {
 		let _ = self.to_worker.unbounded_send(ServiceToWorkerMsg::PutRecordTo {
@@ -936,7 +936,7 @@ where
 		&self,
 		key: KademliaKey,
 		value: Vec<u8>,
-		publisher: Option<sc_network_types::PeerId>,
+		publisher: Option<soil_network_types::PeerId>,
 		expires: Option<Instant>,
 	) {
 		let _ = self.to_worker.unbounded_send(ServiceToWorkerMsg::StoreRecord(
@@ -1001,7 +1001,7 @@ where
 	B: BlockT + 'static,
 	H: ExHashT,
 {
-	fn set_authorized_peers(&self, peers: HashSet<sc_network_types::PeerId>) {
+	fn set_authorized_peers(&self, peers: HashSet<soil_network_types::PeerId>) {
 		self.sync_protocol_handle
 			.set_reserved_peers(peers.iter().map(|peer| (*peer).into()).collect());
 	}
@@ -1012,23 +1012,23 @@ where
 
 	fn add_known_address(
 		&self,
-		peer_id: sc_network_types::PeerId,
-		addr: sc_network_types::multiaddr::Multiaddr,
+		peer_id: soil_network_types::PeerId,
+		addr: soil_network_types::multiaddr::Multiaddr,
 	) {
 		let _ = self
 			.to_worker
 			.unbounded_send(ServiceToWorkerMsg::AddKnownAddress(peer_id.into(), addr.into()));
 	}
 
-	fn report_peer(&self, peer_id: sc_network_types::PeerId, cost_benefit: ReputationChange) {
+	fn report_peer(&self, peer_id: soil_network_types::PeerId, cost_benefit: ReputationChange) {
 		self.peer_store_handle.report_peer(peer_id, cost_benefit);
 	}
 
-	fn peer_reputation(&self, peer_id: &sc_network_types::PeerId) -> i32 {
+	fn peer_reputation(&self, peer_id: &soil_network_types::PeerId) -> i32 {
 		self.peer_store_handle.peer_reputation(peer_id)
 	}
 
-	fn disconnect_peer(&self, peer_id: sc_network_types::PeerId, protocol: ProtocolName) {
+	fn disconnect_peer(&self, peer_id: soil_network_types::PeerId, protocol: ProtocolName) {
 		let _ = self
 			.to_worker
 			.unbounded_send(ServiceToWorkerMsg::DisconnectPeer(peer_id.into(), protocol));
@@ -1057,14 +1057,14 @@ where
 		Ok(())
 	}
 
-	fn remove_reserved_peer(&self, peer_id: sc_network_types::PeerId) {
+	fn remove_reserved_peer(&self, peer_id: soil_network_types::PeerId) {
 		self.sync_protocol_handle.remove_reserved_peer(peer_id.into());
 	}
 
 	fn set_reserved_peers(
 		&self,
 		protocol: ProtocolName,
-		peers: HashSet<sc_network_types::multiaddr::Multiaddr>,
+		peers: HashSet<soil_network_types::multiaddr::Multiaddr>,
 	) -> Result<(), String> {
 		let Some(set_id) = self.notification_protocol_ids.get(&protocol) else {
 			return Err(format!("Cannot set reserved peers for unknown protocol: {}", protocol));
@@ -1098,7 +1098,7 @@ where
 	fn add_peers_to_reserved_set(
 		&self,
 		protocol: ProtocolName,
-		peers: HashSet<sc_network_types::multiaddr::Multiaddr>,
+		peers: HashSet<soil_network_types::multiaddr::Multiaddr>,
 	) -> Result<(), String> {
 		let Some(set_id) = self.notification_protocol_ids.get(&protocol) else {
 			return Err(format!(
@@ -1131,7 +1131,7 @@ where
 	fn remove_peers_from_reserved_set(
 		&self,
 		protocol: ProtocolName,
-		peers: Vec<sc_network_types::PeerId>,
+		peers: Vec<soil_network_types::PeerId>,
 	) -> Result<(), String> {
 		let Some(set_id) = self.notification_protocol_ids.get(&protocol) else {
 			return Err(format!(
@@ -1153,7 +1153,7 @@ where
 
 	fn peer_role(
 		&self,
-		peer_id: sc_network_types::PeerId,
+		peer_id: soil_network_types::PeerId,
 		handshake: Vec<u8>,
 	) -> Option<ObservedRole> {
 		match Roles::decode_all(&mut &handshake[..]) {
@@ -1168,7 +1168,7 @@ where
 	/// Get the list of reserved peers.
 	///
 	/// Returns an error if the `NetworkWorker` is no longer running.
-	async fn reserved_peers(&self) -> Result<Vec<sc_network_types::PeerId>, ()> {
+	async fn reserved_peers(&self) -> Result<Vec<soil_network_types::PeerId>, ()> {
 		let (tx, rx) = oneshot::channel();
 
 		self.sync_protocol_handle.reserved_peers(tx);
@@ -1200,7 +1200,7 @@ where
 {
 	async fn request(
 		&self,
-		target: sc_network_types::PeerId,
+		target: soil_network_types::PeerId,
 		protocol: ProtocolName,
 		request: Vec<u8>,
 		fallback_request: Option<(Vec<u8>, ProtocolName)>,
@@ -1221,7 +1221,7 @@ where
 
 	fn start_request(
 		&self,
-		target: sc_network_types::PeerId,
+		target: soil_network_types::PeerId,
 		protocol: ProtocolName,
 		request: Vec<u8>,
 		fallback_request: Option<(Vec<u8>, ProtocolName)>,
@@ -1315,7 +1315,7 @@ enum ServiceToWorkerMsg {
 	PutValue(KademliaKey, Vec<u8>),
 	PutRecordTo {
 		record: Record,
-		peers: HashSet<sc_network_types::PeerId>,
+		peers: HashSet<soil_network_types::PeerId>,
 		update_local_storage: bool,
 	},
 	StoreRecord(KademliaKey, Vec<u8>, Option<PeerId>, Option<Instant>),
@@ -1938,10 +1938,10 @@ where
 }
 
 pub(crate) fn ensure_addresses_consistent_with_transport<'a>(
-	addresses: impl Iterator<Item = &'a sc_network_types::multiaddr::Multiaddr>,
+	addresses: impl Iterator<Item = &'a soil_network_types::multiaddr::Multiaddr>,
 	transport: &TransportConfig,
 ) -> Result<(), Error> {
-	use sc_network_types::multiaddr::Protocol;
+	use soil_network_types::multiaddr::Protocol;
 
 	if matches!(transport, TransportConfig::MemoryOnly) {
 		let addresses: Vec<_> = addresses
