@@ -1,0 +1,53 @@
+[package]
+description = "Substrate transaction protocol"
+name = "soil-network-transactions"
+version = "0.33.0"
+license = "GPL-3.0-or-later WITH Classpath-exception-2.0"
+authors.workspace = true
+edition.workspace = true
+homepage.workspace = true
+repository.workspace = true
+documentation = "https://docs.rs/soil-network-transactions"
+
+[lints]
+workspace = true
+
+[package.metadata.docs.rs]
+targets = ["x86_64-unknown-linux-gnu"]
+
+[dependencies]
+array-bytes = { workspace = true, default-features = true, optional = true}
+codec = { features = ["derive"], workspace = true, default-features = true, optional = true}
+futures = { workspace = true, optional = true}
+log = { workspace = true, default-features = true, optional = true}
+prometheus-endpoint = { workspace = true, default-features = true, optional = true}
+soil-network = { workspace = true, default-features = true, optional = true}
+soil-network-common = { workspace = true, default-features = true, optional = true}
+soil-network-sync = { workspace = true, default-features = true, optional = true}
+soil-network-types = { workspace = true, default-features = true, optional = true}
+soil-utils = { workspace = true, default-features = true, optional = true}
+soil-consensus = { workspace = true, default-features = true, optional = true}
+soil-runtime = { workspace = true, default-features = true, optional = true}
+
+[features]
+default = ["std"]
+std = [
+	"array-bytes",
+	"codec",
+	"futures",
+	"log",
+	"prometheus-endpoint",
+	"soil-consensus",
+	"soil-network",
+	"soil-network-common",
+	"soil-network-sync",
+	"soil-network-types",
+	"soil-runtime",
+	"soil-utils",
+	"soil-network/std",
+	"soil-network-common/std",
+	"soil-network-sync/std",
+	"soil-network-types/std",
+	"soil-runtime/std",
+	"soil-utils/std",
+]

@@ -46,9 +46,9 @@ use finality_grandpa::{
 	voter_set::VoterSet,
 	Message::{Precommit, Prevote, PrimaryPropose},
 };
-use sc_network::{NetworkBlock, NetworkSyncForkRequest, NotificationService, ReputationChange};
-use sc_network_gossip::{GossipEngine, Network as GossipNetwork};
-use sc_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG, CONSENSUS_INFO};
+use soil_network::{NetworkBlock, NetworkSyncForkRequest, NotificationService, ReputationChange};
+use soil_network_gossip::{GossipEngine, Network as GossipNetwork};
+use soil_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG, CONSENSUS_INFO};
 use soil_keystore::KeystorePtr;
 use soil_runtime::traits::{Block as BlockT, Hash as HashT, Header as HeaderT, NumberFor};
 
@@ -59,8 +59,8 @@ use crate::{
 use gossip::{
 	FullCatchUpMessage, FullCommitMessage, GossipMessage, GossipValidator, PeerReport, VoteMessage,
 };
-use sc_network_sync::SyncEventStream;
-use sc_utils::mpsc::TracingUnboundedReceiver;
+use soil_network_sync::SyncEventStream;
+use soil_utils::mpsc::TracingUnboundedReceiver;
 use soil_consensus_grandpa::{AuthorityId, AuthoritySignature, RoundNumber, SetId as SetIdNumber};
 
 pub mod gossip;
@@ -73,8 +73,8 @@ pub(crate) mod tests;
 pub(crate) const NEIGHBOR_REBROADCAST_PERIOD: Duration = Duration::from_secs(2 * 60);
 
 pub mod grandpa_protocol_name {
-	use sc_chain_spec::ChainSpec;
-	use sc_network::types::ProtocolName;
+	use soil_chain_spec::ChainSpec;
+	use soil_network::types::ProtocolName;
 
 	pub(crate) const NAME: &str = "/grandpa/1";
 	/// Old names for the notifications protocol, used for backward compatibility.
@@ -98,7 +98,7 @@ pub mod grandpa_protocol_name {
 
 // cost scalars for reporting peers.
 mod cost {
-	use sc_network::ReputationChange as Rep;
+	use soil_network::ReputationChange as Rep;
 	pub(super) const PAST_REJECTION: Rep = Rep::new(-50, "Grandpa: Past message");
 	pub(super) const BAD_SIGNATURE: Rep = Rep::new(-100, "Grandpa: Bad signature");
 	pub(super) const MALFORMED_CATCH_UP: Rep = Rep::new(-1000, "Grandpa: Malformed cath-up");
@@ -126,7 +126,7 @@ mod cost {
 
 // benefit scalars for reporting peers.
 mod benefit {
-	use sc_network::ReputationChange as Rep;
+	use soil_network::ReputationChange as Rep;
 	pub(super) const NEIGHBOR_MESSAGE: Rep = Rep::new(100, "Grandpa: Neighbor message");
 	pub(super) const ROUND_MESSAGE: Rep = Rep::new(100, "Grandpa: Round message");
 	pub(super) const BASIC_VALIDATED_CATCH_UP: Rep = Rep::new(200, "Grandpa: Catch-up message");
@@ -488,7 +488,7 @@ impl<B: BlockT, N: Network<B>, S: Syncing<B>> NetworkBridge<B, N, S> {
 	/// connected to (NOTE: this assumption will change in the future #3629).
 	pub(crate) fn set_sync_fork_request(
 		&self,
-		peers: Vec<sc_network_types::PeerId>,
+		peers: Vec<soil_network_types::PeerId>,
 		hash: B::Hash,
 		number: NumberFor<B>,
 	) {
@@ -550,7 +550,7 @@ fn incoming_global<B: BlockT>(
 	let process_commit = {
 		let telemetry = telemetry.clone();
 		move |msg: FullCommitMessage<B>,
-		      mut notification: sc_network_gossip::TopicNotification,
+		      mut notification: soil_network_gossip::TopicNotification,
 		      gossip_engine: &Arc<Mutex<GossipEngine<B>>>,
 		      gossip_validator: &Arc<GossipValidator<B>>,
 		      voters: &VoterSet<AuthorityId>| {
@@ -618,7 +618,7 @@ fn incoming_global<B: BlockT>(
 	};
 
 	let process_catch_up = move |msg: FullCatchUpMessage<B>,
-	                             mut notification: sc_network_gossip::TopicNotification,
+	                             mut notification: soil_network_gossip::TopicNotification,
 	                             gossip_engine: &Arc<Mutex<GossipEngine<B>>>,
 	                             gossip_validator: &Arc<GossipValidator<B>>,
 	                             voters: &VoterSet<AuthorityId>| {

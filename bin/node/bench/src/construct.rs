@@ -29,7 +29,7 @@ use std::{borrow::Cow, collections::HashMap, pin::Pin, sync::Arc};
 use async_trait::async_trait;
 use node_primitives::Block;
 use node_testing::bench::{BenchDb, BlockType, DatabaseType, KeyTypes};
-use sc_transaction_pool_api::{
+use soil_transaction_pool_api::{
 	ImportNotificationStream, PoolStatus, ReadyTransactions, TransactionFor, TransactionSource,
 	TransactionStatusStreamFor, TxHash, TxInvalidityReportMap,
 };
@@ -120,7 +120,7 @@ impl core::Benchmark for ConstructionBenchmark {
 			std::thread::park_timeout(std::time::Duration::from_secs(3));
 		}
 
-		let mut proposer_factory = sc_basic_authorship::ProposerFactory::new(
+		let mut proposer_factory = soil_basic_authorship::ProposerFactory::new(
 			context.spawn_handle.clone(),
 			context.client.clone(),
 			self.transactions.clone().into(),
@@ -178,7 +178,7 @@ impl From<OpaqueExtrinsic> for PoolTransaction {
 	}
 }
 
-impl sc_transaction_pool_api::InPoolTransaction for PoolTransaction {
+impl soil_transaction_pool_api::InPoolTransaction for PoolTransaction {
 	type Transaction = Arc<OpaqueExtrinsic>;
 	type Hash = node_primitives::Hash;
 
@@ -228,11 +228,11 @@ impl ReadyTransactions for TransactionsIterator {
 }
 
 #[async_trait]
-impl sc_transaction_pool_api::TransactionPool for Transactions {
+impl soil_transaction_pool_api::TransactionPool for Transactions {
 	type Block = Block;
 	type Hash = node_primitives::Hash;
 	type InPoolTransaction = PoolTransaction;
-	type Error = sc_transaction_pool_api::error::Error;
+	type Error = soil_transaction_pool_api::error::Error;
 
 	/// Asynchronously imports a bunch of unverified transactions to the pool.
 	async fn submit_at(

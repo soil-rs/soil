@@ -23,8 +23,8 @@ use crate::{
 	best_justification, find_scheduled_change, AuthoritySetChanges, AuthoritySetHardFork,
 	BlockNumberOps, GrandpaJustification, SharedAuthoritySet,
 };
-use sc_client_api::Backend as ClientBackend;
-use sc_network_sync::strategy::warp::{
+use soil_client_api::Backend as ClientBackend;
+use soil_network_sync::strategy::warp::{
 	EncodedProof, VerificationResult, Verifier, WarpSyncProvider,
 };
 use soil_blockchain::{Backend as BlockchainBackend, HeaderBackend};

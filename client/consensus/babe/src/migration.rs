@@ -21,7 +21,7 @@ use crate::{
 	NextEpochDescriptor, Randomness,
 };
 use codec::{Decode, Encode};
-use sc_consensus_epochs::Epoch as EpochT;
+use soil_consensus_epochs::Epoch as EpochT;
 use soil_consensus_slots::Slot;
 
 /// BABE epoch information, version 0.

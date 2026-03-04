@@ -21,16 +21,16 @@ use futures::{future, StreamExt};
 use kitchensink_runtime::{constants::currency::*, BalancesCall, SudoCall};
 use node_cli::service::{create_extrinsic, fetch_nonce, FullClient, TransactionPool};
 use node_primitives::AccountId;
-use sc_service::config::{ExecutorConfiguration, RpcConfiguration};
-use sc_transaction_pool_api::TransactionPool as _;
-use sc_service::{
+use soil_service::config::{ExecutorConfiguration, RpcConfiguration};
+use soil_transaction_pool_api::TransactionPool as _;
+use soil_service::{
 	config::{
 		BlocksPruning, DatabaseSource, KeystoreConfig, NetworkConfiguration, OffchainWorkerConfig,
 		PruningMode, RpcBatchRequestConfig, TransactionPoolOptions,
 	},
 	BasePath, Configuration, Role,
 };
-use sc_transaction_pool_api::{TransactionSource, TransactionStatus};
+use soil_transaction_pool_api::{TransactionSource, TransactionStatus};
 use soil_core::{crypto::Pair, sr25519};
 use soil_keyring::Sr25519Keyring;
 use soil_runtime::OpaqueExtrinsic;
@@ -97,12 +97,12 @@ fn new_node(tokio_handle: Handle) -> node_cli::service::NewFullBase {
 	};
 
 	tokio_handle.block_on(async move {
-		node_cli::service::new_full_base::<sc_network::NetworkWorker<_, _>>(
+		node_cli::service::new_full_base::<soil_network::NetworkWorker<_, _>>(
 			config,
 			None,
 			false,
 			1,
-			sc_network_statement::config::DEFAULT_STATEMENTS_PER_SECOND,
+			soil_network_statement::config::DEFAULT_STATEMENTS_PER_SECOND,
 			|_, _| (),
 		)
 		.expect("Creates node")

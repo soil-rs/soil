@@ -23,14 +23,14 @@ jsonrpsee = { features = ["server"], workspace = true }
 log = { workspace = true, default-features = true }
 parking_lot = { workspace = true, default-features = true }
 sc-block-builder = { workspace = true, default-features = true }
-sc-chain-spec = { workspace = true, default-features = true }
-sc-client-api = { workspace = true, default-features = true }
+soil-chain-spec = { workspace = true, default-features = true }
+soil-client-api = { workspace = true, default-features = true }
 sc-mixnet = { workspace = true, default-features = true }
-sc-rpc-api = { workspace = true, default-features = true }
+soil-rpc-api = { workspace = true, default-features = true }
 sc-statement-store = { workspace = true, default-features = true }
 sc-tracing = { workspace = true, default-features = true }
-sc-transaction-pool-api = { workspace = true, default-features = true }
-sc-utils = { workspace = true, default-features = true }
+soil-transaction-pool-api = { workspace = true, default-features = true }
+soil-utils = { workspace = true, default-features = true }
 serde_json = { workspace = true, default-features = true }
 soil-api = { workspace = true, default-features = true }
 soil-blockchain = { workspace = true, default-features = true }
@@ -49,7 +49,7 @@ assert_matches = { workspace = true }
 futures-timer = { workspace = true }
 pretty_assertions = { workspace = true }
 sc-keystore = { workspace = true }
-sc-network = { workspace = true, default-features = true }
+soil-network = { workspace = true, default-features = true }
 sc-transaction-pool = { workspace = true, default-features = true }
 soil-consensus = { workspace = true, default-features = true }
 soil-crypto-hashing = { workspace = true, default-features = true }

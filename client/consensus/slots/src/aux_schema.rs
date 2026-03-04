@@ -19,7 +19,7 @@
 //! Schema for slots in the aux-db.
 
 use codec::{Decode, Encode};
-use sc_client_api::backend::AuxStore;
+use soil_client_api::backend::AuxStore;
 use soil_blockchain::{Error as ClientError, Result as ClientResult};
 use soil_consensus_slots::{EquivocationProof, Slot};
 use soil_runtime::traits::Header;

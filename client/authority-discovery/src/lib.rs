@@ -40,8 +40,8 @@ use futures::{
 	Stream,
 };
 
-use sc_network::{event::DhtEvent, Multiaddr};
-use sc_network_types::PeerId;
+use soil_network::{event::DhtEvent, Multiaddr};
+use soil_network_types::PeerId;
 use soil_authority_discovery::AuthorityId;
 use soil_blockchain::HeaderBackend;
 use soil_core::traits::SpawnNamed;

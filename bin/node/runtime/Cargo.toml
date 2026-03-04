@@ -147,8 +147,8 @@ pallet-utility = { workspace = true }
 pallet-verify-signature = { workspace = true }
 pallet-vesting = { workspace = true }
 pallet-whitelist = { workspace = true }
-sc-chain-spec-derive = { workspace = true }
-sc-tracing-proc-macro = { workspace = true }
+soil-chain-spec-derive = { workspace = true }
+soil-tracing-proc-macro = { workspace = true }
 soil-api = { workspace = true }
 soil-api-proc-macro = { workspace = true }
 soil-application-crypto = { workspace = true }

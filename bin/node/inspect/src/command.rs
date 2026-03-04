@@ -22,8 +22,8 @@ use crate::{
 	cli::{InspectCmd, InspectSubCmd},
 	Inspector,
 };
-use sc_cli::{CliConfiguration, ImportParams, Result, SharedParams};
-use sc_service::Configuration;
+use soil_cli::{CliConfiguration, ImportParams, Result, SharedParams};
+use soil_service::Configuration;
 use soil_runtime::traits::Block;
 
 type HostFunctions =
@@ -36,9 +36,9 @@ impl InspectCmd {
 		B: Block,
 		RA: Send + Sync + 'static,
 	{
-		let executor = sc_service::new_wasm_executor::<HostFunctions>(&config.executor);
+		let executor = soil_service::new_wasm_executor::<HostFunctions>(&config.executor);
 		let client =
-			sc_service::new_full_client::<B, RA, _>(&config, None, executor, Default::default())?;
+			soil_service::new_full_client::<B, RA, _>(&config, None, executor, Default::default())?;
 		let inspect = Inspector::<B>::new(client);
 
 		match &self.command {

@@ -35,7 +35,7 @@ pub enum Error {
 	VerifyingDhtPayload,
 
 	#[error("Failed to hash the authority id to be used as a dht key.")]
-	HashingAuthorityId(#[from] sc_network_types::multihash::Error),
+	HashingAuthorityId(#[from] soil_network_types::multihash::Error),
 
 	#[error("Failed calling into the Substrate runtime: {0}")]
 	CallingRuntime(#[from] soil_blockchain::Error),
@@ -56,7 +56,7 @@ pub enum Error {
 	EncodingDecodingAddrCache(String),
 
 	#[error("Failed to parse a libp2p multi address.")]
-	ParsingMultiaddress(#[from] sc_network::multiaddr::ParseError),
+	ParsingMultiaddress(#[from] soil_network::multiaddr::ParseError),
 
 	#[error("Failed to parse a libp2p key: {0}")]
 	ParsingLibp2pIdentity(String),

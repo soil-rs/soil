@@ -111,15 +111,54 @@ Merge the `sc-*` implementation into its corresponding `soil-*` crate behind
 Rename `sc-*` crates that have no `sp-*` counterpart. Add `std` feature (no_std
 build produces empty library).
 
-Remaining sc-* crates (not listed in Phase 4):
-`sc-allocator`, `sc-basic-authorship`, `sc-chain-spec`, `sc-cli`,
-`sc-client-api`, `sc-client-db`, `sc-consensus-epochs`,
-`sc-consensus-manual-seal`, `sc-executor`, `sc-informant`, `sc-network`,
-`sc-proposer-metrics`, `sc-rpc-api`, `sc-rpc-server`, `sc-rpc-spec-v2`,
-`sc-service`, `sc-state-db`, `sc-storage-monitor`, `sc-sync-state-rpc`,
-`sc-sysinfo`, `sc-telemetry`, `sc-utils`, and sub-crates.
+| Old Crate | New Crate | Status |
+|---|---|---|
+| `sc-allocator` | `soil-allocator` | DONE |
+| `sc-basic-authorship` | `soil-basic-authorship` | DONE |
+| `sc-chain-spec` | `soil-chain-spec` | DONE |
+| `sc-chain-spec-derive` | `soil-chain-spec-derive` | DONE |
+| `sc-cli` | `soil-cli` | DONE |
+| `sc-client-api` | `soil-client-api` | DONE |
+| `sc-client-db` | `soil-client-db` | DONE |
+| `sc-consensus-babe-rpc` | `soil-consensus-babe-rpc` | DONE |
+| `sc-consensus-beefy-rpc` | `soil-consensus-beefy-rpc` | DONE |
+| `sc-consensus-epochs` | `soil-consensus-epochs` | DONE |
+| `sc-consensus-grandpa-rpc` | `soil-consensus-grandpa-rpc` | DONE |
+| `sc-consensus-manual-seal` | `soil-consensus-manual-seal` | DONE |
+| `sc-executor` | `soil-executor` | DONE |
+| `sc-executor-common` | `soil-executor-common` | DONE |
+| `sc-executor-polkavm` | `soil-executor-polkavm` | DONE |
+| `sc-executor-wasmtime` | `soil-executor-wasmtime` | DONE |
+| `sc-informant` | `soil-informant` | DONE |
+| `sc-network` | `soil-network` | DONE |
+| `sc-network-common` | `soil-network-common` | DONE |
+| `sc-network-gossip` | `soil-network-gossip` | DONE |
+| `sc-network-light` | `soil-network-light` | DONE |
+| `sc-network-statement` | `soil-network-statement` | DONE |
+| `sc-network-sync` | `soil-network-sync` | DONE |
+| `sc-network-test` | `soil-network-test` | DONE |
+| `sc-network-transactions` | `soil-network-transactions` | DONE |
+| `sc-network-types` | `soil-network-types` | DONE |
+| `sc-proposer-metrics` | `soil-proposer-metrics` | DONE |
+| `sc-rpc-api` | `soil-rpc-api` | DONE |
+| `sc-rpc-server` | `soil-rpc-server` | DONE |
+| `sc-rpc-spec-v2` | `soil-rpc-spec-v2` | DONE |
+| `sc-runtime-test` | `soil-runtime-test` | DONE |
+| `sc-runtime-utilities` | `soil-runtime-utilities` | DONE |
+| `sc-service` | `soil-service` | DONE |
+| `sc-service-test` | `soil-service-test` | DONE |
+| `sc-state-db` | `soil-state-db` | DONE |
+| `sc-storage-monitor` | `soil-storage-monitor` | DONE |
+| `sc-sync-state-rpc` | `soil-sync-state-rpc` | DONE |
+| `sc-sysinfo` | `soil-sysinfo` | DONE |
+| `sc-telemetry` | `soil-telemetry` | DONE |
+| `sc-tracing-proc-macro` | `soil-tracing-proc-macro` | DONE |
+| `sc-transaction-pool-api` | `soil-transaction-pool-api` | DONE |
+| `sc-utils` | `soil-utils` | DONE |
+| `mmr-gadget` | `soil-mmr-gadget` | DONE |
+| `mmr-rpc` | `soil-mmr-rpc` | DONE |
 
-Status: TODO
+Status: DONE
 
 ### Phase 6 — FRAME / pallets (frame-*, pallet-* → topsoil-*)
 

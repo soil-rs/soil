@@ -1,0 +1,49 @@
+[package]
+name = "soil-telemetry"
+version = "15.0.0"
+authors.workspace = true
+description = "Telemetry utils"
+edition.workspace = true
+license = "GPL-3.0-or-later WITH Classpath-exception-2.0"
+homepage.workspace = true
+repository.workspace = true
+documentation = "https://docs.rs/soil-telemetry"
+readme = "README.md"
+
+[lints]
+workspace = true
+
+[package.metadata.docs.rs]
+targets = ["x86_64-unknown-linux-gnu"]
+
+[dependencies]
+chrono = { workspace = true, optional = true}
+futures = { workspace = true, optional = true}
+libp2p = { features = ["dns", "tcp", "tokio", "websocket"], workspace = true, optional = true}
+log = { workspace = true, default-features = true, optional = true}
+parking_lot = { workspace = true, default-features = true, optional = true}
+pin-project = { workspace = true, optional = true}
+rand = { workspace = true, default-features = true, optional = true}
+soil-utils = { workspace = true, default-features = true, optional = true}
+serde = { features = ["derive"], workspace = true, default-features = true, optional = true}
+serde_json = { workspace = true, default-features = true, optional = true}
+thiserror = { workspace = true, optional = true}
+wasm-timer = { workspace = true, optional = true}
+
+[features]
+default = ["std"]
+std = [
+	"chrono",
+	"futures",
+	"libp2p",
+	"log",
+	"parking_lot",
+	"pin-project",
+	"rand",
+	"serde",
+	"serde_json",
+	"soil-utils",
+	"thiserror",
+	"wasm-timer",
+	"soil-utils/std",
+]

@@ -23,7 +23,7 @@ pub mod fatp_common;
 use fatp_common::{invalid_hash, new_best_block_event, TestPoolBuilder, LOG_TARGET, SOURCE};
 use futures::{executor::block_on, FutureExt};
 use sc_transaction_pool::ChainApi;
-use sc_transaction_pool_api::{
+use soil_transaction_pool_api::{
 	error::Error as TxPoolError, LocalTransactionPool, MaintainedTransactionPool, TransactionPool,
 	TransactionStatus,
 };

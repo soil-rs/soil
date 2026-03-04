@@ -21,7 +21,7 @@ use super::{
 	currency, substrate_test_pallet, wasm_binary_unwrap, AccountId, Balance, RuntimeGenesisConfig,
 };
 use codec::Encode;
-use sc_service::construct_genesis_block;
+use soil_service::construct_genesis_block;
 use soil_core::{
 	sr25519,
 	storage::{well_known_keys, StateVersion, Storage},

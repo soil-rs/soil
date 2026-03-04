@@ -21,9 +21,9 @@ use crate::DenyUnsafe;
 use assert_matches::assert_matches;
 use futures::prelude::*;
 use jsonrpsee::{core::EmptyServerParams as EmptyParams, MethodsError as RpcError, RpcModule};
-use sc_network::{self, config::Role, PeerId};
-use sc_rpc_api::system::helpers::PeerInfo;
-use sc_utils::mpsc::tracing_unbounded;
+use soil_network::{self, config::Role, PeerId};
+use soil_rpc_api::system::helpers::PeerInfo;
+use soil_utils::mpsc::tracing_unbounded;
 use soil_core::H256;
 use std::{
 	env,
@@ -84,7 +84,7 @@ fn api<T: Into<Option<Status>>>(sync: T) -> RpcModule<System<Block>> {
 				},
 				Request::NetworkState(sender) => {
 					let _ = sender.send(
-						serde_json::to_value(&sc_network::network_state::NetworkState {
+						serde_json::to_value(&soil_network::network_state::NetworkState {
 							peer_id: String::new(),
 							listened_addresses: Default::default(),
 							external_addresses: Default::default(),
@@ -96,7 +96,7 @@ fn api<T: Into<Option<Status>>>(sync: T) -> RpcModule<System<Block>> {
 					);
 				},
 				Request::NetworkAddReservedPeer(peer, sender) => {
-					let _ = match sc_network::config::parse_str_addr(&peer) {
+					let _ = match soil_network::config::parse_str_addr(&peer) {
 						Ok(_) => sender.send(Ok(())),
 						Err(s) => {
 							sender.send(Err(error::Error::MalformattedPeerArg(s.to_string())))
@@ -270,7 +270,7 @@ async fn system_peers() {
 
 #[tokio::test]
 async fn system_network_state() {
-	use sc_network::network_state::NetworkState;
+	use soil_network::network_state::NetworkState;
 	let network_state: NetworkState = api(None)
 		.call("system_unstable_networkState", EmptyParams::new())
 		.await

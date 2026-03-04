@@ -36,18 +36,18 @@ use futures::{channel::mpsc, future, stream::Fuse, FutureExt, Stream, StreamExt}
 use codec::{Decode, Encode};
 use ip_network::IpNetwork;
 use linked_hash_set::LinkedHashSet;
-use sc_network_types::kad::{Key, PeerRecord, Record};
+use soil_network_types::kad::{Key, PeerRecord, Record};
 
 use log::{debug, error, info, trace};
 use prometheus_endpoint::{register, Counter, CounterVec, Gauge, Opts, U64};
 use prost::Message;
 use rand::{seq::SliceRandom, thread_rng};
 
-use sc_network::{
+use soil_network::{
 	config::DEFAULT_KADEMLIA_REPLICATION_FACTOR, event::DhtEvent, multiaddr, KademliaKey,
 	Multiaddr, NetworkDHTProvider, NetworkSigner, NetworkStateInfo,
 };
-use sc_network_types::{multihash::Code, PeerId};
+use soil_network_types::{multihash::Code, PeerId};
 use schema::PeerSignature;
 use soil_api::{ApiError, ProvideRuntimeApi};
 use soil_authority_discovery::{
@@ -1099,7 +1099,7 @@ impl AddressType {
 
 /// NetworkProvider provides [`Worker`] with all necessary hooks into the
 /// underlying Substrate networking. Using this trait abstraction instead of
-/// `sc_network::NetworkService` directly is necessary to unit test [`Worker`].
+/// `soil_network::NetworkService` directly is necessary to unit test [`Worker`].
 pub trait NetworkProvider:
 	NetworkDHTProvider + NetworkStateInfo + NetworkSigner + Send + Sync
 {

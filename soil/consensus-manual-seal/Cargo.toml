@@ -1,0 +1,102 @@
+[package]
+name = "soil-consensus-manual-seal"
+version = "0.35.0"
+authors.workspace = true
+description = "Manual sealing engine for Substrate"
+edition.workspace = true
+license = "GPL-3.0-or-later WITH Classpath-exception-2.0"
+homepage.workspace = true
+repository.workspace = true
+readme = "README.md"
+
+[lints]
+workspace = true
+
+[package.metadata.docs.rs]
+targets = ["x86_64-unknown-linux-gnu"]
+
+[dependencies]
+async-trait = { workspace = true, optional = true}
+codec = { workspace = true, default-features = true, optional = true}
+futures = { workspace = true, optional = true}
+futures-timer = { workspace = true, optional = true}
+jsonrpsee = { features = ["client-core", "macros", "server-core"], workspace = true, optional = true}
+log = { workspace = true, default-features = true, optional = true}
+prometheus-endpoint = { workspace = true, default-features = true, optional = true}
+soil-client-api = { workspace = true, default-features = true, optional = true}
+sc-consensus = { workspace = true, default-features = true, optional = true}
+sc-consensus-aura = { workspace = true, default-features = true, optional = true}
+sc-consensus-babe = { workspace = true, default-features = true, optional = true}
+soil-consensus-epochs = { workspace = true, default-features = true, optional = true}
+sc-transaction-pool = { workspace = true, default-features = true, optional = true}
+soil-transaction-pool-api = { workspace = true, default-features = true, optional = true}
+serde = { features = ["derive"], workspace = true, default-features = true, optional = true}
+soil-api = { workspace = true, default-features = true, optional = true}
+soil-blockchain = { workspace = true, default-features = true, optional = true}
+soil-consensus = { workspace = true, default-features = true, optional = true}
+soil-consensus-aura = { workspace = true, default-features = true, optional = true}
+soil-consensus-babe = { workspace = true, default-features = true, optional = true}
+soil-consensus-slots = { workspace = true, default-features = true, optional = true}
+soil-core = { workspace = true, default-features = true, optional = true}
+soil-externalities = { workspace = true, default-features = true, optional = true}
+soil-inherents = { workspace = true, default-features = true, optional = true}
+soil-keystore = { workspace = true, default-features = true, optional = true}
+soil-runtime = { workspace = true, default-features = true, optional = true}
+soil-timestamp = { workspace = true, default-features = true, optional = true}
+soil-trie = { workspace = true, default-features = true, optional = true}
+thiserror = { workspace = true, optional = true}
+
+[features]
+default = ["std"]
+std = [
+	"async-trait",
+	"codec",
+	"futures",
+	"futures-timer",
+	"jsonrpsee",
+	"log",
+	"prometheus-endpoint",
+	"sc-consensus",
+	"sc-consensus-aura",
+	"sc-consensus-babe",
+	"sc-transaction-pool",
+	"serde",
+	"soil-api",
+	"soil-blockchain",
+	"soil-client-api",
+	"soil-consensus",
+	"soil-consensus-aura",
+	"soil-consensus-babe",
+	"soil-consensus-epochs",
+	"soil-consensus-slots",
+	"soil-core",
+	"soil-externalities",
+	"soil-inherents",
+	"soil-keystore",
+	"soil-runtime",
+	"soil-timestamp",
+	"soil-transaction-pool-api",
+	"soil-trie",
+	"thiserror",
+	"soil-api/std",
+	"soil-client-api/std",
+	"soil-consensus-aura/std",
+	"soil-consensus-babe/std",
+	"soil-consensus-epochs/std",
+	"soil-consensus-slots/std",
+	"soil-core/std",
+	"soil-externalities/std",
+	"soil-inherents/std",
+	"soil-keystore/std",
+	"soil-runtime/std",
+	"soil-timestamp/std",
+	"soil-transaction-pool-api/std",
+	"soil-trie/std",
+]
+
+[dev-dependencies]
+assert_matches = { workspace = true }
+soil-basic-authorship = { workspace = true, default-features = true }
+substrate-test-runtime-client = { workspace = true }
+substrate-test-runtime-transaction-pool = { workspace = true }
+tokio = { features = ["macros", "rt-multi-thread"], workspace = true, default-features = true }

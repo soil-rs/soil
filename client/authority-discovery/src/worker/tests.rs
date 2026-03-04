@@ -34,12 +34,12 @@ use futures::{
 	task::LocalSpawn,
 };
 use prometheus_endpoint::prometheus::default_registry;
-use sc_client_api::HeaderBackend;
-use sc_network::{
+use soil_client_api::HeaderBackend;
+use soil_network::{
 	service::signature::{Keypair, SigningError},
 	PublicKey, Signature,
 };
-use sc_network_types::{
+use soil_network_types::{
 	kad::Key as KademliaKey,
 	multiaddr::{Multiaddr, Protocol},
 	PeerId,
@@ -71,8 +71,8 @@ impl<Block: BlockT> HeaderBackend<Block> for TestApi {
 		Ok(None)
 	}
 
-	fn info(&self) -> sc_client_api::blockchain::Info<Block> {
-		sc_client_api::blockchain::Info {
+	fn info(&self) -> soil_client_api::blockchain::Info<Block> {
+		soil_client_api::blockchain::Info {
 			best_hash: Default::default(),
 			best_number: Zero::zero(),
 			finalized_hash: Default::default(),
@@ -87,8 +87,8 @@ impl<Block: BlockT> HeaderBackend<Block> for TestApi {
 	fn status(
 		&self,
 		_hash: Block::Hash,
-	) -> std::result::Result<sc_client_api::blockchain::BlockStatus, soil_blockchain::Error> {
-		Ok(sc_client_api::blockchain::BlockStatus::Unknown)
+	) -> std::result::Result<soil_client_api::blockchain::BlockStatus, soil_blockchain::Error> {
+		Ok(soil_client_api::blockchain::BlockStatus::Unknown)
 	}
 
 	fn number(
@@ -127,16 +127,16 @@ pub enum TestNetworkEvent {
 }
 
 pub struct TestNetwork {
-	peer_id: sc_network_types::PeerId,
+	peer_id: soil_network_types::PeerId,
 	identity: Keypair,
 	external_addresses: Vec<Multiaddr>,
 	// Whenever functions on `TestNetwork` are called, the function arguments are added to the
 	// vectors below.
 	pub put_value_call: Arc<Mutex<Vec<(KademliaKey, Vec<u8>)>>>,
-	pub put_value_to_call: Arc<Mutex<Vec<(Record, HashSet<sc_network_types::PeerId>, bool)>>>,
+	pub put_value_to_call: Arc<Mutex<Vec<(Record, HashSet<soil_network_types::PeerId>, bool)>>>,
 	pub get_value_call: Arc<Mutex<Vec<KademliaKey>>>,
 	pub store_value_call:
-		Arc<Mutex<Vec<(KademliaKey, Vec<u8>, Option<sc_network_types::PeerId>, Option<Instant>)>>>,
+		Arc<Mutex<Vec<(KademliaKey, Vec<u8>, Option<soil_network_types::PeerId>, Option<Instant>)>>>,
 
 	event_sender: mpsc::UnboundedSender<TestNetworkEvent>,
 	event_receiver: Option<mpsc::UnboundedReceiver<TestNetworkEvent>>,
@@ -176,7 +176,7 @@ impl NetworkSigner for TestNetwork {
 
 	fn verify(
 		&self,
-		peer_id: sc_network_types::PeerId,
+		peer_id: soil_network_types::PeerId,
 		public_key: &Vec<u8>,
 		signature: &Vec<u8>,
 		message: &Vec<u8>,
@@ -203,7 +203,7 @@ impl NetworkDHTProvider for TestNetwork {
 	fn put_record_to(
 		&self,
 		record: Record,
-		peers: HashSet<sc_network_types::PeerId>,
+		peers: HashSet<soil_network_types::PeerId>,
 		update_local_storage: bool,
 	) {
 		self.put_value_to_call.lock().unwrap().push((
@@ -251,7 +251,7 @@ impl NetworkDHTProvider for TestNetwork {
 }
 
 impl NetworkStateInfo for TestNetwork {
-	fn local_peer_id(&self) -> sc_network_types::PeerId {
+	fn local_peer_id(&self) -> soil_network_types::PeerId {
 		self.peer_id.into()
 	}
 
@@ -278,7 +278,7 @@ impl<'a> NetworkSigner for TestSigner<'a> {
 
 	fn verify(
 		&self,
-		_: sc_network_types::PeerId,
+		_: soil_network_types::PeerId,
 		_: &Vec<u8>,
 		_: &Vec<u8>,
 		_: &Vec<u8>,

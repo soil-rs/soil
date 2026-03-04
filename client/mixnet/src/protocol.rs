@@ -18,7 +18,7 @@
 
 use super::config::Config;
 use mixnet::core::PACKET_SIZE;
-use sc_network::{
+use soil_network::{
 	config::{NonReservedPeerMode, SetConfig},
 	peer_store::PeerStoreProvider,
 	service::NotificationMetrics,

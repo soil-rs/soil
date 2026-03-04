@@ -25,11 +25,11 @@ pub struct Cli {
 
 	#[allow(missing_docs)]
 	#[clap(flatten)]
-	pub run: sc_cli::RunCmd,
+	pub run: soil_cli::RunCmd,
 
 	#[allow(missing_docs)]
 	#[clap(flatten)]
-	pub mixnet_params: sc_cli::MixnetParams,
+	pub mixnet_params: soil_cli::MixnetParams,
 
 	/// Disable automatic hardware benchmarks.
 	///
@@ -58,7 +58,7 @@ pub struct Cli {
 
 	#[allow(missing_docs)]
 	#[clap(flatten)]
-	pub storage_monitor: sc_storage_monitor::StorageMonitorParams,
+	pub storage_monitor: soil_storage_monitor::StorageMonitorParams,
 }
 
 /// Possible subcommands of the main binary.
@@ -73,16 +73,16 @@ pub enum Subcommand {
 
 	/// Key management cli utilities
 	#[command(subcommand)]
-	Key(sc_cli::KeySubcommand),
+	Key(soil_cli::KeySubcommand),
 
 	/// Verify a signature for a message, provided on STDIN, with a given (public or secret) key.
-	Verify(sc_cli::VerifyCmd),
+	Verify(soil_cli::VerifyCmd),
 
 	/// Generate a seed that provides a vanity address.
-	Vanity(sc_cli::VanityCmd),
+	Vanity(soil_cli::VanityCmd),
 
 	/// Sign a message, with a given (secret) key.
-	Sign(sc_cli::SignCmd),
+	Sign(soil_cli::SignCmd),
 
 	/// Build a chain specification.
 	/// DEPRECATED: `build-spec` command will be removed after 1/04/2026. Use `export-chain-spec`
@@ -90,29 +90,29 @@ pub enum Subcommand {
 	#[deprecated(
 		note = "build-spec command will be removed after 1/04/2026. Use export-chain-spec command instead"
 	)]
-	BuildSpec(sc_cli::BuildSpecCmd),
+	BuildSpec(soil_cli::BuildSpecCmd),
 
 	/// Export the chain specification.
-	ExportChainSpec(sc_cli::ExportChainSpecCmd),
+	ExportChainSpec(soil_cli::ExportChainSpecCmd),
 
 	/// Validate blocks.
-	CheckBlock(sc_cli::CheckBlockCmd),
+	CheckBlock(soil_cli::CheckBlockCmd),
 
 	/// Export blocks.
-	ExportBlocks(sc_cli::ExportBlocksCmd),
+	ExportBlocks(soil_cli::ExportBlocksCmd),
 
 	/// Export the state of a given block into a chain spec.
-	ExportState(sc_cli::ExportStateCmd),
+	ExportState(soil_cli::ExportStateCmd),
 
 	/// Import blocks.
-	ImportBlocks(sc_cli::ImportBlocksCmd),
+	ImportBlocks(soil_cli::ImportBlocksCmd),
 
 	/// Remove the whole chain.
-	PurgeChain(sc_cli::PurgeChainCmd),
+	PurgeChain(soil_cli::PurgeChainCmd),
 
 	/// Revert the chain to a previous state.
-	Revert(sc_cli::RevertCmd),
+	Revert(soil_cli::RevertCmd),
 
 	/// Db meta columns information.
-	ChainInfo(sc_cli::ChainInfoCmd),
+	ChainInfo(soil_cli::ChainInfoCmd),
 }

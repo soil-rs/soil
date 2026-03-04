@@ -26,7 +26,7 @@ pub(crate) mod peers;
 
 pub(crate) mod beefy_protocol_name {
 	use array_bytes::bytes2hex;
-	use sc_network::ProtocolName;
+	use soil_network::ProtocolName;
 
 	/// BEEFY votes gossip protocol name suffix.
 	const GOSSIP_NAME: &str = "/beefy/2";
@@ -63,26 +63,26 @@ pub(crate) mod beefy_protocol_name {
 }
 
 /// Returns the configuration value to put in
-/// [`sc_network::config::FullNetworkConfiguration`].
+/// [`soil_network::config::FullNetworkConfiguration`].
 /// For standard protocol name see [`beefy_protocol_name::gossip_protocol_name`].
 pub fn beefy_peers_set_config<
 	B: soil_runtime::traits::Block,
-	N: sc_network::NetworkBackend<B, <B as soil_runtime::traits::Block>::Hash>,
+	N: soil_network::NetworkBackend<B, <B as soil_runtime::traits::Block>::Hash>,
 >(
-	gossip_protocol_name: sc_network::ProtocolName,
-	metrics: sc_network::service::NotificationMetrics,
-	peer_store_handle: std::sync::Arc<dyn sc_network::peer_store::PeerStoreProvider>,
-) -> (N::NotificationProtocolConfig, Box<dyn sc_network::NotificationService>) {
+	gossip_protocol_name: soil_network::ProtocolName,
+	metrics: soil_network::service::NotificationMetrics,
+	peer_store_handle: std::sync::Arc<dyn soil_network::peer_store::PeerStoreProvider>,
+) -> (N::NotificationProtocolConfig, Box<dyn soil_network::NotificationService>) {
 	let (cfg, notification_service) = N::notification_config(
 		gossip_protocol_name,
 		Vec::new(),
 		1024 * 1024,
 		None,
-		sc_network::config::SetConfig {
+		soil_network::config::SetConfig {
 			in_peers: 25,
 			out_peers: 25,
 			reserved_nodes: Vec::new(),
-			non_reserved_mode: sc_network::config::NonReservedPeerMode::Accept,
+			non_reserved_mode: soil_network::config::NonReservedPeerMode::Accept,
 		},
 		metrics,
 		peer_store_handle,
@@ -92,7 +92,7 @@ pub fn beefy_peers_set_config<
 
 // cost scalars for reporting peers.
 mod cost {
-	use sc_network::ReputationChange as Rep;
+	use soil_network::ReputationChange as Rep;
 	// Message that's for an outdated round.
 	pub(super) const OUTDATED_MESSAGE: Rep = Rep::new(-50, "BEEFY: Past message");
 	// Message that's from the future relative to our current set-id.
@@ -115,7 +115,7 @@ mod cost {
 
 // benefit scalars for reporting peers.
 mod benefit {
-	use sc_network::ReputationChange as Rep;
+	use soil_network::ReputationChange as Rep;
 	pub(super) const VOTE_MESSAGE: Rep = Rep::new(100, "BEEFY: Round vote message");
 	pub(super) const NOT_INTERESTED: Rep = Rep::new(10, "BEEFY: Not interested in round");
 	pub(super) const VALIDATED_PROOF: Rep = Rep::new(100, "BEEFY: Justification");

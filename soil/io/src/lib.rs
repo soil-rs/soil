@@ -867,7 +867,7 @@ soil_externalities::decl_extension! {
 	/// client.execution_extensions().set_extensions_factory(
 	/// 	// Let the `UseDalekExt` extension being registered for each runtime invocation
 	/// 	// until the execution happens in the context of block `1000`.
-	/// 	sc_client_api::execution_extensions::ExtensionBeforeBlock::<Block, UseDalekExt>::new(1000)
+	/// 	soil_client_api::execution_extensions::ExtensionBeforeBlock::<Block, UseDalekExt>::new(1000)
 	/// );
 	/// ```
 	pub struct UseDalekExt;

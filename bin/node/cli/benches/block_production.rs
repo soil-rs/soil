@@ -20,13 +20,13 @@ use criterion::{criterion_group, criterion_main, BatchSize, Criterion, Throughpu
 
 use kitchensink_runtime::{constants::currency::*, BalancesCall};
 use node_cli::service::{create_extrinsic, FullClient};
-use sc_service::config::{ExecutorConfiguration, RpcConfiguration};
+use soil_service::config::{ExecutorConfiguration, RpcConfiguration};
 use sc_block_builder::{BlockBuilderBuilder, BuiltBlock};
 use sc_consensus::{
 	block_import::{BlockImportParams, ForkChoiceStrategy},
 	BlockImport, StateAction,
 };
-use sc_service::{
+use soil_service::{
 	config::{
 		BlocksPruning, DatabaseSource, KeystoreConfig, NetworkConfiguration, OffchainWorkerConfig,
 		PruningMode, RpcBatchRequestConfig, WasmExecutionMethod, WasmtimeInstantiationStrategy,
@@ -111,12 +111,12 @@ fn new_node(tokio_handle: Handle) -> node_cli::service::NewFullBase {
 		wasm_runtime_overrides: None,
 	};
 
-	node_cli::service::new_full_base::<sc_network::NetworkWorker<_, _>>(
+	node_cli::service::new_full_base::<soil_network::NetworkWorker<_, _>>(
 		config,
 		None,
 		false,
 		1,
-		sc_network_statement::config::DEFAULT_STATEMENTS_PER_SECOND,
+		soil_network_statement::config::DEFAULT_STATEMENTS_PER_SECOND,
 		|_, _| (),
 	)
 	.expect("creating a full node doesn't fail")

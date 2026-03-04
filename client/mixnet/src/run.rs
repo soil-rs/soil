@@ -42,12 +42,12 @@ use mixnet::{
 	reply_manager::{ReplyContext, ReplyManager},
 	request_manager::RequestManager,
 };
-use sc_client_api::{BlockchainEvents, HeaderBackend};
-use sc_network::{
+use soil_client_api::{BlockchainEvents, HeaderBackend};
+use soil_network::{
 	service::traits::{NetworkService, NotificationEvent, ValidationResult},
 	NetworkPeers, NetworkStateInfo, NotificationService, ProtocolName,
 };
-use sc_transaction_pool_api::{
+use soil_transaction_pool_api::{
 	LocalTransactionPool, OffchainTransactionPoolFactory, TransactionPool,
 };
 use soil_api::{ApiExt, ProvideRuntimeApi};

@@ -32,11 +32,11 @@ use crate::{
 
 use futures::{future, stream, StreamExt};
 use jsonrpsee::{core::async_trait, types::ErrorObject, PendingSubscriptionSink};
-use sc_client_api::{
+use soil_client_api::{
 	Backend, BlockBackend, BlockchainEvents, CallExecutor, ExecutorProvider, ProofProvider,
 	StorageProvider,
 };
-use sc_rpc_api::state::ReadProof;
+use soil_rpc_api::state::ReadProof;
 use sc_tracing::block::TracingExecuteBlock;
 use soil_api::{CallApiAt, Metadata, ProvideRuntimeApi};
 use soil_blockchain::{

@@ -24,7 +24,7 @@ use fatp_common::{
 };
 use futures::{executor::block_on, task::Poll, FutureExt, StreamExt};
 use sc_transaction_pool::ChainApi;
-use sc_transaction_pool_api::{
+use soil_transaction_pool_api::{
 	error::Error as TxPoolError, ChainEvent, MaintainedTransactionPool, TransactionPool,
 	TransactionStatus,
 };

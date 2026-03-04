@@ -17,21 +17,21 @@ targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
 jsonrpsee = { features = ["server"], workspace = true }
-mmr-rpc = { workspace = true, default-features = true }
+soil-mmr-rpc = { workspace = true, default-features = true }
 node-primitives = { workspace = true, default-features = true }
 pallet-transaction-payment-rpc = { workspace = true, default-features = true }
-sc-chain-spec = { workspace = true, default-features = true }
-sc-client-api = { workspace = true, default-features = true }
+soil-chain-spec = { workspace = true, default-features = true }
+soil-client-api = { workspace = true, default-features = true }
 sc-consensus-babe = { workspace = true, default-features = true }
-sc-consensus-babe-rpc = { workspace = true, default-features = true }
+soil-consensus-babe-rpc = { workspace = true, default-features = true }
 sc-consensus-beefy = { workspace = true, default-features = true }
-sc-consensus-beefy-rpc = { workspace = true, default-features = true }
+soil-consensus-beefy-rpc = { workspace = true, default-features = true }
 sc-consensus-grandpa = { workspace = true, default-features = true }
-sc-consensus-grandpa-rpc = { workspace = true, default-features = true }
+soil-consensus-grandpa-rpc = { workspace = true, default-features = true }
 sc-mixnet = { workspace = true, default-features = true }
 sc-rpc = { workspace = true, default-features = true }
-sc-sync-state-rpc = { workspace = true, default-features = true }
-sc-transaction-pool-api = { workspace = true, default-features = true }
+soil-sync-state-rpc = { workspace = true, default-features = true }
+soil-transaction-pool-api = { workspace = true, default-features = true }
 soil-api = { workspace = true, default-features = true }
 soil-application-crypto = { workspace = true, default-features = true }
 soil-block-builder = { workspace = true, default-features = true }

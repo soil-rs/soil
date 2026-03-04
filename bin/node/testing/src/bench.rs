@@ -40,10 +40,10 @@ use kitchensink_runtime::{
 };
 use node_primitives::Block;
 use sc_block_builder::BlockBuilderBuilder;
-use sc_client_api::{execution_extensions::ExecutionExtensions, UsageProvider};
-use sc_client_db::PruningMode;
+use soil_client_api::{execution_extensions::ExecutionExtensions, UsageProvider};
+use soil_client_db::PruningMode;
 use sc_consensus::{BlockImport, BlockImportParams, ForkChoiceStrategy, ImportResult, ImportedAux};
-use sc_executor::{WasmExecutionMethod, WasmtimeInstantiationStrategy};
+use soil_executor::{WasmExecutionMethod, WasmtimeInstantiationStrategy};
 use soil_api::ProvideRuntimeApi;
 use soil_block_builder::BlockBuilder;
 use soil_consensus::BlockOrigin;
@@ -220,10 +220,10 @@ pub enum DatabaseType {
 }
 
 impl DatabaseType {
-	fn into_settings(self, path: PathBuf) -> sc_client_db::DatabaseSource {
+	fn into_settings(self, path: PathBuf) -> soil_client_db::DatabaseSource {
 		match self {
-			Self::RocksDb => sc_client_db::DatabaseSource::RocksDb { path, cache_size: 512 },
-			Self::ParityDb => sc_client_db::DatabaseSource::ParityDb { path },
+			Self::RocksDb => soil_client_db::DatabaseSource::RocksDb { path, cache_size: 512 },
+			Self::ParityDb => soil_client_db::DatabaseSource::ParityDb { path },
 		}
 	}
 }
@@ -266,7 +266,7 @@ impl SpawnNamed for TaskExecutor {
 pub struct BlockContentIterator<'a> {
 	iteration: usize,
 	content: BlockContent,
-	runtime_version: sc_executor::RuntimeVersion,
+	runtime_version: soil_executor::RuntimeVersion,
 	genesis_hash: node_primitives::Hash,
 	keyring: &'a BenchKeyring,
 }
@@ -386,25 +386,25 @@ impl BenchDb {
 		dir: &std::path::Path,
 		keyring: &BenchKeyring,
 	) -> (Client, std::sync::Arc<Backend>, TaskExecutor) {
-		let db_config = sc_client_db::DatabaseSettings {
+		let db_config = soil_client_db::DatabaseSettings {
 			trie_cache_maximum_size: Some(16 * 1024 * 1024),
 			state_pruning: Some(PruningMode::ArchiveAll),
 			source: database_type.into_settings(dir.into()),
-			blocks_pruning: sc_client_db::BlocksPruning::KeepAll,
+			blocks_pruning: soil_client_db::BlocksPruning::KeepAll,
 			pruning_filters: Default::default(),
 			metrics_registry: None,
 		};
 		let task_executor = TaskExecutor::new();
 
-		let backend = sc_service::new_db_backend(db_config).expect("Should not fail");
-		let executor = sc_executor::WasmExecutor::builder()
+		let backend = soil_service::new_db_backend(db_config).expect("Should not fail");
+		let executor = soil_executor::WasmExecutor::builder()
 			.with_execution_method(WasmExecutionMethod::Compiled {
 				instantiation_strategy: WasmtimeInstantiationStrategy::PoolingCopyOnWrite,
 			})
 			.build();
 
-		let client_config = sc_service::ClientConfig::default();
-		let genesis_block_builder = sc_service::GenesisBlockBuilder::new(
+		let client_config = soil_service::ClientConfig::default();
+		let genesis_block_builder = soil_service::GenesisBlockBuilder::new(
 			keyring.as_storage_builder(),
 			!client_config.no_genesis,
 			backend.clone(),
@@ -412,7 +412,7 @@ impl BenchDb {
 		)
 		.expect("Failed to create genesis block builder");
 
-		let client = sc_service::new_client(
+		let client = soil_service::new_client(
 			backend.clone(),
 			executor.clone(),
 			genesis_block_builder,

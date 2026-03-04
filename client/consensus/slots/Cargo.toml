@@ -22,9 +22,9 @@ codec = { workspace = true, default-features = true }
 futures = { workspace = true }
 futures-timer = { workspace = true }
 log = { workspace = true, default-features = true }
-sc-client-api = { workspace = true, default-features = true }
+soil-client-api = { workspace = true, default-features = true }
 sc-consensus = { workspace = true, default-features = true }
-sc-telemetry = { workspace = true, default-features = true }
+soil-telemetry = { workspace = true, default-features = true }
 soil-arithmetic = { workspace = true, default-features = true }
 soil-blockchain = { workspace = true, default-features = true }
 soil-consensus = { workspace = true, default-features = true }

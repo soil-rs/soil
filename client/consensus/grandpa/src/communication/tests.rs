@@ -25,7 +25,7 @@ use super::{
 use crate::{communication::grandpa_protocol_name, environment::SharedVoterSetState};
 use codec::{DecodeAll, Encode};
 use futures::prelude::*;
-use sc_network::{
+use soil_network::{
 	config::{MultiaddrWithPeerId, Role},
 	event::Event as NetworkEvent,
 	service::traits::{Direction, MessageSink, NotificationEvent, NotificationService},
@@ -33,12 +33,12 @@ use sc_network::{
 	Multiaddr, NetworkBlock, NetworkEventStream, NetworkPeers, NetworkSyncForkRequest,
 	ReputationChange,
 };
-use sc_network_common::role::{ObservedRole, Roles};
-use sc_network_gossip::Validator;
-use sc_network_sync::{SyncEvent as SyncStreamEvent, SyncEventStream};
-use sc_network_test::{Block, Hash};
-use sc_network_types::PeerId;
-use sc_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
+use soil_network_common::role::{ObservedRole, Roles};
+use soil_network_gossip::Validator;
+use soil_network_sync::{SyncEvent as SyncStreamEvent, SyncEventStream};
+use soil_network_test::{Block, Hash};
+use soil_network_types::PeerId;
+use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
 use soil_consensus_grandpa::AuthorityList;
 use soil_keyring::Ed25519Keyring;
 use soil_runtime::traits::NumberFor;
@@ -157,7 +157,7 @@ impl NetworkSyncForkRequest<Hash, NumberFor<Block>> for TestNetwork {
 	fn set_sync_fork_request(&self, _peers: Vec<PeerId>, _hash: Hash, _number: NumberFor<Block>) {}
 }
 
-impl sc_network_gossip::ValidatorContext<Block> for TestNetwork {
+impl soil_network_gossip::ValidatorContext<Block> for TestNetwork {
 	fn broadcast_topic(&mut self, _: Hash, _: bool) {}
 
 	fn broadcast_message(&mut self, _: Hash, _: Vec<u8>, _: bool) {}
@@ -223,7 +223,7 @@ impl NotificationService for TestNotificationService {
 		&mut self,
 		_peer: &PeerId,
 		_notification: Vec<u8>,
-	) -> Result<(), sc_network::error::Error> {
+	) -> Result<(), soil_network::error::Error> {
 		unimplemented!();
 	}
 
@@ -357,7 +357,7 @@ fn make_ids(keys: &[Ed25519Keyring]) -> AuthorityList {
 
 struct NoopContext;
 
-impl sc_network_gossip::ValidatorContext<Block> for NoopContext {
+impl soil_network_gossip::ValidatorContext<Block> for NoopContext {
 	fn broadcast_topic(&mut self, _: Hash, _: bool) {}
 	fn broadcast_message(&mut self, _: Hash, _: Vec<u8>, _: bool) {}
 	fn send_message(&mut self, _: &PeerId, _: Vec<u8>) {}
@@ -663,7 +663,7 @@ fn peer_with_higher_view_leads_to_catch_up_request() {
 
 			// neighbor packets are always discard
 			match result {
-				sc_network_gossip::ValidationResult::Discard => {},
+				soil_network_gossip::ValidationResult::Discard => {},
 				_ => panic!("wrong expected outcome from neighbor validation"),
 			}
 
@@ -691,13 +691,13 @@ fn peer_with_higher_view_leads_to_catch_up_request() {
 	futures::executor::block_on(test);
 }
 
-fn local_chain_spec() -> Box<dyn sc_chain_spec::ChainSpec> {
+fn local_chain_spec() -> Box<dyn soil_chain_spec::ChainSpec> {
 	let chain_spec =
-		sc_chain_spec::GenericChainSpec::<sc_chain_spec::NoExtension, ()>::from_json_bytes(
-			&include_bytes!("../../../../chain-spec/res/chain_spec.json")[..],
+		soil_chain_spec::GenericChainSpec::<soil_chain_spec::NoExtension, ()>::from_json_bytes(
+			&include_bytes!("../../../../../soil/chain-spec/res/chain_spec.json")[..],
 		)
 		.unwrap();
-	sc_chain_spec::ChainSpec::cloned_box(&chain_spec)
+	soil_chain_spec::ChainSpec::cloned_box(&chain_spec)
 }
 
 #[test]

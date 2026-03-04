@@ -30,11 +30,11 @@ once_cell = { workspace = true }
 parking_lot = { workspace = true, default-features = true }
 rand = { workspace = true, default-features = true }
 rustls = { workspace = true }
-sc-client-api = { workspace = true, default-features = true }
-sc-network = { workspace = true, default-features = true }
-sc-network-types = { workspace = true, default-features = true }
-sc-transaction-pool-api = { workspace = true, default-features = true }
-sc-utils = { workspace = true, default-features = true }
+soil-client-api = { workspace = true, default-features = true }
+soil-network = { workspace = true, default-features = true }
+soil-network-types = { workspace = true, default-features = true }
+soil-transaction-pool-api = { workspace = true, default-features = true }
+soil-utils = { workspace = true, default-features = true }
 soil-api = { workspace = true, default-features = true }
 soil-core = { workspace = true, default-features = true }
 soil-externalities = { workspace = true, default-features = true }
@@ -47,7 +47,7 @@ tracing = { workspace = true, default-features = true }
 [dev-dependencies]
 async-trait = { workspace = true }
 sc-block-builder = { workspace = true, default-features = true }
-sc-client-db = { default-features = true, workspace = true }
+soil-client-db = { default-features = true, workspace = true }
 sc-transaction-pool = { workspace = true, default-features = true }
 soil-consensus = { workspace = true, default-features = true }
 soil-tracing = { workspace = true, default-features = true }

@@ -34,12 +34,12 @@ use log::{debug, warn};
 use parking_lot::RwLock;
 use prometheus_endpoint::{register, Counter, Gauge, PrometheusError, U64};
 
-use sc_client_api::{
+use soil_client_api::{
 	backend::{apply_aux, Backend as BackendT},
 	utils::is_descendent_of,
 };
-use sc_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG, CONSENSUS_INFO};
-use sc_transaction_pool_api::OffchainTransactionPoolFactory;
+use soil_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG, CONSENSUS_INFO};
+use soil_transaction_pool_api::OffchainTransactionPoolFactory;
 use soil_api::ApiExt;
 use soil_blockchain::HeaderMetadata;
 use soil_consensus::SelectChain as SelectChainT;

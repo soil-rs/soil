@@ -28,7 +28,7 @@ pub mod cli;
 pub mod command;
 
 use codec::{Decode, Encode};
-use sc_client_api::BlockBackend;
+use soil_client_api::BlockBackend;
 use soil_blockchain::HeaderBackend;
 use soil_core::hexdisplay::HexDisplay;
 use soil_runtime::{
@@ -97,7 +97,7 @@ pub trait ChainAccess<TBlock: Block>: HeaderBackend<TBlock> + BlockBackend<TBloc
 impl<T, TBlock> ChainAccess<TBlock> for T
 where
 	TBlock: Block,
-	T: soil_blockchain::HeaderBackend<TBlock> + sc_client_api::BlockBackend<TBlock>,
+	T: soil_blockchain::HeaderBackend<TBlock> + soil_client_api::BlockBackend<TBlock>,
 {
 }
 

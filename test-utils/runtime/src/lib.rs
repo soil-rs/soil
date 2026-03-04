@@ -1353,8 +1353,8 @@ mod tests {
 		use super::*;
 		use crate::genesismap::GenesisStorageBuilder;
 		use pretty_assertions::assert_eq;
-		use sc_executor::{error::Result, WasmExecutor};
-		use sc_executor_common::runtime_blob::RuntimeBlob;
+		use soil_executor::{error::Result, WasmExecutor};
+		use soil_executor_common::runtime_blob::RuntimeBlob;
 		use serde_json::json;
 		use soil_application_crypto::Ss58Codec;
 		use soil_core::traits::Externalities;
@@ -1591,7 +1591,7 @@ mod tests {
 				}
 			});
 
-			sc_chain_spec::json_merge(&mut default_config, patch);
+			soil_chain_spec::json_merge(&mut default_config, patch);
 
 			// Build genesis config using custom json:
 			let mut t = BasicExternalities::new_empty();

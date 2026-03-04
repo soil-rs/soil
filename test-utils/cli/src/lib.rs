@@ -56,8 +56,8 @@ use tokio::io::{AsyncBufReadExt, AsyncRead};
 ///     }
 /// });
 /// ```
-pub fn start_node_inline(args: Vec<&str>) -> Result<(), sc_service::error::Error> {
-	use sc_cli::SubstrateCli;
+pub fn start_node_inline(args: Vec<&str>) -> Result<(), soil_service::error::Error> {
+	use soil_cli::SubstrateCli;
 
 	// Prepend the args with some dummy value because the first arg is skipped.
 	let cli_call = std::iter::once("node-template").chain(args);
