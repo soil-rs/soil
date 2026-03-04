@@ -568,7 +568,7 @@ mod tests {
 
 	#[test]
 	fn request_is_rescheduled_when_earlier_block_is_finalized() {
-		sp_tracing::try_init_simple();
+		soil_tracing::try_init_simple();
 
 		let mut finality_proofs = ExtraRequests::<Block>::new("test", None);
 

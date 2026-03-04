@@ -127,7 +127,7 @@ pub const CALL: &<Test as Config>::RuntimeCall =
 /// Create new externalities for `System` module tests.
 pub fn new_test_ext() -> sp_io::TestExternalities {
 	// Initialize logging
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	let mut ext: sp_io::TestExternalities =
 		RuntimeGenesisConfig::default().build_storage().unwrap().into();

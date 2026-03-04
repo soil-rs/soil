@@ -1444,42 +1444,42 @@ pub trait Crypto {
 pub trait Hashing {
 	/// Conduct a 256-bit Keccak hash.
 	fn keccak_256(data: PassFatPointerAndRead<&[u8]>) -> AllocateAndReturnPointer<[u8; 32], 32> {
-		sp_crypto_hashing::keccak_256(data)
+		soil_crypto_hashing::keccak_256(data)
 	}
 
 	/// Conduct a 512-bit Keccak hash.
 	fn keccak_512(data: PassFatPointerAndRead<&[u8]>) -> AllocateAndReturnPointer<[u8; 64], 64> {
-		sp_crypto_hashing::keccak_512(data)
+		soil_crypto_hashing::keccak_512(data)
 	}
 
 	/// Conduct a 256-bit Sha2 hash.
 	fn sha2_256(data: PassFatPointerAndRead<&[u8]>) -> AllocateAndReturnPointer<[u8; 32], 32> {
-		sp_crypto_hashing::sha2_256(data)
+		soil_crypto_hashing::sha2_256(data)
 	}
 
 	/// Conduct a 128-bit Blake2 hash.
 	fn blake2_128(data: PassFatPointerAndRead<&[u8]>) -> AllocateAndReturnPointer<[u8; 16], 16> {
-		sp_crypto_hashing::blake2_128(data)
+		soil_crypto_hashing::blake2_128(data)
 	}
 
 	/// Conduct a 256-bit Blake2 hash.
 	fn blake2_256(data: PassFatPointerAndRead<&[u8]>) -> AllocateAndReturnPointer<[u8; 32], 32> {
-		sp_crypto_hashing::blake2_256(data)
+		soil_crypto_hashing::blake2_256(data)
 	}
 
 	/// Conduct four XX hashes to give a 256-bit result.
 	fn twox_256(data: PassFatPointerAndRead<&[u8]>) -> AllocateAndReturnPointer<[u8; 32], 32> {
-		sp_crypto_hashing::twox_256(data)
+		soil_crypto_hashing::twox_256(data)
 	}
 
 	/// Conduct two XX hashes to give a 128-bit result.
 	fn twox_128(data: PassFatPointerAndRead<&[u8]>) -> AllocateAndReturnPointer<[u8; 16], 16> {
-		sp_crypto_hashing::twox_128(data)
+		soil_crypto_hashing::twox_128(data)
 	}
 
 	/// Conduct two XX hashes to give a 64-bit result.
 	fn twox_64(data: PassFatPointerAndRead<&[u8]>) -> AllocateAndReturnPointer<[u8; 8], 8> {
-		sp_crypto_hashing::twox_64(data)
+		soil_crypto_hashing::twox_64(data)
 	}
 }
 
@@ -1832,7 +1832,7 @@ pub trait WasmTracing {
 	/// checked more than once per metadata. This exists for optimisation purposes but is still not
 	/// cheap as it will jump the wasm-native-barrier every time it is called. So an implementation
 	/// might chose to cache the result for the execution of the entire block.
-	fn enabled(&mut self, metadata: PassFatPointerAndDecode<sp_tracing::WasmMetadata>) -> bool {
+	fn enabled(&mut self, metadata: PassFatPointerAndDecode<soil_tracing::WasmMetadata>) -> bool {
 		let metadata: &tracing_core::metadata::Metadata<'static> = (&metadata).into();
 		tracing::dispatcher::get_default(|d| d.enabled(metadata))
 	}
@@ -1845,7 +1845,7 @@ pub trait WasmTracing {
 	/// side.
 	fn enter_span(
 		&mut self,
-		span: PassFatPointerAndDecode<sp_tracing::WasmEntryAttributes>,
+		span: PassFatPointerAndDecode<soil_tracing::WasmEntryAttributes>,
 	) -> u64 {
 		let span: tracing::Span = span.into();
 		match span.id() {
@@ -1861,7 +1861,7 @@ pub trait WasmTracing {
 	}
 
 	/// Emit the given event to the global tracer on the native side
-	fn event(&mut self, event: PassFatPointerAndDecode<sp_tracing::WasmEntryAttributes>) {
+	fn event(&mut self, event: PassFatPointerAndDecode<soil_tracing::WasmEntryAttributes>) {
 		event.emit();
 	}
 
@@ -1919,7 +1919,7 @@ mod tracing_setup {
 		}
 	}
 
-	/// Initialize tracing of sp_tracing on wasm with `with-tracing` enabled.
+	/// Initialize tracing of soil_tracing on wasm with `with-tracing` enabled.
 	/// Can be called multiple times from within the same process and will only
 	/// set the global bridging subscriber once.
 	pub fn init_tracing() {
@@ -1933,7 +1933,7 @@ mod tracing_setup {
 
 #[cfg(not(all(substrate_runtime, feature = "with-tracing")))]
 mod tracing_setup {
-	/// Initialize tracing of sp_tracing not necessary – noop. To enable build
+	/// Initialize tracing of soil_tracing not necessary – noop. To enable build
 	/// when not both `substrate_runtime` and `with-tracing`-feature.
 	pub fn init_tracing() {}
 }

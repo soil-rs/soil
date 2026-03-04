@@ -68,7 +68,7 @@ use sc_client_api::{
 	IoInfo, MemoryInfo, MemorySize, TrieCacheContext, UsageInfo,
 };
 use sc_state_db::{IsPruned, LastCanonicalized, StateDb};
-use sp_arithmetic::traits::Saturating;
+use soil_arithmetic::traits::Saturating;
 use sp_blockchain::{
 	Backend as _, CachedHeaderMetadata, DisplacedLeavesAfterFinalization, Error as ClientError,
 	HeaderBackend, HeaderMetadata, HeaderMetadataCache, Result as ClientResult,
@@ -77,7 +77,7 @@ use sp_core::{
 	offchain::OffchainOverlayedChange,
 	storage::{well_known_keys, ChildInfo},
 };
-use sp_database::Transaction;
+use soil_database::Transaction;
 use sp_runtime::{
 	generic::BlockId,
 	traits::{
@@ -97,7 +97,7 @@ use utils::BLOCK_GAP_CURRENT_VERSION;
 
 // Re-export the Database trait so that one can pass an implementation of it.
 pub use sc_state_db::PruningMode;
-pub use sp_database::Database;
+pub use soil_database::Database;
 
 pub use bench::BenchmarkingState;
 
@@ -483,7 +483,7 @@ struct PendingBlock<Block: BlockT> {
 struct StateMetaDb(Arc<dyn Database<DbHash>>);
 
 impl sc_state_db::MetaDb for StateMetaDb {
-	type Error = sp_database::error::DatabaseError;
+	type Error = soil_database::error::DatabaseError;
 
 	fn get_meta(&self, key: &[u8]) -> Result<Option<Vec<u8>>, Self::Error> {
 		Ok(self.0.get(columns::STATE_META, key))
@@ -1238,7 +1238,7 @@ impl<Block: BlockT> Backend<Block> {
 		pruning_filters: Vec<Arc<dyn PruningFilter>>,
 	) -> Self {
 		let db = kvdb_memorydb::create(crate::utils::NUM_COLUMNS);
-		let db = sp_database::as_database(db);
+		let db = soil_database::as_database(db);
 		let state_pruning = match blocks_pruning {
 			BlocksPruning::KeepAll => PruningMode::ArchiveAll,
 			BlocksPruning::KeepFinalized => PruningMode::ArchiveCanonical,
@@ -1261,7 +1261,7 @@ impl<Block: BlockT> Backend<Block> {
 	///
 	/// Should only be needed for benchmarking.
 	#[cfg(feature = "runtime-benchmarks")]
-	pub fn expose_db(&self) -> (Arc<dyn sp_database::Database<DbHash>>, sp_database::ColumnId) {
+	pub fn expose_db(&self) -> (Arc<dyn soil_database::Database<DbHash>>, soil_database::ColumnId) {
 		(self.storage.db.clone(), columns::STATE)
 	}
 
@@ -1537,7 +1537,7 @@ impl<Block: BlockT> Backend<Block> {
 			trace!(target: "db", "Canonicalize block #{to_canonicalize} ({hash_to_canonicalize:?})");
 			let commit = self.storage.state_db.canonicalize_block(&hash_to_canonicalize).map_err(
 				sp_blockchain::Error::from_state_db::<
-					sc_state_db::Error<sp_database::error::DatabaseError>,
+					sc_state_db::Error<soil_database::error::DatabaseError>,
 				>,
 			)?;
 			apply_state_commit(transaction, commit);
@@ -1700,7 +1700,7 @@ impl<Block: BlockT> Backend<Block> {
 					.storage
 					.state_db
 					.insert_block(&hash, number_u64, pending_block.header.parent_hash(), changeset)
-					.map_err(|e: sc_state_db::Error<sp_database::error::DatabaseError>| {
+					.map_err(|e: sc_state_db::Error<soil_database::error::DatabaseError>| {
 						sp_blockchain::Error::from_state_db(e)
 					})?;
 				apply_state_commit(&mut transaction, commit);
@@ -1708,7 +1708,7 @@ impl<Block: BlockT> Backend<Block> {
 					// Canonicalize in the db when re-importing existing blocks with state.
 					let commit = self.storage.state_db.canonicalize_block(&hash).map_err(
 						sp_blockchain::Error::from_state_db::<
-							sc_state_db::Error<sp_database::error::DatabaseError>,
+							sc_state_db::Error<soil_database::error::DatabaseError>,
 						>,
 					)?;
 					apply_state_commit(&mut transaction, commit);
@@ -1991,7 +1991,7 @@ impl<Block: BlockT> Backend<Block> {
 		if requires_canonicalization && sc_client_api::Backend::have_state_at(self, f_hash, f_num) {
 			let commit = self.storage.state_db.canonicalize_block(&f_hash).map_err(
 				sp_blockchain::Error::from_state_db::<
-					sc_state_db::Error<sp_database::error::DatabaseError>,
+					sc_state_db::Error<soil_database::error::DatabaseError>,
 				>,
 			)?;
 			apply_state_commit(transaction, commit);
@@ -3068,7 +3068,7 @@ pub(crate) mod tests {
 
 	#[test]
 	fn delete_only_when_negative_rc() {
-		sp_tracing::try_init_simple();
+		soil_tracing::try_init_simple();
 		let state_version = StateVersion::default();
 		let key;
 		let backend = Backend::<Block>::new_test(1, 0);
@@ -4142,7 +4142,7 @@ pub(crate) mod tests {
 
 	#[test]
 	fn prune_blocks_on_finalize_with_fork() {
-		sp_tracing::try_init_simple();
+		soil_tracing::try_init_simple();
 
 		let pruning_modes =
 			vec![BlocksPruning::Some(2), BlocksPruning::KeepFinalized, BlocksPruning::KeepAll];

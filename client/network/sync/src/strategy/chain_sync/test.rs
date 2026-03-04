@@ -347,7 +347,7 @@ fn unwrap_from_block_number(from: FromBlock<Hash, u64>) -> u64 {
 /// is now expected that we start an ancestor search to find the common number.
 #[test]
 fn do_ancestor_search_when_common_block_to_best_queued_gap_is_to_big() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	let blocks = {
 		let client = TestClientBuilder::new().build();
@@ -509,7 +509,7 @@ fn do_ancestor_search_when_common_block_to_best_queued_gap_is_to_big() {
 /// the fork and finish it ;)
 #[test]
 fn can_sync_huge_fork() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	let client = Arc::new(TestClientBuilder::new().build());
 	let blocks = (0..MAX_BLOCKS_TO_LOOK_BACKWARDS * 4)
@@ -665,7 +665,7 @@ fn can_sync_huge_fork() {
 
 #[test]
 fn syncs_fork_without_duplicate_requests() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	let client = Arc::new(TestClientBuilder::new().build());
 	let blocks = (0..MAX_BLOCKS_TO_LOOK_BACKWARDS * 4)
@@ -845,7 +845,7 @@ fn syncs_fork_without_duplicate_requests() {
 
 #[test]
 fn removes_target_fork_on_disconnect() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 	let client = Arc::new(TestClientBuilder::new().build());
 	let blocks = (0..3).map(|_| build_block(&client, None, false)).collect::<Vec<_>>();
 
@@ -879,7 +879,7 @@ fn removes_target_fork_on_disconnect() {
 
 #[test]
 fn can_import_response_with_missing_blocks() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 	let client2 = TestClientBuilder::new().build();
 	let blocks = (0..4).map(|_| build_block(&client2, None, false)).collect::<Vec<_>>();
 
@@ -1043,7 +1043,7 @@ fn sync_restart_removes_block_but_not_justification_requests() {
 #[test]
 #[should_panic]
 fn request_across_forks() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	let client = Arc::new(TestClientBuilder::new().build());
 	let blocks = (0..100).map(|_| build_block(&client, None, false)).collect::<Vec<_>>();
@@ -1176,7 +1176,7 @@ fn request_across_forks() {
 /// on importing unknown blocks (ie blocks we don't have in our chain yet).
 #[test]
 fn sync_verification_failed_with_gap_filled() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	// We only care about 2 iterations of the loop (since max blocks per request is 64).
 	const TEST_TARGET: u32 = 64 * 3;
@@ -1320,7 +1320,7 @@ fn sync_verification_failed_with_gap_filled() {
 
 #[test]
 fn sync_gap_filled_regardless_of_blocks_origin() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	let blocks = {
 		let client = TestClientBuilder::new().build();
@@ -1391,7 +1391,7 @@ fn sync_gap_filled_regardless_of_blocks_origin() {
 
 #[test]
 fn gap_sync_body_request_depends_on_pruning_mode() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	for archive_blocks in [true, false] {
 		// Bodies only needed for archive mode
@@ -1451,7 +1451,7 @@ fn gap_sync_body_request_depends_on_pruning_mode() {
 
 #[test]
 fn regular_sync_always_requests_bodies_regardless_of_pruning() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	// Verify that regular (non-gap) sync always requests bodies,
 	// regardless of pruning mode - our optimization only applies to gap sync
@@ -1518,7 +1518,7 @@ fn regular_sync_always_requests_bodies_regardless_of_pruning() {
 /// If this happens to enough peers, sync stalls.
 #[test]
 fn no_ancestry_search_during_major_sync() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	let (blocks, fork_block) = {
 		let client = TestClientBuilder::new().build();

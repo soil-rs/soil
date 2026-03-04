@@ -27,7 +27,7 @@ use frame_support::{
 		Get,
 	},
 };
-use sp_arithmetic::Permill;
+use soil_arithmetic::Permill;
 use sp_runtime::{DispatchError, TokenError};
 
 fn events() -> Vec<Event<Test>> {

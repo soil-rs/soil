@@ -22,7 +22,7 @@ use criterion::{criterion_group, criterion_main, Criterion};
 use futures::executor::block_on;
 use sc_transaction_pool::*;
 use sp_blockchain::HashAndNumber;
-use sp_crypto_hashing::blake2_256;
+use soil_crypto_hashing::blake2_256;
 use sp_runtime::{
 	generic::BlockId,
 	traits::{Block as BlockT, NumberFor},

@@ -28,8 +28,8 @@ use crate::{
 use alloc::{vec, vec::Vec};
 use codec::{Decode, Encode, EncodeLike, FullCodec, MaxEncodedLen};
 use frame_support::storage::StorageDecodeNonDedupLength;
-use sp_arithmetic::traits::SaturatedConversion;
-use sp_metadata_ir::{StorageEntryMetadataIR, StorageEntryTypeIR};
+use soil_arithmetic::traits::SaturatedConversion;
+use soil_metadata_ir::{StorageEntryMetadataIR, StorageEntryTypeIR};
 
 /// A type representing a *value* in storage. A *storage value* is a single value of a given type
 /// stored on-chain.
@@ -278,7 +278,7 @@ where
 	OnEmpty: crate::traits::Get<QueryKind::Query> + 'static,
 {
 	fn build_metadata(
-		deprecation_status: sp_metadata_ir::ItemDeprecationInfoIR,
+		deprecation_status: soil_metadata_ir::ItemDeprecationInfoIR,
 		docs: Vec<&'static str>,
 		entries: &mut Vec<StorageEntryMetadataIR>,
 	) {
@@ -341,7 +341,7 @@ mod test {
 	use super::*;
 	use crate::storage::types::ValueQuery;
 	use sp_io::{hashing::twox_128, TestExternalities};
-	use sp_metadata_ir::StorageEntryModifierIR;
+	use soil_metadata_ir::StorageEntryModifierIR;
 
 	struct Prefix;
 	impl StorageInstance for Prefix {
@@ -421,12 +421,12 @@ mod test {
 
 			let mut entries = vec![];
 			A::build_metadata(
-				sp_metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
+				soil_metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
 				vec![],
 				&mut entries,
 			);
 			AValueQueryWithAnOnEmpty::build_metadata(
-				sp_metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
+				soil_metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
 				vec![],
 				&mut entries,
 			);
@@ -439,7 +439,7 @@ mod test {
 						ty: StorageEntryTypeIR::Plain(scale_info::meta_type::<u32>()),
 						default: Option::<u32>::None.encode(),
 						docs: vec![],
-						deprecation_info: sp_metadata_ir::ItemDeprecationInfoIR::NotDeprecated
+						deprecation_info: soil_metadata_ir::ItemDeprecationInfoIR::NotDeprecated
 					},
 					StorageEntryMetadataIR {
 						name: "foo",
@@ -447,7 +447,7 @@ mod test {
 						ty: StorageEntryTypeIR::Plain(scale_info::meta_type::<u32>()),
 						default: 97u32.encode(),
 						docs: vec![],
-						deprecation_info: sp_metadata_ir::ItemDeprecationInfoIR::NotDeprecated
+						deprecation_info: soil_metadata_ir::ItemDeprecationInfoIR::NotDeprecated
 					}
 				]
 			);

@@ -216,7 +216,7 @@ async fn submit_tx_and_wait_for_inclusion(
 }
 
 fn transaction_pool_benchmarks(c: &mut Criterion) {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	let runtime = tokio::runtime::Runtime::new().expect("Creates tokio runtime");
 	let tokio_handle = runtime.handle().clone();

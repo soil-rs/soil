@@ -34,7 +34,7 @@ use frame_support::{
 };
 use frame_system::{EnsureSigned, EnsureSignedBy};
 use pallet_asset_conversion::{self, AccountIdConverter, AccountIdConverterNoSeed, Ascending};
-use sp_arithmetic::Permill;
+use soil_arithmetic::Permill;
 use sp_runtime::{traits::AccountIdConversion, BuildStorage};
 
 type Block = frame_system::mocking::MockBlock<Test>;

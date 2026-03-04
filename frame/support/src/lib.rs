@@ -65,7 +65,7 @@ pub mod __private {
 	#[cfg(feature = "std")]
 	pub use sp_io::TestExternalities;
 	pub use sp_io::{self, hashing, storage::root as storage_root};
-	pub use sp_metadata_ir as metadata_ir;
+	pub use soil_metadata_ir as metadata_ir;
 	#[cfg(feature = "std")]
 	pub use sp_runtime::{bounded_btree_map, bounded_vec};
 	pub use sp_runtime::{
@@ -74,8 +74,8 @@ pub mod __private {
 	};
 	#[cfg(feature = "std")]
 	pub use sp_state_machine::BasicExternalities;
-	pub use sp_std;
-	pub use sp_tracing;
+	pub use soil_std;
+	pub use soil_tracing;
 	pub use tt_call::*;
 }
 
@@ -407,7 +407,7 @@ pub mod testing_prelude {
 		assert_err, assert_err_ignore_postinfo, assert_err_with_weight, assert_noop, assert_ok,
 		assert_storage_noop, parameter_types,
 	};
-	pub use sp_arithmetic::assert_eq_error_rate;
+	pub use soil_arithmetic::assert_eq_error_rate;
 	pub use sp_runtime::{bounded_btree_map, bounded_vec};
 }
 

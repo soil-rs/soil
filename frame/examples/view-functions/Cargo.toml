@@ -25,7 +25,7 @@ frame-system = { default-features = false, workspace = true }
 
 sp-core = { default-features = false, workspace = true }
 sp-io = { default-features = false, workspace = true }
-sp-metadata-ir = { default-features = false, workspace = true }
+soil-metadata-ir = { default-features = false, workspace = true }
 sp-runtime = { default-features = false, workspace = true }
 
 [dev-dependencies]
@@ -42,7 +42,7 @@ std = [
 	"scale-info/std",
 	"sp-core/std",
 	"sp-io/std",
-	"sp-metadata-ir/std",
+	"soil-metadata-ir/std",
 	"sp-runtime/std",
 ]
 runtime-benchmarks = [

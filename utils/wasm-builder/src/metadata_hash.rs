@@ -46,7 +46,7 @@ type HostFunctions = (
 ///
 /// Returns the metadata hash.
 pub fn generate_metadata_hash(wasm: &Path, extra_info: MetadataExtraInfo) -> [u8; 32] {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	let wasm = std::fs::read(wasm).expect("Wasm file was just created and should be readable.");
 

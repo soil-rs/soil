@@ -453,7 +453,7 @@ impl ExtBuilder {
 		self
 	}
 	fn build(self) -> sp_io::TestExternalities {
-		sp_tracing::try_init_simple();
+		soil_tracing::try_init_simple();
 		let mut storage = frame_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 		let ed = ExistentialDeposit::get();
 
@@ -584,7 +584,7 @@ impl ExtBuilder {
 		ext
 	}
 	pub fn build_and_execute(self, test: impl FnOnce() -> ()) {
-		sp_tracing::try_init_simple();
+		soil_tracing::try_init_simple();
 		let mut ext = self.build();
 		ext.execute_with(test);
 		ext.execute_with(|| {

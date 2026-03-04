@@ -416,18 +416,18 @@ async fn follow_with_runtime() {
 	// The `RuntimeVersion` is embedded into the WASM blob at the `runtime_version`
 	// section. Modify the `RuntimeVersion` and commit the changes to a new block.
 	// The RPC must notify the runtime event change.
-	let wasm = sp_maybe_compressed_blob::decompress(
+	let wasm = soil_maybe_compressed_blob::decompress(
 		runtime::wasm_binary_unwrap(),
-		sp_maybe_compressed_blob::CODE_BLOB_BOMB_LIMIT,
+		soil_maybe_compressed_blob::CODE_BLOB_BOMB_LIMIT,
 	)
 	.unwrap();
 	// Update the runtime spec version.
 	let mut runtime = runtime;
 	runtime.spec_version += 1;
 	let embedded = sp_version::embed::embed_runtime_version(&wasm, runtime.clone()).unwrap();
-	let wasm = sp_maybe_compressed_blob::compress_strongly(
+	let wasm = soil_maybe_compressed_blob::compress_strongly(
 		&embedded,
-		sp_maybe_compressed_blob::CODE_BLOB_BOMB_LIMIT,
+		soil_maybe_compressed_blob::CODE_BLOB_BOMB_LIMIT,
 	)
 	.unwrap();
 

@@ -30,7 +30,7 @@ use frame_support::{
 	PalletId,
 };
 use frame_system::{EnsureRoot, EnsureSignedBy};
-use sp_arithmetic::Perbill;
+use soil_arithmetic::Perbill;
 use sp_core::{ConstU32, ConstU64, Get};
 use sp_runtime::{
 	traits::{BlockNumberProvider, Identity, MaybeConvert},

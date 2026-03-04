@@ -83,7 +83,7 @@ pub use impls::{feasibility_check_page_inner_with_snapshot, pallet::*, Status};
 use sp_core::Get;
 use sp_npos_elections::ElectionScore;
 use sp_runtime::Weight;
-use sp_std::{fmt::Debug, prelude::*};
+use soil_std::{fmt::Debug, prelude::*};
 
 /// Errors that can happen in the feasibility check.
 #[derive(

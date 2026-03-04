@@ -100,7 +100,7 @@ pub mod __private {
 	#[cfg(not(feature = "std"))]
 	pub use sp_core::to_substrate_wasm_fn_return_value;
 	#[cfg(feature = "frame-metadata")]
-	pub use sp_metadata_ir::{self as metadata_ir, frame_metadata as metadata};
+	pub use soil_metadata_ir::{self as metadata_ir, frame_metadata as metadata};
 	pub use sp_runtime::{
 		generic::BlockId,
 		traits::{Block as BlockT, Hash as HashT, HashingFor, Header as HeaderT, NumberFor},
@@ -260,7 +260,7 @@ use std::cell::RefCell;
 ///
 /// - Usage of `deprecated` attribute will propagate deprecation information to the metadata.
 /// - For general usage examples of `deprecated` attribute please refer to <https://doc.rust-lang.org/nightly/reference/attributes/diagnostics.html#the-deprecated-attribute>
-pub use sp_api_proc_macro::decl_runtime_apis;
+pub use soil_api_proc_macro::decl_runtime_apis;
 
 /// Tags given trait implementations as runtime apis.
 ///
@@ -412,7 +412,7 @@ pub use sp_api_proc_macro::decl_runtime_apis;
 ///  // impl skipped
 /// }
 /// ```
-pub use sp_api_proc_macro::impl_runtime_apis;
+pub use soil_api_proc_macro::impl_runtime_apis;
 
 /// Mocks given trait implementations as runtime apis.
 ///
@@ -518,7 +518,7 @@ pub use sp_api_proc_macro::impl_runtime_apis;
 ///
 /// # fn main() {}
 /// ```
-pub use sp_api_proc_macro::mock_impl_runtime_apis;
+pub use soil_api_proc_macro::mock_impl_runtime_apis;
 
 /// A type that records all accessed trie nodes and generates a proof out of it.
 #[cfg(feature = "std")]

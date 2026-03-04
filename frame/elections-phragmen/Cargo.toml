@@ -31,7 +31,7 @@ sp-staking = { workspace = true }
 [dev-dependencies]
 pallet-balances = { workspace = true, default-features = true }
 sp-core = { workspace = true, default-features = true }
-sp-tracing = { workspace = true, default-features = true }
+soil-tracing = { workspace = true, default-features = true }
 substrate-test-utils = { workspace = true }
 
 [features]
@@ -49,7 +49,7 @@ std = [
 	"sp-npos-elections/std",
 	"sp-runtime/std",
 	"sp-staking/std",
-	"sp-tracing/std",
+	"soil-tracing/std",
 ]
 runtime-benchmarks = [
 	"frame-benchmarking/runtime-benchmarks",

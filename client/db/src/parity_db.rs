@@ -20,7 +20,7 @@ use crate::{
 	utils::{DatabaseType, NUM_COLUMNS},
 };
 /// A `Database` adapter for parity-db.
-use sp_database::{error::DatabaseError, Change, ColumnId, Database, Transaction};
+use soil_database::{error::DatabaseError, Change, ColumnId, Database, Transaction};
 
 struct DbAdapter(parity_db::Db);
 
@@ -33,7 +33,7 @@ fn handle_err<T>(result: parity_db::Result<T>) -> T {
 	}
 }
 
-/// Wrap parity-db database into a trait object that implements `sp_database::Database`
+/// Wrap parity-db database into a trait object that implements `soil_database::Database`
 pub fn open<H: Clone + AsRef<[u8]>>(
 	path: &std::path::Path,
 	db_type: DatabaseType,

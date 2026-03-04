@@ -27,7 +27,7 @@ use frame_support::{
 };
 use frame_system::RawOrigin;
 use rand::{prelude::SliceRandom, rngs::SmallRng, SeedableRng};
-use sp_arithmetic::{per_things::Percent, traits::One};
+use soil_arithmetic::{per_things::Percent, traits::One};
 use sp_runtime::InnerOf;
 
 use crate::{unsigned::IndexAssignmentOf, *};

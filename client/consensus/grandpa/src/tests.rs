@@ -435,7 +435,7 @@ fn add_forced_change(
 
 #[tokio::test]
 async fn finalize_3_voters_no_observers() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 	let peers = &[Ed25519Keyring::Alice, Ed25519Keyring::Bob, Ed25519Keyring::Charlie];
 	let voters = make_ids(peers);
 
@@ -539,7 +539,7 @@ async fn finalize_3_voters_1_full_observer() {
 
 #[tokio::test]
 async fn transition_3_voters_twice_1_full_observer() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 	let peers_a = &[Ed25519Keyring::Alice, Ed25519Keyring::Bob, Ed25519Keyring::Charlie];
 
 	let peers_b = &[Ed25519Keyring::Dave, Ed25519Keyring::Eve, Ed25519Keyring::Ferdie];
@@ -779,7 +779,7 @@ async fn sync_justifications_on_change_blocks() {
 
 #[tokio::test]
 async fn finalizes_multiple_pending_changes_in_order() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	let peers_a = &[Ed25519Keyring::Alice, Ed25519Keyring::Bob, Ed25519Keyring::Charlie];
 	let peers_b = &[Ed25519Keyring::Dave, Ed25519Keyring::Eve, Ed25519Keyring::Ferdie];
@@ -842,7 +842,7 @@ async fn finalizes_multiple_pending_changes_in_order() {
 
 #[tokio::test]
 async fn force_change_to_new_set() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 	// two of these guys are offline.
 	let genesis_authorities = &[
 		Ed25519Keyring::Alice,
@@ -1000,7 +1000,7 @@ async fn voter_persists_its_votes() {
 	use futures::future;
 	use std::sync::atomic::{AtomicUsize, Ordering};
 
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	// we have two authorities but we'll only be running the voter for alice
 	// we are going to be listening for the prevotes it casts
@@ -1272,7 +1272,7 @@ async fn voter_persists_its_votes() {
 
 #[tokio::test]
 async fn finalize_3_voters_1_light_observer() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 	let authorities = &[Ed25519Keyring::Alice, Ed25519Keyring::Bob, Ed25519Keyring::Charlie];
 	let voters = make_ids(authorities);
 
@@ -1314,7 +1314,7 @@ async fn finalize_3_voters_1_light_observer() {
 
 #[tokio::test]
 async fn voter_catches_up_to_latest_round_when_behind() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	let peers = &[Ed25519Keyring::Alice, Ed25519Keyring::Bob];
 	let voters = make_ids(peers);
@@ -1707,7 +1707,7 @@ async fn grandpa_environment_passes_actual_best_block_to_voting_rules() {
 
 #[tokio::test]
 async fn grandpa_environment_checks_if_best_block_is_descendent_of_finality_target() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 	use finality_grandpa::voter::Environment;
 
 	let peers = &[Ed25519Keyring::Alice];
@@ -2227,7 +2227,7 @@ async fn grandpa_environment_doesnt_send_equivocation_reports_for_itself() {
 
 #[tokio::test]
 async fn revert_prunes_authority_changes() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	let peers = &[Ed25519Keyring::Alice, Ed25519Keyring::Bob, Ed25519Keyring::Charlie];
 

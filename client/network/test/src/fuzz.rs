@@ -90,7 +90,7 @@ fn discard_incoming_index(state: State) -> BareState {
 
 #[tokio::test]
 async fn run() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	for _ in 0..50 {
 		test_once().await;

@@ -35,7 +35,7 @@ use frame_support::traits::{
 	defensive_prelude::*, Currency, Get, OnUnbalanced, ReservableCurrency,
 };
 use frame_system::pallet_prelude::BlockNumberFor;
-use sp_arithmetic::traits::SaturatedConversion;
+use soil_arithmetic::traits::SaturatedConversion;
 use sp_core::bounded::BoundedVec;
 use sp_npos_elections::ElectionScore;
 use sp_runtime::{

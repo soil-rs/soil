@@ -19,7 +19,7 @@ codec = { features = ["derive"], workspace = true }
 docify = { workspace = true }
 frame = { workspace = true, features = ["runtime"] }
 scale-info = { features = ["derive"], workspace = true }
-sp-metadata-ir = { optional = true, workspace = true }
+soil-metadata-ir = { optional = true, workspace = true }
 
 [features]
 default = ["std"]
@@ -28,7 +28,7 @@ std = [
 	"codec/std",
 	"frame/std",
 	"scale-info/std",
-	"sp-metadata-ir/std",
+	"soil-metadata-ir/std",
 ]
 
 runtime-benchmarks = [
@@ -39,4 +39,4 @@ try-runtime = [
 	"frame/try-runtime",
 ]
 
-frame-metadata = ["sp-metadata-ir"]
+frame-metadata = ["soil-metadata-ir"]

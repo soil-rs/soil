@@ -23,14 +23,14 @@ frame-system = { workspace = true }
 log = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 sp-api = { workspace = true }
-sp-arithmetic = { workspace = true }
+soil-arithmetic = { workspace = true }
 sp-core = { workspace = true }
 sp-runtime = { workspace = true }
 
 [dev-dependencies]
 pretty_assertions = { workspace = true }
 sp-io = { workspace = true, default-features = true }
-sp-tracing = { workspace = true, default-features = true }
+soil-tracing = { workspace = true, default-features = true }
 
 [features]
 default = ["std"]
@@ -43,7 +43,7 @@ std = [
 	"log/std",
 	"scale-info/std",
 	"sp-api/std",
-	"sp-arithmetic/std",
+	"soil-arithmetic/std",
 	"sp-core/std",
 	"sp-io/std",
 	"sp-runtime/std",

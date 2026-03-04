@@ -23,7 +23,7 @@ use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use frame_support::traits::fungible::Inspect;
 use frame_system::Config as SConfig;
 use scale_info::TypeInfo;
-use sp_arithmetic::Perbill;
+use soil_arithmetic::Perbill;
 use sp_core::ConstU32;
 use sp_runtime::BoundedVec;
 
@@ -326,7 +326,7 @@ pub type ConfigRecordOf<T> = ConfigRecord<RelayBlockNumberOf<T>>;
 
 impl<RelayBlockNumber> ConfigRecord<RelayBlockNumber>
 where
-	RelayBlockNumber: sp_arithmetic::traits::Zero,
+	RelayBlockNumber: soil_arithmetic::traits::Zero,
 {
 	/// Check the config for basic validity constraints.
 	pub(crate) fn validate(&self) -> Result<(), ()> {

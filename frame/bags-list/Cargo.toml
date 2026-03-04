@@ -37,7 +37,7 @@ frame-benchmarking = { optional = true, workspace = true }
 pallet-balances = { optional = true, workspace = true }
 sp-core = { optional = true, workspace = true }
 sp-io = { optional = true, workspace = true }
-sp-tracing = { optional = true, workspace = true }
+soil-tracing = { optional = true, workspace = true }
 
 [dev-dependencies]
 frame-benchmarking = { workspace = true, default-features = true }
@@ -45,7 +45,7 @@ frame-election-provider-support = { workspace = true, default-features = true }
 pallet-balances = { workspace = true, default-features = true }
 sp-core = { workspace = true, default-features = true }
 sp-io = { workspace = true, default-features = true }
-sp-tracing = { workspace = true, default-features = true }
+soil-tracing = { workspace = true, default-features = true }
 substrate-test-utils = { workspace = true }
 
 [features]
@@ -62,7 +62,7 @@ std = [
 	"sp-core?/std",
 	"sp-io?/std",
 	"sp-runtime/std",
-	"sp-tracing?/std",
+	"soil-tracing?/std",
 ]
 runtime-benchmarks = [
 	"frame-benchmarking/runtime-benchmarks",
@@ -73,14 +73,14 @@ runtime-benchmarks = [
 	"sp-core",
 	"sp-io",
 	"sp-runtime/runtime-benchmarks",
-	"sp-tracing",
+	"soil-tracing",
 ]
 fuzz = [
 	"frame-election-provider-support/fuzz",
 	"pallet-balances",
 	"sp-core",
 	"sp-io",
-	"sp-tracing",
+	"soil-tracing",
 ]
 try-runtime = [
 	"frame-election-provider-support/try-runtime",

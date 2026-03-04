@@ -498,7 +498,7 @@ async fn fallback_request_compatible_peers() {
 
 #[tokio::test]
 async fn fallback_request_old_peer_receives() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	// `litep2p1` supports both the new and the old protocol
 	let (mut litep2p1, handle1_1, handle1_2) = {
@@ -640,7 +640,7 @@ async fn fallback_request_old_peer_receives() {
 
 #[tokio::test]
 async fn fallback_request_old_peer_sends() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	// `litep2p1` supports both the new and the old protocol
 	let (mut litep2p1, handle1_1, handle1_2) = {
@@ -782,7 +782,7 @@ async fn fallback_request_old_peer_sends() {
 
 #[tokio::test]
 async fn old_protocol_supported_but_no_fallback_provided() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	// `litep2p1` supports both the new and the old protocol
 	let (mut litep2p1, handle1_1, handle1_2) = {

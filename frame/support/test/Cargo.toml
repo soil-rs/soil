@@ -26,10 +26,10 @@ rustversion = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { features = ["derive"], workspace = true }
 sp-api = { workspace = true }
-sp-arithmetic = { workspace = true }
+soil-arithmetic = { workspace = true }
 sp-core = { workspace = true }
 sp-io = { workspace = true }
-sp-metadata-ir = { workspace = true }
+soil-metadata-ir = { workspace = true }
 sp-runtime = { workspace = true }
 sp-state-machine = { optional = true, workspace = true, default-features = true }
 sp-version = { workspace = true }
@@ -50,10 +50,10 @@ std = [
 	"scale-info/std",
 	"serde/std",
 	"sp-api/std",
-	"sp-arithmetic/std",
+	"soil-arithmetic/std",
 	"sp-core/std",
 	"sp-io/std",
-	"sp-metadata-ir/std",
+	"soil-metadata-ir/std",
 	"sp-runtime/std",
 	"sp-state-machine/std",
 	"sp-version/std",

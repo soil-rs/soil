@@ -25,7 +25,7 @@ honggfuzz = { workspace = true }
 codec = { features = ["derive"], workspace = true }
 frame-election-provider-solution-type = { workspace = true, default-features = true }
 frame-election-provider-support = { workspace = true, default-features = true }
-sp-arithmetic = { workspace = true, default-features = true }
+soil-arithmetic = { workspace = true, default-features = true }
 sp-runtime = { workspace = true, default-features = true }
 # used by generate_solution_type:
 frame-support = { workspace = true, default-features = true }

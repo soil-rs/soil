@@ -24,7 +24,7 @@ use frame_support::{
 		OnUnbalanced,
 	},
 };
-use sp_arithmetic::{
+use soil_arithmetic::{
 	traits::{SaturatedConversion, Saturating},
 	FixedPointNumber, FixedU64,
 };

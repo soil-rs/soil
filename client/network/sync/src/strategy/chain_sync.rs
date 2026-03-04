@@ -56,7 +56,7 @@ use sc_network_common::sync::message::{
 	BlockAnnounce, BlockAttributes, BlockData, BlockRequest, BlockResponse, Direction, FromBlock,
 };
 use sc_network_types::PeerId;
-use sp_arithmetic::traits::Saturating;
+use soil_arithmetic::traits::Saturating;
 use sp_blockchain::{Error as ClientError, HeaderBackend, HeaderMetadata};
 use sp_consensus::{BlockOrigin, BlockStatus};
 use sp_runtime::{

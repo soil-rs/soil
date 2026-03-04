@@ -37,7 +37,7 @@ use futures_timer::Delay;
 use log::{debug, info, warn};
 use sc_consensus::{BlockImport, JustificationSyncLink};
 use sc_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG, CONSENSUS_INFO, CONSENSUS_WARN};
-use sp_arithmetic::traits::BaseArithmetic;
+use soil_arithmetic::traits::BaseArithmetic;
 use sp_consensus::{Proposal, ProposeArgs, Proposer, SelectChain, SyncOracle};
 use sp_consensus_slots::{Slot, SlotDuration};
 use sp_inherents::CreateInherentDataProviders;

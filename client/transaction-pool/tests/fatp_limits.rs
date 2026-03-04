@@ -35,7 +35,7 @@ use tracing::debug;
 
 #[test]
 fn fatp_limits_no_views_mempool_count() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	let builder = TestPoolBuilder::new();
 	let (pool, api, _) = builder.with_mempool_count_limit(2).build();
@@ -65,7 +65,7 @@ fn fatp_limits_no_views_mempool_count() {
 
 #[test]
 fn fatp_limits_ready_count_works() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	let builder = TestPoolBuilder::new();
 	let (pool, api, _) = builder.with_mempool_count_limit(3).with_ready_count(2).build();
@@ -126,7 +126,7 @@ fn fatp_limits_ready_count_works() {
 
 #[test]
 fn fatp_limits_ready_count_works_for_submit_at() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	let builder = TestPoolBuilder::new();
 	let (pool, api, _) = builder.with_mempool_count_limit(3).with_ready_count(2).build();
@@ -160,7 +160,7 @@ fn fatp_limits_ready_count_works_for_submit_at() {
 
 #[test]
 fn fatp_limits_ready_count_works_for_submit_and_watch() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	let builder = TestPoolBuilder::new();
 	let (pool, api, _) = builder.with_mempool_count_limit(3).with_ready_count(2).build();
@@ -194,7 +194,7 @@ fn fatp_limits_ready_count_works_for_submit_and_watch() {
 
 #[test]
 fn fatp_limits_future_count_works() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	let builder = TestPoolBuilder::new();
 	let (pool, api, _) = builder.with_mempool_count_limit(3).with_future_count(2).build();
@@ -239,7 +239,7 @@ fn fatp_limits_future_count_works() {
 
 #[test]
 fn fatp_limits_watcher_mempool_doesnt_prevent_dropping() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	let builder = TestPoolBuilder::new();
 	let (pool, api, _) = builder.with_mempool_count_limit(3).with_ready_count(2).build();
@@ -275,7 +275,7 @@ fn fatp_limits_watcher_mempool_doesnt_prevent_dropping() {
 
 #[test]
 fn fatp_limits_watcher_non_intial_view_drops_transaction() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	let builder = TestPoolBuilder::new();
 	let (pool, api, _) = builder.with_ready_count(2).build();
@@ -315,7 +315,7 @@ fn fatp_limits_watcher_non_intial_view_drops_transaction() {
 
 #[test]
 fn fatp_limits_watcher_finalized_transaction_frees_ready_space() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	let builder = TestPoolBuilder::new();
 	let (pool, api, _) = builder.with_ready_count(2).build();
@@ -353,7 +353,7 @@ fn fatp_limits_watcher_finalized_transaction_frees_ready_space() {
 
 #[test]
 fn fatp_limits_watcher_view_can_drop_transcation() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	let builder = TestPoolBuilder::new();
 	let (pool, api, _) = builder.with_mempool_count_limit(3).with_ready_count(2).build();
@@ -398,7 +398,7 @@ fn fatp_limits_watcher_view_can_drop_transcation() {
 
 #[test]
 fn fatp_limits_watcher_empty_and_full_view_immediately_drops() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	let builder = TestPoolBuilder::new();
 	let (pool, api, _) = builder.with_mempool_count_limit(4).with_ready_count(2).build();
@@ -480,7 +480,7 @@ fn fatp_limits_watcher_empty_and_full_view_immediately_drops() {
 fn fatp_limits_watcher_empty_and_full_view_drops_with_event() {
 	// it is almost copy of fatp_limits_watcher_empty_and_full_view_immediately_drops, but the
 	// mempool_count limit is set to 5 (vs 4).
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	let builder = TestPoolBuilder::new();
 	let (pool, api, _) = builder.with_mempool_count_limit(5).with_ready_count(2).build();
@@ -567,7 +567,7 @@ fn large_uxt(x: usize) -> substrate_test_runtime::Extrinsic {
 
 #[test]
 fn fatp_limits_ready_size_works() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	let builder = TestPoolBuilder::new();
 	let (pool, api, _) = builder.with_ready_bytes_size(3390).with_future_bytes_size(0).build();
@@ -599,7 +599,7 @@ fn fatp_limits_ready_size_works() {
 
 #[test]
 fn fatp_limits_future_size_works() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 	const UXT_SIZE: usize = 137;
 
 	let builder = TestPoolBuilder::new();
@@ -644,7 +644,7 @@ fn fatp_limits_future_size_works() {
 
 #[test]
 fn fatp_limits_watcher_ready_transactions_are_not_droped_when_view_is_dropped() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	let builder = TestPoolBuilder::new();
 	let (pool, api, _) = builder.with_mempool_count_limit(6).with_ready_count(2).build();
@@ -746,7 +746,7 @@ fn fatp_limits_watcher_ready_transactions_are_not_droped_when_view_is_dropped() 
 
 #[test]
 fn fatp_limits_watcher_future_transactions_are_droped_when_view_is_dropped() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	let builder = TestPoolBuilder::new();
 	let (pool, api, _) = builder.with_mempool_count_limit(6).with_future_count(2).build();

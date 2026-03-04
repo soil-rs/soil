@@ -451,8 +451,8 @@ where
 			// This code may be removed once warp sync to an old runtime is no longer needed.
 			for prefix in ["GrandpaFinality", "Grandpa"] {
 				let k = [
-					sp_crypto_hashing::twox_128(prefix.as_bytes()),
-					sp_crypto_hashing::twox_128(b"CurrentSetId"),
+					soil_crypto_hashing::twox_128(prefix.as_bytes()),
+					soil_crypto_hashing::twox_128(b"CurrentSetId"),
 				]
 				.concat();
 				if let Ok(Some(id)) =

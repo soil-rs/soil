@@ -22,7 +22,7 @@
 use wasmtime::Caller;
 
 use sc_allocator::{AllocationStats, FreeingBumpHeapAllocator};
-use sp_wasm_interface::{Pointer, WordSize};
+use soil_wasm_interface::{Pointer, WordSize};
 
 use crate::{instance_wrapper::MemoryWrapper, runtime::StoreData, util};
 
@@ -73,20 +73,20 @@ impl<'a> HostContext<'a> {
 	}
 }
 
-impl<'a> sp_wasm_interface::FunctionContext for HostContext<'a> {
+impl<'a> soil_wasm_interface::FunctionContext for HostContext<'a> {
 	fn read_memory_into(
 		&self,
 		address: Pointer<u8>,
 		dest: &mut [u8],
-	) -> sp_wasm_interface::Result<()> {
+	) -> soil_wasm_interface::Result<()> {
 		util::read_memory_into(&self.caller, address, dest).map_err(|e| e.to_string())
 	}
 
-	fn write_memory(&mut self, address: Pointer<u8>, data: &[u8]) -> sp_wasm_interface::Result<()> {
+	fn write_memory(&mut self, address: Pointer<u8>, data: &[u8]) -> soil_wasm_interface::Result<()> {
 		util::write_memory_from(&mut self.caller, address, data).map_err(|e| e.to_string())
 	}
 
-	fn allocate_memory(&mut self, size: WordSize) -> sp_wasm_interface::Result<Pointer<u8>> {
+	fn allocate_memory(&mut self, size: WordSize) -> soil_wasm_interface::Result<Pointer<u8>> {
 		let memory = self.caller.data().memory();
 		let mut allocator = self
 			.host_state_mut()
@@ -104,7 +104,7 @@ impl<'a> sp_wasm_interface::FunctionContext for HostContext<'a> {
 		res
 	}
 
-	fn deallocate_memory(&mut self, ptr: Pointer<u8>) -> sp_wasm_interface::Result<()> {
+	fn deallocate_memory(&mut self, ptr: Pointer<u8>) -> soil_wasm_interface::Result<()> {
 		let memory = self.caller.data().memory();
 		let mut allocator = self
 			.host_state_mut()

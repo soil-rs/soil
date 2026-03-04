@@ -172,7 +172,7 @@ trait HardJunctionId {
 /// Derive a single hard junction.
 fn derive_hard_junction<T: HardJunctionId>(secret_seed: &Seed, cc: &[u8; 32]) -> Seed {
 	use codec::Encode;
-	(T::ID, secret_seed, cc).using_encoded(sp_crypto_hashing::blake2_256)
+	(T::ID, secret_seed, cc).using_encoded(soil_crypto_hashing::blake2_256)
 }
 
 impl<T: EngineBLS> Pair<T> {}

@@ -158,7 +158,7 @@ fn call_runtime_api_with_multiple_arguments() {
 #[test]
 fn disable_logging_works() {
 	if std::env::var("RUN_TEST").is_ok() {
-		sp_tracing::try_init_simple();
+		soil_tracing::try_init_simple();
 
 		let mut builder = TestClientBuilder::new();
 		builder.genesis_init_mut().set_wasm_code(

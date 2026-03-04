@@ -33,7 +33,7 @@ pub mod logging;
 
 use rustc_hash::FxHashMap;
 use serde::ser::{Serialize, SerializeMap, Serializer};
-use sp_tracing::{WASM_NAME_KEY, WASM_TARGET_KEY, WASM_TRACE_IDENTIFIER};
+use soil_tracing::{WASM_NAME_KEY, WASM_TARGET_KEY, WASM_TRACE_IDENTIFIER};
 use std::{
 	fmt,
 	time::{Duration, Instant},

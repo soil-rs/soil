@@ -65,7 +65,7 @@ use alloc::boxed::Box;
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use core::{fmt::Debug, marker::PhantomData};
 use scale_info::TypeInfo;
-use sp_arithmetic::traits::{Saturating, Zero};
+use soil_arithmetic::traits::{Saturating, Zero};
 
 use frame_support::{
 	defensive,

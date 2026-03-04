@@ -36,10 +36,10 @@ enum BlobKind {
 impl RuntimeBlob {
 	/// Create `RuntimeBlob` from the given WASM or PolkaVM compressed program blob.
 	///
-	/// See [`sp_maybe_compressed_blob`] for details about decompression.
+	/// See [`soil_maybe_compressed_blob`] for details about decompression.
 	pub fn uncompress_if_needed(wasm_code: &[u8]) -> Result<Self, WasmError> {
-		use sp_maybe_compressed_blob::CODE_BLOB_BOMB_LIMIT;
-		let wasm_code = sp_maybe_compressed_blob::decompress(wasm_code, CODE_BLOB_BOMB_LIMIT)
+		use soil_maybe_compressed_blob::CODE_BLOB_BOMB_LIMIT;
+		let wasm_code = soil_maybe_compressed_blob::decompress(wasm_code, CODE_BLOB_BOMB_LIMIT)
 			.map_err(|e| WasmError::Other(format!("Decompression error: {:?}", e)))?;
 		Self::new(&wasm_code)
 	}

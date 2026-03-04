@@ -27,7 +27,7 @@ use frame_support::pallet_prelude::*;
 use frame_system::RawOrigin;
 use sp_npos_elections::ElectionScore;
 use sp_runtime::traits::One;
-use sp_std::boxed::Box;
+use soil_std::boxed::Box;
 
 #[benchmarks(where T: crate::Config + crate::verifier::Config + crate::unsigned::Config)]
 mod benchmarks {

@@ -46,7 +46,7 @@ sp-blockchain = { workspace = true, default-features = true }
 sp-core = { workspace = true, default-features = true }
 sp-keyring = { workspace = true, default-features = true }
 sp-keystore = { workspace = true, default-features = true }
-sp-panic-handler = { workspace = true, default-features = true }
+soil-panic-handler = { workspace = true, default-features = true }
 sp-runtime = { workspace = true, default-features = true }
 sp-version = { workspace = true, default-features = true }
 thiserror = { workspace = true }
@@ -54,7 +54,7 @@ tokio = { features = ["parking_lot", "rt-multi-thread", "signal"], workspace = t
 
 [dev-dependencies]
 futures-timer = { workspace = true }
-sp-tracing = { workspace = true, default-features = true }
+soil-tracing = { workspace = true, default-features = true }
 tempfile = { workspace = true }
 
 [features]

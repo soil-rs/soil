@@ -27,7 +27,7 @@ use scale_info::meta_type;
 
 use frame_support::{derive_impl, pallet_prelude::PalletInfoAccess, view_functions::ViewFunction};
 use sp_io::hashing::twox_128;
-use sp_metadata_ir::{
+use soil_metadata_ir::{
 	ItemDeprecationInfoIR, PalletViewFunctionMetadataIR, PalletViewFunctionParamMetadataIR,
 };
 use sp_runtime::testing::TestXt;

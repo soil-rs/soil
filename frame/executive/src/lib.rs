@@ -602,7 +602,7 @@ where
 		header: &frame_system::pallet_prelude::HeaderFor<System>,
 	) -> ExtrinsicInclusionMode {
 		sp_io::init_tracing();
-		sp_tracing::enter_span!(sp_tracing::Level::TRACE, "init_block");
+		soil_tracing::enter_span!(soil_tracing::Level::TRACE, "init_block");
 		let digests = Self::extract_pre_digest(header);
 		Self::initialize_block_impl(header.number(), header.parent_hash(), &digests);
 
@@ -679,7 +679,7 @@ where
 	}
 
 	fn initial_checks(header: &Block::Header) {
-		sp_tracing::enter_span!(sp_tracing::Level::TRACE, "initial_checks");
+		soil_tracing::enter_span!(soil_tracing::Level::TRACE, "initial_checks");
 
 		// Check that `parent_hash` is correct.
 		let n = *header.number();
@@ -694,8 +694,8 @@ where
 	/// Actually execute all transitions for `block`.
 	pub fn execute_block(block: Block::LazyBlock) {
 		sp_io::init_tracing();
-		sp_tracing::within_span! {
-			sp_tracing::info_span!("execute_block", ?block);
+		soil_tracing::within_span! {
+			soil_tracing::info_span!("execute_block", ?block);
 			// Execute `on_runtime_upgrade` and `on_initialize`.
 			let mode = Self::initialize_block(block.header());
 			Self::initial_checks(block.header());
@@ -787,7 +787,7 @@ where
 	// Note: Only used by the block builder - not Executive itself.
 	pub fn finalize_block() -> frame_system::pallet_prelude::HeaderFor<System> {
 		sp_io::init_tracing();
-		sp_tracing::enter_span!(sp_tracing::Level::TRACE, "finalize_block");
+		soil_tracing::enter_span!(soil_tracing::Level::TRACE, "finalize_block");
 
 		// In this case there were no transactions to trigger this state transition:
 		if !<frame_system::Pallet<System>>::inherents_applied() {
@@ -868,7 +868,7 @@ where
 		sp_io::init_tracing();
 		let encoded = uxt.encode();
 		let encoded_len = encoded.len();
-		sp_tracing::enter_span!(sp_tracing::info_span!("apply_extrinsic",
+		soil_tracing::enter_span!(soil_tracing::info_span!("apply_extrinsic",
 			ext=?sp_core::hexdisplay::HexDisplay::from(&encoded)));
 
 		let uxt = <Block::Extrinsic as codec::DecodeLimit>::decode_all_with_depth_limit(
@@ -918,7 +918,7 @@ where
 	}
 
 	fn final_checks(header: &frame_system::pallet_prelude::HeaderFor<System>) {
-		sp_tracing::enter_span!(sp_tracing::Level::TRACE, "final_checks");
+		soil_tracing::enter_span!(soil_tracing::Level::TRACE, "final_checks");
 		// remove temporaries
 		let new_header = <frame_system::Pallet<System>>::finalize();
 
@@ -956,7 +956,7 @@ where
 		block_hash: Block::Hash,
 	) -> TransactionValidity {
 		sp_io::init_tracing();
-		use sp_tracing::{enter_span, within_span};
+		use soil_tracing::{enter_span, within_span};
 
 		<frame_system::Pallet<System>>::initialize(
 			&(frame_system::Pallet::<System>::block_number() + One::one()),
@@ -964,9 +964,9 @@ where
 			&Default::default(),
 		);
 
-		enter_span! { sp_tracing::Level::TRACE, "validate_transaction" };
+		enter_span! { soil_tracing::Level::TRACE, "validate_transaction" };
 
-		let encoded = within_span! { sp_tracing::Level::TRACE, "using_encoded";
+		let encoded = within_span! { soil_tracing::Level::TRACE, "using_encoded";
 			uxt.encode()
 		};
 
@@ -976,11 +976,11 @@ where
 		)
 		.map_err(|_| InvalidTransaction::Call)?;
 
-		let xt = within_span! { sp_tracing::Level::TRACE, "check";
+		let xt = within_span! { soil_tracing::Level::TRACE, "check";
 			uxt.check(&Default::default())
 		}?;
 
-		let dispatch_info = within_span! { sp_tracing::Level::TRACE, "dispatch_info";
+		let dispatch_info = within_span! { soil_tracing::Level::TRACE, "dispatch_info";
 			xt.get_dispatch_info()
 		};
 
@@ -989,7 +989,7 @@ where
 		}
 
 		within_span! {
-			sp_tracing::Level::TRACE, "validate";
+			soil_tracing::Level::TRACE, "validate";
 			xt.validate::<UnsignedValidator>(source, &dispatch_info, encoded.len())
 		}
 	}

@@ -21,7 +21,7 @@
 //! including the place of the Freezes in FRAME.
 
 use scale_info::TypeInfo;
-use sp_arithmetic::{
+use soil_arithmetic::{
 	traits::{CheckedAdd, CheckedSub},
 	ArithmeticError,
 };

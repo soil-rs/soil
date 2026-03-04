@@ -15,7 +15,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use sp_arithmetic::{PerThing, PerU16, Perbill, Percent, Perquintill};
+use soil_arithmetic::{PerThing, PerU16, Perbill, Percent, Perquintill};
 
 /// This test the precision and panics if error too big error.
 ///

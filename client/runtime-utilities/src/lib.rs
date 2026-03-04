@@ -30,7 +30,7 @@ use sp_core::{
 	OpaqueMetadata,
 };
 use sp_state_machine::BasicExternalities;
-use sp_wasm_interface::HostFunctions;
+use soil_wasm_interface::HostFunctions;
 use std::borrow::Cow;
 
 pub mod error;
@@ -79,7 +79,7 @@ impl<'a> FetchRuntimeCode for BasicCodeFetcher<'a> {
 
 impl<'a> BasicCodeFetcher<'a> {
 	fn new(code: Cow<'a, [u8]>) -> Self {
-		Self { hash: sp_crypto_hashing::blake2_256(&code).to_vec(), code }
+		Self { hash: soil_crypto_hashing::blake2_256(&code).to_vec(), code }
 	}
 
 	fn runtime_code(&'a self) -> RuntimeCode<'a> {

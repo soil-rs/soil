@@ -21,10 +21,10 @@ docify = { workspace = true }
 hash-db = { optional = true, workspace = true, default-features = true }
 log = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
-sp-api-proc-macro = { workspace = true }
+soil-api-proc-macro = { workspace = true }
 sp-core = { workspace = true }
 sp-externalities = { optional = true, workspace = true }
-sp-metadata-ir = { optional = true, workspace = true }
+soil-metadata-ir = { optional = true, workspace = true }
 sp-runtime = { workspace = true }
 sp-runtime-interface = { workspace = true }
 sp-state-machine = { optional = true, workspace = true }
@@ -42,11 +42,11 @@ std = [
 	"hash-db",
 	"log/std",
 	"scale-info/std",
-	"sp-api-proc-macro/std",
+	"soil-api-proc-macro/std",
 	"sp-core/std",
 	"sp-externalities",
 	"sp-externalities?/std",
-	"sp-metadata-ir?/std",
+	"soil-metadata-ir?/std",
 	"sp-runtime-interface/std",
 	"sp-runtime/std",
 	"sp-state-machine/std",
@@ -64,5 +64,5 @@ std = [
 # This sets the max logging level to `off` for `log`.
 disable-logging = ["log/max_level_off"]
 # Do not report the documentation in the metadata.
-no-metadata-docs = ["sp-api-proc-macro/no-metadata-docs"]
-frame-metadata = ["sp-metadata-ir"]
+no-metadata-docs = ["soil-api-proc-macro/no-metadata-docs"]
+frame-metadata = ["soil-metadata-ir"]

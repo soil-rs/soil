@@ -19,7 +19,7 @@
 
 use crate::RIType;
 
-use sp_wasm_interface::{FunctionContext, Result};
+use soil_wasm_interface::{FunctionContext, Result};
 
 /// A type used as a return value in a host function. Can be turned into an FFI value.
 pub trait IntoFFIValue: RIType {

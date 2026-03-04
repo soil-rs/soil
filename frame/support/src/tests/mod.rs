@@ -18,7 +18,7 @@
 
 use super::*;
 use sp_io::{MultiRemovalResults, TestExternalities};
-use sp_metadata_ir::{
+use soil_metadata_ir::{
 	PalletStorageMetadataIR, StorageEntryMetadataIR, StorageEntryModifierIR, StorageEntryTypeIR,
 	StorageHasherIR,
 };
@@ -607,7 +607,7 @@ fn expected_metadata() -> PalletStorageMetadataIR {
 				},
 				default: vec![0, 0, 0, 0, 0, 0, 0, 0],
 				docs: vec![],
-				deprecation_info: sp_metadata_ir::ItemDeprecationInfoIR::DeprecatedWithoutNote,
+				deprecation_info: soil_metadata_ir::ItemDeprecationInfoIR::DeprecatedWithoutNote,
 			},
 			StorageEntryMetadataIR {
 				name: "OptionLinkedMap",
@@ -619,7 +619,7 @@ fn expected_metadata() -> PalletStorageMetadataIR {
 				},
 				default: vec![0],
 				docs: vec![],
-				deprecation_info: sp_metadata_ir::ItemDeprecationInfoIR::Deprecated {
+				deprecation_info: soil_metadata_ir::ItemDeprecationInfoIR::Deprecated {
 					note: "test",
 					since: None,
 				},
@@ -634,7 +634,7 @@ fn expected_metadata() -> PalletStorageMetadataIR {
 				},
 				default: vec![0, 0, 0, 0],
 				docs: vec![],
-				deprecation_info: sp_metadata_ir::ItemDeprecationInfoIR::Deprecated {
+				deprecation_info: soil_metadata_ir::ItemDeprecationInfoIR::Deprecated {
 					note: "test",
 					since: Some("test"),
 				},
@@ -649,7 +649,7 @@ fn expected_metadata() -> PalletStorageMetadataIR {
 				},
 				default: vec![0],
 				docs: vec![],
-				deprecation_info: sp_metadata_ir::ItemDeprecationInfoIR::Deprecated {
+				deprecation_info: soil_metadata_ir::ItemDeprecationInfoIR::Deprecated {
 					note: "test",
 					since: None,
 				},
@@ -664,7 +664,7 @@ fn expected_metadata() -> PalletStorageMetadataIR {
 				},
 				default: vec![0, 0, 0, 0, 0, 0, 0, 0],
 				docs: vec![],
-				deprecation_info: sp_metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
+				deprecation_info: soil_metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
 			},
 			StorageEntryMetadataIR {
 				name: "GenericDataDM",
@@ -676,7 +676,7 @@ fn expected_metadata() -> PalletStorageMetadataIR {
 				},
 				default: vec![0, 0, 0, 0],
 				docs: vec![],
-				deprecation_info: sp_metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
+				deprecation_info: soil_metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
 			},
 			StorageEntryMetadataIR {
 				name: "GenericData2DM",
@@ -688,7 +688,7 @@ fn expected_metadata() -> PalletStorageMetadataIR {
 				},
 				default: vec![0],
 				docs: vec![],
-				deprecation_info: sp_metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
+				deprecation_info: soil_metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
 			},
 			StorageEntryMetadataIR {
 				name: "AppendableDM",
@@ -703,7 +703,7 @@ fn expected_metadata() -> PalletStorageMetadataIR {
 				},
 				default: vec![0],
 				docs: vec![],
-				deprecation_info: sp_metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
+				deprecation_info: soil_metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
 			},
 			StorageEntryMetadataIR {
 				name: "Total",
@@ -711,7 +711,7 @@ fn expected_metadata() -> PalletStorageMetadataIR {
 				ty: StorageEntryTypeIR::Plain(scale_info::meta_type::<(u32, u32)>()),
 				default: vec![0, 0, 0, 0, 0, 0, 0, 0],
 				docs: vec![" Some running total."],
-				deprecation_info: sp_metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
+				deprecation_info: soil_metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
 			},
 			StorageEntryMetadataIR {
 				name: "Numbers",
@@ -723,7 +723,7 @@ fn expected_metadata() -> PalletStorageMetadataIR {
 				},
 				default: vec![0],
 				docs: vec![" Numbers to be added into the total."],
-				deprecation_info: sp_metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
+				deprecation_info: soil_metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
 			},
 		],
 	}
@@ -737,16 +737,16 @@ fn store_metadata() {
 
 #[test]
 fn constant_metadata() {
-	let metadata: Vec<sp_metadata_ir::PalletConstantMetadataIR> =
+	let metadata: Vec<soil_metadata_ir::PalletConstantMetadataIR> =
 		Pallet::<Runtime>::pallet_constants_metadata();
 	pretty_assertions::assert_eq!(
 		metadata,
-		vec![sp_metadata_ir::PalletConstantMetadataIR {
+		vec![soil_metadata_ir::PalletConstantMetadataIR {
 			name: "ExampleConstant",
 			ty: scale_info::meta_type::<()>(),
 			value: vec![],
 			docs: vec![],
-			deprecation_info: sp_metadata_ir::ItemDeprecationInfoIR::Deprecated {
+			deprecation_info: soil_metadata_ir::ItemDeprecationInfoIR::Deprecated {
 				note: "this constant is deprecated",
 				since: None
 			}

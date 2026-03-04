@@ -38,7 +38,7 @@ use frame_support::{
 use frame_system::pallet_prelude::*;
 use pallet::*;
 use sp_npos_elections::{evaluate_support, ElectionScore};
-use sp_std::{collections::btree_map::BTreeMap, prelude::*};
+use soil_std::{collections::btree_map::BTreeMap, prelude::*};
 
 pub(crate) type SupportsOfVerifier<V> = frame_election_provider_support::BoundedSupports<
 	<V as Verifier>::AccountId,
@@ -204,7 +204,7 @@ pub(crate) mod pallet {
 	///
 	/// No additional conditions must be met when the pallet is in [`Status::Ongoing`]. The number
 	/// of pages in
-	pub struct QueuedSolution<T: Config>(sp_std::marker::PhantomData<T>);
+	pub struct QueuedSolution<T: Config>(soil_std::marker::PhantomData<T>);
 	impl<T: Config> QueuedSolution<T> {
 		/// Private helper for mutating the storage group.
 		fn mutate_checked<R>(mutate: impl FnOnce() -> R) -> R {
@@ -719,7 +719,7 @@ impl<T: Config> Pallet<T> {
 
 		// verify each page, and amalgamate into a final support.
 		let mut backings =
-			sp_std::collections::btree_map::BTreeMap::<T::AccountId, PartialBackings>::new();
+			soil_std::collections::btree_map::BTreeMap::<T::AccountId, PartialBackings>::new();
 		let mut linked_supports = Vec::with_capacity(partial_solutions.len());
 
 		for (solution_page, page) in partial_solutions.into_iter().zip(solution_pages.iter()) {

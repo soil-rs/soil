@@ -51,7 +51,7 @@ use sp_runtime::{
 	traits::{CheckedSub, One, Zero},
 	SaturatedConversion, Saturating,
 };
-use sp_std::{collections::btree_set::BTreeSet, fmt::Debug, prelude::*};
+use soil_std::{collections::btree_set::BTreeSet, fmt::Debug, prelude::*};
 
 /// The solution type used by this crate.
 pub type SolutionOf<T> = <T as MinerConfig>::Solution;
@@ -174,7 +174,7 @@ impl<T: Default + Clone + Debug> PadSolutionPages for Vec<T> {
 
 		// we basically need to prepend the list with this many items.
 		let empty_slots = desired_pages_usize.saturating_sub(self.len());
-		sp_std::iter::repeat(Default::default())
+		soil_std::iter::repeat(Default::default())
 			.take(empty_slots)
 			.chain(self.into_iter())
 			.collect::<Vec<_>>()
@@ -193,7 +193,7 @@ impl<T: Default + Clone + Debug, Bound: frame_support::traits::Get<u32>> PadSolu
 
 		// we basically need to prepend the list with this many items.
 		let empty_slots = desired_pages_usize.saturating_sub(self.len());
-		let self_as_vec = sp_std::iter::repeat(Default::default())
+		let self_as_vec = soil_std::iter::repeat(Default::default())
 			.take(empty_slots)
 			.chain(self.into_iter())
 			.collect::<Vec<_>>();
@@ -214,7 +214,7 @@ pub type VoterPageOf<T> = BoundedVec<VoterOf<T>, <T as MinerConfig>::VoterSnapsh
 pub type AllVoterPagesOf<T> = BoundedVec<VoterPageOf<T>, <T as MinerConfig>::Pages>;
 
 /// Maximum number of items that [`AllVoterPagesOf`] can contain, when flattened.
-pub struct MaxFlattenedVoters<T: MinerConfig>(sp_std::marker::PhantomData<T>);
+pub struct MaxFlattenedVoters<T: MinerConfig>(soil_std::marker::PhantomData<T>);
 impl<T: MinerConfig> Get<u32> for MaxFlattenedVoters<T> {
 	fn get() -> u32 {
 		T::VoterSnapshotPerBlock::get().saturating_mul(T::Pages::get())

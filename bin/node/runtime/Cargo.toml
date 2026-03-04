@@ -25,7 +25,7 @@ rand = { workspace = true, optional = true }
 rand_pcg = { workspace = true, optional = true }
 scale-info = { features = ["derive", "serde"], workspace = true }
 serde_json = { features = ["alloc", "arbitrary_precision"], workspace = true }
-sp-debug-derive = { workspace = true }
+soil-debug-derive = { workspace = true }
 static_assertions = { workspace = true, default-features = true }
 
 # pallet-asset-conversion: turn on "num-traits" feature
@@ -150,9 +150,9 @@ pallet-whitelist = { workspace = true }
 sc-chain-spec-derive = { workspace = true }
 sc-tracing-proc-macro = { workspace = true }
 sp-api = { workspace = true }
-sp-api-proc-macro = { workspace = true }
+soil-api-proc-macro = { workspace = true }
 sp-application-crypto = { workspace = true }
-sp-arithmetic = { workspace = true }
+soil-arithmetic = { workspace = true }
 sp-authority-discovery = { workspace = true }
 sp-block-builder = { workspace = true }
 sp-consensus-aura = { workspace = true }
@@ -163,7 +163,7 @@ sp-consensus-pow = { workspace = true }
 sp-consensus-slots = { workspace = true }
 sp-core = { workspace = true }
 sp-crypto-ec-utils = { workspace = true }
-sp-crypto-hashing = { workspace = true }
+soil-crypto-hashing = { workspace = true }
 sp-crypto-hashing-proc-macro = { workspace = true }
 sp-externalities = { workspace = true }
 sp-genesis-builder = { workspace = true }
@@ -171,28 +171,28 @@ sp-inherents = { workspace = true }
 sp-io = { workspace = true }
 sp-keyring = { workspace = true }
 sp-keystore = { workspace = true }
-sp-metadata-ir = { workspace = true }
+soil-metadata-ir = { workspace = true }
 sp-mixnet = { workspace = true }
 sp-mmr-primitives = { workspace = true }
 sp-npos-elections = { workspace = true }
 sp-offchain = { workspace = true }
 sp-runtime = { workspace = true }
 sp-runtime-interface = { workspace = true }
-sp-runtime-interface-proc-macro = { workspace = true }
+soil-runtime-interface-proc-macro = { workspace = true }
 sp-session = { workspace = true }
 sp-staking = { workspace = true }
 sp-state-machine = { workspace = true }
 sp-statement-store = { workspace = true }
-sp-std = { workspace = true }
+soil-std = { workspace = true }
 sp-storage = { workspace = true }
 sp-timestamp = { workspace = true }
-sp-tracing = { workspace = true }
+soil-tracing = { workspace = true }
 sp-transaction-pool = { workspace = true }
 sp-transaction-storage-proof = { workspace = true }
 sp-trie = { workspace = true }
 sp-version = { workspace = true }
-sp-version-proc-macro = { workspace = true }
-sp-wasm-interface = { workspace = true }
+soil-version-proc-macro = { workspace = true }
+soil-wasm-interface = { workspace = true }
 sp-weights = { workspace = true }
 substrate-bip39 = { workspace = true }
 
@@ -211,7 +211,7 @@ default = ["std"]
 with-tracing = [
 	"frame-executive/with-tracing",
 	"sp-io/with-tracing",
-	"sp-tracing/with-tracing",
+	"soil-tracing/with-tracing",
 ]
 std = [
 	"binary-merkle-tree/std",
@@ -336,9 +336,9 @@ std = [
 	"scale-info/std",
 	"serde_json/std",
 	"sp-api/std",
-	"sp-api-proc-macro/std",
+	"soil-api-proc-macro/std",
 	"sp-application-crypto/std",
-	"sp-arithmetic/std",
+	"soil-arithmetic/std",
 	"sp-authority-discovery/std",
 	"sp-block-builder/std",
 	"sp-consensus-aura/std",
@@ -349,15 +349,15 @@ std = [
 	"sp-consensus-slots/std",
 	"sp-core/std",
 	"sp-crypto-ec-utils/std",
-	"sp-crypto-hashing/std",
-	"sp-debug-derive/std",
+	"soil-crypto-hashing/std",
+	"soil-debug-derive/std",
 	"sp-externalities/std",
 	"sp-genesis-builder/std",
 	"sp-inherents/std",
 	"sp-io/std",
 	"sp-keyring/std",
 	"sp-keystore/std",
-	"sp-metadata-ir/std",
+	"soil-metadata-ir/std",
 	"sp-mixnet/std",
 	"sp-mmr-primitives/std",
 	"sp-npos-elections/std",
@@ -368,15 +368,15 @@ std = [
 	"sp-staking/std",
 	"sp-state-machine/std",
 	"sp-statement-store/std",
-	"sp-std/std",
+	"soil-std/std",
 	"sp-storage/std",
 	"sp-timestamp/std",
-	"sp-tracing/std",
+	"soil-tracing/std",
 	"sp-transaction-pool/std",
 	"sp-transaction-storage-proof/std",
 	"sp-trie/std",
 	"sp-version/std",
-	"sp-wasm-interface/std",
+	"soil-wasm-interface/std",
 	"sp-weights/std",
 	"substrate-bip39/std",
 	"substrate-wasm-builder",

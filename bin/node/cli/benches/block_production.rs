@@ -185,7 +185,7 @@ fn prepare_benchmark(client: &FullClient) -> (usize, Vec<OpaqueExtrinsic>) {
 }
 
 fn block_production(c: &mut Criterion) {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	let runtime = tokio::runtime::Runtime::new().expect("creating tokio runtime doesn't fail; qed");
 	let tokio_handle = runtime.handle().clone();

@@ -25,7 +25,7 @@ use crate::wasm::*;
 use crate::{Pointer, RIType};
 
 #[cfg(not(substrate_runtime))]
-use sp_wasm_interface::{FunctionContext, Result};
+use soil_wasm_interface::{FunctionContext, Result};
 
 // Make sure that our assumptions for storing a pointer + its size in `u64` is valid.
 #[cfg(all(substrate_runtime, not(feature = "disable_target_static_assertions")))]
@@ -144,7 +144,7 @@ impl IntoFFIValue for bool {
 }
 
 #[cfg(not(substrate_runtime))]
-impl<T: sp_wasm_interface::PointerType> RIType for Pointer<T> {
+impl<T: soil_wasm_interface::PointerType> RIType for Pointer<T> {
 	type FFIType = u32;
 	type Inner = Self;
 }
@@ -173,7 +173,7 @@ impl<T> FromFFIValue for Pointer<T> {
 }
 
 #[cfg(not(substrate_runtime))]
-impl<'a, T: sp_wasm_interface::PointerType> FromFFIValue<'a> for Pointer<T> {
+impl<'a, T: soil_wasm_interface::PointerType> FromFFIValue<'a> for Pointer<T> {
 	type Owned = Self;
 
 	fn from_ffi_value(_: &mut dyn FunctionContext, arg: u32) -> Result<Self> {
@@ -186,7 +186,7 @@ impl<'a, T: sp_wasm_interface::PointerType> FromFFIValue<'a> for Pointer<T> {
 }
 
 #[cfg(not(substrate_runtime))]
-impl<T: sp_wasm_interface::PointerType> IntoFFIValue for Pointer<T> {
+impl<T: soil_wasm_interface::PointerType> IntoFFIValue for Pointer<T> {
 	fn into_ffi_value(value: Self, _: &mut dyn FunctionContext) -> Result<u32> {
 		Ok(value.into())
 	}

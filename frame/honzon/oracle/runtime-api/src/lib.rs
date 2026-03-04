@@ -39,7 +39,7 @@
 #![allow(clippy::unnecessary_mut_passed)]
 
 use codec::Codec;
-use sp_std::prelude::Vec;
+use soil_std::prelude::Vec;
 
 sp_api::decl_runtime_apis! {
 	/// Runtime API for querying oracle data from the blockchain.

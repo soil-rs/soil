@@ -221,12 +221,12 @@ members = [
 	"frame/vesting",
 	"frame/whitelist",
 	"primitives/api",
-	"primitives/api/proc-macro",
+	"soil/api-proc-macro",
 	"primitives/api/test",
 	"primitives/application-crypto",
 	"primitives/application-crypto/test",
-	"primitives/arithmetic",
-	"primitives/arithmetic/fuzzer",
+	"soil/arithmetic",
+	"soil/arithmetic/fuzzer",
 	"primitives/authority-discovery",
 	"primitives/block-builder",
 	"primitives/blockchain",
@@ -241,10 +241,10 @@ members = [
 	"primitives/core",
 	"primitives/core/fuzz",
 	"primitives/crypto/ec-utils",
-	"primitives/crypto/hashing",
-	"primitives/crypto/hashing/proc-macro",
-	"primitives/database",
-	"primitives/debug-derive",
+	"soil/crypto-hashing",
+	"soil/crypto-hashing/proc-macro",
+	"soil/database",
+	"soil/debug-derive",
 	"primitives/ethereum-standards",
 	"primitives/externalities",
 	"primitives/genesis-builder",
@@ -252,18 +252,18 @@ members = [
 	"primitives/io",
 	"primitives/keyring",
 	"primitives/keystore",
-	"primitives/maybe-compressed-blob",
+	"soil/maybe-compressed-blob",
 	"primitives/merkle-mountain-range",
-	"primitives/metadata-ir",
+	"soil/metadata-ir",
 	"primitives/mixnet",
 	"primitives/npos-elections",
 	"primitives/npos-elections/fuzzer",
 	"primitives/offchain",
-	"primitives/panic-handler",
+	"soil/panic-handler",
 	"primitives/rpc",
 	"primitives/runtime",
 	"primitives/runtime-interface",
-	"primitives/runtime-interface/proc-macro",
+	"soil/runtime-interface-proc-macro",
 	"primitives/runtime-interface/test",
 	"primitives/runtime-interface/test-wasm",
 	"primitives/runtime-interface/test-wasm-deprecated",
@@ -271,17 +271,17 @@ members = [
 	"primitives/staking",
 	"primitives/state-machine",
 	"primitives/statement-store",
-	"primitives/std",
+	"soil/std",
 	"primitives/storage",
 	"primitives/test-primitives",
 	"primitives/timestamp",
-	"primitives/tracing",
+	"soil/tracing",
 	"primitives/transaction-pool",
 	"primitives/transaction-storage-proof",
 	"primitives/trie",
 	"primitives/version",
-	"primitives/version/proc-macro",
-	"primitives/wasm-interface",
+	"soil/version-proc-macro",
+	"soil/wasm-interface",
 	"primitives/weights",
 	"scripts/ci/node-template-release",
 	"test-utils",
@@ -556,9 +556,9 @@ sc-transaction-pool = { path = "client/transaction-pool", default-features = fal
 sc-transaction-pool-api = { path = "client/transaction-pool/api", default-features = false }
 sc-utils = { path = "client/utils", default-features = false }
 sp-api = { path = "primitives/api", default-features = false }
-sp-api-proc-macro = { path = "primitives/api/proc-macro", default-features = false }
+soil-api-proc-macro = { path = "soil/api-proc-macro", default-features = false }
 sp-application-crypto = { path = "primitives/application-crypto", default-features = false }
-sp-arithmetic = { path = "primitives/arithmetic", default-features = false }
+soil-arithmetic = { path = "soil/arithmetic", default-features = false }
 sp-authority-discovery = { path = "primitives/authority-discovery", default-features = false }
 sp-block-builder = { path = "primitives/block-builder", default-features = false }
 sp-blockchain = { path = "primitives/blockchain", default-features = false }
@@ -574,44 +574,44 @@ sp-core = { path = "primitives/core", default-features = false }
 sp-core-hashing = { default-features = false, path = "deprecated/hashing" }
 sp-core-hashing-proc-macro = { default-features = false, path = "deprecated/hashing/proc-macro" }
 sp-crypto-ec-utils = { default-features = false, path = "primitives/crypto/ec-utils" }
-sp-crypto-hashing = { path = "primitives/crypto/hashing", default-features = false }
-sp-crypto-hashing-proc-macro = { path = "primitives/crypto/hashing/proc-macro", default-features = false }
-sp-database = { path = "primitives/database", default-features = false }
-sp-debug-derive = { path = "primitives/debug-derive", default-features = false }
+soil-crypto-hashing = { path = "soil/crypto-hashing", default-features = false }
+sp-crypto-hashing-proc-macro = { path = "soil/crypto-hashing/proc-macro", default-features = false }
+soil-database = { path = "soil/database", default-features = false }
+soil-debug-derive = { path = "soil/debug-derive", default-features = false }
 sp-externalities = { path = "primitives/externalities", default-features = false }
 sp-genesis-builder = { path = "primitives/genesis-builder", default-features = false }
 sp-inherents = { path = "primitives/inherents", default-features = false }
 sp-io = { path = "primitives/io", default-features = false }
 sp-keyring = { path = "primitives/keyring", default-features = false }
 sp-keystore = { path = "primitives/keystore", default-features = false }
-sp-maybe-compressed-blob = { path = "primitives/maybe-compressed-blob", default-features = false }
-sp-metadata-ir = { path = "primitives/metadata-ir", default-features = false }
+soil-maybe-compressed-blob = { path = "soil/maybe-compressed-blob", default-features = false }
+soil-metadata-ir = { path = "soil/metadata-ir", default-features = false }
 sp-mixnet = { path = "primitives/mixnet", default-features = false }
 sp-mmr-primitives = { path = "primitives/merkle-mountain-range", default-features = false }
 sp-npos-elections = { path = "primitives/npos-elections", default-features = false }
 sp-offchain = { path = "primitives/offchain", default-features = false }
-sp-panic-handler = { path = "primitives/panic-handler", default-features = false }
+soil-panic-handler = { path = "soil/panic-handler", default-features = false }
 sp-rpc = { path = "primitives/rpc", default-features = false }
 sp-runtime = { path = "primitives/runtime", default-features = false }
 sp-runtime-interface = { path = "primitives/runtime-interface", default-features = false }
-sp-runtime-interface-proc-macro = { path = "primitives/runtime-interface/proc-macro", default-features = false }
+soil-runtime-interface-proc-macro = { path = "soil/runtime-interface-proc-macro", default-features = false }
 sp-runtime-interface-test-wasm = { path = "primitives/runtime-interface/test-wasm" }
 sp-runtime-interface-test-wasm-deprecated = { path = "primitives/runtime-interface/test-wasm-deprecated" }
 sp-session = { path = "primitives/session", default-features = false }
 sp-staking = { path = "primitives/staking", default-features = false }
 sp-state-machine = { path = "primitives/state-machine", default-features = false }
 sp-statement-store = { path = "primitives/statement-store", default-features = false }
-sp-std = { path = "primitives/std", default-features = false }
+soil-std = { path = "soil/std", default-features = false }
 sp-storage = { path = "primitives/storage", default-features = false }
 sp-test-primitives = { path = "primitives/test-primitives" }
 sp-timestamp = { path = "primitives/timestamp", default-features = false }
-sp-tracing = { path = "primitives/tracing", default-features = false }
+soil-tracing = { path = "soil/tracing", default-features = false }
 sp-transaction-pool = { path = "primitives/transaction-pool", default-features = false }
 sp-transaction-storage-proof = { path = "primitives/transaction-storage-proof", default-features = false }
 sp-trie = { path = "primitives/trie", default-features = false }
 sp-version = { path = "primitives/version", default-features = false }
-sp-version-proc-macro = { path = "primitives/version/proc-macro", default-features = false }
-sp-wasm-interface = { path = "primitives/wasm-interface", default-features = false }
+soil-version-proc-macro = { path = "soil/version-proc-macro", default-features = false }
+soil-wasm-interface = { path = "soil/wasm-interface", default-features = false }
 sp-weights = { path = "primitives/weights", default-features = false }
 subkey = { path = "bin/utils/subkey", default-features = false }
 substrate-bip39 = { path = "utils/substrate-bip39", default-features = false }

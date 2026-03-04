@@ -22,7 +22,7 @@ use alloc::{vec, vec::Vec};
 use codec::{CompactLen, Decode, DecodeLimit, Encode, EncodeLike, Input, MaxEncodedLen};
 use impl_trait_for_tuples::impl_for_tuples;
 use scale_info::{build::Fields, meta_type, Path, Type, TypeInfo, TypeParameter};
-use sp_arithmetic::traits::{CheckedAdd, CheckedMul, CheckedSub, One, Saturating};
+use soil_arithmetic::traits::{CheckedAdd, CheckedMul, CheckedSub, One, Saturating};
 use sp_core::bounded::bounded_vec::TruncateFrom;
 
 use core::cmp::Ordering;
@@ -747,7 +747,7 @@ pub trait HandleLifetime<T> {
 impl<T> HandleLifetime<T> for () {}
 
 pub trait Time {
-	type Moment: sp_arithmetic::traits::AtLeast32Bit + Parameter + Default + Copy + MaxEncodedLen;
+	type Moment: soil_arithmetic::traits::AtLeast32Bit + Parameter + Default + Copy + MaxEncodedLen;
 
 	fn now() -> Self::Moment;
 }

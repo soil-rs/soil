@@ -23,7 +23,7 @@ serde = { optional = true, features = ["alloc", "derive"], workspace = true }
 sp-api = { workspace = true }
 sp-application-crypto = { workspace = true }
 sp-core = { workspace = true }
-sp-crypto-hashing = { workspace = true }
+soil-crypto-hashing = { workspace = true }
 sp-externalities = { workspace = true }
 sp-runtime = { workspace = true }
 sp-runtime-interface = { workspace = true }
@@ -56,7 +56,7 @@ std = [
 	"sp-api/std",
 	"sp-application-crypto/std",
 	"sp-core/std",
-	"sp-crypto-hashing/std",
+	"soil-crypto-hashing/std",
 	"sp-externalities/std",
 	"sp-runtime-interface/std",
 	"sp-runtime/std",

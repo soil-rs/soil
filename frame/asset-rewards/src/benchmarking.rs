@@ -29,7 +29,7 @@ use frame_support::{
 };
 use frame_system::{Pallet as System, RawOrigin};
 use sp_runtime::{traits::One, Saturating};
-use sp_std::prelude::*;
+use soil_std::prelude::*;
 
 /// Benchmark Helper
 pub trait BenchmarkHelper<AssetId> {

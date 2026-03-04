@@ -37,7 +37,7 @@ use crate::{
 use alloc::boxed::Box;
 use core::marker::PhantomData;
 use frame_support_procedural::{DebugNoBound, EqNoBound, PartialEqNoBound};
-use sp_arithmetic::traits::SaturatedConversion;
+use soil_arithmetic::traits::SaturatedConversion;
 use sp_runtime::traits::Zero;
 
 /// Handler for when an imbalance gets dropped. This could handle either a credit (negative) or

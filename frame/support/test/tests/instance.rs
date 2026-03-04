@@ -24,7 +24,7 @@ use frame_support::{
 };
 use frame_system::pallet_prelude::BlockNumberFor;
 use sp_core::sr25519;
-use sp_metadata_ir::{
+use soil_metadata_ir::{
 	PalletStorageMetadataIR, StorageEntryMetadataIR, StorageEntryModifierIR, StorageEntryTypeIR,
 	StorageHasherIR,
 };
@@ -447,7 +447,7 @@ fn expected_metadata() -> PalletStorageMetadataIR {
 				ty: StorageEntryTypeIR::Plain(scale_info::meta_type::<u32>()),
 				default: vec![0, 0, 0, 0],
 				docs: vec![],
-				deprecation_info: sp_metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
+				deprecation_info: soil_metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
 			},
 			StorageEntryMetadataIR {
 				name: "Map",
@@ -459,7 +459,7 @@ fn expected_metadata() -> PalletStorageMetadataIR {
 				},
 				default: [0u8; 8].to_vec(),
 				docs: vec![],
-				deprecation_info: sp_metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
+				deprecation_info: soil_metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
 			},
 			StorageEntryMetadataIR {
 				name: "DoubleMap",
@@ -471,7 +471,7 @@ fn expected_metadata() -> PalletStorageMetadataIR {
 				},
 				default: [0u8; 8].to_vec(),
 				docs: vec![],
-				deprecation_info: sp_metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
+				deprecation_info: soil_metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
 			},
 		],
 	}

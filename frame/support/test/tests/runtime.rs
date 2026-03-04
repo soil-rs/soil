@@ -737,7 +737,7 @@ fn test_metadata() {
 	};
 	use scale_info::meta_type;
 	use sp_core::Encode;
-	use sp_metadata_ir::StorageEntryModifierIR::Optional;
+	use soil_metadata_ir::StorageEntryModifierIR::Optional;
 
 	fn maybe_docs(doc: Vec<&'static str>) -> Vec<&'static str> {
 		if cfg!(feature = "no-metadata-docs") {

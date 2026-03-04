@@ -22,7 +22,7 @@ use frame_election_provider_support::{
 };
 use frame_support::pallet_prelude::*;
 use sp_core::bounded_vec;
-use sp_std::prelude::*;
+use soil_std::prelude::*;
 
 pub type T = Runtime;
 

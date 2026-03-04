@@ -184,7 +184,7 @@ pub struct ExtBuilder {}
 
 impl ExtBuilder {
 	fn build(self) -> sp_io::TestExternalities {
-		sp_tracing::try_init_simple();
+		soil_tracing::try_init_simple();
 		let mut storage =
 			frame_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
 
@@ -244,7 +244,7 @@ impl ExtBuilder {
 		ext
 	}
 	pub fn build_and_execute(self, test: impl FnOnce()) {
-		sp_tracing::try_init_simple();
+		soil_tracing::try_init_simple();
 		let mut ext = self.build();
 		ext.execute_with(test);
 		ext.execute_with(|| {

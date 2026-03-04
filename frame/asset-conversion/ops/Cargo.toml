@@ -22,7 +22,7 @@ frame-system = { workspace = true }
 log = { workspace = true }
 pallet-asset-conversion = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
-sp-arithmetic = { workspace = true }
+soil-arithmetic = { workspace = true }
 sp-core = { workspace = true }
 sp-io = { workspace = true }
 sp-runtime = { workspace = true }
@@ -45,7 +45,7 @@ std = [
 	"pallet-balances/std",
 	"primitive-types/std",
 	"scale-info/std",
-	"sp-arithmetic/std",
+	"soil-arithmetic/std",
 	"sp-core/std",
 	"sp-io/std",
 	"sp-runtime/std",

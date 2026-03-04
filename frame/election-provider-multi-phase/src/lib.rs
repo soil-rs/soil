@@ -259,7 +259,7 @@ use frame_support::{
 };
 use frame_system::{ensure_none, offchain::CreateBare, pallet_prelude::BlockNumberFor};
 use scale_info::TypeInfo;
-use sp_arithmetic::{
+use soil_arithmetic::{
 	traits::{CheckedAdd, Zero},
 	UpperOf,
 };

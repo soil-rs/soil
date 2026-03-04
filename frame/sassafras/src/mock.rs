@@ -218,7 +218,7 @@ pub fn make_ticket_body(attempt_idx: u32, pair: &AuthorityPair) -> (TicketId, Ti
 }
 
 pub fn make_dummy_ticket_body(attempt_idx: u32) -> (TicketId, TicketBody) {
-	let hash = sp_crypto_hashing::blake2_256(&attempt_idx.to_le_bytes());
+	let hash = soil_crypto_hashing::blake2_256(&attempt_idx.to_le_bytes());
 
 	let erased_public = EphemeralPublic::unchecked_from(hash);
 	let revealed_public = erased_public;

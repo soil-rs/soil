@@ -22,7 +22,7 @@ filetime = { workspace = true }
 jobserver = { workspace = true }
 parity-wasm = { workspace = true }
 polkavm-linker = { workspace = true }
-sp-maybe-compressed-blob = { workspace = true, default-features = true }
+soil-maybe-compressed-blob = { workspace = true, default-features = true }
 strum = { features = ["derive"], workspace = true, default-features = true }
 tempfile = { workspace = true }
 toml = { workspace = true }
@@ -38,7 +38,7 @@ sc-executor = { optional = true, workspace = true, default-features = true }
 shlex = { workspace = true }
 sp-core = { optional = true, workspace = true, default-features = true }
 sp-io = { optional = true, workspace = true, default-features = true }
-sp-tracing = { optional = true, workspace = true, default-features = true }
+soil-tracing = { optional = true, workspace = true, default-features = true }
 sp-version = { optional = true, workspace = true, default-features = true }
 
 [features]
@@ -57,6 +57,6 @@ metadata-hash = [
 	"sc-executor",
 	"sp-core",
 	"sp-io",
-	"sp-tracing",
+	"soil-tracing",
 	"sp-version",
 ]

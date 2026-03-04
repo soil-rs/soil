@@ -28,7 +28,7 @@ sc-telemetry = { workspace = true, default-features = true }
 serde = { features = ["derive"], workspace = true, default-features = true }
 serde_json = { workspace = true, default-features = true }
 sp-core = { workspace = true, default-features = true }
-sp-crypto-hashing = { workspace = true, default-features = true }
+soil-crypto-hashing = { workspace = true, default-features = true }
 sp-io = { workspace = true, default-features = true }
 
 [dev-dependencies]

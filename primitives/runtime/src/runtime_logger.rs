@@ -74,7 +74,7 @@ mod tests {
 	#[test]
 	fn ensure_runtime_logger_works() {
 		if env::var("RUN_TEST").is_ok() {
-			sp_tracing::try_init_simple();
+			soil_tracing::try_init_simple();
 
 			let client = TestClientBuilder::new().build();
 			let runtime_api = client.runtime_api();

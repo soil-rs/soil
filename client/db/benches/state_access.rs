@@ -162,7 +162,7 @@ fn generate_storage() -> (Vec<Vec<u8>>, Vec<(Vec<u8>, Vec<u8>)>) {
 }
 
 fn state_access_benchmarks(c: &mut Criterion) {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	let (keys, storage) = generate_storage();
 	let path = TempDir::new().expect("Creates temporary directory");

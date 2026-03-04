@@ -22,7 +22,7 @@ use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use core::fmt::Debug;
 use frame_support::Parameter;
 use scale_info::TypeInfo;
-use sp_arithmetic::traits::AtLeast32BitUnsigned;
+use soil_arithmetic::traits::AtLeast32BitUnsigned;
 use sp_runtime::traits::BlockNumberProvider;
 
 use crate::Timeslice;

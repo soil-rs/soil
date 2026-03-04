@@ -1655,7 +1655,7 @@ mod tests {
 	}
 
 	fn test_store() -> (Store, tempfile::TempDir) {
-		sp_tracing::init_for_tests();
+		soil_tracing::init_for_tests();
 		let temp_dir = tempfile::Builder::new().tempdir().expect("Error creating test dir");
 
 		let client = std::sync::Arc::new(TestClient);

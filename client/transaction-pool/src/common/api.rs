@@ -332,10 +332,10 @@ where
 	let s = std::time::Instant::now();
 	let tx_hash = uxt.using_encoded(|x| <traits::HashingFor<Block> as traits::Hash>::hash(x));
 
-	let result = sp_tracing::within_span!(sp_tracing::Level::TRACE, "validate_transaction";
+	let result = soil_tracing::within_span!(soil_tracing::Level::TRACE, "validate_transaction";
 	{
 		let runtime_api = client.runtime_api();
-		let api_version = sp_tracing::within_span! { sp_tracing::Level::TRACE, "check_version";
+		let api_version = soil_tracing::within_span! { soil_tracing::Level::TRACE, "check_version";
 			runtime_api
 				.api_version::<dyn TaggedTransactionQueue<Block>>(at)
 				.map_err(|e| Error::RuntimeApi(e.to_string()))?
@@ -346,8 +346,8 @@ where
 
 		use sp_api::Core;
 
-		sp_tracing::within_span!(
-			sp_tracing::Level::TRACE, "runtime::validate_transaction";
+		soil_tracing::within_span!(
+			soil_tracing::Level::TRACE, "runtime::validate_transaction";
 		{
 			if api_version >= 3 {
 				runtime_api.validate_transaction(at, source, (*uxt).clone(), at)

@@ -248,7 +248,7 @@ mod ecdsa {
 /// Returns blake2-256 hash for the encoded statement.
 #[cfg(feature = "std")]
 pub fn hash_encoded(data: &[u8]) -> [u8; 32] {
-	sp_crypto_hashing::blake2_256(data)
+	soil_crypto_hashing::blake2_256(data)
 }
 
 /// Statement proof.
@@ -901,7 +901,7 @@ mod test {
 		statement.sign_ecdsa_private(&secp256k1_kp);
 		assert_eq!(
 			statement.verify_signature(),
-			SignatureVerificationResult::Valid(sp_crypto_hashing::blake2_256(
+			SignatureVerificationResult::Valid(soil_crypto_hashing::blake2_256(
 				&secp256k1_kp.public().0
 			))
 		);

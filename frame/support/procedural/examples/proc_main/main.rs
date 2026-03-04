@@ -20,7 +20,7 @@ use frame_support_procedural::import_section;
 #[cfg(test)]
 use sp_io::{MultiRemovalResults, TestExternalities};
 #[cfg(test)]
-use sp_metadata_ir::{
+use soil_metadata_ir::{
 	PalletStorageMetadataIR, StorageEntryMetadataIR, StorageEntryModifierIR, StorageEntryTypeIR,
 	StorageHasherIR,
 };

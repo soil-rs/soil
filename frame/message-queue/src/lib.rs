@@ -221,7 +221,7 @@ use frame_support::{
 use frame_system::pallet_prelude::*;
 pub use pallet::*;
 use scale_info::TypeInfo;
-use sp_arithmetic::traits::{BaseArithmetic, Unsigned};
+use soil_arithmetic::traits::{BaseArithmetic, Unsigned};
 use sp_core::{defer, H256};
 use sp_runtime::{
 	traits::{One, Zero},

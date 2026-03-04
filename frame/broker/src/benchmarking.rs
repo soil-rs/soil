@@ -30,7 +30,7 @@ use frame_support::{
 	},
 };
 use frame_system::{Pallet as System, RawOrigin};
-use sp_arithmetic::{FixedU64, Perbill};
+use soil_arithmetic::{FixedU64, Perbill};
 use sp_core::Get;
 use sp_runtime::{
 	traits::{BlockNumberProvider, MaybeConvert},

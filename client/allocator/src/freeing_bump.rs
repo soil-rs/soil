@@ -69,7 +69,7 @@
 
 use crate::{Error, Memory, MAX_WASM_PAGES, PAGE_SIZE};
 pub use sp_core::MAX_POSSIBLE_ALLOCATION;
-use sp_wasm_interface::{Pointer, WordSize};
+use soil_wasm_interface::{Pointer, WordSize};
 use std::{
 	cmp::{max, min},
 	mem,

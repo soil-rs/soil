@@ -535,8 +535,8 @@ pub fn expand_call(def: &mut Def) -> proc_macro2::TokenStream {
 						#(
 							#cfg_attrs
 							Self::#fn_name { #( #args_name_pattern, )* } => {
-								#frame_support::__private::sp_tracing::enter_span!(
-									#frame_support::__private::sp_tracing::trace_span!(stringify!(#fn_name))
+								#frame_support::__private::soil_tracing::enter_span!(
+									#frame_support::__private::soil_tracing::trace_span!(stringify!(#fn_name))
 								);
 								#maybe_allow_attrs
 								#[allow(clippy::useless_conversion)]

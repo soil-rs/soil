@@ -917,7 +917,7 @@ mod tests {
 	// This can be run locally with `cargo test --release -p node-cli test_sync -- --ignored`.
 	#[ignore]
 	fn test_sync() {
-		sp_tracing::try_init_simple();
+		soil_tracing::try_init_simple();
 
 		let keystore_path = tempfile::tempdir().expect("Creates keystore path");
 		let keystore: KeystorePtr = LocalKeystore::open(keystore_path.path(), None)
@@ -1151,7 +1151,7 @@ mod tests {
 	#[test]
 	#[ignore]
 	fn test_consensus() {
-		sp_tracing::try_init_simple();
+		soil_tracing::try_init_simple();
 
 		sc_service_test::consensus(
 			crate::chain_spec::tests::integration_test_config_with_two_authorities(),

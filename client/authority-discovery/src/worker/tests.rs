@@ -338,7 +338,7 @@ async fn new_registers_metrics() {
 
 #[tokio::test]
 async fn triggers_dht_get_query() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 	let (_dht_event_tx, dht_event_rx) = channel(1000);
 
 	// Generate authority keys
@@ -374,7 +374,7 @@ async fn triggers_dht_get_query() {
 
 #[tokio::test]
 async fn publish_discover_cycle() {
-	sp_tracing::try_init_simple();
+	soil_tracing::try_init_simple();
 
 	let mut pool = LocalPool::new();
 

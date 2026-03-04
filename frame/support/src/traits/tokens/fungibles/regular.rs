@@ -38,7 +38,7 @@ use crate::{
 		SameOrOther, TryDrop,
 	},
 };
-use sp_arithmetic::traits::{CheckedAdd, CheckedSub, One};
+use soil_arithmetic::traits::{CheckedAdd, CheckedSub, One};
 use sp_runtime::{traits::Saturating, ArithmeticError, DispatchError, TokenError};
 
 use super::{Credit, Debt, HandleImbalanceDrop, Imbalance};

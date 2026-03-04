@@ -21,7 +21,7 @@
 use crate::dispatch::Parameter;
 use alloc::{vec, vec::Vec};
 use codec::{HasCompact, MaxEncodedLen};
-use sp_arithmetic::Perbill;
+use soil_arithmetic::Perbill;
 use sp_runtime::{traits::Member, DispatchError};
 
 pub trait VoteTally<Votes, Class> {

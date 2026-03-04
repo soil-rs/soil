@@ -136,7 +136,7 @@ mod v3 {
 		storage_alias,
 	};
 	use frame_system::Pallet as System;
-	use sp_arithmetic::Perbill;
+	use soil_arithmetic::Perbill;
 
 	pub struct MigrateToV3Impl<T>(PhantomData<T>);
 

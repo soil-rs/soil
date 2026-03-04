@@ -27,7 +27,7 @@ use frame_support::{
 	},
 };
 use scale_info::TypeInfo;
-use sp_arithmetic::traits::Zero;
+use soil_arithmetic::traits::Zero;
 use sp_core::{Get, TypedGet};
 use sp_runtime::{DispatchError, DispatchResult};
 

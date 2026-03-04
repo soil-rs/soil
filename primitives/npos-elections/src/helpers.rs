@@ -22,7 +22,7 @@ use crate::{
 	VoteWeight,
 };
 use alloc::{collections::BTreeMap, vec::Vec};
-use sp_arithmetic::PerThing;
+use soil_arithmetic::PerThing;
 
 /// Converts a vector of ratio assignments into ones with absolute budget value.
 ///
@@ -98,7 +98,7 @@ pub fn supports_to_staked_assignment<A: IdentifierT>(
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use sp_arithmetic::Perbill;
+	use soil_arithmetic::Perbill;
 
 	#[test]
 	fn into_staked_works() {

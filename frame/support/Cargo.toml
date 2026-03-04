@@ -33,19 +33,19 @@ scale-info = { features = ["derive"], workspace = true }
 serde = { features = ["alloc", "derive"], workspace = true }
 serde_json = { features = ["alloc"], workspace = true }
 sp-api = { features = ["frame-metadata"], workspace = true }
-sp-arithmetic = { workspace = true }
+soil-arithmetic = { workspace = true }
 sp-core = { workspace = true }
 sp-crypto-hashing-proc-macro = { workspace = true, default-features = true }
-sp-debug-derive = { workspace = true }
+soil-debug-derive = { workspace = true }
 sp-genesis-builder = { workspace = true }
 sp-inherents = { workspace = true }
 sp-io = { workspace = true }
-sp-metadata-ir = { workspace = true }
+soil-metadata-ir = { workspace = true }
 sp-runtime = { features = ["serde"], workspace = true }
 sp-staking = { workspace = true }
 sp-state-machine = { optional = true, workspace = true }
-sp-std = { workspace = true }
-sp-tracing = { workspace = true }
+soil-std = { workspace = true }
+soil-tracing = { workspace = true }
 sp-trie = { workspace = true }
 sp-weights = { workspace = true }
 tt-call = { workspace = true }
@@ -56,7 +56,7 @@ aquamarine = { workspace = true }
 Inflector = { workspace = true }
 frame-system = { workspace = true, default-features = true }
 pretty_assertions = { workspace = true }
-sp-crypto-hashing = { workspace = true, default-features = true }
+soil-crypto-hashing = { workspace = true, default-features = true }
 sp-timestamp = { workspace = true, default-features = true }
 
 [features]
@@ -74,18 +74,18 @@ std = [
 	"serde/std",
 	"serde_json/std",
 	"sp-api/std",
-	"sp-arithmetic/std",
+	"soil-arithmetic/std",
 	"sp-core/std",
-	"sp-debug-derive/std",
+	"soil-debug-derive/std",
 	"sp-genesis-builder/std",
 	"sp-inherents/std",
 	"sp-io/std",
-	"sp-metadata-ir/std",
+	"soil-metadata-ir/std",
 	"sp-runtime/std",
 	"sp-staking/std",
 	"sp-state-machine/std",
-	"sp-std/std",
-	"sp-tracing/std",
+	"soil-std/std",
+	"soil-tracing/std",
 	"sp-trie/std",
 	"sp-weights/std",
 ]
