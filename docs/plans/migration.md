@@ -165,7 +165,13 @@ Status: DONE
 Rename and move to `topsoil/` directory. Verify the dependency invariant:
 `topsoil → soil` is allowed, `soil → topsoil` is forbidden.
 
-Status: TODO
+- 140 crates renamed: `frame-*` → `topsoil-*`, `pallet-*` → `topsoil-*`
+- `polkadot-sdk-frame` umbrella crate → `topsoil`
+- Directory: `frame/` → `topsoil/`
+- Proc macro string literals updated for crate resolution
+- All source references updated (`frame_support` → `topsoil_support`, `pallet_*` → `topsoil_*`)
+
+Status: DONE
 
 ## Known Blockers
 
