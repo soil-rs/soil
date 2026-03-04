@@ -11321,33 +11321,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "sc-mixnet"
-version = "0.4.0"
-dependencies = [
- "array-bytes 6.2.3",
- "arrayvec 0.7.6",
- "blake2 0.10.6",
- "bytes",
- "futures",
- "futures-timer",
- "log",
- "mixnet",
- "parity-scale-codec",
- "parking_lot 0.12.5",
- "sc-client-api",
- "sc-network",
- "sc-network-types",
- "sc-transaction-pool-api",
- "soil-api",
- "soil-consensus",
- "soil-core",
- "soil-keystore",
- "soil-mixnet",
- "soil-runtime",
- "thiserror 1.0.69",
-]
-
-[[package]]
 name = "sc-network"
 version = "0.34.0"
 dependencies = [

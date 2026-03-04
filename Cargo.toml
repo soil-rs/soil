@@ -42,7 +42,6 @@ members = [
 	"client/executor/runtime-test",
 	"client/executor/wasmtime",
 	"client/informant",
-	"client/mixnet",
 	"client/merkle-mountain-range",
 	"client/merkle-mountain-range/rpc",
 	"client/network",
@@ -515,7 +514,6 @@ sc-executor-common = { path = "client/executor/common", default-features = false
 sc-executor-polkavm = { path = "client/executor/polkavm", default-features = false }
 sc-executor-wasmtime = { path = "client/executor/wasmtime", default-features = false }
 sc-informant = { path = "client/informant", default-features = false }
-sc-mixnet = { path = "client/mixnet", default-features = false }
 sc-network = { path = "client/network", default-features = false }
 sc-network-common = { path = "client/network/common", default-features = false }
 sc-network-gossip = { path = "client/network-gossip", default-features = false }
