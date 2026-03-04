@@ -18,7 +18,7 @@
 
 //! Disk-backed statement store.
 //!
-//! This module contains an implementation of `soil_statement_store::StatementStore` which is backed
+//! This module contains an implementation of `crate::StatementStore` which is backed
 //! by a database.
 //!
 //! Constraint management.
@@ -44,15 +44,9 @@
 //! can't be added to the store for `Options::purge_after_sec` seconds. This is to prevent old
 //! statements from being propagated on the network.
 
-#![warn(missing_docs)]
-#![warn(unused_extern_crates)]
-
-mod metrics;
-mod subscription;
-
-use crate::subscription::{SubscriptionStatementsStream, SubscriptionsHandle};
+use super::subscription::{SubscriptionStatementsStream, SubscriptionsHandle};
 use futures::FutureExt;
-use metrics::MetricsLink as PrometheusMetrics;
+use super::metrics::MetricsLink as PrometheusMetrics;
 use parking_lot::{lock_api::RwLockUpgradableReadGuard, RwLock};
 use prometheus_endpoint::Registry as PrometheusRegistry;
 use sc_client_api::{backend::StorageProvider, Backend, StorageKey};
@@ -60,19 +54,19 @@ use soil_keystore::LocalKeystore;
 use soil_blockchain::HeaderBackend;
 use soil_core::{crypto::UncheckedFrom, hexdisplay::HexDisplay, traits::SpawnNamed, Decode, Encode};
 use soil_runtime::traits::Block as BlockT;
-use soil_statement_store::{
+use crate::{
 	runtime_api::{StatementSource, StatementStoreExt},
 	AccountId, BlockHash, Channel, DecryptionKey, FilterDecision, Hash, InvalidReason,
 	OptimizedTopicFilter, Proof, RejectionReason, Result, SignatureVerificationResult, Statement,
 	StatementAllowance, StatementEvent, SubmitResult, Topic,
 };
-pub use soil_statement_store::{Error, StatementStore, MAX_TOPICS};
+pub use crate::{Error, StatementStore, MAX_TOPICS};
 use std::{
 	collections::{BTreeMap, HashMap, HashSet},
 	sync::Arc,
 	time::{Duration, Instant},
 };
-pub use subscription::StatementStoreSubscriptionApi;
+pub use super::subscription::StatementStoreSubscriptionApi;
 
 const KEY_VERSION: &[u8] = b"version".as_slice();
 const CURRENT_VERSION: u32 = 1;
@@ -88,8 +82,11 @@ pub const DEFAULT_MAX_TOTAL_STATEMENTS: usize = 4 * 1024 * 1024; // ~4 million
 pub const DEFAULT_MAX_TOTAL_SIZE: usize = 2 * 1024 * 1024 * 1024; // 2GiB
 /// The maximum size of a single statement in bytes.
 /// Accounts for the 1-byte vector length prefix when statements are gossiped as `Vec<Statement>`.
-pub const MAX_STATEMENT_SIZE: usize =
-	sc_network_statement::config::MAX_STATEMENT_NOTIFICATION_SIZE as usize - 1;
+/// Maximum notification size from `sc_network_statement::config::MAX_STATEMENT_NOTIFICATION_SIZE`.
+const MAX_STATEMENT_NOTIFICATION_SIZE: u64 = 1024 * 1024;
+/// The maximum size of a single statement in bytes.
+/// Accounts for the 1-byte vector length prefix when statements are gossiped as `Vec<Statement>`.
+pub const MAX_STATEMENT_SIZE: usize = MAX_STATEMENT_NOTIFICATION_SIZE as usize - 1;
 
 /// Maximum number of statements to expire in a single iteration.
 const MAX_EXPIRY_STATEMENTS_PER_ITERATION: usize = 10_000;
@@ -221,7 +218,7 @@ where
 		account_id: &AccountId,
 		block_hash: Option<Block::Hash>,
 	) -> Result<Option<StatementAllowance>> {
-		use soil_statement_store::{statement_allowance_key, StatementAllowance};
+		use crate::{statement_allowance_key, StatementAllowance};
 
 		let block_hash = block_hash.unwrap_or(self.client.info().finalized_hash);
 		let key = statement_allowance_key(account_id);
@@ -1052,8 +1049,8 @@ impl Store {
 			|statement| {
 				if let (Some(key), Some(_)) = (statement.decryption_key(), statement.data()) {
 					let public: soil_core::ed25519::Public = UncheckedFrom::unchecked_from(key);
-					let public: soil_statement_store::ed25519::Public = public.into();
-					match self.keystore.key_pair::<soil_statement_store::ed25519::Pair>(&public) {
+					let public: crate::ed25519::Public = public.into();
+					match self.keystore.key_pair::<crate::ed25519::Pair>(&public) {
 						Err(e) => {
 							log::debug!(
 								target: LOG_TARGET,
@@ -1495,7 +1492,7 @@ mod tests {
 	use crate::{col, Store};
 	use soil_keystore::Keystore;
 	use soil_core::{Decode, Encode, Pair};
-	use soil_statement_store::{
+	use crate::{
 		AccountId, Channel, DecryptionKey, InvalidReason, Proof, Statement, StatementSource,
 		StatementStore, SubmitResult, Topic,
 	};
@@ -1520,7 +1517,7 @@ mod tests {
 			_hash: Hash,
 			key: &sc_client_api::StorageKey,
 		) -> soil_blockchain::Result<Option<sc_client_api::StorageData>> {
-			use soil_statement_store::StatementAllowance;
+			use crate::StatementAllowance;
 
 			assert_eq!(&key.0[0..21], b":statement_allowance:" as &[u8],);
 
@@ -2212,7 +2209,7 @@ mod tests {
 
 	#[test]
 	fn remove_by_covers_various_situations() {
-		use soil_statement_store::{StatementSource, StatementStore, SubmitResult};
+		use crate::{StatementSource, StatementStore, SubmitResult};
 
 		// Use a fresh store and fixed time so we can control purging.
 		let (mut store, _temp) = test_store();

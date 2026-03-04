@@ -32,7 +32,7 @@ use sc_network_statement::{
 };
 use sc_network_sync::{SyncEvent, SyncEventStream};
 use sc_network_types::PeerId;
-use sc_statement_store::Store;
+use soil_statement_store::Store;
 use soil_core::Pair;
 use soil_statement_store::{Statement, StatementSource, StatementStore};
 use std::{

@@ -38,7 +38,7 @@ tokio = { workspace = true }
 [dev-dependencies]
 async-trait = { workspace = true }
 criterion = { workspace = true, default-features = true }
-sc-statement-store = { workspace = true, default-features = true }
+soil-statement-store = { workspace = true, default-features = true }
 soil-api = { workspace = true, default-features = true }
 soil-blockchain = { workspace = true, default-features = true }
 soil-core = { workspace = true, default-features = true }

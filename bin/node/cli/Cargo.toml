@@ -113,7 +113,7 @@ sc-rpc-server = { workspace = true, default-features = true }
 sc-rpc-spec-v2 = { workspace = true, default-features = true }
 sc-service = { workspace = true, default-features = true }
 sc-state-db = { workspace = true, default-features = true }
-sc-statement-store = { workspace = true, default-features = true }
+soil-statement-store = { workspace = true, default-features = true }
 sc-storage-monitor = { workspace = true, default-features = true }
 sc-sync-state-rpc = { workspace = true, default-features = true }
 sc-sysinfo = { workspace = true, default-features = true }
@@ -142,7 +142,6 @@ soil-offchain = { workspace = true, default-features = true }
 soil-panic-handler = { workspace = true, default-features = true }
 soil-rpc = { workspace = true, default-features = true }
 soil-runtime = { workspace = true, default-features = true }
-soil-statement-store = { workspace = true, default-features = true }
 soil-timestamp = { workspace = true }
 soil-transaction-storage-proof = { workspace = true, default-features = true }
 chain-spec-builder = { workspace = true, default-features = true }

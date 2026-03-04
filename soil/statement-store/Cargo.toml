@@ -38,29 +38,68 @@ rand = { features = ["small_rng"], optional = true, workspace = true, default-fe
 sha2 = { optional = true, workspace = true, default-features = true }
 x25519-dalek = { optional = true, features = ["static_secrets"], workspace = true }
 
+# Client-side dependencies (former sc-statement-store)
+async-channel = { optional = true, workspace = true }
+futures = { optional = true, workspace = true }
+itertools = { optional = true, workspace = true }
+log = { optional = true, workspace = true, default-features = true }
+parity-db = { optional = true, workspace = true }
+parking_lot = { optional = true, workspace = true, default-features = true }
+prometheus-endpoint = { optional = true, workspace = true, default-features = true }
+sc-client-api = { optional = true, workspace = true, default-features = true }
+sc-utils = { optional = true, workspace = true }
+soil-blockchain = { optional = true, workspace = true, default-features = true }
+soil-keystore = { optional = true, workspace = true, default-features = true }
+soil-storage = { optional = true, workspace = true, default-features = true }
+tokio = { optional = true, features = ["time"], workspace = true, default-features = true }
+
+[dev-dependencies]
+criterion = { workspace = true, default-features = true }
+soil-tracing = { workspace = true }
+tempfile = { workspace = true }
+
+[[bench]]
+name = "statement_store"
+harness = false
+required-features = ["std"]
+
 [features]
 default = ["std"]
 std = [
 	"aes-gcm",
 	"aes-gcm?/std",
+	"async-channel",
 	"codec/std",
 	"curve25519-dalek",
 	"ed25519-dalek",
 	"frame-support/std",
+	"futures",
 	"hkdf",
 	"hkdf?/std",
+	"itertools",
+	"log",
+	"parity-db",
+	"parking_lot",
+	"prometheus-endpoint",
 	"rand",
+	"sc-client-api",
+
+	"sc-utils",
 	"scale-info/std",
 	"serde?/std",
 	"sha2",
 	"soil-api/std",
 	"soil-application-crypto/std",
+	"soil-blockchain",
 	"soil-core/std",
 	"soil-crypto-hashing/std",
 	"soil-externalities/std",
+	"soil-keystore",
 	"soil-runtime-interface/std",
 	"soil-runtime/std",
+	"soil-storage",
 	"thiserror",
+	"tokio",
 	"x25519-dalek",
 ]
 serde = [

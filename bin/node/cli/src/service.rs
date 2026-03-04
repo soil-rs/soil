@@ -39,7 +39,7 @@ use sc_network::{
 };
 use sc_network_sync::{strategy::warp::WarpSyncConfig, SyncingService};
 use sc_service::{config::Configuration, error::Error as ServiceError, RpcHandlers, TaskManager};
-use sc_statement_store::Store as StatementStore;
+use soil_statement_store::Store as StatementStore;
 use sc_telemetry::{Telemetry, TelemetryWorker};
 use sc_transaction_pool::TransactionPoolHandle;
 use sc_transaction_pool_api::OffchainTransactionPoolFactory;
@@ -296,7 +296,7 @@ pub fn new_partial(
 
 	let import_setup = (block_import, grandpa_link, babe_link, beefy_voter_links);
 
-	let statement_store = sc_statement_store::Store::new_shared(
+	let statement_store = soil_statement_store::Store::new_shared(
 		&config.data_path,
 		Default::default(),
 		client.clone(),

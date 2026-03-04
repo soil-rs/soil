@@ -216,6 +216,17 @@ pub mod runtime_api;
 #[cfg(feature = "std")]
 mod store_api;
 
+// std-only modules (former sc-statement-store)
+#[cfg(feature = "std")]
+mod client;
+#[cfg(feature = "std")]
+mod metrics;
+#[cfg(feature = "std")]
+mod subscription;
+
+#[cfg(feature = "std")]
+pub use client::*;
+
 mod sr25519 {
 	mod app_sr25519 {
 		use soil_application_crypto::{app_crypto, key_types::STATEMENT, sr25519};

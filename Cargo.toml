@@ -61,7 +61,6 @@ members = [
 	"client/service",
 	"client/service/test",
 	"client/state-db",
-	"client/statement-store",
 	"client/storage-monitor",
 	"client/sync-state-rpc",
 	"client/sysinfo",
@@ -531,7 +530,6 @@ sc-runtime-utilities = { path = "client/runtime-utilities", default-features = t
 sc-service = { path = "client/service", default-features = false }
 sc-service-test = { path = "client/service/test" }
 sc-state-db = { path = "client/state-db", default-features = false }
-sc-statement-store = { default-features = false, path = "client/statement-store" }
 sc-storage-monitor = { path = "client/storage-monitor", default-features = false }
 sc-sync-state-rpc = { path = "client/sync-state-rpc", default-features = false }
 sc-sysinfo = { path = "client/sysinfo", default-features = false }

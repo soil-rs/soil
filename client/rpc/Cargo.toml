@@ -27,7 +27,7 @@ sc-chain-spec = { workspace = true, default-features = true }
 sc-client-api = { workspace = true, default-features = true }
 soil-mixnet = { workspace = true, default-features = true }
 sc-rpc-api = { workspace = true, default-features = true }
-sc-statement-store = { workspace = true, default-features = true }
+soil-statement-store = { workspace = true, default-features = true }
 sc-tracing = { workspace = true, default-features = true }
 sc-transaction-pool-api = { workspace = true, default-features = true }
 sc-utils = { workspace = true, default-features = true }
@@ -40,7 +40,6 @@ soil-offchain = { workspace = true, default-features = true }
 soil-rpc = { workspace = true, default-features = true }
 soil-runtime = { workspace = true, default-features = true }
 soil-session = { workspace = true, default-features = true }
-soil-statement-store = { workspace = true, default-features = true }
 soil-version = { workspace = true, default-features = true }
 tokio = { workspace = true, default-features = true }
 

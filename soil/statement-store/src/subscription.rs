@@ -39,11 +39,12 @@ const SUBSCRIPTION_BUFFER_SIZE: usize = 128;
 use futures::{Stream, StreamExt};
 use itertools::Itertools;
 
-use crate::LOG_TARGET;
+const LOG_TARGET: &str = "statement-store";
+
 use sc_utils::id_sequence::SeqID;
 use soil_core::{traits::SpawnNamed, Bytes, Encode};
-pub use soil_statement_store::StatementStore;
-use soil_statement_store::{
+pub use crate::StatementStore;
+use crate::{
 	OptimizedTopicFilter, Result, Statement, StatementEvent, Topic, MAX_TOPICS,
 };
 use std::{
@@ -465,11 +466,11 @@ impl Stream for SubscriptionStatementsStream {
 #[cfg(test)]
 mod tests {
 
-	use crate::tests::signed_statement;
+	use super::tests::signed_statement;
 
 	use super::*;
 	use soil_core::Decode;
-	use soil_statement_store::Topic;
+	use crate::Topic;
 
 	fn unwrap_statement(item: StatementEvent) -> Bytes {
 		match item {
