@@ -29,7 +29,6 @@ use kitchensink_runtime::{
 };
 use node_primitives::Balance;
 use node_testing::keyring::*;
-use polkadot_sdk::*;
 use sp_runtime::{traits::One, Perbill};
 
 pub mod common;

@@ -9,10 +9,13 @@ repository = "https://github.com/bitarray/soil.git"
 resolver = "2"
 
 members = [
+	"bin/node/bench",
+	"bin/node/cli",
 	"bin/node/runtime",
 	"bin/node/inspect",
 	"bin/node/primitives",
 	"bin/node/rpc",
+	"bin/node/testing",
 	"bin/utils/chain-spec-builder",
 	"bin/utils/subkey",
 	"client/allocator",
@@ -282,6 +285,7 @@ members = [
 	"primitives/weights",
 	"scripts/ci/node-template-release",
 	"test-utils",
+	"test-utils/cli",
 	"test-utils/client",
 	"test-utils/runtime",
 	"test-utils/runtime/client",
@@ -290,6 +294,7 @@ members = [
 	"utils/build-script-utils",
 	"utils/fork-tree",
 	"utils/frame/generate-bags",
+	"utils/frame/generate-bags/node-runtime",
 	"utils/frame/remote-externalities",
 	"utils/frame/rpc/client",
 	"utils/frame/rpc/state-trie-migration-rpc",
@@ -352,7 +357,6 @@ ethereum-standards = { path = "primitives/ethereum-standards" }
 fork-tree = { path = "utils/fork-tree", default-features = false }
 frame = { path = "frame", default-features = false, package = "polkadot-sdk-frame" }
 frame-benchmarking = { path = "frame/benchmarking", default-features = false }
-frame-benchmarking-cli = { path = "utils/frame/benchmarking-cli", default-features = false }
 frame-benchmarking-pallet-pov = { default-features = false, path = "frame/benchmarking/pov" }
 frame-election-provider-solution-type = { path = "frame/election-provider-support/solution-type", default-features = false }
 frame-election-provider-support = { path = "frame/election-provider-support", default-features = false }

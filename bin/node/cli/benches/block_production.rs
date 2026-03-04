@@ -16,13 +16,11 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-use polkadot_sdk::*;
-
 use criterion::{criterion_group, criterion_main, BatchSize, Criterion, Throughput};
 
 use kitchensink_runtime::{constants::currency::*, BalancesCall};
 use node_cli::service::{create_extrinsic, FullClient};
-use polkadot_sdk::sc_service::config::{ExecutorConfiguration, RpcConfiguration};
+use sc_service::config::{ExecutorConfiguration, RpcConfiguration};
 use sc_block_builder::{BlockBuilderBuilder, BuiltBlock};
 use sc_consensus::{
 	block_import::{BlockImportParams, ForkChoiceStrategy},

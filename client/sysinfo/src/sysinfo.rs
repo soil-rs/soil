@@ -33,7 +33,7 @@ use std::{
 	io::{Seek, SeekFrom, Write},
 	ops::{Deref, DerefMut},
 	path::{Path, PathBuf},
-	sync::{Arc, Barrier},
+	sync::{Arc, Barrier, LazyLock},
 	time::{Duration, Instant},
 };
 
@@ -248,6 +248,15 @@ where
 /// Multiple requirements for the hardware.
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 pub struct Requirements(pub Vec<Requirement>);
+
+/// The hardware requirements as measured on reference hardware.
+///
+/// These values are provided by Parity, however it is possible
+/// to use your own requirements if you are running a custom chain.
+pub static SUBSTRATE_REFERENCE_HARDWARE: LazyLock<Requirements> = LazyLock::new(|| {
+	let raw = include_bytes!("reference_hardware.json").as_slice();
+	serde_json::from_slice(raw).expect("Hardcoded data is known good; qed")
+});
 
 /// A single requirement for the hardware.
 #[derive(Deserialize, Serialize, Debug, Clone, Copy, PartialEq)]

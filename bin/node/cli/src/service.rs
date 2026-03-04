@@ -20,15 +20,14 @@
 
 //! Service implementation. Specialized wrapper over substrate service.
 
-use polkadot_sdk::{
-	sc_consensus_beefy as beefy, sc_consensus_grandpa as grandpa,
-	sp_consensus_babe::inherents::BabeCreateInherentDataProviders,
-	sp_consensus_beefy as beefy_primitives, *,
-};
+use sc_consensus_beefy as beefy;
+use sc_consensus_grandpa as grandpa;
+use sp_consensus_babe::inherents::BabeCreateInherentDataProviders;
+use sp_consensus_beefy as beefy_primitives;
 
 use crate::Cli;
 use codec::Encode;
-use frame_benchmarking_cli::SUBSTRATE_REFERENCE_HARDWARE;
+use sc_sysinfo::SUBSTRATE_REFERENCE_HARDWARE;
 use frame_system_rpc_runtime_api::AccountNonceApi;
 use futures::prelude::*;
 use kitchensink_runtime::RuntimeApi;
@@ -141,7 +140,6 @@ pub fn create_extrinsic(
 				>::from(tip, None),
 			),
 			frame_metadata_hash_extension::CheckMetadataHash::new(false),
-			pallet_revive::evm::tx_extension::SetOrigin::<kitchensink_runtime::Runtime>::default(),
 			frame_system::WeightReclaim::<kitchensink_runtime::Runtime>::new(),
 		);
 
@@ -159,7 +157,6 @@ pub fn create_extrinsic(
 			(),
 			(),
 			None,
-			(),
 			(),
 		),
 	);
@@ -891,7 +888,7 @@ mod tests {
 		Address, BalancesCall, RuntimeCall, TxExtension,
 	};
 	use node_primitives::{Block, DigestItem, Signature};
-	use polkadot_sdk::{sc_transaction_pool_api::MaintainedTransactionPool, *};
+	use sc_transaction_pool_api::MaintainedTransactionPool;
 	use sc_client_api::BlockBackend;
 	use sc_consensus::{BlockImport, BlockImportParams, ForkChoiceStrategy};
 	use sc_consensus_babe::{BabeIntermediate, CompatibleDigestItem, INTERMEDIATE_KEY};
@@ -1102,7 +1099,6 @@ mod tests {
 				let tx_payment = pallet_skip_feeless_payment::SkipCheckIfFeeless::from(
 					pallet_asset_conversion_tx_payment::ChargeAssetTxPayment::from(0, None),
 				);
-				let set_eth_origin = pallet_revive::evm::tx_extension::SetOrigin::default();
 				let weight_reclaim = frame_system::WeightReclaim::new();
 				let metadata_hash = frame_metadata_hash_extension::CheckMetadataHash::new(false);
 				let tx_ext: TxExtension = (
@@ -1116,7 +1112,6 @@ mod tests {
 					check_weight,
 					tx_payment,
 					metadata_hash,
-					set_eth_origin,
 					weight_reclaim,
 				);
 				let raw_payload = SignedPayload::from_raw(
@@ -1133,7 +1128,6 @@ mod tests {
 						(),
 						(),
 						None,
-						(),
 						(),
 					),
 				);

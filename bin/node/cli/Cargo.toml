@@ -61,13 +61,18 @@ serde_json = { workspace = true, default-features = true }
 subxt-signer = { workspace = true, features = ["unstable-eth"] }
 
 # Substrate dependencies (formerly via polkadot-sdk umbrella):
+frame-metadata-hash-extension = { workspace = true, default-features = true }
+frame-system = { workspace = true, default-features = true }
+frame-system-rpc-runtime-api = { workspace = true, default-features = true }
 fork-tree = { workspace = true, default-features = true }
-frame-benchmarking-cli = { workspace = true, default-features = true }
 remote-externalities = { workspace = true, default-features = true }
 frame-support-procedural-tools = { workspace = true, default-features = true }
 generate-bags = { workspace = true, default-features = true }
 mmr-gadget = { workspace = true, default-features = true }
 mmr-rpc = { workspace = true, default-features = true }
+pallet-asset-conversion-tx-payment = { workspace = true, default-features = true }
+pallet-im-online = { workspace = true, default-features = true }
+pallet-skip-feeless-payment = { workspace = true, default-features = true }
 pallet-transaction-payment-rpc = { workspace = true, default-features = true }
 sc-allocator = { workspace = true, default-features = true }
 sc-authority-discovery = { workspace = true, default-features = true }
@@ -121,14 +126,28 @@ sc-tracing = { workspace = true, default-features = true }
 sc-transaction-pool = { workspace = true, default-features = true }
 sc-transaction-pool-api = { workspace = true, default-features = true }
 sc-utils = { workspace = true, default-features = true }
+sp-api = { workspace = true, default-features = true }
+sp-authority-discovery = { workspace = true, default-features = true }
 sp-blockchain = { workspace = true, default-features = true }
 sp-consensus = { workspace = true, default-features = true }
+sp-consensus-babe = { workspace = true, default-features = true }
+sp-consensus-beefy = { workspace = true, default-features = true }
+sp-consensus-grandpa = { workspace = true, default-features = true }
+sp-core = { workspace = true, default-features = true }
 sp-core-hashing = { workspace = true, default-features = true }
 sp-core-hashing-proc-macro = { workspace = true, default-features = true }
 sp-database = { workspace = true, default-features = true }
+sp-genesis-builder = { workspace = true, default-features = true }
+sp-io = { workspace = true, default-features = true }
 sp-maybe-compressed-blob = { workspace = true, default-features = true }
+sp-mixnet = { workspace = true, default-features = true }
+sp-mmr-primitives = { workspace = true, default-features = true }
 sp-panic-handler = { workspace = true, default-features = true }
 sp-rpc = { workspace = true, default-features = true }
+sp-runtime = { workspace = true, default-features = true }
+sp-statement-store = { workspace = true, default-features = true }
+sp-timestamp = { workspace = true }
+sp-transaction-storage-proof = { workspace = true, default-features = true }
 chain-spec-builder = { workspace = true, default-features = true }
 node-inspect = { optional = true, workspace = true, default-features = true }
 subkey = { workspace = true, default-features = true }
@@ -170,7 +189,6 @@ clap_complete = { optional = true, workspace = true }
 
 node-inspect = { optional = true, workspace = true, default-features = true }
 
-frame-benchmarking-cli = { optional = true, workspace = true, default-features = true }
 sc-cli = { optional = true, workspace = true, default-features = true }
 sc-storage-monitor = { optional = true, workspace = true, default-features = true }
 substrate-build-script-utils = { optional = true, workspace = true, default-features = true }
@@ -181,23 +199,17 @@ cli = [
 	"clap",
 	"clap_complete",
 	"node-inspect",
-	"dep:frame-benchmarking-cli",
 	"dep:sc-cli",
 	"dep:sc-storage-monitor",
 	"dep:substrate-build-script-utils",
 ]
 runtime-benchmarks = [
-	"frame-benchmarking-cli/runtime-benchmarks",
 	"kitchensink-runtime/runtime-benchmarks",
 	"node-inspect?/runtime-benchmarks",
 	"sc-client-db/runtime-benchmarks",
 	"sc-service/runtime-benchmarks",
-	"sp-runtime/runtime-benchmarks",
 ]
 try-runtime = [
 	"kitchensink-runtime/try-runtime",
-	"frame-support/try-runtime",
-	"frame-system/try-runtime",
-	"sp-runtime/try-runtime",
 	"substrate-cli-test-utils/try-runtime",
 ]
