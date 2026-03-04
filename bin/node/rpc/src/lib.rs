@@ -40,7 +40,7 @@ use soil_consensus_babe::client::BabeWorkerHandle;
 use soil_consensus_beefy::communication::notification::{
 	BeefyBestBlockStream, BeefyVersionedFinalityProofStream,
 };
-use sc_consensus_grandpa::{
+use soil_consensus_grandpa::{
 	FinalityProofProvider, GrandpaJustificationStream, SharedAuthoritySet, SharedVoterState,
 };
 pub use sc_rpc::SubscriptionTaskExecutor;

@@ -17,7 +17,7 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 use codec::Encode;
-use sc_consensus_grandpa::GrandpaJustification;
+use soil_consensus_grandpa::GrandpaJustification;
 use serde::{Deserialize, Serialize};
 use soil_runtime::traits::Block as BlockT;
 

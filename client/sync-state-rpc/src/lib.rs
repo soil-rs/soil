@@ -54,7 +54,7 @@ use soil_blockchain::HeaderBackend;
 use soil_runtime::traits::{Block as BlockT, NumberFor};
 
 type SharedAuthoritySet<TBl> =
-	sc_consensus_grandpa::SharedAuthoritySet<<TBl as BlockT>::Hash, NumberFor<TBl>>;
+	soil_consensus_grandpa::SharedAuthoritySet<<TBl as BlockT>::Hash, NumberFor<TBl>>;
 
 /// Error type used by this crate.
 #[derive(Debug, thiserror::Error)]
@@ -120,7 +120,7 @@ pub struct LightSyncState<Block: BlockT> {
 	/// The authority set for grandpa.
 	#[serde(serialize_with = "serialize_encoded")]
 	pub grandpa_authority_set:
-		sc_consensus_grandpa::AuthoritySet<<Block as BlockT>::Hash, NumberFor<Block>>,
+		soil_consensus_grandpa::AuthoritySet<<Block as BlockT>::Hash, NumberFor<Block>>,
 }
 
 /// An api for sync state RPC calls.

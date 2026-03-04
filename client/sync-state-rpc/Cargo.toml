@@ -21,7 +21,7 @@ sc-chain-spec = { workspace = true, default-features = true }
 sc-client-api = { workspace = true, default-features = true }
 soil-consensus-babe = { workspace = true, default-features = true }
 sc-consensus-epochs = { workspace = true, default-features = true }
-sc-consensus-grandpa = { workspace = true, default-features = true }
+soil-consensus-grandpa = { workspace = true, default-features = true }
 serde = { features = ["derive"], workspace = true, default-features = true }
 serde_json = { workspace = true, default-features = true }
 soil-blockchain = { workspace = true, default-features = true }

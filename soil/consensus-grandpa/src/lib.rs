@@ -130,7 +130,7 @@ pub type CompactCommit<Header> = finality_grandpa::CompactCommit<
 /// nodes, and are used by syncing nodes to prove authority set handoffs.
 #[derive(Clone, Encode, Decode, PartialEq, Eq, TypeInfo)]
 #[cfg_attr(feature = "std", derive(Debug))]
-pub struct GrandpaJustification<Header: HeaderT> {
+pub struct RawGrandpaJustification<Header: HeaderT> {
 	pub round: u64,
 	pub commit: Commit<Header>,
 	pub votes_ancestries: Vec<Header>,
@@ -534,6 +534,54 @@ where
 /// opaque representation, implementors of the runtime API will have to make
 /// sure that all usages of `OpaqueKeyOwnershipProof` refer to the same type.
 pub type OpaqueKeyOwnershipProof = OpaqueValue;
+
+// Client-side modules (std only)
+#[cfg(feature = "std")]
+macro_rules! grandpa_log {
+	($condition:expr, $($msg: expr),+ $(,)?) => {
+		{
+			let log_level = if $condition {
+				log::Level::Debug
+			} else {
+				log::Level::Info
+			};
+			log::log!(target: crate::CLIENT_LOG_TARGET, log_level, $($msg),+);
+		}
+	};
+}
+
+#[cfg(feature = "std")]
+mod authorities;
+#[cfg(feature = "std")]
+mod aux_schema;
+#[cfg(feature = "std")]
+mod client;
+#[cfg(feature = "std")]
+mod communication;
+#[cfg(feature = "std")]
+mod environment;
+#[cfg(feature = "std")]
+mod finality_proof;
+#[cfg(feature = "std")]
+mod import;
+#[cfg(feature = "std")]
+mod justification;
+#[cfg(feature = "std")]
+mod notification;
+#[cfg(feature = "std")]
+mod observer;
+#[cfg(feature = "std")]
+mod until_imported;
+#[cfg(feature = "std")]
+mod voting_rule;
+#[cfg(feature = "std")]
+pub mod warp_proof;
+
+#[cfg(feature = "std")]
+pub use client::*;
+
+#[cfg(all(feature = "std", test))]
+mod grandpa_tests;
 
 soil_api::decl_runtime_apis! {
 	/// APIs for integrating the GRANDPA finality gadget into runtimes.

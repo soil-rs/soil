@@ -37,7 +37,7 @@ use error::Error;
 use finality::{EncodedFinalityProof, RpcFinalityProofProvider};
 use notification::JustificationNotification;
 use report::{ReportAuthoritySet, ReportVoterState, ReportedRoundStates};
-use sc_consensus_grandpa::GrandpaJustificationStream;
+use soil_consensus_grandpa::GrandpaJustificationStream;
 use sc_rpc::{
 	utils::{BoundedVecDeque, PendingSubscription},
 	SubscriptionTaskExecutor,
@@ -106,7 +106,7 @@ where
 
 	fn subscribe_justifications(&self, pending: PendingSubscriptionSink) {
 		let stream = self.justification_stream.subscribe(100_000).map(
-			|x: sc_consensus_grandpa::GrandpaJustification<Block>| {
+			|x: soil_consensus_grandpa::GrandpaJustification<Block>| {
 				JustificationNotification::from(x)
 			},
 		);
@@ -136,7 +136,7 @@ mod tests {
 	use codec::{Decode, Encode};
 	use jsonrpsee::{core::EmptyServerParams as EmptyParams, types::SubscriptionId, RpcModule};
 	use soil_block_builder::BlockBuilderBuilder;
-	use sc_consensus_grandpa::{
+	use soil_consensus_grandpa::{
 		report, AuthorityId, FinalityProof, GrandpaJustification, GrandpaJustificationSender,
 	};
 	use sc_rpc::testing::test_executor;
@@ -194,7 +194,7 @@ mod tests {
 		fn rpc_prove_finality(
 			&self,
 			_block: NumberFor<Block>,
-		) -> Result<Option<EncodedFinalityProof>, sc_consensus_grandpa::FinalityProofError> {
+		) -> Result<Option<EncodedFinalityProof>, soil_consensus_grandpa::FinalityProofError> {
 			Ok(Some(EncodedFinalityProof(
 				self.finality_proof
 					.as_ref()
@@ -210,7 +210,7 @@ mod tests {
 			let voter_id_1 = AuthorityId::from_slice(&[1; 32]).unwrap();
 			let voters_best: HashSet<_> = vec![voter_id_1].into_iter().collect();
 
-			let best_round_state = sc_consensus_grandpa::report::RoundState {
+			let best_round_state = soil_consensus_grandpa::report::RoundState {
 				total_weight: 100_u64.try_into().unwrap(),
 				threshold_weight: 67_u64.try_into().unwrap(),
 				prevote_current_weight: 50.into(),
@@ -219,7 +219,7 @@ mod tests {
 				precommit_ids: HashSet::new(),
 			};
 
-			let past_round_state = sc_consensus_grandpa::report::RoundState {
+			let past_round_state = soil_consensus_grandpa::report::RoundState {
 				total_weight: 100_u64.try_into().unwrap(),
 				threshold_weight: 67_u64.try_into().unwrap(),
 				prevote_current_weight: 100.into(),

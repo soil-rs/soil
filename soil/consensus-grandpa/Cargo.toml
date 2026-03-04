@@ -17,30 +17,97 @@ workspace = true
 targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
+ahash = { optional = true, workspace = true }
+array-bytes = { optional = true, workspace = true, default-features = true }
+async-trait = { optional = true, workspace = true }
 codec = { features = ["derive"], workspace = true }
+dyn-clone = { optional = true, workspace = true }
 finality-grandpa = { features = ["derive-codec"], workspace = true }
+fork-tree = { optional = true, workspace = true, default-features = true }
+futures = { optional = true, workspace = true }
+futures-timer = { optional = true, workspace = true }
 log = { workspace = true }
+parking_lot = { optional = true, workspace = true, default-features = true }
+prometheus-endpoint = { optional = true, workspace = true, default-features = true }
+rand = { optional = true, workspace = true, default-features = true }
+sc-chain-spec = { optional = true, workspace = true, default-features = true }
+sc-client-api = { optional = true, workspace = true, default-features = true }
+sc-client-db = { optional = true, workspace = true, default-features = true }
+sc-consensus = { optional = true, workspace = true, default-features = true }
+sc-network = { optional = true, workspace = true, default-features = true }
+sc-network-common = { optional = true, workspace = true, default-features = true }
+sc-network-gossip = { optional = true, workspace = true, default-features = true }
+sc-network-sync = { optional = true, workspace = true, default-features = true }
+sc-network-types = { optional = true, workspace = true, default-features = true }
+sc-telemetry = { optional = true, workspace = true, default-features = true }
+sc-utils = { optional = true, workspace = true, default-features = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { features = ["alloc", "derive"], optional = true, workspace = true }
+serde_json = { optional = true, workspace = true, default-features = true }
 soil-api = { workspace = true }
 soil-application-crypto = { workspace = true }
+soil-arithmetic = { optional = true, workspace = true, default-features = true }
+soil-block-builder = { optional = true, workspace = true, default-features = true }
+soil-blockchain = { optional = true, workspace = true, default-features = true }
+soil-consensus = { optional = true, workspace = true, default-features = true }
 soil-core = { workspace = true }
+soil-crypto-hashing = { optional = true, workspace = true, default-features = true }
 soil-keystore = { optional = true, workspace = true }
 soil-runtime = { workspace = true }
+soil-transaction-pool = { optional = true, workspace = true, default-features = true }
+thiserror = { optional = true, workspace = true }
+
+[dev-dependencies]
+assert_matches = { workspace = true }
+finality-grandpa = { features = ["derive-codec", "test-helpers"], workspace = true, default-features = true }
+sc-network-test = { workspace = true }
+soil-keyring = { workspace = true, default-features = true }
+soil-tracing = { workspace = true, default-features = true }
+substrate-test-runtime-client = { workspace = true }
+tokio = { workspace = true, default-features = true }
 
 [features]
 default = ["std"]
 std = [
+	"ahash",
+	"array-bytes",
+	"async-trait",
 	"codec/std",
+	"dyn-clone",
 	"finality-grandpa/std",
+	"fork-tree",
+	"futures",
+	"futures-timer",
 	"log/std",
+	"parking_lot",
+	"prometheus-endpoint",
+	"rand",
+	"sc-chain-spec",
+	"sc-client-api",
+	"sc-client-db",
+	"sc-consensus",
+	"sc-network",
+	"sc-network-common",
+	"sc-network-gossip",
+	"sc-network-sync",
+	"sc-network-types",
+	"sc-telemetry",
+	"sc-utils",
 	"scale-info/std",
 	"serde/std",
+	"serde_json",
 	"soil-api/std",
 	"soil-application-crypto/std",
+	"soil-arithmetic",
+	"soil-block-builder",
+	"soil-blockchain",
+	"soil-consensus",
 	"soil-core/std",
+	"soil-crypto-hashing",
 	"soil-keystore/std",
 	"soil-runtime/std",
+	"soil-transaction-pool",
+	"thiserror",
 ]
 
 # Serde support without relying on std features.
