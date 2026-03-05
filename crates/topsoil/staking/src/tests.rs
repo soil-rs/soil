@@ -20,8 +20,9 @@
 use super::{ConfigOp, Event, *};
 use crate::{asset, ledger::StakingLedgerInspect};
 use mock::*;
+use subsoil::assert_eq_error_rate;
 use subsoil::runtime::{
-	assert_eq_error_rate, bounded_vec,
+	bounded_vec,
 	traits::{BadOrigin, Dispatchable},
 	Perbill, Percent, Perquintill, Rounding, TokenError,
 };

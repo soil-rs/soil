@@ -2617,9 +2617,9 @@ mod tests {
 	}
 
 	mod t {
-		use crate::application_crypto::{app_crypto, sr25519};
+		use crate::application_crypto::sr25519;
 		use crate::core::crypto::KeyTypeId;
-		app_crypto!(sr25519, KeyTypeId(*b"test"));
+		crate::app_crypto!(sr25519, KeyTypeId(*b"test"));
 	}
 
 	#[test]

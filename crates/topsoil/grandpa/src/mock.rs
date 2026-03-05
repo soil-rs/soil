@@ -27,7 +27,6 @@ use subsoil::core::{ConstBool, H256};
 use subsoil::keyring::Ed25519Keyring;
 use subsoil::runtime::{
 	curve::PiecewiseLinear,
-	impl_opaque_keys,
 	testing::{TestXt, UintAuthorityId},
 	traits::OpaqueKeys,
 	BuildStorage, DigestItem, Perbill,
@@ -60,7 +59,7 @@ topsoil_support::construct_runtime!(
 	}
 );
 
-impl_opaque_keys! {
+subsoil::impl_opaque_keys! {
 	pub struct TestSessionKeys {
 		pub grandpa_authority: super::Pallet<Test>,
 	}

@@ -21,8 +21,12 @@
 use super::{
 	backend::{IterArgs, StorageIterator},
 	trie_backend::TrieCacheProvider,
-	warn, StorageKey, StorageValue,
+	StorageKey, StorageValue,
 };
+#[cfg(feature = "std")]
+use super::warn;
+#[cfg(not(feature = "std"))]
+use crate::warn;
 #[cfg(feature = "std")]
 use alloc::sync::Arc;
 use alloc::{boxed::Box, vec::Vec};
@@ -879,7 +883,7 @@ impl<
 #[cfg(test)]
 mod test {
 	use super::*;
-	use super::{Backend, TrieBackend};
+	use crate::state_machine::{Backend, TrieBackend};
 	use crate::core::{Blake2Hasher, H256};
 	use crate::trie::{
 		cache::LocalTrieCache, trie_types::TrieDBMutBuilderV1 as TrieDBMutBuilder, KeySpacedDBMut,

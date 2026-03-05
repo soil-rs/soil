@@ -211,7 +211,7 @@ use core::{fmt::Debug, ops::Deref};
 pub use pallet::*;
 use scale_info::TypeInfo;
 use subsoil::arithmetic::traits::{BaseArithmetic, Unsigned};
-use subsoil::core::{defer, H256};
+use subsoil::core::H256;
 use subsoil::runtime::{
 	traits::{One, Zero},
 	SaturatedConversion, Saturating, TransactionOutcome,
@@ -1696,7 +1696,7 @@ pub(crate) fn with_service_mutex<F: FnOnce() -> R, R>(f: F) -> Result<R, ()> {
 		let hold = token::with(|t| t.take()).ok_or(()).defensive()?.ok_or(())?;
 
 		// Put the token back when we're done.
-		defer! {
+		subsoil::defer! {
 			token::with(|t| {
 				*t = Some(hold);
 			});

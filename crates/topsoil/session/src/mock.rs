@@ -25,7 +25,6 @@ use crate::historical as pallet_session_historical;
 use codec::Encode;
 use subsoil::core::crypto::key_types::DUMMY;
 use subsoil::runtime::{
-	impl_opaque_keys,
 	testing::UintAuthorityId,
 	traits::{Convert, OpaqueKeys},
 	BuildStorage,
@@ -35,7 +34,7 @@ use std::collections::BTreeMap;
 use topsoil_balances::{self, AccountData};
 use topsoil_support::{derive_impl, parameter_types, traits::ConstU64};
 
-impl_opaque_keys! {
+subsoil::impl_opaque_keys! {
 	pub struct MockSessionKeys {
 		pub dummy: UintAuthorityId,
 	}

@@ -21,6 +21,7 @@ topsoil = { workspace = true, features = ["runtime"] }
 log = { workspace = true }
 topsoil-ranked-collective = { optional = true, workspace = true }
 scale-info = { features = ["derive"], workspace = true }
+subsoil = { workspace = true }
 
 [features]
 default = ["std"]
@@ -30,6 +31,7 @@ std = [
 	"log/std",
 	"topsoil-ranked-collective/std",
 	"scale-info/std",
+	"subsoil/std",
 ]
 runtime-benchmarks = [
 	"topsoil/runtime-benchmarks",

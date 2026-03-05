@@ -22,6 +22,7 @@ topsoil-support = { workspace = true }
 topsoil-system = { workspace = true }
 log = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
+subsoil = { workspace = true }
 [dev-dependencies]
 pretty_assertions = { workspace = true }
 subsoil = { workspace = true, default-features = true }
@@ -37,7 +38,7 @@ std = [
 	"log/std",
 	"scale-info/std",
 	"subsoil/std",
-	"subsoil/std"]
+]
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",
 	"topsoil-support/runtime-benchmarks",

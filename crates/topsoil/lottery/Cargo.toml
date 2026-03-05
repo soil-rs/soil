@@ -20,6 +20,7 @@ topsoil-benchmarking = { optional = true, workspace = true }
 topsoil-support = { workspace = true }
 topsoil-system = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
+subsoil = { workspace = true }
 
 [dev-dependencies]
 topsoil-support-test = { workspace = true }
@@ -36,7 +37,6 @@ std = [
 	"topsoil-system/std",
 	"topsoil-balances/std",
 	"scale-info/std",
-	"subsoil/std",
 	"subsoil/std",
 ]
 runtime-benchmarks = [

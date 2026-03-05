@@ -23,6 +23,8 @@
 
 extern crate alloc;
 
+use subsoil::runtime::str_array as s;
+
 #[cfg(feature = "runtime-benchmarks")]
 use subsoil::core::crypto::FromEntropy;
 #[cfg(feature = "runtime-benchmarks")]
@@ -46,7 +48,6 @@ use subsoil::core::{crypto::KeyTypeId, OpaqueMetadata};
 use subsoil::inherents::{CheckInherentsResult, InherentData};
 use subsoil::runtime::{
 	curve::PiecewiseLinear,
-	generic, impl_opaque_keys, str_array as s,
 	traits::{
 		self, AccountIdConversion, BlakeTwo256, Block as BlockT, Bounded, ConvertInto,
 		MaybeConvert, NumberFor, OpaqueKeys, SaturatedConversion, StaticLookup,
@@ -135,7 +136,7 @@ use impls::AllianceProposalProvider;
 /// Constant values used within the runtime.
 pub mod constants;
 use constants::{currency::*, time::*};
-use subsoil::runtime::generic::Era;
+use subsoil::runtime::{generic, generic::Era};
 
 /// Generated voter bag information.
 mod voter_bags;
@@ -654,7 +655,7 @@ impl topsoil_authorship::Config for Runtime {
 	type EventHandler = (Staking, ImOnline);
 }
 
-impl_opaque_keys! {
+subsoil::impl_opaque_keys! {
 	pub struct SessionKeys {
 		pub grandpa: Grandpa,
 		pub babe: Babe,

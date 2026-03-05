@@ -39,6 +39,7 @@ soil-consensus = { workspace = true, default-features = true }
 soil-consensus-babe = { workspace = true, default-features = true }
 soil-consensus-slots = { workspace = true, default-features = true }
 subsoil-crypto-hashing = { workspace = true, default-features = true }
+subsoil = { workspace = true, default-features = true }
 thiserror = { workspace = true }
 
 [dev-dependencies]

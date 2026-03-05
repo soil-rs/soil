@@ -586,9 +586,9 @@ pub mod hashing {
 // Systems involved in transaction execution in the runtime.
 /// This is already part of the [`prelude`].
 pub mod transaction {
+	pub use subsoil::impl_tx_ext_default;
 	pub use subsoil::runtime::{
 		generic::ExtensionVersion,
-		impl_tx_ext_default,
 		traits::{
 			AsTransactionAuthorizedOrigin, DispatchTransaction, TransactionExtension,
 			ValidateResult,
@@ -622,6 +622,7 @@ pub mod deps {
 	pub use topsoil_support;
 	pub use topsoil_system;
 
+	pub use subsoil;
 	pub use subsoil::arithmetic;
 	pub use subsoil::core;
 	pub use subsoil::io;

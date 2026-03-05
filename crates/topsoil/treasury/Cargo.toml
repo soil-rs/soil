@@ -26,7 +26,7 @@ log = { workspace = true }
 topsoil-balances = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { features = ["derive"], optional = true, workspace = true, default-features = true }
-subsoil = { optional = true, workspace = true }
+subsoil = { workspace = true }
 
 [dev-dependencies]
 topsoil-utility = { workspace = true, default-features = true }
@@ -43,12 +43,9 @@ std = [
 	"topsoil-utility/std",
 	"scale-info/std",
 	"serde",
-	"subsoil?/std",
-	"subsoil/std",
 	"subsoil/std",
 ]
 runtime-benchmarks = [
-	"dep:subsoil",
 	"topsoil-benchmarking/runtime-benchmarks",
 	"topsoil-support/runtime-benchmarks",
 	"topsoil-system/runtime-benchmarks",

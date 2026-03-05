@@ -100,11 +100,11 @@ pub mod crypto {
 	use super::KEY_TYPE;
 	use subsoil::core::sr25519::Signature as Sr25519Signature;
 	use subsoil::runtime::{
-		app_crypto::{app_crypto, sr25519},
+		app_crypto::sr25519,
 		traits::Verify,
 		MultiSignature, MultiSigner,
 	};
-	app_crypto!(sr25519, KEY_TYPE);
+	subsoil::app_crypto!(sr25519, KEY_TYPE);
 
 	pub struct TestAuthId;
 

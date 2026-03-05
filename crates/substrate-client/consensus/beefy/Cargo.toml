@@ -30,6 +30,7 @@ soil-utils = { workspace = true, default-features = true }
 soil-blockchain = { workspace = true, default-features = true }
 soil-consensus = { workspace = true, default-features = true }
 soil-consensus-beefy = { workspace = true, default-features = true }
+subsoil = { workspace = true }
 thiserror = { workspace = true }
 tokio = { workspace = true, default-features = true }
 wasm-timer = { workspace = true }
@@ -45,6 +46,9 @@ substrate-test-runtime-client = { workspace = true }
 [features]
 # This feature adds BLS crypto primitives. It should not be used in production since
 # the BLS implementation and interface may still be subject to significant change.
+std = [
+	"subsoil/std",
+]
 bls-experimental = [
 	"subsoil/bls-experimental",
 	"soil-consensus-beefy/bls-experimental",

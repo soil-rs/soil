@@ -63,6 +63,7 @@ unsigned-varint = { features = ["asynchronous_codec", "futures"], workspace = tr
 void = { workspace = true, optional = true}
 wasm-timer = { workspace = true, optional = true}
 zeroize = { workspace = true, default-features = true, optional = true}
+subsoil = { workspace = true, default-features = true, optional = true}
 
 [dev-dependencies]
 assert_matches = { workspace = true }
@@ -123,11 +124,11 @@ std = [
 	"void",
 	"wasm-timer",
 	"zeroize",
+	"subsoil",
 	"subsoil/std",
 	"soil-client-api/std",
 	"soil-network-common/std",
 	"soil-network-types/std",
-	"subsoil/std",
 	"soil-utils/std",
 ]
 default = ["std"]

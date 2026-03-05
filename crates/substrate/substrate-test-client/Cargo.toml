@@ -21,10 +21,10 @@ async-trait = { workspace = true }
 codec = { workspace = true, default-features = true }
 futures = { workspace = true }
 soil-client-api = { workspace = true, default-features = true }
-soil-client-db = { features = ["test-helpers"], workspace = true, default-features = false }
+soil-client-db = { features = ["test-helpers"], workspace = true, default-features = true }
 sc-consensus = { workspace = true, default-features = true }
 soil-executor = { workspace = true, default-features = true }
-soil-service = { workspace = true, default-features = false }
+soil-service = { workspace = true, default-features = true }
 serde = { workspace = true, default-features = true }
 serde_json = { workspace = true, default-features = true }
 soil-blockchain = { workspace = true, default-features = true }

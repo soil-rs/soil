@@ -19,7 +19,7 @@ targets = ["x86_64-unknown-linux-gnu"]
 async-trait = { optional = true, workspace = true }
 codec = { features = ["derive"], workspace = true }
 scale-info = { features = ["derive"], workspace = true }
-subsoil = { optional = true, workspace = true }
+subsoil = { workspace = true }
 
 [features]
 default = ["std"]
@@ -28,4 +28,4 @@ std = [
 	"codec/std",
 	"scale-info/std",
 	"subsoil/std",
-	"subsoil/std"]
+]

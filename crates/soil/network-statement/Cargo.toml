@@ -54,6 +54,7 @@ soil-network-sync = { workspace = true, default-features = true, optional = true
 soil-network-types = { workspace = true, default-features = true, optional = true}
 soil-consensus = { workspace = true, default-features = true, optional = true}
 soil-statement-store = { workspace = true, default-features = true, optional = true}
+subsoil = { workspace = true }
 tokio = { workspace = true, optional = true}
 
 [dev-dependencies]

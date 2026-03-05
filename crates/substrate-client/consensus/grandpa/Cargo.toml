@@ -47,6 +47,7 @@ serde_json = { workspace = true, default-features = true }
 soil-blockchain = { workspace = true, default-features = true }
 soil-consensus = { workspace = true, default-features = true }
 soil-consensus-grandpa = { workspace = true, default-features = true }
+subsoil = { workspace = true }
 subsoil-crypto-hashing = { workspace = true, default-features = true }
 thiserror = { workspace = true }
 
@@ -57,3 +58,9 @@ soil-network-test = { workspace = true }
 subsoil = { workspace = true, default-features = true }
 substrate-test-runtime-client = { workspace = true }
 tokio = { workspace = true, default-features = true }
+
+[features]
+default = ["std"]
+std = [
+	"subsoil/std",
+]

@@ -47,7 +47,7 @@ mod app {
 	subsoil::app_crypto!(ed25519, GRANDPA);
 }
 
-subsoil::application_crypto::with_pair! {
+subsoil::with_pair! {
 	/// The grandpa crypto scheme defined via the keypair type.
 	pub type AuthorityPair = app::Pair;
 }

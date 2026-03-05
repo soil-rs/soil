@@ -20,7 +20,6 @@ use codec::{Decode, DecodeWithMemTracking, Encode};
 use core::marker::PhantomData;
 use scale_info::TypeInfo;
 use subsoil::runtime::{
-	impl_tx_ext_default,
 	traits::{DispatchInfoOf, TransactionExtension},
 	transaction_validity::InvalidTransaction,
 };
@@ -77,7 +76,7 @@ impl<T: Config + Send + Sync> TransactionExtension<T::RuntimeCall> for CheckNonZ
 		}
 		Ok((Default::default(), (), origin))
 	}
-	impl_tx_ext_default!(T::RuntimeCall; prepare);
+	subsoil::impl_tx_ext_default!(T::RuntimeCall; prepare);
 }
 
 #[cfg(test)]

@@ -791,7 +791,7 @@ mod assignment_convert_normalize {
 
 mod score {
 	use super::*;
-	use super::ElectionScore;
+	use crate::npos_elections::ElectionScore;
 	use crate::arithmetic::PerThing;
 
 	/// NOTE: in tests, we still use the legacy [u128; 3] since it is more compact. Each `u128`

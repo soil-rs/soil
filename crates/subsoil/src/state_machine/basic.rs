@@ -376,10 +376,7 @@ impl crate::externalities::ExtensionStore for BasicExternalities {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use crate::core::{
-		map,
-		storage::{well_known_keys::CODE, Storage, StorageChild},
-	};
+	use crate::core::storage::{well_known_keys::CODE, Storage, StorageChild};
 
 	#[test]
 	fn commit_should_work() {

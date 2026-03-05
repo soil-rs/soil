@@ -28,7 +28,7 @@ mod app {
 	subsoil::app_crypto!(sr25519, AUTHORITY_DISCOVERY);
 }
 
-subsoil::application_crypto::with_pair! {
+subsoil::with_pair! {
 	/// An authority discovery authority keypair.
 	pub type AuthorityPair = app::Pair;
 }

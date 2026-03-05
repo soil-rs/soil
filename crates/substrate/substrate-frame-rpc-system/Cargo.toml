@@ -26,6 +26,7 @@ soil-rpc-api = { workspace = true, default-features = true }
 soil-transaction-pool-api = { workspace = true, default-features = true }
 soil-block-builder = { workspace = true, default-features = true }
 soil-blockchain = { workspace = true, default-features = true }
+subsoil = { workspace = true }
 
 [dev-dependencies]
 assert_matches = { workspace = true }
@@ -33,3 +34,9 @@ sc-transaction-pool = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
 substrate-test-runtime-client = { workspace = true }
 tokio = { workspace = true, default-features = true }
+
+[features]
+default = ["std"]
+std = [
+	"subsoil/std",
+]

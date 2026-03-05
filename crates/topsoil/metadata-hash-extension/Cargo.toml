@@ -17,6 +17,7 @@ topsoil-support = { workspace = true }
 topsoil-system = { workspace = true }
 log = { workspace = true }
 scale-info = { features = ["derive", "serde"], workspace = true }
+subsoil = { workspace = true }
 
 [dev-dependencies]
 frame-metadata = { features = ["current", "unstable"], workspace = true, default-features = true }

@@ -33,7 +33,10 @@ use crate::core::storage::{
 use crate::externalities::TransactionType;
 use crate::externalities::{Extension, ExtensionStore, Externalities, MultiRemovalResults};
 
-use super::{trace, warn};
+#[cfg(feature = "std")]
+use super::{log_error, trace, warn};
+#[cfg(not(feature = "std"))]
+use crate::{log_error, trace, warn};
 use alloc::{boxed::Box, vec::Vec};
 use core::{
 	any::{Any, TypeId},
@@ -748,7 +751,7 @@ impl<'a> StorageAppend<'a> {
 			Ok(item) => item,
 			Err(_) => {
 				result = false;
-				crate::log_error!(
+				log_error!(
 					target: "runtime",
 					"Failed to append value, resetting storage item to `[value]`.",
 				);
@@ -832,10 +835,9 @@ where
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use super::InMemoryBackend;
+	use super::super::InMemoryBackend;
 	use codec::{Decode, Encode};
 	use crate::core::{
-		map,
 		storage::{Storage, StorageChild},
 		Blake2Hasher,
 	};

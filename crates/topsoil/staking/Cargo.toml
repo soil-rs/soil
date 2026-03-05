@@ -26,6 +26,7 @@ topsoil-session = { features = ["historical"], workspace = true }
 scale-info = { features = ["derive", "serde"], workspace = true }
 serde = { features = ["alloc", "derive"], workspace = true }
 soil-staking = { features = ["serde"], workspace = true }
+subsoil = { workspace = true }
 
 # Optional imports for benchmarking
 topsoil-benchmarking = { optional = true, workspace = true }

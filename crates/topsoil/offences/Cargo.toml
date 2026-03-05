@@ -23,6 +23,7 @@ log = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { optional = true, workspace = true, default-features = true }
 soil-staking = { workspace = true }
+subsoil = { workspace = true }
 
 [dev-dependencies]
 subsoil = { workspace = true, default-features = true }
@@ -36,7 +37,6 @@ std = [
 	"log/std",
 	"scale-info/std",
 	"serde",
-	"subsoil/std",
 	"subsoil/std",
 	"soil-staking/std",
 ]

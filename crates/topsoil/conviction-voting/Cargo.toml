@@ -23,6 +23,7 @@ topsoil-support = { workspace = true }
 topsoil-system = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { features = ["derive"], optional = true, workspace = true, default-features = true }
+subsoil = { workspace = true }
 
 [dev-dependencies]
 topsoil-balances = { workspace = true, default-features = true }
@@ -38,7 +39,6 @@ std = [
 	"topsoil-balances/std",
 	"scale-info/std",
 	"serde",
-	"subsoil/std",
 	"subsoil/std",
 ]
 runtime-benchmarks = [

@@ -25,7 +25,11 @@ use codec::{Compact, CompactLen};
 #[cfg(feature = "std")]
 use std::collections::HashSet as Set;
 
-use super::super::{ext::StorageAppend, warn};
+use super::super::ext::StorageAppend;
+#[cfg(feature = "std")]
+use super::super::warn;
+#[cfg(not(feature = "std"))]
+use crate::warn;
 use alloc::{
 	collections::{btree_map::BTreeMap, btree_set::BTreeSet},
 	vec::Vec,

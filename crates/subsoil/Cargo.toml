@@ -46,7 +46,7 @@ hash-db = { workspace = true }
 impl-serde = { optional = true, workspace = true }
 ref-cast = { workspace = true }
 subsoil-debug-derive = { workspace = true }
-bounded-collections = { workspace = true }
+bounded-collections = { workspace = true, features = ["scale-codec"] }
 schemars = { optional = true, workspace = true }
 smallvec = { workspace = true, default-features = true }
 wasmtime = { optional = true, workspace = true }

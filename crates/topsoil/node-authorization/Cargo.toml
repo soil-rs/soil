@@ -19,6 +19,7 @@ codec = { features = ["derive"], workspace = true }
 topsoil = { workspace = true, features = ["runtime"] }
 log = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
+subsoil = { workspace = true }
 
 [features]
 default = ["std"]
@@ -27,6 +28,7 @@ std = [
 	"topsoil/std",
 	"log/std",
 	"scale-info/std",
+	"subsoil/std",
 ]
 try-runtime = [
 	"topsoil/try-runtime",

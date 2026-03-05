@@ -1209,7 +1209,6 @@ mod test_extensions {
 	use codec::{Decode, DecodeWithMemTracking, Encode};
 	use scale_info::TypeInfo;
 	use subsoil::runtime::{
-		impl_tx_ext_default,
 		traits::{
 			DispatchInfoOf, DispatchOriginOf, Dispatchable, PostDispatchInfoOf,
 			TransactionExtension,
@@ -1258,7 +1257,7 @@ mod test_extensions {
 				Ok(Weight::zero())
 			}
 		}
-		impl_tx_ext_default!(RuntimeCall; validate);
+		subsoil::impl_tx_ext_default!(RuntimeCall; validate);
 	}
 
 	/// Test extension that refunds its cost if the actual post dispatch weight up until this point
@@ -1304,7 +1303,7 @@ mod test_extensions {
 			}
 			Ok(Weight::zero())
 		}
-		impl_tx_ext_default!(RuntimeCall; validate);
+		subsoil::impl_tx_ext_default!(RuntimeCall; validate);
 	}
 
 	/// Test extension that sets its actual post dispatch `ref_time` weight to the preset inner
@@ -1342,7 +1341,7 @@ mod test_extensions {
 		) -> Result<Weight, TransactionValidityError> {
 			Ok(Weight::from_parts(300u64.saturating_sub(pre), 0))
 		}
-		impl_tx_ext_default!(RuntimeCall; validate);
+		subsoil::impl_tx_ext_default!(RuntimeCall; validate);
 	}
 }
 

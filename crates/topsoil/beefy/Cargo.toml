@@ -23,6 +23,7 @@ serde = { optional = true, workspace = true, default-features = true }
 soil-consensus-beefy = { features = ["serde"], workspace = true }
 soil-session = { workspace = true }
 soil-staking = { features = ["serde"], workspace = true }
+subsoil = { workspace = true }
 
 [dev-dependencies]
 topsoil-election-provider-support = { workspace = true, default-features = true }

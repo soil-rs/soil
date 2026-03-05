@@ -39,6 +39,7 @@ soil-offchain = { workspace = true }
 soil-session = { workspace = true }
 soil-statement-store = { workspace = true }
 soil-transaction-pool = { workspace = true }
+subsoil = { workspace = true }
 trie-db = { workspace = true }
 
 # 3rd party

@@ -23,6 +23,7 @@ soil-blockchain = { workspace = true, default-features = true, optional = true}
 soil-consensus = { workspace = true, default-features = true, optional = true}
 soil-consensus-beefy = { workspace = true, default-features = true, optional = true}
 soil-mmr-primitives = { workspace = true, default-features = true, optional = true}
+subsoil = { workspace = true, default-features = true, optional = true}
 
 [features]
 default = ["std"]
@@ -38,9 +39,10 @@ std = [
 	"soil-mmr-primitives",
 	"soil-client-api/std",
 	"soil-consensus-beefy/std",
+	"subsoil",
 	"subsoil/std",
 	"soil-mmr-primitives/std",
-	"subsoil/std"]
+]
 
 [dev-dependencies]
 parking_lot = { workspace = true, default-features = true }

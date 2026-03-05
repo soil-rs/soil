@@ -1095,12 +1095,11 @@ mod tests {
 	use assert_matches::assert_matches;
 	use codec::Encode;
 	use crate::core::{
-		map,
 		storage::{ChildInfo, StateVersion},
 		traits::{CallContext, CodeExecutor, Externalities, RuntimeCode},
 		H256,
 	};
-	use subsoil::runtime::traits::BlakeTwo256;
+	use crate::runtime::traits::BlakeTwo256;
 	use crate::trie::{
 		trie_types::{TrieDBMutBuilderV0, TrieDBMutBuilderV1},
 		KeySpacedDBMut, PrefixedMemoryDB,

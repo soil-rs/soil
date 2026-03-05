@@ -38,6 +38,10 @@ extern crate alloc;
 /// Maximum nesting level for extrinsics.
 pub const MAX_EXTRINSIC_DEPTH: u32 = 256;
 
+/// Re-export subsoil for proc-macro generated code.
+#[doc(hidden)]
+pub use subsoil;
+
 /// Private exports that are being used by macros.
 ///
 /// The exports are not stable and should not be relied on.

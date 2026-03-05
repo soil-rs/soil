@@ -35,7 +35,7 @@ use subsoil::runtime_interface::{
 use core::mem;
 
 use alloc::{vec, vec::Vec};
-use subsoil::core::{sr25519::Public, wasm_export_functions};
+use subsoil::core::sr25519::Public;
 
 // Include the WASM binary
 #[cfg(feature = "std")]
@@ -241,7 +241,7 @@ pub fn import_sp_io() {
 	subsoil::io::misc::print_utf8(&[]);
 }
 
-wasm_export_functions! {
+subsoil::wasm_export_functions! {
 	fn test_return_data() {
 		let input = vec![1, 2, 3, 4, 5, 6];
 		let res = test_api::return_input(input.clone());

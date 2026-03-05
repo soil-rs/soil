@@ -1135,7 +1135,7 @@ mod tests {
 
 	use super::*;
 	use codec::{Decode, Encode};
-	use crate::core::{crypto::Pair, hex2array};
+	use crate::core::crypto::Pair;
 	use crate::io::TestExternalities;
 	use crate::state_machine::create_proof_check_backend;
 
@@ -1290,21 +1290,4 @@ mod tests {
 	}
 }
 
-// NOTE: we have to test the soil_core stuff also from a different crate to check that the macro
-// can access the soil_core crate.
-#[cfg(test)]
-mod sp_core_tests {
-	crate::generate_feature_enabled_macro!(if_test, test, $);
-	crate::generate_feature_enabled_macro!(if_not_test, not(test), $);
-
-	#[test]
-	#[should_panic]
-	fn generate_feature_enabled_macro_panics() {
-		if_test!(panic!("This should panic"));
-	}
-
-	#[test]
-	fn generate_feature_enabled_macro_works() {
-		if_not_test!(panic!("This should not panic"));
-	}
-}
+// NOTE: generate_feature_enabled_macro tests are in core/mod.rs (both modules are now in the same crate)

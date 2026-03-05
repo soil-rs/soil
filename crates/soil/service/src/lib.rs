@@ -222,6 +222,7 @@ pub struct PartialComponents<Client, Backend, SelectChain, ImportQueue, Transact
 	pub other: Other,
 }
 
+#[cfg(feature = "std")]
 /// Builds a future that continuously polls the network.
 async fn build_network_future<
 	B: BlockT,
@@ -289,6 +290,7 @@ async fn build_network_future<
 	}
 }
 
+#[cfg(feature = "std")]
 /// Builds a future that processes system RPC requests.
 pub async fn build_system_rpc_future<
 	B: BlockT,

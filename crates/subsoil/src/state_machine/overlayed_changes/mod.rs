@@ -908,7 +908,7 @@ impl<'a> OverlayedExtensions<'a> {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use super::{ext::Ext, new_in_mem, InMemoryBackend};
+	use crate::state_machine::{Ext, new_in_mem, InMemoryBackend};
 	use array_bytes::bytes2hex;
 	use crate::core::{traits::Externalities, Blake2Hasher};
 	use std::collections::BTreeMap;

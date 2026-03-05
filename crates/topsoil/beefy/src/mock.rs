@@ -21,7 +21,6 @@ use subsoil::core::{crypto::KeyTypeId, ConstBool, ConstU128};
 use subsoil::runtime::{
 	app_crypto::ecdsa::Public,
 	curve::PiecewiseLinear,
-	impl_opaque_keys,
 	testing::TestXt,
 	traits::{Header as HeaderT, OpaqueKeys},
 	BuildStorage, Perbill,
@@ -46,7 +45,7 @@ pub use soil_consensus_beefy::{
 };
 use soil_consensus_beefy::{AncestryHelper, AncestryHelperWeightInfo, Commitment};
 
-impl_opaque_keys! {
+subsoil::impl_opaque_keys! {
 	pub struct MockSessionKeys {
 		pub dummy: topsoil_beefy::Pallet<Test>,
 	}

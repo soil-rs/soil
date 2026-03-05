@@ -39,6 +39,7 @@ soil-consensus = { workspace = true, default-features = true, optional = true}
 thiserror = { workspace = true, optional = true}
 tokio = { features = ["macros", "time"], workspace = true, default-features = true, optional = true}
 tokio-stream = { workspace = true, optional = true}
+subsoil = { workspace = true, optional = true}
 
 [features]
 default = ["std"]
@@ -66,12 +67,12 @@ std = [
 	"thiserror",
 	"tokio",
 	"tokio-stream",
+	"subsoil",
 	"subsoil/std",
 	"soil-client-api/std",
 	"soil-network/std",
 	"soil-network-common/std",
 	"soil-network-types/std",
-	"subsoil/std",
 	"soil-utils/std",
 ]
 

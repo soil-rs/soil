@@ -34,7 +34,7 @@ pub mod sr25519 {
 		subsoil::app_crypto!(sr25519, AURA);
 	}
 
-	subsoil::application_crypto::with_pair! {
+	subsoil::with_pair! {
 		/// An Aura authority keypair using S/R 25519 as its crypto.
 		pub type AuthorityPair = app_sr25519::Pair;
 	}
@@ -52,7 +52,7 @@ pub mod ed25519 {
 		subsoil::app_crypto!(ed25519, AURA);
 	}
 
-	subsoil::application_crypto::with_pair! {
+	subsoil::with_pair! {
 		/// An Aura authority keypair using Ed25519 as its crypto.
 		pub type AuthorityPair = app_ed25519::Pair;
 	}

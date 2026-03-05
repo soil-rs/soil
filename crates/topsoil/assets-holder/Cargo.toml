@@ -22,6 +22,7 @@ topsoil-system = { workspace = true }
 log = { workspace = true }
 topsoil-assets = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
+subsoil = { workspace = true }
 
 [dev-dependencies]
 topsoil-balances = { workspace = true }
@@ -38,7 +39,6 @@ std = [
 	"topsoil-assets/std",
 	"topsoil-balances/std",
 	"scale-info/std",
-	"subsoil/std",
 	"subsoil/std",
 ]
 runtime-benchmarks = [

@@ -26,6 +26,7 @@ serde = { optional = true, workspace = true, default-features = true }
 substrate-state-trie-migration-rpc = { optional = true, workspace = true, default-features = true }
 thousands = { optional = true, workspace = true }
 zstd = { optional = true, workspace = true }
+subsoil = { workspace = true }
 
 [dev-dependencies]
 topsoil-balances = { workspace = true, default-features = true }
@@ -42,7 +43,6 @@ std = [
 	"log/std",
 	"topsoil-balances/std",
 	"scale-info/std",
-	"subsoil/std",
 	"subsoil/std",
 ]
 runtime-benchmarks = [

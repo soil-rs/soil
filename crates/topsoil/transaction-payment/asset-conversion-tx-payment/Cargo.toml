@@ -24,6 +24,7 @@ topsoil-system = { workspace = true }
 topsoil-asset-conversion = { workspace = true }
 topsoil-transaction-payment = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
+subsoil = { workspace = true }
 
 [dev-dependencies]
 topsoil-assets = { workspace = true, default-features = true }

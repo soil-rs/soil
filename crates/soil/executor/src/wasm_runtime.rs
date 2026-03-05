@@ -449,7 +449,7 @@ mod tests {
 	use alloc::borrow::Cow;
 	use codec::Encode;
 	use subsoil::api::{Core, RuntimeApiInfo};
-	use subsoil::version::{create_apis_vec, RuntimeVersion};
+	use subsoil::version::RuntimeVersion;
 	use subsoil::wasm_interface::HostFunctions;
 	use substrate_test_runtime::Block;
 
@@ -479,7 +479,7 @@ mod tests {
 			authoring_version: 1,
 			spec_version: 1,
 			impl_version: 1,
-			apis: create_apis_vec!([(<dyn Core::<Block>>::ID, 1)]),
+			apis: subsoil::create_apis_vec!([(<dyn Core::<Block>>::ID, 1)]),
 		};
 
 		let version = decode_version(&old_runtime_version.encode()).unwrap();
@@ -495,7 +495,7 @@ mod tests {
 			authoring_version: 1,
 			spec_version: 1,
 			impl_version: 1,
-			apis: create_apis_vec!([(<dyn Core::<Block>>::ID, 3)]),
+			apis: subsoil::create_apis_vec!([(<dyn Core::<Block>>::ID, 3)]),
 		};
 
 		decode_version(&old_runtime_version.encode()).unwrap_err();
@@ -509,7 +509,7 @@ mod tests {
 			authoring_version: 1,
 			spec_version: 1,
 			impl_version: 1,
-			apis: create_apis_vec!([(<dyn Core::<Block>>::ID, 3)]),
+			apis: subsoil::create_apis_vec!([(<dyn Core::<Block>>::ID, 3)]),
 			transaction_version: 3,
 			system_version: 4,
 		};
@@ -524,7 +524,7 @@ mod tests {
 			authoring_version: 1,
 			spec_version: 1,
 			impl_version: 1,
-			apis: create_apis_vec!([(<dyn Core::<Block>>::ID, 4)]),
+			apis: subsoil::create_apis_vec!([(<dyn Core::<Block>>::ID, 4)]),
 			transaction_version: 3,
 			system_version: 4,
 		};
@@ -547,7 +547,7 @@ mod tests {
 			authoring_version: 100,
 			spec_version: 100,
 			impl_version: 100,
-			apis: create_apis_vec!([(<dyn Core::<Block>>::ID, 4)]),
+			apis: subsoil::create_apis_vec!([(<dyn Core::<Block>>::ID, 4)]),
 			transaction_version: 100,
 			system_version: 1,
 		};

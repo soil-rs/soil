@@ -33,6 +33,7 @@ soil-blockchain = { workspace = true, default-features = true }
 soil-consensus = { workspace = true, default-features = true }
 soil-consensus-aura = { workspace = true, default-features = true }
 soil-consensus-slots = { workspace = true, default-features = true }
+subsoil = { workspace = true }
 thiserror = { workspace = true }
 
 [dev-dependencies]
@@ -43,3 +44,9 @@ subsoil = { workspace = true, default-features = true }
 substrate-test-runtime-client = { workspace = true }
 tempfile = { workspace = true }
 tokio = { workspace = true, default-features = true }
+
+[features]
+default = ["std"]
+std = [
+	"subsoil/std",
+]

@@ -36,6 +36,7 @@ soil-network-types = { workspace = true, default-features = true }
 soil-transaction-pool-api = { workspace = true, default-features = true }
 soil-utils = { workspace = true, default-features = true }
 soil-offchain = { workspace = true, default-features = true }
+subsoil = { workspace = true }
 threadpool = { workspace = true }
 tracing = { workspace = true, default-features = true }
 
@@ -50,4 +51,7 @@ substrate-test-runtime-client = { workspace = true }
 tokio = { workspace = true, default-features = true }
 
 [features]
-default = []
+default = ["std"]
+std = [
+	"subsoil/std",
+]

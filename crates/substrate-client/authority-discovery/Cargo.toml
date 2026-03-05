@@ -37,6 +37,7 @@ soil-authority-discovery = { workspace = true, default-features = true }
 soil-blockchain = { workspace = true, default-features = true }
 thiserror = { workspace = true }
 tokio.workspace = true
+subsoil = { workspace = true, default-features = true }
 
 [dev-dependencies]
 hex.workspace = true

@@ -20,6 +20,7 @@ jsonrpsee = { features = ["ws-client"], workspace = true }
 log = { workspace = true, default-features = true }
 soil-rpc-api = { workspace = true, default-features = true }
 serde = { workspace = true, default-features = true }
+subsoil = { workspace = true, default-features = true }
 
 [dev-dependencies]
 subsoil = { workspace = true, default-features = true }

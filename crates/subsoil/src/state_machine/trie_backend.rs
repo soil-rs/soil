@@ -573,12 +573,12 @@ where
 
 #[cfg(test)]
 pub mod tests {
-	use super::{new_in_mem, InMemoryBackend};
+	use crate::state_machine::{new_in_mem, InMemoryBackend};
 
 	use super::*;
 	use codec::Encode;
 	use crate::core::H256;
-	use subsoil::runtime::traits::BlakeTwo256;
+	use crate::runtime::traits::BlakeTwo256;
 	use crate::trie::{
 		cache::{CacheSize, SharedTrieCache},
 		trie_types::{TrieDBBuilder, TrieDBMutBuilderV0, TrieDBMutBuilderV1},

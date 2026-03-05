@@ -27,7 +27,6 @@ use subsoil::core::{
 use subsoil::io;
 use subsoil::runtime::{
 	curve::PiecewiseLinear,
-	impl_opaque_keys,
 	testing::{Digest, DigestItem, Header, TestXt},
 	traits::{Header as _, OpaqueKeys},
 	BuildStorage, DispatchError, Perbill,
@@ -85,7 +84,7 @@ where
 	}
 }
 
-impl_opaque_keys! {
+subsoil::impl_opaque_keys! {
 	pub struct MockSessionKeys {
 		pub babe_authority: super::Pallet<Test>,
 	}

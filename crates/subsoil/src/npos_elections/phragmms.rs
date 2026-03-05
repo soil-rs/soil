@@ -231,7 +231,7 @@ pub(crate) fn apply_elected<AccountId: IdentifierT>(
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use super::{Assignment, ElectionResult};
+	use crate::npos_elections::Assignment;
 	use alloc::rc::Rc;
 	use crate::runtime::{Perbill, Percent};
 

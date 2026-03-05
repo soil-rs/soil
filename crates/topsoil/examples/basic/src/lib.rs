@@ -68,7 +68,6 @@ use core::marker::PhantomData;
 use log::info;
 use scale_info::TypeInfo;
 use subsoil::runtime::{
-	impl_tx_ext_default,
 	traits::{
 		Bounded, DispatchInfoOf, DispatchOriginOf, SaturatedConversion, Saturating,
 		TransactionExtension, ValidateResult,
@@ -532,5 +531,5 @@ where
 		};
 		Ok((validity, (), origin))
 	}
-	impl_tx_ext_default!(<T as topsoil_system::Config>::RuntimeCall; weight prepare);
+	subsoil::impl_tx_ext_default!(<T as topsoil_system::Config>::RuntimeCall; weight prepare);
 }

@@ -18,6 +18,7 @@ topsoil-system = { workspace = true }
 log = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 soil-staking = { workspace = true }
+subsoil = { workspace = true }
 
 [dev-dependencies]
 topsoil-election-provider-support = { workspace = true }
@@ -41,7 +42,6 @@ std = [
 	"topsoil-staking/std",
 	"topsoil-timestamp/std",
 	"scale-info/std",
-	"subsoil/std",
 	"subsoil/std",
 	"soil-staking/std",
 ]

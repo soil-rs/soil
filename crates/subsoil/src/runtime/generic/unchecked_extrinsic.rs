@@ -901,7 +901,7 @@ mod tests {
 	use super::{legacy::UncheckedExtrinsicV4, *};
 	use crate::runtime::{
 		codec::{Decode, Encode},
-		impl_tx_ext_default,
+		
 		testing::TestSignature as TestSig,
 		traits::{FakeDispatchable, IdentityLookup, TransactionExtension},
 	};
@@ -975,7 +975,7 @@ mod tests {
 		type Implicit = ();
 		type Val = ();
 		type Pre = ();
-		impl_tx_ext_default!(TestCall; weight validate prepare);
+		crate::impl_tx_ext_default!(TestCall; weight validate prepare);
 	}
 
 	type Ex = UncheckedExtrinsic<TestAccountId, TestCall, TestSig, DummyExtension>;

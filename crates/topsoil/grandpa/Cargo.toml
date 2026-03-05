@@ -27,6 +27,7 @@ scale-info = { features = ["derive", "serde"], workspace = true }
 soil-consensus-grandpa = { features = ["serde"], workspace = true }
 soil-session = { workspace = true }
 soil-staking = { features = ["serde"], workspace = true }
+subsoil = { workspace = true }
 
 [dev-dependencies]
 finality-grandpa = { features = ["derive-codec"], workspace = true, default-features = true }

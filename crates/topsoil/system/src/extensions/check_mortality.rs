@@ -20,7 +20,6 @@ use codec::{Decode, DecodeWithMemTracking, Encode};
 use scale_info::TypeInfo;
 use subsoil::runtime::{
 	generic::Era,
-	impl_tx_ext_default,
 	traits::{DispatchInfoOf, SaturatedConversion, TransactionExtension, ValidateResult},
 	transaction_validity::{InvalidTransaction, TransactionValidityError, ValidTransaction},
 };
@@ -105,7 +104,7 @@ impl<T: Config + Send + Sync> TransactionExtension<T::RuntimeCall> for CheckMort
 			origin,
 		))
 	}
-	impl_tx_ext_default!(T::RuntimeCall; prepare);
+	subsoil::impl_tx_ext_default!(T::RuntimeCall; prepare);
 }
 
 #[cfg(test)]

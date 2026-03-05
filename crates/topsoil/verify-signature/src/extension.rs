@@ -23,7 +23,6 @@ use codec::{Decode, DecodeWithMemTracking, Encode};
 use scale_info::TypeInfo;
 use subsoil::io::hashing::blake2_256;
 use subsoil::runtime::{
-	impl_tx_ext_default,
 	traits::{
 		transaction_extension::TransactionExtension, AsTransactionAuthorizedOrigin, DispatchInfoOf,
 		Dispatchable, Verify,
@@ -154,5 +153,5 @@ where
 		Ok((ValidTransaction::default(), (), origin))
 	}
 
-	impl_tx_ext_default!(T::RuntimeCall; prepare);
+	subsoil::impl_tx_ext_default!(T::RuntimeCall; prepare);
 }

@@ -35,8 +35,8 @@ use soil_mixnet::types::{
 };
 use topsoil::{
 	deps::{
-		subsoil::io::{self, MultiRemovalResults},
-		subsoil::runtime,
+		io::{self, MultiRemovalResults},
+		runtime,
 	},
 	prelude::*,
 };

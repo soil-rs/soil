@@ -412,8 +412,8 @@ where
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use subsoil::core::H256;
-	use subsoil::runtime::traits::Keccak256;
+	use crate::core::H256;
+	use crate::runtime::traits::Keccak256;
 
 	#[test]
 	fn should_generate_empty_root() {

@@ -19,7 +19,7 @@ use crate::{Config, Pallet};
 use codec::{Decode, DecodeWithMemTracking, Encode};
 use scale_info::TypeInfo;
 use subsoil::runtime::{
-	impl_tx_ext_default, traits::TransactionExtension,
+	traits::TransactionExtension,
 	transaction_validity::TransactionValidityError,
 };
 
@@ -65,5 +65,5 @@ impl<T: Config + Send + Sync> TransactionExtension<<T as Config>::RuntimeCall>
 	fn weight(&self, _: &<T as Config>::RuntimeCall) -> subsoil::weights::Weight {
 		<T::ExtensionsWeightInfo as super::WeightInfo>::check_spec_version()
 	}
-	impl_tx_ext_default!(<T as Config>::RuntimeCall; validate prepare);
+	subsoil::impl_tx_ext_default!(<T as Config>::RuntimeCall; validate prepare);
 }

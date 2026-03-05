@@ -65,7 +65,7 @@ impl log::Log for RuntimeLogger {
 
 #[cfg(test)]
 mod tests {
-	use subsoil::api::ProvideRuntimeApi;
+	use crate::api::ProvideRuntimeApi;
 	use ::std::env;
 	use substrate_test_runtime_client::{
 		runtime::TestAPI, DefaultTestClientBuilderExt, TestClientBuilder, TestClientBuilderExt,

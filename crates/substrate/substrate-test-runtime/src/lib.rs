@@ -65,7 +65,6 @@ pub use subsoil::core::hash::H256;
 use soil_genesis_builder::PresetId;
 use subsoil::inherents::{CheckInherentsResult, InherentData};
 use subsoil::runtime::{
-	impl_opaque_keys, impl_tx_ext_default,
 	traits::{BlakeTwo256, Block as BlockT, DispatchInfoOf, Dispatchable, NumberFor, Verify},
 	transaction_validity::{
 		TransactionSource, TransactionValidity, TransactionValidityError, ValidTransaction,
@@ -310,7 +309,7 @@ impl subsoil::runtime::traits::TransactionExtension<RuntimeCall> for CheckSubstr
 	type Implicit = ();
 	type Pre = ();
 	type Val = ();
-	impl_tx_ext_default!(RuntimeCall; weight prepare);
+	subsoil::impl_tx_ext_default!(RuntimeCall; weight prepare);
 
 	fn validate(
 		&self,
@@ -496,7 +495,7 @@ fn code_using_trie() -> u64 {
 /// The test owner to test proof of possession generation and verification for the session keys
 pub const TEST_OWNER: &[u8; 5] = b"owner";
 
-impl_opaque_keys! {
+subsoil::impl_opaque_keys! {
 	pub struct SessionKeys {
 		pub ed25519: ed25519::AppPublic,
 		pub sr25519: sr25519::AppPublic,

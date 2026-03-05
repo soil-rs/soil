@@ -25,7 +25,7 @@ use codec::Encode;
 use hash_db::Hasher;
 use crate::core::{storage::StateVersion, traits::Externalities};
 #[cfg(test)]
-use subsoil::runtime::traits::BlakeTwo256;
+use crate::runtime::traits::BlakeTwo256;
 use crate::trie::PrefixedMemoryDB;
 use std::collections::BTreeMap;
 

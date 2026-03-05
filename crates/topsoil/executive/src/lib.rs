@@ -957,7 +957,7 @@ where
 		block_hash: Block::Hash,
 	) -> TransactionValidity {
 		subsoil::io::init_tracing();
-		use subsoil::tracing::{enter_span, within_span};
+		use subsoil::{enter_span, within_span};
 
 		<topsoil_system::Pallet<System>>::initialize(
 			&(topsoil_system::Pallet::<System>::block_number() + One::one()),

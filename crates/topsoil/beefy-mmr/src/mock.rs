@@ -22,7 +22,6 @@ use soil_consensus_beefy::mmr::MmrLeafVersion;
 use subsoil::io::TestExternalities;
 use subsoil::runtime::{
 	app_crypto::ecdsa::Public,
-	impl_opaque_keys,
 	traits::{ConvertInto, Keccak256, OpaqueKeys},
 	BuildStorage,
 };
@@ -39,7 +38,7 @@ pub use soil_consensus_beefy::{
 };
 use subsoil::core::offchain::{testing::TestOffchainExt, OffchainDbExt, OffchainWorkerExt};
 
-impl_opaque_keys! {
+subsoil::impl_opaque_keys! {
 	pub struct MockSessionKeys {
 		pub dummy: topsoil_beefy::Pallet<Test>,
 	}

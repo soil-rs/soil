@@ -19,7 +19,6 @@ use crate::{pallet_prelude::BlockNumberFor, Config, Pallet};
 use codec::{Decode, DecodeWithMemTracking, Encode};
 use scale_info::TypeInfo;
 use subsoil::runtime::{
-	impl_tx_ext_default,
 	traits::{TransactionExtension, Zero},
 	transaction_validity::TransactionValidityError,
 };
@@ -66,5 +65,5 @@ impl<T: Config + Send + Sync> TransactionExtension<T::RuntimeCall> for CheckGene
 		// charging this multiple times in a block we manually set the proof size to 0.
 		<T::ExtensionsWeightInfo as super::WeightInfo>::check_genesis().set_proof_size(0)
 	}
-	impl_tx_ext_default!(T::RuntimeCall; validate prepare);
+	subsoil::impl_tx_ext_default!(T::RuntimeCall; validate prepare);
 }

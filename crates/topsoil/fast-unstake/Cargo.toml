@@ -28,6 +28,7 @@ soil-staking = { workspace = true }
 topsoil-benchmarking = { optional = true, workspace = true }
 
 docify = { workspace = true }
+subsoil = { workspace = true }
 
 [dev-dependencies]
 topsoil-balances = { workspace = true, default-features = true }
@@ -49,7 +50,6 @@ std = [
 	"topsoil-staking/std",
 	"topsoil-timestamp/std",
 	"scale-info/std",
-	"subsoil/std",
 	"subsoil/std",
 	"soil-staking/std",
 ]

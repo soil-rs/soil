@@ -26,7 +26,6 @@ use core::{fmt, marker::PhantomData};
 use codec::{Decode, DecodeWithMemTracking, Encode};
 use scale_info::TypeInfo;
 use subsoil::runtime::{
-	impl_tx_ext_default,
 	traits::{
 		DispatchInfoOf, DispatchOriginOf, IdentifyAccount, TransactionExtension, ValidateResult,
 		Verify,
@@ -135,5 +134,5 @@ where
 		Ok((ValidTransaction::default(), (), origin))
 	}
 	// We're not doing any special logic in `TransactionExtension::prepare`, so just impl a default.
-	impl_tx_ext_default!(T::RuntimeCall; weight prepare);
+	subsoil::impl_tx_ext_default!(T::RuntimeCall; weight prepare);
 }
