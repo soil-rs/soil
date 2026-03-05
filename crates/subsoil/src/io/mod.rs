@@ -2017,6 +2017,7 @@ pub type SubstrateHostFunctions = (
 mod tests {
 	use super::*;
 	use crate::core::{crypto::UncheckedInto, storage::Storage};
+	use crate::map;
 	use crate::state_machine::BasicExternalities;
 
 	#[test]

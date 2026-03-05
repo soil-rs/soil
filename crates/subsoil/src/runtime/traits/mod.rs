@@ -403,7 +403,8 @@ impl<T1, T2, T3, T4> Morph<(T1, T2, T3, T4)> for TakeFirst {
 /// # Examples
 ///
 /// ```
-/// # use subsoil::runtime::{morph_types, traits::{Morph, TryMorph, TypedGet, ConstU32}};
+/// # use subsoil::morph_types;
+/// # use subsoil::runtime::traits::{Morph, TryMorph, TypedGet, ConstU32};
 /// # use subsoil::arithmetic::traits::CheckedSub;
 ///
 /// morph_types! {
@@ -2363,8 +2364,9 @@ pub struct GeneratedSessionKeys<Keys, Proof> {
 /// struct. Each signature is created by signing the `owner` given to the `generate` function.
 ///
 /// ```rust
+/// use subsoil::impl_opaque_keys;
 /// use subsoil::runtime::{
-/// 	impl_opaque_keys, KeyTypeId, BoundToRuntimeAppPublic, app_crypto::{sr25519, ed25519}
+/// 	KeyTypeId, BoundToRuntimeAppPublic, app_crypto::{sr25519, ed25519}
 /// };
 ///
 /// pub struct KeyModule;

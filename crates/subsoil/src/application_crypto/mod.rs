@@ -57,7 +57,7 @@ pub use traits::*;
 /// types whose identifier is `$key_type`.
 ///
 /// ```rust
-/// # use subsoil::application_crypto::{app_crypto, ed25519, KeyTypeId};
+/// # use subsoil::{app_crypto, application_crypto::{ed25519, KeyTypeId}};
 /// // Declare a new set of crypto types using ed25519 logic that identifies as `KeyTypeId`
 /// // of value `b"fuba"`.
 /// app_crypto!(ed25519, KeyTypeId(*b"fuba"));
@@ -94,7 +94,7 @@ macro_rules! app_crypto {
 /// types whose identifier is `$key_type`.
 ///
 /// ```rust
-/// # use subsoil::application_crypto::{app_crypto, ed25519, KeyTypeId};
+/// # use subsoil::{app_crypto, application_crypto::{ed25519, KeyTypeId}};
 /// // Declare a new set of crypto types using ed25519 logic that identifies as `KeyTypeId`
 /// // of value `b"fuba"`.
 /// app_crypto!(ed25519, KeyTypeId(*b"fuba"));

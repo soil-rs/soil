@@ -696,7 +696,7 @@ fn peer_with_higher_view_leads_to_catch_up_request() {
 fn local_chain_spec() -> Box<dyn soil_chain_spec::ChainSpec> {
 	let chain_spec =
 		soil_chain_spec::GenericChainSpec::<soil_chain_spec::NoExtension, ()>::from_json_bytes(
-			&include_bytes!("../../../../../crates/soil/chain-spec/res/chain_spec.json")[..],
+			&include_bytes!("../../../../../soil/chain-spec/res/chain_spec.json")[..],
 		)
 		.unwrap();
 	soil_chain_spec::ChainSpec::cloned_box(&chain_spec)

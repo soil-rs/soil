@@ -18,6 +18,7 @@
 
 use assert_matches::assert_matches;
 use codec::{Decode, Encode};
+use subsoil::map;
 use subsoil::core::{
 	ed25519,
 	offchain::{testing, OffchainDbExt, OffchainWorkerExt},

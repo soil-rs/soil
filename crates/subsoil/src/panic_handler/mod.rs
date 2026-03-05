@@ -36,7 +36,12 @@ use std::{
 };
 
 thread_local! {
+	// In test builds, default to Unwind so that `#[should_panic]` tests in other modules
+	// are not killed by `std::process::exit(1)` when the custom panic hook is installed.
+	#[cfg(not(test))]
 	static ON_PANIC: Cell<OnPanic> = Cell::new(OnPanic::Abort);
+	#[cfg(test)]
+	static ON_PANIC: Cell<OnPanic> = Cell::new(OnPanic::Unwind);
 }
 
 /// Panic action.

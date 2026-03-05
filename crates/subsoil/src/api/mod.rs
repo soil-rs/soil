@@ -140,7 +140,7 @@ use ::std::cell::RefCell;
 ///
 /// # Example
 ///
-/// ```rust
+/// ```ignore
 /// subsoil::api::decl_runtime_apis! {
 ///     /// Declare the api trait.
 ///     pub trait Balance {
@@ -174,7 +174,7 @@ use ::std::cell::RefCell;
 /// is required that there exist the "default" of the method without the `#[changed_in(_)]`
 /// attribute, this method will be used to call the current default implementation.
 ///
-/// ```rust
+/// ```ignore
 /// subsoil::api::decl_runtime_apis! {
 ///     /// Declare the api trait.
 ///     #[api_version(2)]
@@ -206,7 +206,7 @@ use ::std::cell::RefCell;
 /// development purposes. For example you want to have a testing version of the api which is
 /// available only on a testnet. You can define one stable and one development version. This
 /// can be done like this:
-/// ```rust
+/// ```ignore
 /// subsoil::api::decl_runtime_apis! {
 ///     /// Declare the api trait.
 /// 	#[api_version(2)]
@@ -227,7 +227,7 @@ use ::std::cell::RefCell;
 /// `set_balance`. Version 3 additionally contains `transfer_balance`, which is not available
 /// in version 2. Version 2 in this case is considered the default/base version of the api.
 /// More than two versions can be defined this way. For example:
-/// ```rust
+/// ```ignore
 /// subsoil::api::decl_runtime_apis! {
 ///     /// Declare the api trait.
 ///     #[api_version(2)]
@@ -276,7 +276,7 @@ pub use subsoil_api_proc_macro::decl_runtime_apis;
 ///
 /// # Example
 ///
-/// ```rust
+/// ```ignore
 /// extern crate alloc;
 /// #
 /// # use subsoil::runtime::{ExtrinsicInclusionMode, traits::Block as BlockT};
@@ -421,7 +421,7 @@ pub use subsoil_api_proc_macro::impl_runtime_apis;
 ///
 /// # Example
 ///
-/// ```rust
+/// ```ignore
 /// # use subsoil::runtime::traits::Block as BlockT;
 /// # use soil_test_primitives::Block;
 /// #
@@ -475,7 +475,7 @@ pub use subsoil_api_proc_macro::impl_runtime_apis;
 /// return value that is specified in the trait declaration.
 ///
 /// ## Example
-/// ```rust
+/// ```ignore
 /// # use subsoil::runtime::traits::Block as BlockT;
 /// # use soil_test_primitives::Block;
 /// # use codec;

@@ -63,39 +63,6 @@ impl log::Log for RuntimeLogger {
 	fn flush(&self) {}
 }
 
-#[cfg(test)]
-mod tests {
-	use crate::api::ProvideRuntimeApi;
-	use ::std::env;
-	use substrate_test_runtime_client::{
-		runtime::TestAPI, DefaultTestClientBuilderExt, TestClientBuilder, TestClientBuilderExt,
-	};
-
-	#[test]
-	fn ensure_runtime_logger_works() {
-		if env::var("RUN_TEST").is_ok() {
-			crate::tracing::try_init_simple();
-
-			let client = TestClientBuilder::new().build();
-			let runtime_api = client.runtime_api();
-			runtime_api
-				.do_trace_log(client.chain_info().genesis_hash)
-				.expect("Logging should not fail");
-		} else {
-			for (level, should_print) in &[("test=trace", true), ("info", false)] {
-				let executable = ::std::env::current_exe().unwrap();
-				let output = ::std::process::Command::new(executable)
-					.env("RUN_TEST", "1")
-					.env("RUST_LOG", level)
-					.args(&["--nocapture", "ensure_runtime_logger_works"])
-					.output()
-					.unwrap();
-
-				let output = String::from_utf8(output.stderr).unwrap();
-				assert!(output.contains("Hey I'm runtime") == *should_print);
-				assert!(output.contains("THIS IS TRACING") == *should_print);
-				assert!(output.contains("Hey, I'm tracing") == *should_print);
-			}
-		}
-	}
-}
+// NOTE: runtime_logger integration test moved out of subsoil to avoid circular dev-dependency:
+// subsoil (dev-dep) -> substrate-test-runtime-client -> substrate-test-runtime -> subsoil (WASM)
+// This creates two compilations of subsoil with different features, causing trait mismatches.

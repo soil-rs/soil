@@ -10947,7 +10947,6 @@ dependencies = [
  "subsoil-version-proc-macro",
  "substrate-bip39",
  "substrate-prometheus-endpoint",
- "substrate-test-runtime-client",
  "substrate-test-utils",
  "thiserror 1.0.69",
  "tracing",

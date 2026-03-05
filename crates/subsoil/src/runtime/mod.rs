@@ -1136,6 +1136,7 @@ mod tests {
 	use super::*;
 	use codec::{Decode, Encode};
 	use crate::core::crypto::Pair;
+	use crate::hex2array;
 	use crate::io::TestExternalities;
 	use crate::state_machine::create_proof_check_backend;
 

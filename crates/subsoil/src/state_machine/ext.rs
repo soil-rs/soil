@@ -34,6 +34,7 @@ use crate::externalities::TransactionType;
 use crate::externalities::{Extension, ExtensionStore, Externalities, MultiRemovalResults};
 
 #[cfg(feature = "std")]
+#[allow(unused_imports)]
 use super::{log_error, trace, warn};
 #[cfg(not(feature = "std"))]
 use crate::{log_error, trace, warn};
@@ -841,6 +842,7 @@ mod tests {
 		storage::{Storage, StorageChild},
 		Blake2Hasher,
 	};
+	use crate::map;
 
 	type TestBackend = InMemoryBackend<Blake2Hasher>;
 	type TestExt<'a> = Ext<'a, Blake2Hasher, TestBackend>;
