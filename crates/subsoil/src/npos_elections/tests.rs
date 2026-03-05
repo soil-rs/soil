@@ -17,11 +17,11 @@
 
 //! Tests for npos-elections.
 
-use crate::{
+use super::{
 	balancing, helpers::*, mock::*, seq_phragmen, seq_phragmen_core, setup_inputs, to_support_map,
 	Assignment, BalancingConfig, ElectionResult, ExtendedBalance, StakedAssignment, Support, Voter,
 };
-use subsoil::arithmetic::{PerU16, Perbill, Percent, Permill};
+use crate::arithmetic::{PerU16, Perbill, Percent, Permill};
 use substrate_test_utils::assert_eq_uvec;
 
 #[test]
@@ -189,7 +189,7 @@ fn balancing_core_works() {
 
 #[test]
 fn voter_normalize_ops_works() {
-	use crate::{Candidate, Edge};
+	use super::{Candidate, Edge};
 	// normalize
 	{
 		let c1 = Candidate { who: 10, elected: false, ..Default::default() };
@@ -791,8 +791,8 @@ mod assignment_convert_normalize {
 
 mod score {
 	use super::*;
-	use crate::ElectionScore;
-	use subsoil::arithmetic::PerThing;
+	use super::ElectionScore;
+	use crate::arithmetic::PerThing;
 
 	/// NOTE: in tests, we still use the legacy [u128; 3] since it is more compact. Each `u128`
 	/// corresponds to element at the respective field index of `ElectionScore`.

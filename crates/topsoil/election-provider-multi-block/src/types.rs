@@ -39,7 +39,7 @@ use crate::{unsigned::miner::MinerConfig, verifier};
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;
 use subsoil::core::Get;
-pub use soil_npos_elections::{ElectionResult, ElectionScore};
+pub use subsoil::npos_elections::{ElectionResult, ElectionScore};
 use subsoil::runtime::{
 	traits::{CheckedSub, One, Zero},
 	SaturatedConversion, Saturating,
@@ -66,7 +66,7 @@ pub type FallbackErrorOf<T> = <<T as crate::Config>::Fallback as ElectionProvide
 
 /// The relative distribution of a voter's stake among the winning targets.
 pub type AssignmentOf<T> =
-	soil_npos_elections::Assignment<<T as MinerConfig>::AccountId, SolutionAccuracyOf<T>>;
+	subsoil::npos_elections::Assignment<<T as MinerConfig>::AccountId, SolutionAccuracyOf<T>>;
 
 /// A paginated raw solution type.
 ///

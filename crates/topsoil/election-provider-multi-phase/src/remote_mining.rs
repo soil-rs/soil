@@ -30,7 +30,7 @@ use codec::Decode;
 use core::marker::PhantomData;
 use remote_externalities::{Builder, Mode, OnlineConfig};
 use subsoil::core::{ConstU32, H256};
-use soil_npos_elections::BalancingConfig;
+use subsoil::npos_elections::BalancingConfig;
 use subsoil::runtime::{Perbill, Weight};
 use topsoil_election_provider_support::generate_solution_type;
 use topsoil_support::{

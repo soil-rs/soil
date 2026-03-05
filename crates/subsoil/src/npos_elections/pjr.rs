@@ -22,12 +22,12 @@
 //!
 //! See [`pjr_check`] which is the main entry point of the module.
 
-use crate::{
+use super::{
 	Candidate, CandidatePtr, Edge, ExtendedBalance, IdentifierT, Support, SupportMap, Supports,
 	VoteWeight, Voter,
 };
 use alloc::{collections::btree_map::BTreeMap, rc::Rc, vec::Vec};
-use subsoil::arithmetic::{traits::Zero, Perbill};
+use crate::arithmetic::{traits::Zero, Perbill};
 /// The type used as the threshold.
 ///
 /// Just some reading sugar; Must always be same as [`ExtendedBalance`];

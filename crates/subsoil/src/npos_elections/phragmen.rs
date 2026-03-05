@@ -20,12 +20,12 @@
 //! This method is ensured to achieve PJR, yet, it does not achieve a constant factor approximation
 //! to the Maximin problem.
 
-use crate::{
+use super::{
 	balancing, setup_inputs, BalancingConfig, CandidatePtr, ElectionResult, ExtendedBalance,
 	IdentifierT, PerThing128, VoteWeight, Voter,
 };
 use alloc::vec::Vec;
-use subsoil::arithmetic::{
+use crate::arithmetic::{
 	helpers_128bit::multiply_by_rational_with_rounding,
 	traits::{Bounded, Zero},
 	Rational128, Rounding,
@@ -49,7 +49,7 @@ const DEN: ExtendedBalance = ExtendedBalance::max_value();
 ///   interpreted with any significance.
 /// - The returning winners are zipped with their final backing stake. Yet, to get the exact final
 ///   weight distribution from the winner's point of view, one needs to build a support map. See
-///   [`crate::SupportMap`] for more info. Note that this backing stake is computed in
+///   [`super::SupportMap`] for more info. Note that this backing stake is computed in
 ///   ExtendedBalance and may be slightly different that what will be computed from the support map,
 ///   due to accuracy loss.
 /// - The accuracy of the returning edge weight ratios can be configured via the `P` generic
@@ -72,7 +72,7 @@ pub fn seq_phragmen<AccountId: IdentifierT, P: PerThing128>(
 	candidates: Vec<AccountId>,
 	voters: Vec<(AccountId, VoteWeight, impl IntoIterator<Item = AccountId>)>,
 	balancing: Option<BalancingConfig>,
-) -> Result<ElectionResult<AccountId, P>, crate::Error> {
+) -> Result<ElectionResult<AccountId, P>, super::Error> {
 	let (candidates, voters) = setup_inputs(candidates, voters);
 
 	let (candidates, mut voters) = seq_phragmen_core::<AccountId>(to_elect, candidates, voters)?;
@@ -97,7 +97,7 @@ pub fn seq_phragmen<AccountId: IdentifierT, P: PerThing128>(
 		voters.into_iter().filter_map(|v| v.into_assignment()).collect::<Vec<_>>();
 	assignments
 		.iter_mut()
-		.try_for_each(|a| a.try_normalize().map_err(|_| crate::Error::ArithmeticError))?;
+		.try_for_each(|a| a.try_normalize().map_err(|_| super::Error::ArithmeticError))?;
 	let winners = winners
 		.into_iter()
 		.map(|w_ptr| (w_ptr.borrow().who.clone(), w_ptr.borrow().backed_stake))
@@ -113,12 +113,12 @@ pub fn seq_phragmen<AccountId: IdentifierT, P: PerThing128>(
 /// the implementation in a custom way.
 ///
 /// This can only fail if the normalization fails.
-// To create the inputs needed for this function, see [`crate::setup_inputs`].
+// To create the inputs needed for this function, see [`super::setup_inputs`].
 pub fn seq_phragmen_core<AccountId: IdentifierT>(
 	to_elect: usize,
 	candidates: Vec<CandidatePtr<AccountId>>,
 	mut voters: Vec<Voter<AccountId>>,
-) -> Result<(Vec<CandidatePtr<AccountId>>, Vec<Voter<AccountId>>), crate::Error> {
+) -> Result<(Vec<CandidatePtr<AccountId>>, Vec<Voter<AccountId>>), super::Error> {
 	// we have already checked that we have more candidates than minimum_candidate_count.
 	let to_elect = to_elect.min(candidates.len());
 
@@ -205,7 +205,7 @@ pub fn seq_phragmen_core<AccountId: IdentifierT>(
 		// edge of all candidates that eventually have a non-zero weight must be elected.
 		debug_assert!(voter.edges.iter().all(|e| e.candidate.borrow().elected));
 		// inc budget to sum the budget.
-		voter.try_normalize_elected().map_err(|_| crate::Error::ArithmeticError)?;
+		voter.try_normalize_elected().map_err(|_| super::Error::ArithmeticError)?;
 	}
 
 	Ok((candidates, voters))

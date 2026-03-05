@@ -18,7 +18,7 @@
 #![allow(dead_code)]
 
 use subsoil::core::{ConstBool, ConstU32, Get};
-use soil_npos_elections::{ElectionScore, VoteWeight};
+use subsoil::npos_elections::{ElectionScore, VoteWeight};
 use subsoil::runtime::{
 	offchain::{
 		testing::{OffchainState, PoolState, TestOffchainExt, TestTransactionPoolExt},
@@ -242,7 +242,7 @@ impl MinerConfig for Runtime {
 const THRESHOLDS: [VoteWeight; 9] = [10, 20, 30, 40, 50, 60, 1_000, 2_000, 10_000];
 
 parameter_types! {
-	pub static BagThresholds: &'static [soil_npos_elections::VoteWeight] = &THRESHOLDS;
+	pub static BagThresholds: &'static [subsoil::npos_elections::VoteWeight] = &THRESHOLDS;
 	pub const SessionsPerEra: soil_staking::SessionIndex = 2;
 	pub static BondingDuration: soil_staking::EraIndex = 28;
 	pub const SlashDeferDuration: soil_staking::EraIndex = 7; // 1/4 the bonding duration.

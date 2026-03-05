@@ -20,13 +20,11 @@ topsoil-election-provider-solution-type = { workspace = true, default-features =
 topsoil-support = { workspace = true }
 topsoil-system = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
-soil-npos-elections = { workspace = true }
 subsoil = { workspace = true }
 
 
 [dev-dependencies]
 rand = { features = ["small_rng"], workspace = true, default-features = true }
-soil-npos-elections = { workspace = true, default-features = true }
 
 [features]
 default = ["std"]
@@ -37,7 +35,6 @@ std = [
 	"topsoil-system/std",
 	"scale-info/std",
 	"subsoil/std",
-	"soil-npos-elections/std",
 	"subsoil/std",
 ]
 runtime-benchmarks = [

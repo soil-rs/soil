@@ -59,7 +59,7 @@ use crate::{
 use codec::{Decode, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;
 use subsoil::io::MultiRemovalResults;
-use soil_npos_elections::ElectionScore;
+use subsoil::npos_elections::ElectionScore;
 use subsoil::runtime::{traits::Saturating, Perbill};
 use subsoil::std::prelude::*;
 use topsoil_election_provider_support::PageIndex;

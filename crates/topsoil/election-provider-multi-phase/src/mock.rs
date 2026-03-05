@@ -26,7 +26,7 @@ use subsoil::core::{
 	},
 	ConstBool, H256,
 };
-use soil_npos_elections::{
+use subsoil::npos_elections::{
 	assignment_ratio_to_staked_normalized, seq_phragmen, to_supports, BalancingConfig,
 	ElectionResult, EvaluateSupport,
 };
@@ -124,7 +124,7 @@ pub struct TrimHelpers {
 	pub voters: Vec<VoterOf<Runtime>>,
 	pub assignments: Vec<IndexAssignmentOf<Runtime>>,
 	pub encoded_size_of:
-		Box<dyn Fn(&[IndexAssignmentOf<Runtime>]) -> Result<usize, soil_npos_elections::Error>>,
+		Box<dyn Fn(&[IndexAssignmentOf<Runtime>]) -> Result<usize, subsoil::npos_elections::Error>>,
 	pub voter_index: Box<
 		dyn Fn(
 			&<Runtime as topsoil_system::Config>::AccountId,

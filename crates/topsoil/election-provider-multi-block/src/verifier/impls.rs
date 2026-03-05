@@ -28,7 +28,7 @@ use crate::{
 };
 use codec::{Decode, Encode, MaxEncodedLen};
 use pallet::*;
-use soil_npos_elections::{evaluate_support, ElectionScore};
+use subsoil::npos_elections::{evaluate_support, ElectionScore};
 use subsoil::std::{collections::btree_map::BTreeMap, prelude::*};
 use topsoil_election_provider_support::{
 	ExtendedBalance, NposSolution, PageIndex, TryFromOtherBounds,
@@ -89,7 +89,7 @@ impl ValidSolution {
 }
 
 /// A simple newtype that represents the partial backing of a winner. It only stores the total
-/// backing, and the sum of backings, as opposed to a [`soil_npos_elections::Support`] that also
+/// backing, and the sum of backings, as opposed to a [`subsoil::npos_elections::Support`] that also
 /// stores all of the backers' individual contribution.
 ///
 /// This is mainly here to allow us to implement `Backings` for it.
@@ -101,7 +101,7 @@ pub struct PartialBackings {
 	pub backers: u32,
 }
 
-impl soil_npos_elections::Backings for PartialBackings {
+impl subsoil::npos_elections::Backings for PartialBackings {
 	fn total(&self) -> ExtendedBalance {
 		self.total
 	}
@@ -925,10 +925,10 @@ pub fn feasibility_check_page_inner_with_snapshot<T: MinerConfig>(
 
 	// This might fail if the normalization fails. Very unlikely. See `integrity_test`.
 	let staked_assignments =
-		soil_npos_elections::assignment_ratio_to_staked_normalized(assignments, stake_of)
+		subsoil::npos_elections::assignment_ratio_to_staked_normalized(assignments, stake_of)
 			.map_err::<FeasibilityError, _>(Into::into)?;
 
-	let supports = soil_npos_elections::to_supports(&staked_assignments);
+	let supports = subsoil::npos_elections::to_supports(&staked_assignments);
 
 	// Ensure some heuristics. These conditions must hold in the **entire** support, this is
 	// just a single page. But, they must hold in a single page as well.

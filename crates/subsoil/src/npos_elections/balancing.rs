@@ -26,9 +26,9 @@
 //!
 //! See [`balance`] for more information.
 
-use crate::{BalancingConfig, Edge, ExtendedBalance, IdentifierT, Voter};
+use super::{BalancingConfig, Edge, ExtendedBalance, IdentifierT, Voter};
 use alloc::vec::Vec;
-use subsoil::arithmetic::traits::Zero;
+use crate::arithmetic::traits::Zero;
 
 /// Balance the weight distribution of a given `voters` at most `iterations` times, or up until the
 /// point where the biggest difference created per iteration of all stakes is `tolerance`. If this
@@ -37,7 +37,7 @@ use subsoil::arithmetic::traits::Zero;
 /// [`BalancingConfig`] struct.
 ///
 /// In almost all cases, a balanced solution will have a better score than an unbalanced solution,
-/// yet this is not 100% guaranteed because the first element of a [`crate::ElectionScore`] does not
+/// yet this is not 100% guaranteed because the first element of a [`super::ElectionScore`] does not
 /// directly relate to balancing.
 ///
 /// Note that some reference implementation adopt an approach in which voters are balanced randomly

@@ -23,7 +23,7 @@ topsoil-support = { workspace = true }
 topsoil-system = { workspace = true }
 
 topsoil-election-provider-support = { workspace = true }
-soil-npos-elections = { workspace = true }
+subsoil = { workspace = true }
 
 # Optional imports for benchmarking
 topsoil-benchmarking = { optional = true, workspace = true }
@@ -57,7 +57,6 @@ std = [
 	"rand/std",
 	"scale-info/std",
 	"subsoil/std",
-	"soil-npos-elections/std",
 	"subsoil/std",
 	"strum/std",
 ]

@@ -35,7 +35,7 @@ use honggfuzz::fuzz;
 mod common;
 use common::to_range;
 use rand::{self, Rng, RngCore, SeedableRng};
-use soil_npos_elections::{reduce, to_support_map, ExtendedBalance, StakedAssignment};
+use subsoil::npos_elections::{reduce, to_support_map, ExtendedBalance, StakedAssignment};
 
 type Balance = u128;
 type AccountId = u64;

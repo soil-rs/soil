@@ -17,12 +17,12 @@
 
 //! Helper methods for npos-elections.
 
-use crate::{
+use super::{
 	Assignment, Error, ExtendedBalance, IdentifierT, PerThing128, StakedAssignment, Supports,
 	VoteWeight,
 };
 use alloc::{collections::BTreeMap, vec::Vec};
-use subsoil::arithmetic::PerThing;
+use crate::arithmetic::PerThing;
 
 /// Converts a vector of ratio assignments into ones with absolute budget value.
 ///
@@ -98,7 +98,7 @@ pub fn supports_to_staked_assignment<A: IdentifierT>(
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use subsoil::arithmetic::Perbill;
+	use crate::arithmetic::Perbill;
 
 	#[test]
 	fn into_staked_works() {

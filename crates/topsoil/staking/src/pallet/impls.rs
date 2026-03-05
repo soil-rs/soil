@@ -742,7 +742,7 @@ impl<T: Config> Pallet<T> {
 		elected_stashes
 	}
 
-	/// Consume a set of [`BoundedSupports`] from [`soil_npos_elections`] and collect them into a
+	/// Consume a set of [`BoundedSupports`] from [`subsoil::npos_elections`] and collect them into a
 	/// [`Exposure`].
 	fn collect_exposures(
 		supports: BoundedSupportsOf<T::ElectionProvider>,

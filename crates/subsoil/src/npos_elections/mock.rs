@@ -20,13 +20,13 @@
 #![cfg(test)]
 
 use alloc::collections::btree_map::BTreeMap;
-use subsoil::arithmetic::{
+use crate::arithmetic::{
 	traits::{One, SaturatedConversion, Zero},
 	PerThing,
 };
-use subsoil::assert_eq_error_rate;
+use crate::assert_eq_error_rate;
 
-use crate::{seq_phragmen, Assignment, ElectionResult, ExtendedBalance, PerThing128, VoteWeight};
+use super::{seq_phragmen, Assignment, ElectionResult, ExtendedBalance, PerThing128, VoteWeight};
 
 pub type AccountId = u64;
 
@@ -177,7 +177,7 @@ pub(crate) fn equalize_float<A, FS>(
 	stake_of: FS,
 ) where
 	for<'r> FS: Fn(&'r A) -> VoteWeight,
-	A: Ord + Clone + std::fmt::Debug,
+	A: Ord + Clone + core::fmt::Debug,
 {
 	for _i in 0..iterations {
 		let mut max_diff = 0.0;

@@ -40,7 +40,7 @@ use subsoil::core::{
 	},
 	ConstBool,
 };
-use soil_npos_elections::EvaluateSupport;
+use subsoil::npos_elections::EvaluateSupport;
 use subsoil::runtime::{
 	bounded_vec,
 	traits::{BlakeTwo256, IdentityLookup},
@@ -529,11 +529,11 @@ pub fn roll_to_full_verification() -> Vec<BoundedSupportsOf<MultiBlock>> {
 /// All of the voters in this support must live in a single page of the snapshot, noted by
 /// `snapshot_page`.
 pub fn solution_from_supports(
-	supports: soil_npos_elections::Supports<AccountId>,
+	supports: subsoil::npos_elections::Supports<AccountId>,
 	snapshot_page: PageIndex,
 ) -> TestNposSolution {
-	let staked = soil_npos_elections::supports_to_staked_assignment(supports);
-	let assignments = soil_npos_elections::assignment_staked_to_ratio_normalized(staked).unwrap();
+	let staked = subsoil::npos_elections::supports_to_staked_assignment(supports);
+	let assignments = subsoil::npos_elections::assignment_staked_to_ratio_normalized(staked).unwrap();
 
 	let voters = crate::Snapshot::<Runtime>::voters(snapshot_page).unwrap();
 	let targets = crate::Snapshot::<Runtime>::targets().unwrap();
@@ -548,7 +548,7 @@ pub fn solution_from_supports(
 /// Given vector must be aligned with the snapshot, at most need to be 'pagified' which we do
 /// internally.
 pub fn raw_paged_from_supports(
-	paged_supports: Vec<soil_npos_elections::Supports<AccountId>>,
+	paged_supports: Vec<subsoil::npos_elections::Supports<AccountId>>,
 	round: u32,
 ) -> PagedRawSolution<Runtime> {
 	let score = {

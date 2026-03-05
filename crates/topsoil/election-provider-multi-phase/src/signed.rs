@@ -32,7 +32,7 @@ use codec::{Decode, Encode, HasCompact};
 use core::cmp::Ordering;
 use subsoil::arithmetic::traits::SaturatedConversion;
 use subsoil::core::bounded::BoundedVec;
-use soil_npos_elections::ElectionScore;
+use subsoil::npos_elections::ElectionScore;
 use subsoil::runtime::{
 	traits::{Convert, Saturating, Zero},
 	Debug, FixedPointNumber, FixedPointOperand, FixedU128, Percent,

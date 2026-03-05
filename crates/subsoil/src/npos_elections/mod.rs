@@ -41,8 +41,8 @@
 //! - `assignment`: A mapping from each voter to their winner-only targets, zipped with a ration
 //!   denoting the amount of support given to that particular target.
 //!
-//! ```rust
-//! # use soil_npos_elections::*;
+//! ```rust,ignore
+//! # use subsoil::npos_elections::*;
 //! # use subsoil::runtime::Perbill;
 //! // the winners.
 //! let winners = vec![(1, 100), (2, 50)];
@@ -72,18 +72,13 @@
 //!
 //! More information can be found at: <https://arxiv.org/abs/2004.12990>
 
-#![cfg_attr(not(feature = "std"), no_std)]
-
-extern crate alloc;
-
 use alloc::{collections::btree_map::BTreeMap, rc::Rc, vec, vec::Vec};
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
-use core::{cell::RefCell, cmp::Ordering};
+use core::{cell::RefCell, cmp::Ordering, fmt::Debug};
 use scale_info::TypeInfo;
 #[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
-use subsoil::arithmetic::{traits::Zero, Normalizable, PerThing, Rational128, ThresholdOrd};
-use Debug;
+use crate::arithmetic::{traits::Zero, Normalizable, PerThing, Rational128, ThresholdOrd};
 
 #[cfg(test)]
 mod mock;
@@ -249,7 +244,7 @@ impl ElectionScore {
 	/// Compares two sets of election scores based on desirability, returning true if `self` is
 	/// strictly better than `other`.
 	pub fn strict_better(self, other: Self) -> bool {
-		self.strict_threshold_better(other, subsoil::runtime::Perbill::zero())
+		self.strict_threshold_better(other, crate::runtime::Perbill::zero())
 	}
 }
 
@@ -353,8 +348,8 @@ pub struct Voter<AccountId> {
 }
 
 #[cfg(feature = "std")]
-impl<A: IdentifierT> std::fmt::Debug for Voter<A> {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+impl<A: IdentifierT> core::fmt::Debug for Voter<A> {
+	fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
 		write!(f, "Voter({:?}, budget = {}, edges = {:?})", self.who, self.budget, self.edges)
 	}
 }

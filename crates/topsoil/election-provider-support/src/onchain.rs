@@ -26,7 +26,7 @@ use crate::{
 };
 use alloc::{collections::btree_map::BTreeMap, vec::Vec};
 use core::marker::PhantomData;
-use soil_npos_elections::{
+use subsoil::npos_elections::{
 	assignment_ratio_to_staked_normalized, to_supports, ElectionResult, VoteWeight,
 };
 use topsoil_support::{dispatch::DispatchClass, traits::Get};
@@ -36,15 +36,15 @@ use topsoil_system::pallet_prelude::BlockNumberFor;
 #[derive(Eq, PartialEq, Debug, Clone)]
 pub enum Error {
 	/// An internal error in the NPoS elections crate.
-	NposElections(soil_npos_elections::Error),
+	NposElections(subsoil::npos_elections::Error),
 	/// Errors from the data provider.
 	DataProvider(&'static str),
 	/// Results failed to meet the bounds.
 	FailedToBound,
 }
 
-impl From<soil_npos_elections::Error> for Error {
-	fn from(e: soil_npos_elections::Error) -> Self {
+impl From<subsoil::npos_elections::Error> for Error {
+	fn from(e: subsoil::npos_elections::Error) -> Self {
 		Error::NposElections(e)
 	}
 }
@@ -74,7 +74,7 @@ pub trait Config {
 	/// `NposSolver` that should be used, an example would be `PhragMMS`.
 	type Solver: NposSolver<
 		AccountId = <Self::System as topsoil_system::Config>::AccountId,
-		Error = soil_npos_elections::Error,
+		Error = subsoil::npos_elections::Error,
 	>;
 
 	/// Maximum number of backers allowed per target.
@@ -216,7 +216,7 @@ mod tests {
 	use super::*;
 	use crate::{ElectionProvider, PhragMMS, SequentialPhragmen};
 	use subsoil::io::TestExternalities;
-	use soil_npos_elections::Support;
+	use subsoil::npos_elections::Support;
 	use subsoil::runtime::Perbill;
 	use topsoil_support::{assert_noop, derive_impl, parameter_types};
 	type AccountId = u64;

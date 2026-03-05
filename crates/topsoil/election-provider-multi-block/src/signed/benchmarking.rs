@@ -21,7 +21,7 @@ use crate::{
 	unsigned::miner::OffchainWorkerMiner,
 	CurrentPhase, Phase, Round,
 };
-use soil_npos_elections::ElectionScore;
+use subsoil::npos_elections::ElectionScore;
 use subsoil::runtime::traits::One;
 use subsoil::std::boxed::Box;
 use topsoil_benchmarking::v2::*;

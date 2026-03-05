@@ -17,9 +17,9 @@
 
 //! Traits for the npos-election operations.
 
-use crate::ExtendedBalance;
+use super::ExtendedBalance;
 use core::{fmt::Debug, ops::Mul};
-use subsoil::arithmetic::PerThing;
+use crate::arithmetic::PerThing;
 
 /// an aggregator trait for a generic type of a voter/target identifier. This usually maps to
 /// substrate's account id.

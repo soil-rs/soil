@@ -23,7 +23,7 @@ use crate::{
 	Phase,
 };
 use subsoil::core::bounded_vec;
-use soil_npos_elections::ElectionScore;
+use subsoil::npos_elections::ElectionScore;
 use topsoil_election_provider_support::{ElectionProvider, NposSolution};
 use topsoil_support::storage::unhashed;
 
@@ -925,7 +925,7 @@ mod e2e {
 						crate::verifier::Event::VerificationFailed(
 							1,
 							FeasibilityError::NposElection(
-								soil_npos_elections::Error::SolutionInvalidIndex
+								subsoil::npos_elections::Error::SolutionInvalidIndex
 							)
 						),
 					]

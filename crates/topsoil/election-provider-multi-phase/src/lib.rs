@@ -250,7 +250,7 @@ use subsoil::arithmetic::{
 	traits::{CheckedAdd, Zero},
 	UpperOf,
 };
-use soil_npos_elections::{ElectionScore, IdentifierT, Supports, VoteWeight};
+use subsoil::npos_elections::{ElectionScore, IdentifierT, Supports, VoteWeight};
 use subsoil::runtime::{
 	transaction_validity::{
 		InvalidTransaction, TransactionPriority, TransactionSource, TransactionValidity,
@@ -564,7 +564,7 @@ pub enum FeasibilityError {
 	/// no snapshot is present.
 	SnapshotUnavailable,
 	/// Internal error from the election crate.
-	NposElection(soil_npos_elections::Error),
+	NposElection(subsoil::npos_elections::Error),
 	/// A vote is invalid.
 	InvalidVote,
 	/// A voter is invalid.
@@ -583,8 +583,8 @@ pub enum FeasibilityError {
 	BoundedConversionFailed,
 }
 
-impl From<soil_npos_elections::Error> for FeasibilityError {
-	fn from(e: soil_npos_elections::Error) -> Self {
+impl From<subsoil::npos_elections::Error> for FeasibilityError {
+	fn from(e: subsoil::npos_elections::Error) -> Self {
 		FeasibilityError::NposElection(e)
 	}
 }
@@ -877,7 +877,7 @@ pub mod pallet {
 			assert!(size_of::<SolutionTargetIndexOf<T::MinerConfig>>() <= size_of::<usize>());
 
 			// ----------------------------
-			// Based on the requirements of [`soil_npos_elections::Assignment::try_normalize`].
+			// Based on the requirements of [`subsoil::npos_elections::Assignment::try_normalize`].
 			let max_vote: usize = <SolutionOf<T::MinerConfig> as NposSolution>::LIMIT;
 
 			// 2. Maximum sum of [SolutionAccuracy; 16] must fit into `UpperOf<OffchainAccuracy>`.
@@ -1977,7 +1977,7 @@ mod feasibility_check {
 			});
 			assert_noop!(
 				MultiPhase::feasibility_check(raw, COMPUTE),
-				FeasibilityError::NposElection(soil_npos_elections::Error::SolutionInvalidIndex)
+				FeasibilityError::NposElection(subsoil::npos_elections::Error::SolutionInvalidIndex)
 			);
 		})
 	}
@@ -2005,7 +2005,7 @@ mod feasibility_check {
 			);
 			assert_noop!(
 				MultiPhase::feasibility_check(solution, COMPUTE),
-				FeasibilityError::NposElection(soil_npos_elections::Error::SolutionInvalidIndex),
+				FeasibilityError::NposElection(subsoil::npos_elections::Error::SolutionInvalidIndex),
 			);
 		})
 	}
@@ -2070,7 +2070,7 @@ mod tests {
 		},
 		Phase,
 	};
-	use soil_npos_elections::{BalancingConfig, Support};
+	use subsoil::npos_elections::{BalancingConfig, Support};
 	use topsoil_election_provider_support::bounds::ElectionBoundsBuilder;
 	use topsoil_support::{assert_noop, assert_ok};
 

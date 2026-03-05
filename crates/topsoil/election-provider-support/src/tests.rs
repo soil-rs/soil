@@ -22,7 +22,7 @@ use crate::{
 	mock::*, BoundedSupport, BoundedSupports, IndexAssignment, NposSolution, TryFromOtherBounds,
 };
 use rand::SeedableRng;
-use soil_npos_elections::{Support, Supports};
+use subsoil::npos_elections::{Support, Supports};
 use topsoil_support::traits::ConstU32;
 
 mod solution_type {

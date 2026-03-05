@@ -4691,7 +4691,6 @@ dependencies = [
  "soil-inherents",
  "soil-mixnet",
  "soil-mmr-primitives",
- "soil-npos-elections",
  "soil-offchain",
  "soil-session",
  "soil-staking",
@@ -10083,17 +10082,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "soil-npos-elections"
-version = "26.0.0"
-dependencies = [
- "parity-scale-codec",
- "scale-info",
- "serde",
- "subsoil",
- "substrate-test-utils",
-]
-
-[[package]]
 name = "soil-offchain"
 version = "26.0.0"
 dependencies = [
@@ -10567,7 +10555,6 @@ dependencies = [
  "clap",
  "honggfuzz",
  "rand 0.8.5",
- "soil-npos-elections",
  "subsoil",
 ]
 
@@ -11009,6 +10996,7 @@ dependencies = [
  "substrate-bip39",
  "substrate-prometheus-endpoint",
  "substrate-test-runtime-client",
+ "substrate-test-utils",
  "thiserror 1.0.69",
  "tracing",
  "tracing-core",
@@ -12651,7 +12639,6 @@ dependencies = [
  "parity-scale-codec",
  "parking_lot 0.12.5",
  "scale-info",
- "soil-npos-elections",
  "soil-staking",
  "subsoil",
  "topsoil-bags-list",
@@ -12676,7 +12663,6 @@ dependencies = [
  "parking_lot 0.12.5",
  "rand 0.8.5",
  "scale-info",
- "soil-npos-elections",
  "subsoil",
  "topsoil-balances",
  "topsoil-benchmarking",
@@ -12696,7 +12682,6 @@ dependencies = [
  "parking_lot 0.12.5",
  "rand 0.8.5",
  "scale-info",
- "soil-npos-elections",
  "strum 0.26.3",
  "subsoil",
  "tokio",
@@ -12730,7 +12715,6 @@ dependencies = [
  "parity-scale-codec",
  "rand 0.8.5",
  "scale-info",
- "soil-npos-elections",
  "subsoil",
  "topsoil-election-provider-solution-type",
  "topsoil-support",
@@ -12742,7 +12726,6 @@ name = "topsoil-election-provider-support-benchmarking"
 version = "27.0.0"
 dependencies = [
  "parity-scale-codec",
- "soil-npos-elections",
  "subsoil",
  "topsoil-benchmarking",
  "topsoil-election-provider-support",
@@ -12768,7 +12751,6 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "scale-info",
- "soil-npos-elections",
  "soil-staking",
  "subsoil",
  "substrate-test-utils",
@@ -13638,7 +13620,6 @@ dependencies = [
  "rand_chacha 0.3.1",
  "scale-info",
  "serde",
- "soil-npos-elections",
  "soil-staking",
  "subsoil",
  "substrate-test-utils",

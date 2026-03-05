@@ -203,11 +203,11 @@ impl OnUnbalanced<NegativeImbalanceOf<Test>> for RewardRemainderMock {
 	}
 }
 
-const THRESHOLDS: [soil_npos_elections::VoteWeight; 9] =
+const THRESHOLDS: [subsoil::npos_elections::VoteWeight; 9] =
 	[10, 20, 30, 40, 50, 60, 1_000, 2_000, 10_000];
 
 parameter_types! {
-	pub static BagThresholds: &'static [soil_npos_elections::VoteWeight] = &THRESHOLDS;
+	pub static BagThresholds: &'static [subsoil::npos_elections::VoteWeight] = &THRESHOLDS;
 	pub static HistoryDepth: u32 = 80;
 	pub static MaxExposurePageSize: u32 = 64;
 	pub static MaxUnlockingChunks: u32 = 32;

@@ -147,6 +147,7 @@ substrate-test-runtime-client = { workspace = true }
 zstd = { workspace = true }
 ark-ff = { workspace = true }
 ark-std = { workspace = true }
+substrate-test-utils = { workspace = true }
 
 [features]
 default = ["std"]
@@ -242,6 +243,8 @@ std = [
 	"ark-std/std",
 ]
 runtime-benchmarks = []
+# soil-npos-elections features
+npos-elections-bench = []
 try-runtime = []
 debug = []
 wasm-interface-wasmtime = ["anyhow", "dep:wasmtime"]

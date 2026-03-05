@@ -36,5 +36,4 @@ path = "src/phragmen_pjr.rs"
 clap = { features = ["derive"], workspace = true }
 honggfuzz = { workspace = true }
 rand = { features = ["small_rng", "std"], workspace = true, default-features = true }
-soil-npos-elections = { workspace = true, default-features = true }
-subsoil = { workspace = true }
+subsoil = { workspace = true, default-features = true }

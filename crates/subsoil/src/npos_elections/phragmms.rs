@@ -21,12 +21,12 @@
 //! _also_ provides a constant factor approximation of the Maximin problem, similar to that of the
 //! MMS algorithm.
 
-use crate::{
+use super::{
 	balance, setup_inputs, BalancingConfig, CandidatePtr, ElectionResult, ExtendedBalance,
 	IdentifierT, PerThing128, VoteWeight, Voter,
 };
 use alloc::{rc::Rc, vec, vec::Vec};
-use subsoil::arithmetic::{traits::Bounded, PerThing, Rational128};
+use crate::arithmetic::{traits::Bounded, PerThing, Rational128};
 
 /// Execute the phragmms method.
 ///
@@ -46,7 +46,7 @@ pub fn phragmms<AccountId: IdentifierT, P: PerThing128>(
 	candidates: Vec<AccountId>,
 	voters: Vec<(AccountId, VoteWeight, impl IntoIterator<Item = AccountId>)>,
 	balancing: Option<BalancingConfig>,
-) -> Result<ElectionResult<AccountId, P>, crate::Error> {
+) -> Result<ElectionResult<AccountId, P>, super::Error> {
 	let (candidates, mut voters) = setup_inputs(candidates, voters);
 
 	let mut winners = vec![];
@@ -71,7 +71,7 @@ pub fn phragmms<AccountId: IdentifierT, P: PerThing128>(
 	assignments
 		.iter_mut()
 		.try_for_each(|a| a.try_normalize())
-		.map_err(|_| crate::Error::ArithmeticError)?;
+		.map_err(|_| super::Error::ArithmeticError)?;
 	let winners = winners
 		.into_iter()
 		.map(|w_ptr| (w_ptr.borrow().who.clone(), w_ptr.borrow().backed_stake))
@@ -231,9 +231,9 @@ pub(crate) fn apply_elected<AccountId: IdentifierT>(
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use crate::{Assignment, ElectionResult};
+	use super::{Assignment, ElectionResult};
 	use alloc::rc::Rc;
-	use subsoil::runtime::{Perbill, Percent};
+	use crate::runtime::{Perbill, Percent};
 
 	#[test]
 	fn basic_election_manual_works() {

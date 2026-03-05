@@ -21,7 +21,7 @@
 #![allow(dead_code)]
 
 use rand::{self, seq::SliceRandom, Rng, RngCore};
-use soil_npos_elections::{phragmms, seq_phragmen, BalancingConfig, ElectionResult, VoteWeight};
+use subsoil::npos_elections::{phragmms, seq_phragmen, BalancingConfig, ElectionResult, VoteWeight};
 use subsoil::runtime::Perbill;
 use std::collections::{BTreeMap, HashSet};
 

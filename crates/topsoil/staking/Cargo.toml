@@ -40,7 +40,6 @@ topsoil-balances = { workspace = true, default-features = true }
 topsoil-staking-reward-curve = { workspace = true, default-features = true }
 topsoil-timestamp = { workspace = true, default-features = true }
 rand_chacha = { workspace = true, default-features = true }
-soil-npos-elections = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
 substrate-test-utils = { workspace = true }
 
@@ -61,7 +60,6 @@ std = [
 	"scale-info/std",
 	"serde/std",
 	"subsoil/std",
-	"soil-npos-elections/std",
 	"subsoil/std",
 	"soil-staking/std",
 ]

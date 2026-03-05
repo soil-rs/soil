@@ -34,7 +34,7 @@ use crate::{
 };
 use codec::Encode;
 use scale_info::TypeInfo;
-use soil_npos_elections::EvaluateSupport;
+use subsoil::npos_elections::EvaluateSupport;
 use subsoil::runtime::{
 	offchain::storage::{MutateStorageError, StorageValueRef},
 	traits::{SaturatedConversion, Saturating, Zero},
@@ -70,7 +70,7 @@ pub(crate) type MinerSolverErrorOf<T> = <<T as MinerConfig>::Solver as NposSolve
 )]
 pub enum MinerError<T: MinerConfig> {
 	/// An internal error in the NPoS elections crate.
-	NposElections(soil_npos_elections::Error),
+	NposElections(subsoil::npos_elections::Error),
 	/// An internal error in the generic solver.
 	Solver(MinerSolverErrorOf<T>),
 	/// Snapshot data was unavailable unexpectedly.
@@ -87,8 +87,8 @@ pub enum MinerError<T: MinerConfig> {
 	Defensive(&'static str),
 }
 
-impl<T: MinerConfig> From<soil_npos_elections::Error> for MinerError<T> {
-	fn from(e: soil_npos_elections::Error) -> Self {
+impl<T: MinerConfig> From<subsoil::npos_elections::Error> for MinerError<T> {
+	fn from(e: subsoil::npos_elections::Error) -> Self {
 		MinerError::NposElections(e)
 	}
 }
@@ -314,7 +314,7 @@ impl<T: MinerConfig> BaseMiner<T> {
 			// assignments -> staked assignments -> reduce -> supports -> trim supports -> staked
 			// assignments -> final assignments
 			// This is by no means the most performant, but is the clear and correct.
-			use soil_npos_elections::{
+			use subsoil::npos_elections::{
 				assignment_ratio_to_staked_normalized, assignment_staked_to_ratio_normalized,
 				reduce, supports_to_staked_assignment, to_supports, EvaluateSupport,
 			};
@@ -514,7 +514,7 @@ impl<T: MinerConfig> BaseMiner<T> {
 		page_voters: &VoterPageOf<T>,
 		page: PageIndex,
 	) -> Result<Vec<AssignmentOf<T>>, MinerError<T>> {
-		use soil_npos_elections::{
+		use subsoil::npos_elections::{
 			assignment_ratio_to_staked_normalized, assignment_staked_to_ratio_normalized,
 			supports_to_staked_assignment, to_supports,
 		};
@@ -1004,7 +1004,7 @@ impl<T: Config> OffchainWorkerMiner<T> {
 mod trimming {
 	use super::*;
 	use crate::{mock::*, verifier::Verifier};
-	use soil_npos_elections::Support;
+	use subsoil::npos_elections::Support;
 	use topsoil_election_provider_support::TryFromUnboundedPagedSupports;
 
 	#[test]
@@ -1399,7 +1399,7 @@ mod base_miner {
 
 	use super::*;
 	use crate::{mock::*, Snapshot};
-	use soil_npos_elections::Support;
+	use subsoil::npos_elections::Support;
 	use subsoil::runtime::PerU16;
 	use topsoil_election_provider_support::TryFromUnboundedPagedSupports;
 

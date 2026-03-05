@@ -60,7 +60,6 @@ members = [
 	"crates/soil/network-test",
 	"crates/soil/network-transactions",
 	"crates/soil/network-types",
-	"crates/soil/npos-elections",
 	"crates/soil/npos-elections/fuzzer",
 	"crates/soil/offchain",
 	"crates/soil/proposer-metrics",
@@ -537,7 +536,6 @@ soil-inherents = { path = "crates/soil/inherents", default-features = false }
 soil-maybe-compressed-blob = { path = "crates/soil/maybe-compressed-blob", default-features = false }
 soil-mixnet = { path = "crates/soil/mixnet", default-features = false }
 soil-mmr-primitives = { path = "crates/soil/merkle-mountain-range", default-features = false }
-soil-npos-elections = { path = "crates/soil/npos-elections", default-features = false }
 soil-offchain = { path = "crates/soil/offchain", default-features = false }
 soil-rpc = { path = "crates/soil/rpc", default-features = false }
 subsoil-runtime-interface-proc-macro = { path = "crates/subsoil-runtime-interface-proc-macro", default-features = false }
