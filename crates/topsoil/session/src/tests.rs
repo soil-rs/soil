@@ -779,7 +779,7 @@ mod disabling_byzantine_threshold {
 
 	#[test]
 	fn disable_when_below_byzantine_threshold() {
-		soil_io::TestExternalities::default().execute_with(|| {
+		subsoil::io::TestExternalities::default().execute_with(|| {
 			let initially_disabled = vec![(1, MAX_OFFENDER_SEVERITY)];
 			Validators::<Test>::put(ACTIVE_SET.to_vec());
 
@@ -796,7 +796,7 @@ mod disabling_byzantine_threshold {
 
 	#[test]
 	fn disable_when_below_custom_byzantine_threshold() {
-		soil_io::TestExternalities::default().execute_with(|| {
+		subsoil::io::TestExternalities::default().execute_with(|| {
 			let initially_disabled = vec![(1, MAX_OFFENDER_SEVERITY), (2, MAX_OFFENDER_SEVERITY)];
 			Validators::<Test>::put(ACTIVE_SET.to_vec());
 
@@ -813,7 +813,7 @@ mod disabling_byzantine_threshold {
 
 	#[test]
 	fn non_slashable_offences_still_disable() {
-		soil_io::TestExternalities::default().execute_with(|| {
+		subsoil::io::TestExternalities::default().execute_with(|| {
 			let initially_disabled = vec![(1, MAX_OFFENDER_SEVERITY)];
 			Validators::<Test>::put(ACTIVE_SET.to_vec());
 
@@ -830,7 +830,7 @@ mod disabling_byzantine_threshold {
 
 	#[test]
 	fn dont_disable_beyond_byzantine_threshold() {
-		soil_io::TestExternalities::default().execute_with(|| {
+		subsoil::io::TestExternalities::default().execute_with(|| {
 			let initially_disabled = vec![(1, MIN_OFFENDER_SEVERITY), (2, MAX_OFFENDER_SEVERITY)];
 			Validators::<Test>::put(ACTIVE_SET.to_vec());
 			let disabling_decision =
@@ -860,7 +860,7 @@ mod disabling_with_reenabling {
 
 	#[test]
 	fn disable_when_below_byzantine_threshold() {
-		soil_io::TestExternalities::default().execute_with(|| {
+		subsoil::io::TestExternalities::default().execute_with(|| {
 			let initially_disabled = vec![(0, MAX_OFFENDER_SEVERITY)];
 			Validators::<Test>::put(ACTIVE_SET.to_vec());
 
@@ -879,7 +879,7 @@ mod disabling_with_reenabling {
 
 	#[test]
 	fn reenable_arbitrary_on_equal_severity() {
-		soil_io::TestExternalities::default().execute_with(|| {
+		subsoil::io::TestExternalities::default().execute_with(|| {
 			let initially_disabled = vec![(0, MAX_OFFENDER_SEVERITY), (1, MAX_OFFENDER_SEVERITY)];
 			Validators::<Test>::put(ACTIVE_SET.to_vec());
 
@@ -899,7 +899,7 @@ mod disabling_with_reenabling {
 
 	#[test]
 	fn do_not_reenable_higher_offenders() {
-		soil_io::TestExternalities::default().execute_with(|| {
+		subsoil::io::TestExternalities::default().execute_with(|| {
 			let initially_disabled = vec![(0, MAX_OFFENDER_SEVERITY), (1, MAX_OFFENDER_SEVERITY)];
 			Validators::<Test>::put(ACTIVE_SET.to_vec());
 
@@ -918,7 +918,7 @@ mod disabling_with_reenabling {
 
 	#[test]
 	fn reenable_lower_offenders() {
-		soil_io::TestExternalities::default().execute_with(|| {
+		subsoil::io::TestExternalities::default().execute_with(|| {
 			let initially_disabled = vec![(0, LOW_OFFENDER_SEVERITY), (1, LOW_OFFENDER_SEVERITY)];
 			Validators::<Test>::put(ACTIVE_SET.to_vec());
 
@@ -940,7 +940,7 @@ mod disabling_with_reenabling {
 
 	#[test]
 	fn reenable_lower_offenders_unordered() {
-		soil_io::TestExternalities::default().execute_with(|| {
+		subsoil::io::TestExternalities::default().execute_with(|| {
 			let initially_disabled = vec![(0, MAX_OFFENDER_SEVERITY), (1, LOW_OFFENDER_SEVERITY)];
 			Validators::<Test>::put(ACTIVE_SET.to_vec());
 
@@ -960,7 +960,7 @@ mod disabling_with_reenabling {
 
 	#[test]
 	fn update_severity() {
-		soil_io::TestExternalities::default().execute_with(|| {
+		subsoil::io::TestExternalities::default().execute_with(|| {
 			let initially_disabled =
 				vec![(OFFENDER_VALIDATOR_IDX, LOW_OFFENDER_SEVERITY), (0, MAX_OFFENDER_SEVERITY)];
 			Validators::<Test>::put(ACTIVE_SET.to_vec());
@@ -980,7 +980,7 @@ mod disabling_with_reenabling {
 
 	#[test]
 	fn update_cannot_lower_severity() {
-		soil_io::TestExternalities::default().execute_with(|| {
+		subsoil::io::TestExternalities::default().execute_with(|| {
 			let initially_disabled =
 				vec![(OFFENDER_VALIDATOR_IDX, MAX_OFFENDER_SEVERITY), (0, MAX_OFFENDER_SEVERITY)];
 			Validators::<Test>::put(ACTIVE_SET.to_vec());
@@ -998,7 +998,7 @@ mod disabling_with_reenabling {
 
 	#[test]
 	fn no_accidental_reenablement_on_repeated_offence() {
-		soil_io::TestExternalities::default().execute_with(|| {
+		subsoil::io::TestExternalities::default().execute_with(|| {
 			let initially_disabled =
 				vec![(OFFENDER_VALIDATOR_IDX, MAX_OFFENDER_SEVERITY), (0, LOW_OFFENDER_SEVERITY)];
 			Validators::<Test>::put(ACTIVE_SET.to_vec());

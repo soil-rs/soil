@@ -101,7 +101,7 @@ impl ExtBuilder {
 		self
 	}
 
-	pub(crate) fn build(self) -> soil_io::TestExternalities {
+	pub(crate) fn build(self) -> subsoil::io::TestExternalities {
 		subsoil::tracing::try_init_simple();
 		let storage = topsoil_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
 
@@ -111,7 +111,7 @@ impl ExtBuilder {
 			GENESIS_IDS.iter().chain(self.ids.iter()).collect()
 		};
 
-		let mut ext = soil_io::TestExternalities::from(storage);
+		let mut ext = subsoil::io::TestExternalities::from(storage);
 		ext.execute_with(|| {
 			for (id, weight) in ids_with_weight {
 				topsoil_support::assert_ok!(List::<Runtime>::insert(*id, *weight));

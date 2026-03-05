@@ -126,9 +126,9 @@ impl topsoil_ranked_collective::Config for Test {
 	type BenchmarkSetup = CoreFellowship;
 }
 
-pub fn new_test_ext() -> soil_io::TestExternalities {
+pub fn new_test_ext() -> subsoil::io::TestExternalities {
 	let t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
-	let mut ext = soil_io::TestExternalities::new(t);
+	let mut ext = subsoil::io::TestExternalities::new(t);
 	ext.execute_with(|| {
 		assert_ok!(Club::add_member(RuntimeOrigin::root(), 100));
 		promote_n_times(100, 9);
@@ -235,7 +235,7 @@ fn swap_exhaustive_works() {
 
 			// The events mess up the storage root:
 			System::reset_events();
-			soil_io::storage::root(soil_runtime::StateVersion::V1)
+			subsoil::io::storage::root(soil_runtime::StateVersion::V1)
 		});
 
 		let root_swap = hypothetically!({
@@ -248,7 +248,7 @@ fn swap_exhaustive_works() {
 			assert_ok!(Club::exchange_member(RuntimeOrigin::root(), 0, 1));
 
 			System::reset_events();
-			soil_io::storage::root(soil_runtime::StateVersion::V1)
+			subsoil::io::storage::root(soil_runtime::StateVersion::V1)
 		});
 
 		assert_eq!(root_add, root_swap);

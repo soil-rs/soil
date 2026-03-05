@@ -175,7 +175,7 @@ topsoil_support::construct_runtime!(
 	}
 );
 
-pub fn new_test_ext() -> soil_io::TestExternalities {
+pub fn new_test_ext() -> subsoil::io::TestExternalities {
 	let mut storage = topsoil_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
 	let _ = topsoil_nomination_pools::GenesisConfig::<Runtime> {
 		min_join_bond: 2,
@@ -186,5 +186,5 @@ pub fn new_test_ext() -> soil_io::TestExternalities {
 		global_max_commission: Some(Perbill::from_percent(50)),
 	}
 	.assimilate_storage(&mut storage);
-	soil_io::TestExternalities::from(storage)
+	subsoil::io::TestExternalities::from(storage)
 }

@@ -20,7 +20,7 @@
 use super::*;
 
 use crate as recovery;
-use topsoil::{deps::soil_io, testing_prelude::*};
+use topsoil::{deps::io, testing_prelude::*};
 
 type Block = topsoil_system::mocking::MockBlock<Test>;
 
@@ -73,7 +73,7 @@ impl Config for Test {
 pub type BalancesCall = topsoil_balances::Call<Test>;
 pub type RecoveryCall = super::Call<Test>;
 
-pub fn new_test_ext() -> soil_io::TestExternalities {
+pub fn new_test_ext() -> subsoil::io::TestExternalities {
 	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	topsoil_balances::GenesisConfig::<Test> {
 		balances: vec![(1, 100), (2, 100), (3, 100), (4, 100), (5, 100)],
@@ -81,7 +81,7 @@ pub fn new_test_ext() -> soil_io::TestExternalities {
 	}
 	.assimilate_storage(&mut t)
 	.unwrap();
-	let mut ext: soil_io::TestExternalities = t.into();
+	let mut ext: subsoil::io::TestExternalities = t.into();
 	ext.execute_with(|| System::set_block_number(1));
 	ext
 }

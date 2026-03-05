@@ -1563,7 +1563,7 @@ impl<T: Config> Pallet<T> {
 		meter: &mut WeightMeter,
 		overweight_limit: Weight,
 	) -> MessageExecutionStatus {
-		let mut id = soil_io::hashing::blake2_256(message);
+		let mut id = subsoil::io::hashing::blake2_256(message);
 		use ProcessMessageError::*;
 		let prev_consumed = meter.consumed();
 

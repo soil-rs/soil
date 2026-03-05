@@ -135,7 +135,7 @@ impl pallet_test::OtherConfig for Test {
 	type OtherEvent = RuntimeEvent;
 }
 
-fn new_test_ext() -> soil_io::TestExternalities {
+fn new_test_ext() -> subsoil::io::TestExternalities {
 	RuntimeGenesisConfig::default().build_storage().unwrap().into()
 }
 

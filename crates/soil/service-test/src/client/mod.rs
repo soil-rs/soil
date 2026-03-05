@@ -2263,7 +2263,7 @@ fn use_dalek_ext_works() {
 		.execution_extensions()
 		.set_extensions_factory(soil_client_api::execution_extensions::ExtensionBeforeBlock::<
 		Block,
-		soil_io::UseDalekExt,
+		subsoil::io::UseDalekExt,
 	>::new(1));
 
 	let a1 = BlockBuilderBuilder::new(&client)

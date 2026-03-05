@@ -1366,7 +1366,7 @@ macro_rules! impl_benchmark_test {
 /// The first argument, `module`, must be the path to this crate's module.
 ///
 /// The second argument, `new_test_ext`, must be a function call which returns either a
-/// `soil_io::TestExternalities`, or some other type with a similar interface.
+/// `subsoil::io::TestExternalities`, or some other type with a similar interface.
 ///
 /// Note that this function call is _not_ evaluated at compile time, but is instead copied textually
 /// into each appropriate invocation site.

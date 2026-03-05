@@ -349,7 +349,7 @@ impl TestExt {
 	}
 }
 
-pub fn new_test_ext() -> soil_io::TestExternalities {
+pub fn new_test_ext() -> subsoil::io::TestExternalities {
 	let c = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
-	soil_io::TestExternalities::from(c)
+	subsoil::io::TestExternalities::from(c)
 }

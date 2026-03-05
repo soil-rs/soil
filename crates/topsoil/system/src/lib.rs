@@ -104,7 +104,7 @@ use core::{fmt::Debug, marker::PhantomData};
 use pallet_prelude::{BlockNumberFor, HeaderFor};
 #[cfg(feature = "std")]
 use serde::Serialize;
-use soil_io::hashing::blake2_256;
+use subsoil::io::hashing::blake2_256;
 #[cfg(feature = "runtime-benchmarks")]
 use soil_runtime::traits::TrailingZeroInput;
 use soil_runtime::{
@@ -151,7 +151,7 @@ use topsoil_support::{
 };
 
 #[cfg(any(feature = "std", test))]
-use soil_io::TestExternalities;
+use subsoil::io::TestExternalities;
 
 pub mod limits;
 #[cfg(test)]
@@ -1123,7 +1123,7 @@ pub mod pallet {
 			<UpgradedToU32RefCount<T>>::put(true);
 			<UpgradedToTripleRefCount<T>>::put(true);
 
-			soil_io::storage::set(well_known_keys::EXTRINSIC_INDEX, &0u32.encode());
+			subsoil::io::storage::set(well_known_keys::EXTRINSIC_INDEX, &0u32.encode());
 		}
 	}
 
@@ -2059,7 +2059,7 @@ impl<T: Config> Pallet<T> {
 		}
 
 		let version = T::Version::get().state_version();
-		let storage_root = T::Hash::decode(&mut &soil_io::storage::root(version)[..])
+		let storage_root = T::Hash::decode(&mut &subsoil::io::storage::root(version)[..])
 			.expect("Node is configured to use the same hash; qed");
 
 		HeaderFor::<T>::new(number, extrinsics_root, storage_root, parent_hash, digest)
@@ -2369,7 +2369,7 @@ impl<T: Config> Pallet<T> {
 
 		if check_version {
 			let current_version = T::Version::get();
-			let Some(new_version) = soil_io::misc::runtime_version(code)
+			let Some(new_version) = subsoil::io::misc::runtime_version(code)
 				.and_then(|v| RuntimeVersion::decode(&mut &v[..]).ok())
 			else {
 				return CanSetCodeResult::InvalidVersion(Error::<T>::FailedToExtractRuntimeVersion);
@@ -2451,9 +2451,9 @@ impl<T: Config> Pallet<T> {
 /// as a facility to reduce the potential for precalculating results.
 pub fn unique(entropy: impl Encode) -> [u8; 32] {
 	let mut last = [0u8; 32];
-	soil_io::storage::read(well_known_keys::INTRABLOCK_ENTROPY, &mut last[..], 0);
+	subsoil::io::storage::read(well_known_keys::INTRABLOCK_ENTROPY, &mut last[..], 0);
 	let next = (b"topsoil_system::unique", entropy, last).using_encoded(blake2_256);
-	soil_io::storage::set(well_known_keys::INTRABLOCK_ENTROPY, &next);
+	subsoil::io::storage::set(well_known_keys::INTRABLOCK_ENTROPY, &next);
 	next
 }
 

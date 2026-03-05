@@ -38,7 +38,7 @@ use core::fmt::{
 	Debug, {self},
 };
 use scale_info::{build::Fields, meta_type, Path, StaticTypeInfo, Type, TypeInfo, TypeParameter};
-use soil_io::hashing::blake2_256;
+use subsoil::io::hashing::blake2_256;
 use subsoil::weights::Weight;
 
 /// Type to represent the version of the [Extension](TransactionExtension) used in this extrinsic.
@@ -905,7 +905,7 @@ mod tests {
 		testing::TestSignature as TestSig,
 		traits::{FakeDispatchable, IdentityLookup, TransactionExtension},
 	};
-	use soil_io::hashing::blake2_256;
+	use subsoil::io::hashing::blake2_256;
 
 	type TestContext = IdentityLookup<u64>;
 	type TestAccountId = u64;

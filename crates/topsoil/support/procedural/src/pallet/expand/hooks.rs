@@ -295,7 +295,7 @@ pub fn expand_hooks(def: &mut Def) -> proc_macro2::TokenStream {
 			for #pallet_ident<#type_use_gen> #where_clause
 			{
 				fn integrity_test() {
-					#topsoil_support::__private::soil_io::TestExternalities::default().execute_with(|| {
+					#topsoil_support::__private::subsoil::io::TestExternalities::default().execute_with(|| {
 						<
 							Self as #topsoil_support::traits::Hooks<
 								#topsoil_system::pallet_prelude::BlockNumberFor::<T>

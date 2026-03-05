@@ -46,7 +46,7 @@ pub fn store_session_validator_set_to_offchain<T: HistoricalConfig + SessionConf
 
 	encoded_validator_list.using_encoded(|encoded_validator_list| {
 		let derived_key = shared::derive_key(shared::PREFIX, session_index);
-		soil_io::offchain_index::set(derived_key.as_slice(), encoded_validator_list);
+		subsoil::io::offchain_index::set(derived_key.as_slice(), encoded_validator_list);
 	});
 }
 

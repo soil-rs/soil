@@ -465,7 +465,7 @@ mod tests {
 
 	#[test]
 	fn host_functions_are_equal() {
-		let host_functions = soil_io::SubstrateHostFunctions::host_functions();
+		let host_functions = subsoil::io::SubstrateHostFunctions::host_functions();
 
 		let equal = &host_functions[..] == &host_functions[..];
 		assert!(equal, "Host functions are not equal");

@@ -41,7 +41,7 @@ impl RuntimeLogger {
 		let _ = log::set_logger(&LOGGER);
 
 		// Use the same max log level as used by the host.
-		log::set_max_level(soil_io::logging::max_level().into());
+		log::set_max_level(subsoil::io::logging::max_level().into());
 	}
 }
 
@@ -57,7 +57,7 @@ impl log::Log for RuntimeLogger {
 		let mut msg = alloc::string::String::default();
 		let _ = ::core::write!(&mut msg, "{}", record.args());
 
-		soil_io::logging::log(record.level().into(), record.target(), msg.as_bytes());
+		subsoil::io::logging::log(record.level().into(), record.target(), msg.as_bytes());
 	}
 
 	fn flush(&self) {}

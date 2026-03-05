@@ -38,7 +38,7 @@ pub use value::StorageValue;
 mod tests {
 	use alloc::vec::Vec;
 	use codec::Encode;
-	use soil_io::TestExternalities;
+	use subsoil::io::TestExternalities;
 	use soil_runtime::{generic, traits::BlakeTwo256, BuildStorage};
 
 	use crate::{

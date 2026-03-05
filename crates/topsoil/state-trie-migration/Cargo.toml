@@ -23,7 +23,6 @@ log = { workspace = true }
 remote-externalities = { optional = true, workspace = true, default-features = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { optional = true, workspace = true, default-features = true }
-soil-io = { workspace = true }
 soil-runtime = { workspace = true }
 substrate-state-trie-migration-rpc = { optional = true, workspace = true, default-features = true }
 thousands = { optional = true, workspace = true }
@@ -45,7 +44,6 @@ std = [
 	"topsoil-balances/std",
 	"scale-info/std",
 	"subsoil/std",
-	"soil-io/std",
 	"soil-runtime/std",
 ]
 runtime-benchmarks = [

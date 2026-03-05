@@ -41,7 +41,7 @@ fn call_wasm_method_with_result<HF: HostFunctionsT>(
 	let mut ext_ext = ext.ext();
 
 	let executor = soil_executor::WasmExecutor::<
-		ExtendedHostFunctions<soil_io::SubstrateHostFunctions, HF>,
+		ExtendedHostFunctions<subsoil::io::SubstrateHostFunctions, HF>,
 	>::builder()
 	.build();
 

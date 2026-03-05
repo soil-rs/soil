@@ -136,8 +136,8 @@ construct_runtime!(
 	}
 );
 
-pub(crate) fn new_test_ext() -> soil_io::TestExternalities {
-	let mut ext = soil_io::TestExternalities::new(Default::default());
+pub(crate) fn new_test_ext() -> subsoil::io::TestExternalities {
+	let mut ext = subsoil::io::TestExternalities::new(Default::default());
 	ext.execute_with(|| {
 		topsoil_system::GenesisConfig::<Runtime>::default().build();
 		System::set_block_number(1);

@@ -343,7 +343,7 @@ impl module3::Config for Runtime {
 	type Currency2 = Module2_3;
 }
 
-fn new_test_ext() -> soil_io::TestExternalities {
+fn new_test_ext() -> subsoil::io::TestExternalities {
 	RuntimeGenesisConfig {
 		system: Default::default(),
 		module_1_1: module1::GenesisConfig { value: 3, test: 2 },

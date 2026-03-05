@@ -196,7 +196,7 @@ pub trait TypeId {
 
 /// A log level matching the one from `log` crate.
 ///
-/// Used internally by `soil_io::logging::log` method.
+/// Used internally by `subsoil::io::logging::log` method.
 #[derive(Copy, Clone)]
 pub enum RuntimeInterfaceLogLevel {
 	/// `Error` log level.

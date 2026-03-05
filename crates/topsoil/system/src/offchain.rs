@@ -86,7 +86,7 @@ where
 {
 	/// A convenience method to submit an extrinsic onchain.
 	pub fn submit_transaction(xt: T::Extrinsic) -> Result<(), ()> {
-		soil_io::offchain::submit_transaction(xt.encode())
+		subsoil::io::offchain::submit_transaction(xt.encode())
 	}
 }
 
@@ -713,7 +713,7 @@ mod tests {
 	fn should_send_unsigned_with_signed_payload_with_all_accounts() {
 		let (pool, pool_state) = testing::TestTransactionPoolExt::new();
 
-		let mut t = soil_io::TestExternalities::default();
+		let mut t = subsoil::io::TestExternalities::default();
 		t.register_extension(TransactionPoolExt::new(pool));
 
 		// given
@@ -748,7 +748,7 @@ mod tests {
 	fn should_send_unsigned_with_signed_payload_with_any_account() {
 		let (pool, pool_state) = testing::TestTransactionPoolExt::new();
 
-		let mut t = soil_io::TestExternalities::default();
+		let mut t = subsoil::io::TestExternalities::default();
 		t.register_extension(TransactionPoolExt::new(pool));
 
 		// given
@@ -779,7 +779,7 @@ mod tests {
 	fn should_send_unsigned_with_signed_payload_with_all_account_and_filter() {
 		let (pool, pool_state) = testing::TestTransactionPoolExt::new();
 
-		let mut t = soil_io::TestExternalities::default();
+		let mut t = subsoil::io::TestExternalities::default();
 		t.register_extension(TransactionPoolExt::new(pool));
 
 		// given
@@ -813,7 +813,7 @@ mod tests {
 	fn should_send_unsigned_with_signed_payload_with_any_account_and_filter() {
 		let (pool, pool_state) = testing::TestTransactionPoolExt::new();
 
-		let mut t = soil_io::TestExternalities::default();
+		let mut t = subsoil::io::TestExternalities::default();
 		t.register_extension(TransactionPoolExt::new(pool));
 
 		// given

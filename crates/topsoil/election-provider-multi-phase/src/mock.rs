@@ -629,7 +629,7 @@ impl ExtBuilder {
 		MaxBackersPerWinner::set(max);
 		self
 	}
-	pub fn build(self) -> soil_io::TestExternalities {
+	pub fn build(self) -> subsoil::io::TestExternalities {
 		subsoil::tracing::try_init_simple();
 		let mut storage =
 			topsoil_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
@@ -651,13 +651,13 @@ impl ExtBuilder {
 		}
 		.assimilate_storage(&mut storage);
 
-		soil_io::TestExternalities::from(storage)
+		subsoil::io::TestExternalities::from(storage)
 	}
 
 	pub fn build_offchainify(
 		self,
 		iters: u32,
-	) -> (soil_io::TestExternalities, Arc<RwLock<PoolState>>) {
+	) -> (subsoil::io::TestExternalities, Arc<RwLock<PoolState>>) {
 		let mut ext = self.build();
 		let (offchain, offchain_state) = TestOffchainExt::new();
 		let (pool, pool_state) = TestTransactionPoolExt::new();

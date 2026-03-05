@@ -224,11 +224,11 @@ pub fn extract_keyring(id: &AuthorityId) -> Ed25519Keyring {
 	Ed25519Keyring::from_raw_public(raw_public).unwrap()
 }
 
-pub fn new_test_ext(vec: Vec<(u64, u64)>) -> soil_io::TestExternalities {
+pub fn new_test_ext(vec: Vec<(u64, u64)>) -> subsoil::io::TestExternalities {
 	new_test_ext_raw_authorities(to_authorities(vec))
 }
 
-pub fn new_test_ext_raw_authorities(authorities: AuthorityList) -> soil_io::TestExternalities {
+pub fn new_test_ext_raw_authorities(authorities: AuthorityList) -> subsoil::io::TestExternalities {
 	subsoil::tracing::try_init_simple();
 	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 

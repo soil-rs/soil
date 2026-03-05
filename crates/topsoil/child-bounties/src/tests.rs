@@ -144,7 +144,7 @@ impl topsoil_child_bounties::Config for Test {
 	type WeightInfo = ();
 }
 
-pub fn new_test_ext() -> soil_io::TestExternalities {
+pub fn new_test_ext() -> subsoil::io::TestExternalities {
 	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	topsoil_balances::GenesisConfig::<Test> {
 		// Total issuance will be 200 with treasury account initialized at ED.

@@ -55,7 +55,7 @@ impl Config for Test {
 	type PalletId = DapPalletId;
 }
 
-pub fn new_test_ext(fund_buffer: bool) -> soil_io::TestExternalities {
+pub fn new_test_ext(fund_buffer: bool) -> subsoil::io::TestExternalities {
 	let mut balances = vec![(1, 100), (2, 200), (3, 300)];
 
 	if fund_buffer {

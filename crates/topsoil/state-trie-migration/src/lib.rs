@@ -320,7 +320,7 @@ pub mod pallet {
 		///
 		/// It updates the dynamic counters.
 		fn migrate_child(&mut self) -> Result<(), Error<T>> {
-			use soil_io::default_child_storage as child_io;
+			use subsoil::io::default_child_storage as child_io;
 			let (maybe_current_child, child_root) = match (&self.progress_child, &self.progress_top)
 			{
 				(Progress::LastKey(last_child), Progress::LastKey(last_top)) => {
@@ -372,7 +372,7 @@ pub mod pallet {
 			let maybe_current_top = match &self.progress_top {
 				Progress::LastKey(last_top) => {
 					let maybe_top: Option<BoundedVec<u8, T::MaxKeyLen>> =
-						if let Some(next) = soil_io::storage::next_key(last_top) {
+						if let Some(next) = subsoil::io::storage::next_key(last_top) {
 							Some(next.try_into().map_err(|_| Error::<T>::KeyTooLong)?)
 						} else {
 							None
@@ -389,8 +389,8 @@ pub mod pallet {
 			};
 
 			if let Some(current_top) = maybe_current_top.as_ref() {
-				let added_size = if let Some(data) = soil_io::storage::get(current_top) {
-					soil_io::storage::set(current_top, &data);
+				let added_size = if let Some(data) = subsoil::io::storage::get(current_top) {
+					subsoil::io::storage::set(current_top, &data);
 					data.len() as u32
 				} else {
 					Zero::zero()
@@ -743,9 +743,9 @@ pub mod pallet {
 
 			let mut dyn_size = 0u32;
 			for key in &keys {
-				if let Some(data) = soil_io::storage::get(key) {
+				if let Some(data) = subsoil::io::storage::get(key) {
 					dyn_size = dyn_size.saturating_add(data.len() as u32);
-					soil_io::storage::set(key, &data);
+					subsoil::io::storage::set(key, &data);
 				}
 			}
 
@@ -789,7 +789,7 @@ pub mod pallet {
 			child_keys: Vec<Vec<u8>>,
 			total_size: u32,
 		) -> DispatchResultWithPostInfo {
-			use soil_io::default_child_storage as child_io;
+			use subsoil::io::default_child_storage as child_io;
 			let who = T::SignedFilter::ensure_origin(origin)?;
 
 			// ensure they can pay more than the fee.
@@ -1071,7 +1071,7 @@ mod benchmarks {
 			let stash = set_balance_for_deposit::<T>(&caller, null.item);
 			// for tests, we need to make sure there is _something_ in storage that is being
 			// migrated.
-			soil_io::storage::set(b"foo", vec![1u8; 33].as_ref());
+			subsoil::io::storage::set(b"foo", vec![1u8; 33].as_ref());
 			#[block]
 			{
 				assert!(StateTrieMigration::<T>::migrate_custom_top(
@@ -1122,7 +1122,7 @@ mod benchmarks {
 			let stash = set_balance_for_deposit::<T>(&caller, 1);
 			// for tests, we need to make sure there is _something_ in storage that is being
 			// migrated.
-			soil_io::default_child_storage::set(b"top", b"foo", vec![1u8; 33].as_ref());
+			subsoil::io::default_child_storage::set(b"top", b"foo", vec![1u8; 33].as_ref());
 
 			#[block]
 			{
@@ -1143,12 +1143,12 @@ mod benchmarks {
 		#[benchmark]
 		fn process_top_key(v: Linear<1, { 4 * 1024 * 1024 }>) -> Result<(), BenchmarkError> {
 			let value = alloc::vec![1u8; v as usize];
-			soil_io::storage::set(KEY, &value);
+			subsoil::io::storage::set(KEY, &value);
 			#[block]
 			{
-				let data = soil_io::storage::get(KEY).unwrap();
-				soil_io::storage::set(KEY, &data);
-				let _next = soil_io::storage::next_key(KEY);
+				let data = subsoil::io::storage::get(KEY).unwrap();
+				subsoil::io::storage::set(KEY, &data);
+				let _next = subsoil::io::storage::next_key(KEY);
 				assert_eq!(data, value);
 			}
 
@@ -1253,7 +1253,7 @@ mod mock {
 		with_pallets: bool,
 		custom_keys: Option<Vec<(Vec<u8>, Vec<u8>)>>,
 		custom_child: Option<Vec<(Vec<u8>, Vec<u8>, Vec<u8>)>>,
-	) -> soil_io::TestExternalities {
+	) -> subsoil::io::TestExternalities {
 		let minimum_size = subsoil::core::storage::TRIE_VALUE_NODE_THRESHOLD as usize + 1;
 		let mut custom_storage = subsoil::core::storage::Storage {
 			top: vec![

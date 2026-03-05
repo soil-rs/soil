@@ -41,6 +41,5 @@ serde = [
 	"dep:serde",
 	"scale-info/serde",
 	"subsoil/serde",
-	"subsoil/serde",
 	"soil-runtime/serde",
 ]

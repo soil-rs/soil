@@ -28,15 +28,15 @@ use std::path::Path;
 /// Any other host function will return an error.
 type HostFunctions = (
 	// The allocator functions.
-	soil_io::allocator::HostFunctions,
+	subsoil::io::allocator::HostFunctions,
 	// Logging is good to have for debugging issues.
-	soil_io::logging::HostFunctions,
+	subsoil::io::logging::HostFunctions,
 	// Give access to the "state", actually the state will be empty, but some chains put constants
 	// into the state and this would panic at metadata generation. Thus, we give them an empty
 	// state to not panic.
-	soil_io::storage::HostFunctions,
+	subsoil::io::storage::HostFunctions,
 	// The hashing functions.
-	soil_io::hashing::HostFunctions,
+	subsoil::io::hashing::HostFunctions,
 );
 
 /// Generate the metadata hash.
@@ -63,7 +63,7 @@ pub fn generate_metadata_hash(wasm: &Path, extra_info: MetadataExtraInfo) -> [u8
 
 	let metadata = executor
 		.call(
-			&mut soil_io::TestExternalities::default().ext(),
+			&mut subsoil::io::TestExternalities::default().ext(),
 			&runtime_code,
 			"Metadata_metadata_at_version",
 			&15u32.encode(),
@@ -83,7 +83,7 @@ pub fn generate_metadata_hash(wasm: &Path, extra_info: MetadataExtraInfo) -> [u8
 
 	let runtime_version = executor
 		.call(
-			&mut soil_io::TestExternalities::default().ext(),
+			&mut subsoil::io::TestExternalities::default().ext(),
 			&runtime_code,
 			"Core_version",
 			&[],

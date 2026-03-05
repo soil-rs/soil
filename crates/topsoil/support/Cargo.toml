@@ -36,7 +36,6 @@ subsoil-crypto-hashing-proc-macro = { workspace = true, default-features = true 
 subsoil-debug-derive = { workspace = true }
 soil-genesis-builder = { workspace = true }
 soil-inherents = { workspace = true }
-soil-io = { workspace = true }
 soil-runtime = { features = ["serde"], workspace = true }
 soil-staking = { workspace = true }
 subsoil = { workspace = true }
@@ -69,7 +68,6 @@ std = [
 	"subsoil-debug-derive/std",
 	"soil-genesis-builder/std",
 	"soil-inherents/std",
-	"soil-io/std",
 	"soil-runtime/std",
 	"soil-staking/std",
 ]

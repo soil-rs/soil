@@ -218,7 +218,7 @@ impl ExtBuilder {
 		self
 	}
 
-	pub fn build(self) -> soil_io::TestExternalities {
+	pub fn build(self) -> subsoil::io::TestExternalities {
 		let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 		topsoil_balances::GenesisConfig::<Test> {
 			// Total issuance will be 200 with treasury account initialized at ED.
@@ -228,7 +228,7 @@ impl ExtBuilder {
 		.assimilate_storage(&mut t)
 		.unwrap();
 		crate::GenesisConfig::<Test>::default().assimilate_storage(&mut t).unwrap();
-		let mut ext = soil_io::TestExternalities::new(t);
+		let mut ext = subsoil::io::TestExternalities::new(t);
 		ext.execute_with(|| System::set_block_number(1));
 		ext
 	}
@@ -416,7 +416,7 @@ fn inexistent_account_works() {
 	.assimilate_storage(&mut t)
 	.unwrap();
 	// Treasury genesis config is not build thus treasury account does not exist
-	let mut t: soil_io::TestExternalities = t.into();
+	let mut t: subsoil::io::TestExternalities = t.into();
 
 	t.execute_with(|| {
 		assert_eq!(Balances::free_balance(Treasury::account_id()), 0); // Account does not exist
@@ -456,7 +456,7 @@ fn genesis_funding_works() {
 	.assimilate_storage(&mut t)
 	.unwrap();
 	crate::GenesisConfig::<Test>::default().assimilate_storage(&mut t).unwrap();
-	let mut t: soil_io::TestExternalities = t.into();
+	let mut t: subsoil::io::TestExternalities = t.into();
 
 	t.execute_with(|| {
 		assert_eq!(Balances::free_balance(Treasury::account_id()), initial_funding);

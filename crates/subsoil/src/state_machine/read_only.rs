@@ -17,7 +17,7 @@
 
 //! Read-only version of Externalities.
 
-use crate::{Backend, StorageKey, StorageValue};
+use super::{Backend, StorageKey, StorageValue};
 use alloc::{boxed::Box, vec::Vec};
 use codec::Encode;
 use core::{

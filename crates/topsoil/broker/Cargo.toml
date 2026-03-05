@@ -27,7 +27,6 @@ soil-runtime = { workspace = true }
 
 [dev-dependencies]
 pretty_assertions = { workspace = true }
-soil-io = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
 
 [features]
@@ -42,7 +41,6 @@ std = [
 	"scale-info/std",
 	"soil-api/std",
 	"subsoil/std",
-	"soil-io/std",
 	"soil-runtime/std",
 ]
 runtime-benchmarks = [

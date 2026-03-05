@@ -21,7 +21,6 @@ log = { workspace = true }
 parking_lot = { workspace = true, default-features = true }
 scale-info = { features = ["derive"], workspace = true, default-features = true }
 
-soil-io = { workspace = true, default-features = true }
 soil-npos-elections = { workspace = true }
 soil-runtime = { workspace = true, default-features = true }
 soil-staking = { workspace = true, default-features = true }

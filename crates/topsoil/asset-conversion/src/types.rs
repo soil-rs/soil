@@ -152,7 +152,7 @@ where
 	Seed: Get<PalletId>,
 {
 	fn try_convert(id: &PoolId) -> Result<AccountId, &PoolId> {
-		soil_io::hashing::blake2_256(&Encode::encode(&(Seed::get(), id))[..])
+		subsoil::io::hashing::blake2_256(&Encode::encode(&(Seed::get(), id))[..])
 			.using_encoded(|e| Decode::decode(&mut TrailingZeroInput::new(e)).map_err(|_| id))
 	}
 }
@@ -165,7 +165,7 @@ where
 	AccountId: Decode,
 {
 	fn try_convert(id: &PoolId) -> Result<AccountId, &PoolId> {
-		soil_io::hashing::blake2_256(&Encode::encode(id)[..])
+		subsoil::io::hashing::blake2_256(&Encode::encode(id)[..])
 			.using_encoded(|e| Decode::decode(&mut TrailingZeroInput::new(e)).map_err(|_| id))
 	}
 }

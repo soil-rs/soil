@@ -333,7 +333,7 @@ macro_rules! runtime_print {
 			use core::fmt::Write;
 			let mut msg = $crate::__private::String::default();
 			let _ = core::write!(&mut msg, $($arg)+);
-			$crate::__private::soil_io::misc::print_utf8(msg.as_bytes())
+			$crate::__private::subsoil::io::misc::print_utf8(msg.as_bytes())
 		}
 	}
 }

@@ -26,7 +26,6 @@ topsoil-session = { features = ["historical"], workspace = true }
 scale-info = { features = ["derive", "serde"], workspace = true }
 serde = { features = ["alloc", "derive"], workspace = true }
 soil-application-crypto = { features = ["serde"], workspace = true }
-soil-io = { workspace = true }
 soil-runtime = { features = ["serde"], workspace = true }
 soil-staking = { features = ["serde"], workspace = true }
 
@@ -64,11 +63,10 @@ std = [
 	"scale-info/std",
 	"serde/std",
 	"soil-application-crypto/std",
-	"soil-io/std",
+	"subsoil/std",
 	"soil-npos-elections/std",
 	"soil-runtime/std",
 	"soil-staking/std",
-	"subsoil/std",
 ]
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",

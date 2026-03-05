@@ -19,7 +19,7 @@
 use crate::{ExecutionLimit, HwBench};
 
 use subsoil::core::{sr25519, Pair};
-use soil_io::crypto::sr25519_verify;
+use subsoil::io::crypto::sr25519_verify;
 use soil_telemetry::SysInfo;
 
 use core::f64;

@@ -36,7 +36,7 @@ impl<T, S: Get<u32>> StorageTryAppend<T> for WeakBoundedVec<T, S> {
 pub mod test {
 	use super::*;
 	use crate::Twox128;
-	use soil_io::TestExternalities;
+	use subsoil::io::TestExternalities;
 	use topsoil_support::traits::ConstU32;
 
 	#[crate::storage_alias]

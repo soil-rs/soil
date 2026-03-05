@@ -42,7 +42,7 @@ pub mod __private {
 	pub use log;
 	pub use paste;
 	pub use subsoil::defer;
-	pub use soil_io::storage::root as storage_root;
+	pub use subsoil::io::storage::root as storage_root;
 	pub use soil_runtime::{traits::Zero, StateVersion};
 	pub use subsoil::storage::{well_known_keys, TrackedStorageKey};
 	pub use topsoil_support::{storage, traits};

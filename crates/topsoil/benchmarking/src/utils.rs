@@ -21,7 +21,7 @@ use codec::{Decode, Encode};
 use scale_info::TypeInfo;
 #[cfg(feature = "std")]
 use serde::{Deserialize, Serialize};
-use soil_io::hashing::blake2_256;
+use subsoil::io::hashing::blake2_256;
 use soil_runtime::{
 	traits::TrailingZeroInput, transaction_validity::TransactionValidityError, DispatchError,
 };

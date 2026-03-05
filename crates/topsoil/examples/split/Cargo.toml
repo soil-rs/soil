@@ -24,7 +24,6 @@ scale-info = { features = ["derive"], workspace = true }
 topsoil-support = { workspace = true }
 topsoil-system = { workspace = true }
 
-soil-io = { workspace = true }
 
 topsoil-benchmarking = { optional = true, workspace = true }
 
@@ -41,7 +40,6 @@ std = [
 	"log/std",
 	"scale-info/std",
 	"subsoil/std",
-	"soil-io/std",
 ]
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",

@@ -23,7 +23,6 @@ topsoil-support = { workspace = true }
 topsoil-system = { workspace = true }
 
 topsoil-election-provider-support = { workspace = true }
-soil-io = { workspace = true }
 soil-npos-elections = { workspace = true }
 soil-runtime = { workspace = true }
 
@@ -59,7 +58,6 @@ std = [
 	"rand/std",
 	"scale-info/std",
 	"subsoil/std",
-	"soil-io/std",
 	"soil-npos-elections/std",
 	"soil-runtime/std",
 	"strum/std",

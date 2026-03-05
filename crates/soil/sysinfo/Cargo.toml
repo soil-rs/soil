@@ -29,7 +29,6 @@ serde = { features = ["derive"], workspace = true, default-features = true, opti
 serde_json = { workspace = true, default-features = true, optional = true}
 subsoil = { workspace = true, default-features = true, optional = true}
 subsoil-crypto-hashing = { workspace = true, default-features = true, optional = true}
-soil-io = { workspace = true, default-features = true, optional = true}
 
 [features]
 default = ["std"]
@@ -45,11 +44,9 @@ std = [
 	"serde_json",
 	"subsoil",
 	"subsoil-crypto-hashing",
-	"soil-io",
 	"soil-telemetry",
 	"subsoil/std",
 	"subsoil-crypto-hashing/std",
-	"soil-io/std",
 	"soil-telemetry/std",
 ]
 

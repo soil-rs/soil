@@ -87,7 +87,7 @@ pub const TEST_EPOCH_CONFIGURATION: EpochConfiguration =
 	EpochConfiguration { redundancy_factor: u32::MAX, attempts_number: 5 };
 
 /// Build and returns test storage externalities
-pub fn new_test_ext(authorities_len: usize) -> soil_io::TestExternalities {
+pub fn new_test_ext(authorities_len: usize) -> subsoil::io::TestExternalities {
 	new_test_ext_with_pairs(authorities_len, false).1
 }
 
@@ -96,7 +96,7 @@ pub fn new_test_ext(authorities_len: usize) -> soil_io::TestExternalities {
 pub fn new_test_ext_with_pairs(
 	authorities_len: usize,
 	with_ring_context: bool,
-) -> (Vec<AuthorityPair>, soil_io::TestExternalities) {
+) -> (Vec<AuthorityPair>, subsoil::io::TestExternalities) {
 	let pairs = (0..authorities_len)
 		.map(|i| AuthorityPair::from_seed(&U256::from(i).to_big_endian()))
 		.collect::<Vec<_>>();
@@ -113,7 +113,7 @@ pub fn new_test_ext_with_pairs(
 	.assimilate_storage(&mut storage)
 	.unwrap();
 
-	let mut ext: soil_io::TestExternalities = storage.into();
+	let mut ext: subsoil::io::TestExternalities = storage.into();
 
 	if with_ring_context {
 		ext.execute_with(|| {

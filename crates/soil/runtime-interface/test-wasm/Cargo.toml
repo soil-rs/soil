@@ -18,7 +18,6 @@ targets = ["x86_64-unknown-linux-gnu"]
 [dependencies]
 bytes = { workspace = true }
 subsoil = { workspace = true }
-soil-io = { workspace = true }
 
 [build-dependencies]
 substrate-wasm-builder = { optional = true, workspace = true, default-features = true }
@@ -28,6 +27,5 @@ default = ["std"]
 std = [
 	"bytes/std",
 	"subsoil/std",
-	"soil-io/std",
 	"substrate-wasm-builder",
 ]

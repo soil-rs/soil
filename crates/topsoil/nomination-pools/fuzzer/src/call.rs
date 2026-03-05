@@ -210,7 +210,7 @@ impl RewardAgent {
 fn main() {
 	let mut reward_agent = RewardAgent::new(REWARD_AGENT_ACCOUNT);
 	subsoil::tracing::try_init_simple();
-	let mut ext = soil_io::TestExternalities::new_empty();
+	let mut ext = subsoil::io::TestExternalities::new_empty();
 	let mut events_histogram = Vec::<(PoolsEvents<T>, u32)>::default();
 	let mut iteration = 0 as BlockNumber;
 	let mut ok = 0;

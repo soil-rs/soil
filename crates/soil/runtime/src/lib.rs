@@ -399,12 +399,12 @@ impl traits::IdentifyAccount for MultiSigner {
 		match self {
 			Self::Ed25519(who) => <[u8; 32]>::from(who).into(),
 			Self::Sr25519(who) => <[u8; 32]>::from(who).into(),
-			Self::Ecdsa(who) => soil_io::hashing::blake2_256(who.as_ref()).into(),
+			Self::Ecdsa(who) => subsoil::io::hashing::blake2_256(who.as_ref()).into(),
 			Self::Eth(who) => {
 				// It is important that the account id is based off the eth address rather
 				// than its pubkey. This is because in many cases we don't know the pubkey
 				// of an eth account.
-				let eth_address = &soil_io::hashing::keccak_256(who.as_ref())[12..];
+				let eth_address = &subsoil::io::hashing::keccak_256(who.as_ref())[12..];
 				// This is by convention: `pallet_revive` maps eth addresses to account ids
 				// by filling up the additional 12 bytes with 0xEE.
 				let mut address = [0xEE; 32];
@@ -486,13 +486,13 @@ impl Verify for MultiSignature {
 			Self::Ed25519(sig) => sig.verify(msg, &who.into()),
 			Self::Sr25519(sig) => sig.verify(msg, &who.into()),
 			Self::Ecdsa(sig) => {
-				let m = soil_io::hashing::blake2_256(msg.get());
-				soil_io::crypto::secp256k1_ecdsa_recover_compressed(sig.as_ref(), &m)
-					.map_or(false, |pubkey| soil_io::hashing::blake2_256(&pubkey) == who)
+				let m = subsoil::io::hashing::blake2_256(msg.get());
+				subsoil::io::crypto::secp256k1_ecdsa_recover_compressed(sig.as_ref(), &m)
+					.map_or(false, |pubkey| subsoil::io::hashing::blake2_256(&pubkey) == who)
 			},
 			Self::Eth(sig) => {
-				let m = soil_io::hashing::keccak_256(msg.get());
-				soil_io::crypto::secp256k1_ecdsa_recover_compressed(sig.as_ref(), &m)
+				let m = subsoil::io::hashing::keccak_256(msg.get());
+				subsoil::io::crypto::secp256k1_ecdsa_recover_compressed(sig.as_ref(), &m)
 					.map_or(false, |pubkey| {
 						&MultiSigner::Eth(pubkey.into()).into_account() == signer
 					})
@@ -1169,7 +1169,7 @@ mod tests {
 	use super::*;
 	use codec::{Decode, Encode};
 	use subsoil::core::{crypto::Pair, hex2array};
-	use soil_io::TestExternalities;
+	use subsoil::io::TestExternalities;
 	use subsoil::state_machine::create_proof_check_backend;
 
 	#[test]
@@ -1292,10 +1292,10 @@ mod tests {
 
 		let pre_root = *ext.backend.root();
 		let (_, proof) = ext.execute_and_prove(|| {
-			soil_io::storage::get(b"a");
-			soil_io::storage::get(b"b");
-			soil_io::storage::get(b"v");
-			soil_io::storage::get(b"d");
+			subsoil::io::storage::get(b"a");
+			subsoil::io::storage::get(b"b");
+			subsoil::io::storage::get(b"v");
+			subsoil::io::storage::get(b"d");
 		});
 
 		let compact_proof = proof.clone().into_compact_proof::<BlakeTwo256>(pre_root).unwrap();
@@ -1311,14 +1311,14 @@ mod tests {
 		assert_eq!(proof_check.storage(b"a",).unwrap().unwrap(), vec![1u8; 33]);
 
 		let _ = ext.execute_and_prove(|| {
-			soil_io::storage::set(b"a", &vec![1u8; 44]);
+			subsoil::io::storage::set(b"a", &vec![1u8; 44]);
 		});
 
 		// ensure that these changes are propagated to the backend.
 
 		ext.execute_with(|| {
-			assert_eq!(soil_io::storage::get(b"a").unwrap(), vec![1u8; 44]);
-			assert_eq!(soil_io::storage::get(b"b").unwrap(), vec![2u8; 33]);
+			assert_eq!(subsoil::io::storage::get(b"a").unwrap(), vec![1u8; 44]);
+			assert_eq!(subsoil::io::storage::get(b"b").unwrap(), vec![2u8; 33]);
 		});
 	}
 }

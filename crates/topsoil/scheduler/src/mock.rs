@@ -236,7 +236,7 @@ impl Config for Test {
 
 pub type LoggerCall = logger::Call<Test>;
 
-pub fn new_test_ext() -> soil_io::TestExternalities {
+pub fn new_test_ext() -> subsoil::io::TestExternalities {
 	let t = system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	t.into()
 }

@@ -296,7 +296,7 @@ topsoil_support::construct_runtime!(
 	}
 );
 
-pub fn new_test_ext() -> soil_io::TestExternalities {
+pub fn new_test_ext() -> subsoil::io::TestExternalities {
 	let t = RuntimeGenesisConfig { ..Default::default() }.build_storage().unwrap();
 	t.into()
 }

@@ -64,12 +64,12 @@ impl<'a> StorageValueRef<'a> {
 	/// if you happen to write a `get-check-set` pattern you should most likely
 	/// be using `mutate` instead.
 	pub fn set(&self, value: &impl codec::Encode) {
-		value.using_encoded(|val| soil_io::offchain::local_storage_set(self.kind, self.key, val))
+		value.using_encoded(|val| subsoil::io::offchain::local_storage_set(self.kind, self.key, val))
 	}
 
 	/// Remove the associated value from the storage.
 	pub fn clear(&mut self) {
-		soil_io::offchain::local_storage_clear(self.kind, self.key)
+		subsoil::io::offchain::local_storage_clear(self.kind, self.key)
 	}
 
 	/// Retrieve & decode the value from storage.
@@ -80,7 +80,7 @@ impl<'a> StorageValueRef<'a> {
 	/// Returns the value if stored.
 	/// Returns an error if the value could not be decoded.
 	pub fn get<T: codec::Decode>(&self) -> Result<Option<T>, StorageRetrievalError> {
-		soil_io::offchain::local_storage_get(self.kind, self.key)
+		subsoil::io::offchain::local_storage_get(self.kind, self.key)
 			.map(|val| T::decode(&mut &*val).map_err(|_| StorageRetrievalError::Undecodable))
 			.transpose()
 	}
@@ -100,7 +100,7 @@ impl<'a> StorageValueRef<'a> {
 		T: codec::Codec,
 		F: FnOnce(Result<Option<T>, StorageRetrievalError>) -> Result<T, E>,
 	{
-		let value = soil_io::offchain::local_storage_get(self.kind, self.key);
+		let value = subsoil::io::offchain::local_storage_get(self.kind, self.key);
 		let decoded = value
 			.as_deref()
 			.map(|mut bytes| T::decode(&mut bytes).map_err(|_| StorageRetrievalError::Undecodable))
@@ -110,7 +110,7 @@ impl<'a> StorageValueRef<'a> {
 			mutate_val(decoded).map_err(|err| MutateStorageError::ValueFunctionFailed(err))?;
 
 		let set = val.using_encoded(|new_val| {
-			soil_io::offchain::local_storage_compare_and_set(self.kind, self.key, value, new_val)
+			subsoil::io::offchain::local_storage_compare_and_set(self.kind, self.key, value, new_val)
 		});
 		if set {
 			Ok(val)
@@ -124,7 +124,7 @@ impl<'a> StorageValueRef<'a> {
 mod tests {
 	use super::*;
 	use subsoil::core::offchain::{testing, OffchainDbExt};
-	use soil_io::TestExternalities;
+	use subsoil::io::TestExternalities;
 
 	#[test]
 	fn should_set_and_get() {

@@ -125,11 +125,11 @@ pub const CALL: &<Test as Config>::RuntimeCall =
 	&RuntimeCall::System(topsoil_system::Call::set_heap_pages { pages: 0u64 });
 
 /// Create new externalities for `System` module tests.
-pub fn new_test_ext() -> soil_io::TestExternalities {
+pub fn new_test_ext() -> subsoil::io::TestExternalities {
 	// Initialize logging
 	subsoil::tracing::try_init_simple();
 
-	let mut ext: soil_io::TestExternalities =
+	let mut ext: subsoil::io::TestExternalities =
 		RuntimeGenesisConfig::default().build_storage().unwrap().into();
 	// Add to each test the initial weight of a block
 	ext.execute_with(|| {

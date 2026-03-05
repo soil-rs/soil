@@ -18,7 +18,7 @@
 use crate::*;
 use core::ops::Add;
 use mock::*;
-use soil_io::hashing::blake2_256;
+use subsoil::io::hashing::blake2_256;
 use soil_keyring::Sr25519Keyring;
 use soil_runtime::{
 	generic::Era,

@@ -70,7 +70,7 @@ impl module::Config for Runtime {
 	type RuntimeEvent = RuntimeEvent;
 }
 
-fn new_test_ext() -> soil_io::TestExternalities {
+fn new_test_ext() -> subsoil::io::TestExternalities {
 	topsoil_system::GenesisConfig::<Runtime>::default()
 		.build_storage()
 		.unwrap()

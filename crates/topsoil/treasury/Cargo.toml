@@ -31,7 +31,6 @@ soil-runtime = { workspace = true }
 
 [dev-dependencies]
 topsoil-utility = { workspace = true, default-features = true }
-soil-io = { workspace = true, default-features = true }
 
 [features]
 default = ["std"]
@@ -46,7 +45,7 @@ std = [
 	"scale-info/std",
 	"serde",
 	"subsoil?/std",
-	"soil-io/std",
+	"subsoil/std",
 	"soil-runtime/std",
 ]
 runtime-benchmarks = [

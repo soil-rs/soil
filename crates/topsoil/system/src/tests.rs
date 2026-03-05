@@ -61,36 +61,36 @@ fn origin_works() {
 fn unique_datum_works() {
 	new_test_ext().execute_with(|| {
 		System::initialize(&1, &[0u8; 32].into(), &Default::default());
-		assert!(soil_io::storage::exists(well_known_keys::INTRABLOCK_ENTROPY));
+		assert!(subsoil::io::storage::exists(well_known_keys::INTRABLOCK_ENTROPY));
 
 		let h1 = unique(b"");
 		assert_eq!(
 			32,
-			soil_io::storage::read(well_known_keys::INTRABLOCK_ENTROPY, &mut [], 0).unwrap()
+			subsoil::io::storage::read(well_known_keys::INTRABLOCK_ENTROPY, &mut [], 0).unwrap()
 		);
 		let h2 = unique(b"");
 		assert_eq!(
 			32,
-			soil_io::storage::read(well_known_keys::INTRABLOCK_ENTROPY, &mut [], 0).unwrap()
+			subsoil::io::storage::read(well_known_keys::INTRABLOCK_ENTROPY, &mut [], 0).unwrap()
 		);
 		assert_ne!(h1, h2);
 
 		let h3 = unique(b"Hello");
 		assert_eq!(
 			32,
-			soil_io::storage::read(well_known_keys::INTRABLOCK_ENTROPY, &mut [], 0).unwrap()
+			subsoil::io::storage::read(well_known_keys::INTRABLOCK_ENTROPY, &mut [], 0).unwrap()
 		);
 		assert_ne!(h2, h3);
 
 		let h4 = unique(b"Hello");
 		assert_eq!(
 			32,
-			soil_io::storage::read(well_known_keys::INTRABLOCK_ENTROPY, &mut [], 0).unwrap()
+			subsoil::io::storage::read(well_known_keys::INTRABLOCK_ENTROPY, &mut [], 0).unwrap()
 		);
 		assert_ne!(h3, h4);
 
 		System::finalize();
-		assert!(!soil_io::storage::exists(well_known_keys::INTRABLOCK_ENTROPY));
+		assert!(!subsoil::io::storage::exists(well_known_keys::INTRABLOCK_ENTROPY));
 	});
 }
 

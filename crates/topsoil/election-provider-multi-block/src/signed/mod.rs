@@ -58,7 +58,7 @@ use crate::{
 };
 use codec::{Decode, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;
-use soil_io::MultiRemovalResults;
+use subsoil::io::MultiRemovalResults;
 use soil_npos_elections::ElectionScore;
 use soil_runtime::{traits::Saturating, Perbill};
 use subsoil::std::prelude::*;

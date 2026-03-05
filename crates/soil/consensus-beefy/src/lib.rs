@@ -144,7 +144,7 @@ pub mod ecdsa_crypto {
 
 		fn verify(&self, signature: &<Self as RuntimeAppPublic>::Signature, msg: &[u8]) -> bool {
 			let msg_hash = keccak_256(msg);
-			match soil_io::crypto::secp256k1_ecdsa_recover_compressed(
+			match subsoil::io::crypto::secp256k1_ecdsa_recover_compressed(
 				signature.as_inner_ref().as_ref(),
 				&msg_hash,
 			) {

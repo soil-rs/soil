@@ -1026,7 +1026,7 @@ pub mod pallet {
 			debug_assert_eq!(buffer, data.encode());
 			// buffer should have not re-allocated since.
 			debug_assert!(buffer.len() == size && size == buffer.capacity());
-			soil_io::storage::set(key, &buffer);
+			subsoil::io::storage::set(key, &buffer);
 
 			hash
 		}

@@ -22,7 +22,7 @@ use std::{
 	panic::{AssertUnwindSafe, UnwindSafe},
 };
 
-use crate::{
+use super::{
 	backend::Backend, ext::Ext, InMemoryBackend, OverlayedChanges, StorageKey, StorageValue,
 	TrieBackendBuilder,
 };

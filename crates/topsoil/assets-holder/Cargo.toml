@@ -27,7 +27,6 @@ soil-runtime = { workspace = true }
 [dev-dependencies]
 topsoil-balances = { workspace = true }
 subsoil = { workspace = true }
-soil-io = { workspace = true }
 
 [features]
 default = ["std"]
@@ -41,7 +40,6 @@ std = [
 	"topsoil-balances/std",
 	"scale-info/std",
 	"subsoil/std",
-	"soil-io/std",
 	"soil-runtime/std",
 ]
 runtime-benchmarks = [

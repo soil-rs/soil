@@ -48,7 +48,7 @@ impl RuntimePublic for Public {
 	}
 
 	fn generate_pair(key_type: KeyTypeId, seed: Option<Vec<u8>>) -> Self {
-		soil_io::crypto::ecdsa_bls381_generate(key_type, seed)
+		subsoil::io::crypto::ecdsa_bls381_generate(key_type, seed)
 	}
 
 	/// Dummy implementation. Returns `None`.
@@ -114,7 +114,7 @@ fn generate_ecdsa_proof_of_possession(
 ) -> Option<ecdsa::Signature> {
 	let ecdsa_pub = ecdsa::Public::from_raw(ecdsa_pub_as_bytes);
 	let proof_of_possession_statement = ecdsa::Pair::proof_of_possession_statement(owner);
-	soil_io::crypto::ecdsa_sign(key_type, &ecdsa_pub, &proof_of_possession_statement)
+	subsoil::io::crypto::ecdsa_sign(key_type, &ecdsa_pub, &proof_of_possession_statement)
 }
 
 /// Helper: Generate BLS381 proof of possession
@@ -124,7 +124,7 @@ fn generate_bls381_proof_of_possession(
 	owner: &[u8],
 ) -> Option<bls381::ProofOfPossession> {
 	let bls381_pub = bls381::Public::from_raw(bls381_pub_as_bytes);
-	soil_io::crypto::bls381_generate_proof_of_possession(key_type, &bls381_pub, owner)
+	subsoil::io::crypto::bls381_generate_proof_of_possession(key_type, &bls381_pub, owner)
 }
 
 /// Helper: Combine ECDSA and BLS381 proof_of_possessions into a single raw proof_of_possession

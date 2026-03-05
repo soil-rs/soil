@@ -16,7 +16,7 @@
 // limitations under the License.
 
 #[cfg(test)]
-use soil_io::{MultiRemovalResults, TestExternalities};
+use subsoil::io::{MultiRemovalResults, TestExternalities};
 #[cfg(test)]
 use subsoil::metadata_ir::{
 	PalletStorageMetadataIR, StorageEntryMetadataIR, StorageEntryModifierIR, StorageEntryTypeIR,
@@ -712,7 +712,7 @@ parameter_types! {
 #[test]
 fn check_storage_parameter_type_works() {
 	TestExternalities::default().execute_with(|| {
-		assert_eq!(soil_io::hashing::twox_128(b":StorageParameter:"), StorageParameter::key());
+		assert_eq!(subsoil::io::hashing::twox_128(b":StorageParameter:"), StorageParameter::key());
 
 		assert_eq!(10, StorageParameter::get());
 

@@ -95,10 +95,10 @@ impl Config for Test {
 	type BlockNumberProvider = topsoil_system::Pallet<Test>;
 }
 
-pub(crate) fn new_test_ext() -> soil_io::TestExternalities {
+pub(crate) fn new_test_ext() -> subsoil::io::TestExternalities {
 	let t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 
-	let mut ext = soil_io::TestExternalities::new(t);
+	let mut ext = subsoil::io::TestExternalities::new(t);
 	ext.register_extension(KeystoreExt::new(MemoryKeystore::new()));
 	ext.execute_with(|| System::set_block_number(1));
 	ext

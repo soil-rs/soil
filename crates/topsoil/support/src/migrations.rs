@@ -30,7 +30,7 @@ use core::marker::PhantomData;
 use impl_trait_for_tuples::impl_for_tuples;
 use subsoil::arithmetic::traits::Bounded;
 use subsoil::core::Get;
-use soil_io::{hashing::twox_128, storage::clear_prefix, KillStorageResult};
+use subsoil::io::{hashing::twox_128, storage::clear_prefix, KillStorageResult};
 use soil_runtime::traits::Zero;
 
 /// Handles storage migration pallet versioning.
@@ -229,7 +229,7 @@ where
 			crate::storage::storage_prefix(name.as_bytes(), PALLET_VERSION_STORAGE_KEY_POSTFIX)
 		}
 
-		soil_io::storage::clear(&pallet_version_key(<T as PalletInfoAccess>::name()));
+		subsoil::io::storage::clear(&pallet_version_key(<T as PalletInfoAccess>::name()));
 
 		<T::InCodeStorageVersion as StoreInCodeStorageVersion<T>>::store_in_code_storage_version();
 
@@ -1221,7 +1221,7 @@ mod tests {
 		assert_eq!(<Triple as SteppedMigrations>::nth_id(1), Some(1u8.encode()));
 		assert_eq!(<Triple as SteppedMigrations>::nth_id(2), Some(2u8.encode()));
 
-		soil_io::TestExternalities::default().execute_with(|| {
+		subsoil::io::TestExternalities::default().execute_with(|| {
 			for n in 0..3 {
 				<Triple as SteppedMigrations>::nth_step(
 					n,
@@ -1234,7 +1234,7 @@ mod tests {
 
 	#[test]
 	fn integrity_test_works() {
-		soil_io::TestExternalities::default().execute_with(|| {
+		subsoil::io::TestExternalities::default().execute_with(|| {
 			assert_ok!(<() as SteppedMigrations>::integrity_test());
 			assert_ok!(<M0 as SteppedMigrations>::integrity_test());
 			assert_ok!(<M1 as SteppedMigrations>::integrity_test());
@@ -1246,7 +1246,7 @@ mod tests {
 
 	#[test]
 	fn transactional_rollback_works() {
-		soil_io::TestExternalities::default().execute_with(|| {
+		subsoil::io::TestExternalities::default().execute_with(|| {
 			assert_ok!(<(M0, F0) as SteppedMigrations>::nth_transactional_step(
 				0,
 				Default::default(),

@@ -19,7 +19,7 @@
 #![allow(deprecated)]
 
 use subsoil::core::sr25519;
-use soil_io::TestExternalities;
+use subsoil::io::TestExternalities;
 use soil_runtime::{
 	generic,
 	traits::{BlakeTwo256, Verify},

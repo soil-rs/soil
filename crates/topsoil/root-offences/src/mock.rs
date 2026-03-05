@@ -204,7 +204,7 @@ impl Default for ExtBuilder {
 }
 
 impl ExtBuilder {
-	fn build(self) -> soil_io::TestExternalities {
+	fn build(self) -> subsoil::io::TestExternalities {
 		let mut storage = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 
 		topsoil_balances::GenesisConfig::<Test> {

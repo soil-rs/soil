@@ -35,15 +35,12 @@ log = { workspace = true }
 # Optional imports for benchmarking
 topsoil-benchmarking = { optional = true, workspace = true }
 topsoil-balances = { optional = true, workspace = true }
-soil-io = { optional = true, workspace = true }
 subsoil = { workspace = true, optional = true }
 
 [dev-dependencies]
 topsoil-benchmarking = { workspace = true, default-features = true }
 topsoil-election-provider-support = { workspace = true, default-features = true }
 topsoil-balances = { workspace = true, default-features = true }
-soil-io = { workspace = true, default-features = true }
-subsoil = { workspace = true, default-features = true }
 substrate-test-utils = { workspace = true }
 
 [features]
@@ -58,9 +55,7 @@ std = [
 	"topsoil-balances?/std",
 	"scale-info/std",
 	"subsoil?/std",
-	"soil-io?/std",
 	"soil-runtime/std",
-	"subsoil?/std",
 ]
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",
@@ -69,15 +64,11 @@ runtime-benchmarks = [
 	"topsoil-system/runtime-benchmarks",
 	"topsoil-balances/runtime-benchmarks",
 	"subsoil",
-	"soil-io",
 	"soil-runtime/runtime-benchmarks",
-	"subsoil",
 ]
 fuzz = [
 	"topsoil-election-provider-support/fuzz",
 	"topsoil-balances",
-	"subsoil",
-	"soil-io",
 	"subsoil",
 ]
 try-runtime = [

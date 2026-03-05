@@ -103,7 +103,6 @@ std = [
 	"soil-consensus",
 	"subsoil",
 	"soil-executor",
-	"subsoil",
 	"soil-informant",
 	"soil-network",
 	"soil-network-common",

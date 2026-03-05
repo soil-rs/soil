@@ -51,7 +51,7 @@ extern crate alloc;
 use alloc::{collections::btree_set::BTreeSet, vec::Vec};
 pub use pallet::*;
 use topsoil::{
-	deps::{subsoil::core::OpaquePeerId as PeerId, soil_io},
+	deps::{subsoil::core::OpaquePeerId as PeerId, io},
 	prelude::*,
 };
 pub use weights::WeightInfo;
@@ -176,7 +176,7 @@ pub mod pallet {
 		/// Set reserved node every block. It may not be enabled depends on the offchain
 		/// worker settings when starting the node.
 		fn offchain_worker(now: BlockNumberFor<T>) {
-			let network_state = soil_io::offchain::network_state();
+			let network_state = subsoil::io::offchain::network_state();
 			match network_state {
 				Err(_) => log::error!(
 					target: "runtime::node-authorization",
@@ -191,7 +191,7 @@ pub mod pallet {
 							"Error: failed to decode PeerId at {:?}",
 							now,
 						),
-						Ok(node) => soil_io::offchain::set_authorized_nodes(
+						Ok(node) => subsoil::io::offchain::set_authorized_nodes(
 							Self::get_authorized_nodes(&PeerId(node)),
 							true,
 						),

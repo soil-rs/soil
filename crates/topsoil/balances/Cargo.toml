@@ -30,7 +30,6 @@ soil-runtime = { workspace = true }
 topsoil-support = { features = ["experimental"], workspace = true, default-features = true }
 topsoil-transaction-payment = { workspace = true, default-features = true }
 paste = { workspace = true, default-features = true }
-soil-io = { workspace = true, default-features = true }
 
 [features]
 default = ["std"]
@@ -43,7 +42,6 @@ std = [
 	"topsoil-transaction-payment/std",
 	"scale-info/std",
 	"subsoil/std",
-	"soil-io/std",
 	"soil-runtime/std",
 ]
 # Enable support for setting the existential deposit to zero.

@@ -340,7 +340,7 @@ where
 mod test {
 	use super::*;
 	use crate::storage::types::ValueQuery;
-	use soil_io::{hashing::twox_128, TestExternalities};
+	use subsoil::io::{hashing::twox_128, TestExternalities};
 	use subsoil::metadata_ir::StorageEntryModifierIR;
 
 	struct Prefix;

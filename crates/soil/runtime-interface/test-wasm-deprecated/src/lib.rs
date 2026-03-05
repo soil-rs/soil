@@ -40,7 +40,7 @@ pub fn wasm_binary_unwrap() -> &'static [u8] {
 #[cfg(not(feature = "std"))]
 #[no_mangle]
 pub fn import_sp_io() {
-	soil_io::misc::print_utf8(&[]);
+	subsoil::io::misc::print_utf8(&[]);
 }
 
 #[runtime_interface]

@@ -183,7 +183,7 @@ topsoil_support::construct_runtime!(
 pub struct ExtBuilder {}
 
 impl ExtBuilder {
-	fn build(self) -> soil_io::TestExternalities {
+	fn build(self) -> subsoil::io::TestExternalities {
 		subsoil::tracing::try_init_simple();
 		let mut storage =
 			topsoil_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
@@ -232,7 +232,7 @@ impl ExtBuilder {
 		}
 		.assimilate_storage(&mut storage);
 
-		let mut ext = soil_io::TestExternalities::from(storage);
+		let mut ext = subsoil::io::TestExternalities::from(storage);
 
 		ext.execute_with(|| {
 			// for events to be deposited.

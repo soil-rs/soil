@@ -24,7 +24,6 @@ log = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 soil-api = { workspace = true }
 subsoil = { workspace = true }
-soil-io = { workspace = true }
 soil-runtime = { workspace = true }
 
 [dev-dependencies]
@@ -46,7 +45,6 @@ std = [
 	"scale-info/std",
 	"soil-api/std",
 	"subsoil/std",
-	"soil-io/std",
 	"soil-runtime/std",
 ]
 runtime-benchmarks = [

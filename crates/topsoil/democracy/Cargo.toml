@@ -24,7 +24,6 @@ log = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { features = ["derive"], optional = true, workspace = true, default-features = true }
 subsoil = { workspace = true }
-soil-io = { workspace = true }
 soil-runtime = { workspace = true }
 
 [dev-dependencies]
@@ -46,7 +45,6 @@ std = [
 	"scale-info/std",
 	"serde",
 	"subsoil/std",
-	"soil-io/std",
 	"soil-runtime/std",
 ]
 runtime-benchmarks = [

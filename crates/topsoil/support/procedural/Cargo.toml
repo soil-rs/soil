@@ -43,7 +43,6 @@ topsoil-system = { workspace = true, default-features = true }
 pretty_assertions = { workspace = true }
 regex = { workspace = true }
 scale-info = { features = ["derive"], workspace = true, default-features = true }
-soil-io = { workspace = true, default-features = true }
 soil-runtime = { features = ["serde"], workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
 

@@ -27,7 +27,6 @@ scale-info = { features = ["derive"], workspace = true }
 serde = { optional = true, workspace = true, default-features = true }
 soil-api = { workspace = true }
 soil-application-crypto = { workspace = true }
-soil-io = { workspace = true }
 soil-runtime = { workspace = true }
 subsoil = { workspace = true }
 static_assertions = { workspace = true, default-features = true }
@@ -51,7 +50,6 @@ std = [
 	"soil-api/std",
 	"soil-application-crypto/std",
 	"subsoil/std",
-	"soil-io/std",
 	"soil-runtime/std",
 ]
 runtime-benchmarks = [

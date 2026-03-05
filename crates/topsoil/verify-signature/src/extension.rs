@@ -21,7 +21,7 @@
 use crate::{Config, WeightInfo};
 use codec::{Decode, DecodeWithMemTracking, Encode};
 use scale_info::TypeInfo;
-use soil_io::hashing::blake2_256;
+use subsoil::io::hashing::blake2_256;
 use soil_runtime::{
 	impl_tx_ext_default,
 	traits::{

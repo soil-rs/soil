@@ -61,7 +61,7 @@ fn create_asset_works() {
 		// extension.
 		let tx_sign = MultiSignature::Sr25519(
 			(&(ext_version, &create_asset_call), &tx_ext, tx_ext.implicit().unwrap())
-				.using_encoded(|e| alice_keyring.sign(&soil_io::hashing::blake2_256(e))),
+				.using_encoded(|e| alice_keyring.sign(&subsoil::io::hashing::blake2_256(e))),
 		);
 		// Add the signature to the extension.
 		let tx_ext = (
@@ -129,11 +129,11 @@ fn create_coowned_asset_works() {
 			(&(ext_version, &create_asset_call), &inner_ext, inner_ext.implicit().unwrap());
 		// Create Alice's signature.
 		let alice_inner_sig = MultiSignature::Sr25519(
-			inner_payload.using_encoded(|e| alice_keyring.sign(&soil_io::hashing::blake2_256(e))),
+			inner_payload.using_encoded(|e| alice_keyring.sign(&subsoil::io::hashing::blake2_256(e))),
 		);
 		// Create Bob's signature.
 		let bob_inner_sig = MultiSignature::Sr25519(
-			inner_payload.using_encoded(|e| bob_keyring.sign(&soil_io::hashing::blake2_256(e))),
+			inner_payload.using_encoded(|e| bob_keyring.sign(&subsoil::io::hashing::blake2_256(e))),
 		);
 		// Create the transaction extension, to be signed by the submitter of the extrinsic, let's
 		// have it be Charlie.
@@ -152,7 +152,7 @@ fn create_coowned_asset_works() {
 		// `VerifyMultiSignature` extension.
 		let tx_sign = MultiSignature::Sr25519(
 			(&(ext_version, &create_asset_call), &tx_ext, tx_ext.implicit().unwrap())
-				.using_encoded(|e| charlie_keyring.sign(&soil_io::hashing::blake2_256(e))),
+				.using_encoded(|e| charlie_keyring.sign(&subsoil::io::hashing::blake2_256(e))),
 		);
 		// Add the signature to the extension.
 		let tx_ext = (
@@ -221,11 +221,11 @@ fn inner_authorization_works() {
 		let inner_payload = (&create_asset_call, &inner_ext, inner_ext.implicit().unwrap());
 		// Create Alice's signature.
 		let alice_inner_sig = MultiSignature::Sr25519(
-			inner_payload.using_encoded(|e| alice_keyring.sign(&soil_io::hashing::blake2_256(e))),
+			inner_payload.using_encoded(|e| alice_keyring.sign(&subsoil::io::hashing::blake2_256(e))),
 		);
 		// Create Bob's signature.
 		let bob_inner_sig = MultiSignature::Sr25519(
-			inner_payload.using_encoded(|e| bob_keyring.sign(&soil_io::hashing::blake2_256(e))),
+			inner_payload.using_encoded(|e| bob_keyring.sign(&subsoil::io::hashing::blake2_256(e))),
 		);
 		// Create the transaction extension, to be signed by the submitter of the extrinsic, let's
 		// have it be Charlie.
@@ -245,7 +245,7 @@ fn inner_authorization_works() {
 		// `VerifyMultiSignature` extension.
 		let tx_sign = MultiSignature::Sr25519(
 			(&(ext_version, &create_asset_call), &tx_ext, tx_ext.implicit().unwrap())
-				.using_encoded(|e| charlie_keyring.sign(&soil_io::hashing::blake2_256(e))),
+				.using_encoded(|e| charlie_keyring.sign(&subsoil::io::hashing::blake2_256(e))),
 		);
 		// Add the signature to the extension that Charlie signed.
 		let tx_ext = (

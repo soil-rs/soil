@@ -17,7 +17,7 @@
 
 //! State machine in memory backend.
 
-use crate::{
+use super::{
 	backend::Backend, trie_backend::TrieBackend, StorageCollection, StorageKey, StorageValue,
 	TrieBackendBuilder,
 };

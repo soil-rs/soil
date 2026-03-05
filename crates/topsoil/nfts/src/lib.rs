@@ -112,7 +112,7 @@ pub mod pallet {
 			i.into()
 		}
 		fn signer() -> (soil_runtime::MultiSigner, soil_runtime::AccountId32) {
-			let public = soil_io::crypto::sr25519_generate(0.into(), None);
+			let public = subsoil::io::crypto::sr25519_generate(0.into(), None);
 			let account = soil_runtime::MultiSigner::Sr25519(public).into_account();
 			(public.into(), account)
 		}
@@ -121,7 +121,7 @@ pub mod pallet {
 			message: &[u8],
 		) -> soil_runtime::MultiSignature {
 			soil_runtime::MultiSignature::Sr25519(
-				soil_io::crypto::sr25519_sign(
+				subsoil::io::crypto::sr25519_sign(
 					0.into(),
 					&signer.clone().try_into().unwrap(),
 					message,

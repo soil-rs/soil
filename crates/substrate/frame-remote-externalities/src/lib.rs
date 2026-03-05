@@ -17,7 +17,7 @@
 
 //! # Remote Externalities
 //!
-//! An equivalent of `soil_io::TestExternalities` that can load its state from a remote substrate
+//! An equivalent of `subsoil::io::TestExternalities` that can load its state from a remote substrate
 //! based chain, or a local state snapshot file.
 
 mod client;
@@ -72,7 +72,7 @@ type ChildKeyValues = Vec<(ChildInfo, Vec<KeyValue>)>;
 
 const LOG_TARGET: &str = "remote-ext";
 
-/// An externalities that acts exactly the same as [`soil_io::TestExternalities`] but has a few extra
+/// An externalities that acts exactly the same as [`subsoil::io::TestExternalities`] but has a few extra
 /// bits and pieces to it, and can be loaded remotely.
 pub struct RemoteExternalities<B: BlockT> {
 	/// The inner externalities.
@@ -1051,7 +1051,7 @@ where
 				self.hashed_blacklist.len()
 			);
 			for k in self.hashed_blacklist {
-				ext.execute_with(|| soil_io::storage::clear(&k));
+				ext.execute_with(|| subsoil::io::storage::clear(&k));
 			}
 		}
 
@@ -1153,8 +1153,8 @@ mod tests {
 			.expect("Can't read state snapshot file")
 			.execute_with(|| {
 				let key =
-					soil_io::storage::next_key(&[]).expect("some key must exist in the snapshot");
-				assert!(soil_io::storage::get(&key).is_some());
+					subsoil::io::storage::next_key(&[]).expect("some key must exist in the snapshot");
+				assert!(subsoil::io::storage::get(&key).is_some());
 				key
 			});
 
@@ -1166,7 +1166,7 @@ mod tests {
 			.build()
 			.await
 			.expect("Can't read state snapshot file")
-			.execute_with(|| assert!(soil_io::storage::get(&some_key).is_none()));
+			.execute_with(|| assert!(subsoil::io::storage::get(&some_key).is_none()));
 	}
 }
 

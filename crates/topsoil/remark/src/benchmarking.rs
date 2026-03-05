@@ -48,7 +48,7 @@ mod benchmarks {
 		assert_last_event::<T>(
 			Event::Stored {
 				sender: caller,
-				content_hash: soil_io::hashing::blake2_256(&vec![0u8; l as usize]).into(),
+				content_hash: subsoil::io::hashing::blake2_256(&vec![0u8; l as usize]).into(),
 			}
 			.into(),
 		);

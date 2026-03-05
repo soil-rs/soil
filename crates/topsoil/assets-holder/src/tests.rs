@@ -353,7 +353,7 @@ mod impl_hold_mutate {
 		});
 	}
 
-	fn new_test_ext() -> soil_io::TestExternalities {
+	fn new_test_ext() -> subsoil::io::TestExternalities {
 		super::new_test_ext(|| {
 			assert_ok!(AssetsHolder::hold(ASSET_ID, &DummyHoldReason::Governance, &WHO, 30));
 			assert_ok!(AssetsHolder::hold(ASSET_ID, &DummyHoldReason::Staking, &WHO, 20));

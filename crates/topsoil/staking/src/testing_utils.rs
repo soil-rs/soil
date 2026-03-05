@@ -23,7 +23,7 @@ use rand_chacha::{
 	rand_core::{RngCore, SeedableRng},
 	ChaChaRng,
 };
-use soil_io::hashing::blake2_256;
+use subsoil::io::hashing::blake2_256;
 use topsoil_benchmarking::account;
 use topsoil_system::RawOrigin;
 

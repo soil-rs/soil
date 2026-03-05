@@ -34,14 +34,14 @@ use std::borrow::Cow;
 /// A utility that facilitates calling the GenesisBuilder API from the runtime wasm code blob.
 ///
 /// `EHF` type allows to specify the extended host function required for building runtime's genesis
-/// config. The type will be combined with default `soil_io::SubstrateHostFunctions`.
+/// config. The type will be combined with default `subsoil::io::SubstrateHostFunctions`.
 pub struct GenesisConfigBuilderRuntimeCaller<'a, EHF = ()>
 where
 	EHF: HostFunctions,
 {
 	code: Cow<'a, [u8]>,
 	code_hash: Vec<u8>,
-	executor: WasmExecutor<(soil_io::SubstrateHostFunctions, EHF)>,
+	executor: WasmExecutor<(subsoil::io::SubstrateHostFunctions, EHF)>,
 }
 
 impl<'a, EHF> FetchRuntimeCode for GenesisConfigBuilderRuntimeCaller<'a, EHF>
@@ -64,7 +64,7 @@ where
 		GenesisConfigBuilderRuntimeCaller {
 			code: code.into(),
 			code_hash: subsoil_crypto_hashing::blake2_256(code).to_vec(),
-			executor: WasmExecutor::<(soil_io::SubstrateHostFunctions, EHF)>::builder()
+			executor: WasmExecutor::<(subsoil::io::SubstrateHostFunctions, EHF)>::builder()
 				.with_allow_missing_host_functions(true)
 				.build(),
 		}

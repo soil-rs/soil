@@ -238,7 +238,7 @@ impl TryFrom<u32> for Opaque {
 /// `sp-io` is required for its panic and oom handler.
 #[no_mangle]
 pub fn import_sp_io() {
-	soil_io::misc::print_utf8(&[]);
+	subsoil::io::misc::print_utf8(&[]);
 }
 
 wasm_export_functions! {

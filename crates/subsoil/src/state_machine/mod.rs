@@ -1091,7 +1091,7 @@ mod execution {
 #[cfg(test)]
 mod tests {
 	use super::{backend::AsTrieBackend, ext::Ext, *};
-	use crate::{execution::CallResult, in_memory_backend::new_in_mem};
+	use self::{execution::CallResult, in_memory_backend::new_in_mem};
 	use assert_matches::assert_matches;
 	use codec::Encode;
 	use crate::core::{

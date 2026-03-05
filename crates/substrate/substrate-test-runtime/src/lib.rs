@@ -670,11 +670,11 @@ impl_runtime_apis! {
 		}
 
 		fn verify_ed25519(sig: ed25519::Signature, public: ed25519::Public, message: Vec<u8>) -> bool {
-			soil_io::crypto::ed25519_verify(&sig, &message, &public)
+			subsoil::io::crypto::ed25519_verify(&sig, &message, &public)
 		}
 
 		fn write_key_value(key: Vec<u8>, value: Vec<u8>, panic: bool) {
-			soil_io::storage::set(&key, &value);
+			subsoil::io::storage::set(&key, &value);
 
 			if panic {
 				panic!("I'm just following my master");
@@ -742,7 +742,7 @@ impl_runtime_apis! {
 					value:Some(header.number.encode())
 				}.into(),
 			);
-			soil_io::offchain::submit_transaction(ext.encode()).unwrap();
+			subsoil::io::offchain::submit_transaction(ext.encode()).unwrap();
 			Executive::offchain_worker(header);
 		}
 	}
@@ -916,15 +916,15 @@ fn test_ecdsa_bls381_crypto() -> (EcdsaBls381Pop, EcdsaBls381Public) {
 
 fn test_read_storage() {
 	const KEY: &[u8] = b":read_storage";
-	soil_io::storage::set(KEY, b"test");
+	subsoil::io::storage::set(KEY, b"test");
 
 	let mut v = [0u8; 4];
-	let r = soil_io::storage::read(KEY, &mut v, 0);
+	let r = subsoil::io::storage::read(KEY, &mut v, 0);
 	assert_eq!(r, Some(4));
 	assert_eq!(&v, b"test");
 
 	let mut v = [0u8; 4];
-	let r = soil_io::storage::read(KEY, &mut v, 4);
+	let r = subsoil::io::storage::read(KEY, &mut v, 4);
 	assert_eq!(r, Some(0));
 	assert_eq!(&v, &[0, 0, 0, 0]);
 }
@@ -932,15 +932,15 @@ fn test_read_storage() {
 fn test_read_child_storage() {
 	const STORAGE_KEY: &[u8] = b"unique_id_1";
 	const KEY: &[u8] = b":read_child_storage";
-	soil_io::default_child_storage::set(STORAGE_KEY, KEY, b"test");
+	subsoil::io::default_child_storage::set(STORAGE_KEY, KEY, b"test");
 
 	let mut v = [0u8; 4];
-	let r = soil_io::default_child_storage::read(STORAGE_KEY, KEY, &mut v, 0);
+	let r = subsoil::io::default_child_storage::read(STORAGE_KEY, KEY, &mut v, 0);
 	assert_eq!(r, Some(4));
 	assert_eq!(&v, b"test");
 
 	let mut v = [0u8; 4];
-	let r = soil_io::default_child_storage::read(STORAGE_KEY, KEY, &mut v, 8);
+	let r = subsoil::io::default_child_storage::read(STORAGE_KEY, KEY, &mut v, 8);
 	assert_eq!(r, Some(0));
 	assert_eq!(&v, &[0, 0, 0, 0]);
 }
@@ -1242,7 +1242,7 @@ mod tests {
 		runtime_api.test_witness(best_hash, proof, root).unwrap();
 	}
 
-	pub fn new_test_ext() -> soil_io::TestExternalities {
+	pub fn new_test_ext() -> subsoil::io::TestExternalities {
 		genesismap::GenesisStorageBuilder::new(
 			vec![Sr25519Keyring::One.public().into(), Sr25519Keyring::Two.public().into()],
 			vec![Sr25519Keyring::One.into(), Sr25519Keyring::Two.into()],
@@ -1369,7 +1369,7 @@ mod tests {
 			method: &str,
 			data: &[u8],
 		) -> Result<Vec<u8>> {
-			let executor = WasmExecutor::<soil_io::SubstrateHostFunctions>::builder().build();
+			let executor = WasmExecutor::<subsoil::io::SubstrateHostFunctions>::builder().build();
 			executor.uncached_call(
 				RuntimeBlob::uncompress_if_needed(wasm_binary_unwrap()).unwrap(),
 				ext,

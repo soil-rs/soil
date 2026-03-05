@@ -66,7 +66,6 @@ std = [
 	"soil-network-types",
 	"soil-runtime",
 	"soil-service",
-	"subsoil",
 	"soil-utils",
 	"substrate-test-runtime",
 	"substrate-test-runtime-client",

@@ -913,7 +913,7 @@ impl<Origin: PartialEq> PrivilegeCmp<Origin> for EqualPrivilegeOnly {
 pub trait OffchainWorker<BlockNumber> {
 	/// This function is being called after every block import (when fully synced).
 	///
-	/// Implement this and use any of the `Offchain` `soil_io` set of APIs
+	/// Implement this and use any of the `Offchain` `subsoil::io` set of APIs
 	/// to perform off-chain computations, calls and submit transactions
 	/// with results to trigger any on-chain changes.
 	/// Any state alterations are lost and are not persisted.

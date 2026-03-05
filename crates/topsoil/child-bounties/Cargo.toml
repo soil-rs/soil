@@ -25,7 +25,6 @@ topsoil-bounties = { workspace = true }
 topsoil-treasury = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 subsoil = { workspace = true }
-soil-io = { workspace = true }
 soil-runtime = { workspace = true }
 
 [dev-dependencies]
@@ -44,7 +43,6 @@ std = [
 	"topsoil-treasury/std",
 	"scale-info/std",
 	"subsoil/std",
-	"soil-io/std",
 	"soil-runtime/std",
 ]
 runtime-benchmarks = [

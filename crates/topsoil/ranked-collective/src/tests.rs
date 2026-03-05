@@ -204,9 +204,9 @@ impl Default for ExtBuilder {
 }
 
 impl ExtBuilder {
-	pub fn build(self) -> soil_io::TestExternalities {
+	pub fn build(self) -> subsoil::io::TestExternalities {
 		let t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
-		let mut ext = soil_io::TestExternalities::new(t);
+		let mut ext = subsoil::io::TestExternalities::new(t);
 		ext.execute_with(|| System::set_block_number(1));
 		ext
 	}

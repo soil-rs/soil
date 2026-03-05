@@ -88,7 +88,7 @@ impl topsoil_aura::Config for Test {
 	type SlotDuration = SlotDurationValue;
 }
 
-pub fn build_ext(authorities: Vec<u64>) -> soil_io::TestExternalities {
+pub fn build_ext(authorities: Vec<u64>) -> subsoil::io::TestExternalities {
 	let mut storage = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	topsoil_aura::GenesisConfig::<Test> {
 		authorities: authorities.into_iter().map(|a| UintAuthorityId(a).to_public_key()).collect(),

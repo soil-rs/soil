@@ -133,7 +133,6 @@ soil-consensus-babe = { workspace = true, default-features = true }
 soil-consensus-beefy = { workspace = true, default-features = true }
 soil-consensus-grandpa = { workspace = true, default-features = true }
 soil-genesis-builder = { workspace = true, default-features = true }
-soil-io = { workspace = true, default-features = true }
 soil-maybe-compressed-blob = { workspace = true, default-features = true }
 soil-mixnet = { workspace = true, default-features = true }
 soil-mmr-primitives = { workspace = true, default-features = true }

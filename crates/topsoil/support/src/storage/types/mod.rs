@@ -155,7 +155,7 @@ mod test {
 		storage::types::ValueQuery,
 		traits::{Get, StorageInstance},
 	};
-	use soil_io::TestExternalities;
+	use subsoil::io::TestExternalities;
 
 	struct Prefix;
 	impl StorageInstance for Prefix {

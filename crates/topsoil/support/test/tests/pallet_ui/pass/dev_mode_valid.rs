@@ -113,7 +113,7 @@ impl pallet::Config for Runtime {}
 
 fn main() {
 	use topsoil_support::pallet_prelude::*;
-	use soil_io::{
+	use subsoil::io::{
 		hashing::{blake2_128, twox_128},
 		TestExternalities,
 	};

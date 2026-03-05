@@ -25,7 +25,7 @@ use crate::{
 
 use codec::{Decode, Encode};
 use subsoil::core::H256;
-use soil_io::crypto::{sr25519_generate, sr25519_sign};
+use subsoil::io::crypto::{sr25519_generate, sr25519_sign};
 use subsoil::keystore::{testing::MemoryKeystore, KeystoreExt};
 use soil_runtime::{
 	traits::{BadOrigin, BlakeTwo256, IdentifyAccount, IdentityLookup, Verify},
@@ -96,7 +96,7 @@ impl topsoil_identity::Config for Test {
 	type WeightInfo = ();
 }
 
-pub fn new_test_ext() -> soil_io::TestExternalities {
+pub fn new_test_ext() -> subsoil::io::TestExternalities {
 	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	topsoil_balances::GenesisConfig::<Test> {
 		balances: vec![
@@ -111,7 +111,7 @@ pub fn new_test_ext() -> soil_io::TestExternalities {
 	}
 	.assimilate_storage(&mut t)
 	.unwrap();
-	let mut ext = soil_io::TestExternalities::new(t);
+	let mut ext = subsoil::io::TestExternalities::new(t);
 	ext.register_extension(KeystoreExt::new(MemoryKeystore::new()));
 	ext.execute_with(|| System::set_block_number(1));
 	ext

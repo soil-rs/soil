@@ -57,7 +57,7 @@ unsafe impl GlobalAlloc for RuntimeAllocator {
 		//
 		// As the host side already aligns the pointer by `8`, we only need to account for any
 		// excess.
-		let ptr = crate::allocator::malloc((size + align.saturating_sub(8)) as u32);
+		let ptr = super::allocator::malloc((size + align.saturating_sub(8)) as u32);
 
 		// Calculate the required alignment.
 		let ptr_offset = ptr.align_offset(align);
@@ -80,6 +80,6 @@ unsafe impl GlobalAlloc for RuntimeAllocator {
 	unsafe fn dealloc(&self, ptr: *mut u8, _: Layout) {
 		let offset = unsafe { (ptr.sub(OFFSET_LENGTH) as *const Offset).read_unaligned() };
 
-		crate::allocator::free(ptr.sub(offset as usize))
+		super::allocator::free(ptr.sub(offset as usize))
 	}
 }

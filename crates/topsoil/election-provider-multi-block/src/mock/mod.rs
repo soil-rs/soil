@@ -428,7 +428,7 @@ impl ExtBuilder {
 		AreWeDone::set(mode);
 		self
 	}
-	pub(crate) fn build_unchecked(self) -> soil_io::TestExternalities {
+	pub(crate) fn build_unchecked(self) -> subsoil::io::TestExternalities {
 		subsoil::tracing::try_init_simple();
 		let mut storage =
 			topsoil_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
@@ -452,11 +452,11 @@ impl ExtBuilder {
 		}
 		.assimilate_storage(&mut storage);
 
-		soil_io::TestExternalities::from(storage)
+		subsoil::io::TestExternalities::from(storage)
 	}
 
 	/// Warning: this does not execute the post-sanity-checks.
-	pub(crate) fn build_offchainify(self) -> (soil_io::TestExternalities, Arc<RwLock<PoolState>>) {
+	pub(crate) fn build_offchainify(self) -> (subsoil::io::TestExternalities, Arc<RwLock<PoolState>>) {
 		let mut ext = self.build_unchecked();
 		let (offchain, _offchain_state) = TestOffchainExt::new();
 		let (pool, pool_state) = TestTransactionPoolExt::new();
@@ -479,7 +479,7 @@ pub trait ExecuteWithSanityChecks {
 	fn execute_with_sanity_checks(&mut self, test: impl FnOnce() -> ());
 }
 
-impl ExecuteWithSanityChecks for soil_io::TestExternalities {
+impl ExecuteWithSanityChecks for subsoil::io::TestExternalities {
 	fn execute_with_sanity_checks(&mut self, test: impl FnOnce() -> ()) {
 		self.execute_with(all_pallets_integrity_test);
 		self.execute_with(test);

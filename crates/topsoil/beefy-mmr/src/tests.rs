@@ -25,7 +25,7 @@ use soil_consensus_beefy::{
 };
 
 use subsoil::core::H256;
-use soil_io::TestExternalities;
+use subsoil::io::TestExternalities;
 use soil_runtime::{traits::Keccak256, DigestItem};
 
 use topsoil_support::traits::OnInitialize;

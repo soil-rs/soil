@@ -23,7 +23,6 @@ log = { workspace = true }
 topsoil-asset-conversion = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 subsoil = { workspace = true }
-soil-io = { workspace = true }
 soil-runtime = { workspace = true }
 
 [dev-dependencies]
@@ -45,7 +44,6 @@ std = [
 	"primitive-types/std",
 	"scale-info/std",
 	"subsoil/std",
-	"soil-io/std",
 	"soil-runtime/std",
 ]
 runtime-benchmarks = [

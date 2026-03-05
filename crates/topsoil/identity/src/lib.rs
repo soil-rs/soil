@@ -159,9 +159,9 @@ pub mod pallet {
 		fn sign_message(
 			message: &[u8],
 		) -> (soil_runtime::MultiSigner, soil_runtime::MultiSignature) {
-			let public = soil_io::crypto::sr25519_generate(0.into(), None);
+			let public = subsoil::io::crypto::sr25519_generate(0.into(), None);
 			let signature = soil_runtime::MultiSignature::Sr25519(
-				soil_io::crypto::sr25519_sign(
+				subsoil::io::crypto::sr25519_sign(
 					0.into(),
 					&public.into_account().try_into().unwrap(),
 					message,

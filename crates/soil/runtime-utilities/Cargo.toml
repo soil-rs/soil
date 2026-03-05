@@ -33,7 +33,6 @@ std = [
 	"subsoil-crypto-hashing",
 	"soil-executor",
 	"soil-executor-common",
-	"subsoil",
 	"thiserror",
 	"subsoil/std",
 	"subsoil-crypto-hashing/std",
@@ -42,6 +41,5 @@ std = [
 ]
 
 [dev-dependencies]
-soil-io = { workspace = true, default-features = true }
 soil-version = { workspace = true, default-features = true }
 subxt = { workspace = true, features = ["native"] }

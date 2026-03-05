@@ -21,7 +21,7 @@
 //! In other context, such interfaces are referred to as "**host functions**".
 //!
 //! Each set of host functions are defined with an instance of the
-//! [`subsoil::runtime_interface::runtime_interface`] macro.
+//! [`crate::runtime_interface::runtime_interface`] macro.
 //!
 //! Most notably, this crate contains host functions for:
 //!
@@ -45,7 +45,7 @@
 //! A typical error for substrate developers is the following:
 //!
 //! ```should_panic
-//! use soil_io::storage::get;
+//! use subsoil::io::storage::get;
 //! # fn main() {
 //! let data = get(b"hello world");
 //! # }
@@ -60,12 +60,12 @@
 //! Such error messages should always be interpreted as "code accessing host functions accessed
 //! outside of externalities".
 //!
-//! An externality is any type that implements [`subsoil::externalities::Externalities`]. A simple example
+//! An externality is any type that implements [`crate::externalities::Externalities`]. A simple example
 //! of which is [`TestExternalities`], which is commonly used in tests and is exported from this
 //! crate.
 //!
 //! ```
-//! use soil_io::{storage::get, TestExternalities};
+//! use subsoil::io::{storage::get, TestExternalities};
 //! # fn main() {
 //! TestExternalities::default().execute_with(|| {
 //! 	let data = get(b"hello world");
@@ -73,30 +73,24 @@
 //! # }
 //! ```
 
-#![warn(missing_docs)]
-#![cfg_attr(not(feature = "std"), no_std)]
-#![cfg_attr(enable_alloc_error_handler, feature(alloc_error_handler))]
-
-extern crate alloc;
-
 use alloc::vec::Vec;
 
 #[cfg(not(substrate_runtime))]
 use tracing;
 
 #[cfg(not(substrate_runtime))]
-use subsoil::core::{
+use crate::core::{
 	crypto::Pair,
 	hexdisplay::HexDisplay,
 	offchain::{OffchainDbExt, OffchainWorkerExt, TransactionPoolExt},
 	storage::ChildInfo,
 };
 #[cfg(not(substrate_runtime))]
-use subsoil::keystore::KeystoreExt;
+use crate::keystore::KeystoreExt;
 
 #[cfg(feature = "bandersnatch-experimental")]
-use subsoil::core::bandersnatch;
-use subsoil::core::{
+use crate::core::bandersnatch;
+use crate::core::{
 	crypto::KeyTypeId,
 	ecdsa, ed25519,
 	offchain::{
@@ -108,12 +102,12 @@ use subsoil::core::{
 };
 
 #[cfg(feature = "bls-experimental")]
-use subsoil::core::{bls381, ecdsa_bls381};
+use crate::core::{bls381, ecdsa_bls381};
 
 #[cfg(not(substrate_runtime))]
-use subsoil::trie::{LayoutV0, LayoutV1, TrieConfiguration};
+use crate::trie::{LayoutV0, LayoutV1, TrieConfiguration};
 
-use subsoil::runtime_interface::{
+use crate::runtime_interface::{
 	pass_by::{
 		AllocateAndReturnByCodec, AllocateAndReturnFatPointer, AllocateAndReturnPointer, PassAs,
 		PassFatPointerAndDecode, PassFatPointerAndDecodeSlice, PassFatPointerAndRead,
@@ -131,15 +125,15 @@ use secp256k1::{
 };
 
 #[cfg(not(substrate_runtime))]
-use subsoil::externalities::{Externalities, ExternalitiesExt};
+use crate::externalities::{Externalities, ExternalitiesExt};
 
-pub use subsoil::externalities::MultiRemovalResults;
+pub use crate::externalities::MultiRemovalResults;
 
-#[cfg(all(not(feature = "disable_allocator"), substrate_runtime, target_family = "wasm"))]
+#[cfg(all(not(feature = "io-disable_allocator"), substrate_runtime, target_family = "wasm"))]
 mod global_alloc_wasm;
 
 #[cfg(all(
-	not(feature = "disable_allocator"),
+	not(feature = "io-disable_allocator"),
 	substrate_runtime,
 	any(target_arch = "riscv32", target_arch = "riscv64")
 ))]
@@ -288,7 +282,7 @@ pub trait Storage {
 	/// operating on the same prefix should always pass `Some`, and this should be equal to the
 	/// previous call result's `maybe_cursor` field.
 	///
-	/// Returns [`MultiRemovalResults`](soil_io::MultiRemovalResults) to inform about the result. Once
+	/// Returns [`MultiRemovalResults`](subsoil::io::MultiRemovalResults) to inform about the result. Once
 	/// the resultant `maybe_cursor` field is `None`, then no further items remain to be deleted.
 	///
 	/// NOTE: After the initial call for any given prefix, it is important that no keys further
@@ -630,7 +624,7 @@ pub trait Trie {
 	fn blake2_256_root(
 		input: PassFatPointerAndDecode<Vec<(Vec<u8>, Vec<u8>)>>,
 	) -> AllocateAndReturnPointer<H256, 32> {
-		LayoutV0::<subsoil::core::Blake2Hasher>::trie_root(input)
+		LayoutV0::<crate::core::Blake2Hasher>::trie_root(input)
 	}
 
 	/// A trie root formed from the iterated items.
@@ -640,8 +634,8 @@ pub trait Trie {
 		version: PassAs<StateVersion, u8>,
 	) -> AllocateAndReturnPointer<H256, 32> {
 		match version {
-			StateVersion::V0 => LayoutV0::<subsoil::core::Blake2Hasher>::trie_root(input),
-			StateVersion::V1 => LayoutV1::<subsoil::core::Blake2Hasher>::trie_root(input),
+			StateVersion::V0 => LayoutV0::<crate::core::Blake2Hasher>::trie_root(input),
+			StateVersion::V1 => LayoutV1::<crate::core::Blake2Hasher>::trie_root(input),
 		}
 	}
 
@@ -649,7 +643,7 @@ pub trait Trie {
 	fn blake2_256_ordered_root(
 		input: PassFatPointerAndDecode<Vec<Vec<u8>>>,
 	) -> AllocateAndReturnPointer<H256, 32> {
-		LayoutV0::<subsoil::core::Blake2Hasher>::ordered_trie_root(input)
+		LayoutV0::<crate::core::Blake2Hasher>::ordered_trie_root(input)
 	}
 
 	/// A trie root formed from the enumerated items.
@@ -659,8 +653,8 @@ pub trait Trie {
 		version: PassAs<StateVersion, u8>,
 	) -> AllocateAndReturnPointer<H256, 32> {
 		match version {
-			StateVersion::V0 => LayoutV0::<subsoil::core::Blake2Hasher>::ordered_trie_root(input),
-			StateVersion::V1 => LayoutV1::<subsoil::core::Blake2Hasher>::ordered_trie_root(input),
+			StateVersion::V0 => LayoutV0::<crate::core::Blake2Hasher>::ordered_trie_root(input),
+			StateVersion::V1 => LayoutV1::<crate::core::Blake2Hasher>::ordered_trie_root(input),
 		}
 	}
 
@@ -668,7 +662,7 @@ pub trait Trie {
 	fn keccak_256_root(
 		input: PassFatPointerAndDecode<Vec<(Vec<u8>, Vec<u8>)>>,
 	) -> AllocateAndReturnPointer<H256, 32> {
-		LayoutV0::<subsoil::core::KeccakHasher>::trie_root(input)
+		LayoutV0::<crate::core::KeccakHasher>::trie_root(input)
 	}
 
 	/// A trie root formed from the iterated items.
@@ -678,8 +672,8 @@ pub trait Trie {
 		version: PassAs<StateVersion, u8>,
 	) -> AllocateAndReturnPointer<H256, 32> {
 		match version {
-			StateVersion::V0 => LayoutV0::<subsoil::core::KeccakHasher>::trie_root(input),
-			StateVersion::V1 => LayoutV1::<subsoil::core::KeccakHasher>::trie_root(input),
+			StateVersion::V0 => LayoutV0::<crate::core::KeccakHasher>::trie_root(input),
+			StateVersion::V1 => LayoutV1::<crate::core::KeccakHasher>::trie_root(input),
 		}
 	}
 
@@ -687,7 +681,7 @@ pub trait Trie {
 	fn keccak_256_ordered_root(
 		input: PassFatPointerAndDecode<Vec<Vec<u8>>>,
 	) -> AllocateAndReturnPointer<H256, 32> {
-		LayoutV0::<subsoil::core::KeccakHasher>::ordered_trie_root(input)
+		LayoutV0::<crate::core::KeccakHasher>::ordered_trie_root(input)
 	}
 
 	/// A trie root formed from the enumerated items.
@@ -697,8 +691,8 @@ pub trait Trie {
 		version: PassAs<StateVersion, u8>,
 	) -> AllocateAndReturnPointer<H256, 32> {
 		match version {
-			StateVersion::V0 => LayoutV0::<subsoil::core::KeccakHasher>::ordered_trie_root(input),
-			StateVersion::V1 => LayoutV1::<subsoil::core::KeccakHasher>::ordered_trie_root(input),
+			StateVersion::V0 => LayoutV0::<crate::core::KeccakHasher>::ordered_trie_root(input),
+			StateVersion::V1 => LayoutV1::<crate::core::KeccakHasher>::ordered_trie_root(input),
 		}
 	}
 
@@ -709,7 +703,7 @@ pub trait Trie {
 		key: PassFatPointerAndRead<&[u8]>,
 		value: PassFatPointerAndRead<&[u8]>,
 	) -> bool {
-		subsoil::trie::verify_trie_proof::<LayoutV0<subsoil::core::Blake2Hasher>, _, _, _>(
+		crate::trie::verify_trie_proof::<LayoutV0<crate::core::Blake2Hasher>, _, _, _>(
 			&root,
 			proof,
 			&[(key, Some(value))],
@@ -727,15 +721,15 @@ pub trait Trie {
 		version: PassAs<StateVersion, u8>,
 	) -> bool {
 		match version {
-			StateVersion::V0 => subsoil::trie::verify_trie_proof::<
-				LayoutV0<subsoil::core::Blake2Hasher>,
+			StateVersion::V0 => crate::trie::verify_trie_proof::<
+				LayoutV0<crate::core::Blake2Hasher>,
 				_,
 				_,
 				_,
 			>(&root, proof, &[(key, Some(value))])
 			.is_ok(),
-			StateVersion::V1 => subsoil::trie::verify_trie_proof::<
-				LayoutV1<subsoil::core::Blake2Hasher>,
+			StateVersion::V1 => crate::trie::verify_trie_proof::<
+				LayoutV1<crate::core::Blake2Hasher>,
 				_,
 				_,
 				_,
@@ -751,7 +745,7 @@ pub trait Trie {
 		key: PassFatPointerAndRead<&[u8]>,
 		value: PassFatPointerAndRead<&[u8]>,
 	) -> bool {
-		subsoil::trie::verify_trie_proof::<LayoutV0<subsoil::core::KeccakHasher>, _, _, _>(
+		crate::trie::verify_trie_proof::<LayoutV0<crate::core::KeccakHasher>, _, _, _>(
 			&root,
 			proof,
 			&[(key, Some(value))],
@@ -769,15 +763,15 @@ pub trait Trie {
 		version: PassAs<StateVersion, u8>,
 	) -> bool {
 		match version {
-			StateVersion::V0 => subsoil::trie::verify_trie_proof::<
-				LayoutV0<subsoil::core::KeccakHasher>,
+			StateVersion::V0 => crate::trie::verify_trie_proof::<
+				LayoutV0<crate::core::KeccakHasher>,
 				_,
 				_,
 				_,
 			>(&root, proof, &[(key, Some(value))])
 			.is_ok(),
-			StateVersion::V1 => subsoil::trie::verify_trie_proof::<
-				LayoutV1<subsoil::core::KeccakHasher>,
+			StateVersion::V1 => crate::trie::verify_trie_proof::<
+				LayoutV1<crate::core::KeccakHasher>,
 				_,
 				_,
 				_,
@@ -830,9 +824,9 @@ pub trait Misc {
 		&mut self,
 		wasm: PassFatPointerAndRead<&[u8]>,
 	) -> AllocateAndReturnByCodec<Option<Vec<u8>>> {
-		use subsoil::core::traits::ReadRuntimeVersionExt;
+		use crate::core::traits::ReadRuntimeVersionExt;
 
-		let mut ext = subsoil::state_machine::BasicExternalities::default();
+		let mut ext = crate::state_machine::BasicExternalities::default();
 
 		match self
 			.extension::<ReadRuntimeVersionExt>()
@@ -853,7 +847,7 @@ pub trait Misc {
 }
 
 #[cfg(not(substrate_runtime))]
-subsoil::decl_extension! {
+crate::decl_extension! {
 	/// Extension to signal to [`crypt::ed25519_verify`] to use the dalek crate.
 	///
 	/// The switch from `ed25519-dalek` to `ed25519-zebra` was a breaking change.
@@ -939,7 +933,7 @@ pub trait Crypto {
 		// We don't want to force everyone needing to call the function in an externalities context.
 		// So, we assume that we should not use dalek when we are not in externalities context.
 		// Otherwise, we check if the extension is present.
-		if subsoil::externalities::with_externalities(|mut e| e.extension::<UseDalekExt>().is_some())
+		if crate::externalities::with_externalities(|mut e| e.extension::<UseDalekExt>().is_some())
 			.unwrap_or_default()
 		{
 			use ed25519_dalek::Verifier;
@@ -1518,7 +1512,7 @@ pub trait OffchainIndex {
 }
 
 #[cfg(not(substrate_runtime))]
-subsoil::decl_extension! {
+crate::decl_extension! {
 	/// Deprecated verification context.
 	///
 	/// Stores the combined result of all verifications that are done in the same context.
@@ -1832,7 +1826,7 @@ pub trait WasmTracing {
 	/// checked more than once per metadata. This exists for optimisation purposes but is still not
 	/// cheap as it will jump the wasm-native-barrier every time it is called. So an implementation
 	/// might chose to cache the result for the execution of the entire block.
-	fn enabled(&mut self, metadata: PassFatPointerAndDecode<subsoil::tracing::WasmMetadata>) -> bool {
+	fn enabled(&mut self, metadata: PassFatPointerAndDecode<crate::tracing::WasmMetadata>) -> bool {
 		let metadata: &tracing_core::metadata::Metadata<'static> = (&metadata).into();
 		tracing::dispatcher::get_default(|d| d.enabled(metadata))
 	}
@@ -1845,7 +1839,7 @@ pub trait WasmTracing {
 	/// side.
 	fn enter_span(
 		&mut self,
-		span: PassFatPointerAndDecode<subsoil::tracing::WasmEntryAttributes>,
+		span: PassFatPointerAndDecode<crate::tracing::WasmEntryAttributes>,
 	) -> u64 {
 		let span: tracing::Span = span.into();
 		match span.id() {
@@ -1861,7 +1855,7 @@ pub trait WasmTracing {
 	}
 
 	/// Emit the given event to the global tracer on the native side
-	fn event(&mut self, event: PassFatPointerAndDecode<subsoil::tracing::WasmEntryAttributes>) {
+	fn event(&mut self, event: PassFatPointerAndDecode<crate::tracing::WasmEntryAttributes>) {
 		event.emit();
 	}
 
@@ -1919,7 +1913,7 @@ mod tracing_setup {
 		}
 	}
 
-	/// Initialize tracing of subsoil::tracing on wasm with `with-tracing` enabled.
+	/// Initialize tracing of crate::tracing on wasm with `with-tracing` enabled.
 	/// Can be called multiple times from within the same process and will only
 	/// set the global bridging subscriber once.
 	pub fn init_tracing() {
@@ -1933,7 +1927,7 @@ mod tracing_setup {
 
 #[cfg(not(all(substrate_runtime, feature = "with-tracing")))]
 mod tracing_setup {
-	/// Initialize tracing of subsoil::tracing not necessary – noop. To enable build
+	/// Initialize tracing of crate::tracing not necessary – noop. To enable build
 	/// when not both `substrate_runtime` and `with-tracing`-feature.
 	pub fn init_tracing() {}
 }
@@ -1960,15 +1954,15 @@ pub fn unreachable() -> ! {
 }
 
 /// A default panic handler for the runtime environment.
-#[cfg(all(not(feature = "disable_panic_handler"), substrate_runtime))]
+#[cfg(all(not(feature = "io-disable_panic_handler"), substrate_runtime))]
 #[panic_handler]
 pub fn panic(info: &core::panic::PanicInfo) -> ! {
 	let message = alloc::format!("{}", info);
-	#[cfg(feature = "improved_panic_error_reporting")]
+	#[cfg(feature = "io-improved_panic_error_reporting")]
 	{
 		panic_handler::abort_on_panic(&message);
 	}
-	#[cfg(not(feature = "improved_panic_error_reporting"))]
+	#[cfg(not(feature = "io-improved_panic_error_reporting"))]
 	{
 		logging::log(RuntimeInterfaceLogLevel::Error, "runtime", message.as_bytes());
 		unreachable();
@@ -1976,14 +1970,14 @@ pub fn panic(info: &core::panic::PanicInfo) -> ! {
 }
 
 /// A default OOM handler for the runtime environment.
-#[cfg(all(not(feature = "disable_oom"), enable_alloc_error_handler))]
+#[cfg(all(not(feature = "io-disable_oom"), enable_alloc_error_handler))]
 #[alloc_error_handler]
 pub fn oom(_: core::alloc::Layout) -> ! {
-	#[cfg(feature = "improved_panic_error_reporting")]
+	#[cfg(feature = "io-improved_panic_error_reporting")]
 	{
 		panic_handler::abort_on_panic("Runtime memory exhausted.");
 	}
-	#[cfg(not(feature = "improved_panic_error_reporting"))]
+	#[cfg(not(feature = "io-improved_panic_error_reporting"))]
 	{
 		logging::log(
 			RuntimeInterfaceLogLevel::Error,
@@ -1996,7 +1990,7 @@ pub fn oom(_: core::alloc::Layout) -> ! {
 
 /// Type alias for Externalities implementation used in tests.
 #[cfg(feature = "std")] // NOTE: Deliberately isn't `not(substrate_runtime)`.
-pub type TestExternalities = subsoil::state_machine::TestExternalities<subsoil::core::Blake2Hasher>;
+pub type TestExternalities = crate::state_machine::TestExternalities<crate::core::Blake2Hasher>;
 
 /// The host functions Substrate provides for the Wasm runtime environment.
 ///
@@ -2014,7 +2008,7 @@ pub type SubstrateHostFunctions = (
 	allocator::HostFunctions,
 	panic_handler::HostFunctions,
 	logging::HostFunctions,
-	crate::trie::HostFunctions,
+	self::trie::HostFunctions,
 	offchain_index::HostFunctions,
 	transaction_index::HostFunctions,
 );
@@ -2022,8 +2016,8 @@ pub type SubstrateHostFunctions = (
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use subsoil::core::{crypto::UncheckedInto, map, storage::Storage};
-	use subsoil::state_machine::BasicExternalities;
+	use crate::core::{crypto::UncheckedInto, map, storage::Storage};
+	use crate::state_machine::BasicExternalities;
 
 	#[test]
 	fn storage_works() {

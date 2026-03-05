@@ -47,7 +47,7 @@ use alloc::{boxed::Box, vec, vec::Vec};
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use core::{marker::PhantomData, result};
 use scale_info::TypeInfo;
-use soil_io::storage;
+use subsoil::io::storage;
 use soil_runtime::{
 	traits::{Dispatchable, Hash},
 	Debug, DispatchError,

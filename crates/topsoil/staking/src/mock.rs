@@ -19,7 +19,7 @@
 
 use crate::{self as topsoil_staking, *};
 use subsoil::core::ConstBool;
-use soil_io;
+use subsoil::io;
 use soil_runtime::{curve::PiecewiseLinear, testing::UintAuthorityId, traits::Zero, BuildStorage};
 use soil_staking::{
 	offence::{OffenceDetails, OnOffenceHandler},
@@ -453,7 +453,7 @@ impl ExtBuilder {
 		SkipTryStateCheck::set(!enable);
 		self
 	}
-	fn build(self) -> soil_io::TestExternalities {
+	fn build(self) -> subsoil::io::TestExternalities {
 		subsoil::tracing::try_init_simple();
 		let mut storage = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 		let ed = ExistentialDeposit::get();
@@ -571,7 +571,7 @@ impl ExtBuilder {
 		}
 		.assimilate_storage(&mut storage);
 
-		let mut ext = soil_io::TestExternalities::from(storage);
+		let mut ext = subsoil::io::TestExternalities::from(storage);
 
 		if self.initialize_first_session {
 			ext.execute_with(|| {

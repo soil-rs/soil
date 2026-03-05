@@ -83,7 +83,7 @@ impl ExtBuilder {
 		TRANSACTION_BYTE_FEE.with(|v| *v.borrow_mut() = self.byte_fee);
 		WEIGHT_TO_FEE.with(|v| *v.borrow_mut() = self.weight_to_fee);
 	}
-	pub fn build(self) -> soil_io::TestExternalities {
+	pub fn build(self) -> subsoil::io::TestExternalities {
 		self.set_constants();
 		let mut t = topsoil_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
 		topsoil_balances::GenesisConfig::<Runtime> {

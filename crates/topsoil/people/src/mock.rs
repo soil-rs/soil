@@ -267,7 +267,7 @@ impl TestExt {
 	}
 }
 
-pub fn new_test_ext() -> soil_io::TestExternalities {
+pub fn new_test_ext() -> subsoil::io::TestExternalities {
 	let chunks: Vec<<verifiable::demo_impls::Simple as GenerateVerifiable>::StaticChunk> =
 		[(); 512].to_vec();
 	let encoded_chunks = chunks.encode();
@@ -378,7 +378,7 @@ pub fn setup_alias_account(
 	let other_tx_ext = (topsoil_system::CheckNonce::<Test>::from(0),);
 	// Here we simply ignore implicit as they are null.
 	let msg =
-		(&EXTENSION_VERSION, &call, &other_tx_ext).using_encoded(soil_io::hashing::blake2_256);
+		(&EXTENSION_VERSION, &call, &other_tx_ext).using_encoded(subsoil::io::hashing::blake2_256);
 	let (proof, _alias) =
 		Simple::create(commitment, secret, &context, &msg).expect("proof creation failed");
 	let tx_ext = (

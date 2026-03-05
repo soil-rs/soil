@@ -163,7 +163,6 @@ subsoil-crypto-hashing = { workspace = true }
 subsoil-crypto-hashing-proc-macro = { workspace = true }
 soil-genesis-builder = { workspace = true }
 soil-inherents = { workspace = true }
-soil-io = { workspace = true }
 soil-keyring = { workspace = true }
 soil-mixnet = { workspace = true }
 soil-mmr-primitives = { workspace = true }
@@ -189,7 +188,6 @@ substrate-wasm-builder = { optional = true, workspace = true, default-features =
 default = ["std"]
 with-tracing = [
 	"topsoil-executive/with-tracing",
-	"soil-io/with-tracing",
 	"subsoil/with-tracing",
 ]
 std = [
@@ -326,7 +324,6 @@ std = [
 	"subsoil-debug-derive/std",
 	"soil-genesis-builder/std",
 	"soil-inherents/std",
-	"soil-io/std",
 	"soil-keyring/std",
 	"soil-mixnet/std",
 	"soil-mmr-primitives/std",

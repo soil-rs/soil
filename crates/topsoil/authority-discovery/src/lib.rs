@@ -217,7 +217,7 @@ mod tests {
 	use soil_application_crypto::Pair;
 	use soil_authority_discovery::AuthorityPair;
 	use subsoil::core::crypto::key_types;
-	use soil_io::TestExternalities;
+	use subsoil::io::TestExternalities;
 	use soil_runtime::{
 		testing::UintAuthorityId,
 		traits::{ConvertInto, IdentityLookup, OpaqueKeys},

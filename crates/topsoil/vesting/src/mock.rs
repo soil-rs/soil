@@ -82,7 +82,7 @@ impl ExtBuilder {
 		self
 	}
 
-	pub fn build(self) -> soil_io::TestExternalities {
+	pub fn build(self) -> subsoil::io::TestExternalities {
 		EXISTENTIAL_DEPOSIT.with(|v| *v.borrow_mut() = self.existential_deposit);
 		let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 		topsoil_balances::GenesisConfig::<Test> {
@@ -112,7 +112,7 @@ impl ExtBuilder {
 		topsoil_vesting::GenesisConfig::<Test> { vesting }
 			.assimilate_storage(&mut t)
 			.unwrap();
-		let mut ext = soil_io::TestExternalities::new(t);
+		let mut ext = subsoil::io::TestExternalities::new(t);
 		ext.execute_with(|| System::set_block_number(1));
 		ext
 	}

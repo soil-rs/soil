@@ -27,7 +27,7 @@ pub mod test {
 	use super::*;
 	use crate::Twox128;
 	use alloc::collections::btree_set::BTreeSet;
-	use soil_io::TestExternalities;
+	use subsoil::io::TestExternalities;
 	use topsoil_support::traits::{ConstU32, Get};
 
 	#[crate::storage_alias]

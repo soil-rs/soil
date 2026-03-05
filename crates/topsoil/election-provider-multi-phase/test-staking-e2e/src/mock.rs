@@ -577,7 +577,7 @@ impl Default for ExtBuilder {
 }
 
 impl ExtBuilder {
-	pub fn build(&self) -> soil_io::TestExternalities {
+	pub fn build(&self) -> subsoil::io::TestExternalities {
 		subsoil::tracing::try_init_simple();
 		let mut storage =
 			topsoil_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
@@ -626,7 +626,7 @@ impl ExtBuilder {
 		}
 		.assimilate_storage(&mut storage);
 
-		let mut ext = soil_io::TestExternalities::from(storage);
+		let mut ext = subsoil::io::TestExternalities::from(storage);
 
 		// We consider all test to start after timestamp is initialized This must be ensured by
 		// having `timestamp::on_initialize` called before `staking::on_initialize`.
@@ -662,7 +662,7 @@ impl ExtBuilder {
 
 	pub fn build_offchainify(
 		self,
-	) -> (soil_io::TestExternalities, Arc<RwLock<PoolState>>, Arc<RwLock<OffchainState>>) {
+	) -> (subsoil::io::TestExternalities, Arc<RwLock<PoolState>>, Arc<RwLock<OffchainState>>) {
 		// add offchain and pool externality extensions.
 		let mut ext = self.build();
 		let (offchain, offchain_state) = TestOffchainExt::new();
@@ -676,7 +676,7 @@ impl ExtBuilder {
 	}
 }
 
-pub(crate) fn execute_with(mut ext: soil_io::TestExternalities, test: impl FnOnce() -> ()) {
+pub(crate) fn execute_with(mut ext: subsoil::io::TestExternalities, test: impl FnOnce() -> ()) {
 	ext.execute_with(test);
 
 	#[cfg(feature = "try-runtime")]

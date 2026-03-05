@@ -281,7 +281,7 @@ pub(super) fn test_identity_info_deposit() -> <Test as topsoil_balances::Config>
 	byte_deposit * test_identity_info().encoded_size() as u64 + basic_deposit
 }
 
-pub fn new_test_ext() -> soil_io::TestExternalities {
+pub fn new_test_ext() -> subsoil::io::TestExternalities {
 	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 
 	topsoil_balances::GenesisConfig::<Test> {
@@ -309,7 +309,7 @@ pub fn new_test_ext() -> soil_io::TestExternalities {
 	.assimilate_storage(&mut t)
 	.unwrap();
 
-	let mut ext = soil_io::TestExternalities::new(t);
+	let mut ext = subsoil::io::TestExternalities::new(t);
 	ext.execute_with(|| {
 		assert_ok!(Identity::add_registrar(RuntimeOrigin::signed(1), 1));
 
@@ -393,7 +393,7 @@ pub fn build_and_execute(test: impl FnOnce()) {
 }
 
 #[cfg(feature = "runtime-benchmarks")]
-pub fn new_bench_ext() -> soil_io::TestExternalities {
+pub fn new_bench_ext() -> subsoil::io::TestExternalities {
 	RuntimeGenesisConfig::default().build_storage().unwrap().into()
 }
 

@@ -27,7 +27,6 @@ soil-staking = { workspace = true }
 
 [dev-dependencies]
 subsoil = { workspace = true, default-features = true }
-soil-io = { workspace = true, default-features = true }
 
 [features]
 default = ["std"]
@@ -39,7 +38,6 @@ std = [
 	"scale-info/std",
 	"serde",
 	"subsoil/std",
-	"soil-io/std",
 	"soil-runtime/std",
 	"soil-staking/std",
 ]

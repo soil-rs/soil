@@ -27,7 +27,6 @@ subsoil = { workspace = true }
 
 [dev-dependencies]
 rand = { features = ["small_rng"], workspace = true, default-features = true }
-soil-io = { workspace = true, default-features = true }
 soil-npos-elections = { workspace = true, default-features = true }
 
 [features]
@@ -39,7 +38,6 @@ std = [
 	"topsoil-system/std",
 	"scale-info/std",
 	"subsoil/std",
-	"soil-io/std",
 	"soil-npos-elections/std",
 	"soil-runtime/std",
 ]

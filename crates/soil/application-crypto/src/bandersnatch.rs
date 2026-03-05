@@ -47,11 +47,11 @@ impl RuntimePublic for Public {
 	}
 
 	fn generate_pair(key_type: KeyTypeId, seed: Option<Vec<u8>>) -> Self {
-		soil_io::crypto::bandersnatch_generate(key_type, seed)
+		subsoil::io::crypto::bandersnatch_generate(key_type, seed)
 	}
 
 	fn sign<M: AsRef<[u8]>>(&self, key_type: KeyTypeId, msg: &M) -> Option<Self::Signature> {
-		soil_io::crypto::bandersnatch_sign(key_type, self, msg.as_ref())
+		subsoil::io::crypto::bandersnatch_sign(key_type, self, msg.as_ref())
 	}
 
 	fn verify<M: AsRef<[u8]>>(&self, msg: &M, signature: &Self::Signature) -> bool {
@@ -66,7 +66,7 @@ impl RuntimePublic for Public {
 		owner: &[u8],
 	) -> Option<Self::ProofOfPossession> {
 		let proof_of_possession_statement = Pair::proof_of_possession_statement(owner);
-		soil_io::crypto::bandersnatch_sign(key_type, self, &proof_of_possession_statement)
+		subsoil::io::crypto::bandersnatch_sign(key_type, self, &proof_of_possession_statement)
 	}
 
 	fn verify_proof_of_possession(

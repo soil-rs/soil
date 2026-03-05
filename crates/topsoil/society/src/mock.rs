@@ -123,7 +123,7 @@ impl EnvBuilder {
 		topsoil_society::GenesisConfig::<Test> { pot: self.pot }
 			.assimilate_storage(&mut t)
 			.unwrap();
-		let mut ext: soil_io::TestExternalities = t.into();
+		let mut ext: subsoil::io::TestExternalities = t.into();
 		ext.execute_with(|| {
 			// Initialize the block number to 1 for event registration
 			System::set_block_number(1);

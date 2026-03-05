@@ -61,7 +61,7 @@ extern crate alloc;
 use alloc::{boxed::Box, vec::Vec};
 use codec::{Decode, Encode};
 use subsoil::core::TypeId;
-use soil_io::hashing::blake2_256;
+use subsoil::io::hashing::blake2_256;
 use soil_runtime::traits::{BadOrigin, Dispatchable, TrailingZeroInput};
 use topsoil_support::{
 	dispatch::{

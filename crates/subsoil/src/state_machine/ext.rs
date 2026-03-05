@@ -19,7 +19,7 @@
 
 #[cfg(feature = "std")]
 use super::overlayed_changes::OverlayedExtensions;
-use crate::{
+use super::{
 	backend::Backend, IndexOperation, IterArgs, OverlayedChanges, StorageKey, StorageValue,
 };
 use codec::{Compact, CompactLen, Decode, Encode};
@@ -33,7 +33,7 @@ use crate::core::storage::{
 use crate::externalities::TransactionType;
 use crate::externalities::{Extension, ExtensionStore, Externalities, MultiRemovalResults};
 
-use crate::{trace, warn};
+use super::{trace, warn};
 use alloc::{boxed::Box, vec::Vec};
 use core::{
 	any::{Any, TypeId},
@@ -832,7 +832,7 @@ where
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use crate::InMemoryBackend;
+	use super::InMemoryBackend;
 	use codec::{Decode, Encode};
 	use crate::core::{
 		map,

@@ -1045,7 +1045,7 @@ fn compute_randomness(
 		s.extend_from_slice(&vrf_output[..]);
 	}
 
-	soil_io::hashing::blake2_256(&s)
+	subsoil::io::hashing::blake2_256(&s)
 }
 
 pub mod migrations {

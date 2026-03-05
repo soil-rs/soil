@@ -200,8 +200,8 @@ impl ExtBuilder {
 		self
 	}
 
-	pub fn build(self) -> soil_io::TestExternalities {
-		let mut ext: soil_io::TestExternalities = RuntimeGenesisConfig {
+	pub fn build(self) -> subsoil::io::TestExternalities {
+		let mut ext: subsoil::io::TestExternalities = RuntimeGenesisConfig {
 			system: topsoil_system::GenesisConfig::default(),
 			// balances: topsoil_balances::GenesisConfig::default(),
 			balances: topsoil_balances::GenesisConfig {

@@ -47,6 +47,6 @@ impl pallet_template::Config for Test {
 }
 
 // Build genesis storage according to the mock runtime.
-pub fn new_test_ext() -> soil_io::TestExternalities {
+pub fn new_test_ext() -> subsoil::io::TestExternalities {
 	topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap().into()
 }

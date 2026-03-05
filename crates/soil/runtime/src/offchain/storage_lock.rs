@@ -68,7 +68,7 @@ use crate::{
 use codec::{Codec, Decode, Encode};
 use core::fmt;
 use subsoil::core::offchain::{Duration, Timestamp};
-use soil_io::offchain;
+use subsoil::io::offchain;
 
 /// Default expiry duration for time based locks in milliseconds.
 const STORAGE_LOCK_DEFAULT_EXPIRY_DURATION: Duration = Duration::from_millis(20_000);
@@ -101,7 +101,7 @@ pub trait Lockable: Sized {
 	/// Note that `deadline` is only passed to allow optimizations
 	/// for `Lockables` which have a time based component.
 	fn snooze(_deadline: &Self::Deadline) {
-		soil_io::offchain::sleep_until(
+		subsoil::io::offchain::sleep_until(
 			offchain::timestamp().add(STORAGE_LOCK_PER_CHECK_ITERATION_SNOOZE_MAX),
 		);
 	}
@@ -141,7 +141,7 @@ impl Lockable for Time {
 			STORAGE_LOCK_PER_CHECK_ITERATION_SNOOZE_MIN,
 			STORAGE_LOCK_PER_CHECK_ITERATION_SNOOZE_MAX,
 		);
-		soil_io::offchain::sleep_until(now.add(snooze));
+		subsoil::io::offchain::sleep_until(now.add(snooze));
 	}
 }
 
@@ -242,7 +242,7 @@ impl<B: BlockNumberProvider> Lockable for BlockAndTime<B> {
 			STORAGE_LOCK_PER_CHECK_ITERATION_SNOOZE_MIN,
 			STORAGE_LOCK_PER_CHECK_ITERATION_SNOOZE_MAX,
 		);
-		soil_io::offchain::sleep_until(now.add(snooze));
+		subsoil::io::offchain::sleep_until(now.add(snooze));
 	}
 }
 
@@ -435,7 +435,7 @@ where
 mod tests {
 	use super::*;
 	use subsoil::core::offchain::{testing, OffchainDbExt, OffchainWorkerExt};
-	use soil_io::TestExternalities;
+	use subsoil::io::TestExternalities;
 
 	const VAL_1: u32 = 0u32;
 	const VAL_2: u32 = 0xFFFF_FFFFu32;

@@ -140,7 +140,7 @@ pub use pallet::*;
 use types::*;
 
 use core::convert::TryInto;
-use soil_io::hashing::blake2_256;
+use subsoil::io::hashing::blake2_256;
 use soil_runtime::{
 	traits::{CheckedAdd, CheckedSub, TrailingZeroInput, Zero},
 	ArithmeticError, Debug, DispatchResult, Perbill, Saturating,

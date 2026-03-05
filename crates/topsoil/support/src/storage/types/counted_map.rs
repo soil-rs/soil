@@ -31,7 +31,7 @@ use crate::{
 };
 use alloc::{vec, vec::Vec};
 use codec::{Decode, Encode, EncodeLike, FullCodec, MaxEncodedLen, Ref};
-use soil_io::MultiRemovalResults;
+use subsoil::io::MultiRemovalResults;
 use subsoil::metadata_ir::StorageEntryMetadataIR;
 use soil_runtime::traits::Saturating;
 
@@ -338,7 +338,7 @@ where
 
 	/// Attempt to remove all items from the map.
 	///
-	/// Returns [`MultiRemovalResults`](soil_io::MultiRemovalResults) to inform about the result. Once
+	/// Returns [`MultiRemovalResults`](subsoil::io::MultiRemovalResults) to inform about the result. Once
 	/// the resultant `maybe_cursor` field is `None`, then no further items remain to be deleted.
 	///
 	/// NOTE: After the initial call for any given map, it is important that no further items
@@ -414,7 +414,7 @@ where
 		if current < bound {
 			CounterFor::<Prefix>::mutate(|value| value.saturating_inc());
 			let key = <Self as MapWrapper>::Map::hashed_key_for(key);
-			soil_io::storage::append(&key, item.encode());
+			subsoil::io::storage::append(&key, item.encode());
 			Ok(())
 		} else {
 			Err(())
@@ -569,7 +569,7 @@ mod test {
 		storage::{bounded_vec::BoundedVec, types::ValueQuery},
 		traits::ConstU32,
 	};
-	use soil_io::{hashing::twox_128, TestExternalities};
+	use subsoil::io::{hashing::twox_128, TestExternalities};
 	use subsoil::metadata_ir::{StorageEntryModifierIR, StorageEntryTypeIR, StorageHasherIR};
 
 	struct Prefix;

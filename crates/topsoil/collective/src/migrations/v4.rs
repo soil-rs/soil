@@ -15,7 +15,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use soil_io::hashing::twox_128;
+use subsoil::io::hashing::twox_128;
 
 use super::super::LOG_TARGET;
 use topsoil_support::{

@@ -199,7 +199,7 @@ mod multiplier_tests {
 	where
 		F: Fn() -> (),
 	{
-		let mut t: soil_io::TestExternalities = topsoil_system::GenesisConfig::<Runtime>::default()
+		let mut t: subsoil::io::TestExternalities = topsoil_system::GenesisConfig::<Runtime>::default()
 			.build_storage()
 			.unwrap()
 			.into();

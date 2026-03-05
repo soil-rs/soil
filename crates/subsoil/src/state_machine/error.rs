@@ -35,7 +35,7 @@ impl<T: 'static + fmt::Debug + fmt::Display + Send + Sync> Error for T {}
 #[cfg_attr(feature = "std", derive(thiserror::Error))]
 pub enum ExecutionError {
 	#[cfg_attr(feature = "std", error("Backend error {0:?}"))]
-	Backend(crate::DefaultError),
+	Backend(super::DefaultError),
 
 	#[cfg_attr(feature = "std", error("`:code` entry does not exist in storage"))]
 	CodeEntryDoesNotExist,

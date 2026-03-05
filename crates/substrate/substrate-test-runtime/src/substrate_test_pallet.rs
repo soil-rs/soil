@@ -110,7 +110,7 @@ pub mod pallet {
 			value: Vec<u8>,
 		) -> DispatchResult {
 			topsoil_system::ensure_signed(origin)?;
-			soil_io::offchain_index::set(&key, &value);
+			subsoil::io::offchain_index::set(&key, &value);
 			Ok(())
 		}
 
@@ -119,7 +119,7 @@ pub mod pallet {
 		#[pallet::weight(100)]
 		pub fn offchain_index_clear(origin: OriginFor<T>, key: Vec<u8>) -> DispatchResult {
 			topsoil_system::ensure_signed(origin)?;
-			soil_io::offchain_index::clear(&key);
+			subsoil::io::offchain_index::clear(&key);
 			Ok(())
 		}
 
@@ -128,10 +128,10 @@ pub mod pallet {
 		#[pallet::weight(100)]
 		pub fn indexed_call(origin: OriginFor<T>, data: Vec<u8>) -> DispatchResult {
 			topsoil_system::ensure_signed(origin)?;
-			let content_hash = soil_io::hashing::blake2_256(&data);
+			let content_hash = subsoil::io::hashing::blake2_256(&data);
 			let extrinsic_index: u32 =
 				storage::unhashed::get(well_known_keys::EXTRINSIC_INDEX).unwrap();
-			soil_io::transaction_index::index(extrinsic_index, data.len() as u32, content_hash);
+			subsoil::io::transaction_index::index(extrinsic_index, data.len() as u32, content_hash);
 			Ok(())
 		}
 
@@ -195,9 +195,9 @@ pub mod pallet {
 		fn execute_read(read: u32, panic_at_end: bool) -> DispatchResult {
 			let mut next_key = vec![];
 			for _ in 0..(read as usize) {
-				if let Some(next) = soil_io::storage::next_key(&next_key) {
+				if let Some(next) = subsoil::io::storage::next_key(&next_key) {
 					// Read the value
-					soil_io::storage::get(&next);
+					subsoil::io::storage::get(&next);
 
 					next_key = next;
 				} else {

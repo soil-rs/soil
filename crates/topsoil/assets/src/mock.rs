@@ -21,7 +21,7 @@ use super::*;
 use crate as topsoil_assets;
 
 use codec::Encode;
-use soil_io::storage;
+use subsoil::io::storage;
 use soil_runtime::BuildStorage;
 use topsoil_support::{
 	assert_ok, construct_runtime, derive_impl, parameter_types,
@@ -215,7 +215,7 @@ pub(crate) fn take_hooks() -> Vec<Hook> {
 	Hooks::take()
 }
 
-pub(crate) fn new_test_ext() -> soil_io::TestExternalities {
+pub(crate) fn new_test_ext() -> subsoil::io::TestExternalities {
 	let mut storage = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 
 	let config: topsoil_assets::GenesisConfig<Test> = topsoil_assets::GenesisConfig {
@@ -237,7 +237,7 @@ pub(crate) fn new_test_ext() -> soil_io::TestExternalities {
 
 	config.assimilate_storage(&mut storage).unwrap();
 
-	let mut ext: soil_io::TestExternalities = storage.into();
+	let mut ext: subsoil::io::TestExternalities = storage.into();
 	// Clear thread local vars for https://github.com/paritytech/substrate/issues/10479.
 	ext.execute_with(|| take_hooks());
 	ext.execute_with(|| System::set_block_number(1));

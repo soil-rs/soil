@@ -233,7 +233,7 @@ pub fn session_hold(who: u64) -> u64 {
 	)
 }
 
-pub fn new_test_ext() -> soil_io::TestExternalities {
+pub fn new_test_ext() -> subsoil::io::TestExternalities {
 	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	let ed = <Test as topsoil_balances::Config>::ExistentialDeposit::get();
 	topsoil_balances::GenesisConfig::<Test> {
@@ -263,7 +263,7 @@ pub fn new_test_ext() -> soil_io::TestExternalities {
 
 	let v = NextValidators::get().iter().map(|&i| (i, i)).collect();
 	ValidatorAccounts::mutate(|m| *m = v);
-	soil_io::TestExternalities::new(t)
+	subsoil::io::TestExternalities::new(t)
 }
 
 #[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]

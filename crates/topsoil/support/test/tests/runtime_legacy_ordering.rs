@@ -422,7 +422,7 @@ fn test_pub() -> AccountId {
 
 #[test]
 fn check_modules_error_type() {
-	soil_io::TestExternalities::default().execute_with(|| {
+	subsoil::io::TestExternalities::default().execute_with(|| {
 		assert_eq!(
 			Module1_1::fail(topsoil_system::Origin::<Runtime>::Root.into()),
 			Err(DispatchError::Module(ModuleError {

@@ -18,7 +18,7 @@
 //! Trie-based state machine backend essence used to read values
 //! from storage.
 
-use crate::{
+use super::{
 	backend::{IterArgs, StorageIterator},
 	trie_backend::TrieCacheProvider,
 	warn, StorageKey, StorageValue,
@@ -51,12 +51,12 @@ macro_rules! format {
 	( $message:expr, $( $arg:expr )* ) => {
 		{
 			$( let _ = &$arg; )*
-			crate::DefaultError
+			super::DefaultError
 		}
 	};
 }
 
-type Result<V> = core::result::Result<V, crate::DefaultError>;
+type Result<V> = core::result::Result<V, super::DefaultError>;
 
 /// Patricia trie-based storage trait.
 pub trait Storage<H: Hasher>: Send + Sync {
@@ -166,8 +166,8 @@ where
 	C: TrieCacheProvider<H> + Send + Sync,
 	R: TrieRecorderProvider<H> + Send + Sync,
 {
-	type Backend = crate::TrieBackend<S, H, C, R>;
-	type Error = crate::DefaultError;
+	type Backend = super::TrieBackend<S, H, C, R>;
+	type Error = super::DefaultError;
 
 	#[inline]
 	fn next_key(&mut self, backend: &Self::Backend) -> Option<Result<StorageKey>> {
@@ -879,7 +879,7 @@ impl<
 #[cfg(test)]
 mod test {
 	use super::*;
-	use crate::{Backend, TrieBackend};
+	use super::{Backend, TrieBackend};
 	use crate::core::{Blake2Hasher, H256};
 	use crate::trie::{
 		cache::LocalTrieCache, trie_types::TrieDBMutBuilderV1 as TrieDBMutBuilder, KeySpacedDBMut,

@@ -46,7 +46,7 @@ impl RuntimePublic for Public {
 	}
 
 	fn generate_pair(key_type: KeyTypeId, seed: Option<Vec<u8>>) -> Self {
-		soil_io::crypto::bls381_generate(key_type, seed)
+		subsoil::io::crypto::bls381_generate(key_type, seed)
 	}
 
 	/// Dummy implementation. Returns `None`.
@@ -64,7 +64,7 @@ impl RuntimePublic for Public {
 		key_type: KeyTypeId,
 		owner: &[u8],
 	) -> Option<Self::ProofOfPossession> {
-		soil_io::crypto::bls381_generate_proof_of_possession(key_type, self, owner)
+		subsoil::io::crypto::bls381_generate_proof_of_possession(key_type, self, owner)
 	}
 
 	fn verify_proof_of_possession(

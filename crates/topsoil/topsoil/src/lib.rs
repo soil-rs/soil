@@ -335,9 +335,9 @@ pub mod testing_prelude {
 	pub use topsoil_system::{self, mocking::*, RunToBlockHooks};
 
 	#[deprecated(note = "Use `topsoil::testing_prelude::TestState` instead.")]
-	pub use soil_io::TestExternalities;
+	pub use subsoil::io::TestExternalities;
 
-	pub use soil_io::TestExternalities as TestState;
+	pub use subsoil::io::TestExternalities as TestState;
 
 	/// Commonly used runtime traits for testing.
 	pub use soil_runtime::{traits::BadOrigin, StateVersion};
@@ -624,7 +624,7 @@ pub mod deps {
 
 	pub use subsoil::arithmetic;
 	pub use subsoil::core;
-	pub use soil_io;
+	pub use subsoil::io;
 	pub use soil_runtime;
 
 	pub use codec;

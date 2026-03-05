@@ -19,7 +19,7 @@ use std::vec;
 
 use codec::Encode;
 use soil_consensus_beefy::mmr::MmrLeafVersion;
-use soil_io::TestExternalities;
+use subsoil::io::TestExternalities;
 use soil_runtime::{
 	app_crypto::ecdsa::Public,
 	impl_opaque_keys,

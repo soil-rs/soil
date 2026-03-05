@@ -52,12 +52,12 @@ use topsoil_system_rpc_runtime_api::AccountNonceApi;
 /// Host functions required for kitchensink runtime and Substrate node.
 #[cfg(not(feature = "runtime-benchmarks"))]
 pub type HostFunctions =
-	(soil_io::SubstrateHostFunctions, soil_statement_store::runtime_api::HostFunctions);
+	(subsoil::io::SubstrateHostFunctions, soil_statement_store::runtime_api::HostFunctions);
 
 /// Host functions required for kitchensink runtime and Substrate node.
 #[cfg(feature = "runtime-benchmarks")]
 pub type HostFunctions = (
-	soil_io::SubstrateHostFunctions,
+	subsoil::io::SubstrateHostFunctions,
 	soil_statement_store::runtime_api::HostFunctions,
 	topsoil_benchmarking::benchmarking::HostFunctions,
 );

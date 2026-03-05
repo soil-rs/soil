@@ -20,7 +20,7 @@
 use super::*;
 use crate as topsoil_timestamp;
 
-use soil_io::TestExternalities;
+use subsoil::io::TestExternalities;
 use soil_runtime::BuildStorage;
 use topsoil_support::{derive_impl, parameter_types, traits::ConstU64};
 

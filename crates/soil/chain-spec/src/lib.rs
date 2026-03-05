@@ -192,7 +192,7 @@
 //!
 //! This interaction involves passing the runtime genesis config JSON blob to the runtime using the
 //! [`soil_genesis_builder::GenesisBuilder::build_state`] function. During this operation, the
-//! runtime converts the JSON representation of the genesis config into [`soil_io::storage`] items. It
+//! runtime converts the JSON representation of the genesis config into [`subsoil::io::storage`] items. It
 //! is a crucial step for computing the storage root hash, which is a key component in determining
 //! the genesis hash.
 //!

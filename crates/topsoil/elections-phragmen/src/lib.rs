@@ -1471,7 +1471,7 @@ mod tests {
 			MEMBERS.with(|m| {
 				*m.borrow_mut() = self.genesis_members.iter().map(|(m, _)| *m).collect::<Vec<_>>()
 			});
-			let mut ext: soil_io::TestExternalities = RuntimeGenesisConfig {
+			let mut ext: subsoil::io::TestExternalities = RuntimeGenesisConfig {
 				system: topsoil_system::GenesisConfig::default(),
 				balances: topsoil_balances::GenesisConfig::<Test> {
 					balances: vec![

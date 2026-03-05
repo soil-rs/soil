@@ -309,7 +309,7 @@ impl Config for Runtime {
 }
 
 #[cfg(feature = "runtime-benchmarks")]
-pub fn new_test_ext() -> soil_io::TestExternalities {
+pub fn new_test_ext() -> subsoil::io::TestExternalities {
 	let base_weight = 5;
 	let balance_factor = 100;
 	crate::tests::ExtBuilder::default()

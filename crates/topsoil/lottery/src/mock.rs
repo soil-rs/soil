@@ -71,7 +71,7 @@ impl Config for Test {
 pub type SystemCall = topsoil_system::Call<Test>;
 pub type BalancesCall = topsoil_balances::Call<Test>;
 
-pub fn new_test_ext() -> soil_io::TestExternalities {
+pub fn new_test_ext() -> subsoil::io::TestExternalities {
 	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	topsoil_balances::GenesisConfig::<Test> {
 		balances: vec![(1, 100), (2, 100), (3, 100), (4, 100), (5, 100)],

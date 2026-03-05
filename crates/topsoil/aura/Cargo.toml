@@ -28,7 +28,6 @@ soil-runtime = { workspace = true }
 
 [dev-dependencies]
 subsoil = { workspace = true }
-soil-io = { workspace = true, default-features = true }
 
 [features]
 default = ["std"]
@@ -42,7 +41,6 @@ std = [
 	"soil-application-crypto/std",
 	"soil-consensus-aura/std",
 	"subsoil/std",
-	"soil-io/std",
 	"soil-runtime/std",
 ]
 try-runtime = [

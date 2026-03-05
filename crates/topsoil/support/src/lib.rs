@@ -63,8 +63,8 @@ pub mod __private {
 	pub use subsoil_crypto_hashing_proc_macro;
 	pub use soil_inherents;
 	#[cfg(feature = "std")]
-	pub use soil_io::TestExternalities;
-	pub use soil_io::{self, hashing, storage::root as storage_root};
+	pub use subsoil::io::TestExternalities;
+	pub use subsoil::io::{self, hashing, storage::root as storage_root};
 	pub use subsoil;
 	pub use subsoil::metadata_ir;
 	#[cfg(feature = "std")]
@@ -1979,7 +1979,7 @@ pub mod pallet_macros {
 	/// specific key. The exact key is dependent on the type of the storage.
 	///
 	/// > From the perspective of this pallet, the entire blockchain state is abstracted behind
-	/// > a key-value api, namely [`soil_io::storage`].
+	/// > a key-value api, namely [`subsoil::io::storage`].
 	///
 	/// ## Storage Types
 	///
@@ -2144,7 +2144,7 @@ pub mod pallet_macros {
 	///
 	/// Internally, every storage type generates a "prefix". This prefix serves as the initial
 	/// segment of the key utilized to store values in the on-chain state (i.e., the final key
-	/// used in [`soil_io::storage`](soil_io::storage)). For all storage types, the following rule
+	/// used in [`subsoil::io::storage`](subsoil::io::storage)). For all storage types, the following rule
 	/// applies:
 	///
 	/// > The storage prefix begins with `twox128(pallet_prefix) ++ twox128(STORAGE_PREFIX)`,
@@ -2298,7 +2298,7 @@ mod test {
 		traits::{ConstU32, StorageInstance},
 		BoundedVec,
 	};
-	use soil_io::{hashing::twox_128, TestExternalities};
+	use subsoil::io::{hashing::twox_128, TestExternalities};
 
 	struct Prefix;
 	impl StorageInstance for Prefix {

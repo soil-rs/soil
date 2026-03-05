@@ -16,7 +16,7 @@
 // limitations under the License.
 
 use pallet::*;
-use soil_io::TestExternalities;
+use subsoil::io::TestExternalities;
 use topsoil_support::{
 	assert_noop, assert_ok, derive_impl, dispatch::DispatchResult, ensure,
 	pallet_prelude::ConstU32, storage::with_storage_layer,

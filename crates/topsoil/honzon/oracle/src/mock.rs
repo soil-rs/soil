@@ -106,10 +106,10 @@ pub fn set_members(members: Vec<AccountId>) {
 
 // This function basically just builds a genesis storage key/value store
 // according to our desired mockup.
-pub fn new_test_ext() -> soil_io::TestExternalities {
+pub fn new_test_ext() -> subsoil::io::TestExternalities {
 	let storage = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 
-	let mut t: soil_io::TestExternalities = storage.into();
+	let mut t: subsoil::io::TestExternalities = storage.into();
 
 	t.execute_with(|| {
 		Timestamp::set_timestamp(12345);

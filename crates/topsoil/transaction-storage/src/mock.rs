@@ -60,7 +60,7 @@ impl topsoil_transaction_storage::Config for Test {
 	type MaxTransactionSize = ConstU32<{ DEFAULT_MAX_TRANSACTION_SIZE }>;
 }
 
-pub fn new_test_ext() -> soil_io::TestExternalities {
+pub fn new_test_ext() -> subsoil::io::TestExternalities {
 	let t = RuntimeGenesisConfig {
 		system: Default::default(),
 		balances: topsoil_balances::GenesisConfig::<Test> {

@@ -329,14 +329,14 @@ where
 	/// removed and the same result being returned. This happens because the keys to delete in the
 	/// overlay are not taken into account when deleting keys in the backend.
 	#[deprecated = "Use `clear` instead"]
-	pub fn remove_all(limit: Option<u32>) -> soil_io::KillStorageResult {
+	pub fn remove_all(limit: Option<u32>) -> subsoil::io::KillStorageResult {
 		#[allow(deprecated)]
 		<Self as crate::storage::StoragePrefixedMap<Value>>::remove_all(limit)
 	}
 
 	/// Attempt to remove all items from the map.
 	///
-	/// Returns [`MultiRemovalResults`](soil_io::MultiRemovalResults) to inform about the result. Once
+	/// Returns [`MultiRemovalResults`](subsoil::io::MultiRemovalResults) to inform about the result. Once
 	/// the resultant `maybe_cursor` field is `None`, then no further items remain to be deleted.
 	///
 	/// NOTE: After the initial call for any given map, it is important that no further items
@@ -357,7 +357,7 @@ where
 	/// passed once (in the initial call) for any given storage map. Subsequent calls
 	/// operating on the same map should always pass `Some`, and this should be equal to the
 	/// previous call result's `maybe_cursor` field.
-	pub fn clear(limit: u32, maybe_cursor: Option<&[u8]>) -> soil_io::MultiRemovalResults {
+	pub fn clear(limit: u32, maybe_cursor: Option<&[u8]>) -> subsoil::io::MultiRemovalResults {
 		<Self as crate::storage::StoragePrefixedMap<Value>>::clear(limit, maybe_cursor)
 	}
 
@@ -571,7 +571,7 @@ mod test {
 		hash::*,
 		storage::{types::ValueQuery, IterableStorageMap},
 	};
-	use soil_io::{hashing::twox_128, TestExternalities};
+	use subsoil::io::{hashing::twox_128, TestExternalities};
 	use subsoil::metadata_ir::{StorageEntryModifierIR, StorageEntryTypeIR, StorageHasherIR};
 
 	struct Prefix;

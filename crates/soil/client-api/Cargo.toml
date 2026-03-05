@@ -46,7 +46,6 @@ std = [
 	"soil-consensus",
 	"subsoil",
 	"soil-executor",
-	"subsoil",
 	"soil-runtime",
 	"soil-transaction-pool-api",
 	"soil-utils",

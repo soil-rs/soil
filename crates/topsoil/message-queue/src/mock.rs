@@ -306,7 +306,7 @@ impl QueuePausedQuery<MessageOrigin> for MockedQueuePauser {
 /// Create new test externalities.
 ///
 /// Is generic since it is used by the unit test, integration tests and benchmarks.
-pub fn new_test_ext<T: Config>() -> soil_io::TestExternalities
+pub fn new_test_ext<T: Config>() -> subsoil::io::TestExternalities
 where
 	topsoil_system::pallet_prelude::BlockNumberFor<T>: From<u32>,
 {
@@ -315,7 +315,7 @@ where
 	QueueChanges::take();
 	NumMessagesErrored::take();
 	let t = topsoil_system::GenesisConfig::<T>::default().build_storage().unwrap();
-	let mut ext = soil_io::TestExternalities::new(t);
+	let mut ext = subsoil::io::TestExternalities::new(t);
 	ext.execute_with(|| topsoil_system::Pallet::<T>::set_block_number(1.into()));
 	ext
 }

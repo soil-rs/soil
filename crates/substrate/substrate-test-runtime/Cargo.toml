@@ -38,7 +38,6 @@ subsoil-crypto-hashing = { workspace = true }
 subsoil-debug-derive = { workspace = true, default-features = false }
 soil-genesis-builder = { workspace = true }
 soil-inherents = { workspace = true }
-soil-io = { workspace = true }
 soil-keyring = { workspace = true }
 soil-offchain = { workspace = true }
 soil-runtime = { features = ["serde"], workspace = true }
@@ -101,7 +100,6 @@ std = [
 	"subsoil-debug-derive/std",
 	"soil-genesis-builder/std",
 	"soil-inherents/std",
-	"soil-io/std",
 	"soil-keyring/std",
 	"soil-offchain/std",
 	"soil-runtime/std",

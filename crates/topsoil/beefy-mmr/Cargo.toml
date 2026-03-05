@@ -26,7 +26,6 @@ scale-info = { features = ["derive"], workspace = true }
 serde = { optional = true, workspace = true, default-features = true }
 soil-api = { workspace = true }
 soil-consensus-beefy = { workspace = true }
-soil-io = { workspace = true }
 soil-runtime = { workspace = true }
 
 [dev-dependencies]
@@ -52,7 +51,6 @@ std = [
 	"serde",
 	"soil-api/std",
 	"soil-consensus-beefy/std",
-	"soil-io/std",
 	"soil-runtime/std",
 	"soil-staking/std",
 ]

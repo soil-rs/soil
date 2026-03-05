@@ -7,6 +7,7 @@ license.workspace = true
 homepage.workspace = true
 repository.workspace = true
 description = "Substrate primitives foundation crate"
+build = "build.rs"
 
 [lints]
 workspace = true
@@ -98,6 +99,11 @@ polkavm-derive = { workspace = true }
 [target.'cfg(not(substrate_runtime))'.dependencies]
 futures = { version = "0.3.30", default-features = false, features = ["alloc"] }
 dyn-clone = "1.0.17"
+# soil-io target deps
+ed25519-dalek = { workspace = true }
+
+[build-dependencies]
+rustversion = { workspace = true }
 
 [dev-dependencies]
 array-bytes = { workspace = true, default-features = true }
@@ -177,6 +183,8 @@ std = [
 	"w3f-bls?/std",
 	"zeroize/alloc",
 	"zeroize/std",
+	# soil-io std features
+	"ed25519-dalek/std",
 ]
 debug = []
 wasm-interface-wasmtime = ["anyhow", "dep:wasmtime"]
@@ -211,3 +219,9 @@ disable_target_static_assertions = []
 
 # soil-state-machine features
 fuzzing = ["arbitrary"]
+
+# soil-io features
+io-disable_panic_handler = []
+io-disable_oom = []
+io-disable_allocator = []
+io-improved_panic_error_reporting = []

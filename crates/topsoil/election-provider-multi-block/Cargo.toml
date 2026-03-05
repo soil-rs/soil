@@ -27,7 +27,6 @@ topsoil-election-provider-support = { workspace = true }
 topsoil-support = { workspace = true }
 topsoil-system = { workspace = true }
 
-soil-io = { workspace = true }
 soil-npos-elections = { features = ["serde"], workspace = true }
 soil-runtime = { workspace = true }
 subsoil = { workspace = true }
@@ -40,7 +39,6 @@ rand = { features = ["alloc", "small_rng"], optional = true, workspace = true }
 topsoil-benchmarking = { workspace = true, default-features = true }
 topsoil-balances = { workspace = true, default-features = true }
 parking_lot = { workspace = true, default-features = true }
-soil-io = { workspace = true, default-features = true }
 
 [features]
 default = ["std"]
@@ -55,7 +53,6 @@ std = [
 	"rand/std",
 	"scale-info/std",
 	"subsoil/std",
-	"soil-io/std",
 	"soil-npos-elections/std",
 	"soil-runtime/std",
 ]

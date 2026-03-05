@@ -34,7 +34,6 @@ soil-transaction-pool-api = { workspace = true, default-features = true, optiona
 soil-api = { workspace = true, default-features = true, optional = true}
 soil-blockchain = { workspace = true, default-features = true, optional = true}
 soil-consensus = { workspace = true, default-features = true, optional = true}
-soil-io = { workspace = true, default-features = true, optional = true}
 soil-runtime = { workspace = true, default-features = true, optional = true}
 subsoil = { workspace = true, default-features = true, optional = true }
 substrate-test-runtime = { workspace = true, optional = true}
@@ -61,12 +60,10 @@ std = [
 	"soil-consensus",
 	"subsoil",
 	"soil-executor",
-	"soil-io",
 	"soil-network",
 	"soil-network-sync",
 	"soil-runtime",
 	"soil-service",
-	"subsoil",
 	"soil-transaction-pool-api",
 	"substrate-test-runtime",
 	"substrate-test-runtime-client",
@@ -77,7 +74,6 @@ std = [
 	"soil-client-db/std",
 	"subsoil/std",
 	"soil-executor/std",
-	"soil-io/std",
 	"soil-network/std",
 	"soil-network-sync/std",
 	"soil-runtime/std",

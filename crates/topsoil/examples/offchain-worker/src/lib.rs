@@ -650,10 +650,10 @@ impl<T: Config> Pallet<T> {
 		// deadline to 2s to complete the external call.
 		// You can also wait indefinitely for the response, however you may still get a timeout
 		// coming from the host machine.
-		let deadline = soil_io::offchain::timestamp().add(Duration::from_millis(2_000));
+		let deadline = subsoil::io::offchain::timestamp().add(Duration::from_millis(2_000));
 		// Initiate an external HTTP GET request.
 		// This is using high-level wrappers from `soil_runtime`, for the low-level calls that
-		// you can find in `soil_io`. The API is trying to be similar to `request`, but
+		// you can find in `subsoil::io`. The API is trying to be similar to `request`, but
 		// since we are running in a custom WASM execution environment we can't simply
 		// import the library here.
 		let request =

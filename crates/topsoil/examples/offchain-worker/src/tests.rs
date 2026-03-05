@@ -159,7 +159,7 @@ fn test_pub() -> subsoil::core::sr25519::Public {
 
 #[test]
 fn it_aggregates_the_price() {
-	soil_io::TestExternalities::default().execute_with(|| {
+	subsoil::io::TestExternalities::default().execute_with(|| {
 		assert_eq!(Example::average_price(), None);
 
 		assert_ok!(Example::submit_price(RuntimeOrigin::signed(test_pub()), 27));
@@ -173,7 +173,7 @@ fn it_aggregates_the_price() {
 #[test]
 fn should_make_http_call_and_parse_result() {
 	let (offchain, state) = testing::TestOffchainExt::new();
-	let mut t = soil_io::TestExternalities::default();
+	let mut t = subsoil::io::TestExternalities::default();
 	t.register_extension(OffchainWorkerExt::new(offchain));
 
 	price_oracle_response(&mut state.write());
@@ -189,7 +189,7 @@ fn should_make_http_call_and_parse_result() {
 #[test]
 fn knows_how_to_mock_several_http_calls() {
 	let (offchain, state) = testing::TestOffchainExt::new();
-	let mut t = soil_io::TestExternalities::default();
+	let mut t = subsoil::io::TestExternalities::default();
 	t.register_extension(OffchainWorkerExt::new(offchain));
 
 	{
@@ -242,7 +242,7 @@ fn should_submit_signed_transaction_on_chain() {
 		.sr25519_generate_new(crate::crypto::Public::ID, Some(&format!("{}/hunter1", PHRASE)))
 		.unwrap();
 
-	let mut t = soil_io::TestExternalities::default();
+	let mut t = subsoil::io::TestExternalities::default();
 	t.register_extension(OffchainWorkerExt::new(offchain));
 	t.register_extension(TransactionPoolExt::new(pool));
 	t.register_extension(KeystoreExt::new(keystore));
@@ -277,7 +277,7 @@ fn should_submit_authorized_transaction_on_chain_for_any_account() {
 
 	let public_key = *keystore.sr25519_public_keys(crate::crypto::Public::ID).get(0).unwrap();
 
-	let mut t = soil_io::TestExternalities::default();
+	let mut t = subsoil::io::TestExternalities::default();
 	t.register_extension(OffchainWorkerExt::new(offchain));
 	t.register_extension(TransactionPoolExt::new(pool));
 	t.register_extension(KeystoreExt::new(keystore));
@@ -350,7 +350,7 @@ fn should_submit_authorized_transaction_on_chain_for_all_accounts() {
 
 	let public_key = *keystore.sr25519_public_keys(crate::crypto::Public::ID).get(0).unwrap();
 
-	let mut t = soil_io::TestExternalities::default();
+	let mut t = subsoil::io::TestExternalities::default();
 	t.register_extension(OffchainWorkerExt::new(offchain));
 	t.register_extension(TransactionPoolExt::new(pool));
 	t.register_extension(KeystoreExt::new(keystore));
@@ -415,7 +415,7 @@ fn should_submit_raw_authorized_transaction_on_chain() {
 
 	let keystore = MemoryKeystore::new();
 
-	let mut t = soil_io::TestExternalities::default();
+	let mut t = subsoil::io::TestExternalities::default();
 	t.register_extension(OffchainWorkerExt::new(offchain));
 	t.register_extension(TransactionPoolExt::new(pool));
 	t.register_extension(KeystoreExt::new(keystore));
@@ -461,7 +461,7 @@ fn should_submit_raw_authorized_transaction_on_chain() {
 
 #[test]
 fn should_reject_invalid_authorized_transaction() {
-	let mut t = soil_io::TestExternalities::default();
+	let mut t = subsoil::io::TestExternalities::default();
 
 	t.execute_with(|| {
 		// Set NextAuthorizedAt to block 100, so any transaction at block 1 should be stale

@@ -64,6 +64,5 @@ cargo_metadata = { workspace = true }
 codec = { workspace = true, default-features = true }
 paste = { workspace = true, default-features = true }
 soil-runtime-test = { workspace = true }
-soil-io = { workspace = true, default-features = true }
 tempfile = { workspace = true }
 wat = { workspace = true }

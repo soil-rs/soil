@@ -18,7 +18,7 @@
 use std::collections::BTreeMap;
 
 use scale_info::{meta_type, TypeInfo};
-use soil_io::{
+use subsoil::io::{
 	hashing::{blake2_128, twox_128, twox_64},
 	TestExternalities,
 };
@@ -1355,9 +1355,9 @@ fn migrate_from_pallet_version_to_storage_version() {
 
 	TestExternalities::default().execute_with(|| {
 		// Insert some fake pallet versions
-		soil_io::storage::set(&pallet_version_key(Example::name()), &[1, 2, 3]);
-		soil_io::storage::set(&pallet_version_key(Example2::name()), &[1, 2, 3]);
-		soil_io::storage::set(&pallet_version_key(System::name()), &[1, 2, 3]);
+		subsoil::io::storage::set(&pallet_version_key(Example::name()), &[1, 2, 3]);
+		subsoil::io::storage::set(&pallet_version_key(Example2::name()), &[1, 2, 3]);
+		subsoil::io::storage::set(&pallet_version_key(System::name()), &[1, 2, 3]);
 
 		// Check that everyone currently is at version 0
 		assert_eq!(Example::on_chain_storage_version(), StorageVersion::new(0));
@@ -1381,9 +1381,9 @@ fn migrate_from_pallet_version_to_storage_version() {
 		assert_eq!(Weight::from_parts(pallet_num * 2 * 5, 0), weight);
 
 		// All pallet versions should be removed
-		assert!(soil_io::storage::get(&pallet_version_key(Example::name())).is_none());
-		assert!(soil_io::storage::get(&pallet_version_key(Example2::name())).is_none());
-		assert!(soil_io::storage::get(&pallet_version_key(System::name())).is_none());
+		assert!(subsoil::io::storage::get(&pallet_version_key(Example::name())).is_none());
+		assert!(subsoil::io::storage::get(&pallet_version_key(Example2::name())).is_none());
+		assert!(subsoil::io::storage::get(&pallet_version_key(System::name())).is_none());
 
 		assert_eq!(Example::on_chain_storage_version(), pallet::STORAGE_VERSION);
 		assert_eq!(Example2::on_chain_storage_version(), pallet2::STORAGE_VERSION);

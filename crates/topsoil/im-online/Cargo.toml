@@ -25,7 +25,6 @@ topsoil-authorship = { workspace = true }
 scale-info = { features = ["derive", "serde"], workspace = true }
 soil-application-crypto = { features = ["serde"], workspace = true }
 subsoil = { features = ["serde"], workspace = true }
-soil-io = { workspace = true }
 soil-runtime = { features = ["serde"], workspace = true }
 soil-staking = { features = ["serde"], workspace = true }
 
@@ -47,7 +46,6 @@ std = [
 	"scale-info/std",
 	"soil-application-crypto/std",
 	"subsoil/std",
-	"soil-io/std",
 	"soil-runtime/std",
 	"soil-staking/std",
 ]

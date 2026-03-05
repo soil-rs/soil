@@ -32,7 +32,6 @@ topsoil-offences = { workspace = true, default-features = true }
 topsoil-staking = { workspace = true, default-features = true }
 topsoil-staking-reward-curve = { workspace = true, default-features = true }
 topsoil-timestamp = { workspace = true, default-features = true }
-soil-io = { workspace = true, default-features = true }
 soil-staking = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
 
@@ -54,7 +53,6 @@ std = [
 	"serde/std",
 	"soil-consensus-beefy/std",
 	"subsoil/std",
-	"soil-io/std",
 	"soil-runtime/std",
 	"soil-session/std",
 	"soil-staking/std",

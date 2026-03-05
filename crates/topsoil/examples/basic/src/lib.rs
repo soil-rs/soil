@@ -198,7 +198,7 @@ pub mod pallet {
 		fn offchain_worker(_n: BlockNumberFor<T>) {
 			// We don't do anything here.
 			// but we could dispatch extrinsic (transaction/unsigned/inherent) using
-			// soil_io::submit_extrinsic.
+			// subsoil::io::submit_extrinsic.
 			// To see example on offchain worker, please refer to example-offchain-worker pallet
 			// accompanied in this repository.
 		}
@@ -339,7 +339,7 @@ pub mod pallet {
 
 			// Print out log or debug message in the console via log::{error, warn, info, debug,
 			// trace}, accepting format strings similar to `println!`.
-			// https://paritytech.github.io/substrate/master/soil_io/logging/fn.log.html
+			// https://paritytech.github.io/substrate/master/subsoil/io/logging/fn.log.html
 			// https://paritytech.github.io/substrate/master/topsoil_support/constant.LOG_TARGET.html
 			info!("New value is now: {:?}", new_value);
 

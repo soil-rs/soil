@@ -38,19 +38,19 @@ impl RuntimePublic for Public {
 	type ProofOfPossession = Signature;
 
 	fn all(key_type: KeyTypeId) -> crate::Vec<Self> {
-		soil_io::crypto::ecdsa_public_keys(key_type)
+		subsoil::io::crypto::ecdsa_public_keys(key_type)
 	}
 
 	fn generate_pair(key_type: KeyTypeId, seed: Option<Vec<u8>>) -> Self {
-		soil_io::crypto::ecdsa_generate(key_type, seed)
+		subsoil::io::crypto::ecdsa_generate(key_type, seed)
 	}
 
 	fn sign<M: AsRef<[u8]>>(&self, key_type: KeyTypeId, msg: &M) -> Option<Self::Signature> {
-		soil_io::crypto::ecdsa_sign(key_type, self, msg.as_ref())
+		subsoil::io::crypto::ecdsa_sign(key_type, self, msg.as_ref())
 	}
 
 	fn verify<M: AsRef<[u8]>>(&self, msg: &M, signature: &Self::Signature) -> bool {
-		soil_io::crypto::ecdsa_verify(signature, msg.as_ref(), self)
+		subsoil::io::crypto::ecdsa_verify(signature, msg.as_ref(), self)
 	}
 
 	fn generate_proof_of_possession(
@@ -59,7 +59,7 @@ impl RuntimePublic for Public {
 		owner: &[u8],
 	) -> Option<Self::Signature> {
 		let proof_of_possession_statement = Pair::proof_of_possession_statement(owner);
-		soil_io::crypto::ecdsa_sign(key_type, self, &proof_of_possession_statement)
+		subsoil::io::crypto::ecdsa_sign(key_type, self, &proof_of_possession_statement)
 	}
 
 	fn verify_proof_of_possession(
@@ -68,7 +68,7 @@ impl RuntimePublic for Public {
 		proof_of_possession: &Self::Signature,
 	) -> bool {
 		let proof_of_possession_statement = Pair::proof_of_possession_statement(owner);
-		soil_io::crypto::ecdsa_verify(&proof_of_possession, &proof_of_possession_statement, &self)
+		subsoil::io::crypto::ecdsa_verify(&proof_of_possession, &proof_of_possession_statement, &self)
 	}
 
 	fn to_raw_vec(&self) -> Vec<u8> {

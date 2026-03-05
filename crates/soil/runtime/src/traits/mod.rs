@@ -131,7 +131,7 @@ impl Verify for subsoil::core::ed25519::Signature {
 	type Signer = subsoil::core::ed25519::Public;
 
 	fn verify<L: Lazy<[u8]>>(&self, mut msg: L, signer: &subsoil::core::ed25519::Public) -> bool {
-		soil_io::crypto::ed25519_verify(self, msg.get(), signer)
+		subsoil::io::crypto::ed25519_verify(self, msg.get(), signer)
 	}
 }
 
@@ -139,16 +139,16 @@ impl Verify for subsoil::core::sr25519::Signature {
 	type Signer = subsoil::core::sr25519::Public;
 
 	fn verify<L: Lazy<[u8]>>(&self, mut msg: L, signer: &subsoil::core::sr25519::Public) -> bool {
-		soil_io::crypto::sr25519_verify(self, msg.get(), signer)
+		subsoil::io::crypto::sr25519_verify(self, msg.get(), signer)
 	}
 }
 
 impl Verify for subsoil::core::ecdsa::Signature {
 	type Signer = subsoil::core::ecdsa::Public;
 	fn verify<L: Lazy<[u8]>>(&self, mut msg: L, signer: &subsoil::core::ecdsa::Public) -> bool {
-		match soil_io::crypto::secp256k1_ecdsa_recover_compressed(
+		match subsoil::io::crypto::secp256k1_ecdsa_recover_compressed(
 			self.as_ref(),
-			&soil_io::hashing::blake2_256(msg.get()),
+			&subsoil::io::hashing::blake2_256(msg.get()),
 		) {
 			Ok(pubkey) => signer.0 == pubkey,
 			_ => false,
@@ -1067,7 +1067,7 @@ impl Hasher for BlakeTwo256 {
 	const LENGTH: usize = 32;
 
 	fn hash(s: &[u8]) -> Self::Out {
-		soil_io::hashing::blake2_256(s).into()
+		subsoil::io::hashing::blake2_256(s).into()
 	}
 }
 
@@ -1075,11 +1075,11 @@ impl Hash for BlakeTwo256 {
 	type Output = subsoil::core::H256;
 
 	fn ordered_trie_root(input: Vec<Vec<u8>>, version: StateVersion) -> Self::Output {
-		soil_io::trie::blake2_256_ordered_root(input, version)
+		subsoil::io::trie::blake2_256_ordered_root(input, version)
 	}
 
 	fn trie_root(input: Vec<(Vec<u8>, Vec<u8>)>, version: StateVersion) -> Self::Output {
-		soil_io::trie::blake2_256_root(input, version)
+		subsoil::io::trie::blake2_256_root(input, version)
 	}
 }
 
@@ -1094,7 +1094,7 @@ impl Hasher for Keccak256 {
 	const LENGTH: usize = 32;
 
 	fn hash(s: &[u8]) -> Self::Out {
-		soil_io::hashing::keccak_256(s).into()
+		subsoil::io::hashing::keccak_256(s).into()
 	}
 }
 
@@ -1102,11 +1102,11 @@ impl Hash for Keccak256 {
 	type Output = subsoil::core::H256;
 
 	fn ordered_trie_root(input: Vec<Vec<u8>>, version: StateVersion) -> Self::Output {
-		soil_io::trie::keccak_256_ordered_root(input, version)
+		subsoil::io::trie::keccak_256_ordered_root(input, version)
 	}
 
 	fn trie_root(input: Vec<(Vec<u8>, Vec<u8>)>, version: StateVersion) -> Self::Output {
-		soil_io::trie::keccak_256_root(input, version)
+		subsoil::io::trie::keccak_256_root(input, version)
 	}
 }
 
@@ -2469,25 +2469,25 @@ impl Printable for usize {
 
 impl Printable for u64 {
 	fn print(&self) {
-		soil_io::misc::print_num(*self);
+		subsoil::io::misc::print_num(*self);
 	}
 }
 
 impl Printable for &[u8] {
 	fn print(&self) {
-		soil_io::misc::print_hex(self);
+		subsoil::io::misc::print_hex(self);
 	}
 }
 
 impl<const N: usize> Printable for [u8; N] {
 	fn print(&self) {
-		soil_io::misc::print_hex(&self[..]);
+		subsoil::io::misc::print_hex(&self[..]);
 	}
 }
 
 impl Printable for &str {
 	fn print(&self) {
-		soil_io::misc::print_utf8(self.as_bytes());
+		subsoil::io::misc::print_utf8(self.as_bytes());
 	}
 }
 
@@ -2822,7 +2822,7 @@ mod tests {
 		let proof = (&sr25519_sig, &ed25519_sig, &ecdsa_sig, "hello").encode();
 		assert!(!session_keys.ownership_proof_is_valid(owner, &proof));
 
-		let mut ext = soil_io::TestExternalities::default();
+		let mut ext = subsoil::io::TestExternalities::default();
 		ext.register_extension(subsoil::keystore::KeystoreExt(Arc::new(
 			subsoil::keystore::testing::MemoryKeystore::new(),
 		)));

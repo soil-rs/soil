@@ -31,7 +31,6 @@ soil-timestamp = { workspace = true }
 docify = { workspace = true }
 
 [dev-dependencies]
-soil-io = { workspace = true, default-features = true }
 
 [features]
 default = ["std"]

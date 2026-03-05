@@ -24,7 +24,7 @@ use subsoil::core::{
 	crypto::{Pair, VrfSecret},
 	ConstBool, U256,
 };
-use soil_io;
+use subsoil::io;
 use soil_runtime::{
 	curve::PiecewiseLinear,
 	impl_opaque_keys,
@@ -305,13 +305,13 @@ pub fn make_vrf_signature_and_randomness(
 	(signature, randomness)
 }
 
-pub fn new_test_ext(authorities_len: usize) -> soil_io::TestExternalities {
+pub fn new_test_ext(authorities_len: usize) -> subsoil::io::TestExternalities {
 	new_test_ext_with_pairs(authorities_len).1
 }
 
 pub fn new_test_ext_with_pairs(
 	authorities_len: usize,
-) -> (Vec<AuthorityPair>, soil_io::TestExternalities) {
+) -> (Vec<AuthorityPair>, subsoil::io::TestExternalities) {
 	let pairs = (0..authorities_len)
 		.map(|i| AuthorityPair::from_seed(&U256::from(i).to_little_endian()))
 		.collect::<Vec<_>>();
@@ -321,7 +321,7 @@ pub fn new_test_ext_with_pairs(
 	(pairs, new_test_ext_raw_authorities(public))
 }
 
-pub fn new_test_ext_raw_authorities(authorities: Vec<AuthorityId>) -> soil_io::TestExternalities {
+pub fn new_test_ext_raw_authorities(authorities: Vec<AuthorityId>) -> subsoil::io::TestExternalities {
 	subsoil::tracing::try_init_simple();
 	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 

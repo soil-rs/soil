@@ -164,7 +164,7 @@ impl crate::Config for Test {
 	}
 }
 
-pub fn new_test_ext() -> soil_io::TestExternalities {
+pub fn new_test_ext() -> subsoil::io::TestExternalities {
 	let t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
-	soil_io::TestExternalities::new(t)
+	subsoil::io::TestExternalities::new(t)
 }

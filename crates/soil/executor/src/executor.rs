@@ -83,7 +83,7 @@ fn unwrap_heap_pages(pages: Option<HeapAllocStrategy>) -> HeapAllocStrategy {
 }
 
 /// Builder for creating a [`WasmExecutor`] instance.
-pub struct WasmExecutorBuilder<H = soil_io::SubstrateHostFunctions> {
+pub struct WasmExecutorBuilder<H = subsoil::io::SubstrateHostFunctions> {
 	_phantom: PhantomData<H>,
 	method: WasmExecutionMethod,
 	onchain_heap_alloc_strategy: Option<HeapAllocStrategy>,
@@ -218,7 +218,7 @@ impl<H> WasmExecutorBuilder<H> {
 
 /// An abstraction over Wasm code executor. Supports selecting execution backend and
 /// manages runtime cache.
-pub struct WasmExecutor<H = soil_io::SubstrateHostFunctions> {
+pub struct WasmExecutor<H = subsoil::io::SubstrateHostFunctions> {
 	/// Method used to execute fallback Wasm code.
 	method: WasmExecutionMethod,
 	/// The heap allocation strategy for onchain Wasm calls.
@@ -252,7 +252,7 @@ impl<H> Clone for WasmExecutor<H> {
 	}
 }
 
-impl Default for WasmExecutor<soil_io::SubstrateHostFunctions> {
+impl Default for WasmExecutor<subsoil::io::SubstrateHostFunctions> {
 	fn default() -> Self {
 		WasmExecutorBuilder::new().build()
 	}
@@ -574,7 +574,7 @@ pub struct NativeElseWasmExecutor<D: NativeExecutionDispatch> {
 	native_version: NativeVersion,
 	/// Fallback wasm executor.
 	wasm: WasmExecutor<
-		ExtendedHostFunctions<soil_io::SubstrateHostFunctions, D::ExtendHostFunctions>,
+		ExtendedHostFunctions<subsoil::io::SubstrateHostFunctions, D::ExtendHostFunctions>,
 	>,
 
 	use_native: bool,
@@ -620,7 +620,7 @@ impl<D: NativeExecutionDispatch> NativeElseWasmExecutor<D> {
 	/// Create a new instance using the given [`WasmExecutor`].
 	pub fn new_with_wasm_executor(
 		executor: WasmExecutor<
-			ExtendedHostFunctions<soil_io::SubstrateHostFunctions, D::ExtendHostFunctions>,
+			ExtendedHostFunctions<subsoil::io::SubstrateHostFunctions, D::ExtendHostFunctions>,
 		>,
 	) -> Self {
 		Self { native_version: D::native_version(), wasm: executor, use_native: true }

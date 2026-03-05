@@ -49,7 +49,6 @@ members = [
 	"crates/soil/genesis-builder",
 	"crates/soil/informant",
 	"crates/soil/inherents",
-	"crates/soil/io",
 	"crates/soil/keyring",
 	"crates/soil/maybe-compressed-blob",
 	"crates/soil/merkle-mountain-range",
@@ -544,7 +543,6 @@ subsoil-crypto-hashing-proc-macro = { path = "crates/subsoil-crypto-hashing-proc
 subsoil-debug-derive = { path = "crates/subsoil-debug-derive", default-features = false }
 soil-genesis-builder = { path = "crates/soil/genesis-builder", default-features = false }
 soil-inherents = { path = "crates/soil/inherents", default-features = false }
-soil-io = { path = "crates/soil/io", default-features = false }
 soil-keyring = { path = "crates/soil/keyring", default-features = false }
 soil-maybe-compressed-blob = { path = "crates/soil/maybe-compressed-blob", default-features = false }
 soil-mixnet = { path = "crates/soil/mixnet", default-features = false }

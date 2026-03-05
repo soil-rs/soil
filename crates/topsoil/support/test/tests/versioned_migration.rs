@@ -81,9 +81,9 @@ impl topsoil_system::Config for Test {
 	type OnSetCode = ();
 }
 
-pub(crate) fn new_test_ext() -> soil_io::TestExternalities {
+pub(crate) fn new_test_ext() -> subsoil::io::TestExternalities {
 	let storage = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
-	let mut ext: soil_io::TestExternalities = soil_io::TestExternalities::from(storage);
+	let mut ext: subsoil::io::TestExternalities = subsoil::io::TestExternalities::from(storage);
 	ext.execute_with(|| System::set_block_number(1));
 	ext
 }

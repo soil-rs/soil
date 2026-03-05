@@ -21,7 +21,7 @@ mod changeset;
 mod offchain;
 
 use self::changeset::OverlayedChangeSet;
-use crate::{backend::Backend, stats::StateMachineStats, BackendTransaction, DefaultError};
+use super::{backend::Backend, stats::StateMachineStats, BackendTransaction, DefaultError};
 use alloc::{collections::btree_set::BTreeSet, vec::Vec};
 use codec::{Decode, Encode};
 use hash_db::Hasher;
@@ -908,7 +908,7 @@ impl<'a> OverlayedExtensions<'a> {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use crate::{ext::Ext, new_in_mem, InMemoryBackend};
+	use super::{ext::Ext, new_in_mem, InMemoryBackend};
 	use array_bytes::bytes2hex;
 	use crate::core::{traits::Externalities, Blake2Hasher};
 	use std::collections::BTreeMap;

@@ -29,7 +29,7 @@ use log::{debug, trace};
 use topsoil::{
 	deps::{
 		subsoil::core::offchain::StorageKind,
-		soil_io::{offchain, offchain_index},
+		subsoil::io::{offchain, offchain_index},
 	},
 	prelude::*,
 };

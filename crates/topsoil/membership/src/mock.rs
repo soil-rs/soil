@@ -93,7 +93,7 @@ impl Config for Test {
 	type WeightInfo = ();
 }
 
-pub(crate) fn new_test_ext() -> soil_io::TestExternalities {
+pub(crate) fn new_test_ext() -> subsoil::io::TestExternalities {
 	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	// We use default for brevity, but you can configure as desired if needed.
 	topsoil_membership::GenesisConfig::<Test> {
@@ -106,7 +106,7 @@ pub(crate) fn new_test_ext() -> soil_io::TestExternalities {
 }
 
 #[cfg(feature = "runtime-benchmarks")]
-pub(crate) fn new_bench_ext() -> soil_io::TestExternalities {
+pub(crate) fn new_bench_ext() -> subsoil::io::TestExternalities {
 	topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap().into()
 }
 

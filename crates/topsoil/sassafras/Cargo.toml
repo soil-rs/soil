@@ -27,7 +27,6 @@ topsoil-system = { workspace = true }
 log = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 soil-consensus-sassafras = { features = ["serde"], workspace = true }
-soil-io = { workspace = true }
 soil-runtime = { workspace = true }
 
 [dev-dependencies]
@@ -45,7 +44,7 @@ std = [
 	"log/std",
 	"scale-info/std",
 	"soil-consensus-sassafras/std",
-	"soil-io/std",
+	"subsoil/std",
 	"soil-runtime/std",
 ]
 runtime-benchmarks = [

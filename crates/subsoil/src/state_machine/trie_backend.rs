@@ -19,7 +19,7 @@
 
 #[cfg(feature = "std")]
 use super::backend::AsTrieBackend;
-use crate::{
+use super::{
 	backend::{IterArgs, StorageIterator},
 	trie_backend_essence::{RawIter, TrieBackendEssence, TrieBackendStorage},
 	Backend, StorageKey, StorageValue,
@@ -418,7 +418,7 @@ impl<
 where
 	H::Out: Ord + Codec,
 {
-	type Error = crate::DefaultError;
+	type Error = super::DefaultError;
 	type TrieBackendStorage = S;
 	type RawIter = super::trie_backend_essence::RawIter<S, H, C, R>;
 
@@ -532,8 +532,8 @@ where
 
 	fn register_overlay_stats(&self, _stats: &super::stats::StateMachineStats) {}
 
-	fn usage_info(&self) -> crate::UsageInfo {
-		crate::UsageInfo::empty()
+	fn usage_info(&self) -> super::UsageInfo {
+		super::UsageInfo::empty()
 	}
 
 	fn wipe(&self) -> Result<(), Self::Error> {
@@ -557,7 +557,7 @@ impl<S: TrieBackendStorage<H>, H: Hasher, C> AsTrieBackend<H, C> for TrieBackend
 pub fn create_proof_check_backend<H>(
 	root: H::Out,
 	proof: StorageProof,
-) -> Result<TrieBackend<MemoryDB<H>, H>, Box<dyn crate::Error>>
+) -> Result<TrieBackend<MemoryDB<H>, H>, Box<dyn super::Error>>
 where
 	H: Hasher,
 	H::Out: Codec,
@@ -567,13 +567,13 @@ where
 	if db.contains(&root, hash_db::EMPTY_PREFIX) {
 		Ok(TrieBackendBuilder::new(db, root).build())
 	} else {
-		Err(Box::new(crate::ExecutionError::InvalidProof))
+		Err(Box::new(super::ExecutionError::InvalidProof))
 	}
 }
 
 #[cfg(test)]
 pub mod tests {
-	use crate::{new_in_mem, InMemoryBackend};
+	use super::{new_in_mem, InMemoryBackend};
 
 	use super::*;
 	use codec::Encode;

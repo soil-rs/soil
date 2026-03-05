@@ -26,7 +26,7 @@ use subsoil::core::{crypto::ByteArray, ecdsa::Public};
 /// # Note
 ///
 /// This is needed because host functions cannot be called from within
-/// `soil_core` due to cyclic dependencies  on `soil_io`.
+/// `soil_core` due to cyclic dependencies  on `subsoil::io`.
 pub trait ECDSAExt {
 	/// Returns Ethereum address calculated from this ECDSA public key.
 	fn to_eth_address(&self) -> Result<[u8; 20], ()>;
@@ -41,7 +41,7 @@ impl ECDSAExt for Public {
 			let uncompressed = pub_key.to_encoded_point(false);
 			// convert to ETH address
 			<[u8; 20]>::try_from(
-				soil_io::hashing::keccak_256(&uncompressed.as_bytes()[1..])[12..].as_ref(),
+				subsoil::io::hashing::keccak_256(&uncompressed.as_bytes()[1..])[12..].as_ref(),
 			)
 			.map_err(drop)
 		})

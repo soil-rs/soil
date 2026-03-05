@@ -601,7 +601,7 @@ where
 	pub fn initialize_block(
 		header: &topsoil_system::pallet_prelude::HeaderFor<System>,
 	) -> ExtrinsicInclusionMode {
-		soil_io::init_tracing();
+		subsoil::io::init_tracing();
 		subsoil::enter_span!(subsoil::tracing::Level::TRACE, "init_block");
 		let digests = Self::extract_pre_digest(header);
 		Self::initialize_block_impl(header.number(), header.parent_hash(), &digests);
@@ -694,7 +694,7 @@ where
 
 	/// Actually execute all transitions for `block`.
 	pub fn execute_block(block: Block::LazyBlock) {
-		soil_io::init_tracing();
+		subsoil::io::init_tracing();
 		subsoil::within_span! {
 			subsoil::tracing::info_span!("execute_block", ?block);
 			// Execute `on_runtime_upgrade` and `on_initialize`.
@@ -787,7 +787,7 @@ where
 	/// except state-root.
 	// Note: Only used by the block builder - not Executive itself.
 	pub fn finalize_block() -> topsoil_system::pallet_prelude::HeaderFor<System> {
-		soil_io::init_tracing();
+		subsoil::io::init_tracing();
 		subsoil::enter_span!(subsoil::tracing::Level::TRACE, "finalize_block");
 
 		// In this case there were no transactions to trigger this state transition:
@@ -866,7 +866,7 @@ where
 			&Context,
 		) -> Result<CheckedOf<Block::Extrinsic, Context>, TransactionValidityError>,
 	) -> ApplyExtrinsicResult {
-		soil_io::init_tracing();
+		subsoil::io::init_tracing();
 		let encoded = uxt.encode();
 		let encoded_len = encoded.len();
 		subsoil::enter_span!(subsoil::tracing::info_span!("apply_extrinsic",
@@ -956,7 +956,7 @@ where
 		uxt: Block::Extrinsic,
 		block_hash: Block::Hash,
 	) -> TransactionValidity {
-		soil_io::init_tracing();
+		subsoil::io::init_tracing();
 		use subsoil::tracing::{enter_span, within_span};
 
 		<topsoil_system::Pallet<System>>::initialize(
@@ -997,7 +997,7 @@ where
 
 	/// Start an offchain worker and generate extrinsics.
 	pub fn offchain_worker(header: &topsoil_system::pallet_prelude::HeaderFor<System>) {
-		soil_io::init_tracing();
+		subsoil::io::init_tracing();
 		// We need to keep events available for offchain workers,
 		// hence we initialize the block manually.
 		// OffchainWorker RuntimeApi should skip initialization.

@@ -37,7 +37,6 @@ soil-staking = { workspace = true }
 [dev-dependencies]
 topsoil-staking-reward-curve = { workspace = true, default-features = true }
 topsoil-timestamp = { workspace = true, default-features = true }
-soil-io = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
 
 [features]
@@ -60,7 +59,6 @@ std = [
 	"topsoil-timestamp/std",
 	"scale-info/std",
 	"subsoil/std",
-	"soil-io/std",
 	"soil-runtime/std",
 	"soil-staking/std",
 ]

@@ -16,7 +16,7 @@
 // limitations under the License.
 
 use core::str;
-use soil_io::hashing::twox_128;
+use subsoil::io::hashing::twox_128;
 
 use topsoil_support::{
 	storage::{generator::StorageValue, StoragePrefixedMap},

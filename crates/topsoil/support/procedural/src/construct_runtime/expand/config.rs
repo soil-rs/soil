@@ -92,7 +92,7 @@ pub fn expand_outer_config(
 		#[cfg(test)]
 		#[test]
 		fn test_genesis_config_builds() {
-			#scrate::__private::soil_io::TestExternalities::default().execute_with(|| {
+			#scrate::__private::subsoil::io::TestExternalities::default().execute_with(|| {
 				<RuntimeGenesisConfig as #scrate::traits::BuildGenesisConfig>::build(
 					&RuntimeGenesisConfig::default()
 				);

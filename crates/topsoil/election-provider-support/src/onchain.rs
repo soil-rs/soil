@@ -215,7 +215,7 @@ impl<T: Config> ElectionProvider for OnChainExecution<T> {
 mod tests {
 	use super::*;
 	use crate::{ElectionProvider, PhragMMS, SequentialPhragmen};
-	use soil_io::TestExternalities;
+	use subsoil::io::TestExternalities;
 	use soil_npos_elections::Support;
 	use soil_runtime::Perbill;
 	use topsoil_support::{assert_noop, derive_impl, parameter_types};

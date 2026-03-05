@@ -17,7 +17,7 @@
 
 //! Basic implementation for Externalities.
 
-use crate::{Backend, OverlayedChanges, StorageKey, StorageValue};
+use super::{Backend, OverlayedChanges, StorageKey, StorageValue};
 use alloc::{boxed::Box, collections::BTreeMap, vec::Vec};
 use codec::Encode;
 use core::{

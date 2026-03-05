@@ -1406,8 +1406,8 @@ mod extension_weight_tests {
 	}
 
 	impl ExtBuilder {
-		pub fn build(self) -> soil_io::TestExternalities {
-			let mut ext = soil_io::TestExternalities::new(Default::default());
+		pub fn build(self) -> subsoil::io::TestExternalities {
+			let mut ext = subsoil::io::TestExternalities::new(Default::default());
 			ext.execute_with(|| {});
 			ext
 		}

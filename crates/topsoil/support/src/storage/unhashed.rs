@@ -22,7 +22,7 @@ use codec::{Decode, Encode};
 
 /// Return the value of the item in storage under `key`, or `None` if there is no explicit entry.
 pub fn get<T: Decode + Sized>(key: &[u8]) -> Option<T> {
-	soil_io::storage::get(key).and_then(|val| {
+	subsoil::io::storage::get(key).and_then(|val| {
 		Decode::decode(&mut &val[..]).map(Some).unwrap_or_else(|e| {
 			// TODO #3700: error should be handleable.
 			log::error!(
@@ -56,7 +56,7 @@ pub fn get_or_else<T: Decode + Sized, F: FnOnce() -> T>(key: &[u8], default_valu
 
 /// Put `value` in storage under `key`.
 pub fn put<T: Encode + ?Sized>(key: &[u8], value: &T) {
-	value.using_encoded(|slice| soil_io::storage::set(key, slice));
+	value.using_encoded(|slice| subsoil::io::storage::set(key, slice));
 }
 
 /// Remove `key` from storage, returning its value if it had an explicit entry or `None` otherwise.
@@ -88,21 +88,21 @@ pub fn take_or_else<T: Decode + Sized, F: FnOnce() -> T>(key: &[u8], default_val
 
 /// Check to see if `key` has an explicit entry in storage.
 pub fn exists(key: &[u8]) -> bool {
-	soil_io::storage::exists(key)
+	subsoil::io::storage::exists(key)
 }
 
 /// Ensure `key` has no explicit entry in storage.
 pub fn kill(key: &[u8]) {
-	soil_io::storage::clear(key);
+	subsoil::io::storage::clear(key);
 }
 
 /// Ensure keys with the given `prefix` have no entries in storage.
 #[deprecated = "Use `clear_prefix` instead"]
-pub fn kill_prefix(prefix: &[u8], limit: Option<u32>) -> soil_io::KillStorageResult {
+pub fn kill_prefix(prefix: &[u8], limit: Option<u32>) -> subsoil::io::KillStorageResult {
 	// TODO: Once the network has upgraded to include the new host functions, this code can be
 	// enabled.
 	// clear_prefix(prefix, limit).into()
-	soil_io::storage::clear_prefix(prefix, limit)
+	subsoil::io::storage::clear_prefix(prefix, limit)
 }
 
 /// Partially clear the storage of all keys under a common `prefix`.
@@ -127,7 +127,7 @@ pub fn kill_prefix(prefix: &[u8], limit: Option<u32>) -> soil_io::KillStorageRes
 /// cursor need not be passed in and a `None` may be passed instead. This exception may be useful
 /// then making this call solely from a block-hook such as `on_initialize`.
 ///
-/// Returns [`MultiRemovalResults`](soil_io::MultiRemovalResults) to inform about the result. Once the
+/// Returns [`MultiRemovalResults`](subsoil::io::MultiRemovalResults) to inform about the result. Once the
 /// resultant `maybe_cursor` field is `None`, then no further items remain to be deleted.
 ///
 /// NOTE: After the initial call for any given child storage, it is important that no keys further
@@ -141,11 +141,11 @@ pub fn clear_prefix(
 	prefix: &[u8],
 	maybe_limit: Option<u32>,
 	_maybe_cursor: Option<&[u8]>,
-) -> soil_io::MultiRemovalResults {
+) -> subsoil::io::MultiRemovalResults {
 	// TODO: Once the network has upgraded to include the new host functions, this code can be
 	// enabled.
-	// soil_io::storage::clear_prefix(prefix, maybe_limit, maybe_cursor)
-	use soil_io::{KillStorageResult::*, MultiRemovalResults};
+	// subsoil::io::storage::clear_prefix(prefix, maybe_limit, maybe_cursor)
+	use subsoil::io::{KillStorageResult::*, MultiRemovalResults};
 	#[allow(deprecated)]
 	let (maybe_cursor, i) = match kill_prefix(prefix, maybe_limit) {
 		AllRemoved(i) => (None, i),
@@ -158,7 +158,7 @@ pub fn clear_prefix(
 /// and is longer than said prefix.
 /// This means that a key which equals the prefix will not be counted.
 pub fn contains_prefixed_key(prefix: &[u8]) -> bool {
-	match soil_io::storage::next_key(prefix) {
+	match subsoil::io::storage::next_key(prefix) {
 		Some(key) => key.starts_with(prefix),
 		None => false,
 	}
@@ -166,7 +166,7 @@ pub fn contains_prefixed_key(prefix: &[u8]) -> bool {
 
 /// Get a Vec of bytes from storage.
 pub fn get_raw(key: &[u8]) -> Option<Vec<u8>> {
-	soil_io::storage::get(key).map(|value| value.to_vec())
+	subsoil::io::storage::get(key).map(|value| value.to_vec())
 }
 
 /// Put a raw byte slice into storage.
@@ -175,5 +175,5 @@ pub fn get_raw(key: &[u8]) -> Option<Vec<u8>> {
 /// you should also call `topsoil_system::RuntimeUpgraded::put(true)` to trigger the
 /// `on_runtime_upgrade` logic.
 pub fn put_raw(key: &[u8], value: &[u8]) {
-	soil_io::storage::set(key, value)
+	subsoil::io::storage::set(key, value)
 }

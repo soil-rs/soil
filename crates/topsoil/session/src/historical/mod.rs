@@ -406,7 +406,7 @@ pub(crate) mod tests {
 
 	type Historical = Pallet<Test>;
 
-	pub(crate) fn new_test_ext() -> soil_io::TestExternalities {
+	pub(crate) fn new_test_ext() -> subsoil::io::TestExternalities {
 		let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 		let keys: Vec<_> = NextValidators::get()
 			.iter()
@@ -421,7 +421,7 @@ pub(crate) mod tests {
 		topsoil_session::GenesisConfig::<Test> { keys, ..Default::default() }
 			.assimilate_storage(&mut t)
 			.unwrap();
-		soil_io::TestExternalities::new(t)
+		subsoil::io::TestExternalities::new(t)
 	}
 
 	#[test]

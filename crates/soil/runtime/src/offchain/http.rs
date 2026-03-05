@@ -206,22 +206,22 @@ impl<'a, I: AsRef<[u8]>, T: IntoIterator<Item = I>> Request<'a, T> {
 		let meta = &[];
 
 		// start an http request.
-		let id = soil_io::offchain::http_request_start(self.method.as_ref(), self.url, meta)
+		let id = subsoil::io::offchain::http_request_start(self.method.as_ref(), self.url, meta)
 			.map_err(|_| HttpError::IoError)?;
 
 		// add custom headers
 		for header in &self.headers {
-			soil_io::offchain::http_request_add_header(id, header.name(), header.value())
+			subsoil::io::offchain::http_request_add_header(id, header.name(), header.value())
 				.map_err(|_| HttpError::IoError)?
 		}
 
 		// write body
 		for chunk in self.body {
-			soil_io::offchain::http_request_write_body(id, chunk.as_ref(), self.deadline)?;
+			subsoil::io::offchain::http_request_write_body(id, chunk.as_ref(), self.deadline)?;
 		}
 
 		// finalize the request
-		soil_io::offchain::http_request_write_body(id, &[], self.deadline)?;
+		subsoil::io::offchain::http_request_write_body(id, &[], self.deadline)?;
 
 		Ok(PendingRequest { id })
 	}
@@ -290,7 +290,7 @@ impl PendingRequest {
 		deadline: impl Into<Option<Timestamp>>,
 	) -> Vec<Result<HttpResult, PendingRequest>> {
 		let ids = requests.iter().map(|r| r.id).collect::<Vec<_>>();
-		let statuses = soil_io::offchain::http_response_wait(&ids, deadline.into());
+		let statuses = subsoil::io::offchain::http_response_wait(&ids, deadline.into());
 
 		statuses
 			.into_iter()
@@ -324,7 +324,7 @@ impl Response {
 	/// Retrieve the headers for this response.
 	pub fn headers(&mut self) -> &Headers {
 		if self.headers.is_none() {
-			self.headers = Some(Headers { raw: soil_io::offchain::http_response_headers(self.id) });
+			self.headers = Some(Headers { raw: subsoil::io::offchain::http_response_headers(self.id) });
 		}
 		self.headers.as_ref().expect("Headers were just set; qed")
 	}
@@ -403,7 +403,7 @@ impl Iterator for ResponseBody {
 		}
 
 		if self.filled_up_to.is_none() {
-			let result = soil_io::offchain::http_response_read_body(
+			let result = subsoil::io::offchain::http_response_read_body(
 				self.id,
 				&mut self.buffer,
 				self.deadline,
@@ -493,7 +493,7 @@ impl<'a> HeadersIterator<'a> {
 mod tests {
 	use super::*;
 	use subsoil::core::offchain::{testing, OffchainWorkerExt};
-	use soil_io::TestExternalities;
+	use subsoil::io::TestExternalities;
 
 	#[test]
 	fn should_send_a_basic_request_and_get_response() {

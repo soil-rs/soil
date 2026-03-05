@@ -20,7 +20,6 @@ serde = { features = ["derive"], optional = true, workspace = true }
 topsoil-benchmarking = { workspace = true, optional = true }
 topsoil-support = { workspace = true }
 topsoil-system = { workspace = true }
-soil-io = { workspace = true }
 soil-runtime = { workspace = true }
 subsoil = { workspace = true }
 
@@ -40,7 +39,6 @@ std = [
 	"scale-info/std",
 	"serde?/std",
 	"subsoil/std",
-	"soil-io/std",
 	"soil-runtime/std",
 ]
 runtime-benchmarks = [

@@ -16,7 +16,7 @@
 // limitations under the License.
 
 use core::any::TypeId;
-use soil_io::{
+use subsoil::io::{
 	hashing::{blake2_128, twox_128, twox_64},
 	TestExternalities,
 };

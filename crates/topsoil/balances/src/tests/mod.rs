@@ -26,7 +26,7 @@ use crate::{
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;
 use subsoil::core::{hexdisplay::HexDisplay, sr25519::Pair as SrPair, Pair};
-use soil_io;
+use subsoil::io;
 use soil_runtime::{
 	traits::{BadOrigin, Zero},
 	ArithmeticError, BuildStorage, Debug, DispatchError, DispatchResult, FixedPointNumber,
@@ -168,7 +168,7 @@ impl ExtBuilder {
 		DUST_TRAP_TARGET.with(|v| v.replace(self.dust_trap));
 		EXISTENTIAL_DEPOSIT.with(|v| v.replace(self.existential_deposit));
 	}
-	pub fn build(self) -> soil_io::TestExternalities {
+	pub fn build(self) -> subsoil::io::TestExternalities {
 		self.set_associated_consts();
 		let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 		topsoil_balances::GenesisConfig::<Test> {
@@ -192,7 +192,7 @@ impl ExtBuilder {
 		.assimilate_storage(&mut t)
 		.unwrap();
 
-		let mut ext = soil_io::TestExternalities::new(t);
+		let mut ext = subsoil::io::TestExternalities::new(t);
 		ext.execute_with(|| System::set_block_number(1));
 		ext
 	}

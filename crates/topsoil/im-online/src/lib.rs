@@ -423,7 +423,7 @@ pub mod pallet {
 	impl<T: Config> Hooks<BlockNumberFor<T>> for Pallet<T> {
 		fn offchain_worker(now: BlockNumberFor<T>) {
 			// Only send messages if we are a potential validator.
-			if soil_io::offchain::is_validator() {
+			if subsoil::io::offchain::is_validator() {
 				for res in Self::send_heartbeats(now).into_iter().flatten() {
 					if let Err(e) = res {
 						log::debug!(
@@ -566,7 +566,7 @@ impl<T: Config> Pallet<T> {
 			let residual = Permill::from_rational(1u32, session_length.saturated_into());
 			let threshold: Permill = progress.saturating_pow(6).saturating_add(residual);
 
-			let seed = soil_io::offchain::random_seed();
+			let seed = subsoil::io::offchain::random_seed();
 			let random = <u32>::decode(&mut TrailingZeroInput::new(seed.as_ref()))
 				.expect("input is padded with zeroes; qed");
 			let random = Permill::from_parts(random % Permill::ACCURACY);

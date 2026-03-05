@@ -84,7 +84,7 @@ pub trait RuntimeVersionOf {
 mod tests {
 	use super::*;
 	use soil_executor_common::runtime_blob::RuntimeBlob;
-	use soil_io::TestExternalities;
+	use subsoil::io::TestExternalities;
 	use soil_runtime_test::wasm_binary_unwrap;
 
 	#[test]
@@ -92,7 +92,7 @@ mod tests {
 		let mut ext = TestExternalities::default();
 		let mut ext = ext.ext();
 
-		let executor = WasmExecutor::<soil_io::SubstrateHostFunctions>::builder().build();
+		let executor = WasmExecutor::<subsoil::io::SubstrateHostFunctions>::builder().build();
 		let res = executor
 			.uncached_call(
 				RuntimeBlob::uncompress_if_needed(wasm_binary_unwrap()).unwrap(),

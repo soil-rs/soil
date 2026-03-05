@@ -841,7 +841,7 @@ impl Get<Option<BalancingConfig>> for OffchainRandomBalancing {
 		let iterations = match MINER_MAX_ITERATIONS {
 			0 => 0,
 			max => {
-				let seed = soil_io::offchain::random_seed();
+				let seed = subsoil::io::offchain::random_seed();
 				let random = <u32>::decode(&mut TrailingZeroInput::new(&seed))
 					.expect("input is padded with zeroes; qed")
 					% max.saturating_add(1);

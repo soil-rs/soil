@@ -1378,7 +1378,7 @@ impl<T: Config> SnapshotWrapper<T> {
 	pub fn set(metadata: SolutionOrSnapshotSize, desired_targets: u32, buffer: &[u8]) {
 		SnapshotMetadata::<T>::put(metadata);
 		DesiredTargets::<T>::put(desired_targets);
-		soil_io::storage::set(&Snapshot::<T>::hashed_key(), &buffer);
+		subsoil::io::storage::set(&Snapshot::<T>::hashed_key(), &buffer);
 	}
 
 	/// Check if all of the storage items exist at the same time or all of the storage items do not

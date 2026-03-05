@@ -19,7 +19,7 @@
 
 use super::*;
 use crate as sudo;
-use soil_io;
+use subsoil::io;
 use soil_runtime::BuildStorage;
 use topsoil_support::{derive_impl, traits::Contains};
 
@@ -129,17 +129,17 @@ pub type SudoCall = sudo::Call<Test>;
 pub type LoggerCall = logger::Call<Test>;
 
 // Build test environment by setting the root `key` for the Genesis.
-pub fn new_test_ext(root_key: u64) -> soil_io::TestExternalities {
+pub fn new_test_ext(root_key: u64) -> subsoil::io::TestExternalities {
 	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	sudo::GenesisConfig::<Test> { key: Some(root_key) }
 		.assimilate_storage(&mut t)
 		.unwrap();
-	let mut ext: soil_io::TestExternalities = t.into();
+	let mut ext: subsoil::io::TestExternalities = t.into();
 	ext.execute_with(|| System::set_block_number(1));
 	ext
 }
 
 #[cfg(feature = "runtime-benchmarks")]
-pub fn new_bench_ext() -> soil_io::TestExternalities {
+pub fn new_bench_ext() -> subsoil::io::TestExternalities {
 	topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap().into()
 }

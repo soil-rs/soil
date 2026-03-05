@@ -105,7 +105,7 @@ impl my_pallet::Config<topsoil_support::instances::Instance3> for Runtime {}
 
 impl my_pallet_2::Config<topsoil_support::instances::Instance1> for Runtime {}
 
-fn new_test_ext() -> soil_io::TestExternalities {
+fn new_test_ext() -> subsoil::io::TestExternalities {
 	use soil_runtime::BuildStorage;
 
 	RuntimeGenesisConfig::default().build_storage().unwrap().into()

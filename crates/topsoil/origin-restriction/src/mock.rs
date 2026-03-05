@@ -260,14 +260,14 @@ pub fn advance_by(b: BlockNumber) {
 }
 
 /// Builds a new `TestExternalities`.
-pub fn new_test_ext() -> soil_io::TestExternalities {
+pub fn new_test_ext() -> subsoil::io::TestExternalities {
 	let storage = RuntimeGenesisConfig {
 		system: Default::default(),
 		transaction_payment: Default::default(),
 	}
 	.build_storage()
 	.unwrap();
-	soil_io::TestExternalities::from(storage)
+	subsoil::io::TestExternalities::from(storage)
 }
 
 /// We gather both error into a single type in order to do `assert_ok` and `assert_err` safely.

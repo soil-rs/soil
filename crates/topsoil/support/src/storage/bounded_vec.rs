@@ -36,7 +36,7 @@ impl<T, S: Get<u32>> StorageTryAppend<T> for BoundedVec<T, S> {
 pub mod test {
 	use super::*;
 	use crate::{traits::ConstU32, Twox128};
-	use soil_io::TestExternalities;
+	use subsoil::io::TestExternalities;
 	use soil_runtime::bounded_vec;
 
 	#[crate::storage_alias]
