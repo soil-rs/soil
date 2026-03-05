@@ -43,7 +43,7 @@ use soil_consensus::{Error as ConsensusError, SyncOracle};
 use soil_consensus_beefy::{
 	AuthorityIdBound, BeefyApi, ConsensusLog, PayloadProvider, ValidatorSet, BEEFY_ENGINE_ID,
 };
-use soil_keystore::KeystorePtr;
+use subsoil::keystore::KeystorePtr;
 use soil_network::{NetworkRequest, NotificationService, ProtocolName};
 use soil_network_gossip::{GossipEngine, Network as GossipNetwork, Syncing as GossipSyncing};
 use soil_runtime::traits::{Block, Header as HeaderT, NumberFor, Zero};

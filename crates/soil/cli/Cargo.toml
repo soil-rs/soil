@@ -45,7 +45,6 @@ serde = { workspace = true, default-features = true, optional = true}
 serde_json = { workspace = true, default-features = true, optional = true}
 soil-blockchain = { workspace = true, default-features = true, optional = true}
 soil-keyring = { workspace = true, default-features = true, optional = true}
-soil-keystore = { workspace = true, default-features = true, optional = true}
 soil-runtime = { workspace = true, default-features = true, optional = true}
 soil-version = { workspace = true, default-features = true, optional = true}
 thiserror = { workspace = true, optional = true}
@@ -81,7 +80,6 @@ std = [
 	"soil-client-api",
 	"soil-client-db",
 	"soil-keyring",
-	"soil-keystore",
 	"soil-network",
 	"subsoil/std",
 	"soil-runtime",
@@ -94,7 +92,6 @@ std = [
 	"soil-client-api/std",
 	"soil-client-db/std",
 	"soil-keyring/std",
-	"soil-keystore/std",
 	"soil-network/std",
 	"soil-runtime/std",
 	"soil-service/std",

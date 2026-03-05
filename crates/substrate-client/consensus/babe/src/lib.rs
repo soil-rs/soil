@@ -119,7 +119,7 @@ use soil_consensus_epochs::{
 use soil_consensus_slots::Slot;
 use subsoil::core::traits::SpawnEssentialNamed;
 use soil_inherents::{CreateInherentDataProviders, InherentDataProvider};
-use soil_keystore::KeystorePtr;
+use subsoil::keystore::KeystorePtr;
 use soil_runtime::{
 	generic::OpaqueDigestItemId,
 	traits::{Block as BlockT, Header, NumberFor, SaturatedConversion, Zero},

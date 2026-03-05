@@ -51,7 +51,7 @@ use soil_client_api::AuxStore;
 use soil_consensus::SelectChain;
 use soil_consensus_babe::BabeApi;
 use soil_consensus_beefy::AuthorityIdBound;
-use soil_keystore::KeystorePtr;
+use subsoil::keystore::KeystorePtr;
 use soil_transaction_pool_api::TransactionPool;
 
 /// Extra dependencies for BABE.

@@ -28,7 +28,7 @@ use alloc::vec::Vec;
 use codec::{Codec, Decode, DecodeWithMemTracking, Encode};
 use scale_info::TypeInfo;
 #[cfg(feature = "std")]
-use soil_keystore::KeystorePtr;
+use subsoil::keystore::KeystorePtr;
 use soil_runtime::{
 	traits::{Header as HeaderT, NumberFor},
 	ConsensusEngineId, Debug, OpaqueValue,

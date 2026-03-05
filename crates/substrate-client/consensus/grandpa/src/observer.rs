@@ -31,7 +31,7 @@ use soil_blockchain::HeaderMetadata;
 use soil_client_api::backend::Backend;
 use soil_consensus::SelectChain;
 use soil_consensus_grandpa::AuthorityId;
-use soil_keystore::KeystorePtr;
+use subsoil::keystore::KeystorePtr;
 use soil_network::NotificationService;
 use soil_runtime::traits::{Block as BlockT, NumberFor};
 use soil_telemetry::TelemetryHandle;

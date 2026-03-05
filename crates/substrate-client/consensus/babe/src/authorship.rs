@@ -30,7 +30,7 @@ use subsoil::core::{
 	crypto::{ByteArray, Wraps},
 	U256,
 };
-use soil_keystore::KeystorePtr;
+use subsoil::keystore::KeystorePtr;
 
 /// Calculates the primary selection threshold for a given authority, taking
 /// into account `c` (`1 - c` represents the probability of a slot being empty).
@@ -276,7 +276,7 @@ mod tests {
 		AllowedSlots, AuthorityId, BabeEpochConfiguration, Epoch, RANDOMNESS_LENGTH,
 	};
 	use subsoil::core::{crypto::Pair as _, sr25519::Pair};
-	use soil_keystore::testing::MemoryKeystore;
+	use subsoil::keystore::testing::MemoryKeystore;
 
 	#[test]
 	fn claim_secondary_plain_slot_works() {

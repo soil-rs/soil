@@ -499,7 +499,7 @@ pub(crate) mod tests {
 		ecdsa_crypto, known_payloads, test_utils::Keyring, Commitment, MmrRootHash, Payload,
 		SignedCommitment, VoteMessage,
 	};
-	use soil_keystore::{testing::MemoryKeystore, Keystore};
+	use subsoil::keystore::{testing::MemoryKeystore, Keystore};
 	use soil_network_test::Block;
 
 	pub(crate) struct TestNetwork {

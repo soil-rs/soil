@@ -24,7 +24,7 @@ use subsoil::core::{
 	proof_of_possession::{ProofOfPossessionGenerator, ProofOfPossessionVerifier},
 	testing::ECDSA,
 };
-use soil_keystore::{testing::MemoryKeystore, Keystore, KeystoreExt};
+use subsoil::keystore::{testing::MemoryKeystore, Keystore, KeystoreExt};
 use std::sync::Arc;
 use substrate_test_runtime_client::{
 	runtime::{TestAPI, TEST_OWNER},

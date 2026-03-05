@@ -52,7 +52,7 @@ use soil_consensus_epochs::Epoch as EpochT;
 #[cfg(feature = "std")]
 use subsoil::core::crypto::ByteArray;
 #[cfg(feature = "std")]
-use soil_keystore::KeystorePtr;
+use subsoil::keystore::KeystorePtr;
 #[cfg(feature = "std")]
 use soil_rpc_api::{check_if_safe, UnsafeRpcError};
 #[cfg(feature = "std")]
@@ -223,7 +223,7 @@ mod tests {
 	use soil_consensus_babe::inherents::InherentDataProvider;
 	use subsoil::core::{crypto::key_types::BABE, testing::TaskExecutor};
 	use soil_keyring::Sr25519Keyring;
-	use soil_keystore::{testing::MemoryKeystore, Keystore};
+	use subsoil::keystore::{testing::MemoryKeystore, Keystore};
 	use soil_rpc_api::DenyUnsafe;
 	use soil_transaction_pool_api::{OffchainTransactionPoolFactory, RejectAllTxPool};
 	use substrate_test_runtime_client::{

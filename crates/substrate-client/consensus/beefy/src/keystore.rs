@@ -20,7 +20,7 @@ use log::warn;
 
 use soil_application_crypto::{key_types::BEEFY as BEEFY_KEY_TYPE, RuntimeAppPublic};
 
-use soil_keystore::KeystorePtr;
+use subsoil::keystore::KeystorePtr;
 use std::marker::PhantomData;
 
 use soil_consensus_beefy::{AuthorityIdBound, BeefyAuthorityId};
@@ -28,7 +28,7 @@ use soil_consensus_beefy::{AuthorityIdBound, BeefyAuthorityId};
 use crate::{error, LOG_TARGET};
 
 /// A BEEFY specific keystore implemented as a `Newtype`. This is basically a
-/// wrapper around [`soil_keystore::Keystore`] and allows to customize
+/// wrapper around [`subsoil::keystore::Keystore`] and allows to customize
 /// common cryptographic functionality.
 pub(crate) struct BeefyKeystore<AuthorityId: AuthorityIdBound>(
 	Option<KeystorePtr>,
@@ -143,7 +143,7 @@ pub mod tests {
 	#[cfg(feature = "bls-experimental")]
 	use subsoil::core::ecdsa_bls381;
 	use subsoil::core::{ecdsa, Pair as PairT};
-	use soil_keystore::{testing::MemoryKeystore, Keystore};
+	use subsoil::keystore::{testing::MemoryKeystore, Keystore};
 
 	use super::*;
 	use crate::error::Error;

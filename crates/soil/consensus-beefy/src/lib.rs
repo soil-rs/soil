@@ -54,7 +54,7 @@ pub use soil_application_crypto::key_types::BEEFY as KEY_TYPE;
 use soil_application_crypto::{AppPublic, RuntimeAppPublic};
 use subsoil::core::H256;
 #[cfg(feature = "std")]
-use soil_keystore::KeystorePtr;
+use subsoil::keystore::KeystorePtr;
 use soil_runtime::{
 	traits::{Header as HeaderT, Keccak256, NumberFor},
 	OpaqueValue,
@@ -76,7 +76,7 @@ pub trait BeefyAuthorityId: RuntimeAppPublic {
 		&self,
 		store: KeystorePtr,
 		msg: &[u8],
-	) -> Result<Option<impl AsRef<[u8]> + Debug>, soil_keystore::Error>;
+	) -> Result<Option<impl AsRef<[u8]> + Debug>, subsoil::keystore::Error>;
 
 	/// Verify a signature.
 	///
@@ -115,7 +115,7 @@ pub mod ecdsa_crypto {
 	use subsoil::core::ByteArray;
 	use subsoil_crypto_hashing::keccak_256;
 	#[cfg(feature = "std")]
-	use soil_keystore::KeystorePtr;
+	use subsoil::keystore::KeystorePtr;
 
 	app_crypto!(ecdsa, BEEFY_KEY_TYPE);
 
@@ -134,9 +134,9 @@ pub mod ecdsa_crypto {
 		#[cfg(feature = "std")]
 		fn try_sign_with_store(
 			&self,
-			store: soil_keystore::KeystorePtr,
+			store: subsoil::keystore::KeystorePtr,
 			msg: &[u8],
-		) -> Result<Option<impl AsRef<[u8]> + Debug>, soil_keystore::Error> {
+		) -> Result<Option<impl AsRef<[u8]> + Debug>, subsoil::keystore::Error> {
 			let msg_hash = keccak_256(msg);
 			let public = ecdsa::Public::try_from(self.as_slice()).unwrap();
 			store.ecdsa_sign_prehashed(BEEFY_KEY_TYPE, &public, &msg_hash)
@@ -179,7 +179,7 @@ pub mod bls_crypto {
 	use soil_application_crypto::{app_crypto, bls381};
 	use subsoil::core::{bls381::Pair as BlsPair, crypto::Wraps, ByteArray, Pair as _};
 	#[cfg(feature = "std")]
-	use soil_keystore::KeystorePtr;
+	use subsoil::keystore::KeystorePtr;
 
 	app_crypto!(bls381, BEEFY_KEY_TYPE);
 
@@ -198,9 +198,9 @@ pub mod bls_crypto {
 		#[cfg(feature = "std")]
 		fn try_sign_with_store(
 			&self,
-			store: soil_keystore::KeystorePtr,
+			store: subsoil::keystore::KeystorePtr,
 			msg: &[u8],
-		) -> Result<Option<impl AsRef<[u8]> + Debug>, soil_keystore::Error> {
+		) -> Result<Option<impl AsRef<[u8]> + Debug>, subsoil::keystore::Error> {
 			let public = bls381::Public::try_from(self.as_slice()).unwrap();
 			store.bls381_sign(BEEFY_KEY_TYPE, &public, msg)
 		}
@@ -239,7 +239,7 @@ pub mod ecdsa_bls_crypto {
 	use soil_application_crypto::{app_crypto, ecdsa_bls381};
 	use subsoil::core::{crypto::Wraps, ecdsa_bls381::Pair as EcdsaBlsPair, ByteArray};
 	#[cfg(feature = "std")]
-	use soil_keystore::KeystorePtr;
+	use subsoil::keystore::KeystorePtr;
 	use soil_runtime::traits::Keccak256;
 
 	app_crypto!(ecdsa_bls381, BEEFY_KEY_TYPE);
@@ -259,9 +259,9 @@ pub mod ecdsa_bls_crypto {
 		#[cfg(feature = "std")]
 		fn try_sign_with_store(
 			&self,
-			store: soil_keystore::KeystorePtr,
+			store: subsoil::keystore::KeystorePtr,
 			msg: &[u8],
-		) -> Result<Option<impl AsRef<[u8]> + Debug>, soil_keystore::Error> {
+		) -> Result<Option<impl AsRef<[u8]> + Debug>, subsoil::keystore::Error> {
 			let public = ecdsa_bls381::Public::try_from(self.as_slice()).unwrap();
 			store.ecdsa_bls381_sign_with_keccak256(BEEFY_KEY_TYPE, &public, &msg)
 		}

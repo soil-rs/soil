@@ -155,7 +155,7 @@ pub mod mock {
 	impl super::Config for Test {}
 
 	pub fn new_test_ext() -> soil_io::TestExternalities {
-		use soil_keystore::{testing::MemoryKeystore, KeystoreExt};
+		use subsoil::keystore::{testing::MemoryKeystore, KeystoreExt};
 
 		let t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 		let mut ext = soil_io::TestExternalities::new(t);

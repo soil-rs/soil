@@ -36,7 +36,7 @@ use futures::{
 use prometheus_endpoint::prometheus::default_registry;
 use soil_api::{ApiRef, ProvideRuntimeApi};
 use soil_client_api::HeaderBackend;
-use soil_keystore::{testing::MemoryKeystore, Keystore};
+use subsoil::keystore::{testing::MemoryKeystore, Keystore};
 use soil_network::{
 	service::signature::{Keypair, SigningError},
 	PublicKey, Signature,

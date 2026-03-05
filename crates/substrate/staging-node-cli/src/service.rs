@@ -895,7 +895,7 @@ mod tests {
 	use subsoil::core::crypto::Pair;
 	use soil_inherents::InherentDataProvider;
 	use soil_keyring::Sr25519Keyring;
-	use soil_keystore::KeystorePtr;
+	use subsoil::keystore::KeystorePtr;
 	use soil_runtime::{
 		generic::{self, Digest, Era, SignedPayload},
 		key_types::BABE,

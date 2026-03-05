@@ -2823,8 +2823,8 @@ mod tests {
 		assert!(!session_keys.ownership_proof_is_valid(owner, &proof));
 
 		let mut ext = soil_io::TestExternalities::default();
-		ext.register_extension(soil_keystore::KeystoreExt(Arc::new(
-			soil_keystore::testing::MemoryKeystore::new(),
+		ext.register_extension(subsoil::keystore::KeystoreExt(Arc::new(
+			subsoil::keystore::testing::MemoryKeystore::new(),
 		)));
 
 		ext.execute_with(|| {

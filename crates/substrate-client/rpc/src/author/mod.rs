@@ -31,7 +31,7 @@ use jsonrpsee::{core::async_trait, types::ErrorObject, Extensions, PendingSubscr
 use soil_api::{ApiExt, ProvideRuntimeApi};
 use soil_blockchain::HeaderBackend;
 use subsoil::core::Bytes;
-use soil_keystore::{KeystoreExt, KeystorePtr};
+use subsoil::keystore::{KeystoreExt, KeystorePtr};
 use soil_rpc_api::check_if_safe;
 use soil_runtime::traits::Block as BlockT;
 use soil_session::SessionKeys;

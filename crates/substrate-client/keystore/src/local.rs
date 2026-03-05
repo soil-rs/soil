@@ -24,7 +24,7 @@ use subsoil::core::{
 	crypto::{ByteArray, ExposeSecret, KeyTypeId, Pair as CorePair, SecretString, VrfSecret},
 	ecdsa, ed25519, sr25519,
 };
-use soil_keystore::{Error as TraitError, Keystore, KeystorePtr};
+use subsoil::keystore::{Error as TraitError, Keystore, KeystorePtr};
 use std::{
 	collections::HashMap,
 	fs::{self, File},
@@ -33,11 +33,11 @@ use std::{
 	sync::Arc,
 };
 
-soil_keystore::bandersnatch_experimental_enabled! {
+subsoil::keystore::bandersnatch_experimental_enabled! {
 use subsoil::core::bandersnatch;
 }
 
-soil_keystore::bls_experimental_enabled! {
+subsoil::keystore::bls_experimental_enabled! {
 use subsoil::core::{bls381, ecdsa_bls381, KeccakHasher, proof_of_possession::ProofOfPossessionGenerator};
 }
 
@@ -142,7 +142,7 @@ impl LocalKeystore {
 		Ok(pre_output)
 	}
 
-	soil_keystore::bls_experimental_enabled! {
+	subsoil::keystore::bls_experimental_enabled! {
 		fn generate_proof_of_possession<T: CorePair + ProofOfPossessionGenerator>(
 			&self,
 			key_type: KeyTypeId,
@@ -290,7 +290,7 @@ impl Keystore for LocalKeystore {
 		Ok(sig)
 	}
 
-	soil_keystore::bandersnatch_experimental_enabled! {
+	subsoil::keystore::bandersnatch_experimental_enabled! {
 		fn bandersnatch_public_keys(&self, key_type: KeyTypeId) -> Vec<bandersnatch::Public> {
 			self.public_keys::<bandersnatch::Pair>(key_type)
 		}
@@ -349,7 +349,7 @@ impl Keystore for LocalKeystore {
 		}
 	}
 
-	soil_keystore::bls_experimental_enabled! {
+	subsoil::keystore::bls_experimental_enabled! {
 		fn bls381_public_keys(&self, key_type: KeyTypeId) -> Vec<bls381::Public> {
 			self.public_keys::<bls381::Pair>(key_type)
 		}

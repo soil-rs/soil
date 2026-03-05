@@ -53,7 +53,7 @@ use subsoil::core::{
 	crypto::{key_types, ByteArray, Pair},
 	traits::SpawnNamed,
 };
-use soil_keystore::{Keystore, KeystorePtr};
+use subsoil::keystore::{Keystore, KeystorePtr};
 use soil_network::{
 	config::DEFAULT_KADEMLIA_REPLICATION_FACTOR, event::DhtEvent, multiaddr, KademliaKey,
 	Multiaddr, NetworkDHTProvider, NetworkSigner, NetworkStateInfo,

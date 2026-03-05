@@ -35,7 +35,7 @@ use soil_consensus_grandpa::{
 };
 use subsoil::core::H256;
 use soil_keyring::Ed25519Keyring;
-use soil_keystore::{testing::MemoryKeystore, Keystore, KeystorePtr};
+use subsoil::keystore::{testing::MemoryKeystore, Keystore, KeystorePtr};
 use soil_network::config::Role;
 use soil_network_test::{
 	Block, BlockImportAdapter, FullPeerConfig, Hash, PassThroughVerifier, Peer, PeersClient,

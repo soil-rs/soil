@@ -92,7 +92,7 @@ use subsoil::core::{
 	storage::ChildInfo,
 };
 #[cfg(not(substrate_runtime))]
-use soil_keystore::KeystoreExt;
+use subsoil::keystore::KeystoreExt;
 
 #[cfg(feature = "bandersnatch-experimental")]
 use subsoil::core::bandersnatch;

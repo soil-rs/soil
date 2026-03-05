@@ -25,7 +25,6 @@ serde = { features = ["alloc", "derive"], optional = true, workspace = true }
 soil-api = { workspace = true }
 soil-application-crypto = { workspace = true }
 subsoil = { workspace = true }
-soil-keystore = { optional = true, workspace = true }
 soil-runtime = { workspace = true }
 
 [features]
@@ -39,7 +38,6 @@ std = [
 	"soil-api/std",
 	"soil-application-crypto/std",
 	"subsoil/std",
-	"soil-keystore/std",
 	"soil-runtime/std",
 ]
 

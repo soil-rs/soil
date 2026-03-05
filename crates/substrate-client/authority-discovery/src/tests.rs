@@ -31,7 +31,7 @@ use std::{collections::HashSet, sync::Arc};
 
 use soil_authority_discovery::AuthorityId;
 use subsoil::core::{crypto::key_types, testing::TaskExecutor, traits::SpawnNamed};
-use soil_keystore::{testing::MemoryKeystore, Keystore};
+use subsoil::keystore::{testing::MemoryKeystore, Keystore};
 use soil_network::{multiaddr::Protocol, Multiaddr, PeerId};
 
 pub(super) fn create_spawner() -> Box<dyn SpawnNamed> {

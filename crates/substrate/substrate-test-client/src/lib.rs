@@ -27,7 +27,7 @@ pub use soil_client_db::{self, Backend, BlocksPruning};
 pub use soil_consensus;
 pub use soil_executor::{self, WasmExecutionMethod, WasmExecutor};
 pub use soil_keyring::{Ed25519Keyring, Sr25519Keyring};
-pub use soil_keystore::{Keystore, KeystorePtr};
+pub use subsoil::keystore::{Keystore, KeystorePtr};
 pub use soil_runtime::{Storage, StorageChild};
 pub use soil_service::{client, RpcHandlers};
 

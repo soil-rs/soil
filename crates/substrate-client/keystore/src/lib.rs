@@ -20,13 +20,13 @@
 
 #![warn(missing_docs)]
 use subsoil::core::crypto::KeyTypeId;
-use soil_keystore::Error as TraitError;
+use subsoil::keystore::Error as TraitError;
 use std::io;
 
 /// Local keystore implementation
 mod local;
 pub use local::LocalKeystore;
-pub use soil_keystore::Keystore;
+pub use subsoil::keystore::Keystore;
 
 /// Keystore error.
 #[derive(Debug, thiserror::Error)]

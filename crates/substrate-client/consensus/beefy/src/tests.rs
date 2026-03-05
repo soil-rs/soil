@@ -64,7 +64,7 @@ use soil_consensus_beefy::{
 	BEEFY_ENGINE_ID,
 };
 use subsoil::core::H256;
-use soil_keystore::{testing::MemoryKeystore, Keystore, KeystorePtr};
+use subsoil::keystore::{testing::MemoryKeystore, Keystore, KeystorePtr};
 use soil_mmr_primitives::{Error as MmrError, MmrApi};
 use soil_network::{config::RequestResponseConfig, ProtocolName};
 use soil_network_test::{

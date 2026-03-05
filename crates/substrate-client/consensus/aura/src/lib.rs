@@ -48,7 +48,7 @@ use soil_consensus::{BlockOrigin, Environment, Error as ConsensusError, Proposer
 use soil_consensus_slots::Slot;
 use subsoil::core::crypto::Pair;
 use soil_inherents::CreateInherentDataProviders;
-use soil_keystore::KeystorePtr;
+use subsoil::keystore::KeystorePtr;
 use soil_runtime::traits::{Block as BlockT, Header, Member, NumberFor};
 use soil_telemetry::TelemetryHandle;
 
@@ -557,7 +557,7 @@ mod tests {
 	use soil_consensus::{NoNetwork as DummyOracle, Proposal, ProposeArgs};
 	use soil_consensus_aura::sr25519::AuthorityPair;
 	use soil_keyring::sr25519::Keyring;
-	use soil_keystore::Keystore;
+	use subsoil::keystore::Keystore;
 	use soil_network_test::{Block as TestBlock, *};
 	use soil_runtime::traits::{Block as BlockT, Header as _};
 	use soil_timestamp::Timestamp;

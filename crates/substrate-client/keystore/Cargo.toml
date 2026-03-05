@@ -22,7 +22,6 @@ parking_lot = { workspace = true, default-features = true }
 serde_json = { workspace = true, default-features = true }
 soil-application-crypto = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
-soil-keystore = { workspace = true, default-features = true }
 thiserror = { workspace = true }
 
 [dev-dependencies]
@@ -34,7 +33,6 @@ tempfile = { workspace = true }
 # be subject to significant changes.
 bls-experimental = [
 	"subsoil/bls-experimental",
-	"soil-keystore/bls-experimental",
 ]
 
 # This feature adds Bandersnatch crypto primitives.
@@ -43,5 +41,4 @@ bls-experimental = [
 bandersnatch-experimental = [
 	"soil-application-crypto/bandersnatch-experimental",
 	"subsoil/bandersnatch-experimental",
-	"soil-keystore/bandersnatch-experimental",
 ]

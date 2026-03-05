@@ -29,7 +29,6 @@ topsoil-balances = { workspace = true, default-features = true }
 topsoil-transaction-payment = { workspace = true, default-features = true }
 topsoil-verify-signature = { workspace = true, default-features = true }
 soil-keyring = { workspace = true, default-features = true }
-soil-keystore = { workspace = true, default-features = true }
 
 [features]
 default = ["std"]

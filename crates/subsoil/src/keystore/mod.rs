@@ -17,18 +17,14 @@
 
 //! Keystore traits
 
-#![cfg_attr(not(feature = "std"), no_std)]
-
-extern crate alloc;
-
 #[cfg(feature = "std")]
 pub mod testing;
 
 #[cfg(feature = "bandersnatch-experimental")]
-use subsoil::core::bandersnatch;
+use crate::core::bandersnatch;
 #[cfg(feature = "bls-experimental")]
-use subsoil::core::{bls381, ecdsa_bls381};
-use subsoil::core::{
+use crate::core::{bls381, ecdsa_bls381};
+use crate::core::{
 	crypto::{ByteArray, CryptoTypeId, KeyTypeId},
 	ecdsa, ed25519, sr25519,
 };
@@ -692,7 +688,7 @@ impl<T: Keystore + ?Sized> Keystore for Arc<T> {
 /// A shared pointer to a keystore implementation.
 pub type KeystorePtr = Arc<dyn Keystore>;
 
-subsoil::decl_extension! {
+crate::decl_extension! {
 	/// The keystore extension to register/retrieve from the externalities.
 	pub struct KeystoreExt(KeystorePtr);
 }
@@ -711,13 +707,13 @@ impl KeystoreExt {
 	}
 }
 
-subsoil::generate_feature_enabled_macro!(
+crate::generate_feature_enabled_macro!(
 	bandersnatch_experimental_enabled,
 	feature = "bandersnatch-experimental",
 	$
 );
 
-subsoil::generate_feature_enabled_macro!(
+crate::generate_feature_enabled_macro!(
 	bls_experimental_enabled,
 	feature = "bls-experimental",
 	$

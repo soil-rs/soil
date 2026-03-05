@@ -26,7 +26,7 @@ use crate::{
 use codec::{Decode, Encode};
 use subsoil::core::H256;
 use soil_io::crypto::{sr25519_generate, sr25519_sign};
-use soil_keystore::{testing::MemoryKeystore, KeystoreExt};
+use subsoil::keystore::{testing::MemoryKeystore, KeystoreExt};
 use soil_runtime::{
 	traits::{BadOrigin, BlakeTwo256, IdentifyAccount, IdentityLookup, Verify},
 	BuildStorage, MultiSignature, MultiSigner,

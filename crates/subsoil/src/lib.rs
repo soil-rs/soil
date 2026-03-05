@@ -1,4 +1,5 @@
 #![cfg_attr(not(feature = "std"), no_std)]
+#![allow(macro_expanded_macro_exports_accessed_by_absolute_paths)]
 
 extern crate alloc;
 
@@ -20,5 +21,6 @@ pub mod storage;
 pub mod weights;
 #[allow(clippy::module_inception)]
 pub mod core;
+pub mod keystore;
 #[cfg(feature = "std")]
 pub mod allocator;

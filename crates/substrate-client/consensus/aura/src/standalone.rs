@@ -31,7 +31,7 @@ use soil_client_api::UsageProvider;
 use soil_consensus::Error as ConsensusError;
 use soil_consensus_slots::Slot;
 use subsoil::core::crypto::{ByteArray, Pair};
-use soil_keystore::KeystorePtr;
+use subsoil::keystore::KeystorePtr;
 use soil_runtime::{
 	traits::{Block as BlockT, Header, NumberFor, Zero},
 	DigestItem,

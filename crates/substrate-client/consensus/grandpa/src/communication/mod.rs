@@ -46,7 +46,7 @@ use finality_grandpa::{
 	voter_set::VoterSet,
 	Message::{Precommit, Prevote, PrimaryPropose},
 };
-use soil_keystore::KeystorePtr;
+use subsoil::keystore::KeystorePtr;
 use soil_network::{NetworkBlock, NetworkSyncForkRequest, NotificationService, ReputationChange};
 use soil_network_gossip::{GossipEngine, Network as GossipNetwork};
 use soil_runtime::traits::{Block as BlockT, Hash as HashT, Header as HeaderT, NumberFor};

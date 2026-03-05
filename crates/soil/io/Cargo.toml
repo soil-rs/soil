@@ -22,7 +22,6 @@ bytes = { workspace = true }
 codec = { features = ["bytes"], workspace = true }
 secp256k1 = { features = ["global-context", "recovery"], optional = true, workspace = true, default-features = true }
 subsoil-crypto-hashing = { workspace = true }
-soil-keystore = { optional = true, workspace = true }
 soil-runtime-interface = { workspace = true }
 soil-state-machine = { optional = true, workspace = true }
 subsoil = { workspace = true }
@@ -31,7 +30,6 @@ tracing = { workspace = true }
 tracing-core = { workspace = true }
 
 [target.'cfg(not(substrate_runtime))'.dependencies]
-soil-keystore = { workspace = true, default-features = false }
 soil-trie = { workspace = true, default-features = false }
 soil-state-machine = { workspace = true, default-features = false }
 log = { workspace = true, default-features = true }
@@ -59,7 +57,6 @@ std = [
 	"secp256k1/std",
 	"subsoil/std",
 	"subsoil-crypto-hashing/std",
-	"soil-keystore/std",
 	"soil-runtime-interface/std",
 	"soil-state-machine/std",
 	"soil-trie/std",
@@ -96,12 +93,11 @@ improved_panic_error_reporting = []
 # This feature adds BLS crypto primitives.
 # It should not be used in production since the implementation and interface may still
 # be subject to significant changes.
-bls-experimental = ["subsoil/bls-experimental", "soil-keystore/bls-experimental"]
+bls-experimental = ["subsoil/bls-experimental"]
 
 # This feature adds Bandersnatch crypto primitives.
 # It should not be used in production since the implementation and interface may still
 # be subject to significant changes.
 bandersnatch-experimental = [
 	"subsoil/bandersnatch-experimental",
-	"soil-keystore/bandersnatch-experimental",
 ]

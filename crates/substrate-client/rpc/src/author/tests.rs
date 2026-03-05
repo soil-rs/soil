@@ -31,7 +31,7 @@ use subsoil::core::{
 	H256,
 };
 use subsoil_crypto_hashing::blake2_256;
-use soil_keystore::{testing::MemoryKeystore, Keystore};
+use subsoil::keystore::{testing::MemoryKeystore, Keystore};
 use soil_rpc_api::DenyUnsafe;
 use soil_runtime::Perbill;
 use soil_transaction_pool_api::TransactionStatus;

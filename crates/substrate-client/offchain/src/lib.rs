@@ -46,7 +46,7 @@ use soil_api::{ApiExt, ProvideRuntimeApi};
 use soil_client_api::BlockchainEvents;
 use subsoil::core::{offchain, traits::SpawnNamed};
 use subsoil::externalities::Extension;
-use soil_keystore::{KeystoreExt, KeystorePtr};
+use subsoil::keystore::{KeystoreExt, KeystorePtr};
 use soil_network::{NetworkPeers, NetworkStateInfo};
 use soil_runtime::traits::{self, Header};
 use soil_transaction_pool_api::OffchainTransactionPoolFactory;

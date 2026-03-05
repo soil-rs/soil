@@ -108,7 +108,7 @@ pub fn generate_initial_session_keys<Block, T>(
 	client: std::sync::Arc<T>,
 	at: Block::Hash,
 	seeds: Vec<String>,
-	keystore: soil_keystore::KeystorePtr,
+	keystore: subsoil::keystore::KeystorePtr,
 ) -> Result<(), soil_api::ApiError>
 where
 	Block: BlockT,
@@ -127,7 +127,7 @@ where
 		ApiError::Application(Box::from("Could not find `SessionKeys` runtime api"))
 	})?;
 
-	runtime_api.register_extension(soil_keystore::KeystoreExt::from(keystore));
+	runtime_api.register_extension(subsoil::keystore::KeystoreExt::from(keystore));
 
 	for seed in seeds {
 		let seed = Some(seed.as_bytes().to_vec());

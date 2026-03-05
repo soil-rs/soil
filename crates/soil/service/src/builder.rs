@@ -57,7 +57,7 @@ use soil_executor::{
 	wasm_interface::HostFunctions, HeapAllocStrategy, NativeExecutionDispatch,
 	RuntimeVersionOf, WasmExecutor, DEFAULT_HEAP_ALLOC_STRATEGY,
 };
-use soil_keystore::KeystorePtr;
+use subsoil::keystore::KeystorePtr;
 use soil_network::{
 	config::{FullNetworkConfiguration, ProtocolId, SyncMode},
 	multiaddr::Protocol,

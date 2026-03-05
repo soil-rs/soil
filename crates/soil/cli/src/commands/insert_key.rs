@@ -24,7 +24,7 @@ use crate::{
 use clap::Parser;
 use sc_keystore::LocalKeystore;
 use subsoil::core::crypto::{KeyTypeId, SecretString};
-use soil_keystore::KeystorePtr;
+use subsoil::keystore::KeystorePtr;
 use soil_service::config::{BasePath, KeystoreConfig};
 
 /// The `insert` command
@@ -95,7 +95,7 @@ fn to_vec<P: subsoil::core::Pair>(uri: &str, pass: Option<SecretString>) -> Resu
 mod tests {
 	use super::*;
 	use subsoil::core::{sr25519::Pair, ByteArray, Pair as _};
-	use soil_keystore::Keystore;
+	use subsoil::keystore::Keystore;
 	use soil_service::{ChainSpec, ChainType, GenericChainSpec, NoExtension};
 	use tempfile::TempDir;
 

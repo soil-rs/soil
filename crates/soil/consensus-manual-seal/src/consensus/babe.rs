@@ -29,7 +29,7 @@ use soil_client_api::{AuxStore, UsageProvider};
 use soil_consensus_epochs::{
 	descendent_query, EpochHeader, SharedEpochChanges, ViableEpochDescriptor,
 };
-use soil_keystore::KeystorePtr;
+use subsoil::keystore::KeystorePtr;
 use std::sync::Arc;
 
 use sc_consensus::{BlockImportParams, ForkChoiceStrategy, Verifier};

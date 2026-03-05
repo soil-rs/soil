@@ -34,7 +34,7 @@ use topsoil_support::{
 	traits::{ConstU32, ConstU64},
 };
 
-use soil_keystore::{testing::MemoryKeystore, Keystore, KeystoreExt};
+use subsoil::keystore::{testing::MemoryKeystore, Keystore, KeystoreExt};
 use soil_runtime::{
 	testing::TestXt,
 	traits::{BlakeTwo256, IdentifyAccount, IdentityLookup, Verify},

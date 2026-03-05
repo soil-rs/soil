@@ -20,7 +20,6 @@ codec = { features = ["derive"], workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 soil-api = { workspace = true }
 subsoil = { workspace = true }
-soil-keystore = { optional = true, workspace = true }
 soil-runtime = { workspace = true }
 soil-staking = { workspace = true }
 
@@ -31,7 +30,6 @@ std = [
 	"scale-info/std",
 	"soil-api/std",
 	"subsoil/std",
-	"soil-keystore/std",
 	"soil-runtime/std",
 	"soil-staking/std",
 ]
