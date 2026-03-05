@@ -91,7 +91,7 @@ pub fn generate_metadata_hash(wasm: &Path, extra_info: MetadataExtraInfo) -> [u8
 		)
 		.0
 		.expect("`Core_version` should exist.");
-	let runtime_version = soil_version::RuntimeVersion::decode(&mut &runtime_version[..])
+	let runtime_version = subsoil::version::RuntimeVersion::decode(&mut &runtime_version[..])
 		.expect("Invalid `RuntimeVersion` encoding");
 
 	let base58_prefix = extract_ss58_prefix(&metadata);

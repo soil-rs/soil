@@ -15,7 +15,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//! Provides functionality to embed a [`RuntimeVersion`](crate::RuntimeVersion) as custom section
+//! Provides functionality to embed a [`RuntimeVersion`](super::RuntimeVersion) as custom section
 //! into a WASM file.
 
 use codec::Encode;
@@ -36,7 +36,7 @@ pub enum Error {
 /// Returns the new WASM blob.
 pub fn embed_runtime_version(
 	wasm: &[u8],
-	mut version: crate::RuntimeVersion,
+	mut version: super::RuntimeVersion,
 ) -> Result<Vec<u8>, Error> {
 	let mut module: Module = deserialize_buffer(wasm).map_err(|_| Error::Deserialize)?;
 

@@ -37,7 +37,6 @@ merkleized-metadata = { optional = true, workspace = true }
 soil-executor = { optional = true, workspace = true, default-features = true }
 shlex = { workspace = true }
 subsoil = { workspace = true, default-features = true, optional = true }
-soil-version = { optional = true, workspace = true, default-features = true }
 
 [features]
 # Enable support for generating the metadata hash.
@@ -54,5 +53,4 @@ metadata-hash = [
 	"merkleized-metadata",
 	"soil-executor",
 	"subsoil",
-	"soil-version",
 ]

@@ -30,7 +30,6 @@ array-bytes = { workspace = true, default-features = true }
 topsoil-balances = { workspace = true, default-features = true }
 topsoil-transaction-payment = { workspace = true, default-features = true }
 soil-inherents = { workspace = true, default-features = true }
-soil-version = { workspace = true, default-features = true }
 substrate-test-runtime-client = { workspace = true }
 
 [features]
@@ -49,7 +48,6 @@ std = [
 	"subsoil/std",
 	"soil-inherents/std",
 	"subsoil/std",
-	"soil-version/std",
 ]
 try-runtime = [
 	"topsoil-support/try-runtime",

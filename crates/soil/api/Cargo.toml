@@ -23,7 +23,6 @@ log = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 subsoil-api-proc-macro = { workspace = true }
 subsoil = { workspace = true }
-soil-version = { workspace = true }
 thiserror = { optional = true, workspace = true }
 
 [dev-dependencies]
@@ -40,7 +39,6 @@ std = [
 	"subsoil/std",
 	"subsoil/std",
 	"soil-test-primitives/std",
-	"soil-version/std",
 	"thiserror",
 ]
 # Special feature to disable logging completely.

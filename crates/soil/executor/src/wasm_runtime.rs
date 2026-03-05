@@ -31,7 +31,7 @@ use soil_executor_common::{
 	runtime_blob::RuntimeBlob,
 	wasm_runtime::{HeapAllocStrategy, WasmInstance, WasmModule},
 };
-use soil_version::RuntimeVersion;
+use subsoil::version::RuntimeVersion;
 use subsoil::wasm_interface::HostFunctions;
 
 use std::{
@@ -362,12 +362,12 @@ pub fn read_embedded_version(blob: &RuntimeBlob) -> Result<Option<RuntimeVersion
 			.transpose()?
 			.map(Into::into);
 
-		let core_version = apis.as_ref().and_then(soil_version::core_version_from_apis);
+		let core_version = apis.as_ref().and_then(subsoil::version::core_version_from_apis);
 		// We do not use `RuntimeVersion::decode` here because that `decode_version` relies on
 		// presence of a special API in the `apis` field to treat the input as a non-legacy version.
 		// However the structure found in the `runtime_version` always contain an empty `apis`
 		// field. Therefore the version read will be mistakenly treated as an legacy one.
-		let mut decoded_version = soil_version::RuntimeVersion::decode_with_version_hint(
+		let mut decoded_version = subsoil::version::RuntimeVersion::decode_with_version_hint(
 			&mut version_section,
 			core_version,
 		)
@@ -449,7 +449,7 @@ mod tests {
 	use alloc::borrow::Cow;
 	use codec::Encode;
 	use soil_api::{Core, RuntimeApiInfo};
-	use soil_version::{create_apis_vec, RuntimeVersion};
+	use subsoil::version::{create_apis_vec, RuntimeVersion};
 	use subsoil::wasm_interface::HostFunctions;
 	use substrate_test_runtime::Block;
 
@@ -460,7 +460,7 @@ mod tests {
 		pub authoring_version: u32,
 		pub spec_version: u32,
 		pub impl_version: u32,
-		pub apis: soil_version::ApisVec,
+		pub apis: subsoil::version::ApisVec,
 	}
 
 	#[test]
@@ -552,7 +552,7 @@ mod tests {
 			system_version: 1,
 		};
 
-		let embedded = soil_version::embed::embed_runtime_version(&wasm, runtime_version.clone())
+		let embedded = subsoil::version::embed::embed_runtime_version(&wasm, runtime_version.clone())
 			.expect("Embedding works");
 
 		let blob = RuntimeBlob::new(&embedded).expect("Embedded blob is valid");

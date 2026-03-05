@@ -771,7 +771,7 @@ fn metadata() {
 			},
 			PalletConstantMetadata {
 				name: "Version",
-				ty: scale_info::meta_type::<soil_version::RuntimeVersion>(),
+				ty: scale_info::meta_type::<subsoil::version::RuntimeVersion>(),
 				value: vec![],
 				docs: vec![],
 			},

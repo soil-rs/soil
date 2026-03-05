@@ -29,7 +29,7 @@ use subsoil::runtime::{
 	traits::{BlakeTwo256, ValidateUnsigned, Verify},
 	DispatchError, ModuleError,
 };
-use soil_version::RuntimeVersion;
+use subsoil::version::RuntimeVersion;
 use topsoil_support::{
 	derive_impl, parameter_types, traits::PalletInfo as _, weights::RuntimeDbWeight,
 };

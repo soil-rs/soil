@@ -42,7 +42,6 @@ soil-offchain = { workspace = true }
 soil-session = { workspace = true }
 soil-statement-store = { workspace = true }
 soil-transaction-pool = { workspace = true }
-soil-version = { workspace = true }
 trie-db = { workspace = true }
 
 # 3rd party
@@ -103,7 +102,6 @@ std = [
 	"soil-session/std",
 	"soil-statement-store/std",
 	"soil-transaction-pool/std",
-	"soil-version/std",
 	"substrate-wasm-builder",
 	"tracing/std",
 	"trie-db/std",

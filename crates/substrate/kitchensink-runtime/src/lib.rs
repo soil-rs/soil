@@ -57,8 +57,8 @@ use subsoil::runtime::{
 };
 use subsoil::std::{borrow::Cow, prelude::*};
 #[cfg(any(feature = "std", test))]
-use soil_version::NativeVersion;
-use soil_version::RuntimeVersion;
+use subsoil::version::NativeVersion;
+use subsoil::version::RuntimeVersion;
 use static_assertions::const_assert;
 use topsoil_asset_conversion::{AccountIdConverter, Ascending, Chain, WithFirstAsset};
 use topsoil_asset_conversion_tx_payment::SwapAssetAdapter;
@@ -166,7 +166,7 @@ pub fn wasm_binary_unwrap() -> &'static [u8] {
 }
 
 /// Runtime version.
-#[soil_version::runtime_version]
+#[subsoil::version::runtime_version]
 pub const VERSION: RuntimeVersion = RuntimeVersion {
 	spec_name: alloc::borrow::Cow::Borrowed("node"),
 	impl_name: alloc::borrow::Cow::Borrowed("substrate-node"),

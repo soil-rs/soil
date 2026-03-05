@@ -51,6 +51,11 @@ smallvec = { workspace = true, default-features = true }
 wasmtime = { optional = true, workspace = true }
 subsoil-runtime-interface-proc-macro = { workspace = true, default-features = true }
 
+# Dependencies from soil-version
+subsoil-crypto-hashing-proc-macro = { workspace = true, default-features = true }
+subsoil-version-proc-macro = { workspace = true }
+parity-wasm = { optional = true, workspace = true }
+
 # Dependencies from soil-runtime
 either = { workspace = true }
 strum = { workspace = true, features = ["derive"] }
@@ -191,6 +196,8 @@ std = [
 	"w3f-bls?/std",
 	"zeroize/alloc",
 	"zeroize/std",
+	# soil-version std features
+	"parity-wasm",
 	# soil-io std features
 	"ed25519-dalek/std",
 	# soil-runtime std features

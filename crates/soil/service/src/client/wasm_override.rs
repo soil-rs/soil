@@ -40,7 +40,7 @@ use soil_blockchain::Result;
 use subsoil::core::traits::{FetchRuntimeCode, RuntimeCode, WrappedRuntimeCode};
 use soil_executor::RuntimeVersionOf;
 use subsoil::state_machine::BasicExternalities;
-use soil_version::RuntimeVersion;
+use subsoil::version::RuntimeVersion;
 use std::{
 	collections::{hash_map::DefaultHasher, HashMap},
 	fs,

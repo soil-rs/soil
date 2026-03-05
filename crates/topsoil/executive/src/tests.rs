@@ -451,14 +451,14 @@ impl custom::Config for Runtime {}
 impl custom2::Config for Runtime {}
 
 pub struct RuntimeVersion;
-impl topsoil_support::traits::Get<soil_version::RuntimeVersion> for RuntimeVersion {
-	fn get() -> soil_version::RuntimeVersion {
+impl topsoil_support::traits::Get<subsoil::version::RuntimeVersion> for RuntimeVersion {
+	fn get() -> subsoil::version::RuntimeVersion {
 		RuntimeVersionTestValues::get().clone()
 	}
 }
 
 parameter_types! {
-	pub static RuntimeVersionTestValues: soil_version::RuntimeVersion =
+	pub static RuntimeVersionTestValues: subsoil::version::RuntimeVersion =
 		Default::default();
 }
 
@@ -944,12 +944,12 @@ fn runtime_upgraded_should_work() {
 		assert!(!Executive::runtime_upgraded());
 
 		RuntimeVersionTestValues::mutate(|v| {
-			*v = soil_version::RuntimeVersion { spec_version: 1, ..Default::default() }
+			*v = subsoil::version::RuntimeVersion { spec_version: 1, ..Default::default() }
 		});
 		assert!(Executive::runtime_upgraded());
 
 		RuntimeVersionTestValues::mutate(|v| {
-			*v = soil_version::RuntimeVersion {
+			*v = subsoil::version::RuntimeVersion {
 				spec_version: 1,
 				spec_name: "test".into(),
 				..Default::default()
@@ -958,7 +958,7 @@ fn runtime_upgraded_should_work() {
 		assert!(Executive::runtime_upgraded());
 
 		RuntimeVersionTestValues::mutate(|v| {
-			*v = soil_version::RuntimeVersion {
+			*v = subsoil::version::RuntimeVersion {
 				spec_version: 0,
 				impl_version: 2,
 				..Default::default()
@@ -982,7 +982,7 @@ fn last_runtime_upgrade_was_upgraded_works() {
 	];
 
 	for (spec_version, spec_name, c_spec_version, c_spec_name, result) in test_data {
-		let current = soil_version::RuntimeVersion {
+		let current = subsoil::version::RuntimeVersion {
 			spec_version: c_spec_version,
 			spec_name: c_spec_name.into(),
 			..Default::default()
@@ -1002,7 +1002,7 @@ fn custom_runtime_upgrade_is_called_before_modules() {
 	new_test_ext(1).execute_with(|| {
 		// Make sure `on_runtime_upgrade` is called.
 		RuntimeVersionTestValues::mutate(|v| {
-			*v = soil_version::RuntimeVersion { spec_version: 1, ..Default::default() }
+			*v = subsoil::version::RuntimeVersion { spec_version: 1, ..Default::default() }
 		});
 
 		Executive::initialize_block(&Header::new_from_number(1));
@@ -1021,7 +1021,7 @@ fn event_from_runtime_upgrade_is_included() {
 	new_test_ext(1).execute_with(|| {
 		// Make sure `on_runtime_upgrade` is called.
 		RuntimeVersionTestValues::mutate(|v| {
-			*v = soil_version::RuntimeVersion { spec_version: 1, ..Default::default() }
+			*v = subsoil::version::RuntimeVersion { spec_version: 1, ..Default::default() }
 		});
 
 		// set block number to non zero so events are not excluded
@@ -1046,7 +1046,7 @@ fn custom_runtime_upgrade_is_called_when_using_execute_block_trait() {
 	let header = new_test_ext(1).execute_with(|| {
 		// Make sure `on_runtime_upgrade` is called.
 		RuntimeVersionTestValues::mutate(|v| {
-			*v = soil_version::RuntimeVersion { spec_version: 1, ..Default::default() }
+			*v = subsoil::version::RuntimeVersion { spec_version: 1, ..Default::default() }
 		});
 
 		// Let's build some fake block.
@@ -1059,13 +1059,13 @@ fn custom_runtime_upgrade_is_called_when_using_execute_block_trait() {
 
 	// Reset to get the correct new genesis below.
 	RuntimeVersionTestValues::mutate(|v| {
-		*v = soil_version::RuntimeVersion { spec_version: 0, ..Default::default() }
+		*v = subsoil::version::RuntimeVersion { spec_version: 0, ..Default::default() }
 	});
 
 	new_test_ext(1).execute_with(|| {
 		// Make sure `on_runtime_upgrade` is called.
 		RuntimeVersionTestValues::mutate(|v| {
-			*v = soil_version::RuntimeVersion { spec_version: 1, ..Default::default() }
+			*v = subsoil::version::RuntimeVersion { spec_version: 1, ..Default::default() }
 		});
 
 		<Executive as ExecuteBlock<Block<UncheckedXt>>>::execute_block(
@@ -1085,7 +1085,7 @@ fn all_weights_are_recorded_correctly() {
 	new_test_ext(1).execute_with(|| {
 		// Make sure `on_runtime_upgrade` is called for maximum complexity
 		RuntimeVersionTestValues::mutate(|v| {
-			*v = soil_version::RuntimeVersion { spec_version: 1, ..Default::default() }
+			*v = subsoil::version::RuntimeVersion { spec_version: 1, ..Default::default() }
 		});
 
 		let block_number = 1;

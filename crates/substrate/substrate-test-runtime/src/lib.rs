@@ -73,8 +73,8 @@ use subsoil::runtime::{
 	ApplyExtrinsicResult, ExtrinsicInclusionMode, Perbill,
 };
 #[cfg(any(feature = "std", test))]
-use soil_version::NativeVersion;
-use soil_version::RuntimeVersion;
+use subsoil::version::NativeVersion;
+use subsoil::version::RuntimeVersion;
 
 pub use soil_consensus_babe::{AllowedSlots, BabeEpochConfiguration, Slot};
 
@@ -115,7 +115,7 @@ pub fn wasm_binary_logging_disabled_unwrap() -> &'static [u8] {
 }
 
 /// Test runtime version.
-#[soil_version::runtime_version]
+#[subsoil::version::runtime_version]
 pub const VERSION: RuntimeVersion = RuntimeVersion {
 	spec_name: alloc::borrow::Cow::Borrowed("test"),
 	impl_name: alloc::borrow::Cow::Borrowed("parity-test"),

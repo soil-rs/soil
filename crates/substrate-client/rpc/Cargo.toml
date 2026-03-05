@@ -39,7 +39,6 @@ soil-offchain = { workspace = true, default-features = true }
 soil-rpc = { workspace = true, default-features = true }
 soil-session = { workspace = true, default-features = true }
 soil-statement-store = { workspace = true, default-features = true }
-soil-version = { workspace = true, default-features = true }
 tokio = { workspace = true, default-features = true }
 
 [dev-dependencies]

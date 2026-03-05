@@ -68,7 +68,7 @@ pub use signals::Signals;
 #[cfg(feature = "std")]
 pub use soil_service::{ChainSpec, Role};
 #[cfg(feature = "std")]
-pub use soil_version::RuntimeVersion;
+pub use subsoil::version::RuntimeVersion;
 
 /// Substrate client CLI
 ///

@@ -23,7 +23,7 @@ use subsoil::core::{
 	storage::{StorageChangeSet, StorageData, StorageKey},
 	Bytes,
 };
-use soil_version::RuntimeVersion;
+use subsoil::version::RuntimeVersion;
 
 pub mod error;
 pub mod helpers;

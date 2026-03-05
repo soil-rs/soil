@@ -399,11 +399,11 @@ pub mod runtime {
 		/// Types to define your runtime version.
 		// TODO: Remove deprecation suppression once
 		#[allow(deprecated)]
-		pub use soil_version::create_runtime_str;
-		pub use soil_version::{runtime_version, RuntimeVersion};
+		pub use subsoil::version::create_runtime_str;
+		pub use subsoil::version::{runtime_version, RuntimeVersion};
 
 		#[cfg(feature = "std")]
-		pub use soil_version::NativeVersion;
+		pub use subsoil::version::NativeVersion;
 
 		/// Macro to implement runtime APIs.
 		pub use soil_api::impl_runtime_apis;
@@ -649,7 +649,7 @@ pub mod deps {
 	#[cfg(feature = "runtime")]
 	pub use subsoil::storage;
 	#[cfg(feature = "runtime")]
-	pub use soil_version;
+	pub use subsoil::version;
 	#[cfg(feature = "runtime")]
 	pub use topsoil_executive;
 

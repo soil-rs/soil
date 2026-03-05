@@ -26,7 +26,6 @@ scale-info = { features = ["derive"], workspace = true }
 soil-api = { workspace = true, default-features = true }
 soil-consensus = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
-soil-version = { workspace = true, default-features = true }
 substrate-test-runtime-client = { workspace = true }
 trybuild = { workspace = true }
 

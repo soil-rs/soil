@@ -31,10 +31,6 @@
 //! be generated in the runtime using the [`runtime_version`] attribute. The `Core` runtime api also
 //! needs to be implemented for the runtime using `impl_runtime_apis!`.
 
-#![cfg_attr(not(feature = "std"), no_std)]
-
-extern crate alloc;
-
 #[cfg(any(feature = "std", feature = "serde"))]
 use alloc::fmt;
 #[cfg(feature = "serde")]
@@ -47,13 +43,13 @@ pub use alloc::borrow::Cow;
 use codec::{Decode, Encode, Input};
 use scale_info::TypeInfo;
 #[allow(deprecated)]
-pub use subsoil::create_runtime_str;
-pub use subsoil::runtime::StateVersion;
+pub use crate::create_runtime_str;
+pub use crate::runtime::StateVersion;
 #[doc(hidden)]
-pub use subsoil::std;
+pub use crate::std;
 
 #[cfg(feature = "std")]
-use subsoil::runtime::traits::Block as BlockT;
+use crate::runtime::traits::Block as BlockT;
 
 #[cfg(feature = "std")]
 pub mod embed;
@@ -76,9 +72,9 @@ pub mod embed;
 /// extern crate alloc;
 ///
 /// use alloc::borrow::Cow;
-/// use soil_version::RuntimeVersion;
+/// use subsoil::version::RuntimeVersion;
 ///
-/// #[soil_version::runtime_version]
+/// #[subsoil::version::runtime_version]
 /// pub const VERSION: RuntimeVersion = RuntimeVersion {
 /// 	spec_name: Cow::Borrowed("test"),
 /// 	impl_name: Cow::Borrowed("test"),
@@ -90,7 +86,7 @@ pub mod embed;
 /// 	system_version: 1,
 /// };
 ///
-/// # const RUNTIME_API_VERSIONS: soil_version::ApisVec = soil_version::create_apis_vec!([]);
+/// # const RUNTIME_API_VERSIONS: subsoil::version::ApisVec = subsoil::create_apis_vec!([]);
 /// ```
 ///
 /// It will pass it through and add code required for emitting a custom section. The
@@ -153,7 +149,7 @@ pub type ApisVec = alloc::borrow::Cow<'static, [(ApiId, u32)]>;
 #[macro_export]
 macro_rules! create_apis_vec {
 	( $y:expr ) => {
-		$crate::Cow::Borrowed(&$y)
+		$crate::version::Cow::Borrowed(&$y)
 	};
 }
 
@@ -275,7 +271,7 @@ impl<'de> serde::Deserialize<'de> for RuntimeVersion {
 	where
 		D: serde::Deserializer<'de>,
 	{
-		use core::marker::PhantomData;
+		use ::core::marker::PhantomData;
 
 		enum Field {
 			SpecName,
@@ -809,7 +805,7 @@ pub trait GetRuntimeVersionAt<Block: BlockT> {
 
 #[cfg(feature = "std")]
 impl<T: GetRuntimeVersionAt<Block>, Block: BlockT> GetRuntimeVersionAt<Block>
-	for std::sync::Arc<T>
+	for ::std::sync::Arc<T>
 {
 	fn runtime_version(&self, at: <Block as BlockT>::Hash) -> Result<RuntimeVersion, String> {
 		(&**self).runtime_version(at)
@@ -817,7 +813,7 @@ impl<T: GetRuntimeVersionAt<Block>, Block: BlockT> GetRuntimeVersionAt<Block>
 }
 
 #[cfg(feature = "std")]
-impl<T: GetNativeVersion> GetNativeVersion for std::sync::Arc<T> {
+impl<T: GetNativeVersion> GetNativeVersion for ::std::sync::Arc<T> {
 	fn native_version(&self) -> &NativeVersion {
 		(&**self).native_version()
 	}
@@ -863,7 +859,7 @@ mod apis_serialize {
 		impl<'de> de::Visitor<'de> for Visitor {
 			type Value = ApisVec;
 
-			fn expecting(&self, formatter: &mut core::fmt::Formatter) -> core::fmt::Result {
+			fn expecting(&self, formatter: &mut ::core::fmt::Formatter) -> ::core::fmt::Result {
 				formatter.write_str("a sequence of api id and version tuples")
 			}
 

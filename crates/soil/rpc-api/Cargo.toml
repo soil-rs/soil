@@ -27,7 +27,6 @@ serde_json = { workspace = true, default-features = true, optional = true}
 subsoil = { workspace = true, default-features = true, optional = true}
 soil-rpc = { workspace = true, default-features = true, optional = true}
 soil-statement-store = { features = ["serde"], workspace = true, default-features = true, optional = true}
-soil-version = { workspace = true, default-features = true, optional = true}
 thiserror = { workspace = true, optional = true}
 
 [features]
@@ -45,12 +44,10 @@ std = [
 	"subsoil",
 	"soil-statement-store",
 	"soil-transaction-pool-api",
-	"soil-version",
 	"thiserror",
 	"soil-chain-spec/std",
 	"subsoil/std",
 	"subsoil/std",
 	"soil-statement-store/std",
 	"soil-transaction-pool-api/std",
-	"soil-version/std",
 ]

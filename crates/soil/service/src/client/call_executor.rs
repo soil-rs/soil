@@ -240,29 +240,29 @@ where
 		&self,
 		ext: &mut dyn subsoil::externalities::Externalities,
 		runtime_code: &subsoil::core::traits::RuntimeCode,
-	) -> Result<soil_version::RuntimeVersion, soil_executor::error::Error> {
+	) -> Result<subsoil::version::RuntimeVersion, soil_executor::error::Error> {
 		RuntimeVersionOf::runtime_version(&self.executor, ext, runtime_code)
 	}
 }
 
-impl<Block, B, E> soil_version::GetRuntimeVersionAt<Block> for LocalCallExecutor<Block, B, E>
+impl<Block, B, E> subsoil::version::GetRuntimeVersionAt<Block> for LocalCallExecutor<Block, B, E>
 where
 	B: backend::Backend<Block>,
 	E: CodeExecutor + RuntimeVersionOf + Clone + 'static,
 	Block: BlockT,
 {
-	fn runtime_version(&self, at: Block::Hash) -> Result<soil_version::RuntimeVersion, String> {
+	fn runtime_version(&self, at: Block::Hash) -> Result<subsoil::version::RuntimeVersion, String> {
 		CallExecutor::runtime_version(self, at).map_err(|e| e.to_string())
 	}
 }
 
-impl<Block, B, E> soil_version::GetNativeVersion for LocalCallExecutor<Block, B, E>
+impl<Block, B, E> subsoil::version::GetNativeVersion for LocalCallExecutor<Block, B, E>
 where
 	B: backend::Backend<Block>,
-	E: CodeExecutor + soil_version::GetNativeVersion + Clone + 'static,
+	E: CodeExecutor + subsoil::version::GetNativeVersion + Clone + 'static,
 	Block: BlockT,
 {
-	fn native_version(&self) -> &soil_version::NativeVersion {
+	fn native_version(&self) -> &subsoil::version::NativeVersion {
 		self.executor.native_version()
 	}
 }

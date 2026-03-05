@@ -34,7 +34,7 @@ use subsoil::runtime::{
 	Justifications,
 };
 use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedSender};
-use soil_version::RuntimeVersion;
+use subsoil::version::RuntimeVersion;
 use std::sync::Arc;
 use substrate_test_runtime::{Block, Hash, Header, H256};
 

@@ -51,7 +51,7 @@ use subsoil::core::{
 };
 use soil_rpc_api::state::ReadProof;
 use subsoil::runtime::traits::Block as BlockT;
-use soil_version::RuntimeVersion;
+use subsoil::version::RuntimeVersion;
 
 /// The maximum time allowed for an RPC call when running without unsafe RPC enabled.
 const MAXIMUM_SAFE_RPC_CALL_TIMEOUT: Duration = Duration::from_secs(30);

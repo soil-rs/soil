@@ -105,7 +105,7 @@ mod apis {
 		}
 
 		impl soil_api::Core<Block> for Runtime {
-			fn version() -> soil_version::RuntimeVersion {
+			fn version() -> subsoil::version::RuntimeVersion {
 				unimplemented!()
 			}
 			fn execute_block(_: <Block as BlockT>::LazyBlock) {
@@ -210,7 +210,7 @@ fn runtime_metadata() {
 				RuntimeApiMethodMetadataIR {
 					name: "version",
 					inputs: vec![],
-					output: meta_type::<soil_version::RuntimeVersion>(),
+					output: meta_type::<subsoil::version::RuntimeVersion>(),
 					docs: maybe_docs(vec![" Returns the version of the runtime."]),
 					deprecation_info: ItemDeprecationInfoIR::NotDeprecated,
 				},

@@ -4702,7 +4702,6 @@ dependencies = [
  "soil-timestamp",
  "soil-transaction-pool",
  "soil-transaction-storage-proof",
- "soil-version",
  "static_assertions",
  "subsoil",
  "subsoil-api-proc-macro",
@@ -8440,7 +8439,6 @@ dependencies = [
  "soil-statement-store",
  "soil-transaction-pool-api",
  "soil-utils",
- "soil-version",
  "subsoil",
  "subsoil-crypto-hashing",
  "substrate-test-runtime-client",
@@ -9328,7 +9326,6 @@ dependencies = [
  "parity-scale-codec",
  "scale-info",
  "soil-test-primitives",
- "soil-version",
  "subsoil",
  "subsoil-api-proc-macro",
  "thiserror 1.0.69",
@@ -9461,7 +9458,6 @@ dependencies = [
  "soil-service",
  "soil-telemetry",
  "soil-utils",
- "soil-version",
  "subsoil",
  "tempfile",
  "thiserror 1.0.69",
@@ -9771,7 +9767,6 @@ dependencies = [
  "soil-executor-wasmtime",
  "soil-maybe-compressed-blob",
  "soil-runtime-test",
- "soil-version",
  "subsoil",
  "subsoil-crypto-hashing",
  "substrate-test-runtime",
@@ -10230,7 +10225,6 @@ dependencies = [
  "soil-rpc",
  "soil-statement-store",
  "soil-transaction-pool-api",
- "soil-version",
  "subsoil",
  "thiserror 1.0.69",
 ]
@@ -10291,7 +10285,6 @@ dependencies = [
  "soil-service",
  "soil-transaction-pool-api",
  "soil-utils",
- "soil-version",
  "subsoil",
  "substrate-prometheus-endpoint",
  "substrate-test-runtime",
@@ -10317,7 +10310,6 @@ dependencies = [
  "parity-scale-codec",
  "soil-executor",
  "soil-executor-common",
- "soil-version",
  "subsoil",
  "subsoil-crypto-hashing",
  "subxt",
@@ -10370,7 +10362,6 @@ dependencies = [
  "soil-transaction-pool-api",
  "soil-transaction-storage-proof",
  "soil-utils",
- "soil-version",
  "static_init",
  "subsoil",
  "substrate-prometheus-endpoint",
@@ -10605,21 +10596,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "soil-version"
-version = "29.0.0"
-dependencies = [
- "impl-serde",
- "parity-scale-codec",
- "parity-wasm",
- "scale-info",
- "serde",
- "subsoil",
- "subsoil-crypto-hashing-proc-macro",
- "subsoil-version-proc-macro",
- "thiserror 1.0.69",
-]
-
-[[package]]
 name = "soketto"
 version = "0.8.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -10648,7 +10624,6 @@ dependencies = [
  "scale-info",
  "soil-api",
  "soil-consensus",
- "soil-version",
  "static_assertions",
  "subsoil",
  "substrate-test-runtime-client",
@@ -11091,6 +11066,7 @@ dependencies = [
  "nohash-hasher",
  "num-traits",
  "parity-scale-codec",
+ "parity-wasm",
  "parking_lot 0.12.5",
  "paste",
  "polkavm-derive",
@@ -11116,8 +11092,10 @@ dependencies = [
  "static_assertions",
  "strum 0.26.3",
  "subsoil-crypto-hashing",
+ "subsoil-crypto-hashing-proc-macro",
  "subsoil-debug-derive",
  "subsoil-runtime-interface-proc-macro",
+ "subsoil-version-proc-macro",
  "substrate-bip39",
  "substrate-prometheus-endpoint",
  "substrate-test-runtime-client",
@@ -11214,7 +11192,7 @@ dependencies = [
  "proc-macro-warning",
  "proc-macro2",
  "quote",
- "soil-version",
+ "subsoil",
  "syn 2.0.117",
 ]
 
@@ -11380,7 +11358,6 @@ dependencies = [
  "soil-session",
  "soil-statement-store",
  "soil-transaction-pool",
- "soil-version",
  "subsoil",
  "subsoil-crypto-hashing",
  "subsoil-debug-derive",
@@ -11454,7 +11431,6 @@ dependencies = [
  "shlex",
  "soil-executor",
  "soil-maybe-compressed-blob",
- "soil-version",
  "strum 0.26.3",
  "subsoil",
  "tempfile",
@@ -12210,7 +12186,6 @@ dependencies = [
  "soil-offchain",
  "soil-session",
  "soil-transaction-pool",
- "soil-version",
  "subsoil",
  "topsoil-benchmarking",
  "topsoil-executive",
@@ -12980,7 +12955,6 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "scale-info",
- "soil-version",
  "subsoil",
  "topsoil-balances",
  "topsoil-support",
@@ -13025,7 +12999,6 @@ dependencies = [
  "parity-scale-codec",
  "scale-info",
  "soil-inherents",
- "soil-version",
  "subsoil",
  "substrate-test-runtime-client",
  "topsoil-balances",
@@ -13957,7 +13930,6 @@ dependencies = [
  "scale-info",
  "serde",
  "soil-api",
- "soil-version",
  "static_assertions",
  "subsoil",
  "topsoil-benchmarking",
@@ -13974,7 +13946,6 @@ version = "4.0.0-dev"
 dependencies = [
  "parity-scale-codec",
  "scale-info",
- "soil-version",
  "subsoil",
  "topsoil-support",
  "topsoil-system",
@@ -14012,7 +13983,6 @@ dependencies = [
  "parity-scale-codec",
  "scale-info",
  "serde",
- "soil-version",
  "subsoil",
  "substrate-test-runtime-client",
  "topsoil-support",
@@ -14024,7 +13994,6 @@ version = "28.0.0"
 dependencies = [
  "parity-scale-codec",
  "scale-info",
- "soil-version",
  "subsoil",
  "topsoil-benchmarking",
  "topsoil-support",

@@ -24,7 +24,6 @@ topsoil-system = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 
 [dev-dependencies]
-soil-version = { workspace = true, default-features = true }
 
 [features]
 default = ["std"]

@@ -27,7 +27,6 @@ topsoil-support = { workspace = true }
 log = { workspace = true }
 scale-info = { features = ["derive", "serde"], workspace = true }
 serde = { features = ["alloc", "derive"], workspace = true }
-soil-version = { features = ["serde"], workspace = true }
 subsoil = { features = ["serde"], workspace = true }
 
 [dev-dependencies]
@@ -44,7 +43,6 @@ std = [
 	"serde/std",
 	"subsoil/std",
 	"subsoil/std",
-	"soil-version/std",
 ]
 runtime-benchmarks = [
 	"topsoil-support/runtime-benchmarks",

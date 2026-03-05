@@ -94,7 +94,7 @@ impl subsoil::core::traits::ReadRuntimeVersion for MockedReadRuntimeVersion {
 pub fn new_test_ext() -> subsoil::io::TestExternalities {
 	let t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 
-	let version = soil_version::RuntimeVersion {
+	let version = subsoil::version::RuntimeVersion {
 		spec_name: "spec_name".into(),
 		spec_version: 123,
 		impl_version: 456,

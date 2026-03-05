@@ -21,7 +21,6 @@ log = { workspace = true }
 topsoil-balances = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 subsoil = { workspace = true }
-soil-version = { workspace = true }
 
 [features]
 default = ["std"]
@@ -34,7 +33,6 @@ std = [
 	"scale-info/std",
 	"subsoil/std",
 	"subsoil/std",
-	"soil-version/std",
 ]
 runtime-benchmarks = [
 	"topsoil-support/runtime-benchmarks",

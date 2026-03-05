@@ -51,7 +51,7 @@ pub use executor::{with_externalities_safe, NativeExecutionDispatch, WasmExecuto
 #[cfg(feature = "std")]
 pub use subsoil::core::traits::Externalities;
 #[cfg(feature = "std")]
-pub use soil_version::{NativeVersion, RuntimeVersion};
+pub use subsoil::version::{NativeVersion, RuntimeVersion};
 #[doc(hidden)]
 #[cfg(feature = "std")]
 pub use subsoil::wasm_interface;

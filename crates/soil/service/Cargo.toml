@@ -60,7 +60,6 @@ soil-session = { workspace = true, default-features = true, optional = true}
 subsoil = { workspace = true, default-features = true, optional = true}
 soil-transaction-pool = { workspace = true, default-features = true, optional = true}
 soil-transaction-storage-proof = { workspace = true, default-features = true, optional = true}
-soil-version = { workspace = true, default-features = true, optional = true}
 static_init = { workspace = true, optional = true}
 tempfile = { workspace = true, optional = true}
 thiserror = { workspace = true, optional = true}
@@ -119,7 +118,6 @@ std = [
 	"soil-transaction-pool-api",
 	"soil-transaction-storage-proof",
 	"soil-utils",
-	"soil-version",
 	"static_init",
 	"tempfile",
 	"thiserror",
@@ -149,7 +147,6 @@ std = [
 	"soil-transaction-pool-api/std",
 	"soil-transaction-storage-proof/std",
 	"soil-utils/std",
-	"soil-version/std",
 ]
 default = ["std", "rocksdb"]
 # The RocksDB feature activates the RocksDB database backend. If it is not activated, and you pass

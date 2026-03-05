@@ -31,7 +31,6 @@ soil-executor-common = { workspace = true, default-features = true, optional = t
 soil-executor-polkavm = { workspace = true, default-features = true, optional = true}
 soil-executor-wasmtime = { workspace = true, default-features = true, optional = true}
 soil-api = { workspace = true, default-features = true, optional = true}
-soil-version = { workspace = true, default-features = true, optional = true}
 
 [dev-dependencies]
 array-bytes = { workspace = true, default-features = true }
@@ -60,10 +59,8 @@ std = [
 	"soil-executor-polkavm",
 	"soil-executor-wasmtime",
 	"subsoil/std",
-	"soil-version",
 	"tracing",
 	"soil-api/std",
-	"soil-version/std",
 	"soil-executor-common/std",
 	"soil-executor-polkavm/std",
 	"soil-executor-wasmtime/std",

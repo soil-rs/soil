@@ -38,7 +38,6 @@ soil-keyring = { optional = true, workspace = true }
 soil-offchain = { optional = true, workspace = true }
 soil-session = { optional = true, workspace = true }
 soil-transaction-pool = { optional = true, workspace = true }
-soil-version = { optional = true, workspace = true }
 
 topsoil-executive = { optional = true, workspace = true }
 topsoil-system-rpc-runtime-api = { optional = true, workspace = true }
@@ -79,7 +78,6 @@ std = [
 	"subsoil/std",
 	"soil-session?/std",
 	"soil-transaction-pool?/std",
-	"soil-version?/std",
 ]
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",
@@ -109,5 +107,4 @@ runtime = [
 	"soil-offchain",
 	"soil-session",
 	"soil-transaction-pool",
-	"soil-version",
 ]

@@ -54,7 +54,7 @@ fn decl_runtime_version_impl_inner(item: ItemConst) -> Result<TokenStream> {
 	})
 }
 
-/// This is a duplicate of `soil_version::RuntimeVersion`. We cannot unfortunately use the original
+/// This is a duplicate of `subsoil::version::RuntimeVersion`. We cannot unfortunately use the original
 /// declaration, because if we directly depend on `soil_version` from this proc-macro cargo will
 /// enable `std` feature even for `no_std` wasm runtime builds.
 ///
@@ -296,12 +296,12 @@ mod tests {
 		.encode();
 
 		assert_eq!(
-			soil_version::RuntimeVersion::decode_with_version_hint(
+			subsoil::version::RuntimeVersion::decode_with_version_hint(
 				&mut &version_bytes[..],
 				Some(4)
 			)
 			.unwrap(),
-			soil_version::RuntimeVersion {
+			subsoil::version::RuntimeVersion {
 				spec_name: "hello".into(),
 				impl_name: "world".into(),
 				authoring_version: 10,

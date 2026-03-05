@@ -24,7 +24,7 @@ use subsoil::core::traits::{FetchRuntimeCode, RuntimeCode, WrappedRuntimeCode};
 use soil_executor::RuntimeVersionOf;
 use subsoil::runtime::traits::{Block as BlockT, NumberFor};
 use subsoil::state_machine::BasicExternalities;
-use soil_version::RuntimeVersion;
+use subsoil::version::RuntimeVersion;
 use std::{
 	collections::{hash_map::DefaultHasher, HashMap},
 	hash::Hasher as _,

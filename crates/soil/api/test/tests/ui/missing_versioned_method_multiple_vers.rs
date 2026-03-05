@@ -41,7 +41,7 @@ soil_api::impl_runtime_apis! {
 	}
 
 	impl soil_api::Core<Block> for Runtime {
-		fn version() -> soil_version::RuntimeVersion {
+		fn version() -> subsoil::version::RuntimeVersion {
 			unimplemented!()
 		}
 		fn execute_block(_: <Block as BlockT>::LazyBlock) {

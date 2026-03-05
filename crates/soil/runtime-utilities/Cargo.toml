@@ -41,5 +41,4 @@ std = [
 ]
 
 [dev-dependencies]
-soil-version = { workspace = true, default-features = true }
 subxt = { workspace = true, features = ["native"] }

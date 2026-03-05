@@ -353,7 +353,7 @@ fn ensure_runtime_version_wasm_section_exists(blob_path: &Path) {
 	if !module.custom_sections().any(|cs| cs.name() == "runtime_version") {
 		println!(
 			"Couldn't find the `runtime_version` section. \
-				  Please ensure that you are using the `soil_version::runtime_version` attribute macro!"
+				  Please ensure that you are using the `subsoil::version::runtime_version` attribute macro!"
 		);
 		process::exit(1);
 	}

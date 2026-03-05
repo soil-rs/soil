@@ -313,9 +313,9 @@ mod tests {
 		let backend = Arc::new(in_mem::Backend::<runtime::Block>::new());
 
 		// Let's only override the `spec_name` for our testing purposes.
-		let substitute = soil_version::embed::embed_runtime_version(
+		let substitute = subsoil::version::embed::embed_runtime_version(
 			&substrate_test_runtime::WASM_BINARY_BLOATY.unwrap(),
-			soil_version::RuntimeVersion {
+			subsoil::version::RuntimeVersion {
 				spec_name: SUBSTITUTE_SPEC_NAME.into(),
 				..substrate_test_runtime::VERSION
 			},

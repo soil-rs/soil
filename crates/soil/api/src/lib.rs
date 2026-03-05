@@ -107,7 +107,8 @@ pub mod __private {
 		transaction_validity::TransactionValidity,
 		ExtrinsicInclusionMode, TransactionOutcome,
 	};
-	pub use soil_version::{create_apis_vec, ApiId, ApisVec, RuntimeVersion};
+	pub use subsoil::create_apis_vec;
+	pub use subsoil::version::{ApiId, ApisVec, RuntimeVersion};
 
 	#[cfg(all(any(target_arch = "riscv32", target_arch = "riscv64"), substrate_runtime))]
 	pub use subsoil::runtime_interface::polkavm::{polkavm_abi, polkavm_export};
@@ -127,7 +128,7 @@ use subsoil::runtime::{traits::Block as BlockT, ExtrinsicInclusionMode};
 pub use subsoil::state_machine::StorageProof;
 #[cfg(feature = "std")]
 use subsoil::state_machine::{backend::AsTrieBackend, Backend as StateBackend, OverlayedChanges};
-use soil_version::RuntimeVersion;
+use subsoil::version::RuntimeVersion;
 #[cfg(feature = "std")]
 use std::cell::RefCell;
 
@@ -308,7 +309,7 @@ pub use subsoil_api_proc_macro::decl_runtime_apis;
 /// /// All runtime api implementations need to be done in one call of the macro!
 /// soil_api::impl_runtime_apis! {
 /// #   impl soil_api::Core<Block> for Runtime {
-/// #       fn version() -> soil_version::RuntimeVersion {
+/// #       fn version() -> subsoil::version::RuntimeVersion {
 /// #           unimplemented!()
 /// #       }
 /// #       fn execute_block(_block: <Block as BlockT>::LazyBlock) {}
@@ -334,7 +335,7 @@ pub use subsoil_api_proc_macro::decl_runtime_apis;
 /// }
 ///
 /// /// Runtime version. This needs to be declared for each runtime.
-/// pub const VERSION: soil_version::RuntimeVersion = soil_version::RuntimeVersion {
+/// pub const VERSION: subsoil::version::RuntimeVersion = subsoil::version::RuntimeVersion {
 ///     spec_name: alloc::borrow::Cow::Borrowed("node"),
 ///     impl_name: alloc::borrow::Cow::Borrowed("test-node"),
 ///     authoring_version: 1,

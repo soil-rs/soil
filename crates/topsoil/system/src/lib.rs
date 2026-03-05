@@ -120,7 +120,7 @@ use subsoil::runtime::{
 	},
 	DispatchError,
 };
-use soil_version::RuntimeVersion;
+use subsoil::version::RuntimeVersion;
 
 use codec::{Decode, DecodeWithMemTracking, Encode, EncodeLike, FullCodec, MaxEncodedLen};
 use scale_info::TypeInfo;

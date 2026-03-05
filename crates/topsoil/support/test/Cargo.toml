@@ -27,7 +27,6 @@ scale-info = { features = ["derive"], workspace = true }
 serde = { features = ["derive"], workspace = true }
 soil-api = { workspace = true }
 subsoil = { workspace = true }
-soil-version = { workspace = true }
 static_assertions = { workspace = true, default-features = true }
 trybuild = { features = ["diff"], workspace = true }
 # The "std" feature for this pallet is never activated on purpose, in order to test construct_runtime error message
@@ -47,7 +46,6 @@ std = [
 	"soil-api/std",
 	"subsoil/std",
 	"subsoil/std",
-	"soil-version/std",
 	"test-pallet/std",
 ]
 experimental = ["topsoil-support/experimental", "topsoil-system/experimental"]
