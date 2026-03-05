@@ -140,7 +140,7 @@ pub use soil_consensus_babe::{
 };
 
 pub use aux_schema::load_block_weight as block_weight;
-use soil_timestamp::Timestamp;
+use subsoil::timestamp::Timestamp;
 
 mod migration;
 mod verification;

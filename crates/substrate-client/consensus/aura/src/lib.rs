@@ -560,7 +560,7 @@ mod tests {
 	use subsoil::keystore::Keystore;
 	use soil_network_test::{Block as TestBlock, *};
 	use subsoil::runtime::traits::{Block as BlockT, Header as _};
-	use soil_timestamp::Timestamp;
+	use subsoil::timestamp::Timestamp;
 	use std::{
 		task::Poll,
 		time::{Duration, Instant},

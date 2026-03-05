@@ -21,7 +21,7 @@
 
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;
-use soil_timestamp::Timestamp;
+use subsoil::timestamp::Timestamp;
 
 /// Unit type wrapper that represents a slot.
 #[derive(

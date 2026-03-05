@@ -30,7 +30,7 @@ use soil_consensus_aura::{
 };
 use subsoil::inherents::InherentData;
 use subsoil::runtime::{traits::Block as BlockT, Digest, DigestItem};
-use soil_timestamp::TimestampInherentData;
+use subsoil::timestamp::TimestampInherentData;
 use std::{marker::PhantomData, sync::Arc};
 
 /// Consensus data provider for Aura. This allows to use manual-seal driven nodes to author valid

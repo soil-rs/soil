@@ -824,7 +824,7 @@ pub mod pallet_macros {
 	/// mod pallet {
 	/// # 	use topsoil_support::pallet_prelude::*;
 	/// # 	use topsoil_support::inherent::IsFatalError;
-	/// # 	use soil_timestamp::InherentError;
+	/// # 	use subsoil::timestamp::InherentError;
 	/// # 	use core::result;
 	/// #
 	/// 	// Example inherent identifier

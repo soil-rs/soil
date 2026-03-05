@@ -4694,7 +4694,6 @@ dependencies = [
  "soil-session",
  "soil-staking",
  "soil-statement-store",
- "soil-timestamp",
  "soil-transaction-pool",
  "soil-transaction-storage-proof",
  "static_assertions",
@@ -6106,7 +6105,6 @@ dependencies = [
  "soil-basic-authorship",
  "soil-client-api",
  "soil-consensus",
- "soil-timestamp",
  "soil-transaction-pool-api",
  "subsoil",
  "tempfile",
@@ -6191,7 +6189,6 @@ dependencies = [
  "soil-consensus",
  "soil-executor",
  "soil-service",
- "soil-timestamp",
  "staging-node-cli",
  "subsoil",
  "subsoil-crypto-hashing",
@@ -8147,7 +8144,6 @@ dependencies = [
  "soil-network",
  "soil-network-test",
  "soil-telemetry",
- "soil-timestamp",
  "subsoil",
  "substrate-prometheus-endpoint",
  "substrate-test-runtime-client",
@@ -8181,7 +8177,6 @@ dependencies = [
  "soil-consensus-slots",
  "soil-network-test",
  "soil-telemetry",
- "soil-timestamp",
  "soil-transaction-pool-api",
  "subsoil",
  "subsoil-crypto-hashing",
@@ -9476,7 +9471,6 @@ dependencies = [
  "parity-scale-codec",
  "scale-info",
  "soil-consensus-slots",
- "soil-timestamp",
  "subsoil",
 ]
 
@@ -9489,7 +9483,6 @@ dependencies = [
  "scale-info",
  "serde",
  "soil-consensus-slots",
- "soil-timestamp",
  "subsoil",
 ]
 
@@ -9618,7 +9611,6 @@ dependencies = [
  "soil-consensus-babe",
  "soil-consensus-epochs",
  "soil-consensus-slots",
- "soil-timestamp",
  "soil-transaction-pool-api",
  "subsoil",
  "substrate-prometheus-endpoint",
@@ -9654,7 +9646,7 @@ dependencies = [
  "parity-scale-codec",
  "scale-info",
  "serde",
- "soil-timestamp",
+ "subsoil",
 ]
 
 [[package]]
@@ -10397,16 +10389,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "soil-timestamp"
-version = "26.0.0"
-dependencies = [
- "async-trait",
- "parity-scale-codec",
- "subsoil",
- "thiserror 1.0.69",
-]
-
-[[package]]
 name = "soil-transaction-pool"
 version = "26.0.0"
 dependencies = [
@@ -10728,7 +10710,6 @@ dependencies = [
  "soil-sync-state-rpc",
  "soil-sysinfo",
  "soil-telemetry",
- "soil-timestamp",
  "soil-transaction-pool-api",
  "soil-transaction-storage-proof",
  "soil-utils",
@@ -13699,7 +13680,6 @@ dependencies = [
  "serde_json",
  "soil-genesis-builder",
  "soil-staking",
- "soil-timestamp",
  "subsoil",
  "subsoil-crypto-hashing",
  "subsoil-crypto-hashing-proc-macro",
@@ -13853,7 +13833,6 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "scale-info",
- "soil-timestamp",
  "subsoil",
  "topsoil-benchmarking",
  "topsoil-support",

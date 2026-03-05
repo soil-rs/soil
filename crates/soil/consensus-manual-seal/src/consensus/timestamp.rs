@@ -31,7 +31,7 @@ use soil_consensus_babe::BabeApi;
 use soil_consensus_slots::{Slot, SlotDuration};
 use subsoil::inherents::{InherentData, InherentDataProvider, InherentIdentifier};
 use subsoil::runtime::traits::{Block as BlockT, Zero};
-use soil_timestamp::{InherentType, INHERENT_IDENTIFIER};
+use subsoil::timestamp::{InherentType, INHERENT_IDENTIFIER};
 use std::{
 	sync::{atomic, Arc},
 	time::SystemTime,
@@ -131,8 +131,8 @@ impl SlotTimestampProvider {
 	}
 
 	/// Gets the current time stamp.
-	pub fn timestamp(&self) -> soil_timestamp::Timestamp {
-		soil_timestamp::Timestamp::new(self.unix_millis.load(atomic::Ordering::SeqCst))
+	pub fn timestamp(&self) -> subsoil::timestamp::Timestamp {
+		subsoil::timestamp::Timestamp::new(self.unix_millis.load(atomic::Ordering::SeqCst))
 	}
 }
 

@@ -38,6 +38,5 @@ soil-blockchain = { workspace = true, default-features = true }
 soil-consensus = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
 subsoil-crypto-hashing = { workspace = true, default-features = true }
-soil-timestamp = { workspace = true }
 substrate-test-client = { workspace = true }
 tempfile = { workspace = true }

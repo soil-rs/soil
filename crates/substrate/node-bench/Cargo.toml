@@ -37,6 +37,5 @@ soil-transaction-pool-api = { workspace = true, default-features = true }
 serde = { workspace = true, default-features = true }
 serde_json = { workspace = true, default-features = true }
 soil-consensus = { workspace = true, default-features = true }
-soil-timestamp = { workspace = true }
 subsoil = { workspace = true, default-features = true }
 tempfile = { workspace = true }

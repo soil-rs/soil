@@ -45,7 +45,6 @@ Inflector = { workspace = true }
 topsoil-system = { workspace = true, default-features = true }
 pretty_assertions = { workspace = true }
 subsoil-crypto-hashing = { workspace = true, default-features = true }
-soil-timestamp = { workspace = true, default-features = true }
 
 [features]
 default = ["std"]

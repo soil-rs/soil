@@ -83,7 +83,6 @@ members = [
 	"crates/soil/sysinfo",
 	"crates/soil/telemetry",
 	"crates/soil/test-primitives",
-	"crates/soil/timestamp",
 	"crates/subsoil-tracing-proc-macro",
 	"crates/soil/transaction-pool",
 	"crates/soil/transaction-pool-api",
@@ -543,7 +542,6 @@ soil-session = { path = "crates/soil/session", default-features = false }
 soil-staking = { path = "crates/soil/staking", default-features = false }
 soil-statement-store = { path = "crates/soil/statement-store", default-features = false }
 soil-test-primitives = { path = "crates/soil/test-primitives" }
-soil-timestamp = { path = "crates/soil/timestamp", default-features = false }
 soil-transaction-pool = { path = "crates/soil/transaction-pool", default-features = false }
 soil-transaction-storage-proof = { path = "crates/soil/transaction-storage-proof", default-features = false }
 subsoil-version-proc-macro = { path = "crates/subsoil-version-proc-macro", default-features = false }

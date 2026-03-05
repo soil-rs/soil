@@ -437,7 +437,7 @@ impl BenchDb {
 		let timestamp = 1 * MinimumPeriod::get();
 
 		inherent_data
-			.put_data(soil_timestamp::INHERENT_IDENTIFIER, &timestamp)
+			.put_data(subsoil::timestamp::INHERENT_IDENTIFIER, &timestamp)
 			.expect("Put timestamp failed");
 
 		client

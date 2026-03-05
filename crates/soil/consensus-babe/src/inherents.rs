@@ -31,7 +31,7 @@ pub type BabeCreateInherentDataProviders<Block> = std::sync::Arc<
 	dyn subsoil::inherents::CreateInherentDataProviders<
 		Block,
 		(),
-		InherentDataProviders = (InherentDataProvider, soil_timestamp::InherentDataProvider),
+		InherentDataProviders = (InherentDataProvider, subsoil::timestamp::InherentDataProvider),
 	>,
 >;
 
@@ -70,7 +70,7 @@ impl InherentDataProvider {
 	/// Creates the inherent data provider by calculating the slot from the given
 	/// `timestamp` and `duration`.
 	pub fn from_timestamp_and_slot_duration(
-		timestamp: soil_timestamp::Timestamp,
+		timestamp: subsoil::timestamp::Timestamp,
 		slot_duration: soil_consensus_slots::SlotDuration,
 	) -> Self {
 		let slot = InherentType::from_timestamp(timestamp, slot_duration);

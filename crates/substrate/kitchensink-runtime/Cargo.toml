@@ -165,7 +165,6 @@ soil-offchain = { workspace = true }
 soil-session = { workspace = true }
 soil-staking = { workspace = true }
 soil-statement-store = { workspace = true }
-soil-timestamp = { workspace = true }
 soil-transaction-pool = { workspace = true }
 soil-transaction-storage-proof = { workspace = true }
 subsoil-version-proc-macro = { workspace = true }
@@ -318,7 +317,6 @@ std = [
 	"soil-session/std",
 	"soil-staking/std",
 	"soil-statement-store/std",
-	"soil-timestamp/std",
 	"soil-transaction-pool/std",
 	"soil-transaction-storage-proof/std",
 	"substrate-bip39/std",

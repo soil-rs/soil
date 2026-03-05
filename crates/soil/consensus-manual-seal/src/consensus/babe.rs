@@ -47,7 +47,7 @@ use subsoil::runtime::{
 	traits::{Block as BlockT, Header},
 	DigestItem,
 };
-use soil_timestamp::TimestampInherentData;
+use subsoil::timestamp::TimestampInherentData;
 
 /// Provides BABE-compatible predigests and BlockImportParams.
 /// Intended for use with BABE runtimes.

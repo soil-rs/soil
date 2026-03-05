@@ -17,11 +17,9 @@
 
 //! Substrate core types and inherents for timestamps.
 
-#![cfg_attr(not(feature = "std"), no_std)]
-
 use codec::{Decode, Encode};
-use core::time::Duration;
-use subsoil::inherents::{InherentData, InherentIdentifier, IsFatalError};
+use ::core::time::Duration;
+use crate::inherents::{InherentData, InherentIdentifier, IsFatalError};
 
 /// The identifier for the `timestamp` inherent.
 pub const INHERENT_IDENTIFIER: InherentIdentifier = *b"timstap0";
@@ -60,7 +58,7 @@ impl Timestamp {
 	/// The current timestamp using the system time.
 	#[cfg(feature = "std")]
 	pub fn current() -> Self {
-		use std::time::SystemTime;
+		use ::std::time::SystemTime;
 
 		let now = SystemTime::now();
 		now.duration_since(SystemTime::UNIX_EPOCH)
@@ -69,7 +67,7 @@ impl Timestamp {
 	}
 }
 
-impl core::ops::Deref for Timestamp {
+impl ::core::ops::Deref for Timestamp {
 	type Target = u64;
 
 	fn deref(&self) -> &Self::Target {
@@ -77,7 +75,7 @@ impl core::ops::Deref for Timestamp {
 	}
 }
 
-impl core::ops::Add for Timestamp {
+impl ::core::ops::Add for Timestamp {
 	type Output = Self;
 
 	fn add(self, other: Self) -> Self {
@@ -85,7 +83,7 @@ impl core::ops::Add for Timestamp {
 	}
 }
 
-impl core::ops::Add<u64> for Timestamp {
+impl ::core::ops::Add<u64> for Timestamp {
 	type Output = Self;
 
 	fn add(self, other: u64) -> Self {
@@ -93,21 +91,21 @@ impl core::ops::Add<u64> for Timestamp {
 	}
 }
 
-impl<T: Into<u64> + Copy> core::cmp::PartialEq<T> for Timestamp {
+impl<T: Into<u64> + Copy> ::core::cmp::PartialEq<T> for Timestamp {
 	fn eq(&self, eq: &T) -> bool {
 		self.0 == (*eq).into()
 	}
 }
 
-impl<T: Into<u64> + Copy> core::cmp::PartialOrd<T> for Timestamp {
-	fn partial_cmp(&self, other: &T) -> Option<core::cmp::Ordering> {
+impl<T: Into<u64> + Copy> ::core::cmp::PartialOrd<T> for Timestamp {
+	fn partial_cmp(&self, other: &T) -> Option<::core::cmp::Ordering> {
 		self.0.partial_cmp(&(*other).into())
 	}
 }
 
 #[cfg(feature = "std")]
-impl std::fmt::Display for Timestamp {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+impl ::std::fmt::Display for Timestamp {
+	fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
 		write!(f, "{}", self.0)
 	}
 }
@@ -169,11 +167,11 @@ impl InherentError {
 /// Auxiliary trait to extract timestamp inherent data.
 pub trait TimestampInherentData {
 	/// Get timestamp inherent data.
-	fn timestamp_inherent_data(&self) -> Result<Option<InherentType>, subsoil::inherents::Error>;
+	fn timestamp_inherent_data(&self) -> Result<Option<InherentType>, crate::inherents::Error>;
 }
 
 impl TimestampInherentData for InherentData {
-	fn timestamp_inherent_data(&self) -> Result<Option<InherentType>, subsoil::inherents::Error> {
+	fn timestamp_inherent_data(&self) -> Result<Option<InherentType>, crate::inherents::Error> {
 		self.get_data(&INHERENT_IDENTIFIER)
 	}
 }
@@ -190,14 +188,14 @@ impl InherentDataProvider {
 	/// Create `Self` while using the system time to get the timestamp.
 	pub fn from_system_time() -> Self {
 		Self {
-			max_drift: std::time::Duration::from_secs(60).into(),
+			max_drift: ::std::time::Duration::from_secs(60).into(),
 			timestamp: Timestamp::current(),
 		}
 	}
 
 	/// Create `Self` using the given `timestamp`.
 	pub fn new(timestamp: InherentType) -> Self {
-		Self { max_drift: std::time::Duration::from_secs(60).into(), timestamp }
+		Self { max_drift: ::std::time::Duration::from_secs(60).into(), timestamp }
 	}
 
 	/// With the given maximum drift.
@@ -207,7 +205,7 @@ impl InherentDataProvider {
 	/// The maximum drift is used when checking the inherents of a runtime. If the current timestamp
 	/// plus the maximum drift is smaller than the timestamp in the block, the block will be
 	/// rejected as being too far in the future.
-	pub fn with_max_drift(mut self, max_drift: std::time::Duration) -> Self {
+	pub fn with_max_drift(mut self, max_drift: ::std::time::Duration) -> Self {
 		self.max_drift = max_drift.into();
 		self
 	}
@@ -219,7 +217,7 @@ impl InherentDataProvider {
 }
 
 #[cfg(feature = "std")]
-impl core::ops::Deref for InherentDataProvider {
+impl ::core::ops::Deref for InherentDataProvider {
 	type Target = InherentType;
 
 	fn deref(&self) -> &Self::Target {
@@ -229,11 +227,11 @@ impl core::ops::Deref for InherentDataProvider {
 
 #[cfg(feature = "std")]
 #[async_trait::async_trait]
-impl subsoil::inherents::InherentDataProvider for InherentDataProvider {
+impl crate::inherents::InherentDataProvider for InherentDataProvider {
 	async fn provide_inherent_data(
 		&self,
 		inherent_data: &mut InherentData,
-	) -> Result<(), subsoil::inherents::Error> {
+	) -> Result<(), crate::inherents::Error> {
 		inherent_data.put_data(INHERENT_IDENTIFIER, &self.timestamp)
 	}
 
@@ -241,8 +239,8 @@ impl subsoil::inherents::InherentDataProvider for InherentDataProvider {
 		&self,
 		identifier: &InherentIdentifier,
 		error: &[u8],
-	) -> Option<Result<(), subsoil::inherents::Error>> {
-		Some(Err(subsoil::inherents::Error::Application(Box::from(InherentError::try_from(
+	) -> Option<Result<(), crate::inherents::Error>> {
+		Some(Err(crate::inherents::Error::Application(Box::from(InherentError::try_from(
 			identifier, error,
 		)?))))
 	}

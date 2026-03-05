@@ -39,7 +39,6 @@ thiserror = { workspace = true }
 sc-keystore = { workspace = true, default-features = true }
 soil-network = { workspace = true, default-features = true }
 soil-network-test = { workspace = true }
-soil-timestamp = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
 substrate-test-runtime-client = { workspace = true }
 tempfile = { workspace = true }

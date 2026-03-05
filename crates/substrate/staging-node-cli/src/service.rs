@@ -268,7 +268,7 @@ pub fn new_partial(
 		beefy_block_import,
 		client.clone(),
 		Arc::new(move |_, _| async move {
-			let timestamp = soil_timestamp::InherentDataProvider::from_system_time();
+			let timestamp = subsoil::timestamp::InherentDataProvider::from_system_time();
 			let slot =
 			soil_consensus_babe::inherents::InherentDataProvider::from_timestamp_and_slot_duration(
 				*timestamp,
@@ -622,7 +622,7 @@ pub fn new_full_base<N: NetworkBackend<Block, <Block as BlockT>::Hash>>(
 			create_inherent_data_providers: move |parent, ()| {
 				let client_clone = client_clone.clone();
 				async move {
-					let timestamp = soil_timestamp::InherentDataProvider::from_system_time();
+					let timestamp = subsoil::timestamp::InherentDataProvider::from_system_time();
 
 					let slot =
 						soil_consensus_babe::inherents::InherentDataProvider::from_timestamp_and_slot_duration(
@@ -903,7 +903,6 @@ mod tests {
 		RuntimeAppPublic,
 	};
 	use soil_service_test::TestNetNode;
-	use soil_timestamp;
 	use soil_transaction_pool_api::ChainEvent;
 	use soil_transaction_pool_api::MaintainedTransactionPool;
 	use std::sync::Arc;
@@ -1016,7 +1015,7 @@ mod tests {
 
 				let inherent_data = futures::executor::block_on(
 					(
-						soil_timestamp::InherentDataProvider::new(
+						subsoil::timestamp::InherentDataProvider::new(
 							std::time::Duration::from_millis(SLOT_DURATION * slot).into(),
 						),
 						soil_consensus_babe::inherents::InherentDataProvider::new(slot.into()),

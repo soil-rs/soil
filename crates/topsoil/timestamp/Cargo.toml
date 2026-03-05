@@ -24,7 +24,6 @@ topsoil-system = { workspace = true }
 log = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 subsoil = { workspace = true }
-soil-timestamp = { workspace = true }
 
 docify = { workspace = true }
 
@@ -40,8 +39,6 @@ std = [
 	"log/std",
 	"scale-info/std",
 	"subsoil/std",
-	"subsoil/std",
-	"soil-timestamp/std",
 ]
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",

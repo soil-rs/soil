@@ -127,7 +127,7 @@ impl core::Benchmark for ConstructionBenchmark {
 			None,
 			None,
 		);
-		let timestamp_provider = soil_timestamp::InherentDataProvider::from_system_time();
+		let timestamp_provider = subsoil::timestamp::InherentDataProvider::from_system_time();
 
 		let start = std::time::Instant::now();
 
