@@ -19,7 +19,7 @@ use proc_macro2::TokenStream as TokenStream2;
 use quote::quote;
 use syn::{parse_quote, spanned::Spanned, ItemImpl, ItemTrait, Result};
 
-use crate::utils::{
+use super::utils::{
 	extract_api_version, extract_impl_trait, filter_cfg_attributes, generate_crate_access,
 	generate_runtime_mod_name_for_trait, get_doc_literals, RequireQualifiedTraitPath,
 };
@@ -121,7 +121,7 @@ pub fn generate_decl_runtime_metadata<'a>(
 
 		// Include the method metadata only if its `cfg` features are enabled.
 		let attrs = filter_cfg_attributes(&method.attrs);
-		let deprecation = match crate::utils::get_deprecation(&crate_, &method.attrs) {
+		let deprecation = match super::utils::get_deprecation(&crate_, &method.attrs) {
 			Ok(deprecation) => deprecation,
 			Err(e) => return e.into_compile_error(),
 		};
@@ -147,7 +147,7 @@ pub fn generate_decl_runtime_metadata<'a>(
 	let trait_name_ident = &decl.ident;
 	let trait_name = trait_name_ident.to_string();
 	let docs = collect_docs(&decl.attrs, &crate_);
-	let deprecation = match crate::utils::get_deprecation(&crate_, &decl.attrs) {
+	let deprecation = match super::utils::get_deprecation(&crate_, &decl.attrs) {
 		Ok(deprecation) => deprecation,
 		Err(e) => return e.into_compile_error(),
 	};

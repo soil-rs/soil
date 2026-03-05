@@ -15,7 +15,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::utils::{
+use super::utils::{
 	extract_api_version, extract_block_type_from_trait_path, extract_impl_trait,
 	extract_parameter_names_types_and_borrows, generate_crate_access,
 	generate_runtime_mod_name_for_trait, prefix_function_with_trait, versioned_trait_name,
@@ -853,7 +853,7 @@ fn impl_runtime_apis_impl_inner(api_impls: &mut [ItemImpl]) -> Result<TokenStrea
 	let wasm_interface = generate_wasm_interface(api_impls)?;
 	let api_impls_for_runtime_api = generate_api_impl_for_runtime_api(api_impls)?;
 
-	let runtime_metadata = crate::runtime_metadata::generate_impl_runtime_metadata(api_impls)?;
+	let runtime_metadata = super::runtime_metadata::generate_impl_runtime_metadata(api_impls)?;
 
 	let impl_ = quote!(
 		#base_runtime_api

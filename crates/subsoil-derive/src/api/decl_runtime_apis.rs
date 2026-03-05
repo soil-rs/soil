@@ -15,7 +15,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::{
+use super::{
 	common::{
 		API_VERSION_ATTRIBUTE, BLOCK_GENERIC_IDENT, CHANGED_IN_ATTRIBUTE, CORE_TRAIT_ATTRIBUTE,
 		RENAMED_ATTRIBUTE, SUPPORTED_ATTRIBUTE_NAMES,
@@ -260,7 +260,7 @@ fn generate_runtime_decls(decls: &[ItemTrait]) -> Result<TokenStream> {
 			.iter()
 			.flat_map(|(&version, methods)| methods.iter().map(move |method| (method, version)));
 		let metadata =
-			crate::runtime_metadata::generate_decl_runtime_metadata(&decl, versioned_methods_iter);
+			super::runtime_metadata::generate_decl_runtime_metadata(&decl, versioned_methods_iter);
 
 		let versioned_api_traits = generate_versioned_api_traits(decl.clone(), methods_by_version);
 
