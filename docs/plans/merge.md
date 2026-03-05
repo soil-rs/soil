@@ -36,24 +36,24 @@ See `docs/specs/merge.md` for the full spec.
 - [x] 14. `soil-keystore`
 
 ### Tier 5 — Former SCC
-- [ ] 15. `soil-runtime-interface`
-- [ ] 16. `soil-trie`
-- [ ] 17. `soil-state-machine`
-- [ ] 18. `soil-io`
-- [ ] 19. `soil-application-crypto`
+- [x] 15. `soil-runtime-interface`
+- [x] 16. `soil-trie`
+- [x] 17. `soil-state-machine`
+- [x] 18. `soil-io`
+- [x] 19. `soil-application-crypto`
 
 ### Tier 6
-- [ ] 20. `soil-runtime`
+- [x] 20. `soil-runtime`
 
 ### Tier 7
-- [ ] 21. `soil-version`
-- [ ] 22. `soil-api`
+- [x] 21. `soil-version`
+- [x] 22. `soil-api`
 
 ### Tier 8
-- [ ] 23. `soil-keyring`
-- [ ] 24. `soil-crypto-ec-utils`
-- [ ] 25. `soil-npos-elections`
-- [ ] 26. `soil-inherents`
+- [x] 23. `soil-keyring`
+- [x] 24. `soil-crypto-ec-utils`
+- [x] 25. `soil-npos-elections`
+- [x] 26. `soil-inherents`
 
 ### Tier 9
-- [ ] 27. `soil-timestamp`
+- [x] 27. `soil-timestamp`
