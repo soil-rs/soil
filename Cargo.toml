@@ -10,7 +10,6 @@ resolver = "2"
 
 members = [
 	"crates/subsoil",
-	"crates/soil/allocator",
 	"crates/soil/api",
 	"crates/subsoil-api-proc-macro",
 	"crates/soil/api/test",
@@ -471,7 +470,6 @@ topsoil-vesting = { path = "crates/topsoil/vesting", default-features = false }
 topsoil-whitelist = { path = "crates/topsoil/whitelist", default-features = false }
 prometheus-endpoint = { path = "crates/substrate/substrate-prometheus-endpoint", default-features = false, package = "substrate-prometheus-endpoint" }
 remote-externalities = { path = "crates/substrate/frame-remote-externalities", default-features = false, package = "frame-remote-externalities" }
-soil-allocator = { path = "crates/soil/allocator", default-features = false }
 sc-authority-discovery = { path = "crates/substrate-client/authority-discovery", default-features = false }
 soil-basic-authorship = { path = "crates/soil/basic-authorship", default-features = false }
 sc-block-builder = { path = "crates/substrate-client/block-builder", default-features = false }

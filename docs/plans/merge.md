@@ -29,7 +29,7 @@ See `docs/specs/merge.md` for the full spec.
 - [x] 11. `soil-weights`
 
 ### Tier 3
-- [ ] 12. `soil-core`
+- [x] 12. `soil-core`
 
 ### Tier 4
 - [ ] 13. `soil-allocator`

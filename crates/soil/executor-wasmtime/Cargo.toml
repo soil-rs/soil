@@ -22,7 +22,6 @@ parking_lot = { workspace = true, default-features = true, optional = true}
 # When bumping wasmtime do not forget to also bump rustix
 # to exactly the same version as used by wasmtime!
 anyhow = { workspace = true, optional = true}
-soil-allocator = { workspace = true, default-features = true, optional = true}
 soil-executor-common = { workspace = true, default-features = true, optional = true}
 soil-runtime-interface = { workspace = true, default-features = true, optional = true}
 subsoil = { features = ["wasm-interface-wasmtime"], workspace = true, default-features = true, optional = true}
@@ -54,12 +53,10 @@ std = [
 	"log",
 	"parking_lot",
 	"rustix",
-	"soil-allocator",
 	"soil-executor-common",
 	"soil-runtime-interface",
 	"subsoil",
 	"wasmtime",
-	"soil-allocator/std",
 	"soil-executor-common/std",
 	"soil-runtime-interface/std",
 	"subsoil/std",

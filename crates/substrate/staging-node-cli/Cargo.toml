@@ -74,7 +74,6 @@ soil-mmr-rpc = { workspace = true, default-features = true }
 topsoil-asset-conversion-tx-payment = { workspace = true, default-features = true }
 topsoil-im-online = { workspace = true, default-features = true }
 topsoil-transaction-payment-rpc = { workspace = true, default-features = true }
-soil-allocator = { workspace = true, default-features = true }
 sc-authority-discovery = { workspace = true, default-features = true }
 soil-basic-authorship = { workspace = true, default-features = true }
 sc-block-builder = { workspace = true, default-features = true }

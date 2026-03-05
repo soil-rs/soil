@@ -67,9 +67,9 @@
 //!   wasted. This is more pronounced (in terms of absolute heap amounts) with larger allocation
 //!   sizes.
 
-use crate::{Error, Memory, MAX_WASM_PAGES, PAGE_SIZE};
-pub use subsoil::core::MAX_POSSIBLE_ALLOCATION;
-use subsoil::wasm_interface::{Pointer, WordSize};
+use super::{Error, Memory, MAX_WASM_PAGES, PAGE_SIZE};
+pub use crate::core::MAX_POSSIBLE_ALLOCATION;
+use crate::wasm_interface::{Pointer, WordSize};
 use std::{
 	cmp::{max, min},
 	mem,

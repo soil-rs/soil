@@ -20,3 +20,5 @@ pub mod storage;
 pub mod weights;
 #[allow(clippy::module_inception)]
 pub mod core;
+#[cfg(feature = "std")]
+pub mod allocator;

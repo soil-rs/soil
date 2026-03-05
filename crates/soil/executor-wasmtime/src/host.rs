@@ -21,7 +21,7 @@
 
 use wasmtime::Caller;
 
-use soil_allocator::{AllocationStats, FreeingBumpHeapAllocator};
+use subsoil::allocator::{AllocationStats, FreeingBumpHeapAllocator};
 use subsoil::wasm_interface::{Pointer, WordSize};
 
 use crate::{instance_wrapper::MemoryWrapper, runtime::StoreData, util};

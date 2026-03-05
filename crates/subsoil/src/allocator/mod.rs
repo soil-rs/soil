@@ -17,11 +17,8 @@
 
 //! Collection of allocator implementations.
 //!
-//! This crate provides the following allocator implementations:
+//! This module provides the following allocator implementations:
 //! - A freeing-bump allocator: [`FreeingBumpHeapAllocator`]
-
-#![warn(missing_docs)]
-#![cfg_attr(not(feature = "std"), no_std)]
 
 #[cfg(feature = "std")]
 mod error;

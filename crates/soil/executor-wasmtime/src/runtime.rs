@@ -25,7 +25,7 @@ use crate::{
 };
 
 use parking_lot::Mutex;
-use soil_allocator::{AllocationStats, FreeingBumpHeapAllocator};
+use subsoil::allocator::{AllocationStats, FreeingBumpHeapAllocator};
 use soil_executor_common::{
 	error::{Error, Result, WasmError},
 	runtime_blob::RuntimeBlob,

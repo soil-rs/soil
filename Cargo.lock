@@ -9370,15 +9370,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "soil-allocator"
-version = "23.0.0"
-dependencies = [
- "log",
- "subsoil",
- "thiserror 1.0.69",
-]
-
-[[package]]
 name = "soil-api"
 version = "26.0.0"
 dependencies = [
@@ -9909,7 +9900,6 @@ name = "soil-executor-common"
 version = "0.29.0"
 dependencies = [
  "polkavm",
- "soil-allocator",
  "soil-maybe-compressed-blob",
  "subsoil",
  "thiserror 1.0.69",
@@ -9937,7 +9927,6 @@ dependencies = [
  "parking_lot 0.12.5",
  "paste",
  "rustix 1.1.4",
- "soil-allocator",
  "soil-executor-common",
  "soil-io",
  "soil-runtime-interface",
@@ -11159,7 +11148,6 @@ dependencies = [
  "scale-info",
  "serde",
  "serde_json",
- "soil-allocator",
  "soil-api",
  "soil-application-crypto",
  "soil-authority-discovery",
