@@ -1171,7 +1171,7 @@ pub mod pallet {
 }
 
 pub trait EncodeInto: Encode {
-	fn encode_into<T: AsMut<[u8]> + Default, H: soil_core::Hasher>(&self) -> T {
+	fn encode_into<T: AsMut<[u8]> + Default, H: subsoil::core::Hasher>(&self) -> T {
 		let mut t = T::default();
 		self.using_encoded(|data| {
 			if data.len() <= t.as_mut().len() {

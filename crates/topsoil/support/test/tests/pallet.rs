@@ -985,7 +985,7 @@ fn instance_expand() {
 
 #[test]
 fn inherent_expand() {
-	use soil_core::Hasher;
+	use subsoil::core::Hasher;
 	use soil_runtime::{
 		traits::{BlakeTwo256, Block as _, Header},
 		Digest,
@@ -1921,7 +1921,7 @@ fn metadata_v15() {
 #[test]
 fn metadata_at_version() {
 	use frame_metadata::*;
-	use soil_core::Decode;
+	use subsoil::core::Decode;
 
 	// Metadata always returns the V14.3
 	let metadata = Runtime::metadata();

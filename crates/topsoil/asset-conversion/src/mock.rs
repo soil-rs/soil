@@ -141,7 +141,7 @@ pub type WithFirstAssetLocator =
 impl Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type Balance = <Self as topsoil_balances::Config>::Balance;
-	type HigherPrecisionBalance = soil_core::U256;
+	type HigherPrecisionBalance = subsoil::core::U256;
 	type AssetKind = NativeOrWithId<u32>;
 	type Assets = NativeAndAssets;
 	type PoolId = (Self::AssetKind, Self::AssetKind);

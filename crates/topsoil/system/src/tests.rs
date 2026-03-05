@@ -17,7 +17,7 @@
 
 use crate::*;
 use mock::{RuntimeOrigin, *};
-use soil_core::{hexdisplay::HexDisplay, H256};
+use subsoil::core::{hexdisplay::HexDisplay, H256};
 use soil_runtime::{
 	generic::{Digest, DigestItem},
 	traits::{BlakeTwo256, Header},
@@ -617,7 +617,7 @@ fn prunes_block_hash_mappings() {
 fn set_code_checks_works() {
 	struct ReadRuntimeVersion(Vec<u8>);
 
-	impl soil_core::traits::ReadRuntimeVersion for ReadRuntimeVersion {
+	impl subsoil::core::traits::ReadRuntimeVersion for ReadRuntimeVersion {
 		fn read_runtime_version(
 			&self,
 			_wasm_code: &[u8],
@@ -651,7 +651,7 @@ fn set_code_checks_works() {
 		let read_runtime_version = ReadRuntimeVersion(version.encode());
 
 		let mut ext = new_test_ext();
-		ext.register_extension(soil_core::traits::ReadRuntimeVersionExt::new(read_runtime_version));
+		ext.register_extension(subsoil::core::traits::ReadRuntimeVersionExt::new(read_runtime_version));
 		ext.execute_with(|| {
 			let res = System::set_code(RawOrigin::Root.into(), vec![1, 2, 3, 4]);
 
@@ -677,7 +677,7 @@ fn assert_runtime_updated_digest(num: usize) {
 fn set_code_with_real_wasm_blob() {
 	let executor = WasmExecutor::default();
 	let mut ext = new_test_ext();
-	ext.register_extension(soil_core::traits::ReadRuntimeVersionExt::new(executor));
+	ext.register_extension(subsoil::core::traits::ReadRuntimeVersionExt::new(executor));
 	ext.execute_with(|| {
 		System::set_block_number(1);
 		System::set_code(
@@ -703,7 +703,7 @@ fn set_code_rejects_during_mbm() {
 
 	let executor = substrate_test_runtime_client::WasmExecutor::default();
 	let mut ext = new_test_ext();
-	ext.register_extension(soil_core::traits::ReadRuntimeVersionExt::new(executor));
+	ext.register_extension(subsoil::core::traits::ReadRuntimeVersionExt::new(executor));
 	ext.execute_with(|| {
 		System::set_block_number(1);
 		let res = System::set_code(
@@ -723,7 +723,7 @@ fn set_code_rejects_during_mbm() {
 fn set_code_via_authorization_works() {
 	let executor = substrate_test_runtime_client::WasmExecutor::default();
 	let mut ext = new_test_ext();
-	ext.register_extension(soil_core::traits::ReadRuntimeVersionExt::new(executor));
+	ext.register_extension(subsoil::core::traits::ReadRuntimeVersionExt::new(executor));
 	ext.execute_with(|| {
 		System::set_block_number(1);
 		assert!(System::authorized_upgrade().is_none());
@@ -763,7 +763,7 @@ fn set_code_via_authorization_works() {
 fn runtime_upgraded_with_set_storage() {
 	let executor = substrate_test_runtime_client::WasmExecutor::default();
 	let mut ext = new_test_ext();
-	ext.register_extension(soil_core::traits::ReadRuntimeVersionExt::new(executor));
+	ext.register_extension(subsoil::core::traits::ReadRuntimeVersionExt::new(executor));
 	ext.execute_with(|| {
 		System::set_storage(
 			RawOrigin::Root.into(),
@@ -807,7 +807,7 @@ fn extrinsics_root_is_calculated_correctly() {
 
 		let ext_root = extrinsics_data_root::<BlakeTwo256>(
 			vec![vec![1], vec![2]],
-			soil_core::storage::StateVersion::V0,
+			subsoil::core::storage::StateVersion::V0,
 		);
 		assert_eq!(ext_root, *header.extrinsics_root());
 	});

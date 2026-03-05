@@ -22,11 +22,11 @@
 
 extern crate alloc;
 
-pub use soil_core::crypto::{key_types, CryptoTypeId, DeriveJunction, KeyTypeId, Ss58Codec};
+pub use subsoil::core::crypto::{key_types, CryptoTypeId, DeriveJunction, KeyTypeId, Ss58Codec};
 #[doc(hidden)]
-pub use soil_core::crypto::{DeriveError, Pair, SecretStringError};
+pub use subsoil::core::crypto::{DeriveError, Pair, SecretStringError};
 #[doc(hidden)]
-pub use soil_core::{
+pub use subsoil::core::{
 	self,
 	crypto::{ByteArray, CryptoType, Derive, IsWrappedBy, Public, Signature, UncheckedFrom, Wraps},
 	proof_of_possession::{ProofOfPossessionGenerator, ProofOfPossessionVerifier},
@@ -37,7 +37,7 @@ pub use alloc::vec::Vec;
 #[doc(hidden)]
 pub use codec;
 #[doc(hidden)]
-pub use core::ops::Deref;
+pub use ::core::ops::Deref;
 #[doc(hidden)]
 pub use scale_info;
 #[doc(hidden)]

@@ -131,7 +131,7 @@ where
 {
 	const USE_EXTENSION: bool = false;
 	const ALLOW_EMPTY: bool = true;
-	const MAX_INLINE_VALUE: Option<u32> = Some(soil_core::storage::TRIE_VALUE_NODE_THRESHOLD);
+	const MAX_INLINE_VALUE: Option<u32> = Some(subsoil::core::storage::TRIE_VALUE_NODE_THRESHOLD);
 
 	type Hash = H;
 	type Codec = NodeCodec<Self::Hash>;
@@ -648,7 +648,7 @@ mod tests {
 	use super::*;
 	use codec::{Compact, Decode, Encode};
 	use hash_db::{HashDB, Hasher};
-	use soil_core::Blake2Hasher;
+	use subsoil::core::Blake2Hasher;
 	use trie_db::{DBValue, NodeCodec as NodeCodecT, Trie, TrieMut};
 	use trie_standardmap::{Alphabet, StandardMap, ValueMode};
 
@@ -1100,7 +1100,7 @@ mod tests {
 	fn generate_storage_root_with_proof_works_independently_from_the_delta_order() {
 		let proof = StorageProof::decode(&mut &include_bytes!("../test-res/proof")[..]).unwrap();
 		let storage_root =
-			soil_core::H256::decode(&mut &include_bytes!("../test-res/storage_root")[..]).unwrap();
+			subsoil::core::H256::decode(&mut &include_bytes!("../test-res/storage_root")[..]).unwrap();
 		// Delta order that is "invalid" so that it would require a different proof.
 		let invalid_delta = Vec::<(Vec<u8>, Option<Vec<u8>>)>::decode(
 			&mut &include_bytes!("../test-res/invalid-delta-order")[..],

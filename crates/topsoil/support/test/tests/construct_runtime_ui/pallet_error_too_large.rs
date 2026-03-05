@@ -16,7 +16,7 @@
 // limitations under the License.
 
 use topsoil_support::{construct_runtime, derive_impl};
-use soil_core::sr25519;
+use subsoil::core::sr25519;
 use soil_runtime::{generic, traits::BlakeTwo256};
 
 #[topsoil_support::pallet]

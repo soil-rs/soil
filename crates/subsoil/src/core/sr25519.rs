@@ -17,12 +17,12 @@
 
 //! Simple sr25519 (Schnorr-Ristretto) API.
 //!
-//! Note: `CHAIN_CODE_LENGTH` must be equal to `crate::crypto::JUNCTION_ID_LEN`
+//! Note: `CHAIN_CODE_LENGTH` must be equal to `crate::core::crypto::JUNCTION_ID_LEN`
 //! for this to work.
 
 #[cfg(feature = "serde")]
-use crate::crypto::Ss58Codec;
-use crate::{
+use crate::core::crypto::Ss58Codec;
+use crate::core::{
 	crypto::{CryptoBytes, DeriveError, DeriveJunction, Pair as TraitPair, SecretStringError},
 	proof_of_possession::NonAggregatable,
 };
@@ -35,7 +35,7 @@ use schnorrkel::{
 	ExpansionMode, Keypair, MiniSecretKey, PublicKey, SecretKey,
 };
 
-use crate::crypto::{CryptoType, CryptoTypeId, Derive, Public as TraitPublic, SignatureBytes};
+use crate::core::crypto::{CryptoType, CryptoTypeId, Derive, Public as TraitPublic, SignatureBytes};
 use codec::{Decode, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;
 
@@ -86,7 +86,7 @@ impl Derive for Public {
 
 #[cfg(feature = "std")]
 impl std::str::FromStr for Public {
-	type Err = crate::crypto::PublicError;
+	type Err = crate::core::crypto::PublicError;
 
 	fn from_str(s: &str) -> Result<Self, Self::Err> {
 		Self::from_ss58check(s)
@@ -100,15 +100,15 @@ impl std::fmt::Display for Public {
 	}
 }
 
-impl core::fmt::Debug for Public {
+impl ::core::fmt::Debug for Public {
 	#[cfg(feature = "std")]
-	fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+	fn fmt(&self, f: &mut ::core::fmt::Formatter) -> ::core::fmt::Result {
 		let s = self.to_ss58check();
-		write!(f, "{} ({}...)", crate::hexdisplay::HexDisplay::from(&self.0), &s[0..8])
+		write!(f, "{} ({}...)", crate::core::hexdisplay::HexDisplay::from(&self.0), &s[0..8])
 	}
 
 	#[cfg(not(feature = "std"))]
-	fn fmt(&self, _: &mut core::fmt::Formatter) -> core::fmt::Result {
+	fn fmt(&self, _: &mut ::core::fmt::Formatter) -> ::core::fmt::Result {
 		Ok(())
 	}
 }
@@ -308,8 +308,8 @@ impl NonAggregatable for Pair {}
 pub mod vrf {
 	use super::*;
 	#[cfg(feature = "full_crypto")]
-	use crate::crypto::VrfSecret;
-	use crate::crypto::{VrfCrypto, VrfPublic};
+	use crate::core::crypto::VrfSecret;
+	use crate::core::crypto::{VrfCrypto, VrfPublic};
 	use schnorrkel::{
 		errors::MultiSignatureStage,
 		vrf::{VRF_PREOUT_LENGTH, VRF_PROOF_LENGTH},
@@ -602,7 +602,7 @@ pub mod vrf {
 #[cfg(test)]
 mod tests {
 	use super::{vrf::*, *};
-	use crate::{
+	use crate::core::{
 		crypto::{Ss58Codec, VrfPublic, VrfSecret, DEV_ADDRESS, DEV_PHRASE},
 		proof_of_possession::{ProofOfPossessionGenerator, ProofOfPossessionVerifier},
 		ByteArray as _,

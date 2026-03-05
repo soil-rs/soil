@@ -18,7 +18,7 @@
 //! Integration tests for ecdsa
 use soil_api::{ApiExt, ProvideRuntimeApi};
 use soil_application_crypto::{ecdsa::AppPair, RuntimePublic};
-use soil_core::{
+use subsoil::core::{
 	crypto::{ByteArray, Pair},
 	ecdsa::Pair as ECDSAPair,
 	proof_of_possession::{ProofOfPossessionGenerator, ProofOfPossessionVerifier},

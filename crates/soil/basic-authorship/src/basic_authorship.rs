@@ -32,7 +32,7 @@ use sc_block_builder::{BlockBuilderApi, BlockBuilderBuilder};
 use soil_api::{ApiExt, CallApiAt, ProvideRuntimeApi};
 use soil_blockchain::{ApplyExtrinsicFailed::Validity, Error::ApplyExtrinsicFailed, HeaderBackend};
 use soil_consensus::{Proposal, ProposeArgs};
-use soil_core::traits::SpawnNamed;
+use subsoil::core::traits::SpawnNamed;
 use soil_inherents::InherentData;
 use soil_proposer_metrics::{EndProposingReason, MetricsLink as PrometheusMetrics};
 use soil_runtime::{
@@ -624,7 +624,7 @@ mod tests {
 	fn should_cease_building_block_when_deadline_is_reached() {
 		// given
 		let client = Arc::new(substrate_test_runtime_client::new());
-		let spawner = soil_core::testing::TaskExecutor::new();
+		let spawner = subsoil::core::testing::TaskExecutor::new();
 		let txpool = Arc::from(BasicPool::new_full(
 			Default::default(),
 			true.into(),
@@ -678,7 +678,7 @@ mod tests {
 	#[test]
 	fn should_not_panic_when_deadline_is_reached() {
 		let client = Arc::new(substrate_test_runtime_client::new());
-		let spawner = soil_core::testing::TaskExecutor::new();
+		let spawner = subsoil::core::testing::TaskExecutor::new();
 		let txpool = Arc::from(BasicPool::new_full(
 			Default::default(),
 			true.into(),
@@ -717,7 +717,7 @@ mod tests {
 	fn proposed_storage_changes_should_match_execute_block_storage_changes() {
 		let (client, backend) = TestClientBuilder::new().build_with_backend();
 		let client = Arc::new(client);
-		let spawner = soil_core::testing::TaskExecutor::new();
+		let spawner = subsoil::core::testing::TaskExecutor::new();
 		let txpool = Arc::from(BasicPool::new_full(
 			Default::default(),
 			true.into(),
@@ -774,7 +774,7 @@ mod tests {
 	fn should_not_remove_invalid_transactions_from_the_same_sender_after_one_was_invalid() {
 		// given
 		let client = Arc::new(substrate_test_runtime_client::new());
-		let spawner = soil_core::testing::TaskExecutor::new();
+		let spawner = subsoil::core::testing::TaskExecutor::new();
 		let txpool = Arc::from(BasicPool::new_full(
 			Default::default(),
 			true.into(),
@@ -884,7 +884,7 @@ mod tests {
 	#[test]
 	fn should_cease_building_block_when_block_limit_is_reached() {
 		let client = Arc::new(substrate_test_runtime_client::new());
-		let spawner = soil_core::testing::TaskExecutor::new();
+		let spawner = subsoil::core::testing::TaskExecutor::new();
 		let txpool = Arc::from(BasicPool::new_full(
 			Default::default(),
 			true.into(),
@@ -984,7 +984,7 @@ mod tests {
 	fn should_keep_adding_transactions_after_exhausts_resources_before_soft_deadline() {
 		// given
 		let client = Arc::new(substrate_test_runtime_client::new());
-		let spawner = soil_core::testing::TaskExecutor::new();
+		let spawner = subsoil::core::testing::TaskExecutor::new();
 		let txpool = Arc::from(BasicPool::new_full(
 			Default::default(),
 			true.into(),
@@ -1054,7 +1054,7 @@ mod tests {
 	fn should_only_skip_up_to_some_limit_after_soft_deadline() {
 		// given
 		let client = Arc::new(substrate_test_runtime_client::new());
-		let spawner = soil_core::testing::TaskExecutor::new();
+		let spawner = subsoil::core::testing::TaskExecutor::new();
 		let txpool = Arc::from(BasicPool::new_full(
 			Default::default(),
 			true.into(),

@@ -24,7 +24,7 @@ topsoil-staking = { workspace = true }
 
 topsoil-support = { workspace = true }
 topsoil-system = { workspace = true }
-soil-core = { workspace = true }
+subsoil = { workspace = true }
 soil-runtime = { workspace = true }
 soil-staking = { workspace = true }
 
@@ -49,7 +49,7 @@ std = [
 	"topsoil-staking/std",
 	"topsoil-timestamp/std",
 	"scale-info/std",
-	"soil-core/std",
+	"subsoil/std",
 	"soil-io/std",
 	"soil-runtime/std",
 	"soil-staking/std",

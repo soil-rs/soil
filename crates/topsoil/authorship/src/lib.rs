@@ -96,7 +96,7 @@ mod tests {
 	use super::*;
 	use crate as topsoil_authorship;
 	use codec::{Decode, Encode};
-	use soil_core::H256;
+	use subsoil::core::H256;
 	use soil_runtime::{
 		generic::DigestItem, testing::Header, traits::Header as HeaderT, BuildStorage,
 	};

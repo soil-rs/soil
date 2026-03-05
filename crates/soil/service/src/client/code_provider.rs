@@ -18,7 +18,7 @@
 
 use super::{client::ClientConfig, wasm_override::WasmOverride, wasm_substitutes::WasmSubstitutes};
 use soil_client_api::{backend, TrieCacheContext};
-use soil_core::traits::{FetchRuntimeCode, RuntimeCode};
+use subsoil::core::traits::{FetchRuntimeCode, RuntimeCode};
 use soil_executor::{RuntimeVersion, RuntimeVersionOf};
 use soil_runtime::traits::Block as BlockT;
 use soil_state_machine::{Ext, OverlayedChanges};
@@ -171,7 +171,7 @@ mod tests {
 	use super::*;
 	use backend::Backend;
 	use soil_client_api::{in_mem, HeaderBackend};
-	use soil_core::{
+	use subsoil::core::{
 		testing::TaskExecutor,
 		traits::{FetchRuntimeCode, WrappedRuntimeCode},
 	};

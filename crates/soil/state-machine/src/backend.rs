@@ -27,9 +27,9 @@ use alloc::vec::Vec;
 use codec::Encode;
 use core::marker::PhantomData;
 use hash_db::Hasher;
-use soil_core::storage::{ChildInfo, StateVersion, TrackedStorageKey};
+use subsoil::core::storage::{ChildInfo, StateVersion, TrackedStorageKey};
 #[cfg(feature = "std")]
-use soil_core::traits::RuntimeCode;
+use subsoil::core::traits::RuntimeCode;
 use soil_trie::{MerkleValue, PrefixedMemoryDB, RandomState};
 
 /// A struct containing arguments for iterating over the storage.
@@ -400,12 +400,12 @@ pub struct BackendRuntimeCode<'a, B, H> {
 }
 
 #[cfg(feature = "std")]
-impl<'a, B: Backend<H>, H: Hasher> soil_core::traits::FetchRuntimeCode
+impl<'a, B: Backend<H>, H: Hasher> subsoil::core::traits::FetchRuntimeCode
 	for BackendRuntimeCode<'a, B, H>
 {
 	fn fetch_runtime_code(&self) -> Option<std::borrow::Cow<'_, [u8]>> {
 		self.backend
-			.storage(soil_core::storage::well_known_keys::CODE)
+			.storage(subsoil::core::storage::well_known_keys::CODE)
 			.ok()
 			.flatten()
 			.map(Into::into)
@@ -426,14 +426,14 @@ where
 	pub fn runtime_code(&self) -> Result<RuntimeCode<'_>, &'static str> {
 		let hash = self
 			.backend
-			.storage_hash(soil_core::storage::well_known_keys::CODE)
+			.storage_hash(subsoil::core::storage::well_known_keys::CODE)
 			.ok()
 			.flatten()
 			.ok_or("`:code` hash not found")?
 			.encode();
 		let heap_pages = self
 			.backend
-			.storage(soil_core::storage::well_known_keys::HEAP_PAGES)
+			.storage(subsoil::core::storage::well_known_keys::HEAP_PAGES)
 			.ok()
 			.flatten()
 			.and_then(|d| codec::Decode::decode(&mut &d[..]).ok());

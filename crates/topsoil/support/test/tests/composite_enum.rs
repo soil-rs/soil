@@ -21,7 +21,7 @@
 #![recursion_limit = "128"]
 
 use codec::Encode;
-use soil_core::sr25519;
+use subsoil::core::sr25519;
 use soil_runtime::{
 	generic,
 	traits::{BlakeTwo256, Verify},

@@ -24,7 +24,7 @@ use soil_consensus_sassafras::{
 	vrf::{RingProver, VrfSignature},
 	AuthorityIndex, AuthorityPair, EpochConfiguration, Slot, TicketBody, TicketEnvelope, TicketId,
 };
-use soil_core::{
+use subsoil::core::{
 	crypto::{ByteArray, Pair, UncheckedFrom, VrfSecret, Wraps},
 	ed25519::Public as EphemeralPublic,
 	H256, U256,
@@ -164,7 +164,7 @@ pub fn make_prover(pair: &AuthorityPair) -> RingProver {
 
 	let ring_ctx = RingContext::<Test>::get().unwrap();
 
-	let pks: Vec<soil_core::bandersnatch::Public> = Authorities::<Test>::get()
+	let pks: Vec<subsoil::core::bandersnatch::Public> = Authorities::<Test>::get()
 		.iter()
 		.enumerate()
 		.map(|(idx, auth)| {

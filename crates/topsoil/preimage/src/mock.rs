@@ -20,7 +20,7 @@
 use super::*;
 
 use crate as topsoil_preimage;
-use soil_core::H256;
+use subsoil::core::H256;
 use soil_runtime::{
 	traits::{BlakeTwo256, Convert},
 	BuildStorage,

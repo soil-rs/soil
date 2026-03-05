@@ -24,7 +24,7 @@
 //! Tests for topsoil-dev-mode.
 
 use crate::*;
-use soil_core::H256;
+use subsoil::core::H256;
 use soil_runtime::{
 	traits::{BlakeTwo256, IdentityLookup},
 	BuildStorage,

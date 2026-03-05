@@ -20,7 +20,7 @@ targets = ["x86_64-unknown-linux-gnu"]
 codec = { features = ["derive"], workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { optional = true, features = ["alloc", "derive"], workspace = true }
-soil-core = { workspace = true }
+subsoil = { workspace = true }
 soil-io = { workspace = true }
 
 [features]
@@ -30,18 +30,18 @@ std = [
 	"full_crypto",
 	"scale-info/std",
 	"serde/std",
-	"soil-core/std",
+	"subsoil/std",
 	"soil-io/std",
 ]
 
 # Serde support without relying on std features.
-serde = ["dep:serde", "scale-info/serde", "soil-core/serde"]
+serde = ["dep:serde", "scale-info/serde", "subsoil/serde"]
 
 # This feature enables all crypto primitives for `no_std` builds like microcontrollers
 # or Intel SGX.
 # For the regular wasm runtime builds this should not be used.
 full_crypto = [
-	"soil-core/full_crypto",
+	"subsoil/full_crypto",
 	"soil-io/disable_oom",
 	# Don't add `panic_handler` and `alloc_error_handler` since they are expected to be provided
 	# by the user anyway.
@@ -51,12 +51,12 @@ full_crypto = [
 # This feature adds BLS crypto primitives.
 # It should not be used in production since the implementation and interface may still
 # be subject to significant changes.
-bls-experimental = ["soil-core/bls-experimental", "soil-io/bls-experimental"]
+bls-experimental = ["subsoil/bls-experimental", "soil-io/bls-experimental"]
 
 # This feature adds Bandersnatch crypto primitives.
 # It should not be used in production since the implementation and interface may still
 # be subject to significant changes.
 bandersnatch-experimental = [
-	"soil-core/bandersnatch-experimental",
+	"subsoil/bandersnatch-experimental",
 	"soil-io/bandersnatch-experimental",
 ]

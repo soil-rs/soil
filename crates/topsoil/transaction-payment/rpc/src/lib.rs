@@ -30,7 +30,7 @@ use jsonrpsee::{
 };
 use soil_api::ProvideRuntimeApi;
 use soil_blockchain::HeaderBackend;
-use soil_core::Bytes;
+use subsoil::core::Bytes;
 use soil_rpc::number::NumberOrHex;
 use soil_runtime::traits::{Block as BlockT, MaybeDisplay};
 use topsoil_transaction_payment_rpc_runtime_api::{FeeDetails, InclusionFee, RuntimeDispatchInfo};

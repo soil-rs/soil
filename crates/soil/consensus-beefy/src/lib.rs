@@ -52,7 +52,7 @@ use core::fmt::{Debug, Display};
 use scale_info::TypeInfo;
 pub use soil_application_crypto::key_types::BEEFY as KEY_TYPE;
 use soil_application_crypto::{AppPublic, RuntimeAppPublic};
-use soil_core::H256;
+use subsoil::core::H256;
 #[cfg(feature = "std")]
 use soil_keystore::KeystorePtr;
 use soil_runtime::{
@@ -110,9 +110,9 @@ pub mod ecdsa_crypto {
 	#[cfg(feature = "std")]
 	use core::fmt::Debug;
 	use soil_application_crypto::{app_crypto, ecdsa};
-	use soil_core::crypto::Wraps;
+	use subsoil::core::crypto::Wraps;
 	#[cfg(feature = "std")]
-	use soil_core::ByteArray;
+	use subsoil::core::ByteArray;
 	use subsoil_crypto_hashing::keccak_256;
 	#[cfg(feature = "std")]
 	use soil_keystore::KeystorePtr;
@@ -177,7 +177,7 @@ pub mod bls_crypto {
 	#[cfg(feature = "std")]
 	use core::fmt::Debug;
 	use soil_application_crypto::{app_crypto, bls381};
-	use soil_core::{bls381::Pair as BlsPair, crypto::Wraps, ByteArray, Pair as _};
+	use subsoil::core::{bls381::Pair as BlsPair, crypto::Wraps, ByteArray, Pair as _};
 	#[cfg(feature = "std")]
 	use soil_keystore::KeystorePtr;
 
@@ -237,7 +237,7 @@ pub mod ecdsa_bls_crypto {
 	#[cfg(feature = "std")]
 	use core::fmt::Debug;
 	use soil_application_crypto::{app_crypto, ecdsa_bls381};
-	use soil_core::{crypto::Wraps, ecdsa_bls381::Pair as EcdsaBlsPair, ByteArray};
+	use subsoil::core::{crypto::Wraps, ecdsa_bls381::Pair as EcdsaBlsPair, ByteArray};
 	#[cfg(feature = "std")]
 	use soil_keystore::KeystorePtr;
 	use soil_runtime::traits::Keccak256;
@@ -617,7 +617,7 @@ soil_api::decl_runtime_apis! {
 mod tests {
 	use super::*;
 	use soil_application_crypto::ecdsa::{self, Public};
-	use soil_core::crypto::{Pair, Wraps};
+	use subsoil::core::crypto::{Pair, Wraps};
 	use subsoil_crypto_hashing::keccak_256;
 
 	#[test]

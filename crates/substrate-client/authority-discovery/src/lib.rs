@@ -42,7 +42,7 @@ use futures::{
 
 use soil_authority_discovery::AuthorityId;
 use soil_blockchain::HeaderBackend;
-use soil_core::traits::SpawnNamed;
+use subsoil::core::traits::SpawnNamed;
 use soil_network::{event::DhtEvent, Multiaddr};
 use soil_network_types::PeerId;
 use soil_runtime::traits::Block as BlockT;

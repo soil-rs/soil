@@ -28,7 +28,7 @@ use codec::{Decode, Encode};
 #[cfg(feature = "std")]
 use error::{Error, Result};
 #[cfg(feature = "std")]
-use soil_core::{
+use subsoil::core::{
 	traits::{CallContext, CodeExecutor, FetchRuntimeCode, RuntimeCode},
 	OpaqueMetadata,
 };

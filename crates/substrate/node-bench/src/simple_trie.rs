@@ -23,7 +23,7 @@ use kvdb::KeyValueDB;
 use node_primitives::Hash;
 use soil_trie::DBValue;
 
-pub type Hasher = soil_core::Blake2Hasher;
+pub type Hasher = subsoil::core::Blake2Hasher;
 
 /// Immutable generated trie database with root.
 pub struct SimpleTrie<'a> {

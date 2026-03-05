@@ -27,7 +27,7 @@ pub use soil_application_crypto;
 use soil_application_crypto::sr25519;
 
 use alloc::vec::Vec;
-pub use soil_core::hash::H256;
+pub use subsoil::core::hash::H256;
 use soil_runtime::{
 	traits::{BlakeTwo256, ExtrinsicLike, LazyExtrinsic, Verify},
 	OpaqueExtrinsic,

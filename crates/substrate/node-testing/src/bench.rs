@@ -46,7 +46,7 @@ use soil_block_builder::BlockBuilder;
 use soil_client_api::{execution_extensions::ExecutionExtensions, UsageProvider};
 use soil_client_db::PruningMode;
 use soil_consensus::BlockOrigin;
-use soil_core::{
+use subsoil::core::{
 	crypto::get_public_from_string_or_panic, ed25519, sr25519, traits::SpawnNamed, Pair,
 };
 use subsoil_crypto_hashing::blake2_256;
@@ -621,9 +621,9 @@ impl BenchKeyring {
 }
 
 impl soil_runtime::BuildStorage for BenchKeyring {
-	fn assimilate_storage(&self, storage: &mut soil_core::storage::Storage) -> Result<(), String> {
+	fn assimilate_storage(&self, storage: &mut subsoil::core::storage::Storage) -> Result<(), String> {
 		storage.top.insert(
-			soil_core::storage::well_known_keys::CODE.to_vec(),
+			subsoil::core::storage::well_known_keys::CODE.to_vec(),
 			kitchensink_runtime::wasm_binary_unwrap().into(),
 		);
 		crate::genesis::config_endowed(self.collect_account_ids()).assimilate_storage(storage)

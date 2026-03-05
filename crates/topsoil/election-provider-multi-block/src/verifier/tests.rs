@@ -24,7 +24,7 @@ use crate::{
 	verifier::{impls::Status, Event, FeasibilityError, Verifier, *},
 	PagedRawSolution, Snapshot, *,
 };
-use soil_core::bounded_vec;
+use subsoil::core::bounded_vec;
 use soil_npos_elections::ElectionScore;
 use soil_runtime::{traits::Bounded, PerU16};
 use topsoil_election_provider_support::Support;
@@ -284,7 +284,7 @@ mod feasibility_check {
 
 mod async_verification {
 	use super::*;
-	use soil_core::bounded_vec;
+	use subsoil::core::bounded_vec;
 	// disambiguate event
 	use crate::verifier::Event;
 

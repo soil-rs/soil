@@ -20,7 +20,7 @@ use scale_info::TypeInfo;
 
 use alloc::vec::Vec;
 use core::fmt::Debug;
-use soil_core::crypto::{
+use subsoil::core::crypto::{
 	CryptoType, CryptoTypeId, IsWrappedBy, KeyTypeId, Pair, Public, Signature,
 };
 

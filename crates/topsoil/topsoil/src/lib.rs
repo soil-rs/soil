@@ -409,7 +409,7 @@ pub mod runtime {
 		pub use soil_api::impl_runtime_apis;
 
 		// Types often used in the runtime APIs.
-		pub use soil_core::OpaqueMetadata;
+		pub use subsoil::core::OpaqueMetadata;
 		pub use soil_genesis_builder::{
 			PresetId, Result as GenesisBuilderResult, DEV_RUNTIME_PRESET,
 			LOCAL_TESTNET_RUNTIME_PRESET,
@@ -518,7 +518,7 @@ pub mod runtime {
 	/// counter part of `runtime::prelude`.
 	#[cfg(feature = "std")]
 	pub mod testing_prelude {
-		pub use soil_core::storage::Storage;
+		pub use subsoil::core::storage::Storage;
 		pub use soil_runtime::{BuildStorage, DispatchError};
 	}
 }
@@ -579,7 +579,7 @@ pub mod derive {
 ///
 /// This is already part of the main [`prelude`].
 pub mod hashing {
-	pub use soil_core::{hashing::*, H160, H256, H512, U256, U512};
+	pub use subsoil::core::{hashing::*, H160, H256, H512, U256, U512};
 	pub use soil_runtime::traits::{BlakeTwo256, Hash, Keccak256};
 }
 
@@ -623,7 +623,7 @@ pub mod deps {
 	pub use topsoil_system;
 
 	pub use subsoil::arithmetic;
-	pub use soil_core;
+	pub use subsoil::core;
 	pub use soil_io;
 	pub use soil_runtime;
 

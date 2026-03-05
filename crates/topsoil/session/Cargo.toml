@@ -24,7 +24,7 @@ log = { workspace = true }
 topsoil-balances = { workspace = true }
 topsoil-timestamp = { workspace = true }
 scale-info = { features = ["derive", "serde"], workspace = true }
-soil-core = { features = ["serde"], workspace = true }
+subsoil = { features = ["serde"], workspace = true }
 soil-io = { workspace = true }
 soil-runtime = { features = ["serde"], workspace = true }
 soil-session = { workspace = true }
@@ -43,7 +43,7 @@ std = [
 	"topsoil-balances/std",
 	"topsoil-timestamp/std",
 	"scale-info/std",
-	"soil-core/std",
+	"subsoil/std",
 	"soil-io/std",
 	"soil-runtime/std",
 	"soil-session/std",

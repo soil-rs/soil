@@ -31,7 +31,7 @@ use codec::{
 	Codec, Decode, DecodeWithMemTracking, Encode, EncodeLike, FullCodec, HasCompact, MaxEncodedLen,
 };
 #[doc(hidden)]
-pub use core::{fmt::Debug, marker::PhantomData};
+pub use ::core::{fmt::Debug, marker::PhantomData};
 use impl_trait_for_tuples::impl_for_tuples;
 #[cfg(feature = "serde")]
 use serde::{de::DeserializeOwned, Deserialize, Serialize};
@@ -43,9 +43,9 @@ pub use subsoil::arithmetic::traits::{
 	EnsureOp, EnsureOpAssign, EnsureSub, EnsureSubAssign, IntegerSquareRoot, One,
 	SaturatedConversion, Saturating, UniqueSaturatedFrom, UniqueSaturatedInto, Zero,
 };
-use soil_core::{self, storage::StateVersion, Hasher, TypeId, U256};
+use subsoil::core::{self, storage::StateVersion, Hasher, TypeId, U256};
 #[doc(hidden)]
-pub use soil_core::{
+pub use subsoil::core::{
 	parameter_types, ConstBool, ConstI128, ConstI16, ConstI32, ConstI64, ConstI8, ConstInt,
 	ConstU128, ConstU16, ConstU32, ConstU64, ConstU8, ConstUint, Get, GetDefault, TryCollect,
 	TypedGet,
@@ -84,21 +84,21 @@ pub trait IdentifyAccount {
 	fn into_account(self) -> Self::AccountId;
 }
 
-impl IdentifyAccount for soil_core::ed25519::Public {
+impl IdentifyAccount for subsoil::core::ed25519::Public {
 	type AccountId = Self;
 	fn into_account(self) -> Self {
 		self
 	}
 }
 
-impl IdentifyAccount for soil_core::sr25519::Public {
+impl IdentifyAccount for subsoil::core::sr25519::Public {
 	type AccountId = Self;
 	fn into_account(self) -> Self {
 		self
 	}
 }
 
-impl IdentifyAccount for soil_core::ecdsa::Public {
+impl IdentifyAccount for subsoil::core::ecdsa::Public {
 	type AccountId = Self;
 	fn into_account(self) -> Self {
 		self
@@ -106,7 +106,7 @@ impl IdentifyAccount for soil_core::ecdsa::Public {
 }
 
 #[cfg(feature = "bls-experimental")]
-impl IdentifyAccount for soil_core::ecdsa_bls381::Public {
+impl IdentifyAccount for subsoil::core::ecdsa_bls381::Public {
 	type AccountId = Self;
 	fn into_account(self) -> Self {
 		self
@@ -127,25 +127,25 @@ pub trait Verify {
 	) -> bool;
 }
 
-impl Verify for soil_core::ed25519::Signature {
-	type Signer = soil_core::ed25519::Public;
+impl Verify for subsoil::core::ed25519::Signature {
+	type Signer = subsoil::core::ed25519::Public;
 
-	fn verify<L: Lazy<[u8]>>(&self, mut msg: L, signer: &soil_core::ed25519::Public) -> bool {
+	fn verify<L: Lazy<[u8]>>(&self, mut msg: L, signer: &subsoil::core::ed25519::Public) -> bool {
 		soil_io::crypto::ed25519_verify(self, msg.get(), signer)
 	}
 }
 
-impl Verify for soil_core::sr25519::Signature {
-	type Signer = soil_core::sr25519::Public;
+impl Verify for subsoil::core::sr25519::Signature {
+	type Signer = subsoil::core::sr25519::Public;
 
-	fn verify<L: Lazy<[u8]>>(&self, mut msg: L, signer: &soil_core::sr25519::Public) -> bool {
+	fn verify<L: Lazy<[u8]>>(&self, mut msg: L, signer: &subsoil::core::sr25519::Public) -> bool {
 		soil_io::crypto::sr25519_verify(self, msg.get(), signer)
 	}
 }
 
-impl Verify for soil_core::ecdsa::Signature {
-	type Signer = soil_core::ecdsa::Public;
-	fn verify<L: Lazy<[u8]>>(&self, mut msg: L, signer: &soil_core::ecdsa::Public) -> bool {
+impl Verify for subsoil::core::ecdsa::Signature {
+	type Signer = subsoil::core::ecdsa::Public;
+	fn verify<L: Lazy<[u8]>>(&self, mut msg: L, signer: &subsoil::core::ecdsa::Public) -> bool {
 		match soil_io::crypto::secp256k1_ecdsa_recover_compressed(
 			self.as_ref(),
 			&soil_io::hashing::blake2_256(msg.get()),
@@ -157,10 +157,10 @@ impl Verify for soil_core::ecdsa::Signature {
 }
 
 #[cfg(feature = "bls-experimental")]
-impl Verify for soil_core::ecdsa_bls381::Signature {
-	type Signer = soil_core::ecdsa_bls381::Public;
-	fn verify<L: Lazy<[u8]>>(&self, mut msg: L, signer: &soil_core::ecdsa_bls381::Public) -> bool {
-		<soil_core::ecdsa_bls381::Pair as soil_core::Pair>::verify(self, msg.get(), signer)
+impl Verify for subsoil::core::ecdsa_bls381::Signature {
+	type Signer = subsoil::core::ecdsa_bls381::Public;
+	fn verify<L: Lazy<[u8]>>(&self, mut msg: L, signer: &subsoil::core::ecdsa_bls381::Public) -> bool {
+		<subsoil::core::ecdsa_bls381::Pair as subsoil::core::Pair>::verify(self, msg.get(), signer)
 	}
 }
 
@@ -354,7 +354,7 @@ impl<T> TryMorph<T> for Identity {
 }
 
 /// Implementation of `Morph` which converts between types using `Into`.
-pub struct MorphInto<T>(core::marker::PhantomData<T>);
+pub struct MorphInto<T>(::core::marker::PhantomData<T>);
 impl<T, A: Into<T>> Morph<A> for MorphInto<T> {
 	type Outcome = T;
 	fn morph(a: A) -> T {
@@ -363,7 +363,7 @@ impl<T, A: Into<T>> Morph<A> for MorphInto<T> {
 }
 
 /// Implementation of `TryMorph` which attempts to convert between types using `TryInto`.
-pub struct TryMorphInto<T>(core::marker::PhantomData<T>);
+pub struct TryMorphInto<T>(::core::marker::PhantomData<T>);
 impl<T, A: TryInto<T>> TryMorph<A> for TryMorphInto<T> {
 	type Outcome = T;
 	fn try_morph(a: A) -> Result<T, ()> {
@@ -724,7 +724,7 @@ impl<A, B> MaybeEquivalence<A, B> for Tuple {
 
 /// Adapter which turns a [Get] implementation into a [Convert] implementation which always returns
 /// in the same value no matter the input.
-pub struct ConvertToValue<T>(core::marker::PhantomData<T>);
+pub struct ConvertToValue<T>(::core::marker::PhantomData<T>);
 impl<X, Y, T: Get<Y>> Convert<X, Y> for ConvertToValue<T> {
 	fn convert(_: X) -> Y {
 		T::get()
@@ -966,17 +966,17 @@ impl<T: Default + Eq + PartialEq> Clear for T {
 pub trait SimpleBitOps:
 	Sized
 	+ Clear
-	+ core::ops::BitOr<Self, Output = Self>
-	+ core::ops::BitXor<Self, Output = Self>
-	+ core::ops::BitAnd<Self, Output = Self>
+	+ ::core::ops::BitOr<Self, Output = Self>
+	+ ::core::ops::BitXor<Self, Output = Self>
+	+ ::core::ops::BitAnd<Self, Output = Self>
 {
 }
 impl<
 		T: Sized
 			+ Clear
-			+ core::ops::BitOr<Self, Output = Self>
-			+ core::ops::BitXor<Self, Output = Self>
-			+ core::ops::BitAnd<Self, Output = Self>,
+			+ ::core::ops::BitOr<Self, Output = Self>
+			+ ::core::ops::BitXor<Self, Output = Self>
+			+ ::core::ops::BitAnd<Self, Output = Self>,
 	> SimpleBitOps for T
 {
 }
@@ -1020,7 +1020,7 @@ pub trait HashOutput:
 	+ MaybeDisplay
 	+ MaybeFromStr
 	+ Debug
-	+ core::hash::Hash
+	+ ::core::hash::Hash
 	+ AsRef<[u8]>
 	+ AsMut<[u8]>
 	+ Copy
@@ -1041,7 +1041,7 @@ impl<T> HashOutput for T where
 		+ MaybeDisplay
 		+ MaybeFromStr
 		+ Debug
-		+ core::hash::Hash
+		+ ::core::hash::Hash
 		+ AsRef<[u8]>
 		+ AsMut<[u8]>
 		+ Copy
@@ -1062,7 +1062,7 @@ impl<T> HashOutput for T where
 pub struct BlakeTwo256;
 
 impl Hasher for BlakeTwo256 {
-	type Out = soil_core::H256;
+	type Out = subsoil::core::H256;
 	type StdHasher = hash256_std_hasher::Hash256StdHasher;
 	const LENGTH: usize = 32;
 
@@ -1072,7 +1072,7 @@ impl Hasher for BlakeTwo256 {
 }
 
 impl Hash for BlakeTwo256 {
-	type Output = soil_core::H256;
+	type Output = subsoil::core::H256;
 
 	fn ordered_trie_root(input: Vec<Vec<u8>>, version: StateVersion) -> Self::Output {
 		soil_io::trie::blake2_256_ordered_root(input, version)
@@ -1089,7 +1089,7 @@ impl Hash for BlakeTwo256 {
 pub struct Keccak256;
 
 impl Hasher for Keccak256 {
-	type Out = soil_core::H256;
+	type Out = subsoil::core::H256;
 	type StdHasher = hash256_std_hasher::Hash256StdHasher;
 	const LENGTH: usize = 32;
 
@@ -1099,7 +1099,7 @@ impl Hasher for Keccak256 {
 }
 
 impl Hash for Keccak256 {
-	type Output = soil_core::H256;
+	type Output = subsoil::core::H256;
 
 	fn ordered_trie_root(input: Vec<Vec<u8>>, version: StateVersion) -> Self::Output {
 		soil_io::trie::keccak_256_ordered_root(input, version)
@@ -1116,10 +1116,10 @@ pub trait CheckEqual {
 	fn check_equal(&self, other: &Self);
 }
 
-impl CheckEqual for soil_core::H256 {
+impl CheckEqual for subsoil::core::H256 {
 	#[cfg(feature = "std")]
 	fn check_equal(&self, other: &Self) {
-		use soil_core::hexdisplay::HexDisplay;
+		use subsoil::core::hexdisplay::HexDisplay;
 		if self != other {
 			println!(
 				"Hash: given={}, expected={}",
@@ -1157,7 +1157,7 @@ impl CheckEqual for super::generic::DigestItem {
 	}
 }
 
-soil_core::impl_maybe_marker!(
+subsoil::impl_maybe_marker!(
 	/// A type that implements Display when in std environment.
 	trait MaybeDisplay: Display;
 
@@ -1165,10 +1165,10 @@ soil_core::impl_maybe_marker!(
 	trait MaybeFromStr: FromStr;
 
 	/// A type that implements Hash when in std environment.
-	trait MaybeHash: core::hash::Hash;
+	trait MaybeHash: ::core::hash::Hash;
 );
 
-soil_core::impl_maybe_marker_std_or_serde!(
+subsoil::impl_maybe_marker_std_or_serde!(
 	/// A type that implements Serialize when in std environment or serde feature is activated.
 	trait MaybeSerialize: Serialize;
 
@@ -1192,7 +1192,7 @@ pub trait BlockNumber:
 	+ MaybeSerializeDeserialize
 	+ MaybeFromStr
 	+ Debug
-	+ core::hash::Hash
+	+ ::core::hash::Hash
 	+ Copy
 	+ MaybeDisplay
 	+ AtLeast32BitUnsigned
@@ -1212,7 +1212,7 @@ impl<
 			+ MaybeSerializeDeserialize
 			+ MaybeFromStr
 			+ Debug
-			+ core::hash::Hash
+			+ ::core::hash::Hash
 			+ Copy
 			+ MaybeDisplay
 			+ AtLeast32BitUnsigned
@@ -2593,8 +2593,8 @@ mod tests {
 	use super::*;
 	use crate::codec::{Decode, Encode, Input};
 	#[cfg(feature = "bls-experimental")]
-	use soil_core::ecdsa_bls381;
-	use soil_core::{
+	use subsoil::core::ecdsa_bls381;
+	use subsoil::core::{
 		crypto::{Pair, UncheckedFrom},
 		ecdsa, ed25519,
 		proof_of_possession::ProofOfPossessionGenerator,
@@ -2618,7 +2618,7 @@ mod tests {
 
 	mod t {
 		use soil_application_crypto::{app_crypto, sr25519};
-		use soil_core::crypto::KeyTypeId;
+		use subsoil::core::crypto::KeyTypeId;
 		app_crypto!(sr25519, KeyTypeId(*b"test"));
 	}
 
@@ -2772,9 +2772,9 @@ mod tests {
 
 	#[test]
 	fn opaque_keys_ownership_proof_works() {
-		let mut sr25519 = soil_core::sr25519::Pair::generate().0;
-		let mut ed25519 = soil_core::ed25519::Pair::generate().0;
-		let mut ecdsa = soil_core::ecdsa::Pair::generate().0;
+		let mut sr25519 = subsoil::core::sr25519::Pair::generate().0;
+		let mut ed25519 = subsoil::core::ed25519::Pair::generate().0;
+		let mut ecdsa = subsoil::core::ecdsa::Pair::generate().0;
 
 		let session_keys = SessionKeys {
 			sr25519: sr25519.public().into(),

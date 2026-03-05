@@ -18,7 +18,7 @@
 //! Substrate Blake2b Hasher implementation
 
 pub mod blake2 {
-	use crate::hash::H256;
+	use crate::core::hash::H256;
 	use hash256_std_hasher::Hash256StdHasher;
 	use hash_db::Hasher;
 
@@ -32,13 +32,13 @@ pub mod blake2 {
 		const LENGTH: usize = 32;
 
 		fn hash(x: &[u8]) -> Self::Out {
-			subsoil_crypto_hashing::blake2_256(x).into()
+			crate::crypto_hashing::blake2_256(x).into()
 		}
 	}
 }
 
 pub mod keccak {
-	use crate::hash::H256;
+	use crate::core::hash::H256;
 	use hash256_std_hasher::Hash256StdHasher;
 	use hash_db::Hasher;
 
@@ -52,7 +52,7 @@ pub mod keccak {
 		const LENGTH: usize = 32;
 
 		fn hash(x: &[u8]) -> Self::Out {
-			subsoil_crypto_hashing::keccak_256(x).into()
+			crate::crypto_hashing::keccak_256(x).into()
 		}
 	}
 }

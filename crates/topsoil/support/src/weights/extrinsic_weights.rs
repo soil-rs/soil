@@ -35,7 +35,7 @@
 //   --warmup=10
 //   --repeat=100
 
-use soil_core::parameter_types;
+use subsoil::core::parameter_types;
 use subsoil::weights::{constants::WEIGHT_REF_TIME_PER_NANOS, Weight};
 
 parameter_types! {

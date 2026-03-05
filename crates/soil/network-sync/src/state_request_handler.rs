@@ -249,11 +249,11 @@ where
 				response.entries.get(0).and_then(|top| top
 					.entries
 					.first()
-					.map(|e| soil_core::hexdisplay::HexDisplay::from(&e.key))),
+					.map(|e| subsoil::core::hexdisplay::HexDisplay::from(&e.key))),
 				response.entries.get(0).and_then(|top| top
 					.entries
 					.last()
-					.map(|e| soil_core::hexdisplay::HexDisplay::from(&e.key))),
+					.map(|e| subsoil::core::hexdisplay::HexDisplay::from(&e.key))),
 			);
 			if let Some(value) = self.seen_requests.get(&key) {
 				// If this is the first time we have processed this request, we need to change

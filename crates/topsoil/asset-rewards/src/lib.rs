@@ -84,7 +84,7 @@ pub use pallet::*;
 
 use codec::{Codec, Decode, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;
-use soil_core::Get;
+use subsoil::core::Get;
 use soil_runtime::{
 	traits::{BadOrigin, BlockNumberProvider, EnsureAdd, MaybeDisplay, Zero},
 	DispatchError, DispatchResult,

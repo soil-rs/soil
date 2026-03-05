@@ -114,7 +114,7 @@ impl serde::Serialize for DigestItem {
 	where
 		S: serde::Serializer,
 	{
-		self.using_encoded(|bytes| soil_core::bytes::serialize(bytes, seq))
+		self.using_encoded(|bytes| subsoil::core::bytes::serialize(bytes, seq))
 	}
 }
 
@@ -124,7 +124,7 @@ impl<'a> serde::Deserialize<'a> for DigestItem {
 	where
 		D: serde::Deserializer<'a>,
 	{
-		let r = soil_core::bytes::deserialize(de)?;
+		let r = subsoil::core::bytes::deserialize(de)?;
 		Decode::decode(&mut &r[..])
 			.map_err(|e| serde::de::Error::custom(format!("Decode error: {}", e)))
 	}

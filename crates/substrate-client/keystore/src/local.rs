@@ -20,7 +20,7 @@
 
 use parking_lot::RwLock;
 use soil_application_crypto::{AppCrypto, AppPair, IsWrappedBy};
-use soil_core::{
+use subsoil::core::{
 	crypto::{ByteArray, ExposeSecret, KeyTypeId, Pair as CorePair, SecretString, VrfSecret},
 	ecdsa, ed25519, sr25519,
 };
@@ -34,11 +34,11 @@ use std::{
 };
 
 soil_keystore::bandersnatch_experimental_enabled! {
-use soil_core::bandersnatch;
+use subsoil::core::bandersnatch;
 }
 
 soil_keystore::bls_experimental_enabled! {
-use soil_core::{bls381, ecdsa_bls381, KeccakHasher, proof_of_possession::ProofOfPossessionGenerator};
+use subsoil::core::{bls381, ecdsa_bls381, KeccakHasher, proof_of_possession::ProofOfPossessionGenerator};
 }
 
 use crate::{Error, Result};
@@ -54,7 +54,7 @@ impl LocalKeystore {
 	///
 	/// NOTE: Even when passing a `password`, the keys on disk appear to look like normal secret
 	/// uris. However, without having the correct password the secret uri will not generate the
-	/// correct private key. See [`SecretUri`](soil_core::crypto::SecretUri) for more information.
+	/// correct private key. See [`SecretUri`](subsoil::core::crypto::SecretUri) for more information.
 	pub fn open<T: Into<PathBuf>>(path: T, password: Option<SecretString>) -> Result<Self> {
 		let inner = KeystoreInner::open(path, password)?;
 		Ok(Self(RwLock::new(inner)))
@@ -163,7 +163,7 @@ impl Keystore for LocalKeystore {
 	/// Insert a new secret key.
 	///
 	/// WARNING: if the secret keypair has been manually generated using a password
-	/// (e.g. using methods such as [`soil_core::crypto::Pair::from_phrase`]) then such
+	/// (e.g. using methods such as [`subsoil::core::crypto::Pair::from_phrase`]) then such
 	/// a password must match the one used to open the keystore via [`LocalKeystore::open`].
 	/// If the passwords doesn't match then the inserted key ends up being unusable under
 	/// the current keystore instance.
@@ -653,7 +653,7 @@ impl KeystoreInner {
 mod tests {
 	use super::*;
 	use soil_application_crypto::{ed25519, sr25519, AppPublic};
-	use soil_core::{crypto::Ss58Codec, testing::SR25519, Pair};
+	use subsoil::core::{crypto::Ss58Codec, testing::SR25519, Pair};
 	use std::{fs, str::FromStr};
 	use tempfile::TempDir;
 
@@ -863,7 +863,7 @@ mod tests {
 	#[test]
 	#[cfg(feature = "bls-experimental")]
 	fn ecdsa_bls381_generate_with_none_works() {
-		use soil_core::testing::ECDSA_BLS381;
+		use subsoil::core::testing::ECDSA_BLS381;
 
 		let store = LocalKeystore::in_memory();
 		let ecdsa_bls381_key =
@@ -891,7 +891,7 @@ mod tests {
 	#[test]
 	#[cfg(feature = "bls-experimental")]
 	fn ecdsa_bls381_generate_with_seed_works() {
-		use soil_core::testing::ECDSA_BLS381;
+		use subsoil::core::testing::ECDSA_BLS381;
 
 		let store = LocalKeystore::in_memory();
 		let ecdsa_bls381_key = store

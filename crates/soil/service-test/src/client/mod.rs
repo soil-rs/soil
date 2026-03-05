@@ -30,7 +30,7 @@ use soil_client_api::{
 };
 use soil_client_db::{Backend, BlocksPruning, DatabaseSettings, DatabaseSource, PruningMode};
 use soil_consensus::{BlockOrigin, Error as ConsensusError, SelectChain};
-use soil_core::{testing::TaskExecutor, traits::CallContext, H256};
+use subsoil::core::{testing::TaskExecutor, traits::CallContext, H256};
 use soil_executor::WasmExecutor;
 use soil_runtime::{
 	generic::BlockId,
@@ -2249,12 +2249,12 @@ fn reorg_triggers_a_notification_even_for_sources_that_should_not_trigger_notifi
 
 #[test]
 fn use_dalek_ext_works() {
-	fn zero_ed_pub() -> soil_core::ed25519::Public {
-		soil_core::ed25519::Public::default()
+	fn zero_ed_pub() -> subsoil::core::ed25519::Public {
+		subsoil::core::ed25519::Public::default()
 	}
 
-	fn zero_ed_sig() -> soil_core::ed25519::Signature {
-		soil_core::ed25519::Signature::default()
+	fn zero_ed_sig() -> subsoil::core::ed25519::Signature {
+		subsoil::core::ed25519::Signature::default()
 	}
 
 	let client = TestClientBuilder::new().build();

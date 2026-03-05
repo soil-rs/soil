@@ -17,12 +17,12 @@
 
 //! Support code for the runtime. A set of test accounts.
 
-pub use soil_core::sr25519;
+pub use subsoil::core::sr25519;
 
 use crate::ParseKeyringError;
 #[cfg(feature = "std")]
-use soil_core::sr25519::Signature;
-use soil_core::{
+use subsoil::core::sr25519::Signature;
+use subsoil::core::{
 	hex2array,
 	sr25519::{Pair, Public},
 	ByteArray, Pair as PairT, H256,
@@ -255,7 +255,7 @@ impl From<Keyring> for H256 {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use soil_core::{sr25519::Pair, Pair as PairT};
+	use subsoil::core::{sr25519::Pair, Pair as PairT};
 
 	#[test]
 	fn should_work() {

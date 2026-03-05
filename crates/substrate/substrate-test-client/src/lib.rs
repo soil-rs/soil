@@ -34,7 +34,7 @@ pub use soil_service::{client, RpcHandlers};
 use futures::{future::Future, stream::StreamExt};
 use serde::Deserialize;
 use soil_client_api::BlockchainEvents;
-use soil_core::{storage::ChildInfo, testing::TaskExecutor};
+use subsoil::core::{storage::ChildInfo, testing::TaskExecutor};
 use soil_runtime::{
 	codec::Encode,
 	traits::{Block as BlockT, Header},

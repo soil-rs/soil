@@ -42,7 +42,7 @@ use soil_client_api::{
 #[cfg(feature = "std")]
 use soil_consensus::{Environment, Proposer, SelectChain};
 #[cfg(feature = "std")]
-use soil_core::traits::SpawnNamed;
+use subsoil::core::traits::SpawnNamed;
 #[cfg(feature = "std")]
 use soil_inherents::CreateInherentDataProviders;
 #[cfg(feature = "std")]
@@ -103,7 +103,7 @@ impl<B: BlockT> Verifier<B> for ManualSealVerifier {
 #[cfg(feature = "std")]
 pub fn import_queue<Block>(
 	block_import: BoxBlockImport<Block>,
-	spawner: &impl soil_core::traits::SpawnEssentialNamed,
+	spawner: &impl subsoil::core::traits::SpawnEssentialNamed,
 	registry: Option<&Registry>,
 ) -> BasicQueue<Block>
 where
@@ -427,7 +427,7 @@ mod tests {
 		let builder = TestClientBuilder::new();
 		let (client, select_chain) = builder.build_with_longest_chain();
 		let client = Arc::new(client);
-		let spawner = soil_core::testing::TaskExecutor::new();
+		let spawner = subsoil::core::testing::TaskExecutor::new();
 		let genesis_hash = client.info().genesis_hash;
 		let pool_api = Arc::new(FullChainApi::new(client.clone(), None, &spawner.clone()));
 		let pool = Arc::new(BasicPool::with_revalidation_type(
@@ -504,7 +504,7 @@ mod tests {
 		let builder = TestClientBuilder::new();
 		let (client, select_chain) = builder.build_with_longest_chain();
 		let client = Arc::new(client);
-		let spawner = soil_core::testing::TaskExecutor::new();
+		let spawner = subsoil::core::testing::TaskExecutor::new();
 		let genesis_hash = client.info().genesis_hash;
 		let pool_api = Arc::new(FullChainApi::new(client.clone(), None, &spawner.clone()));
 		let pool = Arc::new(BasicPool::with_revalidation_type(
@@ -594,7 +594,7 @@ mod tests {
 		let builder = TestClientBuilder::new();
 		let (client, select_chain) = builder.build_with_longest_chain();
 		let client = Arc::new(client);
-		let spawner = soil_core::testing::TaskExecutor::new();
+		let spawner = subsoil::core::testing::TaskExecutor::new();
 		let genesis_hash = client.info().genesis_hash;
 		let pool_api = Arc::new(FullChainApi::new(client.clone(), None, &spawner.clone()));
 		let pool = Arc::new(BasicPool::with_revalidation_type(
@@ -677,9 +677,9 @@ mod tests {
 		let pool_api = Arc::new(FullChainApi::new(
 			client.clone(),
 			None,
-			&soil_core::testing::TaskExecutor::new(),
+			&subsoil::core::testing::TaskExecutor::new(),
 		));
-		let spawner = soil_core::testing::TaskExecutor::new();
+		let spawner = subsoil::core::testing::TaskExecutor::new();
 		let genesis_hash = client.info().genesis_hash;
 		let pool = Arc::new(BasicPool::with_revalidation_type(
 			Options::default(),
@@ -784,7 +784,7 @@ mod tests {
 		let builder = TestClientBuilder::new();
 		let (client, select_chain) = builder.build_with_longest_chain();
 		let client = Arc::new(client);
-		let spawner = soil_core::testing::TaskExecutor::new();
+		let spawner = subsoil::core::testing::TaskExecutor::new();
 		let genesis_hash = client.header(client.info().genesis_hash).unwrap().unwrap().hash();
 		let pool = Arc::new(BasicPool::with_revalidation_type(
 			Options::default(),

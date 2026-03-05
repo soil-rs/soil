@@ -18,3 +18,5 @@ pub mod binary_merkle_tree;
 pub mod externalities;
 pub mod storage;
 pub mod weights;
+#[allow(clippy::module_inception)]
+pub mod core;

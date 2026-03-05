@@ -567,7 +567,7 @@ mod tests {
 	use futures_timer::Delay;
 	use soil_client_api::BlockImportNotification;
 	use soil_consensus::BlockOrigin;
-	use soil_core::crypto::UncheckedFrom;
+	use subsoil::core::crypto::UncheckedFrom;
 	use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedSender};
 	use substrate_test_runtime_client::runtime::{Block, Hash, Header};
 

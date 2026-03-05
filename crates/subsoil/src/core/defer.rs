@@ -46,7 +46,7 @@ impl<F: FnOnce()> Drop for DeferGuard<F> {
 /// # Example
 ///
 /// ```rust
-/// use soil_core::defer;
+/// use subsoil::defer;
 ///
 /// let message = std::cell::RefCell::new("".to_string());
 /// {
@@ -62,7 +62,7 @@ impl<F: FnOnce()> Drop for DeferGuard<F> {
 #[macro_export]
 macro_rules! defer(
 	( $( $code:tt )* ) => {
-		let _guard = $crate::defer::DeferGuard(Some(|| { $( $code )* }));
+		let _guard = $crate::core::defer::DeferGuard(Some(|| { $( $code )* }));
 	};
 );
 

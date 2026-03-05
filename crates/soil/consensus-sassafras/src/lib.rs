@@ -26,7 +26,7 @@ extern crate alloc;
 use alloc::vec::Vec;
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;
-use soil_core::crypto::KeyTypeId;
+use subsoil::core::crypto::KeyTypeId;
 use soil_runtime::ConsensusEngineId;
 
 pub use soil_consensus_slots::{Slot, SlotDuration};

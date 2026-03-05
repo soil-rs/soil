@@ -17,7 +17,7 @@
 
 use super::{AccountId, MaxVotesPerVoter, Runtime};
 use crate::VoterOf;
-use soil_core::bounded_vec;
+use subsoil::core::bounded_vec;
 use subsoil::std::prelude::*;
 use topsoil_election_provider_support::{
 	data_provider, DataProviderBounds, ElectionDataProvider, PageIndex, VoteWeight,

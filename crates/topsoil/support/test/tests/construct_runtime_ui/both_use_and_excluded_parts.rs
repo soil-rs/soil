@@ -17,7 +17,7 @@
 
 use topsoil_support::construct_runtime;
 use soil_runtime::{generic, traits::BlakeTwo256};
-use soil_core::sr25519;
+use subsoil::core::sr25519;
 
 #[topsoil_support::pallet]
 mod pallet {

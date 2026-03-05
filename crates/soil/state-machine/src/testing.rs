@@ -28,7 +28,7 @@ use crate::{
 };
 
 use hash_db::{HashDB, Hasher};
-use soil_core::{
+use subsoil::core::{
 	offchain::testing::TestPersistentOffchainDB,
 	storage::{
 		well_known_keys::{is_child_storage_key, CODE},
@@ -145,7 +145,7 @@ where
 	/// This only supports inserting keys in child tries.
 	pub fn insert_child(
 		&mut self,
-		c: soil_core::storage::ChildInfo,
+		c: subsoil::core::storage::ChildInfo,
 		k: StorageKey,
 		v: StorageValue,
 	) {
@@ -414,7 +414,7 @@ where
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use soil_core::{storage::ChildInfo, traits::Externalities, H256};
+	use subsoil::core::{storage::ChildInfo, traits::Externalities, H256};
 	use soil_runtime::traits::BlakeTwo256;
 
 	#[test]

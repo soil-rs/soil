@@ -20,7 +20,7 @@ jsonrpsee = { features = ["client-core", "macros", "server-core"], workspace = t
 serde = { features = ["derive"], workspace = true, default-features = true, optional = true}
 soil-api = { workspace = true, default-features = true, optional = true}
 soil-blockchain = { workspace = true, default-features = true, optional = true}
-soil-core = { workspace = true, default-features = true, optional = true}
+subsoil = { workspace = true, default-features = true, optional = true}
 soil-mmr-primitives = { workspace = true, default-features = true, optional = true}
 soil-runtime = { workspace = true, default-features = true, optional = true}
 
@@ -32,11 +32,11 @@ std = [
 	"serde",
 	"soil-api",
 	"soil-blockchain",
-	"soil-core",
+	"subsoil",
 	"soil-mmr-primitives",
 	"soil-runtime",
 	"soil-api/std",
-	"soil-core/std",
+	"subsoil/std",
 	"soil-mmr-primitives/std",
 	"soil-runtime/std",
 ]

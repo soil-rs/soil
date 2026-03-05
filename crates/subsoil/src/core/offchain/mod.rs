@@ -17,12 +17,12 @@
 
 //! Offchain workers types
 
-use crate::OpaquePeerId;
+use crate::core::OpaquePeerId;
 use alloc::{boxed::Box, vec::Vec};
 use codec::{Decode, Encode};
 use scale_info::TypeInfo;
 
-pub use crate::crypto::KeyTypeId;
+pub use crate::core::crypto::KeyTypeId;
 
 #[cfg(feature = "std")]
 pub mod storage;
@@ -625,7 +625,7 @@ impl<T: Externalities> Externalities for LimitedExternalities<T> {
 }
 
 #[cfg(not(substrate_runtime))]
-subsoil::decl_extension! {
+crate::decl_extension! {
 	/// The offchain worker extension that will be registered at the Substrate externalities.
 	pub struct OffchainWorkerExt(Box<dyn Externalities>);
 }
@@ -731,7 +731,7 @@ impl<T: DbExternalities> DbExternalities for LimitedExternalities<T> {
 }
 
 #[cfg(not(substrate_runtime))]
-subsoil::decl_extension! {
+crate::decl_extension! {
 	/// The offchain database extension that will be registered at the Substrate externalities.
 	pub struct OffchainDbExt(Box<dyn DbExternalities>);
 }
@@ -758,7 +758,7 @@ pub trait TransactionPool {
 }
 
 #[cfg(not(substrate_runtime))]
-subsoil::decl_extension! {
+crate::decl_extension! {
 	/// An externalities extension to submit transactions to the pool.
 	pub struct TransactionPoolExt(Box<dyn TransactionPool + Send>);
 }

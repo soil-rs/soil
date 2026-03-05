@@ -26,7 +26,7 @@ use parking_lot::RwLock;
 use soil_api::ProvideRuntimeApi;
 use soil_blockchain::{HeaderBackend, HeaderMetadata};
 use soil_consensus_aura::{AuraApi, ConsensusLog, AURA_ENGINE_ID};
-use soil_core::Pair;
+use subsoil::core::Pair;
 use soil_runtime::{
 	generic::OpaqueDigestItemId,
 	traits::{Block, Header, NumberFor},

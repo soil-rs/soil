@@ -67,7 +67,7 @@ use crate::{
 };
 use codec::{Codec, Decode, Encode};
 use core::fmt;
-use soil_core::offchain::{Duration, Timestamp};
+use subsoil::core::offchain::{Duration, Timestamp};
 use soil_io::offchain;
 
 /// Default expiry duration for time based locks in milliseconds.
@@ -434,7 +434,7 @@ where
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use soil_core::offchain::{testing, OffchainDbExt, OffchainWorkerExt};
+	use subsoil::core::offchain::{testing, OffchainDbExt, OffchainWorkerExt};
 	use soil_io::TestExternalities;
 
 	const VAL_1: u32 = 0u32;

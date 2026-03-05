@@ -32,7 +32,7 @@ use soil_blockchain::{HeaderBackend, HeaderMetadata};
 use soil_client_api::{
 	Backend, BlockBackend, BlockchainEvents, ExecutorProvider, ProofProvider, StorageProvider,
 };
-use soil_core::{
+use subsoil::core::{
 	storage::{PrefixedStorageKey, StorageChangeSet, StorageData, StorageKey},
 	Bytes,
 };

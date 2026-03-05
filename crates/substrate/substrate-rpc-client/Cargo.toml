@@ -23,5 +23,5 @@ serde = { workspace = true, default-features = true }
 soil-runtime = { workspace = true, default-features = true }
 
 [dev-dependencies]
-soil-core = { workspace = true, default-features = true }
+subsoil = { workspace = true, default-features = true }
 tokio = { features = ["macros", "rt-multi-thread", "sync"], workspace = true, default-features = true }

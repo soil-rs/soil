@@ -25,8 +25,8 @@ use crate::{
 	DispatchResultWithInfo, KeyTypeId, OpaqueExtrinsic,
 };
 use serde::{de::Error as DeError, Deserialize, Deserializer, Serialize};
-use soil_core::crypto::{key_types, ByteArray, CryptoType, Dummy};
-pub use soil_core::{sr25519, H256};
+use subsoil::core::crypto::{key_types, ByteArray, CryptoType, Dummy};
+pub use subsoil::core::{sr25519, H256};
 use std::{cell::RefCell, fmt::Debug};
 
 /// A dummy type which can be used instead of regular cryptographic primitives.

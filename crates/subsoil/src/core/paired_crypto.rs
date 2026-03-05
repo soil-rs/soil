@@ -17,23 +17,23 @@
 
 //! API for using a pair of crypto schemes together.
 
-use core::marker::PhantomData;
+use ::core::marker::PhantomData;
 
-use crate::crypto::{
+use crate::core::crypto::{
 	ByteArray, CryptoType, DeriveError, DeriveJunction, Pair as PairT, Public as PublicT,
 	PublicBytes, SecretStringError, Signature as SignatureT, SignatureBytes, UncheckedFrom,
 };
 
-use crate::proof_of_possession::{ProofOfPossessionGenerator, ProofOfPossessionVerifier};
+use crate::core::proof_of_possession::{ProofOfPossessionGenerator, ProofOfPossessionVerifier};
 
 use alloc::vec::Vec;
 
 /// ECDSA and BLS12-377 paired crypto scheme
 #[cfg(feature = "bls-experimental")]
 pub mod ecdsa_bls377 {
-	use crate::{bls377, crypto::CryptoTypeId, ecdsa};
+	use crate::core::{bls377, crypto::CryptoTypeId, ecdsa};
 	#[cfg(feature = "full_crypto")]
-	use crate::{
+	use crate::core::{
 		crypto::{Pair as PairT, UncheckedFrom},
 		Hasher,
 	};
@@ -147,9 +147,9 @@ pub mod ecdsa_bls377 {
 /// ECDSA and BLS12-381 paired crypto scheme
 #[cfg(feature = "bls-experimental")]
 pub mod ecdsa_bls381 {
-	use crate::{bls381, crypto::CryptoTypeId, ecdsa};
+	use crate::core::{bls381, crypto::CryptoTypeId, ecdsa};
 	#[cfg(feature = "full_crypto")]
-	use crate::{
+	use crate::core::{
 		crypto::{Pair as PairT, UncheckedFrom},
 		Hasher,
 	};
@@ -526,8 +526,8 @@ where
 mod tests {
 	use super::*;
 	#[cfg(feature = "serde")]
-	use crate::crypto::Ss58Codec;
-	use crate::{bls377, crypto::DEV_PHRASE, ecdsa, KeccakHasher};
+	use crate::core::crypto::Ss58Codec;
+	use crate::core::{bls377, crypto::DEV_PHRASE, ecdsa, KeccakHasher};
 	use codec::{Decode, Encode};
 	use ecdsa_bls377::{Pair, Signature};
 

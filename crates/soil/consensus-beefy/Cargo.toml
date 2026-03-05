@@ -20,7 +20,6 @@ scale-info = { features = ["derive"], workspace = true }
 serde = { optional = true, features = ["alloc", "derive"], workspace = true }
 soil-api = { workspace = true }
 soil-application-crypto = { workspace = true }
-soil-core = { workspace = true }
 subsoil-crypto-hashing = { workspace = true }
 soil-io = { workspace = true }
 soil-keystore = { workspace = true }
@@ -41,13 +40,12 @@ std = [
 	"serde/std",
 	"soil-api/std",
 	"soil-application-crypto/std",
-	"soil-core/std",
+	"subsoil/std",
 	"subsoil-crypto-hashing/std",
 	"soil-io/std",
 	"soil-keystore/std",
 	"soil-mmr-primitives/std",
 	"soil-runtime/std",
-	"subsoil/std",
 	"strum/std",
 ]
 
@@ -56,7 +54,7 @@ serde = [
 	"dep:serde",
 	"scale-info/serde",
 	"soil-application-crypto/serde",
-	"soil-core/serde",
+	"subsoil/serde",
 	"soil-runtime/serde",
 ]
 
@@ -64,5 +62,5 @@ serde = [
 # the BLS implementation and interface may still be subject to significant change.
 bls-experimental = [
 	"soil-application-crypto/bls-experimental",
-	"soil-core/bls-experimental",
+	"subsoil/bls-experimental",
 ]

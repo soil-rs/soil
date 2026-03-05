@@ -30,7 +30,6 @@ rand = { optional = true, workspace = true, default-features = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { features = ["alloc", "derive"], optional = true, workspace = true }
 soil-application-crypto = { workspace = true }
-soil-core = { workspace = true }
 soil-io = { workspace = true }
 subsoil = { workspace = true }
 soil-trie = { workspace = true }
@@ -67,10 +66,9 @@ std = [
 	"simple-mermaid",
 	"soil-api/std",
 	"soil-application-crypto/std",
-	"soil-core/std",
+	"subsoil/std",
 	"soil-io/std",
 	"soil-state-machine/std",
-	"subsoil/std",
 	"soil-trie/std",
 	"strum/std",
 	"tracing/std",
@@ -83,7 +81,7 @@ serde = [
 	"scale-info/serde",
 	"soil-application-crypto/serde",
 	"subsoil/serde",
-	"soil-core/serde",
+	"subsoil/serde",
 ]
 
 # This feature adds BLS crypto primitives.
@@ -91,7 +89,7 @@ serde = [
 # be subject to significant changes.
 bls-experimental = [
 	"soil-application-crypto/bls-experimental",
-	"soil-core/bls-experimental",
+	"subsoil/bls-experimental",
 	"soil-io/bls-experimental",
 	"substrate-test-runtime-client/bls-experimental",
 ]

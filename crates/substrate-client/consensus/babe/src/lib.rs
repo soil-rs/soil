@@ -117,7 +117,7 @@ use soil_consensus_epochs::{
 	ViableEpochDescriptor,
 };
 use soil_consensus_slots::Slot;
-use soil_core::traits::SpawnEssentialNamed;
+use subsoil::core::traits::SpawnEssentialNamed;
 use soil_inherents::{CreateInherentDataProviders, InherentDataProvider};
 use soil_keystore::KeystorePtr;
 use soil_runtime::{

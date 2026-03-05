@@ -26,7 +26,7 @@ use topsoil_support::{
 
 use soil_runtime::{traits::IdentityLookup, BuildStorage, Perbill};
 
-use soil_core::{ConstBool, U256};
+use subsoil::core::{ConstBool, U256};
 use soil_runtime::traits::Convert;
 use soil_staking::{Agent, Stake, StakingInterface};
 use topsoil_election_provider_support::{

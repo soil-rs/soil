@@ -21,7 +21,7 @@
 
 use super::*;
 use crate::mock::*;
-use soil_core::offchain::{
+use subsoil::core::offchain::{
 	testing::{TestOffchainExt, TestTransactionPoolExt},
 	OffchainDbExt, OffchainWorkerExt, TransactionPoolExt,
 };

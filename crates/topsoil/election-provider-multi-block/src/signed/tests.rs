@@ -22,7 +22,7 @@ use crate::{
 	verifier::{FeasibilityError, Verifier},
 	Phase,
 };
-use soil_core::bounded_vec;
+use subsoil::core::bounded_vec;
 use soil_npos_elections::ElectionScore;
 use topsoil_election_provider_support::{ElectionProvider, NposSolution};
 use topsoil_support::storage::unhashed;

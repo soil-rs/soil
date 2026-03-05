@@ -785,7 +785,7 @@ mod tests {
 	use jsonrpsee::ConnectionId;
 	use sc_block_builder::BlockBuilderBuilder;
 	use soil_consensus::BlockOrigin;
-	use soil_core::{testing::TaskExecutor, H256};
+	use subsoil::core::{testing::TaskExecutor, H256};
 	use soil_service::client::new_with_backend;
 	use substrate_test_runtime_client::{
 		prelude::*,

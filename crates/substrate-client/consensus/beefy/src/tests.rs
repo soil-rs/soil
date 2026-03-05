@@ -63,7 +63,7 @@ use soil_consensus_beefy::{
 	Payload, SignedCommitment, ValidatorSet, ValidatorSetId, VersionedFinalityProof, VoteMessage,
 	BEEFY_ENGINE_ID,
 };
-use soil_core::H256;
+use subsoil::core::H256;
 use soil_keystore::{testing::MemoryKeystore, Keystore, KeystorePtr};
 use soil_mmr_primitives::{Error as MmrError, MmrApi};
 use soil_network::{config::RequestResponseConfig, ProtocolName};

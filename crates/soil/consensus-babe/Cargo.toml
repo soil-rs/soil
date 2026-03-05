@@ -23,7 +23,7 @@ serde = { features = ["alloc", "derive"], optional = true, workspace = true }
 soil-api = { workspace = true }
 soil-application-crypto = { workspace = true }
 soil-consensus-slots = { workspace = true }
-soil-core = { workspace = true }
+subsoil = { workspace = true }
 soil-inherents = { workspace = true }
 soil-runtime = { workspace = true }
 soil-timestamp = { optional = true, workspace = true }
@@ -38,7 +38,7 @@ std = [
 	"soil-api/std",
 	"soil-application-crypto/std",
 	"soil-consensus-slots/std",
-	"soil-core/std",
+	"subsoil/std",
 	"soil-inherents/std",
 	"soil-runtime/std",
 	"soil-timestamp/std",
@@ -50,6 +50,6 @@ serde = [
 	"scale-info/serde",
 	"soil-application-crypto/serde",
 	"soil-consensus-slots/serde",
-	"soil-core/serde",
+	"subsoil/serde",
 	"soil-runtime/serde",
 ]

@@ -112,7 +112,7 @@ impl<T: Config + Send + Sync> TransactionExtension<T::RuntimeCall> for CheckMort
 mod tests {
 	use super::*;
 	use crate::mock::{new_test_ext, System, Test, CALL};
-	use soil_core::H256;
+	use subsoil::core::H256;
 	use soil_runtime::{
 		traits::DispatchTransaction, transaction_validity::TransactionSource::External,
 	};

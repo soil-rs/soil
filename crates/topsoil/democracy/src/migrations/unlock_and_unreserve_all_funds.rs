@@ -21,7 +21,7 @@
 use crate::{PropIndex, Voting, DEMOCRACY_ID};
 use alloc::{collections::btree_map::BTreeMap, vec::Vec};
 use core::iter::Sum;
-use soil_core::Get;
+use subsoil::core::Get;
 use soil_runtime::{traits::Zero, BoundedVec, Saturating};
 use topsoil_support::{
 	pallet_prelude::ValueQuery,
@@ -296,7 +296,7 @@ mod test {
 		tests::{new_test_ext, Balances, Test},
 		DepositOf, Voting, VotingOf,
 	};
-	use soil_core::ConstU32;
+	use subsoil::core::ConstU32;
 	use topsoil_support::{
 		assert_ok, parameter_types,
 		traits::{Currency, OnRuntimeUpgrade, ReservableCurrency, WithdrawReasons},

@@ -45,7 +45,7 @@ where
 	AccountIndex: std::fmt::Debug,
 {
 	fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-		use soil_core::hexdisplay::HexDisplay;
+		use subsoil::core::hexdisplay::HexDisplay;
 		match self {
 			Self::Raw(inner) => write!(f, "MultiAddress::Raw({})", HexDisplay::from(inner)),
 			Self::Address32(inner) => {

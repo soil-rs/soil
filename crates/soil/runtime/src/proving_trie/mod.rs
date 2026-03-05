@@ -129,7 +129,7 @@ impl From<TrieError> for &'static str {
 pub trait ProvingTrie<Hashing, Key, Value>
 where
 	Self: Sized,
-	Hashing: soil_core::Hasher,
+	Hashing: subsoil::core::Hasher,
 {
 	/// Create a new instance of a `ProvingTrie` using an iterator of key/value pairs.
 	fn generate_for<I>(items: I) -> Result<Self, DispatchError>

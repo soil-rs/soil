@@ -22,7 +22,7 @@ use soil_client_api::{
 	backend, call_executor::CallExecutor, execution_extensions::ExecutionExtensions, HeaderBackend,
 	TrieCacheContext,
 };
-use soil_core::traits::{CallContext, CodeExecutor};
+use subsoil::core::traits::{CallContext, CodeExecutor};
 use soil_executor::{RuntimeVersion, RuntimeVersionOf};
 use subsoil::externalities::Extensions;
 use soil_runtime::{
@@ -239,7 +239,7 @@ where
 	fn runtime_version(
 		&self,
 		ext: &mut dyn subsoil::externalities::Externalities,
-		runtime_code: &soil_core::traits::RuntimeCode,
+		runtime_code: &subsoil::core::traits::RuntimeCode,
 	) -> Result<soil_version::RuntimeVersion, soil_executor::error::Error> {
 		RuntimeVersionOf::runtime_version(&self.executor, ext, runtime_code)
 	}

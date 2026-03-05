@@ -17,7 +17,7 @@
 
 use crate::*;
 use codec::MaxEncodedLen;
-use soil_core::{ConstU64, H256};
+use subsoil::core::{ConstU64, H256};
 use soil_runtime::{
 	testing::UintAuthorityId,
 	traits::{Applyable, BlakeTwo256, Checkable, ConstUint, IdentityLookup},

@@ -22,7 +22,6 @@ jsonrpsee = { features = ["http-client", "ws-client"], workspace = true }
 log = { workspace = true, default-features = true }
 rand = { workspace = true, default-features = true }
 serde = { workspace = true, default-features = true }
-soil-core = { workspace = true, default-features = true }
 subsoil-crypto-hashing = { workspace = true, default-features = true }
 soil-io = { workspace = true, default-features = true }
 soil-runtime = { workspace = true, default-features = true }

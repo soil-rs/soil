@@ -22,7 +22,6 @@ hash-db = { optional = true, workspace = true, default-features = true }
 log = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 subsoil-api-proc-macro = { workspace = true }
-soil-core = { workspace = true }
 soil-runtime = { workspace = true }
 subsoil = { workspace = true }
 soil-runtime-interface = { workspace = true }
@@ -42,14 +41,13 @@ std = [
 	"log/std",
 	"scale-info/std",
 	"subsoil-api-proc-macro/std",
-	"soil-core/std",
+	"subsoil/std",
 	"soil-runtime-interface/std",
 	"soil-runtime/std",
 	"soil-state-machine/std",
 	"soil-test-primitives/std",
 	"soil-trie/std",
 	"soil-version/std",
-	"subsoil/std",
 	"thiserror",
 ]
 # Special feature to disable logging completely.

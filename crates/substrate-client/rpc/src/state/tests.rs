@@ -24,7 +24,7 @@ use futures::executor;
 use jsonrpsee::{core::EmptyServerParams as EmptyParams, MethodsError as RpcError};
 use sc_block_builder::BlockBuilderBuilder;
 use soil_consensus::BlockOrigin;
-use soil_core::{hash::H256, storage::ChildInfo};
+use subsoil::core::{hash::H256, storage::ChildInfo};
 use std::sync::Arc;
 use substrate_test_runtime_client::{
 	prelude::*,

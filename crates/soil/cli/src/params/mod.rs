@@ -33,7 +33,7 @@ mod transaction_pool_params;
 
 use crate::arg_enums::{CryptoScheme, OutputType};
 use clap::Args;
-use soil_core::crypto::{Ss58AddressFormat, Ss58AddressFormatRegistry};
+use subsoil::core::crypto::{Ss58AddressFormat, Ss58AddressFormatRegistry};
 use soil_runtime::{
 	generic::BlockId,
 	traits::{Block as BlockT, NumberFor},
@@ -178,7 +178,7 @@ mod tests {
 
 	#[test]
 	fn parse_block_hash() {
-		let hash = soil_core::H256::default();
+		let hash = subsoil::core::H256::default();
 		let hash_str = format!("{:?}", hash);
 		let block_number_or_hash = BlockNumberOrHash::from_str(&hash_str).unwrap();
 		let parsed = block_number_or_hash.parse::<Block>().unwrap();

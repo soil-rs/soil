@@ -30,7 +30,7 @@ use jsonrpsee::{
 use soil_api::ApiExt;
 use soil_block_builder::BlockBuilder;
 use soil_blockchain::HeaderBackend;
-use soil_core::{hexdisplay::HexDisplay, Bytes};
+use subsoil::core::{hexdisplay::HexDisplay, Bytes};
 use soil_runtime::{legacy, traits};
 use soil_transaction_pool_api::{InPoolTransaction, TransactionPool};
 
@@ -244,7 +244,7 @@ mod tests {
 
 		// given
 		let client = Arc::new(substrate_test_runtime_client::new());
-		let spawner = soil_core::testing::TaskExecutor::new();
+		let spawner = subsoil::core::testing::TaskExecutor::new();
 		let pool = Arc::from(BasicPool::new_full(
 			Default::default(),
 			true.into(),
@@ -285,7 +285,7 @@ mod tests {
 
 		// given
 		let client = Arc::new(substrate_test_runtime_client::new());
-		let spawner = soil_core::testing::TaskExecutor::new();
+		let spawner = subsoil::core::testing::TaskExecutor::new();
 		let pool = Arc::from(BasicPool::new_full(
 			Default::default(),
 			true.into(),
@@ -309,7 +309,7 @@ mod tests {
 
 		// given
 		let client = Arc::new(substrate_test_runtime_client::new());
-		let spawner = soil_core::testing::TaskExecutor::new();
+		let spawner = subsoil::core::testing::TaskExecutor::new();
 		let pool = Arc::from(BasicPool::new_full(
 			Default::default(),
 			true.into(),
@@ -345,7 +345,7 @@ mod tests {
 
 		// given
 		let client = Arc::new(substrate_test_runtime_client::new());
-		let spawner = soil_core::testing::TaskExecutor::new();
+		let spawner = subsoil::core::testing::TaskExecutor::new();
 		let pool = Arc::from(BasicPool::new_full(
 			Default::default(),
 			true.into(),

@@ -216,7 +216,7 @@ mod tests {
 	use alloc::vec;
 	use soil_application_crypto::Pair;
 	use soil_authority_discovery::AuthorityPair;
-	use soil_core::crypto::key_types;
+	use subsoil::core::crypto::key_types;
 	use soil_io::TestExternalities;
 	use soil_runtime::{
 		testing::UintAuthorityId,

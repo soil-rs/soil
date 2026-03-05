@@ -22,7 +22,7 @@ use crate::NetworkProvider;
 use codec::{Decode, Encode};
 use futures::Future;
 pub use http::SharedClient;
-use soil_core::{
+use subsoil::core::{
 	offchain::{
 		self, HttpError, HttpRequestId, HttpRequestStatus, OpaqueMultiaddr, OpaqueNetworkState,
 		Timestamp,
@@ -221,7 +221,7 @@ impl AsyncApi {
 mod tests {
 	use super::*;
 	use soil_client_db::offchain::LocalStorage;
-	use soil_core::offchain::{storage::OffchainDb, DbExternalities, Externalities, StorageKind};
+	use subsoil::core::offchain::{storage::OffchainDb, DbExternalities, Externalities, StorageKind};
 	use soil_network::{
 		config::MultiaddrWithPeerId, types::ProtocolName, NetworkPeers, NetworkStateInfo,
 		ObservedRole, ReputationChange,
@@ -362,7 +362,7 @@ mod tests {
 
 		// Arrange.
 		let now = api.timestamp();
-		let delta = soil_core::offchain::Duration::from_millis(100);
+		let delta = subsoil::core::offchain::Duration::from_millis(100);
 		let deadline = now.add(delta);
 
 		// Act.

@@ -21,7 +21,7 @@ use super::{
 	currency, substrate_test_pallet, wasm_binary_unwrap, AccountId, Balance, RuntimeGenesisConfig,
 };
 use codec::Encode;
-use soil_core::{
+use subsoil::core::{
 	sr25519,
 	storage::{well_known_keys, StateVersion, Storage},
 	Pair,
@@ -160,7 +160,7 @@ impl GenesisStorageBuilder {
 	}
 }
 
-pub fn insert_genesis_block(storage: &mut Storage) -> soil_core::hash::H256 {
+pub fn insert_genesis_block(storage: &mut Storage) -> subsoil::core::hash::H256 {
 	let child_roots = storage.children_default.iter().map(|(sk, child_content)| {
 		let state_root =
 			<<<crate::Block as BlockT>::Header as HeaderT>::Hashing as HashT>::trie_root(

@@ -358,7 +358,7 @@ use alloc::{collections::btree_map::BTreeMap, vec::Vec};
 use codec::{Codec, DecodeWithMemTracking};
 use core::{fmt::Debug, ops::Div};
 use scale_info::TypeInfo;
-use soil_core::U256;
+use subsoil::core::U256;
 use soil_runtime::{
 	traits::{
 		AccountIdConversion, Bounded, CheckedAdd, CheckedSub, Convert, Saturating, StaticLookup,

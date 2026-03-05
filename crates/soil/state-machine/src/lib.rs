@@ -166,7 +166,7 @@ mod execution {
 	use codec::Codec;
 	use hash_db::Hasher;
 	use smallvec::SmallVec;
-	use soil_core::{
+	use subsoil::core::{
 		hexdisplay::HexDisplay,
 		storage::{ChildInfo, ChildType, PrefixedStorageKey},
 		traits::{CallContext, CodeExecutor, RuntimeCode},
@@ -652,7 +652,7 @@ mod execution {
 				let (key, value) = item.map_err(|e| Box::new(e) as Box<dyn Error>)?;
 
 				if depth < MAX_NESTED_TRIE_DEPTH
-					&& soil_core::storage::well_known_keys::is_child_storage_key(key.as_slice())
+					&& subsoil::core::storage::well_known_keys::is_child_storage_key(key.as_slice())
 				{
 					count += 1;
 					// do not add two child trie with same root
@@ -1060,7 +1060,7 @@ mod execution {
 				values.push((key.to_vec(), value.to_vec()));
 
 				if depth < MAX_NESTED_TRIE_DEPTH
-					&& soil_core::storage::well_known_keys::is_child_storage_key(key.as_slice())
+					&& subsoil::core::storage::well_known_keys::is_child_storage_key(key.as_slice())
 				{
 					// Do not add two chid trie with same root.
 					if !child_roots.contains(value.as_slice()) {
@@ -1097,7 +1097,7 @@ mod tests {
 	use crate::{execution::CallResult, in_memory_backend::new_in_mem};
 	use assert_matches::assert_matches;
 	use codec::Encode;
-	use soil_core::{
+	use subsoil::core::{
 		map,
 		storage::{ChildInfo, StateVersion},
 		traits::{CallContext, CodeExecutor, Externalities, RuntimeCode},
@@ -1141,7 +1141,7 @@ mod tests {
 		}
 	}
 
-	impl soil_core::traits::ReadRuntimeVersion for DummyCodeExecutor {
+	impl subsoil::core::traits::ReadRuntimeVersion for DummyCodeExecutor {
 		fn read_runtime_version(
 			&self,
 			_: &[u8],
@@ -1579,7 +1579,7 @@ mod tests {
 		}
 	}
 
-	fn test_compact(remote_proof: StorageProof, remote_root: &soil_core::H256) -> StorageProof {
+	fn test_compact(remote_proof: StorageProof, remote_root: &subsoil::core::H256) -> StorageProof {
 		let compact_remote_proof =
 			remote_proof.into_compact_proof::<BlakeTwo256>(*remote_root).unwrap();
 		compact_remote_proof

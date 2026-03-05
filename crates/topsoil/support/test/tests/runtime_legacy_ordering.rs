@@ -23,7 +23,7 @@
 
 use codec::MaxEncodedLen;
 use scale_info::TypeInfo;
-use soil_core::sr25519;
+use subsoil::core::sr25519;
 use soil_runtime::{
 	generic,
 	traits::{BlakeTwo256, ValidateUnsigned, Verify},
@@ -741,7 +741,7 @@ fn test_metadata() {
 		*,
 	};
 	use scale_info::meta_type;
-	use soil_core::Encode;
+	use subsoil::core::Encode;
 	use subsoil::metadata_ir::StorageEntryModifierIR::Optional;
 
 	fn maybe_docs(doc: Vec<&'static str>) -> Vec<&'static str> {

@@ -33,7 +33,7 @@ use soil_consensus::{BlockOrigin, Error as ConsensusError, SelectChain};
 use soil_consensus_grandpa::{
 	AuthorityList, EquivocationProof, GrandpaApi, OpaqueKeyOwnershipProof, GRANDPA_ENGINE_ID,
 };
-use soil_core::H256;
+use subsoil::core::H256;
 use soil_keyring::Ed25519Keyring;
 use soil_keystore::{testing::MemoryKeystore, Keystore, KeystorePtr};
 use soil_network::config::Role;

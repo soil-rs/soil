@@ -304,7 +304,7 @@ mod tests {
 	use soil_network_types::multihash::{Code, Multihash};
 
 	use soil_authority_discovery::{AuthorityId, AuthorityPair};
-	use soil_core::crypto::Pair;
+	use subsoil::core::crypto::Pair;
 
 	#[derive(Clone, Debug)]
 	struct TestAuthorityId(AuthorityId);

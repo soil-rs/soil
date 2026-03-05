@@ -20,7 +20,7 @@
 
 use codec::{Decode, Encode};
 use serde_json::{from_slice, Value};
-use soil_core::{
+use subsoil::core::{
 	storage::Storage,
 	traits::{CallContext, CodeExecutor, Externalities, FetchRuntimeCode, RuntimeCode},
 };

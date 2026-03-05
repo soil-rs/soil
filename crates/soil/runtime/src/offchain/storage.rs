@@ -17,7 +17,7 @@
 
 //! A set of storage helpers for offchain workers.
 
-use soil_core::offchain::StorageKind;
+use subsoil::core::offchain::StorageKind;
 
 /// A storage value with a static key.
 pub type StorageValue = StorageValueRef<'static>;
@@ -123,7 +123,7 @@ impl<'a> StorageValueRef<'a> {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use soil_core::offchain::{testing, OffchainDbExt};
+	use subsoil::core::offchain::{testing, OffchainDbExt};
 	use soil_io::TestExternalities;
 
 	#[test]

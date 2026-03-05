@@ -184,7 +184,7 @@ async fn should_return_block_hash() {
 	);
 
 	let res: ListOrValue<Option<H256>> = api
-		.call("chain_getBlockHash", [ListOrValue::Value(soil_core::U256::from(1_u64))])
+		.call("chain_getBlockHash", [ListOrValue::Value(subsoil::core::U256::from(1_u64))])
 		.await
 		.unwrap();
 	assert_matches!(

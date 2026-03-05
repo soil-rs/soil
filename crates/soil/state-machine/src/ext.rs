@@ -25,8 +25,8 @@ use crate::{
 use codec::{Compact, CompactLen, Decode, Encode};
 use hash_db::Hasher;
 #[cfg(feature = "std")]
-use soil_core::hexdisplay::HexDisplay;
-use soil_core::storage::{
+use subsoil::core::hexdisplay::HexDisplay;
+use subsoil::core::storage::{
 	well_known_keys::is_child_storage_key, ChildInfo, StateVersion, TrackedStorageKey,
 };
 #[cfg(feature = "std")]
@@ -418,7 +418,7 @@ where
 		);
 		let _guard = guard();
 
-		if soil_core::storage::well_known_keys::starts_with_child_storage_key(prefix) {
+		if subsoil::core::storage::well_known_keys::starts_with_child_storage_key(prefix) {
 			warn!(
 				target: "trie",
 				"Refuse to directly clear prefix that is part or contains of child storage key",
@@ -834,7 +834,7 @@ mod tests {
 	use super::*;
 	use crate::InMemoryBackend;
 	use codec::{Decode, Encode};
-	use soil_core::{
+	use subsoil::core::{
 		map,
 		storage::{Storage, StorageChild},
 		Blake2Hasher,
@@ -1028,7 +1028,7 @@ mod tests {
 
 		let ext = TestExt::new(&mut overlay, &backend, None);
 
-		use soil_core::storage::well_known_keys;
+		use subsoil::core::storage::well_known_keys;
 		let mut ext = ext;
 		let mut not_under_prefix = well_known_keys::CHILD_STORAGE_KEY_PREFIX.to_vec();
 		not_under_prefix[4] = 88;

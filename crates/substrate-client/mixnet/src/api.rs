@@ -21,7 +21,7 @@ use futures::{
 	channel::{mpsc, oneshot},
 	SinkExt,
 };
-use soil_core::Bytes;
+use subsoil::core::Bytes;
 use std::future::Future;
 
 /// The other end of an [`Api`]. This should be passed to [`run`](super::run::run).

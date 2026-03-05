@@ -32,7 +32,7 @@ use alloc::{
 ///
 /// Example:
 /// ```
-/// 	use soil_core::crypto::AddressUri;
+/// 	use subsoil::core::crypto::AddressUri;
 /// 	let manual_result = AddressUri::parse("hello world/s//h///pass");
 /// 	assert_eq!(
 /// 		manual_result.unwrap(),
@@ -97,10 +97,10 @@ impl InvalidCharacterInfo {
 	}
 }
 
-impl core::fmt::Display for InvalidCharacterInfo {
-	fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+impl ::core::fmt::Display for InvalidCharacterInfo {
+	fn fmt(&self, f: &mut ::core::fmt::Formatter) -> ::core::fmt::Result {
 		let (s, pos) = escape_string(&self.0, self.1);
-		write!(f, "{s}\n{i}^", i = core::iter::repeat(" ").take(pos).collect::<String>())
+		write!(f, "{s}\n{i}^", i = ::core::iter::repeat(" ").take(pos).collect::<String>())
 	}
 }
 

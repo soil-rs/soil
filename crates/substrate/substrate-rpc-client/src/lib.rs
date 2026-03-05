@@ -24,7 +24,7 @@
 //!
 //! ```no_run
 //! # use substrate_rpc_client::{ws_client, StateApi};
-//! # use soil_core::{H256, storage::StorageKey};
+//! # use subsoil::core::{H256, storage::StorageKey};
 //!
 //! #[tokio::main]
 //! async fn main() {

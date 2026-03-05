@@ -162,7 +162,7 @@ mod tests {
 	};
 	use sc_rpc::testing::test_executor;
 	use soil_blockchain::HeaderBackend;
-	use soil_core::crypto::ByteArray;
+	use subsoil::core::crypto::ByteArray;
 	use soil_keyring::Ed25519Keyring;
 	use soil_runtime::traits::{Block as BlockT, Header as HeaderT};
 	use substrate_test_runtime_client::{
@@ -410,7 +410,7 @@ mod tests {
 		justification_sender.notify(|| Ok::<_, ()>(justification.clone())).unwrap();
 
 		// Inspect what we received
-		let (recv_justification, recv_sub_id): (soil_core::Bytes, SubscriptionId) =
+		let (recv_justification, recv_sub_id): (subsoil::core::Bytes, SubscriptionId) =
 			sub.next().await.unwrap().unwrap();
 		let recv_justification: GrandpaJustification<Block> =
 			Decode::decode(&mut &recv_justification[..]).unwrap();
@@ -429,7 +429,7 @@ mod tests {
 		let (rpc, _) =
 			setup_io_handler_with_finality_proofs(TestVoterState, Some(finality_proof.clone()));
 
-		let bytes: soil_core::Bytes = rpc.call("grandpa_proveFinality", [42]).await.unwrap();
+		let bytes: subsoil::core::Bytes = rpc.call("grandpa_proveFinality", [42]).await.unwrap();
 		let finality_proof_rpc: FinalityProof<Header> = Decode::decode(&mut &bytes[..]).unwrap();
 		assert_eq!(finality_proof_rpc, finality_proof);
 	}

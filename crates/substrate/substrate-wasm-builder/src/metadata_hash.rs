@@ -19,7 +19,7 @@ use crate::builder::MetadataExtraInfo;
 use codec::{Decode, Encode};
 use frame_metadata::{RuntimeMetadata, RuntimeMetadataPrefixed};
 use merkleized_metadata::{generate_metadata_digest, ExtraInfo};
-use soil_core::traits::{CallContext, CodeExecutor, RuntimeCode, WrappedRuntimeCode};
+use subsoil::core::traits::{CallContext, CodeExecutor, RuntimeCode, WrappedRuntimeCode};
 use soil_executor::WasmExecutor;
 use std::path::Path;
 

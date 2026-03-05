@@ -76,7 +76,7 @@ use soil_consensus::SelectChain;
 use soil_consensus_grandpa::{
 	AuthorityList, AuthoritySignature, SetId, CLIENT_LOG_TARGET as LOG_TARGET,
 };
-use soil_core::{crypto::ByteArray, traits::CallContext};
+use subsoil::core::{crypto::ByteArray, traits::CallContext};
 use soil_keystore::KeystorePtr;
 use soil_network::{types::ProtocolName, NetworkBackend, NotificationService};
 use soil_runtime::{

@@ -20,7 +20,6 @@ log = { workspace = true }
 topsoil-transaction-payment = { workspace = true }
 scale-info = { workspace = true, features = ["derive"] }
 subsoil = { workspace = true }
-soil-core = { workspace = true }
 soil-io = { workspace = true }
 soil-runtime = { workspace = true }
 
@@ -35,7 +34,6 @@ std = [
 	"topsoil-transaction-payment/std",
 	"scale-info/std",
 	"subsoil/std",
-	"soil-core/std",
 	"soil-io/std",
 	"soil-runtime/std",
 ]

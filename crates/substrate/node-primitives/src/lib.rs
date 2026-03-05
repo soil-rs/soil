@@ -49,7 +49,7 @@ pub type Moment = u64;
 pub type Nonce = u32;
 
 /// A hash of some data used by the chain.
-pub type Hash = soil_core::H256;
+pub type Hash = subsoil::core::H256;
 
 /// A timestamp: milliseconds since the unix epoch.
 /// `u64` is enough to represent a duration of half a billion years, when the

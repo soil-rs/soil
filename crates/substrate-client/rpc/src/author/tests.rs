@@ -23,7 +23,7 @@ use assert_matches::assert_matches;
 use codec::Encode;
 use jsonrpsee::{core::EmptyServerParams as EmptyParams, MethodsError as RpcError, RpcModule};
 use sc_transaction_pool::{BasicPool, FullChainApi};
-use soil_core::{
+use subsoil::core::{
 	bytes::to_hex,
 	crypto::{ByteArray, Pair},
 	ed25519,
@@ -65,7 +65,7 @@ impl Default for TestSetup {
 		let keystore = Arc::new(MemoryKeystore::new());
 		let client = Arc::new(substrate_test_runtime_client::TestClientBuilder::new().build());
 
-		let spawner = soil_core::testing::TaskExecutor::new();
+		let spawner = subsoil::core::testing::TaskExecutor::new();
 		let pool = Arc::from(BasicPool::new_full(
 			Default::default(),
 			true.into(),

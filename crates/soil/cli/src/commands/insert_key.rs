@@ -23,7 +23,7 @@ use crate::{
 };
 use clap::Parser;
 use sc_keystore::LocalKeystore;
-use soil_core::crypto::{KeyTypeId, SecretString};
+use subsoil::core::crypto::{KeyTypeId, SecretString};
 use soil_keystore::KeystorePtr;
 use soil_service::config::{BasePath, KeystoreConfig};
 
@@ -86,7 +86,7 @@ impl InsertKeyCmd {
 	}
 }
 
-fn to_vec<P: soil_core::Pair>(uri: &str, pass: Option<SecretString>) -> Result<Vec<u8>, Error> {
+fn to_vec<P: subsoil::core::Pair>(uri: &str, pass: Option<SecretString>) -> Result<Vec<u8>, Error> {
 	let p = utils::pair_from_suri::<P>(uri, pass)?;
 	Ok(p.public().as_ref().to_vec())
 }
@@ -94,7 +94,7 @@ fn to_vec<P: soil_core::Pair>(uri: &str, pass: Option<SecretString>) -> Result<V
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use soil_core::{sr25519::Pair, ByteArray, Pair as _};
+	use subsoil::core::{sr25519::Pair, ByteArray, Pair as _};
 	use soil_keystore::Keystore;
 	use soil_service::{ChainSpec, ChainType, GenericChainSpec, NoExtension};
 	use tempfile::TempDir;

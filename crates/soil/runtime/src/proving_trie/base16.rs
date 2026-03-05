@@ -38,7 +38,7 @@ use soil_trie::{
 /// with proofs using `LayoutV0`.
 pub struct BasicProvingTrie<Hashing, Key, Value>
 where
-	Hashing: soil_core::Hasher,
+	Hashing: subsoil::core::Hasher,
 {
 	db: MemoryDB<Hashing>,
 	root: Hashing::Out,
@@ -47,7 +47,7 @@ where
 
 impl<Hashing, Key, Value> BasicProvingTrie<Hashing, Key, Value>
 where
-	Hashing: soil_core::Hasher,
+	Hashing: subsoil::core::Hasher,
 	Key: Encode,
 {
 	/// Create a compact merkle proof needed to prove all `keys` and their values are in the trie.
@@ -68,7 +68,7 @@ where
 
 impl<Hashing, Key, Value> ProvingTrie<Hashing, Key, Value> for BasicProvingTrie<Hashing, Key, Value>
 where
-	Hashing: soil_core::Hasher,
+	Hashing: subsoil::core::Hasher,
 	Key: Encode,
 	Value: Encode + Decode,
 {
@@ -129,7 +129,7 @@ where
 
 impl<Hashing, Key, Value> ProofToHashes for BasicProvingTrie<Hashing, Key, Value>
 where
-	Hashing: soil_core::Hasher,
+	Hashing: subsoil::core::Hasher,
 	Hashing::Out: MaxEncodedLen,
 {
 	// Our proof is just raw bytes.
@@ -152,7 +152,7 @@ pub fn verify_proof<Hashing, Key, Value>(
 	value: &Value,
 ) -> Result<(), DispatchError>
 where
-	Hashing: soil_core::Hasher,
+	Hashing: subsoil::core::Hasher,
 	Key: Encode,
 	Value: Encode,
 {
@@ -173,7 +173,7 @@ pub fn verify_multi_proof<Hashing, Key, Value>(
 	items: &[(Key, Value)],
 ) -> Result<(), DispatchError>
 where
-	Hashing: soil_core::Hasher,
+	Hashing: subsoil::core::Hasher,
 	Key: Encode,
 	Value: Encode,
 {
@@ -196,7 +196,7 @@ where
 mod tests {
 	use super::*;
 	use crate::traits::BlakeTwo256;
-	use soil_core::H256;
+	use subsoil::core::H256;
 	use std::collections::BTreeMap;
 
 	// A trie which simulates a trie of accounts (u32) and balances (u128).

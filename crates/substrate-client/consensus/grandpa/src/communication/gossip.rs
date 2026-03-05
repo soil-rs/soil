@@ -1676,7 +1676,7 @@ pub(super) struct PeerReport {
 mod tests {
 	use super::{super::NEIGHBOR_REBROADCAST_PERIOD, environment::SharedVoterSetState, *};
 	use crate::communication;
-	use soil_core::{crypto::UncheckedFrom, H256};
+	use subsoil::core::{crypto::UncheckedFrom, H256};
 	use soil_network::config::Role;
 	use soil_network_gossip::Validator as GossipValidatorT;
 	use std::time::Instant;

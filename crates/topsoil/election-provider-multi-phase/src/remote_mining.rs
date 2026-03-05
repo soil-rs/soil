@@ -29,7 +29,7 @@ use crate::{ElectionCompute, Miner, MinerConfig, RawSolution, RoundSnapshot};
 use codec::Decode;
 use core::marker::PhantomData;
 use remote_externalities::{Builder, Mode, OnlineConfig};
-use soil_core::{ConstU32, H256};
+use subsoil::core::{ConstU32, H256};
 use soil_npos_elections::BalancingConfig;
 use soil_runtime::{Perbill, Weight};
 use topsoil_election_provider_support::generate_solution_type;
@@ -145,8 +145,8 @@ impl<T: MinerConfig> HackyGetSnapshot<T> {
 		UntypedSnapshotOf<T>: Decode,
 	{
 		let key = [
-			soil_core::hashing::twox_128(b"ElectionProviderMultiPhase"),
-			soil_core::hashing::twox_128(b"Snapshot"),
+			subsoil::core::hashing::twox_128(b"ElectionProviderMultiPhase"),
+			subsoil::core::hashing::twox_128(b"Snapshot"),
 		]
 		.concat();
 		topsoil_support::storage::unhashed::get::<UntypedSnapshotOf<T>>(&key).unwrap()
@@ -154,8 +154,8 @@ impl<T: MinerConfig> HackyGetSnapshot<T> {
 
 	fn desired_targets() -> u32 {
 		let key = [
-			soil_core::hashing::twox_128(b"ElectionProviderMultiPhase"),
-			soil_core::hashing::twox_128(b"DesiredTargets"),
+			subsoil::core::hashing::twox_128(b"ElectionProviderMultiPhase"),
+			subsoil::core::hashing::twox_128(b"DesiredTargets"),
 		]
 		.concat();
 		topsoil_support::storage::unhashed::get::<u32>(&key).unwrap()

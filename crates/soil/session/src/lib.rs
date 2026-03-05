@@ -77,13 +77,13 @@ pub trait GetValidatorCount {
 	fn validator_count(&self) -> ValidatorCount;
 }
 
-impl GetSessionNumber for soil_core::Void {
+impl GetSessionNumber for subsoil::core::Void {
 	fn session(&self) -> SessionIndex {
 		Default::default()
 	}
 }
 
-impl GetValidatorCount for soil_core::Void {
+impl GetValidatorCount for subsoil::core::Void {
 	fn validator_count(&self) -> ValidatorCount {
 		Default::default()
 	}

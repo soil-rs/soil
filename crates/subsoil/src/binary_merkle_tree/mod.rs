@@ -412,7 +412,7 @@ where
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use soil_core::H256;
+	use subsoil::core::H256;
 	use soil_runtime::traits::Keccak256;
 
 	#[test]

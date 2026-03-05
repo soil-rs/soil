@@ -161,7 +161,7 @@ pub mod tests {
 
 		// type Nonce = u32;
 		// type BlockNumber = u32;
-		// type Hash = soil_core::hash::H256;
+		// type Hash = subsoil::core::hash::H256;
 		// type Hashing = soil_runtime::traits::BlakeTwo256;
 		// type AccountId = u64;
 		// type Lookup = soil_runtime::traits::IdentityLookup<u64>;

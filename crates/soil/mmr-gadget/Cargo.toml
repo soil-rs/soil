@@ -23,7 +23,6 @@ soil-api = { workspace = true, default-features = true, optional = true}
 soil-blockchain = { workspace = true, default-features = true, optional = true}
 soil-consensus = { workspace = true, default-features = true, optional = true}
 soil-consensus-beefy = { workspace = true, default-features = true, optional = true}
-soil-core = { workspace = true, default-features = true, optional = true}
 soil-mmr-primitives = { workspace = true, default-features = true, optional = true}
 soil-runtime = { workspace = true, default-features = true, optional = true}
 
@@ -39,13 +38,12 @@ std = [
 	"soil-client-api",
 	"soil-consensus",
 	"soil-consensus-beefy",
-	"soil-core",
 	"soil-mmr-primitives",
 	"soil-runtime",
 	"soil-api/std",
 	"soil-client-api/std",
 	"soil-consensus-beefy/std",
-	"soil-core/std",
+	"subsoil/std",
 	"soil-mmr-primitives/std",
 	"soil-runtime/std",
 ]

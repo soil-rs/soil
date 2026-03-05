@@ -23,7 +23,7 @@ use crate as topsoil_session;
 use crate::historical as pallet_session_historical;
 
 use codec::Encode;
-use soil_core::crypto::key_types::DUMMY;
+use subsoil::core::crypto::key_types::DUMMY;
 use soil_runtime::{
 	impl_opaque_keys,
 	testing::UintAuthorityId,

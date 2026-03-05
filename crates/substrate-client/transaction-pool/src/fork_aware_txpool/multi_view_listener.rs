@@ -806,7 +806,7 @@ mod tests {
 	use super::*;
 	use crate::common::tests::TestApi;
 	use futures::{stream, StreamExt};
-	use soil_core::H256;
+	use subsoil::core::H256;
 	use tokio::{select, task::JoinHandle};
 	use tracing::debug;
 

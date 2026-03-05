@@ -37,7 +37,6 @@ soil-client-api = { workspace = true, default-features = true, optional = true}
 soil-state-db = { workspace = true, default-features = true, optional = true}
 schnellru = { workspace = true, optional = true}
 soil-blockchain = { workspace = true, default-features = true, optional = true}
-soil-core = { workspace = true, default-features = true, optional = true}
 subsoil = { workspace = true, default-features = true, optional = true}
 soil-runtime = { workspace = true, default-features = true, optional = true}
 soil-state-machine = { workspace = true, default-features = true, optional = true}
@@ -70,7 +69,7 @@ std = [
 	"subsoil",
 	"soil-blockchain",
 	"soil-client-api",
-	"soil-core",
+	"subsoil",
 	"soil-runtime",
 	"soil-state-db",
 	"soil-state-machine",
@@ -78,7 +77,6 @@ std = [
 	"sysinfo",
 	"subsoil/std",
 	"soil-client-api/std",
-	"soil-core/std",
 	"soil-runtime/std",
 	"soil-state-db/std",
 	"soil-state-machine/std",

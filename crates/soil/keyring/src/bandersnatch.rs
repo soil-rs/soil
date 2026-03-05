@@ -17,12 +17,12 @@
 
 //! A set of well-known keys used for testing.
 
-pub use soil_core::bandersnatch;
+pub use subsoil::core::bandersnatch;
 
 use crate::ParseKeyringError;
 #[cfg(feature = "std")]
-use soil_core::bandersnatch::Signature;
-use soil_core::{
+use subsoil::core::bandersnatch::Signature;
+use subsoil::core::{
 	bandersnatch::{Pair, Public},
 	crypto::UncheckedFrom,
 	hex2array, ByteArray, Pair as PairT,
@@ -173,7 +173,7 @@ impl From<Keyring> for [u8; PUBLIC_RAW_LEN] {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use soil_core::{bandersnatch::Pair, Pair as PairT};
+	use subsoil::core::{bandersnatch::Pair, Pair as PairT};
 
 	#[test]
 	fn should_work() {

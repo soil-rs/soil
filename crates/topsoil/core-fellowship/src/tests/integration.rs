@@ -19,7 +19,7 @@
 
 #![allow(deprecated)]
 
-use soil_core::Get;
+use subsoil::core::Get;
 use soil_runtime::{
 	bounded_vec,
 	traits::{Convert, ReduceBy, ReplaceWithDefault, TryMorphInto},

@@ -20,7 +20,7 @@ use criterion::{
 	criterion_group, criterion_main, AxisScale, BenchmarkId, Criterion, PlotConfiguration,
 	Throughput,
 };
-use soil_core::H256;
+use subsoil::core::H256;
 use soil_network::{
 	config::{
 		FullNetworkConfiguration, MultiaddrWithPeerId, NetworkConfiguration, NonReservedPeerMode,

@@ -134,7 +134,7 @@ where
 
 #[cfg(test)]
 mod test {
-	use soil_core::{hash::H256, sr25519, Pair};
+	use subsoil::core::{hash::H256, sr25519, Pair};
 	use soil_runtime::testing::{Digest as DigestTest, Header as HeaderTest};
 	use substrate_test_runtime_client;
 

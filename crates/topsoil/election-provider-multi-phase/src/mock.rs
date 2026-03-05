@@ -19,7 +19,7 @@ use super::*;
 use crate::{self as multi_phase, signed::GeometricDepositBase, unsigned::MinerConfig};
 use multi_phase::unsigned::{IndexAssignmentOf, VoterOf};
 use parking_lot::RwLock;
-use soil_core::{
+use subsoil::core::{
 	offchain::{
 		testing::{PoolState, TestOffchainExt, TestTransactionPoolExt},
 		OffchainDbExt, OffchainWorkerExt, TransactionPoolExt,

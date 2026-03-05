@@ -19,7 +19,7 @@
 
 use alloc::vec::Vec;
 use codec::{Decode, Encode};
-use soil_core::Hasher;
+use subsoil::core::Hasher;
 use soil_runtime::DispatchError;
 
 // Re-export the `proving_trie` types and traits.

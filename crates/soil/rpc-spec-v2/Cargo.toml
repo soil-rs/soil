@@ -38,7 +38,6 @@ schnellru = { workspace = true, optional = true}
 serde = { workspace = true, default-features = true, optional = true}
 soil-api = { workspace = true, default-features = true, optional = true}
 soil-blockchain = { workspace = true, default-features = true, optional = true}
-soil-core = { workspace = true, default-features = true, optional = true}
 soil-rpc = { workspace = true, default-features = true, optional = true}
 soil-runtime = { workspace = true, default-features = true, optional = true}
 soil-version = { workspace = true, default-features = true, optional = true}
@@ -67,7 +66,6 @@ std = [
 	"soil-blockchain",
 	"soil-chain-spec",
 	"soil-client-api",
-	"soil-core",
 	"soil-rpc",
 	"soil-runtime",
 	"soil-transaction-pool-api",
@@ -78,7 +76,7 @@ std = [
 	"soil-api/std",
 	"soil-chain-spec/std",
 	"soil-client-api/std",
-	"soil-core/std",
+	"subsoil/std",
 	"soil-runtime/std",
 	"soil-transaction-pool-api/std",
 	"soil-version/std",

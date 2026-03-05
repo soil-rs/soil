@@ -21,7 +21,7 @@ use super::*;
 use crate::Pallet as AssetConversion;
 use alloc::vec;
 use core::marker::PhantomData;
-use soil_core::Get;
+use subsoil::core::Get;
 use topsoil_benchmarking::{v2::*, whitelisted_caller};
 use topsoil_support::{
 	assert_ok,

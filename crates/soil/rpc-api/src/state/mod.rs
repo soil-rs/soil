@@ -19,7 +19,7 @@
 //! Substrate state API.
 
 use jsonrpsee::proc_macros::rpc;
-use soil_core::{
+use subsoil::core::{
 	storage::{StorageChangeSet, StorageData, StorageKey},
 	Bytes,
 };

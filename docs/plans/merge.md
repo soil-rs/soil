@@ -22,11 +22,11 @@ See `docs/specs/merge.md` for the full spec.
 - [x] 8. `binary-merkle-tree`
 
 ### Tier 1
-- [ ] 9. `soil-storage`
+- [x] 9. `soil-storage`
 
 ### Tier 2
-- [ ] 10. `soil-externalities`
-- [ ] 11. `soil-weights`
+- [x] 10. `soil-externalities`
+- [x] 11. `soil-weights`
 
 ### Tier 3
 - [ ] 12. `soil-core`

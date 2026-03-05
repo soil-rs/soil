@@ -26,7 +26,7 @@ use alloc::{collections::btree_set::BTreeSet, vec::Vec};
 use codec::{Decode, Encode};
 use hash_db::Hasher;
 pub use offchain::OffchainOverlayedChanges;
-use soil_core::{
+use subsoil::core::{
 	offchain::OffchainOverlayedChange,
 	storage::{well_known_keys::EXTRINSIC_INDEX, ChildInfo, StateVersion},
 };
@@ -758,7 +758,7 @@ impl<H: Hasher> OverlayedChanges<H> {
 
 	/// Write a key value pair to the offchain storage overlay.
 	pub fn set_offchain_storage(&mut self, key: &[u8], value: Option<&[u8]>) {
-		use soil_core::offchain::STORAGE_PREFIX;
+		use subsoil::core::offchain::STORAGE_PREFIX;
 		match value {
 			Some(value) => self.offchain.set(STORAGE_PREFIX, key, value),
 			None => self.offchain.remove(STORAGE_PREFIX, key),
@@ -772,8 +772,8 @@ impl<H: Hasher> OverlayedChanges<H> {
 }
 
 #[cfg(not(substrate_runtime))]
-impl<H: Hasher> From<soil_core::storage::Storage> for OverlayedChanges<H> {
-	fn from(storage: soil_core::storage::Storage) -> Self {
+impl<H: Hasher> From<subsoil::core::storage::Storage> for OverlayedChanges<H> {
+	fn from(storage: subsoil::core::storage::Storage) -> Self {
 		Self {
 			top: storage.top.into(),
 			children: storage
@@ -910,7 +910,7 @@ mod tests {
 	use super::*;
 	use crate::{ext::Ext, new_in_mem, InMemoryBackend};
 	use array_bytes::bytes2hex;
-	use soil_core::{traits::Externalities, Blake2Hasher};
+	use subsoil::core::{traits::Externalities, Blake2Hasher};
 	use std::collections::BTreeMap;
 
 	fn assert_extrinsics(
@@ -959,7 +959,7 @@ mod tests {
 
 	#[test]
 	fn offchain_overlayed_storage_transactions_works() {
-		use soil_core::offchain::STORAGE_PREFIX;
+		use subsoil::core::offchain::STORAGE_PREFIX;
 		fn check_offchain_content(
 			state: &OverlayedChanges<Blake2Hasher>,
 			nb_commit: usize,

@@ -1788,7 +1788,7 @@ impl<T: Config> ElectionProvider for Pallet<T> {
 	type MaxWinnersPerPage = T::MaxWinners;
 	type MaxBackersPerWinner = T::MaxBackersPerWinner;
 	type MaxBackersPerWinnerFinal = T::MaxBackersPerWinner;
-	type Pages = soil_core::ConstU32<1>;
+	type Pages = subsoil::core::ConstU32<1>;
 	type DataProvider = T::DataProvider;
 
 	fn elect(page: PageIndex) -> Result<BoundedSupportsOf<Self>, Self::Error> {

@@ -499,7 +499,7 @@ mod test {
 
 	#[test]
 	fn cleanup_agendas_works() {
-		use soil_core::bounded_vec;
+		use subsoil::core::bounded_vec;
 		new_test_ext().execute_with(|| {
 			StorageVersion::new(4).put::<Scheduler>();
 

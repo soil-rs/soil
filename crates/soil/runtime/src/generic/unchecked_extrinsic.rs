@@ -627,7 +627,7 @@ impl<'a, Address: Decode, Signature: Decode, Call: DecodeWithMemTracking, Extens
 	where
 		D: serde::Deserializer<'a>,
 	{
-		let r = soil_core::bytes::deserialize(de)?;
+		let r = subsoil::core::bytes::deserialize(de)?;
 		Self::decode(&mut &r[..])
 			.map_err(|e| serde::de::Error::custom(format!("Decode error: {}", e)))
 	}

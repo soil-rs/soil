@@ -49,7 +49,7 @@
 //! ```
 
 use alloc::{str, vec, vec::Vec};
-use soil_core::offchain::{
+use subsoil::core::offchain::{
 	HttpError, HttpRequestId as RequestId, HttpRequestStatus as RequestStatus, Timestamp,
 };
 
@@ -492,7 +492,7 @@ impl<'a> HeadersIterator<'a> {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use soil_core::offchain::{testing, OffchainWorkerExt};
+	use subsoil::core::offchain::{testing, OffchainWorkerExt};
 	use soil_io::TestExternalities;
 
 	#[test]

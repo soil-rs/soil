@@ -30,7 +30,7 @@ use crate::traits::{
 		WithdrawConsequence,
 	},
 };
-use soil_core::Get;
+use subsoil::core::Get;
 use soil_runtime::{DispatchError, DispatchResult};
 use topsoil_support::traits::fungible::hold::DoneSlash;
 

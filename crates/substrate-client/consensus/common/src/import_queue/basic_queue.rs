@@ -65,7 +65,7 @@ impl<B: BlockT> BasicQueue<B> {
 		verifier: V,
 		block_import: BoxBlockImport<B>,
 		justification_import: Option<BoxJustificationImport<B>>,
-		spawner: &impl soil_core::traits::SpawnEssentialNamed,
+		spawner: &impl subsoil::core::traits::SpawnEssentialNamed,
 		prometheus_registry: Option<&Registry>,
 	) -> Self
 	where

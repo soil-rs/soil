@@ -36,7 +36,6 @@ schnellru = { workspace = true, optional = true}
 smallvec = { workspace = true, default-features = true, optional = true}
 soil-blockchain = { workspace = true, default-features = true, optional = true}
 soil-consensus = { workspace = true, default-features = true, optional = true}
-soil-core = { workspace = true, default-features = true, optional = true}
 soil-runtime = { workspace = true, default-features = true, optional = true}
 thiserror = { workspace = true, optional = true}
 tokio = { features = ["macros", "time"], workspace = true, default-features = true, optional = true}
@@ -61,7 +60,6 @@ std = [
 	"soil-blockchain",
 	"soil-client-api",
 	"soil-consensus",
-	"soil-core",
 	"soil-network",
 	"soil-network-common",
 	"soil-network-types",
@@ -72,7 +70,6 @@ std = [
 	"tokio-stream",
 	"subsoil/std",
 	"soil-client-api/std",
-	"soil-core/std",
 	"soil-network/std",
 	"soil-network-common/std",
 	"soil-network-types/std",

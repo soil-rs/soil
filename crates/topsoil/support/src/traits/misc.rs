@@ -23,7 +23,7 @@ use codec::{CompactLen, Decode, DecodeLimit, Encode, EncodeLike, Input, MaxEncod
 use impl_trait_for_tuples::impl_for_tuples;
 use scale_info::{build::Fields, meta_type, Path, Type, TypeInfo, TypeParameter};
 use subsoil::arithmetic::traits::{CheckedAdd, CheckedMul, CheckedSub, One, Saturating};
-use soil_core::bounded::bounded_vec::TruncateFrom;
+use subsoil::core::bounded::bounded_vec::TruncateFrom;
 
 use core::cmp::Ordering;
 #[doc(hidden)]
@@ -1283,7 +1283,7 @@ pub trait RewardsReporter<ValidatorId> {
 mod test {
 	use super::*;
 	use core::marker::PhantomData;
-	use soil_core::bounded::{BoundedSlice, BoundedVec};
+	use subsoil::core::bounded::{BoundedSlice, BoundedVec};
 
 	#[test]
 	fn defensive_assert_works() {

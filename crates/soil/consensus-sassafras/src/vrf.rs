@@ -23,7 +23,7 @@ use alloc::vec::Vec;
 use codec::Encode;
 use soil_consensus_slots::Slot;
 
-pub use soil_core::bandersnatch::{
+pub use subsoil::core::bandersnatch::{
 	ring_vrf::{RingProver, RingVerifier, RingVerifierKey, RingVrfSignature},
 	vrf::{VrfInput, VrfPreOutput, VrfSignData, VrfSignature},
 };
@@ -32,7 +32,7 @@ pub use soil_core::bandersnatch::{
 pub const RING_SIZE: usize = 1024;
 
 /// Bandersnatch VRF [`RingContext`] specialization for Sassafras using [`RING_SIZE`].
-pub type RingContext = soil_core::bandersnatch::ring_vrf::RingContext<RING_SIZE>;
+pub type RingContext = subsoil::core::bandersnatch::ring_vrf::RingContext<RING_SIZE>;
 
 /// Input for slot claim
 pub fn slot_claim_input(randomness: &Randomness, slot: Slot, epoch: u64) -> VrfInput {

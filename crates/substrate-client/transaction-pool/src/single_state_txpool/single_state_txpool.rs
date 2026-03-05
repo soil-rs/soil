@@ -40,7 +40,7 @@ use futures::{channel::oneshot, future, prelude::*, Future, FutureExt};
 use parking_lot::Mutex;
 use prometheus_endpoint::Registry as PrometheusRegistry;
 use soil_blockchain::{HashAndNumber, TreeRoute};
-use soil_core::traits::SpawnEssentialNamed;
+use subsoil::core::traits::SpawnEssentialNamed;
 use soil_runtime::{
 	generic::BlockId,
 	traits::{

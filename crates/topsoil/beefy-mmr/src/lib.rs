@@ -88,7 +88,7 @@ where
 pub struct BeefyEcdsaToEthereum;
 impl Convert<soil_consensus_beefy::ecdsa_crypto::AuthorityId, Vec<u8>> for BeefyEcdsaToEthereum {
 	fn convert(beefy_id: soil_consensus_beefy::ecdsa_crypto::AuthorityId) -> Vec<u8> {
-		soil_core::ecdsa::Public::from(beefy_id)
+		subsoil::core::ecdsa::Public::from(beefy_id)
 			.to_eth_address()
 			.map(|v| v.to_vec())
 			.map_err(|_| {

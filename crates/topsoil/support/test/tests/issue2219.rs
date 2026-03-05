@@ -15,7 +15,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use soil_core::{sr25519, ConstU64};
+use subsoil::core::{sr25519, ConstU64};
 use soil_runtime::{
 	generic,
 	traits::{BlakeTwo256, Verify},

@@ -33,8 +33,6 @@ assert_matches = { workspace = true }
 topsoil-balances = { workspace = true, default-features = true }
 topsoil-preimage = { workspace = true, default-features = true }
 topsoil-scheduler = { workspace = true, default-features = true }
-soil-core = { workspace = true, default-features = true }
-
 [features]
 default = ["std"]
 std = [
@@ -49,7 +47,6 @@ std = [
 	"scale-info/std",
 	"serde",
 	"subsoil/std",
-	"soil-core/std",
 	"soil-io/std",
 	"soil-runtime/std",
 ]

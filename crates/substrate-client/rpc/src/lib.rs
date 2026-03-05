@@ -42,4 +42,4 @@ pub mod utils;
 pub mod testing;
 
 /// Task executor that is being used by RPC subscriptions.
-pub type SubscriptionTaskExecutor = std::sync::Arc<dyn soil_core::traits::SpawnNamed>;
+pub type SubscriptionTaskExecutor = std::sync::Arc<dyn subsoil::core::traits::SpawnNamed>;

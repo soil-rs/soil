@@ -35,7 +35,7 @@ use sc_statement_store::Store as StatementStore;
 use sc_transaction_pool::TransactionPoolHandle;
 use soil_api::ProvideRuntimeApi;
 use soil_client_api::{Backend, BlockBackend};
-use soil_core::crypto::Pair;
+use subsoil::core::crypto::Pair;
 use soil_network::{
 	event::Event, service::traits::NetworkService, NetworkBackend, NetworkEventStream,
 };
@@ -90,7 +90,7 @@ const GRANDPA_JUSTIFICATION_PERIOD: u32 = 512;
 /// Fetch the nonce of the given `account` from the chain state.
 ///
 /// Note: Should only be used for tests.
-pub fn fetch_nonce(client: &FullClient, account: soil_core::sr25519::Pair) -> u32 {
+pub fn fetch_nonce(client: &FullClient, account: subsoil::core::sr25519::Pair) -> u32 {
 	let best_hash = client.chain_info().best_hash;
 	client
 		.runtime_api()
@@ -106,7 +106,7 @@ pub fn fetch_nonce(client: &FullClient, account: soil_core::sr25519::Pair) -> u3
 /// Note: Should only be used for tests.
 pub fn create_extrinsic(
 	client: &FullClient,
-	sender: soil_core::sr25519::Pair,
+	sender: subsoil::core::sr25519::Pair,
 	function: impl Into<kitchensink_runtime::RuntimeCall>,
 	nonce: Option<u32>,
 ) -> kitchensink_runtime::UncheckedExtrinsic {
@@ -892,7 +892,7 @@ mod tests {
 	use soil_client_api::BlockBackend;
 	use soil_consensus::{BlockOrigin, Environment, Proposer};
 	use soil_consensus_epochs::descendent_query;
-	use soil_core::crypto::Pair;
+	use subsoil::core::crypto::Pair;
 	use soil_inherents::InherentDataProvider;
 	use soil_keyring::Sr25519Keyring;
 	use soil_keystore::KeystorePtr;

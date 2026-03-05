@@ -20,7 +20,7 @@
 use crate::{self as topsoil_babe, Config, CurrentSlot};
 use codec::Encode;
 use soil_consensus_babe::{AuthorityId, AuthorityPair, Randomness, Slot, VrfSignature};
-use soil_core::{
+use subsoil::core::{
 	crypto::{Pair, VrfSecret},
 	ConstBool, U256,
 };

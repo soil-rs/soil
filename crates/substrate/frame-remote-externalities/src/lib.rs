@@ -38,7 +38,7 @@ use jsonrpsee::core::params::ArrayParams;
 use log::*;
 use parallel::{run_workers, ProcessResult};
 use serde::de::DeserializeOwned;
-use soil_core::{
+use subsoil::core::{
 	hexdisplay::HexDisplay,
 	storage::{
 		well_known_keys::{is_default_child_storage_key, DEFAULT_CHILD_STORAGE_KEY_PREFIX},
@@ -1286,7 +1286,7 @@ mod remote_tests {
 			.unwrap();
 
 		// Generate artificial child storage entry, to ensure the test's assertion is valid.
-		let child_info = soil_core::storage::ChildInfo::new_default(b"test_child");
+		let child_info = subsoil::core::storage::ChildInfo::new_default(b"test_child");
 		let child_key: Vec<u8> = b"k1".to_vec();
 		let child_value: Vec<u8> = b"v1".to_vec();
 

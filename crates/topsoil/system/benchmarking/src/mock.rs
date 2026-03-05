@@ -81,7 +81,7 @@ impl crate::Config for Test {}
 
 struct MockedReadRuntimeVersion(Vec<u8>);
 
-impl soil_core::traits::ReadRuntimeVersion for MockedReadRuntimeVersion {
+impl subsoil::core::traits::ReadRuntimeVersion for MockedReadRuntimeVersion {
 	fn read_runtime_version(
 		&self,
 		_wasm_code: &[u8],
@@ -102,6 +102,6 @@ pub fn new_test_ext() -> soil_io::TestExternalities {
 	};
 	let read_runtime_version = MockedReadRuntimeVersion(version.encode());
 	let mut ext = soil_io::TestExternalities::new(t);
-	ext.register_extension(soil_core::traits::ReadRuntimeVersionExt::new(read_runtime_version));
+	ext.register_extension(subsoil::core::traits::ReadRuntimeVersionExt::new(read_runtime_version));
 	ext
 }

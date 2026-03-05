@@ -20,7 +20,7 @@
 
 use crate as topsoil_meta_tx;
 use crate::*;
-use soil_core::ConstU8;
+use subsoil::core::ConstU8;
 use soil_keystore::{testing::MemoryKeystore, KeystoreExt};
 use soil_runtime::{
 	traits::{IdentifyAccount, IdentityLookup, Verify},

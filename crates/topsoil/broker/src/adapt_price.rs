@@ -19,7 +19,7 @@
 
 use crate::{CoreIndex, SaleInfoRecord};
 use subsoil::arithmetic::{traits::One, FixedU64};
-use soil_core::Get;
+use subsoil::core::Get;
 use soil_runtime::{FixedPointNumber, FixedPointOperand, Saturating};
 
 /// Performance of a past sale.
@@ -167,7 +167,7 @@ impl<Balance: FixedPointOperand, MinPrice: Get<Balance>> AdaptPrice<Balance>
 
 #[cfg(test)]
 mod tests {
-	use soil_core::ConstU64;
+	use subsoil::core::ConstU64;
 
 	use super::*;
 

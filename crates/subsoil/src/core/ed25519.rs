@@ -17,7 +17,7 @@
 
 //! Simple Ed25519 API.
 
-use crate::{
+use crate::core::{
 	crypto::{
 		ByteArray, CryptoType, CryptoTypeId, DeriveError, DeriveJunction, Pair as TraitPair,
 		PublicBytes, SecretStringError, SignatureBytes,
@@ -65,7 +65,7 @@ pub struct Pair {
 /// Derive a single hard junction.
 fn derive_hard_junction(secret_seed: &Seed, cc: &[u8; 32]) -> Seed {
 	use codec::Encode;
-	("Ed25519HDKD", secret_seed, cc).using_encoded(subsoil_crypto_hashing::blake2_256)
+	("Ed25519HDKD", secret_seed, cc).using_encoded(crate::crypto_hashing::blake2_256)
 }
 
 impl TraitPair for Pair {
@@ -166,8 +166,8 @@ impl NonAggregatable for Pair {}
 mod tests {
 	use super::*;
 	#[cfg(feature = "serde")]
-	use crate::crypto::Ss58Codec;
-	use crate::{
+	use crate::core::crypto::Ss58Codec;
+	use crate::core::{
 		crypto::DEV_PHRASE,
 		proof_of_possession::{ProofOfPossessionGenerator, ProofOfPossessionVerifier},
 	};

@@ -51,7 +51,7 @@ pub async fn execute<Runtime, Block>(
 		.unwrap();
 
 	ext.execute_with(|| {
-		soil_core::crypto::set_default_ss58_version(Runtime::SS58Prefix::get().try_into().unwrap());
+		subsoil::core::crypto::set_default_ss58_version(Runtime::SS58Prefix::get().try_into().unwrap());
 
 		topsoil_bags_list::Pallet::<Runtime, topsoil_bags_list::Instance1>::do_try_state().unwrap();
 

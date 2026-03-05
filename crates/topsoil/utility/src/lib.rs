@@ -60,7 +60,7 @@ extern crate alloc;
 
 use alloc::{boxed::Box, vec::Vec};
 use codec::{Decode, Encode};
-use soil_core::TypeId;
+use subsoil::core::TypeId;
 use soil_io::hashing::blake2_256;
 use soil_runtime::traits::{BadOrigin, Dispatchable, TrailingZeroInput};
 use topsoil_support::{
@@ -141,7 +141,7 @@ pub mod pallet {
 	impl<T: Config> Pallet<T> {
 		/// The limit on the number of batched calls.
 		fn batched_calls_limit() -> u32 {
-			let allocator_limit = soil_core::MAX_POSSIBLE_ALLOCATION;
+			let allocator_limit = subsoil::core::MAX_POSSIBLE_ALLOCATION;
 			let call_size = (core::mem::size_of::<<T as Config>::RuntimeCall>() as u32)
 				.div_ceil(CALL_ALIGN)
 				* CALL_ALIGN;

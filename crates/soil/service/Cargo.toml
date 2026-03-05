@@ -56,7 +56,6 @@ serde_json = { workspace = true, default-features = true, optional = true}
 soil-api = { workspace = true, default-features = true, optional = true}
 soil-blockchain = { workspace = true, default-features = true, optional = true}
 soil-consensus = { workspace = true, default-features = true, optional = true}
-soil-core = { workspace = true, default-features = true, optional = true}
 soil-keystore = { workspace = true, default-features = true, optional = true}
 soil-runtime = { workspace = true, default-features = true, optional = true}
 soil-session = { workspace = true, default-features = true, optional = true}
@@ -105,7 +104,7 @@ std = [
 	"soil-client-api",
 	"soil-client-db",
 	"soil-consensus",
-	"soil-core",
+	"subsoil",
 	"soil-executor",
 	"subsoil",
 	"soil-informant",
@@ -139,9 +138,8 @@ std = [
 	"soil-chain-spec/std",
 	"soil-client-api/std",
 	"soil-client-db/std",
-	"soil-core/std",
-	"soil-executor/std",
 	"subsoil/std",
+	"soil-executor/std",
 	"soil-informant/std",
 	"soil-keystore/std",
 	"soil-network/std",

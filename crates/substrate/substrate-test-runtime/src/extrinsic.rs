@@ -22,7 +22,7 @@ use crate::{
 	CheckSubstrateCall, Extrinsic, Nonce, Pair, RuntimeCall, SignedPayload, TransferData,
 };
 use codec::Encode;
-use soil_core::crypto::Pair as TraitPair;
+use subsoil::core::crypto::Pair as TraitPair;
 use soil_keyring::Sr25519Keyring;
 use soil_runtime::{
 	generic::Preamble, traits::TransactionExtension, transaction_validity::TransactionPriority,

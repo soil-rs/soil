@@ -161,7 +161,7 @@ pub mod registration {
 	use soil_runtime::traits::{Block as BlockT, One, Saturating, Zero};
 	use soil_trie::TrieMut;
 
-	type Hasher = soil_core::Blake2Hasher;
+	type Hasher = subsoil::core::Blake2Hasher;
 	type TrieLayout = soil_trie::LayoutV1<Hasher>;
 
 	/// Create a new inherent data provider instance for a given parent block hash.
@@ -250,7 +250,7 @@ pub mod registration {
 		use std::str::FromStr;
 		let random = [0u8; 32];
 		let proof = build_proof(&random, vec![vec![42]]).unwrap().unwrap();
-		let root = soil_core::H256::from_str(
+		let root = subsoil::core::H256::from_str(
 			"0xff8611a4d212fc161dae19dd57f0f1ba9309f45d6207da13f2d3eab4c6839e91",
 		)
 		.unwrap();

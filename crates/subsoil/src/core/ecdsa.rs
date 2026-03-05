@@ -17,7 +17,7 @@
 
 //! Simple ECDSA secp256k1 API.
 
-use crate::{
+use crate::core::{
 	crypto::{
 		CryptoType, CryptoTypeId, DeriveError, DeriveJunction, Pair as TraitPair, PublicBytes,
 		SecretStringError, SignatureBytes,
@@ -185,14 +185,14 @@ pub type KeccakProofOfPossession = KeccakSignature;
 impl Signature {
 	/// Recover the public key from this signature and a message.
 	pub fn recover<M: AsRef<[u8]>>(&self, message: M) -> Option<Public> {
-		self.recover_prehashed(&subsoil_crypto_hashing::blake2_256(message.as_ref()))
+		self.recover_prehashed(&crate::crypto_hashing::blake2_256(message.as_ref()))
 	}
 }
 
 impl KeccakSignature {
 	/// Recover the public key from this signature and a message.
 	pub fn recover<M: AsRef<[u8]>>(&self, message: M) -> Option<KeccakPublic> {
-		self.recover_prehashed(&subsoil_crypto_hashing::keccak_256(message.as_ref()))
+		self.recover_prehashed(&crate::crypto_hashing::keccak_256(message.as_ref()))
 	}
 }
 
@@ -245,7 +245,7 @@ impl<PUBLIC> From<RecoverableSignature> for GenericSignature<PUBLIC> {
 /// Derive a single hard junction.
 fn derive_hard_junction(secret_seed: &Seed, cc: &[u8; 32]) -> Seed {
 	use codec::Encode;
-	("Secp256k1HDKD", secret_seed, cc).using_encoded(subsoil_crypto_hashing::blake2_256)
+	("Secp256k1HDKD", secret_seed, cc).using_encoded(crate::crypto_hashing::blake2_256)
 }
 
 #[derive(Clone)]
@@ -385,7 +385,7 @@ where
 	#[deprecated(note = "please use `verify` instead")]
 	pub fn verify_deprecated<M: AsRef<[u8]>>(sig: &Signature, message: M, pubkey: &Public) -> bool {
 		let message =
-			libsecp256k1::Message::parse(&subsoil_crypto_hashing::blake2_256(message.as_ref()));
+			libsecp256k1::Message::parse(&crate::crypto_hashing::blake2_256(message.as_ref()));
 
 		let parse_signature_overflowing = |x: [u8; SIGNATURE_SERIALIZED_SIZE]| {
 			let sig = libsecp256k1::Signature::parse_overflowing_slice(&x[..64]).ok()?;
@@ -481,7 +481,7 @@ where
 	<Self as TraitPair>::Signature: From<NativeSignature>,
 {
 	fn sign(&self, message: &[u8]) -> Signature {
-		self.sign_prehashed(&subsoil_crypto_hashing::blake2_256(message))
+		self.sign_prehashed(&crate::crypto_hashing::blake2_256(message))
 	}
 }
 
@@ -491,7 +491,7 @@ where
 	<Self as TraitPair>::Signature: From<NativeSignature>,
 {
 	fn sign(&self, message: &[u8]) -> KeccakSignature {
-		self.sign_prehashed(&subsoil_crypto_hashing::keccak_256(message))
+		self.sign_prehashed(&crate::crypto_hashing::keccak_256(message))
 	}
 }
 
@@ -542,7 +542,7 @@ mod seal {
 #[cfg(test)]
 mod test {
 	use super::*;
-	use crate::{
+	use crate::core::{
 		crypto::{
 			set_default_ss58_version, PublicError, Ss58AddressFormat, Ss58AddressFormatRegistry,
 			Ss58Codec, DEV_PHRASE,
@@ -737,9 +737,9 @@ mod test {
 		// We need to run this test in its own process to not interfere with other tests running in
 		// parallel and also relying on the ss58 version.
 		if std::env::var("RUN_CUSTOM_FORMAT_TEST") == Ok("1".into()) {
-			use crate::crypto::Ss58AddressFormat;
+			use crate::core::crypto::Ss58AddressFormat;
 			// temp save default format version
-			let default_format = crate::crypto::default_ss58_version();
+			let default_format = crate::core::crypto::default_ss58_version();
 			// set current ss58 version is custom "200" `Ss58AddressFormat::Custom(200)`
 
 			set_default_ss58_version(Ss58AddressFormat::custom(200));
@@ -818,7 +818,7 @@ mod test {
 
 		// using pre-hashed `msg` works
 		let msg = b"this should be hashed";
-		let sig1 = pair.sign_prehashed(&subsoil_crypto_hashing::blake2_256(msg));
+		let sig1 = pair.sign_prehashed(&crate::crypto_hashing::blake2_256(msg));
 		let sig2 = pair.sign(msg);
 		assert_eq!(sig1, sig2);
 	}
@@ -828,12 +828,12 @@ mod test {
 		let (pair, _, _) = Pair::generate_with_phrase(Some("password"));
 
 		// `msg` and `sig` match
-		let msg = subsoil_crypto_hashing::blake2_256(b"this should be hashed");
+		let msg = crate::crypto_hashing::blake2_256(b"this should be hashed");
 		let sig = pair.sign_prehashed(&msg);
 		assert!(Pair::verify_prehashed(&sig, &msg, &pair.public()));
 
 		// `msg` and `sig` don't match
-		let msg = subsoil_crypto_hashing::blake2_256(b"this is a different message");
+		let msg = crate::crypto_hashing::blake2_256(b"this is a different message");
 		assert!(!Pair::verify_prehashed(&sig, &msg, &pair.public()));
 	}
 
@@ -842,7 +842,7 @@ mod test {
 		let (pair, _, _) = Pair::generate_with_phrase(Some("password"));
 
 		// recovered key matches signing key
-		let msg = subsoil_crypto_hashing::blake2_256(b"this should be hashed");
+		let msg = crate::crypto_hashing::blake2_256(b"this should be hashed");
 		let sig = pair.sign_prehashed(&msg);
 		let key = sig.recover_prehashed(&msg).unwrap();
 		assert_eq!(pair.public(), key);
@@ -851,7 +851,7 @@ mod test {
 		assert!(Pair::verify_prehashed(&sig, &msg, &key));
 
 		// recovered key and signing key don't match
-		let msg = subsoil_crypto_hashing::blake2_256(b"this is a different message");
+		let msg = crate::crypto_hashing::blake2_256(b"this is a different message");
 		let key = sig.recover_prehashed(&msg).unwrap();
 		assert_ne!(pair.public(), key);
 	}

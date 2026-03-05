@@ -20,7 +20,7 @@
 
 use parking_lot::RwLock;
 use soil_blockchain::{CachedHeaderMetadata, HeaderMetadata};
-use soil_core::{
+use subsoil::core::{
 	offchain::storage::InMemOffchainStorage as OffchainStorage, storage::well_known_keys,
 };
 use soil_runtime::{

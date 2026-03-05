@@ -19,7 +19,7 @@
 //! Extrinsic helpers for author RPC module.
 
 use serde::{Deserialize, Serialize};
-use soil_core::Bytes;
+use subsoil::core::Bytes;
 
 /// RPC Extrinsic or hash
 ///

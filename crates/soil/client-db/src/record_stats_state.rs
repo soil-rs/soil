@@ -19,7 +19,7 @@
 //! Provides [`RecordStatsState`] for recording stats about state access.
 
 use crate::stats::StateUsageStats;
-use soil_core::storage::ChildInfo;
+use subsoil::core::storage::ChildInfo;
 use soil_runtime::{
 	traits::{Block as BlockT, HashingFor},
 	StateVersion,

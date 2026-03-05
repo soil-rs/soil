@@ -17,7 +17,7 @@
 
 pub use crate::runtime_api::StatementSource;
 use crate::{Hash, Statement, Topic, MAX_ANY_TOPICS, MAX_TOPICS};
-use soil_core::{bounded_vec::BoundedVec, Bytes, ConstU32};
+use subsoil::core::{bounded_vec::BoundedVec, Bytes, ConstU32};
 use std::collections::HashSet;
 
 /// Statement store error.

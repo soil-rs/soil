@@ -26,7 +26,7 @@ use core::{
 };
 use hash_db::Hasher;
 use log::warn;
-use soil_core::{
+use subsoil::core::{
 	storage::{
 		well_known_keys::is_child_storage_key, ChildInfo, StateVersion, Storage, TrackedStorageKey,
 	},
@@ -74,7 +74,7 @@ impl BasicExternalities {
 				.map(|(iter, i)| {
 					(
 						i.storage_key().to_vec(),
-						soil_core::storage::StorageChild {
+						subsoil::core::storage::StorageChild {
 							data: iter
 								.filter_map(|(k, v)| v.value().map(|v| (k.to_vec(), v.to_vec())))
 								.collect(),
@@ -91,7 +91,7 @@ impl BasicExternalities {
 	/// Returns the result of the closure and updates `storage` with all changes.
 	#[cfg(feature = "std")]
 	pub fn execute_with_storage<R>(
-		storage: &mut soil_core::storage::Storage,
+		storage: &mut subsoil::core::storage::Storage,
 		f: impl FnOnce() -> R,
 	) -> R {
 		let mut ext = Self::new(core::mem::take(storage));
@@ -376,7 +376,7 @@ impl subsoil::externalities::ExtensionStore for BasicExternalities {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use soil_core::{
+	use subsoil::core::{
 		map,
 		storage::{well_known_keys::CODE, Storage, StorageChild},
 	};

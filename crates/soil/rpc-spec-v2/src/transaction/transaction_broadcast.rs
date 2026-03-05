@@ -33,7 +33,7 @@ use parking_lot::RwLock;
 use rand::{distributions::Alphanumeric, Rng};
 use soil_blockchain::HeaderBackend;
 use soil_client_api::BlockchainEvents;
-use soil_core::Bytes;
+use subsoil::core::Bytes;
 use soil_runtime::traits::Block as BlockT;
 use soil_transaction_pool_api::{
 	error::IntoPoolError, TransactionFor, TransactionPool, TransactionSource,

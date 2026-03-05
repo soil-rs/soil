@@ -861,11 +861,11 @@ impl<H: Hasher> SharedTrieCache<H> {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use soil_core::H256 as Hash;
+	use subsoil::core::H256 as Hash;
 
 	#[test]
 	fn shared_value_cache_works() {
-		let mut cache = SharedValueCache::<soil_core::H256>::new(usize::MAX, 10 * 10);
+		let mut cache = SharedValueCache::<subsoil::core::H256>::new(usize::MAX, 10 * 10);
 
 		let key = vec![0; 10];
 

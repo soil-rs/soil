@@ -19,7 +19,7 @@
 
 use crate::{mock::*, Event, SystemConfig, *};
 use enumflags2::BitFlags;
-use soil_core::{bounded::BoundedVec, Pair};
+use subsoil::core::{bounded::BoundedVec, Pair};
 use soil_runtime::{
 	traits::{Dispatchable, IdentifyAccount},
 	MultiSignature, MultiSigner,
@@ -3291,7 +3291,7 @@ fn add_remove_item_attributes_approval_should_work() {
 #[test]
 fn validate_signature() {
 	new_test_ext().execute_with(|| {
-		let user_1_pair = soil_core::sr25519::Pair::from_string("//Alice", None).unwrap();
+		let user_1_pair = subsoil::core::sr25519::Pair::from_string("//Alice", None).unwrap();
 		let user_1_signer = MultiSigner::Sr25519(user_1_pair.public());
 		let user_1 = user_1_signer.clone().into_account();
 		let mint_data: PreSignedMint<u32, u32, AccountId, u32, u64> = PreSignedMint {
@@ -3321,7 +3321,7 @@ fn validate_signature() {
 fn pre_signed_mints_should_work() {
 	new_test_ext().execute_with(|| {
 		let user_0 = account(0);
-		let user_1_pair = soil_core::sr25519::Pair::from_string("//Alice", None).unwrap();
+		let user_1_pair = subsoil::core::sr25519::Pair::from_string("//Alice", None).unwrap();
 		let user_1_signer = MultiSigner::Sr25519(user_1_pair.public());
 		let user_1 = user_1_signer.clone().into_account();
 		let mint_data = PreSignedMint {
@@ -3492,11 +3492,11 @@ fn pre_signed_mints_should_work() {
 #[test]
 fn pre_signed_attributes_should_work() {
 	new_test_ext().execute_with(|| {
-		let user_1_pair = soil_core::sr25519::Pair::from_string("//Alice", None).unwrap();
+		let user_1_pair = subsoil::core::sr25519::Pair::from_string("//Alice", None).unwrap();
 		let user_1_signer = MultiSigner::Sr25519(user_1_pair.public());
 		let user_1 = user_1_signer.clone().into_account();
 		let user_2 = account(2);
-		let user_3_pair = soil_core::sr25519::Pair::from_string("//Bob", None).unwrap();
+		let user_3_pair = subsoil::core::sr25519::Pair::from_string("//Bob", None).unwrap();
 		let user_3_signer = MultiSigner::Sr25519(user_3_pair.public());
 		let user_3 = user_3_signer.clone().into_account();
 		let collection_id = 0;

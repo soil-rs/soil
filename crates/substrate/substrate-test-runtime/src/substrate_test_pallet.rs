@@ -22,7 +22,7 @@
 //! of them requires signing. Refer to `pallet::Call` for further details.
 
 use alloc::{vec, vec::Vec};
-use soil_core::sr25519::Public;
+use subsoil::core::sr25519::Public;
 use soil_runtime::{
 	traits::Hash,
 	transaction_validity::{
@@ -39,7 +39,7 @@ const LOG_TARGET: &str = "substrate_test_pallet";
 pub mod pallet {
 	use super::*;
 	use crate::TransferData;
-	use soil_core::storage::well_known_keys;
+	use subsoil::core::storage::well_known_keys;
 	use soil_runtime::{traits::BlakeTwo256, transaction_validity::TransactionPriority, Perbill};
 	use topsoil_system::pallet_prelude::*;
 

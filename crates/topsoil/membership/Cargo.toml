@@ -22,7 +22,7 @@ topsoil-support = { workspace = true }
 topsoil-system = { workspace = true }
 log = { workspace = true }
 scale-info = { features = ["derive", "serde"], workspace = true }
-soil-core = { features = ["serde"], workspace = true }
+subsoil = { features = ["serde"], workspace = true }
 soil-io = { workspace = true }
 soil-runtime = { features = ["serde"], workspace = true }
 
@@ -35,7 +35,7 @@ std = [
 	"topsoil-system/std",
 	"log/std",
 	"scale-info/std",
-	"soil-core/std",
+	"subsoil/std",
 	"soil-io/std",
 	"soil-runtime/std",
 ]

@@ -29,7 +29,7 @@ use codec::Codec;
 #[cfg(feature = "std")]
 use hash_db::HashDB;
 use hash_db::Hasher;
-use soil_core::storage::{ChildInfo, StateVersion};
+use subsoil::core::storage::{ChildInfo, StateVersion};
 #[cfg(feature = "std")]
 use soil_trie::{
 	cache::{LocalTrieCache, TrieCache},
@@ -577,7 +577,7 @@ pub mod tests {
 
 	use super::*;
 	use codec::Encode;
-	use soil_core::H256;
+	use subsoil::core::H256;
 	use soil_runtime::traits::BlakeTwo256;
 	use soil_trie::{
 		cache::{CacheSize, SharedTrieCache},

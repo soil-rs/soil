@@ -17,7 +17,7 @@
 
 #![allow(dead_code)]
 
-use soil_core::{ConstBool, ConstU32, Get};
+use subsoil::core::{ConstBool, ConstU32, Get};
 use soil_npos_elections::{ElectionScore, VoteWeight};
 use soil_runtime::{
 	offchain::{
@@ -258,15 +258,15 @@ impl topsoil_bags_list::Config for Runtime {
 }
 
 pub struct BalanceToU256;
-impl soil_runtime::traits::Convert<Balance, soil_core::U256> for BalanceToU256 {
-	fn convert(n: Balance) -> soil_core::U256 {
+impl soil_runtime::traits::Convert<Balance, subsoil::core::U256> for BalanceToU256 {
+	fn convert(n: Balance) -> subsoil::core::U256 {
 		n.into()
 	}
 }
 
 pub struct U256ToBalance;
-impl soil_runtime::traits::Convert<soil_core::U256, Balance> for U256ToBalance {
-	fn convert(n: soil_core::U256) -> Balance {
+impl soil_runtime::traits::Convert<subsoil::core::U256, Balance> for U256ToBalance {
+	fn convert(n: subsoil::core::U256) -> Balance {
 		n.try_into().unwrap()
 	}
 }

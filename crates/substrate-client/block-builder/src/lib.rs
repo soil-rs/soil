@@ -33,7 +33,7 @@ use soil_api::{
 	TransactionOutcome,
 };
 use soil_blockchain::{ApplyExtrinsicFailed, Error, HeaderBackend};
-use soil_core::traits::CallContext;
+use subsoil::core::traits::CallContext;
 use subsoil::externalities::Extensions;
 use soil_runtime::{
 	legacy,
@@ -381,7 +381,7 @@ where
 mod tests {
 	use super::*;
 	use soil_blockchain::HeaderBackend;
-	use soil_core::Blake2Hasher;
+	use subsoil::core::Blake2Hasher;
 	use soil_state_machine::Backend;
 	use substrate_test_runtime_client::{
 		runtime::{Block, ExtrinsicBuilder},
@@ -416,7 +416,7 @@ mod tests {
 		.unwrap();
 
 		assert!(backend
-			.storage(&soil_core::storage::well_known_keys::CODE)
+			.storage(&subsoil::core::storage::well_known_keys::CODE)
 			.unwrap_err()
 			.contains("Database missing expected key"),);
 	}

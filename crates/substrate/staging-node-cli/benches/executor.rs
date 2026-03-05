@@ -24,7 +24,7 @@ use kitchensink_runtime::{
 };
 use node_primitives::{BlockNumber, Hash};
 use node_testing::keyring::*;
-use soil_core::{
+use subsoil::core::{
 	storage::well_known_keys,
 	traits::{CallContext, CodeExecutor, RuntimeCode},
 };
@@ -97,7 +97,7 @@ fn construct_block<E: Externalities>(
 	};
 
 	let runtime_code = RuntimeCode {
-		code_fetcher: &soil_core::traits::WrappedRuntimeCode(compact_code_unwrap().into()),
+		code_fetcher: &subsoil::core::traits::WrappedRuntimeCode(compact_code_unwrap().into()),
 		hash: vec![1, 2, 3],
 		heap_pages: None,
 	};
@@ -169,7 +169,7 @@ fn bench_execute_block(c: &mut Criterion) {
 
 		let executor = RuntimeExecutor::builder().build();
 		let runtime_code = RuntimeCode {
-			code_fetcher: &soil_core::traits::WrappedRuntimeCode(compact_code_unwrap().into()),
+			code_fetcher: &subsoil::core::traits::WrappedRuntimeCode(compact_code_unwrap().into()),
 			hash: vec![1, 2, 3],
 			heap_pages: None,
 		};

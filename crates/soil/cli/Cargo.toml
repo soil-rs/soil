@@ -44,7 +44,6 @@ soil-utils = { workspace = true, default-features = true, optional = true}
 serde = { workspace = true, default-features = true, optional = true}
 serde_json = { workspace = true, default-features = true, optional = true}
 soil-blockchain = { workspace = true, default-features = true, optional = true}
-soil-core = { workspace = true, default-features = true, optional = true}
 soil-keyring = { workspace = true, default-features = true, optional = true}
 soil-keystore = { workspace = true, default-features = true, optional = true}
 soil-runtime = { workspace = true, default-features = true, optional = true}
@@ -81,7 +80,6 @@ std = [
 	"soil-blockchain",
 	"soil-client-api",
 	"soil-client-db",
-	"soil-core",
 	"soil-keyring",
 	"soil-keystore",
 	"soil-network",
@@ -95,7 +93,6 @@ std = [
 	"tokio",
 	"soil-client-api/std",
 	"soil-client-db/std",
-	"soil-core/std",
 	"soil-keyring/std",
 	"soil-keystore/std",
 	"soil-network/std",

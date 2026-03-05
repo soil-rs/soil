@@ -21,7 +21,7 @@
 #![warn(missing_docs)]
 
 /// Re-export of parent module scope storage prefix.
-pub use soil_core::offchain::STORAGE_PREFIX;
+pub use subsoil::core::offchain::STORAGE_PREFIX;
 
 soil_api::decl_runtime_apis! {
 	/// The offchain worker api.

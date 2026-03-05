@@ -20,7 +20,7 @@
 
 use parking_lot::Mutex;
 use schnellru::{ByLength, LruMap};
-use soil_core::U256;
+use subsoil::core::U256;
 use soil_runtime::{
 	traits::{Block as BlockT, Header, NumberFor, One},
 	Saturating,

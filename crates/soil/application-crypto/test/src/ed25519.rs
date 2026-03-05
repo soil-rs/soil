@@ -19,7 +19,7 @@
 
 use soil_api::{ApiExt, ProvideRuntimeApi};
 use soil_application_crypto::{ed25519::AppPair, RuntimePublic};
-use soil_core::{
+use subsoil::core::{
 	crypto::{ByteArray, Pair},
 	ed25519::Pair as Ed25519Pair,
 	proof_of_possession::{ProofOfPossessionGenerator, ProofOfPossessionVerifier},

@@ -23,7 +23,7 @@ pub mod pallet {
 
 	#[pallet::config]
 	pub trait Config:
-		topsoil_system::Config<Hash = soil_core::H256, RuntimeEvent: From<Event<Self>>>
+		topsoil_system::Config<Hash = subsoil::core::H256, RuntimeEvent: From<Event<Self>>>
 	{
 		type Bar: Clone + std::fmt::Debug + Eq;
 	}

@@ -57,7 +57,7 @@ extern crate alloc;
 use alloc::vec::Vec;
 use codec::{Decode, DecodeWithMemTracking, Encode};
 use lite_json::json::JsonValue;
-use soil_core::crypto::KeyTypeId;
+use subsoil::core::crypto::KeyTypeId;
 use soil_runtime::{
 	offchain::{
 		http,
@@ -98,7 +98,7 @@ pub const KEY_TYPE: KeyTypeId = KeyTypeId(*b"btc!");
 /// the types with this pallet-specific identifier.
 pub mod crypto {
 	use super::KEY_TYPE;
-	use soil_core::sr25519::Signature as Sr25519Signature;
+	use subsoil::core::sr25519::Signature as Sr25519Signature;
 	use soil_runtime::{
 		app_crypto::{app_crypto, sr25519},
 		traits::Verify,
@@ -110,8 +110,8 @@ pub mod crypto {
 
 	impl topsoil_system::offchain::AppCrypto<MultiSigner, MultiSignature> for TestAuthId {
 		type RuntimeAppPublic = Public;
-		type GenericSignature = soil_core::sr25519::Signature;
-		type GenericPublic = soil_core::sr25519::Public;
+		type GenericSignature = subsoil::core::sr25519::Signature;
+		type GenericPublic = subsoil::core::sr25519::Public;
 	}
 
 	// implemented for mock runtime in test
@@ -119,8 +119,8 @@ pub mod crypto {
 		for TestAuthId
 	{
 		type RuntimeAppPublic = Public;
-		type GenericSignature = soil_core::sr25519::Signature;
-		type GenericPublic = soil_core::sr25519::Public;
+		type GenericSignature = subsoil::core::sr25519::Signature;
+		type GenericPublic = subsoil::core::sr25519::Public;
 	}
 }
 

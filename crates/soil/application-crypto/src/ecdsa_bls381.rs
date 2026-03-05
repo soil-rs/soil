@@ -20,8 +20,8 @@
 use crate::{KeyTypeId, RuntimePublic};
 use alloc::vec::Vec;
 
-pub use soil_core::paired_crypto::ecdsa_bls381::*;
-use soil_core::{
+pub use subsoil::core::paired_crypto::ecdsa_bls381::*;
+use subsoil::core::{
 	bls381,
 	crypto::CryptoType,
 	ecdsa, ecdsa_bls381,
@@ -29,7 +29,7 @@ use soil_core::{
 };
 
 mod app {
-	crate::app_crypto!(super, soil_core::testing::ECDSA_BLS381);
+	crate::app_crypto!(super, subsoil::core::testing::ECDSA_BLS381);
 }
 
 #[cfg(feature = "full_crypto")]
@@ -91,7 +91,7 @@ impl RuntimePublic for Public {
 	}
 
 	fn to_raw_vec(&self) -> Vec<u8> {
-		soil_core::crypto::ByteArray::to_raw_vec(self)
+		subsoil::core::crypto::ByteArray::to_raw_vec(self)
 	}
 }
 
@@ -143,7 +143,7 @@ fn combine_proof_of_possession(
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use soil_core::{bls381, crypto::Pair, ecdsa};
+	use subsoil::core::{bls381, crypto::Pair, ecdsa};
 
 	/// Helper function to generate test public keys for ECDSA and BLS381
 	fn generate_test_keys(

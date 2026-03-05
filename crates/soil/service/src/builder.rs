@@ -52,7 +52,7 @@ use soil_client_db::{Backend, BlocksPruning, DatabaseSettings, PruningMode};
 use soil_consensus::block_validation::{
 	BlockAnnounceValidator, Chain, DefaultBlockAnnounceValidator,
 };
-use soil_core::traits::{CodeExecutor, SpawnNamed};
+use subsoil::core::traits::{CodeExecutor, SpawnNamed};
 use soil_executor::{
 	wasm_interface::HostFunctions, HeapAllocStrategy, NativeExecutionDispatch,
 	RuntimeVersionOf, WasmExecutor, DEFAULT_HEAP_ALLOC_STRATEGY,

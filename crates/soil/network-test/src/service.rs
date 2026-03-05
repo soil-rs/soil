@@ -149,7 +149,7 @@ impl TestNetworkBuilder {
 				PassThroughVerifier(false),
 				Box::new(client.clone()),
 				None,
-				&soil_core::testing::TaskExecutor::new(),
+				&subsoil::core::testing::TaskExecutor::new(),
 				None,
 			)));
 

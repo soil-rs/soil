@@ -23,7 +23,7 @@ topsoil-system = { workspace = true }
 lite-json = { workspace = true }
 log = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
-soil-core = { workspace = true }
+subsoil = { workspace = true }
 soil-io = { workspace = true }
 soil-keystore = { optional = true, workspace = true }
 soil-runtime = { workspace = true }
@@ -37,7 +37,7 @@ std = [
 	"lite-json/std",
 	"log/std",
 	"scale-info/std",
-	"soil-core/std",
+	"subsoil/std",
 	"soil-io/std",
 	"soil-keystore/std",
 	"soil-runtime/std",

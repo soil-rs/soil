@@ -21,7 +21,7 @@ impl-trait-for-tuples = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { features = ["alloc", "derive"], optional = true, workspace = true }
 
-soil-core = { workspace = true }
+subsoil = { workspace = true }
 soil-runtime = { workspace = true }
 
 [features]
@@ -30,7 +30,7 @@ std = [
 	"codec/std",
 	"scale-info/std",
 	"serde/std",
-	"soil-core/std",
+	"subsoil/std",
 	"soil-runtime/std",
 ]
 runtime-benchmarks = ["soil-runtime/runtime-benchmarks"]

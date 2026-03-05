@@ -20,14 +20,14 @@ use crate::{KeyTypeId, RuntimePublic};
 
 use alloc::vec::Vec;
 
-pub use soil_core::bls::{
+pub use subsoil::core::bls::{
 	bls381::{BlsEngine as Bls381Engine, *},
 	Pair as BLS_Pair, ProofOfPossession as BLSPoP,
 };
-use soil_core::{crypto::CryptoType, proof_of_possession::ProofOfPossessionVerifier};
+use subsoil::core::{crypto::CryptoType, proof_of_possession::ProofOfPossessionVerifier};
 
 mod app {
-	crate::app_crypto!(super, soil_core::testing::BLS381);
+	crate::app_crypto!(super, subsoil::core::testing::BLS381);
 }
 
 #[cfg(feature = "full_crypto")]
@@ -81,6 +81,6 @@ impl RuntimePublic for Public {
 	}
 
 	fn to_raw_vec(&self) -> Vec<u8> {
-		soil_core::crypto::ByteArray::to_raw_vec(self)
+		subsoil::core::crypto::ByteArray::to_raw_vec(self)
 	}
 }

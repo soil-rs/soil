@@ -16,7 +16,7 @@
 // limitations under the License.
 
 pub mod constants {
-	use soil_core::parameter_types;
+	use subsoil::core::parameter_types;
 	use subsoil::weights::RuntimeDbWeight;
 	use topsoil_support::weights::constants;
 

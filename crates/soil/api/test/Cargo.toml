@@ -36,7 +36,6 @@ trybuild = { workspace = true }
 criterion = { workspace = true, default-features = true }
 futures = { workspace = true }
 log = { workspace = true, default-features = true }
-soil-core = { workspace = true, default-features = true }
 static_assertions = { workspace = true, default-features = true }
 
 [features]

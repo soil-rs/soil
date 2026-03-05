@@ -143,7 +143,7 @@ mod tests {
 	};
 
 	use codec::Encode;
-	use soil_core::{
+	use subsoil::core::{
 		crypto::key_types::DUMMY,
 		offchain::{testing::TestOffchainExt, OffchainDbExt, OffchainWorkerExt, StorageKind},
 	};

@@ -19,16 +19,16 @@
 
 use crate::{KeyTypeId, RuntimePublic};
 use alloc::vec::Vec;
-pub use soil_core::bandersnatch::*;
+pub use subsoil::core::bandersnatch::*;
 
-use soil_core::{
+use subsoil::core::{
 	crypto::CryptoType,
 	proof_of_possession::{NonAggregatable, ProofOfPossessionVerifier},
 	Pair as TraitPair,
 };
 
 mod app {
-	crate::app_crypto!(super, soil_core::testing::BANDERSNATCH);
+	crate::app_crypto!(super, subsoil::core::testing::BANDERSNATCH);
 }
 
 #[cfg(feature = "full_crypto")]
@@ -83,6 +83,6 @@ impl RuntimePublic for Public {
 	}
 
 	fn to_raw_vec(&self) -> Vec<u8> {
-		soil_core::crypto::ByteArray::to_raw_vec(self)
+		subsoil::core::crypto::ByteArray::to_raw_vec(self)
 	}
 }

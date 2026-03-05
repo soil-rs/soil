@@ -18,7 +18,7 @@
 
 use criterion::{criterion_group, criterion_main, Criterion};
 use sc_statement_store::Store;
-use soil_core::Pair;
+use subsoil::core::Pair;
 use soil_runtime::codec::Encode;
 use soil_statement_store::{
 	DecryptionKey, Statement, StatementSource, StatementStore, SubmitResult, Topic,
@@ -26,7 +26,7 @@ use soil_statement_store::{
 use std::sync::Arc;
 
 type Extrinsic = soil_runtime::OpaqueExtrinsic;
-type Hash = soil_core::H256;
+type Hash = subsoil::core::H256;
 type Hashing = soil_runtime::traits::BlakeTwo256;
 type BlockNumber = u64;
 type Header = soil_runtime::generic::Header<BlockNumber, Hashing>;
@@ -183,7 +183,7 @@ fn create_signed_statement(
 	id: u64,
 	topics: &[Topic],
 	dec_key: Option<DecryptionKey>,
-	keypair: &soil_core::ed25519::Pair,
+	keypair: &subsoil::core::ed25519::Pair,
 ) -> Statement {
 	let mut statement = Statement::new();
 	let mut data = vec![0u8; STATEMENT_DATA_SIZE];
@@ -202,7 +202,7 @@ fn create_signed_statement(
 	statement
 }
 
-fn setup_store(keypair: &soil_core::ed25519::Pair) -> (Store, tempfile::TempDir) {
+fn setup_store(keypair: &subsoil::core::ed25519::Pair) -> (Store, tempfile::TempDir) {
 	let temp_dir = tempfile::Builder::new().tempdir().expect("Error creating test dir");
 	let client = Arc::new(TestClient);
 	let mut path: std::path::PathBuf = temp_dir.path().into();
@@ -214,7 +214,7 @@ fn setup_store(keypair: &soil_core::ed25519::Pair) -> (Store, tempfile::TempDir)
 		client,
 		keystore,
 		None,
-		Box::new(soil_core::testing::TaskExecutor::new()),
+		Box::new(subsoil::core::testing::TaskExecutor::new()),
 	)
 	.unwrap();
 
@@ -229,7 +229,7 @@ fn setup_store(keypair: &soil_core::ed25519::Pair) -> (Store, tempfile::TempDir)
 }
 
 fn bench_submit(c: &mut Criterion) {
-	let keypair = soil_core::ed25519::Pair::from_string("//Bench", None).unwrap();
+	let keypair = subsoil::core::ed25519::Pair::from_string("//Bench", None).unwrap();
 	let statements: Vec<_> = (INITIAL_STATEMENTS..INITIAL_STATEMENTS + TOTAL_OPS)
 		.map(|i| create_signed_statement(i as u64, &[], None, &keypair))
 		.collect();
@@ -262,7 +262,7 @@ fn bench_submit(c: &mut Criterion) {
 }
 
 fn bench_remove(c: &mut Criterion) {
-	let keypair = soil_core::ed25519::Pair::from_string("//Bench", None).unwrap();
+	let keypair = subsoil::core::ed25519::Pair::from_string("//Bench", None).unwrap();
 
 	c.bench_function("remove", |b| {
 		b.iter_batched(
@@ -298,7 +298,7 @@ fn bench_remove(c: &mut Criterion) {
 }
 
 fn bench_statement_lookup(c: &mut Criterion) {
-	let keypair = soil_core::ed25519::Pair::from_string("//Bench", None).unwrap();
+	let keypair = subsoil::core::ed25519::Pair::from_string("//Bench", None).unwrap();
 
 	c.bench_function("statement_lookup", |b| {
 		b.iter_batched(
@@ -334,7 +334,7 @@ fn bench_statement_lookup(c: &mut Criterion) {
 }
 
 fn bench_statements_all(c: &mut Criterion) {
-	let keypair = soil_core::ed25519::Pair::from_string("//Bench", None).unwrap();
+	let keypair = subsoil::core::ed25519::Pair::from_string("//Bench", None).unwrap();
 	let (store, _temp) = setup_store(&keypair);
 	let store = Arc::new(store);
 
@@ -355,7 +355,7 @@ fn bench_statements_all(c: &mut Criterion) {
 }
 
 fn bench_broadcasts(c: &mut Criterion) {
-	let keypair = soil_core::ed25519::Pair::from_string("//Bench", None).unwrap();
+	let keypair = subsoil::core::ed25519::Pair::from_string("//Bench", None).unwrap();
 	let (store, _temp) = setup_store(&keypair);
 	let store = Arc::new(store);
 	let topics = vec![topic(0), topic(1)];
@@ -378,7 +378,7 @@ fn bench_broadcasts(c: &mut Criterion) {
 }
 
 fn bench_posted(c: &mut Criterion) {
-	let keypair = soil_core::ed25519::Pair::from_string("//Bench", None).unwrap();
+	let keypair = subsoil::core::ed25519::Pair::from_string("//Bench", None).unwrap();
 	let (store, _temp) = setup_store(&keypair);
 	let store = Arc::new(store);
 	let key = dec_key(42);
@@ -400,7 +400,7 @@ fn bench_posted(c: &mut Criterion) {
 }
 
 fn bench_maintain(c: &mut Criterion) {
-	let keypair = soil_core::ed25519::Pair::from_string("//Bench", None).unwrap();
+	let keypair = subsoil::core::ed25519::Pair::from_string("//Bench", None).unwrap();
 
 	c.bench_function("maintain", |b| {
 		b.iter_batched(
@@ -428,7 +428,7 @@ fn bench_maintain(c: &mut Criterion) {
 }
 
 fn bench_mixed_workload(c: &mut Criterion) {
-	let keypair = soil_core::ed25519::Pair::from_string("//Bench", None).unwrap();
+	let keypair = subsoil::core::ed25519::Pair::from_string("//Bench", None).unwrap();
 	let statements: Vec<_> = (INITIAL_STATEMENTS..INITIAL_STATEMENTS + TOTAL_OPS)
 		.map(|i| create_signed_statement(i as u64, &[topic(0), topic(1)], None, &keypair))
 		.collect();

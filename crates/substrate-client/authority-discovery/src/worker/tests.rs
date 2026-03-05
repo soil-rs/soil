@@ -616,7 +616,7 @@ async fn dont_stop_polling_dht_event_stream_after_bogus_event() {
 
 struct DhtValueFoundTester {
 	pub remote_key_store: MemoryKeystore,
-	pub remote_authority_public: soil_core::sr25519::Public,
+	pub remote_authority_public: subsoil::core::sr25519::Public,
 	pub remote_node_key: Keypair,
 	pub local_worker: Option<
 		Worker<

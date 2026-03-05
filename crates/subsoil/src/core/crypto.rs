@@ -17,15 +17,15 @@
 
 //! Cryptographic utilities.
 
-use crate::{ed25519, sr25519, U256};
+use crate::core::{ed25519, sr25519, U256};
 use alloc::{format, str, vec::Vec};
 #[cfg(feature = "serde")]
 use alloc::{string::String, vec};
 use bip39::{Language, Mnemonic};
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
-use core::hash::Hash;
+use ::core::hash::Hash;
 #[doc(hidden)]
-pub use core::ops::Deref;
+pub use ::core::ops::Deref;
 #[cfg(feature = "std")]
 use itertools::Itertools;
 #[cfg(feature = "std")]
@@ -36,7 +36,7 @@ pub use ss58_registry::{from_known_address_format, Ss58AddressFormat, Ss58Addres
 /// Trait to zeroize a memory buffer.
 pub use zeroize::Zeroize;
 
-pub use crate::{
+pub use crate::core::{
 	address_uri::{AddressUri, Error as AddressUriError},
 	crypto_bytes::{CryptoBytes, PublicBytes, SignatureBytes},
 };
@@ -142,7 +142,7 @@ impl DeriveJunction {
 		let mut cc: [u8; JUNCTION_ID_LEN] = Default::default();
 		index.using_encoded(|data| {
 			if data.len() > JUNCTION_ID_LEN {
-				cc.copy_from_slice(&subsoil_crypto_hashing::blake2_256(data));
+				cc.copy_from_slice(&crate::crypto_hashing::blake2_256(data));
 			} else {
 				cc[0..data.len()].copy_from_slice(data);
 			}
@@ -242,8 +242,8 @@ pub enum PublicError {
 }
 
 #[cfg(feature = "std")]
-impl core::fmt::Debug for PublicError {
-	fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+impl ::core::fmt::Debug for PublicError {
+	fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
 		// Just use the `Display` implementation
 		write!(f, "{}", self)
 	}
@@ -388,14 +388,14 @@ fn ss58hash(data: &[u8]) -> Vec<u8> {
 
 /// Default prefix number
 #[cfg(feature = "serde")]
-static DEFAULT_VERSION: core::sync::atomic::AtomicU16 = core::sync::atomic::AtomicU16::new(
+static DEFAULT_VERSION: ::core::sync::atomic::AtomicU16 = ::core::sync::atomic::AtomicU16::new(
 	from_known_address_format(Ss58AddressFormatRegistry::SubstrateAccount),
 );
 
 /// Returns default SS58 format used by the current active process.
 #[cfg(feature = "serde")]
 pub fn default_ss58_version() -> Ss58AddressFormat {
-	DEFAULT_VERSION.load(core::sync::atomic::Ordering::Relaxed).into()
+	DEFAULT_VERSION.load(::core::sync::atomic::Ordering::Relaxed).into()
 }
 
 /// Returns either the input address format or the default.
@@ -415,7 +415,7 @@ pub fn unwrap_or_default_ss58_version(network: Option<Ss58AddressFormat>) -> Ss5
 /// This SS58 version/format is also only used by the node and not by the runtime.
 #[cfg(feature = "serde")]
 pub fn set_default_ss58_version(new_default: Ss58AddressFormat) {
-	DEFAULT_VERSION.store(new_default.into(), core::sync::atomic::Ordering::Relaxed);
+	DEFAULT_VERSION.store(new_default.into(), ::core::sync::atomic::Ordering::Relaxed);
 }
 
 /// Interprets the string `s` in order to generate a public key without password.
@@ -525,8 +525,8 @@ impl AccountId32 {
 	}
 }
 
-impl UncheckedFrom<crate::hash::H256> for AccountId32 {
-	fn unchecked_from(h: crate::hash::H256) -> Self {
+impl UncheckedFrom<crate::core::hash::H256> for AccountId32 {
+	fn unchecked_from(h: crate::core::hash::H256) -> Self {
 		AccountId32(h.into())
 	}
 }
@@ -606,16 +606,16 @@ impl std::fmt::Display for AccountId32 {
 	}
 }
 
-impl core::fmt::Debug for AccountId32 {
-	fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+impl ::core::fmt::Debug for AccountId32 {
+	fn fmt(&self, f: &mut ::core::fmt::Formatter) -> ::core::fmt::Result {
 		#[cfg(feature = "serde")]
 		{
 			let s = self.to_ss58check();
-			write!(f, "{} ({}...)", crate::hexdisplay::HexDisplay::from(&self.0), &s[0..8])?;
+			write!(f, "{} ({}...)", crate::core::hexdisplay::HexDisplay::from(&self.0), &s[0..8])?;
 		}
 
 		#[cfg(not(feature = "serde"))]
-		write!(f, "{}", crate::hexdisplay::HexDisplay::from(&self.0))?;
+		write!(f, "{}", crate::core::hexdisplay::HexDisplay::from(&self.0))?;
 
 		Ok(())
 	}
@@ -763,7 +763,7 @@ mod dummy {
 /// Parse [`DEV_PHRASE`] secret uri with junction:
 ///
 /// ```
-/// # use soil_core::crypto::{SecretUri, DeriveJunction, DEV_PHRASE, ExposeSecret};
+/// # use subsoil::core::crypto::{SecretUri, DeriveJunction, DEV_PHRASE, ExposeSecret};
 /// # use std::str::FromStr;
 /// let suri = SecretUri::from_str("//Alice").expect("Parse SURI");
 ///
@@ -775,7 +775,7 @@ mod dummy {
 /// Parse [`DEV_PHRASE`] secret ui with junction and password:
 ///
 /// ```
-/// # use soil_core::crypto::{SecretUri, DeriveJunction, DEV_PHRASE, ExposeSecret};
+/// # use subsoil::core::crypto::{SecretUri, DeriveJunction, DEV_PHRASE, ExposeSecret};
 /// # use std::str::FromStr;
 /// let suri = SecretUri::from_str("//Alice///SECRET_PASSWORD").expect("Parse SURI");
 ///
@@ -787,7 +787,7 @@ mod dummy {
 /// Parse [`DEV_PHRASE`] secret ui with hex phrase and junction:
 ///
 /// ```
-/// # use soil_core::crypto::{SecretUri, DeriveJunction, DEV_PHRASE, ExposeSecret};
+/// # use subsoil::core::crypto::{SecretUri, DeriveJunction, DEV_PHRASE, ExposeSecret};
 /// # use std::str::FromStr;
 /// let suri = SecretUri::from_str("0xe5be9a5092b81bca64be81d212e7f2f9eba183bb7a90954f7b76361f6edb5c0a//Alice").expect("Parse SURI");
 ///
@@ -1213,7 +1213,7 @@ impl_from_entropy_base!(u8, u16, u32, u64, u128, i8, i16, i32, i64, i128, U256);
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use crate::DeriveJunction;
+	use crate::core::DeriveJunction;
 	use alloc::{string::String, vec};
 
 	struct TestCryptoTag;

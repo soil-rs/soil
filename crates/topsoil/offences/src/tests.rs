@@ -24,7 +24,7 @@ use crate::mock::{
 	new_test_ext, offence_reports, with_on_offence_fractions, Offence, Offences, Runtime,
 	RuntimeEvent, System, KIND,
 };
-use soil_core::H256;
+use subsoil::core::H256;
 use soil_runtime::Perbill;
 use topsoil_system::{EventRecord, Phase};
 

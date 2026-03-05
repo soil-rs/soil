@@ -38,7 +38,7 @@
 use crate::{unsigned::miner::MinerConfig, verifier};
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;
-use soil_core::Get;
+use subsoil::core::Get;
 pub use soil_npos_elections::{ElectionResult, ElectionScore};
 use soil_runtime::{
 	traits::{CheckedSub, One, Zero},

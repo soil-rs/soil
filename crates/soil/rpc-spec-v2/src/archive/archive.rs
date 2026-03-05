@@ -46,7 +46,7 @@ use soil_client_api::{
 	Backend, BlockBackend, BlockchainEvents, CallExecutor, ChildInfo, ExecutorProvider, StorageKey,
 	StorageProvider,
 };
-use soil_core::{Bytes, U256};
+use subsoil::core::{Bytes, U256};
 use soil_runtime::{
 	traits::{Block as BlockT, Header as HeaderT, NumberFor},
 	SaturatedConversion,

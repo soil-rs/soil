@@ -80,7 +80,7 @@ where
 
 		let mut iter = trie.iter()?;
 
-		let childtrie_roots = soil_core::storage::well_known_keys::DEFAULT_CHILD_STORAGE_KEY_PREFIX;
+		let childtrie_roots = subsoil::core::storage::well_known_keys::DEFAULT_CHILD_STORAGE_KEY_PREFIX;
 		if iter.seek(childtrie_roots).is_ok() {
 			loop {
 				match iter.next() {
@@ -161,7 +161,7 @@ where
 
 		let mut iter = trie.iter()?;
 
-		let childtrie_roots = soil_core::storage::well_known_keys::DEFAULT_CHILD_STORAGE_KEY_PREFIX;
+		let childtrie_roots = subsoil::core::storage::well_known_keys::DEFAULT_CHILD_STORAGE_KEY_PREFIX;
 		if iter.seek(childtrie_roots).is_ok() {
 			loop {
 				match iter.next() {
@@ -210,13 +210,13 @@ mod tests {
 	use crate::{delta_trie_root, recorder::IgnoredNodes, HashDB, StorageProof};
 	use codec::Encode;
 	use hash_db::AsHashDB;
-	use soil_core::{Blake2Hasher, H256};
+	use subsoil::core::{Blake2Hasher, H256};
 	use std::collections::HashSet;
 	use trie_db::{DBValue, Trie, TrieDBBuilder, TrieDBMutBuilder, TrieHash, TrieMut};
 
-	type MemoryDB = crate::MemoryDB<soil_core::Blake2Hasher>;
-	type Layout = crate::LayoutV1<soil_core::Blake2Hasher>;
-	type Recorder = crate::recorder::Recorder<soil_core::Blake2Hasher>;
+	type MemoryDB = crate::MemoryDB<subsoil::core::Blake2Hasher>;
+	type Layout = crate::LayoutV1<subsoil::core::Blake2Hasher>;
+	type Recorder = crate::recorder::Recorder<subsoil::core::Blake2Hasher>;
 
 	fn create_trie(num_keys: u32) -> (MemoryDB, TrieHash<Layout>) {
 		let mut db = MemoryDB::default();
@@ -241,10 +241,10 @@ mod tests {
 		write: MemoryDB,
 	}
 
-	impl hash_db::HashDB<soil_core::Blake2Hasher, DBValue> for Overlay<'_> {
+	impl hash_db::HashDB<subsoil::core::Blake2Hasher, DBValue> for Overlay<'_> {
 		fn get(
 			&self,
-			key: &<soil_core::Blake2Hasher as hash_db::Hasher>::Out,
+			key: &<subsoil::core::Blake2Hasher as hash_db::Hasher>::Out,
 			prefix: hash_db::Prefix,
 		) -> Option<DBValue> {
 			HashDB::get(self.db, key, prefix)
@@ -252,7 +252,7 @@ mod tests {
 
 		fn contains(
 			&self,
-			key: &<soil_core::Blake2Hasher as hash_db::Hasher>::Out,
+			key: &<subsoil::core::Blake2Hasher as hash_db::Hasher>::Out,
 			prefix: hash_db::Prefix,
 		) -> bool {
 			HashDB::contains(self.db, key, prefix)
@@ -262,13 +262,13 @@ mod tests {
 			&mut self,
 			prefix: hash_db::Prefix,
 			value: &[u8],
-		) -> <soil_core::Blake2Hasher as hash_db::Hasher>::Out {
+		) -> <subsoil::core::Blake2Hasher as hash_db::Hasher>::Out {
 			self.write.insert(prefix, value)
 		}
 
 		fn emplace(
 			&mut self,
-			key: <soil_core::Blake2Hasher as hash_db::Hasher>::Out,
+			key: <subsoil::core::Blake2Hasher as hash_db::Hasher>::Out,
 			prefix: hash_db::Prefix,
 			value: DBValue,
 		) {
@@ -277,7 +277,7 @@ mod tests {
 
 		fn remove(
 			&mut self,
-			key: &<soil_core::Blake2Hasher as hash_db::Hasher>::Out,
+			key: &<subsoil::core::Blake2Hasher as hash_db::Hasher>::Out,
 			prefix: hash_db::Prefix,
 		) {
 			self.write.remove(key, prefix);

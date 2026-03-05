@@ -49,7 +49,7 @@ use soil_authority_discovery::{
 	AuthorityDiscoveryApi, AuthorityId, AuthorityPair, AuthoritySignature,
 };
 use soil_blockchain::HeaderBackend;
-use soil_core::{
+use subsoil::core::{
 	crypto::{key_types, ByteArray, Pair},
 	traits::SpawnNamed,
 };

@@ -1942,4 +1942,4 @@ pub mod pallet {
 	}
 }
 
-soil_core::generate_feature_enabled_macro!(runtime_benchmarks_enabled, feature = "runtime-benchmarks", $);
+subsoil::generate_feature_enabled_macro!(runtime_benchmarks_enabled, feature = "runtime-benchmarks", $);

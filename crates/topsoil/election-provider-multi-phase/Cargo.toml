@@ -23,7 +23,6 @@ topsoil-support = { workspace = true }
 topsoil-system = { workspace = true }
 
 topsoil-election-provider-support = { workspace = true }
-soil-core = { workspace = true }
 soil-io = { workspace = true }
 soil-npos-elections = { workspace = true }
 soil-runtime = { workspace = true }
@@ -59,11 +58,10 @@ std = [
 	"topsoil-balances/std",
 	"rand/std",
 	"scale-info/std",
-	"soil-core/std",
+	"subsoil/std",
 	"soil-io/std",
 	"soil-npos-elections/std",
 	"soil-runtime/std",
-	"subsoil/std",
 	"strum/std",
 ]
 runtime-benchmarks = [

@@ -42,7 +42,7 @@ use soil_client_api::{
 	Backend, BlockBackend, BlockchainEvents, CallExecutor, ExecutorProvider, ProofProvider,
 	StorageProvider,
 };
-use soil_core::{
+use subsoil::core::{
 	storage::{
 		ChildInfo, ChildType, PrefixedStorageKey, StorageChangeSet, StorageData, StorageKey,
 	},

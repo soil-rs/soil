@@ -22,7 +22,7 @@ use mock::*;
 use soil_consensus_babe::{
 	AllowedSlots, BabeEpochConfiguration, Slot, VrfSignature, RANDOMNESS_LENGTH,
 };
-use soil_core::crypto::Pair;
+use subsoil::core::crypto::Pair;
 use topsoil_session::ShouldEndSession;
 use topsoil_support::{
 	assert_err, assert_noop, assert_ok,

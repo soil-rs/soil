@@ -37,7 +37,7 @@ use soil_client_api::{backend::AuxStore, BlockOf, UsageProvider};
 use soil_consensus::Error as ConsensusError;
 use soil_consensus_aura::{inherents::AuraInherentData, AuraApi};
 use soil_consensus_slots::Slot;
-use soil_core::crypto::Pair;
+use subsoil::core::crypto::Pair;
 use soil_inherents::{CreateInherentDataProviders, InherentDataProvider as _};
 use soil_runtime::{
 	traits::{Block as BlockT, Header, NumberFor},
@@ -338,7 +338,7 @@ where
 	P: Pair + 'static,
 	P::Public: Codec + Debug,
 	P::Signature: Codec,
-	S: soil_core::traits::SpawnEssentialNamed,
+	S: subsoil::core::traits::SpawnEssentialNamed,
 	CIDP: CreateInherentDataProviders<Block, ()> + Sync + Send + 'static,
 	CIDP::InherentDataProviders: InherentDataProviderExt + Send + Sync,
 {

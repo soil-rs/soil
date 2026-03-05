@@ -17,17 +17,17 @@
 
 //! Generic byte array which can be specialized with a marker type.
 
-use crate::{
+use crate::core::{
 	crypto::{CryptoType, Derive, FromEntropy, Public, Signature, UncheckedFrom},
 	hash::{H256, H512},
 };
 
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
-use core::marker::PhantomData;
+use ::core::marker::PhantomData;
 use scale_info::TypeInfo;
 
 #[cfg(feature = "serde")]
-use crate::crypto::Ss58Codec;
+use crate::core::crypto::Ss58Codec;
 #[cfg(feature = "serde")]
 use serde::{de, Deserialize, Deserializer, Serialize, Serializer};
 
@@ -66,13 +66,13 @@ impl<const N: usize, T> TypeInfo for CryptoBytes<N, T> {
 }
 
 impl<const N: usize, T> PartialOrd for CryptoBytes<N, T> {
-	fn partial_cmp(&self, other: &Self) -> Option<core::cmp::Ordering> {
+	fn partial_cmp(&self, other: &Self) -> Option<::core::cmp::Ordering> {
 		self.0.partial_cmp(&other.0)
 	}
 }
 
 impl<const N: usize, T> Ord for CryptoBytes<N, T> {
-	fn cmp(&self, other: &Self) -> core::cmp::Ordering {
+	fn cmp(&self, other: &Self) -> ::core::cmp::Ordering {
 		self.0.cmp(&other.0)
 	}
 }
@@ -83,7 +83,7 @@ impl<const N: usize, T> PartialEq for CryptoBytes<N, T> {
 	}
 }
 
-impl<const N: usize, T> core::hash::Hash for CryptoBytes<N, T> {
+impl<const N: usize, T> ::core::hash::Hash for CryptoBytes<N, T> {
 	fn hash<H: scale_info::prelude::hash::Hasher>(&self, state: &mut H) {
 		self.0.hash(state)
 	}
@@ -152,7 +152,7 @@ impl<const N: usize, T> UncheckedFrom<[u8; N]> for CryptoBytes<N, T> {
 	}
 }
 
-impl<const N: usize, T> core::ops::Deref for CryptoBytes<N, T> {
+impl<const N: usize, T> ::core::ops::Deref for CryptoBytes<N, T> {
 	type Target = [u8];
 
 	fn deref(&self) -> &Self::Target {
@@ -177,7 +177,7 @@ impl<const N: usize, T> CryptoBytes<N, T> {
 	}
 }
 
-impl<const N: usize, T> crate::ByteArray for CryptoBytes<N, T> {
+impl<const N: usize, T> crate::core::ByteArray for CryptoBytes<N, T> {
 	const LEN: usize = N;
 }
 
@@ -234,18 +234,18 @@ mod public_bytes {
 
 	impl<const N: usize, SubTag> Public for PublicBytes<N, SubTag> where Self: CryptoType {}
 
-	impl<const N: usize, SubTag> core::fmt::Debug for PublicBytes<N, SubTag>
+	impl<const N: usize, SubTag> ::core::fmt::Debug for PublicBytes<N, SubTag>
 	where
 		Self: CryptoType,
 	{
 		#[cfg(feature = "std")]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			let s = self.to_ss58check();
-			write!(f, "{} ({}...)", crate::hexdisplay::HexDisplay::from(&self.as_ref()), &s[0..8])
+			write!(f, "{} ({}...)", crate::core::hexdisplay::HexDisplay::from(&self.as_ref()), &s[0..8])
 		}
 
 		#[cfg(not(feature = "std"))]
-		fn fmt(&self, _: &mut core::fmt::Formatter) -> core::fmt::Result {
+		fn fmt(&self, _: &mut ::core::fmt::Formatter) -> ::core::fmt::Result {
 			Ok(())
 		}
 	}
@@ -265,7 +265,7 @@ mod public_bytes {
 	where
 		Self: CryptoType,
 	{
-		type Err = crate::crypto::PublicError;
+		type Err = crate::core::crypto::PublicError;
 
 		fn from_str(s: &str) -> Result<Self, Self::Err> {
 			Self::from_ss58check(s)
@@ -340,17 +340,17 @@ mod signature_bytes {
 		}
 	}
 
-	impl<const N: usize, SubTag> core::fmt::Debug for SignatureBytes<N, SubTag>
+	impl<const N: usize, SubTag> ::core::fmt::Debug for SignatureBytes<N, SubTag>
 	where
 		Self: CryptoType,
 	{
 		#[cfg(feature = "std")]
-		fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
-			write!(f, "{}", crate::hexdisplay::HexDisplay::from(&&self.0[..]))
+		fn fmt(&self, f: &mut ::core::fmt::Formatter) -> ::core::fmt::Result {
+			write!(f, "{}", crate::core::hexdisplay::HexDisplay::from(&&self.0[..]))
 		}
 
 		#[cfg(not(feature = "std"))]
-		fn fmt(&self, _: &mut core::fmt::Formatter) -> core::fmt::Result {
+		fn fmt(&self, _: &mut ::core::fmt::Formatter) -> ::core::fmt::Result {
 			Ok(())
 		}
 	}

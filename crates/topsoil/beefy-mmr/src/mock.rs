@@ -37,7 +37,7 @@ use crate as topsoil_beefy_mmr;
 pub use soil_consensus_beefy::{
 	ecdsa_crypto::AuthorityId as BeefyId, mmr::BeefyDataProvider, ConsensusLog, BEEFY_ENGINE_ID,
 };
-use soil_core::offchain::{testing::TestOffchainExt, OffchainDbExt, OffchainWorkerExt};
+use subsoil::core::offchain::{testing::TestOffchainExt, OffchainDbExt, OffchainWorkerExt};
 
 impl_opaque_keys! {
 	pub struct MockSessionKeys {
@@ -116,7 +116,7 @@ impl topsoil_beefy::Config for Test {
 	type OnNewValidatorSet = BeefyMmr;
 	type AncestryHelper = BeefyMmr;
 	type WeightInfo = ();
-	type KeyOwnerProof = soil_core::Void;
+	type KeyOwnerProof = subsoil::core::Void;
 	type EquivocationReportSystem = ();
 }
 

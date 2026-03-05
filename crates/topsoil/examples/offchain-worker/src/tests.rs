@@ -24,7 +24,7 @@
 use crate as example_offchain_worker;
 use crate::*;
 use codec::Decode;
-use soil_core::{
+use subsoil::core::{
 	offchain::{testing, OffchainWorkerExt, TransactionPoolExt},
 	sr25519::Signature,
 	H256,
@@ -72,7 +72,7 @@ impl topsoil_system::Config for Test {
 	type Nonce = u64;
 	type Hash = H256;
 	type Hashing = BlakeTwo256;
-	type AccountId = soil_core::sr25519::Public;
+	type AccountId = subsoil::core::sr25519::Public;
 	type Lookup = IdentityLookup<Self::AccountId>;
 	type Block = Block;
 	type RuntimeEvent = RuntimeEvent;
@@ -153,8 +153,8 @@ impl Config for Test {
 	type MaxPrices = ConstU32<64>;
 }
 
-fn test_pub() -> soil_core::sr25519::Public {
-	soil_core::sr25519::Public::from_raw([1u8; 32])
+fn test_pub() -> subsoil::core::sr25519::Public {
+	subsoil::core::sr25519::Public::from_raw([1u8; 32])
 }
 
 #[test]

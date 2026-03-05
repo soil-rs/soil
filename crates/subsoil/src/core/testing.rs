@@ -17,7 +17,7 @@
 
 //! Types that should only be used for testing!
 
-use crate::crypto::KeyTypeId;
+use crate::core::crypto::KeyTypeId;
 
 /// Key type for generic Ed25519 key.
 pub const ED25519: KeyTypeId = KeyTypeId(*b"ed25");
@@ -48,7 +48,7 @@ pub const ECDSA_BLS381: KeyTypeId = KeyTypeId(*b"ecb8");
 /// # Example
 ///
 /// ```
-/// # use soil_core::wasm_export_functions;
+/// # use subsoil::wasm_export_functions;
 ///
 /// wasm_export_functions! {
 ///     fn test_in_wasm(value: bool, another_value: Vec<u8>) -> bool {
@@ -96,14 +96,14 @@ macro_rules! wasm_export_functions {
 			};
 
 			{
-				let ($( $arg_name ),*) : ($( $arg_ty ),*) = $crate::Decode::decode(
+				let ($( $arg_name ),*) : ($( $arg_ty ),*) = $crate::core::Decode::decode(
 					&mut &input[..],
 				).expect("Input data is correctly encoded");
 
 				(|| { $( $fn_impl )* })()
 			}
 
-			$crate::to_substrate_wasm_fn_return_value(&())
+			$crate::core::to_substrate_wasm_fn_return_value(&())
 		}
 	};
 	(@IMPL
@@ -124,14 +124,14 @@ macro_rules! wasm_export_functions {
 			};
 
 			let output $( : $ret_ty )? = {
-				let ($( $arg_name ),*) : ($( $arg_ty ),*) = $crate::Decode::decode(
+				let ($( $arg_name ),*) : ($( $arg_ty ),*) = $crate::core::Decode::decode(
 					&mut &input[..],
 				).expect("Input data is correctly encoded");
 
 				(|| { $( $fn_impl )* })()
 			};
 
-			$crate::to_substrate_wasm_fn_return_value(&output)
+			$crate::core::to_substrate_wasm_fn_return_value(&output)
 		}
 	};
 }
@@ -161,7 +161,7 @@ impl Default for TaskExecutor {
 }
 
 #[cfg(feature = "std")]
-impl crate::traits::SpawnNamed for TaskExecutor {
+impl crate::core::traits::SpawnNamed for TaskExecutor {
 	fn spawn_blocking(
 		&self,
 		_name: &'static str,
@@ -181,7 +181,7 @@ impl crate::traits::SpawnNamed for TaskExecutor {
 }
 
 #[cfg(feature = "std")]
-impl crate::traits::SpawnEssentialNamed for TaskExecutor {
+impl crate::core::traits::SpawnEssentialNamed for TaskExecutor {
 	fn spawn_essential_blocking(
 		&self,
 		_: &'static str,

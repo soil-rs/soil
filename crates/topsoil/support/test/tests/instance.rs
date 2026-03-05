@@ -17,7 +17,7 @@
 
 #![recursion_limit = "128"]
 
-use soil_core::sr25519;
+use subsoil::core::sr25519;
 use subsoil::metadata_ir::{
 	PalletStorageMetadataIR, StorageEntryMetadataIR, StorageEntryModifierIR, StorageEntryTypeIR,
 	StorageHasherIR,
@@ -368,7 +368,7 @@ fn new_test_ext() -> soil_io::TestExternalities {
 
 #[test]
 fn storage_instance_independence() {
-	let mut storage = soil_core::storage::Storage {
+	let mut storage = subsoil::core::storage::Storage {
 		top: std::collections::BTreeMap::new(),
 		children_default: std::collections::HashMap::new(),
 	};

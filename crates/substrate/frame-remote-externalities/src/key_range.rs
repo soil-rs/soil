@@ -17,7 +17,7 @@
 
 //! Key range management for parallel storage fetching.
 
-use soil_core::storage::StorageKey;
+use subsoil::core::storage::StorageKey;
 use std::{
 	collections::VecDeque,
 	sync::{Arc, Mutex},

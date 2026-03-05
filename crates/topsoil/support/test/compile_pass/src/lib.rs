@@ -22,7 +22,7 @@
 
 extern crate alloc;
 
-use soil_core::{sr25519, H256};
+use subsoil::core::{sr25519, H256};
 use soil_runtime::{
 	generic,
 	traits::{BlakeTwo256, IdentityLookup, Verify},

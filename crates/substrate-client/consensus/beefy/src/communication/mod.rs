@@ -125,7 +125,7 @@ mod benefit {
 mod tests {
 	use super::*;
 
-	use soil_core::H256;
+	use subsoil::core::H256;
 
 	#[test]
 	fn beefy_protocols_names() {

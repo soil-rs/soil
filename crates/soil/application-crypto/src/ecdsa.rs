@@ -21,11 +21,11 @@ use crate::{KeyTypeId, RuntimePublic};
 
 use alloc::vec::Vec;
 
-pub use soil_core::ecdsa::*;
-use soil_core::proof_of_possession::NonAggregatable;
+pub use subsoil::core::ecdsa::*;
+use subsoil::core::proof_of_possession::NonAggregatable;
 
 mod app {
-	crate::app_crypto!(super, soil_core::testing::ECDSA);
+	crate::app_crypto!(super, subsoil::core::testing::ECDSA);
 }
 
 pub use app::{
@@ -72,6 +72,6 @@ impl RuntimePublic for Public {
 	}
 
 	fn to_raw_vec(&self) -> Vec<u8> {
-		soil_core::crypto::ByteArray::to_raw_vec(self)
+		subsoil::core::crypto::ByteArray::to_raw_vec(self)
 	}
 }

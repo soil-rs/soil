@@ -30,7 +30,7 @@ use soil_blockchain::Result as CResult;
 use soil_client_api::UsageProvider;
 use soil_consensus::Error as ConsensusError;
 use soil_consensus_slots::Slot;
-use soil_core::crypto::{ByteArray, Pair};
+use subsoil::core::crypto::{ByteArray, Pair};
 use soil_keystore::KeystorePtr;
 use soil_runtime::{
 	traits::{Block as BlockT, Header, NumberFor, Zero},

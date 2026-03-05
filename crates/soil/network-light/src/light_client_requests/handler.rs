@@ -28,7 +28,7 @@ use futures::prelude::*;
 use log::{debug, trace};
 use prost::Message;
 use soil_client_api::{BlockBackend, ProofProvider};
-use soil_core::{
+use subsoil::core::{
 	hexdisplay::HexDisplay,
 	storage::{ChildInfo, ChildType, PrefixedStorageKey},
 };

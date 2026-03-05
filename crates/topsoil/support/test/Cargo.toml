@@ -26,7 +26,6 @@ rustversion = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { features = ["derive"], workspace = true }
 soil-api = { workspace = true }
-soil-core = { workspace = true }
 soil-io = { workspace = true }
 soil-runtime = { workspace = true }
 subsoil = { workspace = true }
@@ -49,10 +48,9 @@ std = [
 	"scale-info/std",
 	"serde/std",
 	"soil-api/std",
-	"soil-core/std",
+	"subsoil/std",
 	"soil-io/std",
 	"soil-runtime/std",
-	"subsoil/std",
 	"soil-state-machine/std",
 	"soil-version/std",
 	"test-pallet/std",

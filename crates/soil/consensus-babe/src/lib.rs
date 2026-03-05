@@ -35,12 +35,12 @@ use soil_runtime::{traits::Header, ConsensusEngineId};
 
 use crate::digests::{NextConfigDescriptor, NextEpochDescriptor};
 
-pub use soil_core::sr25519::vrf::{
+pub use subsoil::core::sr25519::vrf::{
 	VrfInput, VrfPreOutput, VrfProof, VrfSignData, VrfSignature, VrfTranscript,
 };
 
 /// Key type for BABE module.
-pub const KEY_TYPE: soil_core::crypto::KeyTypeId = soil_application_crypto::key_types::BABE;
+pub const KEY_TYPE: subsoil::core::crypto::KeyTypeId = soil_application_crypto::key_types::BABE;
 
 mod app {
 	use soil_application_crypto::{app_crypto, key_types::BABE, sr25519};

@@ -25,10 +25,10 @@ extern crate alloc;
 pub mod testing;
 
 #[cfg(feature = "bandersnatch-experimental")]
-use soil_core::bandersnatch;
+use subsoil::core::bandersnatch;
 #[cfg(feature = "bls-experimental")]
-use soil_core::{bls381, ecdsa_bls381};
-use soil_core::{
+use subsoil::core::{bls381, ecdsa_bls381};
+use subsoil::core::{
 	crypto::{ByteArray, CryptoTypeId, KeyTypeId},
 	ecdsa, ed25519, sr25519,
 };
@@ -711,13 +711,13 @@ impl KeystoreExt {
 	}
 }
 
-soil_core::generate_feature_enabled_macro!(
+subsoil::generate_feature_enabled_macro!(
 	bandersnatch_experimental_enabled,
 	feature = "bandersnatch-experimental",
 	$
 );
 
-soil_core::generate_feature_enabled_macro!(
+subsoil::generate_feature_enabled_macro!(
 	bls_experimental_enabled,
 	feature = "bls-experimental",
 	$

@@ -94,7 +94,7 @@ use soil_client_api::{
 	IoInfo, MemoryInfo, MemorySize, TrieCacheContext, UsageInfo,
 };
 #[cfg(feature = "std")]
-use soil_core::{
+use subsoil::core::{
 	offchain::OffchainOverlayedChange,
 	storage::{well_known_keys, ChildInfo},
 };
@@ -172,7 +172,7 @@ const DB_HASH_LEN: usize = 32;
 
 /// Hash type that this backend uses for the database.
 #[cfg(feature = "std")]
-pub type DbHash = soil_core::H256;
+pub type DbHash = subsoil::core::H256;
 
 /// An extrinsic entry in the database.
 #[derive(Debug, Encode, Decode)]
@@ -2896,7 +2896,7 @@ pub(crate) mod tests {
 		backend::{Backend as BTrait, BlockImportOperation as Op},
 		blockchain::Backend as BLBTrait,
 	};
-	use soil_core::H256;
+	use subsoil::core::H256;
 	use soil_runtime::{
 		testing::{Block as RawBlock, Header, MockCallU64, TestXt},
 		traits::{BlakeTwo256, Hash},
@@ -4414,8 +4414,8 @@ pub(crate) mod tests {
 
 		let x0 = UncheckedXt::new_transaction(0.into(), ()).encode();
 		let x1 = UncheckedXt::new_transaction(1.into(), ()).encode();
-		let x0_hash = <HashingFor<Block> as soil_core::Hasher>::hash(&x0[1..]);
-		let x1_hash = <HashingFor<Block> as soil_core::Hasher>::hash(&x1[1..]);
+		let x0_hash = <HashingFor<Block> as subsoil::core::Hasher>::hash(&x0[1..]);
+		let x1_hash = <HashingFor<Block> as subsoil::core::Hasher>::hash(&x1[1..]);
 		let index = vec![
 			IndexOperation::Insert {
 				extrinsic: 0,
@@ -4462,8 +4462,8 @@ pub(crate) mod tests {
 		let x0 = UncheckedXt::new_transaction(0.into(), ()).encode();
 		let x1 = UncheckedXt::new_transaction(1.into(), ()).encode();
 
-		let x0_hash = <HashingFor<Block> as soil_core::Hasher>::hash(&x0[..]);
-		let x1_hash = <HashingFor<Block> as soil_core::Hasher>::hash(&x1[..]);
+		let x0_hash = <HashingFor<Block> as subsoil::core::Hasher>::hash(&x0[..]);
+		let x1_hash = <HashingFor<Block> as subsoil::core::Hasher>::hash(&x1[..]);
 		let index = vec![
 			IndexOperation::Insert {
 				extrinsic: 0,
@@ -4500,7 +4500,7 @@ pub(crate) mod tests {
 		let mut blocks = Vec::new();
 		let mut prev_hash = Default::default();
 		let x1 = UncheckedXt::new_transaction(0.into(), ()).encode();
-		let x1_hash = <HashingFor<Block> as soil_core::Hasher>::hash(&x1[1..]);
+		let x1_hash = <HashingFor<Block> as subsoil::core::Hasher>::hash(&x1[1..]);
 		for i in 0..10 {
 			let mut index = Vec::new();
 			if i == 0 {
@@ -4567,7 +4567,7 @@ pub(crate) mod tests {
 				2,
 				blocks[1],
 				None,
-				soil_core::H256::random(),
+				subsoil::core::H256::random(),
 				vec![UncheckedXt::new_transaction(i.into(), ())],
 				None,
 			)
@@ -4581,7 +4581,7 @@ pub(crate) mod tests {
 			1,
 			blocks[0],
 			None,
-			soil_core::H256::random(),
+			subsoil::core::H256::random(),
 			vec![UncheckedXt::new_transaction(42.into(), ())],
 			None,
 		)

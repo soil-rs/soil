@@ -24,7 +24,7 @@
 extern crate alloc;
 
 #[cfg(feature = "runtime-benchmarks")]
-use soil_core::crypto::FromEntropy;
+use subsoil::core::crypto::FromEntropy;
 #[cfg(feature = "runtime-benchmarks")]
 use topsoil_asset_rate::AssetKindFactory;
 #[cfg(feature = "runtime-benchmarks")]
@@ -42,7 +42,7 @@ use soil_consensus_beefy::{
 	mmr::MmrLeafVersion,
 };
 use soil_consensus_grandpa::AuthorityId as GrandpaId;
-use soil_core::{crypto::KeyTypeId, OpaqueMetadata};
+use subsoil::core::{crypto::KeyTypeId, OpaqueMetadata};
 use soil_inherents::{CheckInherentsResult, InherentData};
 use soil_runtime::{
 	curve::PiecewiseLinear,
@@ -959,14 +959,14 @@ parameter_types! {
 
 use soil_runtime::traits::{Convert, Keccak256};
 pub struct BalanceToU256;
-impl Convert<Balance, soil_core::U256> for BalanceToU256 {
-	fn convert(balance: Balance) -> soil_core::U256 {
-		soil_core::U256::from(balance)
+impl Convert<Balance, subsoil::core::U256> for BalanceToU256 {
+	fn convert(balance: Balance) -> subsoil::core::U256 {
+		subsoil::core::U256::from(balance)
 	}
 }
 pub struct U256ToBalance;
-impl Convert<soil_core::U256, Balance> for U256ToBalance {
-	fn convert(n: soil_core::U256) -> Balance {
+impl Convert<subsoil::core::U256, Balance> for U256ToBalance {
+	fn convert(n: subsoil::core::U256) -> Balance {
 		n.try_into().unwrap_or(Balance::max_value())
 	}
 }
@@ -1839,7 +1839,7 @@ pub type NativeAndAssets =
 impl topsoil_asset_conversion::Config for Runtime {
 	type RuntimeEvent = RuntimeEvent;
 	type Balance = u128;
-	type HigherPrecisionBalance = soil_core::U256;
+	type HigherPrecisionBalance = subsoil::core::U256;
 	type AssetKind = NativeOrWithId<u32>;
 	type Assets = NativeAndAssets;
 	type PoolId = (Self::AssetKind, Self::AssetKind);

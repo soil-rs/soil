@@ -192,7 +192,7 @@ mod tests {
 	use std::sync::Arc;
 
 	use soil_client_api::{Backend, UnpinWorkerMessage};
-	use soil_core::H256;
+	use subsoil::core::H256;
 	use soil_runtime::traits::Block as BlockT;
 	use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver};
 

@@ -41,7 +41,7 @@ use soil_api::{ApiExt, ProvideRuntimeApi};
 #[cfg(feature = "std")]
 use soil_blockchain::HeaderBackend;
 #[cfg(feature = "std")]
-use soil_core::{
+use subsoil::core::{
 	offchain::{storage::OffchainDb, OffchainDbExt, OffchainStorage},
 	Bytes,
 };
@@ -323,7 +323,7 @@ fn invalid_params(e: impl std::error::Error) -> ErrorObjectOwned {
 #[cfg(feature = "std")]
 mod tests {
 	use super::*;
-	use soil_core::H256;
+	use subsoil::core::H256;
 
 	#[test]
 	fn should_serialize_leaf_proof() {

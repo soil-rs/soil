@@ -26,7 +26,7 @@ use crate::error::{Error, WasmError};
 use codec::Decode;
 use parking_lot::Mutex;
 use schnellru::{ByLength, LruMap};
-use soil_core::traits::{Externalities, FetchRuntimeCode, RuntimeCode};
+use subsoil::core::traits::{Externalities, FetchRuntimeCode, RuntimeCode};
 use soil_executor_common::{
 	runtime_blob::RuntimeBlob,
 	wasm_runtime::{HeapAllocStrategy, WasmInstance, WasmModule},

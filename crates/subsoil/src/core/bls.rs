@@ -23,7 +23,7 @@
 //! Chaum-Pedersen proof uses the same hash-to-field specified in RFC 9380 for the field of the BLS
 //! curve.
 
-use crate::{
+use crate::core::{
 	crypto::{
 		CryptoType, DeriveError, DeriveJunction, Pair as TraitPair, PublicBytes, SecretStringError,
 		SignatureBytes, UncheckedFrom,
@@ -52,7 +52,7 @@ pub mod bls377 {
 	pub use super::{
 		PROOF_OF_POSSESSION_SERIALIZED_SIZE, PUBLIC_KEY_SERIALIZED_SIZE, SIGNATURE_SERIALIZED_SIZE,
 	};
-	use crate::crypto::CryptoTypeId;
+	use crate::core::crypto::CryptoTypeId;
 	pub(crate) use w3f_bls::TinyBLS377 as BlsEngine;
 
 	/// An identifier used to match public keys against BLS12-377 keys
@@ -80,7 +80,7 @@ pub mod bls381 {
 	pub use super::{
 		PROOF_OF_POSSESSION_SERIALIZED_SIZE, PUBLIC_KEY_SERIALIZED_SIZE, SIGNATURE_SERIALIZED_SIZE,
 	};
-	use crate::crypto::CryptoTypeId;
+	use crate::core::crypto::CryptoTypeId;
 	pub use w3f_bls::TinyBLS381 as BlsEngine;
 
 	/// An identifier used to match public keys against BLS12-381 keys
@@ -172,7 +172,7 @@ trait HardJunctionId {
 /// Derive a single hard junction.
 fn derive_hard_junction<T: HardJunctionId>(secret_seed: &Seed, cc: &[u8; 32]) -> Seed {
 	use codec::Encode;
-	(T::ID, secret_seed, cc).using_encoded(subsoil_crypto_hashing::blake2_256)
+	(T::ID, secret_seed, cc).using_encoded(crate::crypto_hashing::blake2_256)
 }
 
 impl<T: EngineBLS> Pair<T> {}
@@ -338,8 +338,8 @@ impl<T: BlsBound> CryptoType for Pair<T> {
 mod tests {
 	use super::*;
 	#[cfg(feature = "serde")]
-	use crate::crypto::Ss58Codec;
-	use crate::crypto::DEV_PHRASE;
+	use crate::core::crypto::Ss58Codec;
+	use crate::core::crypto::DEV_PHRASE;
 	use bls377::Pair as Bls377Pair;
 	use bls381::Pair as Bls381Pair;
 

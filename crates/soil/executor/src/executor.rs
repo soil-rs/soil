@@ -30,7 +30,7 @@ use std::{
 };
 
 use codec::Encode;
-use soil_core::traits::{CallContext, CodeExecutor, Externalities, RuntimeCode};
+use subsoil::core::traits::{CallContext, CodeExecutor, Externalities, RuntimeCode};
 use soil_executor_common::{
 	runtime_blob::RuntimeBlob,
 	wasm_runtime::{
@@ -450,7 +450,7 @@ where
 	}
 }
 
-impl<H> soil_core::traits::ReadRuntimeVersion for WasmExecutor<H>
+impl<H> subsoil::core::traits::ReadRuntimeVersion for WasmExecutor<H>
 where
 	H: HostFunctions,
 {
@@ -745,7 +745,7 @@ impl<D: NativeExecutionDispatch> Clone for NativeElseWasmExecutor<D> {
 }
 
 #[allow(deprecated)]
-impl<D: NativeExecutionDispatch> soil_core::traits::ReadRuntimeVersion
+impl<D: NativeExecutionDispatch> subsoil::core::traits::ReadRuntimeVersion
 	for NativeElseWasmExecutor<D>
 {
 	fn read_runtime_version(

@@ -22,7 +22,7 @@ sc-rpc = { workspace = true, default-features = true, optional = true}
 serde = { features = ["derive"], workspace = true, default-features = true, optional = true}
 soil-application-crypto = { workspace = true, default-features = true, optional = true}
 soil-consensus-beefy = { workspace = true, default-features = true, optional = true}
-soil-core = { workspace = true, default-features = true, optional = true}
+subsoil = { workspace = true, default-features = true, optional = true}
 soil-runtime = { workspace = true, default-features = true, optional = true}
 thiserror = { workspace = true, optional = true}
 
@@ -39,12 +39,12 @@ std = [
 	"serde",
 	"soil-application-crypto",
 	"soil-consensus-beefy",
-	"soil-core",
+	"subsoil",
 	"soil-runtime",
 	"thiserror",
 	"soil-application-crypto/std",
 	"soil-consensus-beefy/std",
-	"soil-core/std",
+	"subsoil/std",
 	"soil-runtime/std",
 ]
 

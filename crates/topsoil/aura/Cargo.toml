@@ -27,7 +27,7 @@ soil-consensus-aura = { workspace = true }
 soil-runtime = { workspace = true }
 
 [dev-dependencies]
-soil-core = { workspace = true }
+subsoil = { workspace = true }
 soil-io = { workspace = true, default-features = true }
 
 [features]
@@ -41,7 +41,7 @@ std = [
 	"scale-info/std",
 	"soil-application-crypto/std",
 	"soil-consensus-aura/std",
-	"soil-core/std",
+	"subsoil/std",
 	"soil-io/std",
 	"soil-runtime/std",
 ]

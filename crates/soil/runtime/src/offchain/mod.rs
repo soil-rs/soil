@@ -21,4 +21,4 @@ pub mod http;
 pub mod storage;
 pub mod storage_lock;
 
-pub use soil_core::offchain::*;
+pub use subsoil::core::offchain::*;

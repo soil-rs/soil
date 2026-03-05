@@ -161,7 +161,7 @@ use codec::{Codec, MaxEncodedLen};
 use core::{cmp, fmt::Debug, mem, result};
 pub use impl_currency::{NegativeImbalance, PositiveImbalance};
 use scale_info::TypeInfo;
-use soil_core::{sr25519::Pair as SrPair, Pair};
+use subsoil::core::{sr25519::Pair as SrPair, Pair};
 use soil_runtime::{
 	traits::{
 		AtLeast32BitUnsigned, CheckedAdd, CheckedSub, MaybeSerializeDeserialize, Saturating,

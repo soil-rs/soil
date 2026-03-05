@@ -85,7 +85,7 @@ use alloc::vec::Vec;
 use tracing;
 
 #[cfg(not(substrate_runtime))]
-use soil_core::{
+use subsoil::core::{
 	crypto::Pair,
 	hexdisplay::HexDisplay,
 	offchain::{OffchainDbExt, OffchainWorkerExt, TransactionPoolExt},
@@ -95,8 +95,8 @@ use soil_core::{
 use soil_keystore::KeystoreExt;
 
 #[cfg(feature = "bandersnatch-experimental")]
-use soil_core::bandersnatch;
-use soil_core::{
+use subsoil::core::bandersnatch;
+use subsoil::core::{
 	crypto::KeyTypeId,
 	ecdsa, ed25519,
 	offchain::{
@@ -108,7 +108,7 @@ use soil_core::{
 };
 
 #[cfg(feature = "bls-experimental")]
-use soil_core::{bls381, ecdsa_bls381};
+use subsoil::core::{bls381, ecdsa_bls381};
 
 #[cfg(not(substrate_runtime))]
 use soil_trie::{LayoutV0, LayoutV1, TrieConfiguration};
@@ -630,7 +630,7 @@ pub trait Trie {
 	fn blake2_256_root(
 		input: PassFatPointerAndDecode<Vec<(Vec<u8>, Vec<u8>)>>,
 	) -> AllocateAndReturnPointer<H256, 32> {
-		LayoutV0::<soil_core::Blake2Hasher>::trie_root(input)
+		LayoutV0::<subsoil::core::Blake2Hasher>::trie_root(input)
 	}
 
 	/// A trie root formed from the iterated items.
@@ -640,8 +640,8 @@ pub trait Trie {
 		version: PassAs<StateVersion, u8>,
 	) -> AllocateAndReturnPointer<H256, 32> {
 		match version {
-			StateVersion::V0 => LayoutV0::<soil_core::Blake2Hasher>::trie_root(input),
-			StateVersion::V1 => LayoutV1::<soil_core::Blake2Hasher>::trie_root(input),
+			StateVersion::V0 => LayoutV0::<subsoil::core::Blake2Hasher>::trie_root(input),
+			StateVersion::V1 => LayoutV1::<subsoil::core::Blake2Hasher>::trie_root(input),
 		}
 	}
 
@@ -649,7 +649,7 @@ pub trait Trie {
 	fn blake2_256_ordered_root(
 		input: PassFatPointerAndDecode<Vec<Vec<u8>>>,
 	) -> AllocateAndReturnPointer<H256, 32> {
-		LayoutV0::<soil_core::Blake2Hasher>::ordered_trie_root(input)
+		LayoutV0::<subsoil::core::Blake2Hasher>::ordered_trie_root(input)
 	}
 
 	/// A trie root formed from the enumerated items.
@@ -659,8 +659,8 @@ pub trait Trie {
 		version: PassAs<StateVersion, u8>,
 	) -> AllocateAndReturnPointer<H256, 32> {
 		match version {
-			StateVersion::V0 => LayoutV0::<soil_core::Blake2Hasher>::ordered_trie_root(input),
-			StateVersion::V1 => LayoutV1::<soil_core::Blake2Hasher>::ordered_trie_root(input),
+			StateVersion::V0 => LayoutV0::<subsoil::core::Blake2Hasher>::ordered_trie_root(input),
+			StateVersion::V1 => LayoutV1::<subsoil::core::Blake2Hasher>::ordered_trie_root(input),
 		}
 	}
 
@@ -668,7 +668,7 @@ pub trait Trie {
 	fn keccak_256_root(
 		input: PassFatPointerAndDecode<Vec<(Vec<u8>, Vec<u8>)>>,
 	) -> AllocateAndReturnPointer<H256, 32> {
-		LayoutV0::<soil_core::KeccakHasher>::trie_root(input)
+		LayoutV0::<subsoil::core::KeccakHasher>::trie_root(input)
 	}
 
 	/// A trie root formed from the iterated items.
@@ -678,8 +678,8 @@ pub trait Trie {
 		version: PassAs<StateVersion, u8>,
 	) -> AllocateAndReturnPointer<H256, 32> {
 		match version {
-			StateVersion::V0 => LayoutV0::<soil_core::KeccakHasher>::trie_root(input),
-			StateVersion::V1 => LayoutV1::<soil_core::KeccakHasher>::trie_root(input),
+			StateVersion::V0 => LayoutV0::<subsoil::core::KeccakHasher>::trie_root(input),
+			StateVersion::V1 => LayoutV1::<subsoil::core::KeccakHasher>::trie_root(input),
 		}
 	}
 
@@ -687,7 +687,7 @@ pub trait Trie {
 	fn keccak_256_ordered_root(
 		input: PassFatPointerAndDecode<Vec<Vec<u8>>>,
 	) -> AllocateAndReturnPointer<H256, 32> {
-		LayoutV0::<soil_core::KeccakHasher>::ordered_trie_root(input)
+		LayoutV0::<subsoil::core::KeccakHasher>::ordered_trie_root(input)
 	}
 
 	/// A trie root formed from the enumerated items.
@@ -697,8 +697,8 @@ pub trait Trie {
 		version: PassAs<StateVersion, u8>,
 	) -> AllocateAndReturnPointer<H256, 32> {
 		match version {
-			StateVersion::V0 => LayoutV0::<soil_core::KeccakHasher>::ordered_trie_root(input),
-			StateVersion::V1 => LayoutV1::<soil_core::KeccakHasher>::ordered_trie_root(input),
+			StateVersion::V0 => LayoutV0::<subsoil::core::KeccakHasher>::ordered_trie_root(input),
+			StateVersion::V1 => LayoutV1::<subsoil::core::KeccakHasher>::ordered_trie_root(input),
 		}
 	}
 
@@ -709,7 +709,7 @@ pub trait Trie {
 		key: PassFatPointerAndRead<&[u8]>,
 		value: PassFatPointerAndRead<&[u8]>,
 	) -> bool {
-		soil_trie::verify_trie_proof::<LayoutV0<soil_core::Blake2Hasher>, _, _, _>(
+		soil_trie::verify_trie_proof::<LayoutV0<subsoil::core::Blake2Hasher>, _, _, _>(
 			&root,
 			proof,
 			&[(key, Some(value))],
@@ -728,14 +728,14 @@ pub trait Trie {
 	) -> bool {
 		match version {
 			StateVersion::V0 => soil_trie::verify_trie_proof::<
-				LayoutV0<soil_core::Blake2Hasher>,
+				LayoutV0<subsoil::core::Blake2Hasher>,
 				_,
 				_,
 				_,
 			>(&root, proof, &[(key, Some(value))])
 			.is_ok(),
 			StateVersion::V1 => soil_trie::verify_trie_proof::<
-				LayoutV1<soil_core::Blake2Hasher>,
+				LayoutV1<subsoil::core::Blake2Hasher>,
 				_,
 				_,
 				_,
@@ -751,7 +751,7 @@ pub trait Trie {
 		key: PassFatPointerAndRead<&[u8]>,
 		value: PassFatPointerAndRead<&[u8]>,
 	) -> bool {
-		soil_trie::verify_trie_proof::<LayoutV0<soil_core::KeccakHasher>, _, _, _>(
+		soil_trie::verify_trie_proof::<LayoutV0<subsoil::core::KeccakHasher>, _, _, _>(
 			&root,
 			proof,
 			&[(key, Some(value))],
@@ -770,14 +770,14 @@ pub trait Trie {
 	) -> bool {
 		match version {
 			StateVersion::V0 => soil_trie::verify_trie_proof::<
-				LayoutV0<soil_core::KeccakHasher>,
+				LayoutV0<subsoil::core::KeccakHasher>,
 				_,
 				_,
 				_,
 			>(&root, proof, &[(key, Some(value))])
 			.is_ok(),
 			StateVersion::V1 => soil_trie::verify_trie_proof::<
-				LayoutV1<soil_core::KeccakHasher>,
+				LayoutV1<subsoil::core::KeccakHasher>,
 				_,
 				_,
 				_,
@@ -830,7 +830,7 @@ pub trait Misc {
 		&mut self,
 		wasm: PassFatPointerAndRead<&[u8]>,
 	) -> AllocateAndReturnByCodec<Option<Vec<u8>>> {
-		use soil_core::traits::ReadRuntimeVersionExt;
+		use subsoil::core::traits::ReadRuntimeVersionExt;
 
 		let mut ext = soil_state_machine::BasicExternalities::default();
 
@@ -1996,7 +1996,7 @@ pub fn oom(_: core::alloc::Layout) -> ! {
 
 /// Type alias for Externalities implementation used in tests.
 #[cfg(feature = "std")] // NOTE: Deliberately isn't `not(substrate_runtime)`.
-pub type TestExternalities = soil_state_machine::TestExternalities<soil_core::Blake2Hasher>;
+pub type TestExternalities = soil_state_machine::TestExternalities<subsoil::core::Blake2Hasher>;
 
 /// The host functions Substrate provides for the Wasm runtime environment.
 ///
@@ -2022,7 +2022,7 @@ pub type SubstrateHostFunctions = (
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use soil_core::{crypto::UncheckedInto, map, storage::Storage};
+	use subsoil::core::{crypto::UncheckedInto, map, storage::Storage};
 	use soil_state_machine::BasicExternalities;
 
 	#[test]

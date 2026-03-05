@@ -541,7 +541,7 @@ pub fn storage_alias(attributes: TokenStream, input: TokenStream) -> TokenStream
 ///     type DbWeight = ();
 ///     type Nonce = u64;
 ///     type BlockNumber = u64;
-///     type Hash = soil_core::hash::H256;
+///     type Hash = subsoil::core::hash::H256;
 ///     type Hashing = soil_runtime::traits::BlakeTwo256;
 ///     type AccountId = AccountId;
 ///     type Lookup = IdentityLookup<AccountId>;

@@ -22,7 +22,6 @@ serde = { workspace = true }
 
 # primitive deps, used for developing FRAME pallets.
 subsoil = { workspace = true }
-soil-core = { workspace = true }
 soil-io = { workspace = true }
 soil-runtime = { workspace = true }
 
@@ -75,7 +74,6 @@ std = [
 	"soil-block-builder?/std",
 	"soil-consensus-aura?/std",
 	"soil-consensus-grandpa?/std",
-	"soil-core/std",
 	"soil-genesis-builder?/std",
 	"soil-inherents?/std",
 	"soil-io/std",

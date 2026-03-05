@@ -24,7 +24,7 @@ use subsoil::database::{Database, Transaction};
 use soil_runtime::traits::AtLeast32Bit;
 use std::{cmp::Reverse, collections::BTreeMap};
 
-type DbHash = soil_core::H256;
+type DbHash = subsoil::core::H256;
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 struct LeafSetItem<H, N> {

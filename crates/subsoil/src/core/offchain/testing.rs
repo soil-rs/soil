@@ -20,7 +20,7 @@
 //! Namely all ExecutionExtensions that allow mocking
 //! the extra APIs.
 
-use crate::{
+use crate::core::{
 	offchain::{
 		self, storage::InMemOffchainStorage, HttpError, HttpRequestId as RequestId,
 		HttpRequestStatus as RequestStatus, OffchainOverlayedChange, OffchainStorage,

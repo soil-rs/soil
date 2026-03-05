@@ -21,8 +21,8 @@
 //! The primitive can operate both as a regular VRF or as an anonymized Ring VRF.
 
 #[cfg(feature = "full_crypto")]
-use crate::crypto::VrfSecret;
-use crate::{
+use crate::core::crypto::VrfSecret;
+use crate::core::{
 	crypto::{
 		ByteArray, CryptoType, CryptoTypeId, DeriveError, DeriveJunction, Pair as TraitPair,
 		PublicBytes, SecretStringError, SignatureBytes, UncheckedFrom, VrfPublic,
@@ -128,7 +128,7 @@ impl TraitPair for Pair {
 		_seed: Option<Seed>,
 	) -> Result<(Pair, Option<Seed>), DeriveError> {
 		let derive_hard = |seed, cc| -> Seed {
-			("bandersnatch-vrf-HDKD", seed, cc).using_encoded(subsoil_crypto_hashing::blake2_256)
+			("bandersnatch-vrf-HDKD", seed, cc).using_encoded(crate::crypto_hashing::blake2_256)
 		};
 
 		let mut seed = self.seed();
@@ -198,7 +198,7 @@ impl NonAggregatable for Pair {}
 /// Bandersnatch VRF types and operations.
 pub mod vrf {
 	use super::*;
-	use crate::crypto::VrfCrypto;
+	use crate::core::crypto::VrfCrypto;
 
 	/// [`VrfSignature`] serialized size.
 	pub const VRF_SIGNATURE_SERIALIZED_SIZE: usize =
@@ -601,7 +601,7 @@ pub mod ring_vrf {
 #[cfg(test)]
 mod tests {
 	use super::{ring_vrf::*, vrf::*, *};
-	use crate::{
+	use crate::core::{
 		crypto::{VrfPublic, VrfSecret, DEV_PHRASE},
 		proof_of_possession::{ProofOfPossessionGenerator, ProofOfPossessionVerifier},
 	};

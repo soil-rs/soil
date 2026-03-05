@@ -26,7 +26,7 @@ use soil_runtime::traits::Block as BlockT;
 /// The given bytes should be the SCALE-encoded representation of a
 /// `soil_consensus_beefy::VersionedFinalityProof`.
 #[derive(Clone, Serialize, Deserialize)]
-pub struct EncodedVersionedFinalityProof(soil_core::Bytes);
+pub struct EncodedVersionedFinalityProof(subsoil::core::Bytes);
 
 impl EncodedVersionedFinalityProof {
 	pub fn new<Block, AuthorityId>(

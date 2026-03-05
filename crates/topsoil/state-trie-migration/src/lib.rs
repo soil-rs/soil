@@ -18,7 +18,7 @@
 //! # Pallet State Trie Migration
 //!
 //! Reads and writes all keys and values in the entire state in a systematic way. This is useful for
-//! upgrading a chain to `soil_core::StateVersion::V1`, where all keys need to be touched.
+//! upgrading a chain to `subsoil::core::StateVersion::V1`, where all keys need to be touched.
 //!
 //! ## Migration Types
 //!
@@ -79,7 +79,7 @@ pub mod pallet {
 
 	use alloc::vec::Vec;
 	use core::ops::Deref;
-	use soil_core::{
+	use subsoil::core::{
 		hexdisplay::HexDisplay, storage::well_known_keys::DEFAULT_CHILD_STORAGE_KEY_PREFIX,
 	};
 	use soil_runtime::{
@@ -926,7 +926,7 @@ pub mod pallet {
 
 		/// Convert a child root key, aka. "Child-bearing top key" into the proper format.
 		fn transform_child_key(root: &Vec<u8>) -> Option<&[u8]> {
-			use soil_core::storage::{ChildType, PrefixedStorageKey};
+			use subsoil::core::storage::{ChildType, PrefixedStorageKey};
 			match ChildType::from_prefixed_key(PrefixedStorageKey::new_ref(root)) {
 				Some((ChildType::ParentKeyId, root)) => Some(root),
 				_ => None,
@@ -1168,7 +1168,7 @@ mod mock {
 	use super::*;
 	use crate as topsoil_state_trie_migration;
 	use alloc::{vec, vec::Vec};
-	use soil_core::{
+	use subsoil::core::{
 		storage::{ChildInfo, StateVersion},
 		H256,
 	};
@@ -1254,8 +1254,8 @@ mod mock {
 		custom_keys: Option<Vec<(Vec<u8>, Vec<u8>)>>,
 		custom_child: Option<Vec<(Vec<u8>, Vec<u8>, Vec<u8>)>>,
 	) -> soil_io::TestExternalities {
-		let minimum_size = soil_core::storage::TRIE_VALUE_NODE_THRESHOLD as usize + 1;
-		let mut custom_storage = soil_core::storage::Storage {
+		let minimum_size = subsoil::core::storage::TRIE_VALUE_NODE_THRESHOLD as usize + 1;
+		let mut custom_storage = subsoil::core::storage::Storage {
 			top: vec![
 				(b"key1".to_vec(), vec![1u8; minimum_size + 1]), // 6b657931
 				(b"key2".to_vec(), vec![1u8; minimum_size + 2]), // 6b657931
@@ -1640,7 +1640,7 @@ mod test {
 
 	#[test]
 	fn custom_migrate_top_works() {
-		let correct_witness = 3 + soil_core::storage::TRIE_VALUE_NODE_THRESHOLD * 3 + 1 + 2 + 3;
+		let correct_witness = 3 + subsoil::core::storage::TRIE_VALUE_NODE_THRESHOLD * 3 + 1 + 2 + 3;
 		new_test_ext(StateVersion::V0, true, None, None).execute_with(|| {
 			topsoil_support::assert_ok!(StateTrieMigration::migrate_custom_top(
 				RuntimeOrigin::signed(1),
@@ -1727,7 +1727,7 @@ pub(crate) mod remote_tests {
 	use crate::{AutoLimits, MigrationLimits, Pallet as StateTrieMigration, LOG_TARGET};
 	use codec::Encode;
 	use remote_externalities::Mode;
-	use soil_core::H256;
+	use subsoil::core::H256;
 	use soil_runtime::{
 		traits::{Block as BlockT, HashingFor, Header as _, One, Zero},
 		DeserializeOwned,
@@ -1772,7 +1772,7 @@ pub(crate) mod remote_tests {
 	{
 		let mut ext = remote_externalities::Builder::<Block>::new()
 			.mode(mode)
-			.overwrite_state_version(soil_core::storage::StateVersion::V0)
+			.overwrite_state_version(subsoil::core::storage::StateVersion::V0)
 			.build()
 			.await
 			.unwrap();
@@ -1785,7 +1785,7 @@ pub(crate) mod remote_tests {
 
 		let mut duration: BlockNumberFor<Runtime> = Zero::zero();
 		// set the version to 1, as if the upgrade happened.
-		ext.state_version = soil_core::storage::StateVersion::V1;
+		ext.state_version = subsoil::core::storage::StateVersion::V1;
 
 		let status =
 			substrate_state_trie_migration_rpc::migration_status(&ext.as_backend()).unwrap();

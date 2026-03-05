@@ -142,7 +142,7 @@ fn new_test_ext() -> soil_io::TestExternalities {
 mod benchmarks {
 	use super::pallet_test::{self, Value};
 	use crate::account;
-	use soil_core::Get;
+	use subsoil::core::Get;
 	use topsoil_support::ensure;
 	use topsoil_system::RawOrigin;
 

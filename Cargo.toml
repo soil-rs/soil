@@ -38,7 +38,6 @@ members = [
 	"crates/soil/consensus-pow",
 	"crates/soil/consensus-sassafras",
 	"crates/soil/consensus-slots",
-	"crates/soil/core",
 	"crates/soil/core/fuzz",
 	"crates/soil/crypto-ec-utils",
 	"crates/subsoil-crypto-hashing",
@@ -544,7 +543,6 @@ soil-consensus-grandpa = { path = "crates/soil/consensus-grandpa", default-featu
 soil-consensus-pow = { path = "crates/soil/consensus-pow", default-features = false }
 soil-consensus-sassafras = { path = "crates/soil/consensus-sassafras", default-features = false }
 soil-consensus-slots = { path = "crates/soil/consensus-slots", default-features = false }
-soil-core = { path = "crates/soil/core", default-features = false }
 soil-crypto-ec-utils = { default-features = false, path = "crates/soil/crypto-ec-utils" }
 subsoil = { path = "crates/subsoil", default-features = false }
 subsoil-crypto-hashing = { path = "crates/subsoil-crypto-hashing", default-features = false }

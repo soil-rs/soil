@@ -95,8 +95,8 @@ fn record_proof_works() {
 	let storage_root =
 		*futures::executor::block_on(longest_chain.best_chain()).unwrap().state_root();
 
-	let runtime_code = soil_core::traits::RuntimeCode {
-		code_fetcher: &soil_core::traits::WrappedRuntimeCode(
+	let runtime_code = subsoil::core::traits::RuntimeCode {
+		code_fetcher: &subsoil::core::traits::WrappedRuntimeCode(
 			client.code_at(client.chain_info().best_hash).unwrap().into(),
 		),
 		hash: vec![1],

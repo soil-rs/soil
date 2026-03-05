@@ -21,7 +21,6 @@ topsoil-support = { workspace = true, features = ["experimental"] }
 topsoil-system = { workspace = true }
 scale-info = { workspace = true, features = ["derive"] }
 soil-api = { workspace = true }
-soil-core = { workspace = true }
 soil-io = { workspace = true }
 soil-runtime = { workspace = true }
 subsoil = { workspace = true }
@@ -45,10 +44,9 @@ std = [
 	"primitive-types/std",
 	"scale-info/std",
 	"soil-api/std",
-	"soil-core/std",
+	"subsoil/std",
 	"soil-io/std",
 	"soil-runtime/std",
-	"subsoil/std",
 ]
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",

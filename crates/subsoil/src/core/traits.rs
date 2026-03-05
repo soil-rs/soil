@@ -18,9 +18,9 @@
 //! Shareable Substrate traits.
 
 use alloc::{borrow::Cow, boxed::Box, string::String, vec::Vec};
-use core::fmt::{Debug, Display};
+use ::core::fmt::{Debug, Display};
 
-pub use subsoil::externalities::{Externalities, ExternalitiesExt};
+pub use crate::externalities::{Externalities, ExternalitiesExt};
 
 /// The context in which a call is done.
 ///
@@ -120,8 +120,8 @@ impl<'a> FetchRuntimeCode for RuntimeCode<'a> {
 #[derive(Debug)]
 pub struct CodeNotFound;
 
-impl core::fmt::Display for CodeNotFound {
-	fn fmt(&self, f: &mut core::fmt::Formatter) -> Result<(), core::fmt::Error> {
+impl ::core::fmt::Display for CodeNotFound {
+	fn fmt(&self, f: &mut ::core::fmt::Formatter) -> Result<(), ::core::fmt::Error> {
 		write!(f, "the storage entry `:code` doesn't have any code")
 	}
 }
@@ -164,7 +164,7 @@ impl ReadRuntimeVersion for alloc::sync::Arc<dyn ReadRuntimeVersion> {
 	}
 }
 
-subsoil::decl_extension! {
+crate::decl_extension! {
 	/// An extension that provides functionality to read version information from a given wasm blob.
 	pub struct ReadRuntimeVersionExt(Box<dyn ReadRuntimeVersion>);
 }

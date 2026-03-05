@@ -232,7 +232,7 @@ pub mod tests {
 	use super::*;
 	use crate::{tests::create_storage_proof, StorageProof};
 
-	type Hasher = soil_core::Blake2Hasher;
+	type Hasher = subsoil::core::Blake2Hasher;
 	type Layout = crate::LayoutV1<Hasher>;
 
 	const TEST_DATA: &[(&[u8], &[u8])] =

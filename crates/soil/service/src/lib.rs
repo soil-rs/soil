@@ -638,7 +638,7 @@ mod tests {
 		// given
 		let (client, longest_chain) = TestClientBuilder::new().build_with_longest_chain();
 		let client = Arc::new(client);
-		let spawner = soil_core::testing::TaskExecutor::new();
+		let spawner = subsoil::core::testing::TaskExecutor::new();
 		let pool = Arc::from(BasicPool::new_full(
 			Default::default(),
 			true.into(),

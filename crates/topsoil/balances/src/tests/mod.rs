@@ -25,7 +25,7 @@ use crate::{
 };
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;
-use soil_core::{hexdisplay::HexDisplay, sr25519::Pair as SrPair, Pair};
+use subsoil::core::{hexdisplay::HexDisplay, sr25519::Pair as SrPair, Pair};
 use soil_io;
 use soil_runtime::{
 	traits::{BadOrigin, Zero},

@@ -27,7 +27,7 @@ serde = { features = ["derive"], optional = true, workspace = true }
 soil-api = { workspace = true }
 soil-application-crypto = { features = ["bandersnatch-experimental"], workspace = true }
 soil-consensus-slots = { workspace = true }
-soil-core = { features = ["bandersnatch-experimental"], workspace = true }
+subsoil = { features = ["bandersnatch-experimental"], workspace = true }
 soil-runtime = { workspace = true }
 
 [features]
@@ -39,7 +39,7 @@ std = [
 	"soil-api/std",
 	"soil-application-crypto/std",
 	"soil-consensus-slots/std",
-	"soil-core/std",
+	"subsoil/std",
 	"soil-runtime/std",
 ]
 
@@ -49,6 +49,6 @@ serde = [
 	"scale-info/serde",
 	"soil-application-crypto/serde",
 	"soil-consensus-slots/serde",
-	"soil-core/serde",
+	"subsoil/serde",
 	"soil-runtime/serde",
 ]

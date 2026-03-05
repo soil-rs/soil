@@ -141,8 +141,8 @@ pub mod tests {
 		test_utils::{BeefySignerAuthority, Keyring},
 	};
 	#[cfg(feature = "bls-experimental")]
-	use soil_core::ecdsa_bls381;
-	use soil_core::{ecdsa, Pair as PairT};
+	use subsoil::core::ecdsa_bls381;
+	use subsoil::core::{ecdsa, Pair as PairT};
 	use soil_keystore::{testing::MemoryKeystore, Keystore};
 
 	use super::*;

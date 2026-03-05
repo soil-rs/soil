@@ -67,10 +67,10 @@ parameter_types! {
 
 type Balance = u64;
 // must be at least 20 bytes long because of child-bounty account derivation.
-type AccountId = soil_core::U256;
+type AccountId = subsoil::core::U256;
 
 fn account_id(id: u8) -> AccountId {
-	soil_core::U256::from(id)
+	subsoil::core::U256::from(id)
 }
 
 #[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]

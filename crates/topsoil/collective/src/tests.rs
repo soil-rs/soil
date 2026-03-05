@@ -17,7 +17,7 @@
 
 use super::{Event as CollectiveEvent, *};
 use crate as topsoil_collective;
-use soil_core::{ConstU128, H256};
+use subsoil::core::{ConstU128, H256};
 use soil_runtime::{
 	testing::Header,
 	traits::{BlakeTwo256, Convert, Zero},

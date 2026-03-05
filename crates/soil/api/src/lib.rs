@@ -80,7 +80,7 @@ pub mod __private {
 	#[cfg(feature = "std")]
 	mod std_imports {
 		pub use hash_db::Hasher;
-		pub use soil_core::traits::CallContext;
+		pub use subsoil::core::traits::CallContext;
 		pub use subsoil::externalities::{Extension, Extensions, TransactionType};
 		pub use soil_runtime::StateVersion;
 		pub use soil_state_machine::{
@@ -96,9 +96,9 @@ pub mod __private {
 	pub use codec::{self, Decode, DecodeLimit, Encode};
 	pub use core::{mem, slice};
 	pub use scale_info;
-	pub use soil_core::offchain;
+	pub use subsoil::core::offchain;
 	#[cfg(not(feature = "std"))]
-	pub use soil_core::to_substrate_wasm_fn_return_value;
+	pub use subsoil::core::to_substrate_wasm_fn_return_value;
 	#[cfg(feature = "frame-metadata")]
 	pub use subsoil::metadata_ir::{self as metadata_ir, frame_metadata as metadata};
 	pub use soil_runtime::{
@@ -114,8 +114,8 @@ pub mod __private {
 }
 
 #[cfg(feature = "std")]
-pub use soil_core::traits::CallContext;
-use soil_core::OpaqueMetadata;
+pub use subsoil::core::traits::CallContext;
+use subsoil::core::OpaqueMetadata;
 #[cfg(feature = "std")]
 use subsoil::externalities::{Extension, Extensions};
 #[cfg(feature = "std")]
@@ -852,6 +852,6 @@ decl_runtime_apis! {
 	}
 }
 
-soil_core::generate_feature_enabled_macro!(std_enabled, feature = "std", $);
-soil_core::generate_feature_enabled_macro!(std_disabled, not(feature = "std"), $);
-soil_core::generate_feature_enabled_macro!(frame_metadata_enabled, feature = "frame-metadata", $);
+subsoil::generate_feature_enabled_macro!(std_enabled, feature = "std", $);
+subsoil::generate_feature_enabled_macro!(std_disabled, not(feature = "std"), $);
+subsoil::generate_feature_enabled_macro!(frame_metadata_enabled, feature = "frame-metadata", $);

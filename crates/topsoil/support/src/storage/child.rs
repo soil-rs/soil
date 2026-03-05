@@ -23,7 +23,7 @@
 
 use alloc::vec::Vec;
 use codec::{Codec, Decode, Encode};
-pub use soil_core::storage::{ChildInfo, ChildType, StateVersion};
+pub use subsoil::core::storage::{ChildInfo, ChildType, StateVersion};
 pub use soil_io::{KillStorageResult, MultiRemovalResults};
 
 /// Return the value of the item in storage under `key`, or `None` if there is no explicit entry.

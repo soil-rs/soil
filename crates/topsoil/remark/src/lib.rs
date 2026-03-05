@@ -84,6 +84,6 @@ pub mod pallet {
 	#[pallet::generate_deposit(pub(super) fn deposit_event)]
 	pub enum Event<T: Config> {
 		/// Stored data off chain.
-		Stored { sender: T::AccountId, content_hash: soil_core::H256 },
+		Stored { sender: T::AccountId, content_hash: subsoil::core::H256 },
 	}
 }

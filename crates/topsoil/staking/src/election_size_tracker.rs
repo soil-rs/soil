@@ -175,7 +175,7 @@ mod tests {
 		mock::{AccountId, Staking, Test},
 		BoundedVec, MaxNominationsOf,
 	};
-	use soil_core::bounded_vec;
+	use subsoil::core::bounded_vec;
 	use topsoil_election_provider_support::bounds::ElectionBoundsBuilder;
 
 	type Voters = BoundedVec<AccountId, MaxNominationsOf<Test>>;

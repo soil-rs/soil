@@ -41,7 +41,7 @@ pub mod __private {
 	pub use codec;
 	pub use log;
 	pub use paste;
-	pub use soil_core::defer;
+	pub use subsoil::defer;
 	pub use soil_io::storage::root as storage_root;
 	pub use soil_runtime::{traits::Zero, StateVersion};
 	pub use subsoil::storage::{well_known_keys, TrackedStorageKey};

@@ -207,7 +207,7 @@ extern crate alloc;
 
 use alloc::{boxed::Box, vec::Vec};
 use core::fmt::Debug;
-use soil_core::ConstU32;
+use subsoil::core::ConstU32;
 use soil_runtime::traits::{Bounded, Saturating, Zero};
 use topsoil_support::traits::{Defensive, DefensiveResult};
 
@@ -1229,13 +1229,13 @@ pub type BoundedSupportsOf<E> = BoundedSupports<
 	<E as ElectionProvider>::MaxBackersPerWinner,
 >;
 
-soil_core::generate_feature_enabled_macro!(
+subsoil::generate_feature_enabled_macro!(
 	runtime_benchmarks_enabled,
 	feature = "runtime-benchmarks",
 	$
 );
 
-soil_core::generate_feature_enabled_macro!(
+subsoil::generate_feature_enabled_macro!(
 	runtime_benchmarks_or_std_enabled,
 	any(feature = "runtime-benchmarks", feature = "std"),
 	$

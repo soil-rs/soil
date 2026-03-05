@@ -18,7 +18,7 @@
 //! Storage migrations for the preimage pallet.
 
 use crate::*;
-use soil_core::H256;
+use subsoil::core::H256;
 use topsoil_support::{pallet_prelude::*, storage_alias, traits::OnRuntimeUpgrade, BoundedVec};
 use topsoil_system::pallet_prelude::BlockNumberFor;
 

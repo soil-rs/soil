@@ -24,7 +24,7 @@ log = { workspace = true }
 topsoil-bounties = { workspace = true }
 topsoil-treasury = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
-soil-core = { workspace = true }
+subsoil = { workspace = true }
 soil-io = { workspace = true }
 soil-runtime = { workspace = true }
 
@@ -43,7 +43,7 @@ std = [
 	"topsoil-bounties/std",
 	"topsoil-treasury/std",
 	"scale-info/std",
-	"soil-core/std",
+	"subsoil/std",
 	"soil-io/std",
 	"soil-runtime/std",
 ]

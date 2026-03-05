@@ -23,7 +23,7 @@ use crate::{
 };
 use clap::Parser;
 use rand::{rngs::OsRng, RngCore};
-use soil_core::crypto::{unwrap_or_default_ss58_version, Ss58AddressFormat, Ss58Codec};
+use subsoil::core::crypto::{unwrap_or_default_ss58_version, Ss58AddressFormat, Ss58Codec};
 use soil_runtime::traits::IdentifyAccount;
 use utils::print_from_uri;
 
@@ -78,7 +78,7 @@ fn generate_key<Pair>(
 	network_override: Ss58AddressFormat,
 ) -> Result<String, &'static str>
 where
-	Pair: soil_core::Pair,
+	Pair: subsoil::core::Pair,
 	Pair::Public: IdentifyAccount,
 	<Pair::Public as IdentifyAccount>::AccountId: Ss58Codec,
 {
@@ -162,7 +162,7 @@ fn assert_non_empty_string(pattern: &str) -> Result<String, &'static str> {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use soil_core::{
+	use subsoil::core::{
 		crypto::{default_ss58_version, Ss58AddressFormatRegistry, Ss58Codec},
 		sr25519, Pair,
 	};

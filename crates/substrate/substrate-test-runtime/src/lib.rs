@@ -52,7 +52,7 @@ use topsoil_system::{
 #[cfg(feature = "bls-experimental")]
 use soil_application_crypto::{bls381, ecdsa_bls381};
 
-use soil_core::OpaqueMetadata;
+use subsoil::core::OpaqueMetadata;
 use soil_trie::{
 	trie_types::{TrieDBBuilder, TrieDBMutBuilderV1},
 	PrefixedMemoryDB, StorageProof,
@@ -61,7 +61,7 @@ use trie_db::{Trie, TrieMut};
 
 use serde_json::json;
 use soil_api::{decl_runtime_apis, impl_runtime_apis};
-pub use soil_core::hash::H256;
+pub use subsoil::core::hash::H256;
 use soil_genesis_builder::PresetId;
 use soil_inherents::{CheckInherentsResult, InherentData};
 use soil_runtime::{
@@ -147,10 +147,10 @@ pub struct TransferData {
 }
 
 /// The address format for describing accounts.
-pub type Address = soil_core::sr25519::Public;
+pub type Address = subsoil::core::sr25519::Public;
 pub type Signature = sr25519::Signature;
 #[cfg(feature = "std")]
-pub type Pair = soil_core::sr25519::Pair;
+pub type Pair = subsoil::core::sr25519::Pair;
 
 // TODO: Remove after the Checks are migrated to TxExtension.
 /// The extension to the basic transaction logic.
@@ -456,7 +456,7 @@ impl topsoil_babe::Config for Runtime {
 	type ExpectedBlockTime = ConstU64<10_000>;
 	type EpochChangeTrigger = topsoil_babe::SameAuthoritiesForever;
 	type DisabledValidators = ();
-	type KeyOwnerProof = soil_core::Void;
+	type KeyOwnerProof = subsoil::core::Void;
 	type EquivocationReportSystem = ();
 	type WeightInfo = ();
 	type MaxAuthorities = ConstU32<10>;
@@ -754,7 +754,7 @@ impl_runtime_apis! {
 
 		fn decode_session_keys(
 			encoded: Vec<u8>,
-		) -> Option<Vec<(Vec<u8>, soil_core::crypto::KeyTypeId)>> {
+		) -> Option<Vec<(Vec<u8>, subsoil::core::crypto::KeyTypeId)>> {
 			SessionKeys::decode_into_raw_public_keys(&encoded)
 		}
 	}
@@ -969,7 +969,7 @@ fn test_witness(proof: StorageProof, root: crate::Hash) {
 #[cfg(feature = "std")]
 pub mod storage_key_generator {
 	use super::*;
-	use soil_core::Pair;
+	use subsoil::core::Pair;
 
 	/// Generate hex string without prefix
 	pub(super) fn hex<T>(x: T) -> String
@@ -1153,7 +1153,7 @@ mod tests {
 	use sc_block_builder::BlockBuilderBuilder;
 	use soil_api::{ApiExt, ProvideRuntimeApi};
 	use soil_consensus::BlockOrigin;
-	use soil_core::{storage::well_known_keys::HEAP_PAGES, traits::CallContext};
+	use subsoil::core::{storage::well_known_keys::HEAP_PAGES, traits::CallContext};
 	use soil_runtime::{
 		traits::{DispatchTransaction, Hash as _},
 		transaction_validity::{InvalidTransaction, TransactionSource::External, ValidTransaction},
@@ -1356,7 +1356,7 @@ mod tests {
 		use pretty_assertions::assert_eq;
 		use serde_json::json;
 		use soil_application_crypto::Ss58Codec;
-		use soil_core::traits::Externalities;
+		use subsoil::core::traits::Externalities;
 		use soil_executor::{error::Result, WasmExecutor};
 		use soil_executor_common::runtime_blob::RuntimeBlob;
 		use soil_genesis_builder::Result as BuildResult;
@@ -1614,7 +1614,7 @@ mod tests {
 				"00771836bebdd29870ff246d305c578c5e0621c4869aa60c02be9adcc98a0d1d",
 			);
 			let authority_key_vec =
-				Vec::<soil_core::sr25519::Public>::decode(&mut &value[..]).unwrap();
+				Vec::<subsoil::core::sr25519::Public>::decode(&mut &value[..]).unwrap();
 			assert_eq!(authority_key_vec.len(), 2);
 			assert_eq!(authority_key_vec[0], Sr25519Keyring::Ferdie.public());
 			assert_eq!(authority_key_vec[1], Sr25519Keyring::Alice.public());

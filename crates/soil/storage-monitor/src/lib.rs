@@ -21,7 +21,7 @@
 #[cfg(feature = "std")]
 use clap::Args;
 #[cfg(feature = "std")]
-use soil_core::traits::SpawnEssentialNamed;
+use subsoil::core::traits::SpawnEssentialNamed;
 #[cfg(feature = "std")]
 use std::{
 	io,

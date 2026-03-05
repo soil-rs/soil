@@ -21,7 +21,7 @@ use soil_consensus_babe::{
 	digests::{PreDigest, SecondaryPlainPreDigest},
 	Slot, BABE_ENGINE_ID,
 };
-use soil_core::{
+use subsoil::core::{
 	crypto::KeyTypeId,
 	sr25519::Signature,
 	traits::{CallContext, CodeExecutor, RuntimeCode},
@@ -60,7 +60,7 @@ pub struct TestAuthorityId;
 impl AppCrypto<MultiSigner, MultiSignature> for TestAuthorityId {
 	type RuntimeAppPublic = sr25519::AuthorityId;
 	type GenericSignature = Signature;
-	type GenericPublic = soil_core::sr25519::Public;
+	type GenericPublic = subsoil::core::sr25519::Public;
 }
 
 /// The wasm runtime code.
@@ -109,10 +109,10 @@ pub fn executor_call(
 ) -> (Result<Vec<u8>>, bool) {
 	let mut t = t.ext();
 
-	let code = t.storage(soil_core::storage::well_known_keys::CODE).unwrap();
-	let heap_pages = t.storage(soil_core::storage::well_known_keys::HEAP_PAGES);
+	let code = t.storage(subsoil::core::storage::well_known_keys::CODE).unwrap();
+	let heap_pages = t.storage(subsoil::core::storage::well_known_keys::HEAP_PAGES);
 	let runtime_code = RuntimeCode {
-		code_fetcher: &soil_core::traits::WrappedRuntimeCode(code.as_slice().into()),
+		code_fetcher: &subsoil::core::traits::WrappedRuntimeCode(code.as_slice().into()),
 		hash: subsoil_crypto_hashing::blake2_256(&code).to_vec(),
 		heap_pages: heap_pages.and_then(|hp| Decode::decode(&mut &hp[..]).ok()),
 	};

@@ -463,7 +463,7 @@ pub fn import_queue<B, Algorithm>(
 	block_import: BoxBlockImport<B>,
 	justification_import: Option<BoxJustificationImport<B>>,
 	algorithm: Algorithm,
-	spawner: &impl soil_core::traits::SpawnEssentialNamed,
+	spawner: &impl subsoil::core::traits::SpawnEssentialNamed,
 	registry: Option<&Registry>,
 ) -> Result<PowImportQueue<B>, soil_consensus::Error>
 where

@@ -211,7 +211,7 @@ use core::{fmt::Debug, ops::Deref};
 pub use pallet::*;
 use scale_info::TypeInfo;
 use subsoil::arithmetic::traits::{BaseArithmetic, Unsigned};
-use soil_core::{defer, H256};
+use subsoil::core::{defer, H256};
 use soil_runtime::{
 	traits::{One, Zero},
 	SaturatedConversion, Saturating, TransactionOutcome,
@@ -1706,7 +1706,7 @@ pub(crate) fn with_service_mutex<F: FnOnce() -> R, R>(f: F) -> Result<R, ()> {
 	})
 }
 
-/// Provides a [`soil_core::Get`] to access the `MEL` of a [`codec::MaxEncodedLen`] type.
+/// Provides a [`subsoil::core::Get`] to access the `MEL` of a [`codec::MaxEncodedLen`] type.
 pub struct MaxEncodedLenOf<T>(core::marker::PhantomData<T>);
 impl<T: MaxEncodedLen> Get<u32> for MaxEncodedLenOf<T> {
 	fn get() -> u32 {
@@ -1740,7 +1740,7 @@ pub type PageOf<T> = Page<<T as Config>::Size, <T as Config>::HeapSize>;
 /// The [`BookState`] of this pallet.
 pub type BookStateOf<T> = BookState<MessageOriginOf<T>>;
 
-/// Converts a [`soil_core::Get`] with returns a type that can be cast into an `u32` into a `Get`
+/// Converts a [`subsoil::core::Get`] with returns a type that can be cast into an `u32` into a `Get`
 /// which returns an `u32`.
 pub struct IntoU32<T, O>(core::marker::PhantomData<(T, O)>);
 impl<T: Get<O>, O: Into<u32>> Get<u32> for IntoU32<T, O> {

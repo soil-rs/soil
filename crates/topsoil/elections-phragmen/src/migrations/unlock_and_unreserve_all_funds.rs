@@ -20,7 +20,7 @@
 
 use alloc::{collections::btree_map::BTreeMap, vec::Vec};
 use core::iter::Sum;
-use soil_core::Get;
+use subsoil::core::Get;
 use soil_runtime::traits::Zero;
 use topsoil_support::{
 	pallet_prelude::ValueQuery,

@@ -20,7 +20,7 @@
 use codec::{FullCodec, MaxEncodedLen};
 use core::fmt::Debug;
 use scale_info::TypeInfo;
-use soil_core::TypedGet;
+use subsoil::core::TypedGet;
 use soil_runtime::DispatchError;
 
 use super::{fungible, fungibles, Balance, Preservation::Expendable};

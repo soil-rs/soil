@@ -210,8 +210,8 @@ pub trait KeyOwnerProofSystem<Key> {
 impl<Key> KeyOwnerProofSystem<Key> for () {
 	// The proof and identification tuples is any bottom type to guarantee that the methods of this
 	// implementation can never be called or return anything other than `None`.
-	type Proof = soil_core::Void;
-	type IdentificationTuple = soil_core::Void;
+	type Proof = subsoil::core::Void;
+	type IdentificationTuple = subsoil::core::Void;
 
 	fn prove(_key: Key) -> Option<Self::Proof> {
 		None

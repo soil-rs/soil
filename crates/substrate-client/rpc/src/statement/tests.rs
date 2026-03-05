@@ -22,7 +22,7 @@ use codec::Encode;
 use futures::FutureExt;
 use jsonrpsee::{RpcModule, Subscription};
 use sc_statement_store::Store;
-use soil_core::traits::SpawnNamed;
+use subsoil::core::traits::SpawnNamed;
 use soil_statement_store::{statement_allowance_key, Statement, StatementAllowance, Topic};
 use std::sync::Arc;
 use substrate_test_runtime_client::{TestClientBuilder, TestClientBuilderExt};

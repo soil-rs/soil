@@ -870,7 +870,7 @@ where
 		let encoded = uxt.encode();
 		let encoded_len = encoded.len();
 		subsoil::enter_span!(subsoil::tracing::info_span!("apply_extrinsic",
-			ext=?soil_core::hexdisplay::HexDisplay::from(&encoded)));
+			ext=?subsoil::core::hexdisplay::HexDisplay::from(&encoded)));
 
 		let uxt = <Block::Extrinsic as codec::DecodeLimit>::decode_all_with_depth_limit(
 			MAX_EXTRINSIC_DEPTH,

@@ -50,7 +50,7 @@ use soil_consensus_babe::{digests::PreDigest, AuthorityId, BabeApi as BabeRuntim
 #[cfg(feature = "std")]
 use soil_consensus_epochs::Epoch as EpochT;
 #[cfg(feature = "std")]
-use soil_core::crypto::ByteArray;
+use subsoil::core::crypto::ByteArray;
 #[cfg(feature = "std")]
 use soil_keystore::KeystorePtr;
 #[cfg(feature = "std")]
@@ -221,7 +221,7 @@ mod tests {
 	use super::*;
 	use sc_consensus_babe::ImportQueueParams;
 	use soil_consensus_babe::inherents::InherentDataProvider;
-	use soil_core::{crypto::key_types::BABE, testing::TaskExecutor};
+	use subsoil::core::{crypto::key_types::BABE, testing::TaskExecutor};
 	use soil_keyring::Sr25519Keyring;
 	use soil_keystore::{testing::MemoryKeystore, Keystore};
 	use soil_rpc_api::DenyUnsafe;

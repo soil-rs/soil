@@ -48,16 +48,16 @@ pub trait UnlockConfig<I>: 'static {
 	/// Base deposit to report a tip.
 	///
 	/// Should match the currency type previously used for the pallet, if applicable.
-	type TipReportDepositBase: soil_core::Get<BalanceOf<Self, I>>;
+	type TipReportDepositBase: subsoil::core::Get<BalanceOf<Self, I>>;
 	/// Deposit per byte to report a tip.
 	///
 	/// Should match the currency type previously used for the pallet, if applicable.
-	type DataDepositPerByte: soil_core::Get<BalanceOf<Self, I>>;
+	type DataDepositPerByte: subsoil::core::Get<BalanceOf<Self, I>>;
 	/// The name of the pallet as previously configured in
 	/// [`construct_runtime!`](topsoil_support::construct_runtime).
-	type PalletName: soil_core::Get<&'static str>;
+	type PalletName: subsoil::core::Get<&'static str>;
 	/// The DB weight as configured in the runtime to calculate the correct weight.
-	type DbWeight: soil_core::Get<RuntimeDbWeight>;
+	type DbWeight: subsoil::core::Get<RuntimeDbWeight>;
 	/// The block number as configured in the runtime.
 	type BlockNumber: Parameter + Zero + Copy + Ord;
 }
@@ -98,7 +98,7 @@ impl<T: UnlockConfig<I>, I: 'static> UnreserveDeposits<T, I> {
 	/// * `topsoil_support::weights::Weight`: The weight of this operation.
 	fn get_deposits() -> (BTreeMap<T::AccountId, BalanceOf<T, I>>, topsoil_support::weights::Weight)
 	{
-		use soil_core::Get;
+		use subsoil::core::Get;
 
 		let mut tips_len = 0;
 		let account_deposits: BTreeMap<T::AccountId, BalanceOf<T, I>> = Tips::<T, I>::iter()
@@ -235,7 +235,7 @@ mod test {
 		migrations::unreserve_deposits::UnreserveDeposits,
 		tests::{new_test_ext, Balances, RuntimeOrigin, Test, Tips},
 	};
-	use soil_core::ConstU64;
+	use subsoil::core::ConstU64;
 	use topsoil_support::{assert_ok, parameter_types, traits::TypedGet};
 	use topsoil_system::pallet_prelude::BlockNumberFor;
 
@@ -248,7 +248,7 @@ mod test {
 		type Currency = Balances;
 		type TipReportDepositBase = ConstU64<1>;
 		type DataDepositPerByte = ConstU64<1>;
-		type Hash = soil_core::H256;
+		type Hash = subsoil::core::H256;
 		type AccountId = u128;
 		type BlockNumber = BlockNumberFor<Test>;
 		type DbWeight = ();

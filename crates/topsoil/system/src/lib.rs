@@ -124,7 +124,7 @@ use soil_version::RuntimeVersion;
 
 use codec::{Decode, DecodeWithMemTracking, Encode, EncodeLike, FullCodec, MaxEncodedLen};
 use scale_info::TypeInfo;
-use soil_core::storage::well_known_keys;
+use subsoil::core::storage::well_known_keys;
 use soil_runtime::{
 	traits::{DispatchInfoOf, PostDispatchInfoOf},
 	transaction_validity::TransactionValidityError,
@@ -183,7 +183,7 @@ pub use extensions::{
 };
 // Backward compatible re-export.
 pub use extensions::check_mortality::CheckMortality as CheckEra;
-use soil_core::storage::StateVersion;
+use subsoil::core::storage::StateVersion;
 pub use topsoil_support::dispatch::RawOrigin;
 use topsoil_support::traits::{Authorize, PostInherents, PostTransactions, PreInherents};
 pub use weights::WeightInfo;
@@ -330,7 +330,7 @@ pub mod pallet {
 		#[topsoil_support::register_default_impl(TestDefaultConfig)]
 		impl DefaultConfig for TestDefaultConfig {
 			type Nonce = u32;
-			type Hash = soil_core::hash::H256;
+			type Hash = subsoil::core::hash::H256;
 			type Hashing = soil_runtime::traits::BlakeTwo256;
 			type AccountId = u64;
 			type Lookup = soil_runtime::traits::IdentityLookup<Self::AccountId>;
@@ -386,7 +386,7 @@ pub mod pallet {
 			type Nonce = u32;
 
 			/// The default type for hashing blocks and tries.
-			type Hash = soil_core::hash::H256;
+			type Hash = subsoil::core::hash::H256;
 
 			/// The default hashing algorithm used.
 			type Hashing = soil_runtime::traits::BlakeTwo256;
@@ -2079,7 +2079,7 @@ impl<T: Config> Pallet<T> {
 	/// Get the basic externalities for this pallet, useful for tests.
 	#[cfg(any(feature = "std", test))]
 	pub fn externalities() -> TestExternalities {
-		TestExternalities::new(soil_core::storage::Storage {
+		TestExternalities::new(subsoil::core::storage::Storage {
 			top: [
 				(<BlockHash<T>>::hashed_key_for(BlockNumberFor::<T>::zero()), [69u8; 32].encode()),
 				(<Number<T>>::hashed_key().to_vec(), BlockNumberFor::<T>::one().encode()),

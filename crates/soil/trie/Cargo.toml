@@ -34,7 +34,6 @@ prometheus-endpoint = { optional = true, workspace = true, default-features = tr
 rand = { optional = true, workspace = true, default-features = true }
 scale-info = { features = ["derive"], workspace = true }
 schnellru = { optional = true, workspace = true }
-soil-core = { workspace = true }
 thiserror = { optional = true, workspace = true }
 tracing = { optional = true, workspace = true, default-features = true }
 trie-db = { workspace = true }
@@ -61,7 +60,6 @@ std = [
 	"rand",
 	"scale-info/std",
 	"schnellru",
-	"soil-core/std",
 	"subsoil/std",
 	"soil-runtime/std",
 	"thiserror",

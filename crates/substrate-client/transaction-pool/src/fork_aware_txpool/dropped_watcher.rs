@@ -442,7 +442,7 @@ mod dropped_watcher_tests {
 	use super::*;
 	use crate::common::tests::TestApi;
 	use futures::{stream::pending, FutureExt, StreamExt};
-	use soil_core::H256;
+	use subsoil::core::H256;
 
 	type MultiViewDroppedWatcher = super::MultiViewDroppedWatcherController<TestApi>;
 

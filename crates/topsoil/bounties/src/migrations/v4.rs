@@ -16,7 +16,7 @@
 // limitations under the License.
 
 use core::str;
-use soil_core::hexdisplay::HexDisplay;
+use subsoil::core::hexdisplay::HexDisplay;
 use soil_io::{hashing::twox_128, storage};
 use topsoil_support::{
 	storage::{generator::StorageValue, StoragePrefixedMap},

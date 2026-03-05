@@ -22,8 +22,8 @@ use codec::{Decode, DecodeWithMemTracking, Encode, FullCodec, MaxEncodedLen};
 use core::{marker::PhantomData, mem, ops::Drop};
 use impl_trait_for_tuples::impl_for_tuples;
 use scale_info::TypeInfo;
-pub use soil_core::storage::TrackedStorageKey;
-use soil_core::Get;
+pub use subsoil::core::storage::TrackedStorageKey;
+use subsoil::core::Get;
 use soil_runtime::{
 	traits::{Convert, Member},
 	Debug, DispatchError,
@@ -420,7 +420,7 @@ mod sealed {
 mod tests {
 	use super::*;
 	use crate::BoundedVec;
-	use soil_core::{ConstU32, ConstU64};
+	use subsoil::core::{ConstU32, ConstU64};
 
 	#[test]
 	fn incrementable_works() {

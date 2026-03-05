@@ -44,7 +44,7 @@ use futures::{
 use parking_lot::Mutex;
 use soil_api::{ApiExt, ProvideRuntimeApi};
 use soil_client_api::BlockchainEvents;
-use soil_core::{offchain, traits::SpawnNamed};
+use subsoil::core::{offchain, traits::SpawnNamed};
 use subsoil::externalities::Extension;
 use soil_keystore::{KeystoreExt, KeystorePtr};
 use soil_network::{NetworkPeers, NetworkStateInfo};
@@ -54,7 +54,7 @@ use threadpool::ThreadPool;
 
 mod api;
 
-pub use soil_core::offchain::storage::OffchainDb;
+pub use subsoil::core::offchain::storage::OffchainDb;
 pub use soil_offchain::{OffchainWorkerApi, STORAGE_PREFIX};
 
 const LOG_TARGET: &str = "offchain-worker";
@@ -445,7 +445,7 @@ mod tests {
 		subsoil::tracing::try_init_simple();
 
 		let client = Arc::new(substrate_test_runtime_client::new());
-		let spawner = soil_core::testing::TaskExecutor::new();
+		let spawner = subsoil::core::testing::TaskExecutor::new();
 		let pool = Arc::from(BasicPool::new_full(
 			Default::default(),
 			true.into(),
@@ -480,7 +480,7 @@ mod tests {
 
 	#[test]
 	fn offchain_index_set_and_clear_works() {
-		use soil_core::offchain::OffchainStorage;
+		use subsoil::core::offchain::OffchainStorage;
 
 		subsoil::tracing::try_init_simple();
 

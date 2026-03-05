@@ -20,7 +20,7 @@
 
 use crate::{error, params::MessageParams, utils, with_crypto_scheme, CryptoSchemeFlag};
 use clap::Parser;
-use soil_core::crypto::{ByteArray, Ss58Codec};
+use subsoil::core::crypto::{ByteArray, Ss58Codec};
 use std::io::BufRead;
 
 /// The `verify` command
@@ -74,7 +74,7 @@ impl VerifyCmd {
 
 fn verify<Pair>(sig_data: Vec<u8>, message: Vec<u8>, uri: &str) -> error::Result<()>
 where
-	Pair: soil_core::Pair,
+	Pair: subsoil::core::Pair,
 	Pair::Signature: for<'a> TryFrom<&'a [u8]>,
 {
 	let signature =

@@ -191,7 +191,7 @@ pub struct Votes<AccountId, BlockNumber> {
 #[doc = docify::embed!("src/tests.rs", deposit_round_with_geometric_work)]
 pub mod deposit {
 	use core::marker::PhantomData;
-	use soil_core::Get;
+	use subsoil::core::Get;
 	use soil_runtime::{traits::Convert, FixedPointNumber, FixedU128, Saturating};
 
 	/// Constant deposit amount regardless of current proposal count.

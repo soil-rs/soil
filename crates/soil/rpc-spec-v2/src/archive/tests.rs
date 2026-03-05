@@ -40,7 +40,7 @@ use sc_rpc::testing::TokioTestExecutor;
 use soil_blockchain::HeaderBackend;
 use soil_client_api::ChildInfo;
 use soil_consensus::BlockOrigin;
-use soil_core::{Blake2Hasher, Hasher};
+use subsoil::core::{Blake2Hasher, Hasher};
 use soil_runtime::{
 	traits::{Block as BlockT, Header as HeaderT},
 	SaturatedConversion,

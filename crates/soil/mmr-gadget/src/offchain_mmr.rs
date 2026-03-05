@@ -27,7 +27,7 @@ use sc_offchain::OffchainDb;
 use soil_blockchain::CachedHeaderMetadata;
 use soil_client_api::{Backend, FinalityNotification};
 use soil_consensus_beefy::MmrRootHash;
-use soil_core::offchain::{DbExternalities, StorageKind};
+use subsoil::core::offchain::{DbExternalities, StorageKind};
 use soil_mmr_primitives::{utils, utils::NodesUtils, MmrApi, NodeIndex};
 use soil_runtime::{
 	traits::{Block, Header, NumberFor, One},

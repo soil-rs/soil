@@ -17,7 +17,7 @@
 
 //! Test utilities
 
-pub use soil_core::H256;
+pub use subsoil::core::H256;
 use soil_runtime::traits::Hash;
 pub use soil_runtime::{
 	traits::{BlakeTwo256, IdentifyAccount, Lazy, Verify},

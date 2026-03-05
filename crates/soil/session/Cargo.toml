@@ -19,7 +19,7 @@ targets = ["x86_64-unknown-linux-gnu"]
 codec = { features = ["derive"], workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 soil-api = { workspace = true }
-soil-core = { workspace = true }
+subsoil = { workspace = true }
 soil-keystore = { optional = true, workspace = true }
 soil-runtime = { workspace = true }
 soil-staking = { workspace = true }
@@ -30,7 +30,7 @@ std = [
 	"codec/std",
 	"scale-info/std",
 	"soil-api/std",
-	"soil-core/std",
+	"subsoil/std",
 	"soil-keystore/std",
 	"soil-runtime/std",
 	"soil-staking/std",

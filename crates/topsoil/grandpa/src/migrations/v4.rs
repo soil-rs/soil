@@ -90,7 +90,7 @@ pub fn pre_migration<T: crate::Config, N: AsRef<str>>(new: N) {
 		),
 		"unexpected next_key({}) = {:?}",
 		new,
-		soil_core::hexdisplay::HexDisplay::from(
+		subsoil::core::hexdisplay::HexDisplay::from(
 			&soil_io::storage::next_key(&twox_128(new.as_bytes())).unwrap()
 		),
 	);

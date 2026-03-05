@@ -27,8 +27,8 @@ impl<'a> HexDisplay<'a> {
 	}
 }
 
-impl<'a> core::fmt::Display for HexDisplay<'a> {
-	fn fmt(&self, f: &mut core::fmt::Formatter) -> Result<(), core::fmt::Error> {
+impl<'a> ::core::fmt::Display for HexDisplay<'a> {
+	fn fmt(&self, f: &mut ::core::fmt::Formatter) -> Result<(), ::core::fmt::Error> {
 		if self.0.len() < 1027 {
 			for byte in self.0 {
 				f.write_fmt(format_args!("{:02x}", byte))?;
@@ -46,8 +46,8 @@ impl<'a> core::fmt::Display for HexDisplay<'a> {
 	}
 }
 
-impl<'a> core::fmt::Debug for HexDisplay<'a> {
-	fn fmt(&self, f: &mut core::fmt::Formatter) -> Result<(), core::fmt::Error> {
+impl<'a> ::core::fmt::Debug for HexDisplay<'a> {
+	fn fmt(&self, f: &mut ::core::fmt::Formatter) -> Result<(), ::core::fmt::Error> {
 		for byte in self.0 {
 			f.write_fmt(format_args!("{:02x}", byte))?;
 		}
@@ -79,7 +79,7 @@ impl AsBytesRef for alloc::vec::Vec<u8> {
 	}
 }
 
-impl AsBytesRef for subsoil::storage::StorageKey {
+impl AsBytesRef for crate::storage::StorageKey {
 	fn as_bytes_ref(&self) -> &[u8] {
 		self.as_ref()
 	}

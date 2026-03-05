@@ -40,7 +40,7 @@ pub const CLIENT_LOG_TARGET: &str = "grandpa";
 pub const RUNTIME_LOG_TARGET: &str = "runtime::grandpa";
 
 /// Key type for GRANDPA module.
-pub const KEY_TYPE: soil_core::crypto::KeyTypeId = soil_application_crypto::key_types::GRANDPA;
+pub const KEY_TYPE: subsoil::core::crypto::KeyTypeId = soil_application_crypto::key_types::GRANDPA;
 
 mod app {
 	use soil_application_crypto::{app_crypto, ed25519, key_types::GRANDPA};

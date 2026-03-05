@@ -21,7 +21,7 @@ use crate::*;
 use codec::{Decode, DecodeWithMemTracking, Encode};
 use core::fmt;
 use scale_info::TypeInfo;
-use soil_core::twox_64;
+use subsoil::core::twox_64;
 use soil_runtime::{
 	traits::{DispatchInfoOf, TransactionExtension, ValidateResult},
 	transaction_validity::{InvalidTransaction, TransactionValidityError, ValidTransaction},

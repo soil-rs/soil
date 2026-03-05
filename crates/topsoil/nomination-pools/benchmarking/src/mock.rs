@@ -106,15 +106,15 @@ impl topsoil_bags_list::Config<VoterBagsListInstance> for Runtime {
 }
 
 pub struct BalanceToU256;
-impl Convert<Balance, soil_core::U256> for BalanceToU256 {
-	fn convert(n: Balance) -> soil_core::U256 {
+impl Convert<Balance, subsoil::core::U256> for BalanceToU256 {
+	fn convert(n: Balance) -> subsoil::core::U256 {
 		n.into()
 	}
 }
 
 pub struct U256ToBalance;
-impl Convert<soil_core::U256, Balance> for U256ToBalance {
-	fn convert(n: soil_core::U256) -> Balance {
+impl Convert<subsoil::core::U256, Balance> for U256ToBalance {
+	fn convert(n: subsoil::core::U256) -> Balance {
 		n.try_into().unwrap()
 	}
 }

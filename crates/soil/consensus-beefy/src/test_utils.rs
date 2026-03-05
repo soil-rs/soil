@@ -22,7 +22,7 @@ use crate::{
 	FutureBlockVotingProof, Payload, ValidatorSetId, VoteMessage,
 };
 use soil_application_crypto::{AppCrypto, AppPair, RuntimeAppPublic, Wraps};
-use soil_core::{ecdsa, Pair};
+use subsoil::core::{ecdsa, Pair};
 use soil_runtime::traits::{BlockNumber, Header as HeaderT};
 
 use codec::Encode;

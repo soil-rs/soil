@@ -76,7 +76,7 @@ extern crate alloc;
 
 use alloc::{boxed::Box, collections::btree_set::BTreeSet, vec::Vec};
 use codec::Codec;
-use soil_core::Get;
+use subsoil::core::Get;
 use soil_runtime::{
 	traits::{
 		CheckedAdd, CheckedDiv, CheckedMul, CheckedSub, Ensure, IntegerSquareRoot, MaybeDisplay,
@@ -1396,4 +1396,4 @@ soil_api::decl_runtime_apis! {
 	}
 }
 
-soil_core::generate_feature_enabled_macro!(runtime_benchmarks_enabled, feature = "runtime-benchmarks", $);
+subsoil::generate_feature_enabled_macro!(runtime_benchmarks_enabled, feature = "runtime-benchmarks", $);

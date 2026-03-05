@@ -18,7 +18,7 @@
 
 use crate::error::Error;
 use soil_client_api::{StorageProvider, UsageProvider};
-use soil_core::storage::{
+use subsoil::core::storage::{
 	well_known_keys, ChildInfo, Storage, StorageChild, StorageKey, StorageMap,
 };
 use soil_runtime::traits::Block as BlockT;

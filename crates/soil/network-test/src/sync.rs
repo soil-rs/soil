@@ -1071,26 +1071,26 @@ async fn syncs_state() {
 	subsoil::tracing::try_init_simple();
 	for skip_proofs in &[false, true] {
 		let mut net = TestNet::new(0);
-		let mut genesis_storage: soil_core::storage::Storage = Default::default();
+		let mut genesis_storage: subsoil::core::storage::Storage = Default::default();
 		genesis_storage.top.insert(b"additional_key".to_vec(), vec![1]);
 		let mut child_data: std::collections::BTreeMap<Vec<u8>, Vec<u8>> = Default::default();
 		for i in 0u8..16 {
 			child_data.insert(vec![i; 5], vec![i; 33]);
 		}
-		let child1 = soil_core::storage::StorageChild {
+		let child1 = subsoil::core::storage::StorageChild {
 			data: child_data.clone(),
-			child_info: soil_core::storage::ChildInfo::new_default(b"child1"),
+			child_info: subsoil::core::storage::ChildInfo::new_default(b"child1"),
 		};
-		let child3 = soil_core::storage::StorageChild {
+		let child3 = subsoil::core::storage::StorageChild {
 			data: child_data.clone(),
-			child_info: soil_core::storage::ChildInfo::new_default(b"child3"),
+			child_info: subsoil::core::storage::ChildInfo::new_default(b"child3"),
 		};
 		for i in 22u8..33 {
 			child_data.insert(vec![i; 5], vec![i; 33]);
 		}
-		let child2 = soil_core::storage::StorageChild {
+		let child2 = subsoil::core::storage::StorageChild {
 			data: child_data.clone(),
-			child_info: soil_core::storage::ChildInfo::new_default(b"child2"),
+			child_info: subsoil::core::storage::ChildInfo::new_default(b"child2"),
 		};
 		genesis_storage
 			.children_default
@@ -1365,7 +1365,7 @@ async fn warp_sync_to_target_block() {
 
 #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
 async fn syncs_huge_blocks() {
-	use soil_core::storage::well_known_keys::HEAP_PAGES;
+	use subsoil::core::storage::well_known_keys::HEAP_PAGES;
 	use soil_runtime::codec::Encode;
 	use substrate_test_runtime_client::BlockBuilderExt;
 

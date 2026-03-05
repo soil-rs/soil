@@ -47,7 +47,7 @@ use topsoil_support::storage::generator::{StorageDoubleMap, StorageMap, StorageV
 /// # 	}
 /// # );
 /// #
-/// # type Hash = soil_core::H256;
+/// # type Hash = subsoil::core::H256;
 /// #
 /// # #[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
 /// # impl topsoil_system::Config for TestRuntime {

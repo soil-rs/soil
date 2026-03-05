@@ -265,7 +265,7 @@ mod tests {
 	use soil_client_api::{apply_aux, LockImportRun};
 	use soil_consensus::BlockOrigin;
 	use soil_consensus_grandpa::GRANDPA_ENGINE_ID as ID;
-	use soil_core::crypto::UncheckedFrom;
+	use subsoil::core::crypto::UncheckedFrom;
 	use soil_keyring::Ed25519Keyring;
 	use substrate_test_runtime_client::{
 		runtime::{Block, Header, H256},
@@ -437,8 +437,8 @@ mod tests {
 		auth: &[Ed25519Keyring],
 	) -> finality_grandpa::Commit<H256, u64, S, Id>
 	where
-		Id: From<soil_core::ed25519::Public>,
-		S: From<soil_core::ed25519::Signature>,
+		Id: From<subsoil::core::ed25519::Public>,
+		S: From<subsoil::core::ed25519::Signature>,
 	{
 		let mut precommits = Vec::new();
 

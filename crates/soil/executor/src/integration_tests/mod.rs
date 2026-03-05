@@ -18,7 +18,7 @@
 
 use assert_matches::assert_matches;
 use codec::{Decode, Encode};
-use soil_core::{
+use subsoil::core::{
 	ed25519, map,
 	offchain::{testing, OffchainDbExt, OffchainWorkerExt},
 	sr25519,
@@ -180,7 +180,7 @@ fn storage_should_work(wasm_method: WasmExecutionMethod) {
 		assert_eq!(output, b"all ok!".to_vec().encode());
 	}
 
-	let mut expected = TestExternalities::new(soil_core::storage::Storage {
+	let mut expected = TestExternalities::new(subsoil::core::storage::Storage {
 		top: map![
 			b"input".to_vec() => value,
 			b"foo".to_vec() => b"bar".to_vec(),
@@ -210,7 +210,7 @@ fn clear_prefix_should_work(wasm_method: WasmExecutionMethod) {
 		assert_eq!(output, b"all ok!".to_vec().encode());
 	}
 
-	let mut expected = TestExternalities::new(soil_core::storage::Storage {
+	let mut expected = TestExternalities::new(subsoil::core::storage::Storage {
 		top: map![
 			b"aaa".to_vec() => b"1".to_vec(),
 			b"aab".to_vec() => b"2".to_vec(),
@@ -365,12 +365,12 @@ fn offchain_index(wasm_method: WasmExecutionMethod) {
 	ext.register_extension(OffchainWorkerExt::new(offchain));
 	call_in_wasm("test_offchain_index_set", &[0], wasm_method, &mut ext.ext()).unwrap();
 
-	use soil_core::offchain::OffchainOverlayedChange;
+	use subsoil::core::offchain::OffchainOverlayedChange;
 	let data = ext
 		.overlayed_changes()
 		.clone()
 		.offchain_drain_committed()
-		.find(|(k, _v)| k == &(soil_core::offchain::STORAGE_PREFIX.to_vec(), b"k".to_vec()));
+		.find(|(k, _v)| k == &(subsoil::core::offchain::STORAGE_PREFIX.to_vec(), b"k".to_vec()));
 	assert_eq!(data.map(|data| data.1), Some(OffchainOverlayedChange::SetValue(b"v".to_vec())));
 }
 
@@ -630,7 +630,7 @@ fn memory_is_cleared_between_invocations(wasm_method: WasmExecutionMethod) {
 	//        COUNTER += 1;
 	//        COUNTER as u64
 	//     };
-	//     soil_core::to_substrate_wasm_fn_return_value(&output)
+	//     subsoil::core::to_substrate_wasm_fn_return_value(&output)
 	// }
 	// ```
 	//

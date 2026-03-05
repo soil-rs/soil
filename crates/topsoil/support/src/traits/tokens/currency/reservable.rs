@@ -18,7 +18,7 @@
 //! The reservable currency trait.
 
 use scale_info::TypeInfo;
-use soil_core::Get;
+use subsoil::core::Get;
 
 use super::{super::misc::BalanceStatus, Currency};
 use crate::{

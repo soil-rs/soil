@@ -27,7 +27,7 @@ topsoil-support = { workspace = true }
 # `system` module provides us with all sorts of useful stuff and macros depend on it being around.
 topsoil-benchmarking = { optional = true, workspace = true }
 topsoil-system = { workspace = true }
-soil-core = { workspace = true }
+subsoil = { workspace = true }
 
 [dev-dependencies]
 topsoil-balances = { workspace = true, default-features = true }
@@ -43,7 +43,7 @@ std = [
 	"log/std",
 	"topsoil-balances/std",
 	"scale-info/std",
-	"soil-core/std",
+	"subsoil/std",
 	"soil-io/std",
 	"soil-runtime/std",
 ]

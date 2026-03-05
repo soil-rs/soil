@@ -30,7 +30,7 @@ use codec::MaxEncodedLen;
 /// trie.
 pub struct BasicProvingTrie<Hashing, Key, Value>
 where
-	Hashing: soil_core::Hasher,
+	Hashing: subsoil::core::Hasher,
 {
 	db: BTreeMap<Key, Value>,
 	root: Hashing::Out,
@@ -39,7 +39,7 @@ where
 
 impl<Hashing, Key, Value> ProvingTrie<Hashing, Key, Value> for BasicProvingTrie<Hashing, Key, Value>
 where
-	Hashing: soil_core::Hasher,
+	Hashing: subsoil::core::Hasher,
 	Hashing::Out: Encode + Decode,
 	Key: Encode + Decode + Ord,
 	Value: Encode + Decode + Clone,
@@ -102,7 +102,7 @@ where
 
 impl<Hashing, Key, Value> ProofToHashes for BasicProvingTrie<Hashing, Key, Value>
 where
-	Hashing: soil_core::Hasher,
+	Hashing: subsoil::core::Hasher,
 	Hashing::Out: MaxEncodedLen + Decode,
 	Key: Decode,
 	Value: Decode,
@@ -128,7 +128,7 @@ pub fn verify_proof<Hashing, Key, Value>(
 	value: &Value,
 ) -> Result<(), DispatchError>
 where
-	Hashing: soil_core::Hasher,
+	Hashing: subsoil::core::Hasher,
 	Hashing::Out: Decode,
 	Key: Encode + Decode,
 	Value: Encode + Decode,
@@ -160,7 +160,7 @@ where
 mod tests {
 	use super::*;
 	use crate::traits::BlakeTwo256;
-	use soil_core::H256;
+	use subsoil::core::H256;
 	use std::collections::BTreeMap;
 
 	// A trie which simulates a trie of accounts (u32) and balances (u128).

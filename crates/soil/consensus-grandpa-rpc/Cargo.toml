@@ -23,7 +23,7 @@ sc-consensus-grandpa = { workspace = true, default-features = true, optional = t
 sc-rpc = { workspace = true, default-features = true, optional = true}
 serde = { features = ["derive"], workspace = true, default-features = true, optional = true}
 soil-blockchain = { workspace = true, default-features = true, optional = true}
-soil-core = { workspace = true, default-features = true, optional = true}
+subsoil = { workspace = true, default-features = true, optional = true}
 soil-runtime = { workspace = true, default-features = true, optional = true}
 thiserror = { workspace = true, optional = true}
 
@@ -40,11 +40,11 @@ std = [
 	"serde",
 	"soil-blockchain",
 	"soil-client-api",
-	"soil-core",
+	"subsoil",
 	"soil-runtime",
 	"thiserror",
 	"soil-client-api/std",
-	"soil-core/std",
+	"subsoil/std",
 	"soil-runtime/std",
 ]
 

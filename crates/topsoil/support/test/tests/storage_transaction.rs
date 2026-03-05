@@ -18,7 +18,7 @@
 // Disable warnings for #\[transactional\] being deprecated.
 #![allow(deprecated)]
 
-use soil_core::sr25519;
+use subsoil::core::sr25519;
 use soil_io::TestExternalities;
 use soil_runtime::{
 	generic,

@@ -29,7 +29,7 @@ use futures::Stream;
 
 use prometheus_endpoint::Registry as PrometheusRegistry;
 
-use soil_core::storage::{StorageData, StorageKey};
+use subsoil::core::storage::{StorageData, StorageKey};
 use soil_runtime::traits::Block as BlockT;
 use soil_utils::pubsub::{Hub, Receiver};
 

@@ -2050,4 +2050,4 @@ impl<T: Config<I>, I: 'static> Pallet<T, I> {
 	}
 }
 
-soil_core::generate_feature_enabled_macro!(runtime_benchmarks_enabled, feature = "runtime-benchmarks", $);
+subsoil::generate_feature_enabled_macro!(runtime_benchmarks_enabled, feature = "runtime-benchmarks", $);

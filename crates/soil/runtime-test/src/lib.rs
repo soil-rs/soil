@@ -38,7 +38,7 @@ extern crate alloc;
 use alloc::{vec, vec::Vec};
 
 #[cfg(not(feature = "std"))]
-use soil_core::{ed25519, sr25519};
+use subsoil::core::{ed25519, sr25519};
 #[cfg(not(feature = "std"))]
 use soil_io::{
 	crypto::{ed25519_verify, sr25519_verify},
@@ -76,7 +76,7 @@ static mut MUTABLE_STATIC: u64 = 32;
 /// may be differences in handling zeroed and non-zeroed data.
 static mut MUTABLE_STATIC_BSS: u64 = 0;
 
-soil_core::wasm_export_functions! {
+subsoil::wasm_export_functions! {
 	fn test_calling_missing_external() {
 		unsafe { missing_external() }
 	}
@@ -205,7 +205,7 @@ soil_core::wasm_export_functions! {
 				b"one"[..].into(),
 				b"two"[..].into(),
 			],
-			soil_core::storage::StateVersion::V1,
+			subsoil::core::storage::StateVersion::V1,
 		).as_ref().to_vec()
 	}
 
@@ -214,7 +214,7 @@ soil_core::wasm_export_functions! {
 	}
 
 	fn test_offchain_local_storage() -> bool {
-		let kind = soil_core::offchain::StorageKind::PERSISTENT;
+		let kind = subsoil::core::offchain::StorageKind::PERSISTENT;
 		assert_eq!(soil_io::offchain::local_storage_get(kind, b"test"), None);
 		soil_io::offchain::local_storage_set(kind, b"test", b"asd");
 		assert_eq!(soil_io::offchain::local_storage_get(kind, b"test"), Some(b"asd".to_vec()));
@@ -230,7 +230,7 @@ soil_core::wasm_export_functions! {
 	}
 
 	fn test_offchain_local_storage_with_none() {
-		let kind = soil_core::offchain::StorageKind::PERSISTENT;
+		let kind = subsoil::core::offchain::StorageKind::PERSISTENT;
 		assert_eq!(soil_io::offchain::local_storage_get(kind, b"test"), None);
 
 		let res = soil_io::offchain::local_storage_compare_and_set(kind, b"test", None, b"value");
@@ -239,7 +239,7 @@ soil_core::wasm_export_functions! {
 	}
 
 	fn test_offchain_http() -> bool {
-		use soil_core::offchain::HttpRequestStatus;
+		use subsoil::core::offchain::HttpRequestStatus;
 		let run = || -> Option<()> {
 			let id = soil_io::offchain::http_request_start(
 				"POST",

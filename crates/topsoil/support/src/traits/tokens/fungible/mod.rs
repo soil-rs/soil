@@ -183,7 +183,7 @@ pub use regular::{
 	Balanced, DecreaseIssuance, Dust, IncreaseIssuance, Inspect, Mutate, Unbalanced,
 };
 use subsoil::arithmetic::traits::Zero;
-use soil_core::Get;
+use subsoil::core::Get;
 use soil_runtime::{traits::Convert, DispatchError};
 pub use union_of::{NativeFromLeft, NativeOrWithId, UnionOf};
 

@@ -28,7 +28,7 @@ use soil_chain_spec::ChainSpecExtension;
 use soil_consensus_babe::AuthorityId as BabeId;
 use soil_consensus_beefy::ecdsa_crypto::AuthorityId as BeefyId;
 use soil_consensus_grandpa::AuthorityId as GrandpaId;
-use soil_core::crypto::UncheckedInto;
+use subsoil::core::crypto::UncheckedInto;
 use soil_mixnet::types::AuthorityId as MixnetId;
 use soil_service::ChainType;
 use soil_service::Properties;

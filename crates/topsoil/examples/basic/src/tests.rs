@@ -24,7 +24,7 @@
 //! Tests for topsoil-example-basic.
 
 use crate::*;
-use soil_core::H256;
+use subsoil::core::H256;
 use topsoil_support::{
 	assert_ok, derive_impl,
 	dispatch::{DispatchInfo, GetDispatchInfo},

@@ -402,7 +402,7 @@ mod test {
 	use sc_block_builder::BlockBuilderBuilder;
 	use sc_consensus::{ImportedAux, ImportedState};
 	use soil_client_api::KeyValueStates;
-	use soil_core::H256;
+	use subsoil::core::H256;
 	use soil_runtime::traits::Zero;
 	use substrate_test_runtime_client::{
 		runtime::{Block, Hash},

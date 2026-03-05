@@ -48,7 +48,7 @@ use soil_client_api::{
 	Backend, BlockBackend, BlockchainEvents, CallExecutor, ChildInfo, ExecutorProvider, StorageKey,
 	StorageProvider,
 };
-use soil_core::{traits::CallContext, Bytes};
+use subsoil::core::{traits::CallContext, Bytes};
 use soil_rpc::list::ListOrValue;
 use soil_runtime::traits::Block as BlockT;
 use std::{marker::PhantomData, sync::Arc, time::Duration};

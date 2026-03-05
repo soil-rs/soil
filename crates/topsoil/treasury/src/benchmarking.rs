@@ -21,7 +21,7 @@
 
 use super::{Pallet as Treasury, *};
 
-use soil_core::crypto::FromEntropy;
+use subsoil::core::crypto::FromEntropy;
 use topsoil_benchmarking::{
 	v1::{account, BenchmarkError},
 	v2::*,

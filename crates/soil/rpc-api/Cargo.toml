@@ -24,7 +24,7 @@ soil-transaction-pool-api = { workspace = true, default-features = true, optiona
 scale-info = { features = ["derive"], workspace = true, optional = true}
 serde = { features = ["derive"], workspace = true, default-features = true, optional = true}
 serde_json = { workspace = true, default-features = true, optional = true}
-soil-core = { workspace = true, default-features = true, optional = true}
+subsoil = { workspace = true, default-features = true, optional = true}
 soil-rpc = { workspace = true, default-features = true, optional = true}
 soil-runtime = { workspace = true, default-features = true, optional = true}
 soil-statement-store = { features = ["serde"], workspace = true, default-features = true, optional = true}
@@ -41,7 +41,7 @@ std = [
 	"serde",
 	"serde_json",
 	"soil-chain-spec",
-	"soil-core",
+	"subsoil",
 	"soil-rpc",
 	"soil-runtime",
 	"soil-statement-store",
@@ -49,7 +49,7 @@ std = [
 	"soil-version",
 	"thiserror",
 	"soil-chain-spec/std",
-	"soil-core/std",
+	"subsoil/std",
 	"soil-runtime/std",
 	"soil-statement-store/std",
 	"soil-transaction-pool-api/std",

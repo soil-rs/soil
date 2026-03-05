@@ -26,7 +26,6 @@ topsoil-session = { workspace = true }
 scale-info = { features = ["derive", "serde"], workspace = true }
 soil-application-crypto = { features = ["serde"], workspace = true }
 soil-consensus-grandpa = { features = ["serde"], workspace = true }
-soil-core = { features = ["serde"], workspace = true }
 soil-io = { workspace = true }
 soil-runtime = { features = ["serde"], workspace = true }
 soil-session = { workspace = true }
@@ -62,7 +61,7 @@ std = [
 	"scale-info/std",
 	"soil-application-crypto/std",
 	"soil-consensus-grandpa/std",
-	"soil-core/std",
+	"subsoil/std",
 	"soil-io/std",
 	"soil-runtime/std",
 	"soil-session/std",

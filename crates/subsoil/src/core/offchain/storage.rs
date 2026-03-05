@@ -17,7 +17,7 @@
 
 //! In-memory implementation of offchain workers database.
 
-use crate::offchain::{DbExternalities, OffchainStorage, StorageKind, STORAGE_PREFIX};
+use crate::core::offchain::{DbExternalities, OffchainStorage, StorageKind, STORAGE_PREFIX};
 use std::{
 	collections::hash_map::{Entry, HashMap},
 	iter::Iterator,

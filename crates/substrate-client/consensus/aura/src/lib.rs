@@ -46,7 +46,7 @@ use soil_blockchain::HeaderBackend;
 use soil_client_api::{backend::AuxStore, BlockOf};
 use soil_consensus::{BlockOrigin, Environment, Error as ConsensusError, Proposer, SelectChain};
 use soil_consensus_slots::Slot;
-use soil_core::crypto::Pair;
+use subsoil::core::crypto::Pair;
 use soil_inherents::CreateInherentDataProviders;
 use soil_keystore::KeystorePtr;
 use soil_runtime::traits::{Block as BlockT, Header, Member, NumberFor};

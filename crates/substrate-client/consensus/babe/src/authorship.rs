@@ -26,7 +26,7 @@ use soil_consensus_babe::{
 	make_vrf_sign_data, AuthorityId, BabeAuthorityWeight, Randomness, Slot,
 };
 use soil_consensus_epochs::Epoch as EpochT;
-use soil_core::{
+use subsoil::core::{
 	crypto::{ByteArray, Wraps},
 	U256,
 };
@@ -275,14 +275,14 @@ mod tests {
 	use soil_consensus_babe::{
 		AllowedSlots, AuthorityId, BabeEpochConfiguration, Epoch, RANDOMNESS_LENGTH,
 	};
-	use soil_core::{crypto::Pair as _, sr25519::Pair};
+	use subsoil::core::{crypto::Pair as _, sr25519::Pair};
 	use soil_keystore::testing::MemoryKeystore;
 
 	#[test]
 	fn claim_secondary_plain_slot_works() {
 		let keystore: KeystorePtr = MemoryKeystore::new().into();
 		let valid_public_key = keystore
-			.sr25519_generate_new(AuthorityId::ID, Some(soil_core::crypto::DEV_PHRASE))
+			.sr25519_generate_new(AuthorityId::ID, Some(subsoil::core::crypto::DEV_PHRASE))
 			.unwrap();
 
 		let authorities = vec![

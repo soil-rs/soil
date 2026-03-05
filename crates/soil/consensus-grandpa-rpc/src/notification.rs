@@ -23,7 +23,7 @@ use soil_runtime::traits::Block as BlockT;
 
 /// An encoded justification proving that the given header has been finalized
 #[derive(Clone, Serialize, Deserialize)]
-pub struct JustificationNotification(soil_core::Bytes);
+pub struct JustificationNotification(subsoil::core::Bytes);
 
 impl<Block: BlockT> From<GrandpaJustification<Block>> for JustificationNotification {
 	fn from(notification: GrandpaJustification<Block>) -> Self {

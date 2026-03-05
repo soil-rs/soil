@@ -25,7 +25,7 @@ use crate::tests::mock::{
 	RuntimeParametersValue,
 };
 use codec::Encode;
-use soil_core::Get;
+use subsoil::core::Get;
 use soil_runtime::DispatchError;
 use topsoil_support::{assert_noop, assert_ok, traits::dynamic_params::AggregatedKeyValue};
 

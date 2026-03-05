@@ -31,7 +31,7 @@ use alloc::{
 use codec::{Decode, Encode, HasCompact};
 use core::cmp::Ordering;
 use subsoil::arithmetic::traits::SaturatedConversion;
-use soil_core::bounded::BoundedVec;
+use subsoil::core::bounded::BoundedVec;
 use soil_npos_elections::ElectionScore;
 use soil_runtime::{
 	traits::{Convert, Saturating, Zero},

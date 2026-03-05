@@ -27,7 +27,7 @@ use crate::mock::{
 };
 
 use codec::Encode;
-use soil_core::crypto::key_types::DUMMY;
+use subsoil::core::crypto::key_types::DUMMY;
 use soil_runtime::{testing::UintAuthorityId, Perbill};
 
 use topsoil_support::{
@@ -409,7 +409,7 @@ fn session_keys_generate_output_works_as_set_keys_input() {
 
 #[test]
 fn upgrade_keys() {
-	use soil_core::crypto::key_types::DUMMY;
+	use subsoil::core::crypto::key_types::DUMMY;
 	use topsoil_support::storage;
 
 	// This test assumes certain mocks.

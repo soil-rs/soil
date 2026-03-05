@@ -17,7 +17,7 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 use codec::{Decode, Encode, Joiner};
-use soil_core::{storage::well_known_keys, traits::Externalities};
+use subsoil::core::{storage::well_known_keys, traits::Externalities};
 use soil_runtime::{
 	traits::Hash as HashT, transaction_validity::InvalidTransaction, ApplyExtrinsicResult,
 };

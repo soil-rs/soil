@@ -30,7 +30,7 @@ soil-runtime = { workspace = true }
 
 [dev-dependencies]
 topsoil-verify-signature = { workspace = true }
-soil-core = { workspace = true }
+subsoil = { workspace = true }
 soil-keyring = { workspace = true, default-features = true }
 
 [features]
@@ -43,7 +43,7 @@ std = [
 	"log/std",
 	"topsoil-verify-signature/std",
 	"scale-info/std",
-	"soil-core/std",
+	"subsoil/std",
 	"soil-io/std",
 	"soil-runtime/std",
 ]

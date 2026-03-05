@@ -32,7 +32,7 @@ use futures::Stream;
 #[cfg(feature = "std")]
 use serde::{de::DeserializeOwned, Deserialize, Serialize};
 #[cfg(feature = "std")]
-use soil_core::offchain::TransactionPoolExt;
+use subsoil::core::offchain::TransactionPoolExt;
 #[cfg(feature = "std")]
 use soil_runtime::traits::{Block as BlockT, Member};
 use std::{collections::HashMap, hash::Hash, marker::PhantomData, pin::Pin, sync::Arc};
@@ -546,7 +546,7 @@ impl<Block: BlockT> OffchainTransactionPoolFactory<Block> {
 	}
 }
 
-/// Wraps a `pool` and `block_hash` to implement [`soil_core::offchain::TransactionPool`].
+/// Wraps a `pool` and `block_hash` to implement [`subsoil::core::offchain::TransactionPool`].
 #[cfg(feature = "std")]
 struct OffchainTransactionPool<Block: BlockT> {
 	block_hash: Block::Hash,
@@ -554,7 +554,7 @@ struct OffchainTransactionPool<Block: BlockT> {
 }
 
 #[cfg(feature = "std")]
-impl<Block: BlockT> soil_core::offchain::TransactionPool for OffchainTransactionPool<Block> {
+impl<Block: BlockT> subsoil::core::offchain::TransactionPool for OffchainTransactionPool<Block> {
 	fn submit_transaction(&mut self, extrinsic: Vec<u8>) -> Result<(), ()> {
 		let extrinsic = match codec::Decode::decode(&mut &extrinsic[..]) {
 			Ok(t) => t,

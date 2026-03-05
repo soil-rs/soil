@@ -17,9 +17,9 @@
 
 //! Simple ECDSA secp256k1 API.
 //!
-//! Provides an extension trait for [`soil_core::ecdsa::Public`] to do certain operations.
+//! Provides an extension trait for [`subsoil::core::ecdsa::Public`] to do certain operations.
 
-use soil_core::{crypto::ByteArray, ecdsa::Public};
+use subsoil::core::{crypto::ByteArray, ecdsa::Public};
 
 /// Extension trait for [`Public`] to be used from inside the runtime.
 ///
@@ -51,7 +51,7 @@ impl ECDSAExt for Public {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use soil_core::{ecdsa, Pair};
+	use subsoil::core::{ecdsa, Pair};
 
 	#[test]
 	fn to_eth_address_works() {

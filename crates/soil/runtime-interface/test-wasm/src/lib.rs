@@ -35,7 +35,7 @@ use soil_runtime_interface::{
 use core::mem;
 
 use alloc::{vec, vec::Vec};
-use soil_core::{sr25519::Public, wasm_export_functions};
+use subsoil::core::{sr25519::Public, wasm_export_functions};
 
 // Include the WASM binary
 #[cfg(feature = "std")]

@@ -31,7 +31,7 @@
 //! # };
 //! # use sc_transaction_pool::{BasicPool, FullChainApi};
 //! # let client = Arc::new(substrate_test_runtime_client::new());
-//! # let spawner = soil_core::testing::TaskExecutor::new();
+//! # let spawner = subsoil::core::testing::TaskExecutor::new();
 //! # let txpool = Arc::from(BasicPool::new_full(
 //! #     Default::default(),
 //! #     true.into(),

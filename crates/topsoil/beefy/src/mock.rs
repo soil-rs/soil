@@ -17,7 +17,7 @@
 
 use codec::{Decode, DecodeWithMemTracking, Encode};
 use scale_info::TypeInfo;
-use soil_core::{crypto::KeyTypeId, ConstBool, ConstU128};
+use subsoil::core::{crypto::KeyTypeId, ConstBool, ConstU128};
 use soil_runtime::{
 	app_crypto::ecdsa::Public,
 	curve::PiecewiseLinear,

@@ -21,4 +21,4 @@ doc = false
 libfuzzer-sys = { workspace = true }
 regex = { workspace = true }
 
-soil-core = { workspace = true, default-features = true }
+subsoil = { workspace = true, default-features = true }

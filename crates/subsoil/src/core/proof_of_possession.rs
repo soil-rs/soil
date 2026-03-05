@@ -14,8 +14,8 @@
 
 //! Utilities for proving possession of a particular public key
 
-use crate::crypto::{CryptoType, Pair, Signature};
-use subsoil::std::vec::Vec;
+use crate::core::crypto::{CryptoType, Pair, Signature};
+use crate::std::vec::Vec;
 
 /// Pair which is able to generate proof of possession.
 ///

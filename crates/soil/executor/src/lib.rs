@@ -49,7 +49,7 @@ pub use executor::NativeElseWasmExecutor;
 pub use executor::{with_externalities_safe, NativeExecutionDispatch, WasmExecutor};
 #[doc(hidden)]
 #[cfg(feature = "std")]
-pub use soil_core::traits::Externalities;
+pub use subsoil::core::traits::Externalities;
 #[cfg(feature = "std")]
 pub use soil_version::{NativeVersion, RuntimeVersion};
 #[doc(hidden)]
@@ -75,7 +75,7 @@ pub trait RuntimeVersionOf {
 	fn runtime_version(
 		&self,
 		ext: &mut dyn Externalities,
-		runtime_code: &soil_core::traits::RuntimeCode,
+		runtime_code: &subsoil::core::traits::RuntimeCode,
 	) -> error::Result<RuntimeVersion>;
 }
 

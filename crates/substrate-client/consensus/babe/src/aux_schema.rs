@@ -147,7 +147,7 @@ mod test {
 	use soil_consensus::Error as ConsensusError;
 	use soil_consensus_babe::AllowedSlots;
 	use soil_consensus_epochs::{EpochHeader, PersistedEpoch, PersistedEpochHeader};
-	use soil_core::H256;
+	use subsoil::core::H256;
 	use soil_network_test::Block as TestBlock;
 	use soil_runtime::traits::NumberFor;
 	use substrate_test_runtime_client;

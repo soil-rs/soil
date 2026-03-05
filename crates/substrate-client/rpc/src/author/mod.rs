@@ -30,7 +30,7 @@ use codec::{Decode, Encode};
 use jsonrpsee::{core::async_trait, types::ErrorObject, Extensions, PendingSubscriptionSink};
 use soil_api::{ApiExt, ProvideRuntimeApi};
 use soil_blockchain::HeaderBackend;
-use soil_core::Bytes;
+use subsoil::core::Bytes;
 use soil_keystore::{KeystoreExt, KeystorePtr};
 use soil_rpc_api::check_if_safe;
 use soil_runtime::traits::Block as BlockT;

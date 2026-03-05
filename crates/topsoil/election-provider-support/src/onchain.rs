@@ -189,7 +189,7 @@ impl<T: Config> ElectionProvider for OnChainExecution<T> {
 	type MaxBackersPerWinner = T::MaxBackersPerWinner;
 	// can support any number of pages, as this is meant to be called "instantly". We don't care
 	// about this value here.
-	type Pages = soil_core::ConstU32<1>;
+	type Pages = subsoil::core::ConstU32<1>;
 	type DataProvider = T::DataProvider;
 
 	fn elect(page: PageIndex) -> Result<BoundedSupportsOf<Self>, Self::Error> {
@@ -240,7 +240,7 @@ mod tests {
 		type RuntimeOrigin = RuntimeOrigin;
 		type Nonce = Nonce;
 		type RuntimeCall = RuntimeCall;
-		type Hash = soil_core::H256;
+		type Hash = subsoil::core::H256;
 		type Hashing = soil_runtime::traits::BlakeTwo256;
 		type AccountId = AccountId;
 		type Lookup = soil_runtime::traits::IdentityLookup<Self::AccountId>;

@@ -32,7 +32,7 @@ use num_traits::{
 	Num, NumCast, PrimInt, Saturating, ToPrimitive,
 };
 use scale_info::{StaticTypeInfo, TypeInfo};
-use soil_core::Get;
+use subsoil::core::Get;
 
 #[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
@@ -525,7 +525,7 @@ mod tests {
 	use super::TypeWithDefault;
 	use scale_info::TypeInfo;
 	use subsoil::arithmetic::traits::{AtLeast16Bit, AtLeast32Bit, AtLeast8Bit};
-	use soil_core::Get;
+	use subsoil::core::Get;
 
 	#[test]
 	#[allow(dead_code)]

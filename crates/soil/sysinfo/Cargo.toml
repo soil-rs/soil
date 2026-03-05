@@ -27,7 +27,7 @@ regex = { workspace = true, optional = true}
 soil-telemetry = { workspace = true, default-features = true, optional = true}
 serde = { features = ["derive"], workspace = true, default-features = true, optional = true}
 serde_json = { workspace = true, default-features = true, optional = true}
-soil-core = { workspace = true, default-features = true, optional = true}
+subsoil = { workspace = true, default-features = true, optional = true}
 subsoil-crypto-hashing = { workspace = true, default-features = true, optional = true}
 soil-io = { workspace = true, default-features = true, optional = true}
 
@@ -43,11 +43,11 @@ std = [
 	"regex",
 	"serde",
 	"serde_json",
-	"soil-core",
+	"subsoil",
 	"subsoil-crypto-hashing",
 	"soil-io",
 	"soil-telemetry",
-	"soil-core/std",
+	"subsoil/std",
 	"subsoil-crypto-hashing/std",
 	"soil-io/std",
 	"soil-telemetry/std",

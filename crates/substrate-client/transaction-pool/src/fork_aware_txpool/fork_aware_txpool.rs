@@ -57,7 +57,7 @@ use futures::{
 use parking_lot::Mutex;
 use prometheus_endpoint::Registry as PrometheusRegistry;
 use soil_blockchain::{HashAndNumber, TreeRoute};
-use soil_core::traits::SpawnEssentialNamed;
+use subsoil::core::traits::SpawnEssentialNamed;
 use soil_runtime::{
 	generic::BlockId,
 	traits::{Block as BlockT, NumberFor},
@@ -2108,7 +2108,7 @@ where
 #[cfg(test)]
 mod reduce_multiview_result_tests {
 	use super::*;
-	use soil_core::H256;
+	use subsoil::core::H256;
 	#[derive(Debug, PartialEq, Clone)]
 	enum Error {
 		Custom(u8),

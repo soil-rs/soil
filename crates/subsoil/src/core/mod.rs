@@ -17,10 +17,8 @@
 
 //! Shareable Substrate types.
 
-#![warn(missing_docs)]
-#![cfg_attr(not(feature = "std"), no_std)]
-
-extern crate alloc;
+#[warn(missing_docs)]
+mod _warn_missing_docs {}
 
 /// Initialize a key-value collection from array.
 ///
@@ -36,7 +34,7 @@ macro_rules! map {
 use alloc::vec::Vec;
 #[doc(hidden)]
 pub use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
-use core::ops::Deref;
+use ::core::ops::Deref;
 use scale_info::TypeInfo;
 #[cfg(feature = "serde")]
 pub use serde;
@@ -50,7 +48,7 @@ pub use impl_serde::serialize as bytes;
 	since = "27.0.0",
 	note = "`sp-crypto-hashing` re-exports will be removed after June 2024. Use `sp-crypto-hashing` instead."
 )]
-pub use subsoil_crypto_hashing::{self as hashing, *};
+pub use crate::crypto_hashing::{self as hashing, *};
 
 pub mod const_hex2array;
 pub mod crypto;
@@ -103,10 +101,10 @@ pub use bounded_collections::{
 	ConstU128, ConstU16, ConstU32, ConstU64, ConstU8, ConstUint, Get, GetDefault, TryCollect,
 	TypedGet,
 };
-pub use subsoil::storage;
+pub use crate::storage;
 
 #[doc(hidden)]
-pub use subsoil::std;
+pub use crate::std;
 
 /// Hex-serialized shim for `Vec<u8>`.
 #[derive(PartialEq, Eq, Clone, Debug)]
@@ -356,7 +354,7 @@ pub fn to_substrate_wasm_fn_return_value(value: &impl Encode) -> u64 {
 	// Leak the output vector to avoid it being freed.
 	// This is fine in a WASM context since the heap
 	// will be discarded after the call.
-	core::mem::forget(encoded);
+	::core::mem::forget(encoded);
 
 	res
 }
@@ -377,7 +375,7 @@ pub enum Void {}
 /// # Example
 ///
 /// ```
-/// soil_core::impl_maybe_marker! {
+/// subsoil::impl_maybe_marker! {
 ///     /// A marker for a type that implements `Debug` when `feature = std`.
 ///     trait MaybeDebug: std::fmt::Debug;
 ///     /// A marker for a type that implements `Debug + Display` when `feature = std`.
@@ -416,7 +414,7 @@ macro_rules! impl_maybe_marker {
 /// # Example
 ///
 /// ```
-/// soil_core::impl_maybe_marker_std_or_serde! {
+/// subsoil::impl_maybe_marker_std_or_serde! {
 ///     /// A marker for a type that implements `Debug` when `feature = serde` or `feature = std`.
 ///     trait MaybeDebug: std::fmt::Debug;
 ///     /// A marker for a type that implements `Debug + Display` when `feature = serde` or `feature = std`.
@@ -459,8 +457,8 @@ pub const MAX_POSSIBLE_ALLOCATION: u32 = 33554432; // 2^25 bytes, 32 MiB
 ///
 /// # Example
 ///```
-/// soil_core::generate_feature_enabled_macro!(check_std_is_enabled, feature = "std", $);
-/// soil_core::generate_feature_enabled_macro!(check_std_or_serde_is_enabled, any(feature = "std", feature = "serde"), $);
+/// subsoil::generate_feature_enabled_macro!(check_std_is_enabled, feature = "std", $);
+/// subsoil::generate_feature_enabled_macro!(check_std_or_serde_is_enabled, any(feature = "std", feature = "serde"), $);
 ///
 /// // All the code passed to the macro will then conditionally compiled based on the features
 /// // activated for the crate where the macro was generated.
@@ -474,7 +472,7 @@ pub const MAX_POSSIBLE_ALLOCATION: u32 = 33554432; // 2^25 bytes, 32 MiB
 #[rustfmt::skip]
 macro_rules! generate_feature_enabled_macro {
 	( $macro_name:ident, $feature_name:meta, $d:tt ) => {
-		$crate::paste::paste!{
+		$crate::core::paste::paste!{
 			///
 			#[cfg($feature_name)]
 			#[macro_export]

@@ -33,7 +33,7 @@ use crate::{
 use codec::{Decode, Encode, MaxEncodedLen};
 use parking_lot::RwLock;
 pub use signed::*;
-use soil_core::{
+use subsoil::core::{
 	offchain::{
 		testing::{PoolState, TestOffchainExt, TestTransactionPoolExt},
 		OffchainDbExt, OffchainWorkerExt, TransactionPoolExt,

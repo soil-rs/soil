@@ -661,7 +661,7 @@ mod tests {
 	use super::*;
 	use crate::mock::{RuntimeCall, Test as TestRuntime, CALL};
 	use codec::Decode;
-	use soil_core::offchain::{testing, TransactionPoolExt};
+	use subsoil::core::offchain::{testing, TransactionPoolExt};
 	use soil_runtime::testing::{TestSignature, TestXt, UintAuthorityId};
 
 	impl SigningTypes for TestRuntime {

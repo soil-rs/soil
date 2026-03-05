@@ -18,7 +18,7 @@
 //! Test utilities
 
 use crate::{self as topsoil_staking, *};
-use soil_core::ConstBool;
+use subsoil::core::ConstBool;
 use soil_io;
 use soil_runtime::{curve::PiecewiseLinear, testing::UintAuthorityId, traits::Zero, BuildStorage};
 use soil_staking::{

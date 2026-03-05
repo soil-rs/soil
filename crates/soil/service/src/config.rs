@@ -23,7 +23,7 @@ use prometheus_endpoint::Registry;
 pub use sc_transaction_pool::TransactionPoolOptions;
 use soil_chain_spec::ChainSpec;
 pub use soil_client_db::{BlocksPruning, Database, DatabaseSource, PruningMode};
-use soil_core::crypto::SecretString;
+use subsoil::core::crypto::SecretString;
 pub use soil_executor::{WasmExecutionMethod, WasmtimeInstantiationStrategy};
 pub use soil_network::{
 	config::{

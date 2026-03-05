@@ -19,7 +19,7 @@ use alloc::collections::btree_map::BTreeMap;
 use codec::{Decode, Encode};
 use scale_info::TypeInfo;
 use subsoil::arithmetic::traits::Zero;
-use soil_core::{Get, TypedGet};
+use subsoil::core::{Get, TypedGet};
 use soil_runtime::{DispatchError, DispatchResult};
 use topsoil_support::{
 	parameter_types,

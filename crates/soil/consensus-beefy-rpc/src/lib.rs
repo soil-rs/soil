@@ -317,7 +317,7 @@ mod tests {
 		r.unwrap();
 
 		// Inspect what we received
-		let (bytes, recv_sub_id) = sub.next::<soil_core::Bytes>().await.unwrap().unwrap();
+		let (bytes, recv_sub_id) = sub.next::<subsoil::core::Bytes>().await.unwrap().unwrap();
 		let recv_finality_proof: BeefyVersionedFinalityProof<Block, ecdsa_crypto::AuthorityId> =
 			Decode::decode(&mut &bytes[..]).unwrap();
 		assert_eq!(&recv_sub_id, sub.subscription_id());

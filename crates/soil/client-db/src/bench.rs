@@ -23,7 +23,7 @@ use hash_db::{Hasher as DbHasher, Prefix};
 use kvdb::{DBTransaction, KeyValueDB};
 use linked_hash_map::LinkedHashMap;
 use parking_lot::Mutex;
-use soil_core::{
+use subsoil::core::{
 	hexdisplay::HexDisplay,
 	storage::{ChildInfo, TrackedStorageKey},
 };
@@ -702,8 +702,8 @@ mod test {
 		.unwrap();
 
 		for _ in 0..2 {
-			let child1 = soil_core::storage::ChildInfo::new_default(b"child1");
-			let child2 = soil_core::storage::ChildInfo::new_default(b"child2");
+			let child1 = subsoil::core::storage::ChildInfo::new_default(b"child1");
+			let child2 = subsoil::core::storage::ChildInfo::new_default(b"child2");
 
 			bench_state.storage(b"foo").unwrap();
 			bench_state.child_storage(&child1, b"foo").unwrap();

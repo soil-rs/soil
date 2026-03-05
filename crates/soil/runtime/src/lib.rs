@@ -68,11 +68,11 @@ pub use subsoil::arithmetic::traits::Saturating;
 #[doc(hidden)]
 pub use soil_application_crypto as app_crypto;
 
-pub use soil_core::storage::StateVersion;
+pub use subsoil::core::storage::StateVersion;
 #[cfg(feature = "std")]
-pub use soil_core::storage::{Storage, StorageChild};
+pub use subsoil::core::storage::{Storage, StorageChild};
 
-use soil_core::{
+use subsoil::core::{
 	crypto::{self, ByteArray, FromEntropy},
 	ecdsa, ed25519,
 	hash::{H256, H512},
@@ -106,14 +106,14 @@ pub use generic::{Digest, DigestItem};
 
 pub use soil_application_crypto::{BoundToRuntimeAppPublic, RuntimeAppPublic};
 /// Re-export this since it's part of the API of this crate.
-pub use soil_core::{
+pub use subsoil::core::{
 	bounded::{BoundedBTreeMap, BoundedBTreeSet, BoundedSlice, BoundedVec, WeakBoundedVec},
 	crypto::{key_types, AccountId32, CryptoType, CryptoTypeId, KeyTypeId},
 	TypeId,
 };
 /// Re-export bounded_vec and bounded_btree_map macros only when std is enabled.
 #[cfg(feature = "std")]
-pub use soil_core::{bounded_btree_map, bounded_vec};
+pub use subsoil::core::{bounded_btree_map, bounded_vec};
 
 /// Re-export `Debug`, to avoid dependency clutter.
 pub use core::fmt::Debug;
@@ -224,13 +224,13 @@ pub use serde::{de::DeserializeOwned, Deserialize, Serialize};
 #[cfg(feature = "std")]
 pub trait BuildStorage {
 	/// Build the storage out of this builder.
-	fn build_storage(&self) -> Result<soil_core::storage::Storage, String> {
+	fn build_storage(&self) -> Result<subsoil::core::storage::Storage, String> {
 		let mut storage = Default::default();
 		self.assimilate_storage(&mut storage)?;
 		Ok(storage)
 	}
 	/// Assimilate the storage for this module into pre-existing overlays.
-	fn assimilate_storage(&self, storage: &mut soil_core::storage::Storage) -> Result<(), String>;
+	fn assimilate_storage(&self, storage: &mut subsoil::core::storage::Storage) -> Result<(), String>;
 }
 
 /// Something that can build the genesis storage of a module.
@@ -242,13 +242,13 @@ pub trait BuildModuleGenesisStorage<T, I>: Sized {
 	/// Create the module genesis storage into the given `storage` and `child_storage`.
 	fn build_module_genesis_storage(
 		&self,
-		storage: &mut soil_core::storage::Storage,
+		storage: &mut subsoil::core::storage::Storage,
 	) -> Result<(), String>;
 }
 
 #[cfg(feature = "std")]
-impl BuildStorage for soil_core::storage::Storage {
-	fn assimilate_storage(&self, storage: &mut soil_core::storage::Storage) -> Result<(), String> {
+impl BuildStorage for subsoil::core::storage::Storage {
+	fn assimilate_storage(&self, storage: &mut subsoil::core::storage::Storage) -> Result<(), String> {
 		storage.top.extend(self.top.iter().map(|(k, v)| (k.clone(), v.clone())));
 		for (k, other_map) in self.children_default.iter() {
 			let k = k.clone();
@@ -267,7 +267,7 @@ impl BuildStorage for soil_core::storage::Storage {
 
 #[cfg(feature = "std")]
 impl BuildStorage for () {
-	fn assimilate_storage(&self, _: &mut soil_core::storage::Storage) -> Result<(), String> {
+	fn assimilate_storage(&self, _: &mut subsoil::core::storage::Storage) -> Result<(), String> {
 		Err("`assimilate_storage` not implemented for `()`".into())
 	}
 }
@@ -1033,7 +1033,7 @@ impl LazyExtrinsic for OpaqueExtrinsic {
 impl core::fmt::Debug for OpaqueExtrinsic {
 	#[cfg(feature = "std")]
 	fn fmt(&self, fmt: &mut core::fmt::Formatter) -> core::fmt::Result {
-		write!(fmt, "{}", soil_core::hexdisplay::HexDisplay::from(&self.0.as_ref()))
+		write!(fmt, "{}", subsoil::core::hexdisplay::HexDisplay::from(&self.0.as_ref()))
 	}
 
 	#[cfg(not(feature = "std"))]
@@ -1048,7 +1048,7 @@ impl ::serde::Serialize for OpaqueExtrinsic {
 	where
 		S: ::serde::Serializer,
 	{
-		codec::Encode::using_encoded(&self.0, |bytes| ::soil_core::bytes::serialize(bytes, seq))
+		codec::Encode::using_encoded(&self.0, |bytes| ::subsoil::core::bytes::serialize(bytes, seq))
 	}
 }
 
@@ -1058,7 +1058,7 @@ impl<'a> ::serde::Deserialize<'a> for OpaqueExtrinsic {
 	where
 		D: ::serde::Deserializer<'a>,
 	{
-		let r = ::soil_core::bytes::deserialize(de)?;
+		let r = ::subsoil::core::bytes::deserialize(de)?;
 		Decode::decode(&mut &r[..])
 			.map_err(|e| ::serde::de::Error::custom(alloc::format!("Decode error: {}", e)))
 	}
@@ -1168,7 +1168,7 @@ mod tests {
 
 	use super::*;
 	use codec::{Decode, Encode};
-	use soil_core::{crypto::Pair, hex2array};
+	use subsoil::core::{crypto::Pair, hex2array};
 	use soil_io::TestExternalities;
 	use soil_state_machine::create_proof_check_backend;
 
@@ -1327,8 +1327,8 @@ mod tests {
 // can access the soil_core crate.
 #[cfg(test)]
 mod sp_core_tests {
-	soil_core::generate_feature_enabled_macro!(if_test, test, $);
-	soil_core::generate_feature_enabled_macro!(if_not_test, not(test), $);
+	subsoil::generate_feature_enabled_macro!(if_test, test, $);
+	subsoil::generate_feature_enabled_macro!(if_not_test, not(test), $);
 
 	#[test]
 	#[should_panic]

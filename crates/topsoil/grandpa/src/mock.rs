@@ -23,7 +23,7 @@ use crate::{self as topsoil_grandpa, AuthorityId, AuthorityList, Config, Consens
 use codec::Encode;
 use finality_grandpa;
 use soil_consensus_grandpa::{RoundNumber, SetId, GRANDPA_ENGINE_ID};
-use soil_core::{ConstBool, H256};
+use subsoil::core::{ConstBool, H256};
 use soil_keyring::Ed25519Keyring;
 use soil_runtime::{
 	curve::PiecewiseLinear,

@@ -19,7 +19,7 @@
 
 use super::*;
 
-use soil_core::H256;
+use subsoil::core::H256;
 use soil_runtime::{
 	generic::{DigestItem, Era},
 	testing::{Block, Digest, Header},
@@ -1114,7 +1114,7 @@ fn all_weights_are_recorded_correctly() {
 #[test]
 fn offchain_worker_works_as_expected() {
 	new_test_ext(1).execute_with(|| {
-		let parent_hash = soil_core::H256::from([69u8; 32]);
+		let parent_hash = subsoil::core::H256::from([69u8; 32]);
 
 		// Emulate block production before running the offchain worker.
 		System::initialize(&1, &parent_hash, &Digest::default());

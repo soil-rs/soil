@@ -44,7 +44,7 @@ impl substrate_test_client::GenesisInit for GenesisParameters {
 	fn genesis_storage(&self) -> Storage {
 		let mut storage = crate::genesis::config().build_storage().unwrap();
 		storage.top.insert(
-			soil_core::storage::well_known_keys::CODE.to_vec(),
+			subsoil::core::storage::well_known_keys::CODE.to_vec(),
 			kitchensink_runtime::wasm_binary_unwrap().into(),
 		);
 		storage

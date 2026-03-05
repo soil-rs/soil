@@ -28,7 +28,7 @@ use soil_authority_discovery::AuthorityId as AuthorityDiscoveryId;
 use soil_consensus_babe::AuthorityId as BabeId;
 use soil_consensus_beefy::ecdsa_crypto::AuthorityId as BeefyId;
 use soil_consensus_grandpa::AuthorityId as GrandpaId;
-use soil_core::{crypto::get_public_from_string_or_panic, sr25519};
+use subsoil::core::{crypto::get_public_from_string_or_panic, sr25519};
 use soil_genesis_builder::PresetId;
 use soil_keyring::Sr25519Keyring;
 use soil_mixnet::types::AuthorityId as MixnetId;

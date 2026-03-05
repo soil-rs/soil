@@ -31,7 +31,7 @@ use core::marker::PhantomData;
 use hash_db::{self, AsHashDB, HashDB, HashDBRef, Hasher, Prefix};
 #[cfg(feature = "std")]
 use parking_lot::RwLock;
-use soil_core::storage::{ChildInfo, ChildType, StateVersion};
+use subsoil::core::storage::{ChildInfo, ChildType, StateVersion};
 use soil_trie::{
 	child_delta_trie_root, delta_trie_root, empty_child_trie_root,
 	read_child_trie_first_descendant_value, read_child_trie_hash, read_child_trie_value,
@@ -880,7 +880,7 @@ impl<
 mod test {
 	use super::*;
 	use crate::{Backend, TrieBackend};
-	use soil_core::{Blake2Hasher, H256};
+	use subsoil::core::{Blake2Hasher, H256};
 	use soil_trie::{
 		cache::LocalTrieCache, trie_types::TrieDBMutBuilderV1 as TrieDBMutBuilder, KeySpacedDBMut,
 		PrefixedMemoryDB, TrieMut,

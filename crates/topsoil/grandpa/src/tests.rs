@@ -22,7 +22,7 @@
 use super::{Call, Event, *};
 use crate::mock::*;
 use fg_primitives::ScheduledChange;
-use soil_core::H256;
+use subsoil::core::H256;
 use soil_keyring::Ed25519Keyring;
 use soil_runtime::testing::Digest;
 use topsoil_support::{

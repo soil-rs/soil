@@ -16,7 +16,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-use soil_core::{testing::TaskExecutor, traits::SpawnNamed};
+use subsoil::core::{testing::TaskExecutor, traits::SpawnNamed};
 use std::sync::{atomic::AtomicUsize, Arc};
 use tokio::sync::mpsc;
 

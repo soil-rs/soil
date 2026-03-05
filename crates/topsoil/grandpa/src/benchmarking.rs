@@ -18,7 +18,7 @@
 //! Benchmarks for the GRANDPA pallet.
 
 use super::*;
-use soil_core::H256;
+use subsoil::core::H256;
 use topsoil_benchmarking::v2::*;
 use topsoil_system::RawOrigin;
 

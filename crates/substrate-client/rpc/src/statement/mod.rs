@@ -24,7 +24,7 @@ use jsonrpsee::{
 	core::{async_trait, RpcResult},
 	Extensions, PendingSubscriptionSink,
 };
-use soil_core::Bytes;
+use subsoil::core::Bytes;
 /// Re-export the API for backward compatibility.
 pub use soil_rpc_api::statement::{error::Error, StatementApiServer};
 use soil_statement_store::{

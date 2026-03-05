@@ -575,7 +575,7 @@ mod tests {
 		test::{make_changeset, make_db},
 		ChangeSet, CommitSet, MetaDb, StateDbError,
 	};
-	use soil_core::H256;
+	use subsoil::core::H256;
 
 	fn contains(overlay: &NonCanonicalOverlay<H256, H256>, key: u64) -> bool {
 		overlay.get(&H256::from_low_u64_be(key))

@@ -19,7 +19,7 @@
 
 use super::changeset::OverlayedMap;
 use alloc::vec::Vec;
-use soil_core::offchain::OffchainOverlayedChange;
+use subsoil::core::offchain::OffchainOverlayedChange;
 
 /// In-memory storage for offchain workers recoding changes for the actual offchain storage
 /// implementation.
@@ -91,7 +91,7 @@ impl OffchainOverlayedChanges {
 #[cfg(test)]
 mod test {
 	use super::*;
-	use soil_core::offchain::STORAGE_PREFIX;
+	use subsoil::core::offchain::STORAGE_PREFIX;
 
 	#[test]
 	fn test_drain() {

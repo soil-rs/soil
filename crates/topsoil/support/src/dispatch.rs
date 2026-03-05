@@ -710,7 +710,7 @@ impl<T> PaysFee<T> for (u64, Pays) {
 #[allow(dead_code)]
 mod weight_tests {
 	use super::*;
-	use soil_core::parameter_types;
+	use subsoil::core::parameter_types;
 	use soil_runtime::{generic, traits::BlakeTwo256};
 	use subsoil::weights::RuntimeDbWeight;
 
@@ -1353,7 +1353,7 @@ mod extension_weight_tests {
 	use crate::assert_ok;
 
 	use super::*;
-	use soil_core::parameter_types;
+	use subsoil::core::parameter_types;
 	use soil_runtime::{
 		generic::{self, ExtrinsicFormat},
 		traits::{Applyable, BlakeTwo256, DispatchTransaction, TransactionExtension},

@@ -24,7 +24,7 @@ use topsoil_support::{
 	storage::with_transaction, weights::RuntimeDbWeight,
 };
 
-use soil_core::{ConstU16, ConstU32, ConstU64, H256};
+use subsoil::core::{ConstU16, ConstU32, ConstU64, H256};
 use soil_runtime::{
 	testing::UintAuthorityId,
 	traits::{Applyable, BlakeTwo256, Checkable, IdentityLookup},

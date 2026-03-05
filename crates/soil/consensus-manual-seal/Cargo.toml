@@ -38,7 +38,6 @@ soil-consensus = { workspace = true, default-features = true, optional = true}
 soil-consensus-aura = { workspace = true, default-features = true, optional = true}
 soil-consensus-babe = { workspace = true, default-features = true, optional = true}
 soil-consensus-slots = { workspace = true, default-features = true, optional = true}
-soil-core = { workspace = true, default-features = true, optional = true}
 soil-inherents = { workspace = true, default-features = true, optional = true}
 soil-keystore = { workspace = true, default-features = true, optional = true}
 soil-runtime = { workspace = true, default-features = true, optional = true}
@@ -69,7 +68,6 @@ std = [
 	"soil-consensus-babe",
 	"soil-consensus-epochs",
 	"soil-consensus-slots",
-	"soil-core",
 	"soil-inherents",
 	"soil-keystore",
 	"soil-runtime",
@@ -83,7 +81,6 @@ std = [
 	"soil-consensus-babe/std",
 	"soil-consensus-epochs/std",
 	"soil-consensus-slots/std",
-	"soil-core/std",
 	"subsoil/std",
 	"soil-inherents/std",
 	"soil-keystore/std",

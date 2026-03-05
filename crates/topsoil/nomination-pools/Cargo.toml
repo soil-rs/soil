@@ -23,7 +23,6 @@ scale-info = { features = ["derive"], workspace = true }
 topsoil-support = { workspace = true }
 topsoil-system = { workspace = true }
 log = { workspace = true }
-soil-core = { workspace = true }
 soil-io = { workspace = true }
 soil-runtime = { workspace = true }
 soil-staking = { workspace = true }
@@ -46,7 +45,7 @@ std = [
 	"log/std",
 	"topsoil-balances?/std",
 	"scale-info/std",
-	"soil-core/std",
+	"subsoil/std",
 	"soil-io/std",
 	"soil-runtime/std",
 	"soil-staking/std",
