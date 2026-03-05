@@ -18,7 +18,6 @@
 //! Home of the parsing and expansion code for the new pallet benchmarking syntax
 
 use derive_syn_parse::Parse;
-use topsoil_support_procedural_tools::generate_access_from_frame_or_crate;
 use proc_macro::TokenStream;
 use proc_macro2::{Ident, Span, TokenStream as TokenStream2};
 use quote::{quote, quote_spanned, ToTokens};
@@ -32,6 +31,7 @@ use syn::{
 	PathArguments, PathSegment, Result, ReturnType, Signature, Stmt, Token, Type, TypePath,
 	Visibility, WhereClause, WherePredicate,
 };
+use topsoil_support_procedural_tools::generate_access_from_frame_or_crate;
 
 mod keywords {
 	use syn::custom_keyword;

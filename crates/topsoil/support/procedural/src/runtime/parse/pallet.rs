@@ -19,9 +19,9 @@ use crate::{
 	construct_runtime::parse::{Pallet, PalletPart, PalletPartKeyword, PalletPath},
 	runtime::parse::PalletDeclaration,
 };
-use topsoil_support_procedural_tools::get_doc_literals;
 use quote::ToTokens;
 use syn::{punctuated::Punctuated, spanned::Spanned, token, Error};
+use topsoil_support_procedural_tools::get_doc_literals;
 
 impl Pallet {
 	pub fn try_from(

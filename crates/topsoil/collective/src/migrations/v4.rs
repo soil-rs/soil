@@ -35,7 +35,11 @@ use topsoil_support::{
 /// The migration will look into the storage version in order not to trigger a migration on an up
 /// to date storage. Thus the on chain storage version must be less than 4 in order to trigger the
 /// migration.
-pub fn migrate<T: topsoil_system::Config, P: GetStorageVersion + PalletInfoAccess, N: AsRef<str>>(
+pub fn migrate<
+	T: topsoil_system::Config,
+	P: GetStorageVersion + PalletInfoAccess,
+	N: AsRef<str>,
+>(
 	old_pallet_name: N,
 ) -> Weight {
 	let old_pallet_name = old_pallet_name.as_ref();

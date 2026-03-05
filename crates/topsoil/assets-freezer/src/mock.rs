@@ -26,8 +26,8 @@
 use crate as topsoil_assets_freezer;
 pub use crate::*;
 use codec::{Compact, Decode, Encode, MaxEncodedLen};
-use topsoil::testing_prelude::*;
 use scale_info::TypeInfo;
+use topsoil::testing_prelude::*;
 
 pub type AccountId = u64;
 pub type Balance = u64;

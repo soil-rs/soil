@@ -36,7 +36,6 @@
 //! in the MMR.
 
 #![warn(missing_docs)]
-
 #![cfg_attr(not(feature = "std"), no_std)]
 
 #[cfg(feature = "std")]
@@ -54,13 +53,13 @@ use futures::StreamExt;
 #[cfg(feature = "std")]
 use log::{debug, error, trace, warn};
 #[cfg(feature = "std")]
-use soil_client_api::{Backend, BlockchainEvents, FinalityNotification, FinalityNotifications};
-#[cfg(feature = "std")]
 use sc_offchain::OffchainDb;
 #[cfg(feature = "std")]
 use soil_api::ProvideRuntimeApi;
 #[cfg(feature = "std")]
 use soil_blockchain::{HeaderBackend, HeaderMetadata};
+#[cfg(feature = "std")]
+use soil_client_api::{Backend, BlockchainEvents, FinalityNotification, FinalityNotifications};
 #[cfg(feature = "std")]
 use soil_consensus_beefy::MmrRootHash;
 #[cfg(feature = "std")]

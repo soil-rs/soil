@@ -19,15 +19,15 @@
 
 use super::*;
 use crate::Pallet as AssetConversionOps;
+use soil_core::Get;
+use soil_runtime::traits::One;
+use topsoil_asset_conversion::{BenchmarkHelper, Pallet as AssetConversion};
 use topsoil_benchmarking::{v2::*, whitelisted_caller};
 use topsoil_support::{
 	assert_ok,
 	traits::fungibles::{Create, Inspect, Mutate},
 };
 use topsoil_system::RawOrigin as SystemOrigin;
-use topsoil_asset_conversion::{BenchmarkHelper, Pallet as AssetConversion};
-use soil_core::Get;
-use soil_runtime::traits::One;
 
 /// Provides a pair of amounts expected to serve as sufficient initial liquidity for a pool.
 fn valid_liquidity_amount<T: Config>(ed1: T::Balance, ed2: T::Balance) -> (T::Balance, T::Balance)
@@ -82,10 +82,10 @@ fn mint_setup_fee_asset<T: Config>(
 	assert_ok!(T::Assets::mint_into(
 		T::PoolSetupFeeAsset::get(),
 		&caller,
-		T::PoolSetupFee::get() +
-			T::Assets::deposit_required(asset1.clone()) +
-			T::Assets::deposit_required(asset2.clone()) +
-			T::PoolAssets::deposit_required(lp_token.clone())
+		T::PoolSetupFee::get()
+			+ T::Assets::deposit_required(asset1.clone())
+			+ T::Assets::deposit_required(asset2.clone())
+			+ T::PoolAssets::deposit_required(lp_token.clone())
 	));
 }
 

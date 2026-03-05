@@ -21,6 +21,7 @@
 
 use super::*;
 use enumflags2::{BitFlag, BitFlags};
+use soil_runtime::traits::{Bounded, One};
 use topsoil_benchmarking::v1::{
 	account, benchmarks_instance_pallet, whitelist_account, whitelisted_caller, BenchmarkError,
 };
@@ -30,7 +31,6 @@ use topsoil_support::{
 	BoundedVec,
 };
 use topsoil_system::RawOrigin as SystemOrigin;
-use soil_runtime::traits::{Bounded, One};
 
 use crate::Pallet as Nfts;
 

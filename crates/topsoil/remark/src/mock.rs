@@ -18,8 +18,8 @@
 //! Test environment for remarks pallet.
 
 use crate as topsoil_remark;
-use topsoil_support::derive_impl;
 use soil_runtime::BuildStorage;
+use topsoil_support::derive_impl;
 
 pub type Block = topsoil_system::mocking::MockBlock<Test>;
 

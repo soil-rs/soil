@@ -22,15 +22,6 @@
 use crate::{self as topsoil_grandpa, AuthorityId, AuthorityList, Config, ConsensusLog};
 use codec::Encode;
 use finality_grandpa;
-use topsoil_election_provider_support::{
-	bounds::{ElectionBounds, ElectionBoundsBuilder},
-	onchain, SequentialPhragmen,
-};
-use topsoil_support::{
-	derive_impl, parameter_types,
-	traits::{ConstU128, ConstU32, ConstU64, OnFinalize, OnInitialize},
-};
-use topsoil_session::historical as pallet_session_historical;
 use soil_consensus_grandpa::{RoundNumber, SetId, GRANDPA_ENGINE_ID};
 use soil_core::{ConstBool, H256};
 use soil_keyring::Ed25519Keyring;
@@ -42,6 +33,15 @@ use soil_runtime::{
 	BuildStorage, DigestItem, Perbill,
 };
 use soil_staking::{EraIndex, SessionIndex};
+use topsoil_election_provider_support::{
+	bounds::{ElectionBounds, ElectionBoundsBuilder},
+	onchain, SequentialPhragmen,
+};
+use topsoil_session::historical as pallet_session_historical;
+use topsoil_support::{
+	derive_impl, parameter_types,
+	traits::{ConstU128, ConstU32, ConstU64, OnFinalize, OnInitialize},
+};
 
 type Block = topsoil_system::mocking::MockBlock<Test>;
 

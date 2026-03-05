@@ -39,11 +39,6 @@ use async_trait::async_trait;
 use futures::{channel::oneshot, future, prelude::*, Future, FutureExt};
 use parking_lot::Mutex;
 use prometheus_endpoint::Registry as PrometheusRegistry;
-use soil_transaction_pool_api::{
-	error::Error as TxPoolError, ChainEvent, ImportNotificationStream, MaintainedTransactionPool,
-	PoolStatus, TransactionFor, TransactionPool, TransactionSource, TransactionStatusStreamFor,
-	TxHash, TxInvalidityReportMap,
-};
 use soil_blockchain::{HashAndNumber, TreeRoute};
 use soil_core::traits::SpawnEssentialNamed;
 use soil_runtime::{
@@ -52,6 +47,11 @@ use soil_runtime::{
 		AtLeast32Bit, Block as BlockT, Header as HeaderT, NumberFor, SaturatedConversion, Zero,
 	},
 	transaction_validity::{TransactionTag as Tag, TransactionValidityError},
+};
+use soil_transaction_pool_api::{
+	error::Error as TxPoolError, ChainEvent, ImportNotificationStream, MaintainedTransactionPool,
+	PoolStatus, TransactionFor, TransactionPool, TransactionSource, TransactionStatusStreamFor,
+	TxHash, TxInvalidityReportMap,
 };
 use std::{
 	collections::{HashMap, HashSet},
@@ -584,8 +584,8 @@ impl<N: Clone + Copy + AtLeast32Bit> RevalidationStatus<N> {
 			},
 			Self::Scheduled(revalidate_at_time, revalidate_at_block) => {
 				let is_required =
-					revalidate_at_time.map(|at| Instant::now() >= at).unwrap_or(false) ||
-						revalidate_at_block.map(|at| block >= at).unwrap_or(false);
+					revalidate_at_time.map(|at| Instant::now() >= at).unwrap_or(false)
+						|| revalidate_at_block.map(|at| block >= at).unwrap_or(false);
 				if is_required {
 					*self = Self::InProgress;
 				}

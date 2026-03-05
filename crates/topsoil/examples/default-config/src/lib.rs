@@ -140,8 +140,8 @@ pub mod pallet {
 #[cfg(any(test, doc))]
 pub mod tests {
 	use super::*;
-	use topsoil_support::{derive_impl, parameter_types};
 	use pallet::{self as topsoil_default_config_example, config_preludes::*};
+	use topsoil_support::{derive_impl, parameter_types};
 
 	type Block = topsoil_system::mocking::MockBlock<Runtime>;
 
@@ -210,8 +210,8 @@ pub mod tests {
 
 	#[test]
 	fn it_works() {
-		use topsoil_support::traits::Get;
 		use pallet::{Config, DefaultConfig};
+		use topsoil_support::traits::Get;
 
 		// assert one of the value types that is not overwritten.
 		assert_eq!(

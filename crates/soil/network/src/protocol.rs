@@ -37,8 +37,8 @@ use log::{debug, warn};
 
 use codec::DecodeAll;
 use soil_network_common::{role::Roles, types::ReputationChange};
-use soil_utils::mpsc::TracingUnboundedReceiver;
 use soil_runtime::traits::Block as BlockT;
+use soil_utils::mpsc::TracingUnboundedReceiver;
 
 use std::{collections::HashSet, iter, sync::Arc, task::Poll};
 

@@ -31,9 +31,9 @@ use std::{
 use futures::StreamExt;
 use soil_client_api::{Backend, UnpinWorkerMessage};
 
-use soil_utils::mpsc::TracingUnboundedReceiver;
 use schnellru::Limiter;
 use soil_runtime::traits::Block as BlockT;
+use soil_utils::mpsc::TracingUnboundedReceiver;
 
 const LOG_TARGET: &str = "db::notification_pinning";
 const NOTIFICATION_PINNING_LIMIT: usize = 1024;
@@ -192,9 +192,9 @@ mod tests {
 	use std::sync::Arc;
 
 	use soil_client_api::{Backend, UnpinWorkerMessage};
-	use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver};
 	use soil_core::H256;
 	use soil_runtime::traits::Block as BlockT;
+	use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver};
 
 	type Block = substrate_test_runtime_client::runtime::Block;
 

@@ -16,11 +16,11 @@
 // limitations under the License.
 
 use crate::{Config, DisabledValidators as NewDisabledValidators, Pallet, Vec};
+use soil_staking::offence::OffenceSeverity;
 use topsoil_support::{
 	pallet_prelude::{Get, ValueQuery, Weight},
 	traits::UncheckedOnRuntimeUpgrade,
 };
-use soil_staking::offence::OffenceSeverity;
 
 #[cfg(feature = "try-runtime")]
 use soil_runtime::TryRuntimeError;

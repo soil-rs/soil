@@ -22,6 +22,11 @@
 use super::*;
 
 use crate as utility;
+use soil_runtime::{
+	traits::{BadOrigin, BlakeTwo256, Dispatchable, Hash},
+	BuildStorage, DispatchError, TokenError,
+};
+use topsoil_collective::{EnsureProportionAtLeast, Instance1};
 use topsoil_support::{
 	assert_err_ignore_postinfo, assert_noop, assert_ok, derive_impl,
 	dispatch::{DispatchErrorWithPostInfo, Pays},
@@ -30,11 +35,6 @@ use topsoil_support::{
 	weights::Weight,
 };
 use topsoil_system::EnsureRoot;
-use topsoil_collective::{EnsureProportionAtLeast, Instance1};
-use soil_runtime::{
-	traits::{BadOrigin, BlakeTwo256, Dispatchable, Hash},
-	BuildStorage, DispatchError, TokenError,
-};
 
 type BlockNumber = u64;
 
@@ -229,9 +229,9 @@ impl Config for Test {
 type ExampleCall = example::Call<Test>;
 type UtilityCall = crate::Call<Test>;
 
-use topsoil_system::Call as SystemCall;
 use topsoil_balances::Call as BalancesCall;
 use topsoil_root_testing::Call as RootTestingCall;
+use topsoil_system::Call as SystemCall;
 use topsoil_timestamp::Call as TimestampCall;
 
 pub fn new_test_ext() -> soil_io::TestExternalities {

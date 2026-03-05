@@ -20,7 +20,6 @@
 
 #![warn(missing_docs)]
 #![deny(unused_crate_dependencies)]
-
 #![cfg_attr(not(feature = "std"), no_std)]
 
 #[cfg(feature = "std")]

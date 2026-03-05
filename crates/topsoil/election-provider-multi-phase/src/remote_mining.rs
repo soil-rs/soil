@@ -28,15 +28,15 @@
 use crate::{ElectionCompute, Miner, MinerConfig, RawSolution, RoundSnapshot};
 use codec::Decode;
 use core::marker::PhantomData;
+use remote_externalities::{Builder, Mode, OnlineConfig};
+use soil_core::{ConstU32, H256};
+use soil_npos_elections::BalancingConfig;
+use soil_runtime::{Perbill, Weight};
 use topsoil_election_provider_support::generate_solution_type;
 use topsoil_support::{
 	traits::Get,
 	weights::constants::{WEIGHT_PROOF_SIZE_PER_MB, WEIGHT_REF_TIME_PER_SECOND},
 };
-use remote_externalities::{Builder, Mode, OnlineConfig};
-use soil_core::{ConstU32, H256};
-use soil_npos_elections::BalancingConfig;
-use soil_runtime::{Perbill, Weight};
 
 pub mod polkadot {
 	use super::*;

@@ -17,16 +17,13 @@
 
 //! Genesis Presets for the Kitchensink Runtime
 
-
 use crate::{
 	constants::currency::*, AccountId, AssetsConfig, BabeConfig, Balance, BalancesConfig,
 	ElectionsConfig, NominationPoolsConfig, RuntimeGenesisConfig, SessionConfig, SessionKeys,
 	SocietyConfig, StakerStatus, StakingConfig, SudoConfig, TechnicalCommitteeConfig,
 	BABE_GENESIS_EPOCH_CONFIG,
 };
-use topsoil_support::build_struct_json_patch;
 use alloc::{vec, vec::Vec};
-use topsoil_im_online::sr25519::AuthorityId as ImOnlineId;
 use soil_authority_discovery::AuthorityId as AuthorityDiscoveryId;
 use soil_consensus_babe::AuthorityId as BabeId;
 use soil_consensus_beefy::ecdsa_crypto::AuthorityId as BeefyId;
@@ -36,6 +33,8 @@ use soil_genesis_builder::PresetId;
 use soil_keyring::Sr25519Keyring;
 use soil_mixnet::types::AuthorityId as MixnetId;
 use soil_runtime::Perbill;
+use topsoil_im_online::sr25519::AuthorityId as ImOnlineId;
+use topsoil_support::build_struct_json_patch;
 
 pub const ENDOWMENT: Balance = 10_000_000 * DOLLARS;
 pub const STASH: Balance = ENDOWMENT / 1000;

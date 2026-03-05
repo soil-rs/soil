@@ -46,8 +46,8 @@ use crate::peer_store::{PeerStoreProvider, ProtocolHandle as ProtocolHandleT};
 use futures::{channel::oneshot, future::Either, FutureExt, StreamExt};
 use libp2p::PeerId;
 use log::{debug, error, trace, warn};
-use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
 use soil_arithmetic::traits::SaturatedConversion;
+use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
 use std::{
 	collections::{HashMap, HashSet},
 	sync::Arc,
@@ -518,8 +518,8 @@ impl ProtocolController {
 
 		if let PeerState::Connected(direction) = state {
 			// Disconnect if we're at (or over) the regular node limit
-			let disconnect = self.reserved_only ||
-				match direction {
+			let disconnect = self.reserved_only
+				|| match direction {
 					Direction::Inbound => self.num_in >= self.max_in,
 					Direction::Outbound => self.num_out >= self.max_out,
 				};
@@ -816,7 +816,11 @@ impl ProtocolController {
 			.map(From::from)
 			.collect::<HashSet<soil_network_types::PeerId>>()
 			.union(
-				&self.nodes.keys().map(From::from).collect::<HashSet<soil_network_types::PeerId>>(),
+				&self
+					.nodes
+					.keys()
+					.map(From::from)
+					.collect::<HashSet<soil_network_types::PeerId>>(),
 			)
 			.cloned()
 			.collect();
@@ -826,8 +830,8 @@ impl ProtocolController {
 			.outgoing_candidates(available_slots, ignored)
 			.into_iter()
 			.filter_map(|peer_id| {
-				(!self.reserved_nodes.contains_key(&peer_id.into()) &&
-					!self.nodes.contains_key(&peer_id.into()))
+				(!self.reserved_nodes.contains_key(&peer_id.into())
+					&& !self.nodes.contains_key(&peer_id.into()))
 				.then_some(peer_id)
 				.or_else(|| {
 					error!(

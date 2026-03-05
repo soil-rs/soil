@@ -21,6 +21,8 @@
 //! are expected to be removed in the near future, once migration to `fungible::*` traits is done.
 
 use super::*;
+pub use imbalances::{NegativeImbalance, PositiveImbalance};
+use soil_runtime::traits::Bounded;
 use topsoil_support::{
 	ensure,
 	pallet_prelude::DispatchResult,
@@ -33,8 +35,6 @@ use topsoil_support::{
 	},
 };
 use topsoil_system::pallet_prelude::BlockNumberFor;
-pub use imbalances::{NegativeImbalance, PositiveImbalance};
-use soil_runtime::traits::Bounded;
 
 // wrapping these imbalances in a private module is necessary to ensure absolute privacy
 // of the inner member.

@@ -1173,8 +1173,8 @@ mod tests {
 #[cfg(all(test, feature = "remote-test"))]
 mod remote_tests {
 	use super::test_prelude::*;
-	use topsoil_support::storage::KeyPrefixIterator;
 	use std::{env, os::unix::fs::MetadataExt, path::Path};
+	use topsoil_support::storage::KeyPrefixIterator;
 
 	fn endpoint() -> String {
 		env::var("TEST_WS").unwrap_or_else(|_| DEFAULT_WS_ENDPOINT.to_string())

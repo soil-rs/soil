@@ -20,8 +20,10 @@
 use crate as topsoil_salary;
 use crate::*;
 use core::cell::RefCell;
-use topsoil::{deps::soil_runtime::traits::Identity, testing_prelude::*, traits::tokens::ConvertRank};
 use std::collections::BTreeMap;
+use topsoil::{
+	deps::soil_runtime::traits::Identity, testing_prelude::*, traits::tokens::ConvertRank,
+};
 
 type Block = MockBlock<Test>;
 

@@ -21,10 +21,10 @@ extern crate alloc;
 
 use super::*;
 use crate::Pallet;
+use soil_runtime::traits::{AsTransactionAuthorizedOrigin, DispatchTransaction, Dispatchable};
 use topsoil_benchmarking::v2::*;
 use topsoil_support::dispatch::{DispatchInfo, PostDispatchInfo};
 use topsoil_system::{EventRecord, RawOrigin};
-use soil_runtime::traits::{AsTransactionAuthorizedOrigin, DispatchTransaction, Dispatchable};
 
 /// Benchmark configuration trait.
 ///

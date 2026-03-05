@@ -36,12 +36,12 @@ use futures::{future::Either, Future, TryFutureExt};
 use futures_timer::Delay;
 use log::{debug, info, warn};
 use sc_consensus::{BlockImport, JustificationSyncLink};
-use soil_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG, CONSENSUS_INFO, CONSENSUS_WARN};
 use soil_arithmetic::traits::BaseArithmetic;
 use soil_consensus::{Proposal, ProposeArgs, Proposer, SelectChain, SyncOracle};
 use soil_consensus_slots::{Slot, SlotDuration};
 use soil_inherents::CreateInherentDataProviders;
 use soil_runtime::traits::{Block as BlockT, HashingFor, Header as HeaderT};
+use soil_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG, CONSENSUS_INFO, CONSENSUS_WARN};
 use std::{
 	ops::Deref,
 	time::{Duration, Instant},
@@ -325,9 +325,9 @@ pub trait SimpleSlotWorker<B: BlockT> {
 
 		let authorities_len = self.authorities_len(&aux_data);
 
-		if !self.force_authoring() &&
-			self.sync_oracle().is_offline() &&
-			authorities_len.map(|a| a > 1).unwrap_or(false)
+		if !self.force_authoring()
+			&& self.sync_oracle().is_offline()
+			&& authorities_len.map(|a| a > 1).unwrap_or(false)
 		{
 			debug!(target: logging_target, "Skipping proposal slot. Waiting for the network.");
 			telemetry!(

@@ -24,9 +24,9 @@ use std::{
 };
 
 use crate::LOG_TARGET;
-use soil_transaction_pool_api::error;
 use serde::Serialize;
 use soil_runtime::{traits::Member, transaction_validity::TransactionTag as Tag};
+use soil_transaction_pool_api::error;
 use tracing::trace;
 
 use super::{
@@ -752,18 +752,18 @@ mod tests {
 		};
 		// higher priority = better
 		assert!(
-			TransactionRef { transaction: Arc::new(with_priority(3, 3)), insertion_id: 1 } >
-				TransactionRef { transaction: Arc::new(with_priority(2, 3)), insertion_id: 2 }
+			TransactionRef { transaction: Arc::new(with_priority(3, 3)), insertion_id: 1 }
+				> TransactionRef { transaction: Arc::new(with_priority(2, 3)), insertion_id: 2 }
 		);
 		// lower validity = better
 		assert!(
-			TransactionRef { transaction: Arc::new(with_priority(3, 2)), insertion_id: 1 } >
-				TransactionRef { transaction: Arc::new(with_priority(3, 3)), insertion_id: 2 }
+			TransactionRef { transaction: Arc::new(with_priority(3, 2)), insertion_id: 1 }
+				> TransactionRef { transaction: Arc::new(with_priority(3, 3)), insertion_id: 2 }
 		);
 		// lower insertion_id = better
 		assert!(
-			TransactionRef { transaction: Arc::new(with_priority(3, 3)), insertion_id: 1 } >
-				TransactionRef { transaction: Arc::new(with_priority(3, 3)), insertion_id: 2 }
+			TransactionRef { transaction: Arc::new(with_priority(3, 3)), insertion_id: 1 }
+				> TransactionRef { transaction: Arc::new(with_priority(3, 3)), insertion_id: 2 }
 		);
 	}
 

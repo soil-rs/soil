@@ -29,10 +29,10 @@ use futures::{channel::mpsc::channel, executor::LocalPool, task::LocalSpawn};
 use soil_network_types::ed25519;
 use std::{collections::HashSet, sync::Arc};
 
-use soil_network::{multiaddr::Protocol, Multiaddr, PeerId};
 use soil_authority_discovery::AuthorityId;
 use soil_core::{crypto::key_types, testing::TaskExecutor, traits::SpawnNamed};
 use soil_keystore::{testing::MemoryKeystore, Keystore};
+use soil_network::{multiaddr::Protocol, Multiaddr, PeerId};
 
 pub(super) fn create_spawner() -> Box<dyn SpawnNamed> {
 	Box::new(TaskExecutor::new())

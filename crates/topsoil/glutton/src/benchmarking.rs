@@ -19,11 +19,11 @@
 //!
 //! Has to be compiled and run twice to calibrate on new hardware.
 
+use soil_runtime::{traits::One, Perbill};
 #[cfg(feature = "runtime-benchmarks")]
 use topsoil_benchmarking::v2::*;
 use topsoil_support::{pallet_prelude::*, weights::constants::*};
 use topsoil_system::RawOrigin;
-use soil_runtime::{traits::One, Perbill};
 
 use crate::*;
 

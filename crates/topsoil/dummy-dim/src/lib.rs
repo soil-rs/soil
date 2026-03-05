@@ -21,8 +21,8 @@
 #![recursion_limit = "128"]
 
 use codec::{Decode, Encode, MaxEncodedLen};
-use topsoil_support::traits::reality::{AddOnlyPeopleTrait, PeopleTrait, PersonalId};
 use scale_info::TypeInfo;
+use topsoil_support::traits::reality::{AddOnlyPeopleTrait, PeopleTrait, PersonalId};
 
 #[cfg(test)]
 mod mock;
@@ -55,7 +55,8 @@ pub mod pallet {
 
 		/// The runtime event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>>
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// The origin which may command personhood updates through this pallet. Root can always do
 		/// this.

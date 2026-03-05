@@ -16,16 +16,16 @@
 
 //! Test to execute the snapshot using the voter bag.
 
-use topsoil_election_provider_support::{
-	bounds::{CountBound, DataProviderBounds},
-	SortedListProvider,
-};
-use topsoil_support::traits::PalletInfoAccess;
 use remote_externalities::{Builder, Mode, OnlineConfig};
 use soil_runtime::{
 	traits::{Block as BlockT, Zero},
 	DeserializeOwned,
 };
+use topsoil_election_provider_support::{
+	bounds::{CountBound, DataProviderBounds},
+	SortedListProvider,
+};
+use topsoil_support::traits::PalletInfoAccess;
 
 /// Execute create a snapshot from topsoil-staking.
 pub async fn execute<Runtime, Block>(voter_limit: Option<usize>, currency_unit: u64, ws_url: String)
@@ -41,8 +41,10 @@ where
 			transport_uris: vec![ws_url.to_string()],
 			// NOTE: we don't scrape topsoil-staking, this kinda ensures that the source of the data
 			// is bags-list.
-			pallets: vec![topsoil_bags_list::Pallet::<Runtime, topsoil_bags_list::Instance1>::name()
-				.to_string()],
+			pallets: vec![
+				topsoil_bags_list::Pallet::<Runtime, topsoil_bags_list::Instance1>::name()
+					.to_string(),
+			],
 			at: None,
 			hashed_prefixes: vec![
 				<topsoil_staking::Bonded<Runtime>>::prefix_hash().to_vec(),

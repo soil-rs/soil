@@ -16,12 +16,12 @@
 // limitations under the License.
 
 use codec::EncodeLike;
-use topsoil_support::{assert_noop, assert_ok, assert_storage_noop};
-use topsoil_system::RawOrigin;
 use soil_runtime::{
 	traits::{BadOrigin, Identity},
 	TokenError,
 };
+use topsoil_support::{assert_noop, assert_ok, assert_storage_noop};
+use topsoil_system::RawOrigin;
 
 use super::{Vesting as VestingStorage, *};
 use crate::mock::{vesting_events_since_last_call, Balances, ExtBuilder, System, Test, Vesting};
@@ -1156,16 +1156,16 @@ fn vested_transfer_less_than_existential_deposit_fails() {
 	ExtBuilder::default().existential_deposit(4 * ED).build().execute_with(|| {
 		// MinVestedTransfer is less the ED.
 		assert!(
-			<Test as Config>::Currency::minimum_balance() >
-				<Test as Config>::MinVestedTransfer::get()
+			<Test as Config>::Currency::minimum_balance()
+				> <Test as Config>::MinVestedTransfer::get()
 		);
 
 		let sched =
 			VestingInfo::new(<Test as Config>::MinVestedTransfer::get() as u64, 1u64, 10u64);
 		// The new account balance with the schedule's locked amount would be less than ED.
 		assert!(
-			Balances::free_balance(&99) + sched.locked() <
-				<Test as Config>::Currency::minimum_balance()
+			Balances::free_balance(&99) + sched.locked()
+				< <Test as Config>::Currency::minimum_balance()
 		);
 
 		// vested_transfer fails.

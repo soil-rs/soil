@@ -136,6 +136,11 @@ use core::{
 	cmp::{self},
 	ops::Range,
 };
+use scale_info::TypeInfo;
+use soil_runtime::{
+	traits::{BadOrigin, Dispatchable},
+	ArithmeticError, Debug, SaturatedConversion, Saturating,
+};
 use topsoil_support::{
 	dispatch::{
 		extract_actual_weight, DispatchInfo, DispatchResultWithPostInfo, GetDispatchInfo,
@@ -151,11 +156,6 @@ use topsoil_support::{
 	},
 	transactional,
 	weights::WeightMeter,
-};
-use scale_info::TypeInfo;
-use soil_runtime::{
-	traits::{BadOrigin, Dispatchable},
-	ArithmeticError, Debug, SaturatedConversion, Saturating,
 };
 use verifiable::{Alias, GenerateVerifiable};
 
@@ -200,7 +200,8 @@ pub mod pallet {
 
 		/// The runtime event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>>
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// Trait allowing cryptographic proof of membership without exposing the underlying member.
 		/// Normally a Ring-VRF.
@@ -485,10 +486,10 @@ pub mod pallet {
 
 			// Check if there are any rings with suspensions and try to clean the first one.
 			if let Some(ring_index) = PendingSuspensions::<T>::iter_keys().next() {
-				if Self::should_remove_suspended_keys(ring_index, true) &&
-					weight_meter.can_consume(T::WeightInfo::remove_suspended_people(
-						T::MaxRingSize::get(),
-					)) {
+				if Self::should_remove_suspended_keys(ring_index, true)
+					&& weight_meter
+						.can_consume(T::WeightInfo::remove_suspended_people(T::MaxRingSize::get()))
+				{
 					let actual = Self::remove_suspended_keys(ring_index);
 					weight_meter.consume(actual)
 				}
@@ -820,9 +821,9 @@ pub mod pallet {
 			// merged.
 			let current_ring_index = CurrentRingIndex::<T>::get();
 			ensure!(
-				base_ring_index != target_ring_index &&
-					base_ring_index != current_ring_index &&
-					target_ring_index != current_ring_index,
+				base_ring_index != target_ring_index
+					&& base_ring_index != current_ring_index
+					&& target_ring_index != current_ring_index,
 				Error::<T>::InvalidRing
 			);
 
@@ -1204,9 +1205,9 @@ pub mod pallet {
 			// Here we check we have enough items in the queue so that the onboarding group size is
 			// respected, but also that we can support another queue of at least onboarding size
 			// in a future call.
-			let can_onboard_with_cohort = to_include >= onboarding_size &&
-				ring_status.total.saturating_add(to_include.saturated_into()) <=
-					T::MaxRingSize::get().saturating_sub(onboarding_size);
+			let can_onboard_with_cohort = to_include >= onboarding_size
+				&& ring_status.total.saturating_add(to_include.saturated_into())
+					<= T::MaxRingSize::get().saturating_sub(onboarding_size);
 			// If this call completely fills the ring, no onboarding rule enforcement will be
 			// necessary.
 			let ring_filled = open_slots == to_include;
@@ -1802,9 +1803,9 @@ pub mod pallet {
 		}
 
 		fn renew_id_reservation(personal_id: PersonalId) -> Result<(), DispatchError> {
-			if NextPersonalId::<T>::get() <= personal_id ||
-				People::<T>::contains_key(personal_id) ||
-				ReservedPersonalId::<T>::contains_key(personal_id)
+			if NextPersonalId::<T>::get() <= personal_id
+				|| People::<T>::contains_key(personal_id)
+				|| ReservedPersonalId::<T>::contains_key(personal_id)
 			{
 				return Err(Error::<T>::PersonalIdReservationCannotRenew.into());
 			}

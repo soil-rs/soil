@@ -20,12 +20,12 @@
 docify::compile_markdown!("README.docify.md", "README.md");
 
 use clap::{Parser, Subcommand};
+use serde::{Deserialize, Serialize};
+use serde_json::Value;
 use soil_chain_spec::{
 	json_patch, set_code_substitute_in_json_chain_spec, update_code_in_json_chain_spec, ChainType,
 	GenericChainSpec, GenesisConfigBuilderRuntimeCaller,
 };
-use serde::{Deserialize, Serialize};
-use serde_json::Value;
 use std::{
 	borrow::Cow,
 	fs,

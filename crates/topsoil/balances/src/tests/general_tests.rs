@@ -24,6 +24,7 @@ use crate::{
 	},
 	AccountData, ExtraFlags, TotalIssuance,
 };
+use soil_runtime::DispatchError;
 use topsoil_support::{
 	assert_noop, assert_ok, hypothetically,
 	traits::{
@@ -31,7 +32,6 @@ use topsoil_support::{
 		tokens::Precision,
 	},
 };
-use soil_runtime::DispatchError;
 
 /// There are some accounts that have one consumer ref too few. These accounts are at risk of losing
 /// their held (reserved) balance. They do not just lose it - it is also not accounted for in the

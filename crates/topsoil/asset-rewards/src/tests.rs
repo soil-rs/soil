@@ -16,6 +16,7 @@
 // limitations under the License.
 
 use crate::{mock::*, *};
+use soil_runtime::{traits::BadOrigin, ArithmeticError, TokenError};
 use topsoil_support::{
 	assert_err, assert_noop, assert_ok, hypothetically,
 	traits::{
@@ -25,7 +26,6 @@ use topsoil_support::{
 		tokens::{Fortitude, Preservation},
 	},
 };
-use soil_runtime::{traits::BadOrigin, ArithmeticError, TokenError};
 
 const DEFAULT_STAKED_ASSET_ID: NativeOrWithId<u32> = NativeOrWithId::<u32>::WithId(1);
 const DEFAULT_REWARD_ASSET_ID: NativeOrWithId<u32> = NativeOrWithId::<u32>::Native;

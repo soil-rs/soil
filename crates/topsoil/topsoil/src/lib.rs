@@ -434,7 +434,6 @@ pub mod runtime {
 	// moved to file similarly.
 	#[allow(ambiguous_glob_reexports)]
 	pub mod apis {
-		pub use topsoil_system_rpc_runtime_api::*;
 		pub use soil_api::{self, *};
 		pub use soil_block_builder::*;
 		pub use soil_consensus_aura::*;
@@ -443,6 +442,7 @@ pub mod runtime {
 		pub use soil_offchain::*;
 		pub use soil_session::runtime_api::*;
 		pub use soil_transaction_pool::runtime_api::*;
+		pub use topsoil_system_rpc_runtime_api::*;
 	}
 
 	/// A set of opinionated types aliases commonly used in runtimes.
@@ -458,8 +458,8 @@ pub mod runtime {
 	///   "account-index" system (eg `topsoil-indices`). And, in any case, it should be paired with
 	///   `AccountIdLookup` in [`topsoil_system::Config::Lookup`].
 	pub mod types_common {
-		use topsoil_system::Config as SysConfig;
 		use soil_runtime::{generic, traits, OpaqueExtrinsic};
+		use topsoil_system::Config as SysConfig;
 
 		/// A signature type compatible capably of handling multiple crypto-schemes.
 		pub type Signature = soil_runtime::MultiSignature;
@@ -530,8 +530,8 @@ pub mod runtime {
 // cleaned up.
 #[allow(ambiguous_glob_reexports)]
 pub mod traits {
-	pub use topsoil_support::traits::*;
 	pub use soil_runtime::traits::*;
+	pub use topsoil_support::traits::*;
 }
 
 /// The arithmetic types used for safe math.
@@ -561,10 +561,6 @@ pub mod token {
 pub mod derive {
 	pub use codec::{Decode, Encode};
 	pub use core::fmt::Debug;
-	pub use topsoil_support::{
-		CloneNoBound, DebugNoBound, DefaultNoBound, EqNoBound, OrdNoBound, PartialEqNoBound,
-		PartialOrdNoBound,
-	};
 	pub use scale_info::TypeInfo;
 	pub use serde;
 	/// The `serde` `Serialize`/`Deserialize` derive macros and traits.
@@ -573,6 +569,10 @@ pub mod derive {
 	/// or specify the `#[serde(crate = "PATH_TO_THIS_CRATE::serde")]` attribute that points
 	/// to the path where serde can be found.
 	pub use serde::{Deserialize, Serialize};
+	pub use topsoil_support::{
+		CloneNoBound, DebugNoBound, DefaultNoBound, EqNoBound, OrdNoBound, PartialEqNoBound,
+		PartialOrdNoBound,
+	};
 }
 
 /// All hashing related components.
@@ -586,7 +586,6 @@ pub mod hashing {
 // Systems involved in transaction execution in the runtime.
 /// This is already part of the [`prelude`].
 pub mod transaction {
-	pub use topsoil_support::traits::{CallMetadata, GetCallMetadata};
 	pub use soil_runtime::{
 		generic::ExtensionVersion,
 		impl_tx_ext_default,
@@ -596,16 +595,17 @@ pub mod transaction {
 		},
 		transaction_validity::{InvalidTransaction, ValidTransaction},
 	};
+	pub use topsoil_support::traits::{CallMetadata, GetCallMetadata};
 }
 
 /// All account management related traits.
 ///
 /// This is already part of the [`prelude`].
 pub mod account {
+	pub use soil_runtime::traits::{IdentifyAccount, IdentityLookup};
 	pub use topsoil_support::traits::{
 		AsEnsureOriginWithArg, ChangeMembers, EitherOfDiverse, InitializeMembers,
 	};
-	pub use soil_runtime::traits::{IdentifyAccount, IdentityLookup};
 }
 
 /// Access to all of the dependencies of this crate. In case the prelude re-exports are not enough,
@@ -631,8 +631,6 @@ pub mod deps {
 	pub use scale_info;
 
 	#[cfg(feature = "runtime")]
-	pub use topsoil_executive;
-	#[cfg(feature = "runtime")]
 	pub use soil_api;
 	#[cfg(feature = "runtime")]
 	pub use soil_block_builder;
@@ -652,6 +650,8 @@ pub mod deps {
 	pub use soil_storage;
 	#[cfg(feature = "runtime")]
 	pub use soil_version;
+	#[cfg(feature = "runtime")]
+	pub use topsoil_executive;
 
 	#[cfg(feature = "runtime-benchmarks")]
 	pub use topsoil_benchmarking;

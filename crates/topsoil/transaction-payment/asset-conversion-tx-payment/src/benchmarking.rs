@@ -21,15 +21,15 @@ extern crate alloc;
 
 use super::*;
 use crate::Pallet;
+use soil_runtime::traits::{
+	AsSystemOriginSigner, AsTransactionAuthorizedOrigin, DispatchTransaction, Dispatchable,
+};
 use topsoil_benchmarking::v2::*;
 use topsoil_support::{
 	dispatch::{DispatchInfo, PostDispatchInfo},
 	pallet_prelude::*,
 };
 use topsoil_system::RawOrigin;
-use soil_runtime::traits::{
-	AsSystemOriginSigner, AsTransactionAuthorizedOrigin, DispatchTransaction, Dispatchable,
-};
 
 #[benchmarks(where
 	T::RuntimeOrigin: AsTransactionAuthorizedOrigin,

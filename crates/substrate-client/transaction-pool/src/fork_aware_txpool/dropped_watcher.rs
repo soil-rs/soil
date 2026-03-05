@@ -28,9 +28,9 @@ use crate::{
 	LOG_TARGET,
 };
 use futures::stream::StreamExt;
+use soil_runtime::traits::Block as BlockT;
 use soil_transaction_pool_api::TransactionStatus;
 use soil_utils::mpsc;
-use soil_runtime::traits::Block as BlockT;
 use std::{
 	collections::{
 		hash_map::{Entry, OccupiedEntry},

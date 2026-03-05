@@ -18,17 +18,17 @@
 //! Consensus extension module tests for BABE consensus.
 
 use super::{Call, *};
+use mock::*;
+use soil_consensus_babe::{
+	AllowedSlots, BabeEpochConfiguration, Slot, VrfSignature, RANDOMNESS_LENGTH,
+};
+use soil_core::crypto::Pair;
+use topsoil_session::ShouldEndSession;
 use topsoil_support::{
 	assert_err, assert_noop, assert_ok,
 	dispatch::{GetDispatchInfo, Pays},
 	traits::{Currency, EstimateNextSessionRotation, KeyOwnerProofSystem, OnFinalize},
 };
-use mock::*;
-use topsoil_session::ShouldEndSession;
-use soil_consensus_babe::{
-	AllowedSlots, BabeEpochConfiguration, Slot, VrfSignature, RANDOMNESS_LENGTH,
-};
-use soil_core::crypto::Pair;
 
 const EMPTY_RANDOMNESS: [u8; RANDOMNESS_LENGTH] = [
 	74, 25, 49, 128, 53, 97, 244, 49, 222, 202, 176, 2, 231, 66, 95, 10, 133, 49, 213, 228, 86,
@@ -251,8 +251,8 @@ fn can_estimate_current_epoch_progress() {
 				);
 			} else {
 				assert!(
-					Babe::estimate_current_session_progress(i).0.unwrap() <
-						Permill::from_percent(100)
+					Babe::estimate_current_session_progress(i).0.unwrap()
+						< Permill::from_percent(100)
 				);
 			}
 		}

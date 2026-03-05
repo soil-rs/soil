@@ -17,18 +17,18 @@
 
 use super::*;
 
+use soil_runtime::{
+	traits::{CheckedAdd, CheckedSub, Zero},
+	ArithmeticError,
+};
+use storage::StorageDoubleMap;
+use topsoil_assets::BalanceOnHold;
 use topsoil_support::traits::{
 	fungibles::{Dust, Inspect, InspectHold, MutateHold, Unbalanced, UnbalancedHold},
 	tokens::{
 		DepositConsequence, Fortitude, Precision, Preservation, Provenance, WithdrawConsequence,
 	},
 };
-use topsoil_assets::BalanceOnHold;
-use soil_runtime::{
-	traits::{CheckedAdd, CheckedSub, Zero},
-	ArithmeticError,
-};
-use storage::StorageDoubleMap;
 
 // Implements [`BalanceOnHold`] from [`topsoil-assets`], so it can understand whether there's some
 // balance on hold for an asset account, and is able to signal to this pallet when to clear the

@@ -27,6 +27,17 @@ use log::{debug, info, trace, warn};
 use parking_lot::{Mutex, RwLock};
 use prometheus_endpoint::Registry;
 use rand::Rng;
+use sc_consensus::{
+	BlockCheckParams, BlockImportParams, ForkChoiceStrategy, ImportResult, StateAction,
+};
+use soil_api::{
+	ApiExt, ApiRef, CallApiAt, CallApiAtParams, ConstructRuntimeApi, Core as CoreApi,
+	ProvideRuntimeApi,
+};
+use soil_blockchain::{
+	self as blockchain, Backend as ChainBackend, CachedHeaderMetadata, Error,
+	HeaderBackend as ChainHeaderBackend, HeaderMetadata, Info as BlockchainInfo,
+};
 use soil_chain_spec::{resolve_state_version_from_wasm, BuildGenesisBlock};
 use soil_client_api::{
 	backend::{
@@ -43,22 +54,10 @@ use soil_client_api::{
 	CallExecutor, ExecutorProvider, KeysIter, OnFinalityAction, OnImportAction, PairsIter,
 	ProofProvider, StaleBlock, TrieCacheContext, UnpinWorkerMessage, UsageProvider,
 };
-use sc_consensus::{
-	BlockCheckParams, BlockImportParams, ForkChoiceStrategy, ImportResult, StateAction,
-};
+use soil_consensus::{BlockOrigin, BlockStatus, Error as ConsensusError};
 use soil_executor::RuntimeVersion;
 use soil_telemetry::{telemetry, TelemetryHandle, SUBSTRATE_INFO};
-use soil_api::{
-	ApiExt, ApiRef, CallApiAt, CallApiAtParams, ConstructRuntimeApi, Core as CoreApi,
-	ProvideRuntimeApi,
-};
-use soil_blockchain::{
-	self as blockchain, Backend as ChainBackend, CachedHeaderMetadata, Error,
-	HeaderBackend as ChainHeaderBackend, HeaderMetadata, Info as BlockchainInfo,
-};
-use soil_consensus::{BlockOrigin, BlockStatus, Error as ConsensusError};
 
-use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedSender};
 use soil_core::{
 	storage::{ChildInfo, ChildType, PrefixedStorageKey, StorageChild, StorageData, StorageKey},
 	traits::{CallContext, SpawnNamed},
@@ -78,6 +77,7 @@ use soil_state_machine::{
 	MAX_NESTED_TRIE_DEPTH,
 };
 use soil_trie::{proof_size_extension::ProofSizeExt, CompactProof, MerkleValue, StorageProof};
+use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedSender};
 use std::{
 	collections::{HashMap, HashSet},
 	marker::PhantomData,
@@ -577,9 +577,9 @@ where
 
 		// the block is lower than our last finalized block so it must revert
 		// finality, refusing import.
-		if status == blockchain::BlockStatus::Unknown &&
-			*import_headers.post().number() <= info.finalized_number &&
-			!gap_block
+		if status == blockchain::BlockStatus::Unknown
+			&& *import_headers.post().number() <= info.finalized_number
+			&& !gap_block
 		{
 			return Err(soil_blockchain::Error::NotInFinalizedChain);
 		}
@@ -591,11 +591,11 @@ where
 			BlockOrigin::NetworkBroadcast | BlockOrigin::Own | BlockOrigin::ConsensusBroadcast => {
 				true
 			},
-			BlockOrigin::Genesis |
-			BlockOrigin::NetworkInitialSync |
-			BlockOrigin::File |
-			BlockOrigin::WarpSync |
-			BlockOrigin::GapSync => false,
+			BlockOrigin::Genesis
+			| BlockOrigin::NetworkInitialSync
+			| BlockOrigin::File
+			| BlockOrigin::WarpSync
+			| BlockOrigin::GapSync => false,
 		};
 
 		let storage_changes = match storage_changes {
@@ -685,9 +685,9 @@ where
 			)?;
 		}
 
-		let is_new_best = !gap_block &&
-			(finalized ||
-				match fork_choice {
+		let is_new_best = !gap_block
+			&& (finalized
+				|| match fork_choice {
 					ForkChoiceStrategy::LongestChain => {
 						import_headers.post().number() > &info.best_number
 					},
@@ -707,8 +707,11 @@ where
 		let register_as_leaf = origin != BlockOrigin::WarpSync;
 
 		let tree_route = if is_new_best && info.best_hash != parent_hash && parent_exists {
-			let route_from_best =
-				soil_blockchain::tree_route(self.backend.blockchain(), info.best_hash, parent_hash)?;
+			let route_from_best = soil_blockchain::tree_route(
+				self.backend.blockchain(),
+				info.best_hash,
+				parent_hash,
+			)?;
 			Some(route_from_best)
 		} else {
 			None
@@ -1338,9 +1341,10 @@ where
 				}
 				total_size += size;
 
-				if current_child.is_none() &&
-					soil_core::storage::well_known_keys::is_child_storage_key(next_key.as_slice()) &&
-					!child_roots.contains(value.as_slice())
+				if current_child.is_none()
+					&& soil_core::storage::well_known_keys::is_child_storage_key(
+						next_key.as_slice(),
+					) && !child_roots.contains(value.as_slice())
 				{
 					child_roots.insert(value.clone());
 					switch_child_key = Some((next_key.clone(), value.clone()));
@@ -1993,7 +1997,10 @@ where
 		self.backend.blockchain().has_indexed_transaction(hash)
 	}
 
-	fn block_indexed_body(&self, hash: Block::Hash) -> soil_blockchain::Result<Option<Vec<Vec<u8>>>> {
+	fn block_indexed_body(
+		&self,
+		hash: Block::Hash,
+	) -> soil_blockchain::Result<Option<Vec<Vec<u8>>>> {
 		self.backend.blockchain().block_indexed_body(hash)
 	}
 

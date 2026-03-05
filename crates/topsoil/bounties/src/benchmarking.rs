@@ -20,9 +20,9 @@
 use super::*;
 
 use alloc::{vec, vec::Vec};
+use soil_runtime::traits::{BlockNumberProvider, Bounded};
 use topsoil_benchmarking::v2::*;
 use topsoil_system::{pallet_prelude::BlockNumberFor as SystemBlockNumberFor, RawOrigin};
-use soil_runtime::traits::{BlockNumberProvider, Bounded};
 
 use crate::Pallet as Bounties;
 use topsoil_treasury::Pallet as Treasury;
@@ -66,8 +66,8 @@ fn setup_bounty<T: Config<I>, I: 'static>(
 	let caller = account("caller", u, SEED);
 	let value: BalanceOf<T, I> = T::BountyValueMinimum::get().saturating_mul(100u32.into());
 	let fee = value / 2u32.into();
-	let deposit = T::BountyDepositBase::get() +
-		T::DataDepositPerByte::get() * T::MaximumReasonLength::get().into();
+	let deposit = T::BountyDepositBase::get()
+		+ T::DataDepositPerByte::get() * T::MaximumReasonLength::get().into();
 	let _ = T::Currency::make_free_balance_be(&caller, deposit + minimum_balance::<T, I>());
 	let curator = account("curator", u, SEED);
 	let _ =

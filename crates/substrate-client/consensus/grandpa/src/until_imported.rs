@@ -37,9 +37,9 @@ use log::{debug, warn};
 use parking_lot::Mutex;
 use prometheus_endpoint::{register, Gauge, PrometheusError, Registry, U64};
 use soil_client_api::{BlockImportNotification, ImportNotifications};
-use soil_utils::mpsc::TracingUnboundedReceiver;
 use soil_consensus_grandpa::AuthorityId;
 use soil_runtime::traits::{Block as BlockT, Header as HeaderT, NumberFor};
+use soil_utils::mpsc::TracingUnboundedReceiver;
 
 use std::{
 	collections::{HashMap, VecDeque},
@@ -566,9 +566,9 @@ mod tests {
 	use futures::future::Either;
 	use futures_timer::Delay;
 	use soil_client_api::BlockImportNotification;
-	use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedSender};
 	use soil_consensus::BlockOrigin;
 	use soil_core::crypto::UncheckedFrom;
+	use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedSender};
 	use substrate_test_runtime_client::runtime::{Block, Hash, Header};
 
 	#[derive(Clone)]
@@ -940,8 +940,8 @@ mod tests {
 			let block_sync_requests = block_sync_requester.requests.lock();
 
 			// we request blocks targeted by the precommits that aren't imported
-			if block_sync_requests.contains(&(h2.hash(), *h2.number())) &&
-				block_sync_requests.contains(&(h3.hash(), *h3.number()))
+			if block_sync_requests.contains(&(h2.hash(), *h2.number()))
+				&& block_sync_requests.contains(&(h3.hash(), *h3.number()))
 			{
 				return Poll::Ready(());
 			}

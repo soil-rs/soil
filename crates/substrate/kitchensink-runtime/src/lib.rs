@@ -24,21 +24,57 @@
 extern crate alloc;
 
 #[cfg(feature = "runtime-benchmarks")]
+use soil_core::crypto::FromEntropy;
+#[cfg(feature = "runtime-benchmarks")]
 use topsoil_asset_rate::AssetKindFactory;
 #[cfg(feature = "runtime-benchmarks")]
 use topsoil_multi_asset_bounties::ArgumentsFactory as PalletMultiAssetBountiesArgumentsFactory;
 #[cfg(feature = "runtime-benchmarks")]
 use topsoil_treasury::ArgumentsFactory as PalletTreasuryArgumentsFactory;
-#[cfg(feature = "runtime-benchmarks")]
-use soil_core::crypto::FromEntropy;
-
 
 use alloc::{vec, vec::Vec};
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
+pub use node_primitives::{AccountId, Signature};
+use node_primitives::{AccountIndex, Balance, BlockNumber, Hash, Moment, Nonce};
+use soil_authority_discovery::AuthorityId as AuthorityDiscoveryId;
+use soil_consensus_beefy::{
+	ecdsa_crypto::{AuthorityId as BeefyId, Signature as BeefySignature},
+	mmr::MmrLeafVersion,
+};
+use soil_consensus_grandpa::AuthorityId as GrandpaId;
+use soil_core::{crypto::KeyTypeId, OpaqueMetadata};
+use soil_inherents::{CheckInherentsResult, InherentData};
+use soil_runtime::{
+	curve::PiecewiseLinear,
+	generic, impl_opaque_keys, str_array as s,
+	traits::{
+		self, AccountIdConversion, BlakeTwo256, Block as BlockT, Bounded, ConvertInto,
+		MaybeConvert, NumberFor, OpaqueKeys, SaturatedConversion, StaticLookup,
+	},
+	transaction_validity::{TransactionPriority, TransactionSource, TransactionValidity},
+	ApplyExtrinsicResult, Debug, FixedPointNumber, FixedU128, MultiSignature, MultiSigner, Perbill,
+	Percent, Permill, Perquintill,
+};
+use soil_std::{borrow::Cow, prelude::*};
+#[cfg(any(feature = "std", test))]
+use soil_version::NativeVersion;
+use soil_version::RuntimeVersion;
+use static_assertions::const_assert;
+use topsoil_asset_conversion::{AccountIdConverter, Ascending, Chain, WithFirstAsset};
+use topsoil_asset_conversion_tx_payment::SwapAssetAdapter;
+use topsoil_broker::{CoreAssignment, CoreIndex, CoretimeInterface, PartsOf57600, TaskId};
+use topsoil_election_provider_multi_phase::{GeometricDepositBase, SolutionAccuracyOf};
 use topsoil_election_provider_support::{
 	bounds::{ElectionBounds, ElectionBoundsBuilder},
 	onchain, BalancingConfig, ElectionDataProvider, SequentialPhragmen, VoteWeight,
 };
+use topsoil_identity::legacy::IdentityInfo;
+use topsoil_im_online::sr25519::AuthorityId as ImOnlineId;
+use topsoil_nfts::PalletFeatures;
+use topsoil_nis::WithMaximumOf;
+use topsoil_nomination_pools::PoolId;
+use topsoil_session::historical as pallet_session_historical;
+use topsoil_support::weights::IdentityFee;
 use topsoil_support::{
 	derive_impl,
 	dispatch::DispatchClass,
@@ -75,55 +111,18 @@ use topsoil_system::{
 	limits::{BlockLength, BlockWeights},
 	EnsureRoot, EnsureRootWithSuccess, EnsureSigned, EnsureSignedBy, EnsureWithSuccess,
 };
-pub use node_primitives::{AccountId, Signature};
-use node_primitives::{AccountIndex, Balance, BlockNumber, Hash, Moment, Nonce};
-use topsoil_asset_conversion::{AccountIdConverter, Ascending, Chain, WithFirstAsset};
-use topsoil_asset_conversion_tx_payment::SwapAssetAdapter;
-use topsoil_broker::{CoreAssignment, CoreIndex, CoretimeInterface, PartsOf57600, TaskId};
-use topsoil_election_provider_multi_phase::{GeometricDepositBase, SolutionAccuracyOf};
-use topsoil_identity::legacy::IdentityInfo;
-use topsoil_im_online::sr25519::AuthorityId as ImOnlineId;
-use topsoil_nfts::PalletFeatures;
-use topsoil_nis::WithMaximumOf;
-use topsoil_nomination_pools::PoolId;
-use topsoil_session::historical as pallet_session_historical;
 use topsoil_transaction_payment::{FeeDetails, RuntimeDispatchInfo};
 pub use topsoil_transaction_payment::{FungibleAdapter, Multiplier, TargetedFeeAdjustment};
-use topsoil_support::weights::IdentityFee;
 use topsoil_tx_pause::RuntimeCallNameOf;
-use soil_authority_discovery::AuthorityId as AuthorityDiscoveryId;
-use soil_consensus_beefy::{
-	ecdsa_crypto::{AuthorityId as BeefyId, Signature as BeefySignature},
-	mmr::MmrLeafVersion,
-};
-use soil_consensus_grandpa::AuthorityId as GrandpaId;
-use soil_core::{crypto::KeyTypeId, OpaqueMetadata};
-use soil_inherents::{CheckInherentsResult, InherentData};
-use soil_runtime::{
-	curve::PiecewiseLinear,
-	generic, impl_opaque_keys, str_array as s,
-	traits::{
-		self, AccountIdConversion, BlakeTwo256, Block as BlockT, Bounded, ConvertInto,
-		MaybeConvert, NumberFor, OpaqueKeys, SaturatedConversion, StaticLookup,
-	},
-	transaction_validity::{TransactionPriority, TransactionSource, TransactionValidity},
-	ApplyExtrinsicResult, Debug, FixedPointNumber, FixedU128, MultiSignature, MultiSigner, Perbill,
-	Percent, Permill, Perquintill,
-};
-use soil_std::{borrow::Cow, prelude::*};
-#[cfg(any(feature = "std", test))]
-use soil_version::NativeVersion;
-use soil_version::RuntimeVersion;
-use static_assertions::const_assert;
 
 #[cfg(any(feature = "std", test))]
-pub use topsoil_system::Call as SystemCall;
+pub use soil_runtime::BuildStorage;
 #[cfg(any(feature = "std", test))]
 pub use topsoil_balances::Call as BalancesCall;
 #[cfg(any(feature = "std", test))]
 pub use topsoil_sudo::Call as SudoCall;
 #[cfg(any(feature = "std", test))]
-pub use soil_runtime::BuildStorage;
+pub use topsoil_system::Call as SystemCall;
 
 pub use topsoil_staking::StakerStatus;
 
@@ -437,21 +436,21 @@ impl InstanceFilter<RuntimeCall> for ProxyType {
 			ProxyType::Any => true,
 			ProxyType::NonTransfer => !matches!(
 				c,
-				RuntimeCall::Balances(..) |
-					RuntimeCall::Assets(..) |
-					RuntimeCall::Uniques(..) |
-					RuntimeCall::Nfts(..) |
-					RuntimeCall::Vesting(topsoil_vesting::Call::vested_transfer { .. }) |
-					RuntimeCall::Indices(topsoil_indices::Call::transfer { .. })
+				RuntimeCall::Balances(..)
+					| RuntimeCall::Assets(..)
+					| RuntimeCall::Uniques(..)
+					| RuntimeCall::Nfts(..)
+					| RuntimeCall::Vesting(topsoil_vesting::Call::vested_transfer { .. })
+					| RuntimeCall::Indices(topsoil_indices::Call::transfer { .. })
 			),
 			ProxyType::Governance => matches!(
 				c,
-				RuntimeCall::Democracy(..) |
-					RuntimeCall::Council(..) |
-					RuntimeCall::Society(..) |
-					RuntimeCall::TechnicalCommittee(..) |
-					RuntimeCall::Elections(..) |
-					RuntimeCall::Treasury(..)
+				RuntimeCall::Democracy(..)
+					| RuntimeCall::Council(..)
+					| RuntimeCall::Society(..)
+					| RuntimeCall::TechnicalCommittee(..)
+					| RuntimeCall::Elections(..)
+					| RuntimeCall::Treasury(..)
 			),
 			ProxyType::Staking => {
 				matches!(c, RuntimeCall::Staking(..) | RuntimeCall::FastUnstake(..))
@@ -844,8 +843,8 @@ impl Get<Option<BalancingConfig>> for OffchainRandomBalancing {
 			max => {
 				let seed = soil_io::offchain::random_seed();
 				let random = <u32>::decode(&mut TrailingZeroInput::new(&seed))
-					.expect("input is padded with zeroes; qed") %
-					max.saturating_add(1);
+					.expect("input is padded with zeroes; qed")
+					% max.saturating_add(1);
 				random as usize
 			},
 		};
@@ -1519,9 +1518,7 @@ where
 			topsoil_system::CheckEra::<Runtime>::from(era),
 			topsoil_system::CheckNonce::<Runtime>::from(nonce),
 			topsoil_system::CheckWeight::<Runtime>::new(),
-			topsoil_asset_conversion_tx_payment::ChargeAssetTxPayment::<Runtime>::from(
-				tip, None,
-			),
+			topsoil_asset_conversion_tx_payment::ChargeAssetTxPayment::<Runtime>::from(tip, None),
 			topsoil_metadata_hash_extension::CheckMetadataHash::new(false),
 			topsoil_system::WeightReclaim::<Runtime>::new(),
 		);
@@ -2565,7 +2562,8 @@ mod runtime {
 	pub type Historical = pallet_session_historical::Pallet<Runtime>;
 
 	#[runtime::pallet_index(27)]
-	pub type RandomnessCollectiveFlip = topsoil_insecure_randomness_collective_flip::Pallet<Runtime>;
+	pub type RandomnessCollectiveFlip =
+		topsoil_insecure_randomness_collective_flip::Pallet<Runtime>;
 
 	#[runtime::pallet_index(28)]
 	pub type Identity = topsoil_identity::Pallet<Runtime>;
@@ -2733,7 +2731,6 @@ mod runtime {
 
 	#[runtime::pallet_index(90)]
 	pub type MultiAssetBounties = topsoil_multi_asset_bounties::Pallet<Runtime>;
-
 }
 
 /// The address format for describing accounts.

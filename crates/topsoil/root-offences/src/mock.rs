@@ -19,17 +19,17 @@ use super::*;
 use crate as root_offences;
 
 use alloc::collections::btree_map::BTreeMap;
+use soil_runtime::{curve::PiecewiseLinear, testing::UintAuthorityId, traits::Zero, BuildStorage};
+use soil_staking::{EraIndex, SessionIndex};
 use topsoil_election_provider_support::{
 	bounds::{ElectionBounds, ElectionBoundsBuilder},
 	onchain, SequentialPhragmen,
 };
+use topsoil_staking::{BalanceOf, StakerStatus};
 use topsoil_support::{
 	derive_impl, parameter_types,
 	traits::{ConstBool, ConstU32, ConstU64, OneSessionHandler},
 };
-use topsoil_staking::{BalanceOf, StakerStatus};
-use soil_runtime::{curve::PiecewiseLinear, testing::UintAuthorityId, traits::Zero, BuildStorage};
-use soil_staking::{EraIndex, SessionIndex};
 
 type Block = topsoil_system::mocking::MockBlock<Test>;
 type AccountId = u64;

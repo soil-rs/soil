@@ -40,17 +40,17 @@ use kitchensink_runtime::{
 };
 use node_primitives::Block;
 use sc_block_builder::BlockBuilderBuilder;
-use soil_client_api::{execution_extensions::ExecutionExtensions, UsageProvider};
-use soil_client_db::PruningMode;
 use sc_consensus::{BlockImport, BlockImportParams, ForkChoiceStrategy, ImportResult, ImportedAux};
-use soil_executor::{WasmExecutionMethod, WasmtimeInstantiationStrategy};
 use soil_api::ProvideRuntimeApi;
 use soil_block_builder::BlockBuilder;
+use soil_client_api::{execution_extensions::ExecutionExtensions, UsageProvider};
+use soil_client_db::PruningMode;
 use soil_consensus::BlockOrigin;
 use soil_core::{
 	crypto::get_public_from_string_or_panic, ed25519, sr25519, traits::SpawnNamed, Pair,
 };
 use soil_crypto_hashing::blake2_256;
+use soil_executor::{WasmExecutionMethod, WasmtimeInstantiationStrategy};
 use soil_inherents::InherentData;
 use soil_runtime::{
 	generic::{self, ExtrinsicFormat, Preamble},
@@ -315,8 +315,8 @@ impl<'a> Iterator for BlockContentIterator<'a> {
 							dest: soil_runtime::MultiAddress::Id(receiver),
 							// Transfer so that ending balance would be 1 less than existential
 							// deposit so that we kill the sender account.
-							value: 100 * DOLLARS -
-								(kitchensink_runtime::ExistentialDeposit::get() - 1),
+							value: 100 * DOLLARS
+								- (kitchensink_runtime::ExistentialDeposit::get() - 1),
 						})
 					},
 					BlockType::Noop => {

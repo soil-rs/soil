@@ -18,7 +18,6 @@
 
 //! Transaction pool client facing API.
 #![warn(missing_docs)]
-
 #![cfg_attr(not(feature = "std"), no_std)]
 
 #[cfg(feature = "std")]
@@ -177,11 +176,11 @@ impl<Hash, BlockHash> TransactionStatus<Hash, BlockHash> {
 	pub fn is_final(&self) -> bool {
 		// The state must be kept in sync with `crate::graph::Sender`.
 		match self {
-			Self::Usurped(_) |
-			Self::Finalized(_) |
-			Self::FinalityTimeout(_) |
-			Self::Invalid |
-			Self::Dropped => true,
+			Self::Usurped(_)
+			| Self::Finalized(_)
+			| Self::FinalityTimeout(_)
+			| Self::Invalid
+			| Self::Dropped => true,
 			_ => false,
 		}
 	}

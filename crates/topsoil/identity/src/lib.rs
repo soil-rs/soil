@@ -119,6 +119,10 @@ extern crate alloc;
 use crate::types::{AuthorityProperties, Provider, Suffix, Username, UsernameInformation};
 use alloc::{boxed::Box, vec::Vec};
 use codec::Encode;
+pub use pallet::*;
+use soil_runtime::traits::{
+	AppendZerosInput, Hash, IdentifyAccount, Saturating, StaticLookup, Verify, Zero,
+};
 use topsoil_support::{
 	ensure,
 	pallet_prelude::{DispatchError, DispatchResult},
@@ -128,10 +132,6 @@ use topsoil_support::{
 	BoundedVec,
 };
 use topsoil_system::pallet_prelude::*;
-pub use pallet::*;
-use soil_runtime::traits::{
-	AppendZerosInput, Hash, IdentifyAccount, Saturating, StaticLookup, Verify, Zero,
-};
 pub use types::{
 	Data, IdentityInformationProvider, Judgement, RegistrarIndex, RegistrarInfo, Registration,
 };
@@ -156,7 +156,9 @@ pub mod pallet {
 	}
 	#[cfg(feature = "runtime-benchmarks")]
 	impl BenchmarkHelper<soil_runtime::MultiSigner, soil_runtime::MultiSignature> for () {
-		fn sign_message(message: &[u8]) -> (soil_runtime::MultiSigner, soil_runtime::MultiSignature) {
+		fn sign_message(
+			message: &[u8],
+		) -> (soil_runtime::MultiSigner, soil_runtime::MultiSignature) {
 			let public = soil_io::crypto::sr25519_generate(0.into(), None);
 			let signature = soil_runtime::MultiSignature::Sr25519(
 				soil_io::crypto::sr25519_sign(
@@ -174,7 +176,8 @@ pub mod pallet {
 	pub trait Config: topsoil_system::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>>
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// The currency trait.
 		type Currency: ReservableCurrency<Self::AccountId>;

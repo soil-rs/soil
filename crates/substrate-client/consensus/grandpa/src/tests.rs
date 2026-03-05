@@ -28,12 +28,6 @@ use sc_consensus::{
 	BlockImport, BlockImportParams, BoxJustificationImport, ForkChoiceStrategy, ImportResult,
 	ImportedAux,
 };
-use soil_network::config::Role;
-use soil_network_test::{
-	Block, BlockImportAdapter, FullPeerConfig, Hash, PassThroughVerifier, Peer, PeersClient,
-	PeersFullClient, TestClient, TestNetFactory,
-};
-use soil_transaction_pool_api::RejectAllTxPool;
 use soil_api::{ApiRef, ProvideRuntimeApi};
 use soil_consensus::{BlockOrigin, Error as ConsensusError, SelectChain};
 use soil_consensus_grandpa::{
@@ -42,12 +36,18 @@ use soil_consensus_grandpa::{
 use soil_core::H256;
 use soil_keyring::Ed25519Keyring;
 use soil_keystore::{testing::MemoryKeystore, Keystore, KeystorePtr};
+use soil_network::config::Role;
+use soil_network_test::{
+	Block, BlockImportAdapter, FullPeerConfig, Hash, PassThroughVerifier, Peer, PeersClient,
+	PeersFullClient, TestClient, TestNetFactory,
+};
 use soil_runtime::{
 	codec::Encode,
 	generic::{BlockId, DigestItem},
 	traits::{Block as BlockT, Header as HeaderT},
 	Justifications,
 };
+use soil_transaction_pool_api::RejectAllTxPool;
 use std::{collections::HashSet, pin::Pin};
 use substrate_test_runtime_client::{runtime::BlockNumber, BlockBuilderExt};
 use tokio::runtime::Handle;
@@ -1231,8 +1231,8 @@ async fn voter_persists_its_votes() {
 					Pin::new(&mut *round_tx.lock())
 						.start_send(finality_grandpa::Message::Prevote(prevote))
 						.unwrap();
-				} else if state.compare_exchange(1, 2, Ordering::SeqCst, Ordering::SeqCst).unwrap() ==
-					1
+				} else if state.compare_exchange(1, 2, Ordering::SeqCst, Ordering::SeqCst).unwrap()
+					== 1
 				{
 					// the next message we receive should be our own prevote
 					let prevote = match signed.message {
@@ -1246,8 +1246,8 @@ async fn voter_persists_its_votes() {
 				// after alice restarts it should send its previous prevote
 				// therefore we won't ever receive it again since it will be a
 				// known message on the gossip layer
-				} else if state.compare_exchange(2, 3, Ordering::SeqCst, Ordering::SeqCst).unwrap() ==
-					2
+				} else if state.compare_exchange(2, 3, Ordering::SeqCst, Ordering::SeqCst).unwrap()
+					== 2
 				{
 					// we then receive a precommit from alice for block 15
 					// even though we casted a prevote for block 30

@@ -24,18 +24,18 @@
 //! Tests for topsoil-example-authorization-tx-extension.
 
 use codec::Encode;
-use topsoil_support::{
-	assert_noop,
-	dispatch::GetDispatchInfo,
-	pallet_prelude::{InvalidTransaction, TransactionValidityError},
-};
-use topsoil_verify_signature::VerifySignature;
 use soil_keyring::Sr25519Keyring;
 use soil_runtime::{
 	generic::ExtensionVersion,
 	traits::{Applyable, Checkable, IdentityLookup, TransactionExtension},
 	MultiSignature, MultiSigner,
 };
+use topsoil_support::{
+	assert_noop,
+	dispatch::GetDispatchInfo,
+	pallet_prelude::{InvalidTransaction, TransactionValidityError},
+};
+use topsoil_verify_signature::VerifySignature;
 
 use crate::{extensions::AuthorizeCoownership, mock::*, topsoil_assets};
 
@@ -92,7 +92,10 @@ fn create_asset_works() {
 		let res = xt.apply::<Runtime>(&uxt_info, uxt_len).unwrap();
 
 		// Asserting the results.
-		assert_eq!(topsoil_system::Account::<Runtime>::get(&alice_account).nonce, initial_nonce + 1);
+		assert_eq!(
+			topsoil_system::Account::<Runtime>::get(&alice_account).nonce,
+			initial_nonce + 1
+		);
 		assert_eq!(
 			topsoil_assets::AssetOwners::<Runtime>::get(42),
 			Some(topsoil_assets::Owner::<AccountId>::Single(alice_account))
@@ -184,7 +187,10 @@ fn create_coowned_asset_works() {
 
 		// Asserting the results.
 		assert!(res.is_ok());
-		assert_eq!(topsoil_system::Account::<Runtime>::get(charlie_account).nonce, initial_nonce + 1);
+		assert_eq!(
+			topsoil_system::Account::<Runtime>::get(charlie_account).nonce,
+			initial_nonce + 1
+		);
 		assert_eq!(
 			topsoil_assets::AssetOwners::<Runtime>::get(42),
 			Some(topsoil_assets::Owner::<AccountId>::Double(alice_account, bob_account))

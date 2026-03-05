@@ -22,15 +22,15 @@
 use crate as offences;
 use crate::Config;
 use codec::Encode;
-use topsoil_support::{
-	derive_impl, parameter_types,
-	traits::ConstU32,
-	weights::{constants::RocksDbWeight, Weight},
-};
 use soil_runtime::{traits::IdentityLookup, BuildStorage, Perbill};
 use soil_staking::{
 	offence::{self, Kind, OffenceDetails},
 	SessionIndex,
+};
+use topsoil_support::{
+	derive_impl, parameter_types,
+	traits::ConstU32,
+	weights::{constants::RocksDbWeight, Weight},
 };
 
 pub struct OnOffenceHandler;

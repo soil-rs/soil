@@ -20,14 +20,14 @@
 use super::*;
 use crate as topsoil_nfts;
 
-use topsoil_support::{
-	construct_runtime, derive_impl, parameter_types,
-	traits::{AsEnsureOriginWithArg, ConstU32, ConstU64},
-};
 use soil_keystore::{testing::MemoryKeystore, KeystoreExt};
 use soil_runtime::{
 	traits::{IdentifyAccount, IdentityLookup, Verify},
 	BuildStorage, MultiSignature,
+};
+use topsoil_support::{
+	construct_runtime, derive_impl, parameter_types,
+	traits::{AsEnsureOriginWithArg, ConstU32, ConstU64},
 };
 
 type Block = topsoil_system::mocking::MockBlock<Test>;

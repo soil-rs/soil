@@ -79,6 +79,13 @@ pub mod pallet {
 
 	use alloc::vec::Vec;
 	use core::ops::Deref;
+	use soil_core::{
+		hexdisplay::HexDisplay, storage::well_known_keys::DEFAULT_CHILD_STORAGE_KEY_PREFIX,
+	};
+	use soil_runtime::{
+		self,
+		traits::{Saturating, Zero},
+	};
 	use topsoil_support::{
 		dispatch::{DispatchErrorWithPostInfo, PostDispatchInfo},
 		ensure,
@@ -90,13 +97,6 @@ pub mod pallet {
 		},
 	};
 	use topsoil_system::{self, pallet_prelude::*};
-	use soil_core::{
-		hexdisplay::HexDisplay, storage::well_known_keys::DEFAULT_CHILD_STORAGE_KEY_PREFIX,
-	};
-	use soil_runtime::{
-		self,
-		traits::{Saturating, Zero},
-	};
 
 	pub(crate) type BalanceOf<T> =
 		<<T as Config>::Currency as Inspect<<T as topsoil_system::Config>::AccountId>>::Balance;
@@ -508,7 +508,8 @@ pub mod pallet {
 		/// The overarching event type.
 		#[pallet::no_default_bounds]
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>>
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// The currency provider type.
 		#[pallet::no_default]
@@ -1167,13 +1168,13 @@ mod mock {
 	use super::*;
 	use crate as topsoil_state_trie_migration;
 	use alloc::{vec, vec::Vec};
-	use topsoil_support::{derive_impl, parameter_types, traits::Hooks, weights::Weight};
-	use topsoil_system::{EnsureRoot, EnsureSigned};
 	use soil_core::{
 		storage::{ChildInfo, StateVersion},
 		H256,
 	};
 	use soil_runtime::{traits::Header as _, BuildStorage, StorageChild};
+	use topsoil_support::{derive_impl, parameter_types, traits::Hooks, weights::Weight};
+	use topsoil_system::{EnsureRoot, EnsureSigned};
 
 	type Block = topsoil_system::mocking::MockBlockU32<Test>;
 
@@ -1352,8 +1353,8 @@ mod mock {
 #[cfg(test)]
 mod test {
 	use super::{mock::*, *};
-	use topsoil_support::assert_ok;
 	use soil_runtime::{bounded_vec, traits::Bounded, StateVersion};
+	use topsoil_support::assert_ok;
 
 	#[test]
 	fn fails_if_no_migration() {
@@ -1725,11 +1726,6 @@ mod test {
 pub(crate) mod remote_tests {
 	use crate::{AutoLimits, MigrationLimits, Pallet as StateTrieMigration, LOG_TARGET};
 	use codec::Encode;
-	use topsoil_support::{
-		traits::{Get, Hooks},
-		weights::Weight,
-	};
-	use topsoil_system::{pallet_prelude::BlockNumberFor, Pallet as System};
 	use remote_externalities::Mode;
 	use soil_core::H256;
 	use soil_runtime::{
@@ -1737,6 +1733,11 @@ pub(crate) mod remote_tests {
 		DeserializeOwned,
 	};
 	use thousands::Separable;
+	use topsoil_support::{
+		traits::{Get, Hooks},
+		weights::Weight,
+	};
+	use topsoil_system::{pallet_prelude::BlockNumberFor, Pallet as System};
 
 	#[allow(dead_code)]
 	fn run_to_block<Runtime: crate::Config<Hash = H256>>(

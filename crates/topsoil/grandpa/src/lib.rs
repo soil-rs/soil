@@ -37,14 +37,6 @@ pub use soil_consensus_grandpa::{
 
 use alloc::{boxed::Box, vec::Vec};
 use codec::{Decode, Encode, MaxEncodedLen};
-use topsoil_support::{
-	dispatch::{DispatchResultWithPostInfo, Pays},
-	pallet_prelude::Get,
-	traits::OneSessionHandler,
-	weights::Weight,
-	WeakBoundedVec,
-};
-use topsoil_system::pallet_prelude::BlockNumberFor;
 use scale_info::TypeInfo;
 use soil_consensus_grandpa::{
 	ConsensusLog, EquivocationProof, ScheduledChange, SetId, GRANDPA_ENGINE_ID,
@@ -53,6 +45,14 @@ use soil_consensus_grandpa::{
 use soil_runtime::{generic::DigestItem, traits::Zero, DispatchResult};
 use soil_session::{GetSessionNumber, GetValidatorCount};
 use soil_staking::{offence::OffenceReportSystem, SessionIndex};
+use topsoil_support::{
+	dispatch::{DispatchResultWithPostInfo, Pays},
+	pallet_prelude::Get,
+	traits::OneSessionHandler,
+	weights::Weight,
+	WeakBoundedVec,
+};
+use topsoil_system::pallet_prelude::BlockNumberFor;
 
 mod default_weights;
 mod equivocation;

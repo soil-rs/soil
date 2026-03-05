@@ -21,6 +21,7 @@
 
 use super::*;
 use alloc::{vec, vec::Vec};
+use soil_runtime::traits::Bounded;
 use topsoil_benchmarking::v1::{
 	account, benchmarks_instance_pallet, whitelist_account, whitelisted_caller, BenchmarkError,
 };
@@ -29,7 +30,6 @@ use topsoil_support::{
 	BoundedVec,
 };
 use topsoil_system::RawOrigin as SystemOrigin;
-use soil_runtime::traits::Bounded;
 
 use crate::Pallet as Uniques;
 

@@ -27,9 +27,9 @@ use crate::{
 };
 use alloc::{vec, vec::Vec};
 use codec::{Decode, Encode, EncodeLike, FullCodec, MaxEncodedLen};
-use topsoil_support::storage::StorageDecodeNonDedupLength;
 use soil_arithmetic::traits::SaturatedConversion;
 use soil_metadata_ir::{StorageEntryMetadataIR, StorageEntryTypeIR};
+use topsoil_support::storage::StorageDecodeNonDedupLength;
 
 /// A type representing a *value* in storage. A *storage value* is a single value of a given type
 /// stored on-chain.

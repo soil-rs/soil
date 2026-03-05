@@ -42,9 +42,9 @@ pub mod view_functions;
 pub mod tests;
 
 use composite::{keyword::CompositeKeyword, CompositeDef};
-use topsoil_support_procedural_tools::generate_access_from_frame_or_crate;
 use quote::ToTokens;
 use syn::spanned::Spanned;
+use topsoil_support_procedural_tools::generate_access_from_frame_or_crate;
 
 /// Parsed definition of a pallet.
 pub struct Def {

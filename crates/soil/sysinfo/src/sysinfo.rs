@@ -18,9 +18,9 @@
 
 use crate::{ExecutionLimit, HwBench};
 
-use soil_telemetry::SysInfo;
 use soil_core::{sr25519, Pair};
 use soil_io::crypto::sr25519_verify;
+use soil_telemetry::SysInfo;
 
 use core::f64;
 use derive_more::From;
@@ -421,8 +421,8 @@ pub fn benchmark_cpu_parallelism(limit: ExecutionLimit, refhw_num_cores: usize) 
 	let average_score = benchmark_threads
 		.into_iter()
 		.map(|thread| thread.join().map(|throughput| throughput.as_kibs()).unwrap_or(0.0))
-		.sum::<f64>() /
-		refhw_num_cores as f64;
+		.sum::<f64>()
+		/ refhw_num_cores as f64;
 	Throughput::from_kibs(average_score)
 }
 
@@ -834,16 +834,16 @@ mod tests {
 	#[test]
 	fn test_benchmark_disk_sequential_writes() {
 		assert!(
-			benchmark_disk_sequential_writes(DEFAULT_DISK_EXECUTION_LIMIT, "./".as_ref()).unwrap() >
-				Throughput::from_mibs(0.0)
+			benchmark_disk_sequential_writes(DEFAULT_DISK_EXECUTION_LIMIT, "./".as_ref()).unwrap()
+				> Throughput::from_mibs(0.0)
 		);
 	}
 
 	#[test]
 	fn test_benchmark_disk_random_writes() {
 		assert!(
-			benchmark_disk_random_writes(DEFAULT_DISK_EXECUTION_LIMIT, "./".as_ref()).unwrap() >
-				Throughput::from_mibs(0.0)
+			benchmark_disk_random_writes(DEFAULT_DISK_EXECUTION_LIMIT, "./".as_ref()).unwrap()
+				> Throughput::from_mibs(0.0)
 		);
 	}
 

@@ -20,9 +20,9 @@
 #![cfg(test)]
 
 use super::{mock::*, *};
-use topsoil_support::{assert_noop, assert_ok, pallet_prelude::Pays};
-use topsoil_balances::Error as BalancesError;
 use soil_runtime::MultiAddress::Id;
+use topsoil_balances::Error as BalancesError;
+use topsoil_support::{assert_noop, assert_ok, pallet_prelude::Pays};
 
 #[test]
 fn claiming_should_work() {

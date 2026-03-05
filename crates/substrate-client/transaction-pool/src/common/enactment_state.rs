@@ -19,9 +19,9 @@
 //! Substrate transaction pool implementation.
 
 use crate::LOG_TARGET;
-use soil_transaction_pool_api::ChainEvent;
 use soil_blockchain::TreeRoute;
 use soil_runtime::traits::{Block as BlockT, NumberFor, Saturating};
+use soil_transaction_pool_api::ChainEvent;
 use tracing::{debug, trace};
 
 /// The threshold since the last update where we will skip any maintenance for blocks.
@@ -191,9 +191,9 @@ where
 #[cfg(test)]
 mod enactment_state_tests {
 	use super::{EnactmentAction, EnactmentState};
-	use soil_transaction_pool_api::ChainEvent;
 	use soil_blockchain::{HashAndNumber, TreeRoute};
 	use soil_runtime::traits::NumberFor;
+	use soil_transaction_pool_api::ChainEvent;
 	use std::sync::Arc;
 	use substrate_test_runtime_client::runtime::{Block, Hash};
 

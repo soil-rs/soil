@@ -16,9 +16,9 @@
 // limitations under the License.
 
 pub mod constants {
-	use topsoil_support::weights::constants;
 	use soil_core::parameter_types;
 	use soil_weights::RuntimeDbWeight;
+	use topsoil_support::weights::constants;
 
 	parameter_types! {
 		/// ParityDB can be enabled with a feature flag, but is still experimental. These weights

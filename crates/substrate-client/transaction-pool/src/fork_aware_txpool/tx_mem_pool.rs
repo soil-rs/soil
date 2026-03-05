@@ -34,12 +34,12 @@
 use futures::{future::join_all, FutureExt};
 use itertools::Itertools;
 use parking_lot::RwLock;
-use soil_transaction_pool_api::{error::IntoMetricsLabel, TransactionPriority, TransactionSource};
 use soil_blockchain::HashAndNumber;
 use soil_runtime::{
 	traits::Block as BlockT,
 	transaction_validity::{InvalidTransaction, TransactionValidityError},
 };
+use soil_transaction_pool_api::{error::IntoMetricsLabel, TransactionPriority, TransactionSource};
 use std::{
 	collections::HashSet,
 	future::Future,
@@ -98,10 +98,10 @@ pub(super) enum InvalidTxReason {
 impl InvalidTxReason {
 	pub(super) fn reason(&self) -> &String {
 		match self {
-			InvalidTxReason::Invalid(inner) |
-			InvalidTxReason::Unknown(inner) |
-			InvalidTxReason::Subtree(inner) |
-			InvalidTxReason::ValidationFailed(inner) => inner,
+			InvalidTxReason::Invalid(inner)
+			| InvalidTxReason::Unknown(inner)
+			| InvalidTxReason::Subtree(inner)
+			| InvalidTxReason::ValidationFailed(inner) => inner,
 		}
 	}
 
@@ -249,13 +249,13 @@ where
 	ChainApi: graph::ChainApi<Block = Block> + 'static,
 {
 	fn eq(&self, other: &Self) -> bool {
-		self.watched == other.watched &&
-			self.tx == other.tx &&
-			self.bytes == other.bytes &&
-			self.source == other.source &&
-			*self.priority.read() == *other.priority.read() &&
-			self.validated_at.load(atomic::Ordering::Relaxed) ==
-				other.validated_at.load(atomic::Ordering::Relaxed)
+		self.watched == other.watched
+			&& self.tx == other.tx
+			&& self.bytes == other.bytes
+			&& self.source == other.source
+			&& *self.priority.read() == *other.priority.read()
+			&& self.validated_at.load(atomic::Ordering::Relaxed)
+				== other.validated_at.load(atomic::Ordering::Relaxed)
 	}
 }
 
@@ -459,8 +459,8 @@ where
 
 	/// Returns true if provided values would exceed defined limits.
 	fn is_limit_exceeded(&self, length: usize, current_total_bytes: usize) -> bool {
-		length > self.max_transactions_count ||
-			current_total_bytes > self.max_transactions_total_bytes
+		length > self.max_transactions_count
+			|| current_total_bytes > self.max_transactions_total_bytes
 	}
 
 	/// Attempts to insert a transaction into the memory pool, ensuring it does not
@@ -635,9 +635,9 @@ where
 				self.with_transactions(|iter| {
 					iter.filter(|(_, xt)| {
 						let finalized_block_number = finalized_block.number.into().as_u64();
-						xt.validated_at.load(atomic::Ordering::Relaxed) +
-							TXMEMPOOL_REVALIDATION_PERIOD <
-							finalized_block_number
+						xt.validated_at.load(atomic::Ordering::Relaxed)
+							+ TXMEMPOOL_REVALIDATION_PERIOD
+							< finalized_block_number
 					})
 					.sorted_by_key(|(_, tx)| tx.validated_at.load(atomic::Ordering::Relaxed))
 					.take(TXMEMPOOL_MAX_REVALIDATION_BATCH_SIZE)

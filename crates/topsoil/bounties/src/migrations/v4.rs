@@ -16,6 +16,8 @@
 // limitations under the License.
 
 use core::str;
+use soil_core::hexdisplay::HexDisplay;
+use soil_io::{hashing::twox_128, storage};
 use topsoil_support::{
 	storage::{generator::StorageValue, StoragePrefixedMap},
 	traits::{
@@ -24,8 +26,6 @@ use topsoil_support::{
 	},
 	weights::Weight,
 };
-use soil_core::hexdisplay::HexDisplay;
-use soil_io::{hashing::twox_128, storage};
 
 use crate as topsoil_bounties;
 
@@ -123,7 +123,8 @@ pub fn pre_migration<T: topsoil_bounties::Config, P: GetStorageVersion + 'static
 	let storage_prefix_bounties = topsoil_bounties::Bounties::<T>::storage_prefix();
 	let storage_prefix_bounties_description =
 		topsoil_bounties::BountyDescriptions::<T>::storage_prefix();
-	let storage_prefix_bounties_approvals = topsoil_bounties::BountyApprovals::<T>::storage_prefix();
+	let storage_prefix_bounties_approvals =
+		topsoil_bounties::BountyApprovals::<T>::storage_prefix();
 	log_migration("pre-migration", storage_prefix_bounties_count, old_pallet_name, new_pallet_name);
 	log_migration("pre-migration", storage_prefix_bounties, old_pallet_name, new_pallet_name);
 	log_migration(
@@ -177,7 +178,8 @@ pub fn post_migration<T: topsoil_bounties::Config, P: GetStorageVersion, N: AsRe
 	let storage_prefix_bounties = topsoil_bounties::Bounties::<T>::storage_prefix();
 	let storage_prefix_bounties_description =
 		topsoil_bounties::BountyDescriptions::<T>::storage_prefix();
-	let storage_prefix_bounties_approvals = topsoil_bounties::BountyApprovals::<T>::storage_prefix();
+	let storage_prefix_bounties_approvals =
+		topsoil_bounties::BountyApprovals::<T>::storage_prefix();
 	log_migration(
 		"post-migration",
 		storage_prefix_bounties_count,

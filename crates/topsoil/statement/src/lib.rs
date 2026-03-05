@@ -28,9 +28,9 @@
 
 #![cfg_attr(not(feature = "std"), no_std)]
 
+use soil_statement_store::{Proof, Statement};
 use topsoil_support::{pallet_prelude::*, traits::fungible::Inspect};
 use topsoil_system::pallet_prelude::*;
-use soil_statement_store::{Proof, Statement};
 
 pub use pallet::*;
 
@@ -52,7 +52,8 @@ pub mod pallet {
 	{
 		/// The overarching event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>>
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 		/// The currency which is used to calculate account limits.
 		type Currency: Inspect<Self::AccountId>;
 		/// Min balance for priority statements.

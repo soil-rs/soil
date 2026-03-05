@@ -45,13 +45,6 @@
 extern crate alloc;
 
 use codec::{Decode, DecodeWithMemTracking, Encode};
-use topsoil_support::{
-	dispatch::{DispatchInfo, DispatchResult, PostDispatchInfo},
-	pallet_prelude::TransactionSource,
-	traits::IsType,
-	DefaultNoBound,
-};
-use topsoil_transaction_payment::{ChargeTransactionPayment, OnChargeTransaction};
 use scale_info::TypeInfo;
 use soil_runtime::{
 	traits::{
@@ -60,6 +53,13 @@ use soil_runtime::{
 	},
 	transaction_validity::{InvalidTransaction, TransactionValidityError, ValidTransaction},
 };
+use topsoil_support::{
+	dispatch::{DispatchInfo, DispatchResult, PostDispatchInfo},
+	pallet_prelude::TransactionSource,
+	traits::IsType,
+	DefaultNoBound,
+};
+use topsoil_transaction_payment::{ChargeTransactionPayment, OnChargeTransaction};
 
 #[cfg(test)]
 mod mock;
@@ -71,8 +71,8 @@ pub mod weights;
 mod benchmarking;
 
 mod payment;
-use topsoil_support::{pallet_prelude::Weight, traits::tokens::AssetId};
 pub use payment::*;
+use topsoil_support::{pallet_prelude::Weight, traits::tokens::AssetId};
 pub use weights::WeightInfo;
 
 /// Balance type alias for balances of the chain's native asset.
@@ -112,7 +112,8 @@ pub mod pallet {
 	pub trait Config: topsoil_system::Config + topsoil_transaction_payment::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>>
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 		/// The asset ID type that can be used for transaction payments in addition to a
 		/// native asset.
 		type AssetId: AssetId;

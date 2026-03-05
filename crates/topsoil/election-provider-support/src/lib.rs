@@ -207,15 +207,12 @@ extern crate alloc;
 
 use alloc::{boxed::Box, vec::Vec};
 use core::fmt::Debug;
-use topsoil_support::traits::{Defensive, DefensiveResult};
 use soil_core::ConstU32;
 use soil_runtime::traits::{Bounded, Saturating, Zero};
+use topsoil_support::traits::{Defensive, DefensiveResult};
 
 pub use bounds::DataProviderBounds;
 pub use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
-/// Re-export the solution generation macro.
-pub use topsoil_election_provider_solution_type::generate_solution_type;
-pub use topsoil_support::{traits::Get, weights::Weight, BoundedVec, DefaultNoBound};
 use scale_info::TypeInfo;
 /// Re-export some type as they are used in the interface.
 pub use soil_arithmetic::PerThing;
@@ -223,6 +220,9 @@ pub use soil_npos_elections::{
 	Assignment, BalancingConfig, ElectionResult, Error, ExtendedBalance, IdentifierT, PerThing128,
 	Support, Supports, VoteWeight,
 };
+/// Re-export the solution generation macro.
+pub use topsoil_election_provider_solution_type::generate_solution_type;
+pub use topsoil_support::{traits::Get, weights::Weight, BoundedVec, DefaultNoBound};
 pub use traits::NposSolution;
 
 #[cfg(feature = "try-runtime")]
@@ -929,7 +929,9 @@ pub struct BoundedSupport<AccountId, Bound: Get<u32>> {
 	pub voters: BoundedVec<(AccountId, ExtendedBalance), Bound>,
 }
 
-impl<AccountId, Bound: Get<u32>> soil_npos_elections::Backings for &BoundedSupport<AccountId, Bound> {
+impl<AccountId, Bound: Get<u32>> soil_npos_elections::Backings
+	for &BoundedSupport<AccountId, Bound>
+{
 	fn total(&self) -> ExtendedBalance {
 		self.total
 	}
@@ -968,7 +970,9 @@ impl<AccountId: Clone, Bound: Get<u32>> BoundedSupport<AccountId, Bound> {
 	/// truncating if needed.
 	///
 	/// Returns the number of backers removed.
-	pub fn sorted_truncate_from(mut support: soil_npos_elections::Support<AccountId>) -> (Self, u32) {
+	pub fn sorted_truncate_from(
+		mut support: soil_npos_elections::Support<AccountId>,
+	) -> (Self, u32) {
 		// If bounds meet, then short circuit.
 		if let Ok(bounded) = support.clone().try_into() {
 			return (bounded, 0);

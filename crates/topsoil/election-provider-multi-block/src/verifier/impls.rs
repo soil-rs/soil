@@ -27,6 +27,9 @@ use crate::{
 	SolutionOf,
 };
 use codec::{Decode, Encode, MaxEncodedLen};
+use pallet::*;
+use soil_npos_elections::{evaluate_support, ElectionScore};
+use soil_std::{collections::btree_map::BTreeMap, prelude::*};
 use topsoil_election_provider_support::{
 	ExtendedBalance, NposSolution, PageIndex, TryFromOtherBounds,
 };
@@ -36,9 +39,6 @@ use topsoil_support::{
 	traits::{defensive_prelude::*, DefensiveSaturating, Get},
 };
 use topsoil_system::pallet_prelude::*;
-use pallet::*;
-use soil_npos_elections::{evaluate_support, ElectionScore};
-use soil_std::{collections::btree_map::BTreeMap, prelude::*};
 
 pub(crate) type SupportsOfVerifier<V> = topsoil_election_provider_support::BoundedSupports<
 	<V as Verifier>::AccountId,
@@ -489,8 +489,8 @@ pub(crate) mod pallet {
 			// The number of existing keys in `QueuedSolutionBackings` must always match that of
 			// the INVALID variant.
 			ensure!(
-				QueuedSolutionBackings::<T>::iter_prefix(Self::round()).count() ==
-					Self::invalid_iter().count(),
+				QueuedSolutionBackings::<T>::iter_prefix(Self::round()).count()
+					== Self::invalid_iter().count(),
 				"incorrect number of backings pages",
 			);
 
@@ -864,7 +864,9 @@ impl<T: Config> Pallet<T> {
 	}
 
 	#[cfg(any(test, feature = "runtime-benchmarks", feature = "try-runtime"))]
-	pub(crate) fn do_try_state(_now: BlockNumberFor<T>) -> Result<(), soil_runtime::TryRuntimeError> {
+	pub(crate) fn do_try_state(
+		_now: BlockNumberFor<T>,
+	) -> Result<(), soil_runtime::TryRuntimeError> {
 		QueuedSolution::<T>::sanity_check()
 	}
 }

@@ -27,6 +27,8 @@ use soil_runtime::{
 	BuildStorage,
 };
 
+use mock::*;
+use topsoil_balances::Call as BalancesCall;
 use topsoil_support::{
 	assert_ok,
 	dispatch::{DispatchClass, DispatchInfo, GetDispatchInfo, PostDispatchInfo},
@@ -34,8 +36,6 @@ use topsoil_support::{
 	weights::Weight,
 };
 use topsoil_system as system;
-use mock::*;
-use topsoil_balances::Call as BalancesCall;
 
 pub struct ExtBuilder {
 	balance_factor: u64,

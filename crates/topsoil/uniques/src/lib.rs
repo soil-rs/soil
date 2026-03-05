@@ -47,14 +47,14 @@ extern crate alloc;
 
 use alloc::vec::Vec;
 use codec::{Decode, DecodeWithMemTracking, Encode};
-use topsoil_support::traits::{
-	tokens::Locker, BalanceStatus::Reserved, Currency, EnsureOriginWithArg, ReservableCurrency,
-};
-use topsoil_system::Config as SystemConfig;
 use soil_runtime::{
 	traits::{Saturating, StaticLookup, Zero},
 	ArithmeticError, Debug,
 };
+use topsoil_support::traits::{
+	tokens::Locker, BalanceStatus::Reserved, Currency, EnsureOriginWithArg, ReservableCurrency,
+};
+use topsoil_system::Config as SystemConfig;
 
 pub use pallet::*;
 pub use types::*;

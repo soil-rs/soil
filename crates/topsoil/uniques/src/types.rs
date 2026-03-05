@@ -18,11 +18,11 @@
 //! Various basic types for use in the Uniques pallet.
 
 use super::*;
+use scale_info::TypeInfo;
 use topsoil_support::{
 	pallet_prelude::{BoundedVec, MaxEncodedLen},
 	traits::Get,
 };
-use scale_info::TypeInfo;
 
 /// A type alias for handling balance deposits.
 pub type DepositBalanceOf<T, I = ()> =

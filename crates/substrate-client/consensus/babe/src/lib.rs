@@ -88,10 +88,6 @@ use log::{debug, info, log, trace, warn};
 use parking_lot::Mutex;
 use prometheus_endpoint::Registry;
 
-use soil_client_api::{
-	backend::AuxStore, AuxDataOperations, Backend as BackendT, FinalityNotification,
-	PreCommitActions, UsageProvider,
-};
 use sc_consensus::{
 	block_import::{
 		BlockCheckParams, BlockImport, BlockImportParams, ForkChoiceStrategy, ImportResult,
@@ -99,16 +95,10 @@ use sc_consensus::{
 	},
 	import_queue::{BasicQueue, BoxJustificationImport, DefaultImportQueue, Verifier},
 };
-use soil_consensus_epochs::{
-	descendent_query, Epoch as EpochT, EpochChangesFor, SharedEpochChanges, ViableEpoch,
-	ViableEpochDescriptor,
-};
 use sc_consensus_slots::{
 	check_equivocation, BackoffAuthoringBlocksStrategy, CheckedHeader, InherentDataProviderExt,
 	SlotInfo, StorageChanges,
 };
-use soil_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG, CONSENSUS_TRACE};
-use soil_transaction_pool_api::OffchainTransactionPoolFactory;
 use soil_api::{ApiExt, ProvideRuntimeApi};
 use soil_application_crypto::AppCrypto;
 use soil_block_builder::BlockBuilder as BlockBuilderApi;
@@ -116,8 +106,16 @@ use soil_blockchain::{
 	Backend as _, BlockStatus, Error as ClientError, HeaderBackend, HeaderMetadata,
 	Result as ClientResult,
 };
+use soil_client_api::{
+	backend::AuxStore, AuxDataOperations, Backend as BackendT, FinalityNotification,
+	PreCommitActions, UsageProvider,
+};
 use soil_consensus::{BlockOrigin, Environment, Error as ConsensusError, Proposer, SelectChain};
 use soil_consensus_babe::{inherents::BabeInherentData, SlotDuration};
+use soil_consensus_epochs::{
+	descendent_query, Epoch as EpochT, EpochChangesFor, SharedEpochChanges, ViableEpoch,
+	ViableEpochDescriptor,
+};
 use soil_consensus_slots::Slot;
 use soil_core::traits::SpawnEssentialNamed;
 use soil_inherents::{CreateInherentDataProviders, InherentDataProvider};
@@ -127,6 +125,8 @@ use soil_runtime::{
 	traits::{Block as BlockT, Header, NumberFor, SaturatedConversion, Zero},
 	DigestItem,
 };
+use soil_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG, CONSENSUS_TRACE};
+use soil_transaction_pool_api::OffchainTransactionPoolFactory;
 
 pub use sc_consensus_slots::SlotProportion;
 pub use soil_consensus::SyncOracle;
@@ -1475,8 +1475,8 @@ where
 		// Skip babe logic if block already in chain or importing blocks during initial sync,
 		// otherwise the check for epoch changes will error because trying to re-import an
 		// epoch change or because of missing epoch data in the tree, respectively.
-		if info.block_gap.map_or(false, |gap| gap.start <= number && number <= gap.end) ||
-			block_status == BlockStatus::InChain
+		if info.block_gap.map_or(false, |gap| gap.start <= number && number <= gap.end)
+			|| block_status == BlockStatus::InChain
 		{
 			// When re-importing existing block strip away intermediates.
 			// In case of initial sync intermediates should not be present...
@@ -1972,8 +1972,8 @@ where
 		let mut hash = leaf;
 		loop {
 			let meta = client.header_metadata(hash)?;
-			if meta.number <= revert_up_to_number ||
-				!weight_keys.insert(aux_schema::block_weight_key(hash))
+			if meta.number <= revert_up_to_number
+				|| !weight_keys.insert(aux_schema::block_weight_key(hash))
 			{
 				// We've reached the revert point or an already processed branch, stop here.
 				break;

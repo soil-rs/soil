@@ -19,6 +19,7 @@
 
 use super::*;
 use crate::{mock::*, types::*, Event};
+use topsoil_staking::{CurrentEra, RewardDestination};
 use topsoil_support::{
 	pallet_prelude::*,
 	testing_prelude::*,
@@ -28,7 +29,6 @@ use topsoil_support::{
 		Currency,
 	},
 };
-use topsoil_staking::{CurrentEra, RewardDestination};
 
 use soil_runtime::traits::BadOrigin;
 use soil_staking::StakingInterface;

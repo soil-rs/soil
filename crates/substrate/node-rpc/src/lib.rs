@@ -35,7 +35,6 @@ use std::sync::Arc;
 
 use jsonrpsee::RpcModule;
 use node_primitives::{AccountId, Balance, Block, BlockNumber, Hash, Nonce};
-use soil_client_api::AuxStore;
 use sc_consensus_babe::BabeWorkerHandle;
 use sc_consensus_beefy::communication::notification::{
 	BeefyBestBlockStream, BeefyVersionedFinalityProofStream,
@@ -44,15 +43,16 @@ use sc_consensus_grandpa::{
 	FinalityProofProvider, GrandpaJustificationStream, SharedAuthoritySet, SharedVoterState,
 };
 pub use sc_rpc::SubscriptionTaskExecutor;
-use soil_transaction_pool_api::TransactionPool;
 use soil_api::ProvideRuntimeApi;
 use soil_application_crypto::RuntimeAppPublic;
 use soil_block_builder::BlockBuilder;
 use soil_blockchain::{Error as BlockChainError, HeaderBackend, HeaderMetadata};
+use soil_client_api::AuxStore;
 use soil_consensus::SelectChain;
 use soil_consensus_babe::BabeApi;
 use soil_consensus_beefy::AuthorityIdBound;
 use soil_keystore::KeystorePtr;
+use soil_transaction_pool_api::TransactionPool;
 
 /// Extra dependencies for BABE.
 pub struct BabeDeps {
@@ -143,7 +143,11 @@ where
 		+ Send
 		+ 'static,
 	C::Api: substrate_frame_rpc_system::AccountNonceApi<Block, AccountId, Nonce>,
-	C::Api: soil_mmr_rpc::MmrRuntimeApi<Block, <Block as soil_runtime::traits::Block>::Hash, BlockNumber>,
+	C::Api: soil_mmr_rpc::MmrRuntimeApi<
+		Block,
+		<Block as soil_runtime::traits::Block>::Hash,
+		BlockNumber,
+	>,
 	C::Api: topsoil_transaction_payment_rpc::TransactionPaymentRuntimeApi<Block, Balance>,
 	C::Api: BabeApi<Block>,
 	C::Api: BlockBuilder<Block>,
@@ -154,19 +158,19 @@ where
 	AuthorityId: AuthorityIdBound,
 	<AuthorityId as RuntimeAppPublic>::Signature: Send + Sync,
 {
-	use soil_mmr_rpc::{Mmr, MmrApiServer};
-	use topsoil_transaction_payment_rpc::{TransactionPayment, TransactionPaymentApiServer};
-	use soil_consensus_babe_rpc::{Babe, BabeApiServer};
-	use soil_consensus_beefy_rpc::{Beefy, BeefyApiServer};
-	use soil_consensus_grandpa_rpc::{Grandpa, GrandpaApiServer};
 	use sc_rpc::{
 		dev::{Dev, DevApiServer},
 		mixnet::MixnetApiServer,
 		statement::StatementApiServer,
 	};
+	use soil_consensus_babe_rpc::{Babe, BabeApiServer};
+	use soil_consensus_beefy_rpc::{Beefy, BeefyApiServer};
+	use soil_consensus_grandpa_rpc::{Grandpa, GrandpaApiServer};
+	use soil_mmr_rpc::{Mmr, MmrApiServer};
 	use soil_sync_state_rpc::{SyncState, SyncStateApiServer};
 	use substrate_frame_rpc_system::{System, SystemApiServer};
 	use substrate_state_trie_migration_rpc::{StateMigration, StateMigrationApiServer};
+	use topsoil_transaction_payment_rpc::{TransactionPayment, TransactionPaymentApiServer};
 
 	let mut io = RpcModule::new(());
 

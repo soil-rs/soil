@@ -25,9 +25,9 @@ use crate::mock::{
 	Test, Timestamp,
 };
 use codec::Encode;
-use topsoil_support::traits::Hooks;
 use soil_consensus_aura::{Slot, AURA_ENGINE_ID};
 use soil_runtime::{Digest, DigestItem, TryRuntimeError};
+use topsoil_support::traits::Hooks;
 
 #[test]
 fn initial_values() {

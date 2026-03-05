@@ -17,9 +17,9 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 use crate::types::BadPeer;
+use schnellru::{ByLength, LruMap};
 use soil_network::ReputationChange as Rep;
 use soil_network_types::PeerId;
-use schnellru::{ByLength, LruMap};
 
 const LOG_TARGET: &str = "sync::disconnected_peers";
 

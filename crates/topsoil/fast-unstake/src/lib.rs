@@ -127,9 +127,9 @@ pub mod weights;
 
 // some extra imports for docs to link properly.
 #[cfg(doc)]
-pub use topsoil_support::traits::Hooks;
-#[cfg(doc)]
 pub use soil_staking::StakingInterface;
+#[cfg(doc)]
+pub use topsoil_support::traits::Hooks;
 
 /// The logging target of this pallet.
 pub const LOG_TARGET: &'static str = "runtime::fast-unstake";
@@ -149,13 +149,13 @@ pub mod pallet {
 	use super::*;
 	use crate::types::*;
 	use alloc::vec::Vec;
+	use soil_runtime::{traits::Zero, DispatchResult};
+	use soil_staking::{EraIndex, StakingInterface};
 	use topsoil_support::{
 		pallet_prelude::*,
 		traits::{Defensive, ReservableCurrency, StorageVersion},
 	};
 	use topsoil_system::pallet_prelude::*;
-	use soil_runtime::{traits::Zero, DispatchResult};
-	use soil_staking::{EraIndex, StakingInterface};
 	pub use weights::WeightInfo;
 
 	#[cfg(feature = "try-runtime")]
@@ -526,8 +526,8 @@ pub mod pallet {
 			let unchecked_eras_to_check = {
 				// get the last available `bonding_duration` eras up to current era in reverse
 				// order.
-				let total_check_range = (current_era.saturating_sub(bonding_duration)..=
-					current_era)
+				let total_check_range = (current_era.saturating_sub(bonding_duration)
+					..=current_era)
 					.rev()
 					.collect::<Vec<_>>();
 				debug_assert!(

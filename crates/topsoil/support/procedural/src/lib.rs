@@ -37,12 +37,12 @@ mod storage_alias;
 mod transactional;
 mod tt_macro;
 
-use topsoil_support_procedural_tools::generate_access_from_frame_or_crate;
 use macro_magic::{import_tokens_attr, import_tokens_attr_verbatim};
 use proc_macro::TokenStream;
 use quote::{quote, ToTokens};
 use std::{cell::RefCell, str::FromStr};
 use syn::{parse_macro_input, Error, ItemImpl, ItemMod, TraitItemType};
+use topsoil_support_procedural_tools::generate_access_from_frame_or_crate;
 
 pub(crate) const INHERENT_INSTANCE_NAME: &str = "__InherentHiddenInstance";
 
@@ -768,15 +768,15 @@ pub fn register_default_impl(attrs: TokenStream, tokens: TokenStream) -> TokenSt
 pub fn inject_runtime_type(_: TokenStream, tokens: TokenStream) -> TokenStream {
 	let item = tokens.clone();
 	let item = syn::parse_macro_input!(item as TraitItemType);
-	if item.ident != "RuntimeCall" &&
-		item.ident != "RuntimeEvent" &&
-		item.ident != "RuntimeTask" &&
-		item.ident != "RuntimeViewFunction" &&
-		item.ident != "RuntimeOrigin" &&
-		item.ident != "RuntimeHoldReason" &&
-		item.ident != "RuntimeFreezeReason" &&
-		item.ident != "RuntimeParameters" &&
-		item.ident != "PalletInfo"
+	if item.ident != "RuntimeCall"
+		&& item.ident != "RuntimeEvent"
+		&& item.ident != "RuntimeTask"
+		&& item.ident != "RuntimeViewFunction"
+		&& item.ident != "RuntimeOrigin"
+		&& item.ident != "RuntimeHoldReason"
+		&& item.ident != "RuntimeFreezeReason"
+		&& item.ident != "RuntimeParameters"
+		&& item.ident != "PalletInfo"
 	{
 		return syn::Error::new_spanned(
 			item,

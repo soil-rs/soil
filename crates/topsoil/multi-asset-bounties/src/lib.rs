@@ -78,6 +78,11 @@ pub use weights::WeightInfo;
 
 extern crate alloc;
 use alloc::{boxed::Box, collections::btree_map::BTreeMap};
+use scale_info::TypeInfo;
+use soil_runtime::{
+	traits::{AccountIdConversion, BadOrigin, Convert, Saturating, StaticLookup, TryConvert, Zero},
+	Debug, Permill,
+};
 use topsoil_support::{
 	dispatch::{DispatchResult, DispatchResultWithPostInfo},
 	dispatch_context::with_context,
@@ -93,11 +98,6 @@ use topsoil_support::{
 };
 use topsoil_system::pallet_prelude::{
 	ensure_signed, BlockNumberFor as SystemBlockNumberFor, OriginFor,
-};
-use scale_info::TypeInfo;
-use soil_runtime::{
-	traits::{AccountIdConversion, BadOrigin, Convert, Saturating, StaticLookup, TryConvert, Zero},
-	Debug, Permill,
 };
 
 /// Lookup type for beneficiary addresses.
@@ -668,8 +668,8 @@ pub mod pallet {
 				Error::<T, I>::InvalidValue
 			);
 			ensure!(
-				ChildBountiesPerParent::<T, I>::get(parent_bounty_id) <
-					T::MaxActiveChildBountyCount::get(),
+				ChildBountiesPerParent::<T, I>::get(parent_bounty_id)
+					< T::MaxActiveChildBountyCount::get(),
 				Error::<T, I>::TooManyChildBounties,
 			);
 
@@ -903,8 +903,8 @@ pub mod pallet {
 					// curator can unassign the child-/bounty curator.
 					ensure!(
 						maybe_sender.map_or(true, |sender| {
-							sender == *curator ||
-								parent_curator
+							sender == *curator
+								|| parent_curator
 									.map_or(false, |parent_curator| sender == parent_curator)
 						}),
 						BadOrigin
@@ -1185,9 +1185,9 @@ pub mod pallet {
 							},
 							_ => BountyStatus::Funded { curator },
 						},
-						PaymentState::Pending |
-						PaymentState::Failed |
-						PaymentState::Attempted { .. } => BountyStatus::FundingAttempted {
+						PaymentState::Pending
+						| PaymentState::Failed
+						| PaymentState::Attempted { .. } => BountyStatus::FundingAttempted {
 							payment_status: new_payment_status,
 							curator,
 						},
@@ -1227,9 +1227,9 @@ pub mod pallet {
 							Self::remove_bounty(parent_bounty_id, child_bounty_id, metadata);
 							return Ok(Pays::No.into());
 						},
-						PaymentState::Pending |
-						PaymentState::Failed |
-						PaymentState::Attempted { .. } => BountyStatus::RefundAttempted {
+						PaymentState::Pending
+						| PaymentState::Failed
+						| PaymentState::Attempted { .. } => BountyStatus::RefundAttempted {
 							payment_status: new_payment_status,
 							curator: curator.clone(),
 						},
@@ -1263,9 +1263,9 @@ pub mod pallet {
 							Self::remove_bounty(parent_bounty_id, child_bounty_id, metadata);
 							return Ok(Pays::No.into());
 						},
-						PaymentState::Pending |
-						PaymentState::Failed |
-						PaymentState::Attempted { .. } => BountyStatus::PayoutAttempted {
+						PaymentState::Pending
+						| PaymentState::Failed
+						| PaymentState::Attempted { .. } => BountyStatus::PayoutAttempted {
 							curator: curator.clone(),
 							beneficiary: beneficiary.clone(),
 							payment_status: new_payment_status.clone(),

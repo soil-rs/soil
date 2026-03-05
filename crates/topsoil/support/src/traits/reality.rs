@@ -20,10 +20,10 @@
 use core::marker::PhantomData;
 
 use codec::{Decode, DecodeWithMemTracking, Encode, FullCodec, MaxEncodedLen};
-use topsoil_support::{CloneNoBound, EqNoBound, Parameter, PartialEqNoBound};
 use scale_info::TypeInfo;
 use soil_core::ConstU32;
 use soil_runtime::{traits::Member, BoundedVec, DispatchError, DispatchResult};
+use topsoil_support::{CloneNoBound, EqNoBound, Parameter, PartialEqNoBound};
 
 /// Identity of personhood.
 ///
@@ -245,8 +245,8 @@ pub mod identity {
 		pub fn eq_platform(&self, other: &Social) -> bool {
 			matches!(
 				(&self, &other),
-				(Social::Twitter { .. }, Social::Twitter { .. }) |
-					(Social::Github { .. }, Social::Github { .. })
+				(Social::Twitter { .. }, Social::Twitter { .. })
+					| (Social::Github { .. }, Social::Github { .. })
 			)
 		}
 	}

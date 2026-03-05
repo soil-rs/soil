@@ -19,12 +19,12 @@
 
 #![cfg(test)]
 
-use topsoil_support::{derive_impl, traits::ConstU32};
 use soil_runtime::{
 	testing::H256,
 	traits::{BlakeTwo256, IdentityLookup},
 	BuildStorage,
 };
+use topsoil_support::{derive_impl, traits::ConstU32};
 
 #[topsoil_support::pallet]
 mod pallet_test {
@@ -142,9 +142,9 @@ fn new_test_ext() -> soil_io::TestExternalities {
 mod benchmarks {
 	use super::pallet_test::{self, Value};
 	use crate::account;
+	use soil_core::Get;
 	use topsoil_support::ensure;
 	use topsoil_system::RawOrigin;
-	use soil_core::Get;
 
 	// Additional used internally by the benchmark macro.
 	use super::pallet_test::{Call, Config, Pallet};

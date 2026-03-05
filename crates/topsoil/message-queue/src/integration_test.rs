@@ -37,10 +37,10 @@ use crate::{
 };
 
 use crate as topsoil_message_queue;
-use topsoil_support::{derive_impl, parameter_types};
 use rand::{rngs::StdRng, Rng, SeedableRng};
 use rand_distr::Pareto;
 use std::collections::{BTreeMap, BTreeSet};
+use topsoil_support::{derive_impl, parameter_types};
 
 type Block = topsoil_system::mocking::MockBlock<Test>;
 

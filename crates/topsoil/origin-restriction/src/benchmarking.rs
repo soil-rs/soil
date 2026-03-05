@@ -18,8 +18,8 @@
 //! Benchmarks for pallet origin restriction.
 
 use super::*;
-use topsoil_benchmarking::{v2::*, BenchmarkError};
 use soil_runtime::traits::DispatchTransaction;
+use topsoil_benchmarking::{v2::*, BenchmarkError};
 
 fn assert_last_event<T: Config>(generic_event: <T as Config>::RuntimeEvent) {
 	topsoil_system::Pallet::<T>::assert_last_event(generic_event.into());

@@ -22,6 +22,12 @@
 
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use core::cmp::Ordering;
+use scale_info::TypeInfo;
+use soil_runtime::{
+	traits::Convert,
+	Debug, DispatchError, DispatchResult, Either,
+	Either::{Left, Right},
+};
 use topsoil_support::traits::{
 	fungible::imbalance,
 	tokens::{
@@ -29,12 +35,6 @@ use topsoil_support::traits::{
 		Provenance, Restriction, WithdrawConsequence,
 	},
 	AccountTouch,
-};
-use scale_info::TypeInfo;
-use soil_runtime::{
-	traits::Convert,
-	Debug, DispatchError, DispatchResult, Either,
-	Either::{Left, Right},
 };
 
 /// The `NativeOrWithId` enum classifies an asset as either `Native` to the current chain or as an

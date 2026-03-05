@@ -31,12 +31,12 @@ use futures::StreamExt;
 use litep2p::types::cid::{Cid, Error as CidError, Version as CidVersion};
 use log::{debug, error, trace};
 use prost::Message;
-use soil_client_api::BlockBackend;
-use soil_network_types::PeerId;
 use schema::bitswap::{
 	message::{wantlist::WantType, Block as MessageBlock, BlockPresence, BlockPresenceType},
 	Message as BitswapMessage,
 };
+use soil_client_api::BlockBackend;
+use soil_network_types::PeerId;
 use soil_runtime::traits::Block as BlockT;
 use std::{io, sync::Arc, time::Duration};
 use unsigned_varint::encode as varint_encode;
@@ -506,7 +506,9 @@ mod tests {
 								0x70,
 								cid::multihash::Multihash::wrap(
 									u64::from(Code::Blake2b256),
-									&soil_crypto_hashing::blake2_256(&ext.encode()[pattern_index..]),
+									&soil_crypto_hashing::blake2_256(
+										&ext.encode()[pattern_index..],
+									),
 								)
 								.unwrap(),
 							)

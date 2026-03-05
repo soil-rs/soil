@@ -18,6 +18,7 @@
 //! Tests for [`ItemOf`], [`fungible::UnionOf`] and [`fungibles::UnionOf`] set types.
 
 use super::*;
+use soil_runtime::{traits::ConvertToValue, Either};
 use topsoil_support::{
 	parameter_types,
 	traits::{
@@ -33,7 +34,6 @@ use topsoil_support::{
 		},
 	},
 };
-use soil_runtime::{traits::ConvertToValue, Either};
 
 const FIRST_ASSET: u32 = 0;
 const UNKNOWN_ASSET: u32 = 10;

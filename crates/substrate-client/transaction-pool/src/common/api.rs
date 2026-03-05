@@ -27,9 +27,9 @@ use async_trait::async_trait;
 use codec::Encode;
 use futures::future::{Future, FutureExt};
 use prometheus_endpoint::Registry as PrometheusRegistry;
-use soil_client_api::{blockchain::HeaderBackend, BlockBackend};
 use soil_api::{ApiExt, ProvideRuntimeApi};
 use soil_blockchain::{HeaderMetadata, TreeRoute};
+use soil_client_api::{blockchain::HeaderBackend, BlockBackend};
 use soil_core::traits::SpawnEssentialNamed;
 use soil_runtime::{
 	generic::BlockId,

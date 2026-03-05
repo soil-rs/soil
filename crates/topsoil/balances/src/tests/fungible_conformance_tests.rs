@@ -16,8 +16,8 @@
 // limitations under the License.
 
 use super::*;
-use topsoil_support::traits::fungible::{conformance_tests, Inspect, Mutate};
 use paste::paste;
+use topsoil_support::traits::fungible::{conformance_tests, Inspect, Mutate};
 
 macro_rules! generate_tests {
 	// Handle a conformance test that requires special testing with and without a dust trap.

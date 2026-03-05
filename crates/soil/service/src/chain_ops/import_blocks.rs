@@ -21,12 +21,12 @@ use codec::{Decode, IoReader as CodecIoReader};
 use futures::{future, prelude::*};
 use futures_timer::Delay;
 use log::{info, warn};
-use soil_chain_spec::ChainSpec;
-use soil_client_api::HeaderBackend;
 use sc_consensus::import_queue::{
 	BlockImportError, BlockImportStatus, ImportQueue, IncomingBlock, Link,
 };
 use serde_json::{de::IoRead as JsonIoRead, Deserializer, StreamDeserializer};
+use soil_chain_spec::ChainSpec;
+use soil_client_api::HeaderBackend;
 use soil_consensus::BlockOrigin;
 use soil_runtime::{
 	generic::SignedBlock,
@@ -104,8 +104,8 @@ where
 	/// Returns the number of blocks read thus far.
 	fn read_block_count(&self) -> u64 {
 		match self {
-			BlockIter::Binary { read_block_count, .. } |
-			BlockIter::Json { read_block_count, .. } => *read_block_count,
+			BlockIter::Binary { read_block_count, .. }
+			| BlockIter::Json { read_block_count, .. } => *read_block_count,
 		}
 	}
 
@@ -229,8 +229,8 @@ impl<B: BlockT> Speedometer<B> {
 			let speed = diff
 				.saturating_mul(10_000)
 				.checked_div(u128::from(elapsed_ms))
-				.map_or(0.0, |s| s as f64) /
-				10.0;
+				.map_or(0.0, |s| s as f64)
+				/ 10.0;
 			info!("📦 Current best block: {} ({:4.1} bps)", self.best_number, speed);
 		} else {
 			// If the number of blocks can't be converted to a regular integer, then we need a more
@@ -375,8 +375,8 @@ where
 						let read_block_count = block_iter.read_block_count();
 						match block_result {
 							Ok(block) => {
-								if read_block_count - link.imported_blocks.load(Ordering::Acquire) >=
-									MAX_PENDING_BLOCKS
+								if read_block_count - link.imported_blocks.load(Ordering::Acquire)
+									>= MAX_PENDING_BLOCKS
 								{
 									// The queue is full, so do not add this block and simply wait
 									// until the queue has made some progress.
@@ -404,8 +404,8 @@ where
 			},
 			ImportState::WaitingForImportQueueToCatchUp { block_iter, mut delay, block } => {
 				let read_block_count = block_iter.read_block_count();
-				if read_block_count - link.imported_blocks.load(Ordering::Acquire) >=
-					MAX_PENDING_BLOCKS
+				if read_block_count - link.imported_blocks.load(Ordering::Acquire)
+					>= MAX_PENDING_BLOCKS
 				{
 					// Queue is still full, so wait until there is room to insert our block.
 					match Pin::new(&mut delay).poll(cx) {

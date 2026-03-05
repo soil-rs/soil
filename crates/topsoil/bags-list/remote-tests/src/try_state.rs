@@ -16,12 +16,12 @@
 
 //! Test to execute the sanity-check of the voter bag.
 
+use remote_externalities::{Builder, Mode, OnlineConfig};
+use soil_runtime::{traits::Block as BlockT, DeserializeOwned};
 use topsoil_support::{
 	storage::generator::StorageMap,
 	traits::{Get, PalletInfoAccess},
 };
-use remote_externalities::{Builder, Mode, OnlineConfig};
-use soil_runtime::{traits::Block as BlockT, DeserializeOwned};
 
 /// Execute the sanity check of the bags-list.
 pub async fn execute<Runtime, Block>(
@@ -36,8 +36,10 @@ pub async fn execute<Runtime, Block>(
 	let mut ext = Builder::<Block>::new()
 		.mode(Mode::Online(OnlineConfig {
 			transport_uris: vec![ws_url.to_string()],
-			pallets: vec![topsoil_bags_list::Pallet::<Runtime, topsoil_bags_list::Instance1>::name()
-				.to_string()],
+			pallets: vec![
+				topsoil_bags_list::Pallet::<Runtime, topsoil_bags_list::Instance1>::name()
+					.to_string(),
+			],
 			hashed_prefixes: vec![
 				<topsoil_staking::Bonded<Runtime>>::prefix_hash().to_vec(),
 				<topsoil_staking::Ledger<Runtime>>::prefix_hash().to_vec(),

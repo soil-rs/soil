@@ -16,6 +16,13 @@
 // limitations under the License.
 
 use crate::Config;
+use soil_runtime::{
+	traits::{
+		AsTransactionAuthorizedOrigin, Dispatchable, Implication, PostDispatchInfoOf,
+		TransactionExtension, ValidateResult,
+	},
+	transaction_validity::TransactionValidityError,
+};
 use topsoil_support::{
 	dispatch::DispatchInfo,
 	pallet_prelude::{
@@ -23,13 +30,6 @@ use topsoil_support::{
 	},
 	traits::Authorize,
 	CloneNoBound, DebugNoBound, EqNoBound, PartialEqNoBound,
-};
-use soil_runtime::{
-	traits::{
-		AsTransactionAuthorizedOrigin, Dispatchable, Implication, PostDispatchInfoOf,
-		TransactionExtension, ValidateResult,
-	},
-	transaction_validity::TransactionValidityError,
 };
 
 /// A transaction extension that authorizes some calls (i.e. dispatchable functions) to be
@@ -116,10 +116,6 @@ where
 mod tests {
 	use crate as topsoil_system;
 	use codec::Encode;
-	use topsoil_support::{
-		derive_impl, dispatch::GetDispatchInfo, pallet_prelude::TransactionSource,
-		traits::OriginTrait,
-	};
 	use soil_runtime::{
 		testing::UintAuthorityId,
 		traits::{Applyable, Checkable, TransactionExtension as _, TxBaseImplication},
@@ -127,6 +123,10 @@ mod tests {
 			InvalidTransaction, TransactionSource::External, TransactionValidityError,
 		},
 		BuildStorage, DispatchError,
+	};
+	use topsoil_support::{
+		derive_impl, dispatch::GetDispatchInfo, pallet_prelude::TransactionSource,
+		traits::OriginTrait,
 	};
 
 	#[topsoil_support::pallet]
@@ -314,7 +314,8 @@ mod tests {
 	fn call_filter_preserved() {
 		new_test_ext().execute_with(|| {
 			let ext = topsoil_system::AuthorizeCall::<Runtime>::new();
-			let filtered_call = RuntimeCall::System(topsoil_system::Call::remark { remark: vec![] });
+			let filtered_call =
+				RuntimeCall::System(topsoil_system::Call::remark { remark: vec![] });
 
 			let origin = {
 				let mut o: RuntimeOrigin = crate::Origin::<Runtime>::Signed(42).into();

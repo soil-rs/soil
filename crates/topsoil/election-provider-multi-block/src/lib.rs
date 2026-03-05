@@ -200,6 +200,17 @@
 use crate::signed::{CalculateBaseDeposit, CalculatePageDeposit};
 use crate::verifier::{AsynchronousVerifier, Verifier};
 use codec::{Decode, Encode, MaxEncodedLen};
+use scale_info::TypeInfo;
+use soil_arithmetic::{
+	traits::{CheckedAdd, Zero},
+	PerThing, UpperOf,
+};
+use soil_npos_elections::{EvaluateSupport, VoteWeight};
+use soil_runtime::{
+	traits::{Hash, Saturating},
+	SaturatedConversion,
+};
+use soil_std::{borrow::ToOwned, boxed::Box, prelude::*};
 use topsoil_election_provider_support::{
 	onchain, BoundedSupportsOf, DataProviderBounds, ElectionDataProvider, ElectionProvider,
 	InstantElectionProvider,
@@ -212,17 +223,6 @@ use topsoil_support::{
 	DebugNoBound, Twox64Concat,
 };
 use topsoil_system::pallet_prelude::*;
-use scale_info::TypeInfo;
-use soil_arithmetic::{
-	traits::{CheckedAdd, Zero},
-	PerThing, UpperOf,
-};
-use soil_npos_elections::{EvaluateSupport, VoteWeight};
-use soil_runtime::{
-	traits::{Hash, Saturating},
-	SaturatedConversion,
-};
-use soil_std::{borrow::ToOwned, boxed::Box, prelude::*};
 
 #[cfg(test)]
 mod mock;
@@ -797,8 +797,8 @@ pub mod pallet {
 			let max_vote: usize = <SolutionOf<T::MinerConfig> as NposSolution>::LIMIT;
 
 			// 2. Maximum sum of [SolutionAccuracy; 16] must fit into `UpperOf<OffchainAccuracy>`.
-			let maximum_chain_accuracy: Vec<UpperOf<SolutionAccuracyOf<T::MinerConfig>>> = (0..
-				max_vote)
+			let maximum_chain_accuracy: Vec<UpperOf<SolutionAccuracyOf<T::MinerConfig>>> = (0
+				..max_vote)
 				.map(|_| {
 					<UpperOf<SolutionAccuracyOf<T::MinerConfig>>>::from(
 						<SolutionAccuracyOf<T::MinerConfig>>::one().deconstruct(),
@@ -829,8 +829,8 @@ pub mod pallet {
 				"Signed phase not set correct -- both should be set or unset"
 			);
 			assert!(
-				signed_validation.is_zero() ||
-					signed_validation % T::Pages::get().into() == Zero::zero(),
+				signed_validation.is_zero()
+					|| signed_validation % T::Pages::get().into() == Zero::zero(),
 				"signed validation phase should be a multiple of the number of pages."
 			);
 
@@ -1070,8 +1070,8 @@ pub mod pallet {
 				.take(up_to_page as usize)
 			{
 				ensure!(
-					(exists ^ Self::voters(p).is_none()) &&
-						(exists ^ Self::voters_hash(p).is_none()),
+					(exists ^ Self::voters(p).is_none())
+						&& (exists ^ Self::voters_hash(p).is_none()),
 					"voter page existence mismatch"
 				);
 
@@ -1087,8 +1087,8 @@ pub mod pallet {
 				.take((T::Pages::get() - up_to_page) as usize)
 			{
 				ensure!(
-					(exists ^ Self::voters(p).is_some()) &&
-						(exists ^ Self::voters_hash(p).is_some()),
+					(exists ^ Self::voters(p).is_some())
+						&& (exists ^ Self::voters_hash(p).is_some()),
 					"voter page non-existence mismatch"
 				);
 			}
@@ -1108,17 +1108,17 @@ pub mod pallet {
 			ensure!(Self::desired_targets().is_some(), "desired target mismatch");
 			ensure!(Self::targets_hash().is_some(), "targets hash mismatch");
 			ensure!(
-				Self::targets_decode_len().unwrap_or_default() as u32 ==
-					T::TargetSnapshotPerBlock::get(),
+				Self::targets_decode_len().unwrap_or_default() as u32
+					== T::TargetSnapshotPerBlock::get(),
 				"targets decode length mismatch"
 			);
 
 			// ensure that voter pages that should exist, indeed to exist..
 			for p in crate::Pallet::<T>::lsp()..=crate::Pallet::<T>::msp() {
 				ensure!(
-					Self::voters_hash(p).is_some() &&
-						Self::voters_decode_len(p).unwrap_or_default() as u32 ==
-							T::VoterSnapshotPerBlock::get(),
+					Self::voters_hash(p).is_some()
+						&& Self::voters_decode_len(p).unwrap_or_default() as u32
+							== T::VoterSnapshotPerBlock::get(),
 					"voter page existence mismatch"
 				);
 			}
@@ -1158,12 +1158,12 @@ pub mod pallet {
 				Phase::Snapshot(_) => Ok(()),
 
 				// full snapshot must exist in these phases.
-				Phase::Emergency |
-				Phase::Signed(_) |
-				Phase::SignedValidation(_) |
-				Phase::Export(_) |
-				Phase::Done |
-				Phase::Unsigned(_) => Self::ensure_snapshot(true, T::Pages::get()),
+				Phase::Emergency
+				| Phase::Signed(_)
+				| Phase::SignedValidation(_)
+				| Phase::Export(_)
+				| Phase::Done
+				| Phase::Unsigned(_) => Self::ensure_snapshot(true, T::Pages::get()),
 			}?;
 
 			Ok(())
@@ -1396,12 +1396,12 @@ impl<T: Config> Pallet<T> {
 					just_next_phase
 				}
 			},
-			Phase::SignedValidation(_) |
-			Phase::Unsigned(_) |
-			Phase::Off |
-			Phase::Emergency |
-			Phase::Done |
-			Phase::Export(_) => just_next_phase,
+			Phase::SignedValidation(_)
+			| Phase::Unsigned(_)
+			| Phase::Off
+			| Phase::Emergency
+			| Phase::Done
+			| Phase::Export(_) => just_next_phase,
 		}
 	}
 
@@ -1475,8 +1475,8 @@ impl<T: Config> Pallet<T> {
 		// check the snapshot fingerprint, if asked for.
 		ensure!(
 			maybe_snapshot_fingerprint
-				.map_or(true, |snapshot_fingerprint| Snapshot::<T>::fingerprint() ==
-					snapshot_fingerprint),
+				.map_or(true, |snapshot_fingerprint| Snapshot::<T>::fingerprint()
+					== snapshot_fingerprint),
 			CommonError::WrongFingerprint
 		);
 
@@ -1822,8 +1822,8 @@ where
 	pub(crate) fn submit_full_solution(
 		PagedRawSolution { score, solution_pages, .. }: PagedRawSolution<T::MinerConfig>,
 	) -> DispatchResultWithPostInfo {
-		use topsoil_system::RawOrigin;
 		use soil_std::boxed::Box;
+		use topsoil_system::RawOrigin;
 		use types::Pagify;
 
 		// register alice
@@ -2000,11 +2000,11 @@ impl<T: Config> ElectionProvider for Pallet<T> {
 			Phase::Off => Err(()),
 
 			// we're doing something but not ready.
-			Phase::Signed(_) |
-			Phase::SignedValidation(_) |
-			Phase::Unsigned(_) |
-			Phase::Snapshot(_) |
-			Phase::Emergency => Ok(None),
+			Phase::Signed(_)
+			| Phase::SignedValidation(_)
+			| Phase::Unsigned(_)
+			| Phase::Snapshot(_)
+			| Phase::Emergency => Ok(None),
 
 			// we're ready
 			Phase::Done => Ok(Some(T::WeightInfo::export_non_terminal())),

@@ -108,7 +108,8 @@ where
 					compatibility_mode,
 				)
 				.map_err(|e| format!("Could not fetch authorities at {:?}: {}", parent_hash, e))?;
-				let is_descendent_of = soil_client_api::utils::is_descendent_of(&*self.client, None);
+				let is_descendent_of =
+					soil_client_api::utils::is_descendent_of(&*self.client, None);
 				let mut authorities_cache = self.authorities.write();
 				authorities_cache
 					.import(

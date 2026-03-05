@@ -20,7 +20,6 @@
 
 use crate::{Config, WeightInfo};
 use codec::{Decode, DecodeWithMemTracking, Encode};
-use topsoil_support::{pallet_prelude::TransactionSource, traits::OriginTrait};
 use scale_info::TypeInfo;
 use soil_io::hashing::blake2_256;
 use soil_runtime::{
@@ -32,6 +31,7 @@ use soil_runtime::{
 	transaction_validity::{InvalidTransaction, TransactionValidityError, ValidTransaction},
 };
 use soil_weights::Weight;
+use topsoil_support::{pallet_prelude::TransactionSource, traits::OriginTrait};
 
 /// Extension that, if enabled, validates a signature type against the payload constructed from the
 /// call and the rest of the transaction extension pipeline. This extension provides the

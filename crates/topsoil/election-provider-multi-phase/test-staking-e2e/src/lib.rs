@@ -23,11 +23,11 @@ mod mock;
 
 pub(crate) const LOG_TARGET: &str = "tests::e2e-epm";
 
-use topsoil_support::{assert_err, assert_ok};
 use mock::*;
-use topsoil_timestamp::Now;
 use soil_core::Get;
 use soil_runtime::Perbill;
+use topsoil_support::{assert_err, assert_ok};
+use topsoil_timestamp::Now;
 
 use crate::mock::RuntimeOrigin;
 
@@ -146,7 +146,10 @@ fn mass_slash_doesnt_enter_emergency_phase() {
 		.build_offchainify();
 
 	ext.execute_with(|| {
-		assert_eq!(topsoil_staking::ForceEra::<Runtime>::get(), topsoil_staking::Forcing::NotForcing);
+		assert_eq!(
+			topsoil_staking::ForceEra::<Runtime>::get(),
+			topsoil_staking::Forcing::NotForcing
+		);
 
 		let active_set_size_before_slash = Session::validators().len();
 
@@ -178,7 +181,10 @@ fn mass_slash_doesnt_enter_emergency_phase() {
 		>::disable_limit(active_set_size_before_slash);
 		assert!(disabled.len() == disabling_limit);
 
-		assert_eq!(topsoil_staking::ForceEra::<Runtime>::get(), topsoil_staking::Forcing::NotForcing);
+		assert_eq!(
+			topsoil_staking::ForceEra::<Runtime>::get(),
+			topsoil_staking::Forcing::NotForcing
+		);
 	});
 }
 

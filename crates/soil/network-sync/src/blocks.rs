@@ -142,8 +142,8 @@ impl<B: BlockT> BlockCollection<B> {
 					// If there is a gap between ranges requested, download this gap unless the peer
 					// has common number above the gap start
 					(Some((start, r)), Some((next_start, _)))
-						if *start + r.len() < *next_start &&
-							*start + r.len() >= first_different =>
+						if *start + r.len() < *next_start
+							&& *start + r.len() >= first_different =>
 					{
 						(*start + r.len()..cmp::min(*next_start, *start + r.len() + count), 0)
 					},
@@ -268,9 +268,9 @@ impl<B: BlockT> BlockCollection<B> {
 #[cfg(test)]
 mod test {
 	use super::{BlockCollection, BlockData, BlockRangeState};
+	use soil_core::H256;
 	use soil_network_common::sync::message;
 	use soil_network_types::PeerId;
-	use soil_core::H256;
 	use soil_runtime::testing::{Block as RawBlock, MockCallU64, TestXt};
 
 	type Block = RawBlock<TestXt<MockCallU64, ()>>;

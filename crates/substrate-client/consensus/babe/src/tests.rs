@@ -21,26 +21,26 @@
 use super::*;
 use authorship::claim_slot;
 use sc_block_builder::{BlockBuilder, BlockBuilderBuilder};
-use soil_client_api::{BlockchainEvents, Finalizer};
 use sc_consensus::{BoxBlockImport, BoxJustificationImport};
-use soil_consensus_epochs::{EpochIdentifier, EpochIdentifierPosition};
 use sc_consensus_slots::BackoffAuthoringOnFinalizedHeadLagging;
-use soil_network_test::{Block as TestBlock, *};
-use soil_transaction_pool_api::RejectAllTxPool;
 use soil_application_crypto::key_types::BABE;
+use soil_client_api::{BlockchainEvents, Finalizer};
 use soil_consensus::{NoNetwork as DummyOracle, Proposal, ProposeArgs};
 use soil_consensus_babe::{
 	inherents::{BabeCreateInherentDataProviders, InherentDataProvider},
 	make_vrf_sign_data, AllowedSlots, AuthorityId, AuthorityPair, Slot,
 };
+use soil_consensus_epochs::{EpochIdentifier, EpochIdentifierPosition};
 use soil_consensus_slots::SlotDuration;
 use soil_core::crypto::Pair;
 use soil_keyring::Sr25519Keyring;
 use soil_keystore::{testing::MemoryKeystore, Keystore};
+use soil_network_test::{Block as TestBlock, *};
 use soil_runtime::{
 	generic::{Digest, DigestItem},
 	traits::Block as BlockT,
 };
+use soil_transaction_pool_api::RejectAllTxPool;
 use std::{cell::RefCell, task::Poll};
 use substrate_test_runtime_client::DefaultTestClientBuilderExt;
 

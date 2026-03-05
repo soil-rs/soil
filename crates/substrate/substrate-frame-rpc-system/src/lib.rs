@@ -27,12 +27,12 @@ use jsonrpsee::{
 	Extensions,
 };
 
-use soil_transaction_pool_api::{InPoolTransaction, TransactionPool};
 use soil_api::ApiExt;
 use soil_block_builder::BlockBuilder;
 use soil_blockchain::HeaderBackend;
 use soil_core::{hexdisplay::HexDisplay, Bytes};
 use soil_runtime::{legacy, traits};
+use soil_transaction_pool_api::{InPoolTransaction, TransactionPool};
 
 pub use topsoil_system_rpc_runtime_api::AccountNonceApi;
 
@@ -218,8 +218,8 @@ mod tests {
 
 	use assert_matches::assert_matches;
 	use futures::executor::block_on;
-	use soil_rpc_api::DenyUnsafe;
 	use sc_transaction_pool::BasicPool;
+	use soil_rpc_api::DenyUnsafe;
 	use soil_runtime::{
 		transaction_validity::{InvalidTransaction, TransactionValidityError},
 		ApplyExtrinsicResult,

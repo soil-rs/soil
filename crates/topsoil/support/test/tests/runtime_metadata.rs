@@ -16,13 +16,13 @@
 // limitations under the License.
 #![allow(useless_deprecated)]
 
-use topsoil_support::{derive_impl, traits::ConstU32};
 use scale_info::{form::MetaForm, meta_type};
 use soil_metadata_ir::{
 	ItemDeprecationInfoIR, RuntimeApiMetadataIR, RuntimeApiMethodMetadataIR,
 	RuntimeApiMethodParamMetadataIR,
 };
 use soil_runtime::traits::Block as BlockT;
+use topsoil_support::{derive_impl, traits::ConstU32};
 
 pub type BlockNumber = u64;
 pub type Header = soil_runtime::generic::Header<u32, soil_runtime::traits::BlakeTwo256>;

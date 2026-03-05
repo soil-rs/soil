@@ -15,8 +15,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use topsoil_support::{derive_impl, parameter_types, traits::WithdrawReasons};
 use soil_runtime::{traits::Identity, BuildStorage};
+use topsoil_support::{derive_impl, parameter_types, traits::WithdrawReasons};
 
 use super::*;
 use crate as topsoil_vesting;

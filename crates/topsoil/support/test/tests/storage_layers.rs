@@ -15,12 +15,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+use pallet::*;
+use soil_io::TestExternalities;
 use topsoil_support::{
 	assert_noop, assert_ok, derive_impl, dispatch::DispatchResult, ensure,
 	pallet_prelude::ConstU32, storage::with_storage_layer,
 };
-use pallet::*;
-use soil_io::TestExternalities;
 
 #[topsoil_support::pallet(dev_mode)]
 pub mod pallet {

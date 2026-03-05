@@ -18,11 +18,11 @@
 //! Various basic types for use in the assets pallet.
 
 use super::*;
+use soil_runtime::{traits::Convert, FixedPointNumber, FixedU128};
 use topsoil_support::{
 	pallet_prelude::*,
 	traits::{fungible, tokens::ConversionToAssetBalance},
 };
-use soil_runtime::{traits::Convert, FixedPointNumber, FixedU128};
 
 pub type DepositBalanceOf<T, I = ()> =
 	<<T as Config<I>>::Currency as Currency<<T as SystemConfig>::AccountId>>::Balance;

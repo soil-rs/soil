@@ -43,19 +43,15 @@ use futures::{
 };
 use parking_lot::Mutex;
 use sc_block_builder::BlockBuilderBuilder;
-use soil_client_api::{Backend as BackendT, BlockchainEvents, FinalityNotifications, HeaderBackend};
 use sc_consensus::{
 	BlockImport, BlockImportParams, BoxJustificationImport, ForkChoiceStrategy, ImportResult,
 	ImportedAux,
 };
-use soil_network::{config::RequestResponseConfig, ProtocolName};
-use soil_network_test::{
-	Block, BlockImportAdapter, FullPeerConfig, PassThroughVerifier, Peer, PeersClient,
-	PeersFullClient, TestNetFactory,
-};
-use soil_utils::{mpsc::TracingUnboundedReceiver, notification::NotificationReceiver};
 use soil_api::{ApiRef, ProvideRuntimeApi};
 use soil_application_crypto::key_types::BEEFY as BEEFY_KEY_TYPE;
+use soil_client_api::{
+	Backend as BackendT, BlockchainEvents, FinalityNotifications, HeaderBackend,
+};
 use soil_consensus::BlockOrigin;
 use soil_consensus_beefy::{
 	ecdsa_crypto,
@@ -70,11 +66,17 @@ use soil_consensus_beefy::{
 use soil_core::H256;
 use soil_keystore::{testing::MemoryKeystore, Keystore, KeystorePtr};
 use soil_mmr_primitives::{Error as MmrError, MmrApi};
+use soil_network::{config::RequestResponseConfig, ProtocolName};
+use soil_network_test::{
+	Block, BlockImportAdapter, FullPeerConfig, PassThroughVerifier, Peer, PeersClient,
+	PeersFullClient, TestNetFactory,
+};
 use soil_runtime::{
 	codec::{Decode, Encode},
 	traits::{Header as HeaderT, NumberFor},
 	DigestItem, EncodedJustification, Justifications,
 };
+use soil_utils::{mpsc::TracingUnboundedReceiver, notification::NotificationReceiver};
 use std::{marker::PhantomData, sync::Arc, task::Poll};
 use substrate_test_runtime_client::{BlockBuilderExt, ClientExt};
 use tokio::time::Duration;

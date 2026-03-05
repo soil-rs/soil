@@ -35,19 +35,19 @@ use futures::{stream::Fuse, FutureExt, StreamExt};
 use log::{debug, error, info, trace, warn};
 use parking_lot::Mutex;
 use prometheus_endpoint::Registry;
-use soil_client_api::{Backend, BlockBackend, BlockchainEvents, FinalityNotification, Finalizer};
 use sc_consensus::BlockImport;
-use soil_network::{NetworkRequest, NotificationService, ProtocolName};
-use soil_network_gossip::{GossipEngine, Network as GossipNetwork, Syncing as GossipSyncing};
-use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver};
 use soil_api::ProvideRuntimeApi;
 use soil_blockchain::{Backend as BlockchainBackend, HeaderBackend};
+use soil_client_api::{Backend, BlockBackend, BlockchainEvents, FinalityNotification, Finalizer};
 use soil_consensus::{Error as ConsensusError, SyncOracle};
 use soil_consensus_beefy::{
 	AuthorityIdBound, BeefyApi, ConsensusLog, PayloadProvider, ValidatorSet, BEEFY_ENGINE_ID,
 };
 use soil_keystore::KeystorePtr;
+use soil_network::{NetworkRequest, NotificationService, ProtocolName};
+use soil_network_gossip::{GossipEngine, Network as GossipNetwork, Syncing as GossipSyncing};
 use soil_runtime::traits::{Block, Header as HeaderT, NumberFor, Zero};
+use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver};
 use std::{
 	collections::{BTreeMap, VecDeque},
 	future::Future,

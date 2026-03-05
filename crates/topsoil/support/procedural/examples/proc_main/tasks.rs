@@ -50,9 +50,10 @@ fn tasks_work() {
 	super::new_test_ext().execute_with(|| {
 		Numbers::<Runtime>::insert(0, 1);
 
-		let task = RuntimeTask::System(super::topsoil_system::Task::<Runtime>::AddNumberIntoTotal {
-			i: 0u32,
-		});
+		let task =
+			RuntimeTask::System(super::topsoil_system::Task::<Runtime>::AddNumberIntoTotal {
+				i: 0u32,
+			});
 
 		assert_ok!(System::do_task(RuntimeOrigin::signed(1), task.clone(),));
 		assert_eq!(Numbers::<Runtime>::get(0), None);

@@ -205,8 +205,8 @@ impl OutChannels {
 					);
 				}
 				sender.warning_fired = SenderWarningState::FiredFull;
-			} else if sender.warning_fired == SenderWarningState::FiredFull &&
-				current_pending < sender.queue_size_warning.wrapping_div(2)
+			} else if sender.warning_fired == SenderWarningState::FiredFull
+				&& current_pending < sender.queue_size_warning.wrapping_div(2)
 			{
 				sender.warning_fired = SenderWarningState::FiredFree;
 				debug!(

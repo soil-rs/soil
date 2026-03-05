@@ -76,6 +76,14 @@ extern crate alloc;
 
 use alloc::{boxed::Box, collections::btree_set::BTreeSet, vec::Vec};
 use codec::Codec;
+use soil_core::Get;
+use soil_runtime::{
+	traits::{
+		CheckedAdd, CheckedDiv, CheckedMul, CheckedSub, Ensure, IntegerSquareRoot, MaybeDisplay,
+		One, TrailingZeroInput, Zero,
+	},
+	DispatchError, Saturating, TokenError, TransactionOutcome,
+};
 use topsoil_support::{
 	traits::{
 		fungibles::{Balanced, Create, Credit, Inspect, Mutate},
@@ -89,21 +97,13 @@ use topsoil_support::{
 	},
 	PalletId,
 };
-use soil_core::Get;
-use soil_runtime::{
-	traits::{
-		CheckedAdd, CheckedDiv, CheckedMul, CheckedSub, Ensure, IntegerSquareRoot, MaybeDisplay,
-		One, TrailingZeroInput, Zero,
-	},
-	DispatchError, Saturating, TokenError, TransactionOutcome,
-};
 
 #[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
+	use soil_arithmetic::{traits::Unsigned, Permill};
 	use topsoil_support::{pallet_prelude::*, traits::fungibles::Refund};
 	use topsoil_system::pallet_prelude::*;
-	use soil_arithmetic::{traits::Unsigned, Permill};
 
 	#[pallet::pallet]
 	pub struct Pallet<T>(_);
@@ -112,7 +112,8 @@ pub mod pallet {
 	pub trait Config: topsoil_system::Config {
 		/// Overarching event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>>
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// The type in which the assets for swapping are measured.
 		type Balance: Balance;

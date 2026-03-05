@@ -173,8 +173,9 @@ pub trait AppVerify {
 }
 
 impl<
-		S: Verify<Signer = <<T as AppCrypto>::Public as soil_application_crypto::AppPublic>::Generic>
-			+ From<T>,
+		S: Verify<
+				Signer = <<T as AppCrypto>::Public as soil_application_crypto::AppPublic>::Generic,
+			> + From<T>,
 		T: soil_application_crypto::Wraps<Inner = S>
 			+ soil_application_crypto::AppCrypto
 			+ soil_application_crypto::AppSignature

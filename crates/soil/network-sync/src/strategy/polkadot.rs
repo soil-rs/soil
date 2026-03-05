@@ -34,12 +34,12 @@ use crate::{
 };
 use log::{debug, error, info, warn};
 use prometheus_endpoint::Registry;
-use soil_client_api::{BlockBackend, ProofProvider};
 use sc_consensus::{BlockImportError, BlockImportStatus};
+use soil_blockchain::{Error as ClientError, HeaderBackend, HeaderMetadata};
+use soil_client_api::{BlockBackend, ProofProvider};
 use soil_network::ProtocolName;
 use soil_network_common::sync::{message::BlockAnnounce, SyncMode};
 use soil_network_types::PeerId;
-use soil_blockchain::{Error as ClientError, HeaderBackend, HeaderMetadata};
 use soil_runtime::traits::{Block as BlockT, Header, NumberFor};
 use std::{any::Any, collections::HashMap, sync::Arc};
 
@@ -275,9 +275,9 @@ where
 	}
 
 	fn is_major_syncing(&self) -> bool {
-		self.warp.is_some() ||
-			self.state.is_some() ||
-			match self.chain_sync {
+		self.warp.is_some()
+			|| self.state.is_some()
+			|| match self.chain_sync {
 				Some(ref s) => s.status().state.is_major_syncing(),
 				None => unreachable!("At least one syncing strategy is active; qed"),
 			}

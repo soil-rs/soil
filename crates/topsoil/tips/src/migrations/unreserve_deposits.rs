@@ -20,6 +20,7 @@
 
 use alloc::collections::btree_map::BTreeMap;
 use core::iter::Sum;
+use soil_runtime::{traits::Zero, Saturating};
 use topsoil_support::{
 	pallet_prelude::OptionQuery,
 	storage_alias,
@@ -27,7 +28,6 @@ use topsoil_support::{
 	weights::RuntimeDbWeight,
 	Parameter, Twox64Concat,
 };
-use soil_runtime::{traits::Zero, Saturating};
 
 #[cfg(feature = "try-runtime")]
 const LOG_TARGET: &str = "runtime::tips::migrations::unreserve_deposits";
@@ -96,7 +96,8 @@ impl<T: UnlockConfig<I>, I: 'static> UnreserveDeposits<T, I> {
 	/// * `BTreeMap<T::AccountId, T::Balance>`: Map of account IDs to their respective total
 	///   reserved balance by this pallet
 	/// * `topsoil_support::weights::Weight`: The weight of this operation.
-	fn get_deposits() -> (BTreeMap<T::AccountId, BalanceOf<T, I>>, topsoil_support::weights::Weight) {
+	fn get_deposits() -> (BTreeMap<T::AccountId, BalanceOf<T, I>>, topsoil_support::weights::Weight)
+	{
 		use soil_core::Get;
 
 		let mut tips_len = 0;
@@ -150,8 +151,8 @@ where
 		// If it is higher, there is either a bug with the pallet or a bug in the calculation of the
 		// deposit amount.
 		ensure!(
-			account_deposits.iter().all(|(account, deposit)| *deposit <=
-				*account_reserved_before.get(account).unwrap_or(&Zero::zero())),
+			account_deposits.iter().all(|(account, deposit)| *deposit
+				<= *account_reserved_before.get(account).unwrap_or(&Zero::zero())),
 			"Deposit amount is greater than reserved amount"
 		);
 
@@ -234,9 +235,9 @@ mod test {
 		migrations::unreserve_deposits::UnreserveDeposits,
 		tests::{new_test_ext, Balances, RuntimeOrigin, Test, Tips},
 	};
+	use soil_core::ConstU64;
 	use topsoil_support::{assert_ok, parameter_types, traits::TypedGet};
 	use topsoil_system::pallet_prelude::BlockNumberFor;
-	use soil_core::ConstU64;
 
 	parameter_types! {
 		const PalletName: &'static str = "Tips";
@@ -289,17 +290,17 @@ mod test {
 			// Verify the expected amount is reserved
 			assert_eq!(
 				<Test as topsoil_treasury::Config>::Currency::reserved_balance(&tipper_0),
-				tipper_0_initial_reserved +
-					<Test as crate::Config>::TipReportDepositBase::get() +
-					<Test as crate::Config>::DataDepositPerByte::get() *
-						tip_0_reason.len() as u64
+				tipper_0_initial_reserved
+					+ <Test as crate::Config>::TipReportDepositBase::get()
+					+ <Test as crate::Config>::DataDepositPerByte::get()
+						* tip_0_reason.len() as u64
 			);
 			assert_eq!(
 				<Test as topsoil_treasury::Config>::Currency::reserved_balance(&tipper_1),
-				tipper_1_initial_reserved +
-					<Test as crate::Config>::TipReportDepositBase::get() +
-					<Test as crate::Config>::DataDepositPerByte::get() *
-						tip_1_reason.len() as u64
+				tipper_1_initial_reserved
+					+ <Test as crate::Config>::TipReportDepositBase::get()
+					+ <Test as crate::Config>::DataDepositPerByte::get()
+						* tip_1_reason.len() as u64
 			);
 
 			// Execute the migration

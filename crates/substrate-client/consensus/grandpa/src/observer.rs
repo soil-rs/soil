@@ -27,15 +27,15 @@ use finality_grandpa::{voter, voter_set::VoterSet, BlockNumberOps, Error as Gran
 use futures::prelude::*;
 use log::{debug, info, warn};
 
-use soil_client_api::backend::Backend;
-use soil_network::NotificationService;
-use soil_telemetry::TelemetryHandle;
-use soil_utils::mpsc::TracingUnboundedReceiver;
 use soil_blockchain::HeaderMetadata;
+use soil_client_api::backend::Backend;
 use soil_consensus::SelectChain;
 use soil_consensus_grandpa::AuthorityId;
 use soil_keystore::KeystorePtr;
+use soil_network::NotificationService;
 use soil_runtime::traits::{Block as BlockT, NumberFor};
+use soil_telemetry::TelemetryHandle;
+use soil_utils::mpsc::TracingUnboundedReceiver;
 
 use crate::{
 	authorities::SharedAuthoritySet,
@@ -410,9 +410,9 @@ mod tests {
 		communication::tests::{make_test_network, Event},
 	};
 	use assert_matches::assert_matches;
+	use soil_blockchain::HeaderBackend as _;
 	use soil_network_types::PeerId;
 	use soil_utils::mpsc::tracing_unbounded;
-	use soil_blockchain::HeaderBackend as _;
 	use substrate_test_runtime_client::{TestClientBuilder, TestClientBuilderExt};
 
 	use futures::executor;

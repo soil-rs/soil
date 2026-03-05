@@ -25,10 +25,6 @@ use mixnet::core::{
 	Mixnet, Mixnode as CoreMixnode, MixnodesErr as CoreMixnodesErr, RelSessionIndex,
 	SessionPhase as CoreSessionPhase, SessionStatus as CoreSessionStatus,
 };
-use soil_network_types::{
-	multiaddr::{multiaddr, Multiaddr, Protocol},
-	PeerId,
-};
 use soil_api::{ApiError, ApiRef};
 use soil_mixnet::{
 	runtime_api::MixnetApi,
@@ -36,6 +32,10 @@ use soil_mixnet::{
 		Mixnode as RuntimeMixnode, MixnodesErr as RuntimeMixnodesErr,
 		SessionPhase as RuntimeSessionPhase, SessionStatus as RuntimeSessionStatus,
 	},
+};
+use soil_network_types::{
+	multiaddr::{multiaddr, Multiaddr, Protocol},
+	PeerId,
 };
 use soil_runtime::traits::Block;
 

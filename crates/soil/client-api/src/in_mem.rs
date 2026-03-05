@@ -209,10 +209,10 @@ impl<Block: BlockT> Blockchain<Block> {
 		}
 		let this = self.storage.read();
 		let other = other.storage.read();
-		this.hashes == other.hashes &&
-			this.best_hash == other.best_hash &&
-			this.best_number == other.best_number &&
-			this.genesis_hash == other.genesis_hash
+		this.hashes == other.hashes
+			&& this.best_hash == other.best_hash
+			&& this.best_number == other.best_number
+			&& this.genesis_hash == other.genesis_hash
 	}
 
 	/// Insert header CHT root.
@@ -680,7 +680,10 @@ impl<Block: BlockT> backend::Backend<Block> for Backend<Block> {
 		Ok(())
 	}
 
-	fn commit_operation(&self, operation: Self::BlockImportOperation) -> soil_blockchain::Result<()> {
+	fn commit_operation(
+		&self,
+		operation: Self::BlockImportOperation,
+	) -> soil_blockchain::Result<()> {
 		if !operation.finalized_blocks.is_empty() {
 			for (block, justification) in operation.finalized_blocks {
 				self.blockchain.finalize_header(block, justification)?;

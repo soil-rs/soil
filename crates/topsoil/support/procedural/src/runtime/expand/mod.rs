@@ -29,13 +29,13 @@ use crate::{
 	},
 };
 use cfg_expr::Predicate;
-use topsoil_support_procedural_tools::{
-	generate_access_from_frame_or_crate, generate_crate_access, generate_hidden_includes,
-};
 use proc_macro2::TokenStream as TokenStream2;
 use quote::quote;
 use std::collections::HashSet;
 use syn::{Ident, Result};
+use topsoil_support_procedural_tools::{
+	generate_access_from_frame_or_crate, generate_crate_access, generate_hidden_includes,
+};
 
 /// The fixed name of the system pallet.
 const SYSTEM_PALLET_NAME: &str = "System";

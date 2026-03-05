@@ -24,12 +24,6 @@ use crate::{
 };
 
 use codec::{Decode, Encode};
-use topsoil_support::{
-	assert_err, assert_noop, assert_ok, derive_impl, parameter_types,
-	traits::{ConstU32, ConstU64, Get},
-	BoundedVec,
-};
-use topsoil_system::EnsureRoot;
 use soil_core::H256;
 use soil_io::crypto::{sr25519_generate, sr25519_sign};
 use soil_keystore::{testing::MemoryKeystore, KeystoreExt};
@@ -37,6 +31,12 @@ use soil_runtime::{
 	traits::{BadOrigin, BlakeTwo256, IdentifyAccount, IdentityLookup, Verify},
 	BuildStorage, MultiSignature, MultiSigner,
 };
+use topsoil_support::{
+	assert_err, assert_noop, assert_ok, derive_impl, parameter_types,
+	traits::{ConstU32, ConstU64, Get},
+	BoundedVec,
+};
+use topsoil_system::EnsureRoot;
 
 type AccountIdOf<Test> = <Test as topsoil_system::Config>::AccountId;
 pub type AccountPublic = <MultiSignature as Verify>::Signer;
@@ -185,8 +185,8 @@ fn infoof_twenty() -> IdentityInfo<MaxAdditionalFields> {
 
 fn id_deposit(id: &IdentityInfo<MaxAdditionalFields>) -> u64 {
 	let base_deposit: u64 = <<Test as Config>::BasicDeposit as Get<u64>>::get();
-	let byte_deposit: u64 = <<Test as Config>::ByteDeposit as Get<u64>>::get() *
-		TryInto::<u64>::try_into(id.encoded_size()).unwrap();
+	let byte_deposit: u64 = <<Test as Config>::ByteDeposit as Get<u64>>::get()
+		* TryInto::<u64>::try_into(id.encoded_size()).unwrap();
 	base_deposit + byte_deposit
 }
 
@@ -202,11 +202,11 @@ fn identity_fields_repr_works() {
 	assert_eq!(IdentityField::Image as u64, 1 << 6);
 	assert_eq!(IdentityField::Twitter as u64, 1 << 7);
 
-	let fields = IdentityField::Legal |
-		IdentityField::Web |
-		IdentityField::Riot |
-		IdentityField::PgpFingerprint |
-		IdentityField::Twitter;
+	let fields = IdentityField::Legal
+		| IdentityField::Web
+		| IdentityField::Riot
+		| IdentityField::PgpFingerprint
+		| IdentityField::Twitter;
 
 	assert!(!fields.contains(IdentityField::Display));
 	assert!(fields.contains(IdentityField::Legal));

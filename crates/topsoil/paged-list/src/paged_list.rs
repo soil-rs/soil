@@ -522,7 +522,8 @@ mod tests {
 			let as_vec = Vec::<u32>::decode(&mut &raw[..]).unwrap();
 			assert_eq!(as_vec.len(), 4, "Second page contains 4");
 
-			let meta = soil_io::storage::get(&meta_key::<Prefix>()).expect("Meta should be present");
+			let meta =
+				soil_io::storage::get(&meta_key::<Prefix>()).expect("Meta should be present");
 			let meta: StoragePagedListMeta<Prefix, u32, ValuesPerNewPage> =
 				Decode::decode(&mut &meta[..]).unwrap();
 			assert_eq!(meta.first_page, 0);

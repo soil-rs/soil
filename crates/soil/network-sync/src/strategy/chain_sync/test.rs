@@ -25,9 +25,9 @@ use crate::{
 };
 use futures::{channel::oneshot::Canceled, executor::block_on};
 use sc_block_builder::BlockBuilderBuilder;
+use soil_blockchain::HeaderBackend;
 use soil_network::RequestFailure;
 use soil_network_common::sync::message::{BlockAnnounce, BlockData, BlockState, FromBlock};
-use soil_blockchain::HeaderBackend;
 use std::sync::Mutex;
 use substrate_test_runtime_client::{
 	runtime::{Block, Hash, Header},
@@ -213,9 +213,9 @@ fn restart_doesnt_affect_peers_downloading_finality_data() {
 	// the justification request should be scheduled to the
 	// new peer which is at the given block
 	assert!(sync.justification_requests().iter().any(|(p, r)| {
-		*p == peer_id3 &&
-			r.fields == BlockAttributes::JUSTIFICATION &&
-			r.from == FromBlock::Hash(b1_hash)
+		*p == peer_id3
+			&& r.fields == BlockAttributes::JUSTIFICATION
+			&& r.from == FromBlock::Hash(b1_hash)
 	}));
 
 	assert_eq!(

@@ -62,13 +62,13 @@
 extern crate alloc;
 
 use alloc::boxed::Box;
-use topsoil_support::traits::{
-	fungible::Inspect,
-	tokens::{ConversionFromAssetBalance, ConversionToAssetBalance},
-};
 use soil_runtime::{
 	traits::{CheckedDiv, Zero},
 	FixedPointNumber, FixedU128,
+};
+use topsoil_support::traits::{
+	fungible::Inspect,
+	tokens::{ConversionFromAssetBalance, ConversionToAssetBalance},
 };
 
 pub use pallet::*;
@@ -107,7 +107,8 @@ pub mod pallet {
 
 		/// The runtime event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>>
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// The origin permissioned to create a conversion rate for an asset.
 		type CreateOrigin: EnsureOrigin<Self::RuntimeOrigin>;

@@ -18,10 +18,10 @@
 //! Test mock for the DAP pallet.
 
 use crate::{self as topsoil_dap, Config};
+use soil_runtime::BuildStorage;
 use topsoil_support::{
 	derive_impl, parameter_types, soil_runtime::traits::AccountIdConversion, PalletId,
 };
-use soil_runtime::BuildStorage;
 
 type Block = topsoil_system::mocking::MockBlock<Test>;
 

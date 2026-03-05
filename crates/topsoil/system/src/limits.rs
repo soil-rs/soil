@@ -25,12 +25,12 @@
 //! `DispatchClass`. This module contains configuration object for both resources,
 //! which should be passed to `topsoil_system` configuration when runtime is being set up.
 
+use scale_info::TypeInfo;
+use soil_runtime::{traits::Bounded, Perbill};
 use topsoil_support::{
 	dispatch::{DispatchClass, OneOrMany, PerDispatchClass},
 	weights::{constants, Weight},
 };
-use scale_info::TypeInfo;
-use soil_runtime::{traits::Bounded, Perbill};
 
 /// Block length limit configuration.
 #[derive(Debug, Clone, codec::Encode, codec::Decode, TypeInfo)]

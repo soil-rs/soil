@@ -20,9 +20,9 @@
 //! that expect this inherent.
 
 use crate::Error;
-use soil_client_api::{AuxStore, UsageProvider};
 use soil_api::ProvideRuntimeApi;
 use soil_blockchain::HeaderBackend;
+use soil_client_api::{AuxStore, UsageProvider};
 use soil_consensus_aura::{
 	sr25519::{AuthorityId, AuthoritySignature},
 	AuraApi,

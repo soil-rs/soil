@@ -18,20 +18,20 @@
 //! Mock file for offences benchmarking.
 
 use codec::Encode;
+use soil_runtime::{
+	testing::{Header, UintAuthorityId},
+	BuildStorage, KeyTypeId, Perbill,
+};
 use topsoil_election_provider_support::{
 	bounds::{ElectionBounds, ElectionBoundsBuilder},
 	onchain, SequentialPhragmen,
 };
+use topsoil_session::historical as pallet_session_historical;
 use topsoil_support::{
 	derive_impl, parameter_types,
 	traits::{ConstU32, ConstU64},
 };
 use topsoil_system as system;
-use topsoil_session::historical as pallet_session_historical;
-use soil_runtime::{
-	testing::{Header, UintAuthorityId},
-	BuildStorage, KeyTypeId, Perbill,
-};
 
 type AccountId = u64;
 

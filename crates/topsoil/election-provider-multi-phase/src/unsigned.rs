@@ -24,6 +24,15 @@ use crate::{
 };
 use alloc::{boxed::Box, vec::Vec};
 use codec::Encode;
+use scale_info::TypeInfo;
+use soil_npos_elections::{
+	assignment_ratio_to_staked_normalized, assignment_staked_to_ratio_normalized, ElectionResult,
+	ElectionScore, EvaluateSupport,
+};
+use soil_runtime::{
+	offchain::storage::{MutateStorageError, StorageValueRef},
+	DispatchError, SaturatedConversion,
+};
 use topsoil_election_provider_support::{NposSolution, NposSolver, PerThing128, VoteWeight};
 use topsoil_support::{
 	dispatch::DispatchResult,
@@ -34,15 +43,6 @@ use topsoil_support::{
 use topsoil_system::{
 	offchain::{CreateBare, SubmitTransaction},
 	pallet_prelude::BlockNumberFor,
-};
-use scale_info::TypeInfo;
-use soil_npos_elections::{
-	assignment_ratio_to_staked_normalized, assignment_staked_to_ratio_normalized, ElectionResult,
-	ElectionScore, EvaluateSupport,
-};
-use soil_runtime::{
-	offchain::storage::{MutateStorageError, StorageValueRef},
-	DispatchError, SaturatedConversion,
 };
 
 /// Storage key used to store the last block number at which offchain worker ran.
@@ -64,8 +64,10 @@ pub type MinerVoterOf<T> = topsoil_election_provider_support::Voter<
 >;
 
 /// The relative distribution of a voter's stake among the winning targets.
-pub type Assignment<T> =
-	soil_npos_elections::Assignment<<T as topsoil_system::Config>::AccountId, SolutionAccuracyOf<T>>;
+pub type Assignment<T> = soil_npos_elections::Assignment<
+	<T as topsoil_system::Config>::AccountId,
+	SolutionAccuracyOf<T>,
+>;
 
 /// The [`IndexAssignment`][topsoil_election_provider_support::IndexAssignment] type specialized for a
 /// particular runtime `T`.
@@ -400,8 +402,8 @@ impl<T: Config + CreateBare<Call<T>>> Pallet<T> {
 
 		// ensure correct number of winners.
 		ensure!(
-			DesiredTargets::<T>::get().unwrap_or_default() ==
-				raw_solution.solution.unique_targets().len() as u32,
+			DesiredTargets::<T>::get().unwrap_or_default()
+				== raw_solution.solution.unique_targets().len() as u32,
 			Error::<T>::PreDispatchWrongWinnerCount,
 		);
 
@@ -669,8 +671,8 @@ impl<T: MinerConfig> Miner<T> {
 				high = test;
 			}
 		}
-		let maximum_allowed_voters = if low < assignments.len() &&
-			encoded_size_of(&assignments[..low + 1])? <= max_allowed_length
+		let maximum_allowed_voters = if low < assignments.len()
+			&& encoded_size_of(&assignments[..low + 1])? <= max_allowed_length
 		{
 			low + 1
 		} else {
@@ -682,8 +684,8 @@ impl<T: MinerConfig> Miner<T> {
 			encoded_size_of(&assignments[..maximum_allowed_voters]).unwrap() <= max_allowed_length
 		);
 		debug_assert!(if maximum_allowed_voters < assignments.len() {
-			encoded_size_of(&assignments[..maximum_allowed_voters + 1]).unwrap() >
-				max_allowed_length
+			encoded_size_of(&assignments[..maximum_allowed_voters + 1]).unwrap()
+				> max_allowed_length
 		} else {
 			true
 		});
@@ -1105,8 +1107,6 @@ mod tests {
 	};
 	use alloc::vec;
 	use codec::Decode;
-	use topsoil_election_provider_support::IndexAssignment;
-	use topsoil_support::{assert_noop, assert_ok, traits::OffchainWorker};
 	use soil_npos_elections::ElectionScore;
 	use soil_runtime::{
 		bounded_vec,
@@ -1114,6 +1114,8 @@ mod tests {
 		traits::{Dispatchable, ValidateUnsigned, Zero},
 		ModuleError, PerU16,
 	};
+	use topsoil_election_provider_support::IndexAssignment;
+	use topsoil_support::{assert_noop, assert_ok, traits::OffchainWorker};
 
 	type Assignment = crate::unsigned::Assignment<Runtime>;
 

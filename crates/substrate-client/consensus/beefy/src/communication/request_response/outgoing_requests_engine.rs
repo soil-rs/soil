@@ -22,12 +22,12 @@ use codec::Encode;
 use futures::channel::{oneshot, oneshot::Canceled};
 use log::{debug, warn};
 use parking_lot::Mutex;
+use soil_consensus_beefy::{AuthorityIdBound, ValidatorSet};
 use soil_network::{
 	request_responses::{IfDisconnected, RequestFailure},
 	NetworkRequest, ProtocolName,
 };
 use soil_network_types::PeerId;
-use soil_consensus_beefy::{AuthorityIdBound, ValidatorSet};
 use soil_runtime::traits::{Block, NumberFor};
 use std::{collections::VecDeque, result::Result, sync::Arc};
 

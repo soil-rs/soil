@@ -25,6 +25,8 @@ use super::{
 use crate::{communication::grandpa_protocol_name, environment::SharedVoterSetState};
 use codec::{DecodeAll, Encode};
 use futures::prelude::*;
+use soil_consensus_grandpa::AuthorityList;
+use soil_keyring::Ed25519Keyring;
 use soil_network::{
 	config::{MultiaddrWithPeerId, Role},
 	event::Event as NetworkEvent,
@@ -38,10 +40,8 @@ use soil_network_gossip::Validator;
 use soil_network_sync::{SyncEvent as SyncStreamEvent, SyncEventStream};
 use soil_network_test::{Block, Hash};
 use soil_network_types::PeerId;
-use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
-use soil_consensus_grandpa::AuthorityList;
-use soil_keyring::Ed25519Keyring;
 use soil_runtime::traits::NumberFor;
+use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
 use std::{collections::HashSet, pin::Pin, sync::Arc, task::Poll};
 
 #[derive(Debug)]
@@ -390,7 +390,8 @@ fn good_commit_leads_to_relay() {
 		for (i, key) in private.iter().enumerate() {
 			precommits.push(precommit.clone());
 
-			let signature = soil_consensus_grandpa::AuthoritySignature::from(key.sign(&payload[..]));
+			let signature =
+				soil_consensus_grandpa::AuthoritySignature::from(key.sign(&payload[..]));
 			auth_data.push((signature, public[i].0.clone()))
 		}
 
@@ -541,7 +542,8 @@ fn bad_commit_leads_to_report() {
 		for (i, key) in private.iter().enumerate() {
 			precommits.push(precommit.clone());
 
-			let signature = soil_consensus_grandpa::AuthoritySignature::from(key.sign(&payload[..]));
+			let signature =
+				soil_consensus_grandpa::AuthoritySignature::from(key.sign(&payload[..]));
 			auth_data.push((signature, public[i].0.clone()))
 		}
 

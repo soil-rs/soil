@@ -22,15 +22,13 @@ use codec::Decode;
 use log::debug;
 use parking_lot::Mutex;
 
-use soil_client_api::{backend::Backend, utils::is_descendent_of};
 use sc_consensus::{
 	shared_data::{SharedDataLocked, SharedDataLockedUpgradable},
 	BlockCheckParams, BlockImport, BlockImportParams, ImportResult, JustificationImport,
 };
-use soil_telemetry::TelemetryHandle;
-use soil_utils::mpsc::TracingUnboundedSender;
 use soil_api::{Core, RuntimeApiInfo};
 use soil_blockchain::BlockStatus;
+use soil_client_api::{backend::Backend, utils::is_descendent_of};
 use soil_consensus::{BlockOrigin, Error as ConsensusError, SelectChain};
 use soil_consensus_grandpa::{ConsensusLog, GrandpaApi, ScheduledChange, SetId, GRANDPA_ENGINE_ID};
 use soil_runtime::{
@@ -38,6 +36,8 @@ use soil_runtime::{
 	traits::{Block as BlockT, Header as HeaderT, NumberFor, Zero},
 	Justification,
 };
+use soil_telemetry::TelemetryHandle;
+use soil_utils::mpsc::TracingUnboundedSender;
 
 use crate::{
 	authorities::{AuthoritySet, DelayKind, PendingChange, SharedAuthoritySet},
@@ -109,9 +109,9 @@ where
 			self.authority_set.inner().pending_changes().cloned().collect();
 
 		for pending_change in pending_changes {
-			if pending_change.delay_kind == DelayKind::Finalized &&
-				pending_change.effective_number() > chain_info.finalized_number &&
-				pending_change.effective_number() <= chain_info.best_number
+			if pending_change.delay_kind == DelayKind::Finalized
+				&& pending_change.effective_number() > chain_info.finalized_number
+				&& pending_change.effective_number() <= chain_info.best_number
 			{
 				let effective_block_hash = if !pending_change.delay.is_zero() {
 					self.select_chain

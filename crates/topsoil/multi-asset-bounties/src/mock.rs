@@ -24,6 +24,10 @@ use crate::{Event as BountiesEvent, *};
 
 use alloc::collections::btree_map::BTreeMap;
 use core::cell::RefCell;
+use soil_runtime::{
+	traits::{BlakeTwo256, Convert, Hash, Identity, IdentityLookup},
+	BuildStorage, Perbill,
+};
 use topsoil_support::{
 	assert_ok, derive_impl, parameter_types,
 	traits::{
@@ -33,10 +37,6 @@ use topsoil_support::{
 	},
 	weights::constants::ParityDbWeight,
 	PalletId,
-};
-use soil_runtime::{
-	traits::{BlakeTwo256, Convert, Hash, Identity, IdentityLookup},
-	BuildStorage, Perbill,
 };
 
 type Block = topsoil_system::mocking::MockBlock<Test>;

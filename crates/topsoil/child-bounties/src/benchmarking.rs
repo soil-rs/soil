@@ -20,12 +20,12 @@
 #![cfg(feature = "runtime-benchmarks")]
 
 use alloc::vec;
+use soil_runtime::traits::BlockNumberProvider;
 use topsoil_benchmarking::{v2::*, BenchmarkError};
+use topsoil_bounties::Pallet as Bounties;
 use topsoil_support::ensure;
 use topsoil_system::RawOrigin;
-use topsoil_bounties::Pallet as Bounties;
 use topsoil_treasury::Pallet as Treasury;
-use soil_runtime::traits::BlockNumberProvider;
 
 use crate::*;
 
@@ -66,8 +66,8 @@ fn setup_bounty<T: Config>(
 	let caller = account("caller", user, SEED);
 	let value: BalanceOf<T> = T::BountyValueMinimum::get().saturating_mul(100u32.into());
 	let fee = value / 2u32.into();
-	let deposit = T::BountyDepositBase::get() +
-		T::DataDepositPerByte::get() * T::MaximumReasonLength::get().into();
+	let deposit = T::BountyDepositBase::get()
+		+ T::DataDepositPerByte::get() * T::MaximumReasonLength::get().into();
 	let _ = T::Currency::make_free_balance_be(&caller, deposit + T::Currency::minimum_balance());
 	let curator = account("curator", user, SEED);
 	let _ = T::Currency::make_free_balance_be(

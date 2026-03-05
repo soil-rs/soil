@@ -21,12 +21,12 @@
 #![recursion_limit = "128"]
 
 use codec::Encode;
-use topsoil_support::{derive_impl, traits::VariantCount};
 use soil_core::sr25519;
 use soil_runtime::{
 	generic,
 	traits::{BlakeTwo256, Verify},
 };
+use topsoil_support::{derive_impl, traits::VariantCount};
 
 #[topsoil_support::pallet(dev_mode)]
 mod module_single_instance {

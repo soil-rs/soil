@@ -28,8 +28,8 @@ use soil_runtime::{
 	EncodedJustification,
 };
 
-use soil_client_api::{backend::Backend, TrieCacheContext};
 use sc_consensus::{BlockCheckParams, BlockImport, BlockImportParams, ImportResult};
+use soil_client_api::{backend::Backend, TrieCacheContext};
 
 use crate::{
 	communication::notification::BeefyVersionedFinalityProofSender,

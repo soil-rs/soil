@@ -53,12 +53,12 @@
 //!    + pub const BagThresholds: &'static [u64] = &output::THRESHOLDS;
 //!    ```
 
-use topsoil_election_provider_support::VoteWeight;
-use topsoil_support::traits::Get;
 use std::{
 	io::Write,
 	path::{Path, PathBuf},
 };
+use topsoil_election_provider_support::VoteWeight;
+use topsoil_support::traits::Get;
 
 /// Compute the existential weight for the specified configuration.
 ///

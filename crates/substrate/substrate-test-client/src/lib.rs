@@ -24,23 +24,23 @@ pub mod client_ext;
 pub use self::client_ext::{BlockOrigin, ClientBlockImportExt, ClientExt};
 pub use soil_client_api::{execution_extensions::ExecutionExtensions, BadBlocks, ForkBlocks};
 pub use soil_client_db::{self, Backend, BlocksPruning};
-pub use soil_executor::{self, WasmExecutionMethod, WasmExecutor};
-pub use soil_service::{client, RpcHandlers};
 pub use soil_consensus;
+pub use soil_executor::{self, WasmExecutionMethod, WasmExecutor};
 pub use soil_keyring::{Ed25519Keyring, Sr25519Keyring};
 pub use soil_keystore::{Keystore, KeystorePtr};
 pub use soil_runtime::{Storage, StorageChild};
+pub use soil_service::{client, RpcHandlers};
 
 use futures::{future::Future, stream::StreamExt};
-use soil_client_api::BlockchainEvents;
-use soil_service::client::{ClientConfig, LocalCallExecutor};
 use serde::Deserialize;
+use soil_client_api::BlockchainEvents;
 use soil_core::{storage::ChildInfo, testing::TaskExecutor};
 use soil_runtime::{
 	codec::Encode,
 	traits::{Block as BlockT, Header},
 	OpaqueExtrinsic,
 };
+use soil_service::client::{ClientConfig, LocalCallExecutor};
 use std::{
 	collections::{HashMap, HashSet},
 	pin::Pin,
@@ -186,8 +186,10 @@ impl<Block: BlockT, ExecutorDispatch, Backend, G: GenesisInit>
 		sc_consensus::LongestChain<Backend, Block>,
 	)
 	where
-		ExecutorDispatch:
-			soil_client_api::CallExecutor<Block> + soil_executor::RuntimeVersionOf + Clone + 'static,
+		ExecutorDispatch: soil_client_api::CallExecutor<Block>
+			+ soil_executor::RuntimeVersionOf
+			+ Clone
+			+ 'static,
 		Backend: soil_client_api::backend::Backend<Block>,
 		<Backend as soil_client_api::backend::Backend<Block>>::OffchainStorage: 'static,
 	{

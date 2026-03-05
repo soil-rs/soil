@@ -83,8 +83,9 @@ use topsoil::{
 pub use pallet::*;
 pub use weights::*;
 
-type BalanceOf<T> =
-	<<T as Config>::Currency as fungible::Inspect<<T as topsoil_system::Config>::AccountId>>::Balance;
+type BalanceOf<T> = <<T as Config>::Currency as fungible::Inspect<
+	<T as topsoil_system::Config>::AccountId,
+>>::Balance;
 
 #[topsoil::pallet]
 pub mod pallet {
@@ -97,7 +98,8 @@ pub mod pallet {
 	pub trait Config: topsoil_system::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>>
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// Currency type for this pallet, used for Deposits.
 		type Currency: Inspect<Self::AccountId>

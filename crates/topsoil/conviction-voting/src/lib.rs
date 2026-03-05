@@ -29,6 +29,10 @@
 
 extern crate alloc;
 
+use soil_runtime::{
+	traits::{AtLeast32BitUnsigned, Saturating, StaticLookup, Zero},
+	ArithmeticError, DispatchError, Perbill,
+};
 use topsoil_support::{
 	dispatch::DispatchResult,
 	ensure,
@@ -36,10 +40,6 @@ use topsoil_support::{
 		fungible, Currency, Get, LockIdentifier, LockableCurrency, PollStatus, Polling,
 		ReservableCurrency, WithdrawReasons,
 	},
-};
-use soil_runtime::{
-	traits::{AtLeast32BitUnsigned, Saturating, StaticLookup, Zero},
-	ArithmeticError, DispatchError, Perbill,
 };
 
 mod conviction;
@@ -92,6 +92,7 @@ pub type ClassOf<T, I = ()> = <<T as Config<I>>::Polls as Polling<TallyOf<T, I>>
 #[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
+	use soil_runtime::BoundedVec;
 	use topsoil_support::{
 		pallet_prelude::{
 			DispatchResultWithPostInfo, IsType, StorageDoubleMap, StorageMap, ValueQuery,
@@ -100,7 +101,6 @@ pub mod pallet {
 		Twox64Concat,
 	};
 	use topsoil_system::pallet_prelude::{ensure_signed, OriginFor};
-	use soil_runtime::BoundedVec;
 
 	#[pallet::pallet]
 	pub struct Pallet<T, I = ()>(_);

@@ -71,8 +71,8 @@ mod tests;
 extern crate alloc;
 
 use codec::FullCodec;
-use topsoil::{prelude::*, traits::StorageInstance};
 pub use paged_list::StoragePagedList;
+use topsoil::{prelude::*, traits::StorageInstance};
 
 #[topsoil::pallet]
 pub mod pallet {

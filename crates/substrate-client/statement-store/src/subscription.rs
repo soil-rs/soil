@@ -40,12 +40,12 @@ use futures::{Stream, StreamExt};
 use itertools::Itertools;
 
 use crate::LOG_TARGET;
-use soil_utils::id_sequence::SeqID;
 use soil_core::{traits::SpawnNamed, Bytes, Encode};
 pub use soil_statement_store::StatementStore;
 use soil_statement_store::{
 	OptimizedTopicFilter, Result, Statement, StatementEvent, Topic, MAX_TOPICS,
 };
+use soil_utils::id_sequence::SeqID;
 use std::{
 	collections::{hash_map::Entry, HashMap, HashSet},
 	sync::atomic::AtomicU64,

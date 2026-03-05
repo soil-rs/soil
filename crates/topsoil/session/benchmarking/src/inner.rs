@@ -22,16 +22,16 @@ use alloc::vec::Vec;
 use soil_runtime::traits::{One, StaticLookup};
 
 use topsoil_benchmarking::v2::*;
-use topsoil_support::{
-	assert_ok,
-	traits::{Get, KeyOwnerProofSystem, OnInitialize},
-};
-use topsoil_system::{pallet_prelude::BlockNumberFor, RawOrigin};
 use topsoil_session::{historical::Pallet as Historical, Pallet as Session, *};
 use topsoil_staking::{
 	benchmarking::create_validator_with_nominators, testing_utils::create_validators,
 	MaxNominationsOf, RewardDestination,
 };
+use topsoil_support::{
+	assert_ok,
+	traits::{Get, KeyOwnerProofSystem, OnInitialize},
+};
+use topsoil_system::{pallet_prelude::BlockNumberFor, RawOrigin};
 
 const MAX_VALIDATORS: u32 = 1000;
 

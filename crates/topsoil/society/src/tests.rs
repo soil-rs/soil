@@ -21,9 +21,9 @@ use super::*;
 use migrations::v0;
 use mock::*;
 
-use topsoil_support::{assert_noop, assert_ok};
 use soil_crypto_hashing::blake2_256;
 use soil_runtime::traits::BadOrigin;
+use topsoil_support::{assert_noop, assert_ok};
 use BidKind::*;
 use VouchingStatus::*;
 

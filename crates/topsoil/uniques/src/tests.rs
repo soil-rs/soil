@@ -18,9 +18,9 @@
 //! Tests for Uniques pallet.
 
 use crate::{mock::*, Event, *};
-use topsoil_support::{assert_noop, assert_ok, traits::Currency};
-use topsoil_balances::Error as BalancesError;
 use soil_runtime::{traits::Dispatchable, DispatchError};
+use topsoil_balances::Error as BalancesError;
+use topsoil_support::{assert_noop, assert_ok, traits::Currency};
 
 fn items() -> Vec<(u64, u32, u32)> {
 	let mut r: Vec<_> = Account::<Test>::iter().map(|x| x.0).collect();

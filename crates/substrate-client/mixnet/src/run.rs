@@ -42,22 +42,22 @@ use mixnet::{
 	reply_manager::{ReplyContext, ReplyManager},
 	request_manager::RequestManager,
 };
+use soil_api::{ApiExt, ProvideRuntimeApi};
 use soil_client_api::{BlockchainEvents, HeaderBackend};
+use soil_consensus::SyncOracle;
+use soil_keystore::{KeystoreExt, KeystorePtr};
+use soil_mixnet::{runtime_api::MixnetApi, types::Mixnode};
 use soil_network::{
 	service::traits::{NetworkService, NotificationEvent, ValidationResult},
 	NetworkPeers, NetworkStateInfo, NotificationService, ProtocolName,
 };
-use soil_transaction_pool_api::{
-	LocalTransactionPool, OffchainTransactionPoolFactory, TransactionPool,
-};
-use soil_api::{ApiExt, ProvideRuntimeApi};
-use soil_consensus::SyncOracle;
-use soil_keystore::{KeystoreExt, KeystorePtr};
-use soil_mixnet::{runtime_api::MixnetApi, types::Mixnode};
 use soil_runtime::{
 	traits::{Block, Header},
 	transaction_validity::TransactionSource,
 	Saturating,
+};
+use soil_transaction_pool_api::{
+	LocalTransactionPool, OffchainTransactionPoolFactory, TransactionPool,
 };
 use std::{
 	sync::Arc,

@@ -143,7 +143,12 @@ where
 	/// Insert key/value into backend.
 	///
 	/// This only supports inserting keys in child tries.
-	pub fn insert_child(&mut self, c: soil_core::storage::ChildInfo, k: StorageKey, v: StorageValue) {
+	pub fn insert_child(
+		&mut self,
+		c: soil_core::storage::ChildInfo,
+		k: StorageKey,
+		v: StorageValue,
+	) {
 		self.backend.insert(vec![(Some(c), vec![(k, Some(v))])], self.state_version);
 	}
 
@@ -394,7 +399,10 @@ where
 		self.extension_by_type_id(TypeId::of::<T>()).and_then(<dyn Any>::downcast_mut)
 	}
 
-	fn register_extension<T: Extension>(&mut self, ext: T) -> Result<(), soil_externalities::Error> {
+	fn register_extension<T: Extension>(
+		&mut self,
+		ext: T,
+	) -> Result<(), soil_externalities::Error> {
 		self.register_extension_with_type_id(TypeId::of::<T>(), Box::new(ext))
 	}
 

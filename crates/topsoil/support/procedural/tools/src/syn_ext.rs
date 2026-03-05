@@ -19,7 +19,6 @@
 //! Extension to syn types, mainly for parsing
 // end::description[]
 
-use topsoil_support_procedural_tools_derive::{Parse, ToTokens};
 use proc_macro2::{TokenStream, TokenTree};
 use quote::ToTokens;
 use std::iter::once;
@@ -28,6 +27,7 @@ use syn::{
 	visit::{self, Visit},
 	Ident,
 };
+use topsoil_support_procedural_tools_derive::{Parse, ToTokens};
 
 /// stop parsing here getting remaining token as content
 /// Warn duplicate stream (part of)

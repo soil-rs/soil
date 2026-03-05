@@ -28,16 +28,16 @@ use futures::prelude::*;
 use log::{debug, trace};
 use prost::Message;
 use soil_client_api::{BlockBackend, ProofProvider};
+use soil_core::{
+	hexdisplay::HexDisplay,
+	storage::{ChildInfo, ChildType, PrefixedStorageKey},
+};
 use soil_network::{
 	config::ProtocolId,
 	request_responses::{IncomingRequest, OutgoingResponse},
 	NetworkBackend, ReputationChange,
 };
 use soil_network_types::PeerId;
-use soil_core::{
-	hexdisplay::HexDisplay,
-	storage::{ChildInfo, ChildType, PrefixedStorageKey},
-};
 use soil_runtime::traits::Block;
 use std::{marker::PhantomData, sync::Arc};
 

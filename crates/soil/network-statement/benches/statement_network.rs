@@ -18,6 +18,8 @@
 
 use criterion::{criterion_group, criterion_main, Criterion};
 use futures::{stream, Stream, StreamExt};
+use sc_statement_store::Store;
+use soil_core::Pair;
 use soil_network::{
 	service::traits::{NotificationEvent, NotificationService},
 	utils::LruHashSet,
@@ -32,8 +34,6 @@ use soil_network_statement::{
 };
 use soil_network_sync::{SyncEvent, SyncEventStream};
 use soil_network_types::PeerId;
-use sc_statement_store::Store;
-use soil_core::Pair;
 use soil_statement_store::{Statement, StatementSource, StatementStore};
 use std::{
 	collections::HashMap,
@@ -66,7 +66,10 @@ impl NetworkPeers for TestNetwork {
 	fn disconnect_peer(&self, _: PeerId, _: soil_network::ProtocolName) {}
 	fn accept_unreserved_peers(&self) {}
 	fn deny_unreserved_peers(&self) {}
-	fn add_reserved_peer(&self, _: soil_network::config::MultiaddrWithPeerId) -> Result<(), String> {
+	fn add_reserved_peer(
+		&self,
+		_: soil_network::config::MultiaddrWithPeerId,
+	) -> Result<(), String> {
 		unimplemented!()
 	}
 	fn remove_reserved_peer(&self, _: PeerId) {}

@@ -20,8 +20,8 @@ use crate::{
 	pallet::{parse::event::PalletEventDepositAttr, Def},
 	COUNTER,
 };
-use topsoil_support_procedural_tools::get_doc_literals;
 use syn::{spanned::Spanned, Ident};
+use topsoil_support_procedural_tools::get_doc_literals;
 
 /// * Add __Ignore variant on Event
 /// * Impl various trait on Event including metadata

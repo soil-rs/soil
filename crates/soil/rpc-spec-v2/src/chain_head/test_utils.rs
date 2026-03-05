@@ -19,21 +19,21 @@
 //! Test utilities.
 
 use parking_lot::Mutex;
+use soil_api::{CallApiAt, CallApiAtParams};
+use soil_blockchain::{BlockStatus, CachedHeaderMetadata, HeaderBackend, HeaderMetadata, Info};
 use soil_client_api::{
 	execution_extensions::ExecutionExtensions, BlockBackend, BlockImportNotification,
 	BlockchainEvents, CallExecutor, ChildInfo, ExecutorProvider, FinalityNotification,
 	FinalityNotifications, FinalizeSummary, ImportNotifications, KeysIter, MerkleValue, PairsIter,
 	StaleBlock, StorageData, StorageEventStream, StorageKey, StorageProvider,
 };
-use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedSender};
-use soil_api::{CallApiAt, CallApiAtParams};
-use soil_blockchain::{BlockStatus, CachedHeaderMetadata, HeaderBackend, HeaderMetadata, Info};
 use soil_consensus::BlockOrigin;
 use soil_runtime::{
 	generic::SignedBlock,
 	traits::{Block as BlockT, Header as HeaderT, NumberFor},
 	Justifications,
 };
+use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedSender};
 use soil_version::RuntimeVersion;
 use std::sync::Arc;
 use substrate_test_runtime::{Block, Hash, Header, H256};
@@ -272,7 +272,10 @@ impl<Block: BlockT, Client: BlockBackend<Block>> BlockBackend<Block>
 		self.client.block(hash)
 	}
 
-	fn block_status(&self, hash: Block::Hash) -> soil_blockchain::Result<soil_consensus::BlockStatus> {
+	fn block_status(
+		&self,
+		hash: Block::Hash,
+	) -> soil_blockchain::Result<soil_consensus::BlockStatus> {
 		self.client.block_status(hash)
 	}
 
@@ -292,7 +295,10 @@ impl<Block: BlockT, Client: BlockBackend<Block>> BlockBackend<Block>
 		self.client.has_indexed_transaction(hash)
 	}
 
-	fn block_indexed_body(&self, hash: Block::Hash) -> soil_blockchain::Result<Option<Vec<Vec<u8>>>> {
+	fn block_indexed_body(
+		&self,
+		hash: Block::Hash,
+	) -> soil_blockchain::Result<Option<Vec<Vec<u8>>>> {
 		self.client.block_indexed_body(hash)
 	}
 

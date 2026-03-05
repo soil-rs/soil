@@ -21,13 +21,13 @@
 
 use super::*;
 
+use soil_runtime::{traits::Bounded, BoundedVec};
 use topsoil_benchmarking::v2::*;
 use topsoil_support::{
 	assert_noop, assert_ok,
 	traits::{Currency, EnsureOrigin, Get, OnInitialize, UnfilteredDispatchable},
 };
 use topsoil_system::{pallet_prelude::BlockNumberFor, RawOrigin};
-use soil_runtime::{traits::Bounded, BoundedVec};
 
 use crate::Pallet as Democracy;
 

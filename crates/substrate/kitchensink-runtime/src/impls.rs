@@ -18,6 +18,9 @@
 //! Some configurable implementations as associated type for the substrate runtime.
 
 use alloc::boxed::Box;
+use topsoil_alliance::{IdentityVerifier, ProposalIndex, ProposalProvider};
+use topsoil_asset_tx_payment::HandleCredit;
+use topsoil_identity::legacy::IdentityField;
 use topsoil_support::{
 	pallet_prelude::*,
 	traits::{
@@ -25,9 +28,6 @@ use topsoil_support::{
 		Currency, OnUnbalanced,
 	},
 };
-use topsoil_alliance::{IdentityVerifier, ProposalIndex, ProposalProvider};
-use topsoil_asset_tx_payment::HandleCredit;
-use topsoil_identity::legacy::IdentityField;
 
 use crate::{
 	AccountId, AllianceCollective, AllianceMotion, Assets, Authorship, Balances, Hash,
@@ -114,16 +114,16 @@ impl ProposalProvider<AccountId, Hash, RuntimeCall> for AllianceProposalProvider
 
 #[cfg(test)]
 mod multiplier_tests {
-	use topsoil_support::{
-		dispatch::DispatchClass,
-		weights::{Weight, WeightToFee},
-	};
-	use topsoil_transaction_payment::{Multiplier, TargetedFeeAdjustment};
 	use soil_runtime::{
 		assert_eq_error_rate,
 		traits::{Convert, One, Zero},
 		BuildStorage, FixedPointNumber,
 	};
+	use topsoil_support::{
+		dispatch::DispatchClass,
+		weights::{Weight, WeightToFee},
+	};
+	use topsoil_transaction_payment::{Multiplier, TargetedFeeAdjustment};
 
 	use crate::{
 		constants::{currency::*, time::*},
@@ -305,8 +305,8 @@ mod multiplier_tests {
 		// `cargo test congested_chain_simulation -- --nocapture` to get some insight.
 
 		// almost full. The entire quota of normal transactions is taken.
-		let block_weight = BlockWeights::get().get(DispatchClass::Normal).max_total.unwrap() -
-			Weight::from_parts(100, 0);
+		let block_weight = BlockWeights::get().get(DispatchClass::Normal).max_total.unwrap()
+			- Weight::from_parts(100, 0);
 
 		// Default substrate weight.
 		let tx_weight = topsoil_support::weights::constants::ExtrinsicBaseWeight::get();

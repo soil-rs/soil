@@ -16,11 +16,6 @@
 // limitations under the License.
 
 use codec::Encode;
-use topsoil_support::{
-	derive_impl,
-	dispatch::GetDispatchInfo,
-	pallet_prelude::{TransactionSource, Weight},
-};
 use soil_runtime::{
 	testing::UintAuthorityId,
 	traits::{Applyable, Checkable},
@@ -28,6 +23,11 @@ use soil_runtime::{
 		InvalidTransaction, TransactionValidity, TransactionValidityError, ValidTransaction,
 	},
 	BuildStorage, DispatchError,
+};
+use topsoil_support::{
+	derive_impl,
+	dispatch::GetDispatchInfo,
+	pallet_prelude::{TransactionSource, Weight},
 };
 
 // test for instance
@@ -365,8 +365,8 @@ fn valid_call_weight_test() {
 			dispatch_success: true,
 			call_weight: pallet1::CALL_2_WEIGHT,
 			ext_weight: pallet1::CALL_2_AUTH_WEIGHT,
-			actual_weight: pallet1::CALL_2_REFUND + pallet1::CALL_2_AUTH_WEIGHT -
-				call_2_auth_weight_refund,
+			actual_weight: pallet1::CALL_2_REFUND + pallet1::CALL_2_AUTH_WEIGHT
+				- call_2_auth_weight_refund,
 		},
 		Test {
 			call: RuntimeCall::Pallet1Instance2(pallet1::Call::call3 { valid: true, some_gen: 1 }),

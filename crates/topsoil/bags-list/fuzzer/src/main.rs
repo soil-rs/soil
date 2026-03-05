@@ -27,9 +27,9 @@
 //! More information about `honggfuzz` can be found
 //! [here](https://docs.rs/honggfuzz/).
 
-use topsoil_election_provider_support::{SortedListProvider, VoteWeight};
 use honggfuzz::fuzz;
 use topsoil_bags_list::mock::{AccountId, BagsList, ExtBuilder};
+use topsoil_election_provider_support::{SortedListProvider, VoteWeight};
 
 const ID_RANGE: AccountId = 25_000;
 

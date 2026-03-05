@@ -18,6 +18,11 @@
 //! Tests regarding the functionality of the `fungible` trait set implementations.
 
 use super::*;
+use fungible::{
+	FreezeConsideration, HoldConsideration, Inspect, InspectFreeze, InspectHold,
+	LoneFreezeConsideration, LoneHoldConsideration, Mutate, MutateFreeze, MutateHold, Unbalanced,
+};
+use soil_core::ConstU64;
 use topsoil_support::traits::{
 	tokens::{
 		Fortitude::{Force, Polite},
@@ -27,11 +32,6 @@ use topsoil_support::traits::{
 	},
 	Consideration, Footprint, LinearStoragePrice, MaybeConsideration,
 };
-use fungible::{
-	FreezeConsideration, HoldConsideration, Inspect, InspectFreeze, InspectHold,
-	LoneFreezeConsideration, LoneHoldConsideration, Mutate, MutateFreeze, MutateHold, Unbalanced,
-};
-use soil_core::ConstU64;
 
 #[test]
 fn inspect_trait_reducible_balance_basic_works() {

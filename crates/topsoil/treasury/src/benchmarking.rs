@@ -21,6 +21,7 @@
 
 use super::{Pallet as Treasury, *};
 
+use soil_core::crypto::FromEntropy;
 use topsoil_benchmarking::{
 	v1::{account, BenchmarkError},
 	v2::*,
@@ -33,7 +34,6 @@ use topsoil_support::{
 	},
 };
 use topsoil_system::RawOrigin;
-use soil_core::crypto::FromEntropy;
 
 /// Trait describing factory functions for dispatchables' parameters.
 pub trait ArgumentsFactory<AssetKind, Beneficiary> {

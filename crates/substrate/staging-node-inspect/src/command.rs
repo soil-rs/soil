@@ -23,8 +23,8 @@ use crate::{
 	Inspector,
 };
 use soil_cli::{CliConfiguration, ImportParams, Result, SharedParams};
-use soil_service::Configuration;
 use soil_runtime::traits::Block;
+use soil_service::Configuration;
 
 type HostFunctions =
 	(soil_io::SubstrateHostFunctions, soil_statement_store::runtime_api::HostFunctions);

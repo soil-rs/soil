@@ -31,12 +31,12 @@ extern crate alloc;
 use alloc::vec::Vec;
 use codec::Encode;
 use core::marker::PhantomData;
-use topsoil_support::weights::Weight;
 use soil_runtime::{traits::Hash, Perbill};
 use soil_staking::{
 	offence::{Kind, Offence, OffenceDetails, OffenceError, OnOffenceHandler, ReportOffence},
 	SessionIndex,
 };
+use topsoil_support::weights::Weight;
 
 pub use pallet::*;
 

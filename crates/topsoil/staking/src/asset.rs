@@ -19,6 +19,7 @@
 //! asset.
 
 use crate::{BalanceOf, Config, HoldReason, NegativeImbalanceOf, PositiveImbalanceOf};
+use soil_runtime::{DispatchResult, Saturating};
 use topsoil_support::traits::{
 	fungible::{
 		hold::{Balanced as FunHoldBalanced, Inspect as FunHoldInspect, Mutate as FunHoldMutate},
@@ -26,7 +27,6 @@ use topsoil_support::traits::{
 	},
 	tokens::{Fortitude, Precision, Preservation},
 };
-use soil_runtime::{DispatchResult, Saturating};
 
 /// Existential deposit for the chain.
 pub fn existential_deposit<T: Config>() -> BalanceOf<T> {

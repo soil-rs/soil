@@ -18,10 +18,6 @@
 use std::vec;
 
 use codec::Encode;
-use topsoil_support::{
-	construct_runtime, derive_impl, parameter_types,
-	traits::{ConstU32, ConstU64},
-};
 use soil_consensus_beefy::mmr::MmrLeafVersion;
 use soil_io::TestExternalities;
 use soil_runtime::{
@@ -31,6 +27,10 @@ use soil_runtime::{
 	BuildStorage,
 };
 use soil_state_machine::BasicExternalities;
+use topsoil_support::{
+	construct_runtime, derive_impl, parameter_types,
+	traits::{ConstU32, ConstU64},
+};
 
 use crate as topsoil_beefy_mmr;
 

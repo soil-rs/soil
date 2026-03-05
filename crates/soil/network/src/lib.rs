@@ -292,16 +292,6 @@ pub use event::{DhtEvent, Event};
 #[cfg(feature = "std")]
 pub use request_responses::{Config, IfDisconnected, RequestFailure};
 #[cfg(feature = "std")]
-pub use soil_network_common::{
-	role::{ObservedRole, Roles},
-	types::ReputationChange,
-};
-#[cfg(feature = "std")]
-pub use soil_network_types::{
-	multiaddr::{self, Multiaddr},
-	PeerId,
-};
-#[cfg(feature = "std")]
 pub use service::{
 	metrics::NotificationMetrics,
 	signature::Signature,
@@ -314,6 +304,16 @@ pub use service::{
 	},
 	DecodingError, Keypair, NetworkService, NetworkWorker, NotificationSender, OutboundFailure,
 	PublicKey,
+};
+#[cfg(feature = "std")]
+pub use soil_network_common::{
+	role::{ObservedRole, Roles},
+	types::ReputationChange,
+};
+#[cfg(feature = "std")]
+pub use soil_network_types::{
+	multiaddr::{self, Multiaddr},
+	PeerId,
 };
 #[cfg(feature = "std")]
 pub use types::ProtocolName;

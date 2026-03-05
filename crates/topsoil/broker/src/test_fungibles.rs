@@ -17,6 +17,10 @@
 
 use alloc::collections::btree_map::BTreeMap;
 use codec::{Decode, Encode};
+use scale_info::TypeInfo;
+use soil_arithmetic::traits::Zero;
+use soil_core::{Get, TypedGet};
+use soil_runtime::{DispatchError, DispatchResult};
 use topsoil_support::{
 	parameter_types,
 	traits::{
@@ -26,10 +30,6 @@ use topsoil_support::{
 		},
 	},
 };
-use scale_info::TypeInfo;
-use soil_arithmetic::traits::Zero;
-use soil_core::{Get, TypedGet};
-use soil_runtime::{DispatchError, DispatchResult};
 
 parameter_types! {
 	static TestAssetOf: BTreeMap<(u32, Vec<u8>), Vec<u8>> = Default::default();

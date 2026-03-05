@@ -20,9 +20,9 @@
 //! runtimes that expect the aura-specific digests.
 
 use crate::{ConsensusDataProvider, Error};
-use soil_client_api::{AuxStore, UsageProvider};
 use sc_consensus::BlockImportParams;
 use soil_api::{ProvideRuntimeApi, StorageProof};
+use soil_client_api::{AuxStore, UsageProvider};
 use soil_consensus_aura::{
 	digests::CompatibleDigestItem,
 	sr25519::{AuthorityId, AuthoritySignature},

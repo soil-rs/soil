@@ -56,11 +56,6 @@ use futures::{
 };
 use parking_lot::Mutex;
 use prometheus_endpoint::Registry as PrometheusRegistry;
-use soil_transaction_pool_api::{
-	error::Error as TxPoolApiError, ChainEvent, ImportNotificationStream,
-	MaintainedTransactionPool, PoolStatus, TransactionFor, TransactionPool, TransactionSource,
-	TransactionStatusStreamFor, TxHash, TxInvalidityReportMap,
-};
 use soil_blockchain::{HashAndNumber, TreeRoute};
 use soil_core::traits::SpawnEssentialNamed;
 use soil_runtime::{
@@ -68,6 +63,11 @@ use soil_runtime::{
 	traits::{Block as BlockT, NumberFor},
 	transaction_validity::{TransactionTag as Tag, TransactionValidityError, ValidTransaction},
 	Saturating,
+};
+use soil_transaction_pool_api::{
+	error::Error as TxPoolApiError, ChainEvent, ImportNotificationStream,
+	MaintainedTransactionPool, PoolStatus, TransactionFor, TransactionPool, TransactionSource,
+	TransactionStatusStreamFor, TxHash, TxInvalidityReportMap,
 };
 use std::{
 	collections::{BTreeMap, HashMap, HashSet},
@@ -1282,8 +1282,8 @@ where
 				return;
 			};
 
-			if at.number.saturating_sub(oldest_block_number).into() <=
-				self.finality_timeout_threshold.into()
+			if at.number.saturating_sub(oldest_block_number).into()
+				<= self.finality_timeout_threshold.into()
 			{
 				return;
 			}
@@ -1514,8 +1514,8 @@ where
 			// note: There is no point to fetch the transactions from blocks older than threshold.
 			// All transactions included in these blocks, were already removed from pool
 			// with FinalityTimeout event.
-			if at.number.saturating_sub(block.number).into() <=
-				self.finality_timeout_threshold.into()
+			if at.number.saturating_sub(block.number).into()
+				<= self.finality_timeout_threshold.into()
 			{
 				all_txs.extend(self.fetch_block_transactions(block).await);
 			}

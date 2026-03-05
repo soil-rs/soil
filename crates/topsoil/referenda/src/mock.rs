@@ -21,6 +21,11 @@ use super::*;
 use crate::{self as topsoil_referenda, types::Track};
 use alloc::borrow::Cow;
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
+use soil_runtime::{
+	str_array as s,
+	traits::{BlakeTwo256, Hash},
+	BuildStorage, DispatchResult, Perbill,
+};
 use topsoil_support::{
 	assert_ok, derive_impl, ord_parameter_types, parameter_types,
 	traits::{
@@ -29,11 +34,6 @@ use topsoil_support::{
 	weights::Weight,
 };
 use topsoil_system::{EnsureRoot, EnsureSignedBy};
-use soil_runtime::{
-	str_array as s,
-	traits::{BlakeTwo256, Hash},
-	BuildStorage, DispatchResult, Perbill,
-};
 
 type Block = topsoil_system::mocking::MockBlock<Test>;
 

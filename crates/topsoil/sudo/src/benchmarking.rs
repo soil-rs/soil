@@ -20,12 +20,12 @@
 use super::*;
 use crate::Pallet;
 use alloc::{boxed::Box, vec};
-use topsoil_benchmarking::v2::*;
-use topsoil_support::dispatch::{DispatchInfo, GetDispatchInfo};
-use topsoil_system::RawOrigin;
 use soil_runtime::traits::{
 	AsSystemOriginSigner, AsTransactionAuthorizedOrigin, DispatchTransaction, Dispatchable,
 };
+use topsoil_benchmarking::v2::*;
+use topsoil_support::dispatch::{DispatchInfo, GetDispatchInfo};
+use topsoil_system::RawOrigin;
 
 fn assert_last_event<T: Config>(generic_event: crate::Event<T>) {
 	let re: <T as Config>::RuntimeEvent = generic_event.into();

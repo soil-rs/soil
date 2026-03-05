@@ -18,21 +18,21 @@
 
 use codec::{Decode, Encode};
 use criterion::{criterion_group, criterion_main, BatchSize, Criterion};
-use topsoil_support::Hashable;
 use kitchensink_runtime::{
 	constants::currency::*, Block, BuildStorage, CheckedExtrinsic, Header, RuntimeCall,
 	RuntimeGenesisConfig, UncheckedExtrinsic,
 };
 use node_primitives::{BlockNumber, Hash};
 use node_testing::keyring::*;
-use soil_executor::{Externalities, RuntimeVersionOf};
 use soil_core::{
 	storage::well_known_keys,
 	traits::{CallContext, CodeExecutor, RuntimeCode},
 };
+use soil_executor::{Externalities, RuntimeVersionOf};
 use soil_runtime::{generic::ExtrinsicFormat, traits::BlakeTwo256};
 use soil_state_machine::TestExternalities as CoreTestExternalities;
 use staging_node_cli::service::RuntimeExecutor;
+use topsoil_support::Hashable;
 
 criterion_group!(benches, bench_execute_block);
 criterion_main!(benches);

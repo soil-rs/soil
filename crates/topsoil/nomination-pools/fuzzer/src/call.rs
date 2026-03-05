@@ -23,11 +23,9 @@
 //! Once a panic is found, it can be debugged with
 //! `cargo hfuzz run-debug per_thing_rational hfuzz_workspace/call/*.fuzz`.
 
-use topsoil_support::{
-	assert_ok,
-	traits::{Currency, GetCallName, UnfilteredDispatchable},
-};
 use honggfuzz::fuzz;
+use rand::{seq::SliceRandom, Rng};
+use soil_runtime::{assert_eq_error_rate, Perbill, Perquintill};
 use topsoil_nomination_pools::{
 	log,
 	mock::*,
@@ -36,8 +34,10 @@ use topsoil_nomination_pools::{
 	BondExtra, BondedPool, GlobalMaxCommission, LastPoolId, MaxPoolMembers, MaxPoolMembersPerPool,
 	MaxPools, MinCreateBond, MinJoinBond, PoolId,
 };
-use rand::{seq::SliceRandom, Rng};
-use soil_runtime::{assert_eq_error_rate, Perbill, Perquintill};
+use topsoil_support::{
+	assert_ok,
+	traits::{Currency, GetCallName, UnfilteredDispatchable},
+};
 
 const ERA: BlockNumber = 1000;
 const MAX_ED_MULTIPLE: Balance = 10_000;

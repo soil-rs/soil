@@ -17,16 +17,16 @@
 
 use super::*;
 use crate::{self as pools};
+use soil_runtime::{BuildStorage, DispatchResult, FixedU128};
+use soil_staking::{
+	Agent, DelegationInterface, DelegationMigrator, Delegator, OnStakingUpdate, Stake,
+};
 use topsoil_support::{
 	assert_ok, derive_impl, ord_parameter_types, parameter_types,
 	traits::{fungible::Mutate, VariantCountOf},
 	PalletId,
 };
 use topsoil_system::{EnsureSignedBy, RawOrigin};
-use soil_runtime::{BuildStorage, DispatchResult, FixedU128};
-use soil_staking::{
-	Agent, DelegationInterface, DelegationMigrator, Delegator, OnStakingUpdate, Stake,
-};
 
 pub type BlockNumber = u64;
 pub type AccountId = u128;
@@ -171,8 +171,8 @@ impl soil_staking::StakingInterface for StakingMock {
 		DelegateMock::on_withdraw(who, withdraw_amount);
 
 		UnbondingBalanceMap::set(&unbonding_map);
-		Ok(UnbondingBalanceMap::get().get(&who).unwrap().is_empty() &&
-			BondedBalanceMap::get().get(&who).unwrap().is_zero())
+		Ok(UnbondingBalanceMap::get().get(&who).unwrap().is_empty()
+			&& BondedBalanceMap::get().get(&who).unwrap().is_zero())
 	}
 
 	fn bond(stash: &Self::AccountId, value: Self::Balance, _: &Self::AccountId) -> DispatchResult {

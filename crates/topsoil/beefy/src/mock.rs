@@ -16,16 +16,6 @@
 // limitations under the License.
 
 use codec::{Decode, DecodeWithMemTracking, Encode};
-use topsoil_election_provider_support::{
-	bounds::{ElectionBounds, ElectionBoundsBuilder},
-	onchain, SequentialPhragmen, Weight,
-};
-use topsoil_support::{
-	construct_runtime, derive_impl, parameter_types,
-	traits::{ConstU32, ConstU64, KeyOwnerProofSystem, OnFinalize, OnInitialize},
-};
-use topsoil_system::pallet_prelude::HeaderFor;
-use topsoil_session::historical as pallet_session_historical;
 use scale_info::TypeInfo;
 use soil_core::{crypto::KeyTypeId, ConstBool, ConstU128};
 use soil_runtime::{
@@ -38,10 +28,22 @@ use soil_runtime::{
 };
 use soil_staking::{EraIndex, SessionIndex};
 use soil_state_machine::BasicExternalities;
+use topsoil_election_provider_support::{
+	bounds::{ElectionBounds, ElectionBoundsBuilder},
+	onchain, SequentialPhragmen, Weight,
+};
+use topsoil_session::historical as pallet_session_historical;
+use topsoil_support::{
+	construct_runtime, derive_impl, parameter_types,
+	traits::{ConstU32, ConstU64, KeyOwnerProofSystem, OnFinalize, OnInitialize},
+};
+use topsoil_system::pallet_prelude::HeaderFor;
 
 use crate as topsoil_beefy;
 
-pub use soil_consensus_beefy::{ecdsa_crypto::AuthorityId as BeefyId, ConsensusLog, BEEFY_ENGINE_ID};
+pub use soil_consensus_beefy::{
+	ecdsa_crypto::AuthorityId as BeefyId, ConsensusLog, BEEFY_ENGINE_ID,
+};
 use soil_consensus_beefy::{AncestryHelper, AncestryHelperWeightInfo, Commitment};
 
 impl_opaque_keys! {

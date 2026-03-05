@@ -20,10 +20,10 @@
 use alloc::vec::Vec;
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use core::fmt::Debug;
-use topsoil_support::Parameter;
 use scale_info::TypeInfo;
 use soil_arithmetic::traits::AtLeast32BitUnsigned;
 use soil_runtime::traits::BlockNumberProvider;
+use topsoil_support::Parameter;
 
 use crate::Timeslice;
 

@@ -19,8 +19,8 @@
 
 use super::{mock::*, *};
 
-use topsoil_support::{assert_err, assert_noop, assert_ok, weights::constants::*};
 use soil_runtime::{traits::One, Perbill};
+use topsoil_support::{assert_err, assert_noop, assert_ok, weights::constants::*};
 
 const CALIBRATION_ERROR: &'static str =
 	"Weight calibration failed. Please re-run the benchmarks on the same hardware.";

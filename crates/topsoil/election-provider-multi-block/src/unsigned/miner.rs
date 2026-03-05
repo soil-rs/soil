@@ -33,9 +33,6 @@ use crate::{
 	CommonError,
 };
 use codec::Encode;
-use topsoil_election_provider_support::{ExtendedBalance, NposSolver, Support, VoteWeight};
-use topsoil_support::{traits::Get, BoundedVec};
-use topsoil_system::pallet_prelude::*;
 use scale_info::TypeInfo;
 use soil_npos_elections::EvaluateSupport;
 use soil_runtime::{
@@ -43,6 +40,9 @@ use soil_runtime::{
 	traits::{SaturatedConversion, Saturating, Zero},
 };
 use soil_std::{collections::btree_map::BTreeMap, prelude::*};
+use topsoil_election_provider_support::{ExtendedBalance, NposSolver, Support, VoteWeight};
+use topsoil_support::{traits::Get, BoundedVec};
+use topsoil_system::pallet_prelude::*;
 
 // TODO: we should have a fuzzer for miner that ensures no matter the parameters, it generates a
 // valid solution. Esp. for the trimming.
@@ -1004,8 +1004,8 @@ impl<T: Config> OffchainWorkerMiner<T> {
 mod trimming {
 	use super::*;
 	use crate::{mock::*, verifier::Verifier};
-	use topsoil_election_provider_support::TryFromUnboundedPagedSupports;
 	use soil_npos_elections::Support;
+	use topsoil_election_provider_support::TryFromUnboundedPagedSupports;
 
 	#[test]
 	fn solution_without_any_trimming() {
@@ -1399,9 +1399,9 @@ mod base_miner {
 
 	use super::*;
 	use crate::{mock::*, Snapshot};
-	use topsoil_election_provider_support::TryFromUnboundedPagedSupports;
 	use soil_npos_elections::Support;
 	use soil_runtime::PerU16;
+	use topsoil_election_provider_support::TryFromUnboundedPagedSupports;
 
 	#[test]
 	fn pagination_does_not_affect_score() {
@@ -1856,8 +1856,8 @@ mod base_miner {
 #[cfg(test)]
 mod offchain_worker_miner {
 	use crate::{verifier::Verifier, CommonError};
-	use topsoil_support::traits::Hooks;
 	use soil_runtime::offchain::storage_lock::{BlockAndTime, StorageLock};
+	use topsoil_support::traits::Hooks;
 
 	use super::*;
 	use crate::mock::*;

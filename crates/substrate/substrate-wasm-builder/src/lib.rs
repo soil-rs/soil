@@ -302,8 +302,8 @@ impl CargoCommand {
 
 	/// Returns whether this version of the toolchain supports nightly features.
 	fn supports_nightly_features(&self) -> bool {
-		self.version.map_or(false, |version| version.is_nightly) ||
-			env::var("RUSTC_BOOTSTRAP").is_ok()
+		self.version.map_or(false, |version| version.is_nightly)
+			|| env::var("RUSTC_BOOTSTRAP").is_ok()
 	}
 
 	/// Check if the supplied cargo command supports our runtime environment.

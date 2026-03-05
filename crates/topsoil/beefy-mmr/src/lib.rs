@@ -43,13 +43,13 @@ use soil_runtime::{
 
 use alloc::vec::Vec;
 use codec::Decode;
-use topsoil_mmr::{primitives::AncestryProof, LeafDataProvider, NodesUtils, ParentNumberAndHash};
 use soil_consensus_beefy::{
 	known_payloads,
 	mmr::{BeefyAuthoritySet, BeefyDataProvider, BeefyNextAuthoritySet, MmrLeaf, MmrLeafVersion},
 	AncestryHelper, AncestryHelperWeightInfo, Commitment, ConsensusLog,
 	ValidatorSet as BeefyValidatorSet,
 };
+use topsoil_mmr::{primitives::AncestryProof, LeafDataProvider, NodesUtils, ParentNumberAndHash};
 
 use topsoil_support::{crypto::ecdsa::ECDSAExt, pallet_prelude::Weight, traits::Get};
 use topsoil_system::pallet_prelude::{BlockNumberFor, HeaderFor};
@@ -67,7 +67,8 @@ mod weights;
 /// A BEEFY consensus digest item with MMR root hash.
 pub struct DepositBeefyDigest<T>(core::marker::PhantomData<T>);
 
-impl<T> topsoil_mmr::primitives::OnNewRoot<soil_consensus_beefy::MmrRootHash> for DepositBeefyDigest<T>
+impl<T> topsoil_mmr::primitives::OnNewRoot<soil_consensus_beefy::MmrRootHash>
+	for DepositBeefyDigest<T>
 where
 	T: topsoil_mmr::Config<Hashing = soil_consensus_beefy::MmrHashing>,
 	T: topsoil_beefy::Config,

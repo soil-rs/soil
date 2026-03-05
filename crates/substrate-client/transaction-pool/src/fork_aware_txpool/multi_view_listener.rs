@@ -28,9 +28,9 @@ use crate::{
 };
 use futures::{Future, FutureExt, Stream, StreamExt};
 use parking_lot::RwLock;
+use soil_runtime::traits::Block as BlockT;
 use soil_transaction_pool_api::{TransactionStatus, TransactionStatusStream, TxIndex};
 use soil_utils::mpsc;
-use soil_runtime::traits::Block as BlockT;
 use std::{
 	collections::{hash_map::Entry, HashMap, HashSet},
 	pin::Pin,
@@ -113,10 +113,10 @@ where
 {
 	fn hash(&self) -> ExtrinsicHash<ChainApi> {
 		match self {
-			Self::Invalidated(hash) |
-			Self::Finalized(hash, _, _) |
-			Self::Broadcasted(hash, _) |
-			Self::Dropped(hash, _) => *hash,
+			Self::Invalidated(hash)
+			| Self::Finalized(hash, _, _)
+			| Self::Broadcasted(hash, _)
+			| Self::Dropped(hash, _) => *hash,
 			Self::FinalityTimeout(hash, _) => *hash,
 		}
 	}
@@ -396,12 +396,12 @@ where
 				self.terminate = true;
 				Some(status)
 			},
-			TransactionStatus::FinalityTimeout(_) |
-			TransactionStatus::Retracted(_) |
-			TransactionStatus::Broadcast(_) |
-			TransactionStatus::Usurped(_) |
-			TransactionStatus::Dropped |
-			TransactionStatus::Invalid => None,
+			TransactionStatus::FinalityTimeout(_)
+			| TransactionStatus::Retracted(_)
+			| TransactionStatus::Broadcast(_)
+			| TransactionStatus::Usurped(_)
+			| TransactionStatus::Dropped
+			| TransactionStatus::Invalid => None,
 		}
 	}
 

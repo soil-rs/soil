@@ -20,6 +20,12 @@
 #![cfg(feature = "runtime-benchmarks")]
 
 use alloc::vec;
+use soil_runtime::{
+	generic::Era,
+	traits::{
+		AsSystemOriginSigner, AsTransactionAuthorizedOrigin, DispatchTransaction, Dispatchable, Get,
+	},
+};
 use topsoil_benchmarking::{account, v2::*, BenchmarkError};
 use topsoil_support::{
 	dispatch::{DispatchClass, DispatchInfo, PostDispatchInfo},
@@ -30,12 +36,6 @@ use topsoil_system::{
 	pallet_prelude::*, CheckGenesis, CheckMortality, CheckNonZeroSender, CheckNonce,
 	CheckSpecVersion, CheckTxVersion, CheckWeight, Config, ExtensionsWeightInfo, Pallet as System,
 	RawOrigin, WeightReclaim,
-};
-use soil_runtime::{
-	generic::Era,
-	traits::{
-		AsSystemOriginSigner, AsTransactionAuthorizedOrigin, DispatchTransaction, Dispatchable, Get,
-	},
 };
 
 pub struct Pallet<T: Config>(System<T>);
@@ -247,9 +247,9 @@ mod benchmarks {
 
 		assert_eq!(
 			System::<T>::block_weight().total(),
-			initial_block_weight +
-				base_extrinsic +
-				post_info.actual_weight.unwrap().saturating_add(extension_weight),
+			initial_block_weight
+				+ base_extrinsic
+				+ post_info.actual_weight.unwrap().saturating_add(extension_weight),
 		);
 		Ok(())
 	}
@@ -260,7 +260,8 @@ mod benchmarks {
 		let base_extrinsic = <T as topsoil_system::Config>::BlockWeights::get()
 			.get(DispatchClass::Normal)
 			.base_extrinsic;
-		let extension_weight = <T as topsoil_system::Config>::ExtensionsWeightInfo::weight_reclaim();
+		let extension_weight =
+			<T as topsoil_system::Config>::ExtensionsWeightInfo::weight_reclaim();
 		let info = DispatchInfo {
 			call_weight: Weight::from_parts(base_extrinsic.ref_time() * 5, 0),
 			extension_weight,
@@ -291,9 +292,9 @@ mod benchmarks {
 
 		assert_eq!(
 			System::<T>::block_weight().total(),
-			initial_block_weight +
-				base_extrinsic +
-				post_info.actual_weight.unwrap().saturating_add(extension_weight),
+			initial_block_weight
+				+ base_extrinsic
+				+ post_info.actual_weight.unwrap().saturating_add(extension_weight),
 		);
 		Ok(())
 	}

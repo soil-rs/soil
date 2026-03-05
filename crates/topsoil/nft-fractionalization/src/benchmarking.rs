@@ -22,12 +22,12 @@
 use super::*;
 use topsoil::benchmarking::prelude::*;
 
-use topsoil::deps::topsoil_support::assert_ok;
 use fungible::{Inspect as InspectFungible, Mutate as MutateFungible};
 use nonfungibles_v2::{Create, Mutate};
+use topsoil::deps::topsoil_support::assert_ok;
 
-use topsoil_system::RawOrigin as SystemOrigin;
 use topsoil_nfts::{CollectionConfig, CollectionSettings, ItemConfig, MintSettings};
+use topsoil_system::RawOrigin as SystemOrigin;
 
 use crate::Pallet as NftFractionalization;
 

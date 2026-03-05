@@ -19,10 +19,10 @@
 
 use super::*;
 use crate::mock::*;
-use topsoil_support::{assert_noop, assert_ok, traits::fungible::InspectHold};
+use soil_staking::{Agent, DelegationInterface, Delegator, StakerStatus};
 use topsoil_nomination_pools::{Error as PoolsError, Event as PoolsEvent};
 use topsoil_staking::{Error as StakingError, RewardDestination};
-use soil_staking::{Agent, DelegationInterface, Delegator, StakerStatus};
+use topsoil_support::{assert_noop, assert_ok, traits::fungible::InspectHold};
 
 #[test]
 fn create_an_agent_with_first_delegator() {

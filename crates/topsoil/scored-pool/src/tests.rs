@@ -20,8 +20,8 @@
 use super::*;
 use mock::*;
 
-use topsoil_support::{assert_noop, assert_ok, traits::OnInitialize};
 use soil_runtime::traits::BadOrigin;
+use topsoil_support::{assert_noop, assert_ok, traits::OnInitialize};
 
 type ScoredPool = Pallet<Test>;
 type System = topsoil_system::Pallet<Test>;

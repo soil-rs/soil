@@ -21,10 +21,10 @@ use crate::DenyUnsafe;
 use assert_matches::assert_matches;
 use futures::prelude::*;
 use jsonrpsee::{core::EmptyServerParams as EmptyParams, MethodsError as RpcError, RpcModule};
+use soil_core::H256;
 use soil_network::{self, config::Role, PeerId};
 use soil_rpc_api::system::helpers::PeerInfo;
 use soil_utils::mpsc::tracing_unbounded;
-use soil_core::H256;
 use std::{
 	env,
 	io::{BufRead, BufReader, Write},

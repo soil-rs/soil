@@ -19,10 +19,6 @@
 
 use crate::{self as topsoil_sassafras, EpochChangeInternalTrigger, *};
 
-use topsoil_support::{
-	derive_impl,
-	traits::{ConstU32, OnFinalize, OnInitialize},
-};
 use soil_consensus_sassafras::{
 	digests::SlotClaim,
 	vrf::{RingProver, VrfSignature},
@@ -36,6 +32,10 @@ use soil_core::{
 use soil_runtime::{
 	testing::{Digest, DigestItem, Header},
 	BuildStorage,
+};
+use topsoil_support::{
+	derive_impl,
+	traits::{ConstU32, OnFinalize, OnInitialize},
 };
 
 const LOG_TARGET: &str = "sassafras::tests";

@@ -25,16 +25,15 @@ use crate::{
 use codec::Codec;
 use log::{debug, info, trace};
 use prometheus_endpoint::Registry;
-use soil_client_api::{backend::AuxStore, BlockOf, UsageProvider};
 use sc_consensus::{
 	block_import::{BlockImport, BlockImportParams, ForkChoiceStrategy},
 	import_queue::{BasicQueue, BoxJustificationImport, DefaultImportQueue, Verifier},
 };
 use sc_consensus_slots::{check_equivocation, CheckedHeader, InherentDataProviderExt};
-use soil_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG, CONSENSUS_TRACE};
 use soil_api::{ApiExt, ProvideRuntimeApi};
 use soil_block_builder::BlockBuilder as BlockBuilderApi;
 use soil_blockchain::{HeaderBackend, HeaderMetadata};
+use soil_client_api::{backend::AuxStore, BlockOf, UsageProvider};
 use soil_consensus::Error as ConsensusError;
 use soil_consensus_aura::{inherents::AuraInherentData, AuraApi};
 use soil_consensus_slots::Slot;
@@ -44,6 +43,7 @@ use soil_runtime::{
 	traits::{Block as BlockT, Header, NumberFor},
 	DigestItem,
 };
+use soil_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG, CONSENSUS_TRACE};
 use std::{fmt::Debug, sync::Arc};
 
 /// check a header has been signed by the right key. If the slot is too far in the future, an error

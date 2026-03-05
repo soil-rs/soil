@@ -24,10 +24,10 @@ use log::trace;
 
 use codec::Codec;
 
-use soil_client_api::UsageProvider;
 use soil_api::{Core, ProvideRuntimeApi};
 use soil_application_crypto::{AppCrypto, AppPublic};
 use soil_blockchain::Result as CResult;
+use soil_client_api::UsageProvider;
 use soil_consensus::Error as ConsensusError;
 use soil_consensus_slots::Slot;
 use soil_core::crypto::{ByteArray, Pair};

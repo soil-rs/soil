@@ -30,6 +30,9 @@ pub mod substrate_test_pallet;
 #[cfg(not(feature = "std"))]
 use alloc::{vec, vec::Vec};
 use codec::{Decode, DecodeWithMemTracking, Encode};
+use scale_info::TypeInfo;
+use soil_application_crypto::{ecdsa, ed25519, sr25519, RuntimeAppPublic, Ss58Codec};
+use soil_keyring::Sr25519Keyring;
 use topsoil_support::{
 	construct_runtime, derive_impl,
 	dispatch::DispatchClass,
@@ -45,9 +48,6 @@ use topsoil_system::{
 	limits::{BlockLength, BlockWeights},
 	CheckNonce, CheckWeight,
 };
-use scale_info::TypeInfo;
-use soil_application_crypto::{ecdsa, ed25519, sr25519, RuntimeAppPublic, Ss58Codec};
-use soil_keyring::Sr25519Keyring;
 
 #[cfg(feature = "bls-experimental")]
 use soil_application_crypto::{bls381, ecdsa_bls381};
@@ -948,7 +948,8 @@ fn test_read_child_storage() {
 fn test_witness(proof: StorageProof, root: crate::Hash) {
 	use soil_externalities::Externalities;
 	let db: soil_trie::MemoryDB<crate::Hashing> = proof.into_memory_db();
-	let backend = soil_state_machine::TrieBackendBuilder::<_, crate::Hashing>::new(db, root).build();
+	let backend =
+		soil_state_machine::TrieBackendBuilder::<_, crate::Hashing>::new(db, root).build();
 	let mut overlay = soil_state_machine::OverlayedChanges::default();
 	let mut ext = soil_state_machine::Ext::new(
 		&mut overlay,
@@ -1148,7 +1149,6 @@ pub mod storage_key_generator {
 mod tests {
 	use super::*;
 	use codec::Encode;
-	use topsoil_support::dispatch::DispatchInfo;
 	use pretty_assertions::assert_eq;
 	use sc_block_builder::BlockBuilderBuilder;
 	use soil_api::{ApiExt, ProvideRuntimeApi};
@@ -1161,6 +1161,7 @@ mod tests {
 	use substrate_test_runtime_client::{
 		prelude::*, runtime::TestAPI, DefaultTestClientBuilderExt, TestClientBuilder,
 	};
+	use topsoil_support::dispatch::DispatchInfo;
 
 	#[test]
 	fn expected_keys_vec_are_matching() {
@@ -1353,11 +1354,11 @@ mod tests {
 		use super::*;
 		use crate::genesismap::GenesisStorageBuilder;
 		use pretty_assertions::assert_eq;
-		use soil_executor::{error::Result, WasmExecutor};
-		use soil_executor_common::runtime_blob::RuntimeBlob;
 		use serde_json::json;
 		use soil_application_crypto::Ss58Codec;
 		use soil_core::traits::Externalities;
+		use soil_executor::{error::Result, WasmExecutor};
+		use soil_executor_common::runtime_blob::RuntimeBlob;
 		use soil_genesis_builder::Result as BuildResult;
 		use soil_state_machine::BasicExternalities;
 		use std::{fs, io::Write};

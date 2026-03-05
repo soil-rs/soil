@@ -16,8 +16,8 @@
 // limitations under the License.
 
 use super::*;
-use topsoil_support::{assert_noop, assert_ok};
 use mock::*;
+use topsoil_support::{assert_noop, assert_ok};
 
 #[test]
 fn should_feed_values_from_member() {

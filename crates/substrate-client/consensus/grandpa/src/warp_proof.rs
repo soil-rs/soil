@@ -23,12 +23,12 @@ use crate::{
 	best_justification, find_scheduled_change, AuthoritySetChanges, AuthoritySetHardFork,
 	BlockNumberOps, GrandpaJustification, SharedAuthoritySet,
 };
+use soil_blockchain::{Backend as BlockchainBackend, HeaderBackend};
 use soil_client_api::Backend as ClientBackend;
+use soil_consensus_grandpa::{AuthorityList, SetId, GRANDPA_ENGINE_ID};
 use soil_network_sync::strategy::warp::{
 	EncodedProof, VerificationResult, Verifier, WarpSyncProvider,
 };
-use soil_blockchain::{Backend as BlockchainBackend, HeaderBackend};
-use soil_consensus_grandpa::{AuthorityList, SetId, GRANDPA_ENGINE_ID};
 use soil_runtime::{
 	generic::BlockId,
 	traits::{Block as BlockT, Header as HeaderT, NumberFor, One},
@@ -469,7 +469,8 @@ mod tests {
 					let precommit = finality_grandpa::Precommit { target_hash, target_number };
 
 					let msg = finality_grandpa::Message::Precommit(precommit.clone());
-					let encoded = soil_consensus_grandpa::localized_payload(42, current_set_id, &msg);
+					let encoded =
+						soil_consensus_grandpa::localized_payload(42, current_set_id, &msg);
 					let signature = keyring.sign(&encoded[..]).into();
 
 					let precommit = finality_grandpa::SignedPrecommit {

@@ -19,8 +19,8 @@
 
 use super::*;
 use alloc::vec;
-use topsoil_support::{defensive, traits::Get, BoundedVec};
 use soil_runtime::traits::ConstU32;
+use topsoil_support::{defensive, traits::Get, BoundedVec};
 
 #[must_use]
 pub(super) enum DeadConsequence {
@@ -161,7 +161,8 @@ impl<T: Config<I>, I: 'static> Pallet<T, I> {
 			if amount < details.min_balance {
 				return DepositConsequence::BelowMinimum;
 			}
-			if !details.is_sufficient && !topsoil_system::Pallet::<T>::can_accrue_consumers(who, 2) {
+			if !details.is_sufficient && !topsoil_system::Pallet::<T>::can_accrue_consumers(who, 2)
+			{
 				return DepositConsequence::CannotCreate;
 			}
 			if details.is_sufficient && details.sufficients.checked_add(1).is_none() {

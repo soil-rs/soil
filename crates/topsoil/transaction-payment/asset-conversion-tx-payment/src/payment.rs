@@ -19,6 +19,12 @@ use crate::Config;
 
 use alloc::vec;
 use core::marker::PhantomData;
+use soil_runtime::{
+	traits::{DispatchInfoOf, Get, PostDispatchInfoOf, Zero},
+	transaction_validity::InvalidTransaction,
+	Saturating,
+};
+use topsoil_asset_conversion::{QuotePrice, SwapCredit};
 use topsoil_support::{
 	defensive, ensure,
 	traits::{
@@ -27,12 +33,6 @@ use topsoil_support::{
 		Defensive, OnUnbalanced, SameOrOther,
 	},
 	unsigned::TransactionValidityError,
-};
-use topsoil_asset_conversion::{QuotePrice, SwapCredit};
-use soil_runtime::{
-	traits::{DispatchInfoOf, Get, PostDispatchInfoOf, Zero},
-	transaction_validity::InvalidTransaction,
-	Saturating,
 };
 
 /// Handle withdrawing, refunding and depositing of transaction fees.
@@ -213,8 +213,8 @@ where
 	) -> Result<BalanceOf<T>, TransactionValidityError> {
 		let (fee_paid, initial_asset_consumed) = already_withdrawn;
 		let refund_amount = fee_paid.peek().saturating_sub(corrected_fee);
-		let (fee_in_asset, adjusted_paid) = if refund_amount.is_zero() ||
-			F::total_balance(asset_id.clone(), who).is_zero()
+		let (fee_in_asset, adjusted_paid) = if refund_amount.is_zero()
+			|| F::total_balance(asset_id.clone(), who).is_zero()
 		{
 			// Nothing to refund or the account was removed be the dispatched function.
 			(initial_asset_consumed, fee_paid)

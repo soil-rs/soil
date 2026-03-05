@@ -16,8 +16,8 @@
 // limitations under the License.
 
 use crate::{Config, Pallet, Weight, LOG_TARGET};
-use topsoil_support::{pallet_prelude::*, storage::migration, traits::OnRuntimeUpgrade};
 use log;
+use topsoil_support::{pallet_prelude::*, storage::migration, traits::OnRuntimeUpgrade};
 
 /// The in-code storage version.
 pub const STORAGE_VERSION: StorageVersion = StorageVersion::new(2);
@@ -108,8 +108,8 @@ pub(crate) mod v1_to_v2 {
 			.len()
 			.saturating_add(fellows_vec.len())
 			.saturating_add(allies.len())
-			.saturating_add(retiring.len()) ==
-			0
+			.saturating_add(retiring.len())
+			== 0
 		{
 			return T::DbWeight::get().reads(4);
 		}

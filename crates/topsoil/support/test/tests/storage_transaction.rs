@@ -18,18 +18,18 @@
 // Disable warnings for #\[transactional\] being deprecated.
 #![allow(deprecated)]
 
-use topsoil_support::{
-	assert_noop, assert_ok, assert_storage_noop, derive_impl,
-	dispatch::DispatchResult,
-	storage::{with_transaction, TransactionOutcome::*},
-	transactional,
-};
 use soil_core::sr25519;
 use soil_io::TestExternalities;
 use soil_runtime::{
 	generic,
 	traits::{BlakeTwo256, Verify},
 	TransactionOutcome,
+};
+use topsoil_support::{
+	assert_noop, assert_ok, assert_storage_noop, derive_impl,
+	dispatch::DispatchResult,
+	storage::{with_transaction, TransactionOutcome::*},
+	transactional,
 };
 
 pub use self::pallet::*;

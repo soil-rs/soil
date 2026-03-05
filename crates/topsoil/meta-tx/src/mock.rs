@@ -20,15 +20,15 @@
 
 use crate as topsoil_meta_tx;
 use crate::*;
-use topsoil_support::{
-	construct_runtime, derive_impl,
-	weights::{FixedFee, NoFee},
-};
 use soil_core::ConstU8;
 use soil_keystore::{testing::MemoryKeystore, KeystoreExt};
 use soil_runtime::{
 	traits::{IdentifyAccount, IdentityLookup, Verify},
 	MultiSignature,
+};
+use topsoil_support::{
+	construct_runtime, derive_impl,
+	weights::{FixedFee, NoFee},
 };
 
 pub type Balance = u64;

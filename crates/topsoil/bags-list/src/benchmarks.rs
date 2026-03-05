@@ -20,13 +20,13 @@
 use super::*;
 use crate::list::List;
 use alloc::{vec, vec::Vec};
+use soil_runtime::traits::One;
 use topsoil_benchmarking::v1::{
 	account, benchmarks_instance_pallet, whitelist_account, whitelisted_caller,
 };
 use topsoil_election_provider_support::ScoreProvider;
 use topsoil_support::{assert_ok, traits::Get};
 use topsoil_system::RawOrigin as SystemOrigin;
-use soil_runtime::traits::One;
 
 benchmarks_instance_pallet! {
 	// iteration of any number of items should only touch that many nodes and bags.

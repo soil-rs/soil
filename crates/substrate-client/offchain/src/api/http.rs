@@ -36,8 +36,8 @@ use hyper::body::Body as _;
 use hyper_rustls::{HttpsConnector, HttpsConnectorBuilder};
 use hyper_util::{client::legacy as client, rt::TokioExecutor};
 use once_cell::sync::Lazy;
-use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
 use soil_core::offchain::{HttpError, HttpRequestId, HttpRequestStatus, Timestamp};
+use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
 use std::{
 	fmt,
 	io::Read as _,
@@ -324,8 +324,8 @@ impl HttpApi {
 					return Err(HttpError::IoError);
 				},
 
-				v @ HttpApiRequest::Dispatched(None) |
-				v @ HttpApiRequest::Response(HttpApiRequestRp { sending_body: None, .. }) => {
+				v @ HttpApiRequest::Dispatched(None)
+				| v @ HttpApiRequest::Response(HttpApiRequestRp { sending_body: None, .. }) => {
 					tracing::debug!(target: LOG_TARGET, id = %request_id.0, "Body sending already finished");
 
 					// We have already finished sending this body.
@@ -347,8 +347,8 @@ impl HttpApi {
 		for id in ids {
 			match self.requests.get_mut(id) {
 				Some(HttpApiRequest::NotDispatched(_, _)) => {},
-				Some(HttpApiRequest::Dispatched(sending_body)) |
-				Some(HttpApiRequest::Response(HttpApiRequestRp { sending_body, .. })) => {
+				Some(HttpApiRequest::Dispatched(sending_body))
+				| Some(HttpApiRequest::Response(HttpApiRequestRp { sending_body, .. })) => {
 					let _ = sending_body.take();
 					continue;
 				},
@@ -783,7 +783,9 @@ mod tests {
 	use core::convert::Infallible;
 	use futures::future;
 	use http_body_util::BodyExt;
-	use soil_core::offchain::{Duration, Externalities, HttpError, HttpRequestId, HttpRequestStatus};
+	use soil_core::offchain::{
+		Duration, Externalities, HttpError, HttpRequestId, HttpRequestStatus,
+	};
 	use std::sync::LazyLock;
 
 	// Using LazyLock to avoid spawning lots of different SharedClients,

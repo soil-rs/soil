@@ -22,7 +22,6 @@
 //! of them requires signing. Refer to `pallet::Call` for further details.
 
 use alloc::{vec, vec::Vec};
-use topsoil_support::{pallet_prelude::*, storage};
 use soil_core::sr25519::Public;
 use soil_runtime::{
 	traits::Hash,
@@ -30,6 +29,7 @@ use soil_runtime::{
 		InvalidTransaction, TransactionSource, TransactionValidity, ValidTransaction,
 	},
 };
+use topsoil_support::{pallet_prelude::*, storage};
 
 pub use self::pallet::*;
 
@@ -39,9 +39,9 @@ const LOG_TARGET: &str = "substrate_test_pallet";
 pub mod pallet {
 	use super::*;
 	use crate::TransferData;
-	use topsoil_system::pallet_prelude::*;
 	use soil_core::storage::well_known_keys;
 	use soil_runtime::{traits::BlakeTwo256, transaction_validity::TransactionPriority, Perbill};
+	use topsoil_system::pallet_prelude::*;
 
 	#[pallet::pallet]
 	#[pallet::without_storage_info]
@@ -227,10 +227,10 @@ pub mod pallet {
 				// Some tests do not need to be complicated with signer and nonce, some need
 				// reproducible block hash (call signature can't be there).
 				// Offchain testing requires storage_change.
-				Call::deposit_log_digest_item { .. } |
-				Call::storage_change { .. } |
-				Call::read { .. } |
-				Call::read_and_panic { .. } => Ok(ValidTransaction {
+				Call::deposit_log_digest_item { .. }
+				| Call::storage_change { .. }
+				| Call::read { .. }
+				| Call::read_and_panic { .. } => Ok(ValidTransaction {
 					provides: vec![BlakeTwo256::hash_of(&call).encode()],
 					..Default::default()
 				}),

@@ -23,7 +23,6 @@ use async_trait::async_trait;
 use codec::Encode;
 use parking_lot::RwLock;
 use sc_transaction_pool::{ChainApi, ValidateTransactionPriority};
-use soil_transaction_pool_api::error::IntoMetricsLabel;
 use soil_blockchain::{CachedHeaderMetadata, HashAndNumber, TreeRoute};
 use soil_runtime::{
 	generic::{self, BlockId},
@@ -35,6 +34,7 @@ use soil_runtime::{
 		ValidTransaction,
 	},
 };
+use soil_transaction_pool_api::error::IntoMetricsLabel;
 use std::{
 	collections::{BTreeMap, HashMap, HashSet},
 	sync::Arc,

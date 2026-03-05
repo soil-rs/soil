@@ -27,7 +27,6 @@
 //! Finality implies canonicality but not vice-versa.
 
 #![warn(missing_docs)]
-
 #![cfg_attr(not(feature = "std"), no_std)]
 
 #[cfg(feature = "std")]
@@ -80,21 +79,19 @@ use codec::{Decode, Encode};
 #[cfg(feature = "std")]
 use hash_db::Prefix;
 #[cfg(feature = "std")]
+use soil_arithmetic::traits::Saturating;
+#[cfg(feature = "std")]
+use soil_blockchain::{
+	Backend as _, CachedHeaderMetadata, DisplacedLeavesAfterFinalization, Error as ClientError,
+	HeaderBackend, HeaderMetadata, HeaderMetadataCache, Result as ClientResult,
+};
+#[cfg(feature = "std")]
 use soil_client_api::{
 	backend::NewBlockState,
 	blockchain::{BlockGap, BlockGapType},
 	leaves::{FinalizationOutcome, LeafSet},
 	utils::is_descendent_of,
 	IoInfo, MemoryInfo, MemorySize, TrieCacheContext, UsageInfo,
-};
-#[cfg(feature = "std")]
-use soil_state_db::{IsPruned, LastCanonicalized, StateDb};
-#[cfg(feature = "std")]
-use soil_arithmetic::traits::Saturating;
-#[cfg(feature = "std")]
-use soil_blockchain::{
-	Backend as _, CachedHeaderMetadata, DisplacedLeavesAfterFinalization, Error as ClientError,
-	HeaderBackend, HeaderMetadata, HeaderMetadataCache, Result as ClientResult,
 };
 #[cfg(feature = "std")]
 use soil_core::{
@@ -113,6 +110,8 @@ use soil_runtime::{
 	Justification, Justifications, StateVersion, Storage,
 };
 #[cfg(feature = "std")]
+use soil_state_db::{IsPruned, LastCanonicalized, StateDb};
+#[cfg(feature = "std")]
 use soil_state_machine::{
 	backend::{AsTrieBackend, Backend as StateBackend},
 	BackendTransaction, ChildStorageCollection, DBValue, IndexOperation, IterArgs,
@@ -126,9 +125,9 @@ use utils::BLOCK_GAP_CURRENT_VERSION;
 
 // Re-export the Database trait so that one can pass an implementation of it.
 #[cfg(feature = "std")]
-pub use soil_state_db::PruningMode;
-#[cfg(feature = "std")]
 pub use soil_database::Database;
+#[cfg(feature = "std")]
+pub use soil_state_db::PruningMode;
 
 #[cfg(feature = "std")]
 pub use bench::BenchmarkingState;
@@ -1429,9 +1428,9 @@ impl<Block: BlockT> Backend<Block> {
 
 		// Older DB versions have no last state key. Check if the state is available and set it.
 		let info = backend.blockchain.info();
-		if info.finalized_state.is_none() &&
-			info.finalized_hash != Default::default() &&
-			soil_client_api::Backend::have_state_at(
+		if info.finalized_state.is_none()
+			&& info.finalized_hash != Default::default()
+			&& soil_client_api::Backend::have_state_at(
 				&backend,
 				info.finalized_hash,
 				info.finalized_number,
@@ -1470,8 +1469,8 @@ impl<Block: BlockT> Backend<Block> {
 
 		let meta = self.blockchain.meta.read();
 
-		if meta.best_number.saturating_sub(best_number).saturated_into::<u64>() >
-			self.canonicalization_delay
+		if meta.best_number.saturating_sub(best_number).saturated_into::<u64>()
+			> self.canonicalization_delay
 		{
 			return Err(soil_blockchain::Error::SetHeadTooOld);
 		}
@@ -1481,7 +1480,8 @@ impl<Block: BlockT> Backend<Block> {
 
 		// Cannot find tree route with empty DB or when imported a detached block.
 		if meta.best_hash != Default::default() && parent_exists {
-			let tree_route = soil_blockchain::tree_route(&self.blockchain, meta.best_hash, route_to)?;
+			let tree_route =
+				soil_blockchain::tree_route(&self.blockchain, meta.best_hash, route_to)?;
 
 			// uncanonicalize: check safety violations and ensure the numbers no longer
 			// point to these block hashes in the key mapping.
@@ -1530,8 +1530,8 @@ impl<Block: BlockT> Backend<Block> {
 	) -> ClientResult<()> {
 		let last_finalized =
 			last_finalized.unwrap_or_else(|| self.blockchain.meta.read().finalized_hash);
-		if last_finalized != self.blockchain.meta.read().genesis_hash &&
-			*header.parent_hash() != last_finalized
+		if last_finalized != self.blockchain.meta.read().genesis_hash
+			&& *header.parent_hash() != last_finalized
 		{
 			return Err(soil_blockchain::Error::NonSequentialFinalization(format!(
 				"Last finalized {last_finalized:?} not parent of {:?}",
@@ -1807,8 +1807,8 @@ impl<Block: BlockT> Backend<Block> {
 				let finalized = number_u64 == 0 || pending_block.leaf_state.is_final();
 				finalized
 			} else {
-				(number.is_zero() && last_finalized_num.is_zero()) ||
-					pending_block.leaf_state.is_final()
+				(number.is_zero() && last_finalized_num.is_zero())
+					|| pending_block.leaf_state.is_final()
 			};
 
 			let header = &pending_block.header;
@@ -1844,8 +1844,8 @@ impl<Block: BlockT> Backend<Block> {
 
 			if !header_exists_in_db {
 				// Add a new leaf if the block has the potential to be finalized.
-				if pending_block.register_as_leaf &&
-					(number > last_finalized_num || last_finalized_num.is_zero())
+				if pending_block.register_as_leaf
+					&& (number > last_finalized_num || last_finalized_num.is_zero())
 				{
 					let mut leaves = self.blockchain.leaves.write();
 					leaves.import(hash, number, parent_hash);
@@ -1951,8 +1951,8 @@ impl<Block: BlockT> Backend<Block> {
 						},
 					}
 				} else if operation.create_gap {
-					if number > best_num + One::one() &&
-						self.blockchain.header(parent_hash)?.is_none()
+					if number > best_num + One::one()
+						&& self.blockchain.header(parent_hash)?.is_none()
 					{
 						let gap = BlockGap {
 							start: best_num + One::one(),
@@ -1962,9 +1962,9 @@ impl<Block: BlockT> Backend<Block> {
 						update_gap(&mut transaction, gap, &mut block_gap);
 						block_gap_updated = true;
 						debug!(target: "db", "Detected block gap (warp sync) {block_gap:?}");
-					} else if number == best_num + One::one() &&
-						self.blockchain.header(parent_hash)?.is_some() &&
-						!incoming_has_body
+					} else if number == best_num + One::one()
+						&& self.blockchain.header(parent_hash)?.is_some()
+						&& !incoming_has_body
 					{
 						let gap = BlockGap {
 							start: number,
@@ -2070,7 +2070,8 @@ impl<Block: BlockT> Backend<Block> {
 			LastCanonicalized::NotCanonicalizing => false,
 		};
 
-		if requires_canonicalization && soil_client_api::Backend::have_state_at(self, f_hash, f_num) {
+		if requires_canonicalization && soil_client_api::Backend::have_state_at(self, f_hash, f_num)
+		{
 			let commit = self.storage.state_db.canonicalize_block(&f_hash).map_err(
 				soil_blockchain::Error::from_state_db::<
 					soil_state_db::Error<soil_database::error::DatabaseError>,
@@ -2441,8 +2442,8 @@ impl<Block: BlockT> soil_client_api::backend::Backend<Block> for Backend<Block> 
 		let last_finalized = self.blockchain.last_finalized()?;
 
 		// We can do a quick check first, before doing a proper but more expensive check
-		if number > self.blockchain.info().finalized_number ||
-			(hash != last_finalized && !is_descendent_of(&hash, &last_finalized)?)
+		if number > self.blockchain.info().finalized_number
+			|| (hash != last_finalized && !is_descendent_of(&hash, &last_finalized)?)
 		{
 			return Err(ClientError::NotInFinalizedChain);
 		}
@@ -2577,8 +2578,8 @@ impl<Block: BlockT> soil_client_api::backend::Backend<Block> for Backend<Block> 
 							reverted_finalized.insert(removed_hash);
 							if let Some((hash, _)) = self.blockchain.info().finalized_state {
 								if hash == hash_to_revert {
-									if !number_to_revert.is_zero() &&
-										self.have_state_at(prev_hash, prev_number)
+									if !number_to_revert.is_zero()
+										&& self.have_state_at(prev_hash, prev_number)
 									{
 										let lookup_key = utils::number_and_hash_to_lookup_key(
 											prev_number,
@@ -2674,7 +2675,9 @@ impl<Block: BlockT> soil_client_api::backend::Backend<Block> for Backend<Block> 
 		let best_hash = self.blockchain.info().best_hash;
 
 		if best_hash == hash {
-			return Err(soil_blockchain::Error::Backend(format!("Can't remove best block {hash:?}")));
+			return Err(soil_blockchain::Error::Backend(format!(
+				"Can't remove best block {hash:?}"
+			)));
 		}
 
 		let hdr = self.blockchain.header_metadata(hash)?;
@@ -2888,11 +2891,11 @@ pub(crate) mod tests {
 	use super::*;
 	use crate::{columns, utils::number_and_hash_to_lookup_key};
 	use hash_db::{HashDB, EMPTY_PREFIX};
+	use soil_blockchain::{lowest_common_ancestor, tree_route};
 	use soil_client_api::{
 		backend::{Backend as BTrait, BlockImportOperation as Op},
 		blockchain::Backend as BLBTrait,
 	};
-	use soil_blockchain::{lowest_common_ancestor, tree_route};
 	use soil_core::H256;
 	use soil_runtime::{
 		testing::{Block as RawBlock, Header, MockCallU64, TestXt},
@@ -3192,7 +3195,10 @@ pub(crate) mod tests {
 				backend
 					.storage
 					.db
-					.get(columns::STATE, &soil_trie::prefixed_key::<BlakeTwo256>(&key, EMPTY_PREFIX))
+					.get(
+						columns::STATE,
+						&soil_trie::prefixed_key::<BlakeTwo256>(&key, EMPTY_PREFIX)
+					)
 					.unwrap(),
 				&b"hello"[..]
 			);
@@ -3229,7 +3235,10 @@ pub(crate) mod tests {
 				backend
 					.storage
 					.db
-					.get(columns::STATE, &soil_trie::prefixed_key::<BlakeTwo256>(&key, EMPTY_PREFIX))
+					.get(
+						columns::STATE,
+						&soil_trie::prefixed_key::<BlakeTwo256>(&key, EMPTY_PREFIX)
+					)
 					.unwrap(),
 				&b"hello"[..]
 			);

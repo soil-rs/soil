@@ -76,14 +76,14 @@ mod tests;
 // internal imports
 pub use crate::weights::traits::pallet_election_provider_multi_block_verifier::*;
 
-use topsoil_election_provider_support::PageIndex;
-use topsoil_support::weights::WeightMeter;
 use impls::SupportsOfVerifier;
 pub use impls::{feasibility_check_page_inner_with_snapshot, pallet::*, Status};
 use soil_core::Get;
 use soil_npos_elections::ElectionScore;
 use soil_runtime::Weight;
 use soil_std::{fmt::Debug, prelude::*};
+use topsoil_election_provider_support::PageIndex;
+use topsoil_support::weights::WeightMeter;
 
 /// Errors that can happen in the feasibility check.
 #[derive(

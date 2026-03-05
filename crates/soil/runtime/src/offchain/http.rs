@@ -403,8 +403,11 @@ impl Iterator for ResponseBody {
 		}
 
 		if self.filled_up_to.is_none() {
-			let result =
-				soil_io::offchain::http_response_read_body(self.id, &mut self.buffer, self.deadline);
+			let result = soil_io::offchain::http_response_read_body(
+				self.id,
+				&mut self.buffer,
+				self.deadline,
+			);
 			match result {
 				Err(e) => {
 					self.error = Some(e);

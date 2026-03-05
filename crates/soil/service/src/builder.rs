@@ -29,6 +29,19 @@ use futures::{select, FutureExt, StreamExt};
 use jsonrpsee::RpcModule;
 use log::{debug, error, info};
 use prometheus_endpoint::Registry;
+use sc_consensus::import_queue::{ImportQueue, ImportQueueService};
+use sc_keystore::LocalKeystore;
+use sc_rpc::{
+	author::AuthorApiServer,
+	chain::ChainApiServer,
+	offchain::OffchainApiServer,
+	state::{ChildStateApiServer, StateApiServer},
+	system::SystemApiServer,
+	DenyUnsafe, SubscriptionTaskExecutor,
+};
+use sc_tracing::block::TracingExecuteBlock;
+use soil_api::{CallApiAt, ProvideRuntimeApi};
+use soil_blockchain::{HeaderBackend, HeaderMetadata};
 use soil_chain_spec::{get_extension, ChainSpec};
 use soil_client_api::{
 	execution_extensions::ExecutionExtensions, proof_provider::ProofProvider, BadBlocks,
@@ -36,12 +49,15 @@ use soil_client_api::{
 	TrieCacheContext, UsageProvider,
 };
 use soil_client_db::{Backend, BlocksPruning, DatabaseSettings, PruningMode};
-use sc_consensus::import_queue::{ImportQueue, ImportQueueService};
-use soil_executor::{
-	soil_wasm_interface::HostFunctions, HeapAllocStrategy, NativeExecutionDispatch, RuntimeVersionOf,
-	WasmExecutor, DEFAULT_HEAP_ALLOC_STRATEGY,
+use soil_consensus::block_validation::{
+	BlockAnnounceValidator, Chain, DefaultBlockAnnounceValidator,
 };
-use sc_keystore::LocalKeystore;
+use soil_core::traits::{CodeExecutor, SpawnNamed};
+use soil_executor::{
+	soil_wasm_interface::HostFunctions, HeapAllocStrategy, NativeExecutionDispatch,
+	RuntimeVersionOf, WasmExecutor, DEFAULT_HEAP_ALLOC_STRATEGY,
+};
+use soil_keystore::KeystorePtr;
 use soil_network::{
 	config::{FullNetworkConfiguration, ProtocolId, SyncMode},
 	multiaddr::Protocol,
@@ -66,33 +82,17 @@ use soil_network_sync::{
 	warp_request_handler::RequestHandler as WarpSyncRequestHandler,
 	SyncingService, WarpSyncConfig,
 };
-use sc_rpc::{
-	author::AuthorApiServer,
-	chain::ChainApiServer,
-	offchain::OffchainApiServer,
-	state::{ChildStateApiServer, StateApiServer},
-	system::SystemApiServer,
-	DenyUnsafe, SubscriptionTaskExecutor,
-};
 use soil_rpc_spec_v2::{
 	archive::ArchiveApiServer,
 	chain_head::ChainHeadApiServer,
 	chain_spec::ChainSpecApiServer,
 	transaction::{TransactionApiServer, TransactionBroadcastApiServer},
 };
-use soil_telemetry::{telemetry, ConnectionMessage, Telemetry, TelemetryHandle, SUBSTRATE_INFO};
-use sc_tracing::block::TracingExecuteBlock;
-use soil_transaction_pool_api::{MaintainedTransactionPool, TransactionPool};
-use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedSender};
-use soil_api::{CallApiAt, ProvideRuntimeApi};
-use soil_blockchain::{HeaderBackend, HeaderMetadata};
-use soil_consensus::block_validation::{
-	BlockAnnounceValidator, Chain, DefaultBlockAnnounceValidator,
-};
-use soil_core::traits::{CodeExecutor, SpawnNamed};
-use soil_keystore::KeystorePtr;
 use soil_runtime::traits::{Block as BlockT, BlockIdTo, NumberFor, Zero};
 use soil_storage::{ChildInfo, ChildType, PrefixedStorageKey};
+use soil_telemetry::{telemetry, ConnectionMessage, Telemetry, TelemetryHandle, SUBSTRATE_INFO};
+use soil_transaction_pool_api::{MaintainedTransactionPool, TransactionPool};
+use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedSender};
 use std::{
 	str::FromStr,
 	sync::Arc,
@@ -370,7 +370,9 @@ pub fn new_native_or_wasm_executor<D: NativeExecutionDispatch>(
 	config: &Configuration,
 ) -> soil_executor::NativeElseWasmExecutor<D> {
 	#[allow(deprecated)]
-	soil_executor::NativeElseWasmExecutor::new_with_wasm_executor(new_wasm_executor(&config.executor))
+	soil_executor::NativeElseWasmExecutor::new_with_wasm_executor(new_wasm_executor(
+		&config.executor,
+	))
 }
 
 /// Creates a [`WasmExecutor`] according to [`ExecutorConfiguration`].
@@ -517,10 +519,11 @@ where
 		+ CallApiAt<TBl>
 		+ Send
 		+ 'static,
-	<TCl as ProvideRuntimeApi<TBl>>::Api: soil_api::Metadata<TBl>
-		+ soil_transaction_pool::runtime_api::TaggedTransactionQueue<TBl>
-		+ soil_session::SessionKeys<TBl>
-		+ soil_api::ApiExt<TBl>,
+	<TCl as ProvideRuntimeApi<TBl>>::Api:
+		soil_api::Metadata<TBl>
+			+ soil_transaction_pool::runtime_api::TaggedTransactionQueue<TBl>
+			+ soil_session::SessionKeys<TBl>
+			+ soil_api::ApiExt<TBl>,
 	TBl: BlockT,
 	TBl::Hash: Unpin,
 	TBl::Header: Unpin,
@@ -896,8 +899,8 @@ where
 	// An archive node that can respond to the `archive` RPC-v2 queries is a node with:
 	// - state pruning in archive mode: The storage of blocks is kept around
 	// - block pruning in archive mode: The block's body is kept around
-	let is_archive_node = state_pruning.as_ref().map(|sp| sp.is_archive()).unwrap_or(false) &&
-		blocks_pruning.is_archive();
+	let is_archive_node = state_pruning.as_ref().map(|sp| sp.is_archive()).unwrap_or(false)
+		&& blocks_pruning.is_archive();
 	let genesis_hash = client.hash(Zero::zero()).ok().flatten().expect("Genesis block exists; qed");
 	if is_archive_node {
 		let archive_v2 = soil_rpc_spec_v2::archive::Archive::new(
@@ -1058,8 +1061,8 @@ where
 			&mut net_config,
 			network_service_provider.handle(),
 			Arc::clone(&client),
-			config.network.default_peers_set.in_peers as usize +
-				config.network.default_peers_set.out_peers as usize,
+			config.network.default_peers_set.in_peers as usize
+				+ config.network.default_peers_set.out_peers as usize,
 			&spawn_handle,
 		),
 	};
@@ -1504,8 +1507,8 @@ where
 	let genesis_hash = client.info().genesis_hash;
 
 	let (state_request_protocol_config, state_request_protocol_name) = {
-		let num_peer_hint = net_config.network_config.default_peers_set_num_full as usize +
-			net_config.network_config.default_peers_set.reserved_nodes.len();
+		let num_peer_hint = net_config.network_config.default_peers_set_num_full as usize
+			+ net_config.network_config.default_peers_set.reserved_nodes.len();
 		// Allow both outgoing and incoming requests.
 		let (handler, protocol_config) =
 			StateRequestHandler::new::<Net>(&protocol_id, fork_id, client.clone(), num_peer_hint);

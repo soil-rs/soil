@@ -83,8 +83,8 @@ use soil_network_common::{
 	role::{ObservedRole, Roles},
 	ExHashT,
 };
-use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
 use soil_runtime::traits::Block as BlockT;
+use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
 
 pub use behaviour::{InboundFailure, OutboundFailure, ResponseFailure};
 pub use libp2p::identity::{DecodingError, Keypair, PublicKey};
@@ -1828,9 +1828,9 @@ where
 						DialError::LocalPeerId { .. } => Some("local-peer-id"),
 						DialError::WrongPeerId { .. } => Some("invalid-peer-id"),
 						DialError::Transport(_) => Some("transport-error"),
-						DialError::NoAddresses |
-						DialError::DialPeerConditionFalse(_) |
-						DialError::Aborted => None, // ignore them
+						DialError::NoAddresses
+						| DialError::DialPeerConditionFalse(_)
+						| DialError::Aborted => None, // ignore them
 					};
 					if let Some(reason) = reason {
 						metrics.pending_connections_errors_total.with_label_values(&[reason]).inc();

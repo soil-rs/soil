@@ -19,17 +19,17 @@
 //!
 //! See the [`crate::traits::fungibles`] doc for more information about fungibles traits.
 
+use soil_runtime::{
+	traits::Convert,
+	DispatchError, DispatchResult, Either,
+	Either::{Left, Right},
+};
 use topsoil_support::traits::{
 	tokens::{
 		fungibles, fungibles::imbalance, AssetId, DepositConsequence, Fortitude, Precision,
 		Preservation, Provenance, Restriction, WithdrawConsequence,
 	},
 	AccountTouch,
-};
-use soil_runtime::{
-	traits::Convert,
-	DispatchError, DispatchResult, Either,
-	Either::{Left, Right},
 };
 
 /// Type to combine two `fungibles::*` implementations into one union `fungibles::*` implementation.

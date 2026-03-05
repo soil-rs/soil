@@ -28,8 +28,8 @@ use quote::ToTokens;
 use std::collections::HashMap;
 use syn::{spanned::Spanned, Ident, Token};
 
-use topsoil_support_procedural_tools::syn_ext as ext;
 use runtime_types::RuntimeType;
+use topsoil_support_procedural_tools::syn_ext as ext;
 
 mod keyword {
 	use syn::custom_keyword;

@@ -22,8 +22,6 @@ use crate::NetworkProvider;
 use codec::{Decode, Encode};
 use futures::Future;
 pub use http::SharedClient;
-use soil_network::Multiaddr;
-use soil_network_types::PeerId;
 use soil_core::{
 	offchain::{
 		self, HttpError, HttpRequestId, HttpRequestStatus, OpaqueMultiaddr, OpaqueNetworkState,
@@ -31,6 +29,8 @@ use soil_core::{
 	},
 	OpaquePeerId,
 };
+use soil_network::Multiaddr;
+use soil_network_types::PeerId;
 
 mod http;
 
@@ -221,11 +221,11 @@ impl AsyncApi {
 mod tests {
 	use super::*;
 	use soil_client_db::offchain::LocalStorage;
+	use soil_core::offchain::{storage::OffchainDb, DbExternalities, Externalities, StorageKind};
 	use soil_network::{
 		config::MultiaddrWithPeerId, types::ProtocolName, NetworkPeers, NetworkStateInfo,
 		ObservedRole, ReputationChange,
 	};
-	use soil_core::offchain::{storage::OffchainDb, DbExternalities, Externalities, StorageKind};
 	use std::time::SystemTime;
 
 	pub(super) struct TestNetwork();

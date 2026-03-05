@@ -34,7 +34,9 @@ use futures::{
 	task::LocalSpawn,
 };
 use prometheus_endpoint::prometheus::default_registry;
+use soil_api::{ApiRef, ProvideRuntimeApi};
 use soil_client_api::HeaderBackend;
+use soil_keystore::{testing::MemoryKeystore, Keystore};
 use soil_network::{
 	service::signature::{Keypair, SigningError},
 	PublicKey, Signature,
@@ -44,8 +46,6 @@ use soil_network_types::{
 	multiaddr::{Multiaddr, Protocol},
 	PeerId,
 };
-use soil_api::{ApiRef, ProvideRuntimeApi};
-use soil_keystore::{testing::MemoryKeystore, Keystore};
 use soil_runtime::traits::{Block as BlockT, NumberFor, Zero};
 use substrate_test_runtime_client::runtime::Block;
 
@@ -135,8 +135,9 @@ pub struct TestNetwork {
 	pub put_value_call: Arc<Mutex<Vec<(KademliaKey, Vec<u8>)>>>,
 	pub put_value_to_call: Arc<Mutex<Vec<(Record, HashSet<soil_network_types::PeerId>, bool)>>>,
 	pub get_value_call: Arc<Mutex<Vec<KademliaKey>>>,
-	pub store_value_call:
-		Arc<Mutex<Vec<(KademliaKey, Vec<u8>, Option<soil_network_types::PeerId>, Option<Instant>)>>>,
+	pub store_value_call: Arc<
+		Mutex<Vec<(KademliaKey, Vec<u8>, Option<soil_network_types::PeerId>, Option<Instant>)>>,
+	>,
 
 	event_sender: mpsc::UnboundedSender<TestNetworkEvent>,
 	event_receiver: Option<mpsc::UnboundedReceiver<TestNetworkEvent>>,

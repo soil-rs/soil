@@ -27,8 +27,8 @@ pub mod test {
 	use super::*;
 	use crate::Twox128;
 	use alloc::collections::btree_map::BTreeMap;
-	use topsoil_support::traits::{ConstU32, Get};
 	use soil_io::TestExternalities;
+	use topsoil_support::traits::{ConstU32, Get};
 
 	#[crate::storage_alias]
 	type Foo = StorageValue<Prefix, BoundedBTreeMap<u32, (), ConstU32<7>>>;

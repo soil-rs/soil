@@ -208,6 +208,15 @@ extern crate alloc;
 use alloc::vec::Vec;
 use codec::{Codec, ConstEncodedLen, Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use core::{fmt::Debug, ops::Deref};
+pub use pallet::*;
+use scale_info::TypeInfo;
+use soil_arithmetic::traits::{BaseArithmetic, Unsigned};
+use soil_core::{defer, H256};
+use soil_runtime::{
+	traits::{One, Zero},
+	SaturatedConversion, Saturating, TransactionOutcome,
+};
+use soil_weights::WeightMeter;
 use topsoil_support::{
 	defensive,
 	pallet_prelude::*,
@@ -219,15 +228,6 @@ use topsoil_support::{
 	BoundedSlice, CloneNoBound, DefaultNoBound,
 };
 use topsoil_system::pallet_prelude::*;
-pub use pallet::*;
-use scale_info::TypeInfo;
-use soil_arithmetic::traits::{BaseArithmetic, Unsigned};
-use soil_core::{defer, H256};
-use soil_runtime::{
-	traits::{One, Zero},
-	SaturatedConversion, Saturating, TransactionOutcome,
-};
-use soil_weights::WeightMeter;
 pub use weights::WeightInfo;
 
 /// Type for identifying a page.
@@ -504,7 +504,8 @@ pub mod pallet {
 	pub trait Config: topsoil_system::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>>
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// Weight information for extrinsics in this pallet.
 		type WeightInfo: WeightInfo;
@@ -985,9 +986,9 @@ impl<T: Config> Pallet<T> {
 		if let (Some(service_weight), Some(on_idle)) =
 			(T::ServiceWeight::get(), T::IdleMaxServiceWeight::get())
 		{
-			if !(service_weight.all_gt(on_idle) ||
-				on_idle.all_gt(service_weight) ||
-				service_weight == on_idle)
+			if !(service_weight.all_gt(on_idle)
+				|| on_idle.all_gt(service_weight)
+				|| service_weight == on_idle)
 			{
 				return Err("One of `ServiceWeight` or `IdleMaxServiceWeight` needs to be `all_gt` or both need to be equal.".into());
 			}
@@ -1092,8 +1093,8 @@ impl<T: Config> Pallet<T> {
 			page.peek_index(index.into() as usize).ok_or(Error::<T>::NoMessage)?;
 		let payload_len = payload.len() as u64;
 		ensure!(
-			page_index < book_state.begin ||
-				(page_index == book_state.begin && pos < page.first.into() as usize),
+			page_index < book_state.begin
+				|| (page_index == book_state.begin && pos < page.first.into() as usize),
 			Error::<T>::Queued
 		);
 		ensure!(!is_processed, Error::<T>::AlreadyProcessed);

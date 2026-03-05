@@ -25,9 +25,9 @@ use futures::{
 	SinkExt,
 };
 
+use soil_authority_discovery::AuthorityId;
 use soil_network::Multiaddr;
 use soil_network_types::PeerId;
-use soil_authority_discovery::AuthorityId;
 
 /// Service to interact with the [`crate::Worker`].
 #[derive(Clone)]

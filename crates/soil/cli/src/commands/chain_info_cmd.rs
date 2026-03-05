@@ -18,8 +18,8 @@
 
 use crate::{CliConfiguration, DatabaseParams, PruningParams, Result as CliResult, SharedParams};
 use codec::{Decode, Encode};
-use soil_client_api::{backend::Backend as BackendT, blockchain::HeaderBackend};
 use soil_blockchain::Info;
+use soil_client_api::{backend::Backend as BackendT, blockchain::HeaderBackend};
 use soil_runtime::traits::{Block as BlockT, Header as HeaderT};
 use std::{fmt::Debug, io};
 

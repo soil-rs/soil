@@ -16,8 +16,8 @@
 // limitations under the License.
 
 use super::*;
-use topsoil_support::traits::OnRuntimeUpgrade;
 use log;
+use topsoil_support::traits::OnRuntimeUpgrade;
 
 #[cfg(feature = "try-runtime")]
 use soil_runtime::TryRuntimeError;

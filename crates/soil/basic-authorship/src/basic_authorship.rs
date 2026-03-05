@@ -29,18 +29,18 @@ use futures::{
 use log::{debug, error, info, log_enabled, trace, warn, Level};
 use prometheus_endpoint::Registry as PrometheusRegistry;
 use sc_block_builder::{BlockBuilderApi, BlockBuilderBuilder};
-use soil_proposer_metrics::{EndProposingReason, MetricsLink as PrometheusMetrics};
-use soil_telemetry::{telemetry, TelemetryHandle, CONSENSUS_INFO};
-use soil_transaction_pool_api::{InPoolTransaction, TransactionPool, TxInvalidityReportMap};
 use soil_api::{ApiExt, CallApiAt, ProvideRuntimeApi};
 use soil_blockchain::{ApplyExtrinsicFailed::Validity, Error::ApplyExtrinsicFailed, HeaderBackend};
 use soil_consensus::{Proposal, ProposeArgs};
 use soil_core::traits::SpawnNamed;
 use soil_inherents::InherentData;
+use soil_proposer_metrics::{EndProposingReason, MetricsLink as PrometheusMetrics};
 use soil_runtime::{
 	traits::{BlakeTwo256, Block as BlockT, Hash as HashT, Header as HeaderT},
 	ExtrinsicInclusionMode, Percent, SaturatedConversion,
 };
+use soil_telemetry::{telemetry, TelemetryHandle, CONSENSUS_INFO};
+use soil_transaction_pool_api::{InPoolTransaction, TransactionPool, TxInvalidityReportMap};
 use std::{pin::Pin, sync::Arc, time};
 
 /// Default block size limit in bytes used by [`Proposer`].
@@ -582,13 +582,13 @@ mod tests {
 	use super::*;
 	use futures::executor::block_on;
 	use parking_lot::Mutex;
-	use soil_client_api::{Backend, TrieCacheContext};
 	use sc_transaction_pool::BasicPool;
-	use soil_transaction_pool_api::{ChainEvent, MaintainedTransactionPool, TransactionSource};
 	use soil_api::Core;
 	use soil_blockchain::HeaderBackend;
+	use soil_client_api::{Backend, TrieCacheContext};
 	use soil_consensus::{BlockOrigin, Environment};
 	use soil_runtime::{generic::BlockId, traits::NumberFor, Perbill};
+	use soil_transaction_pool_api::{ChainEvent, MaintainedTransactionPool, TransactionSource};
 	use substrate_test_runtime_client::{
 		prelude::*,
 		runtime::{Block as TestBlock, Extrinsic, ExtrinsicBuilder, Transfer},
@@ -908,13 +908,13 @@ mod tests {
 		.chain((1..extrinsics_num as u64).map(extrinsic))
 		.collect::<Vec<_>>();
 
-		let block_limit = genesis_header.encoded_size() +
-			extrinsics
+		let block_limit = genesis_header.encoded_size()
+			+ extrinsics
 				.iter()
 				.take(extrinsics_num - 1)
 				.map(Encode::encoded_size)
-				.sum::<usize>() +
-			Vec::<Extrinsic>::new().encoded_size();
+				.sum::<usize>()
+			+ Vec::<Extrinsic>::new().encoded_size();
 
 		block_on(txpool.submit_at(genesis_hash, SOURCE, extrinsics.clone())).unwrap();
 

@@ -163,10 +163,10 @@ mod union_of;
 
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use core::marker::PhantomData;
-use topsoil_support_procedural::{CloneNoBound, DebugNoBound, EqNoBound, PartialEqNoBound};
 use scale_info::TypeInfo;
 #[cfg(feature = "runtime-benchmarks")]
 use soil_runtime::Saturating;
+use topsoil_support_procedural::{CloneNoBound, DebugNoBound, EqNoBound, PartialEqNoBound};
 
 use super::{
 	Fortitude::{Force, Polite},

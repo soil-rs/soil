@@ -88,6 +88,12 @@ extern crate alloc;
 use alloc::{boxed::Box, vec::Vec};
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use core::{borrow::Borrow, cmp::Ordering, marker::PhantomData};
+use scale_info::TypeInfo;
+use soil_io::hashing::blake2_256;
+use soil_runtime::{
+	traits::{BadOrigin, BlockNumberProvider, Dispatchable, One, Saturating, Zero},
+	BoundedVec, Debug, DispatchError,
+};
 use topsoil_support::{
 	dispatch::{DispatchResult, GetDispatchInfo, Parameter, RawOrigin},
 	ensure,
@@ -99,12 +105,6 @@ use topsoil_support::{
 	weights::{Weight, WeightMeter},
 };
 use topsoil_system::{self as system};
-use scale_info::TypeInfo;
-use soil_io::hashing::blake2_256;
-use soil_runtime::{
-	traits::{BadOrigin, BlockNumberProvider, Dispatchable, One, Saturating, Zero},
-	BoundedVec, Debug, DispatchError,
-};
 
 pub use pallet::*;
 pub use weights::WeightInfo;
@@ -255,7 +255,8 @@ pub mod pallet {
 	pub trait Config: topsoil_system::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>>
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// The aggregated origin which the dispatch will take.
 		type RuntimeOrigin: OriginTrait<PalletsOrigin = Self::PalletsOrigin>
@@ -432,9 +433,9 @@ pub mod pallet {
 		fn integrity_test() {
 			/// Calculate the maximum weight that a lookup of a given size can take.
 			fn lookup_weight<T: Config>(s: usize) -> Weight {
-				T::WeightInfo::service_agendas_base() +
-					T::WeightInfo::service_agenda_base(T::MaxScheduledPerBlock::get()) +
-					T::WeightInfo::service_task(Some(s), true, true)
+				T::WeightInfo::service_agendas_base()
+					+ T::WeightInfo::service_agenda_base(T::MaxScheduledPerBlock::get())
+					+ T::WeightInfo::service_task(Some(s), true, true)
 			}
 
 			let limit = soil_runtime::Perbill::from_percent(90) * T::MaximumWeight::get();

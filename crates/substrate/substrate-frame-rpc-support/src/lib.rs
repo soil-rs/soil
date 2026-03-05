@@ -22,11 +22,11 @@
 
 use codec::{DecodeAll, FullCodec, FullEncode};
 use core::marker::PhantomData;
-use topsoil_support::storage::generator::{StorageDoubleMap, StorageMap, StorageValue};
 use jsonrpsee::core::ClientError as RpcError;
-use soil_rpc_api::state::StateApiClient;
 use serde::{de::DeserializeOwned, Serialize};
+use soil_rpc_api::state::StateApiClient;
 use soil_storage::{StorageData, StorageKey};
+use topsoil_support::storage::generator::{StorageDoubleMap, StorageMap, StorageValue};
 
 /// A typed query on chain state usable from an RPC client.
 ///

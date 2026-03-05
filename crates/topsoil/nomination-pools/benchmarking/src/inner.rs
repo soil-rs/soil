@@ -18,8 +18,21 @@
 //! Benchmarks for the nomination pools coupled with the staking and bags list pallets.
 
 use alloc::{vec, vec::Vec};
+use soil_runtime::{
+	traits::{Bounded, StaticLookup, Zero},
+	Perbill,
+};
+use soil_staking::{EraIndex, StakingUnchecked};
 use topsoil_benchmarking::v2::*;
 use topsoil_election_provider_support::SortedListProvider;
+use topsoil_nomination_pools::{
+	adapter::{Member, Pool, StakeStrategy, StakeStrategyType},
+	BalanceOf, BondExtra, BondedPoolInner, BondedPools, ClaimPermission, ClaimPermissions,
+	Commission, CommissionChangeRate, CommissionClaimPermission, ConfigOp, GlobalMaxCommission,
+	MaxPoolMembers, MaxPoolMembersPerPool, MaxPools, Metadata, MinCreateBond, MinJoinBond,
+	Pallet as Pools, PoolId, PoolMembers, PoolRoles, PoolState, RewardPools, SubPoolsStorage,
+};
+use topsoil_staking::MaxNominationsOf;
 use topsoil_support::{
 	assert_ok, ensure,
 	traits::{
@@ -29,19 +42,6 @@ use topsoil_support::{
 	},
 };
 use topsoil_system::RawOrigin as RuntimeOrigin;
-use topsoil_nomination_pools::{
-	adapter::{Member, Pool, StakeStrategy, StakeStrategyType},
-	BalanceOf, BondExtra, BondedPoolInner, BondedPools, ClaimPermission, ClaimPermissions,
-	Commission, CommissionChangeRate, CommissionClaimPermission, ConfigOp, GlobalMaxCommission,
-	MaxPoolMembers, MaxPoolMembersPerPool, MaxPools, Metadata, MinCreateBond, MinJoinBond,
-	Pallet as Pools, PoolId, PoolMembers, PoolRoles, PoolState, RewardPools, SubPoolsStorage,
-};
-use topsoil_staking::MaxNominationsOf;
-use soil_runtime::{
-	traits::{Bounded, StaticLookup, Zero},
-	Perbill,
-};
-use soil_staking::{EraIndex, StakingUnchecked};
 // `topsoil_benchmarking::benchmarks!` macro needs this
 use topsoil_nomination_pools::Call;
 
@@ -198,10 +198,11 @@ impl<T: Config> ListScenario<T> {
 		)?;
 
 		// Find a destination weight that will trigger the worst case scenario
-		let dest_weight_as_vote = <T as topsoil_staking::Config>::VoterList::score_update_worst_case(
-			&pool_origin1,
-			is_increase,
-		);
+		let dest_weight_as_vote =
+			<T as topsoil_staking::Config>::VoterList::score_update_worst_case(
+				&pool_origin1,
+				is_increase,
+			);
 
 		let dest_weight: BalanceOf<T> =
 			dest_weight_as_vote.try_into().map_err(|_| "could not convert u64 to Balance")?;
@@ -348,8 +349,8 @@ mod benchmarks {
 
 		// commission of 50% deducted here.
 		assert!(
-			T::StakeAdapter::active_stake(Pool::from(scenario.origin1)) >=
-				scenario.dest_weight / 2u32.into()
+			T::StakeAdapter::active_stake(Pool::from(scenario.origin1))
+				>= scenario.dest_weight / 2u32.into()
 		);
 	}
 
@@ -988,8 +989,8 @@ mod benchmarks {
 		assert_eq!(PoolMembers::<T>::get(&depositor).unwrap().total_balance(), deposit_amount);
 		// verify delegated balance.
 		assert!(
-			T::StakeAdapter::member_delegation_balance(Member::from(depositor.clone())) ==
-				Some(deposit_amount),
+			T::StakeAdapter::member_delegation_balance(Member::from(depositor.clone()))
+				== Some(deposit_amount),
 		);
 
 		// ugly type conversion between balances of pallet staking and pools (which really are same
@@ -1012,8 +1013,8 @@ mod benchmarks {
 		);
 		// verify delegated balance are not yet slashed.
 		assert!(
-			T::StakeAdapter::member_delegation_balance(Member::from(depositor.clone())) ==
-				Some(deposit_amount),
+			T::StakeAdapter::member_delegation_balance(Member::from(depositor.clone()))
+				== Some(deposit_amount),
 		);
 
 		// Fill member's sub pools for the worst case.
@@ -1048,8 +1049,8 @@ mod benchmarks {
 			deposit_amount / 2u32.into()
 		);
 		assert!(
-			T::StakeAdapter::member_delegation_balance(Member::from(depositor.clone())) ==
-				Some(deposit_amount / 2u32.into()),
+			T::StakeAdapter::member_delegation_balance(Member::from(depositor.clone()))
+				== Some(deposit_amount / 2u32.into()),
 		);
 	}
 
@@ -1167,8 +1168,8 @@ mod benchmarks {
 		}
 		// verify balances once more.
 		assert!(
-			T::StakeAdapter::member_delegation_balance(Member::from(depositor.clone())) ==
-				Some(deposit_amount),
+			T::StakeAdapter::member_delegation_balance(Member::from(depositor.clone()))
+				== Some(deposit_amount),
 		);
 		assert_eq!(PoolMembers::<T>::get(&depositor).unwrap().total_balance(), deposit_amount);
 	}

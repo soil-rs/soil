@@ -56,6 +56,7 @@ const LOG_TARGET: &str = "runtime::broker";
 pub mod pallet {
 	use super::*;
 	use alloc::vec::Vec;
+	use soil_runtime::traits::{Convert, ConvertBack, MaybeConvert};
 	use topsoil_support::{
 		pallet_prelude::{DispatchResult, DispatchResultWithPostInfo, *},
 		traits::{
@@ -65,7 +66,6 @@ pub mod pallet {
 		PalletId,
 	};
 	use topsoil_system::pallet_prelude::*;
-	use soil_runtime::traits::{Convert, ConvertBack, MaybeConvert};
 
 	const STORAGE_VERSION: StorageVersion = StorageVersion::new(4);
 
@@ -76,7 +76,8 @@ pub mod pallet {
 	#[pallet::config]
 	pub trait Config: topsoil_system::Config {
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>>
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// Weight information for all calls of this pallet.
 		type WeightInfo: WeightInfo;

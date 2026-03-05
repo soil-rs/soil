@@ -345,12 +345,12 @@ pub mod v12 {
 
 pub mod v11 {
 	use super::*;
+	#[cfg(feature = "try-runtime")]
+	use soil_io::hashing::twox_128;
 	use topsoil_support::{
 		storage::migration::move_pallet,
 		traits::{GetStorageVersion, PalletInfoAccess},
 	};
-	#[cfg(feature = "try-runtime")]
-	use soil_io::hashing::twox_128;
 
 	pub struct MigrateToV11<T, P, N>(core::marker::PhantomData<(T, P, N)>);
 	impl<T: Config, P: GetStorageVersion + PalletInfoAccess, N: Get<&'static str>> OnRuntimeUpgrade

@@ -23,10 +23,10 @@ use crate::graph::{
 };
 use futures::prelude::*;
 use indexmap::IndexMap;
-use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
 use soil_runtime::{
 	generic::BlockId, traits::SaturatedConversion, transaction_validity::TransactionValidityError,
 };
+use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
 use std::{
 	collections::{BTreeMap, HashMap, HashSet},
 	pin::Pin,

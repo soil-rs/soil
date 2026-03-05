@@ -20,6 +20,8 @@
 
 use alloc::{collections::btree_map::BTreeMap, vec::Vec};
 use core::iter::Sum;
+use soil_core::Get;
+use soil_runtime::traits::Zero;
 use topsoil_support::{
 	pallet_prelude::ValueQuery,
 	storage_alias,
@@ -27,8 +29,6 @@ use topsoil_support::{
 	weights::RuntimeDbWeight,
 	Parameter, Twox64Concat,
 };
-use soil_core::Get;
-use soil_runtime::traits::Zero;
 
 const LOG_TARGET: &str = "elections_phragmen::migrations::unlock_and_unreserve_all_funds";
 
@@ -210,8 +210,8 @@ where
 		let bugged_deposits = all_accounts
 			.iter()
 			.filter(|account| {
-				account_deposited_sums.get(&account).unwrap_or(&Zero::zero()) >
-					account_reserved_before.get(&account).unwrap_or(&Zero::zero())
+				account_deposited_sums.get(&account).unwrap_or(&Zero::zero())
+					> account_reserved_before.get(&account).unwrap_or(&Zero::zero())
 			})
 			.count();
 

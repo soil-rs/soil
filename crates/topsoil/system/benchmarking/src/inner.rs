@@ -19,11 +19,11 @@
 
 use alloc::{vec, vec::Vec};
 use codec::Encode;
+use soil_core::storage::well_known_keys;
+use soil_runtime::traits::Hash;
 use topsoil_benchmarking::v2::*;
 use topsoil_support::{dispatch::DispatchClass, storage, traits::Get};
 use topsoil_system::{Call, Pallet as System, RawOrigin};
-use soil_core::storage::well_known_keys;
-use soil_runtime::traits::Hash;
 
 pub struct Pallet<T: Config>(System<T>);
 pub trait Config: topsoil_system::Config {

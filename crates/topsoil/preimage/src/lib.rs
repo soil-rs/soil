@@ -46,6 +46,7 @@ use soil_runtime::{
 };
 
 use codec::{Decode, Encode, MaxEncodedLen};
+use scale_info::TypeInfo;
 use topsoil_support::{
 	dispatch::Pays,
 	ensure,
@@ -56,7 +57,6 @@ use topsoil_support::{
 	},
 	BoundedSlice, BoundedVec,
 };
-use scale_info::TypeInfo;
 pub use weights::WeightInfo;
 
 use topsoil_support::pallet_prelude::*;
@@ -115,7 +115,8 @@ pub mod pallet {
 	pub trait Config: topsoil_system::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>>
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// The Weight information for this pallet.
 		type WeightInfo: weights::WeightInfo;

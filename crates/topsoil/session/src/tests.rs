@@ -409,8 +409,8 @@ fn session_keys_generate_output_works_as_set_keys_input() {
 
 #[test]
 fn upgrade_keys() {
-	use topsoil_support::storage;
 	use soil_core::crypto::key_types::DUMMY;
+	use topsoil_support::storage;
 
 	// This test assumes certain mocks.
 	assert_eq!(mock::NextValidators::get().clone(), vec![1, 2, 3]);

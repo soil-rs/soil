@@ -36,6 +36,14 @@
 #![cfg_attr(not(feature = "std"), no_std)]
 
 use codec::{Decode, DecodeWithMemTracking, Encode};
+use scale_info::TypeInfo;
+use soil_runtime::{
+	traits::{
+		AsSystemOriginSigner, DispatchInfoOf, Dispatchable, PostDispatchInfoOf, RefundWeight,
+		TransactionExtension, Zero,
+	},
+	transaction_validity::{InvalidTransaction, TransactionValidityError, ValidTransaction},
+};
 use topsoil_support::{
 	dispatch::{DispatchInfo, DispatchResult, PostDispatchInfo},
 	pallet_prelude::{TransactionSource, Weight},
@@ -49,14 +57,6 @@ use topsoil_support::{
 	DefaultNoBound,
 };
 use topsoil_transaction_payment::OnChargeTransaction;
-use scale_info::TypeInfo;
-use soil_runtime::{
-	traits::{
-		AsSystemOriginSigner, DispatchInfoOf, Dispatchable, PostDispatchInfoOf, RefundWeight,
-		TransactionExtension, Zero,
-	},
-	transaction_validity::{InvalidTransaction, TransactionValidityError, ValidTransaction},
-};
 
 #[cfg(test)]
 mod mock;
@@ -122,7 +122,8 @@ pub mod pallet {
 	pub trait Config: topsoil_system::Config + topsoil_transaction_payment::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>>
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 		/// The fungibles instance used to pay for transactions in assets.
 		type Fungibles: Balanced<Self::AccountId>;
 		/// The actual transaction charging logic that charges the fees.

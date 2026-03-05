@@ -21,6 +21,7 @@
 
 use super::*;
 use alloc::vec;
+use soil_runtime::{traits::Bounded, Weight};
 use topsoil_benchmarking::{
 	v1::{
 		account, benchmarks_instance_pallet, whitelist_account, whitelisted_caller, BenchmarkError,
@@ -29,7 +30,6 @@ use topsoil_benchmarking::{
 };
 use topsoil_support::traits::{EnsureOrigin, Get, UnfilteredDispatchable};
 use topsoil_system::RawOrigin as SystemOrigin;
-use soil_runtime::{traits::Bounded, Weight};
 
 use crate::Pallet as Assets;
 

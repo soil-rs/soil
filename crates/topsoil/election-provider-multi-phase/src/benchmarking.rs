@@ -18,6 +18,9 @@
 //! Two phase election pallet benchmarking.
 
 use core::cmp::Reverse;
+use rand::{prelude::SliceRandom, rngs::SmallRng, SeedableRng};
+use soil_arithmetic::{per_things::Percent, traits::One};
+use soil_runtime::InnerOf;
 use topsoil_benchmarking::{v2::*, BenchmarkError};
 use topsoil_election_provider_support::{bounds::DataProviderBounds, IndexAssignment};
 use topsoil_support::{
@@ -26,9 +29,6 @@ use topsoil_support::{
 	BoundedVec,
 };
 use topsoil_system::RawOrigin;
-use rand::{prelude::SliceRandom, rngs::SmallRng, SeedableRng};
-use soil_arithmetic::{per_things::Percent, traits::One};
-use soil_runtime::InnerOf;
 
 use crate::{unsigned::IndexAssignmentOf, *};
 

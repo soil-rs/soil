@@ -20,24 +20,24 @@ use async_channel::TryRecvError;
 use codec::{Decode, Encode, Joiner};
 use futures::executor::block_on;
 use sc_block_builder::BlockBuilderBuilder;
+use sc_consensus::{
+	BlockCheckParams, BlockImport, BlockImportParams, ForkChoiceStrategy, ImportResult,
+};
+use soil_api::ProvideRuntimeApi;
 use soil_client_api::{
 	in_mem, Backend as BackendT, BlockBackend, BlockchainEvents, ExecutorProvider,
 	FinalityNotifications, HeaderBackend, StorageProvider,
 };
 use soil_client_db::{Backend, BlocksPruning, DatabaseSettings, DatabaseSource, PruningMode};
-use sc_consensus::{
-	BlockCheckParams, BlockImport, BlockImportParams, ForkChoiceStrategy, ImportResult,
-};
-use soil_executor::WasmExecutor;
-use soil_service::client::{new_with_backend, Client, LocalCallExecutor};
-use soil_api::ProvideRuntimeApi;
 use soil_consensus::{BlockOrigin, Error as ConsensusError, SelectChain};
 use soil_core::{testing::TaskExecutor, traits::CallContext, H256};
+use soil_executor::WasmExecutor;
 use soil_runtime::{
 	generic::BlockId,
 	traits::{BlakeTwo256, Block as BlockT, Header as HeaderT},
 	ConsensusEngineId, Justifications, StateVersion,
 };
+use soil_service::client::{new_with_backend, Client, LocalCallExecutor};
 use soil_state_machine::{backend::Backend as _, InMemoryBackend, OverlayedChanges, StateMachine};
 use soil_storage::{ChildInfo, StorageKey};
 use std::{collections::HashSet, sync::Arc};
@@ -2259,11 +2259,12 @@ fn use_dalek_ext_works() {
 
 	let client = TestClientBuilder::new().build();
 
-	client.execution_extensions().set_extensions_factory(
-		soil_client_api::execution_extensions::ExtensionBeforeBlock::<Block, soil_io::UseDalekExt>::new(
-			1,
-		),
-	);
+	client
+		.execution_extensions()
+		.set_extensions_factory(soil_client_api::execution_extensions::ExtensionBeforeBlock::<
+		Block,
+		soil_io::UseDalekExt,
+	>::new(1));
 
 	let a1 = BlockBuilderBuilder::new(&client)
 		.on_parent_block(client.chain_info().genesis_hash)

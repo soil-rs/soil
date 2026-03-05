@@ -37,14 +37,14 @@ use crate::{
 use codec::Encode;
 use futures::FutureExt;
 use jsonrpsee::{core::async_trait, PendingSubscriptionSink};
-use soil_client_api::{
-	Backend, BlockBackend, BlockchainEvents, CallExecutor, ChildInfo, ExecutorProvider, StorageKey,
-	StorageProvider,
-};
 use sc_rpc::utils::Subscription;
 use soil_api::{CallApiAt, CallContext};
 use soil_blockchain::{
 	Backend as BlockChainBackend, Error as BlockChainError, HeaderBackend, HeaderMetadata,
+};
+use soil_client_api::{
+	Backend, BlockBackend, BlockchainEvents, CallExecutor, ChildInfo, ExecutorProvider, StorageKey,
+	StorageProvider,
 };
 use soil_core::{Bytes, U256};
 use soil_runtime::{
@@ -233,8 +233,8 @@ where
 					let key = StorageKey(parse_hex_param(query.key)?);
 
 					// Validate that paginationStartKey is only used with descendant queries
-					if query.pagination_start_key.is_some() &&
-						!query.query_type.is_descendant_query()
+					if query.pagination_start_key.is_some()
+						&& !query.query_type.is_descendant_query()
 					{
 						return Err(ArchiveError::InvalidParam(
 							"paginationStartKey is only valid for descendantsValues and descendantsHashes query types"

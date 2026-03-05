@@ -34,6 +34,7 @@ use log::debug;
 use prost::Message;
 use schnellru::{ByLength, LruMap};
 
+use soil_blockchain::HeaderBackend;
 use soil_client_api::BlockBackend;
 use soil_network::{
 	config::ProtocolId,
@@ -44,7 +45,6 @@ use soil_network::{
 };
 use soil_network_common::sync::message::{BlockAttributes, BlockData, BlockRequest, FromBlock};
 use soil_network_types::PeerId;
-use soil_blockchain::HeaderBackend;
 use soil_runtime::{
 	generic::BlockId,
 	traits::{Block as BlockT, Header, One, Zero},

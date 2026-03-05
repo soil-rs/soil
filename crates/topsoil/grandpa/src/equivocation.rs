@@ -37,8 +37,6 @@
 
 use alloc::{boxed::Box, vec, vec::Vec};
 use codec::{self as codec, Decode, Encode};
-use topsoil_support::traits::{Get, KeyOwnerProofSystem};
-use topsoil_system::pallet_prelude::BlockNumberFor;
 use log::{error, info};
 use soil_consensus_grandpa::{AuthorityId, EquivocationProof, RoundNumber, SetId, KEY_TYPE};
 use soil_runtime::{
@@ -53,6 +51,8 @@ use soil_staking::{
 	offence::{Kind, Offence, OffenceReportSystem, ReportOffence},
 	SessionIndex,
 };
+use topsoil_support::traits::{Get, KeyOwnerProofSystem};
+use topsoil_system::pallet_prelude::BlockNumberFor;
 
 use super::{Call, Config, Error, Pallet, LOG_TARGET};
 
@@ -213,8 +213,8 @@ where
 
 		// Check that the session id for the membership proof is within the
 		// bounds of the set id reported in the equivocation.
-		if session_index > set_id_session_index ||
-			previous_set_id_session_index
+		if session_index > set_id_session_index
+			|| previous_set_id_session_index
 				.map(|previous_index| session_index <= previous_index)
 				.unwrap_or(false)
 		{

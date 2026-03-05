@@ -60,9 +60,9 @@ use soil_network_sync::{SyncEvent, SyncEventStream};
 #[cfg(feature = "std")]
 use soil_network_types::PeerId;
 #[cfg(feature = "std")]
-use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
-#[cfg(feature = "std")]
 use soil_runtime::traits::Block as BlockT;
+#[cfg(feature = "std")]
+use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
 
 #[cfg(feature = "std")]
 use std::{

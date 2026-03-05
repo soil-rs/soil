@@ -19,13 +19,13 @@
 
 #![cfg(test)]
 
-use topsoil_support::{derive_impl, parameter_types, traits::ConstU32};
 use soil_runtime::{
 	testing::H256,
 	traits::{BlakeTwo256, IdentityLookup},
 	BuildStorage,
 };
 use std::cell::RefCell;
+use topsoil_support::{derive_impl, parameter_types, traits::ConstU32};
 
 #[topsoil_support::pallet(dev_mode)]
 mod pallet_test {
@@ -126,9 +126,9 @@ thread_local! {
 mod benchmarks {
 	use super::{new_test_ext, pallet_test::Value, Test, VALUES_PER_COMPONENT};
 	use crate::{account, BenchmarkError, BenchmarkParameter, BenchmarkResult, BenchmarkingSetup};
+	use rusty_fork::rusty_fork_test;
 	use topsoil_support::{assert_err, assert_ok, ensure, traits::Get};
 	use topsoil_system::RawOrigin;
-	use rusty_fork::rusty_fork_test;
 
 	// Additional used internally by the benchmark macro.
 	use super::pallet_test::{Call, Config, Pallet};

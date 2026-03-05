@@ -22,8 +22,8 @@ use clap::Parser;
 
 use cmd_lib::spawn_with_output;
 use pretty_assertions::assert_eq;
-use soil_chain_spec::update_code_in_json_chain_spec;
 use serde_json::{from_reader, from_str, Value};
+use soil_chain_spec::update_code_in_json_chain_spec;
 use staging_chain_spec_builder::ChainSpecBuilder;
 
 // note: the runtime path will not be read, runtime code will be set directly, to avoid hassle with

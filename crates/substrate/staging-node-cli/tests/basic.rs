@@ -17,16 +17,16 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 use codec::{Decode, Encode, Joiner};
+use soil_core::{storage::well_known_keys, traits::Externalities};
+use soil_runtime::{
+	traits::Hash as HashT, transaction_validity::InvalidTransaction, ApplyExtrinsicResult,
+};
 use topsoil_support::{
 	dispatch::{DispatchClass, GetDispatchInfo},
 	traits::Currency,
 	weights::Weight,
 };
 use topsoil_system::{self, AccountInfo, DispatchEventInfo, EventRecord, Phase};
-use soil_core::{storage::well_known_keys, traits::Externalities};
-use soil_runtime::{
-	traits::Hash as HashT, transaction_validity::InvalidTransaction, ApplyExtrinsicResult,
-};
 
 use kitchensink_runtime::{
 	constants::{currency::*, time::SLOT_DURATION},
@@ -177,7 +177,9 @@ fn block_with_size(time: u64, nonce: u32, size: usize) -> (Vec<u8>, Hash) {
 			},
 			CheckedExtrinsic {
 				format: soil_runtime::generic::ExtrinsicFormat::Signed(alice(), tx_ext(nonce, 0)),
-				function: RuntimeCall::System(topsoil_system::Call::remark { remark: vec![0; size] }),
+				function: RuntimeCall::System(topsoil_system::Call::remark {
+					remark: vec![0; size],
+				}),
 			},
 		],
 		(time * 1000 / SLOT_DURATION).into(),

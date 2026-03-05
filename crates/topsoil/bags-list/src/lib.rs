@@ -121,13 +121,13 @@ pub mod example {}
 
 use alloc::{boxed::Box, vec::Vec};
 use codec::FullCodec;
+use soil_runtime::traits::{AtLeast32BitUnsigned, Bounded, StaticLookup};
 use topsoil_election_provider_support::{ScoreProvider, SortedListProvider};
 use topsoil_support::{
 	traits::Get,
 	weights::{Weight, WeightMeter},
 };
 use topsoil_system::ensure_signed;
-use soil_runtime::traits::{AtLeast32BitUnsigned, Bounded, StaticLookup};
 
 #[cfg(any(test, feature = "try-runtime", feature = "fuzz"))]
 use soil_runtime::TryRuntimeError;

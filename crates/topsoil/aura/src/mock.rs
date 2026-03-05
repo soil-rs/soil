@@ -20,12 +20,12 @@
 #![cfg(test)]
 
 use crate as topsoil_aura;
+use soil_consensus_aura::{ed25519::AuthorityId, AuthorityIndex};
+use soil_runtime::{testing::UintAuthorityId, BuildStorage};
 use topsoil_support::{
 	derive_impl, parameter_types,
 	traits::{ConstU32, ConstU64, DisabledValidators},
 };
-use soil_consensus_aura::{ed25519::AuthorityId, AuthorityIndex};
-use soil_runtime::{testing::UintAuthorityId, BuildStorage};
 
 type Block = topsoil_system::mocking::MockBlock<Test>;
 

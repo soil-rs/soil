@@ -36,10 +36,9 @@ use soil_application_crypto::RuntimeAppPublic;
 use codec::{Codec, Decode, DecodeAll, Encode};
 use futures::{stream::Fuse, FutureExt, StreamExt};
 use log::{debug, error, info, trace, warn};
-use soil_client_api::{Backend, HeaderBackend};
-use soil_utils::notification::NotificationReceiver;
 use soil_api::ProvideRuntimeApi;
 use soil_arithmetic::traits::{AtLeast32Bit, Saturating};
+use soil_client_api::{Backend, HeaderBackend};
 use soil_consensus::SyncOracle;
 use soil_consensus_beefy::{
 	AuthorityIdBound, BeefyApi, Commitment, DoubleVotingProof, PayloadProvider, ValidatorSet,
@@ -50,6 +49,7 @@ use soil_runtime::{
 	traits::{Block, Header, NumberFor, Zero},
 	SaturatedConversion,
 };
+use soil_utils::notification::NotificationReceiver;
 use std::{
 	collections::{BTreeMap, VecDeque},
 	fmt::Debug,
@@ -1038,11 +1038,8 @@ pub(crate) mod tests {
 	};
 	use futures::{future::poll_fn, task::Poll};
 	use parking_lot::Mutex;
-	use soil_client_api::{Backend as BackendT, HeaderBackend};
-	use soil_network_gossip::GossipEngine;
-	use soil_network_sync::SyncingService;
-	use soil_network_test::TestNetFactory;
 	use soil_blockchain::Backend as BlockchainBackendT;
+	use soil_client_api::{Backend as BackendT, HeaderBackend};
 	use soil_consensus_beefy::{
 		ecdsa_crypto, known_payloads,
 		known_payloads::MMR_ROOT_ID,
@@ -1050,6 +1047,9 @@ pub(crate) mod tests {
 		test_utils::{generate_double_voting_proof, Keyring},
 		ConsensusLog, Payload, SignedCommitment,
 	};
+	use soil_network_gossip::GossipEngine;
+	use soil_network_sync::SyncingService;
+	use soil_network_test::TestNetFactory;
 	use soil_runtime::traits::{Header as HeaderT, One};
 	use substrate_test_runtime_client::{
 		runtime::{Block, Digest, DigestItem, Header},

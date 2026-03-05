@@ -38,10 +38,6 @@ use serde::{Deserialize, Serialize};
 #[cfg(feature = "std")]
 use sc_consensus_babe::{authorship, BabeWorkerHandle};
 #[cfg(feature = "std")]
-use soil_consensus_epochs::Epoch as EpochT;
-#[cfg(feature = "std")]
-use soil_rpc_api::{check_if_safe, UnsafeRpcError};
-#[cfg(feature = "std")]
 use soil_api::ProvideRuntimeApi;
 #[cfg(feature = "std")]
 use soil_application_crypto::AppCrypto;
@@ -52,9 +48,13 @@ use soil_consensus::{Error as ConsensusError, SelectChain};
 #[cfg(feature = "std")]
 use soil_consensus_babe::{digests::PreDigest, AuthorityId, BabeApi as BabeRuntimeApi};
 #[cfg(feature = "std")]
+use soil_consensus_epochs::Epoch as EpochT;
+#[cfg(feature = "std")]
 use soil_core::crypto::ByteArray;
 #[cfg(feature = "std")]
 use soil_keystore::KeystorePtr;
+#[cfg(feature = "std")]
+use soil_rpc_api::{check_if_safe, UnsafeRpcError};
 #[cfg(feature = "std")]
 use soil_runtime::traits::{Block as BlockT, Header as _};
 
@@ -220,12 +220,12 @@ impl From<Error> for ErrorObjectOwned {
 mod tests {
 	use super::*;
 	use sc_consensus_babe::ImportQueueParams;
-	use soil_rpc_api::DenyUnsafe;
-	use soil_transaction_pool_api::{OffchainTransactionPoolFactory, RejectAllTxPool};
 	use soil_consensus_babe::inherents::InherentDataProvider;
 	use soil_core::{crypto::key_types::BABE, testing::TaskExecutor};
 	use soil_keyring::Sr25519Keyring;
 	use soil_keystore::{testing::MemoryKeystore, Keystore};
+	use soil_rpc_api::DenyUnsafe;
+	use soil_transaction_pool_api::{OffchainTransactionPoolFactory, RejectAllTxPool};
 	use substrate_test_runtime_client::{
 		runtime::Block, Backend, DefaultTestClientBuilderExt, TestClient, TestClientBuilder,
 		TestClientBuilderExt,

@@ -364,13 +364,13 @@ pub use self::{
 pub use soil_chain_spec_derive::{ChainSpecExtension, ChainSpecGroup};
 
 #[cfg(feature = "std")]
-use soil_network::config::MultiaddrWithPeerId;
-#[cfg(feature = "std")]
-use soil_telemetry::TelemetryEndpoints;
-#[cfg(feature = "std")]
 use soil_core::storage::Storage;
 #[cfg(feature = "std")]
+use soil_network::config::MultiaddrWithPeerId;
+#[cfg(feature = "std")]
 use soil_runtime::BuildStorage;
+#[cfg(feature = "std")]
+use soil_telemetry::TelemetryEndpoints;
 
 /// The type of chain.
 ///

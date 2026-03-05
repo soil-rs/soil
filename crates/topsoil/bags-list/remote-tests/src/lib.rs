@@ -17,8 +17,8 @@
 
 //! Utilities for remote-testing topsoil-bags-list.
 
-use topsoil_election_provider_support::ScoreProvider;
 use topsoil_bags_list::Instance1;
+use topsoil_election_provider_support::ScoreProvider;
 
 /// A common log target to use.
 pub const LOG_TARGET: &str = "runtime::bags-list::remote-tests";
@@ -63,7 +63,8 @@ pub fn display_and_check_bags<Runtime: RuntimeT<Instance1>>(
 	let mut seen_in_bags = 0;
 	let mut rebaggable = 0;
 	let mut active_bags = 0;
-	for vote_weight_thresh in <Runtime as topsoil_bags_list::Config<Instance1>>::BagThresholds::get()
+	for vote_weight_thresh in
+		<Runtime as topsoil_bags_list::Config<Instance1>>::BagThresholds::get()
 	{
 		let vote_weight_thresh_u64: u64 = (*vote_weight_thresh)
 			.try_into()

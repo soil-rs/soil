@@ -16,6 +16,11 @@
 // limitations under the License.
 
 use super::*;
+use soil_arithmetic::{
+	traits::{SaturatedConversion, Saturating},
+	FixedPointNumber, FixedU64,
+};
+use soil_runtime::traits::{AccountIdConversion, BlockNumberProvider};
 use topsoil_support::{
 	pallet_prelude::*,
 	traits::{
@@ -24,11 +29,6 @@ use topsoil_support::{
 		OnUnbalanced,
 	},
 };
-use soil_arithmetic::{
-	traits::{SaturatedConversion, Saturating},
-	FixedPointNumber, FixedU64,
-};
-use soil_runtime::traits::{AccountIdConversion, BlockNumberProvider};
 
 impl<T: Config> Pallet<T> {
 	pub fn current_timeslice() -> Timeslice {

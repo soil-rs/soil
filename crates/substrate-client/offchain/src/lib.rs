@@ -42,14 +42,14 @@ use futures::{
 	prelude::*,
 };
 use parking_lot::Mutex;
-use soil_client_api::BlockchainEvents;
-use soil_network::{NetworkPeers, NetworkStateInfo};
-use soil_transaction_pool_api::OffchainTransactionPoolFactory;
 use soil_api::{ApiExt, ProvideRuntimeApi};
+use soil_client_api::BlockchainEvents;
 use soil_core::{offchain, traits::SpawnNamed};
 use soil_externalities::Extension;
 use soil_keystore::{KeystoreExt, KeystorePtr};
+use soil_network::{NetworkPeers, NetworkStateInfo};
 use soil_runtime::traits::{self, Header};
+use soil_transaction_pool_api::OffchainTransactionPoolFactory;
 use threadpool::ThreadPool;
 
 mod api;
@@ -328,15 +328,15 @@ mod tests {
 	use super::*;
 	use futures::executor::block_on;
 	use sc_block_builder::BlockBuilderBuilder;
+	use sc_transaction_pool::BasicPool;
 	use soil_client_api::Backend as _;
+	use soil_consensus::BlockOrigin;
 	use soil_network::{
 		config::MultiaddrWithPeerId, types::ProtocolName, Multiaddr, ObservedRole, ReputationChange,
 	};
 	use soil_network_types::PeerId;
-	use sc_transaction_pool::BasicPool;
-	use soil_transaction_pool_api::{InPoolTransaction, TransactionPool};
-	use soil_consensus::BlockOrigin;
 	use soil_runtime::traits::Block as BlockT;
+	use soil_transaction_pool_api::{InPoolTransaction, TransactionPool};
 	use std::{collections::HashSet, sync::Arc};
 	use substrate_test_runtime_client::{
 		runtime::{

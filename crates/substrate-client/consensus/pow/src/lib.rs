@@ -48,7 +48,6 @@ use codec::{Decode, Encode};
 use futures::{Future, StreamExt};
 use log::*;
 use prometheus_endpoint::Registry;
-use soil_client_api::{self, backend::AuxStore, BlockOf, BlockchainEvents};
 use sc_consensus::{
 	BasicQueue, BlockCheckParams, BlockImport, BlockImportParams, BoxBlockImport,
 	BoxJustificationImport, ForkChoiceStrategy, ImportResult, Verifier,
@@ -56,6 +55,7 @@ use sc_consensus::{
 use soil_api::ProvideRuntimeApi;
 use soil_block_builder::BlockBuilder as BlockBuilderApi;
 use soil_blockchain::HeaderBackend;
+use soil_client_api::{self, backend::AuxStore, BlockOf, BlockchainEvents};
 use soil_consensus::{
 	Environment, Error as ConsensusError, ProposeArgs, Proposer, SelectChain, SyncOracle,
 };

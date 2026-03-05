@@ -409,9 +409,11 @@ mod tests {
 		let proof = storage_proof_recorder.drain_storage_proof();
 		let genesis_state_root = client.header(genesis_hash).unwrap().unwrap().state_root;
 
-		let backend =
-			soil_state_machine::create_proof_check_backend::<Blake2Hasher>(genesis_state_root, proof)
-				.unwrap();
+		let backend = soil_state_machine::create_proof_check_backend::<Blake2Hasher>(
+			genesis_state_root,
+			proof,
+		)
+		.unwrap();
 
 		assert!(backend
 			.storage(&soil_core::storage::well_known_keys::CODE)

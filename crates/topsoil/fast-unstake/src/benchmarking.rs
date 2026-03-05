@@ -21,14 +21,14 @@
 
 use crate::{types::*, *};
 use alloc::vec::Vec;
+use soil_runtime::traits::Zero;
+use soil_staking::{EraIndex, StakingInterface};
 use topsoil_benchmarking::v2::*;
 use topsoil_support::{
 	assert_ok,
 	traits::{Currency, EnsureOrigin, Get, Hooks},
 };
 use topsoil_system::RawOrigin;
-use soil_runtime::traits::Zero;
-use soil_staking::{EraIndex, StakingInterface};
 
 const USER_SEED: u32 = 0;
 

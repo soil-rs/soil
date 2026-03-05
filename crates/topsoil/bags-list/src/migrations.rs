@@ -23,9 +23,9 @@ use topsoil_election_provider_support::ScoreProvider;
 use topsoil_support::traits::OnRuntimeUpgrade;
 
 #[cfg(feature = "try-runtime")]
-use topsoil_support::ensure;
-#[cfg(feature = "try-runtime")]
 use soil_runtime::TryRuntimeError;
+#[cfg(feature = "try-runtime")]
+use topsoil_support::ensure;
 
 #[cfg(feature = "try-runtime")]
 use alloc::vec::Vec;

@@ -52,8 +52,10 @@ fn generate_statements() -> Vec<Statement> {
 	statement.set_topic(0, topic);
 	statement.set_topic(1, topic2);
 
-	statement
-		.set_proof(soil_statement_store::Proof::Ed25519 { signature: [0u8; 64], signer: [0u8; 32] });
+	statement.set_proof(soil_statement_store::Proof::Ed25519 {
+		signature: [0u8; 64],
+		signer: [0u8; 32],
+	});
 	statement.set_expiry_from_parts(u32::MAX, 1);
 
 	statements.push(statement.clone());
@@ -61,8 +63,10 @@ fn generate_statements() -> Vec<Statement> {
 	let mut statement = soil_statement_store::Statement::new();
 	statement.set_topic(0, topic);
 	statement.set_topic(1, topic1);
-	statement
-		.set_proof(soil_statement_store::Proof::Ed25519 { signature: [0u8; 64], signer: [0u8; 32] });
+	statement.set_proof(soil_statement_store::Proof::Ed25519 {
+		signature: [0u8; 64],
+		signer: [0u8; 32],
+	});
 	statement.set_expiry_from_parts(u32::MAX, 1);
 
 	statements.push(statement.clone());

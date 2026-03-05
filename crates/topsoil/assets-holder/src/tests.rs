@@ -19,11 +19,11 @@
 
 use crate::mock::*;
 
+use topsoil_assets::BalanceOnHold;
 use topsoil_support::{
 	assert_noop, assert_ok,
 	traits::tokens::fungibles::{Inspect, InspectHold, MutateHold, UnbalancedHold},
 };
-use topsoil_assets::BalanceOnHold;
 
 const WHO: AccountId = 1;
 const ASSET_ID: AssetId = 1;
@@ -285,8 +285,8 @@ mod impl_hold_unbalanced {
 
 mod impl_hold_mutate {
 	use super::*;
-	use topsoil_support::traits::tokens::{Fortitude, Precision, Preservation};
 	use soil_runtime::TokenError;
+	use topsoil_support::traits::tokens::{Fortitude, Precision, Preservation};
 
 	#[test]
 	fn hold_works() {

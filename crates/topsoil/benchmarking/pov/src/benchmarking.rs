@@ -21,10 +21,10 @@
 
 use super::*;
 
+use soil_runtime::traits::Hash;
 use topsoil_benchmarking::v2::*;
 use topsoil_support::traits::UnfilteredDispatchable;
 use topsoil_system::{Pallet as System, RawOrigin};
-use soil_runtime::traits::Hash;
 
 #[benchmarks]
 mod benchmarks {
@@ -397,8 +397,8 @@ mod benchmarks {
 
 #[cfg(test)]
 mod mock {
-	use topsoil_support::derive_impl;
 	use soil_runtime::{testing::H256, BuildStorage};
+	use topsoil_support::derive_impl;
 
 	type AccountId = u64;
 	type Nonce = u32;

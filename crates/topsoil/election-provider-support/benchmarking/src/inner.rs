@@ -20,9 +20,9 @@
 
 use alloc::vec::Vec;
 use codec::Decode;
+use soil_runtime::Perbill;
 use topsoil_benchmarking::v2::*;
 use topsoil_election_provider_support::{NposSolver, PhragMMS, SequentialPhragmen};
-use soil_runtime::Perbill;
 
 const VOTERS: [u32; 2] = [1_000, 2_000];
 const TARGETS: [u32; 2] = [500, 1_000];

@@ -22,9 +22,9 @@
 use super::*;
 use crate::Pallet as Balances;
 
+use soil_runtime::traits::Bounded;
 use topsoil_benchmarking::v2::*;
 use topsoil_system::RawOrigin;
-use soil_runtime::traits::Bounded;
 use types::ExtraFlags;
 
 const SEED: u32 = 0;

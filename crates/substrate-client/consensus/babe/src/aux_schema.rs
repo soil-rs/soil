@@ -22,13 +22,13 @@ use codec::{Decode, Encode};
 use log::info;
 
 use crate::{migration::EpochV0, Epoch, LOG_TARGET};
+use soil_blockchain::{Error as ClientError, Result as ClientResult};
 use soil_client_api::backend::AuxStore;
+use soil_consensus_babe::{BabeBlockWeight, BabeConfiguration};
 use soil_consensus_epochs::{
 	migration::{EpochChangesV0For, EpochChangesV1For},
 	EpochChangesFor, SharedEpochChanges,
 };
-use soil_blockchain::{Error as ClientError, Result as ClientResult};
-use soil_consensus_babe::{BabeBlockWeight, BabeConfiguration};
 use soil_runtime::traits::Block as BlockT;
 
 const BABE_EPOCH_CHANGES_VERSION: &[u8] = b"babe_epoch_changes_version";
@@ -144,11 +144,11 @@ mod test {
 	use super::*;
 	use crate::migration::EpochV0;
 	use fork_tree::ForkTree;
-	use soil_consensus_epochs::{EpochHeader, PersistedEpoch, PersistedEpochHeader};
-	use soil_network_test::Block as TestBlock;
 	use soil_consensus::Error as ConsensusError;
 	use soil_consensus_babe::AllowedSlots;
+	use soil_consensus_epochs::{EpochHeader, PersistedEpoch, PersistedEpochHeader};
 	use soil_core::H256;
+	use soil_network_test::Block as TestBlock;
 	use soil_runtime::traits::NumberFor;
 	use substrate_test_runtime_client;
 
@@ -203,8 +203,8 @@ mod test {
 				.tree()
 				.iter()
 				.map(|(_, _, epoch)| epoch.clone())
-				.collect::<Vec<_>>() ==
-				vec![PersistedEpochHeader::Regular(EpochHeader {
+				.collect::<Vec<_>>()
+				== vec![PersistedEpochHeader::Regular(EpochHeader {
 					start_slot: 0.into(),
 					end_slot: 100.into(),
 				})],

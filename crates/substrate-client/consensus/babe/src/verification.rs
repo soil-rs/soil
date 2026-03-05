@@ -23,7 +23,6 @@ use crate::{
 	AUTHORING_SCORE_VRF_CONTEXT, LOG_TARGET,
 };
 use log::{debug, trace};
-use soil_consensus_epochs::Epoch as EpochT;
 use sc_consensus_slots::CheckedHeader;
 use soil_consensus_babe::{
 	digests::{
@@ -32,6 +31,7 @@ use soil_consensus_babe::{
 	},
 	make_vrf_sign_data, AuthorityPair, AuthoritySignature,
 };
+use soil_consensus_epochs::Epoch as EpochT;
 use soil_consensus_slots::Slot;
 use soil_core::{
 	crypto::{VrfPublic, Wraps},

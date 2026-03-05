@@ -36,8 +36,6 @@
 
 use alloc::{vec, vec::Vec};
 use codec::{self as codec, Decode, Encode};
-use topsoil_support::traits::{Get, KeyOwnerProofSystem};
-use topsoil_system::pallet_prelude::{BlockNumberFor, HeaderFor};
 use log::{error, info};
 use soil_consensus_beefy::{
 	check_commitment_signature, AncestryHelper, DoubleVotingProof, ForkVotingProof,
@@ -55,6 +53,8 @@ use soil_staking::{
 	offence::{Kind, Offence, OffenceReportSystem, ReportOffence},
 	SessionIndex,
 };
+use topsoil_support::traits::{Get, KeyOwnerProofSystem};
+use topsoil_system::pallet_prelude::{BlockNumberFor, HeaderFor};
 
 use super::{Call, Config, Error, Pallet, LOG_TARGET};
 
@@ -282,8 +282,8 @@ impl<T: Config> EquivocationEvidenceFor<T> {
 	fn slash_fraction(&self) -> Option<Perbill> {
 		match self {
 			EquivocationEvidenceFor::DoubleVotingProof(_, _) => None,
-			EquivocationEvidenceFor::ForkVotingProof(_, _) |
-			EquivocationEvidenceFor::FutureBlockVotingProof(_, _) => Some(Perbill::from_percent(50)),
+			EquivocationEvidenceFor::ForkVotingProof(_, _)
+			| EquivocationEvidenceFor::FutureBlockVotingProof(_, _) => Some(Perbill::from_percent(50)),
 		}
 	}
 }

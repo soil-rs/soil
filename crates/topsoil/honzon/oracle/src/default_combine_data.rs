@@ -16,9 +16,9 @@
 // limitations under the License.
 
 use crate::{CombineData, Config, MomentOf, TimestampedValueOf};
-use topsoil_support::traits::{Get, Time};
 use soil_runtime::traits::Saturating;
 use soil_std::{marker, prelude::*};
+use topsoil_support::traits::{Get, Time};
 
 /// Sort by value and returns median timestamped value.
 /// Returns prev_value if not enough valid values.

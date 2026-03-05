@@ -61,6 +61,14 @@ extern crate alloc;
 use alloc::vec::Vec;
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use core::{fmt::Debug, marker::PhantomData};
+use scale_info::TypeInfo;
+use soil_runtime::{
+	traits::{
+		AtLeast32BitUnsigned, BlockNumberProvider, Bounded, Convert, MaybeSerializeDeserialize,
+		One, Saturating, StaticLookup, Zero,
+	},
+	DispatchError,
+};
 use topsoil_support::{
 	dispatch::DispatchResult,
 	ensure,
@@ -72,14 +80,6 @@ use topsoil_support::{
 	weights::Weight,
 };
 use topsoil_system::pallet_prelude::BlockNumberFor;
-use scale_info::TypeInfo;
-use soil_runtime::{
-	traits::{
-		AtLeast32BitUnsigned, BlockNumberProvider, Bounded, Convert, MaybeSerializeDeserialize,
-		One, Saturating, StaticLookup, Zero,
-	},
-	DispatchError,
-};
 
 pub use pallet::*;
 pub use vesting_info::*;
@@ -87,8 +87,9 @@ pub use weights::WeightInfo;
 
 type BalanceOf<T> =
 	<<T as Config>::Currency as Currency<<T as topsoil_system::Config>::AccountId>>::Balance;
-type MaxLocksOf<T> =
-	<<T as Config>::Currency as LockableCurrency<<T as topsoil_system::Config>::AccountId>>::MaxLocks;
+type MaxLocksOf<T> = <<T as Config>::Currency as LockableCurrency<
+	<T as topsoil_system::Config>::AccountId,
+>>::MaxLocks;
 type AccountIdLookupOf<T> = <<T as topsoil_system::Config>::Lookup as StaticLookup>::Source;
 
 const VESTING_ID: LockIdentifier = *b"vesting ";
@@ -161,7 +162,8 @@ pub mod pallet {
 	pub trait Config: topsoil_system::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>>
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// The currency trait.
 		type Currency: LockableCurrency<Self::AccountId>;
@@ -701,8 +703,8 @@ impl<T: Config> Pallet<T> {
 		};
 
 		debug_assert!(
-			locked_now > Zero::zero() && schedules.len() > 0 ||
-				locked_now == Zero::zero() && schedules.len() == 0
+			locked_now > Zero::zero() && schedules.len() > 0
+				|| locked_now == Zero::zero() && schedules.len() == 0
 		);
 
 		Ok((schedules, locked_now))

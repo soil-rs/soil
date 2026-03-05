@@ -21,6 +21,12 @@ use super::*;
 
 use crate::{CoreAssignment::Task, Pallet as Broker};
 use alloc::{vec, vec::Vec};
+use soil_arithmetic::{FixedU64, Perbill};
+use soil_core::Get;
+use soil_runtime::{
+	traits::{BlockNumberProvider, MaybeConvert},
+	FixedPointNumber, Saturating,
+};
 use topsoil_benchmarking::v2::*;
 use topsoil_support::{
 	storage::bounded_vec::BoundedVec,
@@ -30,12 +36,6 @@ use topsoil_support::{
 	},
 };
 use topsoil_system::{Pallet as System, RawOrigin};
-use soil_arithmetic::{FixedU64, Perbill};
-use soil_core::Get;
-use soil_runtime::{
-	traits::{BlockNumberProvider, MaybeConvert},
-	FixedPointNumber, Saturating,
-};
 
 const SEED: u32 = 0;
 const MAX_CORE_COUNT: u16 = 1_000;
@@ -270,8 +270,8 @@ mod benches {
 		_(origin as T::RuntimeOrigin, initial_price, extra_cores.try_into().unwrap());
 
 		assert!(SaleInfo::<T>::get().is_some());
-		let sale_start = RCBlockNumberProviderOf::<T::Coretime>::current_block_number() +
-			config.interlude_length;
+		let sale_start = RCBlockNumberProviderOf::<T::Coretime>::current_block_number()
+			+ config.interlude_length;
 		assert_last_event::<T>(
 			Event::SaleInitialized {
 				sale_start,

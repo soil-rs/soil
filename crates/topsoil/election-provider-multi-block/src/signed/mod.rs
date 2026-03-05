@@ -57,6 +57,11 @@ use crate::{
 	verifier::{AsynchronousVerifier, SolutionDataProvider, Status, VerificationResult},
 };
 use codec::{Decode, Encode, MaxEncodedLen};
+use scale_info::TypeInfo;
+use soil_io::MultiRemovalResults;
+use soil_npos_elections::ElectionScore;
+use soil_runtime::{traits::Saturating, Perbill};
+use soil_std::prelude::*;
 use topsoil_election_provider_support::PageIndex;
 use topsoil_support::{
 	dispatch::DispatchResultWithPostInfo,
@@ -71,11 +76,6 @@ use topsoil_support::{
 	BoundedVec, Twox64Concat,
 };
 use topsoil_system::{ensure_signed, pallet_prelude::*};
-use scale_info::TypeInfo;
-use soil_io::MultiRemovalResults;
-use soil_npos_elections::ElectionScore;
-use soil_runtime::{traits::Saturating, Perbill};
-use soil_std::prelude::*;
 
 /// Explore all weights
 pub use crate::weights::traits::pallet_election_provider_multi_block_signed::*;

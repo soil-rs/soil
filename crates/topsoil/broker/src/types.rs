@@ -20,12 +20,12 @@ use crate::{
 	CORE_MASK_BITS,
 };
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
-use topsoil_support::traits::fungible::Inspect;
-use topsoil_system::Config as SConfig;
 use scale_info::TypeInfo;
 use soil_arithmetic::Perbill;
 use soil_core::ConstU32;
 use soil_runtime::BoundedVec;
+use topsoil_support::traits::fungible::Inspect;
+use topsoil_system::Config as SConfig;
 
 pub type BalanceOf<T> = <<T as Config>::Currency as Inspect<<T as SConfig>::AccountId>>::Balance;
 pub type RelayBalanceOf<T> = <<T as Config>::Coretime as CoretimeInterface>::Balance;

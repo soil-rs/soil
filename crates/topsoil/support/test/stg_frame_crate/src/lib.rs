@@ -52,8 +52,9 @@ pub mod pallet {
 // Dummy test to make sure a runtime would compile.
 mod tests {
 	use super::{
+		pallet,
 		topsoil_support::{construct_runtime, derive_impl},
-		topsoil_system, pallet,
+		topsoil_system,
 	};
 
 	type Block = topsoil_system::mocking::MockBlock<Runtime>;

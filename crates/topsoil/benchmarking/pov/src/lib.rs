@@ -39,7 +39,8 @@ pub mod pallet {
 	#[pallet::config]
 	pub trait Config: topsoil_system::Config {
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>>
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 	}
 
 	#[pallet::storage]

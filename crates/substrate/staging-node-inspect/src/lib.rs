@@ -28,8 +28,8 @@ pub mod cli;
 pub mod command;
 
 use codec::{Decode, Encode};
-use soil_client_api::BlockBackend;
 use soil_blockchain::HeaderBackend;
+use soil_client_api::BlockBackend;
 use soil_core::hexdisplay::HexDisplay;
 use soil_runtime::{
 	generic::BlockId,

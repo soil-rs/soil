@@ -17,8 +17,8 @@
 
 use alloc::vec::Vec;
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
-use topsoil_support::{traits::ConstU32, BoundedVec};
 use scale_info::TypeInfo;
+use topsoil_support::{traits::ConstU32, BoundedVec};
 use Debug;
 
 /// A Multihash instance that only supports the basic functionality and no hashing.
