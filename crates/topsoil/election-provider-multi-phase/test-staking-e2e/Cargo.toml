@@ -1,0 +1,58 @@
+[package]
+name = "topsoil-election-provider-e2e-test"
+version = "1.0.0"
+authors.workspace = true
+edition.workspace = true
+license.workspace = true
+homepage.workspace = true
+repository.workspace = true
+description = "FRAME election provider multi phase pallet tests with staking pallet, bags-list and session pallets"
+publish = false
+
+[lints]
+workspace = true
+
+[package.metadata.docs.rs]
+targets = ["x86_64-unknown-linux-gnu"]
+
+[dev-dependencies]
+codec = { features = ["derive"], workspace = true, default-features = true }
+log = { workspace = true }
+parking_lot = { workspace = true, default-features = true }
+scale-info = { features = ["derive"], workspace = true, default-features = true }
+
+soil-core = { workspace = true, default-features = true }
+soil-io = { workspace = true, default-features = true }
+soil-npos-elections = { workspace = true }
+soil-runtime = { workspace = true, default-features = true }
+soil-staking = { workspace = true, default-features = true }
+soil-tracing = { workspace = true, default-features = true }
+
+topsoil-election-provider-support = { workspace = true, default-features = true }
+topsoil-support = { workspace = true, default-features = true }
+topsoil-system = { workspace = true, default-features = true }
+
+topsoil-bags-list = { workspace = true, default-features = true }
+topsoil-balances = { workspace = true, default-features = true }
+topsoil-delegated-staking = { workspace = true, default-features = true }
+topsoil-election-provider-multi-phase = { workspace = true, default-features = true }
+topsoil-nomination-pools = { workspace = true, default-features = true }
+topsoil-session = { workspace = true, default-features = true }
+topsoil-staking = { workspace = true, default-features = true }
+topsoil-timestamp = { workspace = true, default-features = true }
+
+[features]
+try-runtime = [
+	"topsoil-election-provider-support/try-runtime",
+	"topsoil-support/try-runtime",
+	"topsoil-system/try-runtime",
+	"topsoil-bags-list/try-runtime",
+	"topsoil-balances/try-runtime",
+	"topsoil-delegated-staking/try-runtime",
+	"topsoil-election-provider-multi-phase/try-runtime",
+	"topsoil-nomination-pools/try-runtime",
+	"topsoil-session/try-runtime",
+	"topsoil-staking/try-runtime",
+	"topsoil-timestamp/try-runtime",
+	"soil-runtime/try-runtime",
+]

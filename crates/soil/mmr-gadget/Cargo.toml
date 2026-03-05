@@ -1,0 +1,58 @@
+[package]
+name = "soil-mmr-gadget"
+version = "29.0.0"
+authors.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "MMR Client gadget for substrate"
+homepage.workspace = true
+
+[lints]
+workspace = true
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+codec = { workspace = true, default-features = true, optional = true}
+futures = { workspace = true, optional = true}
+log = { workspace = true, default-features = true, optional = true}
+soil-client-api = { workspace = true, default-features = true, optional = true}
+sc-offchain = { workspace = true, default-features = true, optional = true}
+soil-api = { workspace = true, default-features = true, optional = true}
+soil-blockchain = { workspace = true, default-features = true, optional = true}
+soil-consensus = { workspace = true, default-features = true, optional = true}
+soil-consensus-beefy = { workspace = true, default-features = true, optional = true}
+soil-core = { workspace = true, default-features = true, optional = true}
+soil-mmr-primitives = { workspace = true, default-features = true, optional = true}
+soil-runtime = { workspace = true, default-features = true, optional = true}
+
+[features]
+default = ["std"]
+std = [
+	"codec",
+	"futures",
+	"log",
+	"sc-offchain",
+	"soil-api",
+	"soil-blockchain",
+	"soil-client-api",
+	"soil-consensus",
+	"soil-consensus-beefy",
+	"soil-core",
+	"soil-mmr-primitives",
+	"soil-runtime",
+	"soil-api/std",
+	"soil-client-api/std",
+	"soil-consensus-beefy/std",
+	"soil-core/std",
+	"soil-mmr-primitives/std",
+	"soil-runtime/std",
+]
+
+[dev-dependencies]
+parking_lot = { workspace = true, default-features = true }
+sc-block-builder = { workspace = true, default-features = true }
+soil-tracing = { workspace = true, default-features = true }
+substrate-test-runtime-client = { workspace = true }
+tokio = { workspace = true, default-features = true }

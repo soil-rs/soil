@@ -365,18 +365,11 @@ impl topsoil_system::Config for Runtime {
 	type SystemWeightInfo = topsoil_system::weights::SubstrateWeight<Runtime>;
 	type SS58Prefix = ConstU16<42>;
 	type MaxConsumers = ConstU32<16>;
-	type MultiBlockMigrator = MultiBlockMigrations;
+	type MultiBlockMigrator = ();
 	type SingleBlockMigrations = Migrations;
 }
 
 impl topsoil_insecure_randomness_collective_flip::Config for Runtime {}
-
-impl topsoil_example_tasks::Config for Runtime {
-	type RuntimeTask = RuntimeTask;
-	type WeightInfo = topsoil_example_tasks::weights::SubstrateWeight<Runtime>;
-}
-
-impl topsoil_example_mbm::Config for Runtime {}
 
 impl topsoil_utility::Config for Runtime {
 	type RuntimeEvent = RuntimeEvent;
@@ -644,10 +637,6 @@ impl topsoil_asset_conversion_tx_payment::Config for Runtime {
 	type WeightInfo = topsoil_asset_conversion_tx_payment::weights::SubstrateWeight<Runtime>;
 	#[cfg(feature = "runtime-benchmarks")]
 	type BenchmarkHelper = AssetConversionTxHelper;
-}
-
-impl topsoil_skip_feeless_payment::Config for Runtime {
-	type RuntimeEvent = RuntimeEvent;
 }
 
 parameter_types! {
@@ -1530,10 +1519,8 @@ where
 			topsoil_system::CheckEra::<Runtime>::from(era),
 			topsoil_system::CheckNonce::<Runtime>::from(nonce),
 			topsoil_system::CheckWeight::<Runtime>::new(),
-			topsoil_skip_feeless_payment::SkipCheckIfFeeless::from(
-				topsoil_asset_conversion_tx_payment::ChargeAssetTxPayment::<Runtime>::from(
-					tip, None,
-				),
+			topsoil_asset_conversion_tx_payment::ChargeAssetTxPayment::<Runtime>::from(
+				tip, None,
 			),
 			topsoil_metadata_hash_extension::CheckMetadataHash::new(false),
 			topsoil_system::WeightReclaim::<Runtime>::new(),
@@ -1587,9 +1574,7 @@ where
 			topsoil_system::CheckEra::<Runtime>::from(Era::Immortal),
 			topsoil_system::CheckNonce::<Runtime>::from(0),
 			topsoil_system::CheckWeight::<Runtime>::new(),
-			topsoil_skip_feeless_payment::SkipCheckIfFeeless::from(
-				topsoil_asset_conversion_tx_payment::ChargeAssetTxPayment::<Runtime>::from(0, None),
-			),
+			topsoil_asset_conversion_tx_payment::ChargeAssetTxPayment::<Runtime>::from(0, None),
 			topsoil_metadata_hash_extension::CheckMetadataHash::new(false),
 			topsoil_system::WeightReclaim::<Runtime>::new(),
 		)
@@ -2280,25 +2265,6 @@ impl topsoil_statement::Config for Runtime {
 }
 
 parameter_types! {
-	pub MbmServiceWeight: Weight = Perbill::from_percent(80) * RuntimeBlockWeights::get().max_block;
-}
-
-impl topsoil_migrations::Config for Runtime {
-	type RuntimeEvent = RuntimeEvent;
-	#[cfg(not(feature = "runtime-benchmarks"))]
-	type Migrations = ();
-	// Benchmarks need mocked migrations to guarantee that they succeed.
-	#[cfg(feature = "runtime-benchmarks")]
-	type Migrations = topsoil_migrations::mock_helpers::MockedMigrations;
-	type CursorMaxLen = ConstU32<65_536>;
-	type IdentifierMaxLen = ConstU32<256>;
-	type MigrationStatusHandler = ();
-	type FailedMigrationHandler = topsoil_support::migrations::FreezeChainOnFailedMigration;
-	type MaxServiceWeight = MbmServiceWeight;
-	type WeightInfo = topsoil_migrations::weights::SubstrateWeight<Runtime>;
-}
-
-parameter_types! {
 	pub const BrokerPalletId: PalletId = PalletId(*b"py/broke");
 	pub const MinimumCreditPurchase: Balance =  100 * MILLICENTS;
 }
@@ -2735,26 +2701,14 @@ mod runtime {
 	#[runtime::pallet_index(71)]
 	pub type Statement = topsoil_statement::Pallet<Runtime>;
 
-	#[runtime::pallet_index(72)]
-	pub type MultiBlockMigrations = topsoil_migrations::Pallet<Runtime>;
-
 	#[runtime::pallet_index(73)]
 	pub type Broker = topsoil_broker::Pallet<Runtime>;
-
-	#[runtime::pallet_index(74)]
-	pub type TasksExample = topsoil_example_tasks::Pallet<Runtime>;
 
 	#[runtime::pallet_index(75)]
 	pub type Mixnet = topsoil_mixnet::Pallet<Runtime>;
 
 	#[runtime::pallet_index(76)]
 	pub type Parameters = topsoil_parameters::Pallet<Runtime>;
-
-	#[runtime::pallet_index(77)]
-	pub type SkipFeelessPayment = topsoil_skip_feeless_payment::Pallet<Runtime>;
-
-	#[runtime::pallet_index(78)]
-	pub type PalletExampleMbms = topsoil_example_mbm::Pallet<Runtime>;
 
 	#[runtime::pallet_index(79)]
 	pub type AssetConversionMigration = topsoil_asset_conversion_ops::Pallet<Runtime>;
@@ -2806,10 +2760,7 @@ pub type TxExtension = (
 	topsoil_system::CheckEra<Runtime>,
 	topsoil_system::CheckNonce<Runtime>,
 	topsoil_system::CheckWeight<Runtime>,
-	topsoil_skip_feeless_payment::SkipCheckIfFeeless<
-		Runtime,
-		topsoil_asset_conversion_tx_payment::ChargeAssetTxPayment<Runtime>,
-	>,
+	topsoil_asset_conversion_tx_payment::ChargeAssetTxPayment<Runtime>,
 	topsoil_metadata_hash_extension::CheckMetadataHash<Runtime>,
 	topsoil_system::WeightReclaim<Runtime>,
 );
@@ -3000,7 +2951,6 @@ mod benches {
 		[topsoil_collective, Council]
 		[topsoil_conviction_voting, ConvictionVoting]
 		[topsoil_core_fellowship, CoreFellowship]
-		[topsoil_example_tasks, TasksExample]
 		[topsoil_democracy, Democracy]
 		[topsoil_asset_conversion, AssetConversion]
 		[topsoil_asset_rewards, AssetRewards]
@@ -3019,7 +2969,6 @@ mod benches {
 		[topsoil_lottery, Lottery]
 		[topsoil_membership, TechnicalMembership]
 		[topsoil_message_queue, MessageQueue]
-		[topsoil_migrations, MultiBlockMigrations]
 		[topsoil_mmr, Mmr]
 		[topsoil_multi_asset_bounties, MultiAssetBounties]
 		[topsoil_multisig, Multisig]
@@ -3055,7 +3004,6 @@ mod benches {
 		[topsoil_whitelist, Whitelist]
 		[topsoil_tx_pause, TxPause]
 		[topsoil_safe_mode, SafeMode]
-		[topsoil_example_mbm, PalletExampleMbms]
 		[topsoil_asset_conversion_ops, AssetConversionMigration]
 		[topsoil_verify_signature, VerifySignature]
 		[topsoil_meta_tx, MetaTx]

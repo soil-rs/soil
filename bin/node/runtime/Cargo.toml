@@ -5,7 +5,7 @@ authors.workspace = true
 description = "Substrate node kitchensink runtime."
 edition.workspace = true
 build = "build.rs"
-license = "Apache-2.0"
+license.workspace = true
 homepage.workspace = true
 repository.workspace = true
 publish = false
@@ -91,7 +91,6 @@ topsoil-lottery = { workspace = true }
 topsoil-membership = { workspace = true }
 topsoil-message-queue = { workspace = true }
 topsoil-meta-tx = { workspace = true }
-topsoil-migrations = { workspace = true }
 topsoil-mixnet = { workspace = true }
 topsoil-mmr = { workspace = true }
 topsoil-multi-asset-bounties = { workspace = true }
@@ -126,7 +125,6 @@ topsoil-scheduler = { workspace = true }
 topsoil-scored-pool = { workspace = true }
 topsoil-session = { workspace = true }
 topsoil-session-benchmarking = { workspace = true }
-topsoil-skip-feeless-payment = { workspace = true }
 topsoil-society = { workspace = true }
 topsoil-staking = { workspace = true }
 topsoil-staking-reward-curve = { workspace = true }
@@ -199,9 +197,6 @@ substrate-bip39 = { workspace = true }
 # shared code between runtime and node
 node-primitives = { workspace = true }
 
-# Example pallets that are not published:
-topsoil-example-mbm = { workspace = true }
-topsoil-example-tasks = { workspace = true }
 
 [build-dependencies]
 substrate-wasm-builder = { optional = true, workspace = true, default-features = true }
@@ -263,8 +258,6 @@ std = [
 	"topsoil-election-provider-multi-phase/std",
 	"topsoil-election-provider-support-benchmarking/std",
 	"topsoil-elections-phragmen/std",
-	"topsoil-example-mbm/std",
-	"topsoil-example-tasks/std",
 	"topsoil-fast-unstake/std",
 	"topsoil-glutton/std",
 	"topsoil-grandpa/std",
@@ -276,7 +269,6 @@ std = [
 	"topsoil-membership/std",
 	"topsoil-message-queue/std",
 	"topsoil-meta-tx/std",
-	"topsoil-migrations/std",
 	"topsoil-mixnet/std",
 	"topsoil-mmr/std",
 	"topsoil-multi-asset-bounties/std",
@@ -311,7 +303,6 @@ std = [
 	"topsoil-scored-pool/std",
 	"topsoil-session/std",
 	"topsoil-session-benchmarking/std",
-	"topsoil-skip-feeless-payment/std",
 	"topsoil-society/std",
 	"topsoil-staking/std",
 	"topsoil-staking-reward-fn/std",
@@ -416,8 +407,6 @@ runtime-benchmarks = [
 	"topsoil-election-provider-multi-phase/runtime-benchmarks",
 	"topsoil-election-provider-support-benchmarking/runtime-benchmarks",
 	"topsoil-elections-phragmen/runtime-benchmarks",
-	"topsoil-example-mbm/runtime-benchmarks",
-	"topsoil-example-tasks/runtime-benchmarks",
 	"topsoil-fast-unstake/runtime-benchmarks",
 	"topsoil-glutton/runtime-benchmarks",
 	"topsoil-grandpa/runtime-benchmarks",
@@ -428,7 +417,6 @@ runtime-benchmarks = [
 	"topsoil-membership/runtime-benchmarks",
 	"topsoil-message-queue/runtime-benchmarks",
 	"topsoil-meta-tx/runtime-benchmarks",
-	"topsoil-migrations/runtime-benchmarks",
 	"topsoil-mmr/runtime-benchmarks",
 	"topsoil-multi-asset-bounties/runtime-benchmarks",
 	"topsoil-multisig/runtime-benchmarks",
@@ -456,7 +444,6 @@ runtime-benchmarks = [
 	"topsoil-scheduler/runtime-benchmarks",
 	"topsoil-session/runtime-benchmarks",
 	"topsoil-session-benchmarking/runtime-benchmarks",
-	"topsoil-skip-feeless-payment/runtime-benchmarks",
 	"topsoil-society/runtime-benchmarks",
 	"topsoil-staking/runtime-benchmarks",
 	"topsoil-state-trie-migration/runtime-benchmarks",
@@ -517,8 +504,6 @@ try-runtime = [
 	"topsoil-dummy-dim/try-runtime",
 	"topsoil-election-provider-multi-phase/try-runtime",
 	"topsoil-elections-phragmen/try-runtime",
-	"topsoil-example-mbm/try-runtime",
-	"topsoil-example-tasks/try-runtime",
 	"topsoil-fast-unstake/try-runtime",
 	"topsoil-glutton/try-runtime",
 	"topsoil-grandpa/try-runtime",
@@ -530,7 +515,6 @@ try-runtime = [
 	"topsoil-membership/try-runtime",
 	"topsoil-message-queue/try-runtime",
 	"topsoil-meta-tx/try-runtime",
-	"topsoil-migrations/try-runtime",
 	"topsoil-mixnet/try-runtime",
 	"topsoil-mmr/try-runtime",
 	"topsoil-multi-asset-bounties/try-runtime",
@@ -559,7 +543,6 @@ try-runtime = [
 	"topsoil-scheduler/try-runtime",
 	"topsoil-scored-pool/try-runtime",
 	"topsoil-session/try-runtime",
-	"topsoil-skip-feeless-payment/try-runtime",
 	"topsoil-society/try-runtime",
 	"topsoil-staking/try-runtime",
 	"topsoil-state-trie-migration/try-runtime",
@@ -577,8 +560,5 @@ try-runtime = [
 	"topsoil-vesting/try-runtime",
 	"topsoil-whitelist/try-runtime",
 	"soil-runtime/try-runtime",
-]
-experimental = [
-	"topsoil-example-tasks/experimental",
 ]
 metadata-hash = ["substrate-wasm-builder/metadata-hash"]

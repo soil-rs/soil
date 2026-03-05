@@ -1,0 +1,35 @@
+[package]
+name = "soil-runtime-test"
+version = "2.0.0"
+authors.workspace = true
+edition.workspace = true
+build = "build.rs"
+license.workspace = true
+publish = false
+homepage.workspace = true
+repository.workspace = true
+
+[lints]
+workspace = true
+
+[package.metadata.docs.rs]
+targets = ["x86_64-unknown-linux-gnu"]
+
+[dependencies]
+soil-core = { workspace = true }
+soil-io = { features = ["improved_panic_error_reporting"], workspace = true }
+soil-runtime = { workspace = true }
+soil-runtime-interface = { workspace = true }
+
+[build-dependencies]
+substrate-wasm-builder = { optional = true, workspace = true, default-features = true }
+
+[features]
+default = ["std"]
+std = [
+	"soil-core/std",
+	"soil-io/std",
+	"soil-runtime-interface/std",
+	"soil-runtime/std",
+	"substrate-wasm-builder",
+]

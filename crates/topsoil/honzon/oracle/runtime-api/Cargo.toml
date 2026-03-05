@@ -1,0 +1,25 @@
+[package]
+name = "topsoil-oracle-runtime-api"
+version = "1.0.0"
+authors = ["Acala Developers", "Parity Technologies <admin@parity.io>"]
+edition.workspace = true
+license.workspace = true
+homepage.workspace = true
+repository.workspace = true
+description = "Runtime API for the oracle pallet."
+
+[dependencies]
+codec = { workspace = true, features = ["derive"] }
+scale-info = { workspace = true }
+soil-api = { workspace = true }
+soil-std = { workspace = true }
+
+
+[features]
+default = ["std"]
+std = [
+	"codec/std",
+	"scale-info/std",
+	"soil-api/std",
+	"soil-std/std",
+]

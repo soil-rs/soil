@@ -37,7 +37,7 @@ and WASM pipelines are fully separate and perform independent feature resolution
 | Aspect         | Before                                   | After                              |
 |----------------|------------------------------------------|-------------------------------------|
 | Prefix         | `sp-*` (primitives), `sc-*` (client)     | `soil-*`                            |
-| Directory      | `primitives/`, `client/`                 | `soil/`                             |
+| Directory      | `primitives/`, `client/`                 | `crates/soil/`                      |
 | `no_std`       | `sp-` yes, `sc-` no                     | **All** `soil-` crates support `no_std` |
 | Umbrella crate | —                                        | `soil` (re-exports all `soil-*`)    |
 
@@ -46,7 +46,7 @@ Rules:
 - Every `soil-` crate **must** declare a `std` feature and compile under
   `no_std`. For crates whose functionality is inherently `std`-only (e.g.
   networking, database), the `no_std` build produces an empty library.
-- The umbrella crate `soil` lives at `soil/soil` and re-exports all public API.
+- The umbrella crate `soil` lives at `crates/soil/soil` and re-exports all public API.
 - Paired `sp-` / `sc-` crates that share a logical boundary are merged into a
   single `soil-` crate.
 
@@ -55,7 +55,7 @@ Rules:
 | Aspect         | Before                        | After                                |
 |----------------|-------------------------------|---------------------------------------|
 | Prefix         | `pallet-*`, `frame-*`        | `topsoil-*`                           |
-| Directory      | `frame/`                      | `topsoil/`                            |
+| Directory      | `frame/`                      | `crates/topsoil/`                     |
 | `no_std`       | Yes                           | Yes                                   |
 
 Rules:
@@ -68,11 +68,11 @@ Rules:
 
 | Old prefix / pattern       | New prefix    | New directory |
 |----------------------------|---------------|---------------|
-| `sp-*`                     | `soil-`       | `soil/`       |
-| `sc-*`                     | `soil-`       | `soil/`       |
-| `pallet-*`                 | `topsoil-`    | `topsoil/`    |
-| `frame-*`                  | `topsoil-`    | `topsoil/`    |
-| `frame` (umbrella)         | `topsoil`     | `topsoil/`    |
+| `sp-*`                     | `soil-`       | `crates/soil/`       |
+| `sc-*`                     | `soil-`       | `crates/soil/`       |
+| `pallet-*`                 | `topsoil-`    | `crates/topsoil/`    |
+| `frame-*`                  | `topsoil-`    | `crates/topsoil/`    |
+| `frame` (umbrella)         | `topsoil`     | `crates/topsoil/`    |
 
 ### `no_std` design for `sc-*` → `soil-*` migrations
 

@@ -5,7 +5,7 @@ authors.workspace = true
 description = "Generic Substrate node implementation in Rust."
 build = "build.rs"
 edition.workspace = true
-license = "GPL-3.0-or-later WITH Classpath-exception-2.0"
+license.workspace = true
 default-run = "substrate-node"
 homepage.workspace = true
 repository.workspace = true
@@ -72,7 +72,6 @@ soil-mmr-gadget = { workspace = true, default-features = true }
 soil-mmr-rpc = { workspace = true, default-features = true }
 topsoil-asset-conversion-tx-payment = { workspace = true, default-features = true }
 topsoil-im-online = { workspace = true, default-features = true }
-topsoil-skip-feeless-payment = { workspace = true, default-features = true }
 topsoil-transaction-payment-rpc = { workspace = true, default-features = true }
 soil-allocator = { workspace = true, default-features = true }
 sc-authority-discovery = { workspace = true, default-features = true }

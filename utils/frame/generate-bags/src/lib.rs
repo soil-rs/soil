@@ -93,7 +93,7 @@ fn path_to_header_file() -> Option<PathBuf> {
 		workdir = workdir.parent()?;
 	}
 
-	for file_name in &["HEADER-APACHE2", "HEADER-GPL3", "HEADER", "file_header.txt"] {
+	for file_name in &["HEADER", "file_header.txt"] {
 		let path = workdir.join(file_name);
 		if path.exists() {
 			return Some(path);

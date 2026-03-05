@@ -1,0 +1,54 @@
+[package]
+name = "soil-consensus-beefy-rpc"
+version = "13.0.0"
+authors.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "RPC for the BEEFY Client gadget for substrate"
+homepage.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+codec = { features = ["derive"], workspace = true, default-features = true, optional = true}
+futures = { workspace = true, optional = true}
+jsonrpsee = { features = ["client-core", "macros", "server-core"], workspace = true, optional = true}
+log = { workspace = true, default-features = true, optional = true}
+parking_lot = { workspace = true, default-features = true, optional = true}
+sc-consensus-beefy = { workspace = true, default-features = true, optional = true}
+sc-rpc = { workspace = true, default-features = true, optional = true}
+serde = { features = ["derive"], workspace = true, default-features = true, optional = true}
+soil-application-crypto = { workspace = true, default-features = true, optional = true}
+soil-consensus-beefy = { workspace = true, default-features = true, optional = true}
+soil-core = { workspace = true, default-features = true, optional = true}
+soil-runtime = { workspace = true, default-features = true, optional = true}
+thiserror = { workspace = true, optional = true}
+
+[features]
+default = ["std"]
+std = [
+	"codec",
+	"futures",
+	"jsonrpsee",
+	"log",
+	"parking_lot",
+	"sc-consensus-beefy",
+	"sc-rpc",
+	"serde",
+	"soil-application-crypto",
+	"soil-consensus-beefy",
+	"soil-core",
+	"soil-runtime",
+	"thiserror",
+	"soil-application-crypto/std",
+	"soil-consensus-beefy/std",
+	"soil-core/std",
+	"soil-runtime/std",
+]
+
+[dev-dependencies]
+sc-rpc = { features = ["test-helpers"], workspace = true, default-features = true }
+substrate-test-runtime-client = { workspace = true }
+tokio = { features = ["macros"], workspace = true, default-features = true }

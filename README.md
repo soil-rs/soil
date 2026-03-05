@@ -36,13 +36,7 @@ The security policy and procedures can be found in
 
 ## License
 
-- Substrate Primitives (`sp-*`), Frame (`frame-*`) and the pallets (`pallets-*`), binaries (`/bin`) and all other
-utilities are licensed under [Apache 2.0](LICENSE-APACHE2).  - Substrate Client (`/client/*` / `sc-*`) is licensed under
-[GPL v3.0 with a classpath linking exception](LICENSE-GPL3).
+All code is licensed under [GPL v3.0 with a classpath linking exception](LICENSE).
 
-The reason for the split-licensing is to ensure that for the vast majority of teams using Substrate to create
-feature-chains, then all changes can be made entirely in Apache2-licensed code, allowing teams full freedom over what
-and how they release and giving licensing clarity to commercial teams.
-
-In the interests of the community, we require any deeper improvements made to Substrate's core logic (e.g. Substrate's
-internal consensus, crypto or database code) to be contributed back so everyone can benefit.
+The classpath exception means that independent modules linking to this code can be distributed under any license of
+your choosing. Modifications to this code itself must remain under GPL-3.0-or-later WITH Classpath-exception-2.0.

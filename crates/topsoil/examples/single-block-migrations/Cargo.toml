@@ -1,0 +1,53 @@
+[package]
+name = "topsoil-example-single-block-migrations"
+version = "0.0.1"
+authors.workspace = true
+edition.workspace = true
+license.workspace = true
+homepage.workspace = true
+repository.workspace = true
+description = "FRAME example pallet demonstrating best-practices for writing storage migrations."
+publish = false
+
+[package.metadata.docs.rs]
+targets = ["x86_64-unknown-linux-gnu"]
+
+[dependencies]
+codec = { features = ["derive"], workspace = true }
+docify = { workspace = true }
+topsoil-support = { workspace = true }
+topsoil-system = { workspace = true }
+log = { workspace = true }
+topsoil-balances = { workspace = true }
+scale-info = { features = ["derive"], workspace = true }
+soil-core = { workspace = true }
+soil-io = { workspace = true }
+soil-runtime = { workspace = true }
+soil-version = { workspace = true }
+
+[features]
+default = ["std"]
+std = [
+	"codec/std",
+	"topsoil-support/std",
+	"topsoil-system/std",
+	"log/std",
+	"topsoil-balances/std",
+	"scale-info/std",
+	"soil-core/std",
+	"soil-io/std",
+	"soil-runtime/std",
+	"soil-version/std",
+]
+runtime-benchmarks = [
+	"topsoil-support/runtime-benchmarks",
+	"topsoil-system/runtime-benchmarks",
+	"topsoil-balances/runtime-benchmarks",
+	"soil-runtime/runtime-benchmarks",
+]
+try-runtime = [
+	"topsoil-support/try-runtime",
+	"topsoil-system/try-runtime",
+	"topsoil-balances/try-runtime",
+	"soil-runtime/try-runtime",
+]

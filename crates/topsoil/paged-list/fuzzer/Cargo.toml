@@ -1,0 +1,30 @@
+[package]
+name = "topsoil-paged-list-fuzzer"
+version = "0.1.0"
+authors.workspace = true
+edition.workspace = true
+license.workspace = true
+homepage.workspace = true
+repository.workspace = true
+description = "Fuzz storage types of pallet-paged-list"
+publish = false
+
+[lints]
+workspace = true
+
+[[bin]]
+name = "topsoil-paged-list-fuzzer"
+path = "src/paged_list.rs"
+
+[dependencies]
+arbitrary = { workspace = true }
+topsoil = { workspace = true, features = ["runtime"] }
+honggfuzz = { workspace = true }
+topsoil-paged-list = { features = ["std"], workspace = true }
+
+[features]
+default = ["std"]
+std = [
+	"topsoil/std",
+	"topsoil-paged-list/std",
+]

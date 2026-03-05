@@ -1,0 +1,32 @@
+[package]
+name = "soil-storage-monitor"
+version = "0.16.0"
+authors.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "Storage monitor service for substrate"
+homepage.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+clap = { features = ["derive", "string"], workspace = true, optional = true}
+fs4 = { workspace = true, optional = true}
+log = { workspace = true, default-features = true, optional = true}
+soil-core = { workspace = true, default-features = true, optional = true}
+thiserror = { workspace = true, optional = true}
+tokio = { features = ["time"], workspace = true, default-features = true, optional = true}
+
+[features]
+default = ["std"]
+std = [
+	"clap",
+	"fs4",
+	"log",
+	"soil-core",
+	"thiserror",
+	"tokio",
+	"soil-core/std",
+]

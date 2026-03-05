@@ -2,7 +2,7 @@
 description = "Endpoint to expose Prometheus metrics"
 name = "substrate-prometheus-endpoint"
 version = "0.17.0"
-license = "Apache-2.0"
+license.workspace = true
 authors.workspace = true
 edition.workspace = true
 homepage.workspace = true

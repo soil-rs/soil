@@ -1,0 +1,27 @@
+[package]
+name = "sp-application-crypto-test"
+version = "2.0.0"
+authors.workspace = true
+edition.workspace = true
+description = "Integration tests for application-crypto"
+license.workspace = true
+publish = false
+homepage.workspace = true
+repository.workspace = true
+
+[lints]
+workspace = true
+
+[package.metadata.docs.rs]
+targets = ["x86_64-unknown-linux-gnu"]
+
+[dependencies]
+soil-api = { workspace = true, default-features = true }
+soil-application-crypto = { workspace = true, default-features = true }
+soil-core = { workspace = true }
+soil-keystore = { workspace = true }
+soil-tracing = { workspace = true, default-features = true }
+substrate-test-runtime-client = { workspace = true }
+
+[features]
+bls-experimental = ["substrate-test-runtime-client/bls-experimental"]

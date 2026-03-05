@@ -1,0 +1,39 @@
+[package]
+name = "soil-utils"
+version = "14.0.0"
+authors.workspace = true
+edition.workspace = true
+license.workspace = true
+homepage.workspace = true
+repository.workspace = true
+description = "I/O for Substrate runtimes"
+readme = "README.md"
+
+[lints]
+workspace = true
+
+[dependencies]
+async-channel = { workspace = true, optional = true}
+futures = { workspace = true, optional = true}
+futures-timer = { workspace = true, optional = true}
+log = { workspace = true, default-features = true, optional = true}
+parking_lot = { workspace = true, default-features = true, optional = true}
+prometheus = { workspace = true, optional = true}
+soil-arithmetic = { workspace = true, optional = true}
+
+[dev-dependencies]
+tokio-test = { workspace = true }
+
+[features]
+std = [
+	"async-channel",
+	"futures",
+	"futures-timer",
+	"log",
+	"parking_lot",
+	"prometheus",
+	"soil-arithmetic",
+	"soil-arithmetic/std",
+]
+default = ["std", "metered"]
+metered = []

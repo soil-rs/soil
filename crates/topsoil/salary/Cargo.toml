@@ -1,0 +1,41 @@
+[package]
+name = "topsoil-salary"
+version = "13.0.0"
+authors.workspace = true
+edition.workspace = true
+license.workspace = true
+homepage.workspace = true
+repository.workspace = true
+description = "Paymaster"
+readme = "README.md"
+
+[lints]
+workspace = true
+
+[package.metadata.docs.rs]
+targets = ["x86_64-unknown-linux-gnu"]
+
+[dependencies]
+codec = { features = ["derive"], workspace = true }
+topsoil = { workspace = true, features = ["runtime"] }
+log = { workspace = true }
+topsoil-ranked-collective = { optional = true, workspace = true }
+scale-info = { features = ["derive"], workspace = true }
+
+[features]
+default = ["std"]
+std = [
+	"codec/std",
+	"topsoil/std",
+	"log/std",
+	"topsoil-ranked-collective/std",
+	"scale-info/std",
+]
+runtime-benchmarks = [
+	"topsoil/runtime-benchmarks",
+	"topsoil-ranked-collective/runtime-benchmarks",
+]
+try-runtime = [
+	"topsoil/try-runtime",
+	"topsoil-ranked-collective?/try-runtime",
+]

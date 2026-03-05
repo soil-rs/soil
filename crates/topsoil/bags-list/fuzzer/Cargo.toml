@@ -1,0 +1,22 @@
+[package]
+name = "topsoil-bags-list-fuzzer"
+version = "4.0.0-dev"
+authors.workspace = true
+edition.workspace = true
+license.workspace = true
+homepage.workspace = true
+repository.workspace = true
+description = "Fuzzer for FRAME pallet bags list"
+publish = false
+
+[lints]
+workspace = true
+
+[[bin]]
+name = "bags-list"
+path = "src/main.rs"
+
+[dependencies]
+topsoil-election-provider-support = { features = ["fuzz"], workspace = true, default-features = true }
+honggfuzz = { workspace = true }
+topsoil-bags-list = { features = ["fuzz"], workspace = true, default-features = true }

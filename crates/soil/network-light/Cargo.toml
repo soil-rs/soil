@@ -1,0 +1,57 @@
+[package]
+description = "Substrate light network protocol"
+name = "soil-network-light"
+version = "0.33.0"
+license.workspace = true
+authors.workspace = true
+edition.workspace = true
+homepage.workspace = true
+repository.workspace = true
+documentation = "https://docs.rs/soil-network-light"
+
+[lints]
+workspace = true
+
+[package.metadata.docs.rs]
+targets = ["x86_64-unknown-linux-gnu"]
+
+[dependencies]
+array-bytes = { workspace = true, default-features = true, optional = true}
+async-channel = { workspace = true, optional = true}
+codec = { features = ["derive"], workspace = true, default-features = true, optional = true}
+futures = { workspace = true, optional = true}
+log = { workspace = true, default-features = true, optional = true}
+prost = { workspace = true, optional = true}
+soil-client-api = { workspace = true, default-features = true, optional = true}
+soil-network = { workspace = true, default-features = true, optional = true}
+soil-network-types = { workspace = true, default-features = true, optional = true}
+soil-blockchain = { workspace = true, default-features = true, optional = true}
+soil-core = { workspace = true, default-features = true, optional = true}
+soil-runtime = { workspace = true, default-features = true, optional = true}
+thiserror = { workspace = true, optional = true}
+
+[build-dependencies]
+prost-build = { workspace = true }
+
+[features]
+default = ["std"]
+std = [
+	"array-bytes",
+	"async-channel",
+	"codec",
+	"futures",
+	"log",
+	"prost",
+	"soil-blockchain",
+	"soil-client-api",
+	"soil-core",
+	"soil-network",
+	"soil-network-types",
+	"soil-runtime",
+	"thiserror",
+	"soil-client-api/std",
+	"soil-core/std",
+	"soil-network/std",
+	"soil-network-types/std",
+	"soil-runtime/std",
+]

@@ -39,7 +39,7 @@ sp-debug-derive (T0) → sp-storage (T1) → sp-externalities (T2) → sp-core (
 
 ### Phase 1 — Tier 0 leaf crates (sp-* → soil-*)
 
-Rename, move to `soil/` directory, add `std` feature where missing. These 13
+Rename, move to `crates/soil/` directory, add `std` feature where missing. These 13
 crates can be migrated in parallel since they have no internal dependencies.
 
 | Old Crate                          | New Crate                          | Status |
@@ -162,12 +162,12 @@ Status: DONE
 
 ### Phase 6 — FRAME / pallets (frame-*, pallet-* → topsoil-*)
 
-Rename and move to `topsoil/` directory. Verify the dependency invariant:
+Rename and move to `crates/topsoil/` directory. Verify the dependency invariant:
 `topsoil → soil` is allowed, `soil → topsoil` is forbidden.
 
 - 140 crates renamed: `frame-*` → `topsoil-*`, `pallet-*` → `topsoil-*`
 - `polkadot-sdk-frame` umbrella crate → `topsoil`
-- Directory: `frame/` → `topsoil/`
+- Directory: `frame/` → `crates/topsoil/`
 - Proc macro string literals updated for crate resolution
 - All source references updated (`frame_support` → `topsoil_support`, `pallet_*` → `topsoil_*`)
 
@@ -186,7 +186,7 @@ Status: DONE
 For each crate:
 
 1. Rename `Cargo.toml` package name (`sp-foo` → `soil-foo`)
-2. Move directory (`primitives/foo` → `soil/foo`)
+2. Move directory (`primitives/foo` → `crates/soil/foo`)
 3. Ensure `std` feature exists and crate compiles under `no_std`
 4. Update workspace `Cargo.toml`: member path, `[workspace.dependencies]` entry
 5. Update all downstream `Cargo.toml` references
