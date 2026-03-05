@@ -9,15 +9,15 @@ repository = "https://github.com/bitarray/soil.git"
 resolver = "2"
 
 members = [
-	"bin/node/bench",
-	"bin/node/cli",
-	"bin/node/runtime",
-	"bin/node/inspect",
-	"bin/node/primitives",
-	"bin/node/rpc",
-	"bin/node/testing",
-	"bin/utils/chain-spec-builder",
-	"bin/utils/subkey",
+	"crates/substrate/node-bench",
+	"crates/substrate/staging-node-cli",
+	"crates/substrate/kitchensink-runtime",
+	"crates/substrate/staging-node-inspect",
+	"crates/substrate/node-primitives",
+	"crates/substrate/node-rpc",
+	"crates/substrate/node-testing",
+	"crates/substrate/staging-chain-spec-builder",
+	"crates/substrate/subkey",
 	"crates/soil/allocator",
 	"crates/soil/client-api",
 	"crates/substrate-client/authority-discovery",
@@ -275,30 +275,30 @@ members = [
 	"crates/soil/version-proc-macro",
 	"crates/soil/wasm-interface",
 	"crates/soil/weights",
-	"scripts/ci/node-template-release",
-	"test-utils",
-	"test-utils/cli",
-	"test-utils/client",
-	"test-utils/runtime",
-	"test-utils/runtime/client",
-	"test-utils/runtime/transaction-pool",
-	"utils/binary-merkle-tree",
-	"utils/build-script-utils",
-	"utils/fork-tree",
-	"utils/frame/generate-bags",
-	"utils/frame/generate-bags/node-runtime",
-	"utils/frame/remote-externalities",
-	"utils/frame/rpc/client",
-	"utils/frame/rpc/state-trie-migration-rpc",
-	"utils/frame/rpc/support",
-	"utils/frame/rpc/system",
-	"utils/prometheus",
-	"utils/substrate-bip39",
-	"utils/wasm-builder",
+	"crates/substrate/node-template-release",
+	"crates/substrate/substrate-test-utils",
+	"crates/substrate/substrate-cli-test-utils",
+	"crates/substrate/substrate-test-client",
+	"crates/substrate/substrate-test-runtime",
+	"crates/substrate/substrate-test-runtime-client",
+	"crates/substrate/substrate-test-runtime-transaction-pool",
+	"crates/substrate/binary-merkle-tree",
+	"crates/substrate/substrate-build-script-utils",
+	"crates/substrate/fork-tree",
+	"crates/substrate/generate-bags",
+	"crates/substrate/node-runtime-generate-bags",
+	"crates/substrate/frame-remote-externalities",
+	"crates/substrate/substrate-rpc-client",
+	"crates/substrate/substrate-state-trie-migration-rpc",
+	"crates/substrate/substrate-frame-rpc-support",
+	"crates/substrate/substrate-frame-rpc-system",
+	"crates/substrate/substrate-prometheus-endpoint",
+	"crates/substrate/substrate-bip39",
+	"crates/substrate/substrate-wasm-builder",
 ]
 
 default-members = [
-	"bin/node/inspect",
+	"crates/substrate/staging-node-inspect",
 ]
 
 [workspace.lints.rust]
@@ -343,9 +343,9 @@ zero-prefixed-literal = { level = "allow", priority = 2 }            # 00_1000_0
 [workspace.dependencies]
 
 # Substrate path dependencies
-binary-merkle-tree = { path = "utils/binary-merkle-tree", default-features = false }
-chain-spec-builder = { path = "bin/utils/chain-spec-builder", default-features = false, package = "staging-chain-spec-builder" }
-fork-tree = { path = "utils/fork-tree", default-features = false }
+binary-merkle-tree = { path = "crates/substrate/binary-merkle-tree", default-features = false }
+chain-spec-builder = { path = "crates/substrate/staging-chain-spec-builder", default-features = false, package = "staging-chain-spec-builder" }
+fork-tree = { path = "crates/substrate/fork-tree", default-features = false }
 topsoil = { path = "crates/topsoil/topsoil", default-features = false }
 topsoil-benchmarking = { path = "crates/topsoil/benchmarking", default-features = false }
 topsoil-benchmarking-pallet-pov = { default-features = false, path = "crates/topsoil/benchmarking/pov" }
@@ -362,15 +362,15 @@ topsoil-system = { path = "crates/topsoil/system", default-features = false }
 topsoil-system-benchmarking = { path = "crates/topsoil/system/benchmarking", default-features = false }
 topsoil-system-rpc-runtime-api = { path = "crates/topsoil/system/rpc/runtime-api", default-features = false }
 topsoil-try-runtime = { path = "crates/topsoil/try-runtime", default-features = false }
-generate-bags = { path = "utils/frame/generate-bags", default-features = false }
-kitchensink-runtime = { path = "bin/node/runtime" }
+generate-bags = { path = "crates/substrate/generate-bags", default-features = false }
+kitchensink-runtime = { path = "crates/substrate/kitchensink-runtime" }
 soil-mmr-gadget = { path = "crates/soil/mmr-gadget", default-features = false }
 soil-mmr-rpc = { path = "crates/soil/mmr-rpc", default-features = false }
-node-cli = { path = "bin/node/cli", package = "staging-node-cli" }
-node-inspect = { path = "bin/node/inspect", default-features = false, package = "staging-node-inspect" }
-node-primitives = { path = "bin/node/primitives", default-features = false }
-node-rpc = { path = "bin/node/rpc" }
-node-testing = { path = "bin/node/testing" }
+node-cli = { path = "crates/substrate/staging-node-cli", package = "staging-node-cli" }
+node-inspect = { path = "crates/substrate/staging-node-inspect", default-features = false, package = "staging-node-inspect" }
+node-primitives = { path = "crates/substrate/node-primitives", default-features = false }
+node-rpc = { path = "crates/substrate/node-rpc" }
+node-testing = { path = "crates/substrate/node-testing" }
 topsoil-alliance = { path = "crates/topsoil/alliance", default-features = false }
 topsoil-asset-conversion = { path = "crates/topsoil/asset-conversion", default-features = false }
 topsoil-asset-conversion-ops = { path = "crates/topsoil/asset-conversion/ops", default-features = false }
@@ -481,8 +481,8 @@ topsoil-utility = { path = "crates/topsoil/utility", default-features = false }
 topsoil-verify-signature = { path = "crates/topsoil/verify-signature", default-features = false }
 topsoil-vesting = { path = "crates/topsoil/vesting", default-features = false }
 topsoil-whitelist = { path = "crates/topsoil/whitelist", default-features = false }
-prometheus-endpoint = { path = "utils/prometheus", default-features = false, package = "substrate-prometheus-endpoint" }
-remote-externalities = { path = "utils/frame/remote-externalities", default-features = false, package = "frame-remote-externalities" }
+prometheus-endpoint = { path = "crates/substrate/substrate-prometheus-endpoint", default-features = false, package = "substrate-prometheus-endpoint" }
+remote-externalities = { path = "crates/substrate/frame-remote-externalities", default-features = false, package = "frame-remote-externalities" }
 soil-allocator = { path = "crates/soil/allocator", default-features = false }
 sc-authority-discovery = { path = "crates/substrate-client/authority-discovery", default-features = false }
 soil-basic-authorship = { path = "crates/soil/basic-authorship", default-features = false }
@@ -597,20 +597,20 @@ soil-version = { path = "crates/soil/version", default-features = false }
 soil-version-proc-macro = { path = "crates/soil/version-proc-macro", default-features = false }
 soil-wasm-interface = { path = "crates/soil/wasm-interface", default-features = false }
 soil-weights = { path = "crates/soil/weights", default-features = false }
-subkey = { path = "bin/utils/subkey", default-features = false }
-substrate-bip39 = { path = "utils/substrate-bip39", default-features = false }
-substrate-build-script-utils = { path = "utils/build-script-utils", default-features = false }
-substrate-cli-test-utils = { path = "test-utils/cli" }
-substrate-frame-rpc-support = { default-features = false, path = "utils/frame/rpc/support" }
-substrate-frame-rpc-system = { path = "utils/frame/rpc/system", default-features = false }
-substrate-rpc-client = { path = "utils/frame/rpc/client", default-features = false }
-substrate-state-trie-migration-rpc = { path = "utils/frame/rpc/state-trie-migration-rpc", default-features = false }
-substrate-test-client = { path = "test-utils/client" }
-substrate-test-runtime = { path = "test-utils/runtime" }
-substrate-test-runtime-client = { path = "test-utils/runtime/client" }
-substrate-test-runtime-transaction-pool = { path = "test-utils/runtime/transaction-pool" }
-substrate-test-utils = { path = "test-utils" }
-substrate-wasm-builder = { path = "utils/wasm-builder", default-features = false }
+subkey = { path = "crates/substrate/subkey", default-features = false }
+substrate-bip39 = { path = "crates/substrate/substrate-bip39", default-features = false }
+substrate-build-script-utils = { path = "crates/substrate/substrate-build-script-utils", default-features = false }
+substrate-cli-test-utils = { path = "crates/substrate/substrate-cli-test-utils" }
+substrate-frame-rpc-support = { default-features = false, path = "crates/substrate/substrate-frame-rpc-support" }
+substrate-frame-rpc-system = { path = "crates/substrate/substrate-frame-rpc-system", default-features = false }
+substrate-rpc-client = { path = "crates/substrate/substrate-rpc-client", default-features = false }
+substrate-state-trie-migration-rpc = { path = "crates/substrate/substrate-state-trie-migration-rpc", default-features = false }
+substrate-test-client = { path = "crates/substrate/substrate-test-client" }
+substrate-test-runtime = { path = "crates/substrate/substrate-test-runtime" }
+substrate-test-runtime-client = { path = "crates/substrate/substrate-test-runtime-client" }
+substrate-test-runtime-transaction-pool = { path = "crates/substrate/substrate-test-runtime-transaction-pool" }
+substrate-test-utils = { path = "crates/substrate/substrate-test-utils" }
+substrate-wasm-builder = { path = "crates/substrate/substrate-wasm-builder", default-features = false }
 test-pallet = { path = "crates/topsoil/support/test/pallet", default-features = false, package = "topsoil-support-test-pallet" }
 
 # External dependencies
