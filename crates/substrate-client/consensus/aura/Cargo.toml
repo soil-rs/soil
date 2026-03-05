@@ -33,7 +33,6 @@ soil-blockchain = { workspace = true, default-features = true }
 soil-consensus = { workspace = true, default-features = true }
 soil-consensus-aura = { workspace = true, default-features = true }
 soil-consensus-slots = { workspace = true, default-features = true }
-soil-inherents = { workspace = true, default-features = true }
 thiserror = { workspace = true }
 
 [dev-dependencies]

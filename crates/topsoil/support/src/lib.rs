@@ -61,7 +61,7 @@ pub mod __private {
 	pub use serde_json;
 	pub use subsoil::core::{Get, OpaqueMetadata, Void};
 	pub use subsoil_crypto_hashing_proc_macro;
-	pub use soil_inherents;
+	pub use subsoil::inherents;
 	#[cfg(feature = "std")]
 	pub use subsoil::io::TestExternalities;
 	pub use subsoil::io::{self, hashing, storage::root as storage_root};
@@ -442,7 +442,7 @@ pub mod pallet_prelude {
 	pub use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 	pub use core::marker::PhantomData;
 	pub use scale_info::TypeInfo;
-	pub use soil_inherents::MakeFatalError;
+	pub use subsoil::inherents::MakeFatalError;
 	pub use subsoil::runtime::{
 		traits::{
 			CheckedAdd, CheckedConversion, CheckedDiv, CheckedMul, CheckedShl, CheckedShr,

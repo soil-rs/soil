@@ -18,7 +18,6 @@ targets = ["x86_64-unknown-linux-gnu"]
 [dependencies]
 async-trait = { optional = true, workspace = true }
 codec = { features = ["derive"], workspace = true }
-soil-inherents = { workspace = true }
 subsoil = { workspace = true }
 thiserror = { optional = true, workspace = true }
 
@@ -27,7 +26,6 @@ default = ["std"]
 std = [
 	"async-trait",
 	"codec/std",
-	"soil-inherents/std",
 	"subsoil/std",
 	"thiserror",
 ]

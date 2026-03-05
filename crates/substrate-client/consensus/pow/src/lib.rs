@@ -60,7 +60,7 @@ use soil_consensus::{
 	Environment, Error as ConsensusError, ProposeArgs, Proposer, SelectChain, SyncOracle,
 };
 use soil_consensus_pow::{Seal, TotalDifficulty, POW_ENGINE_ID};
-use soil_inherents::{CreateInherentDataProviders, InherentDataProvider};
+use subsoil::inherents::{CreateInherentDataProviders, InherentDataProvider};
 use subsoil::runtime::{
 	generic::{BlockId, Digest, DigestItem},
 	traits::{Block as BlockT, Header as HeaderT},
@@ -94,14 +94,14 @@ pub enum Error<B: BlockT> {
 	#[error("Error with block built on {0:?}: {1}")]
 	BlockBuiltError(B::Hash, ConsensusError),
 	#[error("Creating inherents failed: {0}")]
-	CreateInherents(soil_inherents::Error),
+	CreateInherents(subsoil::inherents::Error),
 	#[error("Checking inherents failed: {0}")]
-	CheckInherents(soil_inherents::Error),
+	CheckInherents(subsoil::inherents::Error),
 	#[error(
 		"Checking inherents unknown error for identifier: {}",
 		String::from_utf8_lossy(.0)
 	)]
-	CheckInherentsUnknownError(soil_inherents::InherentIdentifier),
+	CheckInherentsUnknownError(subsoil::inherents::InherentIdentifier),
 	#[error("Multiple pre-runtime digests")]
 	MultiplePreRuntimeDigests,
 	#[error(transparent)]

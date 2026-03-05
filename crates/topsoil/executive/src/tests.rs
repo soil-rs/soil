@@ -126,7 +126,7 @@ mod custom {
 	impl<T: Config> ProvideInherent for Pallet<T> {
 		type Call = Call<T>;
 
-		type Error = soil_inherents::MakeFatalError<()>;
+		type Error = subsoil::inherents::MakeFatalError<()>;
 
 		const INHERENT_IDENTIFIER: [u8; 8] = *b"test1234";
 
@@ -248,7 +248,7 @@ mod custom2 {
 	impl<T: Config> ProvideInherent for Pallet<T> {
 		type Call = Call<T>;
 
-		type Error = soil_inherents::MakeFatalError<()>;
+		type Error = subsoil::inherents::MakeFatalError<()>;
 
 		const INHERENT_IDENTIFIER: [u8; 8] = *b"test1235";
 

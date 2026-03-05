@@ -46,7 +46,7 @@
 //!
 //! ```
 //! use codec::Decode;
-//! use soil_inherents::{InherentIdentifier, InherentData};
+//! use subsoil::inherents::{InherentIdentifier, InherentData};
 //!
 //! // This needs to be unique for the runtime.
 //! const INHERENT_IDENTIFIER: InherentIdentifier = *b"testinh0";
@@ -55,11 +55,11 @@
 //! struct InherentDataProvider;
 //!
 //! #[async_trait::async_trait]
-//! impl soil_inherents::InherentDataProvider for InherentDataProvider {
+//! impl subsoil::inherents::InherentDataProvider for InherentDataProvider {
 //! 	async fn provide_inherent_data(
 //! 		&self,
 //! 		inherent_data: &mut InherentData,
-//! 	) -> Result<(), soil_inherents::Error> {
+//! 	) -> Result<(), subsoil::inherents::Error> {
 //! 		// We can insert any data that implements [`codec::Encode`].
 //! 		inherent_data.put_data(INHERENT_IDENTIFIER, &"hello")
 //! 	}
@@ -78,7 +78,7 @@
 //! 		&self,
 //! 		identifier: &InherentIdentifier,
 //! 		mut error: &[u8],
-//! 	) -> Option<Result<(), soil_inherents::Error>> {
+//! 	) -> Option<Result<(), subsoil::inherents::Error>> {
 //! 		// Check if this error belongs to us.
 //! 		if *identifier != INHERENT_IDENTIFIER {
 //! 			return None;
@@ -87,7 +87,7 @@
 //! 		// For demonstration purposes we are using a `String` as error type. In real
 //! 		// implementations it is advised to not use `String`.
 //! 		Some(Err(
-//! 			soil_inherents::Error::Application(Box::from(String::decode(&mut error).ok()?))
+//! 			subsoil::inherents::Error::Application(Box::from(String::decode(&mut error).ok()?))
 //! 		))
 //! 	}
 //! }
@@ -99,21 +99,21 @@
 //!
 //! ```
 //! # use subsoil::runtime::testing::{MockCallU64, TestXt};
-//! # use soil_inherents::{InherentIdentifier, InherentData};
+//! # use subsoil::inherents::{InherentIdentifier, InherentData};
 //! # use futures::FutureExt;
 //! # type Block = subsoil::runtime::testing::Block<TestXt<MockCallU64, ()>>;
 //! # const INHERENT_IDENTIFIER: InherentIdentifier = *b"testinh0";
 //! # struct InherentDataProvider;
 //! # #[async_trait::async_trait]
-//! # impl soil_inherents::InherentDataProvider for InherentDataProvider {
-//! # 	async fn provide_inherent_data(&self, inherent_data: &mut InherentData) -> Result<(), soil_inherents::Error> {
+//! # impl subsoil::inherents::InherentDataProvider for InherentDataProvider {
+//! # 	async fn provide_inherent_data(&self, inherent_data: &mut InherentData) -> Result<(), subsoil::inherents::Error> {
 //! # 		inherent_data.put_data(INHERENT_IDENTIFIER, &"hello")
 //! # 	}
 //! # 	async fn try_handle_error(
 //! # 		&self,
 //! # 		_: &InherentIdentifier,
 //! # 		_: &[u8],
-//! # 	) -> Option<Result<(), soil_inherents::Error>> {
+//! # 	) -> Option<Result<(), subsoil::inherents::Error>> {
 //! # 		None
 //! # 	}
 //! # }
@@ -121,13 +121,13 @@
 //! async fn cool_consensus_block_production(
 //! 	// The second parameter to the trait are parameters that depend on what the caller
 //! 	// can provide on extra data.
-//! 	_: impl soil_inherents::CreateInherentDataProviders<Block, ()>,
+//! 	_: impl subsoil::inherents::CreateInherentDataProviders<Block, ()>,
 //! ) {
 //! 	// do cool stuff
 //! }
 //!
 //! async fn cool_consensus_block_import(
-//! 	_: impl soil_inherents::CreateInherentDataProviders<Block, ()>,
+//! 	_: impl subsoil::inherents::CreateInherentDataProviders<Block, ()>,
 //! ) {
 //! 	// do cool stuff
 //! }
@@ -158,11 +158,6 @@
 //! to create the inherents. As already described above the client side passes the [`InherentData`]
 //! and expects the runtime to construct the inherents out of it. When validating the inherents,
 //! [`CheckInherentsResult`] is used to communicate the result client side.
-
-#![cfg_attr(not(feature = "std"), no_std)]
-#![warn(missing_docs)]
-
-extern crate alloc;
 
 use codec::{Decode, Encode};
 
@@ -199,7 +194,7 @@ pub enum Error {
 	FatalErrorReported,
 	#[cfg(feature = "std")]
 	#[error(transparent)]
-	Application(#[from] Box<dyn std::error::Error + Send + Sync>),
+	Application(#[from] Box<dyn ::std::error::Error + Send + Sync>),
 }
 
 /// An identifier for an inherent.

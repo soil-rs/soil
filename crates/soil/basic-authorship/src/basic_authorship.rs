@@ -33,7 +33,7 @@ use subsoil::api::{ApiExt, CallApiAt, ProvideRuntimeApi};
 use soil_blockchain::{ApplyExtrinsicFailed::Validity, Error::ApplyExtrinsicFailed, HeaderBackend};
 use soil_consensus::{Proposal, ProposeArgs};
 use subsoil::core::traits::SpawnNamed;
-use soil_inherents::InherentData;
+use subsoil::inherents::InherentData;
 use soil_proposer_metrics::{EndProposingReason, MetricsLink as PrometheusMetrics};
 use subsoil::runtime::{
 	traits::{BlakeTwo256, Block as BlockT, Hash as HashT, Header as HeaderT},

@@ -43,8 +43,8 @@ pub use subsoil::core::sr25519::vrf::{
 pub const KEY_TYPE: subsoil::core::crypto::KeyTypeId = subsoil::application_crypto::key_types::BABE;
 
 mod app {
-	use subsoil::application_crypto::{app_crypto, key_types::BABE, sr25519};
-	app_crypto!(sr25519, BABE);
+	use subsoil::application_crypto::{key_types::BABE, sr25519};
+	subsoil::app_crypto!(sr25519, BABE);
 }
 
 /// VRF context used for per-slot randomness generation.

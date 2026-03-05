@@ -44,7 +44,7 @@ use soil_consensus::{Environment, Proposer, SelectChain};
 #[cfg(feature = "std")]
 use subsoil::core::traits::SpawnNamed;
 #[cfg(feature = "std")]
-use soil_inherents::CreateInherentDataProviders;
+use subsoil::inherents::CreateInherentDataProviders;
 #[cfg(feature = "std")]
 use subsoil::runtime::{traits::Block as BlockT, ConsensusEngineId};
 #[cfg(feature = "std")]
@@ -378,7 +378,7 @@ mod tests {
 	use sc_transaction_pool::{BasicPool, FullChainApi, Options, RevalidationType};
 	use subsoil::api::StorageProof;
 	use soil_basic_authorship::ProposerFactory;
-	use soil_inherents::InherentData;
+	use subsoil::inherents::InherentData;
 	use subsoil::runtime::generic::{Digest, DigestItem};
 	use soil_transaction_pool_api::{
 		MaintainedTransactionPool, TransactionPool, TransactionSource,

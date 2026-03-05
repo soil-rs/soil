@@ -220,8 +220,8 @@ mod store_api;
 
 mod sr25519 {
 	mod app_sr25519 {
-		use subsoil::application_crypto::{app_crypto, key_types::STATEMENT, sr25519};
-		app_crypto!(sr25519, STATEMENT);
+		use subsoil::application_crypto::{key_types::STATEMENT, sr25519};
+		subsoil::app_crypto!(sr25519, STATEMENT);
 	}
 	pub type Public = app_sr25519::Public;
 }
@@ -229,8 +229,8 @@ mod sr25519 {
 /// Statement-store specific ed25519 crypto primitives.
 pub mod ed25519 {
 	mod app_ed25519 {
-		use subsoil::application_crypto::{app_crypto, ed25519, key_types::STATEMENT};
-		app_crypto!(ed25519, STATEMENT);
+		use subsoil::application_crypto::{ed25519, key_types::STATEMENT};
+		subsoil::app_crypto!(ed25519, STATEMENT);
 	}
 	/// Statement-store specific ed25519 public key.
 	pub type Public = app_ed25519::Public;
@@ -241,8 +241,8 @@ pub mod ed25519 {
 
 mod ecdsa {
 	mod app_ecdsa {
-		use subsoil::application_crypto::{app_crypto, ecdsa, key_types::STATEMENT};
-		app_crypto!(ecdsa, STATEMENT);
+		use subsoil::application_crypto::{ecdsa, key_types::STATEMENT};
+		subsoil::app_crypto!(ecdsa, STATEMENT);
 	}
 	pub type Public = app_ecdsa::Public;
 }

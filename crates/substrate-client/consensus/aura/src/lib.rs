@@ -47,7 +47,7 @@ use soil_client_api::{backend::AuxStore, BlockOf};
 use soil_consensus::{BlockOrigin, Environment, Error as ConsensusError, Proposer, SelectChain};
 use soil_consensus_slots::Slot;
 use subsoil::core::crypto::Pair;
-use soil_inherents::CreateInherentDataProviders;
+use subsoil::inherents::CreateInherentDataProviders;
 use subsoil::keystore::KeystorePtr;
 use subsoil::runtime::traits::{Block as BlockT, Header, Member, NumberFor};
 use soil_telemetry::TelemetryHandle;
@@ -485,7 +485,7 @@ pub enum Error<B: BlockT> {
 	Client(soil_blockchain::Error),
 	/// Inherents Error
 	#[error("Inherent error: {0}")]
-	Inherent(soil_inherents::Error),
+	Inherent(subsoil::inherents::Error),
 }
 
 impl<B: BlockT> From<Error<B>> for String {

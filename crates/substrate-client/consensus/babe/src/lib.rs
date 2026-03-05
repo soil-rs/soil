@@ -118,7 +118,7 @@ use soil_consensus_epochs::{
 };
 use soil_consensus_slots::Slot;
 use subsoil::core::traits::SpawnEssentialNamed;
-use soil_inherents::{CreateInherentDataProviders, InherentDataProvider};
+use subsoil::inherents::{CreateInherentDataProviders, InherentDataProvider};
 use subsoil::keystore::KeystorePtr;
 use subsoil::runtime::{
 	generic::OpaqueDigestItemId,
@@ -336,13 +336,13 @@ pub enum Error<B: BlockT> {
 	ParentBlockNoAssociatedWeight(B::Hash),
 	/// Check inherents error
 	#[error("Checking inherents failed: {0}")]
-	CheckInherents(soil_inherents::Error),
+	CheckInherents(subsoil::inherents::Error),
 	/// Unhandled check inherents error
 	#[error("Checking inherents unhandled error: {}", String::from_utf8_lossy(.0))]
-	CheckInherentsUnhandled(soil_inherents::InherentIdentifier),
+	CheckInherentsUnhandled(subsoil::inherents::InherentIdentifier),
 	/// Create inherents error.
 	#[error("Creating inherents failed: {0}")]
-	CreateInherents(soil_inherents::Error),
+	CreateInherents(subsoil::inherents::Error),
 	/// Background worker is not running and therefore requests cannot be answered.
 	#[error("Background worker is not running")]
 	BackgroundWorkerTerminated,

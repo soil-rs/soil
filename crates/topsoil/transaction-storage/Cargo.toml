@@ -24,7 +24,6 @@ topsoil-system = { workspace = true }
 topsoil-balances = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { optional = true, workspace = true, default-features = true }
-soil-inherents = { workspace = true }
 subsoil = { workspace = true }
 soil-transaction-storage-proof = { workspace = true }
 tracing = { workspace = true }
@@ -42,7 +41,6 @@ std = [
 	"topsoil-balances/std",
 	"scale-info/std",
 	"serde",
-	"soil-inherents/std",
 	"subsoil/std",
 	"subsoil/std",
 	"soil-transaction-storage-proof/std",

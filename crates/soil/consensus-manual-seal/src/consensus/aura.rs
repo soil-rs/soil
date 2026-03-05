@@ -28,7 +28,7 @@ use soil_consensus_aura::{
 	sr25519::{AuthorityId, AuthoritySignature},
 	AuraApi, Slot, SlotDuration,
 };
-use soil_inherents::InherentData;
+use subsoil::inherents::InherentData;
 use subsoil::runtime::{traits::Block as BlockT, Digest, DigestItem};
 use soil_timestamp::TimestampInherentData;
 use std::{marker::PhantomData, sync::Arc};

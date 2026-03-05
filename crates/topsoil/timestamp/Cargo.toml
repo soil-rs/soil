@@ -23,7 +23,6 @@ topsoil-support = { workspace = true }
 topsoil-system = { workspace = true }
 log = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
-soil-inherents = { workspace = true }
 subsoil = { workspace = true }
 soil-timestamp = { workspace = true }
 
@@ -40,7 +39,6 @@ std = [
 	"topsoil-system/std",
 	"log/std",
 	"scale-info/std",
-	"soil-inherents/std",
 	"subsoil/std",
 	"subsoil/std",
 	"soil-timestamp/std",

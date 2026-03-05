@@ -349,7 +349,7 @@ where
 	/// Returns the inherents created by the runtime or an error if something failed.
 	pub fn create_inherents(
 		&mut self,
-		inherent_data: soil_inherents::InherentData,
+		inherent_data: subsoil::inherents::InherentData,
 	) -> Result<Vec<Block::Extrinsic>, Error> {
 		let parent_hash = self.parent_hash;
 		self.api

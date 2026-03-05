@@ -29,7 +29,7 @@ use soil_consensus_aura::{
 };
 use soil_consensus_babe::BabeApi;
 use soil_consensus_slots::{Slot, SlotDuration};
-use soil_inherents::{InherentData, InherentDataProvider, InherentIdentifier};
+use subsoil::inherents::{InherentData, InherentDataProvider, InherentIdentifier};
 use subsoil::runtime::traits::{Block as BlockT, Zero};
 use soil_timestamp::{InherentType, INHERENT_IDENTIFIER};
 use std::{
@@ -141,7 +141,7 @@ impl InherentDataProvider for SlotTimestampProvider {
 	async fn provide_inherent_data(
 		&self,
 		inherent_data: &mut InherentData,
-	) -> Result<(), soil_inherents::Error> {
+	) -> Result<(), subsoil::inherents::Error> {
 		// we update the time here.
 		let new_time: InherentType = self
 			.unix_millis
@@ -155,7 +155,7 @@ impl InherentDataProvider for SlotTimestampProvider {
 		&self,
 		_: &InherentIdentifier,
 		_: &[u8],
-	) -> Option<Result<(), soil_inherents::Error>> {
+	) -> Option<Result<(), subsoil::inherents::Error>> {
 		None
 	}
 }

@@ -30,7 +30,7 @@ use async_trait::async_trait;
 use node_primitives::Block;
 use node_testing::bench::{BenchDb, BlockType, DatabaseType, KeyTypes};
 use soil_consensus::{Environment, ProposeArgs, Proposer};
-use soil_inherents::InherentDataProvider;
+use subsoil::inherents::InherentDataProvider;
 use subsoil::runtime::OpaqueExtrinsic;
 use soil_transaction_pool_api::{
 	ImportNotificationStream, PoolStatus, ReadyTransactions, TransactionFor, TransactionSource,

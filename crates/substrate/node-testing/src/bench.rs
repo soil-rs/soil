@@ -51,7 +51,7 @@ use subsoil::core::{
 };
 use subsoil_crypto_hashing::blake2_256;
 use soil_executor::{WasmExecutionMethod, WasmtimeInstantiationStrategy};
-use soil_inherents::InherentData;
+use subsoil::inherents::InherentData;
 use subsoil::runtime::{
 	generic::{self, ExtrinsicFormat, Preamble},
 	traits::{Block as BlockT, IdentifyAccount, Verify},

@@ -41,7 +41,7 @@ use soil_consensus_babe::{
 	AuthorityId, BabeApi, BabeAuthorityWeight, BabeConfiguration, ConsensusLog, BABE_ENGINE_ID,
 };
 use soil_consensus_slots::Slot;
-use soil_inherents::InherentData;
+use subsoil::inherents::InherentData;
 use subsoil::runtime::{
 	generic::Digest,
 	traits::{Block as BlockT, Header},

@@ -386,7 +386,7 @@ impl_for_tuples_attr! {
 ///   detected.
 /// * [`OnRuntimeUpgrade`](Hooks::OnRuntimeUpgrade) hooks are mandatorily executed at the very
 ///   beginning of the block body, before any extrinsics are processed.
-/// * [`Inherents`](soil_inherents) are always executed before any other other signed or unsigned
+/// * [`Inherents`](subsoil::inherents) are always executed before any other other signed or unsigned
 ///   extrinsics.
 /// * [`OnIdle`](Hooks::OnIdle) hooks are executed after extrinsics if there is weight remaining in
 ///   the block.

@@ -414,7 +414,7 @@ pub mod runtime {
 			PresetId, Result as GenesisBuilderResult, DEV_RUNTIME_PRESET,
 			LOCAL_TESTNET_RUNTIME_PRESET,
 		};
-		pub use soil_inherents::{CheckInherentsResult, InherentData};
+		pub use subsoil::inherents::{CheckInherentsResult, InherentData};
 		pub use subsoil::keyring::Sr25519Keyring;
 		pub use subsoil::runtime::{ApplyExtrinsicResult, ExtrinsicInclusionMode};
 	}
@@ -639,7 +639,7 @@ pub mod deps {
 	#[cfg(feature = "runtime")]
 	pub use soil_genesis_builder;
 	#[cfg(feature = "runtime")]
-	pub use soil_inherents;
+	pub use subsoil::inherents;
 	#[cfg(feature = "runtime")]
 	pub use subsoil::keyring;
 	#[cfg(feature = "runtime")]

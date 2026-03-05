@@ -164,7 +164,6 @@ topsoil-timestamp = { workspace = true, default-features = true }
 topsoil-transaction-payment = { workspace = true, default-features = true }
 topsoil-treasury = { workspace = true, default-features = true }
 subsoil-crypto-hashing = { workspace = true, default-features = true }
-soil-inherents = { workspace = true, default-features = true }
 criterion = { features = ["async_tokio"], workspace = true, default-features = true }
 nix = { features = ["signal"], workspace = true }
 pretty_assertions.workspace = true

@@ -34,7 +34,6 @@ serde_json = { features = ["alloc"], workspace = true }
 subsoil-crypto-hashing-proc-macro = { workspace = true, default-features = true }
 subsoil-debug-derive = { workspace = true }
 soil-genesis-builder = { workspace = true }
-soil-inherents = { workspace = true }
 soil-staking = { workspace = true }
 subsoil = { features = ["frame-metadata"], workspace = true }
 tt-call = { workspace = true }
@@ -64,7 +63,6 @@ std = [
 	"subsoil/std",
 	"subsoil-debug-derive/std",
 	"soil-genesis-builder/std",
-	"soil-inherents/std",
 	"subsoil/std",
 	"soil-staking/std"]
 runtime-benchmarks = [

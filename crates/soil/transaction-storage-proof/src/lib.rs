@@ -28,10 +28,10 @@ use core::result::Result;
 
 use alloc::vec::Vec;
 use codec::{Decode, DecodeWithMemTracking, Encode};
-use soil_inherents::{InherentData, InherentIdentifier, IsFatalError};
+use subsoil::inherents::{InherentData, InherentIdentifier, IsFatalError};
 use subsoil::runtime::traits::{Block as BlockT, NumberFor};
 
-pub use soil_inherents::Error;
+pub use subsoil::inherents::Error;
 
 /// The identifier for the proof inherent.
 pub const INHERENT_IDENTIFIER: InherentIdentifier = *b"tx_proof";
@@ -92,7 +92,7 @@ impl InherentDataProvider {
 
 #[cfg(feature = "std")]
 #[async_trait::async_trait]
-impl soil_inherents::InherentDataProvider for InherentDataProvider {
+impl subsoil::inherents::InherentDataProvider for InherentDataProvider {
 	async fn provide_inherent_data(&self, inherent_data: &mut InherentData) -> Result<(), Error> {
 		if let Some(proof) = &self.proof {
 			inherent_data.put_data(INHERENT_IDENTIFIER, proof)

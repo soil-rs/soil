@@ -16,9 +16,8 @@ workspace = true
 targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
-soil-inherents = { workspace = true }
 subsoil = { workspace = true }
 
 [features]
 default = ["std"]
-std = ["soil-inherents/std", "subsoil/std"]
+std = ["subsoil/std"]

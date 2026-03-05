@@ -30,8 +30,8 @@ pub mod inherents;
 
 pub mod sr25519 {
 	mod app_sr25519 {
-		use subsoil::application_crypto::{app_crypto, key_types::AURA, sr25519};
-		app_crypto!(sr25519, AURA);
+		use subsoil::application_crypto::{key_types::AURA, sr25519};
+		subsoil::app_crypto!(sr25519, AURA);
 	}
 
 	subsoil::application_crypto::with_pair! {
@@ -48,8 +48,8 @@ pub mod sr25519 {
 
 pub mod ed25519 {
 	mod app_ed25519 {
-		use subsoil::application_crypto::{app_crypto, ed25519, key_types::AURA};
-		app_crypto!(ed25519, AURA);
+		use subsoil::application_crypto::{ed25519, key_types::AURA};
+		subsoil::app_crypto!(ed25519, AURA);
 	}
 
 	subsoil::application_crypto::with_pair! {

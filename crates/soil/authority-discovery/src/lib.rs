@@ -24,8 +24,8 @@ extern crate alloc;
 use alloc::vec::Vec;
 
 mod app {
-	use subsoil::application_crypto::{app_crypto, key_types::AUTHORITY_DISCOVERY, sr25519};
-	app_crypto!(sr25519, AUTHORITY_DISCOVERY);
+	use subsoil::application_crypto::{key_types::AUTHORITY_DISCOVERY, sr25519};
+	subsoil::app_crypto!(sr25519, AUTHORITY_DISCOVERY);
 }
 
 subsoil::application_crypto::with_pair! {

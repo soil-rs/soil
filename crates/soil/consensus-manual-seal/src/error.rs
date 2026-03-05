@@ -24,7 +24,7 @@ use jsonrpsee::types::error::{ErrorObject, ErrorObjectOwned};
 use sc_consensus::ImportResult;
 use soil_blockchain::Error as BlockchainError;
 use soil_consensus::Error as ConsensusError;
-use soil_inherents::Error as InherentsError;
+use subsoil::inherents::Error as InherentsError;
 
 /// Error code for rpc
 mod codes {

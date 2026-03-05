@@ -114,8 +114,8 @@ pub use weights::WeightInfo;
 
 pub mod sr25519 {
 	mod app_sr25519 {
-		use subsoil::application_crypto::{app_crypto, key_types::IM_ONLINE, sr25519};
-		app_crypto!(sr25519, IM_ONLINE);
+		use subsoil::application_crypto::{key_types::IM_ONLINE, sr25519};
+		subsoil::app_crypto!(sr25519, IM_ONLINE);
 	}
 
 	subsoil::application_crypto::with_pair! {
@@ -132,8 +132,8 @@ pub mod sr25519 {
 
 pub mod ed25519 {
 	mod app_ed25519 {
-		use subsoil::application_crypto::{app_crypto, ed25519, key_types::IM_ONLINE};
-		app_crypto!(ed25519, IM_ONLINE);
+		use subsoil::application_crypto::{ed25519, key_types::IM_ONLINE};
+		subsoil::app_crypto!(ed25519, IM_ONLINE);
 	}
 
 	subsoil::application_crypto::with_pair! {

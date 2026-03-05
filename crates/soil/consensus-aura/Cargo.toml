@@ -21,7 +21,6 @@ async-trait = { optional = true, workspace = true }
 codec = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 soil-consensus-slots = { workspace = true }
-soil-inherents = { workspace = true }
 soil-timestamp = { workspace = true }
 
 [features]
@@ -32,7 +31,6 @@ std = [
 	"scale-info/std",
 	"subsoil/std",
 	"soil-consensus-slots/std",
-	"soil-inherents/std",
 	"subsoil/std",
 	"soil-timestamp/std"]
 

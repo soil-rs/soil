@@ -24,7 +24,6 @@ topsoil-system = { workspace = true }
 log = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 subsoil = { workspace = true }
-soil-inherents = { workspace = true }
 
 [features]
 default = ["std"]
@@ -37,7 +36,6 @@ std = [
 	"log/std",
 	"scale-info/std",
 	"subsoil/std",
-	"soil-inherents/std",
 	"subsoil/std",
 ]
 try-runtime = [

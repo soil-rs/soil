@@ -893,7 +893,7 @@ mod tests {
 	use soil_consensus::{BlockOrigin, Environment, Proposer};
 	use soil_consensus_epochs::descendent_query;
 	use subsoil::core::crypto::Pair;
-	use soil_inherents::InherentDataProvider;
+	use subsoil::inherents::InherentDataProvider;
 	use subsoil::keyring::Sr25519Keyring;
 	use subsoil::keystore::KeystorePtr;
 	use subsoil::runtime::{

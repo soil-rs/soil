@@ -44,8 +44,8 @@ pub use ticket::{
 };
 
 mod app {
-	use subsoil::application_crypto::{app_crypto, bandersnatch, key_types::SASSAFRAS};
-	app_crypto!(bandersnatch, SASSAFRAS);
+	use subsoil::application_crypto::{bandersnatch, key_types::SASSAFRAS};
+	subsoil::app_crypto!(bandersnatch, SASSAFRAS);
 }
 
 /// Key type identifier.

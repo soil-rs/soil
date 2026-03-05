@@ -16,7 +16,7 @@
 // limitations under the License.
 
 /// Contains the inherents for the AURA module
-use soil_inherents::{Error, InherentData, InherentIdentifier};
+use subsoil::inherents::{Error, InherentData, InherentIdentifier};
 
 /// The Aura inherent identifier.
 pub const INHERENT_IDENTIFIER: InherentIdentifier = *b"auraslot";
@@ -79,7 +79,7 @@ impl core::ops::Deref for InherentDataProvider {
 
 #[cfg(feature = "std")]
 #[async_trait::async_trait]
-impl soil_inherents::InherentDataProvider for InherentDataProvider {
+impl subsoil::inherents::InherentDataProvider for InherentDataProvider {
 	async fn provide_inherent_data(&self, inherent_data: &mut InherentData) -> Result<(), Error> {
 		inherent_data.put_data(INHERENT_IDENTIFIER, &self.slot)
 	}

@@ -21,7 +21,7 @@ use super::Error;
 
 use sc_consensus::BlockImportParams;
 use subsoil::api::StorageProof;
-use soil_inherents::InherentData;
+use subsoil::inherents::InherentData;
 use subsoil::runtime::{traits::Block as BlockT, Digest};
 
 pub mod aura;

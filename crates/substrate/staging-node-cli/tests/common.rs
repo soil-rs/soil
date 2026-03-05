@@ -49,8 +49,8 @@ pub const TEST_KEY_TYPE_ID: KeyTypeId = KeyTypeId(*b"test");
 pub mod sr25519 {
 	mod app_sr25519 {
 		use super::super::TEST_KEY_TYPE_ID;
-		use subsoil::application_crypto::{app_crypto, sr25519};
-		app_crypto!(sr25519, TEST_KEY_TYPE_ID);
+		use subsoil::application_crypto::{sr25519};
+		subsoil::app_crypto!(sr25519, TEST_KEY_TYPE_ID);
 	}
 
 	pub type AuthorityId = app_sr25519::Public;

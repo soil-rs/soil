@@ -231,7 +231,7 @@ pub mod pallet {
 	#[pallet::inherent]
 	impl<T: Config> ProvideInherent for Pallet<T> {
 		type Call = Call<T>;
-		type Error = soil_inherents::MakeFatalError<()>;
+		type Error = subsoil::inherents::MakeFatalError<()>;
 
 		const INHERENT_IDENTIFIER: InherentIdentifier = *b"bloated0";
 

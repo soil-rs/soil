@@ -22,7 +22,6 @@ scale-info = { features = ["derive"], workspace = true }
 serde = { features = ["alloc", "derive"], optional = true, workspace = true }
 soil-consensus-slots = { workspace = true }
 subsoil = { workspace = true }
-soil-inherents = { workspace = true }
 soil-timestamp = { optional = true, workspace = true }
 
 [features]
@@ -34,7 +33,6 @@ std = [
 	"serde/std",
 	"subsoil/std",
 	"soil-consensus-slots/std",
-	"soil-inherents/std",
 	"subsoil/std",
 	"soil-timestamp/std"]
 

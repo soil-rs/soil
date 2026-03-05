@@ -159,7 +159,6 @@ soil-consensus-slots = { workspace = true }
 subsoil-crypto-hashing = { workspace = true }
 subsoil-crypto-hashing-proc-macro = { workspace = true }
 soil-genesis-builder = { workspace = true }
-soil-inherents = { workspace = true }
 soil-mixnet = { workspace = true }
 soil-mmr-primitives = { workspace = true }
 soil-offchain = { workspace = true }
@@ -312,7 +311,6 @@ std = [
 	"subsoil-crypto-hashing/std",
 	"subsoil-debug-derive/std",
 	"soil-genesis-builder/std",
-	"soil-inherents/std",
 	"soil-mixnet/std",
 	"soil-mmr-primitives/std",
 	"soil-offchain/std",

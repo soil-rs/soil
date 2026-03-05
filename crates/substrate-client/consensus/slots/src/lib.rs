@@ -39,7 +39,7 @@ use sc_consensus::{BlockImport, JustificationSyncLink};
 use subsoil::arithmetic::traits::BaseArithmetic;
 use soil_consensus::{Proposal, ProposeArgs, Proposer, SelectChain, SyncOracle};
 use soil_consensus_slots::{Slot, SlotDuration};
-use soil_inherents::CreateInherentDataProviders;
+use subsoil::inherents::CreateInherentDataProviders;
 use subsoil::runtime::traits::{Block as BlockT, HashingFor, Header as HeaderT};
 use soil_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG, CONSENSUS_INFO, CONSENSUS_WARN};
 use std::{
@@ -246,7 +246,7 @@ pub trait SimpleSlotWorker<B: BlockT> {
 		slot_info: &SlotInfo<B>,
 		logging_target: &str,
 		end_proposing_at: Instant,
-	) -> Option<soil_inherents::InherentData> {
+	) -> Option<subsoil::inherents::InherentData> {
 		let remaining_duration = end_proposing_at.saturating_duration_since(Instant::now());
 		let delay = Delay::new(remaining_duration);
 		let cid = slot_info.create_inherent_data.create_inherent_data();
@@ -458,7 +458,7 @@ impl<T: SimpleSlotWorker<B> + Send + Sync, B: BlockT> SlotWorker<B>
 
 /// Slot specific extension that the inherent data provider needs to implement.
 pub trait InherentDataProviderExt {
-	/// The current slot that will be found in the [`InherentData`](`soil_inherents::InherentData`).
+	/// The current slot that will be found in the [`InherentData`](`subsoil::inherents::InherentData`).
 	fn slot(&self) -> Slot;
 }
 

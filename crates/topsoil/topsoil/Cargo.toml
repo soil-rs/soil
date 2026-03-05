@@ -32,7 +32,6 @@ soil-block-builder = { optional = true, workspace = true }
 soil-consensus-aura = { optional = true, workspace = true }
 soil-consensus-grandpa = { optional = true, workspace = true }
 soil-genesis-builder = { optional = true, workspace = true }
-soil-inherents = { optional = true, workspace = true }
 soil-offchain = { optional = true, workspace = true }
 soil-session = { optional = true, workspace = true }
 soil-transaction-pool = { optional = true, workspace = true }
@@ -69,7 +68,6 @@ std = [
 	"soil-consensus-aura?/std",
 	"soil-consensus-grandpa?/std",
 	"soil-genesis-builder?/std",
-	"soil-inherents?/std",
 	"soil-offchain?/std",
 	"subsoil/std",
 	"soil-session?/std",
@@ -94,7 +92,6 @@ runtime = [
 	"soil-consensus-aura",
 	"soil-consensus-grandpa",
 	"soil-genesis-builder",
-	"soil-inherents",
 	"soil-offchain",
 	"soil-session",
 	"soil-transaction-pool"]

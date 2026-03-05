@@ -13,6 +13,7 @@ build = "build.rs"
 workspace = true
 
 [dependencies]
+async-trait = { optional = true, workspace = true }
 subsoil-crypto-hashing = { workspace = true }
 backtrace = { optional = true, workspace = true }
 regex = { optional = true, workspace = true }
@@ -152,6 +153,8 @@ substrate-test-utils = { workspace = true }
 [features]
 default = ["std"]
 std = [
+	# soil-inherents std features
+	"async-trait",
 	"bytes/std",
 	"subsoil-crypto-hashing/std",
 	"bounded-collections/std",

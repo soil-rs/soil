@@ -37,7 +37,7 @@ mod select_chain;
 
 pub use self::error::Error;
 pub use select_chain::SelectChain;
-pub use soil_inherents::InherentData;
+pub use subsoil::inherents::InherentData;
 pub use subsoil::state_machine::Backend as StateBackend;
 
 /// Block status.

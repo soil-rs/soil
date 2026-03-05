@@ -20,7 +20,6 @@ async-trait = { optional = true, workspace = true }
 codec = { features = ["derive"], workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 subsoil = { optional = true, workspace = true }
-soil-inherents = { workspace = true }
 
 [features]
 default = ["std"]
@@ -29,5 +28,4 @@ std = [
 	"codec/std",
 	"scale-info/std",
 	"subsoil/std",
-	"soil-inherents/std",
 	"subsoil/std"]

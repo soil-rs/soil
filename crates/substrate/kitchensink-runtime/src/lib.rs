@@ -43,7 +43,7 @@ use soil_consensus_beefy::{
 };
 use soil_consensus_grandpa::AuthorityId as GrandpaId;
 use subsoil::core::{crypto::KeyTypeId, OpaqueMetadata};
-use soil_inherents::{CheckInherentsResult, InherentData};
+use subsoil::inherents::{CheckInherentsResult, InherentData};
 use subsoil::runtime::{
 	curve::PiecewiseLinear,
 	generic, impl_opaque_keys, str_array as s,

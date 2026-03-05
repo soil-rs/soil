@@ -109,7 +109,7 @@ pub mod ecdsa_crypto {
 	use super::{AuthorityIdBound, BeefyAuthorityId, RuntimeAppPublic, BEEFY_KEY_TYPE};
 	#[cfg(feature = "std")]
 	use core::fmt::Debug;
-	use subsoil::application_crypto::{app_crypto, ecdsa};
+	use subsoil::application_crypto::{ecdsa};
 	use subsoil::core::crypto::Wraps;
 	#[cfg(feature = "std")]
 	use subsoil::core::ByteArray;
@@ -117,7 +117,7 @@ pub mod ecdsa_crypto {
 	#[cfg(feature = "std")]
 	use subsoil::keystore::KeystorePtr;
 
-	app_crypto!(ecdsa, BEEFY_KEY_TYPE);
+	subsoil::app_crypto!(ecdsa, BEEFY_KEY_TYPE);
 
 	/// Identity of a BEEFY authority using ECDSA as its crypto.
 	pub type AuthorityId = Public;
@@ -176,12 +176,12 @@ pub mod bls_crypto {
 	use super::{AuthorityIdBound, BeefyAuthorityId, RuntimeAppPublic, BEEFY_KEY_TYPE};
 	#[cfg(feature = "std")]
 	use core::fmt::Debug;
-	use subsoil::application_crypto::{app_crypto, bls381};
+	use subsoil::application_crypto::{bls381};
 	use subsoil::core::{bls381::Pair as BlsPair, crypto::Wraps, ByteArray, Pair as _};
 	#[cfg(feature = "std")]
 	use subsoil::keystore::KeystorePtr;
 
-	app_crypto!(bls381, BEEFY_KEY_TYPE);
+	subsoil::app_crypto!(bls381, BEEFY_KEY_TYPE);
 
 	/// Identity of a BEEFY authority using BLS as its crypto.
 	pub type AuthorityId = Public;
@@ -236,13 +236,13 @@ pub mod ecdsa_bls_crypto {
 	use super::{AuthorityIdBound, BeefyAuthorityId, RuntimeAppPublic, BEEFY_KEY_TYPE};
 	#[cfg(feature = "std")]
 	use core::fmt::Debug;
-	use subsoil::application_crypto::{app_crypto, ecdsa_bls381};
+	use subsoil::application_crypto::{ecdsa_bls381};
 	use subsoil::core::{crypto::Wraps, ecdsa_bls381::Pair as EcdsaBlsPair, ByteArray};
 	#[cfg(feature = "std")]
 	use subsoil::keystore::KeystorePtr;
 	use subsoil::runtime::traits::Keccak256;
 
-	app_crypto!(ecdsa_bls381, BEEFY_KEY_TYPE);
+	subsoil::app_crypto!(ecdsa_bls381, BEEFY_KEY_TYPE);
 
 	/// Identity of a BEEFY authority using (ECDSA,BLS) as its crypto.
 	pub type AuthorityId = Public;

@@ -30,5 +30,4 @@ soil-blockchain = { workspace = true, default-features = true }
 soil-consensus = { workspace = true, default-features = true }
 soil-consensus-pow = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
-soil-inherents = { workspace = true, default-features = true }
 thiserror = { workspace = true }

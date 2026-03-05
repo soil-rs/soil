@@ -93,7 +93,7 @@ pub fn expand_outer_inherent(
 				use #scrate::inherent::{ProvideInherent, IsFatalError};
 				use #scrate::traits::IsSubType;
 				use #scrate::subsoil::runtime::traits::{Block as _, ExtrinsicCall, LazyBlock};
-				use #scrate::__private::{soil_inherents::Error, log};
+				use #scrate::__private::{inherents::Error, log};
 
 				let mut result = #scrate::inherent::CheckInherentsResult::new();
 

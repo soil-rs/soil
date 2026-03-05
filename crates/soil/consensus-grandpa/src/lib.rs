@@ -43,8 +43,8 @@ pub const RUNTIME_LOG_TARGET: &str = "runtime::grandpa";
 pub const KEY_TYPE: subsoil::core::crypto::KeyTypeId = subsoil::application_crypto::key_types::GRANDPA;
 
 mod app {
-	use subsoil::application_crypto::{app_crypto, ed25519, key_types::GRANDPA};
-	app_crypto!(ed25519, GRANDPA);
+	use subsoil::application_crypto::{ed25519, key_types::GRANDPA};
+	subsoil::app_crypto!(ed25519, GRANDPA);
 }
 
 subsoil::application_crypto::with_pair! {

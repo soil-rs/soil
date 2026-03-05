@@ -63,7 +63,7 @@ use serde_json::json;
 use subsoil::api::{decl_runtime_apis, impl_runtime_apis};
 pub use subsoil::core::hash::H256;
 use soil_genesis_builder::PresetId;
-use soil_inherents::{CheckInherentsResult, InherentData};
+use subsoil::inherents::{CheckInherentsResult, InherentData};
 use subsoil::runtime::{
 	impl_opaque_keys, impl_tx_ext_default,
 	traits::{BlakeTwo256, Block as BlockT, DispatchInfoOf, Dispatchable, NumberFor, Verify},

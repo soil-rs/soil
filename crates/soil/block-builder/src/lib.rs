@@ -27,7 +27,7 @@ mod client_side;
 #[cfg(feature = "std")]
 pub use client_side::*;
 
-use soil_inherents::{CheckInherentsResult, InherentData};
+use subsoil::inherents::{CheckInherentsResult, InherentData};
 use subsoil::runtime::{traits::Block as BlockT, ApplyExtrinsicResult};
 
 subsoil::api::decl_runtime_apis! {

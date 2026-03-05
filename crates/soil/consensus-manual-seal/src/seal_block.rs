@@ -26,7 +26,7 @@ use subsoil::api::{ProofRecorder, ProvideRuntimeApi};
 use soil_blockchain::HeaderBackend;
 use soil_consensus::{self, BlockOrigin, Environment, ProposeArgs, Proposer, SelectChain};
 use subsoil::externalities::Extensions;
-use soil_inherents::{CreateInherentDataProviders, InherentDataProvider};
+use subsoil::inherents::{CreateInherentDataProviders, InherentDataProvider};
 use subsoil::runtime::traits::{Block as BlockT, Header as HeaderT};
 use soil_transaction_pool_api::TransactionPool;
 use subsoil::trie::proof_size_extension::ProofSizeExt;

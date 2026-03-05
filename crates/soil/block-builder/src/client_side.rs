@@ -17,18 +17,18 @@
 
 use crate::BlockBuilder;
 
-use soil_inherents::{InherentData, InherentDataProvider, InherentIdentifier};
+use subsoil::inherents::{InherentData, InherentDataProvider, InherentIdentifier};
 use subsoil::runtime::traits::Block as BlockT;
 
 /// Errors that occur when creating and checking on the client side.
 #[derive(Debug)]
 pub enum CheckInherentsError {
 	/// Create inherents error.
-	CreateInherentData(soil_inherents::Error),
+	CreateInherentData(subsoil::inherents::Error),
 	/// Client Error
 	Client(subsoil::api::ApiError),
 	/// Check inherents error
-	CheckInherents(soil_inherents::Error),
+	CheckInherents(subsoil::inherents::Error),
 	/// Unknown inherent error for identifier
 	CheckInherentsUnknownError(InherentIdentifier),
 }
