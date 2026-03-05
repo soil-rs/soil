@@ -21,8 +21,8 @@
 use crate::{PropIndex, Voting, DEMOCRACY_ID};
 use alloc::{collections::btree_map::BTreeMap, vec::Vec};
 use core::iter::Sum;
-use soil_core::Get;
-use soil_runtime::{traits::Zero, BoundedVec, Saturating};
+use subsoil::core::Get;
+use subsoil::runtime::{traits::Zero, BoundedVec, Saturating};
 use topsoil_support::{
 	pallet_prelude::ValueQuery,
 	storage_alias,
@@ -169,7 +169,7 @@ where
 	/// Fails with a `TryRuntimeError` if somehow the amount reserved by this pallet is greater than
 	/// the actual total reserved amount for any accounts.
 	#[cfg(feature = "try-runtime")]
-	fn pre_upgrade() -> Result<Vec<u8>, soil_runtime::TryRuntimeError> {
+	fn pre_upgrade() -> Result<Vec<u8>, subsoil::runtime::TryRuntimeError> {
 		use alloc::collections::btree_set::BTreeSet;
 		use codec::Encode;
 
@@ -257,7 +257,7 @@ where
 	#[cfg(feature = "try-runtime")]
 	fn post_upgrade(
 		account_reserved_before_bytes: Vec<u8>,
-	) -> Result<(), soil_runtime::TryRuntimeError> {
+	) -> Result<(), subsoil::runtime::TryRuntimeError> {
 		use codec::Decode;
 
 		let account_reserved_before =
@@ -296,7 +296,7 @@ mod test {
 		tests::{new_test_ext, Balances, Test},
 		DepositOf, Voting, VotingOf,
 	};
-	use soil_core::ConstU32;
+	use subsoil::core::ConstU32;
 	use topsoil_support::{
 		assert_ok, parameter_types,
 		traits::{Currency, OnRuntimeUpgrade, ReservableCurrency, WithdrawReasons},

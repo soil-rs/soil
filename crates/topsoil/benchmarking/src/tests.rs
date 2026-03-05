@@ -19,7 +19,7 @@
 
 #![cfg(test)]
 
-use soil_runtime::{
+use subsoil::runtime::{
 	testing::H256,
 	traits::{BlakeTwo256, IdentityLookup},
 	BuildStorage,
@@ -111,7 +111,7 @@ impl pallet_test::Config for Test {
 	type MaybeItem = MaybeItem;
 }
 
-fn new_test_ext() -> soil_io::TestExternalities {
+fn new_test_ext() -> subsoil::io::TestExternalities {
 	RuntimeGenesisConfig::default().build_storage().unwrap().into()
 }
 

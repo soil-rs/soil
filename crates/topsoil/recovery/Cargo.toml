@@ -19,6 +19,7 @@ targets = ["x86_64-unknown-linux-gnu"]
 codec = { features = ["derive"], workspace = true }
 topsoil = { workspace = true, features = ["runtime"] }
 scale-info = { features = ["derive"], workspace = true }
+subsoil = { workspace = true }
 
 [dev-dependencies]
 topsoil-balances = { workspace = true, default-features = true }
@@ -34,6 +35,7 @@ std = [
 	"topsoil/std",
 	"topsoil-balances/std",
 	"scale-info/std",
+	"subsoil/std",
 ]
 try-runtime = [
 	"topsoil/try-runtime",

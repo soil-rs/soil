@@ -16,8 +16,8 @@
 // limitations under the License.
 
 use core::str;
-use soil_core::hexdisplay::HexDisplay;
-use soil_io::{hashing::twox_128, storage};
+use subsoil::core::hexdisplay::HexDisplay;
+use subsoil::io::{hashing::twox_128, storage};
 use topsoil_support::{
 	storage::{generator::StorageValue, StoragePrefixedMap},
 	traits::{
@@ -159,7 +159,7 @@ pub fn pre_migration<T: topsoil_bounties::Config, P: GetStorageVersion + 'static
 		),
 		"unexpected next_key({}) = {:?}",
 		new_pallet_name,
-		HexDisplay::from(&soil_io::storage::next_key(&new_pallet_prefix).unwrap()),
+		HexDisplay::from(&subsoil::io::storage::next_key(&new_pallet_prefix).unwrap()),
 	);
 	assert!(<P as GetStorageVersion>::on_chain_storage_version() < 4);
 }

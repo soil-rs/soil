@@ -28,7 +28,7 @@ use jsonrpsee::{
 };
 use sc_tracing::logging;
 use soil_rpc_api::check_if_safe;
-use soil_runtime::traits::{self, Header as HeaderT};
+use subsoil::runtime::traits::{self, Header as HeaderT};
 use soil_utils::mpsc::TracingUnboundedSender;
 
 pub use self::helpers::{Health, NodeRole, PeerInfo, SyncState, SystemInfo};

@@ -76,8 +76,8 @@ impl<TBlockNumber, TSignatureAccumulator>
 
 #[cfg(test)]
 mod tests {
-	use soil_core::Pair;
-	use soil_crypto_hashing::keccak_256;
+	use subsoil::core::Pair;
+	use subsoil_crypto_hashing::keccak_256;
 
 	use super::*;
 	use codec::Decode;
@@ -112,7 +112,7 @@ mod tests {
 
 	// The mock signatures are equivalent to the ones produced by the BEEFY keystore
 	fn mock_ecdsa_signatures() -> (EcdsaSignature, EcdsaSignature) {
-		let alice = soil_core::ecdsa::Pair::from_string("//Alice", None).unwrap();
+		let alice = subsoil::core::ecdsa::Pair::from_string("//Alice", None).unwrap();
 
 		let msg = keccak_256(b"This is the first message");
 		let sig1 = alice.sign_prehashed(&msg);
@@ -127,7 +127,7 @@ mod tests {
 	// BLS signatures
 	#[cfg(feature = "bls-experimental")]
 	fn mock_bls_signatures() -> (BlsSignature, BlsSignature) {
-		let alice = soil_core::bls::Pair::from_string("//Alice", None).unwrap();
+		let alice = subsoil::core::bls::Pair::from_string("//Alice", None).unwrap();
 
 		let msg = b"This is the first message";
 		let sig1 = alice.sign(msg);

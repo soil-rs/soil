@@ -24,7 +24,7 @@
 //! Tests for topsoil-example-basic.
 
 use crate::*;
-use soil_core::H256;
+use subsoil::core::H256;
 use topsoil_support::{
 	assert_ok, derive_impl,
 	dispatch::{DispatchInfo, GetDispatchInfo},
@@ -32,7 +32,7 @@ use topsoil_support::{
 };
 // The testing primitives are very useful for avoiding having to work with signatures
 // or public keys. `u64` is used as the `AccountId` and no `Signature`s are required.
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{BlakeTwo256, DispatchTransaction, IdentityLookup},
 	transaction_validity::TransactionSource::External,
 	BuildStorage,
@@ -90,7 +90,7 @@ impl Config for Test {
 
 // This function basically just builds a genesis storage key/value store according to
 // our desired mockup.
-pub fn new_test_ext() -> soil_io::TestExternalities {
+pub fn new_test_ext() -> subsoil::io::TestExternalities {
 	let t = RuntimeGenesisConfig {
 		// We use default for brevity, but you can configure as desired if needed.
 		system: Default::default(),

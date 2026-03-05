@@ -214,7 +214,7 @@ impl<T: codec::Decode> core::iter::Iterator for ScaleContainerStreamIter<T> {
 /// state for every access is too slow.
 const STORAGE_INPUT_BUFFER_CAPACITY: usize = 2 * 1024;
 
-/// Implementation of [`codec::Input`] using [`soil_io::storage::read`].
+/// Implementation of [`codec::Input`] using [`subsoil::io::storage::read`].
 ///
 /// Keeps an internal buffer with a size of [`STORAGE_INPUT_BUFFER_CAPACITY`]. All read accesses
 /// are tried to be served by this buffer. If the buffer doesn't hold enough bytes to fulfill the
@@ -241,7 +241,7 @@ impl StorageInput {
 		}
 
 		let (total_length, exists) =
-			if let Some(total_length) = soil_io::storage::read(&key, &mut buffer, 0) {
+			if let Some(total_length) = subsoil::io::storage::read(&key, &mut buffer, 0) {
 				(total_length, true)
 			} else {
 				(0, false)
@@ -267,7 +267,7 @@ impl StorageInput {
 		}
 
 		if let Some(length_minus_offset) =
-			soil_io::storage::read(&self.key, &mut self.buffer[present_bytes..], self.offset)
+			subsoil::io::storage::read(&self.key, &mut self.buffer[present_bytes..], self.offset)
 		{
 			let bytes_read =
 				core::cmp::min(length_minus_offset as usize, self.buffer.len() - present_bytes);
@@ -311,7 +311,7 @@ impl StorageInput {
 		}
 
 		if let Some(length_minus_offset) =
-			soil_io::storage::read(&self.key, &mut out_remaining, self.offset)
+			subsoil::io::storage::read(&self.key, &mut out_remaining, self.offset)
 		{
 			if (length_minus_offset as usize) < out_remaining.len() {
 				return Err("Not enough data to fill the buffer".into());
@@ -404,7 +404,7 @@ mod tests {
 
 	#[test]
 	fn remaining_len_works() {
-		soil_io::TestExternalities::default().execute_with(|| {
+		subsoil::io::TestExternalities::default().execute_with(|| {
 			let data: Vec<u32> = vec![1, 2, 3, 4, 5];
 			TestVecU32::put(&data);
 
@@ -465,7 +465,7 @@ mod tests {
 
 	#[test]
 	fn detects_value_total_length_change() {
-		soil_io::TestExternalities::default().execute_with(|| {
+		subsoil::io::TestExternalities::default().execute_with(|| {
 			let test_data: Vec<Vec<Vec<u8>>> = vec![
 				vec![vec![0; 20], vec![1; STORAGE_INPUT_BUFFER_CAPACITY * 2]],
 				vec![
@@ -500,7 +500,7 @@ mod tests {
 
 	#[test]
 	fn stream_read_test() {
-		soil_io::TestExternalities::default().execute_with(|| {
+		subsoil::io::TestExternalities::default().execute_with(|| {
 			let data: Vec<u32> = vec![1, 2, 3, 4, 5];
 			TestVecU32::put(&data);
 
@@ -515,7 +515,7 @@ mod tests {
 
 	#[test]
 	fn reading_big_intermediate_value() {
-		soil_io::TestExternalities::default().execute_with(|| {
+		subsoil::io::TestExternalities::default().execute_with(|| {
 			let data: Vec<Vec<u8>> =
 				vec![vec![0; 20], vec![1; STORAGE_INPUT_BUFFER_CAPACITY * 2], vec![2; 30]];
 			TestVecVecU8::put(&data);
@@ -539,7 +539,7 @@ mod tests {
 
 	#[test]
 	fn reading_more_data_as_in_the_state_is_detected() {
-		soil_io::TestExternalities::default().execute_with(|| {
+		subsoil::io::TestExternalities::default().execute_with(|| {
 			let data: Vec<Vec<u8>> = vec![vec![0; 20], vec![1; STORAGE_INPUT_BUFFER_CAPACITY * 2]];
 			TestVecVecU8::put(&data);
 
@@ -560,25 +560,25 @@ mod tests {
 
 	#[test]
 	fn reading_invalid_data_from_state() {
-		soil_io::TestExternalities::default().execute_with(|| {
+		subsoil::io::TestExternalities::default().execute_with(|| {
 			let data: Vec<u32> = vec![1, 2, 3, 4, 5];
 
 			let mut data_encoded = data.encode();
 			data_encoded.truncate(data_encoded.len() - 2);
-			soil_io::storage::set(&TestVecU32::hashed_key(), &data_encoded);
+			subsoil::io::storage::set(&TestVecU32::hashed_key(), &data_encoded);
 			assert_eq!(
 				data.iter().copied().take(data.len() - 1).collect::<Vec<_>>(),
 				TestVecU32::stream_iter().collect::<Vec<_>>()
 			);
 
 			let data_encoded = data.encode()[2..].to_vec();
-			soil_io::storage::set(&TestVecU32::hashed_key(), &data_encoded);
+			subsoil::io::storage::set(&TestVecU32::hashed_key(), &data_encoded);
 			assert!(TestVecU32::stream_iter().collect::<Vec<_>>().is_empty());
 
 			let data: Vec<Vec<u8>> = vec![vec![0; 20], vec![1; STORAGE_INPUT_BUFFER_CAPACITY * 2]];
 			let mut data_encoded = data.encode();
 			data_encoded.truncate(data_encoded.len() - 100);
-			soil_io::storage::set(&TestVecVecU8::hashed_key(), &data_encoded);
+			subsoil::io::storage::set(&TestVecVecU8::hashed_key(), &data_encoded);
 
 			assert_eq!(
 				data.iter().cloned().take(1).collect::<Vec<_>>(),
@@ -589,7 +589,7 @@ mod tests {
 
 	#[test]
 	fn reading_with_fill_buffer() {
-		soil_io::TestExternalities::default().execute_with(|| {
+		subsoil::io::TestExternalities::default().execute_with(|| {
 			const BUFFER_SIZE: usize = 300;
 			// Ensure that the capacity isn't dividable by `300`.
 			assert!(
@@ -626,7 +626,7 @@ mod tests {
 
 	#[test]
 	fn detect_value_deleted_in_state() {
-		soil_io::TestExternalities::default().execute_with(|| {
+		subsoil::io::TestExternalities::default().execute_with(|| {
 			let data: Vec<Vec<u8>> = vec![vec![0; 20], vec![1; STORAGE_INPUT_BUFFER_CAPACITY * 2]];
 			TestVecVecU8::put(&data);
 

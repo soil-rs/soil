@@ -53,7 +53,7 @@ mod benchmarks {
 		assert!(T::Pages::get() >= 2, "this benchmark only works in a runtime with 2 pages or more, set at least `type Pages = 2` for benchmark run");
 
 		#[cfg(test)]
-		crate::mock::ElectionStart::set(soil_runtime::traits::Bounded::max_value());
+		crate::mock::ElectionStart::set(subsoil::runtime::traits::Bounded::max_value());
 		crate::Pallet::<T>::start().unwrap();
 
 		assert_eq!(CurrentPhase::<T>::get(), Phase::Snapshot(T::Pages::get()));
@@ -81,7 +81,7 @@ mod benchmarks {
 		assert!(T::Pages::get() >= 2, "this benchmark only works in a runtime with 2 pages or more, set at least `type Pages = 2` for benchmark run");
 
 		#[cfg(test)]
-		crate::mock::ElectionStart::set(soil_runtime::traits::Bounded::max_value());
+		crate::mock::ElectionStart::set(subsoil::runtime::traits::Bounded::max_value());
 		crate::Pallet::<T>::start().unwrap();
 
 		// roll to the first block of the snapshot.
@@ -118,7 +118,7 @@ mod benchmarks {
 	#[benchmark(pov_mode = Measured)]
 	fn per_block_start_signed_validation() -> Result<(), BenchmarkError> {
 		#[cfg(test)]
-		crate::mock::ElectionStart::set(soil_runtime::traits::Bounded::max_value());
+		crate::mock::ElectionStart::set(subsoil::runtime::traits::Bounded::max_value());
 		crate::Pallet::<T>::start().unwrap();
 
 		Pallet::<T>::roll_until_before_matches(|| {
@@ -140,7 +140,7 @@ mod benchmarks {
 	#[benchmark(pov_mode = Measured)]
 	fn export_non_terminal() -> Result<(), BenchmarkError> {
 		#[cfg(test)]
-		crate::mock::ElectionStart::set(soil_runtime::traits::Bounded::max_value());
+		crate::mock::ElectionStart::set(subsoil::runtime::traits::Bounded::max_value());
 		crate::Pallet::<T>::start().unwrap();
 
 		// submit a full solution.
@@ -175,7 +175,7 @@ mod benchmarks {
 	#[benchmark(pov_mode = Measured)]
 	fn export_terminal() -> Result<(), BenchmarkError> {
 		#[cfg(test)]
-		crate::mock::ElectionStart::set(soil_runtime::traits::Bounded::max_value());
+		crate::mock::ElectionStart::set(subsoil::runtime::traits::Bounded::max_value());
 		crate::Pallet::<T>::start().unwrap();
 
 		// submit a full solution.
@@ -217,7 +217,7 @@ mod benchmarks {
 	fn manage_fallback() -> Result<(), BenchmarkError> {
 		// heaviest case is emergency set.
 		#[cfg(test)]
-		crate::mock::ElectionStart::set(soil_runtime::traits::Bounded::max_value());
+		crate::mock::ElectionStart::set(subsoil::runtime::traits::Bounded::max_value());
 		crate::Pallet::<T>::start().unwrap();
 
 		// roll to signed so the snapshot exists
@@ -244,7 +244,7 @@ mod benchmarks {
 	fn admin_set() -> Result<(), BenchmarkError> {
 		// heaviest case is emergency set.
 		#[cfg(test)]
-		crate::mock::ElectionStart::set(soil_runtime::traits::Bounded::max_value());
+		crate::mock::ElectionStart::set(subsoil::runtime::traits::Bounded::max_value());
 		crate::Pallet::<T>::start().unwrap();
 
 		// mine a single page solution.
@@ -280,7 +280,7 @@ mod benchmarks {
 			assert_ok!(Pallet::<T>::admin(
 				origin,
 				crate::AdminOperation::EmergencySetSolution(
-					soil_std::boxed::Box::new(single_support),
+					subsoil::std::boxed::Box::new(single_support),
 					solution.score,
 				),
 			));

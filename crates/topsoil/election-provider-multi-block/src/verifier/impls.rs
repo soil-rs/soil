@@ -28,8 +28,8 @@ use crate::{
 };
 use codec::{Decode, Encode, MaxEncodedLen};
 use pallet::*;
-use soil_npos_elections::{evaluate_support, ElectionScore};
-use soil_std::{collections::btree_map::BTreeMap, prelude::*};
+use subsoil::npos_elections::{evaluate_support, ElectionScore};
+use subsoil::std::{collections::btree_map::BTreeMap, prelude::*};
 use topsoil_election_provider_support::{
 	ExtendedBalance, NposSolution, PageIndex, TryFromOtherBounds,
 };
@@ -89,7 +89,7 @@ impl ValidSolution {
 }
 
 /// A simple newtype that represents the partial backing of a winner. It only stores the total
-/// backing, and the sum of backings, as opposed to a [`soil_npos_elections::Support`] that also
+/// backing, and the sum of backings, as opposed to a [`subsoil::npos_elections::Support`] that also
 /// stores all of the backers' individual contribution.
 ///
 /// This is mainly here to allow us to implement `Backings` for it.
@@ -101,7 +101,7 @@ pub struct PartialBackings {
 	pub backers: u32,
 }
 
-impl soil_npos_elections::Backings for PartialBackings {
+impl subsoil::npos_elections::Backings for PartialBackings {
 	fn total(&self) -> ExtendedBalance {
 		self.total
 	}
@@ -204,7 +204,7 @@ pub(crate) mod pallet {
 	///
 	/// No additional conditions must be met when the pallet is in [`Status::Ongoing`]. The number
 	/// of pages in
-	pub struct QueuedSolution<T: Config>(soil_std::marker::PhantomData<T>);
+	pub struct QueuedSolution<T: Config>(subsoil::std::marker::PhantomData<T>);
 	impl<T: Config> QueuedSolution<T> {
 		/// Private helper for mutating the storage group.
 		fn mutate_checked<R>(mutate: impl FnOnce() -> R) -> R {
@@ -463,7 +463,7 @@ pub(crate) mod pallet {
 		}
 
 		/// Ensure this storage item group is in correct state.
-		pub(crate) fn sanity_check() -> Result<(), soil_runtime::DispatchError> {
+		pub(crate) fn sanity_check() -> Result<(), subsoil::runtime::DispatchError> {
 			// score is correct and better than min-score.
 			ensure!(
 				Pallet::<T>::minimum_score()
@@ -609,7 +609,7 @@ pub(crate) mod pallet {
 		}
 
 		#[cfg(feature = "try-runtime")]
-		fn try_state(_now: BlockNumberFor<T>) -> Result<(), soil_runtime::TryRuntimeError> {
+		fn try_state(_now: BlockNumberFor<T>) -> Result<(), subsoil::runtime::TryRuntimeError> {
 			Self::do_try_state(_now)
 		}
 	}
@@ -719,7 +719,7 @@ impl<T: Config> Pallet<T> {
 
 		// verify each page, and amalgamate into a final support.
 		let mut backings =
-			soil_std::collections::btree_map::BTreeMap::<T::AccountId, PartialBackings>::new();
+			subsoil::std::collections::btree_map::BTreeMap::<T::AccountId, PartialBackings>::new();
 		let mut linked_supports = Vec::with_capacity(partial_solutions.len());
 
 		for (solution_page, page) in partial_solutions.into_iter().zip(solution_pages.iter()) {
@@ -866,7 +866,7 @@ impl<T: Config> Pallet<T> {
 	#[cfg(any(test, feature = "runtime-benchmarks", feature = "try-runtime"))]
 	pub(crate) fn do_try_state(
 		_now: BlockNumberFor<T>,
-	) -> Result<(), soil_runtime::TryRuntimeError> {
+	) -> Result<(), subsoil::runtime::TryRuntimeError> {
 		QueuedSolution::<T>::sanity_check()
 	}
 }
@@ -925,10 +925,10 @@ pub fn feasibility_check_page_inner_with_snapshot<T: MinerConfig>(
 
 	// This might fail if the normalization fails. Very unlikely. See `integrity_test`.
 	let staked_assignments =
-		soil_npos_elections::assignment_ratio_to_staked_normalized(assignments, stake_of)
+		subsoil::npos_elections::assignment_ratio_to_staked_normalized(assignments, stake_of)
 			.map_err::<FeasibilityError, _>(Into::into)?;
 
-	let supports = soil_npos_elections::to_supports(&staked_assignments);
+	let supports = subsoil::npos_elections::to_supports(&staked_assignments);
 
 	// Ensure some heuristics. These conditions must hold in the **entire** support, this is
 	// just a single page. But, they must hold in a single page as well.

@@ -20,7 +20,7 @@
 #![cfg(test)]
 
 use crate::{self as topsoil_indices, Config};
-use soil_runtime::BuildStorage;
+use subsoil::runtime::BuildStorage;
 use topsoil_support::{derive_impl, parameter_types};
 
 type Block = topsoil_system::mocking::MockBlock<Test>;
@@ -59,7 +59,7 @@ impl Config for Test {
 	type WeightInfo = ();
 }
 
-pub fn new_test_ext() -> soil_io::TestExternalities {
+pub fn new_test_ext() -> subsoil::io::TestExternalities {
 	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	topsoil_balances::GenesisConfig::<Test> {
 		balances: vec![(1, 10), (2, 20), (3, 30), (4, 40), (5, 50), (6, 60)],
@@ -67,7 +67,7 @@ pub fn new_test_ext() -> soil_io::TestExternalities {
 	}
 	.assimilate_storage(&mut t)
 	.unwrap();
-	let mut ext: soil_io::TestExternalities = t.into();
+	let mut ext: subsoil::io::TestExternalities = t.into();
 	// Initialize the block number to 1 for event registration
 	ext.execute_with(|| System::set_block_number(1));
 	ext

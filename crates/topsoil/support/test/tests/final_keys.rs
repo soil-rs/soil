@@ -19,12 +19,12 @@ use codec::Encode;
 use topsoil_support::{derive_impl, storage::unhashed, StoragePrefixedMap};
 use topsoil_system::pallet_prelude::BlockNumberFor;
 
-use soil_core::sr25519;
-use soil_io::{
+use subsoil::core::sr25519;
+use subsoil::io::{
 	hashing::{blake2_128, twox_128, twox_64},
 	TestExternalities,
 };
-use soil_runtime::{
+use subsoil::runtime::{
 	generic,
 	traits::{BlakeTwo256, Verify},
 };

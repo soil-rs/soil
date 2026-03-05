@@ -66,8 +66,8 @@ pub(crate) mod beefy_protocol_name {
 /// [`soil_network::config::FullNetworkConfiguration`].
 /// For standard protocol name see [`beefy_protocol_name::gossip_protocol_name`].
 pub fn beefy_peers_set_config<
-	B: soil_runtime::traits::Block,
-	N: soil_network::NetworkBackend<B, <B as soil_runtime::traits::Block>::Hash>,
+	B: subsoil::runtime::traits::Block,
+	N: soil_network::NetworkBackend<B, <B as subsoil::runtime::traits::Block>::Hash>,
 >(
 	gossip_protocol_name: soil_network::ProtocolName,
 	metrics: soil_network::service::NotificationMetrics,
@@ -125,7 +125,7 @@ mod benefit {
 mod tests {
 	use super::*;
 
-	use soil_core::H256;
+	use subsoil::core::H256;
 
 	#[test]
 	fn beefy_protocols_names() {

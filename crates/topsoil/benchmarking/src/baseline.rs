@@ -22,17 +22,17 @@
 
 use crate::benchmarks;
 use alloc::{vec, vec::Vec};
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{AppVerify, Hash},
 	RuntimeAppPublic,
 };
 use topsoil_system::Pallet as System;
 
 mod crypto {
-	use soil_application_crypto::{app_crypto, sr25519, KeyTypeId};
+	use subsoil::application_crypto::{sr25519, KeyTypeId};
 
 	pub const TEST_KEY_TYPE_ID: KeyTypeId = KeyTypeId(*b"test");
-	app_crypto!(sr25519, TEST_KEY_TYPE_ID);
+	subsoil::app_crypto!(sr25519, TEST_KEY_TYPE_ID);
 }
 pub type SignerId = crypto::Public;
 
@@ -110,7 +110,7 @@ benchmarks! {
 
 #[cfg(test)]
 pub mod mock {
-	use soil_runtime::{testing::H256, BuildStorage};
+	use subsoil::runtime::{testing::H256, BuildStorage};
 	use topsoil_support::derive_impl;
 
 	type AccountId = u64;
@@ -135,9 +135,9 @@ pub mod mock {
 		type Nonce = Nonce;
 		type RuntimeCall = RuntimeCall;
 		type Hash = H256;
-		type Hashing = ::soil_runtime::traits::BlakeTwo256;
+		type Hashing = ::subsoil::runtime::traits::BlakeTwo256;
 		type AccountId = AccountId;
-		type Lookup = soil_runtime::traits::IdentityLookup<Self::AccountId>;
+		type Lookup = subsoil::runtime::traits::IdentityLookup<Self::AccountId>;
 		type Block = Block;
 		type RuntimeEvent = RuntimeEvent;
 		type BlockHashCount = ();
@@ -154,11 +154,11 @@ pub mod mock {
 
 	impl super::Config for Test {}
 
-	pub fn new_test_ext() -> soil_io::TestExternalities {
-		use soil_keystore::{testing::MemoryKeystore, KeystoreExt};
+	pub fn new_test_ext() -> subsoil::io::TestExternalities {
+		use subsoil::keystore::{testing::MemoryKeystore, KeystoreExt};
 
 		let t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
-		let mut ext = soil_io::TestExternalities::new(t);
+		let mut ext = subsoil::io::TestExternalities::new(t);
 		ext.register_extension(KeystoreExt::new(MemoryKeystore::new()));
 
 		ext

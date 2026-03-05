@@ -33,14 +33,14 @@ use node_primitives::Block;
 use sc_consensus_babe::{self, SlotProportion};
 use sc_statement_store::Store as StatementStore;
 use sc_transaction_pool::TransactionPoolHandle;
-use soil_api::ProvideRuntimeApi;
+use subsoil::api::ProvideRuntimeApi;
 use soil_client_api::{Backend, BlockBackend};
-use soil_core::crypto::Pair;
+use subsoil::core::crypto::Pair;
 use soil_network::{
 	event::Event, service::traits::NetworkService, NetworkBackend, NetworkEventStream,
 };
 use soil_network_sync::{strategy::warp::WarpSyncConfig, SyncingService};
-use soil_runtime::{generic, traits::Block as BlockT, SaturatedConversion};
+use subsoil::runtime::{generic, traits::Block as BlockT, SaturatedConversion};
 use soil_service::{config::Configuration, error::Error as ServiceError, RpcHandlers, TaskManager};
 use soil_sysinfo::SUBSTRATE_REFERENCE_HARDWARE;
 use soil_telemetry::{Telemetry, TelemetryWorker};
@@ -52,12 +52,12 @@ use topsoil_system_rpc_runtime_api::AccountNonceApi;
 /// Host functions required for kitchensink runtime and Substrate node.
 #[cfg(not(feature = "runtime-benchmarks"))]
 pub type HostFunctions =
-	(soil_io::SubstrateHostFunctions, soil_statement_store::runtime_api::HostFunctions);
+	(subsoil::io::SubstrateHostFunctions, soil_statement_store::runtime_api::HostFunctions);
 
 /// Host functions required for kitchensink runtime and Substrate node.
 #[cfg(feature = "runtime-benchmarks")]
 pub type HostFunctions = (
-	soil_io::SubstrateHostFunctions,
+	subsoil::io::SubstrateHostFunctions,
 	soil_statement_store::runtime_api::HostFunctions,
 	topsoil_benchmarking::benchmarking::HostFunctions,
 );
@@ -90,7 +90,7 @@ const GRANDPA_JUSTIFICATION_PERIOD: u32 = 512;
 /// Fetch the nonce of the given `account` from the chain state.
 ///
 /// Note: Should only be used for tests.
-pub fn fetch_nonce(client: &FullClient, account: soil_core::sr25519::Pair) -> u32 {
+pub fn fetch_nonce(client: &FullClient, account: subsoil::core::sr25519::Pair) -> u32 {
 	let best_hash = client.chain_info().best_hash;
 	client
 		.runtime_api()
@@ -106,7 +106,7 @@ pub fn fetch_nonce(client: &FullClient, account: soil_core::sr25519::Pair) -> u3
 /// Note: Should only be used for tests.
 pub fn create_extrinsic(
 	client: &FullClient,
-	sender: soil_core::sr25519::Pair,
+	sender: subsoil::core::sr25519::Pair,
 	function: impl Into<kitchensink_runtime::RuntimeCall>,
 	nonce: Option<u32>,
 ) -> kitchensink_runtime::UncheckedExtrinsic {
@@ -162,7 +162,7 @@ pub fn create_extrinsic(
 
 	generic::UncheckedExtrinsic::new_signed(
 		function,
-		soil_runtime::AccountId32::from(sender.public()).into(),
+		subsoil::runtime::AccountId32::from(sender.public()).into(),
 		kitchensink_runtime::Signature::Sr25519(signature),
 		tx_ext,
 	)
@@ -268,7 +268,7 @@ pub fn new_partial(
 		beefy_block_import,
 		client.clone(),
 		Arc::new(move |_, _| async move {
-			let timestamp = soil_timestamp::InherentDataProvider::from_system_time();
+			let timestamp = subsoil::timestamp::InherentDataProvider::from_system_time();
 			let slot =
 			soil_consensus_babe::inherents::InherentDataProvider::from_timestamp_and_slot_duration(
 				*timestamp,
@@ -622,7 +622,7 @@ pub fn new_full_base<N: NetworkBackend<Block, <Block as BlockT>::Hash>>(
 			create_inherent_data_providers: move |parent, ()| {
 				let client_clone = client_clone.clone();
 				async move {
-					let timestamp = soil_timestamp::InherentDataProvider::from_system_time();
+					let timestamp = subsoil::timestamp::InherentDataProvider::from_system_time();
 
 					let slot =
 						soil_consensus_babe::inherents::InherentDataProvider::from_timestamp_and_slot_duration(
@@ -892,18 +892,17 @@ mod tests {
 	use soil_client_api::BlockBackend;
 	use soil_consensus::{BlockOrigin, Environment, Proposer};
 	use soil_consensus_epochs::descendent_query;
-	use soil_core::crypto::Pair;
-	use soil_inherents::InherentDataProvider;
-	use soil_keyring::Sr25519Keyring;
-	use soil_keystore::KeystorePtr;
-	use soil_runtime::{
+	use subsoil::core::crypto::Pair;
+	use subsoil::inherents::InherentDataProvider;
+	use subsoil::keyring::Sr25519Keyring;
+	use subsoil::keystore::KeystorePtr;
+	use subsoil::runtime::{
 		generic::{self, Digest, Era, SignedPayload},
 		key_types::BABE,
 		traits::{Block as BlockT, Header as HeaderT, IdentifyAccount, Verify},
 		RuntimeAppPublic,
 	};
 	use soil_service_test::TestNetNode;
-	use soil_timestamp;
 	use soil_transaction_pool_api::ChainEvent;
 	use soil_transaction_pool_api::MaintainedTransactionPool;
 	use std::sync::Arc;
@@ -915,7 +914,7 @@ mod tests {
 	// This can be run locally with `cargo test --release -p node-cli test_sync -- --ignored`.
 	#[ignore]
 	fn test_sync() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 
 		let keystore_path = tempfile::tempdir().expect("Creates keystore path");
 		let keystore: KeystorePtr = LocalKeystore::open(keystore_path.path(), None)
@@ -1016,7 +1015,7 @@ mod tests {
 
 				let inherent_data = futures::executor::block_on(
 					(
-						soil_timestamp::InherentDataProvider::new(
+						subsoil::timestamp::InherentDataProvider::new(
 							std::time::Duration::from_millis(SLOT_DURATION * slot).into(),
 						),
 						soil_consensus_babe::inherents::InherentDataProvider::new(slot.into()),
@@ -1148,7 +1147,7 @@ mod tests {
 	#[test]
 	#[ignore]
 	fn test_consensus() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 
 		soil_service_test::consensus(
 			crate::chain_spec::tests::integration_test_config_with_two_authorities(),

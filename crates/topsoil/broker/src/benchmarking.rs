@@ -21,9 +21,9 @@ use super::*;
 
 use crate::{CoreAssignment::Task, Pallet as Broker};
 use alloc::{vec, vec::Vec};
-use soil_arithmetic::{FixedU64, Perbill};
-use soil_core::Get;
-use soil_runtime::{
+use subsoil::arithmetic::{FixedU64, Perbill};
+use subsoil::core::Get;
+use subsoil::runtime::{
 	traits::{BlockNumberProvider, MaybeConvert},
 	FixedPointNumber, Saturating,
 };

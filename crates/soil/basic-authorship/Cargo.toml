@@ -24,14 +24,9 @@ sc-block-builder = { workspace = true, default-features = true, optional = true}
 soil-proposer-metrics = { workspace = true, default-features = true, optional = true}
 soil-telemetry = { workspace = true, default-features = true, optional = true}
 soil-transaction-pool-api = { workspace = true, default-features = true, optional = true}
-soil-api = { workspace = true, default-features = true, optional = true}
 soil-blockchain = { workspace = true, default-features = true, optional = true}
 soil-consensus = { workspace = true, default-features = true, optional = true}
-soil-core = { workspace = true, default-features = true, optional = true}
-soil-inherents = { workspace = true, default-features = true, optional = true}
-soil-runtime = { workspace = true, default-features = true, optional = true}
-soil-state-machine = { workspace = true, default-features = true, optional = true}
-soil-trie = { workspace = true, default-features = true, optional = true}
+subsoil = { workspace = true, default-features = true, optional = true}
 
 [features]
 default = ["std"]
@@ -41,27 +36,16 @@ std = [
 	"log",
 	"prometheus-endpoint",
 	"sc-block-builder",
-	"soil-api",
 	"soil-blockchain",
 	"soil-consensus",
-	"soil-core",
-	"soil-inherents",
+	"subsoil",
 	"soil-proposer-metrics",
-	"soil-runtime",
-	"soil-state-machine",
 	"soil-telemetry",
 	"soil-transaction-pool-api",
-	"soil-trie",
-	"soil-api/std",
-	"soil-core/std",
-	"soil-inherents/std",
+	"subsoil/std",
 	"soil-proposer-metrics/std",
-	"soil-runtime/std",
-	"soil-state-machine/std",
 	"soil-telemetry/std",
-	"soil-transaction-pool-api/std",
-	"soil-trie/std",
-]
+	"soil-transaction-pool-api/std"]
 
 [dev-dependencies]
 parking_lot = { workspace = true, default-features = true }

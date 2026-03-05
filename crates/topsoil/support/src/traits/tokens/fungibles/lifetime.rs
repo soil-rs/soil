@@ -21,7 +21,7 @@
 
 use super::Inspect;
 use crate::traits::tokens::{AssetId, Balance};
-use soil_runtime::{DispatchError, DispatchResult};
+use subsoil::runtime::{DispatchError, DispatchResult};
 
 /// Trait for providing the ability to create new fungible assets.
 pub trait Create<AccountId>: Inspect<AccountId> {

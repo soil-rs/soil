@@ -21,7 +21,7 @@ use crate::{
 	self as topsoil_transaction_storage, TransactionStorageProof, DEFAULT_MAX_BLOCK_TRANSACTIONS,
 	DEFAULT_MAX_TRANSACTION_SIZE,
 };
-use soil_runtime::{traits::IdentityLookup, BuildStorage};
+use subsoil::runtime::{traits::IdentityLookup, BuildStorage};
 use topsoil_support::{derive_impl, traits::ConstU32};
 
 pub type Block = topsoil_system::mocking::MockBlock<Test>;
@@ -60,7 +60,7 @@ impl topsoil_transaction_storage::Config for Test {
 	type MaxTransactionSize = ConstU32<{ DEFAULT_MAX_TRANSACTION_SIZE }>;
 }
 
-pub fn new_test_ext() -> soil_io::TestExternalities {
+pub fn new_test_ext() -> subsoil::io::TestExternalities {
 	let t = RuntimeGenesisConfig {
 		system: Default::default(),
 		balances: topsoil_balances::GenesisConfig::<Test> {

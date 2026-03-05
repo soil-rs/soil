@@ -18,11 +18,11 @@
 
 use codec::Decode;
 use kitchensink_runtime::{Executive, ExistentialDeposit, Indices, Runtime, UncheckedExtrinsic};
-use soil_application_crypto::AppCrypto;
-use soil_core::offchain::{testing::TestTransactionPoolExt, TransactionPoolExt};
-use soil_keyring::sr25519::Keyring::Alice;
-use soil_keystore::{testing::MemoryKeystore, Keystore, KeystoreExt};
-use soil_runtime::generic;
+use subsoil::application_crypto::AppCrypto;
+use subsoil::core::offchain::{testing::TestTransactionPoolExt, TransactionPoolExt};
+use subsoil::keyring::sr25519::Keyring::Alice;
+use subsoil::keystore::{testing::MemoryKeystore, Keystore, KeystoreExt};
+use subsoil::runtime::generic;
 use topsoil_system::offchain::{SendSignedTransaction, Signer, SubmitTransaction};
 
 pub mod common;
@@ -201,7 +201,7 @@ fn should_submit_signed_twice_from_all_accounts() {
 #[test]
 fn submitted_transaction_should_be_valid() {
 	use codec::Encode;
-	use soil_runtime::{
+	use subsoil::runtime::{
 		traits::StaticLookup,
 		transaction_validity::{TransactionSource, TransactionTag},
 	};

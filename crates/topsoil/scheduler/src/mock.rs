@@ -20,8 +20,8 @@
 use super::*;
 
 use crate as scheduler;
-use soil_runtime::{BuildStorage, Perbill};
-use soil_weights::constants::WEIGHT_REF_TIME_PER_SECOND;
+use subsoil::runtime::{BuildStorage, Perbill};
+use subsoil::weights::constants::WEIGHT_REF_TIME_PER_SECOND;
 use topsoil_support::{
 	derive_impl, ord_parameter_types, parameter_types,
 	traits::{ConstU32, Contains, EitherOfDiverse, EqualPrivilegeOnly},
@@ -236,7 +236,7 @@ impl Config for Test {
 
 pub type LoggerCall = logger::Call<Test>;
 
-pub fn new_test_ext() -> soil_io::TestExternalities {
+pub fn new_test_ext() -> subsoil::io::TestExternalities {
 	let t = system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	t.into()
 }

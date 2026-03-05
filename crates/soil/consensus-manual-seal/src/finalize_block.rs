@@ -20,7 +20,7 @@
 
 use crate::rpc;
 use soil_client_api::backend::{Backend as ClientBackend, Finalizer};
-use soil_runtime::{traits::Block as BlockT, Justification};
+use subsoil::runtime::{traits::Block as BlockT, Justification};
 use std::{marker::PhantomData, sync::Arc};
 
 /// params for block finalization.

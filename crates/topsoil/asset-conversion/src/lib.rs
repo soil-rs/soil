@@ -76,8 +76,8 @@ extern crate alloc;
 
 use alloc::{boxed::Box, collections::btree_set::BTreeSet, vec::Vec};
 use codec::Codec;
-use soil_core::Get;
-use soil_runtime::{
+use subsoil::core::Get;
+use subsoil::runtime::{
 	traits::{
 		CheckedAdd, CheckedDiv, CheckedMul, CheckedSub, Ensure, IntegerSquareRoot, MaybeDisplay,
 		One, TrailingZeroInput, Zero,
@@ -101,7 +101,7 @@ use topsoil_support::{
 #[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
-	use soil_arithmetic::{traits::Unsigned, Permill};
+	use subsoil::arithmetic::{traits::Unsigned, Permill};
 	use topsoil_support::{pallet_prelude::*, traits::fungibles::Refund};
 	use topsoil_system::pallet_prelude::*;
 
@@ -1361,7 +1361,7 @@ pub mod pallet {
 	}
 }
 
-soil_api::decl_runtime_apis! {
+subsoil::api::decl_runtime_apis! {
 	/// This runtime api allows people to query the size of the liquidity pools
 	/// and quote prices for swaps.
 	pub trait AssetConversionApi<Balance, AssetId>
@@ -1396,4 +1396,4 @@ soil_api::decl_runtime_apis! {
 	}
 }
 
-soil_core::generate_feature_enabled_macro!(runtime_benchmarks_enabled, feature = "runtime-benchmarks", $);
+subsoil::generate_feature_enabled_macro!(runtime_benchmarks_enabled, feature = "runtime-benchmarks", $);

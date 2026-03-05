@@ -19,9 +19,7 @@ codec = { features = ["derive"], workspace = true }
 topsoil-support = { workspace = true }
 topsoil-system = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
-soil-core = { workspace = true }
-soil-runtime = { workspace = true }
-soil-version = { workspace = true }
+subsoil = { workspace = true }
 
 [features]
 default = ["std"]
@@ -30,7 +28,5 @@ std = [
 	"topsoil-support/std",
 	"topsoil-system/std",
 	"scale-info/std",
-	"soil-core/std",
-	"soil-runtime/std",
-	"soil-version/std",
+	"subsoil/std",
 ]

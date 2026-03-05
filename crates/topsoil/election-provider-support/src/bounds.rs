@@ -56,7 +56,7 @@
 
 use codec::Encode;
 use core::ops::Add;
-use soil_runtime::traits::Zero;
+use subsoil::runtime::traits::Zero;
 
 /// Count type for data provider bounds.
 ///

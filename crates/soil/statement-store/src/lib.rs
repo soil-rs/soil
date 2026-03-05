@@ -26,13 +26,13 @@ use alloc::vec::Vec;
 use codec::{Compact, Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use core::ops::Deref;
 use scale_info::{build::Fields, Path, Type, TypeInfo};
-use soil_application_crypto::RuntimeAppPublic;
+use subsoil::application_crypto::RuntimeAppPublic;
 #[cfg(feature = "std")]
-use soil_core::Pair;
+use subsoil::core::Pair;
 
 /// Statement topic.
 ///
-/// A 32-byte topic identifier that serializes as a hex string (like `soil_core::Bytes`).
+/// A 32-byte topic identifier that serializes as a hex string (like `subsoil::core::Bytes`).
 #[derive(
 	Clone,
 	Copy,
@@ -57,7 +57,7 @@ impl serde::Serialize for Topic {
 	where
 		S: serde::Serializer,
 	{
-		soil_core::bytes::serialize(&self.0, serializer)
+		subsoil::core::bytes::serialize(&self.0, serializer)
 	}
 }
 
@@ -68,9 +68,9 @@ impl<'de> serde::Deserialize<'de> for Topic {
 		D: serde::Deserializer<'de>,
 	{
 		let mut arr = [0u8; 32];
-		soil_core::bytes::deserialize_check_len(
+		subsoil::core::bytes::deserialize_check_len(
 			deserializer,
-			soil_core::bytes::ExpectedLen::Exact(&mut arr[..]),
+			subsoil::core::bytes::ExpectedLen::Exact(&mut arr[..]),
 		)?;
 		Ok(Topic(arr))
 	}
@@ -220,8 +220,8 @@ mod store_api;
 
 mod sr25519 {
 	mod app_sr25519 {
-		use soil_application_crypto::{app_crypto, key_types::STATEMENT, sr25519};
-		app_crypto!(sr25519, STATEMENT);
+		use subsoil::application_crypto::{key_types::STATEMENT, sr25519};
+		subsoil::app_crypto!(sr25519, STATEMENT);
 	}
 	pub type Public = app_sr25519::Public;
 }
@@ -229,8 +229,8 @@ mod sr25519 {
 /// Statement-store specific ed25519 crypto primitives.
 pub mod ed25519 {
 	mod app_ed25519 {
-		use soil_application_crypto::{app_crypto, ed25519, key_types::STATEMENT};
-		app_crypto!(ed25519, STATEMENT);
+		use subsoil::application_crypto::{ed25519, key_types::STATEMENT};
+		subsoil::app_crypto!(ed25519, STATEMENT);
 	}
 	/// Statement-store specific ed25519 public key.
 	pub type Public = app_ed25519::Public;
@@ -241,8 +241,8 @@ pub mod ed25519 {
 
 mod ecdsa {
 	mod app_ecdsa {
-		use soil_application_crypto::{app_crypto, ecdsa, key_types::STATEMENT};
-		app_crypto!(ecdsa, STATEMENT);
+		use subsoil::application_crypto::{ecdsa, key_types::STATEMENT};
+		subsoil::app_crypto!(ecdsa, STATEMENT);
 	}
 	pub type Public = app_ecdsa::Public;
 }
@@ -250,7 +250,7 @@ mod ecdsa {
 /// Returns blake2-256 hash for the encoded statement.
 #[cfg(feature = "std")]
 pub fn hash_encoded(data: &[u8]) -> [u8; 32] {
-	soil_crypto_hashing::blake2_256(data)
+	subsoil_crypto_hashing::blake2_256(data)
 }
 
 /// Statement proof.
@@ -297,7 +297,7 @@ impl Proof {
 			Proof::Sr25519 { signer, .. } => *signer,
 			Proof::Ed25519 { signer, .. } => *signer,
 			Proof::Secp256k1Ecdsa { signer, .. } => {
-				<soil_runtime::traits::BlakeTwo256 as soil_core::Hasher>::hash(signer).into()
+				<subsoil::runtime::traits::BlakeTwo256 as subsoil::core::Hasher>::hash(signer).into()
 			},
 			Proof::OnChain { who, .. } => *who,
 		}
@@ -478,7 +478,7 @@ impl Statement {
 
 	/// Sign with a given private key and add the signature proof field.
 	#[cfg(feature = "std")]
-	pub fn sign_sr25519_private(&mut self, key: &soil_core::sr25519::Pair) {
+	pub fn sign_sr25519_private(&mut self, key: &subsoil::core::sr25519::Pair) {
 		let to_sign = self.signature_material();
 		let proof =
 			Proof::Sr25519 { signature: key.sign(&to_sign).into(), signer: key.public().into() };
@@ -506,7 +506,7 @@ impl Statement {
 
 	/// Sign with a given private key and add the signature proof field.
 	#[cfg(feature = "std")]
-	pub fn sign_ed25519_private(&mut self, key: &soil_core::ed25519::Pair) {
+	pub fn sign_ed25519_private(&mut self, key: &subsoil::core::ed25519::Pair) {
 		let to_sign = self.signature_material();
 		let proof =
 			Proof::Ed25519 { signature: key.sign(&to_sign).into(), signer: key.public().into() };
@@ -538,7 +538,7 @@ impl Statement {
 
 	/// Sign with a given private key and add the signature proof field.
 	#[cfg(feature = "std")]
-	pub fn sign_ecdsa_private(&mut self, key: &soil_core::ecdsa::Pair) {
+	pub fn sign_ecdsa_private(&mut self, key: &subsoil::core::ecdsa::Pair) {
 		let to_sign = self.signature_material();
 		let proof =
 			Proof::Secp256k1Ecdsa { signature: key.sign(&to_sign).into(), signer: key.public().0 };
@@ -547,14 +547,14 @@ impl Statement {
 
 	/// Check proof signature, if any.
 	pub fn verify_signature(&self) -> SignatureVerificationResult {
-		use soil_runtime::traits::Verify;
+		use subsoil::runtime::traits::Verify;
 
 		match self.proof() {
 			Some(Proof::OnChain { .. }) | None => SignatureVerificationResult::NoSignature,
 			Some(Proof::Sr25519 { signature, signer }) => {
 				let to_sign = self.signature_material();
-				let signature = soil_core::sr25519::Signature::from(*signature);
-				let public = soil_core::sr25519::Public::from(*signer);
+				let signature = subsoil::core::sr25519::Signature::from(*signature);
+				let public = subsoil::core::sr25519::Public::from(*signer);
 				if signature.verify(to_sign.as_slice(), &public) {
 					SignatureVerificationResult::Valid(*signer)
 				} else {
@@ -563,8 +563,8 @@ impl Statement {
 			},
 			Some(Proof::Ed25519 { signature, signer }) => {
 				let to_sign = self.signature_material();
-				let signature = soil_core::ed25519::Signature::from(*signature);
-				let public = soil_core::ed25519::Public::from(*signer);
+				let signature = subsoil::core::ed25519::Signature::from(*signature);
+				let public = subsoil::core::ed25519::Public::from(*signer);
 				if signature.verify(to_sign.as_slice(), &public) {
 					SignatureVerificationResult::Valid(*signer)
 				} else {
@@ -573,11 +573,11 @@ impl Statement {
 			},
 			Some(Proof::Secp256k1Ecdsa { signature, signer }) => {
 				let to_sign = self.signature_material();
-				let signature = soil_core::ecdsa::Signature::from(*signature);
-				let public = soil_core::ecdsa::Public::from(*signer);
+				let signature = subsoil::core::ecdsa::Signature::from(*signature);
+				let public = subsoil::core::ecdsa::Public::from(*signer);
 				if signature.verify(to_sign.as_slice(), &public) {
 					let sender_hash =
-						<soil_runtime::traits::BlakeTwo256 as soil_core::Hasher>::hash(signer);
+						<subsoil::runtime::traits::BlakeTwo256 as subsoil::core::Hasher>::hash(signer);
 					SignatureVerificationResult::Valid(sender_hash.into())
 				} else {
 					SignatureVerificationResult::Invalid
@@ -787,7 +787,7 @@ impl Statement {
 	pub fn encrypt(
 		&mut self,
 		data: &[u8],
-		key: &soil_core::ed25519::Public,
+		key: &subsoil::core::ed25519::Public,
 	) -> core::result::Result<(), ecies::Error> {
 		let encrypted = ecies::encrypt_ed25519(key, data)?;
 		self.data = Some(encrypted);
@@ -799,7 +799,7 @@ impl Statement {
 	#[cfg(feature = "std")]
 	pub fn decrypt_private(
 		&self,
-		key: &soil_core::ed25519::Pair,
+		key: &subsoil::core::ed25519::Pair,
 	) -> core::result::Result<Option<Vec<u8>>, ecies::Error> {
 		self.data.as_ref().map(|d| ecies::decrypt_ed25519(key, d)).transpose()
 	}
@@ -812,8 +812,8 @@ mod test {
 	};
 	use codec::{Decode, Encode};
 	use scale_info::{MetaType, TypeInfo};
-	use soil_application_crypto::Pair;
-	use soil_core::sr25519;
+	use subsoil::application_crypto::Pair;
+	use subsoil::core::sr25519;
 
 	#[test]
 	fn statement_encoding_matches_vec() {
@@ -884,9 +884,9 @@ mod test {
 		let mut statement = Statement::new();
 		statement.set_plain_data(vec![42]);
 
-		let sr25519_kp = soil_core::sr25519::Pair::from_string("//Alice", None).unwrap();
-		let ed25519_kp = soil_core::ed25519::Pair::from_string("//Alice", None).unwrap();
-		let secp256k1_kp = soil_core::ecdsa::Pair::from_string("//Alice", None).unwrap();
+		let sr25519_kp = subsoil::core::sr25519::Pair::from_string("//Alice", None).unwrap();
+		let ed25519_kp = subsoil::core::ed25519::Pair::from_string("//Alice", None).unwrap();
+		let secp256k1_kp = subsoil::core::ecdsa::Pair::from_string("//Alice", None).unwrap();
 
 		statement.sign_sr25519_private(&sr25519_kp);
 		assert_eq!(
@@ -903,7 +903,7 @@ mod test {
 		statement.sign_ecdsa_private(&secp256k1_kp);
 		assert_eq!(
 			statement.verify_signature(),
-			SignatureVerificationResult::Valid(soil_crypto_hashing::blake2_256(
+			SignatureVerificationResult::Valid(subsoil_crypto_hashing::blake2_256(
 				&secp256k1_kp.public().0
 			))
 		);
@@ -919,10 +919,10 @@ mod test {
 	#[test]
 	fn encrypt_decrypt() {
 		let mut statement = Statement::new();
-		let (pair, _) = soil_core::ed25519::Pair::generate();
+		let (pair, _) = subsoil::core::ed25519::Pair::generate();
 		let plain = b"test data".to_vec();
 
-		// let sr25519_kp = soil_core::sr25519::Pair::from_string("//Alice", None).unwrap();
+		// let sr25519_kp = subsoil::core::sr25519::Pair::from_string("//Alice", None).unwrap();
 		statement.encrypt(&plain, &pair.public()).unwrap();
 		assert_ne!(plain.as_slice(), statement.data().unwrap().as_slice());
 

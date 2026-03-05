@@ -227,25 +227,25 @@ pub mod prelude {
 
 	/// Runtime traits
 	#[doc(no_inline)]
-	pub use soil_runtime::traits::{
+	pub use subsoil::runtime::traits::{
 		AccountIdConversion, BlockNumberProvider, Bounded, Convert, ConvertBack, DispatchInfoOf,
 		Dispatchable, ReduceBy, ReplaceWithDefault, SaturatedConversion, Saturating, StaticLookup,
 		TrailingZeroInput,
 	};
 
 	/// Bounded storage related types.
-	pub use soil_runtime::{BoundedSlice, BoundedVec};
+	pub use subsoil::runtime::{BoundedSlice, BoundedVec};
 
 	/// Other error/result types for runtime
 	#[doc(no_inline)]
-	pub use soil_runtime::{
+	pub use subsoil::runtime::{
 		BoundToRuntimeAppPublic, DispatchErrorWithPostInfo, DispatchResultWithInfo, TokenError,
 	};
 }
 
 #[cfg(any(feature = "try-runtime", test))]
 pub mod try_runtime {
-	pub use soil_runtime::TryRuntimeError;
+	pub use subsoil::runtime::TryRuntimeError;
 }
 
 /// Prelude to be included in the `benchmarking.rs` of a pallet.
@@ -335,12 +335,12 @@ pub mod testing_prelude {
 	pub use topsoil_system::{self, mocking::*, RunToBlockHooks};
 
 	#[deprecated(note = "Use `topsoil::testing_prelude::TestState` instead.")]
-	pub use soil_io::TestExternalities;
+	pub use subsoil::io::TestExternalities;
 
-	pub use soil_io::TestExternalities as TestState;
+	pub use subsoil::io::TestExternalities as TestState;
 
 	/// Commonly used runtime traits for testing.
-	pub use soil_runtime::{traits::BadOrigin, StateVersion};
+	pub use subsoil::runtime::{traits::BadOrigin, StateVersion};
 }
 
 /// All of the types and tools needed to build FRAME-based runtimes.
@@ -399,24 +399,24 @@ pub mod runtime {
 		/// Types to define your runtime version.
 		// TODO: Remove deprecation suppression once
 		#[allow(deprecated)]
-		pub use soil_version::create_runtime_str;
-		pub use soil_version::{runtime_version, RuntimeVersion};
+		pub use subsoil::version::create_runtime_str;
+		pub use subsoil::version::{runtime_version, RuntimeVersion};
 
 		#[cfg(feature = "std")]
-		pub use soil_version::NativeVersion;
+		pub use subsoil::version::NativeVersion;
 
 		/// Macro to implement runtime APIs.
-		pub use soil_api::impl_runtime_apis;
+		pub use subsoil::api::impl_runtime_apis;
 
 		// Types often used in the runtime APIs.
-		pub use soil_core::OpaqueMetadata;
+		pub use subsoil::core::OpaqueMetadata;
 		pub use soil_genesis_builder::{
 			PresetId, Result as GenesisBuilderResult, DEV_RUNTIME_PRESET,
 			LOCAL_TESTNET_RUNTIME_PRESET,
 		};
-		pub use soil_inherents::{CheckInherentsResult, InherentData};
-		pub use soil_keyring::Sr25519Keyring;
-		pub use soil_runtime::{ApplyExtrinsicResult, ExtrinsicInclusionMode};
+		pub use subsoil::inherents::{CheckInherentsResult, InherentData};
+		pub use subsoil::keyring::Sr25519Keyring;
+		pub use subsoil::runtime::{ApplyExtrinsicResult, ExtrinsicInclusionMode};
 	}
 
 	/// Types and traits for runtimes that implement runtime APIs.
@@ -434,7 +434,7 @@ pub mod runtime {
 	// moved to file similarly.
 	#[allow(ambiguous_glob_reexports)]
 	pub mod apis {
-		pub use soil_api::{self, *};
+		pub use subsoil::api::{self, *};
 		pub use soil_block_builder::*;
 		pub use soil_consensus_aura::*;
 		pub use soil_consensus_grandpa::*;
@@ -453,16 +453,16 @@ pub mod runtime {
 	/// Some note-worthy opinions in this prelude:
 	///
 	/// - `u32` block number.
-	/// - [`soil_runtime::MultiAddress`] and [`soil_runtime::MultiSignature`] are used as the account id
+	/// - [`subsoil::runtime::MultiAddress`] and [`subsoil::runtime::MultiSignature`] are used as the account id
 	///   and signature types. This implies that this prelude can possibly used with an
 	///   "account-index" system (eg `topsoil-indices`). And, in any case, it should be paired with
 	///   `AccountIdLookup` in [`topsoil_system::Config::Lookup`].
 	pub mod types_common {
-		use soil_runtime::{generic, traits, OpaqueExtrinsic};
+		use subsoil::runtime::{generic, traits, OpaqueExtrinsic};
 		use topsoil_system::Config as SysConfig;
 
 		/// A signature type compatible capably of handling multiple crypto-schemes.
-		pub type Signature = soil_runtime::MultiSignature;
+		pub type Signature = subsoil::runtime::MultiSignature;
 
 		/// The corresponding account-id type of [`Signature`].
 		pub type AccountId =
@@ -477,7 +477,7 @@ pub mod runtime {
 		// NOTE: `AccountIndex` is provided for future compatibility, if you want to introduce
 		// something like `topsoil-indices`.
 		type ExtrinsicInner<T, Extra, AccountIndex = ()> = generic::UncheckedExtrinsic<
-			soil_runtime::MultiAddress<AccountId, AccountIndex>,
+			subsoil::runtime::MultiAddress<AccountId, AccountIndex>,
 			<T as SysConfig>::RuntimeCall,
 			Signature,
 			Extra,
@@ -492,7 +492,7 @@ pub mod runtime {
 		pub type BlockOf<T, Extra = ()> = generic::Block<HeaderInner, ExtrinsicInner<T, Extra>>;
 
 		/// The opaque block type. This is the same [`BlockOf`], but it has
-		/// [`soil_runtime::OpaqueExtrinsic`] as its final extrinsic type.
+		/// [`subsoil::runtime::OpaqueExtrinsic`] as its final extrinsic type.
 		///
 		/// This should be provided to the client side as the extrinsic type.
 		pub type OpaqueBlock = generic::Block<HeaderInner, OpaqueExtrinsic>;
@@ -518,8 +518,8 @@ pub mod runtime {
 	/// counter part of `runtime::prelude`.
 	#[cfg(feature = "std")]
 	pub mod testing_prelude {
-		pub use soil_core::storage::Storage;
-		pub use soil_runtime::{BuildStorage, DispatchError};
+		pub use subsoil::core::storage::Storage;
+		pub use subsoil::runtime::{BuildStorage, DispatchError};
 	}
 }
 
@@ -530,7 +530,7 @@ pub mod runtime {
 // cleaned up.
 #[allow(ambiguous_glob_reexports)]
 pub mod traits {
-	pub use soil_runtime::traits::*;
+	pub use subsoil::runtime::traits::*;
 	pub use topsoil_support::traits::*;
 }
 
@@ -538,7 +538,7 @@ pub mod traits {
 ///
 /// This is already part of the main [`prelude`].
 pub mod arithmetic {
-	pub use soil_arithmetic::{traits::*, *};
+	pub use subsoil::arithmetic::{traits::*, *};
 }
 
 /// All token related types and traits.
@@ -579,16 +579,16 @@ pub mod derive {
 ///
 /// This is already part of the main [`prelude`].
 pub mod hashing {
-	pub use soil_core::{hashing::*, H160, H256, H512, U256, U512};
-	pub use soil_runtime::traits::{BlakeTwo256, Hash, Keccak256};
+	pub use subsoil::core::{hashing::*, H160, H256, H512, U256, U512};
+	pub use subsoil::runtime::traits::{BlakeTwo256, Hash, Keccak256};
 }
 
 // Systems involved in transaction execution in the runtime.
 /// This is already part of the [`prelude`].
 pub mod transaction {
-	pub use soil_runtime::{
+	pub use subsoil::impl_tx_ext_default;
+	pub use subsoil::runtime::{
 		generic::ExtensionVersion,
-		impl_tx_ext_default,
 		traits::{
 			AsTransactionAuthorizedOrigin, DispatchTransaction, TransactionExtension,
 			ValidateResult,
@@ -602,7 +602,7 @@ pub mod transaction {
 ///
 /// This is already part of the [`prelude`].
 pub mod account {
-	pub use soil_runtime::traits::{IdentifyAccount, IdentityLookup};
+	pub use subsoil::runtime::traits::{IdentifyAccount, IdentityLookup};
 	pub use topsoil_support::traits::{
 		AsEnsureOriginWithArg, ChangeMembers, EitherOfDiverse, InitializeMembers,
 	};
@@ -622,16 +622,15 @@ pub mod deps {
 	pub use topsoil_support;
 	pub use topsoil_system;
 
-	pub use soil_arithmetic;
-	pub use soil_core;
-	pub use soil_io;
-	pub use soil_runtime;
+	pub use subsoil;
+	pub use subsoil::arithmetic;
+	pub use subsoil::core;
+	pub use subsoil::io;
+	pub use subsoil::runtime;
 
 	pub use codec;
 	pub use scale_info;
 
-	#[cfg(feature = "runtime")]
-	pub use soil_api;
 	#[cfg(feature = "runtime")]
 	pub use soil_block_builder;
 	#[cfg(feature = "runtime")]
@@ -641,15 +640,15 @@ pub mod deps {
 	#[cfg(feature = "runtime")]
 	pub use soil_genesis_builder;
 	#[cfg(feature = "runtime")]
-	pub use soil_inherents;
+	pub use subsoil::inherents;
 	#[cfg(feature = "runtime")]
-	pub use soil_keyring;
+	pub use subsoil::keyring;
 	#[cfg(feature = "runtime")]
 	pub use soil_offchain;
 	#[cfg(feature = "runtime")]
-	pub use soil_storage;
+	pub use subsoil::storage;
 	#[cfg(feature = "runtime")]
-	pub use soil_version;
+	pub use subsoil::version;
 	#[cfg(feature = "runtime")]
 	pub use topsoil_executive;
 

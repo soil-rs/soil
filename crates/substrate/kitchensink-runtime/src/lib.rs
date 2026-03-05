@@ -23,8 +23,10 @@
 
 extern crate alloc;
 
+use subsoil::runtime::str_array as s;
+
 #[cfg(feature = "runtime-benchmarks")]
-use soil_core::crypto::FromEntropy;
+use subsoil::core::crypto::FromEntropy;
 #[cfg(feature = "runtime-benchmarks")]
 use topsoil_asset_rate::AssetKindFactory;
 #[cfg(feature = "runtime-benchmarks")]
@@ -42,11 +44,10 @@ use soil_consensus_beefy::{
 	mmr::MmrLeafVersion,
 };
 use soil_consensus_grandpa::AuthorityId as GrandpaId;
-use soil_core::{crypto::KeyTypeId, OpaqueMetadata};
-use soil_inherents::{CheckInherentsResult, InherentData};
-use soil_runtime::{
+use subsoil::core::{crypto::KeyTypeId, OpaqueMetadata};
+use subsoil::inherents::{CheckInherentsResult, InherentData};
+use subsoil::runtime::{
 	curve::PiecewiseLinear,
-	generic, impl_opaque_keys, str_array as s,
 	traits::{
 		self, AccountIdConversion, BlakeTwo256, Block as BlockT, Bounded, ConvertInto,
 		MaybeConvert, NumberFor, OpaqueKeys, SaturatedConversion, StaticLookup,
@@ -55,10 +56,10 @@ use soil_runtime::{
 	ApplyExtrinsicResult, Debug, FixedPointNumber, FixedU128, MultiSignature, MultiSigner, Perbill,
 	Percent, Permill, Perquintill,
 };
-use soil_std::{borrow::Cow, prelude::*};
+use subsoil::std::{borrow::Cow, prelude::*};
 #[cfg(any(feature = "std", test))]
-use soil_version::NativeVersion;
-use soil_version::RuntimeVersion;
+use subsoil::version::NativeVersion;
+use subsoil::version::RuntimeVersion;
 use static_assertions::const_assert;
 use topsoil_asset_conversion::{AccountIdConverter, Ascending, Chain, WithFirstAsset};
 use topsoil_asset_conversion_tx_payment::SwapAssetAdapter;
@@ -116,7 +117,7 @@ pub use topsoil_transaction_payment::{FungibleAdapter, Multiplier, TargetedFeeAd
 use topsoil_tx_pause::RuntimeCallNameOf;
 
 #[cfg(any(feature = "std", test))]
-pub use soil_runtime::BuildStorage;
+pub use subsoil::runtime::BuildStorage;
 #[cfg(any(feature = "std", test))]
 pub use topsoil_balances::Call as BalancesCall;
 #[cfg(any(feature = "std", test))]
@@ -135,7 +136,7 @@ use impls::AllianceProposalProvider;
 /// Constant values used within the runtime.
 pub mod constants;
 use constants::{currency::*, time::*};
-use soil_runtime::generic::Era;
+use subsoil::runtime::{generic, generic::Era};
 
 /// Generated voter bag information.
 mod voter_bags;
@@ -166,7 +167,7 @@ pub fn wasm_binary_unwrap() -> &'static [u8] {
 }
 
 /// Runtime version.
-#[soil_version::runtime_version]
+#[subsoil::version::runtime_version]
 pub const VERSION: RuntimeVersion = RuntimeVersion {
 	spec_name: alloc::borrow::Cow::Borrowed("node"),
 	impl_name: alloc::borrow::Cow::Borrowed("substrate-node"),
@@ -654,7 +655,7 @@ impl topsoil_authorship::Config for Runtime {
 	type EventHandler = (Staking, ImOnline);
 }
 
-impl_opaque_keys! {
+subsoil::impl_opaque_keys! {
 	pub struct SessionKeys {
 		pub grandpa: Grandpa,
 		pub babe: Babe,
@@ -668,7 +669,7 @@ impl_opaque_keys! {
 impl topsoil_session::Config for Runtime {
 	type RuntimeEvent = RuntimeEvent;
 	type ValidatorId = <Self as topsoil_system::Config>::AccountId;
-	type ValidatorIdOf = soil_runtime::traits::ConvertInto;
+	type ValidatorIdOf = subsoil::runtime::traits::ConvertInto;
 	type ShouldEndSession = Babe;
 	type NextSessionRotation = Babe;
 	type SessionManager = topsoil_session::historical::NoteHistoricalRoot<Self, Staking>;
@@ -795,7 +796,7 @@ topsoil_election_provider_support::generate_solution_type!(
 	pub struct NposSolution16::<
 		VoterIndex = u32,
 		TargetIndex = u16,
-		Accuracy = soil_runtime::PerU16,
+		Accuracy = subsoil::runtime::PerU16,
 		MaxVoters = MaxElectingVotersSolution,
 	>(16)
 );
@@ -837,11 +838,11 @@ pub const MINER_MAX_ITERATIONS: u32 = 10;
 pub struct OffchainRandomBalancing;
 impl Get<Option<BalancingConfig>> for OffchainRandomBalancing {
 	fn get() -> Option<BalancingConfig> {
-		use soil_runtime::traits::TrailingZeroInput;
+		use subsoil::runtime::traits::TrailingZeroInput;
 		let iterations = match MINER_MAX_ITERATIONS {
 			0 => 0,
 			max => {
-				let seed = soil_io::offchain::random_seed();
+				let seed = subsoil::io::offchain::random_seed();
 				let random = <u32>::decode(&mut TrailingZeroInput::new(&seed))
 					.expect("input is padded with zeroes; qed")
 					% max.saturating_add(1);
@@ -957,16 +958,16 @@ parameter_types! {
 	pub const MaxPointsToBalance: u8 = 10;
 }
 
-use soil_runtime::traits::{Convert, Keccak256};
+use subsoil::runtime::traits::{Convert, Keccak256};
 pub struct BalanceToU256;
-impl Convert<Balance, soil_core::U256> for BalanceToU256 {
-	fn convert(balance: Balance) -> soil_core::U256 {
-		soil_core::U256::from(balance)
+impl Convert<Balance, subsoil::core::U256> for BalanceToU256 {
+	fn convert(balance: Balance) -> subsoil::core::U256 {
+		subsoil::core::U256::from(balance)
 	}
 }
 pub struct U256ToBalance;
-impl Convert<soil_core::U256, Balance> for U256ToBalance {
-	fn convert(n: soil_core::U256) -> Balance {
+impl Convert<subsoil::core::U256, Balance> for U256ToBalance {
+	fn convert(n: subsoil::core::U256) -> Balance {
 		n.try_into().unwrap_or(Balance::max_value())
 	}
 }
@@ -1417,17 +1418,17 @@ impl topsoil_multi_asset_bounties::Config for Runtime {
 	type FundingSource = topsoil_multi_asset_bounties::PalletIdAsFundingSource<
 		TreasuryPalletId,
 		Runtime,
-		soil_runtime::traits::Identity,
+		subsoil::runtime::traits::Identity,
 	>;
 	type BountySource = topsoil_multi_asset_bounties::BountySourceFromPalletId<
 		TreasuryPalletId,
 		Runtime,
-		soil_runtime::traits::Identity,
+		subsoil::runtime::traits::Identity,
 	>;
 	type ChildBountySource = topsoil_multi_asset_bounties::ChildBountySourceFromPalletId<
 		TreasuryPalletId,
 		Runtime,
-		soil_runtime::traits::Identity,
+		subsoil::runtime::traits::Identity,
 	>;
 	type Paymaster = PayWithFungibles<NativeAndAssets, AccountId>;
 	type BalanceConverter = AssetRate;
@@ -1839,7 +1840,7 @@ pub type NativeAndAssets =
 impl topsoil_asset_conversion::Config for Runtime {
 	type RuntimeEvent = RuntimeEvent;
 	type Balance = u128;
-	type HigherPrecisionBalance = soil_core::U256;
+	type HigherPrecisionBalance = subsoil::core::U256;
 	type AssetKind = NativeOrWithId<u32>;
 	type Assets = NativeAndAssets;
 	type PoolId = (Self::AssetKind, Self::AssetKind);
@@ -1982,7 +1983,7 @@ impl topsoil_nis::BenchmarkSetup for SetupAsset {
 		let _ = Assets::force_create(
 			RuntimeOrigin::root(),
 			9u32.into(),
-			soil_runtime::MultiAddress::Id(owner),
+			subsoil::runtime::MultiAddress::Id(owner),
 			true,
 			1,
 		);
@@ -2734,7 +2735,7 @@ mod runtime {
 }
 
 /// The address format for describing accounts.
-pub type Address = soil_runtime::MultiAddress<AccountId, AccountIndex>;
+pub type Address = subsoil::runtime::MultiAddress<AccountId, AccountIndex>;
 /// Block header type as expected by this runtime.
 pub type Header = generic::Header<BlockNumber, BlakeTwo256>;
 /// Block type as expected by this runtime.
@@ -2871,7 +2872,7 @@ mod mmr {
 	pub use topsoil_mmr::primitives::*;
 
 	pub type Leaf = <<Runtime as topsoil_mmr::Config>::LeafData as LeafDataProvider>::LeafData;
-	pub type Hash = <Hashing as soil_runtime::traits::Hash>::Output;
+	pub type Hash = <Hashing as subsoil::runtime::traits::Hash>::Output;
 	pub type Hashing = <Runtime as topsoil_mmr::Config>::Hashing;
 }
 
@@ -3007,8 +3008,8 @@ mod benches {
 	);
 }
 
-soil_api::impl_runtime_apis! {
-	impl soil_api::Core<Block> for Runtime {
+subsoil::api::impl_runtime_apis! {
+	impl subsoil::api::Core<Block> for Runtime {
 		fn version() -> RuntimeVersion {
 			VERSION
 		}
@@ -3017,12 +3018,12 @@ soil_api::impl_runtime_apis! {
 			Executive::execute_block(block);
 		}
 
-		fn initialize_block(header: &<Block as BlockT>::Header) -> soil_runtime::ExtrinsicInclusionMode {
+		fn initialize_block(header: &<Block as BlockT>::Header) -> subsoil::runtime::ExtrinsicInclusionMode {
 			Executive::initialize_block(header)
 		}
 	}
 
-	impl soil_api::Metadata<Block> for Runtime {
+	impl subsoil::api::Metadata<Block> for Runtime {
 		fn metadata() -> OpaqueMetadata {
 			OpaqueMetadata::new(Runtime::metadata().into())
 		}
@@ -3384,7 +3385,7 @@ soil_api::impl_runtime_apis! {
 				soil_consensus_beefy::ForkVotingProof<
 					<Block as BlockT>::Header,
 					BeefyId,
-					soil_runtime::OpaqueValue
+					subsoil::runtime::OpaqueValue
 				>,
 			key_owner_proof: soil_consensus_beefy::OpaqueKeyOwnershipProof,
 		) -> Option<()> {
@@ -3569,7 +3570,7 @@ soil_api::impl_runtime_apis! {
 			config: topsoil_benchmarking::BenchmarkConfig
 		) -> Result<Vec<topsoil_benchmarking::BenchmarkBatch>, alloc::string::String> {
 			use topsoil_benchmarking::{baseline, BenchmarkBatch};
-			use soil_storage::TrackedStorageKey;
+			use subsoil::storage::TrackedStorageKey;
 
 			// Trying to add benchmarks directly to the Session Pallet caused cyclic dependency
 			// issues. To get around that, we separated the Session benchmarks into its own crate,

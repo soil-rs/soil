@@ -23,24 +23,17 @@ topsoil-system = { workspace = true }
 topsoil-try-runtime = { optional = true, workspace = true }
 log = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
-soil-core = { workspace = true }
-soil-io = { workspace = true }
-soil-runtime = { workspace = true }
-soil-tracing = { workspace = true }
+subsoil = { workspace = true }
 
 [dev-dependencies]
 array-bytes = { workspace = true, default-features = true }
 topsoil-balances = { workspace = true, default-features = true }
 topsoil-transaction-payment = { workspace = true, default-features = true }
-soil-core = { workspace = true, default-features = true }
-soil-inherents = { workspace = true, default-features = true }
-soil-io = { workspace = true, default-features = true }
-soil-version = { workspace = true, default-features = true }
 substrate-test-runtime-client = { workspace = true }
 
 [features]
 default = ["std"]
-with-tracing = ["soil-tracing/with-tracing"]
+with-tracing = ["subsoil/with-tracing"]
 std = [
 	"codec/std",
 	"topsoil-support/experimental",
@@ -51,12 +44,7 @@ std = [
 	"topsoil-balances/std",
 	"topsoil-transaction-payment/std",
 	"scale-info/std",
-	"soil-core/std",
-	"soil-inherents/std",
-	"soil-io/std",
-	"soil-runtime/std",
-	"soil-tracing/std",
-	"soil-version/std",
+	"subsoil/std",
 ]
 try-runtime = [
 	"topsoil-support/try-runtime",
@@ -64,5 +52,5 @@ try-runtime = [
 	"topsoil-try-runtime/try-runtime",
 	"topsoil-balances/try-runtime",
 	"topsoil-transaction-payment/try-runtime",
-	"soil-runtime/try-runtime",
+	"subsoil/try-runtime",
 ]

@@ -18,7 +18,7 @@
 //! Implementations for `nonfungibles` traits.
 
 use super::*;
-use soil_runtime::{DispatchError, DispatchResult};
+use subsoil::runtime::{DispatchError, DispatchResult};
 use topsoil_support::{
 	ensure,
 	storage::KeyPrefixIterator,

@@ -28,26 +28,25 @@ soil-client-api = { workspace = true, default-features = true }
 sc-consensus = { workspace = true, default-features = true }
 sc-consensus-slots = { workspace = true, default-features = true }
 soil-telemetry = { workspace = true, default-features = true }
-soil-api = { workspace = true, default-features = true }
-soil-application-crypto = { workspace = true, default-features = true }
 soil-block-builder = { workspace = true, default-features = true }
 soil-blockchain = { workspace = true, default-features = true }
 soil-consensus = { workspace = true, default-features = true }
 soil-consensus-aura = { workspace = true, default-features = true }
 soil-consensus-slots = { workspace = true, default-features = true }
-soil-core = { workspace = true, default-features = true }
-soil-inherents = { workspace = true, default-features = true }
-soil-keystore = { workspace = true, default-features = true }
-soil-runtime = { workspace = true, default-features = true }
+subsoil = { workspace = true }
 thiserror = { workspace = true }
 
 [dev-dependencies]
 sc-keystore = { workspace = true, default-features = true }
 soil-network = { workspace = true, default-features = true }
 soil-network-test = { workspace = true }
-soil-keyring = { workspace = true, default-features = true }
-soil-timestamp = { workspace = true, default-features = true }
-soil-tracing = { workspace = true, default-features = true }
+subsoil = { workspace = true, default-features = true }
 substrate-test-runtime-client = { workspace = true }
 tempfile = { workspace = true }
 tokio = { workspace = true, default-features = true }
+
+[features]
+default = ["std"]
+std = [
+	"subsoil/std",
+]

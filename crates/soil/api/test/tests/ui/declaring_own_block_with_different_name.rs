@@ -15,7 +15,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-soil_api::decl_runtime_apis! {
+subsoil::api::decl_runtime_apis! {
 	pub trait Api<B: BlockT> {
 		fn test();
 	}

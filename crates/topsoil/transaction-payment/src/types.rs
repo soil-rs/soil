@@ -23,7 +23,7 @@ use serde::{Deserialize, Serialize};
 
 use scale_info::TypeInfo;
 
-use soil_runtime::traits::{AtLeast32BitUnsigned, Zero};
+use subsoil::runtime::traits::{AtLeast32BitUnsigned, Zero};
 
 use topsoil_support::dispatch::DispatchClass;
 

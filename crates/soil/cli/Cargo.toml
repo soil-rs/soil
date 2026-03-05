@@ -16,6 +16,7 @@ workspace = true
 targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
+subsoil = { workspace = true }
 array-bytes = { workspace = true, default-features = true, optional = true}
 bip39 = { workspace = true, default-features = true, features = ["rand"], optional = true}
 chrono = { workspace = true, optional = true}
@@ -43,18 +44,11 @@ soil-utils = { workspace = true, default-features = true, optional = true}
 serde = { workspace = true, default-features = true, optional = true}
 serde_json = { workspace = true, default-features = true, optional = true}
 soil-blockchain = { workspace = true, default-features = true, optional = true}
-soil-core = { workspace = true, default-features = true, optional = true}
-soil-keyring = { workspace = true, default-features = true, optional = true}
-soil-keystore = { workspace = true, default-features = true, optional = true}
-soil-panic-handler = { workspace = true, default-features = true, optional = true}
-soil-runtime = { workspace = true, default-features = true, optional = true}
-soil-version = { workspace = true, default-features = true, optional = true}
 thiserror = { workspace = true, optional = true}
 tokio = { features = ["parking_lot", "rt-multi-thread", "signal"], workspace = true, default-features = true, optional = true}
 
 [dev-dependencies]
 futures-timer = { workspace = true }
-soil-tracing = { workspace = true, default-features = true }
 tempfile = { workspace = true }
 
 [features]
@@ -82,29 +76,19 @@ std = [
 	"soil-blockchain",
 	"soil-client-api",
 	"soil-client-db",
-	"soil-core",
-	"soil-keyring",
-	"soil-keystore",
 	"soil-network",
-	"soil-panic-handler",
-	"soil-runtime",
+	"subsoil/std",
 	"soil-service",
 	"soil-telemetry",
 	"soil-utils",
-	"soil-version",
 	"thiserror",
 	"tokio",
 	"soil-client-api/std",
 	"soil-client-db/std",
-	"soil-core/std",
-	"soil-keyring/std",
-	"soil-keystore/std",
 	"soil-network/std",
-	"soil-runtime/std",
 	"soil-service/std",
 	"soil-telemetry/std",
 	"soil-utils/std",
-	"soil-version/std",
 ]
 default = ["std", "rocksdb"]
 rocksdb = ["soil-client-db/rocksdb"]

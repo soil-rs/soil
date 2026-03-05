@@ -22,8 +22,8 @@ use soil_client_api::{
 	Backend as _, BlockImportOperation, NewBlockState, StateBackend, TrieCacheContext,
 };
 use soil_client_db::{Backend, BlocksPruning, DatabaseSettings, DatabaseSource, PruningMode};
-use soil_core::H256;
-use soil_runtime::{
+use subsoil::core::H256;
+use subsoil::runtime::{
 	testing::{Block as RawBlock, Header, MockCallU64, TestXt},
 	StateVersion, Storage,
 };
@@ -45,7 +45,7 @@ fn insert_blocks(db: &Backend<Block>, storage: Vec<(Vec<u8>, Vec<u8>)>) -> H256 
 		.set_genesis_state(
 			Storage {
 				top: vec![(
-					soil_core::storage::well_known_keys::CODE.to_vec(),
+					subsoil::core::storage::well_known_keys::CODE.to_vec(),
 					kitchensink_runtime::wasm_binary_unwrap().to_vec(),
 				)]
 				.into_iter()
@@ -162,7 +162,7 @@ fn generate_storage() -> (Vec<Vec<u8>>, Vec<(Vec<u8>, Vec<u8>)>) {
 }
 
 fn state_access_benchmarks(c: &mut Criterion) {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (keys, storage) = generate_storage();
 	let path = TempDir::new().expect("Creates temporary directory");
@@ -297,7 +297,7 @@ fn state_access_benchmarks(c: &mut Criterion) {
 				|| backend.state_at(block_hash, TrieCacheContext::Trusted).expect("Creates state"),
 				|state| {
 					let _ = state
-						.storage_hash(soil_core::storage::well_known_keys::CODE)
+						.storage_hash(subsoil::core::storage::well_known_keys::CODE)
 						.expect("Doesn't fail")
 						.unwrap();
 				},

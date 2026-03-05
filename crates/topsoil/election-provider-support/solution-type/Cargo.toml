@@ -26,7 +26,7 @@ syn = { features = ["full", "visit"], workspace = true }
 [dev-dependencies]
 codec = { workspace = true, default-features = true }
 scale-info = { workspace = true, default-features = true }
-soil-arithmetic = { workspace = true, default-features = true }
+subsoil = { workspace = true, default-features = true }
 # used by generate_solution_type:
 # NOTE: we have to explicitly specify `std` because of trybuild
 # https://github.com/paritytech/polkadot-sdk/pull/5167

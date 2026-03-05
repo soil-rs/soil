@@ -25,7 +25,7 @@ use std::{
 
 use itertools::Itertools;
 use soil_client_api::{Backend, ChildInfo, StorageKey, StorageProvider};
-use soil_runtime::traits::Block as BlockT;
+use subsoil::runtime::traits::Block as BlockT;
 
 use super::error::Error as ArchiveError;
 use crate::{

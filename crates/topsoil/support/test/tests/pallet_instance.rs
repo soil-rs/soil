@@ -16,11 +16,11 @@
 // limitations under the License.
 
 use core::any::TypeId;
-use soil_io::{
+use subsoil::io::{
 	hashing::{blake2_128, twox_128, twox_64},
 	TestExternalities,
 };
-use soil_runtime::{DispatchError, ModuleError};
+use subsoil::runtime::{DispatchError, ModuleError};
 use topsoil_support::{
 	derive_impl,
 	dispatch::{DispatchClass, DispatchInfo, GetDispatchInfo, Pays},
@@ -305,10 +305,10 @@ impl topsoil_system::Config for Runtime {
 	type RuntimeOrigin = RuntimeOrigin;
 	type Nonce = u64;
 	type RuntimeCall = RuntimeCall;
-	type Hash = soil_runtime::testing::H256;
-	type Hashing = soil_runtime::traits::BlakeTwo256;
+	type Hash = subsoil::runtime::testing::H256;
+	type Hashing = subsoil::runtime::traits::BlakeTwo256;
 	type AccountId = u64;
-	type Lookup = soil_runtime::traits::IdentityLookup<Self::AccountId>;
+	type Lookup = subsoil::runtime::traits::IdentityLookup<Self::AccountId>;
 	type Block = Block;
 	type RuntimeEvent = RuntimeEvent;
 	type BlockWeights = ();
@@ -341,9 +341,9 @@ impl pallet2::Config<pallet::Instance1> for Runtime {
 	type RuntimeEvent = RuntimeEvent;
 }
 
-pub type Header = soil_runtime::generic::Header<u32, soil_runtime::traits::BlakeTwo256>;
-pub type Block = soil_runtime::generic::Block<Header, UncheckedExtrinsic>;
-pub type UncheckedExtrinsic = soil_runtime::generic::UncheckedExtrinsic<u32, RuntimeCall, (), ()>;
+pub type Header = subsoil::runtime::generic::Header<u32, subsoil::runtime::traits::BlakeTwo256>;
+pub type Block = subsoil::runtime::generic::Block<Header, UncheckedExtrinsic>;
+pub type UncheckedExtrinsic = subsoil::runtime::generic::UncheckedExtrinsic<u32, RuntimeCall, (), ()>;
 
 topsoil_support::construct_runtime!(
 	pub struct Runtime
@@ -771,7 +771,7 @@ fn metadata() {
 			},
 			PalletConstantMetadata {
 				name: "Version",
-				ty: scale_info::meta_type::<soil_version::RuntimeVersion>(),
+				ty: scale_info::meta_type::<subsoil::version::RuntimeVersion>(),
 				value: vec![],
 				docs: vec![],
 			},

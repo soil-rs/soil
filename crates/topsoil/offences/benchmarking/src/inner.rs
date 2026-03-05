@@ -18,7 +18,7 @@
 //! Offences pallet benchmarking.
 
 use alloc::{vec, vec::Vec};
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{Convert, Saturating, StaticLookup},
 	Perbill,
 };

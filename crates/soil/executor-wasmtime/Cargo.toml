@@ -22,10 +22,8 @@ parking_lot = { workspace = true, default-features = true, optional = true}
 # When bumping wasmtime do not forget to also bump rustix
 # to exactly the same version as used by wasmtime!
 anyhow = { workspace = true, optional = true}
-soil-allocator = { workspace = true, default-features = true, optional = true}
 soil-executor-common = { workspace = true, default-features = true, optional = true}
-soil-runtime-interface = { workspace = true, default-features = true, optional = true}
-soil-wasm-interface = { features = ["wasmtime"], workspace = true, default-features = true, optional = true}
+subsoil = { features = ["wasm-interface-wasmtime"], workspace = true, default-features = true, optional = true}
 wasmtime = { features = [
 	"addr2line",
 	"cache",
@@ -54,15 +52,11 @@ std = [
 	"log",
 	"parking_lot",
 	"rustix",
-	"soil-allocator",
 	"soil-executor-common",
-	"soil-runtime-interface",
-	"soil-wasm-interface",
+	"subsoil",
 	"wasmtime",
-	"soil-allocator/std",
 	"soil-executor-common/std",
-	"soil-runtime-interface/std",
-	"soil-wasm-interface/std",
+	"subsoil/std",
 ]
 
 [dev-dependencies]
@@ -70,6 +64,5 @@ cargo_metadata = { workspace = true }
 codec = { workspace = true, default-features = true }
 paste = { workspace = true, default-features = true }
 soil-runtime-test = { workspace = true }
-soil-io = { workspace = true, default-features = true }
 tempfile = { workspace = true }
 wat = { workspace = true }

@@ -19,9 +19,9 @@
 
 use crate::{test_fungibles::TestFungibles, *};
 use alloc::collections::btree_map::BTreeMap;
-use soil_arithmetic::Perbill;
-use soil_core::{ConstU32, ConstU64, Get};
-use soil_runtime::{
+use subsoil::arithmetic::Perbill;
+use subsoil::core::{ConstU32, ConstU64, Get};
+use subsoil::runtime::{
 	traits::{BlockNumberProvider, Identity, MaybeConvert},
 	BuildStorage, Saturating,
 };
@@ -349,7 +349,7 @@ impl TestExt {
 	}
 }
 
-pub fn new_test_ext() -> soil_io::TestExternalities {
+pub fn new_test_ext() -> subsoil::io::TestExternalities {
 	let c = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
-	soil_io::TestExternalities::from(c)
+	subsoil::io::TestExternalities::from(c)
 }

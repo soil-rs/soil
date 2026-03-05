@@ -35,9 +35,9 @@
 //! is defined inside `#[runtime::derive]`:
 //!  - `enum RuntimeCall`: This type contains the information needed to decode extrinsics.
 //!  - `enum RuntimeEvent`: This type contains the information needed to decode events.
-//!  - `enum RuntimeError`: While this cannot be used directly to decode `soil_runtime::DispatchError`
+//!  - `enum RuntimeError`: While this cannot be used directly to decode `subsoil::runtime::DispatchError`
 //!    from the chain, it contains the information needed to decode the
-//!    `soil_runtime::DispatchError::Module`.
+//!    `subsoil::runtime::DispatchError::Module`.
 //!
 //! # State Transitions
 //!

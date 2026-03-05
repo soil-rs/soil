@@ -16,7 +16,7 @@
 // limitations under the License.
 
 use crate::VoterBagsListInstance;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{Convert, IdentityLookup},
 	BuildStorage, FixedU128, Perbill,
 };
@@ -64,7 +64,7 @@ impl topsoil_balances::Config for Runtime {
 }
 
 topsoil_staking_reward_curve::build! {
-	const I_NPOS: soil_runtime::curve::PiecewiseLinear<'static> = curve!(
+	const I_NPOS: subsoil::runtime::curve::PiecewiseLinear<'static> = curve!(
 		min_inflation: 0_025_000,
 		max_inflation: 0_100_000,
 		ideal_stake: 0_500_000,
@@ -74,7 +74,7 @@ topsoil_staking_reward_curve::build! {
 	);
 }
 parameter_types! {
-	pub const RewardCurve: &'static soil_runtime::curve::PiecewiseLinear<'static> = &I_NPOS;
+	pub const RewardCurve: &'static subsoil::runtime::curve::PiecewiseLinear<'static> = &I_NPOS;
 }
 #[derive_impl(topsoil_staking::config_preludes::TestDefaultConfig)]
 impl topsoil_staking::Config for Runtime {
@@ -106,15 +106,15 @@ impl topsoil_bags_list::Config<VoterBagsListInstance> for Runtime {
 }
 
 pub struct BalanceToU256;
-impl Convert<Balance, soil_core::U256> for BalanceToU256 {
-	fn convert(n: Balance) -> soil_core::U256 {
+impl Convert<Balance, subsoil::core::U256> for BalanceToU256 {
+	fn convert(n: Balance) -> subsoil::core::U256 {
 		n.into()
 	}
 }
 
 pub struct U256ToBalance;
-impl Convert<soil_core::U256, Balance> for U256ToBalance {
-	fn convert(n: soil_core::U256) -> Balance {
+impl Convert<subsoil::core::U256, Balance> for U256ToBalance {
+	fn convert(n: subsoil::core::U256) -> Balance {
 		n.try_into().unwrap()
 	}
 }
@@ -175,7 +175,7 @@ topsoil_support::construct_runtime!(
 	}
 );
 
-pub fn new_test_ext() -> soil_io::TestExternalities {
+pub fn new_test_ext() -> subsoil::io::TestExternalities {
 	let mut storage = topsoil_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
 	let _ = topsoil_nomination_pools::GenesisConfig::<Runtime> {
 		min_join_bond: 2,
@@ -186,5 +186,5 @@ pub fn new_test_ext() -> soil_io::TestExternalities {
 		global_max_commission: Some(Perbill::from_percent(50)),
 	}
 	.assimilate_storage(&mut storage);
-	soil_io::TestExternalities::from(storage)
+	subsoil::io::TestExternalities::from(storage)
 }

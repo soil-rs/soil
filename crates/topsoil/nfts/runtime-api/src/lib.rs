@@ -24,7 +24,7 @@ extern crate alloc;
 use alloc::vec::Vec;
 use codec::{Decode, Encode};
 
-soil_api::decl_runtime_apis! {
+subsoil::api::decl_runtime_apis! {
 	pub trait NftsApi<AccountId, CollectionId, ItemId>
 	where
 		AccountId: Encode + Decode,

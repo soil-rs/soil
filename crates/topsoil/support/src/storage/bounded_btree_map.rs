@@ -18,7 +18,7 @@
 //! Traits, types and structs to support a bounded BTreeMap.
 
 use crate::storage::StorageDecodeLength;
-pub use soil_runtime::BoundedBTreeMap;
+pub use subsoil::runtime::BoundedBTreeMap;
 
 impl<K, V, S> StorageDecodeLength for BoundedBTreeMap<K, V, S> {}
 
@@ -27,7 +27,7 @@ pub mod test {
 	use super::*;
 	use crate::Twox128;
 	use alloc::collections::btree_map::BTreeMap;
-	use soil_io::TestExternalities;
+	use subsoil::io::TestExternalities;
 	use topsoil_support::traits::{ConstU32, Get};
 
 	#[crate::storage_alias]

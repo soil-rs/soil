@@ -23,7 +23,7 @@ use authorship::claim_slot;
 use sc_block_builder::{BlockBuilder, BlockBuilderBuilder};
 use sc_consensus::{BoxBlockImport, BoxJustificationImport};
 use sc_consensus_slots::BackoffAuthoringOnFinalizedHeadLagging;
-use soil_application_crypto::key_types::BABE;
+use subsoil::application_crypto::key_types::BABE;
 use soil_client_api::{BlockchainEvents, Finalizer};
 use soil_consensus::{NoNetwork as DummyOracle, Proposal, ProposeArgs};
 use soil_consensus_babe::{
@@ -32,11 +32,11 @@ use soil_consensus_babe::{
 };
 use soil_consensus_epochs::{EpochIdentifier, EpochIdentifierPosition};
 use soil_consensus_slots::SlotDuration;
-use soil_core::crypto::Pair;
-use soil_keyring::Sr25519Keyring;
-use soil_keystore::{testing::MemoryKeystore, Keystore};
+use subsoil::core::crypto::Pair;
+use subsoil::keyring::Sr25519Keyring;
+use subsoil::keystore::{testing::MemoryKeystore, Keystore};
 use soil_network_test::{Block as TestBlock, *};
-use soil_runtime::{
+use subsoil::runtime::{
 	generic::{Digest, DigestItem},
 	traits::Block as BlockT,
 };
@@ -219,7 +219,7 @@ impl TestNetFactory for BabeTestNet {
 			client.clone(),
 			client.clone(),
 			Arc::new(move |_, _| async {
-				let timestamp = soil_timestamp::InherentDataProvider::from_system_time();
+				let timestamp = subsoil::timestamp::InherentDataProvider::from_system_time();
 				let slot = InherentDataProvider::from_timestamp_and_slot_duration(
 					*timestamp,
 					SlotDuration::from_millis(SLOT_DURATION_MS),
@@ -286,7 +286,7 @@ impl TestNetFactory for BabeTestNet {
 #[tokio::test]
 #[should_panic(expected = "No BABE pre-runtime digest found")]
 async fn rejects_empty_block() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 	let mut net = BabeTestNet::new(3);
 	let block_builder = |builder: BlockBuilder<_, _>| builder.build().unwrap().block;
 	net.mut_peers(|peer| {
@@ -303,7 +303,7 @@ fn create_keystore(authority: Sr25519Keyring) -> KeystorePtr {
 }
 
 async fn run_one_test(mutator: impl Fn(&mut TestHeader, Stage) + Send + Sync + 'static) {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 	let mutator = Arc::new(mutator) as Mutator;
 
 	MUTATOR.with(|m| *m.borrow_mut() = mutator.clone());
@@ -457,7 +457,7 @@ async fn rejects_missing_consensus_digests() {
 
 #[test]
 fn wrong_consensus_engine_id_rejected() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 	let sig = AuthorityPair::generate().0.sign(b"");
 	let bad_seal: Item = DigestItem::Seal([0; 4], sig.to_vec());
 	assert!(bad_seal.as_babe_pre_digest().is_none());
@@ -466,14 +466,14 @@ fn wrong_consensus_engine_id_rejected() {
 
 #[test]
 fn malformed_pre_digest_rejected() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 	let bad_seal: Item = DigestItem::Seal(BABE_ENGINE_ID, [0; 64].to_vec());
 	assert!(bad_seal.as_babe_pre_digest().is_none());
 }
 
 #[test]
 fn sig_is_not_pre_digest() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 	let sig = AuthorityPair::generate().0.sign(b"");
 	let bad_seal: Item = DigestItem::Seal(BABE_ENGINE_ID, sig.to_vec());
 	assert!(bad_seal.as_babe_pre_digest().is_none());
@@ -618,7 +618,7 @@ async fn propose_and_import_block(
 		parent_pre_digest.slot() + 1
 	});
 
-	let pre_digest = soil_runtime::generic::Digest {
+	let pre_digest = subsoil::runtime::generic::Digest {
 		logs: vec![Item::babe_pre_digest(PreDigest::SecondaryPlain(SecondaryPlainPreDigest {
 			authority_index: 0,
 			slot,

@@ -20,28 +20,28 @@
 
 use codec::{Decode, Encode};
 use serde_json::{from_slice, Value};
-use soil_core::{
+use subsoil::core::{
 	storage::Storage,
 	traits::{CallContext, CodeExecutor, Externalities, FetchRuntimeCode, RuntimeCode},
 };
-pub use soil_executor::soil_wasm_interface::HostFunctions;
+pub use soil_executor::wasm_interface::HostFunctions;
 use soil_executor::{error::Result, WasmExecutor};
 use soil_genesis_builder::{PresetId, Result as BuildResult};
 pub use soil_genesis_builder::{DEV_RUNTIME_PRESET, LOCAL_TESTNET_RUNTIME_PRESET};
-use soil_state_machine::BasicExternalities;
+use subsoil::state_machine::BasicExternalities;
 use std::borrow::Cow;
 
 /// A utility that facilitates calling the GenesisBuilder API from the runtime wasm code blob.
 ///
 /// `EHF` type allows to specify the extended host function required for building runtime's genesis
-/// config. The type will be combined with default `soil_io::SubstrateHostFunctions`.
+/// config. The type will be combined with default `subsoil::io::SubstrateHostFunctions`.
 pub struct GenesisConfigBuilderRuntimeCaller<'a, EHF = ()>
 where
 	EHF: HostFunctions,
 {
 	code: Cow<'a, [u8]>,
 	code_hash: Vec<u8>,
-	executor: WasmExecutor<(soil_io::SubstrateHostFunctions, EHF)>,
+	executor: WasmExecutor<(subsoil::io::SubstrateHostFunctions, EHF)>,
 }
 
 impl<'a, EHF> FetchRuntimeCode for GenesisConfigBuilderRuntimeCaller<'a, EHF>
@@ -63,8 +63,8 @@ where
 	pub fn new(code: &'a [u8]) -> Self {
 		GenesisConfigBuilderRuntimeCaller {
 			code: code.into(),
-			code_hash: soil_crypto_hashing::blake2_256(code).to_vec(),
-			executor: WasmExecutor::<(soil_io::SubstrateHostFunctions, EHF)>::builder()
+			code_hash: subsoil_crypto_hashing::blake2_256(code).to_vec(),
+			executor: WasmExecutor::<(subsoil::io::SubstrateHostFunctions, EHF)>::builder()
 				.with_allow_missing_host_functions(true)
 				.build(),
 		}
@@ -182,7 +182,7 @@ mod tests {
 
 	#[test]
 	fn list_presets_works() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 		let presets =
 			<GenesisConfigBuilderRuntimeCaller>::new(substrate_test_runtime::wasm_binary_unwrap())
 				.preset_names()
@@ -202,7 +202,7 @@ mod tests {
 
 	#[test]
 	fn get_named_preset_works() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 		let config =
 			<GenesisConfigBuilderRuntimeCaller>::new(substrate_test_runtime::wasm_binary_unwrap())
 				.get_named_preset(Some(&"foobar".to_string()))

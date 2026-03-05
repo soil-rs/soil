@@ -33,7 +33,7 @@ use crate::{
 use futures::{future, stream, StreamExt};
 use jsonrpsee::{core::async_trait, types::ErrorObject, PendingSubscriptionSink};
 use sc_tracing::block::TracingExecuteBlock;
-use soil_api::{CallApiAt, Metadata, ProvideRuntimeApi};
+use subsoil::api::{CallApiAt, Metadata, ProvideRuntimeApi};
 use soil_blockchain::{
 	CachedHeaderMetadata, Error as ClientError, HeaderBackend, HeaderMetadata,
 	Result as ClientResult,
@@ -42,7 +42,7 @@ use soil_client_api::{
 	Backend, BlockBackend, BlockchainEvents, CallExecutor, ExecutorProvider, ProofProvider,
 	StorageProvider,
 };
-use soil_core::{
+use subsoil::core::{
 	storage::{
 		ChildInfo, ChildType, PrefixedStorageKey, StorageChangeSet, StorageData, StorageKey,
 	},
@@ -50,8 +50,8 @@ use soil_core::{
 	Bytes,
 };
 use soil_rpc_api::state::ReadProof;
-use soil_runtime::traits::Block as BlockT;
-use soil_version::RuntimeVersion;
+use subsoil::runtime::traits::Block as BlockT;
+use subsoil::version::RuntimeVersion;
 
 /// The maximum time allowed for an RPC call when running without unsafe RPC enabled.
 const MAXIMUM_SAFE_RPC_CALL_TIMEOUT: Duration = Duration::from_secs(30);

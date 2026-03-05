@@ -20,9 +20,9 @@
 use super::Error;
 
 use sc_consensus::BlockImportParams;
-use soil_api::StorageProof;
-use soil_inherents::InherentData;
-use soil_runtime::{traits::Block as BlockT, Digest};
+use subsoil::api::StorageProof;
+use subsoil::inherents::InherentData;
+use subsoil::runtime::{traits::Block as BlockT, Digest};
 
 pub mod aura;
 pub mod babe;

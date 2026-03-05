@@ -20,7 +20,7 @@ use std::{collections::HashMap, sync::Arc};
 
 use kvdb::KeyValueDB;
 use node_primitives::Hash;
-use soil_trie::{trie_types::TrieDBMutBuilderV1, TrieMut};
+use subsoil::trie::{trie_types::TrieDBMutBuilderV1, TrieMut};
 
 use crate::simple_trie::SimpleTrie;
 

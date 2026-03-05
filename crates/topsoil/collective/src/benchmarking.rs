@@ -21,7 +21,7 @@ use super::*;
 use crate::Pallet as Collective;
 
 use core::mem::size_of;
-use soil_runtime::traits::Bounded;
+use subsoil::runtime::traits::Bounded;
 
 use topsoil_benchmarking::{
 	v1::{account, whitelisted_caller},

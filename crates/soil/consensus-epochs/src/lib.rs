@@ -32,7 +32,7 @@ use soil_blockchain::{Error as ClientError, HeaderBackend, HeaderMetadata};
 #[cfg(feature = "std")]
 use soil_client_api::utils::is_descendent_of;
 #[cfg(feature = "std")]
-use soil_runtime::traits::{Block as BlockT, NumberFor, One, Zero};
+use subsoil::runtime::traits::{Block as BlockT, NumberFor, One, Zero};
 #[cfg(feature = "std")]
 use std::{
 	borrow::{Borrow, BorrowMut},

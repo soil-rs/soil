@@ -20,7 +20,7 @@
 
 use std::collections::{HashMap, HashSet};
 
-use soil_runtime::traits::{Block as BlockT, NumberFor};
+use subsoil::runtime::traits::{Block as BlockT, NumberFor};
 
 use soil_client_api::{BadBlocks, ForkBlocks};
 

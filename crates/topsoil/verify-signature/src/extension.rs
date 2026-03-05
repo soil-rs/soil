@@ -21,22 +21,21 @@
 use crate::{Config, WeightInfo};
 use codec::{Decode, DecodeWithMemTracking, Encode};
 use scale_info::TypeInfo;
-use soil_io::hashing::blake2_256;
-use soil_runtime::{
-	impl_tx_ext_default,
+use subsoil::io::hashing::blake2_256;
+use subsoil::runtime::{
 	traits::{
 		transaction_extension::TransactionExtension, AsTransactionAuthorizedOrigin, DispatchInfoOf,
 		Dispatchable, Verify,
 	},
 	transaction_validity::{InvalidTransaction, TransactionValidityError, ValidTransaction},
 };
-use soil_weights::Weight;
+use subsoil::weights::Weight;
 use topsoil_support::{pallet_prelude::TransactionSource, traits::OriginTrait};
 
 /// Extension that, if enabled, validates a signature type against the payload constructed from the
 /// call and the rest of the transaction extension pipeline. This extension provides the
 /// functionality that traditionally signed transactions had with the implicit signature checking
-/// implemented in [`Checkable`](soil_runtime::traits::Checkable). It is meant to be placed ahead of
+/// implemented in [`Checkable`](subsoil::runtime::traits::Checkable). It is meant to be placed ahead of
 /// any other extensions that do authorization work in the [`TransactionExtension`] pipeline.
 #[derive(Encode, Decode, DecodeWithMemTracking, Clone, Eq, PartialEq, TypeInfo)]
 #[scale_info(skip_type_params(T))]
@@ -154,5 +153,5 @@ where
 		Ok((ValidTransaction::default(), (), origin))
 	}
 
-	impl_tx_ext_default!(T::RuntimeCall; prepare);
+	subsoil::impl_tx_ext_default!(T::RuntimeCall; prepare);
 }

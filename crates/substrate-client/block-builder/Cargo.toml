@@ -16,15 +16,10 @@ workspace = true
 targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
+subsoil = { workspace = true }
 codec = { features = ["derive"], workspace = true, default-features = true }
-soil-api = { workspace = true, default-features = true }
 soil-block-builder = { workspace = true, default-features = true }
 soil-blockchain = { workspace = true, default-features = true }
-soil-core = { workspace = true, default-features = true }
-soil-externalities = { workspace = true, default-features = true }
-soil-inherents = { workspace = true, default-features = true }
-soil-runtime = { workspace = true, default-features = true }
 
 [dev-dependencies]
-soil-state-machine = { workspace = true, default-features = true }
 substrate-test-runtime-client = { workspace = true }

@@ -17,12 +17,12 @@
 #![allow(clippy::deprecated_semver)]
 
 use super::*;
-use soil_io::{MultiRemovalResults, TestExternalities};
-use soil_metadata_ir::{
+use subsoil::io::{MultiRemovalResults, TestExternalities};
+use subsoil::metadata_ir::{
 	PalletStorageMetadataIR, StorageEntryMetadataIR, StorageEntryModifierIR, StorageEntryTypeIR,
 	StorageHasherIR,
 };
-use soil_runtime::{generic, traits::BlakeTwo256, BuildStorage};
+use subsoil::runtime::{generic, traits::BlakeTwo256, BuildStorage};
 
 pub use self::topsoil_system::{pallet_prelude::*, Config, Pallet};
 
@@ -62,7 +62,7 @@ pub mod topsoil_system {
 	#[pallet::disable_frame_system_supertrait_check]
 	pub trait Config: 'static {
 		#[pallet::no_default]
-		type Block: Parameter + soil_runtime::traits::Block;
+		type Block: Parameter + subsoil::runtime::traits::Block;
 		type AccountId;
 		#[pallet::no_default_bounds]
 		type BaseCallFilter: crate::traits::Contains<Self::RuntimeCall>;
@@ -219,9 +219,9 @@ pub mod topsoil_system {
 		pub type OriginFor<T> = <T as super::Config>::RuntimeOrigin;
 
 		pub type HeaderFor<T> =
-			<<T as super::Config>::Block as soil_runtime::traits::HeaderProvider>::HeaderT;
+			<<T as super::Config>::Block as subsoil::runtime::traits::HeaderProvider>::HeaderT;
 
-		pub type BlockNumberFor<T> = <HeaderFor<T> as soil_runtime::traits::Header>::Number;
+		pub type BlockNumberFor<T> = <HeaderFor<T> as subsoil::runtime::traits::Header>::Number;
 	}
 }
 
@@ -607,7 +607,7 @@ fn expected_metadata() -> PalletStorageMetadataIR {
 				},
 				default: vec![0, 0, 0, 0, 0, 0, 0, 0],
 				docs: vec![],
-				deprecation_info: soil_metadata_ir::ItemDeprecationInfoIR::DeprecatedWithoutNote,
+				deprecation_info: subsoil::metadata_ir::ItemDeprecationInfoIR::DeprecatedWithoutNote,
 			},
 			StorageEntryMetadataIR {
 				name: "OptionLinkedMap",
@@ -619,7 +619,7 @@ fn expected_metadata() -> PalletStorageMetadataIR {
 				},
 				default: vec![0],
 				docs: vec![],
-				deprecation_info: soil_metadata_ir::ItemDeprecationInfoIR::Deprecated {
+				deprecation_info: subsoil::metadata_ir::ItemDeprecationInfoIR::Deprecated {
 					note: "test",
 					since: None,
 				},
@@ -634,7 +634,7 @@ fn expected_metadata() -> PalletStorageMetadataIR {
 				},
 				default: vec![0, 0, 0, 0],
 				docs: vec![],
-				deprecation_info: soil_metadata_ir::ItemDeprecationInfoIR::Deprecated {
+				deprecation_info: subsoil::metadata_ir::ItemDeprecationInfoIR::Deprecated {
 					note: "test",
 					since: Some("test"),
 				},
@@ -649,7 +649,7 @@ fn expected_metadata() -> PalletStorageMetadataIR {
 				},
 				default: vec![0],
 				docs: vec![],
-				deprecation_info: soil_metadata_ir::ItemDeprecationInfoIR::Deprecated {
+				deprecation_info: subsoil::metadata_ir::ItemDeprecationInfoIR::Deprecated {
 					note: "test",
 					since: None,
 				},
@@ -664,7 +664,7 @@ fn expected_metadata() -> PalletStorageMetadataIR {
 				},
 				default: vec![0, 0, 0, 0, 0, 0, 0, 0],
 				docs: vec![],
-				deprecation_info: soil_metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
+				deprecation_info: subsoil::metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
 			},
 			StorageEntryMetadataIR {
 				name: "GenericDataDM",
@@ -676,7 +676,7 @@ fn expected_metadata() -> PalletStorageMetadataIR {
 				},
 				default: vec![0, 0, 0, 0],
 				docs: vec![],
-				deprecation_info: soil_metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
+				deprecation_info: subsoil::metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
 			},
 			StorageEntryMetadataIR {
 				name: "GenericData2DM",
@@ -688,7 +688,7 @@ fn expected_metadata() -> PalletStorageMetadataIR {
 				},
 				default: vec![0],
 				docs: vec![],
-				deprecation_info: soil_metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
+				deprecation_info: subsoil::metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
 			},
 			StorageEntryMetadataIR {
 				name: "AppendableDM",
@@ -703,7 +703,7 @@ fn expected_metadata() -> PalletStorageMetadataIR {
 				},
 				default: vec![0],
 				docs: vec![],
-				deprecation_info: soil_metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
+				deprecation_info: subsoil::metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
 			},
 			StorageEntryMetadataIR {
 				name: "Total",
@@ -711,7 +711,7 @@ fn expected_metadata() -> PalletStorageMetadataIR {
 				ty: StorageEntryTypeIR::Plain(scale_info::meta_type::<(u32, u32)>()),
 				default: vec![0, 0, 0, 0, 0, 0, 0, 0],
 				docs: vec![" Some running total."],
-				deprecation_info: soil_metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
+				deprecation_info: subsoil::metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
 			},
 			StorageEntryMetadataIR {
 				name: "Numbers",
@@ -723,7 +723,7 @@ fn expected_metadata() -> PalletStorageMetadataIR {
 				},
 				default: vec![0],
 				docs: vec![" Numbers to be added into the total."],
-				deprecation_info: soil_metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
+				deprecation_info: subsoil::metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
 			},
 		],
 	}
@@ -737,16 +737,16 @@ fn store_metadata() {
 
 #[test]
 fn constant_metadata() {
-	let metadata: Vec<soil_metadata_ir::PalletConstantMetadataIR> =
+	let metadata: Vec<subsoil::metadata_ir::PalletConstantMetadataIR> =
 		Pallet::<Runtime>::pallet_constants_metadata();
 	pretty_assertions::assert_eq!(
 		metadata,
-		vec![soil_metadata_ir::PalletConstantMetadataIR {
+		vec![subsoil::metadata_ir::PalletConstantMetadataIR {
 			name: "ExampleConstant",
 			ty: scale_info::meta_type::<()>(),
 			value: vec![],
 			docs: vec![],
-			deprecation_info: soil_metadata_ir::ItemDeprecationInfoIR::Deprecated {
+			deprecation_info: subsoil::metadata_ir::ItemDeprecationInfoIR::Deprecated {
 				note: "this constant is deprecated",
 				since: None
 			}
@@ -761,7 +761,7 @@ parameter_types! {
 #[test]
 fn check_storage_parameter_type_works() {
 	TestExternalities::default().execute_with(|| {
-		assert_eq!(soil_io::hashing::twox_128(b":StorageParameter:"), StorageParameter::key());
+		assert_eq!(subsoil::io::hashing::twox_128(b":StorageParameter:"), StorageParameter::key());
 
 		assert_eq!(10, StorageParameter::get());
 

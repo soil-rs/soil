@@ -23,8 +23,8 @@ use crate::{
 	verifier::{self, AsynchronousVerifier, SolutionDataProvider, VerificationResult, Verifier},
 	Event, PadSolutionPages, PagedRawSolution, Pagify, Phase, SolutionOf,
 };
-use soil_npos_elections::ElectionScore;
-use soil_runtime::{traits::Zero, Perbill};
+use subsoil::npos_elections::ElectionScore;
+use subsoil::runtime::{traits::Zero, Perbill};
 use topsoil_election_provider_support::PageIndex;
 use topsoil_support::{
 	assert_ok, dispatch::PostDispatchInfo, parameter_types, traits::EstimateCallFee,

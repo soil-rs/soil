@@ -21,16 +21,16 @@
 
 use crate::{ConsensusDataProvider, Error};
 use sc_consensus::BlockImportParams;
-use soil_api::{ProvideRuntimeApi, StorageProof};
+use subsoil::api::{ProvideRuntimeApi, StorageProof};
 use soil_client_api::{AuxStore, UsageProvider};
 use soil_consensus_aura::{
 	digests::CompatibleDigestItem,
 	sr25519::{AuthorityId, AuthoritySignature},
 	AuraApi, Slot, SlotDuration,
 };
-use soil_inherents::InherentData;
-use soil_runtime::{traits::Block as BlockT, Digest, DigestItem};
-use soil_timestamp::TimestampInherentData;
+use subsoil::inherents::InherentData;
+use subsoil::runtime::{traits::Block as BlockT, Digest, DigestItem};
+use subsoil::timestamp::TimestampInherentData;
 use std::{marker::PhantomData, sync::Arc};
 
 /// Consensus data provider for Aura. This allows to use manual-seal driven nodes to author valid

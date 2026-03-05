@@ -20,8 +20,7 @@ codec = { features = ["bytes"], workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 
 serde_json = { features = ["alloc", "arbitrary_precision"], workspace = true }
-soil-api = { workspace = true }
-soil-runtime = { workspace = true }
+subsoil = { workspace = true }
 
 [features]
 default = ["std"]
@@ -29,6 +28,4 @@ std = [
 	"codec/std",
 	"scale-info/std",
 	"serde_json/std",
-	"soil-api/std",
-	"soil-runtime/std",
-]
+	"subsoil/std"]

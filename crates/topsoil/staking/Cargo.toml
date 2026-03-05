@@ -25,10 +25,8 @@ topsoil-authorship = { workspace = true }
 topsoil-session = { features = ["historical"], workspace = true }
 scale-info = { features = ["derive", "serde"], workspace = true }
 serde = { features = ["alloc", "derive"], workspace = true }
-soil-application-crypto = { features = ["serde"], workspace = true }
-soil-io = { workspace = true }
-soil-runtime = { features = ["serde"], workspace = true }
 soil-staking = { features = ["serde"], workspace = true }
+subsoil = { workspace = true }
 
 # Optional imports for benchmarking
 topsoil-benchmarking = { optional = true, workspace = true }
@@ -43,9 +41,7 @@ topsoil-balances = { workspace = true, default-features = true }
 topsoil-staking-reward-curve = { workspace = true, default-features = true }
 topsoil-timestamp = { workspace = true, default-features = true }
 rand_chacha = { workspace = true, default-features = true }
-soil-core = { workspace = true, default-features = true }
-soil-npos-elections = { workspace = true, default-features = true }
-soil-tracing = { workspace = true, default-features = true }
+subsoil = { workspace = true, default-features = true }
 substrate-test-utils = { workspace = true }
 
 [features]
@@ -64,12 +60,8 @@ std = [
 	"topsoil-timestamp/std",
 	"scale-info/std",
 	"serde/std",
-	"soil-application-crypto/std",
-	"soil-io/std",
-	"soil-npos-elections/std",
-	"soil-runtime/std",
+	"subsoil/std",
 	"soil-staking/std",
-	"soil-tracing/std",
 ]
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",
@@ -81,7 +73,7 @@ runtime-benchmarks = [
 	"topsoil-session/runtime-benchmarks",
 	"topsoil-timestamp/runtime-benchmarks",
 	"rand_chacha",
-	"soil-runtime/runtime-benchmarks",
+	"subsoil/runtime-benchmarks",
 	"soil-staking/runtime-benchmarks",
 ]
 try-runtime = [
@@ -93,5 +85,5 @@ try-runtime = [
 	"topsoil-balances/try-runtime",
 	"topsoil-session/try-runtime",
 	"topsoil-timestamp/try-runtime",
-	"soil-runtime/try-runtime",
+	"subsoil/try-runtime",
 ]

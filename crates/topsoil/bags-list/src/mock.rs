@@ -19,7 +19,7 @@
 
 use super::*;
 use crate::{self as bags_list};
-use soil_runtime::BuildStorage;
+use subsoil::runtime::BuildStorage;
 use std::collections::HashMap;
 use topsoil_election_provider_support::VoteWeight;
 use topsoil_support::{derive_impl, parameter_types};
@@ -101,8 +101,8 @@ impl ExtBuilder {
 		self
 	}
 
-	pub(crate) fn build(self) -> soil_io::TestExternalities {
-		soil_tracing::try_init_simple();
+	pub(crate) fn build(self) -> subsoil::io::TestExternalities {
+		subsoil::tracing::try_init_simple();
 		let storage = topsoil_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
 
 		let ids_with_weight: Vec<_> = if self.skip_genesis_ids {
@@ -111,7 +111,7 @@ impl ExtBuilder {
 			GENESIS_IDS.iter().chain(self.ids.iter()).collect()
 		};
 
-		let mut ext = soil_io::TestExternalities::from(storage);
+		let mut ext = subsoil::io::TestExternalities::from(storage);
 		ext.execute_with(|| {
 			for (id, weight) in ids_with_weight {
 				topsoil_support::assert_ok!(List::<Runtime>::insert(*id, *weight));

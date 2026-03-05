@@ -20,7 +20,7 @@ log = { workspace = true, optional = true}
 polkavm = { workspace = true, optional = true}
 
 soil-executor-common = { workspace = true, default-features = true, optional = true}
-soil-wasm-interface = { workspace = true, default-features = true, optional = true}
+subsoil = { workspace = true, default-features = true, optional = true}
 
 [features]
 default = ["std"]
@@ -28,7 +28,7 @@ std = [
 	"log",
 	"polkavm",
 	"soil-executor-common",
-	"soil-wasm-interface",
+	"subsoil",
 	"soil-executor-common/std",
-	"soil-wasm-interface/std",
+	"subsoil/std",
 ]

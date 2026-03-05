@@ -24,7 +24,7 @@ use futures::channel::oneshot;
 use soil_network::{ProtocolName, RequestFailure};
 use soil_network_common::sync::message::{BlockData, BlockRequest};
 use soil_network_types::PeerId;
-use soil_runtime::traits::Block as BlockT;
+use subsoil::runtime::traits::Block as BlockT;
 
 mockall::mock! {
 	#[derive(Debug)]

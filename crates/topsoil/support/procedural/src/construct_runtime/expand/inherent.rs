@@ -55,16 +55,16 @@ pub fn expand_outer_inherent(
 
 		trait InherentDataExt {
 			fn create_extrinsics(&self) ->
-				#scrate::__private::Vec<<#block as #scrate::soil_runtime::traits::Block>::Extrinsic>;
+				#scrate::__private::Vec<<#block as #scrate::subsoil::runtime::traits::Block>::Extrinsic>;
 			fn check_extrinsics(
 				&self,
-				block: &<#block as #scrate::soil_runtime::traits::Block>::LazyBlock
+				block: &<#block as #scrate::subsoil::runtime::traits::Block>::LazyBlock
 			) -> #scrate::inherent::CheckInherentsResult;
 		}
 
 		impl InherentDataExt for #scrate::inherent::InherentData {
 			fn create_extrinsics(&self) ->
-				#scrate::__private::Vec<<#block as #scrate::soil_runtime::traits::Block>::Extrinsic>
+				#scrate::__private::Vec<<#block as #scrate::subsoil::runtime::traits::Block>::Extrinsic>
 			{
 				use #scrate::{inherent::ProvideInherent, traits::InherentBuilder};
 
@@ -86,14 +86,14 @@ pub fn expand_outer_inherent(
 
 			fn check_extrinsics(
 				&self,
-				block: &<#block as #scrate::soil_runtime::traits::Block>::LazyBlock
+				block: &<#block as #scrate::subsoil::runtime::traits::Block>::LazyBlock
 			) ->
 				#scrate::inherent::CheckInherentsResult
 			{
 				use #scrate::inherent::{ProvideInherent, IsFatalError};
 				use #scrate::traits::IsSubType;
-				use #scrate::soil_runtime::traits::{Block as _, ExtrinsicCall, LazyBlock};
-				use #scrate::__private::{soil_inherents::Error, log};
+				use #scrate::subsoil::runtime::traits::{Block as _, ExtrinsicCall, LazyBlock};
+				use #scrate::__private::{inherents::Error, log};
 
 				let mut result = #scrate::inherent::CheckInherentsResult::new();
 
@@ -131,7 +131,7 @@ pub fn expand_outer_inherent(
 
 					// Inherents are before any other extrinsics.
 					// And signed extrinsics are not inherents.
-					if !(#scrate::soil_runtime::traits::ExtrinsicLike::is_bare(&xt)) {
+					if !(#scrate::subsoil::runtime::traits::ExtrinsicLike::is_bare(&xt)) {
 						break
 					}
 
@@ -193,13 +193,13 @@ pub fn expand_outer_inherent(
 			}
 		}
 
-		impl #scrate::traits::IsInherent<<#block as #scrate::soil_runtime::traits::Block>::Extrinsic> for #runtime {
-			fn is_inherent(ext: &<#block as #scrate::soil_runtime::traits::Block>::Extrinsic) -> bool {
+		impl #scrate::traits::IsInherent<<#block as #scrate::subsoil::runtime::traits::Block>::Extrinsic> for #runtime {
+			fn is_inherent(ext: &<#block as #scrate::subsoil::runtime::traits::Block>::Extrinsic) -> bool {
 				use #scrate::inherent::ProvideInherent;
 				use #scrate::traits::IsSubType;
-				use #scrate::soil_runtime::traits::ExtrinsicCall;
+				use #scrate::subsoil::runtime::traits::ExtrinsicCall;
 
-				let is_bare = #scrate::soil_runtime::traits::ExtrinsicLike::is_bare(ext);
+				let is_bare = #scrate::subsoil::runtime::traits::ExtrinsicLike::is_bare(ext);
 				if !is_bare {
 					// Inherents must be bare extrinsics.
 					return false

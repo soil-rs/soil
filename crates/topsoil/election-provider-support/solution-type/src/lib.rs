@@ -39,7 +39,7 @@ pub(crate) fn syn_err(message: &'static str) -> syn::Error {
 }
 
 /// Generates a struct to store the election result in a small/compact way. This can encode a
-/// structure which is the equivalent of a `soil_npos_elections::Assignment<_>`.
+/// structure which is the equivalent of a `subsoil::npos_elections::Assignment<_>`.
 ///
 /// The following data types can be configured by the macro.
 ///
@@ -64,7 +64,7 @@ pub(crate) fn syn_err(message: &'static str) -> syn::Error {
 ///
 /// ```
 /// # use topsoil_election_provider_solution_type::generate_solution_type;
-/// # use soil_arithmetic::per_things::Perbill;
+/// # use subsoil::arithmetic::per_things::Perbill;
 /// # use topsoil_support::traits::ConstU32;
 /// generate_solution_type!(pub struct TestSolution::<
 ///     VoterIndex = u16,
@@ -110,7 +110,7 @@ pub(crate) fn syn_err(message: &'static str) -> syn::Error {
 /// ```
 /// # use topsoil_election_provider_solution_type::generate_solution_type;
 /// # use topsoil_election_provider_support::NposSolution;
-/// # use soil_arithmetic::per_things::Perbill;
+/// # use subsoil::arithmetic::per_things::Perbill;
 /// # use topsoil_support::traits::ConstU32;
 /// generate_solution_type!(
 ///     #[compact]

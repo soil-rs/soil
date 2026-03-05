@@ -21,7 +21,7 @@ use std::{collections::BTreeSet, sync::Arc, time::Duration};
 use soil_network::{NetworkPeers, ReputationChange};
 use soil_network_gossip::{MessageIntent, ValidationResult, Validator, ValidatorContext};
 use soil_network_types::PeerId;
-use soil_runtime::traits::{Block, Hash, Header, NumberFor};
+use subsoil::runtime::traits::{Block, Hash, Header, NumberFor};
 
 use codec::{Decode, DecodeAll, Encode};
 use log::{debug, trace};
@@ -36,7 +36,7 @@ use crate::{
 	keystore::BeefyKeystore,
 	LOG_TARGET,
 };
-use soil_application_crypto::RuntimeAppPublic;
+use subsoil::application_crypto::RuntimeAppPublic;
 use soil_consensus_beefy::{AuthorityIdBound, ValidatorSet, ValidatorSetId, VoteMessage};
 
 // Timeout for rebroadcasting messages.
@@ -494,12 +494,12 @@ where
 pub(crate) mod tests {
 	use super::*;
 	use crate::{communication::peers::PeerReport, keystore::BeefyKeystore};
-	use soil_application_crypto::key_types::BEEFY as BEEFY_KEY_TYPE;
+	use subsoil::application_crypto::key_types::BEEFY as BEEFY_KEY_TYPE;
 	use soil_consensus_beefy::{
 		ecdsa_crypto, known_payloads, test_utils::Keyring, Commitment, MmrRootHash, Payload,
 		SignedCommitment, VoteMessage,
 	};
-	use soil_keystore::{testing::MemoryKeystore, Keystore};
+	use subsoil::keystore::{testing::MemoryKeystore, Keystore};
 	use soil_network_test::Block;
 
 	pub(crate) struct TestNetwork {
@@ -597,7 +597,7 @@ pub(crate) mod tests {
 	}
 
 	struct TestContext;
-	impl<B: soil_runtime::traits::Block> ValidatorContext<B> for TestContext {
+	impl<B: subsoil::runtime::traits::Block> ValidatorContext<B> for TestContext {
 		fn broadcast_topic(&mut self, _topic: B::Hash, _force: bool) {
 			unimplemented!()
 		}

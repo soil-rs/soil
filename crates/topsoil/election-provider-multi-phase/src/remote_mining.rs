@@ -29,9 +29,9 @@ use crate::{ElectionCompute, Miner, MinerConfig, RawSolution, RoundSnapshot};
 use codec::Decode;
 use core::marker::PhantomData;
 use remote_externalities::{Builder, Mode, OnlineConfig};
-use soil_core::{ConstU32, H256};
-use soil_npos_elections::BalancingConfig;
-use soil_runtime::{Perbill, Weight};
+use subsoil::core::{ConstU32, H256};
+use subsoil::npos_elections::BalancingConfig;
+use subsoil::runtime::{Perbill, Weight};
 use topsoil_election_provider_support::generate_solution_type;
 use topsoil_support::{
 	traits::Get,
@@ -58,14 +58,14 @@ pub mod polkadot {
 		pub struct PolkadotSolution::<
 			VoterIndex = u32,
 			TargetIndex = u16,
-			Accuracy = soil_runtime::PerU16,
+			Accuracy = subsoil::runtime::PerU16,
 			MaxVoters = ConstU32<22_500>,
 		>(16)
 	);
 
 	/// Some configs are a bit inconsistent, but we don't care about them for now.
 	impl crate::MinerConfig for MinerConfig {
-		type AccountId = soil_runtime::AccountId32;
+		type AccountId = subsoil::runtime::AccountId32;
 		type MaxBackersPerWinner = ConstU32<1024>;
 		type MaxLength = ConstU32<{ 4 * 1024 * 1024 }>;
 		type MaxVotesPerVoter = ConstU32<16>;
@@ -103,14 +103,14 @@ pub mod kusama {
 		pub struct PolkadotSolution::<
 			VoterIndex = u32,
 			TargetIndex = u16,
-			Accuracy = soil_runtime::PerU16,
+			Accuracy = subsoil::runtime::PerU16,
 			MaxVoters = ConstU32<12_500>,
 		>(24)
 	);
 
 	/// Some configs are a bit inconsistent, but we don't care about them for now.
 	impl crate::MinerConfig for MinerConfig {
-		type AccountId = soil_runtime::AccountId32;
+		type AccountId = subsoil::runtime::AccountId32;
 		type MaxBackersPerWinner = ConstU32<1024>;
 		type MaxLength = ConstU32<{ 4 * 1024 * 1024 }>;
 		type MaxVotesPerVoter = ConstU32<24>;
@@ -145,8 +145,8 @@ impl<T: MinerConfig> HackyGetSnapshot<T> {
 		UntypedSnapshotOf<T>: Decode,
 	{
 		let key = [
-			soil_core::hashing::twox_128(b"ElectionProviderMultiPhase"),
-			soil_core::hashing::twox_128(b"Snapshot"),
+			subsoil::core::hashing::twox_128(b"ElectionProviderMultiPhase"),
+			subsoil::core::hashing::twox_128(b"Snapshot"),
 		]
 		.concat();
 		topsoil_support::storage::unhashed::get::<UntypedSnapshotOf<T>>(&key).unwrap()
@@ -154,15 +154,15 @@ impl<T: MinerConfig> HackyGetSnapshot<T> {
 
 	fn desired_targets() -> u32 {
 		let key = [
-			soil_core::hashing::twox_128(b"ElectionProviderMultiPhase"),
-			soil_core::hashing::twox_128(b"DesiredTargets"),
+			subsoil::core::hashing::twox_128(b"ElectionProviderMultiPhase"),
+			subsoil::core::hashing::twox_128(b"DesiredTargets"),
 		]
 		.concat();
 		topsoil_support::storage::unhashed::get::<u32>(&key).unwrap()
 	}
 }
 
-pub type FakeBlock = soil_runtime::testing::Block<soil_runtime::testing::TestXt<(), ()>>;
+pub type FakeBlock = subsoil::runtime::testing::Block<subsoil::runtime::testing::TestXt<(), ()>>;
 
 pub struct Balancing;
 impl Get<Option<BalancingConfig>> for Balancing {
@@ -206,7 +206,7 @@ where
 
 #[tokio::test]
 async fn mine_for_polkadot() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	// good way to find good block hashes: https://polkadot.subscan.io/event?page=1&time_dimension=date&module=electionprovidermultiphase&event_id=solutionstored
 	// we are just looking for blocks with snapshot present, that's all.
@@ -236,7 +236,7 @@ async fn mine_for_polkadot() {
 
 #[tokio::test]
 async fn mine_for_kusama() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	// good way to find good block hashes: https://kusama.subscan.io/event?page=1&time_dimension=date&module=electionprovidermultiphase&event_id=solutionstored
 	// we are just looking for blocks with snapshot present, that's all.

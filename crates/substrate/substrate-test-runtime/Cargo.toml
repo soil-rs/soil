@@ -28,28 +28,18 @@ topsoil-timestamp = { workspace = true }
 topsoil-utility = { workspace = true }
 soil-service = { optional = true, workspace = true }
 scale-info = { features = ["derive"], workspace = true }
-soil-api = { workspace = true }
-soil-application-crypto = { features = ["serde"], workspace = true }
 soil-block-builder = { workspace = true }
 soil-consensus-aura = { features = ["serde"], workspace = true }
 soil-consensus-babe = { features = ["serde"], workspace = true }
 soil-consensus-grandpa = { features = ["serde"], workspace = true }
-soil-core = { features = ["serde"], workspace = true }
-soil-crypto-hashing = { workspace = true }
-soil-debug-derive = { workspace = true, default-features = false }
-soil-externalities = { workspace = true }
+subsoil-crypto-hashing = { workspace = true }
+subsoil-debug-derive = { workspace = true, default-features = false }
 soil-genesis-builder = { workspace = true }
-soil-inherents = { workspace = true }
-soil-io = { workspace = true }
-soil-keyring = { workspace = true }
 soil-offchain = { workspace = true }
-soil-runtime = { features = ["serde"], workspace = true }
 soil-session = { workspace = true }
-soil-state-machine = { workspace = true }
 soil-statement-store = { workspace = true }
 soil-transaction-pool = { workspace = true }
-soil-trie = { workspace = true }
-soil-version = { workspace = true }
+subsoil = { workspace = true }
 trie-db = { workspace = true }
 
 # 3rd party
@@ -67,7 +57,7 @@ soil-executor = { workspace = true, default-features = true }
 soil-executor-common = { workspace = true, default-features = true }
 serde = { features = ["alloc", "derive"], workspace = true }
 soil-consensus = { workspace = true, default-features = true }
-soil-tracing = { workspace = true, default-features = true }
+subsoil = { workspace = true, default-features = true }
 substrate-test-runtime-client = { workspace = true }
 
 [build-dependencies]
@@ -94,38 +84,26 @@ std = [
 	"scale-info/std",
 	"serde/std",
 	"serde_json/std",
-	"soil-api/std",
-	"soil-application-crypto/std",
+	"subsoil/std",
 	"soil-block-builder/std",
 	"soil-consensus-aura/std",
 	"soil-consensus-babe/std",
 	"soil-consensus-grandpa/std",
-	"soil-core/std",
-	"soil-crypto-hashing/std",
-	"soil-debug-derive/std",
-	"soil-externalities/std",
+	"subsoil-crypto-hashing/std",
+	"subsoil-debug-derive/std",
 	"soil-genesis-builder/std",
-	"soil-inherents/std",
-	"soil-io/std",
-	"soil-keyring/std",
 	"soil-offchain/std",
-	"soil-runtime/std",
 	"soil-session/std",
-	"soil-state-machine/std",
 	"soil-statement-store/std",
-	"soil-tracing/std",
 	"soil-transaction-pool/std",
-	"soil-trie/std",
-	"soil-version/std",
 	"substrate-wasm-builder",
 	"tracing/std",
-	"trie-db/std",
-]
+	"trie-db/std"]
 
 # Special feature to disable logging
-disable-logging = ["soil-api/disable-logging"]
+disable-logging = ["subsoil/disable-logging"]
 
 # This feature adds BLS crypto primitives.
 # It should not be used in production since the implementation and interface may still
 # be subject to significant changes.
-bls-experimental = ["soil-application-crypto/bls-experimental"]
+bls-experimental = ["subsoil/bls-experimental"]

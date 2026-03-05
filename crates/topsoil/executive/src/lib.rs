@@ -56,7 +56,7 @@
 //! `Executive` type declaration from the node template.
 //!
 //! ```
-//! # use soil_runtime::generic;
+//! # use subsoil::runtime::generic;
 //! # use topsoil_executive as executive;
 //! # pub struct UncheckedExtrinsic {};
 //! # pub struct Header {};
@@ -65,10 +65,10 @@
 //! # pub type Balances = u64;
 //! # pub type AllPalletsWithSystem = u64;
 //! # pub enum Runtime {};
-//! # use soil_runtime::transaction_validity::{
+//! # use subsoil::runtime::transaction_validity::{
 //! #    TransactionValidity, UnknownTransaction, TransactionSource,
 //! # };
-//! # use soil_runtime::traits::ValidateUnsigned;
+//! # use subsoil::runtime::traits::ValidateUnsigned;
 //! # impl ValidateUnsigned for Runtime {
 //! #     type Call = ();
 //! #
@@ -117,7 +117,7 @@ extern crate alloc;
 
 use codec::{Codec, Encode};
 use core::marker::PhantomData;
-use soil_runtime::{
+use subsoil::runtime::{
 	generic::Digest,
 	traits::{
 		self, Applyable, CheckEqual, Checkable, Dispatchable, Header, LazyBlock, NumberFor, One,
@@ -144,7 +144,7 @@ use topsoil_system::pallet_prelude::BlockNumberFor;
 #[cfg(feature = "try-runtime")]
 use ::{
 	log,
-	soil_runtime::TryRuntimeError,
+	subsoil::runtime::TryRuntimeError,
 	topsoil_support::{
 		traits::{TryDecodeEntireStorage, TryDecodeEntireStorageError, TryState},
 		StorageNoopGuard,
@@ -601,8 +601,8 @@ where
 	pub fn initialize_block(
 		header: &topsoil_system::pallet_prelude::HeaderFor<System>,
 	) -> ExtrinsicInclusionMode {
-		soil_io::init_tracing();
-		soil_tracing::enter_span!(soil_tracing::Level::TRACE, "init_block");
+		subsoil::io::init_tracing();
+		subsoil::enter_span!(subsoil::tracing::Level::TRACE, "init_block");
 		let digests = Self::extract_pre_digest(header);
 		Self::initialize_block_impl(header.number(), header.parent_hash(), &digests);
 
@@ -679,7 +679,7 @@ where
 	}
 
 	fn initial_checks(header: &Block::Header) {
-		soil_tracing::enter_span!(soil_tracing::Level::TRACE, "initial_checks");
+		subsoil::enter_span!(subsoil::tracing::Level::TRACE, "initial_checks");
 
 		// Check that `parent_hash` is correct.
 		let n = *header.number();
@@ -694,9 +694,9 @@ where
 
 	/// Actually execute all transitions for `block`.
 	pub fn execute_block(block: Block::LazyBlock) {
-		soil_io::init_tracing();
-		soil_tracing::within_span! {
-			soil_tracing::info_span!("execute_block", ?block);
+		subsoil::io::init_tracing();
+		subsoil::within_span! {
+			subsoil::tracing::info_span!("execute_block", ?block);
 			// Execute `on_runtime_upgrade` and `on_initialize`.
 			let mode = Self::initialize_block(block.header());
 			Self::initial_checks(block.header());
@@ -787,8 +787,8 @@ where
 	/// except state-root.
 	// Note: Only used by the block builder - not Executive itself.
 	pub fn finalize_block() -> topsoil_system::pallet_prelude::HeaderFor<System> {
-		soil_io::init_tracing();
-		soil_tracing::enter_span!(soil_tracing::Level::TRACE, "finalize_block");
+		subsoil::io::init_tracing();
+		subsoil::enter_span!(subsoil::tracing::Level::TRACE, "finalize_block");
 
 		// In this case there were no transactions to trigger this state transition:
 		if !<topsoil_system::Pallet<System>>::inherents_applied() {
@@ -866,11 +866,11 @@ where
 			&Context,
 		) -> Result<CheckedOf<Block::Extrinsic, Context>, TransactionValidityError>,
 	) -> ApplyExtrinsicResult {
-		soil_io::init_tracing();
+		subsoil::io::init_tracing();
 		let encoded = uxt.encode();
 		let encoded_len = encoded.len();
-		soil_tracing::enter_span!(soil_tracing::info_span!("apply_extrinsic",
-			ext=?soil_core::hexdisplay::HexDisplay::from(&encoded)));
+		subsoil::enter_span!(subsoil::tracing::info_span!("apply_extrinsic",
+			ext=?subsoil::core::hexdisplay::HexDisplay::from(&encoded)));
 
 		let uxt = <Block::Extrinsic as codec::DecodeLimit>::decode_all_with_depth_limit(
 			MAX_EXTRINSIC_DEPTH,
@@ -919,7 +919,7 @@ where
 	}
 
 	fn final_checks(header: &topsoil_system::pallet_prelude::HeaderFor<System>) {
-		soil_tracing::enter_span!(soil_tracing::Level::TRACE, "final_checks");
+		subsoil::enter_span!(subsoil::tracing::Level::TRACE, "final_checks");
 		// remove temporaries
 		let new_header = <topsoil_system::Pallet<System>>::finalize();
 
@@ -956,8 +956,8 @@ where
 		uxt: Block::Extrinsic,
 		block_hash: Block::Hash,
 	) -> TransactionValidity {
-		soil_io::init_tracing();
-		use soil_tracing::{enter_span, within_span};
+		subsoil::io::init_tracing();
+		use subsoil::{enter_span, within_span};
 
 		<topsoil_system::Pallet<System>>::initialize(
 			&(topsoil_system::Pallet::<System>::block_number() + One::one()),
@@ -965,9 +965,9 @@ where
 			&Default::default(),
 		);
 
-		enter_span! { soil_tracing::Level::TRACE, "validate_transaction" };
+		enter_span! { subsoil::tracing::Level::TRACE, "validate_transaction" };
 
-		let encoded = within_span! { soil_tracing::Level::TRACE, "using_encoded";
+		let encoded = within_span! { subsoil::tracing::Level::TRACE, "using_encoded";
 			uxt.encode()
 		};
 
@@ -977,11 +977,11 @@ where
 		)
 		.map_err(|_| InvalidTransaction::Call)?;
 
-		let xt = within_span! { soil_tracing::Level::TRACE, "check";
+		let xt = within_span! { subsoil::tracing::Level::TRACE, "check";
 			uxt.check(&Default::default())
 		}?;
 
-		let dispatch_info = within_span! { soil_tracing::Level::TRACE, "dispatch_info";
+		let dispatch_info = within_span! { subsoil::tracing::Level::TRACE, "dispatch_info";
 			xt.get_dispatch_info()
 		};
 
@@ -990,14 +990,14 @@ where
 		}
 
 		within_span! {
-			soil_tracing::Level::TRACE, "validate";
+			subsoil::tracing::Level::TRACE, "validate";
 			xt.validate::<UnsignedValidator>(source, &dispatch_info, encoded.len())
 		}
 	}
 
 	/// Start an offchain worker and generate extrinsics.
 	pub fn offchain_worker(header: &topsoil_system::pallet_prelude::HeaderFor<System>) {
-		soil_io::init_tracing();
+		subsoil::io::init_tracing();
 		// We need to keep events available for offchain workers,
 		// hence we initialize the block manually.
 		// OffchainWorker RuntimeApi should skip initialization.

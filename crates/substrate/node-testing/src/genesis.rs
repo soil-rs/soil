@@ -23,8 +23,8 @@ use kitchensink_runtime::{
 	constants::currency::*, AccountId, AssetsConfig, BalancesConfig, IndicesConfig,
 	RuntimeGenesisConfig, SessionConfig, SocietyConfig, StakerStatus, StakingConfig,
 };
-use soil_keyring::Ed25519Keyring;
-use soil_runtime::Perbill;
+use subsoil::keyring::Ed25519Keyring;
+use subsoil::runtime::Perbill;
 
 /// Create genesis runtime configuration for tests.
 pub fn config() -> RuntimeGenesisConfig {

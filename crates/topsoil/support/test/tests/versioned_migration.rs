@@ -19,7 +19,7 @@
 
 #![cfg(feature = "try-runtime")]
 
-use soil_runtime::BuildStorage;
+use subsoil::runtime::BuildStorage;
 use topsoil_support::{
 	construct_runtime, derive_impl,
 	migrations::VersionedMigration,
@@ -81,9 +81,9 @@ impl topsoil_system::Config for Test {
 	type OnSetCode = ();
 }
 
-pub(crate) fn new_test_ext() -> soil_io::TestExternalities {
+pub(crate) fn new_test_ext() -> subsoil::io::TestExternalities {
 	let storage = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
-	let mut ext: soil_io::TestExternalities = soil_io::TestExternalities::from(storage);
+	let mut ext: subsoil::io::TestExternalities = subsoil::io::TestExternalities::from(storage);
 	ext.execute_with(|| System::set_block_number(1));
 	ext
 }
@@ -106,7 +106,7 @@ parameter_types! {
 impl<T: dummy_pallet::Config, const S: u32> UncheckedOnRuntimeUpgrade
 	for SomeUnversionedMigration<T, S>
 {
-	fn pre_upgrade() -> Result<Vec<u8>, soil_runtime::TryRuntimeError> {
+	fn pre_upgrade() -> Result<Vec<u8>, subsoil::runtime::TryRuntimeError> {
 		PreUpgradeCalled::set(true);
 		Ok(PreUpgradeReturnBytes::get().to_vec())
 	}
@@ -116,7 +116,7 @@ impl<T: dummy_pallet::Config, const S: u32> UncheckedOnRuntimeUpgrade
 		RocksDbWeight::get().reads_writes(UpgradeReads::get(), UpgradeWrites::get())
 	}
 
-	fn post_upgrade(state: Vec<u8>) -> Result<(), soil_runtime::TryRuntimeError> {
+	fn post_upgrade(state: Vec<u8>) -> Result<(), subsoil::runtime::TryRuntimeError> {
 		PostUpgradeCalled::set(true);
 		PostUpgradeCalledWith::set(state);
 		Ok(())

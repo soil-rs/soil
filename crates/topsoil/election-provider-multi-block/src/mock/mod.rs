@@ -33,15 +33,15 @@ use crate::{
 use codec::{Decode, Encode, MaxEncodedLen};
 use parking_lot::RwLock;
 pub use signed::*;
-use soil_core::{
+use subsoil::core::{
 	offchain::{
 		testing::{PoolState, TestOffchainExt, TestTransactionPoolExt},
 		OffchainDbExt, OffchainWorkerExt, TransactionPoolExt,
 	},
 	ConstBool,
 };
-use soil_npos_elections::EvaluateSupport;
-use soil_runtime::{
+use subsoil::npos_elections::EvaluateSupport;
+use subsoil::runtime::{
 	bounded_vec,
 	traits::{BlakeTwo256, IdentityLookup},
 	BuildStorage, PerU16, Perbill,
@@ -60,7 +60,7 @@ use topsoil_support::{
 };
 use topsoil_system::EnsureRoot;
 
-pub type Extrinsic = soil_runtime::testing::TestXt<RuntimeCall, ()>;
+pub type Extrinsic = subsoil::runtime::testing::TestXt<RuntimeCall, ()>;
 
 pub type Balance = u64;
 pub type AccountId = u64;
@@ -250,7 +250,7 @@ impl onchain::Config for Runtime {
 	type MaxBackersPerWinner = MaxBackersPerWinner;
 	type MaxWinnersPerPage = MaxWinnersPerPage;
 	type Sort = ConstBool<true>;
-	type Solver = SequentialPhragmen<AccountId, soil_runtime::PerU16, ()>;
+	type Solver = SequentialPhragmen<AccountId, subsoil::runtime::PerU16, ()>;
 	type System = Runtime;
 	type WeightInfo = ();
 	type Bounds = OnChainElectionBounds;
@@ -428,8 +428,8 @@ impl ExtBuilder {
 		AreWeDone::set(mode);
 		self
 	}
-	pub(crate) fn build_unchecked(self) -> soil_io::TestExternalities {
-		soil_tracing::try_init_simple();
+	pub(crate) fn build_unchecked(self) -> subsoil::io::TestExternalities {
+		subsoil::tracing::try_init_simple();
 		let mut storage =
 			topsoil_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
 
@@ -452,11 +452,11 @@ impl ExtBuilder {
 		}
 		.assimilate_storage(&mut storage);
 
-		soil_io::TestExternalities::from(storage)
+		subsoil::io::TestExternalities::from(storage)
 	}
 
 	/// Warning: this does not execute the post-sanity-checks.
-	pub(crate) fn build_offchainify(self) -> (soil_io::TestExternalities, Arc<RwLock<PoolState>>) {
+	pub(crate) fn build_offchainify(self) -> (subsoil::io::TestExternalities, Arc<RwLock<PoolState>>) {
 		let mut ext = self.build_unchecked();
 		let (offchain, _offchain_state) = TestOffchainExt::new();
 		let (pool, pool_state) = TestTransactionPoolExt::new();
@@ -479,7 +479,7 @@ pub trait ExecuteWithSanityChecks {
 	fn execute_with_sanity_checks(&mut self, test: impl FnOnce() -> ());
 }
 
-impl ExecuteWithSanityChecks for soil_io::TestExternalities {
+impl ExecuteWithSanityChecks for subsoil::io::TestExternalities {
 	fn execute_with_sanity_checks(&mut self, test: impl FnOnce() -> ()) {
 		self.execute_with(all_pallets_integrity_test);
 		self.execute_with(test);
@@ -529,11 +529,11 @@ pub fn roll_to_full_verification() -> Vec<BoundedSupportsOf<MultiBlock>> {
 /// All of the voters in this support must live in a single page of the snapshot, noted by
 /// `snapshot_page`.
 pub fn solution_from_supports(
-	supports: soil_npos_elections::Supports<AccountId>,
+	supports: subsoil::npos_elections::Supports<AccountId>,
 	snapshot_page: PageIndex,
 ) -> TestNposSolution {
-	let staked = soil_npos_elections::supports_to_staked_assignment(supports);
-	let assignments = soil_npos_elections::assignment_staked_to_ratio_normalized(staked).unwrap();
+	let staked = subsoil::npos_elections::supports_to_staked_assignment(supports);
+	let assignments = subsoil::npos_elections::assignment_staked_to_ratio_normalized(staked).unwrap();
 
 	let voters = crate::Snapshot::<Runtime>::voters(snapshot_page).unwrap();
 	let targets = crate::Snapshot::<Runtime>::targets().unwrap();
@@ -548,7 +548,7 @@ pub fn solution_from_supports(
 /// Given vector must be aligned with the snapshot, at most need to be 'pagified' which we do
 /// internally.
 pub fn raw_paged_from_supports(
-	paged_supports: Vec<soil_npos_elections::Supports<AccountId>>,
+	paged_supports: Vec<subsoil::npos_elections::Supports<AccountId>>,
 	round: u32,
 ) -> PagedRawSolution<Runtime> {
 	let score = {
@@ -749,7 +749,7 @@ pub fn roll_to_unsigned_open_with_ocw(maybe_pool: Option<Arc<RwLock<PoolState>>>
 
 /// proceed block number to `n`, while running all offchain workers as well.
 pub fn roll_to_with_ocw(n: BlockNumber, maybe_pool: Option<Arc<RwLock<PoolState>>>) {
-	use soil_runtime::traits::Dispatchable;
+	use subsoil::runtime::traits::Dispatchable;
 	let now = System::block_number();
 	for i in now + 1..=n {
 		// check the offchain transaction pool, and if anything's there, submit it.

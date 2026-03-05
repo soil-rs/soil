@@ -24,13 +24,13 @@ use kitchensink_runtime::{
 };
 use node_primitives::{BlockNumber, Hash};
 use node_testing::keyring::*;
-use soil_core::{
+use subsoil::core::{
 	storage::well_known_keys,
 	traits::{CallContext, CodeExecutor, RuntimeCode},
 };
 use soil_executor::{Externalities, RuntimeVersionOf};
-use soil_runtime::{generic::ExtrinsicFormat, traits::BlakeTwo256};
-use soil_state_machine::TestExternalities as CoreTestExternalities;
+use subsoil::runtime::{generic::ExtrinsicFormat, traits::BlakeTwo256};
+use subsoil::state_machine::TestExternalities as CoreTestExternalities;
 use staging_node_cli::service::RuntimeExecutor;
 use topsoil_support::Hashable;
 
@@ -77,7 +77,7 @@ fn construct_block<E: Externalities>(
 	parent_hash: Hash,
 	extrinsics: Vec<CheckedExtrinsic>,
 ) -> (Vec<u8>, Hash) {
-	use soil_trie::{LayoutV0, TrieConfiguration};
+	use subsoil::trie::{LayoutV0, TrieConfiguration};
 
 	// sign extrinsics.
 	let extrinsics = extrinsics.into_iter().map(sign).collect::<Vec<_>>();
@@ -97,7 +97,7 @@ fn construct_block<E: Externalities>(
 	};
 
 	let runtime_code = RuntimeCode {
-		code_fetcher: &soil_core::traits::WrappedRuntimeCode(compact_code_unwrap().into()),
+		code_fetcher: &subsoil::core::traits::WrappedRuntimeCode(compact_code_unwrap().into()),
 		hash: vec![1, 2, 3],
 		heap_pages: None,
 	};
@@ -169,7 +169,7 @@ fn bench_execute_block(c: &mut Criterion) {
 
 		let executor = RuntimeExecutor::builder().build();
 		let runtime_code = RuntimeCode {
-			code_fetcher: &soil_core::traits::WrappedRuntimeCode(compact_code_unwrap().into()),
+			code_fetcher: &subsoil::core::traits::WrappedRuntimeCode(compact_code_unwrap().into()),
 			hash: vec![1, 2, 3],
 			heap_pages: None,
 		};

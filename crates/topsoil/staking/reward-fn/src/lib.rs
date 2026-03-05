@@ -19,7 +19,7 @@
 
 //! Useful function for inflation for nominated proof of stake.
 
-use soil_arithmetic::{
+use subsoil::arithmetic::{
 	biguint::BigUint,
 	traits::{SaturatedConversion, Zero},
 	PerThing, Perquintill,

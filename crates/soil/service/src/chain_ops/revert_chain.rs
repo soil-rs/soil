@@ -19,7 +19,7 @@
 use crate::error::Error;
 use log::info;
 use soil_client_api::{Backend, UsageProvider};
-use soil_runtime::traits::{Block as BlockT, NumberFor, Zero};
+use subsoil::runtime::traits::{Block as BlockT, NumberFor, Zero};
 use std::sync::Arc;
 
 /// Performs a revert of `blocks` blocks.

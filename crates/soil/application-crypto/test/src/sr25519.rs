@@ -17,15 +17,15 @@
 
 //! Integration tests for sr25519
 
-use soil_api::{ApiExt, ProvideRuntimeApi};
-use soil_application_crypto::{sr25519::AppPair, RuntimePublic};
-use soil_core::{
+use subsoil::api::{ApiExt, ProvideRuntimeApi};
+use subsoil::application_crypto::{sr25519::AppPair, RuntimePublic};
+use subsoil::core::{
 	crypto::{ByteArray, Pair},
 	proof_of_possession::{ProofOfPossessionGenerator, ProofOfPossessionVerifier},
 	sr25519::Pair as Sr25519Pair,
 	testing::SR25519,
 };
-use soil_keystore::{testing::MemoryKeystore, Keystore, KeystoreExt};
+use subsoil::keystore::{testing::MemoryKeystore, Keystore, KeystoreExt};
 use std::sync::Arc;
 use substrate_test_runtime_client::{
 	runtime::{TestAPI, TEST_OWNER},
@@ -34,7 +34,7 @@ use substrate_test_runtime_client::{
 
 #[test]
 fn sr25519_works_in_runtime() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 	let keystore = Arc::new(MemoryKeystore::new());
 	let test_client = TestClientBuilder::new().build();
 

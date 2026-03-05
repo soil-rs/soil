@@ -18,10 +18,10 @@
 
 use super::{client::ClientConfig, wasm_override::WasmOverride, wasm_substitutes::WasmSubstitutes};
 use soil_client_api::{backend, TrieCacheContext};
-use soil_core::traits::{FetchRuntimeCode, RuntimeCode};
+use subsoil::core::traits::{FetchRuntimeCode, RuntimeCode};
 use soil_executor::{RuntimeVersion, RuntimeVersionOf};
-use soil_runtime::traits::Block as BlockT;
-use soil_state_machine::{Ext, OverlayedChanges};
+use subsoil::runtime::traits::Block as BlockT;
+use subsoil::state_machine::{Ext, OverlayedChanges};
 use std::sync::Arc;
 
 /// Provider for fetching `:code` of a block.
@@ -84,7 +84,7 @@ where
 	) -> soil_blockchain::Result<Vec<u8>> {
 		let state = self.backend.state_at(block, TrieCacheContext::Untrusted)?;
 
-		let state_runtime_code = soil_state_machine::backend::BackendRuntimeCode::new(&state);
+		let state_runtime_code = subsoil::state_machine::backend::BackendRuntimeCode::new(&state);
 		let runtime_code =
 			state_runtime_code.runtime_code().map_err(soil_blockchain::Error::RuntimeCode)?;
 
@@ -171,7 +171,7 @@ mod tests {
 	use super::*;
 	use backend::Backend;
 	use soil_client_api::{in_mem, HeaderBackend};
-	use soil_core::{
+	use subsoil::core::{
 		testing::TaskExecutor,
 		traits::{FetchRuntimeCode, WrappedRuntimeCode},
 	};
@@ -313,9 +313,9 @@ mod tests {
 		let backend = Arc::new(in_mem::Backend::<runtime::Block>::new());
 
 		// Let's only override the `spec_name` for our testing purposes.
-		let substitute = soil_version::embed::embed_runtime_version(
+		let substitute = subsoil::version::embed::embed_runtime_version(
 			&substrate_test_runtime::WASM_BINARY_BLOATY.unwrap(),
-			soil_version::RuntimeVersion {
+			subsoil::version::RuntimeVersion {
 				spec_name: SUBSTITUTE_SPEC_NAME.into(),
 				..substrate_test_runtime::VERSION
 			},

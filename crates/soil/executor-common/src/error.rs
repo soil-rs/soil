@@ -59,7 +59,7 @@ pub enum Error {
 	Other(String),
 
 	#[error(transparent)]
-	Allocator(#[from] soil_allocator::Error),
+	Allocator(#[from] subsoil::allocator::Error),
 
 	#[error("Host function {0} execution failed with: {1}")]
 	FunctionExecution(String, String),

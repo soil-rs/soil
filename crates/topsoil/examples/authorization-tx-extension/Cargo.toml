@@ -24,14 +24,11 @@ scale-info = { features = ["derive"], workspace = true }
 topsoil-benchmarking = { optional = true, workspace = true }
 topsoil-support = { features = ["experimental"], workspace = true }
 topsoil-system = { workspace = true }
-
-soil-io = { workspace = true }
-soil-runtime = { workspace = true }
+subsoil = { workspace = true }
 
 [dev-dependencies]
 topsoil-verify-signature = { workspace = true }
-soil-core = { workspace = true }
-soil-keyring = { workspace = true, default-features = true }
+subsoil = { workspace = true }
 
 [features]
 default = ["std"]
@@ -43,20 +40,18 @@ std = [
 	"log/std",
 	"topsoil-verify-signature/std",
 	"scale-info/std",
-	"soil-core/std",
-	"soil-io/std",
-	"soil-runtime/std",
+	"subsoil/std",
 ]
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",
 	"topsoil-support/runtime-benchmarks",
 	"topsoil-system/runtime-benchmarks",
 	"topsoil-verify-signature/runtime-benchmarks",
-	"soil-runtime/runtime-benchmarks",
+	"subsoil/runtime-benchmarks",
 ]
 try-runtime = [
 	"topsoil-support/try-runtime",
 	"topsoil-system/try-runtime",
 	"topsoil-verify-signature/try-runtime",
-	"soil-runtime/try-runtime",
+	"subsoil/try-runtime",
 ]

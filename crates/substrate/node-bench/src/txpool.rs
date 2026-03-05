@@ -69,7 +69,7 @@ impl core::Benchmark for PoolBenchmark {
 			std::thread::park_timeout(std::time::Duration::from_secs(3));
 		}
 
-		let executor = soil_core::testing::TaskExecutor::new();
+		let executor = subsoil::core::testing::TaskExecutor::new();
 		let txpool = BasicPool::new_full(
 			Default::default(),
 			true.into(),

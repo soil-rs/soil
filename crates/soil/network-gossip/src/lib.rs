@@ -80,7 +80,7 @@ use soil_network_types::{
 	PeerId,
 };
 #[cfg(feature = "std")]
-use soil_runtime::traits::{Block as BlockT, NumberFor};
+use subsoil::runtime::traits::{Block as BlockT, NumberFor};
 #[cfg(feature = "std")]
 use std::iter;
 

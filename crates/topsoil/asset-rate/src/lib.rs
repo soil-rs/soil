@@ -62,7 +62,7 @@
 extern crate alloc;
 
 use alloc::boxed::Box;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{CheckedDiv, Zero},
 	FixedPointNumber, FixedU128,
 };

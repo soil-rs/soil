@@ -18,7 +18,7 @@
 //! Benchmarks for the nomination pools coupled with the staking and bags list pallets.
 
 use alloc::{vec, vec::Vec};
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{Bounded, StaticLookup, Zero},
 	Perbill,
 };

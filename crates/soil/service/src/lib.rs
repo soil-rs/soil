@@ -73,7 +73,7 @@ use soil_network_types::PeerId;
 #[cfg(feature = "std")]
 use soil_rpc_server::Server;
 #[cfg(feature = "std")]
-use soil_runtime::traits::{Block as BlockT, Header as HeaderT};
+use subsoil::runtime::traits::{Block as BlockT, Header as HeaderT};
 #[cfg(feature = "std")]
 use soil_utils::mpsc::TracingUnboundedReceiver;
 
@@ -222,6 +222,7 @@ pub struct PartialComponents<Client, Backend, SelectChain, ImportQueue, Transact
 	pub other: Other,
 }
 
+#[cfg(feature = "std")]
 /// Builds a future that continuously polls the network.
 async fn build_network_future<
 	B: BlockT,
@@ -289,6 +290,7 @@ async fn build_network_future<
 	}
 }
 
+#[cfg(feature = "std")]
 /// Builds a future that processes system RPC requests.
 pub async fn build_system_rpc_future<
 	B: BlockT,
@@ -530,7 +532,7 @@ fn transactions_to_propagate<Pool, B, H, E>(pool: &Pool) -> Vec<(H, Arc<B::Extri
 where
 	Pool: TransactionPool<Block = B, Hash = H, Error = E>,
 	B: BlockT,
-	H: std::hash::Hash + Eq + soil_runtime::traits::Member + soil_runtime::traits::MaybeSerialize,
+	H: std::hash::Hash + Eq + subsoil::runtime::traits::Member + subsoil::runtime::traits::MaybeSerialize,
 	E: IntoPoolError + From<soil_transaction_pool_api::error::Error>,
 {
 	pool.ready()
@@ -556,7 +558,7 @@ where
 		+ 'static,
 	Pool: 'static + TransactionPool<Block = B, Hash = H, Error = E>,
 	B: BlockT,
-	H: std::hash::Hash + Eq + soil_runtime::traits::Member + soil_runtime::traits::MaybeSerialize,
+	H: std::hash::Hash + Eq + subsoil::runtime::traits::Member + subsoil::runtime::traits::MaybeSerialize,
 	E: 'static + IntoPoolError + From<soil_transaction_pool_api::error::Error>,
 {
 	fn transactions(&self) -> Vec<(H, Arc<B::Extrinsic>)> {
@@ -638,7 +640,7 @@ mod tests {
 		// given
 		let (client, longest_chain) = TestClientBuilder::new().build_with_longest_chain();
 		let client = Arc::new(client);
-		let spawner = soil_core::testing::TaskExecutor::new();
+		let spawner = subsoil::core::testing::TaskExecutor::new();
 		let pool = Arc::from(BasicPool::new_full(
 			Default::default(),
 			true.into(),
@@ -646,7 +648,7 @@ mod tests {
 			spawner,
 			client.clone(),
 		));
-		let source = soil_runtime::transaction_validity::TransactionSource::External;
+		let source = subsoil::runtime::transaction_validity::TransactionSource::External;
 		let best = block_on(longest_chain.best_chain()).unwrap();
 		let transaction = Transfer {
 			amount: 5,

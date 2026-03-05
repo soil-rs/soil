@@ -30,7 +30,7 @@ pub use substrate_test_runtime as runtime;
 
 pub use self::block_builder_ext::BlockBuilderExt;
 
-use soil_core::storage::ChildInfo;
+use subsoil::core::storage::ChildInfo;
 use substrate_test_runtime::genesismap::GenesisStorageBuilder;
 
 /// A prelude to import in tests.

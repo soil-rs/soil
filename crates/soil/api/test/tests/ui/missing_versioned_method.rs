@@ -15,12 +15,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use soil_runtime::traits::Block as BlockT;
+use subsoil::runtime::traits::Block as BlockT;
 use substrate_test_runtime_client::runtime::Block;
 
 struct Runtime {}
 
-soil_api::decl_runtime_apis! {
+subsoil::api::decl_runtime_apis! {
 	#[api_version(2)]
 	pub trait Api {
 		fn test1();
@@ -30,21 +30,21 @@ soil_api::decl_runtime_apis! {
 	}
 }
 
-soil_api::impl_runtime_apis! {
+subsoil::api::impl_runtime_apis! {
 	#[api_version(3)]
 	impl self::Api<Block> for Runtime {
 		fn test1() {}
 		fn test2() {}
 	}
 
-	impl soil_api::Core<Block> for Runtime {
-		fn version() -> soil_version::RuntimeVersion {
+	impl subsoil::api::Core<Block> for Runtime {
+		fn version() -> subsoil::version::RuntimeVersion {
 			unimplemented!()
 		}
 		fn execute_block(_: <Block as BlockT>::LazyBlock) {
 			unimplemented!()
 		}
-		fn initialize_block(_: &<Block as BlockT>::Header) -> soil_runtime::ExtrinsicInclusionMode {
+		fn initialize_block(_: &<Block as BlockT>::Header) -> subsoil::runtime::ExtrinsicInclusionMode {
 			unimplemented!()
 		}
 	}

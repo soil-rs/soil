@@ -22,7 +22,7 @@
 use super::*;
 use topsoil_benchmarking::v2::*;
 
-type Header = soil_runtime::generic::Header<u64, soil_runtime::traits::BlakeTwo256>;
+type Header = subsoil::runtime::generic::Header<u64, subsoil::runtime::traits::BlakeTwo256>;
 
 #[benchmarks]
 mod benchmarks {

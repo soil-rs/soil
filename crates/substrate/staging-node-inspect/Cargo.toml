@@ -21,14 +21,12 @@ soil-cli = { workspace = true }
 soil-client-api = { workspace = true, default-features = true }
 soil-service = { workspace = true }
 soil-blockchain = { workspace = true, default-features = true }
-soil-core = { workspace = true, default-features = true }
-soil-io = { workspace = true, default-features = true }
-soil-runtime = { workspace = true, default-features = true }
+subsoil = { workspace = true, default-features = true }
 soil-statement-store = { workspace = true, default-features = true }
 thiserror = { workspace = true }
 
 [features]
 runtime-benchmarks = [
 	"soil-service/runtime-benchmarks",
-	"soil-runtime/runtime-benchmarks",
+	"subsoil/runtime-benchmarks",
 ]

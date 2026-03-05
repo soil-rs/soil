@@ -20,8 +20,8 @@
 use super::*;
 use crate as topsoil_asset_conversion;
 use core::default::Default;
-use soil_arithmetic::Permill;
-use soil_runtime::{
+use subsoil::arithmetic::Permill;
+use subsoil::runtime::{
 	traits::{AccountIdConversion, IdentityLookup},
 	BuildStorage,
 };
@@ -141,7 +141,7 @@ pub type WithFirstAssetLocator =
 impl Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type Balance = <Self as topsoil_balances::Config>::Balance;
-	type HigherPrecisionBalance = soil_core::U256;
+	type HigherPrecisionBalance = subsoil::core::U256;
 	type AssetKind = NativeOrWithId<u32>;
 	type Assets = NativeAndAssets;
 	type PoolId = (Self::AssetKind, Self::AssetKind);
@@ -161,7 +161,7 @@ impl Config for Test {
 	type BenchmarkHelper = ();
 }
 
-pub(crate) fn new_test_ext() -> soil_io::TestExternalities {
+pub(crate) fn new_test_ext() -> subsoil::io::TestExternalities {
 	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 
 	topsoil_balances::GenesisConfig::<Test> {
@@ -171,7 +171,7 @@ pub(crate) fn new_test_ext() -> soil_io::TestExternalities {
 	.assimilate_storage(&mut t)
 	.unwrap();
 
-	let mut ext = soil_io::TestExternalities::new(t);
+	let mut ext = subsoil::io::TestExternalities::new(t);
 	ext.execute_with(|| System::set_block_number(1));
 	ext
 }

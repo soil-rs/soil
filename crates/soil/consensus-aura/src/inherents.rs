@@ -16,7 +16,7 @@
 // limitations under the License.
 
 /// Contains the inherents for the AURA module
-use soil_inherents::{Error, InherentData, InherentIdentifier};
+use subsoil::inherents::{Error, InherentData, InherentIdentifier};
 
 /// The Aura inherent identifier.
 pub const INHERENT_IDENTIFIER: InherentIdentifier = *b"auraslot";
@@ -59,7 +59,7 @@ impl InherentDataProvider {
 	/// Creates the inherent data provider by calculating the slot from the given
 	/// `timestamp` and `duration`.
 	pub fn from_timestamp_and_slot_duration(
-		timestamp: soil_timestamp::Timestamp,
+		timestamp: subsoil::timestamp::Timestamp,
 		slot_duration: soil_consensus_slots::SlotDuration,
 	) -> Self {
 		let slot = InherentType::from_timestamp(timestamp, slot_duration);
@@ -79,7 +79,7 @@ impl core::ops::Deref for InherentDataProvider {
 
 #[cfg(feature = "std")]
 #[async_trait::async_trait]
-impl soil_inherents::InherentDataProvider for InherentDataProvider {
+impl subsoil::inherents::InherentDataProvider for InherentDataProvider {
 	async fn provide_inherent_data(&self, inherent_data: &mut InherentData) -> Result<(), Error> {
 		inherent_data.put_data(INHERENT_IDENTIFIER, &self.slot)
 	}

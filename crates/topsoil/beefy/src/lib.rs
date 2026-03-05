@@ -35,7 +35,7 @@ use soil_consensus_beefy::{
 	DoubleVotingProof, ForkVotingProof, FutureBlockVotingProof, OnNewValidatorSet, ValidatorSet,
 	BEEFY_ENGINE_ID, GENESIS_AUTHORITY_SET_ID,
 };
-use soil_runtime::{
+use subsoil::runtime::{
 	generic::DigestItem,
 	traits::{IsMember, Member, One},
 	RuntimeAppPublic,
@@ -417,7 +417,7 @@ pub mod pallet {
 	#[pallet::hooks]
 	impl<T: Config> Hooks<BlockNumberFor<T>> for Pallet<T> {
 		#[cfg(feature = "try-runtime")]
-		fn try_state(_n: BlockNumberFor<T>) -> Result<(), soil_runtime::TryRuntimeError> {
+		fn try_state(_n: BlockNumberFor<T>) -> Result<(), subsoil::runtime::TryRuntimeError> {
 			Self::do_try_state()
 		}
 	}
@@ -487,7 +487,7 @@ impl<T: Config> Pallet<T> {
 	/// Ensure the correctness of the state of this pallet.
 	///
 	/// This should be valid before or after each state transition of this pallet.
-	pub fn do_try_state() -> Result<(), soil_runtime::TryRuntimeError> {
+	pub fn do_try_state() -> Result<(), subsoil::runtime::TryRuntimeError> {
 		Self::try_state_authorities()?;
 		Self::try_state_validators()?;
 
@@ -498,14 +498,14 @@ impl<T: Config> Pallet<T> {
 	///
 	/// * `Authorities` should not exceed the `MaxAuthorities` capacity.
 	/// * `NextAuthorities` should not exceed the `MaxAuthorities` capacity.
-	fn try_state_authorities() -> Result<(), soil_runtime::TryRuntimeError> {
+	fn try_state_authorities() -> Result<(), subsoil::runtime::TryRuntimeError> {
 		if let Some(authorities_len) = <Authorities<T>>::decode_len() {
 			ensure!(
 				authorities_len as u32 <= T::MaxAuthorities::get(),
 				"Authorities number exceeds what the pallet config allows."
 			);
 		} else {
-			return Err(soil_runtime::TryRuntimeError::Other(
+			return Err(subsoil::runtime::TryRuntimeError::Other(
 				"Failed to decode length of authorities",
 			));
 		}
@@ -516,7 +516,7 @@ impl<T: Config> Pallet<T> {
 				"Next authorities number exceeds what the pallet config allows."
 			);
 		} else {
-			return Err(soil_runtime::TryRuntimeError::Other(
+			return Err(subsoil::runtime::TryRuntimeError::Other(
 				"Failed to decode length of next authorities",
 			));
 		}
@@ -526,7 +526,7 @@ impl<T: Config> Pallet<T> {
 	/// # Invariants
 	///
 	/// `ValidatorSetId` must be present in `SetIdSession`
-	fn try_state_validators() -> Result<(), soil_runtime::TryRuntimeError> {
+	fn try_state_validators() -> Result<(), subsoil::runtime::TryRuntimeError> {
 		let validator_set_id = <ValidatorSetId<T>>::get();
 		ensure!(
 			SetIdSession::<T>::get(validator_set_id).is_some(),
@@ -661,7 +661,7 @@ impl<T: Config> Pallet<T> {
 	}
 }
 
-impl<T: Config> soil_runtime::BoundToRuntimeAppPublic for Pallet<T> {
+impl<T: Config> subsoil::runtime::BoundToRuntimeAppPublic for Pallet<T> {
 	type Public = T::BeefyId;
 }
 

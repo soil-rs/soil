@@ -62,7 +62,7 @@ pub mod weights;
 
 extern crate alloc;
 
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{AccountIdConversion, BadOrigin, Hash, StaticLookup, TrailingZeroInput, Zero},
 	Debug, Percent,
 };
@@ -80,7 +80,7 @@ use topsoil_support::{
 use topsoil_system::pallet_prelude::BlockNumberFor;
 
 #[cfg(any(feature = "try-runtime", test))]
-use soil_runtime::TryRuntimeError;
+use subsoil::runtime::TryRuntimeError;
 
 pub use pallet::*;
 pub use weights::WeightInfo;

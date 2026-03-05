@@ -28,8 +28,8 @@ use alloc::vec::Vec;
 use codec::{Codec, Decode, DecodeWithMemTracking, Encode};
 use scale_info::TypeInfo;
 #[cfg(feature = "std")]
-use soil_keystore::KeystorePtr;
-use soil_runtime::{
+use subsoil::keystore::KeystorePtr;
+use subsoil::runtime::{
 	traits::{Header as HeaderT, NumberFor},
 	ConsensusEngineId, Debug, OpaqueValue,
 };
@@ -40,14 +40,14 @@ pub const CLIENT_LOG_TARGET: &str = "grandpa";
 pub const RUNTIME_LOG_TARGET: &str = "runtime::grandpa";
 
 /// Key type for GRANDPA module.
-pub const KEY_TYPE: soil_core::crypto::KeyTypeId = soil_application_crypto::key_types::GRANDPA;
+pub const KEY_TYPE: subsoil::core::crypto::KeyTypeId = subsoil::application_crypto::key_types::GRANDPA;
 
 mod app {
-	use soil_application_crypto::{app_crypto, ed25519, key_types::GRANDPA};
-	app_crypto!(ed25519, GRANDPA);
+	use subsoil::application_crypto::{ed25519, key_types::GRANDPA};
+	subsoil::app_crypto!(ed25519, GRANDPA);
 }
 
-soil_application_crypto::with_pair! {
+subsoil::with_pair! {
 	/// The grandpa crypto scheme defined via the keypair type.
 	pub type AuthorityPair = app::Pair;
 }
@@ -467,7 +467,7 @@ where
 	H: Encode,
 	N: Encode,
 {
-	use soil_application_crypto::RuntimeAppPublic;
+	use subsoil::application_crypto::RuntimeAppPublic;
 
 	localized_payload_with_buffer(round, set_id, message, buf);
 
@@ -514,7 +514,7 @@ where
 	H: Encode,
 	N: Encode,
 {
-	use soil_application_crypto::AppCrypto;
+	use subsoil::application_crypto::AppCrypto;
 
 	let encoded = localized_payload(round, set_id, &message);
 	let signature = keystore
@@ -535,7 +535,7 @@ where
 /// sure that all usages of `OpaqueKeyOwnershipProof` refer to the same type.
 pub type OpaqueKeyOwnershipProof = OpaqueValue;
 
-soil_api::decl_runtime_apis! {
+subsoil::api::decl_runtime_apis! {
 	/// APIs for integrating the GRANDPA finality gadget into runtimes.
 	/// This should be implemented on the runtime side.
 	///

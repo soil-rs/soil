@@ -59,9 +59,9 @@ impl topsoil_system::Config for Runtime {
 	type Block = Block;
 }
 
-pub type Header = soil_runtime::generic::Header<u64, soil_runtime::traits::BlakeTwo256>;
-pub type UncheckedExtrinsic = soil_runtime::generic::UncheckedExtrinsic<u64, RuntimeCall, (), ()>;
-pub type Block = soil_runtime::generic::Block<Header, UncheckedExtrinsic>;
+pub type Header = subsoil::runtime::generic::Header<u64, subsoil::runtime::traits::BlakeTwo256>;
+pub type UncheckedExtrinsic = subsoil::runtime::generic::UncheckedExtrinsic<u64, RuntimeCall, (), ()>;
+pub type Block = subsoil::runtime::generic::Block<Header, UncheckedExtrinsic>;
 
 topsoil_support::construct_runtime!(
 	pub enum Runtime

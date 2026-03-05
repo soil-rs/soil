@@ -30,7 +30,7 @@ use rand::Rng;
 use sc_consensus::{
 	BlockCheckParams, BlockImportParams, ForkChoiceStrategy, ImportResult, StateAction,
 };
-use soil_api::{
+use subsoil::api::{
 	ApiExt, ApiRef, CallApiAt, CallApiAtParams, ConstructRuntimeApi, Core as CoreApi,
 	ProvideRuntimeApi,
 };
@@ -58,11 +58,11 @@ use soil_consensus::{BlockOrigin, BlockStatus, Error as ConsensusError};
 use soil_executor::RuntimeVersion;
 use soil_telemetry::{telemetry, TelemetryHandle, SUBSTRATE_INFO};
 
-use soil_core::{
+use subsoil::core::{
 	storage::{ChildInfo, ChildType, PrefixedStorageKey, StorageChild, StorageData, StorageKey},
 	traits::{CallContext, SpawnNamed},
 };
-use soil_runtime::{
+use subsoil::runtime::{
 	generic::{BlockId, SignedBlock},
 	traits::{
 		Block as BlockT, BlockIdTo, HashingFor, Header as HeaderT, NumberFor, One,
@@ -70,13 +70,13 @@ use soil_runtime::{
 	},
 	Justification, Justifications, StateVersion,
 };
-use soil_state_machine::{
+use subsoil::state_machine::{
 	prove_child_read, prove_range_read_with_child_with_size, prove_read,
 	read_range_proof_check_with_child_on_proving_backend, Backend as StateBackend,
 	ChildStorageCollection, KeyValueStates, KeyValueStorageLevel, StorageCollection,
 	MAX_NESTED_TRIE_DEPTH,
 };
-use soil_trie::{proof_size_extension::ProofSizeExt, CompactProof, MerkleValue, StorageProof};
+use subsoil::trie::{proof_size_extension::ProofSizeExt, CompactProof, MerkleValue, StorageProof};
 use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedSender};
 use std::{
 	collections::{HashMap, HashSet},
@@ -86,7 +86,7 @@ use std::{
 };
 
 use super::call_executor::LocalCallExecutor;
-use soil_core::traits::CodeExecutor;
+use subsoil::core::traits::CodeExecutor;
 
 type NotificationSinks<T> = Mutex<Vec<TracingUnboundedSender<T>>>;
 
@@ -617,7 +617,7 @@ where
 						Some((main_sc, child_sc))
 					},
 					sc_consensus::StorageChanges::Import(changes) => {
-						let mut storage = soil_storage::Storage::default();
+						let mut storage = subsoil::storage::Storage::default();
 						for state in changes.state.0.into_iter() {
 							if state.parent_storage_keys.is_empty() && state.state_root.is_empty() {
 								for (key, value) in state.key_values.into_iter() {
@@ -1342,7 +1342,7 @@ where
 				total_size += size;
 
 				if current_child.is_none()
-					&& soil_core::storage::well_known_keys::is_child_storage_key(
+					&& subsoil::core::storage::well_known_keys::is_child_storage_key(
 						next_key.as_slice(),
 					) && !child_roots.contains(value.as_slice())
 				{
@@ -1386,15 +1386,15 @@ where
 		proof: CompactProof,
 		start_key: &[Vec<u8>],
 	) -> soil_blockchain::Result<(KeyValueStates, usize)> {
-		let mut db = soil_state_machine::MemoryDB::<HashingFor<Block>>::new(&[]);
+		let mut db = subsoil::state_machine::MemoryDB::<HashingFor<Block>>::new(&[]);
 		// Compact encoding
-		soil_trie::decode_compact::<soil_state_machine::LayoutV0<HashingFor<Block>>, _, _>(
+		subsoil::trie::decode_compact::<subsoil::state_machine::LayoutV0<HashingFor<Block>>, _, _>(
 			&mut db,
 			proof.iter_compact_encoded_nodes(),
 			Some(&root),
 		)
 		.map_err(|e| soil_blockchain::Error::from_state(Box::new(e)))?;
-		let proving_backend = soil_state_machine::TrieBackendBuilder::new(db, root).build();
+		let proving_backend = subsoil::state_machine::TrieBackendBuilder::new(db, root).build();
 		let state = read_range_proof_check_with_child_on_proving_backend::<HashingFor<Block>>(
 			&proving_backend,
 			start_key,
@@ -1677,7 +1677,7 @@ where
 {
 	type StateBackend = B::State;
 
-	fn call_api_at(&self, params: CallApiAtParams<Block>) -> Result<Vec<u8>, soil_api::ApiError> {
+	fn call_api_at(&self, params: CallApiAtParams<Block>) -> Result<Vec<u8>, subsoil::api::ApiError> {
 		self.executor
 			.contextual_call(
 				params.at,
@@ -1691,19 +1691,19 @@ where
 			.map_err(Into::into)
 	}
 
-	fn runtime_version_at(&self, hash: Block::Hash) -> Result<RuntimeVersion, soil_api::ApiError> {
+	fn runtime_version_at(&self, hash: Block::Hash) -> Result<RuntimeVersion, subsoil::api::ApiError> {
 		CallExecutor::runtime_version(&self.executor, hash).map_err(Into::into)
 	}
 
-	fn state_at(&self, at: Block::Hash) -> Result<Self::StateBackend, soil_api::ApiError> {
+	fn state_at(&self, at: Block::Hash) -> Result<Self::StateBackend, subsoil::api::ApiError> {
 		self.state_at(at).map_err(Into::into)
 	}
 
 	fn initialize_extensions(
 		&self,
 		at: Block::Hash,
-		extensions: &mut soil_externalities::Extensions,
-	) -> Result<(), soil_api::ApiError> {
+		extensions: &mut subsoil::externalities::Extensions,
+	) -> Result<(), subsoil::api::ApiError> {
 		let block_number = self.expect_block_number_from_id(&BlockId::Hash(at))?;
 
 		extensions.merge(self.executor.execution_extensions().extensions(at, block_number));

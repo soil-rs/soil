@@ -22,7 +22,7 @@
 
 use super::*;
 pub use imbalances::{NegativeImbalance, PositiveImbalance};
-use soil_runtime::traits::Bounded;
+use subsoil::runtime::traits::Bounded;
 use topsoil_support::{
 	ensure,
 	pallet_prelude::DispatchResult,

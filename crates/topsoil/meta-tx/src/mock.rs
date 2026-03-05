@@ -20,9 +20,9 @@
 
 use crate as topsoil_meta_tx;
 use crate::*;
-use soil_core::ConstU8;
-use soil_keystore::{testing::MemoryKeystore, KeystoreExt};
-use soil_runtime::{
+use subsoil::core::ConstU8;
+use subsoil::keystore::{testing::MemoryKeystore, KeystoreExt};
+use subsoil::runtime::{
 	traits::{IdentifyAccount, IdentityLookup, Verify},
 	MultiSignature,
 };
@@ -47,7 +47,7 @@ mod tx_ext {
 	use super::*;
 
 	pub type UncheckedExtrinsic =
-		soil_runtime::generic::UncheckedExtrinsic<AccountId, RuntimeCall, Signature, TxExtension>;
+		subsoil::runtime::generic::UncheckedExtrinsic<AccountId, RuntimeCall, Signature, TxExtension>;
 
 	/// Transaction extension.
 	pub type TxExtension = (topsoil_verify_signature::VerifySignature<Runtime>, TxBareExtension);
@@ -136,8 +136,8 @@ construct_runtime!(
 	}
 );
 
-pub(crate) fn new_test_ext() -> soil_io::TestExternalities {
-	let mut ext = soil_io::TestExternalities::new(Default::default());
+pub(crate) fn new_test_ext() -> subsoil::io::TestExternalities {
+	let mut ext = subsoil::io::TestExternalities::new(Default::default());
 	ext.execute_with(|| {
 		topsoil_system::GenesisConfig::<Runtime>::default().build();
 		System::set_block_number(1);

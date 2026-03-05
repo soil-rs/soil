@@ -38,8 +38,8 @@ use crate::{
 		SameOrOther, TryDrop,
 	},
 };
-use soil_arithmetic::traits::{CheckedAdd, CheckedSub, One};
-use soil_runtime::{traits::Saturating, ArithmeticError, DispatchError, TokenError};
+use subsoil::arithmetic::traits::{CheckedAdd, CheckedSub, One};
+use subsoil::runtime::{traits::Saturating, ArithmeticError, DispatchError, TokenError};
 
 use super::{Credit, Debt, HandleImbalanceDrop, Imbalance};
 

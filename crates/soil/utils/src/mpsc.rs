@@ -28,7 +28,7 @@ use futures::{
 	task::{Context, Poll},
 };
 use log::error;
-use soil_arithmetic::traits::SaturatedConversion;
+use subsoil::arithmetic::traits::SaturatedConversion;
 use std::{
 	backtrace::Backtrace,
 	pin::Pin,

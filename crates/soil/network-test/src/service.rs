@@ -37,7 +37,7 @@ use soil_network_sync::{
 	state_request_handler::StateRequestHandler,
 	strategy::polkadot::{PolkadotSyncingStrategy, PolkadotSyncingStrategyConfig},
 };
-use soil_runtime::traits::{Block as BlockT, Zero};
+use subsoil::runtime::traits::{Block as BlockT, Zero};
 use substrate_test_runtime_client::{
 	runtime::{Block as TestBlock, Hash as TestHash},
 	TestClientBuilder, TestClientBuilderExt as _,
@@ -149,7 +149,7 @@ impl TestNetworkBuilder {
 				PassThroughVerifier(false),
 				Box::new(client.clone()),
 				None,
-				&soil_core::testing::TaskExecutor::new(),
+				&subsoil::core::testing::TaskExecutor::new(),
 				None,
 			)));
 
@@ -460,7 +460,7 @@ async fn notifications_state_consistent() {
 
 #[tokio::test]
 async fn lots_of_incoming_peers_works() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 	let listen_addr = config::build_multiaddr![Memory(rand::random::<u64>())];
 
 	let (main_node, handle1) = TestNetworkBuilder::new()
@@ -588,7 +588,7 @@ async fn notifications_back_pressure() {
 
 #[tokio::test]
 async fn fallback_name_working() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 	// Node 1 supports the protocols "new" and "old". Node 2 only supports "old". Checks whether
 	// they can connect.
 	const NEW_PROTOCOL_NAME: &str = "/new-shiny-protocol-that-isnt-PROTOCOL_NAME";

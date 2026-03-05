@@ -246,12 +246,12 @@ extern crate alloc;
 use alloc::{boxed::Box, vec::Vec};
 use codec::{Decode, DecodeWithMemTracking, Encode};
 use scale_info::TypeInfo;
-use soil_arithmetic::{
+use subsoil::arithmetic::{
 	traits::{CheckedAdd, Zero},
 	UpperOf,
 };
-use soil_npos_elections::{ElectionScore, IdentifierT, Supports, VoteWeight};
-use soil_runtime::{
+use subsoil::npos_elections::{ElectionScore, IdentifierT, Supports, VoteWeight};
+use subsoil::runtime::{
 	transaction_validity::{
 		InvalidTransaction, TransactionPriority, TransactionSource, TransactionValidity,
 		TransactionValidityError, ValidTransaction,
@@ -273,7 +273,7 @@ use topsoil_support::{
 use topsoil_system::{ensure_none, offchain::CreateBare, pallet_prelude::BlockNumberFor};
 
 #[cfg(feature = "try-runtime")]
-use soil_runtime::TryRuntimeError;
+use subsoil::runtime::TryRuntimeError;
 
 #[cfg(feature = "runtime-benchmarks")]
 mod benchmarking;
@@ -564,7 +564,7 @@ pub enum FeasibilityError {
 	/// no snapshot is present.
 	SnapshotUnavailable,
 	/// Internal error from the election crate.
-	NposElection(soil_npos_elections::Error),
+	NposElection(subsoil::npos_elections::Error),
 	/// A vote is invalid.
 	InvalidVote,
 	/// A voter is invalid.
@@ -583,8 +583,8 @@ pub enum FeasibilityError {
 	BoundedConversionFailed,
 }
 
-impl From<soil_npos_elections::Error> for FeasibilityError {
-	fn from(e: soil_npos_elections::Error) -> Self {
+impl From<subsoil::npos_elections::Error> for FeasibilityError {
+	fn from(e: subsoil::npos_elections::Error) -> Self {
 		FeasibilityError::NposElection(e)
 	}
 }
@@ -593,7 +593,7 @@ pub use pallet::*;
 #[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
-	use soil_runtime::traits::Convert;
+	use subsoil::runtime::traits::Convert;
 	use topsoil_election_provider_support::{InstantElectionProvider, NposSolver};
 	use topsoil_support::{pallet_prelude::*, traits::EstimateCallFee};
 	use topsoil_system::pallet_prelude::*;
@@ -848,7 +848,7 @@ pub mod pallet {
 		}
 
 		fn offchain_worker(now: BlockNumberFor<T>) {
-			use soil_runtime::offchain::storage_lock::{BlockAndTime, StorageLock};
+			use subsoil::runtime::offchain::storage_lock::{BlockAndTime, StorageLock};
 
 			// Create a lock with the maximum deadline of number of blocks in the unsigned phase.
 			// This should only come useful in an **abrupt** termination of execution, otherwise the
@@ -877,7 +877,7 @@ pub mod pallet {
 			assert!(size_of::<SolutionTargetIndexOf<T::MinerConfig>>() <= size_of::<usize>());
 
 			// ----------------------------
-			// Based on the requirements of [`soil_npos_elections::Assignment::try_normalize`].
+			// Based on the requirements of [`subsoil::npos_elections::Assignment::try_normalize`].
 			let max_vote: usize = <SolutionOf<T::MinerConfig> as NposSolution>::LIMIT;
 
 			// 2. Maximum sum of [SolutionAccuracy; 16] must fit into `UpperOf<OffchainAccuracy>`.
@@ -1378,7 +1378,7 @@ impl<T: Config> SnapshotWrapper<T> {
 	pub fn set(metadata: SolutionOrSnapshotSize, desired_targets: u32, buffer: &[u8]) {
 		SnapshotMetadata::<T>::put(metadata);
 		DesiredTargets::<T>::put(desired_targets);
-		soil_io::storage::set(&Snapshot::<T>::hashed_key(), &buffer);
+		subsoil::io::storage::set(&Snapshot::<T>::hashed_key(), &buffer);
 	}
 
 	/// Check if all of the storage items exist at the same time or all of the storage items do not
@@ -1788,7 +1788,7 @@ impl<T: Config> ElectionProvider for Pallet<T> {
 	type MaxWinnersPerPage = T::MaxWinners;
 	type MaxBackersPerWinner = T::MaxBackersPerWinner;
 	type MaxBackersPerWinnerFinal = T::MaxBackersPerWinner;
-	type Pages = soil_core::ConstU32<1>;
+	type Pages = subsoil::core::ConstU32<1>;
 	type DataProvider = T::DataProvider;
 
 	fn elect(page: PageIndex) -> Result<BoundedSupportsOf<Self>, Self::Error> {
@@ -1977,7 +1977,7 @@ mod feasibility_check {
 			});
 			assert_noop!(
 				MultiPhase::feasibility_check(raw, COMPUTE),
-				FeasibilityError::NposElection(soil_npos_elections::Error::SolutionInvalidIndex)
+				FeasibilityError::NposElection(subsoil::npos_elections::Error::SolutionInvalidIndex)
 			);
 		})
 	}
@@ -2005,7 +2005,7 @@ mod feasibility_check {
 			);
 			assert_noop!(
 				MultiPhase::feasibility_check(solution, COMPUTE),
-				FeasibilityError::NposElection(soil_npos_elections::Error::SolutionInvalidIndex),
+				FeasibilityError::NposElection(subsoil::npos_elections::Error::SolutionInvalidIndex),
 			);
 		})
 	}
@@ -2070,7 +2070,7 @@ mod tests {
 		},
 		Phase,
 	};
-	use soil_npos_elections::{BalancingConfig, Support};
+	use subsoil::npos_elections::{BalancingConfig, Support};
 	use topsoil_election_provider_support::bounds::ElectionBoundsBuilder;
 	use topsoil_support::{assert_noop, assert_ok};
 

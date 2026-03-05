@@ -16,15 +16,11 @@ workspace = true
 targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
+subsoil = { workspace = true }
 async-trait = { optional = true, workspace = true }
 codec = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
-soil-api = { workspace = true }
-soil-application-crypto = { workspace = true }
 soil-consensus-slots = { workspace = true }
-soil-inherents = { workspace = true }
-soil-runtime = { workspace = true }
-soil-timestamp = { workspace = true }
 
 [features]
 default = ["std"]
@@ -32,18 +28,11 @@ std = [
 	"async-trait",
 	"codec/std",
 	"scale-info/std",
-	"soil-api/std",
-	"soil-application-crypto/std",
-	"soil-consensus-slots/std",
-	"soil-inherents/std",
-	"soil-runtime/std",
-	"soil-timestamp/std",
-]
+	"subsoil/std",
+	"soil-consensus-slots/std"]
 
 # Serde support without relying on std features.
 serde = [
 	"scale-info/serde",
-	"soil-application-crypto/serde",
-	"soil-consensus-slots/serde",
-	"soil-runtime/serde",
-]
+	"subsoil/serde",
+	"soil-consensus-slots/serde"]

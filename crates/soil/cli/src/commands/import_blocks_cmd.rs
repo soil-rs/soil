@@ -23,7 +23,7 @@ use crate::{
 };
 use clap::Parser;
 use soil_client_api::HeaderBackend;
-use soil_runtime::traits::Block as BlockT;
+use subsoil::runtime::traits::Block as BlockT;
 use soil_service::chain_ops::import_blocks;
 use std::{
 	fmt::Debug,

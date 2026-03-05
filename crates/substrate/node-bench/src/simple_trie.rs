@@ -21,9 +21,9 @@ use std::{collections::HashMap, sync::Arc};
 use hash_db::{AsHashDB, HashDB, Hasher as _, Prefix};
 use kvdb::KeyValueDB;
 use node_primitives::Hash;
-use soil_trie::DBValue;
+use subsoil::trie::DBValue;
 
-pub type Hasher = soil_core::Blake2Hasher;
+pub type Hasher = subsoil::core::Blake2Hasher;
 
 /// Immutable generated trie database with root.
 pub struct SimpleTrie<'a> {
@@ -43,7 +43,7 @@ impl<'a> AsHashDB<Hasher, DBValue> for SimpleTrie<'a> {
 
 impl<'a> HashDB<Hasher, DBValue> for SimpleTrie<'a> {
 	fn get(&self, key: &Hash, prefix: Prefix) -> Option<DBValue> {
-		let key = soil_trie::prefixed_key::<Hasher>(key, prefix);
+		let key = subsoil::trie::prefixed_key::<Hasher>(key, prefix);
 		if let Some(value) = self.overlay.get(&key) {
 			return value.clone();
 		}
@@ -61,12 +61,12 @@ impl<'a> HashDB<Hasher, DBValue> for SimpleTrie<'a> {
 	}
 
 	fn emplace(&mut self, key: Hash, prefix: Prefix, value: DBValue) {
-		let key = soil_trie::prefixed_key::<Hasher>(&key, prefix);
+		let key = subsoil::trie::prefixed_key::<Hasher>(&key, prefix);
 		self.overlay.insert(key, Some(value));
 	}
 
 	fn remove(&mut self, key: &Hash, prefix: Prefix) {
-		let key = soil_trie::prefixed_key::<Hasher>(key, prefix);
+		let key = subsoil::trie::prefixed_key::<Hasher>(key, prefix);
 		self.overlay.insert(key, None);
 	}
 }

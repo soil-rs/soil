@@ -21,7 +21,7 @@ use async_trait::async_trait;
 use futures::channel::mpsc::Receiver;
 use indexmap::IndexMap;
 use soil_blockchain::{HashAndNumber, TreeRoute};
-use soil_runtime::{
+use subsoil::runtime::{
 	generic::BlockId,
 	traits::{self, Block as BlockT, SaturatedConversion},
 	transaction_validity::{
@@ -609,7 +609,7 @@ mod tests {
 	use codec::Encode;
 	use futures::executor::block_on;
 	use parking_lot::Mutex;
-	use soil_runtime::transaction_validity::TransactionSource;
+	use subsoil::runtime::transaction_validity::TransactionSource;
 	use soil_transaction_pool_api::TransactionStatus;
 	use std::{collections::HashMap, time::Instant};
 	use substrate_test_runtime::{AccountId, ExtrinsicBuilder, Transfer, H256};
@@ -648,7 +648,7 @@ mod tests {
 
 	#[test]
 	fn submit_at_preserves_order() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 		// given
 		let (pool, api) = pool();
 
@@ -892,7 +892,7 @@ mod tests {
 
 	#[test]
 	fn should_limit_futures() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 
 		let xt = uxt(Transfer {
 			from: Alice.into(),

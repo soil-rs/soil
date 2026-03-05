@@ -632,7 +632,7 @@ pub fn check_pallet_call_return_type(sig: &syn::Signature) -> syn::Result<CallRe
 }
 
 pub(crate) fn two128_str(s: &str) -> TokenStream {
-	bytes_to_array(soil_crypto_hashing::twox_128(s.as_bytes()).into_iter())
+	bytes_to_array(subsoil_crypto_hashing::twox_128(s.as_bytes()).into_iter())
 }
 
 pub(crate) fn bytes_to_array(bytes: impl IntoIterator<Item = u8>) -> TokenStream {

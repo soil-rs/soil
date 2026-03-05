@@ -54,7 +54,7 @@ pub use weights::WeightInfo;
 
 use codec::{Decode, DecodeWithMemTracking, Encode};
 use scale_info::TypeInfo;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{
 		AsTransactionAuthorizedOrigin, DispatchInfoOf, DispatchOriginOf, Dispatchable, Implication,
 		PostDispatchInfoOf, TransactionExtension, ValidateResult,

@@ -42,7 +42,7 @@ impl Default for TokioTestExecutor {
 	}
 }
 
-impl soil_core::traits::SpawnNamed for TokioTestExecutor {
+impl subsoil::core::traits::SpawnNamed for TokioTestExecutor {
 	fn spawn_blocking(
 		&self,
 		_name: &'static str,

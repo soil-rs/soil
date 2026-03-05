@@ -32,7 +32,7 @@ use topsoil_support::{
 	PalletId,
 };
 
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{BadOrigin, IdentityLookup},
 	BuildStorage, Perbill, Permill, TokenError,
 };
@@ -67,10 +67,10 @@ parameter_types! {
 
 type Balance = u64;
 // must be at least 20 bytes long because of child-bounty account derivation.
-type AccountId = soil_core::U256;
+type AccountId = subsoil::core::U256;
 
 fn account_id(id: u8) -> AccountId {
-	soil_core::U256::from(id)
+	subsoil::core::U256::from(id)
 }
 
 #[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
@@ -144,7 +144,7 @@ impl topsoil_child_bounties::Config for Test {
 	type WeightInfo = ();
 }
 
-pub fn new_test_ext() -> soil_io::TestExternalities {
+pub fn new_test_ext() -> subsoil::io::TestExternalities {
 	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	topsoil_balances::GenesisConfig::<Test> {
 		// Total issuance will be 200 with treasury account initialized at ED.

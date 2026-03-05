@@ -19,12 +19,12 @@
 
 #![cfg(test)]
 
-use soil_core::H256;
-use soil_runtime::{
+use subsoil::core::H256;
+use subsoil::runtime::{
 	traits::{BadOrigin, BlakeTwo256, IdentityLookup},
 	BuildStorage, Perbill, Permill,
 };
-use soil_storage::Storage;
+use subsoil::storage::Storage;
 
 use topsoil_support::{
 	assert_noop, assert_ok, derive_impl, parameter_types,
@@ -177,8 +177,8 @@ impl Config<Instance1> for Test {
 	type WeightInfo = ();
 }
 
-pub fn new_test_ext() -> soil_io::TestExternalities {
-	let mut ext: soil_io::TestExternalities = RuntimeGenesisConfig {
+pub fn new_test_ext() -> subsoil::io::TestExternalities {
+	let mut ext: subsoil::io::TestExternalities = RuntimeGenesisConfig {
 		system: topsoil_system::GenesisConfig::default(),
 		balances: topsoil_balances::GenesisConfig {
 			balances: vec![(0, 100), (1, 98), (2, 1)],
@@ -488,7 +488,7 @@ fn test_last_reward_migration() {
 
 	s.top = data.into_iter().collect();
 
-	soil_io::TestExternalities::new(s).execute_with(|| {
+	subsoil::io::TestExternalities::new(s).execute_with(|| {
 		let module = topsoil_tips::Tips::<Test>::pallet_prefix();
 		let item = topsoil_tips::Tips::<Test>::storage_prefix();
 		Tips::migrate_retract_tip_for_tip_new(module, item);
@@ -546,7 +546,7 @@ fn test_migration_v4() {
 	let mut s = Storage::default();
 	s.top = data.into_iter().collect();
 
-	soil_io::TestExternalities::new(s).execute_with(|| {
+	subsoil::io::TestExternalities::new(s).execute_with(|| {
 		use topsoil_support::traits::PalletInfoAccess;
 
 		let old_pallet = "Treasury";
@@ -562,7 +562,7 @@ fn test_migration_v4() {
 		crate::migrations::v4::post_migrate::<Test, Tips, _>(old_pallet);
 	});
 
-	soil_io::TestExternalities::new(Storage::default()).execute_with(|| {
+	subsoil::io::TestExternalities::new(Storage::default()).execute_with(|| {
 		use topsoil_support::traits::PalletInfoAccess;
 
 		let old_pallet = "Treasury";
@@ -593,7 +593,7 @@ fn genesis_funding_works() {
 	topsoil_treasury::GenesisConfig::<Test>::default()
 		.assimilate_storage(&mut t)
 		.unwrap();
-	let mut t: soil_io::TestExternalities = t.into();
+	let mut t: subsoil::io::TestExternalities = t.into();
 
 	t.execute_with(|| {
 		assert_eq!(Balances::free_balance(Treasury::account_id()), initial_funding);

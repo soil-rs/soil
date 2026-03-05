@@ -358,8 +358,8 @@ use alloc::{collections::btree_map::BTreeMap, vec::Vec};
 use codec::{Codec, DecodeWithMemTracking};
 use core::{fmt::Debug, ops::Div};
 use scale_info::TypeInfo;
-use soil_core::U256;
-use soil_runtime::{
+use subsoil::core::U256;
+use subsoil::runtime::{
 	traits::{
 		AccountIdConversion, Bounded, CheckedAdd, CheckedSub, Convert, Saturating, StaticLookup,
 		Zero,
@@ -380,7 +380,7 @@ use topsoil_support::{
 };
 
 #[cfg(any(feature = "try-runtime", feature = "fuzzing", test, debug_assertions))]
-use soil_runtime::TryRuntimeError;
+use subsoil::runtime::TryRuntimeError;
 
 /// The log target of this pallet.
 pub const LOG_TARGET: &str = "runtime::nomination-pools";
@@ -405,7 +405,7 @@ pub mod migration;
 pub mod weights;
 
 pub use pallet::*;
-use soil_runtime::traits::BlockNumberProvider;
+use subsoil::runtime::traits::BlockNumberProvider;
 pub use weights::WeightInfo;
 
 /// The balance type used by the currency system.
@@ -1649,7 +1649,7 @@ impl<T: Config> Get<u32> for TotalUnbondingPools<T> {
 #[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
-	use soil_runtime::Perbill;
+	use subsoil::runtime::Perbill;
 	use topsoil_support::traits::StorageVersion;
 	use topsoil_system::pallet_prelude::{
 		ensure_root, ensure_signed, BlockNumberFor as SystemBlockNumberFor, OriginFor,
@@ -1688,7 +1688,7 @@ pub mod pallet {
 		/// a PITA to do).
 		///
 		/// See the inline code docs of `Member::pending_rewards` and `RewardPool::update_recorded`
-		/// for example analysis. A [`soil_runtime::FixedU128`] should be fine for chains with balance
+		/// for example analysis. A [`subsoil::runtime::FixedU128`] should be fine for chains with balance
 		/// types similar to that of Polkadot and Kusama, in the absence of severe slashing (or
 		/// prevented via a reasonable `MaxPointsToBalance`), for many many years to come.
 		type RewardCounter: FixedPointNumber + MaxEncodedLen + TypeInfo + Default + codec::FullCodec;
@@ -2801,7 +2801,7 @@ pub mod pallet {
 		) -> DispatchResult {
 			let mut bonded_pool = match ensure_root(origin.clone()) {
 				Ok(()) => BondedPool::<T>::get(pool_id).ok_or(Error::<T>::PoolNotFound)?,
-				Err(soil_runtime::traits::BadOrigin) => {
+				Err(subsoil::runtime::traits::BadOrigin) => {
 					let who = ensure_signed(origin)?;
 					let bonded_pool =
 						BondedPool::<T>::get(pool_id).ok_or(Error::<T>::PoolNotFound)?;

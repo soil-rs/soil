@@ -25,7 +25,7 @@ use log::{debug, error, trace, warn};
 use soil_consensus::block_validation::Validation;
 use soil_network_common::sync::message::BlockAnnounce;
 use soil_network_types::PeerId;
-use soil_runtime::traits::{Block as BlockT, Header, Zero};
+use subsoil::runtime::traits::{Block as BlockT, Header, Zero};
 use std::{
 	collections::{hash_map::Entry, HashMap},
 	default::Default,

@@ -25,7 +25,7 @@ use crate::{
 	ChainApi, FullChainApi, ReadyIteratorFor,
 };
 use async_trait::async_trait;
-use soil_runtime::traits::Block as BlockT;
+use subsoil::runtime::traits::Block as BlockT;
 use soil_transaction_pool_api::{
 	ChainEvent, ImportNotificationStream, LocalTransactionFor, LocalTransactionPool,
 	MaintainedTransactionPool, PoolStatus, ReadyTransactions, TransactionFor, TransactionPool,
@@ -41,10 +41,10 @@ pub struct TransactionPoolWrapper<Block, Client>(
 )
 where
 	Block: BlockT,
-	Client: soil_api::ProvideRuntimeApi<Block>
+	Client: subsoil::api::ProvideRuntimeApi<Block>
 		+ soil_client_api::BlockBackend<Block>
 		+ soil_client_api::blockchain::HeaderBackend<Block>
-		+ soil_runtime::traits::BlockIdTo<Block>
+		+ subsoil::runtime::traits::BlockIdTo<Block>
 		+ soil_blockchain::HeaderMetadata<Block, Error = soil_blockchain::Error>
 		+ 'static,
 	Client::Api: soil_transaction_pool::runtime_api::TaggedTransactionQueue<Block>;
@@ -53,10 +53,10 @@ where
 impl<Block, Client> TransactionPool for TransactionPoolWrapper<Block, Client>
 where
 	Block: BlockT,
-	Client: soil_api::ProvideRuntimeApi<Block>
+	Client: subsoil::api::ProvideRuntimeApi<Block>
 		+ soil_client_api::BlockBackend<Block>
 		+ soil_client_api::blockchain::HeaderBackend<Block>
-		+ soil_runtime::traits::BlockIdTo<Block>
+		+ subsoil::runtime::traits::BlockIdTo<Block>
 		+ soil_blockchain::HeaderMetadata<Block, Error = soil_blockchain::Error>
 		+ 'static,
 	Client::Api: soil_transaction_pool::runtime_api::TaggedTransactionQueue<Block>,
@@ -152,10 +152,10 @@ where
 impl<Block, Client> MaintainedTransactionPool for TransactionPoolWrapper<Block, Client>
 where
 	Block: BlockT,
-	Client: soil_api::ProvideRuntimeApi<Block>
+	Client: subsoil::api::ProvideRuntimeApi<Block>
 		+ soil_client_api::BlockBackend<Block>
 		+ soil_client_api::blockchain::HeaderBackend<Block>
-		+ soil_runtime::traits::BlockIdTo<Block>
+		+ subsoil::runtime::traits::BlockIdTo<Block>
 		+ soil_blockchain::HeaderMetadata<Block, Error = soil_blockchain::Error>
 		+ 'static,
 	Client::Api: soil_transaction_pool::runtime_api::TaggedTransactionQueue<Block>,
@@ -168,10 +168,10 @@ where
 impl<Block, Client> LocalTransactionPool for TransactionPoolWrapper<Block, Client>
 where
 	Block: BlockT,
-	Client: soil_api::ProvideRuntimeApi<Block>
+	Client: subsoil::api::ProvideRuntimeApi<Block>
 		+ soil_client_api::BlockBackend<Block>
 		+ soil_client_api::blockchain::HeaderBackend<Block>
-		+ soil_runtime::traits::BlockIdTo<Block>
+		+ subsoil::runtime::traits::BlockIdTo<Block>
 		+ soil_blockchain::HeaderMetadata<Block, Error = soil_blockchain::Error>
 		+ 'static,
 	Client::Api: soil_transaction_pool::runtime_api::TaggedTransactionQueue<Block>,

@@ -18,7 +18,7 @@
 
 use crate::{RuntimeT, LOG_TARGET};
 use remote_externalities::{Builder, Mode, OnlineConfig};
-use soil_runtime::{traits::Block as BlockT, DeserializeOwned};
+use subsoil::runtime::{traits::Block as BlockT, DeserializeOwned};
 use topsoil_staking::Nominators;
 use topsoil_support::traits::PalletInfoAccess;
 

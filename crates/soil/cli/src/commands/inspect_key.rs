@@ -23,7 +23,7 @@ use crate::{
 	with_crypto_scheme, CryptoSchemeFlag, Error, KeystoreParams, NetworkSchemeFlag, OutputTypeFlag,
 };
 use clap::Parser;
-use soil_core::crypto::{ExposeSecret, SecretString, SecretUri, Ss58Codec};
+use subsoil::core::crypto::{ExposeSecret, SecretString, SecretUri, Ss58Codec};
 use std::str::FromStr;
 
 /// The `inspect` command
@@ -116,7 +116,7 @@ impl InspectKeyCmd {
 /// `suri`, i.e. without any derivations.
 ///
 /// Returns an error if the public key does not match.
-fn expect_public_from_phrase<Pair: soil_core::Pair>(
+fn expect_public_from_phrase<Pair: subsoil::core::Pair>(
 	expect_public: &str,
 	suri: &str,
 	password: Option<&SecretString>,
@@ -152,8 +152,8 @@ fn expect_public_from_phrase<Pair: soil_core::Pair>(
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use soil_core::crypto::{ByteArray, Pair};
-	use soil_runtime::traits::IdentifyAccount;
+	use subsoil::core::crypto::{ByteArray, Pair};
+	use subsoil::runtime::traits::IdentifyAccount;
 
 	#[test]
 	fn inspect() {
@@ -200,7 +200,7 @@ mod tests {
 		let seed =
 			"remember fiber forum demise paper uniform squirrel feel access exclude casual effort";
 		let invalid_public = "0x12e76e0ae8ce41b6516cce52b3f23a08dcb4cfeed53c6ee8f5eb9f7367341069";
-		let valid_public = soil_core::sr25519::Pair::from_string_with_seed(seed, None)
+		let valid_public = subsoil::core::sr25519::Pair::from_string_with_seed(seed, None)
 			.expect("Valid")
 			.0
 			.public();
@@ -217,7 +217,7 @@ mod tests {
 		let password = "test12245";
 		let seed_with_password = format!("{}///{}", seed, password);
 		let valid_public_with_password =
-			soil_core::sr25519::Pair::from_string_with_seed(&seed_with_password, Some(password))
+			subsoil::core::sr25519::Pair::from_string_with_seed(&seed_with_password, Some(password))
 				.expect("Valid")
 				.0
 				.public();
@@ -236,7 +236,7 @@ mod tests {
 		let seed_with_password_and_derivation = format!("{}//test//account///{}", seed, password);
 
 		let valid_public_with_password_and_derivation =
-			soil_core::sr25519::Pair::from_string_with_seed(
+			subsoil::core::sr25519::Pair::from_string_with_seed(
 				&seed_with_password_and_derivation,
 				Some(password),
 			)

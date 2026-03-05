@@ -785,7 +785,7 @@ impl<N: Ord + Clone> AuthoritySetChanges<N> {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use soil_core::crypto::{ByteArray, UncheckedFrom};
+	use subsoil::core::crypto::{ByteArray, UncheckedFrom};
 
 	fn static_is_descendent_of<A>(value: bool) -> impl Fn(&A, &A) -> Result<bool, std::io::Error> {
 		move |_, _| Ok(value)

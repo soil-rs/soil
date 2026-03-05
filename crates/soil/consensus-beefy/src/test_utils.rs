@@ -21,12 +21,12 @@ use crate::{
 	ecdsa_crypto, AuthorityIdBound, Commitment, DoubleVotingProof, ForkVotingProof,
 	FutureBlockVotingProof, Payload, ValidatorSetId, VoteMessage,
 };
-use soil_application_crypto::{AppCrypto, AppPair, RuntimeAppPublic, Wraps};
-use soil_core::{ecdsa, Pair};
-use soil_runtime::traits::{BlockNumber, Header as HeaderT};
+use subsoil::application_crypto::{AppCrypto, AppPair, RuntimeAppPublic, Wraps};
+use subsoil::core::{ecdsa, Pair};
+use subsoil::runtime::traits::{BlockNumber, Header as HeaderT};
 
 use codec::Encode;
-use soil_crypto_hashing::keccak_256;
+use subsoil_crypto_hashing::keccak_256;
 use std::{collections::HashMap, marker::PhantomData, sync::LazyLock};
 use strum::IntoEnumIterator;
 
@@ -111,7 +111,7 @@ static PUBLIC_KEYS: LazyLock<HashMap<Keyring<ecdsa_crypto::AuthorityId>, ecdsa_c
 	LazyLock::new(|| {
 		PRIVATE_KEYS
 			.iter()
-			.map(|(name, pair)| (name.clone(), soil_application_crypto::Pair::public(pair)))
+			.map(|(name, pair)| (name.clone(), subsoil::application_crypto::Pair::public(pair)))
 			.collect()
 	});
 

@@ -19,7 +19,7 @@
 
 #![cfg(feature = "runtime-benchmarks")]
 
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{ValidateUnsigned, Zero},
 	transaction_validity::TransactionSource,
 };

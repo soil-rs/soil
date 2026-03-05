@@ -62,8 +62,8 @@ use log::{debug, error, info};
 use parking_lot::RwLock;
 use prometheus_endpoint::{PrometheusError, Registry};
 use sc_consensus::BlockImport;
-use soil_api::ProvideRuntimeApi;
-use soil_application_crypto::AppCrypto;
+use subsoil::api::ProvideRuntimeApi;
+use subsoil::application_crypto::AppCrypto;
 use soil_blockchain::{
 	Error as ClientError, HeaderBackend, HeaderMetadata, Result as ClientResult,
 };
@@ -76,10 +76,10 @@ use soil_consensus::SelectChain;
 use soil_consensus_grandpa::{
 	AuthorityList, AuthoritySignature, SetId, CLIENT_LOG_TARGET as LOG_TARGET,
 };
-use soil_core::{crypto::ByteArray, traits::CallContext};
-use soil_keystore::KeystorePtr;
+use subsoil::core::{crypto::ByteArray, traits::CallContext};
+use subsoil::keystore::KeystorePtr;
 use soil_network::{types::ProtocolName, NetworkBackend, NotificationService};
-use soil_runtime::{
+use subsoil::runtime::{
 	generic::BlockId,
 	traits::{Block as BlockT, NumberFor, Zero},
 };
@@ -163,7 +163,7 @@ use std::marker::PhantomData;
 pub struct GrandpaPruningFilter;
 
 impl soil_client_db::PruningFilter for GrandpaPruningFilter {
-	fn should_retain(&self, justifications: &soil_runtime::Justifications) -> bool {
+	fn should_retain(&self, justifications: &subsoil::runtime::Justifications) -> bool {
 		justifications.get(GRANDPA_ENGINE_ID).is_some()
 	}
 }
@@ -290,7 +290,7 @@ pub enum Error {
 
 	/// A runtime api request failed.
 	#[error("runtime API request failed: {0}")]
-	RuntimeApi(soil_api::ApiError),
+	RuntimeApi(subsoil::api::ApiError),
 }
 
 /// Something which can determine if a block is known.

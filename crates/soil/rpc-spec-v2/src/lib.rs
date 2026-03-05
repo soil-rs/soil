@@ -25,7 +25,7 @@
 #![cfg_attr(not(feature = "std"), no_std)]
 
 #[cfg(feature = "std")]
-use soil_core::hexdisplay::{AsBytesRef, HexDisplay};
+use subsoil::core::hexdisplay::{AsBytesRef, HexDisplay};
 
 #[cfg(feature = "std")]
 mod common;
@@ -41,7 +41,7 @@ pub mod transaction;
 
 /// Task executor that is being used by RPC subscriptions.
 #[cfg(feature = "std")]
-pub type SubscriptionTaskExecutor = std::sync::Arc<dyn soil_core::traits::SpawnNamed>;
+pub type SubscriptionTaskExecutor = std::sync::Arc<dyn subsoil::core::traits::SpawnNamed>;
 
 /// Util function to encode a value as a hex string
 #[cfg(feature = "std")]

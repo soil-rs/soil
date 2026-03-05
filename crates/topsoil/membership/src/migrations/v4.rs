@@ -16,7 +16,7 @@
 // limitations under the License.
 
 use super::super::LOG_TARGET;
-use soil_io::hashing::twox_128;
+use subsoil::io::hashing::twox_128;
 
 use topsoil_support::{
 	traits::{

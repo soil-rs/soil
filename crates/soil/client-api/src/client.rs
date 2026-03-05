@@ -19,8 +19,8 @@
 //! A set of APIs supported by the client along with their primitives.
 
 use soil_consensus::BlockOrigin;
-use soil_core::storage::StorageKey;
-use soil_runtime::{
+use subsoil::core::storage::StorageKey;
+use subsoil::runtime::{
 	generic::SignedBlock,
 	traits::{Block as BlockT, NumberFor},
 	Justifications,

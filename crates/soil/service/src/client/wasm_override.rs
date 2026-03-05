@@ -37,10 +37,10 @@
 //! needed must be provided in the given directory.
 
 use soil_blockchain::Result;
-use soil_core::traits::{FetchRuntimeCode, RuntimeCode, WrappedRuntimeCode};
+use subsoil::core::traits::{FetchRuntimeCode, RuntimeCode, WrappedRuntimeCode};
 use soil_executor::RuntimeVersionOf;
-use soil_state_machine::BasicExternalities;
-use soil_version::RuntimeVersion;
+use subsoil::state_machine::BasicExternalities;
+use subsoil::version::RuntimeVersion;
 use std::{
 	collections::{hash_map::DefaultHasher, HashMap},
 	fs,

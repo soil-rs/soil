@@ -18,7 +18,7 @@
 //! Trait for handling imbalances.
 
 use core::marker::PhantomData;
-use soil_core::TypedGet;
+use subsoil::core::TypedGet;
 use topsoil_support::traits::{fungible, fungibles, misc::TryDrop};
 
 /// Handler for when some currency "account" decreased in balance for

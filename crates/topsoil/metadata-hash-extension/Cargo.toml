@@ -17,13 +17,12 @@ topsoil-support = { workspace = true }
 topsoil-system = { workspace = true }
 log = { workspace = true }
 scale-info = { features = ["derive", "serde"], workspace = true }
-soil-runtime = { features = ["serde"], workspace = true }
+subsoil = { workspace = true }
 
 [dev-dependencies]
 frame-metadata = { features = ["current", "unstable"], workspace = true, default-features = true }
 merkleized-metadata = { workspace = true }
-soil-api = { workspace = true, default-features = true }
-soil-tracing = { workspace = true, default-features = true }
+subsoil = { workspace = true, default-features = true }
 soil-transaction-pool = { workspace = true, default-features = true }
 substrate-test-runtime-client = { workspace = true }
 substrate-wasm-builder = { features = ["metadata-hash"], workspace = true, default-features = true }
@@ -37,5 +36,4 @@ std = [
 	"topsoil-system/std",
 	"log/std",
 	"scale-info/std",
-	"soil-runtime/std",
-]
+	"subsoil/std"]

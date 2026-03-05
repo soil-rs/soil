@@ -18,7 +18,7 @@
 use alloc::{vec, vec::Vec};
 use codec::{Decode, DecodeWithMemTracking, Encode};
 use scale_info::TypeInfo;
-use soil_runtime::traits::Block;
+use subsoil::runtime::traits::Block;
 
 /// Id of different payloads in the [`crate::Commitment`] data.
 pub type BeefyPayloadId = [u8; 2];

@@ -26,7 +26,7 @@
 //! which should be passed to `topsoil_system` configuration when runtime is being set up.
 
 use scale_info::TypeInfo;
-use soil_runtime::{traits::Bounded, Perbill};
+use subsoil::runtime::{traits::Bounded, Perbill};
 use topsoil_support::{
 	dispatch::{DispatchClass, OneOrMany, PerDispatchClass},
 	weights::{constants, Weight},

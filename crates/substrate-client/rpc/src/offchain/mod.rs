@@ -24,7 +24,7 @@ mod tests;
 use self::error::Error;
 use jsonrpsee::{core::async_trait, Extensions};
 use parking_lot::RwLock;
-use soil_core::{
+use subsoil::core::{
 	offchain::{OffchainStorage, StorageKind},
 	Bytes,
 };

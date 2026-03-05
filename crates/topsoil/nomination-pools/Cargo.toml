@@ -23,22 +23,18 @@ scale-info = { features = ["derive"], workspace = true }
 topsoil-support = { workspace = true }
 topsoil-system = { workspace = true }
 log = { workspace = true }
-soil-core = { workspace = true }
-soil-io = { workspace = true }
-soil-runtime = { workspace = true }
 soil-staking = { workspace = true }
 
 # Optional: use for testing and/or fuzzing
 topsoil-balances = { optional = true, workspace = true }
-soil-tracing = { optional = true, workspace = true }
+subsoil = { workspace = true }
 
 [dev-dependencies]
 topsoil-balances = { workspace = true, default-features = true }
-soil-tracing = { workspace = true, default-features = true }
 
 [features]
 default = ["std"]
-fuzzing = ["topsoil-balances", "soil-tracing"]
+fuzzing = ["topsoil-balances"]
 std = [
 	"codec/std",
 	"topsoil-support/std",
@@ -46,22 +42,19 @@ std = [
 	"log/std",
 	"topsoil-balances?/std",
 	"scale-info/std",
-	"soil-core/std",
-	"soil-io/std",
-	"soil-runtime/std",
+	"subsoil/std",
 	"soil-staking/std",
-	"soil-tracing?/std",
 ]
 runtime-benchmarks = [
 	"topsoil-support/runtime-benchmarks",
 	"topsoil-system/runtime-benchmarks",
 	"topsoil-balances?/runtime-benchmarks",
-	"soil-runtime/runtime-benchmarks",
+	"subsoil/runtime-benchmarks",
 	"soil-staking/runtime-benchmarks",
 ]
 try-runtime = [
 	"topsoil-support/try-runtime",
 	"topsoil-system/try-runtime",
 	"topsoil-balances?/try-runtime",
-	"soil-runtime/try-runtime",
+	"subsoil/try-runtime",
 ]

@@ -23,7 +23,7 @@ use super::*;
 use crate::Pallet as BeefyMmr;
 use codec::Encode;
 use soil_consensus_beefy::Payload;
-use soil_runtime::traits::One;
+use subsoil::runtime::traits::One;
 use topsoil_benchmarking::v2::*;
 use topsoil_mmr::{Nodes, Pallet as Mmr};
 use topsoil_support::traits::Hooks;

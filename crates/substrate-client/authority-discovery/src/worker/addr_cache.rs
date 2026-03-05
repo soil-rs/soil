@@ -22,7 +22,7 @@ use serde::{Deserialize, Serialize};
 use soil_authority_discovery::AuthorityId;
 use soil_network::{multiaddr::Protocol, Multiaddr};
 use soil_network_types::PeerId;
-use soil_runtime::DeserializeOwned;
+use subsoil::runtime::DeserializeOwned;
 use std::{
 	collections::{hash_map::Entry, HashMap, HashSet},
 	fs::File,
@@ -304,7 +304,7 @@ mod tests {
 	use soil_network_types::multihash::{Code, Multihash};
 
 	use soil_authority_discovery::{AuthorityId, AuthorityPair};
-	use soil_core::crypto::Pair;
+	use subsoil::core::crypto::Pair;
 
 	#[derive(Clone, Debug)]
 	struct TestAuthorityId(AuthorityId);

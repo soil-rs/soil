@@ -18,7 +18,7 @@
 //! # Pallet State Trie Migration
 //!
 //! Reads and writes all keys and values in the entire state in a systematic way. This is useful for
-//! upgrading a chain to `soil_core::StateVersion::V1`, where all keys need to be touched.
+//! upgrading a chain to `subsoil::core::StateVersion::V1`, where all keys need to be touched.
 //!
 //! ## Migration Types
 //!
@@ -79,10 +79,10 @@ pub mod pallet {
 
 	use alloc::vec::Vec;
 	use core::ops::Deref;
-	use soil_core::{
+	use subsoil::core::{
 		hexdisplay::HexDisplay, storage::well_known_keys::DEFAULT_CHILD_STORAGE_KEY_PREFIX,
 	};
-	use soil_runtime::{
+	use subsoil::runtime::{
 		self,
 		traits::{Saturating, Zero},
 	};
@@ -320,7 +320,7 @@ pub mod pallet {
 		///
 		/// It updates the dynamic counters.
 		fn migrate_child(&mut self) -> Result<(), Error<T>> {
-			use soil_io::default_child_storage as child_io;
+			use subsoil::io::default_child_storage as child_io;
 			let (maybe_current_child, child_root) = match (&self.progress_child, &self.progress_top)
 			{
 				(Progress::LastKey(last_child), Progress::LastKey(last_top)) => {
@@ -372,7 +372,7 @@ pub mod pallet {
 			let maybe_current_top = match &self.progress_top {
 				Progress::LastKey(last_top) => {
 					let maybe_top: Option<BoundedVec<u8, T::MaxKeyLen>> =
-						if let Some(next) = soil_io::storage::next_key(last_top) {
+						if let Some(next) = subsoil::io::storage::next_key(last_top) {
 							Some(next.try_into().map_err(|_| Error::<T>::KeyTooLong)?)
 						} else {
 							None
@@ -389,8 +389,8 @@ pub mod pallet {
 			};
 
 			if let Some(current_top) = maybe_current_top.as_ref() {
-				let added_size = if let Some(data) = soil_io::storage::get(current_top) {
-					soil_io::storage::set(current_top, &data);
+				let added_size = if let Some(data) = subsoil::io::storage::get(current_top) {
+					subsoil::io::storage::set(current_top, &data);
 					data.len() as u32
 				} else {
 					Zero::zero()
@@ -743,9 +743,9 @@ pub mod pallet {
 
 			let mut dyn_size = 0u32;
 			for key in &keys {
-				if let Some(data) = soil_io::storage::get(key) {
+				if let Some(data) = subsoil::io::storage::get(key) {
 					dyn_size = dyn_size.saturating_add(data.len() as u32);
-					soil_io::storage::set(key, &data);
+					subsoil::io::storage::set(key, &data);
 				}
 			}
 
@@ -789,7 +789,7 @@ pub mod pallet {
 			child_keys: Vec<Vec<u8>>,
 			total_size: u32,
 		) -> DispatchResultWithPostInfo {
-			use soil_io::default_child_storage as child_io;
+			use subsoil::io::default_child_storage as child_io;
 			let who = T::SignedFilter::ensure_origin(origin)?;
 
 			// ensure they can pay more than the fee.
@@ -926,7 +926,7 @@ pub mod pallet {
 
 		/// Convert a child root key, aka. "Child-bearing top key" into the proper format.
 		fn transform_child_key(root: &Vec<u8>) -> Option<&[u8]> {
-			use soil_core::storage::{ChildType, PrefixedStorageKey};
+			use subsoil::core::storage::{ChildType, PrefixedStorageKey};
 			match ChildType::from_prefixed_key(PrefixedStorageKey::new_ref(root)) {
 				Some((ChildType::ParentKeyId, root)) => Some(root),
 				_ => None,
@@ -1071,7 +1071,7 @@ mod benchmarks {
 			let stash = set_balance_for_deposit::<T>(&caller, null.item);
 			// for tests, we need to make sure there is _something_ in storage that is being
 			// migrated.
-			soil_io::storage::set(b"foo", vec![1u8; 33].as_ref());
+			subsoil::io::storage::set(b"foo", vec![1u8; 33].as_ref());
 			#[block]
 			{
 				assert!(StateTrieMigration::<T>::migrate_custom_top(
@@ -1122,7 +1122,7 @@ mod benchmarks {
 			let stash = set_balance_for_deposit::<T>(&caller, 1);
 			// for tests, we need to make sure there is _something_ in storage that is being
 			// migrated.
-			soil_io::default_child_storage::set(b"top", b"foo", vec![1u8; 33].as_ref());
+			subsoil::io::default_child_storage::set(b"top", b"foo", vec![1u8; 33].as_ref());
 
 			#[block]
 			{
@@ -1143,12 +1143,12 @@ mod benchmarks {
 		#[benchmark]
 		fn process_top_key(v: Linear<1, { 4 * 1024 * 1024 }>) -> Result<(), BenchmarkError> {
 			let value = alloc::vec![1u8; v as usize];
-			soil_io::storage::set(KEY, &value);
+			subsoil::io::storage::set(KEY, &value);
 			#[block]
 			{
-				let data = soil_io::storage::get(KEY).unwrap();
-				soil_io::storage::set(KEY, &data);
-				let _next = soil_io::storage::next_key(KEY);
+				let data = subsoil::io::storage::get(KEY).unwrap();
+				subsoil::io::storage::set(KEY, &data);
+				let _next = subsoil::io::storage::next_key(KEY);
 				assert_eq!(data, value);
 			}
 
@@ -1157,7 +1157,7 @@ mod benchmarks {
 
 		impl_benchmark_test_suite!(
 			StateTrieMigration,
-			crate::mock::new_test_ext(soil_runtime::StateVersion::V0, true, None, None),
+			crate::mock::new_test_ext(subsoil::runtime::StateVersion::V0, true, None, None),
 			crate::mock::Test
 		);
 	}
@@ -1168,11 +1168,11 @@ mod mock {
 	use super::*;
 	use crate as topsoil_state_trie_migration;
 	use alloc::{vec, vec::Vec};
-	use soil_core::{
+	use subsoil::core::{
 		storage::{ChildInfo, StateVersion},
 		H256,
 	};
-	use soil_runtime::{traits::Header as _, BuildStorage, StorageChild};
+	use subsoil::runtime::{traits::Header as _, BuildStorage, StorageChild};
 	use topsoil_support::{derive_impl, parameter_types, traits::Hooks, weights::Weight};
 	use topsoil_system::{EnsureRoot, EnsureSigned};
 
@@ -1253,9 +1253,9 @@ mod mock {
 		with_pallets: bool,
 		custom_keys: Option<Vec<(Vec<u8>, Vec<u8>)>>,
 		custom_child: Option<Vec<(Vec<u8>, Vec<u8>, Vec<u8>)>>,
-	) -> soil_io::TestExternalities {
-		let minimum_size = soil_core::storage::TRIE_VALUE_NODE_THRESHOLD as usize + 1;
-		let mut custom_storage = soil_core::storage::Storage {
+	) -> subsoil::io::TestExternalities {
+		let minimum_size = subsoil::core::storage::TRIE_VALUE_NODE_THRESHOLD as usize + 1;
+		let mut custom_storage = subsoil::core::storage::Storage {
 			top: vec![
 				(b"key1".to_vec(), vec![1u8; minimum_size + 1]), // 6b657931
 				(b"key2".to_vec(), vec![1u8; minimum_size + 2]), // 6b657931
@@ -1328,7 +1328,7 @@ mod mock {
 			.unwrap();
 		}
 
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 		(custom_storage, version).into()
 	}
 
@@ -1353,7 +1353,7 @@ mod mock {
 #[cfg(test)]
 mod test {
 	use super::{mock::*, *};
-	use soil_runtime::{bounded_vec, traits::Bounded, StateVersion};
+	use subsoil::runtime::{bounded_vec, traits::Bounded, StateVersion};
 	use topsoil_support::assert_ok;
 
 	#[test]
@@ -1547,7 +1547,7 @@ mod test {
 			topsoil_support::assert_err!(
 				StateTrieMigration::continue_migrate(
 					RuntimeOrigin::signed(1),
-					MigrationLimits { item: 5, size: soil_runtime::traits::Bounded::max_value() },
+					MigrationLimits { item: 5, size: subsoil::runtime::traits::Bounded::max_value() },
 					Bounded::max_value(),
 					MigrationProcess::<Test>::get()
 				),
@@ -1640,7 +1640,7 @@ mod test {
 
 	#[test]
 	fn custom_migrate_top_works() {
-		let correct_witness = 3 + soil_core::storage::TRIE_VALUE_NODE_THRESHOLD * 3 + 1 + 2 + 3;
+		let correct_witness = 3 + subsoil::core::storage::TRIE_VALUE_NODE_THRESHOLD * 3 + 1 + 2 + 3;
 		new_test_ext(StateVersion::V0, true, None, None).execute_with(|| {
 			topsoil_support::assert_ok!(StateTrieMigration::migrate_custom_top(
 				RuntimeOrigin::signed(1),
@@ -1727,8 +1727,8 @@ pub(crate) mod remote_tests {
 	use crate::{AutoLimits, MigrationLimits, Pallet as StateTrieMigration, LOG_TARGET};
 	use codec::Encode;
 	use remote_externalities::Mode;
-	use soil_core::H256;
-	use soil_runtime::{
+	use subsoil::core::H256;
+	use subsoil::runtime::{
 		traits::{Block as BlockT, HashingFor, Header as _, One, Zero},
 		DeserializeOwned,
 	};
@@ -1772,7 +1772,7 @@ pub(crate) mod remote_tests {
 	{
 		let mut ext = remote_externalities::Builder::<Block>::new()
 			.mode(mode)
-			.overwrite_state_version(soil_core::storage::StateVersion::V0)
+			.overwrite_state_version(subsoil::core::storage::StateVersion::V0)
 			.build()
 			.await
 			.unwrap();
@@ -1785,7 +1785,7 @@ pub(crate) mod remote_tests {
 
 		let mut duration: BlockNumberFor<Runtime> = Zero::zero();
 		// set the version to 1, as if the upgrade happened.
-		ext.state_version = soil_core::storage::StateVersion::V1;
+		ext.state_version = subsoil::core::storage::StateVersion::V1;
 
 		let status =
 			substrate_state_trie_migration_rpc::migration_status(&ext.as_backend()).unwrap();
@@ -1863,19 +1863,19 @@ mod remote_tests_local {
 		*,
 	};
 	use remote_externalities::{Mode, OfflineConfig, OnlineConfig, SnapshotConfig};
-	use soil_runtime::traits::Bounded;
+	use subsoil::runtime::traits::Bounded;
 	use std::env::var as env_var;
 
 	// we only use the hash type from this, so using the mock should be fine.
-	type Extrinsic = soil_runtime::testing::TestXt<MockCall, ()>;
-	type Block = soil_runtime::testing::Block<Extrinsic>;
+	type Extrinsic = subsoil::runtime::testing::TestXt<MockCall, ()>;
+	type Block = subsoil::runtime::testing::Block<Extrinsic>;
 
 	#[tokio::test]
 	async fn on_initialize_migration() {
 		let snap: SnapshotConfig = env_var("SNAP").expect("Need SNAP env var").into();
 		let ws_api = env_var("WS_API").expect("Need WS_API env var").into();
 
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 		let mode = Mode::OfflineOrElseOnline(
 			OfflineConfig { state_snapshot: snap.clone() },
 			OnlineConfig {

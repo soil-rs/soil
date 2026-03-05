@@ -20,8 +20,7 @@ use alloc::vec;
 use codec::{Decode, DecodeWithMemTracking, Encode};
 use core::{fmt, marker::PhantomData};
 use scale_info::TypeInfo;
-use soil_runtime::{
-	impl_tx_ext_default,
+use subsoil::runtime::{
 	traits::{AsSystemOriginSigner, DispatchInfoOf, Dispatchable, Hash, TransactionExtension},
 	transaction_validity::{
 		InvalidTransaction, TransactionPriority, TransactionValidityError, UnknownTransaction,
@@ -119,5 +118,5 @@ where
 		))
 	}
 
-	impl_tx_ext_default!(<T as topsoil_system::Config>::RuntimeCall; prepare);
+	subsoil::impl_tx_ext_default!(<T as topsoil_system::Config>::RuntimeCall; prepare);
 }

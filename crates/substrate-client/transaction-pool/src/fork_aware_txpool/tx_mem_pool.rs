@@ -35,7 +35,7 @@ use futures::{future::join_all, FutureExt};
 use itertools::Itertools;
 use parking_lot::RwLock;
 use soil_blockchain::HashAndNumber;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::Block as BlockT,
 	transaction_validity::{InvalidTransaction, TransactionValidityError},
 };
@@ -1060,7 +1060,7 @@ mod tx_mem_pool_tests {
 
 	#[tokio::test]
 	async fn extend_unwatched_detects_already_imported() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 		let max = 10;
 		let api = Arc::from(TestApi::default());
 		let mempool = TxMemPool::new_test(api, max, usize::MAX);
@@ -1128,7 +1128,7 @@ mod tx_mem_pool_tests {
 
 	#[tokio::test]
 	async fn count_works() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 		trace!(target:LOG_TARGET,line=line!(),"xxx");
 
 		let max = 100;
@@ -1165,7 +1165,7 @@ mod tx_mem_pool_tests {
 
 	#[tokio::test]
 	async fn push_obeys_size_limit() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 		let max = 10;
 		let api = Arc::from(TestApi::default());
 		let mempool = TxMemPool::new_test(api.clone(), usize::MAX, max * LARGE_XT_SIZE);
@@ -1195,7 +1195,7 @@ mod tx_mem_pool_tests {
 
 	#[tokio::test]
 	async fn replacing_txs_works_for_same_tx_size() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 		let max = 10;
 		let api = Arc::from(TestApi::default());
 		let mempool = TxMemPool::new_test(api.clone(), usize::MAX, max * LARGE_XT_SIZE);
@@ -1235,7 +1235,7 @@ mod tx_mem_pool_tests {
 
 	#[tokio::test]
 	async fn replacing_txs_removes_proper_size_of_txs() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 		let max = 10;
 		let api = Arc::from(TestApi::default());
 		let mempool = TxMemPool::new_test(api.clone(), usize::MAX, max * LARGE_XT_SIZE);
@@ -1278,7 +1278,7 @@ mod tx_mem_pool_tests {
 
 	#[tokio::test]
 	async fn replacing_txs_removes_proper_size_and_prios() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 		const COUNT: usize = 10;
 		let api = Arc::from(TestApi::default());
 		let mempool = TxMemPool::new_test(api.clone(), usize::MAX, COUNT * LARGE_XT_SIZE);
@@ -1321,7 +1321,7 @@ mod tx_mem_pool_tests {
 
 	#[tokio::test]
 	async fn replacing_txs_skips_lower_prio_tx() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 		const COUNT: usize = 10;
 		let api = Arc::from(TestApi::default());
 		let mempool = TxMemPool::new_test(api.clone(), usize::MAX, COUNT * LARGE_XT_SIZE);
@@ -1362,7 +1362,7 @@ mod tx_mem_pool_tests {
 
 	#[tokio::test]
 	async fn replacing_txs_is_skipped_if_prios_are_not_set() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 		const COUNT: usize = 10;
 		let api = Arc::from(TestApi::default());
 		let mempool = TxMemPool::new_test(api.clone(), usize::MAX, COUNT * LARGE_XT_SIZE);

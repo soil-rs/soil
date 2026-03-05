@@ -51,7 +51,7 @@
 //! To get the current time for the current block in another pallet:
 //!
 //! ```
-//! use topsoil_timestamp::{self as timestamp};
+//! use topsubsoil::timestamp::{self as timestamp};
 //!
 //! #[topsoil_support::pallet]
 //! pub mod pallet {
@@ -133,8 +133,8 @@ mod tests;
 pub mod weights;
 
 use core::{cmp, result};
-use soil_runtime::traits::{AtLeast32Bit, SaturatedConversion, Scale, Zero};
-use soil_timestamp::{InherentError, InherentType, INHERENT_IDENTIFIER};
+use subsoil::runtime::traits::{AtLeast32Bit, SaturatedConversion, Scale, Zero};
+use subsoil::timestamp::{InherentError, InherentType, INHERENT_IDENTIFIER};
 use topsoil_support::traits::{OnTimestampSet, Time, UnixTime};
 pub use weights::WeightInfo;
 
@@ -302,8 +302,8 @@ pub mod pallet {
 			call: &Self::Call,
 			data: &InherentData,
 		) -> result::Result<(), Self::Error> {
-			const MAX_TIMESTAMP_DRIFT_MILLIS: soil_timestamp::Timestamp =
-				soil_timestamp::Timestamp::new(30 * 1000);
+			const MAX_TIMESTAMP_DRIFT_MILLIS: subsoil::timestamp::Timestamp =
+				subsoil::timestamp::Timestamp::new(30 * 1000);
 
 			let t: u64 = match call {
 				Call::set { ref now } => (*now).saturated_into::<u64>(),
@@ -364,13 +364,13 @@ impl<T: Config> Time for Pallet<T> {
 impl<T: Config> UnixTime for Pallet<T> {
 	fn now() -> core::time::Duration {
 		// now is duration since unix epoch in millisecond as documented in
-		// `soil_timestamp::InherentDataProvider`.
+		// `subsoil::timestamp::InherentDataProvider`.
 		let now = Now::<T>::get();
 
 		if now == T::Moment::zero() {
 			log::error!(
 				target: "runtime::timestamp",
-				"`topsoil_timestamp::UnixTime::now` is called at genesis, invalid value returned: 0",
+				"`topsubsoil::timestamp::UnixTime::now` is called at genesis, invalid value returned: 0",
 			);
 		}
 

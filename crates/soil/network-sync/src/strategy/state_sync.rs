@@ -27,8 +27,8 @@ use log::debug;
 use sc_consensus::ImportedState;
 use smallvec::SmallVec;
 use soil_client_api::{CompactProof, KeyValueStates, ProofProvider};
-use soil_core::storage::well_known_keys;
-use soil_runtime::{
+use subsoil::core::storage::well_known_keys;
+use subsoil::runtime::{
 	traits::{Block as BlockT, Header, NumberFor},
 	Justifications,
 };
@@ -227,8 +227,8 @@ where
 			debug!(
 				target: LOG_TARGET,
 				"Importing state from {:?} to {:?}",
-				state.entries.last().map(|e| soil_core::hexdisplay::HexDisplay::from(&e.key)),
-				state.entries.first().map(|e| soil_core::hexdisplay::HexDisplay::from(&e.key)),
+				state.entries.last().map(|e| subsoil::core::hexdisplay::HexDisplay::from(&e.key)),
+				state.entries.first().map(|e| subsoil::core::hexdisplay::HexDisplay::from(&e.key)),
 			);
 
 			if !state.complete {

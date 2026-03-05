@@ -135,7 +135,7 @@ impl topsoil_nis::Config for Test {
 
 // This function basically just builds a genesis storage key/value store according to
 // our desired mockup.
-pub fn new_test_ext() -> soil_io::TestExternalities {
+pub fn new_test_ext() -> subsoil::io::TestExternalities {
 	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	topsoil_balances::GenesisConfig::<Test, topsoil_balances::Instance1> {
 		balances: vec![(1, 100), (2, 100), (3, 100), (4, 100)],
@@ -149,6 +149,6 @@ pub fn new_test_ext() -> soil_io::TestExternalities {
 // This function basically just builds a genesis storage key/value store according to
 // our desired mockup, but without any balances.
 #[cfg(feature = "runtime-benchmarks")]
-pub fn new_test_ext_empty() -> soil_io::TestExternalities {
+pub fn new_test_ext_empty() -> subsoil::io::TestExternalities {
 	topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap().into()
 }

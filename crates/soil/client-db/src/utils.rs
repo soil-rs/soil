@@ -26,15 +26,15 @@ use log::{debug, info};
 use crate::{Database, DatabaseSource, DbHash};
 use codec::Decode;
 use soil_client_api::blockchain::{BlockGap, BlockGapType};
-use soil_database::Transaction;
-use soil_runtime::{
+use subsoil::database::Transaction;
+use subsoil::runtime::{
 	generic::BlockId,
 	traits::{
 		Block as BlockT, Header as HeaderT, NumberFor, UniqueSaturatedFrom, UniqueSaturatedInto,
 		Zero,
 	},
 };
-use soil_trie::DBValue;
+use subsoil::trie::DBValue;
 
 /// Number of columns in the db. Must be the same for both full && light dbs.
 /// Otherwise RocksDb will fail to open database && check its type.
@@ -172,7 +172,7 @@ pub fn block_id_to_lookup_key<Block>(
 ) -> Result<Option<Vec<u8>>, soil_blockchain::Error>
 where
 	Block: BlockT,
-	::soil_runtime::traits::NumberFor<Block>: UniqueSaturatedFrom<u64> + UniqueSaturatedInto<u64>,
+	::subsoil::runtime::traits::NumberFor<Block>: UniqueSaturatedFrom<u64> + UniqueSaturatedInto<u64>,
 {
 	Ok(match id {
 		BlockId::Number(n) => db.get(key_lookup_col, number_index_key(n)?.as_ref()),
@@ -234,7 +234,7 @@ pub enum OpenDbError {
 	NotEnabled(&'static str),
 	DoesNotExist,
 	Internal(String),
-	DatabaseError(soil_database::error::DatabaseError),
+	DatabaseError(subsoil::database::error::DatabaseError),
 	UnexpectedDbType {
 		expected: DatabaseType,
 		found: Vec<u8>,
@@ -351,7 +351,7 @@ fn open_kvdb_rocksdb<Block: BlockT>(
 	let db = kvdb_rocksdb::Database::open(&db_config, path)?;
 	// write database version only after the database is successfully opened
 	crate::upgrade::update_version(path)?;
-	Ok(soil_database::as_rocksdb_database(db))
+	Ok(subsoil::database::as_rocksdb_database(db))
 }
 
 #[cfg(not(any(feature = "rocksdb", test)))]
@@ -620,7 +620,7 @@ impl<'a, 'b> codec::Input for JoinInput<'a, 'b> {
 mod tests {
 	use super::*;
 	use codec::Input;
-	use soil_runtime::testing::{Block as RawBlock, MockCallU64, TestXt};
+	use subsoil::runtime::testing::{Block as RawBlock, MockCallU64, TestXt};
 
 	pub type UncheckedXt = TestXt<MockCallU64, ()>;
 	type Block = RawBlock<UncheckedXt>;

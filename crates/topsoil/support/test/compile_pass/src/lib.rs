@@ -22,12 +22,12 @@
 
 extern crate alloc;
 
-use soil_core::{sr25519, H256};
-use soil_runtime::{
+use subsoil::core::{sr25519, H256};
+use subsoil::runtime::{
 	generic,
 	traits::{BlakeTwo256, IdentityLookup, Verify},
 };
-use soil_version::RuntimeVersion;
+use subsoil::version::RuntimeVersion;
 use topsoil_support::{
 	construct_runtime, derive_impl, parameter_types,
 	traits::{ConstU16, ConstU32, ConstU64, Everything},
@@ -39,7 +39,7 @@ pub const VERSION: RuntimeVersion = RuntimeVersion {
 	authoring_version: 0,
 	spec_version: 0,
 	impl_version: 0,
-	apis: soil_version::create_apis_vec!([]),
+	apis: subsoil::create_apis_vec!([]),
 	transaction_version: 0,
 	system_version: 0,
 };

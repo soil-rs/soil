@@ -24,7 +24,7 @@ use crate as topsoil_bounties;
 use crate::Pallet as Bounties;
 
 use alloc::{borrow::Cow, vec};
-use soil_core::crypto::FromEntropy;
+use subsoil::core::crypto::FromEntropy;
 use topsoil_benchmarking::{v2::*, BenchmarkError};
 use topsoil_support::assert_ok;
 use topsoil_system::RawOrigin;

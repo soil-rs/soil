@@ -42,11 +42,11 @@ use soil_client_api::{
 #[cfg(feature = "std")]
 use soil_consensus::{Environment, Proposer, SelectChain};
 #[cfg(feature = "std")]
-use soil_core::traits::SpawnNamed;
+use subsoil::core::traits::SpawnNamed;
 #[cfg(feature = "std")]
-use soil_inherents::CreateInherentDataProviders;
+use subsoil::inherents::CreateInherentDataProviders;
 #[cfg(feature = "std")]
-use soil_runtime::{traits::Block as BlockT, ConsensusEngineId};
+use subsoil::runtime::{traits::Block as BlockT, ConsensusEngineId};
 #[cfg(feature = "std")]
 use std::{marker::PhantomData, sync::Arc, time::Duration};
 
@@ -71,7 +71,7 @@ pub use self::{
 	seal_block::{seal_block, SealBlockParams, MAX_PROPOSAL_DURATION},
 };
 #[cfg(feature = "std")]
-use soil_api::ProvideRuntimeApi;
+use subsoil::api::ProvideRuntimeApi;
 #[cfg(feature = "std")]
 use soil_transaction_pool_api::TransactionPool;
 
@@ -103,7 +103,7 @@ impl<B: BlockT> Verifier<B> for ManualSealVerifier {
 #[cfg(feature = "std")]
 pub fn import_queue<Block>(
 	block_import: BoxBlockImport<Block>,
-	spawner: &impl soil_core::traits::SpawnEssentialNamed,
+	spawner: &impl subsoil::core::traits::SpawnEssentialNamed,
 	registry: Option<&Registry>,
 ) -> BasicQueue<Block>
 where
@@ -376,10 +376,10 @@ mod tests {
 	use assert_matches::assert_matches;
 	use sc_consensus::ImportedAux;
 	use sc_transaction_pool::{BasicPool, FullChainApi, Options, RevalidationType};
-	use soil_api::StorageProof;
+	use subsoil::api::StorageProof;
 	use soil_basic_authorship::ProposerFactory;
-	use soil_inherents::InherentData;
-	use soil_runtime::generic::{Digest, DigestItem};
+	use subsoil::inherents::InherentData;
+	use subsoil::runtime::generic::{Digest, DigestItem};
 	use soil_transaction_pool_api::{
 		MaintainedTransactionPool, TransactionPool, TransactionSource,
 	};
@@ -427,7 +427,7 @@ mod tests {
 		let builder = TestClientBuilder::new();
 		let (client, select_chain) = builder.build_with_longest_chain();
 		let client = Arc::new(client);
-		let spawner = soil_core::testing::TaskExecutor::new();
+		let spawner = subsoil::core::testing::TaskExecutor::new();
 		let genesis_hash = client.info().genesis_hash;
 		let pool_api = Arc::new(FullChainApi::new(client.clone(), None, &spawner.clone()));
 		let pool = Arc::new(BasicPool::with_revalidation_type(
@@ -504,7 +504,7 @@ mod tests {
 		let builder = TestClientBuilder::new();
 		let (client, select_chain) = builder.build_with_longest_chain();
 		let client = Arc::new(client);
-		let spawner = soil_core::testing::TaskExecutor::new();
+		let spawner = subsoil::core::testing::TaskExecutor::new();
 		let genesis_hash = client.info().genesis_hash;
 		let pool_api = Arc::new(FullChainApi::new(client.clone(), None, &spawner.clone()));
 		let pool = Arc::new(BasicPool::with_revalidation_type(
@@ -594,7 +594,7 @@ mod tests {
 		let builder = TestClientBuilder::new();
 		let (client, select_chain) = builder.build_with_longest_chain();
 		let client = Arc::new(client);
-		let spawner = soil_core::testing::TaskExecutor::new();
+		let spawner = subsoil::core::testing::TaskExecutor::new();
 		let genesis_hash = client.info().genesis_hash;
 		let pool_api = Arc::new(FullChainApi::new(client.clone(), None, &spawner.clone()));
 		let pool = Arc::new(BasicPool::with_revalidation_type(
@@ -677,9 +677,9 @@ mod tests {
 		let pool_api = Arc::new(FullChainApi::new(
 			client.clone(),
 			None,
-			&soil_core::testing::TaskExecutor::new(),
+			&subsoil::core::testing::TaskExecutor::new(),
 		));
-		let spawner = soil_core::testing::TaskExecutor::new();
+		let spawner = subsoil::core::testing::TaskExecutor::new();
 		let genesis_hash = client.info().genesis_hash;
 		let pool = Arc::new(BasicPool::with_revalidation_type(
 			Options::default(),
@@ -784,7 +784,7 @@ mod tests {
 		let builder = TestClientBuilder::new();
 		let (client, select_chain) = builder.build_with_longest_chain();
 		let client = Arc::new(client);
-		let spawner = soil_core::testing::TaskExecutor::new();
+		let spawner = subsoil::core::testing::TaskExecutor::new();
 		let genesis_hash = client.header(client.info().genesis_hash).unwrap().unwrap().hash();
 		let pool = Arc::new(BasicPool::with_revalidation_type(
 			Options::default(),

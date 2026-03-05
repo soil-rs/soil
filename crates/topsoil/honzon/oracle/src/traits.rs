@@ -17,8 +17,8 @@
 
 //! This module provides traits for data feeding and provisioning.
 
-use soil_runtime::DispatchResult;
-use soil_std::vec::Vec;
+use subsoil::runtime::DispatchResult;
+use subsoil::std::vec::Vec;
 
 /// A trait for feeding data to a data provider.
 pub trait DataFeeder<Key, Value, AccountId> {
@@ -69,7 +69,7 @@ macro_rules! create_median_value_data_provider {
 		}
 		impl $crate::DataProviderExtended<$key, $timestamped_value> for $name {
 			fn get_all_values() -> impl Iterator<Item = ($key, Option<$timestamped_value>)> {
-				let mut keys = soil_std::collections::btree_set::BTreeSet::new();
+				let mut keys = subsoil::std::collections::btree_set::BTreeSet::new();
 				$(
 					<$provider as $crate::DataProviderExtended<$key, $timestamped_value>>::get_all_values()
 						.into_iter()
@@ -101,7 +101,7 @@ pub trait OnNewData<AccountId, Key, Value> {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use soil_std::cell::RefCell;
+	use subsoil::std::cell::RefCell;
 
 	thread_local! {
 		static MOCK_PRICE_1: RefCell<Option<u8>> = RefCell::new(None);

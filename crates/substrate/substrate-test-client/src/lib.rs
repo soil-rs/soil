@@ -26,16 +26,16 @@ pub use soil_client_api::{execution_extensions::ExecutionExtensions, BadBlocks, 
 pub use soil_client_db::{self, Backend, BlocksPruning};
 pub use soil_consensus;
 pub use soil_executor::{self, WasmExecutionMethod, WasmExecutor};
-pub use soil_keyring::{Ed25519Keyring, Sr25519Keyring};
-pub use soil_keystore::{Keystore, KeystorePtr};
-pub use soil_runtime::{Storage, StorageChild};
+pub use subsoil::keyring::{Ed25519Keyring, Sr25519Keyring};
+pub use subsoil::keystore::{Keystore, KeystorePtr};
+pub use subsoil::runtime::{Storage, StorageChild};
 pub use soil_service::{client, RpcHandlers};
 
 use futures::{future::Future, stream::StreamExt};
 use serde::Deserialize;
 use soil_client_api::BlockchainEvents;
-use soil_core::{storage::ChildInfo, testing::TaskExecutor};
-use soil_runtime::{
+use subsoil::core::{storage::ChildInfo, testing::TaskExecutor};
+use subsoil::runtime::{
 	codec::Encode,
 	traits::{Block as BlockT, Header},
 	OpaqueExtrinsic,

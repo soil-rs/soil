@@ -15,7 +15,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-soil_api::decl_runtime_apis! {
+subsoil::api::decl_runtime_apis! {
 	pub trait Api {
 		fn test(data: u64);
 	}
@@ -28,7 +28,7 @@ soil_api::decl_runtime_apis! {
 struct MockApi;
 struct MockApi2;
 
-soil_api::mock_impl_runtime_apis! {
+subsoil::api::mock_impl_runtime_apis! {
 	impl Api<Block> for MockApi {
 		fn test(data: u64) {}
 	}

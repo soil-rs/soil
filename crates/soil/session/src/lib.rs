@@ -24,9 +24,9 @@ extern crate alloc;
 use codec::{Decode, DecodeWithMemTracking, Encode};
 
 #[cfg(feature = "std")]
-use soil_api::ProvideRuntimeApi;
+use subsoil::api::ProvideRuntimeApi;
 #[cfg(feature = "std")]
-use soil_runtime::traits::Block as BlockT;
+use subsoil::runtime::traits::Block as BlockT;
 
 use alloc::vec::Vec;
 use soil_staking::SessionIndex;
@@ -77,13 +77,13 @@ pub trait GetValidatorCount {
 	fn validator_count(&self) -> ValidatorCount;
 }
 
-impl GetSessionNumber for soil_core::Void {
+impl GetSessionNumber for subsoil::core::Void {
 	fn session(&self) -> SessionIndex {
 		Default::default()
 	}
 }
 
-impl GetValidatorCount for soil_core::Void {
+impl GetValidatorCount for subsoil::core::Void {
 	fn validator_count(&self) -> ValidatorCount {
 		Default::default()
 	}
@@ -108,14 +108,14 @@ pub fn generate_initial_session_keys<Block, T>(
 	client: std::sync::Arc<T>,
 	at: Block::Hash,
 	seeds: Vec<String>,
-	keystore: soil_keystore::KeystorePtr,
-) -> Result<(), soil_api::ApiError>
+	keystore: subsoil::keystore::KeystorePtr,
+) -> Result<(), subsoil::api::ApiError>
 where
 	Block: BlockT,
 	T: ProvideRuntimeApi<Block>,
 	T::Api: SessionKeys<Block>,
 {
-	use soil_api::{ApiError, ApiExt};
+	use subsoil::api::{ApiError, ApiExt};
 
 	if seeds.is_empty() {
 		return Ok(());
@@ -127,7 +127,7 @@ where
 		ApiError::Application(Box::from("Could not find `SessionKeys` runtime api"))
 	})?;
 
-	runtime_api.register_extension(soil_keystore::KeystoreExt::from(keystore));
+	runtime_api.register_extension(subsoil::keystore::KeystoreExt::from(keystore));
 
 	for seed in seeds {
 		let seed = Some(seed.as_bytes().to_vec());

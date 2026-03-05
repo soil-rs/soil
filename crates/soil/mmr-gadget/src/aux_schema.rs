@@ -23,7 +23,7 @@ use codec::{Decode, Encode};
 use log::{info, trace};
 use soil_blockchain::{Error as ClientError, Result as ClientResult};
 use soil_client_api::backend::AuxStore;
-use soil_runtime::traits::{Block, NumberFor};
+use subsoil::runtime::traits::{Block, NumberFor};
 
 const VERSION_KEY: &[u8] = b"mmr_auxschema_version";
 const GADGET_STATE: &[u8] = b"mmr_gadget_state";
@@ -107,7 +107,7 @@ pub(crate) mod tests {
 	use super::*;
 	use crate::test_utils::{run_test_with_mmr_gadget_pre_post_using_client, MmrBlock, MockClient};
 	use parking_lot::Mutex;
-	use soil_runtime::generic::BlockId;
+	use subsoil::runtime::generic::BlockId;
 	use std::{sync::Arc, time::Duration};
 	use substrate_test_runtime_client::{runtime::Block, Backend};
 
@@ -130,7 +130,7 @@ pub(crate) mod tests {
 
 	#[test]
 	fn should_persist_progress_across_runs() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 
 		let client = Arc::new(MockClient::new());
 		let backend = client.backend.clone();
@@ -180,7 +180,7 @@ pub(crate) mod tests {
 
 	#[test]
 	fn should_resume_from_persisted_state() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 
 		let client = Arc::new(MockClient::new());
 		let blocks = Arc::new(Mutex::new(Vec::<MmrBlock>::new()));

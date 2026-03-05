@@ -28,20 +28,20 @@ use sc_consensus::{
 	BlockImport, BlockImportParams, BoxJustificationImport, ForkChoiceStrategy, ImportResult,
 	ImportedAux,
 };
-use soil_api::{ApiRef, ProvideRuntimeApi};
+use subsoil::api::{ApiRef, ProvideRuntimeApi};
 use soil_consensus::{BlockOrigin, Error as ConsensusError, SelectChain};
 use soil_consensus_grandpa::{
 	AuthorityList, EquivocationProof, GrandpaApi, OpaqueKeyOwnershipProof, GRANDPA_ENGINE_ID,
 };
-use soil_core::H256;
-use soil_keyring::Ed25519Keyring;
-use soil_keystore::{testing::MemoryKeystore, Keystore, KeystorePtr};
+use subsoil::core::H256;
+use subsoil::keyring::Ed25519Keyring;
+use subsoil::keystore::{testing::MemoryKeystore, Keystore, KeystorePtr};
 use soil_network::config::Role;
 use soil_network_test::{
 	Block, BlockImportAdapter, FullPeerConfig, Hash, PassThroughVerifier, Peer, PeersClient,
 	PeersFullClient, TestClient, TestNetFactory,
 };
-use soil_runtime::{
+use subsoil::runtime::{
 	codec::Encode,
 	generic::{BlockId, DigestItem},
 	traits::{Block as BlockT, Header as HeaderT},
@@ -56,7 +56,7 @@ use authorities::AuthoritySet;
 use communication::grandpa_protocol_name;
 use sc_block_builder::{BlockBuilder, BlockBuilderBuilder};
 use sc_consensus::LongestChain;
-use soil_application_crypto::key_types::GRANDPA;
+use subsoil::application_crypto::key_types::GRANDPA;
 
 type TestLinkHalf =
 	LinkHalf<Block, PeersFullClient, LongestChain<substrate_test_runtime_client::Backend, Block>>;
@@ -178,7 +178,7 @@ impl ProvideRuntimeApi<Block> for TestApi {
 	}
 }
 
-soil_api::mock_impl_runtime_apis! {
+subsoil::api::mock_impl_runtime_apis! {
 	impl GrandpaApi<Block> for RuntimeApi {
 		fn grandpa_authorities(&self) -> AuthorityList {
 			self.inner.genesis_authorities.clone()
@@ -435,7 +435,7 @@ fn add_forced_change(
 
 #[tokio::test]
 async fn finalize_3_voters_no_observers() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 	let peers = &[Ed25519Keyring::Alice, Ed25519Keyring::Bob, Ed25519Keyring::Charlie];
 	let voters = make_ids(peers);
 
@@ -539,7 +539,7 @@ async fn finalize_3_voters_1_full_observer() {
 
 #[tokio::test]
 async fn transition_3_voters_twice_1_full_observer() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 	let peers_a = &[Ed25519Keyring::Alice, Ed25519Keyring::Bob, Ed25519Keyring::Charlie];
 
 	let peers_b = &[Ed25519Keyring::Dave, Ed25519Keyring::Eve, Ed25519Keyring::Ferdie];
@@ -779,7 +779,7 @@ async fn sync_justifications_on_change_blocks() {
 
 #[tokio::test]
 async fn finalizes_multiple_pending_changes_in_order() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let peers_a = &[Ed25519Keyring::Alice, Ed25519Keyring::Bob, Ed25519Keyring::Charlie];
 	let peers_b = &[Ed25519Keyring::Dave, Ed25519Keyring::Eve, Ed25519Keyring::Ferdie];
@@ -842,7 +842,7 @@ async fn finalizes_multiple_pending_changes_in_order() {
 
 #[tokio::test]
 async fn force_change_to_new_set() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 	// two of these guys are offline.
 	let genesis_authorities = &[
 		Ed25519Keyring::Alice,
@@ -1000,7 +1000,7 @@ async fn voter_persists_its_votes() {
 	use futures::future;
 	use std::sync::atomic::{AtomicUsize, Ordering};
 
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	// we have two authorities but we'll only be running the voter for alice
 	// we are going to be listening for the prevotes it casts
@@ -1272,7 +1272,7 @@ async fn voter_persists_its_votes() {
 
 #[tokio::test]
 async fn finalize_3_voters_1_light_observer() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 	let authorities = &[Ed25519Keyring::Alice, Ed25519Keyring::Bob, Ed25519Keyring::Charlie];
 	let voters = make_ids(authorities);
 
@@ -1314,7 +1314,7 @@ async fn finalize_3_voters_1_light_observer() {
 
 #[tokio::test]
 async fn voter_catches_up_to_latest_round_when_behind() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let peers = &[Ed25519Keyring::Alice, Ed25519Keyring::Bob];
 	let voters = make_ids(peers);
@@ -1707,7 +1707,7 @@ async fn grandpa_environment_passes_actual_best_block_to_voting_rules() {
 
 #[tokio::test]
 async fn grandpa_environment_checks_if_best_block_is_descendent_of_finality_target() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 	use finality_grandpa::voter::Environment;
 
 	let peers = &[Ed25519Keyring::Alice];
@@ -2004,7 +2004,7 @@ async fn grandpa_environment_never_overwrites_round_voter_state() {
 
 #[tokio::test]
 async fn justification_with_equivocation() {
-	use soil_application_crypto::Pair;
+	use subsoil::application_crypto::Pair;
 
 	// we have 100 authorities
 	let pairs = (0..100).map(|n| AuthorityPair::from_seed(&[n; 32])).collect::<Vec<_>>();
@@ -2227,7 +2227,7 @@ async fn grandpa_environment_doesnt_send_equivocation_reports_for_itself() {
 
 #[tokio::test]
 async fn revert_prunes_authority_changes() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let peers = &[Ed25519Keyring::Alice, Ed25519Keyring::Bob, Ed25519Keyring::Charlie];
 

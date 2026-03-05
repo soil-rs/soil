@@ -29,7 +29,7 @@ use soil_consensus_grandpa::{AuthorityList, SetId, GRANDPA_ENGINE_ID};
 use soil_network_sync::strategy::warp::{
 	EncodedProof, VerificationResult, Verifier, WarpSyncProvider,
 };
-use soil_runtime::{
+use subsoil::runtime::{
 	generic::BlockId,
 	traits::{Block as BlockT, Header as HeaderT, NumberFor, One},
 	Justifications,
@@ -396,7 +396,7 @@ mod tests {
 	use soil_blockchain::HeaderBackend;
 	use soil_consensus::BlockOrigin;
 	use soil_consensus_grandpa::GRANDPA_ENGINE_ID;
-	use soil_keyring::Ed25519Keyring;
+	use subsoil::keyring::Ed25519Keyring;
 	use std::sync::Arc;
 	use substrate_test_runtime_client::{
 		BlockBuilderExt, ClientBlockImportExt, ClientExt, DefaultTestClientBuilderExt,
@@ -441,7 +441,7 @@ mod tests {
 					.map(|keyring| (keyring.public().into(), 1))
 					.collect::<Vec<_>>();
 
-				let digest = soil_runtime::generic::DigestItem::Consensus(
+				let digest = subsoil::runtime::generic::DigestItem::Consensus(
 					soil_consensus_grandpa::GRANDPA_ENGINE_ID,
 					soil_consensus_grandpa::ConsensusLog::ScheduledChange(
 						soil_consensus_grandpa::ScheduledChange { delay: 0u64, next_authorities },

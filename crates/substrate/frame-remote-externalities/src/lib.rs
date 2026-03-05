@@ -17,7 +17,7 @@
 
 //! # Remote Externalities
 //!
-//! An equivalent of `soil_io::TestExternalities` that can load its state from a remote substrate
+//! An equivalent of `subsoil::io::TestExternalities` that can load its state from a remote substrate
 //! based chain, or a local state snapshot file.
 
 mod client;
@@ -38,18 +38,18 @@ use jsonrpsee::core::params::ArrayParams;
 use log::*;
 use parallel::{run_workers, ProcessResult};
 use serde::de::DeserializeOwned;
-use soil_core::{
+use subsoil::core::{
 	hexdisplay::HexDisplay,
 	storage::{
 		well_known_keys::{is_default_child_storage_key, DEFAULT_CHILD_STORAGE_KEY_PREFIX},
 		ChildInfo, ChildType, PrefixedStorageKey, StorageData, StorageKey,
 	},
 };
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{Block as BlockT, HashingFor},
 	StateVersion,
 };
-use soil_state_machine::TestExternalities;
+use subsoil::state_machine::TestExternalities;
 use std::{
 	collections::{BTreeSet, VecDeque},
 	future::Future,
@@ -72,7 +72,7 @@ type ChildKeyValues = Vec<(ChildInfo, Vec<KeyValue>)>;
 
 const LOG_TARGET: &str = "remote-ext";
 
-/// An externalities that acts exactly the same as [`soil_io::TestExternalities`] but has a few extra
+/// An externalities that acts exactly the same as [`subsoil::io::TestExternalities`] but has a few extra
 /// bits and pieces to it, and can be loaded remotely.
 pub struct RemoteExternalities<B: BlockT> {
 	/// The inner externalities.
@@ -898,7 +898,7 @@ where
 		online_config.pallets.iter().for_each(|p| {
 			online_config
 				.hashed_prefixes
-				.push(soil_crypto_hashing::twox_128(p.as_bytes()).to_vec())
+				.push(subsoil_crypto_hashing::twox_128(p.as_bytes()).to_vec())
 		});
 
 		if online_config.child_trie {
@@ -1051,7 +1051,7 @@ where
 				self.hashed_blacklist.len()
 			);
 			for k in self.hashed_blacklist {
-				ext.execute_with(|| soil_io::storage::clear(&k));
+				ext.execute_with(|| subsoil::io::storage::clear(&k));
 			}
 		}
 
@@ -1113,12 +1113,12 @@ where
 #[cfg(test)]
 mod test_prelude {
 	pub(crate) use super::*;
-	pub(crate) use soil_runtime::testing::{Block as RawBlock, MockCallU64};
-	pub(crate) type UncheckedXt = soil_runtime::testing::TestXt<MockCallU64, ()>;
+	pub(crate) use subsoil::runtime::testing::{Block as RawBlock, MockCallU64};
+	pub(crate) type UncheckedXt = subsoil::runtime::testing::TestXt<MockCallU64, ()>;
 	pub(crate) type Block = RawBlock<UncheckedXt>;
 
 	pub(crate) fn init_logger() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 	}
 }
 
@@ -1153,8 +1153,8 @@ mod tests {
 			.expect("Can't read state snapshot file")
 			.execute_with(|| {
 				let key =
-					soil_io::storage::next_key(&[]).expect("some key must exist in the snapshot");
-				assert!(soil_io::storage::get(&key).is_some());
+					subsoil::io::storage::next_key(&[]).expect("some key must exist in the snapshot");
+				assert!(subsoil::io::storage::get(&key).is_some());
 				key
 			});
 
@@ -1166,7 +1166,7 @@ mod tests {
 			.build()
 			.await
 			.expect("Can't read state snapshot file")
-			.execute_with(|| assert!(soil_io::storage::get(&some_key).is_none()));
+			.execute_with(|| assert!(subsoil::io::storage::get(&some_key).is_none()));
 	}
 }
 
@@ -1257,7 +1257,7 @@ mod remote_tests {
 
 		// This test does not rely on the remote endpoint having child tries. A synthetic child
 		// storage entry is inserted locally and then asserted on.
-		use soil_state_machine::Backend;
+		use subsoil::state_machine::Backend;
 
 		// Create an externality with child trie scraping enabled.
 		let mut child_ext = Builder::<Block>::new()
@@ -1286,7 +1286,7 @@ mod remote_tests {
 			.unwrap();
 
 		// Generate artificial child storage entry, to ensure the test's assertion is valid.
-		let child_info = soil_core::storage::ChildInfo::new_default(b"test_child");
+		let child_info = subsoil::core::storage::ChildInfo::new_default(b"test_child");
 		let child_key: Vec<u8> = b"k1".to_vec();
 		let child_value: Vec<u8> = b"v1".to_vec();
 

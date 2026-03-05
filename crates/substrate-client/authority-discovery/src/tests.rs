@@ -30,8 +30,8 @@ use soil_network_types::ed25519;
 use std::{collections::HashSet, sync::Arc};
 
 use soil_authority_discovery::AuthorityId;
-use soil_core::{crypto::key_types, testing::TaskExecutor, traits::SpawnNamed};
-use soil_keystore::{testing::MemoryKeystore, Keystore};
+use subsoil::core::{crypto::key_types, testing::TaskExecutor, traits::SpawnNamed};
+use subsoil::keystore::{testing::MemoryKeystore, Keystore};
 use soil_network::{multiaddr::Protocol, Multiaddr, PeerId};
 
 pub(super) fn create_spawner() -> Box<dyn SpawnNamed> {
@@ -95,13 +95,13 @@ async fn get_addresses_and_authority_id() {
 
 #[tokio::test]
 async fn cryptos_are_compatible() {
-	use soil_core::crypto::Pair;
+	use subsoil::core::crypto::Pair;
 
 	let libp2p_keypair = ed25519::Keypair::generate();
 	let libp2p_public = libp2p_keypair.public();
 
 	let sp_core_secret =
-		{ soil_core::ed25519::Pair::from_seed_slice(&libp2p_keypair.secret().as_ref()).unwrap() };
+		{ subsoil::core::ed25519::Pair::from_seed_slice(&libp2p_keypair.secret().as_ref()).unwrap() };
 	let sp_core_public = sp_core_secret.public();
 
 	let message = b"we are more powerful than not to be better";
@@ -109,8 +109,8 @@ async fn cryptos_are_compatible() {
 	let libp2p_signature = libp2p_keypair.sign(message);
 	let sp_core_signature = sp_core_secret.sign(message); // no error expected...
 
-	assert!(soil_core::ed25519::Pair::verify(
-		&soil_core::ed25519::Signature::try_from(libp2p_signature.as_slice()).unwrap(),
+	assert!(subsoil::core::ed25519::Pair::verify(
+		&subsoil::core::ed25519::Signature::try_from(libp2p_signature.as_slice()).unwrap(),
 		message,
 		&sp_core_public
 	));

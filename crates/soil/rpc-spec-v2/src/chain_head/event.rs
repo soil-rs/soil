@@ -19,8 +19,8 @@
 //! The chain head's event returned as json compatible object.
 
 use serde::{ser::SerializeStruct, Deserialize, Serialize, Serializer};
-use soil_api::ApiError;
-use soil_version::RuntimeVersion;
+use subsoil::api::ApiError;
+use subsoil::version::RuntimeVersion;
 use std::collections::BTreeMap;
 
 use crate::common::events::StorageResult;
@@ -45,8 +45,8 @@ pub struct RuntimeVersionEvent {
 	pub spec: ChainHeadRuntimeVersion,
 }
 
-/// Simplified type clone of `soil_version::RuntimeVersion`. Used instead of
-/// `soil_version::RuntimeVersion` to conform to RPC spec V2.
+/// Simplified type clone of `subsoil::version::RuntimeVersion`. Used instead of
+/// `subsoil::version::RuntimeVersion` to conform to RPC spec V2.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ChainHeadRuntimeVersion {
@@ -74,7 +74,7 @@ impl From<RuntimeVersion> for ChainHeadRuntimeVersion {
 			apis: val
 				.apis
 				.into_iter()
-				.map(|(api, version)| (soil_core::bytes::to_hex(api, false), *version))
+				.map(|(api, version)| (subsoil::core::bytes::to_hex(api, false), *version))
 				.collect(),
 			transaction_version: val.transaction_version,
 		}

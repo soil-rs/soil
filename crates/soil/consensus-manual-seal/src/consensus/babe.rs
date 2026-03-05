@@ -29,11 +29,11 @@ use soil_client_api::{AuxStore, UsageProvider};
 use soil_consensus_epochs::{
 	descendent_query, EpochHeader, SharedEpochChanges, ViableEpochDescriptor,
 };
-use soil_keystore::KeystorePtr;
+use subsoil::keystore::KeystorePtr;
 use std::sync::Arc;
 
 use sc_consensus::{BlockImportParams, ForkChoiceStrategy, Verifier};
-use soil_api::{ProvideRuntimeApi, StorageProof};
+use subsoil::api::{ProvideRuntimeApi, StorageProof};
 use soil_blockchain::{HeaderBackend, HeaderMetadata};
 use soil_consensus_babe::{
 	digests::{NextEpochDescriptor, PreDigest, SecondaryPlainPreDigest},
@@ -41,13 +41,13 @@ use soil_consensus_babe::{
 	AuthorityId, BabeApi, BabeAuthorityWeight, BabeConfiguration, ConsensusLog, BABE_ENGINE_ID,
 };
 use soil_consensus_slots::Slot;
-use soil_inherents::InherentData;
-use soil_runtime::{
+use subsoil::inherents::InherentData;
+use subsoil::runtime::{
 	generic::Digest,
 	traits::{Block as BlockT, Header},
 	DigestItem,
 };
-use soil_timestamp::TimestampInherentData;
+use subsoil::timestamp::TimestampInherentData;
 
 /// Provides BABE-compatible predigests and BlockImportParams.
 /// Intended for use with BABE runtimes.

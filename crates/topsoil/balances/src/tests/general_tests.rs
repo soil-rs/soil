@@ -24,7 +24,7 @@ use crate::{
 	},
 	AccountData, ExtraFlags, TotalIssuance,
 };
-use soil_runtime::DispatchError;
+use subsoil::runtime::DispatchError;
 use topsoil_support::{
 	assert_noop, assert_ok, hypothetically,
 	traits::{

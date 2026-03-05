@@ -17,7 +17,7 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 use clap::Args;
-use soil_core::H256;
+use subsoil::core::H256;
 use std::str::FromStr;
 
 fn parse_kx_secret(s: &str) -> Result<sc_mixnet::KxSecret, String> {

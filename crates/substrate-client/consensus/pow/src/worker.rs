@@ -26,7 +26,7 @@ use parking_lot::Mutex;
 use sc_consensus::{BlockImportParams, BoxBlockImport, StateAction, StorageChanges};
 use soil_client_api::ImportNotifications;
 use soil_consensus::{BlockOrigin, Proposal};
-use soil_runtime::{
+use subsoil::runtime::{
 	generic::BlockId,
 	traits::{Block as BlockT, Header as HeaderT},
 	DigestItem,

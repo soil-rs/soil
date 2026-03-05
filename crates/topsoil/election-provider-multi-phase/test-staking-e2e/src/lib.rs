@@ -24,8 +24,8 @@ mod mock;
 pub(crate) const LOG_TARGET: &str = "tests::e2e-epm";
 
 use mock::*;
-use soil_core::Get;
-use soil_runtime::Perbill;
+use subsoil::core::Get;
+use subsoil::runtime::Perbill;
 use topsoil_support::{assert_err, assert_ok};
 use topsoil_timestamp::Now;
 

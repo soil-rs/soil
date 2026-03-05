@@ -40,7 +40,7 @@ use soil_consensus::BlockOrigin;
 use soil_network::ProtocolName;
 use soil_network_common::sync::message::BlockAnnounce;
 use soil_network_types::PeerId;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{Block as BlockT, NumberFor},
 	Justifications,
 };

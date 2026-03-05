@@ -25,7 +25,8 @@
 
 use honggfuzz::fuzz;
 use rand::{seq::SliceRandom, Rng};
-use soil_runtime::{assert_eq_error_rate, Perbill, Perquintill};
+use subsoil::assert_eq_error_rate;
+use subsoil::runtime::{Perbill, Perquintill};
 use topsoil_nomination_pools::{
 	log,
 	mock::*,
@@ -209,8 +210,8 @@ impl RewardAgent {
 
 fn main() {
 	let mut reward_agent = RewardAgent::new(REWARD_AGENT_ACCOUNT);
-	soil_tracing::try_init_simple();
-	let mut ext = soil_io::TestExternalities::new_empty();
+	subsoil::tracing::try_init_simple();
+	let mut ext = subsoil::io::TestExternalities::new_empty();
 	let mut events_histogram = Vec::<(PoolsEvents<T>, u32)>::default();
 	let mut iteration = 0 as BlockNumber;
 	let mut ok = 0;

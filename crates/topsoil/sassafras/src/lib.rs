@@ -59,8 +59,8 @@ use soil_consensus_sassafras::{
 	vrf, AuthorityId, Epoch, EpochConfiguration, Randomness, Slot, TicketBody, TicketEnvelope,
 	TicketId, RANDOMNESS_LENGTH, SASSAFRAS_ENGINE_ID,
 };
-use soil_io::hashing;
-use soil_runtime::{
+use subsoil::io::hashing;
+use subsoil::runtime::{
 	generic::DigestItem,
 	traits::{One, Zero},
 	BoundToRuntimeAppPublic,

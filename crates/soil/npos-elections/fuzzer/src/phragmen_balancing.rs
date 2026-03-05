@@ -22,7 +22,7 @@ mod common;
 use common::*;
 use honggfuzz::fuzz;
 use rand::{self, SeedableRng};
-use soil_npos_elections::{
+use subsoil::npos_elections::{
 	assignment_ratio_to_staked_normalized, seq_phragmen, to_supports, BalancingConfig,
 	ElectionResult, EvaluateSupport, VoteWeight,
 };
@@ -66,7 +66,7 @@ fn main() {
 
 			if iterations > 0 {
 				let config = BalancingConfig { iterations, tolerance: 0 };
-				let balanced: ElectionResult<AccountId, soil_runtime::Perbill> =
+				let balanced: ElectionResult<AccountId, subsoil::runtime::Perbill> =
 					seq_phragmen(to_elect, candidates, voters, Some(config)).unwrap();
 
 				let balanced_score = {

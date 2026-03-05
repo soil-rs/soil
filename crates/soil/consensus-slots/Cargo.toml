@@ -19,11 +19,11 @@ targets = ["x86_64-unknown-linux-gnu"]
 codec = { features = ["derive", "max-encoded-len"], workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { features = ["alloc", "derive"], optional = true, workspace = true }
-soil-timestamp = { workspace = true }
+subsoil = { workspace = true }
 
 [features]
 default = ["std"]
-std = ["codec/std", "scale-info/std", "serde/std", "soil-timestamp/std"]
+std = ["codec/std", "scale-info/std", "serde/std", "subsoil/std"]
 
 # Serde support without relying on std features.
 serde = ["dep:serde", "scale-info/serde"]

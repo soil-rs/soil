@@ -17,7 +17,7 @@
 
 use super::*;
 
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{CheckedAdd, CheckedSub, Zero},
 	ArithmeticError,
 };

@@ -19,8 +19,7 @@ codec = { features = ["derive"], workspace = true }
 topsoil-benchmarking = { optional = true, workspace = true }
 topsoil-election-provider-support = { workspace = true }
 topsoil-system = { workspace = true }
-soil-npos-elections = { workspace = true }
-soil-runtime = { workspace = true }
+subsoil = { workspace = true }
 
 [features]
 default = ["std"]
@@ -29,12 +28,11 @@ std = [
 	"topsoil-benchmarking?/std",
 	"topsoil-election-provider-support/std",
 	"topsoil-system/std",
-	"soil-npos-elections/std",
-	"soil-runtime/std",
+	"subsoil/std",
 ]
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",
 	"topsoil-election-provider-support/runtime-benchmarks",
 	"topsoil-system/runtime-benchmarks",
-	"soil-runtime/runtime-benchmarks",
+	"subsoil/runtime-benchmarks",
 ]

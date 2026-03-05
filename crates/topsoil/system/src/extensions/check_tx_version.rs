@@ -18,8 +18,8 @@
 use crate::{Config, Pallet};
 use codec::{Decode, DecodeWithMemTracking, Encode};
 use scale_info::TypeInfo;
-use soil_runtime::{
-	impl_tx_ext_default, traits::TransactionExtension,
+use subsoil::runtime::{
+	traits::TransactionExtension,
 	transaction_validity::TransactionValidityError,
 };
 
@@ -62,8 +62,8 @@ impl<T: Config + Send + Sync> TransactionExtension<<T as Config>::RuntimeCall>
 	}
 	type Val = ();
 	type Pre = ();
-	fn weight(&self, _: &<T as Config>::RuntimeCall) -> soil_weights::Weight {
+	fn weight(&self, _: &<T as Config>::RuntimeCall) -> subsoil::weights::Weight {
 		<T::ExtensionsWeightInfo as super::WeightInfo>::check_tx_version()
 	}
-	impl_tx_ext_default!(<T as Config>::RuntimeCall; validate prepare);
+	subsoil::impl_tx_ext_default!(<T as Config>::RuntimeCall; validate prepare);
 }

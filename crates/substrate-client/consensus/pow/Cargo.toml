@@ -25,12 +25,9 @@ parking_lot = { workspace = true, default-features = true }
 prometheus-endpoint = { workspace = true, default-features = true }
 soil-client-api = { workspace = true, default-features = true }
 sc-consensus = { workspace = true, default-features = true }
-soil-api = { workspace = true, default-features = true }
 soil-block-builder = { workspace = true, default-features = true }
 soil-blockchain = { workspace = true, default-features = true }
 soil-consensus = { workspace = true, default-features = true }
 soil-consensus-pow = { workspace = true, default-features = true }
-soil-core = { workspace = true, default-features = true }
-soil-inherents = { workspace = true, default-features = true }
-soil-runtime = { workspace = true, default-features = true }
+subsoil = { workspace = true, default-features = true }
 thiserror = { workspace = true }

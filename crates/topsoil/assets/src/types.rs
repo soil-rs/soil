@@ -18,7 +18,7 @@
 //! Various basic types for use in the assets pallet.
 
 use super::*;
-use soil_runtime::{traits::Convert, FixedPointNumber, FixedU128};
+use subsoil::runtime::{traits::Convert, FixedPointNumber, FixedU128};
 use topsoil_support::{
 	pallet_prelude::*,
 	traits::{fungible, tokens::ConversionToAssetBalance},

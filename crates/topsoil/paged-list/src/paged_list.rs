@@ -27,7 +27,7 @@ use alloc::vec::Vec;
 use codec::{Decode, Encode, EncodeLike, FullCodec};
 use core::marker::PhantomData;
 use topsoil::{
-	deps::soil_io,
+	deps::io,
 	prelude::*,
 	runtime::prelude::storage::{StorageAppender, StorageList, StoragePrefixedContainer},
 	traits::{Get, StorageInstance},
@@ -60,10 +60,10 @@ pub type ValueIndex = u32;
 /// are loaded once a page is read from storage. Iteration then happens on the cached elements. This
 /// reduces the number of storage `read` calls on the overlay. **Appending** to the list happens by
 /// appending to the last page by utilizing
-/// [`storage::append`](topsoil::deps::soil_io::storage::append). It allows to directly extend
+/// [`storage::append`](topsoil::deps::subsoil::io::storage::append). It allows to directly extend
 /// the elements of `values` vector of the page without loading the whole vector from storage. A new
 /// page is instantiated once [`Page::next`] overflows `ValuesPerNewPage`. Its vector will also be
-/// created through [`storage::append`](topsoil::deps::soil_io::storage::append). **Draining** advances
+/// created through [`storage::append`](topsoil::deps::subsoil::io::storage::append). **Draining** advances
 /// the internal indices identical to Iteration. It additionally persists the increments to storage
 /// and thereby 'drains' elements. Completely drained pages are deleted from storage.
 ///
@@ -135,7 +135,7 @@ where
 	pub fn from_storage() -> Option<Self> {
 		let key = Self::key();
 
-		soil_io::storage::get(&key).and_then(|raw| Self::decode(&mut &raw[..]).ok())
+		subsoil::io::storage::get(&key).and_then(|raw| Self::decode(&mut &raw[..]).ok())
 	}
 
 	pub fn key() -> Vec<u8> {
@@ -153,13 +153,13 @@ where
 		}
 		let key = page_key::<Prefix>(self.last_page);
 		self.last_page_len.saturating_inc();
-		soil_io::storage::append(&key, item.encode());
+		subsoil::io::storage::append(&key, item.encode());
 		self.store();
 	}
 
 	pub fn store(&self) {
 		let key = Self::key();
-		self.using_encoded(|enc| soil_io::storage::set(&key, enc));
+		self.using_encoded(|enc| subsoil::io::storage::set(&key, enc));
 	}
 
 	pub fn reset(&mut self) {
@@ -168,7 +168,7 @@ where
 	}
 
 	pub fn delete() {
-		soil_io::storage::clear(&Self::key());
+		subsoil::io::storage::clear(&Self::key());
 	}
 }
 
@@ -187,7 +187,7 @@ impl<V: FullCodec> Page<V> {
 		value_index: ValueIndex,
 	) -> Option<Self> {
 		let key = page_key::<Prefix>(index);
-		let values = soil_io::storage::get(&key)
+		let values = subsoil::io::storage::get(&key)
 			.and_then(|raw| alloc::vec::Vec::<V>::decode(&mut &raw[..]).ok())?;
 		if values.is_empty() {
 			// Don't create empty pages.
@@ -213,7 +213,7 @@ impl<V: FullCodec> Page<V> {
 // Does not live under `Page` since it does not require the `Value` generic.
 pub(crate) fn delete_page<Prefix: StorageInstance>(index: PageIndex) {
 	let key = page_key::<Prefix>(index);
-	soil_io::storage::clear(&key);
+	subsoil::io::storage::clear(&key);
 }
 
 /// Storage key of a page with `index`.
@@ -496,13 +496,13 @@ mod tests {
 		TestExternalities::default().execute_with(|| {
 			List::append_many(0..9);
 
-			assert!(soil_io::storage::exists(&page_key::<Prefix>(0)));
-			assert!(soil_io::storage::exists(&page_key::<Prefix>(1)));
+			assert!(subsoil::io::storage::exists(&page_key::<Prefix>(0)));
+			assert!(subsoil::io::storage::exists(&page_key::<Prefix>(1)));
 
 			assert_eq!(List::drain().take(5).count(), 5);
 			// Page 0 is eagerly removed.
-			assert!(!soil_io::storage::exists(&page_key::<Prefix>(0)));
-			assert!(soil_io::storage::exists(&page_key::<Prefix>(1)));
+			assert!(!subsoil::io::storage::exists(&page_key::<Prefix>(0)));
+			assert!(subsoil::io::storage::exists(&page_key::<Prefix>(1)));
 		});
 	}
 
@@ -513,17 +513,17 @@ mod tests {
 			List::append_many(0..9);
 
 			let key = page_key::<Prefix>(0);
-			let raw = soil_io::storage::get(&key).expect("Page should be present");
+			let raw = subsoil::io::storage::get(&key).expect("Page should be present");
 			let as_vec = Vec::<u32>::decode(&mut &raw[..]).unwrap();
 			assert_eq!(as_vec.len(), 5, "First page contains 5");
 
 			let key = page_key::<Prefix>(1);
-			let raw = soil_io::storage::get(&key).expect("Page should be present");
+			let raw = subsoil::io::storage::get(&key).expect("Page should be present");
 			let as_vec = Vec::<u32>::decode(&mut &raw[..]).unwrap();
 			assert_eq!(as_vec.len(), 4, "Second page contains 4");
 
 			let meta =
-				soil_io::storage::get(&meta_key::<Prefix>()).expect("Meta should be present");
+				subsoil::io::storage::get(&meta_key::<Prefix>()).expect("Meta should be present");
 			let meta: StoragePagedListMeta<Prefix, u32, ValuesPerNewPage> =
 				Decode::decode(&mut &meta[..]).unwrap();
 			assert_eq!(meta.first_page, 0);

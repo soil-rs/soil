@@ -36,7 +36,7 @@ use hyper::body::Body as _;
 use hyper_rustls::{HttpsConnector, HttpsConnectorBuilder};
 use hyper_util::{client::legacy as client, rt::TokioExecutor};
 use once_cell::sync::Lazy;
-use soil_core::offchain::{HttpError, HttpRequestId, HttpRequestStatus, Timestamp};
+use subsoil::core::offchain::{HttpError, HttpRequestId, HttpRequestStatus, Timestamp};
 use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
 use std::{
 	fmt,
@@ -783,7 +783,7 @@ mod tests {
 	use core::convert::Infallible;
 	use futures::future;
 	use http_body_util::BodyExt;
-	use soil_core::offchain::{
+	use subsoil::core::offchain::{
 		Duration, Externalities, HttpError, HttpRequestId, HttpRequestStatus,
 	};
 	use std::sync::LazyLock;

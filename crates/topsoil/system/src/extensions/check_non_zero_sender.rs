@@ -19,8 +19,7 @@ use crate::Config;
 use codec::{Decode, DecodeWithMemTracking, Encode};
 use core::marker::PhantomData;
 use scale_info::TypeInfo;
-use soil_runtime::{
-	impl_tx_ext_default,
+use subsoil::runtime::{
 	traits::{DispatchInfoOf, TransactionExtension},
 	transaction_validity::InvalidTransaction,
 };
@@ -56,7 +55,7 @@ impl<T: Config + Send + Sync> TransactionExtension<T::RuntimeCall> for CheckNonZ
 	type Val = ();
 	type Pre = ();
 
-	fn weight(&self, _: &T::RuntimeCall) -> soil_weights::Weight {
+	fn weight(&self, _: &T::RuntimeCall) -> subsoil::weights::Weight {
 		<T::ExtensionsWeightInfo as super::WeightInfo>::check_non_zero_sender()
 	}
 
@@ -69,7 +68,7 @@ impl<T: Config + Send + Sync> TransactionExtension<T::RuntimeCall> for CheckNonZ
 		_self_implicit: Self::Implicit,
 		_inherited_implication: &impl Encode,
 		_source: TransactionSource,
-	) -> soil_runtime::traits::ValidateResult<Self::Val, T::RuntimeCall> {
+	) -> subsoil::runtime::traits::ValidateResult<Self::Val, T::RuntimeCall> {
 		if let Some(who) = origin.as_signer() {
 			if who.using_encoded(|d| d.iter().all(|x| *x == 0)) {
 				return Err(InvalidTransaction::BadSigner.into());
@@ -77,14 +76,14 @@ impl<T: Config + Send + Sync> TransactionExtension<T::RuntimeCall> for CheckNonZ
 		}
 		Ok((Default::default(), (), origin))
 	}
-	impl_tx_ext_default!(T::RuntimeCall; prepare);
+	subsoil::impl_tx_ext_default!(T::RuntimeCall; prepare);
 }
 
 #[cfg(test)]
 mod tests {
 	use super::*;
 	use crate::mock::{new_test_ext, Test, CALL};
-	use soil_runtime::{
+	use subsoil::runtime::{
 		traits::{AsTransactionAuthorizedOrigin, DispatchTransaction, TxBaseImplication},
 		transaction_validity::{TransactionSource::External, TransactionValidityError},
 	};

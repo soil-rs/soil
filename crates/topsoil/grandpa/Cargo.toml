@@ -24,13 +24,10 @@ log = { workspace = true }
 topsoil-authorship = { workspace = true }
 topsoil-session = { workspace = true }
 scale-info = { features = ["derive", "serde"], workspace = true }
-soil-application-crypto = { features = ["serde"], workspace = true }
 soil-consensus-grandpa = { features = ["serde"], workspace = true }
-soil-core = { features = ["serde"], workspace = true }
-soil-io = { workspace = true }
-soil-runtime = { features = ["serde"], workspace = true }
 soil-session = { workspace = true }
 soil-staking = { features = ["serde"], workspace = true }
+subsoil = { workspace = true }
 
 [dev-dependencies]
 finality-grandpa = { features = ["derive-codec"], workspace = true, default-features = true }
@@ -41,8 +38,7 @@ topsoil-offences = { workspace = true, default-features = true }
 topsoil-staking = { workspace = true, default-features = true }
 topsoil-staking-reward-curve = { workspace = true, default-features = true }
 topsoil-timestamp = { workspace = true, default-features = true }
-soil-keyring = { workspace = true, default-features = true }
-soil-tracing = { workspace = true, default-features = true }
+subsoil = { workspace = true, default-features = true }
 
 [features]
 default = ["std"]
@@ -60,11 +56,8 @@ std = [
 	"topsoil-staking/std",
 	"topsoil-timestamp/std",
 	"scale-info/std",
-	"soil-application-crypto/std",
+	"subsoil/std",
 	"soil-consensus-grandpa/std",
-	"soil-core/std",
-	"soil-io/std",
-	"soil-runtime/std",
 	"soil-session/std",
 	"soil-staking/std",
 ]
@@ -78,7 +71,7 @@ runtime-benchmarks = [
 	"topsoil-session/runtime-benchmarks",
 	"topsoil-staking/runtime-benchmarks",
 	"topsoil-timestamp/runtime-benchmarks",
-	"soil-runtime/runtime-benchmarks",
+	"subsoil/runtime-benchmarks",
 	"soil-staking/runtime-benchmarks",
 ]
 try-runtime = [
@@ -91,5 +84,5 @@ try-runtime = [
 	"topsoil-session/try-runtime",
 	"topsoil-staking/try-runtime",
 	"topsoil-timestamp/try-runtime",
-	"soil-runtime/try-runtime",
+	"subsoil/try-runtime",
 ]

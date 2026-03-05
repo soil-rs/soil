@@ -40,7 +40,7 @@ use soil_network_common::sync::message::{
 	BlockAnnounce, BlockAttributes, BlockData, BlockRequest, Direction, FromBlock,
 };
 use soil_network_types::PeerId;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{Block as BlockT, Header, NumberFor, Zero},
 	Justifications, SaturatedConversion,
 };
@@ -790,8 +790,8 @@ mod test {
 	use crate::{mock::MockBlockDownloader, service::network::NetworkServiceProvider};
 	use sc_block_builder::BlockBuilderBuilder;
 	use soil_blockchain::{BlockStatus, Error as BlockchainError, HeaderBackend, Info};
-	use soil_core::H256;
-	use soil_runtime::{
+	use subsoil::core::H256;
+	use subsoil::runtime::{
 		traits::{Block as BlockT, Header as HeaderT, NumberFor},
 		ConsensusEngineId,
 	};
@@ -1372,7 +1372,7 @@ mod test {
 	#[test]
 	fn complete_warp_proof_advances_phase() {
 		// Initialize logging
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 
 		let client = Arc::new(TestClientBuilder::new().set_no_genesis().build());
 		let mut provider = MockWarpSyncProvider::<Block>::new();
@@ -1741,7 +1741,7 @@ mod test {
 
 	#[test]
 	fn target_block_response_with_wrong_block_drops_peer() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 
 		let client = Arc::new(TestClientBuilder::new().set_no_genesis().build());
 		let mut provider = MockWarpSyncProvider::<Block>::new();

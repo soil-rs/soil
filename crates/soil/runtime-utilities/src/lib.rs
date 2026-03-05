@@ -28,16 +28,16 @@ use codec::{Decode, Encode};
 #[cfg(feature = "std")]
 use error::{Error, Result};
 #[cfg(feature = "std")]
-use soil_core::{
+use subsoil::core::{
 	traits::{CallContext, CodeExecutor, FetchRuntimeCode, RuntimeCode},
 	OpaqueMetadata,
 };
 #[cfg(feature = "std")]
 use soil_executor::WasmExecutor;
 #[cfg(feature = "std")]
-use soil_state_machine::BasicExternalities;
+use subsoil::state_machine::BasicExternalities;
 #[cfg(feature = "std")]
-use soil_wasm_interface::HostFunctions;
+use subsoil::wasm_interface::HostFunctions;
 #[cfg(feature = "std")]
 use std::borrow::Cow;
 
@@ -92,7 +92,7 @@ impl<'a> FetchRuntimeCode for BasicCodeFetcher<'a> {
 #[cfg(feature = "std")]
 impl<'a> BasicCodeFetcher<'a> {
 	fn new(code: Cow<'a, [u8]>) -> Self {
-		Self { hash: soil_crypto_hashing::blake2_256(&code).to_vec(), code }
+		Self { hash: subsoil_crypto_hashing::blake2_256(&code).to_vec(), code }
 	}
 
 	fn runtime_code(&'a self) -> RuntimeCode<'a> {

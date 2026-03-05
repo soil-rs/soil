@@ -34,9 +34,9 @@ use sc_rpc::{
 	SubscriptionTaskExecutor,
 };
 #[cfg(feature = "std")]
-use soil_application_crypto::RuntimeAppPublic;
+use subsoil::application_crypto::RuntimeAppPublic;
 #[cfg(feature = "std")]
-use soil_runtime::traits::Block as BlockT;
+use subsoil::runtime::traits::Block as BlockT;
 
 #[cfg(feature = "std")]
 use futures::{task::SpawnError, FutureExt, StreamExt};
@@ -191,7 +191,7 @@ mod tests {
 		justification::BeefyVersionedFinalityProof,
 	};
 	use soil_consensus_beefy::{ecdsa_crypto, known_payloads, Payload, SignedCommitment};
-	use soil_runtime::traits::{BlakeTwo256, Hash};
+	use subsoil::runtime::traits::{BlakeTwo256, Hash};
 	use substrate_test_runtime_client::runtime::Block;
 
 	fn setup_io_handler() -> (
@@ -317,7 +317,7 @@ mod tests {
 		r.unwrap();
 
 		// Inspect what we received
-		let (bytes, recv_sub_id) = sub.next::<soil_core::Bytes>().await.unwrap().unwrap();
+		let (bytes, recv_sub_id) = sub.next::<subsoil::core::Bytes>().await.unwrap().unwrap();
 		let recv_finality_proof: BeefyVersionedFinalityProof<Block, ecdsa_crypto::AuthorityId> =
 			Decode::decode(&mut &bytes[..]).unwrap();
 		assert_eq!(&recv_sub_id, sub.subscription_id());

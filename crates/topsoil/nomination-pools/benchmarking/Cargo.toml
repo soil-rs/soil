@@ -31,16 +31,13 @@ topsoil-nomination-pools = { workspace = true }
 topsoil-staking = { workspace = true }
 
 # Substrate Primitives
-soil-runtime = { workspace = true }
-soil-runtime-interface = { workspace = true }
 soil-staking = { workspace = true }
+subsoil = { workspace = true }
 
 [dev-dependencies]
 topsoil-balances = { workspace = true }
 topsoil-staking-reward-curve = { workspace = true, default-features = true }
 topsoil-timestamp = { workspace = true, default-features = true }
-soil-core = { workspace = true, default-features = true }
-soil-io = { workspace = true, default-features = true }
 
 [features]
 default = ["std"]
@@ -57,10 +54,7 @@ std = [
 	"topsoil-staking/std",
 	"topsoil-timestamp/std",
 	"scale-info/std",
-	"soil-core/std",
-	"soil-io/std",
-	"soil-runtime-interface/std",
-	"soil-runtime/std",
+	"subsoil/std",
 	"soil-staking/std",
 ]
 runtime-benchmarks = [
@@ -74,6 +68,6 @@ runtime-benchmarks = [
 	"topsoil-nomination-pools/runtime-benchmarks",
 	"topsoil-staking/runtime-benchmarks",
 	"topsoil-timestamp/runtime-benchmarks",
-	"soil-runtime/runtime-benchmarks",
+	"subsoil/runtime-benchmarks",
 	"soil-staking/runtime-benchmarks",
 ]

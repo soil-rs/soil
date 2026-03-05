@@ -38,9 +38,9 @@
 //! This macro also generates the following enums for ease of decoding:
 //!  - `enum RuntimeCall`: This type contains the information needed to decode extrinsics.
 //!  - `enum RuntimeEvent`: This type contains the information needed to decode events.
-//!  - `enum RuntimeError`: While this cannot be used directly to decode `soil_runtime::DispatchError`
+//!  - `enum RuntimeError`: While this cannot be used directly to decode `subsoil::runtime::DispatchError`
 //!    from the chain, it contains the information needed to decode the
-//!    `soil_runtime::DispatchError::Module`.
+//!    `subsoil::runtime::DispatchError::Module`.
 //!
 //! # State Transitions
 //!
@@ -387,7 +387,7 @@ fn construct_runtime_final_expansion(
 
 	let topsoil_system = generate_access_from_frame_or_crate("topsoil-system")?;
 	let block = quote!(<#name as #topsoil_system::Config>::Block);
-	let unchecked_extrinsic = quote!(<#block as #scrate::soil_runtime::traits::Block>::Extrinsic);
+	let unchecked_extrinsic = quote!(<#block as #scrate::subsoil::runtime::traits::Block>::Extrinsic);
 
 	let outer_event =
 		expand::expand_outer_enum(&name, &pallets, &scrate, expand::OuterEnumType::Event)?;
@@ -449,7 +449,7 @@ fn construct_runtime_final_expansion(
 			#scrate::__private::scale_info::TypeInfo
 		)]
 		pub struct #name;
-		impl #scrate::soil_runtime::traits::GetRuntimeBlockType for #name {
+		impl #scrate::subsoil::runtime::traits::GetRuntimeBlockType for #name {
 			type RuntimeBlock = #block;
 		}
 
@@ -736,7 +736,7 @@ pub(crate) fn decl_integrity_test(scrate: &TokenStream2) -> TokenStream2 {
 
 			#[test]
 			pub fn runtime_integrity_tests() {
-				#scrate::__private::soil_tracing::try_init_simple();
+				#scrate::__private::subsoil::tracing::try_init_simple();
 				<AllPalletsWithSystem as #scrate::traits::IntegrityTest>::integrity_test();
 			}
 		}

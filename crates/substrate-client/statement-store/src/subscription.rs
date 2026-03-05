@@ -40,7 +40,7 @@ use futures::{Stream, StreamExt};
 use itertools::Itertools;
 
 use crate::LOG_TARGET;
-use soil_core::{traits::SpawnNamed, Bytes, Encode};
+use subsoil::core::{traits::SpawnNamed, Bytes, Encode};
 pub use soil_statement_store::StatementStore;
 use soil_statement_store::{
 	OptimizedTopicFilter, Result, Statement, StatementEvent, Topic, MAX_TOPICS,
@@ -468,7 +468,7 @@ mod tests {
 	use crate::tests::signed_statement;
 
 	use super::*;
-	use soil_core::Decode;
+	use subsoil::core::Decode;
 	use soil_statement_store::Topic;
 
 	fn unwrap_statement(item: StatementEvent) -> Bytes {
@@ -643,7 +643,7 @@ mod tests {
 	async fn test_subscription_handle_with_different_workers_number() {
 		for num_workers in 1..5 {
 			let subscriptions_handle = SubscriptionsHandle::new(
-				Box::new(soil_core::testing::TaskExecutor::new()),
+				Box::new(subsoil::core::testing::TaskExecutor::new()),
 				num_workers,
 			);
 
@@ -679,7 +679,7 @@ mod tests {
 	#[tokio::test]
 	async fn test_handle_unsubscribe() {
 		let subscriptions_handle =
-			SubscriptionsHandle::new(Box::new(soil_core::testing::TaskExecutor::new()), 2);
+			SubscriptionsHandle::new(Box::new(subsoil::core::testing::TaskExecutor::new()), 2);
 
 		let topic1 = Topic::from([8u8; 32]);
 		let topic2 = Topic::from([9u8; 32]);
@@ -1002,7 +1002,7 @@ mod tests {
 	#[tokio::test]
 	async fn test_handle_with_match_any_filter() {
 		let subscriptions_handle =
-			SubscriptionsHandle::new(Box::new(soil_core::testing::TaskExecutor::new()), 2);
+			SubscriptionsHandle::new(Box::new(subsoil::core::testing::TaskExecutor::new()), 2);
 
 		let topic1 = Topic::from([8u8; 32]);
 		let topic2 = Topic::from([9u8; 32]);
@@ -1034,7 +1034,7 @@ mod tests {
 	#[tokio::test]
 	async fn test_handle_with_any_filter() {
 		let subscriptions_handle =
-			SubscriptionsHandle::new(Box::new(soil_core::testing::TaskExecutor::new()), 2);
+			SubscriptionsHandle::new(Box::new(subsoil::core::testing::TaskExecutor::new()), 2);
 
 		let (_tx, mut stream) = subscriptions_handle.subscribe(OptimizedTopicFilter::Any);
 
@@ -1060,7 +1060,7 @@ mod tests {
 	#[tokio::test]
 	async fn test_handle_multiple_subscribers_different_filters() {
 		let subscriptions_handle =
-			SubscriptionsHandle::new(Box::new(soil_core::testing::TaskExecutor::new()), 2);
+			SubscriptionsHandle::new(Box::new(subsoil::core::testing::TaskExecutor::new()), 2);
 
 		let topic1 = Topic::from([8u8; 32]);
 		let topic2 = Topic::from([9u8; 32]);

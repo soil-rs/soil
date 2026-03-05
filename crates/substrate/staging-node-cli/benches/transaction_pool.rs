@@ -21,9 +21,9 @@ use futures::{future, StreamExt};
 use kitchensink_runtime::{constants::currency::*, BalancesCall, SudoCall};
 use node_cli::service::{create_extrinsic, fetch_nonce, FullClient, TransactionPool};
 use node_primitives::AccountId;
-use soil_core::{crypto::Pair, sr25519};
-use soil_keyring::Sr25519Keyring;
-use soil_runtime::OpaqueExtrinsic;
+use subsoil::core::{crypto::Pair, sr25519};
+use subsoil::keyring::Sr25519Keyring;
+use subsoil::runtime::OpaqueExtrinsic;
 use soil_service::config::{ExecutorConfiguration, RpcConfiguration};
 use soil_service::{
 	config::{
@@ -216,7 +216,7 @@ async fn submit_tx_and_wait_for_inclusion(
 }
 
 fn transaction_pool_benchmarks(c: &mut Criterion) {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let runtime = tokio::runtime::Runtime::new().expect("Creates tokio runtime");
 	let tokio_handle = runtime.handle().clone();

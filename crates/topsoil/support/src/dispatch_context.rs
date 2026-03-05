@@ -30,7 +30,7 @@
 //! [`UnfilteredDispatchable`](topsoil_support::traits::UnfilteredDispatchable) for each pallet `Call`
 //! enum. Part of this implementation is the call to [`run_in_context`], so that each call to
 //! [`UnfilteredDispatchable::dispatch_bypass_filter`](crate::traits::UnfilteredDispatchable::dispatch_bypass_filter)
-//! or [`Dispatchable::dispatch`](soil_runtime::traits::Dispatchable::dispatch) will run in a dispatch
+//! or [`Dispatchable::dispatch`](subsoil::runtime::traits::Dispatchable::dispatch) will run in a dispatch
 //! context.
 //!
 //! # Example

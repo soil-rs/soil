@@ -18,7 +18,7 @@
 
 use super::*;
 
-use soil_runtime::testing::{Block as RawBlock, TestXt, H256 as Hash};
+use subsoil::runtime::testing::{Block as RawBlock, TestXt, H256 as Hash};
 use std::iter::{empty, Empty};
 
 type TestChangeSet = (

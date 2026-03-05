@@ -24,7 +24,7 @@ use kitchensink_runtime::{
 };
 use node_primitives::Balance;
 use node_testing::keyring::*;
-use soil_runtime::{traits::One, Perbill};
+use subsoil::runtime::{traits::One, Perbill};
 use topsoil_support::{
 	dispatch::GetDispatchInfo,
 	traits::Currency,
@@ -55,11 +55,11 @@ fn fee_multiplier_increases_and_decreases_on_big_weight() {
 		GENESIS_HASH.into(),
 		vec![
 			CheckedExtrinsic {
-				format: soil_runtime::generic::ExtrinsicFormat::Bare,
+				format: subsoil::runtime::generic::ExtrinsicFormat::Bare,
 				function: RuntimeCall::Timestamp(topsoil_timestamp::Call::set { now: time1 }),
 			},
 			CheckedExtrinsic {
-				format: soil_runtime::generic::ExtrinsicFormat::Signed(charlie(), tx_ext(0, 0)),
+				format: subsoil::runtime::generic::ExtrinsicFormat::Signed(charlie(), tx_ext(0, 0)),
 				function: RuntimeCall::Sudo(topsoil_sudo::Call::sudo {
 					call: Box::new(RuntimeCall::RootTesting(
 						topsoil_root_testing::Call::fill_block { ratio: Perbill::from_percent(60) },
@@ -78,11 +78,11 @@ fn fee_multiplier_increases_and_decreases_on_big_weight() {
 		block1.1,
 		vec![
 			CheckedExtrinsic {
-				format: soil_runtime::generic::ExtrinsicFormat::Bare,
+				format: subsoil::runtime::generic::ExtrinsicFormat::Bare,
 				function: RuntimeCall::Timestamp(topsoil_timestamp::Call::set { now: time2 }),
 			},
 			CheckedExtrinsic {
-				format: soil_runtime::generic::ExtrinsicFormat::Signed(charlie(), tx_ext(1, 0)),
+				format: subsoil::runtime::generic::ExtrinsicFormat::Signed(charlie(), tx_ext(1, 0)),
 				function: RuntimeCall::System(topsoil_system::Call::remark { remark: vec![0; 1] }),
 			},
 		],
@@ -148,7 +148,7 @@ fn transaction_fee_is_correct() {
 
 	let tip = 1_000_000;
 	let xt = sign(CheckedExtrinsic {
-		format: soil_runtime::generic::ExtrinsicFormat::Signed(alice(), tx_ext(0, tip)),
+		format: subsoil::runtime::generic::ExtrinsicFormat::Signed(alice(), tx_ext(0, tip)),
 		function: RuntimeCall::Balances(default_transfer_call()),
 	});
 

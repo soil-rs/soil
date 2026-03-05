@@ -18,20 +18,20 @@
 //! Integration tests for runtime interface primitives
 #![cfg(test)]
 
-use soil_runtime_interface::*;
+use subsoil::runtime_interface::*;
 
 use sp_runtime_interface_test_wasm::{test_api::HostFunctions, wasm_binary_unwrap};
 use sp_runtime_interface_test_wasm_deprecated::wasm_binary_unwrap as wasm_binary_deprecated_unwrap;
 
 use soil_executor_common::{runtime_blob::RuntimeBlob, wasm_runtime::AllocationStats};
-use soil_wasm_interface::{ExtendedHostFunctions, HostFunctions as HostFunctionsT};
+use subsoil::wasm_interface::{ExtendedHostFunctions, HostFunctions as HostFunctionsT};
 
-use std::{
+use ::std::{
 	collections::HashSet,
 	sync::{Arc, Mutex},
 };
 
-type TestExternalities = soil_state_machine::TestExternalities<soil_runtime::traits::BlakeTwo256>;
+type TestExternalities = subsoil::state_machine::TestExternalities<subsoil::runtime::traits::BlakeTwo256>;
 
 fn call_wasm_method_with_result<HF: HostFunctionsT>(
 	binary: &[u8],
@@ -41,7 +41,7 @@ fn call_wasm_method_with_result<HF: HostFunctionsT>(
 	let mut ext_ext = ext.ext();
 
 	let executor = soil_executor::WasmExecutor::<
-		ExtendedHostFunctions<soil_io::SubstrateHostFunctions, HF>,
+		ExtendedHostFunctions<subsoil::io::SubstrateHostFunctions, HF>,
 	>::builder()
 	.build();
 
@@ -173,12 +173,12 @@ fn test_versioning_register_only() {
 fn run_test_in_another_process(
 	test_name: &str,
 	test_body: impl FnOnce(),
-) -> Option<std::process::Output> {
-	if std::env::var("RUN_FORKED_TEST").is_ok() {
+) -> Option<::std::process::Output> {
+	if ::std::env::var("RUN_FORKED_TEST").is_ok() {
 		test_body();
 		None
 	} else {
-		let output = std::process::Command::new(std::env::current_exe().unwrap())
+		let output = ::std::process::Command::new(::std::env::current_exe().unwrap())
 			.arg(test_name)
 			.env("RUN_FORKED_TEST", "1")
 			.output()
@@ -194,7 +194,7 @@ fn test_tracing() {
 	// Run in a different process to ensure that the `Span` is registered with our local
 	// `TracingSubscriber`.
 	run_test_in_another_process("test_tracing", || {
-		use std::fmt;
+		use ::std::fmt;
 		use tracing::span::Id as SpanId;
 		use tracing_core::field::{Field, Visit};
 

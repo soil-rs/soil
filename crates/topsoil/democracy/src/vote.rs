@@ -20,7 +20,7 @@
 use crate::{Conviction, Delegations, ReferendumIndex};
 use codec::{Decode, DecodeWithMemTracking, Encode, EncodeLike, Input, MaxEncodedLen, Output};
 use scale_info::TypeInfo;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{Saturating, Zero},
 	BoundedVec, Debug,
 };

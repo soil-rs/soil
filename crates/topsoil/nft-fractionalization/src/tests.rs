@@ -21,7 +21,7 @@ use crate::{mock::*, *};
 
 use fungible::{hold::Inspect as InspectHold, Mutate as MutateFungible};
 use fungibles::{metadata::Inspect, InspectEnumerable};
-use topsoil::{deps::soil_runtime::ModuleError, testing_prelude::*};
+use topsoil::{deps::subsoil::runtime::ModuleError, testing_prelude::*};
 use TokenError::FundsUnavailable;
 
 use topsoil_nfts::CollectionConfig;

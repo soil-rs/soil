@@ -19,7 +19,7 @@
 
 #![cfg(test)]
 
-use soil_runtime::{testing::UintAuthorityId, traits::ConvertInto, BuildStorage, Permill};
+use subsoil::runtime::{testing::UintAuthorityId, traits::ConvertInto, BuildStorage, Permill};
 use soil_staking::{
 	offence::{OffenceError, ReportOffence},
 	SessionIndex,
@@ -74,7 +74,7 @@ impl topsoil_session::historical::SessionManager<u64, u64> for TestSessionManage
 }
 
 /// An extrinsic type used for tests.
-pub type Extrinsic = soil_runtime::testing::TestXt<RuntimeCall, ()>;
+pub type Extrinsic = subsoil::runtime::testing::TestXt<RuntimeCall, ()>;
 type IdentificationTuple = (u64, u64);
 type Offence = crate::UnresponsivenessOffence<IdentificationTuple>;
 
@@ -95,9 +95,9 @@ impl ReportOffence<u64, IdentificationTuple, Offence> for OffenceHandler {
 	}
 }
 
-pub fn new_test_ext() -> soil_io::TestExternalities {
+pub fn new_test_ext() -> subsoil::io::TestExternalities {
 	let t = topsoil_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
-	let mut result: soil_io::TestExternalities = t.into();
+	let mut result: subsoil::io::TestExternalities = t.into();
 	// Set the default keys, otherwise session will discard the validator.
 	result.execute_with(|| {
 		for i in 1..=6 {

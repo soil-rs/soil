@@ -38,8 +38,8 @@ pub use value::StorageValue;
 mod tests {
 	use alloc::vec::Vec;
 	use codec::Encode;
-	use soil_io::TestExternalities;
-	use soil_runtime::{generic, traits::BlakeTwo256, BuildStorage};
+	use subsoil::io::TestExternalities;
+	use subsoil::runtime::{generic, traits::BlakeTwo256, BuildStorage};
 
 	use crate::{
 		assert_noop, assert_ok,
@@ -59,7 +59,7 @@ mod tests {
 		#[pallet::config]
 		#[pallet::disable_frame_system_supertrait_check]
 		pub trait Config: 'static {
-			type Block: soil_runtime::traits::Block;
+			type Block: subsoil::runtime::traits::Block;
 			type AccountId;
 			type BaseCallFilter: crate::traits::Contains<Self::RuntimeCall>;
 			type RuntimeOrigin;
@@ -106,9 +106,9 @@ mod tests {
 			pub type OriginFor<T> = <T as super::Config>::RuntimeOrigin;
 
 			pub type HeaderFor<T> =
-				<<T as super::Config>::Block as soil_runtime::traits::HeaderProvider>::HeaderT;
+				<<T as super::Config>::Block as subsoil::runtime::traits::HeaderProvider>::HeaderT;
 
-			pub type BlockNumberFor<T> = <HeaderFor<T> as soil_runtime::traits::Header>::Number;
+			pub type BlockNumberFor<T> = <HeaderFor<T> as subsoil::runtime::traits::Header>::Number;
 		}
 	}
 

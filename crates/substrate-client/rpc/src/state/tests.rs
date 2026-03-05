@@ -24,7 +24,7 @@ use futures::executor;
 use jsonrpsee::{core::EmptyServerParams as EmptyParams, MethodsError as RpcError};
 use sc_block_builder::BlockBuilderBuilder;
 use soil_consensus::BlockOrigin;
-use soil_core::{hash::H256, storage::ChildInfo};
+use subsoil::core::{hash::H256, storage::ChildInfo};
 use std::sync::Arc;
 use substrate_test_runtime_client::{
 	prelude::*,
@@ -253,9 +253,9 @@ async fn should_send_initial_storage_changes_and_notifications() {
 		let (api, _child) = new_full(client.clone(), test_executor(), None);
 
 		let alice_balance_key = [
-			soil_crypto_hashing::twox_128(b"System"),
-			soil_crypto_hashing::twox_128(b"Account"),
-			soil_crypto_hashing::blake2_128(&Sr25519Keyring::Alice.public()),
+			subsoil_crypto_hashing::twox_128(b"System"),
+			subsoil_crypto_hashing::twox_128(b"Account"),
+			subsoil_crypto_hashing::blake2_128(&Sr25519Keyring::Alice.public()),
 		]
 		.concat()
 		.iter()

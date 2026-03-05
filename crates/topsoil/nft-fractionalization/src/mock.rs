@@ -20,7 +20,7 @@
 use super::*;
 use crate as topsoil_nft_fractionalization;
 
-use topsoil::{deps::soil_runtime::MultiSignature, testing_prelude::*, traits::Verify};
+use topsoil::{deps::subsoil::runtime::MultiSignature, testing_prelude::*, traits::Verify};
 use topsoil_nfts::PalletFeatures;
 
 type Block = MockBlock<Test>;

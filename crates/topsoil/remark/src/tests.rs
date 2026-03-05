@@ -32,7 +32,7 @@ fn generates_event() {
 		let events = System::events();
 		// this one we create as we expect it
 		let system_event: <Test as topsoil_system::Config>::RuntimeEvent = Event::Stored {
-			content_hash: soil_io::hashing::blake2_256(&data).into(),
+			content_hash: subsoil::io::hashing::blake2_256(&data).into(),
 			sender: caller,
 		}
 		.into();

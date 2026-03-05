@@ -20,7 +20,7 @@ use alloc::{collections::btree_map::BTreeMap, vec::Vec};
 use topsoil_support::traits::{OnRuntimeUpgrade, UncheckedOnRuntimeUpgrade};
 
 #[cfg(feature = "try-runtime")]
-use soil_runtime::TryRuntimeError;
+use subsoil::runtime::TryRuntimeError;
 
 /// Exports for versioned migration `type`s for this pallet.
 pub mod versioned {
@@ -767,7 +767,7 @@ pub mod v3 {
 
 pub mod v2 {
 	use super::*;
-	use soil_runtime::Perbill;
+	use subsoil::runtime::Perbill;
 
 	#[test]
 	fn migration_assumption_is_correct() {

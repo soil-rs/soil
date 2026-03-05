@@ -26,16 +26,9 @@ prometheus-endpoint = { workspace = true, default-features = true, optional = tr
 soil-executor = { workspace = true, default-features = true, optional = true}
 soil-transaction-pool-api = { workspace = true, default-features = true, optional = true}
 soil-utils = { workspace = true, default-features = true, optional = true}
-soil-api = { workspace = true, default-features = true, optional = true}
 soil-blockchain = { workspace = true, default-features = true, optional = true}
 soil-consensus = { workspace = true, default-features = true, optional = true}
-soil-core = { workspace = true, optional = true}
-soil-database = { workspace = true, default-features = true, optional = true}
-soil-externalities = { workspace = true, default-features = true, optional = true}
-soil-runtime = { workspace = true, optional = true}
-soil-state-machine = { workspace = true, default-features = true, optional = true}
-soil-storage = { workspace = true, default-features = true, optional = true}
-soil-trie = { workspace = true, default-features = true, optional = true}
+subsoil = { workspace = true, default-features = true, optional = true}
 
 [features]
 default = ["std"]
@@ -46,30 +39,16 @@ std = [
 	"log",
 	"parking_lot",
 	"prometheus-endpoint",
-	"soil-api",
 	"soil-blockchain",
 	"soil-consensus",
-	"soil-core",
-	"soil-database",
+	"subsoil",
 	"soil-executor",
-	"soil-externalities",
-	"soil-runtime",
-	"soil-state-machine",
-	"soil-storage",
 	"soil-transaction-pool-api",
-	"soil-trie",
 	"soil-utils",
-	"soil-api/std",
-	"soil-core/std",
+	"subsoil/std",
 	"soil-executor/std",
-	"soil-externalities/std",
-	"soil-runtime/std",
-	"soil-state-machine/std",
-	"soil-storage/std",
 	"soil-transaction-pool-api/std",
-	"soil-trie/std",
-	"soil-utils/std",
-]
+	"soil-utils/std"]
 
 [dev-dependencies]
 substrate-test-runtime = { workspace = true }

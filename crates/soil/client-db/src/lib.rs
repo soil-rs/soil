@@ -79,7 +79,7 @@ use codec::{Decode, Encode};
 #[cfg(feature = "std")]
 use hash_db::Prefix;
 #[cfg(feature = "std")]
-use soil_arithmetic::traits::Saturating;
+use subsoil::arithmetic::traits::Saturating;
 #[cfg(feature = "std")]
 use soil_blockchain::{
 	Backend as _, CachedHeaderMetadata, DisplacedLeavesAfterFinalization, Error as ClientError,
@@ -94,14 +94,14 @@ use soil_client_api::{
 	IoInfo, MemoryInfo, MemorySize, TrieCacheContext, UsageInfo,
 };
 #[cfg(feature = "std")]
-use soil_core::{
+use subsoil::core::{
 	offchain::OffchainOverlayedChange,
 	storage::{well_known_keys, ChildInfo},
 };
 #[cfg(feature = "std")]
-use soil_database::Transaction;
+use subsoil::database::Transaction;
 #[cfg(feature = "std")]
-use soil_runtime::{
+use subsoil::runtime::{
 	generic::BlockId,
 	traits::{
 		Block as BlockT, Hash, HashingFor, Header as HeaderT, NumberFor, One, SaturatedConversion,
@@ -112,20 +112,20 @@ use soil_runtime::{
 #[cfg(feature = "std")]
 use soil_state_db::{IsPruned, LastCanonicalized, StateDb};
 #[cfg(feature = "std")]
-use soil_state_machine::{
+use subsoil::state_machine::{
 	backend::{AsTrieBackend, Backend as StateBackend},
 	BackendTransaction, ChildStorageCollection, DBValue, IndexOperation, IterArgs,
 	OffchainChangesCollection, StateMachineStats, StorageCollection, StorageIterator, StorageKey,
 	StorageValue, UsageInfo as StateUsageInfo,
 };
 #[cfg(feature = "std")]
-use soil_trie::{cache::SharedTrieCache, prefixed_key, MemoryDB, MerkleValue, PrefixedMemoryDB};
+use subsoil::trie::{cache::SharedTrieCache, prefixed_key, MemoryDB, MerkleValue, PrefixedMemoryDB};
 #[cfg(feature = "std")]
 use utils::BLOCK_GAP_CURRENT_VERSION;
 
 // Re-export the Database trait so that one can pass an implementation of it.
 #[cfg(feature = "std")]
-pub use soil_database::Database;
+pub use subsoil::database::Database;
 #[cfg(feature = "std")]
 pub use soil_state_db::PruningMode;
 
@@ -159,12 +159,12 @@ const CACHE_HEADERS: usize = 8;
 
 /// DB-backed patricia trie state, transaction type is an overlay of changes to commit.
 #[cfg(feature = "std")]
-pub type DbState<H> = soil_state_machine::TrieBackend<Arc<dyn soil_state_machine::Storage<H>>, H>;
+pub type DbState<H> = subsoil::state_machine::TrieBackend<Arc<dyn subsoil::state_machine::Storage<H>>, H>;
 
 /// Builder for [`DbState`].
 #[cfg(feature = "std")]
 pub type DbStateBuilder<Hasher> =
-	soil_state_machine::TrieBackendBuilder<Arc<dyn soil_state_machine::Storage<Hasher>>, Hasher>;
+	subsoil::state_machine::TrieBackendBuilder<Arc<dyn subsoil::state_machine::Storage<Hasher>>, Hasher>;
 
 /// Length of a [`DbHash`].
 #[cfg(feature = "std")]
@@ -172,7 +172,7 @@ const DB_HASH_LEN: usize = 32;
 
 /// Hash type that this backend uses for the database.
 #[cfg(feature = "std")]
-pub type DbHash = soil_core::H256;
+pub type DbHash = subsoil::core::H256;
 
 /// An extrinsic entry in the database.
 #[derive(Debug, Encode, Decode)]
@@ -361,7 +361,7 @@ impl<B: BlockT> AsTrieBackend<HashingFor<B>> for RefTrackingState<B> {
 
 	fn as_trie_backend(
 		&self,
-	) -> &soil_state_machine::TrieBackend<Self::TrieBackendStorage, HashingFor<B>> {
+	) -> &subsoil::state_machine::TrieBackend<Self::TrieBackendStorage, HashingFor<B>> {
 		&self.state.as_trie_backend()
 	}
 }
@@ -540,7 +540,7 @@ struct StateMetaDb(Arc<dyn Database<DbHash>>);
 
 #[cfg(feature = "std")]
 impl soil_state_db::MetaDb for StateMetaDb {
-	type Error = soil_database::error::DatabaseError;
+	type Error = subsoil::database::error::DatabaseError;
 
 	fn get_meta(&self, key: &[u8]) -> Result<Option<Vec<u8>>, Self::Error> {
 		Ok(self.0.get(columns::STATE_META, key))
@@ -1118,7 +1118,7 @@ struct StorageDb<Block: BlockT> {
 }
 
 #[cfg(feature = "std")]
-impl<Block: BlockT> soil_state_machine::Storage<HashingFor<Block>> for StorageDb<Block> {
+impl<Block: BlockT> subsoil::state_machine::Storage<HashingFor<Block>> for StorageDb<Block> {
 	fn get(&self, key: &Block::Hash, prefix: Prefix) -> Result<Option<DBValue>, String> {
 		if self.prefix_keys {
 			let key = prefixed_key::<HashingFor<Block>>(key, prefix);
@@ -1154,7 +1154,7 @@ impl<Block: BlockT> DbGenesisStorage<Block> {
 }
 
 #[cfg(feature = "std")]
-impl<Block: BlockT> soil_state_machine::Storage<HashingFor<Block>> for DbGenesisStorage<Block> {
+impl<Block: BlockT> subsoil::state_machine::Storage<HashingFor<Block>> for DbGenesisStorage<Block> {
 	fn get(&self, key: &Block::Hash, prefix: Prefix) -> Result<Option<DBValue>, String> {
 		use hash_db::HashDB;
 		Ok(self.storage.get(key, prefix))
@@ -1170,14 +1170,14 @@ impl<Block: BlockT> EmptyStorage<Block> {
 		let mut root = Block::Hash::default();
 		let mut mdb = MemoryDB::<HashingFor<Block>>::default();
 		// both triedbmut are the same on empty storage.
-		soil_trie::trie_types::TrieDBMutBuilderV1::<HashingFor<Block>>::new(&mut mdb, &mut root)
+		subsoil::trie::trie_types::TrieDBMutBuilderV1::<HashingFor<Block>>::new(&mut mdb, &mut root)
 			.build();
 		EmptyStorage(root)
 	}
 }
 
 #[cfg(feature = "std")]
-impl<Block: BlockT> soil_state_machine::Storage<HashingFor<Block>> for EmptyStorage<Block> {
+impl<Block: BlockT> subsoil::state_machine::Storage<HashingFor<Block>> for EmptyStorage<Block> {
 	fn get(&self, _key: &Block::Hash, _prefix: Prefix) -> Result<Option<DBValue>, String> {
 		Ok(None)
 	}
@@ -1243,7 +1243,7 @@ pub struct Backend<Block: BlockT> {
 	io_stats: FrozenForDuration<(kvdb::IoStats, StateUsageInfo)>,
 	state_usage: Arc<StateUsageStats>,
 	genesis_state: RwLock<Option<Arc<DbGenesisStorage<Block>>>>,
-	shared_trie_cache: Option<soil_trie::cache::SharedTrieCache<HashingFor<Block>>>,
+	shared_trie_cache: Option<subsoil::trie::cache::SharedTrieCache<HashingFor<Block>>>,
 	pruning_filters: Vec<Arc<dyn PruningFilter>>,
 }
 
@@ -1319,7 +1319,7 @@ impl<Block: BlockT> Backend<Block> {
 		pruning_filters: Vec<Arc<dyn PruningFilter>>,
 	) -> Self {
 		let db = kvdb_memorydb::create(crate::utils::NUM_COLUMNS);
-		let db = soil_database::as_database(db);
+		let db = subsoil::database::as_database(db);
 		let state_pruning = match blocks_pruning {
 			BlocksPruning::KeepAll => PruningMode::ArchiveAll,
 			BlocksPruning::KeepFinalized => PruningMode::ArchiveCanonical,
@@ -1342,7 +1342,7 @@ impl<Block: BlockT> Backend<Block> {
 	///
 	/// Should only be needed for benchmarking.
 	#[cfg(feature = "runtime-benchmarks")]
-	pub fn expose_db(&self) -> (Arc<dyn soil_database::Database<DbHash>>, soil_database::ColumnId) {
+	pub fn expose_db(&self) -> (Arc<dyn subsoil::database::Database<DbHash>>, subsoil::database::ColumnId) {
 		(self.storage.db.clone(), columns::STATE)
 	}
 
@@ -1350,7 +1350,7 @@ impl<Block: BlockT> Backend<Block> {
 	///
 	/// Should only be needed for benchmarking.
 	#[cfg(feature = "runtime-benchmarks")]
-	pub fn expose_storage(&self) -> Arc<dyn soil_state_machine::Storage<HashingFor<Block>>> {
+	pub fn expose_storage(&self) -> Arc<dyn subsoil::state_machine::Storage<HashingFor<Block>>> {
 		self.storage.clone()
 	}
 
@@ -1360,7 +1360,7 @@ impl<Block: BlockT> Backend<Block> {
 	#[cfg(feature = "runtime-benchmarks")]
 	pub fn expose_shared_trie_cache(
 		&self,
-	) -> Option<soil_trie::cache::SharedTrieCache<HashingFor<Block>>> {
+	) -> Option<subsoil::trie::cache::SharedTrieCache<HashingFor<Block>>> {
 		self.shared_trie_cache.clone()
 	}
 
@@ -1408,7 +1408,7 @@ impl<Block: BlockT> Backend<Block> {
 				);
 			}
 
-			SharedTrieCache::new(soil_trie::cache::CacheSize::new(maximum_size), config.metrics_registry.as_ref())
+			SharedTrieCache::new(subsoil::trie::cache::CacheSize::new(maximum_size), config.metrics_registry.as_ref())
 		});
 
 		let backend = Backend {
@@ -1619,7 +1619,7 @@ impl<Block: BlockT> Backend<Block> {
 			trace!(target: "db", "Canonicalize block #{to_canonicalize} ({hash_to_canonicalize:?})");
 			let commit = self.storage.state_db.canonicalize_block(&hash_to_canonicalize).map_err(
 				soil_blockchain::Error::from_state_db::<
-					soil_state_db::Error<soil_database::error::DatabaseError>,
+					soil_state_db::Error<subsoil::database::error::DatabaseError>,
 				>,
 			)?;
 			apply_state_commit(transaction, commit);
@@ -1782,7 +1782,7 @@ impl<Block: BlockT> Backend<Block> {
 					.storage
 					.state_db
 					.insert_block(&hash, number_u64, pending_block.header.parent_hash(), changeset)
-					.map_err(|e: soil_state_db::Error<soil_database::error::DatabaseError>| {
+					.map_err(|e: soil_state_db::Error<subsoil::database::error::DatabaseError>| {
 						soil_blockchain::Error::from_state_db(e)
 					})?;
 				apply_state_commit(&mut transaction, commit);
@@ -1790,7 +1790,7 @@ impl<Block: BlockT> Backend<Block> {
 					// Canonicalize in the db when re-importing existing blocks with state.
 					let commit = self.storage.state_db.canonicalize_block(&hash).map_err(
 						soil_blockchain::Error::from_state_db::<
-							soil_state_db::Error<soil_database::error::DatabaseError>,
+							soil_state_db::Error<subsoil::database::error::DatabaseError>,
 						>,
 					)?;
 					apply_state_commit(&mut transaction, commit);
@@ -2074,7 +2074,7 @@ impl<Block: BlockT> Backend<Block> {
 		{
 			let commit = self.storage.state_db.canonicalize_block(&f_hash).map_err(
 				soil_blockchain::Error::from_state_db::<
-					soil_state_db::Error<soil_database::error::DatabaseError>,
+					soil_state_db::Error<subsoil::database::error::DatabaseError>,
 				>,
 			)?;
 			apply_state_commit(transaction, commit);
@@ -2309,7 +2309,7 @@ fn apply_index_ops<Block: BlockT>(
 #[cfg(feature = "std")]
 fn apply_indexed_body<Block: BlockT>(transaction: &mut Transaction<DbHash>, body: Vec<Vec<u8>>) {
 	for extrinsic in body {
-		let hash = soil_runtime::traits::BlakeTwo256::hash(&extrinsic);
+		let hash = subsoil::runtime::traits::BlakeTwo256::hash(&extrinsic);
 		transaction.store(columns::TRANSACTION, DbHash::from_slice(hash.as_ref()), extrinsic);
 	}
 }
@@ -2802,7 +2802,7 @@ impl<Block: BlockT> soil_client_api::backend::Backend<Block> for Backend<Block> 
 	fn have_state_at(&self, hash: Block::Hash, number: NumberFor<Block>) -> bool {
 		if self.is_archive {
 			match self.blockchain.header_metadata(hash) {
-				Ok(header) => soil_state_machine::Storage::get(
+				Ok(header) => subsoil::state_machine::Storage::get(
 					self.storage.as_ref(),
 					&header.state_root,
 					(&[], None),
@@ -2816,7 +2816,7 @@ impl<Block: BlockT> soil_client_api::backend::Backend<Block> for Backend<Block> 
 				IsPruned::Pruned => false,
 				IsPruned::NotPruned => true,
 				IsPruned::MaybePruned => match self.blockchain.header_metadata(hash) {
-					Ok(header) => soil_state_machine::Storage::get(
+					Ok(header) => subsoil::state_machine::Storage::get(
 						self.storage.as_ref(),
 						&header.state_root,
 						(&[], None),
@@ -2896,8 +2896,8 @@ pub(crate) mod tests {
 		backend::{Backend as BTrait, BlockImportOperation as Op},
 		blockchain::Backend as BLBTrait,
 	};
-	use soil_core::H256;
-	use soil_runtime::{
+	use subsoil::core::H256;
+	use subsoil::runtime::{
 		testing::{Block as RawBlock, Header, MockCallU64, TestXt},
 		traits::{BlakeTwo256, Hash},
 		ConsensusEngineId, StateVersion,
@@ -2929,7 +2929,7 @@ pub(crate) mod tests {
 		body: Vec<UncheckedXt>,
 		transaction_index: Option<Vec<IndexOperation>>,
 	) -> Result<H256, soil_blockchain::Error> {
-		use soil_runtime::testing::Digest;
+		use subsoil::runtime::testing::Digest;
 
 		let digest = Digest::default();
 		let mut header =
@@ -2965,7 +2965,7 @@ pub(crate) mod tests {
 		extrinsics_root: H256,
 		best: bool,
 	) -> H256 {
-		use soil_runtime::testing::Digest;
+		use subsoil::runtime::testing::Digest;
 
 		let digest = Digest::default();
 		let header =
@@ -2994,7 +2994,7 @@ pub(crate) mod tests {
 		parent_hash: H256,
 		extrinsics_root: H256,
 	) -> H256 {
-		use soil_runtime::testing::Digest;
+		use subsoil::runtime::testing::Digest;
 
 		let digest = Digest::default();
 		let mut header =
@@ -3160,7 +3160,7 @@ pub(crate) mod tests {
 
 	#[test]
 	fn delete_only_when_negative_rc() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 		let state_version = StateVersion::default();
 		let key;
 		let backend = Backend::<Block>::new_test(1, 0);
@@ -3197,7 +3197,7 @@ pub(crate) mod tests {
 					.db
 					.get(
 						columns::STATE,
-						&soil_trie::prefixed_key::<BlakeTwo256>(&key, EMPTY_PREFIX)
+						&subsoil::trie::prefixed_key::<BlakeTwo256>(&key, EMPTY_PREFIX)
 					)
 					.unwrap(),
 				&b"hello"[..]
@@ -3237,7 +3237,7 @@ pub(crate) mod tests {
 					.db
 					.get(
 						columns::STATE,
-						&soil_trie::prefixed_key::<BlakeTwo256>(&key, EMPTY_PREFIX)
+						&subsoil::trie::prefixed_key::<BlakeTwo256>(&key, EMPTY_PREFIX)
 					)
 					.unwrap(),
 				&b"hello"[..]
@@ -3274,7 +3274,7 @@ pub(crate) mod tests {
 			assert!(backend
 				.storage
 				.db
-				.get(columns::STATE, &soil_trie::prefixed_key::<BlakeTwo256>(&key, EMPTY_PREFIX))
+				.get(columns::STATE, &subsoil::trie::prefixed_key::<BlakeTwo256>(&key, EMPTY_PREFIX))
 				.is_some());
 			hash
 		};
@@ -3333,7 +3333,7 @@ pub(crate) mod tests {
 			assert!(backend
 				.storage
 				.db
-				.get(columns::STATE, &soil_trie::prefixed_key::<BlakeTwo256>(&key, EMPTY_PREFIX))
+				.get(columns::STATE, &subsoil::trie::prefixed_key::<BlakeTwo256>(&key, EMPTY_PREFIX))
 				.is_none());
 			hash
 		};
@@ -3345,7 +3345,7 @@ pub(crate) mod tests {
 		assert!(backend
 			.storage
 			.db
-			.get(columns::STATE, &soil_trie::prefixed_key::<BlakeTwo256>(&key, EMPTY_PREFIX))
+			.get(columns::STATE, &subsoil::trie::prefixed_key::<BlakeTwo256>(&key, EMPTY_PREFIX))
 			.is_none());
 	}
 
@@ -3643,7 +3643,7 @@ pub(crate) mod tests {
 		                        state: NewBlockState,
 		                        register_as_leaf: bool|
 		 -> H256 {
-			use soil_runtime::testing::Digest;
+			use subsoil::runtime::testing::Digest;
 			let digest = Digest::default();
 			let header = Header {
 				number,
@@ -4240,7 +4240,7 @@ pub(crate) mod tests {
 
 	#[test]
 	fn prune_blocks_on_finalize_with_fork() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 
 		let pruning_modes =
 			vec![BlocksPruning::Some(2), BlocksPruning::KeepFinalized, BlocksPruning::KeepAll];
@@ -4414,8 +4414,8 @@ pub(crate) mod tests {
 
 		let x0 = UncheckedXt::new_transaction(0.into(), ()).encode();
 		let x1 = UncheckedXt::new_transaction(1.into(), ()).encode();
-		let x0_hash = <HashingFor<Block> as soil_core::Hasher>::hash(&x0[1..]);
-		let x1_hash = <HashingFor<Block> as soil_core::Hasher>::hash(&x1[1..]);
+		let x0_hash = <HashingFor<Block> as subsoil::core::Hasher>::hash(&x0[1..]);
+		let x1_hash = <HashingFor<Block> as subsoil::core::Hasher>::hash(&x1[1..]);
 		let index = vec![
 			IndexOperation::Insert {
 				extrinsic: 0,
@@ -4462,8 +4462,8 @@ pub(crate) mod tests {
 		let x0 = UncheckedXt::new_transaction(0.into(), ()).encode();
 		let x1 = UncheckedXt::new_transaction(1.into(), ()).encode();
 
-		let x0_hash = <HashingFor<Block> as soil_core::Hasher>::hash(&x0[..]);
-		let x1_hash = <HashingFor<Block> as soil_core::Hasher>::hash(&x1[..]);
+		let x0_hash = <HashingFor<Block> as subsoil::core::Hasher>::hash(&x0[..]);
+		let x1_hash = <HashingFor<Block> as subsoil::core::Hasher>::hash(&x1[..]);
 		let index = vec![
 			IndexOperation::Insert {
 				extrinsic: 0,
@@ -4500,7 +4500,7 @@ pub(crate) mod tests {
 		let mut blocks = Vec::new();
 		let mut prev_hash = Default::default();
 		let x1 = UncheckedXt::new_transaction(0.into(), ()).encode();
-		let x1_hash = <HashingFor<Block> as soil_core::Hasher>::hash(&x1[1..]);
+		let x1_hash = <HashingFor<Block> as subsoil::core::Hasher>::hash(&x1[1..]);
 		for i in 0..10 {
 			let mut index = Vec::new();
 			if i == 0 {
@@ -4567,7 +4567,7 @@ pub(crate) mod tests {
 				2,
 				blocks[1],
 				None,
-				soil_core::H256::random(),
+				subsoil::core::H256::random(),
 				vec![UncheckedXt::new_transaction(i.into(), ())],
 				None,
 			)
@@ -4581,7 +4581,7 @@ pub(crate) mod tests {
 			1,
 			blocks[0],
 			None,
-			soil_core::H256::random(),
+			subsoil::core::H256::random(),
 			vec![UncheckedXt::new_transaction(42.into(), ())],
 			None,
 		)

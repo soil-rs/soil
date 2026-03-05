@@ -22,11 +22,7 @@ finality-grandpa = { features = ["derive-codec"], workspace = true }
 log = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { features = ["alloc", "derive"], optional = true, workspace = true }
-soil-api = { workspace = true }
-soil-application-crypto = { workspace = true }
-soil-core = { workspace = true }
-soil-keystore = { optional = true, workspace = true }
-soil-runtime = { workspace = true }
+subsoil = { workspace = true }
 
 [features]
 default = ["std"]
@@ -36,18 +32,10 @@ std = [
 	"log/std",
 	"scale-info/std",
 	"serde/std",
-	"soil-api/std",
-	"soil-application-crypto/std",
-	"soil-core/std",
-	"soil-keystore/std",
-	"soil-runtime/std",
-]
+	"subsoil/std"]
 
 # Serde support without relying on std features.
 serde = [
 	"dep:serde",
 	"scale-info/serde",
-	"soil-application-crypto/serde",
-	"soil-core/serde",
-	"soil-runtime/serde",
-]
+	"subsoil/serde"]

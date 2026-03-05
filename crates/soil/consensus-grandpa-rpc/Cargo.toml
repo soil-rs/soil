@@ -23,8 +23,7 @@ sc-consensus-grandpa = { workspace = true, default-features = true, optional = t
 sc-rpc = { workspace = true, default-features = true, optional = true}
 serde = { features = ["derive"], workspace = true, default-features = true, optional = true}
 soil-blockchain = { workspace = true, default-features = true, optional = true}
-soil-core = { workspace = true, default-features = true, optional = true}
-soil-runtime = { workspace = true, default-features = true, optional = true}
+subsoil = { workspace = true, default-features = true, optional = true}
 thiserror = { workspace = true, optional = true}
 
 [features]
@@ -40,18 +39,15 @@ std = [
 	"serde",
 	"soil-blockchain",
 	"soil-client-api",
-	"soil-core",
-	"soil-runtime",
+	"subsoil",
 	"thiserror",
 	"soil-client-api/std",
-	"soil-core/std",
-	"soil-runtime/std",
+	"subsoil/std",
 ]
 
 [dev-dependencies]
 sc-block-builder = { workspace = true, default-features = true }
 sc-rpc = { features = ["test-helpers"], workspace = true, default-features = true }
 soil-consensus-grandpa = { workspace = true, default-features = true }
-soil-keyring = { workspace = true, default-features = true }
 substrate-test-runtime-client = { workspace = true }
 tokio = { features = ["macros"], workspace = true, default-features = true }

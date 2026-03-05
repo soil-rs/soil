@@ -19,7 +19,7 @@
 //! Substrate Statement Store RPC API.
 
 use jsonrpsee::{core::RpcResult, proc_macros::rpc};
-use soil_core::Bytes;
+use subsoil::core::Bytes;
 use soil_statement_store::{StatementEvent, SubmitResult, TopicFilter};
 
 pub mod error;

@@ -36,11 +36,11 @@ use futures::{future::Either, Future, TryFutureExt};
 use futures_timer::Delay;
 use log::{debug, info, warn};
 use sc_consensus::{BlockImport, JustificationSyncLink};
-use soil_arithmetic::traits::BaseArithmetic;
+use subsoil::arithmetic::traits::BaseArithmetic;
 use soil_consensus::{Proposal, ProposeArgs, Proposer, SelectChain, SyncOracle};
 use soil_consensus_slots::{Slot, SlotDuration};
-use soil_inherents::CreateInherentDataProviders;
-use soil_runtime::traits::{Block as BlockT, HashingFor, Header as HeaderT};
+use subsoil::inherents::CreateInherentDataProviders;
+use subsoil::runtime::traits::{Block as BlockT, HashingFor, Header as HeaderT};
 use soil_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG, CONSENSUS_INFO, CONSENSUS_WARN};
 use std::{
 	ops::Deref,
@@ -51,8 +51,8 @@ const LOG_TARGET: &str = "slots";
 
 /// The changes that need to applied to the storage to create the state for a block.
 ///
-/// See [`soil_state_machine::StorageChanges`] for more information.
-pub type StorageChanges<Block> = soil_state_machine::StorageChanges<HashingFor<Block>>;
+/// See [`subsoil::state_machine::StorageChanges`] for more information.
+pub type StorageChanges<Block> = subsoil::state_machine::StorageChanges<HashingFor<Block>>;
 
 /// A worker that should be invoked at every new slot.
 ///
@@ -128,7 +128,7 @@ pub trait SimpleSlotWorker<B: BlockT> {
 	fn notify_slot(&self, _header: &B::Header, _slot: Slot, _aux_data: &Self::AuxData) {}
 
 	/// Return the pre digest data to include in a block authored with the given claim.
-	fn pre_digest_data(&self, slot: Slot, claim: &Self::Claim) -> Vec<soil_runtime::DigestItem>;
+	fn pre_digest_data(&self, slot: Slot, claim: &Self::Claim) -> Vec<subsoil::runtime::DigestItem>;
 
 	/// Returns a function which produces a `BlockImportParams`.
 	async fn block_import_params(
@@ -193,7 +193,7 @@ pub trait SimpleSlotWorker<B: BlockT> {
 		// the result to be returned.
 		let propose_args = ProposeArgs {
 			inherent_data,
-			inherent_digests: soil_runtime::generic::Digest { logs },
+			inherent_digests: subsoil::runtime::generic::Digest { logs },
 			max_duration: proposing_remaining_duration.mul_f32(0.98),
 			block_size_limit: slot_info.block_size_limit,
 			storage_proof_recorder: slot_info.storage_proof_recorder,
@@ -246,7 +246,7 @@ pub trait SimpleSlotWorker<B: BlockT> {
 		slot_info: &SlotInfo<B>,
 		logging_target: &str,
 		end_proposing_at: Instant,
-	) -> Option<soil_inherents::InherentData> {
+	) -> Option<subsoil::inherents::InherentData> {
 		let remaining_duration = end_proposing_at.saturating_duration_since(Instant::now());
 		let delay = Delay::new(remaining_duration);
 		let cid = slot_info.create_inherent_data.create_inherent_data();
@@ -458,7 +458,7 @@ impl<T: SimpleSlotWorker<B> + Send + Sync, B: BlockT> SlotWorker<B>
 
 /// Slot specific extension that the inherent data provider needs to implement.
 pub trait InherentDataProviderExt {
-	/// The current slot that will be found in the [`InherentData`](`soil_inherents::InherentData`).
+	/// The current slot that will be found in the [`InherentData`](`subsoil::inherents::InherentData`).
 	fn slot(&self) -> Slot;
 }
 
@@ -579,7 +579,7 @@ pub fn proposing_remaining_duration<Block: BlockT>(
 	slot_lenience_type: SlotLenienceType,
 	log_target: &str,
 ) -> Duration {
-	use soil_runtime::traits::Zero;
+	use subsoil::runtime::traits::Zero;
 
 	let proposing_duration = slot_info.duration.mul_f32(block_proposal_slot_portion.get());
 
@@ -798,7 +798,7 @@ impl<N> BackoffAuthoringBlocksStrategy<N> for () {
 #[cfg(test)]
 mod test {
 	use super::*;
-	use soil_runtime::traits::NumberFor;
+	use subsoil::runtime::traits::NumberFor;
 	use std::time::{Duration, Instant};
 	use substrate_test_runtime_client::runtime::{Block, Header};
 

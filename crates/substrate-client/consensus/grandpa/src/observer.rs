@@ -31,9 +31,9 @@ use soil_blockchain::HeaderMetadata;
 use soil_client_api::backend::Backend;
 use soil_consensus::SelectChain;
 use soil_consensus_grandpa::AuthorityId;
-use soil_keystore::KeystorePtr;
+use subsoil::keystore::KeystorePtr;
 use soil_network::NotificationService;
-use soil_runtime::traits::{Block as BlockT, NumberFor};
+use subsoil::runtime::traits::{Block as BlockT, NumberFor};
 use soil_telemetry::TelemetryHandle;
 use soil_utils::mpsc::TracingUnboundedReceiver;
 
@@ -439,7 +439,7 @@ mod tests {
 			(Arc::new(client), backend)
 		};
 
-		let voters = vec![(soil_keyring::Ed25519Keyring::Alice.public().into(), 1)];
+		let voters = vec![(subsoil::keyring::Ed25519Keyring::Alice.public().into(), 1)];
 
 		let persistent_data =
 			aux_schema::load_persistent(&*backend, client.info().genesis_hash, 0, || Ok(voters))

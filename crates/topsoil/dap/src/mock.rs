@@ -18,9 +18,9 @@
 //! Test mock for the DAP pallet.
 
 use crate::{self as topsoil_dap, Config};
-use soil_runtime::BuildStorage;
+use subsoil::runtime::BuildStorage;
 use topsoil_support::{
-	derive_impl, parameter_types, soil_runtime::traits::AccountIdConversion, PalletId,
+	derive_impl, parameter_types, subsoil::runtime::traits::AccountIdConversion, PalletId,
 };
 
 type Block = topsoil_system::mocking::MockBlock<Test>;
@@ -55,7 +55,7 @@ impl Config for Test {
 	type PalletId = DapPalletId;
 }
 
-pub fn new_test_ext(fund_buffer: bool) -> soil_io::TestExternalities {
+pub fn new_test_ext(fund_buffer: bool) -> subsoil::io::TestExternalities {
 	let mut balances = vec![(1, 100), (2, 200), (3, 300)];
 
 	if fund_buffer {

@@ -16,8 +16,8 @@
 // limitations under the License.
 
 pub mod constants {
-	use soil_core::parameter_types;
-	use soil_weights::RuntimeDbWeight;
+	use subsoil::core::parameter_types;
+	use subsoil::weights::RuntimeDbWeight;
 	use topsoil_support::weights::constants;
 
 	parameter_types! {
@@ -32,7 +32,7 @@ pub mod constants {
 	#[cfg(test)]
 	mod test_db_weights {
 		use super::constants::RocksDbWeight as W;
-		use soil_weights::constants;
+		use subsoil::weights::constants;
 
 		/// Checks that all weights exist and have sane values.
 		// NOTE: If this test fails but you are sure that the generated values are fine,

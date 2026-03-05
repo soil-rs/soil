@@ -38,9 +38,9 @@ use serde::{Deserialize, Serialize};
 #[cfg(feature = "std")]
 use sc_consensus_babe::{authorship, BabeWorkerHandle};
 #[cfg(feature = "std")]
-use soil_api::ProvideRuntimeApi;
+use subsoil::api::ProvideRuntimeApi;
 #[cfg(feature = "std")]
-use soil_application_crypto::AppCrypto;
+use subsoil::application_crypto::AppCrypto;
 #[cfg(feature = "std")]
 use soil_blockchain::{Error as BlockChainError, HeaderBackend, HeaderMetadata};
 #[cfg(feature = "std")]
@@ -50,13 +50,13 @@ use soil_consensus_babe::{digests::PreDigest, AuthorityId, BabeApi as BabeRuntim
 #[cfg(feature = "std")]
 use soil_consensus_epochs::Epoch as EpochT;
 #[cfg(feature = "std")]
-use soil_core::crypto::ByteArray;
+use subsoil::core::crypto::ByteArray;
 #[cfg(feature = "std")]
-use soil_keystore::KeystorePtr;
+use subsoil::keystore::KeystorePtr;
 #[cfg(feature = "std")]
 use soil_rpc_api::{check_if_safe, UnsafeRpcError};
 #[cfg(feature = "std")]
-use soil_runtime::traits::{Block as BlockT, Header as _};
+use subsoil::runtime::traits::{Block as BlockT, Header as _};
 
 #[cfg(feature = "std")]
 const BABE_ERROR: i32 = 9000;
@@ -221,9 +221,9 @@ mod tests {
 	use super::*;
 	use sc_consensus_babe::ImportQueueParams;
 	use soil_consensus_babe::inherents::InherentDataProvider;
-	use soil_core::{crypto::key_types::BABE, testing::TaskExecutor};
-	use soil_keyring::Sr25519Keyring;
-	use soil_keystore::{testing::MemoryKeystore, Keystore};
+	use subsoil::core::{crypto::key_types::BABE, testing::TaskExecutor};
+	use subsoil::keyring::Sr25519Keyring;
+	use subsoil::keystore::{testing::MemoryKeystore, Keystore};
 	use soil_rpc_api::DenyUnsafe;
 	use soil_transaction_pool_api::{OffchainTransactionPoolFactory, RejectAllTxPool};
 	use substrate_test_runtime_client::{

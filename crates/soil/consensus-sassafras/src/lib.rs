@@ -26,8 +26,8 @@ extern crate alloc;
 use alloc::vec::Vec;
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;
-use soil_core::crypto::KeyTypeId;
-use soil_runtime::ConsensusEngineId;
+use subsoil::core::crypto::KeyTypeId;
+use subsoil::runtime::ConsensusEngineId;
 
 pub use soil_consensus_slots::{Slot, SlotDuration};
 
@@ -44,12 +44,12 @@ pub use ticket::{
 };
 
 mod app {
-	use soil_application_crypto::{app_crypto, bandersnatch, key_types::SASSAFRAS};
-	app_crypto!(bandersnatch, SASSAFRAS);
+	use subsoil::application_crypto::{bandersnatch, key_types::SASSAFRAS};
+	subsoil::app_crypto!(bandersnatch, SASSAFRAS);
 }
 
 /// Key type identifier.
-pub const KEY_TYPE: KeyTypeId = soil_application_crypto::key_types::SASSAFRAS;
+pub const KEY_TYPE: KeyTypeId = subsoil::application_crypto::key_types::SASSAFRAS;
 
 /// Consensus engine identifier.
 pub const SASSAFRAS_ENGINE_ID: ConsensusEngineId = *b"SASS";
@@ -144,7 +144,7 @@ pub struct Epoch {
 pub struct OpaqueKeyOwnershipProof(Vec<u8>);
 
 // Runtime API.
-soil_api::decl_runtime_apis! {
+subsoil::api::decl_runtime_apis! {
 	/// API necessary for block authorship with Sassafras.
 	pub trait SassafrasApi {
 		/// Get ring context to be used for ticket construction and verification.

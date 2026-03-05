@@ -40,8 +40,7 @@ extern crate self as topsoil_metadata_hash_extension;
 
 use codec::{Decode, DecodeWithMemTracking, Encode};
 use scale_info::TypeInfo;
-use soil_runtime::{
-	impl_tx_ext_default,
+use subsoil::runtime::{
 	traits::TransactionExtension,
 	transaction_validity::{TransactionValidityError, UnknownTransaction},
 };
@@ -173,5 +172,5 @@ impl<T: Config + Send + Sync> TransactionExtension<T::RuntimeCall> for CheckMeta
 		Weight::zero()
 	}
 
-	impl_tx_ext_default!(T::RuntimeCall; validate prepare);
+	subsoil::impl_tx_ext_default!(T::RuntimeCall; validate prepare);
 }

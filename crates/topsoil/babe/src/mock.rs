@@ -20,14 +20,13 @@
 use crate::{self as topsoil_babe, Config, CurrentSlot};
 use codec::Encode;
 use soil_consensus_babe::{AuthorityId, AuthorityPair, Randomness, Slot, VrfSignature};
-use soil_core::{
+use subsoil::core::{
 	crypto::{Pair, VrfSecret},
 	ConstBool, U256,
 };
-use soil_io;
-use soil_runtime::{
+use subsoil::io;
+use subsoil::runtime::{
 	curve::PiecewiseLinear,
-	impl_opaque_keys,
 	testing::{Digest, DigestItem, Header, TestXt},
 	traits::{Header as _, OpaqueKeys},
 	BuildStorage, DispatchError, Perbill,
@@ -85,7 +84,7 @@ where
 	}
 }
 
-impl_opaque_keys! {
+subsoil::impl_opaque_keys! {
 	pub struct MockSessionKeys {
 		pub babe_authority: super::Pallet<Test>,
 	}
@@ -94,7 +93,7 @@ impl_opaque_keys! {
 impl topsoil_session::Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type ValidatorId = <Self as topsoil_system::Config>::AccountId;
-	type ValidatorIdOf = soil_runtime::traits::ConvertInto;
+	type ValidatorIdOf = subsoil::runtime::traits::ConvertInto;
 	type ShouldEndSession = Babe;
 	type NextSessionRotation = Babe;
 	type SessionManager = topsoil_session::historical::NoteHistoricalRoot<Self, Staking>;
@@ -305,13 +304,13 @@ pub fn make_vrf_signature_and_randomness(
 	(signature, randomness)
 }
 
-pub fn new_test_ext(authorities_len: usize) -> soil_io::TestExternalities {
+pub fn new_test_ext(authorities_len: usize) -> subsoil::io::TestExternalities {
 	new_test_ext_with_pairs(authorities_len).1
 }
 
 pub fn new_test_ext_with_pairs(
 	authorities_len: usize,
-) -> (Vec<AuthorityPair>, soil_io::TestExternalities) {
+) -> (Vec<AuthorityPair>, subsoil::io::TestExternalities) {
 	let pairs = (0..authorities_len)
 		.map(|i| AuthorityPair::from_seed(&U256::from(i).to_little_endian()))
 		.collect::<Vec<_>>();
@@ -321,8 +320,8 @@ pub fn new_test_ext_with_pairs(
 	(pairs, new_test_ext_raw_authorities(public))
 }
 
-pub fn new_test_ext_raw_authorities(authorities: Vec<AuthorityId>) -> soil_io::TestExternalities {
-	soil_tracing::try_init_simple();
+pub fn new_test_ext_raw_authorities(authorities: Vec<AuthorityId>) -> subsoil::io::TestExternalities {
+	subsoil::tracing::try_init_simple();
 	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 
 	let balances: Vec<_> = (0..authorities.len()).map(|i| (i as u64, 10_000_000)).collect();
@@ -389,7 +388,7 @@ pub fn generate_equivocation_proof(
 			Timestamp::set_timestamp(*current_slot * Babe::slot_duration());
 			let header = System::finalize();
 
-			soil_runtime::TransactionOutcome::Rollback(Ok::<_, DispatchError>(header))
+			subsoil::runtime::TransactionOutcome::Rollback(Ok::<_, DispatchError>(header))
 		})
 		.unwrap()
 	};

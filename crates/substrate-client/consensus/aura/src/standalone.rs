@@ -24,15 +24,15 @@ use log::trace;
 
 use codec::Codec;
 
-use soil_api::{Core, ProvideRuntimeApi};
-use soil_application_crypto::{AppCrypto, AppPublic};
+use subsoil::api::{Core, ProvideRuntimeApi};
+use subsoil::application_crypto::{AppCrypto, AppPublic};
 use soil_blockchain::Result as CResult;
 use soil_client_api::UsageProvider;
 use soil_consensus::Error as ConsensusError;
 use soil_consensus_slots::Slot;
-use soil_core::crypto::{ByteArray, Pair};
-use soil_keystore::KeystorePtr;
-use soil_runtime::{
+use subsoil::core::crypto::{ByteArray, Pair};
+use subsoil::keystore::KeystorePtr;
+use subsoil::runtime::{
 	traits::{Block as BlockT, Header, NumberFor, Zero},
 	DigestItem,
 };
@@ -95,7 +95,7 @@ pub async fn claim_slot<P: Pair>(
 ) -> Option<P::Public> {
 	let expected_author = slot_author::<P>(slot, authorities);
 	expected_author.and_then(|p| {
-		if keystore.has_keys(&[(p.to_raw_vec(), soil_application_crypto::key_types::AURA)]) {
+		if keystore.has_keys(&[(p.to_raw_vec(), subsoil::application_crypto::key_types::AURA)]) {
 			Some(p.clone())
 		} else {
 			None
@@ -107,7 +107,7 @@ pub async fn claim_slot<P: Pair>(
 ///
 /// This is intended to be put into the block header prior to runtime execution,
 /// so the runtime can read the slot in this way.
-pub fn pre_digest<P: Pair>(slot: Slot) -> soil_runtime::DigestItem
+pub fn pre_digest<P: Pair>(slot: Slot) -> subsoil::runtime::DigestItem
 where
 	P::Signature: Codec,
 {
@@ -121,7 +121,7 @@ pub fn seal<Hash, P>(
 	header_hash: &Hash,
 	public: &P::Public,
 	keystore: &KeystorePtr,
-) -> Result<soil_runtime::DigestItem, ConsensusError>
+) -> Result<subsoil::runtime::DigestItem, ConsensusError>
 where
 	Hash: AsRef<[u8]>,
 	P: Pair,
@@ -324,7 +324,7 @@ where
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use soil_keyring::sr25519::Keyring;
+	use subsoil::keyring::sr25519::Keyring;
 
 	#[test]
 	fn authorities_call_works() {

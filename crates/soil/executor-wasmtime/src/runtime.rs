@@ -25,15 +25,15 @@ use crate::{
 };
 
 use parking_lot::Mutex;
-use soil_allocator::{AllocationStats, FreeingBumpHeapAllocator};
+use subsoil::allocator::{AllocationStats, FreeingBumpHeapAllocator};
 use soil_executor_common::{
 	error::{Error, Result, WasmError},
 	runtime_blob::RuntimeBlob,
 	util::checked_range,
 	wasm_runtime::{HeapAllocStrategy, WasmInstance, WasmModule},
 };
-use soil_runtime_interface::unpack_ptr_and_len;
-use soil_wasm_interface::{HostFunctions, Pointer, WordSize};
+use subsoil::runtime_interface::unpack_ptr_and_len;
+use subsoil::wasm_interface::{HostFunctions, Pointer, WordSize};
 use std::{
 	path::{Path, PathBuf},
 	sync::{

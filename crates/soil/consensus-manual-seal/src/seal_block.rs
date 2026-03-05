@@ -22,14 +22,14 @@ use crate::{rpc, ConsensusDataProvider, CreatedBlock, Error};
 use codec::Encode;
 use futures::prelude::*;
 use sc_consensus::{BlockImport, BlockImportParams, ForkChoiceStrategy, ImportResult, StateAction};
-use soil_api::{ProofRecorder, ProvideRuntimeApi};
+use subsoil::api::{ProofRecorder, ProvideRuntimeApi};
 use soil_blockchain::HeaderBackend;
 use soil_consensus::{self, BlockOrigin, Environment, ProposeArgs, Proposer, SelectChain};
-use soil_externalities::Extensions;
-use soil_inherents::{CreateInherentDataProviders, InherentDataProvider};
-use soil_runtime::traits::{Block as BlockT, Header as HeaderT};
+use subsoil::externalities::Extensions;
+use subsoil::inherents::{CreateInherentDataProviders, InherentDataProvider};
+use subsoil::runtime::traits::{Block as BlockT, Header as HeaderT};
 use soil_transaction_pool_api::TransactionPool;
-use soil_trie::proof_size_extension::ProofSizeExt;
+use subsoil::trie::proof_size_extension::ProofSizeExt;
 use std::{sync::Arc, time::Duration};
 
 /// max duration for creating a proposal in secs

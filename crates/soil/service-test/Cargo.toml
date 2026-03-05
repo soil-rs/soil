@@ -31,15 +31,9 @@ soil-network = { workspace = true, default-features = true, optional = true}
 soil-network-sync = { workspace = true, default-features = true, optional = true}
 soil-service = { workspace = true, default-features = true, optional = true}
 soil-transaction-pool-api = { workspace = true, default-features = true, optional = true}
-soil-api = { workspace = true, default-features = true, optional = true}
 soil-blockchain = { workspace = true, default-features = true, optional = true}
 soil-consensus = { workspace = true, default-features = true, optional = true}
-soil-core = { workspace = true, default-features = true, optional = true}
-soil-io = { workspace = true, default-features = true, optional = true}
-soil-runtime = { workspace = true, default-features = true, optional = true}
-soil-state-machine = { workspace = true, default-features = true, optional = true}
-soil-storage = { workspace = true, default-features = true, optional = true}
-soil-tracing = { workspace = true, default-features = true, optional = true}
+subsoil = { workspace = true, default-features = true, optional = true }
 substrate-test-runtime = { workspace = true, optional = true}
 substrate-test-runtime-client = { workspace = true, optional = true}
 tempfile = { workspace = true, optional = true}
@@ -57,38 +51,25 @@ std = [
 	"parking_lot",
 	"sc-block-builder",
 	"sc-consensus",
-	"soil-api",
 	"soil-blockchain",
 	"soil-client-api",
 	"soil-client-db",
 	"soil-consensus",
-	"soil-core",
+	"subsoil",
 	"soil-executor",
-	"soil-io",
 	"soil-network",
 	"soil-network-sync",
-	"soil-runtime",
 	"soil-service",
-	"soil-state-machine",
-	"soil-storage",
-	"soil-tracing",
 	"soil-transaction-pool-api",
 	"substrate-test-runtime",
 	"substrate-test-runtime-client",
 	"tempfile",
 	"tokio",
-	"soil-api/std",
 	"soil-client-api/std",
 	"soil-client-db/std",
-	"soil-core/std",
+	"subsoil/std",
 	"soil-executor/std",
-	"soil-io/std",
 	"soil-network/std",
 	"soil-network-sync/std",
-	"soil-runtime/std",
 	"soil-service/std",
-	"soil-state-machine/std",
-	"soil-storage/std",
-	"soil-tracing/std",
-	"soil-transaction-pool-api/std",
-]
+	"soil-transaction-pool-api/std"]

@@ -23,11 +23,10 @@ use crate::{self as topsoil_grandpa, AuthorityId, AuthorityList, Config, Consens
 use codec::Encode;
 use finality_grandpa;
 use soil_consensus_grandpa::{RoundNumber, SetId, GRANDPA_ENGINE_ID};
-use soil_core::{ConstBool, H256};
-use soil_keyring::Ed25519Keyring;
-use soil_runtime::{
+use subsoil::core::{ConstBool, H256};
+use subsoil::keyring::Ed25519Keyring;
+use subsoil::runtime::{
 	curve::PiecewiseLinear,
-	impl_opaque_keys,
 	testing::{TestXt, UintAuthorityId},
 	traits::OpaqueKeys,
 	BuildStorage, DigestItem, Perbill,
@@ -60,7 +59,7 @@ topsoil_support::construct_runtime!(
 	}
 );
 
-impl_opaque_keys! {
+subsoil::impl_opaque_keys! {
 	pub struct TestSessionKeys {
 		pub grandpa_authority: super::Pallet<Test>,
 	}
@@ -98,7 +97,7 @@ parameter_types! {
 impl topsoil_session::Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type ValidatorId = u64;
-	type ValidatorIdOf = soil_runtime::traits::ConvertInto;
+	type ValidatorIdOf = subsoil::runtime::traits::ConvertInto;
 	type ShouldEndSession = topsoil_session::PeriodicSessions<ConstU64<1>, ConstU64<0>>;
 	type NextSessionRotation = topsoil_session::PeriodicSessions<ConstU64<1>, ConstU64<0>>;
 	type SessionManager = topsoil_session::historical::NoteHistoricalRoot<Self, Staking>;
@@ -224,12 +223,12 @@ pub fn extract_keyring(id: &AuthorityId) -> Ed25519Keyring {
 	Ed25519Keyring::from_raw_public(raw_public).unwrap()
 }
 
-pub fn new_test_ext(vec: Vec<(u64, u64)>) -> soil_io::TestExternalities {
+pub fn new_test_ext(vec: Vec<(u64, u64)>) -> subsoil::io::TestExternalities {
 	new_test_ext_raw_authorities(to_authorities(vec))
 }
 
-pub fn new_test_ext_raw_authorities(authorities: AuthorityList) -> soil_io::TestExternalities {
-	soil_tracing::try_init_simple();
+pub fn new_test_ext_raw_authorities(authorities: AuthorityList) -> subsoil::io::TestExternalities {
+	subsoil::tracing::try_init_simple();
 	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 
 	let balances: Vec<_> = (0..authorities.len()).map(|i| (i as u64, 10_000_000)).collect();

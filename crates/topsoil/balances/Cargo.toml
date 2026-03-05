@@ -23,14 +23,12 @@ topsoil-support = { workspace = true }
 topsoil-system = { workspace = true }
 log = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
-soil-core = { workspace = true }
-soil-runtime = { workspace = true }
+subsoil = { workspace = true }
 
 [dev-dependencies]
 topsoil-support = { features = ["experimental"], workspace = true, default-features = true }
 topsoil-transaction-payment = { workspace = true, default-features = true }
 paste = { workspace = true, default-features = true }
-soil-io = { workspace = true, default-features = true }
 
 [features]
 default = ["std"]
@@ -42,9 +40,7 @@ std = [
 	"log/std",
 	"topsoil-transaction-payment/std",
 	"scale-info/std",
-	"soil-core/std",
-	"soil-io/std",
-	"soil-runtime/std",
+	"subsoil/std",
 ]
 # Enable support for setting the existential deposit to zero.
 insecure_zero_ed = []
@@ -53,11 +49,11 @@ runtime-benchmarks = [
 	"topsoil-support/runtime-benchmarks",
 	"topsoil-system/runtime-benchmarks",
 	"topsoil-transaction-payment/runtime-benchmarks",
-	"soil-runtime/runtime-benchmarks",
+	"subsoil/runtime-benchmarks",
 ]
 try-runtime = [
 	"topsoil-support/try-runtime",
 	"topsoil-system/try-runtime",
 	"topsoil-transaction-payment/try-runtime",
-	"soil-runtime/try-runtime",
+	"subsoil/try-runtime",
 ]

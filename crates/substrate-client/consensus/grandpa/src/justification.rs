@@ -26,7 +26,7 @@ use codec::{Decode, DecodeAll, Encode};
 use finality_grandpa::{voter_set::VoterSet, Error as GrandpaError};
 use soil_blockchain::{Error as ClientError, HeaderBackend};
 use soil_consensus_grandpa::AuthorityId;
-use soil_runtime::traits::{Block as BlockT, Header as HeaderT, NumberFor};
+use subsoil::runtime::traits::{Block as BlockT, Header as HeaderT, NumberFor};
 
 use crate::{AuthorityList, Commit, Error};
 

@@ -24,9 +24,9 @@ use alloc::vec::Vec;
 use codec::{Decode, DecodeWithMemTracking, Encode, FullCodec, MaxEncodedLen};
 use core::{cmp::Ordering, fmt::Debug, marker::PhantomData};
 use scale_info::TypeInfo;
-use soil_core::{ConstU32, Get, TypedGet};
-use soil_runtime::{traits::Convert, BoundedSlice};
-use soil_weights::{Weight, WeightMeter};
+use subsoil::core::{ConstU32, Get, TypedGet};
+use subsoil::runtime::{traits::Convert, BoundedSlice};
+use subsoil::weights::{Weight, WeightMeter};
 
 /// Errors that can happen when attempting to process a message with
 /// [`ProcessMessage::process_message()`].

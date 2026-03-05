@@ -28,7 +28,7 @@
 //! FRAME Transaction Extension reference implementation, origin mutation, origin authorization and
 //! integration in a `TransactionExtension` pipeline.
 //!
-//! The [TransactionExtension](soil_runtime::traits::TransactionExtension) used in this example is
+//! The [TransactionExtension](subsoil::runtime::traits::TransactionExtension) used in this example is
 //! [AuthorizeCoownership](extensions::AuthorizeCoownership). If activated, the extension will
 //! authorize 2 signers as coowners, with a [coowner origin](pallet_coownership::Origin) specific to
 //! the [coownership example pallet](pallet_coownership), by validating a signature of the rest of

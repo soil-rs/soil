@@ -34,9 +34,9 @@ use futures::{
 	task::LocalSpawn,
 };
 use prometheus_endpoint::prometheus::default_registry;
-use soil_api::{ApiRef, ProvideRuntimeApi};
+use subsoil::api::{ApiRef, ProvideRuntimeApi};
 use soil_client_api::HeaderBackend;
-use soil_keystore::{testing::MemoryKeystore, Keystore};
+use subsoil::keystore::{testing::MemoryKeystore, Keystore};
 use soil_network::{
 	service::signature::{Keypair, SigningError},
 	PublicKey, Signature,
@@ -46,7 +46,7 @@ use soil_network_types::{
 	multiaddr::{Multiaddr, Protocol},
 	PeerId,
 };
-use soil_runtime::traits::{Block as BlockT, NumberFor, Zero};
+use subsoil::runtime::traits::{Block as BlockT, NumberFor, Zero};
 use substrate_test_runtime_client::runtime::Block;
 
 #[derive(Clone)]
@@ -110,7 +110,7 @@ pub(crate) struct RuntimeApi {
 	authorities: Vec<AuthorityId>,
 }
 
-soil_api::mock_impl_runtime_apis! {
+subsoil::api::mock_impl_runtime_apis! {
 	impl AuthorityDiscoveryApi<Block> for RuntimeApi {
 		fn authorities(&self) -> Vec<AuthorityId> {
 			self.authorities.clone()
@@ -339,7 +339,7 @@ async fn new_registers_metrics() {
 
 #[tokio::test]
 async fn triggers_dht_get_query() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 	let (_dht_event_tx, dht_event_rx) = channel(1000);
 
 	// Generate authority keys
@@ -375,7 +375,7 @@ async fn triggers_dht_get_query() {
 
 #[tokio::test]
 async fn publish_discover_cycle() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let mut pool = LocalPool::new();
 
@@ -616,13 +616,13 @@ async fn dont_stop_polling_dht_event_stream_after_bogus_event() {
 
 struct DhtValueFoundTester {
 	pub remote_key_store: MemoryKeystore,
-	pub remote_authority_public: soil_core::sr25519::Public,
+	pub remote_authority_public: subsoil::core::sr25519::Public,
 	pub remote_node_key: Keypair,
 	pub local_worker: Option<
 		Worker<
 			TestApi,
-			soil_runtime::generic::Block<
-				soil_runtime::generic::Header<u64, soil_runtime::traits::BlakeTwo256>,
+			subsoil::runtime::generic::Block<
+				subsoil::runtime::generic::Header<u64, subsoil::runtime::traits::BlakeTwo256>,
 				substrate_test_runtime_client::runtime::Extrinsic,
 			>,
 			std::pin::Pin<Box<futures::channel::mpsc::Receiver<DhtEvent>>>,

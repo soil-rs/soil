@@ -17,8 +17,8 @@
 
 use super::{Event as CollectiveEvent, *};
 use crate as topsoil_collective;
-use soil_core::{ConstU128, H256};
-use soil_runtime::{
+use subsoil::core::{ConstU128, H256};
+use subsoil::runtime::{
 	testing::Header,
 	traits::{BlakeTwo256, Convert, Zero},
 	BuildStorage, FixedU128,
@@ -35,8 +35,8 @@ use topsoil_support::{
 };
 use topsoil_system::{EnsureRoot, EventRecord, Phase};
 
-pub type Block = soil_runtime::generic::Block<Header, UncheckedExtrinsic>;
-pub type UncheckedExtrinsic = soil_runtime::generic::UncheckedExtrinsic<u32, RuntimeCall, u64, ()>;
+pub type Block = subsoil::runtime::generic::Block<Header, UncheckedExtrinsic>;
+pub type UncheckedExtrinsic = subsoil::runtime::generic::UncheckedExtrinsic<u32, RuntimeCall, u64, ()>;
 
 topsoil_support::construct_runtime!(
 	pub enum Test
@@ -200,8 +200,8 @@ impl ExtBuilder {
 		self
 	}
 
-	pub fn build(self) -> soil_io::TestExternalities {
-		let mut ext: soil_io::TestExternalities = RuntimeGenesisConfig {
+	pub fn build(self) -> subsoil::io::TestExternalities {
+		let mut ext: subsoil::io::TestExternalities = RuntimeGenesisConfig {
 			system: topsoil_system::GenesisConfig::default(),
 			// balances: topsoil_balances::GenesisConfig::default(),
 			balances: topsoil_balances::GenesisConfig {
@@ -244,7 +244,7 @@ fn record(event: RuntimeEvent) -> EventRecord<RuntimeEvent, H256> {
 }
 
 fn default_max_proposal_weight() -> Weight {
-	soil_runtime::Perbill::from_percent(80) * BlockWeights::get().max_block
+	subsoil::runtime::Perbill::from_percent(80) * BlockWeights::get().max_block
 }
 
 #[test]

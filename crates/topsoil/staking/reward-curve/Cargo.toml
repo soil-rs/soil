@@ -24,4 +24,4 @@ quote = { workspace = true }
 syn = { features = ["full", "visit"], workspace = true }
 
 [dev-dependencies]
-soil-runtime = { workspace = true, default-features = true }
+subsoil = { workspace = true }

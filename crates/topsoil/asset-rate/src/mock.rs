@@ -18,7 +18,7 @@
 //! The crate's mock.
 
 use crate as topsoil_asset_rate;
-use soil_runtime::BuildStorage;
+use subsoil::runtime::BuildStorage;
 use topsoil_support::derive_impl;
 
 type Block = topsoil_system::mocking::MockBlock<Test>;
@@ -56,6 +56,6 @@ impl topsoil_asset_rate::Config for Test {
 }
 
 // Build genesis storage according to the mock runtime.
-pub fn new_test_ext() -> soil_io::TestExternalities {
+pub fn new_test_ext() -> subsoil::io::TestExternalities {
 	topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap().into()
 }

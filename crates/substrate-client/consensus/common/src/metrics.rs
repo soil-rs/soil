@@ -23,7 +23,7 @@ use prometheus_endpoint::{
 	U64,
 };
 
-use soil_runtime::traits::{Block as BlockT, NumberFor};
+use subsoil::runtime::traits::{Block as BlockT, NumberFor};
 
 use crate::import_queue::{BlockImportError, BlockImportStatus};
 

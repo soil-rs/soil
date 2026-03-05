@@ -21,14 +21,12 @@ topsoil-support = { workspace = true }
 topsoil-system = { workspace = true }
 topsoil-session = { features = ["historical"], workspace = true }
 scale-info = { features = ["derive"], workspace = true }
-soil-application-crypto = { workspace = true }
 soil-authority-discovery = { workspace = true }
-soil-runtime = { workspace = true }
+subsoil = { workspace = true }
 
 [dev-dependencies]
 topsoil-balances = { workspace = true }
-soil-core = { workspace = true, default-features = true }
-soil-io = { workspace = true, default-features = true }
+subsoil = { workspace = true, default-features = true }
 
 [features]
 default = ["std"]
@@ -39,16 +37,13 @@ std = [
 	"topsoil-balances/std",
 	"topsoil-session/std",
 	"scale-info/std",
-	"soil-application-crypto/std",
+	"subsoil/std",
 	"soil-authority-discovery/std",
-	"soil-core/std",
-	"soil-io/std",
-	"soil-runtime/std",
 ]
 try-runtime = [
 	"topsoil-support/try-runtime",
 	"topsoil-system/try-runtime",
 	"topsoil-balances/try-runtime",
 	"topsoil-session/try-runtime",
-	"soil-runtime/try-runtime",
+	"subsoil/try-runtime",
 ]

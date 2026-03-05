@@ -24,8 +24,8 @@
 //! Tests for topsoil-example-authorization-tx-extension.
 
 use codec::Encode;
-use soil_keyring::Sr25519Keyring;
-use soil_runtime::{
+use subsoil::keyring::Sr25519Keyring;
+use subsoil::runtime::{
 	generic::ExtensionVersion,
 	traits::{Applyable, Checkable, IdentityLookup, TransactionExtension},
 	MultiSignature, MultiSigner,
@@ -55,13 +55,13 @@ fn create_asset_works() {
 			AuthorizeCoownership::<Runtime, MultiSigner, MultiSignature>::default(),
 			topsoil_system::CheckGenesis::<Runtime>::new(),
 			topsoil_system::CheckTxVersion::<Runtime>::new(),
-			topsoil_system::CheckEra::<Runtime>::from(soil_runtime::generic::Era::immortal()),
+			topsoil_system::CheckEra::<Runtime>::from(subsoil::runtime::generic::Era::immortal()),
 		);
 		// Create the transaction signature, to be used in the top level `VerifyMultiSignature`
 		// extension.
 		let tx_sign = MultiSignature::Sr25519(
 			(&(ext_version, &create_asset_call), &tx_ext, tx_ext.implicit().unwrap())
-				.using_encoded(|e| alice_keyring.sign(&soil_io::hashing::blake2_256(e))),
+				.using_encoded(|e| alice_keyring.sign(&subsoil::io::hashing::blake2_256(e))),
 		);
 		// Add the signature to the extension.
 		let tx_ext = (
@@ -70,7 +70,7 @@ fn create_asset_works() {
 			AuthorizeCoownership::<Runtime, MultiSigner, MultiSignature>::default(),
 			topsoil_system::CheckGenesis::<Runtime>::new(),
 			topsoil_system::CheckTxVersion::<Runtime>::new(),
-			topsoil_system::CheckEra::<Runtime>::from(soil_runtime::generic::Era::immortal()),
+			topsoil_system::CheckEra::<Runtime>::from(subsoil::runtime::generic::Era::immortal()),
 		);
 		// Create the transaction and we're ready for dispatch.
 		let uxt = UncheckedExtrinsic::new_transaction(create_asset_call, tx_ext);
@@ -122,18 +122,18 @@ fn create_coowned_asset_works() {
 		let inner_ext: InnerTxExtension = (
 			topsoil_system::CheckGenesis::<Runtime>::new(),
 			topsoil_system::CheckTxVersion::<Runtime>::new(),
-			topsoil_system::CheckEra::<Runtime>::from(soil_runtime::generic::Era::immortal()),
+			topsoil_system::CheckEra::<Runtime>::from(subsoil::runtime::generic::Era::immortal()),
 		);
 		// Create the payload Alice and Bob need to sign.
 		let inner_payload =
 			(&(ext_version, &create_asset_call), &inner_ext, inner_ext.implicit().unwrap());
 		// Create Alice's signature.
 		let alice_inner_sig = MultiSignature::Sr25519(
-			inner_payload.using_encoded(|e| alice_keyring.sign(&soil_io::hashing::blake2_256(e))),
+			inner_payload.using_encoded(|e| alice_keyring.sign(&subsoil::io::hashing::blake2_256(e))),
 		);
 		// Create Bob's signature.
 		let bob_inner_sig = MultiSignature::Sr25519(
-			inner_payload.using_encoded(|e| bob_keyring.sign(&soil_io::hashing::blake2_256(e))),
+			inner_payload.using_encoded(|e| bob_keyring.sign(&subsoil::io::hashing::blake2_256(e))),
 		);
 		// Create the transaction extension, to be signed by the submitter of the extrinsic, let's
 		// have it be Charlie.
@@ -146,13 +146,13 @@ fn create_coowned_asset_works() {
 			),
 			topsoil_system::CheckGenesis::<Runtime>::new(),
 			topsoil_system::CheckTxVersion::<Runtime>::new(),
-			topsoil_system::CheckEra::<Runtime>::from(soil_runtime::generic::Era::immortal()),
+			topsoil_system::CheckEra::<Runtime>::from(subsoil::runtime::generic::Era::immortal()),
 		);
 		// Create Charlie's transaction signature, to be used in the top level
 		// `VerifyMultiSignature` extension.
 		let tx_sign = MultiSignature::Sr25519(
 			(&(ext_version, &create_asset_call), &tx_ext, tx_ext.implicit().unwrap())
-				.using_encoded(|e| charlie_keyring.sign(&soil_io::hashing::blake2_256(e))),
+				.using_encoded(|e| charlie_keyring.sign(&subsoil::io::hashing::blake2_256(e))),
 		);
 		// Add the signature to the extension.
 		let tx_ext = (
@@ -164,7 +164,7 @@ fn create_coowned_asset_works() {
 			),
 			topsoil_system::CheckGenesis::<Runtime>::new(),
 			topsoil_system::CheckTxVersion::<Runtime>::new(),
-			topsoil_system::CheckEra::<Runtime>::from(soil_runtime::generic::Era::immortal()),
+			topsoil_system::CheckEra::<Runtime>::from(subsoil::runtime::generic::Era::immortal()),
 		);
 		// Create the transaction and we're ready for dispatch.
 		let uxt = UncheckedExtrinsic::new_transaction(create_asset_call, tx_ext);
@@ -215,17 +215,17 @@ fn inner_authorization_works() {
 			topsoil_system::CheckGenesis::<Runtime>::new(),
 			topsoil_system::CheckTxVersion::<Runtime>::new(),
 			// Sign with mortal era check.
-			topsoil_system::CheckEra::<Runtime>::from(soil_runtime::generic::Era::mortal(4, 0)),
+			topsoil_system::CheckEra::<Runtime>::from(subsoil::runtime::generic::Era::mortal(4, 0)),
 		);
 		// Create the payload Alice and Bob need to sign.
 		let inner_payload = (&create_asset_call, &inner_ext, inner_ext.implicit().unwrap());
 		// Create Alice's signature.
 		let alice_inner_sig = MultiSignature::Sr25519(
-			inner_payload.using_encoded(|e| alice_keyring.sign(&soil_io::hashing::blake2_256(e))),
+			inner_payload.using_encoded(|e| alice_keyring.sign(&subsoil::io::hashing::blake2_256(e))),
 		);
 		// Create Bob's signature.
 		let bob_inner_sig = MultiSignature::Sr25519(
-			inner_payload.using_encoded(|e| bob_keyring.sign(&soil_io::hashing::blake2_256(e))),
+			inner_payload.using_encoded(|e| bob_keyring.sign(&subsoil::io::hashing::blake2_256(e))),
 		);
 		// Create the transaction extension, to be signed by the submitter of the extrinsic, let's
 		// have it be Charlie.
@@ -239,13 +239,13 @@ fn inner_authorization_works() {
 			topsoil_system::CheckGenesis::<Runtime>::new(),
 			topsoil_system::CheckTxVersion::<Runtime>::new(),
 			// Construct the transaction as immortal with a different era check.
-			topsoil_system::CheckEra::<Runtime>::from(soil_runtime::generic::Era::immortal()),
+			topsoil_system::CheckEra::<Runtime>::from(subsoil::runtime::generic::Era::immortal()),
 		);
 		// Create Charlie's transaction signature, to be used in the top level
 		// `VerifyMultiSignature` extension.
 		let tx_sign = MultiSignature::Sr25519(
 			(&(ext_version, &create_asset_call), &tx_ext, tx_ext.implicit().unwrap())
-				.using_encoded(|e| charlie_keyring.sign(&soil_io::hashing::blake2_256(e))),
+				.using_encoded(|e| charlie_keyring.sign(&subsoil::io::hashing::blake2_256(e))),
 		);
 		// Add the signature to the extension that Charlie signed.
 		let tx_ext = (
@@ -258,7 +258,7 @@ fn inner_authorization_works() {
 			topsoil_system::CheckGenesis::<Runtime>::new(),
 			topsoil_system::CheckTxVersion::<Runtime>::new(),
 			// Construct the transaction as immortal with a different era check.
-			topsoil_system::CheckEra::<Runtime>::from(soil_runtime::generic::Era::immortal()),
+			topsoil_system::CheckEra::<Runtime>::from(subsoil::runtime::generic::Era::immortal()),
 		);
 		// Create the transaction and we're ready for dispatch.
 		let uxt = UncheckedExtrinsic::new_transaction(create_asset_call, tx_ext);

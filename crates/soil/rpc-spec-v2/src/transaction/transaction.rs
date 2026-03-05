@@ -35,8 +35,8 @@ use super::metrics::{InstanceMetrics, Metrics};
 
 use sc_rpc::utils::{RingBuffer, Subscription};
 use soil_blockchain::HeaderBackend;
-use soil_core::Bytes;
-use soil_runtime::traits::Block as BlockT;
+use subsoil::core::Bytes;
+use subsoil::runtime::traits::Block as BlockT;
 use soil_transaction_pool_api::{
 	error::IntoPoolError, BlockHash, TransactionFor, TransactionPool, TransactionSource,
 	TransactionStatus,

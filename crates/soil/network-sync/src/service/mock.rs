@@ -27,7 +27,7 @@ use soil_network::{
 };
 use soil_network_common::role::ObservedRole;
 use soil_network_types::{multiaddr::Multiaddr, PeerId};
-use soil_runtime::traits::{Block as BlockT, NumberFor};
+use subsoil::runtime::traits::{Block as BlockT, NumberFor};
 
 use std::collections::HashSet;
 

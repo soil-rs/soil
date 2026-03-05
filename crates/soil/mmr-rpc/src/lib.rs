@@ -37,18 +37,18 @@ use jsonrpsee::{
 use serde::{Deserialize, Serialize};
 
 #[cfg(feature = "std")]
-use soil_api::{ApiExt, ProvideRuntimeApi};
+use subsoil::api::{ApiExt, ProvideRuntimeApi};
 #[cfg(feature = "std")]
 use soil_blockchain::HeaderBackend;
 #[cfg(feature = "std")]
-use soil_core::{
+use subsoil::core::{
 	offchain::{storage::OffchainDb, OffchainDbExt, OffchainStorage},
 	Bytes,
 };
 #[cfg(feature = "std")]
 use soil_mmr_primitives::{AncestryProof as MmrAncestryProof, Error as MmrError, LeafProof};
 #[cfg(feature = "std")]
-use soil_runtime::traits::{Block as BlockT, NumberFor};
+use subsoil::runtime::traits::{Block as BlockT, NumberFor};
 
 #[cfg(feature = "std")]
 pub use soil_mmr_primitives::MmrApi as MmrRuntimeApi;
@@ -323,7 +323,7 @@ fn invalid_params(e: impl std::error::Error) -> ErrorObjectOwned {
 #[cfg(feature = "std")]
 mod tests {
 	use super::*;
-	use soil_core::H256;
+	use subsoil::core::H256;
 
 	#[test]
 	fn should_serialize_leaf_proof() {

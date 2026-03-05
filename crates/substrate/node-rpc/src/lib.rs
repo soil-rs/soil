@@ -43,15 +43,15 @@ use sc_consensus_grandpa::{
 	FinalityProofProvider, GrandpaJustificationStream, SharedAuthoritySet, SharedVoterState,
 };
 pub use sc_rpc::SubscriptionTaskExecutor;
-use soil_api::ProvideRuntimeApi;
-use soil_application_crypto::RuntimeAppPublic;
+use subsoil::api::ProvideRuntimeApi;
+use subsoil::application_crypto::RuntimeAppPublic;
 use soil_block_builder::BlockBuilder;
 use soil_blockchain::{Error as BlockChainError, HeaderBackend, HeaderMetadata};
 use soil_client_api::AuxStore;
 use soil_consensus::SelectChain;
 use soil_consensus_babe::BabeApi;
 use soil_consensus_beefy::AuthorityIdBound;
-use soil_keystore::KeystorePtr;
+use subsoil::keystore::KeystorePtr;
 use soil_transaction_pool_api::TransactionPool;
 
 /// Extra dependencies for BABE.
@@ -145,7 +145,7 @@ where
 	C::Api: substrate_frame_rpc_system::AccountNonceApi<Block, AccountId, Nonce>,
 	C::Api: soil_mmr_rpc::MmrRuntimeApi<
 		Block,
-		<Block as soil_runtime::traits::Block>::Hash,
+		<Block as subsoil::runtime::traits::Block>::Hash,
 		BlockNumber,
 	>,
 	C::Api: topsoil_transaction_payment_rpc::TransactionPaymentRuntimeApi<Block, Balance>,
@@ -154,7 +154,7 @@ where
 	P: TransactionPool + 'static,
 	SC: SelectChain<Block> + 'static,
 	B: soil_client_api::Backend<Block> + Send + Sync + 'static,
-	B::State: soil_client_api::backend::StateBackend<soil_runtime::traits::HashingFor<Block>>,
+	B::State: soil_client_api::backend::StateBackend<subsoil::runtime::traits::HashingFor<Block>>,
 	AuthorityId: AuthorityIdBound,
 	<AuthorityId as RuntimeAppPublic>::Signature: Send + Sync,
 {

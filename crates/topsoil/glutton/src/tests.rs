@@ -19,7 +19,7 @@
 
 use super::{mock::*, *};
 
-use soil_runtime::{traits::One, Perbill};
+use subsoil::runtime::{traits::One, Perbill};
 use topsoil_support::{assert_err, assert_noop, assert_ok, weights::constants::*};
 
 const CALIBRATION_ERROR: &'static str =

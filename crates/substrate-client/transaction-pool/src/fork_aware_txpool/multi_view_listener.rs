@@ -28,7 +28,7 @@ use crate::{
 };
 use futures::{Future, FutureExt, Stream, StreamExt};
 use parking_lot::RwLock;
-use soil_runtime::traits::Block as BlockT;
+use subsoil::runtime::traits::Block as BlockT;
 use soil_transaction_pool_api::{TransactionStatus, TransactionStatusStream, TxIndex};
 use soil_utils::mpsc;
 use std::{
@@ -806,7 +806,7 @@ mod tests {
 	use super::*;
 	use crate::common::tests::TestApi;
 	use futures::{stream, StreamExt};
-	use soil_core::H256;
+	use subsoil::core::H256;
 	use tokio::{select, task::JoinHandle};
 	use tracing::debug;
 
@@ -830,7 +830,7 @@ mod tests {
 
 	#[tokio::test]
 	async fn test01() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 		let (listener, terminate_listener, listener_task) = create_multi_view_listener();
 
 		let block_hash = H256::repeat_byte(0x01);
@@ -859,7 +859,7 @@ mod tests {
 
 	#[tokio::test]
 	async fn test02() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 		let (listener, terminate_listener, listener_task) = create_multi_view_listener();
 
 		let block_hash0 = H256::repeat_byte(0x01);
@@ -908,7 +908,7 @@ mod tests {
 
 	#[tokio::test]
 	async fn test03() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 		let (listener, terminate_listener, listener_task) = create_multi_view_listener();
 
 		let block_hash0 = H256::repeat_byte(0x01);
@@ -955,7 +955,7 @@ mod tests {
 	//
 	#[tokio::test]
 	async fn test032() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 		let (listener, terminate_listener, listener_task) = create_multi_view_listener();
 
 		let block_hash0 = H256::repeat_byte(0x01);
@@ -1028,7 +1028,7 @@ mod tests {
 
 	#[tokio::test]
 	async fn test04() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 		let (listener, terminate_listener, listener_task) = create_multi_view_listener();
 
 		let block_hash0 = H256::repeat_byte(0x01);
@@ -1077,7 +1077,7 @@ mod tests {
 
 	#[tokio::test]
 	async fn test05() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 		let (listener, terminate_listener, listener_task) = create_multi_view_listener();
 
 		let block_hash0 = H256::repeat_byte(0x01);

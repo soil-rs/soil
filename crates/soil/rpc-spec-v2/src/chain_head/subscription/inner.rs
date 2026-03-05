@@ -19,7 +19,7 @@
 use futures::channel::oneshot;
 use parking_lot::Mutex;
 use soil_client_api::Backend;
-use soil_runtime::traits::Block as BlockT;
+use subsoil::runtime::traits::Block as BlockT;
 use std::{
 	collections::{hash_map::Entry, HashMap, HashSet},
 	sync::Arc,
@@ -785,7 +785,7 @@ mod tests {
 	use jsonrpsee::ConnectionId;
 	use sc_block_builder::BlockBuilderBuilder;
 	use soil_consensus::BlockOrigin;
-	use soil_core::{testing::TaskExecutor, H256};
+	use subsoil::core::{testing::TaskExecutor, H256};
 	use soil_service::client::new_with_backend;
 	use substrate_test_runtime_client::{
 		prelude::*,

@@ -18,7 +18,7 @@
 
 use crate::{error, error::Result};
 use clap::Args;
-use soil_core::crypto::SecretString;
+use subsoil::core::crypto::SecretString;
 use soil_service::config::KeystoreConfig;
 use std::{
 	fs,

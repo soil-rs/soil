@@ -25,11 +25,11 @@ use crate::{
 use alloc::{boxed::Box, vec::Vec};
 use codec::Encode;
 use scale_info::TypeInfo;
-use soil_npos_elections::{
+use subsoil::npos_elections::{
 	assignment_ratio_to_staked_normalized, assignment_staked_to_ratio_normalized, ElectionResult,
 	ElectionScore, EvaluateSupport,
 };
-use soil_runtime::{
+use subsoil::runtime::{
 	offchain::storage::{MutateStorageError, StorageValueRef},
 	DispatchError, SaturatedConversion,
 };
@@ -64,7 +64,7 @@ pub type MinerVoterOf<T> = topsoil_election_provider_support::Voter<
 >;
 
 /// The relative distribution of a voter's stake among the winning targets.
-pub type Assignment<T> = soil_npos_elections::Assignment<
+pub type Assignment<T> = subsoil::npos_elections::Assignment<
 	<T as topsoil_system::Config>::AccountId,
 	SolutionAccuracyOf<T>,
 >;
@@ -79,7 +79,7 @@ pub type SolverErrorOf<T> = <<T as Config>::Solver as NposSolver>::Error;
 #[derive(topsoil_support::DebugNoBound, topsoil_support::PartialEqNoBound)]
 pub enum MinerError {
 	/// An internal error in the NPoS elections crate.
-	NposElections(soil_npos_elections::Error),
+	NposElections(subsoil::npos_elections::Error),
 	/// Snapshot data was unavailable unexpectedly.
 	SnapshotUnAvailable,
 	/// Submitting a transaction to the pool failed.
@@ -104,8 +104,8 @@ pub enum MinerError {
 	TooManyDesiredTargets,
 }
 
-impl From<soil_npos_elections::Error> for MinerError {
-	fn from(e: soil_npos_elections::Error) -> Self {
+impl From<subsoil::npos_elections::Error> for MinerError {
+	fn from(e: subsoil::npos_elections::Error) -> Self {
 		MinerError::NposElections(e)
 	}
 }
@@ -482,7 +482,7 @@ impl<T: MinerConfig> Miner<T> {
 			})
 	}
 
-	/// Convert a raw solution from [`soil_npos_elections::ElectionResult`] to [`RawSolution`], which
+	/// Convert a raw solution from [`subsoil::npos_elections::ElectionResult`] to [`RawSolution`], which
 	/// is ready to be submitted to the chain.
 	///
 	/// Will always reduce the solution as well.
@@ -521,12 +521,12 @@ impl<T: MinerConfig> Miner<T> {
 
 			// we reduce before sorting in order to ensure that the reduction process doesn't
 			// accidentally change the sort order
-			soil_npos_elections::reduce(&mut staked);
+			subsoil::npos_elections::reduce(&mut staked);
 
 			// Sort the assignments by reversed voter stake. This ensures that we can efficiently
 			// truncate the list.
 			staked.sort_by_key(
-				|soil_npos_elections::StakedAssignment::<T::AccountId> { who, .. }| {
+				|subsoil::npos_elections::StakedAssignment::<T::AccountId> { who, .. }| {
 					// though staked assignments are expressed in terms of absolute stake, we'd
 					// still need to iterate over all votes in order to actually compute the total
 					// stake. it should be faster to look it up from the cache.
@@ -551,7 +551,7 @@ impl<T: MinerConfig> Miner<T> {
 			// targets have *too many* edges by definition if trimmed.
 			let max_backers_per_winner = T::MaxBackersPerWinner::get().saturated_into::<usize>();
 
-			let _ = soil_npos_elections::to_supports(&staked)
+			let _ = subsoil::npos_elections::to_supports(&staked)
 				.iter_mut()
 				.filter(|(_, support)| support.voters.len() > max_backers_per_winner)
 				.for_each(|(target, ref mut support)| {
@@ -584,7 +584,7 @@ impl<T: MinerConfig> Miner<T> {
 				let expected_ok: Result<
 					crate::BoundedSupports<_, T::MaxWinners, T::MaxBackersPerWinner>,
 					_,
-				> = soil_npos_elections::to_supports(&staked).try_into();
+				> = subsoil::npos_elections::to_supports(&staked).try_into();
 				expected_ok.is_ok()
 			});
 
@@ -650,7 +650,7 @@ impl<T: MinerConfig> Miner<T> {
 	pub fn trim_assignments_length(
 		max_allowed_length: u32,
 		assignments: &mut Vec<IndexAssignmentOf<T>>,
-		encoded_size_of: impl Fn(&[IndexAssignmentOf<T>]) -> Result<usize, soil_npos_elections::Error>,
+		encoded_size_of: impl Fn(&[IndexAssignmentOf<T>]) -> Result<usize, subsoil::npos_elections::Error>,
 	) -> Result<usize, MinerError> {
 		// Perform a binary search for the max subset of which can fit into the allowed
 		// length. Having discovered that, we can truncate efficiently.
@@ -888,7 +888,7 @@ impl<T: MinerConfig> Miner<T> {
 		// This might fail if the normalization fails. Very unlikely. See `integrity_test`.
 		let staked_assignments = assignment_ratio_to_staked_normalized(assignments, stake_of)
 			.map_err::<FeasibilityError, _>(Into::into)?;
-		let supports = soil_npos_elections::to_supports(&staked_assignments);
+		let supports = subsoil::npos_elections::to_supports(&staked_assignments);
 
 		// Finally, check that the claimed score was indeed correct.
 		let known_score = supports.evaluate();
@@ -1107,8 +1107,8 @@ mod tests {
 	};
 	use alloc::vec;
 	use codec::Decode;
-	use soil_npos_elections::ElectionScore;
-	use soil_runtime::{
+	use subsoil::npos_elections::ElectionScore;
+	use subsoil::runtime::{
 		bounded_vec,
 		offchain::storage_lock::{BlockAndTime, StorageLock},
 		traits::{Dispatchable, ValidateUnsigned, Zero},

@@ -25,14 +25,7 @@ pretty_assertions = { workspace = true }
 rustversion = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { features = ["derive"], workspace = true }
-soil-api = { workspace = true }
-soil-arithmetic = { workspace = true }
-soil-core = { workspace = true }
-soil-io = { workspace = true }
-soil-metadata-ir = { workspace = true }
-soil-runtime = { workspace = true }
-soil-state-machine = { optional = true, workspace = true, default-features = true }
-soil-version = { workspace = true }
+subsoil = { workspace = true }
 static_assertions = { workspace = true, default-features = true }
 trybuild = { features = ["diff"], workspace = true }
 # The "std" feature for this pallet is never activated on purpose, in order to test construct_runtime error message
@@ -49,29 +42,19 @@ std = [
 	"topsoil-system/std",
 	"scale-info/std",
 	"serde/std",
-	"soil-api/std",
-	"soil-arithmetic/std",
-	"soil-core/std",
-	"soil-io/std",
-	"soil-metadata-ir/std",
-	"soil-runtime/std",
-	"soil-state-machine/std",
-	"soil-version/std",
-	"test-pallet/std",
-]
+	"subsoil/std",
+	"test-pallet/std"]
 experimental = ["topsoil-support/experimental", "topsoil-system/experimental"]
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",
 	"topsoil-support/runtime-benchmarks",
 	"topsoil-system/runtime-benchmarks",
-	"soil-runtime/runtime-benchmarks",
-]
+	"subsoil/runtime-benchmarks"]
 try-runtime = [
 	"topsoil-executive/try-runtime",
 	"topsoil-support/try-runtime",
 	"topsoil-system/try-runtime",
-	"soil-runtime/try-runtime",
-]
+	"subsoil/try-runtime"]
 # WARNING:
 # Only CI runs with this feature enabled. This feature is for testing stuff related to the FRAME macros
 # in conjunction with rust features.

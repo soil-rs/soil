@@ -22,11 +22,11 @@ mod common;
 use common::*;
 use honggfuzz::fuzz;
 use rand::{self, SeedableRng};
-use soil_npos_elections::{
+use subsoil::npos_elections::{
 	assignment_ratio_to_staked_normalized, phragmms, to_supports, BalancingConfig, ElectionResult,
 	EvaluateSupport, VoteWeight,
 };
-use soil_runtime::Perbill;
+use subsoil::runtime::Perbill;
 
 fn main() {
 	loop {

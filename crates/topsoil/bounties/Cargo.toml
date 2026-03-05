@@ -23,9 +23,7 @@ topsoil-system = { workspace = true }
 log = { workspace = true }
 topsoil-treasury = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
-soil-core = { workspace = true }
-soil-io = { workspace = true }
-soil-runtime = { workspace = true }
+subsoil = { workspace = true }
 
 [dev-dependencies]
 topsoil-assets = { workspace = true, default-features = true }
@@ -42,9 +40,7 @@ std = [
 	"topsoil-balances/std",
 	"topsoil-treasury/std",
 	"scale-info/std",
-	"soil-core/std",
-	"soil-io/std",
-	"soil-runtime/std",
+	"subsoil/std",
 ]
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",
@@ -53,7 +49,7 @@ runtime-benchmarks = [
 	"topsoil-assets/runtime-benchmarks",
 	"topsoil-balances/runtime-benchmarks",
 	"topsoil-treasury/runtime-benchmarks",
-	"soil-runtime/runtime-benchmarks",
+	"subsoil/runtime-benchmarks",
 ]
 try-runtime = [
 	"topsoil-support/try-runtime",
@@ -61,5 +57,5 @@ try-runtime = [
 	"topsoil-assets/try-runtime",
 	"topsoil-balances/try-runtime",
 	"topsoil-treasury/try-runtime",
-	"soil-runtime/try-runtime",
+	"subsoil/try-runtime",
 ]

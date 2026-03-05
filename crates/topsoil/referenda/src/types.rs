@@ -22,8 +22,8 @@ use alloc::borrow::Cow;
 use codec::{Compact, Decode, DecodeWithMemTracking, Encode, EncodeLike, Input, MaxEncodedLen};
 use core::fmt::Debug;
 use scale_info::{Type, TypeInfo};
-use soil_arithmetic::{Rounding::*, SignedRounding::*};
-use soil_runtime::{FixedI64, PerThing};
+use subsoil::arithmetic::{Rounding::*, SignedRounding::*};
+use subsoil::runtime::{FixedI64, PerThing};
 use topsoil_support::{
 	traits::{schedule::v3::Anon, Bounded},
 	Parameter,
@@ -644,7 +644,7 @@ impl Debug for Curve {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use soil_runtime::{str_array as s, PerThing};
+	use subsoil::runtime::{str_array as s, PerThing};
 	use topsoil_support::traits::ConstU32;
 
 	const fn percent(x: u128) -> FixedI64 {

@@ -23,7 +23,7 @@ use super::*;
 use crate::extension::{AsPerson, AsPersonInfo};
 
 use core::marker::{Send, Sync};
-use soil_runtime::{
+use subsoil::runtime::{
 	generic::ExtensionVersion,
 	traits::{AppendZerosInput, AsTransactionAuthorizedOrigin, DispatchTransaction},
 	Weight,
@@ -943,7 +943,7 @@ mod benches {
 				T::Crypto::open(member, members.iter().map(|(_, m)| m.clone())).unwrap(),
 				secret,
 				&context[..],
-				&soil_io::hashing::blake2_256(msg),
+				&subsoil::io::hashing::blake2_256(msg),
 			)
 			.map(|(p, _)| p)
 			.expect("should create proof")
@@ -992,7 +992,7 @@ mod benches {
 		let call: <T as topsoil_system::Config>::RuntimeCall = inner.into();
 		let ext_version: ExtensionVersion = 0;
 		let signature = (ext_version, &call).using_encoded(|msg| {
-			<T::Crypto as GenerateVerifiable>::sign(secret, &soil_io::hashing::blake2_256(msg))
+			<T::Crypto as GenerateVerifiable>::sign(secret, &subsoil::io::hashing::blake2_256(msg))
 				.expect("failed to create signature")
 		});
 

@@ -22,7 +22,7 @@ use crate::{
 	OutputType,
 };
 use serde_json::json;
-use soil_core::{
+use subsoil::core::{
 	crypto::{
 		unwrap_or_default_ss58_version, ExposeSecret, SecretString, Ss58AddressFormat, Ss58Codec,
 		Zeroize,
@@ -30,13 +30,13 @@ use soil_core::{
 	hexdisplay::HexDisplay,
 	Pair,
 };
-use soil_runtime::{traits::IdentifyAccount, MultiSigner};
+use subsoil::runtime::{traits::IdentifyAccount, MultiSigner};
 use std::path::PathBuf;
 
 /// Public key type for Runtime
-pub type PublicFor<P> = <P as soil_core::Pair>::Public;
+pub type PublicFor<P> = <P as subsoil::core::Pair>::Public;
 /// Seed type for Runtime
-pub type SeedFor<P> = <P as soil_core::Pair>::Seed;
+pub type SeedFor<P> = <P as subsoil::core::Pair>::Seed;
 
 /// helper method to fetch uri from `Option<String>` either as a file or read from stdin
 pub fn read_uri(uri: Option<&String>) -> error::Result<String> {
@@ -56,20 +56,20 @@ pub fn read_uri(uri: Option<&String>) -> error::Result<String> {
 
 /// Try to parse given `uri` and print relevant information.
 ///
-/// 1. Try to construct the `Pair` while using `uri` as input for [`soil_core::Pair::from_phrase`].
+/// 1. Try to construct the `Pair` while using `uri` as input for [`subsoil::core::Pair::from_phrase`].
 ///
 /// 2. Try to construct the `Pair` while using `uri` as input for
-/// [`soil_core::Pair::from_string_with_seed`].
+/// [`subsoil::core::Pair::from_string_with_seed`].
 ///
 /// 3. Try to construct the `Pair::Public` while using `uri` as input for
-///    [`soil_core::crypto::Ss58Codec::from_string_with_version`].
+///    [`subsoil::core::crypto::Ss58Codec::from_string_with_version`].
 pub fn print_from_uri<Pair>(
 	uri: &str,
 	password: Option<SecretString>,
 	network_override: Option<Ss58AddressFormat>,
 	output: OutputType,
 ) where
-	Pair: soil_core::Pair,
+	Pair: subsoil::core::Pair,
 	Pair::Public: Into<MultiSigner>,
 {
 	let password = password.as_ref().map(|s| s.expose_secret().as_str());
@@ -200,7 +200,7 @@ pub fn print_from_public<Pair>(
 	output: OutputType,
 ) -> Result<(), Error>
 where
-	Pair: soil_core::Pair,
+	Pair: subsoil::core::Pair,
 	Pair::Public: Into<MultiSigner>,
 {
 	let public = array_bytes::hex2bytes(public_str)?;
@@ -256,17 +256,17 @@ pub fn pair_from_suri<P: Pair>(suri: &str, password: Option<SecretString>) -> Re
 }
 
 /// formats seed as hex
-pub fn format_seed<P: soil_core::Pair>(seed: SeedFor<P>) -> String {
+pub fn format_seed<P: subsoil::core::Pair>(seed: SeedFor<P>) -> String {
 	format!("0x{}", HexDisplay::from(&seed.as_ref()))
 }
 
 /// formats public key as hex
-fn format_public_key<P: soil_core::Pair>(public_key: PublicFor<P>) -> String {
+fn format_public_key<P: subsoil::core::Pair>(public_key: PublicFor<P>) -> String {
 	format!("0x{}", HexDisplay::from(&public_key.as_ref()))
 }
 
 /// formats public key as accountId as hex
-fn format_account_id<P: soil_core::Pair>(public_key: PublicFor<P>) -> String
+fn format_account_id<P: subsoil::core::Pair>(public_key: PublicFor<P>) -> String
 where
 	PublicFor<P>: Into<MultiSigner>,
 {
@@ -288,13 +288,13 @@ macro_rules! with_crypto_scheme {
 	) => {
 		match $scheme {
 			$crate::CryptoScheme::Ecdsa => {
-				$method::<soil_core::ecdsa::Pair, $($generics),*>($($params),*)
+				$method::<subsoil::core::ecdsa::Pair, $($generics),*>($($params),*)
 			}
 			$crate::CryptoScheme::Sr25519 => {
-				$method::<soil_core::sr25519::Pair, $($generics),*>($($params),*)
+				$method::<subsoil::core::sr25519::Pair, $($generics),*>($($params),*)
 			}
 			$crate::CryptoScheme::Ed25519 => {
-				$method::<soil_core::ed25519::Pair, $($generics),*>($($params),*)
+				$method::<subsoil::core::ed25519::Pair, $($generics),*>($($params),*)
 			}
 		}
 	};

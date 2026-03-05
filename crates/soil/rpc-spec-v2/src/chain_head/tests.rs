@@ -36,13 +36,13 @@ use sc_rpc::testing::TokioTestExecutor;
 use soil_blockchain::HeaderBackend;
 use soil_client_api::ChildInfo;
 use soil_consensus::BlockOrigin;
-use soil_core::{
+use subsoil::core::{
 	storage::well_known_keys::{self, CODE},
 	Blake2Hasher, Hasher,
 };
-use soil_runtime::traits::Block as BlockT;
+use subsoil::runtime::traits::Block as BlockT;
 use soil_service::client::new_with_backend;
-use soil_version::RuntimeVersion;
+use subsoil::version::RuntimeVersion;
 use std::{
 	collections::{HashMap, HashSet, VecDeque},
 	fmt::Debug,
@@ -424,7 +424,7 @@ async fn follow_with_runtime() {
 	// Update the runtime spec version.
 	let mut runtime = runtime;
 	runtime.spec_version += 1;
-	let embedded = soil_version::embed::embed_runtime_version(&wasm, runtime.clone()).unwrap();
+	let embedded = subsoil::version::embed::embed_runtime_version(&wasm, runtime.clone()).unwrap();
 	let wasm = soil_maybe_compressed_blob::compress_strongly(
 		&embedded,
 		soil_maybe_compressed_blob::CODE_BLOB_BOMB_LIMIT,

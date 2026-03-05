@@ -24,7 +24,7 @@ extern crate alloc;
 #[cfg(not(feature = "std"))]
 use alloc::vec::Vec;
 use codec::Decode;
-use soil_runtime::ConsensusEngineId;
+use subsoil::runtime::ConsensusEngineId;
 
 /// The `ConsensusEngineId` of PoW.
 pub const POW_ENGINE_ID: ConsensusEngineId = [b'p', b'o', b'w', b'_'];
@@ -37,7 +37,7 @@ pub trait TotalDifficulty {
 	fn increment(&mut self, other: Self);
 }
 
-impl TotalDifficulty for soil_core::U256 {
+impl TotalDifficulty for subsoil::core::U256 {
 	fn increment(&mut self, other: Self) {
 		let ret = self.saturating_add(other);
 		*self = ret;
@@ -51,7 +51,7 @@ impl TotalDifficulty for u128 {
 	}
 }
 
-soil_api::decl_runtime_apis! {
+subsoil::api::decl_runtime_apis! {
 	/// API necessary for timestamp-based difficulty adjustment algorithms.
 	pub trait TimestampApi<Moment: Decode> {
 		/// Return the timestamp in the current block.

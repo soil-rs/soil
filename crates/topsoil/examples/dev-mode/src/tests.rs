@@ -24,8 +24,8 @@
 //! Tests for topsoil-dev-mode.
 
 use crate::*;
-use soil_core::H256;
-use soil_runtime::{
+use subsoil::core::H256;
+use subsoil::runtime::{
 	traits::{BlakeTwo256, IdentityLookup},
 	BuildStorage,
 };
@@ -80,7 +80,7 @@ impl Config for Test {}
 
 // This function basically just builds a genesis storage key/value store according to
 // our desired mockup.
-pub fn new_test_ext() -> soil_io::TestExternalities {
+pub fn new_test_ext() -> subsoil::io::TestExternalities {
 	let t = RuntimeGenesisConfig {
 		// We use default for brevity, but you can configure as desired if needed.
 		system: Default::default(),

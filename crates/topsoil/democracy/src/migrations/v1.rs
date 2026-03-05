@@ -18,7 +18,7 @@
 //! Storage migrations for the preimage pallet.
 
 use crate::*;
-use soil_core::H256;
+use subsoil::core::H256;
 use topsoil_support::{pallet_prelude::*, storage_alias, traits::OnRuntimeUpgrade, BoundedVec};
 use topsoil_system::pallet_prelude::BlockNumberFor;
 
@@ -62,7 +62,7 @@ pub mod v1 {
 
 	impl<T: Config + topsoil_system::Config<Hash = H256>> OnRuntimeUpgrade for Migration<T> {
 		#[cfg(feature = "try-runtime")]
-		fn pre_upgrade() -> Result<Vec<u8>, soil_runtime::TryRuntimeError> {
+		fn pre_upgrade() -> Result<Vec<u8>, subsoil::runtime::TryRuntimeError> {
 			ensure!(StorageVersion::get::<Pallet<T>>() == 0, "can only upgrade from version 0");
 
 			let props_count = v0::PublicProps::<T>::get().len();
@@ -136,7 +136,7 @@ pub mod v1 {
 		}
 
 		#[cfg(feature = "try-runtime")]
-		fn post_upgrade(state: Vec<u8>) -> Result<(), soil_runtime::TryRuntimeError> {
+		fn post_upgrade(state: Vec<u8>) -> Result<(), subsoil::runtime::TryRuntimeError> {
 			ensure!(StorageVersion::get::<Pallet<T>>() == 1, "must upgrade");
 
 			let (old_props_count, old_ref_count): (u32, u32) =
@@ -165,7 +165,7 @@ mod test {
 		tests::{Test as T, *},
 		types::*,
 	};
-	use soil_runtime::bounded_vec;
+	use subsoil::runtime::bounded_vec;
 
 	#[allow(deprecated)]
 	#[test]

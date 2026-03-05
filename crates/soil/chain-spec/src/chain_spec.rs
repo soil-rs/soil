@@ -24,12 +24,12 @@ use crate::{
 };
 use serde::{Deserialize, Serialize};
 use serde_json as json;
-use soil_core::{
+use subsoil::core::{
 	storage::{ChildInfo, Storage, StorageChild, StorageData, StorageKey},
 	Bytes,
 };
 use soil_network::config::MultiaddrWithPeerId;
-use soil_runtime::BuildStorage;
+use subsoil::runtime::BuildStorage;
 use soil_telemetry::TelemetryEndpoints;
 use std::{
 	borrow::Cow,
@@ -183,7 +183,7 @@ where
 					.assimilate_storage(storage)?;
 				storage
 					.top
-					.insert(soil_core::storage::well_known_keys::CODE.to_vec(), code.clone());
+					.insert(subsoil::core::storage::well_known_keys::CODE.to_vec(), code.clone());
 			},
 			Genesis::RuntimeGenesis(RuntimeGenesisInner {
 				json_blob: RuntimeGenesisConfigJson::Patch(patch),
@@ -194,7 +194,7 @@ where
 					.assimilate_storage(storage)?;
 				storage
 					.top
-					.insert(soil_core::storage::well_known_keys::CODE.to_vec(), code.clone());
+					.insert(subsoil::core::storage::well_known_keys::CODE.to_vec(), code.clone());
 			},
 		};
 
@@ -213,8 +213,8 @@ pub struct RawGenesis {
 	pub children_default: BTreeMap<StorageKey, GenesisStorage>,
 }
 
-impl From<soil_core::storage::Storage> for RawGenesis {
-	fn from(value: soil_core::storage::Storage) -> Self {
+impl From<subsoil::core::storage::Storage> for RawGenesis {
+	fn from(value: subsoil::core::storage::Storage) -> Self {
 		Self {
 			top: value.top.into_iter().map(|(k, v)| (StorageKey(k), StorageData(v))).collect(),
 			children_default: value
@@ -240,7 +240,7 @@ impl From<soil_core::storage::Storage> for RawGenesis {
 struct RuntimeGenesisInner {
 	/// Runtime wasm code, expected to be hex-encoded in JSON.
 	/// The code shall be capable of parsing `json_blob`.
-	#[serde(default, with = "soil_core::bytes")]
+	#[serde(default, with = "subsoil::core::bytes")]
 	code: Vec<u8>,
 	/// The patch or full representation of runtime's `RuntimeGenesisConfig` struct.
 	#[serde(flatten)]
@@ -607,7 +607,7 @@ where
 			) => {
 				let mut storage =
 					RuntimeCaller::<EHF>::new(&code[..]).get_storage_for_config(config)?;
-				storage.top.insert(soil_core::storage::well_known_keys::CODE.to_vec(), code);
+				storage.top.insert(subsoil::core::storage::well_known_keys::CODE.to_vec(), code);
 				RawGenesis::from(storage)
 			},
 			(
@@ -619,7 +619,7 @@ where
 			) => {
 				let mut storage =
 					RuntimeCaller::<EHF>::new(&code[..]).get_storage_for_patch(patch)?;
-				storage.top.insert(soil_core::storage::well_known_keys::CODE.to_vec(), code);
+				storage.top.insert(subsoil::core::storage::well_known_keys::CODE.to_vec(), code);
 				RawGenesis::from(storage)
 			},
 			(true, Genesis::Raw(raw)) => raw,
@@ -770,7 +770,7 @@ pub fn update_code_in_json_chain_spec(chain_spec: &mut json::Value, code: &[u8])
 	if json_contains_path(&chain_spec, &mut path) {
 		#[derive(Serialize)]
 		struct Container<'a> {
-			#[serde(with = "soil_core::bytes")]
+			#[serde(with = "subsoil::core::bytes")]
 			code: &'a [u8],
 		}
 		let code_patch = json::json!({"genesis":{"runtimeGenesis": Container { code }}});
@@ -779,7 +779,7 @@ pub fn update_code_in_json_chain_spec(chain_spec: &mut json::Value, code: &[u8])
 	} else if json_contains_path(&chain_spec, &mut raw_path) {
 		#[derive(Serialize)]
 		struct Container<'a> {
-			#[serde(with = "soil_core::bytes", rename = "0x3a636f6465")]
+			#[serde(with = "subsoil::core::bytes", rename = "0x3a636f6465")]
 			code: &'a [u8],
 		}
 		let code_patch = json::json!({"genesis":{"raw":{"top": Container { code }}}});
@@ -796,7 +796,7 @@ pub fn set_code_substitute_in_json_chain_spec(
 	code: &[u8],
 	block_height: u64,
 ) {
-	let substitutes = json::json!({"codeSubstitutes":{ &block_height.to_string(): soil_core::bytes::to_hex(code, false) }});
+	let substitutes = json::json!({"codeSubstitutes":{ &block_height.to_string(): subsoil::core::bytes::to_hex(code, false) }});
 	crate::json_patch::merge(chain_spec, substitutes);
 }
 
@@ -805,9 +805,9 @@ mod tests {
 	use super::*;
 	use pretty_assertions::assert_eq;
 	use serde_json::{from_str, json, Value};
-	use soil_application_crypto::Ss58Codec;
-	use soil_core::storage::well_known_keys;
-	use soil_keyring::Sr25519Keyring;
+	use subsoil::application_crypto::Ss58Codec;
+	use subsoil::core::storage::well_known_keys;
+	use subsoil::keyring::Sr25519Keyring;
 
 	type TestSpec = ChainSpec;
 
@@ -962,7 +962,7 @@ mod tests {
 
 	#[test]
 	fn generate_chain_spec_with_named_preset_works() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 		let output: ChainSpec<()> = ChainSpec::builder(
 			substrate_test_runtime::wasm_binary_unwrap().into(),
 			Default::default(),
@@ -1032,7 +1032,7 @@ mod tests {
 
 	#[test]
 	fn generate_chain_spec_with_full_config_works() {
-		let j = include_str!("../../../../test-utils/runtime/res/default_genesis_config.json");
+		let j = include_str!("../../../substrate/substrate-test-runtime/res/default_genesis_config.json");
 		let output = ChainSpec::<()>::builder(
 			substrate_test_runtime::wasm_binary_unwrap().into(),
 			Default::default(),
@@ -1064,7 +1064,7 @@ mod tests {
 	#[test]
 	fn chain_spec_as_json_fails_with_invalid_config() {
 		let invalid_genesis_config = from_str::<Value>(include_str!(
-			"../../../../test-utils/runtime/res/default_genesis_config_invalid_2.json"
+			"../../../substrate/substrate-test-runtime/res/default_genesis_config_invalid_2.json"
 		))
 		.unwrap();
 		let output = ChainSpec::<()>::builder(
@@ -1152,7 +1152,7 @@ mod tests {
 
 	#[test]
 	fn update_code_works_with_runtime_genesis_config() {
-		let j = include_str!("../../../../test-utils/runtime/res/default_genesis_config.json");
+		let j = include_str!("../../../substrate/substrate-test-runtime/res/default_genesis_config.json");
 		let chain_spec = ChainSpec::<()>::builder(
 			substrate_test_runtime::wasm_binary_unwrap().into(),
 			Default::default(),
@@ -1175,7 +1175,7 @@ mod tests {
 
 	#[test]
 	fn update_code_works_for_raw() {
-		let j = include_str!("../../../../test-utils/runtime/res/default_genesis_config.json");
+		let j = include_str!("../../../substrate/substrate-test-runtime/res/default_genesis_config.json");
 		let chain_spec = ChainSpec::<()>::builder(
 			substrate_test_runtime::wasm_binary_unwrap().into(),
 			Default::default(),

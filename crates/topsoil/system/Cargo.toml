@@ -27,16 +27,10 @@ topsoil-support = { workspace = true }
 log = { workspace = true }
 scale-info = { features = ["derive", "serde"], workspace = true }
 serde = { features = ["alloc", "derive"], workspace = true }
-soil-core = { features = ["serde"], workspace = true }
-soil-io = { workspace = true }
-soil-runtime = { features = ["serde"], workspace = true }
-soil-version = { features = ["serde"], workspace = true }
-soil-weights = { features = ["serde"], workspace = true }
+subsoil = { features = ["serde"], workspace = true }
 
 [dev-dependencies]
 criterion = { workspace = true, default-features = true }
-soil-externalities = { workspace = true, default-features = true }
-soil-tracing = { workspace = true, default-features = true }
 substrate-test-runtime-client = { workspace = true }
 
 [features]
@@ -47,15 +41,11 @@ std = [
 	"log/std",
 	"scale-info/std",
 	"serde/std",
-	"soil-core/std",
-	"soil-io/std",
-	"soil-runtime/std",
-	"soil-version/std",
-	"soil-weights/std",
+	"subsoil/std",
 ]
 runtime-benchmarks = [
 	"topsoil-support/runtime-benchmarks",
-	"soil-runtime/runtime-benchmarks",
+	"subsoil/runtime-benchmarks",
 ]
-try-runtime = ["topsoil-support/try-runtime", "soil-runtime/try-runtime"]
+try-runtime = ["topsoil-support/try-runtime", "subsoil/try-runtime"]
 experimental = ["topsoil-support/experimental"]

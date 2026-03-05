@@ -17,17 +17,17 @@
 #![allow(useless_deprecated)]
 
 use scale_info::{form::MetaForm, meta_type};
-use soil_metadata_ir::{
+use subsoil::metadata_ir::{
 	ItemDeprecationInfoIR, RuntimeApiMetadataIR, RuntimeApiMethodMetadataIR,
 	RuntimeApiMethodParamMetadataIR,
 };
-use soil_runtime::traits::Block as BlockT;
+use subsoil::runtime::traits::Block as BlockT;
 use topsoil_support::{derive_impl, traits::ConstU32};
 
 pub type BlockNumber = u64;
-pub type Header = soil_runtime::generic::Header<u32, soil_runtime::traits::BlakeTwo256>;
-pub type Block = soil_runtime::generic::Block<Header, UncheckedExtrinsic>;
-pub type UncheckedExtrinsic = soil_runtime::generic::UncheckedExtrinsic<u32, RuntimeCall, (), ()>;
+pub type Header = subsoil::runtime::generic::Header<u32, subsoil::runtime::traits::BlakeTwo256>;
+pub type Block = subsoil::runtime::generic::Block<Header, UncheckedExtrinsic>;
+pub type UncheckedExtrinsic = subsoil::runtime::generic::UncheckedExtrinsic<u32, RuntimeCall, (), ()>;
 
 #[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
 impl topsoil_system::Config for Runtime {
@@ -38,10 +38,10 @@ impl topsoil_system::Config for Runtime {
 	type RuntimeOrigin = RuntimeOrigin;
 	type Nonce = u64;
 	type RuntimeCall = RuntimeCall;
-	type Hash = soil_runtime::testing::H256;
-	type Hashing = soil_runtime::traits::BlakeTwo256;
+	type Hash = subsoil::runtime::testing::H256;
+	type Hashing = subsoil::runtime::traits::BlakeTwo256;
 	type AccountId = u64;
-	type Lookup = soil_runtime::traits::IdentityLookup<Self::AccountId>;
+	type Lookup = subsoil::runtime::traits::IdentityLookup<Self::AccountId>;
 	type Block = Block;
 	type RuntimeEvent = RuntimeEvent;
 	type Version = ();
@@ -62,7 +62,7 @@ topsoil_support::construct_runtime!(
 	}
 );
 
-soil_api::decl_runtime_apis! {
+subsoil::api::decl_runtime_apis! {
 	/// ApiWithCustomVersion trait documentation
 	///
 	/// Documentation on multiline.
@@ -84,7 +84,7 @@ soil_api::decl_runtime_apis! {
 mod apis {
 	use super::{Block, BlockT, Runtime};
 
-	soil_api::impl_runtime_apis! {
+	subsoil::api::impl_runtime_apis! {
 		#[allow(deprecated)]
 		impl crate::Api<Block> for Runtime {
 			fn test(_data: u64) {
@@ -104,14 +104,14 @@ mod apis {
 			fn wild_card(_: u32) {}
 		}
 
-		impl soil_api::Core<Block> for Runtime {
-			fn version() -> soil_version::RuntimeVersion {
+		impl subsoil::api::Core<Block> for Runtime {
+			fn version() -> subsoil::version::RuntimeVersion {
 				unimplemented!()
 			}
 			fn execute_block(_: <Block as BlockT>::LazyBlock) {
 				unimplemented!()
 			}
-			fn initialize_block(_: &<Block as BlockT>::Header) -> soil_runtime::ExtrinsicInclusionMode {
+			fn initialize_block(_: &<Block as BlockT>::Header) -> subsoil::runtime::ExtrinsicInclusionMode {
 				unimplemented!()
 			}
 		}
@@ -210,7 +210,7 @@ fn runtime_metadata() {
 				RuntimeApiMethodMetadataIR {
 					name: "version",
 					inputs: vec![],
-					output: meta_type::<soil_version::RuntimeVersion>(),
+					output: meta_type::<subsoil::version::RuntimeVersion>(),
 					docs: maybe_docs(vec![" Returns the version of the runtime."]),
 					deprecation_info: ItemDeprecationInfoIR::NotDeprecated,
 				},
@@ -231,7 +231,7 @@ fn runtime_metadata() {
 						name: "header",
 						ty: meta_type::<&<Block as BlockT>::Header>(),
 					}],
-					output: meta_type::<soil_runtime::ExtrinsicInclusionMode>(),
+					output: meta_type::<subsoil::runtime::ExtrinsicInclusionMode>(),
 					docs: maybe_docs(vec![" Initialize a block with the given header and return the runtime executive mode."]),
 					deprecation_info: ItemDeprecationInfoIR::NotDeprecated,
 				},

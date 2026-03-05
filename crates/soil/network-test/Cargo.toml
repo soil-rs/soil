@@ -36,9 +36,7 @@ soil-service = { workspace = true, optional = true}
 soil-utils = { workspace = true, default-features = true, optional = true}
 soil-blockchain = { workspace = true, default-features = true, optional = true}
 soil-consensus = { workspace = true, default-features = true, optional = true}
-soil-core = { workspace = true, default-features = true, optional = true}
-soil-runtime = { workspace = true, default-features = true, optional = true}
-soil-tracing = { workspace = true, default-features = true, optional = true}
+subsoil = { workspace = true, default-features = true, optional = true }
 substrate-test-runtime = { workspace = true, optional = true}
 substrate-test-runtime-client = { workspace = true, optional = true}
 tokio = { workspace = true, default-features = true, optional = true}
@@ -59,28 +57,24 @@ std = [
 	"soil-blockchain",
 	"soil-client-api",
 	"soil-consensus",
-	"soil-core",
+	"subsoil",
 	"soil-network",
 	"soil-network-common",
 	"soil-network-light",
 	"soil-network-sync",
 	"soil-network-types",
-	"soil-runtime",
 	"soil-service",
-	"soil-tracing",
 	"soil-utils",
 	"substrate-test-runtime",
 	"substrate-test-runtime-client",
 	"tokio",
 	"soil-client-api/std",
-	"soil-core/std",
+	"subsoil/std",
 	"soil-network/std",
 	"soil-network-common/std",
 	"soil-network-light/std",
 	"soil-network-sync/std",
 	"soil-network-types/std",
-	"soil-runtime/std",
 	"soil-service/std",
-	"soil-tracing/std",
 	"soil-utils/std",
 ]

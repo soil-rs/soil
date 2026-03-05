@@ -16,7 +16,7 @@
 // limitations under the License.
 
 use crate::{mock::*, *};
-use soil_runtime::{traits::BadOrigin, ArithmeticError, TokenError};
+use subsoil::runtime::{traits::BadOrigin, ArithmeticError, TokenError};
 use topsoil_support::{
 	assert_err, assert_noop, assert_ok, hypothetically,
 	traits::{

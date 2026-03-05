@@ -20,7 +20,7 @@
 pub use topsoil_support::traits::{TryStateSelect, UpgradeCheckSelect};
 use topsoil_support::weights::Weight;
 
-soil_api::decl_runtime_apis! {
+subsoil::api::decl_runtime_apis! {
 	/// Runtime api for testing the execution of a runtime upgrade.
 	pub trait TryRuntime {
 		/// dry-run runtime upgrades, returning the total weight consumed.

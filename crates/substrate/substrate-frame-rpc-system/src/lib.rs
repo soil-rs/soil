@@ -27,11 +27,11 @@ use jsonrpsee::{
 	Extensions,
 };
 
-use soil_api::ApiExt;
+use subsoil::api::ApiExt;
 use soil_block_builder::BlockBuilder;
 use soil_blockchain::HeaderBackend;
-use soil_core::{hexdisplay::HexDisplay, Bytes};
-use soil_runtime::{legacy, traits};
+use subsoil::core::{hexdisplay::HexDisplay, Bytes};
+use subsoil::runtime::{legacy, traits};
 use soil_transaction_pool_api::{InPoolTransaction, TransactionPool};
 
 pub use topsoil_system_rpc_runtime_api::AccountNonceApi;
@@ -88,7 +88,7 @@ impl<P: TransactionPool, C, B> System<P, C, B> {
 impl<P, C, Block, AccountId, Nonce>
 	SystemApiServer<<Block as traits::Block>::Hash, AccountId, Nonce> for System<P, C, Block>
 where
-	C: soil_api::ProvideRuntimeApi<Block>,
+	C: subsoil::api::ProvideRuntimeApi<Block>,
 	C: HeaderBackend<Block>,
 	C: Send + Sync + 'static,
 	C::Api: AccountNonceApi<Block, AccountId, Nonce>,
@@ -220,7 +220,7 @@ mod tests {
 	use futures::executor::block_on;
 	use sc_transaction_pool::BasicPool;
 	use soil_rpc_api::DenyUnsafe;
-	use soil_runtime::{
+	use subsoil::runtime::{
 		transaction_validity::{InvalidTransaction, TransactionValidityError},
 		ApplyExtrinsicResult,
 	};
@@ -240,11 +240,11 @@ mod tests {
 
 	#[tokio::test]
 	async fn should_return_next_nonce_for_some_account() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 
 		// given
 		let client = Arc::new(substrate_test_runtime_client::new());
-		let spawner = soil_core::testing::TaskExecutor::new();
+		let spawner = subsoil::core::testing::TaskExecutor::new();
 		let pool = Arc::from(BasicPool::new_full(
 			Default::default(),
 			true.into(),
@@ -253,7 +253,7 @@ mod tests {
 			client.clone(),
 		));
 
-		let source = soil_runtime::transaction_validity::TransactionSource::External;
+		let source = subsoil::runtime::transaction_validity::TransactionSource::External;
 		let new_transaction = |nonce: u64| {
 			let t = Transfer {
 				from: Sr25519Keyring::Alice.into(),
@@ -281,11 +281,11 @@ mod tests {
 
 	#[tokio::test]
 	async fn dry_run_should_deny_unsafe() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 
 		// given
 		let client = Arc::new(substrate_test_runtime_client::new());
-		let spawner = soil_core::testing::TaskExecutor::new();
+		let spawner = subsoil::core::testing::TaskExecutor::new();
 		let pool = Arc::from(BasicPool::new_full(
 			Default::default(),
 			true.into(),
@@ -305,11 +305,11 @@ mod tests {
 
 	#[tokio::test]
 	async fn dry_run_should_work() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 
 		// given
 		let client = Arc::new(substrate_test_runtime_client::new());
-		let spawner = soil_core::testing::TaskExecutor::new();
+		let spawner = subsoil::core::testing::TaskExecutor::new();
 		let pool = Arc::from(BasicPool::new_full(
 			Default::default(),
 			true.into(),
@@ -341,11 +341,11 @@ mod tests {
 
 	#[tokio::test]
 	async fn dry_run_should_indicate_error() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 
 		// given
 		let client = Arc::new(substrate_test_runtime_client::new());
-		let spawner = soil_core::testing::TaskExecutor::new();
+		let spawner = subsoil::core::testing::TaskExecutor::new();
 		let pool = Arc::from(BasicPool::new_full(
 			Default::default(),
 			true.into(),

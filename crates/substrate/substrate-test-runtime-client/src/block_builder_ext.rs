@@ -18,7 +18,7 @@
 //! Block Builder extensions for tests.
 
 use sc_block_builder::BlockBuilderApi;
-use soil_api::{ApiExt, ProvideRuntimeApi};
+use subsoil::api::{ApiExt, ProvideRuntimeApi};
 use substrate_test_runtime::*;
 
 /// Extension trait for test block builder.
@@ -39,14 +39,14 @@ pub trait BlockBuilderExt {
 	/// Adds an extrinsic which pushes DigestItem to header's log
 	fn push_deposit_log_digest_item(
 		&mut self,
-		log: soil_runtime::generic::DigestItem,
+		log: subsoil::runtime::generic::DigestItem,
 	) -> Result<(), soil_blockchain::Error>;
 }
 
 impl<'a, A> BlockBuilderExt for sc_block_builder::BlockBuilder<'a, substrate_test_runtime::Block, A>
 where
 	A: ProvideRuntimeApi<substrate_test_runtime::Block>
-		+ soil_api::CallApiAt<substrate_test_runtime::Block>
+		+ subsoil::api::CallApiAt<substrate_test_runtime::Block>
 		+ 'a,
 	A::Api: BlockBuilderApi<substrate_test_runtime::Block> + ApiExt<substrate_test_runtime::Block>,
 {
@@ -67,7 +67,7 @@ where
 
 	fn push_deposit_log_digest_item(
 		&mut self,
-		log: soil_runtime::generic::DigestItem,
+		log: subsoil::runtime::generic::DigestItem,
 	) -> Result<(), soil_blockchain::Error> {
 		self.push(ExtrinsicBuilder::new_deposit_log_digest_item(log).build())
 	}

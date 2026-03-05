@@ -58,7 +58,7 @@ use soil_blockchain::HeaderBackend;
 #[cfg(feature = "std")]
 use soil_client_api::StorageData;
 #[cfg(feature = "std")]
-use soil_runtime::traits::{Block as BlockT, NumberFor};
+use subsoil::runtime::traits::{Block as BlockT, NumberFor};
 
 #[cfg(feature = "std")]
 type SharedAuthoritySet<TBl> =

@@ -17,16 +17,16 @@
 
 //! Integration tests for ecdsa-bls12-381
 
-use soil_api::{ApiExt, ProvideRuntimeApi};
-use soil_application_crypto::{ecdsa_bls381::AppPair, RuntimePublic};
-use soil_core::{
+use subsoil::api::{ApiExt, ProvideRuntimeApi};
+use subsoil::application_crypto::{ecdsa_bls381::AppPair, RuntimePublic};
+use subsoil::core::{
 	crypto::ByteArray,
 	ecdsa_bls381::Pair as EcdsaBls381Pair,
 	proof_of_possession::{ProofOfPossessionGenerator, ProofOfPossessionVerifier},
 	testing::ECDSA_BLS381,
 	Pair,
 };
-use soil_keystore::{testing::MemoryKeystore, Keystore, KeystoreExt};
+use subsoil::keystore::{testing::MemoryKeystore, Keystore, KeystoreExt};
 use std::sync::Arc;
 use substrate_test_runtime_client::{
 	runtime::{TestAPI, TEST_OWNER},
@@ -35,7 +35,7 @@ use substrate_test_runtime_client::{
 
 #[test]
 fn ecdsa_bls381_works_in_runtime() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 	let keystore = Arc::new(MemoryKeystore::new());
 	let test_client = TestClientBuilder::new().build();
 

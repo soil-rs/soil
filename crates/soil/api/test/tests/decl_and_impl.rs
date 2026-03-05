@@ -15,10 +15,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use soil_api::{
+use subsoil::api::{
 	decl_runtime_apis, impl_runtime_apis, mock_impl_runtime_apis, ApiError, ApiExt, RuntimeApiInfo,
 };
-use soil_runtime::traits::Block as BlockT;
+use subsoil::runtime::traits::Block as BlockT;
 
 use substrate_test_runtime_client::runtime::{Block, Hash};
 
@@ -135,14 +135,14 @@ impl_runtime_apis! {
 		fn staging_one() {}
 	}
 
-	impl soil_api::Core<Block> for Runtime {
-		fn version() -> soil_version::RuntimeVersion {
+	impl subsoil::api::Core<Block> for Runtime {
+		fn version() -> subsoil::version::RuntimeVersion {
 			unimplemented!()
 		}
 		fn execute_block(_: <Block as BlockT>::LazyBlock) {
 			unimplemented!()
 		}
-		fn initialize_block(_: &<Block as BlockT>::Header) -> soil_runtime::ExtrinsicInclusionMode {
+		fn initialize_block(_: &<Block as BlockT>::Header) -> subsoil::runtime::ExtrinsicInclusionMode {
 			unimplemented!()
 		}
 	}
@@ -282,7 +282,7 @@ fn check_runtime_api_versions() {
 	);
 	check_staging_runtime_api_versions::<dyn ApiWithStagingAndChangedBase<Block>>(99);
 
-	check_runtime_api_versions_contains::<dyn soil_api::Core<Block>>();
+	check_runtime_api_versions_contains::<dyn subsoil::api::Core<Block>>();
 }
 
 #[test]
@@ -318,7 +318,7 @@ fn mock_runtime_api_works_with_advanced() {
 
 #[test]
 fn runtime_api_metadata_matches_version_implemented() {
-	use soil_metadata_ir::InternalImplRuntimeApis;
+	use subsoil::metadata_ir::InternalImplRuntimeApis;
 
 	let rt = Runtime {};
 	let runtime_metadata = rt.runtime_metadata();

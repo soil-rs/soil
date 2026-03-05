@@ -40,16 +40,16 @@ use sc_consensus_slots::{
 	BackoffAuthoringBlocksStrategy, InherentDataProviderExt, SimpleSlotWorkerToSlotWorker,
 	SlotInfo, StorageChanges,
 };
-use soil_api::{Core, ProvideRuntimeApi};
-use soil_application_crypto::AppPublic;
+use subsoil::api::{Core, ProvideRuntimeApi};
+use subsoil::application_crypto::AppPublic;
 use soil_blockchain::HeaderBackend;
 use soil_client_api::{backend::AuxStore, BlockOf};
 use soil_consensus::{BlockOrigin, Environment, Error as ConsensusError, Proposer, SelectChain};
 use soil_consensus_slots::Slot;
-use soil_core::crypto::Pair;
-use soil_inherents::CreateInherentDataProviders;
-use soil_keystore::KeystorePtr;
-use soil_runtime::traits::{Block as BlockT, Header, Member, NumberFor};
+use subsoil::core::crypto::Pair;
+use subsoil::inherents::CreateInherentDataProviders;
+use subsoil::keystore::KeystorePtr;
+use subsoil::runtime::traits::{Block as BlockT, Header, Member, NumberFor};
 use soil_telemetry::TelemetryHandle;
 
 mod authorities_tracker;
@@ -381,7 +381,7 @@ where
 		crate::standalone::claim_slot::<P>(slot, authorities, &self.keystore).await
 	}
 
-	fn pre_digest_data(&self, slot: Slot, _claim: &Self::Claim) -> Vec<soil_runtime::DigestItem> {
+	fn pre_digest_data(&self, slot: Slot, _claim: &Self::Claim) -> Vec<subsoil::runtime::DigestItem> {
 		vec![crate::standalone::pre_digest::<P>(slot)]
 	}
 
@@ -485,7 +485,7 @@ pub enum Error<B: BlockT> {
 	Client(soil_blockchain::Error),
 	/// Inherents Error
 	#[error("Inherent error: {0}")]
-	Inherent(soil_inherents::Error),
+	Inherent(subsoil::inherents::Error),
 }
 
 impl<B: BlockT> From<Error<B>> for String {
@@ -552,15 +552,15 @@ mod tests {
 	use sc_consensus::BoxJustificationImport;
 	use sc_consensus_slots::{BackoffAuthoringOnFinalizedHeadLagging, SimpleSlotWorker};
 	use sc_keystore::LocalKeystore;
-	use soil_application_crypto::{key_types::AURA, AppCrypto};
+	use subsoil::application_crypto::{key_types::AURA, AppCrypto};
 	use soil_client_api::BlockchainEvents;
 	use soil_consensus::{NoNetwork as DummyOracle, Proposal, ProposeArgs};
 	use soil_consensus_aura::sr25519::AuthorityPair;
-	use soil_keyring::sr25519::Keyring;
-	use soil_keystore::Keystore;
+	use subsoil::keyring::sr25519::Keyring;
+	use subsoil::keystore::Keystore;
 	use soil_network_test::{Block as TestBlock, *};
-	use soil_runtime::traits::{Block as BlockT, Header as _};
-	use soil_timestamp::Timestamp;
+	use subsoil::runtime::traits::{Block as BlockT, Header as _};
+	use subsoil::timestamp::Timestamp;
 	use std::{
 		task::Poll,
 		time::{Duration, Instant},
@@ -681,7 +681,7 @@ mod tests {
 
 	#[tokio::test]
 	async fn authoring_blocks() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 		let net = AuraTestNet::new(3);
 
 		let peers = &[(0, Keyring::Alice), (1, Keyring::Bob), (2, Keyring::Charlie)];

@@ -53,13 +53,13 @@ pub use soil_blockchain as blockchain;
 pub use soil_blockchain::HeaderBackend;
 
 #[cfg(feature = "std")]
-pub use soil_state_machine::{CompactProof, StorageProof};
+pub use subsoil::state_machine::{CompactProof, StorageProof};
 #[cfg(feature = "std")]
-pub use soil_storage::{ChildInfo, PrefixedStorageKey, StorageData, StorageKey};
+pub use subsoil::storage::{ChildInfo, PrefixedStorageKey, StorageData, StorageKey};
 
 /// Usage Information Provider interface
 #[cfg(feature = "std")]
-pub trait UsageProvider<Block: soil_runtime::traits::Block> {
+pub trait UsageProvider<Block: subsoil::runtime::traits::Block> {
 	/// Get usage info about current client.
 	fn usage_info(&self) -> ClientInfo<Block>;
 }
@@ -68,7 +68,7 @@ pub trait UsageProvider<Block: soil_runtime::traits::Block> {
 #[cfg(feature = "std")]
 pub mod utils {
 	use soil_blockchain::{Error, HeaderBackend, HeaderMetadata};
-	use soil_runtime::traits::Block as BlockT;
+	use subsoil::runtime::traits::Block as BlockT;
 
 	/// Returns a function for checking block ancestry, the returned function will
 	/// return `true` if the given hash (second parameter) is a descendent of the

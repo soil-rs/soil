@@ -95,7 +95,7 @@ use soil_network::ReputationChange;
 use soil_network_common::role::ObservedRole;
 use soil_network_gossip::{MessageIntent, ValidatorContext};
 use soil_network_types::PeerId;
-use soil_runtime::traits::{Block as BlockT, NumberFor, Zero};
+use subsoil::runtime::traits::{Block as BlockT, NumberFor, Zero};
 use soil_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG};
 use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
 
@@ -1676,7 +1676,7 @@ pub(super) struct PeerReport {
 mod tests {
 	use super::{super::NEIGHBOR_REBROADCAST_PERIOD, environment::SharedVoterSetState, *};
 	use crate::communication;
-	use soil_core::{crypto::UncheckedFrom, H256};
+	use subsoil::core::{crypto::UncheckedFrom, H256};
 	use soil_network::config::Role;
 	use soil_network_gossip::Validator as GossipValidatorT;
 	use std::time::Instant;

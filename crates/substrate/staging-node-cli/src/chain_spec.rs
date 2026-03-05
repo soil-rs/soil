@@ -28,7 +28,7 @@ use soil_chain_spec::ChainSpecExtension;
 use soil_consensus_babe::AuthorityId as BabeId;
 use soil_consensus_beefy::ecdsa_crypto::AuthorityId as BeefyId;
 use soil_consensus_grandpa::AuthorityId as GrandpaId;
-use soil_core::crypto::UncheckedInto;
+use subsoil::core::crypto::UncheckedInto;
 use soil_mixnet::types::AuthorityId as MixnetId;
 use soil_service::ChainType;
 use soil_service::Properties;
@@ -425,7 +425,7 @@ pub(crate) mod tests {
 	use super::*;
 	use crate::service::{new_full_base, NewFullBase};
 	use kitchensink_runtime::genesis_config_presets::well_known_including_eth_accounts;
-	use soil_runtime::{AccountId32, BuildStorage};
+	use subsoil::runtime::{AccountId32, BuildStorage};
 	use soil_service_test;
 
 	/// Local testnet config (single validator - Alice).
@@ -458,7 +458,7 @@ pub(crate) mod tests {
 	#[test]
 	#[ignore]
 	fn test_connectivity() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 
 		soil_service_test::connectivity(integration_test_config_with_two_authorities(), |config| {
 			let NewFullBase { task_manager, client, network, sync, transaction_pool, .. } =

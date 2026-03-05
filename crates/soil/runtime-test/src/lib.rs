@@ -38,15 +38,15 @@ extern crate alloc;
 use alloc::{vec, vec::Vec};
 
 #[cfg(not(feature = "std"))]
-use soil_core::{ed25519, sr25519};
+use subsoil::core::{ed25519, sr25519};
 #[cfg(not(feature = "std"))]
-use soil_io::{
+use subsoil::io::{
 	crypto::{ed25519_verify, sr25519_verify},
 	hashing::{blake2_128, blake2_256, sha2_256, twox_128, twox_256},
 	storage, wasm_tracing,
 };
 #[cfg(not(feature = "std"))]
-use soil_runtime::{
+use subsoil::runtime::{
 	print,
 	traits::{BlakeTwo256, Hash},
 };
@@ -76,7 +76,7 @@ static mut MUTABLE_STATIC: u64 = 32;
 /// may be differences in handling zeroed and non-zeroed data.
 static mut MUTABLE_STATIC_BSS: u64 = 0;
 
-soil_core::wasm_export_functions! {
+subsoil::wasm_export_functions! {
 	fn test_calling_missing_external() {
 		unsafe { missing_external() }
 	}
@@ -205,59 +205,59 @@ soil_core::wasm_export_functions! {
 				b"one"[..].into(),
 				b"two"[..].into(),
 			],
-			soil_core::storage::StateVersion::V1,
+			subsoil::core::storage::StateVersion::V1,
 		).as_ref().to_vec()
 	}
 
 	fn test_offchain_index_set() {
-		soil_io::offchain_index::set(b"k", b"v");
+		subsoil::io::offchain_index::set(b"k", b"v");
 	}
 
 	fn test_offchain_local_storage() -> bool {
-		let kind = soil_core::offchain::StorageKind::PERSISTENT;
-		assert_eq!(soil_io::offchain::local_storage_get(kind, b"test"), None);
-		soil_io::offchain::local_storage_set(kind, b"test", b"asd");
-		assert_eq!(soil_io::offchain::local_storage_get(kind, b"test"), Some(b"asd".to_vec()));
+		let kind = subsoil::core::offchain::StorageKind::PERSISTENT;
+		assert_eq!(subsoil::io::offchain::local_storage_get(kind, b"test"), None);
+		subsoil::io::offchain::local_storage_set(kind, b"test", b"asd");
+		assert_eq!(subsoil::io::offchain::local_storage_get(kind, b"test"), Some(b"asd".to_vec()));
 
-		let res = soil_io::offchain::local_storage_compare_and_set(
+		let res = subsoil::io::offchain::local_storage_compare_and_set(
 			kind,
 			b"test",
 			Some(b"asd".to_vec()),
 			b"",
 		);
-		assert_eq!(soil_io::offchain::local_storage_get(kind, b"test"), Some(b"".to_vec()));
+		assert_eq!(subsoil::io::offchain::local_storage_get(kind, b"test"), Some(b"".to_vec()));
 		res
 	}
 
 	fn test_offchain_local_storage_with_none() {
-		let kind = soil_core::offchain::StorageKind::PERSISTENT;
-		assert_eq!(soil_io::offchain::local_storage_get(kind, b"test"), None);
+		let kind = subsoil::core::offchain::StorageKind::PERSISTENT;
+		assert_eq!(subsoil::io::offchain::local_storage_get(kind, b"test"), None);
 
-		let res = soil_io::offchain::local_storage_compare_and_set(kind, b"test", None, b"value");
+		let res = subsoil::io::offchain::local_storage_compare_and_set(kind, b"test", None, b"value");
 		assert_eq!(res, true);
-		assert_eq!(soil_io::offchain::local_storage_get(kind, b"test"), Some(b"value".to_vec()));
+		assert_eq!(subsoil::io::offchain::local_storage_get(kind, b"test"), Some(b"value".to_vec()));
 	}
 
 	fn test_offchain_http() -> bool {
-		use soil_core::offchain::HttpRequestStatus;
+		use subsoil::core::offchain::HttpRequestStatus;
 		let run = || -> Option<()> {
-			let id = soil_io::offchain::http_request_start(
+			let id = subsoil::io::offchain::http_request_start(
 				"POST",
 				"http://localhost:12345",
 				&[],
 			).ok()?;
-			soil_io::offchain::http_request_add_header(id, "X-Auth", "test").ok()?;
-			soil_io::offchain::http_request_write_body(id, &[1, 2, 3, 4], None).ok()?;
-			soil_io::offchain::http_request_write_body(id, &[], None).ok()?;
-			let status = soil_io::offchain::http_response_wait(&[id], None);
+			subsoil::io::offchain::http_request_add_header(id, "X-Auth", "test").ok()?;
+			subsoil::io::offchain::http_request_write_body(id, &[1, 2, 3, 4], None).ok()?;
+			subsoil::io::offchain::http_request_write_body(id, &[], None).ok()?;
+			let status = subsoil::io::offchain::http_response_wait(&[id], None);
 			assert!(status == vec![HttpRequestStatus::Finished(200)], "Expected Finished(200) status.");
-			let headers = soil_io::offchain::http_response_headers(id);
+			let headers = subsoil::io::offchain::http_response_headers(id);
 			assert_eq!(headers, vec![(b"X-Auth".to_vec(), b"hello".to_vec())]);
 			let mut buffer = vec![0; 64];
-			let read = soil_io::offchain::http_response_read_body(id, &mut buffer, None).ok()?;
+			let read = subsoil::io::offchain::http_response_read_body(id, &mut buffer, None).ok()?;
 			assert_eq!(read, 3);
 			assert_eq!(&buffer[0..read as usize], &[1, 2, 3]);
-			let read = soil_io::offchain::http_response_read_body(id, &mut buffer, None).ok()?;
+			let read = subsoil::io::offchain::http_response_read_body(id, &mut buffer, None).ok()?;
 			assert_eq!(read, 0);
 
 			Some(())
@@ -275,10 +275,10 @@ soil_core::wasm_export_functions! {
 	}
 
 	fn test_nested_spans() {
-		soil_io::init_tracing();
+		subsoil::io::init_tracing();
 		let span_id = wasm_tracing::enter_span(Default::default());
 		{
-			soil_io::init_tracing();
+			subsoil::io::init_tracing();
 			let span_id = wasm_tracing::enter_span(Default::default());
 			wasm_tracing::exit(span_id);
 		}
@@ -359,7 +359,7 @@ soil_core::wasm_export_functions! {
 	}
 
 	fn test_abort_on_panic() {
-		soil_io::panic_handler::abort_on_panic("test_abort_on_panic called");
+		subsoil::io::panic_handler::abort_on_panic("test_abort_on_panic called");
 	}
 
 	fn test_unreachable_intrinsic() {
@@ -379,7 +379,7 @@ mod output_validity {
 	use super::WASM_PAGE_SIZE;
 
 	#[cfg(not(feature = "std"))]
-	use soil_runtime_interface::pack_ptr_and_len;
+	use subsoil::runtime_interface::pack_ptr_and_len;
 
 	// Returns a huge len. It should result in an error, and not an allocation.
 	#[no_mangle]

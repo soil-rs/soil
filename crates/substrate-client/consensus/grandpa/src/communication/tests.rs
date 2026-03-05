@@ -26,7 +26,7 @@ use crate::{communication::grandpa_protocol_name, environment::SharedVoterSetSta
 use codec::{DecodeAll, Encode};
 use futures::prelude::*;
 use soil_consensus_grandpa::AuthorityList;
-use soil_keyring::Ed25519Keyring;
+use subsoil::keyring::Ed25519Keyring;
 use soil_network::{
 	config::{MultiaddrWithPeerId, Role},
 	event::Event as NetworkEvent,
@@ -40,7 +40,7 @@ use soil_network_gossip::Validator;
 use soil_network_sync::{SyncEvent as SyncStreamEvent, SyncEventStream};
 use soil_network_test::{Block, Hash};
 use soil_network_types::PeerId;
-use soil_runtime::traits::NumberFor;
+use subsoil::runtime::traits::NumberFor;
 use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
 use std::{collections::HashSet, pin::Pin, sync::Arc, task::Poll};
 
@@ -308,7 +308,7 @@ fn voter_set_state() -> SharedVoterSetState<Block> {
 	use crate::{authorities::AuthoritySet, environment::VoterSetState};
 	use finality_grandpa::round::State as RoundState;
 	use soil_consensus_grandpa::AuthorityId;
-	use soil_core::{crypto::ByteArray, H256};
+	use subsoil::core::{crypto::ByteArray, H256};
 
 	let state = RoundState::genesis((H256::zero(), 0));
 	let base = state.prevote_ghost.unwrap();
@@ -517,7 +517,7 @@ fn good_commit_leads_to_relay() {
 
 #[test]
 fn bad_commit_leads_to_report() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 	let private = [Ed25519Keyring::Alice, Ed25519Keyring::Bob, Ed25519Keyring::Charlie];
 	let public = make_ids(&private[..]);
 	let voter_set = Arc::new(VoterSet::new(public.iter().cloned()).unwrap());
@@ -696,7 +696,7 @@ fn peer_with_higher_view_leads_to_catch_up_request() {
 fn local_chain_spec() -> Box<dyn soil_chain_spec::ChainSpec> {
 	let chain_spec =
 		soil_chain_spec::GenericChainSpec::<soil_chain_spec::NoExtension, ()>::from_json_bytes(
-			&include_bytes!("../../../../../crates/soil/chain-spec/res/chain_spec.json")[..],
+			&include_bytes!("../../../../../soil/chain-spec/res/chain_spec.json")[..],
 		)
 		.unwrap();
 	soil_chain_spec::ChainSpec::cloned_box(&chain_spec)
@@ -707,7 +707,7 @@ fn grandpa_protocol_name() {
 	let chain_spec = local_chain_spec();
 
 	// Create protocol name using random genesis hash.
-	let genesis_hash = soil_core::H256::random();
+	let genesis_hash = subsoil::core::H256::random();
 	let expected = format!("/{}/grandpa/1", array_bytes::bytes2hex("", genesis_hash));
 	let proto_name = grandpa_protocol_name::standard_name(&genesis_hash, &chain_spec);
 	assert_eq!(proto_name.to_string(), expected);

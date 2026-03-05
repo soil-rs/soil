@@ -28,8 +28,8 @@ use core::iter::Peekable;
 use log::{debug, trace};
 use topsoil::{
 	deps::{
-		soil_core::offchain::StorageKind,
-		soil_io::{offchain, offchain_index},
+		subsoil::core::offchain::StorageKind,
+		subsoil::io::{offchain, offchain_index},
 	},
 	prelude::*,
 };

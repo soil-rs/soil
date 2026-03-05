@@ -21,7 +21,7 @@ use crate::{
 	mock::{Lottery, *},
 	*,
 };
-use soil_runtime::{traits::BadOrigin, TokenError};
+use subsoil::runtime::{traits::BadOrigin, TokenError};
 use topsoil_support::{assert_noop, assert_ok, assert_storage_noop};
 
 #[test]

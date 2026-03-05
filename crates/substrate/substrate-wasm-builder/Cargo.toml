@@ -36,10 +36,7 @@ frame-metadata = { features = ["current", "unstable"], optional = true, workspac
 merkleized-metadata = { optional = true, workspace = true }
 soil-executor = { optional = true, workspace = true, default-features = true }
 shlex = { workspace = true }
-soil-core = { optional = true, workspace = true, default-features = true }
-soil-io = { optional = true, workspace = true, default-features = true }
-soil-tracing = { optional = true, workspace = true, default-features = true }
-soil-version = { optional = true, workspace = true, default-features = true }
+subsoil = { workspace = true, default-features = true, optional = true }
 
 [features]
 # Enable support for generating the metadata hash.
@@ -55,8 +52,5 @@ metadata-hash = [
 	"frame-metadata",
 	"merkleized-metadata",
 	"soil-executor",
-	"soil-core",
-	"soil-io",
-	"soil-tracing",
-	"soil-version",
+	"subsoil",
 ]

@@ -44,22 +44,22 @@ use prost::Message;
 use rand::{seq::SliceRandom, thread_rng};
 
 use schema::PeerSignature;
-use soil_api::{ApiError, ProvideRuntimeApi};
+use subsoil::api::{ApiError, ProvideRuntimeApi};
 use soil_authority_discovery::{
 	AuthorityDiscoveryApi, AuthorityId, AuthorityPair, AuthoritySignature,
 };
 use soil_blockchain::HeaderBackend;
-use soil_core::{
+use subsoil::core::{
 	crypto::{key_types, ByteArray, Pair},
 	traits::SpawnNamed,
 };
-use soil_keystore::{Keystore, KeystorePtr};
+use subsoil::keystore::{Keystore, KeystorePtr};
 use soil_network::{
 	config::DEFAULT_KADEMLIA_REPLICATION_FACTOR, event::DhtEvent, multiaddr, KademliaKey,
 	Multiaddr, NetworkDHTProvider, NetworkSigner, NetworkStateInfo,
 };
 use soil_network_types::{multihash::Code, PeerId};
-use soil_runtime::traits::Block as BlockT;
+use subsoil::runtime::traits::Block as BlockT;
 
 mod addr_cache;
 /// Dht payload schemas generated from Protobuf definitions via Prost crate in build.rs.

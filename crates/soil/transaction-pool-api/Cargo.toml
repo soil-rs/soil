@@ -19,8 +19,7 @@ indexmap = { workspace = true, optional = true}
 log = { workspace = true, default-features = true, optional = true}
 serde = { features = ["derive"], workspace = true, default-features = true, optional = true}
 soil-blockchain = { workspace = true, default-features = true, optional = true}
-soil-core = { workspace = true, optional = true}
-soil-runtime = { workspace = true, optional = true}
+subsoil = { workspace = true, optional = true}
 strum = { workspace = true, features = ["derive"], optional = true}
 thiserror = { workspace = true, optional = true}
 
@@ -34,12 +33,10 @@ std = [
 	"log",
 	"serde",
 	"soil-blockchain",
-	"soil-core",
-	"soil-runtime",
+	"subsoil",
 	"strum",
 	"thiserror",
-	"soil-core/std",
-	"soil-runtime/std",
+	"subsoil/std",
 ]
 
 [dev-dependencies]

@@ -22,13 +22,13 @@
 #![deny(missing_docs)]
 
 use crate::{impl_for_tuples_attr, weights::Weight};
-use soil_runtime::traits::AtLeast32BitUnsigned;
-use soil_weights::WeightMeter;
+use subsoil::runtime::traits::AtLeast32BitUnsigned;
+use subsoil::weights::WeightMeter;
 
 #[cfg(feature = "try-runtime")]
 use alloc::vec::Vec;
 #[cfg(feature = "try-runtime")]
-use soil_runtime::TryRuntimeError;
+use subsoil::runtime::TryRuntimeError;
 
 /// Provides a callback to execute logic before the all inherents.
 pub trait PreInherents {
@@ -386,7 +386,7 @@ impl_for_tuples_attr! {
 ///   detected.
 /// * [`OnRuntimeUpgrade`](Hooks::OnRuntimeUpgrade) hooks are mandatorily executed at the very
 ///   beginning of the block body, before any extrinsics are processed.
-/// * [`Inherents`](soil_inherents) are always executed before any other other signed or unsigned
+/// * [`Inherents`](subsoil::inherents) are always executed before any other other signed or unsigned
 ///   extrinsics.
 /// * [`OnIdle`](Hooks::OnIdle) hooks are executed after extrinsics if there is weight remaining in
 ///   the block.
@@ -540,7 +540,7 @@ pub trait Hooks<BlockNumber> {
 	/// details on this.
 	///
 	/// Moreover, the code in this function has access to a wider range of host functions in
-	/// [`soil_io`], namely [`soil_io::offchain`]. This includes exotic operations such as HTTP calls
+	/// [`subsoil::io`], namely [`subsoil::io::offchain`]. This includes exotic operations such as HTTP calls
 	/// that are not really possible in the rest of the runtime code.
 	///
 	/// The execution of this hook is entirely optional and is left at the discretion of the
@@ -560,14 +560,14 @@ pub trait Hooks<BlockNumber> {
 	/// checks can be asserted upon here.
 	///
 	/// Note that this hook is executed in an externality environment, provided by
-	/// `soil_io::TestExternalities`. This makes it possible to access the storage.
+	/// `subsoil::io::TestExternalities`. This makes it possible to access the storage.
 	fn integrity_test() {}
 }
 
 /// A trait to define the build function of a genesis config for both runtime and pallets.
 ///
 /// Replaces deprecated [`GenesisBuild<T,I>`].
-pub trait BuildGenesisConfig: soil_runtime::traits::MaybeSerializeDeserialize {
+pub trait BuildGenesisConfig: subsoil::runtime::traits::MaybeSerializeDeserialize {
 	/// The build function puts initial `GenesisConfig` keys/values pairs into the storage.
 	fn build(&self);
 }
@@ -581,14 +581,14 @@ impl BuildGenesisConfig for () {
 #[deprecated(
 	note = "GenesisBuild is planned to be removed in December 2023. Use BuildGenesisConfig instead of it."
 )]
-pub trait GenesisBuild<T, I = ()>: soil_runtime::traits::MaybeSerializeDeserialize {
+pub trait GenesisBuild<T, I = ()>: subsoil::runtime::traits::MaybeSerializeDeserialize {
 	/// The build function is called within an externalities allowing storage APIs.
 	/// Thus one can write to storage using regular pallet storages.
 	fn build(&self);
 
 	/// Build the storage using `build` inside default storage.
 	#[cfg(feature = "std")]
-	fn build_storage(&self) -> Result<soil_runtime::Storage, String> {
+	fn build_storage(&self) -> Result<subsoil::runtime::Storage, String> {
 		let mut storage = Default::default();
 		self.assimilate_storage(&mut storage)?;
 		Ok(storage)
@@ -596,8 +596,8 @@ pub trait GenesisBuild<T, I = ()>: soil_runtime::traits::MaybeSerializeDeseriali
 
 	/// Assimilate the storage for this module into pre-existing overlays.
 	#[cfg(feature = "std")]
-	fn assimilate_storage(&self, storage: &mut soil_runtime::Storage) -> Result<(), String> {
-		soil_state_machine::BasicExternalities::execute_with_storage(storage, || {
+	fn assimilate_storage(&self, storage: &mut subsoil::runtime::Storage) -> Result<(), String> {
+		subsoil::state_machine::BasicExternalities::execute_with_storage(storage, || {
 			self.build();
 			Ok(())
 		})
@@ -617,7 +617,7 @@ mod tests {
 	use super::*;
 	use crate::parameter_types;
 	use alloc::vec::Vec;
-	use soil_io::TestExternalities;
+	use subsoil::io::TestExternalities;
 
 	#[cfg(feature = "try-runtime")]
 	#[test]

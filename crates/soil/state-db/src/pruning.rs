@@ -446,7 +446,7 @@ mod tests {
 		to_meta_key, CommitSet, Error, Hash, StateDbError, DEFAULT_MAX_BLOCK_CONSTRAINT,
 	};
 	use codec::Encode;
-	use soil_core::H256;
+	use subsoil::core::H256;
 
 	fn check_journal(pruning: &RefWindow<H256, H256, TestDb>, db: &TestDb) {
 		let count_insertions = matches!(pruning.queue, DeathRowQueue::Mem { .. });

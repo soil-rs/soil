@@ -22,7 +22,7 @@
 use crate as offences;
 use crate::Config;
 use codec::Encode;
-use soil_runtime::{traits::IdentityLookup, BuildStorage, Perbill};
+use subsoil::runtime::{traits::IdentityLookup, BuildStorage, Perbill};
 use soil_staking::{
 	offence::{self, Kind, OffenceDetails},
 	SessionIndex,
@@ -85,9 +85,9 @@ impl Config for Runtime {
 	type OnOffenceHandler = OnOffenceHandler;
 }
 
-pub fn new_test_ext() -> soil_io::TestExternalities {
+pub fn new_test_ext() -> subsoil::io::TestExternalities {
 	let t = topsoil_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
-	let mut ext = soil_io::TestExternalities::new(t);
+	let mut ext = subsoil::io::TestExternalities::new(t);
 	ext.execute_with(|| System::set_block_number(1));
 	ext
 }

@@ -40,7 +40,7 @@ use soil_client_api::{BlockBackend, ProofProvider};
 use soil_network::ProtocolName;
 use soil_network_common::sync::{message::BlockAnnounce, SyncMode};
 use soil_network_types::PeerId;
-use soil_runtime::traits::{Block as BlockT, Header, NumberFor};
+use subsoil::runtime::traits::{Block as BlockT, Header, NumberFor};
 use std::{any::Any, collections::HashMap, sync::Arc};
 
 /// Corresponding `ChainSync` mode.

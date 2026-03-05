@@ -26,11 +26,11 @@ use super::*;
 #[allow(unused)]
 use crate::{extension::VerifySignature, Config, Pallet as VerifySignaturePallet};
 use alloc::vec;
-use soil_io::{
+use subsoil::io::{
 	crypto::{sr25519_generate, sr25519_sign},
 	hashing::blake2_256,
 };
-use soil_runtime::{
+use subsoil::runtime::{
 	generic::ExtensionVersion,
 	traits::{AsTransactionAuthorizedOrigin, DispatchTransaction, Dispatchable, IdentifyAccount},
 	AccountId32, MultiSignature, MultiSigner,

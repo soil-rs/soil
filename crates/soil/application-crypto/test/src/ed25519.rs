@@ -17,15 +17,15 @@
 
 //! Integration tests for ed25519
 
-use soil_api::{ApiExt, ProvideRuntimeApi};
-use soil_application_crypto::{ed25519::AppPair, RuntimePublic};
-use soil_core::{
+use subsoil::api::{ApiExt, ProvideRuntimeApi};
+use subsoil::application_crypto::{ed25519::AppPair, RuntimePublic};
+use subsoil::core::{
 	crypto::{ByteArray, Pair},
 	ed25519::Pair as Ed25519Pair,
 	proof_of_possession::{ProofOfPossessionGenerator, ProofOfPossessionVerifier},
 	testing::ED25519,
 };
-use soil_keystore::{testing::MemoryKeystore, Keystore, KeystoreExt};
+use subsoil::keystore::{testing::MemoryKeystore, Keystore, KeystoreExt};
 use std::sync::Arc;
 use substrate_test_runtime_client::{
 	runtime::{TestAPI, TEST_OWNER},
@@ -34,7 +34,7 @@ use substrate_test_runtime_client::{
 
 #[test]
 fn ed25519_works_in_runtime() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 	let keystore = Arc::new(MemoryKeystore::new());
 	let test_client = TestClientBuilder::new().build();
 

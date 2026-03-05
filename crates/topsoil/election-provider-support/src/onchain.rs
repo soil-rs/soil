@@ -26,7 +26,7 @@ use crate::{
 };
 use alloc::{collections::btree_map::BTreeMap, vec::Vec};
 use core::marker::PhantomData;
-use soil_npos_elections::{
+use subsoil::npos_elections::{
 	assignment_ratio_to_staked_normalized, to_supports, ElectionResult, VoteWeight,
 };
 use topsoil_support::{dispatch::DispatchClass, traits::Get};
@@ -36,15 +36,15 @@ use topsoil_system::pallet_prelude::BlockNumberFor;
 #[derive(Eq, PartialEq, Debug, Clone)]
 pub enum Error {
 	/// An internal error in the NPoS elections crate.
-	NposElections(soil_npos_elections::Error),
+	NposElections(subsoil::npos_elections::Error),
 	/// Errors from the data provider.
 	DataProvider(&'static str),
 	/// Results failed to meet the bounds.
 	FailedToBound,
 }
 
-impl From<soil_npos_elections::Error> for Error {
-	fn from(e: soil_npos_elections::Error) -> Self {
+impl From<subsoil::npos_elections::Error> for Error {
+	fn from(e: subsoil::npos_elections::Error) -> Self {
 		Error::NposElections(e)
 	}
 }
@@ -74,7 +74,7 @@ pub trait Config {
 	/// `NposSolver` that should be used, an example would be `PhragMMS`.
 	type Solver: NposSolver<
 		AccountId = <Self::System as topsoil_system::Config>::AccountId,
-		Error = soil_npos_elections::Error,
+		Error = subsoil::npos_elections::Error,
 	>;
 
 	/// Maximum number of backers allowed per target.
@@ -189,7 +189,7 @@ impl<T: Config> ElectionProvider for OnChainExecution<T> {
 	type MaxBackersPerWinner = T::MaxBackersPerWinner;
 	// can support any number of pages, as this is meant to be called "instantly". We don't care
 	// about this value here.
-	type Pages = soil_core::ConstU32<1>;
+	type Pages = subsoil::core::ConstU32<1>;
 	type DataProvider = T::DataProvider;
 
 	fn elect(page: PageIndex) -> Result<BoundedSupportsOf<Self>, Self::Error> {
@@ -203,10 +203,10 @@ impl<T: Config> ElectionProvider for OnChainExecution<T> {
 	}
 
 	fn duration() -> Self::BlockNumber {
-		soil_runtime::traits::Zero::zero()
+		subsoil::runtime::traits::Zero::zero()
 	}
 
-	fn status() -> Result<Option<soil_runtime::Weight>, ()> {
+	fn status() -> Result<Option<subsoil::runtime::Weight>, ()> {
 		Ok(Some(Default::default()))
 	}
 }
@@ -215,17 +215,17 @@ impl<T: Config> ElectionProvider for OnChainExecution<T> {
 mod tests {
 	use super::*;
 	use crate::{ElectionProvider, PhragMMS, SequentialPhragmen};
-	use soil_io::TestExternalities;
-	use soil_npos_elections::Support;
-	use soil_runtime::Perbill;
+	use subsoil::io::TestExternalities;
+	use subsoil::npos_elections::Support;
+	use subsoil::runtime::Perbill;
 	use topsoil_support::{assert_noop, derive_impl, parameter_types};
 	type AccountId = u64;
 	type Nonce = u64;
 	type BlockNumber = u64;
 
-	pub type Header = soil_runtime::generic::Header<BlockNumber, soil_runtime::traits::BlakeTwo256>;
-	pub type UncheckedExtrinsic = soil_runtime::generic::UncheckedExtrinsic<AccountId, (), (), ()>;
-	pub type Block = soil_runtime::generic::Block<Header, UncheckedExtrinsic>;
+	pub type Header = subsoil::runtime::generic::Header<BlockNumber, subsoil::runtime::traits::BlakeTwo256>;
+	pub type UncheckedExtrinsic = subsoil::runtime::generic::UncheckedExtrinsic<AccountId, (), (), ()>;
+	pub type Block = subsoil::runtime::generic::Block<Header, UncheckedExtrinsic>;
 
 	topsoil_support::construct_runtime!(
 		pub enum Runtime {
@@ -240,10 +240,10 @@ mod tests {
 		type RuntimeOrigin = RuntimeOrigin;
 		type Nonce = Nonce;
 		type RuntimeCall = RuntimeCall;
-		type Hash = soil_core::H256;
-		type Hashing = soil_runtime::traits::BlakeTwo256;
+		type Hash = subsoil::core::H256;
+		type Hashing = subsoil::runtime::traits::BlakeTwo256;
 		type AccountId = AccountId;
-		type Lookup = soil_runtime::traits::IdentityLookup<Self::AccountId>;
+		type Lookup = subsoil::runtime::traits::IdentityLookup<Self::AccountId>;
 		type Block = Block;
 		type RuntimeEvent = ();
 		type BlockHashCount = ();
@@ -296,7 +296,7 @@ mod tests {
 	mod mock_data_provider {
 		use super::*;
 		use crate::{data_provider, DataProviderBounds, PageIndex, VoterOf};
-		use soil_runtime::bounded_vec;
+		use subsoil::runtime::bounded_vec;
 		use topsoil_support::traits::ConstU32;
 
 		pub struct DataProvider;

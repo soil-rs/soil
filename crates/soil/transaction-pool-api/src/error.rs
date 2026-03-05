@@ -18,7 +18,7 @@
 
 //! Transaction pool errors.
 
-use soil_runtime::transaction_validity::{
+use subsoil::runtime::transaction_validity::{
 	InvalidTransaction, TransactionPriority as Priority, UnknownTransaction,
 };
 

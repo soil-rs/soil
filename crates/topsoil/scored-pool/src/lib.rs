@@ -106,7 +106,7 @@ use alloc::vec::Vec;
 use codec::{FullCodec, MaxEncodedLen};
 use core::{cmp::Reverse, fmt::Debug};
 pub use pallet::*;
-use soil_runtime::traits::{AtLeast32Bit, StaticLookup, Zero};
+use subsoil::runtime::traits::{AtLeast32Bit, StaticLookup, Zero};
 use topsoil_support::{
 	ensure,
 	traits::{ChangeMembers, Currency, Get, InitializeMembers, ReservableCurrency},

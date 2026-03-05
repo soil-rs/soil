@@ -20,7 +20,7 @@
 
 use crate::error::Error;
 
-pub use soil_allocator::AllocationStats;
+pub use subsoil::allocator::AllocationStats;
 
 /// Default heap allocation strategy.
 pub const DEFAULT_HEAP_ALLOC_STRATEGY: HeapAllocStrategy =

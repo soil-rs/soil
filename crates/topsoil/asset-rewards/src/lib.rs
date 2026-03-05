@@ -84,12 +84,12 @@ pub use pallet::*;
 
 use codec::{Codec, Decode, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;
-use soil_core::Get;
-use soil_runtime::{
+use subsoil::core::Get;
+use subsoil::runtime::{
 	traits::{BadOrigin, BlockNumberProvider, EnsureAdd, MaybeDisplay, Zero},
 	DispatchError, DispatchResult,
 };
-use soil_std::boxed::Box;
+use subsoil::std::boxed::Box;
 use topsoil_support::{
 	ensure,
 	traits::{
@@ -166,7 +166,7 @@ pub struct PoolInfo<AccountId, AssetId, Balance, BlockNumber> {
 	account: AccountId,
 }
 
-soil_api::decl_runtime_apis! {
+subsoil::api::decl_runtime_apis! {
 	/// The runtime API for the asset rewards pallet.
 	pub trait AssetRewards<Cost: MaybeDisplay + Codec> {
 		/// Get the cost of creating a pool.
@@ -179,7 +179,7 @@ soil_api::decl_runtime_apis! {
 #[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
-	use soil_runtime::{
+	use subsoil::runtime::{
 		traits::{
 			AccountIdConversion, BadOrigin, EnsureAdd, EnsureAddAssign, EnsureDiv, EnsureMul,
 			EnsureSub, EnsureSubAssign,

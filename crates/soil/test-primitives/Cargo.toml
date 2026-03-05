@@ -18,9 +18,7 @@ targets = ["x86_64-unknown-linux-gnu"]
 codec = { features = ["derive"], workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { features = ["derive"], optional = true, workspace = true }
-soil-application-crypto = { workspace = true }
-soil-core = { workspace = true }
-soil-runtime = { workspace = true }
+subsoil = { workspace = true }
 
 [features]
 default = ["std"]
@@ -28,15 +26,11 @@ std = [
 	"codec/std",
 	"scale-info/std",
 	"serde/std",
-	"soil-application-crypto/std",
-	"soil-core/std",
-	"soil-runtime/std",
+	"subsoil/std",
 ]
 
 # Serde support without relying on std features.
 serde = [
 	"dep:serde",
-	"soil-application-crypto/serde",
-	"soil-core/serde",
-	"soil-runtime/serde",
+	"subsoil/serde",
 ]

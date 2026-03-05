@@ -18,7 +18,7 @@
 
 use soil_network_common::role::ObservedRole;
 use soil_network_types::PeerId;
-use soil_runtime::traits::Block as BlockT;
+use subsoil::runtime::traits::Block as BlockT;
 
 /// Validates consensus messages.
 pub trait Validator<B: BlockT>: Send + Sync {

@@ -16,7 +16,7 @@
 // limitations under the License.
 
 use crate::{self as topsoil_system, *};
-use soil_runtime::{type_with_default::TypeWithDefault, BuildStorage, Perbill};
+use subsoil::runtime::{type_with_default::TypeWithDefault, BuildStorage, Perbill};
 use topsoil_support::{derive_impl, parameter_types};
 
 type Block = mocking::MockBlock<Test>;
@@ -39,7 +39,7 @@ parameter_types! {
 		authoring_version: 1,
 		spec_version: 1,
 		impl_version: 1,
-		apis: soil_version::create_apis_vec!([]),
+		apis: subsoil::create_apis_vec!([]),
 		transaction_version: 1,
 		system_version: 1,
 	};
@@ -125,11 +125,11 @@ pub const CALL: &<Test as Config>::RuntimeCall =
 	&RuntimeCall::System(topsoil_system::Call::set_heap_pages { pages: 0u64 });
 
 /// Create new externalities for `System` module tests.
-pub fn new_test_ext() -> soil_io::TestExternalities {
+pub fn new_test_ext() -> subsoil::io::TestExternalities {
 	// Initialize logging
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
-	let mut ext: soil_io::TestExternalities =
+	let mut ext: subsoil::io::TestExternalities =
 		RuntimeGenesisConfig::default().build_storage().unwrap().into();
 	// Add to each test the initial weight of a block
 	ext.execute_with(|| {

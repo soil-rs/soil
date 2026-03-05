@@ -22,8 +22,8 @@ use alloc::{vec, vec::IntoIter};
 use codec::FullCodec;
 use core::{fmt::Debug, iter::Iterator};
 use scale_info::TypeInfo;
-use soil_runtime::DispatchError;
-use soil_weights::Weight;
+use subsoil::runtime::DispatchError;
+use subsoil::weights::Weight;
 
 /// Contain's re-exports of all the supporting types for the [`Task`] trait. Used in the macro
 /// expansion of `RuntimeTask`.
@@ -33,8 +33,8 @@ pub mod __private {
 	pub use codec::FullCodec;
 	pub use core::{fmt::Debug, iter::Iterator};
 	pub use scale_info::TypeInfo;
-	pub use soil_runtime::DispatchError;
-	pub use soil_weights::Weight;
+	pub use subsoil::runtime::DispatchError;
+	pub use subsoil::weights::Weight;
 }
 
 /// A general-purpose trait which defines a type of service work (i.e., work to performed by an

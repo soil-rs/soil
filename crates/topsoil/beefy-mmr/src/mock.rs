@@ -19,14 +19,13 @@ use std::vec;
 
 use codec::Encode;
 use soil_consensus_beefy::mmr::MmrLeafVersion;
-use soil_io::TestExternalities;
-use soil_runtime::{
+use subsoil::io::TestExternalities;
+use subsoil::runtime::{
 	app_crypto::ecdsa::Public,
-	impl_opaque_keys,
 	traits::{ConvertInto, Keccak256, OpaqueKeys},
 	BuildStorage,
 };
-use soil_state_machine::BasicExternalities;
+use subsoil::state_machine::BasicExternalities;
 use topsoil_support::{
 	construct_runtime, derive_impl, parameter_types,
 	traits::{ConstU32, ConstU64},
@@ -37,9 +36,9 @@ use crate as topsoil_beefy_mmr;
 pub use soil_consensus_beefy::{
 	ecdsa_crypto::AuthorityId as BeefyId, mmr::BeefyDataProvider, ConsensusLog, BEEFY_ENGINE_ID,
 };
-use soil_core::offchain::{testing::TestOffchainExt, OffchainDbExt, OffchainWorkerExt};
+use subsoil::core::offchain::{testing::TestOffchainExt, OffchainDbExt, OffchainWorkerExt};
 
-impl_opaque_keys! {
+subsoil::impl_opaque_keys! {
 	pub struct MockSessionKeys {
 		pub dummy: topsoil_beefy::Pallet<Test>,
 	}
@@ -116,7 +115,7 @@ impl topsoil_beefy::Config for Test {
 	type OnNewValidatorSet = BeefyMmr;
 	type AncestryHelper = BeefyMmr;
 	type WeightInfo = ();
-	type KeyOwnerProof = soil_core::Void;
+	type KeyOwnerProof = subsoil::core::Void;
 	type EquivocationReportSystem = ();
 }
 
@@ -140,7 +139,7 @@ impl BeefyDataProvider<Vec<u8>> for DummyDataProvider {
 	fn extra_data() -> Vec<u8> {
 		let mut col = vec![(15, vec![1, 2, 3]), (5, vec![4, 5, 6])];
 		col.sort();
-		binary_merkle_tree::merkle_root::<<Test as topsoil_mmr::Config>::Hashing, _>(
+		subsoil::binary_merkle_tree::merkle_root::<<Test as topsoil_mmr::Config>::Hashing, _>(
 			col.into_iter().map(|pair| pair.encode()),
 		)
 		.as_ref()

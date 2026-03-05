@@ -18,7 +18,7 @@
 //! Tests for [`ItemOf`], [`fungible::UnionOf`] and [`fungibles::UnionOf`] set types.
 
 use super::*;
-use soil_runtime::{traits::ConvertToValue, Either};
+use subsoil::runtime::{traits::ConvertToValue, Either};
 use topsoil_support::{
 	parameter_types,
 	traits::{

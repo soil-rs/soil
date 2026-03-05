@@ -80,7 +80,7 @@ fn main() {
 	let opt = Opt::parse();
 
 	if !opt.json {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 	}
 
 	let mut import_benchmarks = Vec::new();

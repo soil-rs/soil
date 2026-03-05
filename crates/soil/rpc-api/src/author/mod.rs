@@ -20,7 +20,7 @@
 
 use error::Error;
 use jsonrpsee::proc_macros::rpc;
-use soil_core::Bytes;
+use subsoil::core::Bytes;
 use soil_transaction_pool_api::TransactionStatus;
 
 pub mod error;

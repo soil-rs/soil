@@ -18,7 +18,7 @@
 //! Test environment for remarks pallet.
 
 use crate as topsoil_remark;
-use soil_runtime::BuildStorage;
+use subsoil::runtime::BuildStorage;
 use topsoil_support::derive_impl;
 
 pub type Block = topsoil_system::mocking::MockBlock<Test>;
@@ -42,7 +42,7 @@ impl topsoil_remark::Config for Test {
 	type WeightInfo = ();
 }
 
-pub fn new_test_ext() -> soil_io::TestExternalities {
+pub fn new_test_ext() -> subsoil::io::TestExternalities {
 	let t = RuntimeGenesisConfig { system: Default::default() }.build_storage().unwrap();
 	t.into()
 }

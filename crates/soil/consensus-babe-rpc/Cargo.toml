@@ -22,14 +22,10 @@ sc-consensus-babe = { workspace = true, default-features = true, optional = true
 soil-consensus-epochs = { workspace = true, default-features = true, optional = true}
 soil-rpc-api = { workspace = true, default-features = true, optional = true}
 serde = { features = ["derive"], workspace = true, default-features = true, optional = true}
-soil-api = { workspace = true, default-features = true, optional = true}
-soil-application-crypto = { workspace = true, default-features = true, optional = true}
 soil-blockchain = { workspace = true, default-features = true, optional = true}
 soil-consensus = { workspace = true, default-features = true, optional = true}
 soil-consensus-babe = { workspace = true, default-features = true, optional = true}
-soil-core = { workspace = true, default-features = true, optional = true}
-soil-keystore = { workspace = true, default-features = true, optional = true}
-soil-runtime = { workspace = true, default-features = true, optional = true}
+subsoil = { workspace = true, default-features = true, optional = true}
 thiserror = { workspace = true, optional = true}
 
 [features]
@@ -39,30 +35,20 @@ std = [
 	"jsonrpsee",
 	"sc-consensus-babe",
 	"serde",
-	"soil-api",
-	"soil-application-crypto",
+	"subsoil",
 	"soil-blockchain",
 	"soil-consensus",
 	"soil-consensus-babe",
 	"soil-consensus-epochs",
-	"soil-core",
-	"soil-keystore",
 	"soil-rpc-api",
-	"soil-runtime",
 	"thiserror",
-	"soil-api/std",
-	"soil-application-crypto/std",
+	"subsoil/std",
 	"soil-consensus-babe/std",
 	"soil-consensus-epochs/std",
-	"soil-core/std",
-	"soil-keystore/std",
-	"soil-rpc-api/std",
-	"soil-runtime/std",
-]
+	"soil-rpc-api/std"]
 
 [dev-dependencies]
 sc-consensus = { workspace = true, default-features = true }
 soil-transaction-pool-api = { workspace = true, default-features = true }
-soil-keyring = { workspace = true, default-features = true }
 substrate-test-runtime-client = { workspace = true }
 tokio = { workspace = true, default-features = true }

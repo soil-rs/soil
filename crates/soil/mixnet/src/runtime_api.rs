@@ -20,7 +20,7 @@
 use super::types::{Mixnode, MixnodesErr, SessionIndex, SessionStatus};
 use alloc::vec::Vec;
 
-soil_api::decl_runtime_apis! {
+subsoil::api::decl_runtime_apis! {
 	/// API to query the mixnet session status and mixnode sets, and to register mixnodes.
 	pub trait MixnetApi {
 		/// Get the index and phase of the current session.

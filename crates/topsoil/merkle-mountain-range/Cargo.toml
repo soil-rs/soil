@@ -23,7 +23,7 @@ soil-mmr-primitives = { workspace = true }
 
 [dev-dependencies]
 itertools = { workspace = true }
-soil-tracing = { workspace = true, default-features = true }
+subsoil = { workspace = true, default-features = true }
 
 [features]
 default = ["std"]

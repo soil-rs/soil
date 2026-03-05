@@ -38,6 +38,10 @@ extern crate alloc;
 /// Maximum nesting level for extrinsics.
 pub const MAX_EXTRINSIC_DEPTH: u32 = 256;
 
+/// Re-export subsoil for proc-macro generated code.
+#[doc(hidden)]
+pub use subsoil;
+
 /// Private exports that are being used by macros.
 ///
 /// The exports are not stable and should not be relied on.
@@ -59,23 +63,24 @@ pub mod __private {
 	pub use scale_info;
 	pub use serde;
 	pub use serde_json;
-	pub use soil_core::{Get, OpaqueMetadata, Void};
-	pub use soil_crypto_hashing_proc_macro;
-	pub use soil_inherents;
+	pub use subsoil::core::{Get, OpaqueMetadata, Void};
+	pub use subsoil_crypto_hashing_proc_macro;
+	pub use subsoil::inherents;
 	#[cfg(feature = "std")]
-	pub use soil_io::TestExternalities;
-	pub use soil_io::{self, hashing, storage::root as storage_root};
-	pub use soil_metadata_ir as metadata_ir;
+	pub use subsoil::io::TestExternalities;
+	pub use subsoil::io::{self, hashing, storage::root as storage_root};
+	pub use subsoil;
+	pub use subsoil::metadata_ir;
 	#[cfg(feature = "std")]
-	pub use soil_runtime::{bounded_btree_map, bounded_vec};
-	pub use soil_runtime::{
+	pub use subsoil::runtime::{bounded_btree_map, bounded_vec};
+	pub use subsoil::runtime::{
 		traits::{AsSystemOriginSigner, AsTransactionAuthorizedOrigin, Dispatchable},
 		DispatchError, StateVersion, TransactionOutcome,
 	};
 	#[cfg(feature = "std")]
-	pub use soil_state_machine::BasicExternalities;
-	pub use soil_std;
-	pub use soil_tracing;
+	pub use subsoil::state_machine::BasicExternalities;
+	pub use subsoil::std;
+	pub use subsoil::tracing;
 	pub use tt_call::*;
 }
 
@@ -97,9 +102,9 @@ pub mod weights;
 #[doc(hidden)]
 pub mod unsigned {
 	#[doc(hidden)]
-	pub use crate::soil_runtime::traits::ValidateUnsigned;
+	pub use subsoil::runtime::traits::ValidateUnsigned;
 	#[doc(hidden)]
-	pub use crate::soil_runtime::transaction_validity::{
+	pub use subsoil::runtime::transaction_validity::{
 		TransactionSource, TransactionValidity, TransactionValidityError, UnknownTransaction,
 	};
 }
@@ -122,13 +127,13 @@ pub use self::{
 		StorageMap, StorageNMap, StoragePrefixedMap, StorageValue,
 	},
 };
-pub use soil_runtime::{
+pub use subsoil::runtime::{
 	self, print, traits::Printable, ConsensusEngineId, MAX_MODULE_ERROR_ENCODED_SIZE,
 };
 
 use codec::{Decode, Encode};
 use scale_info::TypeInfo;
-use soil_runtime::TypeId;
+use subsoil::runtime::TypeId;
 
 /// A unified log target for support operations.
 pub const LOG_TARGET: &str = "runtime::topsoil-support";
@@ -407,8 +412,8 @@ pub mod testing_prelude {
 		assert_err, assert_err_ignore_postinfo, assert_err_with_weight, assert_noop, assert_ok,
 		assert_storage_noop, parameter_types,
 	};
-	pub use soil_arithmetic::assert_eq_error_rate;
-	pub use soil_runtime::{bounded_btree_map, bounded_vec};
+	pub use subsoil::assert_eq_error_rate;
+	pub use subsoil::runtime::{bounded_btree_map, bounded_vec};
 }
 
 /// Prelude to be used alongside pallet macro, for ease of use.
@@ -441,8 +446,8 @@ pub mod pallet_prelude {
 	pub use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 	pub use core::marker::PhantomData;
 	pub use scale_info::TypeInfo;
-	pub use soil_inherents::MakeFatalError;
-	pub use soil_runtime::{
+	pub use subsoil::inherents::MakeFatalError;
+	pub use subsoil::runtime::{
 		traits::{
 			CheckedAdd, CheckedConversion, CheckedDiv, CheckedMul, CheckedShl, CheckedShr,
 			CheckedSub, MaybeSerializeDeserialize, Member, One, ValidateResult, ValidateUnsigned,
@@ -455,7 +460,7 @@ pub mod pallet_prelude {
 		},
 		Debug, DispatchError, MAX_MODULE_ERROR_ENCODED_SIZE,
 	};
-	pub use soil_weights::Weight;
+	pub use subsoil::weights::Weight;
 	pub use topsoil_support::pallet_macros::*;
 	pub use topsoil_support_procedural::{inject_runtime_type, register_default_impl};
 }
@@ -823,7 +828,7 @@ pub mod pallet_macros {
 	/// mod pallet {
 	/// # 	use topsoil_support::pallet_prelude::*;
 	/// # 	use topsoil_support::inherent::IsFatalError;
-	/// # 	use soil_timestamp::InherentError;
+	/// # 	use subsoil::timestamp::InherentError;
 	/// # 	use core::result;
 	/// #
 	/// 	// Example inherent identifier
@@ -1226,7 +1231,7 @@ pub mod pallet_macros {
 	/// 	pub struct Pallet<T>(_);
 	///
 	/// 	#[pallet::validate_unsigned]
-	/// 	impl<T: Config> soil_runtime::traits::ValidateUnsigned for Pallet<T> {
+	/// 	impl<T: Config> subsoil::runtime::traits::ValidateUnsigned for Pallet<T> {
 	/// 		type Call = Call<T>;
 	///
 	/// 		fn validate_unsigned(_source: TransactionSource, _call: &Self::Call) -> TransactionValidity {
@@ -1244,7 +1249,7 @@ pub mod pallet_macros {
 	/// [`ValidateUnsigned`](topsoil_support::pallet_prelude::ValidateUnsigned) for
 	/// type `Pallet<T>`, and some optional where clause.
 	///
-	/// NOTE: There is also the [`soil_runtime::traits::TransactionExtension`] trait that can be
+	/// NOTE: There is also the [`subsoil::runtime::traits::TransactionExtension`] trait that can be
 	/// used to add some specific logic for transaction validation.
 	///
 	/// ## Macro expansion
@@ -1296,7 +1301,7 @@ pub mod pallet_macros {
 	/// accepts view function queries and dispatches them to the right pallet. You can do that
 	/// by implementing the
 	/// [`RuntimeViewFunction`](topsoil_support::view_functions::runtime_api::RuntimeViewFunction)
-	/// trait for the runtime inside an [`impl_runtime_apis!`](soil_api::impl_runtime_apis)
+	/// trait for the runtime inside an [`impl_runtime_apis!`](subsoil::api::impl_runtime_apis)
 	/// block.
 	///
 	/// The `RuntimeViewFunction` trait implements a hashing-based dispatching mechanism to
@@ -1319,7 +1324,7 @@ pub mod pallet_macros {
 	/// ```
 	/// #[topsoil_support::pallet]
 	/// mod pallet {
-	/// # 	use soil_runtime::FixedU128;
+	/// # 	use subsoil::runtime::FixedU128;
 	/// # 	use topsoil_support::pallet_prelude::*;
 	/// #
 	/// 	#[pallet::pallet]
@@ -1641,12 +1646,12 @@ pub mod pallet_macros {
 	/// pallet.
 	///
 	/// > The exact definition of **extrinsic** can be found in
-	/// > [`soil_runtime::generic::UncheckedExtrinsic`].
+	/// > [`subsoil::runtime::generic::UncheckedExtrinsic`].
 	///
 	/// A **dispatchable** is a common term in FRAME, referring to process of constructing a
 	/// function, and dispatching it with the correct inputs. This is commonly used with
 	/// extrinsics, for example "an extrinsic has been dispatched". See
-	/// [`soil_runtime::traits::Dispatchable`] and [`crate::traits::UnfilteredDispatchable`].
+	/// [`subsoil::runtime::traits::Dispatchable`] and [`crate::traits::UnfilteredDispatchable`].
 	///
 	/// ## Call Enum
 	///
@@ -1978,7 +1983,7 @@ pub mod pallet_macros {
 	/// specific key. The exact key is dependent on the type of the storage.
 	///
 	/// > From the perspective of this pallet, the entire blockchain state is abstracted behind
-	/// > a key-value api, namely [`soil_io::storage`].
+	/// > a key-value api, namely [`subsoil::io::storage`].
 	///
 	/// ## Storage Types
 	///
@@ -2143,7 +2148,7 @@ pub mod pallet_macros {
 	///
 	/// Internally, every storage type generates a "prefix". This prefix serves as the initial
 	/// segment of the key utilized to store values in the on-chain state (i.e., the final key
-	/// used in [`soil_io::storage`](soil_io::storage)). For all storage types, the following rule
+	/// used in [`subsoil::io::storage`](subsoil::io::storage)). For all storage types, the following rule
 	/// applies:
 	///
 	/// > The storage prefix begins with `twox128(pallet_prefix) ++ twox128(STORAGE_PREFIX)`,
@@ -2265,22 +2270,22 @@ pub mod pallet_macros {
 }
 
 #[deprecated(
-	note = "Will be removed after July 2023; Use `soil_runtime::traits` directly instead."
+	note = "Will be removed after July 2023; Use `subsoil::runtime::traits` directly instead."
 )]
 pub mod error {
 	#[doc(hidden)]
-	pub use soil_runtime::traits::{BadOrigin, LookupError};
+	pub use subsoil::runtime::traits::{BadOrigin, LookupError};
 }
 
 #[doc(inline)]
 pub use topsoil_support_procedural::register_default_impl;
 
 // Generate a macro that will enable/disable code based on `std` feature being active.
-soil_core::generate_feature_enabled_macro!(std_enabled, feature = "std", $);
+subsoil::generate_feature_enabled_macro!(std_enabled, feature = "std", $);
 // Generate a macro that will enable/disable code based on `try-runtime` feature being active.
-soil_core::generate_feature_enabled_macro!(try_runtime_enabled, feature = "try-runtime", $);
-soil_core::generate_feature_enabled_macro!(try_runtime_or_std_enabled, any(feature = "try-runtime", feature = "std"), $);
-soil_core::generate_feature_enabled_macro!(try_runtime_and_std_not_enabled, all(not(feature = "try-runtime"), not(feature = "std")), $);
+subsoil::generate_feature_enabled_macro!(try_runtime_enabled, feature = "try-runtime", $);
+subsoil::generate_feature_enabled_macro!(try_runtime_or_std_enabled, any(feature = "try-runtime", feature = "std"), $);
+subsoil::generate_feature_enabled_macro!(try_runtime_and_std_not_enabled, all(not(feature = "try-runtime"), not(feature = "std")), $);
 
 /// Helper for implementing GenesisBuilder runtime API
 pub mod genesis_builder_helper;
@@ -2297,7 +2302,7 @@ mod test {
 		traits::{ConstU32, StorageInstance},
 		BoundedVec,
 	};
-	use soil_io::{hashing::twox_128, TestExternalities};
+	use subsoil::io::{hashing::twox_128, TestExternalities};
 
 	struct Prefix;
 	impl StorageInstance for Prefix {

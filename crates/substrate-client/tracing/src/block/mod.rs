@@ -35,16 +35,16 @@ use tracing::{
 };
 
 use crate::{SpanDatum, TraceEvent, Values};
-use soil_api::{Core, ProvideRuntimeApi};
+use subsoil::api::{Core, ProvideRuntimeApi};
 use soil_blockchain::HeaderBackend;
 use soil_client_api::BlockBackend;
-use soil_core::hexdisplay::HexDisplay;
+use subsoil::core::hexdisplay::HexDisplay;
 use soil_rpc::tracing::{BlockTrace, Span, TraceBlockResponse};
-use soil_runtime::{
+use subsoil::runtime::{
 	generic::BlockId,
 	traits::{Block as BlockT, Header},
 };
-use soil_tracing::{WASM_NAME_KEY, WASM_TARGET_KEY, WASM_TRACE_IDENTIFIER};
+use subsoil::tracing::{WASM_NAME_KEY, WASM_TARGET_KEY, WASM_TRACE_IDENTIFIER};
 
 // Default to only pallet, frame support and state related traces
 const DEFAULT_TARGETS: &str = "pallet,frame,state";

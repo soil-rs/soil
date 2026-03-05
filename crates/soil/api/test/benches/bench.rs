@@ -16,7 +16,7 @@
 // limitations under the License.
 
 use criterion::{criterion_group, criterion_main, Criterion};
-use soil_api::ProvideRuntimeApi;
+use subsoil::api::ProvideRuntimeApi;
 use substrate_test_runtime_client::{
 	runtime::TestAPI, DefaultTestClientBuilderExt, TestClientBuilder, TestClientBuilderExt,
 };

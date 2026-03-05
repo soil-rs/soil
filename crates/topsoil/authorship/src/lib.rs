@@ -96,8 +96,8 @@ mod tests {
 	use super::*;
 	use crate as topsoil_authorship;
 	use codec::{Decode, Encode};
-	use soil_core::H256;
-	use soil_runtime::{
+	use subsoil::core::H256;
+	use subsoil::runtime::{
 		generic::DigestItem, testing::Header, traits::Header as HeaderT, BuildStorage,
 	};
 	use topsoil_support::{derive_impl, ConsensusEngineId};
@@ -155,7 +155,7 @@ mod tests {
 		Header::new(number, Default::default(), state_root, parent_hash, Default::default())
 	}
 
-	fn new_test_ext() -> soil_io::TestExternalities {
+	fn new_test_ext() -> subsoil::io::TestExternalities {
 		let t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 		t.into()
 	}

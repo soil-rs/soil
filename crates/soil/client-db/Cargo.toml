@@ -36,13 +36,8 @@ prometheus-endpoint = { workspace = true, default-features = true, optional = tr
 soil-client-api = { workspace = true, default-features = true, optional = true}
 soil-state-db = { workspace = true, default-features = true, optional = true}
 schnellru = { workspace = true, optional = true}
-soil-arithmetic = { workspace = true, default-features = true, optional = true}
 soil-blockchain = { workspace = true, default-features = true, optional = true}
-soil-core = { workspace = true, default-features = true, optional = true}
-soil-database = { workspace = true, default-features = true, optional = true}
-soil-runtime = { workspace = true, default-features = true, optional = true}
-soil-state-machine = { workspace = true, default-features = true, optional = true}
-soil-trie = { workspace = true, default-features = true, optional = true}
+subsoil = { workspace = true, default-features = true, optional = true}
 sysinfo = { workspace = true, optional = true}
 
 [dev-dependencies]
@@ -50,8 +45,6 @@ array-bytes = { workspace = true, default-features = true }
 criterion = { workspace = true, default-features = true }
 kvdb-rocksdb = { workspace = true }
 rand = { workspace = true, default-features = true }
-soil-database = { workspace = true, default-features = true, features = ["rocksdb"] }
-soil-tracing = { workspace = true, default-features = true }
 kitchensink-runtime = { workspace = true }
 substrate-test-runtime-client = { workspace = true }
 tempfile = { workspace = true }
@@ -69,28 +62,19 @@ std = [
 	"parking_lot",
 	"prometheus-endpoint",
 	"schnellru",
-	"soil-arithmetic",
+	"subsoil",
 	"soil-blockchain",
 	"soil-client-api",
-	"soil-core",
-	"soil-database",
-	"soil-runtime",
 	"soil-state-db",
-	"soil-state-machine",
-	"soil-trie",
 	"sysinfo",
-	"soil-arithmetic/std",
+	"subsoil/std",
 	"soil-client-api/std",
-	"soil-core/std",
-	"soil-runtime/std",
 	"soil-state-db/std",
-	"soil-state-machine/std",
-	"soil-trie/std",
 ]
 default = ["std"]
 test-helpers = []
 runtime-benchmarks = [
-	"soil-runtime/runtime-benchmarks",
+	"subsoil/runtime-benchmarks",
 ]
-rocksdb = ["kvdb-rocksdb", "soil-database/rocksdb"]
+rocksdb = ["kvdb-rocksdb", "subsoil/rocksdb"]
 jemalloc-allocator = ["kvdb-rocksdb?/jemalloc"]

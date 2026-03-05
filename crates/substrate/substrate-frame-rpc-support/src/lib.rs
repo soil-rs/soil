@@ -25,7 +25,7 @@ use core::marker::PhantomData;
 use jsonrpsee::core::ClientError as RpcError;
 use serde::{de::DeserializeOwned, Serialize};
 use soil_rpc_api::state::StateApiClient;
-use soil_storage::{StorageData, StorageKey};
+use subsoil::storage::{StorageData, StorageKey};
 use topsoil_support::storage::generator::{StorageDoubleMap, StorageMap, StorageValue};
 
 /// A typed query on chain state usable from an RPC client.
@@ -37,7 +37,7 @@ use topsoil_support::storage::generator::{StorageDoubleMap, StorageMap, StorageV
 /// # use topsoil_support::{construct_runtime, derive_impl, traits::ConstU32};
 /// # use substrate_frame_rpc_support::StorageQuery;
 /// # use soil_rpc_api::state::StateApiClient;
-/// # use soil_runtime::{traits::{BlakeTwo256, IdentityLookup}, testing::Header};
+/// # use subsoil::runtime::{traits::{BlakeTwo256, IdentityLookup}, testing::Header};
 /// #
 /// # construct_runtime!(
 /// # 	pub enum TestRuntime
@@ -47,7 +47,7 @@ use topsoil_support::storage::generator::{StorageDoubleMap, StorageMap, StorageV
 /// # 	}
 /// # );
 /// #
-/// # type Hash = soil_core::H256;
+/// # type Hash = subsoil::core::H256;
 /// #
 /// # #[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
 /// # impl topsoil_system::Config for TestRuntime {

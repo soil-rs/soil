@@ -46,7 +46,7 @@ use std::{
 #[tokio::test]
 #[cfg(debug_assertions)]
 async fn run() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	for _ in 0..50 {
 		test_once().await;

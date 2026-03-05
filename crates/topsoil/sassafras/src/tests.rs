@@ -790,7 +790,7 @@ fn trivial_fisher_yates_shuffle<T>(vector: &mut Vec<T>, random_seed: u64) {
 // `submit_ticket` call which tests for ticket validity.
 #[test]
 fn submit_tickets_with_ring_proof_check_works() {
-	use soil_core::Pair as _;
+	use subsoil::core::Pair as _;
 
 	let (authorities, mut tickets): (Vec<AuthorityId>, Vec<TicketEnvelope>) =
 		data_read(TICKETS_FILE);
@@ -845,7 +845,7 @@ fn submit_tickets_with_ring_proof_check_works() {
 #[ignore = "test tickets data generator"]
 fn make_tickets_data() {
 	use super::*;
-	use soil_core::crypto::Pair;
+	use subsoil::core::crypto::Pair;
 
 	// Number of authorities who produces tickets (for the sake of this test)
 	let tickets_authors_count = 5;

@@ -20,7 +20,7 @@
 use crate as topsoil_membership;
 use crate::{mock::*, *};
 
-use soil_runtime::{bounded_vec, traits::BadOrigin, BuildStorage};
+use subsoil::runtime::{bounded_vec, traits::BadOrigin, BuildStorage};
 
 use topsoil_support::{assert_noop, assert_ok, assert_storage_noop, traits::StorageVersion};
 

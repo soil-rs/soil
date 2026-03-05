@@ -19,7 +19,7 @@
 
 use crate as topsoil_salary;
 use crate::*;
-use topsoil::{deps::soil_io, testing_prelude::*};
+use topsoil::{deps::io, testing_prelude::*};
 use topsoil_ranked_collective::{EnsureRanked, Geometric};
 
 type Rank = u16;
@@ -183,7 +183,7 @@ fn swap_exhaustive_works() {
 
 			// The events mess up the storage root:
 			System::reset_events();
-			soil_io::storage::root(StateVersion::V1)
+			subsoil::io::storage::root(StateVersion::V1)
 		});
 
 		let root_swap = hypothetically!({
@@ -196,7 +196,7 @@ fn swap_exhaustive_works() {
 
 			// The events mess up the storage root:
 			System::reset_events();
-			soil_io::storage::root(StateVersion::V1)
+			subsoil::io::storage::root(StateVersion::V1)
 		});
 
 		assert_eq!(root_add, root_swap);

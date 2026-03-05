@@ -18,14 +18,14 @@
 use crate::{limits::BlockWeights, Config, Pallet, LOG_TARGET};
 use codec::{Decode, DecodeWithMemTracking, Encode};
 use scale_info::TypeInfo;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{
 		DispatchInfoOf, Dispatchable, PostDispatchInfoOf, TransactionExtension, ValidateResult,
 	},
 	transaction_validity::{InvalidTransaction, TransactionValidityError, ValidTransaction},
 	DispatchResult,
 };
-use soil_weights::Weight;
+use subsoil::weights::Weight;
 use topsoil_support::{
 	dispatch::{DispatchInfo, PostDispatchInfo},
 	pallet_prelude::TransactionSource,
@@ -314,7 +314,7 @@ mod tests {
 		BlockSize, BlockWeight, DispatchClass,
 	};
 	use core::marker::PhantomData;
-	use soil_runtime::traits::DispatchTransaction;
+	use subsoil::runtime::traits::DispatchTransaction;
 	use topsoil_support::{assert_err, assert_ok, dispatch::Pays, weights::Weight};
 
 	fn block_weights() -> crate::limits::BlockWeights {

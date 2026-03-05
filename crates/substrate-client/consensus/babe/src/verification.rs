@@ -33,11 +33,11 @@ use soil_consensus_babe::{
 };
 use soil_consensus_epochs::Epoch as EpochT;
 use soil_consensus_slots::Slot;
-use soil_core::{
+use subsoil::core::{
 	crypto::{VrfPublic, Wraps},
 	Pair,
 };
-use soil_runtime::{traits::Header, DigestItem};
+use subsoil::runtime::{traits::Header, DigestItem};
 
 /// BABE verification parameters
 pub(super) struct VerificationParams<'a, B: 'a + BlockT> {

@@ -24,11 +24,8 @@ targets = ["x86_64-unknown-linux-gnu"]
 codec = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { features = ["derive"], optional = true, workspace = true }
-soil-api = { workspace = true }
-soil-application-crypto = { features = ["bandersnatch-experimental"], workspace = true }
 soil-consensus-slots = { workspace = true }
-soil-core = { features = ["bandersnatch-experimental"], workspace = true }
-soil-runtime = { workspace = true }
+subsoil = { features = ["bandersnatch-experimental"], workspace = true }
 
 [features]
 default = ["std"]
@@ -36,19 +33,12 @@ std = [
 	"codec/std",
 	"scale-info/std",
 	"serde/std",
-	"soil-api/std",
-	"soil-application-crypto/std",
-	"soil-consensus-slots/std",
-	"soil-core/std",
-	"soil-runtime/std",
-]
+	"subsoil/std",
+	"soil-consensus-slots/std"]
 
 # Serde support without relying on std features.
 serde = [
 	"dep:serde",
 	"scale-info/serde",
-	"soil-application-crypto/serde",
-	"soil-consensus-slots/serde",
-	"soil-core/serde",
-	"soil-runtime/serde",
-]
+	"subsoil/serde",
+	"soil-consensus-slots/serde"]

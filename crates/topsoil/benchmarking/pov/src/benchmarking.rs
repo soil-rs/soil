@@ -21,7 +21,7 @@
 
 use super::*;
 
-use soil_runtime::traits::Hash;
+use subsoil::runtime::traits::Hash;
 use topsoil_benchmarking::v2::*;
 use topsoil_support::traits::UnfilteredDispatchable;
 use topsoil_system::{Pallet as System, RawOrigin};
@@ -247,7 +247,7 @@ mod benchmarks {
 
 	#[benchmark(pov_mode = Measured)]
 	fn measured_storage_value_read_linear_size(l: Linear<0, { 1 << 22 }>) {
-		let v: soil_runtime::BoundedVec<u8, _> = alloc::vec![0u8; l as usize].try_into().unwrap();
+		let v: subsoil::runtime::BoundedVec<u8, _> = alloc::vec![0u8; l as usize].try_into().unwrap();
 		LargeValue::<T>::put(&v);
 		#[block]
 		{
@@ -257,7 +257,7 @@ mod benchmarks {
 
 	#[benchmark(pov_mode = MaxEncodedLen)]
 	fn mel_storage_value_read_linear_size(l: Linear<0, { 1 << 22 }>) {
-		let v: soil_runtime::BoundedVec<u8, _> = alloc::vec![0u8; l as usize].try_into().unwrap();
+		let v: subsoil::runtime::BoundedVec<u8, _> = alloc::vec![0u8; l as usize].try_into().unwrap();
 		LargeValue::<T>::put(&v);
 		#[block]
 		{
@@ -267,7 +267,7 @@ mod benchmarks {
 
 	#[benchmark(pov_mode = Measured)]
 	fn measured_storage_double_value_read_linear_size(l: Linear<0, { 1 << 22 }>) {
-		let v: soil_runtime::BoundedVec<u8, _> = alloc::vec![0u8; l as usize].try_into().unwrap();
+		let v: subsoil::runtime::BoundedVec<u8, _> = alloc::vec![0u8; l as usize].try_into().unwrap();
 		LargeValue::<T>::put(&v);
 		LargeValue2::<T>::put(&v);
 		#[block]
@@ -279,7 +279,7 @@ mod benchmarks {
 
 	#[benchmark(pov_mode = MaxEncodedLen)]
 	fn mel_storage_double_value_read_linear_size(l: Linear<0, { 1 << 22 }>) {
-		let v: soil_runtime::BoundedVec<u8, _> = alloc::vec![0u8; l as usize].try_into().unwrap();
+		let v: subsoil::runtime::BoundedVec<u8, _> = alloc::vec![0u8; l as usize].try_into().unwrap();
 		LargeValue::<T>::put(&v);
 		LargeValue2::<T>::put(&v);
 		#[block]
@@ -293,7 +293,7 @@ mod benchmarks {
 		Pov::LargeValue2: Measured
 	})]
 	fn mel_mixed_storage_double_value_read_linear_size(l: Linear<0, { 1 << 22 }>) {
-		let v: soil_runtime::BoundedVec<u8, _> = alloc::vec![0u8; l as usize].try_into().unwrap();
+		let v: subsoil::runtime::BoundedVec<u8, _> = alloc::vec![0u8; l as usize].try_into().unwrap();
 		LargeValue::<T>::put(&v);
 		LargeValue2::<T>::put(&v);
 		#[block]
@@ -307,7 +307,7 @@ mod benchmarks {
 		Pov::LargeValue2: MaxEncodedLen
 	})]
 	fn measured_mixed_storage_double_value_read_linear_size(l: Linear<0, { 1 << 22 }>) {
-		let v: soil_runtime::BoundedVec<u8, _> = alloc::vec![0u8; l as usize].try_into().unwrap();
+		let v: subsoil::runtime::BoundedVec<u8, _> = alloc::vec![0u8; l as usize].try_into().unwrap();
 		LargeValue::<T>::put(&v);
 		LargeValue2::<T>::put(&v);
 		#[block]
@@ -397,7 +397,7 @@ mod benchmarks {
 
 #[cfg(test)]
 mod mock {
-	use soil_runtime::{testing::H256, BuildStorage};
+	use subsoil::runtime::{testing::H256, BuildStorage};
 	use topsoil_support::derive_impl;
 
 	type AccountId = u64;
@@ -423,9 +423,9 @@ mod mock {
 		type Nonce = Nonce;
 		type RuntimeCall = RuntimeCall;
 		type Hash = H256;
-		type Hashing = ::soil_runtime::traits::BlakeTwo256;
+		type Hashing = ::subsoil::runtime::traits::BlakeTwo256;
 		type AccountId = AccountId;
-		type Lookup = soil_runtime::traits::IdentityLookup<Self::AccountId>;
+		type Lookup = subsoil::runtime::traits::IdentityLookup<Self::AccountId>;
 		type Block = Block;
 		type RuntimeEvent = RuntimeEvent;
 		type BlockHashCount = ();
@@ -444,7 +444,7 @@ mod mock {
 		type RuntimeEvent = RuntimeEvent;
 	}
 
-	pub fn new_test_ext() -> soil_io::TestExternalities {
+	pub fn new_test_ext() -> subsoil::io::TestExternalities {
 		topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap().into()
 	}
 }

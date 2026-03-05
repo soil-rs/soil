@@ -20,7 +20,7 @@
 use super::*;
 use crate as topsoil_asset_rewards;
 use core::default::Default;
-use soil_runtime::{traits::IdentityLookup, BuildStorage};
+use subsoil::runtime::{traits::IdentityLookup, BuildStorage};
 use topsoil_support::{
 	construct_runtime, derive_impl,
 	instances::Instance1,
@@ -173,7 +173,7 @@ impl Config for MockRuntime {
 	type BenchmarkHelper = AssetRewardsBenchmarkHelper;
 }
 
-pub(crate) fn new_test_ext() -> soil_io::TestExternalities {
+pub(crate) fn new_test_ext() -> subsoil::io::TestExternalities {
 	let mut t = topsoil_system::GenesisConfig::<MockRuntime>::default().build_storage().unwrap();
 
 	topsoil_assets::GenesisConfig::<MockRuntime, Instance1> {
@@ -220,7 +220,7 @@ pub(crate) fn new_test_ext() -> soil_io::TestExternalities {
 	.assimilate_storage(&mut t)
 	.unwrap();
 
-	let mut ext = soil_io::TestExternalities::new(t);
+	let mut ext = subsoil::io::TestExternalities::new(t);
 	ext.execute_with(|| System::set_block_number(1));
 	ext
 }

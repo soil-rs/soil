@@ -24,29 +24,29 @@ use core::fmt;
 use scale_info::TypeInfo;
 #[cfg(feature = "std")]
 use serde::{Deserialize, Serialize};
-use soil_runtime::{
+use subsoil::runtime::{
 	generic::{CheckedExtrinsic, UncheckedExtrinsic},
 	traits::{
 		Dispatchable, ExtensionPostDispatchWeightHandler, RefundWeight, TransactionExtension,
 	},
 	DispatchError,
 };
-use soil_weights::Weight;
+use subsoil::weights::Weight;
 
 /// The return type of a `Dispatchable` in frame. When returned explicitly from
 /// a dispatchable function it allows overriding the default `PostDispatchInfo`
 /// returned from a dispatch.
-pub type DispatchResultWithPostInfo = soil_runtime::DispatchResultWithInfo<PostDispatchInfo>;
+pub type DispatchResultWithPostInfo = subsoil::runtime::DispatchResultWithInfo<PostDispatchInfo>;
 
 #[docify::export]
 /// Un-augmented version of `DispatchResultWithPostInfo` that can be returned from
 /// dispatchable functions and is automatically converted to the augmented type. Should be
 /// used whenever the `PostDispatchInfo` does not need to be overwritten. As this should
 /// be the common case it is the implicit return type when none is specified.
-pub type DispatchResult = Result<(), soil_runtime::DispatchError>;
+pub type DispatchResult = Result<(), subsoil::runtime::DispatchError>;
 
 /// The error type contained in a `DispatchResultWithPostInfo`.
-pub type DispatchErrorWithPostInfo = soil_runtime::DispatchErrorWithPostInfo<PostDispatchInfo>;
+pub type DispatchErrorWithPostInfo = subsoil::runtime::DispatchErrorWithPostInfo<PostDispatchInfo>;
 
 /// Serializable version of pallet dispatchable.
 pub trait Callable<T> {
@@ -362,7 +362,7 @@ impl From<()> for PostDispatchInfo {
 	}
 }
 
-impl soil_runtime::traits::Printable for PostDispatchInfo {
+impl subsoil::runtime::traits::Printable for PostDispatchInfo {
 	fn print(&self) {
 		"actual_weight=".print();
 		match self.actual_weight {
@@ -710,9 +710,9 @@ impl<T> PaysFee<T> for (u64, Pays) {
 #[allow(dead_code)]
 mod weight_tests {
 	use super::*;
-	use soil_core::parameter_types;
-	use soil_runtime::{generic, traits::BlakeTwo256};
-	use soil_weights::RuntimeDbWeight;
+	use subsoil::core::parameter_types;
+	use subsoil::runtime::{generic, traits::BlakeTwo256};
+	use subsoil::weights::RuntimeDbWeight;
 
 	pub use self::topsoil_system::{Call, Config};
 
@@ -739,7 +739,7 @@ mod weight_tests {
 		#[pallet::config]
 		#[pallet::disable_frame_system_supertrait_check]
 		pub trait Config: 'static {
-			type Block: Parameter + soil_runtime::traits::Block;
+			type Block: Parameter + subsoil::runtime::traits::Block;
 			type AccountId;
 			type Balance;
 			type BaseCallFilter: crate::traits::Contains<Self::RuntimeCall>;
@@ -821,9 +821,9 @@ mod weight_tests {
 			pub type OriginFor<T> = <T as super::Config>::RuntimeOrigin;
 
 			pub type HeaderFor<T> =
-				<<T as super::Config>::Block as soil_runtime::traits::HeaderProvider>::HeaderT;
+				<<T as super::Config>::Block as subsoil::runtime::traits::HeaderProvider>::HeaderT;
 
-			pub type BlockNumberFor<T> = <HeaderFor<T> as soil_runtime::traits::Header>::Number;
+			pub type BlockNumberFor<T> = <HeaderFor<T> as subsoil::runtime::traits::Header>::Number;
 		}
 	}
 
@@ -1032,7 +1032,7 @@ mod weight_tests {
 #[cfg(test)]
 mod per_dispatch_class_tests {
 	use super::*;
-	use soil_runtime::traits::Zero;
+	use subsoil::runtime::traits::Zero;
 	use DispatchClass::*;
 
 	#[test]
@@ -1208,15 +1208,14 @@ mod per_dispatch_class_tests {
 mod test_extensions {
 	use codec::{Decode, DecodeWithMemTracking, Encode};
 	use scale_info::TypeInfo;
-	use soil_runtime::{
-		impl_tx_ext_default,
+	use subsoil::runtime::{
 		traits::{
 			DispatchInfoOf, DispatchOriginOf, Dispatchable, PostDispatchInfoOf,
 			TransactionExtension,
 		},
 		transaction_validity::TransactionValidityError,
 	};
-	use soil_weights::Weight;
+	use subsoil::weights::Weight;
 
 	use super::{DispatchResult, PostDispatchInfo};
 
@@ -1230,7 +1229,7 @@ mod test_extensions {
 		type Val = ();
 		type Pre = bool;
 
-		fn weight(&self, _: &RuntimeCall) -> soil_weights::Weight {
+		fn weight(&self, _: &RuntimeCall) -> subsoil::weights::Weight {
 			Weight::from_parts(100, 0)
 		}
 
@@ -1258,7 +1257,7 @@ mod test_extensions {
 				Ok(Weight::zero())
 			}
 		}
-		impl_tx_ext_default!(RuntimeCall; validate);
+		subsoil::impl_tx_ext_default!(RuntimeCall; validate);
 	}
 
 	/// Test extension that refunds its cost if the actual post dispatch weight up until this point
@@ -1275,7 +1274,7 @@ mod test_extensions {
 		type Val = ();
 		type Pre = u64;
 
-		fn weight(&self, _: &RuntimeCall) -> soil_weights::Weight {
+		fn weight(&self, _: &RuntimeCall) -> subsoil::weights::Weight {
 			Weight::from_parts(200, 0)
 		}
 
@@ -1304,7 +1303,7 @@ mod test_extensions {
 			}
 			Ok(Weight::zero())
 		}
-		impl_tx_ext_default!(RuntimeCall; validate);
+		subsoil::impl_tx_ext_default!(RuntimeCall; validate);
 	}
 
 	/// Test extension that sets its actual post dispatch `ref_time` weight to the preset inner
@@ -1318,7 +1317,7 @@ mod test_extensions {
 		type Val = ();
 		type Pre = u64;
 
-		fn weight(&self, _: &RuntimeCall) -> soil_weights::Weight {
+		fn weight(&self, _: &RuntimeCall) -> subsoil::weights::Weight {
 			Weight::from_parts(300, 0)
 		}
 
@@ -1342,7 +1341,7 @@ mod test_extensions {
 		) -> Result<Weight, TransactionValidityError> {
 			Ok(Weight::from_parts(300u64.saturating_sub(pre), 0))
 		}
-		impl_tx_ext_default!(RuntimeCall; validate);
+		subsoil::impl_tx_ext_default!(RuntimeCall; validate);
 	}
 }
 
@@ -1353,12 +1352,12 @@ mod extension_weight_tests {
 	use crate::assert_ok;
 
 	use super::*;
-	use soil_core::parameter_types;
-	use soil_runtime::{
+	use subsoil::core::parameter_types;
+	use subsoil::runtime::{
 		generic::{self, ExtrinsicFormat},
 		traits::{Applyable, BlakeTwo256, DispatchTransaction, TransactionExtension},
 	};
-	use soil_weights::RuntimeDbWeight;
+	use subsoil::weights::RuntimeDbWeight;
 	use test_extensions::{ActualWeightIs, FreeIfUnder, HalfCostIf};
 
 	use super::weight_tests::topsoil_system;
@@ -1406,8 +1405,8 @@ mod extension_weight_tests {
 	}
 
 	impl ExtBuilder {
-		pub fn build(self) -> soil_io::TestExternalities {
-			let mut ext = soil_io::TestExternalities::new(Default::default());
+		pub fn build(self) -> subsoil::io::TestExternalities {
+			let mut ext = subsoil::io::TestExternalities::new(Default::default());
 			ext.execute_with(|| {});
 			ext
 		}

@@ -21,12 +21,8 @@ log = { workspace = true }
 parking_lot = { workspace = true, default-features = true }
 scale-info = { features = ["derive"], workspace = true, default-features = true }
 
-soil-core = { workspace = true, default-features = true }
-soil-io = { workspace = true, default-features = true }
-soil-npos-elections = { workspace = true }
-soil-runtime = { workspace = true, default-features = true }
 soil-staking = { workspace = true, default-features = true }
-soil-tracing = { workspace = true, default-features = true }
+subsoil = { workspace = true, default-features = true }
 
 topsoil-election-provider-support = { workspace = true, default-features = true }
 topsoil-support = { workspace = true, default-features = true }
@@ -54,5 +50,5 @@ try-runtime = [
 	"topsoil-session/try-runtime",
 	"topsoil-staking/try-runtime",
 	"topsoil-timestamp/try-runtime",
-	"soil-runtime/try-runtime",
+	"subsoil/try-runtime",
 ]

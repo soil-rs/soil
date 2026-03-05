@@ -30,7 +30,7 @@
 /// ```should_panic
 /// use topsoil_support::{StorageNoopGuard, storage::unhashed::put};
 ///
-/// soil_io::TestExternalities::default().execute_with(|| {
+/// subsoil::io::TestExternalities::default().execute_with(|| {
 /// 	let _guard = topsoil_support::StorageNoopGuard::default();
 /// 	put(b"key", b"value");
 /// 	// Panics since there are storage changes.
@@ -45,7 +45,7 @@ pub struct StorageNoopGuard<'a> {
 impl<'a> Default for StorageNoopGuard<'a> {
 	fn default() -> Self {
 		Self {
-			storage_root: soil_io::storage::root(soil_runtime::StateVersion::V1),
+			storage_root: subsoil::io::storage::root(subsoil::runtime::StateVersion::V1),
 			error_message: "`StorageNoopGuard` detected an attempted storage change.",
 		}
 	}
@@ -59,7 +59,7 @@ impl<'a> StorageNoopGuard<'a> {
 
 	/// Creates a new [`StorageNoopGuard`] with a custom error message.
 	pub fn from_error_message(error_message: &'a str) -> Self {
-		Self { storage_root: soil_io::storage::root(soil_runtime::StateVersion::V1), error_message }
+		Self { storage_root: subsoil::io::storage::root(subsoil::runtime::StateVersion::V1), error_message }
 	}
 
 	/// Sets a custom error message for a [`StorageNoopGuard`].
@@ -76,7 +76,7 @@ impl<'a> Drop for StorageNoopGuard<'a> {
 			return;
 		}
 		assert_eq!(
-			soil_io::storage::root(soil_runtime::StateVersion::V1),
+			subsoil::io::storage::root(subsoil::runtime::StateVersion::V1),
 			self.storage_root,
 			"{}",
 			self.error_message,
@@ -86,7 +86,7 @@ impl<'a> Drop for StorageNoopGuard<'a> {
 
 #[cfg(test)]
 mod tests {
-	use soil_io::TestExternalities;
+	use subsoil::io::TestExternalities;
 
 	use super::*;
 

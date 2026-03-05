@@ -22,7 +22,7 @@
 use super::*;
 
 use crate as utility;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{BadOrigin, BlakeTwo256, Dispatchable, Hash},
 	BuildStorage, DispatchError, TokenError,
 };
@@ -176,7 +176,7 @@ parameter_types! {
 	pub const MotionDuration: BlockNumber = MOTION_DURATION_IN_BLOCKS;
 	pub const MaxProposals: u32 = 100;
 	pub const MaxMembers: u32 = 100;
-	pub MaxProposalWeight: Weight = soil_runtime::Perbill::from_percent(50) * BlockWeights::get().max_block;
+	pub MaxProposalWeight: Weight = subsoil::runtime::Perbill::from_percent(50) * BlockWeights::get().max_block;
 }
 
 type CouncilCollective = topsoil_collective::Instance1;
@@ -234,7 +234,7 @@ use topsoil_root_testing::Call as RootTestingCall;
 use topsoil_system::Call as SystemCall;
 use topsoil_timestamp::Call as TimestampCall;
 
-pub fn new_test_ext() -> soil_io::TestExternalities {
+pub fn new_test_ext() -> subsoil::io::TestExternalities {
 	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	topsoil_balances::GenesisConfig::<Test> {
 		balances: vec![(1, 10), (2, 10), (3, 10), (4, 10), (5, 2)],
@@ -250,7 +250,7 @@ pub fn new_test_ext() -> soil_io::TestExternalities {
 	.assimilate_storage(&mut t)
 	.unwrap();
 
-	let mut ext = soil_io::TestExternalities::new(t);
+	let mut ext = subsoil::io::TestExternalities::new(t);
 	ext.execute_with(|| System::set_block_number(1));
 	ext
 }
@@ -461,7 +461,7 @@ fn batch_early_exit_works() {
 
 #[test]
 fn batch_weight_calculation_doesnt_overflow() {
-	use soil_runtime::Perbill;
+	use subsoil::runtime::Perbill;
 	new_test_ext().execute_with(|| {
 		let big_call = RuntimeCall::RootTesting(RootTestingCall::fill_block {
 			ratio: Perbill::from_percent(50),

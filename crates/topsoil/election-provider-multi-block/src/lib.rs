@@ -201,16 +201,16 @@ use crate::signed::{CalculateBaseDeposit, CalculatePageDeposit};
 use crate::verifier::{AsynchronousVerifier, Verifier};
 use codec::{Decode, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;
-use soil_arithmetic::{
+use subsoil::arithmetic::{
 	traits::{CheckedAdd, Zero},
 	PerThing, UpperOf,
 };
-use soil_npos_elections::{EvaluateSupport, VoteWeight};
-use soil_runtime::{
+use subsoil::npos_elections::{EvaluateSupport, VoteWeight};
+use subsoil::runtime::{
 	traits::{Hash, Saturating},
 	SaturatedConversion,
 };
-use soil_std::{borrow::ToOwned, boxed::Box, prelude::*};
+use subsoil::std::{borrow::ToOwned, boxed::Box, prelude::*};
 use topsoil_election_provider_support::{
 	onchain, BoundedSupportsOf, DataProviderBounds, ElectionDataProvider, ElectionProvider,
 	InstantElectionProvider,
@@ -257,7 +257,7 @@ pub use types::*;
 pub use weights::traits::topsoil_election_provider_multi_block::WeightInfo;
 
 /// A fallback implementation that transitions the pallet to the emergency phase.
-pub struct InitiateEmergencyPhase<T>(soil_std::marker::PhantomData<T>);
+pub struct InitiateEmergencyPhase<T>(subsoil::std::marker::PhantomData<T>);
 impl<T: Config> ElectionProvider for InitiateEmergencyPhase<T> {
 	type AccountId = T::AccountId;
 	type BlockNumber = BlockNumberFor<T>;
@@ -303,7 +303,7 @@ impl<T: Config> InstantElectionProvider for InitiateEmergencyPhase<T> {
 /// A fallback implementation that silently continues into the next page.
 ///
 /// This is suitable for onchain usage.
-pub struct Continue<T>(soil_std::marker::PhantomData<T>);
+pub struct Continue<T>(subsoil::std::marker::PhantomData<T>);
 impl<T: Config> ElectionProvider for Continue<T> {
 	type AccountId = T::AccountId;
 	type BlockNumber = BlockNumberFor<T>;
@@ -353,11 +353,11 @@ impl<T: Config> InstantElectionProvider for Continue<T> {
 /// * [`ProceedRegardlessOf`]
 /// * [`RevertToSignedIfNotQueuedOf`]
 pub struct IfSolutionQueuedElse<T, Queued, NotQueued>(
-	soil_std::marker::PhantomData<(T, Queued, NotQueued)>,
+	subsoil::std::marker::PhantomData<(T, Queued, NotQueued)>,
 );
 
 /// A `Get` impl for `Phase::Done`
-pub struct GetDone<T>(soil_std::marker::PhantomData<T>);
+pub struct GetDone<T>(subsoil::std::marker::PhantomData<T>);
 impl<T: Config> Get<Phase<T>> for GetDone<T> {
 	fn get() -> Phase<T> {
 		Phase::Done
@@ -365,7 +365,7 @@ impl<T: Config> Get<Phase<T>> for GetDone<T> {
 }
 
 /// A `Get` impl for `Phase::Signed(T::SignedPhase::get())`
-pub struct GetSigned<T>(soil_std::marker::PhantomData<T>);
+pub struct GetSigned<T>(subsoil::std::marker::PhantomData<T>);
 impl<T: Config> Get<Phase<T>> for GetSigned<T> {
 	fn get() -> Phase<T> {
 		Phase::Signed(T::SignedPhase::get().saturating_sub(1u32.into()))
@@ -779,7 +779,7 @@ pub mod pallet {
 		}
 
 		fn integrity_test() {
-			use soil_std::mem::size_of;
+			use subsoil::std::mem::size_of;
 			// The index type of both voters and targets need to be smaller than that of usize (very
 			// unlikely to be the case, but anyhow).
 			assert!(size_of::<SolutionVoterIndexOf<T::MinerConfig>>() <= size_of::<usize>());
@@ -793,7 +793,7 @@ pub mod pallet {
 			// pages must be at least 1.
 			assert!(T::Pages::get() > 0);
 
-			// Based on the requirements of [`soil_npos_elections::Assignment::try_normalize`].
+			// Based on the requirements of [`subsoil::npos_elections::Assignment::try_normalize`].
 			let max_vote: usize = <SolutionOf<T::MinerConfig> as NposSolution>::LIMIT;
 
 			// 2. Maximum sum of [SolutionAccuracy; 16] must fit into `UpperOf<OffchainAccuracy>`.
@@ -838,7 +838,7 @@ pub mod pallet {
 		}
 
 		#[cfg(feature = "try-runtime")]
-		fn try_state(now: BlockNumberFor<T>) -> Result<(), soil_runtime::TryRuntimeError> {
+		fn try_state(now: BlockNumberFor<T>) -> Result<(), subsoil::runtime::TryRuntimeError> {
 			Self::do_try_state(now).map_err(Into::into)
 		}
 	}
@@ -950,7 +950,7 @@ pub mod pallet {
 	///     `lsp` based on the inner value.
 	///   - If `Phase` IS `Off`, then, no snapshot must exist.
 	///   - In all other phases, the snapshot must FULLY exist.
-	pub(crate) struct Snapshot<T>(soil_std::marker::PhantomData<T>);
+	pub(crate) struct Snapshot<T>(subsoil::std::marker::PhantomData<T>);
 	impl<T: Config> Snapshot<T> {
 		// ----------- mutable methods
 		pub(crate) fn set_desired_targets(d: u32) {
@@ -1026,7 +1026,7 @@ pub mod pallet {
 			debug_assert_eq!(buffer, data.encode());
 			// buffer should have not re-allocated since.
 			debug_assert!(buffer.len() == size && size == buffer.capacity());
-			soil_io::storage::set(key, &buffer);
+			subsoil::io::storage::set(key, &buffer);
 
 			hash
 		}
@@ -1173,12 +1173,12 @@ pub mod pallet {
 	#[cfg(test)]
 	impl<T: Config> Snapshot<T> {
 		pub(crate) fn voter_pages() -> PageIndex {
-			use soil_runtime::SaturatedConversion;
+			use subsoil::runtime::SaturatedConversion;
 			PagedVoterSnapshot::<T>::iter().count().saturated_into::<PageIndex>()
 		}
 
 		pub(crate) fn target_pages() -> PageIndex {
-			use soil_runtime::SaturatedConversion;
+			use subsoil::runtime::SaturatedConversion;
 			PagedTargetSnapshot::<T>::iter().count().saturated_into::<PageIndex>()
 		}
 
@@ -1419,7 +1419,7 @@ impl<T: Config> Pallet<T> {
 		if from == to {
 			return;
 		}
-		use soil_std::mem::discriminant;
+		use subsoil::std::mem::discriminant;
 		if discriminant(&from) != discriminant(&to) {
 			log!(debug, "transitioning phase from {:?} to {:?}", from, to);
 			Self::deposit_event(Event::PhaseTransitioned { from, to });
@@ -1604,8 +1604,8 @@ impl<T: Config> Pallet<T> {
 		op_name: &str,
 		op_weight: Weight,
 		limit_weight: Weight,
-		maybe_max_ratio: Option<soil_runtime::Percent>,
-		maybe_max_warn_ratio: Option<soil_runtime::Percent>,
+		maybe_max_ratio: Option<subsoil::runtime::Percent>,
+		maybe_max_warn_ratio: Option<subsoil::runtime::Percent>,
 	) {
 		use topsoil_support::weights::constants::{
 			WEIGHT_PROOF_SIZE_PER_KB, WEIGHT_REF_TIME_PER_MILLIS,
@@ -1613,10 +1613,10 @@ impl<T: Config> Pallet<T> {
 
 		let ref_time_ms = op_weight.ref_time() / WEIGHT_REF_TIME_PER_MILLIS;
 		let ref_time_ratio =
-			soil_runtime::Percent::from_rational(op_weight.ref_time(), limit_weight.ref_time());
+			subsoil::runtime::Percent::from_rational(op_weight.ref_time(), limit_weight.ref_time());
 		let proof_size_kb = op_weight.proof_size() / WEIGHT_PROOF_SIZE_PER_KB;
 		let proof_size_ratio =
-			soil_runtime::Percent::from_rational(op_weight.proof_size(), limit_weight.proof_size());
+			subsoil::runtime::Percent::from_rational(op_weight.proof_size(), limit_weight.proof_size());
 		let limit_ms = limit_weight.ref_time() / WEIGHT_REF_TIME_PER_MILLIS;
 		let limit_kb = limit_weight.proof_size() / WEIGHT_PROOF_SIZE_PER_KB;
 		log::info!(
@@ -1658,8 +1658,8 @@ impl<T: Config> Pallet<T> {
 	/// A reasonable value for `maybe_max_weight` would be 75%, and 50% for `maybe_max_warn_ratio`.
 	pub fn check_all_weights(
 		limit_weight: Weight,
-		maybe_max_ratio: Option<soil_runtime::Percent>,
-		maybe_max_warn_ratio: Option<soil_runtime::Percent>,
+		maybe_max_ratio: Option<subsoil::runtime::Percent>,
+		maybe_max_warn_ratio: Option<subsoil::runtime::Percent>,
 	) where
 		T: crate::verifier::Config + crate::signed::Config + crate::unsigned::Config,
 	{
@@ -1822,7 +1822,7 @@ where
 	pub(crate) fn submit_full_solution(
 		PagedRawSolution { score, solution_pages, .. }: PagedRawSolution<T::MinerConfig>,
 	) -> DispatchResultWithPostInfo {
-		use soil_std::boxed::Box;
+		use subsoil::std::boxed::Box;
 		use topsoil_system::RawOrigin;
 		use types::Pagify;
 

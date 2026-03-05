@@ -15,8 +15,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use soil_core::{ConstU16, ConstU32, ConstU64, H256};
-use soil_runtime::{
+use subsoil::core::{ConstU16, ConstU32, ConstU64, H256};
+use subsoil::runtime::{
 	traits::{BlakeTwo256, IdentityLookup},
 	BuildStorage,
 };
@@ -112,7 +112,7 @@ impl TestExt {
 	}
 }
 
-pub fn new_test_ext() -> soil_io::TestExternalities {
+pub fn new_test_ext() -> subsoil::io::TestExternalities {
 	let c = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
-	soil_io::TestExternalities::from(c)
+	subsoil::io::TestExternalities::from(c)
 }

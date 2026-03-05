@@ -22,9 +22,9 @@
 
 use super::{InherentDataProviderExt, Slot, LOG_TARGET};
 use soil_consensus::{SelectChain, SyncOracle};
-use soil_inherents::{CreateInherentDataProviders, InherentDataProvider};
-use soil_runtime::traits::{Block as BlockT, HashingFor, Header as HeaderT};
-use soil_trie::recorder::Recorder;
+use subsoil::inherents::{CreateInherentDataProviders, InherentDataProvider};
+use subsoil::runtime::traits::{Block as BlockT, HashingFor, Header as HeaderT};
+use subsoil::trie::recorder::Recorder;
 
 use futures_timer::Delay;
 use std::time::{Duration, Instant};

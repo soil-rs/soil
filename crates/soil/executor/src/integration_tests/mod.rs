@@ -18,30 +18,31 @@
 
 use assert_matches::assert_matches;
 use codec::{Decode, Encode};
-use soil_core::{
-	ed25519, map,
+use subsoil::map;
+use subsoil::core::{
+	ed25519,
 	offchain::{testing, OffchainDbExt, OffchainWorkerExt},
 	sr25519,
 	traits::Externalities,
 	Pair,
 };
-use soil_crypto_hashing::{blake2_128, blake2_256, sha2_256, twox_128, twox_256};
+use subsoil_crypto_hashing::{blake2_128, blake2_256, sha2_256, twox_128, twox_256};
 use soil_executor_common::{
 	error::Error,
 	runtime_blob::RuntimeBlob,
 	wasm_runtime::{HeapAllocStrategy, WasmModule},
 };
-use soil_runtime::traits::BlakeTwo256;
+use subsoil::runtime::traits::BlakeTwo256;
 use soil_runtime_test::wasm_binary_unwrap;
-use soil_state_machine::TestExternalities as CoreTestExternalities;
-use soil_trie::{LayoutV1 as Layout, TrieConfiguration};
+use subsoil::state_machine::TestExternalities as CoreTestExternalities;
+use subsoil::trie::{LayoutV1 as Layout, TrieConfiguration};
 use std::sync::Arc;
 use tracing_subscriber::layer::SubscriberExt;
 
 use crate::WasmExecutionMethod;
 
 pub type TestExternalities = CoreTestExternalities<BlakeTwo256>;
-type HostFunctions = soil_io::SubstrateHostFunctions;
+type HostFunctions = subsoil::io::SubstrateHostFunctions;
 
 /// Simple macro that runs a given method as test with the available wasm execution methods.
 #[macro_export]
@@ -50,7 +51,7 @@ macro_rules! test_wasm_execution {
 		paste::item! {
 			#[test]
 			fn [<$method_name _compiled_recreate_instance_cow>]() {
-				let _ = soil_tracing::try_init_simple();
+				let _ = subsoil::tracing::try_init_simple();
 				$method_name(WasmExecutionMethod::Compiled {
 					instantiation_strategy: soil_executor_wasmtime::InstantiationStrategy::RecreateInstanceCopyOnWrite
 				});
@@ -58,7 +59,7 @@ macro_rules! test_wasm_execution {
 
 			#[test]
 			fn [<$method_name _compiled_recreate_instance_vanilla>]() {
-				let _ = soil_tracing::try_init_simple();
+				let _ = subsoil::tracing::try_init_simple();
 				$method_name(WasmExecutionMethod::Compiled {
 					instantiation_strategy: soil_executor_wasmtime::InstantiationStrategy::RecreateInstance
 				});
@@ -66,7 +67,7 @@ macro_rules! test_wasm_execution {
 
 			#[test]
 			fn [<$method_name _compiled_pooling_cow>]() {
-				let _ = soil_tracing::try_init_simple();
+				let _ = subsoil::tracing::try_init_simple();
 				$method_name(WasmExecutionMethod::Compiled {
 					instantiation_strategy: soil_executor_wasmtime::InstantiationStrategy::PoolingCopyOnWrite
 				});
@@ -74,7 +75,7 @@ macro_rules! test_wasm_execution {
 
 			#[test]
 			fn [<$method_name _compiled_pooling_vanilla>]() {
-				let _ = soil_tracing::try_init_simple();
+				let _ = subsoil::tracing::try_init_simple();
 				$method_name(WasmExecutionMethod::Compiled {
 					instantiation_strategy: soil_executor_wasmtime::InstantiationStrategy::Pooling
 				});
@@ -180,7 +181,7 @@ fn storage_should_work(wasm_method: WasmExecutionMethod) {
 		assert_eq!(output, b"all ok!".to_vec().encode());
 	}
 
-	let mut expected = TestExternalities::new(soil_core::storage::Storage {
+	let mut expected = TestExternalities::new(subsoil::core::storage::Storage {
 		top: map![
 			b"input".to_vec() => value,
 			b"foo".to_vec() => b"bar".to_vec(),
@@ -210,7 +211,7 @@ fn clear_prefix_should_work(wasm_method: WasmExecutionMethod) {
 		assert_eq!(output, b"all ok!".to_vec().encode());
 	}
 
-	let mut expected = TestExternalities::new(soil_core::storage::Storage {
+	let mut expected = TestExternalities::new(subsoil::core::storage::Storage {
 		top: map![
 			b"aaa".to_vec() => b"1".to_vec(),
 			b"aab".to_vec() => b"2".to_vec(),
@@ -365,12 +366,12 @@ fn offchain_index(wasm_method: WasmExecutionMethod) {
 	ext.register_extension(OffchainWorkerExt::new(offchain));
 	call_in_wasm("test_offchain_index_set", &[0], wasm_method, &mut ext.ext()).unwrap();
 
-	use soil_core::offchain::OffchainOverlayedChange;
+	use subsoil::core::offchain::OffchainOverlayedChange;
 	let data = ext
 		.overlayed_changes()
 		.clone()
 		.offchain_drain_committed()
-		.find(|(k, _v)| k == &(soil_core::offchain::STORAGE_PREFIX.to_vec(), b"k".to_vec()));
+		.find(|(k, _v)| k == &(subsoil::core::offchain::STORAGE_PREFIX.to_vec(), b"k".to_vec()));
 	assert_eq!(data.map(|data| data.1), Some(OffchainOverlayedChange::SetValue(b"v".to_vec())));
 }
 
@@ -630,7 +631,7 @@ fn memory_is_cleared_between_invocations(wasm_method: WasmExecutionMethod) {
 	//        COUNTER += 1;
 	//        COUNTER as u64
 	//     };
-	//     soil_core::to_substrate_wasm_fn_return_value(&output)
+	//     subsoil::core::to_substrate_wasm_fn_return_value(&output)
 	// }
 	// ```
 	//

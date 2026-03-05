@@ -20,8 +20,9 @@
 use super::{ConfigOp, Event, *};
 use crate::{asset, ledger::StakingLedgerInspect};
 use mock::*;
-use soil_runtime::{
-	assert_eq_error_rate, bounded_vec,
+use subsoil::assert_eq_error_rate;
+use subsoil::runtime::{
+	bounded_vec,
 	traits::{BadOrigin, Dispatchable},
 	Perbill, Percent, Perquintill, Rounding, TokenError,
 };
@@ -6154,7 +6155,7 @@ fn proportional_ledger_slash_works() {
 		assert_eq!(LedgerSlashPerEra::get().1, BTreeMap::from([(4, 0), (5, 0), (6, 0), (7, 0)]));
 
 		// Given
-		use soil_runtime::PerThing as _;
+		use subsoil::runtime::PerThing as _;
 		let slash = u64::MAX as Balance * 2;
 		let value = u64::MAX as Balance * 2;
 		let unit = 100;
@@ -8483,7 +8484,7 @@ mod getters {
 
 	#[test]
 	fn get_validator_count_returns_value_from_storage() {
-		soil_io::TestExternalities::default().execute_with(|| {
+		subsoil::io::TestExternalities::default().execute_with(|| {
 			// given
 			let v: u32 = 12;
 			ValidatorCount::<Test>::put(v);
@@ -8498,7 +8499,7 @@ mod getters {
 
 	#[test]
 	fn get_minimum_validator_count_returns_value_from_storage() {
-		soil_io::TestExternalities::default().execute_with(|| {
+		subsoil::io::TestExternalities::default().execute_with(|| {
 			// given
 			let v: u32 = 12;
 			MinimumValidatorCount::<Test>::put(v);
@@ -8513,7 +8514,7 @@ mod getters {
 
 	#[test]
 	fn get_invulnerables_returns_value_from_storage() {
-		soil_io::TestExternalities::default().execute_with(|| {
+		subsoil::io::TestExternalities::default().execute_with(|| {
 			// given
 			let v: Vec<mock::AccountId> = vec![1, 2, 3];
 			Invulnerables::<Test>::put(v.clone());
@@ -8528,7 +8529,7 @@ mod getters {
 
 	#[test]
 	fn get_validators_returns_value_from_storage() {
-		soil_io::TestExternalities::default().execute_with(|| {
+		subsoil::io::TestExternalities::default().execute_with(|| {
 			// given
 			let account_id: mock::AccountId = 1;
 			let validator_prefs = ValidatorPrefs::default();
@@ -8545,7 +8546,7 @@ mod getters {
 
 	#[test]
 	fn get_nominators_returns_value_from_storage() {
-		soil_io::TestExternalities::default().execute_with(|| {
+		subsoil::io::TestExternalities::default().execute_with(|| {
 			// given
 			let account_id: mock::AccountId = 1;
 			let nominations: Nominations<Test> = Nominations {
@@ -8566,7 +8567,7 @@ mod getters {
 
 	#[test]
 	fn get_current_era_returns_value_from_storage() {
-		soil_io::TestExternalities::default().execute_with(|| {
+		subsoil::io::TestExternalities::default().execute_with(|| {
 			// given
 			let era: EraIndex = 12;
 			CurrentEra::<Test>::put(era);
@@ -8581,7 +8582,7 @@ mod getters {
 
 	#[test]
 	fn get_active_era_returns_value_from_storage() {
-		soil_io::TestExternalities::default().execute_with(|| {
+		subsoil::io::TestExternalities::default().execute_with(|| {
 			// given
 			let era = ActiveEraInfo { index: 2, start: None };
 			ActiveEra::<Test>::put(era);
@@ -8601,7 +8602,7 @@ mod getters {
 
 	#[test]
 	fn get_eras_start_session_index_returns_value_from_storage() {
-		soil_io::TestExternalities::default().execute_with(|| {
+		subsoil::io::TestExternalities::default().execute_with(|| {
 			// given
 			let era: EraIndex = 12;
 			let session_index: SessionIndex = 14;
@@ -8617,7 +8618,7 @@ mod getters {
 
 	#[test]
 	fn get_eras_stakers_clipped_returns_value_from_storage() {
-		soil_io::TestExternalities::default().execute_with(|| {
+		subsoil::io::TestExternalities::default().execute_with(|| {
 			// given
 			let era: EraIndex = 12;
 			let account_id: mock::AccountId = 1;
@@ -8638,7 +8639,7 @@ mod getters {
 
 	#[test]
 	fn get_claimed_rewards_returns_value_from_storage() {
-		soil_io::TestExternalities::default().execute_with(|| {
+		subsoil::io::TestExternalities::default().execute_with(|| {
 			// given
 			let era: EraIndex = 12;
 			let account_id: mock::AccountId = 1;
@@ -8655,7 +8656,7 @@ mod getters {
 
 	#[test]
 	fn get_eras_validator_prefs_returns_value_from_storage() {
-		soil_io::TestExternalities::default().execute_with(|| {
+		subsoil::io::TestExternalities::default().execute_with(|| {
 			// given
 			let era: EraIndex = 12;
 			let account_id: mock::AccountId = 1;
@@ -8673,7 +8674,7 @@ mod getters {
 
 	#[test]
 	fn get_eras_validator_reward_returns_value_from_storage() {
-		soil_io::TestExternalities::default().execute_with(|| {
+		subsoil::io::TestExternalities::default().execute_with(|| {
 			// given
 			let era: EraIndex = 12;
 			let balance_of = BalanceOf::<Test>::default();
@@ -8690,7 +8691,7 @@ mod getters {
 
 	#[test]
 	fn get_eras_reward_points_returns_value_from_storage() {
-		soil_io::TestExternalities::default().execute_with(|| {
+		subsoil::io::TestExternalities::default().execute_with(|| {
 			// given
 			let era: EraIndex = 12;
 			let reward_points = EraRewardPoints::<mock::AccountId> {
@@ -8709,7 +8710,7 @@ mod getters {
 
 	#[test]
 	fn get_eras_total_stake_returns_value_from_storage() {
-		soil_io::TestExternalities::default().execute_with(|| {
+		subsoil::io::TestExternalities::default().execute_with(|| {
 			// given
 			let era: EraIndex = 12;
 			let balance_of = BalanceOf::<Test>::default();
@@ -8726,7 +8727,7 @@ mod getters {
 
 	#[test]
 	fn get_force_era_returns_value_from_storage() {
-		soil_io::TestExternalities::default().execute_with(|| {
+		subsoil::io::TestExternalities::default().execute_with(|| {
 			// given
 			let forcing = Forcing::NotForcing;
 			ForceEra::<Test>::put(forcing);
@@ -8741,7 +8742,7 @@ mod getters {
 
 	#[test]
 	fn get_slash_reward_fraction_returns_value_from_storage() {
-		soil_io::TestExternalities::default().execute_with(|| {
+		subsoil::io::TestExternalities::default().execute_with(|| {
 			// given
 			let perbill = Perbill::one();
 			SlashRewardFraction::<Test>::put(perbill);
@@ -8756,7 +8757,7 @@ mod getters {
 
 	#[test]
 	fn get_canceled_payout_returns_value_from_storage() {
-		soil_io::TestExternalities::default().execute_with(|| {
+		subsoil::io::TestExternalities::default().execute_with(|| {
 			// given
 			let balance_of = BalanceOf::<Test>::default();
 			CanceledSlashPayout::<Test>::put(balance_of);
@@ -8771,7 +8772,7 @@ mod getters {
 
 	#[test]
 	fn get_slashing_spans_returns_value_from_storage() {
-		soil_io::TestExternalities::default().execute_with(|| {
+		subsoil::io::TestExternalities::default().execute_with(|| {
 			// given
 			let account_id: mock::AccountId = 1;
 			let spans = slashing::SlashingSpans::new(2);
@@ -8788,7 +8789,7 @@ mod getters {
 
 	#[test]
 	fn get_current_planned_session_returns_value_from_storage() {
-		soil_io::TestExternalities::default().execute_with(|| {
+		subsoil::io::TestExternalities::default().execute_with(|| {
 			// given
 			let session_index = SessionIndex::default();
 			CurrentPlannedSession::<Test>::put(session_index);

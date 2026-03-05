@@ -28,14 +28,14 @@
 
 use codec::Encode;
 
-use soil_api::{
+use subsoil::api::{
 	ApiExt, ApiRef, CallApiAt, Core, ProofRecorder, ProvideRuntimeApi, StorageChanges,
 	TransactionOutcome,
 };
 use soil_blockchain::{ApplyExtrinsicFailed, Error, HeaderBackend};
-use soil_core::traits::CallContext;
-use soil_externalities::Extensions;
-use soil_runtime::{
+use subsoil::core::traits::CallContext;
+use subsoil::externalities::Extensions;
+use subsoil::runtime::{
 	legacy,
 	traits::{Block as BlockT, Hash, HashingFor, Header as HeaderT, NumberFor, One},
 	Digest, ExtrinsicInclusionMode,
@@ -349,7 +349,7 @@ where
 	/// Returns the inherents created by the runtime or an error if something failed.
 	pub fn create_inherents(
 		&mut self,
-		inherent_data: soil_inherents::InherentData,
+		inherent_data: subsoil::inherents::InherentData,
 	) -> Result<Vec<Block::Extrinsic>, Error> {
 		let parent_hash = self.parent_hash;
 		self.api
@@ -381,8 +381,8 @@ where
 mod tests {
 	use super::*;
 	use soil_blockchain::HeaderBackend;
-	use soil_core::Blake2Hasher;
-	use soil_state_machine::Backend;
+	use subsoil::core::Blake2Hasher;
+	use subsoil::state_machine::Backend;
 	use substrate_test_runtime_client::{
 		runtime::{Block, ExtrinsicBuilder},
 		DefaultTestClientBuilderExt, TestClientBuilderExt,
@@ -409,14 +409,14 @@ mod tests {
 		let proof = storage_proof_recorder.drain_storage_proof();
 		let genesis_state_root = client.header(genesis_hash).unwrap().unwrap().state_root;
 
-		let backend = soil_state_machine::create_proof_check_backend::<Blake2Hasher>(
+		let backend = subsoil::state_machine::create_proof_check_backend::<Blake2Hasher>(
 			genesis_state_root,
 			proof,
 		)
 		.unwrap();
 
 		assert!(backend
-			.storage(&soil_core::storage::well_known_keys::CODE)
+			.storage(&subsoil::core::storage::well_known_keys::CODE)
 			.unwrap_err()
 			.contains("Database missing expected key"),);
 	}

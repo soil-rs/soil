@@ -22,7 +22,7 @@ use crate::{
 };
 use array_bytes::bytes2hex;
 use clap::Parser;
-use soil_core::crypto::SecretString;
+use subsoil::core::crypto::SecretString;
 use std::io::{BufRead, Write};
 
 /// The `sign` command
@@ -74,7 +74,7 @@ impl SignCmd {
 	}
 }
 
-fn sign<P: soil_core::Pair>(
+fn sign<P: subsoil::core::Pair>(
 	suri: &str,
 	password: Option<SecretString>,
 	message: Vec<u8>,

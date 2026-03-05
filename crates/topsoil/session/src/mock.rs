@@ -23,9 +23,8 @@ use crate as topsoil_session;
 use crate::historical as pallet_session_historical;
 
 use codec::Encode;
-use soil_core::crypto::key_types::DUMMY;
-use soil_runtime::{
-	impl_opaque_keys,
+use subsoil::core::crypto::key_types::DUMMY;
+use subsoil::runtime::{
 	testing::UintAuthorityId,
 	traits::{Convert, OpaqueKeys},
 	BuildStorage,
@@ -35,7 +34,7 @@ use std::collections::BTreeMap;
 use topsoil_balances::{self, AccountData};
 use topsoil_support::{derive_impl, parameter_types, traits::ConstU64};
 
-impl_opaque_keys! {
+subsoil::impl_opaque_keys! {
 	pub struct MockSessionKeys {
 		pub dummy: UintAuthorityId,
 	}
@@ -130,7 +129,7 @@ impl ShouldEndSession<u64> for TestShouldEndSession {
 
 pub struct TestSessionHandler;
 impl SessionHandler<u64> for TestSessionHandler {
-	const KEY_TYPE_IDS: &'static [soil_runtime::KeyTypeId] = &[UintAuthorityId::ID];
+	const KEY_TYPE_IDS: &'static [subsoil::runtime::KeyTypeId] = &[UintAuthorityId::ID];
 	fn on_genesis_session<T: OpaqueKeys>(_validators: &[(u64, T)]) {}
 	fn on_new_session<T: OpaqueKeys>(
 		changed: bool,
@@ -233,7 +232,7 @@ pub fn session_hold(who: u64) -> u64 {
 	)
 }
 
-pub fn new_test_ext() -> soil_io::TestExternalities {
+pub fn new_test_ext() -> subsoil::io::TestExternalities {
 	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	let ed = <Test as topsoil_balances::Config>::ExistentialDeposit::get();
 	topsoil_balances::GenesisConfig::<Test> {
@@ -263,7 +262,7 @@ pub fn new_test_ext() -> soil_io::TestExternalities {
 
 	let v = NextValidators::get().iter().map(|&i| (i, i)).collect();
 	ValidatorAccounts::mutate(|m| *m = v);
-	soil_io::TestExternalities::new(t)
+	subsoil::io::TestExternalities::new(t)
 }
 
 #[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
@@ -319,7 +318,7 @@ impl Config for Test {
 impl crate::historical::Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type FullIdentification = u64;
-	type FullIdentificationOf = soil_runtime::traits::ConvertInto;
+	type FullIdentificationOf = subsoil::runtime::traits::ConvertInto;
 }
 
 #[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig as topsoil_balances::DefaultConfig)]

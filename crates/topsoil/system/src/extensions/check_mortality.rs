@@ -18,9 +18,8 @@
 use crate::{pallet_prelude::BlockNumberFor, BlockHash, Config, Pallet};
 use codec::{Decode, DecodeWithMemTracking, Encode};
 use scale_info::TypeInfo;
-use soil_runtime::{
+use subsoil::runtime::{
 	generic::Era,
-	impl_tx_ext_default,
 	traits::{DispatchInfoOf, SaturatedConversion, TransactionExtension, ValidateResult},
 	transaction_validity::{InvalidTransaction, TransactionValidityError, ValidTransaction},
 };
@@ -73,7 +72,7 @@ impl<T: Config + Send + Sync> TransactionExtension<T::RuntimeCall> for CheckMort
 	type Pre = ();
 	type Val = ();
 
-	fn weight(&self, _: &T::RuntimeCall) -> soil_weights::Weight {
+	fn weight(&self, _: &T::RuntimeCall) -> subsoil::weights::Weight {
 		if self.0.is_immortal() {
 			// All immortal transactions will always read the hash of the genesis block, so to avoid
 			// charging this multiple times in a block we manually set the proof size to 0.
@@ -105,15 +104,15 @@ impl<T: Config + Send + Sync> TransactionExtension<T::RuntimeCall> for CheckMort
 			origin,
 		))
 	}
-	impl_tx_ext_default!(T::RuntimeCall; prepare);
+	subsoil::impl_tx_ext_default!(T::RuntimeCall; prepare);
 }
 
 #[cfg(test)]
 mod tests {
 	use super::*;
 	use crate::mock::{new_test_ext, System, Test, CALL};
-	use soil_core::H256;
-	use soil_runtime::{
+	use subsoil::core::H256;
+	use subsoil::runtime::{
 		traits::DispatchTransaction, transaction_validity::TransactionSource::External,
 	};
 	use topsoil_support::{

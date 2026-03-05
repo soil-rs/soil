@@ -27,8 +27,8 @@ use sc_consensus::{
 };
 use soil_blockchain::{ApplyExtrinsicFailed::Validity, Error::ApplyExtrinsicFailed};
 use soil_consensus::BlockOrigin;
-use soil_keyring::Sr25519Keyring;
-use soil_runtime::{
+use subsoil::keyring::Sr25519Keyring;
+use subsoil::runtime::{
 	generic,
 	transaction_validity::{InvalidTransaction, TransactionValidityError},
 	AccountId32, MultiAddress, OpaqueExtrinsic,
@@ -185,7 +185,7 @@ fn prepare_benchmark(client: &FullClient) -> (usize, Vec<OpaqueExtrinsic>) {
 }
 
 fn block_production(c: &mut Criterion) {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let runtime = tokio::runtime::Runtime::new().expect("creating tokio runtime doesn't fail; qed");
 	let tokio_handle = runtime.handle().clone();

@@ -29,7 +29,7 @@
 
 extern crate alloc;
 
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{AtLeast32BitUnsigned, Saturating, StaticLookup, Zero},
 	ArithmeticError, DispatchError, Perbill,
 };
@@ -56,7 +56,7 @@ pub use self::{
 	vote::{AccountVote, Casting, Delegating, Vote, Voting},
 	weights::WeightInfo,
 };
-use soil_runtime::traits::BlockNumberProvider;
+use subsoil::runtime::traits::BlockNumberProvider;
 
 #[cfg(test)]
 mod tests;
@@ -92,7 +92,7 @@ pub type ClassOf<T, I = ()> = <<T as Config<I>>::Polls as Polling<TallyOf<T, I>>
 #[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
-	use soil_runtime::BoundedVec;
+	use subsoil::runtime::BoundedVec;
 	use topsoil_support::{
 		pallet_prelude::{
 			DispatchResultWithPostInfo, IsType, StorageDoubleMap, StorageMap, ValueQuery,

@@ -45,7 +45,7 @@ pub use weights::WeightInfo;
 extern crate alloc;
 
 use alloc::boxed::Box;
-use soil_runtime::traits::{TryConvert, Zero};
+use subsoil::runtime::traits::{TryConvert, Zero};
 use topsoil_asset_conversion::{PoolLocator, Pools};
 use topsoil_support::traits::{
 	fungible::{Inspect as FungibleInspect, Mutate as FungibleMutate},

@@ -24,10 +24,10 @@ use topsoil_support::{
 	PalletId,
 };
 
-use soil_runtime::{traits::IdentityLookup, BuildStorage, Perbill};
+use subsoil::runtime::{traits::IdentityLookup, BuildStorage, Perbill};
 
-use soil_core::{ConstBool, U256};
-use soil_runtime::traits::Convert;
+use subsoil::core::{ConstBool, U256};
+use subsoil::runtime::traits::Convert;
 use soil_staking::{Agent, Stake, StakingInterface};
 use topsoil_election_provider_support::{
 	bounds::{ElectionBounds, ElectionBoundsBuilder},
@@ -76,7 +76,7 @@ impl topsoil_balances::Config for Runtime {
 }
 
 topsoil_staking_reward_curve::build! {
-	const I_NPOS: soil_runtime::curve::PiecewiseLinear<'static> = curve!(
+	const I_NPOS: subsoil::runtime::curve::PiecewiseLinear<'static> = curve!(
 		min_inflation: 0_025_000,
 		max_inflation: 0_100_000,
 		ideal_stake: 0_500_000,
@@ -87,13 +87,13 @@ topsoil_staking_reward_curve::build! {
 }
 
 parameter_types! {
-	pub const RewardCurve: &'static soil_runtime::curve::PiecewiseLinear<'static> = &I_NPOS;
+	pub const RewardCurve: &'static subsoil::runtime::curve::PiecewiseLinear<'static> = &I_NPOS;
 	pub static ElectionsBoundsOnChain: ElectionBounds = ElectionBoundsBuilder::default().build();
 }
 pub struct OnChainSeqPhragmen;
 impl onchain::Config for OnChainSeqPhragmen {
 	type System = Runtime;
-	type Solver = SequentialPhragmen<Balance, soil_runtime::Perbill>;
+	type Solver = SequentialPhragmen<Balance, subsoil::runtime::Perbill>;
 	type DataProvider = Staking;
 	type WeightInfo = ();
 	type MaxWinnersPerPage = ConstU32<100>;
@@ -153,7 +153,7 @@ impl topsoil_nomination_pools::Config for Runtime {
 	type WeightInfo = ();
 	type Currency = Balances;
 	type RuntimeFreezeReason = RuntimeFreezeReason;
-	type RewardCounter = soil_runtime::FixedU128;
+	type RewardCounter = subsoil::runtime::FixedU128;
 	type BalanceToU256 = BalanceToU256;
 	type U256ToBalance = U256ToBalance;
 	type PostUnbondingPoolsWindow = ConstU32<2>;
@@ -183,8 +183,8 @@ topsoil_support::construct_runtime!(
 pub struct ExtBuilder {}
 
 impl ExtBuilder {
-	fn build(self) -> soil_io::TestExternalities {
-		soil_tracing::try_init_simple();
+	fn build(self) -> subsoil::io::TestExternalities {
+		subsoil::tracing::try_init_simple();
 		let mut storage =
 			topsoil_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
 
@@ -232,7 +232,7 @@ impl ExtBuilder {
 		}
 		.assimilate_storage(&mut storage);
 
-		let mut ext = soil_io::TestExternalities::from(storage);
+		let mut ext = subsoil::io::TestExternalities::from(storage);
 
 		ext.execute_with(|| {
 			// for events to be deposited.
@@ -244,7 +244,7 @@ impl ExtBuilder {
 		ext
 	}
 	pub fn build_and_execute(self, test: impl FnOnce()) {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 		let mut ext = self.build();
 		ext.execute_with(test);
 		ext.execute_with(|| {

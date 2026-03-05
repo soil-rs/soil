@@ -88,8 +88,8 @@ mod pallet {
 		verifier::Verifier,
 		CommonError,
 	};
-	use soil_runtime::traits::SaturatedConversion;
-	use soil_std::prelude::*;
+	use subsoil::runtime::traits::SaturatedConversion;
+	use subsoil::std::prelude::*;
 	use topsoil_support::pallet_prelude::*;
 	use topsoil_system::{offchain::CreateBare, pallet_prelude::*};
 
@@ -247,12 +247,12 @@ mod pallet {
 		}
 
 		#[cfg(feature = "try-runtime")]
-		fn try_state(now: BlockNumberFor<T>) -> Result<(), soil_runtime::TryRuntimeError> {
+		fn try_state(now: BlockNumberFor<T>) -> Result<(), subsoil::runtime::TryRuntimeError> {
 			Self::do_try_state(now)
 		}
 
 		fn offchain_worker(now: BlockNumberFor<T>) {
-			use soil_runtime::offchain::storage_lock::{BlockAndTime, StorageLock};
+			use subsoil::runtime::offchain::storage_lock::{BlockAndTime, StorageLock};
 
 			// Create a lock with the maximum deadline of number of blocks in the unsigned phase.
 			// This should only come useful in an **abrupt** termination of execution, otherwise the
@@ -363,7 +363,7 @@ mod pallet {
 		#[cfg(any(test, feature = "runtime-benchmarks", feature = "try-runtime"))]
 		pub(crate) fn do_try_state(
 			_now: BlockNumberFor<T>,
-		) -> Result<(), soil_runtime::TryRuntimeError> {
+		) -> Result<(), subsoil::runtime::TryRuntimeError> {
 			Ok(())
 		}
 	}

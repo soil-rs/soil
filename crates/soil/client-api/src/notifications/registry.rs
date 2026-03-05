@@ -18,7 +18,7 @@
 
 use super::*;
 
-use soil_core::hexdisplay::HexDisplay;
+use subsoil::core::hexdisplay::HexDisplay;
 
 use fnv::{FnvHashMap, FnvHashSet};
 use prometheus_endpoint::{register, CounterVec, Opts, U64};

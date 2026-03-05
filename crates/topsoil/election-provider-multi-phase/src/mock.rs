@@ -19,18 +19,18 @@ use super::*;
 use crate::{self as multi_phase, signed::GeometricDepositBase, unsigned::MinerConfig};
 use multi_phase::unsigned::{IndexAssignmentOf, VoterOf};
 use parking_lot::RwLock;
-use soil_core::{
+use subsoil::core::{
 	offchain::{
 		testing::{PoolState, TestOffchainExt, TestTransactionPoolExt},
 		OffchainDbExt, OffchainWorkerExt, TransactionPoolExt,
 	},
 	ConstBool, H256,
 };
-use soil_npos_elections::{
+use subsoil::npos_elections::{
 	assignment_ratio_to_staked_normalized, seq_phragmen, to_supports, BalancingConfig,
 	ElectionResult, EvaluateSupport,
 };
-use soil_runtime::{
+use subsoil::runtime::{
 	bounded_vec,
 	testing::Header,
 	traits::{BlakeTwo256, Convert, IdentityLookup},
@@ -49,9 +49,9 @@ use topsoil_support::{
 	BoundedVec,
 };
 
-pub type Block = soil_runtime::generic::Block<Header, UncheckedExtrinsic>;
+pub type Block = subsoil::runtime::generic::Block<Header, UncheckedExtrinsic>;
 pub type UncheckedExtrinsic =
-	soil_runtime::generic::UncheckedExtrinsic<AccountId, RuntimeCall, (), ()>;
+	subsoil::runtime::generic::UncheckedExtrinsic<AccountId, RuntimeCall, (), ()>;
 
 topsoil_support::construct_runtime!(
 	pub enum Runtime {
@@ -124,7 +124,7 @@ pub struct TrimHelpers {
 	pub voters: Vec<VoterOf<Runtime>>,
 	pub assignments: Vec<IndexAssignmentOf<Runtime>>,
 	pub encoded_size_of:
-		Box<dyn Fn(&[IndexAssignmentOf<Runtime>]) -> Result<usize, soil_npos_elections::Error>>,
+		Box<dyn Fn(&[IndexAssignmentOf<Runtime>]) -> Result<usize, subsoil::npos_elections::Error>>,
 	pub voter_index: Box<
 		dyn Fn(
 			&<Runtime as topsoil_system::Config>::AccountId,
@@ -471,7 +471,7 @@ where
 	}
 }
 
-pub type Extrinsic = soil_runtime::testing::TestXt<RuntimeCall, ()>;
+pub type Extrinsic = subsoil::runtime::testing::TestXt<RuntimeCall, ()>;
 
 parameter_types! {
 	pub MaxNominations: u32 = <TestNposSolution as NposSolution>::LIMIT as u32;
@@ -629,8 +629,8 @@ impl ExtBuilder {
 		MaxBackersPerWinner::set(max);
 		self
 	}
-	pub fn build(self) -> soil_io::TestExternalities {
-		soil_tracing::try_init_simple();
+	pub fn build(self) -> subsoil::io::TestExternalities {
+		subsoil::tracing::try_init_simple();
 		let mut storage =
 			topsoil_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
 
@@ -651,13 +651,13 @@ impl ExtBuilder {
 		}
 		.assimilate_storage(&mut storage);
 
-		soil_io::TestExternalities::from(storage)
+		subsoil::io::TestExternalities::from(storage)
 	}
 
 	pub fn build_offchainify(
 		self,
 		iters: u32,
-	) -> (soil_io::TestExternalities, Arc<RwLock<PoolState>>) {
+	) -> (subsoil::io::TestExternalities, Arc<RwLock<PoolState>>) {
 		let mut ext = self.build();
 		let (offchain, offchain_state) = TestOffchainExt::new();
 		let (pool, pool_state) = TestTransactionPoolExt::new();
@@ -674,7 +674,7 @@ impl ExtBuilder {
 	}
 
 	pub fn build_and_execute(self, test: impl FnOnce() -> ()) {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 
 		let mut ext = self.build();
 		ext.execute_with(test);

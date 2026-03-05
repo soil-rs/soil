@@ -15,7 +15,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use soil_core::Get;
+use subsoil::core::Get;
 
 use super::{new_test_ext, BlockNumberFor, Config, Pallet, Runtime};
 use crate::{

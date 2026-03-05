@@ -18,15 +18,9 @@ targets = ["x86_64-unknown-linux-gnu"]
 codec = { features = ["derive"], workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { optional = true, features = ["alloc", "derive"], workspace = true }
-soil-api = { workspace = true }
-soil-application-crypto = { workspace = true }
-soil-core = { workspace = true }
-soil-crypto-hashing = { workspace = true }
-soil-io = { workspace = true }
-soil-keystore = { workspace = true }
+subsoil-crypto-hashing = { workspace = true }
 soil-mmr-primitives = { workspace = true }
-soil-runtime = { workspace = true }
-soil-weights = { workspace = true }
+subsoil = { workspace = true }
 strum = { features = ["derive"], workspace = true }
 
 [dev-dependencies]
@@ -39,30 +33,18 @@ std = [
 	"codec/std",
 	"scale-info/std",
 	"serde/std",
-	"soil-api/std",
-	"soil-application-crypto/std",
-	"soil-core/std",
-	"soil-crypto-hashing/std",
-	"soil-io/std",
-	"soil-keystore/std",
+	"subsoil/std",
+	"subsoil-crypto-hashing/std",
 	"soil-mmr-primitives/std",
-	"soil-runtime/std",
-	"soil-weights/std",
-	"strum/std",
-]
+	"strum/std"]
 
 # Serde support without relying on std features.
 serde = [
 	"dep:serde",
 	"scale-info/serde",
-	"soil-application-crypto/serde",
-	"soil-core/serde",
-	"soil-runtime/serde",
-]
+	"subsoil/serde"]
 
 # This feature adds BLS crypto primitives. It should not be used in production since
 # the BLS implementation and interface may still be subject to significant change.
 bls-experimental = [
-	"soil-application-crypto/bls-experimental",
-	"soil-core/bls-experimental",
-]
+	"subsoil/bls-experimental"]

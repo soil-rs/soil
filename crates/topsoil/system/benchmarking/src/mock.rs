@@ -20,7 +20,7 @@
 #![cfg(test)]
 
 use codec::Encode;
-use soil_runtime::BuildStorage;
+use subsoil::runtime::BuildStorage;
 use topsoil_support::{derive_impl, weights::Weight};
 
 type Block = topsoil_system::mocking::MockBlock<Test>;
@@ -81,27 +81,27 @@ impl crate::Config for Test {}
 
 struct MockedReadRuntimeVersion(Vec<u8>);
 
-impl soil_core::traits::ReadRuntimeVersion for MockedReadRuntimeVersion {
+impl subsoil::core::traits::ReadRuntimeVersion for MockedReadRuntimeVersion {
 	fn read_runtime_version(
 		&self,
 		_wasm_code: &[u8],
-		_ext: &mut dyn soil_externalities::Externalities,
+		_ext: &mut dyn subsoil::externalities::Externalities,
 	) -> Result<Vec<u8>, String> {
 		Ok(self.0.clone())
 	}
 }
 
-pub fn new_test_ext() -> soil_io::TestExternalities {
+pub fn new_test_ext() -> subsoil::io::TestExternalities {
 	let t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 
-	let version = soil_version::RuntimeVersion {
+	let version = subsoil::version::RuntimeVersion {
 		spec_name: "spec_name".into(),
 		spec_version: 123,
 		impl_version: 456,
 		..Default::default()
 	};
 	let read_runtime_version = MockedReadRuntimeVersion(version.encode());
-	let mut ext = soil_io::TestExternalities::new(t);
-	ext.register_extension(soil_core::traits::ReadRuntimeVersionExt::new(read_runtime_version));
+	let mut ext = subsoil::io::TestExternalities::new(t);
+	ext.register_extension(subsoil::core::traits::ReadRuntimeVersionExt::new(read_runtime_version));
 	ext
 }

@@ -40,7 +40,7 @@ use sc_rpc::{
 	DenyUnsafe, SubscriptionTaskExecutor,
 };
 use sc_tracing::block::TracingExecuteBlock;
-use soil_api::{CallApiAt, ProvideRuntimeApi};
+use subsoil::api::{CallApiAt, ProvideRuntimeApi};
 use soil_blockchain::{HeaderBackend, HeaderMetadata};
 use soil_chain_spec::{get_extension, ChainSpec};
 use soil_client_api::{
@@ -52,12 +52,12 @@ use soil_client_db::{Backend, BlocksPruning, DatabaseSettings, PruningMode};
 use soil_consensus::block_validation::{
 	BlockAnnounceValidator, Chain, DefaultBlockAnnounceValidator,
 };
-use soil_core::traits::{CodeExecutor, SpawnNamed};
+use subsoil::core::traits::{CodeExecutor, SpawnNamed};
 use soil_executor::{
-	soil_wasm_interface::HostFunctions, HeapAllocStrategy, NativeExecutionDispatch,
+	wasm_interface::HostFunctions, HeapAllocStrategy, NativeExecutionDispatch,
 	RuntimeVersionOf, WasmExecutor, DEFAULT_HEAP_ALLOC_STRATEGY,
 };
-use soil_keystore::KeystorePtr;
+use subsoil::keystore::KeystorePtr;
 use soil_network::{
 	config::{FullNetworkConfiguration, ProtocolId, SyncMode},
 	multiaddr::Protocol,
@@ -88,8 +88,8 @@ use soil_rpc_spec_v2::{
 	chain_spec::ChainSpecApiServer,
 	transaction::{TransactionApiServer, TransactionBroadcastApiServer},
 };
-use soil_runtime::traits::{Block as BlockT, BlockIdTo, NumberFor, Zero};
-use soil_storage::{ChildInfo, ChildType, PrefixedStorageKey};
+use subsoil::runtime::traits::{Block as BlockT, BlockIdTo, NumberFor, Zero};
+use subsoil::storage::{ChildInfo, ChildType, PrefixedStorageKey};
 use soil_telemetry::{telemetry, ConnectionMessage, Telemetry, TelemetryHandle, SUBSTRATE_INFO};
 use soil_transaction_pool_api::{MaintainedTransactionPool, TransactionPool};
 use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedSender};
@@ -318,7 +318,7 @@ fn warm_up_trie_cache<TBl: BlockT>(
 	storage_root: TBl::Hash,
 ) -> Result<(), Error> {
 	use soil_client_api::backend::Backend;
-	use soil_state_machine::Backend as StateBackend;
+	use subsoil::state_machine::Backend as StateBackend;
 
 	let untrusted_state = || backend.state_at(storage_root, TrieCacheContext::Untrusted);
 	let trusted_state = || backend.state_at(storage_root, TrieCacheContext::Trusted);
@@ -520,10 +520,10 @@ where
 		+ Send
 		+ 'static,
 	<TCl as ProvideRuntimeApi<TBl>>::Api:
-		soil_api::Metadata<TBl>
+		subsoil::api::Metadata<TBl>
 			+ soil_transaction_pool::runtime_api::TaggedTransactionQueue<TBl>
 			+ soil_session::SessionKeys<TBl>
-			+ soil_api::ApiExt<TBl>,
+			+ subsoil::api::ApiExt<TBl>,
 	TBl: BlockT,
 	TBl::Hash: Unpin,
 	TBl::Header: Unpin,
@@ -842,7 +842,7 @@ where
 		+ Sync
 		+ 'static,
 	TBackend: soil_client_api::backend::Backend<TBl> + 'static,
-	<TCl as ProvideRuntimeApi<TBl>>::Api: soil_session::SessionKeys<TBl> + soil_api::Metadata<TBl>,
+	<TCl as ProvideRuntimeApi<TBl>>::Api: soil_session::SessionKeys<TBl> + subsoil::api::Metadata<TBl>,
 	TExPool: MaintainedTransactionPool<Block = TBl, Hash = <TBl as BlockT>::Hash> + 'static,
 	TBl::Hash: Unpin,
 	TBl::Header: Unpin,

@@ -22,7 +22,7 @@
 // SOFTWARE.
 
 use crate as pallet_template;
-use topsoil_support::{derive_impl, soil_runtime::BuildStorage};
+use topsoil_support::{derive_impl, subsoil::runtime::BuildStorage};
 
 type Block = topsoil_system::mocking::MockBlock<Test>;
 
@@ -47,6 +47,6 @@ impl pallet_template::Config for Test {
 }
 
 // Build genesis storage according to the mock runtime.
-pub fn new_test_ext() -> soil_io::TestExternalities {
+pub fn new_test_ext() -> subsoil::io::TestExternalities {
 	topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap().into()
 }

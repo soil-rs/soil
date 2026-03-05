@@ -22,7 +22,7 @@ use crate::{
 	storage::{StorageDecodeLength, StorageTryAppend},
 	traits::Get,
 };
-pub use soil_runtime::WeakBoundedVec;
+pub use subsoil::runtime::WeakBoundedVec;
 
 impl<T, S> StorageDecodeLength for WeakBoundedVec<T, S> {}
 
@@ -36,7 +36,7 @@ impl<T, S: Get<u32>> StorageTryAppend<T> for WeakBoundedVec<T, S> {
 pub mod test {
 	use super::*;
 	use crate::Twox128;
-	use soil_io::TestExternalities;
+	use subsoil::io::TestExternalities;
 	use topsoil_support::traits::ConstU32;
 
 	#[crate::storage_alias]

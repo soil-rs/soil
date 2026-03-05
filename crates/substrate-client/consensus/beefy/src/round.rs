@@ -20,12 +20,12 @@ use crate::LOG_TARGET;
 
 use codec::{Decode, Encode};
 use log::{debug, info};
-use soil_application_crypto::RuntimeAppPublic;
+use subsoil::application_crypto::RuntimeAppPublic;
 use soil_consensus_beefy::{
 	AuthorityIdBound, Commitment, DoubleVotingProof, SignedCommitment, ValidatorSet,
 	ValidatorSetId, VoteMessage,
 };
-use soil_runtime::traits::{Block, NumberFor};
+use subsoil::runtime::traits::{Block, NumberFor};
 use std::collections::BTreeMap;
 
 /// Tracks for each round which validators have voted/signed and
@@ -278,7 +278,7 @@ mod tests {
 
 	#[test]
 	fn new_rounds() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 
 		let validators = ValidatorSet::<ecdsa_crypto::AuthorityId>::new(
 			vec![Keyring::Alice.public(), Keyring::Bob.public(), Keyring::Charlie.public()],
@@ -303,7 +303,7 @@ mod tests {
 
 	#[test]
 	fn add_and_conclude_votes() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 
 		let validators = ValidatorSet::<ecdsa_crypto::AuthorityId>::new(
 			vec![
@@ -369,7 +369,7 @@ mod tests {
 
 	#[test]
 	fn old_rounds_not_accepted() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 
 		let validators = ValidatorSet::<ecdsa_crypto::AuthorityId>::new(
 			vec![Keyring::Alice.public(), Keyring::Bob.public(), Keyring::Charlie.public()],
@@ -415,7 +415,7 @@ mod tests {
 
 	#[test]
 	fn multiple_rounds() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 
 		let validators = ValidatorSet::<ecdsa_crypto::AuthorityId>::new(
 			vec![Keyring::Alice.public(), Keyring::Bob.public(), Keyring::Charlie.public()],
@@ -490,7 +490,7 @@ mod tests {
 
 	#[test]
 	fn should_provide_equivocation_proof() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 
 		let validators = ValidatorSet::<ecdsa_crypto::AuthorityId>::new(
 			vec![Keyring::Alice.public(), Keyring::Bob.public()],

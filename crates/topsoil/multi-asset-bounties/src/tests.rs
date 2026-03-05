@@ -23,7 +23,7 @@ use super::{Event as BountiesEvent, *};
 use crate as topsoil_bounties;
 use crate::mock::{Bounties, *};
 
-use soil_runtime::{traits::Dispatchable, TokenError};
+use subsoil::runtime::{traits::Dispatchable, TokenError};
 use topsoil_support::{
 	assert_err_ignore_postinfo, assert_noop, assert_ok,
 	traits::{fungible::Mutate, Currency},

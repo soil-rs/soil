@@ -19,8 +19,8 @@
 
 #![cfg_attr(not(feature = "std"), no_std)]
 
-use soil_core::wasm_export_functions;
-use soil_runtime_interface::runtime_interface;
+use subsoil::wasm_export_functions;
+use subsoil::runtime_interface::runtime_interface;
 
 // Include the WASM binary
 #[cfg(feature = "std")]
@@ -40,7 +40,7 @@ pub fn wasm_binary_unwrap() -> &'static [u8] {
 #[cfg(not(feature = "std"))]
 #[no_mangle]
 pub fn import_sp_io() {
-	soil_io::misc::print_utf8(&[]);
+	subsoil::io::misc::print_utf8(&[]);
 }
 
 #[runtime_interface]

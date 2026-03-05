@@ -15,7 +15,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-soil_api::decl_runtime_apis! {
+subsoil::api::decl_runtime_apis! {
 	#[api_version(2)]
 	pub trait Api {
 		#[api_version(1)]

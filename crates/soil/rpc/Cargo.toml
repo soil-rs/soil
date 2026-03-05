@@ -18,7 +18,7 @@ targets = ["x86_64-unknown-linux-gnu"]
 [dependencies]
 rustc-hash = { workspace = true }
 serde = { features = ["derive"], workspace = true, default-features = true }
-soil-core = { workspace = true, default-features = true }
+subsoil = { workspace = true, default-features = true }
 
 [dev-dependencies]
 serde_json = { workspace = true, default-features = true }

@@ -13,7 +13,7 @@ workspace = true
 
 [dependencies]
 array-bytes = { optional = true, workspace = true, default-features = true }
-binary-merkle-tree = { workspace = true }
+subsoil = { workspace = true }
 codec = { features = ["derive"], workspace = true }
 topsoil-benchmarking = { optional = true, workspace = true }
 topsoil-support = { workspace = true }
@@ -24,12 +24,7 @@ topsoil-mmr = { workspace = true }
 topsoil-session = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { optional = true, workspace = true, default-features = true }
-soil-api = { workspace = true }
 soil-consensus-beefy = { workspace = true }
-soil-core = { workspace = true }
-soil-io = { workspace = true }
-soil-runtime = { workspace = true }
-soil-state-machine = { workspace = true }
 
 [dev-dependencies]
 array-bytes = { workspace = true, default-features = true }
@@ -40,7 +35,7 @@ soil-staking = { workspace = true, default-features = true }
 default = ["std"]
 std = [
 	"array-bytes",
-	"binary-merkle-tree/std",
+	"subsoil/std",
 	"codec/std",
 	"topsoil-benchmarking/std",
 	"topsoil-support/std",
@@ -52,14 +47,8 @@ std = [
 	"topsoil-session/std",
 	"scale-info/std",
 	"serde",
-	"soil-api/std",
 	"soil-consensus-beefy/std",
-	"soil-core/std",
-	"soil-io/std",
-	"soil-runtime/std",
-	"soil-staking/std",
-	"soil-state-machine/std",
-]
+	"soil-staking/std"]
 try-runtime = [
 	"topsoil-support/try-runtime",
 	"topsoil-system/try-runtime",
@@ -67,8 +56,7 @@ try-runtime = [
 	"topsoil-beefy/try-runtime",
 	"topsoil-mmr/try-runtime",
 	"topsoil-session/try-runtime",
-	"soil-runtime/try-runtime",
-]
+	"subsoil/try-runtime"]
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",
 	"topsoil-support/runtime-benchmarks",
@@ -76,6 +64,5 @@ runtime-benchmarks = [
 	"topsoil-balances/runtime-benchmarks",
 	"topsoil-mmr/runtime-benchmarks",
 	"topsoil-session/runtime-benchmarks",
-	"soil-runtime/runtime-benchmarks",
-	"soil-staking/runtime-benchmarks",
-]
+	"subsoil/runtime-benchmarks",
+	"soil-staking/runtime-benchmarks"]

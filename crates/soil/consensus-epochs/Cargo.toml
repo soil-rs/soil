@@ -21,7 +21,7 @@ fork-tree = { workspace = true, default-features = true, optional = true}
 soil-client-api = { workspace = true, default-features = true, optional = true}
 sc-consensus = { workspace = true, default-features = true, optional = true}
 soil-blockchain = { workspace = true, default-features = true, optional = true}
-soil-runtime = { workspace = true, default-features = true, optional = true}
+subsoil = { workspace = true, optional = true}
 
 [features]
 default = ["std"]
@@ -31,7 +31,7 @@ std = [
 	"sc-consensus",
 	"soil-blockchain",
 	"soil-client-api",
-	"soil-runtime",
+	"subsoil",
 	"soil-client-api/std",
-	"soil-runtime/std",
+	"subsoil/std",
 ]

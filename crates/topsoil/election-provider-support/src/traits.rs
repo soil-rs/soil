@@ -22,8 +22,8 @@ use alloc::vec::Vec;
 use codec::Encode;
 use core::fmt::Debug;
 use scale_info::TypeInfo;
-use soil_arithmetic::traits::{Bounded, UniqueSaturatedInto};
-use soil_npos_elections::{ElectionScore, Error, EvaluateSupport};
+use subsoil::arithmetic::traits::{Bounded, UniqueSaturatedInto};
+use subsoil::npos_elections::{ElectionScore, Error, EvaluateSupport};
 
 /// An opaque index-based, NPoS solution type.
 pub trait NposSolution
@@ -97,8 +97,8 @@ where
 	{
 		let ratio = self.into_assignment(voter_at, target_at)?;
 		let staked =
-			soil_npos_elections::helpers::assignment_ratio_to_staked_normalized(ratio, stake_of)?;
-		let supports = soil_npos_elections::to_supports(&staked);
+			subsoil::npos_elections::helpers::assignment_ratio_to_staked_normalized(ratio, stake_of)?;
+		let supports = subsoil::npos_elections::to_supports(&staked);
 		Ok(supports.evaluate())
 	}
 

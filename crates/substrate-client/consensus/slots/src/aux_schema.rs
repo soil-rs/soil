@@ -22,7 +22,7 @@ use codec::{Decode, Encode};
 use soil_blockchain::{Error as ClientError, Result as ClientResult};
 use soil_client_api::backend::AuxStore;
 use soil_consensus_slots::{EquivocationProof, Slot};
-use soil_runtime::traits::Header;
+use subsoil::runtime::traits::Header;
 
 const SLOT_HEADER_MAP_KEY: &[u8] = b"slot_header_map";
 const SLOT_HEADER_START: &[u8] = b"slot_header_start";
@@ -134,8 +134,8 @@ where
 
 #[cfg(test)]
 mod test {
-	use soil_core::{hash::H256, sr25519, Pair};
-	use soil_runtime::testing::{Digest as DigestTest, Header as HeaderTest};
+	use subsoil::core::{hash::H256, sr25519, Pair};
+	use subsoil::runtime::testing::{Digest as DigestTest, Header as HeaderTest};
 	use substrate_test_runtime_client;
 
 	use super::{check_equivocation, MAX_SLOT_CAPACITY, PRUNING_BOUND};

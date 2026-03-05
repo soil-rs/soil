@@ -16,17 +16,12 @@ workspace = true
 targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
+subsoil = { workspace = true }
 codec = { features = ["derive"], workspace = true }
 topsoil-support = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { optional = true, features = ["alloc", "derive"], workspace = true }
-soil-api = { workspace = true }
-soil-application-crypto = { workspace = true }
-soil-core = { workspace = true }
-soil-crypto-hashing = { workspace = true }
-soil-externalities = { workspace = true }
-soil-runtime = { workspace = true }
-soil-runtime-interface = { workspace = true }
+subsoil-crypto-hashing = { workspace = true }
 thiserror = { optional = true, workspace = true }
 
 # ECIES dependencies
@@ -53,20 +48,11 @@ std = [
 	"scale-info/std",
 	"serde?/std",
 	"sha2",
-	"soil-api/std",
-	"soil-application-crypto/std",
-	"soil-core/std",
-	"soil-crypto-hashing/std",
-	"soil-externalities/std",
-	"soil-runtime-interface/std",
-	"soil-runtime/std",
+	"subsoil/std",
+	"subsoil-crypto-hashing/std",
 	"thiserror",
-	"x25519-dalek",
-]
+	"x25519-dalek"]
 serde = [
 	"dep:serde",
 	"scale-info/serde",
-	"soil-application-crypto/serde",
-	"soil-core/serde",
-	"soil-runtime/serde",
-]
+	"subsoil/serde"]

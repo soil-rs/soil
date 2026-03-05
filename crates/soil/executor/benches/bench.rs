@@ -84,11 +84,11 @@ fn initialize(
 				std::fs::write(&path, &precompiled_blob).unwrap();
 				unsafe {
 					soil_executor_wasmtime::create_runtime_from_artifact::<
-						soil_io::SubstrateHostFunctions,
+						subsoil::io::SubstrateHostFunctions,
 					>(&path, config)
 				}
 			} else {
-				soil_executor_wasmtime::create_runtime::<soil_io::SubstrateHostFunctions>(
+				soil_executor_wasmtime::create_runtime::<subsoil::io::SubstrateHostFunctions>(
 					blob, config,
 				)
 			}
@@ -150,7 +150,7 @@ fn run_benchmark(
 }
 
 fn bench_call_instance(c: &mut Criterion) {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let strategies = [
 		(

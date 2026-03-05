@@ -23,18 +23,18 @@ extern crate alloc;
 
 use alloc::vec::Vec;
 use codec::{Codec, Decode, Encode};
-use soil_runtime::ConsensusEngineId;
+use subsoil::runtime::ConsensusEngineId;
 
 pub mod digests;
 pub mod inherents;
 
 pub mod sr25519 {
 	mod app_sr25519 {
-		use soil_application_crypto::{app_crypto, key_types::AURA, sr25519};
-		app_crypto!(sr25519, AURA);
+		use subsoil::application_crypto::{key_types::AURA, sr25519};
+		subsoil::app_crypto!(sr25519, AURA);
 	}
 
-	soil_application_crypto::with_pair! {
+	subsoil::with_pair! {
 		/// An Aura authority keypair using S/R 25519 as its crypto.
 		pub type AuthorityPair = app_sr25519::Pair;
 	}
@@ -48,11 +48,11 @@ pub mod sr25519 {
 
 pub mod ed25519 {
 	mod app_ed25519 {
-		use soil_application_crypto::{app_crypto, ed25519, key_types::AURA};
-		app_crypto!(ed25519, AURA);
+		use subsoil::application_crypto::{ed25519, key_types::AURA};
+		subsoil::app_crypto!(ed25519, AURA);
 	}
 
-	soil_application_crypto::with_pair! {
+	subsoil::with_pair! {
 		/// An Aura authority keypair using Ed25519 as its crypto.
 		pub type AuthorityPair = app_ed25519::Pair;
 	}
@@ -83,7 +83,7 @@ pub enum ConsensusLog<AuthorityId: Codec> {
 	OnDisabled(AuthorityIndex),
 }
 
-soil_api::decl_runtime_apis! {
+subsoil::api::decl_runtime_apis! {
 	/// API necessary for block authorship with aura.
 	pub trait AuraApi<AuthorityId: Codec> {
 		/// Returns the slot duration for Aura.

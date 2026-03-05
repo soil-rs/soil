@@ -20,9 +20,7 @@ targets = ["x86_64-unknown-linux-gnu"]
 array-bytes = { workspace = true, default-features = true }
 parking_lot = { workspace = true, default-features = true }
 serde_json = { workspace = true, default-features = true }
-soil-application-crypto = { workspace = true, default-features = true }
-soil-core = { workspace = true, default-features = true }
-soil-keystore = { workspace = true, default-features = true }
+subsoil = { workspace = true, default-features = true }
 thiserror = { workspace = true }
 
 [dev-dependencies]
@@ -33,15 +31,12 @@ tempfile = { workspace = true }
 # It should not be used in production since the implementation and interface may still
 # be subject to significant changes.
 bls-experimental = [
-	"soil-core/bls-experimental",
-	"soil-keystore/bls-experimental",
+	"subsoil/bls-experimental",
 ]
 
 # This feature adds Bandersnatch crypto primitives.
 # It should not be used in production since the implementation and interface may still
 # be subject to significant changes.
 bandersnatch-experimental = [
-	"soil-application-crypto/bandersnatch-experimental",
-	"soil-core/bandersnatch-experimental",
-	"soil-keystore/bandersnatch-experimental",
+	"subsoil/bandersnatch-experimental",
 ]

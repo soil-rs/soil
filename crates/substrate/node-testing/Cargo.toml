@@ -33,15 +33,10 @@ soil-client-db = { features = ["rocksdb"], workspace = true, default-features = 
 sc-consensus = { workspace = true, default-features = true }
 soil-executor = { workspace = true, default-features = true }
 soil-service = { features = ["rocksdb"], workspace = true, default-features = true }
-soil-api = { workspace = true, default-features = true }
 soil-block-builder = { workspace = true, default-features = true }
 soil-blockchain = { workspace = true, default-features = true }
 soil-consensus = { workspace = true, default-features = true }
-soil-core = { workspace = true, default-features = true }
-soil-crypto-hashing = { workspace = true, default-features = true }
-soil-inherents = { workspace = true, default-features = true }
-soil-keyring = { workspace = true, default-features = true }
-soil-runtime = { workspace = true, default-features = true }
-soil-timestamp = { workspace = true }
+subsoil = { workspace = true, default-features = true }
+subsoil-crypto-hashing = { workspace = true, default-features = true }
 substrate-test-client = { workspace = true }
 tempfile = { workspace = true }

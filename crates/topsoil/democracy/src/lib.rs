@@ -156,7 +156,7 @@ extern crate alloc;
 
 use alloc::{vec, vec::Vec};
 use codec::{Decode, Encode};
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{BadOrigin, Bounded as ArithBounded, One, Saturating, StaticLookup, Zero},
 	ArithmeticError, DispatchError, DispatchResult,
 };
@@ -1171,7 +1171,7 @@ pub mod pallet {
 }
 
 pub trait EncodeInto: Encode {
-	fn encode_into<T: AsMut<[u8]> + Default, H: soil_core::Hasher>(&self) -> T {
+	fn encode_into<T: AsMut<[u8]> + Default, H: subsoil::core::Hasher>(&self) -> T {
 		let mut t = T::default();
 		self.using_encoded(|data| {
 			if data.len() <= t.as_mut().len() {
@@ -1741,14 +1741,14 @@ impl<T: Config> Pallet<T> {
 fn decode_compact_u32_at(key: &[u8]) -> Option<u32> {
 	// `Compact<u32>` takes at most 5 bytes.
 	let mut buf = [0u8; 5];
-	let bytes = soil_io::storage::read(key, &mut buf, 0)?;
+	let bytes = subsoil::io::storage::read(key, &mut buf, 0)?;
 	// The value may be smaller than 5 bytes.
 	let mut input = &buf[0..buf.len().min(bytes as usize)];
 	match codec::Compact::<u32>::decode(&mut input) {
 		Ok(c) => Some(c.0),
 		Err(_) => {
-			soil_runtime::print("Failed to decode compact u32 at:");
-			soil_runtime::print(key);
+			subsoil::runtime::print("Failed to decode compact u32 at:");
+			subsoil::runtime::print(key);
 			None
 		},
 	}

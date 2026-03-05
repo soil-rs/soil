@@ -34,12 +34,12 @@ use crate::{
 };
 use codec::Encode;
 use scale_info::TypeInfo;
-use soil_npos_elections::EvaluateSupport;
-use soil_runtime::{
+use subsoil::npos_elections::EvaluateSupport;
+use subsoil::runtime::{
 	offchain::storage::{MutateStorageError, StorageValueRef},
 	traits::{SaturatedConversion, Saturating, Zero},
 };
-use soil_std::{collections::btree_map::BTreeMap, prelude::*};
+use subsoil::std::{collections::btree_map::BTreeMap, prelude::*};
 use topsoil_election_provider_support::{ExtendedBalance, NposSolver, Support, VoteWeight};
 use topsoil_support::{traits::Get, BoundedVec};
 use topsoil_system::pallet_prelude::*;
@@ -70,7 +70,7 @@ pub(crate) type MinerSolverErrorOf<T> = <<T as MinerConfig>::Solver as NposSolve
 )]
 pub enum MinerError<T: MinerConfig> {
 	/// An internal error in the NPoS elections crate.
-	NposElections(soil_npos_elections::Error),
+	NposElections(subsoil::npos_elections::Error),
 	/// An internal error in the generic solver.
 	Solver(MinerSolverErrorOf<T>),
 	/// Snapshot data was unavailable unexpectedly.
@@ -87,8 +87,8 @@ pub enum MinerError<T: MinerConfig> {
 	Defensive(&'static str),
 }
 
-impl<T: MinerConfig> From<soil_npos_elections::Error> for MinerError<T> {
-	fn from(e: soil_npos_elections::Error) -> Self {
+impl<T: MinerConfig> From<subsoil::npos_elections::Error> for MinerError<T> {
+	fn from(e: subsoil::npos_elections::Error) -> Self {
 		MinerError::NposElections(e)
 	}
 }
@@ -154,7 +154,7 @@ pub trait MinerConfig {
 		+ PartialEq
 		+ Eq
 		+ Clone
-		+ soil_std::fmt::Debug
+		+ subsoil::std::fmt::Debug
 		+ Ord
 		+ NposSolution
 		+ TypeInfo
@@ -209,7 +209,7 @@ pub trait MinerConfig {
 
 /// A base miner that is only capable of mining a new solution and checking it against the state of
 /// this pallet for feasibility, and trimming its length/weight.
-pub struct BaseMiner<T: MinerConfig>(soil_std::marker::PhantomData<T>);
+pub struct BaseMiner<T: MinerConfig>(subsoil::std::marker::PhantomData<T>);
 
 /// Parameterized `BoundedSupports` for the miner.
 ///
@@ -314,7 +314,7 @@ impl<T: MinerConfig> BaseMiner<T> {
 			// assignments -> staked assignments -> reduce -> supports -> trim supports -> staked
 			// assignments -> final assignments
 			// This is by no means the most performant, but is the clear and correct.
-			use soil_npos_elections::{
+			use subsoil::npos_elections::{
 				assignment_ratio_to_staked_normalized, assignment_staked_to_ratio_normalized,
 				reduce, supports_to_staked_assignment, to_supports, EvaluateSupport,
 			};
@@ -514,7 +514,7 @@ impl<T: MinerConfig> BaseMiner<T> {
 		page_voters: &VoterPageOf<T>,
 		page: PageIndex,
 	) -> Result<Vec<AssignmentOf<T>>, MinerError<T>> {
-		use soil_npos_elections::{
+		use subsoil::npos_elections::{
 			assignment_ratio_to_staked_normalized, assignment_staked_to_ratio_normalized,
 			supports_to_staked_assignment, to_supports,
 		};
@@ -667,7 +667,7 @@ impl<T: MinerConfig> BaseMiner<T> {
 /// A miner that is suited to work inside offchain worker environment.
 ///
 /// This is parameterized by [`Config`], rather than [`MinerConfig`].
-pub struct OffchainWorkerMiner<T: Config>(soil_std::marker::PhantomData<T>);
+pub struct OffchainWorkerMiner<T: Config>(subsoil::std::marker::PhantomData<T>);
 
 impl<T: Config> OffchainWorkerMiner<T> {
 	/// Storage key used to store the offchain worker running status.
@@ -1004,7 +1004,7 @@ impl<T: Config> OffchainWorkerMiner<T> {
 mod trimming {
 	use super::*;
 	use crate::{mock::*, verifier::Verifier};
-	use soil_npos_elections::Support;
+	use subsoil::npos_elections::Support;
 	use topsoil_election_provider_support::TryFromUnboundedPagedSupports;
 
 	#[test]
@@ -1399,8 +1399,8 @@ mod base_miner {
 
 	use super::*;
 	use crate::{mock::*, Snapshot};
-	use soil_npos_elections::Support;
-	use soil_runtime::PerU16;
+	use subsoil::npos_elections::Support;
+	use subsoil::runtime::PerU16;
 	use topsoil_election_provider_support::TryFromUnboundedPagedSupports;
 
 	#[test]
@@ -1856,7 +1856,7 @@ mod base_miner {
 #[cfg(test)]
 mod offchain_worker_miner {
 	use crate::{verifier::Verifier, CommonError};
-	use soil_runtime::offchain::storage_lock::{BlockAndTime, StorageLock};
+	use subsoil::runtime::offchain::storage_lock::{BlockAndTime, StorageLock};
 	use topsoil_support::traits::Hooks;
 
 	use super::*;

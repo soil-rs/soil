@@ -23,23 +23,23 @@ use sc_block_builder::BlockBuilderBuilder;
 use sc_consensus::{
 	BlockCheckParams, BlockImport, BlockImportParams, ForkChoiceStrategy, ImportResult,
 };
-use soil_api::ProvideRuntimeApi;
+use subsoil::api::ProvideRuntimeApi;
 use soil_client_api::{
 	in_mem, Backend as BackendT, BlockBackend, BlockchainEvents, ExecutorProvider,
 	FinalityNotifications, HeaderBackend, StorageProvider,
 };
 use soil_client_db::{Backend, BlocksPruning, DatabaseSettings, DatabaseSource, PruningMode};
 use soil_consensus::{BlockOrigin, Error as ConsensusError, SelectChain};
-use soil_core::{testing::TaskExecutor, traits::CallContext, H256};
+use subsoil::core::{testing::TaskExecutor, traits::CallContext, H256};
 use soil_executor::WasmExecutor;
-use soil_runtime::{
+use subsoil::runtime::{
 	generic::BlockId,
 	traits::{BlakeTwo256, Block as BlockT, Header as HeaderT},
 	ConsensusEngineId, Justifications, StateVersion,
 };
 use soil_service::client::{new_with_backend, Client, LocalCallExecutor};
-use soil_state_machine::{backend::Backend as _, InMemoryBackend, OverlayedChanges, StateMachine};
-use soil_storage::{ChildInfo, StorageKey};
+use subsoil::state_machine::{backend::Backend as _, InMemoryBackend, OverlayedChanges, StateMachine};
+use subsoil::storage::{ChildInfo, StorageKey};
 use std::{collections::HashSet, sync::Arc};
 use substrate_test_runtime::TestAPI;
 use substrate_test_runtime_client::{
@@ -72,7 +72,7 @@ fn construct_block(
 		digest: Digest { logs: vec![] },
 	};
 	let mut overlay = OverlayedChanges::default();
-	let backend_runtime_code = soil_state_machine::backend::BackendRuntimeCode::new(backend);
+	let backend_runtime_code = subsoil::state_machine::backend::BackendRuntimeCode::new(backend);
 	let runtime_code = backend_runtime_code.runtime_code().expect("Code is part of the backend");
 
 	StateMachine::new(
@@ -168,7 +168,7 @@ fn construct_genesis_should_work_with_native() {
 
 	let backend = InMemoryBackend::from((storage, StateVersion::default()));
 	let b1data = block1(genesis_hash, &backend);
-	let backend_runtime_code = soil_state_machine::backend::BackendRuntimeCode::new(&backend);
+	let backend_runtime_code = subsoil::state_machine::backend::BackendRuntimeCode::new(&backend);
 	let runtime_code = backend_runtime_code.runtime_code().expect("Code is part of the backend");
 
 	let mut overlay = OverlayedChanges::default();
@@ -199,7 +199,7 @@ fn construct_genesis_should_work_with_wasm() {
 
 	let backend = InMemoryBackend::from((storage, StateVersion::default()));
 	let b1data = block1(genesis_hash, &backend);
-	let backend_runtime_code = soil_state_machine::backend::BackendRuntimeCode::new(&backend);
+	let backend_runtime_code = subsoil::state_machine::backend::BackendRuntimeCode::new(&backend);
 	let runtime_code = backend_runtime_code.runtime_code().expect("Code is part of the backend");
 
 	let mut overlay = OverlayedChanges::default();
@@ -1259,7 +1259,7 @@ fn finalizing_diverged_block_should_trigger_reorg() {
 
 #[test]
 fn finality_notifications_content() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 	let (client, _select_chain) = TestClientBuilder::new().build_with_longest_chain();
 
 	//               -> D3 -> D4
@@ -1413,7 +1413,7 @@ fn get_hash_by_block_number_doesnt_panic() {
 
 #[test]
 fn state_reverted_on_reorg() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 	let client = substrate_test_runtime_client::new();
 
 	let current_balance = |client: &substrate_test_runtime_client::TestClient| {
@@ -1478,7 +1478,7 @@ fn state_reverted_on_reorg() {
 
 #[test]
 fn doesnt_import_blocks_that_revert_finality() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 	let tmp = tempfile::tempdir().unwrap();
 
 	// we need to run with archive pruning to avoid pruning non-canonical
@@ -1760,7 +1760,7 @@ fn respects_block_rules() {
 #[test]
 fn returns_status_for_pruned_blocks() {
 	use soil_consensus::BlockStatus;
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 	let tmp = tempfile::tempdir().unwrap();
 
 	// set to prune after 1 block
@@ -2004,7 +2004,7 @@ fn storage_keys_prefix_and_start_key_works() {
 
 #[test]
 fn storage_keys_works() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let expected_keys =
 		substrate_test_runtime::storage_key_generator::get_expected_storage_hashed_keys(false);
@@ -2249,12 +2249,12 @@ fn reorg_triggers_a_notification_even_for_sources_that_should_not_trigger_notifi
 
 #[test]
 fn use_dalek_ext_works() {
-	fn zero_ed_pub() -> soil_core::ed25519::Public {
-		soil_core::ed25519::Public::default()
+	fn zero_ed_pub() -> subsoil::core::ed25519::Public {
+		subsoil::core::ed25519::Public::default()
 	}
 
-	fn zero_ed_sig() -> soil_core::ed25519::Signature {
-		soil_core::ed25519::Signature::default()
+	fn zero_ed_sig() -> subsoil::core::ed25519::Signature {
+		subsoil::core::ed25519::Signature::default()
 	}
 
 	let client = TestClientBuilder::new().build();
@@ -2263,7 +2263,7 @@ fn use_dalek_ext_works() {
 		.execution_extensions()
 		.set_extensions_factory(soil_client_api::execution_extensions::ExtensionBeforeBlock::<
 		Block,
-		soil_io::UseDalekExt,
+		subsoil::io::UseDalekExt,
 	>::new(1));
 
 	let a1 = BlockBuilderBuilder::new(&client)

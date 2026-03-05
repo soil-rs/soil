@@ -162,7 +162,7 @@ fn noop_is_free() {
 }
 
 mod mock {
-	use soil_runtime::testing::H256;
+	use subsoil::runtime::testing::H256;
 	use topsoil_support::derive_impl;
 
 	type Block = topsoil_system::mocking::MockBlock<Test>;
@@ -185,9 +185,9 @@ mod mock {
 		type Nonce = u32;
 		type RuntimeCall = RuntimeCall;
 		type Hash = H256;
-		type Hashing = ::soil_runtime::traits::BlakeTwo256;
+		type Hashing = ::subsoil::runtime::traits::BlakeTwo256;
 		type AccountId = u32;
-		type Lookup = soil_runtime::traits::IdentityLookup<Self::AccountId>;
+		type Lookup = subsoil::runtime::traits::IdentityLookup<Self::AccountId>;
 		type Block = Block;
 		type RuntimeEvent = RuntimeEvent;
 		type BlockHashCount = ();

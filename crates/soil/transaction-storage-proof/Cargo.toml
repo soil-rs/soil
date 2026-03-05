@@ -19,11 +19,7 @@ targets = ["x86_64-unknown-linux-gnu"]
 async-trait = { optional = true, workspace = true }
 codec = { features = ["derive"], workspace = true }
 scale-info = { features = ["derive"], workspace = true }
-soil-api = { workspace = true }
-soil-core = { optional = true, workspace = true }
-soil-inherents = { workspace = true }
-soil-runtime = { workspace = true }
-soil-trie = { optional = true, workspace = true }
+subsoil = { workspace = true }
 
 [features]
 default = ["std"]
@@ -31,9 +27,5 @@ std = [
 	"async-trait",
 	"codec/std",
 	"scale-info/std",
-	"soil-api/std",
-	"soil-core/std",
-	"soil-inherents/std",
-	"soil-runtime/std",
-	"soil-trie/std",
+	"subsoil/std",
 ]

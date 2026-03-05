@@ -28,10 +28,10 @@ use alloc::vec::Vec;
 use codec::{Decode, Encode, MaxEncodedLen};
 use core::marker::PhantomData;
 use impl_trait_for_tuples::impl_for_tuples;
-use soil_arithmetic::traits::Bounded;
-use soil_core::Get;
-use soil_io::{hashing::twox_128, storage::clear_prefix, KillStorageResult};
-use soil_runtime::traits::Zero;
+use subsoil::arithmetic::traits::Bounded;
+use subsoil::core::Get;
+use subsoil::io::{hashing::twox_128, storage::clear_prefix, KillStorageResult};
+use subsoil::runtime::traits::Zero;
 
 /// Handles storage migration pallet versioning.
 ///
@@ -126,7 +126,7 @@ impl<
 	/// [`VersionedPostUpgradeData`] before passing them to post_upgrade, so it knows whether the
 	/// migration ran or not.
 	#[cfg(feature = "try-runtime")]
-	fn pre_upgrade() -> Result<alloc::vec::Vec<u8>, soil_runtime::TryRuntimeError> {
+	fn pre_upgrade() -> Result<alloc::vec::Vec<u8>, subsoil::runtime::TryRuntimeError> {
 		let on_chain_version = Pallet::on_chain_storage_version();
 		if on_chain_version == FROM {
 			Ok(VersionedPostUpgradeData::MigrationExecuted(Inner::pre_upgrade()?).encode())
@@ -177,7 +177,7 @@ impl<
 	#[cfg(feature = "try-runtime")]
 	fn post_upgrade(
 		versioned_post_upgrade_data_bytes: alloc::vec::Vec<u8>,
-	) -> Result<(), soil_runtime::TryRuntimeError> {
+	) -> Result<(), subsoil::runtime::TryRuntimeError> {
 		use codec::DecodeAll;
 		match <VersionedPostUpgradeData>::decode_all(&mut &versioned_post_upgrade_data_bytes[..])
 			.map_err(|_| "VersionedMigration post_upgrade failed to decode PreUpgradeData")?
@@ -229,7 +229,7 @@ where
 			crate::storage::storage_prefix(name.as_bytes(), PALLET_VERSION_STORAGE_KEY_POSTFIX)
 		}
 
-		soil_io::storage::clear(&pallet_version_key(<T as PalletInfoAccess>::name()));
+		subsoil::io::storage::clear(&pallet_version_key(<T as PalletInfoAccess>::name()));
 
 		<T::InCodeStorageVersion as StoreInCodeStorageVersion<T>>::store_in_code_storage_version();
 
@@ -337,7 +337,7 @@ impl<P: Get<&'static str>, DbWeight: Get<RuntimeDbWeight>> topsoil_support::trai
 	}
 
 	#[cfg(feature = "try-runtime")]
-	fn pre_upgrade() -> Result<alloc::vec::Vec<u8>, soil_runtime::TryRuntimeError> {
+	fn pre_upgrade() -> Result<alloc::vec::Vec<u8>, subsoil::runtime::TryRuntimeError> {
 		use crate::storage::unhashed::contains_prefixed_key;
 
 		let hashed_prefix = twox_128(P::get().as_bytes());
@@ -352,7 +352,7 @@ impl<P: Get<&'static str>, DbWeight: Get<RuntimeDbWeight>> topsoil_support::trai
 	}
 
 	#[cfg(feature = "try-runtime")]
-	fn post_upgrade(_state: alloc::vec::Vec<u8>) -> Result<(), soil_runtime::TryRuntimeError> {
+	fn post_upgrade(_state: alloc::vec::Vec<u8>) -> Result<(), subsoil::runtime::TryRuntimeError> {
 		use crate::storage::unhashed::contains_prefixed_key;
 
 		let hashed_prefix = twox_128(P::get().as_bytes());
@@ -444,7 +444,7 @@ impl<P: Get<&'static str>, S: Get<&'static str>, DbWeight: Get<RuntimeDbWeight>>
 	}
 
 	#[cfg(feature = "try-runtime")]
-	fn pre_upgrade() -> Result<alloc::vec::Vec<u8>, soil_runtime::TryRuntimeError> {
+	fn pre_upgrade() -> Result<alloc::vec::Vec<u8>, subsoil::runtime::TryRuntimeError> {
 		use crate::storage::unhashed::contains_prefixed_key;
 
 		let hashed_prefix = storage_prefix(P::get().as_bytes(), S::get().as_bytes());
@@ -460,7 +460,7 @@ impl<P: Get<&'static str>, S: Get<&'static str>, DbWeight: Get<RuntimeDbWeight>>
 	}
 
 	#[cfg(feature = "try-runtime")]
-	fn post_upgrade(_state: alloc::vec::Vec<u8>) -> Result<(), soil_runtime::TryRuntimeError> {
+	fn post_upgrade(_state: alloc::vec::Vec<u8>) -> Result<(), subsoil::runtime::TryRuntimeError> {
 		use crate::storage::unhashed::contains_prefixed_key;
 
 		let hashed_prefix = storage_prefix(P::get().as_bytes(), S::get().as_bytes());
@@ -526,9 +526,9 @@ pub trait SteppedMigration {
 		with_transaction_opaque_err(move || match Self::step(cursor, meter) {
 			Ok(new_cursor) => {
 				cursor = new_cursor;
-				soil_runtime::TransactionOutcome::Commit(Ok(cursor))
+				subsoil::runtime::TransactionOutcome::Commit(Ok(cursor))
 			},
-			Err(err) => soil_runtime::TransactionOutcome::Rollback(Err(err)),
+			Err(err) => subsoil::runtime::TransactionOutcome::Rollback(Err(err)),
 		})
 		.map_err(|()| SteppedMigrationError::Failed)?
 	}
@@ -538,7 +538,7 @@ pub trait SteppedMigration {
 	/// Returns some bytes which are passed into `post_upgrade` after the migration is completed.
 	/// This is not run for the real migration, so panicking is not an issue here.
 	#[cfg(feature = "try-runtime")]
-	fn pre_upgrade() -> Result<Vec<u8>, soil_runtime::TryRuntimeError> {
+	fn pre_upgrade() -> Result<Vec<u8>, subsoil::runtime::TryRuntimeError> {
 		Ok(Vec::new())
 	}
 
@@ -548,7 +548,7 @@ pub trait SteppedMigration {
 	/// is the return value from `pre_upgrade`. This is not run for the real migration, so panicking
 	/// is not an issue here.
 	#[cfg(feature = "try-runtime")]
-	fn post_upgrade(_state: Vec<u8>) -> Result<(), soil_runtime::TryRuntimeError> {
+	fn post_upgrade(_state: Vec<u8>) -> Result<(), subsoil::runtime::TryRuntimeError> {
 		Ok(())
 	}
 }
@@ -731,7 +731,7 @@ pub trait SteppedMigrations {
 	///
 	/// Returns `None` if the index is out of bounds.
 	#[cfg(feature = "try-runtime")]
-	fn nth_pre_upgrade(n: u32) -> Option<Result<Vec<u8>, soil_runtime::TryRuntimeError>>;
+	fn nth_pre_upgrade(n: u32) -> Option<Result<Vec<u8>, subsoil::runtime::TryRuntimeError>>;
 
 	/// Call the post-upgrade hooks of the `n`th migration.
 	///
@@ -740,7 +740,7 @@ pub trait SteppedMigrations {
 	fn nth_post_upgrade(
 		n: u32,
 		_state: Vec<u8>,
-	) -> Option<Result<(), soil_runtime::TryRuntimeError>>;
+	) -> Option<Result<(), subsoil::runtime::TryRuntimeError>>;
 
 	/// The maximal encoded length across all cursors.
 	fn cursor_max_encoded_len() -> usize;
@@ -810,7 +810,7 @@ impl SteppedMigrations for () {
 	}
 
 	#[cfg(feature = "try-runtime")]
-	fn nth_pre_upgrade(_n: u32) -> Option<Result<Vec<u8>, soil_runtime::TryRuntimeError>> {
+	fn nth_pre_upgrade(_n: u32) -> Option<Result<Vec<u8>, subsoil::runtime::TryRuntimeError>> {
 		Some(Ok(Vec::new()))
 	}
 
@@ -818,7 +818,7 @@ impl SteppedMigrations for () {
 	fn nth_post_upgrade(
 		_n: u32,
 		_state: Vec<u8>,
-	) -> Option<Result<(), soil_runtime::TryRuntimeError>> {
+	) -> Option<Result<(), subsoil::runtime::TryRuntimeError>> {
 		Some(Ok(()))
 	}
 
@@ -900,7 +900,7 @@ impl<T: SteppedMigration> SteppedMigrations for T {
 	}
 
 	#[cfg(feature = "try-runtime")]
-	fn nth_pre_upgrade(n: u32) -> Option<Result<Vec<u8>, soil_runtime::TryRuntimeError>> {
+	fn nth_pre_upgrade(n: u32) -> Option<Result<Vec<u8>, subsoil::runtime::TryRuntimeError>> {
 		if n != 0 {
 			defensive!("nth_pre_upgrade should only be called with n==0");
 		}
@@ -912,7 +912,7 @@ impl<T: SteppedMigration> SteppedMigrations for T {
 	fn nth_post_upgrade(
 		n: u32,
 		state: Vec<u8>,
-	) -> Option<Result<(), soil_runtime::TryRuntimeError>> {
+	) -> Option<Result<(), subsoil::runtime::TryRuntimeError>> {
 		if n != 0 {
 			defensive!("nth_post_upgrade should only be called with n==0");
 		}
@@ -997,7 +997,7 @@ impl SteppedMigrations for Tuple {
 	}
 
 	#[cfg(feature = "try-runtime")]
-	fn nth_pre_upgrade(n: u32) -> Option<Result<Vec<u8>, soil_runtime::TryRuntimeError>> {
+	fn nth_pre_upgrade(n: u32) -> Option<Result<Vec<u8>, subsoil::runtime::TryRuntimeError>> {
 		let mut i = 0;
 
 		for_tuples! ( #(
@@ -1015,7 +1015,7 @@ impl SteppedMigrations for Tuple {
 	fn nth_post_upgrade(
 		n: u32,
 		state: Vec<u8>,
-	) -> Option<Result<(), soil_runtime::TryRuntimeError>> {
+	) -> Option<Result<(), subsoil::runtime::TryRuntimeError>> {
 		let mut i = 0;
 
 		for_tuples! ( #(
@@ -1221,7 +1221,7 @@ mod tests {
 		assert_eq!(<Triple as SteppedMigrations>::nth_id(1), Some(1u8.encode()));
 		assert_eq!(<Triple as SteppedMigrations>::nth_id(2), Some(2u8.encode()));
 
-		soil_io::TestExternalities::default().execute_with(|| {
+		subsoil::io::TestExternalities::default().execute_with(|| {
 			for n in 0..3 {
 				<Triple as SteppedMigrations>::nth_step(
 					n,
@@ -1234,7 +1234,7 @@ mod tests {
 
 	#[test]
 	fn integrity_test_works() {
-		soil_io::TestExternalities::default().execute_with(|| {
+		subsoil::io::TestExternalities::default().execute_with(|| {
 			assert_ok!(<() as SteppedMigrations>::integrity_test());
 			assert_ok!(<M0 as SteppedMigrations>::integrity_test());
 			assert_ok!(<M1 as SteppedMigrations>::integrity_test());
@@ -1246,7 +1246,7 @@ mod tests {
 
 	#[test]
 	fn transactional_rollback_works() {
-		soil_io::TestExternalities::default().execute_with(|| {
+		subsoil::io::TestExternalities::default().execute_with(|| {
 			assert_ok!(<(M0, F0) as SteppedMigrations>::nth_transactional_step(
 				0,
 				Default::default(),

@@ -16,7 +16,7 @@
 // limitations under the License.
 
 use codec::Encode;
-use soil_runtime::{
+use subsoil::runtime::{
 	testing::UintAuthorityId,
 	traits::{Applyable, Checkable},
 	transaction_validity::{
@@ -136,7 +136,7 @@ pub mod pallet1 {
 
 			let _ = valid;
 
-			Err(soil_runtime::DispatchErrorWithPostInfo {
+			Err(subsoil::runtime::DispatchErrorWithPostInfo {
 				post_info: Some(CALL_3_REFUND).into(),
 				error: DispatchError::Other("Call3 failed"),
 			})
@@ -274,9 +274,9 @@ impl pallet4::Config for Runtime {}
 
 pub type TransactionExtension = topsoil_system::AuthorizeCall<Runtime>;
 
-pub type Header = soil_runtime::generic::Header<u32, soil_runtime::traits::BlakeTwo256>;
-pub type Block = soil_runtime::generic::Block<Header, UncheckedExtrinsic>;
-pub type UncheckedExtrinsic = soil_runtime::generic::UncheckedExtrinsic<
+pub type Header = subsoil::runtime::generic::Header<u32, subsoil::runtime::traits::BlakeTwo256>;
+pub type Block = subsoil::runtime::generic::Block<Header, UncheckedExtrinsic>;
+pub type UncheckedExtrinsic = subsoil::runtime::generic::UncheckedExtrinsic<
 	u64,
 	RuntimeCall,
 	UintAuthorityId,
@@ -296,7 +296,7 @@ topsoil_support::construct_runtime!(
 	}
 );
 
-pub fn new_test_ext() -> soil_io::TestExternalities {
+pub fn new_test_ext() -> subsoil::io::TestExternalities {
 	let t = RuntimeGenesisConfig { ..Default::default() }.build_storage().unwrap();
 	t.into()
 }

@@ -34,14 +34,12 @@ soil-network-types = { workspace = true, default-features = true, optional = tru
 soil-utils = { workspace = true, default-features = true, optional = true}
 schnellru = { workspace = true, optional = true}
 smallvec = { workspace = true, default-features = true, optional = true}
-soil-arithmetic = { workspace = true, default-features = true, optional = true}
 soil-blockchain = { workspace = true, default-features = true, optional = true}
 soil-consensus = { workspace = true, default-features = true, optional = true}
-soil-core = { workspace = true, default-features = true, optional = true}
-soil-runtime = { workspace = true, default-features = true, optional = true}
 thiserror = { workspace = true, optional = true}
 tokio = { features = ["macros", "time"], workspace = true, default-features = true, optional = true}
 tokio-stream = { workspace = true, optional = true}
+subsoil = { workspace = true, optional = true}
 
 [features]
 default = ["std"]
@@ -59,26 +57,22 @@ std = [
 	"sc-consensus",
 	"schnellru",
 	"smallvec",
-	"soil-arithmetic",
 	"soil-blockchain",
 	"soil-client-api",
 	"soil-consensus",
-	"soil-core",
 	"soil-network",
 	"soil-network-common",
 	"soil-network-types",
-	"soil-runtime",
 	"soil-utils",
 	"thiserror",
 	"tokio",
 	"tokio-stream",
-	"soil-arithmetic/std",
+	"subsoil",
+	"subsoil/std",
 	"soil-client-api/std",
-	"soil-core/std",
 	"soil-network/std",
 	"soil-network-common/std",
 	"soil-network-types/std",
-	"soil-runtime/std",
 	"soil-utils/std",
 ]
 
@@ -86,7 +80,7 @@ std = [
 quickcheck = { workspace = true }
 sc-block-builder = { workspace = true, default-features = true }
 soil-test-primitives = { workspace = true }
-soil-tracing = { workspace = true, default-features = true }
+subsoil = { workspace = true, default-features = true }
 substrate-test-runtime-client = { workspace = true }
 
 [build-dependencies]

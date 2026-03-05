@@ -29,7 +29,7 @@ use alloc::vec::Vec;
 use codec::{Decode, DecodeWithMemTracking, Encode};
 use core::fmt;
 use scale_info::TypeInfo;
-use soil_runtime::traits;
+use subsoil::runtime::traits;
 
 pub mod utils;
 
@@ -109,7 +109,7 @@ pub struct OpaqueLeaf(
 	/// Raw bytes of the leaf type encoded in its compact form.
 	///
 	/// NOTE it DOES NOT include length prefix (like `Vec<u8>` encoding would).
-	#[cfg_attr(feature = "serde", serde(with = "soil_core::bytes"))]
+	#[cfg_attr(feature = "serde", serde(with = "subsoil::core::bytes"))]
 	pub Vec<u8>,
 );
 
@@ -437,7 +437,7 @@ impl Error {
 	}
 }
 
-soil_api::decl_runtime_apis! {
+subsoil::api::decl_runtime_apis! {
 	/// API to interact with MMR pallet.
 	#[api_version(3)]
 	pub trait MmrApi<Hash: codec::Codec, BlockNumber: codec::Codec> {
@@ -485,8 +485,8 @@ mod tests {
 	use super::*;
 
 	use codec::Decode;
-	use soil_core::H256;
-	use soil_runtime::traits::Keccak256;
+	use subsoil::core::H256;
+	use subsoil::runtime::traits::Keccak256;
 
 	pub(crate) fn hex(s: &str) -> H256 {
 		s.parse().unwrap()

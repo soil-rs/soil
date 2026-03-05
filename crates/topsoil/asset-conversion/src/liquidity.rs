@@ -17,7 +17,7 @@
 
 //! Trait for providing methods to mutate liquidity pools.
 
-use soil_runtime::DispatchError;
+use subsoil::runtime::DispatchError;
 use topsoil_support::{traits::tokens::Balance, transactional};
 
 use crate::{Config, Pallet};

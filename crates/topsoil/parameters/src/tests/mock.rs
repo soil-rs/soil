@@ -152,8 +152,8 @@ construct_runtime!(
 	}
 );
 
-pub fn new_test_ext() -> soil_io::TestExternalities {
-	let mut ext = soil_io::TestExternalities::new(Default::default());
+pub fn new_test_ext() -> subsoil::io::TestExternalities {
+	let mut ext = subsoil::io::TestExternalities::new(Default::default());
 	ext.execute_with(|| System::set_block_number(1));
 	ext
 }

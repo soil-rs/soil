@@ -26,8 +26,7 @@ soil-client-api = { workspace = true, default-features = true, optional = true}
 soil-network = { workspace = true, default-features = true, optional = true}
 soil-network-types = { workspace = true, default-features = true, optional = true}
 soil-blockchain = { workspace = true, default-features = true, optional = true}
-soil-core = { workspace = true, default-features = true, optional = true}
-soil-runtime = { workspace = true, default-features = true, optional = true}
+subsoil = { workspace = true, default-features = true, optional = true}
 thiserror = { workspace = true, optional = true}
 
 [build-dependencies]
@@ -44,14 +43,12 @@ std = [
 	"prost",
 	"soil-blockchain",
 	"soil-client-api",
-	"soil-core",
+	"subsoil",
 	"soil-network",
 	"soil-network-types",
-	"soil-runtime",
 	"thiserror",
 	"soil-client-api/std",
-	"soil-core/std",
+	"subsoil/std",
 	"soil-network/std",
 	"soil-network-types/std",
-	"soil-runtime/std",
 ]

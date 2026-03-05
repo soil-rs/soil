@@ -48,6 +48,7 @@ name = "executor"
 harness = false
 
 [dependencies]
+subsoil = { workspace = true }
 # third-party dependencies
 array-bytes = { workspace = true, default-features = true }
 clap = { features = ["derive"], optional = true, workspace = true }
@@ -73,7 +74,6 @@ soil-mmr-rpc = { workspace = true, default-features = true }
 topsoil-asset-conversion-tx-payment = { workspace = true, default-features = true }
 topsoil-im-online = { workspace = true, default-features = true }
 topsoil-transaction-payment-rpc = { workspace = true, default-features = true }
-soil-allocator = { workspace = true, default-features = true }
 sc-authority-discovery = { workspace = true, default-features = true }
 soil-basic-authorship = { workspace = true, default-features = true }
 sc-block-builder = { workspace = true, default-features = true }
@@ -125,25 +125,18 @@ sc-tracing = { workspace = true, default-features = true }
 sc-transaction-pool = { workspace = true, default-features = true }
 soil-transaction-pool-api = { workspace = true, default-features = true }
 soil-utils = { workspace = true, default-features = true }
-soil-api = { workspace = true, default-features = true }
 soil-authority-discovery = { workspace = true, default-features = true }
 soil-blockchain = { workspace = true, default-features = true }
 soil-consensus = { workspace = true, default-features = true }
 soil-consensus-babe = { workspace = true, default-features = true }
 soil-consensus-beefy = { workspace = true, default-features = true }
 soil-consensus-grandpa = { workspace = true, default-features = true }
-soil-core = { workspace = true, default-features = true }
-soil-database = { workspace = true, default-features = true }
 soil-genesis-builder = { workspace = true, default-features = true }
-soil-io = { workspace = true, default-features = true }
 soil-maybe-compressed-blob = { workspace = true, default-features = true }
 soil-mixnet = { workspace = true, default-features = true }
 soil-mmr-primitives = { workspace = true, default-features = true }
-soil-panic-handler = { workspace = true, default-features = true }
 soil-rpc = { workspace = true, default-features = true }
-soil-runtime = { workspace = true, default-features = true }
 soil-statement-store = { workspace = true, default-features = true }
-soil-timestamp = { workspace = true }
 soil-transaction-storage-proof = { workspace = true, default-features = true }
 chain-spec-builder = { workspace = true, default-features = true }
 node-inspect = { optional = true, workspace = true, default-features = true }
@@ -155,12 +148,10 @@ prometheus-endpoint = { workspace = true, default-features = true }
 substrate-rpc-client = { workspace = true, default-features = true }
 substrate-state-trie-migration-rpc = { workspace = true, default-features = true }
 substrate-wasm-builder = { workspace = true, default-features = true }
-
 # Shared code between the staging node and kitchensink runtime:
 kitchensink-runtime = { workspace = true }
 node-primitives = { workspace = true, default-features = true }
 node-rpc = { workspace = true }
-
 [dev-dependencies]
 assert_cmd = { workspace = true }
 topsoil-support = { workspace = true, default-features = true }
@@ -171,21 +162,13 @@ topsoil-sudo = { workspace = true, default-features = true }
 topsoil-timestamp = { workspace = true, default-features = true }
 topsoil-transaction-payment = { workspace = true, default-features = true }
 topsoil-treasury = { workspace = true, default-features = true }
-soil-crypto-hashing = { workspace = true, default-features = true }
-soil-tracing = { workspace = true, default-features = true }
-soil-application-crypto = { workspace = true, default-features = true }
-soil-externalities = { workspace = true, default-features = true }
-soil-inherents = { workspace = true, default-features = true }
-soil-keystore = { workspace = true, default-features = true }
-soil-state-machine = { workspace = true, default-features = true }
-soil-trie = { workspace = true, default-features = true }
+subsoil-crypto-hashing = { workspace = true, default-features = true }
 criterion = { features = ["async_tokio"], workspace = true, default-features = true }
 nix = { features = ["signal"], workspace = true }
 pretty_assertions.workspace = true
 regex = { workspace = true }
 scale-info = { features = ["derive", "serde"], workspace = true, default-features = true }
 soketto = { workspace = true }
-soil-keyring = { workspace = true }
 tempfile = { workspace = true }
 tokio = { features = ["macros", "parking_lot", "time"], workspace = true, default-features = true }
 tokio-util = { features = ["compat"], workspace = true }
@@ -195,7 +178,6 @@ wat = { workspace = true }
 node-testing = { workspace = true }
 soil-service-test = { workspace = true }
 substrate-cli-test-utils = { workspace = true }
-
 [build-dependencies]
 clap = { optional = true, workspace = true }
 clap_complete = { optional = true, workspace = true }
@@ -214,15 +196,12 @@ cli = [
 	"node-inspect",
 	"dep:soil-cli",
 	"dep:soil-storage-monitor",
-	"dep:substrate-build-script-utils",
-]
+	"dep:substrate-build-script-utils"]
 runtime-benchmarks = [
 	"kitchensink-runtime/runtime-benchmarks",
 	"node-inspect?/runtime-benchmarks",
 	"soil-client-db/runtime-benchmarks",
-	"soil-service/runtime-benchmarks",
-]
+	"soil-service/runtime-benchmarks"]
 try-runtime = [
 	"kitchensink-runtime/try-runtime",
-	"substrate-cli-test-utils/try-runtime",
-]
+	"substrate-cli-test-utils/try-runtime"]

@@ -21,7 +21,7 @@
 
 extern crate alloc;
 
-use soil_runtime_interface::{
+use subsoil::runtime_interface::{
 	pass_by::{
 		AllocateAndReturnByCodec, AllocateAndReturnFatPointer, AllocateAndReturnPointer, PassAs,
 		PassFatPointerAndDecode, PassFatPointerAndDecodeSlice, PassFatPointerAndRead,
@@ -35,7 +35,7 @@ use soil_runtime_interface::{
 use core::mem;
 
 use alloc::{vec, vec::Vec};
-use soil_core::{sr25519::Public, wasm_export_functions};
+use subsoil::core::sr25519::Public;
 
 // Include the WASM binary
 #[cfg(feature = "std")]
@@ -238,10 +238,10 @@ impl TryFrom<u32> for Opaque {
 /// `sp-io` is required for its panic and oom handler.
 #[no_mangle]
 pub fn import_sp_io() {
-	soil_io::misc::print_utf8(&[]);
+	subsoil::io::misc::print_utf8(&[]);
 }
 
-wasm_export_functions! {
+subsoil::wasm_export_functions! {
 	fn test_return_data() {
 		let input = vec![1, 2, 3, 4, 5, 6];
 		let res = test_api::return_input(input.clone());

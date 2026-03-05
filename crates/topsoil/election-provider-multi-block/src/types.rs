@@ -38,13 +38,13 @@
 use crate::{unsigned::miner::MinerConfig, verifier};
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;
-use soil_core::Get;
-pub use soil_npos_elections::{ElectionResult, ElectionScore};
-use soil_runtime::{
+use subsoil::core::Get;
+pub use subsoil::npos_elections::{ElectionResult, ElectionScore};
+use subsoil::runtime::{
 	traits::{CheckedSub, One, Zero},
 	SaturatedConversion, Saturating,
 };
-use soil_std::{collections::btree_set::BTreeSet, fmt::Debug, prelude::*};
+use subsoil::std::{collections::btree_set::BTreeSet, fmt::Debug, prelude::*};
 use topsoil_election_provider_support::ElectionProvider;
 pub use topsoil_election_provider_support::{NposSolution, PageIndex};
 use topsoil_support::{
@@ -66,7 +66,7 @@ pub type FallbackErrorOf<T> = <<T as crate::Config>::Fallback as ElectionProvide
 
 /// The relative distribution of a voter's stake among the winning targets.
 pub type AssignmentOf<T> =
-	soil_npos_elections::Assignment<<T as MinerConfig>::AccountId, SolutionAccuracyOf<T>>;
+	subsoil::npos_elections::Assignment<<T as MinerConfig>::AccountId, SolutionAccuracyOf<T>>;
 
 /// A paginated raw solution type.
 ///
@@ -174,7 +174,7 @@ impl<T: Default + Clone + Debug> PadSolutionPages for Vec<T> {
 
 		// we basically need to prepend the list with this many items.
 		let empty_slots = desired_pages_usize.saturating_sub(self.len());
-		soil_std::iter::repeat(Default::default())
+		subsoil::std::iter::repeat(Default::default())
 			.take(empty_slots)
 			.chain(self.into_iter())
 			.collect::<Vec<_>>()
@@ -193,7 +193,7 @@ impl<T: Default + Clone + Debug, Bound: topsoil_support::traits::Get<u32>> PadSo
 
 		// we basically need to prepend the list with this many items.
 		let empty_slots = desired_pages_usize.saturating_sub(self.len());
-		let self_as_vec = soil_std::iter::repeat(Default::default())
+		let self_as_vec = subsoil::std::iter::repeat(Default::default())
 			.take(empty_slots)
 			.chain(self.into_iter())
 			.collect::<Vec<_>>();
@@ -214,7 +214,7 @@ pub type VoterPageOf<T> = BoundedVec<VoterOf<T>, <T as MinerConfig>::VoterSnapsh
 pub type AllVoterPagesOf<T> = BoundedVec<VoterPageOf<T>, <T as MinerConfig>::Pages>;
 
 /// Maximum number of items that [`AllVoterPagesOf`] can contain, when flattened.
-pub struct MaxFlattenedVoters<T: MinerConfig>(soil_std::marker::PhantomData<T>);
+pub struct MaxFlattenedVoters<T: MinerConfig>(subsoil::std::marker::PhantomData<T>);
 impl<T: MinerConfig> Get<u32> for MaxFlattenedVoters<T> {
 	fn get() -> u32 {
 		T::VoterSnapshotPerBlock::get().saturating_mul(T::Pages::get())

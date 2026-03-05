@@ -19,7 +19,7 @@
 
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{Bounded, CheckedDiv, CheckedMul, Zero},
 	Debug,
 };

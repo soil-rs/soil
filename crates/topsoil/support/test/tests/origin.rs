@@ -19,7 +19,7 @@
 
 #![recursion_limit = "128"]
 
-use soil_runtime::{generic, traits::BlakeTwo256};
+use subsoil::runtime::{generic, traits::BlakeTwo256};
 use topsoil_support::{
 	derive_impl,
 	traits::{Contains, OriginTrait},

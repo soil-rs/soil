@@ -21,17 +21,17 @@ use soil_consensus_babe::{
 	digests::{PreDigest, SecondaryPlainPreDigest},
 	Slot, BABE_ENGINE_ID,
 };
-use soil_core::{
+use subsoil::core::{
 	crypto::KeyTypeId,
 	sr25519::Signature,
 	traits::{CallContext, CodeExecutor, RuntimeCode},
 };
 use soil_executor::error::Result;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{BlakeTwo256, Header as HeaderT},
 	ApplyExtrinsicResult, Digest, DigestItem, MultiSignature, MultiSigner,
 };
-use soil_state_machine::TestExternalities as CoreTestExternalities;
+use subsoil::state_machine::TestExternalities as CoreTestExternalities;
 use topsoil_support::Hashable;
 use topsoil_system::offchain::AppCrypto;
 
@@ -41,7 +41,7 @@ use kitchensink_runtime::{
 };
 use node_primitives::{BlockNumber, Hash};
 use node_testing::keyring::*;
-use soil_externalities::Externalities;
+use subsoil::externalities::Externalities;
 use staging_node_cli::service::RuntimeExecutor;
 
 pub const TEST_KEY_TYPE_ID: KeyTypeId = KeyTypeId(*b"test");
@@ -49,8 +49,8 @@ pub const TEST_KEY_TYPE_ID: KeyTypeId = KeyTypeId(*b"test");
 pub mod sr25519 {
 	mod app_sr25519 {
 		use super::super::TEST_KEY_TYPE_ID;
-		use soil_application_crypto::{app_crypto, sr25519};
-		app_crypto!(sr25519, TEST_KEY_TYPE_ID);
+		use subsoil::application_crypto::{sr25519};
+		subsoil::app_crypto!(sr25519, TEST_KEY_TYPE_ID);
 	}
 
 	pub type AuthorityId = app_sr25519::Public;
@@ -60,7 +60,7 @@ pub struct TestAuthorityId;
 impl AppCrypto<MultiSigner, MultiSignature> for TestAuthorityId {
 	type RuntimeAppPublic = sr25519::AuthorityId;
 	type GenericSignature = Signature;
-	type GenericPublic = soil_core::sr25519::Public;
+	type GenericPublic = subsoil::core::sr25519::Public;
 }
 
 /// The wasm runtime code.
@@ -109,19 +109,19 @@ pub fn executor_call(
 ) -> (Result<Vec<u8>>, bool) {
 	let mut t = t.ext();
 
-	let code = t.storage(soil_core::storage::well_known_keys::CODE).unwrap();
-	let heap_pages = t.storage(soil_core::storage::well_known_keys::HEAP_PAGES);
+	let code = t.storage(subsoil::core::storage::well_known_keys::CODE).unwrap();
+	let heap_pages = t.storage(subsoil::core::storage::well_known_keys::HEAP_PAGES);
 	let runtime_code = RuntimeCode {
-		code_fetcher: &soil_core::traits::WrappedRuntimeCode(code.as_slice().into()),
-		hash: soil_crypto_hashing::blake2_256(&code).to_vec(),
+		code_fetcher: &subsoil::core::traits::WrappedRuntimeCode(code.as_slice().into()),
+		hash: subsoil_crypto_hashing::blake2_256(&code).to_vec(),
 		heap_pages: heap_pages.and_then(|hp| Decode::decode(&mut &hp[..]).ok()),
 	};
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 	executor().call(&mut t, &runtime_code, method, data, CallContext::Onchain)
 }
 
 pub fn new_test_ext(code: &[u8]) -> TestExternalities<BlakeTwo256> {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 	let ext = TestExternalities::new_with_code(
 		code,
 		node_testing::genesis::config().build_storage().unwrap(),
@@ -140,7 +140,7 @@ pub fn construct_block(
 	extrinsics: Vec<CheckedExtrinsic>,
 	babe_slot: Slot,
 ) -> (Vec<u8>, Hash) {
-	use soil_trie::{LayoutV1 as Layout, TrieConfiguration};
+	use subsoil::trie::{LayoutV1 as Layout, TrieConfiguration};
 
 	// sign extrinsics.
 	let extrinsics = extrinsics.into_iter().map(sign).collect::<Vec<_>>();

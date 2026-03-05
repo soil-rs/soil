@@ -19,7 +19,7 @@
 
 use super::*;
 use alloc::vec;
-use soil_runtime::traits::ConstU32;
+use subsoil::runtime::traits::ConstU32;
 use topsoil_support::{defensive, traits::Get, BoundedVec};
 
 #[must_use]

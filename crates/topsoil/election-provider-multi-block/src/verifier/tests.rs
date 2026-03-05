@@ -24,9 +24,9 @@ use crate::{
 	verifier::{impls::Status, Event, FeasibilityError, Verifier, *},
 	PagedRawSolution, Snapshot, *,
 };
-use soil_core::bounded_vec;
-use soil_npos_elections::ElectionScore;
-use soil_runtime::{traits::Bounded, PerU16};
+use subsoil::core::bounded_vec;
+use subsoil::npos_elections::ElectionScore;
+use subsoil::runtime::{traits::Bounded, PerU16};
 use topsoil_election_provider_support::Support;
 use topsoil_support::{assert_noop, assert_ok};
 
@@ -119,7 +119,7 @@ mod feasibility_check {
 
 			assert_noop!(
 				VerifierPallet::feasibility_check_page_inner(paged.solution_pages[0].clone(), 0),
-				FeasibilityError::NposElection(soil_npos_elections::Error::SolutionInvalidIndex)
+				FeasibilityError::NposElection(subsoil::npos_elections::Error::SolutionInvalidIndex)
 			);
 		})
 	}
@@ -154,7 +154,7 @@ mod feasibility_check {
 						0
 					),
 					FeasibilityError::NposElection(
-						soil_npos_elections::Error::SolutionInvalidIndex
+						subsoil::npos_elections::Error::SolutionInvalidIndex
 					),
 				);
 			})
@@ -284,7 +284,7 @@ mod feasibility_check {
 
 mod async_verification {
 	use super::*;
-	use soil_core::bounded_vec;
+	use subsoil::core::bounded_vec;
 	// disambiguate event
 	use crate::verifier::Event;
 
@@ -580,7 +580,7 @@ mod async_verification {
 				vec![Event::<Runtime>::VerificationFailed(
 					0,
 					FeasibilityError::NposElection(
-						soil_npos_elections::Error::SolutionInvalidIndex
+						subsoil::npos_elections::Error::SolutionInvalidIndex
 					)
 				),]
 			);
@@ -1063,7 +1063,7 @@ mod multi_page_sync_verification {
 					paged.score,
 				)
 				.unwrap_err(),
-				FeasibilityError::NposElection(soil_npos_elections::Error::SolutionInvalidIndex)
+				FeasibilityError::NposElection(subsoil::npos_elections::Error::SolutionInvalidIndex)
 			);
 
 			assert_eq!(
@@ -1073,7 +1073,7 @@ mod multi_page_sync_verification {
 					Event::<Runtime>::VerificationFailed(
 						2,
 						FeasibilityError::NposElection(
-							soil_npos_elections::Error::SolutionInvalidIndex
+							subsoil::npos_elections::Error::SolutionInvalidIndex
 						)
 					),
 				]

@@ -33,7 +33,7 @@ extern crate alloc;
 use alloc::vec::Vec;
 use codec::{Decode, Encode, MaxEncodedLen};
 use core::fmt::Debug;
-use soil_runtime::traits::{BlakeTwo256, Dispatchable, Hash, One, Saturating, Zero};
+use subsoil::runtime::traits::{BlakeTwo256, Dispatchable, Hash, One, Saturating, Zero};
 use soil_transaction_storage_proof::{
 	encode_index, num_chunks, random_chunk, ChunkIndex, InherentError, TransactionStorageProof,
 	CHUNK_SIZE, INHERENT_IDENTIFIER,
@@ -303,12 +303,12 @@ pub mod pallet {
 			let chunk_count = chunks.len() as u32;
 			debug_assert_eq!(chunk_count, num_chunks(data.len() as u32));
 			let root =
-				soil_io::trie::blake2_256_ordered_root(chunks, soil_runtime::StateVersion::V1);
+				subsoil::io::trie::blake2_256_ordered_root(chunks, subsoil::runtime::StateVersion::V1);
 
-			let content_hash = soil_io::hashing::blake2_256(&data);
+			let content_hash = subsoil::io::hashing::blake2_256(&data);
 			let extrinsic_index =
 				topsoil_system::Pallet::<T>::extrinsic_index().ok_or(Error::<T>::BadContext)?;
-			soil_io::transaction_index::index(extrinsic_index, data.len() as u32, content_hash);
+			subsoil::io::transaction_index::index(extrinsic_index, data.len() as u32, content_hash);
 
 			let mut index = 0;
 			BlockTransactions::<T>::mutate(|transactions| {
@@ -358,7 +358,7 @@ pub mod pallet {
 				topsoil_system::Pallet::<T>::extrinsic_index().ok_or(Error::<T>::BadContext)?;
 			Self::apply_fee(sender, info.size)?;
 			let content_hash = info.content_hash.into();
-			soil_io::transaction_index::renew(extrinsic_index, content_hash);
+			subsoil::io::transaction_index::renew(extrinsic_index, content_hash);
 
 			let mut index = 0;
 			BlockTransactions::<T>::mutate(|transactions| {
@@ -620,12 +620,12 @@ pub mod pallet {
 
 			// Verify the tx chunk proof.
 			ensure!(
-				soil_io::trie::blake2_256_verify_proof(
+				subsoil::io::trie::blake2_256_verify_proof(
 					tx_info.chunk_root,
 					&proof.proof,
 					&encode_index(tx_chunk_index),
 					&proof.chunk,
-					soil_runtime::StateVersion::V1,
+					subsoil::runtime::StateVersion::V1,
 				),
 				Error::<T>::InvalidProof
 			);

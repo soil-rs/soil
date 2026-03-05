@@ -20,7 +20,7 @@
 use crate::pallet_prelude::{Decode, Encode};
 use core::fmt::Debug;
 use scale_info::TypeInfo;
-use soil_runtime::codec::{FullCodec, MaxEncodedLen};
+use subsoil::runtime::codec::{FullCodec, MaxEncodedLen};
 use topsoil_support::traits::tokens::PaymentStatus;
 
 /// Is intended to be implemented using a `fungible` impl, but can also be implemented with

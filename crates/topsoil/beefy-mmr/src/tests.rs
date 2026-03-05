@@ -24,9 +24,9 @@ use soil_consensus_beefy::{
 	AncestryHelper, Commitment, Payload, ValidatorSet,
 };
 
-use soil_core::H256;
-use soil_io::TestExternalities;
-use soil_runtime::{traits::Keccak256, DigestItem};
+use subsoil::core::H256;
+use subsoil::io::TestExternalities;
+use subsoil::runtime::{traits::Keccak256, DigestItem};
 
 use topsoil_support::traits::OnInitialize;
 

@@ -27,7 +27,7 @@ soil-network-sync = { workspace = true, default-features = true, optional = true
 soil-network-types = { workspace = true, default-features = true, optional = true}
 soil-utils = { workspace = true, default-features = true, optional = true}
 soil-consensus = { workspace = true, default-features = true, optional = true}
-soil-runtime = { workspace = true, default-features = true, optional = true}
+subsoil = { workspace = true, optional = true}
 
 [features]
 default = ["std"]
@@ -42,12 +42,12 @@ std = [
 	"soil-network-common",
 	"soil-network-sync",
 	"soil-network-types",
-	"soil-runtime",
+	"subsoil",
 	"soil-utils",
 	"soil-network/std",
 	"soil-network-common/std",
 	"soil-network-sync/std",
 	"soil-network-types/std",
-	"soil-runtime/std",
+	"subsoil/std",
 	"soil-utils/std",
 ]

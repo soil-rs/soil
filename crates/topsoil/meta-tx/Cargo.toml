@@ -20,17 +20,12 @@ serde = { features = ["derive"], optional = true, workspace = true }
 topsoil-benchmarking = { workspace = true, optional = true }
 topsoil-support = { workspace = true }
 topsoil-system = { workspace = true }
-soil-core = { workspace = true }
-soil-io = { workspace = true }
-soil-runtime = { workspace = true }
-soil-std = { workspace = true }
+subsoil = { workspace = true }
 
 [dev-dependencies]
 topsoil-balances = { workspace = true, default-features = true }
 topsoil-transaction-payment = { workspace = true, default-features = true }
 topsoil-verify-signature = { workspace = true, default-features = true }
-soil-keyring = { workspace = true, default-features = true }
-soil-keystore = { workspace = true, default-features = true }
 
 [features]
 default = ["std"]
@@ -41,10 +36,7 @@ std = [
 	"topsoil-system/std",
 	"scale-info/std",
 	"serde?/std",
-	"soil-core/std",
-	"soil-io/std",
-	"soil-runtime/std",
-	"soil-std/std",
+	"subsoil/std",
 ]
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",
@@ -53,7 +45,7 @@ runtime-benchmarks = [
 	"topsoil-balances/runtime-benchmarks",
 	"topsoil-transaction-payment/runtime-benchmarks",
 	"topsoil-verify-signature/runtime-benchmarks",
-	"soil-runtime/runtime-benchmarks",
+	"subsoil/runtime-benchmarks",
 ]
 try-runtime = [
 	"topsoil-support/try-runtime",
@@ -61,5 +53,5 @@ try-runtime = [
 	"topsoil-balances/try-runtime",
 	"topsoil-transaction-payment/try-runtime",
 	"topsoil-verify-signature/try-runtime",
-	"soil-runtime/try-runtime",
+	"subsoil/try-runtime",
 ]

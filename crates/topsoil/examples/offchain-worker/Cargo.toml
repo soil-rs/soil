@@ -23,10 +23,7 @@ topsoil-system = { workspace = true }
 lite-json = { workspace = true }
 log = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
-soil-core = { workspace = true }
-soil-io = { workspace = true }
-soil-keystore = { optional = true, workspace = true }
-soil-runtime = { workspace = true }
+subsoil = { workspace = true }
 
 [features]
 default = ["std"]
@@ -37,13 +34,10 @@ std = [
 	"lite-json/std",
 	"log/std",
 	"scale-info/std",
-	"soil-core/std",
-	"soil-io/std",
-	"soil-keystore/std",
-	"soil-runtime/std",
+	"subsoil/std",
 ]
 try-runtime = [
 	"topsoil-support/try-runtime",
 	"topsoil-system/try-runtime",
-	"soil-runtime/try-runtime",
+	"subsoil/try-runtime",
 ]

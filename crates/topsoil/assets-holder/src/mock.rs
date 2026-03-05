@@ -21,7 +21,7 @@ use crate as topsoil_assets_holder;
 pub use crate::*;
 use codec::{Decode, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;
-use soil_runtime::BuildStorage;
+use subsoil::runtime::BuildStorage;
 use topsoil_support::{derive_impl, traits::AsEnsureOriginWithArg};
 
 pub type AccountId = <Test as topsoil_system::Config>::AccountId;
@@ -103,7 +103,7 @@ impl Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 }
 
-pub fn new_test_ext(execute: impl FnOnce()) -> soil_io::TestExternalities {
+pub fn new_test_ext(execute: impl FnOnce()) -> subsoil::io::TestExternalities {
 	let t = RuntimeGenesisConfig {
 		assets: topsoil_assets::GenesisConfig {
 			assets: vec![(1, 0, true, 1)],
@@ -117,7 +117,7 @@ pub fn new_test_ext(execute: impl FnOnce()) -> soil_io::TestExternalities {
 	}
 	.build_storage()
 	.unwrap();
-	let mut ext: soil_io::TestExternalities = t.into();
+	let mut ext: subsoil::io::TestExternalities = t.into();
 	ext.execute_with(|| {
 		System::set_block_number(1);
 		execute();

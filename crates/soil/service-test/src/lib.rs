@@ -38,7 +38,7 @@ use soil_network::{
 #[cfg(feature = "std")]
 use soil_network_sync::SyncingService;
 #[cfg(feature = "std")]
-use soil_runtime::traits::Block as BlockT;
+use subsoil::runtime::traits::Block as BlockT;
 #[cfg(feature = "std")]
 use soil_service::{
 	client::Client,
@@ -312,7 +312,7 @@ where
 		authorities: impl Iterator<Item = (String, impl FnOnce(Configuration) -> Result<(F, U), Error>)>,
 		base_port: u16,
 	) -> TestNet<E, F, U> {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 		fdlimit::raise_fd_limit().unwrap();
 		let runtime = Runtime::new().expect("Error creating tokio runtime");
 		let mut net = TestNet {

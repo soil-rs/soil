@@ -19,7 +19,7 @@ use crate::{
 	verifier::{Config, Event, FeasibilityError, Pallet, Status, StatusStorage},
 	CurrentPhase, Phase,
 };
-use soil_std::prelude::*;
+use subsoil::std::prelude::*;
 use topsoil_benchmarking::v2::*;
 use topsoil_election_provider_support::{ElectionProvider, NposSolution};
 use topsoil_support::pallet_prelude::*;
@@ -41,7 +41,7 @@ mod benchmarks {
 	#[benchmark(pov_mode = Measured)]
 	fn verification_valid_non_terminal() -> Result<(), BenchmarkError> {
 		#[cfg(test)]
-		crate::mock::ElectionStart::set(soil_runtime::traits::Bounded::max_value());
+		crate::mock::ElectionStart::set(subsoil::runtime::traits::Bounded::max_value());
 		crate::Pallet::<T>::start().unwrap();
 
 		// roll to signed validation, with a solution stored in the signed pallet
@@ -67,7 +67,7 @@ mod benchmarks {
 	#[benchmark(pov_mode = Measured)]
 	fn verification_valid_terminal() -> Result<(), BenchmarkError> {
 		#[cfg(test)]
-		crate::mock::ElectionStart::set(soil_runtime::traits::Bounded::max_value());
+		crate::mock::ElectionStart::set(subsoil::runtime::traits::Bounded::max_value());
 		crate::Pallet::<T>::start().unwrap();
 
 		// roll to signed validation, with a solution stored in the signed pallet
@@ -119,7 +119,7 @@ mod benchmarks {
 		assert!(T::Pages::get() >= 2, "benchmark only works if we have more than 2 pages");
 
 		#[cfg(test)]
-		crate::mock::ElectionStart::set(soil_runtime::traits::Bounded::max_value());
+		crate::mock::ElectionStart::set(subsoil::runtime::traits::Bounded::max_value());
 		crate::Pallet::<T>::start().unwrap();
 
 		// roll to signed validation, with a solution stored in the signed pallet
@@ -179,7 +179,7 @@ mod benchmarks {
 		assert!(T::Pages::get() >= 2, "benchmark only works if we have more than 2 pages");
 
 		#[cfg(test)]
-		crate::mock::ElectionStart::set(soil_runtime::traits::Bounded::max_value());
+		crate::mock::ElectionStart::set(subsoil::runtime::traits::Bounded::max_value());
 		crate::Pallet::<T>::start().unwrap();
 
 		// roll to signed validation, with a solution stored in the signed pallet, but this solution

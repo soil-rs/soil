@@ -23,13 +23,13 @@
 
 use codec::MaxEncodedLen;
 use scale_info::TypeInfo;
-use soil_core::sr25519;
-use soil_runtime::{
+use subsoil::core::sr25519;
+use subsoil::runtime::{
 	generic,
 	traits::{BlakeTwo256, ValidateUnsigned, Verify},
 	DispatchError, ModuleError,
 };
-use soil_version::RuntimeVersion;
+use subsoil::version::RuntimeVersion;
 use topsoil_support::{
 	derive_impl, parameter_types, traits::PalletInfo as _, weights::RuntimeDbWeight,
 };
@@ -369,7 +369,7 @@ mod runtime {
 #[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
 impl topsoil_system::Config for Runtime {
 	type AccountId = AccountId;
-	type Lookup = soil_runtime::traits::IdentityLookup<AccountId>;
+	type Lookup = subsoil::runtime::traits::IdentityLookup<AccountId>;
 	type BaseCallFilter = topsoil_support::traits::Everything;
 	type RuntimeOrigin = RuntimeOrigin;
 	type RuntimeCall = RuntimeCall;
@@ -422,7 +422,7 @@ fn test_pub() -> AccountId {
 
 #[test]
 fn check_modules_error_type() {
-	soil_io::TestExternalities::default().execute_with(|| {
+	subsoil::io::TestExternalities::default().execute_with(|| {
 		assert_eq!(
 			Module1_1::fail(topsoil_system::Origin::<Runtime>::Root.into()),
 			Err(DispatchError::Module(ModuleError {
@@ -741,8 +741,8 @@ fn test_metadata() {
 		*,
 	};
 	use scale_info::meta_type;
-	use soil_core::Encode;
-	use soil_metadata_ir::StorageEntryModifierIR::Optional;
+	use subsoil::core::Encode;
+	use subsoil::metadata_ir::StorageEntryModifierIR::Optional;
 
 	fn maybe_docs(doc: Vec<&'static str>) -> Vec<&'static str> {
 		if cfg!(feature = "no-metadata-docs") {

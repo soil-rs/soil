@@ -20,7 +20,7 @@
 
 use crate::traits::misc::{SameOrOther, TryDrop};
 use core::ops::Div;
-use soil_runtime::traits::Saturating;
+use subsoil::runtime::traits::Saturating;
 
 mod imbalance_accounting;
 mod on_unbalanced;

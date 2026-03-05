@@ -19,7 +19,7 @@
 //! asset.
 
 use crate::{BalanceOf, Config, HoldReason, NegativeImbalanceOf, PositiveImbalanceOf};
-use soil_runtime::{DispatchResult, Saturating};
+use subsoil::runtime::{DispatchResult, Saturating};
 use topsoil_support::traits::{
 	fungible::{
 		hold::{Balanced as FunHoldBalanced, Inspect as FunHoldInspect, Mutate as FunHoldMutate},

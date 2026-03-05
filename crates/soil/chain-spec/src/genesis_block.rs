@@ -22,9 +22,9 @@ use std::{marker::PhantomData, sync::Arc};
 
 use codec::Encode;
 use soil_client_api::{backend::Backend, BlockImportOperation};
-use soil_core::storage::{well_known_keys, StateVersion, Storage};
+use subsoil::core::storage::{well_known_keys, StateVersion, Storage};
 use soil_executor::RuntimeVersionOf;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{Block as BlockT, Hash as HashT, HashingFor, Header as HeaderT, Zero},
 	BuildStorage,
 };
@@ -39,10 +39,10 @@ where
 	H: HashT,
 {
 	if let Some(wasm) = storage.top.get(well_known_keys::CODE) {
-		let mut ext = soil_state_machine::BasicExternalities::new_empty(); // just to read runtime version.
+		let mut ext = subsoil::state_machine::BasicExternalities::new_empty(); // just to read runtime version.
 
-		let code_fetcher = soil_core::traits::WrappedRuntimeCode(wasm.as_slice().into());
-		let runtime_code = soil_core::traits::RuntimeCode {
+		let code_fetcher = subsoil::core::traits::WrappedRuntimeCode(wasm.as_slice().into());
+		let runtime_code = subsoil::core::traits::RuntimeCode {
 			code_fetcher: &code_fetcher,
 			heap_pages: None,
 			hash: <H as HashT>::hash(wasm).encode(),

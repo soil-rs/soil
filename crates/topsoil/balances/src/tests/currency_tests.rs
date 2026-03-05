@@ -19,7 +19,7 @@
 
 use super::*;
 use crate::{Event, NegativeImbalance};
-use soil_runtime::traits::DispatchTransaction;
+use subsoil::runtime::traits::DispatchTransaction;
 use topsoil_support::{
 	traits::{
 		BalanceStatus::{Free, Reserved},

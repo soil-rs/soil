@@ -78,7 +78,7 @@ use soil_consensus::{
 	BlockOrigin, Error as ConsensusError, SyncOracle,
 };
 #[cfg(feature = "std")]
-use soil_core::H256;
+use subsoil::core::H256;
 #[cfg(feature = "std")]
 use soil_network::{
 	config::{
@@ -112,7 +112,7 @@ use soil_network_sync::{
 #[cfg(feature = "std")]
 use soil_network_types::{build_multiaddr, multiaddr::Multiaddr};
 #[cfg(feature = "std")]
-use soil_runtime::{
+use subsoil::runtime::{
 	codec::{Decode, Encode},
 	generic::BlockId,
 	traits::{Block as BlockT, Header as HeaderT, NumberFor, Zero},
@@ -822,7 +822,7 @@ pub struct FullPeerConfig {
 	/// Syncing mode
 	pub sync_mode: SyncMode,
 	/// Extra genesis storage.
-	pub extra_storage: Option<soil_core::storage::Storage>,
+	pub extra_storage: Option<subsoil::core::storage::Storage>,
 	/// Enable transaction indexing.
 	pub storage_chain: bool,
 	/// Optional target block header to sync to
@@ -909,7 +909,7 @@ pub trait TestNetFactory: Default + Sized + Send {
 			verifier.clone(),
 			Box::new(block_import.clone()),
 			justification_import,
-			&soil_core::testing::TaskExecutor::new(),
+			&subsoil::core::testing::TaskExecutor::new(),
 			None,
 		));
 

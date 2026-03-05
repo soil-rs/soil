@@ -24,10 +24,7 @@ topsoil-benchmarking = { workspace = true, optional = true }
 topsoil-support = { workspace = true }
 topsoil-system = { workspace = true }
 impl-trait-for-tuples = { workspace = true }
-soil-application-crypto = { workspace = true }
-soil-io = { workspace = true }
-soil-runtime = { workspace = true }
-soil-std = { workspace = true }
+subsoil = { workspace = true }
 
 [features]
 default = ["std"]
@@ -38,19 +35,16 @@ std = [
 	"topsoil-system/std",
 	"scale-info/std",
 	"serde/std",
-	"soil-application-crypto/std",
-	"soil-io/std",
-	"soil-runtime/std",
-	"soil-std/std",
+	"subsoil/std",
 ]
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",
 	"topsoil-support/runtime-benchmarks",
 	"topsoil-system/runtime-benchmarks",
-	"soil-runtime/runtime-benchmarks",
+	"subsoil/runtime-benchmarks",
 ]
 try-runtime = [
 	"topsoil-support/try-runtime",
 	"topsoil-system/try-runtime",
-	"soil-runtime/try-runtime",
+	"subsoil/try-runtime",
 ]

@@ -15,7 +15,7 @@ workspace = true
 clap = { features = ["derive", "string"], workspace = true, optional = true}
 fs4 = { workspace = true, optional = true}
 log = { workspace = true, default-features = true, optional = true}
-soil-core = { workspace = true, default-features = true, optional = true}
+subsoil = { workspace = true, default-features = true, optional = true}
 thiserror = { workspace = true, optional = true}
 tokio = { features = ["time"], workspace = true, default-features = true, optional = true}
 
@@ -25,8 +25,8 @@ std = [
 	"clap",
 	"fs4",
 	"log",
-	"soil-core",
+	"subsoil",
 	"thiserror",
 	"tokio",
-	"soil-core/std",
+	"subsoil/std",
 ]

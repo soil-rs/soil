@@ -99,8 +99,8 @@ use sc_consensus_slots::{
 	check_equivocation, BackoffAuthoringBlocksStrategy, CheckedHeader, InherentDataProviderExt,
 	SlotInfo, StorageChanges,
 };
-use soil_api::{ApiExt, ProvideRuntimeApi};
-use soil_application_crypto::AppCrypto;
+use subsoil::api::{ApiExt, ProvideRuntimeApi};
+use subsoil::application_crypto::AppCrypto;
 use soil_block_builder::BlockBuilder as BlockBuilderApi;
 use soil_blockchain::{
 	Backend as _, BlockStatus, Error as ClientError, HeaderBackend, HeaderMetadata,
@@ -117,10 +117,10 @@ use soil_consensus_epochs::{
 	ViableEpochDescriptor,
 };
 use soil_consensus_slots::Slot;
-use soil_core::traits::SpawnEssentialNamed;
-use soil_inherents::{CreateInherentDataProviders, InherentDataProvider};
-use soil_keystore::KeystorePtr;
-use soil_runtime::{
+use subsoil::core::traits::SpawnEssentialNamed;
+use subsoil::inherents::{CreateInherentDataProviders, InherentDataProvider};
+use subsoil::keystore::KeystorePtr;
+use subsoil::runtime::{
 	generic::OpaqueDigestItemId,
 	traits::{Block as BlockT, Header, NumberFor, SaturatedConversion, Zero},
 	DigestItem,
@@ -140,7 +140,7 @@ pub use soil_consensus_babe::{
 };
 
 pub use aux_schema::load_block_weight as block_weight;
-use soil_timestamp::Timestamp;
+use subsoil::timestamp::Timestamp;
 
 mod migration;
 mod verification;
@@ -336,13 +336,13 @@ pub enum Error<B: BlockT> {
 	ParentBlockNoAssociatedWeight(B::Hash),
 	/// Check inherents error
 	#[error("Checking inherents failed: {0}")]
-	CheckInherents(soil_inherents::Error),
+	CheckInherents(subsoil::inherents::Error),
 	/// Unhandled check inherents error
 	#[error("Checking inherents unhandled error: {}", String::from_utf8_lossy(.0))]
-	CheckInherentsUnhandled(soil_inherents::InherentIdentifier),
+	CheckInherentsUnhandled(subsoil::inherents::InherentIdentifier),
 	/// Create inherents error.
 	#[error("Creating inherents failed: {0}")]
-	CreateInherents(soil_inherents::Error),
+	CreateInherents(subsoil::inherents::Error),
 	/// Background worker is not running and therefore requests cannot be answered.
 	#[error("Background worker is not running")]
 	BackgroundWorkerTerminated,
@@ -351,7 +351,7 @@ pub enum Error<B: BlockT> {
 	Client(soil_blockchain::Error),
 	/// Runtime Api error.
 	#[error(transparent)]
-	RuntimeApi(soil_api::ApiError),
+	RuntimeApi(subsoil::api::ApiError),
 	/// Fork tree error
 	#[error(transparent)]
 	ForkTree(Box<fork_tree::Error<soil_blockchain::Error>>),
@@ -803,7 +803,7 @@ where
 		});
 	}
 
-	fn pre_digest_data(&self, _slot: Slot, claim: &Self::Claim) -> Vec<soil_runtime::DigestItem> {
+	fn pre_digest_data(&self, _slot: Slot, claim: &Self::Claim) -> Vec<subsoil::runtime::DigestItem> {
 		vec![<DigestItem as CompatibleDigestItem>::babe_pre_digest(claim.0.clone())]
 	}
 

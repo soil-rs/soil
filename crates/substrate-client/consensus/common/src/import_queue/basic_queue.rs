@@ -22,7 +22,7 @@ use futures::{
 use log::{debug, trace};
 use prometheus_endpoint::Registry;
 use soil_consensus::BlockOrigin;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{Block as BlockT, Header as HeaderT, NumberFor},
 	Justification, Justifications,
 };
@@ -65,7 +65,7 @@ impl<B: BlockT> BasicQueue<B> {
 		verifier: V,
 		block_import: BoxBlockImport<B>,
 		justification_import: Option<BoxJustificationImport<B>>,
-		spawner: &impl soil_core::traits::SpawnEssentialNamed,
+		spawner: &impl subsoil::core::traits::SpawnEssentialNamed,
 		prometheus_registry: Option<&Registry>,
 	) -> Self
 	where

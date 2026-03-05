@@ -41,7 +41,7 @@ use libp2p::{
 };
 
 use parking_lot::Mutex;
-use soil_runtime::traits::Block as BlockT;
+use subsoil::runtime::traits::Block as BlockT;
 use std::{
 	collections::HashSet,
 	sync::Arc,

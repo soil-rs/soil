@@ -22,8 +22,8 @@ use crate::{
 	verifier::{FeasibilityError, Verifier},
 	Phase,
 };
-use soil_core::bounded_vec;
-use soil_npos_elections::ElectionScore;
+use subsoil::core::bounded_vec;
+use subsoil::npos_elections::ElectionScore;
 use topsoil_election_provider_support::{ElectionProvider, NposSolution};
 use topsoil_support::storage::unhashed;
 
@@ -35,7 +35,7 @@ fn score_from(x: u128) -> ElectionScore {
 
 mod calls {
 	use super::*;
-	use soil_runtime::{DispatchError, TokenError::FundsUnavailable};
+	use subsoil::runtime::{DispatchError, TokenError::FundsUnavailable};
 
 	#[test]
 	fn cannot_register_with_insufficient_balance() {
@@ -925,7 +925,7 @@ mod e2e {
 						crate::verifier::Event::VerificationFailed(
 							1,
 							FeasibilityError::NposElection(
-								soil_npos_elections::Error::SolutionInvalidIndex
+								subsoil::npos_elections::Error::SolutionInvalidIndex
 							)
 						),
 					]
@@ -1124,7 +1124,7 @@ mod invulnerables {
 			// Should fail with non-admin origin
 			assert_noop!(
 				SignedPallet::set_invulnerables(RuntimeOrigin::signed(1), vec![99]),
-				soil_runtime::DispatchError::BadOrigin
+				subsoil::runtime::DispatchError::BadOrigin
 			);
 
 			// Should succeed with admin origin (root)

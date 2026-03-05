@@ -19,10 +19,7 @@ topsoil-system = { workspace = true }
 log = { workspace = true }
 topsoil-transaction-payment = { workspace = true }
 scale-info = { workspace = true, features = ["derive"] }
-soil-arithmetic = { workspace = true }
-soil-core = { workspace = true }
-soil-io = { workspace = true }
-soil-runtime = { workspace = true }
+subsoil = { workspace = true }
 
 [features]
 default = ["std"]
@@ -34,21 +31,18 @@ std = [
 	"log/std",
 	"topsoil-transaction-payment/std",
 	"scale-info/std",
-	"soil-arithmetic/std",
-	"soil-core/std",
-	"soil-io/std",
-	"soil-runtime/std",
+	"subsoil/std",
 ]
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",
 	"topsoil-support/runtime-benchmarks",
 	"topsoil-system/runtime-benchmarks",
 	"topsoil-transaction-payment/runtime-benchmarks",
-	"soil-runtime/runtime-benchmarks",
+	"subsoil/runtime-benchmarks",
 ]
 try-runtime = [
 	"topsoil-support/try-runtime",
 	"topsoil-system/try-runtime",
 	"topsoil-transaction-payment/try-runtime",
-	"soil-runtime/try-runtime",
+	"subsoil/try-runtime",
 ]

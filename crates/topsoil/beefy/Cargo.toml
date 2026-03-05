@@ -21,9 +21,9 @@ topsoil-session = { workspace = true }
 scale-info = { features = ["derive", "serde"], workspace = true }
 serde = { optional = true, workspace = true, default-features = true }
 soil-consensus-beefy = { features = ["serde"], workspace = true }
-soil-runtime = { features = ["serde"], workspace = true }
 soil-session = { workspace = true }
 soil-staking = { features = ["serde"], workspace = true }
+subsoil = { workspace = true }
 
 [dev-dependencies]
 topsoil-election-provider-support = { workspace = true, default-features = true }
@@ -32,11 +32,8 @@ topsoil-offences = { workspace = true, default-features = true }
 topsoil-staking = { workspace = true, default-features = true }
 topsoil-staking-reward-curve = { workspace = true, default-features = true }
 topsoil-timestamp = { workspace = true, default-features = true }
-soil-core = { workspace = true, default-features = true }
-soil-io = { workspace = true, default-features = true }
 soil-staking = { workspace = true, default-features = true }
-soil-state-machine = { workspace = true }
-soil-tracing = { workspace = true, default-features = true }
+subsoil = { workspace = true, default-features = true }
 
 [features]
 default = ["std"]
@@ -55,12 +52,9 @@ std = [
 	"scale-info/std",
 	"serde/std",
 	"soil-consensus-beefy/std",
-	"soil-core/std",
-	"soil-io/std",
-	"soil-runtime/std",
+	"subsoil/std",
 	"soil-session/std",
 	"soil-staking/std",
-	"soil-state-machine/std",
 ]
 try-runtime = [
 	"topsoil-election-provider-support/try-runtime",
@@ -72,5 +66,5 @@ try-runtime = [
 	"topsoil-session/try-runtime",
 	"topsoil-staking/try-runtime",
 	"topsoil-timestamp/try-runtime",
-	"soil-runtime/try-runtime",
+	"subsoil/try-runtime",
 ]

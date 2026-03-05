@@ -86,9 +86,9 @@
 //!
 //! ```rust
 //! # use topsoil_election_provider_support::{*, data_provider};
-//! # use soil_npos_elections::{Support, Assignment};
+//! # use subsoil::npos_elections::{Support, Assignment};
 //! # use topsoil_support::traits::ConstU32;
-//! # use soil_runtime::bounded_vec;
+//! # use subsoil::runtime::bounded_vec;
 //!
 //! type AccountId = u64;
 //! type Balance = u64;
@@ -132,7 +132,7 @@
 //!
 //! mod generic_election_provider {
 //!     use super::*;
-//!     use soil_runtime::traits::Zero;
+//!     use subsoil::runtime::traits::Zero;
 //! 	use topsoil_support::pallet_prelude::Weight;
 //!
 //!     pub struct GenericElectionProvider<T: Config>(std::marker::PhantomData<T>);
@@ -207,16 +207,16 @@ extern crate alloc;
 
 use alloc::{boxed::Box, vec::Vec};
 use core::fmt::Debug;
-use soil_core::ConstU32;
-use soil_runtime::traits::{Bounded, Saturating, Zero};
+use subsoil::core::ConstU32;
+use subsoil::runtime::traits::{Bounded, Saturating, Zero};
 use topsoil_support::traits::{Defensive, DefensiveResult};
 
 pub use bounds::DataProviderBounds;
 pub use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;
 /// Re-export some type as they are used in the interface.
-pub use soil_arithmetic::PerThing;
-pub use soil_npos_elections::{
+pub use subsoil::arithmetic::PerThing;
+pub use subsoil::npos_elections::{
 	Assignment, BalancingConfig, ElectionResult, Error, ExtendedBalance, IdentifierT, PerThing128,
 	Support, Supports, VoteWeight,
 };
@@ -226,7 +226,7 @@ pub use topsoil_support::{traits::Get, weights::Weight, BoundedVec, DefaultNoBou
 pub use traits::NposSolution;
 
 #[cfg(feature = "try-runtime")]
-use soil_runtime::TryRuntimeError;
+use subsoil::runtime::TryRuntimeError;
 
 // re-export for the solution macro, with the dependencies of the macro.
 #[doc(hidden)]
@@ -237,7 +237,7 @@ pub mod private {
 	};
 	pub use codec;
 	pub use scale_info;
-	pub use soil_arithmetic;
+	pub use subsoil;
 
 	// Simple Extension trait to easily convert `None` from index closures to `Err`.
 	//
@@ -758,7 +758,7 @@ pub trait ScoreProvider<AccountId> {
 /// Something that can compute the result to an NPoS solution.
 pub trait NposSolver {
 	/// The account identifier type of this solver.
-	type AccountId: soil_npos_elections::IdentifierT;
+	type AccountId: subsoil::npos_elections::IdentifierT;
 	/// The accuracy of this solver. This will affect the accuracy of the output.
 	type Accuracy: PerThing128;
 	/// The error type of this implementation.
@@ -810,7 +810,7 @@ impl<AccountId: IdentifierT, Accuracy: PerThing128> NposSolver
 			impl Clone + IntoIterator<Item = Self::AccountId>,
 		)>,
 	) -> Result<ElectionResult<Self::AccountId, Self::Accuracy>, Self::Error> {
-		use soil_std::collections::btree_map::BTreeMap;
+		use subsoil::std::collections::btree_map::BTreeMap;
 
 		if to_elect > targets.len() {
 			return Err("to_elect is greater than the number of targets.");
@@ -851,8 +851,8 @@ impl<AccountId: IdentifierT, Accuracy: PerThing128> NposSolver
 	}
 }
 
-/// A wrapper for [`soil_npos_elections::seq_phragmen`] that implements [`NposSolver`]. See the
-/// documentation of [`soil_npos_elections::seq_phragmen`] for more info.
+/// A wrapper for [`subsoil::npos_elections::seq_phragmen`] that implements [`NposSolver`]. See the
+/// documentation of [`subsoil::npos_elections::seq_phragmen`] for more info.
 pub struct SequentialPhragmen<AccountId, Accuracy, Balancing = ()>(
 	core::marker::PhantomData<(AccountId, Accuracy, Balancing)>,
 );
@@ -862,7 +862,7 @@ impl<AccountId: IdentifierT, Accuracy: PerThing128, Balancing: Get<Option<Balanc
 {
 	type AccountId = AccountId;
 	type Accuracy = Accuracy;
-	type Error = soil_npos_elections::Error;
+	type Error = subsoil::npos_elections::Error;
 	fn solve(
 		winners: usize,
 		targets: Vec<Self::AccountId>,
@@ -872,7 +872,7 @@ impl<AccountId: IdentifierT, Accuracy: PerThing128, Balancing: Get<Option<Balanc
 			impl Clone + IntoIterator<Item = Self::AccountId>,
 		)>,
 	) -> Result<ElectionResult<Self::AccountId, Self::Accuracy>, Self::Error> {
-		soil_npos_elections::seq_phragmen(winners, targets, voters, Balancing::get())
+		subsoil::npos_elections::seq_phragmen(winners, targets, voters, Balancing::get())
 	}
 
 	fn weight<T: WeightInfo>(voters: u32, targets: u32, vote_degree: u32) -> Weight {
@@ -880,8 +880,8 @@ impl<AccountId: IdentifierT, Accuracy: PerThing128, Balancing: Get<Option<Balanc
 	}
 }
 
-/// A wrapper for [`soil_npos_elections::phragmms()`] that implements [`NposSolver`]. See the
-/// documentation of [`soil_npos_elections::phragmms()`] for more info.
+/// A wrapper for [`subsoil::npos_elections::phragmms()`] that implements [`NposSolver`]. See the
+/// documentation of [`subsoil::npos_elections::phragmms()`] for more info.
 pub struct PhragMMS<AccountId, Accuracy, Balancing = ()>(
 	core::marker::PhantomData<(AccountId, Accuracy, Balancing)>,
 );
@@ -891,7 +891,7 @@ impl<AccountId: IdentifierT, Accuracy: PerThing128, Balancing: Get<Option<Balanc
 {
 	type AccountId = AccountId;
 	type Accuracy = Accuracy;
-	type Error = soil_npos_elections::Error;
+	type Error = subsoil::npos_elections::Error;
 	fn solve(
 		winners: usize,
 		targets: Vec<Self::AccountId>,
@@ -901,7 +901,7 @@ impl<AccountId: IdentifierT, Accuracy: PerThing128, Balancing: Get<Option<Balanc
 			impl Clone + IntoIterator<Item = Self::AccountId>,
 		)>,
 	) -> Result<ElectionResult<Self::AccountId, Self::Accuracy>, Self::Error> {
-		soil_npos_elections::phragmms(winners, targets, voters, Balancing::get())
+		subsoil::npos_elections::phragmms(winners, targets, voters, Balancing::get())
 	}
 
 	fn weight<T: WeightInfo>(voters: u32, targets: u32, vote_degree: u32) -> Weight {
@@ -916,7 +916,7 @@ pub type Voter<AccountId, Bound> = (AccountId, VoteWeight, BoundedVec<AccountId,
 pub type VoterOf<D> =
 	Voter<<D as ElectionDataProvider>::AccountId, <D as ElectionDataProvider>::MaxVotesPerVoter>;
 
-/// A bounded vector of supports. Bounded equivalent to [`soil_npos_elections::Supports`].
+/// A bounded vector of supports. Bounded equivalent to [`subsoil::npos_elections::Supports`].
 #[derive(
 	Default, Debug, Encode, Decode, DecodeWithMemTracking, scale_info::TypeInfo, MaxEncodedLen,
 )]
@@ -929,7 +929,7 @@ pub struct BoundedSupport<AccountId, Bound: Get<u32>> {
 	pub voters: BoundedVec<(AccountId, ExtendedBalance), Bound>,
 }
 
-impl<AccountId, Bound: Get<u32>> soil_npos_elections::Backings
+impl<AccountId, Bound: Get<u32>> subsoil::npos_elections::Backings
 	for &BoundedSupport<AccountId, Bound>
 {
 	fn total(&self) -> ExtendedBalance {
@@ -955,11 +955,11 @@ impl<AccountId: Clone, Bound: Get<u32>> Clone for BoundedSupport<AccountId, Boun
 	}
 }
 
-impl<AccountId, Bound: Get<u32>> TryFrom<soil_npos_elections::Support<AccountId>>
+impl<AccountId, Bound: Get<u32>> TryFrom<subsoil::npos_elections::Support<AccountId>>
 	for BoundedSupport<AccountId, Bound>
 {
 	type Error = &'static str;
-	fn try_from(s: soil_npos_elections::Support<AccountId>) -> Result<Self, Self::Error> {
+	fn try_from(s: subsoil::npos_elections::Support<AccountId>) -> Result<Self, Self::Error> {
 		let voters = s.voters.try_into().map_err(|_| "voters bound not respected")?;
 		Ok(Self { voters, total: s.total })
 	}
@@ -971,7 +971,7 @@ impl<AccountId: Clone, Bound: Get<u32>> BoundedSupport<AccountId, Bound> {
 	///
 	/// Returns the number of backers removed.
 	pub fn sorted_truncate_from(
-		mut support: soil_npos_elections::Support<AccountId>,
+		mut support: subsoil::npos_elections::Support<AccountId>,
 	) -> (Self, u32) {
 		// If bounds meet, then short circuit.
 		if let Ok(bounded) = support.clone().try_into() {
@@ -998,7 +998,7 @@ impl<AccountId: Clone, Bound: Get<u32>> BoundedSupport<AccountId, Bound> {
 
 /// A bounded vector of [`BoundedSupport`].
 ///
-/// A [`BoundedSupports`] is a set of [`soil_npos_elections::Supports`] which are bounded in two
+/// A [`BoundedSupports`] is a set of [`subsoil::npos_elections::Supports`] which are bounded in two
 /// dimensions. `BInner` corresponds to the bound of the maximum backers per voter and `BOuter`
 /// corresponds to the bound of the maximum winners that the bounded supports may contain.
 ///
@@ -1111,15 +1111,15 @@ impl<AccountId, BOuter: Get<u32>, BInner: Get<u32>>
 	}
 }
 
-impl<AccountId, BOuter: Get<u32>, BInner: Get<u32>> soil_npos_elections::EvaluateSupport
+impl<AccountId, BOuter: Get<u32>, BInner: Get<u32>> subsoil::npos_elections::EvaluateSupport
 	for BoundedSupports<AccountId, BOuter, BInner>
 {
-	fn evaluate(&self) -> soil_npos_elections::ElectionScore {
-		soil_npos_elections::evaluate_support(self.iter().map(|(_, s)| s))
+	fn evaluate(&self) -> subsoil::npos_elections::ElectionScore {
+		subsoil::npos_elections::evaluate_support(self.iter().map(|(_, s)| s))
 	}
 }
 
-impl<AccountId, BOuter: Get<u32>, BInner: Get<u32>> soil_std::ops::DerefMut
+impl<AccountId, BOuter: Get<u32>, BInner: Get<u32>> subsoil::std::ops::DerefMut
 	for BoundedSupports<AccountId, BOuter, BInner>
 {
 	fn deref_mut(&mut self) -> &mut Self::Target {
@@ -1172,7 +1172,7 @@ impl<AccountId: Clone, BOuter: Get<u32>, BInner: Get<u32>> Clone
 	}
 }
 
-impl<AccountId, BOuter: Get<u32>, BInner: Get<u32>> soil_std::ops::Deref
+impl<AccountId, BOuter: Get<u32>, BInner: Get<u32>> subsoil::std::ops::Deref
 	for BoundedSupports<AccountId, BOuter, BInner>
 {
 	type Target = BoundedVec<(AccountId, BoundedSupport<AccountId, BInner>), BOuter>;
@@ -1186,7 +1186,7 @@ impl<AccountId, BOuter: Get<u32>, BInner: Get<u32>> IntoIterator
 	for BoundedSupports<AccountId, BOuter, BInner>
 {
 	type Item = (AccountId, BoundedSupport<AccountId, BInner>);
-	type IntoIter = soil_std::vec::IntoIter<Self::Item>;
+	type IntoIter = subsoil::std::vec::IntoIter<Self::Item>;
 
 	fn into_iter(self) -> Self::IntoIter {
 		self.0.into_iter()
@@ -1229,13 +1229,13 @@ pub type BoundedSupportsOf<E> = BoundedSupports<
 	<E as ElectionProvider>::MaxBackersPerWinner,
 >;
 
-soil_core::generate_feature_enabled_macro!(
+subsoil::generate_feature_enabled_macro!(
 	runtime_benchmarks_enabled,
 	feature = "runtime-benchmarks",
 	$
 );
 
-soil_core::generate_feature_enabled_macro!(
+subsoil::generate_feature_enabled_macro!(
 	runtime_benchmarks_or_std_enabled,
 	any(feature = "runtime-benchmarks", feature = "std"),
 	$

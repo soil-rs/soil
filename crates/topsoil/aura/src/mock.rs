@@ -21,7 +21,7 @@
 
 use crate as topsoil_aura;
 use soil_consensus_aura::{ed25519::AuthorityId, AuthorityIndex};
-use soil_runtime::{testing::UintAuthorityId, BuildStorage};
+use subsoil::runtime::{testing::UintAuthorityId, BuildStorage};
 use topsoil_support::{
 	derive_impl, parameter_types,
 	traits::{ConstU32, ConstU64, DisabledValidators},
@@ -88,7 +88,7 @@ impl topsoil_aura::Config for Test {
 	type SlotDuration = SlotDurationValue;
 }
 
-pub fn build_ext(authorities: Vec<u64>) -> soil_io::TestExternalities {
+pub fn build_ext(authorities: Vec<u64>) -> subsoil::io::TestExternalities {
 	let mut storage = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	topsoil_aura::GenesisConfig::<Test> {
 		authorities: authorities.into_iter().map(|a| UintAuthorityId(a).to_public_key()).collect(),

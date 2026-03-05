@@ -27,7 +27,7 @@ use soil_network::{
 	NetworkBackend, ReputationChange,
 };
 use soil_network_types::PeerId;
-use soil_runtime::traits::Block;
+use subsoil::runtime::traits::Block;
 use std::{marker::PhantomData, sync::Arc};
 
 use crate::{

@@ -24,7 +24,7 @@ use super::*;
 
 use crate as topsoil_message_queue;
 use alloc::collections::btree_map::BTreeMap;
-use soil_runtime::BuildStorage;
+use subsoil::runtime::BuildStorage;
 use topsoil_support::{derive_impl, parameter_types};
 
 type Block = topsoil_system::mocking::MockBlock<Test>;
@@ -306,16 +306,16 @@ impl QueuePausedQuery<MessageOrigin> for MockedQueuePauser {
 /// Create new test externalities.
 ///
 /// Is generic since it is used by the unit test, integration tests and benchmarks.
-pub fn new_test_ext<T: Config>() -> soil_io::TestExternalities
+pub fn new_test_ext<T: Config>() -> subsoil::io::TestExternalities
 where
 	topsoil_system::pallet_prelude::BlockNumberFor<T>: From<u32>,
 {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 	WeightForCall::take();
 	QueueChanges::take();
 	NumMessagesErrored::take();
 	let t = topsoil_system::GenesisConfig::<T>::default().build_storage().unwrap();
-	let mut ext = soil_io::TestExternalities::new(t);
+	let mut ext = subsoil::io::TestExternalities::new(t);
 	ext.execute_with(|| topsoil_system::Pallet::<T>::set_block_number(1.into()));
 	ext
 }

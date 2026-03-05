@@ -27,12 +27,7 @@ topsoil-election-provider-support = { workspace = true }
 topsoil-support = { workspace = true }
 topsoil-system = { workspace = true }
 
-soil-arithmetic = { workspace = true }
-soil-core = { workspace = true }
-soil-io = { workspace = true }
-soil-npos-elections = { features = ["serde"], workspace = true }
-soil-runtime = { workspace = true }
-soil-std = { workspace = true }
+subsoil = { features = ["serde"], workspace = true }
 
 # Optional imports for benchmarking
 topsoil-benchmarking = { optional = true, workspace = true }
@@ -42,8 +37,6 @@ rand = { features = ["alloc", "small_rng"], optional = true, workspace = true }
 topsoil-benchmarking = { workspace = true, default-features = true }
 topsoil-balances = { workspace = true, default-features = true }
 parking_lot = { workspace = true, default-features = true }
-soil-io = { workspace = true, default-features = true }
-soil-tracing = { workspace = true, default-features = true }
 
 [features]
 default = ["std"]
@@ -57,13 +50,7 @@ std = [
 	"topsoil-balances/std",
 	"rand/std",
 	"scale-info/std",
-	"soil-arithmetic/std",
-	"soil-core/std",
-	"soil-io/std",
-	"soil-npos-elections/std",
-	"soil-runtime/std",
-	"soil-std/std",
-	"soil-tracing/std",
+	"subsoil/std",
 ]
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",
@@ -72,12 +59,12 @@ runtime-benchmarks = [
 	"topsoil-system/runtime-benchmarks",
 	"topsoil-balances/runtime-benchmarks",
 	"rand",
-	"soil-runtime/runtime-benchmarks",
+	"subsoil/runtime-benchmarks",
 ]
 try-runtime = [
 	"topsoil-election-provider-support/try-runtime",
 	"topsoil-support/try-runtime",
 	"topsoil-system/try-runtime",
 	"topsoil-balances/try-runtime",
-	"soil-runtime/try-runtime",
+	"subsoil/try-runtime",
 ]

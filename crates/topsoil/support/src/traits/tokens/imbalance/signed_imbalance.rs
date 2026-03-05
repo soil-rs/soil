@@ -21,7 +21,7 @@ use super::super::imbalance::Imbalance;
 use crate::traits::misc::SameOrOther;
 use codec::FullCodec;
 use core::fmt::Debug;
-use soil_runtime::traits::{AtLeast32BitUnsigned, MaybeSerializeDeserialize};
+use subsoil::runtime::traits::{AtLeast32BitUnsigned, MaybeSerializeDeserialize};
 
 /// Either a positive or a negative imbalance.
 pub enum SignedImbalance<B, PositiveImbalance: Imbalance<B>> {

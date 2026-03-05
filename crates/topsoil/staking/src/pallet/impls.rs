@@ -17,7 +17,7 @@
 
 //! Implementations for the Staking FRAME Pallet.
 
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{
 		Bounded, CheckedAdd, Convert, One, SaturatedConversion, Saturating, StaticLookup, Zero,
 	},
@@ -60,7 +60,7 @@ use alloc::{boxed::Box, vec, vec::Vec};
 use super::pallet::*;
 
 #[cfg(any(test, feature = "try-runtime"))]
-use soil_runtime::TryRuntimeError;
+use subsoil::runtime::TryRuntimeError;
 #[cfg(feature = "try-runtime")]
 use topsoil_support::ensure;
 
@@ -742,7 +742,7 @@ impl<T: Config> Pallet<T> {
 		elected_stashes
 	}
 
-	/// Consume a set of [`BoundedSupports`] from [`soil_npos_elections`] and collect them into a
+	/// Consume a set of [`BoundedSupports`] from [`subsoil::npos_elections`] and collect them into a
 	/// [`Exposure`].
 	fn collect_exposures(
 		supports: BoundedSupportsOf<T::ElectionProvider>,
@@ -2074,7 +2074,7 @@ impl<T: Config> StakingInterface for Pallet<T> {
 		T::ElectionProvider::status().is_ok()
 	}
 
-	fn force_unstake(who: Self::AccountId) -> soil_runtime::DispatchResult {
+	fn force_unstake(who: Self::AccountId) -> subsoil::runtime::DispatchResult {
 		let num_slashing_spans =
 			SlashingSpans::<T>::get(&who).map_or(0, |s| s.iter().count() as u32);
 		Self::force_unstake(RawOrigin::Root.into(), who.clone(), num_slashing_spans)

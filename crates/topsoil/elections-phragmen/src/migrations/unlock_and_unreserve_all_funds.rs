@@ -20,8 +20,8 @@
 
 use alloc::{collections::btree_map::BTreeMap, vec::Vec};
 use core::iter::Sum;
-use soil_core::Get;
-use soil_runtime::traits::Zero;
+use subsoil::core::Get;
+use subsoil::runtime::traits::Zero;
 use topsoil_support::{
 	pallet_prelude::ValueQuery,
 	storage_alias,
@@ -121,7 +121,7 @@ impl<T: UnlockConfig> UnlockAndUnreserveAllFunds<T> {
 		BTreeMap<T::AccountId, BalanceOf<T>>,
 		topsoil_support::weights::Weight,
 	) {
-		use soil_runtime::Saturating;
+		use subsoil::runtime::Saturating;
 
 		let members = Members::<T>::get();
 		let runner_ups = RunnersUp::<T>::get();
@@ -186,7 +186,7 @@ where
 	/// Fails with a `TryRuntimeError` if there's a discrepancy between the amount
 	/// reported as staked by the pallet and the amount actually locked in `Balances`.
 	#[cfg(feature = "try-runtime")]
-	fn pre_upgrade() -> Result<Vec<u8>, soil_runtime::TryRuntimeError> {
+	fn pre_upgrade() -> Result<Vec<u8>, subsoil::runtime::TryRuntimeError> {
 		use alloc::collections::btree_set::BTreeSet;
 		use codec::Encode;
 
@@ -282,9 +282,9 @@ where
 	#[cfg(feature = "try-runtime")]
 	fn post_upgrade(
 		account_reserved_before_bytes: Vec<u8>,
-	) -> Result<(), soil_runtime::TryRuntimeError> {
+	) -> Result<(), subsoil::runtime::TryRuntimeError> {
 		use codec::Decode;
-		use soil_runtime::Saturating;
+		use subsoil::runtime::Saturating;
 
 		let account_reserved_before =
 			BTreeMap::<T::AccountId, BalanceOf<T>>::decode(&mut &account_reserved_before_bytes[..])

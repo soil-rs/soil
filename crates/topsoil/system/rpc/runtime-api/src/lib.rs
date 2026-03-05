@@ -24,7 +24,7 @@
 #![cfg_attr(not(feature = "std"), no_std)]
 
 #[docify::export(AccountNonceApi)]
-soil_api::decl_runtime_apis! {
+subsoil::api::decl_runtime_apis! {
 	/// The API to query account nonce.
 	pub trait AccountNonceApi<AccountId, Nonce> where
 		AccountId: codec::Codec,

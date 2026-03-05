@@ -17,17 +17,16 @@
 
 use codec::{Decode, DecodeWithMemTracking, Encode};
 use scale_info::TypeInfo;
-use soil_core::{crypto::KeyTypeId, ConstBool, ConstU128};
-use soil_runtime::{
+use subsoil::core::{crypto::KeyTypeId, ConstBool, ConstU128};
+use subsoil::runtime::{
 	app_crypto::ecdsa::Public,
 	curve::PiecewiseLinear,
-	impl_opaque_keys,
 	testing::TestXt,
 	traits::{Header as HeaderT, OpaqueKeys},
 	BuildStorage, Perbill,
 };
 use soil_staking::{EraIndex, SessionIndex};
-use soil_state_machine::BasicExternalities;
+use subsoil::state_machine::BasicExternalities;
 use topsoil_election_provider_support::{
 	bounds::{ElectionBounds, ElectionBoundsBuilder},
 	onchain, SequentialPhragmen, Weight,
@@ -46,7 +45,7 @@ pub use soil_consensus_beefy::{
 };
 use soil_consensus_beefy::{AncestryHelper, AncestryHelperWeightInfo, Commitment};
 
-impl_opaque_keys! {
+subsoil::impl_opaque_keys! {
 	pub struct MockSessionKeys {
 		pub dummy: topsoil_beefy::Pallet<Test>,
 	}
@@ -173,7 +172,7 @@ parameter_types! {
 impl topsoil_session::Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type ValidatorId = u64;
-	type ValidatorIdOf = soil_runtime::traits::ConvertInto;
+	type ValidatorIdOf = subsoil::runtime::traits::ConvertInto;
 	type ShouldEndSession = topsoil_session::PeriodicSessions<ConstU64<1>, ConstU64<0>>;
 	type NextSessionRotation = topsoil_session::PeriodicSessions<ConstU64<1>, ConstU64<0>>;
 	type SessionManager = topsoil_session::historical::NoteHistoricalRoot<Self, Staking>;
@@ -276,8 +275,8 @@ impl ExtBuilder {
 		self
 	}
 
-	pub fn build(self) -> soil_io::TestExternalities {
-		soil_tracing::try_init_simple();
+	pub fn build(self) -> subsoil::io::TestExternalities {
+		subsoil::tracing::try_init_simple();
 		let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 
 		let balances: Vec<_> =

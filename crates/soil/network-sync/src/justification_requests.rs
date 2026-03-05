@@ -31,7 +31,7 @@ use prometheus_endpoint::{
 };
 use soil_blockchain::Error as ClientError;
 use soil_network_types::PeerId;
-use soil_runtime::traits::{Block as BlockT, NumberFor, Zero};
+use subsoil::runtime::traits::{Block as BlockT, NumberFor, Zero};
 use std::{
 	collections::{HashMap, HashSet, VecDeque},
 	time::{Duration, Instant},
@@ -568,7 +568,7 @@ mod tests {
 
 	#[test]
 	fn request_is_rescheduled_when_earlier_block_is_finalized() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 
 		let mut finality_proofs = ExtraRequests::<Block>::new("test", None);
 

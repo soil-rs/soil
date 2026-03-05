@@ -21,8 +21,8 @@
 use hash_db::Prefix;
 use kvdb::KeyValueDB;
 use rand::Rng;
-use soil_state_machine::Backend as _;
-use soil_trie::{trie_types::TrieDBMutBuilderV1, TrieMut as _};
+use subsoil::state_machine::Backend as _;
+use subsoil::trie::{trie_types::TrieDBMutBuilderV1, TrieMut as _};
 use std::{
 	borrow::Cow,
 	collections::HashMap,
@@ -167,9 +167,9 @@ impl core::BenchmarkDescription for TrieReadBenchmarkDescription {
 
 struct Storage(Arc<dyn KeyValueDB>);
 
-impl soil_state_machine::Storage<soil_core::Blake2Hasher> for Storage {
+impl subsoil::state_machine::Storage<subsoil::core::Blake2Hasher> for Storage {
 	fn get(&self, key: &Hash, prefix: Prefix) -> Result<Option<Vec<u8>>, String> {
-		let key = soil_trie::prefixed_key::<soil_core::Blake2Hasher>(key, prefix);
+		let key = subsoil::trie::prefixed_key::<subsoil::core::Blake2Hasher>(key, prefix);
 		self.0.get(0, &key).map_err(|e| format!("Database backend error: {:?}", e))
 	}
 }
@@ -178,10 +178,10 @@ impl core::Benchmark for TrieReadBenchmark {
 	fn run(&mut self, mode: Mode) -> std::time::Duration {
 		let mut db = self.database.clone();
 
-		let storage: Arc<dyn soil_state_machine::Storage<soil_core::Blake2Hasher>> =
+		let storage: Arc<dyn subsoil::state_machine::Storage<subsoil::core::Blake2Hasher>> =
 			Arc::new(Storage(db.open(self.database_type)));
 
-		let trie_backend = soil_state_machine::TrieBackendBuilder::new(storage, self.root).build();
+		let trie_backend = subsoil::state_machine::TrieBackendBuilder::new(storage, self.root).build();
 		for (warmup_key, warmup_value) in self.warmup_keys.iter() {
 			let value = trie_backend
 				.storage(&warmup_key[..])

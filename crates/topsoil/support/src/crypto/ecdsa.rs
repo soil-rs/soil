@@ -17,16 +17,16 @@
 
 //! Simple ECDSA secp256k1 API.
 //!
-//! Provides an extension trait for [`soil_core::ecdsa::Public`] to do certain operations.
+//! Provides an extension trait for [`subsoil::core::ecdsa::Public`] to do certain operations.
 
-use soil_core::{crypto::ByteArray, ecdsa::Public};
+use subsoil::core::{crypto::ByteArray, ecdsa::Public};
 
 /// Extension trait for [`Public`] to be used from inside the runtime.
 ///
 /// # Note
 ///
 /// This is needed because host functions cannot be called from within
-/// `soil_core` due to cyclic dependencies  on `soil_io`.
+/// `soil_core` due to cyclic dependencies  on `subsoil::io`.
 pub trait ECDSAExt {
 	/// Returns Ethereum address calculated from this ECDSA public key.
 	fn to_eth_address(&self) -> Result<[u8; 20], ()>;
@@ -41,7 +41,7 @@ impl ECDSAExt for Public {
 			let uncompressed = pub_key.to_encoded_point(false);
 			// convert to ETH address
 			<[u8; 20]>::try_from(
-				soil_io::hashing::keccak_256(&uncompressed.as_bytes()[1..])[12..].as_ref(),
+				subsoil::io::hashing::keccak_256(&uncompressed.as_bytes()[1..])[12..].as_ref(),
 			)
 			.map_err(drop)
 		})
@@ -51,7 +51,7 @@ impl ECDSAExt for Public {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use soil_core::{ecdsa, Pair};
+	use subsoil::core::{ecdsa, Pair};
 
 	#[test]
 	fn to_eth_address_works() {

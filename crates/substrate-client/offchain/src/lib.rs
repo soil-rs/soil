@@ -42,19 +42,19 @@ use futures::{
 	prelude::*,
 };
 use parking_lot::Mutex;
-use soil_api::{ApiExt, ProvideRuntimeApi};
+use subsoil::api::{ApiExt, ProvideRuntimeApi};
 use soil_client_api::BlockchainEvents;
-use soil_core::{offchain, traits::SpawnNamed};
-use soil_externalities::Extension;
-use soil_keystore::{KeystoreExt, KeystorePtr};
+use subsoil::core::{offchain, traits::SpawnNamed};
+use subsoil::externalities::Extension;
+use subsoil::keystore::{KeystoreExt, KeystorePtr};
 use soil_network::{NetworkPeers, NetworkStateInfo};
-use soil_runtime::traits::{self, Header};
+use subsoil::runtime::traits::{self, Header};
 use soil_transaction_pool_api::OffchainTransactionPoolFactory;
 use threadpool::ThreadPool;
 
 mod api;
 
-pub use soil_core::offchain::storage::OffchainDb;
+pub use subsoil::core::offchain::storage::OffchainDb;
 pub use soil_offchain::{OffchainWorkerApi, STORAGE_PREFIX};
 
 const LOG_TARGET: &str = "offchain-worker";
@@ -335,7 +335,7 @@ mod tests {
 		config::MultiaddrWithPeerId, types::ProtocolName, Multiaddr, ObservedRole, ReputationChange,
 	};
 	use soil_network_types::PeerId;
-	use soil_runtime::traits::Block as BlockT;
+	use subsoil::runtime::traits::Block as BlockT;
 	use soil_transaction_pool_api::{InPoolTransaction, TransactionPool};
 	use std::{collections::HashSet, sync::Arc};
 	use substrate_test_runtime_client::{
@@ -442,10 +442,10 @@ mod tests {
 
 	#[test]
 	fn should_call_into_runtime_and_produce_extrinsic() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 
 		let client = Arc::new(substrate_test_runtime_client::new());
-		let spawner = soil_core::testing::TaskExecutor::new();
+		let spawner = subsoil::core::testing::TaskExecutor::new();
 		let pool = Arc::from(BasicPool::new_full(
 			Default::default(),
 			true.into(),
@@ -480,9 +480,9 @@ mod tests {
 
 	#[test]
 	fn offchain_index_set_and_clear_works() {
-		use soil_core::offchain::OffchainStorage;
+		use subsoil::core::offchain::OffchainStorage;
 
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 
 		let (client, backend) = substrate_test_runtime_client::TestClientBuilder::new()
 			.enable_offchain_indexing_api()

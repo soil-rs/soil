@@ -24,7 +24,7 @@
 use crate as example_offchain_worker;
 use crate::*;
 use codec::Decode;
-use soil_core::{
+use subsoil::core::{
 	offchain::{testing, OffchainWorkerExt, TransactionPoolExt},
 	sr25519::Signature,
 	H256,
@@ -34,8 +34,8 @@ use topsoil_support::{
 	traits::{ConstU32, ConstU64},
 };
 
-use soil_keystore::{testing::MemoryKeystore, Keystore, KeystoreExt};
-use soil_runtime::{
+use subsoil::keystore::{testing::MemoryKeystore, Keystore, KeystoreExt};
+use subsoil::runtime::{
 	testing::TestXt,
 	traits::{BlakeTwo256, IdentifyAccount, IdentityLookup, Verify},
 	RuntimeAppPublic,
@@ -47,8 +47,8 @@ type TxExtension = topsoil_system::AuthorizeCall<Test>;
 type Extrinsic = TestXt<RuntimeCall, TxExtension>;
 
 // Define a custom Block that uses our Extrinsic with AuthorizeCall extension
-type Block = soil_runtime::generic::Block<
-	soil_runtime::generic::Header<u64, soil_runtime::traits::BlakeTwo256>,
+type Block = subsoil::runtime::generic::Block<
+	subsoil::runtime::generic::Header<u64, subsoil::runtime::traits::BlakeTwo256>,
 	Extrinsic,
 >;
 
@@ -72,7 +72,7 @@ impl topsoil_system::Config for Test {
 	type Nonce = u64;
 	type Hash = H256;
 	type Hashing = BlakeTwo256;
-	type AccountId = soil_core::sr25519::Public;
+	type AccountId = subsoil::core::sr25519::Public;
 	type Lookup = IdentityLookup<Self::AccountId>;
 	type Block = Block;
 	type RuntimeEvent = RuntimeEvent;
@@ -153,13 +153,13 @@ impl Config for Test {
 	type MaxPrices = ConstU32<64>;
 }
 
-fn test_pub() -> soil_core::sr25519::Public {
-	soil_core::sr25519::Public::from_raw([1u8; 32])
+fn test_pub() -> subsoil::core::sr25519::Public {
+	subsoil::core::sr25519::Public::from_raw([1u8; 32])
 }
 
 #[test]
 fn it_aggregates_the_price() {
-	soil_io::TestExternalities::default().execute_with(|| {
+	subsoil::io::TestExternalities::default().execute_with(|| {
 		assert_eq!(Example::average_price(), None);
 
 		assert_ok!(Example::submit_price(RuntimeOrigin::signed(test_pub()), 27));
@@ -173,7 +173,7 @@ fn it_aggregates_the_price() {
 #[test]
 fn should_make_http_call_and_parse_result() {
 	let (offchain, state) = testing::TestOffchainExt::new();
-	let mut t = soil_io::TestExternalities::default();
+	let mut t = subsoil::io::TestExternalities::default();
 	t.register_extension(OffchainWorkerExt::new(offchain));
 
 	price_oracle_response(&mut state.write());
@@ -189,7 +189,7 @@ fn should_make_http_call_and_parse_result() {
 #[test]
 fn knows_how_to_mock_several_http_calls() {
 	let (offchain, state) = testing::TestOffchainExt::new();
-	let mut t = soil_io::TestExternalities::default();
+	let mut t = subsoil::io::TestExternalities::default();
 	t.register_extension(OffchainWorkerExt::new(offchain));
 
 	{
@@ -242,7 +242,7 @@ fn should_submit_signed_transaction_on_chain() {
 		.sr25519_generate_new(crate::crypto::Public::ID, Some(&format!("{}/hunter1", PHRASE)))
 		.unwrap();
 
-	let mut t = soil_io::TestExternalities::default();
+	let mut t = subsoil::io::TestExternalities::default();
 	t.register_extension(OffchainWorkerExt::new(offchain));
 	t.register_extension(TransactionPoolExt::new(pool));
 	t.register_extension(KeystoreExt::new(keystore));
@@ -257,7 +257,7 @@ fn should_submit_signed_transaction_on_chain() {
 		assert!(pool_state.read().transactions.is_empty());
 		let tx = Extrinsic::decode(&mut &*tx).unwrap();
 		// For signed transactions, the preamble includes the signature and bypass AuthorizeCall
-		assert!(matches!(tx.preamble, soil_runtime::generic::Preamble::Signed(0, (), _)));
+		assert!(matches!(tx.preamble, subsoil::runtime::generic::Preamble::Signed(0, (), _)));
 		assert_eq!(tx.function, RuntimeCall::Example(crate::Call::submit_price { price: 15523 }));
 	});
 }
@@ -277,7 +277,7 @@ fn should_submit_authorized_transaction_on_chain_for_any_account() {
 
 	let public_key = *keystore.sr25519_public_keys(crate::crypto::Public::ID).get(0).unwrap();
 
-	let mut t = soil_io::TestExternalities::default();
+	let mut t = subsoil::io::TestExternalities::default();
 	t.register_extension(OffchainWorkerExt::new(offchain));
 	t.register_extension(TransactionPoolExt::new(pool));
 	t.register_extension(KeystoreExt::new(keystore));
@@ -303,7 +303,7 @@ fn should_submit_authorized_transaction_on_chain_for_any_account() {
 		assert!(!tx.is_inherent() && !tx.is_signed());
 
 		// Actually validate the transaction through the authorize logic
-		use soil_runtime::transaction_validity::TransactionSource;
+		use subsoil::runtime::transaction_validity::TransactionSource;
 		use topsoil_support::traits::Authorize;
 
 		let authorize_result = tx.function.authorize(TransactionSource::External);
@@ -350,7 +350,7 @@ fn should_submit_authorized_transaction_on_chain_for_all_accounts() {
 
 	let public_key = *keystore.sr25519_public_keys(crate::crypto::Public::ID).get(0).unwrap();
 
-	let mut t = soil_io::TestExternalities::default();
+	let mut t = subsoil::io::TestExternalities::default();
 	t.register_extension(OffchainWorkerExt::new(offchain));
 	t.register_extension(TransactionPoolExt::new(pool));
 	t.register_extension(KeystoreExt::new(keystore));
@@ -376,7 +376,7 @@ fn should_submit_authorized_transaction_on_chain_for_all_accounts() {
 		assert!(!tx.is_inherent() && !tx.is_signed());
 
 		// Actually validate the transaction through the authorize logic
-		use soil_runtime::transaction_validity::TransactionSource;
+		use subsoil::runtime::transaction_validity::TransactionSource;
 		use topsoil_support::traits::Authorize;
 
 		let authorize_result = tx.function.authorize(TransactionSource::External);
@@ -415,7 +415,7 @@ fn should_submit_raw_authorized_transaction_on_chain() {
 
 	let keystore = MemoryKeystore::new();
 
-	let mut t = soil_io::TestExternalities::default();
+	let mut t = subsoil::io::TestExternalities::default();
 	t.register_extension(OffchainWorkerExt::new(offchain));
 	t.register_extension(TransactionPoolExt::new(pool));
 	t.register_extension(KeystoreExt::new(keystore));
@@ -436,7 +436,7 @@ fn should_submit_raw_authorized_transaction_on_chain() {
 		assert!(!tx.is_inherent() && !tx.is_signed());
 
 		// Actually validate the transaction through the authorize logic
-		use soil_runtime::transaction_validity::TransactionSource;
+		use subsoil::runtime::transaction_validity::TransactionSource;
 		use topsoil_support::traits::Authorize;
 
 		let authorize_result = tx.function.authorize(TransactionSource::External);
@@ -461,7 +461,7 @@ fn should_submit_raw_authorized_transaction_on_chain() {
 
 #[test]
 fn should_reject_invalid_authorized_transaction() {
-	let mut t = soil_io::TestExternalities::default();
+	let mut t = subsoil::io::TestExternalities::default();
 
 	t.execute_with(|| {
 		// Set NextAuthorizedAt to block 100, so any transaction at block 1 should be stale
@@ -475,7 +475,7 @@ fn should_reject_invalid_authorized_transaction() {
 
 		// Try to validate the call's authorization - this should FAIL because the block number is
 		// too old
-		use soil_runtime::transaction_validity::TransactionSource;
+		use subsoil::runtime::transaction_validity::TransactionSource;
 		use topsoil_support::traits::Authorize;
 
 		let authorize_result = call.authorize(TransactionSource::External);

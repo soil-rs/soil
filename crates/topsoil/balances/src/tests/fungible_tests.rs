@@ -22,7 +22,7 @@ use fungible::{
 	FreezeConsideration, HoldConsideration, Inspect, InspectFreeze, InspectHold,
 	LoneFreezeConsideration, LoneHoldConsideration, Mutate, MutateFreeze, MutateHold, Unbalanced,
 };
-use soil_core::ConstU64;
+use subsoil::core::ConstU64;
 use topsoil_support::traits::{
 	tokens::{
 		Fortitude::{Force, Polite},

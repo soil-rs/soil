@@ -20,7 +20,6 @@ codec = { features = ["derive"], workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 
 # primitives
-soil-runtime = { workspace = true }
 
 # FRAME
 topsoil-election-provider-support = { workspace = true }
@@ -35,17 +34,12 @@ log = { workspace = true }
 # Optional imports for benchmarking
 topsoil-benchmarking = { optional = true, workspace = true }
 topsoil-balances = { optional = true, workspace = true }
-soil-core = { optional = true, workspace = true }
-soil-io = { optional = true, workspace = true }
-soil-tracing = { optional = true, workspace = true }
+subsoil = { workspace = true }
 
 [dev-dependencies]
 topsoil-benchmarking = { workspace = true, default-features = true }
 topsoil-election-provider-support = { workspace = true, default-features = true }
 topsoil-balances = { workspace = true, default-features = true }
-soil-core = { workspace = true, default-features = true }
-soil-io = { workspace = true, default-features = true }
-soil-tracing = { workspace = true, default-features = true }
 substrate-test-utils = { workspace = true }
 
 [features]
@@ -59,10 +53,7 @@ std = [
 	"log/std",
 	"topsoil-balances?/std",
 	"scale-info/std",
-	"soil-core?/std",
-	"soil-io?/std",
-	"soil-runtime/std",
-	"soil-tracing?/std",
+	"subsoil/std",
 ]
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",
@@ -70,22 +61,16 @@ runtime-benchmarks = [
 	"topsoil-support/runtime-benchmarks",
 	"topsoil-system/runtime-benchmarks",
 	"topsoil-balances/runtime-benchmarks",
-	"soil-core",
-	"soil-io",
-	"soil-runtime/runtime-benchmarks",
-	"soil-tracing",
+	"subsoil/runtime-benchmarks",
 ]
 fuzz = [
 	"topsoil-election-provider-support/fuzz",
 	"topsoil-balances",
-	"soil-core",
-	"soil-io",
-	"soil-tracing",
 ]
 try-runtime = [
 	"topsoil-election-provider-support/try-runtime",
 	"topsoil-support/try-runtime",
 	"topsoil-system/try-runtime",
 	"topsoil-balances?/try-runtime",
-	"soil-runtime/try-runtime",
+	"subsoil/try-runtime",
 ]

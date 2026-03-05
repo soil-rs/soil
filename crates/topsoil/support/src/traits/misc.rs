@@ -22,16 +22,16 @@ use alloc::{vec, vec::Vec};
 use codec::{CompactLen, Decode, DecodeLimit, Encode, EncodeLike, Input, MaxEncodedLen};
 use impl_trait_for_tuples::impl_for_tuples;
 use scale_info::{build::Fields, meta_type, Path, Type, TypeInfo, TypeParameter};
-use soil_arithmetic::traits::{CheckedAdd, CheckedMul, CheckedSub, One, Saturating};
-use soil_core::bounded::bounded_vec::TruncateFrom;
+use subsoil::arithmetic::traits::{CheckedAdd, CheckedMul, CheckedSub, One, Saturating};
+use subsoil::core::bounded::bounded_vec::TruncateFrom;
 
 use core::cmp::Ordering;
 #[doc(hidden)]
-pub use soil_runtime::traits::{
+pub use subsoil::runtime::traits::{
 	ConstBool, ConstI128, ConstI16, ConstI32, ConstI64, ConstI8, ConstInt, ConstU128, ConstU16,
 	ConstU32, ConstU64, ConstU8, ConstUint, Get, GetDefault, TryCollect, TypedGet,
 };
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{Block as BlockT, ExtrinsicCall},
 	DispatchError,
 };
@@ -446,7 +446,7 @@ pub trait DefensiveTruncateFrom<T> {
 	///
 	/// ```
 	/// use topsoil_support::{BoundedVec, traits::DefensiveTruncateFrom};
-	/// use soil_runtime::traits::ConstU32;
+	/// use subsoil::runtime::traits::ConstU32;
 	///
 	/// let unbound = vec![1, 2];
 	/// let bound = BoundedVec::<u8, ConstU32<2>>::defensive_truncate_from(unbound);
@@ -747,7 +747,7 @@ pub trait HandleLifetime<T> {
 impl<T> HandleLifetime<T> for () {}
 
 pub trait Time {
-	type Moment: soil_arithmetic::traits::AtLeast32Bit + Parameter + Default + Copy + MaxEncodedLen;
+	type Moment: subsoil::arithmetic::traits::AtLeast32Bit + Parameter + Default + Copy + MaxEncodedLen;
 
 	fn now() -> Self::Moment;
 }
@@ -913,7 +913,7 @@ impl<Origin: PartialEq> PrivilegeCmp<Origin> for EqualPrivilegeOnly {
 pub trait OffchainWorker<BlockNumber> {
 	/// This function is being called after every block import (when fully synced).
 	///
-	/// Implement this and use any of the `Offchain` `soil_io` set of APIs
+	/// Implement this and use any of the `Offchain` `subsoil::io` set of APIs
 	/// to perform off-chain computations, calls and submit transactions
 	/// with results to trigger any on-chain changes.
 	/// Any state alterations are lost and are not persisted.
@@ -949,7 +949,7 @@ pub trait InherentBuilder: ExtrinsicCall {
 }
 
 impl<Address, Call, Signature, Extra> InherentBuilder
-	for soil_runtime::generic::UncheckedExtrinsic<Address, Call, Signature, Extra>
+	for subsoil::runtime::generic::UncheckedExtrinsic<Address, Call, Signature, Extra>
 where
 	Address: TypeInfo,
 	Call: TypeInfo,
@@ -978,7 +978,7 @@ pub trait SignedTransactionBuilder: ExtrinsicCall {
 }
 
 impl<Address, Call, Signature, Extension> SignedTransactionBuilder
-	for soil_runtime::generic::UncheckedExtrinsic<Address, Call, Signature, Extension>
+	for subsoil::runtime::generic::UncheckedExtrinsic<Address, Call, Signature, Extension>
 where
 	Address: TypeInfo,
 	Call: TypeInfo,
@@ -1283,7 +1283,7 @@ pub trait RewardsReporter<ValidatorId> {
 mod test {
 	use super::*;
 	use core::marker::PhantomData;
-	use soil_core::bounded::{BoundedSlice, BoundedVec};
+	use subsoil::core::bounded::{BoundedSlice, BoundedVec};
 
 	#[test]
 	fn defensive_assert_works() {

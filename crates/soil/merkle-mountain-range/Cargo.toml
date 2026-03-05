@@ -20,10 +20,8 @@ log = { workspace = true }
 mmr-lib = { workspace = true, default-features = false }
 scale-info = { features = ["derive"], workspace = true }
 serde = { features = ["alloc", "derive"], optional = true, workspace = true }
-soil-api = { workspace = true }
-soil-core = { workspace = true }
-soil-debug-derive = { workspace = true }
-soil-runtime = { workspace = true }
+subsoil = { workspace = true }
+subsoil-debug-derive = { workspace = true }
 thiserror = { optional = true, workspace = true }
 
 [dev-dependencies]
@@ -38,11 +36,8 @@ std = [
 	"mmr-lib/std",
 	"scale-info/std",
 	"serde/std",
-	"soil-api/std",
-	"soil-core/std",
-	"soil-debug-derive/std",
-	"soil-runtime/std",
-]
+	"subsoil/std",
+	"subsoil-debug-derive/std"]
 
 # Serde support without relying on std features.
-serde = ["dep:serde", "scale-info/serde", "soil-core/serde", "soil-runtime/serde"]
+serde = ["dep:serde", "scale-info/serde", "subsoil/serde"]

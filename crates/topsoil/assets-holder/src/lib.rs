@@ -143,7 +143,7 @@ pub mod pallet {
 	#[pallet::hooks]
 	impl<T: Config<I>, I: 'static> Hooks<BlockNumberFor<T>> for Pallet<T, I> {
 		#[cfg(feature = "try-runtime")]
-		fn try_state(_: BlockNumberFor<T>) -> Result<(), soil_runtime::TryRuntimeError> {
+		fn try_state(_: BlockNumberFor<T>) -> Result<(), subsoil::runtime::TryRuntimeError> {
 			Self::do_try_state()
 		}
 	}
@@ -151,8 +151,8 @@ pub mod pallet {
 
 impl<T: Config<I>, I: 'static> Pallet<T, I> {
 	#[cfg(any(test, feature = "try-runtime"))]
-	fn do_try_state() -> Result<(), soil_runtime::TryRuntimeError> {
-		use soil_runtime::{
+	fn do_try_state() -> Result<(), subsoil::runtime::TryRuntimeError> {
+		use subsoil::runtime::{
 			traits::{CheckedAdd, Zero},
 			ArithmeticError,
 		};

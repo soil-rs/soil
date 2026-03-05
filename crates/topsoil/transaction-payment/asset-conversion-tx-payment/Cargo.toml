@@ -24,12 +24,12 @@ topsoil-system = { workspace = true }
 topsoil-asset-conversion = { workspace = true }
 topsoil-transaction-payment = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
-soil-runtime = { workspace = true }
+subsoil = { workspace = true }
 
 [dev-dependencies]
 topsoil-assets = { workspace = true, default-features = true }
 topsoil-balances = { workspace = true, default-features = true }
-soil-io = { workspace = true, default-features = true }
+subsoil = { workspace = true, default-features = true }
 
 [features]
 default = ["std"]
@@ -41,7 +41,7 @@ std = [
 	"topsoil-asset-conversion/std",
 	"topsoil-transaction-payment/std",
 	"scale-info/std",
-	"soil-runtime/std",
+	"subsoil/std",
 ]
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",
@@ -51,7 +51,7 @@ runtime-benchmarks = [
 	"topsoil-assets/runtime-benchmarks",
 	"topsoil-balances/runtime-benchmarks",
 	"topsoil-transaction-payment/runtime-benchmarks",
-	"soil-runtime/runtime-benchmarks",
+	"subsoil/runtime-benchmarks",
 ]
 try-runtime = [
 	"topsoil-support/try-runtime",
@@ -60,5 +60,5 @@ try-runtime = [
 	"topsoil-assets/try-runtime",
 	"topsoil-balances/try-runtime",
 	"topsoil-transaction-payment/try-runtime",
-	"soil-runtime/try-runtime",
+	"subsoil/try-runtime",
 ]

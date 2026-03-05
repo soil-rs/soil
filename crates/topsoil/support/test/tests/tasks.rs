@@ -72,9 +72,9 @@ mod my_pallet_2 {
 
 type BlockNumber = u32;
 type AccountId = u64;
-type Header = soil_runtime::generic::Header<BlockNumber, soil_runtime::traits::BlakeTwo256>;
-type UncheckedExtrinsic = soil_runtime::generic::UncheckedExtrinsic<u32, RuntimeCall, (), ()>;
-type Block = soil_runtime::generic::Block<Header, UncheckedExtrinsic>;
+type Header = subsoil::runtime::generic::Header<BlockNumber, subsoil::runtime::traits::BlakeTwo256>;
+type UncheckedExtrinsic = subsoil::runtime::generic::UncheckedExtrinsic<u32, RuntimeCall, (), ()>;
+type Block = subsoil::runtime::generic::Block<Header, UncheckedExtrinsic>;
 
 topsoil_support::construct_runtime!(
 	pub enum Runtime
@@ -105,8 +105,8 @@ impl my_pallet::Config<topsoil_support::instances::Instance3> for Runtime {}
 
 impl my_pallet_2::Config<topsoil_support::instances::Instance1> for Runtime {}
 
-fn new_test_ext() -> soil_io::TestExternalities {
-	use soil_runtime::BuildStorage;
+fn new_test_ext() -> subsoil::io::TestExternalities {
+	use subsoil::runtime::BuildStorage;
 
 	RuntimeGenesisConfig::default().build_storage().unwrap().into()
 }

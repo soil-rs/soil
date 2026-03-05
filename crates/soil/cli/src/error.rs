@@ -20,7 +20,7 @@
 
 use std::path::PathBuf;
 
-use soil_core::crypto;
+use subsoil::core::crypto;
 
 /// Result type alias for the CLI.
 pub type Result<T> = std::result::Result<T, Error>;

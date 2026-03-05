@@ -20,7 +20,7 @@
 #![cfg(test)]
 
 use codec::Encode;
-use soil_runtime::{traits::IdentityLookup, BuildStorage, KeyTypeId};
+use subsoil::runtime::{traits::IdentityLookup, BuildStorage, KeyTypeId};
 use topsoil_election_provider_support::{
 	bounds::{ElectionBounds, ElectionBoundsBuilder},
 	onchain, SequentialPhragmen,
@@ -73,9 +73,9 @@ impl topsoil_session::historical::Config for Test {
 	type FullIdentificationOf = topsoil_staking::UnitIdentificationOf<Self>;
 }
 
-soil_runtime::impl_opaque_keys! {
+subsoil::impl_opaque_keys! {
 	pub struct SessionKeys {
-		pub foo: soil_runtime::testing::UintAuthorityId,
+		pub foo: subsoil::runtime::testing::UintAuthorityId,
 	}
 }
 
@@ -84,9 +84,9 @@ impl topsoil_session::SessionHandler<AccountId> for TestSessionHandler {
 	// corresponds to the opaque key id above
 	const KEY_TYPE_IDS: &'static [KeyTypeId] = &[KeyTypeId([100u8, 117u8, 109u8, 121u8])];
 
-	fn on_genesis_session<Ks: soil_runtime::traits::OpaqueKeys>(_validators: &[(AccountId, Ks)]) {}
+	fn on_genesis_session<Ks: subsoil::runtime::traits::OpaqueKeys>(_validators: &[(AccountId, Ks)]) {}
 
-	fn on_new_session<Ks: soil_runtime::traits::OpaqueKeys>(
+	fn on_new_session<Ks: subsoil::runtime::traits::OpaqueKeys>(
 		_: bool,
 		_: &[(AccountId, Ks)],
 		_: &[(AccountId, Ks)],
@@ -104,7 +104,7 @@ impl topsoil_session::Config for Test {
 	type SessionHandler = TestSessionHandler;
 	type RuntimeEvent = RuntimeEvent;
 	type ValidatorId = AccountId;
-	type ValidatorIdOf = soil_runtime::traits::ConvertInto;
+	type ValidatorIdOf = subsoil::runtime::traits::ConvertInto;
 	type DisablingStrategy = ();
 	type WeightInfo = ();
 	type Currency = Balances;
@@ -113,7 +113,7 @@ impl topsoil_session::Config for Test {
 	type KeyDeposit = ConstU64<2000000000>;
 }
 topsoil_staking_reward_curve::build! {
-	const I_NPOS: soil_runtime::curve::PiecewiseLinear<'static> = curve!(
+	const I_NPOS: subsoil::runtime::curve::PiecewiseLinear<'static> = curve!(
 		min_inflation: 0_025_000,
 		max_inflation: 0_100_000,
 		ideal_stake: 0_500_000,
@@ -123,7 +123,7 @@ topsoil_staking_reward_curve::build! {
 	);
 }
 parameter_types! {
-	pub const RewardCurve: &'static soil_runtime::curve::PiecewiseLinear<'static> = &I_NPOS;
+	pub const RewardCurve: &'static subsoil::runtime::curve::PiecewiseLinear<'static> = &I_NPOS;
 	pub static ElectionsBounds: ElectionBounds = ElectionBoundsBuilder::default().build();
 	pub const Sort: bool = true;
 }
@@ -131,7 +131,7 @@ parameter_types! {
 pub struct OnChainSeqPhragmen;
 impl onchain::Config for OnChainSeqPhragmen {
 	type System = Test;
-	type Solver = SequentialPhragmen<AccountId, soil_runtime::Perbill>;
+	type Solver = SequentialPhragmen<AccountId, subsoil::runtime::Perbill>;
 	type DataProvider = Staking;
 	type WeightInfo = ();
 	type MaxWinnersPerPage = ConstU32<100>;
@@ -164,7 +164,7 @@ impl crate::Config for Test {
 	}
 }
 
-pub fn new_test_ext() -> soil_io::TestExternalities {
+pub fn new_test_ext() -> subsoil::io::TestExternalities {
 	let t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
-	soil_io::TestExternalities::new(t)
+	subsoil::io::TestExternalities::new(t)
 }

@@ -18,8 +18,8 @@
 
 use crate::{ExecutionLimit, HwBench};
 
-use soil_core::{sr25519, Pair};
-use soil_io::crypto::sr25519_verify;
+use subsoil::core::{sr25519, Pair};
+use subsoil::io::crypto::sr25519_verify;
 use soil_telemetry::SysInfo;
 
 use core::f64;
@@ -406,7 +406,7 @@ pub fn benchmark_cpu_parallelism(limit: ExecutionLimit, refhw_num_cores: usize) 
 
 			let run = || -> Result<(), ()> {
 				clobber_slice(&mut buffer);
-				hash = soil_crypto_hashing::blake2_256(&buffer);
+				hash = subsoil_crypto_hashing::blake2_256(&buffer);
 				clobber_slice(&mut hash);
 
 				Ok(())
@@ -800,7 +800,7 @@ impl Requirements {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use soil_runtime::assert_eq_error_rate_float;
+	use subsoil::assert_eq_error_rate_float;
 
 	#[cfg(target_os = "linux")]
 	#[test]

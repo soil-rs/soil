@@ -22,7 +22,7 @@ use alloc::{vec, vec::Vec};
 use crate::Config;
 use codec::{Decode, DecodeWithMemTracking, Encode};
 use scale_info::TypeInfo;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{
 		AsSystemOriginSigner, CheckedAdd, DispatchInfoOf, Dispatchable, One, PostDispatchInfoOf,
 		TransactionExtension, ValidateResult, Zero,
@@ -32,7 +32,7 @@ use soil_runtime::{
 	},
 	DispatchResult, Saturating,
 };
-use soil_weights::Weight;
+use subsoil::weights::Weight;
 use topsoil_support::{dispatch::DispatchInfo, pallet_prelude::TransactionSource, DebugNoBound};
 
 /// Nonce check and increment to give replay protection for transactions.
@@ -146,7 +146,7 @@ where
 	type Val = Val<T>;
 	type Pre = Pre;
 
-	fn weight(&self, _: &T::RuntimeCall) -> soil_weights::Weight {
+	fn weight(&self, _: &T::RuntimeCall) -> subsoil::weights::Weight {
 		<T::ExtensionsWeightInfo as super::WeightInfo>::check_nonce()
 	}
 
@@ -209,7 +209,7 @@ where
 mod tests {
 	use super::*;
 	use crate::mock::{new_test_ext, RuntimeCall, Test, CALL};
-	use soil_runtime::{
+	use subsoil::runtime::{
 		traits::{AsTransactionAuthorizedOrigin, DispatchTransaction, TxBaseImplication},
 		transaction_validity::TransactionSource::External,
 	};

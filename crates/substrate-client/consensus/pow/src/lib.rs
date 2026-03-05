@@ -52,7 +52,7 @@ use sc_consensus::{
 	BasicQueue, BlockCheckParams, BlockImport, BlockImportParams, BoxBlockImport,
 	BoxJustificationImport, ForkChoiceStrategy, ImportResult, Verifier,
 };
-use soil_api::ProvideRuntimeApi;
+use subsoil::api::ProvideRuntimeApi;
 use soil_block_builder::BlockBuilder as BlockBuilderApi;
 use soil_blockchain::HeaderBackend;
 use soil_client_api::{self, backend::AuxStore, BlockOf, BlockchainEvents};
@@ -60,8 +60,8 @@ use soil_consensus::{
 	Environment, Error as ConsensusError, ProposeArgs, Proposer, SelectChain, SyncOracle,
 };
 use soil_consensus_pow::{Seal, TotalDifficulty, POW_ENGINE_ID};
-use soil_inherents::{CreateInherentDataProviders, InherentDataProvider};
-use soil_runtime::{
+use subsoil::inherents::{CreateInherentDataProviders, InherentDataProvider};
+use subsoil::runtime::{
 	generic::{BlockId, Digest, DigestItem},
 	traits::{Block as BlockT, Header as HeaderT},
 };
@@ -94,14 +94,14 @@ pub enum Error<B: BlockT> {
 	#[error("Error with block built on {0:?}: {1}")]
 	BlockBuiltError(B::Hash, ConsensusError),
 	#[error("Creating inherents failed: {0}")]
-	CreateInherents(soil_inherents::Error),
+	CreateInherents(subsoil::inherents::Error),
 	#[error("Checking inherents failed: {0}")]
-	CheckInherents(soil_inherents::Error),
+	CheckInherents(subsoil::inherents::Error),
 	#[error(
 		"Checking inherents unknown error for identifier: {}",
 		String::from_utf8_lossy(.0)
 	)]
-	CheckInherentsUnknownError(soil_inherents::InherentIdentifier),
+	CheckInherentsUnknownError(subsoil::inherents::InherentIdentifier),
 	#[error("Multiple pre-runtime digests")]
 	MultiplePreRuntimeDigests,
 	#[error(transparent)]
@@ -463,7 +463,7 @@ pub fn import_queue<B, Algorithm>(
 	block_import: BoxBlockImport<B>,
 	justification_import: Option<BoxJustificationImport<B>>,
 	algorithm: Algorithm,
-	spawner: &impl soil_core::traits::SpawnEssentialNamed,
+	spawner: &impl subsoil::core::traits::SpawnEssentialNamed,
 	registry: Option<&Registry>,
 ) -> Result<PowImportQueue<B>, soil_consensus::Error>
 where

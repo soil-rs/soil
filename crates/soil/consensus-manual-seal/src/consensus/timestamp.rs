@@ -20,7 +20,7 @@
 //! that expect this inherent.
 
 use crate::Error;
-use soil_api::ProvideRuntimeApi;
+use subsoil::api::ProvideRuntimeApi;
 use soil_blockchain::HeaderBackend;
 use soil_client_api::{AuxStore, UsageProvider};
 use soil_consensus_aura::{
@@ -29,9 +29,9 @@ use soil_consensus_aura::{
 };
 use soil_consensus_babe::BabeApi;
 use soil_consensus_slots::{Slot, SlotDuration};
-use soil_inherents::{InherentData, InherentDataProvider, InherentIdentifier};
-use soil_runtime::traits::{Block as BlockT, Zero};
-use soil_timestamp::{InherentType, INHERENT_IDENTIFIER};
+use subsoil::inherents::{InherentData, InherentDataProvider, InherentIdentifier};
+use subsoil::runtime::traits::{Block as BlockT, Zero};
+use subsoil::timestamp::{InherentType, INHERENT_IDENTIFIER};
 use std::{
 	sync::{atomic, Arc},
 	time::SystemTime,
@@ -131,8 +131,8 @@ impl SlotTimestampProvider {
 	}
 
 	/// Gets the current time stamp.
-	pub fn timestamp(&self) -> soil_timestamp::Timestamp {
-		soil_timestamp::Timestamp::new(self.unix_millis.load(atomic::Ordering::SeqCst))
+	pub fn timestamp(&self) -> subsoil::timestamp::Timestamp {
+		subsoil::timestamp::Timestamp::new(self.unix_millis.load(atomic::Ordering::SeqCst))
 	}
 }
 
@@ -141,7 +141,7 @@ impl InherentDataProvider for SlotTimestampProvider {
 	async fn provide_inherent_data(
 		&self,
 		inherent_data: &mut InherentData,
-	) -> Result<(), soil_inherents::Error> {
+	) -> Result<(), subsoil::inherents::Error> {
 		// we update the time here.
 		let new_time: InherentType = self
 			.unix_millis
@@ -155,7 +155,7 @@ impl InherentDataProvider for SlotTimestampProvider {
 		&self,
 		_: &InherentIdentifier,
 		_: &[u8],
-	) -> Option<Result<(), soil_inherents::Error>> {
+	) -> Option<Result<(), subsoil::inherents::Error>> {
 		None
 	}
 }

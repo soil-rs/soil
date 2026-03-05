@@ -21,7 +21,7 @@ use super::*;
 use crate::mock::{RefState::*, *};
 use assert_matches::assert_matches;
 use codec::Decode;
-use soil_runtime::DispatchError::BadOrigin;
+use subsoil::runtime::DispatchError::BadOrigin;
 use topsoil_balances::Error as BalancesError;
 use topsoil_support::{assert_noop, assert_ok, dispatch::RawOrigin, traits::Contains};
 

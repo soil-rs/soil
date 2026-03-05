@@ -16,15 +16,15 @@
 // limitations under the License.
 
 //! Integration tests for ecdsa
-use soil_api::{ApiExt, ProvideRuntimeApi};
-use soil_application_crypto::{ecdsa::AppPair, RuntimePublic};
-use soil_core::{
+use subsoil::api::{ApiExt, ProvideRuntimeApi};
+use subsoil::application_crypto::{ecdsa::AppPair, RuntimePublic};
+use subsoil::core::{
 	crypto::{ByteArray, Pair},
 	ecdsa::Pair as ECDSAPair,
 	proof_of_possession::{ProofOfPossessionGenerator, ProofOfPossessionVerifier},
 	testing::ECDSA,
 };
-use soil_keystore::{testing::MemoryKeystore, Keystore, KeystoreExt};
+use subsoil::keystore::{testing::MemoryKeystore, Keystore, KeystoreExt};
 use std::sync::Arc;
 use substrate_test_runtime_client::{
 	runtime::{TestAPI, TEST_OWNER},
@@ -33,7 +33,7 @@ use substrate_test_runtime_client::{
 
 #[test]
 fn ecdsa_works_in_runtime() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 	let keystore = Arc::new(MemoryKeystore::new());
 	let test_client = TestClientBuilder::new().build();
 

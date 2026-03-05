@@ -19,7 +19,7 @@
 
 use crate::{core_mask::*, mock::*, *};
 use pretty_assertions::assert_eq;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{BadOrigin, Get},
 	DispatchError, Perbill, TokenError,
 };
@@ -435,7 +435,7 @@ fn renewal_works() {
 /// on price. If there are no cores left for sale on the open markent, renewals will affect price
 /// even in the interlude, making sure renewal prices stay in the range of the open market.
 fn renewals_affect_price() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 	let b = 100_000;
 	let config = ConfigRecord {
 		advance_notice: 2,
@@ -498,7 +498,7 @@ fn renewals_affect_price() {
 #[test]
 /// Renewals adjust to lower end of market
 fn renewal_price_adjusts_to_lower_market_end() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 	let b = 100_000_000;
 	let region_length_blocks = 40;
 	let config = ConfigRecord {

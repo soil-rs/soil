@@ -33,13 +33,13 @@ mod shared;
 use alloc::vec::Vec;
 use codec::{Decode, Encode};
 use core::fmt::Debug;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{Convert, OpaqueKeys},
 	KeyTypeId,
 };
 use soil_session::{MembershipProof, ValidatorCount};
 use soil_staking::SessionIndex;
-use soil_trie::{
+use subsoil::trie::{
 	trie_types::{TrieDBBuilder, TrieDBMutBuilderV0},
 	LayoutV0, MemoryDB, RandomState, Recorder, StorageProof, Trie, TrieMut, TrieRecorder,
 };
@@ -55,7 +55,7 @@ const LOG_TARGET: &'static str = "runtime::historical";
 use crate::{self as topsoil_session, Pallet as Session};
 
 pub use pallet::*;
-use soil_trie::{accessed_nodes_tracker::AccessedNodesTracker, recorder_ext::RecorderExt};
+use subsoil::trie::{accessed_nodes_tracker::AccessedNodesTracker, recorder_ext::RecorderExt};
 
 #[topsoil_support::pallet]
 pub mod pallet {
@@ -399,14 +399,14 @@ pub(crate) mod tests {
 	};
 	use alloc::vec;
 
-	use soil_runtime::{key_types::DUMMY, testing::UintAuthorityId, BuildStorage};
-	use soil_state_machine::BasicExternalities;
+	use subsoil::runtime::{key_types::DUMMY, testing::UintAuthorityId, BuildStorage};
+	use subsoil::state_machine::BasicExternalities;
 
 	use topsoil_support::traits::{KeyOwnerProofSystem, OnInitialize};
 
 	type Historical = Pallet<Test>;
 
-	pub(crate) fn new_test_ext() -> soil_io::TestExternalities {
+	pub(crate) fn new_test_ext() -> subsoil::io::TestExternalities {
 		let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 		let keys: Vec<_> = NextValidators::get()
 			.iter()
@@ -421,7 +421,7 @@ pub(crate) mod tests {
 		topsoil_session::GenesisConfig::<Test> { keys, ..Default::default() }
 			.assimilate_storage(&mut t)
 			.unwrap();
-		soil_io::TestExternalities::new(t)
+		subsoil::io::TestExternalities::new(t)
 	}
 
 	#[test]

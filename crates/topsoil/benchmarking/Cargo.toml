@@ -25,22 +25,13 @@ log = { workspace = true }
 paste = { workspace = true, default-features = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { optional = true, workspace = true, default-features = true }
-soil-api = { workspace = true }
-soil-application-crypto = { workspace = true }
-soil-core = { workspace = true }
-soil-io = { workspace = true }
-soil-runtime = { workspace = true }
-soil-runtime-interface = { workspace = true }
-soil-storage = { workspace = true }
+subsoil = { workspace = true }
 static_assertions = { workspace = true, default-features = true }
 
 [dev-dependencies]
 array-bytes = { workspace = true, default-features = true }
 rusty-fork = { workspace = true }
 soil-client-db = { workspace = true }
-soil-externalities = { workspace = true }
-soil-keystore = { workspace = true, default-features = true }
-soil-state-machine = { workspace = true }
 
 [features]
 default = ["std"]
@@ -53,20 +44,9 @@ std = [
 	"log/std",
 	"scale-info/std",
 	"serde",
-	"soil-api/std",
-	"soil-application-crypto/std",
-	"soil-core/std",
-	"soil-externalities/std",
-	"soil-io/std",
-	"soil-keystore/std",
-	"soil-runtime-interface/std",
-	"soil-runtime/std",
-	"soil-state-machine/std",
-	"soil-storage/std",
-]
+	"subsoil/std"]
 runtime-benchmarks = [
 	"topsoil-support/runtime-benchmarks",
 	"topsoil-system/runtime-benchmarks",
 	"soil-client-db/runtime-benchmarks",
-	"soil-runtime/runtime-benchmarks",
-]
+	"subsoil/runtime-benchmarks"]

@@ -16,8 +16,8 @@
 // limitations under the License.
 
 use topsoil_support::{construct_runtime, derive_impl};
-use soil_core::sr25519;
-use soil_runtime::{generic, traits::BlakeTwo256};
+use subsoil::core::sr25519;
+use subsoil::runtime::{generic, traits::BlakeTwo256};
 
 #[topsoil_support::pallet]
 mod pallet {
@@ -42,10 +42,10 @@ impl topsoil_system::Config for Runtime {
 	type RuntimeOrigin = RuntimeOrigin;
 	type Nonce = u64;
 	type RuntimeCall = RuntimeCall;
-	type Hash = soil_runtime::testing::H256;
-	type Hashing = soil_runtime::traits::BlakeTwo256;
+	type Hash = subsoil::runtime::testing::H256;
+	type Hashing = subsoil::runtime::traits::BlakeTwo256;
 	type AccountId = u64;
-	type Lookup = soil_runtime::traits::IdentityLookup<Self::AccountId>;
+	type Lookup = subsoil::runtime::traits::IdentityLookup<Self::AccountId>;
 	type Block = Block;
 	type RuntimeEvent = RuntimeEvent;
 	type BlockHashCount = topsoil_support::traits::ConstU32<250>;

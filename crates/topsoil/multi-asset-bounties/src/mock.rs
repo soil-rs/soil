@@ -24,7 +24,7 @@ use crate::{Event as BountiesEvent, *};
 
 use alloc::collections::btree_map::BTreeMap;
 use core::cell::RefCell;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{BlakeTwo256, Convert, Hash, Identity, IdentityLookup},
 	BuildStorage, Perbill,
 };
@@ -243,8 +243,8 @@ impl Default for ExtBuilder {
 }
 
 impl ExtBuilder {
-	pub fn build(self) -> soil_io::TestExternalities {
-		let mut ext: soil_io::TestExternalities = RuntimeGenesisConfig {
+	pub fn build(self) -> subsoil::io::TestExternalities {
+		let mut ext: subsoil::io::TestExternalities = RuntimeGenesisConfig {
 			system: topsoil_system::GenesisConfig::default(),
 			balances: topsoil_balances::GenesisConfig {
 				balances: vec![(0, 100), (1, 98), (2, 1)],

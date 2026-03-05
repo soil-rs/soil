@@ -27,7 +27,7 @@ use topsoil_support::{
 #[cfg(feature = "try-runtime")]
 use alloc::vec::Vec;
 #[cfg(feature = "try-runtime")]
-use soil_runtime::TryRuntimeError;
+use subsoil::runtime::TryRuntimeError;
 
 mod v0 {
 	use topsoil_system::pallet_prelude::BlockNumberFor;

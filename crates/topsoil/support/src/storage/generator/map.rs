@@ -149,7 +149,7 @@ where
 		let previous_key = previous_key.unwrap_or_else(|| prefix.clone());
 
 		let current_key =
-			soil_io::storage::next_key(&previous_key).filter(|n| n.starts_with(&prefix))?;
+			subsoil::io::storage::next_key(&previous_key).filter(|n| n.starts_with(&prefix))?;
 
 		let value = match unhashed::get::<O>(&current_key) {
 			Some(value) => value,
@@ -295,7 +295,7 @@ impl<K: FullEncode, V: FullCodec, G: StorageMap<K, V>> storage::StorageMap<K, V>
 		V: StorageAppend<Item>,
 	{
 		let key = Self::storage_map_final_key(key);
-		soil_io::storage::append(&key, item.encode());
+		subsoil::io::storage::append(&key, item.encode());
 	}
 
 	fn migrate_key<OldHasher: StorageHasher, KeyArg: EncodeLike<K>>(key: KeyArg) -> Option<V> {
@@ -332,7 +332,7 @@ mod test_iterators {
 
 	#[test]
 	fn map_iter_from() {
-		soil_io::TestExternalities::default().execute_with(|| {
+		subsoil::io::TestExternalities::default().execute_with(|| {
 			use crate::hash::Identity;
 			#[crate::storage_alias]
 			type MyMap = StorageMap<MyModule, Identity, u64, u64>;
@@ -357,7 +357,7 @@ mod test_iterators {
 	#[test]
 	#[should_panic]
 	fn map_translate_with_bad_key_in_debug_mode() {
-		soil_io::TestExternalities::default().execute_with(|| {
+		subsoil::io::TestExternalities::default().execute_with(|| {
 			type Map = self::topsoil_system::Map<Runtime>;
 			let prefix = Map::prefix_hash().to_vec();
 
@@ -374,7 +374,7 @@ mod test_iterators {
 	#[test]
 	#[should_panic]
 	fn map_translate_with_bad_value_in_debug_mode() {
-		soil_io::TestExternalities::default().execute_with(|| {
+		subsoil::io::TestExternalities::default().execute_with(|| {
 			type Map = self::topsoil_system::Map<Runtime>;
 			let prefix = Map::prefix_hash().to_vec();
 
@@ -392,7 +392,7 @@ mod test_iterators {
 	#[cfg(not(debug_assertions))]
 	#[test]
 	fn map_translate_with_bad_key_in_production_mode() {
-		soil_io::TestExternalities::default().execute_with(|| {
+		subsoil::io::TestExternalities::default().execute_with(|| {
 			type Map = self::topsoil_system::Map<Runtime>;
 			let prefix = Map::prefix_hash().to_vec();
 
@@ -407,7 +407,7 @@ mod test_iterators {
 	#[cfg(not(debug_assertions))]
 	#[test]
 	fn map_translate_with_bad_value_in_production_mode() {
-		soil_io::TestExternalities::default().execute_with(|| {
+		subsoil::io::TestExternalities::default().execute_with(|| {
 			type Map = self::topsoil_system::Map<Runtime>;
 			let prefix = Map::prefix_hash().to_vec();
 
@@ -424,7 +424,7 @@ mod test_iterators {
 
 	#[test]
 	fn map_reversible_reversible_iteration() {
-		soil_io::TestExternalities::default().execute_with(|| {
+		subsoil::io::TestExternalities::default().execute_with(|| {
 			type Map = self::topsoil_system::Map<Runtime>;
 
 			// All map iterator

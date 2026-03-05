@@ -18,9 +18,9 @@
 //! Test utilities
 
 use crate::{self as topsoil_staking, *};
-use soil_core::ConstBool;
-use soil_io;
-use soil_runtime::{curve::PiecewiseLinear, testing::UintAuthorityId, traits::Zero, BuildStorage};
+use subsoil::core::ConstBool;
+use subsoil::io;
+use subsoil::runtime::{curve::PiecewiseLinear, testing::UintAuthorityId, traits::Zero, BuildStorage};
 use soil_staking::{
 	offence::{OffenceDetails, OnOffenceHandler},
 	OnStakingUpdate, StakingAccount,
@@ -70,7 +70,7 @@ impl OneSessionHandler<AccountId> for OtherSessionHandler {
 	fn on_disabled(_validator_index: u32) {}
 }
 
-impl soil_runtime::BoundToRuntimeAppPublic for OtherSessionHandler {
+impl subsoil::runtime::BoundToRuntimeAppPublic for OtherSessionHandler {
 	type Public = UintAuthorityId;
 }
 
@@ -134,7 +134,7 @@ impl topsoil_balances::Config for Test {
 	type AccountStore = System;
 }
 
-soil_runtime::impl_opaque_keys! {
+subsoil::impl_opaque_keys! {
 	pub struct SessionKeys {
 		pub other: OtherSessionHandler,
 	}
@@ -146,7 +146,7 @@ impl topsoil_session::Config for Test {
 	type SessionHandler = (OtherSessionHandler,);
 	type RuntimeEvent = RuntimeEvent;
 	type ValidatorId = AccountId;
-	type ValidatorIdOf = soil_runtime::traits::ConvertInto;
+	type ValidatorIdOf = subsoil::runtime::traits::ConvertInto;
 	type NextSessionRotation = topsoil_session::PeriodicSessions<Period, Offset>;
 	type DisablingStrategy = topsoil_session::disabling::UpToLimitWithReEnablingDisablingStrategy<
 		DISABLING_LIMIT_FACTOR,
@@ -203,11 +203,11 @@ impl OnUnbalanced<NegativeImbalanceOf<Test>> for RewardRemainderMock {
 	}
 }
 
-const THRESHOLDS: [soil_npos_elections::VoteWeight; 9] =
+const THRESHOLDS: [subsoil::npos_elections::VoteWeight; 9] =
 	[10, 20, 30, 40, 50, 60, 1_000, 2_000, 10_000];
 
 parameter_types! {
-	pub static BagThresholds: &'static [soil_npos_elections::VoteWeight] = &THRESHOLDS;
+	pub static BagThresholds: &'static [subsoil::npos_elections::VoteWeight] = &THRESHOLDS;
 	pub static HistoryDepth: u32 = 80;
 	pub static MaxExposurePageSize: u32 = 64;
 	pub static MaxUnlockingChunks: u32 = 32;
@@ -453,8 +453,8 @@ impl ExtBuilder {
 		SkipTryStateCheck::set(!enable);
 		self
 	}
-	fn build(self) -> soil_io::TestExternalities {
-		soil_tracing::try_init_simple();
+	fn build(self) -> subsoil::io::TestExternalities {
+		subsoil::tracing::try_init_simple();
 		let mut storage = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 		let ed = ExistentialDeposit::get();
 
@@ -571,7 +571,7 @@ impl ExtBuilder {
 		}
 		.assimilate_storage(&mut storage);
 
-		let mut ext = soil_io::TestExternalities::from(storage);
+		let mut ext = subsoil::io::TestExternalities::from(storage);
 
 		if self.initialize_first_session {
 			ext.execute_with(|| {
@@ -585,7 +585,7 @@ impl ExtBuilder {
 		ext
 	}
 	pub fn build_and_execute(self, test: impl FnOnce() -> ()) {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 		let mut ext = self.build();
 		ext.execute_with(test);
 		ext.execute_with(|| {

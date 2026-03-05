@@ -37,7 +37,7 @@ use schema::bitswap::{
 };
 use soil_client_api::BlockBackend;
 use soil_network_types::PeerId;
-use soil_runtime::traits::Block as BlockT;
+use subsoil::runtime::traits::Block as BlockT;
 use std::{io, sync::Arc, time::Duration};
 use unsigned_varint::encode as varint_encode;
 
@@ -302,7 +302,7 @@ mod tests {
 		Message as BitswapMessage,
 	};
 	use soil_consensus::BlockOrigin;
-	use soil_runtime::codec::Encode;
+	use subsoil::runtime::codec::Encode;
 	use substrate_test_runtime::ExtrinsicBuilder;
 	use substrate_test_runtime_client::{self, prelude::*, TestClientBuilder};
 
@@ -506,7 +506,7 @@ mod tests {
 								0x70,
 								cid::multihash::Multihash::wrap(
 									u64::from(Code::Blake2b256),
-									&soil_crypto_hashing::blake2_256(
+									&subsoil_crypto_hashing::blake2_256(
 										&ext.encode()[pattern_index..],
 									),
 								)

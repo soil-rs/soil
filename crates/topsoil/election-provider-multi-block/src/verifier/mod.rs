@@ -33,7 +33,7 @@
 //! per-page, and in order to do them we need to have the entire solution checked and verified.
 //!
 //! 1. Check that the total number of winners is sufficient (`DesiredTargets`).
-//! 2. Check that the claimed score ([`soil_npos_elections::ElectionScore`]) is correct,
+//! 2. Check that the claimed score ([`subsoil::npos_elections::ElectionScore`]) is correct,
 //!   * and more than the minimum score that can be specified via [`Verifier::set_minimum_score`].
 //! 3. Check that all of the bounds of the solution are respected, namely
 //!    [`Verifier::MaxBackersPerWinner`], [`Verifier::MaxWinnersPerPage`] and
@@ -78,10 +78,10 @@ pub use crate::weights::traits::pallet_election_provider_multi_block_verifier::*
 
 use impls::SupportsOfVerifier;
 pub use impls::{feasibility_check_page_inner_with_snapshot, pallet::*, Status};
-use soil_core::Get;
-use soil_npos_elections::ElectionScore;
-use soil_runtime::Weight;
-use soil_std::{fmt::Debug, prelude::*};
+use subsoil::core::Get;
+use subsoil::npos_elections::ElectionScore;
+use subsoil::runtime::Weight;
+use subsoil::std::{fmt::Debug, prelude::*};
 use topsoil_election_provider_support::PageIndex;
 use topsoil_support::weights::WeightMeter;
 
@@ -122,15 +122,15 @@ pub enum FeasibilityError {
 	/// `MaxBackersPerWinnerFinal`
 	FailedToBoundSupport,
 	/// Internal error from the election crate.
-	NposElection(soil_npos_elections::Error),
+	NposElection(subsoil::npos_elections::Error),
 	/// The solution is incomplete, it has too few pages.
 	///
 	/// This is (somewhat) synonym to `WrongPageCount` in other places.
 	Incomplete,
 }
 
-impl From<soil_npos_elections::Error> for FeasibilityError {
-	fn from(e: soil_npos_elections::Error) -> Self {
+impl From<subsoil::npos_elections::Error> for FeasibilityError {
+	fn from(e: subsoil::npos_elections::Error) -> Self {
 		FeasibilityError::NposElection(e)
 	}
 }

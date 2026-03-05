@@ -16,7 +16,7 @@
 // limitations under the License.
 
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
-use soil_runtime::{BuildStorage, Perbill};
+use subsoil::runtime::{BuildStorage, Perbill};
 use topsoil_support::{derive_impl, dispatch::DispatchClass};
 #[topsoil_support::pallet]
 mod module {
@@ -70,7 +70,7 @@ impl module::Config for Runtime {
 	type RuntimeEvent = RuntimeEvent;
 }
 
-fn new_test_ext() -> soil_io::TestExternalities {
+fn new_test_ext() -> subsoil::io::TestExternalities {
 	topsoil_system::GenesisConfig::<Runtime>::default()
 		.build_storage()
 		.unwrap()

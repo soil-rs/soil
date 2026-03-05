@@ -21,15 +21,15 @@ use codec::{Decode, Encode};
 use scale_info::TypeInfo;
 #[cfg(feature = "std")]
 use serde::{Deserialize, Serialize};
-use soil_io::hashing::blake2_256;
-use soil_runtime::{
+use subsoil::io::hashing::blake2_256;
+use subsoil::runtime::{
 	traits::TrailingZeroInput, transaction_validity::TransactionValidityError, DispatchError,
 };
-use soil_runtime_interface::pass_by::{
+use subsoil::runtime_interface::pass_by::{
 	AllocateAndReturnByCodec, AllocateAndReturnPointer, PassFatPointerAndDecode,
 	PassFatPointerAndRead,
 };
-use soil_storage::TrackedStorageKey;
+use subsoil::storage::TrackedStorageKey;
 use topsoil_support::{
 	dispatch::DispatchErrorWithPostInfo, pallet_prelude::*, traits::StorageInfo,
 };
@@ -243,7 +243,7 @@ pub struct BenchmarkMetadata {
 	pub pov_modes: Vec<(Vec<u8>, Vec<u8>)>,
 }
 
-soil_api::decl_runtime_apis! {
+subsoil::api::decl_runtime_apis! {
 	/// Runtime api for benchmarking a FRAME runtime.
 	#[api_version(2)]
 	pub trait Benchmark {
@@ -268,7 +268,7 @@ pub fn current_time() -> u128 {
 }
 
 /// Interface that provides functions for benchmarking the runtime.
-#[soil_runtime_interface::runtime_interface]
+#[subsoil::runtime_interface::runtime_interface]
 pub trait Benchmarking {
 	/// Get the number of nanoseconds passed since the UNIX epoch, as u128 le-bytes.
 	///

@@ -24,11 +24,11 @@ extern crate alloc;
 use alloc::vec::Vec;
 
 mod app {
-	use soil_application_crypto::{app_crypto, key_types::AUTHORITY_DISCOVERY, sr25519};
-	app_crypto!(sr25519, AUTHORITY_DISCOVERY);
+	use subsoil::application_crypto::{key_types::AUTHORITY_DISCOVERY, sr25519};
+	subsoil::app_crypto!(sr25519, AUTHORITY_DISCOVERY);
 }
 
-soil_application_crypto::with_pair! {
+subsoil::with_pair! {
 	/// An authority discovery authority keypair.
 	pub type AuthorityPair = app::Pair;
 }
@@ -39,7 +39,7 @@ pub type AuthorityId = app::Public;
 /// An authority discovery authority signature.
 pub type AuthoritySignature = app::Signature;
 
-soil_api::decl_runtime_apis! {
+subsoil::api::decl_runtime_apis! {
 	/// The authority discovery api.
 	///
 	/// This api is used by the `client/authority-discovery` module to retrieve identifiers

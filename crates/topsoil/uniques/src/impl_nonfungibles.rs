@@ -19,7 +19,7 @@
 
 use super::*;
 use alloc::vec::Vec;
-use soil_runtime::{DispatchError, DispatchResult};
+use subsoil::runtime::{DispatchError, DispatchResult};
 use topsoil_support::{
 	storage::KeyPrefixIterator,
 	traits::{tokens::nonfungibles::*, Get},

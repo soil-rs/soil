@@ -17,12 +17,12 @@
 
 #![recursion_limit = "128"]
 
-use soil_core::sr25519;
-use soil_metadata_ir::{
+use subsoil::core::sr25519;
+use subsoil::metadata_ir::{
 	PalletStorageMetadataIR, StorageEntryMetadataIR, StorageEntryModifierIR, StorageEntryTypeIR,
 	StorageHasherIR,
 };
-use soil_runtime::{
+use subsoil::runtime::{
 	generic,
 	traits::{BlakeTwo256, Verify},
 	BuildStorage,
@@ -343,7 +343,7 @@ impl module3::Config for Runtime {
 	type Currency2 = Module2_3;
 }
 
-fn new_test_ext() -> soil_io::TestExternalities {
+fn new_test_ext() -> subsoil::io::TestExternalities {
 	RuntimeGenesisConfig {
 		system: Default::default(),
 		module_1_1: module1::GenesisConfig { value: 3, test: 2 },
@@ -368,11 +368,11 @@ fn new_test_ext() -> soil_io::TestExternalities {
 
 #[test]
 fn storage_instance_independence() {
-	let mut storage = soil_core::storage::Storage {
+	let mut storage = subsoil::core::storage::Storage {
 		top: std::collections::BTreeMap::new(),
 		children_default: std::collections::HashMap::new(),
 	};
-	soil_state_machine::BasicExternalities::execute_with_storage(&mut storage, || {
+	subsoil::state_machine::BasicExternalities::execute_with_storage(&mut storage, || {
 		module2::Value::<Runtime>::put(0);
 		module2::Value::<Runtime, module2::Instance1>::put(0);
 		module2::Value::<Runtime, module2::Instance2>::put(0);
@@ -447,7 +447,7 @@ fn expected_metadata() -> PalletStorageMetadataIR {
 				ty: StorageEntryTypeIR::Plain(scale_info::meta_type::<u32>()),
 				default: vec![0, 0, 0, 0],
 				docs: vec![],
-				deprecation_info: soil_metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
+				deprecation_info: subsoil::metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
 			},
 			StorageEntryMetadataIR {
 				name: "Map",
@@ -459,7 +459,7 @@ fn expected_metadata() -> PalletStorageMetadataIR {
 				},
 				default: [0u8; 8].to_vec(),
 				docs: vec![],
-				deprecation_info: soil_metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
+				deprecation_info: subsoil::metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
 			},
 			StorageEntryMetadataIR {
 				name: "DoubleMap",
@@ -471,7 +471,7 @@ fn expected_metadata() -> PalletStorageMetadataIR {
 				},
 				default: [0u8; 8].to_vec(),
 				docs: vec![],
-				deprecation_info: soil_metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
+				deprecation_info: subsoil::metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
 			},
 		],
 	}

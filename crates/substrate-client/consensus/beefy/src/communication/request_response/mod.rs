@@ -28,7 +28,7 @@ use std::time::Duration;
 use codec::{Decode, Encode, Error as CodecError};
 use soil_network::NetworkBackend;
 use soil_network_types::PeerId;
-use soil_runtime::traits::{Block, NumberFor};
+use subsoil::runtime::traits::{Block, NumberFor};
 
 use crate::communication::{beefy_protocol_name::justifications_protocol_name, peers::PeerReport};
 use incoming_requests_handler::IncomingRequestReceiver;
@@ -85,7 +85,7 @@ pub enum Error {
 	Client(#[from] soil_blockchain::Error),
 
 	#[error(transparent)]
-	RuntimeApi(#[from] soil_api::ApiError),
+	RuntimeApi(#[from] subsoil::api::ApiError),
 
 	/// Decoding failed, we were able to change the peer's reputation accordingly.
 	#[error("Decoding request failed for peer {0}.")]

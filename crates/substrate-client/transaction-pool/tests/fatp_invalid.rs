@@ -26,7 +26,7 @@ use fatp_common::{
 };
 use futures::{executor::block_on, FutureExt};
 use sc_transaction_pool::ChainApi;
-use soil_runtime::transaction_validity::{InvalidTransaction, TransactionValidityError};
+use subsoil::runtime::transaction_validity::{InvalidTransaction, TransactionValidityError};
 use soil_transaction_pool_api::{
 	error::{Error as TxPoolError, IntoPoolError},
 	MaintainedTransactionPool, TransactionPool, TransactionStatus,
@@ -37,7 +37,7 @@ use tracing::debug;
 
 #[test]
 fn fatp_invalid_three_views_stale_gets_rejected() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 
@@ -73,7 +73,7 @@ fn fatp_invalid_three_views_stale_gets_rejected() {
 
 #[test]
 fn fatp_invalid_three_views_invalid_gets_rejected() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 
@@ -108,7 +108,7 @@ fn fatp_invalid_three_views_invalid_gets_rejected() {
 
 #[test]
 fn fatp_transactions_purging_invalid_on_finalization_works() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 
@@ -151,7 +151,7 @@ fn fatp_transactions_purging_invalid_on_finalization_works() {
 
 #[test]
 fn fatp_transactions_purging_invalid_on_finalization_works2() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 	let xt1 = uxt(Alice, 200);
@@ -186,7 +186,7 @@ fn fatp_transactions_purging_invalid_on_finalization_works2() {
 
 #[test]
 fn should_not_retain_invalid_hashes_from_retracted() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 	let xt = uxt(Alice, 200);
@@ -228,7 +228,7 @@ fn should_not_retain_invalid_hashes_from_retracted() {
 
 #[test]
 fn fatp_watcher_invalid_many_revalidation() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 
@@ -310,7 +310,7 @@ fn fatp_watcher_invalid_many_revalidation() {
 
 #[test]
 fn fatp_watcher_invalid_fails_on_submission() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 
@@ -333,7 +333,7 @@ fn fatp_watcher_invalid_fails_on_submission() {
 
 #[test]
 fn fatp_watcher_invalid_single_revalidation() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 
@@ -366,7 +366,7 @@ fn fatp_watcher_invalid_single_revalidation() {
 
 #[test]
 fn fatp_watcher_invalid_single_revalidation2() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 
@@ -398,7 +398,7 @@ fn fatp_watcher_invalid_single_revalidation2() {
 
 #[test]
 fn fatp_invalid_report_stale_or_future_works_as_expected() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = TestPoolBuilder::new().build();
 	api.set_nonce(api.genesis_hash(), Bob.into(), 300);
@@ -458,7 +458,7 @@ fn fatp_invalid_report_stale_or_future_works_as_expected() {
 
 #[test]
 fn fatp_invalid_report_future_dont_remove_from_pool() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = TestPoolBuilder::new().build();
 	api.set_nonce(api.genesis_hash(), Bob.into(), 300);
@@ -523,7 +523,7 @@ fn fatp_invalid_report_future_dont_remove_from_pool() {
 
 #[test]
 fn fatp_invalid_tx_is_removed_from_the_pool() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = TestPoolBuilder::new().build();
 	api.set_nonce(api.genesis_hash(), Bob.into(), 300);
@@ -570,7 +570,7 @@ fn fatp_invalid_tx_is_removed_from_the_pool() {
 
 #[test]
 fn fatp_invalid_tx_is_removed_from_the_pool_future_subtree_stays() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = TestPoolBuilder::new().build();
 
@@ -613,7 +613,7 @@ fn fatp_invalid_tx_is_removed_from_the_pool_future_subtree_stays() {
 
 #[test]
 fn fatp_invalid_tx_is_removed_from_the_pool2() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = TestPoolBuilder::new().build();
 	api.set_nonce(api.genesis_hash(), Bob.into(), 300);

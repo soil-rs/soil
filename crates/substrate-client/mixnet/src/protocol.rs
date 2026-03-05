@@ -24,7 +24,7 @@ use soil_network::{
 	service::NotificationMetrics,
 	NetworkBackend, NotificationService, ProtocolName,
 };
-use soil_runtime::traits::Block as BlockT;
+use subsoil::runtime::traits::Block as BlockT;
 
 /// Returns the protocol name to use for the mixnet controlled by the given chain.
 pub fn protocol_name(genesis_hash: &[u8], fork_id: Option<&str>) -> ProtocolName {

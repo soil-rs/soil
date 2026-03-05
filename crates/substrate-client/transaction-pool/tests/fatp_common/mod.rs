@@ -19,7 +19,7 @@
 //! Tests for fork-aware transaction pool.
 
 use sc_transaction_pool::{ChainApi, PoolLimit};
-use soil_runtime::transaction_validity::TransactionSource;
+use subsoil::runtime::transaction_validity::TransactionSource;
 use soil_transaction_pool_api::ChainEvent;
 use std::sync::Arc;
 use substrate_test_runtime_client::{
@@ -328,7 +328,7 @@ pub mod test_chain_with_forks {
 
 	#[test]
 	fn test_chain_works() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 		let (api, f) = chain(None);
 		debug!(forks = ?f, "forks");
 		f[0].iter().for_each(|h| print_block(api.clone(), h.hash()));

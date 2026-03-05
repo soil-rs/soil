@@ -19,7 +19,7 @@
 
 #![cfg(test)]
 
-use soil_runtime::{
+use subsoil::runtime::{
 	testing::H256,
 	traits::{BlakeTwo256, IdentityLookup},
 	BuildStorage,
@@ -135,14 +135,14 @@ impl pallet_test::OtherConfig for Test {
 	type OtherEvent = RuntimeEvent;
 }
 
-fn new_test_ext() -> soil_io::TestExternalities {
+fn new_test_ext() -> subsoil::io::TestExternalities {
 	RuntimeGenesisConfig::default().build_storage().unwrap().into()
 }
 
 mod benchmarks {
 	use super::pallet_test::{self, Value};
 	use crate::account;
-	use soil_core::Get;
+	use subsoil::core::Get;
 	use topsoil_support::ensure;
 	use topsoil_system::RawOrigin;
 
@@ -217,7 +217,7 @@ fn ensure_correct_instance_is_selected() {
 	};
 	let params = (&config, &whitelist);
 
-	let state = soil_client_db::BenchmarkingState::<soil_runtime::traits::BlakeTwo256>::new(
+	let state = soil_client_db::BenchmarkingState::<subsoil::runtime::traits::BlakeTwo256>::new(
 		Default::default(),
 		None,
 		false,
@@ -226,8 +226,8 @@ fn ensure_correct_instance_is_selected() {
 	.unwrap();
 
 	let mut overlay = Default::default();
-	let mut ext = soil_state_machine::Ext::new(&mut overlay, &state, None);
-	soil_externalities::set_and_run_with_externalities(&mut ext, || {
+	let mut ext = subsoil::state_machine::Ext::new(&mut overlay, &state, None);
+	subsoil::externalities::set_and_run_with_externalities(&mut ext, || {
 		add_benchmarks!(params, batches);
 		Ok::<_, crate::BenchmarkError>(())
 	})

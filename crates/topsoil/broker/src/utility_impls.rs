@@ -16,11 +16,11 @@
 // limitations under the License.
 
 use super::*;
-use soil_arithmetic::{
+use subsoil::arithmetic::{
 	traits::{SaturatedConversion, Saturating},
 	FixedPointNumber, FixedU64,
 };
-use soil_runtime::traits::{AccountIdConversion, BlockNumberProvider};
+use subsoil::runtime::traits::{AccountIdConversion, BlockNumberProvider};
 use topsoil_support::{
 	pallet_prelude::*,
 	traits::{

@@ -20,12 +20,12 @@
 use crate::dispatch::{DispatchResultWithPostInfo, Parameter, RawOrigin};
 use codec::MaxEncodedLen;
 use core::{cmp::Ordering, marker::PhantomData};
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{BadOrigin, Get, Member, Morph, TryMorph},
 	transaction_validity::{TransactionSource, TransactionValidityError, ValidTransaction},
 	Either,
 };
-use soil_weights::Weight;
+use subsoil::weights::Weight;
 
 use super::misc;
 
@@ -86,7 +86,7 @@ pub trait EnsureOrigin<OuterOrigin> {
 ///
 /// ```rust
 /// # use topsoil_support::traits::{EnsureOriginEqualOrHigherPrivilege, PrivilegeCmp, EnsureOrigin as _};
-/// # use soil_runtime::traits::{parameter_types, Get};
+/// # use subsoil::runtime::traits::{parameter_types, Get};
 /// # use core::cmp::Ordering;
 ///
 /// #[derive(Eq, PartialEq, Debug)]

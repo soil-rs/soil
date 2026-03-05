@@ -239,11 +239,11 @@ fn impl_view_function_metadata(
 			#topsoil_support::__private::metadata_ir::PalletViewFunctionMetadataIR {
 				name: ::core::stringify!(#name),
 				id: <#view_function_struct_ident<#type_use_gen> as #topsoil_support::view_functions::ViewFunction>::id().into(),
-				inputs: #topsoil_support::__private::soil_std::vec![ #( #inputs ),* ],
+				inputs: #topsoil_support::__private::subsoil::std::vec![ #( #inputs ),* ],
 				output: #topsoil_support::__private::scale_info::meta_type::<
 					<#view_function_struct_ident<#type_use_gen> as #topsoil_support::view_functions::ViewFunction>::ReturnType
 				>(),
-				docs: #topsoil_support::__private::soil_std::vec![ #( #doc ),* ],
+				docs: #topsoil_support::__private::subsoil::std::vec![ #( #doc ),* ],
 				deprecation_info: #deprecation,
 			}
 		}

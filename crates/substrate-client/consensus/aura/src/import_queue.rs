@@ -30,16 +30,16 @@ use sc_consensus::{
 	import_queue::{BasicQueue, BoxJustificationImport, DefaultImportQueue, Verifier},
 };
 use sc_consensus_slots::{check_equivocation, CheckedHeader, InherentDataProviderExt};
-use soil_api::{ApiExt, ProvideRuntimeApi};
+use subsoil::api::{ApiExt, ProvideRuntimeApi};
 use soil_block_builder::BlockBuilder as BlockBuilderApi;
 use soil_blockchain::{HeaderBackend, HeaderMetadata};
 use soil_client_api::{backend::AuxStore, BlockOf, UsageProvider};
 use soil_consensus::Error as ConsensusError;
 use soil_consensus_aura::{inherents::AuraInherentData, AuraApi};
 use soil_consensus_slots::Slot;
-use soil_core::crypto::Pair;
-use soil_inherents::{CreateInherentDataProviders, InherentDataProvider as _};
-use soil_runtime::{
+use subsoil::core::crypto::Pair;
+use subsoil::inherents::{CreateInherentDataProviders, InherentDataProvider as _};
+use subsoil::runtime::{
 	traits::{Block as BlockT, Header, NumberFor},
 	DigestItem,
 };
@@ -338,7 +338,7 @@ where
 	P: Pair + 'static,
 	P::Public: Codec + Debug,
 	P::Signature: Codec,
-	S: soil_core::traits::SpawnEssentialNamed,
+	S: subsoil::core::traits::SpawnEssentialNamed,
 	CIDP: CreateInherentDataProviders<Block, ()> + Sync + Send + 'static,
 	CIDP::InherentDataProviders: InherentDataProviderExt + Send + Sync,
 {

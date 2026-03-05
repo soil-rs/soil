@@ -28,7 +28,7 @@ use soil_network::{
 };
 
 use soil_network_common::sync::message::BlockAnnouncesHandshake;
-use soil_runtime::traits::Zero;
+use subsoil::runtime::traits::Zero;
 use std::{sync::Arc, time::Duration};
 use substrate_test_runtime_client::runtime;
 use tokio::sync::Mutex;

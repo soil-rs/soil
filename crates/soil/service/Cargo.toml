@@ -53,20 +53,12 @@ soil-utils = { workspace = true, default-features = true, optional = true}
 schnellru = { workspace = true, optional = true}
 serde = { workspace = true, default-features = true, optional = true}
 serde_json = { workspace = true, default-features = true, optional = true}
-soil-api = { workspace = true, default-features = true, optional = true}
 soil-blockchain = { workspace = true, default-features = true, optional = true}
 soil-consensus = { workspace = true, default-features = true, optional = true}
-soil-core = { workspace = true, default-features = true, optional = true}
-soil-externalities = { workspace = true, default-features = true, optional = true}
-soil-keystore = { workspace = true, default-features = true, optional = true}
-soil-runtime = { workspace = true, default-features = true, optional = true}
 soil-session = { workspace = true, default-features = true, optional = true}
-soil-state-machine = { workspace = true, default-features = true, optional = true}
-soil-storage = { workspace = true, default-features = true, optional = true}
+subsoil = { workspace = true, default-features = true, optional = true}
 soil-transaction-pool = { workspace = true, default-features = true, optional = true}
 soil-transaction-storage-proof = { workspace = true, default-features = true, optional = true}
-soil-trie = { workspace = true, default-features = true, optional = true}
-soil-version = { workspace = true, default-features = true, optional = true}
 static_init = { workspace = true, optional = true}
 tempfile = { workspace = true, optional = true}
 thiserror = { workspace = true, optional = true}
@@ -100,17 +92,14 @@ std = [
 	"schnellru",
 	"serde",
 	"serde_json",
-	"soil-api",
 	"soil-blockchain",
 	"soil-chain-spec",
 	"soil-client-api",
 	"soil-client-db",
 	"soil-consensus",
-	"soil-core",
+	"subsoil",
 	"soil-executor",
-	"soil-externalities",
 	"soil-informant",
-	"soil-keystore",
 	"soil-network",
 	"soil-network-common",
 	"soil-network-light",
@@ -119,33 +108,25 @@ std = [
 	"soil-network-types",
 	"soil-rpc-server",
 	"soil-rpc-spec-v2",
-	"soil-runtime",
 	"soil-session",
-	"soil-state-machine",
-	"soil-storage",
 	"soil-sysinfo",
 	"soil-telemetry",
 	"soil-transaction-pool",
 	"soil-transaction-pool-api",
 	"soil-transaction-storage-proof",
-	"soil-trie",
 	"soil-utils",
-	"soil-version",
 	"static_init",
 	"tempfile",
 	"thiserror",
 	"tokio",
 	"tracing",
 	"tracing-futures",
-	"soil-api/std",
 	"soil-chain-spec/std",
 	"soil-client-api/std",
 	"soil-client-db/std",
-	"soil-core/std",
+	"subsoil/std",
 	"soil-executor/std",
-	"soil-externalities/std",
 	"soil-informant/std",
-	"soil-keystore/std",
 	"soil-network/std",
 	"soil-network-common/std",
 	"soil-network-light/std",
@@ -154,25 +135,18 @@ std = [
 	"soil-network-types/std",
 	"soil-rpc-server/std",
 	"soil-rpc-spec-v2/std",
-	"soil-runtime/std",
 	"soil-session/std",
-	"soil-state-machine/std",
-	"soil-storage/std",
 	"soil-sysinfo/std",
 	"soil-telemetry/std",
 	"soil-transaction-pool/std",
 	"soil-transaction-pool-api/std",
 	"soil-transaction-storage-proof/std",
-	"soil-trie/std",
-	"soil-utils/std",
-	"soil-version/std",
-]
+	"soil-utils/std"]
 default = ["std", "rocksdb"]
 # The RocksDB feature activates the RocksDB database backend. If it is not activated, and you pass
 # a path to a database, an error will be produced at runtime.
 rocksdb = ["soil-client-db/rocksdb"]
 runtime-benchmarks = [
 	"soil-client-db/runtime-benchmarks",
-	"soil-runtime/runtime-benchmarks",
-]
+	"subsoil/runtime-benchmarks"]
 jemalloc-allocator = ["soil-client-db/jemalloc-allocator"]

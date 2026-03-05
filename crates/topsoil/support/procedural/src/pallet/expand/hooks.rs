@@ -148,8 +148,8 @@ pub fn expand_hooks(def: &mut Def) -> proc_macro2::TokenStream {
 			for #pallet_ident<#type_use_gen> #where_clause
 		{
 			fn on_finalize(n: #topsoil_system::pallet_prelude::BlockNumberFor::<T>) {
-				#topsoil_support::__private::soil_tracing::enter_span!(
-					#topsoil_support::__private::soil_tracing::trace_span!("on_finalize")
+				#topsoil_support::__private::subsoil::enter_span!(
+					#topsoil_support::__private::subsoil::tracing::trace_span!("on_finalize")
 				);
 				<
 					Self as #topsoil_support::traits::Hooks<
@@ -198,8 +198,8 @@ pub fn expand_hooks(def: &mut Def) -> proc_macro2::TokenStream {
 			fn on_initialize(
 				n: #topsoil_system::pallet_prelude::BlockNumberFor::<T>
 			) -> #topsoil_support::weights::Weight {
-				#topsoil_support::__private::soil_tracing::enter_span!(
-					#topsoil_support::__private::soil_tracing::trace_span!("on_initialize")
+				#topsoil_support::__private::subsoil::enter_span!(
+					#topsoil_support::__private::subsoil::tracing::trace_span!("on_initialize")
 				);
 				<
 					Self as #topsoil_support::traits::Hooks<
@@ -217,8 +217,8 @@ pub fn expand_hooks(def: &mut Def) -> proc_macro2::TokenStream {
 				use #topsoil_support::traits::{Get, PalletInfoAccess};
 				use #topsoil_support::__private::hashing::twox_128;
 				use #topsoil_support::storage::unhashed::contains_prefixed_key;
-				#topsoil_support::__private::soil_tracing::enter_span!(
-					#topsoil_support::__private::soil_tracing::trace_span!("before_all")
+				#topsoil_support::__private::subsoil::enter_span!(
+					#topsoil_support::__private::subsoil::tracing::trace_span!("before_all")
 				);
 
 				// Check if the pallet has any keys set, including the storage version. If there are
@@ -240,8 +240,8 @@ pub fn expand_hooks(def: &mut Def) -> proc_macro2::TokenStream {
 			for #pallet_ident<#type_use_gen> #where_clause
 		{
 			fn on_runtime_upgrade() -> #topsoil_support::weights::Weight {
-				#topsoil_support::__private::soil_tracing::enter_span!(
-					#topsoil_support::__private::soil_tracing::trace_span!("on_runtime_update")
+				#topsoil_support::__private::subsoil::enter_span!(
+					#topsoil_support::__private::subsoil::tracing::trace_span!("on_runtime_update")
 				);
 
 				// log info about the upgrade.
@@ -255,7 +255,7 @@ pub fn expand_hooks(def: &mut Def) -> proc_macro2::TokenStream {
 			}
 
 			#topsoil_support::try_runtime_enabled! {
-				fn pre_upgrade() -> Result<#topsoil_support::__private::Vec<u8>, #topsoil_support::soil_runtime::TryRuntimeError> {
+				fn pre_upgrade() -> Result<#topsoil_support::__private::Vec<u8>, #topsoil_support::subsoil::runtime::TryRuntimeError> {
 					<
 						Self
 						as
@@ -263,7 +263,7 @@ pub fn expand_hooks(def: &mut Def) -> proc_macro2::TokenStream {
 					>::pre_upgrade()
 				}
 
-				fn post_upgrade(state: #topsoil_support::__private::Vec<u8>) -> Result<(), #topsoil_support::soil_runtime::TryRuntimeError> {
+				fn post_upgrade(state: #topsoil_support::__private::Vec<u8>) -> Result<(), #topsoil_support::subsoil::runtime::TryRuntimeError> {
 					#post_storage_version_check
 
 					<
@@ -295,7 +295,7 @@ pub fn expand_hooks(def: &mut Def) -> proc_macro2::TokenStream {
 			for #pallet_ident<#type_use_gen> #where_clause
 			{
 				fn integrity_test() {
-					#topsoil_support::__private::soil_io::TestExternalities::default().execute_with(|| {
+					#topsoil_support::__private::subsoil::io::TestExternalities::default().execute_with(|| {
 						<
 							Self as #topsoil_support::traits::Hooks<
 								#topsoil_system::pallet_prelude::BlockNumberFor::<T>
@@ -314,7 +314,7 @@ pub fn expand_hooks(def: &mut Def) -> proc_macro2::TokenStream {
 				fn try_state(
 					n: #topsoil_system::pallet_prelude::BlockNumberFor::<T>,
 					_s: #topsoil_support::traits::TryStateSelect
-				) -> Result<(), #topsoil_support::soil_runtime::TryRuntimeError> {
+				) -> Result<(), #topsoil_support::subsoil::runtime::TryRuntimeError> {
 					#topsoil_support::__private::log::info!(
 						target: #topsoil_support::LOG_TARGET,
 						"🩺 Running {:?} try-state checks",

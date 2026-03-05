@@ -25,7 +25,7 @@ use topsoil_benchmarking::v2::*;
 use topsoil_system::RawOrigin;
 
 use alloc::vec;
-use soil_runtime::traits::Bounded;
+use subsoil::runtime::traits::Bounded;
 
 use crate::Pallet as Society;
 
@@ -560,8 +560,8 @@ mod benchmarks {
 
 	impl_benchmark_test_suite!(
 		Society,
-		soil_io::TestExternalities::from(
-			<topsoil_system::GenesisConfig::<crate::mock::Test> as soil_runtime::BuildStorage>::build_storage(
+		subsoil::io::TestExternalities::from(
+			<topsoil_system::GenesisConfig::<crate::mock::Test> as subsoil::runtime::BuildStorage>::build_storage(
 				&topsoil_system::GenesisConfig::default()).unwrap()
 			),
 		crate::mock::Test

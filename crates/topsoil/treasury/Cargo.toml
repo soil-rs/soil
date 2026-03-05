@@ -26,12 +26,10 @@ log = { workspace = true }
 topsoil-balances = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { features = ["derive"], optional = true, workspace = true, default-features = true }
-soil-core = { optional = true, workspace = true }
-soil-runtime = { workspace = true }
+subsoil = { workspace = true }
 
 [dev-dependencies]
 topsoil-utility = { workspace = true, default-features = true }
-soil-io = { workspace = true, default-features = true }
 
 [features]
 default = ["std"]
@@ -45,23 +43,20 @@ std = [
 	"topsoil-utility/std",
 	"scale-info/std",
 	"serde",
-	"soil-core?/std",
-	"soil-io/std",
-	"soil-runtime/std",
+	"subsoil/std",
 ]
 runtime-benchmarks = [
-	"dep:soil-core",
 	"topsoil-benchmarking/runtime-benchmarks",
 	"topsoil-support/runtime-benchmarks",
 	"topsoil-system/runtime-benchmarks",
 	"topsoil-balances/runtime-benchmarks",
 	"topsoil-utility/runtime-benchmarks",
-	"soil-runtime/runtime-benchmarks",
+	"subsoil/runtime-benchmarks",
 ]
 try-runtime = [
 	"topsoil-support/try-runtime",
 	"topsoil-system/try-runtime",
 	"topsoil-balances/try-runtime",
 	"topsoil-utility/try-runtime",
-	"soil-runtime/try-runtime",
+	"subsoil/try-runtime",
 ]

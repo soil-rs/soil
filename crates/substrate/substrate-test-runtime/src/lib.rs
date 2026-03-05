@@ -31,8 +31,8 @@ pub mod substrate_test_pallet;
 use alloc::{vec, vec::Vec};
 use codec::{Decode, DecodeWithMemTracking, Encode};
 use scale_info::TypeInfo;
-use soil_application_crypto::{ecdsa, ed25519, sr25519, RuntimeAppPublic, Ss58Codec};
-use soil_keyring::Sr25519Keyring;
+use subsoil::application_crypto::{ecdsa, ed25519, sr25519, RuntimeAppPublic, Ss58Codec};
+use subsoil::keyring::Sr25519Keyring;
 use topsoil_support::{
 	construct_runtime, derive_impl,
 	dispatch::DispatchClass,
@@ -50,22 +50,21 @@ use topsoil_system::{
 };
 
 #[cfg(feature = "bls-experimental")]
-use soil_application_crypto::{bls381, ecdsa_bls381};
+use subsoil::application_crypto::{bls381, ecdsa_bls381};
 
-use soil_core::OpaqueMetadata;
-use soil_trie::{
+use subsoil::core::OpaqueMetadata;
+use subsoil::trie::{
 	trie_types::{TrieDBBuilder, TrieDBMutBuilderV1},
 	PrefixedMemoryDB, StorageProof,
 };
 use trie_db::{Trie, TrieMut};
 
 use serde_json::json;
-use soil_api::{decl_runtime_apis, impl_runtime_apis};
-pub use soil_core::hash::H256;
+use subsoil::api::{decl_runtime_apis, impl_runtime_apis};
+pub use subsoil::core::hash::H256;
 use soil_genesis_builder::PresetId;
-use soil_inherents::{CheckInherentsResult, InherentData};
-use soil_runtime::{
-	impl_opaque_keys, impl_tx_ext_default,
+use subsoil::inherents::{CheckInherentsResult, InherentData};
+use subsoil::runtime::{
 	traits::{BlakeTwo256, Block as BlockT, DispatchInfoOf, Dispatchable, NumberFor, Verify},
 	transaction_validity::{
 		TransactionSource, TransactionValidity, TransactionValidityError, ValidTransaction,
@@ -73,8 +72,8 @@ use soil_runtime::{
 	ApplyExtrinsicResult, ExtrinsicInclusionMode, Perbill,
 };
 #[cfg(any(feature = "std", test))]
-use soil_version::NativeVersion;
-use soil_version::RuntimeVersion;
+use subsoil::version::NativeVersion;
+use subsoil::version::RuntimeVersion;
 
 pub use soil_consensus_babe::{AllowedSlots, BabeEpochConfiguration, Slot};
 
@@ -115,7 +114,7 @@ pub fn wasm_binary_logging_disabled_unwrap() -> &'static [u8] {
 }
 
 /// Test runtime version.
-#[soil_version::runtime_version]
+#[subsoil::version::runtime_version]
 pub const VERSION: RuntimeVersion = RuntimeVersion {
 	spec_name: alloc::borrow::Cow::Borrowed("test"),
 	impl_name: alloc::borrow::Cow::Borrowed("parity-test"),
@@ -147,10 +146,10 @@ pub struct TransferData {
 }
 
 /// The address format for describing accounts.
-pub type Address = soil_core::sr25519::Public;
+pub type Address = subsoil::core::sr25519::Public;
 pub type Signature = sr25519::Signature;
 #[cfg(feature = "std")]
-pub type Pair = soil_core::sr25519::Pair;
+pub type Pair = subsoil::core::sr25519::Pair;
 
 // TODO: Remove after the Checks are migrated to TxExtension.
 /// The extension to the basic transaction logic.
@@ -161,10 +160,10 @@ pub type TxExtension = (
 	topsoil_system::WeightReclaim<Runtime>,
 );
 /// The payload being signed in transactions.
-pub type SignedPayload = soil_runtime::generic::SignedPayload<RuntimeCall, TxExtension>;
+pub type SignedPayload = subsoil::runtime::generic::SignedPayload<RuntimeCall, TxExtension>;
 /// Unchecked extrinsic type as expected by this runtime.
 pub type Extrinsic =
-	soil_runtime::generic::UncheckedExtrinsic<Address, RuntimeCall, Signature, TxExtension>;
+	subsoil::runtime::generic::UncheckedExtrinsic<Address, RuntimeCall, Signature, TxExtension>;
 
 /// An identifier for an account on this system.
 pub type AccountId = <Signature as Verify>::Signer;
@@ -177,19 +176,19 @@ pub type BlockNumber = u64;
 /// Index of a transaction.
 pub type Nonce = u64;
 /// The item of a block digest.
-pub type DigestItem = soil_runtime::generic::DigestItem;
+pub type DigestItem = subsoil::runtime::generic::DigestItem;
 /// The digest of a block.
-pub type Digest = soil_runtime::generic::Digest;
+pub type Digest = subsoil::runtime::generic::Digest;
 /// A test block.
-pub type Block = soil_runtime::generic::Block<Header, Extrinsic>;
+pub type Block = subsoil::runtime::generic::Block<Header, Extrinsic>;
 /// A test block's header.
-pub type Header = soil_runtime::generic::Header<BlockNumber, Hashing>;
+pub type Header = subsoil::runtime::generic::Header<BlockNumber, Hashing>;
 /// Balance of an account.
 pub type Balance = u64;
 
 #[cfg(feature = "bls-experimental")]
 mod bls {
-	use soil_application_crypto::{bls381, ecdsa_bls381};
+	use subsoil::application_crypto::{bls381, ecdsa_bls381};
 	pub type Bls381Public = bls381::AppPublic;
 	pub type Bls381Pop = bls381::AppProofOfPossession;
 	pub type EcdsaBls381Public = ecdsa_bls381::AppPublic;
@@ -276,22 +275,22 @@ pub type Executive = topsoil_executive::Executive<
 #[derive(Copy, Clone, PartialEq, Eq, Encode, Decode, DecodeWithMemTracking, Debug, TypeInfo)]
 pub struct CheckSubstrateCall;
 
-impl soil_runtime::traits::Printable for CheckSubstrateCall {
+impl subsoil::runtime::traits::Printable for CheckSubstrateCall {
 	fn print(&self) {
 		"CheckSubstrateCall".print()
 	}
 }
 
-impl soil_runtime::traits::RefundWeight for CheckSubstrateCall {
+impl subsoil::runtime::traits::RefundWeight for CheckSubstrateCall {
 	fn refund(&mut self, _weight: topsoil_support::weights::Weight) {}
 }
-impl soil_runtime::traits::ExtensionPostDispatchWeightHandler<CheckSubstrateCall>
+impl subsoil::runtime::traits::ExtensionPostDispatchWeightHandler<CheckSubstrateCall>
 	for CheckSubstrateCall
 {
 	fn set_extension_weight(&mut self, _info: &CheckSubstrateCall) {}
 }
 
-impl soil_runtime::traits::Dispatchable for CheckSubstrateCall {
+impl subsoil::runtime::traits::Dispatchable for CheckSubstrateCall {
 	type RuntimeOrigin = RuntimeOrigin;
 	type Config = CheckSubstrateCall;
 	type Info = CheckSubstrateCall;
@@ -300,17 +299,17 @@ impl soil_runtime::traits::Dispatchable for CheckSubstrateCall {
 	fn dispatch(
 		self,
 		_origin: Self::RuntimeOrigin,
-	) -> soil_runtime::DispatchResultWithInfo<Self::PostInfo> {
+	) -> subsoil::runtime::DispatchResultWithInfo<Self::PostInfo> {
 		panic!("This implementation should not be used for actual dispatch.");
 	}
 }
 
-impl soil_runtime::traits::TransactionExtension<RuntimeCall> for CheckSubstrateCall {
+impl subsoil::runtime::traits::TransactionExtension<RuntimeCall> for CheckSubstrateCall {
 	const IDENTIFIER: &'static str = "CheckSubstrateCall";
 	type Implicit = ();
 	type Pre = ();
 	type Val = ();
-	impl_tx_ext_default!(RuntimeCall; weight prepare);
+	subsoil::impl_tx_ext_default!(RuntimeCall; weight prepare);
 
 	fn validate(
 		&self,
@@ -393,7 +392,7 @@ impl topsoil_system::pallet::Config for Runtime {
 	type BlockWeights = RuntimeBlockWeights;
 	type Nonce = Nonce;
 	type AccountId = AccountId;
-	type Lookup = soil_runtime::traits::IdentityLookup<Self::AccountId>;
+	type Lookup = subsoil::runtime::traits::IdentityLookup<Self::AccountId>;
 	type Block = Block;
 	type AccountData = topsoil_balances::AccountData<Balance>;
 }
@@ -456,7 +455,7 @@ impl topsoil_babe::Config for Runtime {
 	type ExpectedBlockTime = ConstU64<10_000>;
 	type EpochChangeTrigger = topsoil_babe::SameAuthoritiesForever;
 	type DisabledValidators = ();
-	type KeyOwnerProof = soil_core::Void;
+	type KeyOwnerProof = subsoil::core::Void;
 	type EquivocationReportSystem = ();
 	type WeightInfo = ();
 	type MaxAuthorities = ConstU32<10>;
@@ -496,7 +495,7 @@ fn code_using_trie() -> u64 {
 /// The test owner to test proof of possession generation and verification for the session keys
 pub const TEST_OWNER: &[u8; 5] = b"owner";
 
-impl_opaque_keys! {
+subsoil::impl_opaque_keys! {
 	pub struct SessionKeys {
 		pub ed25519: ed25519::AppPublic,
 		pub sr25519: sr25519::AppPublic,
@@ -510,7 +509,7 @@ pub const TEST_RUNTIME_BABE_EPOCH_CONFIGURATION: BabeEpochConfiguration = BabeEp
 };
 
 impl_runtime_apis! {
-	impl soil_api::Core<Block> for Runtime {
+	impl subsoil::api::Core<Block> for Runtime {
 		fn version() -> RuntimeVersion {
 			version()
 		}
@@ -526,7 +525,7 @@ impl_runtime_apis! {
 		}
 	}
 
-	impl soil_api::Metadata<Block> for Runtime {
+	impl subsoil::api::Metadata<Block> for Runtime {
 		fn metadata() -> OpaqueMetadata {
 			OpaqueMetadata::new(Runtime::metadata().into())
 		}
@@ -670,11 +669,11 @@ impl_runtime_apis! {
 		}
 
 		fn verify_ed25519(sig: ed25519::Signature, public: ed25519::Public, message: Vec<u8>) -> bool {
-			soil_io::crypto::ed25519_verify(&sig, &message, &public)
+			subsoil::io::crypto::ed25519_verify(&sig, &message, &public)
 		}
 
 		fn write_key_value(key: Vec<u8>, value: Vec<u8>, panic: bool) {
-			soil_io::storage::set(&key, &value);
+			subsoil::io::storage::set(&key, &value);
 
 			if panic {
 				panic!("I'm just following my master");
@@ -742,7 +741,7 @@ impl_runtime_apis! {
 					value:Some(header.number.encode())
 				}.into(),
 			);
-			soil_io::offchain::submit_transaction(ext.encode()).unwrap();
+			subsoil::io::offchain::submit_transaction(ext.encode()).unwrap();
 			Executive::offchain_worker(header);
 		}
 	}
@@ -754,7 +753,7 @@ impl_runtime_apis! {
 
 		fn decode_session_keys(
 			encoded: Vec<u8>,
-		) -> Option<Vec<(Vec<u8>, soil_core::crypto::KeyTypeId)>> {
+		) -> Option<Vec<(Vec<u8>, subsoil::core::crypto::KeyTypeId)>> {
 			SessionKeys::decode_into_raw_public_keys(&encoded)
 		}
 	}
@@ -916,15 +915,15 @@ fn test_ecdsa_bls381_crypto() -> (EcdsaBls381Pop, EcdsaBls381Public) {
 
 fn test_read_storage() {
 	const KEY: &[u8] = b":read_storage";
-	soil_io::storage::set(KEY, b"test");
+	subsoil::io::storage::set(KEY, b"test");
 
 	let mut v = [0u8; 4];
-	let r = soil_io::storage::read(KEY, &mut v, 0);
+	let r = subsoil::io::storage::read(KEY, &mut v, 0);
 	assert_eq!(r, Some(4));
 	assert_eq!(&v, b"test");
 
 	let mut v = [0u8; 4];
-	let r = soil_io::storage::read(KEY, &mut v, 4);
+	let r = subsoil::io::storage::read(KEY, &mut v, 4);
 	assert_eq!(r, Some(0));
 	assert_eq!(&v, &[0, 0, 0, 0]);
 }
@@ -932,26 +931,26 @@ fn test_read_storage() {
 fn test_read_child_storage() {
 	const STORAGE_KEY: &[u8] = b"unique_id_1";
 	const KEY: &[u8] = b":read_child_storage";
-	soil_io::default_child_storage::set(STORAGE_KEY, KEY, b"test");
+	subsoil::io::default_child_storage::set(STORAGE_KEY, KEY, b"test");
 
 	let mut v = [0u8; 4];
-	let r = soil_io::default_child_storage::read(STORAGE_KEY, KEY, &mut v, 0);
+	let r = subsoil::io::default_child_storage::read(STORAGE_KEY, KEY, &mut v, 0);
 	assert_eq!(r, Some(4));
 	assert_eq!(&v, b"test");
 
 	let mut v = [0u8; 4];
-	let r = soil_io::default_child_storage::read(STORAGE_KEY, KEY, &mut v, 8);
+	let r = subsoil::io::default_child_storage::read(STORAGE_KEY, KEY, &mut v, 8);
 	assert_eq!(r, Some(0));
 	assert_eq!(&v, &[0, 0, 0, 0]);
 }
 
 fn test_witness(proof: StorageProof, root: crate::Hash) {
-	use soil_externalities::Externalities;
-	let db: soil_trie::MemoryDB<crate::Hashing> = proof.into_memory_db();
+	use subsoil::externalities::Externalities;
+	let db: subsoil::trie::MemoryDB<crate::Hashing> = proof.into_memory_db();
 	let backend =
-		soil_state_machine::TrieBackendBuilder::<_, crate::Hashing>::new(db, root).build();
-	let mut overlay = soil_state_machine::OverlayedChanges::default();
-	let mut ext = soil_state_machine::Ext::new(
+		subsoil::state_machine::TrieBackendBuilder::<_, crate::Hashing>::new(db, root).build();
+	let mut overlay = subsoil::state_machine::OverlayedChanges::default();
+	let mut ext = subsoil::state_machine::Ext::new(
 		&mut overlay,
 		&backend,
 		#[cfg(feature = "std")]
@@ -969,7 +968,7 @@ fn test_witness(proof: StorageProof, root: crate::Hash) {
 #[cfg(feature = "std")]
 pub mod storage_key_generator {
 	use super::*;
-	use soil_core::Pair;
+	use subsoil::core::Pair;
 
 	/// Generate hex string without prefix
 	pub(super) fn hex<T>(x: T) -> String
@@ -980,11 +979,11 @@ pub mod storage_key_generator {
 	}
 
 	fn concat_hashes(input: &Vec<&[u8]>) -> String {
-		input.iter().map(|s| soil_crypto_hashing::twox_128(s)).map(hex).collect()
+		input.iter().map(|s| subsoil_crypto_hashing::twox_128(s)).map(hex).collect()
 	}
 
 	fn twox_64_concat(x: &[u8]) -> Vec<u8> {
-		soil_crypto_hashing::twox_64(x).iter().chain(x.iter()).cloned().collect()
+		subsoil_crypto_hashing::twox_64(x).iter().chain(x.iter()).cloned().collect()
 	}
 
 	/// Generate the hashed storage keys from the raw literals. These keys are expected to be in
@@ -1026,7 +1025,7 @@ pub mod storage_key_generator {
 				Sr25519Keyring::Charlie.public().to_vec(),
 			])
 			.map(|pubkey| {
-				soil_crypto_hashing::blake2_128(&pubkey)
+				subsoil_crypto_hashing::blake2_128(&pubkey)
 					.iter()
 					.chain(pubkey.iter())
 					.cloned()
@@ -1151,10 +1150,10 @@ mod tests {
 	use codec::Encode;
 	use pretty_assertions::assert_eq;
 	use sc_block_builder::BlockBuilderBuilder;
-	use soil_api::{ApiExt, ProvideRuntimeApi};
+	use subsoil::api::{ApiExt, ProvideRuntimeApi};
 	use soil_consensus::BlockOrigin;
-	use soil_core::{storage::well_known_keys::HEAP_PAGES, traits::CallContext};
-	use soil_runtime::{
+	use subsoil::core::{storage::well_known_keys::HEAP_PAGES, traits::CallContext};
+	use subsoil::runtime::{
 		traits::{DispatchTransaction, Hash as _},
 		transaction_validity::{InvalidTransaction, TransactionSource::External, ValidTransaction},
 	};
@@ -1217,12 +1216,12 @@ mod tests {
 		runtime_api.test_storage(best_hash).unwrap();
 	}
 
-	fn witness_backend() -> (soil_trie::MemoryDB<crate::Hashing>, crate::Hash) {
+	fn witness_backend() -> (subsoil::trie::MemoryDB<crate::Hashing>, crate::Hash) {
 		let mut root = crate::Hash::default();
-		let mut mdb = soil_trie::MemoryDB::<crate::Hashing>::default();
+		let mut mdb = subsoil::trie::MemoryDB::<crate::Hashing>::default();
 		{
 			let mut trie =
-				soil_trie::trie_types::TrieDBMutBuilderV1::new(&mut mdb, &mut root).build();
+				subsoil::trie::trie_types::TrieDBMutBuilderV1::new(&mut mdb, &mut root).build();
 			trie.insert(b"value3", &[142]).expect("insert failed");
 			trie.insert(b"value4", &[124]).expect("insert failed");
 		};
@@ -1233,8 +1232,8 @@ mod tests {
 	fn witness_backend_works() {
 		let (db, root) = witness_backend();
 		let backend =
-			soil_state_machine::TrieBackendBuilder::<_, crate::Hashing>::new(db, root).build();
-		let proof = soil_state_machine::prove_read(backend, vec![b"value3"]).unwrap();
+			subsoil::state_machine::TrieBackendBuilder::<_, crate::Hashing>::new(db, root).build();
+		let proof = subsoil::state_machine::prove_read(backend, vec![b"value3"]).unwrap();
 		let client = TestClientBuilder::new().build();
 		let runtime_api = client.runtime_api();
 		let best_hash = client.chain_info().best_hash;
@@ -1242,7 +1241,7 @@ mod tests {
 		runtime_api.test_witness(best_hash, proof, root).unwrap();
 	}
 
-	pub fn new_test_ext() -> soil_io::TestExternalities {
+	pub fn new_test_ext() -> subsoil::io::TestExternalities {
 		genesismap::GenesisStorageBuilder::new(
 			vec![Sr25519Keyring::One.public().into(), Sr25519Keyring::Two.public().into()],
 			vec![Sr25519Keyring::One.into(), Sr25519Keyring::Two.into()],
@@ -1268,7 +1267,7 @@ mod tests {
 
 	#[test]
 	fn validate_unsigned_works() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 		new_test_ext().execute_with(|| {
 			let failing_calls = vec![
 				substrate_test_pallet::Call::bench_call { transfer: Default::default() },
@@ -1286,7 +1285,7 @@ mod tests {
 
 			for call in failing_calls {
 				assert_eq!(
-					<SubstrateTest as soil_runtime::traits::ValidateUnsigned>::validate_unsigned(
+					<SubstrateTest as subsoil::runtime::traits::ValidateUnsigned>::validate_unsigned(
 						TransactionSource::External,
 						&call,
 					),
@@ -1296,7 +1295,7 @@ mod tests {
 
 			for call in succeeding_calls {
 				assert_eq!(
-					<SubstrateTest as soil_runtime::traits::ValidateUnsigned>::validate_unsigned(
+					<SubstrateTest as subsoil::runtime::traits::ValidateUnsigned>::validate_unsigned(
 						TransactionSource::External,
 						&call,
 					),
@@ -1311,7 +1310,7 @@ mod tests {
 
 	#[test]
 	fn check_substrate_check_signed_extension_works() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 		new_test_ext().execute_with(|| {
 			let x = Sr25519Keyring::Alice.into();
 			let info = DispatchInfo::default();
@@ -1355,12 +1354,12 @@ mod tests {
 		use crate::genesismap::GenesisStorageBuilder;
 		use pretty_assertions::assert_eq;
 		use serde_json::json;
-		use soil_application_crypto::Ss58Codec;
-		use soil_core::traits::Externalities;
+		use subsoil::application_crypto::Ss58Codec;
+		use subsoil::core::traits::Externalities;
 		use soil_executor::{error::Result, WasmExecutor};
 		use soil_executor_common::runtime_blob::RuntimeBlob;
 		use soil_genesis_builder::Result as BuildResult;
-		use soil_state_machine::BasicExternalities;
+		use subsoil::state_machine::BasicExternalities;
 		use std::{fs, io::Write};
 		use storage_key_generator::hex;
 
@@ -1369,7 +1368,7 @@ mod tests {
 			method: &str,
 			data: &[u8],
 		) -> Result<Vec<u8>> {
-			let executor = WasmExecutor::<soil_io::SubstrateHostFunctions>::builder().build();
+			let executor = WasmExecutor::<subsoil::io::SubstrateHostFunctions>::builder().build();
 			executor.uncached_call(
 				RuntimeBlob::uncompress_if_needed(wasm_binary_unwrap()).unwrap(),
 				ext,
@@ -1381,7 +1380,7 @@ mod tests {
 
 		#[test]
 		fn build_minimal_genesis_config_works() {
-			soil_tracing::try_init_simple();
+			subsoil::tracing::try_init_simple();
 			let default_minimal_json = r#"{"system":{},"babe":{"authorities":[],"epochConfig":{"c": [ 3, 10 ],"allowed_slots":"PrimaryAndSecondaryPlainSlots"}},"substrateTest":{"authorities":[]},"balances":{"balances":[]}}"#;
 			let mut t = BasicExternalities::new_empty();
 
@@ -1433,7 +1432,7 @@ mod tests {
 
 		#[test]
 		fn default_config_as_json_works() {
-			soil_tracing::try_init_simple();
+			subsoil::tracing::try_init_simple();
 			let mut t = BasicExternalities::new_empty();
 			let r = executor_call(&mut t, "GenesisBuilder_get_preset", &None::<&PresetId>.encode())
 				.unwrap();
@@ -1448,7 +1447,7 @@ mod tests {
 
 		#[test]
 		fn preset_names_listing_works() {
-			soil_tracing::try_init_simple();
+			subsoil::tracing::try_init_simple();
 			let mut t = BasicExternalities::new_empty();
 			let r = executor_call(&mut t, "GenesisBuilder_preset_names", &vec![]).unwrap();
 			let r = Vec::<PresetId>::decode(&mut &r[..]).unwrap();
@@ -1458,7 +1457,7 @@ mod tests {
 
 		#[test]
 		fn named_config_works() {
-			soil_tracing::try_init_simple();
+			subsoil::tracing::try_init_simple();
 			let f = |cfg_name: &str, expected: &str| {
 				let mut t = BasicExternalities::new_empty();
 				let name = cfg_name.to_string();
@@ -1484,7 +1483,7 @@ mod tests {
 
 		#[test]
 		fn build_config_from_json_works() {
-			soil_tracing::try_init_simple();
+			subsoil::tracing::try_init_simple();
 			let j = include_str!("../res/default_genesis_config.json");
 
 			let mut t = BasicExternalities::new_empty();
@@ -1504,7 +1503,7 @@ mod tests {
 
 		#[test]
 		fn build_config_from_invalid_json_fails() {
-			soil_tracing::try_init_simple();
+			subsoil::tracing::try_init_simple();
 			let j = include_str!("../res/default_genesis_config_invalid.json");
 			let mut t = BasicExternalities::new_empty();
 			let r = executor_call(&mut t, "GenesisBuilder_build_state", &j.encode()).unwrap();
@@ -1517,7 +1516,7 @@ mod tests {
 
 		#[test]
 		fn build_config_from_invalid_json_fails_2() {
-			soil_tracing::try_init_simple();
+			subsoil::tracing::try_init_simple();
 			let j = include_str!("../res/default_genesis_config_invalid_2.json");
 			let mut t = BasicExternalities::new_empty();
 			let r = executor_call(&mut t, "GenesisBuilder_build_state", &j.encode()).unwrap();
@@ -1529,7 +1528,7 @@ mod tests {
 
 		#[test]
 		fn build_config_from_incomplete_json_fails() {
-			soil_tracing::try_init_simple();
+			subsoil::tracing::try_init_simple();
 			let j = include_str!("../res/default_genesis_config_incomplete.json");
 
 			let mut t = BasicExternalities::new_empty();
@@ -1545,7 +1544,7 @@ mod tests {
 		#[test]
 		fn write_default_config_to_tmp_file() {
 			if std::env::var("WRITE_DEFAULT_JSON_FOR_STR_GC").is_ok() {
-				soil_tracing::try_init_simple();
+				subsoil::tracing::try_init_simple();
 				let mut file = fs::OpenOptions::new()
 					.create(true)
 					.write(true)
@@ -1562,7 +1561,7 @@ mod tests {
 		#[test]
 		fn build_genesis_config_with_patch_json_works() {
 			// this tests shows how to do patching on native side
-			soil_tracing::try_init_simple();
+			subsoil::tracing::try_init_simple();
 
 			let mut t = BasicExternalities::new_empty();
 			let r = executor_call(&mut t, "GenesisBuilder_get_preset", &None::<&PresetId>.encode())
@@ -1614,7 +1613,7 @@ mod tests {
 				"00771836bebdd29870ff246d305c578c5e0621c4869aa60c02be9adcc98a0d1d",
 			);
 			let authority_key_vec =
-				Vec::<soil_core::sr25519::Public>::decode(&mut &value[..]).unwrap();
+				Vec::<subsoil::core::sr25519::Public>::decode(&mut &value[..]).unwrap();
 			assert_eq!(authority_key_vec.len(), 2);
 			assert_eq!(authority_key_vec[0], Sr25519Keyring::Ferdie.public());
 			assert_eq!(authority_key_vec[1], Sr25519Keyring::Alice.public());

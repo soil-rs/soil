@@ -20,17 +20,11 @@ topsoil-election-provider-solution-type = { workspace = true, default-features =
 topsoil-support = { workspace = true }
 topsoil-system = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
-soil-arithmetic = { workspace = true }
-soil-core = { workspace = true }
-soil-npos-elections = { workspace = true }
-soil-runtime = { workspace = true }
-soil-std = { workspace = true }
+subsoil = { workspace = true }
 
 
 [dev-dependencies]
 rand = { features = ["small_rng"], workspace = true, default-features = true }
-soil-io = { workspace = true, default-features = true }
-soil-npos-elections = { workspace = true, default-features = true }
 
 [features]
 default = ["std"]
@@ -40,20 +34,15 @@ std = [
 	"topsoil-support/std",
 	"topsoil-system/std",
 	"scale-info/std",
-	"soil-arithmetic/std",
-	"soil-core/std",
-	"soil-io/std",
-	"soil-npos-elections/std",
-	"soil-runtime/std",
-	"soil-std/std",
+	"subsoil/std",
 ]
 runtime-benchmarks = [
 	"topsoil-support/runtime-benchmarks",
 	"topsoil-system/runtime-benchmarks",
-	"soil-runtime/runtime-benchmarks",
+	"subsoil/runtime-benchmarks",
 ]
 try-runtime = [
 	"topsoil-support/try-runtime",
 	"topsoil-system/try-runtime",
-	"soil-runtime/try-runtime",
+	"subsoil/try-runtime",
 ]

@@ -25,8 +25,7 @@ use core::{fmt, marker::PhantomData};
 
 use codec::{Decode, DecodeWithMemTracking, Encode};
 use scale_info::TypeInfo;
-use soil_runtime::{
-	impl_tx_ext_default,
+use subsoil::runtime::{
 	traits::{
 		DispatchInfoOf, DispatchOriginOf, IdentifyAccount, TransactionExtension, ValidateResult,
 		Verify,
@@ -110,7 +109,7 @@ where
 		let second_account = auth.second.0.clone().into_account();
 
 		// Construct the payload to sign using the `inherited_implication`.
-		let msg = inherited_implication.using_encoded(soil_io::hashing::blake2_256);
+		let msg = inherited_implication.using_encoded(subsoil::io::hashing::blake2_256);
 
 		// Both parties' signatures must be correct for the origin to be authorized.
 		// In a prod environment, we're just return a `InvalidTransaction::BadProof` if the
@@ -135,5 +134,5 @@ where
 		Ok((ValidTransaction::default(), (), origin))
 	}
 	// We're not doing any special logic in `TransactionExtension::prepare`, so just impl a default.
-	impl_tx_ext_default!(T::RuntimeCall; weight prepare);
+	subsoil::impl_tx_ext_default!(T::RuntimeCall; weight prepare);
 }

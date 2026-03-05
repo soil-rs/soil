@@ -17,9 +17,9 @@
 
 #![allow(dead_code)]
 
-use soil_core::{ConstBool, ConstU32, Get};
-use soil_npos_elections::{ElectionScore, VoteWeight};
-use soil_runtime::{
+use subsoil::core::{ConstBool, ConstU32, Get};
+use subsoil::npos_elections::{ElectionScore, VoteWeight};
+use subsoil::runtime::{
 	offchain::{
 		testing::{OffchainState, PoolState, TestOffchainExt, TestTransactionPoolExt},
 		OffchainDbExt, OffchainWorkerExt, TransactionPoolExt,
@@ -61,7 +61,7 @@ pub const INIT_TIMESTAMP: BlockNumber = 30_000;
 pub const BLOCK_TIME: BlockNumber = 1000;
 
 type Block = topsoil_system::mocking::MockBlockU32<Runtime>;
-type Extrinsic = soil_runtime::testing::TestXt<RuntimeCall, ()>;
+type Extrinsic = subsoil::runtime::testing::TestXt<RuntimeCall, ()>;
 
 topsoil_support::construct_runtime!(
 	pub enum Runtime {
@@ -91,7 +91,7 @@ impl topsoil_system::Config for Runtime {
 	type AccountId = AccountId;
 	type Block = Block;
 	type AccountData = topsoil_balances::AccountData<Balance>;
-	type Lookup = soil_runtime::traits::IdentityLookup<Self::AccountId>;
+	type Lookup = subsoil::runtime::traits::IdentityLookup<Self::AccountId>;
 }
 
 const NORMAL_DISPATCH_RATIO: Perbill = Perbill::from_percent(75);
@@ -126,7 +126,7 @@ parameter_types! {
 	pub static Offset: u32 = 0;
 }
 
-soil_runtime::impl_opaque_keys! {
+subsoil::impl_opaque_keys! {
 	pub struct SessionKeys {
 		pub other: OtherSessionHandler,
 	}
@@ -140,7 +140,7 @@ impl topsoil_session::Config for Runtime {
 	type SessionHandler = (OtherSessionHandler,);
 	type RuntimeEvent = RuntimeEvent;
 	type ValidatorId = AccountId;
-	type ValidatorIdOf = soil_runtime::traits::ConvertInto;
+	type ValidatorIdOf = subsoil::runtime::traits::ConvertInto;
 	type DisablingStrategy = topsoil_session::disabling::UpToLimitWithReEnablingDisablingStrategy<
 		SLASHING_DISABLING_FACTOR,
 	>;
@@ -242,7 +242,7 @@ impl MinerConfig for Runtime {
 const THRESHOLDS: [VoteWeight; 9] = [10, 20, 30, 40, 50, 60, 1_000, 2_000, 10_000];
 
 parameter_types! {
-	pub static BagThresholds: &'static [soil_npos_elections::VoteWeight] = &THRESHOLDS;
+	pub static BagThresholds: &'static [subsoil::npos_elections::VoteWeight] = &THRESHOLDS;
 	pub const SessionsPerEra: soil_staking::SessionIndex = 2;
 	pub static BondingDuration: soil_staking::EraIndex = 28;
 	pub const SlashDeferDuration: soil_staking::EraIndex = 7; // 1/4 the bonding duration.
@@ -258,15 +258,15 @@ impl topsoil_bags_list::Config for Runtime {
 }
 
 pub struct BalanceToU256;
-impl soil_runtime::traits::Convert<Balance, soil_core::U256> for BalanceToU256 {
-	fn convert(n: Balance) -> soil_core::U256 {
+impl subsoil::runtime::traits::Convert<Balance, subsoil::core::U256> for BalanceToU256 {
+	fn convert(n: Balance) -> subsoil::core::U256 {
 		n.into()
 	}
 }
 
 pub struct U256ToBalance;
-impl soil_runtime::traits::Convert<soil_core::U256, Balance> for U256ToBalance {
-	fn convert(n: soil_core::U256) -> Balance {
+impl subsoil::runtime::traits::Convert<subsoil::core::U256, Balance> for U256ToBalance {
+	fn convert(n: subsoil::core::U256) -> Balance {
 		n.try_into().unwrap()
 	}
 }
@@ -281,7 +281,7 @@ impl topsoil_nomination_pools::Config for Runtime {
 	type WeightInfo = ();
 	type Currency = Balances;
 	type RuntimeFreezeReason = RuntimeFreezeReason;
-	type RewardCounter = soil_runtime::FixedU128;
+	type RewardCounter = subsoil::runtime::FixedU128;
 	type BalanceToU256 = BalanceToU256;
 	type U256ToBalance = U256ToBalance;
 	type StakeAdapter =
@@ -418,7 +418,7 @@ impl traits::OneSessionHandler<AccountId> for OtherSessionHandler {
 	fn on_disabled(_validator_index: u32) {}
 }
 
-impl soil_runtime::BoundToRuntimeAppPublic for OtherSessionHandler {
+impl subsoil::runtime::BoundToRuntimeAppPublic for OtherSessionHandler {
 	type Public = testing::UintAuthorityId;
 }
 
@@ -577,8 +577,8 @@ impl Default for ExtBuilder {
 }
 
 impl ExtBuilder {
-	pub fn build(&self) -> soil_io::TestExternalities {
-		soil_tracing::try_init_simple();
+	pub fn build(&self) -> subsoil::io::TestExternalities {
+		subsoil::tracing::try_init_simple();
 		let mut storage =
 			topsoil_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
 
@@ -626,7 +626,7 @@ impl ExtBuilder {
 		}
 		.assimilate_storage(&mut storage);
 
-		let mut ext = soil_io::TestExternalities::from(storage);
+		let mut ext = subsoil::io::TestExternalities::from(storage);
 
 		// We consider all test to start after timestamp is initialized This must be ensured by
 		// having `timestamp::on_initialize` called before `staking::on_initialize`.
@@ -662,7 +662,7 @@ impl ExtBuilder {
 
 	pub fn build_offchainify(
 		self,
-	) -> (soil_io::TestExternalities, Arc<RwLock<PoolState>>, Arc<RwLock<OffchainState>>) {
+	) -> (subsoil::io::TestExternalities, Arc<RwLock<PoolState>>, Arc<RwLock<OffchainState>>) {
 		// add offchain and pool externality extensions.
 		let mut ext = self.build();
 		let (offchain, offchain_state) = TestOffchainExt::new();
@@ -676,7 +676,7 @@ impl ExtBuilder {
 	}
 }
 
-pub(crate) fn execute_with(mut ext: soil_io::TestExternalities, test: impl FnOnce() -> ()) {
+pub(crate) fn execute_with(mut ext: subsoil::io::TestExternalities, test: impl FnOnce() -> ()) {
 	ext.execute_with(test);
 
 	#[cfg(feature = "try-runtime")]

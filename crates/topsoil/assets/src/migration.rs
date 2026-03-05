@@ -20,11 +20,11 @@ use log;
 use topsoil_support::traits::OnRuntimeUpgrade;
 
 #[cfg(feature = "try-runtime")]
-use soil_runtime::TryRuntimeError;
+use subsoil::runtime::TryRuntimeError;
 
 pub mod next_asset_id {
 	use super::*;
-	use soil_core::Get;
+	use subsoil::core::Get;
 
 	/// Set [`NextAssetId`] to the value of `ID` if [`NextAssetId`] does not exist yet.
 	pub struct SetNextAssetId<ID, T: Config<I>, I: 'static = ()>(

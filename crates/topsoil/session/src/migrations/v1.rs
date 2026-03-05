@@ -23,7 +23,7 @@ use topsoil_support::{
 };
 
 #[cfg(feature = "try-runtime")]
-use soil_runtime::TryRuntimeError;
+use subsoil::runtime::TryRuntimeError;
 
 #[cfg(feature = "try-runtime")]
 use topsoil_support::ensure;

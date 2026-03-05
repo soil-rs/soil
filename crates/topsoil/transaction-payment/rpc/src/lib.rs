@@ -28,11 +28,11 @@ use jsonrpsee::{
 		ErrorObjectOwned,
 	},
 };
-use soil_api::ProvideRuntimeApi;
+use subsoil::api::ProvideRuntimeApi;
 use soil_blockchain::HeaderBackend;
-use soil_core::Bytes;
+use subsoil::core::Bytes;
 use soil_rpc::number::NumberOrHex;
-use soil_runtime::traits::{Block as BlockT, MaybeDisplay};
+use subsoil::runtime::traits::{Block as BlockT, MaybeDisplay};
 use topsoil_transaction_payment_rpc_runtime_api::{FeeDetails, InclusionFee, RuntimeDispatchInfo};
 
 pub use topsoil_transaction_payment_rpc_runtime_api::TransactionPaymentApi as TransactionPaymentRuntimeApi;
@@ -84,7 +84,7 @@ impl From<Error> for i32 {
 impl<C, Block, Balance>
 	TransactionPaymentApiServer<
 		<Block as BlockT>::Hash,
-		RuntimeDispatchInfo<Balance, soil_weights::Weight>,
+		RuntimeDispatchInfo<Balance, subsoil::weights::Weight>,
 	> for TransactionPayment<C, Block>
 where
 	Block: BlockT,
@@ -96,7 +96,7 @@ where
 		&self,
 		encoded_xt: Bytes,
 		at: Option<Block::Hash>,
-	) -> RpcResult<RuntimeDispatchInfo<Balance, soil_weights::Weight>> {
+	) -> RpcResult<RuntimeDispatchInfo<Balance, subsoil::weights::Weight>> {
 		let api = self.client.runtime_api();
 		let at_hash = at.unwrap_or_else(|| self.client.info().best_hash);
 

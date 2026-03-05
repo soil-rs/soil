@@ -16,18 +16,14 @@ workspace = true
 targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
+subsoil = { workspace = true }
 codec = { workspace = true }
 topsoil-benchmarking = { workspace = true }
 topsoil-support = { workspace = true }
 topsoil-system = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
-soil-core = { workspace = true }
-soil-runtime = { workspace = true }
 
 [dev-dependencies]
-soil-externalities = { workspace = true, default-features = true }
-soil-io = { workspace = true, default-features = true }
-soil-version = { workspace = true, default-features = true }
 
 [features]
 default = ["std"]
@@ -37,13 +33,12 @@ std = [
 	"topsoil-support/std",
 	"topsoil-system/std",
 	"scale-info/std",
-	"soil-core/std",
-	"soil-runtime/std",
+	"subsoil/std",
 ]
 
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",
 	"topsoil-support/runtime-benchmarks",
 	"topsoil-system/runtime-benchmarks",
-	"soil-runtime/runtime-benchmarks",
+	"subsoil/runtime-benchmarks",
 ]

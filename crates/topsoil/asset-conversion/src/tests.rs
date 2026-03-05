@@ -16,8 +16,8 @@
 // limitations under the License.
 
 use crate::{mock::*, *};
-use soil_arithmetic::Permill;
-use soil_runtime::{DispatchError, TokenError};
+use subsoil::arithmetic::Permill;
+use subsoil::runtime::{DispatchError, TokenError};
 use topsoil_support::{
 	assert_noop, assert_ok, assert_storage_noop,
 	instances::Instance1,

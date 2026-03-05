@@ -33,7 +33,7 @@ docify = { workspace = true }
 soil-chain-spec = { features = ["clap"], workspace = true, default-features = true }
 serde = { workspace = true, default-features = true }
 serde_json = { workspace = true, default-features = true }
-soil-tracing = { workspace = true, default-features = true }
+subsoil = { workspace = true, default-features = true }
 
 [dev-dependencies]
 cmd_lib = { workspace = true }

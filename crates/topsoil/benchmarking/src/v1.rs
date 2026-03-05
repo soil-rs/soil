@@ -1366,7 +1366,7 @@ macro_rules! impl_benchmark_test {
 /// The first argument, `module`, must be the path to this crate's module.
 ///
 /// The second argument, `new_test_ext`, must be a function call which returns either a
-/// `soil_io::TestExternalities`, or some other type with a similar interface.
+/// `subsoil::io::TestExternalities`, or some other type with a similar interface.
 ///
 /// Note that this function call is _not_ evaluated at compile time, but is instead copied textually
 /// into each appropriate invocation site.
@@ -1768,7 +1768,7 @@ pub fn show_benchmark_debug_info(
 /// For values that should be skipped entirely, we can just pass `key.into()`. For example:
 ///
 /// ```
-/// use soil_storage::TrackedStorageKey;
+/// use subsoil::storage::TrackedStorageKey;
 /// let whitelist: Vec<TrackedStorageKey> = vec![
 /// 	// Block Number
 /// 	array_bytes::hex_into_unchecked("26aa394eea5630e07c48ae0c9558cef702a5c1b19ab7a04f536c519aca4983ac"),

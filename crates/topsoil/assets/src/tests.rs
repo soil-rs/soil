@@ -19,8 +19,8 @@
 
 use super::*;
 use crate::{mock::*, Error};
-use soil_io::storage;
-use soil_runtime::{
+use subsoil::io::storage;
+use subsoil::runtime::{
 	traits::{ConstU32, ConvertInto},
 	TokenError,
 };
