@@ -82,7 +82,11 @@ impl<'a> soil_wasm_interface::FunctionContext for HostContext<'a> {
 		util::read_memory_into(&self.caller, address, dest).map_err(|e| e.to_string())
 	}
 
-	fn write_memory(&mut self, address: Pointer<u8>, data: &[u8]) -> soil_wasm_interface::Result<()> {
+	fn write_memory(
+		&mut self,
+		address: Pointer<u8>,
+		data: &[u8],
+	) -> soil_wasm_interface::Result<()> {
 		util::write_memory_from(&mut self.caller, address, data).map_err(|e| e.to_string())
 	}
 

@@ -162,8 +162,8 @@ fn noop_is_free() {
 }
 
 mod mock {
-	use topsoil_support::derive_impl;
 	use soil_runtime::testing::H256;
+	use topsoil_support::derive_impl;
 
 	type Block = topsoil_system::mocking::MockBlock<Test>;
 

@@ -16,7 +16,6 @@
 // limitations under the License.
 
 use core::str::FromStr;
-use topsoil_support_procedural_tools::syn_ext as ext;
 use proc_macro2::{Span, TokenStream};
 use quote::ToTokens;
 use std::collections::{HashMap, HashSet};
@@ -27,6 +26,7 @@ use syn::{
 	spanned::Spanned,
 	token, Attribute, Error, Ident, Path, Result, Token,
 };
+use topsoil_support_procedural_tools::syn_ext as ext;
 
 mod keyword {
 	syn::custom_keyword!(Block);
@@ -236,13 +236,13 @@ impl Parse for PalletDeclaration {
 			let res = Some(input.parse()?);
 			let _: Token![>] = input.parse()?;
 			res
-		} else if !(input.peek(Token![::]) && input.peek3(token::Brace)) &&
-			!input.peek(keyword::expanded) &&
-			!input.peek(keyword::exclude_parts) &&
-			!input.peek(keyword::use_parts) &&
-			!input.peek(Token![=]) &&
-			!input.peek(Token![,]) &&
-			!input.is_empty()
+		} else if !(input.peek(Token![::]) && input.peek3(token::Brace))
+			&& !input.peek(keyword::expanded)
+			&& !input.peek(keyword::exclude_parts)
+			&& !input.peek(keyword::use_parts)
+			&& !input.peek(Token![=])
+			&& !input.peek(Token![,])
+			&& !input.is_empty()
 		{
 			return Err(input.error(
 				"Unexpected tokens, expected one of `::$ident` `::{`, `exclude_parts`, `use_parts`, `=`, `,`",
@@ -266,11 +266,11 @@ impl Parse for PalletDeclaration {
 			let mut parts = parse_pallet_parts(input)?;
 			parts.extend(extra_parts.into_iter());
 			Some(parts)
-		} else if !input.peek(keyword::exclude_parts) &&
-			!input.peek(keyword::use_parts) &&
-			!input.peek(Token![=]) &&
-			!input.peek(Token![,]) &&
-			!input.is_empty()
+		} else if !input.peek(keyword::exclude_parts)
+			&& !input.peek(keyword::use_parts)
+			&& !input.peek(Token![=])
+			&& !input.peek(Token![,])
+			&& !input.is_empty()
 		{
 			return Err(input.error(
 				"Unexpected tokens, expected one of `::{`, `exclude_parts`, `use_parts`, `=`, `,`",
@@ -335,10 +335,10 @@ impl Parse for PalletPath {
 			PalletPath { inner: Path { leading_colon: None, segments: Punctuated::new() } };
 
 		let lookahead = input.lookahead1();
-		if lookahead.peek(Token![crate]) ||
-			lookahead.peek(Token![self]) ||
-			lookahead.peek(Token![super]) ||
-			lookahead.peek(Ident)
+		if lookahead.peek(Token![crate])
+			|| lookahead.peek(Token![self])
+			|| lookahead.peek(Token![super])
+			|| lookahead.peek(Ident)
 		{
 			let ident = input.call(Ident::parse_any)?;
 			res.inner.segments.push(ident.into());

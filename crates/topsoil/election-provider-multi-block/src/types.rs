@@ -37,13 +37,6 @@
 
 use crate::{unsigned::miner::MinerConfig, verifier};
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
-use topsoil_election_provider_support::ElectionProvider;
-pub use topsoil_election_provider_support::{NposSolution, PageIndex};
-use topsoil_support::{
-	traits::DefensiveSaturating, BoundedVec, CloneNoBound, DebugNoBound, DefaultNoBound, EqNoBound,
-	PartialEqNoBound,
-};
-use topsoil_system::pallet_prelude::BlockNumberFor;
 use scale_info::TypeInfo;
 use soil_core::Get;
 pub use soil_npos_elections::{ElectionResult, ElectionScore};
@@ -52,6 +45,13 @@ use soil_runtime::{
 	SaturatedConversion, Saturating,
 };
 use soil_std::{collections::btree_set::BTreeSet, fmt::Debug, prelude::*};
+use topsoil_election_provider_support::ElectionProvider;
+pub use topsoil_election_provider_support::{NposSolution, PageIndex};
+use topsoil_support::{
+	traits::DefensiveSaturating, BoundedVec, CloneNoBound, DebugNoBound, DefaultNoBound, EqNoBound,
+	PartialEqNoBound,
+};
+use topsoil_system::pallet_prelude::BlockNumberFor;
 
 /// The solution type used by this crate.
 pub type SolutionOf<T> = <T as MinerConfig>::Solution;

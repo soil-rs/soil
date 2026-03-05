@@ -17,14 +17,14 @@
 
 use super::*;
 use crate::{mock::*, Event};
-use topsoil_support::{assert_err, assert_noop, assert_ok, hypothetically};
-use topsoil_balances::Event as BEvent;
 use soil_runtime::{
 	bounded_btree_map,
 	traits::{BadOrigin, Dispatchable},
 	FixedU128,
 };
 use soil_staking::{Agent, DelegationInterface};
+use topsoil_balances::Event as BEvent;
+use topsoil_support::{assert_err, assert_noop, assert_ok, hypothetically};
 
 macro_rules! unbonding_pools_with_era {
 	($($k:expr => $v:expr),* $(,)?) => {{
@@ -4717,7 +4717,9 @@ mod withdraw_unbonded {
 			// pool is destroyed.
 			assert!(!Metadata::<T>::contains_key(1));
 			// ensure the pool account is reaped.
-			assert!(!topsoil_system::Account::<T>::contains_key(&Pools::generate_bonded_account(1)));
+			assert!(!topsoil_system::Account::<T>::contains_key(&Pools::generate_bonded_account(
+				1
+			)));
 		})
 	}
 

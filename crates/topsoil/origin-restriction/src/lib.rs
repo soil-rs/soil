@@ -53,15 +53,6 @@ extern crate alloc;
 pub use weights::WeightInfo;
 
 use codec::{Decode, DecodeWithMemTracking, Encode};
-use topsoil_support::{
-	dispatch::{DispatchInfo, PostDispatchInfo},
-	pallet_prelude::{Pays, Zero},
-	traits::{ContainsPair, OriginTrait},
-	weights::WeightToFee,
-	DebugNoBound, Parameter,
-};
-use topsoil_system::pallet_prelude::BlockNumberFor;
-use topsoil_transaction_payment::OnChargeTransaction;
 use scale_info::TypeInfo;
 use soil_runtime::{
 	traits::{
@@ -75,6 +66,15 @@ use soil_runtime::{
 	DispatchError::BadOrigin,
 	DispatchResult, SaturatedConversion, Saturating, Weight,
 };
+use topsoil_support::{
+	dispatch::{DispatchInfo, PostDispatchInfo},
+	pallet_prelude::{Pays, Zero},
+	traits::{ContainsPair, OriginTrait},
+	weights::WeightToFee,
+	DebugNoBound, Parameter,
+};
+use topsoil_system::pallet_prelude::BlockNumberFor;
+use topsoil_transaction_payment::OnChargeTransaction;
 
 /// The allowance for an entity, defining its usage limit and recovery rate.
 #[derive(Clone, Debug)]
@@ -163,7 +163,8 @@ pub mod pallet {
 
 		/// The runtime event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>>
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 	}
 
 	#[pallet::error]
@@ -316,8 +317,8 @@ impl<T: Config> TransactionExtension<T::RuntimeCall> for RestrictOrigin<T> {
 		Usages::<T>::insert(&entity, &usage);
 
 		let allowed_one_time_excess = || {
-			usage_without_new_xt == 0u32.into() &&
-				T::OperationAllowedOneTimeExcess::contains(&entity, call)
+			usage_without_new_xt == 0u32.into()
+				&& T::OperationAllowedOneTimeExcess::contains(&entity, call)
 		};
 		if usage.used <= allowance.max || allowed_one_time_excess() {
 			Ok((ValidTransaction::default(), Val::Charge { fee, entity }, origin))

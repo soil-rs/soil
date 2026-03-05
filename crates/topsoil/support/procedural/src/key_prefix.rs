@@ -15,10 +15,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use topsoil_support_procedural_tools::generate_access_from_frame_or_crate;
 use proc_macro2::{Span, TokenStream};
 use quote::{format_ident, quote, ToTokens};
 use syn::{Ident, Result};
+use topsoil_support_procedural_tools::generate_access_from_frame_or_crate;
 
 const MAX_IDENTS: usize = 18;
 

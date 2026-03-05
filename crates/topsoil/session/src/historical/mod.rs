@@ -74,7 +74,8 @@ pub mod pallet {
 	pub trait Config: topsoil_session::Config + topsoil_system::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>>
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// Full identification of the validator.
 		type FullIdentification: Parameter;

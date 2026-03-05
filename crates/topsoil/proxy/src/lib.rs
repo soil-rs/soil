@@ -35,11 +35,11 @@ pub mod weights;
 
 extern crate alloc;
 use alloc::{boxed::Box, vec};
+pub use pallet::*;
 use topsoil::{
 	prelude::*,
 	traits::{Currency, InstanceFilter, ReservableCurrency},
 };
-pub use pallet::*;
 pub use weights::WeightInfo;
 
 type CallHashOf<T> = <<T as Config>::CallHasher as Hash>::Output;
@@ -132,7 +132,8 @@ pub mod pallet {
 	pub trait Config: topsoil_system::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>>
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// The overarching call type.
 		type RuntimeCall: Parameter
@@ -357,7 +358,8 @@ pub mod pallet {
 			T::Currency::reserve(&who, deposit)?;
 
 			Proxies::<T>::insert(&pure, (bounded_proxies, deposit));
-			let extrinsic_index = <topsoil_system::Pallet<T>>::extrinsic_index().unwrap_or_default();
+			let extrinsic_index =
+				<topsoil_system::Pallet<T>>::extrinsic_index().unwrap_or_default();
 			Self::deposit_event(Event::PureCreated {
 				pure,
 				who,
@@ -562,9 +564,9 @@ pub mod pallet {
 			let call_hash = T::CallHasher::hash_of(&call);
 			let now = T::BlockNumberProvider::current_block_number();
 			Self::edit_announcements(&delegate, |ann| {
-				ann.real != real ||
-					ann.call_hash != call_hash ||
-					now.saturating_sub(ann.height) < def.delay
+				ann.real != real
+					|| ann.call_hash != call_hash
+					|| now.saturating_sub(ann.height) < def.delay
 			})
 			.map_err(|_| Error::<T>::Unannounced)?;
 
@@ -985,8 +987,8 @@ impl<T: Config> Pallet<T> {
 		force_proxy_type: Option<T::ProxyType>,
 	) -> Result<ProxyDefinition<T::AccountId, T::ProxyType, BlockNumberFor<T>>, DispatchError> {
 		let f = |x: &ProxyDefinition<T::AccountId, T::ProxyType, BlockNumberFor<T>>| -> bool {
-			&x.delegate == delegate &&
-				force_proxy_type.as_ref().map_or(true, |y| &x.proxy_type == y)
+			&x.delegate == delegate
+				&& force_proxy_type.as_ref().map_or(true, |y| &x.proxy_type == y)
 		};
 		Ok(Proxies::<T>::get(real).0.into_iter().find(f).ok_or(Error::<T>::NotProxy)?)
 	}
@@ -1005,8 +1007,8 @@ impl<T: Config> Pallet<T> {
 			match c.is_sub_type() {
 				// Proxy call cannot add or remove a proxy with more permissions than it already
 				// has.
-				Some(Call::add_proxy { ref proxy_type, .. }) |
-				Some(Call::remove_proxy { ref proxy_type, .. })
+				Some(Call::add_proxy { ref proxy_type, .. })
+				| Some(Call::remove_proxy { ref proxy_type, .. })
 					if !def.proxy_type.is_superset(proxy_type) =>
 				{
 					false

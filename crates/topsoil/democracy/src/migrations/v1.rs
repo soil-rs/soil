@@ -18,9 +18,9 @@
 //! Storage migrations for the preimage pallet.
 
 use crate::*;
+use soil_core::H256;
 use topsoil_support::{pallet_prelude::*, storage_alias, traits::OnRuntimeUpgrade, BoundedVec};
 use topsoil_system::pallet_prelude::BlockNumberFor;
-use soil_core::H256;
 
 /// The log target.
 const TARGET: &'static str = "runtime::democracy::migration::v1";
@@ -32,7 +32,11 @@ mod v0 {
 	#[storage_alias]
 	pub type PublicProps<T: Config> = StorageValue<
 		Pallet<T>,
-		Vec<(PropIndex, <T as topsoil_system::Config>::Hash, <T as topsoil_system::Config>::AccountId)>,
+		Vec<(
+			PropIndex,
+			<T as topsoil_system::Config>::Hash,
+			<T as topsoil_system::Config>::AccountId,
+		)>,
 		ValueQuery,
 	>;
 

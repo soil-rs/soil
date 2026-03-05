@@ -44,6 +44,13 @@ extern crate alloc;
 
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use core::marker::PhantomData;
+use scale_info::TypeInfo;
+use soil_arithmetic::traits::Saturating;
+use soil_runtime::{
+	traits::{Convert, StaticLookup},
+	ArithmeticError::Overflow,
+	Debug, DispatchError, Perbill,
+};
 use topsoil_support::{
 	dispatch::{DispatchResultWithPostInfo, PostDispatchInfo},
 	ensure, impl_ensure_origin_with_arg_ignoring_arg,
@@ -52,13 +59,6 @@ use topsoil_support::{
 		RankedMembersSwapHandler, VoteTally,
 	},
 	CloneNoBound, DebugNoBound, EqNoBound, PartialEqNoBound,
-};
-use scale_info::TypeInfo;
-use soil_arithmetic::traits::Saturating;
-use soil_runtime::{
-	traits::{Convert, StaticLookup},
-	ArithmeticError::Overflow,
-	Debug, DispatchError, Perbill,
 };
 
 #[cfg(test)]
@@ -395,9 +395,9 @@ pub trait BenchmarkSetup<AccountId> {
 #[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
+	use soil_runtime::traits::MaybeConvert;
 	use topsoil_support::{pallet_prelude::*, storage::KeyLenOf};
 	use topsoil_system::pallet_prelude::*;
-	use soil_runtime::traits::MaybeConvert;
 
 	#[pallet::pallet]
 	pub struct Pallet<T, I = ()>(PhantomData<(T, I)>);

@@ -21,7 +21,6 @@
 
 #![warn(missing_docs)]
 #![recursion_limit = "1024"]
-
 #![cfg_attr(not(feature = "std"), no_std)]
 
 #[cfg(feature = "std")]
@@ -57,7 +56,11 @@ use jsonrpsee::RpcModule;
 #[cfg(feature = "std")]
 use log::{debug, error, trace, warn};
 #[cfg(feature = "std")]
+use soil_blockchain::HeaderMetadata;
+#[cfg(feature = "std")]
 use soil_client_api::{blockchain::HeaderBackend, BlockBackend, BlockchainEvents, ProofProvider};
+#[cfg(feature = "std")]
+use soil_consensus::SyncOracle;
 #[cfg(feature = "std")]
 use soil_network::{
 	config::MultiaddrWithPeerId, service::traits::NetworkService, NetworkBackend, NetworkBlock,
@@ -70,13 +73,9 @@ use soil_network_types::PeerId;
 #[cfg(feature = "std")]
 use soil_rpc_server::Server;
 #[cfg(feature = "std")]
-use soil_utils::mpsc::TracingUnboundedReceiver;
-#[cfg(feature = "std")]
-use soil_blockchain::HeaderMetadata;
-#[cfg(feature = "std")]
-use soil_consensus::SyncOracle;
-#[cfg(feature = "std")]
 use soil_runtime::traits::{Block as BlockT, Header as HeaderT};
+#[cfg(feature = "std")]
+use soil_utils::mpsc::TracingUnboundedReceiver;
 
 #[cfg(feature = "std")]
 pub use self::{
@@ -122,18 +121,18 @@ use prometheus_endpoint::Registry;
 #[cfg(feature = "std")]
 pub use sc_consensus::ImportQueue;
 #[cfg(feature = "std")]
+pub use sc_rpc::{RandomIntegerSubscriptionId, RandomStringSubscriptionId};
+#[cfg(feature = "std")]
+pub use sc_tracing::TracingReceiver;
+#[cfg(feature = "std")]
+pub use sc_transaction_pool::TransactionPoolOptions;
+#[cfg(feature = "std")]
 pub use soil_executor::NativeExecutionDispatch;
 #[cfg(feature = "std")]
 pub use soil_network_sync::WarpSyncConfig;
 #[doc(hidden)]
 #[cfg(feature = "std")]
 pub use soil_network_transactions::config::{TransactionImport, TransactionImportFuture};
-#[cfg(feature = "std")]
-pub use sc_rpc::{RandomIntegerSubscriptionId, RandomStringSubscriptionId};
-#[cfg(feature = "std")]
-pub use sc_tracing::TracingReceiver;
-#[cfg(feature = "std")]
-pub use sc_transaction_pool::TransactionPoolOptions;
 #[cfg(feature = "std")]
 pub use soil_transaction_pool_api::{error::IntoPoolError, InPoolTransaction, TransactionPool};
 #[doc(hidden)]

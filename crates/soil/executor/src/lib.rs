@@ -29,7 +29,6 @@
 //! wasm engine used, instance cache.
 
 #![warn(missing_docs)]
-
 #![cfg_attr(not(feature = "std"), no_std)]
 
 #[macro_use]
@@ -85,8 +84,8 @@ pub trait RuntimeVersionOf {
 mod tests {
 	use super::*;
 	use soil_executor_common::runtime_blob::RuntimeBlob;
-	use soil_runtime_test::wasm_binary_unwrap;
 	use soil_io::TestExternalities;
+	use soil_runtime_test::wasm_binary_unwrap;
 
 	#[test]
 	fn call_in_interpreted_wasm_works() {

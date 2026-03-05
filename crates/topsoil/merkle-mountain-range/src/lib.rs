@@ -403,9 +403,9 @@ impl<T: Config<I>, I: 'static> Pallet<T, I> {
 		leaves: Vec<LeafOf<T, I>>,
 		proof: LeafProof<HashOf<T, I>>,
 	) -> Result<(), Error> {
-		if proof.leaf_count > NumberOfLeaves::<T, I>::get() ||
-			proof.leaf_count == 0 ||
-			proof.items.len().saturating_add(leaves.len()) as u64 > proof.leaf_count
+		if proof.leaf_count > NumberOfLeaves::<T, I>::get()
+			|| proof.leaf_count == 0
+			|| proof.items.len().saturating_add(leaves.len()) as u64 > proof.leaf_count
 		{
 			return Err(
 				Error::Verify.log_debug("The proof has incorrect number of leaves or proof items.")
@@ -438,7 +438,8 @@ impl<T: Config<I>, I: 'static> Pallet<T, I> {
 
 	#[cfg(feature = "runtime-benchmarks")]
 	pub fn generate_mock_ancestry_proof() -> Result<AncestryProof<HashOf<T, I>>, Error> {
-		let leaf_count = Self::block_num_to_leaf_count(<topsoil_system::Pallet<T>>::block_number())?;
+		let leaf_count =
+			Self::block_num_to_leaf_count(<topsoil_system::Pallet<T>>::block_number())?;
 		let mmr: ModuleMmr<mmr::storage::OffchainStorage, T, I> = mmr::Mmr::new(leaf_count);
 		mmr.generate_mock_ancestry_proof()
 	}

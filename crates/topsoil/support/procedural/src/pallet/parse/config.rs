@@ -16,10 +16,12 @@
 // limitations under the License.
 
 use super::helper;
-use topsoil_support_procedural_tools::{get_cfg_attributes, get_doc_literals, is_using_frame_crate};
 use proc_macro_warning::Warning;
 use quote::ToTokens;
 use syn::{parse_quote, spanned::Spanned, token, Token, TraitItemType};
+use topsoil_support_procedural_tools::{
+	get_cfg_attributes, get_doc_literals, is_using_frame_crate,
+};
 
 /// List of additional token to be used for parsing.
 mod keyword {
@@ -314,7 +316,8 @@ fn has_expected_system_config(path: syn::Path, topsoil_system: &syn::Path) -> bo
 			// We know that the only valid topsoil_system path is one that is `topsoil_system`, as
 			// `frame` re-exports it as such.
 			{
-				syn::parse2::<syn::Path>(quote::quote!(topsoil_system)).expect("is a valid path; qed")
+				syn::parse2::<syn::Path>(quote::quote!(topsoil_system))
+					.expect("is a valid path; qed")
 			},
 			(_, _) =>
 			// They are either both `topsoil_system` or both `topsoil::xyz::topsoil_system`.
@@ -333,8 +336,8 @@ fn has_expected_system_config(path: syn::Path, topsoil_system: &syn::Path) -> bo
 		.segments
 		.into_iter()
 		.map(|ps| ps.ident)
-		.collect::<Vec<_>>() ==
-		path.segments.into_iter().map(|ps| ps.ident).collect::<Vec<_>>()
+		.collect::<Vec<_>>()
+		== path.segments.into_iter().map(|ps| ps.ident).collect::<Vec<_>>()
 }
 
 /// Replace ident `Self` by `T`
@@ -642,8 +645,7 @@ mod tests {
 		let path = syn::parse2::<syn::Path>(quote::quote!(topsoil_system::Config)).unwrap();
 
 		let topsoil_system =
-			syn::parse2::<syn::Path>(quote::quote!(topsoil::deps::topsoil_system))
-				.unwrap();
+			syn::parse2::<syn::Path>(quote::quote!(topsoil::deps::topsoil_system)).unwrap();
 		assert!(has_expected_system_config(path.clone(), &topsoil_system));
 
 		let topsoil_system =
@@ -654,11 +656,9 @@ mod tests {
 	#[test]
 	fn has_expected_system_config_works_with_frame_full_path() {
 		let topsoil_system =
-			syn::parse2::<syn::Path>(quote::quote!(topsoil::deps::topsoil_system))
-				.unwrap();
+			syn::parse2::<syn::Path>(quote::quote!(topsoil::deps::topsoil_system)).unwrap();
 		let path =
-			syn::parse2::<syn::Path>(quote::quote!(topsoil::deps::topsoil_system::Config))
-				.unwrap();
+			syn::parse2::<syn::Path>(quote::quote!(topsoil::deps::topsoil_system::Config)).unwrap();
 		assert!(has_expected_system_config(path, &topsoil_system));
 
 		let topsoil_system =
@@ -673,8 +673,7 @@ mod tests {
 		let topsoil_system =
 			syn::parse2::<syn::Path>(quote::quote!(topsoil::xyz::topsoil_system)).unwrap();
 		let path =
-			syn::parse2::<syn::Path>(quote::quote!(topsoil::xyz::topsoil_system::Config))
-				.unwrap();
+			syn::parse2::<syn::Path>(quote::quote!(topsoil::xyz::topsoil_system::Config)).unwrap();
 		assert!(has_expected_system_config(path, &topsoil_system));
 
 		let topsoil_system =
@@ -689,19 +688,16 @@ mod tests {
 		let topsoil_system =
 			syn::parse2::<syn::Path>(quote::quote!(topsoil::xyz::topsoil_system)).unwrap();
 		let path =
-			syn::parse2::<syn::Path>(quote::quote!(topsoil::deps::topsoil_system::Config))
-				.unwrap();
+			syn::parse2::<syn::Path>(quote::quote!(topsoil::deps::topsoil_system::Config)).unwrap();
 		assert!(!has_expected_system_config(path, &topsoil_system));
 	}
 
 	#[test]
 	fn has_expected_system_config_does_not_works_with_other_mixed_frame_full_path() {
 		let topsoil_system =
-			syn::parse2::<syn::Path>(quote::quote!(topsoil::deps::topsoil_system))
-				.unwrap();
+			syn::parse2::<syn::Path>(quote::quote!(topsoil::deps::topsoil_system)).unwrap();
 		let path =
-			syn::parse2::<syn::Path>(quote::quote!(topsoil::xyz::topsoil_system::Config))
-				.unwrap();
+			syn::parse2::<syn::Path>(quote::quote!(topsoil::xyz::topsoil_system::Config)).unwrap();
 		assert!(!has_expected_system_config(path, &topsoil_system));
 	}
 
@@ -709,8 +705,7 @@ mod tests {
 	fn has_expected_system_config_does_not_work_with_frame_full_path_if_not_frame_crate() {
 		let topsoil_system = syn::parse2::<syn::Path>(quote::quote!(topsoil_system)).unwrap();
 		let path =
-			syn::parse2::<syn::Path>(quote::quote!(topsoil::deps::topsoil_system::Config))
-				.unwrap();
+			syn::parse2::<syn::Path>(quote::quote!(topsoil::deps::topsoil_system::Config)).unwrap();
 		assert!(!has_expected_system_config(path, &topsoil_system));
 	}
 

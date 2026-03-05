@@ -132,8 +132,8 @@ impl Config for Test {
 }
 
 use super::{Call as ProxyCall, Event as ProxyEvent};
-use topsoil_system::Call as SystemCall;
 use topsoil_balances::{Call as BalancesCall, Error as BalancesError, Event as BalancesEvent};
+use topsoil_system::Call as SystemCall;
 use topsoil_utility::{Call as UtilityCall, Event as UtilityEvent};
 
 type SystemError = topsoil_system::Error<Test>;

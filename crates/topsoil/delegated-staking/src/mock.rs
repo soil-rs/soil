@@ -26,15 +26,15 @@ use topsoil_support::{
 
 use soil_runtime::{traits::IdentityLookup, BuildStorage, Perbill};
 
+use soil_core::{ConstBool, U256};
+use soil_runtime::traits::Convert;
+use soil_staking::{Agent, Stake, StakingInterface};
 use topsoil_election_provider_support::{
 	bounds::{ElectionBounds, ElectionBoundsBuilder},
 	onchain, SequentialPhragmen,
 };
-use topsoil_support::dispatch::RawOrigin;
 use topsoil_staking::{ActiveEra, ActiveEraInfo, CurrentEra};
-use soil_core::{ConstBool, U256};
-use soil_runtime::traits::Convert;
-use soil_staking::{Agent, Stake, StakingInterface};
+use topsoil_support::dispatch::RawOrigin;
 
 pub type T = Runtime;
 type Block = topsoil_system::mocking::MockBlock<Runtime>;
@@ -304,8 +304,8 @@ pub(crate) fn start_era(era: soil_staking::EraIndex) {
 }
 
 pub(crate) fn eq_stake(who: AccountId, total: Balance, active: Balance) -> bool {
-	Staking::stake(&who).unwrap() == Stake { total, active } &&
-		get_agent_ledger(&who).ledger.stakeable_balance() == total
+	Staking::stake(&who).unwrap() == Stake { total, active }
+		&& get_agent_ledger(&who).ledger.stakeable_balance() == total
 }
 
 pub(crate) fn get_agent_ledger(agent: &AccountId) -> AgentLedgerOuter<T> {

@@ -19,9 +19,9 @@
 
 use super::*;
 use crate as sudo;
-use topsoil_support::{derive_impl, traits::Contains};
 use soil_io;
 use soil_runtime::BuildStorage;
+use topsoil_support::{derive_impl, traits::Contains};
 
 // Logger module to track execution.
 #[topsoil_support::pallet]
@@ -32,7 +32,8 @@ pub mod logger {
 	#[pallet::config]
 	pub trait Config: topsoil_system::Config {
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>>
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 	}
 
 	#[pallet::pallet]

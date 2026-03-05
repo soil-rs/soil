@@ -26,11 +26,11 @@
 extern crate alloc;
 
 use alloc::vec::Vec;
+use soil_authority_discovery::AuthorityId;
 use topsoil_support::{
 	traits::{Get, OneSessionHandler},
 	WeakBoundedVec,
 };
-use soil_authority_discovery::AuthorityId;
 
 pub use pallet::*;
 
@@ -214,7 +214,6 @@ mod tests {
 	use super::*;
 	use crate as topsoil_authority_discovery;
 	use alloc::vec;
-	use topsoil_support::{derive_impl, parameter_types, traits::ConstU32};
 	use soil_application_crypto::Pair;
 	use soil_authority_discovery::AuthorityPair;
 	use soil_core::crypto::key_types;
@@ -224,6 +223,7 @@ mod tests {
 		traits::{ConvertInto, IdentityLookup, OpaqueKeys},
 		BuildStorage, KeyTypeId, Perbill,
 	};
+	use topsoil_support::{derive_impl, parameter_types, traits::ConstU32};
 
 	type Block = topsoil_system::mocking::MockBlock<Test>;
 

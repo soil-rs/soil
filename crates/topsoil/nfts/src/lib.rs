@@ -52,15 +52,15 @@ extern crate alloc;
 
 use alloc::{boxed::Box, vec, vec::Vec};
 use codec::{Decode, Encode};
+use soil_runtime::{
+	traits::{BlockNumberProvider, IdentifyAccount, Saturating, StaticLookup, Verify, Zero},
+	Debug,
+};
 use topsoil_support::traits::{
 	tokens::Locker, BalanceStatus::Reserved, Currency, EnsureOriginWithArg, Incrementable,
 	ReservableCurrency,
 };
 use topsoil_system::Config as SystemConfig;
-use soil_runtime::{
-	traits::{BlockNumberProvider, IdentifyAccount, Saturating, StaticLookup, Verify, Zero},
-	Debug,
-};
 
 pub use pallet::*;
 pub use types::*;
@@ -116,10 +116,17 @@ pub mod pallet {
 			let account = soil_runtime::MultiSigner::Sr25519(public).into_account();
 			(public.into(), account)
 		}
-		fn sign(signer: &soil_runtime::MultiSigner, message: &[u8]) -> soil_runtime::MultiSignature {
+		fn sign(
+			signer: &soil_runtime::MultiSigner,
+			message: &[u8],
+		) -> soil_runtime::MultiSignature {
 			soil_runtime::MultiSignature::Sr25519(
-				soil_io::crypto::sr25519_sign(0.into(), &signer.clone().try_into().unwrap(), message)
-					.unwrap(),
+				soil_io::crypto::sr25519_sign(
+					0.into(),
+					&signer.clone().try_into().unwrap(),
+					message,
+				)
+				.unwrap(),
 			)
 		}
 	}

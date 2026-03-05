@@ -19,17 +19,17 @@
 //! bonding validators, nominators, and generating different types of solutions.
 
 use crate::{Pallet as Staking, *};
-use topsoil_benchmarking::account;
-use topsoil_system::RawOrigin;
 use rand_chacha::{
 	rand_core::{RngCore, SeedableRng},
 	ChaChaRng,
 };
 use soil_io::hashing::blake2_256;
+use topsoil_benchmarking::account;
+use topsoil_system::RawOrigin;
 
+use soil_runtime::{traits::StaticLookup, Perbill};
 use topsoil_election_provider_support::SortedListProvider;
 use topsoil_support::pallet_prelude::*;
-use soil_runtime::{traits::StaticLookup, Perbill};
 
 const SEED: u32 = 0;
 

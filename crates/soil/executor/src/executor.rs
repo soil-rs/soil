@@ -30,13 +30,13 @@ use std::{
 };
 
 use codec::Encode;
+use soil_core::traits::{CallContext, CodeExecutor, Externalities, RuntimeCode};
 use soil_executor_common::{
 	runtime_blob::RuntimeBlob,
 	wasm_runtime::{
 		AllocationStats, HeapAllocStrategy, WasmInstance, WasmModule, DEFAULT_HEAP_ALLOC_STRATEGY,
 	},
 };
-use soil_core::traits::{CallContext, CodeExecutor, Externalities, RuntimeCode};
 use soil_version::{GetNativeVersion, NativeVersion, RuntimeVersion};
 use soil_wasm_interface::{ExtendedHostFunctions, HostFunctions};
 
@@ -573,8 +573,9 @@ pub struct NativeElseWasmExecutor<D: NativeExecutionDispatch> {
 	/// Native runtime version info.
 	native_version: NativeVersion,
 	/// Fallback wasm executor.
-	wasm:
-		WasmExecutor<ExtendedHostFunctions<soil_io::SubstrateHostFunctions, D::ExtendHostFunctions>>,
+	wasm: WasmExecutor<
+		ExtendedHostFunctions<soil_io::SubstrateHostFunctions, D::ExtendHostFunctions>,
+	>,
 
 	use_native: bool,
 }
@@ -744,7 +745,9 @@ impl<D: NativeExecutionDispatch> Clone for NativeElseWasmExecutor<D> {
 }
 
 #[allow(deprecated)]
-impl<D: NativeExecutionDispatch> soil_core::traits::ReadRuntimeVersion for NativeElseWasmExecutor<D> {
+impl<D: NativeExecutionDispatch> soil_core::traits::ReadRuntimeVersion
+	for NativeElseWasmExecutor<D>
+{
 	fn read_runtime_version(
 		&self,
 		wasm_code: &[u8],

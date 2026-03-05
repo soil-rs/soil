@@ -16,6 +16,10 @@
 // limitations under the License.
 
 use crate::VoterBagsListInstance;
+use soil_runtime::{
+	traits::{Convert, IdentityLookup},
+	BuildStorage, FixedU128, Perbill,
+};
 use topsoil_election_provider_support::VoteWeight;
 use topsoil_support::{
 	derive_impl,
@@ -23,10 +27,6 @@ use topsoil_support::{
 	parameter_types,
 	traits::{ConstU64, Nothing, VariantCountOf},
 	PalletId,
-};
-use soil_runtime::{
-	traits::{Convert, IdentityLookup},
-	BuildStorage, FixedU128, Perbill,
 };
 
 type AccountId = u128;

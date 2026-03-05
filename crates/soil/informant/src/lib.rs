@@ -29,13 +29,13 @@ use futures_timer::Delay;
 #[cfg(feature = "std")]
 use log::{debug, info, log_enabled, trace};
 #[cfg(feature = "std")]
+use soil_blockchain::HeaderMetadata;
+#[cfg(feature = "std")]
 use soil_client_api::{BlockchainEvents, UsageProvider};
 #[cfg(feature = "std")]
 use soil_network::NetworkStatusProvider;
 #[cfg(feature = "std")]
 use soil_network_sync::{SyncStatusProvider, SyncingService};
-#[cfg(feature = "std")]
-use soil_blockchain::HeaderMetadata;
 #[cfg(feature = "std")]
 use soil_runtime::traits::{Block as BlockT, Header};
 #[cfg(feature = "std")]

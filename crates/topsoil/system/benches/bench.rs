@@ -16,8 +16,8 @@
 // limitations under the License.
 
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
-use topsoil_support::{derive_impl, dispatch::DispatchClass};
 use soil_runtime::{BuildStorage, Perbill};
+use topsoil_support::{derive_impl, dispatch::DispatchClass};
 #[topsoil_support::pallet]
 mod module {
 	use topsoil_support::pallet_prelude::*;

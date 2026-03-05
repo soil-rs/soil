@@ -20,13 +20,13 @@
 use super::*;
 use crate as topsoil_society;
 
+use soil_runtime::{traits::IdentityLookup, BuildStorage};
 use topsoil_support::{
 	assert_noop, assert_ok, derive_impl, ord_parameter_types, parameter_types,
 	traits::{ConstU32, ConstU64},
 };
 use topsoil_support_test::TestRandomness;
 use topsoil_system::EnsureSignedBy;
-use soil_runtime::{traits::IdentityLookup, BuildStorage};
 
 use RuntimeOrigin as Origin;
 

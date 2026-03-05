@@ -18,8 +18,8 @@
 
 use super::{client::ClientConfig, wasm_override::WasmOverride, wasm_substitutes::WasmSubstitutes};
 use soil_client_api::{backend, TrieCacheContext};
-use soil_executor::{RuntimeVersion, RuntimeVersionOf};
 use soil_core::traits::{FetchRuntimeCode, RuntimeCode};
+use soil_executor::{RuntimeVersion, RuntimeVersionOf};
 use soil_runtime::traits::Block as BlockT;
 use soil_state_machine::{Ext, OverlayedChanges};
 use std::sync::Arc;
@@ -78,7 +78,10 @@ where
 	/// Returns the `:code` for the given `block`.
 	///
 	/// This takes into account potential overrides/substitutes.
-	pub fn code_at_ignoring_overrides(&self, block: Block::Hash) -> soil_blockchain::Result<Vec<u8>> {
+	pub fn code_at_ignoring_overrides(
+		&self,
+		block: Block::Hash,
+	) -> soil_blockchain::Result<Vec<u8>> {
 		let state = self.backend.state_at(block, TrieCacheContext::Untrusted)?;
 
 		let state_runtime_code = soil_state_machine::backend::BackendRuntimeCode::new(&state);
@@ -168,11 +171,11 @@ mod tests {
 	use super::*;
 	use backend::Backend;
 	use soil_client_api::{in_mem, HeaderBackend};
-	use soil_executor::WasmExecutor;
 	use soil_core::{
 		testing::TaskExecutor,
 		traits::{FetchRuntimeCode, WrappedRuntimeCode},
 	};
+	use soil_executor::WasmExecutor;
 	use std::collections::HashMap;
 	use substrate_test_runtime_client::{runtime, GenesisInit};
 

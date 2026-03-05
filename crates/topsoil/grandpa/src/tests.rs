@@ -22,15 +22,15 @@
 use super::{Call, Event, *};
 use crate::mock::*;
 use fg_primitives::ScheduledChange;
+use soil_core::H256;
+use soil_keyring::Ed25519Keyring;
+use soil_runtime::testing::Digest;
 use topsoil_support::{
 	assert_err, assert_noop, assert_ok,
 	dispatch::{GetDispatchInfo, Pays},
 	traits::{Currency, KeyOwnerProofSystem, OnFinalize, OneSessionHandler},
 };
 use topsoil_system::{EventRecord, Phase};
-use soil_core::H256;
-use soil_keyring::Ed25519Keyring;
-use soil_runtime::testing::Digest;
 
 #[test]
 fn authorities_change_logged() {

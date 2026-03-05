@@ -90,7 +90,9 @@ pub fn pre_migration<T: crate::Config, N: AsRef<str>>(new: N) {
 		),
 		"unexpected next_key({}) = {:?}",
 		new,
-		soil_core::hexdisplay::HexDisplay::from(&soil_io::storage::next_key(new.as_bytes()).unwrap())
+		soil_core::hexdisplay::HexDisplay::from(
+			&soil_io::storage::next_key(new.as_bytes()).unwrap()
+		)
 	);
 	// ensure storage version is 3.
 	assert_eq!(StorageVersion::get::<crate::Pallet<T>>(), 3);

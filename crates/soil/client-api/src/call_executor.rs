@@ -18,8 +18,8 @@
 
 //! A method call executor interface.
 
-use soil_executor::{RuntimeVersion, RuntimeVersionOf};
 use soil_core::traits::CallContext;
+use soil_executor::{RuntimeVersion, RuntimeVersionOf};
 use soil_externalities::Extensions;
 use soil_runtime::traits::{Block as BlockT, HashingFor};
 use soil_state_machine::{OverlayedChanges, StorageProof};

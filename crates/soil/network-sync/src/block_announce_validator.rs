@@ -22,9 +22,9 @@
 use crate::{futures_stream::FuturesStream, LOG_TARGET};
 use futures::{stream::FusedStream, Future, FutureExt, Stream, StreamExt};
 use log::{debug, error, trace, warn};
+use soil_consensus::block_validation::Validation;
 use soil_network_common::sync::message::BlockAnnounce;
 use soil_network_types::PeerId;
-use soil_consensus::block_validation::Validation;
 use soil_runtime::traits::{Block as BlockT, Header, Zero};
 use std::{
 	collections::{hash_map::Entry, HashMap},
@@ -75,9 +75,9 @@ pub(crate) enum BlockAnnounceValidationResult<H> {
 impl<H> BlockAnnounceValidationResult<H> {
 	fn peer_id(&self) -> &PeerId {
 		match self {
-			BlockAnnounceValidationResult::Failure { peer_id, .. } |
-			BlockAnnounceValidationResult::Process { peer_id, .. } |
-			BlockAnnounceValidationResult::Skip { peer_id } => peer_id,
+			BlockAnnounceValidationResult::Failure { peer_id, .. }
+			| BlockAnnounceValidationResult::Process { peer_id, .. }
+			| BlockAnnounceValidationResult::Skip { peer_id } => peer_id,
 		}
 	}
 }
@@ -310,8 +310,8 @@ impl<B: BlockT> FusedStream for BlockAnnounceValidator<B> {
 mod tests {
 	use super::*;
 	use crate::block_announce_validator::AllocateSlotForBlockAnnounceValidation;
-	use soil_network_types::PeerId;
 	use soil_consensus::block_validation::DefaultBlockAnnounceValidator;
+	use soil_network_types::PeerId;
 	use substrate_test_runtime_client::runtime::Block;
 
 	#[test]

@@ -245,19 +245,6 @@ extern crate alloc;
 
 use alloc::{boxed::Box, vec::Vec};
 use codec::{Decode, DecodeWithMemTracking, Encode};
-use topsoil_election_provider_support::{
-	bounds::{CountBound, ElectionBounds, SizeBound},
-	BoundedSupports, BoundedSupportsOf, ElectionDataProvider, ElectionProvider,
-	InstantElectionProvider, NposSolution, PageIndex,
-};
-use topsoil_support::{
-	dispatch::DispatchClass,
-	ensure,
-	traits::{Currency, Get, OnUnbalanced, ReservableCurrency},
-	weights::Weight,
-	DefaultNoBound, EqNoBound, PartialEqNoBound,
-};
-use topsoil_system::{ensure_none, offchain::CreateBare, pallet_prelude::BlockNumberFor};
 use scale_info::TypeInfo;
 use soil_arithmetic::{
 	traits::{CheckedAdd, Zero},
@@ -271,6 +258,19 @@ use soil_runtime::{
 	},
 	Debug, DispatchError, ModuleError, PerThing, Perbill, SaturatedConversion,
 };
+use topsoil_election_provider_support::{
+	bounds::{CountBound, ElectionBounds, SizeBound},
+	BoundedSupports, BoundedSupportsOf, ElectionDataProvider, ElectionProvider,
+	InstantElectionProvider, NposSolution, PageIndex,
+};
+use topsoil_support::{
+	dispatch::DispatchClass,
+	ensure,
+	traits::{Currency, Get, OnUnbalanced, ReservableCurrency},
+	weights::Weight,
+	DefaultNoBound, EqNoBound, PartialEqNoBound,
+};
+use topsoil_system::{ensure_none, offchain::CreateBare, pallet_prelude::BlockNumberFor};
 
 #[cfg(feature = "try-runtime")]
 use soil_runtime::TryRuntimeError;
@@ -593,10 +593,10 @@ pub use pallet::*;
 #[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
+	use soil_runtime::traits::Convert;
 	use topsoil_election_provider_support::{InstantElectionProvider, NposSolver};
 	use topsoil_support::{pallet_prelude::*, traits::EstimateCallFee};
 	use topsoil_system::pallet_prelude::*;
-	use soil_runtime::traits::Convert;
 
 	#[pallet::config]
 	pub trait Config: topsoil_system::Config + CreateBare<Call<Self>> {
@@ -2070,9 +2070,9 @@ mod tests {
 		},
 		Phase,
 	};
+	use soil_npos_elections::{BalancingConfig, Support};
 	use topsoil_election_provider_support::bounds::ElectionBoundsBuilder;
 	use topsoil_support::{assert_noop, assert_ok};
-	use soil_npos_elections::{BalancingConfig, Support};
 
 	#[test]
 	fn phase_rotation_works() {
@@ -2735,8 +2735,8 @@ mod tests {
 
 		let mut active = 1;
 		while weight_with(active)
-			.all_lte(<Runtime as topsoil_system::Config>::BlockWeights::get().max_block) ||
-			active == all_voters
+			.all_lte(<Runtime as topsoil_system::Config>::BlockWeights::get().max_block)
+			|| active == all_voters
 		{
 			active += 1;
 		}

@@ -16,11 +16,11 @@
 // limitations under the License.
 
 use crate::LOG_TARGET;
+use soil_io::hashing::twox_128;
 use topsoil_support::{
 	traits::{Get, StorageVersion},
 	weights::Weight,
 };
-use soil_io::hashing::twox_128;
 
 /// The old prefix.
 pub const OLD_PREFIX: &[u8] = b"GrandpaFinality";

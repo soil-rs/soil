@@ -16,11 +16,6 @@
 // limitations under the License.
 
 use crate::*;
-use topsoil_support::{
-	assert_noop, assert_ok,
-	dispatch::{Pays, PostDispatchInfo, WithPostDispatchInfo},
-	traits::{OnRuntimeUpgrade, WhitelistedStorageKeys},
-};
 use mock::{RuntimeOrigin, *};
 use soil_core::{hexdisplay::HexDisplay, H256};
 use soil_runtime::{
@@ -30,6 +25,11 @@ use soil_runtime::{
 };
 use std::collections::BTreeSet;
 use substrate_test_runtime_client::WasmExecutor;
+use topsoil_support::{
+	assert_noop, assert_ok,
+	dispatch::{Pays, PostDispatchInfo, WithPostDispatchInfo},
+	traits::{OnRuntimeUpgrade, WhitelistedStorageKeys},
+};
 
 #[test]
 fn check_whitelist() {

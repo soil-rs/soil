@@ -58,6 +58,11 @@ extern crate alloc;
 
 use alloc::{boxed::Box, vec::Vec};
 use codec::{Decode, Encode};
+pub use pallet::*;
+use soil_runtime::{
+	traits::{AccountIdConversion, Dispatchable, Saturating, Zero},
+	ArithmeticError, Debug, DispatchError,
+};
 use topsoil_support::{
 	dispatch::{DispatchResult, GetDispatchInfo},
 	ensure,
@@ -65,11 +70,6 @@ use topsoil_support::{
 	storage::bounded_vec::BoundedVec,
 	traits::{Currency, ExistenceRequirement::KeepAlive, Get, Randomness, ReservableCurrency},
 	PalletId,
-};
-pub use pallet::*;
-use soil_runtime::{
-	traits::{AccountIdConversion, Dispatchable, Saturating, Zero},
-	ArithmeticError, Debug, DispatchError,
 };
 pub use weights::WeightInfo;
 
@@ -146,7 +146,8 @@ pub mod pallet {
 
 		/// The overarching event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>>
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// The manager origin.
 		type ManagerOrigin: EnsureOrigin<Self::RuntimeOrigin>;

@@ -47,8 +47,8 @@ use litep2p::{
 	PeerId, ProtocolName,
 };
 use parking_lot::RwLock;
-use soil_network_types::kad::Key as KademliaKey;
 use schnellru::{ByLength, LruMap};
+use soil_network_types::kad::Key as KademliaKey;
 
 use std::{
 	cmp,
@@ -555,8 +555,8 @@ impl Discovery {
 				}
 			},
 			None => {
-				let oldest = (self.address_confirmations.len() >=
-					self.address_confirmations.limiter().max_length() as usize)
+				let oldest = (self.address_confirmations.len()
+					>= self.address_confirmations.limiter().max_length() as usize)
 					.then(|| {
 						self.address_confirmations.pop_oldest().map(|(address, peers)| {
 							if peers.len() >= MIN_ADDRESS_CONFIRMATIONS {

@@ -23,6 +23,11 @@ use super::*;
 use crate::extension::{AsPerson, AsPersonInfo};
 
 use core::marker::{Send, Sync};
+use soil_runtime::{
+	generic::ExtensionVersion,
+	traits::{AppendZerosInput, AsTransactionAuthorizedOrigin, DispatchTransaction},
+	Weight,
+};
 use topsoil_benchmarking::{account, v2::*, BenchmarkError};
 use topsoil_support::{
 	assert_ok,
@@ -31,11 +36,6 @@ use topsoil_support::{
 	traits::{Len, OnIdle, OnPoll},
 };
 use topsoil_system::RawOrigin as SystemOrigin;
-use soil_runtime::{
-	generic::ExtensionVersion,
-	traits::{AppendZerosInput, AsTransactionAuthorizedOrigin, DispatchTransaction},
-	Weight,
-};
 
 const RI_ZERO: RingIndex = 0;
 const SEED: u32 = 0;

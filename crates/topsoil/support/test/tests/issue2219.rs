@@ -15,13 +15,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use topsoil_support::derive_impl;
-use topsoil_system::pallet_prelude::BlockNumberFor;
 use soil_core::{sr25519, ConstU64};
 use soil_runtime::{
 	generic,
 	traits::{BlakeTwo256, Verify},
 };
+use topsoil_support::derive_impl;
+use topsoil_system::pallet_prelude::BlockNumberFor;
 
 #[topsoil_support::pallet]
 mod module {

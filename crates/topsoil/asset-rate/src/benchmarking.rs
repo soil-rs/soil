@@ -21,10 +21,10 @@ use super::*;
 use crate::{pallet as topsoil_asset_rate, Pallet as AssetRate};
 
 use codec::Encode;
+use soil_core::crypto::FromEntropy;
 use topsoil_benchmarking::v2::*;
 use topsoil_support::assert_ok;
 use topsoil_system::RawOrigin;
-use soil_core::crypto::FromEntropy;
 
 /// Trait describing the factory function for the `AssetKind` parameter.
 pub trait AssetKindFactory<AssetKind> {

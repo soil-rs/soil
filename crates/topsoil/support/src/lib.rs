@@ -440,8 +440,6 @@ pub mod pallet_prelude {
 	};
 	pub use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 	pub use core::marker::PhantomData;
-	pub use topsoil_support::pallet_macros::*;
-	pub use topsoil_support_procedural::{inject_runtime_type, register_default_impl};
 	pub use scale_info::TypeInfo;
 	pub use soil_inherents::MakeFatalError;
 	pub use soil_runtime::{
@@ -458,6 +456,8 @@ pub mod pallet_prelude {
 		Debug, DispatchError, MAX_MODULE_ERROR_ENCODED_SIZE,
 	};
 	pub use soil_weights::Weight;
+	pub use topsoil_support::pallet_macros::*;
+	pub use topsoil_support_procedural::{inject_runtime_type, register_default_impl};
 }
 
 /// The pallet macro has 2 purposes:
@@ -2264,7 +2264,9 @@ pub mod pallet_macros {
 	pub use topsoil_support_procedural::origin;
 }
 
-#[deprecated(note = "Will be removed after July 2023; Use `soil_runtime::traits` directly instead.")]
+#[deprecated(
+	note = "Will be removed after July 2023; Use `soil_runtime::traits` directly instead."
+)]
 pub mod error {
 	#[doc(hidden)]
 	pub use soil_runtime::traits::{BadOrigin, LookupError};

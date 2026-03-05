@@ -25,8 +25,8 @@ use sc_consensus::{
 	BlockImportError, BlockImportStatus, JustificationImportResult, JustificationSyncLink, Link,
 };
 use soil_network::{NetworkBlock, NetworkSyncForkRequest};
-use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedSender};
 use soil_runtime::traits::{Block as BlockT, NumberFor};
+use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedSender};
 
 use std::{
 	pin::Pin,

@@ -19,15 +19,15 @@ use super::*;
 use alloc::{vec, vec::Vec};
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use core::{fmt::Debug, iter::once, ops::Add};
-use topsoil_support::{
-	traits::{ConstU32, Get},
-	BoundedVec, CloneNoBound, DebugNoBound, PartialEqNoBound,
-};
 use scale_info::{
 	build::{Fields, Variants},
 	Path, Type, TypeInfo,
 };
 use soil_runtime::traits::{Member, Zero};
+use topsoil_support::{
+	traits::{ConstU32, Get},
+	BoundedVec, CloneNoBound, DebugNoBound, PartialEqNoBound,
+};
 
 /// An identifier for a single name registrar/identity verification service.
 pub type RegistrarIndex = u32;
@@ -288,8 +288,9 @@ impl<
 	> Registration<Balance, MaxJudgements, IdentityInfo>
 {
 	pub(crate) fn total_deposit(&self) -> Balance {
-		self.deposit +
-			self.judgements
+		self.deposit
+			+ self
+				.judgements
 				.iter()
 				.map(|(_, ref j)| if let Judgement::FeePaid(fee) = j { *fee } else { Zero::zero() })
 				.fold(Zero::zero(), |a, i| a + i)

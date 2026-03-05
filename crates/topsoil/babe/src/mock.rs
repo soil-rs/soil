@@ -19,15 +19,6 @@
 
 use crate::{self as topsoil_babe, Config, CurrentSlot};
 use codec::Encode;
-use topsoil_election_provider_support::{
-	bounds::{ElectionBounds, ElectionBoundsBuilder},
-	onchain, SequentialPhragmen,
-};
-use topsoil_support::{
-	derive_impl, parameter_types,
-	traits::{ConstU128, ConstU32, ConstU64, OnInitialize},
-};
-use topsoil_session::historical as pallet_session_historical;
 use soil_consensus_babe::{AuthorityId, AuthorityPair, Randomness, Slot, VrfSignature};
 use soil_core::{
 	crypto::{Pair, VrfSecret},
@@ -42,6 +33,15 @@ use soil_runtime::{
 	BuildStorage, DispatchError, Perbill,
 };
 use soil_staking::{EraIndex, SessionIndex};
+use topsoil_election_provider_support::{
+	bounds::{ElectionBounds, ElectionBoundsBuilder},
+	onchain, SequentialPhragmen,
+};
+use topsoil_session::historical as pallet_session_historical;
+use topsoil_support::{
+	derive_impl, parameter_types,
+	traits::{ConstU128, ConstU32, ConstU64, OnInitialize},
+};
 
 type DummyValidatorId = u64;
 
@@ -279,7 +279,11 @@ pub fn make_secondary_vrf_pre_digest(
 	vrf_signature: VrfSignature,
 ) -> Digest {
 	let digest_data = soil_consensus_babe::digests::PreDigest::SecondaryVRF(
-		soil_consensus_babe::digests::SecondaryVRFPreDigest { authority_index, slot, vrf_signature },
+		soil_consensus_babe::digests::SecondaryVRFPreDigest {
+			authority_index,
+			slot,
+			vrf_signature,
+		},
 	);
 	let log = DigestItem::PreRuntime(soil_consensus_babe::BABE_ENGINE_ID, digest_data.encode());
 	Digest { logs: vec![log] }
@@ -292,8 +296,9 @@ pub fn make_vrf_signature_and_randomness(
 	let transcript =
 		soil_consensus_babe::make_vrf_transcript(&topsoil_babe::Randomness::<Test>::get(), slot, 0);
 
-	let randomness =
-		pair.as_ref().make_bytes(soil_consensus_babe::RANDOMNESS_VRF_CONTEXT, &transcript);
+	let randomness = pair
+		.as_ref()
+		.make_bytes(soil_consensus_babe::RANDOMNESS_VRF_CONTEXT, &transcript);
 
 	let signature = pair.as_ref().vrf_sign(&transcript.into());
 

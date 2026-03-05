@@ -33,6 +33,11 @@ extern crate alloc;
 use alloc::vec::Vec;
 use codec::{Decode, Encode, MaxEncodedLen};
 use core::fmt::Debug;
+use soil_runtime::traits::{BlakeTwo256, Dispatchable, Hash, One, Saturating, Zero};
+use soil_transaction_storage_proof::{
+	encode_index, num_chunks, random_chunk, ChunkIndex, InherentError, TransactionStorageProof,
+	CHUNK_SIZE, INHERENT_IDENTIFIER,
+};
 use topsoil_support::{
 	dispatch::GetDispatchInfo,
 	pallet_prelude::InvalidTransaction,
@@ -42,11 +47,6 @@ use topsoil_support::{
 	},
 };
 use topsoil_system::pallet_prelude::BlockNumberFor;
-use soil_runtime::traits::{BlakeTwo256, Dispatchable, Hash, One, Saturating, Zero};
-use soil_transaction_storage_proof::{
-	encode_index, num_chunks, random_chunk, ChunkIndex, InherentError, TransactionStorageProof,
-	CHUNK_SIZE, INHERENT_IDENTIFIER,
-};
 
 /// A type alias for the balance type from this pallet's point of view.
 type BalanceOf<T> =
@@ -154,7 +154,8 @@ pub mod pallet {
 	pub trait Config: topsoil_system::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>>
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 		/// A dispatchable call.
 		type RuntimeCall: Parameter
 			+ Dispatchable<RuntimeOrigin = Self::RuntimeOrigin>
@@ -301,7 +302,8 @@ pub mod pallet {
 			let chunks: Vec<_> = data.chunks(CHUNK_SIZE).map(|c| c.to_vec()).collect();
 			let chunk_count = chunks.len() as u32;
 			debug_assert_eq!(chunk_count, num_chunks(data.len() as u32));
-			let root = soil_io::trie::blake2_256_ordered_root(chunks, soil_runtime::StateVersion::V1);
+			let root =
+				soil_io::trie::blake2_256_ordered_root(chunks, soil_runtime::StateVersion::V1);
 
 			let content_hash = soil_io::hashing::blake2_256(&data);
 			let extrinsic_index =

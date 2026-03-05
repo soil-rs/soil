@@ -16,9 +16,9 @@
 // limitations under the License.
 
 pub mod constants {
-	use topsoil_support::weights::constants;
 	use soil_core::parameter_types;
 	use soil_weights::RuntimeDbWeight;
+	use topsoil_support::weights::constants;
 
 	parameter_types! {
 		/// By default, Substrate uses RocksDB, so this will be the weight used throughout

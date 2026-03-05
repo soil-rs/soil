@@ -18,12 +18,6 @@
 
 use assert_matches::assert_matches;
 use codec::{Decode, Encode};
-use soil_executor_common::{
-	error::Error,
-	runtime_blob::RuntimeBlob,
-	wasm_runtime::{HeapAllocStrategy, WasmModule},
-};
-use soil_runtime_test::wasm_binary_unwrap;
 use soil_core::{
 	ed25519, map,
 	offchain::{testing, OffchainDbExt, OffchainWorkerExt},
@@ -32,7 +26,13 @@ use soil_core::{
 	Pair,
 };
 use soil_crypto_hashing::{blake2_128, blake2_256, sha2_256, twox_128, twox_256};
+use soil_executor_common::{
+	error::Error,
+	runtime_blob::RuntimeBlob,
+	wasm_runtime::{HeapAllocStrategy, WasmModule},
+};
 use soil_runtime::traits::BlakeTwo256;
+use soil_runtime_test::wasm_binary_unwrap;
 use soil_state_machine::TestExternalities as CoreTestExternalities;
 use soil_trie::{LayoutV1 as Layout, TrieConfiguration};
 use std::sync::Arc;

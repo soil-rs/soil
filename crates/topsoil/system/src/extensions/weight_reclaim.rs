@@ -17,7 +17,6 @@
 
 use crate::Config;
 use codec::{Decode, DecodeWithMemTracking, Encode};
-use topsoil_support::dispatch::{DispatchInfo, PostDispatchInfo};
 use scale_info::TypeInfo;
 use soil_runtime::{
 	traits::{
@@ -27,6 +26,7 @@ use soil_runtime::{
 	DispatchResult,
 };
 use soil_weights::Weight;
+use topsoil_support::dispatch::{DispatchInfo, PostDispatchInfo};
 
 /// Reclaim the unused weight using the post dispatch information
 ///

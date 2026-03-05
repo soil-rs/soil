@@ -19,8 +19,8 @@
 
 use crate::AccountVote;
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
-use topsoil_support::dispatch::DispatchResult;
 use scale_info::TypeInfo;
+use topsoil_support::dispatch::DispatchResult;
 use Debug;
 
 /// Represents the differents states of a referendum.

@@ -159,6 +159,16 @@ use alloc::{
 };
 use codec::{Codec, MaxEncodedLen};
 use core::{cmp, fmt::Debug, mem, result};
+pub use impl_currency::{NegativeImbalance, PositiveImbalance};
+use scale_info::TypeInfo;
+use soil_core::{sr25519::Pair as SrPair, Pair};
+use soil_runtime::{
+	traits::{
+		AtLeast32BitUnsigned, CheckedAdd, CheckedSub, MaybeSerializeDeserialize, Saturating,
+		StaticLookup, Zero,
+	},
+	ArithmeticError, DispatchError, FixedPointOperand, Perbill, TokenError,
+};
 use topsoil_support::{
 	ensure,
 	pallet_prelude::DispatchResult,
@@ -175,16 +185,6 @@ use topsoil_support::{
 	BoundedSlice, WeakBoundedVec,
 };
 use topsoil_system as system;
-pub use impl_currency::{NegativeImbalance, PositiveImbalance};
-use scale_info::TypeInfo;
-use soil_core::{sr25519::Pair as SrPair, Pair};
-use soil_runtime::{
-	traits::{
-		AtLeast32BitUnsigned, CheckedAdd, CheckedSub, MaybeSerializeDeserialize, Saturating,
-		StaticLookup, Zero,
-	},
-	ArithmeticError, DispatchError, FixedPointOperand, Perbill, TokenError,
-};
 
 pub use types::{
 	AccountData, AdjustmentDirection, BalanceLock, DustCleaner, ExtraFlags, Reasons, ReserveData,
@@ -1376,8 +1376,8 @@ pub mod pallet {
 
 		fn hold_and_freeze_count() -> Result<(), soil_runtime::TryRuntimeError> {
 			Holds::<T, I>::iter_keys().try_for_each(|k| {
-				if Holds::<T, I>::decode_len(k).unwrap_or(0) >
-					T::RuntimeHoldReason::VARIANT_COUNT as usize
+				if Holds::<T, I>::decode_len(k).unwrap_or(0)
+					> T::RuntimeHoldReason::VARIANT_COUNT as usize
 				{
 					Err("Found `Hold` with too many elements")
 				} else {

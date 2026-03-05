@@ -55,17 +55,17 @@ use crate::{
 };
 use alloc::vec::Vec;
 use codec::{Decode, Encode, MaxEncodedLen};
-use topsoil_support::{
-	ensure,
-	pallet_prelude::DecodeWithMemTracking,
-	traits::{Defensive, DefensiveSaturating, Imbalance, OnUnbalanced},
-};
 use scale_info::TypeInfo;
 use soil_runtime::{
 	traits::{Saturating, Zero},
 	Debug, DispatchResult,
 };
 use soil_staking::{EraIndex, StakingInterface};
+use topsoil_support::{
+	ensure,
+	pallet_prelude::DecodeWithMemTracking,
+	traits::{Defensive, DefensiveSaturating, Imbalance, OnUnbalanced},
+};
 
 /// The proportion of the slashing reward to be paid out on the first slashing detection.
 /// This is f_1 in the paper.

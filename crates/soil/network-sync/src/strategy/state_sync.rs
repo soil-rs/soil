@@ -24,9 +24,9 @@ use crate::{
 };
 use codec::{Decode, Encode};
 use log::debug;
-use soil_client_api::{CompactProof, KeyValueStates, ProofProvider};
 use sc_consensus::ImportedState;
 use smallvec::SmallVec;
+use soil_client_api::{CompactProof, KeyValueStates, ProofProvider};
 use soil_core::storage::well_known_keys;
 use soil_runtime::{
 	traits::{Block as BlockT, Header, NumberFor},

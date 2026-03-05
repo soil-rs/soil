@@ -23,13 +23,13 @@ use super::*;
 
 use crate::{migration::v2::LazyMigrationV1ToV2, Pallet as Identity};
 use alloc::{vec, vec::Vec};
+use soil_runtime::traits::{Bounded, One};
 use topsoil_benchmarking::{account, v2::*, whitelisted_caller, BenchmarkError};
 use topsoil_support::{
 	assert_ok, ensure,
 	traits::{EnsureOrigin, Get, OnFinalize, OnInitialize},
 };
 use topsoil_system::RawOrigin;
-use soil_runtime::traits::{Bounded, One};
 
 const SEED: u32 = 0;
 

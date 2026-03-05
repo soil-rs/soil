@@ -17,6 +17,16 @@
 
 use std::collections::BTreeMap;
 
+use scale_info::{meta_type, TypeInfo};
+use soil_io::{
+	hashing::{blake2_128, twox_128, twox_64},
+	TestExternalities,
+};
+use soil_runtime::{
+	testing::UintAuthorityId,
+	traits::{Block as BlockT, Dispatchable},
+	DispatchError, ModuleError,
+};
 use topsoil_support::{
 	assert_ok, derive_impl,
 	dispatch::{DispatchClass, DispatchInfo, GetDispatchInfo, Parameter, Pays},
@@ -33,16 +43,6 @@ use topsoil_support::{
 	OrdNoBound, PartialOrdNoBound,
 };
 use topsoil_system::offchain::{CreateSignedTransaction, CreateTransactionBase, SigningTypes};
-use scale_info::{meta_type, TypeInfo};
-use soil_io::{
-	hashing::{blake2_128, twox_128, twox_64},
-	TestExternalities,
-};
-use soil_runtime::{
-	testing::UintAuthorityId,
-	traits::{Block as BlockT, Dispatchable},
-	DispatchError, ModuleError,
-};
 
 parameter_types! {
 	/// Used to control if the storage version should be updated.
@@ -119,9 +119,9 @@ impl SomeAssociation2 for u64 {
 #[doc = include_str!("../example-readme.md")]
 pub mod pallet {
 	use super::*;
+	use soil_runtime::DispatchResult;
 	use topsoil_support::pallet_prelude::*;
 	use topsoil_system::pallet_prelude::*;
-	use soil_runtime::DispatchResult;
 
 	type BalanceOf<T> = <T as Config>::Balance;
 
@@ -149,7 +149,8 @@ pub mod pallet {
 		type Balance: Parameter + Default + TypeInfo;
 
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>>
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 	}
 
 	#[pallet::extra_constants]
@@ -984,12 +985,12 @@ fn instance_expand() {
 
 #[test]
 fn inherent_expand() {
-	use topsoil_support::inherent::InherentData;
 	use soil_core::Hasher;
 	use soil_runtime::{
 		traits::{BlakeTwo256, Block as _, Header},
 		Digest,
 	};
+	use topsoil_support::inherent::InherentData;
 
 	let inherents = InherentData::new().create_extrinsics();
 
@@ -1346,7 +1347,10 @@ fn migrate_from_pallet_version_to_storage_version() {
 	const PALLET_VERSION_STORAGE_KEY_POSTFIX: &[u8] = b":__PALLET_VERSION__:";
 
 	fn pallet_version_key(name: &str) -> [u8; 32] {
-		topsoil_support::storage::storage_prefix(name.as_bytes(), PALLET_VERSION_STORAGE_KEY_POSTFIX)
+		topsoil_support::storage::storage_prefix(
+			name.as_bytes(),
+			PALLET_VERSION_STORAGE_KEY_POSTFIX,
+		)
 	}
 
 	TestExternalities::default().execute_with(|| {
@@ -1852,9 +1856,9 @@ fn metadata_v15() {
 		},
 	];
 
-	let empty_doc = pallets[0].event.as_ref().unwrap().ty.type_info().docs.is_empty() &&
-		pallets[0].error.as_ref().unwrap().ty.type_info().docs.is_empty() &&
-		pallets[0].calls.as_ref().unwrap().ty.type_info().docs.is_empty();
+	let empty_doc = pallets[0].event.as_ref().unwrap().ty.type_info().docs.is_empty()
+		&& pallets[0].error.as_ref().unwrap().ty.type_info().docs.is_empty()
+		&& pallets[0].calls.as_ref().unwrap().ty.type_info().docs.is_empty();
 
 	if cfg!(feature = "no-metadata-docs") {
 		assert!(empty_doc)
@@ -2443,8 +2447,8 @@ fn post_runtime_upgrade_detects_storage_version_issues() {
 
 		// The version isn't changed, we should detect it.
 		assert!(
-			Executive::try_runtime_upgrade(UpgradeCheckSelect::PreAndPost).unwrap_err() ==
-				"On chain and in-code storage version do not match. Missing runtime upgrade?"
+			Executive::try_runtime_upgrade(UpgradeCheckSelect::PreAndPost).unwrap_err()
+				== "On chain and in-code storage version do not match. Missing runtime upgrade?"
 					.into()
 		);
 	});
@@ -2474,8 +2478,8 @@ fn post_runtime_upgrade_detects_storage_version_issues() {
 		// any storage version "enabled".
 		assert!(
 			ExecutiveWithUpgradePallet4::try_runtime_upgrade(UpgradeCheckSelect::PreAndPost)
-				.unwrap_err() ==
-				"On chain storage version set, while the pallet \
+				.unwrap_err()
+				== "On chain storage version set, while the pallet \
 				doesn't have the `#[pallet::storage_version(VERSION)]` attribute."
 					.into()
 		);
@@ -2504,11 +2508,11 @@ fn test_dispatch_context() {
 fn test_call_feature_parsing() {
 	let call = pallet::Call::<Runtime>::check_for_dispatch_context {};
 	match call {
-		pallet::Call::<Runtime>::check_for_dispatch_context {} |
-		pallet::Call::<Runtime>::foo { .. } |
-		pallet::Call::foo_storage_layer { .. } |
-		pallet::Call::foo_index_out_of_order {} |
-		pallet::Call::foo_no_post_info {} => (),
+		pallet::Call::<Runtime>::check_for_dispatch_context {}
+		| pallet::Call::<Runtime>::foo { .. }
+		| pallet::Call::foo_storage_layer { .. }
+		| pallet::Call::foo_index_out_of_order {}
+		| pallet::Call::foo_no_post_info {} => (),
 		#[cfg(feature = "frame-feature-testing")]
 		pallet::Call::foo_feature_test {} => (),
 		pallet::Call::__Ignore(_, _) => (),
@@ -2520,11 +2524,11 @@ fn test_call_feature_parsing() {
 fn test_error_feature_parsing() {
 	let err = pallet::Error::<Runtime>::InsufficientProposersBalance;
 	match err {
-		pallet::Error::InsufficientProposersBalance |
-		pallet::Error::NonExistentStorageValue |
-		pallet::Error::Code(_) |
-		pallet::Error::Skipped(_) |
-		pallet::Error::CompactU8(_) => (),
+		pallet::Error::InsufficientProposersBalance
+		| pallet::Error::NonExistentStorageValue
+		| pallet::Error::Code(_)
+		| pallet::Error::Skipped(_)
+		| pallet::Error::CompactU8(_) => (),
 		#[cfg(feature = "frame-feature-testing")]
 		pallet::Error::FeatureTest => (),
 		pallet::Error::__Ignore(_, _) => (),
@@ -2533,7 +2537,9 @@ fn test_error_feature_parsing() {
 
 #[test]
 fn pallet_metadata() {
-	use soil_metadata_ir::{EnumDeprecationInfoIR, ItemDeprecationInfoIR, VariantDeprecationInfoIR};
+	use soil_metadata_ir::{
+		EnumDeprecationInfoIR, ItemDeprecationInfoIR, VariantDeprecationInfoIR,
+	};
 	let pallets = Runtime::metadata_ir().pallets;
 	let example = pallets[0].clone();
 	let example2 = pallets[1].clone();

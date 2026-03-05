@@ -23,9 +23,9 @@ use super::*;
 use crate::Pallet as CoreFellowship;
 
 use alloc::{boxed::Box, vec};
+use soil_arithmetic::traits::Bounded;
 use topsoil_benchmarking::v2::*;
 use topsoil_system::{pallet_prelude::BlockNumberFor, RawOrigin};
-use soil_arithmetic::traits::Bounded;
 
 const SEED: u32 = 0;
 

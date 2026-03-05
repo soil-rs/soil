@@ -19,18 +19,18 @@
 
 use crate::{mock::*, Event, SystemConfig, *};
 use enumflags2::BitFlags;
+use soil_core::{bounded::BoundedVec, Pair};
+use soil_runtime::{
+	traits::{Dispatchable, IdentifyAccount},
+	MultiSignature, MultiSigner,
+};
+use topsoil_balances::Error as BalancesError;
 use topsoil_support::{
 	assert_noop, assert_ok,
 	traits::{
 		tokens::nonfungibles_v2::{Create, Destroy, Inspect, Mutate},
 		Currency, Get,
 	},
-};
-use topsoil_balances::Error as BalancesError;
-use soil_core::{bounded::BoundedVec, Pair};
-use soil_runtime::{
-	traits::{Dispatchable, IdentifyAccount},
-	MultiSignature, MultiSigner,
 };
 
 type AccountIdOf<Test> = <Test as topsoil_system::Config>::AccountId;
@@ -3114,9 +3114,9 @@ fn collection_locking_should_work() {
 
 		let stored_config = CollectionConfigOf::<Test>::get(collection_id).unwrap();
 		let full_lock_config = collection_config_from_disabled_settings(
-			CollectionSetting::TransferableItems |
-				CollectionSetting::UnlockedMetadata |
-				CollectionSetting::UnlockedAttributes,
+			CollectionSetting::TransferableItems
+				| CollectionSetting::UnlockedMetadata
+				| CollectionSetting::UnlockedAttributes,
 		);
 		assert_eq!(stored_config, full_lock_config);
 	});

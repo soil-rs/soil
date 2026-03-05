@@ -24,15 +24,15 @@ pub use soil_runtime::{
 	BuildStorage,
 };
 
+use topsoil_identity::{
+	legacy::{IdentityField, IdentityInfo},
+	Data, IdentityOf, Judgement, SuperOf,
+};
 pub use topsoil_support::{
 	assert_noop, assert_ok, derive_impl, ord_parameter_types, parameter_types,
 	traits::EitherOfDiverse, BoundedVec,
 };
 use topsoil_system::{EnsureRoot, EnsureSignedBy};
-use topsoil_identity::{
-	legacy::{IdentityField, IdentityInfo},
-	Data, IdentityOf, Judgement, SuperOf,
-};
 
 pub use crate as topsoil_alliance;
 

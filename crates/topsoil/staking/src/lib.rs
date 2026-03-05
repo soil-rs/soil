@@ -311,16 +311,6 @@ extern crate alloc;
 
 use alloc::{collections::btree_map::BTreeMap, vec, vec::Vec};
 use codec::{Decode, DecodeWithMemTracking, Encode, HasCompact, MaxEncodedLen};
-use topsoil_election_provider_support::ElectionProvider;
-use topsoil_support::{
-	defensive, defensive_assert,
-	traits::{
-		tokens::fungible::{Credit, Debt},
-		ConstU32, Contains, Defensive, DefensiveMax, DefensiveSaturating, Get, LockIdentifier,
-	},
-	weights::Weight,
-	BoundedVec, CloneNoBound, DebugNoBound, EqNoBound, PartialEqNoBound,
-};
 use scale_info::TypeInfo;
 use soil_runtime::{
 	curve::PiecewiseLinear,
@@ -332,6 +322,16 @@ use soil_staking::{
 	EraIndex, ExposurePage, OnStakingUpdate, Page, PagedExposureMetadata, SessionIndex,
 };
 pub use soil_staking::{Exposure, IndividualExposure, StakerStatus};
+use topsoil_election_provider_support::ElectionProvider;
+use topsoil_support::{
+	defensive, defensive_assert,
+	traits::{
+		tokens::fungible::{Credit, Debt},
+		ConstU32, Contains, Defensive, DefensiveMax, DefensiveSaturating, Get, LockIdentifier,
+	},
+	weights::Weight,
+	BoundedVec, CloneNoBound, DebugNoBound, EqNoBound, PartialEqNoBound,
+};
 pub use weights::WeightInfo;
 
 pub use pallet::{pallet::*, UseNominatorsAndValidatorsMap, UseValidatorsMap};
@@ -367,7 +367,8 @@ pub type RewardPoint = u32;
 /// The balance type of this pallet.
 pub type BalanceOf<T> = <T as Config>::CurrencyBalance;
 
-type PositiveImbalanceOf<T> = Debt<<T as topsoil_system::Config>::AccountId, <T as Config>::Currency>;
+type PositiveImbalanceOf<T> =
+	Debt<<T as topsoil_system::Config>::AccountId, <T as Config>::Currency>;
 pub type NegativeImbalanceOf<T> =
 	Credit<<T as topsoil_system::Config>::AccountId, <T as Config>::Currency>;
 
@@ -1202,8 +1203,8 @@ impl<T: Config> EraInfo<T> {
 		validator: &T::AccountId,
 		page: Page,
 	) -> bool {
-		ledger.legacy_claimed_rewards.binary_search(&era).is_ok() ||
-			Self::is_rewards_claimed(era, validator, page)
+		ledger.legacy_claimed_rewards.binary_search(&era).is_ok()
+			|| Self::is_rewards_claimed(era, validator, page)
 	}
 
 	/// Check if the rewards for the given era and page index have been claimed.

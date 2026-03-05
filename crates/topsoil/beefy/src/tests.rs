@@ -21,11 +21,6 @@ use std::{
 	vec,
 };
 
-use topsoil_support::{
-	assert_err, assert_ok,
-	dispatch::{DispatchResultWithPostInfo, Pays},
-	traits::{Currency, KeyOwnerProofSystem, OnInitialize},
-};
 use soil_consensus_beefy::{
 	check_double_voting_proof, ecdsa_crypto,
 	known_payloads::MMR_ROOT_ID,
@@ -37,6 +32,11 @@ use soil_consensus_beefy::{
 };
 use soil_runtime::{DigestItem, Perbill};
 use soil_session::MembershipProof;
+use topsoil_support::{
+	assert_err, assert_ok,
+	dispatch::{DispatchResultWithPostInfo, Pays},
+	traits::{Currency, KeyOwnerProofSystem, OnInitialize},
+};
 
 use crate::{self as beefy, mock::*, Call, Config, Error, WeightInfoExt};
 

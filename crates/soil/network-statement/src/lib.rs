@@ -769,8 +769,8 @@ where
 						rate_limiter: PeerRateLimiter::new(
 							self.statements_per_second,
 							NonZeroU32::new(
-								self.statements_per_second.get() *
-									config::STATEMENTS_BURST_COEFFICIENT,
+								self.statements_per_second.get()
+									* config::STATEMENTS_BURST_COEFFICIENT,
 							)
 							.expect("burst capacity is nonzero"),
 						),
@@ -1339,7 +1339,8 @@ mod tests {
 
 	#[derive(Clone)]
 	struct TestStatementStore {
-		statements: Arc<Mutex<HashMap<soil_statement_store::Hash, soil_statement_store::Statement>>>,
+		statements:
+			Arc<Mutex<HashMap<soil_statement_store::Hash, soil_statement_store::Statement>>>,
 		recent_statements:
 			Arc<Mutex<HashMap<soil_statement_store::Hash, soil_statement_store::Statement>>>,
 	}

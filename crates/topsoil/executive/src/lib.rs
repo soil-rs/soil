@@ -117,6 +117,15 @@ extern crate alloc;
 
 use codec::{Codec, Encode};
 use core::marker::PhantomData;
+use soil_runtime::{
+	generic::Digest,
+	traits::{
+		self, Applyable, CheckEqual, Checkable, Dispatchable, Header, LazyBlock, NumberFor, One,
+		ValidateUnsigned, Zero,
+	},
+	transaction_validity::{TransactionSource, TransactionValidity, TransactionValidityError},
+	ApplyExtrinsicResult, ExtrinsicInclusionMode,
+};
 use topsoil_support::{
 	defensive_assert,
 	dispatch::{DispatchClass, DispatchInfo, GetDispatchInfo, PostDispatchInfo},
@@ -131,25 +140,16 @@ use topsoil_support::{
 	MAX_EXTRINSIC_DEPTH,
 };
 use topsoil_system::pallet_prelude::BlockNumberFor;
-use soil_runtime::{
-	generic::Digest,
-	traits::{
-		self, Applyable, CheckEqual, Checkable, Dispatchable, Header, LazyBlock, NumberFor, One,
-		ValidateUnsigned, Zero,
-	},
-	transaction_validity::{TransactionSource, TransactionValidity, TransactionValidityError},
-	ApplyExtrinsicResult, ExtrinsicInclusionMode,
-};
 
 #[cfg(feature = "try-runtime")]
 use ::{
+	log,
+	soil_runtime::TryRuntimeError,
 	topsoil_support::{
 		traits::{TryDecodeEntireStorage, TryDecodeEntireStorageError, TryState},
 		StorageNoopGuard,
 	},
 	topsoil_try_runtime::{TryStateSelect, UpgradeCheckSelect},
-	log,
-	soil_runtime::TryRuntimeError,
 };
 
 #[allow(dead_code)]
@@ -684,9 +684,10 @@ where
 		// Check that `parent_hash` is correct.
 		let n = *header.number();
 		assert!(
-			n > BlockNumberFor::<System>::zero() &&
-				<topsoil_system::Pallet<System>>::block_hash(n - BlockNumberFor::<System>::one()) ==
-					*header.parent_hash(),
+			n > BlockNumberFor::<System>::zero()
+				&& <topsoil_system::Pallet<System>>::block_hash(
+					n - BlockNumberFor::<System>::one()
+				) == *header.parent_hash(),
 			"Parent hash should be valid.",
 		);
 	}

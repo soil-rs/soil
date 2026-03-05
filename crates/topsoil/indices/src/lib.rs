@@ -29,11 +29,11 @@ extern crate alloc;
 
 use alloc::vec::Vec;
 use codec::Codec;
-use topsoil_support::traits::{BalanceStatus::Reserved, Currency, ReservableCurrency};
 use soil_runtime::{
 	traits::{AtLeast32Bit, LookupError, Saturating, StaticLookup, Zero},
 	MultiAddress,
 };
+use topsoil_support::traits::{BalanceStatus::Reserved, Currency, ReservableCurrency};
 pub use weights::WeightInfo;
 
 type BalanceOf<T> =
@@ -71,7 +71,8 @@ pub mod pallet {
 
 		/// The overarching event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>>
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// Weight information for extrinsics in this pallet.
 		type WeightInfo: WeightInfo;

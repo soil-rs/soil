@@ -1,84 +1,120 @@
 [workspace.package]
-authors = ["Parity Technologies <admin@parity.io>"]
+authors = ["Soil contributors <legal@bitarray.dev>"]
 edition = "2021"
-homepage = "https://paritytech.github.io/polkadot-sdk/"
+homepage = "https://soil.rs"
 license = "GPL-3.0-or-later WITH Classpath-exception-2.0"
-repository = "https://github.com/bitarray/soil.git"
+repository = "https://github.com/soil-rs/soil"
 
 [workspace]
 resolver = "2"
 
 members = [
-	"bin/node/bench",
-	"bin/node/cli",
-	"bin/node/runtime",
-	"bin/node/inspect",
-	"bin/node/primitives",
-	"bin/node/rpc",
-	"bin/node/testing",
-	"bin/utils/chain-spec-builder",
-	"bin/utils/subkey",
 	"crates/soil/allocator",
-	"crates/soil/client-api",
-	"client/authority-discovery",
+	"crates/soil/api",
+	"crates/soil/api-proc-macro",
+	"crates/soil/api/test",
+	"crates/soil/application-crypto",
+	"crates/soil/application-crypto/test",
+	"crates/soil/arithmetic",
+	"crates/soil/arithmetic/fuzzer",
+	"crates/soil/authority-discovery",
 	"crates/soil/basic-authorship",
-	"client/block-builder",
+	"crates/soil/block-builder",
+	"crates/soil/blockchain",
 	"crates/soil/chain-spec",
 	"crates/soil/chain-spec-derive",
 	"crates/soil/cli",
-	"client/consensus/aura",
-	"client/consensus/babe",
+	"crates/soil/client-api",
+	"crates/soil/client-db",
+	"crates/soil/consensus",
+	"crates/soil/consensus-aura",
+	"crates/soil/consensus-babe",
 	"crates/soil/consensus-babe-rpc",
-	"client/consensus/beefy",
+	"crates/soil/consensus-beefy",
 	"crates/soil/consensus-beefy-rpc",
-	"client/consensus/common",
 	"crates/soil/consensus-epochs",
-	"client/consensus/grandpa",
+	"crates/soil/consensus-grandpa",
 	"crates/soil/consensus-grandpa-rpc",
 	"crates/soil/consensus-manual-seal",
-	"client/consensus/pow",
-	"client/consensus/slots",
-	"crates/soil/client-db",
+	"crates/soil/consensus-pow",
+	"crates/soil/consensus-sassafras",
+	"crates/soil/consensus-slots",
+	"crates/soil/core",
+	"crates/soil/core/fuzz",
+	"crates/soil/crypto-ec-utils",
+	"crates/soil/crypto-hashing",
+	"crates/soil/crypto-hashing/proc-macro",
+	"crates/soil/database",
+	"crates/soil/debug-derive",
 	"crates/soil/executor",
 	"crates/soil/executor-common",
 	"crates/soil/executor-polkavm",
-	"crates/soil/runtime-test",
 	"crates/soil/executor-wasmtime",
+	"crates/soil/externalities",
+	"crates/soil/genesis-builder",
 	"crates/soil/informant",
-	"client/keystore",
+	"crates/soil/inherents",
+	"crates/soil/io",
+	"crates/soil/keyring",
+	"crates/soil/keystore",
+	"crates/soil/maybe-compressed-blob",
+	"crates/soil/merkle-mountain-range",
+	"crates/soil/metadata-ir",
+	"crates/soil/mixnet",
 	"crates/soil/mmr-gadget",
 	"crates/soil/mmr-rpc",
-	"client/mixnet",
 	"crates/soil/network",
-	"crates/soil/network-gossip",
 	"crates/soil/network-common",
+	"crates/soil/network-gossip",
 	"crates/soil/network-light",
 	"crates/soil/network-statement",
 	"crates/soil/network-sync",
 	"crates/soil/network-test",
 	"crates/soil/network-transactions",
 	"crates/soil/network-types",
-	"client/offchain",
+	"crates/soil/npos-elections",
+	"crates/soil/npos-elections/fuzzer",
+	"crates/soil/offchain",
+	"crates/soil/panic-handler",
 	"crates/soil/proposer-metrics",
-	"client/rpc",
+	"crates/soil/rpc",
 	"crates/soil/rpc-api",
 	"crates/soil/rpc-server",
 	"crates/soil/rpc-spec-v2",
+	"crates/soil/runtime",
+	"crates/soil/runtime-interface",
+	"crates/soil/runtime-interface-proc-macro",
+	"crates/soil/runtime-interface/test",
+	"crates/soil/runtime-interface/test-wasm",
+	"crates/soil/runtime-interface/test-wasm-deprecated",
+	"crates/soil/runtime-test",
 	"crates/soil/runtime-utilities",
 	"crates/soil/service",
 	"crates/soil/service-test",
+	"crates/soil/session",
+	"crates/soil/staking",
 	"crates/soil/state-db",
-	"client/statement-store",
+	"crates/soil/state-machine",
+	"crates/soil/statement-store",
+	"crates/soil/std",
+	"crates/soil/storage",
 	"crates/soil/storage-monitor",
 	"crates/soil/sync-state-rpc",
 	"crates/soil/sysinfo",
 	"crates/soil/telemetry",
-	"client/tracing",
+	"crates/soil/test-primitives",
+	"crates/soil/timestamp",
+	"crates/soil/tracing",
 	"crates/soil/tracing-proc-macro",
-	"client/transaction-pool",
+	"crates/soil/transaction-pool",
 	"crates/soil/transaction-pool-api",
+	"crates/soil/transaction-storage-proof",
+	"crates/soil/trie",
 	"crates/soil/utils",
-	"crates/topsoil/topsoil",
+	"crates/soil/version",
+	"crates/soil/version-proc-macro",
+	"crates/soil/wasm-interface",
+	"crates/soil/weights",
 	"crates/topsoil/alliance",
 	"crates/topsoil/asset-conversion",
 	"crates/topsoil/asset-conversion/ops",
@@ -199,6 +235,7 @@ members = [
 	"crates/topsoil/system/rpc/runtime-api",
 	"crates/topsoil/timestamp",
 	"crates/topsoil/tips",
+	"crates/topsoil/topsoil",
 	"crates/topsoil/transaction-payment",
 	"crates/topsoil/transaction-payment/asset-conversion-tx-payment",
 	"crates/topsoil/transaction-payment/asset-tx-payment",
@@ -213,92 +250,56 @@ members = [
 	"crates/topsoil/verify-signature",
 	"crates/topsoil/vesting",
 	"crates/topsoil/whitelist",
-	"crates/soil/api",
-	"crates/soil/api-proc-macro",
-	"crates/soil/api/test",
-	"crates/soil/application-crypto",
-	"crates/soil/application-crypto/test",
-	"crates/soil/arithmetic",
-	"crates/soil/arithmetic/fuzzer",
-	"crates/soil/authority-discovery",
-	"crates/soil/block-builder",
-	"crates/soil/blockchain",
-	"crates/soil/consensus-aura",
-	"crates/soil/consensus-babe",
-	"crates/soil/consensus-beefy",
-	"crates/soil/consensus",
-	"crates/soil/consensus-grandpa",
-	"crates/soil/consensus-pow",
-	"crates/soil/consensus-sassafras",
-	"crates/soil/consensus-slots",
-	"crates/soil/core",
-	"crates/soil/core/fuzz",
-	"crates/soil/crypto-ec-utils",
-	"crates/soil/crypto-hashing",
-	"crates/soil/crypto-hashing/proc-macro",
-	"crates/soil/database",
-	"crates/soil/debug-derive",
-	"crates/soil/externalities",
-	"crates/soil/genesis-builder",
-	"crates/soil/inherents",
-	"crates/soil/io",
-	"crates/soil/keyring",
-	"crates/soil/keystore",
-	"crates/soil/maybe-compressed-blob",
-	"crates/soil/merkle-mountain-range",
-	"crates/soil/metadata-ir",
-	"crates/soil/mixnet",
-	"crates/soil/npos-elections",
-	"crates/soil/npos-elections/fuzzer",
-	"crates/soil/offchain",
-	"crates/soil/panic-handler",
-	"crates/soil/rpc",
-	"crates/soil/runtime",
-	"crates/soil/runtime-interface",
-	"crates/soil/runtime-interface-proc-macro",
-	"crates/soil/runtime-interface/test",
-	"crates/soil/runtime-interface/test-wasm",
-	"crates/soil/runtime-interface/test-wasm-deprecated",
-	"crates/soil/session",
-	"crates/soil/staking",
-	"crates/soil/state-machine",
-	"crates/soil/statement-store",
-	"crates/soil/std",
-	"crates/soil/storage",
-	"crates/soil/test-primitives",
-	"crates/soil/timestamp",
-	"crates/soil/tracing",
-	"crates/soil/transaction-pool",
-	"crates/soil/transaction-storage-proof",
-	"crates/soil/trie",
-	"crates/soil/version",
-	"crates/soil/version-proc-macro",
-	"crates/soil/wasm-interface",
-	"crates/soil/weights",
-	"scripts/ci/node-template-release",
-	"test-utils",
-	"test-utils/cli",
-	"test-utils/client",
-	"test-utils/runtime",
-	"test-utils/runtime/client",
-	"test-utils/runtime/transaction-pool",
-	"utils/binary-merkle-tree",
-	"utils/build-script-utils",
-	"utils/fork-tree",
-	"utils/frame/generate-bags",
-	"utils/frame/generate-bags/node-runtime",
-	"utils/frame/remote-externalities",
-	"utils/frame/rpc/client",
-	"utils/frame/rpc/state-trie-migration-rpc",
-	"utils/frame/rpc/support",
-	"utils/frame/rpc/system",
-	"utils/prometheus",
-	"utils/substrate-bip39",
-	"utils/wasm-builder",
+
+	"crates/substrate/binary-merkle-tree",
+	"crates/substrate/fork-tree",
+	"crates/substrate/frame-remote-externalities",
+	"crates/substrate/generate-bags",
+	"crates/substrate/kitchensink-runtime",
+	"crates/substrate/node-bench",
+	"crates/substrate/node-primitives",
+	"crates/substrate/node-rpc",
+	"crates/substrate/node-runtime-generate-bags",
+	"crates/substrate/node-template-release",
+	"crates/substrate/node-testing",
+	"crates/substrate/staging-chain-spec-builder",
+	"crates/substrate/staging-node-cli",
+	"crates/substrate/staging-node-inspect",
+	"crates/substrate/subkey",
+	"crates/substrate/substrate-bip39",
+	"crates/substrate/substrate-build-script-utils",
+	"crates/substrate/substrate-cli-test-utils",
+	"crates/substrate/substrate-frame-rpc-support",
+	"crates/substrate/substrate-frame-rpc-system",
+	"crates/substrate/substrate-prometheus-endpoint",
+	"crates/substrate/substrate-rpc-client",
+	"crates/substrate/substrate-state-trie-migration-rpc",
+	"crates/substrate/substrate-test-client",
+	"crates/substrate/substrate-test-runtime",
+	"crates/substrate/substrate-test-runtime-client",
+	"crates/substrate/substrate-test-runtime-transaction-pool",
+	"crates/substrate/substrate-test-utils",
+	"crates/substrate/substrate-wasm-builder",
+	"crates/substrate-client/authority-discovery",
+	"crates/substrate-client/block-builder",
+	"crates/substrate-client/consensus/aura",
+	"crates/substrate-client/consensus/babe",
+	"crates/substrate-client/consensus/beefy",
+	"crates/substrate-client/consensus/common",
+	"crates/substrate-client/consensus/grandpa",
+	"crates/substrate-client/consensus/pow",
+	"crates/substrate-client/consensus/slots",
+	"crates/substrate-client/keystore",
+	"crates/substrate-client/mixnet",
+	"crates/substrate-client/offchain",
+	"crates/substrate-client/rpc",
+	"crates/substrate-client/statement-store",
+	"crates/substrate-client/tracing",
+	"crates/substrate-client/transaction-pool",
 ]
 
 default-members = [
-	"bin/node/inspect",
+	"crates/substrate/staging-node-inspect",
 ]
 
 [workspace.lints.rust]
@@ -343,9 +344,9 @@ zero-prefixed-literal = { level = "allow", priority = 2 }            # 00_1000_0
 [workspace.dependencies]
 
 # Substrate path dependencies
-binary-merkle-tree = { path = "utils/binary-merkle-tree", default-features = false }
-chain-spec-builder = { path = "bin/utils/chain-spec-builder", default-features = false, package = "staging-chain-spec-builder" }
-fork-tree = { path = "utils/fork-tree", default-features = false }
+binary-merkle-tree = { path = "crates/substrate/binary-merkle-tree", default-features = false }
+chain-spec-builder = { path = "crates/substrate/staging-chain-spec-builder", default-features = false, package = "staging-chain-spec-builder" }
+fork-tree = { path = "crates/substrate/fork-tree", default-features = false }
 topsoil = { path = "crates/topsoil/topsoil", default-features = false }
 topsoil-benchmarking = { path = "crates/topsoil/benchmarking", default-features = false }
 topsoil-benchmarking-pallet-pov = { default-features = false, path = "crates/topsoil/benchmarking/pov" }
@@ -362,15 +363,15 @@ topsoil-system = { path = "crates/topsoil/system", default-features = false }
 topsoil-system-benchmarking = { path = "crates/topsoil/system/benchmarking", default-features = false }
 topsoil-system-rpc-runtime-api = { path = "crates/topsoil/system/rpc/runtime-api", default-features = false }
 topsoil-try-runtime = { path = "crates/topsoil/try-runtime", default-features = false }
-generate-bags = { path = "utils/frame/generate-bags", default-features = false }
-kitchensink-runtime = { path = "bin/node/runtime" }
+generate-bags = { path = "crates/substrate/generate-bags", default-features = false }
+kitchensink-runtime = { path = "crates/substrate/kitchensink-runtime" }
 soil-mmr-gadget = { path = "crates/soil/mmr-gadget", default-features = false }
 soil-mmr-rpc = { path = "crates/soil/mmr-rpc", default-features = false }
-node-cli = { path = "bin/node/cli", package = "staging-node-cli" }
-node-inspect = { path = "bin/node/inspect", default-features = false, package = "staging-node-inspect" }
-node-primitives = { path = "bin/node/primitives", default-features = false }
-node-rpc = { path = "bin/node/rpc" }
-node-testing = { path = "bin/node/testing" }
+node-cli = { path = "crates/substrate/staging-node-cli", package = "staging-node-cli" }
+node-inspect = { path = "crates/substrate/staging-node-inspect", default-features = false, package = "staging-node-inspect" }
+node-primitives = { path = "crates/substrate/node-primitives", default-features = false }
+node-rpc = { path = "crates/substrate/node-rpc" }
+node-testing = { path = "crates/substrate/node-testing" }
 topsoil-alliance = { path = "crates/topsoil/alliance", default-features = false }
 topsoil-asset-conversion = { path = "crates/topsoil/asset-conversion", default-features = false }
 topsoil-asset-conversion-ops = { path = "crates/topsoil/asset-conversion/ops", default-features = false }
@@ -481,36 +482,36 @@ topsoil-utility = { path = "crates/topsoil/utility", default-features = false }
 topsoil-verify-signature = { path = "crates/topsoil/verify-signature", default-features = false }
 topsoil-vesting = { path = "crates/topsoil/vesting", default-features = false }
 topsoil-whitelist = { path = "crates/topsoil/whitelist", default-features = false }
-prometheus-endpoint = { path = "utils/prometheus", default-features = false, package = "substrate-prometheus-endpoint" }
-remote-externalities = { path = "utils/frame/remote-externalities", default-features = false, package = "frame-remote-externalities" }
+prometheus-endpoint = { path = "crates/substrate/substrate-prometheus-endpoint", default-features = false, package = "substrate-prometheus-endpoint" }
+remote-externalities = { path = "crates/substrate/frame-remote-externalities", default-features = false, package = "frame-remote-externalities" }
 soil-allocator = { path = "crates/soil/allocator", default-features = false }
-sc-authority-discovery = { path = "client/authority-discovery", default-features = false }
+sc-authority-discovery = { path = "crates/substrate-client/authority-discovery", default-features = false }
 soil-basic-authorship = { path = "crates/soil/basic-authorship", default-features = false }
-sc-block-builder = { path = "client/block-builder", default-features = false }
+sc-block-builder = { path = "crates/substrate-client/block-builder", default-features = false }
 soil-chain-spec = { path = "crates/soil/chain-spec", default-features = false }
 soil-chain-spec-derive = { path = "crates/soil/chain-spec-derive", default-features = false }
 soil-cli = { path = "crates/soil/cli", default-features = false }
 soil-client-api = { path = "crates/soil/client-api", default-features = false }
 soil-client-db = { path = "crates/soil/client-db", default-features = false }
-sc-consensus = { path = "client/consensus/common", default-features = false }
-sc-consensus-aura = { path = "client/consensus/aura", default-features = false }
-sc-consensus-babe = { path = "client/consensus/babe", default-features = false }
+sc-consensus = { path = "crates/substrate-client/consensus/common", default-features = false }
+sc-consensus-aura = { path = "crates/substrate-client/consensus/aura", default-features = false }
+sc-consensus-babe = { path = "crates/substrate-client/consensus/babe", default-features = false }
 soil-consensus-babe-rpc = { path = "crates/soil/consensus-babe-rpc", default-features = false }
-sc-consensus-beefy = { path = "client/consensus/beefy", default-features = false }
+sc-consensus-beefy = { path = "crates/substrate-client/consensus/beefy", default-features = false }
 soil-consensus-beefy-rpc = { path = "crates/soil/consensus-beefy-rpc", default-features = false }
 soil-consensus-epochs = { path = "crates/soil/consensus-epochs", default-features = false }
-sc-consensus-grandpa = { path = "client/consensus/grandpa", default-features = false }
+sc-consensus-grandpa = { path = "crates/substrate-client/consensus/grandpa", default-features = false }
 soil-consensus-grandpa-rpc = { path = "crates/soil/consensus-grandpa-rpc", default-features = false }
 soil-consensus-manual-seal = { path = "crates/soil/consensus-manual-seal", default-features = false }
-sc-consensus-pow = { path = "client/consensus/pow", default-features = false }
-sc-consensus-slots = { path = "client/consensus/slots", default-features = false }
+sc-consensus-pow = { path = "crates/substrate-client/consensus/pow", default-features = false }
+sc-consensus-slots = { path = "crates/substrate-client/consensus/slots", default-features = false }
 soil-executor = { path = "crates/soil/executor", default-features = false }
 soil-executor-common = { path = "crates/soil/executor-common", default-features = false }
 soil-executor-polkavm = { path = "crates/soil/executor-polkavm", default-features = false }
 soil-executor-wasmtime = { path = "crates/soil/executor-wasmtime", default-features = false }
 soil-informant = { path = "crates/soil/informant", default-features = false }
-sc-keystore = { path = "client/keystore", default-features = false }
-sc-mixnet = { path = "client/mixnet", default-features = false }
+sc-keystore = { path = "crates/substrate-client/keystore", default-features = false }
+sc-mixnet = { path = "crates/substrate-client/mixnet", default-features = false }
 soil-network = { path = "crates/soil/network", default-features = false }
 soil-network-common = { path = "crates/soil/network-common", default-features = false }
 soil-network-gossip = { path = "crates/soil/network-gossip", default-features = false }
@@ -520,9 +521,9 @@ soil-network-sync = { path = "crates/soil/network-sync", default-features = fals
 soil-network-test = { path = "crates/soil/network-test" }
 soil-network-transactions = { path = "crates/soil/network-transactions", default-features = false }
 soil-network-types = { path = "crates/soil/network-types", default-features = false }
-sc-offchain = { path = "client/offchain", default-features = false }
+sc-offchain = { path = "crates/substrate-client/offchain", default-features = false }
 soil-proposer-metrics = { path = "crates/soil/proposer-metrics", default-features = false }
-sc-rpc = { path = "client/rpc", default-features = false }
+sc-rpc = { path = "crates/substrate-client/rpc", default-features = false }
 soil-rpc-api = { path = "crates/soil/rpc-api", default-features = false }
 soil-rpc-server = { path = "crates/soil/rpc-server", default-features = false }
 soil-rpc-spec-v2 = { path = "crates/soil/rpc-spec-v2", default-features = false }
@@ -531,14 +532,14 @@ soil-runtime-utilities = { path = "crates/soil/runtime-utilities", default-featu
 soil-service = { path = "crates/soil/service", default-features = false }
 soil-service-test = { path = "crates/soil/service-test" }
 soil-state-db = { path = "crates/soil/state-db", default-features = false }
-sc-statement-store = { default-features = false, path = "client/statement-store" }
+sc-statement-store = { default-features = false, path = "crates/substrate-client/statement-store" }
 soil-storage-monitor = { path = "crates/soil/storage-monitor", default-features = false }
 soil-sync-state-rpc = { path = "crates/soil/sync-state-rpc", default-features = false }
 soil-sysinfo = { path = "crates/soil/sysinfo", default-features = false }
 soil-telemetry = { path = "crates/soil/telemetry", default-features = false }
-sc-tracing = { path = "client/tracing", default-features = false }
+sc-tracing = { path = "crates/substrate-client/tracing", default-features = false }
 soil-tracing-proc-macro = { path = "crates/soil/tracing-proc-macro", default-features = false }
-sc-transaction-pool = { path = "client/transaction-pool", default-features = false }
+sc-transaction-pool = { path = "crates/substrate-client/transaction-pool", default-features = false }
 soil-transaction-pool-api = { path = "crates/soil/transaction-pool-api", default-features = false }
 soil-utils = { path = "crates/soil/utils", default-features = false }
 soil-api = { path = "crates/soil/api", default-features = false }
@@ -597,20 +598,20 @@ soil-version = { path = "crates/soil/version", default-features = false }
 soil-version-proc-macro = { path = "crates/soil/version-proc-macro", default-features = false }
 soil-wasm-interface = { path = "crates/soil/wasm-interface", default-features = false }
 soil-weights = { path = "crates/soil/weights", default-features = false }
-subkey = { path = "bin/utils/subkey", default-features = false }
-substrate-bip39 = { path = "utils/substrate-bip39", default-features = false }
-substrate-build-script-utils = { path = "utils/build-script-utils", default-features = false }
-substrate-cli-test-utils = { path = "test-utils/cli" }
-substrate-frame-rpc-support = { default-features = false, path = "utils/frame/rpc/support" }
-substrate-frame-rpc-system = { path = "utils/frame/rpc/system", default-features = false }
-substrate-rpc-client = { path = "utils/frame/rpc/client", default-features = false }
-substrate-state-trie-migration-rpc = { path = "utils/frame/rpc/state-trie-migration-rpc", default-features = false }
-substrate-test-client = { path = "test-utils/client" }
-substrate-test-runtime = { path = "test-utils/runtime" }
-substrate-test-runtime-client = { path = "test-utils/runtime/client" }
-substrate-test-runtime-transaction-pool = { path = "test-utils/runtime/transaction-pool" }
-substrate-test-utils = { path = "test-utils" }
-substrate-wasm-builder = { path = "utils/wasm-builder", default-features = false }
+subkey = { path = "crates/substrate/subkey", default-features = false }
+substrate-bip39 = { path = "crates/substrate/substrate-bip39", default-features = false }
+substrate-build-script-utils = { path = "crates/substrate/substrate-build-script-utils", default-features = false }
+substrate-cli-test-utils = { path = "crates/substrate/substrate-cli-test-utils" }
+substrate-frame-rpc-support = { default-features = false, path = "crates/substrate/substrate-frame-rpc-support" }
+substrate-frame-rpc-system = { path = "crates/substrate/substrate-frame-rpc-system", default-features = false }
+substrate-rpc-client = { path = "crates/substrate/substrate-rpc-client", default-features = false }
+substrate-state-trie-migration-rpc = { path = "crates/substrate/substrate-state-trie-migration-rpc", default-features = false }
+substrate-test-client = { path = "crates/substrate/substrate-test-client" }
+substrate-test-runtime = { path = "crates/substrate/substrate-test-runtime" }
+substrate-test-runtime-client = { path = "crates/substrate/substrate-test-runtime-client" }
+substrate-test-runtime-transaction-pool = { path = "crates/substrate/substrate-test-runtime-transaction-pool" }
+substrate-test-utils = { path = "crates/substrate/substrate-test-utils" }
+substrate-wasm-builder = { path = "crates/substrate/substrate-wasm-builder", default-features = false }
 test-pallet = { path = "crates/topsoil/support/test/pallet", default-features = false, package = "topsoil-support-test-pallet" }
 
 # External dependencies

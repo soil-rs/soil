@@ -125,6 +125,11 @@ use core::{
 	ops::{Rem, Sub},
 };
 use disabling::DisablingStrategy;
+use soil_runtime::{
+	traits::{AtLeast32BitUnsigned, Convert, Member, One, OpaqueKeys, Zero},
+	ConsensusEngineId, DispatchError, KeyTypeId, Permill, RuntimeAppPublic,
+};
+use soil_staking::{offence::OffenceSeverity, SessionIndex};
 use topsoil_support::{
 	dispatch::DispatchResult,
 	ensure,
@@ -137,11 +142,6 @@ use topsoil_support::{
 	Parameter,
 };
 use topsoil_system::pallet_prelude::BlockNumberFor;
-use soil_runtime::{
-	traits::{AtLeast32BitUnsigned, Convert, Member, One, OpaqueKeys, Zero},
-	ConsensusEngineId, DispatchError, KeyTypeId, Permill, RuntimeAppPublic,
-};
-use soil_staking::{offence::OffenceSeverity, SessionIndex};
 
 pub use pallet::*;
 pub use weights::WeightInfo;
@@ -456,7 +456,8 @@ pub mod pallet {
 	pub trait Config: topsoil_system::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>>
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// A stable ID for a validator.
 		type ValidatorId: Member

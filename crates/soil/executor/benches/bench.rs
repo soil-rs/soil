@@ -88,7 +88,9 @@ fn initialize(
 					>(&path, config)
 				}
 			} else {
-				soil_executor_wasmtime::create_runtime::<soil_io::SubstrateHostFunctions>(blob, config)
+				soil_executor_wasmtime::create_runtime::<soil_io::SubstrateHostFunctions>(
+					blob, config,
+				)
 			}
 			.map(|runtime| -> Box<dyn WasmModule> { Box::new(runtime) })
 		},

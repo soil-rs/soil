@@ -19,8 +19,8 @@ use crate as topsoil_mmr;
 use crate::*;
 
 use crate::{
-	topsoil_system::DefaultConfig,
 	primitives::{Compact, LeafDataProvider},
+	topsoil_system::DefaultConfig,
 };
 use codec::{Decode, Encode};
 use topsoil::{

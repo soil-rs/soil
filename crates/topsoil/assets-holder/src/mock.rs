@@ -20,9 +20,9 @@
 use crate as topsoil_assets_holder;
 pub use crate::*;
 use codec::{Decode, Encode, MaxEncodedLen};
-use topsoil_support::{derive_impl, traits::AsEnsureOriginWithArg};
 use scale_info::TypeInfo;
 use soil_runtime::BuildStorage;
+use topsoil_support::{derive_impl, traits::AsEnsureOriginWithArg};
 
 pub type AccountId = <Test as topsoil_system::Config>::AccountId;
 pub type Balance = <Test as topsoil_balances::Config>::Balance;

@@ -19,6 +19,7 @@
 use futures::prelude::*;
 
 use sc_consensus::{ImportQueue, Link};
+use soil_blockchain::HeaderBackend;
 use soil_network::{
 	config::{self, FullNetworkConfiguration, MultiaddrWithPeerId, ProtocolId, TransportConfig},
 	event::Event,
@@ -36,7 +37,6 @@ use soil_network_sync::{
 	state_request_handler::StateRequestHandler,
 	strategy::polkadot::{PolkadotSyncingStrategy, PolkadotSyncingStrategyConfig},
 };
-use soil_blockchain::HeaderBackend;
 use soil_runtime::traits::{Block as BlockT, Zero};
 use substrate_test_runtime_client::{
 	runtime::{Block as TestBlock, Hash as TestHash},

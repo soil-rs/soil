@@ -19,13 +19,13 @@ use crate::{BoundedAuthorityList, Pallet};
 use alloc::vec::Vec;
 use codec::Decode;
 use core::marker::PhantomData;
+use soil_consensus_grandpa::AuthorityList;
 use topsoil_support::{
 	migrations::VersionedMigration,
 	storage,
 	traits::{Get, UncheckedOnRuntimeUpgrade},
 	weights::Weight,
 };
-use soil_consensus_grandpa::AuthorityList;
 
 const GRANDPA_AUTHORITIES_KEY: &[u8] = b":grandpa_authorities";
 

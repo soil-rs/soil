@@ -24,7 +24,6 @@ use topsoil_support::{
 	storage::with_transaction, weights::RuntimeDbWeight,
 };
 
-use topsoil_system::{offchain::CreateTransactionBase, ChainContext};
 use soil_core::{ConstU16, ConstU32, ConstU64, H256};
 use soil_runtime::{
 	testing::UintAuthorityId,
@@ -32,6 +31,7 @@ use soil_runtime::{
 	transaction_validity::{InvalidTransaction, TransactionSource, TransactionValidityError},
 	BuildStorage, DispatchError, Weight,
 };
+use topsoil_system::{offchain::CreateTransactionBase, ChainContext};
 use verifiable::demo_impls::Simple;
 
 // First ring, used in testing.
@@ -377,7 +377,8 @@ pub fn setup_alias_account(
 	});
 	let other_tx_ext = (topsoil_system::CheckNonce::<Test>::from(0),);
 	// Here we simply ignore implicit as they are null.
-	let msg = (&EXTENSION_VERSION, &call, &other_tx_ext).using_encoded(soil_io::hashing::blake2_256);
+	let msg =
+		(&EXTENSION_VERSION, &call, &other_tx_ext).using_encoded(soil_io::hashing::blake2_256);
 	let (proof, _alias) =
 		Simple::create(commitment, secret, &context, &msg).expect("proof creation failed");
 	let tx_ext = (

@@ -19,10 +19,10 @@
 
 use super::*;
 use crate::{self as bags_list};
-use topsoil_election_provider_support::VoteWeight;
-use topsoil_support::{derive_impl, parameter_types};
 use soil_runtime::BuildStorage;
 use std::collections::HashMap;
+use topsoil_election_provider_support::VoteWeight;
+use topsoil_support::{derive_impl, parameter_types};
 
 pub type AccountId = <Runtime as topsoil_system::Config>::AccountId;
 pub type Balance = u32;

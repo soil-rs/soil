@@ -19,11 +19,11 @@
 
 #![recursion_limit = "128"]
 
+use soil_runtime::{generic, traits::BlakeTwo256};
 use topsoil_support::{
 	derive_impl,
 	traits::{Contains, OriginTrait},
 };
-use soil_runtime::{generic, traits::BlakeTwo256};
 
 mod nested {
 	#[topsoil_support::pallet(dev_mode)]
@@ -97,7 +97,8 @@ pub mod module {
 	#[pallet::config]
 	pub trait Config: topsoil_system::Config {
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>>
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 	}
 
 	#[pallet::call]

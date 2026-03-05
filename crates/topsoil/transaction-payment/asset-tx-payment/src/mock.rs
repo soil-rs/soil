@@ -17,6 +17,7 @@ use super::*;
 use crate as topsoil_asset_tx_payment;
 
 use codec;
+use soil_runtime::traits::{ConvertInto, SaturatedConversion};
 use topsoil_support::{
 	derive_impl,
 	dispatch::DispatchClass,
@@ -29,7 +30,6 @@ use topsoil_support::{
 use topsoil_system as system;
 use topsoil_system::EnsureRoot;
 use topsoil_transaction_payment::FungibleAdapter;
-use soil_runtime::traits::{ConvertInto, SaturatedConversion};
 
 type Block = topsoil_system::mocking::MockBlock<Runtime>;
 type Balance = u64;
@@ -227,8 +227,8 @@ impl BenchmarkHelperTrait<u64, u32, u32> for Helper {
 	}
 
 	fn setup_balances_and_pool(asset_id: u32, account: u64) {
-		use topsoil_support::{assert_ok, traits::fungibles::Mutate};
 		use soil_runtime::traits::StaticLookup;
+		use topsoil_support::{assert_ok, traits::fungibles::Mutate};
 		let min_balance = 1;
 		assert_ok!(Assets::force_create(
 			RuntimeOrigin::root(),

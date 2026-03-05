@@ -21,6 +21,7 @@ use super::*;
 use crate::Pallet as Referenda;
 use alloc::{borrow::Cow, vec, vec::Vec};
 use assert_matches::assert_matches;
+use soil_runtime::traits::Bounded as ArithBounded;
 use topsoil_benchmarking::v1::{
 	account, benchmarks_instance_pallet, whitelist_account, BenchmarkError,
 };
@@ -29,7 +30,6 @@ use topsoil_support::{
 	traits::{Currency, EnsureOrigin, EnsureOriginWithArg, UnfilteredDispatchable},
 };
 use topsoil_system::RawOrigin;
-use soil_runtime::traits::Bounded as ArithBounded;
 
 const SEED: u32 = 0;
 

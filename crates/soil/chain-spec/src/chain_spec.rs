@@ -22,15 +22,15 @@ use crate::{
 	extension::GetExtension, genesis_config_builder::HostFunctions, json_merge, ChainType,
 	GenesisConfigBuilderRuntimeCaller as RuntimeCaller, Properties,
 };
-use soil_network::config::MultiaddrWithPeerId;
-use soil_telemetry::TelemetryEndpoints;
 use serde::{Deserialize, Serialize};
 use serde_json as json;
 use soil_core::{
 	storage::{ChildInfo, Storage, StorageChild, StorageData, StorageKey},
 	Bytes,
 };
+use soil_network::config::MultiaddrWithPeerId;
 use soil_runtime::BuildStorage;
+use soil_telemetry::TelemetryEndpoints;
 use std::{
 	borrow::Cow,
 	collections::{BTreeMap, VecDeque},
@@ -53,9 +53,9 @@ enum GenesisBuildAction<EHF> {
 impl<EHF> GenesisBuildAction<EHF> {
 	pub fn merge_patch(&mut self, patch: json::Value) {
 		match self {
-			GenesisBuildAction::Patch(value) |
-			GenesisBuildAction::Full(value) |
-			GenesisBuildAction::NamedPreset(_, value, _) => json_merge(value, patch),
+			GenesisBuildAction::Patch(value)
+			| GenesisBuildAction::Full(value)
+			| GenesisBuildAction::NamedPreset(_, value, _) => json_merge(value, patch),
 		}
 	}
 }

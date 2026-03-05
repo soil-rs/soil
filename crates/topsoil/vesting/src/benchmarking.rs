@@ -19,10 +19,10 @@
 
 #![cfg(feature = "runtime-benchmarks")]
 
+use soil_runtime::traits::{Bounded, CheckedDiv, CheckedMul};
 use topsoil_benchmarking::{v2::*, BenchmarkError};
 use topsoil_support::assert_ok;
 use topsoil_system::{pallet_prelude::BlockNumberFor, RawOrigin};
-use soil_runtime::traits::{Bounded, CheckedDiv, CheckedMul};
 
 use crate::*;
 

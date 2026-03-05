@@ -20,6 +20,7 @@ use criterion::{
 	criterion_group, criterion_main, AxisScale, BenchmarkId, Criterion, PlotConfiguration,
 	Throughput,
 };
+use soil_core::H256;
 use soil_network::{
 	config::{
 		FullNetworkConfiguration, IncomingRequest, NetworkConfiguration, NonReservedPeerMode,
@@ -30,7 +31,6 @@ use soil_network::{
 	NotificationMetrics, NotificationService, PeerId, Roles,
 };
 use soil_network_common::{sync::message::BlockAnnouncesHandshake, ExHashT};
-use soil_core::H256;
 use soil_runtime::traits::{Block as BlockT, Zero};
 use std::{sync::Arc, time::Duration};
 use substrate_test_runtime_client::runtime;

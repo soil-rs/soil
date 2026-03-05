@@ -93,7 +93,10 @@ pub mod pallet {
 
 		/// Means by which we can make payments to accounts. This also defines the currency and the
 		/// balance which we use to denote that currency.
-		type Paymaster: Pay<Beneficiary = <Self as topsoil_system::Config>::AccountId, AssetKind = ()>;
+		type Paymaster: Pay<
+			Beneficiary = <Self as topsoil_system::Config>::AccountId,
+			AssetKind = (),
+		>;
 
 		/// The current membership of payees.
 		type Members: RankedMembers<AccountId = <Self as topsoil_system::Config>::AccountId>;
@@ -469,7 +472,8 @@ impl<T: Config<I>, I: 'static>
 
 #[cfg(feature = "runtime-benchmarks")]
 impl<T: Config<I>, I: 'static>
-	topsoil_ranked_collective::BenchmarkSetup<<T as topsoil_system::Config>::AccountId> for Pallet<T, I>
+	topsoil_ranked_collective::BenchmarkSetup<<T as topsoil_system::Config>::AccountId>
+	for Pallet<T, I>
 {
 	fn ensure_member(who: &<T as topsoil_system::Config>::AccountId) {
 		Self::init(topsoil_system::RawOrigin::Signed(who.clone()).into()).unwrap();

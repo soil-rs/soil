@@ -15,10 +15,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use topsoil_support_procedural_tools::generate_access_from_frame_or_crate;
 use proc_macro::TokenStream;
 use quote::quote;
 use syn::{ItemFn, Result};
+use topsoil_support_procedural_tools::generate_access_from_frame_or_crate;
 
 pub fn transactional(_attr: TokenStream, input: TokenStream) -> Result<TokenStream> {
 	let ItemFn { attrs, vis, sig, block } = syn::parse(input)?;

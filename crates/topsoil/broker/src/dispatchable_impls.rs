@@ -18,12 +18,12 @@
 use core::cmp;
 
 use super::*;
+use soil_arithmetic::traits::{CheckedDiv, Saturating, Zero};
+use soil_runtime::traits::{BlockNumberProvider, Convert};
 use topsoil_support::{
 	pallet_prelude::*,
 	traits::{fungible::Mutate, tokens::Preservation::Expendable, DefensiveResult},
 };
-use soil_arithmetic::traits::{CheckedDiv, Saturating, Zero};
-use soil_runtime::traits::{BlockNumberProvider, Convert};
 use CompletionStatus::{Complete, Partial};
 
 impl<T: Config> Pallet<T> {
@@ -111,9 +111,9 @@ impl<T: Config> Pallet<T> {
 		let config = Configuration::<T>::get().ok_or(Error::<T>::Uninitialized)?;
 
 		// Determine the core count
-		let core_count = Leases::<T>::decode_len().unwrap_or(0) as CoreIndex +
-			Reservations::<T>::decode_len().unwrap_or(0) as CoreIndex +
-			extra_cores;
+		let core_count = Leases::<T>::decode_len().unwrap_or(0) as CoreIndex
+			+ Reservations::<T>::decode_len().unwrap_or(0) as CoreIndex
+			+ extra_cores;
 
 		Self::do_request_core_count(core_count)?;
 

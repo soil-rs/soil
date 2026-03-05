@@ -19,11 +19,11 @@
 
 use crate::Config;
 use codec::{Decode, Encode, MaxEncodedLen};
+use scale_info::TypeInfo;
+use soil_staking::{EraIndex, StakingInterface};
 use topsoil_support::{
 	traits::Currency, BoundedVec, CloneNoBound, DebugNoBound, EqNoBound, PartialEqNoBound,
 };
-use scale_info::TypeInfo;
-use soil_staking::{EraIndex, StakingInterface};
 
 /// Maximum number of eras that we might check for a single staker.
 ///

@@ -22,12 +22,12 @@
 use super::*;
 use crate::mock::*;
 
+use soil_runtime::{bounded_vec, TokenError};
 use topsoil_support::{
 	assert_err, assert_noop, assert_ok, assert_storage_noop,
 	traits::{fungible::InspectHold, Bounded, BoundedInline},
 	StorageNoopGuard,
 };
-use soil_runtime::{bounded_vec, TokenError};
 
 /// Returns one `Inline`, `Lookup` and `Legacy` item each with different data and hash.
 pub fn make_bounded_values() -> (

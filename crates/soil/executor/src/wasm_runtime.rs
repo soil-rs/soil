@@ -25,12 +25,12 @@ use crate::error::{Error, WasmError};
 
 use codec::Decode;
 use parking_lot::Mutex;
+use schnellru::{ByLength, LruMap};
+use soil_core::traits::{Externalities, FetchRuntimeCode, RuntimeCode};
 use soil_executor_common::{
 	runtime_blob::RuntimeBlob,
 	wasm_runtime::{HeapAllocStrategy, WasmInstance, WasmModule},
 };
-use schnellru::{ByLength, LruMap};
-use soil_core::traits::{Externalities, FetchRuntimeCode, RuntimeCode};
 use soil_version::RuntimeVersion;
 use soil_wasm_interface::HostFunctions;
 
@@ -53,7 +53,8 @@ pub enum WasmExecutionMethod {
 impl Default for WasmExecutionMethod {
 	fn default() -> Self {
 		Self::Compiled {
-			instantiation_strategy: soil_executor_wasmtime::InstantiationStrategy::PoolingCopyOnWrite,
+			instantiation_strategy:
+				soil_executor_wasmtime::InstantiationStrategy::PoolingCopyOnWrite,
 		}
 	}
 }

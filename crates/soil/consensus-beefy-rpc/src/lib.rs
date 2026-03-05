@@ -19,7 +19,6 @@
 //! RPC API for BEEFY.
 
 #![warn(missing_docs)]
-
 #![cfg_attr(not(feature = "std"), no_std)]
 
 #[cfg(feature = "std")]

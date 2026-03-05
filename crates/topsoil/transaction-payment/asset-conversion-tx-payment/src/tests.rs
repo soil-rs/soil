@@ -15,6 +15,12 @@
 
 use super::*;
 
+use mock::{ExtrinsicBaseWeight, *};
+use soil_runtime::{
+	traits::{DispatchTransaction, StaticLookup},
+	BuildStorage,
+};
+use topsoil_balances::Call as BalancesCall;
 use topsoil_support::{
 	assert_ok,
 	dispatch::{DispatchInfo, GetDispatchInfo, PostDispatchInfo},
@@ -28,12 +34,6 @@ use topsoil_support::{
 	weights::Weight,
 };
 use topsoil_system as system;
-use mock::{ExtrinsicBaseWeight, *};
-use topsoil_balances::Call as BalancesCall;
-use soil_runtime::{
-	traits::{DispatchTransaction, StaticLookup},
-	BuildStorage,
-};
 
 const CALL: &<Runtime as topsoil_system::Config>::RuntimeCall =
 	&RuntimeCall::Balances(BalancesCall::transfer_allow_death { dest: 2, value: 69 });

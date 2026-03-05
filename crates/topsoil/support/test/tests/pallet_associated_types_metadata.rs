@@ -15,9 +15,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use topsoil_support::{derive_impl, traits::ConstU32};
 use scale_info::meta_type;
 use soil_metadata_ir::PalletAssociatedTypeMetadataIR;
+use topsoil_support::{derive_impl, traits::ConstU32};
 
 pub type BlockNumber = u64;
 pub type Header = soil_runtime::generic::Header<u32, soil_runtime::traits::BlakeTwo256>;
@@ -36,7 +36,8 @@ pub mod pallet {
 	pub trait Config: topsoil_system::Config {
 		// Runtime events already propagated to the metadata.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>>
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		// Constants are already propagated.
 		#[pallet::constant]
@@ -61,7 +62,8 @@ pub mod pallet2 {
 	pub trait Config: topsoil_system::Config {
 		// Runtime events already propagated to the metadata.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>>
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		// Constants are already propagated.
 		#[pallet::constant]
@@ -98,7 +100,8 @@ pub mod pallet3 {
 	pub trait Config: topsoil_system::Config {
 		// Runtime events already propagated to the metadata.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>>
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		// Constants are already propagated.
 		#[pallet::constant]

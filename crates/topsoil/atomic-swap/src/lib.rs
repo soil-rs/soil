@@ -50,11 +50,11 @@ use core::{
 	marker::PhantomData,
 	ops::{Deref, DerefMut},
 };
+use scale_info::TypeInfo;
 use topsoil::{
 	prelude::*,
 	traits::{BalanceStatus, Currency, ReservableCurrency},
 };
-use scale_info::TypeInfo;
 
 /// Pending atomic swap operation.
 #[derive(
@@ -174,7 +174,8 @@ pub mod pallet {
 	pub trait Config: topsoil_system::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>>
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 		/// Swap action.
 		type SwapAction: SwapAction<Self::AccountId, Self> + Parameter + MaxEncodedLen;
 		/// Limit of proof size.

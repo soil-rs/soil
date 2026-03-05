@@ -28,17 +28,17 @@ use futures_timer::Delay;
 #[cfg(feature = "std")]
 use prometheus_endpoint::Registry;
 #[cfg(feature = "std")]
-use soil_client_api::{
-	backend::{Backend as ClientBackend, Finalizer},
-	client::BlockchainEvents,
-};
-#[cfg(feature = "std")]
 use sc_consensus::{
 	block_import::{BlockImport, BlockImportParams, ForkChoiceStrategy},
 	import_queue::{BasicQueue, BoxBlockImport, Verifier},
 };
 #[cfg(feature = "std")]
 use soil_blockchain::HeaderBackend;
+#[cfg(feature = "std")]
+use soil_client_api::{
+	backend::{Backend as ClientBackend, Finalizer},
+	client::BlockchainEvents,
+};
 #[cfg(feature = "std")]
 use soil_consensus::{Environment, Proposer, SelectChain};
 #[cfg(feature = "std")]
@@ -71,9 +71,9 @@ pub use self::{
 	seal_block::{seal_block, SealBlockParams, MAX_PROPOSAL_DURATION},
 };
 #[cfg(feature = "std")]
-use soil_transaction_pool_api::TransactionPool;
-#[cfg(feature = "std")]
 use soil_api::ProvideRuntimeApi;
+#[cfg(feature = "std")]
+use soil_transaction_pool_api::TransactionPool;
 
 #[cfg(feature = "std")]
 const LOG_TARGET: &str = "manual-seal";
@@ -374,13 +374,15 @@ pub async fn run_delayed_finalize<B, CB, C, S>(
 mod tests {
 	use super::*;
 	use assert_matches::assert_matches;
-	use soil_basic_authorship::ProposerFactory;
 	use sc_consensus::ImportedAux;
 	use sc_transaction_pool::{BasicPool, FullChainApi, Options, RevalidationType};
-	use soil_transaction_pool_api::{MaintainedTransactionPool, TransactionPool, TransactionSource};
 	use soil_api::StorageProof;
+	use soil_basic_authorship::ProposerFactory;
 	use soil_inherents::InherentData;
 	use soil_runtime::generic::{Digest, DigestItem};
+	use soil_transaction_pool_api::{
+		MaintainedTransactionPool, TransactionPool, TransactionSource,
+	};
 	use substrate_test_runtime_client::{
 		DefaultTestClientBuilderExt, Sr25519Keyring::*, TestClientBuilder, TestClientBuilderExt,
 	};

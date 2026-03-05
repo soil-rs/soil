@@ -140,6 +140,12 @@ pub use pallet::*;
 use types::*;
 
 use core::convert::TryInto;
+use soil_io::hashing::blake2_256;
+use soil_runtime::{
+	traits::{CheckedAdd, CheckedSub, TrailingZeroInput, Zero},
+	ArithmeticError, Debug, DispatchResult, Perbill, Saturating,
+};
+use soil_staking::{Agent, Delegator, EraIndex, StakingInterface, StakingUnchecked};
 use topsoil_support::{
 	pallet_prelude::*,
 	traits::{
@@ -153,12 +159,6 @@ use topsoil_support::{
 		Defensive, DefensiveOption, Imbalance, OnUnbalanced,
 	},
 };
-use soil_io::hashing::blake2_256;
-use soil_runtime::{
-	traits::{CheckedAdd, CheckedSub, TrailingZeroInput, Zero},
-	ArithmeticError, Debug, DispatchResult, Perbill, Saturating,
-};
-use soil_staking::{Agent, Delegator, EraIndex, StakingInterface, StakingUnchecked};
 
 /// The log target of this pallet.
 pub const LOG_TARGET: &str = "runtime::delegated-staking";
@@ -191,7 +191,8 @@ pub mod pallet {
 	pub trait Config: topsoil_system::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>>
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// Injected identifier for the pallet.
 		#[pallet::constant]
@@ -325,9 +326,9 @@ pub mod pallet {
 			let ledger = AgentLedger::<T>::get(&who).ok_or(Error::<T>::NotAgent)?;
 
 			ensure!(
-				ledger.total_delegated == Zero::zero() &&
-					ledger.pending_slash == Zero::zero() &&
-					ledger.unclaimed_withdrawals == Zero::zero(),
+				ledger.total_delegated == Zero::zero()
+					&& ledger.pending_slash == Zero::zero()
+					&& ledger.unclaimed_withdrawals == Zero::zero(),
 				Error::<T>::NotAllowed
 			);
 
@@ -794,8 +795,8 @@ impl<T: Config> Pallet<T> {
 			}
 
 			ensure!(
-				ledger.stakeable_balance() >=
-					T::CoreStaking::total_stake(&agent).unwrap_or_default(),
+				ledger.stakeable_balance()
+					>= T::CoreStaking::total_stake(&agent).unwrap_or_default(),
 				"Cannot stake more than balance"
 			);
 		}

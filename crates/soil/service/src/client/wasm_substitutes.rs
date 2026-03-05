@@ -18,10 +18,10 @@
 
 //! # WASM substitutes
 
-use soil_client_api::backend;
-use soil_executor::RuntimeVersionOf;
 use soil_blockchain::{HeaderBackend, Result};
+use soil_client_api::backend;
 use soil_core::traits::{FetchRuntimeCode, RuntimeCode, WrappedRuntimeCode};
+use soil_executor::RuntimeVersionOf;
 use soil_runtime::traits::{Block as BlockT, NumberFor};
 use soil_state_machine::BasicExternalities;
 use soil_version::RuntimeVersion;

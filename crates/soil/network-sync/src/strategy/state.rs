@@ -32,12 +32,12 @@ use crate::{
 use futures::{channel::oneshot, FutureExt};
 use log::{debug, error, trace};
 use prost::Message;
-use soil_client_api::ProofProvider;
 use sc_consensus::{BlockImportError, BlockImportStatus, IncomingBlock};
+use soil_client_api::ProofProvider;
+use soil_consensus::BlockOrigin;
 use soil_network::{IfDisconnected, ProtocolName};
 use soil_network_common::sync::message::BlockAnnounce;
 use soil_network_types::PeerId;
-use soil_consensus::BlockOrigin;
 use soil_runtime::{
 	traits::{Block as BlockT, Header, NumberFor},
 	Justifications, SaturatedConversion,
@@ -322,9 +322,9 @@ impl<B: BlockT> StateStrategy<B> {
 		// Find a random peer that is synced as much as peer majority and is above
 		// `min_best_number`.
 		for (peer_id, peer) in self.peers.iter_mut() {
-			if peer.state.is_available() &&
-				peer.best_number >= threshold &&
-				self.disconnected_peers.is_peer_available(peer_id)
+			if peer.state.is_available()
+				&& peer.best_number >= threshold
+				&& self.disconnected_peers.is_peer_available(peer_id)
 			{
 				peer.state = new_state;
 				return Some(*peer_id);
@@ -400,8 +400,8 @@ mod test {
 	};
 	use codec::Decode;
 	use sc_block_builder::BlockBuilderBuilder;
-	use soil_client_api::KeyValueStates;
 	use sc_consensus::{ImportedAux, ImportedState};
+	use soil_client_api::KeyValueStates;
 	use soil_core::H256;
 	use soil_runtime::traits::Zero;
 	use substrate_test_runtime_client::{

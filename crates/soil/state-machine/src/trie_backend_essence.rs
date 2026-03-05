@@ -128,8 +128,8 @@ where
 				None
 			},
 			Some(Err(error)) => {
-				if matches!(*error, TrieError::IncompleteDatabase(_)) &&
-					self.stop_on_incomplete_database
+				if matches!(*error, TrieError::IncompleteDatabase(_))
+					&& self.stop_on_incomplete_database
 				{
 					self.state = IterState::FinishedIncomplete;
 					None

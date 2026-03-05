@@ -18,8 +18,8 @@
 
 //! Substrate system API helpers.
 
-use soil_chain_spec::{ChainType, Properties};
 use serde::{Deserialize, Serialize};
+use soil_chain_spec::{ChainType, Properties};
 use std::fmt;
 
 /// Running node's static details.

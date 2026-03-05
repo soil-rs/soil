@@ -15,8 +15,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use topsoil_support::*;
-use topsoil_support_procedural::import_section;
 #[cfg(test)]
 use soil_io::{MultiRemovalResults, TestExternalities};
 #[cfg(test)]
@@ -27,6 +25,8 @@ use soil_metadata_ir::{
 #[cfg(test)]
 use soil_runtime::BuildStorage;
 use soil_runtime::{generic, traits::BlakeTwo256};
+use topsoil_support::*;
+use topsoil_support_procedural::import_section;
 
 pub use self::topsoil_system::{pallet_prelude::*, Config, Pallet};
 

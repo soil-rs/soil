@@ -45,14 +45,14 @@ pub use weights::WeightInfo;
 extern crate alloc;
 
 use alloc::boxed::Box;
+use soil_runtime::traits::{TryConvert, Zero};
+use topsoil_asset_conversion::{PoolLocator, Pools};
 use topsoil_support::traits::{
 	fungible::{Inspect as FungibleInspect, Mutate as FungibleMutate},
 	fungibles::{roles::ResetTeam, Inspect, Mutate, Refund},
 	tokens::{Fortitude, Precision, Preservation},
 	AccountTouch,
 };
-use topsoil_asset_conversion::{PoolLocator, Pools};
-use soil_runtime::traits::{TryConvert, Zero};
 
 #[topsoil_support::pallet]
 pub mod pallet {
@@ -74,7 +74,8 @@ pub mod pallet {
 	{
 		/// Overarching event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>>
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// Type previously used to derive the account ID for a pool. Indicates that the pool's
 		/// liquidity assets are located at this account before the migration.
@@ -207,8 +208,8 @@ pub mod pallet {
 			// Transfer all pool related assets to the new account.
 
 			ensure!(
-				balance1 ==
-					T::Assets::transfer(
+				balance1
+					== T::Assets::transfer(
 						asset1.clone(),
 						&prior_account,
 						&new_account,
@@ -219,8 +220,8 @@ pub mod pallet {
 			);
 
 			ensure!(
-				balance2 ==
-					T::Assets::transfer(
+				balance2
+					== T::Assets::transfer(
 						asset2.clone(),
 						&prior_account,
 						&new_account,
@@ -231,8 +232,8 @@ pub mod pallet {
 			);
 
 			ensure!(
-				lp_balance ==
-					T::PoolAssets::transfer(
+				lp_balance
+					== T::PoolAssets::transfer(
 						info.lp_token.clone(),
 						&prior_account,
 						&new_account,

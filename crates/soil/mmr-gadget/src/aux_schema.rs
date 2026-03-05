@@ -21,8 +21,8 @@
 use crate::LOG_TARGET;
 use codec::{Decode, Encode};
 use log::{info, trace};
-use soil_client_api::backend::AuxStore;
 use soil_blockchain::{Error as ClientError, Result as ClientResult};
+use soil_client_api::backend::AuxStore;
 use soil_runtime::traits::{Block, NumberFor};
 
 const VERSION_KEY: &[u8] = b"mmr_auxschema_version";

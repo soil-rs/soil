@@ -90,13 +90,13 @@ pub use pallet::*;
 pub use weights::WeightInfo;
 
 use alloc::{vec, vec::Vec};
-use topsoil::prelude::*;
 use fungible::{
 	Balanced as FunBalanced, Inspect as FunInspect, Mutate as FunMutate,
 	MutateHold as FunMutateHold,
 };
 use nonfungible::{Inspect as NftInspect, Transfer as NftTransfer};
 use tokens::{Balance, Restriction::*};
+use topsoil::prelude::*;
 use Fortitude::*;
 use Precision::*;
 use Preservation::*;
@@ -195,7 +195,8 @@ pub mod pallet {
 
 		/// Overarching event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>>
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// The treasury's pallet id, used for deriving its sovereign account ID.
 		#[pallet::constant]
@@ -1063,10 +1064,10 @@ pub mod pallet {
 			let expiry = now.saturating_add(T::BasePeriod::get().saturating_mul(duration.into()));
 			let mut count = 0;
 
-			while count < max_bids &&
-				!queue.is_empty() &&
-				!remaining.is_zero() &&
-				weight.check_accrue(T::WeightInfo::process_bid())
+			while count < max_bids
+				&& !queue.is_empty()
+				&& !remaining.is_zero()
+				&& weight.check_accrue(T::WeightInfo::process_bid())
 			{
 				let bid = match queue.pop() {
 					Some(b) => b,

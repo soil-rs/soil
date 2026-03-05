@@ -19,6 +19,7 @@
 
 #![cfg(feature = "try-runtime")]
 
+use soil_runtime::BuildStorage;
 use topsoil_support::{
 	construct_runtime, derive_impl,
 	migrations::VersionedMigration,
@@ -27,7 +28,6 @@ use topsoil_support::{
 	weights::constants::RocksDbWeight,
 };
 use topsoil_system::Config;
-use soil_runtime::BuildStorage;
 
 type Block = topsoil_system::mocking::MockBlock<Test>;
 

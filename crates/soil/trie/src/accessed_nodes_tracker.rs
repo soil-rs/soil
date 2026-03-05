@@ -58,9 +58,9 @@ impl<H: Hash> AccessedNodesTracker<H> {
 impl<H: Hash + Ord> TrieRecorder<H> for AccessedNodesTracker<H> {
 	fn record(&mut self, access: TrieAccess<H>) {
 		match access {
-			TrieAccess::NodeOwned { hash, .. } |
-			TrieAccess::EncodedNode { hash, .. } |
-			TrieAccess::Value { hash, .. } => {
+			TrieAccess::NodeOwned { hash, .. }
+			| TrieAccess::EncodedNode { hash, .. }
+			| TrieAccess::Value { hash, .. } => {
 				self.recorder.insert(hash);
 			},
 			_ => {},

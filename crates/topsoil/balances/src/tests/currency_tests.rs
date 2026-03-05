@@ -19,6 +19,7 @@
 
 use super::*;
 use crate::{Event, NegativeImbalance};
+use soil_runtime::traits::DispatchTransaction;
 use topsoil_support::{
 	traits::{
 		BalanceStatus::{Free, Reserved},
@@ -30,7 +31,6 @@ use topsoil_support::{
 	StorageNoopGuard,
 };
 use topsoil_system::Event as SysEvent;
-use soil_runtime::traits::DispatchTransaction;
 
 const ID_1: LockIdentifier = *b"1       ";
 const ID_2: LockIdentifier = *b"2       ";

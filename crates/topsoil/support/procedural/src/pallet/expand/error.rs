@@ -23,9 +23,9 @@ use crate::{
 	},
 	COUNTER,
 };
-use topsoil_support_procedural_tools::get_doc_literals;
 use quote::ToTokens;
 use syn::spanned::Spanned;
+use topsoil_support_procedural_tools::get_doc_literals;
 
 /// * impl various trait on Error
 pub fn expand_error(def: &mut Def) -> proc_macro2::TokenStream {

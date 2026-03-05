@@ -24,9 +24,9 @@ use crate::mock::{
 	new_test_ext, offence_reports, with_on_offence_fractions, Offence, Offences, Runtime,
 	RuntimeEvent, System, KIND,
 };
-use topsoil_system::{EventRecord, Phase};
 use soil_core::H256;
 use soil_runtime::Perbill;
+use topsoil_system::{EventRecord, Phase};
 
 #[test]
 fn should_get_reports_with_storagemap_getter_and_function_getter() {

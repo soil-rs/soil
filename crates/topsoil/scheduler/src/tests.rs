@@ -22,13 +22,13 @@ use crate::mock::{
 	logger::{self, Threshold},
 	new_test_ext, root, LoggerCall, RuntimeCall, Scheduler, Test, *,
 };
+use soil_runtime::traits::Hash;
+use substrate_test_utils::assert_eq_uvec;
 use topsoil_support::{
 	assert_err, assert_noop, assert_ok,
 	traits::{Contains, GetStorageVersion, OnInitialize, QueryPreimage, StorePreimage},
 	Hashable,
 };
-use soil_runtime::traits::Hash;
-use substrate_test_utils::assert_eq_uvec;
 
 #[test]
 #[docify::export]
@@ -1725,11 +1725,12 @@ fn on_initialize_weight_is_correct() {
 		<Test as Config>::BlockNumberProvider::set_block_number(now);
 		assert_eq!(
 			Scheduler::on_initialize(42), // block number unused
-			TestWeightInfo::service_agendas_base() +
-				TestWeightInfo::service_agenda_base(1) +
-				<TestWeightInfo as MarginalWeightInfo>::service_task(None, true, true) +
-				TestWeightInfo::execute_dispatch_unsigned() +
-				call_weight + Weight::from_parts(4, 0)
+			TestWeightInfo::service_agendas_base()
+				+ TestWeightInfo::service_agenda_base(1)
+				+ <TestWeightInfo as MarginalWeightInfo>::service_task(None, true, true)
+				+ TestWeightInfo::execute_dispatch_unsigned()
+				+ call_weight
+				+ Weight::from_parts(4, 0)
 		);
 		assert_eq!(IncompleteSince::<Test>::get(), Some(now + 1));
 		assert_eq!(logger::log(), vec![(root(), 2600u32)]);
@@ -1739,14 +1740,16 @@ fn on_initialize_weight_is_correct() {
 		<Test as Config>::BlockNumberProvider::set_block_number(now);
 		assert_eq!(
 			Scheduler::on_initialize(123), // block number unused
-			TestWeightInfo::service_agendas_base() +
-				TestWeightInfo::service_agenda_base(2) +
-				<TestWeightInfo as MarginalWeightInfo>::service_task(None, false, true) +
-				TestWeightInfo::execute_dispatch_unsigned() +
-				call_weight + Weight::from_parts(3, 0) +
-				<TestWeightInfo as MarginalWeightInfo>::service_task(None, false, false) +
-				TestWeightInfo::execute_dispatch_unsigned() +
-				call_weight + Weight::from_parts(2, 0)
+			TestWeightInfo::service_agendas_base()
+				+ TestWeightInfo::service_agenda_base(2)
+				+ <TestWeightInfo as MarginalWeightInfo>::service_task(None, false, true)
+				+ TestWeightInfo::execute_dispatch_unsigned()
+				+ call_weight
+				+ Weight::from_parts(3, 0)
+				+ <TestWeightInfo as MarginalWeightInfo>::service_task(None, false, false)
+				+ TestWeightInfo::execute_dispatch_unsigned()
+				+ call_weight
+				+ Weight::from_parts(2, 0)
 		);
 		assert_eq!(IncompleteSince::<Test>::get(), Some(now + 1));
 		assert_eq!(logger::log(), vec![(root(), 2600u32), (root(), 69u32), (root(), 42u32)]);
@@ -1756,11 +1759,12 @@ fn on_initialize_weight_is_correct() {
 		<Test as Config>::BlockNumberProvider::set_block_number(now);
 		assert_eq!(
 			Scheduler::on_initialize(555), // block number unused
-			TestWeightInfo::service_agendas_base() +
-				TestWeightInfo::service_agenda_base(1) +
-				<TestWeightInfo as MarginalWeightInfo>::service_task(None, true, false) +
-				TestWeightInfo::execute_dispatch_unsigned() +
-				call_weight + Weight::from_parts(1, 0)
+			TestWeightInfo::service_agendas_base()
+				+ TestWeightInfo::service_agenda_base(1)
+				+ <TestWeightInfo as MarginalWeightInfo>::service_task(None, true, false)
+				+ TestWeightInfo::execute_dispatch_unsigned()
+				+ call_weight
+				+ Weight::from_parts(1, 0)
 		);
 		assert_eq!(IncompleteSince::<Test>::get(), Some(now + 1));
 		assert_eq!(

@@ -19,23 +19,7 @@
 
 use super::{ConfigOp, Event, *};
 use crate::{asset, ledger::StakingLedgerInspect};
-use topsoil_election_provider_support::{
-	bounds::{DataProviderBounds, ElectionBoundsBuilder},
-	ElectionProvider, SortedListProvider, Support,
-};
-use topsoil_support::{
-	assert_noop, assert_ok, assert_storage_noop,
-	dispatch::{extract_actual_weight, GetDispatchInfo, WithPostDispatchInfo},
-	hypothetically,
-	pallet_prelude::*,
-	traits::{
-		fungible::Inspect, Currency, Get, InspectLockableCurrency, LockableCurrency,
-		ReservableCurrency, RewardsReporter, WithdrawReasons,
-	},
-};
 use mock::*;
-use topsoil_balances::Error as BalancesError;
-use topsoil_session::{disabling::UpToLimitWithReEnablingDisablingStrategy, Event as SessionEvent};
 use soil_runtime::{
 	assert_eq_error_rate, bounded_vec,
 	traits::{BadOrigin, Dispatchable},
@@ -46,6 +30,22 @@ use soil_staking::{
 	SessionIndex, StakingAccount,
 };
 use substrate_test_utils::assert_eq_uvec;
+use topsoil_balances::Error as BalancesError;
+use topsoil_election_provider_support::{
+	bounds::{DataProviderBounds, ElectionBoundsBuilder},
+	ElectionProvider, SortedListProvider, Support,
+};
+use topsoil_session::{disabling::UpToLimitWithReEnablingDisablingStrategy, Event as SessionEvent};
+use topsoil_support::{
+	assert_noop, assert_ok, assert_storage_noop,
+	dispatch::{extract_actual_weight, GetDispatchInfo, WithPostDispatchInfo},
+	hypothetically,
+	pallet_prelude::*,
+	traits::{
+		fungible::Inspect, Currency, Get, InspectLockableCurrency, LockableCurrency,
+		ReservableCurrency, RewardsReporter, WithdrawReasons,
+	},
+};
 
 #[test]
 fn set_staking_configs_works() {
@@ -385,9 +385,9 @@ fn rewards_should_work() {
 		);
 		assert_eq_error_rate!(
 			asset::total_balance::<Test>(&101),
-			init_balance_101 +
-				part_for_101_from_11 * total_payout_0 * 2 / 3 +
-				part_for_101_from_21 * total_payout_0 * 1 / 3,
+			init_balance_101
+				+ part_for_101_from_11 * total_payout_0 * 2 / 3
+				+ part_for_101_from_21 * total_payout_0 * 1 / 3,
 			2
 		);
 
@@ -425,9 +425,9 @@ fn rewards_should_work() {
 		);
 		assert_eq_error_rate!(
 			asset::total_balance::<Test>(&101),
-			init_balance_101 +
-				part_for_101_from_11 * (total_payout_0 * 2 / 3 + total_payout_1) +
-				part_for_101_from_21 * total_payout_0 * 1 / 3,
+			init_balance_101
+				+ part_for_101_from_11 * (total_payout_0 * 2 / 3 + total_payout_1)
+				+ part_for_101_from_21 * total_payout_0 * 1 / 3,
 			2
 		);
 	});
@@ -3488,7 +3488,9 @@ fn test_multi_page_payout_stakers_by_page() {
 
 		// verify rewards have been paid out but still some left
 		assert!(topsoil_balances::TotalIssuance::<Test>::get() > pre_payout_total_issuance);
-		assert!(topsoil_balances::TotalIssuance::<Test>::get() < pre_payout_total_issuance + payout);
+		assert!(
+			topsoil_balances::TotalIssuance::<Test>::get() < pre_payout_total_issuance + payout
+		);
 
 		// verify the validator has been rewarded
 		assert!(controller_balance_after_p0_payout > controller_balance_before_p0_payout);
@@ -3758,7 +3760,9 @@ fn test_multi_page_payout_stakers_backward_compatible() {
 
 		// verify rewards have been paid out but still some left
 		assert!(topsoil_balances::TotalIssuance::<Test>::get() > pre_payout_total_issuance);
-		assert!(topsoil_balances::TotalIssuance::<Test>::get() < pre_payout_total_issuance + payout);
+		assert!(
+			topsoil_balances::TotalIssuance::<Test>::get() < pre_payout_total_issuance + payout
+		);
 
 		// verify the validator has been rewarded
 		assert!(controller_balance_after_p0_payout > controller_balance_before_p0_payout);
@@ -6544,8 +6548,8 @@ fn test_validator_exposure_is_backward_compatible_with_non_paged_rewards_payout(
 		let actual_exposure_page_1 = ErasStakersPaged::<Test>::get((1, 11, 1)).unwrap();
 		expected_individual_exposures.iter().for_each(|exposure| {
 			assert!(
-				actual_exposure_page_0.others.contains(exposure) ||
-					actual_exposure_page_1.others.contains(exposure)
+				actual_exposure_page_0.others.contains(exposure)
+					|| actual_exposure_page_1.others.contains(exposure)
 			);
 		});
 		assert_eq!(
@@ -6738,8 +6742,8 @@ fn test_runtime_api_pending_rewards() {
 }
 
 mod staking_interface {
-	use topsoil_support::storage::with_storage_layer;
 	use soil_staking::StakingInterface;
+	use topsoil_support::storage::with_storage_layer;
 
 	use super::*;
 
@@ -8437,8 +8441,8 @@ mod validator_disabling_integration {
 #[cfg(all(feature = "try-runtime", test))]
 mod migration_tests {
 	use super::*;
-	use topsoil_support::traits::UncheckedOnRuntimeUpgrade;
 	use migrations::{v15, v16};
+	use topsoil_support::traits::UncheckedOnRuntimeUpgrade;
 
 	#[test]
 	fn migrate_v15_to_v16_with_try_runtime() {
@@ -8800,8 +8804,8 @@ mod getters {
 
 mod hold_migration {
 	use super::*;
-	use topsoil_support::traits::fungible::Mutate;
 	use soil_staking::{Stake, StakingInterface};
+	use topsoil_support::traits::fungible::Mutate;
 
 	#[test]
 	fn ledger_update_creates_hold() {
@@ -9293,8 +9297,8 @@ fn manual_slashing_works() {
 		let expected_balance_1 = initial_balance - (initial_balance / 4); // 25% slash
 
 		assert!(
-			balance_after_first_slash <= expected_balance_1 &&
-				balance_after_first_slash >= expected_balance_1 - 5,
+			balance_after_first_slash <= expected_balance_1
+				&& balance_after_first_slash >= expected_balance_1 - 5,
 			"First slash was not applied correctly. Expected around {}, got {}",
 			expected_balance_1,
 			balance_after_first_slash
@@ -9346,8 +9350,8 @@ fn manual_slashing_works() {
 		let expected_balance_3 = initial_balance / 2; // 50% of original
 
 		assert!(
-			balance_after_third_slash <= expected_balance_3 &&
-				balance_after_third_slash >= expected_balance_3 - 5,
+			balance_after_third_slash <= expected_balance_3
+				&& balance_after_third_slash >= expected_balance_3 - 5,
 			"Third slash was not applied correctly. Expected around {}, got {}",
 			expected_balance_3,
 			balance_after_third_slash
@@ -9389,8 +9393,8 @@ fn manual_slashing_works() {
 		let expected_balance_5 = initial_balance / 4; // 25% of original (75% slashed)
 
 		assert!(
-			balance_after_fifth_slash <= expected_balance_5 &&
-				balance_after_fifth_slash >= expected_balance_5 - 5,
+			balance_after_fifth_slash <= expected_balance_5
+				&& balance_after_fifth_slash >= expected_balance_5 - 5,
 			"Fifth slash was not applied correctly. Expected around {}, got {}",
 			expected_balance_5,
 			balance_after_fifth_slash

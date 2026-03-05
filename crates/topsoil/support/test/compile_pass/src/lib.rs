@@ -22,16 +22,16 @@
 
 extern crate alloc;
 
-use topsoil_support::{
-	construct_runtime, derive_impl, parameter_types,
-	traits::{ConstU16, ConstU32, ConstU64, Everything},
-};
 use soil_core::{sr25519, H256};
 use soil_runtime::{
 	generic,
 	traits::{BlakeTwo256, IdentityLookup, Verify},
 };
 use soil_version::RuntimeVersion;
+use topsoil_support::{
+	construct_runtime, derive_impl, parameter_types,
+	traits::{ConstU16, ConstU32, ConstU64, Everything},
+};
 
 pub const VERSION: RuntimeVersion = RuntimeVersion {
 	spec_name: alloc::borrow::Cow::Borrowed("topsoil-support-test-compile-pass"),

@@ -18,6 +18,13 @@
 //! Test utilities
 
 use crate::{self as topsoil_staking, *};
+use soil_core::ConstBool;
+use soil_io;
+use soil_runtime::{curve::PiecewiseLinear, testing::UintAuthorityId, traits::Zero, BuildStorage};
+use soil_staking::{
+	offence::{OffenceDetails, OnOffenceHandler},
+	OnStakingUpdate, StakingAccount,
+};
 use topsoil_election_provider_support::{
 	bounds::{ElectionBounds, ElectionBoundsBuilder},
 	onchain, BoundedSupports, SequentialPhragmen, Support, VoteWeight,
@@ -31,13 +38,6 @@ use topsoil_support::{
 	weights::constants::RocksDbWeight,
 };
 use topsoil_system::{EnsureRoot, EnsureSignedBy};
-use soil_core::ConstBool;
-use soil_io;
-use soil_runtime::{curve::PiecewiseLinear, testing::UintAuthorityId, traits::Zero, BuildStorage};
-use soil_staking::{
-	offence::{OffenceDetails, OnOffenceHandler},
-	OnStakingUpdate, StakingAccount,
-};
 
 pub const INIT_TIMESTAMP: u64 = 30_000;
 pub const BLOCK_TIME: u64 = 1000;
@@ -148,8 +148,9 @@ impl topsoil_session::Config for Test {
 	type ValidatorId = AccountId;
 	type ValidatorIdOf = soil_runtime::traits::ConvertInto;
 	type NextSessionRotation = topsoil_session::PeriodicSessions<Period, Offset>;
-	type DisablingStrategy =
-		topsoil_session::disabling::UpToLimitWithReEnablingDisablingStrategy<DISABLING_LIMIT_FACTOR>;
+	type DisablingStrategy = topsoil_session::disabling::UpToLimitWithReEnablingDisablingStrategy<
+		DISABLING_LIMIT_FACTOR,
+	>;
 	type WeightInfo = ();
 	type Currency = Balances;
 	type KeyDeposit = ();

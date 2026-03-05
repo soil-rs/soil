@@ -19,8 +19,8 @@
 use crate::{MessageIntent, Network, ValidationResult, Validator, ValidatorContext};
 
 use ahash::AHashSet;
-use soil_network_types::PeerId;
 use schnellru::{ByLength, LruMap};
+use soil_network_types::PeerId;
 
 use prometheus_endpoint::{register, Counter, PrometheusError, Registry, U64};
 use soil_network::{types::ProtocolName, NotificationService};

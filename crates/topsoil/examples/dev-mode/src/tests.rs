@@ -24,12 +24,12 @@
 //! Tests for topsoil-dev-mode.
 
 use crate::*;
-use topsoil_support::{assert_ok, derive_impl};
 use soil_core::H256;
 use soil_runtime::{
 	traits::{BlakeTwo256, IdentityLookup},
 	BuildStorage,
 };
+use topsoil_support::{assert_ok, derive_impl};
 // Reexport crate as its pallet name for construct_runtime.
 use crate as topsoil_dev_mode;
 

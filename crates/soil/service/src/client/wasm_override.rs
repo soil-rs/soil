@@ -36,9 +36,9 @@
 //! required to overrides multiple runtimes, multiple WASM blobs matching each of the spec versions
 //! needed must be provided in the given directory.
 
-use soil_executor::RuntimeVersionOf;
 use soil_blockchain::Result;
 use soil_core::traits::{FetchRuntimeCode, RuntimeCode, WrappedRuntimeCode};
+use soil_executor::RuntimeVersionOf;
 use soil_state_machine::BasicExternalities;
 use soil_version::RuntimeVersion;
 use std::{

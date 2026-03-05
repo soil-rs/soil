@@ -78,12 +78,12 @@ use soil_runtime::{
 	Debug, DispatchResult,
 };
 
+use scale_info::TypeInfo;
+use topsoil_bounties::BountyStatus;
 use topsoil_support::pallet_prelude::*;
 use topsoil_system::pallet_prelude::{
 	ensure_signed, BlockNumberFor as SystemBlockNumberFor, OriginFor,
 };
-use topsoil_bounties::BountyStatus;
-use scale_info::TypeInfo;
 pub use weights::WeightInfo;
 
 pub use pallet::*;
@@ -163,7 +163,8 @@ pub mod pallet {
 
 		/// The overarching event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>>
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// Weight information for extrinsics in this pallet.
 		type WeightInfo: WeightInfo;
@@ -287,8 +288,8 @@ pub mod pallet {
 				description.try_into().map_err(|_| BountiesError::<T>::ReasonTooBig)?;
 			ensure!(value >= T::ChildBountyValueMinimum::get(), BountiesError::<T>::InvalidValue);
 			ensure!(
-				ParentChildBounties::<T>::get(parent_bounty_id) <
-					T::MaxActiveChildBountyCount::get(),
+				ParentChildBounties::<T>::get(parent_bounty_id)
+					< T::MaxActiveChildBountyCount::get(),
 				Error::<T>::TooManyChildBounties,
 			);
 
@@ -535,8 +536,8 @@ pub mod pallet {
 							// child-bounty curator can unassign the child-bounty curator.
 							ensure!(
 								maybe_sender.map_or(true, |sender| {
-									sender == *curator ||
-										Self::ensure_bounty_active(parent_bounty_id)
+									sender == *curator
+										|| Self::ensure_bounty_active(parent_bounty_id)
 											.map_or(false, |(parent_curator, _)| {
 												sender == parent_curator
 											})
@@ -565,8 +566,8 @@ pub mod pallet {
 								Some(sender) => {
 									let (parent_curator, update_due) =
 										Self::ensure_bounty_active(parent_bounty_id)?;
-									if sender == parent_curator ||
-										update_due < Self::treasury_block_number()
+									if sender == parent_curator
+										|| update_due < Self::treasury_block_number()
 									{
 										// Slash the child-bounty curator if
 										// + the call is made by the parent bounty curator.
@@ -645,8 +646,8 @@ pub mod pallet {
 						child_bounty.status = ChildBountyStatus::PendingPayout {
 							curator: signer,
 							beneficiary: beneficiary.clone(),
-							unlock_at: Self::treasury_block_number() +
-								T::BountyDepositPayoutDelay::get(),
+							unlock_at: Self::treasury_block_number()
+								+ T::BountyDepositPayoutDelay::get(),
 						};
 						Ok(())
 					} else {

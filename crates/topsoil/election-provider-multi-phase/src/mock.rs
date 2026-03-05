@@ -17,17 +17,6 @@
 
 use super::*;
 use crate::{self as multi_phase, signed::GeometricDepositBase, unsigned::MinerConfig};
-use topsoil_election_provider_support::{
-	bounds::{DataProviderBounds, ElectionBounds, ElectionBoundsBuilder},
-	data_provider, onchain, ElectionDataProvider, NposSolution, SequentialPhragmen,
-};
-pub use topsoil_support::derive_impl;
-use topsoil_support::{
-	parameter_types,
-	traits::{ConstU32, Hooks},
-	weights::{constants, Weight},
-	BoundedVec,
-};
 use multi_phase::unsigned::{IndexAssignmentOf, VoterOf};
 use parking_lot::RwLock;
 use soil_core::{
@@ -48,6 +37,17 @@ use soil_runtime::{
 	BuildStorage, PerU16, Percent,
 };
 use std::sync::Arc;
+use topsoil_election_provider_support::{
+	bounds::{DataProviderBounds, ElectionBounds, ElectionBoundsBuilder},
+	data_provider, onchain, ElectionDataProvider, NposSolution, SequentialPhragmen,
+};
+pub use topsoil_support::derive_impl;
+use topsoil_support::{
+	parameter_types,
+	traits::{ConstU32, Hooks},
+	weights::{constants, Weight},
+	BoundedVec,
+};
 
 pub type Block = soil_runtime::generic::Block<Header, UncheckedExtrinsic>;
 pub type UncheckedExtrinsic =
@@ -496,8 +496,8 @@ impl ElectionDataProvider for StakingMock {
 
 		let targets = Targets::get();
 
-		if !DataProviderAllowBadData::get() &&
-			bounds.count.map_or(false, |max_len| targets.len() > max_len.0 as usize)
+		if !DataProviderAllowBadData::get()
+			&& bounds.count.map_or(false, |max_len| targets.len() > max_len.0 as usize)
 		{
 			return Err("Targets too big");
 		}
@@ -682,7 +682,9 @@ impl ExtBuilder {
 		#[cfg(feature = "try-runtime")]
 		ext.execute_with(|| {
 			topsoil_support::assert_ok!(
-				<MultiPhase as topsoil_support::traits::Hooks<u64>>::try_state(System::block_number())
+				<MultiPhase as topsoil_support::traits::Hooks<u64>>::try_state(
+					System::block_number()
+				)
 			);
 		});
 	}

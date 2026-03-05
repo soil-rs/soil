@@ -31,9 +31,9 @@
 //! performed through the methods exposed by the [`StakingLedger`] implementation in order to ensure
 //! state consistency.
 
-use topsoil_support::{defensive, ensure, traits::Defensive};
 use soil_runtime::DispatchResult;
 use soil_staking::{StakingAccount, StakingInterface};
+use topsoil_support::{defensive, ensure, traits::Defensive};
 
 use crate::{
 	asset, BalanceOf, Bonded, Config, Error, Ledger, Pallet, Payee, RewardDestination,
@@ -292,17 +292,18 @@ pub struct StakingLedgerInspect<T: Config> {
 	#[codec(compact)]
 	pub active: BalanceOf<T>,
 	pub unlocking: topsoil_support::BoundedVec<UnlockChunk<BalanceOf<T>>, T::MaxUnlockingChunks>,
-	pub legacy_claimed_rewards: topsoil_support::BoundedVec<soil_staking::EraIndex, T::HistoryDepth>,
+	pub legacy_claimed_rewards:
+		topsoil_support::BoundedVec<soil_staking::EraIndex, T::HistoryDepth>,
 }
 
 #[cfg(test)]
 impl<T: Config> PartialEq<StakingLedgerInspect<T>> for StakingLedger<T> {
 	fn eq(&self, other: &StakingLedgerInspect<T>) -> bool {
-		self.stash == other.stash &&
-			self.total == other.total &&
-			self.active == other.active &&
-			self.unlocking == other.unlocking &&
-			self.legacy_claimed_rewards == other.legacy_claimed_rewards
+		self.stash == other.stash
+			&& self.total == other.total
+			&& self.active == other.active
+			&& self.unlocking == other.unlocking
+			&& self.legacy_claimed_rewards == other.legacy_claimed_rewards
 	}
 }
 

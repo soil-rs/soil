@@ -44,11 +44,11 @@ extern crate alloc;
 
 use alloc::boxed::Box;
 use codec::{DecodeLimit, Encode, FullCodec};
+use scale_info::TypeInfo;
 use topsoil::{
 	prelude::*,
 	traits::{QueryPreimage, StorePreimage},
 };
-use scale_info::TypeInfo;
 
 pub use pallet::*;
 
@@ -60,7 +60,8 @@ pub mod pallet {
 	pub trait Config: topsoil_system::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>>
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// The overarching call type.
 		type RuntimeCall: IsType<<Self as topsoil_system::Config>::RuntimeCall>

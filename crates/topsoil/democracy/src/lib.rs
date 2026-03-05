@@ -156,6 +156,10 @@ extern crate alloc;
 
 use alloc::{vec, vec::Vec};
 use codec::{Decode, Encode};
+use soil_runtime::{
+	traits::{BadOrigin, Bounded as ArithBounded, One, Saturating, StaticLookup, Zero},
+	ArithmeticError, DispatchError, DispatchResult,
+};
 use topsoil_support::{
 	ensure,
 	traits::{
@@ -167,10 +171,6 @@ use topsoil_support::{
 	weights::Weight,
 };
 use topsoil_system::pallet_prelude::{BlockNumberFor, OriginFor};
-use soil_runtime::{
-	traits::{BadOrigin, Bounded as ArithBounded, One, Saturating, StaticLookup, Zero},
-	ArithmeticError, DispatchError, DispatchResult,
-};
 
 mod conviction;
 mod types;
@@ -223,7 +223,8 @@ pub mod pallet {
 	pub trait Config: topsoil_system::Config + Sized {
 		type WeightInfo: WeightInfo;
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>>
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// The Scheduler.
 		type Scheduler: ScheduleNamed<
@@ -1669,8 +1670,8 @@ impl<T: Config> Pallet<T> {
 		//   of unbaked referendum is bounded by this number. In case those number have changed in a
 		//   runtime upgrade the formula should be adjusted but the bound should still be sensible.
 		LowestUnbaked::<T>::mutate(|ref_index| {
-			while *ref_index < last &&
-				ReferendumInfoOf::<T>::get(*ref_index)
+			while *ref_index < last
+				&& ReferendumInfoOf::<T>::get(*ref_index)
 					.map_or(true, |info| matches!(info, ReferendumInfo::Finished { .. }))
 			{
 				*ref_index += 1

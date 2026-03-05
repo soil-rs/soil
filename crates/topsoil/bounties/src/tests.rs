@@ -24,6 +24,10 @@ use crate::pallet::*;
 
 use crate::{Bounty, BountyStatus, TransferAllFungibles};
 use codec::Encode;
+use soil_runtime::{
+	traits::{BadOrigin, IdentityLookup},
+	BuildStorage, Perbill, Permill, Storage,
+};
 use topsoil_support::{
 	assert_noop, assert_ok, derive_impl, hypothetically, hypothetically_ok,
 	pallet_prelude::*,
@@ -37,10 +41,6 @@ use topsoil_support::{
 	PalletId,
 };
 use topsoil_system::{pallet_prelude::*, EnsureSigned};
-use soil_runtime::{
-	traits::{BadOrigin, IdentityLookup},
-	BuildStorage, Perbill, Permill, Storage,
-};
 
 use super::Event as BountiesEvent;
 

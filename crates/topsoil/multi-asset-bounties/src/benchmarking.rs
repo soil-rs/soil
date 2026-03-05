@@ -24,10 +24,10 @@ use crate as topsoil_bounties;
 use crate::Pallet as Bounties;
 
 use alloc::{borrow::Cow, vec};
+use soil_core::crypto::FromEntropy;
 use topsoil_benchmarking::{v2::*, BenchmarkError};
 use topsoil_support::assert_ok;
 use topsoil_system::RawOrigin;
-use soil_core::crypto::FromEntropy;
 
 /// Trait describing factory functions for dispatchables' parameters.
 pub trait ArgumentsFactory<AssetKind, Beneficiary, Balance> {
@@ -451,7 +451,10 @@ mod benchmarks {
 		let s = create_funded_child_bounty::<T, I>()?;
 		let caller = s.child_curator.clone();
 
-		<T as topsoil_bounties::Config<I>>::Consideration::ensure_successful(&caller, s.child_value);
+		<T as topsoil_bounties::Config<I>>::Consideration::ensure_successful(
+			&caller,
+			s.child_value,
+		);
 
 		#[block]
 		{

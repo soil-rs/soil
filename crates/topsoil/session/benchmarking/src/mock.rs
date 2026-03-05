@@ -20,6 +20,7 @@
 #![cfg(test)]
 
 use codec::Encode;
+use soil_runtime::{traits::IdentityLookup, BuildStorage, KeyTypeId};
 use topsoil_election_provider_support::{
 	bounds::{ElectionBounds, ElectionBoundsBuilder},
 	onchain, SequentialPhragmen,
@@ -28,7 +29,6 @@ use topsoil_support::{
 	derive_impl, parameter_types,
 	traits::{ConstU32, ConstU64},
 };
-use soil_runtime::{traits::IdentityLookup, BuildStorage, KeyTypeId};
 
 type AccountId = u64;
 type Nonce = u32;

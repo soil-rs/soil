@@ -26,11 +26,11 @@ use crate::{
 };
 use alloc::{collections::btree_map::BTreeMap, vec::Vec};
 use core::marker::PhantomData;
-use topsoil_support::{dispatch::DispatchClass, traits::Get};
-use topsoil_system::pallet_prelude::BlockNumberFor;
 use soil_npos_elections::{
 	assignment_ratio_to_staked_normalized, to_supports, ElectionResult, VoteWeight,
 };
+use topsoil_support::{dispatch::DispatchClass, traits::Get};
+use topsoil_system::pallet_prelude::BlockNumberFor;
 
 /// Errors of the on-chain election.
 #[derive(Eq, PartialEq, Debug, Clone)]
@@ -215,10 +215,10 @@ impl<T: Config> ElectionProvider for OnChainExecution<T> {
 mod tests {
 	use super::*;
 	use crate::{ElectionProvider, PhragMMS, SequentialPhragmen};
-	use topsoil_support::{assert_noop, derive_impl, parameter_types};
 	use soil_io::TestExternalities;
 	use soil_npos_elections::Support;
 	use soil_runtime::Perbill;
+	use topsoil_support::{assert_noop, derive_impl, parameter_types};
 	type AccountId = u64;
 	type Nonce = u64;
 	type BlockNumber = u64;
@@ -296,8 +296,8 @@ mod tests {
 	mod mock_data_provider {
 		use super::*;
 		use crate::{data_provider, DataProviderBounds, PageIndex, VoterOf};
-		use topsoil_support::traits::ConstU32;
 		use soil_runtime::bounded_vec;
+		use topsoil_support::traits::ConstU32;
 
 		pub struct DataProvider;
 		impl ElectionDataProvider for DataProvider {

@@ -16,9 +16,9 @@
 // limitations under the License.
 
 use crate::{pallet::Def, COUNTER};
-use topsoil_support_procedural_tools::get_doc_literals;
 use quote::ToTokens;
 use syn::{spanned::Spanned, Ident};
+use topsoil_support_procedural_tools::get_doc_literals;
 
 /// * add various derive trait on GenesisConfig struct.
 pub fn expand_genesis_config(def: &mut Def) -> proc_macro2::TokenStream {
@@ -82,9 +82,9 @@ pub fn expand_genesis_config(def: &mut Def) -> proc_macro2::TokenStream {
 	let serde_crate = format!("{}::__private::serde", topsoil_support.to_token_stream());
 
 	match genesis_config_item {
-		syn::Item::Enum(syn::ItemEnum { attrs, .. }) |
-		syn::Item::Struct(syn::ItemStruct { attrs, .. }) |
-		syn::Item::Type(syn::ItemType { attrs, .. }) => {
+		syn::Item::Enum(syn::ItemEnum { attrs, .. })
+		| syn::Item::Struct(syn::ItemStruct { attrs, .. })
+		| syn::Item::Type(syn::ItemType { attrs, .. }) => {
 			if get_doc_literals(attrs).is_empty() {
 				attrs.push(syn::parse_quote!(
 					#[doc = r"

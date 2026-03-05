@@ -30,16 +30,16 @@ mod tests;
 extern crate alloc;
 use alloc::{vec, vec::Vec};
 pub use pallet::*;
-use topsoil_session::historical::IdentificationTuple;
 use soil_runtime::{traits::Convert, Perbill};
 use soil_staking::offence::{Kind, Offence, OnOffenceHandler};
+use topsoil_session::historical::IdentificationTuple;
 
 #[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
+	use soil_staking::{offence::ReportOffence, SessionIndex};
 	use topsoil_support::pallet_prelude::*;
 	use topsoil_system::pallet_prelude::*;
-	use soil_staking::{offence::ReportOffence, SessionIndex};
 
 	/// Custom offence type for testing spam scenarios.
 	///
@@ -89,7 +89,8 @@ pub mod pallet {
 		+ topsoil_session::historical::Config
 	{
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>>
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// The offence handler provided by the runtime.
 		///
@@ -225,8 +226,8 @@ pub mod pallet {
 		) {
 			let session_index = maybe_session_index.unwrap_or_else(|| {
 				<topsoil_session::Pallet<T> as topsoil_support::traits::ValidatorSet<
-						T::AccountId,
-					>>::session_index()
+					T::AccountId,
+				>>::session_index()
 			});
 			T::OffenceHandler::on_offence(&offenders, &slash_fraction, session_index);
 		}

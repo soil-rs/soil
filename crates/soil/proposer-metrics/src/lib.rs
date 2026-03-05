@@ -33,7 +33,7 @@ pub struct MetricsLink(Option<Metrics>);
 
 #[cfg(feature = "std")]
 impl MetricsLink {
-#[cfg(feature = "std")]
+	#[cfg(feature = "std")]
 	pub fn new(registry: Option<&Registry>) -> Self {
 		Self(registry.and_then(|registry| {
 			Metrics::register(registry)
@@ -44,7 +44,7 @@ impl MetricsLink {
 		}))
 	}
 
-#[cfg(feature = "std")]
+	#[cfg(feature = "std")]
 	pub fn report<O>(&self, do_this: impl FnOnce(&Metrics) -> O) -> Option<O> {
 		self.0.as_ref().map(do_this)
 	}
@@ -75,7 +75,7 @@ pub struct Metrics {
 
 #[cfg(feature = "std")]
 impl Metrics {
-#[cfg(feature = "std")]
+	#[cfg(feature = "std")]
 	pub fn register(registry: &Registry) -> Result<Self, PrometheusError> {
 		Ok(Self {
 			block_constructed: register(
@@ -120,7 +120,7 @@ impl Metrics {
 	}
 
 	/// Report the reason why the proposing ended.
-#[cfg(feature = "std")]
+	#[cfg(feature = "std")]
 	pub fn report_end_proposing_reason(&self, reason: EndProposingReason) {
 		let reason = match reason {
 			EndProposingReason::HitDeadline => "hit_deadline",

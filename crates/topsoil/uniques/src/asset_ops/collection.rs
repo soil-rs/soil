@@ -21,6 +21,7 @@ use crate::{
 	asset_strategies::{Attribute, WithCollectionConfig},
 	Collection as CollectionStorage, *,
 };
+use soil_runtime::{DispatchError, DispatchResult};
 use topsoil_support::{
 	ensure,
 	traits::{
@@ -36,7 +37,6 @@ use topsoil_support::{
 	BoundedSlice,
 };
 use topsoil_system::ensure_signed;
-use soil_runtime::{DispatchError, DispatchResult};
 
 pub struct Collection<PalletInstance>(PhantomData<PalletInstance>);
 

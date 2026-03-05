@@ -305,8 +305,8 @@ mod test {
 	use super::*;
 	use crate::mock::*;
 	use alloc::borrow::Cow;
-	use topsoil_support::Hashable;
 	use substrate_test_utils::assert_eq_uvec;
+	use topsoil_support::Hashable;
 
 	#[test]
 	#[allow(deprecated)]

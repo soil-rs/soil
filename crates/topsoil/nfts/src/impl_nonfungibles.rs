@@ -18,13 +18,13 @@
 //! Implementations for `nonfungibles` traits.
 
 use super::*;
+use soil_runtime::{DispatchError, DispatchResult};
 use topsoil_support::{
 	ensure,
 	storage::KeyPrefixIterator,
 	traits::{tokens::nonfungibles_v2::*, Get},
 	BoundedSlice,
 };
-use soil_runtime::{DispatchError, DispatchResult};
 
 impl<T: Config<I>, I: 'static> Inspect<<T as SystemConfig>::AccountId> for Pallet<T, I> {
 	type ItemId = T::ItemId;
@@ -128,8 +128,8 @@ impl<T: Config<I>, I: 'static> Inspect<<T as SystemConfig>::AccountId> for Palle
 			ItemConfigOf::<T, I>::get(collection, item),
 		) {
 			(Some(cc), Some(ic))
-				if cc.is_setting_enabled(CollectionSetting::TransferableItems) &&
-					ic.is_setting_enabled(ItemSetting::Transferable) =>
+				if cc.is_setting_enabled(CollectionSetting::TransferableItems)
+					&& ic.is_setting_enabled(ItemSetting::Transferable) =>
 			{
 				true
 			},

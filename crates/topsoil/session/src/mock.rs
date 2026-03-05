@@ -23,8 +23,6 @@ use crate as topsoil_session;
 use crate::historical as pallet_session_historical;
 
 use codec::Encode;
-use topsoil_support::{derive_impl, parameter_types, traits::ConstU64};
-use topsoil_balances::{self, AccountData};
 use soil_core::crypto::key_types::DUMMY;
 use soil_runtime::{
 	impl_opaque_keys,
@@ -34,6 +32,8 @@ use soil_runtime::{
 };
 use soil_staking::SessionIndex;
 use std::collections::BTreeMap;
+use topsoil_balances::{self, AccountData};
+use topsoil_support::{derive_impl, parameter_types, traits::ConstU64};
 
 impl_opaque_keys! {
 	pub struct MockSessionKeys {
@@ -119,8 +119,8 @@ pub struct TestShouldEndSession;
 impl ShouldEndSession<u64> for TestShouldEndSession {
 	fn should_end_session(now: u64) -> bool {
 		let l = SessionLength::get();
-		now.is_multiple_of(l) ||
-			ForceSessionEnd::mutate(|l| {
+		now.is_multiple_of(l)
+			|| ForceSessionEnd::mutate(|l| {
 				let r = *l;
 				*l = false;
 				r

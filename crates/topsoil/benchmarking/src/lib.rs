@@ -39,13 +39,13 @@ pub mod v1;
 pub mod __private {
 	pub use alloc::{boxed::Box, str, vec, vec::Vec};
 	pub use codec;
-	pub use topsoil_support::{storage, traits};
 	pub use log;
 	pub use paste;
 	pub use soil_core::defer;
 	pub use soil_io::storage::root as storage_root;
 	pub use soil_runtime::{traits::Zero, StateVersion};
 	pub use soil_storage::{well_known_keys, TrackedStorageKey};
+	pub use topsoil_support::{storage, traits};
 }
 
 #[cfg(feature = "std")]

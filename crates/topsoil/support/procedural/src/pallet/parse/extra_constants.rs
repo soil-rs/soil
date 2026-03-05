@@ -16,8 +16,8 @@
 // limitations under the License.
 
 use super::helper;
-use topsoil_support_procedural_tools::get_doc_literals;
 use syn::spanned::Spanned;
+use topsoil_support_procedural_tools::get_doc_literals;
 
 /// List of additional token to be used for parsing.
 mod keyword {

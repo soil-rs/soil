@@ -88,10 +88,10 @@ mod pallet {
 		verifier::Verifier,
 		CommonError,
 	};
-	use topsoil_support::pallet_prelude::*;
-	use topsoil_system::{offchain::CreateBare, pallet_prelude::*};
 	use soil_runtime::traits::SaturatedConversion;
 	use soil_std::prelude::*;
+	use topsoil_support::pallet_prelude::*;
+	use topsoil_system::{offchain::CreateBare, pallet_prelude::*};
 
 	/// convert a [`crate::CommonError`] to a custom InvalidTransaction with the inner code being
 	/// the index of the variant.
@@ -240,8 +240,8 @@ mod pallet {
 				"weight of `submit_unsigned` is too high"
 			);
 			assert!(
-				<T as Config>::MinerPages::get() as usize <=
-					<T as crate::Config>::Pages::get() as usize,
+				<T as Config>::MinerPages::get() as usize
+					<= <T as crate::Config>::Pages::get() as usize,
 				"number of pages in the unsigned phase is too high"
 			);
 		}

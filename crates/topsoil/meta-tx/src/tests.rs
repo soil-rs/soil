@@ -17,7 +17,6 @@
 
 use crate::*;
 use core::ops::Add;
-use topsoil_support::traits::tokens::fungible::Inspect;
 use mock::*;
 use soil_io::hashing::blake2_256;
 use soil_keyring::Sr25519Keyring;
@@ -26,6 +25,7 @@ use soil_runtime::{
 	traits::{Applyable, Checkable, Hash, IdentityLookup},
 	DispatchErrorWithPostInfo, MultiSignature,
 };
+use topsoil_support::traits::tokens::fungible::Inspect;
 type VerifySignatureExt = topsoil_verify_signature::VerifySignature<Runtime>;
 
 fn create_tx_bare_ext(account: AccountId) -> TxBareExtension {
@@ -145,8 +145,8 @@ fn sign_and_execute_meta_tx() {
 
 		// Asserting the results and make sure the weight is correct.
 
-		let tx_weight = tx_ext.weight(&call) +
-			<Runtime as Config>::WeightInfo::bare_dispatch(meta_tx.encoded_size() as u32);
+		let tx_weight = tx_ext.weight(&call)
+			+ <Runtime as Config>::WeightInfo::bare_dispatch(meta_tx.encoded_size() as u32);
 		let meta_tx_weight = remark_call
 			.get_dispatch_info()
 			.call_weight
@@ -380,8 +380,8 @@ fn meta_tx_call_fails() {
 
 		// Asserting the results and make sure the weight is correct.
 
-		let tx_weight = tx_ext.weight(&call) +
-			<Runtime as Config>::WeightInfo::bare_dispatch(meta_tx.encoded_size() as u32);
+		let tx_weight = tx_ext.weight(&call)
+			+ <Runtime as Config>::WeightInfo::bare_dispatch(meta_tx.encoded_size() as u32);
 		let meta_tx_weight = transfer_call
 			.get_dispatch_info()
 			.call_weight
@@ -401,7 +401,9 @@ fn meta_tx_call_fails() {
 					actual_weight: Some(meta_tx_weight),
 					pays_fee: Pays::Yes,
 				},
-				error: soil_runtime::DispatchError::Token(soil_runtime::TokenError::FundsUnavailable),
+				error: soil_runtime::DispatchError::Token(
+					soil_runtime::TokenError::FundsUnavailable,
+				),
 			}),
 		}));
 

@@ -19,17 +19,6 @@
 
 use super::*;
 
-use topsoil_support::{
-	assert_err, assert_ok, derive_impl,
-	migrations::MultiStepMigrator,
-	pallet_prelude::*,
-	parameter_types,
-	traits::{fungible, ConstU8, Currency, IsInherent, VariantCount, VariantCountOf},
-	weights::{ConstantMultiplier, IdentityFee, RuntimeDbWeight, Weight, WeightMeter, WeightToFee},
-};
-use topsoil_system::{pallet_prelude::*, ChainContext, LastRuntimeUpgrade, LastRuntimeUpgradeInfo};
-use topsoil_balances::Call as BalancesCall;
-use topsoil_transaction_payment::FungibleAdapter;
 use soil_core::H256;
 use soil_runtime::{
 	generic::{DigestItem, Era},
@@ -40,6 +29,17 @@ use soil_runtime::{
 	},
 	BuildStorage, DispatchError,
 };
+use topsoil_balances::Call as BalancesCall;
+use topsoil_support::{
+	assert_err, assert_ok, derive_impl,
+	migrations::MultiStepMigrator,
+	pallet_prelude::*,
+	parameter_types,
+	traits::{fungible, ConstU8, Currency, IsInherent, VariantCount, VariantCountOf},
+	weights::{ConstantMultiplier, IdentityFee, RuntimeDbWeight, Weight, WeightMeter, WeightToFee},
+};
+use topsoil_system::{pallet_prelude::*, ChainContext, LastRuntimeUpgrade, LastRuntimeUpgradeInfo};
+use topsoil_transaction_payment::FungibleAdapter;
 
 const TEST_KEY: &[u8] = b":test:key:";
 const TEST_KEY_2: &[u8] = b":test:key_2:";
@@ -268,9 +268,9 @@ mod custom2 {
 		// Inherent call is accepted for being dispatched
 		fn pre_dispatch(call: &Self::Call) -> Result<(), TransactionValidityError> {
 			match call {
-				Call::allowed_unsigned { .. } |
-				Call::optional_inherent { .. } |
-				Call::inherent { .. } => Ok(()),
+				Call::allowed_unsigned { .. }
+				| Call::optional_inherent { .. }
+				| Call::inherent { .. } => Ok(()),
 				_ => Err(UnknownTransaction::NoUnsignedValidator.into()),
 			}
 		}
@@ -605,8 +605,8 @@ fn balance_transfer_dispatch_works() {
 		.assimilate_storage(&mut t)
 		.unwrap();
 	let xt = UncheckedXt::new_signed(call_transfer(2, 69), 1, 1.into(), tx_ext(0, 0));
-	let weight = xt.get_dispatch_info().total_weight() +
-		<Runtime as topsoil_system::Config>::BlockWeights::get()
+	let weight = xt.get_dispatch_info().total_weight()
+		+ <Runtime as topsoil_system::Config>::BlockWeights::get()
 			.get(DispatchClass::Normal)
 			.base_extrinsic;
 	let fee: Balance =
@@ -781,8 +781,8 @@ fn block_weight_limit_enforced() {
 					// + extension weight
 					// + extrinsic len
 					Weight::from_parts(
-						(transfer_weight.ref_time() + extension_weight.ref_time() + 5) *
-							(nonce + 1),
+						(transfer_weight.ref_time() + extension_weight.ref_time() + 5)
+							* (nonce + 1),
 						(nonce + 1) * encoded_len
 					) + base_block_weight,
 				);
@@ -823,8 +823,8 @@ fn block_weight_and_size_is_stored_per_tx() {
 	let mut t = new_test_ext(2);
 	t.execute_with(|| {
 		// Block execution weight + on_initialize weight from custom module
-		let base_block_weight = Weight::from_parts(175, 0) +
-			<Runtime as topsoil_system::Config>::BlockWeights::get().base_block;
+		let base_block_weight = Weight::from_parts(175, 0)
+			+ <Runtime as topsoil_system::Config>::BlockWeights::get().base_block;
 
 		Executive::initialize_block(&Header::new_from_number(1));
 
@@ -837,9 +837,9 @@ fn block_weight_and_size_is_stored_per_tx() {
 		assert!(Executive::apply_extrinsic(x1.clone()).unwrap().is_ok());
 		assert!(Executive::apply_extrinsic(x2.clone()).unwrap().is_ok());
 
-		let extrinsic_weight = transfer_weight +
-			extension_weight +
-			<Runtime as topsoil_system::Config>::BlockWeights::get()
+		let extrinsic_weight = transfer_weight
+			+ extension_weight
+			+ <Runtime as topsoil_system::Config>::BlockWeights::get()
 				.get(DispatchClass::Normal)
 				.base_extrinsic;
 		// Check we account for all extrinsic weight and their len.

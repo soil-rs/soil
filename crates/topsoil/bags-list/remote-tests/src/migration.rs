@@ -17,10 +17,10 @@
 //! Test to check the migration of the voter bag.
 
 use crate::{RuntimeT, LOG_TARGET};
-use topsoil_support::traits::PalletInfoAccess;
-use topsoil_staking::Nominators;
 use remote_externalities::{Builder, Mode, OnlineConfig};
 use soil_runtime::{traits::Block as BlockT, DeserializeOwned};
+use topsoil_staking::Nominators;
+use topsoil_support::traits::PalletInfoAccess;
 
 /// Test voter bags migration. `currency_unit` is the number of planks per the the runtimes `UNITS`
 /// (i.e. number of decimal places per DOT, KSM etc)

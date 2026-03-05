@@ -20,9 +20,9 @@
 use crate::{Config, CreditOf, Event, Pallet};
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use core::ops::BitOr;
-use topsoil_support::traits::{Imbalance, LockIdentifier, OnUnbalanced, WithdrawReasons};
 use scale_info::TypeInfo;
 use soil_runtime::Saturating;
+use topsoil_support::traits::{Imbalance, LockIdentifier, OnUnbalanced, WithdrawReasons};
 
 /// Simplified reasons for withdrawing balance.
 #[derive(

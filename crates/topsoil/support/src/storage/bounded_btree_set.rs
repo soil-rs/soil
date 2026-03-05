@@ -17,8 +17,8 @@
 
 //! Traits, types and structs to support a bounded `BTreeSet`.
 
-use topsoil_support::storage::StorageDecodeNonDedupLength;
 pub use soil_runtime::BoundedBTreeSet;
+use topsoil_support::storage::StorageDecodeNonDedupLength;
 
 impl<T, S> StorageDecodeNonDedupLength for BoundedBTreeSet<T, S> {}
 
@@ -27,8 +27,8 @@ pub mod test {
 	use super::*;
 	use crate::Twox128;
 	use alloc::collections::btree_set::BTreeSet;
-	use topsoil_support::traits::{ConstU32, Get};
 	use soil_io::TestExternalities;
+	use topsoil_support::traits::{ConstU32, Get};
 
 	#[crate::storage_alias]
 	type Foo = StorageValue<Prefix, BoundedBTreeSet<u32, ConstU32<7>>>;

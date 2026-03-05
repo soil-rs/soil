@@ -24,6 +24,15 @@ use crate::{
 	DEFAULT_ADDRESS_URI,
 };
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
+use scale_info::TypeInfo;
+use soil_core::{hexdisplay::HexDisplay, sr25519::Pair as SrPair, Pair};
+use soil_io;
+use soil_runtime::{
+	traits::{BadOrigin, Zero},
+	ArithmeticError, BuildStorage, Debug, DispatchError, DispatchResult, FixedPointNumber,
+	TokenError,
+};
+use std::collections::BTreeSet;
 use topsoil_support::{
 	assert_err, assert_noop, assert_ok, assert_storage_noop, derive_impl,
 	dispatch::{DispatchInfo, GetDispatchInfo},
@@ -36,15 +45,6 @@ use topsoil_support::{
 };
 use topsoil_system::{self as system, RawOrigin};
 use topsoil_transaction_payment::{ChargeTransactionPayment, FungibleAdapter, Multiplier};
-use scale_info::TypeInfo;
-use soil_core::{hexdisplay::HexDisplay, sr25519::Pair as SrPair, Pair};
-use soil_io;
-use soil_runtime::{
-	traits::{BadOrigin, Zero},
-	ArithmeticError, BuildStorage, Debug, DispatchError, DispatchResult, FixedPointNumber,
-	TokenError,
-};
-use std::collections::BTreeSet;
 
 mod consumer_limit_tests;
 mod currency_tests;

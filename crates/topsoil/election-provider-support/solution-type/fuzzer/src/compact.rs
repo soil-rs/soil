@@ -15,10 +15,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use topsoil_election_provider_solution_type::generate_solution_type;
 use honggfuzz::fuzz;
 use soil_arithmetic::Percent;
 use soil_runtime::codec::{Encode, Error};
+use topsoil_election_provider_solution_type::generate_solution_type;
 
 fn main() {
 	generate_solution_type!(

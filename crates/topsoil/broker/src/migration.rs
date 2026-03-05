@@ -19,8 +19,8 @@ use super::*;
 use crate::types::RegionRecord;
 use codec::{Decode, Encode};
 use core::marker::PhantomData;
-use topsoil_support::traits::{Get, UncheckedOnRuntimeUpgrade};
 use soil_runtime::Saturating;
+use topsoil_support::traits::{Get, UncheckedOnRuntimeUpgrade};
 
 #[cfg(feature = "try-runtime")]
 use alloc::vec::Vec;
@@ -131,12 +131,12 @@ mod v2 {
 mod v3 {
 	use super::*;
 	use codec::MaxEncodedLen;
+	use soil_arithmetic::Perbill;
 	use topsoil_support::{
 		pallet_prelude::{Debug, OptionQuery, TypeInfo},
 		storage_alias,
 	};
 	use topsoil_system::Pallet as System;
-	use soil_arithmetic::Perbill;
 
 	pub struct MigrateToV3Impl<T>(PhantomData<T>);
 

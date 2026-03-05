@@ -19,6 +19,10 @@
 
 use alloc::vec::Vec;
 use codec::Codec;
+use soil_runtime::{
+	traits::{SaturatedConversion, StaticLookup, Zero},
+	ArithmeticError, Perbill, Percent,
+};
 use topsoil_election_provider_support::{ElectionProvider, SortedListProvider, VoteWeight};
 use topsoil_support::{
 	pallet_prelude::*,
@@ -34,10 +38,6 @@ use topsoil_support::{
 	BoundedVec,
 };
 use topsoil_system::{ensure_root, ensure_signed, pallet_prelude::*};
-use soil_runtime::{
-	traits::{SaturatedConversion, StaticLookup, Zero},
-	ArithmeticError, Perbill, Percent,
-};
 
 use soil_staking::{
 	EraIndex, Page, SessionIndex,
@@ -192,7 +192,8 @@ pub mod pallet {
 		/// The overarching event type.
 		#[pallet::no_default_bounds]
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>>
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// Handler for the unbalanced reduction when slashing a staker.
 		#[pallet::no_default_bounds]
@@ -806,9 +807,9 @@ pub mod pallet {
 					_ => Ok(()),
 				});
 				assert!(
-					ValidatorCount::<T>::get() <=
-						<T::ElectionProvider as ElectionProvider>::MaxWinnersPerPage::get() *
-							<T::ElectionProvider as ElectionProvider>::Pages::get()
+					ValidatorCount::<T>::get()
+						<= <T::ElectionProvider as ElectionProvider>::MaxWinnersPerPage::get()
+							* <T::ElectionProvider as ElectionProvider>::Pages::get()
 				);
 			}
 
@@ -991,8 +992,8 @@ pub mod pallet {
 
 			// ensure election results are always bounded with the same value
 			assert!(
-				<T::ElectionProvider as ElectionProvider>::MaxWinnersPerPage::get() ==
-					<T::GenesisElectionProvider as ElectionProvider>::MaxWinnersPerPage::get()
+				<T::ElectionProvider as ElectionProvider>::MaxWinnersPerPage::get()
+					== <T::GenesisElectionProvider as ElectionProvider>::MaxWinnersPerPage::get()
 			);
 
 			assert!(
@@ -1818,10 +1819,10 @@ pub mod pallet {
 			let origin_balance = asset::total_balance::<T>(&stash);
 			let ledger_total =
 				Self::ledger(Stash(stash.clone())).map(|l| l.total).unwrap_or_default();
-			let reapable = origin_balance < ed ||
-				origin_balance.is_zero() ||
-				ledger_total < ed ||
-				ledger_total.is_zero();
+			let reapable = origin_balance < ed
+				|| origin_balance.is_zero()
+				|| ledger_total < ed
+				|| ledger_total.is_zero();
 			ensure!(reapable, Error::<T>::FundedTarget);
 
 			// Remove all staking-related information and lock.

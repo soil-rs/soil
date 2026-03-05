@@ -22,13 +22,6 @@
 #![recursion_limit = "128"]
 
 use codec::MaxEncodedLen;
-use topsoil_support::{
-	derive_impl, parameter_types, traits::PalletInfo as _, weights::RuntimeDbWeight,
-};
-use topsoil_system::{
-	limits::{BlockLength, BlockWeights},
-	DispatchEventInfo,
-};
 use scale_info::TypeInfo;
 use soil_core::sr25519;
 use soil_runtime::{
@@ -37,6 +30,13 @@ use soil_runtime::{
 	DispatchError, ModuleError,
 };
 use soil_version::RuntimeVersion;
+use topsoil_support::{
+	derive_impl, parameter_types, traits::PalletInfo as _, weights::RuntimeDbWeight,
+};
+use topsoil_system::{
+	limits::{BlockLength, BlockWeights},
+	DispatchEventInfo,
+};
 
 parameter_types! {
 	pub static IntegrityTestExec: u32 = 0;
@@ -94,7 +94,8 @@ mod module2 {
 	#[pallet::config]
 	pub trait Config: topsoil_system::Config {
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>>
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 	}
 
 	#[pallet::hooks]
@@ -222,7 +223,8 @@ pub mod module3 {
 	#[pallet::config]
 	pub trait Config: topsoil_system::Config {
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>>
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 	}
 
 	#[pallet::call]
@@ -600,7 +602,10 @@ fn event_codec() {
 #[test]
 fn call_codec() {
 	use codec::Encode;
-	assert_eq!(RuntimeCall::System(topsoil_system::Call::remark { remark: vec![1] }).encode()[0], 30);
+	assert_eq!(
+		RuntimeCall::System(topsoil_system::Call::remark { remark: vec![1] }).encode()[0],
+		30
+	);
 	assert_eq!(RuntimeCall::Module1_1(module1::Call::fail {}).encode()[0], 31);
 	assert_eq!(RuntimeCall::Module2(module2::Call::fail {}).encode()[0], 32);
 	assert_eq!(RuntimeCall::Module1_2(module1::Call::fail {}).encode()[0], 33);

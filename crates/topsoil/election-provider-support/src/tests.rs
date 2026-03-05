@@ -21,9 +21,9 @@
 use crate::{
 	mock::*, BoundedSupport, BoundedSupports, IndexAssignment, NposSolution, TryFromOtherBounds,
 };
-use topsoil_support::traits::ConstU32;
 use rand::SeedableRng;
 use soil_npos_elections::{Support, Supports};
+use topsoil_support::traits::ConstU32;
 
 mod solution_type {
 	use super::*;

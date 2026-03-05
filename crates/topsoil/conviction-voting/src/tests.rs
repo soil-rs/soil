@@ -19,11 +19,11 @@
 
 use std::{cell::RefCell, collections::BTreeMap};
 
+use soil_runtime::BuildStorage;
 use topsoil_support::{
 	assert_noop, assert_ok, derive_impl, parameter_types,
 	traits::{ConstU32, ConstU64, Contains, Polling, VoteTally},
 };
-use soil_runtime::BuildStorage;
 
 use super::*;
 use crate as topsoil_conviction_voting;

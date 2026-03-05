@@ -25,6 +25,7 @@ use crate::{
 };
 use log::warn;
 use names::{Generator, Name};
+use sc_tracing::logging::LoggerBuilder;
 use soil_service::{
 	config::{
 		BasePath, Configuration, DatabaseSource, ExecutorConfiguration, IpNetwork, KeystoreConfig,
@@ -34,7 +35,6 @@ use soil_service::{
 	},
 	BlocksPruning, ChainSpec, TracingReceiver,
 };
-use sc_tracing::logging::LoggerBuilder;
 use std::{num::NonZeroU32, path::PathBuf};
 
 /// The maximum number of characters for a node name.

@@ -21,7 +21,6 @@
 //! Provides convenient APIs to ease calling functions contained by a FRAME
 //! runtime WASM blob.
 #![warn(missing_docs)]
-
 #![cfg_attr(not(feature = "std"), no_std)]
 
 #[cfg(feature = "std")]
@@ -29,12 +28,12 @@ use codec::{Decode, Encode};
 #[cfg(feature = "std")]
 use error::{Error, Result};
 #[cfg(feature = "std")]
-use soil_executor::WasmExecutor;
-#[cfg(feature = "std")]
 use soil_core::{
 	traits::{CallContext, CodeExecutor, FetchRuntimeCode, RuntimeCode},
 	OpaqueMetadata,
 };
+#[cfg(feature = "std")]
+use soil_executor::WasmExecutor;
 #[cfg(feature = "std")]
 use soil_state_machine::BasicExternalities;
 #[cfg(feature = "std")]

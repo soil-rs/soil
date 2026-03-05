@@ -15,9 +15,9 @@
 // See the License for the specific language governsing permissions and
 // limitations under the License.
 
-use topsoil_support_procedural_tools::get_doc_literals;
 use inflector::Inflector;
 use syn::spanned::Spanned;
+use topsoil_support_procedural_tools::get_doc_literals;
 
 /// Parsed representation of an impl block annotated with `pallet::view_functions`.
 pub struct ViewFunctionsImplDef {

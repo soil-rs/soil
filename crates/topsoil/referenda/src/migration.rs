@@ -19,8 +19,8 @@
 
 use super::*;
 use codec::{Decode, Encode, EncodeLike, MaxEncodedLen};
-use topsoil_support::{pallet_prelude::*, storage_alias, traits::OnRuntimeUpgrade};
 use log;
+use topsoil_support::{pallet_prelude::*, storage_alias, traits::OnRuntimeUpgrade};
 
 #[cfg(feature = "try-runtime")]
 use soil_runtime::TryRuntimeError;

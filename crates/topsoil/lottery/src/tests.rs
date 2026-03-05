@@ -21,8 +21,8 @@ use crate::{
 	mock::{Lottery, *},
 	*,
 };
-use topsoil_support::{assert_noop, assert_ok, assert_storage_noop};
 use soil_runtime::{traits::BadOrigin, TokenError};
+use topsoil_support::{assert_noop, assert_ok, assert_storage_noop};
 
 #[test]
 fn initial_state() {

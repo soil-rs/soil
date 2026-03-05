@@ -49,11 +49,11 @@ pub mod weights;
 extern crate alloc;
 
 use alloc::{collections::btree_set::BTreeSet, vec::Vec};
+pub use pallet::*;
 use topsoil::{
 	deps::{soil_core::OpaquePeerId as PeerId, soil_io},
 	prelude::*,
 };
-pub use pallet::*;
 pub use weights::WeightInfo;
 
 type AccountIdLookupOf<T> = <<T as topsoil_system::Config>::Lookup as StaticLookup>::Source;
@@ -71,7 +71,8 @@ pub mod pallet {
 	pub trait Config: topsoil_system::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>>
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// The maximum number of well known nodes that are allowed to set
 		#[pallet::constant]

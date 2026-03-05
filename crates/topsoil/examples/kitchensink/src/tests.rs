@@ -24,8 +24,8 @@
 //! Tests for topsoil-example-kitchensink.
 
 use crate::*;
-use topsoil_support::{assert_ok, derive_impl, parameter_types, traits::VariantCountOf};
 use soil_runtime::BuildStorage;
+use topsoil_support::{assert_ok, derive_impl, parameter_types, traits::VariantCountOf};
 // Reexport crate as its pallet name for construct_runtime.
 use crate as topsoil_example_kitchensink;
 

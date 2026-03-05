@@ -24,11 +24,11 @@ use crate::{
 	verifier::{impls::Status, Event, FeasibilityError, Verifier, *},
 	PagedRawSolution, Snapshot, *,
 };
-use topsoil_election_provider_support::Support;
-use topsoil_support::{assert_noop, assert_ok};
 use soil_core::bounded_vec;
 use soil_npos_elections::ElectionScore;
 use soil_runtime::{traits::Bounded, PerU16};
+use topsoil_election_provider_support::Support;
+use topsoil_support::{assert_noop, assert_ok};
 
 mod feasibility_check {
 	use super::*;
@@ -153,7 +153,9 @@ mod feasibility_check {
 						paged.solution_pages[0].clone(),
 						0
 					),
-					FeasibilityError::NposElection(soil_npos_elections::Error::SolutionInvalidIndex),
+					FeasibilityError::NposElection(
+						soil_npos_elections::Error::SolutionInvalidIndex
+					),
 				);
 			})
 	}
@@ -577,7 +579,9 @@ mod async_verification {
 				verifier_events_since_last_call(),
 				vec![Event::<Runtime>::VerificationFailed(
 					0,
-					FeasibilityError::NposElection(soil_npos_elections::Error::SolutionInvalidIndex)
+					FeasibilityError::NposElection(
+						soil_npos_elections::Error::SolutionInvalidIndex
+					)
 				),]
 			);
 

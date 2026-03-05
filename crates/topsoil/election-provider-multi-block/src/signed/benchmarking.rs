@@ -21,13 +21,13 @@ use crate::{
 	unsigned::miner::OffchainWorkerMiner,
 	CurrentPhase, Phase, Round,
 };
+use soil_npos_elections::ElectionScore;
+use soil_runtime::traits::One;
+use soil_std::boxed::Box;
 use topsoil_benchmarking::v2::*;
 use topsoil_election_provider_support::ElectionProvider;
 use topsoil_support::pallet_prelude::*;
 use topsoil_system::RawOrigin;
-use soil_npos_elections::ElectionScore;
-use soil_runtime::traits::One;
-use soil_std::boxed::Box;
 
 #[benchmarks(where T: crate::Config + crate::verifier::Config + crate::unsigned::Config)]
 mod benchmarks {

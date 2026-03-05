@@ -133,7 +133,9 @@ pub mod pallet {
 	pub struct Pallet<T, I = ()>(_);
 
 	#[pallet::config]
-	pub trait Config<I: 'static = ()>: topsoil_system::Config + topsoil_treasury::Config<I> {
+	pub trait Config<I: 'static = ()>:
+		topsoil_system::Config + topsoil_treasury::Config<I>
+	{
 		/// The overarching event type.
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self, I>>
@@ -268,8 +270,8 @@ pub mod pallet {
 			let hash = T::Hashing::hash_of(&(&reason_hash, &who));
 			ensure!(!Tips::<T, I>::contains_key(&hash), Error::<T, I>::AlreadyKnown);
 
-			let deposit = T::TipReportDepositBase::get() +
-				T::DataDepositPerByte::get() * (reason.len() as u32).into();
+			let deposit = T::TipReportDepositBase::get()
+				+ T::DataDepositPerByte::get() * (reason.len() as u32).into();
 			T::Currency::reserve(&finder, deposit)?;
 
 			Reasons::<T, I>::insert(&reason_hash, &reason);

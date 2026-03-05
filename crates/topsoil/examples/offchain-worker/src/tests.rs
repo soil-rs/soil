@@ -24,14 +24,14 @@
 use crate as example_offchain_worker;
 use crate::*;
 use codec::Decode;
-use topsoil_support::{
-	assert_ok, derive_impl, parameter_types,
-	traits::{ConstU32, ConstU64},
-};
 use soil_core::{
 	offchain::{testing, OffchainWorkerExt, TransactionPoolExt},
 	sr25519::Signature,
 	H256,
+};
+use topsoil_support::{
+	assert_ok, derive_impl, parameter_types,
+	traits::{ConstU32, ConstU64},
 };
 
 use soil_keystore::{testing::MemoryKeystore, Keystore, KeystoreExt};
@@ -303,8 +303,8 @@ fn should_submit_authorized_transaction_on_chain_for_any_account() {
 		assert!(!tx.is_inherent() && !tx.is_signed());
 
 		// Actually validate the transaction through the authorize logic
-		use topsoil_support::traits::Authorize;
 		use soil_runtime::transaction_validity::TransactionSource;
+		use topsoil_support::traits::Authorize;
 
 		let authorize_result = tx.function.authorize(TransactionSource::External);
 		assert!(
@@ -376,8 +376,8 @@ fn should_submit_authorized_transaction_on_chain_for_all_accounts() {
 		assert!(!tx.is_inherent() && !tx.is_signed());
 
 		// Actually validate the transaction through the authorize logic
-		use topsoil_support::traits::Authorize;
 		use soil_runtime::transaction_validity::TransactionSource;
+		use topsoil_support::traits::Authorize;
 
 		let authorize_result = tx.function.authorize(TransactionSource::External);
 		assert!(
@@ -436,8 +436,8 @@ fn should_submit_raw_authorized_transaction_on_chain() {
 		assert!(!tx.is_inherent() && !tx.is_signed());
 
 		// Actually validate the transaction through the authorize logic
-		use topsoil_support::traits::Authorize;
 		use soil_runtime::transaction_validity::TransactionSource;
+		use topsoil_support::traits::Authorize;
 
 		let authorize_result = tx.function.authorize(TransactionSource::External);
 		assert!(
@@ -475,8 +475,8 @@ fn should_reject_invalid_authorized_transaction() {
 
 		// Try to validate the call's authorization - this should FAIL because the block number is
 		// too old
-		use topsoil_support::traits::Authorize;
 		use soil_runtime::transaction_validity::TransactionSource;
+		use topsoil_support::traits::Authorize;
 
 		let authorize_result = call.authorize(TransactionSource::External);
 		assert!(

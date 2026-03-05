@@ -18,6 +18,7 @@
 
 use std::collections::BTreeMap;
 
+use scale_info::TypeInfo;
 use topsoil_support::{
 	derive_impl,
 	dispatch::Parameter,
@@ -25,7 +26,6 @@ use topsoil_support::{
 	traits::{ConstU32, StorageVersion},
 	OrdNoBound, PartialOrdNoBound,
 };
-use scale_info::TypeInfo;
 
 parameter_types! {
 	/// Used to control if the storage version should be updated.
@@ -61,7 +61,8 @@ pub mod pallet {
 		type Balance: Parameter + Default + TypeInfo;
 
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>>
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 	}
 
 	#[pallet::pallet]

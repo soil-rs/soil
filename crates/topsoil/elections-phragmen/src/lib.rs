@@ -103,14 +103,6 @@ extern crate alloc;
 use alloc::{vec, vec::Vec};
 use codec::{Decode, DecodeWithMemTracking, Encode};
 use core::cmp::Ordering;
-use topsoil_support::{
-	traits::{
-		defensive_prelude::*, ChangeMembers, Contains, ContainsLengthBound, Currency, Get,
-		InitializeMembers, LockIdentifier, LockableCurrency, OnUnbalanced, ReservableCurrency,
-		SortedMembers, WithdrawReasons,
-	},
-	weights::Weight,
-};
 use log;
 use scale_info::TypeInfo;
 use soil_npos_elections::{ElectionResult, ExtendedBalance};
@@ -119,6 +111,14 @@ use soil_runtime::{
 	Debug, DispatchError, Perbill,
 };
 use soil_staking::currency_to_vote::CurrencyToVote;
+use topsoil_support::{
+	traits::{
+		defensive_prelude::*, ChangeMembers, Contains, ContainsLengthBound, Currency, Get,
+		InitializeMembers, LockIdentifier, LockableCurrency, OnUnbalanced, ReservableCurrency,
+		SortedMembers, WithdrawReasons,
+	},
+	weights::Weight,
+};
 
 #[cfg(any(feature = "try-runtime", test))]
 use soil_runtime::TryRuntimeError;
@@ -202,7 +202,8 @@ pub mod pallet {
 	#[pallet::config]
 	pub trait Config: topsoil_system::Config {
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>>
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// Identifier for the elections-phragmen pallet's lock
 		#[pallet::constant]
@@ -310,8 +311,8 @@ pub mod pallet {
 			);
 
 			let to_seconds = |w: &Weight| {
-				w.ref_time() as f32 /
-					topsoil_support::weights::constants::WEIGHT_REF_TIME_PER_SECOND as f32
+				w.ref_time() as f32
+					/ topsoil_support::weights::constants::WEIGHT_REF_TIME_PER_SECOND as f32
 			};
 
 			log::debug!(
@@ -636,7 +637,10 @@ pub mod pallet {
 		/// runner-up.
 		///
 		/// Note that old members and runners-up are also candidates.
-		CandidateSlashed { candidate: <T as topsoil_system::Config>::AccountId, amount: BalanceOf<T> },
+		CandidateSlashed {
+			candidate: <T as topsoil_system::Config>::AccountId,
+			amount: BalanceOf<T>,
+		},
 		/// A seat holder was slashed by amount by being forcefully removed from the set.
 		SeatHolderSlashed {
 			seat_holder: <T as topsoil_system::Config>::AccountId,
@@ -1095,8 +1099,8 @@ impl<T: Config> Pallet<T> {
 					// All candidates/members/runners-up who are no longer retaining a position as a
 					// seat holder will lose their bond.
 					candidates_and_deposit.iter().for_each(|(c, d)| {
-						if new_members_ids_sorted.binary_search(c).is_err() &&
-							new_runners_up_ids_sorted.binary_search(c).is_err()
+						if new_members_ids_sorted.binary_search(c).is_err()
+							&& new_runners_up_ids_sorted.binary_search(c).is_err()
 						{
 							let (imbalance, _) = T::Currency::slash_reserved(c, *d);
 							T::LoserCandidate::on_unbalanced(imbalance);
@@ -1264,8 +1268,8 @@ impl<T: Config> Pallet<T> {
 	//  - Members and candidates sets are disjoint;
 	//  - Members and runners-ups sets are disjoint.
 	fn try_state_members_disjoint() -> Result<(), TryRuntimeError> {
-		match Self::intersects(&Pallet::<T>::members_ids(), &Self::candidates_ids()) &&
-			Self::intersects(&Pallet::<T>::members_ids(), &Self::runners_up_ids())
+		match Self::intersects(&Pallet::<T>::members_ids(), &Self::candidates_ids())
+			&& Self::intersects(&Pallet::<T>::members_ids(), &Self::runners_up_ids())
 		{
 			true => {
 				Err("Members set should be disjoint from candidates and runners-up sets".into())
@@ -1305,6 +1309,8 @@ impl<T: Config> Pallet<T> {
 mod tests {
 	use super::*;
 	use crate as elections_phragmen;
+	use soil_runtime::{testing::Header, BuildStorage};
+	use substrate_test_utils::assert_eq_uvec;
 	use topsoil_support::{
 		assert_noop, assert_ok, derive_impl,
 		dispatch::DispatchResultWithPostInfo,
@@ -1312,8 +1318,6 @@ mod tests {
 		traits::{ConstU32, OnInitialize},
 	};
 	use topsoil_system::ensure_signed;
-	use soil_runtime::{testing::Header, BuildStorage};
-	use substrate_test_utils::assert_eq_uvec;
 
 	#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
 	impl topsoil_system::Config for Test {

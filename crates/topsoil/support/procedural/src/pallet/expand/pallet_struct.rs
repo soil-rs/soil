@@ -34,12 +34,13 @@ pub fn expand_pallet_struct(def: &mut Def) -> proc_macro2::TokenStream {
 	let type_decl_gen = &def.type_decl_generics(def.pallet_struct.attr_span);
 	let pallet_ident = &def.pallet_struct.pallet;
 	let config_where_clause = &def.config.where_clause;
-	let deprecation_status =
-		match crate::deprecation::get_deprecation(&quote::quote! {#topsoil_support}, &def.item.attrs)
-		{
-			Ok(deprecation) => deprecation,
-			Err(e) => return e.into_compile_error(),
-		};
+	let deprecation_status = match crate::deprecation::get_deprecation(
+		&quote::quote! {#topsoil_support},
+		&def.item.attrs,
+	) {
+		Ok(deprecation) => deprecation,
+		Err(e) => return e.into_compile_error(),
+	};
 
 	let mut storages_where_clauses = vec![&def.config.where_clause];
 	storages_where_clauses.extend(def.storages.iter().map(|storage| &storage.where_clause));

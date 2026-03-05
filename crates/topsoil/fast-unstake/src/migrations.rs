@@ -18,17 +18,17 @@
 pub mod v1 {
 	use crate::{types::BalanceOf, *};
 	use alloc::vec::Vec;
+	use soil_staking::EraIndex;
 	use topsoil_support::{
 		storage::unhashed,
 		traits::{Defensive, Get, GetStorageVersion, OnRuntimeUpgrade},
 		weights::Weight,
 	};
-	use soil_staking::EraIndex;
 
 	#[cfg(feature = "try-runtime")]
-	use topsoil_support::ensure;
-	#[cfg(feature = "try-runtime")]
 	use soil_runtime::TryRuntimeError;
+	#[cfg(feature = "try-runtime")]
+	use topsoil_support::ensure;
 
 	pub struct MigrateToV1<T>(core::marker::PhantomData<T>);
 	impl<T: Config> OnRuntimeUpgrade for MigrateToV1<T> {

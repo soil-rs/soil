@@ -18,12 +18,12 @@
 //! Tests regarding the reentrancy functionality.
 
 use super::*;
+use fungible::Balanced;
 use topsoil_support::traits::tokens::{
 	Fortitude::Force,
 	Precision::BestEffort,
 	Preservation::{Expendable, Protect},
 };
-use fungible::Balanced;
 
 #[test]
 fn transfer_dust_removal_tst1_should_work() {

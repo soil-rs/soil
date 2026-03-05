@@ -22,6 +22,12 @@
 use super::*;
 
 use extension::VerifySignature;
+use soil_io::hashing::blake2_256;
+use soil_runtime::{
+	generic::ExtensionVersion,
+	testing::{TestSignature, UintAuthorityId},
+	traits::DispatchTransaction,
+};
 use topsoil_support::{
 	derive_impl,
 	dispatch::GetDispatchInfo,
@@ -29,12 +35,6 @@ use topsoil_support::{
 	traits::OriginTrait,
 };
 use topsoil_system::Call as SystemCall;
-use soil_io::hashing::blake2_256;
-use soil_runtime::{
-	generic::ExtensionVersion,
-	testing::{TestSignature, UintAuthorityId},
-	traits::DispatchTransaction,
-};
 
 type Block = topsoil_system::mocking::MockBlock<Test>;
 

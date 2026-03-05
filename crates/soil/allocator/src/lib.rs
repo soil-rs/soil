@@ -21,7 +21,6 @@
 //! - A freeing-bump allocator: [`FreeingBumpHeapAllocator`]
 
 #![warn(missing_docs)]
-
 #![cfg_attr(not(feature = "std"), no_std)]
 
 #[cfg(feature = "std")]
@@ -53,16 +52,16 @@ const MAX_WASM_PAGES: u32 = (4u64 * 1024 * 1024 * 1024 / PAGE_SIZE as u64) as u3
 #[cfg(feature = "std")]
 pub trait Memory {
 	/// Run the given closure `run` and grant it write access to the raw memory.
-#[cfg(feature = "std")]
+	#[cfg(feature = "std")]
 	fn with_access_mut<R>(&mut self, run: impl FnOnce(&mut [u8]) -> R) -> R;
 	/// Run the given closure `run` and grant it read access to the raw memory.
-#[cfg(feature = "std")]
+	#[cfg(feature = "std")]
 	fn with_access<R>(&self, run: impl FnOnce(&[u8]) -> R) -> R;
 	/// Grow the memory by `additional` pages.
-#[cfg(feature = "std")]
+	#[cfg(feature = "std")]
 	fn grow(&mut self, additional: u32) -> Result<(), ()>;
 	/// Returns the current number of pages this memory has allocated.
-#[cfg(feature = "std")]
+	#[cfg(feature = "std")]
 	fn pages(&self) -> u32;
 	/// Returns the maximum number of pages this memory is allowed to allocate.
 	///
@@ -70,6 +69,6 @@ pub trait Memory {
 	/// bigger or equal to [`Self::pages`].
 	///
 	/// If `None` is returned, there is no maximum (besides the maximum defined in the wasm spec).
-#[cfg(feature = "std")]
+	#[cfg(feature = "std")]
 	fn max_pages(&self) -> Option<u32>;
 }

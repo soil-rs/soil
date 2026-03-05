@@ -30,11 +30,6 @@ use alloc::{
 };
 use codec::{Decode, Encode, HasCompact};
 use core::cmp::Ordering;
-use topsoil_election_provider_support::NposSolution;
-use topsoil_support::traits::{
-	defensive_prelude::*, Currency, Get, OnUnbalanced, ReservableCurrency,
-};
-use topsoil_system::pallet_prelude::BlockNumberFor;
 use soil_arithmetic::traits::SaturatedConversion;
 use soil_core::bounded::BoundedVec;
 use soil_npos_elections::ElectionScore;
@@ -42,6 +37,11 @@ use soil_runtime::{
 	traits::{Convert, Saturating, Zero},
 	Debug, FixedPointNumber, FixedPointOperand, FixedU128, Percent,
 };
+use topsoil_election_provider_support::NposSolution;
+use topsoil_support::traits::{
+	defensive_prelude::*, Currency, Get, OnUnbalanced, ReservableCurrency,
+};
+use topsoil_system::pallet_prelude::BlockNumberFor;
 
 /// A raw, unchecked signed submission.
 ///
@@ -568,9 +568,9 @@ mod tests {
 	use crate::{
 		mock::*, CurrentPhase, ElectionCompute, ElectionError, Error, Event, Perbill, Phase, Round,
 	};
+	use soil_runtime::Percent;
 	use topsoil_election_provider_support::bounds::ElectionBoundsBuilder;
 	use topsoil_support::{assert_noop, assert_ok, assert_storage_noop};
-	use soil_runtime::Percent;
 
 	#[test]
 	fn cannot_submit_on_different_round() {

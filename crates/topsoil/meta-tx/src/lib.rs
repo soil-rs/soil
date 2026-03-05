@@ -64,11 +64,6 @@ pub use weights::WeightInfo;
 mod extension;
 pub use extension::MetaTxMarker;
 
-use topsoil_support::{
-	dispatch::{DispatchInfo, GetDispatchInfo, PostDispatchInfo},
-	pallet_prelude::*,
-};
-use topsoil_system::{pallet_prelude::*, RawOrigin as SystemOrigin};
 use soil_runtime::{
 	generic::ExtensionVersion,
 	traits::{
@@ -76,6 +71,11 @@ use soil_runtime::{
 	},
 };
 use soil_std::prelude::*;
+use topsoil_support::{
+	dispatch::{DispatchInfo, GetDispatchInfo, PostDispatchInfo},
+	pallet_prelude::*,
+};
+use topsoil_system::{pallet_prelude::*, RawOrigin as SystemOrigin};
 
 /// Meta Transaction type.
 ///
@@ -98,7 +98,8 @@ impl<Call, Extension> MetaTx<Call, Extension> {
 }
 
 /// The [`MetaTx`] for the given config.
-pub type MetaTxFor<T> = MetaTx<<T as topsoil_system::Config>::RuntimeCall, <T as Config>::Extension>;
+pub type MetaTxFor<T> =
+	MetaTx<<T as topsoil_system::Config>::RuntimeCall, <T as Config>::Extension>;
 
 #[topsoil_support::pallet]
 pub mod pallet {
@@ -119,7 +120,8 @@ pub mod pallet {
 		type WeightInfo: WeightInfo;
 		/// The overarching event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>>
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 		/// Transaction extension/s for meta transactions.
 		///
 		/// The extensions that must be present in every meta transaction. This generally includes

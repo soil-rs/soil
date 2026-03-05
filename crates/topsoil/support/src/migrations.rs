@@ -737,8 +737,10 @@ pub trait SteppedMigrations {
 	///
 	/// Returns `None` if the index is out of bounds.
 	#[cfg(feature = "try-runtime")]
-	fn nth_post_upgrade(n: u32, _state: Vec<u8>)
-		-> Option<Result<(), soil_runtime::TryRuntimeError>>;
+	fn nth_post_upgrade(
+		n: u32,
+		_state: Vec<u8>,
+	) -> Option<Result<(), soil_runtime::TryRuntimeError>>;
 
 	/// The maximal encoded length across all cursors.
 	fn cursor_max_encoded_len() -> usize;
@@ -907,7 +909,10 @@ impl<T: SteppedMigration> SteppedMigrations for T {
 	}
 
 	#[cfg(feature = "try-runtime")]
-	fn nth_post_upgrade(n: u32, state: Vec<u8>) -> Option<Result<(), soil_runtime::TryRuntimeError>> {
+	fn nth_post_upgrade(
+		n: u32,
+		state: Vec<u8>,
+	) -> Option<Result<(), soil_runtime::TryRuntimeError>> {
 		if n != 0 {
 			defensive!("nth_post_upgrade should only be called with n==0");
 		}
@@ -1007,7 +1012,10 @@ impl SteppedMigrations for Tuple {
 	}
 
 	#[cfg(feature = "try-runtime")]
-	fn nth_post_upgrade(n: u32, state: Vec<u8>) -> Option<Result<(), soil_runtime::TryRuntimeError>> {
+	fn nth_post_upgrade(
+		n: u32,
+		state: Vec<u8>,
+	) -> Option<Result<(), soil_runtime::TryRuntimeError>> {
 		let mut i = 0;
 
 		for_tuples! ( #(

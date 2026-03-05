@@ -296,8 +296,11 @@ mod tests {
 		.encode();
 
 		assert_eq!(
-			soil_version::RuntimeVersion::decode_with_version_hint(&mut &version_bytes[..], Some(4))
-				.unwrap(),
+			soil_version::RuntimeVersion::decode_with_version_hint(
+				&mut &version_bytes[..],
+				Some(4)
+			)
+			.unwrap(),
 			soil_version::RuntimeVersion {
 				spec_name: "hello".into(),
 				impl_name: "world".into(),

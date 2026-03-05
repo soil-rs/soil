@@ -16,7 +16,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 #![allow(missing_docs)]
-
 #![cfg_attr(not(feature = "std"), no_std)]
 
 #[cfg(test)]
@@ -58,17 +57,28 @@ use parking_lot::Mutex;
 #[cfg(feature = "std")]
 use sc_block_builder::{BlockBuilder, BlockBuilderBuilder};
 #[cfg(feature = "std")]
+use sc_consensus::{
+	BasicQueue, BlockCheckParams, BlockImport, BlockImportParams, BoxJustificationImport,
+	ForkChoiceStrategy, ImportQueue, ImportResult, JustificationImport, JustificationSyncLink,
+	LongestChain, Verifier,
+};
+#[cfg(feature = "std")]
+use soil_blockchain::{
+	Backend as BlockchainBackend, HeaderBackend, Info as BlockchainInfo, Result as ClientResult,
+};
+#[cfg(feature = "std")]
 use soil_client_api::{
 	backend::{AuxStore, Backend, Finalizer},
 	BlockBackend, BlockImportNotification, BlockchainEvents, FinalityNotification,
 	FinalityNotifications, ImportNotifications,
 };
 #[cfg(feature = "std")]
-use sc_consensus::{
-	BasicQueue, BlockCheckParams, BlockImport, BlockImportParams, BoxJustificationImport,
-	ForkChoiceStrategy, ImportQueue, ImportResult, JustificationImport, JustificationSyncLink,
-	LongestChain, Verifier,
+use soil_consensus::{
+	block_validation::{BlockAnnounceValidator, DefaultBlockAnnounceValidator},
+	BlockOrigin, Error as ConsensusError, SyncOracle,
 };
+#[cfg(feature = "std")]
+use soil_core::H256;
 #[cfg(feature = "std")]
 use soil_network::{
 	config::{
@@ -102,25 +112,14 @@ use soil_network_sync::{
 #[cfg(feature = "std")]
 use soil_network_types::{build_multiaddr, multiaddr::Multiaddr};
 #[cfg(feature = "std")]
-use soil_service::client::Client;
-#[cfg(feature = "std")]
-use soil_blockchain::{
-	Backend as BlockchainBackend, HeaderBackend, Info as BlockchainInfo, Result as ClientResult,
-};
-#[cfg(feature = "std")]
-use soil_consensus::{
-	block_validation::{BlockAnnounceValidator, DefaultBlockAnnounceValidator},
-	BlockOrigin, Error as ConsensusError, SyncOracle,
-};
-#[cfg(feature = "std")]
-use soil_core::H256;
-#[cfg(feature = "std")]
 use soil_runtime::{
 	codec::{Decode, Encode},
 	generic::BlockId,
 	traits::{Block as BlockT, Header as HeaderT, NumberFor, Zero},
 	Digest, Justification, Justifications,
 };
+#[cfg(feature = "std")]
+use soil_service::client::Client;
 #[cfg(feature = "std")]
 use substrate_test_runtime_client::Sr25519Keyring;
 #[cfg(feature = "std")]
@@ -890,8 +889,8 @@ pub trait TestNetFactory: Default + Sized + Send {
 			*genesis_extra_storage = storage;
 		}
 
-		if !config.force_genesis &&
-			matches!(config.sync_mode, SyncMode::LightState { .. } | SyncMode::Warp)
+		if !config.force_genesis
+			&& matches!(config.sync_mode, SyncMode::LightState { .. } | SyncMode::Warp)
 		{
 			test_client_builder = test_client_builder.set_no_genesis();
 		}
@@ -1163,8 +1162,8 @@ pub trait TestNetFactory: Default + Sized + Send {
 		let peers = self.peers_mut();
 
 		for peer in peers {
-			if peer.sync_service.is_major_syncing() ||
-				peer.sync_service.status().await.unwrap().queued_blocks != 0
+			if peer.sync_service.is_major_syncing()
+				|| peer.sync_service.status().await.unwrap().queued_blocks != 0
 			{
 				return false;
 			}

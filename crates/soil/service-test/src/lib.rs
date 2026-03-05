@@ -27,6 +27,8 @@ use log::{debug, info};
 #[cfg(feature = "std")]
 use parking_lot::Mutex;
 #[cfg(feature = "std")]
+use soil_blockchain::HeaderBackend;
+#[cfg(feature = "std")]
 use soil_client_api::{Backend, CallExecutor};
 #[cfg(feature = "std")]
 use soil_network::{
@@ -35,6 +37,8 @@ use soil_network::{
 };
 #[cfg(feature = "std")]
 use soil_network_sync::SyncingService;
+#[cfg(feature = "std")]
+use soil_runtime::traits::Block as BlockT;
 #[cfg(feature = "std")]
 use soil_service::{
 	client::Client,
@@ -47,10 +51,6 @@ use soil_service::{
 };
 #[cfg(feature = "std")]
 use soil_transaction_pool_api::TransactionPool;
-#[cfg(feature = "std")]
-use soil_blockchain::HeaderBackend;
-#[cfg(feature = "std")]
-use soil_runtime::traits::Block as BlockT;
 #[cfg(feature = "std")]
 use std::{iter, net::Ipv4Addr, pin::Pin, sync::Arc, task::Context, time::Duration};
 #[cfg(feature = "std")]

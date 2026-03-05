@@ -29,8 +29,8 @@ use log::{debug, trace, warn};
 use prometheus_endpoint::{
 	prometheus::core::GenericGauge, register, GaugeVec, Opts, PrometheusError, Registry, U64,
 };
-use soil_network_types::PeerId;
 use soil_blockchain::Error as ClientError;
+use soil_network_types::PeerId;
 use soil_runtime::traits::{Block as BlockT, NumberFor, Zero};
 use std::{
 	collections::{HashMap, HashSet, VecDeque},

@@ -19,6 +19,11 @@
 
 use super::*;
 use crate as topsoil_democracy;
+use soil_runtime::{
+	traits::{BadOrigin, BlakeTwo256, Hash},
+	BuildStorage, Perbill,
+};
+use topsoil_balances::{BalanceLock, Error as BalancesError};
 use topsoil_support::{
 	assert_noop, assert_ok, derive_impl, ord_parameter_types, parameter_types,
 	traits::{
@@ -28,11 +33,6 @@ use topsoil_support::{
 	weights::Weight,
 };
 use topsoil_system::{EnsureRoot, EnsureSigned, EnsureSignedBy};
-use topsoil_balances::{BalanceLock, Error as BalancesError};
-use soil_runtime::{
-	traits::{BadOrigin, BlakeTwo256, Hash},
-	BuildStorage, Perbill,
-};
 mod cancellation;
 mod decoders;
 mod delegation;

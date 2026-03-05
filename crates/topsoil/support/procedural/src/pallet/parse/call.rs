@@ -16,11 +16,11 @@
 // limitations under the License.
 
 use super::{helper, InheritedCallWeightAttr};
-use topsoil_support_procedural_tools::get_doc_literals;
 use proc_macro2::Span;
 use quote::ToTokens;
 use std::collections::HashMap;
 use syn::spanned::Spanned;
+use topsoil_support_procedural_tools::get_doc_literals;
 
 /// List of additional token to be used for parsing.
 mod keyword {

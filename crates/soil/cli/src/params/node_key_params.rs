@@ -17,9 +17,9 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 use clap::Args;
+use soil_core::H256;
 use soil_network::config::{ed25519, NodeKeyConfig};
 use soil_service::Role;
-use soil_core::H256;
 use std::{path::PathBuf, str::FromStr};
 
 use crate::{arg_enums::NodeKeyType, error, Error};
@@ -115,9 +115,9 @@ impl NodeKeyParams {
 						.node_key_file
 						.clone()
 						.unwrap_or_else(|| net_config_dir.join(NODE_KEY_ED25519_FILE));
-					if !self.unsafe_force_node_key_generation &&
-						role.is_authority() &&
-						!is_dev && !key_path.exists()
+					if !self.unsafe_force_node_key_generation
+						&& role.is_authority()
+						&& !is_dev && !key_path.exists()
 					{
 						return Err(Error::NetworkKeyNotFound(key_path));
 					}
@@ -241,8 +241,8 @@ mod tests {
 					let typ = params.node_key_type;
 					params.node_key(net_config_dir, role, is_dev).and_then(move |c| match c {
 						NodeKeyConfig::Ed25519(soil_network::config::Secret::File(ref f))
-							if typ == NodeKeyType::Ed25519 &&
-								f == &dir.join(NODE_KEY_ED25519_FILE) =>
+							if typ == NodeKeyType::Ed25519
+								&& f == &dir.join(NODE_KEY_ED25519_FILE) =>
 						{
 							Ok(())
 						},

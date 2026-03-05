@@ -19,12 +19,12 @@
 
 use crate::{Conviction, Delegations, ReferendumIndex};
 use codec::{Decode, DecodeWithMemTracking, Encode, EncodeLike, Input, MaxEncodedLen, Output};
-use topsoil_support::traits::Get;
 use scale_info::TypeInfo;
 use soil_runtime::{
 	traits::{Saturating, Zero},
 	BoundedVec, Debug,
 };
+use topsoil_support::traits::Get;
 
 /// A number of lock periods, plus a vote, one way or the other.
 #[derive(DecodeWithMemTracking, Copy, Clone, Eq, PartialEq, Default, Debug)]

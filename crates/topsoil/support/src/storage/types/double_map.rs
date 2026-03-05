@@ -28,9 +28,9 @@ use crate::{
 };
 use alloc::{vec, vec::Vec};
 use codec::{Decode, Encode, EncodeLike, FullCodec, MaxEncodedLen};
-use topsoil_support::storage::StorageDecodeNonDedupLength;
 use soil_arithmetic::traits::SaturatedConversion;
 use soil_metadata_ir::{StorageEntryMetadataIR, StorageEntryTypeIR};
+use topsoil_support::storage::StorageDecodeNonDedupLength;
 
 /// A type representing a *double map* in storage. This structure associates a pair of keys with a
 /// value of a specified type stored on-chain.

@@ -651,8 +651,8 @@ mod execution {
 			while let Some(item) = iter.next() {
 				let (key, value) = item.map_err(|e| Box::new(e) as Box<dyn Error>)?;
 
-				if depth < MAX_NESTED_TRIE_DEPTH &&
-					soil_core::storage::well_known_keys::is_child_storage_key(key.as_slice())
+				if depth < MAX_NESTED_TRIE_DEPTH
+					&& soil_core::storage::well_known_keys::is_child_storage_key(key.as_slice())
 				{
 					count += 1;
 					// do not add two child trie with same root
@@ -1059,8 +1059,8 @@ mod execution {
 				let (key, value) = item.map_err(|e| Box::new(e) as Box<dyn Error>)?;
 				values.push((key.to_vec(), value.to_vec()));
 
-				if depth < MAX_NESTED_TRIE_DEPTH &&
-					soil_core::storage::well_known_keys::is_child_storage_key(key.as_slice())
+				if depth < MAX_NESTED_TRIE_DEPTH
+					&& soil_core::storage::well_known_keys::is_child_storage_key(key.as_slice())
 				{
 					// Do not add two chid trie with same root.
 					if !child_roots.contains(value.as_slice()) {

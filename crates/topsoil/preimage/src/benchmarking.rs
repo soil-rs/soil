@@ -18,10 +18,10 @@
 //! Preimage pallet benchmarking.
 
 use alloc::vec;
+use soil_runtime::traits::Bounded;
 use topsoil_benchmarking::v2::*;
 use topsoil_support::assert_ok;
 use topsoil_system::RawOrigin;
-use soil_runtime::traits::Bounded;
 
 use crate::*;
 

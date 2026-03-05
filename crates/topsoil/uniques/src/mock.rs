@@ -20,11 +20,11 @@
 use super::*;
 use crate as topsoil_uniques;
 
+use soil_runtime::BuildStorage;
 use topsoil_support::{
 	construct_runtime, derive_impl,
 	traits::{AsEnsureOriginWithArg, ConstU32, ConstU64},
 };
-use soil_runtime::BuildStorage;
 
 type Block = topsoil_system::mocking::MockBlock<Test>;
 

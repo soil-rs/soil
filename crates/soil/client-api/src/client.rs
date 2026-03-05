@@ -35,9 +35,9 @@ use crate::{
 	blockchain::Info, notifications::StorageEventStream, FinalizeSummary, ImportSummary, StaleBlock,
 };
 
+use soil_blockchain;
 use soil_transaction_pool_api::ChainEvent;
 use soil_utils::mpsc::{TracingUnboundedReceiver, TracingUnboundedSender};
-use soil_blockchain;
 
 /// Type that implements `futures::Stream` of block import events.
 pub type ImportNotifications<Block> = TracingUnboundedReceiver<BlockImportNotification<Block>>;
@@ -137,13 +137,19 @@ pub trait BlockBackend<Block: BlockT> {
 	///
 	/// Note that this will only fetch transactions
 	/// that are indexed by the runtime with `storage_index_transaction`.
-	fn block_indexed_body(&self, hash: Block::Hash) -> soil_blockchain::Result<Option<Vec<Vec<u8>>>>;
+	fn block_indexed_body(
+		&self,
+		hash: Block::Hash,
+	) -> soil_blockchain::Result<Option<Vec<Vec<u8>>>>;
 
 	/// Get full block by hash.
 	fn block(&self, hash: Block::Hash) -> soil_blockchain::Result<Option<SignedBlock<Block>>>;
 
 	/// Get block status by block hash.
-	fn block_status(&self, hash: Block::Hash) -> soil_blockchain::Result<soil_consensus::BlockStatus>;
+	fn block_status(
+		&self,
+		hash: Block::Hash,
+	) -> soil_blockchain::Result<soil_consensus::BlockStatus>;
 
 	/// Get block justifications for the block with the given hash.
 	fn justifications(&self, hash: Block::Hash) -> soil_blockchain::Result<Option<Justifications>>;

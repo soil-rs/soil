@@ -25,9 +25,9 @@ use topsoil_support::{
 };
 
 #[cfg(feature = "try-runtime")]
-use topsoil_support::ensure;
-#[cfg(feature = "try-runtime")]
 use soil_runtime::TryRuntimeError;
+#[cfg(feature = "try-runtime")]
+use topsoil_support::ensure;
 
 /// The log target.
 const TARGET: &'static str = "runtime::preimage::migration::v1";

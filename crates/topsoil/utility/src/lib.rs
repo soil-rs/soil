@@ -60,6 +60,9 @@ extern crate alloc;
 
 use alloc::{boxed::Box, vec::Vec};
 use codec::{Decode, Encode};
+use soil_core::TypeId;
+use soil_io::hashing::blake2_256;
+use soil_runtime::traits::{BadOrigin, Dispatchable, TrailingZeroInput};
 use topsoil_support::{
 	dispatch::{
 		extract_actual_weight,
@@ -68,9 +71,6 @@ use topsoil_support::{
 	},
 	traits::{IsSubType, OriginTrait, UnfilteredDispatchable},
 };
-use soil_core::TypeId;
-use soil_io::hashing::blake2_256;
-use soil_runtime::traits::{BadOrigin, Dispatchable, TrailingZeroInput};
 pub use weights::WeightInfo;
 
 pub use pallet::*;
@@ -143,8 +143,8 @@ pub mod pallet {
 		fn batched_calls_limit() -> u32 {
 			let allocator_limit = soil_core::MAX_POSSIBLE_ALLOCATION;
 			let call_size = (core::mem::size_of::<<T as Config>::RuntimeCall>() as u32)
-				.div_ceil(CALL_ALIGN) *
-				CALL_ALIGN;
+				.div_ceil(CALL_ALIGN)
+				* CALL_ALIGN;
 			// The margin to take into account vec doubling capacity.
 			let margin_factor = 3;
 

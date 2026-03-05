@@ -75,11 +75,11 @@ pub mod weights;
 extern crate alloc;
 
 use alloc::vec::Vec;
+pub use pallet::*;
 use topsoil::{
 	prelude::*,
 	traits::{TransactionPause, TransactionPauseError},
 };
-pub use pallet::*;
 pub use weights::*;
 
 /// The stringy name of a pallet from [`GetCallMetadata`] for [`Config::RuntimeCall`] variants.
@@ -104,7 +104,8 @@ pub mod pallet {
 	pub trait Config: topsoil_system::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>>
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// The overarching call type.
 		type RuntimeCall: Parameter

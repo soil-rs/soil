@@ -50,15 +50,6 @@
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;
 
-use topsoil_support::{
-	dispatch::{
-		DispatchClass, DispatchInfo, DispatchResult, GetDispatchInfo, Pays, PostDispatchInfo,
-	},
-	pallet_prelude::TransactionSource,
-	traits::{Defensive, EstimateCallFee, Get, Imbalance, SuppressedDrop},
-	weights::{Weight, WeightToFee},
-	DebugNoBound,
-};
 pub use pallet::*;
 pub use payment::*;
 use soil_runtime::{
@@ -68,6 +59,15 @@ use soil_runtime::{
 	},
 	transaction_validity::{TransactionPriority, TransactionValidityError, ValidTransaction},
 	Debug, FixedPointNumber, FixedU128, Perbill, Perquintill,
+};
+use topsoil_support::{
+	dispatch::{
+		DispatchClass, DispatchInfo, DispatchResult, GetDispatchInfo, Pays, PostDispatchInfo,
+	},
+	pallet_prelude::TransactionSource,
+	traits::{Defensive, EstimateCallFee, Get, Imbalance, SuppressedDrop},
+	weights::{Weight, WeightToFee},
+	DebugNoBound,
 };
 pub use types::{FeeDetails, InclusionFee, RuntimeDispatchInfo};
 pub use weights::WeightInfo;
@@ -256,8 +256,8 @@ where
 		let diff = Multiplier::saturating_from_rational(diff_abs, max_limiting_dimension.max(1));
 		let diff_squared = diff.saturating_mul(diff);
 
-		let v_squared_2 = adjustment_variable.saturating_mul(adjustment_variable) /
-			Multiplier::saturating_from_integer(2);
+		let v_squared_2 = adjustment_variable.saturating_mul(adjustment_variable)
+			/ Multiplier::saturating_from_integer(2);
 
 		let first_term = adjustment_variable.saturating_mul(diff);
 		let second_term = v_squared_2.saturating_mul(diff_squared);
@@ -354,7 +354,8 @@ pub mod pallet {
 		/// The overarching event type.
 		#[pallet::no_default_bounds]
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>>
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// Handler for withdrawing, refunding and depositing the transaction fee.
 		/// Transaction fees are withdrawn before the transaction is executed.
@@ -476,15 +477,15 @@ pub mod pallet {
 			// at most be maximum block weight. Make sure that this can fit in a multiplier without
 			// loss.
 			assert!(
-				<Multiplier as soil_runtime::traits::Bounded>::max_value() >=
-					Multiplier::checked_from_integer::<u128>(
+				<Multiplier as soil_runtime::traits::Bounded>::max_value()
+					>= Multiplier::checked_from_integer::<u128>(
 						T::BlockWeights::get().max_block.ref_time().try_into().unwrap()
 					)
 					.unwrap(),
 			);
 
-			let target = T::FeeMultiplierUpdate::target() *
-				T::BlockWeights::get().get(DispatchClass::Normal).max_total.expect(
+			let target = T::FeeMultiplierUpdate::target()
+				* T::BlockWeights::get().get(DispatchClass::Normal).max_total.expect(
 					"Setting `max_total` for `Normal` dispatch class is not compatible with \
 					`transaction-payment` pallet.",
 				);

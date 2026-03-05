@@ -83,6 +83,13 @@
 pub use pallet::*;
 
 use codec::{Codec, Decode, Encode, MaxEncodedLen};
+use scale_info::TypeInfo;
+use soil_core::Get;
+use soil_runtime::{
+	traits::{BadOrigin, BlockNumberProvider, EnsureAdd, MaybeDisplay, Zero},
+	DispatchError, DispatchResult,
+};
+use soil_std::boxed::Box;
 use topsoil_support::{
 	ensure,
 	traits::{
@@ -93,13 +100,6 @@ use topsoil_support::{
 	},
 	PalletId,
 };
-use scale_info::TypeInfo;
-use soil_core::Get;
-use soil_runtime::{
-	traits::{BadOrigin, BlockNumberProvider, EnsureAdd, MaybeDisplay, Zero},
-	DispatchError, DispatchResult,
-};
-use soil_std::boxed::Box;
 
 #[cfg(feature = "runtime-benchmarks")]
 pub mod benchmarking;
@@ -179,6 +179,13 @@ soil_api::decl_runtime_apis! {
 #[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
+	use soil_runtime::{
+		traits::{
+			AccountIdConversion, BadOrigin, EnsureAdd, EnsureAddAssign, EnsureDiv, EnsureMul,
+			EnsureSub, EnsureSubAssign,
+		},
+		DispatchResult,
+	};
 	use topsoil_support::{
 		pallet_prelude::*,
 		traits::{
@@ -189,13 +196,6 @@ pub mod pallet {
 	};
 	use topsoil_system::pallet_prelude::{
 		ensure_signed, BlockNumberFor as SystemBlockNumberFor, OriginFor,
-	};
-	use soil_runtime::{
-		traits::{
-			AccountIdConversion, BadOrigin, EnsureAdd, EnsureAddAssign, EnsureDiv, EnsureMul,
-			EnsureSub, EnsureSubAssign,
-		},
-		DispatchResult,
 	};
 
 	#[pallet::pallet]
@@ -221,7 +221,8 @@ pub mod pallet {
 	pub trait Config: topsoil_system::Config {
 		/// Overarching event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event<Self>>
+			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
 
 		/// The pallet's unique identifier, used to derive the pool's account ID.
 		///

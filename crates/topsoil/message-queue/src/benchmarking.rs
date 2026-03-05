@@ -22,10 +22,10 @@
 
 use super::{mock_helpers::*, Pallet as MessageQueue, *};
 
+use soil_io::hashing::blake2_256;
 use topsoil_benchmarking::v2::*;
 use topsoil_support::traits::Get;
 use topsoil_system::RawOrigin;
-use soil_io::hashing::blake2_256;
 
 #[benchmarks(
 	where

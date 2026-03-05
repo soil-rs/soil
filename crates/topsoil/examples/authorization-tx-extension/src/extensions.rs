@@ -24,7 +24,6 @@
 use core::{fmt, marker::PhantomData};
 
 use codec::{Decode, DecodeWithMemTracking, Encode};
-use topsoil_support::{pallet_prelude::TransactionSource, traits::OriginTrait, Parameter};
 use scale_info::TypeInfo;
 use soil_runtime::{
 	impl_tx_ext_default,
@@ -34,6 +33,7 @@ use soil_runtime::{
 	},
 	transaction_validity::{InvalidTransaction, ValidTransaction},
 };
+use topsoil_support::{pallet_prelude::TransactionSource, traits::OriginTrait, Parameter};
 
 use crate::pallet_coownership::{Config, Origin};
 

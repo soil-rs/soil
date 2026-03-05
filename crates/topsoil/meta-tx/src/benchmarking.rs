@@ -18,14 +18,14 @@
 #![cfg(feature = "runtime-benchmarks")]
 
 use super::*;
+use soil_runtime::impl_tx_ext_default;
 use topsoil_benchmarking::v2::*;
 use topsoil_support::traits::UnfilteredDispatchable;
-use soil_runtime::impl_tx_ext_default;
 
 pub mod types {
 	use super::*;
-	use topsoil_support::traits::OriginTrait;
 	use soil_runtime::traits::DispatchInfoOf;
+	use topsoil_support::traits::OriginTrait;
 
 	type CallOf<T> = <T as topsoil_system::Config>::RuntimeCall;
 

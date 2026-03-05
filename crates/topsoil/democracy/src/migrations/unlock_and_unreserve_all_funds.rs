@@ -21,6 +21,8 @@
 use crate::{PropIndex, Voting, DEMOCRACY_ID};
 use alloc::{collections::btree_map::BTreeMap, vec::Vec};
 use core::iter::Sum;
+use soil_core::Get;
+use soil_runtime::{traits::Zero, BoundedVec, Saturating};
 use topsoil_support::{
 	pallet_prelude::ValueQuery,
 	storage_alias,
@@ -28,8 +30,6 @@ use topsoil_support::{
 	weights::RuntimeDbWeight,
 	Parameter, Twox64Concat,
 };
-use soil_core::Get;
-use soil_runtime::{traits::Zero, BoundedVec, Saturating};
 
 const LOG_TARGET: &str = "runtime::democracy::migrations::unlock_and_unreserve_all_funds";
 
@@ -191,8 +191,8 @@ where
 		let bugged_deposits = all_accounts
 			.iter()
 			.filter(|account| {
-				account_deposits.get(&account).unwrap_or(&Zero::zero()) >
-					account_reserved_before.get(&account).unwrap_or(&Zero::zero())
+				account_deposits.get(&account).unwrap_or(&Zero::zero())
+					> account_reserved_before.get(&account).unwrap_or(&Zero::zero())
 			})
 			.count();
 
@@ -296,13 +296,13 @@ mod test {
 		tests::{new_test_ext, Balances, Test},
 		DepositOf, Voting, VotingOf,
 	};
+	use soil_core::ConstU32;
 	use topsoil_support::{
 		assert_ok, parameter_types,
 		traits::{Currency, OnRuntimeUpgrade, ReservableCurrency, WithdrawReasons},
 		BoundedVec,
 	};
 	use topsoil_system::pallet_prelude::BlockNumberFor;
-	use soil_core::ConstU32;
 
 	parameter_types! {
 		const PalletName: &'static str = "Democracy";

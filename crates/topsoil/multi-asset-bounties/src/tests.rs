@@ -23,11 +23,11 @@ use super::{Event as BountiesEvent, *};
 use crate as topsoil_bounties;
 use crate::mock::{Bounties, *};
 
+use soil_runtime::{traits::Dispatchable, TokenError};
 use topsoil_support::{
 	assert_err_ignore_postinfo, assert_noop, assert_ok,
 	traits::{fungible::Mutate, Currency},
 };
-use soil_runtime::{traits::Dispatchable, TokenError};
 
 type UtilityCall = topsoil_utility::Call<Test>;
 type BountiesCall = crate::Call<Test>;
@@ -1721,7 +1721,8 @@ fn unassign_curator_works() {
 		));
 
 		// Then
-		assert_eq!(Balances::free_balance(&s.child_curator), Balances::minimum_balance()); // burned
+		assert_eq!(Balances::free_balance(&s.child_curator), Balances::minimum_balance());
+		// burned
 	});
 }
 

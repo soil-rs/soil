@@ -21,12 +21,12 @@
 
 use super::*;
 use crate::mock::*;
-use topsoil_support::{assert_noop, dispatch};
 use soil_core::offchain::{
 	testing::{TestOffchainExt, TestTransactionPoolExt},
 	OffchainDbExt, OffchainWorkerExt, TransactionPoolExt,
 };
 use soil_runtime::testing::UintAuthorityId;
+use topsoil_support::{assert_noop, dispatch};
 
 #[test]
 fn test_unresponsiveness_slash_fraction() {

@@ -39,7 +39,6 @@
 //! the [`SyncState`] will fail at instantiation.
 
 #![deny(unused_crate_dependencies)]
-
 #![cfg_attr(not(feature = "std"), no_std)]
 
 #[cfg(feature = "std")]
@@ -53,11 +52,11 @@ use jsonrpsee::{
 };
 
 #[cfg(feature = "std")]
-use soil_client_api::StorageData;
-#[cfg(feature = "std")]
 use sc_consensus_babe::{BabeWorkerHandle, Error as BabeError};
 #[cfg(feature = "std")]
 use soil_blockchain::HeaderBackend;
+#[cfg(feature = "std")]
+use soil_client_api::StorageData;
 #[cfg(feature = "std")]
 use soil_runtime::traits::{Block as BlockT, NumberFor};
 

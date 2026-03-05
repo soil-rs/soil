@@ -23,6 +23,7 @@ use super::*;
 
 use crate::Pallet as Lottery;
 use alloc::{boxed::Box, vec};
+use soil_runtime::traits::{Bounded, Zero};
 use topsoil_benchmarking::{
 	v1::{account, whitelisted_caller, BenchmarkError},
 	v2::*,
@@ -32,7 +33,6 @@ use topsoil_support::{
 	traits::{EnsureOrigin, OnInitialize},
 };
 use topsoil_system::RawOrigin;
-use soil_runtime::traits::{Bounded, Zero};
 
 // Set up and start a lottery
 fn setup_lottery<T: Config>(repeat: bool) -> Result<(), &'static str> {

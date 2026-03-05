@@ -108,13 +108,13 @@ use soil_runtime::{
 	Debug, DispatchResult, Permill,
 };
 
+use scale_info::TypeInfo;
 use topsoil_support::{
 	dispatch::DispatchResultWithPostInfo, pallet_prelude::*, traits::EnsureOrigin,
 };
 use topsoil_system::pallet_prelude::{
 	ensure_signed, BlockNumberFor as SystemBlockNumberFor, OriginFor,
 };
-use scale_info::TypeInfo;
 pub use weights::WeightInfo;
 
 pub use pallet::*;
@@ -273,7 +273,9 @@ pub mod pallet {
 	pub struct Pallet<T, I = ()>(_);
 
 	#[pallet::config]
-	pub trait Config<I: 'static = ()>: topsoil_system::Config + topsoil_treasury::Config<I> {
+	pub trait Config<I: 'static = ()>:
+		topsoil_system::Config + topsoil_treasury::Config<I>
+	{
 		/// The amount held on deposit for placing a bounty proposal.
 		#[pallet::constant]
 		type BountyDepositBase: Get<BalanceOf<Self, I>>;

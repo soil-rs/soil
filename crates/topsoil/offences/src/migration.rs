@@ -17,6 +17,7 @@
 
 use super::{Config, Kind, OffenceDetails, Pallet, Perbill, SessionIndex, LOG_TARGET};
 use alloc::vec::Vec;
+use soil_staking::offence::OnOffenceHandler;
 use topsoil_support::{
 	pallet_prelude::ValueQuery,
 	storage_alias,
@@ -24,12 +25,11 @@ use topsoil_support::{
 	weights::Weight,
 	Twox64Concat,
 };
-use soil_staking::offence::OnOffenceHandler;
 
 #[cfg(feature = "try-runtime")]
-use topsoil_support::ensure;
-#[cfg(feature = "try-runtime")]
 use soil_runtime::TryRuntimeError;
+#[cfg(feature = "try-runtime")]
+use topsoil_support::ensure;
 
 mod v0 {
 	use super::*;
@@ -90,7 +90,12 @@ pub mod v1 {
 
 /// Type of data stored as a deferred offence
 type DeferredOffenceOf<T> = (
-	Vec<OffenceDetails<<T as topsoil_system::Config>::AccountId, <T as Config>::IdentificationTuple>>,
+	Vec<
+		OffenceDetails<
+			<T as topsoil_system::Config>::AccountId,
+			<T as Config>::IdentificationTuple,
+		>,
+	>,
 	Vec<Perbill>,
 	SessionIndex,
 );

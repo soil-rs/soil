@@ -17,6 +17,7 @@
 
 use super::*;
 use crate as topsoil_transaction_payment;
+use topsoil_balances::Call as BalancesCall;
 use topsoil_support::{
 	derive_impl,
 	dispatch::DispatchClass,
@@ -25,7 +26,6 @@ use topsoil_support::{
 	weights::{Weight, WeightToFee as WeightToFeeT},
 };
 use topsoil_system as system;
-use topsoil_balances::Call as BalancesCall;
 
 type Block = topsoil_system::mocking::MockBlock<Runtime>;
 

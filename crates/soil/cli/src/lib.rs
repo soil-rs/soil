@@ -23,7 +23,6 @@
 #![warn(missing_docs)]
 #![warn(unused_extern_crates)]
 #![warn(unused_imports)]
-
 #![cfg_attr(not(feature = "std"), no_std)]
 
 #[cfg(feature = "std")]
@@ -63,11 +62,11 @@ pub use params::*;
 #[cfg(feature = "std")]
 pub use runner::*;
 #[cfg(feature = "std")]
-pub use soil_service::{ChainSpec, Role};
-#[cfg(feature = "std")]
 pub use sc_tracing::logging::LoggerBuilder;
 #[cfg(feature = "std")]
 pub use signals::Signals;
+#[cfg(feature = "std")]
+pub use soil_service::{ChainSpec, Role};
 #[cfg(feature = "std")]
 pub use soil_version::RuntimeVersion;
 

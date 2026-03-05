@@ -133,9 +133,9 @@ mod tests;
 pub mod weights;
 
 use core::{cmp, result};
-use topsoil_support::traits::{OnTimestampSet, Time, UnixTime};
 use soil_runtime::traits::{AtLeast32Bit, SaturatedConversion, Scale, Zero};
 use soil_timestamp::{InherentError, InherentType, INHERENT_IDENTIFIER};
+use topsoil_support::traits::{OnTimestampSet, Time, UnixTime};
 pub use weights::WeightInfo;
 
 pub use pallet::*;

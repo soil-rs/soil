@@ -19,6 +19,13 @@
 
 #![allow(deprecated)]
 
+use soil_core::Get;
+use soil_runtime::{
+	bounded_vec,
+	traits::{Convert, ReduceBy, ReplaceWithDefault, TryMorphInto},
+	BuildStorage,
+};
+use topsoil_ranked_collective::{EnsureRanked, Geometric, Rank};
 use topsoil_support::{
 	assert_noop, assert_ok, derive_impl, hypothetically, hypothetically_ok, ord_parameter_types,
 	pallet_prelude::Weight,
@@ -26,13 +33,6 @@ use topsoil_support::{
 	traits::{ConstU16, EitherOf, IsInVec, MapSuccess, NoOpPoll, TryMapSuccess},
 };
 use topsoil_system::{pallet_prelude::BlockNumberFor, EnsureSignedBy};
-use topsoil_ranked_collective::{EnsureRanked, Geometric, Rank};
-use soil_core::Get;
-use soil_runtime::{
-	bounded_vec,
-	traits::{Convert, ReduceBy, ReplaceWithDefault, TryMorphInto},
-	BuildStorage,
-};
 type Class = Rank;
 
 use crate as topsoil_core_fellowship;

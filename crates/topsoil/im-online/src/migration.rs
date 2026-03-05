@@ -22,9 +22,9 @@ use alloc::vec::Vec;
 use topsoil_support::{storage_alias, traits::OnRuntimeUpgrade};
 
 #[cfg(feature = "try-runtime")]
-use topsoil_support::ensure;
-#[cfg(feature = "try-runtime")]
 use soil_runtime::TryRuntimeError;
+#[cfg(feature = "try-runtime")]
+use topsoil_support::ensure;
 
 /// The log target.
 const TARGET: &str = "runtime::im-online::migration::v1";
