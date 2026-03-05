@@ -15,10 +15,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/// A wrapper around `kvdb::Database` that implements `soil_database::Database` trait
+/// A wrapper around `kvdb::Database` that implements `subsoil::database::Database` trait
 use ::kvdb::{DBTransaction, KeyValueDB};
 
-use crate::{error, Change, ColumnId, Database, Transaction};
+use super::{error, Change, ColumnId, Database, Transaction};
 
 struct DbAdapter<D: KeyValueDB + 'static>(D);
 

@@ -182,7 +182,7 @@ mod tests {
 
 	#[test]
 	fn list_presets_works() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 		let presets =
 			<GenesisConfigBuilderRuntimeCaller>::new(substrate_test_runtime::wasm_binary_unwrap())
 				.preset_names()
@@ -202,7 +202,7 @@ mod tests {
 
 	#[test]
 	fn get_named_preset_works() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 		let config =
 			<GenesisConfigBuilderRuntimeCaller>::new(substrate_test_runtime::wasm_binary_unwrap())
 				.get_named_preset(Some(&"foobar".to_string()))

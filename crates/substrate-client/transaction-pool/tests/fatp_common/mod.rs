@@ -328,7 +328,7 @@ pub mod test_chain_with_forks {
 
 	#[test]
 	fn test_chain_works() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 		let (api, f) = chain(None);
 		debug!(forks = ?f, "forks");
 		f[0].iter().for_each(|h| print_block(api.clone(), h.hash()));

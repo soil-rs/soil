@@ -45,7 +45,6 @@ members = [
 	"crates/soil/crypto-ec-utils",
 	"crates/subsoil-crypto-hashing",
 	"crates/subsoil-crypto-hashing-proc-macro",
-	"crates/soil/database",
 	"crates/subsoil-debug-derive",
 	"crates/soil/executor",
 	"crates/soil/executor-common",
@@ -102,7 +101,6 @@ members = [
 	"crates/soil/telemetry",
 	"crates/soil/test-primitives",
 	"crates/soil/timestamp",
-	"crates/soil/tracing",
 	"crates/subsoil-tracing-proc-macro",
 	"crates/soil/transaction-pool",
 	"crates/soil/transaction-pool-api",
@@ -559,7 +557,6 @@ soil-crypto-ec-utils = { default-features = false, path = "crates/soil/crypto-ec
 subsoil = { path = "crates/subsoil", default-features = false }
 subsoil-crypto-hashing = { path = "crates/subsoil-crypto-hashing", default-features = false }
 subsoil-crypto-hashing-proc-macro = { path = "crates/subsoil-crypto-hashing-proc-macro", default-features = false }
-soil-database = { path = "crates/soil/database", default-features = false }
 subsoil-debug-derive = { path = "crates/subsoil-debug-derive", default-features = false }
 soil-externalities = { path = "crates/soil/externalities", default-features = false }
 soil-genesis-builder = { path = "crates/soil/genesis-builder", default-features = false }
@@ -585,7 +582,6 @@ soil-statement-store = { path = "crates/soil/statement-store", default-features 
 soil-storage = { path = "crates/soil/storage", default-features = false }
 soil-test-primitives = { path = "crates/soil/test-primitives" }
 soil-timestamp = { path = "crates/soil/timestamp", default-features = false }
-soil-tracing = { path = "crates/soil/tracing", default-features = false }
 soil-transaction-pool = { path = "crates/soil/transaction-pool", default-features = false }
 soil-transaction-storage-proof = { path = "crates/soil/transaction-storage-proof", default-features = false }
 soil-trie = { path = "crates/soil/trie", default-features = false }

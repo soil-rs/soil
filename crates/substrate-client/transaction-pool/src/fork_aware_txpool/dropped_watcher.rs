@@ -448,7 +448,7 @@ mod dropped_watcher_tests {
 
 	#[tokio::test]
 	async fn test01() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 		let (watcher, output_stream) = MultiViewDroppedWatcher::new();
 
 		let block_hash = H256::repeat_byte(0x01);
@@ -467,7 +467,7 @@ mod dropped_watcher_tests {
 
 	#[tokio::test]
 	async fn test02() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 		let (watcher, mut output_stream) = MultiViewDroppedWatcher::new();
 
 		let block_hash0 = H256::repeat_byte(0x01);
@@ -492,7 +492,7 @@ mod dropped_watcher_tests {
 
 	#[tokio::test]
 	async fn test03() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 		let (watcher, output_stream) = MultiViewDroppedWatcher::new();
 
 		let block_hash0 = H256::repeat_byte(0x01);
@@ -520,7 +520,7 @@ mod dropped_watcher_tests {
 
 	#[tokio::test]
 	async fn test04() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 		let (watcher, mut output_stream) = MultiViewDroppedWatcher::new();
 
 		let block_hash0 = H256::repeat_byte(0x01);
@@ -549,7 +549,7 @@ mod dropped_watcher_tests {
 
 	#[tokio::test]
 	async fn test05() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 		let (watcher, mut output_stream) = MultiViewDroppedWatcher::new();
 		assert!(output_stream.next().now_or_never().is_none());
 

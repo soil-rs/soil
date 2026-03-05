@@ -45,7 +45,7 @@ sc-block-builder = { workspace = true, default-features = true }
 soil-network-test = { workspace = true }
 serde = { workspace = true, default-features = true }
 soil-mmr-primitives = { workspace = true, default-features = true }
-soil-tracing = { workspace = true, default-features = true }
+subsoil = { workspace = true, default-features = true }
 substrate-test-runtime-client = { workspace = true }
 
 [features]

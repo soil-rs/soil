@@ -54,7 +54,6 @@ tokio = { features = ["parking_lot", "rt-multi-thread", "signal"], workspace = t
 
 [dev-dependencies]
 futures-timer = { workspace = true }
-soil-tracing = { workspace = true, default-features = true }
 tempfile = { workspace = true }
 
 [features]

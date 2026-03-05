@@ -240,7 +240,7 @@ mod tests {
 
 	#[tokio::test]
 	async fn should_return_next_nonce_for_some_account() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 
 		// given
 		let client = Arc::new(substrate_test_runtime_client::new());
@@ -281,7 +281,7 @@ mod tests {
 
 	#[tokio::test]
 	async fn dry_run_should_deny_unsafe() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 
 		// given
 		let client = Arc::new(substrate_test_runtime_client::new());
@@ -305,7 +305,7 @@ mod tests {
 
 	#[tokio::test]
 	async fn dry_run_should_work() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 
 		// given
 		let client = Arc::new(substrate_test_runtime_client::new());
@@ -341,7 +341,7 @@ mod tests {
 
 	#[tokio::test]
 	async fn dry_run_should_indicate_error() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 
 		// given
 		let client = Arc::new(substrate_test_runtime_client::new());

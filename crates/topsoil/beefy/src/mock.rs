@@ -277,7 +277,7 @@ impl ExtBuilder {
 	}
 
 	pub fn build(self) -> soil_io::TestExternalities {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 		let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 
 		let balances: Vec<_> =

@@ -26,7 +26,7 @@ scale-info = { features = ["derive"], workspace = true }
 soil-core = { workspace = true }
 soil-io = { workspace = true }
 soil-runtime = { workspace = true }
-soil-tracing = { workspace = true }
+subsoil = { workspace = true }
 
 [dev-dependencies]
 array-bytes = { workspace = true, default-features = true }
@@ -40,7 +40,7 @@ substrate-test-runtime-client = { workspace = true }
 
 [features]
 default = ["std"]
-with-tracing = ["soil-tracing/with-tracing"]
+with-tracing = ["subsoil/with-tracing"]
 std = [
 	"codec/std",
 	"topsoil-support/experimental",
@@ -55,7 +55,7 @@ std = [
 	"soil-inherents/std",
 	"soil-io/std",
 	"soil-runtime/std",
-	"soil-tracing/std",
+	"subsoil/std",
 	"soil-version/std",
 ]
 try-runtime = [

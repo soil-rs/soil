@@ -44,7 +44,7 @@ topsoil-benchmarking = { workspace = true, default-features = true }
 topsoil-balances = { workspace = true, default-features = true }
 parking_lot = { workspace = true, default-features = true }
 rand = { workspace = true, default-features = true }
-soil-tracing = { workspace = true, default-features = true }
+subsoil = { workspace = true, default-features = true }
 
 
 [features]
@@ -65,7 +65,7 @@ std = [
 	"soil-io/std",
 	"soil-npos-elections/std",
 	"soil-runtime/std",
-	"soil-tracing/std",
+	"subsoil/std",
 	"strum/std",
 ]
 runtime-benchmarks = [

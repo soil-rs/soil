@@ -814,7 +814,7 @@ mod tests {
 	};
 	use futures::{stream::FuturesUnordered, StreamExt};
 	use soil_core::H256;
-	use soil_tracing::tracing_subscriber;
+	use subsoil::tracing::tracing_subscriber;
 
 	use litep2p::{
 		config::ConfigBuilder as Litep2pConfigBuilder, transport::tcp::config::Config as TcpConfig,

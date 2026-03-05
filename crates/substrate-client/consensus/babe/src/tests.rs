@@ -286,7 +286,7 @@ impl TestNetFactory for BabeTestNet {
 #[tokio::test]
 #[should_panic(expected = "No BABE pre-runtime digest found")]
 async fn rejects_empty_block() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 	let mut net = BabeTestNet::new(3);
 	let block_builder = |builder: BlockBuilder<_, _>| builder.build().unwrap().block;
 	net.mut_peers(|peer| {
@@ -303,7 +303,7 @@ fn create_keystore(authority: Sr25519Keyring) -> KeystorePtr {
 }
 
 async fn run_one_test(mutator: impl Fn(&mut TestHeader, Stage) + Send + Sync + 'static) {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 	let mutator = Arc::new(mutator) as Mutator;
 
 	MUTATOR.with(|m| *m.borrow_mut() = mutator.clone());
@@ -457,7 +457,7 @@ async fn rejects_missing_consensus_digests() {
 
 #[test]
 fn wrong_consensus_engine_id_rejected() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 	let sig = AuthorityPair::generate().0.sign(b"");
 	let bad_seal: Item = DigestItem::Seal([0; 4], sig.to_vec());
 	assert!(bad_seal.as_babe_pre_digest().is_none());
@@ -466,14 +466,14 @@ fn wrong_consensus_engine_id_rejected() {
 
 #[test]
 fn malformed_pre_digest_rejected() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 	let bad_seal: Item = DigestItem::Seal(BABE_ENGINE_ID, [0; 64].to_vec());
 	assert!(bad_seal.as_babe_pre_digest().is_none());
 }
 
 #[test]
 fn sig_is_not_pre_digest() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 	let sig = AuthorityPair::generate().0.sign(b"");
 	let bad_seal: Item = DigestItem::Seal(BABE_ENGINE_ID, sig.to_vec());
 	assert!(bad_seal.as_babe_pre_digest().is_none());

@@ -45,7 +45,7 @@ topsoil-timestamp = { workspace = true, default-features = true }
 rand_chacha = { workspace = true, default-features = true }
 soil-core = { workspace = true, default-features = true }
 soil-npos-elections = { workspace = true, default-features = true }
-soil-tracing = { workspace = true, default-features = true }
+subsoil = { workspace = true, default-features = true }
 substrate-test-utils = { workspace = true }
 
 [features]
@@ -69,7 +69,7 @@ std = [
 	"soil-npos-elections/std",
 	"soil-runtime/std",
 	"soil-staking/std",
-	"soil-tracing/std",
+	"subsoil/std",
 ]
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",

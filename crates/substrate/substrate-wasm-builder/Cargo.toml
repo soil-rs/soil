@@ -38,7 +38,7 @@ soil-executor = { optional = true, workspace = true, default-features = true }
 shlex = { workspace = true }
 soil-core = { optional = true, workspace = true, default-features = true }
 soil-io = { optional = true, workspace = true, default-features = true }
-soil-tracing = { optional = true, workspace = true, default-features = true }
+subsoil = { workspace = true, default-features = true, optional = true }
 soil-version = { optional = true, workspace = true, default-features = true }
 
 [features]
@@ -57,6 +57,6 @@ metadata-hash = [
 	"soil-executor",
 	"soil-core",
 	"soil-io",
-	"soil-tracing",
+	"subsoil",
 	"soil-version",
 ]

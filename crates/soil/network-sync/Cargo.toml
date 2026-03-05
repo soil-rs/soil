@@ -86,7 +86,7 @@ std = [
 quickcheck = { workspace = true }
 sc-block-builder = { workspace = true, default-features = true }
 soil-test-primitives = { workspace = true }
-soil-tracing = { workspace = true, default-features = true }
+subsoil = { workspace = true, default-features = true }
 substrate-test-runtime-client = { workspace = true }
 
 [build-dependencies]

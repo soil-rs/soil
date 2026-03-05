@@ -1328,7 +1328,7 @@ mod mock {
 			.unwrap();
 		}
 
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 		(custom_storage, version).into()
 	}
 
@@ -1875,7 +1875,7 @@ mod remote_tests_local {
 		let snap: SnapshotConfig = env_var("SNAP").expect("Need SNAP env var").into();
 		let ws_api = env_var("WS_API").expect("Need WS_API env var").into();
 
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 		let mode = Mode::OfflineOrElseOnline(
 			OfflineConfig { state_snapshot: snap.clone() },
 			OnlineConfig {

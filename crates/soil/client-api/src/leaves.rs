@@ -20,7 +20,7 @@
 
 use codec::{Decode, Encode};
 use soil_blockchain::{Error, Result};
-use soil_database::{Database, Transaction};
+use subsoil::database::{Database, Transaction};
 use soil_runtime::traits::AtLeast32Bit;
 use std::{cmp::Reverse, collections::BTreeMap};
 
@@ -403,7 +403,7 @@ mod tests {
 	#[test]
 	fn flush_to_disk() {
 		const PREFIX: &[u8] = b"abcdefg";
-		let db = Arc::new(soil_database::MemDb::default());
+		let db = Arc::new(subsoil::database::MemDb::default());
 
 		let mut set = LeafSet::new();
 		set.import(0u32, 0u32, 0u32);

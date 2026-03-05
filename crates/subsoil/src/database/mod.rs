@@ -21,9 +21,9 @@ pub mod error;
 mod kvdb;
 mod mem;
 
-pub use crate::kvdb::as_database;
+pub use self::kvdb::as_database;
 #[cfg(feature = "rocksdb")]
-pub use crate::kvdb::as_rocksdb_database;
+pub use self::kvdb::as_rocksdb_database;
 pub use mem::MemDb;
 
 /// An identifier for a column.

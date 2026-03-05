@@ -183,7 +183,6 @@ soil-statement-store = { workspace = true }
 subsoil = { workspace = true }
 soil-storage = { workspace = true }
 soil-timestamp = { workspace = true }
-soil-tracing = { workspace = true }
 soil-transaction-pool = { workspace = true }
 soil-transaction-storage-proof = { workspace = true }
 soil-trie = { workspace = true }
@@ -204,7 +203,7 @@ default = ["std"]
 with-tracing = [
 	"topsoil-executive/with-tracing",
 	"soil-io/with-tracing",
-	"soil-tracing/with-tracing",
+	"subsoil/with-tracing",
 ]
 std = [
 	"binary-merkle-tree/std",
@@ -359,7 +358,7 @@ std = [
 	"subsoil/std",
 	"soil-storage/std",
 	"soil-timestamp/std",
-	"soil-tracing/std",
+	"subsoil/std",
 	"soil-transaction-pool/std",
 	"soil-transaction-storage-proof/std",
 	"soil-trie/std",

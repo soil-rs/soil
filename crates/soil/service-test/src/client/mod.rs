@@ -1259,7 +1259,7 @@ fn finalizing_diverged_block_should_trigger_reorg() {
 
 #[test]
 fn finality_notifications_content() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 	let (client, _select_chain) = TestClientBuilder::new().build_with_longest_chain();
 
 	//               -> D3 -> D4
@@ -1413,7 +1413,7 @@ fn get_hash_by_block_number_doesnt_panic() {
 
 #[test]
 fn state_reverted_on_reorg() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 	let client = substrate_test_runtime_client::new();
 
 	let current_balance = |client: &substrate_test_runtime_client::TestClient| {
@@ -1478,7 +1478,7 @@ fn state_reverted_on_reorg() {
 
 #[test]
 fn doesnt_import_blocks_that_revert_finality() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 	let tmp = tempfile::tempdir().unwrap();
 
 	// we need to run with archive pruning to avoid pruning non-canonical
@@ -1760,7 +1760,7 @@ fn respects_block_rules() {
 #[test]
 fn returns_status_for_pruned_blocks() {
 	use soil_consensus::BlockStatus;
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 	let tmp = tempfile::tempdir().unwrap();
 
 	// set to prune after 1 block
@@ -2004,7 +2004,7 @@ fn storage_keys_prefix_and_start_key_works() {
 
 #[test]
 fn storage_keys_works() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let expected_keys =
 		substrate_test_runtime::storage_key_generator::get_expected_storage_hashed_keys(false);

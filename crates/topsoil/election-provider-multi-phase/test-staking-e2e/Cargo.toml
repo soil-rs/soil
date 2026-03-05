@@ -26,7 +26,7 @@ soil-io = { workspace = true, default-features = true }
 soil-npos-elections = { workspace = true }
 soil-runtime = { workspace = true, default-features = true }
 soil-staking = { workspace = true, default-features = true }
-soil-tracing = { workspace = true, default-features = true }
+subsoil = { workspace = true, default-features = true }
 
 topsoil-election-provider-support = { workspace = true, default-features = true }
 topsoil-support = { workspace = true, default-features = true }

@@ -76,7 +76,7 @@ pub mod __private {
 	#[cfg(feature = "std")]
 	pub use soil_state_machine::BasicExternalities;
 	pub use subsoil::std;
-	pub use soil_tracing;
+	pub use subsoil::tracing;
 	pub use tt_call::*;
 }
 

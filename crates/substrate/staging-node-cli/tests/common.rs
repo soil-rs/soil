@@ -116,12 +116,12 @@ pub fn executor_call(
 		hash: subsoil_crypto_hashing::blake2_256(&code).to_vec(),
 		heap_pages: heap_pages.and_then(|hp| Decode::decode(&mut &hp[..]).ok()),
 	};
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 	executor().call(&mut t, &runtime_code, method, data, CallContext::Onchain)
 }
 
 pub fn new_test_ext(code: &[u8]) -> TestExternalities<BlakeTwo256> {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 	let ext = TestExternalities::new_with_code(
 		code,
 		node_testing::genesis::config().build_storage().unwrap(),

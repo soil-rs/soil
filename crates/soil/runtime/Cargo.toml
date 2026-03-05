@@ -49,7 +49,6 @@ serde_json = { workspace = true, default-features = true }
 soil-api = { workspace = true, default-features = true }
 soil-keystore = { workspace = true, default-features = true }
 soil-state-machine = { workspace = true, default-features = true }
-soil-tracing = { workspace = true, default-features = true }
 substrate-test-runtime-client = { workspace = true }
 zstd = { workspace = true }
 
@@ -77,7 +76,7 @@ std = [
 	"soil-io/std",
 	"soil-state-machine/std",
 	"subsoil/std",
-	"soil-tracing/std",
+	"subsoil/std",
 	"soil-trie/std",
 	"soil-weights/std",
 	"strum/std",

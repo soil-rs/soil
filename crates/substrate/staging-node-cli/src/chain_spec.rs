@@ -458,7 +458,7 @@ pub(crate) mod tests {
 	#[test]
 	#[ignore]
 	fn test_connectivity() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 
 		soil_service_test::connectivity(integration_test_config_with_two_authorities(), |config| {
 			let NewFullBase { task_manager, client, network, sync, transaction_pool, .. } =

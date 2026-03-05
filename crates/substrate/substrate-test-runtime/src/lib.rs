@@ -1268,7 +1268,7 @@ mod tests {
 
 	#[test]
 	fn validate_unsigned_works() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 		new_test_ext().execute_with(|| {
 			let failing_calls = vec![
 				substrate_test_pallet::Call::bench_call { transfer: Default::default() },
@@ -1311,7 +1311,7 @@ mod tests {
 
 	#[test]
 	fn check_substrate_check_signed_extension_works() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 		new_test_ext().execute_with(|| {
 			let x = Sr25519Keyring::Alice.into();
 			let info = DispatchInfo::default();
@@ -1381,7 +1381,7 @@ mod tests {
 
 		#[test]
 		fn build_minimal_genesis_config_works() {
-			soil_tracing::try_init_simple();
+			subsoil::tracing::try_init_simple();
 			let default_minimal_json = r#"{"system":{},"babe":{"authorities":[],"epochConfig":{"c": [ 3, 10 ],"allowed_slots":"PrimaryAndSecondaryPlainSlots"}},"substrateTest":{"authorities":[]},"balances":{"balances":[]}}"#;
 			let mut t = BasicExternalities::new_empty();
 
@@ -1433,7 +1433,7 @@ mod tests {
 
 		#[test]
 		fn default_config_as_json_works() {
-			soil_tracing::try_init_simple();
+			subsoil::tracing::try_init_simple();
 			let mut t = BasicExternalities::new_empty();
 			let r = executor_call(&mut t, "GenesisBuilder_get_preset", &None::<&PresetId>.encode())
 				.unwrap();
@@ -1448,7 +1448,7 @@ mod tests {
 
 		#[test]
 		fn preset_names_listing_works() {
-			soil_tracing::try_init_simple();
+			subsoil::tracing::try_init_simple();
 			let mut t = BasicExternalities::new_empty();
 			let r = executor_call(&mut t, "GenesisBuilder_preset_names", &vec![]).unwrap();
 			let r = Vec::<PresetId>::decode(&mut &r[..]).unwrap();
@@ -1458,7 +1458,7 @@ mod tests {
 
 		#[test]
 		fn named_config_works() {
-			soil_tracing::try_init_simple();
+			subsoil::tracing::try_init_simple();
 			let f = |cfg_name: &str, expected: &str| {
 				let mut t = BasicExternalities::new_empty();
 				let name = cfg_name.to_string();
@@ -1484,7 +1484,7 @@ mod tests {
 
 		#[test]
 		fn build_config_from_json_works() {
-			soil_tracing::try_init_simple();
+			subsoil::tracing::try_init_simple();
 			let j = include_str!("../res/default_genesis_config.json");
 
 			let mut t = BasicExternalities::new_empty();
@@ -1504,7 +1504,7 @@ mod tests {
 
 		#[test]
 		fn build_config_from_invalid_json_fails() {
-			soil_tracing::try_init_simple();
+			subsoil::tracing::try_init_simple();
 			let j = include_str!("../res/default_genesis_config_invalid.json");
 			let mut t = BasicExternalities::new_empty();
 			let r = executor_call(&mut t, "GenesisBuilder_build_state", &j.encode()).unwrap();
@@ -1517,7 +1517,7 @@ mod tests {
 
 		#[test]
 		fn build_config_from_invalid_json_fails_2() {
-			soil_tracing::try_init_simple();
+			subsoil::tracing::try_init_simple();
 			let j = include_str!("../res/default_genesis_config_invalid_2.json");
 			let mut t = BasicExternalities::new_empty();
 			let r = executor_call(&mut t, "GenesisBuilder_build_state", &j.encode()).unwrap();
@@ -1529,7 +1529,7 @@ mod tests {
 
 		#[test]
 		fn build_config_from_incomplete_json_fails() {
-			soil_tracing::try_init_simple();
+			subsoil::tracing::try_init_simple();
 			let j = include_str!("../res/default_genesis_config_incomplete.json");
 
 			let mut t = BasicExternalities::new_empty();
@@ -1545,7 +1545,7 @@ mod tests {
 		#[test]
 		fn write_default_config_to_tmp_file() {
 			if std::env::var("WRITE_DEFAULT_JSON_FOR_STR_GC").is_ok() {
-				soil_tracing::try_init_simple();
+				subsoil::tracing::try_init_simple();
 				let mut file = fs::OpenOptions::new()
 					.create(true)
 					.write(true)
@@ -1562,7 +1562,7 @@ mod tests {
 		#[test]
 		fn build_genesis_config_with_patch_json_works() {
 			// this tests shows how to do patching on native side
-			soil_tracing::try_init_simple();
+			subsoil::tracing::try_init_simple();
 
 			let mut t = BasicExternalities::new_empty();
 			let r = executor_call(&mut t, "GenesisBuilder_get_preset", &None::<&PresetId>.encode())

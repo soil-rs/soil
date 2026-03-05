@@ -37,7 +37,7 @@ tokio = { features = ["time"], workspace = true, default-features = true }
 
 [dev-dependencies]
 criterion = { workspace = true, default-features = true }
-soil-tracing = { workspace = true }
+subsoil = { workspace = true }
 tempfile = { workspace = true }
 
 [[bench]]

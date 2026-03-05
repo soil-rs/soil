@@ -601,7 +601,7 @@ async fn finalize_block_and_wait_for_beefy(
 
 #[tokio::test]
 async fn beefy_finalizing_blocks() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let peers = [BeefyKeyring::Alice, BeefyKeyring::Bob];
 	let validator_set = ValidatorSet::new(make_beefy_ids(&peers), 0).unwrap();
@@ -641,7 +641,7 @@ async fn beefy_finalizing_blocks() {
 
 #[tokio::test]
 async fn lagging_validators() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let peers = [BeefyKeyring::Alice, BeefyKeyring::Bob, BeefyKeyring::Charlie];
 	let validator_set = ValidatorSet::new(make_beefy_ids(&peers), 0).unwrap();
@@ -709,7 +709,7 @@ async fn lagging_validators() {
 
 #[tokio::test]
 async fn correct_beefy_payload() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let peers = [BeefyKeyring::Alice, BeefyKeyring::Bob, BeefyKeyring::Charlie, BeefyKeyring::Dave];
 	let validator_set = ValidatorSet::new(make_beefy_ids(&peers), 0).unwrap();
@@ -770,7 +770,7 @@ async fn beefy_importing_justifications() {
 	use futures::{future::poll_fn, task::Poll};
 	use soil_client_api::BlockBackend;
 
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let mut net = BeefyTestNet::new(2);
 	let keys = &[BeefyKeyring::Alice, BeefyKeyring::Bob];
@@ -932,7 +932,7 @@ async fn beefy_importing_justifications() {
 
 #[tokio::test]
 async fn on_demand_beefy_justification_sync() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let all_peers =
 		[BeefyKeyring::Alice, BeefyKeyring::Bob, BeefyKeyring::Charlie, BeefyKeyring::Dave];
@@ -1363,7 +1363,7 @@ async fn should_catch_up_when_loading_saved_voter_state() {
 
 #[tokio::test]
 async fn beefy_finalizing_after_pallet_genesis() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let peers = [BeefyKeyring::Alice, BeefyKeyring::Bob];
 	let validator_set = ValidatorSet::new(make_beefy_ids(&peers), 14).unwrap();
@@ -1397,7 +1397,7 @@ async fn beefy_finalizing_after_pallet_genesis() {
 
 #[tokio::test]
 async fn beefy_reports_equivocations() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let peers = [BeefyKeyring::Alice, BeefyKeyring::Bob, BeefyKeyring::Charlie];
 	let validator_set = ValidatorSet::new(make_beefy_ids(&peers), 0).unwrap();
@@ -1469,7 +1469,7 @@ async fn beefy_reports_equivocations() {
 
 #[tokio::test]
 async fn gossipped_finality_proofs() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let validators = [BeefyKeyring::Alice, BeefyKeyring::Bob, BeefyKeyring::Charlie];
 	// Only Alice and Bob are running the voter -> finality threshold not reached

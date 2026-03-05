@@ -30,15 +30,15 @@ soil-staking = { workspace = true }
 
 # Optional: use for testing and/or fuzzing
 topsoil-balances = { optional = true, workspace = true }
-soil-tracing = { optional = true, workspace = true }
+subsoil = { workspace = true, optional = true }
 
 [dev-dependencies]
 topsoil-balances = { workspace = true, default-features = true }
-soil-tracing = { workspace = true, default-features = true }
+subsoil = { workspace = true, default-features = true }
 
 [features]
 default = ["std"]
-fuzzing = ["topsoil-balances", "soil-tracing"]
+fuzzing = ["topsoil-balances", "subsoil"]
 std = [
 	"codec/std",
 	"topsoil-support/std",
@@ -50,7 +50,7 @@ std = [
 	"soil-io/std",
 	"soil-runtime/std",
 	"soil-staking/std",
-	"soil-tracing?/std",
+	"subsoil?/std",
 ]
 runtime-benchmarks = [
 	"topsoil-support/runtime-benchmarks",

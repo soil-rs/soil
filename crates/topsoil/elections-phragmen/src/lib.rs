@@ -1467,7 +1467,7 @@ mod tests {
 			self
 		}
 		pub fn build_and_execute(self, test: impl FnOnce() -> ()) {
-			soil_tracing::try_init_simple();
+			subsoil::tracing::try_init_simple();
 			MEMBERS.with(|m| {
 				*m.borrow_mut() = self.genesis_members.iter().map(|(m, _)| *m).collect::<Vec<_>>()
 			});

@@ -134,7 +134,6 @@ soil-consensus-babe = { workspace = true, default-features = true }
 soil-consensus-beefy = { workspace = true, default-features = true }
 soil-consensus-grandpa = { workspace = true, default-features = true }
 soil-core = { workspace = true, default-features = true }
-soil-database = { workspace = true, default-features = true }
 soil-genesis-builder = { workspace = true, default-features = true }
 soil-io = { workspace = true, default-features = true }
 soil-maybe-compressed-blob = { workspace = true, default-features = true }
@@ -172,7 +171,6 @@ topsoil-timestamp = { workspace = true, default-features = true }
 topsoil-transaction-payment = { workspace = true, default-features = true }
 topsoil-treasury = { workspace = true, default-features = true }
 subsoil-crypto-hashing = { workspace = true, default-features = true }
-soil-tracing = { workspace = true, default-features = true }
 soil-application-crypto = { workspace = true, default-features = true }
 soil-externalities = { workspace = true, default-features = true }
 soil-inherents = { workspace = true, default-features = true }

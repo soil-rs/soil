@@ -53,6 +53,6 @@ std = [
 [dev-dependencies]
 parking_lot = { workspace = true, default-features = true }
 sc-block-builder = { workspace = true, default-features = true }
-soil-tracing = { workspace = true, default-features = true }
+subsoil = { workspace = true, default-features = true }
 substrate-test-runtime-client = { workspace = true }
 tokio = { workspace = true, default-features = true }

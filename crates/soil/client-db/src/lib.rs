@@ -99,7 +99,7 @@ use soil_core::{
 	storage::{well_known_keys, ChildInfo},
 };
 #[cfg(feature = "std")]
-use soil_database::Transaction;
+use subsoil::database::Transaction;
 #[cfg(feature = "std")]
 use soil_runtime::{
 	generic::BlockId,
@@ -125,7 +125,7 @@ use utils::BLOCK_GAP_CURRENT_VERSION;
 
 // Re-export the Database trait so that one can pass an implementation of it.
 #[cfg(feature = "std")]
-pub use soil_database::Database;
+pub use subsoil::database::Database;
 #[cfg(feature = "std")]
 pub use soil_state_db::PruningMode;
 
@@ -540,7 +540,7 @@ struct StateMetaDb(Arc<dyn Database<DbHash>>);
 
 #[cfg(feature = "std")]
 impl soil_state_db::MetaDb for StateMetaDb {
-	type Error = soil_database::error::DatabaseError;
+	type Error = subsoil::database::error::DatabaseError;
 
 	fn get_meta(&self, key: &[u8]) -> Result<Option<Vec<u8>>, Self::Error> {
 		Ok(self.0.get(columns::STATE_META, key))
@@ -1319,7 +1319,7 @@ impl<Block: BlockT> Backend<Block> {
 		pruning_filters: Vec<Arc<dyn PruningFilter>>,
 	) -> Self {
 		let db = kvdb_memorydb::create(crate::utils::NUM_COLUMNS);
-		let db = soil_database::as_database(db);
+		let db = subsoil::database::as_database(db);
 		let state_pruning = match blocks_pruning {
 			BlocksPruning::KeepAll => PruningMode::ArchiveAll,
 			BlocksPruning::KeepFinalized => PruningMode::ArchiveCanonical,
@@ -1342,7 +1342,7 @@ impl<Block: BlockT> Backend<Block> {
 	///
 	/// Should only be needed for benchmarking.
 	#[cfg(feature = "runtime-benchmarks")]
-	pub fn expose_db(&self) -> (Arc<dyn soil_database::Database<DbHash>>, soil_database::ColumnId) {
+	pub fn expose_db(&self) -> (Arc<dyn subsoil::database::Database<DbHash>>, subsoil::database::ColumnId) {
 		(self.storage.db.clone(), columns::STATE)
 	}
 
@@ -1619,7 +1619,7 @@ impl<Block: BlockT> Backend<Block> {
 			trace!(target: "db", "Canonicalize block #{to_canonicalize} ({hash_to_canonicalize:?})");
 			let commit = self.storage.state_db.canonicalize_block(&hash_to_canonicalize).map_err(
 				soil_blockchain::Error::from_state_db::<
-					soil_state_db::Error<soil_database::error::DatabaseError>,
+					soil_state_db::Error<subsoil::database::error::DatabaseError>,
 				>,
 			)?;
 			apply_state_commit(transaction, commit);
@@ -1782,7 +1782,7 @@ impl<Block: BlockT> Backend<Block> {
 					.storage
 					.state_db
 					.insert_block(&hash, number_u64, pending_block.header.parent_hash(), changeset)
-					.map_err(|e: soil_state_db::Error<soil_database::error::DatabaseError>| {
+					.map_err(|e: soil_state_db::Error<subsoil::database::error::DatabaseError>| {
 						soil_blockchain::Error::from_state_db(e)
 					})?;
 				apply_state_commit(&mut transaction, commit);
@@ -1790,7 +1790,7 @@ impl<Block: BlockT> Backend<Block> {
 					// Canonicalize in the db when re-importing existing blocks with state.
 					let commit = self.storage.state_db.canonicalize_block(&hash).map_err(
 						soil_blockchain::Error::from_state_db::<
-							soil_state_db::Error<soil_database::error::DatabaseError>,
+							soil_state_db::Error<subsoil::database::error::DatabaseError>,
 						>,
 					)?;
 					apply_state_commit(&mut transaction, commit);
@@ -2074,7 +2074,7 @@ impl<Block: BlockT> Backend<Block> {
 		{
 			let commit = self.storage.state_db.canonicalize_block(&f_hash).map_err(
 				soil_blockchain::Error::from_state_db::<
-					soil_state_db::Error<soil_database::error::DatabaseError>,
+					soil_state_db::Error<subsoil::database::error::DatabaseError>,
 				>,
 			)?;
 			apply_state_commit(transaction, commit);
@@ -3160,7 +3160,7 @@ pub(crate) mod tests {
 
 	#[test]
 	fn delete_only_when_negative_rc() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 		let state_version = StateVersion::default();
 		let key;
 		let backend = Backend::<Block>::new_test(1, 0);
@@ -4240,7 +4240,7 @@ pub(crate) mod tests {
 
 	#[test]
 	fn prune_blocks_on_finalize_with_fork() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 
 		let pruning_modes =
 			vec![BlocksPruning::Some(2), BlocksPruning::KeepFinalized, BlocksPruning::KeepAll];

@@ -26,7 +26,7 @@ use log::{debug, info};
 use crate::{Database, DatabaseSource, DbHash};
 use codec::Decode;
 use soil_client_api::blockchain::{BlockGap, BlockGapType};
-use soil_database::Transaction;
+use subsoil::database::Transaction;
 use soil_runtime::{
 	generic::BlockId,
 	traits::{
@@ -234,7 +234,7 @@ pub enum OpenDbError {
 	NotEnabled(&'static str),
 	DoesNotExist,
 	Internal(String),
-	DatabaseError(soil_database::error::DatabaseError),
+	DatabaseError(subsoil::database::error::DatabaseError),
 	UnexpectedDbType {
 		expected: DatabaseType,
 		found: Vec<u8>,
@@ -351,7 +351,7 @@ fn open_kvdb_rocksdb<Block: BlockT>(
 	let db = kvdb_rocksdb::Database::open(&db_config, path)?;
 	// write database version only after the database is successfully opened
 	crate::upgrade::update_version(path)?;
-	Ok(soil_database::as_rocksdb_database(db))
+	Ok(subsoil::database::as_rocksdb_database(db))
 }
 
 #[cfg(not(any(feature = "rocksdb", test)))]

@@ -454,7 +454,7 @@ impl ExtBuilder {
 		self
 	}
 	fn build(self) -> soil_io::TestExternalities {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 		let mut storage = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 		let ed = ExistentialDeposit::get();
 
@@ -585,7 +585,7 @@ impl ExtBuilder {
 		ext
 	}
 	pub fn build_and_execute(self, test: impl FnOnce() -> ()) {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 		let mut ext = self.build();
 		ext.execute_with(test);
 		ext.execute_with(|| {

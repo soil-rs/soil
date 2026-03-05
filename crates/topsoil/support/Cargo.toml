@@ -44,7 +44,6 @@ soil-runtime = { features = ["serde"], workspace = true }
 soil-staking = { workspace = true }
 soil-state-machine = { optional = true, workspace = true }
 subsoil = { workspace = true }
-soil-tracing = { workspace = true }
 soil-trie = { workspace = true }
 soil-weights = { workspace = true }
 tt-call = { workspace = true }
@@ -83,7 +82,7 @@ std = [
 	"soil-staking/std",
 	"soil-state-machine/std",
 	"subsoil/std",
-	"soil-tracing/std",
+	"subsoil/std",
 	"soil-trie/std",
 	"soil-weights/std",
 ]

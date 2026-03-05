@@ -154,7 +154,7 @@ pub enum Error {
 	TransactionPoolNotReady,
 
 	#[error("Database error: {0}")]
-	DatabaseError(#[from] soil_database::error::DatabaseError),
+	DatabaseError(#[from] subsoil::database::error::DatabaseError),
 
 	#[error("Failed to get header for hash {0}")]
 	MissingHeader(String),

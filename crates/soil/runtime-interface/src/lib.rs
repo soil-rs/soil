@@ -67,7 +67,7 @@ extern crate self as soil_runtime_interface;
 pub use subsoil::wasm_interface;
 
 #[doc(hidden)]
-pub use soil_tracing;
+pub use subsoil;
 
 #[doc(hidden)]
 pub use subsoil::std;

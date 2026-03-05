@@ -32,7 +32,7 @@ zstd = { optional = true, workspace = true }
 
 [dev-dependencies]
 topsoil-balances = { workspace = true, default-features = true }
-soil-tracing = { workspace = true, default-features = true }
+subsoil = { workspace = true, default-features = true }
 tokio = { features = ["macros"], workspace = true, default-features = true }
 
 [features]
@@ -48,7 +48,7 @@ std = [
 	"soil-core/std",
 	"soil-io/std",
 	"soil-runtime/std",
-	"soil-tracing/std",
+	"subsoil/std",
 ]
 runtime-benchmarks = [
 	"topsoil-benchmarking",

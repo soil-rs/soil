@@ -208,7 +208,7 @@ topsoil_support::construct_runtime!(
 );
 
 pub fn new_test_ext() -> soil_io::TestExternalities {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 	let t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	soil_io::TestExternalities::new(t)
 }

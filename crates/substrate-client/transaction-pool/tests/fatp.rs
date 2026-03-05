@@ -52,7 +52,7 @@ pub mod fatp_common;
 
 #[test]
 fn fatp_no_view_future_and_ready_submit_one_works() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 
@@ -73,7 +73,7 @@ fn fatp_no_view_future_and_ready_submit_one_works() {
 
 #[test]
 fn fatp_no_view_future_and_ready_submit_works() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 
@@ -96,7 +96,7 @@ fn fatp_no_view_future_and_ready_submit_works() {
 
 #[test]
 fn fatp_no_view_submit_already_imported_reports_error() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 
@@ -120,7 +120,7 @@ fn fatp_no_view_submit_already_imported_reports_error() {
 
 #[test]
 fn fatp_one_view_future_and_ready_submit_one_works() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 
@@ -145,7 +145,7 @@ fn fatp_one_view_future_and_ready_submit_one_works() {
 
 #[test]
 fn fatp_one_view_future_and_ready_submit_many_works() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 
@@ -172,7 +172,7 @@ fn fatp_one_view_future_and_ready_submit_many_works() {
 
 #[test]
 fn fatp_one_view_stale_submit_one_fails() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 
@@ -196,7 +196,7 @@ fn fatp_one_view_stale_submit_one_fails() {
 
 #[test]
 fn fatp_one_view_stale_submit_many_fails() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 
@@ -306,7 +306,7 @@ fn fatp_one_view_ready_turns_to_stale_works() {
 
 #[test]
 fn fatp_two_views_future_and_ready_submit_one() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 
@@ -338,7 +338,7 @@ fn fatp_two_views_future_and_ready_submit_one() {
 
 #[test]
 fn fatp_two_views_future_and_ready_submit_many() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 
@@ -373,7 +373,7 @@ fn fatp_two_views_future_and_ready_submit_many() {
 
 #[test]
 fn fatp_two_views_submit_many_variations() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 
@@ -422,7 +422,7 @@ fn fatp_two_views_submit_many_variations() {
 
 #[test]
 fn fatp_linear_progress() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (api, forks) = test_chain_with_forks::chain(None);
 	let (pool, _) = pool_with_api(api.clone());
@@ -449,7 +449,7 @@ fn fatp_linear_progress() {
 
 #[test]
 fn fatp_linear_old_ready_becoming_stale() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 
@@ -486,7 +486,7 @@ fn fatp_linear_old_ready_becoming_stale() {
 
 #[test]
 fn fatp_proper_cleanup_after_mortal_tx_becoming_invalid() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 
@@ -531,7 +531,7 @@ fn fatp_proper_cleanup_after_mortal_tx_becoming_invalid() {
 
 #[test]
 fn fatp_fork_reorg() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (api, forks) = test_chain_with_forks::chain(None);
 	let (pool, _) = pool_with_api(api.clone());
@@ -604,7 +604,7 @@ fn fatp_fork_do_resubmit_same_tx() {
 
 #[test]
 fn fatp_fork_stale_rejected() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	// note: there are no xts in blocks on fork 0!
 	let (api, forks) = test_chain_with_forks::chain(Some(&|f, b| match (f, b) {
@@ -675,7 +675,7 @@ fn fatp_fork_stale_rejected() {
 fn fatp_fork_no_xts_ready_switch_to_future() {
 	// this scenario w/o xts is not likely to happen, but similar thing (xt changing from ready to
 	// future) could occur e.g. when runtime was updated on fork1.
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	// note: there are no xts in blocks!
 	let (api, forks) = test_chain_with_forks::chain(Some(&|_, _| false));
@@ -722,7 +722,7 @@ fn fatp_fork_no_xts_ready_switch_to_future() {
 
 #[test]
 fn fatp_ready_at_does_not_trigger() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (api, forks) = test_chain_with_forks::chain(None);
 	let (pool, _) = pool_with_api(api.clone());
@@ -736,7 +736,7 @@ fn fatp_ready_at_does_not_trigger() {
 
 #[test]
 fn fatp_ready_at_does_not_trigger_after_submit() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (api, forks) = test_chain_with_forks::chain(None);
 	let (pool, _) = pool_with_api(api.clone());
@@ -755,7 +755,7 @@ fn fatp_ready_at_does_not_trigger_after_submit() {
 fn fatp_ready_at_triggered_by_maintain() {
 	// this scenario w/o xts is not likely to happen, but similar thing (xt changing from ready to
 	// future) could occur e.g. when runtime was updated on fork1.
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 	let (api, forks) = test_chain_with_forks::chain(Some(&|_, _| false));
 	let (pool, _) = pool_with_api(api.clone());
 
@@ -783,7 +783,7 @@ fn fatp_ready_at_triggered_by_maintain() {
 
 #[test]
 fn fatp_ready_at_triggered_by_maintain2() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 
@@ -825,7 +825,7 @@ fn fatp_ready_at_triggered_by_maintain2() {
 
 #[test]
 fn fatp_linear_progress_finalization() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (api, forks) = test_chain_with_forks::chain(None);
 	let (pool, _) = pool_with_api(api.clone());
@@ -860,7 +860,7 @@ fn fatp_linear_progress_finalization() {
 
 #[test]
 fn fatp_fork_finalization_removes_stale_views() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (api, forks) = test_chain_with_forks::chain(None);
 	let (pool, _) = pool_with_api(api.clone());
@@ -902,7 +902,7 @@ fn fatp_fork_finalization_removes_stale_views() {
 
 #[test]
 fn fatp_watcher_future() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 
@@ -929,7 +929,7 @@ fn fatp_watcher_future() {
 
 #[test]
 fn fatp_watcher_ready() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 
@@ -958,7 +958,7 @@ fn fatp_watcher_ready() {
 
 #[test]
 fn fatp_watcher_finalized() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 
@@ -995,7 +995,7 @@ fn fatp_watcher_finalized() {
 
 #[test]
 fn fatp_watcher_in_block() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 
@@ -1022,7 +1022,7 @@ fn fatp_watcher_in_block() {
 
 #[test]
 fn fatp_watcher_future_and_finalized() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 
@@ -1067,7 +1067,7 @@ fn fatp_watcher_future_and_finalized() {
 
 #[test]
 fn fatp_watcher_two_finalized_in_different_block() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 	api.set_nonce(api.genesis_hash(), Bob.into(), 200);
@@ -1143,7 +1143,7 @@ fn fatp_watcher_two_finalized_in_different_block() {
 
 #[test]
 fn fatp_no_view_pool_watcher_two_finalized_in_different_block() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 	api.set_nonce(api.genesis_hash(), Bob.into(), 200);
@@ -1219,7 +1219,7 @@ fn fatp_no_view_pool_watcher_two_finalized_in_different_block() {
 
 #[test]
 fn fatp_watcher_in_block_across_many_blocks() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 
@@ -1263,7 +1263,7 @@ fn fatp_watcher_in_block_across_many_blocks() {
 
 #[test]
 fn fatp_watcher_in_block_across_many_blocks2() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 
@@ -1314,7 +1314,7 @@ fn fatp_watcher_in_block_across_many_blocks2() {
 
 #[test]
 fn fatp_watcher_dropping_listener_should_work() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 
@@ -1336,7 +1336,7 @@ fn fatp_watcher_dropping_listener_should_work() {
 
 #[test]
 fn fatp_watcher_fork_retract_and_finalize() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 
@@ -1379,7 +1379,7 @@ fn fatp_watcher_fork_retract_and_finalize() {
 
 #[test]
 fn fatp_retract_all_forks() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 	api.set_nonce(api.genesis_hash(), Bob.into(), 200);
@@ -1407,7 +1407,7 @@ fn fatp_retract_all_forks() {
 
 #[test]
 fn fatp_watcher_finalizing_forks() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 
@@ -1504,7 +1504,7 @@ fn fatp_watcher_finalizing_forks() {
 
 #[test]
 fn fatp_watcher_best_block_after_finalized() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 	let header01 = api.push_block(1, vec![], true);
@@ -1537,7 +1537,7 @@ fn fatp_watcher_best_block_after_finalized() {
 
 #[test]
 fn fatp_watcher_best_block_after_finalized2() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 
@@ -1564,7 +1564,7 @@ fn fatp_watcher_best_block_after_finalized2() {
 
 #[test]
 fn fatp_watcher_switching_fork_multiple_times_works() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 
@@ -1614,7 +1614,7 @@ fn fatp_watcher_switching_fork_multiple_times_works() {
 
 #[test]
 fn fatp_watcher_two_blocks_delayed_finalization_works() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 
@@ -1684,7 +1684,7 @@ fn fatp_watcher_two_blocks_delayed_finalization_works() {
 
 #[test]
 fn fatp_watcher_delayed_finalization_does_not_retract() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 
@@ -1731,7 +1731,7 @@ fn fatp_watcher_delayed_finalization_does_not_retract() {
 
 #[test]
 fn fatp_watcher_best_block_after_finalization_does_not_retract() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 
@@ -1779,7 +1779,7 @@ fn fatp_watcher_best_block_after_finalization_does_not_retract() {
 
 #[test]
 fn fatp_transactions_purging_stale_on_finalization_works() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 
@@ -1827,7 +1827,7 @@ fn fatp_transactions_purging_stale_on_finalization_works() {
 
 #[test]
 fn import_sink_works() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 
@@ -1867,7 +1867,7 @@ fn import_sink_works() {
 
 #[test]
 fn import_sink_works2() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 
@@ -1905,7 +1905,7 @@ fn import_sink_works2() {
 
 #[test]
 fn import_sink_works3() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 
@@ -1943,7 +1943,7 @@ fn import_sink_works3() {
 
 #[test]
 fn fatp_avoid_stuck_transaction() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 
@@ -1998,7 +1998,7 @@ fn fatp_avoid_stuck_transaction() {
 
 #[test]
 fn fatp_future_is_pruned_by_conflicting_tags() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 
@@ -2030,7 +2030,7 @@ fn fatp_future_is_pruned_by_conflicting_tags() {
 
 #[test]
 fn fatp_prune_based_on_inactive_views_tags() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 
@@ -2142,7 +2142,7 @@ fn fatp_prune_based_on_inactive_views_tags() {
 
 #[test]
 fn fatp_dangling_ready_gets_revalidated() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 
@@ -2180,7 +2180,7 @@ fn fatp_dangling_ready_gets_revalidated() {
 #[test]
 fn fatp_ready_txs_are_provided_in_valid_order() {
 	// this test checks if recently_pruned tags are cleared for views cloned from retracted path
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 
@@ -2221,7 +2221,7 @@ fn fatp_ready_txs_are_provided_in_valid_order() {
 
 #[test]
 fn fatp_ready_light_empty_on_unmaintained_fork() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 	api.set_nonce(api.genesis_hash(), Bob.into(), 200);
@@ -2243,7 +2243,7 @@ fn fatp_ready_light_empty_on_unmaintained_fork() {
 
 #[test]
 fn fatp_ready_light_misc_scenarios_works() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 	api.set_nonce(api.genesis_hash(), Bob.into(), 200);
@@ -2308,7 +2308,7 @@ fn fatp_ready_light_misc_scenarios_works() {
 
 #[test]
 fn fatp_ready_light_long_fork_works() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 	api.set_nonce(api.genesis_hash(), Bob.into(), 200);
@@ -2348,7 +2348,7 @@ fn fatp_ready_light_long_fork_works() {
 
 #[test]
 fn fatp_ready_light_most_recent_view_long_fork_retracted_works() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 	api.set_nonce(api.genesis_hash(), Bob.into(), 200);
@@ -2392,7 +2392,7 @@ fn fatp_ready_light_most_recent_view_long_fork_retracted_works() {
 
 #[test]
 fn fatp_ready_light_long_fork_retracted_works() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 	api.set_nonce(api.genesis_hash(), Bob.into(), 200);
@@ -2441,7 +2441,7 @@ fn fatp_ready_light_long_fork_retracted_works() {
 
 #[test]
 fn fatp_ready_light_fallback_for_most_recent_view_gets_triggered() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 	api.set_nonce(api.genesis_hash(), Bob.into(), 200);
@@ -2498,7 +2498,7 @@ fn fatp_ready_light_fallback_for_most_recent_view_gets_triggered() {
 
 #[test]
 fn fatp_ready_light_fallback_gets_triggered() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 	api.set_nonce(api.genesis_hash(), Bob.into(), 200);
@@ -2554,7 +2554,7 @@ fn fatp_ready_light_fallback_gets_triggered() {
 
 #[test]
 fn fatp_ready_at_with_timeout_works_for_misc_scenarios() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 	api.set_nonce(api.genesis_hash(), Bob.into(), 200);
@@ -2601,7 +2601,7 @@ fn fatp_ready_at_with_timeout_works_for_misc_scenarios() {
 
 #[test]
 fn fatp_tx_is_not_prematurely_revalidated() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 	let genesis = api.genesis_hash();
@@ -2649,7 +2649,7 @@ fn fatp_tx_is_not_prematurely_revalidated() {
 
 #[test]
 fn fatp_tx_is_revalidated_by_mempool_revalidation() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 	let genesis = api.genesis_hash();
@@ -2695,7 +2695,7 @@ fn fatp_tx_is_revalidated_by_mempool_revalidation() {
 // see: https://github.com/paritytech/polkadot-sdk/issues/10332
 #[test]
 fn fatp_watcher_ready_event_after_instant_finalization() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	let (pool, api, _) = pool();
 

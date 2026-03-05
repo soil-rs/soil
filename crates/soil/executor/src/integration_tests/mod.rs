@@ -50,7 +50,7 @@ macro_rules! test_wasm_execution {
 		paste::item! {
 			#[test]
 			fn [<$method_name _compiled_recreate_instance_cow>]() {
-				let _ = soil_tracing::try_init_simple();
+				let _ = subsoil::tracing::try_init_simple();
 				$method_name(WasmExecutionMethod::Compiled {
 					instantiation_strategy: soil_executor_wasmtime::InstantiationStrategy::RecreateInstanceCopyOnWrite
 				});
@@ -58,7 +58,7 @@ macro_rules! test_wasm_execution {
 
 			#[test]
 			fn [<$method_name _compiled_recreate_instance_vanilla>]() {
-				let _ = soil_tracing::try_init_simple();
+				let _ = subsoil::tracing::try_init_simple();
 				$method_name(WasmExecutionMethod::Compiled {
 					instantiation_strategy: soil_executor_wasmtime::InstantiationStrategy::RecreateInstance
 				});
@@ -66,7 +66,7 @@ macro_rules! test_wasm_execution {
 
 			#[test]
 			fn [<$method_name _compiled_pooling_cow>]() {
-				let _ = soil_tracing::try_init_simple();
+				let _ = subsoil::tracing::try_init_simple();
 				$method_name(WasmExecutionMethod::Compiled {
 					instantiation_strategy: soil_executor_wasmtime::InstantiationStrategy::PoolingCopyOnWrite
 				});
@@ -74,7 +74,7 @@ macro_rules! test_wasm_execution {
 
 			#[test]
 			fn [<$method_name _compiled_pooling_vanilla>]() {
-				let _ = soil_tracing::try_init_simple();
+				let _ = subsoil::tracing::try_init_simple();
 				$method_name(WasmExecutionMethod::Compiled {
 					instantiation_strategy: soil_executor_wasmtime::InstantiationStrategy::Pooling
 				});

@@ -40,7 +40,7 @@ topsoil-offences = { workspace = true, default-features = true }
 topsoil-staking = { workspace = true, default-features = true }
 topsoil-staking-reward-curve = { workspace = true, default-features = true }
 soil-core = { workspace = true, default-features = true }
-soil-tracing = { workspace = true, default-features = true }
+subsoil = { workspace = true, default-features = true }
 
 [features]
 default = ["std"]

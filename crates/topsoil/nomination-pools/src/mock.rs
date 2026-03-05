@@ -560,7 +560,7 @@ impl ExtBuilder {
 	}
 
 	pub fn build(self) -> soil_io::TestExternalities {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 		let mut storage =
 			topsoil_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
 

@@ -962,7 +962,7 @@ mod tests {
 
 	#[test]
 	fn generate_chain_spec_with_named_preset_works() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 		let output: ChainSpec<()> = ChainSpec::builder(
 			substrate_test_runtime::wasm_binary_unwrap().into(),
 			Default::default(),

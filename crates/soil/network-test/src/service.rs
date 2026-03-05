@@ -460,7 +460,7 @@ async fn notifications_state_consistent() {
 
 #[tokio::test]
 async fn lots_of_incoming_peers_works() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 	let listen_addr = config::build_multiaddr![Memory(rand::random::<u64>())];
 
 	let (main_node, handle1) = TestNetworkBuilder::new()
@@ -588,7 +588,7 @@ async fn notifications_back_pressure() {
 
 #[tokio::test]
 async fn fallback_name_working() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 	// Node 1 supports the protocols "new" and "old". Node 2 only supports "old". Checks whether
 	// they can connect.
 	const NEW_PROTOCOL_NAME: &str = "/new-shiny-protocol-that-isnt-PROTOCOL_NAME";

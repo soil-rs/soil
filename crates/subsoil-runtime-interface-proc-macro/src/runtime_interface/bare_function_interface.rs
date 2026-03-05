@@ -203,7 +203,7 @@ fn function_std_impl(
 		call_to_trait
 	} else {
 		parse_quote!(
-			#crate_::soil_tracing::within_span! { #crate_::soil_tracing::trace_span!(#function_name_str);
+			#crate_::subsoil::within_span! { #crate_::subsoil::tracing::trace_span!(#function_name_str);
 				#call_to_trait
 			}
 		)

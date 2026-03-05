@@ -324,7 +324,7 @@ mod tests {
 	}
 
 	fn offchain_api() -> (Api, AsyncApi) {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 		let mock = Arc::new(TestNetwork());
 		let shared_client = SharedClient::new().unwrap();
 

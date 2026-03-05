@@ -681,7 +681,7 @@ mod tests {
 
 	#[tokio::test]
 	async fn authoring_blocks() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 		let net = AuraTestNet::new(3);
 
 		let peers = &[(0, Keyring::Alice), (1, Keyring::Bob), (2, Keyring::Charlie)];

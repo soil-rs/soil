@@ -36,7 +36,7 @@ soil-core = { workspace = true, default-features = true }
 soil-io = { workspace = true, default-features = true }
 soil-staking = { workspace = true, default-features = true }
 soil-state-machine = { workspace = true }
-soil-tracing = { workspace = true, default-features = true }
+subsoil = { workspace = true, default-features = true }
 
 [features]
 default = ["std"]

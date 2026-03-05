@@ -17,7 +17,7 @@
 
 //! In-memory implementation of `Database`
 
-use crate::{error, Change, ColumnId, Database, Transaction};
+use super::{error, Change, ColumnId, Database, Transaction};
 use parking_lot::RwLock;
 use std::collections::{hash_map::Entry, HashMap};
 

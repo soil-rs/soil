@@ -314,7 +314,7 @@ mod tests {
 
 	#[tokio::test]
 	async fn deduplicating_works() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 
 		let (ctrl, runnable) = MultiViewImportNotificationSink::<u64, i32>::new_with_worker();
 
@@ -347,7 +347,7 @@ mod tests {
 
 	#[tokio::test]
 	async fn dedup_filter_reset_works() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 
 		let (ctrl, runnable) = MultiViewImportNotificationSink::<u64, i32>::new_with_worker();
 
@@ -385,7 +385,7 @@ mod tests {
 
 	#[tokio::test]
 	async fn many_output_streams_are_supported() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 
 		let (ctrl, runnable) = MultiViewImportNotificationSink::<u64, i32>::new_with_worker();
 

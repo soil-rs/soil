@@ -30,7 +30,7 @@ soil-runtime = { workspace = true }
 [dev-dependencies]
 pretty_assertions = { workspace = true }
 soil-io = { workspace = true, default-features = true }
-soil-tracing = { workspace = true, default-features = true }
+subsoil = { workspace = true, default-features = true }
 
 [features]
 default = ["std"]

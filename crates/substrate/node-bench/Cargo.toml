@@ -42,6 +42,6 @@ soil-inherents = { workspace = true, default-features = true }
 soil-runtime = { workspace = true, default-features = true }
 soil-state-machine = { workspace = true, default-features = true }
 soil-timestamp = { workspace = true }
-soil-tracing = { workspace = true, default-features = true }
+subsoil = { workspace = true, default-features = true }
 soil-trie = { workspace = true, default-features = true }
 tempfile = { workspace = true }

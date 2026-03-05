@@ -35,10 +35,6 @@
 //! `name` and `target` data in the `values` map (normally they would be in the static
 //! metadata assembled at compile time).
 
-#![cfg_attr(not(feature = "std"), no_std)]
-
-extern crate alloc;
-
 #[cfg(feature = "std")]
 pub use tracing;
 pub use tracing::{
@@ -49,12 +45,12 @@ pub use tracing::{
 #[cfg(feature = "std")]
 pub use tracing_subscriber;
 
-pub use crate::types::{
+pub use self::types::{
 	WasmEntryAttributes, WasmFieldName, WasmFields, WasmLevel, WasmMetadata, WasmValue,
 	WasmValuesSet,
 };
 #[cfg(not(substrate_runtime))]
-pub use crate::types::{WASM_NAME_KEY, WASM_TARGET_KEY, WASM_TRACE_IDENTIFIER};
+pub use self::types::{WASM_NAME_KEY, WASM_TARGET_KEY, WASM_TRACE_IDENTIFIER};
 
 /// Tracing facilities and helpers.
 ///
@@ -79,17 +75,17 @@ pub use crate::types::{WASM_NAME_KEY, WASM_TARGET_KEY, WASM_TRACE_IDENTIFIER};
 /// # Example
 ///
 /// ```rust
-/// soil_tracing::enter_span!(soil_tracing::Level::TRACE, "fn wide span");
+/// subsoil::enter_span!(subsoil::tracing::Level::TRACE, "fn wide span");
 /// {
-/// 		soil_tracing::enter_span!(soil_tracing::trace_span!("outer-span"));
+/// 		subsoil::enter_span!(subsoil::tracing::trace_span!("outer-span"));
 /// 		{
-/// 			soil_tracing::enter_span!(soil_tracing::Level::TRACE, "inner-span");
+/// 			subsoil::enter_span!(subsoil::tracing::Level::TRACE, "inner-span");
 /// 			// ..
 /// 		}  // inner span exists here
 /// 	} // outer span exists here
 ///
-/// soil_tracing::within_span! {
-/// 		soil_tracing::debug_span!("debug-span", you_can_pass="any params");
+/// subsoil::within_span! {
+/// 		subsoil::tracing::debug_span!("debug-span", you_can_pass="any params");
 ///     1 + 1;
 ///     // some other complex code
 /// } // debug span ends here
@@ -152,26 +148,26 @@ pub fn init_for_tests() {
 /// Runs given code within a tracing span, measuring it's execution time.
 ///
 /// If tracing is not enabled, the code is still executed. Pass in level and name or
-/// use any valid `soil_tracing::Span`followed by `;` and the code to execute,
+/// use any valid `subsoil::tracing::Span`followed by `;` and the code to execute,
 ///
 /// # Example
 ///
 /// ```
-/// soil_tracing::within_span! {
-///     soil_tracing::Level::TRACE,
+/// subsoil::within_span! {
+///     subsoil::tracing::Level::TRACE,
 ///     "test-span";
 ///     1 + 1;
 ///     // some other complex code
 /// }
 ///
-/// soil_tracing::within_span! {
-///     soil_tracing::span!(soil_tracing::Level::WARN, "warn-span", you_can_pass="any params");
+/// subsoil::within_span! {
+///     subsoil::tracing::span!(subsoil::tracing::Level::WARN, "warn-span", you_can_pass="any params");
 ///     1 + 1;
 ///     // some other complex code
 /// }
 ///
-/// soil_tracing::within_span! {
-///     soil_tracing::debug_span!("debug-span", you_can_pass="any params");
+/// subsoil::within_span! {
+///     subsoil::tracing::debug_span!("debug-span", you_can_pass="any params");
 ///     1 + 1;
 ///     // some other complex code
 /// }
@@ -195,7 +191,7 @@ macro_rules! within_span {
 		$( $code:tt )*
 	) => {
 		{
-			$crate::within_span!($crate::span!($lvl, $name); $( $code )*)
+			$crate::within_span!($crate::tracing::span!($lvl, $name); $( $code )*)
 		}
 	};
 }
@@ -229,7 +225,7 @@ macro_rules! enter_span {
 /// Enter a span.
 ///
 /// The span will be valid, until the scope is left. Use either level and name
-/// or pass in any valid `soil_tracing::Span` for extended usage. The span will
+/// or pass in any valid `subsoil::tracing::Span` for extended usage. The span will
 /// be exited on drop – which is at the end of the block or to the next
 /// `enter_span!` calls, as this overwrites the local variable. For nested
 /// usage or to ensure the span closes at certain time either put it into a block
@@ -238,16 +234,16 @@ macro_rules! enter_span {
 /// # Example
 ///
 /// ```
-/// soil_tracing::enter_span!(soil_tracing::Level::TRACE, "test-span");
+/// subsoil::enter_span!(subsoil::tracing::Level::TRACE, "test-span");
 /// // previous will be dropped here
-/// soil_tracing::enter_span!(
-/// 	soil_tracing::span!(soil_tracing::Level::DEBUG, "debug-span", params="value"));
-/// soil_tracing::enter_span!(soil_tracing::info_span!("info-span",  params="value"));
+/// subsoil::enter_span!(
+/// 	subsoil::tracing::span!(subsoil::tracing::Level::DEBUG, "debug-span", params="value"));
+/// subsoil::enter_span!(subsoil::tracing::info_span!("info-span",  params="value"));
 ///
 /// {
-/// 		soil_tracing::enter_span!(soil_tracing::Level::TRACE, "outer-span");
+/// 		subsoil::enter_span!(subsoil::tracing::Level::TRACE, "outer-span");
 /// 		{
-/// 			soil_tracing::enter_span!(soil_tracing::Level::TRACE, "inner-span");
+/// 			subsoil::enter_span!(subsoil::tracing::Level::TRACE, "inner-span");
 /// 			// ..
 /// 		}  // inner span exists here
 /// 	} // outer span exists here
@@ -262,7 +258,7 @@ macro_rules! enter_span {
 		let __tracing_guard__ = __within_span__.enter();
 	};
 	( $lvl:expr, $name:expr ) => {
-		$crate::enter_span!($crate::span!($lvl, $name))
+		$crate::enter_span!($crate::tracing::span!($lvl, $name))
 	};
 }
 
@@ -280,7 +276,7 @@ pub mod test_log_capture {
 	///
 	/// # Examples
 	/// ```
-	/// use soil_tracing::test_log_capture::LogCapture;
+	/// use subsoil::tracing::test_log_capture::LogCapture;
 	/// use std::io::Write;
 	///
 	/// let mut log_capture = LogCapture::new();
@@ -296,7 +292,7 @@ pub mod test_log_capture {
 		///
 		/// # Examples
 		/// ```
-		/// use soil_tracing::test_log_capture::LogCapture;
+		/// use subsoil::tracing::test_log_capture::LogCapture;
 		///
 		/// let log_capture = LogCapture::new();
 		/// assert!(log_capture.get_logs().is_empty());
@@ -309,7 +305,7 @@ pub mod test_log_capture {
 		///
 		/// # Examples
 		/// ```
-		/// use soil_tracing::test_log_capture::LogCapture;
+		/// use subsoil::tracing::test_log_capture::LogCapture;
 		/// use std::io::Write;
 		///
 		/// let mut log_capture = LogCapture::new();
@@ -326,7 +322,7 @@ pub mod test_log_capture {
 		///
 		/// # Examples
 		/// ```
-		/// use soil_tracing::test_log_capture::LogCapture;
+		/// use subsoil::tracing::test_log_capture::LogCapture;
 		/// use std::io::Write;
 		///
 		/// let mut log_capture = LogCapture::new();
@@ -390,7 +386,7 @@ pub mod test_log_capture {
 	/// # Examples
 	///
 	/// ```
-	/// use soil_tracing::{
+	/// use subsoil::tracing::{
 	///     test_log_capture::init_log_capture,
 	///     tracing::{info, subscriber, Level},
 	/// };
@@ -408,7 +404,7 @@ pub mod test_log_capture {
 	///   `init_log_capture(max_level, false)`.
 	/// - If you need both **capturing and printing logs**, use `init_log_capture(max_level, true)`.
 	/// - If you only need to **print logs** but not capture them, use
-	///   `soil_tracing::init_for_tests()`.
+	///   `subsoil::tracing::init_for_tests()`.
 	pub fn init_log_capture(
 		max_level: impl Into<LevelFilter>,
 		print_logs: bool,
@@ -458,10 +454,8 @@ pub mod test_log_capture {
 	/// # Examples
 	///
 	/// ```
-	/// use soil_tracing::{
-	///     capture_test_logs,
-	///     tracing::{info, warn, Level},
-	/// };
+	/// use subsoil::capture_test_logs;
+	/// use subsoil::tracing::tracing::{info, warn, Level};
 	///
 	/// // Capture logs at WARN level without printing them
 	/// let log_capture = capture_test_logs!(Level::WARN, false, {
@@ -482,15 +476,15 @@ pub mod test_log_capture {
 	///
 	/// # Related functions:
 	/// - [`init_log_capture()`]: Captures logs for assertions.
-	/// - `soil_tracing::init_for_tests()`: Outputs logs but does not capture them.
+	/// - `subsoil::tracing::init_for_tests()`: Outputs logs but does not capture them.
 	#[macro_export]
 	macro_rules! capture_test_logs {
 		// Case when max_level and print_logs are provided
 		($max_level:expr, $print_logs:expr, $test:block) => {{
 			let (log_capture, subscriber) =
-				soil_tracing::test_log_capture::init_log_capture($max_level, $print_logs);
+				$crate::tracing::test_log_capture::init_log_capture($max_level, $print_logs);
 
-			soil_tracing::tracing::subscriber::with_default(subscriber, || $test);
+			$crate::tracing::tracing::subscriber::with_default(subscriber, || $test);
 
 			log_capture
 		}};
@@ -502,7 +496,7 @@ pub mod test_log_capture {
 
 		// Case when max_level is omitted (defaults to DEBUG, no printing)
 		($test:block) => {{
-			capture_test_logs!(soil_tracing::tracing::Level::DEBUG, false, $test)
+			capture_test_logs!($crate::tracing::tracing::Level::DEBUG, false, $test)
 		}};
 	}
 }

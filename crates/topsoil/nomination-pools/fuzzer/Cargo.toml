@@ -30,7 +30,7 @@ topsoil-system = { workspace = true, default-features = true }
 
 soil-io = { workspace = true, default-features = true }
 soil-runtime = { workspace = true, default-features = true }
-soil-tracing = { workspace = true, default-features = true }
+subsoil = { workspace = true, default-features = true }
 
 log = { workspace = true, default-features = true }
 rand = { features = ["small_rng"], workspace = true, default-features = true }

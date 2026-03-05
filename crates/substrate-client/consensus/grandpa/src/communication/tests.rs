@@ -517,7 +517,7 @@ fn good_commit_leads_to_relay() {
 
 #[test]
 fn bad_commit_leads_to_report() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 	let private = [Ed25519Keyring::Alice, Ed25519Keyring::Bob, Ed25519Keyring::Charlie];
 	let public = make_ids(&private[..]);
 	let voter_set = Arc::new(VoterSet::new(public.iter().cloned()).unwrap());

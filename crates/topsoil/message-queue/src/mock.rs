@@ -310,7 +310,7 @@ pub fn new_test_ext<T: Config>() -> soil_io::TestExternalities
 where
 	topsoil_system::pallet_prelude::BlockNumberFor<T>: From<u32>,
 {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 	WeightForCall::take();
 	QueueChanges::take();
 	NumMessagesErrored::take();

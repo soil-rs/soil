@@ -39,7 +39,7 @@ schnellru = { workspace = true, optional = true}
 soil-arithmetic = { workspace = true, default-features = true, optional = true}
 soil-blockchain = { workspace = true, default-features = true, optional = true}
 soil-core = { workspace = true, default-features = true, optional = true}
-soil-database = { workspace = true, default-features = true, optional = true}
+subsoil = { workspace = true, default-features = true, optional = true}
 soil-runtime = { workspace = true, default-features = true, optional = true}
 soil-state-machine = { workspace = true, default-features = true, optional = true}
 soil-trie = { workspace = true, default-features = true, optional = true}
@@ -50,8 +50,7 @@ array-bytes = { workspace = true, default-features = true }
 criterion = { workspace = true, default-features = true }
 kvdb-rocksdb = { workspace = true }
 rand = { workspace = true, default-features = true }
-soil-database = { workspace = true, default-features = true, features = ["rocksdb"] }
-soil-tracing = { workspace = true, default-features = true }
+subsoil = { workspace = true, default-features = true, features = ["rocksdb"] }
 kitchensink-runtime = { workspace = true }
 substrate-test-runtime-client = { workspace = true }
 tempfile = { workspace = true }
@@ -73,7 +72,7 @@ std = [
 	"soil-blockchain",
 	"soil-client-api",
 	"soil-core",
-	"soil-database",
+	"subsoil",
 	"soil-runtime",
 	"soil-state-db",
 	"soil-state-machine",
@@ -92,5 +91,5 @@ test-helpers = []
 runtime-benchmarks = [
 	"soil-runtime/runtime-benchmarks",
 ]
-rocksdb = ["kvdb-rocksdb", "soil-database/rocksdb"]
+rocksdb = ["kvdb-rocksdb", "subsoil/rocksdb"]
 jemalloc-allocator = ["kvdb-rocksdb?/jemalloc"]

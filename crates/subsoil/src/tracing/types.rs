@@ -610,25 +610,25 @@ mod std_features {
 
 	// FIXME: this could be done a lot in 0.2 if they opt for using `Cow<str,'static>` instead
 	// 			https://github.com/paritytech/substrate/issues/7134
-	impl From<&crate::WasmMetadata> for &'static tracing_core::Metadata<'static> {
-		fn from(wm: &crate::WasmMetadata) -> &'static tracing_core::Metadata<'static> {
+	impl From<&super::WasmMetadata> for &'static tracing_core::Metadata<'static> {
+		fn from(wm: &super::WasmMetadata) -> &'static tracing_core::Metadata<'static> {
 			match (&wm.level, wm.is_span) {
-				(&crate::WasmLevel::ERROR, true) => &SPAN_ERROR_METADATA,
-				(&crate::WasmLevel::WARN, true) => &SPAN_WARN_METADATA,
-				(&crate::WasmLevel::INFO, true) => &SPAN_INFO_METADATA,
-				(&crate::WasmLevel::DEBUG, true) => &SPAN_DEBUG_METADATA,
-				(&crate::WasmLevel::TRACE, true) => &SPAN_TRACE_METADATA,
-				(&crate::WasmLevel::ERROR, false) => &EVENT_ERROR_METADATA,
-				(&crate::WasmLevel::WARN, false) => &EVENT_WARN_METADATA,
-				(&crate::WasmLevel::INFO, false) => &EVENT_INFO_METADATA,
-				(&crate::WasmLevel::DEBUG, false) => &EVENT_DEBUG_METADATA,
-				(&crate::WasmLevel::TRACE, false) => &EVENT_TRACE_METADATA,
+				(&super::WasmLevel::ERROR, true) => &SPAN_ERROR_METADATA,
+				(&super::WasmLevel::WARN, true) => &SPAN_WARN_METADATA,
+				(&super::WasmLevel::INFO, true) => &SPAN_INFO_METADATA,
+				(&super::WasmLevel::DEBUG, true) => &SPAN_DEBUG_METADATA,
+				(&super::WasmLevel::TRACE, true) => &SPAN_TRACE_METADATA,
+				(&super::WasmLevel::ERROR, false) => &EVENT_ERROR_METADATA,
+				(&super::WasmLevel::WARN, false) => &EVENT_WARN_METADATA,
+				(&super::WasmLevel::INFO, false) => &EVENT_INFO_METADATA,
+				(&super::WasmLevel::DEBUG, false) => &EVENT_DEBUG_METADATA,
+				(&super::WasmLevel::TRACE, false) => &EVENT_TRACE_METADATA,
 			}
 		}
 	}
 
-	impl From<crate::WasmEntryAttributes> for tracing::Span {
-		fn from(a: crate::WasmEntryAttributes) -> tracing::Span {
+	impl From<super::WasmEntryAttributes> for tracing::Span {
+		fn from(a: super::WasmEntryAttributes) -> tracing::Span {
 			let name = core::str::from_utf8(&a.metadata.name).unwrap_or_default();
 			let target = core::str::from_utf8(&a.metadata.target).unwrap_or_default();
 			let file = core::str::from_utf8(&a.metadata.file).unwrap_or_default();
@@ -645,9 +645,9 @@ mod std_features {
 		}
 	}
 
-	impl crate::WasmEntryAttributes {
+	impl super::WasmEntryAttributes {
 		/// convert the given Attributes to an event and emit it using `tracing_core`.
-		pub fn emit(self: crate::WasmEntryAttributes) {
+		pub fn emit(self: super::WasmEntryAttributes) {
 			let name = core::str::from_utf8(&self.metadata.name).unwrap_or_default();
 			let target = core::str::from_utf8(&self.metadata.target).unwrap_or_default();
 			let file = core::str::from_utf8(&self.metadata.file).unwrap_or_default();

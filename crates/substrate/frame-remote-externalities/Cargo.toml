@@ -42,7 +42,7 @@ jsonrpsee = { features = [
 	"server",
 	"ws-client",
 ], workspace = true }
-soil-tracing = { workspace = true, default-features = true }
+subsoil = { workspace = true, default-features = true }
 
 [features]
 remote-test = []

@@ -1118,7 +1118,7 @@ mod test_prelude {
 	pub(crate) type Block = RawBlock<UncheckedXt>;
 
 	pub(crate) fn init_logger() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 	}
 }
 

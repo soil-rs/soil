@@ -27,7 +27,7 @@ soil-externalities = { workspace = true }
 soil-keystore = { optional = true, workspace = true }
 soil-runtime-interface = { workspace = true }
 soil-state-machine = { optional = true, workspace = true }
-soil-tracing = { workspace = true }
+subsoil = { workspace = true }
 soil-trie = { optional = true, workspace = true }
 tracing = { workspace = true }
 tracing-core = { workspace = true }
@@ -67,13 +67,13 @@ std = [
 	"soil-keystore/std",
 	"soil-runtime-interface/std",
 	"soil-state-machine/std",
-	"soil-tracing/std",
+	"subsoil/std",
 	"soil-trie/std",
 	"tracing-core/std",
 	"tracing/std",
 ]
 
-with-tracing = ["soil-tracing/with-tracing"]
+with-tracing = ["subsoil/with-tracing"]
 
 # These two features are used for `no_std` builds for the environments which already provides
 # `#[panic_handler]`, `#[alloc_error_handler]` and `#[global_allocator]`.

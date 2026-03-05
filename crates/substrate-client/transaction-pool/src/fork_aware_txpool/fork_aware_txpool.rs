@@ -2116,7 +2116,7 @@ mod reduce_multiview_result_tests {
 
 	#[test]
 	fn empty() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 		let input = HashMap::default();
 		let r = reduce_multiview_result::<H256, H256, Error>(input);
 		assert!(r.is_empty());
@@ -2124,7 +2124,7 @@ mod reduce_multiview_result_tests {
 
 	#[test]
 	fn errors_only() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 		let v: Vec<(H256, Vec<Result<H256, Error>>)> = vec![
 			(
 				H256::repeat_byte(0x13),
@@ -2165,7 +2165,7 @@ mod reduce_multiview_result_tests {
 	#[should_panic]
 	#[cfg(debug_assertions)]
 	fn invalid_lengths() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 		let v: Vec<(H256, Vec<Result<H256, Error>>)> = vec![
 			(H256::repeat_byte(0x13), vec![Err(Error::Custom(12)), Err(Error::Custom(13))]),
 			(H256::repeat_byte(0x14), vec![Err(Error::Custom(23))]),
@@ -2176,7 +2176,7 @@ mod reduce_multiview_result_tests {
 
 	#[test]
 	fn only_hashes() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 
 		let v: Vec<(H256, Vec<Result<H256, Error>>)> = vec![
 			(
@@ -2196,7 +2196,7 @@ mod reduce_multiview_result_tests {
 
 	#[test]
 	fn one_view() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 		let v: Vec<(H256, Vec<Result<H256, Error>>)> = vec![(
 			H256::repeat_byte(0x13),
 			vec![Ok(H256::repeat_byte(0x10)), Err(Error::Custom(11))],
@@ -2209,7 +2209,7 @@ mod reduce_multiview_result_tests {
 
 	#[test]
 	fn mix() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 		let v: Vec<(H256, Vec<Result<H256, Error>>)> = vec![
 			(
 				H256::repeat_byte(0x13),

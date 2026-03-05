@@ -1372,7 +1372,7 @@ mod test {
 	#[test]
 	fn complete_warp_proof_advances_phase() {
 		// Initialize logging
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 
 		let client = Arc::new(TestClientBuilder::new().set_no_genesis().build());
 		let mut provider = MockWarpSyncProvider::<Block>::new();
@@ -1741,7 +1741,7 @@ mod test {
 
 	#[test]
 	fn target_block_response_with_wrong_block_drops_peer() {
-		soil_tracing::try_init_simple();
+		subsoil::tracing::try_init_simple();
 
 		let client = Arc::new(TestClientBuilder::new().set_no_genesis().build());
 		let mut provider = MockWarpSyncProvider::<Block>::new();

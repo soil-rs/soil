@@ -206,7 +206,7 @@ where
 
 #[tokio::test]
 async fn mine_for_polkadot() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	// good way to find good block hashes: https://polkadot.subscan.io/event?page=1&time_dimension=date&module=electionprovidermultiphase&event_id=solutionstored
 	// we are just looking for blocks with snapshot present, that's all.
@@ -236,7 +236,7 @@ async fn mine_for_polkadot() {
 
 #[tokio::test]
 async fn mine_for_kusama() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	// good way to find good block hashes: https://kusama.subscan.io/event?page=1&time_dimension=date&module=electionprovidermultiphase&event_id=solutionstored
 	// we are just looking for blocks with snapshot present, that's all.

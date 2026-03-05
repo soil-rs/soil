@@ -119,7 +119,7 @@ fn multiple_submission_should_work() {
 
 #[test]
 fn early_nonce_should_be_culled() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 	let (pool, api) = pool();
 	block_on(pool.submit_one(&api.expect_hash_and_number(0), TSOURCE, uxt(Alice, 208).into()))
 		.unwrap();
@@ -228,7 +228,7 @@ fn only_prune_on_new_best() {
 
 #[test]
 fn should_correctly_prune_transactions_providing_more_than_one_tag() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 	let api = Arc::new(TestApi::with_alice_nonce(209));
 	api.set_valid_modifier(Box::new(|v: &mut ValidTransaction| {
 		v.provides.push(vec![155]);
@@ -560,7 +560,7 @@ fn finalization() {
 
 #[test]
 fn fork_aware_finalization() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 	let api = TestApi::empty();
 	// starting block A1 (last finalized.)
 	let a_header = api.push_block(1, vec![], true);
@@ -1079,7 +1079,7 @@ fn pruning_a_transaction_should_remove_it_from_best_transaction() {
 
 #[test]
 fn stale_transactions_are_pruned() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 
 	// Our initial transactions
 	let xts = vec![
@@ -1132,7 +1132,7 @@ fn stale_transactions_are_pruned() {
 
 #[test]
 fn finalized_only_handled_correctly() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 	let xt = uxt(Alice, 209);
 
 	let (pool, api, _guard) = maintained_pool();
@@ -1161,7 +1161,7 @@ fn finalized_only_handled_correctly() {
 
 #[test]
 fn best_block_after_finalized_handled_correctly() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 	let xt = uxt(Alice, 209);
 
 	let (pool, api, _guard) = maintained_pool();
@@ -1191,7 +1191,7 @@ fn best_block_after_finalized_handled_correctly() {
 
 #[test]
 fn switching_fork_with_finalized_works() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 	let api = TestApi::empty();
 	// starting block A1 (last finalized.)
 	let a_header = api.push_block(1, vec![], true);
@@ -1274,7 +1274,7 @@ fn switching_fork_with_finalized_works() {
 
 #[test]
 fn switching_fork_multiple_times_works() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 	let api = TestApi::empty();
 	// starting block A1 (last finalized.)
 	let a_header = api.push_block(1, vec![], true);
@@ -1387,7 +1387,7 @@ fn switching_fork_multiple_times_works() {
 
 #[test]
 fn two_blocks_delayed_finalization_works() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 	let api = TestApi::empty();
 	// starting block A1 (last finalized.)
 	let a_header = api.push_block(1, vec![], true);
@@ -1507,7 +1507,7 @@ fn two_blocks_delayed_finalization_works() {
 
 #[test]
 fn delayed_finalization_does_not_retract() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 	let api = TestApi::empty();
 	// starting block A1 (last finalized.)
 	let a_header = api.push_block(1, vec![], true);
@@ -1605,7 +1605,7 @@ fn delayed_finalization_does_not_retract() {
 
 #[test]
 fn best_block_after_finalization_does_not_retract() {
-	soil_tracing::try_init_simple();
+	subsoil::tracing::try_init_simple();
 	let api = TestApi::empty();
 	// starting block A1 (last finalized.)
 	let a_header = api.push_block(1, vec![], true);
