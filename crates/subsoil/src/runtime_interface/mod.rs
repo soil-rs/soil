@@ -17,7 +17,7 @@
 
 //! Substrate runtime interface
 //!
-//! This crate provides types, traits and macros around runtime interfaces. A runtime interface is
+//! This module provides types, traits and macros around runtime interfaces. A runtime interface is
 //! a fixed interface between a Substrate runtime (also called the "guest") and a Substrate node
 //! (also called the "host"). For a native runtime the interface maps to direct function calls of
 //! the implementation. For a non-native runtime the interface maps to an external function call.
@@ -32,7 +32,7 @@
 //! which can be passed directly through the FFI boundary and which don't require any special
 //! handling besides a straightforward, direct conversion.
 //!
-//! You can find the strategy wrapper types in the [`crate::pass_by`] module.
+//! You can find the strategy wrapper types in the [`pass_by`] module.
 //!
 //! The newtype wrappers are automatically stripped away when the function is called
 //! and applied when the function returns by the `runtime_interface` macro.
@@ -41,11 +41,11 @@
 //!
 //! Declaring a runtime interface is similar to declaring a trait in Rust:
 //!
-//! ```
+//! ```ignore
 //! # mod wrapper {
-//! # use soil_runtime_interface::pass_by::PassFatPointerAndRead;
+//! # use subsoil::runtime_interface::pass_by::PassFatPointerAndRead;
 //!
-//! #[soil_runtime_interface::runtime_interface]
+//! #[subsoil::runtime_interface::runtime_interface]
 //! trait RuntimeInterface {
 //!     fn some_function(value: PassFatPointerAndRead<&[u8]>) -> bool {
 //!         value.iter().all(|v| *v > 125)
@@ -55,22 +55,14 @@
 //! ```
 //!
 //! For more information on declaring a runtime interface, see
-//! [`#[runtime_interface]`](./attr.runtime_interface.html).
-
-#![no_std]
-
-pub extern crate alloc;
-extern crate self as soil_runtime_interface;
+//! [`#[runtime_interface]`](attr.runtime_interface.html).
 
 #[doc(hidden)]
 #[cfg(not(substrate_runtime))]
-pub use subsoil::wasm_interface;
+pub use crate::wasm_interface;
 
 #[doc(hidden)]
-pub use subsoil;
-
-#[doc(hidden)]
-pub use subsoil::std;
+pub use crate::std;
 
 /// Attribute macro for transforming a trait declaration into a runtime interface.
 ///
@@ -81,10 +73,10 @@ pub use subsoil::std;
 ///
 /// The macro expects the runtime interface declaration as trait declaration:
 ///
-/// ```
+/// ```ignore
 /// # mod wrapper {
-/// # use soil_runtime_interface::runtime_interface;
-/// # use soil_runtime_interface::pass_by::{PassFatPointerAndDecode, PassFatPointerAndRead, AllocateAndReturnFatPointer};
+/// # use subsoil::runtime_interface::runtime_interface;
+/// # use subsoil::runtime_interface::pass_by::{PassFatPointerAndDecode, PassFatPointerAndRead, AllocateAndReturnFatPointer};
 ///
 /// #[runtime_interface]
 /// trait Interface {
@@ -147,153 +139,6 @@ pub use subsoil::std;
 /// # }
 /// ```
 ///
-/// The given example will generate roughly the following code for native:
-///
-/// ```
-/// // The name of the trait is converted to snake case and used as mod name.
-/// //
-/// // Be aware that this module is not `public`, the visibility of the module is determined based
-/// // on the visibility of the trait declaration.
-/// mod interface {
-///     trait Interface {
-///         fn call_version_1(data: &[u8]) -> Vec<u8>;
-///         fn call_version_2(data: &[u8]) -> Vec<u8>;
-///         fn call_version_3(data: &[u8]) -> Vec<u8>;
-///         fn set_or_clear_version_1(&mut self, optional: Option<Vec<u8>>);
-///         #[cfg(feature = "experimental-function")]
-///         fn gated_call_version_1(data: &[u8]) -> Vec<u8>;
-///     }
-///
-///     impl Interface for &mut dyn subsoil::externalities::Externalities {
-///         fn call_version_1(data: &[u8]) -> Vec<u8> { Vec::new() }
-///         fn call_version_2(data: &[u8]) -> Vec<u8> { [17].to_vec() }
-///         fn call_version_3(data: &[u8]) -> Vec<u8> { [18].to_vec() }
-///         fn set_or_clear_version_1(&mut self, optional: Option<Vec<u8>>) {
-///             match optional {
-///                 Some(value) => self.set_storage([1, 2, 3, 4].to_vec(), value),
-///                 None => self.clear_storage(&[1, 2, 3, 4]),
-///             }
-///         }
-///         #[cfg(feature = "experimental-function")]
-///         fn gated_call_version_1(data: &[u8]) -> Vec<u8> { [42].to_vec() }
-///     }
-///
-///     pub fn call(data: &[u8]) -> Vec<u8> {
-///         // only latest version is exposed
-///         call_version_2(data)
-///     }
-///
-///     fn call_version_1(data: &[u8]) -> Vec<u8> {
-///         <&mut dyn subsoil::externalities::Externalities as Interface>::call_version_1(data)
-///     }
-///
-///     fn call_version_2(data: &[u8]) -> Vec<u8> {
-///         <&mut dyn subsoil::externalities::Externalities as Interface>::call_version_2(data)
-///     }
-///
-///     fn call_version_3(data: &[u8]) -> Vec<u8> {
-///         <&mut dyn subsoil::externalities::Externalities as Interface>::call_version_3(data)
-///     }
-///
-///     pub fn set_or_clear(optional: Option<Vec<u8>>) {
-///         set_or_clear_version_1(optional)
-///     }
-///
-///     fn set_or_clear_version_1(optional: Option<Vec<u8>>) {
-///         subsoil::externalities::with_externalities(|mut ext| Interface::set_or_clear_version_1(&mut ext, optional))
-///             .expect("`set_or_clear` called outside of an Externalities-provided environment.")
-///     }
-///
-///     #[cfg(feature = "experimental-function")]
-///     pub fn gated_call(data: &[u8]) -> Vec<u8> {
-///         gated_call_version_1(data)
-///     }
-///
-///     #[cfg(feature = "experimental-function")]
-///     fn gated_call_version_1(data: &[u8]) -> Vec<u8> {
-///         <&mut dyn subsoil::externalities::Externalities as Interface>::gated_call_version_1(data)
-///     }
-///
-///     /// This type implements the `HostFunctions` trait (from `sp-wasm-interface`) and
-///     /// provides the host implementation for the wasm side. The host implementation converts the
-///     /// arguments from wasm to native and calls the corresponding native function.
-///     ///
-///     /// This type needs to be passed to the wasm executor, so that the host functions will be
-///     /// registered in the executor.
-///     pub struct HostFunctions;
-/// }
-/// ```
-///
-/// The given example will generate roughly the following code for wasm:
-///
-/// ```
-/// mod interface {
-///     mod extern_host_functions_impls {
-///         /// Every function is exported by the native code as `ext_FUNCTION_NAME_version_VERSION`.
-///         ///
-///         /// The type for each argument of the exported function depends on
-///         /// `<ARGUMENT_TYPE as RIType>::FFIType`.
-///         ///
-///         /// `key` holds the pointer and the length to the `data` slice.
-///         pub fn call(data: &[u8]) -> Vec<u8> {
-///             extern "C" { pub fn ext_call_version_2(key: u64); }
-///             // Should call into external `ext_call_version_2(<[u8] as IntoFFIValue>::into_ffi_value(key))`
-///             // But this is too much to replicate in a doc test so here we just return a dummy vector.
-///             // Note that we jump into the latest version not marked as `register_only` (i.e. version 2).
-///             Vec::new()
-///         }
-///
-///         /// `key` holds the pointer and the length of the `option` value.
-///         pub fn set_or_clear(option: Option<Vec<u8>>) {
-///             extern "C" { pub fn ext_set_or_clear_version_1(key: u64); }
-///             // Same as above
-///         }
-///
-///         /// `key` holds the pointer and the length to the `data` slice.
-///         #[cfg(feature = "experimental-function")]
-///         pub fn gated_call(data: &[u8]) -> Vec<u8> {
-///             extern "C" { pub fn ext_gated_call_version_1(key: u64); }
-///             /// Same as above
-///             Vec::new()
-///         }
-///     }
-///
-///     /// The type is actually `ExchangeableFunction` (from `sp-runtime-interface`) and
-///     /// by default this is initialized to jump into the corresponding function in
-///     /// `extern_host_functions_impls`.
-///     ///
-///     /// This can be used to replace the implementation of the `call` function.
-///     /// Instead of calling into the host, the callee will automatically call the other
-///     /// implementation.
-///     ///
-///     /// To replace the implementation:
-///     ///
-///     /// `host_call.replace_implementation(some_other_impl)`
-///     pub static host_call: () = ();
-///     pub static host_set_or_clear: () = ();
-///     #[cfg(feature = "experimental-feature")]
-///     pub static gated_call: () = ();
-///
-///     pub fn call(data: &[u8]) -> Vec<u8> {
-///         // This is the actual call: `host_call.get()(data)`
-///         //
-///         // But that does not work for several reasons in this example, so we just return an
-///         // empty vector.
-///         Vec::new()
-///     }
-///
-///     pub fn set_or_clear(optional: Option<Vec<u8>>) {
-///         // Same as above
-///     }
-///
-///     #[cfg(feature = "experimental-feature")]
-///     pub fn gated_call(data: &[u8]) -> Vec<u8> {
-///         // Same as above
-///         Vec::new()
-///     }
-/// }
-/// ```
-///
 /// # Argument and return types
 ///
 /// Every argument type and return type must be wrapped in a marker newtype specifying the
@@ -320,7 +165,7 @@ pub use subsoil::std;
 ///
 /// `Identity` means that the value is passed as-is directly in a bit-exact fashion.
 ///
-/// You can find the strategy wrapper types in the [`crate::pass_by`] module.
+/// You can find the strategy wrapper types in the [`pass_by`] module.
 ///
 /// The newtype wrappers are automatically stripped away when the function is called
 /// and applied when the function returns by the `runtime_interface` macro.
@@ -345,13 +190,15 @@ pub use subsoil_runtime_interface_proc_macro::runtime_interface;
 
 #[doc(hidden)]
 #[cfg(not(substrate_runtime))]
-pub use subsoil::externalities::{
+pub use crate::externalities::{
 	set_and_run_with_externalities, with_externalities, ExtensionStore, Externalities,
 	ExternalitiesExt,
 };
 
 #[doc(hidden)]
 pub use codec;
+
+pub use alloc;
 
 #[cfg(all(any(target_arch = "riscv32", target_arch = "riscv64"), substrate_runtime))]
 pub mod polkavm;
@@ -375,9 +222,9 @@ pub use util::{pack_ptr_and_len, unpack_ptr_and_len};
 pub trait RIType: Sized {
 	/// The raw FFI type that is used to pass `Self` through the host <-> runtime boundary.
 	#[cfg(not(substrate_runtime))]
-	type FFIType: subsoil::wasm_interface::IntoValue
-		+ subsoil::wasm_interface::TryFromValue
-		+ subsoil::wasm_interface::WasmTy;
+	type FFIType: crate::wasm_interface::IntoValue
+		+ crate::wasm_interface::TryFromValue
+		+ crate::wasm_interface::WasmTy;
 
 	#[cfg(substrate_runtime)]
 	type FFIType;
@@ -392,4 +239,4 @@ pub type Pointer<T> = *mut T;
 
 /// A raw pointer that can be used in a runtime interface function signature.
 #[cfg(not(substrate_runtime))]
-pub type Pointer<T> = subsoil::wasm_interface::Pointer<T>;
+pub type Pointer<T> = crate::wasm_interface::Pointer<T>;

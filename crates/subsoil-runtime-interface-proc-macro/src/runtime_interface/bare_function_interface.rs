@@ -31,8 +31,9 @@
 
 use crate::utils::{
 	create_exchangeable_host_function_ident, create_function_ident_with_version,
-	generate_crate_access, get_function_argument_names, get_function_arguments,
-	get_runtime_interface, host_inner_return_ty, pat_ty_to_host_inner, RuntimeInterfaceFunction,
+	generate_crate_access, generate_subsoil_crate_access, get_function_argument_names,
+	get_function_arguments, get_runtime_interface, host_inner_return_ty, pat_ty_to_host_inner,
+	RuntimeInterfaceFunction,
 };
 
 use syn::{
@@ -199,11 +200,12 @@ fn function_std_impl(
 	let attrs = method.attrs.iter().filter(|a| !a.path().is_ident("version"));
 	// Don't make the function public accessible when this is a wasm only interface.
 	let call_to_trait = generate_call_to_trait(trait_name, method, version, is_wasm_only);
+	let subsoil_ = generate_subsoil_crate_access();
 	let call_to_trait = if !tracing {
 		call_to_trait
 	} else {
 		parse_quote!(
-			#crate_::subsoil::within_span! { #crate_::subsoil::tracing::trace_span!(#function_name_str);
+			#subsoil_::within_span! { #subsoil_::tracing::trace_span!(#function_name_str);
 				#call_to_trait
 			}
 		)

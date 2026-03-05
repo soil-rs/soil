@@ -32,8 +32,8 @@ See `docs/specs/merge.md` for the full spec.
 - [x] 12. `soil-core`
 
 ### Tier 4
-- [ ] 13. `soil-allocator`
-- [ ] 14. `soil-keystore`
+- [x] 13. `soil-allocator`
+- [x] 14. `soil-keystore`
 
 ### Tier 5 — Former SCC
 - [ ] 15. `soil-runtime-interface`

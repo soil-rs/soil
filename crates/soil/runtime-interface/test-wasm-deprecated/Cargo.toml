@@ -18,7 +18,6 @@ targets = ["x86_64-unknown-linux-gnu"]
 [dependencies]
 subsoil = { workspace = true }
 soil-io = { workspace = true }
-soil-runtime-interface = { workspace = true }
 
 [build-dependencies]
 substrate-wasm-builder = { optional = true, workspace = true, default-features = true }
@@ -28,6 +27,5 @@ default = ["std"]
 std = [
 	"subsoil/std",
 	"soil-io/std",
-	"soil-runtime-interface/std",
 	"substrate-wasm-builder",
 ]

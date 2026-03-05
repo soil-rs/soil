@@ -4702,7 +4702,6 @@ dependencies = [
  "soil-npos-elections",
  "soil-offchain",
  "soil-runtime",
- "soil-runtime-interface",
  "soil-session",
  "soil-staking",
  "soil-state-machine",
@@ -4718,7 +4717,6 @@ dependencies = [
  "subsoil-crypto-hashing",
  "subsoil-crypto-hashing-proc-macro",
  "subsoil-debug-derive",
- "subsoil-runtime-interface-proc-macro",
  "subsoil-tracing-proc-macro",
  "subsoil-version-proc-macro",
  "substrate-bip39",
@@ -9369,7 +9367,6 @@ dependencies = [
  "parity-scale-codec",
  "scale-info",
  "soil-runtime",
- "soil-runtime-interface",
  "soil-state-machine",
  "soil-test-primitives",
  "soil-trie",
@@ -9843,7 +9840,7 @@ dependencies = [
  "ark-ff 0.5.0",
  "ark-scale",
  "ark-std 0.5.0",
- "soil-runtime-interface",
+ "subsoil",
 ]
 
 [[package]]
@@ -9866,7 +9863,6 @@ dependencies = [
  "soil-io",
  "soil-maybe-compressed-blob",
  "soil-runtime",
- "soil-runtime-interface",
  "soil-runtime-test",
  "soil-state-machine",
  "soil-trie",
@@ -9914,7 +9910,6 @@ dependencies = [
  "rustix 1.1.4",
  "soil-executor-common",
  "soil-io",
- "soil-runtime-interface",
  "soil-runtime-test",
  "subsoil",
  "tempfile",
@@ -9974,7 +9969,6 @@ dependencies = [
  "polkavm-derive",
  "rustversion",
  "secp256k1 0.28.2",
- "soil-runtime-interface",
  "soil-state-machine",
  "soil-trie",
  "subsoil",
@@ -10470,30 +10464,11 @@ dependencies = [
 ]
 
 [[package]]
-name = "soil-runtime-interface"
-version = "24.0.0"
-dependencies = [
- "bytes",
- "impl-trait-for-tuples",
- "parity-scale-codec",
- "polkavm-derive",
- "rustversion",
- "soil-io",
- "soil-state-machine",
- "sp-runtime-interface-test-wasm",
- "static_assertions",
- "subsoil",
- "subsoil-runtime-interface-proc-macro",
- "trybuild",
-]
-
-[[package]]
 name = "soil-runtime-test"
 version = "2.0.0"
 dependencies = [
  "soil-io",
  "soil-runtime",
- "soil-runtime-interface",
  "subsoil",
  "substrate-wasm-builder",
 ]
@@ -10681,7 +10656,6 @@ dependencies = [
  "soil-api",
  "soil-application-crypto",
  "soil-runtime",
- "soil-runtime-interface",
  "subsoil",
  "subsoil-crypto-hashing",
  "thiserror 1.0.69",
@@ -10968,7 +10942,6 @@ dependencies = [
  "soil-executor-common",
  "soil-io",
  "soil-runtime",
- "soil-runtime-interface",
  "soil-state-machine",
  "sp-runtime-interface-test-wasm",
  "sp-runtime-interface-test-wasm-deprecated",
@@ -10983,7 +10956,6 @@ version = "2.0.0"
 dependencies = [
  "bytes",
  "soil-io",
- "soil-runtime-interface",
  "subsoil",
  "substrate-wasm-builder",
 ]
@@ -10993,7 +10965,6 @@ name = "sp-runtime-interface-test-wasm-deprecated"
 version = "2.0.0"
 dependencies = [
  "soil-io",
- "soil-runtime-interface",
  "subsoil",
  "substrate-wasm-builder",
 ]
@@ -11337,6 +11308,7 @@ dependencies = [
  "blake2 0.10.6",
  "bounded-collections 0.3.2",
  "bs58",
+ "bytes",
  "criterion",
  "docify",
  "dyn-clone",
@@ -11360,10 +11332,12 @@ dependencies = [
  "parity-scale-codec",
  "parking_lot 0.12.5",
  "paste",
+ "polkavm-derive",
  "primitive-types",
  "rand 0.8.5",
  "ref-cast",
  "regex",
+ "rustversion",
  "scale-info",
  "schemars",
  "schnorrkel 0.11.5",
@@ -11378,11 +11352,13 @@ dependencies = [
  "static_assertions",
  "subsoil-crypto-hashing",
  "subsoil-debug-derive",
+ "subsoil-runtime-interface-proc-macro",
  "substrate-bip39",
  "thiserror 1.0.69",
  "tracing",
  "tracing-core",
  "tracing-subscriber",
+ "trybuild",
  "w3f-bls",
  "wasmtime",
  "zeroize",
@@ -12877,7 +12853,6 @@ dependencies = [
  "soil-client-db",
  "soil-io",
  "soil-runtime",
- "soil-runtime-interface",
  "soil-state-machine",
  "static_assertions",
  "subsoil",
@@ -13755,7 +13730,6 @@ dependencies = [
  "scale-info",
  "soil-io",
  "soil-runtime",
- "soil-runtime-interface",
  "soil-staking",
  "subsoil",
  "topsoil-bags-list",

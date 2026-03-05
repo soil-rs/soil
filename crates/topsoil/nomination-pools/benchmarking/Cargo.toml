@@ -32,8 +32,8 @@ topsoil-staking = { workspace = true }
 
 # Substrate Primitives
 soil-runtime = { workspace = true }
-soil-runtime-interface = { workspace = true }
 soil-staking = { workspace = true }
+subsoil = { workspace = true }
 
 [dev-dependencies]
 topsoil-balances = { workspace = true }
@@ -59,7 +59,6 @@ std = [
 	"scale-info/std",
 	"subsoil/std",
 	"soil-io/std",
-	"soil-runtime-interface/std",
 	"soil-runtime/std",
 	"soil-staking/std",
 ]

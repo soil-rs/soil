@@ -23,7 +23,6 @@ parking_lot = { workspace = true, default-features = true, optional = true}
 # to exactly the same version as used by wasmtime!
 anyhow = { workspace = true, optional = true}
 soil-executor-common = { workspace = true, default-features = true, optional = true}
-soil-runtime-interface = { workspace = true, default-features = true, optional = true}
 subsoil = { features = ["wasm-interface-wasmtime"], workspace = true, default-features = true, optional = true}
 wasmtime = { features = [
 	"addr2line",
@@ -54,11 +53,9 @@ std = [
 	"parking_lot",
 	"rustix",
 	"soil-executor-common",
-	"soil-runtime-interface",
 	"subsoil",
 	"wasmtime",
 	"soil-executor-common/std",
-	"soil-runtime-interface/std",
 	"subsoil/std",
 ]
 

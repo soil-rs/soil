@@ -379,7 +379,7 @@ mod output_validity {
 	use super::WASM_PAGE_SIZE;
 
 	#[cfg(not(feature = "std"))]
-	use soil_runtime_interface::pack_ptr_and_len;
+	use subsoil::runtime_interface::pack_ptr_and_len;
 
 	// Returns a huge len. It should result in an error, and not an allocation.
 	#[no_mangle]

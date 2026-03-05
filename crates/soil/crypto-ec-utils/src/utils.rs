@@ -34,7 +34,7 @@ use ark_scale::{
 	scale::{Decode, Encode, Output},
 	ArkScaleMaxEncodedLen, MaxEncodedLen,
 };
-use soil_runtime_interface::RIType;
+use subsoil::runtime_interface::RIType;
 
 /// Unexpected failure message.
 pub const FAIL_MSG: &str = "Unexpected failure, bad arguments, broken host/runtime contract; qed";
@@ -97,11 +97,11 @@ impl RIType for HostcallResult {
 }
 
 #[cfg(not(substrate_runtime))]
-impl soil_runtime_interface::host::IntoFFIValue for HostcallResult {
+impl subsoil::runtime_interface::host::IntoFFIValue for HostcallResult {
 	fn into_ffi_value(
 		value: Self::Inner,
-		_context: &mut dyn soil_runtime_interface::wasm_interface::FunctionContext,
-	) -> soil_runtime_interface::wasm_interface::Result<Self::FFIType> {
+		_context: &mut dyn subsoil::runtime_interface::wasm_interface::FunctionContext,
+	) -> subsoil::runtime_interface::wasm_interface::Result<Self::FFIType> {
 		Ok(match value {
 			Ok(()) => 0,
 			Err(e) => e as u32,
@@ -110,7 +110,7 @@ impl soil_runtime_interface::host::IntoFFIValue for HostcallResult {
 }
 
 #[cfg(substrate_runtime)]
-impl soil_runtime_interface::wasm::FromFFIValue for HostcallResult {
+impl subsoil::runtime_interface::wasm::FromFFIValue for HostcallResult {
 	fn from_ffi_value(arg: Self::FFIType) -> Self::Inner {
 		match arg {
 			0 => Ok(()),

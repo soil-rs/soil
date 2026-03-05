@@ -25,7 +25,7 @@ use soil_io::hashing::blake2_256;
 use soil_runtime::{
 	traits::TrailingZeroInput, transaction_validity::TransactionValidityError, DispatchError,
 };
-use soil_runtime_interface::pass_by::{
+use subsoil::runtime_interface::pass_by::{
 	AllocateAndReturnByCodec, AllocateAndReturnPointer, PassFatPointerAndDecode,
 	PassFatPointerAndRead,
 };
@@ -268,7 +268,7 @@ pub fn current_time() -> u128 {
 }
 
 /// Interface that provides functions for benchmarking the runtime.
-#[soil_runtime_interface::runtime_interface]
+#[subsoil::runtime_interface::runtime_interface]
 pub trait Benchmarking {
 	/// Get the number of nanoseconds passed since the UNIX epoch, as u128 le-bytes.
 	///

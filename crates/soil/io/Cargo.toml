@@ -22,7 +22,6 @@ bytes = { workspace = true }
 codec = { features = ["bytes"], workspace = true }
 secp256k1 = { features = ["global-context", "recovery"], optional = true, workspace = true, default-features = true }
 subsoil-crypto-hashing = { workspace = true }
-soil-runtime-interface = { workspace = true }
 soil-state-machine = { optional = true, workspace = true }
 subsoil = { workspace = true }
 soil-trie = { optional = true, workspace = true }
@@ -57,7 +56,6 @@ std = [
 	"secp256k1/std",
 	"subsoil/std",
 	"subsoil-crypto-hashing/std",
-	"soil-runtime-interface/std",
 	"soil-state-machine/std",
 	"soil-trie/std",
 	"tracing-core/std",

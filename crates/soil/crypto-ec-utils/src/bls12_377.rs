@@ -21,7 +21,7 @@ use crate::utils::{self, HostcallResult, FAIL_MSG};
 use alloc::vec::Vec;
 use ark_bls12_377_ext::CurveHooks;
 use ark_ec::{pairing::Pairing, AffineRepr, CurveGroup};
-use soil_runtime_interface::{
+use subsoil::runtime_interface::{
 	pass_by::{PassFatPointerAndRead, PassFatPointerAndReadWrite, PassFatPointerAndWrite},
 	runtime_interface,
 };

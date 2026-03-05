@@ -25,7 +25,6 @@ soil-api = { workspace = true }
 soil-application-crypto = { workspace = true }
 subsoil-crypto-hashing = { workspace = true }
 soil-runtime = { workspace = true }
-soil-runtime-interface = { workspace = true }
 thiserror = { optional = true, workspace = true }
 
 # ECIES dependencies
@@ -56,7 +55,6 @@ std = [
 	"soil-application-crypto/std",
 	"subsoil/std",
 	"subsoil-crypto-hashing/std",
-	"soil-runtime-interface/std",
 	"soil-runtime/std",
 	"thiserror",
 	"x25519-dalek",

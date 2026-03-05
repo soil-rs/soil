@@ -160,30 +160,43 @@ impl RuntimeInterface {
 	}
 }
 
-/// Generates the include for the runtime-interface crate.
+/// Generates the include for the subsoil crate.
 pub fn generate_runtime_interface_include() -> TokenStream {
-	match crate_name("soil-runtime-interface") {
-		Ok(FoundCrate::Itself) => quote!(),
-		Ok(FoundCrate::Name(crate_name)) => {
-			let crate_name = Ident::new(&crate_name, Span::call_site());
-			quote!(
-				#[doc(hidden)]
-				extern crate #crate_name as proc_macro_runtime_interface;
-			)
-		},
-		Err(e) => {
-			let err = Error::new(Span::call_site(), e).to_compile_error();
-			quote!( #err )
-		},
+	if env::var("CARGO_PKG_NAME").unwrap() == "subsoil" {
+		quote!()
+	} else {
+		match crate_name("subsoil") {
+			Ok(FoundCrate::Itself) => quote!(),
+			Ok(FoundCrate::Name(crate_name)) => {
+				let crate_name = Ident::new(&crate_name, Span::call_site());
+				quote!(
+					#[doc(hidden)]
+					extern crate #crate_name as proc_macro_subsoil;
+				)
+			},
+			Err(e) => {
+				let err = Error::new(Span::call_site(), e).to_compile_error();
+				quote!( #err )
+			},
+		}
 	}
 }
 
-/// Generates the access to the `sp-runtime-interface` crate.
+/// Generates the access to the `subsoil::runtime_interface` module.
 pub fn generate_crate_access() -> TokenStream {
-	if env::var("CARGO_PKG_NAME").unwrap() == "soil-runtime-interface" {
-		quote!(soil_runtime_interface)
+	if env::var("CARGO_PKG_NAME").unwrap() == "subsoil" {
+		quote!(crate::runtime_interface)
 	} else {
-		quote!(proc_macro_runtime_interface)
+		quote!(proc_macro_subsoil::runtime_interface)
+	}
+}
+
+/// Generates the access to the `subsoil` crate root (for within_span!, tracing, etc.).
+pub fn generate_subsoil_crate_access() -> TokenStream {
+	if env::var("CARGO_PKG_NAME").unwrap() == "subsoil" {
+		quote!(crate)
+	} else {
+		quote!(proc_macro_subsoil)
 	}
 }
 

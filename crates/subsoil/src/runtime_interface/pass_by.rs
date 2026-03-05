@@ -18,19 +18,19 @@
 //! Provides host <-> runtime FFI marshalling strategy newtype wrappers
 //! for defining runtime interfaces.
 
-use crate::{
+use super::{
 	util::{pack_ptr_and_len, unpack_ptr_and_len},
 	RIType,
 };
 
 #[cfg(not(substrate_runtime))]
-use crate::host::*;
+use super::host::*;
 
 #[cfg(substrate_runtime)]
-use crate::wasm::*;
+use super::wasm::*;
 
 #[cfg(not(substrate_runtime))]
-use subsoil::wasm_interface::{FunctionContext, Pointer, Result};
+use crate::wasm_interface::{FunctionContext, Pointer, Result};
 
 #[cfg(not(substrate_runtime))]
 use alloc::{format, string::String};

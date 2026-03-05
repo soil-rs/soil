@@ -29,7 +29,6 @@ soil-api = { workspace = true }
 soil-application-crypto = { workspace = true }
 soil-io = { workspace = true }
 soil-runtime = { workspace = true }
-soil-runtime-interface = { workspace = true }
 subsoil = { workspace = true }
 static_assertions = { workspace = true, default-features = true }
 
@@ -54,7 +53,6 @@ std = [
 	"soil-application-crypto/std",
 	"subsoil/std",
 	"soil-io/std",
-	"soil-runtime-interface/std",
 	"soil-runtime/std",
 	"soil-state-machine/std",
 ]

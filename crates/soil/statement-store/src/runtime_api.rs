@@ -21,7 +21,7 @@ use crate::{Hash, Statement, Topic};
 use alloc::vec::Vec;
 use codec::{Decode, Encode};
 use scale_info::TypeInfo;
-use soil_runtime_interface::{
+use subsoil::runtime_interface::{
 	pass_by::{
 		AllocateAndReturnByCodec, PassFatPointerAndDecode, PassFatPointerAndDecodeSlice,
 		PassPointerAndRead, PassPointerAndReadCopy, ReturnAs,

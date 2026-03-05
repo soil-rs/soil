@@ -760,7 +760,7 @@ impl<D: NativeExecutionDispatch> subsoil::core::traits::ReadRuntimeVersion
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use soil_runtime_interface::{pass_by::PassFatPointerAndRead, runtime_interface};
+	use subsoil::runtime_interface::{pass_by::PassFatPointerAndRead, runtime_interface};
 
 	#[runtime_interface]
 	trait MyInterface {

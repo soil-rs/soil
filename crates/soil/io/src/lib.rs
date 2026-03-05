@@ -21,7 +21,7 @@
 //! In other context, such interfaces are referred to as "**host functions**".
 //!
 //! Each set of host functions are defined with an instance of the
-//! [`soil_runtime_interface::runtime_interface`] macro.
+//! [`subsoil::runtime_interface::runtime_interface`] macro.
 //!
 //! Most notably, this crate contains host functions for:
 //!
@@ -113,7 +113,7 @@ use subsoil::core::{bls381, ecdsa_bls381};
 #[cfg(not(substrate_runtime))]
 use soil_trie::{LayoutV0, LayoutV1, TrieConfiguration};
 
-use soil_runtime_interface::{
+use subsoil::runtime_interface::{
 	pass_by::{
 		AllocateAndReturnByCodec, AllocateAndReturnFatPointer, AllocateAndReturnPointer, PassAs,
 		PassFatPointerAndDecode, PassFatPointerAndDecodeSlice, PassFatPointerAndRead,

@@ -21,7 +21,7 @@
 
 extern crate alloc;
 
-use soil_runtime_interface::{
+use subsoil::runtime_interface::{
 	pass_by::{
 		AllocateAndReturnByCodec, AllocateAndReturnFatPointer, AllocateAndReturnPointer, PassAs,
 		PassFatPointerAndDecode, PassFatPointerAndDecodeSlice, PassFatPointerAndRead,

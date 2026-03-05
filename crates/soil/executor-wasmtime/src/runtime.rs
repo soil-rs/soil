@@ -32,7 +32,7 @@ use soil_executor_common::{
 	util::checked_range,
 	wasm_runtime::{HeapAllocStrategy, WasmInstance, WasmModule},
 };
-use soil_runtime_interface::unpack_ptr_and_len;
+use subsoil::runtime_interface::unpack_ptr_and_len;
 use subsoil::wasm_interface::{HostFunctions, Pointer, WordSize};
 use std::{
 	path::{Path, PathBuf},

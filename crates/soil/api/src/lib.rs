@@ -110,7 +110,7 @@ pub mod __private {
 	pub use soil_version::{create_apis_vec, ApiId, ApisVec, RuntimeVersion};
 
 	#[cfg(all(any(target_arch = "riscv32", target_arch = "riscv64"), substrate_runtime))]
-	pub use soil_runtime_interface::polkavm::{polkavm_abi, polkavm_export};
+	pub use subsoil::runtime_interface::polkavm::{polkavm_abi, polkavm_export};
 }
 
 #[cfg(feature = "std")]

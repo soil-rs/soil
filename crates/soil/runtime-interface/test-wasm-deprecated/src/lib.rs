@@ -20,7 +20,7 @@
 #![cfg_attr(not(feature = "std"), no_std)]
 
 use subsoil::wasm_export_functions;
-use soil_runtime_interface::runtime_interface;
+use subsoil::runtime_interface::runtime_interface;
 
 // Include the WASM binary
 #[cfg(feature = "std")]
