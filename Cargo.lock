@@ -4892,8 +4892,6 @@ dependencies = [
  "topsoil-election-provider-support",
  "topsoil-election-provider-support-benchmarking",
  "topsoil-elections-phragmen",
- "topsoil-example-mbm",
- "topsoil-example-tasks",
  "topsoil-executive",
  "topsoil-fast-unstake",
  "topsoil-glutton",
@@ -4907,7 +4905,6 @@ dependencies = [
  "topsoil-message-queue",
  "topsoil-meta-tx",
  "topsoil-metadata-hash-extension",
- "topsoil-migrations",
  "topsoil-mixnet",
  "topsoil-mmr",
  "topsoil-multi-asset-bounties",
@@ -4942,7 +4939,6 @@ dependencies = [
  "topsoil-scored-pool",
  "topsoil-session",
  "topsoil-session-benchmarking",
- "topsoil-skip-feeless-payment",
  "topsoil-society",
  "topsoil-staking",
  "topsoil-staking-reward-curve",
@@ -6375,7 +6371,6 @@ dependencies = [
  "topsoil-asset-conversion",
  "topsoil-asset-conversion-tx-payment",
  "topsoil-metadata-hash-extension",
- "topsoil-skip-feeless-payment",
  "topsoil-system",
 ]
 
@@ -11768,7 +11763,6 @@ dependencies = [
  "topsoil-im-online",
  "topsoil-metadata-hash-extension",
  "topsoil-root-testing",
- "topsoil-skip-feeless-payment",
  "topsoil-sudo",
  "topsoil-support",
  "topsoil-support-procedural-tools",
@@ -13777,20 +13771,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "topsoil-example-mbm"
-version = "0.1.0"
-dependencies = [
- "log",
- "parity-scale-codec",
- "scale-info",
- "soil-io",
- "topsoil-benchmarking",
- "topsoil-migrations",
- "topsoil-support",
- "topsoil-system",
-]
-
-[[package]]
 name = "topsoil-example-offchain-worker"
 version = "28.0.0"
 dependencies = [
@@ -13838,38 +13818,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "topsoil-example-tasks"
-version = "1.0.0"
-dependencies = [
- "log",
- "parity-scale-codec",
- "scale-info",
- "soil-core",
- "soil-io",
- "soil-runtime",
- "topsoil-benchmarking",
- "topsoil-support",
- "topsoil-system",
-]
-
-[[package]]
-name = "topsoil-example-view-functions"
-version = "1.0.0"
-dependencies = [
- "frame-metadata",
- "log",
- "parity-scale-codec",
- "pretty_assertions",
- "scale-info",
- "soil-core",
- "soil-io",
- "soil-metadata-ir",
- "soil-runtime",
- "topsoil-support",
- "topsoil-system",
-]
-
-[[package]]
 name = "topsoil-examples"
 version = "4.0.0-dev"
 dependencies = [
@@ -13882,8 +13830,6 @@ dependencies = [
  "topsoil-example-offchain-worker",
  "topsoil-example-single-block-migrations",
  "topsoil-example-split",
- "topsoil-example-tasks",
- "topsoil-example-view-functions",
 ]
 
 [[package]]
@@ -14136,27 +14082,6 @@ dependencies = [
  "soil-transaction-pool",
  "substrate-test-runtime-client",
  "substrate-wasm-builder",
- "topsoil-support",
- "topsoil-system",
-]
-
-[[package]]
-name = "topsoil-migrations"
-version = "1.0.0"
-dependencies = [
- "docify",
- "impl-trait-for-tuples",
- "log",
- "parity-scale-codec",
- "pretty_assertions",
- "scale-info",
- "soil-core",
- "soil-io",
- "soil-runtime",
- "soil-tracing",
- "topsoil",
- "topsoil-benchmarking",
- "topsoil-executive",
  "topsoil-support",
  "topsoil-system",
 ]
@@ -14724,17 +14649,6 @@ dependencies = [
  "topsoil-support",
  "topsoil-system",
  "topsoil-timestamp",
-]
-
-[[package]]
-name = "topsoil-skip-feeless-payment"
-version = "3.0.0"
-dependencies = [
- "parity-scale-codec",
- "scale-info",
- "soil-runtime",
- "topsoil-support",
- "topsoil-system",
 ]
 
 [[package]]

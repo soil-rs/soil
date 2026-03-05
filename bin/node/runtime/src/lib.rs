@@ -365,7 +365,7 @@ impl topsoil_system::Config for Runtime {
 	type SystemWeightInfo = topsoil_system::weights::SubstrateWeight<Runtime>;
 	type SS58Prefix = ConstU16<42>;
 	type MaxConsumers = ConstU32<16>;
-	type MultiBlockMigrator = MultiBlockMigrations;
+	type MultiBlockMigrator = ();
 	type SingleBlockMigrations = Migrations;
 }
 

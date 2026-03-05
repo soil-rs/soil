@@ -1032,7 +1032,7 @@ mod tests {
 
 	#[test]
 	fn generate_chain_spec_with_full_config_works() {
-		let j = include_str!("../../../test-utils/runtime/res/default_genesis_config.json");
+		let j = include_str!("../../../../test-utils/runtime/res/default_genesis_config.json");
 		let output = ChainSpec::<()>::builder(
 			substrate_test_runtime::wasm_binary_unwrap().into(),
 			Default::default(),
@@ -1064,7 +1064,7 @@ mod tests {
 	#[test]
 	fn chain_spec_as_json_fails_with_invalid_config() {
 		let invalid_genesis_config = from_str::<Value>(include_str!(
-			"../../../test-utils/runtime/res/default_genesis_config_invalid_2.json"
+			"../../../../test-utils/runtime/res/default_genesis_config_invalid_2.json"
 		))
 		.unwrap();
 		let output = ChainSpec::<()>::builder(
@@ -1152,7 +1152,7 @@ mod tests {
 
 	#[test]
 	fn update_code_works_with_runtime_genesis_config() {
-		let j = include_str!("../../../test-utils/runtime/res/default_genesis_config.json");
+		let j = include_str!("../../../../test-utils/runtime/res/default_genesis_config.json");
 		let chain_spec = ChainSpec::<()>::builder(
 			substrate_test_runtime::wasm_binary_unwrap().into(),
 			Default::default(),
@@ -1175,7 +1175,7 @@ mod tests {
 
 	#[test]
 	fn update_code_works_for_raw() {
-		let j = include_str!("../../../test-utils/runtime/res/default_genesis_config.json");
+		let j = include_str!("../../../../test-utils/runtime/res/default_genesis_config.json");
 		let chain_spec = ChainSpec::<()>::builder(
 			substrate_test_runtime::wasm_binary_unwrap().into(),
 			Default::default(),
