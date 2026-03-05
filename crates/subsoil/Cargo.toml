@@ -1,0 +1,21 @@
+[package]
+name = "subsoil"
+version = "0.1.0"
+authors.workspace = true
+edition.workspace = true
+license.workspace = true
+homepage.workspace = true
+repository.workspace = true
+description = "Substrate primitives foundation crate"
+
+[lints]
+workspace = true
+
+[dependencies]
+subsoil-crypto-hashing = { workspace = true }
+
+[features]
+default = ["std"]
+std = [
+	"subsoil-crypto-hashing/std",
+]

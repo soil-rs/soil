@@ -9,6 +9,7 @@ repository = "https://github.com/soil-rs/soil"
 resolver = "2"
 
 members = [
+	"crates/subsoil",
 	"crates/soil/allocator",
 	"crates/soil/api",
 	"crates/subsoil-api-proc-macro",
@@ -559,6 +560,7 @@ soil-consensus-sassafras = { path = "crates/soil/consensus-sassafras", default-f
 soil-consensus-slots = { path = "crates/soil/consensus-slots", default-features = false }
 soil-core = { path = "crates/soil/core", default-features = false }
 soil-crypto-ec-utils = { default-features = false, path = "crates/soil/crypto-ec-utils" }
+subsoil = { path = "crates/subsoil", default-features = false }
 subsoil-crypto-hashing = { path = "crates/subsoil-crypto-hashing", default-features = false }
 subsoil-crypto-hashing-proc-macro = { path = "crates/subsoil-crypto-hashing-proc-macro", default-features = false }
 soil-database = { path = "crates/soil/database", default-features = false }
