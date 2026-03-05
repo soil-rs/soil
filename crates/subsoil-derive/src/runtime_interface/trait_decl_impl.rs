@@ -18,7 +18,7 @@
 //! Checks the trait declaration, makes the trait declaration module local, removes all method
 //! default implementations and implements the trait for `&mut dyn Externalities`.
 
-use crate::utils::{
+use super::utils::{
 	create_function_ident_with_version, generate_crate_access, get_function_argument_types,
 	get_runtime_interface,
 };
@@ -75,7 +75,7 @@ impl ToEssentialTraitDef {
 	fn process(&mut self, method: &TraitItemFn, version: u32) {
 		let mut folded = self.fold_trait_item_fn(method.clone());
 		folded.sig.ident = create_function_ident_with_version(&folded.sig.ident, version);
-		crate::utils::unpack_inner_types_in_signature(&mut folded.sig);
+		super::utils::unpack_inner_types_in_signature(&mut folded.sig);
 		self.methods.push(folded);
 	}
 
@@ -157,7 +157,7 @@ fn impl_trait_for_externalities(trait_def: &ItemTrait, is_wasm_only: bool) -> Re
 		let mut cloned = (*method).clone();
 		cloned.attrs.retain(|a| !a.path().is_ident("version"));
 		cloned.sig.ident = create_function_ident_with_version(&cloned.sig.ident, version);
-		crate::utils::unpack_inner_types_in_signature(&mut cloned.sig);
+		super::utils::unpack_inner_types_in_signature(&mut cloned.sig);
 		cloned
 	});
 

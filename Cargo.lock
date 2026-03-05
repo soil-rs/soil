@@ -4698,12 +4698,8 @@ dependencies = [
  "soil-transaction-storage-proof",
  "static_assertions",
  "subsoil",
- "subsoil-api-proc-macro",
  "subsoil-crypto-hashing",
- "subsoil-crypto-hashing-proc-macro",
- "subsoil-debug-derive",
- "subsoil-tracing-proc-macro",
- "subsoil-version-proc-macro",
+ "subsoil-derive",
  "substrate-bip39",
  "substrate-wasm-builder",
  "topsoil",
@@ -8455,7 +8451,7 @@ dependencies = [
  "soil-client-api",
  "soil-rpc",
  "subsoil",
- "subsoil-tracing-proc-macro",
+ "subsoil-derive",
  "thiserror 1.0.69",
  "tracing",
  "tracing-log",
@@ -9789,7 +9785,7 @@ dependencies = [
  "scale-info",
  "serde",
  "subsoil",
- "subsoil-debug-derive",
+ "subsoil-derive",
  "thiserror 1.0.69",
 ]
 
@@ -10939,12 +10935,8 @@ dependencies = [
  "ss58-registry",
  "static_assertions",
  "strum 0.26.3",
- "subsoil-api-proc-macro",
  "subsoil-crypto-hashing",
- "subsoil-crypto-hashing-proc-macro",
- "subsoil-debug-derive",
- "subsoil-runtime-interface-proc-macro",
- "subsoil-version-proc-macro",
+ "subsoil-derive",
  "substrate-bip39",
  "substrate-prometheus-endpoint",
  "substrate-test-utils",
@@ -10965,20 +10957,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "subsoil-api-proc-macro"
-version = "15.0.0"
-dependencies = [
- "Inflector",
- "assert_matches",
- "blake2 0.10.6",
- "expander",
- "proc-macro-crate 3.4.0",
- "proc-macro2",
- "quote",
- "syn 2.0.117",
-]
-
-[[package]]
 name = "subsoil-crypto-hashing"
 version = "0.1.0"
 dependencies = [
@@ -10988,60 +10966,25 @@ dependencies = [
  "digest 0.10.7",
  "sha2 0.10.9",
  "sha3",
- "subsoil-crypto-hashing-proc-macro",
+ "subsoil-derive",
  "twox-hash 1.6.3",
 ]
 
 [[package]]
-name = "subsoil-crypto-hashing-proc-macro"
+name = "subsoil-derive"
 version = "0.1.0"
 dependencies = [
- "quote",
- "subsoil-crypto-hashing",
- "syn 2.0.117",
-]
-
-[[package]]
-name = "subsoil-debug-derive"
-version = "14.0.0"
-dependencies = [
- "proc-macro-warning",
- "proc-macro2",
- "quote",
- "syn 2.0.117",
-]
-
-[[package]]
-name = "subsoil-runtime-interface-proc-macro"
-version = "17.0.0"
-dependencies = [
  "Inflector",
+ "assert_matches",
+ "blake2 0.10.6",
  "expander",
- "proc-macro-crate 3.4.0",
- "proc-macro2",
- "quote",
- "syn 2.0.117",
-]
-
-[[package]]
-name = "subsoil-tracing-proc-macro"
-version = "11.0.0"
-dependencies = [
- "proc-macro-crate 3.4.0",
- "proc-macro2",
- "quote",
- "syn 2.0.117",
-]
-
-[[package]]
-name = "subsoil-version-proc-macro"
-version = "13.0.0"
-dependencies = [
  "parity-scale-codec",
+ "proc-macro-crate 3.4.0",
  "proc-macro-warning",
  "proc-macro2",
  "quote",
  "subsoil",
+ "subsoil-crypto-hashing",
  "syn 2.0.117",
 ]
 
@@ -11204,7 +11147,7 @@ dependencies = [
  "soil-transaction-pool",
  "subsoil",
  "subsoil-crypto-hashing",
- "subsoil-debug-derive",
+ "subsoil-derive",
  "substrate-test-runtime-client",
  "substrate-wasm-builder",
  "topsoil-babe",
@@ -13684,8 +13627,7 @@ dependencies = [
  "soil-staking",
  "subsoil",
  "subsoil-crypto-hashing",
- "subsoil-crypto-hashing-proc-macro",
- "subsoil-debug-derive",
+ "subsoil-derive",
  "topsoil-support-procedural",
  "topsoil-system",
  "tt-call",

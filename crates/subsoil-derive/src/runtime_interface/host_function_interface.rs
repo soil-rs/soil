@@ -21,7 +21,7 @@
 //! The implementation of these host functions will be called on the host side from the Wasm
 //! executor. These implementations call the bare function interface.
 
-use crate::utils::{
+use super::utils::{
 	create_exchangeable_host_function_ident, create_function_ident_with_version,
 	create_host_function_ident, generate_crate_access, get_function_argument_names,
 	get_function_argument_names_and_types, get_function_argument_types, get_function_arguments,
@@ -84,7 +84,7 @@ fn generate_extern_host_function(
 	let crate_ = generate_crate_access();
 
 	let mut unpacked_sig = method.sig.clone();
-	crate::utils::unpack_inner_types_in_signature(&mut unpacked_sig);
+	super::utils::unpack_inner_types_in_signature(&mut unpacked_sig);
 	let unpacked_args = get_function_arguments(&unpacked_sig);
 	let unpacked_return_value = &unpacked_sig.output;
 
@@ -162,7 +162,7 @@ fn generate_extern_host_function(
 /// Generate the host exchangeable function for the given method.
 fn generate_exchangeable_host_function(method: &TraitItemFn) -> Result<TokenStream> {
 	let mut method = method.clone();
-	crate::utils::unpack_inner_types_in_signature(&mut method.sig);
+	super::utils::unpack_inner_types_in_signature(&mut method.sig);
 
 	let crate_ = generate_crate_access();
 	let arg_types = get_function_argument_types(&method.sig);

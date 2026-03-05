@@ -64,7 +64,7 @@ pub mod __private {
 	pub use serde;
 	pub use serde_json;
 	pub use subsoil::core::{Get, OpaqueMetadata, Void};
-	pub use subsoil_crypto_hashing_proc_macro;
+	pub use subsoil_derive;
 	pub use subsoil::inherents;
 	#[cfg(feature = "std")]
 	pub use subsoil::io::TestExternalities;

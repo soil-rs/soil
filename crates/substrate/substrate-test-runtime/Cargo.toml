@@ -33,7 +33,7 @@ soil-consensus-aura = { features = ["serde"], workspace = true }
 soil-consensus-babe = { features = ["serde"], workspace = true }
 soil-consensus-grandpa = { features = ["serde"], workspace = true }
 subsoil-crypto-hashing = { workspace = true }
-subsoil-debug-derive = { workspace = true, default-features = false }
+subsoil-derive = { workspace = true }
 soil-genesis-builder = { workspace = true }
 soil-offchain = { workspace = true }
 soil-session = { workspace = true }
@@ -90,7 +90,6 @@ std = [
 	"soil-consensus-babe/std",
 	"soil-consensus-grandpa/std",
 	"subsoil-crypto-hashing/std",
-	"subsoil-debug-derive/std",
 	"soil-genesis-builder/std",
 	"soil-offchain/std",
 	"soil-session/std",

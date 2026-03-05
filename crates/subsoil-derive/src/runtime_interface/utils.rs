@@ -381,11 +381,11 @@ pub fn host_inner_return_ty(ty: &syn::ReturnType) -> syn::ReturnType {
 }
 
 pub fn unpack_inner_types_in_signature(sig: &mut syn::Signature) {
-	sig.output = crate::utils::host_inner_return_ty(&sig.output);
+	sig.output = self::host_inner_return_ty(&sig.output);
 	for arg in sig.inputs.iter_mut() {
 		match arg {
 			syn::FnArg::Typed(ref mut pat_ty) => {
-				*pat_ty = crate::utils::pat_ty_to_host_inner(pat_ty.clone());
+				*pat_ty = self::pat_ty_to_host_inner(pat_ty.clone());
 			},
 			syn::FnArg::Receiver(..) => {},
 		}

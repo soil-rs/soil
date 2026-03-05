@@ -25,7 +25,7 @@ rand = { workspace = true, optional = true }
 rand_pcg = { workspace = true, optional = true }
 scale-info = { features = ["derive", "serde"], workspace = true }
 serde_json = { features = ["alloc", "arbitrary_precision"], workspace = true }
-subsoil-debug-derive = { workspace = true }
+subsoil-derive = { workspace = true }
 static_assertions = { workspace = true, default-features = true }
 
 # pallet-asset-conversion: turn on "num-traits" feature
@@ -145,8 +145,6 @@ topsoil-verify-signature = { workspace = true }
 topsoil-vesting = { workspace = true }
 topsoil-whitelist = { workspace = true }
 soil-chain-spec-derive = { workspace = true }
-subsoil-tracing-proc-macro = { workspace = true }
-subsoil-api-proc-macro = { workspace = true }
 subsoil = { workspace = true }
 soil-authority-discovery = { workspace = true }
 soil-block-builder = { workspace = true }
@@ -157,7 +155,6 @@ soil-consensus-grandpa = { workspace = true }
 soil-consensus-pow = { workspace = true }
 soil-consensus-slots = { workspace = true }
 subsoil-crypto-hashing = { workspace = true }
-subsoil-crypto-hashing-proc-macro = { workspace = true }
 soil-genesis-builder = { workspace = true }
 soil-mixnet = { workspace = true }
 soil-mmr-primitives = { workspace = true }
@@ -167,7 +164,6 @@ soil-staking = { workspace = true }
 soil-statement-store = { workspace = true }
 soil-transaction-pool = { workspace = true }
 soil-transaction-storage-proof = { workspace = true }
-subsoil-version-proc-macro = { workspace = true }
 substrate-bip39 = { workspace = true }
 
 # shared code between runtime and node
@@ -297,7 +293,6 @@ std = [
 	"rand?/std",
 	"scale-info/std",
 	"serde_json/std",
-	"subsoil-api-proc-macro/std",
 	"subsoil/std",
 	"soil-authority-discovery/std",
 	"soil-block-builder/std",
@@ -308,7 +303,6 @@ std = [
 	"soil-consensus-pow/std",
 	"soil-consensus-slots/std",
 	"subsoil-crypto-hashing/std",
-	"subsoil-debug-derive/std",
 	"soil-genesis-builder/std",
 	"soil-mixnet/std",
 	"soil-mmr-primitives/std",

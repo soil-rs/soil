@@ -15,7 +15,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::utils::{
+use super::utils::{
 	extract_block_type_from_trait_path, extract_impl_trait,
 	extract_parameter_names_types_and_borrows, generate_crate_access, return_type_extract_type,
 	AllowSelfRefInParameters, RequireQualifiedTraitPath,

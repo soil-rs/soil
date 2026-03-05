@@ -29,7 +29,7 @@
 //! function per trait method. Each bare function contains both implementations. The implementations
 //! are feature-gated, so that one is compiled for the native and the other for the wasm side.
 
-use crate::utils::{
+use super::utils::{
 	create_exchangeable_host_function_ident, create_function_ident_with_version,
 	generate_crate_access, generate_subsoil_crate_access, get_function_argument_names,
 	get_function_arguments, get_runtime_interface, host_inner_return_ty, pat_ty_to_host_inner,
@@ -98,7 +98,7 @@ fn function_no_std_impl(
 ) -> Result<TokenStream> {
 	let should_trap_on_return = method.should_trap_on_return();
 	let mut method = (*method).clone();
-	crate::utils::unpack_inner_types_in_signature(&mut method.sig);
+	super::utils::unpack_inner_types_in_signature(&mut method.sig);
 
 	let function_name = &method.sig.ident;
 	let host_function_name = create_exchangeable_host_function_ident(&method.sig.ident);
