@@ -34,7 +34,7 @@ use soil_api::{
 };
 use soil_blockchain::{ApplyExtrinsicFailed, Error, HeaderBackend};
 use soil_core::traits::CallContext;
-use soil_externalities::Extensions;
+use subsoil::externalities::Extensions;
 use soil_runtime::{
 	legacy,
 	traits::{Block as BlockT, Hash, HashingFor, Header as HeaderT, NumberFor, One},

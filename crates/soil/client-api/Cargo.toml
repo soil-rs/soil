@@ -30,7 +30,6 @@ soil-api = { workspace = true, default-features = true, optional = true}
 soil-blockchain = { workspace = true, default-features = true, optional = true}
 soil-consensus = { workspace = true, default-features = true, optional = true}
 soil-core = { workspace = true, optional = true}
-soil-externalities = { workspace = true, default-features = true, optional = true}
 subsoil = { workspace = true, default-features = true, optional = true}
 soil-runtime = { workspace = true, optional = true}
 soil-state-machine = { workspace = true, default-features = true, optional = true}
@@ -51,7 +50,6 @@ std = [
 	"soil-core",
 	"soil-executor",
 	"subsoil",
-	"soil-externalities",
 	"soil-runtime",
 	"soil-state-machine",
 	"soil-transaction-pool-api",
@@ -60,10 +58,9 @@ std = [
 	"soil-api/std",
 	"soil-core/std",
 	"soil-executor/std",
-	"soil-externalities/std",
+	"subsoil/std",
 	"soil-runtime/std",
 	"soil-state-machine/std",
-	"subsoil/std",
 	"soil-transaction-pool-api/std",
 	"soil-trie/std",
 	"soil-utils/std",

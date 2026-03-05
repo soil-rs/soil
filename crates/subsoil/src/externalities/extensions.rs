@@ -22,7 +22,7 @@
 //!
 //! It is required that each extension implements the [`Extension`] trait.
 
-use crate::Error;
+use super::Error;
 use alloc::{
 	boxed::Box,
 	collections::btree_map::{BTreeMap, Entry},
@@ -54,7 +54,7 @@ impl TransactionType {
 	}
 }
 
-/// Marker trait for types that should be registered as [`Externalities`](crate::Externalities)
+/// Marker trait for types that should be registered as [`Externalities`](crate::externalities::Externalities)
 /// extension.
 ///
 /// As extensions are stored as `Box<Any>`, this trait should give more confidence that the correct
@@ -113,7 +113,7 @@ impl Extension for Box<dyn Extension> {
 ///
 /// # Example
 /// ```
-/// # use soil_externalities::decl_extension;
+/// # use subsoil::decl_extension;
 /// decl_extension! {
 ///     /// Some test extension
 ///     struct TestExt(String);
@@ -123,7 +123,7 @@ impl Extension for Box<dyn Extension> {
 /// The [`Extension`] trait provides hooks that are called when starting, committing or rolling back
 /// a transaction. These can be implemented with the macro as well:
 /// ```
-/// # use soil_externalities::{decl_extension, TransactionType};
+/// # use subsoil::{decl_extension, externalities::TransactionType};
 /// decl_extension! {
 ///     /// Some test extension
 ///     struct TestExtWithCallback(String);
@@ -154,7 +154,7 @@ macro_rules! decl_extension {
 		$( #[ $attr ] )*
 		$vis struct $ext_name (pub $inner);
 
-		impl $crate::Extension for $ext_name {
+		impl $crate::externalities::Extension for $ext_name {
 			fn as_mut_any(&mut self) -> &mut dyn core::any::Any {
 				self
 			}
@@ -205,7 +205,7 @@ macro_rules! decl_extension {
 		$( #[ $attr ] )*
 		$vis struct $ext_name;
 
-		impl $crate::Extension for $ext_name {
+		impl $crate::externalities::Extension for $ext_name {
 			fn as_mut_any(&mut self) -> &mut dyn core::any::Any {
 				self
 			}
@@ -227,12 +227,12 @@ macro_rules! decl_extension {
 
 /// Something that provides access to the [`Extensions`] store.
 ///
-/// This is a super trait of the [`Externalities`](crate::Externalities).
+/// This is a super trait of the [`Externalities`](crate::externalities::Externalities).
 pub trait ExtensionStore {
 	/// Tries to find a registered extension by the given `type_id` and returns it as a `&mut dyn
 	/// Any`.
 	///
-	/// It is advised to use [`ExternalitiesExt::extension`](crate::ExternalitiesExt::extension)
+	/// It is advised to use [`ExternalitiesExt::extension`](super::ExternalitiesExt::extension)
 	/// instead of this function to get type system support and automatic type downcasting.
 	fn extension_by_type_id(&mut self, type_id: TypeId) -> Option<&mut dyn Any>;
 

@@ -252,7 +252,7 @@ impl<Block: BlockT, Client: CallApiAt<Block>> CallApiAt<Block> for ChainHeadMock
 	fn initialize_extensions(
 		&self,
 		at: <Block as BlockT>::Hash,
-		extensions: &mut soil_externalities::Extensions,
+		extensions: &mut subsoil::externalities::Extensions,
 	) -> Result<(), soil_api::ApiError> {
 		self.client.initialize_extensions(at, extensions)
 	}

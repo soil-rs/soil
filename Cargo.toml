@@ -48,7 +48,6 @@ members = [
 	"crates/soil/executor-common",
 	"crates/soil/executor-polkavm",
 	"crates/soil/executor-wasmtime",
-	"crates/soil/externalities",
 	"crates/soil/genesis-builder",
 	"crates/soil/informant",
 	"crates/soil/inherents",
@@ -552,7 +551,6 @@ subsoil = { path = "crates/subsoil", default-features = false }
 subsoil-crypto-hashing = { path = "crates/subsoil-crypto-hashing", default-features = false }
 subsoil-crypto-hashing-proc-macro = { path = "crates/subsoil-crypto-hashing-proc-macro", default-features = false }
 subsoil-debug-derive = { path = "crates/subsoil-debug-derive", default-features = false }
-soil-externalities = { path = "crates/soil/externalities", default-features = false }
 soil-genesis-builder = { path = "crates/soil/genesis-builder", default-features = false }
 soil-inherents = { path = "crates/soil/inherents", default-features = false }
 soil-io = { path = "crates/soil/io", default-features = false }

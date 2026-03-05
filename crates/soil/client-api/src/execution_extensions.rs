@@ -24,7 +24,7 @@
 
 use parking_lot::RwLock;
 use soil_core::traits::{ReadRuntimeVersion, ReadRuntimeVersionExt};
-use soil_externalities::{Extension, Extensions};
+use subsoil::externalities::{Extension, Extensions};
 use soil_runtime::traits::{Block as BlockT, NumberFor};
 use std::{marker::PhantomData, sync::Arc};
 

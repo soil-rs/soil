@@ -35,7 +35,7 @@ use soil_core::{
 		StateVersion, Storage,
 	},
 };
-use soil_externalities::{Extension, ExtensionStore, Extensions};
+use subsoil::externalities::{Extension, ExtensionStore, Extensions};
 use soil_trie::{recorder::Recorder, PrefixedMemoryDB, StorageProof};
 
 /// Simple HashMap-based Externalities impl.
@@ -250,7 +250,7 @@ where
 	/// Returns the result of the given closure.
 	pub fn execute_with<R>(&mut self, execute: impl FnOnce() -> R) -> R {
 		let mut ext = self.ext();
-		soil_externalities::set_and_run_with_externalities(&mut ext, execute)
+		subsoil::externalities::set_and_run_with_externalities(&mut ext, execute)
 	}
 
 	/// Execute the given closure while `self`, with `proving_backend` as backend, is set as
@@ -265,7 +265,7 @@ where
 		let mut proving_ext =
 			Ext::new(&mut self.overlay, &proving_backend, Some(&mut self.extensions));
 
-		let outcome = soil_externalities::set_and_run_with_externalities(&mut proving_ext, execute);
+		let outcome = subsoil::externalities::set_and_run_with_externalities(&mut proving_ext, execute);
 		let proof = proving_backend.extract_proof().expect("Failed to extract storage proof");
 
 		(outcome, proof)
@@ -283,7 +283,7 @@ where
 		let mut proving_ext =
 			Ext::new(&mut self.overlay, &proving_backend, Some(&mut self.extensions));
 
-		soil_externalities::set_and_run_with_externalities(&mut proving_ext, execute)
+		subsoil::externalities::set_and_run_with_externalities(&mut proving_ext, execute)
 	}
 
 	/// Execute the given closure while `self` is set as externalities.
@@ -296,7 +296,7 @@ where
 	) -> Result<R, String> {
 		let mut ext = AssertUnwindSafe(self.ext());
 		std::panic::catch_unwind(move || {
-			soil_externalities::set_and_run_with_externalities(&mut *ext, f)
+			subsoil::externalities::set_and_run_with_externalities(&mut *ext, f)
 		})
 		.map_err(|e| format!("Closure panicked: {:?}", e))
 	}
@@ -361,7 +361,7 @@ where
 	}
 }
 
-impl<H> soil_externalities::ExtensionStore for TestExternalities<H>
+impl<H> subsoil::externalities::ExtensionStore for TestExternalities<H>
 where
 	H: Hasher,
 	H::Out: Ord + codec::Codec,
@@ -374,23 +374,23 @@ where
 		&mut self,
 		type_id: TypeId,
 		extension: Box<dyn Extension>,
-	) -> Result<(), soil_externalities::Error> {
+	) -> Result<(), subsoil::externalities::Error> {
 		self.extensions.register_with_type_id(type_id, extension)
 	}
 
 	fn deregister_extension_by_type_id(
 		&mut self,
 		type_id: TypeId,
-	) -> Result<(), soil_externalities::Error> {
+	) -> Result<(), subsoil::externalities::Error> {
 		if self.extensions.deregister(type_id) {
 			Ok(())
 		} else {
-			Err(soil_externalities::Error::ExtensionIsNotRegistered(type_id))
+			Err(subsoil::externalities::Error::ExtensionIsNotRegistered(type_id))
 		}
 	}
 }
 
-impl<H> soil_externalities::ExternalitiesExt for TestExternalities<H>
+impl<H> subsoil::externalities::ExternalitiesExt for TestExternalities<H>
 where
 	H: Hasher,
 	H::Out: Ord + codec::Codec,
@@ -402,11 +402,11 @@ where
 	fn register_extension<T: Extension>(
 		&mut self,
 		ext: T,
-	) -> Result<(), soil_externalities::Error> {
+	) -> Result<(), subsoil::externalities::Error> {
 		self.register_extension_with_type_id(TypeId::of::<T>(), Box::new(ext))
 	}
 
-	fn deregister_extension<T: Extension>(&mut self) -> Result<(), soil_externalities::Error> {
+	fn deregister_extension<T: Extension>(&mut self) -> Result<(), subsoil::externalities::Error> {
 		self.deregister_extension_by_type_id(TypeId::of::<T>())
 	}
 }

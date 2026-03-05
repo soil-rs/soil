@@ -45,7 +45,7 @@ use parking_lot::Mutex;
 use soil_api::{ApiExt, ProvideRuntimeApi};
 use soil_client_api::BlockchainEvents;
 use soil_core::{offchain, traits::SpawnNamed};
-use soil_externalities::Extension;
+use subsoil::externalities::Extension;
 use soil_keystore::{KeystoreExt, KeystorePtr};
 use soil_network::{NetworkPeers, NetworkStateInfo};
 use soil_runtime::traits::{self, Header};

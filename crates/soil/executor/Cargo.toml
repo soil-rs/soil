@@ -32,7 +32,6 @@ soil-executor-polkavm = { workspace = true, default-features = true, optional = 
 soil-executor-wasmtime = { workspace = true, default-features = true, optional = true}
 soil-api = { workspace = true, default-features = true, optional = true}
 soil-core = { workspace = true, default-features = true, optional = true}
-soil-externalities = { workspace = true, default-features = true, optional = true}
 soil-io = { workspace = true, default-features = true, optional = true}
 soil-runtime-interface = { workspace = true, default-features = true, optional = true}
 soil-trie = { workspace = true, default-features = true, optional = true}
@@ -67,7 +66,6 @@ std = [
 	"soil-executor-common",
 	"soil-executor-polkavm",
 	"soil-executor-wasmtime",
-	"soil-externalities",
 	"soil-io",
 	"subsoil/std",
 	"soil-runtime-interface",
@@ -76,7 +74,6 @@ std = [
 	"tracing",
 	"soil-api/std",
 	"soil-core/std",
-	"soil-externalities/std",
 	"soil-io/std",
 	"soil-runtime-interface/std",
 	"soil-trie/std",

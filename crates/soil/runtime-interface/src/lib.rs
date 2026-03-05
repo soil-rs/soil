@@ -164,7 +164,7 @@ pub use subsoil::std;
 ///         fn gated_call_version_1(data: &[u8]) -> Vec<u8>;
 ///     }
 ///
-///     impl Interface for &mut dyn soil_externalities::Externalities {
+///     impl Interface for &mut dyn subsoil::externalities::Externalities {
 ///         fn call_version_1(data: &[u8]) -> Vec<u8> { Vec::new() }
 ///         fn call_version_2(data: &[u8]) -> Vec<u8> { [17].to_vec() }
 ///         fn call_version_3(data: &[u8]) -> Vec<u8> { [18].to_vec() }
@@ -184,15 +184,15 @@ pub use subsoil::std;
 ///     }
 ///
 ///     fn call_version_1(data: &[u8]) -> Vec<u8> {
-///         <&mut dyn soil_externalities::Externalities as Interface>::call_version_1(data)
+///         <&mut dyn subsoil::externalities::Externalities as Interface>::call_version_1(data)
 ///     }
 ///
 ///     fn call_version_2(data: &[u8]) -> Vec<u8> {
-///         <&mut dyn soil_externalities::Externalities as Interface>::call_version_2(data)
+///         <&mut dyn subsoil::externalities::Externalities as Interface>::call_version_2(data)
 ///     }
 ///
 ///     fn call_version_3(data: &[u8]) -> Vec<u8> {
-///         <&mut dyn soil_externalities::Externalities as Interface>::call_version_3(data)
+///         <&mut dyn subsoil::externalities::Externalities as Interface>::call_version_3(data)
 ///     }
 ///
 ///     pub fn set_or_clear(optional: Option<Vec<u8>>) {
@@ -200,7 +200,7 @@ pub use subsoil::std;
 ///     }
 ///
 ///     fn set_or_clear_version_1(optional: Option<Vec<u8>>) {
-///         soil_externalities::with_externalities(|mut ext| Interface::set_or_clear_version_1(&mut ext, optional))
+///         subsoil::externalities::with_externalities(|mut ext| Interface::set_or_clear_version_1(&mut ext, optional))
 ///             .expect("`set_or_clear` called outside of an Externalities-provided environment.")
 ///     }
 ///
@@ -211,7 +211,7 @@ pub use subsoil::std;
 ///
 ///     #[cfg(feature = "experimental-function")]
 ///     fn gated_call_version_1(data: &[u8]) -> Vec<u8> {
-///         <&mut dyn soil_externalities::Externalities as Interface>::gated_call_version_1(data)
+///         <&mut dyn subsoil::externalities::Externalities as Interface>::gated_call_version_1(data)
 ///     }
 ///
 ///     /// This type implements the `HostFunctions` trait (from `sp-wasm-interface`) and
@@ -345,7 +345,7 @@ pub use subsoil_runtime_interface_proc_macro::runtime_interface;
 
 #[doc(hidden)]
 #[cfg(not(substrate_runtime))]
-pub use soil_externalities::{
+pub use subsoil::externalities::{
 	set_and_run_with_externalities, with_externalities, ExtensionStore, Externalities,
 	ExternalitiesExt,
 };

@@ -23,21 +23,21 @@ use parking_lot::Mutex;
 use crate::ProofSizeProvider;
 use std::{collections::VecDeque, sync::Arc};
 
-soil_externalities::decl_extension! {
+subsoil::decl_extension! {
 	/// The proof size extension to fetch the current storage proof size
 	/// in externalities.
 	pub struct ProofSizeExt(Box<dyn ProofSizeProvider + 'static + Sync + Send>);
 
 	impl ProofSizeExt {
-		fn start_transaction(&mut self, ty: soil_externalities::TransactionType) {
+		fn start_transaction(&mut self, ty: subsoil::externalities::TransactionType) {
 			self.0.start_transaction(ty.is_host());
 		}
 
-		fn rollback_transaction(&mut self, ty: soil_externalities::TransactionType) {
+		fn rollback_transaction(&mut self, ty: subsoil::externalities::TransactionType) {
 			self.0.rollback_transaction(ty.is_host());
 		}
 
-		fn commit_transaction(&mut self, ty: soil_externalities::TransactionType) {
+		fn commit_transaction(&mut self, ty: subsoil::externalities::TransactionType) {
 			self.0.commit_transaction(ty.is_host());
 		}
 	}

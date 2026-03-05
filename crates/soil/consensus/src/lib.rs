@@ -25,7 +25,7 @@ use std::{sync::Arc, time::Duration};
 
 use futures::prelude::*;
 use soil_api::ProofRecorder;
-use soil_externalities::Extensions;
+use subsoil::externalities::Extensions;
 use soil_runtime::{
 	traits::{Block as BlockT, HashingFor},
 	Digest,

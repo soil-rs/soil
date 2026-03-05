@@ -31,7 +31,7 @@ use soil_core::{
 	storage::{well_known_keys::EXTRINSIC_INDEX, ChildInfo, StateVersion},
 };
 #[cfg(feature = "std")]
-use soil_externalities::{Extension, Extensions, TransactionType};
+use subsoil::externalities::{Extension, Extensions, TransactionType};
 use soil_trie::{empty_child_trie_root, LayoutV1};
 
 #[cfg(not(feature = "std"))]
@@ -864,13 +864,13 @@ impl<'a> OverlayedExtensions<'a> {
 		&mut self,
 		type_id: TypeId,
 		extension: Box<dyn Extension>,
-	) -> Result<(), soil_externalities::Error> {
+	) -> Result<(), subsoil::externalities::Error> {
 		match self.extensions.entry(type_id) {
 			MapEntry::Vacant(vacant) => {
 				vacant.insert(OverlayedExtension::Owned(extension));
 				Ok(())
 			},
-			MapEntry::Occupied(_) => Err(soil_externalities::Error::ExtensionAlreadyRegistered),
+			MapEntry::Occupied(_) => Err(subsoil::externalities::Error::ExtensionAlreadyRegistered),
 		}
 	}
 

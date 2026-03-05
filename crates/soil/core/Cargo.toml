@@ -42,7 +42,6 @@ scale-info = { features = ["derive"], workspace = true }
 secrecy = { features = ["alloc"], workspace = true }
 serde = { optional = true, features = ["alloc", "derive"], workspace = true }
 subsoil-debug-derive = { workspace = true }
-soil-externalities = { optional = true, workspace = true }
 subsoil = { workspace = true }
 ss58-registry = { workspace = true }
 substrate-bip39 = { workspace = true }
@@ -66,12 +65,10 @@ secp256k1 = { features = ["alloc", "recovery"], optional = true, workspace = tru
 # bls crypto
 sha2 = { optional = true, workspace = true }
 w3f-bls = { optional = true, workspace = true }
-
 # bandersnatch crypto
 ark-vrf = { optional = true, workspace = true, features = ["bandersnatch", "ring"] }
 
 [target.'cfg(not(substrate_runtime))'.dependencies]
-soil-externalities = { workspace = true, default-features = false }
 futures = { version = "0.3.30", default-features = false, features = ["alloc"] }
 dyn-clone = "1.0.17"
 
@@ -116,7 +113,6 @@ std = [
 	"sha2?/std",
 	"subsoil-crypto-hashing/std",
 	"subsoil-debug-derive/std",
-	"soil-externalities/std",
 	"subsoil/std",
 	"ss58-registry/std",
 	"substrate-bip39/std",

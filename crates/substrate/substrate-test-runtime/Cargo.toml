@@ -37,7 +37,6 @@ soil-consensus-grandpa = { features = ["serde"], workspace = true }
 soil-core = { features = ["serde"], workspace = true }
 subsoil-crypto-hashing = { workspace = true }
 subsoil-debug-derive = { workspace = true, default-features = false }
-soil-externalities = { workspace = true }
 soil-genesis-builder = { workspace = true }
 soil-inherents = { workspace = true }
 soil-io = { workspace = true }
@@ -103,7 +102,7 @@ std = [
 	"soil-core/std",
 	"subsoil-crypto-hashing/std",
 	"subsoil-debug-derive/std",
-	"soil-externalities/std",
+	"subsoil/std",
 	"soil-genesis-builder/std",
 	"soil-inherents/std",
 	"soil-io/std",
@@ -113,7 +112,6 @@ std = [
 	"soil-session/std",
 	"soil-state-machine/std",
 	"soil-statement-store/std",
-	"subsoil/std",
 	"soil-transaction-pool/std",
 	"soil-trie/std",
 	"soil-version/std",

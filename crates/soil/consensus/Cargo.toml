@@ -17,11 +17,11 @@ workspace = true
 targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
+subsoil = { workspace = true }
 async-trait = { workspace = true }
 futures = { features = ["thread-pool"], workspace = true }
 log = { workspace = true, default-features = true }
 soil-api = { workspace = true, default-features = true }
-soil-externalities = { workspace = true, default-features = true }
 soil-inherents = { workspace = true, default-features = true }
 soil-runtime = { workspace = true, default-features = true }
 soil-state-machine = { workspace = true, default-features = true }

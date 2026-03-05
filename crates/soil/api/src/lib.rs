@@ -81,7 +81,7 @@ pub mod __private {
 	mod std_imports {
 		pub use hash_db::Hasher;
 		pub use soil_core::traits::CallContext;
-		pub use soil_externalities::{Extension, Extensions, TransactionType};
+		pub use subsoil::externalities::{Extension, Extensions, TransactionType};
 		pub use soil_runtime::StateVersion;
 		pub use soil_state_machine::{
 			Backend as StateBackend, InMemoryBackend, OverlayedChanges, StorageProof, TrieBackend,
@@ -117,7 +117,7 @@ pub mod __private {
 pub use soil_core::traits::CallContext;
 use soil_core::OpaqueMetadata;
 #[cfg(feature = "std")]
-use soil_externalities::{Extension, Extensions};
+use subsoil::externalities::{Extension, Extensions};
 #[cfg(feature = "std")]
 use soil_runtime::traits::HashingFor;
 #[cfg(feature = "std")]

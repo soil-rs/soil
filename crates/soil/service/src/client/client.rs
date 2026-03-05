@@ -1702,7 +1702,7 @@ where
 	fn initialize_extensions(
 		&self,
 		at: Block::Hash,
-		extensions: &mut soil_externalities::Extensions,
+		extensions: &mut subsoil::externalities::Extensions,
 	) -> Result<(), soil_api::ApiError> {
 		let block_number = self.expect_block_number_from_id(&BlockId::Hash(at))?;
 

@@ -23,7 +23,6 @@ log = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 subsoil-api-proc-macro = { workspace = true }
 soil-core = { workspace = true }
-soil-externalities = { optional = true, workspace = true }
 soil-runtime = { workspace = true }
 subsoil = { workspace = true }
 soil-runtime-interface = { workspace = true }
@@ -44,8 +43,6 @@ std = [
 	"scale-info/std",
 	"subsoil-api-proc-macro/std",
 	"soil-core/std",
-	"soil-externalities",
-	"soil-externalities?/std",
 	"soil-runtime-interface/std",
 	"soil-runtime/std",
 	"soil-state-machine/std",

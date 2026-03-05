@@ -47,7 +47,7 @@ pub fn with_externalities_safe<F, U>(ext: &mut dyn Externalities, f: F) -> Resul
 where
 	F: UnwindSafe + FnOnce() -> U,
 {
-	soil_externalities::set_and_run_with_externalities(ext, move || {
+	subsoil::externalities::set_and_run_with_externalities(ext, move || {
 		// Substrate uses custom panic hook that terminates process on panic. Disable
 		// termination for the native call.
 		let _guard = subsoil::panic_handler::AbortGuard::force_unwind();

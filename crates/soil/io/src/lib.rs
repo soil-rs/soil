@@ -60,7 +60,7 @@
 //! Such error messages should always be interpreted as "code accessing host functions accessed
 //! outside of externalities".
 //!
-//! An externality is any type that implements [`soil_externalities::Externalities`]. A simple example
+//! An externality is any type that implements [`subsoil::externalities::Externalities`]. A simple example
 //! of which is [`TestExternalities`], which is commonly used in tests and is exported from this
 //! crate.
 //!
@@ -131,9 +131,9 @@ use secp256k1::{
 };
 
 #[cfg(not(substrate_runtime))]
-use soil_externalities::{Externalities, ExternalitiesExt};
+use subsoil::externalities::{Externalities, ExternalitiesExt};
 
-pub use soil_externalities::MultiRemovalResults;
+pub use subsoil::externalities::MultiRemovalResults;
 
 #[cfg(all(not(feature = "disable_allocator"), substrate_runtime, target_family = "wasm"))]
 mod global_alloc_wasm;
@@ -853,7 +853,7 @@ pub trait Misc {
 }
 
 #[cfg(not(substrate_runtime))]
-soil_externalities::decl_extension! {
+subsoil::decl_extension! {
 	/// Extension to signal to [`crypt::ed25519_verify`] to use the dalek crate.
 	///
 	/// The switch from `ed25519-dalek` to `ed25519-zebra` was a breaking change.
@@ -939,7 +939,7 @@ pub trait Crypto {
 		// We don't want to force everyone needing to call the function in an externalities context.
 		// So, we assume that we should not use dalek when we are not in externalities context.
 		// Otherwise, we check if the extension is present.
-		if soil_externalities::with_externalities(|mut e| e.extension::<UseDalekExt>().is_some())
+		if subsoil::externalities::with_externalities(|mut e| e.extension::<UseDalekExt>().is_some())
 			.unwrap_or_default()
 		{
 			use ed25519_dalek::Verifier;
@@ -1518,7 +1518,7 @@ pub trait OffchainIndex {
 }
 
 #[cfg(not(substrate_runtime))]
-soil_externalities::decl_extension! {
+subsoil::decl_extension! {
 	/// Deprecated verification context.
 	///
 	/// Stores the combined result of all verifications that are done in the same context.

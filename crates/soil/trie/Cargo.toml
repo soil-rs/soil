@@ -21,6 +21,7 @@ name = "bench"
 harness = false
 
 [dependencies]
+subsoil = { workspace = true }
 ahash = { optional = true, workspace = true }
 codec = { workspace = true }
 foldhash = { workspace = true }
@@ -34,7 +35,6 @@ rand = { optional = true, workspace = true, default-features = true }
 scale-info = { features = ["derive"], workspace = true }
 schnellru = { optional = true, workspace = true }
 soil-core = { workspace = true }
-soil-externalities = { workspace = true }
 thiserror = { optional = true, workspace = true }
 tracing = { optional = true, workspace = true, default-features = true }
 trie-db = { workspace = true }
@@ -62,7 +62,7 @@ std = [
 	"scale-info/std",
 	"schnellru",
 	"soil-core/std",
-	"soil-externalities/std",
+	"subsoil/std",
 	"soil-runtime/std",
 	"thiserror",
 	"tracing",

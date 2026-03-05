@@ -946,7 +946,7 @@ fn test_read_child_storage() {
 }
 
 fn test_witness(proof: StorageProof, root: crate::Hash) {
-	use soil_externalities::Externalities;
+	use subsoil::externalities::Externalities;
 	let db: soil_trie::MemoryDB<crate::Hashing> = proof.into_memory_db();
 	let backend =
 		soil_state_machine::TrieBackendBuilder::<_, crate::Hashing>::new(db, root).build();

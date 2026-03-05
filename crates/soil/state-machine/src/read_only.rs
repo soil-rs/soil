@@ -29,7 +29,7 @@ use soil_core::{
 	storage::{ChildInfo, StateVersion, TrackedStorageKey},
 	traits::Externalities,
 };
-use soil_externalities::MultiRemovalResults;
+use subsoil::externalities::MultiRemovalResults;
 
 /// Trait for inspecting state in any backend.
 ///
@@ -77,7 +77,7 @@ where
 	///
 	/// Returns the result of the given closure.
 	pub fn execute_with<R>(&mut self, f: impl FnOnce() -> R) -> R {
-		soil_externalities::set_and_run_with_externalities(self, f)
+		subsoil::externalities::set_and_run_with_externalities(self, f)
 	}
 }
 
@@ -221,7 +221,7 @@ where
 	}
 }
 
-impl<'a, H: Hasher, B: 'a + Backend<H>> soil_externalities::ExtensionStore
+impl<'a, H: Hasher, B: 'a + Backend<H>> subsoil::externalities::ExtensionStore
 	for ReadOnlyExternalities<'a, H, B>
 {
 	fn extension_by_type_id(&mut self, _type_id: TypeId) -> Option<&mut dyn Any> {
@@ -231,15 +231,15 @@ impl<'a, H: Hasher, B: 'a + Backend<H>> soil_externalities::ExtensionStore
 	fn register_extension_with_type_id(
 		&mut self,
 		_type_id: TypeId,
-		_extension: Box<dyn soil_externalities::Extension>,
-	) -> Result<(), soil_externalities::Error> {
+		_extension: Box<dyn subsoil::externalities::Extension>,
+	) -> Result<(), subsoil::externalities::Error> {
 		unimplemented!("register_extension_with_type_id is not supported in ReadOnlyExternalities")
 	}
 
 	fn deregister_extension_by_type_id(
 		&mut self,
 		_type_id: TypeId,
-	) -> Result<(), soil_externalities::Error> {
+	) -> Result<(), subsoil::externalities::Error> {
 		unimplemented!("deregister_extension_by_type_id is not supported in ReadOnlyExternalities")
 	}
 }

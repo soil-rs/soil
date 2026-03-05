@@ -17,7 +17,7 @@
 
 //! Stores the externalities in an `environmental` value to make it scope limited available.
 
-use crate::Externalities;
+use super::Externalities;
 
 environmental::environmental!(ext: trait Externalities);
 

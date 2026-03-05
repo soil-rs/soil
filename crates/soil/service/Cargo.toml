@@ -57,7 +57,6 @@ soil-api = { workspace = true, default-features = true, optional = true}
 soil-blockchain = { workspace = true, default-features = true, optional = true}
 soil-consensus = { workspace = true, default-features = true, optional = true}
 soil-core = { workspace = true, default-features = true, optional = true}
-soil-externalities = { workspace = true, default-features = true, optional = true}
 soil-keystore = { workspace = true, default-features = true, optional = true}
 soil-runtime = { workspace = true, default-features = true, optional = true}
 soil-session = { workspace = true, default-features = true, optional = true}
@@ -108,7 +107,7 @@ std = [
 	"soil-consensus",
 	"soil-core",
 	"soil-executor",
-	"soil-externalities",
+	"subsoil",
 	"soil-informant",
 	"soil-keystore",
 	"soil-network",
@@ -122,7 +121,6 @@ std = [
 	"soil-runtime",
 	"soil-session",
 	"soil-state-machine",
-	"subsoil",
 	"soil-sysinfo",
 	"soil-telemetry",
 	"soil-transaction-pool",
@@ -143,7 +141,7 @@ std = [
 	"soil-client-db/std",
 	"soil-core/std",
 	"soil-executor/std",
-	"soil-externalities/std",
+	"subsoil/std",
 	"soil-informant/std",
 	"soil-keystore/std",
 	"soil-network/std",
@@ -157,7 +155,6 @@ std = [
 	"soil-runtime/std",
 	"soil-session/std",
 	"soil-state-machine/std",
-	"subsoil/std",
 	"soil-sysinfo/std",
 	"soil-telemetry/std",
 	"soil-transaction-pool/std",

@@ -16,6 +16,7 @@ workspace = true
 targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
+subsoil = { workspace = true }
 codec = { features = ["derive"], workspace = true }
 topsoil-support = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
@@ -24,7 +25,6 @@ soil-api = { workspace = true }
 soil-application-crypto = { workspace = true }
 soil-core = { workspace = true }
 subsoil-crypto-hashing = { workspace = true }
-soil-externalities = { workspace = true }
 soil-runtime = { workspace = true }
 soil-runtime-interface = { workspace = true }
 thiserror = { optional = true, workspace = true }
@@ -57,7 +57,7 @@ std = [
 	"soil-application-crypto/std",
 	"soil-core/std",
 	"subsoil-crypto-hashing/std",
-	"soil-externalities/std",
+	"subsoil/std",
 	"soil-runtime-interface/std",
 	"soil-runtime/std",
 	"thiserror",

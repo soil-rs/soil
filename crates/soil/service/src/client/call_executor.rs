@@ -24,7 +24,7 @@ use soil_client_api::{
 };
 use soil_core::traits::{CallContext, CodeExecutor};
 use soil_executor::{RuntimeVersion, RuntimeVersionOf};
-use soil_externalities::Extensions;
+use subsoil::externalities::Extensions;
 use soil_runtime::{
 	generic::BlockId,
 	traits::{Block as BlockT, HashingFor},
@@ -238,7 +238,7 @@ where
 {
 	fn runtime_version(
 		&self,
-		ext: &mut dyn soil_externalities::Externalities,
+		ext: &mut dyn subsoil::externalities::Externalities,
 		runtime_code: &soil_core::traits::RuntimeCode,
 	) -> Result<soil_version::RuntimeVersion, soil_executor::error::Error> {
 		RuntimeVersionOf::runtime_version(&self.executor, ext, runtime_code)

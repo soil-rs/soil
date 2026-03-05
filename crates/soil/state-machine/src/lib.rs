@@ -171,7 +171,7 @@ mod execution {
 		storage::{ChildInfo, ChildType, PrefixedStorageKey},
 		traits::{CallContext, CodeExecutor, RuntimeCode},
 	};
-	use soil_externalities::Extensions;
+	use subsoil::externalities::Extensions;
 	use soil_trie::PrefixedMemoryDB;
 	use std::collections::{HashMap, HashSet};
 

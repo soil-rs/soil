@@ -30,8 +30,8 @@ use soil_core::storage::{
 	well_known_keys::is_child_storage_key, ChildInfo, StateVersion, TrackedStorageKey,
 };
 #[cfg(feature = "std")]
-use soil_externalities::TransactionType;
-use soil_externalities::{Extension, ExtensionStore, Externalities, MultiRemovalResults};
+use subsoil::externalities::TransactionType;
+use subsoil::externalities::{Extension, ExtensionStore, Externalities, MultiRemovalResults};
 
 use crate::{trace, warn};
 use alloc::{boxed::Box, vec::Vec};
@@ -89,7 +89,7 @@ where
 	pub fn new(
 		overlay: &'a mut OverlayedChanges<H>,
 		backend: &'a B,
-		extensions: Option<&'a mut soil_externalities::Extensions>,
+		extensions: Option<&'a mut subsoil::externalities::Extensions>,
 	) -> Self {
 		Self {
 			overlay,
@@ -779,15 +779,15 @@ where
 		&mut self,
 		_type_id: TypeId,
 		_extension: Box<dyn Extension>,
-	) -> Result<(), soil_externalities::Error> {
-		Err(soil_externalities::Error::ExtensionsAreNotSupported)
+	) -> Result<(), subsoil::externalities::Error> {
+		Err(subsoil::externalities::Error::ExtensionsAreNotSupported)
 	}
 
 	fn deregister_extension_by_type_id(
 		&mut self,
 		_type_id: TypeId,
-	) -> Result<(), soil_externalities::Error> {
-		Err(soil_externalities::Error::ExtensionsAreNotSupported)
+	) -> Result<(), subsoil::externalities::Error> {
+		Err(subsoil::externalities::Error::ExtensionsAreNotSupported)
 	}
 }
 
@@ -805,26 +805,26 @@ where
 		&mut self,
 		type_id: TypeId,
 		extension: Box<dyn Extension>,
-	) -> Result<(), soil_externalities::Error> {
+	) -> Result<(), subsoil::externalities::Error> {
 		if let Some(ref mut extensions) = self.extensions {
 			extensions.register(type_id, extension)
 		} else {
-			Err(soil_externalities::Error::ExtensionsAreNotSupported)
+			Err(subsoil::externalities::Error::ExtensionsAreNotSupported)
 		}
 	}
 
 	fn deregister_extension_by_type_id(
 		&mut self,
 		type_id: TypeId,
-	) -> Result<(), soil_externalities::Error> {
+	) -> Result<(), subsoil::externalities::Error> {
 		if let Some(ref mut extensions) = self.extensions {
 			if extensions.deregister(type_id) {
 				Ok(())
 			} else {
-				Err(soil_externalities::Error::ExtensionIsNotRegistered(type_id))
+				Err(subsoil::externalities::Error::ExtensionIsNotRegistered(type_id))
 			}
 		} else {
-			Err(soil_externalities::Error::ExtensionsAreNotSupported)
+			Err(subsoil::externalities::Error::ExtensionsAreNotSupported)
 		}
 	}
 }

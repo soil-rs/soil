@@ -15,8 +15,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#![cfg_attr(not(feature = "std"), no_std)]
-
 //! Substrate externalities abstraction
 //!
 //! The externalities mainly provide access to storage and to registered extensions. Extensions
@@ -25,12 +23,10 @@
 //!
 //! This crate exposes the main [`Externalities`] trait.
 
-extern crate alloc;
-
 use alloc::{boxed::Box, vec::Vec};
 use core::any::{Any, TypeId};
 
-use subsoil::storage::{ChildInfo, StateVersion, TrackedStorageKey};
+use crate::storage::{ChildInfo, StateVersion, TrackedStorageKey};
 
 pub use extensions::{Extension, ExtensionStore, Extensions, TransactionType};
 pub use scope_limited::{set_and_run_with_externalities, with_externalities};

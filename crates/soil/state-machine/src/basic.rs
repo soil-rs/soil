@@ -33,7 +33,7 @@ use soil_core::{
 	traits::Externalities,
 	Blake2Hasher,
 };
-use soil_externalities::{Extension, Extensions, MultiRemovalResults};
+use subsoil::externalities::{Extension, Extensions, MultiRemovalResults};
 use soil_trie::{empty_child_trie_root, LayoutV0, LayoutV1, TrieConfiguration};
 
 /// Simple Map-based Externalities impl.
@@ -107,7 +107,7 @@ impl BasicExternalities {
 	///
 	/// Returns the result of the given closure.
 	pub fn execute_with<R>(&mut self, f: impl FnOnce() -> R) -> R {
-		soil_externalities::set_and_run_with_externalities(self, f)
+		subsoil::externalities::set_and_run_with_externalities(self, f)
 	}
 
 	/// List of active extensions.
@@ -348,7 +348,7 @@ impl Externalities for BasicExternalities {
 	}
 }
 
-impl soil_externalities::ExtensionStore for BasicExternalities {
+impl subsoil::externalities::ExtensionStore for BasicExternalities {
 	fn extension_by_type_id(&mut self, type_id: TypeId) -> Option<&mut dyn Any> {
 		self.extensions.get_mut(type_id)
 	}
@@ -356,19 +356,19 @@ impl soil_externalities::ExtensionStore for BasicExternalities {
 	fn register_extension_with_type_id(
 		&mut self,
 		type_id: TypeId,
-		extension: Box<dyn soil_externalities::Extension>,
-	) -> Result<(), soil_externalities::Error> {
+		extension: Box<dyn subsoil::externalities::Extension>,
+	) -> Result<(), subsoil::externalities::Error> {
 		self.extensions.register_with_type_id(type_id, extension)
 	}
 
 	fn deregister_extension_by_type_id(
 		&mut self,
 		type_id: TypeId,
-	) -> Result<(), soil_externalities::Error> {
+	) -> Result<(), subsoil::externalities::Error> {
 		if self.extensions.deregister(type_id) {
 			Ok(())
 		} else {
-			Err(soil_externalities::Error::ExtensionIsNotRegistered(type_id))
+			Err(subsoil::externalities::Error::ExtensionIsNotRegistered(type_id))
 		}
 	}
 }

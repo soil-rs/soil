@@ -23,7 +23,6 @@ codec = { features = ["bytes"], workspace = true }
 secp256k1 = { features = ["global-context", "recovery"], optional = true, workspace = true, default-features = true }
 soil-core = { workspace = true }
 subsoil-crypto-hashing = { workspace = true }
-soil-externalities = { workspace = true }
 soil-keystore = { optional = true, workspace = true }
 soil-runtime-interface = { workspace = true }
 soil-state-machine = { optional = true, workspace = true }
@@ -42,9 +41,7 @@ secp256k1 = { workspace = true, default-features = false, features = ["alloc", "
 
 # Required for backwards compatibility reason, but only used for verifying when `UseDalekExt` is set.
 ed25519-dalek = { workspace = true }
-
 docify = { workspace = true }
-
 [target.'cfg(all(any(target_arch = "riscv32", target_arch = "riscv64"), substrate_runtime))'.dependencies]
 polkavm-derive = { workspace = true }
 
@@ -63,11 +60,10 @@ std = [
 	"secp256k1/std",
 	"soil-core/std",
 	"subsoil-crypto-hashing/std",
-	"soil-externalities/std",
+	"subsoil/std",
 	"soil-keystore/std",
 	"soil-runtime-interface/std",
 	"soil-state-machine/std",
-	"subsoil/std",
 	"soil-trie/std",
 	"tracing-core/std",
 	"tracing/std",
@@ -89,14 +85,11 @@ disable_allocator = []
 # When enabled the runtime will marshal the relevant error message
 # to the host through the `PanicHandler::abort_on_panic` runtime interface.
 # This gives the caller direct programmatic access to the error message.
-#
 # When disabled the error message will only be printed out in the
 # logs, with the caller receiving a generic "wasm `unreachable` instruction executed"
 # error message.
-#
 # This has no effect if both `disable_panic_handler` and `disable_oom`
 # are enabled.
-#
 # WARNING: Enabling this feature flag requires the `PanicHandler::abort_on_panic`
 #          host function to be supported by the host. Do *not* enable it for your
 #          runtime without first upgrading your host client!

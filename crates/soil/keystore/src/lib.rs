@@ -692,7 +692,7 @@ impl<T: Keystore + ?Sized> Keystore for Arc<T> {
 /// A shared pointer to a keystore implementation.
 pub type KeystorePtr = Arc<dyn Keystore>;
 
-soil_externalities::decl_extension! {
+subsoil::decl_extension! {
 	/// The keystore extension to register/retrieve from the externalities.
 	pub struct KeystoreExt(KeystorePtr);
 }

@@ -85,7 +85,7 @@ impl soil_core::traits::ReadRuntimeVersion for MockedReadRuntimeVersion {
 	fn read_runtime_version(
 		&self,
 		_wasm_code: &[u8],
-		_ext: &mut dyn soil_externalities::Externalities,
+		_ext: &mut dyn subsoil::externalities::Externalities,
 	) -> Result<Vec<u8>, String> {
 		Ok(self.0.clone())
 	}
