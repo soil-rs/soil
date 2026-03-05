@@ -238,7 +238,6 @@ members = [
 	"crates/soil/crypto-hashing/proc-macro",
 	"crates/soil/database",
 	"crates/soil/debug-derive",
-	"primitives/ethereum-standards",
 	"crates/soil/externalities",
 	"crates/soil/genesis-builder",
 	"crates/soil/inherents",
@@ -346,7 +345,6 @@ zero-prefixed-literal = { level = "allow", priority = 2 }            # 00_1000_0
 # Substrate path dependencies
 binary-merkle-tree = { path = "utils/binary-merkle-tree", default-features = false }
 chain-spec-builder = { path = "bin/utils/chain-spec-builder", default-features = false, package = "staging-chain-spec-builder" }
-ethereum-standards = { path = "primitives/ethereum-standards" }
 fork-tree = { path = "utils/fork-tree", default-features = false }
 topsoil = { path = "crates/topsoil/topsoil", default-features = false }
 topsoil-benchmarking = { path = "crates/topsoil/benchmarking", default-features = false }
