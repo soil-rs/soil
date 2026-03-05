@@ -78,8 +78,6 @@ members = [
 	"client/transaction-pool",
 	"crates/soil/transaction-pool-api",
 	"crates/soil/utils",
-	"deprecated/hashing",
-	"deprecated/hashing/proc-macro",
 	"crates/topsoil/topsoil",
 	"crates/topsoil/alliance",
 	"crates/topsoil/asset-conversion",
@@ -240,7 +238,6 @@ members = [
 	"crates/soil/crypto-hashing/proc-macro",
 	"crates/soil/database",
 	"crates/soil/debug-derive",
-	"primitives/ethereum-standards",
 	"crates/soil/externalities",
 	"crates/soil/genesis-builder",
 	"crates/soil/inherents",
@@ -348,7 +345,6 @@ zero-prefixed-literal = { level = "allow", priority = 2 }            # 00_1000_0
 # Substrate path dependencies
 binary-merkle-tree = { path = "utils/binary-merkle-tree", default-features = false }
 chain-spec-builder = { path = "bin/utils/chain-spec-builder", default-features = false, package = "staging-chain-spec-builder" }
-ethereum-standards = { path = "primitives/ethereum-standards" }
 fork-tree = { path = "utils/fork-tree", default-features = false }
 topsoil = { path = "crates/topsoil/topsoil", default-features = false }
 topsoil-benchmarking = { path = "crates/topsoil/benchmarking", default-features = false }
@@ -561,8 +557,6 @@ soil-consensus-pow = { path = "crates/soil/consensus-pow", default-features = fa
 soil-consensus-sassafras = { path = "crates/soil/consensus-sassafras", default-features = false }
 soil-consensus-slots = { path = "crates/soil/consensus-slots", default-features = false }
 soil-core = { path = "crates/soil/core", default-features = false }
-sp-core-hashing = { default-features = false, path = "deprecated/hashing" }
-sp-core-hashing-proc-macro = { default-features = false, path = "deprecated/hashing/proc-macro" }
 soil-crypto-ec-utils = { default-features = false, path = "crates/soil/crypto-ec-utils" }
 soil-crypto-hashing = { path = "crates/soil/crypto-hashing", default-features = false }
 soil-crypto-hashing-proc-macro = { path = "crates/soil/crypto-hashing/proc-macro", default-features = false }

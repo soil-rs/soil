@@ -133,8 +133,6 @@ soil-consensus-babe = { workspace = true, default-features = true }
 soil-consensus-beefy = { workspace = true, default-features = true }
 soil-consensus-grandpa = { workspace = true, default-features = true }
 soil-core = { workspace = true, default-features = true }
-sp-core-hashing = { workspace = true, default-features = true }
-sp-core-hashing-proc-macro = { workspace = true, default-features = true }
 soil-database = { workspace = true, default-features = true }
 soil-genesis-builder = { workspace = true, default-features = true }
 soil-io = { workspace = true, default-features = true }
