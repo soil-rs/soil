@@ -2,7 +2,7 @@
 description = "Substrate offchain workers"
 name = "sc-offchain"
 version = "29.0.0"
-license = "GPL-3.0-or-later WITH Classpath-exception-2.0"
+license.workspace = true
 authors.workspace = true
 edition.workspace = true
 homepage.workspace = true

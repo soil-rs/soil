@@ -2,7 +2,7 @@
 authors = ["Parity Technologies <admin@parity.io>"]
 edition = "2021"
 homepage = "https://paritytech.github.io/polkadot-sdk/"
-license = "GPL-3.0-only"
+license = "GPL-3.0-or-later WITH Classpath-exception-2.0"
 repository = "https://github.com/bitarray/soil.git"
 
 [workspace]

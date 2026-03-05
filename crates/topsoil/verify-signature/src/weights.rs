@@ -48,7 +48,7 @@
 // --extrinsic=*
 // --runtime=target/production/wbuild/kitchensink-runtime/kitchensink_runtime.wasm
 // --pallet=topsoil_verify_signature
-// --header=/__w/polkadot-sdk/polkadot-sdk/substrate/HEADER-APACHE2
+// --header=/__w/polkadot-sdk/polkadot-sdk/substrate/HEADER
 // --output=/__w/polkadot-sdk/polkadot-sdk/substrate/frame/verify-signature/src/weights.rs
 // --wasm-execution=compiled
 // --steps=50

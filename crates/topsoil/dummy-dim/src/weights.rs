@@ -33,7 +33,7 @@
 // --repeat=20
 // --output=../../../frame/dummy-dim/src/weights.rs
 // --template=../../../.maintain/frame-weight-template.hbs
-// --header=../../../HEADER-APACHE2
+// --header=../../../HEADER
 // --record-proof
 
 #![cfg_attr(rustfmt, rustfmt_skip)]

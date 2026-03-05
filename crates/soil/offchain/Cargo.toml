@@ -2,7 +2,7 @@
 description = "Substrate offchain workers primitives"
 name = "soil-offchain"
 version = "26.0.0"
-license = "Apache-2.0"
+license.workspace = true
 authors.workspace = true
 edition.workspace = true
 homepage.workspace = true

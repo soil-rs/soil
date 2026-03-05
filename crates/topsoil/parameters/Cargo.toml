@@ -2,7 +2,7 @@
 name = "topsoil-parameters"
 description = "Pallet to store and configure parameters."
 repository.workspace = true
-license = "Apache-2.0"
+license.workspace = true
 version = "0.1.0"
 authors = ["Acala Developers", "Parity Technologies <admin@parity.io>"]
 edition.workspace = true

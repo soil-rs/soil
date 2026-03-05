@@ -31,7 +31,7 @@
 // --extrinsic=all
 // --runtime=target/production/wbuild/kitchensink-runtime/kitchensink_runtime.wasm
 // --pallet=topsoil_oracle
-// --header=substrate/HEADER-APACHE2
+// --header=substrate/HEADER
 // --output=substrate/frame/honzon/oracle/src/weights.rs
 // --wasm-execution=compiled
 // --steps=50

@@ -38,7 +38,7 @@
 // --wasm-execution=compiled
 // --heap-pages=4096
 // --output=./substrate/frame/system/src/extensions/weights.rs
-// --header=./substrate/HEADER-APACHE2
+// --header=./substrate/HEADER
 // --template=./substrate/.maintain/frame-weight-template.hbs
 
 #![cfg_attr(rustfmt, rustfmt_skip)]

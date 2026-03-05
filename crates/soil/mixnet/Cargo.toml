@@ -2,7 +2,7 @@
 description = "Substrate mixnet types and runtime interface"
 name = "soil-mixnet"
 version = "0.4.0"
-license = "Apache-2.0"
+license.workspace = true
 authors = ["Parity Technologies <admin@parity.io>"]
 edition.workspace = true
 homepage.workspace = true

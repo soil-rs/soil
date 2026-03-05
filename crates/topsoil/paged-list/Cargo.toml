@@ -5,7 +5,7 @@ description = "FRAME pallet that provides a paged list data structure."
 authors.workspace = true
 homepage.workspace = true
 edition.workspace = true
-license = "Apache-2.0"
+license.workspace = true
 repository.workspace = true
 
 [lints]

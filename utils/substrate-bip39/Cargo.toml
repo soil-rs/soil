@@ -1,7 +1,7 @@
 [package]
 name = "substrate-bip39"
 version = "0.4.7"
-license = "Apache-2.0"
+license.workspace = true
 description = "Converting BIP39 entropy to valid Substrate (sr25519) SecretKeys"
 documentation = "https://docs.rs/substrate-bip39"
 authors.workspace = true

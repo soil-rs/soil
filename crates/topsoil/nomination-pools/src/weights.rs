@@ -35,7 +35,7 @@
 // --json-file=/builds/parity/mirrors/polkadot-sdk/.git/.artifacts/bench.json
 // --pallet=topsoil_nomination_pools
 // --chain=dev
-// --header=./substrate/HEADER-APACHE2
+// --header=./substrate/HEADER
 // --output=./substrate/frame/nomination-pools/src/weights.rs
 // --template=./substrate/.maintain/frame-weight-template.hbs
 

@@ -2,7 +2,7 @@
 description = "Substrate network types"
 name = "soil-network-types"
 version = "0.10.0"
-license = "GPL-3.0-or-later WITH Classpath-exception-2.0"
+license.workspace = true
 authors.workspace = true
 edition.workspace = true
 homepage.workspace = true

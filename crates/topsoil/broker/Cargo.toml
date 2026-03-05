@@ -5,7 +5,7 @@ description = "Brokerage tool for managing Polkadot Core scheduling"
 authors.workspace = true
 homepage.workspace = true
 edition.workspace = true
-license = "Apache-2.0"
+license.workspace = true
 repository.workspace = true
 
 [lints]

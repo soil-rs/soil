@@ -31,7 +31,7 @@
 //   --chain=dev
 //   --wasm-execution=compiled
 //   --weight-path=./substrate/frame/support/src/weights/
-//   --header=./substrate/HEADER-APACHE2
+//   --header=./substrate/HEADER
 //   --warmup=10
 //   --repeat=100
 
