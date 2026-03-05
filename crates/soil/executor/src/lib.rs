@@ -54,9 +54,9 @@ pub use soil_core::traits::Externalities;
 pub use soil_version::{NativeVersion, RuntimeVersion};
 #[doc(hidden)]
 #[cfg(feature = "std")]
-pub use soil_wasm_interface;
+pub use subsoil::wasm_interface;
 #[cfg(feature = "std")]
-pub use soil_wasm_interface::HostFunctions;
+pub use subsoil::wasm_interface::HostFunctions;
 #[cfg(feature = "std")]
 pub use wasm_runtime::{read_embedded_version, WasmExecutionMethod};
 

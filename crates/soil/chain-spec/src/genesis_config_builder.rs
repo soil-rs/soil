@@ -24,7 +24,7 @@ use soil_core::{
 	storage::Storage,
 	traits::{CallContext, CodeExecutor, Externalities, FetchRuntimeCode, RuntimeCode},
 };
-pub use soil_executor::soil_wasm_interface::HostFunctions;
+pub use soil_executor::wasm_interface::HostFunctions;
 use soil_executor::{error::Result, WasmExecutor};
 use soil_genesis_builder::{PresetId, Result as BuildResult};
 pub use soil_genesis_builder::{DEV_RUNTIME_PRESET, LOCAL_TESTNET_RUNTIME_PRESET};

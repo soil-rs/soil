@@ -112,7 +112,6 @@ members = [
 	"crates/soil/utils",
 	"crates/soil/version",
 	"crates/subsoil-version-proc-macro",
-	"crates/soil/wasm-interface",
 	"crates/soil/weights",
 	"crates/topsoil/alliance",
 	"crates/topsoil/asset-conversion",
@@ -594,7 +593,6 @@ soil-transaction-storage-proof = { path = "crates/soil/transaction-storage-proof
 soil-trie = { path = "crates/soil/trie", default-features = false }
 soil-version = { path = "crates/soil/version", default-features = false }
 subsoil-version-proc-macro = { path = "crates/subsoil-version-proc-macro", default-features = false }
-soil-wasm-interface = { path = "crates/soil/wasm-interface", default-features = false }
 soil-weights = { path = "crates/soil/weights", default-features = false }
 subkey = { path = "crates/substrate/subkey", default-features = false }
 substrate-bip39 = { path = "crates/substrate/substrate-bip39", default-features = false }

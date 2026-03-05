@@ -30,7 +30,7 @@ use crate::host::*;
 use crate::wasm::*;
 
 #[cfg(not(substrate_runtime))]
-use soil_wasm_interface::{FunctionContext, Pointer, Result};
+use subsoil::wasm_interface::{FunctionContext, Pointer, Result};
 
 #[cfg(not(substrate_runtime))]
 use alloc::{format, string::String};

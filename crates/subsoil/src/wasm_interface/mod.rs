@@ -17,20 +17,19 @@
 
 //! Types and traits for interfacing between the host and the wasm runtime.
 
-#![cfg_attr(not(feature = "std"), no_std)]
-
-extern crate alloc;
+// Re-export the macro so it's accessible as `subsoil::wasm_interface::if_wasmtime_is_enabled!`
+pub use crate::if_wasmtime_is_enabled;
 
 use alloc::{borrow::Cow, string::String, vec, vec::Vec};
 use core::{iter::Iterator, marker::PhantomData, mem};
 
-#[cfg(not(all(feature = "std", feature = "wasmtime")))]
+#[cfg(not(all(feature = "std", feature = "wasm-interface-wasmtime")))]
 #[macro_export]
 macro_rules! if_wasmtime_is_enabled {
 	($($token:tt)*) => {};
 }
 
-#[cfg(all(feature = "std", feature = "wasmtime"))]
+#[cfg(all(feature = "std", feature = "wasm-interface-wasmtime"))]
 #[macro_export]
 macro_rules! if_wasmtime_is_enabled {
     ($($token:tt)*) => {
@@ -388,7 +387,7 @@ impl HostFunctions for Tuple {
 		host_functions
 	}
 
-	#[cfg(all(feature = "std", feature = "wasmtime"))]
+	#[cfg(all(feature = "std", feature = "wasm-interface-wasmtime"))]
 	fn register_static<T>(registry: &mut T) -> core::result::Result<(), T::Error>
 	where
 		T: HostFunctionRegistry,
@@ -513,13 +512,13 @@ where
 /// A trait for types directly usable at the WASM FFI boundary without any conversion at all.
 ///
 /// This trait is sealed and should not be implemented downstream.
-#[cfg(all(feature = "std", feature = "wasmtime"))]
+#[cfg(all(feature = "std", feature = "wasm-interface-wasmtime"))]
 pub trait WasmTy: wasmtime::WasmTy + private::Sealed {}
 
 /// A trait for types directly usable at the WASM FFI boundary without any conversion at all.
 ///
 /// This trait is sealed and should not be implemented downstream.
-#[cfg(not(all(feature = "std", feature = "wasmtime")))]
+#[cfg(not(all(feature = "std", feature = "wasm-interface-wasmtime")))]
 pub trait WasmTy: private::Sealed {}
 
 impl WasmTy for i32 {}

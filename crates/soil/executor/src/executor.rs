@@ -38,7 +38,7 @@ use soil_executor_common::{
 	},
 };
 use soil_version::{GetNativeVersion, NativeVersion, RuntimeVersion};
-use soil_wasm_interface::{ExtendedHostFunctions, HostFunctions};
+use subsoil::wasm_interface::{ExtendedHostFunctions, HostFunctions};
 
 /// Set up the externalities and safe calling environment to execute runtime calls.
 ///
@@ -792,7 +792,7 @@ mod tests {
 
 		fn extract_host_functions<H>(
 			_: &WasmExecutor<H>,
-		) -> Vec<&'static dyn soil_wasm_interface::Function>
+		) -> Vec<&'static dyn subsoil::wasm_interface::Function>
 		where
 			H: HostFunctions,
 		{

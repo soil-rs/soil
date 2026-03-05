@@ -25,7 +25,7 @@ anyhow = { workspace = true, optional = true}
 soil-allocator = { workspace = true, default-features = true, optional = true}
 soil-executor-common = { workspace = true, default-features = true, optional = true}
 soil-runtime-interface = { workspace = true, default-features = true, optional = true}
-soil-wasm-interface = { features = ["wasmtime"], workspace = true, default-features = true, optional = true}
+subsoil = { features = ["wasm-interface-wasmtime"], workspace = true, default-features = true, optional = true}
 wasmtime = { features = [
 	"addr2line",
 	"cache",
@@ -57,12 +57,12 @@ std = [
 	"soil-allocator",
 	"soil-executor-common",
 	"soil-runtime-interface",
-	"soil-wasm-interface",
+	"subsoil",
 	"wasmtime",
 	"soil-allocator/std",
 	"soil-executor-common/std",
 	"soil-runtime-interface/std",
-	"soil-wasm-interface/std",
+	"subsoil/std",
 ]
 
 [dev-dependencies]

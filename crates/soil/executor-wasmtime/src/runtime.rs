@@ -33,7 +33,7 @@ use soil_executor_common::{
 	wasm_runtime::{HeapAllocStrategy, WasmInstance, WasmModule},
 };
 use soil_runtime_interface::unpack_ptr_and_len;
-use soil_wasm_interface::{HostFunctions, Pointer, WordSize};
+use subsoil::wasm_interface::{HostFunctions, Pointer, WordSize};
 use std::{
 	path::{Path, PathBuf},
 	sync::{

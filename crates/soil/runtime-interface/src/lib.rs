@@ -64,7 +64,7 @@ extern crate self as soil_runtime_interface;
 
 #[doc(hidden)]
 #[cfg(not(substrate_runtime))]
-pub use soil_wasm_interface;
+pub use subsoil::wasm_interface;
 
 #[doc(hidden)]
 pub use soil_tracing;
@@ -375,9 +375,9 @@ pub use util::{pack_ptr_and_len, unpack_ptr_and_len};
 pub trait RIType: Sized {
 	/// The raw FFI type that is used to pass `Self` through the host <-> runtime boundary.
 	#[cfg(not(substrate_runtime))]
-	type FFIType: soil_wasm_interface::IntoValue
-		+ soil_wasm_interface::TryFromValue
-		+ soil_wasm_interface::WasmTy;
+	type FFIType: subsoil::wasm_interface::IntoValue
+		+ subsoil::wasm_interface::TryFromValue
+		+ subsoil::wasm_interface::WasmTy;
 
 	#[cfg(substrate_runtime)]
 	type FFIType;
@@ -392,4 +392,4 @@ pub type Pointer<T> = *mut T;
 
 /// A raw pointer that can be used in a runtime interface function signature.
 #[cfg(not(substrate_runtime))]
-pub type Pointer<T> = soil_wasm_interface::Pointer<T>;
+pub type Pointer<T> = subsoil::wasm_interface::Pointer<T>;

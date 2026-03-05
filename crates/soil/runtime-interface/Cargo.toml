@@ -25,7 +25,6 @@ subsoil-runtime-interface-proc-macro = { workspace = true, default-features = tr
 subsoil = { workspace = true }
 soil-storage = { workspace = true }
 soil-tracing = { workspace = true }
-soil-wasm-interface = { workspace = true }
 static_assertions = { workspace = true, default-features = true }
 
 [target.'cfg(all(any(target_arch = "riscv32", target_arch = "riscv64"), substrate_runtime))'.dependencies]
@@ -50,7 +49,6 @@ std = [
 	"subsoil/std",
 	"soil-storage/std",
 	"soil-tracing/std",
-	"soil-wasm-interface/std",
 ]
 
 # ATTENTION

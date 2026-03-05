@@ -37,7 +37,7 @@ use soil_executor::WasmExecutor;
 #[cfg(feature = "std")]
 use soil_state_machine::BasicExternalities;
 #[cfg(feature = "std")]
-use soil_wasm_interface::HostFunctions;
+use subsoil::wasm_interface::HostFunctions;
 #[cfg(feature = "std")]
 use std::borrow::Cow;
 

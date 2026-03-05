@@ -23,7 +23,7 @@ soil-executor-common = { workspace = true, default-features = true, optional = t
 soil-core = { workspace = true, default-features = true, optional = true}
 subsoil-crypto-hashing = { workspace = true, default-features = true, optional = true}
 soil-state-machine = { workspace = true, default-features = true, optional = true}
-soil-wasm-interface = { workspace = true, default-features = true, optional = true}
+subsoil = { workspace = true, default-features = true, optional = true}
 
 thiserror = { workspace = true, optional = true}
 
@@ -36,14 +36,14 @@ std = [
 	"soil-executor",
 	"soil-executor-common",
 	"soil-state-machine",
-	"soil-wasm-interface",
+	"subsoil",
 	"thiserror",
 	"soil-core/std",
 	"subsoil-crypto-hashing/std",
 	"soil-executor/std",
 	"soil-executor-common/std",
 	"soil-state-machine/std",
-	"soil-wasm-interface/std",
+	"subsoil/std",
 ]
 
 [dev-dependencies]

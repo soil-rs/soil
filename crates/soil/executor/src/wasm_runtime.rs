@@ -32,7 +32,7 @@ use soil_executor_common::{
 	wasm_runtime::{HeapAllocStrategy, WasmInstance, WasmModule},
 };
 use soil_version::RuntimeVersion;
-use soil_wasm_interface::HostFunctions;
+use subsoil::wasm_interface::HostFunctions;
 
 use std::{
 	panic::AssertUnwindSafe,
@@ -450,7 +450,7 @@ mod tests {
 	use codec::Encode;
 	use soil_api::{Core, RuntimeApiInfo};
 	use soil_version::{create_apis_vec, RuntimeVersion};
-	use soil_wasm_interface::HostFunctions;
+	use subsoil::wasm_interface::HostFunctions;
 	use substrate_test_runtime::Block;
 
 	#[derive(Encode)]

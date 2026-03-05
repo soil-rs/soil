@@ -54,7 +54,7 @@ use soil_consensus::block_validation::{
 };
 use soil_core::traits::{CodeExecutor, SpawnNamed};
 use soil_executor::{
-	soil_wasm_interface::HostFunctions, HeapAllocStrategy, NativeExecutionDispatch,
+	wasm_interface::HostFunctions, HeapAllocStrategy, NativeExecutionDispatch,
 	RuntimeVersionOf, WasmExecutor, DEFAULT_HEAP_ALLOC_STRATEGY,
 };
 use soil_keystore::KeystorePtr;

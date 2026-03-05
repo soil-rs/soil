@@ -21,7 +21,7 @@ use soil_executor_common::{
 	error::{Error, Result},
 	util::checked_range,
 };
-use soil_wasm_interface::Pointer;
+use subsoil::wasm_interface::Pointer;
 use wasmtime::{AsContext, AsContextMut};
 
 /// Read data from the instance memory into a slice.

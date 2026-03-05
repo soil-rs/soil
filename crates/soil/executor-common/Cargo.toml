@@ -20,7 +20,7 @@ targets = ["x86_64-unknown-linux-gnu"]
 polkavm = { workspace = true, optional = true}
 soil-allocator = { workspace = true, default-features = true, optional = true}
 soil-maybe-compressed-blob = { workspace = true, default-features = true, optional = true}
-soil-wasm-interface = { workspace = true, default-features = true, optional = true}
+subsoil = { workspace = true, default-features = true, optional = true}
 thiserror = { workspace = true, optional = true}
 wasm-instrument = { workspace = true, default-features = true, optional = true}
 
@@ -29,10 +29,10 @@ std = [
 	"polkavm",
 	"soil-allocator",
 	"soil-maybe-compressed-blob",
-	"soil-wasm-interface",
+	"subsoil",
 	"thiserror",
 	"wasm-instrument",
 	"soil-allocator/std",
-	"soil-wasm-interface/std",
+	"subsoil/std",
 ]
 default = ["std"]

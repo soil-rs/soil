@@ -4743,7 +4743,6 @@ dependencies = [
  "soil-transaction-storage-proof",
  "soil-trie",
  "soil-version",
- "soil-wasm-interface",
  "soil-weights",
  "static_assertions",
  "subsoil",
@@ -9448,7 +9447,7 @@ version = "23.0.0"
 dependencies = [
  "log",
  "soil-core",
- "soil-wasm-interface",
+ "subsoil",
  "thiserror 1.0.69",
 ]
 
@@ -10061,7 +10060,6 @@ dependencies = [
  "soil-tracing",
  "soil-trie",
  "soil-version",
- "soil-wasm-interface",
  "subsoil",
  "subsoil-crypto-hashing",
  "substrate-test-runtime",
@@ -10078,7 +10076,7 @@ dependencies = [
  "polkavm",
  "soil-allocator",
  "soil-maybe-compressed-blob",
- "soil-wasm-interface",
+ "subsoil",
  "thiserror 1.0.69",
  "wasm-instrument",
 ]
@@ -10090,7 +10088,7 @@ dependencies = [
  "log",
  "polkavm",
  "soil-executor-common",
- "soil-wasm-interface",
+ "subsoil",
 ]
 
 [[package]]
@@ -10109,7 +10107,7 @@ dependencies = [
  "soil-io",
  "soil-runtime-interface",
  "soil-runtime-test",
- "soil-wasm-interface",
+ "subsoil",
  "tempfile",
  "wasmtime",
  "wat",
@@ -10721,7 +10719,6 @@ dependencies = [
  "soil-state-machine",
  "soil-storage",
  "soil-tracing",
- "soil-wasm-interface",
  "sp-runtime-interface-test-wasm",
  "static_assertions",
  "subsoil",
@@ -10751,7 +10748,7 @@ dependencies = [
  "soil-io",
  "soil-state-machine",
  "soil-version",
- "soil-wasm-interface",
+ "subsoil",
  "subsoil-crypto-hashing",
  "subxt",
  "thiserror 1.0.69",
@@ -11154,17 +11151,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "soil-wasm-interface"
-version = "20.0.0"
-dependencies = [
- "anyhow",
- "impl-trait-for-tuples",
- "log",
- "parity-scale-codec",
- "wasmtime",
-]
-
-[[package]]
 name = "soil-weights"
 version = "27.0.0"
 dependencies = [
@@ -11288,6 +11274,7 @@ dependencies = [
  "soil-state-machine",
  "sp-runtime-interface-test-wasm",
  "sp-runtime-interface-test-wasm-deprecated",
+ "subsoil",
  "tracing",
  "tracing-core",
 ]
@@ -11649,9 +11636,14 @@ dependencies = [
 name = "subsoil"
 version = "0.1.0"
 dependencies = [
+ "anyhow",
  "backtrace",
+ "impl-trait-for-tuples",
+ "log",
+ "parity-scale-codec",
  "regex",
  "subsoil-crypto-hashing",
+ "wasmtime",
 ]
 
 [[package]]
