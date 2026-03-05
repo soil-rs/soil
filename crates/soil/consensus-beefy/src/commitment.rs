@@ -336,7 +336,7 @@ mod tests {
 	use crate::{ecdsa_crypto::Signature as EcdsaSignature, known_payloads};
 	use codec::Decode;
 	use soil_core::Pair;
-	use soil_crypto_hashing::keccak_256;
+	use subsoil_crypto_hashing::keccak_256;
 
 	#[cfg(feature = "bls-experimental")]
 	use crate::bls_crypto::Signature as BlsSignature;

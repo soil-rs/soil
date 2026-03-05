@@ -26,7 +26,7 @@ use soil_core::{ecdsa, Pair};
 use soil_runtime::traits::{BlockNumber, Header as HeaderT};
 
 use codec::Encode;
-use soil_crypto_hashing::keccak_256;
+use subsoil_crypto_hashing::keccak_256;
 use std::{collections::HashMap, marker::PhantomData, sync::LazyLock};
 use strum::IntoEnumIterator;
 

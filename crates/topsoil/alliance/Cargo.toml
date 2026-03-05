@@ -23,7 +23,7 @@ codec = { features = ["derive"], workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 
 soil-core = { workspace = true }
-soil-crypto-hashing = { optional = true, workspace = true }
+subsoil-crypto-hashing = { optional = true, workspace = true }
 soil-io = { workspace = true }
 soil-runtime = { workspace = true }
 
@@ -38,7 +38,7 @@ topsoil-identity = { workspace = true }
 array-bytes = { workspace = true, default-features = true }
 topsoil-balances = { workspace = true, default-features = true }
 topsoil-collective = { workspace = true, default-features = true }
-soil-crypto-hashing = { workspace = true }
+subsoil-crypto-hashing = { workspace = true }
 
 [features]
 default = ["std"]
@@ -53,7 +53,7 @@ std = [
 	"topsoil-identity/std",
 	"scale-info/std",
 	"soil-core/std",
-	"soil-crypto-hashing?/std",
+	"subsoil-crypto-hashing?/std",
 	"soil-io/std",
 	"soil-runtime/std",
 ]
@@ -65,7 +65,7 @@ runtime-benchmarks = [
 	"topsoil-balances/runtime-benchmarks",
 	"topsoil-collective/runtime-benchmarks",
 	"topsoil-identity/runtime-benchmarks",
-	"soil-crypto-hashing",
+	"subsoil-crypto-hashing",
 	"soil-runtime/runtime-benchmarks",
 ]
 try-runtime = [

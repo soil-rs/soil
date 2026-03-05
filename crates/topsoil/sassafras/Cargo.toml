@@ -33,7 +33,7 @@ soil-runtime = { workspace = true }
 [dev-dependencies]
 array-bytes = { workspace = true, default-features = true }
 soil-core = { workspace = true, default-features = true }
-soil-crypto-hashing = { workspace = true, default-features = true }
+subsoil-crypto-hashing = { workspace = true, default-features = true }
 
 [features]
 default = ["std"]

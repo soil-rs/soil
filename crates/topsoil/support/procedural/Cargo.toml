@@ -32,7 +32,7 @@ macro_magic = { features = ["proc_support"], workspace = true }
 proc-macro-warning = { workspace = true }
 proc-macro2 = { workspace = true }
 quote = { workspace = true }
-soil-crypto-hashing = { workspace = true }
+subsoil-crypto-hashing = { workspace = true }
 syn = { features = ["full", "parsing", "visit-mut"], workspace = true }
 
 [dev-dependencies]
@@ -55,7 +55,7 @@ std = [
 	"topsoil-support/std",
 	"topsoil-system/std",
 	"scale-info/std",
-	"soil-crypto-hashing/std",
+	"subsoil-crypto-hashing/std",
 	"soil-metadata-ir/std",
 	"soil-runtime/std",
 ]

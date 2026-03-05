@@ -406,7 +406,7 @@ pub fn benchmark_cpu_parallelism(limit: ExecutionLimit, refhw_num_cores: usize) 
 
 			let run = || -> Result<(), ()> {
 				clobber_slice(&mut buffer);
-				hash = soil_crypto_hashing::blake2_256(&buffer);
+				hash = subsoil_crypto_hashing::blake2_256(&buffer);
 				clobber_slice(&mut hash);
 
 				Ok(())

@@ -398,7 +398,7 @@ pub fn new_bench_ext() -> soil_io::TestExternalities {
 }
 
 pub fn test_cid() -> Cid {
-	let result = soil_crypto_hashing::sha2_256(b"hello world");
+	let result = subsoil_crypto_hashing::sha2_256(b"hello world");
 	Cid::new_v0(result)
 }
 

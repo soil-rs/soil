@@ -42,8 +42,8 @@ members = [
 	"crates/soil/core",
 	"crates/soil/core/fuzz",
 	"crates/soil/crypto-ec-utils",
-	"crates/soil/crypto-hashing",
-	"crates/soil/crypto-hashing/proc-macro",
+	"crates/subsoil-crypto-hashing",
+	"crates/subsoil-crypto-hashing/proc-macro",
 	"crates/soil/database",
 	"crates/soil/debug-derive",
 	"crates/soil/executor",
@@ -559,8 +559,8 @@ soil-consensus-sassafras = { path = "crates/soil/consensus-sassafras", default-f
 soil-consensus-slots = { path = "crates/soil/consensus-slots", default-features = false }
 soil-core = { path = "crates/soil/core", default-features = false }
 soil-crypto-ec-utils = { default-features = false, path = "crates/soil/crypto-ec-utils" }
-soil-crypto-hashing = { path = "crates/soil/crypto-hashing", default-features = false }
-soil-crypto-hashing-proc-macro = { path = "crates/soil/crypto-hashing/proc-macro", default-features = false }
+subsoil-crypto-hashing = { path = "crates/subsoil-crypto-hashing", default-features = false }
+subsoil-crypto-hashing-proc-macro = { path = "crates/subsoil-crypto-hashing/proc-macro", default-features = false }
 soil-database = { path = "crates/soil/database", default-features = false }
 soil-debug-derive = { path = "crates/soil/debug-derive", default-features = false }
 soil-externalities = { path = "crates/soil/externalities", default-features = false }

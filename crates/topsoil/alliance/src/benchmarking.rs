@@ -37,7 +37,7 @@ fn assert_last_event<T: Config<I>, I: 'static>(generic_event: <T as Config<I>>::
 }
 
 fn cid(input: impl AsRef<[u8]>) -> Cid {
-	let result = soil_crypto_hashing::sha2_256(input.as_ref());
+	let result = subsoil_crypto_hashing::sha2_256(input.as_ref());
 	Cid::new_v0(result)
 }
 

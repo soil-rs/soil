@@ -35,7 +35,7 @@ serde_json = { features = ["alloc"], workspace = true }
 soil-api = { features = ["frame-metadata"], workspace = true }
 soil-arithmetic = { workspace = true }
 soil-core = { workspace = true }
-soil-crypto-hashing-proc-macro = { workspace = true, default-features = true }
+subsoil-crypto-hashing-proc-macro = { workspace = true, default-features = true }
 soil-debug-derive = { workspace = true }
 soil-genesis-builder = { workspace = true }
 soil-inherents = { workspace = true }
@@ -56,7 +56,7 @@ aquamarine = { workspace = true }
 Inflector = { workspace = true }
 topsoil-system = { workspace = true, default-features = true }
 pretty_assertions = { workspace = true }
-soil-crypto-hashing = { workspace = true, default-features = true }
+subsoil-crypto-hashing = { workspace = true, default-features = true }
 soil-timestamp = { workspace = true, default-features = true }
 
 [features]

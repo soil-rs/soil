@@ -58,7 +58,7 @@ ed25519-zebra = { workspace = true }
 libsecp256k1 = { features = ["static-context"], workspace = true }
 merlin = { workspace = true }
 schnorrkel = { features = ["preaudit_deprecated"], workspace = true }
-soil-crypto-hashing = { workspace = true }
+subsoil-crypto-hashing = { workspace = true }
 # k256 crate, better portability, intended to be used in substrate-runtimes (no-std)
 k256 = { features = ["alloc", "ecdsa"], workspace = true }
 # secp256k1 crate, better performance, intended to be used on host side (std)
@@ -115,7 +115,7 @@ std = [
 	"secp256k1/std",
 	"serde/std",
 	"sha2?/std",
-	"soil-crypto-hashing/std",
+	"subsoil-crypto-hashing/std",
 	"soil-debug-derive/std",
 	"soil-externalities/std",
 	"soil-std/std",

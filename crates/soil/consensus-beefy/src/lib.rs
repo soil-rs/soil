@@ -113,7 +113,7 @@ pub mod ecdsa_crypto {
 	use soil_core::crypto::Wraps;
 	#[cfg(feature = "std")]
 	use soil_core::ByteArray;
-	use soil_crypto_hashing::keccak_256;
+	use subsoil_crypto_hashing::keccak_256;
 	#[cfg(feature = "std")]
 	use soil_keystore::KeystorePtr;
 
@@ -618,7 +618,7 @@ mod tests {
 	use super::*;
 	use soil_application_crypto::ecdsa::{self, Public};
 	use soil_core::crypto::{Pair, Wraps};
-	use soil_crypto_hashing::keccak_256;
+	use subsoil_crypto_hashing::keccak_256;
 
 	#[test]
 	fn validator_set() {

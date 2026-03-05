@@ -171,7 +171,7 @@ topsoil-sudo = { workspace = true, default-features = true }
 topsoil-timestamp = { workspace = true, default-features = true }
 topsoil-transaction-payment = { workspace = true, default-features = true }
 topsoil-treasury = { workspace = true, default-features = true }
-soil-crypto-hashing = { workspace = true, default-features = true }
+subsoil-crypto-hashing = { workspace = true, default-features = true }
 soil-tracing = { workspace = true, default-features = true }
 soil-application-crypto = { workspace = true, default-features = true }
 soil-externalities = { workspace = true, default-features = true }

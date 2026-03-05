@@ -52,7 +52,7 @@ sc-keystore = { workspace = true }
 soil-network = { workspace = true, default-features = true }
 sc-transaction-pool = { workspace = true, default-features = true }
 soil-consensus = { workspace = true, default-features = true }
-soil-crypto-hashing = { workspace = true, default-features = true }
+subsoil-crypto-hashing = { workspace = true, default-features = true }
 substrate-test-runtime-client = { workspace = true }
 tempfile = { workspace = true }
 

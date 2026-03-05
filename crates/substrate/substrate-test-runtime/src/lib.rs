@@ -980,11 +980,11 @@ pub mod storage_key_generator {
 	}
 
 	fn concat_hashes(input: &Vec<&[u8]>) -> String {
-		input.iter().map(|s| soil_crypto_hashing::twox_128(s)).map(hex).collect()
+		input.iter().map(|s| subsoil_crypto_hashing::twox_128(s)).map(hex).collect()
 	}
 
 	fn twox_64_concat(x: &[u8]) -> Vec<u8> {
-		soil_crypto_hashing::twox_64(x).iter().chain(x.iter()).cloned().collect()
+		subsoil_crypto_hashing::twox_64(x).iter().chain(x.iter()).cloned().collect()
 	}
 
 	/// Generate the hashed storage keys from the raw literals. These keys are expected to be in
@@ -1026,7 +1026,7 @@ pub mod storage_key_generator {
 				Sr25519Keyring::Charlie.public().to_vec(),
 			])
 			.map(|pubkey| {
-				soil_crypto_hashing::blake2_128(&pubkey)
+				subsoil_crypto_hashing::blake2_128(&pubkey)
 					.iter()
 					.chain(pubkey.iter())
 					.cloned()

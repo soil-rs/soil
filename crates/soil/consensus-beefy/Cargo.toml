@@ -21,7 +21,7 @@ serde = { optional = true, features = ["alloc", "derive"], workspace = true }
 soil-api = { workspace = true }
 soil-application-crypto = { workspace = true }
 soil-core = { workspace = true }
-soil-crypto-hashing = { workspace = true }
+subsoil-crypto-hashing = { workspace = true }
 soil-io = { workspace = true }
 soil-keystore = { workspace = true }
 soil-mmr-primitives = { workspace = true }
@@ -42,7 +42,7 @@ std = [
 	"soil-api/std",
 	"soil-application-crypto/std",
 	"soil-core/std",
-	"soil-crypto-hashing/std",
+	"subsoil-crypto-hashing/std",
 	"soil-io/std",
 	"soil-keystore/std",
 	"soil-mmr-primitives/std",

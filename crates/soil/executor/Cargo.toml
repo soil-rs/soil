@@ -47,7 +47,7 @@ num_cpus = { workspace = true }
 paste = { workspace = true, default-features = true }
 soil-runtime-test = { workspace = true }
 sc-tracing = { workspace = true, default-features = true }
-soil-crypto-hashing = { workspace = true, default-features = true }
+subsoil-crypto-hashing = { workspace = true, default-features = true }
 soil-maybe-compressed-blob = { workspace = true, default-features = true }
 soil-runtime = { workspace = true, default-features = true }
 soil-state-machine = { workspace = true, default-features = true }

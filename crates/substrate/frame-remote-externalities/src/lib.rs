@@ -898,7 +898,7 @@ where
 		online_config.pallets.iter().for_each(|p| {
 			online_config
 				.hashed_prefixes
-				.push(soil_crypto_hashing::twox_128(p.as_bytes()).to_vec())
+				.push(subsoil_crypto_hashing::twox_128(p.as_bytes()).to_vec())
 		});
 
 		if online_config.child_trie {

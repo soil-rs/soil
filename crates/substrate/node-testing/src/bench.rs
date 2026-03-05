@@ -49,7 +49,7 @@ use soil_consensus::BlockOrigin;
 use soil_core::{
 	crypto::get_public_from_string_or_panic, ed25519, sr25519, traits::SpawnNamed, Pair,
 };
-use soil_crypto_hashing::blake2_256;
+use subsoil_crypto_hashing::blake2_256;
 use soil_executor::{WasmExecutionMethod, WasmtimeInstantiationStrategy};
 use soil_inherents::InherentData;
 use soil_runtime::{

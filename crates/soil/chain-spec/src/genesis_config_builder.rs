@@ -63,7 +63,7 @@ where
 	pub fn new(code: &'a [u8]) -> Self {
 		GenesisConfigBuilderRuntimeCaller {
 			code: code.into(),
-			code_hash: soil_crypto_hashing::blake2_256(code).to_vec(),
+			code_hash: subsoil_crypto_hashing::blake2_256(code).to_vec(),
 			executor: WasmExecutor::<(soil_io::SubstrateHostFunctions, EHF)>::builder()
 				.with_allow_missing_host_functions(true)
 				.build(),

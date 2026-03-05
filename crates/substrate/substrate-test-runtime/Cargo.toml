@@ -35,7 +35,7 @@ soil-consensus-aura = { features = ["serde"], workspace = true }
 soil-consensus-babe = { features = ["serde"], workspace = true }
 soil-consensus-grandpa = { features = ["serde"], workspace = true }
 soil-core = { features = ["serde"], workspace = true }
-soil-crypto-hashing = { workspace = true }
+subsoil-crypto-hashing = { workspace = true }
 soil-debug-derive = { workspace = true, default-features = false }
 soil-externalities = { workspace = true }
 soil-genesis-builder = { workspace = true }
@@ -101,7 +101,7 @@ std = [
 	"soil-consensus-babe/std",
 	"soil-consensus-grandpa/std",
 	"soil-core/std",
-	"soil-crypto-hashing/std",
+	"subsoil-crypto-hashing/std",
 	"soil-debug-derive/std",
 	"soil-externalities/std",
 	"soil-genesis-builder/std",

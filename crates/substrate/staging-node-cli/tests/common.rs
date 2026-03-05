@@ -113,7 +113,7 @@ pub fn executor_call(
 	let heap_pages = t.storage(soil_core::storage::well_known_keys::HEAP_PAGES);
 	let runtime_code = RuntimeCode {
 		code_fetcher: &soil_core::traits::WrappedRuntimeCode(code.as_slice().into()),
-		hash: soil_crypto_hashing::blake2_256(&code).to_vec(),
+		hash: subsoil_crypto_hashing::blake2_256(&code).to_vec(),
 		heap_pages: heap_pages.and_then(|hp| Decode::decode(&mut &hp[..]).ok()),
 	};
 	soil_tracing::try_init_simple();

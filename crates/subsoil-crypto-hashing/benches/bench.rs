@@ -21,37 +21,37 @@ const MAX_EXP: usize = 20;
 
 fn bench_blake2_128(b: &mut Bencher, buf: &Vec<u8>) {
 	b.iter(|| {
-		let _a = soil_crypto_hashing::blake2_128(black_box(buf));
+		let _a = subsoil_crypto_hashing::blake2_128(black_box(buf));
 	});
 }
 
 fn bench_twox_128(b: &mut Bencher, buf: &Vec<u8>) {
 	b.iter(|| {
-		let _a = soil_crypto_hashing::twox_128(black_box(buf));
+		let _a = subsoil_crypto_hashing::twox_128(black_box(buf));
 	});
 }
 
 fn bench_blake2_256(b: &mut Bencher, buf: &Vec<u8>) {
 	b.iter(|| {
-		let _a = soil_crypto_hashing::blake2_256(black_box(buf));
+		let _a = subsoil_crypto_hashing::blake2_256(black_box(buf));
 	});
 }
 
 fn bench_twox_256(b: &mut Bencher, buf: &Vec<u8>) {
 	b.iter(|| {
-		let _a = soil_crypto_hashing::twox_256(black_box(buf));
+		let _a = subsoil_crypto_hashing::twox_256(black_box(buf));
 	});
 }
 
 fn bench_sha_256(b: &mut Bencher, buf: &Vec<u8>) {
 	b.iter(|| {
-		let _a = soil_crypto_hashing::sha2_256(black_box(buf));
+		let _a = subsoil_crypto_hashing::sha2_256(black_box(buf));
 	});
 }
 
 fn bench_keccak_256(b: &mut Bencher, buf: &Vec<u8>) {
 	b.iter(|| {
-		let _a = soil_crypto_hashing::keccak_256(black_box(buf));
+		let _a = subsoil_crypto_hashing::keccak_256(black_box(buf));
 	});
 }
 

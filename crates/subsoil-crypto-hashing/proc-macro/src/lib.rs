@@ -30,24 +30,24 @@
 //!
 //! ```rust
 //! assert_eq!(
-//! 	soil_crypto_hashing_proc_macro::blake2b_256!(b"test"),
-//! 	soil_crypto_hashing::blake2_256(b"test"),
+//! 	subsoil_crypto_hashing_proc_macro::blake2b_256!(b"test"),
+//! 	subsoil_crypto_hashing::blake2_256(b"test"),
 //! );
 //! assert_eq!(
-//! 	soil_crypto_hashing_proc_macro::blake2b_256!([1u8]),
-//! 	soil_crypto_hashing::blake2_256(&[1u8]),
+//! 	subsoil_crypto_hashing_proc_macro::blake2b_256!([1u8]),
+//! 	subsoil_crypto_hashing::blake2_256(&[1u8]),
 //! );
 //! assert_eq!(
-//! 	soil_crypto_hashing_proc_macro::blake2b_256!([1, 2, 3]),
-//! 	soil_crypto_hashing::blake2_256(&[1, 2, 3]),
+//! 	subsoil_crypto_hashing_proc_macro::blake2b_256!([1, 2, 3]),
+//! 	subsoil_crypto_hashing::blake2_256(&[1, 2, 3]),
 //! );
 //! assert_eq!(
-//! 	soil_crypto_hashing_proc_macro::blake2b_256!(identifier),
-//! 	soil_crypto_hashing::blake2_256(b"identifier"),
+//! 	subsoil_crypto_hashing_proc_macro::blake2b_256!(identifier),
+//! 	subsoil_crypto_hashing::blake2_256(b"identifier"),
 //! );
 //! assert_eq!(
-//! 	soil_crypto_hashing_proc_macro::blake2b_256!(identifier, b"/string"),
-//! 	soil_crypto_hashing::blake2_256(b"identifier/string"),
+//! 	subsoil_crypto_hashing_proc_macro::blake2b_256!(identifier, b"/string"),
+//! 	subsoil_crypto_hashing::blake2_256(b"identifier/string"),
 //! );
 //! ```
 

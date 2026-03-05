@@ -28,7 +28,7 @@ soil-telemetry = { workspace = true, default-features = true, optional = true}
 serde = { features = ["derive"], workspace = true, default-features = true, optional = true}
 serde_json = { workspace = true, default-features = true, optional = true}
 soil-core = { workspace = true, default-features = true, optional = true}
-soil-crypto-hashing = { workspace = true, default-features = true, optional = true}
+subsoil-crypto-hashing = { workspace = true, default-features = true, optional = true}
 soil-io = { workspace = true, default-features = true, optional = true}
 
 [features]
@@ -44,11 +44,11 @@ std = [
 	"serde",
 	"serde_json",
 	"soil-core",
-	"soil-crypto-hashing",
+	"subsoil-crypto-hashing",
 	"soil-io",
 	"soil-telemetry",
 	"soil-core/std",
-	"soil-crypto-hashing/std",
+	"subsoil-crypto-hashing/std",
 	"soil-io/std",
 	"soil-telemetry/std",
 ]

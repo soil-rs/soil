@@ -50,7 +50,7 @@ pub use impl_serde::serialize as bytes;
 	since = "27.0.0",
 	note = "`sp-crypto-hashing` re-exports will be removed after June 2024. Use `sp-crypto-hashing` instead."
 )]
-pub use soil_crypto_hashing::{self as hashing, *};
+pub use subsoil_crypto_hashing::{self as hashing, *};
 
 pub mod const_hex2array;
 pub mod crypto;

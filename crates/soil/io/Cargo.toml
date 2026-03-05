@@ -22,7 +22,7 @@ bytes = { workspace = true }
 codec = { features = ["bytes"], workspace = true }
 secp256k1 = { features = ["global-context", "recovery"], optional = true, workspace = true, default-features = true }
 soil-core = { workspace = true }
-soil-crypto-hashing = { workspace = true }
+subsoil-crypto-hashing = { workspace = true }
 soil-externalities = { workspace = true }
 soil-keystore = { optional = true, workspace = true }
 soil-runtime-interface = { workspace = true }
@@ -62,7 +62,7 @@ std = [
 	"secp256k1/global-context",
 	"secp256k1/std",
 	"soil-core/std",
-	"soil-crypto-hashing/std",
+	"subsoil-crypto-hashing/std",
 	"soil-externalities/std",
 	"soil-keystore/std",
 	"soil-runtime-interface/std",

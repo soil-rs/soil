@@ -22,7 +22,7 @@ impl-serde = { optional = true, workspace = true }
 parity-wasm = { optional = true, workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { features = ["alloc", "derive"], optional = true, workspace = true }
-soil-crypto-hashing-proc-macro = { workspace = true, default-features = true }
+subsoil-crypto-hashing-proc-macro = { workspace = true, default-features = true }
 soil-runtime = { workspace = true }
 soil-std = { workspace = true }
 soil-version-proc-macro = { workspace = true }

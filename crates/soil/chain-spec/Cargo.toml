@@ -30,7 +30,7 @@ serde = { features = ["derive"], workspace = true, default-features = true, opti
 serde_json = { workspace = true, default-features = true, optional = true}
 soil-blockchain = { workspace = true, default-features = true, optional = true}
 soil-core = { workspace = true, default-features = true, optional = true}
-soil-crypto-hashing = { workspace = true, default-features = true, optional = true}
+subsoil-crypto-hashing = { workspace = true, default-features = true, optional = true}
 soil-genesis-builder = { workspace = true, default-features = true, optional = true}
 soil-io = { workspace = true, optional = true}
 soil-runtime = { workspace = true, default-features = true, optional = true}
@@ -51,7 +51,7 @@ std = [
 	"soil-chain-spec-derive",
 	"soil-client-api",
 	"soil-core",
-	"soil-crypto-hashing",
+	"subsoil-crypto-hashing",
 	"soil-executor",
 	"soil-genesis-builder",
 	"soil-io",
@@ -62,7 +62,7 @@ std = [
 	"soil-tracing",
 	"soil-client-api/std",
 	"soil-core/std",
-	"soil-crypto-hashing/std",
+	"subsoil-crypto-hashing/std",
 	"soil-executor/std",
 	"soil-genesis-builder/std",
 	"soil-io/std",

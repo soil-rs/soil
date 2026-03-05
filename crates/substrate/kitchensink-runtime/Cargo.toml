@@ -161,8 +161,8 @@ soil-consensus-pow = { workspace = true }
 soil-consensus-slots = { workspace = true }
 soil-core = { workspace = true }
 soil-crypto-ec-utils = { workspace = true }
-soil-crypto-hashing = { workspace = true }
-soil-crypto-hashing-proc-macro = { workspace = true }
+subsoil-crypto-hashing = { workspace = true }
+subsoil-crypto-hashing-proc-macro = { workspace = true }
 soil-externalities = { workspace = true }
 soil-genesis-builder = { workspace = true }
 soil-inherents = { workspace = true }
@@ -340,7 +340,7 @@ std = [
 	"soil-consensus-slots/std",
 	"soil-core/std",
 	"soil-crypto-ec-utils/std",
-	"soil-crypto-hashing/std",
+	"subsoil-crypto-hashing/std",
 	"soil-debug-derive/std",
 	"soil-externalities/std",
 	"soil-genesis-builder/std",

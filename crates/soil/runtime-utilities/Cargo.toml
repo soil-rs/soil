@@ -21,7 +21,7 @@ codec = { workspace = true, default-features = true, optional = true}
 soil-executor = { workspace = true, default-features = true, optional = true}
 soil-executor-common = { workspace = true, default-features = true, optional = true}
 soil-core = { workspace = true, default-features = true, optional = true}
-soil-crypto-hashing = { workspace = true, default-features = true, optional = true}
+subsoil-crypto-hashing = { workspace = true, default-features = true, optional = true}
 soil-state-machine = { workspace = true, default-features = true, optional = true}
 soil-wasm-interface = { workspace = true, default-features = true, optional = true}
 
@@ -32,14 +32,14 @@ default = ["std"]
 std = [
 	"codec",
 	"soil-core",
-	"soil-crypto-hashing",
+	"subsoil-crypto-hashing",
 	"soil-executor",
 	"soil-executor-common",
 	"soil-state-machine",
 	"soil-wasm-interface",
 	"thiserror",
 	"soil-core/std",
-	"soil-crypto-hashing/std",
+	"subsoil-crypto-hashing/std",
 	"soil-executor/std",
 	"soil-executor-common/std",
 	"soil-state-machine/std",

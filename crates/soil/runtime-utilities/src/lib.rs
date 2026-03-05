@@ -92,7 +92,7 @@ impl<'a> FetchRuntimeCode for BasicCodeFetcher<'a> {
 #[cfg(feature = "std")]
 impl<'a> BasicCodeFetcher<'a> {
 	fn new(code: Cow<'a, [u8]>) -> Self {
-		Self { hash: soil_crypto_hashing::blake2_256(&code).to_vec(), code }
+		Self { hash: subsoil_crypto_hashing::blake2_256(&code).to_vec(), code }
 	}
 
 	fn runtime_code(&'a self) -> RuntimeCode<'a> {

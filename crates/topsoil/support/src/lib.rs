@@ -60,7 +60,7 @@ pub mod __private {
 	pub use serde;
 	pub use serde_json;
 	pub use soil_core::{Get, OpaqueMetadata, Void};
-	pub use soil_crypto_hashing_proc_macro;
+	pub use subsoil_crypto_hashing_proc_macro;
 	pub use soil_inherents;
 	#[cfg(feature = "std")]
 	pub use soil_io::TestExternalities;

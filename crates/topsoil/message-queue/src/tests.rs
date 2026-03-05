@@ -22,7 +22,7 @@
 use crate::{mock::*, *};
 
 use rand::{rngs::StdRng, Rng, SeedableRng};
-use soil_crypto_hashing::blake2_256;
+use subsoil_crypto_hashing::blake2_256;
 use topsoil_support::{
 	assert_noop, assert_ok, assert_storage_noop, traits::BatchFootprint, StorageNoopGuard,
 };

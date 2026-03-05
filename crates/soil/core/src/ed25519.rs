@@ -65,7 +65,7 @@ pub struct Pair {
 /// Derive a single hard junction.
 fn derive_hard_junction(secret_seed: &Seed, cc: &[u8; 32]) -> Seed {
 	use codec::Encode;
-	("Ed25519HDKD", secret_seed, cc).using_encoded(soil_crypto_hashing::blake2_256)
+	("Ed25519HDKD", secret_seed, cc).using_encoded(subsoil_crypto_hashing::blake2_256)
 }
 
 impl TraitPair for Pair {

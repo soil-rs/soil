@@ -77,7 +77,7 @@ impl<TBlockNumber, TSignatureAccumulator>
 #[cfg(test)]
 mod tests {
 	use soil_core::Pair;
-	use soil_crypto_hashing::keccak_256;
+	use subsoil_crypto_hashing::keccak_256;
 
 	use super::*;
 	use codec::Decode;
