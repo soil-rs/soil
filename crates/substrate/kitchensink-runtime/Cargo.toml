@@ -156,7 +156,6 @@ soil-consensus-beefy = { workspace = true }
 soil-consensus-grandpa = { workspace = true }
 soil-consensus-pow = { workspace = true }
 soil-consensus-slots = { workspace = true }
-soil-crypto-ec-utils = { workspace = true }
 subsoil-crypto-hashing = { workspace = true }
 subsoil-crypto-hashing-proc-macro = { workspace = true }
 soil-genesis-builder = { workspace = true }
@@ -311,7 +310,6 @@ std = [
 	"soil-consensus-grandpa/std",
 	"soil-consensus-pow/std",
 	"soil-consensus-slots/std",
-	"soil-crypto-ec-utils/std",
 	"subsoil-crypto-hashing/std",
 	"subsoil-debug-derive/std",
 	"soil-genesis-builder/std",

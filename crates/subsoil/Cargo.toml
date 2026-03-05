@@ -105,6 +105,20 @@ w3f-bls = { optional = true, workspace = true }
 # bandersnatch crypto
 ark-vrf = { optional = true, workspace = true, features = ["bandersnatch", "ring"] }
 
+# soil-crypto-ec-utils dependencies (all optional, behind curve features)
+ark-bls12-377 = { features = ["curve"], optional = true, workspace = true }
+ark-bls12-377-ext = { optional = true, workspace = true }
+ark-bls12-381 = { features = ["curve"], optional = true, workspace = true }
+ark-bls12-381-ext = { optional = true, workspace = true }
+ark-bw6-761 = { optional = true, workspace = true }
+ark-bw6-761-ext = { optional = true, workspace = true }
+ark-ec = { optional = true, workspace = true }
+ark-ed-on-bls12-377 = { optional = true, workspace = true }
+ark-ed-on-bls12-377-ext = { optional = true, workspace = true }
+ark-ed-on-bls12-381-bandersnatch = { optional = true, workspace = true }
+ark-ed-on-bls12-381-bandersnatch-ext = { optional = true, workspace = true }
+ark-scale = { features = ["hazmat"], optional = true, workspace = true }
+
 [target.'cfg(all(any(target_arch = "riscv32", target_arch = "riscv64"), substrate_runtime))'.dependencies]
 polkavm-derive = { workspace = true }
 
@@ -131,6 +145,8 @@ trie-bench = { workspace = true }
 trie-standardmap = { workspace = true }
 substrate-test-runtime-client = { workspace = true }
 zstd = { workspace = true }
+ark-ff = { workspace = true }
+ark-std = { workspace = true }
 
 [features]
 default = ["std"]
@@ -208,6 +224,22 @@ std = [
 	"tuplex/std",
 	# soil-api std features
 	"subsoil-api-proc-macro/std",
+	# soil-crypto-ec-utils std features
+	"ark-bls12-377-ext?/std",
+	"ark-bls12-377?/std",
+	"ark-bls12-381-ext?/std",
+	"ark-bls12-381?/std",
+	"ark-bw6-761-ext?/std",
+	"ark-bw6-761?/std",
+	"ark-ec?/parallel",
+	"ark-ec?/std",
+	"ark-ed-on-bls12-377-ext?/std",
+	"ark-ed-on-bls12-377?/std",
+	"ark-ed-on-bls12-381-bandersnatch-ext?/std",
+	"ark-ed-on-bls12-381-bandersnatch?/std",
+	"ark-ff/std",
+	"ark-scale?/std",
+	"ark-std/std",
 ]
 runtime-benchmarks = []
 try-runtime = []
@@ -233,6 +265,25 @@ json-schema = ["dep:schemars"]
 full_crypto = ["blake2"]
 bls-experimental = ["sha2", "w3f-bls"]
 bandersnatch-experimental = ["ark-vrf"]
+
+# soil-crypto-ec-utils features
+crypto-ec-utils-common = ["ark-ec", "ark-scale"]
+crypto-ec-utils-bls12-377 = ["ark-bls12-377", "ark-bls12-377-ext", "crypto-ec-utils-common"]
+crypto-ec-utils-bls12-381 = ["ark-bls12-381", "ark-bls12-381-ext", "crypto-ec-utils-common"]
+crypto-ec-utils-bw6-761 = ["ark-bw6-761", "ark-bw6-761-ext", "crypto-ec-utils-common"]
+crypto-ec-utils-ed-on-bls12-377 = ["ark-ed-on-bls12-377", "ark-ed-on-bls12-377-ext", "crypto-ec-utils-common"]
+crypto-ec-utils-ed-on-bls12-381-bandersnatch = [
+	"ark-ed-on-bls12-381-bandersnatch",
+	"ark-ed-on-bls12-381-bandersnatch-ext",
+	"crypto-ec-utils-common",
+]
+crypto-ec-utils-all-curves = [
+	"crypto-ec-utils-bls12-377",
+	"crypto-ec-utils-bls12-381",
+	"crypto-ec-utils-bw6-761",
+	"crypto-ec-utils-ed-on-bls12-377",
+	"crypto-ec-utils-ed-on-bls12-381-bandersnatch",
+]
 
 # ATTENTION
 #

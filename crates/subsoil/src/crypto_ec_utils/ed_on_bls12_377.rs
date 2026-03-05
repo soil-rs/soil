@@ -17,11 +17,11 @@
 
 //! *Ed-on-BLS12-377* types and host functions.
 
-use crate::utils::{self, HostcallResult, FAIL_MSG};
+use super::utils::{self, HostcallResult, FAIL_MSG};
 use alloc::vec::Vec;
 use ark_ec::{AffineRepr, CurveConfig, CurveGroup};
 use ark_ed_on_bls12_377_ext::CurveHooks;
-use subsoil::runtime_interface::{
+use crate::runtime_interface::{
 	pass_by::{PassFatPointerAndRead, PassFatPointerAndWrite},
 	runtime_interface,
 };
@@ -103,7 +103,7 @@ pub trait HostCalls {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use crate::utils::testing::*;
+	use crate::crypto_ec_utils::utils::testing::*;
 
 	#[test]
 	fn mul_works() {

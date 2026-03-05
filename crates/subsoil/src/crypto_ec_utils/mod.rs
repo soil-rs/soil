@@ -15,7 +15,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//! This crate offers elliptic curves types which are compatible with the
+//! This module offers elliptic curves types which are compatible with the
 //! [Arkworks](https://github.com/arkworks-rs) library functionalities.
 //!
 //! The implementation has been primarily designed to be used in slow hosted
@@ -29,27 +29,22 @@
 //! it easier for users already familiar with the library to understand and utilize
 //! the exported types effectively.
 
-#![warn(missing_docs)]
-#![cfg_attr(not(feature = "std"), no_std)]
-
-extern crate alloc;
-
-#[cfg(feature = "bls12-377")]
+#[cfg(feature = "crypto-ec-utils-bls12-377")]
 pub mod bls12_377;
-#[cfg(feature = "bls12-381")]
+#[cfg(feature = "crypto-ec-utils-bls12-381")]
 pub mod bls12_381;
-#[cfg(feature = "bw6-761")]
+#[cfg(feature = "crypto-ec-utils-bw6-761")]
 pub mod bw6_761;
-#[cfg(feature = "ed-on-bls12-377")]
+#[cfg(feature = "crypto-ec-utils-ed-on-bls12-377")]
 pub mod ed_on_bls12_377;
-#[cfg(feature = "ed-on-bls12-381-bandersnatch")]
+#[cfg(feature = "crypto-ec-utils-ed-on-bls12-381-bandersnatch")]
 pub mod ed_on_bls12_381_bandersnatch;
 
 #[cfg(any(
-	feature = "bls12-377",
-	feature = "bls12-381",
-	feature = "bw6-761",
-	feature = "ed-on-bls12-377",
-	feature = "ed-on-bls12-381-bandersnatch",
+	feature = "crypto-ec-utils-bls12-377",
+	feature = "crypto-ec-utils-bls12-381",
+	feature = "crypto-ec-utils-bw6-761",
+	feature = "crypto-ec-utils-ed-on-bls12-377",
+	feature = "crypto-ec-utils-ed-on-bls12-381-bandersnatch",
 ))]
-mod utils;
+pub(crate) mod utils;

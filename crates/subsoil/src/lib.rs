@@ -33,3 +33,4 @@ pub mod runtime;
 pub mod version;
 pub mod api;
 pub mod keyring;
+pub mod crypto_ec_utils;
