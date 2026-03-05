@@ -84,16 +84,9 @@ The SCC:primitives nucleus plus everything it depends on at depth ≤ 7.
 | soil-timestamp | 7 | Tiny, just inherents+runtime |
 | soil-keystore | 4 | Dep of io, 19 reverse deps |
 | soil-database | 0 | Trait-only, 4 reverse deps |
-
-### `soil-crypto` — Crypto & identity (~3 crates → 1)
-
-Optional consumers of `subsoil`, not part of the core cycle.
-
-| Absorb | Reason |
-|---|---|
-| soil-keyring | Identity/testing keys |
-| soil-crypto-ec-utils | Elliptic curve utils |
-| soil-npos-elections | Election math (depends on core+arithmetic) |
+| soil-keyring | 6 | Test/dev identities, only deps are core+runtime |
+| soil-crypto-ec-utils | 6 | EC helpers, only dep is runtime-interface |
+| soil-npos-elections | 6 | Election math, only deps are arithmetic+core+runtime |
 
 ### `soil-consensus` — Consensus framework + engines (~11 crates → 1)
 
@@ -194,8 +187,7 @@ Re-exports everything. Consumers write `soil = { features = ["client", "aura", "
 
 | New crate | Absorbs | ~Count |
 |---|---|---|
-| **subsoil** | primitives, types, runtime, state-machine, trie, api | ~30 |
-| **soil-crypto** | keys, elections | ~3 |
+| **subsoil** | primitives, types, runtime, state-machine, trie, api, crypto utils | ~33 |
 | **soil-consensus** | base consensus + slots + epochs + block-builder + all engines | ~11 |
 | **soil-consensus-manual-seal** | kept separate (heavy async deps) | 1 |
 | **soil-client** | client-api, executor, blockchain, db, tx-pool, sc-* wrappers | ~16 |
