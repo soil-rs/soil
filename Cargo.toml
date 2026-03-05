@@ -271,9 +271,6 @@ members = [
 	"crates/substrate-client/transaction-pool",
 ]
 
-default-members = [
-	"crates/substrate/staging-node-inspect",
-]
 
 [workspace.lints.rust]
 suspicious_double_ref_op = { level = "allow", priority = 2 }
