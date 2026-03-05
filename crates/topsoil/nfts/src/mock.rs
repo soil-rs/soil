@@ -21,7 +21,7 @@ use super::*;
 use crate as topsoil_nfts;
 
 use subsoil::keystore::{testing::MemoryKeystore, KeystoreExt};
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{IdentifyAccount, IdentityLookup, Verify},
 	BuildStorage, MultiSignature,
 };

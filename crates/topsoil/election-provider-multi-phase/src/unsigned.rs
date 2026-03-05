@@ -29,7 +29,7 @@ use soil_npos_elections::{
 	assignment_ratio_to_staked_normalized, assignment_staked_to_ratio_normalized, ElectionResult,
 	ElectionScore, EvaluateSupport,
 };
-use soil_runtime::{
+use subsoil::runtime::{
 	offchain::storage::{MutateStorageError, StorageValueRef},
 	DispatchError, SaturatedConversion,
 };
@@ -1108,7 +1108,7 @@ mod tests {
 	use alloc::vec;
 	use codec::Decode;
 	use soil_npos_elections::ElectionScore;
-	use soil_runtime::{
+	use subsoil::runtime::{
 		bounded_vec,
 		offchain::storage_lock::{BlockAndTime, StorageLock},
 		traits::{Dispatchable, ValidateUnsigned, Zero},

@@ -22,7 +22,7 @@ use serde::{Deserialize, Serialize};
 use soil_authority_discovery::AuthorityId;
 use soil_network::{multiaddr::Protocol, Multiaddr};
 use soil_network_types::PeerId;
-use soil_runtime::DeserializeOwned;
+use subsoil::runtime::DeserializeOwned;
 use std::{
 	collections::{hash_map::Entry, HashMap, HashSet},
 	fs::File,

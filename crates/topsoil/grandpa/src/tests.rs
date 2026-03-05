@@ -24,7 +24,7 @@ use crate::mock::*;
 use fg_primitives::ScheduledChange;
 use subsoil::core::H256;
 use soil_keyring::Ed25519Keyring;
-use soil_runtime::testing::Digest;
+use subsoil::runtime::testing::Digest;
 use topsoil_support::{
 	assert_err, assert_noop, assert_ok,
 	dispatch::{GetDispatchInfo, Pays},
@@ -662,7 +662,7 @@ fn report_equivocation_invalid_equivocation_proof() {
 
 #[test]
 fn report_equivocation_validate_unsigned_prevents_duplicates() {
-	use soil_runtime::transaction_validity::{
+	use subsoil::runtime::transaction_validity::{
 		InvalidTransaction, TransactionPriority, TransactionSource, TransactionValidity,
 		ValidTransaction,
 	};
@@ -696,7 +696,7 @@ fn report_equivocation_validate_unsigned_prevents_duplicates() {
 
 		// only local/inblock reports are allowed
 		assert_eq!(
-			<Grandpa as soil_runtime::traits::ValidateUnsigned>::validate_unsigned(
+			<Grandpa as subsoil::runtime::traits::ValidateUnsigned>::validate_unsigned(
 				TransactionSource::External,
 				&call,
 			),
@@ -707,7 +707,7 @@ fn report_equivocation_validate_unsigned_prevents_duplicates() {
 		let tx_tag = (equivocation_key, set_id, 1u64);
 
 		assert_eq!(
-			<Grandpa as soil_runtime::traits::ValidateUnsigned>::validate_unsigned(
+			<Grandpa as subsoil::runtime::traits::ValidateUnsigned>::validate_unsigned(
 				TransactionSource::Local,
 				&call,
 			),
@@ -721,7 +721,7 @@ fn report_equivocation_validate_unsigned_prevents_duplicates() {
 		);
 
 		// the pre dispatch checks should also pass
-		assert_ok!(<Grandpa as soil_runtime::traits::ValidateUnsigned>::pre_dispatch(&call));
+		assert_ok!(<Grandpa as subsoil::runtime::traits::ValidateUnsigned>::pre_dispatch(&call));
 
 		// we submit the report
 		Grandpa::report_equivocation_unsigned(
@@ -734,7 +734,7 @@ fn report_equivocation_validate_unsigned_prevents_duplicates() {
 		// the report should now be considered stale and the transaction is invalid
 		// the check for staleness should be done on both `validate_unsigned` and on `pre_dispatch`
 		assert_err!(
-			<Grandpa as soil_runtime::traits::ValidateUnsigned>::validate_unsigned(
+			<Grandpa as subsoil::runtime::traits::ValidateUnsigned>::validate_unsigned(
 				TransactionSource::Local,
 				&call,
 			),
@@ -742,7 +742,7 @@ fn report_equivocation_validate_unsigned_prevents_duplicates() {
 		);
 
 		assert_err!(
-			<Grandpa as soil_runtime::traits::ValidateUnsigned>::pre_dispatch(&call),
+			<Grandpa as subsoil::runtime::traits::ValidateUnsigned>::pre_dispatch(&call),
 			InvalidTransaction::Stale,
 		);
 	});

@@ -31,7 +31,7 @@ use crate::traits::{
 	},
 };
 use subsoil::core::Get;
-use soil_runtime::{DispatchError, DispatchResult};
+use subsoil::runtime::{DispatchError, DispatchResult};
 use topsoil_support::traits::fungible::hold::DoneSlash;
 
 /// Convert a `fungibles` trait implementation into a `fungible` trait implementation by identifying

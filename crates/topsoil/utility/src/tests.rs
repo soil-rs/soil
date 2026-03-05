@@ -22,7 +22,7 @@
 use super::*;
 
 use crate as utility;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{BadOrigin, BlakeTwo256, Dispatchable, Hash},
 	BuildStorage, DispatchError, TokenError,
 };
@@ -176,7 +176,7 @@ parameter_types! {
 	pub const MotionDuration: BlockNumber = MOTION_DURATION_IN_BLOCKS;
 	pub const MaxProposals: u32 = 100;
 	pub const MaxMembers: u32 = 100;
-	pub MaxProposalWeight: Weight = soil_runtime::Perbill::from_percent(50) * BlockWeights::get().max_block;
+	pub MaxProposalWeight: Weight = subsoil::runtime::Perbill::from_percent(50) * BlockWeights::get().max_block;
 }
 
 type CouncilCollective = topsoil_collective::Instance1;
@@ -461,7 +461,7 @@ fn batch_early_exit_works() {
 
 #[test]
 fn batch_weight_calculation_doesnt_overflow() {
-	use soil_runtime::Perbill;
+	use subsoil::runtime::Perbill;
 	new_test_ext().execute_with(|| {
 		let big_call = RuntimeCall::RootTesting(RootTestingCall::fill_block {
 			ratio: Perbill::from_percent(50),

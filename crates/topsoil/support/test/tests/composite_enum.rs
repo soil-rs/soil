@@ -22,7 +22,7 @@
 
 use codec::Encode;
 use subsoil::core::sr25519;
-use soil_runtime::{
+use subsoil::runtime::{
 	generic,
 	traits::{BlakeTwo256, Verify},
 };

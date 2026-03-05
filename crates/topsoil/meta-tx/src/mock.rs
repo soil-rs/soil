@@ -22,7 +22,7 @@ use crate as topsoil_meta_tx;
 use crate::*;
 use subsoil::core::ConstU8;
 use subsoil::keystore::{testing::MemoryKeystore, KeystoreExt};
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{IdentifyAccount, IdentityLookup, Verify},
 	MultiSignature,
 };
@@ -47,7 +47,7 @@ mod tx_ext {
 	use super::*;
 
 	pub type UncheckedExtrinsic =
-		soil_runtime::generic::UncheckedExtrinsic<AccountId, RuntimeCall, Signature, TxExtension>;
+		subsoil::runtime::generic::UncheckedExtrinsic<AccountId, RuntimeCall, Signature, TxExtension>;
 
 	/// Transaction extension.
 	pub type TxExtension = (topsoil_verify_signature::VerifySignature<Runtime>, TxBareExtension);

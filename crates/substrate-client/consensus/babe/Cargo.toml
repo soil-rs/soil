@@ -41,7 +41,6 @@ soil-consensus-babe = { workspace = true, default-features = true }
 soil-consensus-slots = { workspace = true, default-features = true }
 subsoil-crypto-hashing = { workspace = true, default-features = true }
 soil-inherents = { workspace = true, default-features = true }
-soil-runtime = { workspace = true, default-features = true }
 soil-timestamp = { workspace = true, default-features = true }
 thiserror = { workspace = true }
 

@@ -120,7 +120,7 @@ use soil_consensus_slots::Slot;
 use subsoil::core::traits::SpawnEssentialNamed;
 use soil_inherents::{CreateInherentDataProviders, InherentDataProvider};
 use subsoil::keystore::KeystorePtr;
-use soil_runtime::{
+use subsoil::runtime::{
 	generic::OpaqueDigestItemId,
 	traits::{Block as BlockT, Header, NumberFor, SaturatedConversion, Zero},
 	DigestItem,
@@ -803,7 +803,7 @@ where
 		});
 	}
 
-	fn pre_digest_data(&self, _slot: Slot, claim: &Self::Claim) -> Vec<soil_runtime::DigestItem> {
+	fn pre_digest_data(&self, _slot: Slot, claim: &Self::Claim) -> Vec<subsoil::runtime::DigestItem> {
 		vec![<DigestItem as CompatibleDigestItem>::babe_pre_digest(claim.0.clone())]
 	}
 

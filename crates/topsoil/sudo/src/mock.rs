@@ -20,7 +20,7 @@
 use super::*;
 use crate as sudo;
 use subsoil::io;
-use soil_runtime::BuildStorage;
+use subsoil::runtime::BuildStorage;
 use topsoil_support::{derive_impl, traits::Contains};
 
 // Logger module to track execution.

@@ -156,7 +156,7 @@ pub mod tests {
 		AuthorityId: AuthorityIdBound + From<<<AuthorityId as AppCrypto>::Pair as AppCrypto>::Public>,
 	>()
 	where
-		<AuthorityId as soil_runtime::RuntimeAppPublic>::Signature:
+		<AuthorityId as subsoil::runtime::RuntimeAppPublic>::Signature:
 			Send + Sync + From<<<AuthorityId as AppCrypto>::Pair as AppCrypto>::Signature>,
 		<AuthorityId as AppCrypto>::Pair: BeefySignerAuthority,
 	{
@@ -233,7 +233,7 @@ pub mod tests {
 		AuthorityId: AuthorityIdBound + From<<<AuthorityId as AppCrypto>::Pair as AppCrypto>::Public>,
 	>()
 	where
-		<AuthorityId as soil_runtime::RuntimeAppPublic>::Signature:
+		<AuthorityId as subsoil::runtime::RuntimeAppPublic>::Signature:
 			Send + Sync + From<<<AuthorityId as AppCrypto>::Pair as AppCrypto>::Signature>,
 		<AuthorityId as AppCrypto>::Pair: BeefySignerAuthority,
 	{
@@ -301,7 +301,7 @@ pub mod tests {
 		AuthorityId: AuthorityIdBound + From<<<AuthorityId as AppCrypto>::Pair as AppCrypto>::Public>,
 	>()
 	where
-		<AuthorityId as soil_runtime::RuntimeAppPublic>::Signature:
+		<AuthorityId as subsoil::runtime::RuntimeAppPublic>::Signature:
 			Send + Sync + From<<<AuthorityId as AppCrypto>::Pair as AppCrypto>::Signature>,
 		<AuthorityId as AppCrypto>::Pair: BeefySignerAuthority,
 	{
@@ -342,7 +342,7 @@ pub mod tests {
 		AuthorityId: AuthorityIdBound + From<<<AuthorityId as AppCrypto>::Pair as AppCrypto>::Public>,
 	>()
 	where
-		<AuthorityId as soil_runtime::RuntimeAppPublic>::Signature:
+		<AuthorityId as subsoil::runtime::RuntimeAppPublic>::Signature:
 			Send + Sync + From<<<AuthorityId as AppCrypto>::Pair as AppCrypto>::Signature>,
 		<AuthorityId as AppCrypto>::Pair: BeefySignerAuthority,
 	{
@@ -378,7 +378,7 @@ pub mod tests {
 	>(
 		expected_error_message: &str,
 	) where
-		<AuthorityId as soil_runtime::RuntimeAppPublic>::Signature:
+		<AuthorityId as subsoil::runtime::RuntimeAppPublic>::Signature:
 			Send + Sync + From<<<AuthorityId as AppCrypto>::Pair as AppCrypto>::Signature>,
 		<AuthorityId as AppCrypto>::Pair: BeefySignerAuthority,
 	{
@@ -428,7 +428,7 @@ pub mod tests {
 		AuthorityId: AuthorityIdBound + From<<<AuthorityId as AppCrypto>::Pair as AppCrypto>::Public>,
 	>()
 	where
-		<AuthorityId as soil_runtime::RuntimeAppPublic>::Signature:
+		<AuthorityId as subsoil::runtime::RuntimeAppPublic>::Signature:
 			Send + Sync + From<<<AuthorityId as AppCrypto>::Pair as AppCrypto>::Signature>,
 		<AuthorityId as AppCrypto>::Pair: BeefySignerAuthority,
 	{
@@ -467,7 +467,7 @@ pub mod tests {
 		AuthorityId: AuthorityIdBound + From<<<AuthorityId as AppCrypto>::Pair as AppCrypto>::Public>,
 	>()
 	where
-		<AuthorityId as soil_runtime::RuntimeAppPublic>::Signature:
+		<AuthorityId as subsoil::runtime::RuntimeAppPublic>::Signature:
 			Send + Sync + From<<<AuthorityId as AppCrypto>::Pair as AppCrypto>::Signature>,
 		<AuthorityId as AppCrypto>::Pair: BeefySignerAuthority,
 	{

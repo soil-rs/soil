@@ -22,7 +22,7 @@ use crate::{
 	storage::{StorageDecodeLength, StorageTryAppend},
 	traits::Get,
 };
-pub use soil_runtime::{BoundedSlice, BoundedVec};
+pub use subsoil::runtime::{BoundedSlice, BoundedVec};
 
 impl<T, S> StorageDecodeLength for BoundedVec<T, S> {}
 
@@ -37,7 +37,7 @@ pub mod test {
 	use super::*;
 	use crate::{traits::ConstU32, Twox128};
 	use subsoil::io::TestExternalities;
-	use soil_runtime::bounded_vec;
+	use subsoil::runtime::bounded_vec;
 
 	#[crate::storage_alias]
 	type Foo = StorageValue<Prefix, BoundedVec<u32, ConstU32<7>>>;

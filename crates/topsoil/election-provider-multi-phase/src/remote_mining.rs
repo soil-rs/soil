@@ -31,7 +31,7 @@ use core::marker::PhantomData;
 use remote_externalities::{Builder, Mode, OnlineConfig};
 use subsoil::core::{ConstU32, H256};
 use soil_npos_elections::BalancingConfig;
-use soil_runtime::{Perbill, Weight};
+use subsoil::runtime::{Perbill, Weight};
 use topsoil_election_provider_support::generate_solution_type;
 use topsoil_support::{
 	traits::Get,
@@ -58,14 +58,14 @@ pub mod polkadot {
 		pub struct PolkadotSolution::<
 			VoterIndex = u32,
 			TargetIndex = u16,
-			Accuracy = soil_runtime::PerU16,
+			Accuracy = subsoil::runtime::PerU16,
 			MaxVoters = ConstU32<22_500>,
 		>(16)
 	);
 
 	/// Some configs are a bit inconsistent, but we don't care about them for now.
 	impl crate::MinerConfig for MinerConfig {
-		type AccountId = soil_runtime::AccountId32;
+		type AccountId = subsoil::runtime::AccountId32;
 		type MaxBackersPerWinner = ConstU32<1024>;
 		type MaxLength = ConstU32<{ 4 * 1024 * 1024 }>;
 		type MaxVotesPerVoter = ConstU32<16>;
@@ -103,14 +103,14 @@ pub mod kusama {
 		pub struct PolkadotSolution::<
 			VoterIndex = u32,
 			TargetIndex = u16,
-			Accuracy = soil_runtime::PerU16,
+			Accuracy = subsoil::runtime::PerU16,
 			MaxVoters = ConstU32<12_500>,
 		>(24)
 	);
 
 	/// Some configs are a bit inconsistent, but we don't care about them for now.
 	impl crate::MinerConfig for MinerConfig {
-		type AccountId = soil_runtime::AccountId32;
+		type AccountId = subsoil::runtime::AccountId32;
 		type MaxBackersPerWinner = ConstU32<1024>;
 		type MaxLength = ConstU32<{ 4 * 1024 * 1024 }>;
 		type MaxVotesPerVoter = ConstU32<24>;
@@ -162,7 +162,7 @@ impl<T: MinerConfig> HackyGetSnapshot<T> {
 	}
 }
 
-pub type FakeBlock = soil_runtime::testing::Block<soil_runtime::testing::TestXt<(), ()>>;
+pub type FakeBlock = subsoil::runtime::testing::Block<subsoil::runtime::testing::TestXt<(), ()>>;
 
 pub struct Balancing;
 impl Get<Option<BalancingConfig>> for Balancing {

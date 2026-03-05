@@ -27,7 +27,7 @@ use subsoil::core::{
 	Pair,
 };
 use soil_keyring::Sr25519Keyring;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{Block as BlockT, Hash as HashT, Header as HeaderT},
 	BuildStorage,
 };
@@ -165,7 +165,7 @@ pub fn insert_genesis_block(storage: &mut Storage) -> subsoil::core::hash::H256 
 		let state_root =
 			<<<crate::Block as BlockT>::Header as HeaderT>::Hashing as HashT>::trie_root(
 				child_content.data.clone().into_iter().collect(),
-				soil_runtime::StateVersion::V1,
+				subsoil::runtime::StateVersion::V1,
 			);
 		(sk.clone(), state_root.encode())
 	});
@@ -173,7 +173,7 @@ pub fn insert_genesis_block(storage: &mut Storage) -> subsoil::core::hash::H256 
 	storage.top.extend(child_roots);
 	let state_root = <<<crate::Block as BlockT>::Header as HeaderT>::Hashing as HashT>::trie_root(
 		storage.top.clone().into_iter().collect(),
-		soil_runtime::StateVersion::V1,
+		subsoil::runtime::StateVersion::V1,
 	);
 	let block: crate::Block = construct_genesis_block(state_root, StateVersion::V1);
 	let genesis_hash = block.header.hash();

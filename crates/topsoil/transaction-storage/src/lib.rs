@@ -33,7 +33,7 @@ extern crate alloc;
 use alloc::vec::Vec;
 use codec::{Decode, Encode, MaxEncodedLen};
 use core::fmt::Debug;
-use soil_runtime::traits::{BlakeTwo256, Dispatchable, Hash, One, Saturating, Zero};
+use subsoil::runtime::traits::{BlakeTwo256, Dispatchable, Hash, One, Saturating, Zero};
 use soil_transaction_storage_proof::{
 	encode_index, num_chunks, random_chunk, ChunkIndex, InherentError, TransactionStorageProof,
 	CHUNK_SIZE, INHERENT_IDENTIFIER,
@@ -303,7 +303,7 @@ pub mod pallet {
 			let chunk_count = chunks.len() as u32;
 			debug_assert_eq!(chunk_count, num_chunks(data.len() as u32));
 			let root =
-				subsoil::io::trie::blake2_256_ordered_root(chunks, soil_runtime::StateVersion::V1);
+				subsoil::io::trie::blake2_256_ordered_root(chunks, subsoil::runtime::StateVersion::V1);
 
 			let content_hash = subsoil::io::hashing::blake2_256(&data);
 			let extrinsic_index =
@@ -625,7 +625,7 @@ pub mod pallet {
 					&proof.proof,
 					&encode_index(tx_chunk_index),
 					&proof.chunk,
-					soil_runtime::StateVersion::V1,
+					subsoil::runtime::StateVersion::V1,
 				),
 				Error::<T>::InvalidProof
 			);

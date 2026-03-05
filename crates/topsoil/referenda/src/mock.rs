@@ -21,7 +21,7 @@ use super::*;
 use crate::{self as topsoil_referenda, types::Track};
 use alloc::borrow::Cow;
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
-use soil_runtime::{
+use subsoil::runtime::{
 	str_array as s,
 	traits::{BlakeTwo256, Hash},
 	BuildStorage, DispatchResult, Perbill,

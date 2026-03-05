@@ -16,7 +16,7 @@
 // limitations under the License.
 
 use crate::VoterBagsListInstance;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{Convert, IdentityLookup},
 	BuildStorage, FixedU128, Perbill,
 };
@@ -64,7 +64,7 @@ impl topsoil_balances::Config for Runtime {
 }
 
 topsoil_staking_reward_curve::build! {
-	const I_NPOS: soil_runtime::curve::PiecewiseLinear<'static> = curve!(
+	const I_NPOS: subsoil::runtime::curve::PiecewiseLinear<'static> = curve!(
 		min_inflation: 0_025_000,
 		max_inflation: 0_100_000,
 		ideal_stake: 0_500_000,
@@ -74,7 +74,7 @@ topsoil_staking_reward_curve::build! {
 	);
 }
 parameter_types! {
-	pub const RewardCurve: &'static soil_runtime::curve::PiecewiseLinear<'static> = &I_NPOS;
+	pub const RewardCurve: &'static subsoil::runtime::curve::PiecewiseLinear<'static> = &I_NPOS;
 }
 #[derive_impl(topsoil_staking::config_preludes::TestDefaultConfig)]
 impl topsoil_staking::Config for Runtime {

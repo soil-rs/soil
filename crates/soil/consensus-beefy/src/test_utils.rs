@@ -23,7 +23,7 @@ use crate::{
 };
 use subsoil::application_crypto::{AppCrypto, AppPair, RuntimeAppPublic, Wraps};
 use subsoil::core::{ecdsa, Pair};
-use soil_runtime::traits::{BlockNumber, Header as HeaderT};
+use subsoil::runtime::traits::{BlockNumber, Header as HeaderT};
 
 use codec::Encode;
 use subsoil_crypto_hashing::keccak_256;

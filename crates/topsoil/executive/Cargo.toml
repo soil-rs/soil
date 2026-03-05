@@ -23,7 +23,6 @@ topsoil-system = { workspace = true }
 topsoil-try-runtime = { optional = true, workspace = true }
 log = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
-soil-runtime = { workspace = true }
 subsoil = { workspace = true }
 
 [dev-dependencies]
@@ -49,7 +48,7 @@ std = [
 	"scale-info/std",
 	"subsoil/std",
 	"soil-inherents/std",
-	"soil-runtime/std",
+	"subsoil/std",
 	"soil-version/std",
 ]
 try-runtime = [
@@ -58,5 +57,5 @@ try-runtime = [
 	"topsoil-try-runtime/try-runtime",
 	"topsoil-balances/try-runtime",
 	"topsoil-transaction-payment/try-runtime",
-	"soil-runtime/try-runtime",
+	"subsoil/try-runtime",
 ]

@@ -172,7 +172,7 @@ extern crate alloc;
 extern crate core;
 
 use scale_info::TypeInfo;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{AtLeast32BitUnsigned, CheckedAdd, CheckedSub, Saturating, StaticLookup, Zero},
 	ArithmeticError, DispatchError, TokenError,
 };
@@ -750,7 +750,7 @@ pub mod pallet {
 	#[pallet::hooks]
 	impl<T: Config<I>, I: 'static> Hooks<BlockNumberFor<T>> for Pallet<T, I> {
 		#[cfg(feature = "try-runtime")]
-		fn try_state(_n: BlockNumberFor<T>) -> Result<(), soil_runtime::TryRuntimeError> {
+		fn try_state(_n: BlockNumberFor<T>) -> Result<(), subsoil::runtime::TryRuntimeError> {
 			Self::do_try_state()
 		}
 	}
@@ -1977,7 +1977,7 @@ pub mod pallet {
 
 #[cfg(any(feature = "try-runtime", test))]
 impl<T: Config<I>, I: 'static> Pallet<T, I> {
-	pub fn do_try_state() -> Result<(), soil_runtime::TryRuntimeError> {
+	pub fn do_try_state() -> Result<(), subsoil::runtime::TryRuntimeError> {
 		for asset_id in Reserves::<T, I>::iter_keys() {
 			ensure!(Asset::<T, I>::contains_key(asset_id.clone()), "Orphaned Reserves data found");
 		}

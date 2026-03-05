@@ -23,7 +23,7 @@ use core::ops::{Add, Div, Mul, Rem};
 use scale_info::TypeInfo;
 #[cfg(feature = "std")]
 use serde::{Deserialize, Serialize};
-use soil_runtime::traits::{IntegerSquareRoot, Zero};
+use subsoil::runtime::traits::{IntegerSquareRoot, Zero};
 
 /// A means of determining if a vote is past pass threshold.
 #[derive(

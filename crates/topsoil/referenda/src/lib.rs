@@ -70,7 +70,7 @@ use alloc::boxed::Box;
 use codec::{Codec, Encode};
 use core::fmt::Debug;
 use scale_info::TypeInfo;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{AtLeast32BitUnsigned, Bounded, Dispatchable, One, Saturating, Zero},
 	DispatchError, Perbill,
 };
@@ -106,7 +106,7 @@ pub use self::{
 	weights::WeightInfo,
 };
 pub use alloc::vec::Vec;
-use soil_runtime::traits::BlockNumberProvider;
+use subsoil::runtime::traits::BlockNumberProvider;
 
 #[cfg(test)]
 mod mock;
@@ -447,7 +447,7 @@ pub mod pallet {
 	#[pallet::hooks]
 	impl<T: Config<I>, I: 'static> Hooks<SystemBlockNumberFor<T>> for Pallet<T, I> {
 		#[cfg(feature = "try-runtime")]
-		fn try_state(_n: SystemBlockNumberFor<T>) -> Result<(), soil_runtime::TryRuntimeError> {
+		fn try_state(_n: SystemBlockNumberFor<T>) -> Result<(), subsoil::runtime::TryRuntimeError> {
 			Self::do_try_state()?;
 			Ok(())
 		}
@@ -815,7 +815,7 @@ impl<T: Config<I>, I: 'static> Polling<T::Tally> for Pallet<T, I> {
 		});
 		let now = T::BlockNumberProvider::current_block_number();
 		let dummy_account_id =
-			codec::Decode::decode(&mut soil_runtime::traits::TrailingZeroInput::new(&b"dummy"[..]))
+			codec::Decode::decode(&mut subsoil::runtime::traits::TrailingZeroInput::new(&b"dummy"[..]))
 				.expect("infinite length input; no invalid inputs for type; qed");
 		let mut status = ReferendumStatusOf::<T, I> {
 			track: class,
@@ -832,7 +832,7 @@ impl<T: Config<I>, I: 'static> Polling<T::Tally> for Pallet<T, I> {
 			alarm: None,
 		};
 
-		Self::ensure_alarm_at(&mut status, index, soil_runtime::traits::Bounded::max_value());
+		Self::ensure_alarm_at(&mut status, index, subsoil::runtime::traits::Bounded::max_value());
 		ReferendumInfoFor::<T, I>::insert(index, ReferendumInfo::Ongoing(status));
 		Ok(index)
 	}
@@ -1341,7 +1341,7 @@ impl<T: Config<I>, I: 'static> Pallet<T, I> {
 	///   [`ReferendumInfoFor`].
 	/// * Referendum indices in [`MetadataOf`] must also be stored in [`ReferendumInfoFor`].
 	#[cfg(any(feature = "try-runtime", test))]
-	fn do_try_state() -> Result<(), soil_runtime::TryRuntimeError> {
+	fn do_try_state() -> Result<(), subsoil::runtime::TryRuntimeError> {
 		ensure!(
 			ReferendumCount::<T, I>::get() as usize
 				== ReferendumInfoFor::<T, I>::iter_keys().count(),
@@ -1371,7 +1371,7 @@ impl<T: Config<I>, I: 'static> Pallet<T, I> {
 	/// * If alarm is set the nudge call has to be at most [`UndecidingTimeout`] blocks away
 	///  from the submission block.
 	#[cfg(any(feature = "try-runtime", test))]
-	fn try_state_referenda_info() -> Result<(), soil_runtime::TryRuntimeError> {
+	fn try_state_referenda_info() -> Result<(), subsoil::runtime::TryRuntimeError> {
 		ReferendumInfoFor::<T, I>::iter().try_for_each(|(_, referendum)| {
 			match referendum {
 				ReferendumInfo::Ongoing(status) => {
@@ -1401,10 +1401,10 @@ impl<T: Config<I>, I: 'static> Pallet<T, I> {
 	/// * The referendum indices stored in [`TrackQueue`] must exist as keys in the
 	///  [`ReferendumInfoFor`] storage map.
 	#[cfg(any(feature = "try-runtime", test))]
-	fn try_state_tracks() -> Result<(), soil_runtime::TryRuntimeError> {
+	fn try_state_tracks() -> Result<(), subsoil::runtime::TryRuntimeError> {
 		T::Tracks::tracks().try_for_each(|track| {
 			TrackQueue::<T, I>::get(track.id).iter().try_for_each(
-				|(referendum_index, _)| -> Result<(), soil_runtime::TryRuntimeError> {
+				|(referendum_index, _)| -> Result<(), subsoil::runtime::TryRuntimeError> {
 					ensure!(
 					ReferendumInfoFor::<T, I>::contains_key(referendum_index),
 					"`ReferendumIndex` inside the `TrackQueue` should be a key in `ReferendumInfoFor`"

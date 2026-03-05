@@ -71,7 +71,7 @@ use soil_network_test::{
 	Block, BlockImportAdapter, FullPeerConfig, PassThroughVerifier, Peer, PeersClient,
 	PeersFullClient, TestNetFactory,
 };
-use soil_runtime::{
+use subsoil::runtime::{
 	codec::{Decode, Encode},
 	traits::{Header as HeaderT, NumberFor},
 	DigestItem, EncodedJustification, Justifications,

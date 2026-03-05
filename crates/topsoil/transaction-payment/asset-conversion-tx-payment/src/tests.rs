@@ -16,7 +16,7 @@
 use super::*;
 
 use mock::{ExtrinsicBaseWeight, *};
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{DispatchTransaction, StaticLookup},
 	BuildStorage,
 };
@@ -969,7 +969,7 @@ fn transaction_payment_rejects_reduced_to_zero_in_native_asset() {
 				CALL,
 				&info,
 				len,
-				soil_runtime::transaction_validity::TransactionSource::External,
+				subsoil::runtime::transaction_validity::TransactionSource::External,
 				0,
 			);
 
@@ -1042,7 +1042,7 @@ fn transaction_payment_rejects_reduced_to_zero_in_asset() {
 				CALL,
 				&info,
 				len,
-				soil_runtime::transaction_validity::TransactionSource::External,
+				subsoil::runtime::transaction_validity::TransactionSource::External,
 				0,
 			);
 

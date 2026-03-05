@@ -212,7 +212,7 @@ pub use pallet::*;
 use scale_info::TypeInfo;
 use subsoil::arithmetic::traits::{BaseArithmetic, Unsigned};
 use subsoil::core::{defer, H256};
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{One, Zero},
 	SaturatedConversion, Saturating, TransactionOutcome,
 };
@@ -701,7 +701,7 @@ pub mod pallet {
 		}
 
 		#[cfg(feature = "try-runtime")]
-		fn try_state(_: BlockNumberFor<T>) -> Result<(), soil_runtime::TryRuntimeError> {
+		fn try_state(_: BlockNumberFor<T>) -> Result<(), subsoil::runtime::TryRuntimeError> {
 			Self::do_try_state()
 		}
 
@@ -1411,7 +1411,7 @@ impl<T: Config> Pallet<T> {
 	/// * `first` <= `last`
 	/// * Every page can be decoded into peek_* functions
 	#[cfg(any(test, feature = "try-runtime", feature = "std"))]
-	pub fn do_try_state() -> Result<(), soil_runtime::TryRuntimeError> {
+	pub fn do_try_state() -> Result<(), subsoil::runtime::TryRuntimeError> {
 		// Checking memory corruption for BookStateFor
 		ensure!(
 			BookStateFor::<T>::iter_keys().count() == BookStateFor::<T>::iter_values().count(),

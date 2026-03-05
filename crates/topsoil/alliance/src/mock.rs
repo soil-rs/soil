@@ -18,8 +18,8 @@
 //! Test utilities
 
 pub use subsoil::core::H256;
-use soil_runtime::traits::Hash;
-pub use soil_runtime::{
+use subsoil::runtime::traits::Hash;
+pub use subsoil::runtime::{
 	traits::{BlakeTwo256, IdentifyAccount, Lazy, Verify},
 	BuildStorage,
 };
@@ -63,7 +63,7 @@ parameter_types! {
 	pub const MotionDuration: BlockNumber = MOTION_DURATION_IN_BLOCKS;
 	pub const MaxProposals: u32 = 100;
 	pub const MaxMembers: u32 = 100;
-	pub MaxProposalWeight: Weight = soil_runtime::Perbill::from_percent(50) * BlockWeights::get().max_block;
+	pub MaxProposalWeight: Weight = subsoil::runtime::Perbill::from_percent(50) * BlockWeights::get().max_block;
 }
 type AllianceCollective = topsoil_collective::Instance1;
 impl topsoil_collective::Config<AllianceCollective> for Test {

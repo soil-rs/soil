@@ -22,7 +22,7 @@ use soil_api::ProvideRuntimeApi;
 use soil_client_api::{ClientInfo, UsageProvider};
 use soil_network::{config::Role, NetworkStatus, NetworkStatusProvider};
 use soil_network_sync::{SyncStatus, SyncStatusProvider};
-use soil_runtime::traits::{Block, NumberFor, SaturatedConversion, UniqueSaturatedInto};
+use subsoil::runtime::traits::{Block, NumberFor, SaturatedConversion, UniqueSaturatedInto};
 use soil_telemetry::{telemetry, TelemetryHandle, SUBSTRATE_INFO};
 use soil_transaction_pool_api::{MaintainedTransactionPool, PoolStatus};
 use soil_utils::metrics::register_globals;

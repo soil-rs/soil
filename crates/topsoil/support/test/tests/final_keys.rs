@@ -24,7 +24,7 @@ use subsoil::io::{
 	hashing::{blake2_128, twox_128, twox_64},
 	TestExternalities,
 };
-use soil_runtime::{
+use subsoil::runtime::{
 	generic,
 	traits::{BlakeTwo256, Verify},
 };

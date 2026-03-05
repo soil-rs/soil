@@ -41,7 +41,7 @@ use soil_network_test::{
 	Block, BlockImportAdapter, FullPeerConfig, Hash, PassThroughVerifier, Peer, PeersClient,
 	PeersFullClient, TestClient, TestNetFactory,
 };
-use soil_runtime::{
+use subsoil::runtime::{
 	codec::Encode,
 	generic::{BlockId, DigestItem},
 	traits::{Block as BlockT, Header as HeaderT},

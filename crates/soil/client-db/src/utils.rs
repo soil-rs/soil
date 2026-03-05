@@ -27,7 +27,7 @@ use crate::{Database, DatabaseSource, DbHash};
 use codec::Decode;
 use soil_client_api::blockchain::{BlockGap, BlockGapType};
 use subsoil::database::Transaction;
-use soil_runtime::{
+use subsoil::runtime::{
 	generic::BlockId,
 	traits::{
 		Block as BlockT, Header as HeaderT, NumberFor, UniqueSaturatedFrom, UniqueSaturatedInto,
@@ -172,7 +172,7 @@ pub fn block_id_to_lookup_key<Block>(
 ) -> Result<Option<Vec<u8>>, soil_blockchain::Error>
 where
 	Block: BlockT,
-	::soil_runtime::traits::NumberFor<Block>: UniqueSaturatedFrom<u64> + UniqueSaturatedInto<u64>,
+	::subsoil::runtime::traits::NumberFor<Block>: UniqueSaturatedFrom<u64> + UniqueSaturatedInto<u64>,
 {
 	Ok(match id {
 		BlockId::Number(n) => db.get(key_lookup_col, number_index_key(n)?.as_ref()),
@@ -620,7 +620,7 @@ impl<'a, 'b> codec::Input for JoinInput<'a, 'b> {
 mod tests {
 	use super::*;
 	use codec::Input;
-	use soil_runtime::testing::{Block as RawBlock, MockCallU64, TestXt};
+	use subsoil::runtime::testing::{Block as RawBlock, MockCallU64, TestXt};
 
 	pub type UncheckedXt = TestXt<MockCallU64, ()>;
 	type Block = RawBlock<UncheckedXt>;

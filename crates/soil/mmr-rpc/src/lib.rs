@@ -48,7 +48,7 @@ use subsoil::core::{
 #[cfg(feature = "std")]
 use soil_mmr_primitives::{AncestryProof as MmrAncestryProof, Error as MmrError, LeafProof};
 #[cfg(feature = "std")]
-use soil_runtime::traits::{Block as BlockT, NumberFor};
+use subsoil::runtime::traits::{Block as BlockT, NumberFor};
 
 #[cfg(feature = "std")]
 pub use soil_mmr_primitives::MmrApi as MmrRuntimeApi;

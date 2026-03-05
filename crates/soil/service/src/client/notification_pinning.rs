@@ -32,7 +32,7 @@ use futures::StreamExt;
 use soil_client_api::{Backend, UnpinWorkerMessage};
 
 use schnellru::Limiter;
-use soil_runtime::traits::Block as BlockT;
+use subsoil::runtime::traits::Block as BlockT;
 use soil_utils::mpsc::TracingUnboundedReceiver;
 
 const LOG_TARGET: &str = "db::notification_pinning";
@@ -193,7 +193,7 @@ mod tests {
 
 	use soil_client_api::{Backend, UnpinWorkerMessage};
 	use subsoil::core::H256;
-	use soil_runtime::traits::Block as BlockT;
+	use subsoil::runtime::traits::Block as BlockT;
 	use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver};
 
 	type Block = substrate_test_runtime_client::runtime::Block;

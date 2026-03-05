@@ -23,7 +23,6 @@ log = { workspace = true }
 topsoil-timestamp = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 soil-consensus-aura = { workspace = true }
-soil-runtime = { workspace = true }
 
 [dev-dependencies]
 subsoil = { workspace = true }
@@ -39,11 +38,11 @@ std = [
 	"scale-info/std",
 	"subsoil/std",
 	"soil-consensus-aura/std",
-	"soil-runtime/std",
+	"subsoil/std",
 ]
 try-runtime = [
 	"topsoil-support/try-runtime",
 	"topsoil-system/try-runtime",
 	"topsoil-timestamp/try-runtime",
-	"soil-runtime/try-runtime",
+	"subsoil/try-runtime",
 ]

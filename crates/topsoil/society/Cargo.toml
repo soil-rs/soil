@@ -25,7 +25,6 @@ topsoil-benchmarking = { optional = true, workspace = true }
 topsoil-support = { workspace = true }
 topsoil-system = { workspace = true }
 subsoil = { workspace = true }
-soil-runtime = { workspace = true }
 
 [dev-dependencies]
 topsoil-support-test = { workspace = true }
@@ -45,7 +44,7 @@ std = [
 	"rand_chacha/std",
 	"scale-info/std",
 	"subsoil/std",
-	"soil-runtime/std",
+	"subsoil/std",
 ]
 runtime-benchmarks = [
 	"topsoil-benchmarking",
@@ -54,12 +53,12 @@ runtime-benchmarks = [
 	"topsoil-support/runtime-benchmarks",
 	"topsoil-system/runtime-benchmarks",
 	"topsoil-balances/runtime-benchmarks",
-	"soil-runtime/runtime-benchmarks",
+	"subsoil/runtime-benchmarks",
 ]
 try-runtime = [
 	"topsoil-support-test/try-runtime",
 	"topsoil-support/try-runtime",
 	"topsoil-system/try-runtime",
 	"topsoil-balances/try-runtime",
-	"soil-runtime/try-runtime",
+	"subsoil/try-runtime",
 ]

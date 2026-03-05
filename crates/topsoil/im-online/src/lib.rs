@@ -89,7 +89,7 @@ use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 pub use pallet::*;
 use scale_info::TypeInfo;
 use subsoil::application_crypto::RuntimeAppPublic;
-use soil_runtime::{
+use subsoil::runtime::{
 	offchain::storage::{MutateStorageError, StorageRetrievalError, StorageValueRef},
 	traits::{AtLeast32BitUnsigned, Convert, Saturating, TrailingZeroInput},
 	Debug, PerThing, Perbill, Permill, SaturatedConversion,
@@ -738,7 +738,7 @@ impl<T: Config> Pallet<T> {
 	}
 }
 
-impl<T: Config> soil_runtime::BoundToRuntimeAppPublic for Pallet<T> {
+impl<T: Config> subsoil::runtime::BoundToRuntimeAppPublic for Pallet<T> {
 	type Public = T::AuthorityId;
 }
 
@@ -808,7 +808,7 @@ impl<T: Config> OneSessionHandler<T::AccountId> for Pallet<T> {
 			let validator_set_count = keys.len() as u32;
 			let offence = UnresponsivenessOffence { session_index, validator_set_count, offenders };
 			if let Err(e) = T::ReportUnresponsiveness::report_offence(vec![], offence) {
-				soil_runtime::print(e);
+				subsoil::runtime::print(e);
 			}
 		}
 	}

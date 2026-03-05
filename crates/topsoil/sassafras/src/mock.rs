@@ -29,7 +29,7 @@ use subsoil::core::{
 	ed25519::Public as EphemeralPublic,
 	H256, U256,
 };
-use soil_runtime::{
+use subsoil::runtime::{
 	testing::{Digest, DigestItem, Header},
 	BuildStorage,
 };

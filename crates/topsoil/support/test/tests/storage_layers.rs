@@ -60,9 +60,9 @@ pub mod pallet {
 pub type BlockNumber = u32;
 pub type Nonce = u64;
 pub type AccountId = u64;
-pub type Header = soil_runtime::generic::Header<BlockNumber, soil_runtime::traits::BlakeTwo256>;
-pub type UncheckedExtrinsic = soil_runtime::generic::UncheckedExtrinsic<u32, RuntimeCall, (), ()>;
-pub type Block = soil_runtime::generic::Block<Header, UncheckedExtrinsic>;
+pub type Header = subsoil::runtime::generic::Header<BlockNumber, subsoil::runtime::traits::BlakeTwo256>;
+pub type UncheckedExtrinsic = subsoil::runtime::generic::UncheckedExtrinsic<u32, RuntimeCall, (), ()>;
+pub type Block = subsoil::runtime::generic::Block<Header, UncheckedExtrinsic>;
 
 #[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
 impl topsoil_system::Config for Runtime {
@@ -72,10 +72,10 @@ impl topsoil_system::Config for Runtime {
 	type RuntimeOrigin = RuntimeOrigin;
 	type RuntimeCall = RuntimeCall;
 	type Nonce = Nonce;
-	type Hash = soil_runtime::testing::H256;
-	type Hashing = soil_runtime::traits::BlakeTwo256;
+	type Hash = subsoil::runtime::testing::H256;
+	type Hashing = subsoil::runtime::traits::BlakeTwo256;
 	type AccountId = AccountId;
-	type Lookup = soil_runtime::traits::IdentityLookup<Self::AccountId>;
+	type Lookup = subsoil::runtime::traits::IdentityLookup<Self::AccountId>;
 	type Block = Block;
 	type RuntimeEvent = RuntimeEvent;
 	type DbWeight = ();
@@ -229,7 +229,7 @@ fn storage_layer_commit_then_rollback() {
 #[test]
 fn storage_layer_in_pallet_call() {
 	TestExternalities::default().execute_with(|| {
-		use soil_runtime::traits::Dispatchable;
+		use subsoil::runtime::traits::Dispatchable;
 		let call1 = RuntimeCall::MyPallet(pallet::Call::set_value { value: 2 });
 		assert_ok!(call1.dispatch(RuntimeOrigin::signed(0)));
 		assert_eq!(Value::<Runtime>::get(), 2);

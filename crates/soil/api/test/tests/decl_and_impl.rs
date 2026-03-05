@@ -18,7 +18,7 @@
 use soil_api::{
 	decl_runtime_apis, impl_runtime_apis, mock_impl_runtime_apis, ApiError, ApiExt, RuntimeApiInfo,
 };
-use soil_runtime::traits::Block as BlockT;
+use subsoil::runtime::traits::Block as BlockT;
 
 use substrate_test_runtime_client::runtime::{Block, Hash};
 
@@ -142,7 +142,7 @@ impl_runtime_apis! {
 		fn execute_block(_: <Block as BlockT>::LazyBlock) {
 			unimplemented!()
 		}
-		fn initialize_block(_: &<Block as BlockT>::Header) -> soil_runtime::ExtrinsicInclusionMode {
+		fn initialize_block(_: &<Block as BlockT>::Header) -> subsoil::runtime::ExtrinsicInclusionMode {
 			unimplemented!()
 		}
 	}

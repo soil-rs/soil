@@ -20,7 +20,7 @@ topsoil-support = { workspace = true }
 topsoil-system = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { features = ["derive"], workspace = true }
-soil-runtime = { workspace = true }
+subsoil = { workspace = true }
 
 [features]
 default = ["std"]
@@ -30,5 +30,5 @@ std = [
 	"topsoil-system/std",
 	"scale-info/std",
 	"serde/std",
-	"soil-runtime/std",
+	"subsoil/std",
 ]

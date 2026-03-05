@@ -463,7 +463,7 @@ pub(crate) mod pallet {
 		}
 
 		/// Ensure this storage item group is in correct state.
-		pub(crate) fn sanity_check() -> Result<(), soil_runtime::DispatchError> {
+		pub(crate) fn sanity_check() -> Result<(), subsoil::runtime::DispatchError> {
 			// score is correct and better than min-score.
 			ensure!(
 				Pallet::<T>::minimum_score()
@@ -609,7 +609,7 @@ pub(crate) mod pallet {
 		}
 
 		#[cfg(feature = "try-runtime")]
-		fn try_state(_now: BlockNumberFor<T>) -> Result<(), soil_runtime::TryRuntimeError> {
+		fn try_state(_now: BlockNumberFor<T>) -> Result<(), subsoil::runtime::TryRuntimeError> {
 			Self::do_try_state(_now)
 		}
 	}
@@ -866,7 +866,7 @@ impl<T: Config> Pallet<T> {
 	#[cfg(any(test, feature = "runtime-benchmarks", feature = "try-runtime"))]
 	pub(crate) fn do_try_state(
 		_now: BlockNumberFor<T>,
-	) -> Result<(), soil_runtime::TryRuntimeError> {
+	) -> Result<(), subsoil::runtime::TryRuntimeError> {
 		QueuedSolution::<T>::sanity_check()
 	}
 }

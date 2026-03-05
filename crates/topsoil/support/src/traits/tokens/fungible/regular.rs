@@ -38,7 +38,7 @@ use crate::{
 };
 use core::marker::PhantomData;
 use subsoil::arithmetic::traits::{CheckedAdd, CheckedSub, One};
-use soil_runtime::{traits::Saturating, ArithmeticError, DispatchError, TokenError};
+use subsoil::runtime::{traits::Saturating, ArithmeticError, DispatchError, TokenError};
 
 use super::{Credit, Debt, HandleImbalanceDrop, Imbalance};
 

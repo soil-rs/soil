@@ -28,14 +28,14 @@ pub use soil_consensus;
 pub use soil_executor::{self, WasmExecutionMethod, WasmExecutor};
 pub use soil_keyring::{Ed25519Keyring, Sr25519Keyring};
 pub use subsoil::keystore::{Keystore, KeystorePtr};
-pub use soil_runtime::{Storage, StorageChild};
+pub use subsoil::runtime::{Storage, StorageChild};
 pub use soil_service::{client, RpcHandlers};
 
 use futures::{future::Future, stream::StreamExt};
 use serde::Deserialize;
 use soil_client_api::BlockchainEvents;
 use subsoil::core::{storage::ChildInfo, testing::TaskExecutor};
-use soil_runtime::{
+use subsoil::runtime::{
 	codec::Encode,
 	traits::{Block as BlockT, Header},
 	OpaqueExtrinsic,

@@ -20,7 +20,7 @@
 #![cfg(test)]
 
 use codec::Encode;
-use soil_runtime::BuildStorage;
+use subsoil::runtime::BuildStorage;
 use topsoil_support::{derive_impl, weights::Weight};
 
 type Block = topsoil_system::mocking::MockBlock<Test>;

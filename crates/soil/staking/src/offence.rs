@@ -21,7 +21,7 @@
 use alloc::vec::Vec;
 use codec::{Decode, Encode, MaxEncodedLen};
 use subsoil::core::Get;
-use soil_runtime::{transaction_validity::TransactionValidityError, DispatchError, Perbill};
+use subsoil::runtime::{transaction_validity::TransactionValidityError, DispatchError, Perbill};
 
 use crate::SessionIndex;
 
@@ -96,7 +96,7 @@ pub enum OffenceError {
 	Other(u8),
 }
 
-impl soil_runtime::traits::Printable for OffenceError {
+impl subsoil::runtime::traits::Printable for OffenceError {
 	fn print(&self) {
 		"OffenceError".print();
 		match self {

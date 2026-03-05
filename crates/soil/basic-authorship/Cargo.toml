@@ -29,7 +29,6 @@ soil-blockchain = { workspace = true, default-features = true, optional = true}
 soil-consensus = { workspace = true, default-features = true, optional = true}
 subsoil = { workspace = true, default-features = true, optional = true}
 soil-inherents = { workspace = true, default-features = true, optional = true}
-soil-runtime = { workspace = true, default-features = true, optional = true}
 
 [features]
 default = ["std"]
@@ -45,14 +44,14 @@ std = [
 	"subsoil",
 	"soil-inherents",
 	"soil-proposer-metrics",
-	"soil-runtime",
+	"subsoil",
 	"soil-telemetry",
 	"soil-transaction-pool-api",
 	"soil-api/std",
 	"subsoil/std",
 	"soil-inherents/std",
 	"soil-proposer-metrics/std",
-	"soil-runtime/std",
+	"subsoil/std",
 	"soil-telemetry/std",
 	"soil-transaction-pool-api/std",
 ]

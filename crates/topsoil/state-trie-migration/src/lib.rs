@@ -82,7 +82,7 @@ pub mod pallet {
 	use subsoil::core::{
 		hexdisplay::HexDisplay, storage::well_known_keys::DEFAULT_CHILD_STORAGE_KEY_PREFIX,
 	};
-	use soil_runtime::{
+	use subsoil::runtime::{
 		self,
 		traits::{Saturating, Zero},
 	};
@@ -1157,7 +1157,7 @@ mod benchmarks {
 
 		impl_benchmark_test_suite!(
 			StateTrieMigration,
-			crate::mock::new_test_ext(soil_runtime::StateVersion::V0, true, None, None),
+			crate::mock::new_test_ext(subsoil::runtime::StateVersion::V0, true, None, None),
 			crate::mock::Test
 		);
 	}
@@ -1172,7 +1172,7 @@ mod mock {
 		storage::{ChildInfo, StateVersion},
 		H256,
 	};
-	use soil_runtime::{traits::Header as _, BuildStorage, StorageChild};
+	use subsoil::runtime::{traits::Header as _, BuildStorage, StorageChild};
 	use topsoil_support::{derive_impl, parameter_types, traits::Hooks, weights::Weight};
 	use topsoil_system::{EnsureRoot, EnsureSigned};
 
@@ -1353,7 +1353,7 @@ mod mock {
 #[cfg(test)]
 mod test {
 	use super::{mock::*, *};
-	use soil_runtime::{bounded_vec, traits::Bounded, StateVersion};
+	use subsoil::runtime::{bounded_vec, traits::Bounded, StateVersion};
 	use topsoil_support::assert_ok;
 
 	#[test]
@@ -1547,7 +1547,7 @@ mod test {
 			topsoil_support::assert_err!(
 				StateTrieMigration::continue_migrate(
 					RuntimeOrigin::signed(1),
-					MigrationLimits { item: 5, size: soil_runtime::traits::Bounded::max_value() },
+					MigrationLimits { item: 5, size: subsoil::runtime::traits::Bounded::max_value() },
 					Bounded::max_value(),
 					MigrationProcess::<Test>::get()
 				),
@@ -1728,7 +1728,7 @@ pub(crate) mod remote_tests {
 	use codec::Encode;
 	use remote_externalities::Mode;
 	use subsoil::core::H256;
-	use soil_runtime::{
+	use subsoil::runtime::{
 		traits::{Block as BlockT, HashingFor, Header as _, One, Zero},
 		DeserializeOwned,
 	};
@@ -1863,12 +1863,12 @@ mod remote_tests_local {
 		*,
 	};
 	use remote_externalities::{Mode, OfflineConfig, OnlineConfig, SnapshotConfig};
-	use soil_runtime::traits::Bounded;
+	use subsoil::runtime::traits::Bounded;
 	use std::env::var as env_var;
 
 	// we only use the hash type from this, so using the mock should be fine.
-	type Extrinsic = soil_runtime::testing::TestXt<MockCall, ()>;
-	type Block = soil_runtime::testing::Block<Extrinsic>;
+	type Extrinsic = subsoil::runtime::testing::TestXt<MockCall, ()>;
+	type Block = subsoil::runtime::testing::Block<Extrinsic>;
 
 	#[tokio::test]
 	async fn on_initialize_migration() {

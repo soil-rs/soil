@@ -18,7 +18,6 @@ targets = ["x86_64-unknown-linux-gnu"]
 [dependencies]
 # Substrate dependencies
 subsoil = { workspace = true }
-soil-runtime = { workspace = true }
 
 topsoil-benchmarking = { optional = true, workspace = true }
 topsoil-support = { workspace = true }
@@ -46,7 +45,7 @@ std = [
 	"scale-info/std",
 	"serde",
 	"subsoil/std",
-	"soil-runtime/std",
+	"subsoil/std",
 ]
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",
@@ -55,7 +54,7 @@ runtime-benchmarks = [
 	"topsoil-assets/runtime-benchmarks",
 	"topsoil-balances/runtime-benchmarks",
 	"topsoil-transaction-payment/runtime-benchmarks",
-	"soil-runtime/runtime-benchmarks",
+	"subsoil/runtime-benchmarks",
 ]
 try-runtime = [
 	"topsoil-support/try-runtime",
@@ -64,5 +63,5 @@ try-runtime = [
 	"topsoil-authorship/try-runtime",
 	"topsoil-balances/try-runtime",
 	"topsoil-transaction-payment/try-runtime",
-	"soil-runtime/try-runtime",
+	"subsoil/try-runtime",
 ]

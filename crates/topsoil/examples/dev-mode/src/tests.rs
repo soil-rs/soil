@@ -25,7 +25,7 @@
 
 use crate::*;
 use subsoil::core::H256;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{BlakeTwo256, IdentityLookup},
 	BuildStorage,
 };

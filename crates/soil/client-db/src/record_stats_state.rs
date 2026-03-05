@@ -20,7 +20,7 @@
 
 use crate::stats::StateUsageStats;
 use subsoil::core::storage::ChildInfo;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{Block as BlockT, HashingFor},
 	StateVersion,
 };

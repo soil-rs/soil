@@ -31,7 +31,7 @@
 //! performed through the methods exposed by the [`StakingLedger`] implementation in order to ensure
 //! state consistency.
 
-use soil_runtime::DispatchResult;
+use subsoil::runtime::DispatchResult;
 use soil_staking::{StakingAccount, StakingInterface};
 use topsoil_support::{defensive, ensure, traits::Defensive};
 
@@ -41,7 +41,7 @@ use crate::{
 };
 
 #[cfg(any(feature = "runtime-benchmarks", test))]
-use soil_runtime::traits::Zero;
+use subsoil::runtime::traits::Zero;
 
 impl<T: Config> StakingLedger<T> {
 	#[cfg(any(feature = "runtime-benchmarks", test))]

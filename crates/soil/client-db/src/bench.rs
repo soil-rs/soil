@@ -27,7 +27,7 @@ use subsoil::core::{
 	hexdisplay::HexDisplay,
 	storage::{ChildInfo, TrackedStorageKey},
 };
-use soil_runtime::{traits::Hash, StateVersion, Storage};
+use subsoil::runtime::{traits::Hash, StateVersion, Storage};
 use subsoil::state_machine::{
 	backend::Backend as StateBackend, BackendTransaction, ChildStorageCollection, DBValue,
 	IterArgs, StorageCollection, StorageIterator, StorageKey, StorageValue,
@@ -133,7 +133,7 @@ impl<Hasher: Hash> BenchmarkingState<Hasher> {
 		record_proof: bool,
 		enable_tracking: bool,
 	) -> Result<Self, String> {
-		let state_version = soil_runtime::StateVersion::default();
+		let state_version = subsoil::runtime::StateVersion::default();
 		let mut root = Default::default();
 		let mut mdb = MemoryDB::<Hasher>::default();
 		subsoil::trie::trie_types::TrieDBMutBuilderV1::<Hasher>::new(&mut mdb, &mut root).build();
@@ -664,7 +664,7 @@ impl<Hasher: Hash> std::fmt::Debug for BenchmarkingState<Hasher> {
 #[cfg(test)]
 mod test {
 	use crate::bench::BenchmarkingState;
-	use soil_runtime::traits::HashingFor;
+	use subsoil::runtime::traits::HashingFor;
 	use subsoil::state_machine::backend::Backend as _;
 
 	fn hex(hex: &str) -> Vec<u8> {
@@ -673,14 +673,14 @@ mod test {
 
 	#[test]
 	fn iteration_is_also_counted_in_rw_counts() {
-		let storage = soil_runtime::Storage {
+		let storage = subsoil::runtime::Storage {
 			top: vec![(
 				hex("ce6e1397e668c7fcf47744350dc59688455a2c2dbd2e2a649df4e55d93cd7158"),
 				hex("0102030405060708"),
 			)]
 			.into_iter()
 			.collect(),
-			..soil_runtime::Storage::default()
+			..subsoil::runtime::Storage::default()
 		};
 		let bench_state =
 			BenchmarkingState::<HashingFor<crate::tests::Block>>::new(storage, None, false, true)

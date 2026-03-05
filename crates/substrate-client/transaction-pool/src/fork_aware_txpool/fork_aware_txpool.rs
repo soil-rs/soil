@@ -58,7 +58,7 @@ use parking_lot::Mutex;
 use prometheus_endpoint::Registry as PrometheusRegistry;
 use soil_blockchain::{HashAndNumber, TreeRoute};
 use subsoil::core::traits::SpawnEssentialNamed;
-use soil_runtime::{
+use subsoil::runtime::{
 	generic::BlockId,
 	traits::{Block as BlockT, NumberFor},
 	transaction_validity::{TransactionTag as Tag, TransactionValidityError, ValidTransaction},
@@ -2072,7 +2072,7 @@ where
 	Client: soil_api::ProvideRuntimeApi<Block>
 		+ soil_client_api::BlockBackend<Block>
 		+ soil_client_api::blockchain::HeaderBackend<Block>
-		+ soil_runtime::traits::BlockIdTo<Block>
+		+ subsoil::runtime::traits::BlockIdTo<Block>
 		+ soil_client_api::ExecutorProvider<Block>
 		+ soil_client_api::UsageProvider<Block>
 		+ soil_blockchain::HeaderMetadata<Block, Error = soil_blockchain::Error>

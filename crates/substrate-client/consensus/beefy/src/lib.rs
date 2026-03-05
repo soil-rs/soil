@@ -46,7 +46,7 @@ use soil_consensus_beefy::{
 use subsoil::keystore::KeystorePtr;
 use soil_network::{NetworkRequest, NotificationService, ProtocolName};
 use soil_network_gossip::{GossipEngine, Network as GossipNetwork, Syncing as GossipSyncing};
-use soil_runtime::traits::{Block, Header as HeaderT, NumberFor, Zero};
+use subsoil::runtime::traits::{Block, Header as HeaderT, NumberFor, Zero};
 use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver};
 use std::{
 	collections::{BTreeMap, VecDeque},
@@ -80,7 +80,7 @@ use crate::{
 pub use communication::beefy_protocol_name::{
 	gossip_protocol_name, justifications_protocol_name as justifs_protocol_name,
 };
-use soil_runtime::generic::OpaqueDigestItemId;
+use subsoil::runtime::generic::OpaqueDigestItemId;
 
 mod fisherman;
 #[cfg(test)]

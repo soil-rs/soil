@@ -38,7 +38,6 @@ soil-state-db = { workspace = true, default-features = true, optional = true}
 schnellru = { workspace = true, optional = true}
 soil-blockchain = { workspace = true, default-features = true, optional = true}
 subsoil = { workspace = true, default-features = true, optional = true}
-soil-runtime = { workspace = true, default-features = true, optional = true}
 sysinfo = { workspace = true, optional = true}
 
 [dev-dependencies]
@@ -66,18 +65,18 @@ std = [
 	"subsoil",
 	"soil-blockchain",
 	"soil-client-api",
-	"soil-runtime",
+	"subsoil",
 	"soil-state-db",
 	"sysinfo",
 	"subsoil/std",
 	"soil-client-api/std",
-	"soil-runtime/std",
+	"subsoil/std",
 	"soil-state-db/std",
 ]
 default = ["std"]
 test-helpers = []
 runtime-benchmarks = [
-	"soil-runtime/runtime-benchmarks",
+	"subsoil/runtime-benchmarks",
 ]
 rocksdb = ["kvdb-rocksdb", "subsoil/rocksdb"]
 jemalloc-allocator = ["kvdb-rocksdb?/jemalloc"]

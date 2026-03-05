@@ -52,7 +52,7 @@ use scale_info::TypeInfo;
 
 pub use pallet::*;
 pub use payment::*;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{
 		Convert, DispatchInfoOf, Dispatchable, One, PostDispatchInfoOf, SaturatedConversion,
 		Saturating, TransactionExtension, Zero,
@@ -166,7 +166,7 @@ impl MultiplierUpdate for () {
 		Default::default()
 	}
 	fn max() -> Multiplier {
-		<Multiplier as soil_runtime::traits::Bounded>::max_value()
+		<Multiplier as subsoil::runtime::traits::Bounded>::max_value()
 	}
 	fn target() -> Perquintill {
 		Default::default()
@@ -477,7 +477,7 @@ pub mod pallet {
 			// at most be maximum block weight. Make sure that this can fit in a multiplier without
 			// loss.
 			assert!(
-				<Multiplier as soil_runtime::traits::Bounded>::max_value()
+				<Multiplier as subsoil::runtime::traits::Bounded>::max_value()
 					>= Multiplier::checked_from_integer::<u128>(
 						T::BlockWeights::get().max_block.ref_time().try_into().unwrap()
 					)
@@ -530,7 +530,7 @@ impl<T: Config> Pallet<T> {
 	///
 	/// All dispatchables must be annotated with weight and will have some fee info. This function
 	/// always returns.
-	pub fn query_info<Extrinsic: soil_runtime::traits::ExtrinsicLike + GetDispatchInfo>(
+	pub fn query_info<Extrinsic: subsoil::runtime::traits::ExtrinsicLike + GetDispatchInfo>(
 		unchecked_extrinsic: Extrinsic,
 		len: u32,
 	) -> RuntimeDispatchInfo<BalanceOf<T>>
@@ -557,7 +557,7 @@ impl<T: Config> Pallet<T> {
 	}
 
 	/// Query the detailed fee of a given `call`.
-	pub fn query_fee_details<Extrinsic: soil_runtime::traits::ExtrinsicLike + GetDispatchInfo>(
+	pub fn query_fee_details<Extrinsic: subsoil::runtime::traits::ExtrinsicLike + GetDispatchInfo>(
 		unchecked_extrinsic: Extrinsic,
 		len: u32,
 	) -> FeeDetails<BalanceOf<T>>

@@ -167,7 +167,6 @@ soil-mixnet = { workspace = true }
 soil-mmr-primitives = { workspace = true }
 soil-npos-elections = { workspace = true }
 soil-offchain = { workspace = true }
-soil-runtime = { workspace = true }
 soil-session = { workspace = true }
 soil-staking = { workspace = true }
 soil-statement-store = { workspace = true }
@@ -327,7 +326,7 @@ std = [
 	"soil-mmr-primitives/std",
 	"soil-npos-elections/std",
 	"soil-offchain/std",
-	"soil-runtime/std",
+	"subsoil/std",
 	"soil-session/std",
 	"soil-staking/std",
 	"soil-statement-store/std",
@@ -427,7 +426,7 @@ runtime-benchmarks = [
 	"topsoil-whitelist/runtime-benchmarks",
 	"rand",
 	"rand_pcg",
-	"soil-runtime/runtime-benchmarks",
+	"subsoil/runtime-benchmarks",
 	"soil-staking/runtime-benchmarks",
 ]
 try-runtime = [
@@ -525,6 +524,6 @@ try-runtime = [
 	"topsoil-verify-signature/try-runtime",
 	"topsoil-vesting/try-runtime",
 	"topsoil-whitelist/try-runtime",
-	"soil-runtime/try-runtime",
+	"subsoil/try-runtime",
 ]
 metadata-hash = ["substrate-wasm-builder/metadata-hash"]

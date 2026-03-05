@@ -21,7 +21,7 @@ use super::*;
 use topsoil_support::traits::OnRuntimeUpgrade;
 
 #[cfg(feature = "try-runtime")]
-use soil_runtime::TryRuntimeError;
+use subsoil::runtime::TryRuntimeError;
 
 /// The log target.
 const TARGET: &'static str = "runtime::scheduler::migration";

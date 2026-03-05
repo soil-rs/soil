@@ -24,7 +24,6 @@ topsoil-system = { workspace = true }
 
 topsoil-election-provider-support = { workspace = true }
 soil-npos-elections = { workspace = true }
-soil-runtime = { workspace = true }
 
 # Optional imports for benchmarking
 topsoil-benchmarking = { optional = true, workspace = true }
@@ -59,7 +58,7 @@ std = [
 	"scale-info/std",
 	"subsoil/std",
 	"soil-npos-elections/std",
-	"soil-runtime/std",
+	"subsoil/std",
 	"strum/std",
 ]
 runtime-benchmarks = [
@@ -69,7 +68,7 @@ runtime-benchmarks = [
 	"topsoil-system/runtime-benchmarks",
 	"topsoil-balances/runtime-benchmarks",
 	"rand",
-	"soil-runtime/runtime-benchmarks",
+	"subsoil/runtime-benchmarks",
 	"strum",
 ]
 try-runtime = [
@@ -77,5 +76,5 @@ try-runtime = [
 	"topsoil-support/try-runtime",
 	"topsoil-system/try-runtime",
 	"topsoil-balances/try-runtime",
-	"soil-runtime/try-runtime",
+	"subsoil/try-runtime",
 ]

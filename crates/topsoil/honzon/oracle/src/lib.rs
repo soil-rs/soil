@@ -78,7 +78,7 @@ use codec::{Decode, Encode, MaxEncodedLen};
 use serde::{Deserialize, Serialize};
 
 use scale_info::TypeInfo;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{AccountIdConversion, Member},
 	Debug, DispatchResult,
 };

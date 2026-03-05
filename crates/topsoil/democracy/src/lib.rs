@@ -156,7 +156,7 @@ extern crate alloc;
 
 use alloc::{vec, vec::Vec};
 use codec::{Decode, Encode};
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{BadOrigin, Bounded as ArithBounded, One, Saturating, StaticLookup, Zero},
 	ArithmeticError, DispatchError, DispatchResult,
 };
@@ -1747,8 +1747,8 @@ fn decode_compact_u32_at(key: &[u8]) -> Option<u32> {
 	match codec::Compact::<u32>::decode(&mut input) {
 		Ok(c) => Some(c.0),
 		Err(_) => {
-			soil_runtime::print("Failed to decode compact u32 at:");
-			soil_runtime::print(key);
+			subsoil::runtime::print("Failed to decode compact u32 at:");
+			subsoil::runtime::print(key);
 			None
 		},
 	}

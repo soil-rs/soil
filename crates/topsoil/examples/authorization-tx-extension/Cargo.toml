@@ -25,7 +25,6 @@ topsoil-benchmarking = { optional = true, workspace = true }
 topsoil-support = { features = ["experimental"], workspace = true }
 topsoil-system = { workspace = true }
 
-soil-runtime = { workspace = true }
 
 [dev-dependencies]
 topsoil-verify-signature = { workspace = true }
@@ -43,18 +42,18 @@ std = [
 	"topsoil-verify-signature/std",
 	"scale-info/std",
 	"subsoil/std",
-	"soil-runtime/std",
+	"subsoil/std",
 ]
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",
 	"topsoil-support/runtime-benchmarks",
 	"topsoil-system/runtime-benchmarks",
 	"topsoil-verify-signature/runtime-benchmarks",
-	"soil-runtime/runtime-benchmarks",
+	"subsoil/runtime-benchmarks",
 ]
 try-runtime = [
 	"topsoil-support/try-runtime",
 	"topsoil-system/try-runtime",
 	"topsoil-verify-signature/try-runtime",
-	"soil-runtime/try-runtime",
+	"subsoil/try-runtime",
 ]

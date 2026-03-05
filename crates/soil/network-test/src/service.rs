@@ -37,7 +37,7 @@ use soil_network_sync::{
 	state_request_handler::StateRequestHandler,
 	strategy::polkadot::{PolkadotSyncingStrategy, PolkadotSyncingStrategyConfig},
 };
-use soil_runtime::traits::{Block as BlockT, Zero};
+use subsoil::runtime::traits::{Block as BlockT, Zero};
 use substrate_test_runtime_client::{
 	runtime::{Block as TestBlock, Hash as TestHash},
 	TestClientBuilder, TestClientBuilderExt as _,

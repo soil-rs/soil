@@ -20,7 +20,6 @@ codec = { features = ["derive"], workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 
 # primitives
-soil-runtime = { workspace = true }
 
 # FRAME
 topsoil-election-provider-support = { workspace = true }
@@ -55,7 +54,7 @@ std = [
 	"topsoil-balances?/std",
 	"scale-info/std",
 	"subsoil?/std",
-	"soil-runtime/std",
+	"subsoil/std",
 ]
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",
@@ -64,7 +63,7 @@ runtime-benchmarks = [
 	"topsoil-system/runtime-benchmarks",
 	"topsoil-balances/runtime-benchmarks",
 	"subsoil",
-	"soil-runtime/runtime-benchmarks",
+	"subsoil/runtime-benchmarks",
 ]
 fuzz = [
 	"topsoil-election-provider-support/fuzz",
@@ -76,5 +75,5 @@ try-runtime = [
 	"topsoil-support/try-runtime",
 	"topsoil-system/try-runtime",
 	"topsoil-balances?/try-runtime",
-	"soil-runtime/try-runtime",
+	"subsoil/try-runtime",
 ]

@@ -27,7 +27,7 @@ use scale_info::TypeInfo;
 
 #[cfg(not(feature = "std"))]
 use alloc::vec::Vec;
-use soil_runtime::DigestItem;
+use subsoil::runtime::DigestItem;
 
 /// Epoch slot claim digest entry.
 ///

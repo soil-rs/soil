@@ -22,7 +22,7 @@ use soil_consensus::Error as ConsensusError;
 use soil_consensus_beefy::{
 	AuthorityIdBound, KnownSignature, ValidatorSet, ValidatorSetId, VersionedFinalityProof,
 };
-use soil_runtime::traits::{Block as BlockT, NumberFor};
+use subsoil::runtime::traits::{Block as BlockT, NumberFor};
 
 /// A finality proof with matching BEEFY authorities' signatures.
 pub type BeefyVersionedFinalityProof<Block, AuthorityId> =

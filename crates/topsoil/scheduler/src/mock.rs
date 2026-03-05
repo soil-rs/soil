@@ -20,7 +20,7 @@
 use super::*;
 
 use crate as scheduler;
-use soil_runtime::{BuildStorage, Perbill};
+use subsoil::runtime::{BuildStorage, Perbill};
 use subsoil::weights::constants::WEIGHT_REF_TIME_PER_SECOND;
 use topsoil_support::{
 	derive_impl, ord_parameter_types, parameter_types,

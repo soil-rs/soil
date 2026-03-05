@@ -27,7 +27,7 @@ soil-network-common = { workspace = true, default-features = true, optional = tr
 soil-network-sync = { workspace = true, default-features = true, optional = true}
 soil-network-types = { workspace = true, default-features = true, optional = true}
 schnellru = { workspace = true, optional = true}
-soil-runtime = { workspace = true, default-features = true, optional = true}
+subsoil = { workspace = true, optional = true}
 tracing = { workspace = true, default-features = true, optional = true}
 
 [features]
@@ -43,13 +43,13 @@ std = [
 	"soil-network-common",
 	"soil-network-sync",
 	"soil-network-types",
-	"soil-runtime",
+	"subsoil",
 	"tracing",
 	"soil-network/std",
 	"soil-network-common/std",
 	"soil-network-sync/std",
 	"soil-network-types/std",
-	"soil-runtime/std",
+	"subsoil/std",
 ]
 
 [dev-dependencies]

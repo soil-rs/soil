@@ -256,8 +256,8 @@ fn generate_error_impl(scrate: &TokenStream, enum_ty: OuterEnumType) -> TokenStr
 			/// Optionally convert the `DispatchError` into the `RuntimeError`.
 			///
 			/// Returns `Some` if the error matches the `DispatchError::Module` variant, otherwise `None`.
-			pub fn from_dispatch_error(err: #scrate::soil_runtime::DispatchError) -> Option<Self> {
-				let #scrate::soil_runtime::DispatchError::Module(module_error) = err else { return None };
+			pub fn from_dispatch_error(err: #scrate::subsoil::runtime::DispatchError) -> Option<Self> {
+				let #scrate::subsoil::runtime::DispatchError::Module(module_error) = err else { return None };
 
 				let bytes = #scrate::__private::codec::Encode::encode(&module_error);
 				#scrate::__private::codec::Decode::decode(&mut &bytes[..]).ok()

@@ -25,7 +25,7 @@ use topsoil_support::{assert_err, assert_noop, assert_ok};
 
 #[test]
 fn create_offence_fails_given_signed_origin() {
-	use soil_runtime::traits::BadOrigin;
+	use subsoil::runtime::traits::BadOrigin;
 	ExtBuilder::default().build_and_execute(|| {
 		let offenders = (&[]).to_vec();
 		assert_err!(

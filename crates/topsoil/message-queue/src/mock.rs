@@ -24,7 +24,7 @@ use super::*;
 
 use crate as topsoil_message_queue;
 use alloc::collections::btree_map::BTreeMap;
-use soil_runtime::BuildStorage;
+use subsoil::runtime::BuildStorage;
 use topsoil_support::{derive_impl, parameter_types};
 
 type Block = topsoil_system::mocking::MockBlock<Test>;

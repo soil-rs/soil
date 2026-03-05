@@ -21,7 +21,7 @@ use super::*;
 use crate as topsoil_asset_conversion;
 use core::default::Default;
 use subsoil::arithmetic::Permill;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{AccountIdConversion, IdentityLookup},
 	BuildStorage,
 };

@@ -23,7 +23,6 @@ topsoil-system = { workspace = true }
 topsoil-session = { workspace = true }
 topsoil-staking = { workspace = true }
 rand = { features = ["std_rng"], workspace = true }
-soil-runtime = { workspace = true }
 soil-session = { workspace = true }
 
 [dev-dependencies]
@@ -46,7 +45,7 @@ std = [
 	"topsoil-session/std",
 	"topsoil-staking/std",
 	"rand/std",
-	"soil-runtime/std",
+	"subsoil/std",
 	"soil-session/std",
 	"soil-staking/std",
 ]
@@ -59,6 +58,6 @@ runtime-benchmarks = [
 	"topsoil-session/runtime-benchmarks",
 	"topsoil-staking/runtime-benchmarks",
 	"topsoil-timestamp/runtime-benchmarks",
-	"soil-runtime/runtime-benchmarks",
+	"subsoil/runtime-benchmarks",
 	"soil-staking/runtime-benchmarks",
 ]

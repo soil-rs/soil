@@ -106,7 +106,7 @@ use core::cmp::Ordering;
 use log;
 use scale_info::TypeInfo;
 use soil_npos_elections::{ElectionResult, ExtendedBalance};
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{Saturating, StaticLookup, Zero},
 	Debug, DispatchError, Perbill,
 };
@@ -121,7 +121,7 @@ use topsoil_support::{
 };
 
 #[cfg(any(feature = "try-runtime", test))]
-use soil_runtime::TryRuntimeError;
+use subsoil::runtime::TryRuntimeError;
 
 mod benchmarking;
 pub mod weights;
@@ -1309,7 +1309,7 @@ impl<T: Config> Pallet<T> {
 mod tests {
 	use super::*;
 	use crate as elections_phragmen;
-	use soil_runtime::{testing::Header, BuildStorage};
+	use subsoil::runtime::{testing::Header, BuildStorage};
 	use substrate_test_utils::assert_eq_uvec;
 	use topsoil_support::{
 		assert_noop, assert_ok, derive_impl,
@@ -1412,9 +1412,9 @@ mod tests {
 		type MaxCandidates = PhragmenMaxCandidates;
 	}
 
-	pub type Block = soil_runtime::generic::Block<Header, UncheckedExtrinsic>;
+	pub type Block = subsoil::runtime::generic::Block<Header, UncheckedExtrinsic>;
 	pub type UncheckedExtrinsic =
-		soil_runtime::generic::UncheckedExtrinsic<u32, RuntimeCall, u64, ()>;
+		subsoil::runtime::generic::UncheckedExtrinsic<u32, RuntimeCall, u64, ()>;
 
 	topsoil_support::construct_runtime!(
 		pub enum Test
@@ -1568,7 +1568,7 @@ mod tests {
 		Elections::do_try_state().unwrap();
 	}
 
-	fn submit_candidacy(origin: RuntimeOrigin) -> soil_runtime::DispatchResult {
+	fn submit_candidacy(origin: RuntimeOrigin) -> subsoil::runtime::DispatchResult {
 		Elections::submit_candidacy(origin, Candidates::<Test>::get().len() as u32)
 	}
 

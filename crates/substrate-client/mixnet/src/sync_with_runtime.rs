@@ -37,7 +37,7 @@ use soil_network_types::{
 	multiaddr::{multiaddr, Multiaddr, Protocol},
 	PeerId,
 };
-use soil_runtime::traits::Block;
+use subsoil::runtime::traits::Block;
 
 const LOG_TARGET: &str = "mixnet";
 

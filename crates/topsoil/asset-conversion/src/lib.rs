@@ -77,7 +77,7 @@ extern crate alloc;
 use alloc::{boxed::Box, collections::btree_set::BTreeSet, vec::Vec};
 use codec::Codec;
 use subsoil::core::Get;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{
 		CheckedAdd, CheckedDiv, CheckedMul, CheckedSub, Ensure, IntegerSquareRoot, MaybeDisplay,
 		One, TrailingZeroInput, Zero,

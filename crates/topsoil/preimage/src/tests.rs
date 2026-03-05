@@ -22,7 +22,7 @@
 use super::*;
 use crate::mock::*;
 
-use soil_runtime::{bounded_vec, TokenError};
+use subsoil::runtime::{bounded_vec, TokenError};
 use topsoil_support::{
 	assert_err, assert_noop, assert_ok, assert_storage_noop,
 	traits::{fungible::InspectHold, Bounded, BoundedInline},

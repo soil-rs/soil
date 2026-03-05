@@ -18,7 +18,7 @@
 use crate as topsoil_oracle;
 
 use crate::{Config, DefaultCombineData};
-use soil_runtime::{traits::IdentityLookup, BuildStorage};
+use subsoil::runtime::{traits::IdentityLookup, BuildStorage};
 use topsoil_support::{
 	construct_runtime, derive_impl, parameter_types,
 	traits::{ConstU32, SortedMembers, Time},

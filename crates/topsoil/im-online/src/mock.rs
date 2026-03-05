@@ -19,7 +19,7 @@
 
 #![cfg(test)]
 
-use soil_runtime::{testing::UintAuthorityId, traits::ConvertInto, BuildStorage, Permill};
+use subsoil::runtime::{testing::UintAuthorityId, traits::ConvertInto, BuildStorage, Permill};
 use soil_staking::{
 	offence::{OffenceError, ReportOffence},
 	SessionIndex,
@@ -74,7 +74,7 @@ impl topsoil_session::historical::SessionManager<u64, u64> for TestSessionManage
 }
 
 /// An extrinsic type used for tests.
-pub type Extrinsic = soil_runtime::testing::TestXt<RuntimeCall, ()>;
+pub type Extrinsic = subsoil::runtime::testing::TestXt<RuntimeCall, ()>;
 type IdentificationTuple = (u64, u64);
 type Offence = crate::UnresponsivenessOffence<IdentificationTuple>;
 

@@ -162,9 +162,9 @@ pub mod tests {
 		// type Nonce = u32;
 		// type BlockNumber = u32;
 		// type Hash = subsoil::core::hash::H256;
-		// type Hashing = soil_runtime::traits::BlakeTwo256;
+		// type Hashing = subsoil::runtime::traits::BlakeTwo256;
 		// type AccountId = u64;
-		// type Lookup = soil_runtime::traits::IdentityLookup<u64>;
+		// type Lookup = subsoil::runtime::traits::IdentityLookup<u64>;
 		// type BlockHashCount = topsoil_support::traits::ConstU32<10>;
 		// type MaxConsumers = topsoil_support::traits::ConstU32<16>;
 		// type AccountData = ();

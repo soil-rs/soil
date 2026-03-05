@@ -33,7 +33,7 @@ log = { workspace = true, default-features = true }
 kvdb = { optional = true, workspace = true }
 kvdb-rocksdb = { optional = true, workspace = true }
 parking_lot = { optional = true, workspace = true, default-features = true }
-tracing = { workspace = true }
+tracing = { workspace = true, features = ["log"] }
 tracing-core = { workspace = true }
 tracing-subscriber = { workspace = true, optional = true, features = [
 	"env-filter",
@@ -50,6 +50,12 @@ schemars = { optional = true, workspace = true }
 smallvec = { workspace = true, default-features = true }
 wasmtime = { optional = true, workspace = true }
 subsoil-runtime-interface-proc-macro = { workspace = true, default-features = true }
+
+# Dependencies from soil-runtime
+either = { workspace = true }
+strum = { workspace = true, features = ["derive"] }
+simple-mermaid = { workspace = true, optional = true }
+tuplex = { workspace = true, default-features = false }
 
 # Dependencies from soil-core
 bip39 = { workspace = true, default-features = false, features = ["alloc"] }
@@ -109,7 +115,6 @@ rustversion = { workspace = true }
 array-bytes = { workspace = true, default-features = true }
 primitive-types = { workspace = true, default-features = true }
 rand = { workspace = true, default-features = true }
-soil-runtime = { workspace = true, default-features = true }
 criterion = { workspace = true, default-features = true }
 serde_json = { workspace = true, default-features = true }
 rustversion = { workspace = true }
@@ -118,6 +123,9 @@ assert_matches = { workspace = true }
 pretty_assertions = { workspace = true }
 trie-bench = { workspace = true }
 trie-standardmap = { workspace = true }
+soil-api = { workspace = true, default-features = true }
+substrate-test-runtime-client = { workspace = true }
+zstd = { workspace = true }
 
 [features]
 default = ["std"]
@@ -185,7 +193,15 @@ std = [
 	"zeroize/std",
 	# soil-io std features
 	"ed25519-dalek/std",
+	# soil-runtime std features
+	"either/std",
+	"either/use_std",
+	"simple-mermaid",
+	"strum/std",
+	"tuplex/std",
 ]
+runtime-benchmarks = []
+try-runtime = []
 debug = []
 wasm-interface-wasmtime = ["anyhow", "dep:wasmtime"]
 with-tracing = ["codec/derive", "codec/full"]

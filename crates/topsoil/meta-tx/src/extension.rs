@@ -16,7 +16,7 @@
 // limitations under the License.
 
 use super::*;
-use soil_runtime::impl_tx_ext_default;
+use subsoil::impl_tx_ext_default;
 
 /// This type serves as a marker extension to differentiate meta-transactions from regular
 /// transactions. It implements the `TransactionExtension` trait and carries constant implicit data

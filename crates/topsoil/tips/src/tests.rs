@@ -20,7 +20,7 @@
 #![cfg(test)]
 
 use subsoil::core::H256;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{BadOrigin, BlakeTwo256, IdentityLookup},
 	BuildStorage, Perbill, Permill,
 };

@@ -21,7 +21,7 @@
 use subsoil::core::traits::CallContext;
 use soil_executor::{RuntimeVersion, RuntimeVersionOf};
 use subsoil::externalities::Extensions;
-use soil_runtime::traits::{Block as BlockT, HashingFor};
+use subsoil::runtime::traits::{Block as BlockT, HashingFor};
 use subsoil::state_machine::{OverlayedChanges, StorageProof};
 use std::cell::RefCell;
 

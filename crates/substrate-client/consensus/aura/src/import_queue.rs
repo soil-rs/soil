@@ -39,7 +39,7 @@ use soil_consensus_aura::{inherents::AuraInherentData, AuraApi};
 use soil_consensus_slots::Slot;
 use subsoil::core::crypto::Pair;
 use soil_inherents::{CreateInherentDataProviders, InherentDataProvider as _};
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{Block as BlockT, Header, NumberFor},
 	DigestItem,
 };

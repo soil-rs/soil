@@ -17,7 +17,7 @@
 
 use crate::{mock::*, *};
 use subsoil::arithmetic::Permill;
-use soil_runtime::{DispatchError, TokenError};
+use subsoil::runtime::{DispatchError, TokenError};
 use topsoil_support::{
 	assert_noop, assert_ok, assert_storage_noop,
 	instances::Instance1,

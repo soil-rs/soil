@@ -19,7 +19,7 @@
 //! Block import helpers.
 
 use serde::{Deserialize, Serialize};
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{Block as BlockT, HashingFor, Header as HeaderT, NumberFor},
 	DigestItem, Justification, Justifications,
 };

@@ -46,7 +46,6 @@ serde = { workspace = true, default-features = true }
 soil-api = { workspace = true, default-features = true }
 soil-blockchain = { workspace = true, default-features = true }
 soil-rpc = { workspace = true, default-features = true }
-soil-runtime = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
 thiserror = { workspace = true }
 tracing = { workspace = true, default-features = true }

@@ -18,7 +18,7 @@
 //! Traits, types and structs to support a bounded BTreeMap.
 
 use crate::storage::StorageDecodeLength;
-pub use soil_runtime::BoundedBTreeMap;
+pub use subsoil::runtime::BoundedBTreeMap;
 
 impl<K, V, S> StorageDecodeLength for BoundedBTreeMap<K, V, S> {}
 

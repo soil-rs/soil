@@ -28,7 +28,7 @@ use alloc::{collections::btree_set::BTreeSet, vec::Vec};
 use codec::{Decode, Encode, EncodeLike, FullCodec, FullEncode};
 use core::marker::PhantomData;
 use subsoil::core::storage::ChildInfo;
-use soil_runtime::generic::{Digest, DigestItem};
+use subsoil::runtime::generic::{Digest, DigestItem};
 
 pub use self::{
 	stream_iter::StorageStreamIter,
@@ -37,7 +37,7 @@ pub use self::{
 	},
 	types::StorageEntryMetadataBuilder,
 };
-pub use soil_runtime::TransactionOutcome;
+pub use subsoil::runtime::TransactionOutcome;
 pub use types::Key;
 
 pub mod bounded_btree_map;

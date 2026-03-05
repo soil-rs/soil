@@ -24,7 +24,7 @@ use crate::historical as pallet_session_historical;
 
 use codec::Encode;
 use subsoil::core::crypto::key_types::DUMMY;
-use soil_runtime::{
+use subsoil::runtime::{
 	impl_opaque_keys,
 	testing::UintAuthorityId,
 	traits::{Convert, OpaqueKeys},
@@ -130,7 +130,7 @@ impl ShouldEndSession<u64> for TestShouldEndSession {
 
 pub struct TestSessionHandler;
 impl SessionHandler<u64> for TestSessionHandler {
-	const KEY_TYPE_IDS: &'static [soil_runtime::KeyTypeId] = &[UintAuthorityId::ID];
+	const KEY_TYPE_IDS: &'static [subsoil::runtime::KeyTypeId] = &[UintAuthorityId::ID];
 	fn on_genesis_session<T: OpaqueKeys>(_validators: &[(u64, T)]) {}
 	fn on_new_session<T: OpaqueKeys>(
 		changed: bool,
@@ -319,7 +319,7 @@ impl Config for Test {
 impl crate::historical::Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type FullIdentification = u64;
-	type FullIdentificationOf = soil_runtime::traits::ConvertInto;
+	type FullIdentificationOf = subsoil::runtime::traits::ConvertInto;
 }
 
 #[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig as topsoil_balances::DefaultConfig)]

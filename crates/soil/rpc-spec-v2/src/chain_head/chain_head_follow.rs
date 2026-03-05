@@ -41,7 +41,7 @@ use soil_client_api::{
 	Backend, BlockBackend, BlockImportNotification, BlockchainEvents, FinalityNotification,
 	StaleBlock,
 };
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{Block as BlockT, Header as HeaderT, NumberFor},
 	SaturatedConversion, Saturating,
 };

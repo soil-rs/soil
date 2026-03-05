@@ -45,7 +45,7 @@ use subsoil::core::{
 		ChildInfo, ChildType, PrefixedStorageKey, StorageData, StorageKey,
 	},
 };
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{Block as BlockT, HashingFor},
 	StateVersion,
 };
@@ -1113,8 +1113,8 @@ where
 #[cfg(test)]
 mod test_prelude {
 	pub(crate) use super::*;
-	pub(crate) use soil_runtime::testing::{Block as RawBlock, MockCallU64};
-	pub(crate) type UncheckedXt = soil_runtime::testing::TestXt<MockCallU64, ()>;
+	pub(crate) use subsoil::runtime::testing::{Block as RawBlock, MockCallU64};
+	pub(crate) type UncheckedXt = subsoil::runtime::testing::TestXt<MockCallU64, ()>;
 	pub(crate) type Block = RawBlock<UncheckedXt>;
 
 	pub(crate) fn init_logger() {

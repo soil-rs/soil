@@ -36,7 +36,7 @@ use soil_mixnet::types::{
 use topsoil::{
 	deps::{
 		subsoil::io::{self, MultiRemovalResults},
-		soil_runtime,
+		subsoil::runtime,
 	},
 	prelude::*,
 };
@@ -546,7 +546,7 @@ impl<T: Config> Pallet<T> {
 	}
 }
 
-impl<T: Config> soil_runtime::BoundToRuntimeAppPublic for Pallet<T> {
+impl<T: Config> subsoil::runtime::BoundToRuntimeAppPublic for Pallet<T> {
 	type Public = AuthorityId;
 }
 

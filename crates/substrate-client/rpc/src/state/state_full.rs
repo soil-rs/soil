@@ -50,7 +50,7 @@ use subsoil::core::{
 	Bytes,
 };
 use soil_rpc_api::state::ReadProof;
-use soil_runtime::traits::Block as BlockT;
+use subsoil::runtime::traits::Block as BlockT;
 use soil_version::RuntimeVersion;
 
 /// The maximum time allowed for an RPC call when running without unsafe RPC enabled.

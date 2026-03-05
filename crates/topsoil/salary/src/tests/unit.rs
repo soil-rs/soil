@@ -22,7 +22,7 @@ use crate::*;
 use core::cell::RefCell;
 use std::collections::BTreeMap;
 use topsoil::{
-	deps::soil_runtime::traits::Identity, testing_prelude::*, traits::tokens::ConvertRank,
+	deps::subsoil::runtime::traits::Identity, testing_prelude::*, traits::tokens::ConvertRank,
 };
 
 type Block = MockBlock<Test>;

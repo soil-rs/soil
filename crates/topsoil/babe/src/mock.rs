@@ -25,7 +25,7 @@ use subsoil::core::{
 	ConstBool, U256,
 };
 use subsoil::io;
-use soil_runtime::{
+use subsoil::runtime::{
 	curve::PiecewiseLinear,
 	impl_opaque_keys,
 	testing::{Digest, DigestItem, Header, TestXt},
@@ -94,7 +94,7 @@ impl_opaque_keys! {
 impl topsoil_session::Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type ValidatorId = <Self as topsoil_system::Config>::AccountId;
-	type ValidatorIdOf = soil_runtime::traits::ConvertInto;
+	type ValidatorIdOf = subsoil::runtime::traits::ConvertInto;
 	type ShouldEndSession = Babe;
 	type NextSessionRotation = Babe;
 	type SessionManager = topsoil_session::historical::NoteHistoricalRoot<Self, Staking>;
@@ -389,7 +389,7 @@ pub fn generate_equivocation_proof(
 			Timestamp::set_timestamp(*current_slot * Babe::slot_duration());
 			let header = System::finalize();
 
-			soil_runtime::TransactionOutcome::Rollback(Ok::<_, DispatchError>(header))
+			subsoil::runtime::TransactionOutcome::Rollback(Ok::<_, DispatchError>(header))
 		})
 		.unwrap()
 	};

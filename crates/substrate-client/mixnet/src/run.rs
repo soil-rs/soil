@@ -51,7 +51,7 @@ use soil_network::{
 	service::traits::{NetworkService, NotificationEvent, ValidationResult},
 	NetworkPeers, NetworkStateInfo, NotificationService, ProtocolName,
 };
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{Block, Header},
 	transaction_validity::TransactionSource,
 	Saturating,

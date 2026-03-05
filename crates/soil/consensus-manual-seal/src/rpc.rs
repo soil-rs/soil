@@ -26,7 +26,7 @@ use futures::{
 use jsonrpsee::{core::async_trait, proc_macros::rpc};
 use sc_consensus::ImportedAux;
 use serde::{Deserialize, Serialize};
-use soil_runtime::EncodedJustification;
+use subsoil::runtime::EncodedJustification;
 
 /// Sender passed to the authorship task to report errors or successes.
 pub type Sender<T> = Option<oneshot::Sender<std::result::Result<T, Error>>>;

@@ -20,7 +20,7 @@
 use std::collections::BTreeMap;
 
 use subsoil::core::Get;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{BadOrigin, MaybeConvert, ReduceBy, ReplaceWithDefault},
 	BuildStorage,
 };

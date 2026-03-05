@@ -20,7 +20,7 @@
 use super::*;
 use crate as topsoil_uniques;
 
-use soil_runtime::BuildStorage;
+use subsoil::runtime::BuildStorage;
 use topsoil_support::{
 	construct_runtime, derive_impl,
 	traits::{AsEnsureOriginWithArg, ConstU32, ConstU64},

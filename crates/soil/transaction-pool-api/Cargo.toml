@@ -20,7 +20,6 @@ log = { workspace = true, default-features = true, optional = true}
 serde = { features = ["derive"], workspace = true, default-features = true, optional = true}
 soil-blockchain = { workspace = true, default-features = true, optional = true}
 subsoil = { workspace = true, optional = true}
-soil-runtime = { workspace = true, optional = true}
 strum = { workspace = true, features = ["derive"], optional = true}
 thiserror = { workspace = true, optional = true}
 
@@ -35,11 +34,11 @@ std = [
 	"serde",
 	"soil-blockchain",
 	"subsoil",
-	"soil-runtime",
+	"subsoil",
 	"strum",
 	"thiserror",
 	"subsoil/std",
-	"soil-runtime/std",
+	"subsoil/std",
 ]
 
 [dev-dependencies]

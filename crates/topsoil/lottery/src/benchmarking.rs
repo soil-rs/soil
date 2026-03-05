@@ -23,7 +23,7 @@ use super::*;
 
 use crate::Pallet as Lottery;
 use alloc::{boxed::Box, vec};
-use soil_runtime::traits::{Bounded, Zero};
+use subsoil::runtime::traits::{Bounded, Zero};
 use topsoil_benchmarking::{
 	v1::{account, whitelisted_caller, BenchmarkError},
 	v2::*,

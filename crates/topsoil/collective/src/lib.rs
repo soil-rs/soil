@@ -48,7 +48,7 @@ use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use core::{marker::PhantomData, result};
 use scale_info::TypeInfo;
 use subsoil::io::storage;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{Dispatchable, Hash},
 	Debug, DispatchError,
 };
@@ -66,7 +66,7 @@ use topsoil_support::{
 };
 
 #[cfg(any(feature = "try-runtime", test))]
-use soil_runtime::TryRuntimeError;
+use subsoil::runtime::TryRuntimeError;
 
 #[cfg(test)]
 mod tests;
@@ -177,7 +177,7 @@ pub struct Votes<AccountId, BlockNumber> {
 
 /// Types implementing various cost strategies for a given proposal count.
 ///
-/// These types implement [Convert](soil_runtime::traits::Convert) trait and can be used with types
+/// These types implement [Convert](subsoil::runtime::traits::Convert) trait and can be used with types
 /// like [HoldConsideration](`topsoil_support::traits::fungible::HoldConsideration`) implementing
 /// [Consideration](`topsoil_support::traits::Consideration`) trait.
 ///
@@ -192,7 +192,7 @@ pub struct Votes<AccountId, BlockNumber> {
 pub mod deposit {
 	use core::marker::PhantomData;
 	use subsoil::core::Get;
-	use soil_runtime::{traits::Convert, FixedPointNumber, FixedU128, Saturating};
+	use subsoil::runtime::{traits::Convert, FixedPointNumber, FixedU128, Saturating};
 
 	/// Constant deposit amount regardless of current proposal count.
 	/// Returns `None` if configured with zero deposit.
@@ -1400,7 +1400,7 @@ where
 	#[cfg(feature = "runtime-benchmarks")]
 	fn try_successful_origin() -> Result<O, ()> {
 		let zero_account_id =
-			AccountId::decode(&mut soil_runtime::traits::TrailingZeroInput::zeroes())
+			AccountId::decode(&mut subsoil::runtime::traits::TrailingZeroInput::zeroes())
 				.expect("infinite length input; no invalid inputs for type; qed");
 		Ok(O::from(RawOrigin::Member(zero_account_id)))
 	}

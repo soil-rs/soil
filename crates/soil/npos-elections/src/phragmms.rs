@@ -233,7 +233,7 @@ mod tests {
 	use super::*;
 	use crate::{Assignment, ElectionResult};
 	use alloc::rc::Rc;
-	use soil_runtime::{Perbill, Percent};
+	use subsoil::runtime::{Perbill, Percent};
 
 	#[test]
 	fn basic_election_manual_works() {

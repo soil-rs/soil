@@ -44,7 +44,7 @@ use soil_consensus_beefy::{
 use soil_consensus_grandpa::AuthorityId as GrandpaId;
 use subsoil::core::{crypto::KeyTypeId, OpaqueMetadata};
 use soil_inherents::{CheckInherentsResult, InherentData};
-use soil_runtime::{
+use subsoil::runtime::{
 	curve::PiecewiseLinear,
 	generic, impl_opaque_keys, str_array as s,
 	traits::{
@@ -116,7 +116,7 @@ pub use topsoil_transaction_payment::{FungibleAdapter, Multiplier, TargetedFeeAd
 use topsoil_tx_pause::RuntimeCallNameOf;
 
 #[cfg(any(feature = "std", test))]
-pub use soil_runtime::BuildStorage;
+pub use subsoil::runtime::BuildStorage;
 #[cfg(any(feature = "std", test))]
 pub use topsoil_balances::Call as BalancesCall;
 #[cfg(any(feature = "std", test))]
@@ -135,7 +135,7 @@ use impls::AllianceProposalProvider;
 /// Constant values used within the runtime.
 pub mod constants;
 use constants::{currency::*, time::*};
-use soil_runtime::generic::Era;
+use subsoil::runtime::generic::Era;
 
 /// Generated voter bag information.
 mod voter_bags;
@@ -668,7 +668,7 @@ impl_opaque_keys! {
 impl topsoil_session::Config for Runtime {
 	type RuntimeEvent = RuntimeEvent;
 	type ValidatorId = <Self as topsoil_system::Config>::AccountId;
-	type ValidatorIdOf = soil_runtime::traits::ConvertInto;
+	type ValidatorIdOf = subsoil::runtime::traits::ConvertInto;
 	type ShouldEndSession = Babe;
 	type NextSessionRotation = Babe;
 	type SessionManager = topsoil_session::historical::NoteHistoricalRoot<Self, Staking>;
@@ -795,7 +795,7 @@ topsoil_election_provider_support::generate_solution_type!(
 	pub struct NposSolution16::<
 		VoterIndex = u32,
 		TargetIndex = u16,
-		Accuracy = soil_runtime::PerU16,
+		Accuracy = subsoil::runtime::PerU16,
 		MaxVoters = MaxElectingVotersSolution,
 	>(16)
 );
@@ -837,7 +837,7 @@ pub const MINER_MAX_ITERATIONS: u32 = 10;
 pub struct OffchainRandomBalancing;
 impl Get<Option<BalancingConfig>> for OffchainRandomBalancing {
 	fn get() -> Option<BalancingConfig> {
-		use soil_runtime::traits::TrailingZeroInput;
+		use subsoil::runtime::traits::TrailingZeroInput;
 		let iterations = match MINER_MAX_ITERATIONS {
 			0 => 0,
 			max => {
@@ -957,7 +957,7 @@ parameter_types! {
 	pub const MaxPointsToBalance: u8 = 10;
 }
 
-use soil_runtime::traits::{Convert, Keccak256};
+use subsoil::runtime::traits::{Convert, Keccak256};
 pub struct BalanceToU256;
 impl Convert<Balance, subsoil::core::U256> for BalanceToU256 {
 	fn convert(balance: Balance) -> subsoil::core::U256 {
@@ -1417,17 +1417,17 @@ impl topsoil_multi_asset_bounties::Config for Runtime {
 	type FundingSource = topsoil_multi_asset_bounties::PalletIdAsFundingSource<
 		TreasuryPalletId,
 		Runtime,
-		soil_runtime::traits::Identity,
+		subsoil::runtime::traits::Identity,
 	>;
 	type BountySource = topsoil_multi_asset_bounties::BountySourceFromPalletId<
 		TreasuryPalletId,
 		Runtime,
-		soil_runtime::traits::Identity,
+		subsoil::runtime::traits::Identity,
 	>;
 	type ChildBountySource = topsoil_multi_asset_bounties::ChildBountySourceFromPalletId<
 		TreasuryPalletId,
 		Runtime,
-		soil_runtime::traits::Identity,
+		subsoil::runtime::traits::Identity,
 	>;
 	type Paymaster = PayWithFungibles<NativeAndAssets, AccountId>;
 	type BalanceConverter = AssetRate;
@@ -1982,7 +1982,7 @@ impl topsoil_nis::BenchmarkSetup for SetupAsset {
 		let _ = Assets::force_create(
 			RuntimeOrigin::root(),
 			9u32.into(),
-			soil_runtime::MultiAddress::Id(owner),
+			subsoil::runtime::MultiAddress::Id(owner),
 			true,
 			1,
 		);
@@ -2734,7 +2734,7 @@ mod runtime {
 }
 
 /// The address format for describing accounts.
-pub type Address = soil_runtime::MultiAddress<AccountId, AccountIndex>;
+pub type Address = subsoil::runtime::MultiAddress<AccountId, AccountIndex>;
 /// Block header type as expected by this runtime.
 pub type Header = generic::Header<BlockNumber, BlakeTwo256>;
 /// Block type as expected by this runtime.
@@ -2871,7 +2871,7 @@ mod mmr {
 	pub use topsoil_mmr::primitives::*;
 
 	pub type Leaf = <<Runtime as topsoil_mmr::Config>::LeafData as LeafDataProvider>::LeafData;
-	pub type Hash = <Hashing as soil_runtime::traits::Hash>::Output;
+	pub type Hash = <Hashing as subsoil::runtime::traits::Hash>::Output;
 	pub type Hashing = <Runtime as topsoil_mmr::Config>::Hashing;
 }
 
@@ -3017,7 +3017,7 @@ soil_api::impl_runtime_apis! {
 			Executive::execute_block(block);
 		}
 
-		fn initialize_block(header: &<Block as BlockT>::Header) -> soil_runtime::ExtrinsicInclusionMode {
+		fn initialize_block(header: &<Block as BlockT>::Header) -> subsoil::runtime::ExtrinsicInclusionMode {
 			Executive::initialize_block(header)
 		}
 	}
@@ -3384,7 +3384,7 @@ soil_api::impl_runtime_apis! {
 				soil_consensus_beefy::ForkVotingProof<
 					<Block as BlockT>::Header,
 					BeefyId,
-					soil_runtime::OpaqueValue
+					subsoil::runtime::OpaqueValue
 				>,
 			key_owner_proof: soil_consensus_beefy::OpaqueKeyOwnershipProof,
 		) -> Option<()> {

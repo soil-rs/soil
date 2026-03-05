@@ -18,7 +18,7 @@
 use crate::*;
 use codec::MaxEncodedLen;
 use subsoil::core::{ConstU64, H256};
-use soil_runtime::{
+use subsoil::runtime::{
 	testing::UintAuthorityId,
 	traits::{Applyable, BlakeTwo256, Checkable, ConstUint, IdentityLookup},
 	transaction_validity::{InvalidTransaction, TransactionSource},
@@ -39,12 +39,12 @@ pub type BlockNumber = u64;
 
 pub type TransactionExtension = (RestrictOrigin<Test>,);
 
-pub type Header = soil_runtime::generic::Header<BlockNumber, BlakeTwo256>;
-pub type Block = soil_runtime::generic::Block<Header, UncheckedExtrinsic>;
-pub type UncheckedExtrinsic = soil_runtime::generic::UncheckedExtrinsic<
+pub type Header = subsoil::runtime::generic::Header<BlockNumber, BlakeTwo256>;
+pub type Block = subsoil::runtime::generic::Block<Header, UncheckedExtrinsic>;
+pub type UncheckedExtrinsic = subsoil::runtime::generic::UncheckedExtrinsic<
 	AccountId,
 	RuntimeCall,
-	soil_runtime::testing::UintAuthorityId,
+	subsoil::runtime::testing::UintAuthorityId,
 	TransactionExtension,
 >;
 

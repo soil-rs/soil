@@ -251,7 +251,7 @@ use subsoil::arithmetic::{
 	UpperOf,
 };
 use soil_npos_elections::{ElectionScore, IdentifierT, Supports, VoteWeight};
-use soil_runtime::{
+use subsoil::runtime::{
 	transaction_validity::{
 		InvalidTransaction, TransactionPriority, TransactionSource, TransactionValidity,
 		TransactionValidityError, ValidTransaction,
@@ -273,7 +273,7 @@ use topsoil_support::{
 use topsoil_system::{ensure_none, offchain::CreateBare, pallet_prelude::BlockNumberFor};
 
 #[cfg(feature = "try-runtime")]
-use soil_runtime::TryRuntimeError;
+use subsoil::runtime::TryRuntimeError;
 
 #[cfg(feature = "runtime-benchmarks")]
 mod benchmarking;
@@ -593,7 +593,7 @@ pub use pallet::*;
 #[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
-	use soil_runtime::traits::Convert;
+	use subsoil::runtime::traits::Convert;
 	use topsoil_election_provider_support::{InstantElectionProvider, NposSolver};
 	use topsoil_support::{pallet_prelude::*, traits::EstimateCallFee};
 	use topsoil_system::pallet_prelude::*;
@@ -848,7 +848,7 @@ pub mod pallet {
 		}
 
 		fn offchain_worker(now: BlockNumberFor<T>) {
-			use soil_runtime::offchain::storage_lock::{BlockAndTime, StorageLock};
+			use subsoil::runtime::offchain::storage_lock::{BlockAndTime, StorageLock};
 
 			// Create a lock with the maximum deadline of number of blocks in the unsigned phase.
 			// This should only come useful in an **abrupt** termination of execution, otherwise the

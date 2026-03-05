@@ -68,8 +68,8 @@ pub mod __private {
 	pub use subsoil;
 	pub use subsoil::metadata_ir;
 	#[cfg(feature = "std")]
-	pub use soil_runtime::{bounded_btree_map, bounded_vec};
-	pub use soil_runtime::{
+	pub use subsoil::runtime::{bounded_btree_map, bounded_vec};
+	pub use subsoil::runtime::{
 		traits::{AsSystemOriginSigner, AsTransactionAuthorizedOrigin, Dispatchable},
 		DispatchError, StateVersion, TransactionOutcome,
 	};
@@ -98,9 +98,9 @@ pub mod weights;
 #[doc(hidden)]
 pub mod unsigned {
 	#[doc(hidden)]
-	pub use crate::soil_runtime::traits::ValidateUnsigned;
+	pub use crate::subsoil::runtime::traits::ValidateUnsigned;
 	#[doc(hidden)]
-	pub use crate::soil_runtime::transaction_validity::{
+	pub use crate::subsoil::runtime::transaction_validity::{
 		TransactionSource, TransactionValidity, TransactionValidityError, UnknownTransaction,
 	};
 }
@@ -123,13 +123,13 @@ pub use self::{
 		StorageMap, StorageNMap, StoragePrefixedMap, StorageValue,
 	},
 };
-pub use soil_runtime::{
+pub use subsoil::runtime::{
 	self, print, traits::Printable, ConsensusEngineId, MAX_MODULE_ERROR_ENCODED_SIZE,
 };
 
 use codec::{Decode, Encode};
 use scale_info::TypeInfo;
-use soil_runtime::TypeId;
+use subsoil::runtime::TypeId;
 
 /// A unified log target for support operations.
 pub const LOG_TARGET: &str = "runtime::topsoil-support";
@@ -409,7 +409,7 @@ pub mod testing_prelude {
 		assert_storage_noop, parameter_types,
 	};
 	pub use subsoil::assert_eq_error_rate;
-	pub use soil_runtime::{bounded_btree_map, bounded_vec};
+	pub use subsoil::runtime::{bounded_btree_map, bounded_vec};
 }
 
 /// Prelude to be used alongside pallet macro, for ease of use.
@@ -443,7 +443,7 @@ pub mod pallet_prelude {
 	pub use core::marker::PhantomData;
 	pub use scale_info::TypeInfo;
 	pub use soil_inherents::MakeFatalError;
-	pub use soil_runtime::{
+	pub use subsoil::runtime::{
 		traits::{
 			CheckedAdd, CheckedConversion, CheckedDiv, CheckedMul, CheckedShl, CheckedShr,
 			CheckedSub, MaybeSerializeDeserialize, Member, One, ValidateResult, ValidateUnsigned,
@@ -1227,7 +1227,7 @@ pub mod pallet_macros {
 	/// 	pub struct Pallet<T>(_);
 	///
 	/// 	#[pallet::validate_unsigned]
-	/// 	impl<T: Config> soil_runtime::traits::ValidateUnsigned for Pallet<T> {
+	/// 	impl<T: Config> subsoil::runtime::traits::ValidateUnsigned for Pallet<T> {
 	/// 		type Call = Call<T>;
 	///
 	/// 		fn validate_unsigned(_source: TransactionSource, _call: &Self::Call) -> TransactionValidity {
@@ -1245,7 +1245,7 @@ pub mod pallet_macros {
 	/// [`ValidateUnsigned`](topsoil_support::pallet_prelude::ValidateUnsigned) for
 	/// type `Pallet<T>`, and some optional where clause.
 	///
-	/// NOTE: There is also the [`soil_runtime::traits::TransactionExtension`] trait that can be
+	/// NOTE: There is also the [`subsoil::runtime::traits::TransactionExtension`] trait that can be
 	/// used to add some specific logic for transaction validation.
 	///
 	/// ## Macro expansion
@@ -1320,7 +1320,7 @@ pub mod pallet_macros {
 	/// ```
 	/// #[topsoil_support::pallet]
 	/// mod pallet {
-	/// # 	use soil_runtime::FixedU128;
+	/// # 	use subsoil::runtime::FixedU128;
 	/// # 	use topsoil_support::pallet_prelude::*;
 	/// #
 	/// 	#[pallet::pallet]
@@ -1642,12 +1642,12 @@ pub mod pallet_macros {
 	/// pallet.
 	///
 	/// > The exact definition of **extrinsic** can be found in
-	/// > [`soil_runtime::generic::UncheckedExtrinsic`].
+	/// > [`subsoil::runtime::generic::UncheckedExtrinsic`].
 	///
 	/// A **dispatchable** is a common term in FRAME, referring to process of constructing a
 	/// function, and dispatching it with the correct inputs. This is commonly used with
 	/// extrinsics, for example "an extrinsic has been dispatched". See
-	/// [`soil_runtime::traits::Dispatchable`] and [`crate::traits::UnfilteredDispatchable`].
+	/// [`subsoil::runtime::traits::Dispatchable`] and [`crate::traits::UnfilteredDispatchable`].
 	///
 	/// ## Call Enum
 	///
@@ -2266,11 +2266,11 @@ pub mod pallet_macros {
 }
 
 #[deprecated(
-	note = "Will be removed after July 2023; Use `soil_runtime::traits` directly instead."
+	note = "Will be removed after July 2023; Use `subsoil::runtime::traits` directly instead."
 )]
 pub mod error {
 	#[doc(hidden)]
-	pub use soil_runtime::traits::{BadOrigin, LookupError};
+	pub use subsoil::runtime::traits::{BadOrigin, LookupError};
 }
 
 #[doc(inline)]

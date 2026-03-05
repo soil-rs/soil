@@ -18,7 +18,7 @@
 //! Tests for Uniques pallet.
 
 use crate::{mock::*, Event, *};
-use soil_runtime::{traits::Dispatchable, DispatchError};
+use subsoil::runtime::{traits::Dispatchable, DispatchError};
 use topsoil_balances::Error as BalancesError;
 use topsoil_support::{assert_noop, assert_ok, traits::Currency};
 

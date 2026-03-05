@@ -43,7 +43,7 @@
 //!
 //! ```rust
 //! # use soil_npos_elections::*;
-//! # use soil_runtime::Perbill;
+//! # use subsoil::runtime::Perbill;
 //! // the winners.
 //! let winners = vec![(1, 100), (2, 50)];
 //! let assignments = vec![
@@ -249,7 +249,7 @@ impl ElectionScore {
 	/// Compares two sets of election scores based on desirability, returning true if `self` is
 	/// strictly better than `other`.
 	pub fn strict_better(self, other: Self) -> bool {
-		self.strict_threshold_better(other, soil_runtime::Perbill::zero())
+		self.strict_threshold_better(other, subsoil::runtime::Perbill::zero())
 	}
 }
 

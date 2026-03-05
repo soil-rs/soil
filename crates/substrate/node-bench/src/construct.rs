@@ -31,7 +31,7 @@ use node_primitives::Block;
 use node_testing::bench::{BenchDb, BlockType, DatabaseType, KeyTypes};
 use soil_consensus::{Environment, ProposeArgs, Proposer};
 use soil_inherents::InherentDataProvider;
-use soil_runtime::OpaqueExtrinsic;
+use subsoil::runtime::OpaqueExtrinsic;
 use soil_transaction_pool_api::{
 	ImportNotificationStream, PoolStatus, ReadyTransactions, TransactionFor, TransactionSource,
 	TransactionStatusStreamFor, TxHash, TxInvalidityReportMap,

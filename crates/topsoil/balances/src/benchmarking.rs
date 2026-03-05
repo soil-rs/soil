@@ -22,7 +22,7 @@
 use super::*;
 use crate::Pallet as Balances;
 
-use soil_runtime::traits::Bounded;
+use subsoil::runtime::traits::Bounded;
 use topsoil_benchmarking::v2::*;
 use topsoil_system::RawOrigin;
 use types::ExtraFlags;

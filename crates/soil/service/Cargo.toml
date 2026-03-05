@@ -56,7 +56,6 @@ serde_json = { workspace = true, default-features = true, optional = true}
 soil-api = { workspace = true, default-features = true, optional = true}
 soil-blockchain = { workspace = true, default-features = true, optional = true}
 soil-consensus = { workspace = true, default-features = true, optional = true}
-soil-runtime = { workspace = true, default-features = true, optional = true}
 soil-session = { workspace = true, default-features = true, optional = true}
 subsoil = { workspace = true, default-features = true, optional = true}
 soil-transaction-pool = { workspace = true, default-features = true, optional = true}
@@ -112,7 +111,7 @@ std = [
 	"soil-network-types",
 	"soil-rpc-server",
 	"soil-rpc-spec-v2",
-	"soil-runtime",
+	"subsoil",
 	"soil-session",
 	"soil-sysinfo",
 	"soil-telemetry",
@@ -142,7 +141,7 @@ std = [
 	"soil-network-types/std",
 	"soil-rpc-server/std",
 	"soil-rpc-spec-v2/std",
-	"soil-runtime/std",
+	"subsoil/std",
 	"soil-session/std",
 	"soil-sysinfo/std",
 	"soil-telemetry/std",
@@ -158,6 +157,6 @@ default = ["std", "rocksdb"]
 rocksdb = ["soil-client-db/rocksdb"]
 runtime-benchmarks = [
 	"soil-client-db/runtime-benchmarks",
-	"soil-runtime/runtime-benchmarks",
+	"subsoil/runtime-benchmarks",
 ]
 jemalloc-allocator = ["soil-client-db/jemalloc-allocator"]

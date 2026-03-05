@@ -17,7 +17,7 @@
 
 use super::*;
 use crate::{mock::*, Event};
-use soil_runtime::{
+use subsoil::runtime::{
 	bounded_btree_map,
 	traits::{BadOrigin, Dispatchable},
 	FixedU128,
@@ -3700,7 +3700,7 @@ mod pool_withdraw_unbonded {
 
 mod withdraw_unbonded {
 	use super::*;
-	use soil_runtime::bounded_btree_map;
+	use subsoil::runtime::bounded_btree_map;
 
 	#[test]
 	fn withdraw_unbonded_works_against_slashed_no_era_sub_pool() {

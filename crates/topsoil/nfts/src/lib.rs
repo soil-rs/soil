@@ -52,7 +52,7 @@ extern crate alloc;
 
 use alloc::{boxed::Box, vec, vec::Vec};
 use codec::{Decode, Encode};
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{BlockNumberProvider, IdentifyAccount, Saturating, StaticLookup, Verify, Zero},
 	Debug,
 };
@@ -97,9 +97,9 @@ pub mod pallet {
 		BenchmarkHelper<
 			CollectionId,
 			ItemId,
-			soil_runtime::MultiSigner,
-			soil_runtime::AccountId32,
-			soil_runtime::MultiSignature,
+			subsoil::runtime::MultiSigner,
+			subsoil::runtime::AccountId32,
+			subsoil::runtime::MultiSignature,
 		> for ()
 	where
 		CollectionId: From<u16>,
@@ -111,16 +111,16 @@ pub mod pallet {
 		fn item(i: u16) -> ItemId {
 			i.into()
 		}
-		fn signer() -> (soil_runtime::MultiSigner, soil_runtime::AccountId32) {
+		fn signer() -> (subsoil::runtime::MultiSigner, subsoil::runtime::AccountId32) {
 			let public = subsoil::io::crypto::sr25519_generate(0.into(), None);
-			let account = soil_runtime::MultiSigner::Sr25519(public).into_account();
+			let account = subsoil::runtime::MultiSigner::Sr25519(public).into_account();
 			(public.into(), account)
 		}
 		fn sign(
-			signer: &soil_runtime::MultiSigner,
+			signer: &subsoil::runtime::MultiSigner,
 			message: &[u8],
-		) -> soil_runtime::MultiSignature {
-			soil_runtime::MultiSignature::Sr25519(
+		) -> subsoil::runtime::MultiSignature {
+			subsoil::runtime::MultiSignature::Sr25519(
 				subsoil::io::crypto::sr25519_sign(
 					0.into(),
 					&signer.clone().try_into().unwrap(),

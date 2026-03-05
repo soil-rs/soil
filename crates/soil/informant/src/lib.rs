@@ -37,7 +37,7 @@ use soil_network::NetworkStatusProvider;
 #[cfg(feature = "std")]
 use soil_network_sync::{SyncStatusProvider, SyncingService};
 #[cfg(feature = "std")]
-use soil_runtime::traits::{Block as BlockT, Header};
+use subsoil::runtime::traits::{Block as BlockT, Header};
 #[cfg(feature = "std")]
 use std::{
 	collections::VecDeque,

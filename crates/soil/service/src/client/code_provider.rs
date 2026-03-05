@@ -20,7 +20,7 @@ use super::{client::ClientConfig, wasm_override::WasmOverride, wasm_substitutes:
 use soil_client_api::{backend, TrieCacheContext};
 use subsoil::core::traits::{FetchRuntimeCode, RuntimeCode};
 use soil_executor::{RuntimeVersion, RuntimeVersionOf};
-use soil_runtime::traits::Block as BlockT;
+use subsoil::runtime::traits::Block as BlockT;
 use subsoil::state_machine::{Ext, OverlayedChanges};
 use std::sync::Arc;
 

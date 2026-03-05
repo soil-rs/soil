@@ -23,7 +23,7 @@ use crate::{
 	Inspector,
 };
 use soil_cli::{CliConfiguration, ImportParams, Result, SharedParams};
-use soil_runtime::traits::Block;
+use subsoil::runtime::traits::Block;
 use soil_service::Configuration;
 
 type HostFunctions =

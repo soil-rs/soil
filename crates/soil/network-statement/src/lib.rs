@@ -67,7 +67,7 @@ use soil_network_sync::{SyncEvent, SyncEventStream};
 #[cfg(feature = "std")]
 use soil_network_types::PeerId;
 #[cfg(feature = "std")]
-use soil_runtime::traits::Block as BlockT;
+use subsoil::runtime::traits::Block as BlockT;
 #[cfg(feature = "std")]
 use soil_statement_store::{
 	FilterDecision, Hash, Statement, StatementSource, StatementStore, SubmitResult,

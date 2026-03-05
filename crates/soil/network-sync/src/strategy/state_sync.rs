@@ -28,7 +28,7 @@ use sc_consensus::ImportedState;
 use smallvec::SmallVec;
 use soil_client_api::{CompactProof, KeyValueStates, ProofProvider};
 use subsoil::core::storage::well_known_keys;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{Block as BlockT, Header, NumberFor},
 	Justifications,
 };

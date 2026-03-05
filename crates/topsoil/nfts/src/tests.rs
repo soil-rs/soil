@@ -20,7 +20,7 @@
 use crate::{mock::*, Event, SystemConfig, *};
 use enumflags2::BitFlags;
 use subsoil::core::{bounded::BoundedVec, Pair};
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{Dispatchable, IdentifyAccount},
 	MultiSignature, MultiSigner,
 };

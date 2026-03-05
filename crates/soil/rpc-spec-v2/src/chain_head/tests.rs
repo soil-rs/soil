@@ -40,7 +40,7 @@ use subsoil::core::{
 	storage::well_known_keys::{self, CODE},
 	Blake2Hasher, Hasher,
 };
-use soil_runtime::traits::Block as BlockT;
+use subsoil::runtime::traits::Block as BlockT;
 use soil_service::client::new_with_backend;
 use soil_version::RuntimeVersion;
 use std::{

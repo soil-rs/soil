@@ -203,10 +203,10 @@ impl<T: Config> ElectionProvider for OnChainExecution<T> {
 	}
 
 	fn duration() -> Self::BlockNumber {
-		soil_runtime::traits::Zero::zero()
+		subsoil::runtime::traits::Zero::zero()
 	}
 
-	fn status() -> Result<Option<soil_runtime::Weight>, ()> {
+	fn status() -> Result<Option<subsoil::runtime::Weight>, ()> {
 		Ok(Some(Default::default()))
 	}
 }
@@ -217,15 +217,15 @@ mod tests {
 	use crate::{ElectionProvider, PhragMMS, SequentialPhragmen};
 	use subsoil::io::TestExternalities;
 	use soil_npos_elections::Support;
-	use soil_runtime::Perbill;
+	use subsoil::runtime::Perbill;
 	use topsoil_support::{assert_noop, derive_impl, parameter_types};
 	type AccountId = u64;
 	type Nonce = u64;
 	type BlockNumber = u64;
 
-	pub type Header = soil_runtime::generic::Header<BlockNumber, soil_runtime::traits::BlakeTwo256>;
-	pub type UncheckedExtrinsic = soil_runtime::generic::UncheckedExtrinsic<AccountId, (), (), ()>;
-	pub type Block = soil_runtime::generic::Block<Header, UncheckedExtrinsic>;
+	pub type Header = subsoil::runtime::generic::Header<BlockNumber, subsoil::runtime::traits::BlakeTwo256>;
+	pub type UncheckedExtrinsic = subsoil::runtime::generic::UncheckedExtrinsic<AccountId, (), (), ()>;
+	pub type Block = subsoil::runtime::generic::Block<Header, UncheckedExtrinsic>;
 
 	topsoil_support::construct_runtime!(
 		pub enum Runtime {
@@ -241,9 +241,9 @@ mod tests {
 		type Nonce = Nonce;
 		type RuntimeCall = RuntimeCall;
 		type Hash = subsoil::core::H256;
-		type Hashing = soil_runtime::traits::BlakeTwo256;
+		type Hashing = subsoil::runtime::traits::BlakeTwo256;
 		type AccountId = AccountId;
-		type Lookup = soil_runtime::traits::IdentityLookup<Self::AccountId>;
+		type Lookup = subsoil::runtime::traits::IdentityLookup<Self::AccountId>;
 		type Block = Block;
 		type RuntimeEvent = ();
 		type BlockHashCount = ();
@@ -296,7 +296,7 @@ mod tests {
 	mod mock_data_provider {
 		use super::*;
 		use crate::{data_provider, DataProviderBounds, PageIndex, VoterOf};
-		use soil_runtime::bounded_vec;
+		use subsoil::runtime::bounded_vec;
 		use topsoil_support::traits::ConstU32;
 
 		pub struct DataProvider;

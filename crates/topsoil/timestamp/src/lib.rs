@@ -133,7 +133,7 @@ mod tests;
 pub mod weights;
 
 use core::{cmp, result};
-use soil_runtime::traits::{AtLeast32Bit, SaturatedConversion, Scale, Zero};
+use subsoil::runtime::traits::{AtLeast32Bit, SaturatedConversion, Scale, Zero};
 use soil_timestamp::{InherentError, InherentType, INHERENT_IDENTIFIER};
 use topsoil_support::traits::{OnTimestampSet, Time, UnixTime};
 pub use weights::WeightInfo;

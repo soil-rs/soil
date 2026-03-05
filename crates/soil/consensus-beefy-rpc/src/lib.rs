@@ -36,7 +36,7 @@ use sc_rpc::{
 #[cfg(feature = "std")]
 use subsoil::application_crypto::RuntimeAppPublic;
 #[cfg(feature = "std")]
-use soil_runtime::traits::Block as BlockT;
+use subsoil::runtime::traits::Block as BlockT;
 
 #[cfg(feature = "std")]
 use futures::{task::SpawnError, FutureExt, StreamExt};
@@ -191,7 +191,7 @@ mod tests {
 		justification::BeefyVersionedFinalityProof,
 	};
 	use soil_consensus_beefy::{ecdsa_crypto, known_payloads, Payload, SignedCommitment};
-	use soil_runtime::traits::{BlakeTwo256, Hash};
+	use subsoil::runtime::traits::{BlakeTwo256, Hash};
 	use substrate_test_runtime_client::runtime::Block;
 
 	fn setup_io_handler() -> (

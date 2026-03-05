@@ -24,7 +24,7 @@ use soil_network_common::{role::Roles, types::ReputationChange};
 use crate::strategy::{state_sync::StateSyncProgress, warp::WarpSyncProgress};
 
 use soil_network_types::PeerId;
-use soil_runtime::traits::{Block as BlockT, NumberFor};
+use subsoil::runtime::traits::{Block as BlockT, NumberFor};
 
 use std::{fmt, pin::Pin, sync::Arc};
 

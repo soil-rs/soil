@@ -20,7 +20,7 @@
 #![cfg(test)]
 
 use core::{cell::RefCell, marker::PhantomData};
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{BadOrigin, Dispatchable, IdentityLookup},
 	BuildStorage,
 };

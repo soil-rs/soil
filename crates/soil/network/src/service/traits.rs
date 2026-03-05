@@ -41,7 +41,7 @@ pub use soil_network_types::{
 	multiaddr::Multiaddr,
 	PeerId,
 };
-use soil_runtime::traits::Block as BlockT;
+use subsoil::runtime::traits::Block as BlockT;
 
 use std::{
 	collections::HashSet,

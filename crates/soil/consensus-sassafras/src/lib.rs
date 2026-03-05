@@ -27,7 +27,7 @@ use alloc::vec::Vec;
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;
 use subsoil::core::crypto::KeyTypeId;
-use soil_runtime::ConsensusEngineId;
+use subsoil::runtime::ConsensusEngineId;
 
 pub use soil_consensus_slots::{Slot, SlotDuration};
 

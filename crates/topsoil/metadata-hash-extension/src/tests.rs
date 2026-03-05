@@ -20,7 +20,7 @@ use codec::{Decode, Encode};
 use frame_metadata::RuntimeMetadataPrefixed;
 use merkleized_metadata::{generate_metadata_digest, ExtraInfo};
 use soil_api::{Metadata, ProvideRuntimeApi};
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{ExtrinsicLike, TransactionExtension},
 	transaction_validity::{TransactionSource, UnknownTransaction},
 };
@@ -155,7 +155,7 @@ mod docs {
 
 		/// Unchecked extrinsic type as expected by this runtime.
 		pub type UncheckedExtrinsic =
-			soil_runtime::generic::UncheckedExtrinsic<Address, RuntimeCall, Signature, TxExtension>;
+			subsoil::runtime::generic::UncheckedExtrinsic<Address, RuntimeCall, Signature, TxExtension>;
 	}
 
 	// Put here to not have it in the docs as well.

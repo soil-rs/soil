@@ -29,7 +29,7 @@ use subsoil::core::{
 	Bytes,
 };
 use soil_network::config::MultiaddrWithPeerId;
-use soil_runtime::BuildStorage;
+use subsoil::runtime::BuildStorage;
 use soil_telemetry::TelemetryEndpoints;
 use std::{
 	borrow::Cow,

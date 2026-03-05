@@ -1100,7 +1100,7 @@ mod tests {
 		traits::{CallContext, CodeExecutor, Externalities, RuntimeCode},
 		H256,
 	};
-	use soil_runtime::traits::BlakeTwo256;
+	use subsoil::runtime::traits::BlakeTwo256;
 	use crate::trie::{
 		trie_types::{TrieDBMutBuilderV0, TrieDBMutBuilderV1},
 		KeySpacedDBMut, PrefixedMemoryDB,

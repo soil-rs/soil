@@ -79,7 +79,7 @@ pub use weights::WeightInfo;
 extern crate alloc;
 use alloc::{boxed::Box, collections::btree_map::BTreeMap};
 use scale_info::TypeInfo;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{AccountIdConversion, BadOrigin, Convert, Saturating, StaticLookup, TryConvert, Zero},
 	Debug, Permill,
 };
@@ -1385,7 +1385,7 @@ pub mod pallet {
 	#[pallet::hooks]
 	impl<T: Config<I>, I: 'static> Hooks<SystemBlockNumberFor<T>> for Pallet<T, I> {
 		#[cfg(feature = "try-runtime")]
-		fn try_state(_n: SystemBlockNumberFor<T>) -> Result<(), soil_runtime::TryRuntimeError> {
+		fn try_state(_n: SystemBlockNumberFor<T>) -> Result<(), subsoil::runtime::TryRuntimeError> {
 			Self::do_try_state()
 		}
 	}
@@ -1396,7 +1396,7 @@ impl<T: Config<I>, I: 'static> Pallet<T, I> {
 	/// Ensure the correctness of the state of this pallet.
 	///
 	/// This should be valid before or after each state transition of this pallet.
-	pub fn do_try_state() -> Result<(), soil_runtime::TryRuntimeError> {
+	pub fn do_try_state() -> Result<(), subsoil::runtime::TryRuntimeError> {
 		Self::try_state_bounties_count()?;
 
 		for parent_bounty_id in Bounties::<T, I>::iter_keys() {
@@ -1410,7 +1410,7 @@ impl<T: Config<I>, I: 'static> Pallet<T, I> {
 	///
 	/// * `BountyCount` should be greater or equals to the length of the number of items in
 	///   `Bounties`.
-	fn try_state_bounties_count() -> Result<(), soil_runtime::TryRuntimeError> {
+	fn try_state_bounties_count() -> Result<(), subsoil::runtime::TryRuntimeError> {
 		let bounties_length = Bounties::<T, I>::iter().count() as u32;
 
 		ensure!(
@@ -1427,7 +1427,7 @@ impl<T: Config<I>, I: 'static> Pallet<T, I> {
 	///   `ChildBounties`.
 	fn try_state_child_bounties_count(
 		parent_bounty_id: BountyIndex,
-	) -> Result<(), soil_runtime::TryRuntimeError> {
+	) -> Result<(), subsoil::runtime::TryRuntimeError> {
 		let child_bounties_length =
 			ChildBounties::<T, I>::iter_prefix(parent_bounty_id).count() as u32;
 

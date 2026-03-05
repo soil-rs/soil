@@ -37,7 +37,7 @@ use topsoil_support::storage::generator::{StorageDoubleMap, StorageMap, StorageV
 /// # use topsoil_support::{construct_runtime, derive_impl, traits::ConstU32};
 /// # use substrate_frame_rpc_support::StorageQuery;
 /// # use soil_rpc_api::state::StateApiClient;
-/// # use soil_runtime::{traits::{BlakeTwo256, IdentityLookup}, testing::Header};
+/// # use subsoil::runtime::{traits::{BlakeTwo256, IdentityLookup}, testing::Header};
 /// #
 /// # construct_runtime!(
 /// # 	pub enum TestRuntime

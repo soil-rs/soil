@@ -20,7 +20,7 @@
 use alloc::borrow::Cow;
 use codec::{Decode, DecodeWithMemTracking, Encode, EncodeLike, MaxEncodedLen};
 use scale_info::TypeInfo;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{ConstU32, Hash},
 	DispatchError,
 };
@@ -51,7 +51,7 @@ impl<T, H: Hash> Bounded<T, H> {
 	///
 	/// # Examples
 	/// ```
-	/// use topsoil_support::{traits::Bounded, soil_runtime::traits::BlakeTwo256};
+	/// use topsoil_support::{traits::Bounded, subsoil::runtime::traits::BlakeTwo256};
 	///
 	/// // Transmute from `String` to `&str`.
 	/// let x: Bounded<String, BlakeTwo256> = Bounded::Inline(Default::default());
@@ -263,7 +263,7 @@ pub trait StorePreimage: QueryPreimage {
 }
 
 impl QueryPreimage for () {
-	type H = soil_runtime::traits::BlakeTwo256;
+	type H = subsoil::runtime::traits::BlakeTwo256;
 
 	fn len(_: &subsoil::core::H256) -> Option<u32> {
 		None
@@ -289,7 +289,7 @@ impl StorePreimage for () {
 mod tests {
 	use super::*;
 	use crate::BoundedVec;
-	use soil_runtime::{bounded_vec, traits::BlakeTwo256};
+	use subsoil::runtime::{bounded_vec, traits::BlakeTwo256};
 
 	#[test]
 	fn bounded_size_is_correct() {

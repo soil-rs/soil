@@ -23,7 +23,7 @@ use node_cli::service::{create_extrinsic, fetch_nonce, FullClient, TransactionPo
 use node_primitives::AccountId;
 use subsoil::core::{crypto::Pair, sr25519};
 use soil_keyring::Sr25519Keyring;
-use soil_runtime::OpaqueExtrinsic;
+use subsoil::runtime::OpaqueExtrinsic;
 use soil_service::config::{ExecutorConfiguration, RpcConfiguration};
 use soil_service::{
 	config::{

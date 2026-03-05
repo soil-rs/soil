@@ -22,7 +22,6 @@ serde = { workspace = true }
 
 # primitive deps, used for developing FRAME pallets.
 subsoil = { workspace = true }
-soil-runtime = { workspace = true }
 
 # frame deps, for developing FRAME pallets.
 topsoil-support = { workspace = true }
@@ -77,7 +76,7 @@ std = [
 	"soil-inherents?/std",
 	"soil-keyring?/std",
 	"soil-offchain?/std",
-	"soil-runtime/std",
+	"subsoil/std",
 	"soil-session?/std",
 	"soil-transaction-pool?/std",
 	"soil-version?/std",
@@ -87,14 +86,14 @@ runtime-benchmarks = [
 	"topsoil-support/runtime-benchmarks",
 	"topsoil-system-benchmarking/runtime-benchmarks",
 	"topsoil-system/runtime-benchmarks",
-	"soil-runtime/runtime-benchmarks",
+	"subsoil/runtime-benchmarks",
 ]
 try-runtime = [
 	"topsoil-executive/try-runtime",
 	"topsoil-support/try-runtime",
 	"topsoil-system/try-runtime",
 	"topsoil-try-runtime/try-runtime",
-	"soil-runtime/try-runtime",
+	"subsoil/try-runtime",
 ]
 experimental = ["topsoil-support/experimental"]
 runtime = [

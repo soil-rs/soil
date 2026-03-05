@@ -55,7 +55,7 @@ impl topsoil_balances::Config for MockRuntime {
 impl Config for MockRuntime {}
 
 pub fn new_test_ext() -> subsoil::io::TestExternalities {
-	use soil_runtime::BuildStorage;
+	use subsoil::runtime::BuildStorage;
 
 	let t = RuntimeGenesisConfig { system: Default::default(), balances: Default::default() }
 		.build_storage()

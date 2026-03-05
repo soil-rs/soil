@@ -20,7 +20,7 @@
 use super::*;
 
 use subsoil::core::H256;
-use soil_runtime::{
+use subsoil::runtime::{
 	generic::{DigestItem, Era},
 	testing::{Block, Digest, Header},
 	traits::{Block as BlockT, Header as HeaderT, TransactionExtension},
@@ -116,7 +116,7 @@ mod custom {
 		}
 
 		pub fn calculate_storage_root(_origin: OriginFor<T>) -> DispatchResult {
-			let root = subsoil::io::storage::root(soil_runtime::StateVersion::V1);
+			let root = subsoil::io::storage::root(subsoil::runtime::StateVersion::V1);
 			subsoil::io::storage::set("storage_root".as_bytes(), &root);
 			Ok(())
 		}
@@ -470,10 +470,10 @@ type TxExtension = (
 	topsoil_transaction_payment::ChargeTransactionPayment<Runtime>,
 	topsoil_system::WeightReclaim<Runtime>,
 );
-type UncheckedXt = soil_runtime::generic::UncheckedExtrinsic<
+type UncheckedXt = subsoil::runtime::generic::UncheckedExtrinsic<
 	u64,
 	RuntimeCall,
-	soil_runtime::testing::UintAuthorityId,
+	subsoil::runtime::testing::UintAuthorityId,
 	TxExtension,
 >;
 type TestBlock = Block<UncheckedXt>;
@@ -644,7 +644,7 @@ fn new_test_ext_v0(balance_factor: Balance) -> subsoil::io::TestExternalities {
 	}
 	.assimilate_storage(&mut t)
 	.unwrap();
-	(t, soil_runtime::StateVersion::V0).into()
+	(t, subsoil::runtime::StateVersion::V0).into()
 }
 
 #[test]

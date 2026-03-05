@@ -30,7 +30,7 @@ use subsoil::io::{
 	crypto::{sr25519_generate, sr25519_sign},
 	hashing::blake2_256,
 };
-use soil_runtime::{
+use subsoil::runtime::{
 	generic::ExtensionVersion,
 	traits::{AsTransactionAuthorizedOrigin, DispatchTransaction, Dispatchable, IdentifyAccount},
 	AccountId32, MultiSignature, MultiSigner,

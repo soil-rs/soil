@@ -22,7 +22,7 @@ use scale_info::TypeInfo;
 #[cfg(feature = "std")]
 use serde::{Deserialize, Serialize};
 use subsoil::io::hashing::blake2_256;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::TrailingZeroInput, transaction_validity::TransactionValidityError, DispatchError,
 };
 use subsoil::runtime_interface::pass_by::{

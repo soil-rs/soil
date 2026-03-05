@@ -20,7 +20,7 @@
 
 use soil_consensus::BlockOrigin;
 use subsoil::core::storage::StorageKey;
-use soil_runtime::{
+use subsoil::runtime::{
 	generic::SignedBlock,
 	traits::{Block as BlockT, NumberFor},
 	Justifications,

@@ -35,7 +35,7 @@ fn score_from(x: u128) -> ElectionScore {
 
 mod calls {
 	use super::*;
-	use soil_runtime::{DispatchError, TokenError::FundsUnavailable};
+	use subsoil::runtime::{DispatchError, TokenError::FundsUnavailable};
 
 	#[test]
 	fn cannot_register_with_insufficient_balance() {
@@ -1124,7 +1124,7 @@ mod invulnerables {
 			// Should fail with non-admin origin
 			assert_noop!(
 				SignedPallet::set_invulnerables(RuntimeOrigin::signed(1), vec![99]),
-				soil_runtime::DispatchError::BadOrigin
+				subsoil::runtime::DispatchError::BadOrigin
 			);
 
 			// Should succeed with admin origin (root)

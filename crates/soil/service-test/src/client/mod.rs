@@ -32,7 +32,7 @@ use soil_client_db::{Backend, BlocksPruning, DatabaseSettings, DatabaseSource, P
 use soil_consensus::{BlockOrigin, Error as ConsensusError, SelectChain};
 use subsoil::core::{testing::TaskExecutor, traits::CallContext, H256};
 use soil_executor::WasmExecutor;
-use soil_runtime::{
+use subsoil::runtime::{
 	generic::BlockId,
 	traits::{BlakeTwo256, Block as BlockT, Header as HeaderT},
 	ConsensusEngineId, Justifications, StateVersion,

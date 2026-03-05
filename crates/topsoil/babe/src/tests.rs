@@ -142,7 +142,7 @@ fn current_slot_is_processed_on_initialization() {
 
 fn test_author_vrf_output<F>(make_pre_digest: F)
 where
-	F: Fn(soil_consensus_babe::AuthorityIndex, Slot, VrfSignature) -> soil_runtime::Digest,
+	F: Fn(soil_consensus_babe::AuthorityIndex, Slot, VrfSignature) -> subsoil::runtime::Digest,
 {
 	let (pairs, mut ext) = new_test_ext_with_pairs(1);
 
@@ -326,7 +326,7 @@ fn can_enact_next_config() {
 
 #[test]
 fn only_root_can_enact_config_change() {
-	use soil_runtime::DispatchError;
+	use subsoil::runtime::DispatchError;
 
 	new_test_ext(1).execute_with(|| {
 		let next_config =
@@ -628,7 +628,7 @@ fn report_equivocation_invalid_key_owner_proof() {
 
 #[test]
 fn report_equivocation_invalid_equivocation_proof() {
-	use soil_runtime::traits::Header;
+	use subsoil::runtime::traits::Header;
 
 	let (pairs, mut ext) = new_test_ext_with_pairs(3);
 
@@ -730,7 +730,7 @@ fn report_equivocation_invalid_equivocation_proof() {
 
 #[test]
 fn report_equivocation_validate_unsigned_prevents_duplicates() {
-	use soil_runtime::transaction_validity::{
+	use subsoil::runtime::transaction_validity::{
 		InvalidTransaction, TransactionPriority, TransactionSource, TransactionValidity,
 		ValidTransaction,
 	};
@@ -765,7 +765,7 @@ fn report_equivocation_validate_unsigned_prevents_duplicates() {
 
 		// only local/inblock reports are allowed
 		assert_eq!(
-			<Babe as soil_runtime::traits::ValidateUnsigned>::validate_unsigned(
+			<Babe as subsoil::runtime::traits::ValidateUnsigned>::validate_unsigned(
 				TransactionSource::External,
 				&inner,
 			),
@@ -775,7 +775,7 @@ fn report_equivocation_validate_unsigned_prevents_duplicates() {
 		// the transaction is valid when passed as local
 		let tx_tag = (offending_authority_pair.public(), CurrentSlot::<Test>::get());
 		assert_eq!(
-			<Babe as soil_runtime::traits::ValidateUnsigned>::validate_unsigned(
+			<Babe as subsoil::runtime::traits::ValidateUnsigned>::validate_unsigned(
 				TransactionSource::Local,
 				&inner,
 			),
@@ -789,7 +789,7 @@ fn report_equivocation_validate_unsigned_prevents_duplicates() {
 		);
 
 		// the pre dispatch checks should also pass
-		assert_ok!(<Babe as soil_runtime::traits::ValidateUnsigned>::pre_dispatch(&inner));
+		assert_ok!(<Babe as subsoil::runtime::traits::ValidateUnsigned>::pre_dispatch(&inner));
 
 		// we submit the report
 		Babe::report_equivocation_unsigned(
@@ -802,7 +802,7 @@ fn report_equivocation_validate_unsigned_prevents_duplicates() {
 		// the report should now be considered stale and the transaction is invalid.
 		// the check for staleness should be done on both `validate_unsigned` and on `pre_dispatch`
 		assert_err!(
-			<Babe as soil_runtime::traits::ValidateUnsigned>::validate_unsigned(
+			<Babe as subsoil::runtime::traits::ValidateUnsigned>::validate_unsigned(
 				TransactionSource::Local,
 				&inner,
 			),
@@ -810,7 +810,7 @@ fn report_equivocation_validate_unsigned_prevents_duplicates() {
 		);
 
 		assert_err!(
-			<Babe as soil_runtime::traits::ValidateUnsigned>::pre_dispatch(&inner),
+			<Babe as subsoil::runtime::traits::ValidateUnsigned>::pre_dispatch(&inner),
 			InvalidTransaction::Stale,
 		);
 	});

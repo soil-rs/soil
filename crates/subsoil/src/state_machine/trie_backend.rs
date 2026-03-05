@@ -578,7 +578,7 @@ pub mod tests {
 	use super::*;
 	use codec::Encode;
 	use crate::core::H256;
-	use soil_runtime::traits::BlakeTwo256;
+	use subsoil::runtime::traits::BlakeTwo256;
 	use crate::trie::{
 		cache::{CacheSize, SharedTrieCache},
 		trie_types::{TrieDBBuilder, TrieDBMutBuilderV0, TrieDBMutBuilderV1},

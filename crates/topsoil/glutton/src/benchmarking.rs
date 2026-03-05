@@ -19,7 +19,7 @@
 //!
 //! Has to be compiled and run twice to calibrate on new hardware.
 
-use soil_runtime::{traits::One, Perbill};
+use subsoil::runtime::{traits::One, Perbill};
 #[cfg(feature = "runtime-benchmarks")]
 use topsoil_benchmarking::v2::*;
 use topsoil_support::{pallet_prelude::*, weights::constants::*};

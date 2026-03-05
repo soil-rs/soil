@@ -21,7 +21,7 @@ use crate::{Config, CreditOf, Event, Pallet};
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use core::ops::BitOr;
 use scale_info::TypeInfo;
-use soil_runtime::Saturating;
+use subsoil::runtime::Saturating;
 use topsoil_support::traits::{Imbalance, LockIdentifier, OnUnbalanced, WithdrawReasons};
 
 /// Simplified reasons for withdrawing balance.

@@ -24,7 +24,6 @@ sc-rpc = { workspace = true, default-features = true, optional = true}
 serde = { features = ["derive"], workspace = true, default-features = true, optional = true}
 soil-blockchain = { workspace = true, default-features = true, optional = true}
 subsoil = { workspace = true, default-features = true, optional = true}
-soil-runtime = { workspace = true, default-features = true, optional = true}
 thiserror = { workspace = true, optional = true}
 
 [features]
@@ -41,11 +40,11 @@ std = [
 	"soil-blockchain",
 	"soil-client-api",
 	"subsoil",
-	"soil-runtime",
+	"subsoil",
 	"thiserror",
 	"soil-client-api/std",
 	"subsoil/std",
-	"soil-runtime/std",
+	"subsoil/std",
 ]
 
 [dev-dependencies]

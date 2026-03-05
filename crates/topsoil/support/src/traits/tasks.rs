@@ -22,7 +22,7 @@ use alloc::{vec, vec::IntoIter};
 use codec::FullCodec;
 use core::{fmt::Debug, iter::Iterator};
 use scale_info::TypeInfo;
-use soil_runtime::DispatchError;
+use subsoil::runtime::DispatchError;
 use subsoil::weights::Weight;
 
 /// Contain's re-exports of all the supporting types for the [`Task`] trait. Used in the macro
@@ -33,7 +33,7 @@ pub mod __private {
 	pub use codec::FullCodec;
 	pub use core::{fmt::Debug, iter::Iterator};
 	pub use scale_info::TypeInfo;
-	pub use soil_runtime::DispatchError;
+	pub use subsoil::runtime::DispatchError;
 	pub use subsoil::weights::Weight;
 }
 

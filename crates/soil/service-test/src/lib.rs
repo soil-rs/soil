@@ -38,7 +38,7 @@ use soil_network::{
 #[cfg(feature = "std")]
 use soil_network_sync::SyncingService;
 #[cfg(feature = "std")]
-use soil_runtime::traits::Block as BlockT;
+use subsoil::runtime::traits::Block as BlockT;
 #[cfg(feature = "std")]
 use soil_service::{
 	client::Client,

@@ -35,7 +35,7 @@ use subsoil::core::{
 };
 use soil_mmr_primitives as mmr;
 use soil_mmr_primitives::{utils::NodesUtils, LeafIndex, NodeIndex};
-use soil_runtime::{
+use subsoil::runtime::{
 	generic::BlockId,
 	traits::{Block as BlockT, Header as HeaderT},
 };

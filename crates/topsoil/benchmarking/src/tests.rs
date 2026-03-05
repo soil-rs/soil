@@ -19,7 +19,7 @@
 
 #![cfg(test)]
 
-use soil_runtime::{
+use subsoil::runtime::{
 	testing::H256,
 	traits::{BlakeTwo256, IdentityLookup},
 	BuildStorage,

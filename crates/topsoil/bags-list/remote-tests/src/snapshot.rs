@@ -17,7 +17,7 @@
 //! Test to execute the snapshot using the voter bag.
 
 use remote_externalities::{Builder, Mode, OnlineConfig};
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{Block as BlockT, Zero},
 	DeserializeOwned,
 };

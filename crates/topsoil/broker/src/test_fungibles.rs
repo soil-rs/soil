@@ -20,7 +20,7 @@ use codec::{Decode, Encode};
 use scale_info::TypeInfo;
 use subsoil::arithmetic::traits::Zero;
 use subsoil::core::{Get, TypedGet};
-use soil_runtime::{DispatchError, DispatchResult};
+use subsoil::runtime::{DispatchError, DispatchResult};
 use topsoil_support::{
 	parameter_types,
 	traits::{

@@ -29,7 +29,7 @@ use soil_client_api::{Backend, FinalityNotification};
 use soil_consensus_beefy::MmrRootHash;
 use subsoil::core::offchain::{DbExternalities, StorageKind};
 use soil_mmr_primitives::{utils, utils::NodesUtils, MmrApi, NodeIndex};
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{Block, Header, NumberFor, One},
 	Saturating,
 };
@@ -281,7 +281,7 @@ where
 mod tests {
 	use crate::test_utils::{run_test_with_mmr_gadget, run_test_with_mmr_gadget_pre_post};
 	use parking_lot::Mutex;
-	use soil_runtime::generic::BlockId;
+	use subsoil::runtime::generic::BlockId;
 	use std::{sync::Arc, time::Duration};
 
 	#[test]

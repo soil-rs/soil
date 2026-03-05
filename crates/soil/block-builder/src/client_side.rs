@@ -18,7 +18,7 @@
 use crate::BlockBuilder;
 
 use soil_inherents::{InherentData, InherentDataProvider, InherentIdentifier};
-use soil_runtime::traits::Block as BlockT;
+use subsoil::runtime::traits::Block as BlockT;
 
 /// Errors that occur when creating and checking on the client side.
 #[derive(Debug)]

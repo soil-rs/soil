@@ -22,7 +22,7 @@ use crate::{
 	unsigned::miner::MinerConfig,
 	AllVoterPagesOf, SolutionTargetIndexOf, SolutionVoterIndexOf, VoteWeight,
 };
-use soil_runtime::SaturatedConversion;
+use subsoil::runtime::SaturatedConversion;
 use subsoil::std::{collections::btree_map::BTreeMap, convert::TryInto, prelude::*};
 use topsoil_support::{traits::Get, BoundedVec};
 

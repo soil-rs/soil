@@ -24,7 +24,7 @@ use crate::{Event as BountiesEvent, *};
 
 use alloc::collections::btree_map::BTreeMap;
 use core::cell::RefCell;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{BlakeTwo256, Convert, Hash, Identity, IdentityLookup},
 	BuildStorage, Perbill,
 };

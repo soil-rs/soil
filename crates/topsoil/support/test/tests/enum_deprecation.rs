@@ -121,10 +121,10 @@ impl topsoil_system::Config for Runtime {
 	type RuntimeOrigin = RuntimeOrigin;
 	type Nonce = u64;
 	type RuntimeCall = RuntimeCall;
-	type Hash = soil_runtime::testing::H256;
-	type Hashing = soil_runtime::traits::BlakeTwo256;
+	type Hash = subsoil::runtime::testing::H256;
+	type Hashing = subsoil::runtime::traits::BlakeTwo256;
 	type AccountId = u64;
-	type Lookup = soil_runtime::traits::IdentityLookup<Self::AccountId>;
+	type Lookup = subsoil::runtime::traits::IdentityLookup<Self::AccountId>;
 	type Block = Block;
 	type RuntimeEvent = RuntimeEvent;
 	type MaxConsumers = ConstU32<16>;
@@ -134,12 +134,12 @@ impl pallet::Config for Runtime {
 	type Balance = u64;
 }
 
-pub type Header = soil_runtime::generic::Header<u32, soil_runtime::traits::BlakeTwo256>;
-pub type Block = soil_runtime::generic::Block<Header, UncheckedExtrinsic>;
-pub type UncheckedExtrinsic = soil_runtime::generic::UncheckedExtrinsic<
+pub type Header = subsoil::runtime::generic::Header<u32, subsoil::runtime::traits::BlakeTwo256>;
+pub type Block = subsoil::runtime::generic::Block<Header, UncheckedExtrinsic>;
+pub type UncheckedExtrinsic = subsoil::runtime::generic::UncheckedExtrinsic<
 	u64,
 	RuntimeCall,
-	soil_runtime::testing::UintAuthorityId,
+	subsoil::runtime::testing::UintAuthorityId,
 	topsoil_system::CheckNonZeroSender<Runtime>,
 >;
 

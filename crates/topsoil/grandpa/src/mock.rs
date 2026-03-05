@@ -25,7 +25,7 @@ use finality_grandpa;
 use soil_consensus_grandpa::{RoundNumber, SetId, GRANDPA_ENGINE_ID};
 use subsoil::core::{ConstBool, H256};
 use soil_keyring::Ed25519Keyring;
-use soil_runtime::{
+use subsoil::runtime::{
 	curve::PiecewiseLinear,
 	impl_opaque_keys,
 	testing::{TestXt, UintAuthorityId},
@@ -98,7 +98,7 @@ parameter_types! {
 impl topsoil_session::Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type ValidatorId = u64;
-	type ValidatorIdOf = soil_runtime::traits::ConvertInto;
+	type ValidatorIdOf = subsoil::runtime::traits::ConvertInto;
 	type ShouldEndSession = topsoil_session::PeriodicSessions<ConstU64<1>, ConstU64<0>>;
 	type NextSessionRotation = topsoil_session::PeriodicSessions<ConstU64<1>, ConstU64<0>>;
 	type SessionManager = topsoil_session::historical::NoteHistoricalRoot<Self, Staking>;

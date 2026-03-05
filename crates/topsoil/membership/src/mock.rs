@@ -20,7 +20,7 @@
 use super::*;
 use crate as topsoil_membership;
 
-use soil_runtime::{bounded_vec, BuildStorage};
+use subsoil::runtime::{bounded_vec, BuildStorage};
 
 use topsoil_support::{derive_impl, ord_parameter_types, parameter_types, traits::ConstU32};
 use topsoil_system::EnsureSignedBy;

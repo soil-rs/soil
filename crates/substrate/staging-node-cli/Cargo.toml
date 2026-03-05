@@ -137,7 +137,6 @@ soil-maybe-compressed-blob = { workspace = true, default-features = true }
 soil-mixnet = { workspace = true, default-features = true }
 soil-mmr-primitives = { workspace = true, default-features = true }
 soil-rpc = { workspace = true, default-features = true }
-soil-runtime = { workspace = true, default-features = true }
 soil-statement-store = { workspace = true, default-features = true }
 soil-timestamp = { workspace = true }
 soil-transaction-storage-proof = { workspace = true, default-features = true }

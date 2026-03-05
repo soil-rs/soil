@@ -24,7 +24,7 @@ use node_primitives::{AccountId, Balance, Nonce};
 use subsoil::core::{crypto::get_public_from_string_or_panic, ecdsa, ed25519, sr25519};
 use subsoil_crypto_hashing::blake2_256;
 use soil_keyring::Sr25519Keyring;
-use soil_runtime::generic::{self, Era, ExtrinsicFormat};
+use subsoil::runtime::generic::{self, Era, ExtrinsicFormat};
 
 /// Alice's account id.
 pub fn alice() -> AccountId {
@@ -121,7 +121,7 @@ pub fn sign(
 					.into();
 			generic::UncheckedExtrinsic::new_signed(
 				payload.0,
-				soil_runtime::MultiAddress::Id(signed),
+				subsoil::runtime::MultiAddress::Id(signed),
 				signature,
 				tx_ext,
 			)

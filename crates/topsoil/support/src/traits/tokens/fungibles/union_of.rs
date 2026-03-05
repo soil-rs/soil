@@ -19,7 +19,7 @@
 //!
 //! See the [`crate::traits::fungibles`] doc for more information about fungibles traits.
 
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::Convert,
 	DispatchError, DispatchResult, Either,
 	Either::{Left, Right},

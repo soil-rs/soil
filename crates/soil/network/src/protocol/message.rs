@@ -48,7 +48,7 @@ pub mod generic {
 	use codec::{Decode, Encode, Input};
 	use soil_client_api::StorageProof;
 	use soil_network_common::{message::RequestId, role::Roles};
-	use soil_runtime::ConsensusEngineId;
+	use subsoil::runtime::ConsensusEngineId;
 
 	/// Consensus is mostly opaque to us
 	#[derive(Debug, PartialEq, Eq, Clone, Encode, Decode)]

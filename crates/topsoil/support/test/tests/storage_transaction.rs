@@ -20,7 +20,7 @@
 
 use subsoil::core::sr25519;
 use subsoil::io::TestExternalities;
-use soil_runtime::{
+use subsoil::runtime::{
 	generic,
 	traits::{BlakeTwo256, Verify},
 	TransactionOutcome,

@@ -22,7 +22,7 @@ use alloc::{vec, vec::Vec};
 use codec::{Decode, DecodeWithMemTracking, Encode, FullCodec, HasCompact, MaxEncodedLen};
 use core::fmt::Debug;
 use subsoil::arithmetic::traits::{AtLeast32BitUnsigned, Zero};
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{Convert, MaybeSerializeDeserialize},
 	ArithmeticError, DispatchError, TokenError,
 };

@@ -22,7 +22,6 @@ log = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 soil-api = { workspace = true }
 subsoil = { workspace = true }
-soil-runtime = { workspace = true }
 soil-statement-store = { workspace = true }
 
 [features]
@@ -35,11 +34,11 @@ std = [
 	"scale-info/std",
 	"soil-api/std",
 	"subsoil/std",
-	"soil-runtime/std",
+	"subsoil/std",
 	"soil-statement-store/std",
 ]
 try-runtime = [
 	"topsoil-support/try-runtime",
 	"topsoil-system/try-runtime",
-	"soil-runtime/try-runtime",
+	"subsoil/try-runtime",
 ]

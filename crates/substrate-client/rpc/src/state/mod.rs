@@ -37,7 +37,7 @@ use subsoil::core::{
 	Bytes,
 };
 use soil_rpc_api::{check_if_safe, DenyUnsafe};
-use soil_runtime::traits::Block as BlockT;
+use subsoil::runtime::traits::Block as BlockT;
 use soil_version::RuntimeVersion;
 use std::sync::Arc;
 

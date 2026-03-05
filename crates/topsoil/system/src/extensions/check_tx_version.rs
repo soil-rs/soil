@@ -18,7 +18,7 @@
 use crate::{Config, Pallet};
 use codec::{Decode, DecodeWithMemTracking, Encode};
 use scale_info::TypeInfo;
-use soil_runtime::{
+use subsoil::runtime::{
 	impl_tx_ext_default, traits::TransactionExtension,
 	transaction_validity::TransactionValidityError,
 };

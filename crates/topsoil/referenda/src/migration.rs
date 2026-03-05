@@ -23,7 +23,7 @@ use log;
 use topsoil_support::{pallet_prelude::*, storage_alias, traits::OnRuntimeUpgrade};
 
 #[cfg(feature = "try-runtime")]
-use soil_runtime::TryRuntimeError;
+use subsoil::runtime::TryRuntimeError;
 
 type SystemBlockNumberFor<T> = topsoil_system::pallet_prelude::BlockNumberFor<T>;
 

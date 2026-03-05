@@ -20,9 +20,9 @@ use subsoil::metadata_ir::PalletAssociatedTypeMetadataIR;
 use topsoil_support::{derive_impl, traits::ConstU32};
 
 pub type BlockNumber = u64;
-pub type Header = soil_runtime::generic::Header<u32, soil_runtime::traits::BlakeTwo256>;
-pub type Block = soil_runtime::generic::Block<Header, UncheckedExtrinsic>;
-pub type UncheckedExtrinsic = soil_runtime::generic::UncheckedExtrinsic<u32, RuntimeCall, (), ()>;
+pub type Header = subsoil::runtime::generic::Header<u32, subsoil::runtime::traits::BlakeTwo256>;
+pub type Block = subsoil::runtime::generic::Block<Header, UncheckedExtrinsic>;
+pub type UncheckedExtrinsic = subsoil::runtime::generic::UncheckedExtrinsic<u32, RuntimeCall, (), ()>;
 
 /// Pallet without collectable associated types.
 #[topsoil_support::pallet]
@@ -152,10 +152,10 @@ impl topsoil_system::Config for Runtime {
 	type RuntimeOrigin = RuntimeOrigin;
 	type Nonce = u64;
 	type RuntimeCall = RuntimeCall;
-	type Hash = soil_runtime::testing::H256;
-	type Hashing = soil_runtime::traits::BlakeTwo256;
+	type Hash = subsoil::runtime::testing::H256;
+	type Hashing = subsoil::runtime::traits::BlakeTwo256;
 	type AccountId = u64;
-	type Lookup = soil_runtime::traits::IdentityLookup<Self::AccountId>;
+	type Lookup = subsoil::runtime::traits::IdentityLookup<Self::AccountId>;
 	type Block = Block;
 	type RuntimeEvent = RuntimeEvent;
 	type Version = ();
@@ -241,12 +241,12 @@ fn associated_types_metadata() {
 			},
 			PalletAssociatedTypeMetadataIR {
 				name: "Hash",
-				ty: meta_type::<soil_runtime::testing::H256>(),
+				ty: meta_type::<subsoil::runtime::testing::H256>(),
 				docs: maybe_docs(vec![" The output of the `Hashing` function."]),
 			},
             PalletAssociatedTypeMetadataIR {
 				name: "Hashing",
-				ty: meta_type::<soil_runtime::traits::BlakeTwo256>(),
+				ty: meta_type::<subsoil::runtime::traits::BlakeTwo256>(),
 				docs: maybe_docs(vec![" The hashing system (algorithm) being used in the runtime (e.g. Blake2)."]),
 			},
             PalletAssociatedTypeMetadataIR {

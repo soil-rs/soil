@@ -33,7 +33,7 @@ use soil_consensus::SelectChain;
 use soil_consensus_grandpa::AuthorityId;
 use subsoil::keystore::KeystorePtr;
 use soil_network::NotificationService;
-use soil_runtime::traits::{Block as BlockT, NumberFor};
+use subsoil::runtime::traits::{Block as BlockT, NumberFor};
 use soil_telemetry::TelemetryHandle;
 use soil_utils::mpsc::TracingUnboundedReceiver;
 

@@ -32,7 +32,7 @@ use topsoil_support::{
 	PalletId,
 };
 
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{BadOrigin, IdentityLookup},
 	BuildStorage, Perbill, Permill, TokenError,
 };

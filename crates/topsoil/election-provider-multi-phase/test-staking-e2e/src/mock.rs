@@ -19,7 +19,7 @@
 
 use subsoil::core::{ConstBool, ConstU32, Get};
 use soil_npos_elections::{ElectionScore, VoteWeight};
-use soil_runtime::{
+use subsoil::runtime::{
 	offchain::{
 		testing::{OffchainState, PoolState, TestOffchainExt, TestTransactionPoolExt},
 		OffchainDbExt, OffchainWorkerExt, TransactionPoolExt,
@@ -61,7 +61,7 @@ pub const INIT_TIMESTAMP: BlockNumber = 30_000;
 pub const BLOCK_TIME: BlockNumber = 1000;
 
 type Block = topsoil_system::mocking::MockBlockU32<Runtime>;
-type Extrinsic = soil_runtime::testing::TestXt<RuntimeCall, ()>;
+type Extrinsic = subsoil::runtime::testing::TestXt<RuntimeCall, ()>;
 
 topsoil_support::construct_runtime!(
 	pub enum Runtime {
@@ -91,7 +91,7 @@ impl topsoil_system::Config for Runtime {
 	type AccountId = AccountId;
 	type Block = Block;
 	type AccountData = topsoil_balances::AccountData<Balance>;
-	type Lookup = soil_runtime::traits::IdentityLookup<Self::AccountId>;
+	type Lookup = subsoil::runtime::traits::IdentityLookup<Self::AccountId>;
 }
 
 const NORMAL_DISPATCH_RATIO: Perbill = Perbill::from_percent(75);
@@ -126,7 +126,7 @@ parameter_types! {
 	pub static Offset: u32 = 0;
 }
 
-soil_runtime::impl_opaque_keys! {
+subsoil::impl_opaque_keys! {
 	pub struct SessionKeys {
 		pub other: OtherSessionHandler,
 	}
@@ -140,7 +140,7 @@ impl topsoil_session::Config for Runtime {
 	type SessionHandler = (OtherSessionHandler,);
 	type RuntimeEvent = RuntimeEvent;
 	type ValidatorId = AccountId;
-	type ValidatorIdOf = soil_runtime::traits::ConvertInto;
+	type ValidatorIdOf = subsoil::runtime::traits::ConvertInto;
 	type DisablingStrategy = topsoil_session::disabling::UpToLimitWithReEnablingDisablingStrategy<
 		SLASHING_DISABLING_FACTOR,
 	>;
@@ -258,14 +258,14 @@ impl topsoil_bags_list::Config for Runtime {
 }
 
 pub struct BalanceToU256;
-impl soil_runtime::traits::Convert<Balance, subsoil::core::U256> for BalanceToU256 {
+impl subsoil::runtime::traits::Convert<Balance, subsoil::core::U256> for BalanceToU256 {
 	fn convert(n: Balance) -> subsoil::core::U256 {
 		n.into()
 	}
 }
 
 pub struct U256ToBalance;
-impl soil_runtime::traits::Convert<subsoil::core::U256, Balance> for U256ToBalance {
+impl subsoil::runtime::traits::Convert<subsoil::core::U256, Balance> for U256ToBalance {
 	fn convert(n: subsoil::core::U256) -> Balance {
 		n.try_into().unwrap()
 	}
@@ -281,7 +281,7 @@ impl topsoil_nomination_pools::Config for Runtime {
 	type WeightInfo = ();
 	type Currency = Balances;
 	type RuntimeFreezeReason = RuntimeFreezeReason;
-	type RewardCounter = soil_runtime::FixedU128;
+	type RewardCounter = subsoil::runtime::FixedU128;
 	type BalanceToU256 = BalanceToU256;
 	type U256ToBalance = U256ToBalance;
 	type StakeAdapter =
@@ -418,7 +418,7 @@ impl traits::OneSessionHandler<AccountId> for OtherSessionHandler {
 	fn on_disabled(_validator_index: u32) {}
 }
 
-impl soil_runtime::BoundToRuntimeAppPublic for OtherSessionHandler {
+impl subsoil::runtime::BoundToRuntimeAppPublic for OtherSessionHandler {
 	type Public = testing::UintAuthorityId;
 }
 

@@ -18,7 +18,7 @@
 use crate::*;
 use mock::{RuntimeOrigin, *};
 use subsoil::core::{hexdisplay::HexDisplay, H256};
-use soil_runtime::{
+use subsoil::runtime::{
 	generic::{Digest, DigestItem},
 	traits::{BlakeTwo256, Header},
 	DispatchError, DispatchErrorWithPostInfo,
@@ -1019,7 +1019,7 @@ fn block_size_includes_digest_and_header_overhead() {
 		let block_size = System::block_size();
 
 		let digest_size = digest.encoded_size();
-		use soil_runtime::traits::{Block as BlockT, Header as HeaderT};
+		use subsoil::runtime::traits::{Block as BlockT, Header as HeaderT};
 		let empty_header = <<Test as Config>::Block as BlockT>::Header::new(
 			1,
 			Default::default(),

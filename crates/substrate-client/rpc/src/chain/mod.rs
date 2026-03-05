@@ -30,7 +30,7 @@ use crate::SubscriptionTaskExecutor;
 use jsonrpsee::{core::async_trait, PendingSubscriptionSink};
 use soil_client_api::BlockchainEvents;
 use soil_rpc::{list::ListOrValue, number::NumberOrHex};
-use soil_runtime::{
+use subsoil::runtime::{
 	generic::SignedBlock,
 	traits::{Block as BlockT, NumberFor},
 };

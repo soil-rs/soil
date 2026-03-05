@@ -24,7 +24,7 @@ use crate::{
 use clap::Parser;
 use rand::{rngs::OsRng, RngCore};
 use subsoil::core::crypto::{unwrap_or_default_ss58_version, Ss58AddressFormat, Ss58Codec};
-use soil_runtime::traits::IdentifyAccount;
+use subsoil::runtime::traits::IdentifyAccount;
 use utils::print_from_uri;
 
 /// The `vanity` command

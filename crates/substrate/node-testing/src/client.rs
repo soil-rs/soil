@@ -18,7 +18,7 @@
 
 //! Utilities to build a `TestClient` for `kitchensink-runtime`.
 
-use soil_runtime::BuildStorage;
+use subsoil::runtime::BuildStorage;
 /// Re-export test-client utilities.
 pub use substrate_test_client::*;
 

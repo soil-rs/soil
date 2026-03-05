@@ -56,7 +56,6 @@ serde = { features = ["derive"], workspace = true, default-features = true, opti
 serde_json = { workspace = true, default-features = true, optional = true}
 smallvec = { workspace = true, default-features = true, optional = true}
 soil-blockchain = { workspace = true, default-features = true, optional = true}
-soil-runtime = { workspace = true, default-features = true, optional = true}
 thiserror = { workspace = true, optional = true}
 tokio = { features = ["macros", "sync"], workspace = true, default-features = true, optional = true}
 tokio-stream = { workspace = true, optional = true}
@@ -116,7 +115,6 @@ std = [
 	"soil-client-api",
 	"soil-network-common",
 	"soil-network-types",
-	"soil-runtime",
 	"soil-utils",
 	"thiserror",
 	"tokio",
@@ -129,7 +127,7 @@ std = [
 	"soil-client-api/std",
 	"soil-network-common/std",
 	"soil-network-types/std",
-	"soil-runtime/std",
+	"subsoil/std",
 	"soil-utils/std",
 ]
 default = ["std"]

@@ -101,7 +101,7 @@ use subsoil::core::{
 #[cfg(feature = "std")]
 use subsoil::database::Transaction;
 #[cfg(feature = "std")]
-use soil_runtime::{
+use subsoil::runtime::{
 	generic::BlockId,
 	traits::{
 		Block as BlockT, Hash, HashingFor, Header as HeaderT, NumberFor, One, SaturatedConversion,
@@ -2309,7 +2309,7 @@ fn apply_index_ops<Block: BlockT>(
 #[cfg(feature = "std")]
 fn apply_indexed_body<Block: BlockT>(transaction: &mut Transaction<DbHash>, body: Vec<Vec<u8>>) {
 	for extrinsic in body {
-		let hash = soil_runtime::traits::BlakeTwo256::hash(&extrinsic);
+		let hash = subsoil::runtime::traits::BlakeTwo256::hash(&extrinsic);
 		transaction.store(columns::TRANSACTION, DbHash::from_slice(hash.as_ref()), extrinsic);
 	}
 }
@@ -2897,7 +2897,7 @@ pub(crate) mod tests {
 		blockchain::Backend as BLBTrait,
 	};
 	use subsoil::core::H256;
-	use soil_runtime::{
+	use subsoil::runtime::{
 		testing::{Block as RawBlock, Header, MockCallU64, TestXt},
 		traits::{BlakeTwo256, Hash},
 		ConsensusEngineId, StateVersion,
@@ -2929,7 +2929,7 @@ pub(crate) mod tests {
 		body: Vec<UncheckedXt>,
 		transaction_index: Option<Vec<IndexOperation>>,
 	) -> Result<H256, soil_blockchain::Error> {
-		use soil_runtime::testing::Digest;
+		use subsoil::runtime::testing::Digest;
 
 		let digest = Digest::default();
 		let mut header =
@@ -2965,7 +2965,7 @@ pub(crate) mod tests {
 		extrinsics_root: H256,
 		best: bool,
 	) -> H256 {
-		use soil_runtime::testing::Digest;
+		use subsoil::runtime::testing::Digest;
 
 		let digest = Digest::default();
 		let header =
@@ -2994,7 +2994,7 @@ pub(crate) mod tests {
 		parent_hash: H256,
 		extrinsics_root: H256,
 	) -> H256 {
-		use soil_runtime::testing::Digest;
+		use subsoil::runtime::testing::Digest;
 
 		let digest = Digest::default();
 		let mut header =
@@ -3643,7 +3643,7 @@ pub(crate) mod tests {
 		                        state: NewBlockState,
 		                        register_as_leaf: bool|
 		 -> H256 {
-			use soil_runtime::testing::Digest;
+			use subsoil::runtime::testing::Digest;
 			let digest = Digest::default();
 			let header = Header {
 				number,

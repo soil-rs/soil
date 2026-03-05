@@ -27,7 +27,7 @@ use subsoil::core::{
 	sr25519::{Pair, Public},
 	ByteArray, Pair as PairT, H256,
 };
-use soil_runtime::AccountId32;
+use subsoil::runtime::AccountId32;
 
 extern crate alloc;
 use alloc::{format, str::FromStr, string::String, vec::Vec};
@@ -149,9 +149,9 @@ impl From<Keyring> for &'static str {
 	}
 }
 
-impl From<Keyring> for soil_runtime::MultiSigner {
+impl From<Keyring> for subsoil::runtime::MultiSigner {
 	fn from(x: Keyring) -> Self {
-		soil_runtime::MultiSigner::Sr25519(x.into())
+		subsoil::runtime::MultiSigner::Sr25519(x.into())
 	}
 }
 

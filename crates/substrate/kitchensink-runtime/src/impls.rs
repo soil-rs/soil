@@ -114,7 +114,7 @@ impl ProposalProvider<AccountId, Hash, RuntimeCall> for AllianceProposalProvider
 
 #[cfg(test)]
 mod multiplier_tests {
-	use soil_runtime::{
+	use subsoil::runtime::{
 		assert_eq_error_rate,
 		traits::{Convert, One, Zero},
 		BuildStorage, FixedPointNumber,

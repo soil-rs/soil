@@ -39,7 +39,6 @@ serde = { workspace = true, default-features = true, optional = true}
 soil-api = { workspace = true, default-features = true, optional = true}
 soil-blockchain = { workspace = true, default-features = true, optional = true}
 soil-rpc = { workspace = true, default-features = true, optional = true}
-soil-runtime = { workspace = true, default-features = true, optional = true}
 soil-version = { workspace = true, default-features = true, optional = true}
 thiserror = { workspace = true, optional = true}
 tokio = { features = ["sync"], workspace = true, default-features = true, optional = true}
@@ -67,7 +66,6 @@ std = [
 	"soil-chain-spec",
 	"soil-client-api",
 	"soil-rpc",
-	"soil-runtime",
 	"soil-transaction-pool-api",
 	"soil-version",
 	"thiserror",
@@ -77,7 +75,7 @@ std = [
 	"soil-chain-spec/std",
 	"soil-client-api/std",
 	"subsoil/std",
-	"soil-runtime/std",
+	"subsoil/std",
 	"soil-transaction-pool-api/std",
 	"soil-version/std",
 ]

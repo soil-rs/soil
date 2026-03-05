@@ -25,7 +25,7 @@ use subsoil::arithmetic::{
 	traits::{CheckedAdd, CheckedSub},
 	ArithmeticError,
 };
-use soil_runtime::{DispatchResult, TokenError};
+use subsoil::runtime::{DispatchResult, TokenError};
 
 use crate::{ensure, traits::tokens::Fortitude};
 

@@ -255,7 +255,7 @@ pub fn expand_hooks(def: &mut Def) -> proc_macro2::TokenStream {
 			}
 
 			#topsoil_support::try_runtime_enabled! {
-				fn pre_upgrade() -> Result<#topsoil_support::__private::Vec<u8>, #topsoil_support::soil_runtime::TryRuntimeError> {
+				fn pre_upgrade() -> Result<#topsoil_support::__private::Vec<u8>, #topsoil_support::subsoil::runtime::TryRuntimeError> {
 					<
 						Self
 						as
@@ -263,7 +263,7 @@ pub fn expand_hooks(def: &mut Def) -> proc_macro2::TokenStream {
 					>::pre_upgrade()
 				}
 
-				fn post_upgrade(state: #topsoil_support::__private::Vec<u8>) -> Result<(), #topsoil_support::soil_runtime::TryRuntimeError> {
+				fn post_upgrade(state: #topsoil_support::__private::Vec<u8>) -> Result<(), #topsoil_support::subsoil::runtime::TryRuntimeError> {
 					#post_storage_version_check
 
 					<
@@ -314,7 +314,7 @@ pub fn expand_hooks(def: &mut Def) -> proc_macro2::TokenStream {
 				fn try_state(
 					n: #topsoil_system::pallet_prelude::BlockNumberFor::<T>,
 					_s: #topsoil_support::traits::TryStateSelect
-				) -> Result<(), #topsoil_support::soil_runtime::TryRuntimeError> {
+				) -> Result<(), #topsoil_support::subsoil::runtime::TryRuntimeError> {
 					#topsoil_support::__private::log::info!(
 						target: #topsoil_support::LOG_TARGET,
 						"🩺 Running {:?} try-state checks",

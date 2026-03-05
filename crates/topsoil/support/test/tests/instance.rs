@@ -22,7 +22,7 @@ use subsoil::metadata_ir::{
 	PalletStorageMetadataIR, StorageEntryMetadataIR, StorageEntryModifierIR, StorageEntryTypeIR,
 	StorageHasherIR,
 };
-use soil_runtime::{
+use subsoil::runtime::{
 	generic,
 	traits::{BlakeTwo256, Verify},
 	BuildStorage,

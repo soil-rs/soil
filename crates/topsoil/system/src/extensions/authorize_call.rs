@@ -16,7 +16,7 @@
 // limitations under the License.
 
 use crate::Config;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{
 		AsTransactionAuthorizedOrigin, Dispatchable, Implication, PostDispatchInfoOf,
 		TransactionExtension, ValidateResult,
@@ -116,7 +116,7 @@ where
 mod tests {
 	use crate as topsoil_system;
 	use codec::Encode;
-	use soil_runtime::{
+	use subsoil::runtime::{
 		testing::UintAuthorityId,
 		traits::{Applyable, Checkable, TransactionExtension as _, TxBaseImplication},
 		transaction_validity::{
@@ -197,9 +197,9 @@ mod tests {
 
 	pub type TransactionExtension = (topsoil_system::AuthorizeCall<Runtime>,);
 
-	pub type Header = soil_runtime::generic::Header<u32, soil_runtime::traits::BlakeTwo256>;
-	pub type Block = soil_runtime::generic::Block<Header, UncheckedExtrinsic>;
-	pub type UncheckedExtrinsic = soil_runtime::generic::UncheckedExtrinsic<
+	pub type Header = subsoil::runtime::generic::Header<u32, subsoil::runtime::traits::BlakeTwo256>;
+	pub type Block = subsoil::runtime::generic::Block<Header, UncheckedExtrinsic>;
+	pub type UncheckedExtrinsic = subsoil::runtime::generic::UncheckedExtrinsic<
 		u64,
 		RuntimeCall,
 		UintAuthorityId,

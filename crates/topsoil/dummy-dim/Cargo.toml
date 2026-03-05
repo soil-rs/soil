@@ -21,7 +21,6 @@ log = { workspace = true }
 scale-info = { workspace = true, features = ["derive"] }
 soil-api = { workspace = true }
 subsoil = { workspace = true }
-soil-runtime = { workspace = true }
 
 [dev-dependencies]
 topsoil-people = { workspace = true }
@@ -39,7 +38,7 @@ std = [
 	"scale-info/std",
 	"soil-api/std",
 	"subsoil/std",
-	"soil-runtime/std",
+	"subsoil/std",
 	"verifiable/std",
 ]
 runtime-benchmarks = [
@@ -47,11 +46,11 @@ runtime-benchmarks = [
 	"topsoil-support/runtime-benchmarks",
 	"topsoil-system/runtime-benchmarks",
 	"topsoil-people/runtime-benchmarks",
-	"soil-runtime/runtime-benchmarks",
+	"subsoil/runtime-benchmarks",
 ]
 try-runtime = [
 	"topsoil-support/try-runtime",
 	"topsoil-system/try-runtime",
 	"topsoil-people/try-runtime",
-	"soil-runtime/try-runtime",
+	"subsoil/try-runtime",
 ]

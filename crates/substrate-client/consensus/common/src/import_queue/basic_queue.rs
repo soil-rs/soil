@@ -22,7 +22,7 @@ use futures::{
 use log::{debug, trace};
 use prometheus_endpoint::Registry;
 use soil_consensus::BlockOrigin;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{Block as BlockT, Header as HeaderT, NumberFor},
 	Justification, Justifications,
 };

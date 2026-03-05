@@ -21,7 +21,7 @@
 
 use crate::*;
 use alloc::{vec, vec::Vec};
-use soil_runtime::traits::{Bounded, CheckedDiv, One, Zero};
+use subsoil::runtime::traits::{Bounded, CheckedDiv, One, Zero};
 use soil_transaction_storage_proof::TransactionStorageProof;
 use topsoil_benchmarking::v2::*;
 use topsoil_support::traits::{Get, OnFinalize, OnInitialize};

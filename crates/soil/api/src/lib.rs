@@ -44,7 +44,7 @@
 //! # Logging
 //!
 //! Substrate supports logging from the runtime in native and in wasm. For that purpose it provides
-//! the [`RuntimeLogger`](soil_runtime::runtime_logger::RuntimeLogger). This runtime logger is
+//! the [`RuntimeLogger`](subsoil::runtime::runtime_logger::RuntimeLogger). This runtime logger is
 //! automatically enabled for each call into the runtime through the runtime api. As logging
 //! introduces extra code that isn't actually required for the logic of your runtime and also
 //! increases the final wasm blob size, it is recommended to disable the logging for on-chain
@@ -82,7 +82,7 @@ pub mod __private {
 		pub use hash_db::Hasher;
 		pub use subsoil::core::traits::CallContext;
 		pub use subsoil::externalities::{Extension, Extensions, TransactionType};
-		pub use soil_runtime::StateVersion;
+		pub use subsoil::runtime::StateVersion;
 		pub use subsoil::state_machine::{
 			Backend as StateBackend, InMemoryBackend, OverlayedChanges, StorageProof, TrieBackend,
 			TrieBackendBuilder,
@@ -101,7 +101,7 @@ pub mod __private {
 	pub use subsoil::core::to_substrate_wasm_fn_return_value;
 	#[cfg(feature = "frame-metadata")]
 	pub use subsoil::metadata_ir::{self as metadata_ir, frame_metadata as metadata};
-	pub use soil_runtime::{
+	pub use subsoil::runtime::{
 		generic::BlockId,
 		traits::{Block as BlockT, Hash as HashT, HashingFor, Header as HeaderT, NumberFor},
 		transaction_validity::TransactionValidity,
@@ -119,10 +119,10 @@ use subsoil::core::OpaqueMetadata;
 #[cfg(feature = "std")]
 use subsoil::externalities::{Extension, Extensions};
 #[cfg(feature = "std")]
-use soil_runtime::traits::HashingFor;
+use subsoil::runtime::traits::HashingFor;
 #[cfg(feature = "std")]
-pub use soil_runtime::TransactionOutcome;
-use soil_runtime::{traits::Block as BlockT, ExtrinsicInclusionMode};
+pub use subsoil::runtime::TransactionOutcome;
+use subsoil::runtime::{traits::Block as BlockT, ExtrinsicInclusionMode};
 #[cfg(feature = "std")]
 pub use subsoil::state_machine::StorageProof;
 #[cfg(feature = "std")]
@@ -285,7 +285,7 @@ pub use subsoil_api_proc_macro::decl_runtime_apis;
 /// ```rust
 /// extern crate alloc;
 /// #
-/// # use soil_runtime::{ExtrinsicInclusionMode, traits::Block as BlockT};
+/// # use subsoil::runtime::{ExtrinsicInclusionMode, traits::Block as BlockT};
 /// # use soil_test_primitives::Block;
 /// #
 /// # /// The declaration of the `Runtime` type is done by the `construct_runtime!` macro
@@ -428,7 +428,7 @@ pub use subsoil_api_proc_macro::impl_runtime_apis;
 /// # Example
 ///
 /// ```rust
-/// # use soil_runtime::traits::Block as BlockT;
+/// # use subsoil::runtime::traits::Block as BlockT;
 /// # use soil_test_primitives::Block;
 /// #
 /// # soil_api::decl_runtime_apis! {
@@ -473,7 +473,7 @@ pub use subsoil_api_proc_macro::impl_runtime_apis;
 ///
 /// This attribute can be placed above individual function in the mock implementation to
 /// request more control over the function declaration. From the client side each runtime api
-/// function is called with the `at` parameter that is a [`Hash`](soil_runtime::traits::Hash).
+/// function is called with the `at` parameter that is a [`Hash`](subsoil::runtime::traits::Hash).
 /// When using the `advanced` attribute, the macro expects that the first parameter of the
 /// function is this `at` parameter. Besides that the macro also doesn't do the automatic
 /// return value rewrite, which means that full return value must be specified. The full return
@@ -482,7 +482,7 @@ pub use subsoil_api_proc_macro::impl_runtime_apis;
 ///
 /// ## Example
 /// ```rust
-/// # use soil_runtime::traits::Block as BlockT;
+/// # use subsoil::runtime::traits::Block as BlockT;
 /// # use soil_test_primitives::Block;
 /// # use codec;
 /// #
@@ -541,10 +541,10 @@ pub trait ConstructRuntimeApi<Block: BlockT, C: CallApiAt<Block>> {
 }
 
 #[docify::export]
-/// Init the [`RuntimeLogger`](soil_runtime::runtime_logger::RuntimeLogger).
+/// Init the [`RuntimeLogger`](subsoil::runtime::runtime_logger::RuntimeLogger).
 pub fn init_runtime_logger() {
 	#[cfg(not(feature = "disable-logging"))]
-	soil_runtime::runtime_logger::RuntimeLogger::init();
+	subsoil::runtime::runtime_logger::RuntimeLogger::init();
 }
 
 /// An error describing which API call failed.

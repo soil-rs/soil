@@ -95,7 +95,7 @@ pub mod cleanup_proposals {
 		}
 
 		#[cfg(feature = "try-runtime")]
-		fn pre_upgrade() -> Result<Vec<u8>, soil_runtime::TryRuntimeError> {
+		fn pre_upgrade() -> Result<Vec<u8>, subsoil::runtime::TryRuntimeError> {
 			let value = (
 				Proposals::<T, I>::iter_values().count() as u32,
 				Approvals::<T, I>::get().len() as u32,
@@ -109,7 +109,7 @@ pub mod cleanup_proposals {
 		}
 
 		#[cfg(feature = "try-runtime")]
-		fn post_upgrade(state: Vec<u8>) -> Result<(), soil_runtime::TryRuntimeError> {
+		fn post_upgrade(state: Vec<u8>) -> Result<(), subsoil::runtime::TryRuntimeError> {
 			let (old_proposals_count, old_approvals_count) =
 				<(u32, u32)>::decode(&mut &state[..]).expect("Known good");
 			let new_proposals_count = Proposals::<T, I>::iter_values().count() as u32;

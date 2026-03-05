@@ -23,7 +23,7 @@ use scale_info::{
 	build::{Fields, Variants},
 	Path, Type, TypeInfo,
 };
-use soil_runtime::traits::{Member, Zero};
+use subsoil::runtime::traits::{Member, Zero};
 use topsoil_support::{
 	traits::{ConstU32, Get},
 	BoundedVec, CloneNoBound, DebugNoBound, PartialEqNoBound,

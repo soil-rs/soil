@@ -90,7 +90,7 @@ use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use core::{borrow::Borrow, cmp::Ordering, marker::PhantomData};
 use scale_info::TypeInfo;
 use subsoil::io::hashing::blake2_256;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{BadOrigin, BlockNumberProvider, Dispatchable, One, Saturating, Zero},
 	BoundedVec, Debug, DispatchError,
 };
@@ -438,7 +438,7 @@ pub mod pallet {
 					+ T::WeightInfo::service_task(Some(s), true, true)
 			}
 
-			let limit = soil_runtime::Perbill::from_percent(90) * T::MaximumWeight::get();
+			let limit = subsoil::runtime::Perbill::from_percent(90) * T::MaximumWeight::get();
 
 			let small_lookup = lookup_weight::<T>(128);
 			assert!(small_lookup.all_lte(limit), "Must be possible to submit a small lookup");

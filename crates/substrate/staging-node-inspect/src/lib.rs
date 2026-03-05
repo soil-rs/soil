@@ -31,7 +31,7 @@ use codec::{Decode, Encode};
 use soil_blockchain::HeaderBackend;
 use soil_client_api::BlockBackend;
 use subsoil::core::hexdisplay::HexDisplay;
-use soil_runtime::{
+use subsoil::runtime::{
 	generic::BlockId,
 	traits::{Block, Hash, HashingFor, NumberFor},
 };

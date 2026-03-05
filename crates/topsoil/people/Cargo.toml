@@ -20,7 +20,6 @@ topsoil-system = { workspace = true }
 log = { workspace = true }
 scale-info = { workspace = true, features = ["derive"] }
 subsoil = { workspace = true }
-soil-runtime = { workspace = true }
 verifiable = { workspace = true, features = ["small-ring"] }
 
 
@@ -34,18 +33,18 @@ std = [
 	"log/std",
 	"scale-info/std",
 	"subsoil/std",
-	"soil-runtime/std",
+	"subsoil/std",
 	"verifiable/std",
 ]
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",
 	"topsoil-support/runtime-benchmarks",
 	"topsoil-system/runtime-benchmarks",
-	"soil-runtime/runtime-benchmarks",
+	"subsoil/runtime-benchmarks",
 	"verifiable/no-std-prover",
 ]
 try-runtime = [
 	"topsoil-support/try-runtime",
 	"topsoil-system/try-runtime",
-	"soil-runtime/try-runtime",
+	"subsoil/try-runtime",
 ]

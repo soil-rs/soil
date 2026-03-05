@@ -22,7 +22,7 @@ use codec::{Decode, DecodeWithMemTracking, Encode};
 use core::fmt;
 use scale_info::TypeInfo;
 use subsoil::core::twox_64;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{DispatchInfoOf, TransactionExtension, ValidateResult},
 	transaction_validity::{InvalidTransaction, TransactionValidityError, ValidTransaction},
 	Saturating,

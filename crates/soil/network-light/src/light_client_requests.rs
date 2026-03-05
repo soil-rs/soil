@@ -21,7 +21,7 @@
 use soil_network::{
 	config::ProtocolId, request_responses::IncomingRequest, NetworkBackend, MAX_RESPONSE_SIZE,
 };
-use soil_runtime::traits::Block;
+use subsoil::runtime::traits::Block;
 
 use std::time::Duration;
 

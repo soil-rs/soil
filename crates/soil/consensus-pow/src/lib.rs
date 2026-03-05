@@ -24,7 +24,7 @@ extern crate alloc;
 #[cfg(not(feature = "std"))]
 use alloc::vec::Vec;
 use codec::Decode;
-use soil_runtime::ConsensusEngineId;
+use subsoil::runtime::ConsensusEngineId;
 
 /// The `ConsensusEngineId` of PoW.
 pub const POW_ENGINE_ID: ConsensusEngineId = [b'p', b'o', b'w', b'_'];

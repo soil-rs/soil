@@ -39,7 +39,6 @@ soil-genesis-builder = { workspace = true }
 soil-inherents = { workspace = true }
 soil-keyring = { workspace = true }
 soil-offchain = { workspace = true }
-soil-runtime = { features = ["serde"], workspace = true }
 soil-session = { workspace = true }
 soil-statement-store = { workspace = true }
 soil-transaction-pool = { workspace = true }
@@ -100,7 +99,7 @@ std = [
 	"soil-inherents/std",
 	"soil-keyring/std",
 	"soil-offchain/std",
-	"soil-runtime/std",
+	"subsoil/std",
 	"soil-session/std",
 	"soil-statement-store/std",
 	"soil-transaction-pool/std",

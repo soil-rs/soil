@@ -43,7 +43,6 @@ topsoil-system = { workspace = true, default-features = true }
 pretty_assertions = { workspace = true }
 regex = { workspace = true }
 scale-info = { features = ["derive"], workspace = true, default-features = true }
-soil-runtime = { features = ["serde"], workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
 
 [features]
@@ -56,7 +55,7 @@ std = [
 	"scale-info/std",
 	"subsoil-crypto-hashing/std",
 	"subsoil/std",
-	"soil-runtime/std",
+	"subsoil/std",
 ]
 no-metadata-docs = []
 experimental = []

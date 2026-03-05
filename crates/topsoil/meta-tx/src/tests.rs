@@ -20,7 +20,7 @@ use core::ops::Add;
 use mock::*;
 use subsoil::io::hashing::blake2_256;
 use soil_keyring::Sr25519Keyring;
-use soil_runtime::{
+use subsoil::runtime::{
 	generic::Era,
 	traits::{Applyable, Checkable, Hash, IdentityLookup},
 	DispatchErrorWithPostInfo, MultiSignature,
@@ -401,8 +401,8 @@ fn meta_tx_call_fails() {
 					actual_weight: Some(meta_tx_weight),
 					pays_fee: Pays::Yes,
 				},
-				error: soil_runtime::DispatchError::Token(
-					soil_runtime::TokenError::FundsUnavailable,
+				error: subsoil::runtime::DispatchError::Token(
+					subsoil::runtime::TokenError::FundsUnavailable,
 				),
 			}),
 		}));

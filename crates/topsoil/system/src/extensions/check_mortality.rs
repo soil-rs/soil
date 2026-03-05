@@ -18,7 +18,7 @@
 use crate::{pallet_prelude::BlockNumberFor, BlockHash, Config, Pallet};
 use codec::{Decode, DecodeWithMemTracking, Encode};
 use scale_info::TypeInfo;
-use soil_runtime::{
+use subsoil::runtime::{
 	generic::Era,
 	impl_tx_ext_default,
 	traits::{DispatchInfoOf, SaturatedConversion, TransactionExtension, ValidateResult},
@@ -113,7 +113,7 @@ mod tests {
 	use super::*;
 	use crate::mock::{new_test_ext, System, Test, CALL};
 	use subsoil::core::H256;
-	use soil_runtime::{
+	use subsoil::runtime::{
 		traits::DispatchTransaction, transaction_validity::TransactionSource::External,
 	};
 	use topsoil_support::{

@@ -21,7 +21,6 @@ serde = { optional = true, features = ["alloc", "derive"], workspace = true }
 soil-api = { workspace = true }
 subsoil-crypto-hashing = { workspace = true }
 soil-mmr-primitives = { workspace = true }
-soil-runtime = { workspace = true }
 subsoil = { workspace = true }
 strum = { features = ["derive"], workspace = true }
 
@@ -39,7 +38,7 @@ std = [
 	"subsoil/std",
 	"subsoil-crypto-hashing/std",
 	"soil-mmr-primitives/std",
-	"soil-runtime/std",
+	"subsoil/std",
 	"strum/std",
 ]
 
@@ -48,7 +47,7 @@ serde = [
 	"dep:serde",
 	"scale-info/serde",
 	"subsoil/serde",
-	"soil-runtime/serde",
+	"subsoil/serde",
 ]
 
 # This feature adds BLS crypto primitives. It should not be used in production since

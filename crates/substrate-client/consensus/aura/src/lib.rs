@@ -49,7 +49,7 @@ use soil_consensus_slots::Slot;
 use subsoil::core::crypto::Pair;
 use soil_inherents::CreateInherentDataProviders;
 use subsoil::keystore::KeystorePtr;
-use soil_runtime::traits::{Block as BlockT, Header, Member, NumberFor};
+use subsoil::runtime::traits::{Block as BlockT, Header, Member, NumberFor};
 use soil_telemetry::TelemetryHandle;
 
 mod authorities_tracker;
@@ -381,7 +381,7 @@ where
 		crate::standalone::claim_slot::<P>(slot, authorities, &self.keystore).await
 	}
 
-	fn pre_digest_data(&self, slot: Slot, _claim: &Self::Claim) -> Vec<soil_runtime::DigestItem> {
+	fn pre_digest_data(&self, slot: Slot, _claim: &Self::Claim) -> Vec<subsoil::runtime::DigestItem> {
 		vec![crate::standalone::pre_digest::<P>(slot)]
 	}
 
@@ -559,7 +559,7 @@ mod tests {
 	use soil_keyring::sr25519::Keyring;
 	use subsoil::keystore::Keystore;
 	use soil_network_test::{Block as TestBlock, *};
-	use soil_runtime::traits::{Block as BlockT, Header as _};
+	use subsoil::runtime::traits::{Block as BlockT, Header as _};
 	use soil_timestamp::Timestamp;
 	use std::{
 		task::Poll,

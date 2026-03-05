@@ -35,7 +35,7 @@ use topsoil_support::{
 };
 
 use subsoil::keystore::{testing::MemoryKeystore, Keystore, KeystoreExt};
-use soil_runtime::{
+use subsoil::runtime::{
 	testing::TestXt,
 	traits::{BlakeTwo256, IdentifyAccount, IdentityLookup, Verify},
 	RuntimeAppPublic,
@@ -47,8 +47,8 @@ type TxExtension = topsoil_system::AuthorizeCall<Test>;
 type Extrinsic = TestXt<RuntimeCall, TxExtension>;
 
 // Define a custom Block that uses our Extrinsic with AuthorizeCall extension
-type Block = soil_runtime::generic::Block<
-	soil_runtime::generic::Header<u64, soil_runtime::traits::BlakeTwo256>,
+type Block = subsoil::runtime::generic::Block<
+	subsoil::runtime::generic::Header<u64, subsoil::runtime::traits::BlakeTwo256>,
 	Extrinsic,
 >;
 
@@ -257,7 +257,7 @@ fn should_submit_signed_transaction_on_chain() {
 		assert!(pool_state.read().transactions.is_empty());
 		let tx = Extrinsic::decode(&mut &*tx).unwrap();
 		// For signed transactions, the preamble includes the signature and bypass AuthorizeCall
-		assert!(matches!(tx.preamble, soil_runtime::generic::Preamble::Signed(0, (), _)));
+		assert!(matches!(tx.preamble, subsoil::runtime::generic::Preamble::Signed(0, (), _)));
 		assert_eq!(tx.function, RuntimeCall::Example(crate::Call::submit_price { price: 15523 }));
 	});
 }
@@ -303,7 +303,7 @@ fn should_submit_authorized_transaction_on_chain_for_any_account() {
 		assert!(!tx.is_inherent() && !tx.is_signed());
 
 		// Actually validate the transaction through the authorize logic
-		use soil_runtime::transaction_validity::TransactionSource;
+		use subsoil::runtime::transaction_validity::TransactionSource;
 		use topsoil_support::traits::Authorize;
 
 		let authorize_result = tx.function.authorize(TransactionSource::External);
@@ -376,7 +376,7 @@ fn should_submit_authorized_transaction_on_chain_for_all_accounts() {
 		assert!(!tx.is_inherent() && !tx.is_signed());
 
 		// Actually validate the transaction through the authorize logic
-		use soil_runtime::transaction_validity::TransactionSource;
+		use subsoil::runtime::transaction_validity::TransactionSource;
 		use topsoil_support::traits::Authorize;
 
 		let authorize_result = tx.function.authorize(TransactionSource::External);
@@ -436,7 +436,7 @@ fn should_submit_raw_authorized_transaction_on_chain() {
 		assert!(!tx.is_inherent() && !tx.is_signed());
 
 		// Actually validate the transaction through the authorize logic
-		use soil_runtime::transaction_validity::TransactionSource;
+		use subsoil::runtime::transaction_validity::TransactionSource;
 		use topsoil_support::traits::Authorize;
 
 		let authorize_result = tx.function.authorize(TransactionSource::External);
@@ -475,7 +475,7 @@ fn should_reject_invalid_authorized_transaction() {
 
 		// Try to validate the call's authorization - this should FAIL because the block number is
 		// too old
-		use soil_runtime::transaction_validity::TransactionSource;
+		use subsoil::runtime::transaction_validity::TransactionSource;
 		use topsoil_support::traits::Authorize;
 
 		let authorize_result = call.authorize(TransactionSource::External);

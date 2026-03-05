@@ -26,7 +26,7 @@ use codec::{Decode, DecodeWithMemTracking, Encode};
 #[cfg(feature = "std")]
 use soil_api::ProvideRuntimeApi;
 #[cfg(feature = "std")]
-use soil_runtime::traits::Block as BlockT;
+use subsoil::runtime::traits::Block as BlockT;
 
 use alloc::vec::Vec;
 use soil_staking::SessionIndex;

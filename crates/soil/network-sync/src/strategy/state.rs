@@ -38,7 +38,7 @@ use soil_consensus::BlockOrigin;
 use soil_network::{IfDisconnected, ProtocolName};
 use soil_network_common::sync::message::BlockAnnounce;
 use soil_network_types::PeerId;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{Block as BlockT, Header, NumberFor},
 	Justifications, SaturatedConversion,
 };
@@ -403,7 +403,7 @@ mod test {
 	use sc_consensus::{ImportedAux, ImportedState};
 	use soil_client_api::KeyValueStates;
 	use subsoil::core::H256;
-	use soil_runtime::traits::Zero;
+	use subsoil::runtime::traits::Zero;
 	use substrate_test_runtime_client::{
 		runtime::{Block, Hash},
 		BlockBuilderExt, DefaultTestClientBuilderExt, TestClientBuilder, TestClientBuilderExt,

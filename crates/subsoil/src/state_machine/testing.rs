@@ -415,7 +415,7 @@ where
 mod tests {
 	use super::*;
 	use crate::core::{storage::ChildInfo, traits::Externalities, H256};
-	use soil_runtime::traits::BlakeTwo256;
+	use subsoil::runtime::traits::BlakeTwo256;
 
 	#[test]
 	fn commit_should_work() {

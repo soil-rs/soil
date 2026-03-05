@@ -17,7 +17,6 @@ topsoil-support = { workspace = true }
 topsoil-system = { workspace = true }
 log = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
-soil-runtime = { workspace = true }
 soil-staking = { workspace = true }
 
 [dev-dependencies]
@@ -43,7 +42,7 @@ std = [
 	"topsoil-timestamp/std",
 	"scale-info/std",
 	"subsoil/std",
-	"soil-runtime/std",
+	"subsoil/std",
 	"soil-staking/std",
 ]
 runtime-benchmarks = [
@@ -54,7 +53,7 @@ runtime-benchmarks = [
 	"topsoil-nomination-pools/runtime-benchmarks",
 	"topsoil-staking/runtime-benchmarks",
 	"topsoil-timestamp/runtime-benchmarks",
-	"soil-runtime/runtime-benchmarks",
+	"subsoil/runtime-benchmarks",
 	"soil-staking/runtime-benchmarks",
 ]
 try-runtime = [
@@ -65,5 +64,5 @@ try-runtime = [
 	"topsoil-nomination-pools/try-runtime",
 	"topsoil-staking/try-runtime",
 	"topsoil-timestamp/try-runtime",
-	"soil-runtime/try-runtime",
+	"subsoil/try-runtime",
 ]

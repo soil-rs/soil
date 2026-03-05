@@ -106,8 +106,8 @@ use pallet_prelude::{BlockNumberFor, HeaderFor};
 use serde::Serialize;
 use subsoil::io::hashing::blake2_256;
 #[cfg(feature = "runtime-benchmarks")]
-use soil_runtime::traits::TrailingZeroInput;
-use soil_runtime::{
+use subsoil::runtime::traits::TrailingZeroInput;
+use subsoil::runtime::{
 	generic,
 	traits::{
 		self, AsTransactionAuthorizedOrigin, AtLeast32Bit, BadOrigin, BlockNumberProvider, Bounded,
@@ -125,7 +125,7 @@ use soil_version::RuntimeVersion;
 use codec::{Decode, DecodeWithMemTracking, Encode, EncodeLike, FullCodec, MaxEncodedLen};
 use scale_info::TypeInfo;
 use subsoil::core::storage::well_known_keys;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{DispatchInfoOf, PostDispatchInfoOf},
 	transaction_validity::TransactionValidityError,
 };
@@ -331,9 +331,9 @@ pub mod pallet {
 		impl DefaultConfig for TestDefaultConfig {
 			type Nonce = u32;
 			type Hash = subsoil::core::hash::H256;
-			type Hashing = soil_runtime::traits::BlakeTwo256;
+			type Hashing = subsoil::runtime::traits::BlakeTwo256;
 			type AccountId = u64;
-			type Lookup = soil_runtime::traits::IdentityLookup<Self::AccountId>;
+			type Lookup = subsoil::runtime::traits::IdentityLookup<Self::AccountId>;
 			type MaxConsumers = topsoil_support::traits::ConstU32<16>;
 			type AccountData = ();
 			type OnNewAccount = ();
@@ -389,13 +389,13 @@ pub mod pallet {
 			type Hash = subsoil::core::hash::H256;
 
 			/// The default hashing algorithm used.
-			type Hashing = soil_runtime::traits::BlakeTwo256;
+			type Hashing = subsoil::runtime::traits::BlakeTwo256;
 
 			/// The default identifier used to distinguish between accounts.
-			type AccountId = soil_runtime::AccountId32;
+			type AccountId = subsoil::runtime::AccountId32;
 
 			/// The lookup mechanism to get account ID from whatever is passed in dispatchers.
-			type Lookup = soil_runtime::traits::AccountIdLookup<Self::AccountId, ()>;
+			type Lookup = subsoil::runtime::traits::AccountIdLookup<Self::AccountId, ()>;
 
 			/// The maximum number of consumers allowed on a single account. Using 128 as default.
 			type MaxConsumers = topsoil_support::traits::ConstU32<128>;
@@ -1128,7 +1128,7 @@ pub mod pallet {
 	}
 
 	#[pallet::validate_unsigned]
-	impl<T: Config> soil_runtime::traits::ValidateUnsigned for Pallet<T> {
+	impl<T: Config> subsoil::runtime::traits::ValidateUnsigned for Pallet<T> {
 		type Call = Call<T>;
 		fn validate_unsigned(source: TransactionSource, call: &Self::Call) -> TransactionValidity {
 			if let Call::apply_authorized_upgrade { ref code } = call {
@@ -1977,42 +1977,42 @@ impl<T: Config> Pallet<T> {
 			Self::block_number(),
 			Self::extrinsic_count(),
 			Self::block_size(),
-			soil_runtime::Percent::from_rational(
+			subsoil::runtime::Percent::from_rational(
 				Self::block_size(),
 				*T::BlockLength::get().max.get(DispatchClass::Normal)
 			).deconstruct(),
-			soil_runtime::Percent::from_rational(
+			subsoil::runtime::Percent::from_rational(
 				Self::block_size(),
 				*T::BlockLength::get().max.get(DispatchClass::Operational)
 			).deconstruct(),
-			soil_runtime::Percent::from_rational(
+			subsoil::runtime::Percent::from_rational(
 				Self::block_size(),
 				*T::BlockLength::get().max.get(DispatchClass::Mandatory)
 			).deconstruct(),
 			Self::block_weight().get(DispatchClass::Normal),
-			soil_runtime::Percent::from_rational(
+			subsoil::runtime::Percent::from_rational(
 				Self::block_weight().get(DispatchClass::Normal).ref_time(),
 				T::BlockWeights::get().get(DispatchClass::Normal).max_total.unwrap_or(Bounded::max_value()).ref_time()
 			).deconstruct(),
-			soil_runtime::Percent::from_rational(
+			subsoil::runtime::Percent::from_rational(
 				Self::block_weight().get(DispatchClass::Normal).proof_size(),
 				T::BlockWeights::get().get(DispatchClass::Normal).max_total.unwrap_or(Bounded::max_value()).proof_size()
 			).deconstruct(),
 			Self::block_weight().get(DispatchClass::Operational),
-			soil_runtime::Percent::from_rational(
+			subsoil::runtime::Percent::from_rational(
 				Self::block_weight().get(DispatchClass::Operational).ref_time(),
 				T::BlockWeights::get().get(DispatchClass::Operational).max_total.unwrap_or(Bounded::max_value()).ref_time()
 			).deconstruct(),
-			soil_runtime::Percent::from_rational(
+			subsoil::runtime::Percent::from_rational(
 				Self::block_weight().get(DispatchClass::Operational).proof_size(),
 				T::BlockWeights::get().get(DispatchClass::Operational).max_total.unwrap_or(Bounded::max_value()).proof_size()
 			).deconstruct(),
 			Self::block_weight().get(DispatchClass::Mandatory),
-			soil_runtime::Percent::from_rational(
+			subsoil::runtime::Percent::from_rational(
 				Self::block_weight().get(DispatchClass::Mandatory).ref_time(),
 				T::BlockWeights::get().get(DispatchClass::Mandatory).max_total.unwrap_or(Bounded::max_value()).ref_time()
 			).deconstruct(),
-			soil_runtime::Percent::from_rational(
+			subsoil::runtime::Percent::from_rational(
 				Self::block_weight().get(DispatchClass::Mandatory).proof_size(),
 				T::BlockWeights::get().get(DispatchClass::Mandatory).max_total.unwrap_or(Bounded::max_value()).proof_size()
 			).deconstruct(),
@@ -2641,14 +2641,14 @@ pub mod pallet_prelude {
 
 	/// Type alias for the `Header`.
 	pub type HeaderFor<T> =
-		<<T as crate::Config>::Block as soil_runtime::traits::HeaderProvider>::HeaderT;
+		<<T as crate::Config>::Block as subsoil::runtime::traits::HeaderProvider>::HeaderT;
 
 	/// Type alias for the `BlockNumber` associated type of system config.
-	pub type BlockNumberFor<T> = <HeaderFor<T> as soil_runtime::traits::Header>::Number;
+	pub type BlockNumberFor<T> = <HeaderFor<T> as subsoil::runtime::traits::Header>::Number;
 
 	/// Type alias for the `Extrinsic` associated type of system config.
 	pub type ExtrinsicFor<T> =
-		<<T as crate::Config>::Block as soil_runtime::traits::Block>::Extrinsic;
+		<<T as crate::Config>::Block as subsoil::runtime::traits::Block>::Extrinsic;
 
 	/// Type alias for the `RuntimeCall` associated type of system config.
 	pub type RuntimeCallFor<T> = <T as crate::Config>::RuntimeCall;

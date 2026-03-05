@@ -16,7 +16,7 @@
 // limitations under the License.
 
 use codec::EncodeLike;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{BadOrigin, Identity},
 	TokenError,
 };

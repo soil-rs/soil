@@ -21,7 +21,7 @@ use super::*;
 
 use alloc::{collections::btree_map::BTreeMap, vec::Vec};
 use assert_matches::assert_matches;
-use soil_runtime::traits::Bounded;
+use subsoil::runtime::traits::Bounded;
 use topsoil_benchmarking::v1::{account, benchmarks_instance_pallet, whitelist_account};
 use topsoil_support::{
 	dispatch::RawOrigin,

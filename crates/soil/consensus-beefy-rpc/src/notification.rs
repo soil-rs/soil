@@ -20,7 +20,7 @@ use codec::Encode;
 use serde::{Deserialize, Serialize};
 
 use soil_consensus_beefy::AuthorityIdBound;
-use soil_runtime::traits::Block as BlockT;
+use subsoil::runtime::traits::Block as BlockT;
 
 /// An encoded finality proof proving that the given header has been finalized.
 /// The given bytes should be the SCALE-encoded representation of a

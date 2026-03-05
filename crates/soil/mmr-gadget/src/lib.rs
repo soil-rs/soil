@@ -65,7 +65,7 @@ use soil_consensus_beefy::MmrRootHash;
 #[cfg(feature = "std")]
 use soil_mmr_primitives::{utils, LeafIndex, MmrApi};
 #[cfg(feature = "std")]
-use soil_runtime::traits::{Block, Header, NumberFor};
+use subsoil::runtime::traits::{Block, Header, NumberFor};
 #[cfg(feature = "std")]
 use std::{marker::PhantomData, sync::Arc};
 
@@ -244,7 +244,7 @@ where
 #[cfg(feature = "std")]
 mod tests {
 	use crate::test_utils::run_test_with_mmr_gadget;
-	use soil_runtime::generic::BlockId;
+	use subsoil::runtime::generic::BlockId;
 	use std::time::Duration;
 
 	#[test]

@@ -23,7 +23,7 @@
 
 use alloc::{vec, vec::Vec};
 use subsoil::core::sr25519::Public;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::Hash,
 	transaction_validity::{
 		InvalidTransaction, TransactionSource, TransactionValidity, ValidTransaction,
@@ -40,7 +40,7 @@ pub mod pallet {
 	use super::*;
 	use crate::TransferData;
 	use subsoil::core::storage::well_known_keys;
-	use soil_runtime::{traits::BlakeTwo256, transaction_validity::TransactionPriority, Perbill};
+	use subsoil::runtime::{traits::BlakeTwo256, transaction_validity::TransactionPriority, Perbill};
 	use topsoil_system::pallet_prelude::*;
 
 	#[pallet::pallet]
@@ -141,7 +141,7 @@ pub mod pallet {
 		#[pallet::weight(100)]
 		pub fn deposit_log_digest_item(
 			_origin: OriginFor<T>,
-			log: soil_runtime::generic::DigestItem,
+			log: subsoil::runtime::generic::DigestItem,
 		) -> DispatchResult {
 			<topsoil_system::Pallet<T>>::deposit_log(log);
 			Ok(())

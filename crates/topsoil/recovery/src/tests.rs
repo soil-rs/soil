@@ -18,7 +18,7 @@
 //! Tests for the module.
 
 use crate::{mock::*, *};
-use topsoil::{deps::soil_runtime::bounded_vec, testing_prelude::*};
+use topsoil::{deps::subsoil::runtime::bounded_vec, testing_prelude::*};
 
 #[test]
 fn basic_setup_works() {

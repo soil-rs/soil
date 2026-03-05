@@ -22,7 +22,7 @@ use crate::mock::{
 	logger::{self, Threshold},
 	new_test_ext, root, LoggerCall, RuntimeCall, Scheduler, Test, *,
 };
-use soil_runtime::traits::Hash;
+use subsoil::runtime::traits::Hash;
 use substrate_test_utils::assert_eq_uvec;
 use topsoil_support::{
 	assert_err, assert_noop, assert_ok,

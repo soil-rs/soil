@@ -22,13 +22,13 @@
 #![deny(missing_docs)]
 
 use crate::{impl_for_tuples_attr, weights::Weight};
-use soil_runtime::traits::AtLeast32BitUnsigned;
+use subsoil::runtime::traits::AtLeast32BitUnsigned;
 use subsoil::weights::WeightMeter;
 
 #[cfg(feature = "try-runtime")]
 use alloc::vec::Vec;
 #[cfg(feature = "try-runtime")]
-use soil_runtime::TryRuntimeError;
+use subsoil::runtime::TryRuntimeError;
 
 /// Provides a callback to execute logic before the all inherents.
 pub trait PreInherents {
@@ -567,7 +567,7 @@ pub trait Hooks<BlockNumber> {
 /// A trait to define the build function of a genesis config for both runtime and pallets.
 ///
 /// Replaces deprecated [`GenesisBuild<T,I>`].
-pub trait BuildGenesisConfig: soil_runtime::traits::MaybeSerializeDeserialize {
+pub trait BuildGenesisConfig: subsoil::runtime::traits::MaybeSerializeDeserialize {
 	/// The build function puts initial `GenesisConfig` keys/values pairs into the storage.
 	fn build(&self);
 }
@@ -581,14 +581,14 @@ impl BuildGenesisConfig for () {
 #[deprecated(
 	note = "GenesisBuild is planned to be removed in December 2023. Use BuildGenesisConfig instead of it."
 )]
-pub trait GenesisBuild<T, I = ()>: soil_runtime::traits::MaybeSerializeDeserialize {
+pub trait GenesisBuild<T, I = ()>: subsoil::runtime::traits::MaybeSerializeDeserialize {
 	/// The build function is called within an externalities allowing storage APIs.
 	/// Thus one can write to storage using regular pallet storages.
 	fn build(&self);
 
 	/// Build the storage using `build` inside default storage.
 	#[cfg(feature = "std")]
-	fn build_storage(&self) -> Result<soil_runtime::Storage, String> {
+	fn build_storage(&self) -> Result<subsoil::runtime::Storage, String> {
 		let mut storage = Default::default();
 		self.assimilate_storage(&mut storage)?;
 		Ok(storage)
@@ -596,7 +596,7 @@ pub trait GenesisBuild<T, I = ()>: soil_runtime::traits::MaybeSerializeDeseriali
 
 	/// Assimilate the storage for this module into pre-existing overlays.
 	#[cfg(feature = "std")]
-	fn assimilate_storage(&self, storage: &mut soil_runtime::Storage) -> Result<(), String> {
+	fn assimilate_storage(&self, storage: &mut subsoil::runtime::Storage) -> Result<(), String> {
 		subsoil::state_machine::BasicExternalities::execute_with_storage(storage, || {
 			self.build();
 			Ok(())

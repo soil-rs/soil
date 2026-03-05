@@ -22,7 +22,7 @@ use crate::{
 	storage::{StorageDecodeLength, StorageTryAppend},
 	traits::Get,
 };
-pub use soil_runtime::WeakBoundedVec;
+pub use subsoil::runtime::WeakBoundedVec;
 
 impl<T, S> StorageDecodeLength for WeakBoundedVec<T, S> {}
 

@@ -32,7 +32,7 @@ use soil_api::ProvideRuntimeApi;
 use soil_blockchain::HeaderBackend;
 use subsoil::core::Bytes;
 use soil_rpc::number::NumberOrHex;
-use soil_runtime::traits::{Block as BlockT, MaybeDisplay};
+use subsoil::runtime::traits::{Block as BlockT, MaybeDisplay};
 use topsoil_transaction_payment_rpc_runtime_api::{FeeDetails, InclusionFee, RuntimeDispatchInfo};
 
 pub use topsoil_transaction_payment_rpc_runtime_api::TransactionPaymentApi as TransactionPaymentRuntimeApi;

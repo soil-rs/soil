@@ -22,7 +22,7 @@ use crate::dispatch::Parameter;
 use alloc::{vec, vec::Vec};
 use codec::{HasCompact, MaxEncodedLen};
 use subsoil::arithmetic::Perbill;
-use soil_runtime::{traits::Member, DispatchError};
+use subsoil::runtime::{traits::Member, DispatchError};
 
 pub trait VoteTally<Votes, Class> {
 	/// Initializes a new tally.
@@ -75,7 +75,7 @@ impl<Tally, Moment, Class> PollStatus<Tally, Moment, Class> {
 }
 
 pub struct ClassCountOf<P, T>(core::marker::PhantomData<(P, T)>);
-impl<T, P: Polling<T>> soil_runtime::traits::Get<u32> for ClassCountOf<P, T> {
+impl<T, P: Polling<T>> subsoil::runtime::traits::Get<u32> for ClassCountOf<P, T> {
 	fn get() -> u32 {
 		P::classes().len() as u32
 	}

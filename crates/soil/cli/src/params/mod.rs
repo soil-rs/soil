@@ -34,7 +34,7 @@ mod transaction_pool_params;
 use crate::arg_enums::{CryptoScheme, OutputType};
 use clap::Args;
 use subsoil::core::crypto::{Ss58AddressFormat, Ss58AddressFormatRegistry};
-use soil_runtime::{
+use subsoil::runtime::{
 	generic::BlockId,
 	traits::{Block as BlockT, NumberFor},
 };
@@ -166,8 +166,8 @@ pub struct NetworkSchemeFlag {
 mod tests {
 	use super::*;
 
-	type Header = soil_runtime::generic::Header<u32, soil_runtime::traits::BlakeTwo256>;
-	type Block = soil_runtime::generic::Block<Header, soil_runtime::OpaqueExtrinsic>;
+	type Header = subsoil::runtime::generic::Header<u32, subsoil::runtime::traits::BlakeTwo256>;
+	type Block = subsoil::runtime::generic::Block<Header, subsoil::runtime::OpaqueExtrinsic>;
 
 	#[test]
 	fn parse_block_number() {

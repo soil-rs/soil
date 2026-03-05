@@ -18,7 +18,7 @@
 use super::*;
 use crate as topsoil_glutton;
 
-use soil_runtime::BuildStorage;
+use subsoil::runtime::BuildStorage;
 use topsoil_support::{assert_ok, derive_impl};
 
 type Block = topsoil_system::mocking::MockBlock<Test>;

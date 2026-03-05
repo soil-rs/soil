@@ -20,7 +20,7 @@
 #![cfg(test)]
 
 use crate::{self as topsoil_indices, Config};
-use soil_runtime::BuildStorage;
+use subsoil::runtime::BuildStorage;
 use topsoil_support::{derive_impl, parameter_types};
 
 type Block = topsoil_system::mocking::MockBlock<Test>;

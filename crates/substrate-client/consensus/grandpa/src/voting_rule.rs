@@ -27,7 +27,7 @@ use std::{future::Future, pin::Pin, sync::Arc};
 use dyn_clone::DynClone;
 
 use soil_client_api::blockchain::HeaderBackend;
-use soil_runtime::traits::{Block as BlockT, Header, NumberFor, One, Zero};
+use subsoil::runtime::traits::{Block as BlockT, Header, NumberFor, One, Zero};
 
 /// A future returned by a `VotingRule` to restrict a given vote, if any restriction is necessary.
 pub type VotingRuleResult<Block> =
@@ -332,7 +332,7 @@ mod tests {
 	use super::*;
 	use sc_block_builder::BlockBuilderBuilder;
 	use soil_consensus::BlockOrigin;
-	use soil_runtime::traits::Header as _;
+	use subsoil::runtime::traits::Header as _;
 
 	use substrate_test_runtime_client::{
 		runtime::{Block, Header},

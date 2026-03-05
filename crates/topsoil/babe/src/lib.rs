@@ -32,7 +32,7 @@ use soil_consensus_babe::{
 	RANDOMNESS_VRF_CONTEXT,
 };
 use subsoil::core::crypto::Wraps;
-use soil_runtime::{
+use subsoil::runtime::{
 	generic::DigestItem,
 	traits::{IsMember, One, SaturatedConversion, Saturating, Zero},
 	ConsensusEngineId, Permill,
@@ -977,7 +977,7 @@ impl<T: Config> topsoil_support::traits::Lateness<BlockNumberFor<T>> for Pallet<
 	}
 }
 
-impl<T: Config> soil_runtime::BoundToRuntimeAppPublic for Pallet<T> {
+impl<T: Config> subsoil::runtime::BoundToRuntimeAppPublic for Pallet<T> {
 	type Public = AuthorityId;
 }
 

@@ -30,7 +30,7 @@ use subsoil::core::{
 	hexdisplay::HexDisplay,
 	Pair,
 };
-use soil_runtime::{traits::IdentifyAccount, MultiSigner};
+use subsoil::runtime::{traits::IdentifyAccount, MultiSigner};
 use std::path::PathBuf;
 
 /// Public key type for Runtime

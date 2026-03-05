@@ -42,7 +42,7 @@ use soil_consensus_grandpa::{
 	ConsensusLog, EquivocationProof, ScheduledChange, SetId, GRANDPA_ENGINE_ID,
 	RUNTIME_LOG_TARGET as LOG_TARGET,
 };
-use soil_runtime::{generic::DigestItem, traits::Zero, DispatchResult};
+use subsoil::runtime::{generic::DigestItem, traits::Zero, DispatchResult};
 use soil_session::{GetSessionNumber, GetValidatorCount};
 use soil_staking::{offence::OffenceReportSystem, SessionIndex};
 use topsoil_support::{
@@ -591,7 +591,7 @@ impl<T: Config> Pallet<T> {
 	}
 }
 
-impl<T: Config> soil_runtime::BoundToRuntimeAppPublic for Pallet<T> {
+impl<T: Config> subsoil::runtime::BoundToRuntimeAppPublic for Pallet<T> {
 	type Public = AuthorityId;
 }
 

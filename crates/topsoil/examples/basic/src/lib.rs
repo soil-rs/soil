@@ -53,7 +53,7 @@
 //!   as demonstrated by [`Call::set_dummy`].
 //! - A private function that performs a storage update.
 //! - A simple transaction extension implementation (see:
-//!   [`soil_runtime::traits::TransactionExtension`]) which increases the priority of the
+//!   [`subsoil::runtime::traits::TransactionExtension`]) which increases the priority of the
 //!   [`Call::set_dummy`] if it's present and drops any transaction with an encoded length higher
 //!   than 200 bytes.
 
@@ -67,7 +67,7 @@ use codec::{Decode, DecodeWithMemTracking, Encode};
 use core::marker::PhantomData;
 use log::info;
 use scale_info::TypeInfo;
-use soil_runtime::{
+use subsoil::runtime::{
 	impl_tx_ext_default,
 	traits::{
 		Bounded, DispatchInfoOf, DispatchOriginOf, SaturatedConversion, Saturating,
@@ -522,7 +522,7 @@ where
 		// check for `set_dummy`
 		let validity = match call.is_sub_type() {
 			Some(Call::set_dummy { .. }) => {
-				soil_runtime::print("set_dummy was received.");
+				subsoil::runtime::print("set_dummy was received.");
 
 				let valid_tx =
 					ValidTransaction { priority: Bounded::max_value(), ..Default::default() };

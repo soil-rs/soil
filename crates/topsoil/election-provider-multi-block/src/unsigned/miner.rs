@@ -35,7 +35,7 @@ use crate::{
 use codec::Encode;
 use scale_info::TypeInfo;
 use soil_npos_elections::EvaluateSupport;
-use soil_runtime::{
+use subsoil::runtime::{
 	offchain::storage::{MutateStorageError, StorageValueRef},
 	traits::{SaturatedConversion, Saturating, Zero},
 };
@@ -1400,7 +1400,7 @@ mod base_miner {
 	use super::*;
 	use crate::{mock::*, Snapshot};
 	use soil_npos_elections::Support;
-	use soil_runtime::PerU16;
+	use subsoil::runtime::PerU16;
 	use topsoil_election_provider_support::TryFromUnboundedPagedSupports;
 
 	#[test]
@@ -1856,7 +1856,7 @@ mod base_miner {
 #[cfg(test)]
 mod offchain_worker_miner {
 	use crate::{verifier::Verifier, CommonError};
-	use soil_runtime::offchain::storage_lock::{BlockAndTime, StorageLock};
+	use subsoil::runtime::offchain::storage_lock::{BlockAndTime, StorageLock};
 	use topsoil_support::traits::Hooks;
 
 	use super::*;

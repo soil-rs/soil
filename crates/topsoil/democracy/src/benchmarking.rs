@@ -21,7 +21,7 @@
 
 use super::*;
 
-use soil_runtime::{traits::Bounded, BoundedVec};
+use subsoil::runtime::{traits::Bounded, BoundedVec};
 use topsoil_benchmarking::v2::*;
 use topsoil_support::{
 	assert_noop, assert_ok,

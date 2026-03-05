@@ -17,7 +17,7 @@
 
 //! Traits, types and structs to support a bounded `BTreeSet`.
 
-pub use soil_runtime::BoundedBTreeSet;
+pub use subsoil::runtime::BoundedBTreeSet;
 use topsoil_support::storage::StorageDecodeNonDedupLength;
 
 impl<T, S> StorageDecodeNonDedupLength for BoundedBTreeSet<T, S> {}

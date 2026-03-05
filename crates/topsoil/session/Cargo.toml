@@ -25,7 +25,6 @@ topsoil-balances = { workspace = true }
 topsoil-timestamp = { workspace = true }
 scale-info = { features = ["derive", "serde"], workspace = true }
 subsoil = { features = ["serde"], workspace = true }
-soil-runtime = { features = ["serde"], workspace = true }
 soil-session = { workspace = true }
 soil-staking = { features = ["serde"], workspace = true }
 
@@ -41,7 +40,7 @@ std = [
 	"topsoil-timestamp/std",
 	"scale-info/std",
 	"subsoil/std",
-	"soil-runtime/std",
+	"subsoil/std",
 	"soil-session/std",
 	"soil-staking/std",
 ]
@@ -50,13 +49,13 @@ try-runtime = [
 	"topsoil-system/try-runtime",
 	"topsoil-balances/try-runtime",
 	"topsoil-timestamp/try-runtime",
-	"soil-runtime/try-runtime",
+	"subsoil/try-runtime",
 ]
 runtime-benchmarks = [
 	"topsoil-support/runtime-benchmarks",
 	"topsoil-system/runtime-benchmarks",
 	"topsoil-balances/runtime-benchmarks",
 	"topsoil-timestamp/runtime-benchmarks",
-	"soil-runtime/runtime-benchmarks",
+	"subsoil/runtime-benchmarks",
 	"soil-staking/runtime-benchmarks",
 ]

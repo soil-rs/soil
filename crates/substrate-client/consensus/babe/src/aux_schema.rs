@@ -29,7 +29,7 @@ use soil_consensus_epochs::{
 	migration::{EpochChangesV0For, EpochChangesV1For},
 	EpochChangesFor, SharedEpochChanges,
 };
-use soil_runtime::traits::Block as BlockT;
+use subsoil::runtime::traits::Block as BlockT;
 
 const BABE_EPOCH_CHANGES_VERSION: &[u8] = b"babe_epoch_changes_version";
 const BABE_EPOCH_CHANGES_KEY: &[u8] = b"babe_epoch_changes";
@@ -149,7 +149,7 @@ mod test {
 	use soil_consensus_epochs::{EpochHeader, PersistedEpoch, PersistedEpochHeader};
 	use subsoil::core::H256;
 	use soil_network_test::Block as TestBlock;
-	use soil_runtime::traits::NumberFor;
+	use subsoil::runtime::traits::NumberFor;
 	use substrate_test_runtime_client;
 
 	#[test]

@@ -27,11 +27,11 @@ use subsoil::core::bounded::bounded_vec::TruncateFrom;
 
 use core::cmp::Ordering;
 #[doc(hidden)]
-pub use soil_runtime::traits::{
+pub use subsoil::runtime::traits::{
 	ConstBool, ConstI128, ConstI16, ConstI32, ConstI64, ConstI8, ConstInt, ConstU128, ConstU16,
 	ConstU32, ConstU64, ConstU8, ConstUint, Get, GetDefault, TryCollect, TypedGet,
 };
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{Block as BlockT, ExtrinsicCall},
 	DispatchError,
 };
@@ -446,7 +446,7 @@ pub trait DefensiveTruncateFrom<T> {
 	///
 	/// ```
 	/// use topsoil_support::{BoundedVec, traits::DefensiveTruncateFrom};
-	/// use soil_runtime::traits::ConstU32;
+	/// use subsoil::runtime::traits::ConstU32;
 	///
 	/// let unbound = vec![1, 2];
 	/// let bound = BoundedVec::<u8, ConstU32<2>>::defensive_truncate_from(unbound);
@@ -949,7 +949,7 @@ pub trait InherentBuilder: ExtrinsicCall {
 }
 
 impl<Address, Call, Signature, Extra> InherentBuilder
-	for soil_runtime::generic::UncheckedExtrinsic<Address, Call, Signature, Extra>
+	for subsoil::runtime::generic::UncheckedExtrinsic<Address, Call, Signature, Extra>
 where
 	Address: TypeInfo,
 	Call: TypeInfo,
@@ -978,7 +978,7 @@ pub trait SignedTransactionBuilder: ExtrinsicCall {
 }
 
 impl<Address, Call, Signature, Extension> SignedTransactionBuilder
-	for soil_runtime::generic::UncheckedExtrinsic<Address, Call, Signature, Extension>
+	for subsoil::runtime::generic::UncheckedExtrinsic<Address, Call, Signature, Extension>
 where
 	Address: TypeInfo,
 	Call: TypeInfo,

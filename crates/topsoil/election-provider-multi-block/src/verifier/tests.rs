@@ -26,7 +26,7 @@ use crate::{
 };
 use subsoil::core::bounded_vec;
 use soil_npos_elections::ElectionScore;
-use soil_runtime::{traits::Bounded, PerU16};
+use subsoil::runtime::{traits::Bounded, PerU16};
 use topsoil_election_provider_support::Support;
 use topsoil_support::{assert_noop, assert_ok};
 

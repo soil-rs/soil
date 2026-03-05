@@ -32,7 +32,7 @@ use crate::{
 use alloc::{vec, vec::Vec};
 use codec::{Decode, Encode, EncodeLike, FullCodec, MaxEncodedLen};
 use subsoil::metadata_ir::{StorageEntryMetadataIR, StorageEntryTypeIR};
-use soil_runtime::SaturatedConversion;
+use subsoil::runtime::SaturatedConversion;
 
 /// A type representing an *NMap* in storage. This structure associates an arbitrary number of keys
 /// with a value of a specified type stored on-chain.

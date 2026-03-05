@@ -38,7 +38,7 @@ use parking_lot::Mutex;
 use prometheus_endpoint::{register, Gauge, PrometheusError, Registry, U64};
 use soil_client_api::{BlockImportNotification, ImportNotifications};
 use soil_consensus_grandpa::AuthorityId;
-use soil_runtime::traits::{Block as BlockT, Header as HeaderT, NumberFor};
+use subsoil::runtime::traits::{Block as BlockT, Header as HeaderT, NumberFor};
 use soil_utils::mpsc::TracingUnboundedReceiver;
 
 use std::{

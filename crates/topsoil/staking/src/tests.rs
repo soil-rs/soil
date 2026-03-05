@@ -20,7 +20,7 @@
 use super::{ConfigOp, Event, *};
 use crate::{asset, ledger::StakingLedgerInspect};
 use mock::*;
-use soil_runtime::{
+use subsoil::runtime::{
 	assert_eq_error_rate, bounded_vec,
 	traits::{BadOrigin, Dispatchable},
 	Perbill, Percent, Perquintill, Rounding, TokenError,
@@ -6154,7 +6154,7 @@ fn proportional_ledger_slash_works() {
 		assert_eq!(LedgerSlashPerEra::get().1, BTreeMap::from([(4, 0), (5, 0), (6, 0), (7, 0)]));
 
 		// Given
-		use soil_runtime::PerThing as _;
+		use subsoil::runtime::PerThing as _;
 		let slash = u64::MAX as Balance * 2;
 		let value = u64::MAX as Balance * 2;
 		let unit = 100;

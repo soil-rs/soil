@@ -29,7 +29,7 @@ use codec::{Codec, Decode, DecodeWithMemTracking, Encode};
 use scale_info::TypeInfo;
 #[cfg(feature = "std")]
 use subsoil::keystore::KeystorePtr;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{Header as HeaderT, NumberFor},
 	ConsensusEngineId, Debug, OpaqueValue,
 };

@@ -20,7 +20,7 @@
 use crate::{CoreIndex, SaleInfoRecord};
 use subsoil::arithmetic::{traits::One, FixedU64};
 use subsoil::core::Get;
-use soil_runtime::{FixedPointNumber, FixedPointOperand, Saturating};
+use subsoil::runtime::{FixedPointNumber, FixedPointOperand, Saturating};
 
 /// Performance of a past sale.
 #[derive(Copy, Clone)]

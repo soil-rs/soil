@@ -17,7 +17,6 @@ topsoil-support = { workspace = true }
 topsoil-system = { workspace = true }
 log = { workspace = true }
 scale-info = { features = ["derive", "serde"], workspace = true }
-soil-runtime = { features = ["serde"], workspace = true }
 
 [dev-dependencies]
 frame-metadata = { features = ["current", "unstable"], workspace = true, default-features = true }
@@ -37,5 +36,5 @@ std = [
 	"topsoil-system/std",
 	"log/std",
 	"scale-info/std",
-	"soil-runtime/std",
+	"subsoil/std",
 ]

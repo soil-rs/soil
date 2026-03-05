@@ -17,7 +17,7 @@
 
 //! This module provides traits for data feeding and provisioning.
 
-use soil_runtime::DispatchResult;
+use subsoil::runtime::DispatchResult;
 use subsoil::std::vec::Vec;
 
 /// A trait for feeding data to a data provider.

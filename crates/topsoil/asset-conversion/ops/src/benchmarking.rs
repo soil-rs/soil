@@ -20,7 +20,7 @@
 use super::*;
 use crate::Pallet as AssetConversionOps;
 use subsoil::core::Get;
-use soil_runtime::traits::One;
+use subsoil::runtime::traits::One;
 use topsoil_asset_conversion::{BenchmarkHelper, Pallet as AssetConversion};
 use topsoil_benchmarking::{v2::*, whitelisted_caller};
 use topsoil_support::{

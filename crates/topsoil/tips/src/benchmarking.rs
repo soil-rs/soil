@@ -19,7 +19,7 @@
 
 #![cfg(feature = "runtime-benchmarks")]
 
-use soil_runtime::traits::Saturating;
+use subsoil::runtime::traits::Saturating;
 use topsoil_benchmarking::v1::{
 	account, benchmarks_instance_pallet, whitelisted_caller, BenchmarkError,
 };

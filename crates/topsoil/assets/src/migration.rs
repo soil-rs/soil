@@ -20,7 +20,7 @@ use log;
 use topsoil_support::traits::OnRuntimeUpgrade;
 
 #[cfg(feature = "try-runtime")]
-use soil_runtime::TryRuntimeError;
+use subsoil::runtime::TryRuntimeError;
 
 pub mod next_asset_id {
 	use super::*;

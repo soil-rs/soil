@@ -58,7 +58,7 @@ use alloc::vec::Vec;
 use codec::{Decode, DecodeWithMemTracking, Encode};
 use lite_json::json::JsonValue;
 use subsoil::core::crypto::KeyTypeId;
-use soil_runtime::{
+use subsoil::runtime::{
 	offchain::{
 		http,
 		storage::{MutateStorageError, StorageRetrievalError, StorageValueRef},
@@ -99,7 +99,7 @@ pub const KEY_TYPE: KeyTypeId = KeyTypeId(*b"btc!");
 pub mod crypto {
 	use super::KEY_TYPE;
 	use subsoil::core::sr25519::Signature as Sr25519Signature;
-	use soil_runtime::{
+	use subsoil::runtime::{
 		app_crypto::{app_crypto, sr25519},
 		traits::Verify,
 		MultiSignature, MultiSigner,
@@ -191,7 +191,7 @@ pub mod pallet {
 		/// This test validates that the Block type's Extrinsic includes the necessary
 		/// transaction extension structure by checking the type name.
 		fn integrity_test() {
-			use soil_runtime::traits::Block as BlockT;
+			use subsoil::runtime::traits::Block as BlockT;
 
 			// Get the full type name of the Block's Extrinsic type
 			let extrinsic_type_name = core::any::type_name::<<T::Block as BlockT>::Extrinsic>();

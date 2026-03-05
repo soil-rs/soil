@@ -20,7 +20,6 @@ codec = { features = ["derive"], workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { features = ["alloc", "derive"], optional = true, workspace = true }
 subsoil = { workspace = true }
-soil-runtime = { workspace = true }
 
 [dev-dependencies]
 substrate-test-utils = { workspace = true }
@@ -33,7 +32,7 @@ std = [
 	"scale-info/std",
 	"serde/std",
 	"subsoil/std",
-	"soil-runtime/std",
+	"subsoil/std",
 ]
 
 # Serde support without relying on std features.
@@ -41,5 +40,5 @@ serde = [
 	"dep:serde",
 	"scale-info/serde",
 	"subsoil/serde",
-	"soil-runtime/serde",
+	"subsoil/serde",
 ]

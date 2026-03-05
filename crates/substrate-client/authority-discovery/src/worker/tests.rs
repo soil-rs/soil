@@ -46,7 +46,7 @@ use soil_network_types::{
 	multiaddr::{Multiaddr, Protocol},
 	PeerId,
 };
-use soil_runtime::traits::{Block as BlockT, NumberFor, Zero};
+use subsoil::runtime::traits::{Block as BlockT, NumberFor, Zero};
 use substrate_test_runtime_client::runtime::Block;
 
 #[derive(Clone)]
@@ -621,8 +621,8 @@ struct DhtValueFoundTester {
 	pub local_worker: Option<
 		Worker<
 			TestApi,
-			soil_runtime::generic::Block<
-				soil_runtime::generic::Header<u64, soil_runtime::traits::BlakeTwo256>,
+			subsoil::runtime::generic::Block<
+				subsoil::runtime::generic::Header<u64, subsoil::runtime::traits::BlakeTwo256>,
 				substrate_test_runtime_client::runtime::Extrinsic,
 			>,
 			std::pin::Pin<Box<futures::channel::mpsc::Receiver<DhtEvent>>>,

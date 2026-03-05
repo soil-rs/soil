@@ -20,7 +20,7 @@
 use super::*;
 
 use alloc::{vec, vec::Vec};
-use soil_runtime::traits::{BlockNumberProvider, Bounded};
+use subsoil::runtime::traits::{BlockNumberProvider, Bounded};
 use topsoil_benchmarking::v2::*;
 use topsoil_system::{pallet_prelude::BlockNumberFor as SystemBlockNumberFor, RawOrigin};
 

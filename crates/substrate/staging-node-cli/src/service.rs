@@ -40,7 +40,7 @@ use soil_network::{
 	event::Event, service::traits::NetworkService, NetworkBackend, NetworkEventStream,
 };
 use soil_network_sync::{strategy::warp::WarpSyncConfig, SyncingService};
-use soil_runtime::{generic, traits::Block as BlockT, SaturatedConversion};
+use subsoil::runtime::{generic, traits::Block as BlockT, SaturatedConversion};
 use soil_service::{config::Configuration, error::Error as ServiceError, RpcHandlers, TaskManager};
 use soil_sysinfo::SUBSTRATE_REFERENCE_HARDWARE;
 use soil_telemetry::{Telemetry, TelemetryWorker};
@@ -162,7 +162,7 @@ pub fn create_extrinsic(
 
 	generic::UncheckedExtrinsic::new_signed(
 		function,
-		soil_runtime::AccountId32::from(sender.public()).into(),
+		subsoil::runtime::AccountId32::from(sender.public()).into(),
 		kitchensink_runtime::Signature::Sr25519(signature),
 		tx_ext,
 	)
@@ -896,7 +896,7 @@ mod tests {
 	use soil_inherents::InherentDataProvider;
 	use soil_keyring::Sr25519Keyring;
 	use subsoil::keystore::KeystorePtr;
-	use soil_runtime::{
+	use subsoil::runtime::{
 		generic::{self, Digest, Era, SignedPayload},
 		key_types::BABE,
 		traits::{Block as BlockT, Header as HeaderT, IdentifyAccount, Verify},

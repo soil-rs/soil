@@ -28,7 +28,6 @@ topsoil-nomination-pools = { features = ["fuzzing"], workspace = true, default-f
 topsoil-support = { workspace = true, default-features = true }
 topsoil-system = { workspace = true, default-features = true }
 
-soil-runtime = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
 
 log = { workspace = true, default-features = true }

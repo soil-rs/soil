@@ -125,7 +125,7 @@
 //! ```
 
 use core::marker::PhantomData;
-use soil_runtime::DispatchError;
+use subsoil::runtime::DispatchError;
 use subsoil::std::vec::Vec;
 
 pub mod common_ops;

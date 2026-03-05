@@ -23,7 +23,7 @@
 //! ```
 //! # use soil_basic_authorship::ProposerFactory;
 //! # use soil_consensus::{Environment, Proposer, ProposeArgs};
-//! # use soil_runtime::generic::BlockId;
+//! # use subsoil::runtime::generic::BlockId;
 //! # use std::{sync::Arc, time::Duration};
 //! # use substrate_test_runtime_client::{
 //! #     runtime::Transfer, Sr25519Keyring,

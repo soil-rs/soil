@@ -153,7 +153,7 @@ fn expect_public_from_phrase<Pair: subsoil::core::Pair>(
 mod tests {
 	use super::*;
 	use subsoil::core::crypto::{ByteArray, Pair};
-	use soil_runtime::traits::IdentifyAccount;
+	use subsoil::runtime::traits::IdentifyAccount;
 
 	#[test]
 	fn inspect() {

@@ -20,7 +20,7 @@
 #![cfg(feature = "runtime-benchmarks")]
 
 use crate::*;
-use soil_runtime::traits::Bounded;
+use subsoil::runtime::traits::Bounded;
 use topsoil_benchmarking::v2::*;
 use topsoil_support::traits::Get;
 use topsoil_system::RawOrigin;

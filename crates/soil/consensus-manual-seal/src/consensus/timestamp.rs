@@ -30,7 +30,7 @@ use soil_consensus_aura::{
 use soil_consensus_babe::BabeApi;
 use soil_consensus_slots::{Slot, SlotDuration};
 use soil_inherents::{InherentData, InherentDataProvider, InherentIdentifier};
-use soil_runtime::traits::{Block as BlockT, Zero};
+use subsoil::runtime::traits::{Block as BlockT, Zero};
 use soil_timestamp::{InherentType, INHERENT_IDENTIFIER};
 use std::{
 	sync::{atomic, Arc},

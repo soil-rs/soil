@@ -22,7 +22,7 @@ use alloc::vec::Vec;
 use topsoil_support::{storage_alias, traits::OnRuntimeUpgrade};
 
 #[cfg(feature = "try-runtime")]
-use soil_runtime::TryRuntimeError;
+use subsoil::runtime::TryRuntimeError;
 #[cfg(feature = "try-runtime")]
 use topsoil_support::ensure;
 
@@ -128,7 +128,7 @@ pub fn clear_offchain_storage(validator_set_size: u32) {
 			key.extend(idx.encode());
 			key
 		};
-		soil_runtime::offchain::storage::StorageValueRef::persistent(&key).clear();
+		subsoil::runtime::offchain::storage::StorageValueRef::persistent(&key).clear();
 	});
 }
 

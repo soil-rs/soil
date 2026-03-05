@@ -59,7 +59,7 @@ extern crate alloc;
 use alloc::{boxed::Box, vec::Vec};
 use codec::{Decode, Encode};
 pub use pallet::*;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{AccountIdConversion, Dispatchable, Saturating, Zero},
 	ArithmeticError, Debug, DispatchError,
 };

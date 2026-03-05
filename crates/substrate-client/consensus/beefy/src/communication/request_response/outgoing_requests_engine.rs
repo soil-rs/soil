@@ -28,7 +28,7 @@ use soil_network::{
 	NetworkRequest, ProtocolName,
 };
 use soil_network_types::PeerId;
-use soil_runtime::traits::{Block, NumberFor};
+use subsoil::runtime::traits::{Block, NumberFor};
 use std::{collections::VecDeque, result::Result, sync::Arc};
 
 use crate::{

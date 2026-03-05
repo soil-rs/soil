@@ -800,7 +800,7 @@ impl Requirements {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use soil_runtime::assert_eq_error_rate_float;
+	use subsoil::assert_eq_error_rate_float;
 
 	#[cfg(target_os = "linux")]
 	#[test]

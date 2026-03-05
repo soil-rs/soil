@@ -20,7 +20,7 @@
 use super::*;
 use crate as topsoil_asset_rewards;
 use core::default::Default;
-use soil_runtime::{traits::IdentityLookup, BuildStorage};
+use subsoil::runtime::{traits::IdentityLookup, BuildStorage};
 use topsoil_support::{
 	construct_runtime, derive_impl,
 	instances::Instance1,

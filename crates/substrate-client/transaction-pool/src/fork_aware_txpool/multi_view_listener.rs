@@ -28,7 +28,7 @@ use crate::{
 };
 use futures::{Future, FutureExt, Stream, StreamExt};
 use parking_lot::RwLock;
-use soil_runtime::traits::Block as BlockT;
+use subsoil::runtime::traits::Block as BlockT;
 use soil_transaction_pool_api::{TransactionStatus, TransactionStatusStream, TxIndex};
 use soil_utils::mpsc;
 use std::{

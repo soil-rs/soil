@@ -24,7 +24,7 @@
 
 #![cfg_attr(not(feature = "std"), no_std)]
 
-use topsoil_support::{dispatch::DispatchResult, soil_runtime::Perbill};
+use topsoil_support::{dispatch::DispatchResult, subsoil::runtime::Perbill};
 
 pub use pallet::*;
 

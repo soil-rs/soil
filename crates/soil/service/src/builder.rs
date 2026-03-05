@@ -88,7 +88,7 @@ use soil_rpc_spec_v2::{
 	chain_spec::ChainSpecApiServer,
 	transaction::{TransactionApiServer, TransactionBroadcastApiServer},
 };
-use soil_runtime::traits::{Block as BlockT, BlockIdTo, NumberFor, Zero};
+use subsoil::runtime::traits::{Block as BlockT, BlockIdTo, NumberFor, Zero};
 use subsoil::storage::{ChildInfo, ChildType, PrefixedStorageKey};
 use soil_telemetry::{telemetry, ConnectionMessage, Telemetry, TelemetryHandle, SUBSTRATE_INFO};
 use soil_transaction_pool_api::{MaintainedTransactionPool, TransactionPool};

@@ -28,7 +28,7 @@ use soil_client_api::{
 	StaleBlock, StorageData, StorageEventStream, StorageKey, StorageProvider,
 };
 use soil_consensus::BlockOrigin;
-use soil_runtime::{
+use subsoil::runtime::{
 	generic::SignedBlock,
 	traits::{Block as BlockT, Header as HeaderT, NumberFor},
 	Justifications,
@@ -335,7 +335,7 @@ impl<Block: BlockT, Client: HeaderMetadata<Block> + Send + Sync> HeaderMetadata<
 impl<Block: BlockT<Hash = H256>, Client: HeaderBackend<Block> + Send + Sync> HeaderBackend<Block>
 	for ChainHeadMockClient<Client>
 where
-	<<Block as soil_runtime::traits::Block>::Header as HeaderT>::Number: From<u64>,
+	<<Block as subsoil::runtime::traits::Block>::Header as HeaderT>::Number: From<u64>,
 {
 	fn header(
 		&self,

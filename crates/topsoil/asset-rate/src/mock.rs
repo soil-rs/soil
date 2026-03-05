@@ -18,7 +18,7 @@
 //! The crate's mock.
 
 use crate as topsoil_asset_rate;
-use soil_runtime::BuildStorage;
+use subsoil::runtime::BuildStorage;
 use topsoil_support::derive_impl;
 
 type Block = topsoil_system::mocking::MockBlock<Test>;

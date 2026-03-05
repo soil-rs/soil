@@ -265,7 +265,7 @@ use rand_chacha::{
 	ChaChaRng,
 };
 use scale_info::TypeInfo;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{
 		AccountIdConversion, CheckedAdd, CheckedSub, Hash, Saturating, StaticLookup,
 		TrailingZeroInput, Zero,
@@ -291,7 +291,7 @@ use topsoil_system::pallet_prelude::{
 pub use weights::WeightInfo;
 
 pub use pallet::*;
-use soil_runtime::traits::BlockNumberProvider;
+use subsoil::runtime::traits::BlockNumberProvider;
 
 pub type BlockNumberFor<T, I> =
 	<<T as Config<I>>::BlockNumberProvider as BlockNumberProvider>::BlockNumber;

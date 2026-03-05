@@ -20,7 +20,7 @@ use subsoil::arithmetic::{
 	traits::{SaturatedConversion, Saturating},
 	FixedPointNumber, FixedU64,
 };
-use soil_runtime::traits::{AccountIdConversion, BlockNumberProvider};
+use subsoil::runtime::traits::{AccountIdConversion, BlockNumberProvider};
 use topsoil_support::{
 	pallet_prelude::*,
 	traits::{

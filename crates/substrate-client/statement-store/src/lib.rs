@@ -61,7 +61,7 @@ use soil_client_api::{backend::StorageProvider, Backend, StorageKey};
 use subsoil::core::{
 	crypto::UncheckedFrom, hexdisplay::HexDisplay, traits::SpawnNamed, Decode, Encode,
 };
-use soil_runtime::traits::Block as BlockT;
+use subsoil::runtime::traits::Block as BlockT;
 use soil_statement_store::{
 	runtime_api::{StatementSource, StatementStoreExt},
 	AccountId, BlockHash, Channel, DecryptionKey, FilterDecision, Hash, InvalidReason,
@@ -1502,12 +1502,12 @@ mod tests {
 		StatementStore, SubmitResult, Topic,
 	};
 
-	type Extrinsic = soil_runtime::OpaqueExtrinsic;
+	type Extrinsic = subsoil::runtime::OpaqueExtrinsic;
 	type Hash = subsoil::core::H256;
-	type Hashing = soil_runtime::traits::BlakeTwo256;
+	type Hashing = subsoil::runtime::traits::BlakeTwo256;
 	type BlockNumber = u64;
-	type Header = soil_runtime::generic::Header<BlockNumber, Hashing>;
-	type Block = soil_runtime::generic::Block<Header, Extrinsic>;
+	type Header = subsoil::runtime::generic::Header<BlockNumber, Hashing>;
+	type Block = subsoil::runtime::generic::Block<Header, Extrinsic>;
 
 	const CORRECT_BLOCK_HASH: [u8; 32] = [1u8; 32];
 

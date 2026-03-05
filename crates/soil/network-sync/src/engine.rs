@@ -63,7 +63,7 @@ use soil_network_common::{
 	sync::message::{BlockAnnounce, BlockAnnouncesHandshake, BlockState},
 };
 use soil_network_types::PeerId;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{Block as BlockT, Header, NumberFor, Zero},
 	Justifications,
 };

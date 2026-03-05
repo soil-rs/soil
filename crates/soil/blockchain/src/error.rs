@@ -20,7 +20,7 @@
 use codec::Error as CodecError;
 use soil_api::ApiError;
 use soil_consensus;
-use soil_runtime::transaction_validity::TransactionValidityError;
+use subsoil::runtime::transaction_validity::TransactionValidityError;
 use std::{self, result};
 
 /// Client Result type alias

@@ -24,7 +24,6 @@ scale-info = { features = ["derive"], workspace = true }
 
 subsoil = { workspace = true }
 subsoil-crypto-hashing = { optional = true, workspace = true }
-soil-runtime = { workspace = true }
 
 topsoil-benchmarking = { optional = true, workspace = true }
 topsoil-support = { workspace = true }
@@ -53,7 +52,7 @@ std = [
 	"scale-info/std",
 	"subsoil/std",
 	"subsoil-crypto-hashing?/std",
-	"soil-runtime/std",
+	"subsoil/std",
 ]
 runtime-benchmarks = [
 	"array-bytes",
@@ -64,7 +63,7 @@ runtime-benchmarks = [
 	"topsoil-collective/runtime-benchmarks",
 	"topsoil-identity/runtime-benchmarks",
 	"subsoil-crypto-hashing",
-	"soil-runtime/runtime-benchmarks",
+	"subsoil/runtime-benchmarks",
 ]
 try-runtime = [
 	"topsoil-support/try-runtime",
@@ -72,5 +71,5 @@ try-runtime = [
 	"topsoil-balances/try-runtime",
 	"topsoil-collective?/try-runtime",
 	"topsoil-identity/try-runtime",
-	"soil-runtime/try-runtime",
+	"subsoil/try-runtime",
 ]

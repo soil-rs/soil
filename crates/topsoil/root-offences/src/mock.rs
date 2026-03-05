@@ -19,7 +19,7 @@ use super::*;
 use crate as root_offences;
 
 use alloc::collections::btree_map::BTreeMap;
-use soil_runtime::{curve::PiecewiseLinear, testing::UintAuthorityId, traits::Zero, BuildStorage};
+use subsoil::runtime::{curve::PiecewiseLinear, testing::UintAuthorityId, traits::Zero, BuildStorage};
 use soil_staking::{EraIndex, SessionIndex};
 use topsoil_election_provider_support::{
 	bounds::{ElectionBounds, ElectionBoundsBuilder},
@@ -74,7 +74,7 @@ impl OneSessionHandler<AccountId> for OtherSessionHandler {
 	fn on_disabled(_validator_index: u32) {}
 }
 
-impl soil_runtime::BoundToRuntimeAppPublic for OtherSessionHandler {
+impl subsoil::runtime::BoundToRuntimeAppPublic for OtherSessionHandler {
 	type Public = UintAuthorityId;
 }
 
@@ -151,7 +151,7 @@ impl topsoil_session::historical::Config for Test {
 	type FullIdentificationOf = topsoil_staking::UnitIdentificationOf<Self>;
 }
 
-soil_runtime::impl_opaque_keys! {
+subsoil::impl_opaque_keys! {
 	pub struct SessionKeys {
 		pub other: OtherSessionHandler,
 	}
@@ -164,7 +164,7 @@ impl topsoil_session::Config for Test {
 	type SessionHandler = (OtherSessionHandler,);
 	type RuntimeEvent = RuntimeEvent;
 	type ValidatorId = AccountId;
-	type ValidatorIdOf = soil_runtime::traits::ConvertInto;
+	type ValidatorIdOf = subsoil::runtime::traits::ConvertInto;
 	type NextSessionRotation = topsoil_session::PeriodicSessions<Period, Offset>;
 	type DisablingStrategy = ();
 	type WeightInfo = ();

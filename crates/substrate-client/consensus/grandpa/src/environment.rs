@@ -45,7 +45,7 @@ use soil_consensus_grandpa::{
 	AuthorityId, AuthoritySignature, Equivocation, EquivocationProof, GrandpaApi, RoundNumber,
 	SetId, GRANDPA_ENGINE_ID,
 };
-use soil_runtime::traits::{Block as BlockT, Header as HeaderT, NumberFor, Zero};
+use subsoil::runtime::traits::{Block as BlockT, Header as HeaderT, NumberFor, Zero};
 use soil_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG, CONSENSUS_INFO};
 use soil_transaction_pool_api::OffchainTransactionPoolFactory;
 

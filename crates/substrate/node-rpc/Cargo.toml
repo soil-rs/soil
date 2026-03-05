@@ -39,6 +39,5 @@ soil-consensus = { workspace = true, default-features = true }
 soil-consensus-babe = { workspace = true, default-features = true }
 soil-consensus-beefy = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
-soil-runtime = { workspace = true, default-features = true }
 substrate-frame-rpc-system = { workspace = true, default-features = true }
 substrate-state-trie-migration-rpc = { workspace = true, default-features = true }

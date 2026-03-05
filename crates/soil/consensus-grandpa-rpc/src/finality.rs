@@ -19,7 +19,7 @@
 use serde::{Deserialize, Serialize};
 
 use sc_consensus_grandpa::FinalityProofProvider;
-use soil_runtime::traits::{Block as BlockT, NumberFor};
+use subsoil::runtime::traits::{Block as BlockT, NumberFor};
 
 #[derive(Clone, Serialize, Deserialize)]
 pub struct EncodedFinalityProof(pub subsoil::core::Bytes);

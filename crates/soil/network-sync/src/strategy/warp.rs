@@ -40,7 +40,7 @@ use soil_network_common::sync::message::{
 	BlockAnnounce, BlockAttributes, BlockData, BlockRequest, Direction, FromBlock,
 };
 use soil_network_types::PeerId;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{Block as BlockT, Header, NumberFor, Zero},
 	Justifications, SaturatedConversion,
 };
@@ -791,7 +791,7 @@ mod test {
 	use sc_block_builder::BlockBuilderBuilder;
 	use soil_blockchain::{BlockStatus, Error as BlockchainError, HeaderBackend, Info};
 	use subsoil::core::H256;
-	use soil_runtime::{
+	use subsoil::runtime::{
 		traits::{Block as BlockT, Header as HeaderT, NumberFor},
 		ConsensusEngineId,
 	};

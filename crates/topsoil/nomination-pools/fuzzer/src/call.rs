@@ -25,7 +25,7 @@
 
 use honggfuzz::fuzz;
 use rand::{seq::SliceRandom, Rng};
-use soil_runtime::{assert_eq_error_rate, Perbill, Perquintill};
+use subsoil::runtime::{assert_eq_error_rate, Perbill, Perquintill};
 use topsoil_nomination_pools::{
 	log,
 	mock::*,

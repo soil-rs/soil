@@ -19,7 +19,7 @@
 
 use codec::{Decode, Encode};
 use parking_lot::RwLock;
-use soil_runtime::{
+use subsoil::runtime::{
 	generic::BlockId,
 	traits::{Block as BlockT, Header as HeaderT, NumberFor, Zero},
 	Justifications,

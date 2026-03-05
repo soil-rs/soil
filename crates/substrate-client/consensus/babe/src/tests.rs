@@ -36,7 +36,7 @@ use subsoil::core::crypto::Pair;
 use soil_keyring::Sr25519Keyring;
 use subsoil::keystore::{testing::MemoryKeystore, Keystore};
 use soil_network_test::{Block as TestBlock, *};
-use soil_runtime::{
+use subsoil::runtime::{
 	generic::{Digest, DigestItem},
 	traits::Block as BlockT,
 };
@@ -618,7 +618,7 @@ async fn propose_and_import_block(
 		parent_pre_digest.slot() + 1
 	});
 
-	let pre_digest = soil_runtime::generic::Digest {
+	let pre_digest = subsoil::runtime::generic::Digest {
 		logs: vec![Item::babe_pre_digest(PreDigest::SecondaryPlain(SecondaryPlainPreDigest {
 			authority_index: 0,
 			slot,

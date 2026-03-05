@@ -30,7 +30,7 @@ use soil_npos_elections::{
 	assignment_ratio_to_staked_normalized, seq_phragmen, to_supports, BalancingConfig,
 	ElectionResult, EvaluateSupport,
 };
-use soil_runtime::{
+use subsoil::runtime::{
 	bounded_vec,
 	testing::Header,
 	traits::{BlakeTwo256, Convert, IdentityLookup},
@@ -49,9 +49,9 @@ use topsoil_support::{
 	BoundedVec,
 };
 
-pub type Block = soil_runtime::generic::Block<Header, UncheckedExtrinsic>;
+pub type Block = subsoil::runtime::generic::Block<Header, UncheckedExtrinsic>;
 pub type UncheckedExtrinsic =
-	soil_runtime::generic::UncheckedExtrinsic<AccountId, RuntimeCall, (), ()>;
+	subsoil::runtime::generic::UncheckedExtrinsic<AccountId, RuntimeCall, (), ()>;
 
 topsoil_support::construct_runtime!(
 	pub enum Runtime {
@@ -471,7 +471,7 @@ where
 	}
 }
 
-pub type Extrinsic = soil_runtime::testing::TestXt<RuntimeCall, ()>;
+pub type Extrinsic = subsoil::runtime::testing::TestXt<RuntimeCall, ()>;
 
 parameter_types! {
 	pub MaxNominations: u32 = <TestNposSolution as NposSolution>::LIMIT as u32;

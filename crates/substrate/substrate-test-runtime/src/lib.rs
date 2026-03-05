@@ -64,7 +64,7 @@ use soil_api::{decl_runtime_apis, impl_runtime_apis};
 pub use subsoil::core::hash::H256;
 use soil_genesis_builder::PresetId;
 use soil_inherents::{CheckInherentsResult, InherentData};
-use soil_runtime::{
+use subsoil::runtime::{
 	impl_opaque_keys, impl_tx_ext_default,
 	traits::{BlakeTwo256, Block as BlockT, DispatchInfoOf, Dispatchable, NumberFor, Verify},
 	transaction_validity::{
@@ -161,10 +161,10 @@ pub type TxExtension = (
 	topsoil_system::WeightReclaim<Runtime>,
 );
 /// The payload being signed in transactions.
-pub type SignedPayload = soil_runtime::generic::SignedPayload<RuntimeCall, TxExtension>;
+pub type SignedPayload = subsoil::runtime::generic::SignedPayload<RuntimeCall, TxExtension>;
 /// Unchecked extrinsic type as expected by this runtime.
 pub type Extrinsic =
-	soil_runtime::generic::UncheckedExtrinsic<Address, RuntimeCall, Signature, TxExtension>;
+	subsoil::runtime::generic::UncheckedExtrinsic<Address, RuntimeCall, Signature, TxExtension>;
 
 /// An identifier for an account on this system.
 pub type AccountId = <Signature as Verify>::Signer;
@@ -177,13 +177,13 @@ pub type BlockNumber = u64;
 /// Index of a transaction.
 pub type Nonce = u64;
 /// The item of a block digest.
-pub type DigestItem = soil_runtime::generic::DigestItem;
+pub type DigestItem = subsoil::runtime::generic::DigestItem;
 /// The digest of a block.
-pub type Digest = soil_runtime::generic::Digest;
+pub type Digest = subsoil::runtime::generic::Digest;
 /// A test block.
-pub type Block = soil_runtime::generic::Block<Header, Extrinsic>;
+pub type Block = subsoil::runtime::generic::Block<Header, Extrinsic>;
 /// A test block's header.
-pub type Header = soil_runtime::generic::Header<BlockNumber, Hashing>;
+pub type Header = subsoil::runtime::generic::Header<BlockNumber, Hashing>;
 /// Balance of an account.
 pub type Balance = u64;
 
@@ -276,22 +276,22 @@ pub type Executive = topsoil_executive::Executive<
 #[derive(Copy, Clone, PartialEq, Eq, Encode, Decode, DecodeWithMemTracking, Debug, TypeInfo)]
 pub struct CheckSubstrateCall;
 
-impl soil_runtime::traits::Printable for CheckSubstrateCall {
+impl subsoil::runtime::traits::Printable for CheckSubstrateCall {
 	fn print(&self) {
 		"CheckSubstrateCall".print()
 	}
 }
 
-impl soil_runtime::traits::RefundWeight for CheckSubstrateCall {
+impl subsoil::runtime::traits::RefundWeight for CheckSubstrateCall {
 	fn refund(&mut self, _weight: topsoil_support::weights::Weight) {}
 }
-impl soil_runtime::traits::ExtensionPostDispatchWeightHandler<CheckSubstrateCall>
+impl subsoil::runtime::traits::ExtensionPostDispatchWeightHandler<CheckSubstrateCall>
 	for CheckSubstrateCall
 {
 	fn set_extension_weight(&mut self, _info: &CheckSubstrateCall) {}
 }
 
-impl soil_runtime::traits::Dispatchable for CheckSubstrateCall {
+impl subsoil::runtime::traits::Dispatchable for CheckSubstrateCall {
 	type RuntimeOrigin = RuntimeOrigin;
 	type Config = CheckSubstrateCall;
 	type Info = CheckSubstrateCall;
@@ -300,12 +300,12 @@ impl soil_runtime::traits::Dispatchable for CheckSubstrateCall {
 	fn dispatch(
 		self,
 		_origin: Self::RuntimeOrigin,
-	) -> soil_runtime::DispatchResultWithInfo<Self::PostInfo> {
+	) -> subsoil::runtime::DispatchResultWithInfo<Self::PostInfo> {
 		panic!("This implementation should not be used for actual dispatch.");
 	}
 }
 
-impl soil_runtime::traits::TransactionExtension<RuntimeCall> for CheckSubstrateCall {
+impl subsoil::runtime::traits::TransactionExtension<RuntimeCall> for CheckSubstrateCall {
 	const IDENTIFIER: &'static str = "CheckSubstrateCall";
 	type Implicit = ();
 	type Pre = ();
@@ -393,7 +393,7 @@ impl topsoil_system::pallet::Config for Runtime {
 	type BlockWeights = RuntimeBlockWeights;
 	type Nonce = Nonce;
 	type AccountId = AccountId;
-	type Lookup = soil_runtime::traits::IdentityLookup<Self::AccountId>;
+	type Lookup = subsoil::runtime::traits::IdentityLookup<Self::AccountId>;
 	type Block = Block;
 	type AccountData = topsoil_balances::AccountData<Balance>;
 }
@@ -1154,7 +1154,7 @@ mod tests {
 	use soil_api::{ApiExt, ProvideRuntimeApi};
 	use soil_consensus::BlockOrigin;
 	use subsoil::core::{storage::well_known_keys::HEAP_PAGES, traits::CallContext};
-	use soil_runtime::{
+	use subsoil::runtime::{
 		traits::{DispatchTransaction, Hash as _},
 		transaction_validity::{InvalidTransaction, TransactionSource::External, ValidTransaction},
 	};
@@ -1286,7 +1286,7 @@ mod tests {
 
 			for call in failing_calls {
 				assert_eq!(
-					<SubstrateTest as soil_runtime::traits::ValidateUnsigned>::validate_unsigned(
+					<SubstrateTest as subsoil::runtime::traits::ValidateUnsigned>::validate_unsigned(
 						TransactionSource::External,
 						&call,
 					),
@@ -1296,7 +1296,7 @@ mod tests {
 
 			for call in succeeding_calls {
 				assert_eq!(
-					<SubstrateTest as soil_runtime::traits::ValidateUnsigned>::validate_unsigned(
+					<SubstrateTest as subsoil::runtime::traits::ValidateUnsigned>::validate_unsigned(
 						TransactionSource::External,
 						&call,
 					),

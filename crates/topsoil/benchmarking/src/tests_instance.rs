@@ -19,7 +19,7 @@
 
 #![cfg(test)]
 
-use soil_runtime::{
+use subsoil::runtime::{
 	testing::H256,
 	traits::{BlakeTwo256, IdentityLookup},
 	BuildStorage,
@@ -217,7 +217,7 @@ fn ensure_correct_instance_is_selected() {
 	};
 	let params = (&config, &whitelist);
 
-	let state = soil_client_db::BenchmarkingState::<soil_runtime::traits::BlakeTwo256>::new(
+	let state = soil_client_db::BenchmarkingState::<subsoil::runtime::traits::BlakeTwo256>::new(
 		Default::default(),
 		None,
 		false,

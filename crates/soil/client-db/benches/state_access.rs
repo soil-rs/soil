@@ -23,7 +23,7 @@ use soil_client_api::{
 };
 use soil_client_db::{Backend, BlocksPruning, DatabaseSettings, DatabaseSource, PruningMode};
 use subsoil::core::H256;
-use soil_runtime::{
+use subsoil::runtime::{
 	testing::{Block as RawBlock, Header, MockCallU64, TestXt},
 	StateVersion, Storage,
 };

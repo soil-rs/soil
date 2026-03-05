@@ -31,7 +31,7 @@ use soil_api::{ApiExt, ProvideRuntimeApi};
 use soil_blockchain::{HeaderMetadata, TreeRoute};
 use soil_client_api::{blockchain::HeaderBackend, BlockBackend};
 use subsoil::core::traits::SpawnEssentialNamed;
-use soil_runtime::{
+use subsoil::runtime::{
 	generic::BlockId,
 	traits::{self, Block as BlockT, BlockIdTo},
 	transaction_validity::{TransactionSource, TransactionValidity},
@@ -360,8 +360,8 @@ where
 					)?;
 
 				// The old versions require us to call `initialize_block` before.
-				runtime_api.initialize_block(at, &soil_runtime::traits::Header::new(
-					block_number + soil_runtime::traits::One::one(),
+				runtime_api.initialize_block(at, &subsoil::runtime::traits::Header::new(
+					block_number + subsoil::runtime::traits::One::one(),
 					Default::default(),
 					Default::default(),
 					at,

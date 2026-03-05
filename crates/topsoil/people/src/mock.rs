@@ -25,7 +25,7 @@ use topsoil_support::{
 };
 
 use subsoil::core::{ConstU16, ConstU32, ConstU64, H256};
-use soil_runtime::{
+use subsoil::runtime::{
 	testing::UintAuthorityId,
 	traits::{Applyable, BlakeTwo256, Checkable, IdentityLookup},
 	transaction_validity::{InvalidTransaction, TransactionSource, TransactionValidityError},
@@ -39,12 +39,12 @@ pub const RI_ZERO: RingIndex = 0;
 
 const EXTENSION_VERSION: u8 = 0;
 pub type TransactionExtension = (AsPerson<Test>, topsoil_system::CheckNonce<Test>);
-pub type Header = soil_runtime::generic::Header<u64, soil_runtime::traits::BlakeTwo256>;
-pub type Block = soil_runtime::generic::Block<Header, UncheckedExtrinsic>;
-pub type UncheckedExtrinsic = soil_runtime::generic::UncheckedExtrinsic<
+pub type Header = subsoil::runtime::generic::Header<u64, subsoil::runtime::traits::BlakeTwo256>;
+pub type Block = subsoil::runtime::generic::Block<Header, UncheckedExtrinsic>;
+pub type UncheckedExtrinsic = subsoil::runtime::generic::UncheckedExtrinsic<
 	u64,
 	RuntimeCall,
-	soil_runtime::testing::UintAuthorityId,
+	subsoil::runtime::testing::UintAuthorityId,
 	TransactionExtension,
 >;
 
@@ -91,7 +91,7 @@ impl topsoil_system::Config for Test {
 	type MaxConsumers = topsoil_support::traits::ConstU32<16>;
 }
 
-pub type Extrinsic = soil_runtime::testing::TestXt<RuntimeCall, ()>;
+pub type Extrinsic = subsoil::runtime::testing::TestXt<RuntimeCall, ()>;
 
 impl CreateTransactionBase<Call<Self>> for Test {
 	type Extrinsic = Extrinsic;
@@ -111,63 +111,63 @@ match_types! {
 
 pub struct MockWeights;
 impl crate::WeightInfo for MockWeights {
-	fn under_alias() -> soil_runtime::Weight {
+	fn under_alias() -> subsoil::runtime::Weight {
 		Weight::from_parts(3, 3)
 	}
 
-	fn set_alias_account() -> soil_runtime::Weight {
+	fn set_alias_account() -> subsoil::runtime::Weight {
 		Weight::from_parts(4, 4)
 	}
 
-	fn unset_alias_account() -> soil_runtime::Weight {
+	fn unset_alias_account() -> subsoil::runtime::Weight {
 		Weight::from_parts(5, 5)
 	}
 
-	fn reset_root() -> soil_runtime::Weight {
+	fn reset_root() -> subsoil::runtime::Weight {
 		Weight::from_parts(6, 6)
 	}
 
-	fn force_recognize_personhood() -> soil_runtime::Weight {
+	fn force_recognize_personhood() -> subsoil::runtime::Weight {
 		Weight::from_parts(7, 7)
 	}
 
-	fn set_personal_id_account() -> soil_runtime::Weight {
+	fn set_personal_id_account() -> subsoil::runtime::Weight {
 		Weight::from_parts(8, 8)
 	}
 
-	fn unset_personal_id_account() -> soil_runtime::Weight {
+	fn unset_personal_id_account() -> subsoil::runtime::Weight {
 		Weight::from_parts(9, 9)
 	}
 
-	fn set_onboarding_size() -> soil_runtime::Weight {
+	fn set_onboarding_size() -> subsoil::runtime::Weight {
 		Weight::from_parts(10, 10)
 	}
 
-	fn merge_rings() -> soil_runtime::Weight {
+	fn merge_rings() -> subsoil::runtime::Weight {
 		Weight::from_parts(11, 11)
 	}
 
-	fn migrate_included_key() -> soil_runtime::Weight {
+	fn migrate_included_key() -> subsoil::runtime::Weight {
 		Weight::from_parts(12, 12)
 	}
 
-	fn migrate_onboarding_key() -> soil_runtime::Weight {
+	fn migrate_onboarding_key() -> subsoil::runtime::Weight {
 		Weight::from_parts(13, 13)
 	}
 
-	fn should_build_ring(n: u32) -> soil_runtime::Weight {
+	fn should_build_ring(n: u32) -> subsoil::runtime::Weight {
 		Weight::from_parts(n as u64 * 14, n as u64 * 14)
 	}
 
-	fn build_ring(n: u32) -> soil_runtime::Weight {
+	fn build_ring(n: u32) -> subsoil::runtime::Weight {
 		Weight::from_parts(n as u64 * 14, n as u64 * 14)
 	}
 
-	fn onboard_people() -> soil_runtime::Weight {
+	fn onboard_people() -> subsoil::runtime::Weight {
 		Weight::from_parts(15, 15)
 	}
 
-	fn remove_suspended_people(n: u32) -> soil_runtime::Weight {
+	fn remove_suspended_people(n: u32) -> subsoil::runtime::Weight {
 		Weight::from_parts(n as u64 * 16, n as u64 * 16)
 	}
 
@@ -175,19 +175,19 @@ impl crate::WeightInfo for MockWeights {
 		Weight::from_parts(1, 1)
 	}
 
-	fn migrate_keys_single_included_key() -> soil_runtime::Weight {
+	fn migrate_keys_single_included_key() -> subsoil::runtime::Weight {
 		Weight::from_parts(17, 17)
 	}
 
-	fn merge_queue_pages() -> soil_runtime::Weight {
+	fn merge_queue_pages() -> subsoil::runtime::Weight {
 		Weight::from_parts(18, 18)
 	}
 
-	fn on_poll_base() -> soil_runtime::Weight {
+	fn on_poll_base() -> subsoil::runtime::Weight {
 		Weight::from_parts(19, 19)
 	}
 
-	fn on_idle_base() -> soil_runtime::Weight {
+	fn on_idle_base() -> subsoil::runtime::Weight {
 		Weight::from_parts(20, 20)
 	}
 
@@ -335,7 +335,7 @@ pub fn exec_tx(
 	let checked = Checkable::check(tx, &ChainContext::<Test>::default())?;
 	with_transaction(|| {
 		let valid = checked.validate::<Test>(TransactionSource::External, &info, len);
-		soil_runtime::TransactionOutcome::Rollback(Result::<_, DispatchError>::Ok(valid))
+		subsoil::runtime::TransactionOutcome::Rollback(Result::<_, DispatchError>::Ok(valid))
 	})
 	.unwrap()?;
 	// Finally, apply the extrinsic.

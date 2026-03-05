@@ -24,7 +24,7 @@ use impl_trait_for_tuples::impl_for_tuples;
 use scale_info::TypeInfo;
 pub use subsoil::core::storage::TrackedStorageKey;
 use subsoil::core::Get;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{Convert, Member},
 	Debug, DispatchError,
 };
@@ -193,7 +193,7 @@ impl<Base, Slope, Balance> Convert<Footprint, Balance> for LinearStoragePrice<Ba
 where
 	Base: Get<Balance>,
 	Slope: Get<Balance>,
-	Balance: From<u64> + soil_runtime::Saturating,
+	Balance: From<u64> + subsoil::runtime::Saturating,
 {
 	fn convert(a: Footprint) -> Balance {
 		let s: Balance = (a.count.saturating_mul(a.size)).into();
@@ -206,7 +206,7 @@ pub struct ConstantStoragePrice<Price, Balance>(PhantomData<(Price, Balance)>);
 impl<Price, Balance> Convert<Footprint, Balance> for ConstantStoragePrice<Price, Balance>
 where
 	Price: Get<Balance>,
-	Balance: From<u64> + soil_runtime::Saturating,
+	Balance: From<u64> + subsoil::runtime::Saturating,
 {
 	fn convert(_: Footprint) -> Balance {
 		Price::get()

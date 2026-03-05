@@ -55,7 +55,7 @@ use subsoil::application_crypto::{AppPublic, RuntimeAppPublic};
 use subsoil::core::H256;
 #[cfg(feature = "std")]
 use subsoil::keystore::KeystorePtr;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{Header as HeaderT, Keccak256, NumberFor},
 	OpaqueValue,
 };
@@ -240,7 +240,7 @@ pub mod ecdsa_bls_crypto {
 	use subsoil::core::{crypto::Wraps, ecdsa_bls381::Pair as EcdsaBlsPair, ByteArray};
 	#[cfg(feature = "std")]
 	use subsoil::keystore::KeystorePtr;
-	use soil_runtime::traits::Keccak256;
+	use subsoil::runtime::traits::Keccak256;
 
 	app_crypto!(ecdsa_bls381, BEEFY_KEY_TYPE);
 
@@ -288,7 +288,7 @@ pub mod ecdsa_bls_crypto {
 }
 
 /// The `ConsensusEngineId` of BEEFY.
-pub const BEEFY_ENGINE_ID: soil_runtime::ConsensusEngineId = *b"BEEF";
+pub const BEEFY_ENGINE_ID: subsoil::runtime::ConsensusEngineId = *b"BEEF";
 
 /// Authority set id starts with zero at BEEFY pallet genesis.
 pub const GENESIS_AUTHORITY_SET_ID: u64 = 0;

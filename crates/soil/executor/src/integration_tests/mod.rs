@@ -31,7 +31,7 @@ use soil_executor_common::{
 	runtime_blob::RuntimeBlob,
 	wasm_runtime::{HeapAllocStrategy, WasmModule},
 };
-use soil_runtime::traits::BlakeTwo256;
+use subsoil::runtime::traits::BlakeTwo256;
 use soil_runtime_test::wasm_binary_unwrap;
 use subsoil::state_machine::TestExternalities as CoreTestExternalities;
 use subsoil::trie::{LayoutV1 as Layout, TrieConfiguration};

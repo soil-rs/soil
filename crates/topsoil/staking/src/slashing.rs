@@ -56,7 +56,7 @@ use crate::{
 use alloc::vec::Vec;
 use codec::{Decode, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{Saturating, Zero},
 	Debug, DispatchResult,
 };

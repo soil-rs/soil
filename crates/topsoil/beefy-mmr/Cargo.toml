@@ -26,7 +26,6 @@ scale-info = { features = ["derive"], workspace = true }
 serde = { optional = true, workspace = true, default-features = true }
 soil-api = { workspace = true }
 soil-consensus-beefy = { workspace = true }
-soil-runtime = { workspace = true }
 
 [dev-dependencies]
 array-bytes = { workspace = true, default-features = true }
@@ -51,7 +50,7 @@ std = [
 	"serde",
 	"soil-api/std",
 	"soil-consensus-beefy/std",
-	"soil-runtime/std",
+	"subsoil/std",
 	"soil-staking/std",
 ]
 try-runtime = [
@@ -61,7 +60,7 @@ try-runtime = [
 	"topsoil-beefy/try-runtime",
 	"topsoil-mmr/try-runtime",
 	"topsoil-session/try-runtime",
-	"soil-runtime/try-runtime",
+	"subsoil/try-runtime",
 ]
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",
@@ -70,6 +69,6 @@ runtime-benchmarks = [
 	"topsoil-balances/runtime-benchmarks",
 	"topsoil-mmr/runtime-benchmarks",
 	"topsoil-session/runtime-benchmarks",
-	"soil-runtime/runtime-benchmarks",
+	"subsoil/runtime-benchmarks",
 	"soil-staking/runtime-benchmarks",
 ]

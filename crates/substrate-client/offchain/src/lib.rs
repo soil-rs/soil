@@ -48,7 +48,7 @@ use subsoil::core::{offchain, traits::SpawnNamed};
 use subsoil::externalities::Extension;
 use subsoil::keystore::{KeystoreExt, KeystorePtr};
 use soil_network::{NetworkPeers, NetworkStateInfo};
-use soil_runtime::traits::{self, Header};
+use subsoil::runtime::traits::{self, Header};
 use soil_transaction_pool_api::OffchainTransactionPoolFactory;
 use threadpool::ThreadPool;
 
@@ -335,7 +335,7 @@ mod tests {
 		config::MultiaddrWithPeerId, types::ProtocolName, Multiaddr, ObservedRole, ReputationChange,
 	};
 	use soil_network_types::PeerId;
-	use soil_runtime::traits::Block as BlockT;
+	use subsoil::runtime::traits::Block as BlockT;
 	use soil_transaction_pool_api::{InPoolTransaction, TransactionPool};
 	use std::{collections::HashSet, sync::Arc};
 	use substrate_test_runtime_client::{

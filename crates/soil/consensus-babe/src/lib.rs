@@ -31,7 +31,7 @@ use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;
 #[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
-use soil_runtime::{traits::Header, ConsensusEngineId};
+use subsoil::runtime::{traits::Header, ConsensusEngineId};
 
 use crate::digests::{NextConfigDescriptor, NextEpochDescriptor};
 

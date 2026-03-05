@@ -18,7 +18,7 @@
 use alloc::vec::Vec;
 use codec::{Decode, Encode};
 pub use subsoil::core::crypto::KeyTypeId;
-use soil_runtime::traits::GeneratedSessionKeys;
+use subsoil::runtime::traits::GeneratedSessionKeys;
 
 /// Opaque [`GeneratedSessionKeys`].
 #[derive(Debug, Default, Decode, Encode, scale_info::TypeInfo)]

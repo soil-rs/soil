@@ -16,7 +16,7 @@
 use super::*;
 
 use mock::{ExtrinsicBaseWeight, *};
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{DispatchTransaction, StaticLookup},
 	BuildStorage,
 };

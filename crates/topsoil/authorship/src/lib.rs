@@ -97,7 +97,7 @@ mod tests {
 	use crate as topsoil_authorship;
 	use codec::{Decode, Encode};
 	use subsoil::core::H256;
-	use soil_runtime::{
+	use subsoil::runtime::{
 		generic::DigestItem, testing::Header, traits::Header as HeaderT, BuildStorage,
 	};
 	use topsoil_support::{derive_impl, ConsensusEngineId};

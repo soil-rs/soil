@@ -32,7 +32,7 @@ use alloc::{
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use core::{iter, marker::PhantomData};
 use scale_info::TypeInfo;
-use soil_runtime::traits::{Bounded, Zero};
+use subsoil::runtime::traits::{Bounded, Zero};
 use topsoil_election_provider_support::ScoreProvider;
 use topsoil_support::{
 	defensive, ensure,
@@ -49,7 +49,7 @@ use topsoil_support::{
 ))]
 use alloc::vec::Vec;
 #[cfg(any(test, feature = "try-runtime", feature = "fuzz"))]
-use soil_runtime::TryRuntimeError;
+use subsoil::runtime::TryRuntimeError;
 
 #[derive(
 	Debug,

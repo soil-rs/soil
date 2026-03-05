@@ -35,7 +35,7 @@ use soil_consensus::{Proposal, ProposeArgs};
 use subsoil::core::traits::SpawnNamed;
 use soil_inherents::InherentData;
 use soil_proposer_metrics::{EndProposingReason, MetricsLink as PrometheusMetrics};
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{BlakeTwo256, Block as BlockT, Hash as HashT, Header as HeaderT},
 	ExtrinsicInclusionMode, Percent, SaturatedConversion,
 };
@@ -587,7 +587,7 @@ mod tests {
 	use soil_blockchain::HeaderBackend;
 	use soil_client_api::{Backend, TrieCacheContext};
 	use soil_consensus::{BlockOrigin, Environment};
-	use soil_runtime::{generic::BlockId, traits::NumberFor, Perbill};
+	use subsoil::runtime::{generic::BlockId, traits::NumberFor, Perbill};
 	use soil_transaction_pool_api::{ChainEvent, MaintainedTransactionPool, TransactionSource};
 	use substrate_test_runtime_client::{
 		prelude::*,

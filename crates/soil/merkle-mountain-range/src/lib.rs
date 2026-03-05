@@ -29,7 +29,7 @@ use alloc::vec::Vec;
 use codec::{Decode, DecodeWithMemTracking, Encode};
 use core::fmt;
 use scale_info::TypeInfo;
-use soil_runtime::traits;
+use subsoil::runtime::traits;
 
 pub mod utils;
 
@@ -486,7 +486,7 @@ mod tests {
 
 	use codec::Decode;
 	use subsoil::core::H256;
-	use soil_runtime::traits::Keccak256;
+	use subsoil::runtime::traits::Keccak256;
 
 	pub(crate) fn hex(s: &str) -> H256 {
 		s.parse().unwrap()

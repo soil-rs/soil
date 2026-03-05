@@ -56,7 +56,7 @@ use subsoil::keystore::KeystorePtr;
 #[cfg(feature = "std")]
 use soil_rpc_api::{check_if_safe, UnsafeRpcError};
 #[cfg(feature = "std")]
-use soil_runtime::traits::{Block as BlockT, Header as _};
+use subsoil::runtime::traits::{Block as BlockT, Header as _};
 
 #[cfg(feature = "std")]
 const BABE_ERROR: i32 = 9000;

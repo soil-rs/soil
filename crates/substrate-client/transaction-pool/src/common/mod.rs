@@ -36,7 +36,7 @@ pub(crate) const STAT_SLIDING_WINDOW: u64 = 3;
 /// Inform the transaction pool about imported and finalized blocks.
 pub async fn notification_future<Client, Pool, Block>(client: Arc<Client>, txpool: Arc<Pool>)
 where
-	Block: soil_runtime::traits::Block,
+	Block: subsoil::runtime::traits::Block,
 	Client: soil_client_api::BlockchainEvents<Block>,
 	Pool: soil_transaction_pool_api::MaintainedTransactionPool<Block = Block>,
 {

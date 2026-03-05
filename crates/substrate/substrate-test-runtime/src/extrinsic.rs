@@ -24,7 +24,7 @@ use crate::{
 use codec::Encode;
 use subsoil::core::crypto::Pair as TraitPair;
 use soil_keyring::Sr25519Keyring;
-use soil_runtime::{
+use subsoil::runtime::{
 	generic::Preamble, traits::TransactionExtension, transaction_validity::TransactionPriority,
 	Perbill,
 };
@@ -152,7 +152,7 @@ impl ExtrinsicBuilder {
 	}
 
 	/// Create builder for `PalletCall::new_deposit_log_digest_item` call using given `log`
-	pub fn new_deposit_log_digest_item(log: soil_runtime::generic::DigestItem) -> Self {
+	pub fn new_deposit_log_digest_item(log: subsoil::runtime::generic::DigestItem) -> Self {
 		Self::new_unsigned(PalletCall::deposit_log_digest_item { log })
 	}
 

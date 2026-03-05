@@ -16,7 +16,7 @@
 // limitations under the License.
 
 use crate::{CombineData, Config, MomentOf, TimestampedValueOf};
-use soil_runtime::traits::Saturating;
+use subsoil::runtime::traits::Saturating;
 use subsoil::std::{marker, prelude::*};
 use topsoil_support::traits::{Get, Time};
 

@@ -30,7 +30,7 @@ use futures::Stream;
 use prometheus_endpoint::Registry as PrometheusRegistry;
 
 use subsoil::core::storage::{StorageData, StorageKey};
-use soil_runtime::traits::Block as BlockT;
+use subsoil::runtime::traits::Block as BlockT;
 use soil_utils::pubsub::{Hub, Receiver};
 
 mod registry;

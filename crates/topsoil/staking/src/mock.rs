@@ -20,7 +20,7 @@
 use crate::{self as topsoil_staking, *};
 use subsoil::core::ConstBool;
 use subsoil::io;
-use soil_runtime::{curve::PiecewiseLinear, testing::UintAuthorityId, traits::Zero, BuildStorage};
+use subsoil::runtime::{curve::PiecewiseLinear, testing::UintAuthorityId, traits::Zero, BuildStorage};
 use soil_staking::{
 	offence::{OffenceDetails, OnOffenceHandler},
 	OnStakingUpdate, StakingAccount,
@@ -70,7 +70,7 @@ impl OneSessionHandler<AccountId> for OtherSessionHandler {
 	fn on_disabled(_validator_index: u32) {}
 }
 
-impl soil_runtime::BoundToRuntimeAppPublic for OtherSessionHandler {
+impl subsoil::runtime::BoundToRuntimeAppPublic for OtherSessionHandler {
 	type Public = UintAuthorityId;
 }
 
@@ -134,7 +134,7 @@ impl topsoil_balances::Config for Test {
 	type AccountStore = System;
 }
 
-soil_runtime::impl_opaque_keys! {
+subsoil::impl_opaque_keys! {
 	pub struct SessionKeys {
 		pub other: OtherSessionHandler,
 	}
@@ -146,7 +146,7 @@ impl topsoil_session::Config for Test {
 	type SessionHandler = (OtherSessionHandler,);
 	type RuntimeEvent = RuntimeEvent;
 	type ValidatorId = AccountId;
-	type ValidatorIdOf = soil_runtime::traits::ConvertInto;
+	type ValidatorIdOf = subsoil::runtime::traits::ConvertInto;
 	type NextSessionRotation = topsoil_session::PeriodicSessions<Period, Offset>;
 	type DisablingStrategy = topsoil_session::disabling::UpToLimitWithReEnablingDisablingStrategy<
 		DISABLING_LIMIT_FACTOR,

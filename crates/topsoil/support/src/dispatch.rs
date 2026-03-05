@@ -24,7 +24,7 @@ use core::fmt;
 use scale_info::TypeInfo;
 #[cfg(feature = "std")]
 use serde::{Deserialize, Serialize};
-use soil_runtime::{
+use subsoil::runtime::{
 	generic::{CheckedExtrinsic, UncheckedExtrinsic},
 	traits::{
 		Dispatchable, ExtensionPostDispatchWeightHandler, RefundWeight, TransactionExtension,
@@ -36,17 +36,17 @@ use subsoil::weights::Weight;
 /// The return type of a `Dispatchable` in frame. When returned explicitly from
 /// a dispatchable function it allows overriding the default `PostDispatchInfo`
 /// returned from a dispatch.
-pub type DispatchResultWithPostInfo = soil_runtime::DispatchResultWithInfo<PostDispatchInfo>;
+pub type DispatchResultWithPostInfo = subsoil::runtime::DispatchResultWithInfo<PostDispatchInfo>;
 
 #[docify::export]
 /// Un-augmented version of `DispatchResultWithPostInfo` that can be returned from
 /// dispatchable functions and is automatically converted to the augmented type. Should be
 /// used whenever the `PostDispatchInfo` does not need to be overwritten. As this should
 /// be the common case it is the implicit return type when none is specified.
-pub type DispatchResult = Result<(), soil_runtime::DispatchError>;
+pub type DispatchResult = Result<(), subsoil::runtime::DispatchError>;
 
 /// The error type contained in a `DispatchResultWithPostInfo`.
-pub type DispatchErrorWithPostInfo = soil_runtime::DispatchErrorWithPostInfo<PostDispatchInfo>;
+pub type DispatchErrorWithPostInfo = subsoil::runtime::DispatchErrorWithPostInfo<PostDispatchInfo>;
 
 /// Serializable version of pallet dispatchable.
 pub trait Callable<T> {
@@ -362,7 +362,7 @@ impl From<()> for PostDispatchInfo {
 	}
 }
 
-impl soil_runtime::traits::Printable for PostDispatchInfo {
+impl subsoil::runtime::traits::Printable for PostDispatchInfo {
 	fn print(&self) {
 		"actual_weight=".print();
 		match self.actual_weight {
@@ -711,7 +711,7 @@ impl<T> PaysFee<T> for (u64, Pays) {
 mod weight_tests {
 	use super::*;
 	use subsoil::core::parameter_types;
-	use soil_runtime::{generic, traits::BlakeTwo256};
+	use subsoil::runtime::{generic, traits::BlakeTwo256};
 	use subsoil::weights::RuntimeDbWeight;
 
 	pub use self::topsoil_system::{Call, Config};
@@ -739,7 +739,7 @@ mod weight_tests {
 		#[pallet::config]
 		#[pallet::disable_frame_system_supertrait_check]
 		pub trait Config: 'static {
-			type Block: Parameter + soil_runtime::traits::Block;
+			type Block: Parameter + subsoil::runtime::traits::Block;
 			type AccountId;
 			type Balance;
 			type BaseCallFilter: crate::traits::Contains<Self::RuntimeCall>;
@@ -821,9 +821,9 @@ mod weight_tests {
 			pub type OriginFor<T> = <T as super::Config>::RuntimeOrigin;
 
 			pub type HeaderFor<T> =
-				<<T as super::Config>::Block as soil_runtime::traits::HeaderProvider>::HeaderT;
+				<<T as super::Config>::Block as subsoil::runtime::traits::HeaderProvider>::HeaderT;
 
-			pub type BlockNumberFor<T> = <HeaderFor<T> as soil_runtime::traits::Header>::Number;
+			pub type BlockNumberFor<T> = <HeaderFor<T> as subsoil::runtime::traits::Header>::Number;
 		}
 	}
 
@@ -1032,7 +1032,7 @@ mod weight_tests {
 #[cfg(test)]
 mod per_dispatch_class_tests {
 	use super::*;
-	use soil_runtime::traits::Zero;
+	use subsoil::runtime::traits::Zero;
 	use DispatchClass::*;
 
 	#[test]
@@ -1208,7 +1208,7 @@ mod per_dispatch_class_tests {
 mod test_extensions {
 	use codec::{Decode, DecodeWithMemTracking, Encode};
 	use scale_info::TypeInfo;
-	use soil_runtime::{
+	use subsoil::runtime::{
 		impl_tx_ext_default,
 		traits::{
 			DispatchInfoOf, DispatchOriginOf, Dispatchable, PostDispatchInfoOf,
@@ -1354,7 +1354,7 @@ mod extension_weight_tests {
 
 	use super::*;
 	use subsoil::core::parameter_types;
-	use soil_runtime::{
+	use subsoil::runtime::{
 		generic::{self, ExtrinsicFormat},
 		traits::{Applyable, BlakeTwo256, DispatchTransaction, TransactionExtension},
 	};

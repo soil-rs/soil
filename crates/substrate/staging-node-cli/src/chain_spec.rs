@@ -425,7 +425,7 @@ pub(crate) mod tests {
 	use super::*;
 	use crate::service::{new_full_base, NewFullBase};
 	use kitchensink_runtime::genesis_config_presets::well_known_including_eth_accounts;
-	use soil_runtime::{AccountId32, BuildStorage};
+	use subsoil::runtime::{AccountId32, BuildStorage};
 	use soil_service_test;
 
 	/// Local testnet config (single validator - Alice).

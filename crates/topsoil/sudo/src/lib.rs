@@ -85,7 +85,7 @@
 //! meant to be used by constructing runtime calls from outside the runtime.
 //! </pre></div>
 //!
-//! This pallet also defines a [`TransactionExtension`](soil_runtime::traits::TransactionExtension)
+//! This pallet also defines a [`TransactionExtension`](subsoil::runtime::traits::TransactionExtension)
 //! called [`CheckOnlySudoAccount`] to ensure that only signed transactions by the sudo account are
 //! accepted by the transaction pool. The intended use of this signed extension is to prevent other
 //! accounts from spamming the transaction pool for the initial phase of a chain, during which
@@ -122,7 +122,7 @@ extern crate alloc;
 
 use alloc::boxed::Box;
 
-use soil_runtime::{traits::StaticLookup, DispatchResult};
+use subsoil::runtime::{traits::StaticLookup, DispatchResult};
 
 use topsoil_support::{dispatch::GetDispatchInfo, traits::UnfilteredDispatchable};
 

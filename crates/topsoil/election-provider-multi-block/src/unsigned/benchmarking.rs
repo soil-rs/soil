@@ -33,7 +33,7 @@ mod benchmarks {
 	#[benchmark(pov_mode = Measured)]
 	fn validate_unsigned() -> Result<(), BenchmarkError> {
 		#[cfg(test)]
-		crate::mock::ElectionStart::set(soil_runtime::traits::Bounded::max_value());
+		crate::mock::ElectionStart::set(subsoil::runtime::traits::Bounded::max_value());
 		crate::Pallet::<T>::start().unwrap();
 
 		crate::Pallet::<T>::roll_until_matches(|| {
@@ -54,7 +54,7 @@ mod benchmarks {
 	#[benchmark(pov_mode = Measured)]
 	fn submit_unsigned() -> Result<(), BenchmarkError> {
 		#[cfg(test)]
-		crate::mock::ElectionStart::set(soil_runtime::traits::Bounded::max_value());
+		crate::mock::ElectionStart::set(subsoil::runtime::traits::Bounded::max_value());
 		crate::Pallet::<T>::start().unwrap();
 
 		// roll to unsigned phase open
@@ -81,7 +81,7 @@ mod benchmarks {
 	#[benchmark(extra, pov_mode = Measured)]
 	fn mine_solution(p: Linear<1, { T::Pages::get() }>) -> Result<(), BenchmarkError> {
 		#[cfg(test)]
-		crate::mock::ElectionStart::set(soil_runtime::traits::Bounded::max_value());
+		crate::mock::ElectionStart::set(subsoil::runtime::traits::Bounded::max_value());
 		crate::Pallet::<T>::start().unwrap();
 
 		// roll to unsigned phase open

@@ -31,7 +31,7 @@ use soil_network::{
 	PeerId, Roles,
 };
 use soil_network_common::{sync::message::BlockAnnouncesHandshake, ExHashT};
-use soil_runtime::traits::{Block as BlockT, Zero};
+use subsoil::runtime::traits::{Block as BlockT, Zero};
 use std::{sync::Arc, time::Duration};
 use substrate_test_runtime_client::runtime;
 use tokio::{sync::Mutex, task::JoinHandle};

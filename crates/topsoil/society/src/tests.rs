@@ -22,7 +22,7 @@ use migrations::v0;
 use mock::*;
 
 use subsoil_crypto_hashing::blake2_256;
-use soil_runtime::traits::BadOrigin;
+use subsoil::runtime::traits::BadOrigin;
 use topsoil_support::{assert_noop, assert_ok};
 use BidKind::*;
 use VouchingStatus::*;

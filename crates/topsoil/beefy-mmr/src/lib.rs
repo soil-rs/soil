@@ -35,7 +35,7 @@
 
 extern crate alloc;
 
-use soil_runtime::{
+use subsoil::runtime::{
 	generic::OpaqueDigestItemId,
 	traits::{Convert, Header, Member},
 	SaturatedConversion,
@@ -74,7 +74,7 @@ where
 	T: topsoil_beefy::Config,
 {
 	fn on_new_root(root: &soil_consensus_beefy::MmrRootHash) {
-		let digest = soil_runtime::generic::DigestItem::Consensus(
+		let digest = subsoil::runtime::generic::DigestItem::Consensus(
 			soil_consensus_beefy::BEEFY_ENGINE_ID,
 			codec::Encode::encode(&soil_consensus_beefy::ConsensusLog::<
 				<T as topsoil_beefy::Config>::BeefyId,
@@ -98,7 +98,7 @@ impl Convert<soil_consensus_beefy::ecdsa_crypto::AuthorityId, Vec<u8>> for Beefy
 	}
 }
 
-type MerkleRootOf<T> = <<T as topsoil_mmr::Config>::Hashing as soil_runtime::traits::Hash>::Output;
+type MerkleRootOf<T> = <<T as topsoil_mmr::Config>::Hashing as subsoil::runtime::traits::Hash>::Output;
 
 #[topsoil_support::pallet]
 pub mod pallet {

@@ -27,7 +27,7 @@ use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;
 use subsoil::core::{hexdisplay::HexDisplay, sr25519::Pair as SrPair, Pair};
 use subsoil::io;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{BadOrigin, Zero},
 	ArithmeticError, BuildStorage, Debug, DispatchError, DispatchResult, FixedPointNumber,
 	TokenError,

@@ -27,7 +27,7 @@ use jsonrpsee::{
 	types::SubscriptionId, DisconnectError, PendingSubscriptionSink, SubscriptionMessage,
 	SubscriptionSink,
 };
-use soil_runtime::Serialize;
+use subsoil::runtime::Serialize;
 use std::collections::VecDeque;
 
 const DEFAULT_BUF_SIZE: usize = 16;

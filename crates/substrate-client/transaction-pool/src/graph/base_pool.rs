@@ -25,7 +25,7 @@ use std::{cmp::Ordering, collections::HashSet, fmt, hash, sync::Arc, time::Insta
 use crate::LOG_TARGET;
 use serde::Serialize;
 use subsoil::core::hexdisplay::HexDisplay;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::Member,
 	transaction_validity::{
 		TransactionLongevity as Longevity, TransactionPriority as Priority, TransactionSource,

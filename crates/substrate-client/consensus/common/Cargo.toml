@@ -29,7 +29,6 @@ serde = { features = ["derive"], workspace = true, default-features = true }
 soil-blockchain = { workspace = true, default-features = true }
 soil-consensus = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
-soil-runtime = { workspace = true, default-features = true }
 thiserror = { workspace = true }
 
 [dev-dependencies]

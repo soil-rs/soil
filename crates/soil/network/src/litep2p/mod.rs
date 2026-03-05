@@ -77,7 +77,7 @@ use soil_network_types::kad::{Key as RecordKey, PeerRecord, Record as P2PRecord}
 use soil_client_api::BlockBackend;
 use soil_network_common::{role::Roles, ExHashT};
 use soil_network_types::PeerId;
-use soil_runtime::traits::Block as BlockT;
+use subsoil::runtime::traits::Block as BlockT;
 use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver};
 
 use std::{

@@ -22,7 +22,7 @@
 
 use crate::benchmarks;
 use alloc::{vec, vec::Vec};
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{AppVerify, Hash},
 	RuntimeAppPublic,
 };
@@ -110,7 +110,7 @@ benchmarks! {
 
 #[cfg(test)]
 pub mod mock {
-	use soil_runtime::{testing::H256, BuildStorage};
+	use subsoil::runtime::{testing::H256, BuildStorage};
 	use topsoil_support::derive_impl;
 
 	type AccountId = u64;
@@ -135,9 +135,9 @@ pub mod mock {
 		type Nonce = Nonce;
 		type RuntimeCall = RuntimeCall;
 		type Hash = H256;
-		type Hashing = ::soil_runtime::traits::BlakeTwo256;
+		type Hashing = ::subsoil::runtime::traits::BlakeTwo256;
 		type AccountId = AccountId;
-		type Lookup = soil_runtime::traits::IdentityLookup<Self::AccountId>;
+		type Lookup = subsoil::runtime::traits::IdentityLookup<Self::AccountId>;
 		type Block = Block;
 		type RuntimeEvent = RuntimeEvent;
 		type BlockHashCount = ();

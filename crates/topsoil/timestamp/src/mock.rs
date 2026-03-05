@@ -21,7 +21,7 @@ use super::*;
 use crate as topsoil_timestamp;
 
 use subsoil::io::TestExternalities;
-use soil_runtime::BuildStorage;
+use subsoil::runtime::BuildStorage;
 use topsoil_support::{derive_impl, parameter_types, traits::ConstU64};
 
 type Block = topsoil_system::mocking::MockBlock<Test>;

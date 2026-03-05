@@ -28,7 +28,7 @@ mod client_side;
 pub use client_side::*;
 
 use soil_inherents::{CheckInherentsResult, InherentData};
-use soil_runtime::{traits::Block as BlockT, ApplyExtrinsicResult};
+use subsoil::runtime::{traits::Block as BlockT, ApplyExtrinsicResult};
 
 soil_api::decl_runtime_apis! {
 	/// The `BlockBuilder` api trait that provides the required functionality for building a block.
@@ -43,7 +43,7 @@ soil_api::decl_runtime_apis! {
 		#[changed_in(6)]
 		fn apply_extrinsic(
 			extrinsic: <Block as BlockT>::Extrinsic,
-		) -> soil_runtime::legacy::byte_sized_error::ApplyExtrinsicResult;
+		) -> subsoil::runtime::legacy::byte_sized_error::ApplyExtrinsicResult;
 
 		/// Finish the current block.
 		#[renamed("finalise_block", 3)]

@@ -23,7 +23,6 @@ scale-info = { features = ["derive"], workspace = true }
 serde = { optional = true, features = ["alloc", "derive"], workspace = true }
 soil-api = { workspace = true }
 subsoil-crypto-hashing = { workspace = true }
-soil-runtime = { workspace = true }
 thiserror = { optional = true, workspace = true }
 
 # ECIES dependencies
@@ -53,7 +52,7 @@ std = [
 	"soil-api/std",
 	"subsoil/std",
 	"subsoil-crypto-hashing/std",
-	"soil-runtime/std",
+	"subsoil/std",
 	"thiserror",
 	"x25519-dalek",
 ]
@@ -61,5 +60,5 @@ serde = [
 	"dep:serde",
 	"scale-info/serde",
 	"subsoil/serde",
-	"soil-runtime/serde",
+	"subsoil/serde",
 ]

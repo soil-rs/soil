@@ -22,7 +22,7 @@ use subsoil::io::{
 	hashing::{blake2_128, twox_128, twox_64},
 	TestExternalities,
 };
-use soil_runtime::{
+use subsoil::runtime::{
 	testing::UintAuthorityId,
 	traits::{Block as BlockT, Dispatchable},
 	DispatchError, ModuleError,
@@ -119,7 +119,7 @@ impl SomeAssociation2 for u64 {
 #[doc = include_str!("../example-readme.md")]
 pub mod pallet {
 	use super::*;
-	use soil_runtime::DispatchResult;
+	use subsoil::runtime::DispatchResult;
 	use topsoil_support::pallet_prelude::*;
 	use topsoil_system::pallet_prelude::*;
 
@@ -729,10 +729,10 @@ impl topsoil_system::Config for Runtime {
 	type RuntimeOrigin = RuntimeOrigin;
 	type Nonce = u64;
 	type RuntimeCall = RuntimeCall;
-	type Hash = soil_runtime::testing::H256;
-	type Hashing = soil_runtime::traits::BlakeTwo256;
+	type Hash = subsoil::runtime::testing::H256;
+	type Hashing = subsoil::runtime::traits::BlakeTwo256;
 	type AccountId = u64;
-	type Lookup = soil_runtime::traits::IdentityLookup<Self::AccountId>;
+	type Lookup = subsoil::runtime::traits::IdentityLookup<Self::AccountId>;
 	type Block = Block;
 	type RuntimeEvent = RuntimeEvent;
 	type BlockWeights = ();
@@ -772,15 +772,15 @@ impl pallet5::Config for Runtime {
 	type RuntimeOrigin = RuntimeOrigin;
 }
 
-pub type Header = soil_runtime::generic::Header<u32, soil_runtime::traits::BlakeTwo256>;
-pub type Block = soil_runtime::generic::Block<Header, UncheckedExtrinsic>;
-pub type UncheckedExtrinsic = soil_runtime::generic::UncheckedExtrinsic<
+pub type Header = subsoil::runtime::generic::Header<u32, subsoil::runtime::traits::BlakeTwo256>;
+pub type Block = subsoil::runtime::generic::Block<Header, UncheckedExtrinsic>;
+pub type UncheckedExtrinsic = subsoil::runtime::generic::UncheckedExtrinsic<
 	u64,
 	RuntimeCall,
 	UintAuthorityId,
 	topsoil_system::CheckNonZeroSender<Runtime>,
 >;
-pub type UncheckedSignaturePayload = soil_runtime::generic::UncheckedSignaturePayload<
+pub type UncheckedSignaturePayload = subsoil::runtime::generic::UncheckedSignaturePayload<
 	u64,
 	UintAuthorityId,
 	topsoil_system::CheckNonZeroSender<Runtime>,
@@ -986,7 +986,7 @@ fn instance_expand() {
 #[test]
 fn inherent_expand() {
 	use subsoil::core::Hasher;
-	use soil_runtime::{
+	use subsoil::runtime::{
 		traits::{BlakeTwo256, Block as _, Header},
 		Digest,
 	};

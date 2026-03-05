@@ -17,7 +17,7 @@
 //! Test to execute the sanity-check of the voter bag.
 
 use remote_externalities::{Builder, Mode, OnlineConfig};
-use soil_runtime::{traits::Block as BlockT, DeserializeOwned};
+use subsoil::runtime::{traits::Block as BlockT, DeserializeOwned};
 use topsoil_support::{
 	storage::generator::StorageMap,
 	traits::{Get, PalletInfoAccess},

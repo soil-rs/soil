@@ -24,7 +24,7 @@
 use crate::*;
 pub(crate) use example_runtime::*;
 use extensions::AuthorizeCoownership;
-use soil_runtime::{
+use subsoil::runtime::{
 	generic,
 	traits::{BlakeTwo256, IdentifyAccount, IdentityLookup, Verify},
 	BuildStorage, MultiSignature, MultiSigner,

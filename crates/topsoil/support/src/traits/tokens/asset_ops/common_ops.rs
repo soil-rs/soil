@@ -18,7 +18,7 @@
 use super::{common_strategies::*, *};
 use crate::{
 	dispatch::DispatchResult,
-	soil_runtime::traits::Convert,
+	subsoil::runtime::traits::Convert,
 	traits::{misc::TypedGet, EnsureOriginWithArg},
 };
 

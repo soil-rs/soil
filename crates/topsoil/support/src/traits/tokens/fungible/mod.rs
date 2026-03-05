@@ -165,7 +165,7 @@ use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use core::marker::PhantomData;
 use scale_info::TypeInfo;
 #[cfg(feature = "runtime-benchmarks")]
-use soil_runtime::Saturating;
+use subsoil::runtime::Saturating;
 use topsoil_support_procedural::{CloneNoBound, DebugNoBound, EqNoBound, PartialEqNoBound};
 
 use super::{
@@ -184,7 +184,7 @@ pub use regular::{
 };
 use subsoil::arithmetic::traits::Zero;
 use subsoil::core::Get;
-use soil_runtime::{traits::Convert, DispatchError};
+use subsoil::runtime::{traits::Convert, DispatchError};
 pub use union_of::{NativeFromLeft, NativeOrWithId, UnionOf};
 
 #[cfg(feature = "experimental")]

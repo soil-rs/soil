@@ -21,7 +21,7 @@ use crate::{test_fungibles::TestFungibles, *};
 use alloc::collections::btree_map::BTreeMap;
 use subsoil::arithmetic::Perbill;
 use subsoil::core::{ConstU32, ConstU64, Get};
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{BlockNumberProvider, Identity, MaybeConvert},
 	BuildStorage, Saturating,
 };

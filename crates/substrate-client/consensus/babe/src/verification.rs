@@ -37,7 +37,7 @@ use subsoil::core::{
 	crypto::{VrfPublic, Wraps},
 	Pair,
 };
-use soil_runtime::{traits::Header, DigestItem};
+use subsoil::runtime::{traits::Header, DigestItem};
 
 /// BABE verification parameters
 pub(super) struct VerificationParams<'a, B: 'a + BlockT> {

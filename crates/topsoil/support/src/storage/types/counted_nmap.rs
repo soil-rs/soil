@@ -31,7 +31,7 @@ use crate::{
 use alloc::{vec, vec::Vec};
 use codec::{Decode, Encode, EncodeLike, FullCodec, MaxEncodedLen, Ref};
 use subsoil::metadata_ir::StorageEntryMetadataIR;
-use soil_runtime::traits::Saturating;
+use subsoil::runtime::traits::Saturating;
 
 /// A wrapper around a [`StorageNMap`] and a [`StorageValue`] (with the value being `u32`) to keep
 /// track of how many items are in a map, without needing to iterate all the values.

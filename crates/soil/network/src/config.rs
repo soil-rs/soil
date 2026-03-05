@@ -52,7 +52,7 @@ pub use soil_network_common::{
 	ExHashT,
 };
 
-use soil_runtime::traits::Block as BlockT;
+use subsoil::runtime::traits::Block as BlockT;
 
 use std::{
 	error::Error,

@@ -43,7 +43,7 @@ use codec::{Decode, Encode};
 use soil_blockchain::{Backend as BlockchainBackend, HeaderBackend};
 use soil_client_api::backend::Backend;
 use soil_consensus_grandpa::GRANDPA_ENGINE_ID;
-use soil_runtime::{
+use subsoil::runtime::{
 	generic::BlockId,
 	traits::{Block as BlockT, Header as HeaderT, NumberFor, One},
 };

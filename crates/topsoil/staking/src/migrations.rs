@@ -26,7 +26,7 @@ use topsoil_support::{
 };
 
 #[cfg(feature = "try-runtime")]
-use soil_runtime::TryRuntimeError;
+use subsoil::runtime::TryRuntimeError;
 
 /// Used for release versioning up to v12.
 ///
@@ -89,7 +89,7 @@ pub mod v16 {
 	pub struct VersionUncheckedMigrateV15ToV16<T>(core::marker::PhantomData<T>);
 	impl<T: Config> UncheckedOnRuntimeUpgrade for VersionUncheckedMigrateV15ToV16<T> {
 		#[cfg(feature = "try-runtime")]
-		fn pre_upgrade() -> Result<Vec<u8>, soil_runtime::TryRuntimeError> {
+		fn pre_upgrade() -> Result<Vec<u8>, subsoil::runtime::TryRuntimeError> {
 			let old_disabled_validators = v15::DisabledValidators::<T>::get();
 			Ok(old_disabled_validators.encode())
 		}

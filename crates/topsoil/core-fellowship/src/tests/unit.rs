@@ -22,7 +22,7 @@
 use std::collections::BTreeMap;
 
 use core::cell::RefCell;
-use soil_runtime::{
+use subsoil::runtime::{
 	bounded_vec, traits::TryMorphInto, BuildStorage, DispatchError, DispatchResult,
 };
 use topsoil_support::{
@@ -82,7 +82,7 @@ impl RankedMembers for TestClub {
 	}
 	fn demote(who: &Self::AccountId) -> DispatchResult {
 		CLUB.with(|club| match Self::rank_of(who) {
-			None => Err(soil_runtime::DispatchError::Unavailable),
+			None => Err(subsoil::runtime::DispatchError::Unavailable),
 			Some(0) => {
 				club.borrow_mut().remove(&who);
 				Ok(())
@@ -272,12 +272,12 @@ fn import_member_same_as_import() {
 
 			let import_root = hypothetically!({
 				assert_ok!(CoreFellowship::import(signed(0)));
-				subsoil::io::storage::root(soil_runtime::StateVersion::V1)
+				subsoil::io::storage::root(subsoil::runtime::StateVersion::V1)
 			});
 
 			let import_member_root = hypothetically!({
 				assert_ok!(CoreFellowship::import_member(signed(1), 0));
-				subsoil::io::storage::root(soil_runtime::StateVersion::V1)
+				subsoil::io::storage::root(subsoil::runtime::StateVersion::V1)
 			});
 
 			// `import` and `import_member` do exactly the same thing.
@@ -396,7 +396,7 @@ fn promote_fast_identical_to_promote() {
 		let root_promote = hypothetically!({
 			assert_ok!(CoreFellowship::promote(signed(alice), alice, 1));
 			// Don't clean the events since they should emit the same events:
-			subsoil::io::storage::root(soil_runtime::StateVersion::V1)
+			subsoil::io::storage::root(subsoil::runtime::StateVersion::V1)
 		});
 
 		// This is using thread locals instead of storage...
@@ -405,7 +405,7 @@ fn promote_fast_identical_to_promote() {
 		let root_promote_fast = hypothetically!({
 			assert_ok!(CoreFellowship::promote_fast(signed(alice), alice, 1));
 
-			subsoil::io::storage::root(soil_runtime::StateVersion::V1)
+			subsoil::io::storage::root(subsoil::runtime::StateVersion::V1)
 		});
 
 		assert_eq!(root_promote, root_promote_fast);

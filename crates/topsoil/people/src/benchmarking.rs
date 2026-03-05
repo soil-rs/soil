@@ -23,7 +23,7 @@ use super::*;
 use crate::extension::{AsPerson, AsPersonInfo};
 
 use core::marker::{Send, Sync};
-use soil_runtime::{
+use subsoil::runtime::{
 	generic::ExtensionVersion,
 	traits::{AppendZerosInput, AsTransactionAuthorizedOrigin, DispatchTransaction},
 	Weight,

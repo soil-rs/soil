@@ -18,7 +18,7 @@
 use codec::{Decode, DecodeWithMemTracking, Encode};
 use scale_info::TypeInfo;
 use subsoil::core::{crypto::KeyTypeId, ConstBool, ConstU128};
-use soil_runtime::{
+use subsoil::runtime::{
 	app_crypto::ecdsa::Public,
 	curve::PiecewiseLinear,
 	impl_opaque_keys,
@@ -173,7 +173,7 @@ parameter_types! {
 impl topsoil_session::Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type ValidatorId = u64;
-	type ValidatorIdOf = soil_runtime::traits::ConvertInto;
+	type ValidatorIdOf = subsoil::runtime::traits::ConvertInto;
 	type ShouldEndSession = topsoil_session::PeriodicSessions<ConstU64<1>, ConstU64<0>>;
 	type NextSessionRotation = topsoil_session::PeriodicSessions<ConstU64<1>, ConstU64<0>>;
 	type SessionManager = topsoil_session::historical::NoteHistoricalRoot<Self, Staking>;

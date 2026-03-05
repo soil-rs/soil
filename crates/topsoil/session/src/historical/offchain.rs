@@ -24,7 +24,7 @@
 //! and the off-chain indexing API.
 
 use alloc::vec::Vec;
-use soil_runtime::{
+use subsoil::runtime::{
 	offchain::storage::{MutateStorageError, StorageRetrievalError, StorageValueRef},
 	KeyTypeId,
 };
@@ -147,7 +147,7 @@ mod tests {
 		crypto::key_types::DUMMY,
 		offchain::{testing::TestOffchainExt, OffchainDbExt, OffchainWorkerExt, StorageKind},
 	};
-	use soil_runtime::{testing::UintAuthorityId, BuildStorage};
+	use subsoil::runtime::{testing::UintAuthorityId, BuildStorage};
 	use subsoil::state_machine::BasicExternalities;
 
 	use topsoil_support::traits::{KeyOwnerProofSystem, OnInitialize};

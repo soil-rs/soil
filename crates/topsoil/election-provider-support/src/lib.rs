@@ -88,7 +88,7 @@
 //! # use topsoil_election_provider_support::{*, data_provider};
 //! # use soil_npos_elections::{Support, Assignment};
 //! # use topsoil_support::traits::ConstU32;
-//! # use soil_runtime::bounded_vec;
+//! # use subsoil::runtime::bounded_vec;
 //!
 //! type AccountId = u64;
 //! type Balance = u64;
@@ -132,7 +132,7 @@
 //!
 //! mod generic_election_provider {
 //!     use super::*;
-//!     use soil_runtime::traits::Zero;
+//!     use subsoil::runtime::traits::Zero;
 //! 	use topsoil_support::pallet_prelude::Weight;
 //!
 //!     pub struct GenericElectionProvider<T: Config>(std::marker::PhantomData<T>);
@@ -208,7 +208,7 @@ extern crate alloc;
 use alloc::{boxed::Box, vec::Vec};
 use core::fmt::Debug;
 use subsoil::core::ConstU32;
-use soil_runtime::traits::{Bounded, Saturating, Zero};
+use subsoil::runtime::traits::{Bounded, Saturating, Zero};
 use topsoil_support::traits::{Defensive, DefensiveResult};
 
 pub use bounds::DataProviderBounds;
@@ -226,7 +226,7 @@ pub use topsoil_support::{traits::Get, weights::Weight, BoundedVec, DefaultNoBou
 pub use traits::NposSolution;
 
 #[cfg(feature = "try-runtime")]
-use soil_runtime::TryRuntimeError;
+use subsoil::runtime::TryRuntimeError;
 
 // re-export for the solution macro, with the dependencies of the macro.
 #[doc(hidden)]

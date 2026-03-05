@@ -25,7 +25,7 @@ use crate::{
 	dispatch::DispatchResult,
 	traits::{ExistenceRequirement, SignedImbalance, WithdrawReasons},
 };
-use soil_runtime::DispatchError;
+use subsoil::runtime::DispatchError;
 
 /// A currency where funds can be reserved from the user.
 pub trait ReservableCurrency<AccountId>: Currency<AccountId> {

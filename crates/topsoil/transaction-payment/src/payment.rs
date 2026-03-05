@@ -21,7 +21,7 @@ use crate::{Config, Pallet, TxPaymentCredit, LOG_TARGET};
 use codec::{DecodeWithMemTracking, FullCodec, MaxEncodedLen};
 use core::marker::PhantomData;
 use scale_info::TypeInfo;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{CheckedSub, DispatchInfoOf, PostDispatchInfoOf, Saturating, Zero},
 	transaction_validity::InvalidTransaction,
 };

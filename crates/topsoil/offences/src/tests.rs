@@ -25,7 +25,7 @@ use crate::mock::{
 	RuntimeEvent, System, KIND,
 };
 use subsoil::core::H256;
-use soil_runtime::Perbill;
+use subsoil::runtime::Perbill;
 use topsoil_system::{EventRecord, Phase};
 
 #[test]

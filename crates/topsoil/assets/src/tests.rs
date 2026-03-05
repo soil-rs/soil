@@ -20,7 +20,7 @@
 use super::*;
 use crate::{mock::*, Error};
 use subsoil::io::storage;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{ConstU32, ConvertInto},
 	TokenError,
 };

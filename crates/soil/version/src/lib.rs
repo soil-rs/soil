@@ -47,12 +47,13 @@ pub use alloc::borrow::Cow;
 use codec::{Decode, Encode, Input};
 use scale_info::TypeInfo;
 #[allow(deprecated)]
-pub use soil_runtime::{create_runtime_str, StateVersion};
+pub use subsoil::create_runtime_str;
+pub use subsoil::runtime::StateVersion;
 #[doc(hidden)]
 pub use subsoil::std;
 
 #[cfg(feature = "std")]
-use soil_runtime::traits::Block as BlockT;
+use subsoil::runtime::traits::Block as BlockT;
 
 #[cfg(feature = "std")]
 pub mod embed;

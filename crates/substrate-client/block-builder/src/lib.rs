@@ -35,7 +35,7 @@ use soil_api::{
 use soil_blockchain::{ApplyExtrinsicFailed, Error, HeaderBackend};
 use subsoil::core::traits::CallContext;
 use subsoil::externalities::Extensions;
-use soil_runtime::{
+use subsoil::runtime::{
 	legacy,
 	traits::{Block as BlockT, Hash, HashingFor, Header as HeaderT, NumberFor, One},
 	Digest, ExtrinsicInclusionMode,

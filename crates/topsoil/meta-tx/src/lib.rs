@@ -39,7 +39,7 @@
 //! ## Low-Level / Implementation Details
 //!
 //! The structure of a meta transaction is identical to the
-//! [`General`](soil_runtime::generic::Preamble::General) transaction.
+//! [`General`](subsoil::runtime::generic::Preamble::General) transaction.
 //! It contains the target call along with a configurable set of extensions and its associated
 //! version. Typically, these extensions include type like
 //! `topsoil_verify_signature::VerifySignature`, which provides the signer address
@@ -64,7 +64,7 @@ pub use weights::WeightInfo;
 mod extension;
 pub use extension::MetaTxMarker;
 
-use soil_runtime::{
+use subsoil::runtime::{
 	generic::ExtensionVersion,
 	traits::{
 		AsTransactionAuthorizedOrigin, DispatchTransaction, Dispatchable, TransactionExtension,

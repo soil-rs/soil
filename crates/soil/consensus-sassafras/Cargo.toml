@@ -27,7 +27,6 @@ serde = { features = ["derive"], optional = true, workspace = true }
 soil-api = { workspace = true }
 soil-consensus-slots = { workspace = true }
 subsoil = { features = ["bandersnatch-experimental"], workspace = true }
-soil-runtime = { workspace = true }
 
 [features]
 default = ["std"]
@@ -38,7 +37,7 @@ std = [
 	"soil-api/std",
 	"subsoil/std",
 	"soil-consensus-slots/std",
-	"soil-runtime/std",
+	"subsoil/std",
 ]
 
 # Serde support without relying on std features.
@@ -47,5 +46,5 @@ serde = [
 	"scale-info/serde",
 	"subsoil/serde",
 	"soil-consensus-slots/serde",
-	"soil-runtime/serde",
+	"subsoil/serde",
 ]

@@ -20,7 +20,7 @@ use crate::error::Error;
 use codec::Encode;
 use sc_consensus::import_queue::ImportQueue;
 use soil_client_api::{BlockBackend, HeaderBackend};
-use soil_runtime::{generic::BlockId, traits::Block as BlockT};
+use subsoil::runtime::{generic::BlockId, traits::Block as BlockT};
 
 use crate::chain_ops::import_blocks;
 use std::sync::Arc;

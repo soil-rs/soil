@@ -23,7 +23,7 @@ extern crate alloc;
 
 use alloc::vec::Vec;
 use codec::{Codec, Decode, Encode};
-use soil_runtime::ConsensusEngineId;
+use subsoil::runtime::ConsensusEngineId;
 
 pub mod digests;
 pub mod inherents;

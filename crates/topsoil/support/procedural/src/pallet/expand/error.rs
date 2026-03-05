@@ -173,7 +173,7 @@ pub fn expand_error(def: &mut Def) -> proc_macro2::TokenStream {
 
 		#(#maybe_allow_attrs)*
 		impl<#type_impl_gen> From<#error_ident<#type_use_gen>>
-			for #topsoil_support::soil_runtime::DispatchError
+			for #topsoil_support::subsoil::runtime::DispatchError
 			#config_where_clause
 		{
 			fn from(err: #error_ident<#type_use_gen>) -> Self {
@@ -186,7 +186,7 @@ pub fn expand_error(def: &mut Def) -> proc_macro2::TokenStream {
 				let mut encoded = err.encode();
 				encoded.resize(#topsoil_support::MAX_MODULE_ERROR_ENCODED_SIZE, 0);
 
-				#topsoil_support::soil_runtime::DispatchError::Module(#topsoil_support::soil_runtime::ModuleError {
+				#topsoil_support::subsoil::runtime::DispatchError::Module(#topsoil_support::subsoil::runtime::ModuleError {
 					index,
 					error: TryInto::try_into(encoded).expect("encoded error is resized to be equal to the maximum encoded error size; qed"),
 					message: Some(err.as_str()),

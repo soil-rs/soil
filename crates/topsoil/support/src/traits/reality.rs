@@ -22,7 +22,7 @@ use core::marker::PhantomData;
 use codec::{Decode, DecodeWithMemTracking, Encode, FullCodec, MaxEncodedLen};
 use scale_info::TypeInfo;
 use subsoil::core::ConstU32;
-use soil_runtime::{traits::Member, BoundedVec, DispatchError, DispatchResult};
+use subsoil::runtime::{traits::Member, BoundedVec, DispatchError, DispatchResult};
 use topsoil_support::{CloneNoBound, EqNoBound, Parameter, PartialEqNoBound};
 
 /// Identity of personhood.

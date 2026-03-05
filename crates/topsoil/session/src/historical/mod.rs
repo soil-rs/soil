@@ -33,7 +33,7 @@ mod shared;
 use alloc::vec::Vec;
 use codec::{Decode, Encode};
 use core::fmt::Debug;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{Convert, OpaqueKeys},
 	KeyTypeId,
 };
@@ -399,7 +399,7 @@ pub(crate) mod tests {
 	};
 	use alloc::vec;
 
-	use soil_runtime::{key_types::DUMMY, testing::UintAuthorityId, BuildStorage};
+	use subsoil::runtime::{key_types::DUMMY, testing::UintAuthorityId, BuildStorage};
 	use subsoil::state_machine::BasicExternalities;
 
 	use topsoil_support::traits::{KeyOwnerProofSystem, OnInitialize};

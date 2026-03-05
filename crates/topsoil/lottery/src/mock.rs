@@ -20,7 +20,7 @@
 use super::*;
 use crate as topsoil_lottery;
 
-use soil_runtime::{BuildStorage, Perbill};
+use subsoil::runtime::{BuildStorage, Perbill};
 use topsoil_support::{derive_impl, parameter_types, traits::ConstU32};
 use topsoil_support_test::TestRandomness;
 use topsoil_system::EnsureRoot;

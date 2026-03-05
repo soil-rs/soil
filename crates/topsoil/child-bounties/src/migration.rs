@@ -158,7 +158,7 @@ pub mod v1 {
 		}
 
 		#[cfg(feature = "try-runtime")]
-		fn pre_upgrade() -> Result<Vec<u8>, soil_runtime::TryRuntimeError> {
+		fn pre_upgrade() -> Result<Vec<u8>, subsoil::runtime::TryRuntimeError> {
 			let old_child_bounty_count = ChildBounties::<T>::iter_keys().count() as u32;
 			let old_child_bounty_descriptions =
 				v1::ChildBountyDescriptions::<T>::iter_keys().count() as u32;
@@ -168,7 +168,7 @@ pub mod v1 {
 		}
 
 		#[cfg(feature = "try-runtime")]
-		fn post_upgrade(state: Vec<u8>) -> Result<(), soil_runtime::TryRuntimeError> {
+		fn post_upgrade(state: Vec<u8>) -> Result<(), subsoil::runtime::TryRuntimeError> {
 			type StateType = (u32, u32, Vec<(u32, u32)>);
 			let (old_child_bounty_count, old_child_bounty_descriptions, old_child_bounty_ids) =
 				StateType::decode(&mut &state[..]).expect("Can't decode previous state");

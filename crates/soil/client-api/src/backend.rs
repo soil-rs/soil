@@ -25,7 +25,7 @@ use parking_lot::RwLock;
 use soil_api::CallContext;
 use soil_consensus::BlockOrigin;
 use subsoil::core::offchain::OffchainStorage;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{Block as BlockT, HashingFor, NumberFor},
 	Justification, Justifications, StateVersion, Storage,
 };

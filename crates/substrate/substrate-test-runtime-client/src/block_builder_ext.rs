@@ -39,7 +39,7 @@ pub trait BlockBuilderExt {
 	/// Adds an extrinsic which pushes DigestItem to header's log
 	fn push_deposit_log_digest_item(
 		&mut self,
-		log: soil_runtime::generic::DigestItem,
+		log: subsoil::runtime::generic::DigestItem,
 	) -> Result<(), soil_blockchain::Error>;
 }
 
@@ -67,7 +67,7 @@ where
 
 	fn push_deposit_log_digest_item(
 		&mut self,
-		log: soil_runtime::generic::DigestItem,
+		log: subsoil::runtime::generic::DigestItem,
 	) -> Result<(), soil_blockchain::Error> {
 		self.push(ExtrinsicBuilder::new_deposit_log_digest_item(log).build())
 	}

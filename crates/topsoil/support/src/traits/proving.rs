@@ -20,10 +20,10 @@
 use alloc::vec::Vec;
 use codec::{Decode, Encode};
 use subsoil::core::Hasher;
-use soil_runtime::DispatchError;
+use subsoil::runtime::DispatchError;
 
 // Re-export the `proving_trie` types and traits.
-pub use soil_runtime::proving_trie::*;
+pub use subsoil::runtime::proving_trie::*;
 
 /// Something that can verify the existence of some data in a given proof.
 pub trait VerifyExistenceProof {
@@ -122,7 +122,7 @@ impl<H: Hasher> ProofToHashes for SixteenPatriciaMerkleTreeProver<H> {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use soil_runtime::{
+	use subsoil::runtime::{
 		proving_trie::{base16::BasicProvingTrie, ProvingTrie},
 		traits::BlakeTwo256,
 	};

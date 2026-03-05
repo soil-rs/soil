@@ -100,7 +100,7 @@
 //!
 //! ```
 //! use topsoil_support::traits::{WithdrawReasons, LockableCurrency};
-//! use soil_runtime::traits::Bounded;
+//! use subsoil::runtime::traits::Bounded;
 //! pub trait Config: topsoil_system::Config {
 //!     type Currency: LockableCurrency<Self::AccountId, Moment=topsoil_system::pallet_prelude::BlockNumberFor<Self>>;
 //! }
@@ -162,7 +162,7 @@ use core::{cmp, fmt::Debug, mem, result};
 pub use impl_currency::{NegativeImbalance, PositiveImbalance};
 use scale_info::TypeInfo;
 use subsoil::core::{sr25519::Pair as SrPair, Pair};
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{
 		AtLeast32BitUnsigned, CheckedAdd, CheckedSub, MaybeSerializeDeserialize, Saturating,
 		StaticLookup, Zero,
@@ -631,7 +631,7 @@ pub mod pallet {
 		}
 
 		#[cfg(feature = "try-runtime")]
-		fn try_state(n: BlockNumberFor<T>) -> Result<(), soil_runtime::TryRuntimeError> {
+		fn try_state(n: BlockNumberFor<T>) -> Result<(), subsoil::runtime::TryRuntimeError> {
 			Self::do_try_state(n)
 		}
 	}
@@ -1367,14 +1367,14 @@ pub mod pallet {
 	impl<T: Config<I>, I: 'static> Pallet<T, I> {
 		pub(crate) fn do_try_state(
 			_n: BlockNumberFor<T>,
-		) -> Result<(), soil_runtime::TryRuntimeError> {
+		) -> Result<(), subsoil::runtime::TryRuntimeError> {
 			Self::hold_and_freeze_count()?;
 			Self::account_frozen_greater_than_locks()?;
 			Self::account_frozen_greater_than_freezes()?;
 			Ok(())
 		}
 
-		fn hold_and_freeze_count() -> Result<(), soil_runtime::TryRuntimeError> {
+		fn hold_and_freeze_count() -> Result<(), subsoil::runtime::TryRuntimeError> {
 			Holds::<T, I>::iter_keys().try_for_each(|k| {
 				if Holds::<T, I>::decode_len(k).unwrap_or(0)
 					> T::RuntimeHoldReason::VARIANT_COUNT as usize
@@ -1396,7 +1396,7 @@ pub mod pallet {
 			Ok(())
 		}
 
-		fn account_frozen_greater_than_locks() -> Result<(), soil_runtime::TryRuntimeError> {
+		fn account_frozen_greater_than_locks() -> Result<(), subsoil::runtime::TryRuntimeError> {
 			Locks::<T, I>::iter().try_for_each(|(who, locks)| {
 				let max_locks = locks.iter().map(|l| l.amount).max().unwrap_or_default();
 				let frozen = T::AccountStore::get(&who).frozen;
@@ -1415,7 +1415,7 @@ pub mod pallet {
 			})
 		}
 
-		fn account_frozen_greater_than_freezes() -> Result<(), soil_runtime::TryRuntimeError> {
+		fn account_frozen_greater_than_freezes() -> Result<(), subsoil::runtime::TryRuntimeError> {
 			Freezes::<T, I>::iter().try_for_each(|(who, freezes)| {
 				let max_locks = freezes.iter().map(|l| l.amount).max().unwrap_or_default();
 				let frozen = T::AccountStore::get(&who).frozen;

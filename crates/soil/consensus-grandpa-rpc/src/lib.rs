@@ -58,7 +58,7 @@ use sc_rpc::{
 	SubscriptionTaskExecutor,
 };
 #[cfg(feature = "std")]
-use soil_runtime::traits::{Block as BlockT, NumberFor};
+use subsoil::runtime::traits::{Block as BlockT, NumberFor};
 
 /// Provides RPC methods for interacting with GRANDPA.
 #[rpc(client, server)]
@@ -164,7 +164,7 @@ mod tests {
 	use soil_blockchain::HeaderBackend;
 	use subsoil::core::crypto::ByteArray;
 	use soil_keyring::Ed25519Keyring;
-	use soil_runtime::traits::{Block as BlockT, Header as HeaderT};
+	use subsoil::runtime::traits::{Block as BlockT, Header as HeaderT};
 	use substrate_test_runtime_client::{
 		runtime::{Block, Header, H256},
 		DefaultTestClientBuilderExt, TestClientBuilder, TestClientBuilderExt,

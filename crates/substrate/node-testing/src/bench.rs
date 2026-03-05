@@ -52,7 +52,7 @@ use subsoil::core::{
 use subsoil_crypto_hashing::blake2_256;
 use soil_executor::{WasmExecutionMethod, WasmtimeInstantiationStrategy};
 use soil_inherents::InherentData;
-use soil_runtime::{
+use subsoil::runtime::{
 	generic::{self, ExtrinsicFormat, Preamble},
 	traits::{Block as BlockT, IdentifyAccount, Verify},
 	OpaqueExtrinsic,
@@ -306,13 +306,13 @@ impl<'a> Iterator for BlockContentIterator<'a> {
 				function: match self.content.block_type {
 					BlockType::RandomTransfersKeepAlive => {
 						RuntimeCall::Balances(BalancesCall::transfer_keep_alive {
-							dest: soil_runtime::MultiAddress::Id(receiver),
+							dest: subsoil::runtime::MultiAddress::Id(receiver),
 							value: kitchensink_runtime::ExistentialDeposit::get() + 1,
 						})
 					},
 					BlockType::RandomTransfersReaping => {
 						RuntimeCall::Balances(BalancesCall::transfer_allow_death {
-							dest: soil_runtime::MultiAddress::Id(receiver),
+							dest: subsoil::runtime::MultiAddress::Id(receiver),
 							// Transfer so that ending balance would be 1 less than existential
 							// deposit so that we kill the sender account.
 							value: 100 * DOLLARS
@@ -596,7 +596,7 @@ impl BenchKeyring {
 				});
 				generic::UncheckedExtrinsic::new_signed(
 					payload.0,
-					soil_runtime::MultiAddress::Id(signed),
+					subsoil::runtime::MultiAddress::Id(signed),
 					signature,
 					tx_ext,
 				)
@@ -615,12 +615,12 @@ impl BenchKeyring {
 
 	/// Generate genesis with accounts from this keyring endowed with some balance and
 	/// kitchensink_runtime code blob.
-	pub fn as_storage_builder(&self) -> &dyn soil_runtime::BuildStorage {
+	pub fn as_storage_builder(&self) -> &dyn subsoil::runtime::BuildStorage {
 		self
 	}
 }
 
-impl soil_runtime::BuildStorage for BenchKeyring {
+impl subsoil::runtime::BuildStorage for BenchKeyring {
 	fn assimilate_storage(&self, storage: &mut subsoil::core::storage::Storage) -> Result<(), String> {
 		storage.top.insert(
 			subsoil::core::storage::well_known_keys::CODE.to_vec(),

@@ -20,7 +20,7 @@
 
 use alloc::collections::btree_map::BTreeMap;
 use core::iter::Sum;
-use soil_runtime::{traits::Zero, Saturating};
+use subsoil::runtime::{traits::Zero, Saturating};
 use topsoil_support::{
 	pallet_prelude::OptionQuery,
 	storage_alias,
@@ -134,7 +134,7 @@ where
 	/// Fails with a `TryRuntimeError` if somehow the amount reserved by this pallet is greater than
 	/// the actual total reserved amount for any accounts.
 	#[cfg(feature = "try-runtime")]
-	fn pre_upgrade() -> Result<alloc::vec::Vec<u8>, soil_runtime::TryRuntimeError> {
+	fn pre_upgrade() -> Result<alloc::vec::Vec<u8>, subsoil::runtime::TryRuntimeError> {
 		use codec::Encode;
 		use topsoil_support::ensure;
 
@@ -191,7 +191,7 @@ where
 	#[cfg(feature = "try-runtime")]
 	fn post_upgrade(
 		account_reserved_before_bytes: alloc::vec::Vec<u8>,
-	) -> Result<(), soil_runtime::TryRuntimeError> {
+	) -> Result<(), subsoil::runtime::TryRuntimeError> {
 		use codec::Decode;
 
 		let account_reserved_before = BTreeMap::<T::AccountId, BalanceOf<T, I>>::decode(

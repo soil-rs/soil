@@ -61,7 +61,7 @@ use soil_consensus::{
 };
 use soil_consensus_pow::{Seal, TotalDifficulty, POW_ENGINE_ID};
 use soil_inherents::{CreateInherentDataProviders, InherentDataProvider};
-use soil_runtime::{
+use subsoil::runtime::{
 	generic::{BlockId, Digest, DigestItem},
 	traits::{Block as BlockT, Header as HeaderT},
 };

@@ -20,7 +20,7 @@
 #![cfg_attr(not(feature = "std"), no_std)]
 
 use codec::Codec;
-use soil_runtime::traits::MaybeDisplay;
+use subsoil::runtime::traits::MaybeDisplay;
 
 pub use topsoil_transaction_payment::{FeeDetails, InclusionFee, RuntimeDispatchInfo};
 

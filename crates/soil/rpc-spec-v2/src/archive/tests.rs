@@ -41,7 +41,7 @@ use soil_blockchain::HeaderBackend;
 use soil_client_api::ChildInfo;
 use soil_consensus::BlockOrigin;
 use subsoil::core::{Blake2Hasher, Hasher};
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{Block as BlockT, Header as HeaderT},
 	SaturatedConversion,
 };

@@ -20,7 +20,7 @@
 use super::*;
 use mock::*;
 
-use soil_runtime::traits::BadOrigin;
+use subsoil::runtime::traits::BadOrigin;
 use topsoil_support::{assert_noop, assert_ok, traits::OnInitialize};
 
 type ScoredPool = Pallet<Test>;

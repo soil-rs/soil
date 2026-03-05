@@ -20,7 +20,7 @@ use crate::{
 	mock::{test_utils::*, *},
 	ListBags, ListNodes,
 };
-use soil_runtime::TryRuntimeError;
+use subsoil::runtime::TryRuntimeError;
 use topsoil_election_provider_support::{SortedListProvider, VoteWeight};
 use topsoil_support::{assert_ok, assert_storage_noop};
 

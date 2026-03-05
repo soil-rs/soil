@@ -41,7 +41,7 @@ use subsoil::core::{
 	ConstBool,
 };
 use soil_npos_elections::EvaluateSupport;
-use soil_runtime::{
+use subsoil::runtime::{
 	bounded_vec,
 	traits::{BlakeTwo256, IdentityLookup},
 	BuildStorage, PerU16, Perbill,
@@ -60,7 +60,7 @@ use topsoil_support::{
 };
 use topsoil_system::EnsureRoot;
 
-pub type Extrinsic = soil_runtime::testing::TestXt<RuntimeCall, ()>;
+pub type Extrinsic = subsoil::runtime::testing::TestXt<RuntimeCall, ()>;
 
 pub type Balance = u64;
 pub type AccountId = u64;
@@ -250,7 +250,7 @@ impl onchain::Config for Runtime {
 	type MaxBackersPerWinner = MaxBackersPerWinner;
 	type MaxWinnersPerPage = MaxWinnersPerPage;
 	type Sort = ConstBool<true>;
-	type Solver = SequentialPhragmen<AccountId, soil_runtime::PerU16, ()>;
+	type Solver = SequentialPhragmen<AccountId, subsoil::runtime::PerU16, ()>;
 	type System = Runtime;
 	type WeightInfo = ();
 	type Bounds = OnChainElectionBounds;
@@ -749,7 +749,7 @@ pub fn roll_to_unsigned_open_with_ocw(maybe_pool: Option<Arc<RwLock<PoolState>>>
 
 /// proceed block number to `n`, while running all offchain workers as well.
 pub fn roll_to_with_ocw(n: BlockNumber, maybe_pool: Option<Arc<RwLock<PoolState>>>) {
-	use soil_runtime::traits::Dispatchable;
+	use subsoil::runtime::traits::Dispatchable;
 	let now = System::block_number();
 	for i in now + 1..=n {
 		// check the offchain transaction pool, and if anything's there, submit it.

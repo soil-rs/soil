@@ -21,7 +21,7 @@
 
 use super::*;
 use alloc::vec;
-use soil_runtime::{traits::Bounded, Weight};
+use subsoil::runtime::{traits::Bounded, Weight};
 use topsoil_benchmarking::{
 	v1::{
 		account, benchmarks_instance_pallet, whitelist_account, whitelisted_caller, BenchmarkError,

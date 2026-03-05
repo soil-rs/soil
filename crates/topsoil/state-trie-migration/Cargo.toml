@@ -23,7 +23,6 @@ log = { workspace = true }
 remote-externalities = { optional = true, workspace = true, default-features = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { optional = true, workspace = true, default-features = true }
-soil-runtime = { workspace = true }
 substrate-state-trie-migration-rpc = { optional = true, workspace = true, default-features = true }
 thousands = { optional = true, workspace = true }
 zstd = { optional = true, workspace = true }
@@ -44,7 +43,7 @@ std = [
 	"topsoil-balances/std",
 	"scale-info/std",
 	"subsoil/std",
-	"soil-runtime/std",
+	"subsoil/std",
 ]
 runtime-benchmarks = [
 	"topsoil-benchmarking",
@@ -52,13 +51,13 @@ runtime-benchmarks = [
 	"topsoil-support/runtime-benchmarks",
 	"topsoil-system/runtime-benchmarks",
 	"topsoil-balances/runtime-benchmarks",
-	"soil-runtime/runtime-benchmarks",
+	"subsoil/runtime-benchmarks",
 ]
 try-runtime = [
 	"topsoil-support/try-runtime",
 	"topsoil-system/try-runtime",
 	"topsoil-balances/try-runtime",
-	"soil-runtime/try-runtime",
+	"subsoil/try-runtime",
 ]
 remote-test = [
 	"remote-externalities",

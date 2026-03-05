@@ -285,7 +285,7 @@ mod impl_hold_unbalanced {
 
 mod impl_hold_mutate {
 	use super::*;
-	use soil_runtime::TokenError;
+	use subsoil::runtime::TokenError;
 	use topsoil_support::traits::tokens::{Fortitude, Precision, Preservation};
 
 	#[test]

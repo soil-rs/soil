@@ -19,7 +19,7 @@
 
 use super::*;
 use crate as topsoil_democracy;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{BadOrigin, BlakeTwo256, Hash},
 	BuildStorage, Perbill,
 };

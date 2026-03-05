@@ -26,7 +26,7 @@
 extern crate alloc;
 
 use alloc::vec::Vec;
-use soil_runtime::traits::{StaticLookup, UniqueSaturatedInto};
+use subsoil::runtime::traits::{StaticLookup, UniqueSaturatedInto};
 use topsoil_support::{
 	traits::{ChangeMembers, Contains, ContainsLengthBound, Get, InitializeMembers, SortedMembers},
 	BoundedVec,

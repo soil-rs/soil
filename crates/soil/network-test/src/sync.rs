@@ -19,7 +19,7 @@
 use super::*;
 use futures::Future;
 use soil_consensus::{block_validation::Validation, BlockOrigin};
-use soil_runtime::Justifications;
+use subsoil::runtime::Justifications;
 use substrate_test_runtime::Header;
 
 async fn test_ancestor_search_when_common_is(n: usize) {
@@ -1143,7 +1143,7 @@ async fn syncs_state() {
 
 #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
 async fn syncs_indexed_blocks() {
-	use soil_runtime::traits::Hash;
+	use subsoil::runtime::traits::Hash;
 	subsoil::tracing::try_init_simple();
 	let mut net = TestNet::new(0);
 	let mut n: u64 = 0;
@@ -1168,7 +1168,7 @@ async fn syncs_indexed_blocks() {
 		true,
 		ForkChoiceStrategy::LongestChain,
 	);
-	let indexed_key = soil_runtime::traits::BlakeTwo256::hash(&42u64.to_le_bytes());
+	let indexed_key = subsoil::runtime::traits::BlakeTwo256::hash(&42u64.to_le_bytes());
 	assert!(net
 		.peer(0)
 		.client()
@@ -1366,7 +1366,7 @@ async fn warp_sync_to_target_block() {
 #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
 async fn syncs_huge_blocks() {
 	use subsoil::core::storage::well_known_keys::HEAP_PAGES;
-	use soil_runtime::codec::Encode;
+	use subsoil::runtime::codec::Encode;
 	use substrate_test_runtime_client::BlockBuilderExt;
 
 	subsoil::tracing::try_init_simple();
@@ -1398,7 +1398,7 @@ async fn syncs_huge_blocks() {
 #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
 async fn syncs_blocks_with_large_headers() {
 	use sc_consensus::ForkChoiceStrategy;
-	use soil_runtime::{
+	use subsoil::runtime::{
 		generic::{BlockId, DigestItem},
 		Digest,
 	};

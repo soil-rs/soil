@@ -16,7 +16,7 @@
 // limitations under the License.
 
 use subsoil::core::{ConstU16, ConstU32, ConstU64, H256};
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{BlakeTwo256, IdentityLookup},
 	BuildStorage,
 };

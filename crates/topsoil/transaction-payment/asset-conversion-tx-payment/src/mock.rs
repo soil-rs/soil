@@ -16,7 +16,7 @@
 use super::*;
 use crate as topsoil_asset_conversion_tx_payment;
 
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{AccountIdConversion, IdentityLookup, SaturatedConversion},
 	Permill,
 };
@@ -328,7 +328,7 @@ impl BenchmarkHelperTrait<u64, NativeOrWithId<u32>, NativeOrWithId<u32>> for Hel
 	}
 
 	fn setup_balances_and_pool(asset_id: NativeOrWithId<u32>, account: u64) {
-		use soil_runtime::traits::StaticLookup;
+		use subsoil::runtime::traits::StaticLookup;
 		use topsoil_support::{assert_ok, traits::fungibles::Mutate};
 		let NativeOrWithId::WithId(asset_idx) = asset_id.clone() else { unimplemented!() };
 		assert_ok!(Assets::force_create(

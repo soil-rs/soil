@@ -46,7 +46,7 @@ use subsoil::io::{
 	storage, wasm_tracing,
 };
 #[cfg(not(feature = "std"))]
-use soil_runtime::{
+use subsoil::runtime::{
 	print,
 	traits::{BlakeTwo256, Hash},
 };

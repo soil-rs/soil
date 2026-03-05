@@ -297,7 +297,7 @@ impl Proof {
 			Proof::Sr25519 { signer, .. } => *signer,
 			Proof::Ed25519 { signer, .. } => *signer,
 			Proof::Secp256k1Ecdsa { signer, .. } => {
-				<soil_runtime::traits::BlakeTwo256 as subsoil::core::Hasher>::hash(signer).into()
+				<subsoil::runtime::traits::BlakeTwo256 as subsoil::core::Hasher>::hash(signer).into()
 			},
 			Proof::OnChain { who, .. } => *who,
 		}
@@ -547,7 +547,7 @@ impl Statement {
 
 	/// Check proof signature, if any.
 	pub fn verify_signature(&self) -> SignatureVerificationResult {
-		use soil_runtime::traits::Verify;
+		use subsoil::runtime::traits::Verify;
 
 		match self.proof() {
 			Some(Proof::OnChain { .. }) | None => SignatureVerificationResult::NoSignature,
@@ -577,7 +577,7 @@ impl Statement {
 				let public = subsoil::core::ecdsa::Public::from(*signer);
 				if signature.verify(to_sign.as_slice(), &public) {
 					let sender_hash =
-						<soil_runtime::traits::BlakeTwo256 as subsoil::core::Hasher>::hash(signer);
+						<subsoil::runtime::traits::BlakeTwo256 as subsoil::core::Hasher>::hash(signer);
 					SignatureVerificationResult::Valid(sender_hash.into())
 				} else {
 					SignatureVerificationResult::Invalid

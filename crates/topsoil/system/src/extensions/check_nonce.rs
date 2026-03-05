@@ -22,7 +22,7 @@ use alloc::{vec, vec::Vec};
 use crate::Config;
 use codec::{Decode, DecodeWithMemTracking, Encode};
 use scale_info::TypeInfo;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{
 		AsSystemOriginSigner, CheckedAdd, DispatchInfoOf, Dispatchable, One, PostDispatchInfoOf,
 		TransactionExtension, ValidateResult, Zero,
@@ -209,7 +209,7 @@ where
 mod tests {
 	use super::*;
 	use crate::mock::{new_test_ext, RuntimeCall, Test, CALL};
-	use soil_runtime::{
+	use subsoil::runtime::{
 		traits::{AsTransactionAuthorizedOrigin, DispatchTransaction, TxBaseImplication},
 		transaction_validity::TransactionSource::External,
 	};

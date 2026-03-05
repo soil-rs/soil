@@ -25,7 +25,7 @@ use soil_client_api::{
 use subsoil::core::traits::{CallContext, CodeExecutor};
 use soil_executor::{RuntimeVersion, RuntimeVersionOf};
 use subsoil::externalities::Extensions;
-use soil_runtime::{
+use subsoil::runtime::{
 	generic::BlockId,
 	traits::{Block as BlockT, HashingFor},
 };

@@ -25,7 +25,7 @@ sc-consensus-grandpa = { workspace = true, default-features = true, optional = t
 serde = { features = ["derive"], workspace = true, default-features = true, optional = true}
 serde_json = { workspace = true, default-features = true, optional = true}
 soil-blockchain = { workspace = true, default-features = true, optional = true}
-soil-runtime = { workspace = true, default-features = true, optional = true}
+subsoil = { workspace = true, optional = true}
 thiserror = { workspace = true, optional = true}
 
 [features]
@@ -41,10 +41,10 @@ std = [
 	"soil-chain-spec",
 	"soil-client-api",
 	"soil-consensus-epochs",
-	"soil-runtime",
+	"subsoil",
 	"thiserror",
 	"soil-chain-spec/std",
 	"soil-client-api/std",
 	"soil-consensus-epochs/std",
-	"soil-runtime/std",
+	"subsoil/std",
 ]

@@ -30,14 +30,13 @@ std = [
 	"soil-network-common",
 	"soil-network-sync",
 	"soil-network-types",
-	"soil-runtime",
 	"soil-statement-store",
 	"tokio",
 	"soil-network/std",
 	"soil-network-common/std",
 	"soil-network-sync/std",
 	"soil-network-types/std",
-	"soil-runtime/std",
+	"subsoil/std",
 	"soil-statement-store/std",
 ]
 test-helpers = []
@@ -55,7 +54,6 @@ soil-network-common = { workspace = true, default-features = true, optional = tr
 soil-network-sync = { workspace = true, default-features = true, optional = true}
 soil-network-types = { workspace = true, default-features = true, optional = true}
 soil-consensus = { workspace = true, default-features = true, optional = true}
-soil-runtime = { workspace = true, default-features = true, optional = true}
 soil-statement-store = { workspace = true, default-features = true, optional = true}
 tokio = { workspace = true, optional = true}
 

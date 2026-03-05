@@ -51,4 +51,3 @@ std = [
 ]
 
 [dev-dependencies]
-soil-runtime = { workspace = true, default-features = true }

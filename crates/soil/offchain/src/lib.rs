@@ -29,7 +29,7 @@ soil_api::decl_runtime_apis! {
 	pub trait OffchainWorkerApi {
 		/// Starts the off-chain task for given block number.
 		#[changed_in(2)]
-		fn offchain_worker(number: soil_runtime::traits::NumberFor<Block>);
+		fn offchain_worker(number: subsoil::runtime::traits::NumberFor<Block>);
 
 		/// Starts the off-chain task for given block header.
 		fn offchain_worker(header: &Block::Header);

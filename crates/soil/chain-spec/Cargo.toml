@@ -31,7 +31,6 @@ serde_json = { workspace = true, default-features = true, optional = true}
 soil-blockchain = { workspace = true, default-features = true, optional = true}
 subsoil-crypto-hashing = { workspace = true, default-features = true, optional = true}
 soil-genesis-builder = { workspace = true, default-features = true, optional = true}
-soil-runtime = { workspace = true, default-features = true, optional = true}
 subsoil = { workspace = true, default-features = true, optional = true }
 
 [features]
@@ -52,7 +51,7 @@ std = [
 	"soil-executor",
 	"soil-genesis-builder",
 	"soil-network",
-	"soil-runtime",
+	"subsoil",
 	"soil-telemetry",
 	"soil-client-api/std",
 	"subsoil/std",
@@ -60,7 +59,7 @@ std = [
 	"soil-executor/std",
 	"soil-genesis-builder/std",
 	"soil-network/std",
-	"soil-runtime/std",
+	"subsoil/std",
 	"soil-telemetry/std",
 ]
 

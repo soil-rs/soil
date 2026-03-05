@@ -26,7 +26,7 @@ use soil_consensus_beefy::{
 	check_double_voting_proof, AuthorityIdBound, BeefyApi, DoubleVotingProof,
 	OpaqueKeyOwnershipProof, ValidatorSetId,
 };
-use soil_runtime::{
+use subsoil::runtime::{
 	generic::BlockId,
 	traits::{Block, NumberFor},
 };

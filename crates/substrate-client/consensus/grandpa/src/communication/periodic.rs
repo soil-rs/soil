@@ -28,7 +28,7 @@ use std::{
 };
 
 use soil_network_types::PeerId;
-use soil_runtime::traits::{Block as BlockT, NumberFor};
+use subsoil::runtime::traits::{Block as BlockT, NumberFor};
 use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
 
 use super::gossip::{GossipMessage, NeighborPacket};

@@ -43,7 +43,7 @@ mod solution_type {
 			struct InnerTestSolutionIsolated::<
 				VoterIndex = u32,
 				TargetIndex = u8,
-				Accuracy = soil_runtime::Percent,
+				Accuracy = subsoil::runtime::Percent,
 				MaxVoters = crate::tests::ConstU32::<20>,
 			>(12)
 		);

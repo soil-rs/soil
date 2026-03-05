@@ -29,7 +29,7 @@ use subsoil::core::{
 	traits::{CallContext, CodeExecutor, RuntimeCode},
 };
 use soil_executor::{Externalities, RuntimeVersionOf};
-use soil_runtime::{generic::ExtrinsicFormat, traits::BlakeTwo256};
+use subsoil::runtime::{generic::ExtrinsicFormat, traits::BlakeTwo256};
 use subsoil::state_machine::TestExternalities as CoreTestExternalities;
 use staging_node_cli::service::RuntimeExecutor;
 use topsoil_support::Hashable;

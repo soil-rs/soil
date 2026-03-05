@@ -21,7 +21,7 @@
 use super::{
 	AuthorVrfRandomness, Config, EpochStart, NextRandomness, Randomness, RANDOMNESS_LENGTH,
 };
-use soil_runtime::traits::{Hash, One, Saturating};
+use subsoil::runtime::traits::{Hash, One, Saturating};
 use topsoil_support::traits::Randomness as RandomnessT;
 use topsoil_system::pallet_prelude::BlockNumberFor;
 

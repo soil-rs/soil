@@ -16,7 +16,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-use soil_runtime::traits::Block as BlockT;
+use subsoil::runtime::traits::Block as BlockT;
 use soil_utils::notification::{NotificationSender, NotificationStream, TracingKeyStr};
 
 use crate::justification::BeefyVersionedFinalityProof;

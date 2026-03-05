@@ -171,7 +171,7 @@ fn construct_runtime_final_expansion(
 
 	let topsoil_system = generate_access_from_frame_or_crate("topsoil-system")?;
 	let block = quote!(<#name as #topsoil_system::Config>::Block);
-	let unchecked_extrinsic = quote!(<#block as #scrate::soil_runtime::traits::Block>::Extrinsic);
+	let unchecked_extrinsic = quote!(<#block as #scrate::subsoil::runtime::traits::Block>::Extrinsic);
 
 	let mut dispatch = None;
 	let mut outer_event = None;
@@ -262,7 +262,7 @@ fn construct_runtime_final_expansion(
 			#scrate::__private::scale_info::TypeInfo
 		)]
 		pub struct #name;
-		impl #scrate::soil_runtime::traits::GetRuntimeBlockType for #name {
+		impl #scrate::subsoil::runtime::traits::GetRuntimeBlockType for #name {
 			type RuntimeBlock = #block;
 		}
 

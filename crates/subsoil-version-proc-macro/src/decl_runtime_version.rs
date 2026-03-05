@@ -190,7 +190,7 @@ impl ParseRuntimeVersion {
 
 	fn parse_str_literal(expr: &Expr) -> Result<String> {
 		match expr {
-			// TODO: Remove this branch when `soil_runtime::create_runtime_str` is removed
+			// TODO: Remove this branch when `subsoil::create_runtime_str` is removed
 			Expr::Macro(syn::ExprMacro { mac, .. }) => {
 				let lit: ExprLit = mac.parse_body().map_err(|e| {
 					Error::new(

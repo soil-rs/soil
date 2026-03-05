@@ -34,14 +34,14 @@ use serde::{de::DeserializeOwned, Deserialize, Serialize};
 #[cfg(feature = "std")]
 use subsoil::core::offchain::TransactionPoolExt;
 #[cfg(feature = "std")]
-use soil_runtime::traits::{Block as BlockT, Member};
+use subsoil::runtime::traits::{Block as BlockT, Member};
 use std::{collections::HashMap, hash::Hash, marker::PhantomData, pin::Pin, sync::Arc};
 
 #[cfg(feature = "std")]
 const LOG_TARGET: &str = "txpool::api";
 
 #[cfg(feature = "std")]
-pub use soil_runtime::transaction_validity::{
+pub use subsoil::runtime::transaction_validity::{
 	TransactionLongevity, TransactionPriority, TransactionSource, TransactionTag,
 	TransactionValidityError,
 };
@@ -238,7 +238,7 @@ pub type TxInvalidityReportMap<H> = indexmap::IndexMap<H, Option<TransactionVali
 /// In-pool transaction interface.
 ///
 /// The pool is container of transactions that are implementing this trait.
-/// See `soil_runtime::ValidTransaction` for details about every field.
+/// See `subsoil::runtime::ValidTransaction` for details about every field.
 #[cfg(feature = "std")]
 pub trait InPoolTransaction {
 	/// Transaction type.

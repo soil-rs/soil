@@ -44,7 +44,7 @@ use soil_consensus_beefy::{
 	AuthorityIdBound, BeefyApi, Commitment, DoubleVotingProof, PayloadProvider, ValidatorSet,
 	VersionedFinalityProof, VoteMessage, BEEFY_ENGINE_ID,
 };
-use soil_runtime::{
+use subsoil::runtime::{
 	generic::BlockId,
 	traits::{Block, Header, NumberFor, Zero},
 	SaturatedConversion,
@@ -1050,7 +1050,7 @@ pub(crate) mod tests {
 	use soil_network_gossip::GossipEngine;
 	use soil_network_sync::SyncingService;
 	use soil_network_test::TestNetFactory;
-	use soil_runtime::traits::{Header as HeaderT, One};
+	use subsoil::runtime::traits::{Header as HeaderT, One};
 	use substrate_test_runtime_client::{
 		runtime::{Block, Digest, DigestItem, Header},
 		Backend,

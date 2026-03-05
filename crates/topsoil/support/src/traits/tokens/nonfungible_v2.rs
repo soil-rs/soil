@@ -31,7 +31,7 @@ use crate::{
 };
 use alloc::vec::Vec;
 use codec::{Decode, Encode};
-use soil_runtime::TokenError;
+use subsoil::runtime::TokenError;
 
 /// Trait for providing an interface to a read-only NFT-like item.
 pub trait Inspect<AccountId> {

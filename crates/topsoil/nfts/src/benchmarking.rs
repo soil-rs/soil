@@ -21,7 +21,7 @@
 
 use super::*;
 use enumflags2::{BitFlag, BitFlags};
-use soil_runtime::traits::{Bounded, One};
+use subsoil::runtime::traits::{Bounded, One};
 use topsoil_benchmarking::v1::{
 	account, benchmarks_instance_pallet, whitelist_account, whitelisted_caller, BenchmarkError,
 };

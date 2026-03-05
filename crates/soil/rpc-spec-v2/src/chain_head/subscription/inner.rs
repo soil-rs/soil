@@ -19,7 +19,7 @@
 use futures::channel::oneshot;
 use parking_lot::Mutex;
 use soil_client_api::Backend;
-use soil_runtime::traits::Block as BlockT;
+use subsoil::runtime::traits::Block as BlockT;
 use std::{
 	collections::{hash_map::Entry, HashMap, HashSet},
 	sync::Arc,

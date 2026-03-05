@@ -19,13 +19,13 @@ use super::*;
 use topsoil_support::traits::OnRuntimeUpgrade;
 
 #[cfg(feature = "try-runtime")]
-use soil_runtime::TryRuntimeError;
+use subsoil::runtime::TryRuntimeError;
 
 pub mod unversioned {
 	use super::*;
 	#[cfg(feature = "try-runtime")]
 	use alloc::vec::Vec;
-	use soil_runtime::traits::AccountIdConversion;
+	use subsoil::runtime::traits::AccountIdConversion;
 
 	/// Migrates `ProxyDelegator` accounts with better entropy than the old logic which didn't take
 	/// into account all the bytes of the agent account ID.

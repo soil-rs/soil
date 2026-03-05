@@ -22,7 +22,7 @@ use crate::{
 	CurrentPhase, Phase, Round,
 };
 use soil_npos_elections::ElectionScore;
-use soil_runtime::traits::One;
+use subsoil::runtime::traits::One;
 use subsoil::std::boxed::Box;
 use topsoil_benchmarking::v2::*;
 use topsoil_election_provider_support::ElectionProvider;
@@ -93,7 +93,7 @@ mod benchmarks {
 	#[benchmark(pov_mode = Measured)]
 	fn submit_page() -> Result<(), BenchmarkError> {
 		#[cfg(test)]
-		crate::mock::ElectionStart::set(soil_runtime::traits::Bounded::max_value());
+		crate::mock::ElectionStart::set(subsoil::runtime::traits::Bounded::max_value());
 		crate::Pallet::<T>::start().unwrap();
 
 		crate::Pallet::<T>::roll_until_matches(|| {
@@ -120,7 +120,7 @@ mod benchmarks {
 	#[benchmark(pov_mode = Measured)]
 	fn unset_page() -> Result<(), BenchmarkError> {
 		#[cfg(test)]
-		crate::mock::ElectionStart::set(soil_runtime::traits::Bounded::max_value());
+		crate::mock::ElectionStart::set(subsoil::runtime::traits::Bounded::max_value());
 		crate::Pallet::<T>::start().unwrap();
 
 		crate::Pallet::<T>::roll_until_matches(|| {

@@ -21,7 +21,7 @@ use std::{collections::BTreeSet, sync::Arc, time::Duration};
 use soil_network::{NetworkPeers, ReputationChange};
 use soil_network_gossip::{MessageIntent, ValidationResult, Validator, ValidatorContext};
 use soil_network_types::PeerId;
-use soil_runtime::traits::{Block, Hash, Header, NumberFor};
+use subsoil::runtime::traits::{Block, Hash, Header, NumberFor};
 
 use codec::{Decode, DecodeAll, Encode};
 use log::{debug, trace};
@@ -597,7 +597,7 @@ pub(crate) mod tests {
 	}
 
 	struct TestContext;
-	impl<B: soil_runtime::traits::Block> ValidatorContext<B> for TestContext {
+	impl<B: subsoil::runtime::traits::Block> ValidatorContext<B> for TestContext {
 		fn broadcast_topic(&mut self, _topic: B::Hash, _force: bool) {
 			unimplemented!()
 		}

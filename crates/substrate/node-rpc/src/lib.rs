@@ -145,7 +145,7 @@ where
 	C::Api: substrate_frame_rpc_system::AccountNonceApi<Block, AccountId, Nonce>,
 	C::Api: soil_mmr_rpc::MmrRuntimeApi<
 		Block,
-		<Block as soil_runtime::traits::Block>::Hash,
+		<Block as subsoil::runtime::traits::Block>::Hash,
 		BlockNumber,
 	>,
 	C::Api: topsoil_transaction_payment_rpc::TransactionPaymentRuntimeApi<Block, Balance>,
@@ -154,7 +154,7 @@ where
 	P: TransactionPool + 'static,
 	SC: SelectChain<Block> + 'static,
 	B: soil_client_api::Backend<Block> + Send + Sync + 'static,
-	B::State: soil_client_api::backend::StateBackend<soil_runtime::traits::HashingFor<Block>>,
+	B::State: soil_client_api::backend::StateBackend<subsoil::runtime::traits::HashingFor<Block>>,
 	AuthorityId: AuthorityIdBound,
 	<AuthorityId as RuntimeAppPublic>::Signature: Send + Sync,
 {

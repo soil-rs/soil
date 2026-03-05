@@ -21,7 +21,7 @@
 use codec::{Decode, Encode};
 use soil_blockchain::{Error, Result};
 use subsoil::database::{Database, Transaction};
-use soil_runtime::traits::AtLeast32Bit;
+use subsoil::runtime::traits::AtLeast32Bit;
 use std::{cmp::Reverse, collections::BTreeMap};
 
 type DbHash = subsoil::core::H256;

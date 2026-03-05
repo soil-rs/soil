@@ -30,7 +30,7 @@ mod tests;
 extern crate alloc;
 use alloc::{vec, vec::Vec};
 pub use pallet::*;
-use soil_runtime::{traits::Convert, Perbill};
+use subsoil::runtime::{traits::Convert, Perbill};
 use soil_staking::offence::{Kind, Offence, OnOffenceHandler};
 use topsoil_session::historical::IdentificationTuple;
 

@@ -59,7 +59,7 @@ use soil_network::{
 	Multiaddr, NetworkDHTProvider, NetworkSigner, NetworkStateInfo,
 };
 use soil_network_types::{multihash::Code, PeerId};
-use soil_runtime::traits::Block as BlockT;
+use subsoil::runtime::traits::Block as BlockT;
 
 mod addr_cache;
 /// Dht payload schemas generated from Protobuf definitions via Prost crate in build.rs.

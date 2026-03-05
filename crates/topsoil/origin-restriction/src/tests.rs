@@ -16,7 +16,7 @@
 // limitations under the License.
 
 use crate::{mock::*, *};
-use soil_runtime::{testing::UintAuthorityId, transaction_validity::InvalidTransaction};
+use subsoil::runtime::{testing::UintAuthorityId, transaction_validity::InvalidTransaction};
 use topsoil_support::{assert_noop, assert_ok};
 
 /// Test that a non-restricted origin (`NON_RESTRICTED_ORIGIN`) is never tracked, i.e., no usage.
@@ -239,7 +239,7 @@ fn restrict_origin_extension_disabled_behavior() {
 		// because the pallet explicitly forbids restricted origins if the extension is off.
 		assert_noop!(
 			exec_signed_tx_disabled(RESTRICTED_ORIGIN_1, MockPalletCall::do_something {}),
-			soil_runtime::transaction_validity::InvalidTransaction::Call
+			subsoil::runtime::transaction_validity::InvalidTransaction::Call
 		);
 
 		// 2) Attempt from non-restricted origin => Should succeed and also

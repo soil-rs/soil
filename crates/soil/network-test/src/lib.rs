@@ -112,7 +112,7 @@ use soil_network_sync::{
 #[cfg(feature = "std")]
 use soil_network_types::{build_multiaddr, multiaddr::Multiaddr};
 #[cfg(feature = "std")]
-use soil_runtime::{
+use subsoil::runtime::{
 	codec::{Decode, Encode},
 	generic::BlockId,
 	traits::{Block as BlockT, Header as HeaderT, NumberFor, Zero},

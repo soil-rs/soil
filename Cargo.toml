@@ -71,7 +71,6 @@ members = [
 	"crates/soil/rpc-api",
 	"crates/soil/rpc-server",
 	"crates/soil/rpc-spec-v2",
-	"crates/soil/runtime",
 	"crates/subsoil-runtime-interface-proc-macro",
 	"crates/soil/runtime-interface/test",
 	"crates/soil/runtime-interface/test-wasm",
@@ -548,7 +547,6 @@ soil-mmr-primitives = { path = "crates/soil/merkle-mountain-range", default-feat
 soil-npos-elections = { path = "crates/soil/npos-elections", default-features = false }
 soil-offchain = { path = "crates/soil/offchain", default-features = false }
 soil-rpc = { path = "crates/soil/rpc", default-features = false }
-soil-runtime = { path = "crates/soil/runtime", default-features = false }
 subsoil-runtime-interface-proc-macro = { path = "crates/subsoil-runtime-interface-proc-macro", default-features = false }
 sp-runtime-interface-test-wasm = { path = "crates/soil/runtime-interface/test-wasm" }
 sp-runtime-interface-test-wasm-deprecated = { path = "crates/soil/runtime-interface/test-wasm-deprecated" }

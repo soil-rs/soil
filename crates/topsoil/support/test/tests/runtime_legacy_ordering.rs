@@ -24,7 +24,7 @@
 use codec::MaxEncodedLen;
 use scale_info::TypeInfo;
 use subsoil::core::sr25519;
-use soil_runtime::{
+use subsoil::runtime::{
 	generic,
 	traits::{BlakeTwo256, ValidateUnsigned, Verify},
 	DispatchError, ModuleError,
@@ -369,7 +369,7 @@ mod runtime {
 #[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
 impl topsoil_system::Config for Runtime {
 	type AccountId = AccountId;
-	type Lookup = soil_runtime::traits::IdentityLookup<AccountId>;
+	type Lookup = subsoil::runtime::traits::IdentityLookup<AccountId>;
 	type BaseCallFilter = topsoil_support::traits::Everything;
 	type RuntimeOrigin = RuntimeOrigin;
 	type RuntimeCall = RuntimeCall;

@@ -20,7 +20,7 @@
 #![allow(deprecated)]
 
 use subsoil::core::Get;
-use soil_runtime::{
+use subsoil::runtime::{
 	bounded_vec,
 	traits::{Convert, ReduceBy, ReplaceWithDefault, TryMorphInto},
 	BuildStorage,
@@ -235,7 +235,7 @@ fn swap_exhaustive_works() {
 
 			// The events mess up the storage root:
 			System::reset_events();
-			subsoil::io::storage::root(soil_runtime::StateVersion::V1)
+			subsoil::io::storage::root(subsoil::runtime::StateVersion::V1)
 		});
 
 		let root_swap = hypothetically!({
@@ -248,7 +248,7 @@ fn swap_exhaustive_works() {
 			assert_ok!(Club::exchange_member(RuntimeOrigin::root(), 0, 1));
 
 			System::reset_events();
-			subsoil::io::storage::root(soil_runtime::StateVersion::V1)
+			subsoil::io::storage::root(subsoil::runtime::StateVersion::V1)
 		});
 
 		assert_eq!(root_add, root_swap);

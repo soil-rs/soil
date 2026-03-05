@@ -149,7 +149,7 @@ pub mod pallet {
 	use super::*;
 	use crate::types::*;
 	use alloc::vec::Vec;
-	use soil_runtime::{traits::Zero, DispatchResult};
+	use subsoil::runtime::{traits::Zero, DispatchResult};
 	use soil_staking::{EraIndex, StakingInterface};
 	use topsoil_support::{
 		pallet_prelude::*,
@@ -159,7 +159,7 @@ pub mod pallet {
 	pub use weights::WeightInfo;
 
 	#[cfg(feature = "try-runtime")]
-	use soil_runtime::TryRuntimeError;
+	use subsoil::runtime::TryRuntimeError;
 
 	const STORAGE_VERSION: StorageVersion = StorageVersion::new(1);
 

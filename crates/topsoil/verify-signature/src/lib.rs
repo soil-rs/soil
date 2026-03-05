@@ -42,7 +42,7 @@ pub use pallet::*;
 #[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
-	use soil_runtime::traits::{IdentifyAccount, Verify};
+	use subsoil::runtime::traits::{IdentifyAccount, Verify};
 
 	#[pallet::pallet]
 	pub struct Pallet<T>(_);

@@ -25,7 +25,7 @@ use topsoil_support::{
 };
 
 #[cfg(feature = "try-runtime")]
-use soil_runtime::TryRuntimeError;
+use subsoil::runtime::TryRuntimeError;
 #[cfg(feature = "try-runtime")]
 use topsoil_support::ensure;
 
@@ -197,7 +197,7 @@ mod test {
 	use super::*;
 	use crate::mock::{Test as T, *};
 
-	use soil_runtime::bounded_vec;
+	use subsoil::runtime::bounded_vec;
 
 	#[test]
 	fn migration_works() {

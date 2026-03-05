@@ -24,7 +24,7 @@ use crate::pallet::*;
 
 use crate::{Bounty, BountyStatus, TransferAllFungibles};
 use codec::Encode;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{BadOrigin, IdentityLookup},
 	BuildStorage, Perbill, Permill, Storage,
 };

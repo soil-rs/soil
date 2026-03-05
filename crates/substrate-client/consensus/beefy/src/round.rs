@@ -25,7 +25,7 @@ use soil_consensus_beefy::{
 	AuthorityIdBound, Commitment, DoubleVotingProof, SignedCommitment, ValidatorSet,
 	ValidatorSetId, VoteMessage,
 };
-use soil_runtime::traits::{Block, NumberFor};
+use subsoil::runtime::traits::{Block, NumberFor};
 use std::collections::BTreeMap;
 
 /// Tracks for each round which validators have voted/signed and

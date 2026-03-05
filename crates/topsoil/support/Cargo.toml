@@ -36,7 +36,6 @@ subsoil-crypto-hashing-proc-macro = { workspace = true, default-features = true 
 subsoil-debug-derive = { workspace = true }
 soil-genesis-builder = { workspace = true }
 soil-inherents = { workspace = true }
-soil-runtime = { features = ["serde"], workspace = true }
 soil-staking = { workspace = true }
 subsoil = { workspace = true }
 tt-call = { workspace = true }
@@ -68,17 +67,17 @@ std = [
 	"subsoil-debug-derive/std",
 	"soil-genesis-builder/std",
 	"soil-inherents/std",
-	"soil-runtime/std",
+	"subsoil/std",
 	"soil-staking/std",
 ]
 runtime-benchmarks = [
 	"topsoil-system/runtime-benchmarks",
-	"soil-runtime/runtime-benchmarks",
+	"subsoil/runtime-benchmarks",
 	"soil-staking/runtime-benchmarks",
 ]
 try-runtime = [
 	"topsoil-system/try-runtime",
-	"soil-runtime/try-runtime",
+	"subsoil/try-runtime",
 ]
 experimental = ["topsoil-support-procedural/experimental"]
 # By default some types have documentation, `no-metadata-docs` allows to reduce the documentation

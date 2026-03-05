@@ -23,7 +23,6 @@ serde = { features = ["alloc", "derive"], optional = true, workspace = true }
 soil-api = { workspace = true }
 subsoil = { workspace = true }
 subsoil-debug-derive = { workspace = true }
-soil-runtime = { workspace = true }
 thiserror = { optional = true, workspace = true }
 
 [dev-dependencies]
@@ -41,8 +40,8 @@ std = [
 	"soil-api/std",
 	"subsoil/std",
 	"subsoil-debug-derive/std",
-	"soil-runtime/std",
+	"subsoil/std",
 ]
 
 # Serde support without relying on std features.
-serde = ["dep:serde", "scale-info/serde", "subsoil/serde", "soil-runtime/serde"]
+serde = ["dep:serde", "scale-info/serde", "subsoil/serde", "subsoil/serde"]

@@ -56,7 +56,7 @@
 //! `Executive` type declaration from the node template.
 //!
 //! ```
-//! # use soil_runtime::generic;
+//! # use subsoil::runtime::generic;
 //! # use topsoil_executive as executive;
 //! # pub struct UncheckedExtrinsic {};
 //! # pub struct Header {};
@@ -65,10 +65,10 @@
 //! # pub type Balances = u64;
 //! # pub type AllPalletsWithSystem = u64;
 //! # pub enum Runtime {};
-//! # use soil_runtime::transaction_validity::{
+//! # use subsoil::runtime::transaction_validity::{
 //! #    TransactionValidity, UnknownTransaction, TransactionSource,
 //! # };
-//! # use soil_runtime::traits::ValidateUnsigned;
+//! # use subsoil::runtime::traits::ValidateUnsigned;
 //! # impl ValidateUnsigned for Runtime {
 //! #     type Call = ();
 //! #
@@ -117,7 +117,7 @@ extern crate alloc;
 
 use codec::{Codec, Encode};
 use core::marker::PhantomData;
-use soil_runtime::{
+use subsoil::runtime::{
 	generic::Digest,
 	traits::{
 		self, Applyable, CheckEqual, Checkable, Dispatchable, Header, LazyBlock, NumberFor, One,
@@ -144,7 +144,7 @@ use topsoil_system::pallet_prelude::BlockNumberFor;
 #[cfg(feature = "try-runtime")]
 use ::{
 	log,
-	soil_runtime::TryRuntimeError,
+	subsoil::runtime::TryRuntimeError,
 	topsoil_support::{
 		traits::{TryDecodeEntireStorage, TryDecodeEntireStorageError, TryState},
 		StorageNoopGuard,

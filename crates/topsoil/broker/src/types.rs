@@ -23,7 +23,7 @@ use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;
 use subsoil::arithmetic::Perbill;
 use subsoil::core::ConstU32;
-use soil_runtime::BoundedVec;
+use subsoil::runtime::BoundedVec;
 use topsoil_support::traits::fungible::Inspect;
 use topsoil_system::Config as SConfig;
 

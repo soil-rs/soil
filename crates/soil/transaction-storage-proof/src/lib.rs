@@ -29,7 +29,7 @@ use core::result::Result;
 use alloc::vec::Vec;
 use codec::{Decode, DecodeWithMemTracking, Encode};
 use soil_inherents::{InherentData, InherentIdentifier, IsFatalError};
-use soil_runtime::traits::{Block as BlockT, NumberFor};
+use subsoil::runtime::traits::{Block as BlockT, NumberFor};
 
 pub use soil_inherents::Error;
 
@@ -158,7 +158,7 @@ pub trait IndexedBody<B: BlockT> {
 #[cfg(feature = "std")]
 pub mod registration {
 	use super::*;
-	use soil_runtime::traits::{Block as BlockT, One, Saturating, Zero};
+	use subsoil::runtime::traits::{Block as BlockT, One, Saturating, Zero};
 	use subsoil::trie::TrieMut;
 
 	type Hasher = subsoil::core::Blake2Hasher;

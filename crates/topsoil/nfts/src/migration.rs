@@ -20,7 +20,7 @@ use log;
 use topsoil_support::traits::OnRuntimeUpgrade;
 
 #[cfg(feature = "try-runtime")]
-use soil_runtime::TryRuntimeError;
+use subsoil::runtime::TryRuntimeError;
 
 pub mod v1 {
 	use topsoil_support::{pallet_prelude::*, weights::Weight};

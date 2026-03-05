@@ -59,7 +59,7 @@
 use alloc::{boxed::Box, collections::btree_set::BTreeSet, vec::Vec};
 use codec::Encode;
 use scale_info::TypeInfo;
-use soil_runtime::{
+use subsoil::runtime::{
 	app_crypto::RuntimeAppPublic,
 	traits::{ExtrinsicLike, IdentifyAccount, One},
 	Debug,
@@ -662,7 +662,7 @@ mod tests {
 	use crate::mock::{RuntimeCall, Test as TestRuntime, CALL};
 	use codec::Decode;
 	use subsoil::core::offchain::{testing, TransactionPoolExt};
-	use soil_runtime::testing::{TestSignature, TestXt, UintAuthorityId};
+	use subsoil::runtime::testing::{TestSignature, TestXt, UintAuthorityId};
 
 	impl SigningTypes for TestRuntime {
 		type Public = UintAuthorityId;

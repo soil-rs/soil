@@ -20,7 +20,7 @@
 use super::*;
 use crate::Pallet;
 use alloc::{boxed::Box, vec};
-use soil_runtime::traits::{
+use subsoil::runtime::traits::{
 	AsSystemOriginSigner, AsTransactionAuthorizedOrigin, DispatchTransaction, Dispatchable,
 };
 use topsoil_benchmarking::v2::*;

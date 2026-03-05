@@ -46,7 +46,7 @@ use subsoil::core::traits::SpawnNamed;
 #[cfg(feature = "std")]
 use soil_inherents::CreateInherentDataProviders;
 #[cfg(feature = "std")]
-use soil_runtime::{traits::Block as BlockT, ConsensusEngineId};
+use subsoil::runtime::{traits::Block as BlockT, ConsensusEngineId};
 #[cfg(feature = "std")]
 use std::{marker::PhantomData, sync::Arc, time::Duration};
 
@@ -379,7 +379,7 @@ mod tests {
 	use soil_api::StorageProof;
 	use soil_basic_authorship::ProposerFactory;
 	use soil_inherents::InherentData;
-	use soil_runtime::generic::{Digest, DigestItem};
+	use subsoil::runtime::generic::{Digest, DigestItem};
 	use soil_transaction_pool_api::{
 		MaintainedTransactionPool, TransactionPool, TransactionSource,
 	};

@@ -15,7 +15,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use soil_runtime::traits::Block as BlockT;
+use subsoil::runtime::traits::Block as BlockT;
 use substrate_test_runtime_client::runtime::Block;
 
 /// The declaration of the `Runtime` type is done by the `construct_runtime!` macro in a real
@@ -42,7 +42,7 @@ soil_api::impl_runtime_apis! {
 		fn execute_block(_: <Block as BlockT>::LazyBlock) {
 			unimplemented!()
 		}
-		fn initialize_block(_: &<Block as BlockT>::Header) -> soil_runtime::ExtrinsicInclusionMode {
+		fn initialize_block(_: &<Block as BlockT>::Header) -> subsoil::runtime::ExtrinsicInclusionMode {
 			unimplemented!()
 		}
 	}

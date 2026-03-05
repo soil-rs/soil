@@ -24,7 +24,7 @@ use kitchensink_runtime::{
 	RuntimeGenesisConfig, SessionConfig, SocietyConfig, StakerStatus, StakingConfig,
 };
 use soil_keyring::Ed25519Keyring;
-use soil_runtime::Perbill;
+use subsoil::runtime::Perbill;
 
 /// Create genesis runtime configuration for tests.
 pub fn config() -> RuntimeGenesisConfig {

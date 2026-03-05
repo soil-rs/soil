@@ -98,10 +98,10 @@
 //! and production.
 //!
 //! ```
-//! # use soil_runtime::testing::{MockCallU64, TestXt};
+//! # use subsoil::runtime::testing::{MockCallU64, TestXt};
 //! # use soil_inherents::{InherentIdentifier, InherentData};
 //! # use futures::FutureExt;
-//! # type Block = soil_runtime::testing::Block<TestXt<MockCallU64, ()>>;
+//! # type Block = subsoil::runtime::testing::Block<TestXt<MockCallU64, ()>>;
 //! # const INHERENT_IDENTIFIER: InherentIdentifier = *b"testinh0";
 //! # struct InherentDataProvider;
 //! # #[async_trait::async_trait]

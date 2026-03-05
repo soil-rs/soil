@@ -197,7 +197,7 @@ mod tests {
 	use super::*;
 	use super::backend::{AsTrieBackend, Backend};
 	use crate::core::storage::StateVersion;
-	use soil_runtime::traits::BlakeTwo256;
+	use subsoil::runtime::traits::BlakeTwo256;
 
 	/// Assert in memory backend with only child trie keys works as trie backend.
 	#[test]

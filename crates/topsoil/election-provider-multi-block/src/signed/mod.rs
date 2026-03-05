@@ -60,7 +60,7 @@ use codec::{Decode, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;
 use subsoil::io::MultiRemovalResults;
 use soil_npos_elections::ElectionScore;
-use soil_runtime::{traits::Saturating, Perbill};
+use subsoil::runtime::{traits::Saturating, Perbill};
 use subsoil::std::prelude::*;
 use topsoil_election_provider_support::PageIndex;
 use topsoil_support::{
@@ -957,7 +957,7 @@ pub mod pallet {
 	#[pallet::hooks]
 	impl<T: Config> Hooks<BlockNumberFor<T>> for Pallet<T> {
 		#[cfg(feature = "try-runtime")]
-		fn try_state(n: BlockNumberFor<T>) -> Result<(), soil_runtime::TryRuntimeError> {
+		fn try_state(n: BlockNumberFor<T>) -> Result<(), subsoil::runtime::TryRuntimeError> {
 			Self::do_try_state(n)
 		}
 	}
@@ -965,7 +965,7 @@ pub mod pallet {
 
 impl<T: Config> Pallet<T> {
 	#[cfg(any(feature = "try-runtime", test, feature = "runtime-benchmarks"))]
-	pub(crate) fn do_try_state(_n: BlockNumberFor<T>) -> Result<(), soil_runtime::TryRuntimeError> {
+	pub(crate) fn do_try_state(_n: BlockNumberFor<T>) -> Result<(), subsoil::runtime::TryRuntimeError> {
 		Submissions::<T>::sanity_check_round(Self::current_round())
 	}
 

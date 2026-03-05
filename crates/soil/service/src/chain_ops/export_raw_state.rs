@@ -21,7 +21,7 @@ use soil_client_api::{StorageProvider, UsageProvider};
 use subsoil::core::storage::{
 	well_known_keys, ChildInfo, Storage, StorageChild, StorageKey, StorageMap,
 };
-use soil_runtime::traits::Block as BlockT;
+use subsoil::runtime::traits::Block as BlockT;
 
 use std::{
 	collections::{BTreeMap, HashMap},

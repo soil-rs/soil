@@ -40,7 +40,7 @@ use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;
 use subsoil::core::Get;
 pub use soil_npos_elections::{ElectionResult, ElectionScore};
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{CheckedSub, One, Zero},
 	SaturatedConversion, Saturating,
 };

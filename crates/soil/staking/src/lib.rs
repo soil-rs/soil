@@ -27,7 +27,7 @@ use alloc::{collections::btree_map::BTreeMap, vec, vec::Vec};
 use codec::{Decode, DecodeWithMemTracking, Encode, FullCodec, HasCompact, MaxEncodedLen};
 use core::ops::{Add, AddAssign, Sub, SubAssign};
 use scale_info::TypeInfo;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{AtLeast32BitUnsigned, Zero},
 	Debug, DispatchError, DispatchResult, Perbill, Saturating,
 };
@@ -536,10 +536,10 @@ where
 		+ codec::MaxEncodedLen
 		+ Add<Output = Balance>
 		+ Sub<Output = Balance>
-		+ soil_runtime::Saturating
+		+ subsoil::runtime::Saturating
 		+ PartialEq
 		+ Copy
-		+ soil_runtime::traits::Debug,
+		+ subsoil::runtime::traits::Debug,
 {
 	/// Consumes self and returns the result of the metadata updated with `other_balances` and
 	/// of adding `other_num` nominators to the metadata.

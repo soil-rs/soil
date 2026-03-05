@@ -22,7 +22,7 @@
 // SOFTWARE.
 
 use crate as pallet_template;
-use topsoil_support::{derive_impl, soil_runtime::BuildStorage};
+use topsoil_support::{derive_impl, subsoil::runtime::BuildStorage};
 
 type Block = topsoil_system::mocking::MockBlock<Test>;
 

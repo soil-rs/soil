@@ -62,7 +62,7 @@ use alloc::vec::Vec;
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use core::{fmt::Debug, marker::PhantomData};
 use scale_info::TypeInfo;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{
 		AtLeast32BitUnsigned, BlockNumberProvider, Bounded, Convert, MaybeSerializeDeserialize,
 		One, Saturating, StaticLookup, Zero,
@@ -252,7 +252,7 @@ pub mod pallet {
 	#[pallet::genesis_build]
 	impl<T: Config> BuildGenesisConfig for GenesisConfig<T> {
 		fn build(&self) {
-			use soil_runtime::traits::Saturating;
+			use subsoil::runtime::traits::Saturating;
 
 			// Genesis uses the latest storage version.
 			StorageVersion::<T>::put(Releases::V1);
@@ -268,7 +268,7 @@ pub mod pallet {
 				// Total genesis `balance` minus `liquid` equals funds locked for vesting
 				let locked = balance.saturating_sub(liquid);
 				let length_as_balance = T::BlockNumberToBalance::convert(length);
-				let per_block = locked / length_as_balance.max(soil_runtime::traits::One::one());
+				let per_block = locked / length_as_balance.max(subsoil::runtime::traits::One::one());
 				let vesting_info = VestingInfo::new(locked, per_block, begin);
 				if !vesting_info.is_valid() {
 					panic!("Invalid VestingInfo params at genesis")

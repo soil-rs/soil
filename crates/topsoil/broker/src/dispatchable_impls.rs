@@ -19,7 +19,7 @@ use core::cmp;
 
 use super::*;
 use subsoil::arithmetic::traits::{CheckedDiv, Saturating, Zero};
-use soil_runtime::traits::{BlockNumberProvider, Convert};
+use subsoil::runtime::traits::{BlockNumberProvider, Convert};
 use topsoil_support::{
 	pallet_prelude::*,
 	traits::{fungible::Mutate, tokens::Preservation::Expendable, DefensiveResult},

@@ -25,7 +25,7 @@ use subsoil::core::offchain::{
 	testing::{TestOffchainExt, TestTransactionPoolExt},
 	OffchainDbExt, OffchainWorkerExt, TransactionPoolExt,
 };
-use soil_runtime::testing::UintAuthorityId;
+use subsoil::runtime::testing::UintAuthorityId;
 use topsoil_support::{assert_noop, dispatch};
 
 #[test]

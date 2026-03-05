@@ -21,7 +21,7 @@ use alloc::vec::Vec;
 use core::marker::PhantomData;
 use impl_trait_for_tuples::impl_for_tuples;
 use subsoil::arithmetic::traits::AtLeast16BitUnsigned;
-use soil_runtime::DispatchResult;
+use subsoil::runtime::DispatchResult;
 
 /// A trait for querying whether a type can be said to "contain" a value.
 pub trait Contains<T> {

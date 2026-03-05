@@ -20,7 +20,7 @@
 #![cfg(feature = "runtime-benchmarks")]
 
 use core::{cmp, mem::size_of};
-use soil_runtime::traits::{Bounded, Hash, StaticLookup};
+use subsoil::runtime::traits::{Bounded, Hash, StaticLookup};
 
 use topsoil_benchmarking::{account, v2::*, BenchmarkError};
 use topsoil_support::traits::{EnsureOrigin, Get, UnfilteredDispatchable};

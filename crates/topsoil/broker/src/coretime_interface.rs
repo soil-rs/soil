@@ -22,7 +22,7 @@ use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use core::fmt::Debug;
 use scale_info::TypeInfo;
 use subsoil::arithmetic::traits::AtLeast32BitUnsigned;
-use soil_runtime::traits::BlockNumberProvider;
+use subsoil::runtime::traits::BlockNumberProvider;
 use topsoil_support::Parameter;
 
 use crate::Timeslice;

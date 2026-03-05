@@ -22,7 +22,7 @@ use soil_blockchain::{HeaderBackend, Result};
 use soil_client_api::backend;
 use subsoil::core::traits::{FetchRuntimeCode, RuntimeCode, WrappedRuntimeCode};
 use soil_executor::RuntimeVersionOf;
-use soil_runtime::traits::{Block as BlockT, NumberFor};
+use subsoil::runtime::traits::{Block as BlockT, NumberFor};
 use subsoil::state_machine::BasicExternalities;
 use soil_version::RuntimeVersion;
 use std::{

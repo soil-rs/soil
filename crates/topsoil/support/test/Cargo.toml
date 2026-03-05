@@ -26,7 +26,6 @@ rustversion = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { features = ["derive"], workspace = true }
 soil-api = { workspace = true }
-soil-runtime = { workspace = true }
 subsoil = { workspace = true }
 soil-version = { workspace = true }
 static_assertions = { workspace = true, default-features = true }
@@ -47,7 +46,7 @@ std = [
 	"serde/std",
 	"soil-api/std",
 	"subsoil/std",
-	"soil-runtime/std",
+	"subsoil/std",
 	"soil-version/std",
 	"test-pallet/std",
 ]
@@ -56,13 +55,13 @@ runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",
 	"topsoil-support/runtime-benchmarks",
 	"topsoil-system/runtime-benchmarks",
-	"soil-runtime/runtime-benchmarks",
+	"subsoil/runtime-benchmarks",
 ]
 try-runtime = [
 	"topsoil-executive/try-runtime",
 	"topsoil-support/try-runtime",
 	"topsoil-system/try-runtime",
-	"soil-runtime/try-runtime",
+	"subsoil/try-runtime",
 ]
 # WARNING:
 # Only CI runs with this feature enabled. This feature is for testing stuff related to the FRAME macros

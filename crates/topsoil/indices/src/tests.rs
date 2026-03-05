@@ -20,7 +20,7 @@
 #![cfg(test)]
 
 use super::{mock::*, *};
-use soil_runtime::MultiAddress::Id;
+use subsoil::runtime::MultiAddress::Id;
 use topsoil_balances::Error as BalancesError;
 use topsoil_support::{assert_noop, assert_ok, pallet_prelude::Pays};
 

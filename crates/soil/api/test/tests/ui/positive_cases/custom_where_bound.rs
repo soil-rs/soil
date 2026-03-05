@@ -17,7 +17,7 @@
 
 use codec::{Decode, Encode};
 use scale_info::TypeInfo;
-use soil_runtime::traits::Block as BlockT;
+use subsoil::runtime::traits::Block as BlockT;
 use substrate_test_runtime_client::runtime::Block;
 
 struct Runtime {}
@@ -51,7 +51,7 @@ soil_api::impl_runtime_apis! {
 		fn execute_block(_: <Block as BlockT>::LazyBlock) {
 			unimplemented!()
 		}
-		fn initialize_block(_: &<Block as BlockT>::Header) -> soil_runtime::ExtrinsicInclusionMode {
+		fn initialize_block(_: &<Block as BlockT>::Header) -> subsoil::runtime::ExtrinsicInclusionMode {
 			unimplemented!()
 		}
 	}

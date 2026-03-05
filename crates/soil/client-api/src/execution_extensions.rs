@@ -25,7 +25,7 @@
 use parking_lot::RwLock;
 use subsoil::core::traits::{ReadRuntimeVersion, ReadRuntimeVersionExt};
 use subsoil::externalities::{Extension, Extensions};
-use soil_runtime::traits::{Block as BlockT, NumberFor};
+use subsoil::runtime::traits::{Block as BlockT, NumberFor};
 use std::{marker::PhantomData, sync::Arc};
 
 /// Generate the starting set of [`Extensions`].

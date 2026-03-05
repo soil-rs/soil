@@ -33,7 +33,7 @@ use soil_blockchain::HeaderBackend;
 use subsoil::core::Bytes;
 use subsoil::keystore::{KeystoreExt, KeystorePtr};
 use soil_rpc_api::check_if_safe;
-use soil_runtime::traits::Block as BlockT;
+use subsoil::runtime::traits::Block as BlockT;
 use soil_session::SessionKeys;
 use soil_transaction_pool_api::{
 	error::IntoPoolError, BlockHash, InPoolTransaction, TransactionFor, TransactionPool,

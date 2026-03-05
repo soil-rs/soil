@@ -413,7 +413,7 @@ where
 mod tests {
 	use super::*;
 	use subsoil::core::H256;
-	use soil_runtime::traits::Keccak256;
+	use subsoil::runtime::traits::Keccak256;
 
 	#[test]
 	fn should_generate_empty_root() {

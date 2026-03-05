@@ -62,7 +62,7 @@ use alloc::{boxed::Box, vec::Vec};
 use codec::{Decode, Encode};
 use subsoil::core::TypeId;
 use subsoil::io::hashing::blake2_256;
-use soil_runtime::traits::{BadOrigin, Dispatchable, TrailingZeroInput};
+use subsoil::runtime::traits::{BadOrigin, Dispatchable, TrailingZeroInput};
 use topsoil_support::{
 	dispatch::{
 		extract_actual_weight,
@@ -550,7 +550,7 @@ pub mod pallet {
 			};
 
 			// Both calls have failed, return fallback error
-			Err(soil_runtime::DispatchErrorWithPostInfo {
+			Err(subsoil::runtime::DispatchErrorWithPostInfo {
 				error: fallback_error.error,
 				post_info: Some(weight).into(),
 			})

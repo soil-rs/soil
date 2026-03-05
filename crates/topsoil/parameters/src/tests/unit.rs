@@ -26,7 +26,7 @@ use crate::tests::mock::{
 };
 use codec::Encode;
 use subsoil::core::Get;
-use soil_runtime::DispatchError;
+use subsoil::runtime::DispatchError;
 use topsoil_support::{assert_noop, assert_ok, traits::dynamic_params::AggregatedKeyValue};
 
 #[docify::export]

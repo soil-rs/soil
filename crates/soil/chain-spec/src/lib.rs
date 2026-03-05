@@ -368,7 +368,7 @@ use subsoil::core::storage::Storage;
 #[cfg(feature = "std")]
 use soil_network::config::MultiaddrWithPeerId;
 #[cfg(feature = "std")]
-use soil_runtime::BuildStorage;
+use subsoil::runtime::BuildStorage;
 #[cfg(feature = "std")]
 use soil_telemetry::TelemetryEndpoints;
 

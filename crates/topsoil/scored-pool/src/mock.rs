@@ -20,7 +20,7 @@
 use super::*;
 use crate as topsoil_scored_pool;
 
-use soil_runtime::{bounded_vec, BuildStorage};
+use subsoil::runtime::{bounded_vec, BuildStorage};
 use topsoil_support::{
 	construct_runtime, derive_impl, ord_parameter_types, parameter_types,
 	traits::{ConstU32, ConstU64},

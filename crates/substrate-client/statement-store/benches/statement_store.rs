@@ -19,18 +19,18 @@
 use criterion::{criterion_group, criterion_main, Criterion};
 use sc_statement_store::Store;
 use subsoil::core::Pair;
-use soil_runtime::codec::Encode;
+use subsoil::runtime::codec::Encode;
 use soil_statement_store::{
 	DecryptionKey, Statement, StatementSource, StatementStore, SubmitResult, Topic,
 };
 use std::sync::Arc;
 
-type Extrinsic = soil_runtime::OpaqueExtrinsic;
+type Extrinsic = subsoil::runtime::OpaqueExtrinsic;
 type Hash = subsoil::core::H256;
-type Hashing = soil_runtime::traits::BlakeTwo256;
+type Hashing = subsoil::runtime::traits::BlakeTwo256;
 type BlockNumber = u64;
-type Header = soil_runtime::generic::Header<BlockNumber, Hashing>;
-type Block = soil_runtime::generic::Block<Header, Extrinsic>;
+type Header = subsoil::runtime::generic::Header<BlockNumber, Hashing>;
+type Block = subsoil::runtime::generic::Block<Header, Extrinsic>;
 
 const CORRECT_BLOCK_HASH: [u8; 32] = [1u8; 32];
 const STATEMENT_DATA_SIZE: usize = 256;

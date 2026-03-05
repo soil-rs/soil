@@ -20,7 +20,7 @@
 #![cfg(feature = "runtime-benchmarks")]
 
 use alloc::vec;
-use soil_runtime::traits::BlockNumberProvider;
+use subsoil::runtime::traits::BlockNumberProvider;
 use topsoil_benchmarking::{v2::*, BenchmarkError};
 use topsoil_bounties::Pallet as Bounties;
 use topsoil_support::ensure;

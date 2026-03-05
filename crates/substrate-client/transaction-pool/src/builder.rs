@@ -27,7 +27,7 @@ use crate::{
 };
 use prometheus_endpoint::Registry as PrometheusRegistry;
 use subsoil::core::traits::SpawnEssentialNamed;
-use soil_runtime::traits::Block as BlockT;
+use subsoil::runtime::traits::Block as BlockT;
 use soil_transaction_pool_api::{LocalTransactionPool, MaintainedTransactionPool};
 use std::{marker::PhantomData, sync::Arc, time::Duration};
 
@@ -128,7 +128,7 @@ where
 	Client: soil_api::ProvideRuntimeApi<Block>
 		+ soil_client_api::BlockBackend<Block>
 		+ soil_client_api::blockchain::HeaderBackend<Block>
-		+ soil_runtime::traits::BlockIdTo<Block>
+		+ subsoil::runtime::traits::BlockIdTo<Block>
 		+ soil_blockchain::HeaderMetadata<Block, Error = soil_blockchain::Error>
 		+ 'static,
 	Client::Api: soil_transaction_pool::runtime_api::TaggedTransactionQueue<Block>,
@@ -141,7 +141,7 @@ where
 	Client: soil_api::ProvideRuntimeApi<Block>
 		+ soil_client_api::BlockBackend<Block>
 		+ soil_client_api::blockchain::HeaderBackend<Block>
-		+ soil_runtime::traits::BlockIdTo<Block>
+		+ subsoil::runtime::traits::BlockIdTo<Block>
 		+ soil_blockchain::HeaderMetadata<Block, Error = soil_blockchain::Error>
 		+ 'static,
 	Client::Api: soil_transaction_pool::runtime_api::TaggedTransactionQueue<Block>,
@@ -184,7 +184,7 @@ where
 	Client: soil_api::ProvideRuntimeApi<Block>
 		+ soil_client_api::BlockBackend<Block>
 		+ soil_client_api::blockchain::HeaderBackend<Block>
-		+ soil_runtime::traits::BlockIdTo<Block>
+		+ subsoil::runtime::traits::BlockIdTo<Block>
 		+ soil_client_api::ExecutorProvider<Block>
 		+ soil_client_api::UsageProvider<Block>
 		+ soil_blockchain::HeaderMetadata<Block, Error = soil_blockchain::Error>

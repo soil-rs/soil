@@ -120,7 +120,7 @@ use crate::types::{AuthorityProperties, Provider, Suffix, Username, UsernameInfo
 use alloc::{boxed::Box, vec::Vec};
 use codec::Encode;
 pub use pallet::*;
-use soil_runtime::traits::{
+use subsoil::runtime::traits::{
 	AppendZerosInput, Hash, IdentifyAccount, Saturating, StaticLookup, Verify, Zero,
 };
 use topsoil_support::{
@@ -155,12 +155,12 @@ pub mod pallet {
 		fn sign_message(message: &[u8]) -> (Public, Signature);
 	}
 	#[cfg(feature = "runtime-benchmarks")]
-	impl BenchmarkHelper<soil_runtime::MultiSigner, soil_runtime::MultiSignature> for () {
+	impl BenchmarkHelper<subsoil::runtime::MultiSigner, subsoil::runtime::MultiSignature> for () {
 		fn sign_message(
 			message: &[u8],
-		) -> (soil_runtime::MultiSigner, soil_runtime::MultiSignature) {
+		) -> (subsoil::runtime::MultiSigner, subsoil::runtime::MultiSignature) {
 			let public = subsoil::io::crypto::sr25519_generate(0.into(), None);
-			let signature = soil_runtime::MultiSignature::Sr25519(
+			let signature = subsoil::runtime::MultiSignature::Sr25519(
 				subsoil::io::crypto::sr25519_sign(
 					0.into(),
 					&public.into_account().try_into().unwrap(),

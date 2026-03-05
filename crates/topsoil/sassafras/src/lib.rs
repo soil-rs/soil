@@ -60,7 +60,7 @@ use soil_consensus_sassafras::{
 	TicketId, RANDOMNESS_LENGTH, SASSAFRAS_ENGINE_ID,
 };
 use subsoil::io::hashing;
-use soil_runtime::{
+use subsoil::runtime::{
 	generic::DigestItem,
 	traits::{One, Zero},
 	BoundToRuntimeAppPublic,

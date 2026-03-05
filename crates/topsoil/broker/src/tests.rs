@@ -19,7 +19,7 @@
 
 use crate::{core_mask::*, mock::*, *};
 use pretty_assertions::assert_eq;
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{BadOrigin, Get},
 	DispatchError, Perbill, TokenError,
 };

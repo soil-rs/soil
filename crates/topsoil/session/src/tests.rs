@@ -28,7 +28,7 @@ use crate::mock::{
 
 use codec::Encode;
 use subsoil::core::crypto::key_types::DUMMY;
-use soil_runtime::{testing::UintAuthorityId, Perbill};
+use subsoil::runtime::{testing::UintAuthorityId, Perbill};
 
 use topsoil_support::{
 	assert_err, assert_noop, assert_ok,
@@ -528,7 +528,7 @@ fn set_keys_should_fail_with_insufficient_funds() {
 				keys,
 				create_set_keys_proof(account_id, &UintAuthorityId(account_id)),
 			),
-			soil_runtime::TokenError::FundsUnavailable
+			subsoil::runtime::TokenError::FundsUnavailable
 		);
 	});
 }

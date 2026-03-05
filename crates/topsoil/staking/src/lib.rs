@@ -312,7 +312,7 @@ extern crate alloc;
 use alloc::{collections::btree_map::BTreeMap, vec, vec::Vec};
 use codec::{Decode, DecodeWithMemTracking, Encode, HasCompact, MaxEncodedLen};
 use scale_info::TypeInfo;
-use soil_runtime::{
+use subsoil::runtime::{
 	curve::PiecewiseLinear,
 	traits::{AtLeast32BitUnsigned, Convert, StaticLookup, Zero},
 	Debug, Perbill, Perquintill, Rounding, Saturating,
@@ -677,7 +677,7 @@ impl<T: Config> StakingLedger<T> {
 			return Zero::zero();
 		}
 
-		use soil_runtime::PerThing as _;
+		use subsoil::runtime::PerThing as _;
 		let mut remaining_slash = slash_amount;
 		let pre_slash_total = self.total;
 

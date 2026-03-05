@@ -17,7 +17,7 @@
 
 use super::*;
 use crate::{self as pools};
-use soil_runtime::{BuildStorage, DispatchResult, FixedU128};
+use subsoil::runtime::{BuildStorage, DispatchResult, FixedU128};
 use soil_staking::{
 	Agent, DelegationInterface, DelegationMigrator, Delegator, OnStakingUpdate, Stake,
 };
@@ -144,7 +144,7 @@ impl soil_staking::StakingInterface for StakingMock {
 		unimplemented!("method currently not used in testing")
 	}
 
-	fn chill(_: &Self::AccountId) -> soil_runtime::DispatchResult {
+	fn chill(_: &Self::AccountId) -> subsoil::runtime::DispatchResult {
 		Ok(())
 	}
 
@@ -213,7 +213,7 @@ impl soil_staking::StakingInterface for StakingMock {
 		unimplemented!("method currently not used in testing")
 	}
 
-	fn force_unstake(_who: Self::AccountId) -> soil_runtime::DispatchResult {
+	fn force_unstake(_who: Self::AccountId) -> subsoil::runtime::DispatchResult {
 		unimplemented!("method currently not used in testing")
 	}
 
@@ -419,7 +419,7 @@ impl DelegationMigrator for DelegateMock {
 impl topsoil_system::Config for Runtime {
 	type Nonce = u64;
 	type AccountId = AccountId;
-	type Lookup = soil_runtime::traits::IdentityLookup<Self::AccountId>;
+	type Lookup = subsoil::runtime::traits::IdentityLookup<Self::AccountId>;
 	type Block = Block;
 	type AccountData = topsoil_balances::AccountData<Balance>;
 }
@@ -679,7 +679,7 @@ pub enum RewardImbalance {
 	Deficit(Balance),
 }
 
-pub fn pool_pending_rewards(pool: PoolId) -> Result<BalanceOf<T>, soil_runtime::DispatchError> {
+pub fn pool_pending_rewards(pool: PoolId) -> Result<BalanceOf<T>, subsoil::runtime::DispatchError> {
 	let bonded_pool = BondedPools::<T>::get(pool).ok_or(Error::<T>::PoolNotFound)?;
 	let reward_pool = RewardPools::<T>::get(pool).ok_or(Error::<T>::PoolNotFound)?;
 

@@ -27,7 +27,7 @@ use soil_api::{ApiExt, Core, ProvideRuntimeApi};
 use soil_client_api::{BlockBackend, HeaderBackend};
 use subsoil::core::Encode;
 use soil_rpc_api::{check_if_safe, dev::error::Error};
-use soil_runtime::{
+use subsoil::runtime::{
 	generic::DigestItem,
 	traits::{Block as BlockT, Header},
 };

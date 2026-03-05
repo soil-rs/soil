@@ -19,7 +19,7 @@
 use codec::Encode;
 use sc_consensus_grandpa::GrandpaJustification;
 use serde::{Deserialize, Serialize};
-use soil_runtime::traits::Block as BlockT;
+use subsoil::runtime::traits::Block as BlockT;
 
 /// An encoded justification proving that the given header has been finalized
 #[derive(Clone, Serialize, Deserialize)]

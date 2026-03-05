@@ -26,7 +26,7 @@ use std::{
 use sc_block_builder::BlockBuilderBuilder;
 use soil_api::{ApiExt, Core, ProofRecorder, ProvideRuntimeApi};
 use subsoil::{decl_extension, externalities::TransactionType};
-use soil_runtime::{
+use subsoil::runtime::{
 	traits::{HashingFor, Header as HeaderT},
 	TransactionOutcome,
 };
