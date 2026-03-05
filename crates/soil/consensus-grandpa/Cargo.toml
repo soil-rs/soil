@@ -22,7 +22,6 @@ finality-grandpa = { features = ["derive-codec"], workspace = true }
 log = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { features = ["alloc", "derive"], optional = true, workspace = true }
-soil-api = { workspace = true }
 subsoil = { workspace = true }
 
 [features]
@@ -33,15 +32,12 @@ std = [
 	"log/std",
 	"scale-info/std",
 	"serde/std",
-	"soil-api/std",
 	"subsoil/std",
-	"subsoil/std",
-]
+	"subsoil/std"]
 
 # Serde support without relying on std features.
 serde = [
 	"dep:serde",
 	"scale-info/serde",
 	"subsoil/serde",
-	"subsoil/serde",
-]
+	"subsoil/serde"]

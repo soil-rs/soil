@@ -15,7 +15,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use soil_api::{
+use subsoil::api::{
 	decl_runtime_apis, impl_runtime_apis, mock_impl_runtime_apis, ApiError, ApiExt, RuntimeApiInfo,
 };
 use subsoil::runtime::traits::Block as BlockT;
@@ -135,7 +135,7 @@ impl_runtime_apis! {
 		fn staging_one() {}
 	}
 
-	impl soil_api::Core<Block> for Runtime {
+	impl subsoil::api::Core<Block> for Runtime {
 		fn version() -> subsoil::version::RuntimeVersion {
 			unimplemented!()
 		}
@@ -282,7 +282,7 @@ fn check_runtime_api_versions() {
 	);
 	check_staging_runtime_api_versions::<dyn ApiWithStagingAndChangedBase<Block>>(99);
 
-	check_runtime_api_versions_contains::<dyn soil_api::Core<Block>>();
+	check_runtime_api_versions_contains::<dyn subsoil::api::Core<Block>>();
 }
 
 #[test]

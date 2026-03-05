@@ -30,7 +30,7 @@ pub enum Error {
 	#[error("Keystore error: {0}")]
 	Keystore(String),
 	#[error("Runtime api error: {0}")]
-	RuntimeApi(soil_api::ApiError),
+	RuntimeApi(subsoil::api::ApiError),
 	#[error("Signature error: {0}")]
 	Signature(String),
 	#[error("Session uninitialized")]

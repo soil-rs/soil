@@ -30,7 +30,7 @@ use sc_consensus::{
 	import_queue::{BasicQueue, BoxJustificationImport, DefaultImportQueue, Verifier},
 };
 use sc_consensus_slots::{check_equivocation, CheckedHeader, InherentDataProviderExt};
-use soil_api::{ApiExt, ProvideRuntimeApi};
+use subsoil::api::{ApiExt, ProvideRuntimeApi};
 use soil_block_builder::BlockBuilder as BlockBuilderApi;
 use soil_blockchain::{HeaderBackend, HeaderMetadata};
 use soil_client_api::{backend::AuxStore, BlockOf, UsageProvider};

@@ -36,7 +36,7 @@ use log::{debug, error, info, trace, warn};
 use parking_lot::Mutex;
 use prometheus_endpoint::Registry;
 use sc_consensus::BlockImport;
-use soil_api::ProvideRuntimeApi;
+use subsoil::api::ProvideRuntimeApi;
 use soil_blockchain::{Backend as BlockchainBackend, HeaderBackend};
 use soil_client_api::{Backend, BlockBackend, BlockchainEvents, FinalityNotification, Finalizer};
 use soil_consensus::{Error as ConsensusError, SyncOracle};

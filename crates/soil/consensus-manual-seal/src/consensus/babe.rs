@@ -33,7 +33,7 @@ use subsoil::keystore::KeystorePtr;
 use std::sync::Arc;
 
 use sc_consensus::{BlockImportParams, ForkChoiceStrategy, Verifier};
-use soil_api::{ProvideRuntimeApi, StorageProof};
+use subsoil::api::{ProvideRuntimeApi, StorageProof};
 use soil_blockchain::{HeaderBackend, HeaderMetadata};
 use soil_consensus_babe::{
 	digests::{NextEpochDescriptor, PreDigest, SecondaryPlainPreDigest},

@@ -42,7 +42,7 @@ use mixnet::{
 	reply_manager::{ReplyContext, ReplyManager},
 	request_manager::RequestManager,
 };
-use soil_api::{ApiExt, ProvideRuntimeApi};
+use subsoil::api::{ApiExt, ProvideRuntimeApi};
 use soil_client_api::{BlockchainEvents, HeaderBackend};
 use soil_consensus::SyncOracle;
 use subsoil::keystore::{KeystoreExt, KeystorePtr};

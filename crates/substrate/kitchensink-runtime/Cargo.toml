@@ -146,7 +146,6 @@ topsoil-vesting = { workspace = true }
 topsoil-whitelist = { workspace = true }
 soil-chain-spec-derive = { workspace = true }
 subsoil-tracing-proc-macro = { workspace = true }
-soil-api = { workspace = true }
 subsoil-api-proc-macro = { workspace = true }
 subsoil = { workspace = true }
 soil-authority-discovery = { workspace = true }
@@ -185,8 +184,7 @@ substrate-wasm-builder = { optional = true, workspace = true, default-features =
 default = ["std"]
 with-tracing = [
 	"topsoil-executive/with-tracing",
-	"subsoil/with-tracing",
-]
+	"subsoil/with-tracing"]
 std = [
 	"codec/std",
 	"topsoil/std",
@@ -304,7 +302,6 @@ std = [
 	"rand?/std",
 	"scale-info/std",
 	"serde_json/std",
-	"soil-api/std",
 	"subsoil-api-proc-macro/std",
 	"subsoil/std",
 	"soil-authority-discovery/std",
@@ -333,8 +330,7 @@ std = [
 	"soil-transaction-pool/std",
 	"soil-transaction-storage-proof/std",
 	"substrate-bip39/std",
-	"substrate-wasm-builder",
-]
+	"substrate-wasm-builder"]
 runtime-benchmarks = [
 	"topsoil/runtime-benchmarks",
 	"topsoil-benchmarking/runtime-benchmarks",
@@ -425,8 +421,7 @@ runtime-benchmarks = [
 	"rand",
 	"rand_pcg",
 	"subsoil/runtime-benchmarks",
-	"soil-staking/runtime-benchmarks",
-]
+	"soil-staking/runtime-benchmarks"]
 try-runtime = [
 	"topsoil/try-runtime",
 	"topsoil-benchmarking-pallet-pov/try-runtime",
@@ -522,6 +517,5 @@ try-runtime = [
 	"topsoil-verify-signature/try-runtime",
 	"topsoil-vesting/try-runtime",
 	"topsoil-whitelist/try-runtime",
-	"subsoil/try-runtime",
-]
+	"subsoil/try-runtime"]
 metadata-hash = ["substrate-wasm-builder/metadata-hash"]

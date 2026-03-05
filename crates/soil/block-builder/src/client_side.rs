@@ -26,7 +26,7 @@ pub enum CheckInherentsError {
 	/// Create inherents error.
 	CreateInherentData(soil_inherents::Error),
 	/// Client Error
-	Client(soil_api::ApiError),
+	Client(subsoil::api::ApiError),
 	/// Check inherents error
 	CheckInherents(soil_inherents::Error),
 	/// Unknown inherent error for identifier
@@ -34,7 +34,7 @@ pub enum CheckInherentsError {
 }
 
 /// Create inherent data and check that the inherents are valid.
-pub async fn check_inherents<Block: BlockT, Client: soil_api::ProvideRuntimeApi<Block>>(
+pub async fn check_inherents<Block: BlockT, Client: subsoil::api::ProvideRuntimeApi<Block>>(
 	client: std::sync::Arc<Client>,
 	at_hash: Block::Hash,
 	block: Block,
@@ -52,7 +52,7 @@ where
 }
 
 /// Check that the inherents are valid.
-pub async fn check_inherents_with_data<Block: BlockT, Client: soil_api::ProvideRuntimeApi<Block>>(
+pub async fn check_inherents_with_data<Block: BlockT, Client: subsoil::api::ProvideRuntimeApi<Block>>(
 	client: std::sync::Arc<Client>,
 	at_hash: Block::Hash,
 	block: Block,

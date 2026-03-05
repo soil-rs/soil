@@ -71,7 +71,7 @@ pub use self::{
 	seal_block::{seal_block, SealBlockParams, MAX_PROPOSAL_DURATION},
 };
 #[cfg(feature = "std")]
-use soil_api::ProvideRuntimeApi;
+use subsoil::api::ProvideRuntimeApi;
 #[cfg(feature = "std")]
 use soil_transaction_pool_api::TransactionPool;
 
@@ -376,7 +376,7 @@ mod tests {
 	use assert_matches::assert_matches;
 	use sc_consensus::ImportedAux;
 	use sc_transaction_pool::{BasicPool, FullChainApi, Options, RevalidationType};
-	use soil_api::StorageProof;
+	use subsoil::api::StorageProof;
 	use soil_basic_authorship::ProposerFactory;
 	use soil_inherents::InherentData;
 	use subsoil::runtime::generic::{Digest, DigestItem};

@@ -16,7 +16,7 @@
 // limitations under the License.
 
 //! Integration tests for ecdsa
-use soil_api::{ApiExt, ProvideRuntimeApi};
+use subsoil::api::{ApiExt, ProvideRuntimeApi};
 use subsoil::application_crypto::{ecdsa::AppPair, RuntimePublic};
 use subsoil::core::{
 	crypto::{ByteArray, Pair},

@@ -99,7 +99,7 @@ use sc_consensus_slots::{
 	check_equivocation, BackoffAuthoringBlocksStrategy, CheckedHeader, InherentDataProviderExt,
 	SlotInfo, StorageChanges,
 };
-use soil_api::{ApiExt, ProvideRuntimeApi};
+use subsoil::api::{ApiExt, ProvideRuntimeApi};
 use subsoil::application_crypto::AppCrypto;
 use soil_block_builder::BlockBuilder as BlockBuilderApi;
 use soil_blockchain::{
@@ -351,7 +351,7 @@ pub enum Error<B: BlockT> {
 	Client(soil_blockchain::Error),
 	/// Runtime Api error.
 	#[error(transparent)]
-	RuntimeApi(soil_api::ApiError),
+	RuntimeApi(subsoil::api::ApiError),
 	/// Fork tree error
 	#[error(transparent)]
 	ForkTree(Box<fork_tree::Error<soil_blockchain::Error>>),

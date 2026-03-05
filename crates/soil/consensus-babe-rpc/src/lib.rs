@@ -38,7 +38,7 @@ use serde::{Deserialize, Serialize};
 #[cfg(feature = "std")]
 use sc_consensus_babe::{authorship, BabeWorkerHandle};
 #[cfg(feature = "std")]
-use soil_api::ProvideRuntimeApi;
+use subsoil::api::ProvideRuntimeApi;
 #[cfg(feature = "std")]
 use subsoil::application_crypto::AppCrypto;
 #[cfg(feature = "std")]

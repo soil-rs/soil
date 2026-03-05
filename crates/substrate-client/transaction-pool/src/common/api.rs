@@ -27,7 +27,7 @@ use async_trait::async_trait;
 use codec::Encode;
 use futures::future::{Future, FutureExt};
 use prometheus_endpoint::Registry as PrometheusRegistry;
-use soil_api::{ApiExt, ProvideRuntimeApi};
+use subsoil::api::{ApiExt, ProvideRuntimeApi};
 use soil_blockchain::{HeaderMetadata, TreeRoute};
 use soil_client_api::{blockchain::HeaderBackend, BlockBackend};
 use subsoil::core::traits::SpawnEssentialNamed;
@@ -344,7 +344,7 @@ where
 				))
 		}?;
 
-		use soil_api::Core;
+		use subsoil::api::Core;
 
 		subsoil::within_span!(
 			subsoil::tracing::Level::TRACE, "runtime::validate_transaction";

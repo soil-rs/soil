@@ -20,7 +20,7 @@
 use super::Error;
 
 use sc_consensus::BlockImportParams;
-use soil_api::StorageProof;
+use subsoil::api::StorageProof;
 use soil_inherents::InherentData;
 use subsoil::runtime::{traits::Block as BlockT, Digest};
 

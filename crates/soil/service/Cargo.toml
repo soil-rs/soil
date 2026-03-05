@@ -53,7 +53,6 @@ soil-utils = { workspace = true, default-features = true, optional = true}
 schnellru = { workspace = true, optional = true}
 serde = { workspace = true, default-features = true, optional = true}
 serde_json = { workspace = true, default-features = true, optional = true}
-soil-api = { workspace = true, default-features = true, optional = true}
 soil-blockchain = { workspace = true, default-features = true, optional = true}
 soil-consensus = { workspace = true, default-features = true, optional = true}
 soil-session = { workspace = true, default-features = true, optional = true}
@@ -93,7 +92,6 @@ std = [
 	"schnellru",
 	"serde",
 	"serde_json",
-	"soil-api",
 	"soil-blockchain",
 	"soil-chain-spec",
 	"soil-client-api",
@@ -124,7 +122,6 @@ std = [
 	"tokio",
 	"tracing",
 	"tracing-futures",
-	"soil-api/std",
 	"soil-chain-spec/std",
 	"soil-client-api/std",
 	"soil-client-db/std",
@@ -146,14 +143,12 @@ std = [
 	"soil-transaction-pool/std",
 	"soil-transaction-pool-api/std",
 	"soil-transaction-storage-proof/std",
-	"soil-utils/std",
-]
+	"soil-utils/std"]
 default = ["std", "rocksdb"]
 # The RocksDB feature activates the RocksDB database backend. If it is not activated, and you pass
 # a path to a database, an error will be produced at runtime.
 rocksdb = ["soil-client-db/rocksdb"]
 runtime-benchmarks = [
 	"soil-client-db/runtime-benchmarks",
-	"subsoil/runtime-benchmarks",
-]
+	"subsoil/runtime-benchmarks"]
 jemalloc-allocator = ["soil-client-db/jemalloc-allocator"]

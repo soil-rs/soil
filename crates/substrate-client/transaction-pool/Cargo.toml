@@ -33,7 +33,6 @@ soil-client-api = { workspace = true, default-features = true }
 soil-transaction-pool-api = { workspace = true, default-features = true }
 soil-utils = { workspace = true, default-features = true }
 serde = { features = ["derive"], workspace = true, default-features = true }
-soil-api = { workspace = true, default-features = true }
 soil-blockchain = { workspace = true, default-features = true }
 subsoil-crypto-hashing = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }

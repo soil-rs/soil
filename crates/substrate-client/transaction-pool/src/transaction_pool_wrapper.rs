@@ -41,7 +41,7 @@ pub struct TransactionPoolWrapper<Block, Client>(
 )
 where
 	Block: BlockT,
-	Client: soil_api::ProvideRuntimeApi<Block>
+	Client: subsoil::api::ProvideRuntimeApi<Block>
 		+ soil_client_api::BlockBackend<Block>
 		+ soil_client_api::blockchain::HeaderBackend<Block>
 		+ subsoil::runtime::traits::BlockIdTo<Block>
@@ -53,7 +53,7 @@ where
 impl<Block, Client> TransactionPool for TransactionPoolWrapper<Block, Client>
 where
 	Block: BlockT,
-	Client: soil_api::ProvideRuntimeApi<Block>
+	Client: subsoil::api::ProvideRuntimeApi<Block>
 		+ soil_client_api::BlockBackend<Block>
 		+ soil_client_api::blockchain::HeaderBackend<Block>
 		+ subsoil::runtime::traits::BlockIdTo<Block>
@@ -152,7 +152,7 @@ where
 impl<Block, Client> MaintainedTransactionPool for TransactionPoolWrapper<Block, Client>
 where
 	Block: BlockT,
-	Client: soil_api::ProvideRuntimeApi<Block>
+	Client: subsoil::api::ProvideRuntimeApi<Block>
 		+ soil_client_api::BlockBackend<Block>
 		+ soil_client_api::blockchain::HeaderBackend<Block>
 		+ subsoil::runtime::traits::BlockIdTo<Block>
@@ -168,7 +168,7 @@ where
 impl<Block, Client> LocalTransactionPool for TransactionPoolWrapper<Block, Client>
 where
 	Block: BlockT,
-	Client: soil_api::ProvideRuntimeApi<Block>
+	Client: subsoil::api::ProvideRuntimeApi<Block>
 		+ soil_client_api::BlockBackend<Block>
 		+ soil_client_api::blockchain::HeaderBackend<Block>
 		+ subsoil::runtime::traits::BlockIdTo<Block>

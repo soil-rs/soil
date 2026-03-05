@@ -52,7 +52,7 @@ use sc_consensus::{
 	BasicQueue, BlockCheckParams, BlockImport, BlockImportParams, BoxBlockImport,
 	BoxJustificationImport, ForkChoiceStrategy, ImportResult, Verifier,
 };
-use soil_api::ProvideRuntimeApi;
+use subsoil::api::ProvideRuntimeApi;
 use soil_block_builder::BlockBuilder as BlockBuilderApi;
 use soil_blockchain::HeaderBackend;
 use soil_client_api::{self, backend::AuxStore, BlockOf, BlockchainEvents};

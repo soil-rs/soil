@@ -33,7 +33,6 @@ soil-client-db = { features = ["rocksdb"], workspace = true, default-features = 
 sc-consensus = { workspace = true, default-features = true }
 soil-executor = { workspace = true, default-features = true }
 soil-service = { features = ["rocksdb"], workspace = true, default-features = true }
-soil-api = { workspace = true, default-features = true }
 soil-block-builder = { workspace = true, default-features = true }
 soil-blockchain = { workspace = true, default-features = true }
 soil-consensus = { workspace = true, default-features = true }

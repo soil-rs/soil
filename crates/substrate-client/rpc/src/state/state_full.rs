@@ -33,7 +33,7 @@ use crate::{
 use futures::{future, stream, StreamExt};
 use jsonrpsee::{core::async_trait, types::ErrorObject, PendingSubscriptionSink};
 use sc_tracing::block::TracingExecuteBlock;
-use soil_api::{CallApiAt, Metadata, ProvideRuntimeApi};
+use subsoil::api::{CallApiAt, Metadata, ProvideRuntimeApi};
 use soil_blockchain::{
 	CachedHeaderMetadata, Error as ClientError, HeaderBackend, HeaderMetadata,
 	Result as ClientResult,

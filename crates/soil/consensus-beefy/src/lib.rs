@@ -540,7 +540,7 @@ pub trait AncestryHelperWeightInfo<Header: HeaderT>: AncestryHelper<Header> {
 /// sure that all usages of `OpaqueKeyOwnershipProof` refer to the same type.
 pub type OpaqueKeyOwnershipProof = OpaqueValue;
 
-soil_api::decl_runtime_apis! {
+subsoil::api::decl_runtime_apis! {
 	/// API necessary for BEEFY voters.
 	#[api_version(6)]
 	pub trait BeefyApi<AuthorityId> where

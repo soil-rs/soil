@@ -36,7 +36,6 @@ sc-rpc = { workspace = true, default-features = true, optional = true}
 soil-transaction-pool-api = { workspace = true, default-features = true, optional = true}
 schnellru = { workspace = true, optional = true}
 serde = { workspace = true, default-features = true, optional = true}
-soil-api = { workspace = true, default-features = true, optional = true}
 soil-blockchain = { workspace = true, default-features = true, optional = true}
 soil-rpc = { workspace = true, default-features = true, optional = true}
 thiserror = { workspace = true, optional = true}
@@ -60,7 +59,6 @@ std = [
 	"sc-rpc",
 	"schnellru",
 	"serde",
-	"soil-api",
 	"soil-blockchain",
 	"soil-chain-spec",
 	"soil-client-api",
@@ -69,13 +67,11 @@ std = [
 	"thiserror",
 	"tokio",
 	"tokio-stream",
-	"soil-api/std",
 	"soil-chain-spec/std",
 	"soil-client-api/std",
 	"subsoil/std",
 	"subsoil/std",
-	"soil-transaction-pool-api/std",
-]
+	"soil-transaction-pool-api/std"]
 
 [dev-dependencies]
 assert_matches = { workspace = true }

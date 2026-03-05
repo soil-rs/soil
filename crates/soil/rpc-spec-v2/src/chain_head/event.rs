@@ -19,7 +19,7 @@
 //! The chain head's event returned as json compatible object.
 
 use serde::{ser::SerializeStruct, Deserialize, Serialize, Serializer};
-use soil_api::ApiError;
+use subsoil::api::ApiError;
 use subsoil::version::RuntimeVersion;
 use std::collections::BTreeMap;
 

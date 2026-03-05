@@ -62,7 +62,7 @@ use log::{debug, error, info};
 use parking_lot::RwLock;
 use prometheus_endpoint::{PrometheusError, Registry};
 use sc_consensus::BlockImport;
-use soil_api::ProvideRuntimeApi;
+use subsoil::api::ProvideRuntimeApi;
 use subsoil::application_crypto::AppCrypto;
 use soil_blockchain::{
 	Error as ClientError, HeaderBackend, HeaderMetadata, Result as ClientResult,
@@ -290,7 +290,7 @@ pub enum Error {
 
 	/// A runtime api request failed.
 	#[error("runtime API request failed: {0}")]
-	RuntimeApi(soil_api::ApiError),
+	RuntimeApi(subsoil::api::ApiError),
 }
 
 /// Something which can determine if a block is known.

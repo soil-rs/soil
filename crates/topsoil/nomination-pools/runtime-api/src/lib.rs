@@ -23,7 +23,7 @@
 use codec::Codec;
 use topsoil_nomination_pools::PoolId;
 
-soil_api::decl_runtime_apis! {
+subsoil::api::decl_runtime_apis! {
 	/// Runtime api for accessing information about nomination pools.
 	pub trait NominationPoolsApi<AccountId, Balance>
 		where

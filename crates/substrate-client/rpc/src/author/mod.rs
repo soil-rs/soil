@@ -28,7 +28,7 @@ use crate::{
 };
 use codec::{Decode, Encode};
 use jsonrpsee::{core::async_trait, types::ErrorObject, Extensions, PendingSubscriptionSink};
-use soil_api::{ApiExt, ProvideRuntimeApi};
+use subsoil::api::{ApiExt, ProvideRuntimeApi};
 use soil_blockchain::HeaderBackend;
 use subsoil::core::Bytes;
 use subsoil::keystore::{KeystoreExt, KeystorePtr};

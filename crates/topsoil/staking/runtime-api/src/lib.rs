@@ -21,7 +21,7 @@
 
 use codec::Codec;
 
-soil_api::decl_runtime_apis! {
+subsoil::api::decl_runtime_apis! {
 	pub trait StakingApi<Balance, AccountId>
 		where
 			Balance: Codec,

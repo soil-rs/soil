@@ -20,7 +20,7 @@ use substrate_test_runtime_client::runtime::Block;
 
 struct Runtime {}
 
-soil_api::decl_runtime_apis! {
+subsoil::api::decl_runtime_apis! {
 	#[api_version(2)]
 	pub trait Api {
 		fn test1();
@@ -32,14 +32,14 @@ soil_api::decl_runtime_apis! {
 	}
 }
 
-soil_api::impl_runtime_apis! {
+subsoil::api::impl_runtime_apis! {
 	#[api_version(2)]
 	impl self::Api<Block> for Runtime {
 		fn test1() {}
 		fn test2() {}
 	}
 
-	impl soil_api::Core<Block> for Runtime {
+	impl subsoil::api::Core<Block> for Runtime {
 		fn version() -> subsoil::version::RuntimeVersion {
 			unimplemented!()
 		}

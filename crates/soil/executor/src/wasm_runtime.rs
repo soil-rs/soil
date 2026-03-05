@@ -336,14 +336,14 @@ fn decode_version(mut version: &[u8]) -> Result<RuntimeVersion, WasmError> {
 }
 
 fn decode_runtime_apis(apis: &[u8]) -> Result<Vec<([u8; 8], u32)>, WasmError> {
-	use soil_api::RUNTIME_API_INFO_SIZE;
+	use subsoil::api::RUNTIME_API_INFO_SIZE;
 
 	apis.chunks(RUNTIME_API_INFO_SIZE)
 		.map(|chunk| {
 			// `chunk` can be less than `RUNTIME_API_INFO_SIZE` if the total length of `apis`
 			// doesn't completely divide by `RUNTIME_API_INFO_SIZE`.
 			<[u8; RUNTIME_API_INFO_SIZE]>::try_from(chunk)
-				.map(soil_api::deserialize_runtime_api_info)
+				.map(subsoil::api::deserialize_runtime_api_info)
 				.map_err(|_| WasmError::Other("a clipped runtime api info declaration".to_owned()))
 		})
 		.collect::<Result<Vec<_>, WasmError>>()
@@ -448,7 +448,7 @@ mod tests {
 	use super::*;
 	use alloc::borrow::Cow;
 	use codec::Encode;
-	use soil_api::{Core, RuntimeApiInfo};
+	use subsoil::api::{Core, RuntimeApiInfo};
 	use subsoil::version::{create_apis_vec, RuntimeVersion};
 	use subsoil::wasm_interface::HostFunctions;
 	use substrate_test_runtime::Block;

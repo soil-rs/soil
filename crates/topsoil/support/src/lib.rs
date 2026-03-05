@@ -98,9 +98,9 @@ pub mod weights;
 #[doc(hidden)]
 pub mod unsigned {
 	#[doc(hidden)]
-	pub use crate::subsoil::runtime::traits::ValidateUnsigned;
+	pub use subsoil::runtime::traits::ValidateUnsigned;
 	#[doc(hidden)]
-	pub use crate::subsoil::runtime::transaction_validity::{
+	pub use subsoil::runtime::transaction_validity::{
 		TransactionSource, TransactionValidity, TransactionValidityError, UnknownTransaction,
 	};
 }
@@ -1297,7 +1297,7 @@ pub mod pallet_macros {
 	/// accepts view function queries and dispatches them to the right pallet. You can do that
 	/// by implementing the
 	/// [`RuntimeViewFunction`](topsoil_support::view_functions::runtime_api::RuntimeViewFunction)
-	/// trait for the runtime inside an [`impl_runtime_apis!`](soil_api::impl_runtime_apis)
+	/// trait for the runtime inside an [`impl_runtime_apis!`](subsoil::api::impl_runtime_apis)
 	/// block.
 	///
 	/// The `RuntimeViewFunction` trait implements a hashing-based dispatching mechanism to

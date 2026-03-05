@@ -166,7 +166,7 @@ pub struct PoolInfo<AccountId, AssetId, Balance, BlockNumber> {
 	account: AccountId,
 }
 
-soil_api::decl_runtime_apis! {
+subsoil::api::decl_runtime_apis! {
 	/// The runtime API for the asset rewards pallet.
 	pub trait AssetRewards<Cost: MaybeDisplay + Codec> {
 		/// Get the cost of creating a pool.

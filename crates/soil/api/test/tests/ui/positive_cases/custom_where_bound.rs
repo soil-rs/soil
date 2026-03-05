@@ -31,20 +31,20 @@ impl CustomTrait for SomeImpl {}
 #[derive(Encode, Decode, TypeInfo)]
 pub struct SomeOtherType<C: CustomTrait>(C);
 
-soil_api::decl_runtime_apis! {
+subsoil::api::decl_runtime_apis! {
 	pub trait Api<A> where A: CustomTrait {
 		fn test() -> A;
 		fn test2() -> SomeOtherType<A>;
 	}
 }
 
-soil_api::impl_runtime_apis! {
+subsoil::api::impl_runtime_apis! {
 	impl self::Api<Block, SomeImpl> for Runtime {
 		fn test() -> SomeImpl { SomeImpl }
 		fn test2() -> SomeOtherType<SomeImpl> { SomeOtherType(SomeImpl) }
 	}
 
-	impl soil_api::Core<Block> for Runtime {
+	impl subsoil::api::Core<Block> for Runtime {
 		fn version() -> subsoil::version::RuntimeVersion {
 			unimplemented!()
 		}

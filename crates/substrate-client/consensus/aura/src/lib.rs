@@ -40,7 +40,7 @@ use sc_consensus_slots::{
 	BackoffAuthoringBlocksStrategy, InherentDataProviderExt, SimpleSlotWorkerToSlotWorker,
 	SlotInfo, StorageChanges,
 };
-use soil_api::{Core, ProvideRuntimeApi};
+use subsoil::api::{Core, ProvideRuntimeApi};
 use subsoil::application_crypto::AppPublic;
 use soil_blockchain::HeaderBackend;
 use soil_client_api::{backend::AuxStore, BlockOf};

@@ -28,7 +28,7 @@ use jsonrpsee::{
 		ErrorObjectOwned,
 	},
 };
-use soil_api::ProvideRuntimeApi;
+use subsoil::api::ProvideRuntimeApi;
 use soil_blockchain::HeaderBackend;
 use subsoil::core::Bytes;
 use soil_rpc::number::NumberOrHex;

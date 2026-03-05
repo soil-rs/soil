@@ -62,7 +62,7 @@ topsoil_support::construct_runtime!(
 	}
 );
 
-soil_api::decl_runtime_apis! {
+subsoil::api::decl_runtime_apis! {
 	/// ApiWithCustomVersion trait documentation
 	///
 	/// Documentation on multiline.
@@ -84,7 +84,7 @@ soil_api::decl_runtime_apis! {
 mod apis {
 	use super::{Block, BlockT, Runtime};
 
-	soil_api::impl_runtime_apis! {
+	subsoil::api::impl_runtime_apis! {
 		#[allow(deprecated)]
 		impl crate::Api<Block> for Runtime {
 			fn test(_data: u64) {
@@ -104,7 +104,7 @@ mod apis {
 			fn wild_card(_: u32) {}
 		}
 
-		impl soil_api::Core<Block> for Runtime {
+		impl subsoil::api::Core<Block> for Runtime {
 			fn version() -> subsoil::version::RuntimeVersion {
 				unimplemented!()
 			}

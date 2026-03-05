@@ -24,7 +24,6 @@ topsoil-mmr = { workspace = true }
 topsoil-session = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { optional = true, workspace = true, default-features = true }
-soil-api = { workspace = true }
 soil-consensus-beefy = { workspace = true }
 
 [dev-dependencies]
@@ -48,11 +47,9 @@ std = [
 	"topsoil-session/std",
 	"scale-info/std",
 	"serde",
-	"soil-api/std",
 	"soil-consensus-beefy/std",
 	"subsoil/std",
-	"soil-staking/std",
-]
+	"soil-staking/std"]
 try-runtime = [
 	"topsoil-support/try-runtime",
 	"topsoil-system/try-runtime",
@@ -60,8 +57,7 @@ try-runtime = [
 	"topsoil-beefy/try-runtime",
 	"topsoil-mmr/try-runtime",
 	"topsoil-session/try-runtime",
-	"subsoil/try-runtime",
-]
+	"subsoil/try-runtime"]
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",
 	"topsoil-support/runtime-benchmarks",
@@ -70,5 +66,4 @@ runtime-benchmarks = [
 	"topsoil-mmr/runtime-benchmarks",
 	"topsoil-session/runtime-benchmarks",
 	"subsoil/runtime-benchmarks",
-	"soil-staking/runtime-benchmarks",
-]
+	"soil-staking/runtime-benchmarks"]

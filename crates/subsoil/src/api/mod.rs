@@ -44,7 +44,7 @@
 //! # Logging
 //!
 //! Substrate supports logging from the runtime in native and in wasm. For that purpose it provides
-//! the [`RuntimeLogger`](subsoil::runtime::runtime_logger::RuntimeLogger). This runtime logger is
+//! the [`RuntimeLogger`](crate::runtime::runtime_logger::RuntimeLogger). This runtime logger is
 //! automatically enabled for each call into the runtime through the runtime api. As logging
 //! introduces extra code that isn't actually required for the logic of your runtime and also
 //! increases the final wasm blob size, it is recommended to disable the logging for on-chain
@@ -65,13 +65,6 @@
 //! by the trait function. The macros take care to encode the parameters and to decode the return
 //! value.
 
-#![cfg_attr(not(feature = "std"), no_std)]
-
-// Make doc tests happy
-extern crate self as soil_api;
-
-extern crate alloc;
-
 /// Private exports used by the macros.
 ///
 /// This is seen as internal API and can change at any point.
@@ -80,10 +73,10 @@ pub mod __private {
 	#[cfg(feature = "std")]
 	mod std_imports {
 		pub use hash_db::Hasher;
-		pub use subsoil::core::traits::CallContext;
-		pub use subsoil::externalities::{Extension, Extensions, TransactionType};
-		pub use subsoil::runtime::StateVersion;
-		pub use subsoil::state_machine::{
+		pub use crate::core::traits::CallContext;
+		pub use crate::externalities::{Extension, Extensions, TransactionType};
+		pub use crate::runtime::StateVersion;
+		pub use crate::state_machine::{
 			Backend as StateBackend, InMemoryBackend, OverlayedChanges, StorageProof, TrieBackend,
 			TrieBackendBuilder,
 		};
@@ -91,46 +84,46 @@ pub mod __private {
 	#[cfg(feature = "std")]
 	pub use std_imports::*;
 
-	pub use crate::*;
+	pub use crate::api::*;
 	pub use alloc::vec;
 	pub use codec::{self, Decode, DecodeLimit, Encode};
-	pub use core::{mem, slice};
+	pub use ::core::{mem, slice};
 	pub use scale_info;
-	pub use subsoil::core::offchain;
+	pub use crate::core::offchain;
 	#[cfg(not(feature = "std"))]
-	pub use subsoil::core::to_substrate_wasm_fn_return_value;
+	pub use crate::core::to_substrate_wasm_fn_return_value;
 	#[cfg(feature = "frame-metadata")]
-	pub use subsoil::metadata_ir::{self as metadata_ir, frame_metadata as metadata};
-	pub use subsoil::runtime::{
+	pub use crate::metadata_ir::{self as metadata_ir, frame_metadata as metadata};
+	pub use crate::runtime::{
 		generic::BlockId,
 		traits::{Block as BlockT, Hash as HashT, HashingFor, Header as HeaderT, NumberFor},
 		transaction_validity::TransactionValidity,
 		ExtrinsicInclusionMode, TransactionOutcome,
 	};
-	pub use subsoil::create_apis_vec;
-	pub use subsoil::version::{ApiId, ApisVec, RuntimeVersion};
+	pub use crate::create_apis_vec;
+	pub use crate::version::{ApiId, ApisVec, RuntimeVersion};
 
 	#[cfg(all(any(target_arch = "riscv32", target_arch = "riscv64"), substrate_runtime))]
-	pub use subsoil::runtime_interface::polkavm::{polkavm_abi, polkavm_export};
+	pub use crate::runtime_interface::polkavm::{polkavm_abi, polkavm_export};
 }
 
 #[cfg(feature = "std")]
-pub use subsoil::core::traits::CallContext;
-use subsoil::core::OpaqueMetadata;
+pub use crate::core::traits::CallContext;
+use crate::core::OpaqueMetadata;
 #[cfg(feature = "std")]
-use subsoil::externalities::{Extension, Extensions};
+use crate::externalities::{Extension, Extensions};
 #[cfg(feature = "std")]
-use subsoil::runtime::traits::HashingFor;
+use crate::runtime::traits::HashingFor;
 #[cfg(feature = "std")]
-pub use subsoil::runtime::TransactionOutcome;
-use subsoil::runtime::{traits::Block as BlockT, ExtrinsicInclusionMode};
+pub use crate::runtime::TransactionOutcome;
+use crate::runtime::{traits::Block as BlockT, ExtrinsicInclusionMode};
 #[cfg(feature = "std")]
-pub use subsoil::state_machine::StorageProof;
+pub use crate::state_machine::StorageProof;
 #[cfg(feature = "std")]
-use subsoil::state_machine::{backend::AsTrieBackend, Backend as StateBackend, OverlayedChanges};
-use subsoil::version::RuntimeVersion;
+use crate::state_machine::{backend::AsTrieBackend, Backend as StateBackend, OverlayedChanges};
+use crate::version::RuntimeVersion;
 #[cfg(feature = "std")]
-use std::cell::RefCell;
+use ::std::cell::RefCell;
 
 /// Declares given traits as runtime apis.
 ///
@@ -148,7 +141,7 @@ use std::cell::RefCell;
 /// # Example
 ///
 /// ```rust
-/// soil_api::decl_runtime_apis! {
+/// subsoil::api::decl_runtime_apis! {
 ///     /// Declare the api trait.
 ///     pub trait Balance {
 ///         /// Get the balance.
@@ -182,7 +175,7 @@ use std::cell::RefCell;
 /// attribute, this method will be used to call the current default implementation.
 ///
 /// ```rust
-/// soil_api::decl_runtime_apis! {
+/// subsoil::api::decl_runtime_apis! {
 ///     /// Declare the api trait.
 ///     #[api_version(2)]
 ///     pub trait Balance {
@@ -214,7 +207,7 @@ use std::cell::RefCell;
 /// available only on a testnet. You can define one stable and one development version. This
 /// can be done like this:
 /// ```rust
-/// soil_api::decl_runtime_apis! {
+/// subsoil::api::decl_runtime_apis! {
 ///     /// Declare the api trait.
 /// 	#[api_version(2)]
 ///     pub trait Balance {
@@ -235,7 +228,7 @@ use std::cell::RefCell;
 /// in version 2. Version 2 in this case is considered the default/base version of the api.
 /// More than two versions can be defined this way. For example:
 /// ```rust
-/// soil_api::decl_runtime_apis! {
+/// subsoil::api::decl_runtime_apis! {
 ///     /// Declare the api trait.
 ///     #[api_version(2)]
 ///     pub trait Balance {
@@ -293,7 +286,7 @@ pub use subsoil_api_proc_macro::decl_runtime_apis;
 /// # /// in a real runtime.
 /// # pub enum Runtime {}
 /// #
-/// # soil_api::decl_runtime_apis! {
+/// # subsoil::api::decl_runtime_apis! {
 /// #     /// Declare the api trait.
 /// #     pub trait Balance {
 /// #         /// Get the balance.
@@ -307,8 +300,8 @@ pub use subsoil_api_proc_macro::decl_runtime_apis;
 /// # }
 ///
 /// /// All runtime api implementations need to be done in one call of the macro!
-/// soil_api::impl_runtime_apis! {
-/// #   impl soil_api::Core<Block> for Runtime {
+/// subsoil::api::impl_runtime_apis! {
+/// #   impl subsoil::api::Core<Block> for Runtime {
 /// #       fn version() -> subsoil::version::RuntimeVersion {
 /// #           unimplemented!()
 /// #       }
@@ -356,7 +349,7 @@ pub use subsoil_api_proc_macro::decl_runtime_apis;
 /// should specify which version it implements by adding `api_version` attribute to the
 /// `impl` block. If omitted - the base/default version is implemented. Here is an example:
 /// ```ignore
-/// soil_api::impl_runtime_apis! {
+/// subsoil::api::impl_runtime_apis! {
 ///     #[api_version(3)]
 ///     impl self::Balance<Block> for Runtime {
 ///          // implementation
@@ -373,7 +366,7 @@ pub use subsoil_api_proc_macro::decl_runtime_apis;
 /// feature flag. You can do it this way:
 /// ```ignore
 /// pub enum Runtime {}
-/// soil_api::decl_runtime_apis! {
+/// subsoil::api::decl_runtime_apis! {
 ///     pub trait ApiWithStagingMethod {
 ///         fn stable_one(data: u64);
 ///
@@ -382,7 +375,7 @@ pub use subsoil_api_proc_macro::decl_runtime_apis;
 ///     }
 /// }
 ///
-/// soil_api::impl_runtime_apis! {
+/// subsoil::api::impl_runtime_apis! {
 ///     #[cfg_attr(feature = "enable-staging-api", api_version(99))]
 ///     impl self::ApiWithStagingMethod<Block> for Runtime {
 ///         fn stable_one(_: u64) {}
@@ -432,7 +425,7 @@ pub use subsoil_api_proc_macro::impl_runtime_apis;
 /// # use subsoil::runtime::traits::Block as BlockT;
 /// # use soil_test_primitives::Block;
 /// #
-/// # soil_api::decl_runtime_apis! {
+/// # subsoil::api::decl_runtime_apis! {
 /// #     /// Declare the api trait.
 /// #     pub trait Balance {
 /// #         /// Get the balance.
@@ -449,7 +442,7 @@ pub use subsoil_api_proc_macro::impl_runtime_apis;
 /// }
 ///
 /// /// All runtime api mock implementations need to be done in one call of the macro!
-/// soil_api::mock_impl_runtime_apis! {
+/// subsoil::api::mock_impl_runtime_apis! {
 ///     impl Balance<Block> for MockApi {
 ///         /// Here we take the `&self` to access the instance.
 ///         fn get_balance(&self) -> u64 {
@@ -474,7 +467,7 @@ pub use subsoil_api_proc_macro::impl_runtime_apis;
 ///
 /// This attribute can be placed above individual function in the mock implementation to
 /// request more control over the function declaration. From the client side each runtime api
-/// function is called with the `at` parameter that is a [`Hash`](subsoil::runtime::traits::Hash).
+/// function is called with the `at` parameter that is a [`Hash`](crate::runtime::traits::Hash).
 /// When using the `advanced` attribute, the macro expects that the first parameter of the
 /// function is this `at` parameter. Besides that the macro also doesn't do the automatic
 /// return value rewrite, which means that full return value must be specified. The full return
@@ -487,7 +480,7 @@ pub use subsoil_api_proc_macro::impl_runtime_apis;
 /// # use soil_test_primitives::Block;
 /// # use codec;
 /// #
-/// # soil_api::decl_runtime_apis! {
+/// # subsoil::api::decl_runtime_apis! {
 /// #     /// Declare the api trait.
 /// #     pub trait Balance {
 /// #         /// Get the balance.
@@ -500,16 +493,16 @@ pub use subsoil_api_proc_macro::impl_runtime_apis;
 ///     balance: u64,
 /// }
 ///
-/// soil_api::mock_impl_runtime_apis! {
+/// subsoil::api::mock_impl_runtime_apis! {
 ///     impl Balance<Block> for MockApi {
 ///         #[advanced]
-///         fn get_balance(&self, at: <Block as BlockT>::Hash) -> Result<u64, soil_api::ApiError> {
+///         fn get_balance(&self, at: <Block as BlockT>::Hash) -> Result<u64, subsoil::api::ApiError> {
 ///             println!("Being called at: {}", at);
 ///
 ///             Ok(self.balance.into())
 ///         }
 ///         #[advanced]
-///         fn set_balance(at: <Block as BlockT>::Hash, val: u64) -> Result<(), soil_api::ApiError> {
+///         fn set_balance(at: <Block as BlockT>::Hash, val: u64) -> Result<(), subsoil::api::ApiError> {
 ///             println!("Being called at: {}", at);
 ///
 ///             Ok(().into())
@@ -523,13 +516,13 @@ pub use subsoil_api_proc_macro::mock_impl_runtime_apis;
 
 /// A type that records all accessed trie nodes and generates a proof out of it.
 #[cfg(feature = "std")]
-pub type ProofRecorder<B> = subsoil::trie::recorder::Recorder<HashingFor<B>>;
+pub type ProofRecorder<B> = crate::trie::recorder::Recorder<HashingFor<B>>;
 
 #[cfg(feature = "std")]
-pub type ProofRecorderIgnoredNodes<B> = subsoil::trie::recorder::IgnoredNodes<<B as BlockT>::Hash>;
+pub type ProofRecorderIgnoredNodes<B> = crate::trie::recorder::IgnoredNodes<<B as BlockT>::Hash>;
 
 #[cfg(feature = "std")]
-pub type StorageChanges<Block> = subsoil::state_machine::StorageChanges<HashingFor<Block>>;
+pub type StorageChanges<Block> = crate::state_machine::StorageChanges<HashingFor<Block>>;
 
 /// Something that can be constructed to a runtime api.
 #[cfg(feature = "std")]
@@ -542,10 +535,10 @@ pub trait ConstructRuntimeApi<Block: BlockT, C: CallApiAt<Block>> {
 }
 
 #[docify::export]
-/// Init the [`RuntimeLogger`](subsoil::runtime::runtime_logger::RuntimeLogger).
+/// Init the [`RuntimeLogger`](crate::runtime::runtime_logger::RuntimeLogger).
 pub fn init_runtime_logger() {
 	#[cfg(not(feature = "disable-logging"))]
-	subsoil::runtime::runtime_logger::RuntimeLogger::init();
+	crate::runtime::runtime_logger::RuntimeLogger::init();
 }
 
 /// An error describing which API call failed.
@@ -575,7 +568,7 @@ pub enum ApiError {
 	#[error("The given `StateBackend` isn't a `TrieBackend`.")]
 	StateBackendIsNotTrie,
 	#[error(transparent)]
-	Application(#[from] Box<dyn std::error::Error + Send + Sync>),
+	Application(#[from] Box<dyn ::std::error::Error + Send + Sync>),
 	#[error("Api called for an unknown Block: {0}")]
 	UnknownBlock(String),
 	#[error("Using the same api instance to call into multiple independent blocks.")]
@@ -699,7 +692,7 @@ pub trait CallApiAt<Block: BlockT> {
 }
 
 #[cfg(feature = "std")]
-impl<Block: BlockT, T: CallApiAt<Block>> CallApiAt<Block> for std::sync::Arc<T> {
+impl<Block: BlockT, T: CallApiAt<Block>> CallApiAt<Block> for ::std::sync::Arc<T> {
 	type StateBackend = T::StateBackend;
 
 	fn call_api_at(&self, params: CallApiAtParams<Block>) -> Result<Vec<u8>, ApiError> {
@@ -728,7 +721,7 @@ impl<Block: BlockT, T: CallApiAt<Block>> CallApiAt<Block> for std::sync::Arc<T> 
 
 /// Auxiliary wrapper that holds an api instance and binds it to the given lifetime.
 #[cfg(feature = "std")]
-pub struct ApiRef<'a, T>(T, std::marker::PhantomData<&'a ()>);
+pub struct ApiRef<'a, T>(T, ::std::marker::PhantomData<&'a ()>);
 
 #[cfg(feature = "std")]
 impl<'a, T> From<T> for ApiRef<'a, T> {
@@ -738,7 +731,7 @@ impl<'a, T> From<T> for ApiRef<'a, T> {
 }
 
 #[cfg(feature = "std")]
-impl<'a, T> std::ops::Deref for ApiRef<'a, T> {
+impl<'a, T> ::std::ops::Deref for ApiRef<'a, T> {
 	type Target = T;
 
 	fn deref(&self) -> &Self::Target {
@@ -747,7 +740,7 @@ impl<'a, T> std::ops::Deref for ApiRef<'a, T> {
 }
 
 #[cfg(feature = "std")]
-impl<'a, T> std::ops::DerefMut for ApiRef<'a, T> {
+impl<'a, T> ::std::ops::DerefMut for ApiRef<'a, T> {
 	fn deref_mut(&mut self) -> &mut T {
 		&mut self.0
 	}
@@ -853,6 +846,6 @@ decl_runtime_apis! {
 	}
 }
 
-subsoil::generate_feature_enabled_macro!(std_enabled, feature = "std", $);
-subsoil::generate_feature_enabled_macro!(std_disabled, not(feature = "std"), $);
-subsoil::generate_feature_enabled_macro!(frame_metadata_enabled, feature = "frame-metadata", $);
+crate::generate_feature_enabled_macro!(std_enabled, feature = "std", $);
+crate::generate_feature_enabled_macro!(std_disabled, not(feature = "std"), $);
+crate::generate_feature_enabled_macro!(frame_metadata_enabled, feature = "frame-metadata", $);

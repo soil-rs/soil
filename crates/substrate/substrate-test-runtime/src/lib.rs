@@ -60,7 +60,7 @@ use subsoil::trie::{
 use trie_db::{Trie, TrieMut};
 
 use serde_json::json;
-use soil_api::{decl_runtime_apis, impl_runtime_apis};
+use subsoil::api::{decl_runtime_apis, impl_runtime_apis};
 pub use subsoil::core::hash::H256;
 use soil_genesis_builder::PresetId;
 use soil_inherents::{CheckInherentsResult, InherentData};
@@ -510,7 +510,7 @@ pub const TEST_RUNTIME_BABE_EPOCH_CONFIGURATION: BabeEpochConfiguration = BabeEp
 };
 
 impl_runtime_apis! {
-	impl soil_api::Core<Block> for Runtime {
+	impl subsoil::api::Core<Block> for Runtime {
 		fn version() -> RuntimeVersion {
 			version()
 		}
@@ -526,7 +526,7 @@ impl_runtime_apis! {
 		}
 	}
 
-	impl soil_api::Metadata<Block> for Runtime {
+	impl subsoil::api::Metadata<Block> for Runtime {
 		fn metadata() -> OpaqueMetadata {
 			OpaqueMetadata::new(Runtime::metadata().into())
 		}
@@ -1151,7 +1151,7 @@ mod tests {
 	use codec::Encode;
 	use pretty_assertions::assert_eq;
 	use sc_block_builder::BlockBuilderBuilder;
-	use soil_api::{ApiExt, ProvideRuntimeApi};
+	use subsoil::api::{ApiExt, ProvideRuntimeApi};
 	use soil_consensus::BlockOrigin;
 	use subsoil::core::{storage::well_known_keys::HEAP_PAGES, traits::CallContext};
 	use subsoil::runtime::{

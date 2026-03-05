@@ -34,7 +34,7 @@ use log::{debug, warn};
 use parking_lot::RwLock;
 use prometheus_endpoint::{register, Counter, Gauge, PrometheusError, U64};
 
-use soil_api::ApiExt;
+use subsoil::api::ApiExt;
 use soil_blockchain::HeaderMetadata;
 use soil_client_api::{
 	backend::{apply_aux, Backend as BackendT},

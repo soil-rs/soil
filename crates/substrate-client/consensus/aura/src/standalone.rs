@@ -24,7 +24,7 @@ use log::trace;
 
 use codec::Codec;
 
-use soil_api::{Core, ProvideRuntimeApi};
+use subsoil::api::{Core, ProvideRuntimeApi};
 use subsoil::application_crypto::{AppCrypto, AppPublic};
 use soil_blockchain::Result as CResult;
 use soil_client_api::UsageProvider;

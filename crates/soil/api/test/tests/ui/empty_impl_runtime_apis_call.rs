@@ -19,12 +19,12 @@
 /// runtime.
 struct Runtime {}
 
-soil_api::decl_runtime_apis! {
+subsoil::api::decl_runtime_apis! {
 	pub trait Api {
 		fn test(data: u64);
 	}
 }
 
-soil_api::impl_runtime_apis! {}
+subsoil::api::impl_runtime_apis! {}
 
 fn main() {}

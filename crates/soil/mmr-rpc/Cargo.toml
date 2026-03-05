@@ -18,7 +18,6 @@ targets = ["x86_64-unknown-linux-gnu"]
 codec = { workspace = true, default-features = true, optional = true}
 jsonrpsee = { features = ["client-core", "macros", "server-core"], workspace = true, optional = true}
 serde = { features = ["derive"], workspace = true, default-features = true, optional = true}
-soil-api = { workspace = true, default-features = true, optional = true}
 soil-blockchain = { workspace = true, default-features = true, optional = true}
 subsoil = { workspace = true, default-features = true, optional = true}
 soil-mmr-primitives = { workspace = true, default-features = true, optional = true}
@@ -29,16 +28,13 @@ std = [
 	"codec",
 	"jsonrpsee",
 	"serde",
-	"soil-api",
 	"soil-blockchain",
 	"subsoil",
 	"soil-mmr-primitives",
 	"subsoil",
-	"soil-api/std",
 	"subsoil/std",
 	"soil-mmr-primitives/std",
-	"subsoil/std",
-]
+	"subsoil/std"]
 
 [dev-dependencies]
 serde_json = { workspace = true, default-features = true }

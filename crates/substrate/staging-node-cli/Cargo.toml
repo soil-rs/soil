@@ -125,7 +125,6 @@ sc-tracing = { workspace = true, default-features = true }
 sc-transaction-pool = { workspace = true, default-features = true }
 soil-transaction-pool-api = { workspace = true, default-features = true }
 soil-utils = { workspace = true, default-features = true }
-soil-api = { workspace = true, default-features = true }
 soil-authority-discovery = { workspace = true, default-features = true }
 soil-blockchain = { workspace = true, default-features = true }
 soil-consensus = { workspace = true, default-features = true }
@@ -200,15 +199,12 @@ cli = [
 	"node-inspect",
 	"dep:soil-cli",
 	"dep:soil-storage-monitor",
-	"dep:substrate-build-script-utils",
-]
+	"dep:substrate-build-script-utils"]
 runtime-benchmarks = [
 	"kitchensink-runtime/runtime-benchmarks",
 	"node-inspect?/runtime-benchmarks",
 	"soil-client-db/runtime-benchmarks",
-	"soil-service/runtime-benchmarks",
-]
+	"soil-service/runtime-benchmarks"]
 try-runtime = [
 	"kitchensink-runtime/try-runtime",
-	"substrate-cli-test-utils/try-runtime",
-]
+	"substrate-cli-test-utils/try-runtime"]

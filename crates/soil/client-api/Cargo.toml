@@ -26,7 +26,6 @@ prometheus-endpoint = { workspace = true, default-features = true, optional = tr
 soil-executor = { workspace = true, default-features = true, optional = true}
 soil-transaction-pool-api = { workspace = true, default-features = true, optional = true}
 soil-utils = { workspace = true, default-features = true, optional = true}
-soil-api = { workspace = true, default-features = true, optional = true}
 soil-blockchain = { workspace = true, default-features = true, optional = true}
 soil-consensus = { workspace = true, default-features = true, optional = true}
 subsoil = { workspace = true, default-features = true, optional = true}
@@ -40,7 +39,6 @@ std = [
 	"log",
 	"parking_lot",
 	"prometheus-endpoint",
-	"soil-api",
 	"soil-blockchain",
 	"soil-consensus",
 	"subsoil",
@@ -48,13 +46,11 @@ std = [
 	"subsoil",
 	"soil-transaction-pool-api",
 	"soil-utils",
-	"soil-api/std",
 	"subsoil/std",
 	"soil-executor/std",
 	"subsoil/std",
 	"soil-transaction-pool-api/std",
-	"soil-utils/std",
-]
+	"soil-utils/std"]
 
 [dev-dependencies]
 substrate-test-runtime = { workspace = true }

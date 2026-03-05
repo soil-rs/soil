@@ -406,7 +406,7 @@ pub mod runtime {
 		pub use subsoil::version::NativeVersion;
 
 		/// Macro to implement runtime APIs.
-		pub use soil_api::impl_runtime_apis;
+		pub use subsoil::api::impl_runtime_apis;
 
 		// Types often used in the runtime APIs.
 		pub use subsoil::core::OpaqueMetadata;
@@ -434,7 +434,7 @@ pub mod runtime {
 	// moved to file similarly.
 	#[allow(ambiguous_glob_reexports)]
 	pub mod apis {
-		pub use soil_api::{self, *};
+		pub use subsoil::api::{self, *};
 		pub use soil_block_builder::*;
 		pub use soil_consensus_aura::*;
 		pub use soil_consensus_grandpa::*;
@@ -630,8 +630,6 @@ pub mod deps {
 	pub use codec;
 	pub use scale_info;
 
-	#[cfg(feature = "runtime")]
-	pub use soil_api;
 	#[cfg(feature = "runtime")]
 	pub use soil_block_builder;
 	#[cfg(feature = "runtime")]

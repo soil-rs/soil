@@ -35,7 +35,7 @@ use tracing::{
 };
 
 use crate::{SpanDatum, TraceEvent, Values};
-use soil_api::{Core, ProvideRuntimeApi};
+use subsoil::api::{Core, ProvideRuntimeApi};
 use soil_blockchain::HeaderBackend;
 use soil_client_api::BlockBackend;
 use subsoil::core::hexdisplay::HexDisplay;

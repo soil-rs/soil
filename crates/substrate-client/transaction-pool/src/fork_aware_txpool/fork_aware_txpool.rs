@@ -2069,7 +2069,7 @@ where
 impl<Block, Client> ForkAwareTxPool<FullChainApi<Client, Block>, Block>
 where
 	Block: BlockT,
-	Client: soil_api::ProvideRuntimeApi<Block>
+	Client: subsoil::api::ProvideRuntimeApi<Block>
 		+ soil_client_api::BlockBackend<Block>
 		+ soil_client_api::blockchain::HeaderBackend<Block>
 		+ subsoil::runtime::traits::BlockIdTo<Block>

@@ -120,7 +120,7 @@ pub trait ViewFunction: DecodeAll {
 pub mod runtime_api {
 	use super::*;
 
-	soil_api::decl_runtime_apis! {
+	subsoil::api::decl_runtime_apis! {
 		#[api_version(1)]
 		/// Runtime API for executing view functions
 		pub trait RuntimeViewFunction {

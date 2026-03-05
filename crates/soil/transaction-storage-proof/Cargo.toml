@@ -19,7 +19,6 @@ targets = ["x86_64-unknown-linux-gnu"]
 async-trait = { optional = true, workspace = true }
 codec = { features = ["derive"], workspace = true }
 scale-info = { features = ["derive"], workspace = true }
-soil-api = { workspace = true }
 subsoil = { optional = true, workspace = true }
 soil-inherents = { workspace = true }
 
@@ -29,8 +28,6 @@ std = [
 	"async-trait",
 	"codec/std",
 	"scale-info/std",
-	"soil-api/std",
 	"subsoil/std",
 	"soil-inherents/std",
-	"subsoil/std",
-]
+	"subsoil/std"]

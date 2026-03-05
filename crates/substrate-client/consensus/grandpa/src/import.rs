@@ -26,7 +26,7 @@ use sc_consensus::{
 	shared_data::{SharedDataLocked, SharedDataLockedUpgradable},
 	BlockCheckParams, BlockImport, BlockImportParams, ImportResult, JustificationImport,
 };
-use soil_api::{Core, RuntimeApiInfo};
+use subsoil::api::{Core, RuntimeApiInfo};
 use soil_blockchain::BlockStatus;
 use soil_client_api::{backend::Backend, utils::is_descendent_of};
 use soil_consensus::{BlockOrigin, Error as ConsensusError, SelectChain};

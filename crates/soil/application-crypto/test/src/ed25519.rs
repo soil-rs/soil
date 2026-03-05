@@ -17,7 +17,7 @@
 
 //! Integration tests for ed25519
 
-use soil_api::{ApiExt, ProvideRuntimeApi};
+use subsoil::api::{ApiExt, ProvideRuntimeApi};
 use subsoil::application_crypto::{ed25519::AppPair, RuntimePublic};
 use subsoil::core::{
 	crypto::{ByteArray, Pair},

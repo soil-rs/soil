@@ -20,7 +20,7 @@
 use alloc::vec::Vec;
 use codec::Codec;
 
-soil_api::decl_runtime_apis! {
+subsoil::api::decl_runtime_apis! {
 	pub trait AssetsApi<AccountId, AssetBalance, AssetId>
 	where
 		AccountId: Codec,

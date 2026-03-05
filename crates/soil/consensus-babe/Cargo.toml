@@ -20,7 +20,6 @@ async-trait = { optional = true, workspace = true }
 codec = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { features = ["alloc", "derive"], optional = true, workspace = true }
-soil-api = { workspace = true }
 soil-consensus-slots = { workspace = true }
 subsoil = { workspace = true }
 soil-inherents = { workspace = true }
@@ -33,13 +32,11 @@ std = [
 	"codec/std",
 	"scale-info/std",
 	"serde/std",
-	"soil-api/std",
 	"subsoil/std",
 	"soil-consensus-slots/std",
 	"soil-inherents/std",
 	"subsoil/std",
-	"soil-timestamp/std",
-]
+	"soil-timestamp/std"]
 
 # Serde support without relying on std features.
 serde = [
@@ -47,5 +44,4 @@ serde = [
 	"scale-info/serde",
 	"subsoil/serde",
 	"soil-consensus-slots/serde",
-	"subsoil/serde",
-]
+	"subsoil/serde"]

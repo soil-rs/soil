@@ -27,7 +27,7 @@ mod tests;
 use crate::SubscriptionTaskExecutor;
 use jsonrpsee::{core::async_trait, Extensions, PendingSubscriptionSink};
 use sc_tracing::block::TracingExecuteBlock;
-use soil_api::{CallApiAt, Metadata, ProvideRuntimeApi};
+use subsoil::api::{CallApiAt, Metadata, ProvideRuntimeApi};
 use soil_blockchain::{HeaderBackend, HeaderMetadata};
 use soil_client_api::{
 	Backend, BlockBackend, BlockchainEvents, ExecutorProvider, ProofProvider, StorageProvider,

@@ -18,7 +18,6 @@ targets = ["x86_64-unknown-linux-gnu"]
 codec = { features = ["derive"], workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { optional = true, features = ["alloc", "derive"], workspace = true }
-soil-api = { workspace = true }
 subsoil-crypto-hashing = { workspace = true }
 soil-mmr-primitives = { workspace = true }
 subsoil = { workspace = true }
@@ -34,24 +33,20 @@ std = [
 	"codec/std",
 	"scale-info/std",
 	"serde/std",
-	"soil-api/std",
 	"subsoil/std",
 	"subsoil-crypto-hashing/std",
 	"soil-mmr-primitives/std",
 	"subsoil/std",
-	"strum/std",
-]
+	"strum/std"]
 
 # Serde support without relying on std features.
 serde = [
 	"dep:serde",
 	"scale-info/serde",
 	"subsoil/serde",
-	"subsoil/serde",
-]
+	"subsoil/serde"]
 
 # This feature adds BLS crypto primitives. It should not be used in production since
 # the BLS implementation and interface may still be subject to significant change.
 bls-experimental = [
-	"subsoil/bls-experimental",
-]
+	"subsoil/bls-experimental"]

@@ -36,7 +36,7 @@ use subsoil::application_crypto::RuntimeAppPublic;
 use codec::{Codec, Decode, DecodeAll, Encode};
 use futures::{stream::Fuse, FutureExt, StreamExt};
 use log::{debug, error, info, trace, warn};
-use soil_api::ProvideRuntimeApi;
+use subsoil::api::ProvideRuntimeApi;
 use subsoil::arithmetic::traits::{AtLeast32Bit, Saturating};
 use soil_client_api::{Backend, HeaderBackend};
 use soil_consensus::SyncOracle;

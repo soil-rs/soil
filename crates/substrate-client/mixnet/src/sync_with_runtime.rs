@@ -25,7 +25,7 @@ use mixnet::core::{
 	Mixnet, Mixnode as CoreMixnode, MixnodesErr as CoreMixnodesErr, RelSessionIndex,
 	SessionPhase as CoreSessionPhase, SessionStatus as CoreSessionStatus,
 };
-use soil_api::{ApiError, ApiRef};
+use subsoil::api::{ApiError, ApiRef};
 use soil_mixnet::{
 	runtime_api::MixnetApi,
 	types::{

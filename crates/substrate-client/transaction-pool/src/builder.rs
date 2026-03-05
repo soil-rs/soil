@@ -125,7 +125,7 @@ pub trait FullClientTransactionPool<Block, Client>:
 	>
 where
 	Block: BlockT,
-	Client: soil_api::ProvideRuntimeApi<Block>
+	Client: subsoil::api::ProvideRuntimeApi<Block>
 		+ soil_client_api::BlockBackend<Block>
 		+ soil_client_api::blockchain::HeaderBackend<Block>
 		+ subsoil::runtime::traits::BlockIdTo<Block>
@@ -138,7 +138,7 @@ where
 impl<Block, Client, P> FullClientTransactionPool<Block, Client> for P
 where
 	Block: BlockT,
-	Client: soil_api::ProvideRuntimeApi<Block>
+	Client: subsoil::api::ProvideRuntimeApi<Block>
 		+ soil_client_api::BlockBackend<Block>
 		+ soil_client_api::blockchain::HeaderBackend<Block>
 		+ subsoil::runtime::traits::BlockIdTo<Block>
@@ -181,7 +181,7 @@ pub struct Builder<'a, Block, Client> {
 impl<'a, Client, Block> Builder<'a, Block, Client>
 where
 	Block: BlockT,
-	Client: soil_api::ProvideRuntimeApi<Block>
+	Client: subsoil::api::ProvideRuntimeApi<Block>
 		+ soil_client_api::BlockBackend<Block>
 		+ soil_client_api::blockchain::HeaderBackend<Block>
 		+ subsoil::runtime::traits::BlockIdTo<Block>

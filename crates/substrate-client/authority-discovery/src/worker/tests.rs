@@ -34,7 +34,7 @@ use futures::{
 	task::LocalSpawn,
 };
 use prometheus_endpoint::prometheus::default_registry;
-use soil_api::{ApiRef, ProvideRuntimeApi};
+use subsoil::api::{ApiRef, ProvideRuntimeApi};
 use soil_client_api::HeaderBackend;
 use subsoil::keystore::{testing::MemoryKeystore, Keystore};
 use soil_network::{
@@ -110,7 +110,7 @@ pub(crate) struct RuntimeApi {
 	authorities: Vec<AuthorityId>,
 }
 
-soil_api::mock_impl_runtime_apis! {
+subsoil::api::mock_impl_runtime_apis! {
 	impl AuthorityDiscoveryApi<Block> for RuntimeApi {
 		fn authorities(&self) -> Vec<AuthorityId> {
 			self.authorities.clone()

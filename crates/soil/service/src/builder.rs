@@ -40,7 +40,7 @@ use sc_rpc::{
 	DenyUnsafe, SubscriptionTaskExecutor,
 };
 use sc_tracing::block::TracingExecuteBlock;
-use soil_api::{CallApiAt, ProvideRuntimeApi};
+use subsoil::api::{CallApiAt, ProvideRuntimeApi};
 use soil_blockchain::{HeaderBackend, HeaderMetadata};
 use soil_chain_spec::{get_extension, ChainSpec};
 use soil_client_api::{
@@ -520,10 +520,10 @@ where
 		+ Send
 		+ 'static,
 	<TCl as ProvideRuntimeApi<TBl>>::Api:
-		soil_api::Metadata<TBl>
+		subsoil::api::Metadata<TBl>
 			+ soil_transaction_pool::runtime_api::TaggedTransactionQueue<TBl>
 			+ soil_session::SessionKeys<TBl>
-			+ soil_api::ApiExt<TBl>,
+			+ subsoil::api::ApiExt<TBl>,
 	TBl: BlockT,
 	TBl::Hash: Unpin,
 	TBl::Header: Unpin,
@@ -842,7 +842,7 @@ where
 		+ Sync
 		+ 'static,
 	TBackend: soil_client_api::backend::Backend<TBl> + 'static,
-	<TCl as ProvideRuntimeApi<TBl>>::Api: soil_session::SessionKeys<TBl> + soil_api::Metadata<TBl>,
+	<TCl as ProvideRuntimeApi<TBl>>::Api: soil_session::SessionKeys<TBl> + subsoil::api::Metadata<TBl>,
 	TExPool: MaintainedTransactionPool<Block = TBl, Hash = <TBl as BlockT>::Hash> + 'static,
 	TBl::Hash: Unpin,
 	TBl::Header: Unpin,

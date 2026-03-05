@@ -29,7 +29,7 @@ use futures::{
 use log::{debug, error, info, log_enabled, trace, warn, Level};
 use prometheus_endpoint::Registry as PrometheusRegistry;
 use sc_block_builder::{BlockBuilderApi, BlockBuilderBuilder};
-use soil_api::{ApiExt, CallApiAt, ProvideRuntimeApi};
+use subsoil::api::{ApiExt, CallApiAt, ProvideRuntimeApi};
 use soil_blockchain::{ApplyExtrinsicFailed::Validity, Error::ApplyExtrinsicFailed, HeaderBackend};
 use soil_consensus::{Proposal, ProposeArgs};
 use subsoil::core::traits::SpawnNamed;
@@ -583,7 +583,7 @@ mod tests {
 	use futures::executor::block_on;
 	use parking_lot::Mutex;
 	use sc_transaction_pool::BasicPool;
-	use soil_api::Core;
+	use subsoil::api::Core;
 	use soil_blockchain::HeaderBackend;
 	use soil_client_api::{Backend, TrieCacheContext};
 	use soil_consensus::{BlockOrigin, Environment};

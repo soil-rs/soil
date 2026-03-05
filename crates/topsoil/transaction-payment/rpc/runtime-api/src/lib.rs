@@ -24,7 +24,7 @@ use subsoil::runtime::traits::MaybeDisplay;
 
 pub use topsoil_transaction_payment::{FeeDetails, InclusionFee, RuntimeDispatchInfo};
 
-soil_api::decl_runtime_apis! {
+subsoil::api::decl_runtime_apis! {
 	#[api_version(4)]
 	pub trait TransactionPaymentApi<Balance> where
 		Balance: Codec + MaybeDisplay,

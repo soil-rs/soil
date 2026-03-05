@@ -243,7 +243,7 @@ pub struct BenchmarkMetadata {
 	pub pov_modes: Vec<(Vec<u8>, Vec<u8>)>,
 }
 
-soil_api::decl_runtime_apis! {
+subsoil::api::decl_runtime_apis! {
 	/// Runtime api for benchmarking a FRAME runtime.
 	#[api_version(2)]
 	pub trait Benchmark {

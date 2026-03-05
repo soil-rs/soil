@@ -144,7 +144,7 @@ pub struct Epoch {
 pub struct OpaqueKeyOwnershipProof(Vec<u8>);
 
 // Runtime API.
-soil_api::decl_runtime_apis! {
+subsoil::api::decl_runtime_apis! {
 	/// API necessary for block authorship with Sassafras.
 	pub trait SassafrasApi {
 		/// Get ring context to be used for ticket construction and verification.

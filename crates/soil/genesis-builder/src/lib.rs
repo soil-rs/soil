@@ -93,7 +93,7 @@ pub const DEV_RUNTIME_PRESET: &'static str = "development";
 /// (Recommended for local testing with multiple nodes)
 pub const LOCAL_TESTNET_RUNTIME_PRESET: &'static str = "local_testnet";
 
-soil_api::decl_runtime_apis! {
+subsoil::api::decl_runtime_apis! {
 	/// API to interact with `RuntimeGenesisConfig` for the runtime
 	pub trait GenesisBuilder {
 		/// Build `RuntimeGenesisConfig` from a JSON blob not using any defaults and store it in the

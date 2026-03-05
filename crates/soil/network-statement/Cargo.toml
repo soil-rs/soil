@@ -37,8 +37,7 @@ std = [
 	"soil-network-sync/std",
 	"soil-network-types/std",
 	"subsoil/std",
-	"soil-statement-store/std",
-]
+	"soil-statement-store/std"]
 test-helpers = []
 
 [dependencies]
@@ -62,7 +61,6 @@ async-trait = { workspace = true }
 criterion = { workspace = true, default-features = true }
 sc-keystore = { workspace = true, default-features = true }
 sc-statement-store = { workspace = true, default-features = true }
-soil-api = { workspace = true, default-features = true }
 soil-blockchain = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
 soil-keyring = { workspace = true, default-features = true }

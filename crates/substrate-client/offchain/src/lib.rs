@@ -42,7 +42,7 @@ use futures::{
 	prelude::*,
 };
 use parking_lot::Mutex;
-use soil_api::{ApiExt, ProvideRuntimeApi};
+use subsoil::api::{ApiExt, ProvideRuntimeApi};
 use soil_client_api::BlockchainEvents;
 use subsoil::core::{offchain, traits::SpawnNamed};
 use subsoil::externalities::Extension;

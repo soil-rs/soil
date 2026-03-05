@@ -44,7 +44,7 @@ use prost::Message;
 use rand::{seq::SliceRandom, thread_rng};
 
 use schema::PeerSignature;
-use soil_api::{ApiError, ProvideRuntimeApi};
+use subsoil::api::{ApiError, ProvideRuntimeApi};
 use soil_authority_discovery::{
 	AuthorityDiscoveryApi, AuthorityId, AuthorityPair, AuthoritySignature,
 };

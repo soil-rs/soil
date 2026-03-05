@@ -24,7 +24,7 @@ extern crate alloc;
 use codec::{Decode, DecodeWithMemTracking, Encode};
 
 #[cfg(feature = "std")]
-use soil_api::ProvideRuntimeApi;
+use subsoil::api::ProvideRuntimeApi;
 #[cfg(feature = "std")]
 use subsoil::runtime::traits::Block as BlockT;
 
@@ -109,13 +109,13 @@ pub fn generate_initial_session_keys<Block, T>(
 	at: Block::Hash,
 	seeds: Vec<String>,
 	keystore: subsoil::keystore::KeystorePtr,
-) -> Result<(), soil_api::ApiError>
+) -> Result<(), subsoil::api::ApiError>
 where
 	Block: BlockT,
 	T: ProvideRuntimeApi<Block>,
 	T::Api: SessionKeys<Block>,
 {
-	use soil_api::{ApiError, ApiExt};
+	use subsoil::api::{ApiError, ApiExt};
 
 	if seeds.is_empty() {
 		return Ok(());

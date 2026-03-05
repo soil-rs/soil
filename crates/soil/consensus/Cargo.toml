@@ -21,7 +21,6 @@ subsoil = { workspace = true }
 async-trait = { workspace = true }
 futures = { features = ["thread-pool"], workspace = true }
 log = { workspace = true, default-features = true }
-soil-api = { workspace = true, default-features = true }
 soil-inherents = { workspace = true, default-features = true }
 thiserror = { workspace = true }
 

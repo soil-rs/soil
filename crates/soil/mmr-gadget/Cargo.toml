@@ -19,7 +19,6 @@ futures = { workspace = true, optional = true}
 log = { workspace = true, default-features = true, optional = true}
 soil-client-api = { workspace = true, default-features = true, optional = true}
 sc-offchain = { workspace = true, default-features = true, optional = true}
-soil-api = { workspace = true, default-features = true, optional = true}
 soil-blockchain = { workspace = true, default-features = true, optional = true}
 soil-consensus = { workspace = true, default-features = true, optional = true}
 soil-consensus-beefy = { workspace = true, default-features = true, optional = true}
@@ -32,19 +31,16 @@ std = [
 	"futures",
 	"log",
 	"sc-offchain",
-	"soil-api",
 	"soil-blockchain",
 	"soil-client-api",
 	"soil-consensus",
 	"soil-consensus-beefy",
 	"soil-mmr-primitives",
-	"soil-api/std",
 	"soil-client-api/std",
 	"soil-consensus-beefy/std",
 	"subsoil/std",
 	"soil-mmr-primitives/std",
-	"subsoil/std",
-]
+	"subsoil/std"]
 
 [dev-dependencies]
 parking_lot = { workspace = true, default-features = true }

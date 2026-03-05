@@ -10,7 +10,6 @@ resolver = "2"
 
 members = [
 	"crates/subsoil",
-	"crates/soil/api",
 	"crates/subsoil-api-proc-macro",
 	"crates/soil/api/test",
 	"crates/soil/application-crypto/test",
@@ -519,7 +518,6 @@ subsoil-tracing-proc-macro = { path = "crates/subsoil-tracing-proc-macro", defau
 sc-transaction-pool = { path = "crates/substrate-client/transaction-pool", default-features = false }
 soil-transaction-pool-api = { path = "crates/soil/transaction-pool-api", default-features = false }
 soil-utils = { path = "crates/soil/utils", default-features = false }
-soil-api = { path = "crates/soil/api", default-features = false }
 subsoil-api-proc-macro = { path = "crates/subsoil-api-proc-macro", default-features = false }
 soil-authority-discovery = { path = "crates/soil/authority-discovery", default-features = false }
 soil-block-builder = { path = "crates/soil/block-builder", default-features = false }

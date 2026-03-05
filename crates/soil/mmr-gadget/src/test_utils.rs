@@ -22,7 +22,7 @@ use crate::MmrGadget;
 use parking_lot::Mutex;
 use sc_block_builder::BlockBuilderBuilder;
 use sc_offchain::OffchainDb;
-use soil_api::{ApiRef, ProvideRuntimeApi};
+use subsoil::api::{ApiRef, ProvideRuntimeApi};
 use soil_blockchain::{BlockStatus, CachedHeaderMetadata, HeaderBackend, HeaderMetadata, Info};
 use soil_client_api::{
 	Backend as BackendT, BlockchainEvents, FinalityNotifications, ImportNotifications,
@@ -301,7 +301,7 @@ impl ProvideRuntimeApi<Block> for MockClient {
 	}
 }
 
-soil_api::mock_impl_runtime_apis! {
+subsoil::api::mock_impl_runtime_apis! {
 	impl mmr::MmrApi<Block, MmrHash, BlockNumber> for MockRuntimeApi {
 		fn mmr_root() -> Result<MmrHash, mmr::Error> {
 			Err(mmr::Error::PalletNotIncluded)

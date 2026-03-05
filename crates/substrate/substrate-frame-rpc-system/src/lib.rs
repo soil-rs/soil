@@ -27,7 +27,7 @@ use jsonrpsee::{
 	Extensions,
 };
 
-use soil_api::ApiExt;
+use subsoil::api::ApiExt;
 use soil_block_builder::BlockBuilder;
 use soil_blockchain::HeaderBackend;
 use subsoil::core::{hexdisplay::HexDisplay, Bytes};
@@ -88,7 +88,7 @@ impl<P: TransactionPool, C, B> System<P, C, B> {
 impl<P, C, Block, AccountId, Nonce>
 	SystemApiServer<<Block as traits::Block>::Hash, AccountId, Nonce> for System<P, C, Block>
 where
-	C: soil_api::ProvideRuntimeApi<Block>,
+	C: subsoil::api::ProvideRuntimeApi<Block>,
 	C: HeaderBackend<Block>,
 	C: Send + Sync + 'static,
 	C::Api: AccountNonceApi<Block, AccountId, Nonce>,

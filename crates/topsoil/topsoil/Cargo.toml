@@ -28,7 +28,6 @@ topsoil-support = { workspace = true }
 topsoil-system = { workspace = true }
 
 # primitive types used for developing FRAME runtimes.
-soil-api = { optional = true, workspace = true }
 soil-block-builder = { optional = true, workspace = true }
 soil-consensus-aura = { optional = true, workspace = true }
 soil-consensus-grandpa = { optional = true, workspace = true }
@@ -66,7 +65,6 @@ std = [
 	"log/std",
 	"scale-info/std",
 	"serde/std",
-	"soil-api?/std",
 	"subsoil/std",
 	"soil-block-builder?/std",
 	"soil-consensus-aura?/std",
@@ -77,27 +75,23 @@ std = [
 	"soil-offchain?/std",
 	"subsoil/std",
 	"soil-session?/std",
-	"soil-transaction-pool?/std",
-]
+	"soil-transaction-pool?/std"]
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",
 	"topsoil-support/runtime-benchmarks",
 	"topsoil-system-benchmarking/runtime-benchmarks",
 	"topsoil-system/runtime-benchmarks",
-	"subsoil/runtime-benchmarks",
-]
+	"subsoil/runtime-benchmarks"]
 try-runtime = [
 	"topsoil-executive/try-runtime",
 	"topsoil-support/try-runtime",
 	"topsoil-system/try-runtime",
 	"topsoil-try-runtime/try-runtime",
-	"subsoil/try-runtime",
-]
+	"subsoil/try-runtime"]
 experimental = ["topsoil-support/experimental"]
 runtime = [
 	"topsoil-executive",
 	"topsoil-system-rpc-runtime-api",
-	"soil-api",
 	"soil-block-builder",
 	"soil-consensus-aura",
 	"soil-consensus-grandpa",
@@ -106,5 +100,4 @@ runtime = [
 	"soil-keyring",
 	"soil-offchain",
 	"soil-session",
-	"soil-transaction-pool",
-]
+	"soil-transaction-pool"]

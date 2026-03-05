@@ -47,7 +47,7 @@ use sc_consensus::{
 	BlockImport, BlockImportParams, BoxJustificationImport, ForkChoiceStrategy, ImportResult,
 	ImportedAux,
 };
-use soil_api::{ApiRef, ProvideRuntimeApi};
+use subsoil::api::{ApiRef, ProvideRuntimeApi};
 use subsoil::application_crypto::key_types::BEEFY as BEEFY_KEY_TYPE;
 use soil_client_api::{
 	Backend as BackendT, BlockchainEvents, FinalityNotifications, HeaderBackend,
@@ -298,7 +298,7 @@ impl ProvideRuntimeApi<Block> for TestApi {
 		RuntimeApi { inner: self.clone() }.into()
 	}
 }
-soil_api::mock_impl_runtime_apis! {
+subsoil::api::mock_impl_runtime_apis! {
 	impl BeefyApi<Block, AuthorityId> for RuntimeApi {
 		fn beefy_genesis() -> Option<NumberFor<Block>> {
 			Some(self.inner.beefy_genesis)

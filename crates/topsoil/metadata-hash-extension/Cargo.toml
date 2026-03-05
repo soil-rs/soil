@@ -21,7 +21,6 @@ scale-info = { features = ["derive", "serde"], workspace = true }
 [dev-dependencies]
 frame-metadata = { features = ["current", "unstable"], workspace = true, default-features = true }
 merkleized-metadata = { workspace = true }
-soil-api = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
 soil-transaction-pool = { workspace = true, default-features = true }
 substrate-test-runtime-client = { workspace = true }
@@ -36,5 +35,4 @@ std = [
 	"topsoil-system/std",
 	"log/std",
 	"scale-info/std",
-	"subsoil/std",
-]
+	"subsoil/std"]

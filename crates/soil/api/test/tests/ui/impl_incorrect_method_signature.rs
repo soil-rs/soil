@@ -22,19 +22,19 @@ use substrate_test_runtime_client::runtime::Block;
 /// runtime.
 struct Runtime {}
 
-soil_api::decl_runtime_apis! {
+subsoil::api::decl_runtime_apis! {
 	pub trait Api {
 		fn test(data: u64);
 	}
 }
 
-soil_api::impl_runtime_apis! {
+subsoil::api::impl_runtime_apis! {
 	impl self::Api<Block> for Runtime {
 		fn test(data: String) {}
 	}
 
-	impl soil_api::Core<Block> for Runtime {
-		fn version() -> soil_api::RuntimeVersion {
+	impl subsoil::api::Core<Block> for Runtime {
+		fn version() -> subsoil::api::RuntimeVersion {
 			unimplemented!()
 		}
 		fn execute_block(_: <Block as BlockT>::LazyBlock) {

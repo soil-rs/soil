@@ -30,7 +30,7 @@ use rand::Rng;
 use sc_consensus::{
 	BlockCheckParams, BlockImportParams, ForkChoiceStrategy, ImportResult, StateAction,
 };
-use soil_api::{
+use subsoil::api::{
 	ApiExt, ApiRef, CallApiAt, CallApiAtParams, ConstructRuntimeApi, Core as CoreApi,
 	ProvideRuntimeApi,
 };
@@ -1677,7 +1677,7 @@ where
 {
 	type StateBackend = B::State;
 
-	fn call_api_at(&self, params: CallApiAtParams<Block>) -> Result<Vec<u8>, soil_api::ApiError> {
+	fn call_api_at(&self, params: CallApiAtParams<Block>) -> Result<Vec<u8>, subsoil::api::ApiError> {
 		self.executor
 			.contextual_call(
 				params.at,
@@ -1691,11 +1691,11 @@ where
 			.map_err(Into::into)
 	}
 
-	fn runtime_version_at(&self, hash: Block::Hash) -> Result<RuntimeVersion, soil_api::ApiError> {
+	fn runtime_version_at(&self, hash: Block::Hash) -> Result<RuntimeVersion, subsoil::api::ApiError> {
 		CallExecutor::runtime_version(&self.executor, hash).map_err(Into::into)
 	}
 
-	fn state_at(&self, at: Block::Hash) -> Result<Self::StateBackend, soil_api::ApiError> {
+	fn state_at(&self, at: Block::Hash) -> Result<Self::StateBackend, subsoil::api::ApiError> {
 		self.state_at(at).map_err(Into::into)
 	}
 
@@ -1703,7 +1703,7 @@ where
 		&self,
 		at: Block::Hash,
 		extensions: &mut subsoil::externalities::Extensions,
-	) -> Result<(), soil_api::ApiError> {
+	) -> Result<(), subsoil::api::ApiError> {
 		let block_number = self.expect_block_number_from_id(&BlockId::Hash(at))?;
 
 		extensions.merge(self.executor.execution_extensions().extensions(at, block_number));

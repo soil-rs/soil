@@ -24,7 +24,6 @@ sc-block-builder = { workspace = true, default-features = true, optional = true}
 soil-proposer-metrics = { workspace = true, default-features = true, optional = true}
 soil-telemetry = { workspace = true, default-features = true, optional = true}
 soil-transaction-pool-api = { workspace = true, default-features = true, optional = true}
-soil-api = { workspace = true, default-features = true, optional = true}
 soil-blockchain = { workspace = true, default-features = true, optional = true}
 soil-consensus = { workspace = true, default-features = true, optional = true}
 subsoil = { workspace = true, default-features = true, optional = true}
@@ -38,7 +37,6 @@ std = [
 	"log",
 	"prometheus-endpoint",
 	"sc-block-builder",
-	"soil-api",
 	"soil-blockchain",
 	"soil-consensus",
 	"subsoil",
@@ -47,14 +45,12 @@ std = [
 	"subsoil",
 	"soil-telemetry",
 	"soil-transaction-pool-api",
-	"soil-api/std",
 	"subsoil/std",
 	"soil-inherents/std",
 	"soil-proposer-metrics/std",
 	"subsoil/std",
 	"soil-telemetry/std",
-	"soil-transaction-pool-api/std",
-]
+	"soil-transaction-pool-api/std"]
 
 [dev-dependencies]
 parking_lot = { workspace = true, default-features = true }

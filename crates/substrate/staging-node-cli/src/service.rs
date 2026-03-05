@@ -33,7 +33,7 @@ use node_primitives::Block;
 use sc_consensus_babe::{self, SlotProportion};
 use sc_statement_store::Store as StatementStore;
 use sc_transaction_pool::TransactionPoolHandle;
-use soil_api::ProvideRuntimeApi;
+use subsoil::api::ProvideRuntimeApi;
 use soil_client_api::{Backend, BlockBackend};
 use subsoil::core::crypto::Pair;
 use soil_network::{

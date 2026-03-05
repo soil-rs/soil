@@ -31,7 +31,6 @@ soil-network = { workspace = true, default-features = true, optional = true}
 soil-network-sync = { workspace = true, default-features = true, optional = true}
 soil-service = { workspace = true, default-features = true, optional = true}
 soil-transaction-pool-api = { workspace = true, default-features = true, optional = true}
-soil-api = { workspace = true, default-features = true, optional = true}
 soil-blockchain = { workspace = true, default-features = true, optional = true}
 soil-consensus = { workspace = true, default-features = true, optional = true}
 subsoil = { workspace = true, default-features = true, optional = true }
@@ -52,7 +51,6 @@ std = [
 	"parking_lot",
 	"sc-block-builder",
 	"sc-consensus",
-	"soil-api",
 	"soil-blockchain",
 	"soil-client-api",
 	"soil-client-db",
@@ -68,7 +66,6 @@ std = [
 	"substrate-test-runtime-client",
 	"tempfile",
 	"tokio",
-	"soil-api/std",
 	"soil-client-api/std",
 	"soil-client-db/std",
 	"subsoil/std",
@@ -77,5 +74,4 @@ std = [
 	"soil-network-sync/std",
 	"subsoil/std",
 	"soil-service/std",
-	"soil-transaction-pool-api/std",
-]
+	"soil-transaction-pool-api/std"]

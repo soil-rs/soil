@@ -17,7 +17,7 @@
 
 //! Integration tests for bls12-381
 
-use soil_api::{ApiExt, ProvideRuntimeApi};
+use subsoil::api::{ApiExt, ProvideRuntimeApi};
 use subsoil::application_crypto::{bls381::AppPair, RuntimePublic};
 use subsoil::core::{
 	bls381::Pair as Bls381Pair,

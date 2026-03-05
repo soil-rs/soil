@@ -1361,7 +1361,7 @@ pub mod pallet {
 	}
 }
 
-soil_api::decl_runtime_apis! {
+subsoil::api::decl_runtime_apis! {
 	/// This runtime api allows people to query the size of the liquidity pools
 	/// and quote prices for swaps.
 	pub trait AssetConversionApi<Balance, AssetId>

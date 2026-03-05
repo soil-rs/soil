@@ -153,7 +153,7 @@ mod mmr_root_provider {
 	use crate::{known_payloads, payload::PayloadProvider, Payload};
 	use alloc::sync::Arc;
 	use core::marker::PhantomData;
-	use soil_api::ProvideRuntimeApi;
+	use subsoil::api::ProvideRuntimeApi;
 	use soil_mmr_primitives::MmrApi;
 	use subsoil::runtime::traits::NumberFor;
 

@@ -17,7 +17,7 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 use super::{code_provider::CodeProvider, ClientConfig};
-use soil_api::ProofRecorder;
+use subsoil::api::ProofRecorder;
 use soil_client_api::{
 	backend, call_executor::CallExecutor, execution_extensions::ExecutionExtensions, HeaderBackend,
 	TrieCacheContext,

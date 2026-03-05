@@ -3007,8 +3007,8 @@ mod benches {
 	);
 }
 
-soil_api::impl_runtime_apis! {
-	impl soil_api::Core<Block> for Runtime {
+subsoil::api::impl_runtime_apis! {
+	impl subsoil::api::Core<Block> for Runtime {
 		fn version() -> RuntimeVersion {
 			VERSION
 		}
@@ -3022,7 +3022,7 @@ soil_api::impl_runtime_apis! {
 		}
 	}
 
-	impl soil_api::Metadata<Block> for Runtime {
+	impl subsoil::api::Metadata<Block> for Runtime {
 		fn metadata() -> OpaqueMetadata {
 			OpaqueMetadata::new(Runtime::metadata().into())
 		}

@@ -41,7 +41,7 @@ use kitchensink_runtime::{
 use node_primitives::Block;
 use sc_block_builder::BlockBuilderBuilder;
 use sc_consensus::{BlockImport, BlockImportParams, ForkChoiceStrategy, ImportResult, ImportedAux};
-use soil_api::ProvideRuntimeApi;
+use subsoil::api::ProvideRuntimeApi;
 use soil_block_builder::BlockBuilder;
 use soil_client_api::{execution_extensions::ExecutionExtensions, UsageProvider};
 use soil_client_db::PruningMode;

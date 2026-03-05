@@ -21,7 +21,6 @@ codec = { features = ["derive"], workspace = true }
 topsoil-support = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { optional = true, features = ["alloc", "derive"], workspace = true }
-soil-api = { workspace = true }
 subsoil-crypto-hashing = { workspace = true }
 thiserror = { optional = true, workspace = true }
 
@@ -49,16 +48,13 @@ std = [
 	"scale-info/std",
 	"serde?/std",
 	"sha2",
-	"soil-api/std",
 	"subsoil/std",
 	"subsoil-crypto-hashing/std",
 	"subsoil/std",
 	"thiserror",
-	"x25519-dalek",
-]
+	"x25519-dalek"]
 serde = [
 	"dep:serde",
 	"scale-info/serde",
 	"subsoil/serde",
-	"subsoil/serde",
-]
+	"subsoil/serde"]

@@ -18,7 +18,7 @@
 //! Substrate client possible errors.
 
 use codec::Error as CodecError;
-use soil_api::ApiError;
+use subsoil::api::ApiError;
 use soil_consensus;
 use subsoil::runtime::transaction_validity::TransactionValidityError;
 use std::{self, result};

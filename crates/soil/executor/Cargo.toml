@@ -30,8 +30,6 @@ codec = { workspace = true, default-features = true, optional = true}
 soil-executor-common = { workspace = true, default-features = true, optional = true}
 soil-executor-polkavm = { workspace = true, default-features = true, optional = true}
 soil-executor-wasmtime = { workspace = true, default-features = true, optional = true}
-soil-api = { workspace = true, default-features = true, optional = true}
-
 [dev-dependencies]
 array-bytes = { workspace = true, default-features = true }
 assert_matches = { workspace = true }
@@ -54,15 +52,12 @@ std = [
 	"codec",
 	"parking_lot",
 	"schnellru",
-	"soil-api",
 	"soil-executor-common",
 	"soil-executor-polkavm",
 	"soil-executor-wasmtime",
 	"subsoil/std",
 	"tracing",
-	"soil-api/std",
 	"soil-executor-common/std",
 	"soil-executor-polkavm/std",
-	"soil-executor-wasmtime/std",
-]
+	"soil-executor-wasmtime/std"]
 wasm-extern-trace = []

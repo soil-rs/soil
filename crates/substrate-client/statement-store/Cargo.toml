@@ -27,7 +27,6 @@ soil-client-api = { workspace = true, default-features = true }
 sc-keystore = { workspace = true, default-features = true }
 soil-network-statement = { workspace = true, default-features = true }
 soil-utils = { workspace = true }
-soil-api = { workspace = true, default-features = true }
 soil-blockchain = { workspace = true, default-features = true }
 soil-statement-store = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }

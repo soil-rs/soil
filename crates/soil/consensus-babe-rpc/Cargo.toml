@@ -22,7 +22,6 @@ sc-consensus-babe = { workspace = true, default-features = true, optional = true
 soil-consensus-epochs = { workspace = true, default-features = true, optional = true}
 soil-rpc-api = { workspace = true, default-features = true, optional = true}
 serde = { features = ["derive"], workspace = true, default-features = true, optional = true}
-soil-api = { workspace = true, default-features = true, optional = true}
 soil-blockchain = { workspace = true, default-features = true, optional = true}
 soil-consensus = { workspace = true, default-features = true, optional = true}
 soil-consensus-babe = { workspace = true, default-features = true, optional = true}
@@ -36,7 +35,6 @@ std = [
 	"jsonrpsee",
 	"sc-consensus-babe",
 	"serde",
-	"soil-api",
 	"subsoil",
 	"soil-blockchain",
 	"soil-consensus",
@@ -45,13 +43,11 @@ std = [
 	"soil-rpc-api",
 	"subsoil",
 	"thiserror",
-	"soil-api/std",
 	"subsoil/std",
 	"soil-consensus-babe/std",
 	"soil-consensus-epochs/std",
 	"soil-rpc-api/std",
-	"subsoil/std",
-]
+	"subsoil/std"]
 
 [dev-dependencies]
 sc-consensus = { workspace = true, default-features = true }

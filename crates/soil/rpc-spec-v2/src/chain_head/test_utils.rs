@@ -19,7 +19,7 @@
 //! Test utilities.
 
 use parking_lot::Mutex;
-use soil_api::{CallApiAt, CallApiAtParams};
+use subsoil::api::{CallApiAt, CallApiAtParams};
 use soil_blockchain::{BlockStatus, CachedHeaderMetadata, HeaderBackend, HeaderMetadata, Info};
 use soil_client_api::{
 	execution_extensions::ExecutionExtensions, BlockBackend, BlockImportNotification,
@@ -237,15 +237,15 @@ impl<
 impl<Block: BlockT, Client: CallApiAt<Block>> CallApiAt<Block> for ChainHeadMockClient<Client> {
 	type StateBackend = <Client as CallApiAt<Block>>::StateBackend;
 
-	fn call_api_at(&self, params: CallApiAtParams<Block>) -> Result<Vec<u8>, soil_api::ApiError> {
+	fn call_api_at(&self, params: CallApiAtParams<Block>) -> Result<Vec<u8>, subsoil::api::ApiError> {
 		self.client.call_api_at(params)
 	}
 
-	fn runtime_version_at(&self, hash: Block::Hash) -> Result<RuntimeVersion, soil_api::ApiError> {
+	fn runtime_version_at(&self, hash: Block::Hash) -> Result<RuntimeVersion, subsoil::api::ApiError> {
 		self.client.runtime_version_at(hash)
 	}
 
-	fn state_at(&self, at: Block::Hash) -> Result<Self::StateBackend, soil_api::ApiError> {
+	fn state_at(&self, at: Block::Hash) -> Result<Self::StateBackend, subsoil::api::ApiError> {
 		self.client.state_at(at)
 	}
 
@@ -253,7 +253,7 @@ impl<Block: BlockT, Client: CallApiAt<Block>> CallApiAt<Block> for ChainHeadMock
 		&self,
 		at: <Block as BlockT>::Hash,
 		extensions: &mut subsoil::externalities::Extensions,
-	) -> Result<(), soil_api::ApiError> {
+	) -> Result<(), subsoil::api::ApiError> {
 		self.client.initialize_extensions(at, extensions)
 	}
 }

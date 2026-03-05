@@ -31,13 +31,12 @@ paste = { workspace = true, default-features = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { features = ["alloc", "derive"], workspace = true }
 serde_json = { features = ["alloc"], workspace = true }
-soil-api = { features = ["frame-metadata"], workspace = true }
 subsoil-crypto-hashing-proc-macro = { workspace = true, default-features = true }
 subsoil-debug-derive = { workspace = true }
 soil-genesis-builder = { workspace = true }
 soil-inherents = { workspace = true }
 soil-staking = { workspace = true }
-subsoil = { workspace = true }
+subsoil = { features = ["frame-metadata"], workspace = true }
 tt-call = { workspace = true }
 
 aquamarine = { workspace = true }
@@ -62,30 +61,24 @@ std = [
 	"scale-info/std",
 	"serde/std",
 	"serde_json/std",
-	"soil-api/std",
 	"subsoil/std",
 	"subsoil-debug-derive/std",
 	"soil-genesis-builder/std",
 	"soil-inherents/std",
 	"subsoil/std",
-	"soil-staking/std",
-]
+	"soil-staking/std"]
 runtime-benchmarks = [
 	"topsoil-system/runtime-benchmarks",
 	"subsoil/runtime-benchmarks",
-	"soil-staking/runtime-benchmarks",
-]
+	"soil-staking/runtime-benchmarks"]
 try-runtime = [
 	"topsoil-system/try-runtime",
-	"subsoil/try-runtime",
-]
+	"subsoil/try-runtime"]
 experimental = ["topsoil-support-procedural/experimental"]
 # By default some types have documentation, `no-metadata-docs` allows to reduce the documentation
 # in the metadata.
 no-metadata-docs = [
-	"topsoil-support-procedural/no-metadata-docs",
-	"soil-api/no-metadata-docs",
-]
+	"topsoil-support-procedural/no-metadata-docs"]
 # By default some types have documentation, `full-metadata-docs` allows to add documentation to
 # more types in the metadata.
 full-metadata-docs = ["scale-info/docs"]

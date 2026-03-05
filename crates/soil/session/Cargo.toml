@@ -18,7 +18,6 @@ targets = ["x86_64-unknown-linux-gnu"]
 [dependencies]
 codec = { features = ["derive"], workspace = true }
 scale-info = { features = ["derive"], workspace = true }
-soil-api = { workspace = true }
 subsoil = { workspace = true }
 soil-staking = { workspace = true }
 
@@ -27,8 +26,6 @@ default = ["std"]
 std = [
 	"codec/std",
 	"scale-info/std",
-	"soil-api/std",
 	"subsoil/std",
 	"subsoil/std",
-	"soil-staking/std",
-]
+	"soil-staking/std"]

@@ -18,9 +18,9 @@
 use super::{common_strategies::*, *};
 use crate::{
 	dispatch::DispatchResult,
-	subsoil::runtime::traits::Convert,
 	traits::{misc::TypedGet, EnsureOriginWithArg},
 };
+use subsoil::runtime::traits::Convert;
 
 /// The `UseEnsuredOrigin` is an adapter that implements all the asset ops implemented by the `Op`
 /// with strategies augmented by the [CheckOrigin].

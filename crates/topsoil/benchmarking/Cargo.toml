@@ -25,7 +25,6 @@ log = { workspace = true }
 paste = { workspace = true, default-features = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { optional = true, workspace = true, default-features = true }
-soil-api = { workspace = true }
 subsoil = { workspace = true }
 static_assertions = { workspace = true, default-features = true }
 
@@ -45,13 +44,10 @@ std = [
 	"log/std",
 	"scale-info/std",
 	"serde",
-	"soil-api/std",
 	"subsoil/std",
-	"subsoil/std",
-]
+	"subsoil/std"]
 runtime-benchmarks = [
 	"topsoil-support/runtime-benchmarks",
 	"topsoil-system/runtime-benchmarks",
 	"soil-client-db/runtime-benchmarks",
-	"subsoil/runtime-benchmarks",
-]
+	"subsoil/runtime-benchmarks"]

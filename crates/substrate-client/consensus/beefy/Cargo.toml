@@ -27,7 +27,6 @@ soil-network-gossip = { workspace = true, default-features = true }
 soil-network-sync = { workspace = true, default-features = true }
 soil-network-types = { workspace = true, default-features = true }
 soil-utils = { workspace = true, default-features = true }
-soil-api = { workspace = true, default-features = true }
 soil-blockchain = { workspace = true, default-features = true }
 soil-consensus = { workspace = true, default-features = true }
 soil-consensus-beefy = { workspace = true, default-features = true }
@@ -49,5 +48,4 @@ substrate-test-runtime-client = { workspace = true }
 bls-experimental = [
 	"subsoil/bls-experimental",
 	"soil-consensus-beefy/bls-experimental",
-	"subsoil/bls-experimental",
-]
+	"subsoil/bls-experimental"]

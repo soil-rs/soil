@@ -30,7 +30,7 @@ pub use client_side::*;
 use soil_inherents::{CheckInherentsResult, InherentData};
 use subsoil::runtime::{traits::Block as BlockT, ApplyExtrinsicResult};
 
-soil_api::decl_runtime_apis! {
+subsoil::api::decl_runtime_apis! {
 	/// The `BlockBuilder` api trait that provides the required functionality for building a block.
 	#[api_version(6)]
 	pub trait BlockBuilder {

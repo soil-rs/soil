@@ -35,7 +35,7 @@ impl<K: Encode, P: Encode> From<GeneratedSessionKeys<K, P>> for OpaqueGeneratedS
 	}
 }
 
-soil_api::decl_runtime_apis! {
+subsoil::api::decl_runtime_apis! {
 	/// Session keys runtime api.
 	#[api_version(2)]
 	pub trait SessionKeys {

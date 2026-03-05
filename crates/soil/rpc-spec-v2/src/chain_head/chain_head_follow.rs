@@ -33,7 +33,7 @@ use futures::{
 use log::debug;
 use sc_rpc::utils::Subscription;
 use schnellru::{ByLength, LruMap};
-use soil_api::CallApiAt;
+use subsoil::api::CallApiAt;
 use soil_blockchain::{
 	Backend as BlockChainBackend, Error as BlockChainError, HeaderBackend, HeaderMetadata, Info,
 };

@@ -85,7 +85,7 @@ pub enum Error {
 	Client(#[from] soil_blockchain::Error),
 
 	#[error(transparent)]
-	RuntimeApi(#[from] soil_api::ApiError),
+	RuntimeApi(#[from] subsoil::api::ApiError),
 
 	/// Decoding failed, we were able to change the peer's reputation accordingly.
 	#[error("Decoding request failed for peer {0}.")]

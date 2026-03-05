@@ -17,7 +17,7 @@
 
 //! Integration tests for ecdsa-bls12-381
 
-use soil_api::{ApiExt, ProvideRuntimeApi};
+use subsoil::api::{ApiExt, ProvideRuntimeApi};
 use subsoil::application_crypto::{ecdsa_bls381::AppPair, RuntimePublic};
 use subsoil::core::{
 	crypto::ByteArray,

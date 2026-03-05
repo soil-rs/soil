@@ -43,7 +43,7 @@ use sc_consensus_grandpa::{
 	FinalityProofProvider, GrandpaJustificationStream, SharedAuthoritySet, SharedVoterState,
 };
 pub use sc_rpc::SubscriptionTaskExecutor;
-use soil_api::ProvideRuntimeApi;
+use subsoil::api::ProvideRuntimeApi;
 use subsoil::application_crypto::RuntimeAppPublic;
 use soil_block_builder::BlockBuilder;
 use soil_blockchain::{Error as BlockChainError, HeaderBackend, HeaderMetadata};

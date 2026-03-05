@@ -22,7 +22,7 @@ use subsoil::runtime::{
 	transaction_validity::{TransactionSource, TransactionValidity},
 };
 
-soil_api::decl_runtime_apis! {
+subsoil::api::decl_runtime_apis! {
 	/// The `TaggedTransactionQueue` api trait for interfering with the transaction queue.
 	#[api_version(3)]
 	pub trait TaggedTransactionQueue {

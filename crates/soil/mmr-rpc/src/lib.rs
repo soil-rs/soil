@@ -37,7 +37,7 @@ use jsonrpsee::{
 use serde::{Deserialize, Serialize};
 
 #[cfg(feature = "std")]
-use soil_api::{ApiExt, ProvideRuntimeApi};
+use subsoil::api::{ApiExt, ProvideRuntimeApi};
 #[cfg(feature = "std")]
 use soil_blockchain::HeaderBackend;
 #[cfg(feature = "std")]

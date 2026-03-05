@@ -50,6 +50,7 @@ schemars = { optional = true, workspace = true }
 smallvec = { workspace = true, default-features = true }
 wasmtime = { optional = true, workspace = true }
 subsoil-runtime-interface-proc-macro = { workspace = true, default-features = true }
+subsoil-api-proc-macro = { workspace = true }
 
 # Dependencies from soil-version
 subsoil-crypto-hashing-proc-macro = { workspace = true, default-features = true }
@@ -128,7 +129,6 @@ assert_matches = { workspace = true }
 pretty_assertions = { workspace = true }
 trie-bench = { workspace = true }
 trie-standardmap = { workspace = true }
-soil-api = { workspace = true, default-features = true }
 substrate-test-runtime-client = { workspace = true }
 zstd = { workspace = true }
 
@@ -206,6 +206,8 @@ std = [
 	"simple-mermaid",
 	"strum/std",
 	"tuplex/std",
+	# soil-api std features
+	"subsoil-api-proc-macro/std",
 ]
 runtime-benchmarks = []
 try-runtime = []
@@ -248,3 +250,8 @@ io-disable_panic_handler = []
 io-disable_oom = []
 io-disable_allocator = []
 io-improved_panic_error_reporting = []
+
+# soil-api features
+disable-logging = ["log/max_level_off"]
+no-metadata-docs = ["subsoil-api-proc-macro/no-metadata-docs"]
+frame-metadata = []
