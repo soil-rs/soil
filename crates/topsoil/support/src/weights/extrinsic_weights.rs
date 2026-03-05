@@ -36,7 +36,7 @@
 //   --repeat=100
 
 use soil_core::parameter_types;
-use soil_weights::{constants::WEIGHT_REF_TIME_PER_NANOS, Weight};
+use subsoil::weights::{constants::WEIGHT_REF_TIME_PER_NANOS, Weight};
 
 parameter_types! {
 	/// Weight of executing a NO-OP extrinsic, for example `System::remark`.
@@ -58,7 +58,7 @@ parameter_types! {
 
 #[cfg(test)]
 mod test_weights {
-	use soil_weights::constants;
+	use subsoil::weights::constants;
 
 	/// Checks that the weight exists and is sane.
 	// NOTE: If this test fails but you are sure that the generated values are fine,

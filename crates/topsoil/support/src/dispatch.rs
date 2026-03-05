@@ -31,7 +31,7 @@ use soil_runtime::{
 	},
 	DispatchError,
 };
-use soil_weights::Weight;
+use subsoil::weights::Weight;
 
 /// The return type of a `Dispatchable` in frame. When returned explicitly from
 /// a dispatchable function it allows overriding the default `PostDispatchInfo`
@@ -712,7 +712,7 @@ mod weight_tests {
 	use super::*;
 	use soil_core::parameter_types;
 	use soil_runtime::{generic, traits::BlakeTwo256};
-	use soil_weights::RuntimeDbWeight;
+	use subsoil::weights::RuntimeDbWeight;
 
 	pub use self::topsoil_system::{Call, Config};
 
@@ -1216,7 +1216,7 @@ mod test_extensions {
 		},
 		transaction_validity::TransactionValidityError,
 	};
-	use soil_weights::Weight;
+	use subsoil::weights::Weight;
 
 	use super::{DispatchResult, PostDispatchInfo};
 
@@ -1230,7 +1230,7 @@ mod test_extensions {
 		type Val = ();
 		type Pre = bool;
 
-		fn weight(&self, _: &RuntimeCall) -> soil_weights::Weight {
+		fn weight(&self, _: &RuntimeCall) -> subsoil::weights::Weight {
 			Weight::from_parts(100, 0)
 		}
 
@@ -1275,7 +1275,7 @@ mod test_extensions {
 		type Val = ();
 		type Pre = u64;
 
-		fn weight(&self, _: &RuntimeCall) -> soil_weights::Weight {
+		fn weight(&self, _: &RuntimeCall) -> subsoil::weights::Weight {
 			Weight::from_parts(200, 0)
 		}
 
@@ -1318,7 +1318,7 @@ mod test_extensions {
 		type Val = ();
 		type Pre = u64;
 
-		fn weight(&self, _: &RuntimeCall) -> soil_weights::Weight {
+		fn weight(&self, _: &RuntimeCall) -> subsoil::weights::Weight {
 			Weight::from_parts(300, 0)
 		}
 
@@ -1358,7 +1358,7 @@ mod extension_weight_tests {
 		generic::{self, ExtrinsicFormat},
 		traits::{Applyable, BlakeTwo256, DispatchTransaction, TransactionExtension},
 	};
-	use soil_weights::RuntimeDbWeight;
+	use subsoil::weights::RuntimeDbWeight;
 	use test_extensions::{ActualWeightIs, FreeIfUnder, HalfCostIf};
 
 	use super::weight_tests::topsoil_system;

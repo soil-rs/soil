@@ -59,7 +59,7 @@ use soil_runtime::{
 	traits::{Header as HeaderT, Keccak256, NumberFor},
 	OpaqueValue,
 };
-use soil_weights::Weight;
+use subsoil::weights::Weight;
 use KEY_TYPE as BEEFY_KEY_TYPE;
 
 /// Trait representing BEEFY authority id, including custom signature verification.

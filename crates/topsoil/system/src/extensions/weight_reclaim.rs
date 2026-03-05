@@ -25,7 +25,7 @@ use soil_runtime::{
 	transaction_validity::{TransactionSource, TransactionValidityError, ValidTransaction},
 	DispatchResult,
 };
-use soil_weights::Weight;
+use subsoil::weights::Weight;
 use topsoil_support::dispatch::{DispatchInfo, PostDispatchInfo};
 
 /// Reclaim the unused weight using the post dispatch information

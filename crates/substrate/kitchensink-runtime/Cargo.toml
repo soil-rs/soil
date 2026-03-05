@@ -184,7 +184,6 @@ soil-transaction-storage-proof = { workspace = true }
 soil-trie = { workspace = true }
 soil-version = { workspace = true }
 subsoil-version-proc-macro = { workspace = true }
-soil-weights = { workspace = true }
 substrate-bip39 = { workspace = true }
 
 # shared code between runtime and node
@@ -352,7 +351,6 @@ std = [
 	"soil-transaction-storage-proof/std",
 	"soil-trie/std",
 	"soil-version/std",
-	"soil-weights/std",
 	"substrate-bip39/std",
 	"substrate-wasm-builder",
 ]

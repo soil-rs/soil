@@ -105,7 +105,6 @@ members = [
 	"crates/soil/utils",
 	"crates/soil/version",
 	"crates/subsoil-version-proc-macro",
-	"crates/soil/weights",
 	"crates/topsoil/alliance",
 	"crates/topsoil/asset-conversion",
 	"crates/topsoil/asset-conversion/ops",
@@ -578,7 +577,6 @@ soil-transaction-storage-proof = { path = "crates/soil/transaction-storage-proof
 soil-trie = { path = "crates/soil/trie", default-features = false }
 soil-version = { path = "crates/soil/version", default-features = false }
 subsoil-version-proc-macro = { path = "crates/subsoil-version-proc-macro", default-features = false }
-soil-weights = { path = "crates/soil/weights", default-features = false }
 subkey = { path = "crates/substrate/subkey", default-features = false }
 substrate-bip39 = { path = "crates/substrate/substrate-bip39", default-features = false }
 substrate-build-script-utils = { path = "crates/substrate/substrate-build-script-utils", default-features = false }

@@ -4715,7 +4715,6 @@ dependencies = [
  "soil-transaction-storage-proof",
  "soil-trie",
  "soil-version",
- "soil-weights",
  "static_assertions",
  "subsoil",
  "subsoil-api-proc-macro",
@@ -9720,8 +9719,8 @@ dependencies = [
  "soil-keystore",
  "soil-mmr-primitives",
  "soil-runtime",
- "soil-weights",
  "strum 0.26.3",
+ "subsoil",
  "subsoil-crypto-hashing",
  "w3f-bls",
 ]
@@ -10579,7 +10578,6 @@ dependencies = [
  "soil-keystore",
  "soil-state-machine",
  "soil-trie",
- "soil-weights",
  "strum 0.26.3",
  "subsoil",
  "substrate-test-runtime-client",
@@ -11003,20 +11001,6 @@ dependencies = [
  "subsoil-crypto-hashing-proc-macro",
  "subsoil-version-proc-macro",
  "thiserror 1.0.69",
-]
-
-[[package]]
-name = "soil-weights"
-version = "27.0.0"
-dependencies = [
- "bounded-collections 0.3.2",
- "parity-scale-codec",
- "scale-info",
- "schemars",
- "serde",
- "smallvec",
- "subsoil",
- "subsoil-debug-derive",
 ]
 
 [[package]]
@@ -11478,6 +11462,7 @@ dependencies = [
  "anyhow",
  "array-bytes 6.2.3",
  "backtrace",
+ "bounded-collections 0.3.2",
  "docify",
  "environmental",
  "frame-metadata",
@@ -11496,7 +11481,9 @@ dependencies = [
  "ref-cast",
  "regex",
  "scale-info",
+ "schemars",
  "serde",
+ "smallvec",
  "soil-core",
  "soil-runtime",
  "static_assertions",
@@ -13717,7 +13704,6 @@ dependencies = [
  "soil-core",
  "soil-io",
  "soil-runtime",
- "soil-weights",
  "subsoil",
  "subsoil-crypto-hashing",
  "topsoil-benchmarking",
@@ -14270,7 +14256,7 @@ dependencies = [
  "soil-core",
  "soil-io",
  "soil-runtime",
- "soil-weights",
+ "subsoil",
  "substrate-test-utils",
  "topsoil-benchmarking",
  "topsoil-preimage",
@@ -14494,7 +14480,6 @@ dependencies = [
  "soil-state-machine",
  "soil-timestamp",
  "soil-trie",
- "soil-weights",
  "subsoil",
  "subsoil-crypto-hashing",
  "subsoil-crypto-hashing-proc-macro",
@@ -14628,7 +14613,6 @@ dependencies = [
  "soil-io",
  "soil-runtime",
  "soil-version",
- "soil-weights",
  "subsoil",
  "substrate-test-runtime-client",
  "topsoil-support",
@@ -14724,7 +14708,7 @@ dependencies = [
  "soil-core",
  "soil-rpc",
  "soil-runtime",
- "soil-weights",
+ "subsoil",
  "topsoil-transaction-payment-rpc-runtime-api",
 ]
 
@@ -14735,7 +14719,7 @@ dependencies = [
  "parity-scale-codec",
  "soil-api",
  "soil-runtime",
- "soil-weights",
+ "subsoil",
  "topsoil-transaction-payment",
 ]
 
@@ -14842,7 +14826,7 @@ dependencies = [
  "scale-info",
  "soil-io",
  "soil-runtime",
- "soil-weights",
+ "subsoil",
  "topsoil-benchmarking",
  "topsoil-support",
  "topsoil-system",

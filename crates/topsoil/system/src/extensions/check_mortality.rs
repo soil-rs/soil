@@ -73,7 +73,7 @@ impl<T: Config + Send + Sync> TransactionExtension<T::RuntimeCall> for CheckMort
 	type Pre = ();
 	type Val = ();
 
-	fn weight(&self, _: &T::RuntimeCall) -> soil_weights::Weight {
+	fn weight(&self, _: &T::RuntimeCall) -> subsoil::weights::Weight {
 		if self.0.is_immortal() {
 			// All immortal transactions will always read the hash of the genesis block, so to avoid
 			// charging this multiple times in a block we manually set the proof size to 0.

@@ -19,7 +19,7 @@
 //! stage.
 
 use codec::Encode;
-use soil_weights::Weight;
+use subsoil::weights::Weight;
 
 use crate::{
 	traits::{

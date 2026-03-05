@@ -25,7 +25,7 @@ use soil_runtime::{
 	transaction_validity::{TransactionSource, TransactionValidityError, ValidTransaction},
 	Either,
 };
-use soil_weights::Weight;
+use subsoil::weights::Weight;
 
 use super::misc;
 

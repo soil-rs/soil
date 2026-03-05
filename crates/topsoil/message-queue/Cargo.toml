@@ -21,7 +21,7 @@ serde = { optional = true, features = ["derive"], workspace = true, default-feat
 soil-core = { workspace = true }
 soil-io = { workspace = true }
 soil-runtime = { workspace = true }
-soil-weights = { workspace = true }
+subsoil = { workspace = true }
 
 topsoil-benchmarking = { optional = true, workspace = true }
 topsoil-support = { workspace = true }
@@ -32,7 +32,6 @@ topsoil-support = { workspace = true, features = ["experimental"] }
 rand = { workspace = true, default-features = true }
 rand_distr = { workspace = true }
 subsoil-crypto-hashing = { workspace = true, default-features = true }
-subsoil = { workspace = true, default-features = true }
 
 [features]
 default = ["std"]
@@ -48,7 +47,6 @@ std = [
 	"soil-io/std",
 	"soil-runtime/std",
 	"subsoil/std",
-	"soil-weights/std",
 ]
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",

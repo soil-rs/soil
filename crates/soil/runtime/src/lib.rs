@@ -129,7 +129,7 @@ pub use subsoil::arithmetic::{
 	Perquintill, Rational128, Rounding, UpperOf,
 };
 /// Re-export this since it's part of the API of this crate.
-pub use soil_weights::Weight;
+pub use subsoil::weights::Weight;
 
 pub use either::Either;
 

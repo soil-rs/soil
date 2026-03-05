@@ -32,7 +32,7 @@ use soil_runtime::{
 	},
 	DispatchResult, Saturating,
 };
-use soil_weights::Weight;
+use subsoil::weights::Weight;
 use topsoil_support::{dispatch::DispatchInfo, pallet_prelude::TransactionSource, DebugNoBound};
 
 /// Nonce check and increment to give replay protection for transactions.
@@ -146,7 +146,7 @@ where
 	type Val = Val<T>;
 	type Pre = Pre;
 
-	fn weight(&self, _: &T::RuntimeCall) -> soil_weights::Weight {
+	fn weight(&self, _: &T::RuntimeCall) -> subsoil::weights::Weight {
 		<T::ExtensionsWeightInfo as super::WeightInfo>::check_nonce()
 	}
 

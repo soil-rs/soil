@@ -456,7 +456,7 @@ pub mod pallet_prelude {
 		},
 		Debug, DispatchError, MAX_MODULE_ERROR_ENCODED_SIZE,
 	};
-	pub use soil_weights::Weight;
+	pub use subsoil::weights::Weight;
 	pub use topsoil_support::pallet_macros::*;
 	pub use topsoil_support_procedural::{inject_runtime_type, register_default_impl};
 }

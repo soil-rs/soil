@@ -23,7 +23,7 @@
 
 use crate::{impl_for_tuples_attr, weights::Weight};
 use soil_runtime::traits::AtLeast32BitUnsigned;
-use soil_weights::WeightMeter;
+use subsoil::weights::WeightMeter;
 
 #[cfg(feature = "try-runtime")]
 use alloc::vec::Vec;

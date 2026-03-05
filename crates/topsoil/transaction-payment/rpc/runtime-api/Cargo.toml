@@ -20,7 +20,7 @@ codec = { features = ["derive"], workspace = true }
 topsoil-transaction-payment = { workspace = true }
 soil-api = { workspace = true }
 soil-runtime = { workspace = true }
-soil-weights = { workspace = true }
+subsoil = { workspace = true }
 
 [features]
 default = ["std"]
@@ -29,5 +29,5 @@ std = [
 	"topsoil-transaction-payment/std",
 	"soil-api/std",
 	"soil-runtime/std",
-	"soil-weights/std",
+	"subsoil/std",
 ]

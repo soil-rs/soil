@@ -30,7 +30,7 @@ use soil_runtime::{
 	},
 	transaction_validity::{InvalidTransaction, TransactionValidityError, ValidTransaction},
 };
-use soil_weights::Weight;
+use subsoil::weights::Weight;
 use topsoil_support::{pallet_prelude::TransactionSource, traits::OriginTrait};
 
 /// Extension that, if enabled, validates a signature type against the payload constructed from the

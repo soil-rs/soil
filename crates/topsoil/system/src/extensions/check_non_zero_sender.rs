@@ -56,7 +56,7 @@ impl<T: Config + Send + Sync> TransactionExtension<T::RuntimeCall> for CheckNonZ
 	type Val = ();
 	type Pre = ();
 
-	fn weight(&self, _: &T::RuntimeCall) -> soil_weights::Weight {
+	fn weight(&self, _: &T::RuntimeCall) -> subsoil::weights::Weight {
 		<T::ExtensionsWeightInfo as super::WeightInfo>::check_non_zero_sender()
 	}
 

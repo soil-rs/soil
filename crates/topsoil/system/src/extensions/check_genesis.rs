@@ -61,7 +61,7 @@ impl<T: Config + Send + Sync> TransactionExtension<T::RuntimeCall> for CheckGene
 	}
 	type Val = ();
 	type Pre = ();
-	fn weight(&self, _: &T::RuntimeCall) -> soil_weights::Weight {
+	fn weight(&self, _: &T::RuntimeCall) -> subsoil::weights::Weight {
 		// All transactions will always read the hash of the genesis block, so to avoid
 		// charging this multiple times in a block we manually set the proof size to 0.
 		<T::ExtensionsWeightInfo as super::WeightInfo>::check_genesis().set_proof_size(0)

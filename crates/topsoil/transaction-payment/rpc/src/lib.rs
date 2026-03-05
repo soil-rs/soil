@@ -84,7 +84,7 @@ impl From<Error> for i32 {
 impl<C, Block, Balance>
 	TransactionPaymentApiServer<
 		<Block as BlockT>::Hash,
-		RuntimeDispatchInfo<Balance, soil_weights::Weight>,
+		RuntimeDispatchInfo<Balance, subsoil::weights::Weight>,
 	> for TransactionPayment<C, Block>
 where
 	Block: BlockT,
@@ -96,7 +96,7 @@ where
 		&self,
 		encoded_xt: Bytes,
 		at: Option<Block::Hash>,
-	) -> RpcResult<RuntimeDispatchInfo<Balance, soil_weights::Weight>> {
+	) -> RpcResult<RuntimeDispatchInfo<Balance, subsoil::weights::Weight>> {
 		let api = self.client.runtime_api();
 		let at_hash = at.unwrap_or_else(|| self.client.info().best_hash);
 

@@ -26,7 +26,7 @@ soil-io = { workspace = true }
 soil-keystore = { workspace = true }
 soil-mmr-primitives = { workspace = true }
 soil-runtime = { workspace = true }
-soil-weights = { workspace = true }
+subsoil = { workspace = true }
 strum = { features = ["derive"], workspace = true }
 
 [dev-dependencies]
@@ -47,7 +47,7 @@ std = [
 	"soil-keystore/std",
 	"soil-mmr-primitives/std",
 	"soil-runtime/std",
-	"soil-weights/std",
+	"subsoil/std",
 	"strum/std",
 ]
 

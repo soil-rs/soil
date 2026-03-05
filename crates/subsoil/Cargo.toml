@@ -42,6 +42,9 @@ hash-db = { workspace = true }
 impl-serde = { optional = true, workspace = true }
 ref-cast = { workspace = true }
 subsoil-debug-derive = { workspace = true }
+bounded-collections = { workspace = true }
+schemars = { optional = true, workspace = true }
+smallvec = { workspace = true, default-features = true }
 wasmtime = { optional = true, workspace = true }
 
 [dev-dependencies]
@@ -55,6 +58,7 @@ soil-runtime = { workspace = true, default-features = true }
 default = ["std"]
 std = [
 	"subsoil-crypto-hashing/std",
+	"bounded-collections/std",
 	"backtrace",
 	"regex",
 	"anyhow?/std",
@@ -79,4 +83,6 @@ debug = ["array-bytes", "log"]
 wasm-interface-wasmtime = ["anyhow", "dep:wasmtime"]
 with-tracing = ["codec/derive", "codec/full"]
 rocksdb = ["kvdb-rocksdb"]
-serde = ["dep:serde", "impl-serde", "scale-info/serde"]
+serde = ["dep:serde", "impl-serde", "scale-info/serde", "bounded-collections/serde"]
+full-metadata-docs = ["scale-info/docs"]
+json-schema = ["dep:schemars"]

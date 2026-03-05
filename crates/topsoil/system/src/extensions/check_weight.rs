@@ -25,7 +25,7 @@ use soil_runtime::{
 	transaction_validity::{InvalidTransaction, TransactionValidityError, ValidTransaction},
 	DispatchResult,
 };
-use soil_weights::Weight;
+use subsoil::weights::Weight;
 use topsoil_support::{
 	dispatch::{DispatchInfo, PostDispatchInfo},
 	pallet_prelude::TransactionSource,

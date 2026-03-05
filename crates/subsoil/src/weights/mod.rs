@@ -17,10 +17,6 @@
 
 //! # Primitives for transaction weighting.
 
-#![cfg_attr(not(feature = "std"), no_std)]
-
-extern crate self as soil_weights;
-
 mod weight_meter;
 mod weight_v2;
 
@@ -30,7 +26,7 @@ use scale_info::TypeInfo;
 #[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
 use smallvec::SmallVec;
-use subsoil::arithmetic::{
+use crate::arithmetic::{
 	traits::{BaseArithmetic, SaturatedConversion, Unsigned},
 	Perbill,
 };
@@ -245,7 +241,7 @@ pub type NoFee<T> = FixedFee<0, T>;
 ///
 /// ```
 /// # use bounded_collections::ConstU128;
-/// # use soil_weights::ConstantMultiplier;
+/// # use subsoil::weights::ConstantMultiplier;
 /// // Results in a multiplier of 10 for each unit of weight (or length)
 /// type LengthToFee = ConstantMultiplier::<u128, ConstU128<10u128>>;
 /// ```

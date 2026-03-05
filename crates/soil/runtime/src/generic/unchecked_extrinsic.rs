@@ -39,7 +39,7 @@ use core::fmt::{
 };
 use scale_info::{build::Fields, meta_type, Path, StaticTypeInfo, Type, TypeInfo, TypeParameter};
 use soil_io::hashing::blake2_256;
-use soil_weights::Weight;
+use subsoil::weights::Weight;
 
 /// Type to represent the version of the [Extension](TransactionExtension) used in this extrinsic.
 pub type ExtensionVersion = u8;

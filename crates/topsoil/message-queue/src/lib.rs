@@ -88,7 +88,7 @@
 //!
 //! **Weight Metering**
 //!
-//! The pallet utilizes the [`soil_weights::WeightMeter`] to manually track its consumption to always
+//! The pallet utilizes the [`subsoil::weights::WeightMeter`] to manually track its consumption to always
 //! stay within the required limit. This implies that the message processor hook can calculate the
 //! weight of a message without executing it. This restricts the possible use-cases but is necessary
 //! since the pallet runs in `on_initialize` which has a hard weight limit. The weight meter is used
@@ -216,7 +216,7 @@ use soil_runtime::{
 	traits::{One, Zero},
 	SaturatedConversion, Saturating, TransactionOutcome,
 };
-use soil_weights::WeightMeter;
+use subsoil::weights::WeightMeter;
 use topsoil_support::{
 	defensive,
 	pallet_prelude::*,

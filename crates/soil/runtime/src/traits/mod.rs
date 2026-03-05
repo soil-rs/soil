@@ -1565,7 +1565,7 @@ impl<T: BlindCheckable, Context> Checkable<Context> for T {
 /// A type that can handle weight refunds.
 pub trait RefundWeight {
 	/// Refund some unspent weight.
-	fn refund(&mut self, weight: soil_weights::Weight);
+	fn refund(&mut self, weight: subsoil::weights::Weight);
 }
 
 /// A type that can handle weight refunds and incorporate extension weights into the call weight
@@ -1576,7 +1576,7 @@ pub trait ExtensionPostDispatchWeightHandler<DispatchInfo>: RefundWeight {
 }
 
 impl RefundWeight for () {
-	fn refund(&mut self, _weight: soil_weights::Weight) {}
+	fn refund(&mut self, _weight: subsoil::weights::Weight) {}
 }
 
 impl ExtensionPostDispatchWeightHandler<()> for () {
@@ -2501,7 +2501,7 @@ impl Printable for bool {
 	}
 }
 
-impl Printable for soil_weights::Weight {
+impl Printable for subsoil::weights::Weight {
 	fn print(&self) {
 		self.ref_time().print()
 	}

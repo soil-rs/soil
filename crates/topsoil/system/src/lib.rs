@@ -129,7 +129,7 @@ use soil_runtime::{
 	traits::{DispatchInfoOf, PostDispatchInfoOf},
 	transaction_validity::TransactionValidityError,
 };
-use soil_weights::{RuntimeDbWeight, Weight, WeightMeter};
+use subsoil::weights::{RuntimeDbWeight, Weight, WeightMeter};
 #[cfg(feature = "std")]
 use topsoil_support::traits::BuildGenesisConfig;
 use topsoil_support::{
