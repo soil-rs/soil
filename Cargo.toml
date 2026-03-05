@@ -78,8 +78,6 @@ members = [
 	"client/transaction-pool",
 	"crates/soil/transaction-pool-api",
 	"crates/soil/utils",
-	"deprecated/hashing",
-	"deprecated/hashing/proc-macro",
 	"crates/topsoil/topsoil",
 	"crates/topsoil/alliance",
 	"crates/topsoil/asset-conversion",
@@ -561,8 +559,6 @@ soil-consensus-pow = { path = "crates/soil/consensus-pow", default-features = fa
 soil-consensus-sassafras = { path = "crates/soil/consensus-sassafras", default-features = false }
 soil-consensus-slots = { path = "crates/soil/consensus-slots", default-features = false }
 soil-core = { path = "crates/soil/core", default-features = false }
-sp-core-hashing = { default-features = false, path = "deprecated/hashing" }
-sp-core-hashing-proc-macro = { default-features = false, path = "deprecated/hashing/proc-macro" }
 soil-crypto-ec-utils = { default-features = false, path = "crates/soil/crypto-ec-utils" }
 soil-crypto-hashing = { path = "crates/soil/crypto-hashing", default-features = false }
 soil-crypto-hashing-proc-macro = { path = "crates/soil/crypto-hashing/proc-macro", default-features = false }
