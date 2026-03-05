@@ -43,7 +43,6 @@ std = [
 	"topsoil-session/std",
 	"scale-info/std",
 	"subsoil/std",
-	"subsoil/std",
 	"soil-staking/std",
 ]
 runtime-benchmarks = [

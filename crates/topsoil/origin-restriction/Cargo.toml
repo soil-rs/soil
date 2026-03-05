@@ -32,7 +32,6 @@ std = [
 	"topsoil-transaction-payment/std",
 	"scale-info/std",
 	"subsoil/std",
-	"subsoil/std",
 ]
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",

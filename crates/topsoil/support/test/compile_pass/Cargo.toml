@@ -29,5 +29,4 @@ std = [
 	"topsoil-system/std",
 	"scale-info/std",
 	"subsoil/std",
-	"subsoil/std",
 ]

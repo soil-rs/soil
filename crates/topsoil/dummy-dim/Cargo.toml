@@ -36,7 +36,6 @@ std = [
 	"topsoil-people/std",
 	"scale-info/std",
 	"subsoil/std",
-	"subsoil/std",
 	"verifiable/std"]
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",

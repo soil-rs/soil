@@ -313,7 +313,6 @@ std = [
 	"soil-mixnet/std",
 	"soil-mmr-primitives/std",
 	"soil-offchain/std",
-	"subsoil/std",
 	"soil-session/std",
 	"soil-staking/std",
 	"soil-statement-store/std",

@@ -59,7 +59,6 @@ std = [
 	"soil-executor",
 	"soil-network",
 	"soil-network-sync",
-	"subsoil",
 	"soil-service",
 	"soil-transaction-pool-api",
 	"substrate-test-runtime",
@@ -72,6 +71,5 @@ std = [
 	"soil-executor/std",
 	"soil-network/std",
 	"soil-network-sync/std",
-	"subsoil/std",
 	"soil-service/std",
 	"soil-transaction-pool-api/std"]

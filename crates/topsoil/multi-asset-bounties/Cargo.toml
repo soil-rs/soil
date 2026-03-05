@@ -41,7 +41,6 @@ std = [
 	"topsoil-preimage/std",
 	"scale-info/std",
 	"subsoil/std",
-	"subsoil/std",
 ]
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",

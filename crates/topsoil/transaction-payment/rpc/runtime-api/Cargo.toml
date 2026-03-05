@@ -25,5 +25,4 @@ default = ["std"]
 std = [
 	"codec/std",
 	"topsoil-transaction-payment/std",
-	"subsoil/std",
 	"subsoil/std"]

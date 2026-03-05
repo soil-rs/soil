@@ -40,7 +40,6 @@ std = [
 	"topsoil-balances/std",
 	"primitive-types/std",
 	"scale-info/std",
-	"subsoil/std",
 	"subsoil/std"]
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",

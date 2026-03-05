@@ -62,7 +62,6 @@ std = [
 	"subsoil/std",
 	"subsoil-debug-derive/std",
 	"soil-genesis-builder/std",
-	"subsoil/std",
 	"soil-staking/std"]
 runtime-benchmarks = [
 	"topsoil-system/runtime-benchmarks",

@@ -43,12 +43,10 @@ std = [
 	"soil-consensus",
 	"subsoil",
 	"soil-executor",
-	"subsoil",
 	"soil-transaction-pool-api",
 	"soil-utils",
 	"subsoil/std",
 	"soil-executor/std",
-	"subsoil/std",
 	"soil-transaction-pool-api/std",
 	"soil-utils/std"]
 

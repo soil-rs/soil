@@ -52,7 +52,6 @@ std = [
 	"scale-info/std",
 	"subsoil/std",
 	"subsoil-crypto-hashing?/std",
-	"subsoil/std",
 ]
 runtime-benchmarks = [
 	"array-bytes",

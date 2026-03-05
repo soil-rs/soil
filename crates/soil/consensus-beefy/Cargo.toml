@@ -36,14 +36,12 @@ std = [
 	"subsoil/std",
 	"subsoil-crypto-hashing/std",
 	"soil-mmr-primitives/std",
-	"subsoil/std",
 	"strum/std"]
 
 # Serde support without relying on std features.
 serde = [
 	"dep:serde",
 	"scale-info/serde",
-	"subsoil/serde",
 	"subsoil/serde"]
 
 # This feature adds BLS crypto primitives. It should not be used in production since

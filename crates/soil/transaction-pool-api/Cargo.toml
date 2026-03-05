@@ -34,10 +34,8 @@ std = [
 	"serde",
 	"soil-blockchain",
 	"subsoil",
-	"subsoil",
 	"strum",
 	"thiserror",
-	"subsoil/std",
 	"subsoil/std",
 ]
 

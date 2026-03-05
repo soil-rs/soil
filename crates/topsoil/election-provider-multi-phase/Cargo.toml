@@ -57,7 +57,6 @@ std = [
 	"rand/std",
 	"scale-info/std",
 	"subsoil/std",
-	"subsoil/std",
 	"strum/std",
 ]
 runtime-benchmarks = [

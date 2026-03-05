@@ -86,7 +86,6 @@ std = [
 	"soil-client-api/std",
 	"soil-client-db/std",
 	"soil-network/std",
-	"subsoil/std",
 	"soil-service/std",
 	"soil-telemetry/std",
 	"soil-utils/std",

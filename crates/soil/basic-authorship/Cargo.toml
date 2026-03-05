@@ -40,12 +40,10 @@ std = [
 	"soil-consensus",
 	"subsoil",
 	"soil-proposer-metrics",
-	"subsoil",
 	"soil-telemetry",
 	"soil-transaction-pool-api",
 	"subsoil/std",
 	"soil-proposer-metrics/std",
-	"subsoil/std",
 	"soil-telemetry/std",
 	"soil-transaction-pool-api/std"]
 

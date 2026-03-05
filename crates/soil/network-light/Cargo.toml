@@ -46,11 +46,9 @@ std = [
 	"subsoil",
 	"soil-network",
 	"soil-network-types",
-	"subsoil",
 	"thiserror",
 	"soil-client-api/std",
 	"subsoil/std",
 	"soil-network/std",
 	"soil-network-types/std",
-	"subsoil/std",
 ]

@@ -25,6 +25,5 @@ substrate-wasm-builder = { optional = true, workspace = true, default-features =
 default = ["std"]
 std = [
 	"subsoil/std",
-	"subsoil/std",
 	"substrate-wasm-builder",
 ]

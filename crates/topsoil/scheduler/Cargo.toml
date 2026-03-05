@@ -45,7 +45,6 @@ std = [
 	"topsoil-preimage/std",
 	"scale-info/std",
 	"subsoil/std",
-	"subsoil/std",
 ]
 try-runtime = [
 	"topsoil-support/try-runtime",

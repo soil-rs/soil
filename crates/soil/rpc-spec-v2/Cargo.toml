@@ -70,7 +70,6 @@ std = [
 	"soil-chain-spec/std",
 	"soil-client-api/std",
 	"subsoil/std",
-	"subsoil/std",
 	"soil-transaction-pool-api/std"]
 
 [dev-dependencies]

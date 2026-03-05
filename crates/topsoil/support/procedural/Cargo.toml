@@ -55,7 +55,6 @@ std = [
 	"scale-info/std",
 	"subsoil-crypto-hashing/std",
 	"subsoil/std",
-	"subsoil/std",
 ]
 no-metadata-docs = []
 experimental = []

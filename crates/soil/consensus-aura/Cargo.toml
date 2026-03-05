@@ -29,12 +29,10 @@ std = [
 	"codec/std",
 	"scale-info/std",
 	"subsoil/std",
-	"soil-consensus-slots/std",
-	"subsoil/std"]
+	"soil-consensus-slots/std"]
 
 # Serde support without relying on std features.
 serde = [
 	"scale-info/serde",
 	"subsoil/serde",
-	"soil-consensus-slots/serde",
-	"subsoil/serde"]
+	"soil-consensus-slots/serde"]

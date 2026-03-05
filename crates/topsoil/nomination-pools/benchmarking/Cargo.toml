@@ -55,7 +55,6 @@ std = [
 	"topsoil-timestamp/std",
 	"scale-info/std",
 	"subsoil/std",
-	"subsoil/std",
 	"soil-staking/std",
 ]
 runtime-benchmarks = [

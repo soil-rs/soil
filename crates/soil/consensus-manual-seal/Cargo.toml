@@ -69,7 +69,6 @@ std = [
 	"soil-consensus-epochs/std",
 	"soil-consensus-slots/std",
 	"subsoil/std",
-	"subsoil/std",
 	"soil-transaction-pool-api/std"]
 
 [dev-dependencies]

@@ -51,5 +51,4 @@ std = [
 ]
 bls-experimental = [
 	"subsoil/bls-experimental",
-	"soil-consensus-beefy/bls-experimental",
-	"subsoil/bls-experimental"]
+	"soil-consensus-beefy/bls-experimental"]

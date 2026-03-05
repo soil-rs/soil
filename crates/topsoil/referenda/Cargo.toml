@@ -45,7 +45,6 @@ std = [
 	"scale-info/std",
 	"serde",
 	"subsoil/std",
-	"subsoil/std",
 ]
 runtime-benchmarks = [
 	"assert_matches",

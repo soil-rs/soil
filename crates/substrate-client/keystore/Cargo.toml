@@ -39,5 +39,4 @@ bls-experimental = [
 # be subject to significant changes.
 bandersnatch-experimental = [
 	"subsoil/bandersnatch-experimental",
-	"subsoil/bandersnatch-experimental",
 ]

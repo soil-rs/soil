@@ -36,7 +36,6 @@ std = [
 	"scale-info/std",
 	"serde/std",
 	"subsoil/std",
-	"subsoil/std",
 ]
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",

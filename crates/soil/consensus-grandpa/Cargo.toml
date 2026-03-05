@@ -32,12 +32,10 @@ std = [
 	"log/std",
 	"scale-info/std",
 	"serde/std",
-	"subsoil/std",
 	"subsoil/std"]
 
 # Serde support without relying on std features.
 serde = [
 	"dep:serde",
 	"scale-info/serde",
-	"subsoil/serde",
 	"subsoil/serde"]

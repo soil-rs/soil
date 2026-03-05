@@ -65,12 +65,10 @@ std = [
 	"subsoil",
 	"soil-blockchain",
 	"soil-client-api",
-	"subsoil",
 	"soil-state-db",
 	"sysinfo",
 	"subsoil/std",
 	"soil-client-api/std",
-	"subsoil/std",
 	"soil-state-db/std",
 ]
 default = ["std"]

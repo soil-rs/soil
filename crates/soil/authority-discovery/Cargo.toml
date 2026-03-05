@@ -24,9 +24,7 @@ default = ["std"]
 std = [
 	"codec/std",
 	"scale-info/std",
-	"subsoil/std",
 	"subsoil/std"]
 serde = [
 	"scale-info/serde",
-	"subsoil/serde",
 	"subsoil/serde"]

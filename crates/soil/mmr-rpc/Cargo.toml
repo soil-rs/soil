@@ -31,10 +31,8 @@ std = [
 	"soil-blockchain",
 	"subsoil",
 	"soil-mmr-primitives",
-	"subsoil",
 	"subsoil/std",
-	"soil-mmr-primitives/std",
-	"subsoil/std"]
+	"soil-mmr-primitives/std"]
 
 [dev-dependencies]
 serde_json = { workspace = true, default-features = true }

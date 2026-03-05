@@ -20,4 +20,4 @@ subsoil = { workspace = true }
 
 [features]
 default = ["std"]
-std = ["subsoil/std", "subsoil/std"]
+std = ["subsoil/std"]

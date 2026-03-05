@@ -41,13 +41,11 @@ std = [
 	"soil-consensus-babe",
 	"soil-consensus-epochs",
 	"soil-rpc-api",
-	"subsoil",
 	"thiserror",
 	"subsoil/std",
 	"soil-consensus-babe/std",
 	"soil-consensus-epochs/std",
-	"soil-rpc-api/std",
-	"subsoil/std"]
+	"soil-rpc-api/std"]
 
 [dev-dependencies]
 sc-consensus = { workspace = true, default-features = true }

@@ -41,7 +41,6 @@ std = [
 	"topsoil-transaction-payment/std",
 	"scale-info/std",
 	"subsoil/std",
-	"subsoil/std",
 ]
 # Enable support for setting the existential deposit to zero.
 insecure_zero_ed = []

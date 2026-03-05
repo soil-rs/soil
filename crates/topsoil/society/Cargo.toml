@@ -44,7 +44,6 @@ std = [
 	"rand_chacha/std",
 	"scale-info/std",
 	"subsoil/std",
-	"subsoil/std",
 ]
 runtime-benchmarks = [
 	"topsoil-benchmarking",

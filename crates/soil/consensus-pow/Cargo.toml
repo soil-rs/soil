@@ -21,4 +21,4 @@ subsoil = { workspace = true }
 
 [features]
 default = ["std"]
-std = ["codec/std", "subsoil/std", "subsoil/std"]
+std = ["codec/std", "subsoil/std"]

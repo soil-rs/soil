@@ -51,7 +51,6 @@ std = [
 	"soil-executor",
 	"soil-genesis-builder",
 	"soil-network",
-	"subsoil",
 	"soil-telemetry",
 	"soil-client-api/std",
 	"subsoil/std",
@@ -59,7 +58,6 @@ std = [
 	"soil-executor/std",
 	"soil-genesis-builder/std",
 	"soil-network/std",
-	"subsoil/std",
 	"soil-telemetry/std",
 ]
 

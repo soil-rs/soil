@@ -63,7 +63,6 @@ std = [
 	"soil-network-light",
 	"soil-network-sync",
 	"soil-network-types",
-	"subsoil",
 	"soil-service",
 	"soil-utils",
 	"substrate-test-runtime",
@@ -76,7 +75,6 @@ std = [
 	"soil-network-light/std",
 	"soil-network-sync/std",
 	"soil-network-types/std",
-	"subsoil/std",
 	"soil-service/std",
 	"soil-utils/std",
 ]

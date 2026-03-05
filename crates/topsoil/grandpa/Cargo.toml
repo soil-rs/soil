@@ -58,7 +58,6 @@ std = [
 	"scale-info/std",
 	"subsoil/std",
 	"soil-consensus-grandpa/std",
-	"subsoil/std",
 	"soil-session/std",
 	"soil-staking/std",
 ]

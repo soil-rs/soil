@@ -40,10 +40,8 @@ std = [
 	"soil-blockchain",
 	"soil-client-api",
 	"subsoil",
-	"subsoil",
 	"thiserror",
 	"soil-client-api/std",
-	"subsoil/std",
 	"subsoil/std",
 ]
 

@@ -37,11 +37,9 @@ std = [
 	"serde",
 	"subsoil",
 	"soil-consensus-beefy",
-	"subsoil",
 	"thiserror",
 	"subsoil/std",
 	"soil-consensus-beefy/std",
-	"subsoil/std",
 ]
 
 [dev-dependencies]

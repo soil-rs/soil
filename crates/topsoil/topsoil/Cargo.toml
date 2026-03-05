@@ -69,7 +69,6 @@ std = [
 	"soil-consensus-grandpa?/std",
 	"soil-genesis-builder?/std",
 	"soil-offchain?/std",
-	"subsoil/std",
 	"soil-session?/std",
 	"soil-transaction-pool?/std"]
 runtime-benchmarks = [

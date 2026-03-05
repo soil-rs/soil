@@ -61,7 +61,6 @@ std = [
 	"scale-info/std",
 	"serde/std",
 	"subsoil/std",
-	"subsoil/std",
 	"soil-staking/std",
 ]
 runtime-benchmarks = [

@@ -48,7 +48,6 @@ std = [
 	"scale-info/std",
 	"serde",
 	"soil-consensus-beefy/std",
-	"subsoil/std",
 	"soil-staking/std"]
 try-runtime = [
 	"topsoil-support/try-runtime",
