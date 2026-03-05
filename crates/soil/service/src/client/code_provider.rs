@@ -21,7 +21,7 @@ use soil_client_api::{backend, TrieCacheContext};
 use subsoil::core::traits::{FetchRuntimeCode, RuntimeCode};
 use soil_executor::{RuntimeVersion, RuntimeVersionOf};
 use soil_runtime::traits::Block as BlockT;
-use soil_state_machine::{Ext, OverlayedChanges};
+use subsoil::state_machine::{Ext, OverlayedChanges};
 use std::sync::Arc;
 
 /// Provider for fetching `:code` of a block.
@@ -84,7 +84,7 @@ where
 	) -> soil_blockchain::Result<Vec<u8>> {
 		let state = self.backend.state_at(block, TrieCacheContext::Untrusted)?;
 
-		let state_runtime_code = soil_state_machine::backend::BackendRuntimeCode::new(&state);
+		let state_runtime_code = subsoil::state_machine::backend::BackendRuntimeCode::new(&state);
 		let runtime_code =
 			state_runtime_code.runtime_code().map_err(soil_blockchain::Error::RuntimeCode)?;
 

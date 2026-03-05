@@ -18,7 +18,7 @@
 //! Trie-based state machine backend.
 
 #[cfg(feature = "std")]
-use crate::backend::AsTrieBackend;
+use super::backend::AsTrieBackend;
 use crate::{
 	backend::{IterArgs, StorageIterator},
 	trie_backend_essence::{RawIter, TrieBackendEssence, TrieBackendStorage},
@@ -29,15 +29,15 @@ use codec::Codec;
 #[cfg(feature = "std")]
 use hash_db::HashDB;
 use hash_db::Hasher;
-use subsoil::core::storage::{ChildInfo, StateVersion};
+use crate::core::storage::{ChildInfo, StateVersion};
 #[cfg(feature = "std")]
-use subsoil::trie::{
+use crate::trie::{
 	cache::{LocalTrieCache, TrieCache},
 	MemoryDB,
 };
 #[cfg(not(feature = "std"))]
-use subsoil::trie::{Error, NodeCodec};
-use subsoil::trie::{MerkleValue, PrefixedMemoryDB, StorageProof, TrieRecorderProvider};
+use crate::trie::{Error, NodeCodec};
+use crate::trie::{MerkleValue, PrefixedMemoryDB, StorageProof, TrieRecorderProvider};
 
 use trie_db::TrieCache as TrieCacheT;
 #[cfg(not(feature = "std"))]
@@ -46,7 +46,7 @@ use trie_db::{node::NodeOwned, CachedValue};
 /// A provider of trie caches that are compatible with [`trie_db::TrieDB`].
 pub trait TrieCacheProvider<H: Hasher> {
 	/// Cache type that implements [`trie_db::TrieCache`].
-	type Cache<'a>: TrieCacheT<subsoil::trie::NodeCodec<H>> + 'a
+	type Cache<'a>: TrieCacheT<crate::trie::NodeCodec<H>> + 'a
 	where
 		Self: 'a;
 
@@ -168,7 +168,7 @@ impl<H: Hasher> TrieCacheProvider<H> for UnimplementedCacheProvider<H> {
 #[cfg(not(feature = "std"))]
 pub struct UnimplementedRecorderProvider<H> {
 	// Not strictly necessary, but the H bound allows to use this as a drop-in
-	// replacement for the [`subsoil::trie::recorder::Recorder`] in no-std contexts.
+	// replacement for the [`crate::trie::recorder::Recorder`] in no-std contexts.
 	_phantom: core::marker::PhantomData<H>,
 }
 
@@ -206,7 +206,7 @@ type DefaultCache<H> = LocalTrieCache<H>;
 type DefaultCache<H> = UnimplementedCacheProvider<H>;
 
 #[cfg(feature = "std")]
-type DefaultRecorder<H> = subsoil::trie::recorder::Recorder<H>;
+type DefaultRecorder<H> = crate::trie::recorder::Recorder<H>;
 
 #[cfg(not(feature = "std"))]
 type DefaultRecorder<H> = UnimplementedRecorderProvider<H>;
@@ -420,7 +420,7 @@ where
 {
 	type Error = crate::DefaultError;
 	type TrieBackendStorage = S;
-	type RawIter = crate::trie_backend_essence::RawIter<S, H, C, R>;
+	type RawIter = super::trie_backend_essence::RawIter<S, H, C, R>;
 
 	fn storage_hash(&self, key: &[u8]) -> Result<Option<H::Out>, Self::Error> {
 		self.essence.storage_hash(key)
@@ -530,7 +530,7 @@ where
 		self.essence.child_storage_root(child_info, delta, state_version)
 	}
 
-	fn register_overlay_stats(&self, _stats: &crate::stats::StateMachineStats) {}
+	fn register_overlay_stats(&self, _stats: &super::stats::StateMachineStats) {}
 
 	fn usage_info(&self) -> crate::UsageInfo {
 		crate::UsageInfo::empty()
@@ -577,9 +577,9 @@ pub mod tests {
 
 	use super::*;
 	use codec::Encode;
-	use subsoil::core::H256;
+	use crate::core::H256;
 	use soil_runtime::traits::BlakeTwo256;
-	use subsoil::trie::{
+	use crate::trie::{
 		cache::{CacheSize, SharedTrieCache},
 		trie_types::{TrieDBBuilder, TrieDBMutBuilderV0, TrieDBMutBuilderV1},
 		KeySpacedDBMut, PrefixedMemoryDB, Trie, TrieCache, TrieMut,
@@ -589,7 +589,7 @@ pub mod tests {
 
 	const CHILD_KEY_1: &[u8] = b"sub1";
 
-	type Recorder = subsoil::trie::recorder::Recorder<BlakeTwo256>;
+	type Recorder = crate::trie::recorder::Recorder<BlakeTwo256>;
 	type Cache = LocalTrieCache<BlakeTwo256>;
 	type SharedCache = SharedTrieCache<BlakeTwo256>;
 
@@ -656,8 +656,8 @@ pub mod tests {
 			let mut sub_root = Vec::new();
 			root.encode_to(&mut sub_root);
 
-			fn build<L: subsoil::trie::TrieLayout>(
-				mut trie: subsoil::trie::TrieDBMut<L>,
+			fn build<L: crate::trie::TrieLayout>(
+				mut trie: crate::trie::TrieDBMut<L>,
 				child_info: &ChildInfo,
 				sub_root: &[u8],
 			) {
@@ -1372,9 +1372,9 @@ pub mod tests {
 				let hash = BlakeTwo256::hash(&node);
 				// Only insert the node/value that contains the important data.
 				if hash != value_hash {
-					let node = subsoil::trie::NodeCodec::<BlakeTwo256>::decode(&node)
+					let node = crate::trie::NodeCodec::<BlakeTwo256>::decode(&node)
 						.unwrap()
-						.to_owned_node::<subsoil::trie::LayoutV1<BlakeTwo256>>()
+						.to_owned_node::<crate::trie::LayoutV1<BlakeTwo256>>()
 						.unwrap();
 
 					if let Some(data) = node.data() {

@@ -39,7 +39,7 @@ where
 	H: HashT,
 {
 	if let Some(wasm) = storage.top.get(well_known_keys::CODE) {
-		let mut ext = soil_state_machine::BasicExternalities::new_empty(); // just to read runtime version.
+		let mut ext = subsoil::state_machine::BasicExternalities::new_empty(); // just to read runtime version.
 
 		let code_fetcher = subsoil::core::traits::WrappedRuntimeCode(wasm.as_slice().into());
 		let runtime_code = subsoil::core::traits::RuntimeCode {

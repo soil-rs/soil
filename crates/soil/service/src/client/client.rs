@@ -70,7 +70,7 @@ use soil_runtime::{
 	},
 	Justification, Justifications, StateVersion,
 };
-use soil_state_machine::{
+use subsoil::state_machine::{
 	prove_child_read, prove_range_read_with_child_with_size, prove_read,
 	read_range_proof_check_with_child_on_proving_backend, Backend as StateBackend,
 	ChildStorageCollection, KeyValueStates, KeyValueStorageLevel, StorageCollection,
@@ -1386,15 +1386,15 @@ where
 		proof: CompactProof,
 		start_key: &[Vec<u8>],
 	) -> soil_blockchain::Result<(KeyValueStates, usize)> {
-		let mut db = soil_state_machine::MemoryDB::<HashingFor<Block>>::new(&[]);
+		let mut db = subsoil::state_machine::MemoryDB::<HashingFor<Block>>::new(&[]);
 		// Compact encoding
-		subsoil::trie::decode_compact::<soil_state_machine::LayoutV0<HashingFor<Block>>, _, _>(
+		subsoil::trie::decode_compact::<subsoil::state_machine::LayoutV0<HashingFor<Block>>, _, _>(
 			&mut db,
 			proof.iter_compact_encoded_nodes(),
 			Some(&root),
 		)
 		.map_err(|e| soil_blockchain::Error::from_state(Box::new(e)))?;
-		let proving_backend = soil_state_machine::TrieBackendBuilder::new(db, root).build();
+		let proving_backend = subsoil::state_machine::TrieBackendBuilder::new(db, root).build();
 		let state = read_range_proof_check_with_child_on_proving_backend::<HashingFor<Block>>(
 			&proving_backend,
 			start_key,

@@ -28,7 +28,7 @@ use soil_runtime::{
 	traits::{Block as BlockT, HashingFor, Header as HeaderT, NumberFor, Zero},
 	Justification, Justifications, StateVersion, Storage,
 };
-use soil_state_machine::{
+use subsoil::state_machine::{
 	Backend as StateBackend, BackendTransaction, ChildStorageCollection, InMemoryBackend,
 	IndexOperation, StorageCollection,
 };

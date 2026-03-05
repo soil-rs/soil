@@ -33,7 +33,6 @@ subsoil-crypto-hashing = { workspace = true, default-features = true, optional =
 soil-genesis-builder = { workspace = true, default-features = true, optional = true}
 soil-io = { workspace = true, optional = true}
 soil-runtime = { workspace = true, default-features = true, optional = true}
-soil-state-machine = { workspace = true, default-features = true, optional = true}
 subsoil = { workspace = true, default-features = true, optional = true }
 
 [features]
@@ -56,7 +55,6 @@ std = [
 	"soil-io",
 	"soil-network",
 	"soil-runtime",
-	"soil-state-machine",
 	"soil-telemetry",
 	"subsoil",
 	"soil-client-api/std",
@@ -67,7 +65,6 @@ std = [
 	"soil-io/std",
 	"soil-network/std",
 	"soil-runtime/std",
-	"soil-state-machine/std",
 	"soil-telemetry/std",
 ]
 

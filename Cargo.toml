@@ -85,7 +85,6 @@ members = [
 	"crates/soil/session",
 	"crates/soil/staking",
 	"crates/soil/state-db",
-	"crates/soil/state-machine",
 	"crates/soil/statement-store",
 	"crates/soil/storage-monitor",
 	"crates/soil/sync-state-rpc",
@@ -559,7 +558,6 @@ sp-runtime-interface-test-wasm = { path = "crates/soil/runtime-interface/test-wa
 sp-runtime-interface-test-wasm-deprecated = { path = "crates/soil/runtime-interface/test-wasm-deprecated" }
 soil-session = { path = "crates/soil/session", default-features = false }
 soil-staking = { path = "crates/soil/staking", default-features = false }
-soil-state-machine = { path = "crates/soil/state-machine", default-features = false }
 soil-statement-store = { path = "crates/soil/statement-store", default-features = false }
 soil-test-primitives = { path = "crates/soil/test-primitives" }
 soil-timestamp = { path = "crates/soil/timestamp", default-features = false }

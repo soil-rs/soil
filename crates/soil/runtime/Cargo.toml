@@ -42,7 +42,6 @@ tuplex = { workspace = true, default-features = false }
 rand = { workspace = true, default-features = true }
 serde_json = { workspace = true, default-features = true }
 soil-api = { workspace = true, default-features = true }
-soil-state-machine = { workspace = true, default-features = true }
 substrate-test-runtime-client = { workspace = true }
 zstd = { workspace = true }
 
@@ -66,7 +65,6 @@ std = [
 	"soil-application-crypto/std",
 	"subsoil/std",
 	"soil-io/std",
-	"soil-state-machine/std",
 	"strum/std",
 	"tracing/std",
 	"tuplex/std",

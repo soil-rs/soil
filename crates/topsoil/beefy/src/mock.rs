@@ -27,7 +27,7 @@ use soil_runtime::{
 	BuildStorage, Perbill,
 };
 use soil_staking::{EraIndex, SessionIndex};
-use soil_state_machine::BasicExternalities;
+use subsoil::state_machine::BasicExternalities;
 use topsoil_election_provider_support::{
 	bounds::{ElectionBounds, ElectionBoundsBuilder},
 	onchain, SequentialPhragmen, Weight,

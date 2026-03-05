@@ -31,7 +31,7 @@ use std::{
 	sync::{Arc, Mutex},
 };
 
-type TestExternalities = soil_state_machine::TestExternalities<soil_runtime::traits::BlakeTwo256>;
+type TestExternalities = subsoil::state_machine::TestExternalities<soil_runtime::traits::BlakeTwo256>;
 
 fn call_wasm_method_with_result<HF: HostFunctionsT>(
 	binary: &[u8],

@@ -597,7 +597,7 @@ pub trait GenesisBuild<T, I = ()>: soil_runtime::traits::MaybeSerializeDeseriali
 	/// Assimilate the storage for this module into pre-existing overlays.
 	#[cfg(feature = "std")]
 	fn assimilate_storage(&self, storage: &mut soil_runtime::Storage) -> Result<(), String> {
-		soil_state_machine::BasicExternalities::execute_with_storage(storage, || {
+		subsoil::state_machine::BasicExternalities::execute_with_storage(storage, || {
 			self.build();
 			Ok(())
 		})

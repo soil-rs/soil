@@ -53,7 +53,7 @@ pub use soil_blockchain as blockchain;
 pub use soil_blockchain::HeaderBackend;
 
 #[cfg(feature = "std")]
-pub use soil_state_machine::{CompactProof, StorageProof};
+pub use subsoil::state_machine::{CompactProof, StorageProof};
 #[cfg(feature = "std")]
 pub use subsoil::storage::{ChildInfo, PrefixedStorageKey, StorageData, StorageKey};
 

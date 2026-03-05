@@ -25,7 +25,6 @@ serde = { workspace = true, default-features = true }
 subsoil-crypto-hashing = { workspace = true, default-features = true }
 soil-io = { workspace = true, default-features = true }
 soil-runtime = { workspace = true, default-features = true }
-soil-state-machine = { workspace = true, default-features = true }
 spinners = { workspace = true }
 substrate-rpc-client = { workspace = true, default-features = true }
 tokio = { features = [

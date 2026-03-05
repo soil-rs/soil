@@ -226,7 +226,7 @@ fn ensure_correct_instance_is_selected() {
 	.unwrap();
 
 	let mut overlay = Default::default();
-	let mut ext = soil_state_machine::Ext::new(&mut overlay, &state, None);
+	let mut ext = subsoil::state_machine::Ext::new(&mut overlay, &state, None);
 	subsoil::externalities::set_and_run_with_externalities(&mut ext, || {
 		add_benchmarks!(params, batches);
 		Ok::<_, crate::BenchmarkError>(())

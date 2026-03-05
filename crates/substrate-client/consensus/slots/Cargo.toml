@@ -31,7 +31,6 @@ soil-consensus = { workspace = true, default-features = true }
 soil-consensus-slots = { workspace = true, default-features = true }
 soil-inherents = { workspace = true, default-features = true }
 soil-runtime = { workspace = true, default-features = true }
-soil-state-machine = { workspace = true, default-features = true }
 
 [dev-dependencies]
 substrate-test-runtime-client = { workspace = true }

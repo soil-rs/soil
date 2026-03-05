@@ -16,6 +16,7 @@ subsoil-crypto-hashing = { workspace = true }
 backtrace = { optional = true, workspace = true }
 regex = { optional = true, workspace = true }
 anyhow = { optional = true, workspace = true }
+arbitrary = { features = ["derive"], optional = true, workspace = true }
 bytes = { workspace = true }
 codec = { features = ["derive", "max-encoded-len", "bytes"], workspace = true }
 docify = { workspace = true }
@@ -107,6 +108,8 @@ criterion = { workspace = true, default-features = true }
 serde_json = { workspace = true, default-features = true }
 rustversion = { workspace = true }
 trybuild = { workspace = true }
+assert_matches = { workspace = true }
+pretty_assertions = { workspace = true }
 trie-bench = { workspace = true }
 trie-standardmap = { workspace = true }
 
@@ -205,3 +208,6 @@ bandersnatch-experimental = ["ark-vrf"]
 # Disables static assertions in `impls.rs` that checks the word size. To prevent any footgun, the
 # check is changed into a runtime check.
 disable_target_static_assertions = []
+
+# soil-state-machine features
+fuzzing = ["arbitrary"]

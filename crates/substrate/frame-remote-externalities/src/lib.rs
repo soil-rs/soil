@@ -49,7 +49,7 @@ use soil_runtime::{
 	traits::{Block as BlockT, HashingFor},
 	StateVersion,
 };
-use soil_state_machine::TestExternalities;
+use subsoil::state_machine::TestExternalities;
 use std::{
 	collections::{BTreeSet, VecDeque},
 	future::Future,
@@ -1257,7 +1257,7 @@ mod remote_tests {
 
 		// This test does not rely on the remote endpoint having child tries. A synthetic child
 		// storage entry is inserted locally and then asserted on.
-		use soil_state_machine::Backend;
+		use subsoil::state_machine::Backend;
 
 		// Create an externality with child trie scraping enabled.
 		let mut child_ext = Builder::<Block>::new()

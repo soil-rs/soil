@@ -21,7 +21,6 @@ use codec::Error as CodecError;
 use soil_api::ApiError;
 use soil_consensus;
 use soil_runtime::transaction_validity::TransactionValidityError;
-use soil_state_machine;
 use std::{self, result};
 
 /// Client Result type alias
@@ -73,7 +72,7 @@ pub enum Error {
 
 	// `inner` cannot be made member, since it lacks `std::error::Error` trait bounds.
 	#[error("Execution failed: {0}")]
-	Execution(Box<dyn soil_state_machine::Error>),
+	Execution(Box<dyn subsoil::state_machine::Error>),
 
 	#[error("Blockchain")]
 	Blockchain(#[source] Box<Error>),
@@ -82,7 +81,7 @@ pub enum Error {
 	///
 	/// Eventually this will be replaced.
 	#[error("{0}")]
-	StorageChanges(soil_state_machine::DefaultError),
+	StorageChanges(subsoil::state_machine::DefaultError),
 
 	#[error("Invalid child storage key")]
 	InvalidChildStorageKey,
@@ -182,14 +181,14 @@ pub enum Error {
 	Storage(String),
 }
 
-impl From<Box<dyn soil_state_machine::Error + Send + Sync + 'static>> for Error {
-	fn from(e: Box<dyn soil_state_machine::Error + Send + Sync + 'static>) -> Self {
+impl From<Box<dyn subsoil::state_machine::Error + Send + Sync + 'static>> for Error {
+	fn from(e: Box<dyn subsoil::state_machine::Error + Send + Sync + 'static>) -> Self {
 		Self::from_state(e)
 	}
 }
 
-impl From<Box<dyn soil_state_machine::Error>> for Error {
-	fn from(e: Box<dyn soil_state_machine::Error>) -> Self {
+impl From<Box<dyn subsoil::state_machine::Error>> for Error {
+	fn from(e: Box<dyn subsoil::state_machine::Error>) -> Self {
 		Self::from_state(e)
 	}
 }
@@ -211,7 +210,7 @@ impl Error {
 	}
 
 	/// Chain a state error.
-	pub fn from_state(e: Box<dyn soil_state_machine::Error>) -> Self {
+	pub fn from_state(e: Box<dyn subsoil::state_machine::Error>) -> Self {
 		Error::Execution(e)
 	}
 

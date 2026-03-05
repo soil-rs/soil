@@ -24,7 +24,6 @@ scale-info = { features = ["derive"], workspace = true }
 subsoil-api-proc-macro = { workspace = true }
 soil-runtime = { workspace = true }
 subsoil = { workspace = true }
-soil-state-machine = { optional = true, workspace = true }
 soil-version = { workspace = true }
 thiserror = { optional = true, workspace = true }
 
@@ -41,7 +40,6 @@ std = [
 	"subsoil-api-proc-macro/std",
 	"subsoil/std",
 	"soil-runtime/std",
-	"soil-state-machine/std",
 	"soil-test-primitives/std",
 	"soil-version/std",
 	"thiserror",

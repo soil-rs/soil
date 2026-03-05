@@ -26,13 +26,13 @@ use alloc::{collections::btree_set::BTreeSet, vec::Vec};
 use codec::{Decode, Encode};
 use hash_db::Hasher;
 pub use offchain::OffchainOverlayedChanges;
-use subsoil::core::{
+use crate::core::{
 	offchain::OffchainOverlayedChange,
 	storage::{well_known_keys::EXTRINSIC_INDEX, ChildInfo, StateVersion},
 };
 #[cfg(feature = "std")]
-use subsoil::externalities::{Extension, Extensions, TransactionType};
-use subsoil::trie::{empty_child_trie_root, LayoutV1};
+use crate::externalities::{Extension, Extensions, TransactionType};
+use crate::trie::{empty_child_trie_root, LayoutV1};
 
 #[cfg(not(feature = "std"))]
 use alloc::collections::btree_map::BTreeMap as Map;
@@ -758,7 +758,7 @@ impl<H: Hasher> OverlayedChanges<H> {
 
 	/// Write a key value pair to the offchain storage overlay.
 	pub fn set_offchain_storage(&mut self, key: &[u8], value: Option<&[u8]>) {
-		use subsoil::core::offchain::STORAGE_PREFIX;
+		use crate::core::offchain::STORAGE_PREFIX;
 		match value {
 			Some(value) => self.offchain.set(STORAGE_PREFIX, key, value),
 			None => self.offchain.remove(STORAGE_PREFIX, key),
@@ -772,8 +772,8 @@ impl<H: Hasher> OverlayedChanges<H> {
 }
 
 #[cfg(not(substrate_runtime))]
-impl<H: Hasher> From<subsoil::core::storage::Storage> for OverlayedChanges<H> {
-	fn from(storage: subsoil::core::storage::Storage) -> Self {
+impl<H: Hasher> From<crate::core::storage::Storage> for OverlayedChanges<H> {
+	fn from(storage: crate::core::storage::Storage) -> Self {
 		Self {
 			top: storage.top.into(),
 			children: storage
@@ -864,13 +864,13 @@ impl<'a> OverlayedExtensions<'a> {
 		&mut self,
 		type_id: TypeId,
 		extension: Box<dyn Extension>,
-	) -> Result<(), subsoil::externalities::Error> {
+	) -> Result<(), crate::externalities::Error> {
 		match self.extensions.entry(type_id) {
 			MapEntry::Vacant(vacant) => {
 				vacant.insert(OverlayedExtension::Owned(extension));
 				Ok(())
 			},
-			MapEntry::Occupied(_) => Err(subsoil::externalities::Error::ExtensionAlreadyRegistered),
+			MapEntry::Occupied(_) => Err(crate::externalities::Error::ExtensionAlreadyRegistered),
 		}
 	}
 
@@ -910,7 +910,7 @@ mod tests {
 	use super::*;
 	use crate::{ext::Ext, new_in_mem, InMemoryBackend};
 	use array_bytes::bytes2hex;
-	use subsoil::core::{traits::Externalities, Blake2Hasher};
+	use crate::core::{traits::Externalities, Blake2Hasher};
 	use std::collections::BTreeMap;
 
 	fn assert_extrinsics(
@@ -959,7 +959,7 @@ mod tests {
 
 	#[test]
 	fn offchain_overlayed_storage_transactions_works() {
-		use subsoil::core::offchain::STORAGE_PREFIX;
+		use crate::core::offchain::STORAGE_PREFIX;
 		fn check_offchain_content(
 			state: &OverlayedChanges<Blake2Hasher>,
 			nb_commit: usize,

@@ -26,3 +26,4 @@ pub mod keystore;
 pub mod allocator;
 pub mod runtime_interface;
 pub mod trie;
+pub mod state_machine;

@@ -29,7 +29,7 @@ use soil_runtime::{
 	generic::BlockId,
 	traits::{Block as BlockT, HashingFor},
 };
-use soil_state_machine::{backend::AsTrieBackend, OverlayedChanges, StateMachine, StorageProof};
+use subsoil::state_machine::{backend::AsTrieBackend, OverlayedChanges, StateMachine, StorageProof};
 use std::{cell::RefCell, sync::Arc};
 
 /// Call executor that executes methods locally, querying all required
@@ -104,7 +104,7 @@ where
 			self.backend.blockchain().expect_block_number_from_id(&BlockId::Hash(at_hash))?;
 		let state = self.backend.state_at(at_hash, context.into())?;
 
-		let state_runtime_code = soil_state_machine::backend::BackendRuntimeCode::new(&state);
+		let state_runtime_code = subsoil::state_machine::backend::BackendRuntimeCode::new(&state);
 		let runtime_code =
 			state_runtime_code.runtime_code().map_err(soil_blockchain::Error::RuntimeCode)?;
 
@@ -144,7 +144,7 @@ where
 		// It is important to extract the runtime code here before we create the proof
 		// recorder to not record it. We also need to fetch the runtime code from `state` to
 		// make sure we use the caching layers.
-		let state_runtime_code = soil_state_machine::backend::BackendRuntimeCode::new(&state);
+		let state_runtime_code = subsoil::state_machine::backend::BackendRuntimeCode::new(&state);
 
 		let runtime_code =
 			state_runtime_code.runtime_code().map_err(soil_blockchain::Error::RuntimeCode)?;
@@ -155,7 +155,7 @@ where
 			Some(recorder) => {
 				let trie_state = state.as_trie_backend();
 
-				let backend = soil_state_machine::TrieBackendBuilder::wrap(&trie_state)
+				let backend = subsoil::state_machine::TrieBackendBuilder::wrap(&trie_state)
 					.with_recorder(recorder.clone())
 					.build();
 
@@ -192,7 +192,7 @@ where
 
 	fn runtime_version(&self, at_hash: Block::Hash) -> soil_blockchain::Result<RuntimeVersion> {
 		let state = self.backend.state_at(at_hash, backend::TrieCacheContext::Untrusted)?;
-		let state_runtime_code = soil_state_machine::backend::BackendRuntimeCode::new(&state);
+		let state_runtime_code = subsoil::state_machine::backend::BackendRuntimeCode::new(&state);
 
 		let runtime_code =
 			state_runtime_code.runtime_code().map_err(soil_blockchain::Error::RuntimeCode)?;
@@ -213,12 +213,12 @@ where
 
 		let trie_backend = state.as_trie_backend();
 
-		let state_runtime_code = soil_state_machine::backend::BackendRuntimeCode::new(trie_backend);
+		let state_runtime_code = subsoil::state_machine::backend::BackendRuntimeCode::new(trie_backend);
 		let runtime_code =
 			state_runtime_code.runtime_code().map_err(soil_blockchain::Error::RuntimeCode)?;
 		let runtime_code = self.code_provider.maybe_override_code(runtime_code, &state, at_hash)?.0;
 
-		soil_state_machine::prove_execution_on_trie_backend(
+		subsoil::state_machine::prove_execution_on_trie_backend(
 			trie_backend,
 			&mut Default::default(),
 			&self.executor,

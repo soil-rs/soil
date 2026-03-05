@@ -28,15 +28,15 @@ use crate::{
 };
 
 use hash_db::{HashDB, Hasher};
-use subsoil::core::{
+use crate::core::{
 	offchain::testing::TestPersistentOffchainDB,
 	storage::{
 		well_known_keys::{is_child_storage_key, CODE},
 		StateVersion, Storage,
 	},
 };
-use subsoil::externalities::{Extension, ExtensionStore, Extensions};
-use subsoil::trie::{recorder::Recorder, PrefixedMemoryDB, StorageProof};
+use crate::externalities::{Extension, ExtensionStore, Extensions};
+use crate::trie::{recorder::Recorder, PrefixedMemoryDB, StorageProof};
 
 /// Simple HashMap-based Externalities impl.
 pub struct TestExternalities<H>
@@ -145,7 +145,7 @@ where
 	/// This only supports inserting keys in child tries.
 	pub fn insert_child(
 		&mut self,
-		c: subsoil::core::storage::ChildInfo,
+		c: crate::core::storage::ChildInfo,
 		k: StorageKey,
 		v: StorageValue,
 	) {
@@ -250,7 +250,7 @@ where
 	/// Returns the result of the given closure.
 	pub fn execute_with<R>(&mut self, execute: impl FnOnce() -> R) -> R {
 		let mut ext = self.ext();
-		subsoil::externalities::set_and_run_with_externalities(&mut ext, execute)
+		crate::externalities::set_and_run_with_externalities(&mut ext, execute)
 	}
 
 	/// Execute the given closure while `self`, with `proving_backend` as backend, is set as
@@ -265,7 +265,7 @@ where
 		let mut proving_ext =
 			Ext::new(&mut self.overlay, &proving_backend, Some(&mut self.extensions));
 
-		let outcome = subsoil::externalities::set_and_run_with_externalities(&mut proving_ext, execute);
+		let outcome = crate::externalities::set_and_run_with_externalities(&mut proving_ext, execute);
 		let proof = proving_backend.extract_proof().expect("Failed to extract storage proof");
 
 		(outcome, proof)
@@ -283,7 +283,7 @@ where
 		let mut proving_ext =
 			Ext::new(&mut self.overlay, &proving_backend, Some(&mut self.extensions));
 
-		subsoil::externalities::set_and_run_with_externalities(&mut proving_ext, execute)
+		crate::externalities::set_and_run_with_externalities(&mut proving_ext, execute)
 	}
 
 	/// Execute the given closure while `self` is set as externalities.
@@ -296,7 +296,7 @@ where
 	) -> Result<R, String> {
 		let mut ext = AssertUnwindSafe(self.ext());
 		std::panic::catch_unwind(move || {
-			subsoil::externalities::set_and_run_with_externalities(&mut *ext, f)
+			crate::externalities::set_and_run_with_externalities(&mut *ext, f)
 		})
 		.map_err(|e| format!("Closure panicked: {:?}", e))
 	}
@@ -361,7 +361,7 @@ where
 	}
 }
 
-impl<H> subsoil::externalities::ExtensionStore for TestExternalities<H>
+impl<H> crate::externalities::ExtensionStore for TestExternalities<H>
 where
 	H: Hasher,
 	H::Out: Ord + codec::Codec,
@@ -374,23 +374,23 @@ where
 		&mut self,
 		type_id: TypeId,
 		extension: Box<dyn Extension>,
-	) -> Result<(), subsoil::externalities::Error> {
+	) -> Result<(), crate::externalities::Error> {
 		self.extensions.register_with_type_id(type_id, extension)
 	}
 
 	fn deregister_extension_by_type_id(
 		&mut self,
 		type_id: TypeId,
-	) -> Result<(), subsoil::externalities::Error> {
+	) -> Result<(), crate::externalities::Error> {
 		if self.extensions.deregister(type_id) {
 			Ok(())
 		} else {
-			Err(subsoil::externalities::Error::ExtensionIsNotRegistered(type_id))
+			Err(crate::externalities::Error::ExtensionIsNotRegistered(type_id))
 		}
 	}
 }
 
-impl<H> subsoil::externalities::ExternalitiesExt for TestExternalities<H>
+impl<H> crate::externalities::ExternalitiesExt for TestExternalities<H>
 where
 	H: Hasher,
 	H::Out: Ord + codec::Codec,
@@ -402,11 +402,11 @@ where
 	fn register_extension<T: Extension>(
 		&mut self,
 		ext: T,
-	) -> Result<(), subsoil::externalities::Error> {
+	) -> Result<(), crate::externalities::Error> {
 		self.register_extension_with_type_id(TypeId::of::<T>(), Box::new(ext))
 	}
 
-	fn deregister_extension<T: Extension>(&mut self) -> Result<(), subsoil::externalities::Error> {
+	fn deregister_extension<T: Extension>(&mut self) -> Result<(), crate::externalities::Error> {
 		self.deregister_extension_by_type_id(TypeId::of::<T>())
 	}
 }
@@ -414,7 +414,7 @@ where
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use subsoil::core::{storage::ChildInfo, traits::Externalities, H256};
+	use crate::core::{storage::ChildInfo, traits::Externalities, H256};
 	use soil_runtime::traits::BlakeTwo256;
 
 	#[test]

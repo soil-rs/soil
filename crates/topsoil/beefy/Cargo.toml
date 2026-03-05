@@ -34,7 +34,6 @@ topsoil-staking-reward-curve = { workspace = true, default-features = true }
 topsoil-timestamp = { workspace = true, default-features = true }
 soil-io = { workspace = true, default-features = true }
 soil-staking = { workspace = true, default-features = true }
-soil-state-machine = { workspace = true }
 subsoil = { workspace = true, default-features = true }
 
 [features]
@@ -59,7 +58,6 @@ std = [
 	"soil-runtime/std",
 	"soil-session/std",
 	"soil-staking/std",
-	"soil-state-machine/std",
 ]
 try-runtime = [
 	"topsoil-election-provider-support/try-runtime",

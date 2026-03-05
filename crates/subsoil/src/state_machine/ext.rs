@@ -18,20 +18,20 @@
 //! Concrete externalities implementation.
 
 #[cfg(feature = "std")]
-use crate::overlayed_changes::OverlayedExtensions;
+use super::overlayed_changes::OverlayedExtensions;
 use crate::{
 	backend::Backend, IndexOperation, IterArgs, OverlayedChanges, StorageKey, StorageValue,
 };
 use codec::{Compact, CompactLen, Decode, Encode};
 use hash_db::Hasher;
 #[cfg(feature = "std")]
-use subsoil::core::hexdisplay::HexDisplay;
-use subsoil::core::storage::{
+use crate::core::hexdisplay::HexDisplay;
+use crate::core::storage::{
 	well_known_keys::is_child_storage_key, ChildInfo, StateVersion, TrackedStorageKey,
 };
 #[cfg(feature = "std")]
-use subsoil::externalities::TransactionType;
-use subsoil::externalities::{Extension, ExtensionStore, Externalities, MultiRemovalResults};
+use crate::externalities::TransactionType;
+use crate::externalities::{Extension, ExtensionStore, Externalities, MultiRemovalResults};
 
 use crate::{trace, warn};
 use alloc::{boxed::Box, vec::Vec};
@@ -47,8 +47,8 @@ const BENCHMARKING_FN: &str = "\
 	Without client transactions the loop condition guarantees the success of the tx close.";
 
 #[cfg(feature = "std")]
-fn guard() -> subsoil::panic_handler::AbortGuard {
-	subsoil::panic_handler::AbortGuard::force_abort()
+fn guard() -> crate::panic_handler::AbortGuard {
+	crate::panic_handler::AbortGuard::force_abort()
 }
 
 #[cfg(not(feature = "std"))]
@@ -89,7 +89,7 @@ where
 	pub fn new(
 		overlay: &'a mut OverlayedChanges<H>,
 		backend: &'a B,
-		extensions: Option<&'a mut subsoil::externalities::Extensions>,
+		extensions: Option<&'a mut crate::externalities::Extensions>,
 	) -> Self {
 		Self {
 			overlay,
@@ -418,7 +418,7 @@ where
 		);
 		let _guard = guard();
 
-		if subsoil::core::storage::well_known_keys::starts_with_child_storage_key(prefix) {
+		if crate::core::storage::well_known_keys::starts_with_child_storage_key(prefix) {
 			warn!(
 				target: "trie",
 				"Refuse to directly clear prefix that is part or contains of child storage key",
@@ -779,15 +779,15 @@ where
 		&mut self,
 		_type_id: TypeId,
 		_extension: Box<dyn Extension>,
-	) -> Result<(), subsoil::externalities::Error> {
-		Err(subsoil::externalities::Error::ExtensionsAreNotSupported)
+	) -> Result<(), crate::externalities::Error> {
+		Err(crate::externalities::Error::ExtensionsAreNotSupported)
 	}
 
 	fn deregister_extension_by_type_id(
 		&mut self,
 		_type_id: TypeId,
-	) -> Result<(), subsoil::externalities::Error> {
-		Err(subsoil::externalities::Error::ExtensionsAreNotSupported)
+	) -> Result<(), crate::externalities::Error> {
+		Err(crate::externalities::Error::ExtensionsAreNotSupported)
 	}
 }
 
@@ -805,26 +805,26 @@ where
 		&mut self,
 		type_id: TypeId,
 		extension: Box<dyn Extension>,
-	) -> Result<(), subsoil::externalities::Error> {
+	) -> Result<(), crate::externalities::Error> {
 		if let Some(ref mut extensions) = self.extensions {
 			extensions.register(type_id, extension)
 		} else {
-			Err(subsoil::externalities::Error::ExtensionsAreNotSupported)
+			Err(crate::externalities::Error::ExtensionsAreNotSupported)
 		}
 	}
 
 	fn deregister_extension_by_type_id(
 		&mut self,
 		type_id: TypeId,
-	) -> Result<(), subsoil::externalities::Error> {
+	) -> Result<(), crate::externalities::Error> {
 		if let Some(ref mut extensions) = self.extensions {
 			if extensions.deregister(type_id) {
 				Ok(())
 			} else {
-				Err(subsoil::externalities::Error::ExtensionIsNotRegistered(type_id))
+				Err(crate::externalities::Error::ExtensionIsNotRegistered(type_id))
 			}
 		} else {
-			Err(subsoil::externalities::Error::ExtensionsAreNotSupported)
+			Err(crate::externalities::Error::ExtensionsAreNotSupported)
 		}
 	}
 }
@@ -834,7 +834,7 @@ mod tests {
 	use super::*;
 	use crate::InMemoryBackend;
 	use codec::{Decode, Encode};
-	use subsoil::core::{
+	use crate::core::{
 		map,
 		storage::{Storage, StorageChild},
 		Blake2Hasher,
@@ -1028,7 +1028,7 @@ mod tests {
 
 		let ext = TestExt::new(&mut overlay, &backend, None);
 
-		use subsoil::core::storage::well_known_keys;
+		use crate::core::storage::well_known_keys;
 		let mut ext = ext;
 		let mut not_under_prefix = well_known_keys::CHILD_STORAGE_KEY_PREFIX.to_vec();
 		not_under_prefix[4] = 88;

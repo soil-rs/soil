@@ -28,7 +28,7 @@ use subsoil::core::{
 	storage::{ChildInfo, TrackedStorageKey},
 };
 use soil_runtime::{traits::Hash, StateVersion, Storage};
-use soil_state_machine::{
+use subsoil::state_machine::{
 	backend::Backend as StateBackend, BackendTransaction, ChildStorageCollection, DBValue,
 	IterArgs, StorageCollection, StorageIterator, StorageKey, StorageValue,
 };
@@ -49,7 +49,7 @@ struct StorageDb<Hasher> {
 	_phantom: std::marker::PhantomData<Hasher>,
 }
 
-impl<Hasher: Hash> soil_state_machine::Storage<Hasher> for StorageDb<Hasher> {
+impl<Hasher: Hash> subsoil::state_machine::Storage<Hasher> for StorageDb<Hasher> {
 	fn get(&self, key: &Hasher::Output, prefix: Prefix) -> Result<Option<DBValue>, String> {
 		let prefixed_key = prefixed_key::<Hasher>(key, prefix);
 		self.db
@@ -613,15 +613,15 @@ impl<Hasher: Hash> StateBackend<Hasher> for BenchmarkingState<Hasher> {
 			.collect::<Vec<_>>()
 	}
 
-	fn register_overlay_stats(&self, stats: &soil_state_machine::StateMachineStats) {
+	fn register_overlay_stats(&self, stats: &subsoil::state_machine::StateMachineStats) {
 		self.state.borrow().as_ref().map(|s| s.register_overlay_stats(stats));
 	}
 
-	fn usage_info(&self) -> soil_state_machine::UsageInfo {
+	fn usage_info(&self) -> subsoil::state_machine::UsageInfo {
 		self.state
 			.borrow()
 			.as_ref()
-			.map_or(soil_state_machine::UsageInfo::empty(), |s| s.usage_info())
+			.map_or(subsoil::state_machine::UsageInfo::empty(), |s| s.usage_info())
 	}
 
 	fn proof_size(&self) -> Option<u32> {
@@ -665,7 +665,7 @@ impl<Hasher: Hash> std::fmt::Debug for BenchmarkingState<Hasher> {
 mod test {
 	use crate::bench::BenchmarkingState;
 	use soil_runtime::traits::HashingFor;
-	use soil_state_machine::backend::Backend as _;
+	use subsoil::state_machine::backend::Backend as _;
 
 	fn hex(hex: &str) -> Vec<u8> {
 		array_bytes::hex2bytes(hex).unwrap()

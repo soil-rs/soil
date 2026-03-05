@@ -33,7 +33,7 @@ use soil_executor_common::{
 };
 use soil_runtime::traits::BlakeTwo256;
 use soil_runtime_test::wasm_binary_unwrap;
-use soil_state_machine::TestExternalities as CoreTestExternalities;
+use subsoil::state_machine::TestExternalities as CoreTestExternalities;
 use subsoil::trie::{LayoutV1 as Layout, TrieConfiguration};
 use std::sync::Arc;
 use tracing_subscriber::layer::SubscriberExt;

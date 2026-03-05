@@ -58,7 +58,6 @@ soil-blockchain = { workspace = true, default-features = true, optional = true}
 soil-consensus = { workspace = true, default-features = true, optional = true}
 soil-runtime = { workspace = true, default-features = true, optional = true}
 soil-session = { workspace = true, default-features = true, optional = true}
-soil-state-machine = { workspace = true, default-features = true, optional = true}
 subsoil = { workspace = true, default-features = true, optional = true}
 soil-transaction-pool = { workspace = true, default-features = true, optional = true}
 soil-transaction-storage-proof = { workspace = true, default-features = true, optional = true}
@@ -116,7 +115,6 @@ std = [
 	"soil-rpc-spec-v2",
 	"soil-runtime",
 	"soil-session",
-	"soil-state-machine",
 	"soil-sysinfo",
 	"soil-telemetry",
 	"soil-transaction-pool",
@@ -147,7 +145,6 @@ std = [
 	"soil-rpc-spec-v2/std",
 	"soil-runtime/std",
 	"soil-session/std",
-	"soil-state-machine/std",
 	"soil-sysinfo/std",
 	"soil-telemetry/std",
 	"soil-transaction-pool/std",

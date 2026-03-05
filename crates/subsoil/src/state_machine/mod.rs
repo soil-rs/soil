@@ -17,10 +17,7 @@
 
 //! Substrate state machine implementation.
 
-#![warn(missing_docs)]
-#![cfg_attr(not(feature = "std"), no_std)]
-
-extern crate alloc;
+// Note: crate-level attributes are handled at the crate root.
 
 pub mod backend;
 #[cfg(not(substrate_runtime))]
@@ -128,7 +125,7 @@ impl core::fmt::Display for DefaultError {
 	}
 }
 
-pub use crate::{
+pub use self::{
 	backend::{Backend, BackendTransaction, IterArgs, KeysIter, PairsIter, StorageIterator},
 	error::{Error, ExecutionError},
 	ext::Ext,
@@ -143,7 +140,7 @@ pub use crate::{
 };
 
 #[cfg(not(substrate_runtime))]
-pub use crate::{
+pub use self::{
 	basic::BasicExternalities,
 	in_memory_backend::new_in_mem,
 	read_only::{InspectState, ReadOnlyExternalities},
@@ -151,8 +148,8 @@ pub use crate::{
 
 #[cfg(feature = "std")]
 mod std_reexport {
-	pub use crate::{testing::TestExternalities, trie_backend::create_proof_check_backend};
-	pub use subsoil::trie::{
+	pub use super::{testing::TestExternalities, trie_backend::create_proof_check_backend};
+	pub use crate::trie::{
 		trie_types::{TrieDBMutV0, TrieDBMutV1},
 		CompactProof, DBValue, LayoutV0, LayoutV1, MemoryDB, StorageProof, TrieMut,
 	};
@@ -160,19 +157,19 @@ mod std_reexport {
 
 #[cfg(feature = "std")]
 mod execution {
-	use crate::backend::AsTrieBackend;
+	use super::backend::AsTrieBackend;
 
 	use super::*;
 	use codec::Codec;
 	use hash_db::Hasher;
 	use smallvec::SmallVec;
-	use subsoil::core::{
+	use crate::core::{
 		hexdisplay::HexDisplay,
 		storage::{ChildInfo, ChildType, PrefixedStorageKey},
 		traits::{CallContext, CodeExecutor, RuntimeCode},
 	};
-	use subsoil::externalities::Extensions;
-	use subsoil::trie::PrefixedMemoryDB;
+	use crate::externalities::Extensions;
+	use crate::trie::PrefixedMemoryDB;
 	use std::collections::{HashMap, HashSet};
 
 	pub(crate) type CallResult<E> = Result<Vec<u8>, E>;
@@ -599,7 +596,7 @@ mod execution {
 			return Err(Box::new("Invalid start of range."));
 		}
 
-		let recorder = subsoil::trie::recorder::Recorder::default();
+		let recorder = crate::trie::recorder::Recorder::default();
 		let proving_backend =
 			TrieBackendBuilder::wrap(trie_backend).with_recorder(recorder.clone()).build();
 		let mut count = 0;
@@ -652,7 +649,7 @@ mod execution {
 				let (key, value) = item.map_err(|e| Box::new(e) as Box<dyn Error>)?;
 
 				if depth < MAX_NESTED_TRIE_DEPTH
-					&& subsoil::core::storage::well_known_keys::is_child_storage_key(key.as_slice())
+					&& crate::core::storage::well_known_keys::is_child_storage_key(key.as_slice())
 				{
 					count += 1;
 					// do not add two child trie with same root
@@ -726,7 +723,7 @@ mod execution {
 		H: Hasher,
 		H::Out: Ord + Codec,
 	{
-		let recorder = subsoil::trie::recorder::Recorder::default();
+		let recorder = crate::trie::recorder::Recorder::default();
 		let proving_backend =
 			TrieBackendBuilder::wrap(trie_backend).with_recorder(recorder.clone()).build();
 		let mut count = 0;
@@ -1060,7 +1057,7 @@ mod execution {
 				values.push((key.to_vec(), value.to_vec()));
 
 				if depth < MAX_NESTED_TRIE_DEPTH
-					&& subsoil::core::storage::well_known_keys::is_child_storage_key(key.as_slice())
+					&& crate::core::storage::well_known_keys::is_child_storage_key(key.as_slice())
 				{
 					// Do not add two chid trie with same root.
 					if !child_roots.contains(value.as_slice()) {
@@ -1097,14 +1094,14 @@ mod tests {
 	use crate::{execution::CallResult, in_memory_backend::new_in_mem};
 	use assert_matches::assert_matches;
 	use codec::Encode;
-	use subsoil::core::{
+	use crate::core::{
 		map,
 		storage::{ChildInfo, StateVersion},
 		traits::{CallContext, CodeExecutor, Externalities, RuntimeCode},
 		H256,
 	};
 	use soil_runtime::traits::BlakeTwo256;
-	use subsoil::trie::{
+	use crate::trie::{
 		trie_types::{TrieDBMutBuilderV0, TrieDBMutBuilderV1},
 		KeySpacedDBMut, PrefixedMemoryDB,
 	};
@@ -1141,7 +1138,7 @@ mod tests {
 		}
 	}
 
-	impl subsoil::core::traits::ReadRuntimeVersion for DummyCodeExecutor {
+	impl crate::core::traits::ReadRuntimeVersion for DummyCodeExecutor {
 		fn read_runtime_version(
 			&self,
 			_: &[u8],
@@ -1579,7 +1576,7 @@ mod tests {
 		}
 	}
 
-	fn test_compact(remote_proof: StorageProof, remote_root: &subsoil::core::H256) -> StorageProof {
+	fn test_compact(remote_proof: StorageProof, remote_root: &crate::core::H256) -> StorageProof {
 		let compact_remote_proof =
 			remote_proof.into_compact_proof::<BlakeTwo256>(*remote_root).unwrap();
 		compact_remote_proof
@@ -1983,7 +1980,7 @@ mod tests {
 		let child_info_1 = ChildInfo::new_default(b"sub_test1");
 		let child_info_2 = ChildInfo::new_default(b"sub_test2");
 
-		use crate::trie_backend::tests::test_trie;
+		use super::trie_backend::tests::test_trie;
 		let mut overlay = OverlayedChanges::default();
 
 		let mut transaction = {

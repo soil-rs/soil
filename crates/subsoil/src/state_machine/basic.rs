@@ -26,15 +26,15 @@ use core::{
 };
 use hash_db::Hasher;
 use log::warn;
-use subsoil::core::{
+use crate::core::{
 	storage::{
 		well_known_keys::is_child_storage_key, ChildInfo, StateVersion, Storage, TrackedStorageKey,
 	},
 	traits::Externalities,
 	Blake2Hasher,
 };
-use subsoil::externalities::{Extension, Extensions, MultiRemovalResults};
-use subsoil::trie::{empty_child_trie_root, LayoutV0, LayoutV1, TrieConfiguration};
+use crate::externalities::{Extension, Extensions, MultiRemovalResults};
+use crate::trie::{empty_child_trie_root, LayoutV0, LayoutV1, TrieConfiguration};
 
 /// Simple Map-based Externalities impl.
 #[derive(Debug)]
@@ -74,7 +74,7 @@ impl BasicExternalities {
 				.map(|(iter, i)| {
 					(
 						i.storage_key().to_vec(),
-						subsoil::core::storage::StorageChild {
+						crate::core::storage::StorageChild {
 							data: iter
 								.filter_map(|(k, v)| v.value().map(|v| (k.to_vec(), v.to_vec())))
 								.collect(),
@@ -91,7 +91,7 @@ impl BasicExternalities {
 	/// Returns the result of the closure and updates `storage` with all changes.
 	#[cfg(feature = "std")]
 	pub fn execute_with_storage<R>(
-		storage: &mut subsoil::core::storage::Storage,
+		storage: &mut crate::core::storage::Storage,
 		f: impl FnOnce() -> R,
 	) -> R {
 		let mut ext = Self::new(core::mem::take(storage));
@@ -107,7 +107,7 @@ impl BasicExternalities {
 	///
 	/// Returns the result of the given closure.
 	pub fn execute_with<R>(&mut self, f: impl FnOnce() -> R) -> R {
-		subsoil::externalities::set_and_run_with_externalities(self, f)
+		crate::externalities::set_and_run_with_externalities(self, f)
 	}
 
 	/// List of active extensions.
@@ -302,7 +302,7 @@ impl Externalities for BasicExternalities {
 		if let Some((data, child_info)) = self.overlay.child_changes_mut(child_info.storage_key()) {
 			let delta =
 				data.into_iter().map(|(k, v)| (k.as_ref(), v.value().map(|v| v.as_slice())));
-			crate::in_memory_backend::new_in_mem::<Blake2Hasher>()
+			super::in_memory_backend::new_in_mem::<Blake2Hasher>()
 				.child_storage_root(&child_info, delta, state_version)
 				.0
 		} else {
@@ -348,7 +348,7 @@ impl Externalities for BasicExternalities {
 	}
 }
 
-impl subsoil::externalities::ExtensionStore for BasicExternalities {
+impl crate::externalities::ExtensionStore for BasicExternalities {
 	fn extension_by_type_id(&mut self, type_id: TypeId) -> Option<&mut dyn Any> {
 		self.extensions.get_mut(type_id)
 	}
@@ -356,19 +356,19 @@ impl subsoil::externalities::ExtensionStore for BasicExternalities {
 	fn register_extension_with_type_id(
 		&mut self,
 		type_id: TypeId,
-		extension: Box<dyn subsoil::externalities::Extension>,
-	) -> Result<(), subsoil::externalities::Error> {
+		extension: Box<dyn crate::externalities::Extension>,
+	) -> Result<(), crate::externalities::Error> {
 		self.extensions.register_with_type_id(type_id, extension)
 	}
 
 	fn deregister_extension_by_type_id(
 		&mut self,
 		type_id: TypeId,
-	) -> Result<(), subsoil::externalities::Error> {
+	) -> Result<(), crate::externalities::Error> {
 		if self.extensions.deregister(type_id) {
 			Ok(())
 		} else {
-			Err(subsoil::externalities::Error::ExtensionIsNotRegistered(type_id))
+			Err(crate::externalities::Error::ExtensionIsNotRegistered(type_id))
 		}
 	}
 }
@@ -376,7 +376,7 @@ impl subsoil::externalities::ExtensionStore for BasicExternalities {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use subsoil::core::{
+	use crate::core::{
 		map,
 		storage::{well_known_keys::CODE, Storage, StorageChild},
 	};

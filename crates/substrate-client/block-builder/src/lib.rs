@@ -382,7 +382,7 @@ mod tests {
 	use super::*;
 	use soil_blockchain::HeaderBackend;
 	use subsoil::core::Blake2Hasher;
-	use soil_state_machine::Backend;
+	use subsoil::state_machine::Backend;
 	use substrate_test_runtime_client::{
 		runtime::{Block, ExtrinsicBuilder},
 		DefaultTestClientBuilderExt, TestClientBuilderExt,
@@ -409,7 +409,7 @@ mod tests {
 		let proof = storage_proof_recorder.drain_storage_proof();
 		let genesis_state_root = client.header(genesis_hash).unwrap().unwrap().state_root;
 
-		let backend = soil_state_machine::create_proof_check_backend::<Blake2Hasher>(
+		let backend = subsoil::state_machine::create_proof_check_backend::<Blake2Hasher>(
 			genesis_state_root,
 			proof,
 		)

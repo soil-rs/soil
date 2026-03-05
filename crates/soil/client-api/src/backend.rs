@@ -29,7 +29,7 @@ use soil_runtime::{
 	traits::{Block as BlockT, HashingFor, NumberFor},
 	Justification, Justifications, StateVersion, Storage,
 };
-use soil_state_machine::{
+use subsoil::state_machine::{
 	backend::AsTrieBackend, ChildStorageCollection, IndexOperation, IterArgs,
 	OffchainChangesCollection, StorageCollection, StorageIterator,
 };
@@ -38,7 +38,7 @@ pub use subsoil::trie::MerkleValue;
 
 use crate::{blockchain::Backend as BlockchainBackend, UsageInfo};
 
-pub use soil_state_machine::{Backend as StateBackend, BackendTransaction, KeyValueStates};
+pub use subsoil::state_machine::{Backend as StateBackend, BackendTransaction, KeyValueStates};
 
 /// Extracts the state backend type for the given backend.
 pub type StateBackendFor<B, Block> = <B as Backend<Block>>::State;

@@ -112,7 +112,7 @@ use soil_runtime::{
 #[cfg(feature = "std")]
 use soil_state_db::{IsPruned, LastCanonicalized, StateDb};
 #[cfg(feature = "std")]
-use soil_state_machine::{
+use subsoil::state_machine::{
 	backend::{AsTrieBackend, Backend as StateBackend},
 	BackendTransaction, ChildStorageCollection, DBValue, IndexOperation, IterArgs,
 	OffchainChangesCollection, StateMachineStats, StorageCollection, StorageIterator, StorageKey,
@@ -159,12 +159,12 @@ const CACHE_HEADERS: usize = 8;
 
 /// DB-backed patricia trie state, transaction type is an overlay of changes to commit.
 #[cfg(feature = "std")]
-pub type DbState<H> = soil_state_machine::TrieBackend<Arc<dyn soil_state_machine::Storage<H>>, H>;
+pub type DbState<H> = subsoil::state_machine::TrieBackend<Arc<dyn subsoil::state_machine::Storage<H>>, H>;
 
 /// Builder for [`DbState`].
 #[cfg(feature = "std")]
 pub type DbStateBuilder<Hasher> =
-	soil_state_machine::TrieBackendBuilder<Arc<dyn soil_state_machine::Storage<Hasher>>, Hasher>;
+	subsoil::state_machine::TrieBackendBuilder<Arc<dyn subsoil::state_machine::Storage<Hasher>>, Hasher>;
 
 /// Length of a [`DbHash`].
 #[cfg(feature = "std")]
@@ -361,7 +361,7 @@ impl<B: BlockT> AsTrieBackend<HashingFor<B>> for RefTrackingState<B> {
 
 	fn as_trie_backend(
 		&self,
-	) -> &soil_state_machine::TrieBackend<Self::TrieBackendStorage, HashingFor<B>> {
+	) -> &subsoil::state_machine::TrieBackend<Self::TrieBackendStorage, HashingFor<B>> {
 		&self.state.as_trie_backend()
 	}
 }
@@ -1118,7 +1118,7 @@ struct StorageDb<Block: BlockT> {
 }
 
 #[cfg(feature = "std")]
-impl<Block: BlockT> soil_state_machine::Storage<HashingFor<Block>> for StorageDb<Block> {
+impl<Block: BlockT> subsoil::state_machine::Storage<HashingFor<Block>> for StorageDb<Block> {
 	fn get(&self, key: &Block::Hash, prefix: Prefix) -> Result<Option<DBValue>, String> {
 		if self.prefix_keys {
 			let key = prefixed_key::<HashingFor<Block>>(key, prefix);
@@ -1154,7 +1154,7 @@ impl<Block: BlockT> DbGenesisStorage<Block> {
 }
 
 #[cfg(feature = "std")]
-impl<Block: BlockT> soil_state_machine::Storage<HashingFor<Block>> for DbGenesisStorage<Block> {
+impl<Block: BlockT> subsoil::state_machine::Storage<HashingFor<Block>> for DbGenesisStorage<Block> {
 	fn get(&self, key: &Block::Hash, prefix: Prefix) -> Result<Option<DBValue>, String> {
 		use hash_db::HashDB;
 		Ok(self.storage.get(key, prefix))
@@ -1177,7 +1177,7 @@ impl<Block: BlockT> EmptyStorage<Block> {
 }
 
 #[cfg(feature = "std")]
-impl<Block: BlockT> soil_state_machine::Storage<HashingFor<Block>> for EmptyStorage<Block> {
+impl<Block: BlockT> subsoil::state_machine::Storage<HashingFor<Block>> for EmptyStorage<Block> {
 	fn get(&self, _key: &Block::Hash, _prefix: Prefix) -> Result<Option<DBValue>, String> {
 		Ok(None)
 	}
@@ -1350,7 +1350,7 @@ impl<Block: BlockT> Backend<Block> {
 	///
 	/// Should only be needed for benchmarking.
 	#[cfg(feature = "runtime-benchmarks")]
-	pub fn expose_storage(&self) -> Arc<dyn soil_state_machine::Storage<HashingFor<Block>>> {
+	pub fn expose_storage(&self) -> Arc<dyn subsoil::state_machine::Storage<HashingFor<Block>>> {
 		self.storage.clone()
 	}
 
@@ -2802,7 +2802,7 @@ impl<Block: BlockT> soil_client_api::backend::Backend<Block> for Backend<Block> 
 	fn have_state_at(&self, hash: Block::Hash, number: NumberFor<Block>) -> bool {
 		if self.is_archive {
 			match self.blockchain.header_metadata(hash) {
-				Ok(header) => soil_state_machine::Storage::get(
+				Ok(header) => subsoil::state_machine::Storage::get(
 					self.storage.as_ref(),
 					&header.state_root,
 					(&[], None),
@@ -2816,7 +2816,7 @@ impl<Block: BlockT> soil_client_api::backend::Backend<Block> for Backend<Block> 
 				IsPruned::Pruned => false,
 				IsPruned::NotPruned => true,
 				IsPruned::MaybePruned => match self.blockchain.header_metadata(hash) {
-					Ok(header) => soil_state_machine::Storage::get(
+					Ok(header) => subsoil::state_machine::Storage::get(
 						self.storage.as_ref(),
 						&header.state_root,
 						(&[], None),

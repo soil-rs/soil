@@ -83,7 +83,7 @@ pub mod __private {
 		pub use subsoil::core::traits::CallContext;
 		pub use subsoil::externalities::{Extension, Extensions, TransactionType};
 		pub use soil_runtime::StateVersion;
-		pub use soil_state_machine::{
+		pub use subsoil::state_machine::{
 			Backend as StateBackend, InMemoryBackend, OverlayedChanges, StorageProof, TrieBackend,
 			TrieBackendBuilder,
 		};
@@ -124,9 +124,9 @@ use soil_runtime::traits::HashingFor;
 pub use soil_runtime::TransactionOutcome;
 use soil_runtime::{traits::Block as BlockT, ExtrinsicInclusionMode};
 #[cfg(feature = "std")]
-pub use soil_state_machine::StorageProof;
+pub use subsoil::state_machine::StorageProof;
 #[cfg(feature = "std")]
-use soil_state_machine::{backend::AsTrieBackend, Backend as StateBackend, OverlayedChanges};
+use subsoil::state_machine::{backend::AsTrieBackend, Backend as StateBackend, OverlayedChanges};
 use soil_version::RuntimeVersion;
 #[cfg(feature = "std")]
 use std::cell::RefCell;
@@ -528,7 +528,7 @@ pub type ProofRecorder<B> = subsoil::trie::recorder::Recorder<HashingFor<B>>;
 pub type ProofRecorderIgnoredNodes<B> = subsoil::trie::recorder::IgnoredNodes<<B as BlockT>::Hash>;
 
 #[cfg(feature = "std")]
-pub type StorageChanges<Block> = soil_state_machine::StorageChanges<HashingFor<Block>>;
+pub type StorageChanges<Block> = subsoil::state_machine::StorageChanges<HashingFor<Block>>;
 
 /// Something that can be constructed to a runtime api.
 #[cfg(feature = "std")]

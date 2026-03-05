@@ -36,7 +36,6 @@ static_assertions = { workspace = true, default-features = true }
 array-bytes = { workspace = true, default-features = true }
 rusty-fork = { workspace = true }
 soil-client-db = { workspace = true }
-soil-state-machine = { workspace = true }
 
 [features]
 default = ["std"]
@@ -54,7 +53,6 @@ std = [
 	"subsoil/std",
 	"soil-io/std",
 	"soil-runtime/std",
-	"soil-state-machine/std",
 ]
 runtime-benchmarks = [
 	"topsoil-support/runtime-benchmarks",

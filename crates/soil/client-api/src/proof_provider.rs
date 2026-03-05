@@ -19,7 +19,7 @@
 //! Proof utilities
 use crate::{CompactProof, StorageProof};
 use soil_runtime::traits::Block as BlockT;
-use soil_state_machine::{KeyValueStates, KeyValueStorageLevel};
+use subsoil::state_machine::{KeyValueStates, KeyValueStorageLevel};
 use subsoil::storage::ChildInfo;
 
 /// Interface for providing block proving utilities.

@@ -39,7 +39,6 @@ schnellru = { workspace = true, optional = true}
 soil-blockchain = { workspace = true, default-features = true, optional = true}
 subsoil = { workspace = true, default-features = true, optional = true}
 soil-runtime = { workspace = true, default-features = true, optional = true}
-soil-state-machine = { workspace = true, default-features = true, optional = true}
 sysinfo = { workspace = true, optional = true}
 
 [dev-dependencies]
@@ -71,13 +70,11 @@ std = [
 	"subsoil",
 	"soil-runtime",
 	"soil-state-db",
-	"soil-state-machine",
 	"sysinfo",
 	"subsoil/std",
 	"soil-client-api/std",
 	"soil-runtime/std",
 	"soil-state-db/std",
-	"soil-state-machine/std",
 ]
 default = ["std"]
 test-helpers = []

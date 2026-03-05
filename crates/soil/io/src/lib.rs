@@ -832,7 +832,7 @@ pub trait Misc {
 	) -> AllocateAndReturnByCodec<Option<Vec<u8>>> {
 		use subsoil::core::traits::ReadRuntimeVersionExt;
 
-		let mut ext = soil_state_machine::BasicExternalities::default();
+		let mut ext = subsoil::state_machine::BasicExternalities::default();
 
 		match self
 			.extension::<ReadRuntimeVersionExt>()
@@ -1996,7 +1996,7 @@ pub fn oom(_: core::alloc::Layout) -> ! {
 
 /// Type alias for Externalities implementation used in tests.
 #[cfg(feature = "std")] // NOTE: Deliberately isn't `not(substrate_runtime)`.
-pub type TestExternalities = soil_state_machine::TestExternalities<subsoil::core::Blake2Hasher>;
+pub type TestExternalities = subsoil::state_machine::TestExternalities<subsoil::core::Blake2Hasher>;
 
 /// The host functions Substrate provides for the Wasm runtime environment.
 ///
@@ -2023,7 +2023,7 @@ pub type SubstrateHostFunctions = (
 mod tests {
 	use super::*;
 	use subsoil::core::{crypto::UncheckedInto, map, storage::Storage};
-	use soil_state_machine::BasicExternalities;
+	use subsoil::state_machine::BasicExternalities;
 
 	#[test]
 	fn storage_works() {

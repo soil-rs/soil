@@ -31,7 +31,7 @@ use soil_runtime::{
 	traits::{BlakeTwo256, Header as HeaderT},
 	ApplyExtrinsicResult, Digest, DigestItem, MultiSignature, MultiSigner,
 };
-use soil_state_machine::TestExternalities as CoreTestExternalities;
+use subsoil::state_machine::TestExternalities as CoreTestExternalities;
 use topsoil_support::Hashable;
 use topsoil_system::offchain::AppCrypto;
 

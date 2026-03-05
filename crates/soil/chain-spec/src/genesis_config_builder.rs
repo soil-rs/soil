@@ -28,7 +28,7 @@ pub use soil_executor::wasm_interface::HostFunctions;
 use soil_executor::{error::Result, WasmExecutor};
 use soil_genesis_builder::{PresetId, Result as BuildResult};
 pub use soil_genesis_builder::{DEV_RUNTIME_PRESET, LOCAL_TESTNET_RUNTIME_PRESET};
-use soil_state_machine::BasicExternalities;
+use subsoil::state_machine::BasicExternalities;
 use std::borrow::Cow;
 
 /// A utility that facilitates calling the GenesisBuilder API from the runtime wasm code blob.

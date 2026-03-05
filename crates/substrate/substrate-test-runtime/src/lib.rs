@@ -949,9 +949,9 @@ fn test_witness(proof: StorageProof, root: crate::Hash) {
 	use subsoil::externalities::Externalities;
 	let db: subsoil::trie::MemoryDB<crate::Hashing> = proof.into_memory_db();
 	let backend =
-		soil_state_machine::TrieBackendBuilder::<_, crate::Hashing>::new(db, root).build();
-	let mut overlay = soil_state_machine::OverlayedChanges::default();
-	let mut ext = soil_state_machine::Ext::new(
+		subsoil::state_machine::TrieBackendBuilder::<_, crate::Hashing>::new(db, root).build();
+	let mut overlay = subsoil::state_machine::OverlayedChanges::default();
+	let mut ext = subsoil::state_machine::Ext::new(
 		&mut overlay,
 		&backend,
 		#[cfg(feature = "std")]
@@ -1233,8 +1233,8 @@ mod tests {
 	fn witness_backend_works() {
 		let (db, root) = witness_backend();
 		let backend =
-			soil_state_machine::TrieBackendBuilder::<_, crate::Hashing>::new(db, root).build();
-		let proof = soil_state_machine::prove_read(backend, vec![b"value3"]).unwrap();
+			subsoil::state_machine::TrieBackendBuilder::<_, crate::Hashing>::new(db, root).build();
+		let proof = subsoil::state_machine::prove_read(backend, vec![b"value3"]).unwrap();
 		let client = TestClientBuilder::new().build();
 		let runtime_api = client.runtime_api();
 		let best_hash = client.chain_info().best_hash;
@@ -1360,7 +1360,7 @@ mod tests {
 		use soil_executor::{error::Result, WasmExecutor};
 		use soil_executor_common::runtime_blob::RuntimeBlob;
 		use soil_genesis_builder::Result as BuildResult;
-		use soil_state_machine::BasicExternalities;
+		use subsoil::state_machine::BasicExternalities;
 		use std::{fs, io::Write};
 		use storage_key_generator::hex;
 

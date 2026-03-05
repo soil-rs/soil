@@ -18,15 +18,15 @@
 //! State machine fuzzing implementation, behind `fuzzing` feature.
 
 use super::{ext::Ext, *};
-use crate::ext::StorageAppend;
+use super::ext::StorageAppend;
 use arbitrary::Arbitrary;
 #[cfg(test)]
 use codec::Encode;
 use hash_db::Hasher;
-use subsoil::core::{storage::StateVersion, traits::Externalities};
+use crate::core::{storage::StateVersion, traits::Externalities};
 #[cfg(test)]
 use soil_runtime::traits::BlakeTwo256;
-use subsoil::trie::PrefixedMemoryDB;
+use crate::trie::PrefixedMemoryDB;
 use std::collections::BTreeMap;
 
 #[derive(Arbitrary, Debug, Clone)]

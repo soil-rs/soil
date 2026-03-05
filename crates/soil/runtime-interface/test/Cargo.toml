@@ -22,6 +22,5 @@ soil-io = { workspace = true, default-features = true }
 soil-runtime = { workspace = true, default-features = true }
 sp-runtime-interface-test-wasm = { workspace = true }
 sp-runtime-interface-test-wasm-deprecated = { workspace = true }
-soil-state-machine = { workspace = true, default-features = true }
 tracing = { workspace = true, default-features = true }
 tracing-core = { workspace = true, default-features = true }

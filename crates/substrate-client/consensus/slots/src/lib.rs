@@ -51,8 +51,8 @@ const LOG_TARGET: &str = "slots";
 
 /// The changes that need to applied to the storage to create the state for a block.
 ///
-/// See [`soil_state_machine::StorageChanges`] for more information.
-pub type StorageChanges<Block> = soil_state_machine::StorageChanges<HashingFor<Block>>;
+/// See [`subsoil::state_machine::StorageChanges`] for more information.
+pub type StorageChanges<Block> = subsoil::state_machine::StorageChanges<HashingFor<Block>>;
 
 /// A worker that should be invoked at every new slot.
 ///

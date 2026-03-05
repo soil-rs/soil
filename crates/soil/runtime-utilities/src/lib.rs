@@ -35,7 +35,7 @@ use subsoil::core::{
 #[cfg(feature = "std")]
 use soil_executor::WasmExecutor;
 #[cfg(feature = "std")]
-use soil_state_machine::BasicExternalities;
+use subsoil::state_machine::BasicExternalities;
 #[cfg(feature = "std")]
 use subsoil::wasm_interface::HostFunctions;
 #[cfg(feature = "std")]

@@ -39,7 +39,6 @@ soil-inherents = { workspace = true }
 soil-io = { workspace = true }
 soil-runtime = { features = ["serde"], workspace = true }
 soil-staking = { workspace = true }
-soil-state-machine = { optional = true, workspace = true }
 subsoil = { workspace = true }
 tt-call = { workspace = true }
 
@@ -73,7 +72,6 @@ std = [
 	"soil-io/std",
 	"soil-runtime/std",
 	"soil-staking/std",
-	"soil-state-machine/std",
 ]
 runtime-benchmarks = [
 	"topsoil-system/runtime-benchmarks",

@@ -400,7 +400,7 @@ pub(crate) mod tests {
 	use alloc::vec;
 
 	use soil_runtime::{key_types::DUMMY, testing::UintAuthorityId, BuildStorage};
-	use soil_state_machine::BasicExternalities;
+	use subsoil::state_machine::BasicExternalities;
 
 	use topsoil_support::traits::{KeyOwnerProofSystem, OnInitialize};
 

@@ -43,7 +43,6 @@ soil-keyring = { workspace = true }
 soil-offchain = { workspace = true }
 soil-runtime = { features = ["serde"], workspace = true }
 soil-session = { workspace = true }
-soil-state-machine = { workspace = true }
 soil-statement-store = { workspace = true }
 soil-transaction-pool = { workspace = true }
 soil-version = { workspace = true }
@@ -107,7 +106,6 @@ std = [
 	"soil-offchain/std",
 	"soil-runtime/std",
 	"soil-session/std",
-	"soil-state-machine/std",
 	"soil-statement-store/std",
 	"soil-transaction-pool/std",
 	"soil-version/std",

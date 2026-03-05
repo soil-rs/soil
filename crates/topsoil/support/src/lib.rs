@@ -74,7 +74,7 @@ pub mod __private {
 		DispatchError, StateVersion, TransactionOutcome,
 	};
 	#[cfg(feature = "std")]
-	pub use soil_state_machine::BasicExternalities;
+	pub use subsoil::state_machine::BasicExternalities;
 	pub use subsoil::std;
 	pub use subsoil::tracing;
 	pub use tt_call::*;

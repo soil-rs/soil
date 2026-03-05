@@ -33,7 +33,7 @@ use subsoil::core::{
 	storage::{ChildInfo, ChildType, PrefixedStorageKey},
 	Hasher,
 };
-use soil_state_machine::backend::AsTrieBackend;
+use subsoil::state_machine::backend::AsTrieBackend;
 use subsoil::trie::{
 	trie_types::{TrieDB, TrieDBBuilder},
 	KeySpacedDB, Trie,

@@ -30,7 +30,6 @@ soil-consensus = { workspace = true, default-features = true, optional = true}
 subsoil = { workspace = true, default-features = true, optional = true}
 soil-inherents = { workspace = true, default-features = true, optional = true}
 soil-runtime = { workspace = true, default-features = true, optional = true}
-soil-state-machine = { workspace = true, default-features = true, optional = true}
 
 [features]
 default = ["std"]
@@ -47,7 +46,6 @@ std = [
 	"soil-inherents",
 	"soil-proposer-metrics",
 	"soil-runtime",
-	"soil-state-machine",
 	"soil-telemetry",
 	"soil-transaction-pool-api",
 	"soil-api/std",
@@ -55,7 +53,6 @@ std = [
 	"soil-inherents/std",
 	"soil-proposer-metrics/std",
 	"soil-runtime/std",
-	"soil-state-machine/std",
 	"soil-telemetry/std",
 	"soil-transaction-pool-api/std",
 ]

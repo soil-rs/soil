@@ -318,7 +318,7 @@ fn warm_up_trie_cache<TBl: BlockT>(
 	storage_root: TBl::Hash,
 ) -> Result<(), Error> {
 	use soil_client_api::backend::Backend;
-	use soil_state_machine::Backend as StateBackend;
+	use subsoil::state_machine::Backend as StateBackend;
 
 	let untrusted_state = || backend.state_at(storage_root, TrieCacheContext::Untrusted);
 	let trusted_state = || backend.state_at(storage_root, TrieCacheContext::Trusted);

@@ -211,8 +211,8 @@ impl<K, V> Default for OverlayedMap<K, V> {
 }
 
 #[cfg(not(substrate_runtime))]
-impl From<subsoil::core::storage::StorageMap> for OverlayedMap<StorageKey, StorageEntry> {
-	fn from(storage: subsoil::core::storage::StorageMap) -> Self {
+impl From<crate::core::storage::StorageMap> for OverlayedMap<StorageKey, StorageEntry> {
+	fn from(storage: crate::core::storage::StorageMap) -> Self {
 		Self {
 			changes: storage
 				.into_iter()

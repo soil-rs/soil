@@ -38,7 +38,7 @@ mod select_chain;
 pub use self::error::Error;
 pub use select_chain::SelectChain;
 pub use soil_inherents::InherentData;
-pub use soil_state_machine::Backend as StateBackend;
+pub use subsoil::state_machine::Backend as StateBackend;
 
 /// Block status.
 #[derive(Debug, PartialEq, Eq, Clone)]
@@ -108,7 +108,7 @@ pub struct Proposal<Block: BlockT> {
 	/// The block that was build.
 	pub block: Block,
 	/// The storage changes while building this block.
-	pub storage_changes: soil_state_machine::StorageChanges<HashingFor<Block>>,
+	pub storage_changes: subsoil::state_machine::StorageChanges<HashingFor<Block>>,
 }
 
 /// Arguments for [`Proposer::propose`].

@@ -24,8 +24,8 @@ use crate::{
 use alloc::{collections::BTreeMap, vec::Vec};
 use codec::Codec;
 use hash_db::Hasher;
-use subsoil::core::storage::{ChildInfo, StateVersion, Storage};
-use subsoil::trie::{empty_trie_root, LayoutV1, PrefixedMemoryDB, RandomState};
+use crate::core::storage::{ChildInfo, StateVersion, Storage};
+use crate::trie::{empty_trie_root, LayoutV1, PrefixedMemoryDB, RandomState};
 
 #[cfg(feature = "std")]
 use std::collections::HashMap as MapType;
@@ -195,8 +195,8 @@ where
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use crate::backend::{AsTrieBackend, Backend};
-	use subsoil::core::storage::StateVersion;
+	use super::backend::{AsTrieBackend, Backend};
+	use crate::core::storage::StateVersion;
 	use soil_runtime::traits::BlakeTwo256;
 
 	/// Assert in memory backend with only child trie keys works as trie backend.

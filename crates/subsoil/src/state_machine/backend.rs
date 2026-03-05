@@ -18,7 +18,7 @@
 //! State machine backends. These manage the code and storage of contracts.
 
 #[cfg(feature = "std")]
-use crate::trie_backend::TrieBackend;
+use super::trie_backend::TrieBackend;
 use crate::{
 	trie_backend_essence::TrieBackendStorage, ChildStorageCollection, StorageCollection,
 	StorageKey, StorageValue, UsageInfo,
@@ -27,10 +27,10 @@ use alloc::vec::Vec;
 use codec::Encode;
 use core::marker::PhantomData;
 use hash_db::Hasher;
-use subsoil::core::storage::{ChildInfo, StateVersion, TrackedStorageKey};
+use crate::core::storage::{ChildInfo, StateVersion, TrackedStorageKey};
 #[cfg(feature = "std")]
-use subsoil::core::traits::RuntimeCode;
-use subsoil::trie::{MerkleValue, PrefixedMemoryDB, RandomState};
+use crate::core::traits::RuntimeCode;
+use crate::trie::{MerkleValue, PrefixedMemoryDB, RandomState};
 
 /// A struct containing arguments for iterating over the storage.
 #[derive(Default)]
@@ -329,7 +329,7 @@ pub trait Backend<H: Hasher>: core::fmt::Debug {
 	/// Register stats from overlay of state machine.
 	///
 	/// By default nothing is registered.
-	fn register_overlay_stats(&self, _stats: &crate::stats::StateMachineStats);
+	fn register_overlay_stats(&self, _stats: &super::stats::StateMachineStats);
 
 	/// Query backend usage statistics (i/o, memory)
 	///
@@ -384,7 +384,7 @@ pub trait Backend<H: Hasher>: core::fmt::Debug {
 
 /// Something that can be converted into a [`TrieBackend`].
 #[cfg(feature = "std")]
-pub trait AsTrieBackend<H: Hasher, C = subsoil::trie::cache::LocalTrieCache<H>> {
+pub trait AsTrieBackend<H: Hasher, C = crate::trie::cache::LocalTrieCache<H>> {
 	/// Type of trie backend storage.
 	type TrieBackendStorage: TrieBackendStorage<H>;
 
@@ -400,12 +400,12 @@ pub struct BackendRuntimeCode<'a, B, H> {
 }
 
 #[cfg(feature = "std")]
-impl<'a, B: Backend<H>, H: Hasher> subsoil::core::traits::FetchRuntimeCode
+impl<'a, B: Backend<H>, H: Hasher> crate::core::traits::FetchRuntimeCode
 	for BackendRuntimeCode<'a, B, H>
 {
 	fn fetch_runtime_code(&self) -> Option<std::borrow::Cow<'_, [u8]>> {
 		self.backend
-			.storage(subsoil::core::storage::well_known_keys::CODE)
+			.storage(crate::core::storage::well_known_keys::CODE)
 			.ok()
 			.flatten()
 			.map(Into::into)
@@ -426,14 +426,14 @@ where
 	pub fn runtime_code(&self) -> Result<RuntimeCode<'_>, &'static str> {
 		let hash = self
 			.backend
-			.storage_hash(subsoil::core::storage::well_known_keys::CODE)
+			.storage_hash(crate::core::storage::well_known_keys::CODE)
 			.ok()
 			.flatten()
 			.ok_or("`:code` hash not found")?
 			.encode();
 		let heap_pages = self
 			.backend
-			.storage(subsoil::core::storage::well_known_keys::HEAP_PAGES)
+			.storage(crate::core::storage::well_known_keys::HEAP_PAGES)
 			.ok()
 			.flatten()
 			.and_then(|d| codec::Decode::decode(&mut &d[..]).ok());

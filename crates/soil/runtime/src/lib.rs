@@ -1170,7 +1170,7 @@ mod tests {
 	use codec::{Decode, Encode};
 	use subsoil::core::{crypto::Pair, hex2array};
 	use soil_io::TestExternalities;
-	use soil_state_machine::create_proof_check_backend;
+	use subsoil::state_machine::create_proof_check_backend;
 
 	#[test]
 	fn opaque_extrinsic_serialization() {
@@ -1282,7 +1282,7 @@ mod tests {
 	#[test]
 	fn execute_and_generate_proof_works() {
 		use codec::Encode;
-		use soil_state_machine::Backend;
+		use subsoil::state_machine::Backend;
 		let mut ext = TestExternalities::default();
 
 		ext.insert(b"a".to_vec(), vec![1u8; 33]);

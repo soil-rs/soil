@@ -172,7 +172,6 @@ soil-offchain = { workspace = true }
 soil-runtime = { workspace = true }
 soil-session = { workspace = true }
 soil-staking = { workspace = true }
-soil-state-machine = { workspace = true }
 soil-statement-store = { workspace = true }
 soil-timestamp = { workspace = true }
 soil-transaction-pool = { workspace = true }
@@ -336,7 +335,6 @@ std = [
 	"soil-runtime/std",
 	"soil-session/std",
 	"soil-staking/std",
-	"soil-state-machine/std",
 	"soil-statement-store/std",
 	"soil-timestamp/std",
 	"soil-transaction-pool/std",

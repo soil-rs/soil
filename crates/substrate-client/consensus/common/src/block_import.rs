@@ -121,7 +121,7 @@ pub struct BlockCheckParams<Block: BlockT> {
 /// Precomputed storage.
 pub enum StorageChanges<Block: BlockT> {
 	/// Changes coming from block execution.
-	Changes(soil_state_machine::StorageChanges<HashingFor<Block>>),
+	Changes(subsoil::state_machine::StorageChanges<HashingFor<Block>>),
 	/// Whole new state.
 	Import(ImportedState<Block>),
 }
@@ -132,7 +132,7 @@ pub struct ImportedState<B: BlockT> {
 	/// Target block hash.
 	pub block: B::Hash,
 	/// State keys and values.
-	pub state: soil_state_machine::KeyValueStates,
+	pub state: subsoil::state_machine::KeyValueStates,
 }
 
 impl<B: BlockT> std::fmt::Debug for ImportedState<B> {
@@ -171,10 +171,10 @@ impl<Block: BlockT> From<StorageChanges<Block>> for StateAction<Block> {
 	}
 }
 
-impl<Block: BlockT> From<soil_state_machine::StorageChanges<HashingFor<Block>>>
+impl<Block: BlockT> From<subsoil::state_machine::StorageChanges<HashingFor<Block>>>
 	for StateAction<Block>
 {
-	fn from(value: soil_state_machine::StorageChanges<HashingFor<Block>>) -> Self {
+	fn from(value: subsoil::state_machine::StorageChanges<HashingFor<Block>>) -> Self {
 		Self::ApplyChanges(StorageChanges::Changes(value))
 	}
 }

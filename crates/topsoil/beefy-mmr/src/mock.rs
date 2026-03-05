@@ -26,7 +26,7 @@ use soil_runtime::{
 	traits::{ConvertInto, Keccak256, OpaqueKeys},
 	BuildStorage,
 };
-use soil_state_machine::BasicExternalities;
+use subsoil::state_machine::BasicExternalities;
 use topsoil_support::{
 	construct_runtime, derive_impl, parameter_types,
 	traits::{ConstU32, ConstU64},
