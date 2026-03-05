@@ -79,7 +79,7 @@ impl AsBytesRef for alloc::vec::Vec<u8> {
 	}
 }
 
-impl AsBytesRef for soil_storage::StorageKey {
+impl AsBytesRef for subsoil::storage::StorageKey {
 	fn as_bytes_ref(&self) -> &[u8] {
 		self.as_ref()
 	}

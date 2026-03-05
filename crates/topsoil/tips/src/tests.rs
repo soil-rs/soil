@@ -24,7 +24,7 @@ use soil_runtime::{
 	traits::{BadOrigin, BlakeTwo256, IdentityLookup},
 	BuildStorage, Perbill, Permill,
 };
-use soil_storage::Storage;
+use subsoil::storage::Storage;
 
 use topsoil_support::{
 	assert_noop, assert_ok, derive_impl, parameter_types,

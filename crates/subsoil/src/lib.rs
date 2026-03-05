@@ -15,3 +15,4 @@ pub mod wasm_interface;
 pub mod metadata_ir;
 pub mod tracing;
 pub mod binary_merkle_tree;
+pub mod storage;

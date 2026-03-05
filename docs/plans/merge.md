@@ -18,8 +18,8 @@ See `docs/specs/merge.md` for the full spec.
 - [x] 4. `soil-metadata-ir`
 - [x] 5. `soil-database`
 - [x] 6. `soil-tracing`
-- [ ] 7. `soil-arithmetic`
-- [ ] 8. `binary-merkle-tree`
+- [x] 7. `soil-arithmetic`
+- [x] 8. `binary-merkle-tree`
 
 ### Tier 1
 - [ ] 9. `soil-storage`

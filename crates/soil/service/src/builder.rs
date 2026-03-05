@@ -89,7 +89,7 @@ use soil_rpc_spec_v2::{
 	transaction::{TransactionApiServer, TransactionBroadcastApiServer},
 };
 use soil_runtime::traits::{Block as BlockT, BlockIdTo, NumberFor, Zero};
-use soil_storage::{ChildInfo, ChildType, PrefixedStorageKey};
+use subsoil::storage::{ChildInfo, ChildType, PrefixedStorageKey};
 use soil_telemetry::{telemetry, ConnectionMessage, Telemetry, TelemetryHandle, SUBSTRATE_INFO};
 use soil_transaction_pool_api::{MaintainedTransactionPool, TransactionPool};
 use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedSender};

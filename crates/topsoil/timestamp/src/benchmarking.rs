@@ -19,7 +19,7 @@
 
 #![cfg(feature = "runtime-benchmarks")]
 
-use soil_storage::TrackedStorageKey;
+use subsoil::storage::TrackedStorageKey;
 use topsoil_benchmarking::{benchmarking::add_to_whitelist, v2::*};
 use topsoil_support::traits::OnFinalize;
 use topsoil_system::RawOrigin;

@@ -103,7 +103,7 @@ pub use bounded_collections::{
 	ConstU128, ConstU16, ConstU32, ConstU64, ConstU8, ConstUint, Get, GetDefault, TryCollect,
 	TypedGet,
 };
-pub use soil_storage as storage;
+pub use subsoil::storage;
 
 #[doc(hidden)]
 pub use subsoil::std;

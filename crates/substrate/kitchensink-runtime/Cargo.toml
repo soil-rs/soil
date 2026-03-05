@@ -179,7 +179,6 @@ soil-session = { workspace = true }
 soil-staking = { workspace = true }
 soil-state-machine = { workspace = true }
 soil-statement-store = { workspace = true }
-soil-storage = { workspace = true }
 soil-timestamp = { workspace = true }
 soil-transaction-pool = { workspace = true }
 soil-transaction-storage-proof = { workspace = true }
@@ -352,7 +351,6 @@ std = [
 	"soil-staking/std",
 	"soil-state-machine/std",
 	"soil-statement-store/std",
-	"soil-storage/std",
 	"soil-timestamp/std",
 	"soil-transaction-pool/std",
 	"soil-transaction-storage-proof/std",

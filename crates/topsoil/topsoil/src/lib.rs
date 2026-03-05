@@ -647,7 +647,7 @@ pub mod deps {
 	#[cfg(feature = "runtime")]
 	pub use soil_offchain;
 	#[cfg(feature = "runtime")]
-	pub use soil_storage;
+	pub use subsoil::storage;
 	#[cfg(feature = "runtime")]
 	pub use soil_version;
 	#[cfg(feature = "runtime")]

@@ -25,7 +25,7 @@ use core::marker::PhantomData;
 use jsonrpsee::core::ClientError as RpcError;
 use serde::{de::DeserializeOwned, Serialize};
 use soil_rpc_api::state::StateApiClient;
-use soil_storage::{StorageData, StorageKey};
+use subsoil::storage::{StorageData, StorageKey};
 use topsoil_support::storage::generator::{StorageDoubleMap, StorageMap, StorageValue};
 
 /// A typed query on chain state usable from an RPC client.

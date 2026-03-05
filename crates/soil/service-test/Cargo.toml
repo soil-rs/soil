@@ -38,7 +38,6 @@ soil-core = { workspace = true, default-features = true, optional = true}
 soil-io = { workspace = true, default-features = true, optional = true}
 soil-runtime = { workspace = true, default-features = true, optional = true}
 soil-state-machine = { workspace = true, default-features = true, optional = true}
-soil-storage = { workspace = true, default-features = true, optional = true}
 subsoil = { workspace = true, default-features = true, optional = true }
 substrate-test-runtime = { workspace = true, optional = true}
 substrate-test-runtime-client = { workspace = true, optional = true}
@@ -70,7 +69,6 @@ std = [
 	"soil-runtime",
 	"soil-service",
 	"soil-state-machine",
-	"soil-storage",
 	"subsoil",
 	"soil-transaction-pool-api",
 	"substrate-test-runtime",
@@ -88,7 +86,6 @@ std = [
 	"soil-runtime/std",
 	"soil-service/std",
 	"soil-state-machine/std",
-	"soil-storage/std",
 	"subsoil/std",
 	"soil-transaction-pool-api/std",
 ]

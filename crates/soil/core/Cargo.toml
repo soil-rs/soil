@@ -44,7 +44,6 @@ serde = { optional = true, features = ["alloc", "derive"], workspace = true }
 subsoil-debug-derive = { workspace = true }
 soil-externalities = { optional = true, workspace = true }
 subsoil = { workspace = true }
-soil-storage = { workspace = true }
 ss58-registry = { workspace = true }
 substrate-bip39 = { workspace = true }
 thiserror = { optional = true, workspace = true }
@@ -119,7 +118,6 @@ std = [
 	"subsoil-debug-derive/std",
 	"soil-externalities/std",
 	"subsoil/std",
-	"soil-storage/std",
 	"ss58-registry/std",
 	"substrate-bip39/std",
 	"thiserror",
@@ -139,7 +137,7 @@ serde = [
 	"k256/serde",
 	"primitive-types/serde_no_std",
 	"scale-info/serde",
-	"soil-storage/serde",
+	"subsoil/serde",
 ]
 
 # This feature enables all crypto primitives for `no_std` builds like microcontrollers

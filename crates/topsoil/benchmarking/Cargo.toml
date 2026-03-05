@@ -31,7 +31,7 @@ soil-core = { workspace = true }
 soil-io = { workspace = true }
 soil-runtime = { workspace = true }
 soil-runtime-interface = { workspace = true }
-soil-storage = { workspace = true }
+subsoil = { workspace = true }
 static_assertions = { workspace = true, default-features = true }
 
 [dev-dependencies]
@@ -62,7 +62,7 @@ std = [
 	"soil-runtime-interface/std",
 	"soil-runtime/std",
 	"soil-state-machine/std",
-	"soil-storage/std",
+	"subsoil/std",
 ]
 runtime-benchmarks = [
 	"topsoil-support/runtime-benchmarks",

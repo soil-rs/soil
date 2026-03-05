@@ -40,7 +40,6 @@ soil-inherents = { optional = true, workspace = true }
 soil-keyring = { optional = true, workspace = true }
 soil-offchain = { optional = true, workspace = true }
 soil-session = { optional = true, workspace = true }
-soil-storage = { optional = true, workspace = true }
 soil-transaction-pool = { optional = true, workspace = true }
 soil-version = { optional = true, workspace = true }
 
@@ -84,7 +83,6 @@ std = [
 	"soil-offchain?/std",
 	"soil-runtime/std",
 	"soil-session?/std",
-	"soil-storage/std",
 	"soil-transaction-pool?/std",
 	"soil-version?/std",
 ]
@@ -115,7 +113,6 @@ runtime = [
 	"soil-keyring",
 	"soil-offchain",
 	"soil-session",
-	"soil-storage",
 	"soil-transaction-pool",
 	"soil-version",
 ]

@@ -25,7 +25,7 @@ log = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 soil-inherents = { workspace = true }
 soil-runtime = { workspace = true }
-soil-storage = { workspace = true }
+subsoil = { workspace = true }
 soil-timestamp = { workspace = true }
 
 docify = { workspace = true }
@@ -44,7 +44,7 @@ std = [
 	"scale-info/std",
 	"soil-inherents/std",
 	"soil-runtime/std",
-	"soil-storage/std",
+	"subsoil/std",
 	"soil-timestamp/std",
 ]
 runtime-benchmarks = [

@@ -3569,7 +3569,7 @@ soil_api::impl_runtime_apis! {
 			config: topsoil_benchmarking::BenchmarkConfig
 		) -> Result<Vec<topsoil_benchmarking::BenchmarkBatch>, alloc::string::String> {
 			use topsoil_benchmarking::{baseline, BenchmarkBatch};
-			use soil_storage::TrackedStorageKey;
+			use subsoil::storage::TrackedStorageKey;
 
 			// Trying to add benchmarks directly to the Session Pallet caused cyclic dependency
 			// issues. To get around that, we separated the Session benchmarks into its own crate,

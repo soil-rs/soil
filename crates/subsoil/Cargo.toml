@@ -38,6 +38,9 @@ tracing-subscriber = { workspace = true, optional = true, features = [
 ] }
 array-bytes = { optional = true, workspace = true, default-features = true }
 hash-db = { workspace = true }
+impl-serde = { optional = true, workspace = true }
+ref-cast = { workspace = true }
+subsoil-debug-derive = { workspace = true }
 wasmtime = { optional = true, workspace = true }
 
 [dev-dependencies]
@@ -67,9 +70,11 @@ std = [
 	"tracing-subscriber",
 	"tracing/std",
 	"with-tracing",
+	"impl-serde/std",
+	"subsoil-debug-derive/std",
 ]
 debug = ["array-bytes", "log"]
 wasm-interface-wasmtime = ["anyhow", "dep:wasmtime"]
 with-tracing = ["codec/derive", "codec/full"]
 rocksdb = ["kvdb-rocksdb"]
-serde = ["dep:serde", "scale-info/serde"]
+serde = ["dep:serde", "impl-serde", "scale-info/serde"]

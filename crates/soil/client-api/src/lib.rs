@@ -55,7 +55,7 @@ pub use soil_blockchain::HeaderBackend;
 #[cfg(feature = "std")]
 pub use soil_state_machine::{CompactProof, StorageProof};
 #[cfg(feature = "std")]
-pub use soil_storage::{ChildInfo, PrefixedStorageKey, StorageData, StorageKey};
+pub use subsoil::storage::{ChildInfo, PrefixedStorageKey, StorageData, StorageKey};
 
 /// Usage Information Provider interface
 #[cfg(feature = "std")]

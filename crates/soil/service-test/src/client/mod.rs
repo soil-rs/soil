@@ -39,7 +39,7 @@ use soil_runtime::{
 };
 use soil_service::client::{new_with_backend, Client, LocalCallExecutor};
 use soil_state_machine::{backend::Backend as _, InMemoryBackend, OverlayedChanges, StateMachine};
-use soil_storage::{ChildInfo, StorageKey};
+use subsoil::storage::{ChildInfo, StorageKey};
 use std::{collections::HashSet, sync::Arc};
 use substrate_test_runtime::TestAPI;
 use substrate_test_runtime_client::{

@@ -17,10 +17,6 @@
 
 //! Primitive types for storage related stuff.
 
-#![cfg_attr(not(feature = "std"), no_std)]
-
-extern crate alloc;
-
 #[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
 

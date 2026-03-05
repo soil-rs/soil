@@ -33,7 +33,7 @@ use soil_state_machine::{
 	backend::AsTrieBackend, ChildStorageCollection, IndexOperation, IterArgs,
 	OffchainChangesCollection, StorageCollection, StorageIterator,
 };
-use soil_storage::{ChildInfo, StorageData, StorageKey};
+use subsoil::storage::{ChildInfo, StorageData, StorageKey};
 pub use soil_trie::MerkleValue;
 
 use crate::{blockchain::Backend as BlockchainBackend, UsageInfo};
