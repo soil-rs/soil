@@ -244,7 +244,6 @@ members = [
 	"crates/topsoil/vesting",
 	"crates/topsoil/whitelist",
 
-	"crates/substrate/binary-merkle-tree",
 	"crates/substrate/fork-tree",
 	"crates/substrate/frame-remote-externalities",
 	"crates/substrate/generate-bags",
@@ -337,7 +336,6 @@ zero-prefixed-literal = { level = "allow", priority = 2 }            # 00_1000_0
 [workspace.dependencies]
 
 # Substrate path dependencies
-binary-merkle-tree = { path = "crates/substrate/binary-merkle-tree", default-features = false }
 chain-spec-builder = { path = "crates/substrate/staging-chain-spec-builder", default-features = false, package = "staging-chain-spec-builder" }
 fork-tree = { path = "crates/substrate/fork-tree", default-features = false }
 topsoil = { path = "crates/topsoil/topsoil", default-features = false }

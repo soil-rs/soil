@@ -23,7 +23,7 @@
 use super::{ProofToHashes, ProvingTrie, TrieError};
 use crate::{Decode, DispatchError, Encode};
 use alloc::{collections::BTreeMap, vec::Vec};
-use binary_merkle_tree::{merkle_proof, merkle_root, MerkleProof};
+use subsoil::binary_merkle_tree::{merkle_proof, merkle_root, MerkleProof};
 use codec::MaxEncodedLen;
 
 /// A helper structure for building a basic base-2 merkle trie and creating compact proofs for that
@@ -143,7 +143,7 @@ where
 		return Err(TrieError::ValueMismatch.into());
 	}
 
-	if binary_merkle_tree::verify_proof::<Hashing, _, _>(
+	if subsoil::binary_merkle_tree::verify_proof::<Hashing, _, _>(
 		&decoded_proof.root,
 		decoded_proof.proof,
 		decoded_proof.number_of_leaves,

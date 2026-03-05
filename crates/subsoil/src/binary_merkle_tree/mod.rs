@@ -15,10 +15,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#![cfg_attr(not(feature = "std"), no_std)]
-#![warn(missing_docs)]
-
-//! This crate implements a simple binary Merkle Tree utilities required for inter-op with Ethereum
+//! This module implements a simple binary Merkle Tree utilities required for inter-op with Ethereum
 //! bridge & Solidity contract.
 //!
 //! The implementation is optimised for usage within Substrate Runtime and supports no-std
@@ -30,8 +27,7 @@
 //! does not perform any sorting of the input data (leaves) nor when inner nodes are created.
 //!
 //! If the number of leaves is not even, last leaf (hash of) is promoted to the upper layer.
-#[cfg(not(feature = "std"))]
-extern crate alloc;
+
 #[cfg(not(feature = "std"))]
 use alloc::vec;
 #[cfg(not(feature = "std"))]

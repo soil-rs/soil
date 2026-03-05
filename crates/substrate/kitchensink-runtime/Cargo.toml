@@ -32,7 +32,6 @@ static_assertions = { workspace = true, default-features = true }
 primitive-types = { features = ["codec", "num-traits", "scale-info"], workspace = true }
 
 # Substrate dependencies (formerly via polkadot-sdk umbrella runtime-full):
-binary-merkle-tree = { workspace = true }
 topsoil = { workspace = true }
 topsoil-benchmarking = { workspace = true }
 topsoil-benchmarking-pallet-pov = { workspace = true }
@@ -205,7 +204,6 @@ with-tracing = [
 	"subsoil/with-tracing",
 ]
 std = [
-	"binary-merkle-tree/std",
 	"codec/std",
 	"topsoil/std",
 	"topsoil-benchmarking/std",

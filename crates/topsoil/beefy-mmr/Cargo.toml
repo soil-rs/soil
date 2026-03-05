@@ -13,7 +13,7 @@ workspace = true
 
 [dependencies]
 array-bytes = { optional = true, workspace = true, default-features = true }
-binary-merkle-tree = { workspace = true }
+subsoil = { workspace = true }
 codec = { features = ["derive"], workspace = true }
 topsoil-benchmarking = { optional = true, workspace = true }
 topsoil-support = { workspace = true }
@@ -40,7 +40,7 @@ soil-staking = { workspace = true, default-features = true }
 default = ["std"]
 std = [
 	"array-bytes",
-	"binary-merkle-tree/std",
+	"subsoil/std",
 	"codec/std",
 	"topsoil-benchmarking/std",
 	"topsoil-support/std",

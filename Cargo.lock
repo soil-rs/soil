@@ -1023,18 +1023,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2af50177e190e07a26ab74f8b1efbfe2ef87da2116221318cb1c2e82baf7de06"
 
 [[package]]
-name = "binary-merkle-tree"
-version = "13.0.0"
-dependencies = [
- "array-bytes 6.2.3",
- "hash-db",
- "log",
- "parity-scale-codec",
- "soil-core",
- "soil-runtime",
-]
-
-[[package]]
 name = "bindgen"
 version = "0.72.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -4686,7 +4674,6 @@ name = "kitchensink-runtime"
 version = "3.0.0-dev"
 dependencies = [
  "array-bytes 6.2.3",
- "binary-merkle-tree",
  "log",
  "node-primitives",
  "parity-scale-codec",
@@ -10591,7 +10578,6 @@ dependencies = [
 name = "soil-runtime"
 version = "31.0.1"
 dependencies = [
- "binary-merkle-tree",
  "bytes",
  "docify",
  "either",
@@ -11528,9 +11514,11 @@ name = "subsoil"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "array-bytes 6.2.3",
  "backtrace",
  "docify",
  "frame-metadata",
+ "hash-db",
  "impl-trait-for-tuples",
  "integer-sqrt",
  "kvdb",
@@ -11544,6 +11532,8 @@ dependencies = [
  "regex",
  "scale-info",
  "serde",
+ "soil-core",
+ "soil-runtime",
  "static_assertions",
  "subsoil-crypto-hashing",
  "tracing",
@@ -13018,7 +13008,6 @@ name = "topsoil-beefy-mmr"
 version = "28.0.0"
 dependencies = [
  "array-bytes 6.2.3",
- "binary-merkle-tree",
  "log",
  "parity-scale-codec",
  "scale-info",
@@ -13030,6 +13019,7 @@ dependencies = [
  "soil-runtime",
  "soil-staking",
  "soil-state-machine",
+ "subsoil",
  "topsoil-balances",
  "topsoil-beefy",
  "topsoil-benchmarking",
@@ -14517,7 +14507,6 @@ dependencies = [
  "Inflector",
  "aquamarine",
  "array-bytes 6.2.3",
- "binary-merkle-tree",
  "bitflags 1.3.2",
  "docify",
  "environmental",

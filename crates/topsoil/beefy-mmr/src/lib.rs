@@ -351,7 +351,7 @@ impl<T: Config> Pallet<T> {
 				len,
 			);
 		}
-		let keyset_commitment = binary_merkle_tree::merkle_root::<
+		let keyset_commitment = subsoil::binary_merkle_tree::merkle_root::<
 			<T as topsoil_mmr::Config>::Hashing,
 			_,
 		>(beefy_addresses)
