@@ -25,7 +25,7 @@ use log::trace;
 use codec::Codec;
 
 use soil_api::{Core, ProvideRuntimeApi};
-use soil_application_crypto::{AppCrypto, AppPublic};
+use subsoil::application_crypto::{AppCrypto, AppPublic};
 use soil_blockchain::Result as CResult;
 use soil_client_api::UsageProvider;
 use soil_consensus::Error as ConsensusError;
@@ -95,7 +95,7 @@ pub async fn claim_slot<P: Pair>(
 ) -> Option<P::Public> {
 	let expected_author = slot_author::<P>(slot, authorities);
 	expected_author.and_then(|p| {
-		if keystore.has_keys(&[(p.to_raw_vec(), soil_application_crypto::key_types::AURA)]) {
+		if keystore.has_keys(&[(p.to_raw_vec(), subsoil::application_crypto::key_types::AURA)]) {
 			Some(p.clone())
 		} else {
 			None

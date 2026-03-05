@@ -40,10 +40,10 @@ pub use subsoil::core::sr25519::vrf::{
 };
 
 /// Key type for BABE module.
-pub const KEY_TYPE: subsoil::core::crypto::KeyTypeId = soil_application_crypto::key_types::BABE;
+pub const KEY_TYPE: subsoil::core::crypto::KeyTypeId = subsoil::application_crypto::key_types::BABE;
 
 mod app {
-	use soil_application_crypto::{app_crypto, key_types::BABE, sr25519};
+	use subsoil::application_crypto::{app_crypto, key_types::BABE, sr25519};
 	app_crypto!(sr25519, BABE);
 }
 
@@ -284,7 +284,7 @@ where
 	H: Header,
 {
 	use digests::*;
-	use soil_application_crypto::RuntimeAppPublic;
+	use subsoil::application_crypto::RuntimeAppPublic;
 
 	let find_pre_digest =
 		|header: &H| header.digest().logs().iter().find_map(|log| log.as_babe_pre_digest());

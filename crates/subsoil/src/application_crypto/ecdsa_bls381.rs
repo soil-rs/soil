@@ -17,11 +17,11 @@
 
 //! ECDSA and BLS12-381 paired crypto applications.
 
-use crate::{KeyTypeId, RuntimePublic};
+use super::{KeyTypeId, RuntimePublic};
 use alloc::vec::Vec;
 
-pub use subsoil::core::paired_crypto::ecdsa_bls381::*;
-use subsoil::core::{
+pub use crate::core::paired_crypto::ecdsa_bls381::*;
+use crate::core::{
 	bls381,
 	crypto::CryptoType,
 	ecdsa, ecdsa_bls381,
@@ -29,7 +29,7 @@ use subsoil::core::{
 };
 
 mod app {
-	crate::app_crypto!(super, subsoil::core::testing::ECDSA_BLS381);
+	crate::app_crypto!(super, crate::core::testing::ECDSA_BLS381);
 }
 
 #[cfg(feature = "full_crypto")]
@@ -48,7 +48,7 @@ impl RuntimePublic for Public {
 	}
 
 	fn generate_pair(key_type: KeyTypeId, seed: Option<Vec<u8>>) -> Self {
-		subsoil::io::crypto::ecdsa_bls381_generate(key_type, seed)
+		crate::io::crypto::ecdsa_bls381_generate(key_type, seed)
 	}
 
 	/// Dummy implementation. Returns `None`.
@@ -91,7 +91,7 @@ impl RuntimePublic for Public {
 	}
 
 	fn to_raw_vec(&self) -> Vec<u8> {
-		subsoil::core::crypto::ByteArray::to_raw_vec(self)
+		crate::core::crypto::ByteArray::to_raw_vec(self)
 	}
 }
 
@@ -114,7 +114,7 @@ fn generate_ecdsa_proof_of_possession(
 ) -> Option<ecdsa::Signature> {
 	let ecdsa_pub = ecdsa::Public::from_raw(ecdsa_pub_as_bytes);
 	let proof_of_possession_statement = ecdsa::Pair::proof_of_possession_statement(owner);
-	subsoil::io::crypto::ecdsa_sign(key_type, &ecdsa_pub, &proof_of_possession_statement)
+	crate::io::crypto::ecdsa_sign(key_type, &ecdsa_pub, &proof_of_possession_statement)
 }
 
 /// Helper: Generate BLS381 proof of possession
@@ -124,7 +124,7 @@ fn generate_bls381_proof_of_possession(
 	owner: &[u8],
 ) -> Option<bls381::ProofOfPossession> {
 	let bls381_pub = bls381::Public::from_raw(bls381_pub_as_bytes);
-	subsoil::io::crypto::bls381_generate_proof_of_possession(key_type, &bls381_pub, owner)
+	crate::io::crypto::bls381_generate_proof_of_possession(key_type, &bls381_pub, owner)
 }
 
 /// Helper: Combine ECDSA and BLS381 proof_of_possessions into a single raw proof_of_possession
@@ -143,7 +143,7 @@ fn combine_proof_of_possession(
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use subsoil::core::{bls381, crypto::Pair, ecdsa};
+	use crate::core::{bls381, crypto::Pair, ecdsa};
 
 	/// Helper function to generate test public keys for ECDSA and BLS381
 	fn generate_test_keys(

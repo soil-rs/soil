@@ -19,7 +19,7 @@
 //! Local keystore implementation
 
 use parking_lot::RwLock;
-use soil_application_crypto::{AppCrypto, AppPair, IsWrappedBy};
+use subsoil::application_crypto::{AppCrypto, AppPair, IsWrappedBy};
 use subsoil::core::{
 	crypto::{ByteArray, ExposeSecret, KeyTypeId, Pair as CorePair, SecretString, VrfSecret},
 	ecdsa, ed25519, sr25519,
@@ -652,7 +652,7 @@ impl KeystoreInner {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use soil_application_crypto::{ed25519, sr25519, AppPublic};
+	use subsoil::application_crypto::{ed25519, sr25519, AppPublic};
 	use subsoil::core::{crypto::Ss58Codec, testing::SR25519, Pair};
 	use std::{fs, str::FromStr};
 	use tempfile::TempDir;

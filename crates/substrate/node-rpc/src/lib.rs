@@ -44,7 +44,7 @@ use sc_consensus_grandpa::{
 };
 pub use sc_rpc::SubscriptionTaskExecutor;
 use soil_api::ProvideRuntimeApi;
-use soil_application_crypto::RuntimeAppPublic;
+use subsoil::application_crypto::RuntimeAppPublic;
 use soil_block_builder::BlockBuilder;
 use soil_blockchain::{Error as BlockChainError, HeaderBackend, HeaderMetadata};
 use soil_client_api::AuxStore;

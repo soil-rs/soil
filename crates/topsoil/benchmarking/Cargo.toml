@@ -26,7 +26,6 @@ paste = { workspace = true, default-features = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { optional = true, workspace = true, default-features = true }
 soil-api = { workspace = true }
-soil-application-crypto = { workspace = true }
 soil-runtime = { workspace = true }
 subsoil = { workspace = true }
 static_assertions = { workspace = true, default-features = true }
@@ -48,7 +47,6 @@ std = [
 	"scale-info/std",
 	"serde",
 	"soil-api/std",
-	"soil-application-crypto/std",
 	"subsoil/std",
 	"soil-runtime/std",
 ]

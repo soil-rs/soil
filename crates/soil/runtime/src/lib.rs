@@ -66,7 +66,7 @@ pub use paste;
 pub use subsoil::arithmetic::traits::Saturating;
 
 #[doc(hidden)]
-pub use soil_application_crypto as app_crypto;
+pub use subsoil::application_crypto as app_crypto;
 
 pub use subsoil::core::storage::StateVersion;
 #[cfg(feature = "std")]
@@ -104,7 +104,7 @@ use proving_trie::TrieError;
 /// Re-export these since they're only "kind of" generic.
 pub use generic::{Digest, DigestItem};
 
-pub use soil_application_crypto::{BoundToRuntimeAppPublic, RuntimeAppPublic};
+pub use subsoil::application_crypto::{BoundToRuntimeAppPublic, RuntimeAppPublic};
 /// Re-export this since it's part of the API of this crate.
 pub use subsoil::core::{
 	bounded::{BoundedBTreeMap, BoundedBTreeSet, BoundedSlice, BoundedVec, WeakBoundedVec},

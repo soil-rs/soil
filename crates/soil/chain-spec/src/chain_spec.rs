@@ -805,7 +805,7 @@ mod tests {
 	use super::*;
 	use pretty_assertions::assert_eq;
 	use serde_json::{from_str, json, Value};
-	use soil_application_crypto::Ss58Codec;
+	use subsoil::application_crypto::Ss58Codec;
 	use subsoil::core::storage::well_known_keys;
 	use soil_keyring::Sr25519Keyring;
 

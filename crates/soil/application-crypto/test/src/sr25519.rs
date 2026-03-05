@@ -18,7 +18,7 @@
 //! Integration tests for sr25519
 
 use soil_api::{ApiExt, ProvideRuntimeApi};
-use soil_application_crypto::{sr25519::AppPair, RuntimePublic};
+use subsoil::application_crypto::{sr25519::AppPair, RuntimePublic};
 use subsoil::core::{
 	crypto::{ByteArray, Pair},
 	proof_of_possession::{ProofOfPossessionGenerator, ProofOfPossessionVerifier},

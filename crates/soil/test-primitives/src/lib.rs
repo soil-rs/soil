@@ -23,8 +23,8 @@ extern crate alloc;
 
 use codec::{Decode, DecodeWithMemTracking, Encode};
 
-pub use soil_application_crypto;
-use soil_application_crypto::sr25519;
+pub use subsoil::application_crypto as soil_application_crypto;
+use subsoil::application_crypto::sr25519;
 
 use alloc::vec::Vec;
 pub use subsoil::core::hash::H256;

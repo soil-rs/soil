@@ -22,7 +22,7 @@ use codec::{Decode, Encode};
 use scale_info::TypeInfo;
 
 mod app {
-	use soil_application_crypto::{app_crypto, key_types::MIXNET, sr25519};
+	use subsoil::application_crypto::{app_crypto, key_types::MIXNET, sr25519};
 	app_crypto!(sr25519, MIXNET);
 }
 

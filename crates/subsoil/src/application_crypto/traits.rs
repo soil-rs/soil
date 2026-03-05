@@ -19,8 +19,8 @@ use codec::Codec;
 use scale_info::TypeInfo;
 
 use alloc::vec::Vec;
-use core::fmt::Debug;
-use subsoil::core::crypto::{
+use ::core::fmt::Debug;
+use crate::core::crypto::{
 	CryptoType, CryptoTypeId, IsWrappedBy, KeyTypeId, Pair, Public, Signature,
 };
 
@@ -53,8 +53,8 @@ pub trait AppCrypto: 'static + Sized + CryptoType {
 }
 
 /// Type which implements Hash in std, not when no-std (std variant).
-pub trait MaybeHash: core::hash::Hash {}
-impl<T: core::hash::Hash> MaybeHash for T {}
+pub trait MaybeHash: ::core::hash::Hash {}
+impl<T: ::core::hash::Hash> MaybeHash for T {}
 
 /// Application-specific key pair.
 pub trait AppPair:
@@ -87,7 +87,7 @@ pub trait RuntimePublic: Sized {
 	type ProofOfPossession: Debug + Eq + PartialEq + Clone;
 
 	/// Returns all public keys for the given key type in the keystore.
-	fn all(key_type: KeyTypeId) -> crate::Vec<Self>;
+	fn all(key_type: KeyTypeId) -> super::Vec<Self>;
 
 	/// Generate a public/private pair for the given key type with an optional `seed` and
 	/// store it in the keystore.
@@ -157,7 +157,7 @@ pub trait RuntimeAppPublic: Sized {
 	type ProofOfPossession: Debug + Eq + PartialEq + TypeInfo + Clone;
 
 	/// Returns all public keys for this application in the keystore.
-	fn all() -> crate::Vec<Self>;
+	fn all() -> super::Vec<Self>;
 
 	/// Generate a public/private pair with an optional `seed` and store it in the keystore.
 	///
@@ -209,7 +209,7 @@ where
 	type Signature = <T as AppCrypto>::Signature;
 	type ProofOfPossession = <T as AppCrypto>::ProofOfPossession;
 
-	fn all() -> crate::Vec<Self> {
+	fn all() -> super::Vec<Self> {
 		<<T as AppPublic>::Generic as RuntimePublic>::all(Self::ID)
 			.into_iter()
 			.map(|p| p.into())

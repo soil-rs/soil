@@ -25,7 +25,6 @@ topsoil-authorship = { workspace = true }
 topsoil-session = { features = ["historical"], workspace = true }
 scale-info = { features = ["derive", "serde"], workspace = true }
 serde = { features = ["alloc", "derive"], workspace = true }
-soil-application-crypto = { features = ["serde"], workspace = true }
 soil-runtime = { features = ["serde"], workspace = true }
 soil-staking = { features = ["serde"], workspace = true }
 
@@ -62,7 +61,6 @@ std = [
 	"topsoil-timestamp/std",
 	"scale-info/std",
 	"serde/std",
-	"soil-application-crypto/std",
 	"subsoil/std",
 	"soil-npos-elections/std",
 	"soil-runtime/std",

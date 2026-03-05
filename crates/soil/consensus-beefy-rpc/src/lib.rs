@@ -34,7 +34,7 @@ use sc_rpc::{
 	SubscriptionTaskExecutor,
 };
 #[cfg(feature = "std")]
-use soil_application_crypto::RuntimeAppPublic;
+use subsoil::application_crypto::RuntimeAppPublic;
 #[cfg(feature = "std")]
 use soil_runtime::traits::Block as BlockT;
 

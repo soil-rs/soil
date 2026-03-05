@@ -20,7 +20,6 @@ targets = ["x86_64-unknown-linux-gnu"]
 array-bytes = { workspace = true, default-features = true }
 parking_lot = { workspace = true, default-features = true }
 serde_json = { workspace = true, default-features = true }
-soil-application-crypto = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
 thiserror = { workspace = true }
 
@@ -39,6 +38,6 @@ bls-experimental = [
 # It should not be used in production since the implementation and interface may still
 # be subject to significant changes.
 bandersnatch-experimental = [
-	"soil-application-crypto/bandersnatch-experimental",
+	"subsoil/bandersnatch-experimental",
 	"subsoil/bandersnatch-experimental",
 ]

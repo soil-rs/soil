@@ -19,7 +19,7 @@ use alloc::{vec, vec::Vec};
 use codec::{Decode, DecodeWithMemTracking, Encode, Error, Input};
 use core::cmp;
 use scale_info::TypeInfo;
-use soil_application_crypto::RuntimeAppPublic;
+use subsoil::application_crypto::RuntimeAppPublic;
 
 use crate::{BeefyAuthorityId, Payload, ValidatorSet, ValidatorSetId};
 

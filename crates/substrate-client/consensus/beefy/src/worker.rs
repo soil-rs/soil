@@ -31,7 +31,7 @@ use crate::{
 	round::{Rounds, VoteImportResult},
 	BeefyComms, BeefyVoterLinks, UnpinnedFinalityNotification, LOG_TARGET,
 };
-use soil_application_crypto::RuntimeAppPublic;
+use subsoil::application_crypto::RuntimeAppPublic;
 
 use codec::{Codec, Decode, DecodeAll, Encode};
 use futures::{stream::Fuse, FutureExt, StreamExt};

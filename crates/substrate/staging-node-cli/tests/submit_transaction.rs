@@ -18,7 +18,7 @@
 
 use codec::Decode;
 use kitchensink_runtime::{Executive, ExistentialDeposit, Indices, Runtime, UncheckedExtrinsic};
-use soil_application_crypto::AppCrypto;
+use subsoil::application_crypto::AppCrypto;
 use subsoil::core::offchain::{testing::TestTransactionPoolExt, TransactionPoolExt};
 use soil_keyring::sr25519::Keyring::Alice;
 use subsoil::keystore::{testing::MemoryKeystore, Keystore, KeystoreExt};

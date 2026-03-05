@@ -29,7 +29,7 @@ use soil_runtime::{
 use topsoil_system::Pallet as System;
 
 mod crypto {
-	use soil_application_crypto::{app_crypto, sr25519, KeyTypeId};
+	use subsoil::application_crypto::{app_crypto, sr25519, KeyTypeId};
 
 	pub const TEST_KEY_TYPE_ID: KeyTypeId = KeyTypeId(*b"test");
 	app_crypto!(sr25519, TEST_KEY_TYPE_ID);

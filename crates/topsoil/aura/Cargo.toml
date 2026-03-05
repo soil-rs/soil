@@ -22,7 +22,6 @@ topsoil-system = { workspace = true }
 log = { workspace = true }
 topsoil-timestamp = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
-soil-application-crypto = { workspace = true }
 soil-consensus-aura = { workspace = true }
 soil-runtime = { workspace = true }
 
@@ -38,9 +37,8 @@ std = [
 	"log/std",
 	"topsoil-timestamp/std",
 	"scale-info/std",
-	"soil-application-crypto/std",
-	"soil-consensus-aura/std",
 	"subsoil/std",
+	"soil-consensus-aura/std",
 	"soil-runtime/std",
 ]
 try-runtime = [

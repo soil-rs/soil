@@ -29,7 +29,6 @@ topsoil-utility = { workspace = true }
 soil-service = { optional = true, workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 soil-api = { workspace = true }
-soil-application-crypto = { features = ["serde"], workspace = true }
 soil-block-builder = { workspace = true }
 soil-consensus-aura = { features = ["serde"], workspace = true }
 soil-consensus-babe = { features = ["serde"], workspace = true }
@@ -90,12 +89,11 @@ std = [
 	"serde/std",
 	"serde_json/std",
 	"soil-api/std",
-	"soil-application-crypto/std",
+	"subsoil/std",
 	"soil-block-builder/std",
 	"soil-consensus-aura/std",
 	"soil-consensus-babe/std",
 	"soil-consensus-grandpa/std",
-	"subsoil/std",
 	"subsoil-crypto-hashing/std",
 	"subsoil-debug-derive/std",
 	"soil-genesis-builder/std",
@@ -118,4 +116,4 @@ disable-logging = ["soil-api/disable-logging"]
 # This feature adds BLS crypto primitives.
 # It should not be used in production since the implementation and interface may still
 # be subject to significant changes.
-bls-experimental = ["soil-application-crypto/bls-experimental"]
+bls-experimental = ["subsoil/bls-experimental"]

@@ -18,7 +18,7 @@
 use codec::Decode;
 use log::warn;
 
-use soil_application_crypto::{key_types::BEEFY as BEEFY_KEY_TYPE, RuntimeAppPublic};
+use subsoil::application_crypto::{key_types::BEEFY as BEEFY_KEY_TYPE, RuntimeAppPublic};
 
 use subsoil::keystore::KeystorePtr;
 use std::marker::PhantomData;
@@ -133,7 +133,7 @@ impl<AuthorityId: AuthorityIdBound> From<Option<KeystorePtr>> for BeefyKeystore<
 
 #[cfg(test)]
 pub mod tests {
-	use soil_application_crypto::AppCrypto;
+	use subsoil::application_crypto::AppCrypto;
 	#[cfg(feature = "bls-experimental")]
 	use soil_consensus_beefy::ecdsa_bls_crypto;
 	use soil_consensus_beefy::{
@@ -189,7 +189,7 @@ pub mod tests {
 	/// Generate key pair in the given store using the provided seed
 	fn generate_in_store<AuthorityId>(
 		store: KeystorePtr,
-		key_type: soil_application_crypto::KeyTypeId,
+		key_type: subsoil::application_crypto::KeyTypeId,
 		owner: Option<Keyring<AuthorityId>>,
 	) -> AuthorityId
 	where
@@ -471,8 +471,8 @@ pub mod tests {
 			Send + Sync + From<<<AuthorityId as AppCrypto>::Pair as AppCrypto>::Signature>,
 		<AuthorityId as AppCrypto>::Pair: BeefySignerAuthority,
 	{
-		const TEST_TYPE: soil_application_crypto::KeyTypeId =
-			soil_application_crypto::KeyTypeId(*b"test");
+		const TEST_TYPE: subsoil::application_crypto::KeyTypeId =
+			subsoil::application_crypto::KeyTypeId(*b"test");
 
 		let store = keystore();
 

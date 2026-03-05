@@ -56,7 +56,7 @@ use authorities::AuthoritySet;
 use communication::grandpa_protocol_name;
 use sc_block_builder::{BlockBuilder, BlockBuilderBuilder};
 use sc_consensus::LongestChain;
-use soil_application_crypto::key_types::GRANDPA;
+use subsoil::application_crypto::key_types::GRANDPA;
 
 type TestLinkHalf =
 	LinkHalf<Block, PeersFullClient, LongestChain<substrate_test_runtime_client::Backend, Block>>;
@@ -2004,7 +2004,7 @@ async fn grandpa_environment_never_overwrites_round_voter_state() {
 
 #[tokio::test]
 async fn justification_with_equivocation() {
-	use soil_application_crypto::Pair;
+	use subsoil::application_crypto::Pair;
 
 	// we have 100 authorities
 	let pairs = (0..100).map(|n| AuthorityPair::from_seed(&[n; 32])).collect::<Vec<_>>();

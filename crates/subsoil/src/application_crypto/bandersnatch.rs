@@ -17,18 +17,18 @@
 
 //! Bandersnatch VRF application crypto types.
 
-use crate::{KeyTypeId, RuntimePublic};
+use super::{KeyTypeId, RuntimePublic};
 use alloc::vec::Vec;
-pub use subsoil::core::bandersnatch::*;
+pub use crate::core::bandersnatch::*;
 
-use subsoil::core::{
+use crate::core::{
 	crypto::CryptoType,
 	proof_of_possession::{NonAggregatable, ProofOfPossessionVerifier},
 	Pair as TraitPair,
 };
 
 mod app {
-	crate::app_crypto!(super, subsoil::core::testing::BANDERSNATCH);
+	crate::app_crypto!(super, crate::core::testing::BANDERSNATCH);
 }
 
 #[cfg(feature = "full_crypto")]
@@ -47,11 +47,11 @@ impl RuntimePublic for Public {
 	}
 
 	fn generate_pair(key_type: KeyTypeId, seed: Option<Vec<u8>>) -> Self {
-		subsoil::io::crypto::bandersnatch_generate(key_type, seed)
+		crate::io::crypto::bandersnatch_generate(key_type, seed)
 	}
 
 	fn sign<M: AsRef<[u8]>>(&self, key_type: KeyTypeId, msg: &M) -> Option<Self::Signature> {
-		subsoil::io::crypto::bandersnatch_sign(key_type, self, msg.as_ref())
+		crate::io::crypto::bandersnatch_sign(key_type, self, msg.as_ref())
 	}
 
 	fn verify<M: AsRef<[u8]>>(&self, msg: &M, signature: &Self::Signature) -> bool {
@@ -66,7 +66,7 @@ impl RuntimePublic for Public {
 		owner: &[u8],
 	) -> Option<Self::ProofOfPossession> {
 		let proof_of_possession_statement = Pair::proof_of_possession_statement(owner);
-		subsoil::io::crypto::bandersnatch_sign(key_type, self, &proof_of_possession_statement)
+		crate::io::crypto::bandersnatch_sign(key_type, self, &proof_of_possession_statement)
 	}
 
 	fn verify_proof_of_possession(
@@ -83,6 +83,6 @@ impl RuntimePublic for Public {
 	}
 
 	fn to_raw_vec(&self) -> Vec<u8> {
-		subsoil::core::crypto::ByteArray::to_raw_vec(self)
+		crate::core::crypto::ByteArray::to_raw_vec(self)
 	}
 }

@@ -21,7 +21,7 @@ use crate::{
 	ecdsa_crypto, AuthorityIdBound, Commitment, DoubleVotingProof, ForkVotingProof,
 	FutureBlockVotingProof, Payload, ValidatorSetId, VoteMessage,
 };
-use soil_application_crypto::{AppCrypto, AppPair, RuntimeAppPublic, Wraps};
+use subsoil::application_crypto::{AppCrypto, AppPair, RuntimeAppPublic, Wraps};
 use subsoil::core::{ecdsa, Pair};
 use soil_runtime::traits::{BlockNumber, Header as HeaderT};
 
@@ -111,7 +111,7 @@ static PUBLIC_KEYS: LazyLock<HashMap<Keyring<ecdsa_crypto::AuthorityId>, ecdsa_c
 	LazyLock::new(|| {
 		PRIVATE_KEYS
 			.iter()
-			.map(|(name, pair)| (name.clone(), soil_application_crypto::Pair::public(pair)))
+			.map(|(name, pair)| (name.clone(), subsoil::application_crypto::Pair::public(pair)))
 			.collect()
 	});
 

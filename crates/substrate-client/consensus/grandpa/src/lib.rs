@@ -63,7 +63,7 @@ use parking_lot::RwLock;
 use prometheus_endpoint::{PrometheusError, Registry};
 use sc_consensus::BlockImport;
 use soil_api::ProvideRuntimeApi;
-use soil_application_crypto::AppCrypto;
+use subsoil::application_crypto::AppCrypto;
 use soil_blockchain::{
 	Error as ClientError, HeaderBackend, HeaderMetadata, Result as ClientResult,
 };

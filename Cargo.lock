@@ -4680,7 +4680,6 @@ dependencies = [
  "scale-info",
  "serde_json",
  "soil-api",
- "soil-application-crypto",
  "soil-authority-discovery",
  "soil-block-builder",
  "soil-chain-spec-derive",
@@ -6143,7 +6142,6 @@ dependencies = [
  "sc-mixnet",
  "sc-rpc",
  "soil-api",
- "soil-application-crypto",
  "soil-block-builder",
  "soil-blockchain",
  "soil-chain-spec",
@@ -8164,7 +8162,6 @@ dependencies = [
  "sc-consensus-slots",
  "sc-keystore",
  "soil-api",
- "soil-application-crypto",
  "soil-block-builder",
  "soil-blockchain",
  "soil-client-api",
@@ -8203,7 +8200,6 @@ dependencies = [
  "sc-consensus",
  "sc-consensus-slots",
  "soil-api",
- "soil-application-crypto",
  "soil-block-builder",
  "soil-blockchain",
  "soil-client-api",
@@ -8241,7 +8237,6 @@ dependencies = [
  "sc-consensus",
  "serde",
  "soil-api",
- "soil-application-crypto",
  "soil-blockchain",
  "soil-client-api",
  "soil-consensus",
@@ -8283,7 +8278,6 @@ dependencies = [
  "sc-consensus",
  "serde_json",
  "soil-api",
- "soil-application-crypto",
  "soil-blockchain",
  "soil-chain-spec",
  "soil-client-api",
@@ -8361,7 +8355,6 @@ dependencies = [
  "array-bytes 6.2.3",
  "parking_lot 0.12.5",
  "serde_json",
- "soil-application-crypto",
  "subsoil",
  "tempfile",
  "thiserror 1.0.69",
@@ -9364,24 +9357,14 @@ dependencies = [
 ]
 
 [[package]]
-name = "soil-application-crypto"
-version = "30.0.0"
-dependencies = [
- "parity-scale-codec",
- "scale-info",
- "serde",
- "subsoil",
-]
-
-[[package]]
 name = "soil-authority-discovery"
 version = "26.0.0"
 dependencies = [
  "parity-scale-codec",
  "scale-info",
  "soil-api",
- "soil-application-crypto",
  "soil-runtime",
+ "subsoil",
 ]
 
 [[package]]
@@ -9446,7 +9429,6 @@ dependencies = [
  "regex",
  "serde",
  "serde_json",
- "soil-application-crypto",
  "soil-blockchain",
  "soil-chain-spec-derive",
  "soil-client-api",
@@ -9585,11 +9567,11 @@ dependencies = [
  "parity-scale-codec",
  "scale-info",
  "soil-api",
- "soil-application-crypto",
  "soil-consensus-slots",
  "soil-inherents",
  "soil-runtime",
  "soil-timestamp",
+ "subsoil",
 ]
 
 [[package]]
@@ -9601,7 +9583,6 @@ dependencies = [
  "scale-info",
  "serde",
  "soil-api",
- "soil-application-crypto",
  "soil-consensus-slots",
  "soil-inherents",
  "soil-runtime",
@@ -9619,7 +9600,6 @@ dependencies = [
  "sc-consensus-babe",
  "serde",
  "soil-api",
- "soil-application-crypto",
  "soil-blockchain",
  "soil-consensus",
  "soil-consensus-babe",
@@ -9643,7 +9623,6 @@ dependencies = [
  "scale-info",
  "serde",
  "soil-api",
- "soil-application-crypto",
  "soil-mmr-primitives",
  "soil-runtime",
  "strum 0.26.3",
@@ -9664,7 +9643,6 @@ dependencies = [
  "sc-consensus-beefy",
  "sc-rpc",
  "serde",
- "soil-application-crypto",
  "soil-consensus-beefy",
  "soil-runtime",
  "subsoil",
@@ -9695,7 +9673,6 @@ dependencies = [
  "scale-info",
  "serde",
  "soil-api",
- "soil-application-crypto",
  "soil-runtime",
  "subsoil",
 ]
@@ -9779,7 +9756,6 @@ dependencies = [
  "scale-info",
  "serde",
  "soil-api",
- "soil-application-crypto",
  "soil-consensus-slots",
  "soil-runtime",
  "subsoil",
@@ -9949,7 +9925,7 @@ dependencies = [
  "parity-scale-codec",
  "scale-info",
  "soil-api",
- "soil-application-crypto",
+ "subsoil",
 ]
 
 [[package]]
@@ -10399,7 +10375,6 @@ dependencies = [
  "serde_json",
  "simple-mermaid",
  "soil-api",
- "soil-application-crypto",
  "strum 0.26.3",
  "subsoil",
  "substrate-test-runtime-client",
@@ -10570,7 +10545,6 @@ dependencies = [
  "serde",
  "sha2 0.10.9",
  "soil-api",
- "soil-application-crypto",
  "soil-runtime",
  "subsoil",
  "subsoil-crypto-hashing",
@@ -10653,7 +10627,6 @@ dependencies = [
  "parity-scale-codec",
  "scale-info",
  "serde",
- "soil-application-crypto",
  "soil-runtime",
  "subsoil",
 ]
@@ -10780,7 +10753,6 @@ name = "sp-application-crypto-test"
 version = "2.0.0"
 dependencies = [
  "soil-api",
- "soil-application-crypto",
  "subsoil",
  "substrate-test-runtime-client",
 ]
@@ -10972,7 +10944,6 @@ dependencies = [
  "serde",
  "serde_json",
  "soil-api",
- "soil-application-crypto",
  "soil-authority-discovery",
  "soil-basic-authorship",
  "soil-blockchain",
@@ -11488,7 +11459,6 @@ dependencies = [
  "serde",
  "serde_json",
  "soil-api",
- "soil-application-crypto",
  "soil-block-builder",
  "soil-chain-spec",
  "soil-consensus",
@@ -12532,7 +12502,6 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "scale-info",
- "soil-application-crypto",
  "soil-consensus-aura",
  "soil-runtime",
  "subsoil",
@@ -12547,7 +12516,6 @@ version = "28.0.0"
 dependencies = [
  "parity-scale-codec",
  "scale-info",
- "soil-application-crypto",
  "soil-authority-discovery",
  "soil-runtime",
  "subsoil",
@@ -12577,7 +12545,6 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "scale-info",
- "soil-application-crypto",
  "soil-consensus-babe",
  "soil-runtime",
  "soil-session",
@@ -12717,7 +12684,6 @@ dependencies = [
  "scale-info",
  "serde",
  "soil-api",
- "soil-application-crypto",
  "soil-client-db",
  "soil-runtime",
  "static_assertions",
@@ -13256,7 +13222,6 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "scale-info",
- "soil-application-crypto",
  "soil-consensus-grandpa",
  "soil-keyring",
  "soil-runtime",
@@ -13299,7 +13264,6 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "scale-info",
- "soil-application-crypto",
  "soil-runtime",
  "soil-staking",
  "subsoil",
@@ -13432,8 +13396,8 @@ dependencies = [
  "parity-scale-codec",
  "scale-info",
  "serde",
- "soil-application-crypto",
  "soil-mixnet",
+ "subsoil",
  "topsoil",
 ]
 
@@ -13646,7 +13610,6 @@ dependencies = [
  "parity-scale-codec",
  "scale-info",
  "serde",
- "soil-application-crypto",
  "soil-runtime",
  "subsoil",
  "topsoil-benchmarking",
@@ -13986,7 +13949,6 @@ dependencies = [
  "rand_chacha 0.3.1",
  "scale-info",
  "serde",
- "soil-application-crypto",
  "soil-npos-elections",
  "soil-runtime",
  "soil-staking",

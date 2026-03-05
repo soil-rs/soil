@@ -20,7 +20,7 @@ use crate::LOG_TARGET;
 
 use codec::{Decode, Encode};
 use log::{debug, info};
-use soil_application_crypto::RuntimeAppPublic;
+use subsoil::application_crypto::RuntimeAppPublic;
 use soil_consensus_beefy::{
 	AuthorityIdBound, Commitment, DoubleVotingProof, SignedCommitment, ValidatorSet,
 	ValidatorSetId, VoteMessage,

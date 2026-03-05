@@ -13,7 +13,6 @@ members = [
 	"crates/soil/api",
 	"crates/subsoil-api-proc-macro",
 	"crates/soil/api/test",
-	"crates/soil/application-crypto",
 	"crates/soil/application-crypto/test",
 	"crates/soil/authority-discovery",
 	"crates/soil/basic-authorship",
@@ -524,7 +523,6 @@ soil-transaction-pool-api = { path = "crates/soil/transaction-pool-api", default
 soil-utils = { path = "crates/soil/utils", default-features = false }
 soil-api = { path = "crates/soil/api", default-features = false }
 subsoil-api-proc-macro = { path = "crates/subsoil-api-proc-macro", default-features = false }
-soil-application-crypto = { path = "crates/soil/application-crypto", default-features = false }
 soil-authority-discovery = { path = "crates/soil/authority-discovery", default-features = false }
 soil-block-builder = { path = "crates/soil/block-builder", default-features = false }
 soil-blockchain = { path = "crates/soil/blockchain", default-features = false }

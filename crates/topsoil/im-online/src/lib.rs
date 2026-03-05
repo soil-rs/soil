@@ -88,7 +88,7 @@ use alloc::{vec, vec::Vec};
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 pub use pallet::*;
 use scale_info::TypeInfo;
-use soil_application_crypto::RuntimeAppPublic;
+use subsoil::application_crypto::RuntimeAppPublic;
 use soil_runtime::{
 	offchain::storage::{MutateStorageError, StorageRetrievalError, StorageValueRef},
 	traits::{AtLeast32BitUnsigned, Convert, Saturating, TrailingZeroInput},
@@ -114,11 +114,11 @@ pub use weights::WeightInfo;
 
 pub mod sr25519 {
 	mod app_sr25519 {
-		use soil_application_crypto::{app_crypto, key_types::IM_ONLINE, sr25519};
+		use subsoil::application_crypto::{app_crypto, key_types::IM_ONLINE, sr25519};
 		app_crypto!(sr25519, IM_ONLINE);
 	}
 
-	soil_application_crypto::with_pair! {
+	subsoil::application_crypto::with_pair! {
 		/// An i'm online keypair using sr25519 as its crypto.
 		pub type AuthorityPair = app_sr25519::Pair;
 	}
@@ -132,11 +132,11 @@ pub mod sr25519 {
 
 pub mod ed25519 {
 	mod app_ed25519 {
-		use soil_application_crypto::{app_crypto, ed25519, key_types::IM_ONLINE};
+		use subsoil::application_crypto::{app_crypto, ed25519, key_types::IM_ONLINE};
 		app_crypto!(ed25519, IM_ONLINE);
 	}
 
-	soil_application_crypto::with_pair! {
+	subsoil::application_crypto::with_pair! {
 		/// An i'm online keypair using ed25519 as its crypto.
 		pub type AuthorityPair = app_ed25519::Pair;
 	}

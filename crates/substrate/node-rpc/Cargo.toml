@@ -33,7 +33,6 @@ sc-rpc = { workspace = true, default-features = true }
 soil-sync-state-rpc = { workspace = true, default-features = true }
 soil-transaction-pool-api = { workspace = true, default-features = true }
 soil-api = { workspace = true, default-features = true }
-soil-application-crypto = { workspace = true, default-features = true }
 soil-block-builder = { workspace = true, default-features = true }
 soil-blockchain = { workspace = true, default-features = true }
 soil-consensus = { workspace = true, default-features = true }

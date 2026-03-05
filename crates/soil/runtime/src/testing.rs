@@ -102,7 +102,7 @@ thread_local! {
 	static ALL_KEYS: RefCell<Vec<UintAuthorityId>> = RefCell::new(vec![]);
 }
 
-impl soil_application_crypto::RuntimeAppPublic for UintAuthorityId {
+impl subsoil::application_crypto::RuntimeAppPublic for UintAuthorityId {
 	const ID: KeyTypeId = key_types::DUMMY;
 
 	type Signature = TestSignature;

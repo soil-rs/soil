@@ -31,7 +31,7 @@ pub mod substrate_test_pallet;
 use alloc::{vec, vec::Vec};
 use codec::{Decode, DecodeWithMemTracking, Encode};
 use scale_info::TypeInfo;
-use soil_application_crypto::{ecdsa, ed25519, sr25519, RuntimeAppPublic, Ss58Codec};
+use subsoil::application_crypto::{ecdsa, ed25519, sr25519, RuntimeAppPublic, Ss58Codec};
 use soil_keyring::Sr25519Keyring;
 use topsoil_support::{
 	construct_runtime, derive_impl,
@@ -50,7 +50,7 @@ use topsoil_system::{
 };
 
 #[cfg(feature = "bls-experimental")]
-use soil_application_crypto::{bls381, ecdsa_bls381};
+use subsoil::application_crypto::{bls381, ecdsa_bls381};
 
 use subsoil::core::OpaqueMetadata;
 use subsoil::trie::{
@@ -189,7 +189,7 @@ pub type Balance = u64;
 
 #[cfg(feature = "bls-experimental")]
 mod bls {
-	use soil_application_crypto::{bls381, ecdsa_bls381};
+	use subsoil::application_crypto::{bls381, ecdsa_bls381};
 	pub type Bls381Public = bls381::AppPublic;
 	pub type Bls381Pop = bls381::AppProofOfPossession;
 	pub type EcdsaBls381Public = ecdsa_bls381::AppPublic;
@@ -1355,7 +1355,7 @@ mod tests {
 		use crate::genesismap::GenesisStorageBuilder;
 		use pretty_assertions::assert_eq;
 		use serde_json::json;
-		use soil_application_crypto::Ss58Codec;
+		use subsoil::application_crypto::Ss58Codec;
 		use subsoil::core::traits::Externalities;
 		use soil_executor::{error::Result, WasmExecutor};
 		use soil_executor_common::runtime_blob::RuntimeBlob;

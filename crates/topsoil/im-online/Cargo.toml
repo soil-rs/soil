@@ -23,7 +23,6 @@ topsoil-system = { workspace = true }
 log = { workspace = true }
 topsoil-authorship = { workspace = true }
 scale-info = { features = ["derive", "serde"], workspace = true }
-soil-application-crypto = { features = ["serde"], workspace = true }
 subsoil = { features = ["serde"], workspace = true }
 soil-runtime = { features = ["serde"], workspace = true }
 soil-staking = { features = ["serde"], workspace = true }
@@ -44,7 +43,6 @@ std = [
 	"topsoil-balances/std",
 	"topsoil-session/std",
 	"scale-info/std",
-	"soil-application-crypto/std",
 	"subsoil/std",
 	"soil-runtime/std",
 	"soil-staking/std",

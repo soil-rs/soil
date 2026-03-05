@@ -26,7 +26,7 @@ use alloc::vec::Vec;
 use codec::{Compact, Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use core::ops::Deref;
 use scale_info::{build::Fields, Path, Type, TypeInfo};
-use soil_application_crypto::RuntimeAppPublic;
+use subsoil::application_crypto::RuntimeAppPublic;
 #[cfg(feature = "std")]
 use subsoil::core::Pair;
 
@@ -220,7 +220,7 @@ mod store_api;
 
 mod sr25519 {
 	mod app_sr25519 {
-		use soil_application_crypto::{app_crypto, key_types::STATEMENT, sr25519};
+		use subsoil::application_crypto::{app_crypto, key_types::STATEMENT, sr25519};
 		app_crypto!(sr25519, STATEMENT);
 	}
 	pub type Public = app_sr25519::Public;
@@ -229,7 +229,7 @@ mod sr25519 {
 /// Statement-store specific ed25519 crypto primitives.
 pub mod ed25519 {
 	mod app_ed25519 {
-		use soil_application_crypto::{app_crypto, ed25519, key_types::STATEMENT};
+		use subsoil::application_crypto::{app_crypto, ed25519, key_types::STATEMENT};
 		app_crypto!(ed25519, STATEMENT);
 	}
 	/// Statement-store specific ed25519 public key.
@@ -241,7 +241,7 @@ pub mod ed25519 {
 
 mod ecdsa {
 	mod app_ecdsa {
-		use soil_application_crypto::{app_crypto, ecdsa, key_types::STATEMENT};
+		use subsoil::application_crypto::{app_crypto, ecdsa, key_types::STATEMENT};
 		app_crypto!(ecdsa, STATEMENT);
 	}
 	pub type Public = app_ecdsa::Public;
@@ -812,7 +812,7 @@ mod test {
 	};
 	use codec::{Decode, Encode};
 	use scale_info::{MetaType, TypeInfo};
-	use soil_application_crypto::Pair;
+	use subsoil::application_crypto::Pair;
 	use subsoil::core::sr25519;
 
 	#[test]

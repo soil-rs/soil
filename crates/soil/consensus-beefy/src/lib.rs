@@ -50,8 +50,8 @@ use alloc::vec::Vec;
 use codec::{Codec, Decode, DecodeWithMemTracking, Encode};
 use core::fmt::{Debug, Display};
 use scale_info::TypeInfo;
-pub use soil_application_crypto::key_types::BEEFY as KEY_TYPE;
-use soil_application_crypto::{AppPublic, RuntimeAppPublic};
+pub use subsoil::application_crypto::key_types::BEEFY as KEY_TYPE;
+use subsoil::application_crypto::{AppPublic, RuntimeAppPublic};
 use subsoil::core::H256;
 #[cfg(feature = "std")]
 use subsoil::keystore::KeystorePtr;
@@ -109,7 +109,7 @@ pub mod ecdsa_crypto {
 	use super::{AuthorityIdBound, BeefyAuthorityId, RuntimeAppPublic, BEEFY_KEY_TYPE};
 	#[cfg(feature = "std")]
 	use core::fmt::Debug;
-	use soil_application_crypto::{app_crypto, ecdsa};
+	use subsoil::application_crypto::{app_crypto, ecdsa};
 	use subsoil::core::crypto::Wraps;
 	#[cfg(feature = "std")]
 	use subsoil::core::ByteArray;
@@ -176,7 +176,7 @@ pub mod bls_crypto {
 	use super::{AuthorityIdBound, BeefyAuthorityId, RuntimeAppPublic, BEEFY_KEY_TYPE};
 	#[cfg(feature = "std")]
 	use core::fmt::Debug;
-	use soil_application_crypto::{app_crypto, bls381};
+	use subsoil::application_crypto::{app_crypto, bls381};
 	use subsoil::core::{bls381::Pair as BlsPair, crypto::Wraps, ByteArray, Pair as _};
 	#[cfg(feature = "std")]
 	use subsoil::keystore::KeystorePtr;
@@ -236,7 +236,7 @@ pub mod ecdsa_bls_crypto {
 	use super::{AuthorityIdBound, BeefyAuthorityId, RuntimeAppPublic, BEEFY_KEY_TYPE};
 	#[cfg(feature = "std")]
 	use core::fmt::Debug;
-	use soil_application_crypto::{app_crypto, ecdsa_bls381};
+	use subsoil::application_crypto::{app_crypto, ecdsa_bls381};
 	use subsoil::core::{crypto::Wraps, ecdsa_bls381::Pair as EcdsaBlsPair, ByteArray};
 	#[cfg(feature = "std")]
 	use subsoil::keystore::KeystorePtr;
@@ -616,7 +616,7 @@ soil_api::decl_runtime_apis! {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use soil_application_crypto::ecdsa::{self, Public};
+	use subsoil::application_crypto::ecdsa::{self, Public};
 	use subsoil::core::crypto::{Pair, Wraps};
 	use subsoil_crypto_hashing::keccak_256;
 

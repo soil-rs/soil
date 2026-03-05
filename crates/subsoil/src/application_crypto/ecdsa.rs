@@ -15,20 +15,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//! Ed25519 crypto types.
+//! Ecdsa crypto types.
 
-use crate::{KeyTypeId, RuntimePublic};
+use super::{KeyTypeId, RuntimePublic};
 
 use alloc::vec::Vec;
 
-use subsoil::core::proof_of_possession::NonAggregatable;
-pub use subsoil::core::{
-	crypto::{CryptoBytes, SignatureBytes},
-	ed25519::*,
-};
+pub use crate::core::ecdsa::*;
+use crate::core::proof_of_possession::NonAggregatable;
 
 mod app {
-	crate::app_crypto!(super, subsoil::core::testing::ED25519);
+	crate::app_crypto!(super, crate::core::testing::ECDSA);
 }
 
 pub use app::{
@@ -40,41 +37,41 @@ impl RuntimePublic for Public {
 	type Signature = Signature;
 	type ProofOfPossession = Signature;
 
-	fn all(key_type: KeyTypeId) -> crate::Vec<Self> {
-		subsoil::io::crypto::ed25519_public_keys(key_type)
+	fn all(key_type: KeyTypeId) -> super::Vec<Self> {
+		crate::io::crypto::ecdsa_public_keys(key_type)
 	}
 
 	fn generate_pair(key_type: KeyTypeId, seed: Option<Vec<u8>>) -> Self {
-		subsoil::io::crypto::ed25519_generate(key_type, seed)
+		crate::io::crypto::ecdsa_generate(key_type, seed)
 	}
 
 	fn sign<M: AsRef<[u8]>>(&self, key_type: KeyTypeId, msg: &M) -> Option<Self::Signature> {
-		subsoil::io::crypto::ed25519_sign(key_type, self, msg.as_ref())
+		crate::io::crypto::ecdsa_sign(key_type, self, msg.as_ref())
 	}
 
 	fn verify<M: AsRef<[u8]>>(&self, msg: &M, signature: &Self::Signature) -> bool {
-		subsoil::io::crypto::ed25519_verify(signature, msg.as_ref(), self)
+		crate::io::crypto::ecdsa_verify(signature, msg.as_ref(), self)
 	}
 
 	fn generate_proof_of_possession(
 		&mut self,
 		key_type: KeyTypeId,
 		owner: &[u8],
-	) -> Option<Self::ProofOfPossession> {
+	) -> Option<Self::Signature> {
 		let proof_of_possession_statement = Pair::proof_of_possession_statement(owner);
-		subsoil::io::crypto::ed25519_sign(key_type, self, &proof_of_possession_statement)
+		crate::io::crypto::ecdsa_sign(key_type, self, &proof_of_possession_statement)
 	}
 
 	fn verify_proof_of_possession(
 		&self,
 		owner: &[u8],
-		proof_of_possession: &Self::ProofOfPossession,
+		proof_of_possession: &Self::Signature,
 	) -> bool {
 		let proof_of_possession_statement = Pair::proof_of_possession_statement(owner);
-		subsoil::io::crypto::ed25519_verify(&proof_of_possession, &proof_of_possession_statement, &self)
+		crate::io::crypto::ecdsa_verify(&proof_of_possession, &proof_of_possession_statement, &self)
 	}
 
 	fn to_raw_vec(&self) -> Vec<u8> {
-		subsoil::core::crypto::ByteArray::to_raw_vec(self)
+		crate::core::crypto::ByteArray::to_raw_vec(self)
 	}
 }

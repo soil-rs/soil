@@ -21,7 +21,6 @@ topsoil-support = { workspace = true }
 topsoil-system = { workspace = true }
 topsoil-session = { features = ["historical"], workspace = true }
 scale-info = { features = ["derive"], workspace = true }
-soil-application-crypto = { workspace = true }
 soil-authority-discovery = { workspace = true }
 soil-runtime = { workspace = true }
 
@@ -38,9 +37,8 @@ std = [
 	"topsoil-balances/std",
 	"topsoil-session/std",
 	"scale-info/std",
-	"soil-application-crypto/std",
-	"soil-authority-discovery/std",
 	"subsoil/std",
+	"soil-authority-discovery/std",
 	"soil-runtime/std",
 ]
 try-runtime = [

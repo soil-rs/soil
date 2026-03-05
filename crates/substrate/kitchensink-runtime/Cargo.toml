@@ -148,7 +148,6 @@ soil-chain-spec-derive = { workspace = true }
 subsoil-tracing-proc-macro = { workspace = true }
 soil-api = { workspace = true }
 subsoil-api-proc-macro = { workspace = true }
-soil-application-crypto = { workspace = true }
 subsoil = { workspace = true }
 soil-authority-discovery = { workspace = true }
 soil-block-builder = { workspace = true }
@@ -309,7 +308,6 @@ std = [
 	"serde_json/std",
 	"soil-api/std",
 	"subsoil-api-proc-macro/std",
-	"soil-application-crypto/std",
 	"subsoil/std",
 	"soil-authority-discovery/std",
 	"soil-block-builder/std",

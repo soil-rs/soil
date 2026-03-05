@@ -41,7 +41,7 @@ use sc_consensus_slots::{
 	SlotInfo, StorageChanges,
 };
 use soil_api::{Core, ProvideRuntimeApi};
-use soil_application_crypto::AppPublic;
+use subsoil::application_crypto::AppPublic;
 use soil_blockchain::HeaderBackend;
 use soil_client_api::{backend::AuxStore, BlockOf};
 use soil_consensus::{BlockOrigin, Environment, Error as ConsensusError, Proposer, SelectChain};
@@ -552,7 +552,7 @@ mod tests {
 	use sc_consensus::BoxJustificationImport;
 	use sc_consensus_slots::{BackoffAuthoringOnFinalizedHeadLagging, SimpleSlotWorker};
 	use sc_keystore::LocalKeystore;
-	use soil_application_crypto::{key_types::AURA, AppCrypto};
+	use subsoil::application_crypto::{key_types::AURA, AppCrypto};
 	use soil_client_api::BlockchainEvents;
 	use soil_consensus::{NoNetwork as DummyOracle, Proposal, ProposeArgs};
 	use soil_consensus_aura::sr25519::AuthorityPair;

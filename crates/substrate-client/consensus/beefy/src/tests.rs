@@ -48,7 +48,7 @@ use sc_consensus::{
 	ImportedAux,
 };
 use soil_api::{ApiRef, ProvideRuntimeApi};
-use soil_application_crypto::key_types::BEEFY as BEEFY_KEY_TYPE;
+use subsoil::application_crypto::key_types::BEEFY as BEEFY_KEY_TYPE;
 use soil_client_api::{
 	Backend as BackendT, BlockchainEvents, FinalityNotifications, HeaderBackend,
 };

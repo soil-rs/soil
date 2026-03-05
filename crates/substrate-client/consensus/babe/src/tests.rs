@@ -23,7 +23,7 @@ use authorship::claim_slot;
 use sc_block_builder::{BlockBuilder, BlockBuilderBuilder};
 use sc_consensus::{BoxBlockImport, BoxJustificationImport};
 use sc_consensus_slots::BackoffAuthoringOnFinalizedHeadLagging;
-use soil_application_crypto::key_types::BABE;
+use subsoil::application_crypto::key_types::BABE;
 use soil_client_api::{BlockchainEvents, Finalizer};
 use soil_consensus::{NoNetwork as DummyOracle, Proposal, ProposeArgs};
 use soil_consensus_babe::{

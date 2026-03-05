@@ -29,7 +29,6 @@ paste = { workspace = true, default-features = true }
 rand = { optional = true, workspace = true, default-features = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { features = ["alloc", "derive"], optional = true, workspace = true }
-soil-application-crypto = { workspace = true }
 subsoil = { workspace = true }
 strum = { workspace = true, features = ["derive"] }
 tracing = { workspace = true, features = ["log"], default-features = false }
@@ -61,7 +60,6 @@ std = [
 	"serde/std",
 	"simple-mermaid",
 	"soil-api/std",
-	"soil-application-crypto/std",
 	"subsoil/std",
 	"strum/std",
 	"tracing/std",
@@ -72,7 +70,6 @@ std = [
 serde = [
 	"dep:serde",
 	"scale-info/serde",
-	"soil-application-crypto/serde",
 	"subsoil/serde",
 ]
 
@@ -80,7 +77,6 @@ serde = [
 # It should not be used in production since the implementation and interface may still
 # be subject to significant changes.
 bls-experimental = [
-	"soil-application-crypto/bls-experimental",
 	"subsoil/bls-experimental",
 	"substrate-test-runtime-client/bls-experimental",
 ]

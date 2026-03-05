@@ -17,15 +17,15 @@
 
 //! Sr25519 crypto types.
 
-use crate::{KeyTypeId, RuntimePublic};
+use super::{KeyTypeId, RuntimePublic};
 
 use alloc::vec::Vec;
 
-use subsoil::core::proof_of_possession::NonAggregatable;
-pub use subsoil::core::sr25519::*;
+use crate::core::proof_of_possession::NonAggregatable;
+pub use crate::core::sr25519::*;
 
 mod app {
-	crate::app_crypto!(super, subsoil::core::testing::SR25519);
+	crate::app_crypto!(super, crate::core::testing::SR25519);
 }
 
 pub use app::{
@@ -37,20 +37,20 @@ impl RuntimePublic for Public {
 	type Signature = Signature;
 	type ProofOfPossession = Signature;
 
-	fn all(key_type: KeyTypeId) -> crate::Vec<Self> {
-		subsoil::io::crypto::sr25519_public_keys(key_type)
+	fn all(key_type: KeyTypeId) -> super::Vec<Self> {
+		crate::io::crypto::sr25519_public_keys(key_type)
 	}
 
 	fn generate_pair(key_type: KeyTypeId, seed: Option<Vec<u8>>) -> Self {
-		subsoil::io::crypto::sr25519_generate(key_type, seed)
+		crate::io::crypto::sr25519_generate(key_type, seed)
 	}
 
 	fn sign<M: AsRef<[u8]>>(&self, key_type: KeyTypeId, msg: &M) -> Option<Self::Signature> {
-		subsoil::io::crypto::sr25519_sign(key_type, self, msg.as_ref())
+		crate::io::crypto::sr25519_sign(key_type, self, msg.as_ref())
 	}
 
 	fn verify<M: AsRef<[u8]>>(&self, msg: &M, signature: &Self::Signature) -> bool {
-		subsoil::io::crypto::sr25519_verify(signature, msg.as_ref(), self)
+		crate::io::crypto::sr25519_verify(signature, msg.as_ref(), self)
 	}
 
 	fn generate_proof_of_possession(
@@ -59,7 +59,7 @@ impl RuntimePublic for Public {
 		owner: &[u8],
 	) -> Option<Self::ProofOfPossession> {
 		let proof_of_possession_statement = Pair::proof_of_possession_statement(owner);
-		subsoil::io::crypto::sr25519_sign(key_type, self, &proof_of_possession_statement)
+		crate::io::crypto::sr25519_sign(key_type, self, &proof_of_possession_statement)
 	}
 
 	fn verify_proof_of_possession(
@@ -68,10 +68,10 @@ impl RuntimePublic for Public {
 		proof_of_possession: &Self::ProofOfPossession,
 	) -> bool {
 		let proof_of_possession_statement = Pair::proof_of_possession_statement(owner);
-		subsoil::io::crypto::sr25519_verify(&proof_of_possession, &proof_of_possession_statement, &self)
+		crate::io::crypto::sr25519_verify(&proof_of_possession, &proof_of_possession_statement, &self)
 	}
 
 	fn to_raw_vec(&self) -> Vec<u8> {
-		subsoil::core::crypto::ByteArray::to_raw_vec(self)
+		crate::core::crypto::ByteArray::to_raw_vec(self)
 	}
 }

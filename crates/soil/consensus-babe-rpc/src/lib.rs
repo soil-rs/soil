@@ -40,7 +40,7 @@ use sc_consensus_babe::{authorship, BabeWorkerHandle};
 #[cfg(feature = "std")]
 use soil_api::ProvideRuntimeApi;
 #[cfg(feature = "std")]
-use soil_application_crypto::AppCrypto;
+use subsoil::application_crypto::AppCrypto;
 #[cfg(feature = "std")]
 use soil_blockchain::{Error as BlockChainError, HeaderBackend, HeaderMetadata};
 #[cfg(feature = "std")]

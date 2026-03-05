@@ -36,7 +36,7 @@ use crate::{
 	keystore::BeefyKeystore,
 	LOG_TARGET,
 };
-use soil_application_crypto::RuntimeAppPublic;
+use subsoil::application_crypto::RuntimeAppPublic;
 use soil_consensus_beefy::{AuthorityIdBound, ValidatorSet, ValidatorSetId, VoteMessage};
 
 // Timeout for rebroadcasting messages.
@@ -494,7 +494,7 @@ where
 pub(crate) mod tests {
 	use super::*;
 	use crate::{communication::peers::PeerReport, keystore::BeefyKeystore};
-	use soil_application_crypto::key_types::BEEFY as BEEFY_KEY_TYPE;
+	use subsoil::application_crypto::key_types::BEEFY as BEEFY_KEY_TYPE;
 	use soil_consensus_beefy::{
 		ecdsa_crypto, known_payloads, test_utils::Keyring, Commitment, MmrRootHash, Payload,
 		SignedCommitment, VoteMessage,

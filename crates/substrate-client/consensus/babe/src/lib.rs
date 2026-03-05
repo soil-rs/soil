@@ -100,7 +100,7 @@ use sc_consensus_slots::{
 	SlotInfo, StorageChanges,
 };
 use soil_api::{ApiExt, ProvideRuntimeApi};
-use soil_application_crypto::AppCrypto;
+use subsoil::application_crypto::AppCrypto;
 use soil_block_builder::BlockBuilder as BlockBuilderApi;
 use soil_blockchain::{
 	Backend as _, BlockStatus, Error as ClientError, HeaderBackend, HeaderMetadata,

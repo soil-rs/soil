@@ -22,7 +22,6 @@ topsoil-support = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { optional = true, features = ["alloc", "derive"], workspace = true }
 soil-api = { workspace = true }
-soil-application-crypto = { workspace = true }
 subsoil-crypto-hashing = { workspace = true }
 soil-runtime = { workspace = true }
 thiserror = { optional = true, workspace = true }
@@ -52,7 +51,6 @@ std = [
 	"serde?/std",
 	"sha2",
 	"soil-api/std",
-	"soil-application-crypto/std",
 	"subsoil/std",
 	"subsoil-crypto-hashing/std",
 	"soil-runtime/std",
@@ -62,7 +60,6 @@ std = [
 serde = [
 	"dep:serde",
 	"scale-info/serde",
-	"soil-application-crypto/serde",
 	"subsoil/serde",
 	"soil-runtime/serde",
 ]

@@ -35,7 +35,7 @@ pub use ::core::{fmt::Debug, marker::PhantomData};
 use impl_trait_for_tuples::impl_for_tuples;
 #[cfg(feature = "serde")]
 use serde::{de::DeserializeOwned, Deserialize, Serialize};
-use soil_application_crypto::AppCrypto;
+use subsoil::application_crypto::AppCrypto;
 pub use subsoil::arithmetic::traits::{
 	checked_pow, ensure_pow, AtLeast32Bit, AtLeast32BitUnsigned, Bounded, CheckedAdd, CheckedDiv,
 	CheckedMul, CheckedShl, CheckedShr, CheckedSub, Ensure, EnsureAdd, EnsureAddAssign, EnsureDiv,
@@ -174,27 +174,27 @@ pub trait AppVerify {
 
 impl<
 		S: Verify<
-				Signer = <<T as AppCrypto>::Public as soil_application_crypto::AppPublic>::Generic,
+				Signer = <<T as AppCrypto>::Public as subsoil::application_crypto::AppPublic>::Generic,
 			> + From<T>,
-		T: soil_application_crypto::Wraps<Inner = S>
-			+ soil_application_crypto::AppCrypto
-			+ soil_application_crypto::AppSignature
+		T: subsoil::application_crypto::Wraps<Inner = S>
+			+ subsoil::application_crypto::AppCrypto
+			+ subsoil::application_crypto::AppSignature
 			+ AsRef<S>
 			+ AsMut<S>
 			+ From<S>,
 	> AppVerify for T
 where
 	<S as Verify>::Signer: IdentifyAccount<AccountId = <S as Verify>::Signer>,
-	<<T as AppCrypto>::Public as soil_application_crypto::AppPublic>::Generic: IdentifyAccount<
-		AccountId = <<T as AppCrypto>::Public as soil_application_crypto::AppPublic>::Generic,
+	<<T as AppCrypto>::Public as subsoil::application_crypto::AppPublic>::Generic: IdentifyAccount<
+		AccountId = <<T as AppCrypto>::Public as subsoil::application_crypto::AppPublic>::Generic,
 	>,
 {
 	type AccountId = <T as AppCrypto>::Public;
 	fn verify<L: Lazy<[u8]>>(&self, msg: L, signer: &<T as AppCrypto>::Public) -> bool {
-		use soil_application_crypto::IsWrappedBy;
+		use subsoil::application_crypto::IsWrappedBy;
 		let inner: &S = self.as_ref();
 		let inner_pubkey =
-			<<T as AppCrypto>::Public as soil_application_crypto::AppPublic>::Generic::from_ref(
+			<<T as AppCrypto>::Public as subsoil::application_crypto::AppPublic>::Generic::from_ref(
 				signer,
 			);
 		Verify::verify(inner, msg, inner_pubkey)
@@ -2617,7 +2617,7 @@ mod tests {
 	}
 
 	mod t {
-		use soil_application_crypto::{app_crypto, sr25519};
+		use subsoil::application_crypto::{app_crypto, sr25519};
 		use subsoil::core::crypto::KeyTypeId;
 		app_crypto!(sr25519, KeyTypeId(*b"test"));
 	}
@@ -2748,17 +2748,17 @@ mod tests {
 
 	pub struct Sr25519Key;
 	impl crate::BoundToRuntimeAppPublic for Sr25519Key {
-		type Public = soil_application_crypto::sr25519::AppPublic;
+		type Public = subsoil::application_crypto::sr25519::AppPublic;
 	}
 
 	pub struct Ed25519Key;
 	impl crate::BoundToRuntimeAppPublic for Ed25519Key {
-		type Public = soil_application_crypto::ed25519::AppPublic;
+		type Public = subsoil::application_crypto::ed25519::AppPublic;
 	}
 
 	pub struct EcdsaKey;
 	impl crate::BoundToRuntimeAppPublic for EcdsaKey {
-		type Public = soil_application_crypto::ecdsa::AppPublic;
+		type Public = subsoil::application_crypto::ecdsa::AppPublic;
 	}
 
 	impl_opaque_keys! {
