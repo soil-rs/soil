@@ -48,6 +48,7 @@ name = "executor"
 harness = false
 
 [dependencies]
+subsoil = { workspace = true }
 # third-party dependencies
 array-bytes = { workspace = true, default-features = true }
 clap = { features = ["derive"], optional = true, workspace = true }
@@ -139,7 +140,6 @@ soil-io = { workspace = true, default-features = true }
 soil-maybe-compressed-blob = { workspace = true, default-features = true }
 soil-mixnet = { workspace = true, default-features = true }
 soil-mmr-primitives = { workspace = true, default-features = true }
-soil-panic-handler = { workspace = true, default-features = true }
 soil-rpc = { workspace = true, default-features = true }
 soil-runtime = { workspace = true, default-features = true }
 soil-statement-store = { workspace = true, default-features = true }

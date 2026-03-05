@@ -9640,13 +9640,13 @@ dependencies = [
  "soil-keyring",
  "soil-keystore",
  "soil-network",
- "soil-panic-handler",
  "soil-runtime",
  "soil-service",
  "soil-telemetry",
  "soil-tracing",
  "soil-utils",
  "soil-version",
+ "subsoil",
  "tempfile",
  "thiserror 1.0.69",
  "tokio",
@@ -10054,7 +10054,6 @@ dependencies = [
  "soil-externalities",
  "soil-io",
  "soil-maybe-compressed-blob",
- "soil-panic-handler",
  "soil-runtime",
  "soil-runtime-interface",
  "soil-runtime-test",
@@ -10063,6 +10062,7 @@ dependencies = [
  "soil-trie",
  "soil-version",
  "soil-wasm-interface",
+ "subsoil",
  "subsoil-crypto-hashing",
  "substrate-test-runtime",
  "tempfile",
@@ -10564,14 +10564,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "soil-panic-handler"
-version = "13.0.0"
-dependencies = [
- "backtrace",
- "regex",
-]
-
-[[package]]
 name = "soil-proposer-metrics"
 version = "0.17.0"
 dependencies = [
@@ -10916,9 +10908,9 @@ dependencies = [
  "smallvec",
  "soil-core",
  "soil-externalities",
- "soil-panic-handler",
  "soil-runtime",
  "soil-trie",
+ "subsoil",
  "thiserror 1.0.69",
  "tracing",
  "trie-db",
@@ -11487,7 +11479,6 @@ dependencies = [
  "soil-network-sync",
  "soil-network-transactions",
  "soil-network-types",
- "soil-panic-handler",
  "soil-proposer-metrics",
  "soil-rpc",
  "soil-rpc-api",
@@ -11513,6 +11504,7 @@ dependencies = [
  "staging-chain-spec-builder",
  "staging-node-inspect",
  "subkey",
+ "subsoil",
  "subsoil-crypto-hashing",
  "substrate-build-script-utils",
  "substrate-cli-test-utils",
@@ -11657,6 +11649,8 @@ dependencies = [
 name = "subsoil"
 version = "0.1.0"
 dependencies = [
+ "backtrace",
+ "regex",
  "subsoil-crypto-hashing",
 ]
 

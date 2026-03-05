@@ -13,9 +13,13 @@ workspace = true
 
 [dependencies]
 subsoil-crypto-hashing = { workspace = true }
+backtrace = { optional = true, workspace = true }
+regex = { optional = true, workspace = true }
 
 [features]
 default = ["std"]
 std = [
 	"subsoil-crypto-hashing/std",
+	"backtrace",
+	"regex",
 ]

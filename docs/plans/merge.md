@@ -12,7 +12,7 @@ See `docs/specs/merge.md` for the full spec.
 ## Phase 1: Merge Crates
 
 ### Tier 0 — Leaves
-- [ ] 1. `soil-std`
+- [x] 1. `soil-std`
 - [ ] 2. `soil-panic-handler`
 - [ ] 3. `soil-wasm-interface`
 - [ ] 4. `soil-metadata-ir`

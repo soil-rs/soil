@@ -21,6 +21,7 @@ name = "bench"
 harness = false
 
 [dependencies]
+subsoil = { workspace = true }
 parking_lot = { workspace = true, default-features = true, optional = true}
 schnellru = { workspace = true, optional = true}
 tracing = { workspace = true, default-features = true, optional = true}
@@ -33,7 +34,6 @@ soil-api = { workspace = true, default-features = true, optional = true}
 soil-core = { workspace = true, default-features = true, optional = true}
 soil-externalities = { workspace = true, default-features = true, optional = true}
 soil-io = { workspace = true, default-features = true, optional = true}
-soil-panic-handler = { workspace = true, default-features = true, optional = true}
 soil-runtime-interface = { workspace = true, default-features = true, optional = true}
 soil-trie = { workspace = true, default-features = true, optional = true}
 soil-version = { workspace = true, default-features = true, optional = true}
@@ -71,7 +71,7 @@ std = [
 	"soil-executor-wasmtime",
 	"soil-externalities",
 	"soil-io",
-	"soil-panic-handler",
+	"subsoil/std",
 	"soil-runtime-interface",
 	"soil-trie",
 	"soil-version",

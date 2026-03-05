@@ -76,7 +76,6 @@ members = [
 	"crates/soil/npos-elections",
 	"crates/soil/npos-elections/fuzzer",
 	"crates/soil/offchain",
-	"crates/soil/panic-handler",
 	"crates/soil/proposer-metrics",
 	"crates/soil/rpc",
 	"crates/soil/rpc-api",
@@ -576,7 +575,6 @@ soil-mixnet = { path = "crates/soil/mixnet", default-features = false }
 soil-mmr-primitives = { path = "crates/soil/merkle-mountain-range", default-features = false }
 soil-npos-elections = { path = "crates/soil/npos-elections", default-features = false }
 soil-offchain = { path = "crates/soil/offchain", default-features = false }
-soil-panic-handler = { path = "crates/soil/panic-handler", default-features = false }
 soil-rpc = { path = "crates/soil/rpc", default-features = false }
 soil-runtime = { path = "crates/soil/runtime", default-features = false }
 soil-runtime-interface = { path = "crates/soil/runtime-interface", default-features = false }

@@ -47,8 +47,8 @@ const BENCHMARKING_FN: &str = "\
 	Without client transactions the loop condition guarantees the success of the tx close.";
 
 #[cfg(feature = "std")]
-fn guard() -> soil_panic_handler::AbortGuard {
-	soil_panic_handler::AbortGuard::force_abort()
+fn guard() -> subsoil::panic_handler::AbortGuard {
+	subsoil::panic_handler::AbortGuard::force_abort()
 }
 
 #[cfg(not(feature = "std"))]

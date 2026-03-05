@@ -50,7 +50,7 @@ where
 	soil_externalities::set_and_run_with_externalities(ext, move || {
 		// Substrate uses custom panic hook that terminates process on panic. Disable
 		// termination for the native call.
-		let _guard = soil_panic_handler::AbortGuard::force_unwind();
+		let _guard = subsoil::panic_handler::AbortGuard::force_unwind();
 		std::panic::catch_unwind(f).map_err(|e| {
 			if let Some(err) = e.downcast_ref::<String>() {
 				Error::RuntimePanicked(err.clone())
