@@ -15,7 +15,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::{biguint::BigUint, helpers_128bit, Rounding};
+use crate::arithmetic::{biguint::BigUint, helpers_128bit, Rounding};
 use core::cmp::Ordering;
 use num_traits::{Bounded, One, Zero};
 
@@ -328,7 +328,7 @@ impl_rrm!(u64, u128);
 
 impl MultiplyRational for u128 {
 	fn multiply_rational(self, n: Self, d: Self, r: Rounding) -> Option<Self> {
-		crate::helpers_128bit::multiply_by_rational_with_rounding(self, n, d, r)
+		crate::arithmetic::helpers_128bit::multiply_by_rational_with_rounding(self, n, d, r)
 	}
 }
 

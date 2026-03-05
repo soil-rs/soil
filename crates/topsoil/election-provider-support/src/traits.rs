@@ -22,7 +22,7 @@ use alloc::vec::Vec;
 use codec::Encode;
 use core::fmt::Debug;
 use scale_info::TypeInfo;
-use soil_arithmetic::traits::{Bounded, UniqueSaturatedInto};
+use subsoil::arithmetic::traits::{Bounded, UniqueSaturatedInto};
 use soil_npos_elections::{ElectionScore, Error, EvaluateSupport};
 
 /// An opaque index-based, NPoS solution type.

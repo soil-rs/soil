@@ -24,7 +24,7 @@ use super::StorageInstance;
 
 use alloc::vec::Vec;
 use impl_trait_for_tuples::impl_for_tuples;
-use soil_arithmetic::traits::AtLeast32BitUnsigned;
+use subsoil::arithmetic::traits::AtLeast32BitUnsigned;
 use soil_runtime::TryRuntimeError;
 
 /// Which state tests to execute.

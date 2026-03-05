@@ -31,7 +31,6 @@ rand = { optional = true, workspace = true, default-features = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { features = ["alloc", "derive"], optional = true, workspace = true }
 soil-application-crypto = { workspace = true }
-soil-arithmetic = { workspace = true }
 soil-core = { workspace = true }
 soil-io = { workspace = true }
 subsoil = { workspace = true }
@@ -71,11 +70,9 @@ std = [
 	"simple-mermaid",
 	"soil-api/std",
 	"soil-application-crypto/std",
-	"soil-arithmetic/std",
 	"soil-core/std",
 	"soil-io/std",
 	"soil-state-machine/std",
-	"subsoil/std",
 	"subsoil/std",
 	"soil-trie/std",
 	"soil-weights/std",
@@ -89,7 +86,7 @@ serde = [
 	"dep:serde",
 	"scale-info/serde",
 	"soil-application-crypto/serde",
-	"soil-arithmetic/serde",
+	"subsoil/serde",
 	"soil-core/serde",
 	"soil-weights/serde",
 ]

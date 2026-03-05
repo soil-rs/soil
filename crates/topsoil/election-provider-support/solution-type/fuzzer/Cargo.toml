@@ -25,7 +25,7 @@ honggfuzz = { workspace = true }
 codec = { features = ["derive"], workspace = true }
 topsoil-election-provider-solution-type = { workspace = true, default-features = true }
 topsoil-election-provider-support = { workspace = true, default-features = true }
-soil-arithmetic = { workspace = true, default-features = true }
+subsoil = { workspace = true, default-features = true }
 soil-runtime = { workspace = true, default-features = true }
 # used by generate_solution_type:
 topsoil-support = { workspace = true, default-features = true }

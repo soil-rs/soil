@@ -21,7 +21,7 @@ use crate::{ExtendedBalance, IdentifierT, PerThing128};
 use alloc::vec::Vec;
 #[cfg(feature = "serde")]
 use codec::{Decode, Encode};
-use soil_arithmetic::{
+use subsoil::arithmetic::{
 	traits::{Bounded, Zero},
 	Normalizable, PerThing,
 };

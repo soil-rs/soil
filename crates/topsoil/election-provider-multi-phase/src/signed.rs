@@ -30,7 +30,7 @@ use alloc::{
 };
 use codec::{Decode, Encode, HasCompact};
 use core::cmp::Ordering;
-use soil_arithmetic::traits::SaturatedConversion;
+use subsoil::arithmetic::traits::SaturatedConversion;
 use soil_core::bounded::BoundedVec;
 use soil_npos_elections::ElectionScore;
 use soil_runtime::{

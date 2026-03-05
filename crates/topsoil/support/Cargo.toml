@@ -33,7 +33,6 @@ scale-info = { features = ["derive"], workspace = true }
 serde = { features = ["alloc", "derive"], workspace = true }
 serde_json = { features = ["alloc"], workspace = true }
 soil-api = { features = ["frame-metadata"], workspace = true }
-soil-arithmetic = { workspace = true }
 soil-core = { workspace = true }
 subsoil-crypto-hashing-proc-macro = { workspace = true, default-features = true }
 subsoil-debug-derive = { workspace = true }
@@ -72,7 +71,6 @@ std = [
 	"serde/std",
 	"serde_json/std",
 	"soil-api/std",
-	"soil-arithmetic/std",
 	"soil-core/std",
 	"subsoil-debug-derive/std",
 	"soil-genesis-builder/std",
@@ -81,7 +79,6 @@ std = [
 	"soil-runtime/std",
 	"soil-staking/std",
 	"soil-state-machine/std",
-	"subsoil/std",
 	"subsoil/std",
 	"soil-trie/std",
 	"soil-weights/std",

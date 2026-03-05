@@ -21,7 +21,7 @@ use crate::{
 };
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;
-use soil_arithmetic::Perbill;
+use subsoil::arithmetic::Perbill;
 use soil_core::ConstU32;
 use soil_runtime::BoundedVec;
 use topsoil_support::traits::fungible::Inspect;
@@ -326,7 +326,7 @@ pub type ConfigRecordOf<T> = ConfigRecord<RelayBlockNumberOf<T>>;
 
 impl<RelayBlockNumber> ConfigRecord<RelayBlockNumber>
 where
-	RelayBlockNumber: soil_arithmetic::traits::Zero,
+	RelayBlockNumber: subsoil::arithmetic::traits::Zero,
 {
 	/// Check the config for basic validity constraints.
 	pub(crate) fn validate(&self) -> Result<(), ()> {

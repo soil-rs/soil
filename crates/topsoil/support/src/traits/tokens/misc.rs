@@ -21,7 +21,7 @@ use crate::{traits::Contains, TypeInfo};
 use alloc::{vec, vec::Vec};
 use codec::{Decode, DecodeWithMemTracking, Encode, FullCodec, HasCompact, MaxEncodedLen};
 use core::fmt::Debug;
-use soil_arithmetic::traits::{AtLeast32BitUnsigned, Zero};
+use subsoil::arithmetic::traits::{AtLeast32BitUnsigned, Zero};
 use soil_runtime::{
 	traits::{Convert, MaybeSerializeDeserialize},
 	ArithmeticError, DispatchError, TokenError,

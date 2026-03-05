@@ -20,7 +20,7 @@ use crate::traits::{
 	tokens::{Fortitude, Precision, Preservation},
 };
 use core::fmt::Debug;
-use soil_arithmetic::{traits::AtLeast8BitUnsigned, ArithmeticError};
+use subsoil::arithmetic::{traits::AtLeast8BitUnsigned, ArithmeticError};
 use soil_runtime::{traits::Bounded, TokenError};
 
 /// Tests [`Unbalanced::write_balance`].

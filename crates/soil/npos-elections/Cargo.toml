@@ -19,7 +19,7 @@ targets = ["x86_64-unknown-linux-gnu"]
 codec = { features = ["derive"], workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { features = ["alloc", "derive"], optional = true, workspace = true }
-soil-arithmetic = { workspace = true }
+subsoil = { workspace = true }
 soil-core = { workspace = true }
 soil-runtime = { workspace = true }
 
@@ -33,7 +33,7 @@ std = [
 	"codec/std",
 	"scale-info/std",
 	"serde/std",
-	"soil-arithmetic/std",
+	"subsoil/std",
 	"soil-core/std",
 	"soil-runtime/std",
 ]
@@ -42,7 +42,7 @@ std = [
 serde = [
 	"dep:serde",
 	"scale-info/serde",
-	"soil-arithmetic/serde",
+	"subsoil/serde",
 	"soil-core/serde",
 	"soil-runtime/serde",
 ]

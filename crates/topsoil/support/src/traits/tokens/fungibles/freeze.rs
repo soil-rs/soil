@@ -21,7 +21,7 @@
 
 use crate::{ensure, traits::tokens::Fortitude};
 use scale_info::TypeInfo;
-use soil_arithmetic::{
+use subsoil::arithmetic::{
 	traits::{CheckedAdd, CheckedSub},
 	ArithmeticError,
 };

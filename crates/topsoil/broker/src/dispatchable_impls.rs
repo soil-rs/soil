@@ -18,7 +18,7 @@
 use core::cmp;
 
 use super::*;
-use soil_arithmetic::traits::{CheckedDiv, Saturating, Zero};
+use subsoil::arithmetic::traits::{CheckedDiv, Saturating, Zero};
 use soil_runtime::traits::{BlockNumberProvider, Convert};
 use topsoil_support::{
 	pallet_prelude::*,

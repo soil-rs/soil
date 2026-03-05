@@ -65,7 +65,7 @@ use alloc::boxed::Box;
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use core::{fmt::Debug, marker::PhantomData};
 use scale_info::TypeInfo;
-use soil_arithmetic::traits::{Saturating, Zero};
+use subsoil::arithmetic::traits::{Saturating, Zero};
 
 use topsoil_support::{
 	defensive,

@@ -10,6 +10,7 @@ pub mod std;
 pub mod database;
 #[cfg(feature = "std")]
 pub mod panic_handler;
+pub mod arithmetic;
 pub mod wasm_interface;
 pub mod metadata_ir;
 pub mod tracing;

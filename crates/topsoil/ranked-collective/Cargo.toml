@@ -23,7 +23,7 @@ topsoil-system = { workspace = true }
 impl-trait-for-tuples = { workspace = true }
 log = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
-soil-arithmetic = { workspace = true }
+subsoil = { workspace = true }
 soil-core = { workspace = true }
 soil-io = { workspace = true }
 soil-runtime = { workspace = true }
@@ -37,7 +37,7 @@ std = [
 	"topsoil-system/std",
 	"log/std",
 	"scale-info/std",
-	"soil-arithmetic/std",
+	"subsoil/std",
 	"soil-core/std",
 	"soil-io/std",
 	"soil-runtime/std",

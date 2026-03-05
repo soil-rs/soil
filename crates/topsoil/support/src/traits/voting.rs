@@ -21,7 +21,7 @@
 use crate::dispatch::Parameter;
 use alloc::{vec, vec::Vec};
 use codec::{HasCompact, MaxEncodedLen};
-use soil_arithmetic::Perbill;
+use subsoil::arithmetic::Perbill;
 use soil_runtime::{traits::Member, DispatchError};
 
 pub trait VoteTally<Votes, Class> {

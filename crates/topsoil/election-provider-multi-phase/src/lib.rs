@@ -246,7 +246,7 @@ extern crate alloc;
 use alloc::{boxed::Box, vec::Vec};
 use codec::{Decode, DecodeWithMemTracking, Encode};
 use scale_info::TypeInfo;
-use soil_arithmetic::{
+use subsoil::arithmetic::{
 	traits::{CheckedAdd, Zero},
 	UpperOf,
 };

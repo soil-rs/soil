@@ -28,7 +28,7 @@
 
 use crate::{BalancingConfig, Edge, ExtendedBalance, IdentifierT, Voter};
 use alloc::vec::Vec;
-use soil_arithmetic::traits::Zero;
+use subsoil::arithmetic::traits::Zero;
 
 /// Balance the weight distribution of a given `voters` at most `iterations` times, or up until the
 /// point where the biggest difference created per iteration of all stakes is `tolerance`. If this

@@ -36,7 +36,7 @@ use futures::{future::Either, Future, TryFutureExt};
 use futures_timer::Delay;
 use log::{debug, info, warn};
 use sc_consensus::{BlockImport, JustificationSyncLink};
-use soil_arithmetic::traits::BaseArithmetic;
+use subsoil::arithmetic::traits::BaseArithmetic;
 use soil_consensus::{Proposal, ProposeArgs, Proposer, SelectChain, SyncOracle};
 use soil_consensus_slots::{Slot, SlotDuration};
 use soil_inherents::CreateInherentDataProviders;

@@ -82,7 +82,7 @@ use core::{cell::RefCell, cmp::Ordering};
 use scale_info::TypeInfo;
 #[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
-use soil_arithmetic::{traits::Zero, Normalizable, PerThing, Rational128, ThresholdOrd};
+use subsoil::arithmetic::{traits::Zero, Normalizable, PerThing, Rational128, ThresholdOrd};
 use Debug;
 
 #[cfg(test)]

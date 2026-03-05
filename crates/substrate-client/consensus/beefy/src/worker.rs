@@ -37,7 +37,7 @@ use codec::{Codec, Decode, DecodeAll, Encode};
 use futures::{stream::Fuse, FutureExt, StreamExt};
 use log::{debug, error, info, trace, warn};
 use soil_api::ProvideRuntimeApi;
-use soil_arithmetic::traits::{AtLeast32Bit, Saturating};
+use subsoil::arithmetic::traits::{AtLeast32Bit, Saturating};
 use soil_client_api::{Backend, HeaderBackend};
 use soil_consensus::SyncOracle;
 use soil_consensus_beefy::{

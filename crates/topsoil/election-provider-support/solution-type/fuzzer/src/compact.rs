@@ -16,7 +16,7 @@
 // limitations under the License.
 
 use honggfuzz::fuzz;
-use soil_arithmetic::Percent;
+use subsoil::arithmetic::Percent;
 use soil_runtime::codec::{Encode, Error};
 use topsoil_election_provider_solution_type::generate_solution_type;
 

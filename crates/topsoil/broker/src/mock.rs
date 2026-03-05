@@ -19,7 +19,7 @@
 
 use crate::{test_fungibles::TestFungibles, *};
 use alloc::collections::btree_map::BTreeMap;
-use soil_arithmetic::Perbill;
+use subsoil::arithmetic::Perbill;
 use soil_core::{ConstU32, ConstU64, Get};
 use soil_runtime::{
 	traits::{BlockNumberProvider, Identity, MaybeConvert},

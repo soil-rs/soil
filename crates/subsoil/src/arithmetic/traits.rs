@@ -32,7 +32,7 @@ pub use num_traits::{
 	CheckedShr, CheckedSub, One, Signed, Unsigned, Zero,
 };
 
-use crate::MultiplyRational;
+use crate::arithmetic::MultiplyRational;
 
 /// A meta trait for arithmetic type operations, regardless of any limitation on size.
 pub trait BaseArithmetic:
@@ -375,7 +375,7 @@ impl<T: Sized> SaturatedConversion for T {}
 /// This module provide a readable way to do safe arithmetics, turning this:
 ///
 /// ```
-/// # use soil_arithmetic::{traits::EnsureSub, ArithmeticError};
+/// # use subsoil::arithmetic::{traits::EnsureSub, ArithmeticError};
 /// # fn foo() -> Result<(), ArithmeticError> {
 /// # let mut my_value: i32 = 1;
 /// # let other_value: i32 = 1;
@@ -387,7 +387,7 @@ impl<T: Sized> SaturatedConversion for T {}
 /// into this:
 ///
 /// ```
-/// # use soil_arithmetic::{traits::EnsureSubAssign, ArithmeticError};
+/// # use subsoil::arithmetic::{traits::EnsureSubAssign, ArithmeticError};
 /// # fn foo() -> Result<(), ArithmeticError> {
 /// # let mut my_value: i32 = 1;
 /// # let other_value: i32 = 1;
@@ -396,14 +396,14 @@ impl<T: Sized> SaturatedConversion for T {}
 /// # }
 /// ```
 ///
-/// choosing the correct [`ArithmeticError`](crate::ArithmeticError) it should return in case of
+/// choosing the correct [`ArithmeticError`](crate::arithmetic::ArithmeticError) it should return in case of
 /// fail.
 ///
 /// The *EnsureOps* family functions follows the same behavior as *CheckedOps* but
-/// returning an [`ArithmeticError`](crate::ArithmeticError) instead of `None`.
+/// returning an [`ArithmeticError`](crate::arithmetic::ArithmeticError) instead of `None`.
 mod ensure {
 	use super::{checked_pow, CheckedAdd, CheckedDiv, CheckedMul, CheckedSub, One, Zero};
-	use crate::{ArithmeticError, FixedPointNumber, FixedPointOperand};
+	use crate::arithmetic::{ArithmeticError, FixedPointNumber, FixedPointOperand};
 
 	/// Performs addition that returns [`ArithmeticError`] instead of wrapping around on overflow.
 	pub trait EnsureAdd: EnsureAddAssign {
@@ -416,7 +416,7 @@ mod ensure {
 		/// # Examples
 		///
 		/// ```
-		/// use soil_arithmetic::traits::EnsureAdd;
+		/// use subsoil::arithmetic::traits::EnsureAdd;
 		///
 		/// let a: i32 = 10;
 		/// let b: i32 = 20;
@@ -425,7 +425,7 @@ mod ensure {
 		/// ```
 		///
 		/// ```
-		/// use soil_arithmetic::{traits::EnsureAdd, ArithmeticError};
+		/// use subsoil::arithmetic::{traits::EnsureAdd, ArithmeticError};
 		///
 		/// fn overflow() -> Result<(), ArithmeticError> {
 		///     u32::MAX.ensure_add(1)?;
@@ -458,7 +458,7 @@ mod ensure {
 		/// # Examples
 		///
 		/// ```
-		/// use soil_arithmetic::traits::EnsureSub;
+		/// use subsoil::arithmetic::traits::EnsureSub;
 		///
 		/// let a: i32 = 10;
 		/// let b: i32 = 20;
@@ -467,7 +467,7 @@ mod ensure {
 		/// ```
 		///
 		/// ```
-		/// use soil_arithmetic::{traits::EnsureSub, ArithmeticError};
+		/// use subsoil::arithmetic::{traits::EnsureSub, ArithmeticError};
 		///
 		/// fn underflow() -> Result<(), ArithmeticError> {
 		///     0u32.ensure_sub(1)?;
@@ -500,7 +500,7 @@ mod ensure {
 		/// # Examples
 		///
 		/// ```
-		/// use soil_arithmetic::traits::EnsureMul;
+		/// use subsoil::arithmetic::traits::EnsureMul;
 		///
 		/// let a: i32 = 10;
 		/// let b: i32 = 20;
@@ -509,7 +509,7 @@ mod ensure {
 		/// ```
 		///
 		/// ```
-		/// use soil_arithmetic::{traits::EnsureMul, ArithmeticError};
+		/// use subsoil::arithmetic::{traits::EnsureMul, ArithmeticError};
 		///
 		/// fn overflow() -> Result<(), ArithmeticError> {
 		///     u32::MAX.ensure_mul(2)?;
@@ -541,7 +541,7 @@ mod ensure {
 		/// # Examples
 		///
 		/// ```
-		/// use soil_arithmetic::traits::EnsureDiv;
+		/// use subsoil::arithmetic::traits::EnsureDiv;
 		///
 		/// let a: i32 = 20;
 		/// let b: i32 = 10;
@@ -550,7 +550,7 @@ mod ensure {
 		/// ```
 		///
 		/// ```
-		/// use soil_arithmetic::{traits::EnsureDiv, ArithmeticError};
+		/// use subsoil::arithmetic::{traits::EnsureDiv, ArithmeticError};
 		///
 		/// fn extrinsic_zero() -> Result<(), ArithmeticError> {
 		///     1.ensure_div(0)?;
@@ -576,7 +576,7 @@ mod ensure {
 	/// Check [`checked_pow`] for more info about border cases.
 	///
 	/// ```
-	/// use soil_arithmetic::{traits::ensure_pow, ArithmeticError};
+	/// use subsoil::arithmetic::{traits::ensure_pow, ArithmeticError};
 	///
 	/// fn overflow() -> Result<(), ArithmeticError> {
 	///     ensure_pow(2u64, 64)?;
@@ -611,7 +611,7 @@ mod ensure {
 		/// # Examples
 		///
 		/// ```
-		/// use soil_arithmetic::traits::EnsureAddAssign;
+		/// use subsoil::arithmetic::traits::EnsureAddAssign;
 		///
 		/// let mut a: i32 = 10;
 		/// let b: i32 = 20;
@@ -621,7 +621,7 @@ mod ensure {
 		/// ```
 		///
 		/// ```
-		/// use soil_arithmetic::{traits::EnsureAddAssign, ArithmeticError};
+		/// use subsoil::arithmetic::{traits::EnsureAddAssign, ArithmeticError};
 		///
 		/// fn overflow() -> Result<(), ArithmeticError> {
 		///     let mut max = u32::MAX;
@@ -654,7 +654,7 @@ mod ensure {
 		/// # Examples
 		///
 		/// ```
-		/// use soil_arithmetic::traits::EnsureSubAssign;
+		/// use subsoil::arithmetic::traits::EnsureSubAssign;
 		///
 		/// let mut a: i32 = 10;
 		/// let b: i32 = 20;
@@ -664,7 +664,7 @@ mod ensure {
 		/// ```
 		///
 		/// ```
-		/// use soil_arithmetic::{traits::EnsureSubAssign, ArithmeticError};
+		/// use subsoil::arithmetic::{traits::EnsureSubAssign, ArithmeticError};
 		///
 		/// fn underflow() -> Result<(), ArithmeticError> {
 		///     let mut zero: u32 = 0;
@@ -697,7 +697,7 @@ mod ensure {
 		/// # Examples
 		///
 		/// ```
-		/// use soil_arithmetic::traits::EnsureMulAssign;
+		/// use subsoil::arithmetic::traits::EnsureMulAssign;
 		///
 		/// let mut a: i32 = 10;
 		/// let b: i32 = 20;
@@ -707,7 +707,7 @@ mod ensure {
 		/// ```
 		///
 		/// ```
-		/// use soil_arithmetic::{traits::EnsureMulAssign, ArithmeticError};
+		/// use subsoil::arithmetic::{traits::EnsureMulAssign, ArithmeticError};
 		///
 		/// fn overflow() -> Result<(), ArithmeticError> {
 		///     let mut max = u32::MAX;
@@ -740,7 +740,7 @@ mod ensure {
 		/// # Examples
 		///
 		/// ```
-		/// use soil_arithmetic::traits::EnsureDivAssign;
+		/// use subsoil::arithmetic::traits::EnsureDivAssign;
 		///
 		/// let mut a: i32 = 20;
 		/// let b: i32 = 10;
@@ -750,7 +750,7 @@ mod ensure {
 		/// ```
 		///
 		/// ```
-		/// use soil_arithmetic::{traits::EnsureDivAssign, ArithmeticError, FixedI64};
+		/// use subsoil::arithmetic::{traits::EnsureDivAssign, ArithmeticError, FixedI64};
 		///
 		/// fn extrinsic_zero() -> Result<(), ArithmeticError> {
 		///     let mut one = 1;
@@ -801,7 +801,7 @@ mod ensure {
 		/// [`ArithmeticError`] error.
 		///
 		/// ```
-		/// use soil_arithmetic::{traits::EnsureFixedPointNumber, ArithmeticError, FixedI64};
+		/// use subsoil::arithmetic::{traits::EnsureFixedPointNumber, ArithmeticError, FixedI64};
 		///
 		/// fn extrinsic_zero() -> Result<(), ArithmeticError> {
 		///     FixedI64::ensure_from_rational(1, 0)?;
@@ -832,7 +832,7 @@ mod ensure {
 		/// error.
 		///
 		/// ```
-		/// use soil_arithmetic::{traits::EnsureFixedPointNumber, ArithmeticError, FixedI64};
+		/// use subsoil::arithmetic::{traits::EnsureFixedPointNumber, ArithmeticError, FixedI64};
 		///
 		/// fn overflow() -> Result<(), ArithmeticError> {
 		///     FixedI64::from(i64::MAX).ensure_mul_int(2)?;
@@ -859,7 +859,7 @@ mod ensure {
 		/// error.
 		///
 		/// ```
-		/// use soil_arithmetic::{traits::EnsureFixedPointNumber, ArithmeticError, FixedI64};
+		/// use subsoil::arithmetic::{traits::EnsureFixedPointNumber, ArithmeticError, FixedI64};
 		///
 		/// fn extrinsic_zero() -> Result<(), ArithmeticError> {
 		///     FixedI64::from(1).ensure_div_int(0)?;
@@ -888,7 +888,7 @@ mod ensure {
 		/// Similar to [`TryFrom::try_from()`] but returning an [`ArithmeticError`] error.
 		///
 		/// ```
-		/// use soil_arithmetic::{traits::EnsureFrom, ArithmeticError};
+		/// use subsoil::arithmetic::{traits::EnsureFrom, ArithmeticError};
 		///
 		/// fn overflow() -> Result<(), ArithmeticError> {
 		///     let byte: u8 = u8::ensure_from(256u16)?;
@@ -916,7 +916,7 @@ mod ensure {
 		/// Similar to [`TryInto::try_into()`] but returning an [`ArithmeticError`] error
 		///
 		/// ```
-		/// use soil_arithmetic::{traits::EnsureInto, ArithmeticError};
+		/// use subsoil::arithmetic::{traits::EnsureInto, ArithmeticError};
 		///
 		/// fn overflow() -> Result<(), ArithmeticError> {
 		///     let byte: u8 = 256u16.ensure_into()?;
@@ -1011,7 +1011,7 @@ mod ensure {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use crate::ArithmeticError;
+	use crate::arithmetic::ArithmeticError;
 	use rand::{seq::SliceRandom, thread_rng, Rng};
 
 	#[test]

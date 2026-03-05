@@ -32,7 +32,7 @@ use crate::{
 	},
 };
 use scale_info::TypeInfo;
-use soil_arithmetic::{
+use subsoil::arithmetic::{
 	traits::{CheckedAdd, CheckedSub, Zero},
 	ArithmeticError,
 };

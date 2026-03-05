@@ -215,7 +215,7 @@ pub use bounds::DataProviderBounds;
 pub use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;
 /// Re-export some type as they are used in the interface.
-pub use soil_arithmetic::PerThing;
+pub use subsoil::arithmetic::PerThing;
 pub use soil_npos_elections::{
 	Assignment, BalancingConfig, ElectionResult, Error, ExtendedBalance, IdentifierT, PerThing128,
 	Support, Supports, VoteWeight,
@@ -237,7 +237,7 @@ pub mod private {
 	};
 	pub use codec;
 	pub use scale_info;
-	pub use soil_arithmetic;
+	pub use subsoil;
 
 	// Simple Extension trait to easily convert `None` from index closures to `Err`.
 	//

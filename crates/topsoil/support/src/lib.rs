@@ -408,7 +408,7 @@ pub mod testing_prelude {
 		assert_err, assert_err_ignore_postinfo, assert_err_with_weight, assert_noop, assert_ok,
 		assert_storage_noop, parameter_types,
 	};
-	pub use soil_arithmetic::assert_eq_error_rate;
+	pub use subsoil::assert_eq_error_rate;
 	pub use soil_runtime::{bounded_btree_map, bounded_vec};
 }
 

@@ -55,7 +55,6 @@ schnellru = { workspace = true, optional = true}
 serde = { features = ["derive"], workspace = true, default-features = true, optional = true}
 serde_json = { workspace = true, default-features = true, optional = true}
 smallvec = { workspace = true, default-features = true, optional = true}
-soil-arithmetic = { workspace = true, default-features = true, optional = true}
 soil-blockchain = { workspace = true, default-features = true, optional = true}
 soil-core = { workspace = true, default-features = true, optional = true}
 soil-runtime = { workspace = true, default-features = true, optional = true}
@@ -114,7 +113,6 @@ std = [
 	"serde",
 	"serde_json",
 	"smallvec",
-	"soil-arithmetic",
 	"soil-blockchain",
 	"soil-client-api",
 	"soil-core",
@@ -129,7 +127,7 @@ std = [
 	"void",
 	"wasm-timer",
 	"zeroize",
-	"soil-arithmetic/std",
+	"subsoil/std",
 	"soil-client-api/std",
 	"soil-core/std",
 	"soil-network-common/std",

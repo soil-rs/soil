@@ -28,7 +28,7 @@ use alloc::vec::Vec;
 use codec::{Decode, Encode, MaxEncodedLen};
 use core::marker::PhantomData;
 use impl_trait_for_tuples::impl_for_tuples;
-use soil_arithmetic::traits::Bounded;
+use subsoil::arithmetic::traits::Bounded;
 use soil_core::Get;
 use soil_io::{hashing::twox_128, storage::clear_prefix, KillStorageResult};
 use soil_runtime::traits::Zero;

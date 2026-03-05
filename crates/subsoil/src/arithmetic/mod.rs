@@ -17,10 +17,6 @@
 
 //! Minimal fixed point arithmetic primitives and types for runtime.
 
-#![cfg_attr(not(feature = "std"), no_std)]
-
-extern crate alloc;
-
 /// Copied from `sp-runtime` and documented there.
 #[macro_export]
 macro_rules! assert_eq_error_rate {
@@ -524,7 +520,7 @@ mod per_and_fixed_examples {
 #[cfg(test)]
 mod threshold_compare_tests {
 	use super::*;
-	use crate::traits::Saturating;
+	use crate::arithmetic::traits::Saturating;
 	use core::cmp::Ordering;
 
 	#[test]

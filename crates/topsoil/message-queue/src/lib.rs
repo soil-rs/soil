@@ -210,7 +210,7 @@ use codec::{Codec, ConstEncodedLen, Decode, DecodeWithMemTracking, Encode, MaxEn
 use core::{fmt::Debug, ops::Deref};
 pub use pallet::*;
 use scale_info::TypeInfo;
-use soil_arithmetic::traits::{BaseArithmetic, Unsigned};
+use subsoil::arithmetic::traits::{BaseArithmetic, Unsigned};
 use soil_core::{defer, H256};
 use soil_runtime::{
 	traits::{One, Zero},

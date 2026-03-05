@@ -18,7 +18,7 @@
 #![deny(missing_docs)]
 
 use crate::{CoreIndex, SaleInfoRecord};
-use soil_arithmetic::{traits::One, FixedU64};
+use subsoil::arithmetic::{traits::One, FixedU64};
 use soil_core::Get;
 use soil_runtime::{FixedPointNumber, FixedPointOperand, Saturating};
 

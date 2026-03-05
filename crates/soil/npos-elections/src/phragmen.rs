@@ -25,7 +25,7 @@ use crate::{
 	IdentifierT, PerThing128, VoteWeight, Voter,
 };
 use alloc::vec::Vec;
-use soil_arithmetic::{
+use subsoil::arithmetic::{
 	helpers_128bit::multiply_by_rational_with_rounding,
 	traits::{Bounded, Zero},
 	Rational128, Rounding,

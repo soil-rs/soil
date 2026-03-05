@@ -79,7 +79,7 @@ use codec::{Decode, Encode};
 #[cfg(feature = "std")]
 use hash_db::Prefix;
 #[cfg(feature = "std")]
-use soil_arithmetic::traits::Saturating;
+use subsoil::arithmetic::traits::Saturating;
 #[cfg(feature = "std")]
 use soil_blockchain::{
 	Backend as _, CachedHeaderMetadata, DisplacedLeavesAfterFinalization, Error as ClientError,

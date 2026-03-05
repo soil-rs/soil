@@ -24,7 +24,7 @@ scale-info = { features = ["derive"], workspace = true }
 topsoil-benchmarking = { optional = true, workspace = true }
 topsoil-support = { workspace = true }
 topsoil-system = { workspace = true }
-soil-arithmetic = { workspace = true }
+subsoil = { workspace = true }
 soil-io = { workspace = true }
 soil-runtime = { workspace = true }
 
@@ -45,7 +45,7 @@ std = [
 	"topsoil-balances/std",
 	"rand_chacha/std",
 	"scale-info/std",
-	"soil-arithmetic/std",
+	"subsoil/std",
 	"soil-io/std",
 	"soil-runtime/std",
 ]

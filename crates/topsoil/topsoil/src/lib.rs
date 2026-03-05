@@ -538,7 +538,7 @@ pub mod traits {
 ///
 /// This is already part of the main [`prelude`].
 pub mod arithmetic {
-	pub use soil_arithmetic::{traits::*, *};
+	pub use subsoil::arithmetic::{traits::*, *};
 }
 
 /// All token related types and traits.
@@ -622,7 +622,7 @@ pub mod deps {
 	pub use topsoil_support;
 	pub use topsoil_system;
 
-	pub use soil_arithmetic;
+	pub use subsoil::arithmetic;
 	pub use soil_core;
 	pub use soil_io;
 	pub use soil_runtime;

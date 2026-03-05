@@ -22,7 +22,7 @@ use alloc::borrow::Cow;
 use codec::{Compact, Decode, DecodeWithMemTracking, Encode, EncodeLike, Input, MaxEncodedLen};
 use core::fmt::Debug;
 use scale_info::{Type, TypeInfo};
-use soil_arithmetic::{Rounding::*, SignedRounding::*};
+use subsoil::arithmetic::{Rounding::*, SignedRounding::*};
 use soil_runtime::{FixedI64, PerThing};
 use topsoil_support::{
 	traits::{schedule::v3::Anon, Bounded},

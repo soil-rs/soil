@@ -13,11 +13,11 @@ See `docs/specs/merge.md` for the full spec.
 
 ### Tier 0 — Leaves
 - [x] 1. `soil-std`
-- [ ] 2. `soil-panic-handler`
-- [ ] 3. `soil-wasm-interface`
-- [ ] 4. `soil-metadata-ir`
-- [ ] 5. `soil-database`
-- [ ] 6. `soil-tracing`
+- [x] 2. `soil-panic-handler`
+- [x] 3. `soil-wasm-interface`
+- [x] 4. `soil-metadata-ir`
+- [x] 5. `soil-database`
+- [x] 6. `soil-tracing`
 - [ ] 7. `soil-arithmetic`
 - [ ] 8. `binary-merkle-tree`
 

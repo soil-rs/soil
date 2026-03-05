@@ -16,9 +16,9 @@
 // limitations under the License.
 
 //! Decimal Fixed Point implementations for Substrate runtime.
-//! Similar to types that implement [`PerThing`](crate::per_things), these are also
+//! Similar to types that implement [`PerThing`](crate::arithmetic::per_things), these are also
 //! fixed-point types, however, they are able to represent larger fractions:
-#![doc = docify::embed!("./src/lib.rs", fixed_u64)]
+#![doc = docify::embed!("./src/arithmetic/mod.rs", fixed_u64)]
 //! ### Fixed Point Types in Practice
 //!
 //! If one needs to exceed the value of one (1), then
@@ -26,7 +26,7 @@
 //! Take for example this very rudimentary pricing mechanism, where we wish to calculate the demand
 //! / supply to get a price for some on-chain compute:
 #![doc = docify::embed!(
-	"./src/lib.rs",
+	"./src/arithmetic/mod.rs",
 	fixed_u64_block_computation_example
 )]
 //! For a much more comprehensive example, be sure to look at the source for broker (the "coretime")
@@ -37,12 +37,12 @@
 //! Just as with [`PerThing`](PerThing), you can also perform regular mathematical
 //! expressions:
 #![doc = docify::embed!(
-	"./src/lib.rs",
+	"./src/arithmetic/mod.rs",
 	fixed_u64_operation_example
 )]
 //!
 
-use crate::{
+use crate::arithmetic::{
 	helpers_128bit::{multiply_by_rational_with_rounding, sqrt},
 	traits::{
 		Bounded, CheckedAdd, CheckedDiv, CheckedMul, CheckedNeg, CheckedSub, One,
@@ -1123,7 +1123,7 @@ macro_rules! implement_fixed {
 		#[cfg(test)]
 		mod $test_mod {
 			use super::*;
-			use crate::{Perbill, Percent, Permill, Perquintill};
+			use crate::arithmetic::{Perbill, Percent, Permill, Perquintill};
 
 			fn max() -> $name {
 				$name::max_value()

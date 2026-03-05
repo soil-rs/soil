@@ -99,7 +99,7 @@ where
 		best_target: &Block::Header,
 		current_target: &Block::Header,
 	) -> VotingRuleResult<Block> {
-		use soil_arithmetic::traits::Saturating;
+		use subsoil::arithmetic::traits::Saturating;
 
 		if current_target.number().is_zero() {
 			return Box::pin(async { None });

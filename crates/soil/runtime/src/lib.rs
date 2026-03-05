@@ -63,7 +63,7 @@ pub use subsoil::std;
 #[doc(hidden)]
 pub use paste;
 #[doc(hidden)]
-pub use soil_arithmetic::traits::Saturating;
+pub use subsoil::arithmetic::traits::Saturating;
 
 #[doc(hidden)]
 pub use soil_application_crypto as app_crypto;
@@ -119,11 +119,11 @@ pub use soil_core::{bounded_btree_map, bounded_vec};
 pub use core::fmt::Debug;
 
 /// Re-export big_uint stuff.
-pub use soil_arithmetic::biguint;
+pub use subsoil::arithmetic::biguint;
 /// Re-export 128 bit helpers.
-pub use soil_arithmetic::helpers_128bit;
+pub use subsoil::arithmetic::helpers_128bit;
 /// Re-export top-level arithmetic stuff.
-pub use soil_arithmetic::{
+pub use subsoil::arithmetic::{
 	traits::SaturatedConversion, ArithmeticError, FixedI128, FixedI64, FixedPointNumber,
 	FixedPointOperand, FixedU128, FixedU64, InnerOf, PerThing, PerU16, Perbill, Percent, Permill,
 	Perquintill, Rational128, Rounding, UpperOf,

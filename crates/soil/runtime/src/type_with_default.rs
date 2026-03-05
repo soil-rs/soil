@@ -524,7 +524,7 @@ impl<T: HasCompact, D: Get<T>> CompactAs for TypeWithDefault<T, D> {
 mod tests {
 	use super::TypeWithDefault;
 	use scale_info::TypeInfo;
-	use soil_arithmetic::traits::{AtLeast16Bit, AtLeast32Bit, AtLeast8Bit};
+	use subsoil::arithmetic::traits::{AtLeast16Bit, AtLeast32Bit, AtLeast8Bit};
 	use soil_core::Get;
 
 	#[test]

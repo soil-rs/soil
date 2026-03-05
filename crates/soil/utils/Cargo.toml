@@ -19,7 +19,7 @@ futures-timer = { workspace = true, optional = true}
 log = { workspace = true, default-features = true, optional = true}
 parking_lot = { workspace = true, default-features = true, optional = true}
 prometheus = { workspace = true, optional = true}
-soil-arithmetic = { workspace = true, optional = true}
+subsoil = { workspace = true, optional = true }
 
 [dev-dependencies]
 tokio-test = { workspace = true }
@@ -32,8 +32,8 @@ std = [
 	"log",
 	"parking_lot",
 	"prometheus",
-	"soil-arithmetic",
-	"soil-arithmetic/std",
+	"subsoil",
+	"subsoil/std",
 ]
 default = ["std", "metered"]
 metered = []

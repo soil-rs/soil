@@ -3119,16 +3119,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "fraction"
-version = "0.13.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3027ae1df8d41b4bed2241c8fdad4acc1e7af60c8e17743534b545e77182d678"
-dependencies = [
- "lazy_static",
- "num",
-]
-
-[[package]]
 name = "fragile"
 version = "2.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -4707,7 +4697,6 @@ dependencies = [
  "serde_json",
  "soil-api",
  "soil-application-crypto",
- "soil-arithmetic",
  "soil-authority-discovery",
  "soil-block-builder",
  "soil-chain-spec-derive",
@@ -6325,20 +6314,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "num"
-version = "0.4.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "35bd024e8b2ff75562e5f34e7f4905839deb4b22955ef5e73d2fea1b9813cb23"
-dependencies = [
- "num-bigint",
- "num-complex",
- "num-integer",
- "num-iter",
- "num-rational",
- "num-traits",
-]
-
-[[package]]
 name = "num-bigint"
 version = "0.4.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -6379,17 +6354,6 @@ version = "0.1.46"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7969661fd2958a5cb096e56c8e1ad0444ac2bbcd0061bd28660485a44879858f"
 dependencies = [
- "num-traits",
-]
-
-[[package]]
-name = "num-iter"
-version = "0.1.45"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1429034a0490724d0075ebb2bc9e875d6503c3cf69e235a8941aa757d83ef5bf"
-dependencies = [
- "autocfg",
- "num-integer",
  "num-traits",
 ]
 
@@ -8316,7 +8280,6 @@ dependencies = [
  "serde",
  "soil-api",
  "soil-application-crypto",
- "soil-arithmetic",
  "soil-blockchain",
  "soil-client-api",
  "soil-consensus",
@@ -8361,7 +8324,6 @@ dependencies = [
  "serde_json",
  "soil-api",
  "soil-application-crypto",
- "soil-arithmetic",
  "soil-blockchain",
  "soil-chain-spec",
  "soil-client-api",
@@ -8423,7 +8385,6 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "sc-consensus",
- "soil-arithmetic",
  "soil-blockchain",
  "soil-client-api",
  "soil-consensus",
@@ -8434,6 +8395,7 @@ dependencies = [
  "soil-state-machine",
  "soil-telemetry",
  "soil-trie",
+ "subsoil",
  "substrate-test-runtime-client",
 ]
 
@@ -9483,23 +9445,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "soil-arithmetic"
-version = "23.0.0"
-dependencies = [
- "criterion",
- "docify",
- "integer-sqrt",
- "num-traits",
- "parity-scale-codec",
- "primitive-types",
- "rand 0.8.5",
- "scale-info",
- "serde",
- "static_assertions",
- "subsoil-crypto-hashing",
-]
-
-[[package]]
 name = "soil-authority-discovery"
 version = "26.0.0"
 dependencies = [
@@ -9692,7 +9637,6 @@ dependencies = [
  "parking_lot 0.12.5",
  "rand 0.8.5",
  "schnellru",
- "soil-arithmetic",
  "soil-blockchain",
  "soil-client-api",
  "soil-core",
@@ -10299,7 +10243,6 @@ dependencies = [
  "serde",
  "serde_json",
  "smallvec",
- "soil-arithmetic",
  "soil-blockchain",
  "soil-client-api",
  "soil-consensus",
@@ -10426,7 +10369,6 @@ dependencies = [
  "sc-consensus",
  "schnellru",
  "smallvec",
- "soil-arithmetic",
  "soil-blockchain",
  "soil-client-api",
  "soil-consensus",
@@ -10523,9 +10465,9 @@ dependencies = [
  "parity-scale-codec",
  "scale-info",
  "serde",
- "soil-arithmetic",
  "soil-core",
  "soil-runtime",
+ "subsoil",
  "substrate-test-utils",
 ]
 
@@ -10666,7 +10608,6 @@ dependencies = [
  "simple-mermaid",
  "soil-api",
  "soil-application-crypto",
- "soil-arithmetic",
  "soil-core",
  "soil-io",
  "soil-keystore",
@@ -11094,7 +11035,7 @@ dependencies = [
  "log",
  "parking_lot 0.12.5",
  "prometheus",
- "soil-arithmetic",
+ "subsoil",
  "tokio-test",
 ]
 
@@ -11124,7 +11065,7 @@ dependencies = [
  "schemars",
  "serde",
  "smallvec",
- "soil-arithmetic",
+ "subsoil",
  "subsoil-debug-derive",
 ]
 
@@ -11178,17 +11119,6 @@ dependencies = [
  "soil-keystore",
  "subsoil",
  "substrate-test-runtime-client",
-]
-
-[[package]]
-name = "sp-arithmetic-fuzzer"
-version = "2.0.0"
-dependencies = [
- "arbitrary",
- "fraction",
- "honggfuzz",
- "num-bigint",
- "soil-arithmetic",
 ]
 
 [[package]]
@@ -11599,15 +11529,22 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "backtrace",
+ "docify",
  "frame-metadata",
  "impl-trait-for-tuples",
+ "integer-sqrt",
  "kvdb",
  "kvdb-rocksdb",
  "log",
+ "num-traits",
  "parity-scale-codec",
  "parking_lot 0.12.5",
+ "primitive-types",
+ "rand 0.8.5",
  "regex",
  "scale-info",
+ "serde",
+ "static_assertions",
  "subsoil-crypto-hashing",
  "tracing",
  "tracing-core",
@@ -12699,7 +12636,6 @@ dependencies = [
  "scale-info",
  "serde",
  "soil-api",
- "soil-arithmetic",
  "soil-block-builder",
  "soil-consensus-aura",
  "soil-consensus-grandpa",
@@ -12714,6 +12650,7 @@ dependencies = [
  "soil-storage",
  "soil-transaction-pool",
  "soil-version",
+ "subsoil",
  "topsoil-benchmarking",
  "topsoil-executive",
  "topsoil-support",
@@ -12752,10 +12689,10 @@ dependencies = [
  "primitive-types",
  "scale-info",
  "soil-api",
- "soil-arithmetic",
  "soil-core",
  "soil-io",
  "soil-runtime",
+ "subsoil",
  "topsoil-assets",
  "topsoil-balances",
  "topsoil-benchmarking",
@@ -12771,10 +12708,10 @@ dependencies = [
  "parity-scale-codec",
  "primitive-types",
  "scale-info",
- "soil-arithmetic",
  "soil-core",
  "soil-io",
  "soil-runtime",
+ "subsoil",
  "topsoil-asset-conversion",
  "topsoil-assets",
  "topsoil-balances",
@@ -12823,7 +12760,6 @@ dependencies = [
  "primitive-types",
  "scale-info",
  "soil-api",
- "soil-arithmetic",
  "soil-core",
  "soil-io",
  "soil-runtime",
@@ -13173,7 +13109,6 @@ dependencies = [
  "pretty_assertions",
  "scale-info",
  "soil-api",
- "soil-arithmetic",
  "soil-core",
  "soil-io",
  "soil-runtime",
@@ -13242,10 +13177,10 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "scale-info",
- "soil-arithmetic",
  "soil-core",
  "soil-io",
  "soil-runtime",
+ "subsoil",
  "topsoil-benchmarking",
  "topsoil-ranked-collective",
  "topsoil-support",
@@ -13345,10 +13280,10 @@ dependencies = [
  "parity-scale-codec",
  "scale-info",
  "soil-api",
- "soil-arithmetic",
  "soil-core",
  "soil-io",
  "soil-runtime",
+ "subsoil",
  "topsoil-benchmarking",
  "topsoil-people",
  "topsoil-support",
@@ -13392,7 +13327,6 @@ dependencies = [
  "parking_lot 0.12.5",
  "rand 0.8.5",
  "scale-info",
- "soil-arithmetic",
  "soil-core",
  "soil-io",
  "soil-npos-elections",
@@ -13416,7 +13350,6 @@ dependencies = [
  "parking_lot 0.12.5",
  "rand 0.8.5",
  "scale-info",
- "soil-arithmetic",
  "soil-core",
  "soil-io",
  "soil-npos-elections",
@@ -13440,7 +13373,7 @@ dependencies = [
  "proc-macro2",
  "quote",
  "scale-info",
- "soil-arithmetic",
+ "subsoil",
  "syn 2.0.117",
  "topsoil-election-provider-support",
  "topsoil-support",
@@ -13454,7 +13387,6 @@ dependencies = [
  "parity-scale-codec",
  "rand 0.8.5",
  "scale-info",
- "soil-arithmetic",
  "soil-core",
  "soil-io",
  "soil-npos-elections",
@@ -13483,8 +13415,8 @@ version = "2.0.0-alpha.5"
 dependencies = [
  "honggfuzz",
  "parity-scale-codec",
- "soil-arithmetic",
  "soil-runtime",
+ "subsoil",
  "topsoil-election-provider-solution-type",
  "topsoil-election-provider-support",
  "topsoil-support",
@@ -13829,7 +13761,6 @@ dependencies = [
  "rand_distr",
  "scale-info",
  "serde",
- "soil-arithmetic",
  "soil-core",
  "soil-io",
  "soil-runtime",
@@ -14144,10 +14075,10 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "scale-info",
- "soil-arithmetic",
  "soil-core",
  "soil-io",
  "soil-runtime",
+ "subsoil",
  "topsoil-benchmarking",
  "topsoil-support",
  "topsoil-system",
@@ -14201,10 +14132,10 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "scale-info",
- "soil-arithmetic",
  "soil-core",
  "soil-io",
  "soil-runtime",
+ "subsoil",
  "topsoil-benchmarking",
  "topsoil-support",
  "topsoil-system",
@@ -14246,10 +14177,10 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "scale-info",
- "soil-arithmetic",
  "soil-core",
  "soil-io",
  "soil-runtime",
+ "subsoil",
  "topsoil-benchmarking",
  "topsoil-support",
  "topsoil-system",
@@ -14274,10 +14205,10 @@ dependencies = [
  "parity-scale-codec",
  "scale-info",
  "serde",
- "soil-arithmetic",
  "soil-core",
  "soil-io",
  "soil-runtime",
+ "subsoil",
  "topsoil-balances",
  "topsoil-benchmarking",
  "topsoil-preimage",
@@ -14458,9 +14389,9 @@ dependencies = [
  "parity-scale-codec",
  "rand_chacha 0.3.1",
  "scale-info",
- "soil-arithmetic",
  "soil-io",
  "soil-runtime",
+ "subsoil",
  "subsoil-crypto-hashing",
  "topsoil-balances",
  "topsoil-benchmarking",
@@ -14514,7 +14445,7 @@ name = "topsoil-staking-reward-fn"
 version = "19.0.0"
 dependencies = [
  "log",
- "soil-arithmetic",
+ "subsoil",
 ]
 
 [[package]]
@@ -14602,7 +14533,6 @@ dependencies = [
  "serde",
  "serde_json",
  "soil-api",
- "soil-arithmetic",
  "soil-core",
  "soil-genesis-builder",
  "soil-inherents",
@@ -14682,7 +14612,6 @@ dependencies = [
  "scale-info",
  "serde",
  "soil-api",
- "soil-arithmetic",
  "soil-core",
  "soil-io",
  "soil-runtime",

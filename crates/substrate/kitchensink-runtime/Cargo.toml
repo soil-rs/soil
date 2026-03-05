@@ -150,7 +150,7 @@ subsoil-tracing-proc-macro = { workspace = true }
 soil-api = { workspace = true }
 subsoil-api-proc-macro = { workspace = true }
 soil-application-crypto = { workspace = true }
-soil-arithmetic = { workspace = true }
+subsoil = { workspace = true }
 soil-authority-discovery = { workspace = true }
 soil-block-builder = { workspace = true }
 soil-consensus-aura = { workspace = true }
@@ -180,7 +180,6 @@ soil-session = { workspace = true }
 soil-staking = { workspace = true }
 soil-state-machine = { workspace = true }
 soil-statement-store = { workspace = true }
-subsoil = { workspace = true }
 soil-storage = { workspace = true }
 soil-timestamp = { workspace = true }
 soil-transaction-pool = { workspace = true }
@@ -326,7 +325,7 @@ std = [
 	"soil-api/std",
 	"subsoil-api-proc-macro/std",
 	"soil-application-crypto/std",
-	"soil-arithmetic/std",
+	"subsoil/std",
 	"soil-authority-discovery/std",
 	"soil-block-builder/std",
 	"soil-consensus-aura/std",
@@ -355,10 +354,8 @@ std = [
 	"soil-staking/std",
 	"soil-state-machine/std",
 	"soil-statement-store/std",
-	"subsoil/std",
 	"soil-storage/std",
 	"soil-timestamp/std",
-	"subsoil/std",
 	"soil-transaction-pool/std",
 	"soil-transaction-storage-proof/std",
 	"soil-trie/std",

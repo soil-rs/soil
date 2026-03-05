@@ -20,7 +20,7 @@
 #![cfg(test)]
 
 use alloc::collections::btree_map::BTreeMap;
-use soil_arithmetic::{
+use subsoil::arithmetic::{
 	traits::{One, SaturatedConversion, Zero},
 	PerThing,
 };

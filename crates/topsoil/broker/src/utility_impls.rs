@@ -16,7 +16,7 @@
 // limitations under the License.
 
 use super::*;
-use soil_arithmetic::{
+use subsoil::arithmetic::{
 	traits::{SaturatedConversion, Saturating},
 	FixedPointNumber, FixedU64,
 };

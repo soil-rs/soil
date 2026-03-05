@@ -21,7 +21,7 @@
 //! assumptions of a bigger type (u128) being available, or simply create a per-thing and use the
 //! multiplication implementation provided there.
 
-use crate::{biguint, Rounding};
+use crate::arithmetic::{biguint, Rounding};
 use core::cmp::{max, min};
 
 /// Helper gcd function used in Rational128 implementation.

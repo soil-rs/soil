@@ -23,7 +23,6 @@ topsoil-system = { workspace = true }
 log = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 soil-api = { workspace = true }
-soil-arithmetic = { workspace = true }
 soil-core = { workspace = true }
 soil-runtime = { workspace = true }
 
@@ -43,7 +42,7 @@ std = [
 	"log/std",
 	"scale-info/std",
 	"soil-api/std",
-	"soil-arithmetic/std",
+	"subsoil/std",
 	"soil-core/std",
 	"soil-io/std",
 	"soil-runtime/std",

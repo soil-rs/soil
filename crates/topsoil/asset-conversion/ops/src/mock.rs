@@ -19,7 +19,7 @@
 
 use crate as topsoil_asset_conversion_ops;
 use core::default::Default;
-use soil_arithmetic::Permill;
+use subsoil::arithmetic::Permill;
 use soil_runtime::{traits::AccountIdConversion, BuildStorage};
 use topsoil_asset_conversion::{self, AccountIdConverter, AccountIdConverterNoSeed, Ascending};
 use topsoil_support::{

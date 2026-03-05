@@ -578,7 +578,7 @@ impl From<u64> for BigUint {
 
 impl From<u128> for BigUint {
 	fn from(a: u128) -> Self {
-		crate::helpers_128bit::to_big_uint(a)
+		crate::arithmetic::helpers_128bit::to_big_uint(a)
 	}
 }
 

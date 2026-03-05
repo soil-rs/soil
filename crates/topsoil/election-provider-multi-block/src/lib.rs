@@ -201,7 +201,7 @@ use crate::signed::{CalculateBaseDeposit, CalculatePageDeposit};
 use crate::verifier::{AsynchronousVerifier, Verifier};
 use codec::{Decode, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;
-use soil_arithmetic::{
+use subsoil::arithmetic::{
 	traits::{CheckedAdd, Zero},
 	PerThing, UpperOf,
 };

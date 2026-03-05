@@ -131,7 +131,7 @@ mod v2 {
 mod v3 {
 	use super::*;
 	use codec::MaxEncodedLen;
-	use soil_arithmetic::Perbill;
+	use subsoil::arithmetic::Perbill;
 	use topsoil_support::{
 		pallet_prelude::{Debug, OptionQuery, TypeInfo},
 		storage_alias,

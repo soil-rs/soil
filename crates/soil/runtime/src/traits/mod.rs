@@ -36,7 +36,7 @@ use impl_trait_for_tuples::impl_for_tuples;
 #[cfg(feature = "serde")]
 use serde::{de::DeserializeOwned, Deserialize, Serialize};
 use soil_application_crypto::AppCrypto;
-pub use soil_arithmetic::traits::{
+pub use subsoil::arithmetic::traits::{
 	checked_pow, ensure_pow, AtLeast32Bit, AtLeast32BitUnsigned, Bounded, CheckedAdd, CheckedDiv,
 	CheckedMul, CheckedShl, CheckedShr, CheckedSub, Ensure, EnsureAdd, EnsureAddAssign, EnsureDiv,
 	EnsureDivAssign, EnsureFixedPointNumber, EnsureFrom, EnsureInto, EnsureMul, EnsureMulAssign,
@@ -404,7 +404,7 @@ impl<T1, T2, T3, T4> Morph<(T1, T2, T3, T4)> for TakeFirst {
 ///
 /// ```
 /// # use soil_runtime::{morph_types, traits::{Morph, TryMorph, TypedGet, ConstU32}};
-/// # use soil_arithmetic::traits::CheckedSub;
+/// # use subsoil::arithmetic::traits::CheckedSub;
 ///
 /// morph_types! {
 ///    /// Replace by some other value; produce both `Morph` and `TryMorph` implementations

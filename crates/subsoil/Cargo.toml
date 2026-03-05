@@ -16,9 +16,14 @@ subsoil-crypto-hashing = { workspace = true }
 backtrace = { optional = true, workspace = true }
 regex = { optional = true, workspace = true }
 anyhow = { optional = true, workspace = true }
-codec = { features = ["derive"], workspace = true }
+codec = { features = ["derive", "max-encoded-len"], workspace = true }
+docify = { workspace = true }
+integer-sqrt = { workspace = true }
+num-traits = { workspace = true }
 frame-metadata = { features = ["current"], workspace = true }
 scale-info = { features = ["derive"], workspace = true }
+serde = { features = ["alloc", "derive"], optional = true, workspace = true }
+static_assertions = { workspace = true, default-features = true }
 impl-trait-for-tuples = { workspace = true }
 log = { optional = true, workspace = true, default-features = true }
 kvdb = { optional = true, workspace = true }
@@ -33,6 +38,10 @@ tracing-subscriber = { workspace = true, optional = true, features = [
 ] }
 wasmtime = { optional = true, workspace = true }
 
+[dev-dependencies]
+primitive-types = { workspace = true, default-features = true }
+rand = { workspace = true, default-features = true }
+
 [features]
 default = ["std"]
 std = [
@@ -43,7 +52,9 @@ std = [
 	"codec/std",
 	"frame-metadata/std",
 	"log/std",
+	"num-traits/std",
 	"scale-info/std",
+	"serde/std",
 	"kvdb",
 	"parking_lot",
 	"tracing-core/std",
@@ -54,3 +65,4 @@ std = [
 wasm-interface-wasmtime = ["anyhow", "dep:wasmtime"]
 with-tracing = ["codec/derive", "codec/full"]
 rocksdb = ["kvdb-rocksdb"]
+serde = ["dep:serde", "scale-info/serde"]

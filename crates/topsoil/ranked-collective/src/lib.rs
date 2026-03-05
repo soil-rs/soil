@@ -45,7 +45,7 @@ extern crate alloc;
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use core::marker::PhantomData;
 use scale_info::TypeInfo;
-use soil_arithmetic::traits::Saturating;
+use subsoil::arithmetic::traits::Saturating;
 use soil_runtime::{
 	traits::{Convert, StaticLookup},
 	ArithmeticError::Overflow,

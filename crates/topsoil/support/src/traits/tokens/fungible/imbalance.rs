@@ -36,7 +36,7 @@ use crate::{
 };
 use alloc::boxed::Box;
 use core::marker::PhantomData;
-use soil_arithmetic::traits::SaturatedConversion;
+use subsoil::arithmetic::traits::SaturatedConversion;
 use soil_runtime::traits::Zero;
 use topsoil_support_procedural::{DebugNoBound, EqNoBound, PartialEqNoBound};
 

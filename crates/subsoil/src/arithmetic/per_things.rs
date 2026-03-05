@@ -25,9 +25,9 @@
 //! In use, you may see them being used as follows:
 //!
 //! > **[`Perbill`](Perbill), parts of a billion**
-#![doc = docify::embed!("./src/lib.rs", perbill_example)]
+#![doc = docify::embed!("./src/arithmetic/mod.rs", perbill_example)]
 //! > **[`Percent`](Percent), parts of a hundred**
-#![doc = docify::embed!("./src/lib.rs", percent_example)]
+#![doc = docify::embed!("./src/arithmetic/mod.rs", percent_example)]
 //! Note that `Percent` is represented as a _rounded down_, fixed point
 //! number (see the example above). Unlike primitive types, types that implement
 //! [`PerThing`](PerThing) will also not overflow, and are therefore safe to use.
@@ -48,12 +48,12 @@
 //! As stated, one can also perform mathematics using these types directly. For example, finding the
 //! percentage of a particular item:
 
-#![doc = docify::embed!("./src/lib.rs", percent_mult)]
+#![doc = docify::embed!("./src/arithmetic/mod.rs", percent_mult)]
 
 #[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
 
-use crate::traits::{
+use crate::arithmetic::traits::{
 	BaseArithmetic, Bounded, CheckedAdd, CheckedMul, CheckedSub, One, SaturatedConversion,
 	Saturating, UniqueSaturatedInto, Unsigned, Zero,
 };
@@ -80,7 +80,7 @@ pub trait RationalArg:
 	+ Unsigned
 	+ Zero
 	+ One
-	+ crate::MultiplyRational
+	+ crate::arithmetic::MultiplyRational
 {
 }
 
@@ -94,7 +94,7 @@ impl<
 			+ Unsigned
 			+ Zero
 			+ One
-			+ crate::MultiplyRational,
+			+ crate::arithmetic::MultiplyRational,
 	> RationalArg for T
 {
 }
@@ -141,7 +141,7 @@ pub trait PerThing:
 	+ Pow<usize, Output = Self>
 {
 	/// The data type used to build this per-thingy.
-	type Inner: BaseArithmetic + Unsigned + Copy + Into<u128> + fmt::Debug + crate::MultiplyRational;
+	type Inner: BaseArithmetic + Unsigned + Copy + Into<u128> + fmt::Debug + crate::arithmetic::MultiplyRational;
 
 	/// A data type larger than `Self::Inner`, used to avoid overflow in some computations.
 	/// It must be able to compute `ACCURACY^2`.
@@ -152,7 +152,7 @@ pub trait PerThing:
 		+ UniqueSaturatedInto<Self::Inner>
 		+ Unsigned
 		+ fmt::Debug
-		+ crate::MultiplyRational;
+		+ crate::arithmetic::MultiplyRational;
 
 	/// The accuracy of this type.
 	const ACCURACY: Self::Inner;
@@ -240,7 +240,7 @@ pub trait PerThing:
 	/// nearest whole number.
 	///
 	/// ```rust
-	/// # use soil_arithmetic::{Percent, PerThing};
+	/// # use subsoil::arithmetic::{Percent, PerThing};
 	/// # fn main () {
 	/// // round to nearest
 	/// assert_eq!(Percent::from_percent(34) * 10u64, 3);
@@ -264,7 +264,7 @@ pub trait PerThing:
 	/// rounds to the nearest whole number.
 	///
 	/// ```rust
-	/// # use soil_arithmetic::{Percent, PerThing};
+	/// # use subsoil::arithmetic::{Percent, PerThing};
 	/// # fn main () {
 	/// // round to nearest
 	/// assert_eq!(Percent::from_percent(34) * 10u64, 3);
@@ -288,7 +288,7 @@ pub trait PerThing:
 	/// nearest whole number and saturates at the numeric bounds instead of overflowing.
 	///
 	/// ```rust
-	/// # use soil_arithmetic::{Percent, PerThing};
+	/// # use subsoil::arithmetic::{Percent, PerThing};
 	/// # fn main () {
 	/// assert_eq!(Percent::from_percent(50).saturating_reciprocal_mul(10u64), 20);
 	/// # }
@@ -306,7 +306,7 @@ pub trait PerThing:
 	/// nearest whole number and saturates at the numeric bounds instead of overflowing.
 	///
 	/// ```rust
-	/// # use soil_arithmetic::{Percent, PerThing};
+	/// # use subsoil::arithmetic::{Percent, PerThing};
 	/// # fn main () {
 	/// // round to nearest
 	/// assert_eq!(Percent::from_percent(60).saturating_reciprocal_mul(10u64), 17);
@@ -327,7 +327,7 @@ pub trait PerThing:
 	/// nearest whole number and saturates at the numeric bounds instead of overflowing.
 	///
 	/// ```rust
-	/// # use soil_arithmetic::{Percent, PerThing};
+	/// # use subsoil::arithmetic::{Percent, PerThing};
 	/// # fn main () {
 	/// // round to nearest
 	/// assert_eq!(Percent::from_percent(61).saturating_reciprocal_mul(10u64), 16);
@@ -372,7 +372,7 @@ pub trait PerThing:
 	/// Note that this always rounds _down_, i.e.
 	///
 	/// ```rust
-	/// # use soil_arithmetic::{Percent, PerThing};
+	/// # use subsoil::arithmetic::{Percent, PerThing};
 	/// # fn main () {
 	/// // 989/1000 is technically closer to 99%.
 	/// assert_eq!(
@@ -401,7 +401,7 @@ pub trait PerThing:
 	/// Rounding is determined by the parameter `rounding`, i.e.
 	///
 	/// ```rust
-	/// # use soil_arithmetic::{Percent, PerThing, Rounding::*};
+	/// # use subsoil::arithmetic::{Percent, PerThing, Rounding::*};
 	/// # fn main () {
 	/// // 989/100 is technically closer to 99%.
 	/// assert_eq!(
@@ -436,7 +436,7 @@ pub trait PerThing:
 	/// ```
 	///
 	/// ```rust
-	/// # use soil_arithmetic::{Percent, PerThing, Rounding::*};
+	/// # use subsoil::arithmetic::{Percent, PerThing, Rounding::*};
 	/// # fn main () {
 	/// assert_eq!(
 	/// 	Percent::from_rational_with_rounding(981u64, 1000, Up).unwrap(),
@@ -709,7 +709,7 @@ macro_rules! implement_per_thing {
 					+ Unsigned
 					+ Zero
 					+ One
-					+ $crate::MultiplyRational,
+					+ $crate::arithmetic::MultiplyRational,
 				Self::Inner: Into<N>
 			{
 				// q cannot be zero.
@@ -856,7 +856,7 @@ macro_rules! implement_per_thing {
 			/// The `rounding` method must be specified. e.g.:
 			///
 			/// ```rust
-			/// # use soil_arithmetic::{Percent, PerThing, Rounding::*};
+			/// # use subsoil::arithmetic::{Percent, PerThing, Rounding::*};
 			/// # fn main () {
 			/// let pc = |x| Percent::from_percent(x);
 			/// assert_eq!(
@@ -1070,7 +1070,7 @@ macro_rules! implement_per_thing {
 			}
 		}
 
-		impl $crate::traits::Zero for $name {
+		impl $crate::arithmetic::traits::Zero for $name {
 			fn zero() -> Self {
 				Self::zero()
 			}
@@ -1080,7 +1080,7 @@ macro_rules! implement_per_thing {
 			}
 		}
 
-		impl $crate::traits::One for $name {
+		impl $crate::arithmetic::traits::One for $name {
 			fn one() -> Self {
 				Self::one()
 			}
@@ -1090,7 +1090,7 @@ macro_rules! implement_per_thing {
 		mod $test_mod {
 			use codec::{Encode, Decode};
 			use super::{$name, Saturating, PerThing};
-			use crate::traits::Zero;
+			use crate::arithmetic::traits::Zero;
 
 			#[test]
 			fn macro_expanded_correctly() {
@@ -1815,7 +1815,7 @@ macro_rules! implement_per_thing_with_perthousand {
 		#[cfg(test)]
 		mod $pt_test_mod {
 			use super::$name;
-			use crate::traits::Zero;
+			use crate::arithmetic::traits::Zero;
 
 			#[test]
 			fn from_perthousand_works() {

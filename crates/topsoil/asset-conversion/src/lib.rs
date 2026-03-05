@@ -101,7 +101,7 @@ use topsoil_support::{
 #[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
-	use soil_arithmetic::{traits::Unsigned, Permill};
+	use subsoil::arithmetic::{traits::Unsigned, Permill};
 	use topsoil_support::{pallet_prelude::*, traits::fungibles::Refund};
 	use topsoil_system::pallet_prelude::*;
 

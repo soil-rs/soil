@@ -36,7 +36,6 @@ prometheus-endpoint = { workspace = true, default-features = true, optional = tr
 soil-client-api = { workspace = true, default-features = true, optional = true}
 soil-state-db = { workspace = true, default-features = true, optional = true}
 schnellru = { workspace = true, optional = true}
-soil-arithmetic = { workspace = true, default-features = true, optional = true}
 soil-blockchain = { workspace = true, default-features = true, optional = true}
 soil-core = { workspace = true, default-features = true, optional = true}
 subsoil = { workspace = true, default-features = true, optional = true}
@@ -68,17 +67,16 @@ std = [
 	"parking_lot",
 	"prometheus-endpoint",
 	"schnellru",
-	"soil-arithmetic",
+	"subsoil",
 	"soil-blockchain",
 	"soil-client-api",
 	"soil-core",
-	"subsoil",
 	"soil-runtime",
 	"soil-state-db",
 	"soil-state-machine",
 	"soil-trie",
 	"sysinfo",
-	"soil-arithmetic/std",
+	"subsoil/std",
 	"soil-client-api/std",
 	"soil-core/std",
 	"soil-runtime/std",

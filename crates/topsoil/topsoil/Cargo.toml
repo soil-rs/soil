@@ -21,7 +21,7 @@ scale-info = { features = ["derive"], workspace = true }
 serde = { workspace = true }
 
 # primitive deps, used for developing FRAME pallets.
-soil-arithmetic = { workspace = true }
+subsoil = { workspace = true }
 soil-core = { workspace = true }
 soil-io = { workspace = true }
 soil-runtime = { workspace = true }
@@ -72,7 +72,7 @@ std = [
 	"scale-info/std",
 	"serde/std",
 	"soil-api?/std",
-	"soil-arithmetic/std",
+	"subsoil/std",
 	"soil-block-builder?/std",
 	"soil-consensus-aura?/std",
 	"soil-consensus-grandpa?/std",

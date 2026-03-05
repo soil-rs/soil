@@ -27,7 +27,7 @@ use crate::{
 };
 use alloc::{vec, vec::Vec};
 use codec::{Decode, Encode, EncodeLike, FullCodec, MaxEncodedLen};
-use soil_arithmetic::traits::SaturatedConversion;
+use subsoil::arithmetic::traits::SaturatedConversion;
 use subsoil::metadata_ir::{StorageEntryMetadataIR, StorageEntryTypeIR};
 use topsoil_support::storage::StorageDecodeNonDedupLength;
 

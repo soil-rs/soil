@@ -27,7 +27,7 @@ use crate::{
 	VoteWeight, Voter,
 };
 use alloc::{collections::btree_map::BTreeMap, rc::Rc, vec::Vec};
-use soil_arithmetic::{traits::Zero, Perbill};
+use subsoil::arithmetic::{traits::Zero, Perbill};
 /// The type used as the threshold.
 ///
 /// Just some reading sugar; Must always be same as [`ExtendedBalance`];
