@@ -22,7 +22,7 @@ scale-info = { features = ["derive"], workspace = true }
 serde = { features = ["alloc", "derive"], optional = true, workspace = true }
 soil-api = { workspace = true }
 soil-core = { workspace = true }
-soil-debug-derive = { workspace = true }
+subsoil-debug-derive = { workspace = true }
 soil-runtime = { workspace = true }
 thiserror = { optional = true, workspace = true }
 
@@ -40,7 +40,7 @@ std = [
 	"serde/std",
 	"soil-api/std",
 	"soil-core/std",
-	"soil-debug-derive/std",
+	"subsoil-debug-derive/std",
 	"soil-runtime/std",
 ]
 

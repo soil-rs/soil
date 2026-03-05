@@ -25,7 +25,7 @@ serde = { features = ["alloc", "derive"], optional = true, workspace = true }
 subsoil-crypto-hashing-proc-macro = { workspace = true, default-features = true }
 soil-runtime = { workspace = true }
 soil-std = { workspace = true }
-soil-version-proc-macro = { workspace = true }
+subsoil-version-proc-macro = { workspace = true }
 thiserror = { optional = true, workspace = true }
 
 [features]

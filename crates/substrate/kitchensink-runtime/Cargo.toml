@@ -25,7 +25,7 @@ rand = { workspace = true, optional = true }
 rand_pcg = { workspace = true, optional = true }
 scale-info = { features = ["derive", "serde"], workspace = true }
 serde_json = { features = ["alloc", "arbitrary_precision"], workspace = true }
-soil-debug-derive = { workspace = true }
+subsoil-debug-derive = { workspace = true }
 static_assertions = { workspace = true, default-features = true }
 
 # pallet-asset-conversion: turn on "num-traits" feature
@@ -146,9 +146,9 @@ topsoil-verify-signature = { workspace = true }
 topsoil-vesting = { workspace = true }
 topsoil-whitelist = { workspace = true }
 soil-chain-spec-derive = { workspace = true }
-soil-tracing-proc-macro = { workspace = true }
+subsoil-tracing-proc-macro = { workspace = true }
 soil-api = { workspace = true }
-soil-api-proc-macro = { workspace = true }
+subsoil-api-proc-macro = { workspace = true }
 soil-application-crypto = { workspace = true }
 soil-arithmetic = { workspace = true }
 soil-authority-discovery = { workspace = true }
@@ -176,7 +176,7 @@ soil-npos-elections = { workspace = true }
 soil-offchain = { workspace = true }
 soil-runtime = { workspace = true }
 soil-runtime-interface = { workspace = true }
-soil-runtime-interface-proc-macro = { workspace = true }
+subsoil-runtime-interface-proc-macro = { workspace = true }
 soil-session = { workspace = true }
 soil-staking = { workspace = true }
 soil-state-machine = { workspace = true }
@@ -189,7 +189,7 @@ soil-transaction-pool = { workspace = true }
 soil-transaction-storage-proof = { workspace = true }
 soil-trie = { workspace = true }
 soil-version = { workspace = true }
-soil-version-proc-macro = { workspace = true }
+subsoil-version-proc-macro = { workspace = true }
 soil-wasm-interface = { workspace = true }
 soil-weights = { workspace = true }
 substrate-bip39 = { workspace = true }
@@ -327,7 +327,7 @@ std = [
 	"scale-info/std",
 	"serde_json/std",
 	"soil-api/std",
-	"soil-api-proc-macro/std",
+	"subsoil-api-proc-macro/std",
 	"soil-application-crypto/std",
 	"soil-arithmetic/std",
 	"soil-authority-discovery/std",
@@ -341,7 +341,7 @@ std = [
 	"soil-core/std",
 	"soil-crypto-ec-utils/std",
 	"subsoil-crypto-hashing/std",
-	"soil-debug-derive/std",
+	"subsoil-debug-derive/std",
 	"soil-externalities/std",
 	"soil-genesis-builder/std",
 	"soil-inherents/std",

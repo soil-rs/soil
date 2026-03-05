@@ -11,7 +11,7 @@ resolver = "2"
 members = [
 	"crates/soil/allocator",
 	"crates/soil/api",
-	"crates/soil/api-proc-macro",
+	"crates/subsoil-api-proc-macro",
 	"crates/soil/api/test",
 	"crates/soil/application-crypto",
 	"crates/soil/application-crypto/test",
@@ -43,9 +43,9 @@ members = [
 	"crates/soil/core/fuzz",
 	"crates/soil/crypto-ec-utils",
 	"crates/subsoil-crypto-hashing",
-	"crates/subsoil-crypto-hashing/proc-macro",
+	"crates/subsoil-crypto-hashing-proc-macro",
 	"crates/soil/database",
-	"crates/soil/debug-derive",
+	"crates/subsoil-debug-derive",
 	"crates/soil/executor",
 	"crates/soil/executor-common",
 	"crates/soil/executor-polkavm",
@@ -83,7 +83,7 @@ members = [
 	"crates/soil/rpc-spec-v2",
 	"crates/soil/runtime",
 	"crates/soil/runtime-interface",
-	"crates/soil/runtime-interface-proc-macro",
+	"crates/subsoil-runtime-interface-proc-macro",
 	"crates/soil/runtime-interface/test",
 	"crates/soil/runtime-interface/test-wasm",
 	"crates/soil/runtime-interface/test-wasm-deprecated",
@@ -105,14 +105,14 @@ members = [
 	"crates/soil/test-primitives",
 	"crates/soil/timestamp",
 	"crates/soil/tracing",
-	"crates/soil/tracing-proc-macro",
+	"crates/subsoil-tracing-proc-macro",
 	"crates/soil/transaction-pool",
 	"crates/soil/transaction-pool-api",
 	"crates/soil/transaction-storage-proof",
 	"crates/soil/trie",
 	"crates/soil/utils",
 	"crates/soil/version",
-	"crates/soil/version-proc-macro",
+	"crates/subsoil-version-proc-macro",
 	"crates/soil/wasm-interface",
 	"crates/soil/weights",
 	"crates/topsoil/alliance",
@@ -538,12 +538,12 @@ soil-sync-state-rpc = { path = "crates/soil/sync-state-rpc", default-features = 
 soil-sysinfo = { path = "crates/soil/sysinfo", default-features = false }
 soil-telemetry = { path = "crates/soil/telemetry", default-features = false }
 sc-tracing = { path = "crates/substrate-client/tracing", default-features = false }
-soil-tracing-proc-macro = { path = "crates/soil/tracing-proc-macro", default-features = false }
+subsoil-tracing-proc-macro = { path = "crates/subsoil-tracing-proc-macro", default-features = false }
 sc-transaction-pool = { path = "crates/substrate-client/transaction-pool", default-features = false }
 soil-transaction-pool-api = { path = "crates/soil/transaction-pool-api", default-features = false }
 soil-utils = { path = "crates/soil/utils", default-features = false }
 soil-api = { path = "crates/soil/api", default-features = false }
-soil-api-proc-macro = { path = "crates/soil/api-proc-macro", default-features = false }
+subsoil-api-proc-macro = { path = "crates/subsoil-api-proc-macro", default-features = false }
 soil-application-crypto = { path = "crates/soil/application-crypto", default-features = false }
 soil-arithmetic = { path = "crates/soil/arithmetic", default-features = false }
 soil-authority-discovery = { path = "crates/soil/authority-discovery", default-features = false }
@@ -560,9 +560,9 @@ soil-consensus-slots = { path = "crates/soil/consensus-slots", default-features 
 soil-core = { path = "crates/soil/core", default-features = false }
 soil-crypto-ec-utils = { default-features = false, path = "crates/soil/crypto-ec-utils" }
 subsoil-crypto-hashing = { path = "crates/subsoil-crypto-hashing", default-features = false }
-subsoil-crypto-hashing-proc-macro = { path = "crates/subsoil-crypto-hashing/proc-macro", default-features = false }
+subsoil-crypto-hashing-proc-macro = { path = "crates/subsoil-crypto-hashing-proc-macro", default-features = false }
 soil-database = { path = "crates/soil/database", default-features = false }
-soil-debug-derive = { path = "crates/soil/debug-derive", default-features = false }
+subsoil-debug-derive = { path = "crates/subsoil-debug-derive", default-features = false }
 soil-externalities = { path = "crates/soil/externalities", default-features = false }
 soil-genesis-builder = { path = "crates/soil/genesis-builder", default-features = false }
 soil-inherents = { path = "crates/soil/inherents", default-features = false }
@@ -579,7 +579,7 @@ soil-panic-handler = { path = "crates/soil/panic-handler", default-features = fa
 soil-rpc = { path = "crates/soil/rpc", default-features = false }
 soil-runtime = { path = "crates/soil/runtime", default-features = false }
 soil-runtime-interface = { path = "crates/soil/runtime-interface", default-features = false }
-soil-runtime-interface-proc-macro = { path = "crates/soil/runtime-interface-proc-macro", default-features = false }
+subsoil-runtime-interface-proc-macro = { path = "crates/subsoil-runtime-interface-proc-macro", default-features = false }
 sp-runtime-interface-test-wasm = { path = "crates/soil/runtime-interface/test-wasm" }
 sp-runtime-interface-test-wasm-deprecated = { path = "crates/soil/runtime-interface/test-wasm-deprecated" }
 soil-session = { path = "crates/soil/session", default-features = false }
@@ -595,7 +595,7 @@ soil-transaction-pool = { path = "crates/soil/transaction-pool", default-feature
 soil-transaction-storage-proof = { path = "crates/soil/transaction-storage-proof", default-features = false }
 soil-trie = { path = "crates/soil/trie", default-features = false }
 soil-version = { path = "crates/soil/version", default-features = false }
-soil-version-proc-macro = { path = "crates/soil/version-proc-macro", default-features = false }
+subsoil-version-proc-macro = { path = "crates/subsoil-version-proc-macro", default-features = false }
 soil-wasm-interface = { path = "crates/soil/wasm-interface", default-features = false }
 soil-weights = { path = "crates/soil/weights", default-features = false }
 subkey = { path = "crates/substrate/subkey", default-features = false }

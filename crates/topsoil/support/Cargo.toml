@@ -36,7 +36,7 @@ soil-api = { features = ["frame-metadata"], workspace = true }
 soil-arithmetic = { workspace = true }
 soil-core = { workspace = true }
 subsoil-crypto-hashing-proc-macro = { workspace = true, default-features = true }
-soil-debug-derive = { workspace = true }
+subsoil-debug-derive = { workspace = true }
 soil-genesis-builder = { workspace = true }
 soil-inherents = { workspace = true }
 soil-io = { workspace = true }
@@ -76,7 +76,7 @@ std = [
 	"soil-api/std",
 	"soil-arithmetic/std",
 	"soil-core/std",
-	"soil-debug-derive/std",
+	"subsoil-debug-derive/std",
 	"soil-genesis-builder/std",
 	"soil-inherents/std",
 	"soil-io/std",

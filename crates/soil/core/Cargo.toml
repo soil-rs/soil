@@ -41,7 +41,7 @@ rand = { features = ["small_rng"], optional = true, workspace = true, default-fe
 scale-info = { features = ["derive"], workspace = true }
 secrecy = { features = ["alloc"], workspace = true }
 serde = { optional = true, features = ["alloc", "derive"], workspace = true }
-soil-debug-derive = { workspace = true }
+subsoil-debug-derive = { workspace = true }
 soil-externalities = { optional = true, workspace = true }
 soil-std = { workspace = true }
 soil-storage = { workspace = true }
@@ -116,7 +116,7 @@ std = [
 	"serde/std",
 	"sha2?/std",
 	"subsoil-crypto-hashing/std",
-	"soil-debug-derive/std",
+	"subsoil-debug-derive/std",
 	"soil-externalities/std",
 	"soil-std/std",
 	"soil-storage/std",

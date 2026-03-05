@@ -17,7 +17,7 @@
 
 #![allow(deprecated)]
 
-use soil_debug_derive::RuntimeDebug;
+use subsoil_debug_derive::RuntimeDebug;
 
 #[derive(RuntimeDebug)]
 struct Unnamed(u64, String);

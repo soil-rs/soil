@@ -1,5 +1,5 @@
 [package]
-name = "soil-tracing-proc-macro"
+name = "subsoil-tracing-proc-macro"
 version = "11.0.0"
 authors.workspace = true
 edition.workspace = true

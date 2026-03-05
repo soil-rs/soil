@@ -4706,7 +4706,6 @@ dependencies = [
  "scale-info",
  "serde_json",
  "soil-api",
- "soil-api-proc-macro",
  "soil-application-crypto",
  "soil-arithmetic",
  "soil-authority-discovery",
@@ -4720,7 +4719,6 @@ dependencies = [
  "soil-consensus-slots",
  "soil-core",
  "soil-crypto-ec-utils",
- "soil-debug-derive",
  "soil-externalities",
  "soil-genesis-builder",
  "soil-inherents",
@@ -4734,7 +4732,6 @@ dependencies = [
  "soil-offchain",
  "soil-runtime",
  "soil-runtime-interface",
- "soil-runtime-interface-proc-macro",
  "soil-session",
  "soil-staking",
  "soil-state-machine",
@@ -4743,17 +4740,20 @@ dependencies = [
  "soil-storage",
  "soil-timestamp",
  "soil-tracing",
- "soil-tracing-proc-macro",
  "soil-transaction-pool",
  "soil-transaction-storage-proof",
  "soil-trie",
  "soil-version",
- "soil-version-proc-macro",
  "soil-wasm-interface",
  "soil-weights",
  "static_assertions",
+ "subsoil-api-proc-macro",
  "subsoil-crypto-hashing",
  "subsoil-crypto-hashing-proc-macro",
+ "subsoil-debug-derive",
+ "subsoil-runtime-interface-proc-macro",
+ "subsoil-tracing-proc-macro",
+ "subsoil-version-proc-macro",
  "substrate-bip39",
  "substrate-wasm-builder",
  "topsoil",
@@ -8614,7 +8614,7 @@ dependencies = [
  "soil-rpc",
  "soil-runtime",
  "soil-tracing",
- "soil-tracing-proc-macro",
+ "subsoil-tracing-proc-macro",
  "thiserror 1.0.69",
  "tracing",
  "tracing-log",
@@ -9461,7 +9461,6 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "scale-info",
- "soil-api-proc-macro",
  "soil-core",
  "soil-externalities",
  "soil-metadata-ir",
@@ -9471,21 +9470,8 @@ dependencies = [
  "soil-test-primitives",
  "soil-trie",
  "soil-version",
+ "subsoil-api-proc-macro",
  "thiserror 1.0.69",
-]
-
-[[package]]
-name = "soil-api-proc-macro"
-version = "15.0.0"
-dependencies = [
- "Inflector",
- "assert_matches",
- "blake2 0.10.6",
- "expander",
- "proc-macro-crate 3.4.0",
- "proc-macro2",
- "quote",
- "syn 2.0.117",
 ]
 
 [[package]]
@@ -10004,12 +9990,12 @@ dependencies = [
  "serde",
  "serde_json",
  "sha2 0.10.9",
- "soil-debug-derive",
  "soil-externalities",
  "soil-std",
  "soil-storage",
  "ss58-registry",
  "subsoil-crypto-hashing",
+ "subsoil-debug-derive",
  "substrate-bip39",
  "thiserror 1.0.69",
  "tracing",
@@ -10045,16 +10031,6 @@ dependencies = [
  "kvdb",
  "kvdb-rocksdb",
  "parking_lot 0.12.5",
-]
-
-[[package]]
-name = "soil-debug-derive"
-version = "14.0.0"
-dependencies = [
- "proc-macro-warning",
- "proc-macro2",
- "quote",
- "syn 2.0.117",
 ]
 
 [[package]]
@@ -10293,8 +10269,8 @@ dependencies = [
  "serde",
  "soil-api",
  "soil-core",
- "soil-debug-derive",
  "soil-runtime",
+ "subsoil-debug-derive",
  "thiserror 1.0.69",
 ]
 
@@ -10750,7 +10726,6 @@ dependencies = [
  "rustversion",
  "soil-externalities",
  "soil-io",
- "soil-runtime-interface-proc-macro",
  "soil-state-machine",
  "soil-std",
  "soil-storage",
@@ -10758,19 +10733,8 @@ dependencies = [
  "soil-wasm-interface",
  "sp-runtime-interface-test-wasm",
  "static_assertions",
+ "subsoil-runtime-interface-proc-macro",
  "trybuild",
-]
-
-[[package]]
-name = "soil-runtime-interface-proc-macro"
-version = "17.0.0"
-dependencies = [
- "Inflector",
- "expander",
- "proc-macro-crate 3.4.0",
- "proc-macro2",
- "quote",
- "syn 2.0.117",
 ]
 
 [[package]]
@@ -10997,7 +10961,7 @@ dependencies = [
  "parity-scale-codec",
  "ref-cast",
  "serde",
- "soil-debug-derive",
+ "subsoil-debug-derive",
 ]
 
 [[package]]
@@ -11103,16 +11067,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "soil-tracing-proc-macro"
-version = "11.0.0"
-dependencies = [
- "proc-macro-crate 3.4.0",
- "proc-macro2",
- "quote",
- "syn 2.0.117",
-]
-
-[[package]]
 name = "soil-transaction-pool"
 version = "26.0.0"
 dependencies = [
@@ -11206,21 +11160,9 @@ dependencies = [
  "serde",
  "soil-runtime",
  "soil-std",
- "soil-version-proc-macro",
  "subsoil-crypto-hashing-proc-macro",
+ "subsoil-version-proc-macro",
  "thiserror 1.0.69",
-]
-
-[[package]]
-name = "soil-version-proc-macro"
-version = "13.0.0"
-dependencies = [
- "parity-scale-codec",
- "proc-macro-warning",
- "proc-macro2",
- "quote",
- "soil-version",
- "syn 2.0.117",
 ]
 
 [[package]]
@@ -11245,7 +11187,7 @@ dependencies = [
  "serde",
  "smallvec",
  "soil-arithmetic",
- "soil-debug-derive",
+ "subsoil-debug-derive",
 ]
 
 [[package]]
@@ -11716,6 +11658,20 @@ dependencies = [
 ]
 
 [[package]]
+name = "subsoil-api-proc-macro"
+version = "15.0.0"
+dependencies = [
+ "Inflector",
+ "assert_matches",
+ "blake2 0.10.6",
+ "expander",
+ "proc-macro-crate 3.4.0",
+ "proc-macro2",
+ "quote",
+ "syn 2.0.117",
+]
+
+[[package]]
 name = "subsoil-crypto-hashing"
 version = "0.1.0"
 dependencies = [
@@ -11735,6 +11691,50 @@ version = "0.1.0"
 dependencies = [
  "quote",
  "subsoil-crypto-hashing",
+ "syn 2.0.117",
+]
+
+[[package]]
+name = "subsoil-debug-derive"
+version = "14.0.0"
+dependencies = [
+ "proc-macro-warning",
+ "proc-macro2",
+ "quote",
+ "syn 2.0.117",
+]
+
+[[package]]
+name = "subsoil-runtime-interface-proc-macro"
+version = "17.0.0"
+dependencies = [
+ "Inflector",
+ "expander",
+ "proc-macro-crate 3.4.0",
+ "proc-macro2",
+ "quote",
+ "syn 2.0.117",
+]
+
+[[package]]
+name = "subsoil-tracing-proc-macro"
+version = "11.0.0"
+dependencies = [
+ "proc-macro-crate 3.4.0",
+ "proc-macro2",
+ "quote",
+ "syn 2.0.117",
+]
+
+[[package]]
+name = "subsoil-version-proc-macro"
+version = "13.0.0"
+dependencies = [
+ "parity-scale-codec",
+ "proc-macro-warning",
+ "proc-macro2",
+ "quote",
+ "soil-version",
  "syn 2.0.117",
 ]
 
@@ -11902,7 +11902,6 @@ dependencies = [
  "soil-consensus-babe",
  "soil-consensus-grandpa",
  "soil-core",
- "soil-debug-derive",
  "soil-executor",
  "soil-executor-common",
  "soil-externalities",
@@ -11921,6 +11920,7 @@ dependencies = [
  "soil-trie",
  "soil-version",
  "subsoil-crypto-hashing",
+ "subsoil-debug-derive",
  "substrate-test-runtime-client",
  "substrate-wasm-builder",
  "topsoil-babe",
@@ -14647,7 +14647,6 @@ dependencies = [
  "soil-api",
  "soil-arithmetic",
  "soil-core",
- "soil-debug-derive",
  "soil-genesis-builder",
  "soil-inherents",
  "soil-io",
@@ -14662,6 +14661,7 @@ dependencies = [
  "soil-weights",
  "subsoil-crypto-hashing",
  "subsoil-crypto-hashing-proc-macro",
+ "subsoil-debug-derive",
  "topsoil-support-procedural",
  "topsoil-system",
  "tt-call",

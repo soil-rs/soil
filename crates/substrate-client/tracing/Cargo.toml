@@ -41,7 +41,7 @@ log = { workspace = true, default-features = true }
 parking_lot = { workspace = true, default-features = true }
 rustc-hash = { workspace = true }
 soil-client-api = { workspace = true, default-features = true }
-soil-tracing-proc-macro = { workspace = true, default-features = true }
+subsoil-tracing-proc-macro = { workspace = true, default-features = true }
 serde = { workspace = true, default-features = true }
 soil-api = { workspace = true, default-features = true }
 soil-blockchain = { workspace = true, default-features = true }

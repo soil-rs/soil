@@ -23,7 +23,7 @@ schemars = { optional = true, workspace = true }
 serde = { optional = true, features = ["alloc", "derive"], workspace = true }
 smallvec = { workspace = true, default-features = true }
 soil-arithmetic = { workspace = true }
-soil-debug-derive = { workspace = true }
+subsoil-debug-derive = { workspace = true }
 
 [features]
 default = ["std"]
@@ -33,7 +33,7 @@ std = [
 	"scale-info/std",
 	"serde/std",
 	"soil-arithmetic/std",
-	"soil-debug-derive/std",
+	"subsoil-debug-derive/std",
 ]
 # By default some types have documentation, `full-metadata-docs` allows to add documentation to
 # more types in the metadata.

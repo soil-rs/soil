@@ -1,5 +1,5 @@
 [package]
-name = "soil-api-proc-macro"
+name = "subsoil-api-proc-macro"
 version = "15.0.0"
 authors.workspace = true
 edition.workspace = true

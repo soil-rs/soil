@@ -119,7 +119,7 @@ pub mod embed;
 ///
 /// Including this macro in the context where there is no "std" feature and the code is not
 /// compiled to wasm can lead to cryptic linking errors.
-pub use soil_version_proc_macro::runtime_version;
+pub use subsoil_version_proc_macro::runtime_version;
 
 /// The identity of a particular API interface that the runtime might provide.
 ///
