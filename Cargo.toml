@@ -1,9 +1,9 @@
 [workspace.package]
-authors = ["Parity Technologies <admin@parity.io>"]
+authors = ["Soil contributors <legal@bitarray.dev>"]
 edition = "2021"
-homepage = "https://paritytech.github.io/polkadot-sdk/"
+homepage = "https://soil.rs"
 license = "GPL-3.0-or-later WITH Classpath-exception-2.0"
-repository = "https://github.com/bitarray/soil.git"
+repository = "https://github.com/soil-rs/soil"
 
 [workspace]
 resolver = "2"
