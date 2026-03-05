@@ -44,7 +44,6 @@ soil-utils = { workspace = true, default-features = true, optional = true}
 serde = { workspace = true, default-features = true, optional = true}
 serde_json = { workspace = true, default-features = true, optional = true}
 soil-blockchain = { workspace = true, default-features = true, optional = true}
-soil-keyring = { workspace = true, default-features = true, optional = true}
 thiserror = { workspace = true, optional = true}
 tokio = { features = ["parking_lot", "rt-multi-thread", "signal"], workspace = true, default-features = true, optional = true}
 
@@ -77,7 +76,6 @@ std = [
 	"soil-blockchain",
 	"soil-client-api",
 	"soil-client-db",
-	"soil-keyring",
 	"soil-network",
 	"subsoil/std",
 	"soil-service",
@@ -87,7 +85,6 @@ std = [
 	"tokio",
 	"soil-client-api/std",
 	"soil-client-db/std",
-	"soil-keyring/std",
 	"soil-network/std",
 	"subsoil/std",
 	"soil-service/std",

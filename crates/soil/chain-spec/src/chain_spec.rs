@@ -807,7 +807,7 @@ mod tests {
 	use serde_json::{from_str, json, Value};
 	use subsoil::application_crypto::Ss58Codec;
 	use subsoil::core::storage::well_known_keys;
-	use soil_keyring::Sr25519Keyring;
+	use subsoil::keyring::Sr25519Keyring;
 
 	type TestSpec = ChainSpec;
 

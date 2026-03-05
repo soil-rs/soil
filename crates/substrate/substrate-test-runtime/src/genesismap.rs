@@ -26,7 +26,7 @@ use subsoil::core::{
 	storage::{well_known_keys, StateVersion, Storage},
 	Pair,
 };
-use soil_keyring::Sr25519Keyring;
+use subsoil::keyring::Sr25519Keyring;
 use subsoil::runtime::{
 	traits::{Block as BlockT, Hash as HashT, Header as HeaderT},
 	BuildStorage,

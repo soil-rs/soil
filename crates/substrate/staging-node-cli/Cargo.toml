@@ -171,7 +171,6 @@ pretty_assertions.workspace = true
 regex = { workspace = true }
 scale-info = { features = ["derive", "serde"], workspace = true, default-features = true }
 soketto = { workspace = true }
-soil-keyring = { workspace = true }
 tempfile = { workspace = true }
 tokio = { features = ["macros", "parking_lot", "time"], workspace = true, default-features = true }
 tokio-util = { features = ["compat"], workspace = true }

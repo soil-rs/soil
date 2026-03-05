@@ -67,5 +67,4 @@ std = [
 pretty_assertions = { workspace = true }
 regex = { workspace = true }
 soil-consensus-babe = { features = ["serde"], workspace = true }
-soil-keyring = { workspace = true, default-features = true }
 substrate-test-runtime = { workspace = true }

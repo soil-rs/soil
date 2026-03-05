@@ -163,7 +163,7 @@ mod tests {
 	use sc_rpc::testing::test_executor;
 	use soil_blockchain::HeaderBackend;
 	use subsoil::core::crypto::ByteArray;
-	use soil_keyring::Ed25519Keyring;
+	use subsoil::keyring::Ed25519Keyring;
 	use subsoil::runtime::traits::{Block as BlockT, Header as HeaderT};
 	use substrate_test_runtime_client::{
 		runtime::{Block, Header, H256},

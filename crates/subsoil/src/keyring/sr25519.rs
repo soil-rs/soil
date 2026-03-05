@@ -17,17 +17,17 @@
 
 //! Support code for the runtime. A set of test accounts.
 
-pub use subsoil::core::sr25519;
+pub use crate::core::sr25519;
 
-use crate::ParseKeyringError;
+use super::ParseKeyringError;
 #[cfg(feature = "std")]
-use subsoil::core::sr25519::Signature;
-use subsoil::core::{
-	hex2array,
+use crate::core::sr25519::Signature;
+use crate::core::{
 	sr25519::{Pair, Public},
 	ByteArray, Pair as PairT, H256,
 };
-use subsoil::runtime::AccountId32;
+use crate::hex2array;
+use crate::runtime::AccountId32;
 
 extern crate alloc;
 use alloc::{format, str::FromStr, string::String, vec::Vec};
@@ -149,9 +149,9 @@ impl From<Keyring> for &'static str {
 	}
 }
 
-impl From<Keyring> for subsoil::runtime::MultiSigner {
+impl From<Keyring> for crate::runtime::MultiSigner {
 	fn from(x: Keyring) -> Self {
-		subsoil::runtime::MultiSigner::Sr25519(x.into())
+		crate::runtime::MultiSigner::Sr25519(x.into())
 	}
 }
 
@@ -255,7 +255,7 @@ impl From<Keyring> for H256 {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use subsoil::core::{sr25519::Pair, Pair as PairT};
+	use crate::core::{sr25519::Pair, Pair as PairT};
 
 	#[test]
 	fn should_work() {

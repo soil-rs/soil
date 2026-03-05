@@ -24,7 +24,7 @@ use codec::Encode;
 use finality_grandpa;
 use soil_consensus_grandpa::{RoundNumber, SetId, GRANDPA_ENGINE_ID};
 use subsoil::core::{ConstBool, H256};
-use soil_keyring::Ed25519Keyring;
+use subsoil::keyring::Ed25519Keyring;
 use subsoil::runtime::{
 	curve::PiecewiseLinear,
 	impl_opaque_keys,

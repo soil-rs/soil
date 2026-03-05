@@ -23,7 +23,7 @@ use kitchensink_runtime::{CheckedExtrinsic, SessionKeys, TxExtension, UncheckedE
 use node_primitives::{AccountId, Balance, Nonce};
 use subsoil::core::{crypto::get_public_from_string_or_panic, ecdsa, ed25519, sr25519};
 use subsoil_crypto_hashing::blake2_256;
-use soil_keyring::Sr25519Keyring;
+use subsoil::keyring::Sr25519Keyring;
 use subsoil::runtime::generic::{self, Era, ExtrinsicFormat};
 
 /// Alice's account id.

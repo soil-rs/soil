@@ -556,7 +556,7 @@ mod tests {
 	use soil_client_api::BlockchainEvents;
 	use soil_consensus::{NoNetwork as DummyOracle, Proposal, ProposeArgs};
 	use soil_consensus_aura::sr25519::AuthorityPair;
-	use soil_keyring::sr25519::Keyring;
+	use subsoil::keyring::sr25519::Keyring;
 	use subsoil::keystore::Keystore;
 	use soil_network_test::{Block as TestBlock, *};
 	use subsoil::runtime::traits::{Block as BlockT, Header as _};

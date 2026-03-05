@@ -161,7 +161,6 @@ subsoil-crypto-hashing = { workspace = true }
 subsoil-crypto-hashing-proc-macro = { workspace = true }
 soil-genesis-builder = { workspace = true }
 soil-inherents = { workspace = true }
-soil-keyring = { workspace = true }
 soil-mixnet = { workspace = true }
 soil-mmr-primitives = { workspace = true }
 soil-npos-elections = { workspace = true }
@@ -317,7 +316,6 @@ std = [
 	"subsoil-debug-derive/std",
 	"soil-genesis-builder/std",
 	"soil-inherents/std",
-	"soil-keyring/std",
 	"soil-mixnet/std",
 	"soil-mmr-primitives/std",
 	"soil-npos-elections/std",

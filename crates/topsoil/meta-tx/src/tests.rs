@@ -19,7 +19,7 @@ use crate::*;
 use core::ops::Add;
 use mock::*;
 use subsoil::io::hashing::blake2_256;
-use soil_keyring::Sr25519Keyring;
+use subsoil::keyring::Sr25519Keyring;
 use subsoil::runtime::{
 	generic::Era,
 	traits::{Applyable, Checkable, Hash, IdentityLookup},

@@ -22,7 +22,7 @@ use kitchensink_runtime::{constants::currency::*, BalancesCall, SudoCall};
 use node_cli::service::{create_extrinsic, fetch_nonce, FullClient, TransactionPool};
 use node_primitives::AccountId;
 use subsoil::core::{crypto::Pair, sr25519};
-use soil_keyring::Sr25519Keyring;
+use subsoil::keyring::Sr25519Keyring;
 use subsoil::runtime::OpaqueExtrinsic;
 use soil_service::config::{ExecutorConfiguration, RpcConfiguration};
 use soil_service::{

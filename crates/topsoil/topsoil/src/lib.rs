@@ -415,7 +415,7 @@ pub mod runtime {
 			LOCAL_TESTNET_RUNTIME_PRESET,
 		};
 		pub use soil_inherents::{CheckInherentsResult, InherentData};
-		pub use soil_keyring::Sr25519Keyring;
+		pub use subsoil::keyring::Sr25519Keyring;
 		pub use subsoil::runtime::{ApplyExtrinsicResult, ExtrinsicInclusionMode};
 	}
 
@@ -641,7 +641,7 @@ pub mod deps {
 	#[cfg(feature = "runtime")]
 	pub use soil_inherents;
 	#[cfg(feature = "runtime")]
-	pub use soil_keyring;
+	pub use subsoil::keyring;
 	#[cfg(feature = "runtime")]
 	pub use soil_offchain;
 	#[cfg(feature = "runtime")]

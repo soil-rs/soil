@@ -37,7 +37,6 @@ topsoil-offences = { workspace = true, default-features = true }
 topsoil-staking = { workspace = true, default-features = true }
 topsoil-staking-reward-curve = { workspace = true, default-features = true }
 topsoil-timestamp = { workspace = true, default-features = true }
-soil-keyring = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
 
 [features]

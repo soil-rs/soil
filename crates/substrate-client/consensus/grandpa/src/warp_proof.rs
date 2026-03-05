@@ -396,7 +396,7 @@ mod tests {
 	use soil_blockchain::HeaderBackend;
 	use soil_consensus::BlockOrigin;
 	use soil_consensus_grandpa::GRANDPA_ENGINE_ID;
-	use soil_keyring::Ed25519Keyring;
+	use subsoil::keyring::Ed25519Keyring;
 	use std::sync::Arc;
 	use substrate_test_runtime_client::{
 		BlockBuilderExt, ClientBlockImportExt, ClientExt, DefaultTestClientBuilderExt,

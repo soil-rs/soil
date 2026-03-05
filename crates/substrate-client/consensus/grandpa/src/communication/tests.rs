@@ -26,7 +26,7 @@ use crate::{communication::grandpa_protocol_name, environment::SharedVoterSetSta
 use codec::{DecodeAll, Encode};
 use futures::prelude::*;
 use soil_consensus_grandpa::AuthorityList;
-use soil_keyring::Ed25519Keyring;
+use subsoil::keyring::Ed25519Keyring;
 use soil_network::{
 	config::{MultiaddrWithPeerId, Role},
 	event::Event as NetworkEvent,

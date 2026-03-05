@@ -324,7 +324,7 @@ where
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use soil_keyring::sr25519::Keyring;
+	use subsoil::keyring::sr25519::Keyring;
 
 	#[test]
 	fn authorities_call_works() {

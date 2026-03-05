@@ -23,7 +23,7 @@ use crate::{
 };
 use codec::Encode;
 use subsoil::core::crypto::Pair as TraitPair;
-use soil_keyring::Sr25519Keyring;
+use subsoil::keyring::Sr25519Keyring;
 use subsoil::runtime::{
 	generic::Preamble, traits::TransactionExtension, transaction_validity::TransactionPriority,
 	Perbill,

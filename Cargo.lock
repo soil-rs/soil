@@ -4690,7 +4690,6 @@ dependencies = [
  "soil-crypto-ec-utils",
  "soil-genesis-builder",
  "soil-inherents",
- "soil-keyring",
  "soil-mixnet",
  "soil-mmr-primitives",
  "soil-npos-elections",
@@ -6196,7 +6195,6 @@ dependencies = [
  "soil-consensus",
  "soil-executor",
  "soil-inherents",
- "soil-keyring",
  "soil-service",
  "soil-timestamp",
  "staging-node-cli",
@@ -8153,7 +8151,6 @@ dependencies = [
  "soil-consensus-aura",
  "soil-consensus-slots",
  "soil-inherents",
- "soil-keyring",
  "soil-network",
  "soil-network-test",
  "soil-telemetry",
@@ -8190,7 +8187,6 @@ dependencies = [
  "soil-consensus-epochs",
  "soil-consensus-slots",
  "soil-inherents",
- "soil-keyring",
  "soil-network-test",
  "soil-telemetry",
  "soil-timestamp",
@@ -8262,7 +8258,6 @@ dependencies = [
  "soil-client-db",
  "soil-consensus",
  "soil-consensus-grandpa",
- "soil-keyring",
  "soil-network",
  "soil-network-common",
  "soil-network-gossip",
@@ -9372,7 +9367,6 @@ dependencies = [
  "soil-consensus-babe",
  "soil-executor",
  "soil-genesis-builder",
- "soil-keyring",
  "soil-network",
  "soil-telemetry",
  "subsoil",
@@ -9418,7 +9412,6 @@ dependencies = [
  "soil-blockchain",
  "soil-client-api",
  "soil-client-db",
- "soil-keyring",
  "soil-network",
  "soil-service",
  "soil-telemetry",
@@ -9528,7 +9521,6 @@ dependencies = [
  "soil-consensus",
  "soil-consensus-babe",
  "soil-consensus-epochs",
- "soil-keyring",
  "soil-rpc-api",
  "soil-transaction-pool-api",
  "subsoil",
@@ -9611,7 +9603,6 @@ dependencies = [
  "soil-blockchain",
  "soil-client-api",
  "soil-consensus-grandpa",
- "soil-keyring",
  "subsoil",
  "substrate-test-runtime-client",
  "thiserror 1.0.69",
@@ -9809,14 +9800,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "soil-keyring"
-version = "31.0.0"
-dependencies = [
- "strum 0.26.3",
- "subsoil",
-]
-
-[[package]]
 name = "soil-maybe-compressed-blob"
 version = "11.0.0"
 dependencies = [
@@ -10005,7 +9988,6 @@ dependencies = [
  "sc-statement-store",
  "soil-blockchain",
  "soil-consensus",
- "soil-keyring",
  "soil-network",
  "soil-network-common",
  "soil-network-sync",
@@ -10785,7 +10767,6 @@ dependencies = [
  "soil-genesis-builder",
  "soil-informant",
  "soil-inherents",
- "soil-keyring",
  "soil-maybe-compressed-blob",
  "soil-mixnet",
  "soil-mmr-gadget",
@@ -11258,7 +11239,6 @@ dependencies = [
  "soil-client-db",
  "soil-consensus",
  "soil-executor",
- "soil-keyring",
  "soil-service",
  "subsoil",
  "tokio",
@@ -11287,7 +11267,6 @@ dependencies = [
  "soil-executor-common",
  "soil-genesis-builder",
  "soil-inherents",
- "soil-keyring",
  "soil-offchain",
  "soil-service",
  "soil-session",
@@ -12115,7 +12094,6 @@ dependencies = [
  "soil-consensus-grandpa",
  "soil-genesis-builder",
  "soil-inherents",
- "soil-keyring",
  "soil-offchain",
  "soil-session",
  "soil-transaction-pool",
@@ -12816,7 +12794,6 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "scale-info",
- "soil-keyring",
  "subsoil",
  "topsoil-benchmarking",
  "topsoil-support",
@@ -12979,7 +12956,6 @@ dependencies = [
  "parity-scale-codec",
  "scale-info",
  "soil-consensus-grandpa",
- "soil-keyring",
  "soil-session",
  "soil-staking",
  "subsoil",
@@ -13104,7 +13080,6 @@ dependencies = [
  "parity-scale-codec",
  "scale-info",
  "serde",
- "soil-keyring",
  "subsoil",
  "topsoil-balances",
  "topsoil-benchmarking",

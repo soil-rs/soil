@@ -30,5 +30,4 @@ serde_json = { workspace = true, default-features = true }
 soil-blockchain = { workspace = true, default-features = true }
 soil-consensus = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
-soil-keyring = { workspace = true, default-features = true }
 tokio = { features = ["sync"], workspace = true, default-features = true }

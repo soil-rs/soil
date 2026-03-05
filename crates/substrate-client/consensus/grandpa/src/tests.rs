@@ -34,7 +34,7 @@ use soil_consensus_grandpa::{
 	AuthorityList, EquivocationProof, GrandpaApi, OpaqueKeyOwnershipProof, GRANDPA_ENGINE_ID,
 };
 use subsoil::core::H256;
-use soil_keyring::Ed25519Keyring;
+use subsoil::keyring::Ed25519Keyring;
 use subsoil::keystore::{testing::MemoryKeystore, Keystore, KeystorePtr};
 use soil_network::config::Role;
 use soil_network_test::{

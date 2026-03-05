@@ -24,7 +24,7 @@
 //! Tests for topsoil-example-authorization-tx-extension.
 
 use codec::Encode;
-use soil_keyring::Sr25519Keyring;
+use subsoil::keyring::Sr25519Keyring;
 use subsoil::runtime::{
 	generic::ExtensionVersion,
 	traits::{Applyable, Checkable, IdentityLookup, TransactionExtension},

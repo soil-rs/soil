@@ -36,7 +36,6 @@ subsoil-crypto-hashing = { workspace = true }
 subsoil-debug-derive = { workspace = true, default-features = false }
 soil-genesis-builder = { workspace = true }
 soil-inherents = { workspace = true }
-soil-keyring = { workspace = true }
 soil-offchain = { workspace = true }
 soil-session = { workspace = true }
 soil-statement-store = { workspace = true }
@@ -94,7 +93,6 @@ std = [
 	"subsoil-debug-derive/std",
 	"soil-genesis-builder/std",
 	"soil-inherents/std",
-	"soil-keyring/std",
 	"soil-offchain/std",
 	"subsoil/std",
 	"soil-session/std",

@@ -29,7 +29,6 @@ topsoil-system = { workspace = true }
 [dev-dependencies]
 topsoil-verify-signature = { workspace = true }
 subsoil = { workspace = true }
-soil-keyring = { workspace = true, default-features = true }
 
 [features]
 default = ["std"]

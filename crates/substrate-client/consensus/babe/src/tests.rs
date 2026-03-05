@@ -33,7 +33,7 @@ use soil_consensus_babe::{
 use soil_consensus_epochs::{EpochIdentifier, EpochIdentifierPosition};
 use soil_consensus_slots::SlotDuration;
 use subsoil::core::crypto::Pair;
-use soil_keyring::Sr25519Keyring;
+use subsoil::keyring::Sr25519Keyring;
 use subsoil::keystore::{testing::MemoryKeystore, Keystore};
 use soil_network_test::{Block as TestBlock, *};
 use subsoil::runtime::{

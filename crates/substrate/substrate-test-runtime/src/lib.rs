@@ -32,7 +32,7 @@ use alloc::{vec, vec::Vec};
 use codec::{Decode, DecodeWithMemTracking, Encode};
 use scale_info::TypeInfo;
 use subsoil::application_crypto::{ecdsa, ed25519, sr25519, RuntimeAppPublic, Ss58Codec};
-use soil_keyring::Sr25519Keyring;
+use subsoil::keyring::Sr25519Keyring;
 use topsoil_support::{
 	construct_runtime, derive_impl,
 	dispatch::DispatchClass,

@@ -894,7 +894,7 @@ mod tests {
 	use soil_consensus_epochs::descendent_query;
 	use subsoil::core::crypto::Pair;
 	use soil_inherents::InherentDataProvider;
-	use soil_keyring::Sr25519Keyring;
+	use subsoil::keyring::Sr25519Keyring;
 	use subsoil::keystore::KeystorePtr;
 	use subsoil::runtime::{
 		generic::{self, Digest, Era, SignedPayload},

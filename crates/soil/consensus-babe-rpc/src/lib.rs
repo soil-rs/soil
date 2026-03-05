@@ -222,7 +222,7 @@ mod tests {
 	use sc_consensus_babe::ImportQueueParams;
 	use soil_consensus_babe::inherents::InherentDataProvider;
 	use subsoil::core::{crypto::key_types::BABE, testing::TaskExecutor};
-	use soil_keyring::Sr25519Keyring;
+	use subsoil::keyring::Sr25519Keyring;
 	use subsoil::keystore::{testing::MemoryKeystore, Keystore};
 	use soil_rpc_api::DenyUnsafe;
 	use soil_transaction_pool_api::{OffchainTransactionPoolFactory, RejectAllTxPool};
