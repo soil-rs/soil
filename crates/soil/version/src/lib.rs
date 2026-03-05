@@ -40,7 +40,7 @@ use alloc::fmt;
 #[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
 #[cfg(feature = "std")]
-use std::collections::HashSet;
+use ::std::collections::HashSet;
 
 #[doc(hidden)]
 pub use alloc::borrow::Cow;
@@ -49,7 +49,7 @@ use scale_info::TypeInfo;
 #[allow(deprecated)]
 pub use soil_runtime::{create_runtime_str, StateVersion};
 #[doc(hidden)]
-pub use soil_std;
+pub use subsoil::std;
 
 #[cfg(feature = "std")]
 use soil_runtime::traits::Block as BlockT;

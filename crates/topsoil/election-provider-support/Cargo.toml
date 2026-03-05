@@ -24,7 +24,7 @@ soil-arithmetic = { workspace = true }
 soil-core = { workspace = true }
 soil-npos-elections = { workspace = true }
 soil-runtime = { workspace = true }
-soil-std = { workspace = true }
+subsoil = { workspace = true }
 
 
 [dev-dependencies]
@@ -45,7 +45,7 @@ std = [
 	"soil-io/std",
 	"soil-npos-elections/std",
 	"soil-runtime/std",
-	"soil-std/std",
+	"subsoil/std",
 ]
 runtime-benchmarks = [
 	"topsoil-support/runtime-benchmarks",

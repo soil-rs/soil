@@ -61,7 +61,7 @@ use scale_info::TypeInfo;
 use soil_io::MultiRemovalResults;
 use soil_npos_elections::ElectionScore;
 use soil_runtime::{traits::Saturating, Perbill};
-use soil_std::prelude::*;
+use subsoil::std::prelude::*;
 use topsoil_election_provider_support::PageIndex;
 use topsoil_support::{
 	dispatch::DispatchResultWithPostInfo,
@@ -331,7 +331,7 @@ pub mod pallet {
 	///
 	/// No particular invariant exists between data that related to different rounds. They are
 	/// purely independent.
-	pub(crate) struct Submissions<T: Config>(soil_std::marker::PhantomData<T>);
+	pub(crate) struct Submissions<T: Config>(subsoil::std::marker::PhantomData<T>);
 
 	#[pallet::storage]
 	pub type SortedScores<T: Config> = StorageMap<
@@ -482,7 +482,7 @@ pub mod pallet {
 						.ok_or(Error::<T>::QueueFull)?;
 					if insert_idx > remove_idx {
 						// we have a better solution
-						soil_std::mem::swap(&mut sorted_scores[remove_idx], &mut record);
+						subsoil::std::mem::swap(&mut sorted_scores[remove_idx], &mut record);
 						// slicing safety note:
 						// - `insert_idx` is at most `sorted_scores.len()`, obtained from
 						//   `binary_search_by_key`, valid for the upper bound of slicing.
@@ -701,7 +701,7 @@ pub mod pallet {
 
 		/// Perform all the sanity checks of this storage item group at the given round.
 		pub(crate) fn sanity_check_round(round: u32) -> DispatchResult {
-			use soil_std::collections::btree_set::BTreeSet;
+			use subsoil::std::collections::btree_set::BTreeSet;
 			let sorted_scores = SortedScores::<T>::get(round);
 			assert_eq!(
 				sorted_scores.clone().into_iter().map(|(x, _)| x).collect::<BTreeSet<_>>().len(),

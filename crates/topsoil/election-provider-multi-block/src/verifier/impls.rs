@@ -29,7 +29,7 @@ use crate::{
 use codec::{Decode, Encode, MaxEncodedLen};
 use pallet::*;
 use soil_npos_elections::{evaluate_support, ElectionScore};
-use soil_std::{collections::btree_map::BTreeMap, prelude::*};
+use subsoil::std::{collections::btree_map::BTreeMap, prelude::*};
 use topsoil_election_provider_support::{
 	ExtendedBalance, NposSolution, PageIndex, TryFromOtherBounds,
 };
@@ -204,7 +204,7 @@ pub(crate) mod pallet {
 	///
 	/// No additional conditions must be met when the pallet is in [`Status::Ongoing`]. The number
 	/// of pages in
-	pub struct QueuedSolution<T: Config>(soil_std::marker::PhantomData<T>);
+	pub struct QueuedSolution<T: Config>(subsoil::std::marker::PhantomData<T>);
 	impl<T: Config> QueuedSolution<T> {
 		/// Private helper for mutating the storage group.
 		fn mutate_checked<R>(mutate: impl FnOnce() -> R) -> R {
@@ -719,7 +719,7 @@ impl<T: Config> Pallet<T> {
 
 		// verify each page, and amalgamate into a final support.
 		let mut backings =
-			soil_std::collections::btree_map::BTreeMap::<T::AccountId, PartialBackings>::new();
+			subsoil::std::collections::btree_map::BTreeMap::<T::AccountId, PartialBackings>::new();
 		let mut linked_supports = Vec::with_capacity(partial_solutions.len());
 
 		for (solution_page, page) in partial_solutions.into_iter().zip(solution_pages.iter()) {

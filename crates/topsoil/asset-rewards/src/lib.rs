@@ -89,7 +89,7 @@ use soil_runtime::{
 	traits::{BadOrigin, BlockNumberProvider, EnsureAdd, MaybeDisplay, Zero},
 	DispatchError, DispatchResult,
 };
-use soil_std::boxed::Box;
+use subsoil::std::boxed::Box;
 use topsoil_support::{
 	ensure,
 	traits::{

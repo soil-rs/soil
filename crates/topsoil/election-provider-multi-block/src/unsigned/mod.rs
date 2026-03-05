@@ -89,7 +89,7 @@ mod pallet {
 		CommonError,
 	};
 	use soil_runtime::traits::SaturatedConversion;
-	use soil_std::prelude::*;
+	use subsoil::std::prelude::*;
 	use topsoil_support::pallet_prelude::*;
 	use topsoil_system::{offchain::CreateBare, pallet_prelude::*};
 

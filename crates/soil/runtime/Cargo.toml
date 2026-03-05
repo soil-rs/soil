@@ -34,7 +34,7 @@ soil-application-crypto = { workspace = true }
 soil-arithmetic = { workspace = true }
 soil-core = { workspace = true }
 soil-io = { workspace = true }
-soil-std = { workspace = true }
+subsoil = { workspace = true }
 soil-trie = { workspace = true }
 soil-weights = { workspace = true }
 strum = { workspace = true, features = ["derive"] }
@@ -76,7 +76,7 @@ std = [
 	"soil-core/std",
 	"soil-io/std",
 	"soil-state-machine/std",
-	"soil-std/std",
+	"subsoil/std",
 	"soil-tracing/std",
 	"soil-trie/std",
 	"soil-weights/std",

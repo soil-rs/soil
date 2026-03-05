@@ -106,7 +106,7 @@ pub use bounded_collections::{
 pub use soil_storage as storage;
 
 #[doc(hidden)]
-pub use soil_std;
+pub use subsoil::std;
 
 /// Hex-serialized shim for `Vec<u8>`.
 #[derive(PartialEq, Eq, Clone, Debug)]

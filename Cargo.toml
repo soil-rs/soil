@@ -97,7 +97,6 @@ members = [
 	"crates/soil/state-db",
 	"crates/soil/state-machine",
 	"crates/soil/statement-store",
-	"crates/soil/std",
 	"crates/soil/storage",
 	"crates/soil/storage-monitor",
 	"crates/soil/sync-state-rpc",
@@ -588,7 +587,6 @@ soil-session = { path = "crates/soil/session", default-features = false }
 soil-staking = { path = "crates/soil/staking", default-features = false }
 soil-state-machine = { path = "crates/soil/state-machine", default-features = false }
 soil-statement-store = { path = "crates/soil/statement-store", default-features = false }
-soil-std = { path = "crates/soil/std", default-features = false }
 soil-storage = { path = "crates/soil/storage", default-features = false }
 soil-test-primitives = { path = "crates/soil/test-primitives" }
 soil-timestamp = { path = "crates/soil/timestamp", default-features = false }

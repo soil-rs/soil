@@ -2181,7 +2181,7 @@ macro_rules! impl_opaque_keys_inner {
 			#[allow(dead_code)]
 			pub fn generate(
 				owner: &[u8],
-				seed: Option<$crate::soil_std::vec::Vec<u8>>,
+				seed: Option<$crate::subsoil::std::vec::Vec<u8>>,
 			) -> $crate::traits::GeneratedSessionKeys<
 				Self,
 				(
@@ -2258,7 +2258,7 @@ macro_rules! impl_opaque_keys_inner {
 			pub fn create_ownership_proof(
 				&mut self,
 				owner: &[u8],
-			) -> $crate::soil_std::result::Result<
+			) -> $crate::subsoil::std::result::Result<
 				(
 					$(
 						<

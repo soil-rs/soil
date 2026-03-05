@@ -4736,7 +4736,6 @@ dependencies = [
  "soil-staking",
  "soil-state-machine",
  "soil-statement-store",
- "soil-std",
  "soil-storage",
  "soil-timestamp",
  "soil-tracing",
@@ -4747,6 +4746,7 @@ dependencies = [
  "soil-wasm-interface",
  "soil-weights",
  "static_assertions",
+ "subsoil",
  "subsoil-api-proc-macro",
  "subsoil-crypto-hashing",
  "subsoil-crypto-hashing-proc-macro",
@@ -9991,9 +9991,9 @@ dependencies = [
  "serde_json",
  "sha2 0.10.9",
  "soil-externalities",
- "soil-std",
  "soil-storage",
  "ss58-registry",
+ "subsoil",
  "subsoil-crypto-hashing",
  "subsoil-debug-derive",
  "substrate-bip39",
@@ -10704,11 +10704,11 @@ dependencies = [
  "soil-io",
  "soil-keystore",
  "soil-state-machine",
- "soil-std",
  "soil-tracing",
  "soil-trie",
  "soil-weights",
  "strum 0.26.3",
+ "subsoil",
  "substrate-test-runtime-client",
  "tracing",
  "tuplex",
@@ -10727,12 +10727,12 @@ dependencies = [
  "soil-externalities",
  "soil-io",
  "soil-state-machine",
- "soil-std",
  "soil-storage",
  "soil-tracing",
  "soil-wasm-interface",
  "sp-runtime-interface-test-wasm",
  "static_assertions",
+ "subsoil",
  "subsoil-runtime-interface-proc-macro",
  "trybuild",
 ]
@@ -10950,10 +10950,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "soil-std"
-version = "14.0.0"
-
-[[package]]
 name = "soil-storage"
 version = "19.0.0"
 dependencies = [
@@ -11159,7 +11155,7 @@ dependencies = [
  "scale-info",
  "serde",
  "soil-runtime",
- "soil-std",
+ "subsoil",
  "subsoil-crypto-hashing-proc-macro",
  "subsoil-version-proc-macro",
  "thiserror 1.0.69",
@@ -12876,7 +12872,7 @@ dependencies = [
  "soil-core",
  "soil-io",
  "soil-runtime",
- "soil-std",
+ "subsoil",
  "topsoil-assets",
  "topsoil-assets-freezer",
  "topsoil-balances",
@@ -13446,8 +13442,8 @@ dependencies = [
  "soil-io",
  "soil-npos-elections",
  "soil-runtime",
- "soil-std",
  "soil-tracing",
+ "subsoil",
  "topsoil-balances",
  "topsoil-benchmarking",
  "topsoil-election-provider-support",
@@ -13509,7 +13505,7 @@ dependencies = [
  "soil-io",
  "soil-npos-elections",
  "soil-runtime",
- "soil-std",
+ "subsoil",
  "topsoil-election-provider-solution-type",
  "topsoil-support",
  "topsoil-system",
@@ -13904,7 +13900,7 @@ dependencies = [
  "soil-keyring",
  "soil-keystore",
  "soil-runtime",
- "soil-std",
+ "subsoil",
  "topsoil-balances",
  "topsoil-benchmarking",
  "topsoil-support",
@@ -14171,7 +14167,7 @@ dependencies = [
  "soil-application-crypto",
  "soil-io",
  "soil-runtime",
- "soil-std",
+ "subsoil",
  "topsoil-benchmarking",
  "topsoil-support",
  "topsoil-system",
@@ -14184,7 +14180,7 @@ dependencies = [
  "parity-scale-codec",
  "scale-info",
  "soil-api",
- "soil-std",
+ "subsoil",
 ]
 
 [[package]]
@@ -14661,11 +14657,11 @@ dependencies = [
  "soil-runtime",
  "soil-staking",
  "soil-state-machine",
- "soil-std",
  "soil-timestamp",
  "soil-tracing",
  "soil-trie",
  "soil-weights",
+ "subsoil",
  "subsoil-crypto-hashing",
  "subsoil-crypto-hashing-proc-macro",
  "subsoil-debug-derive",

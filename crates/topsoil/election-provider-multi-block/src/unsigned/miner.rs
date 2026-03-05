@@ -39,7 +39,7 @@ use soil_runtime::{
 	offchain::storage::{MutateStorageError, StorageValueRef},
 	traits::{SaturatedConversion, Saturating, Zero},
 };
-use soil_std::{collections::btree_map::BTreeMap, prelude::*};
+use subsoil::std::{collections::btree_map::BTreeMap, prelude::*};
 use topsoil_election_provider_support::{ExtendedBalance, NposSolver, Support, VoteWeight};
 use topsoil_support::{traits::Get, BoundedVec};
 use topsoil_system::pallet_prelude::*;
@@ -154,7 +154,7 @@ pub trait MinerConfig {
 		+ PartialEq
 		+ Eq
 		+ Clone
-		+ soil_std::fmt::Debug
+		+ subsoil::std::fmt::Debug
 		+ Ord
 		+ NposSolution
 		+ TypeInfo
@@ -209,7 +209,7 @@ pub trait MinerConfig {
 
 /// A base miner that is only capable of mining a new solution and checking it against the state of
 /// this pallet for feasibility, and trimming its length/weight.
-pub struct BaseMiner<T: MinerConfig>(soil_std::marker::PhantomData<T>);
+pub struct BaseMiner<T: MinerConfig>(subsoil::std::marker::PhantomData<T>);
 
 /// Parameterized `BoundedSupports` for the miner.
 ///
@@ -667,7 +667,7 @@ impl<T: MinerConfig> BaseMiner<T> {
 /// A miner that is suited to work inside offchain worker environment.
 ///
 /// This is parameterized by [`Config`], rather than [`MinerConfig`].
-pub struct OffchainWorkerMiner<T: Config>(soil_std::marker::PhantomData<T>);
+pub struct OffchainWorkerMiner<T: Config>(subsoil::std::marker::PhantomData<T>);
 
 impl<T: Config> OffchainWorkerMiner<T> {
 	/// Storage key used to store the offchain worker running status.

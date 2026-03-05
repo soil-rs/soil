@@ -280,7 +280,7 @@ mod benchmarks {
 			assert_ok!(Pallet::<T>::admin(
 				origin,
 				crate::AdminOperation::EmergencySetSolution(
-					soil_std::boxed::Box::new(single_support),
+					subsoil::std::boxed::Box::new(single_support),
 					solution.score,
 				),
 			));

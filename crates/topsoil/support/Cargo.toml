@@ -44,7 +44,7 @@ soil-metadata-ir = { workspace = true }
 soil-runtime = { features = ["serde"], workspace = true }
 soil-staking = { workspace = true }
 soil-state-machine = { optional = true, workspace = true }
-soil-std = { workspace = true }
+subsoil = { workspace = true }
 soil-tracing = { workspace = true }
 soil-trie = { workspace = true }
 soil-weights = { workspace = true }
@@ -84,7 +84,7 @@ std = [
 	"soil-runtime/std",
 	"soil-staking/std",
 	"soil-state-machine/std",
-	"soil-std/std",
+	"subsoil/std",
 	"soil-tracing/std",
 	"soil-trie/std",
 	"soil-weights/std",

@@ -5,9 +5,9 @@ See `docs/specs/merge.md` for the full spec.
 
 ## Phase 0: Scaffolding
 
-- [ ] Step 0.1: Move & rename `soil-crypto-hashing` → `subsoil-crypto-hashing`
-- [ ] Step 0.2: Move & rename 6 proc-macro crates → `subsoil-*` prefix
-- [ ] Step 0.3: Create empty `subsoil` crate
+- [x] Step 0.1: Move & rename `soil-crypto-hashing` → `subsoil-crypto-hashing`
+- [x] Step 0.2: Move & rename 6 proc-macro crates → `subsoil-*` prefix
+- [x] Step 0.3: Create empty `subsoil` crate
 
 ## Phase 1: Merge Crates
 

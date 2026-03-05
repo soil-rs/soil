@@ -43,7 +43,7 @@ secrecy = { features = ["alloc"], workspace = true }
 serde = { optional = true, features = ["alloc", "derive"], workspace = true }
 subsoil-debug-derive = { workspace = true }
 soil-externalities = { optional = true, workspace = true }
-soil-std = { workspace = true }
+subsoil = { workspace = true }
 soil-storage = { workspace = true }
 ss58-registry = { workspace = true }
 substrate-bip39 = { workspace = true }
@@ -118,7 +118,7 @@ std = [
 	"subsoil-crypto-hashing/std",
 	"subsoil-debug-derive/std",
 	"soil-externalities/std",
-	"soil-std/std",
+	"subsoil/std",
 	"soil-storage/std",
 	"ss58-registry/std",
 	"substrate-bip39/std",

@@ -58,7 +58,7 @@ pub use scale_info;
 #[doc(hidden)]
 pub use serde;
 #[doc(hidden)]
-pub use soil_std;
+pub use subsoil::std;
 
 #[doc(hidden)]
 pub use paste;

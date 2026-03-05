@@ -27,7 +27,7 @@ impl-trait-for-tuples = { workspace = true }
 soil-application-crypto = { workspace = true }
 soil-io = { workspace = true }
 soil-runtime = { workspace = true }
-soil-std = { workspace = true }
+subsoil = { workspace = true }
 
 [features]
 default = ["std"]
@@ -41,7 +41,7 @@ std = [
 	"soil-application-crypto/std",
 	"soil-io/std",
 	"soil-runtime/std",
-	"soil-std/std",
+	"subsoil/std",
 ]
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",

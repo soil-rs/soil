@@ -181,7 +181,7 @@ soil-session = { workspace = true }
 soil-staking = { workspace = true }
 soil-state-machine = { workspace = true }
 soil-statement-store = { workspace = true }
-soil-std = { workspace = true }
+subsoil = { workspace = true }
 soil-storage = { workspace = true }
 soil-timestamp = { workspace = true }
 soil-tracing = { workspace = true }
@@ -359,7 +359,7 @@ std = [
 	"soil-staking/std",
 	"soil-state-machine/std",
 	"soil-statement-store/std",
-	"soil-std/std",
+	"subsoil/std",
 	"soil-storage/std",
 	"soil-timestamp/std",
 	"soil-tracing/std",

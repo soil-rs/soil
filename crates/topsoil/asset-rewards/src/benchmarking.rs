@@ -20,7 +20,7 @@
 use super::*;
 use crate::Pallet as AssetRewards;
 use soil_runtime::{traits::One, Saturating};
-use soil_std::prelude::*;
+use subsoil::std::prelude::*;
 use topsoil_benchmarking::{v2::*, whitelisted_caller, BenchmarkError};
 use topsoil_support::{
 	assert_ok,

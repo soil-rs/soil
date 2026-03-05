@@ -32,7 +32,7 @@ soil-core = { workspace = true }
 soil-io = { workspace = true }
 soil-npos-elections = { features = ["serde"], workspace = true }
 soil-runtime = { workspace = true }
-soil-std = { workspace = true }
+subsoil = { workspace = true }
 
 # Optional imports for benchmarking
 topsoil-benchmarking = { optional = true, workspace = true }
@@ -62,7 +62,7 @@ std = [
 	"soil-io/std",
 	"soil-npos-elections/std",
 	"soil-runtime/std",
-	"soil-std/std",
+	"subsoil/std",
 	"soil-tracing/std",
 ]
 runtime-benchmarks = [

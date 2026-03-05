@@ -70,7 +70,7 @@ pub use soil_wasm_interface;
 pub use soil_tracing;
 
 #[doc(hidden)]
-pub use soil_std;
+pub use subsoil::std;
 
 /// Attribute macro for transforming a trait declaration into a runtime interface.
 ///

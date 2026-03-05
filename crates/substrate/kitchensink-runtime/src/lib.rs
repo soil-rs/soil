@@ -55,7 +55,7 @@ use soil_runtime::{
 	ApplyExtrinsicResult, Debug, FixedPointNumber, FixedU128, MultiSignature, MultiSigner, Perbill,
 	Percent, Permill, Perquintill,
 };
-use soil_std::{borrow::Cow, prelude::*};
+use subsoil::std::{borrow::Cow, prelude::*};
 #[cfg(any(feature = "std", test))]
 use soil_version::NativeVersion;
 use soil_version::RuntimeVersion;

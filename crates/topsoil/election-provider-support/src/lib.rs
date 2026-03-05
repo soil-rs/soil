@@ -810,7 +810,7 @@ impl<AccountId: IdentifierT, Accuracy: PerThing128> NposSolver
 			impl Clone + IntoIterator<Item = Self::AccountId>,
 		)>,
 	) -> Result<ElectionResult<Self::AccountId, Self::Accuracy>, Self::Error> {
-		use soil_std::collections::btree_map::BTreeMap;
+		use subsoil::std::collections::btree_map::BTreeMap;
 
 		if to_elect > targets.len() {
 			return Err("to_elect is greater than the number of targets.");
@@ -1119,7 +1119,7 @@ impl<AccountId, BOuter: Get<u32>, BInner: Get<u32>> soil_npos_elections::Evaluat
 	}
 }
 
-impl<AccountId, BOuter: Get<u32>, BInner: Get<u32>> soil_std::ops::DerefMut
+impl<AccountId, BOuter: Get<u32>, BInner: Get<u32>> subsoil::std::ops::DerefMut
 	for BoundedSupports<AccountId, BOuter, BInner>
 {
 	fn deref_mut(&mut self) -> &mut Self::Target {
@@ -1172,7 +1172,7 @@ impl<AccountId: Clone, BOuter: Get<u32>, BInner: Get<u32>> Clone
 	}
 }
 
-impl<AccountId, BOuter: Get<u32>, BInner: Get<u32>> soil_std::ops::Deref
+impl<AccountId, BOuter: Get<u32>, BInner: Get<u32>> subsoil::std::ops::Deref
 	for BoundedSupports<AccountId, BOuter, BInner>
 {
 	type Target = BoundedVec<(AccountId, BoundedSupport<AccountId, BInner>), BOuter>;
@@ -1186,7 +1186,7 @@ impl<AccountId, BOuter: Get<u32>, BInner: Get<u32>> IntoIterator
 	for BoundedSupports<AccountId, BOuter, BInner>
 {
 	type Item = (AccountId, BoundedSupport<AccountId, BInner>);
-	type IntoIter = soil_std::vec::IntoIter<Self::Item>;
+	type IntoIter = subsoil::std::vec::IntoIter<Self::Item>;
 
 	fn into_iter(self) -> Self::IntoIter {
 		self.0.into_iter()

@@ -22,7 +22,7 @@ codec = { features = ["bytes"], workspace = true }
 impl-trait-for-tuples = { workspace = true }
 soil-externalities = { workspace = true }
 subsoil-runtime-interface-proc-macro = { workspace = true, default-features = true }
-soil-std = { workspace = true }
+subsoil = { workspace = true }
 soil-storage = { workspace = true }
 soil-tracing = { workspace = true }
 soil-wasm-interface = { workspace = true }
@@ -47,7 +47,7 @@ std = [
 	"soil-io/std",
 	"sp-runtime-interface-test-wasm/std",
 	"soil-state-machine/std",
-	"soil-std/std",
+	"subsoil/std",
 	"soil-storage/std",
 	"soil-tracing/std",
 	"soil-wasm-interface/std",

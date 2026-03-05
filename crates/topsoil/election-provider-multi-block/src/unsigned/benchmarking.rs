@@ -20,7 +20,7 @@ use crate::{
 	verifier::Verifier,
 	CurrentPhase, Phase,
 };
-use soil_std::boxed::Box;
+use subsoil::std::boxed::Box;
 use topsoil_benchmarking::v2::*;
 use topsoil_election_provider_support::ElectionProvider;
 use topsoil_support::{assert_ok, pallet_prelude::*};
