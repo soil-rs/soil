@@ -31,7 +31,7 @@ use crate::{
 };
 use alloc::{vec, vec::Vec};
 use codec::{Decode, Encode, EncodeLike, FullCodec, MaxEncodedLen};
-use soil_metadata_ir::{StorageEntryMetadataIR, StorageEntryTypeIR};
+use subsoil::metadata_ir::{StorageEntryMetadataIR, StorageEntryTypeIR};
 use soil_runtime::SaturatedConversion;
 
 /// A type representing an *NMap* in storage. This structure associates an arbitrary number of keys
@@ -598,7 +598,7 @@ where
 	MaxValues: Get<Option<u32>>,
 {
 	fn build_metadata(
-		deprecation_status: soil_metadata_ir::ItemDeprecationInfoIR,
+		deprecation_status: subsoil::metadata_ir::ItemDeprecationInfoIR,
 		docs: Vec<&'static str>,
 		entries: &mut Vec<StorageEntryMetadataIR>,
 	) {
@@ -676,7 +676,7 @@ mod test {
 	};
 	use alloc::boxed::Box;
 	use soil_io::{hashing::twox_128, TestExternalities};
-	use soil_metadata_ir::{StorageEntryModifierIR, StorageHasherIR};
+	use subsoil::metadata_ir::{StorageEntryModifierIR, StorageHasherIR};
 
 	struct Prefix;
 	impl StorageInstance for Prefix {
@@ -840,12 +840,12 @@ mod test {
 
 			let mut entries = vec![];
 			A::build_metadata(
-				soil_metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
+				subsoil::metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
 				vec![],
 				&mut entries,
 			);
 			AValueQueryWithAnOnEmpty::build_metadata(
-				soil_metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
+				subsoil::metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
 				vec![],
 				&mut entries,
 			);
@@ -862,7 +862,7 @@ mod test {
 						},
 						default: Option::<u32>::None.encode(),
 						docs: vec![],
-						deprecation_info: soil_metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
+						deprecation_info: subsoil::metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
 					},
 					StorageEntryMetadataIR {
 						name: "Foo",
@@ -874,7 +874,7 @@ mod test {
 						},
 						default: 98u32.encode(),
 						docs: vec![],
-						deprecation_info: soil_metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
+						deprecation_info: subsoil::metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
 					}
 				]
 			);
@@ -1050,12 +1050,12 @@ mod test {
 
 			let mut entries = vec![];
 			A::build_metadata(
-				soil_metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
+				subsoil::metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
 				vec![],
 				&mut entries,
 			);
 			AValueQueryWithAnOnEmpty::build_metadata(
-				soil_metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
+				subsoil::metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
 				vec![],
 				&mut entries,
 			);
@@ -1075,7 +1075,7 @@ mod test {
 						},
 						default: Option::<u32>::None.encode(),
 						docs: vec![],
-						deprecation_info: soil_metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
+						deprecation_info: subsoil::metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
 					},
 					StorageEntryMetadataIR {
 						name: "Foo",
@@ -1090,7 +1090,7 @@ mod test {
 						},
 						default: 98u32.encode(),
 						docs: vec![],
-						deprecation_info: soil_metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
+						deprecation_info: subsoil::metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
 					}
 				]
 			);
@@ -1301,12 +1301,12 @@ mod test {
 
 			let mut entries = vec![];
 			A::build_metadata(
-				soil_metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
+				subsoil::metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
 				vec![],
 				&mut entries,
 			);
 			AValueQueryWithAnOnEmpty::build_metadata(
-				soil_metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
+				subsoil::metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
 				vec![],
 				&mut entries,
 			);
@@ -1327,7 +1327,7 @@ mod test {
 						},
 						default: Option::<u32>::None.encode(),
 						docs: vec![],
-						deprecation_info: soil_metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
+						deprecation_info: subsoil::metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
 					},
 					StorageEntryMetadataIR {
 						name: "Foo",
@@ -1343,7 +1343,7 @@ mod test {
 						},
 						default: 98u32.encode(),
 						docs: vec![],
-						deprecation_info: soil_metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
+						deprecation_info: subsoil::metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
 					}
 				]
 			);

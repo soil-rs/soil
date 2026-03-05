@@ -16,7 +16,7 @@
 // limitations under the License.
 
 use scale_info::meta_type;
-use soil_metadata_ir::PalletAssociatedTypeMetadataIR;
+use subsoil::metadata_ir::PalletAssociatedTypeMetadataIR;
 use topsoil_support::{derive_impl, traits::ConstU32};
 
 pub type BlockNumber = u64;

@@ -17,6 +17,8 @@ backtrace = { optional = true, workspace = true }
 regex = { optional = true, workspace = true }
 anyhow = { optional = true, workspace = true }
 codec = { features = ["derive"], workspace = true }
+frame-metadata = { features = ["current"], workspace = true }
+scale-info = { features = ["derive"], workspace = true }
 impl-trait-for-tuples = { workspace = true }
 log = { optional = true, workspace = true, default-features = true }
 wasmtime = { optional = true, workspace = true }
@@ -29,6 +31,8 @@ std = [
 	"regex",
 	"anyhow?/std",
 	"codec/std",
+	"frame-metadata/std",
 	"log/std",
+	"scale-info/std",
 ]
 wasm-interface-wasmtime = ["anyhow", "dep:wasmtime"]

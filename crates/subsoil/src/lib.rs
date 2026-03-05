@@ -9,3 +9,4 @@ pub mod std;
 #[cfg(feature = "std")]
 pub mod panic_handler;
 pub mod wasm_interface;
+pub mod metadata_ir;

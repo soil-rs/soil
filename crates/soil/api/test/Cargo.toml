@@ -26,8 +26,8 @@ scale-info = { features = ["derive"], workspace = true }
 soil-api = { workspace = true, default-features = true }
 soil-consensus = { workspace = true, default-features = true }
 soil-externalities = { workspace = true, default-features = true }
-soil-metadata-ir = { workspace = true, default-features = true }
 soil-runtime = { workspace = true, default-features = true }
+subsoil = { workspace = true, default-features = true }
 soil-state-machine = { workspace = true, default-features = true }
 soil-tracing = { workspace = true, default-features = true }
 soil-version = { workspace = true, default-features = true }

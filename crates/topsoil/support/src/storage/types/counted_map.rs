@@ -32,7 +32,7 @@ use crate::{
 use alloc::{vec, vec::Vec};
 use codec::{Decode, Encode, EncodeLike, FullCodec, MaxEncodedLen, Ref};
 use soil_io::MultiRemovalResults;
-use soil_metadata_ir::StorageEntryMetadataIR;
+use subsoil::metadata_ir::StorageEntryMetadataIR;
 use soil_runtime::traits::Saturating;
 
 /// A wrapper around a [`StorageMap`] and a [`StorageValue`] (with the value being `u32`) to keep
@@ -509,7 +509,7 @@ where
 	MaxValues: Get<Option<u32>>,
 {
 	fn build_metadata(
-		deprecation_status: soil_metadata_ir::ItemDeprecationInfoIR,
+		deprecation_status: subsoil::metadata_ir::ItemDeprecationInfoIR,
 		docs: Vec<&'static str>,
 		entries: &mut Vec<StorageEntryMetadataIR>,
 	) {
@@ -570,7 +570,7 @@ mod test {
 		traits::ConstU32,
 	};
 	use soil_io::{hashing::twox_128, TestExternalities};
-	use soil_metadata_ir::{StorageEntryModifierIR, StorageEntryTypeIR, StorageHasherIR};
+	use subsoil::metadata_ir::{StorageEntryModifierIR, StorageEntryTypeIR, StorageHasherIR};
 
 	struct Prefix;
 	impl StorageInstance for Prefix {
@@ -1199,7 +1199,7 @@ mod test {
 		type A = CountedStorageMap<Prefix, Twox64Concat, u16, u32, ValueQuery, ADefault>;
 		let mut entries = vec![];
 		A::build_metadata(
-			soil_metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
+			subsoil::metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
 			vec![],
 			&mut entries,
 		);
@@ -1216,7 +1216,7 @@ mod test {
 					},
 					default: 97u32.encode(),
 					docs: vec![],
-					deprecation_info: soil_metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
+					deprecation_info: subsoil::metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
 				},
 				StorageEntryMetadataIR {
 					name: "counter_for_foo",
@@ -1228,7 +1228,7 @@ mod test {
 					} else {
 						vec!["Counter for the related counted storage map"]
 					},
-					deprecation_info: soil_metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
+					deprecation_info: subsoil::metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
 				},
 			]
 		);

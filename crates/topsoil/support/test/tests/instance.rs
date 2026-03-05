@@ -18,7 +18,7 @@
 #![recursion_limit = "128"]
 
 use soil_core::sr25519;
-use soil_metadata_ir::{
+use subsoil::metadata_ir::{
 	PalletStorageMetadataIR, StorageEntryMetadataIR, StorageEntryModifierIR, StorageEntryTypeIR,
 	StorageHasherIR,
 };
@@ -447,7 +447,7 @@ fn expected_metadata() -> PalletStorageMetadataIR {
 				ty: StorageEntryTypeIR::Plain(scale_info::meta_type::<u32>()),
 				default: vec![0, 0, 0, 0],
 				docs: vec![],
-				deprecation_info: soil_metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
+				deprecation_info: subsoil::metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
 			},
 			StorageEntryMetadataIR {
 				name: "Map",
@@ -459,7 +459,7 @@ fn expected_metadata() -> PalletStorageMetadataIR {
 				},
 				default: [0u8; 8].to_vec(),
 				docs: vec![],
-				deprecation_info: soil_metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
+				deprecation_info: subsoil::metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
 			},
 			StorageEntryMetadataIR {
 				name: "DoubleMap",
@@ -471,7 +471,7 @@ fn expected_metadata() -> PalletStorageMetadataIR {
 				},
 				default: [0u8; 8].to_vec(),
 				docs: vec![],
-				deprecation_info: soil_metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
+				deprecation_info: subsoil::metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
 			},
 		],
 	}

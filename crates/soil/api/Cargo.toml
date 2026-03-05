@@ -24,8 +24,8 @@ scale-info = { features = ["derive"], workspace = true }
 subsoil-api-proc-macro = { workspace = true }
 soil-core = { workspace = true }
 soil-externalities = { optional = true, workspace = true }
-soil-metadata-ir = { optional = true, workspace = true }
 soil-runtime = { workspace = true }
+subsoil = { workspace = true }
 soil-runtime-interface = { workspace = true }
 soil-state-machine = { optional = true, workspace = true }
 soil-trie = { optional = true, workspace = true }
@@ -46,13 +46,13 @@ std = [
 	"soil-core/std",
 	"soil-externalities",
 	"soil-externalities?/std",
-	"soil-metadata-ir?/std",
 	"soil-runtime-interface/std",
 	"soil-runtime/std",
 	"soil-state-machine/std",
 	"soil-test-primitives/std",
 	"soil-trie/std",
 	"soil-version/std",
+	"subsoil/std",
 	"thiserror",
 ]
 # Special feature to disable logging completely.
@@ -65,4 +65,4 @@ std = [
 disable-logging = ["log/max_level_off"]
 # Do not report the documentation in the metadata.
 no-metadata-docs = ["subsoil-api-proc-macro/no-metadata-docs"]
-frame-metadata = ["soil-metadata-ir"]
+frame-metadata = []

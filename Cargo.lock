@@ -4725,7 +4725,6 @@ dependencies = [
  "soil-io",
  "soil-keyring",
  "soil-keystore",
- "soil-metadata-ir",
  "soil-mixnet",
  "soil-mmr-primitives",
  "soil-npos-elections",
@@ -9462,13 +9461,13 @@ dependencies = [
  "scale-info",
  "soil-core",
  "soil-externalities",
- "soil-metadata-ir",
  "soil-runtime",
  "soil-runtime-interface",
  "soil-state-machine",
  "soil-test-primitives",
  "soil-trie",
  "soil-version",
+ "subsoil",
  "subsoil-api-proc-macro",
  "thiserror 1.0.69",
 ]
@@ -10211,15 +10210,6 @@ version = "11.0.0"
 dependencies = [
  "thiserror 1.0.69",
  "zstd 0.12.4",
-]
-
-[[package]]
-name = "soil-metadata-ir"
-version = "0.6.0"
-dependencies = [
- "frame-metadata",
- "parity-scale-codec",
- "scale-info",
 ]
 
 [[package]]
@@ -11195,12 +11185,12 @@ dependencies = [
  "soil-consensus",
  "soil-core",
  "soil-externalities",
- "soil-metadata-ir",
  "soil-runtime",
  "soil-state-machine",
  "soil-tracing",
  "soil-version",
  "static_assertions",
+ "subsoil",
  "substrate-test-runtime-client",
  "trybuild",
 ]
@@ -11638,10 +11628,12 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "backtrace",
+ "frame-metadata",
  "impl-trait-for-tuples",
  "log",
  "parity-scale-codec",
  "regex",
+ "scale-info",
  "subsoil-crypto-hashing",
  "wasmtime",
 ]
@@ -14193,7 +14185,7 @@ dependencies = [
  "docify",
  "parity-scale-codec",
  "scale-info",
- "soil-metadata-ir",
+ "subsoil",
  "topsoil",
 ]
 
@@ -14639,7 +14631,6 @@ dependencies = [
  "soil-genesis-builder",
  "soil-inherents",
  "soil-io",
- "soil-metadata-ir",
  "soil-runtime",
  "soil-staking",
  "soil-state-machine",
@@ -14675,8 +14666,8 @@ dependencies = [
  "regex",
  "scale-info",
  "soil-io",
- "soil-metadata-ir",
  "soil-runtime",
+ "subsoil",
  "subsoil-crypto-hashing",
  "syn 2.0.117",
  "topsoil-benchmarking",
@@ -14719,11 +14710,11 @@ dependencies = [
  "soil-arithmetic",
  "soil-core",
  "soil-io",
- "soil-metadata-ir",
  "soil-runtime",
  "soil-state-machine",
  "soil-version",
  "static_assertions",
+ "subsoil",
  "topsoil-benchmarking",
  "topsoil-executive",
  "topsoil-support",

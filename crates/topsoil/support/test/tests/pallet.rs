@@ -2537,7 +2537,7 @@ fn test_error_feature_parsing() {
 
 #[test]
 fn pallet_metadata() {
-	use soil_metadata_ir::{
+	use subsoil::metadata_ir::{
 		EnumDeprecationInfoIR, ItemDeprecationInfoIR, VariantDeprecationInfoIR,
 	};
 	let pallets = Runtime::metadata_ir().pallets;

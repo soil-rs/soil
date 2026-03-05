@@ -44,8 +44,8 @@ pretty_assertions = { workspace = true }
 regex = { workspace = true }
 scale-info = { features = ["derive"], workspace = true, default-features = true }
 soil-io = { workspace = true, default-features = true }
-soil-metadata-ir = { workspace = true, default-features = true }
 soil-runtime = { features = ["serde"], workspace = true, default-features = true }
+subsoil = { workspace = true, default-features = true }
 
 [features]
 default = ["std"]
@@ -56,7 +56,7 @@ std = [
 	"topsoil-system/std",
 	"scale-info/std",
 	"subsoil-crypto-hashing/std",
-	"soil-metadata-ir/std",
+	"subsoil/std",
 	"soil-runtime/std",
 ]
 no-metadata-docs = []

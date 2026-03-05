@@ -65,7 +65,8 @@ pub mod __private {
 	#[cfg(feature = "std")]
 	pub use soil_io::TestExternalities;
 	pub use soil_io::{self, hashing, storage::root as storage_root};
-	pub use soil_metadata_ir as metadata_ir;
+	pub use subsoil;
+	pub use subsoil::metadata_ir;
 	#[cfg(feature = "std")]
 	pub use soil_runtime::{bounded_btree_map, bounded_vec};
 	pub use soil_runtime::{

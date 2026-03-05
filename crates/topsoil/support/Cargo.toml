@@ -40,7 +40,6 @@ subsoil-debug-derive = { workspace = true }
 soil-genesis-builder = { workspace = true }
 soil-inherents = { workspace = true }
 soil-io = { workspace = true }
-soil-metadata-ir = { workspace = true }
 soil-runtime = { features = ["serde"], workspace = true }
 soil-staking = { workspace = true }
 soil-state-machine = { optional = true, workspace = true }
@@ -80,7 +79,6 @@ std = [
 	"soil-genesis-builder/std",
 	"soil-inherents/std",
 	"soil-io/std",
-	"soil-metadata-ir/std",
 	"soil-runtime/std",
 	"soil-staking/std",
 	"soil-state-machine/std",

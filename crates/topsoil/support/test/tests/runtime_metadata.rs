@@ -17,7 +17,7 @@
 #![allow(useless_deprecated)]
 
 use scale_info::{form::MetaForm, meta_type};
-use soil_metadata_ir::{
+use subsoil::metadata_ir::{
 	ItemDeprecationInfoIR, RuntimeApiMetadataIR, RuntimeApiMethodMetadataIR,
 	RuntimeApiMethodParamMetadataIR,
 };

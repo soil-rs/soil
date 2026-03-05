@@ -154,7 +154,7 @@ topsoil_support::construct_runtime!(
 
 #[test]
 fn pallet_metadata() {
-	use soil_metadata_ir::{EnumDeprecationInfoIR, VariantDeprecationInfoIR};
+	use subsoil::metadata_ir::{EnumDeprecationInfoIR, VariantDeprecationInfoIR};
 	let pallets = Runtime::metadata_ir().pallets;
 	let example = pallets[0].clone();
 	{

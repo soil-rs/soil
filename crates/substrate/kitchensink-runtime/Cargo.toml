@@ -169,7 +169,6 @@ soil-inherents = { workspace = true }
 soil-io = { workspace = true }
 soil-keyring = { workspace = true }
 soil-keystore = { workspace = true }
-soil-metadata-ir = { workspace = true }
 soil-mixnet = { workspace = true }
 soil-mmr-primitives = { workspace = true }
 soil-npos-elections = { workspace = true }
@@ -347,7 +346,6 @@ std = [
 	"soil-io/std",
 	"soil-keyring/std",
 	"soil-keystore/std",
-	"soil-metadata-ir/std",
 	"soil-mixnet/std",
 	"soil-mmr-primitives/std",
 	"soil-npos-elections/std",

@@ -17,7 +17,7 @@
 
 //! Convert the IR to V16 metadata.
 
-use crate::{
+use super::{
 	EnumDeprecationInfoIR, ItemDeprecationInfoIR, PalletAssociatedTypeMetadataIR,
 	PalletCallMetadataIR, PalletConstantMetadataIR, PalletErrorMetadataIR, PalletEventMetadataIR,
 	PalletStorageMetadataIR, PalletViewFunctionMetadataIR, PalletViewFunctionParamMetadataIR,

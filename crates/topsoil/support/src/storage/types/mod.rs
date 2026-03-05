@@ -20,7 +20,7 @@
 
 use alloc::vec::Vec;
 use codec::FullCodec;
-use soil_metadata_ir::{StorageEntryMetadataIR, StorageEntryModifierIR};
+use subsoil::metadata_ir::{StorageEntryMetadataIR, StorageEntryModifierIR};
 
 mod counted_map;
 mod counted_nmap;
@@ -142,7 +142,7 @@ where
 pub trait StorageEntryMetadataBuilder {
 	/// Build into `entries` the storage metadata entries of a storage given some `docs`.
 	fn build_metadata(
-		deprecation_status: soil_metadata_ir::ItemDeprecationInfoIR,
+		deprecation_status: subsoil::metadata_ir::ItemDeprecationInfoIR,
 		doc: Vec<&'static str>,
 		entries: &mut Vec<StorageEntryMetadataIR>,
 	);

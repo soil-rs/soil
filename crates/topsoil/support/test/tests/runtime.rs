@@ -742,7 +742,7 @@ fn test_metadata() {
 	};
 	use scale_info::meta_type;
 	use soil_core::Encode;
-	use soil_metadata_ir::StorageEntryModifierIR::Optional;
+	use subsoil::metadata_ir::StorageEntryModifierIR::Optional;
 
 	fn maybe_docs(doc: Vec<&'static str>) -> Vec<&'static str> {
 		if cfg!(feature = "no-metadata-docs") {

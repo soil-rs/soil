@@ -100,7 +100,7 @@ pub mod __private {
 	#[cfg(not(feature = "std"))]
 	pub use soil_core::to_substrate_wasm_fn_return_value;
 	#[cfg(feature = "frame-metadata")]
-	pub use soil_metadata_ir::{self as metadata_ir, frame_metadata as metadata};
+	pub use subsoil::metadata_ir::{self as metadata_ir, frame_metadata as metadata};
 	pub use soil_runtime::{
 		generic::BlockId,
 		traits::{Block as BlockT, Hash as HashT, HashingFor, Header as HeaderT, NumberFor},

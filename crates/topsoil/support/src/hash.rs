@@ -20,7 +20,7 @@
 use alloc::vec::Vec;
 use codec::{Codec, MaxEncodedLen};
 use soil_io::hashing::{blake2_128, blake2_256, twox_128, twox_256, twox_64};
-use soil_metadata_ir as metadata_ir;
+use subsoil::metadata_ir as metadata_ir;
 
 // This trait must be kept coherent with topsoil-support-procedural HasherKind usage
 pub trait Hashable: Sized {

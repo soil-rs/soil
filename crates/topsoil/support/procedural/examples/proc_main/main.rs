@@ -18,7 +18,7 @@
 #[cfg(test)]
 use soil_io::{MultiRemovalResults, TestExternalities};
 #[cfg(test)]
-use soil_metadata_ir::{
+use subsoil::metadata_ir::{
 	PalletStorageMetadataIR, StorageEntryMetadataIR, StorageEntryModifierIR, StorageEntryTypeIR,
 	StorageHasherIR,
 };
