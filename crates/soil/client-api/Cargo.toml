@@ -32,7 +32,6 @@ soil-consensus = { workspace = true, default-features = true, optional = true}
 subsoil = { workspace = true, default-features = true, optional = true}
 soil-runtime = { workspace = true, optional = true}
 soil-state-machine = { workspace = true, default-features = true, optional = true}
-soil-trie = { workspace = true, default-features = true, optional = true}
 
 [features]
 default = ["std"]
@@ -52,7 +51,6 @@ std = [
 	"soil-runtime",
 	"soil-state-machine",
 	"soil-transaction-pool-api",
-	"soil-trie",
 	"soil-utils",
 	"soil-api/std",
 	"subsoil/std",
@@ -60,7 +58,6 @@ std = [
 	"soil-runtime/std",
 	"soil-state-machine/std",
 	"soil-transaction-pool-api/std",
-	"soil-trie/std",
 	"soil-utils/std",
 ]
 

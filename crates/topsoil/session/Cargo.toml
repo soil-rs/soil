@@ -30,11 +30,10 @@ soil-runtime = { features = ["serde"], workspace = true }
 soil-session = { workspace = true }
 soil-staking = { features = ["serde"], workspace = true }
 soil-state-machine = { workspace = true }
-soil-trie = { optional = true, workspace = true }
 
 [features]
 default = ["historical", "std"]
-historical = ["soil-trie"]
+historical = []
 std = [
 	"codec/std",
 	"topsoil-support/std",
@@ -49,7 +48,6 @@ std = [
 	"soil-session/std",
 	"soil-staking/std",
 	"soil-state-machine/std",
-	"soil-trie/std",
 ]
 try-runtime = [
 	"topsoil-support/try-runtime",

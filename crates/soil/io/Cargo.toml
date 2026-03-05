@@ -24,12 +24,10 @@ secp256k1 = { features = ["global-context", "recovery"], optional = true, worksp
 subsoil-crypto-hashing = { workspace = true }
 soil-state-machine = { optional = true, workspace = true }
 subsoil = { workspace = true }
-soil-trie = { optional = true, workspace = true }
 tracing = { workspace = true }
 tracing-core = { workspace = true }
 
 [target.'cfg(not(substrate_runtime))'.dependencies]
-soil-trie = { workspace = true, default-features = false }
 soil-state-machine = { workspace = true, default-features = false }
 log = { workspace = true, default-features = true }
 libsecp256k1 = { workspace = true, default-features = false, features = ["static-context"] }
@@ -57,7 +55,6 @@ std = [
 	"subsoil/std",
 	"subsoil-crypto-hashing/std",
 	"soil-state-machine/std",
-	"soil-trie/std",
 	"tracing-core/std",
 	"tracing/std",
 ]

@@ -41,7 +41,6 @@ soil-runtime = { features = ["serde"], workspace = true }
 soil-staking = { workspace = true }
 soil-state-machine = { optional = true, workspace = true }
 subsoil = { workspace = true }
-soil-trie = { workspace = true }
 tt-call = { workspace = true }
 
 aquamarine = { workspace = true }
@@ -75,7 +74,6 @@ std = [
 	"soil-runtime/std",
 	"soil-staking/std",
 	"soil-state-machine/std",
-	"soil-trie/std",
 ]
 runtime-benchmarks = [
 	"topsoil-system/runtime-benchmarks",

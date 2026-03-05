@@ -32,7 +32,7 @@ use soil_state_machine::{
 	backend::Backend as StateBackend, BackendTransaction, ChildStorageCollection, DBValue,
 	IterArgs, StorageCollection, StorageIterator, StorageKey, StorageValue,
 };
-use soil_trie::{
+use subsoil::trie::{
 	cache::{CacheSize, SharedTrieCache},
 	prefixed_key, MemoryDB, MerkleValue,
 };
@@ -81,7 +81,7 @@ pub struct BenchmarkingState<Hasher: Hash> {
 	record: Cell<Vec<Vec<u8>>>,
 	key_tracker: Arc<Mutex<KeyTracker>>,
 	whitelist: RefCell<Vec<TrackedStorageKey>>,
-	proof_recorder: Option<soil_trie::recorder::Recorder<Hasher>>,
+	proof_recorder: Option<subsoil::trie::recorder::Recorder<Hasher>>,
 	proof_recorder_root: Cell<Hasher::Output>,
 	shared_trie_cache: SharedTrieCache<Hasher>,
 }
@@ -136,7 +136,7 @@ impl<Hasher: Hash> BenchmarkingState<Hasher> {
 		let state_version = soil_runtime::StateVersion::default();
 		let mut root = Default::default();
 		let mut mdb = MemoryDB::<Hasher>::default();
-		soil_trie::trie_types::TrieDBMutBuilderV1::<Hasher>::new(&mut mdb, &mut root).build();
+		subsoil::trie::trie_types::TrieDBMutBuilderV1::<Hasher>::new(&mut mdb, &mut root).build();
 
 		let mut state = BenchmarkingState {
 			state: RefCell::new(None),
@@ -180,7 +180,7 @@ impl<Hasher: Hash> BenchmarkingState<Hasher> {
 	}
 
 	/// Get the proof recorder for this state
-	pub fn recorder(&self) -> Option<soil_trie::recorder::Recorder<Hasher>> {
+	pub fn recorder(&self) -> Option<subsoil::trie::recorder::Recorder<Hasher>> {
 		self.proof_recorder.clone()
 	}
 

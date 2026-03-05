@@ -25,7 +25,6 @@ log = { workspace = true }
 parking_lot = { optional = true, workspace = true, default-features = true }
 rand = { optional = true, workspace = true, default-features = true }
 smallvec = { workspace = true, default-features = true }
-soil-trie = { workspace = true }
 thiserror = { optional = true, workspace = true }
 tracing = { optional = true, workspace = true, default-features = true }
 trie-db = { workspace = true }
@@ -49,7 +48,6 @@ std = [
 	"rand",
 	"subsoil/std",
 	"soil-runtime/std",
-	"soil-trie/std",
 	"thiserror",
 	"tracing",
 	"trie-db/std",

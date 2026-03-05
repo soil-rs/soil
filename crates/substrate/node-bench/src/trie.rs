@@ -22,7 +22,7 @@ use hash_db::Prefix;
 use kvdb::KeyValueDB;
 use rand::Rng;
 use soil_state_machine::Backend as _;
-use soil_trie::{trie_types::TrieDBMutBuilderV1, TrieMut as _};
+use subsoil::trie::{trie_types::TrieDBMutBuilderV1, TrieMut as _};
 use std::{
 	borrow::Cow,
 	collections::HashMap,
@@ -169,7 +169,7 @@ struct Storage(Arc<dyn KeyValueDB>);
 
 impl soil_state_machine::Storage<subsoil::core::Blake2Hasher> for Storage {
 	fn get(&self, key: &Hash, prefix: Prefix) -> Result<Option<Vec<u8>>, String> {
-		let key = soil_trie::prefixed_key::<subsoil::core::Blake2Hasher>(key, prefix);
+		let key = subsoil::trie::prefixed_key::<subsoil::core::Blake2Hasher>(key, prefix);
 		self.0.get(0, &key).map_err(|e| format!("Database backend error: {:?}", e))
 	}
 }

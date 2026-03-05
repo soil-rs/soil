@@ -26,7 +26,7 @@ use hash_db::Hasher;
 use subsoil::core::{storage::StateVersion, traits::Externalities};
 #[cfg(test)]
 use soil_runtime::traits::BlakeTwo256;
-use soil_trie::PrefixedMemoryDB;
+use subsoil::trie::PrefixedMemoryDB;
 use std::collections::BTreeMap;
 
 #[derive(Arbitrary, Debug, Clone)]

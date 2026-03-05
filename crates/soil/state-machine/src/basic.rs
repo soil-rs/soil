@@ -34,7 +34,7 @@ use subsoil::core::{
 	Blake2Hasher,
 };
 use subsoil::externalities::{Extension, Extensions, MultiRemovalResults};
-use soil_trie::{empty_child_trie_root, LayoutV0, LayoutV1, TrieConfiguration};
+use subsoil::trie::{empty_child_trie_root, LayoutV0, LayoutV1, TrieConfiguration};
 
 /// Simple Map-based Externalities impl.
 #[derive(Debug)]

@@ -25,3 +25,4 @@ pub mod keystore;
 #[cfg(feature = "std")]
 pub mod allocator;
 pub mod runtime_interface;
+pub mod trie;

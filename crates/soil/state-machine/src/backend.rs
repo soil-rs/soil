@@ -30,7 +30,7 @@ use hash_db::Hasher;
 use subsoil::core::storage::{ChildInfo, StateVersion, TrackedStorageKey};
 #[cfg(feature = "std")]
 use subsoil::core::traits::RuntimeCode;
-use soil_trie::{MerkleValue, PrefixedMemoryDB, RandomState};
+use subsoil::trie::{MerkleValue, PrefixedMemoryDB, RandomState};
 
 /// A struct containing arguments for iterating over the storage.
 #[derive(Default)]
@@ -384,7 +384,7 @@ pub trait Backend<H: Hasher>: core::fmt::Debug {
 
 /// Something that can be converted into a [`TrieBackend`].
 #[cfg(feature = "std")]
-pub trait AsTrieBackend<H: Hasher, C = soil_trie::cache::LocalTrieCache<H>> {
+pub trait AsTrieBackend<H: Hasher, C = subsoil::trie::cache::LocalTrieCache<H>> {
 	/// Type of trie backend storage.
 	type TrieBackendStorage: TrieBackendStorage<H>;
 

@@ -21,7 +21,7 @@ use super::{
 	metrics::Metrics, CacheSize, LocalNodeCacheConfig, LocalNodeCacheLimiter,
 	LocalValueCacheConfig, LocalValueCacheLimiter, NodeCached, TrieHitStats, TrieHitStatsSnapshot,
 };
-use crate::cache::LOG_TARGET;
+use super::LOG_TARGET;
 use core::{hash::Hash, time::Duration};
 use hash_db::Hasher;
 use nohash_hasher::BuildNoHashHasher;
@@ -861,11 +861,11 @@ impl<H: Hasher> SharedTrieCache<H> {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use subsoil::core::H256 as Hash;
+	use crate::core::H256 as Hash;
 
 	#[test]
 	fn shared_value_cache_works() {
-		let mut cache = SharedValueCache::<subsoil::core::H256>::new(usize::MAX, 10 * 10);
+		let mut cache = SharedValueCache::<crate::core::H256>::new(usize::MAX, 10 * 10);
 
 		let key = vec![0; 10];
 

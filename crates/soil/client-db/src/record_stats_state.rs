@@ -28,7 +28,7 @@ use soil_state_machine::{
 	backend::{AsTrieBackend, Backend as StateBackend},
 	BackendTransaction, IterArgs, StorageIterator, StorageKey, StorageValue, TrieBackend,
 };
-use soil_trie::MerkleValue;
+use subsoil::trie::MerkleValue;
 use std::sync::Arc;
 
 /// State abstraction for recording stats about state access.

@@ -17,7 +17,7 @@
 
 //! Extension for the default recorder.
 
-use crate::RawStorageProof;
+use super::RawStorageProof;
 use alloc::{collections::BTreeSet, vec::Vec};
 use trie_db::{Recorder, TrieLayout};
 

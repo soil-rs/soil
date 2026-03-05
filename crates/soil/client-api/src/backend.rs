@@ -34,7 +34,7 @@ use soil_state_machine::{
 	OffchainChangesCollection, StorageCollection, StorageIterator,
 };
 use subsoil::storage::{ChildInfo, StorageData, StorageKey};
-pub use soil_trie::MerkleValue;
+pub use subsoil::trie::MerkleValue;
 
 use crate::{blockchain::Backend as BlockchainBackend, UsageInfo};
 

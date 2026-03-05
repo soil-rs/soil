@@ -17,7 +17,7 @@
 
 //! `TrieStream` implementation for Substrate's trie format.
 
-use crate::{
+use super::{
 	node_header::{size_and_prefix_iterator, NodeKind},
 	trie_constants,
 };

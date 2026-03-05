@@ -32,7 +32,7 @@ use subsoil::core::{
 };
 #[cfg(feature = "std")]
 use subsoil::externalities::{Extension, Extensions, TransactionType};
-use soil_trie::{empty_child_trie_root, LayoutV1};
+use subsoil::trie::{empty_child_trie_root, LayoutV1};
 
 #[cfg(not(feature = "std"))]
 use alloc::collections::btree_map::BTreeMap as Map;

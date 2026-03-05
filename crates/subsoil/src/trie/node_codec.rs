@@ -18,7 +18,7 @@
 //! `NodeCodec` implementation for Substrate's trie format.
 
 use super::node_header::{NodeHeader, NodeKind};
-use crate::{error::Error, trie_constants};
+use super::{error::Error, trie_constants};
 use alloc::{borrow::Borrow, vec::Vec};
 use codec::{Compact, Decode, Encode, Input};
 use core::{marker::PhantomData, ops::Range};

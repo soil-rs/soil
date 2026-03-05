@@ -23,7 +23,7 @@ use scale_info::TypeInfo;
 
 // Note that `LayoutV1` usage here (proof compaction) is compatible
 // with `LayoutV0`.
-use crate::LayoutV1 as Layout;
+use super::LayoutV1 as Layout;
 
 /// Error associated with the `storage_proof` module.
 #[derive(Encode, Decode, Clone, Eq, PartialEq, Debug, TypeInfo)]
@@ -101,13 +101,13 @@ impl StorageProof {
 		self.trie_nodes
 	}
 
-	/// Creates a [`MemoryDB`](crate::MemoryDB) from `Self`.
-	pub fn into_memory_db<H: Hasher>(self) -> crate::MemoryDB<H> {
+	/// Creates a [`MemoryDB`](super::MemoryDB) from `Self`.
+	pub fn into_memory_db<H: Hasher>(self) -> super::MemoryDB<H> {
 		self.into()
 	}
 
-	/// Creates a [`MemoryDB`](crate::MemoryDB) from `Self` reference.
-	pub fn to_memory_db<H: Hasher>(&self) -> crate::MemoryDB<H> {
+	/// Creates a [`MemoryDB`](super::MemoryDB) from `Self` reference.
+	pub fn to_memory_db<H: Hasher>(&self) -> super::MemoryDB<H> {
 		self.into()
 	}
 
@@ -129,18 +129,18 @@ impl StorageProof {
 	pub fn into_compact_proof<H: Hasher>(
 		self,
 		root: H::Out,
-	) -> Result<CompactProof, crate::CompactProofError<H::Out, crate::Error<H::Out>>> {
+	) -> Result<CompactProof, super::CompactProofError<H::Out, super::Error<H::Out>>> {
 		let db = self.into_memory_db();
-		crate::encode_compact::<Layout<H>, crate::MemoryDB<H>>(&db, &root)
+		super::encode_compact::<Layout<H>, super::MemoryDB<H>>(&db, &root)
 	}
 
 	/// Encode as a compact proof with default trie layout.
 	pub fn to_compact_proof<H: Hasher>(
 		&self,
 		root: H::Out,
-	) -> Result<CompactProof, crate::CompactProofError<H::Out, crate::Error<H::Out>>> {
+	) -> Result<CompactProof, super::CompactProofError<H::Out, super::Error<H::Out>>> {
 		let db = self.to_memory_db();
-		crate::encode_compact::<Layout<H>, crate::MemoryDB<H>>(&db, &root)
+		super::encode_compact::<Layout<H>, super::MemoryDB<H>>(&db, &root)
 	}
 
 	/// Returns the estimated encoded size of the compact proof.
@@ -155,17 +155,17 @@ impl StorageProof {
 	}
 }
 
-impl<H: Hasher> From<StorageProof> for crate::MemoryDB<H> {
+impl<H: Hasher> From<StorageProof> for super::MemoryDB<H> {
 	fn from(proof: StorageProof) -> Self {
 		From::from(&proof)
 	}
 }
 
-impl<H: Hasher> From<&StorageProof> for crate::MemoryDB<H> {
+impl<H: Hasher> From<&StorageProof> for super::MemoryDB<H> {
 	fn from(proof: &StorageProof) -> Self {
-		let mut db = crate::MemoryDB::with_hasher(crate::RandomState::default());
+		let mut db = super::MemoryDB::with_hasher(super::RandomState::default());
 		proof.iter_nodes().for_each(|n| {
-			db.insert(crate::EMPTY_PREFIX, &n);
+			db.insert(super::EMPTY_PREFIX, &n);
 		});
 		db
 	}
@@ -187,9 +187,9 @@ impl CompactProof {
 	pub fn to_storage_proof<H: Hasher>(
 		&self,
 		expected_root: Option<&H::Out>,
-	) -> Result<(StorageProof, H::Out), crate::CompactProofError<H::Out, crate::Error<H::Out>>> {
-		let mut db = crate::MemoryDB::<H>::new(&[]);
-		let root = crate::decode_compact::<Layout<H>, _, _>(
+	) -> Result<(StorageProof, H::Out), super::CompactProofError<H::Out, super::Error<H::Out>>> {
+		let mut db = super::MemoryDB::<H>::new(&[]);
+		let root = super::decode_compact::<Layout<H>, _, _>(
 			&mut db,
 			self.iter_compact_encoded_nodes(),
 			expected_root,
@@ -206,7 +206,7 @@ impl CompactProof {
 		))
 	}
 
-	/// Convert self into a [`MemoryDB`](crate::MemoryDB).
+	/// Convert self into a [`MemoryDB`](super::MemoryDB).
 	///
 	/// `expected_root` is the expected root of this compact proof.
 	///
@@ -214,10 +214,10 @@ impl CompactProof {
 	pub fn to_memory_db<H: Hasher>(
 		&self,
 		expected_root: Option<&H::Out>,
-	) -> Result<(crate::MemoryDB<H>, H::Out), crate::CompactProofError<H::Out, crate::Error<H::Out>>>
+	) -> Result<(super::MemoryDB<H>, H::Out), super::CompactProofError<H::Out, super::Error<H::Out>>>
 	{
-		let mut db = crate::MemoryDB::<H>::new(&[]);
-		let root = crate::decode_compact::<Layout<H>, _, _>(
+		let mut db = super::MemoryDB::<H>::new(&[]);
+		let root = super::decode_compact::<Layout<H>, _, _>(
 			&mut db,
 			self.iter_compact_encoded_nodes(),
 			expected_root,
@@ -230,10 +230,10 @@ impl CompactProof {
 #[cfg(test)]
 pub mod tests {
 	use super::*;
-	use crate::{tests::create_storage_proof, StorageProof};
+	use super::super::{tests::create_storage_proof, StorageProof};
 
-	type Hasher = subsoil::core::Blake2Hasher;
-	type Layout = crate::LayoutV1<Hasher>;
+	type Hasher = crate::core::Blake2Hasher;
+	type Layout = super::super::LayoutV1<Hasher>;
 
 	const TEST_DATA: &[(&[u8], &[u8])] =
 		&[(b"key1", &[1; 64]), (b"key2", &[2; 64]), (b"key3", &[3; 64]), (b"key11", &[4; 64])];

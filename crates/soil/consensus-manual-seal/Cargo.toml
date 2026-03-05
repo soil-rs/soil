@@ -41,7 +41,6 @@ soil-consensus-slots = { workspace = true, default-features = true, optional = t
 soil-inherents = { workspace = true, default-features = true, optional = true}
 soil-runtime = { workspace = true, default-features = true, optional = true}
 soil-timestamp = { workspace = true, default-features = true, optional = true}
-soil-trie = { workspace = true, default-features = true, optional = true}
 thiserror = { workspace = true, optional = true}
 
 [features]
@@ -71,7 +70,6 @@ std = [
 	"soil-runtime",
 	"soil-timestamp",
 	"soil-transaction-pool-api",
-	"soil-trie",
 	"thiserror",
 	"soil-api/std",
 	"soil-client-api/std",
@@ -84,7 +82,6 @@ std = [
 	"soil-runtime/std",
 	"soil-timestamp/std",
 	"soil-transaction-pool-api/std",
-	"soil-trie/std",
 ]
 
 [dev-dependencies]

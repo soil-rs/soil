@@ -20,7 +20,7 @@
 use alloc::collections::BTreeSet;
 use core::hash::Hash;
 use scale_info::TypeInfo;
-use subsoil::core::{Decode, Encode};
+use crate::core::{Decode, Encode};
 use trie_db::{RecordedForKey, TrieAccess, TrieRecorder};
 
 /// Error associated with the `AccessedNodesTracker` module.
@@ -75,12 +75,12 @@ impl<H: Hash + Ord> TrieRecorder<H> for AccessedNodesTracker<H> {
 #[cfg(test)]
 pub mod tests {
 	use super::*;
-	use crate::{tests::create_storage_proof, StorageProof};
+	use super::super::{tests::create_storage_proof, StorageProof};
 	use hash_db::Hasher;
 	use trie_db::{Trie, TrieDBBuilder};
 
-	type Hash = <subsoil::core::Blake2Hasher as Hasher>::Out;
-	type Layout = crate::LayoutV1<subsoil::core::Blake2Hasher>;
+	type Hash = <crate::core::Blake2Hasher as Hasher>::Out;
+	type Layout = super::super::LayoutV1<crate::core::Blake2Hasher>;
 
 	const TEST_DATA: &[(&[u8], &[u8])] =
 		&[(b"key1", &[1; 64]), (b"key2", &[2; 64]), (b"key3", &[3; 64])];

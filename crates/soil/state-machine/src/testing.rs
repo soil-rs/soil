@@ -36,7 +36,7 @@ use subsoil::core::{
 	},
 };
 use subsoil::externalities::{Extension, ExtensionStore, Extensions};
-use soil_trie::{recorder::Recorder, PrefixedMemoryDB, StorageProof};
+use subsoil::trie::{recorder::Recorder, PrefixedMemoryDB, StorageProof};
 
 /// Simple HashMap-based Externalities impl.
 pub struct TestExternalities<H>

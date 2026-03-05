@@ -17,10 +17,6 @@
 
 //! Utility functions to interact with Substrate's Base-16 Modified Merkle Patricia tree ("trie").
 
-#![cfg_attr(not(feature = "std"), no_std)]
-
-extern crate alloc;
-
 pub mod accessed_nodes_tracker;
 #[cfg(feature = "std")]
 pub mod cache;
@@ -131,7 +127,7 @@ where
 {
 	const USE_EXTENSION: bool = false;
 	const ALLOW_EMPTY: bool = true;
-	const MAX_INLINE_VALUE: Option<u32> = Some(subsoil::core::storage::TRIE_VALUE_NODE_THRESHOLD);
+	const MAX_INLINE_VALUE: Option<u32> = Some(crate::core::storage::TRIE_VALUE_NODE_THRESHOLD);
 
 	type Hash = H;
 	type Codec = NodeCodec<Self::Hash>;
@@ -648,7 +644,7 @@ mod tests {
 	use super::*;
 	use codec::{Compact, Decode, Encode};
 	use hash_db::{HashDB, Hasher};
-	use subsoil::core::Blake2Hasher;
+	use crate::core::Blake2Hasher;
 	use trie_db::{DBValue, NodeCodec as NodeCodecT, Trie, TrieMut};
 	use trie_standardmap::{Alphabet, StandardMap, ValueMode};
 
@@ -1098,17 +1094,17 @@ mod tests {
 
 	#[test]
 	fn generate_storage_root_with_proof_works_independently_from_the_delta_order() {
-		let proof = StorageProof::decode(&mut &include_bytes!("../test-res/proof")[..]).unwrap();
+		let proof = StorageProof::decode(&mut &include_bytes!("test-res/proof")[..]).unwrap();
 		let storage_root =
-			subsoil::core::H256::decode(&mut &include_bytes!("../test-res/storage_root")[..]).unwrap();
+			crate::core::H256::decode(&mut &include_bytes!("test-res/storage_root")[..]).unwrap();
 		// Delta order that is "invalid" so that it would require a different proof.
 		let invalid_delta = Vec::<(Vec<u8>, Option<Vec<u8>>)>::decode(
-			&mut &include_bytes!("../test-res/invalid-delta-order")[..],
+			&mut &include_bytes!("test-res/invalid-delta-order")[..],
 		)
 		.unwrap();
 		// Delta order that is "valid"
 		let valid_delta = Vec::<(Vec<u8>, Option<Vec<u8>>)>::decode(
-			&mut &include_bytes!("../test-res/valid-delta-order")[..],
+			&mut &include_bytes!("test-res/valid-delta-order")[..],
 		)
 		.unwrap();
 

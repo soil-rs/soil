@@ -111,7 +111,7 @@ use subsoil::core::{
 use subsoil::core::{bls381, ecdsa_bls381};
 
 #[cfg(not(substrate_runtime))]
-use soil_trie::{LayoutV0, LayoutV1, TrieConfiguration};
+use subsoil::trie::{LayoutV0, LayoutV1, TrieConfiguration};
 
 use subsoil::runtime_interface::{
 	pass_by::{
@@ -709,7 +709,7 @@ pub trait Trie {
 		key: PassFatPointerAndRead<&[u8]>,
 		value: PassFatPointerAndRead<&[u8]>,
 	) -> bool {
-		soil_trie::verify_trie_proof::<LayoutV0<subsoil::core::Blake2Hasher>, _, _, _>(
+		subsoil::trie::verify_trie_proof::<LayoutV0<subsoil::core::Blake2Hasher>, _, _, _>(
 			&root,
 			proof,
 			&[(key, Some(value))],
@@ -727,14 +727,14 @@ pub trait Trie {
 		version: PassAs<StateVersion, u8>,
 	) -> bool {
 		match version {
-			StateVersion::V0 => soil_trie::verify_trie_proof::<
+			StateVersion::V0 => subsoil::trie::verify_trie_proof::<
 				LayoutV0<subsoil::core::Blake2Hasher>,
 				_,
 				_,
 				_,
 			>(&root, proof, &[(key, Some(value))])
 			.is_ok(),
-			StateVersion::V1 => soil_trie::verify_trie_proof::<
+			StateVersion::V1 => subsoil::trie::verify_trie_proof::<
 				LayoutV1<subsoil::core::Blake2Hasher>,
 				_,
 				_,
@@ -751,7 +751,7 @@ pub trait Trie {
 		key: PassFatPointerAndRead<&[u8]>,
 		value: PassFatPointerAndRead<&[u8]>,
 	) -> bool {
-		soil_trie::verify_trie_proof::<LayoutV0<subsoil::core::KeccakHasher>, _, _, _>(
+		subsoil::trie::verify_trie_proof::<LayoutV0<subsoil::core::KeccakHasher>, _, _, _>(
 			&root,
 			proof,
 			&[(key, Some(value))],
@@ -769,14 +769,14 @@ pub trait Trie {
 		version: PassAs<StateVersion, u8>,
 	) -> bool {
 		match version {
-			StateVersion::V0 => soil_trie::verify_trie_proof::<
+			StateVersion::V0 => subsoil::trie::verify_trie_proof::<
 				LayoutV0<subsoil::core::KeccakHasher>,
 				_,
 				_,
 				_,
 			>(&root, proof, &[(key, Some(value))])
 			.is_ok(),
-			StateVersion::V1 => soil_trie::verify_trie_proof::<
+			StateVersion::V1 => subsoil::trie::verify_trie_proof::<
 				LayoutV1<subsoil::core::KeccakHasher>,
 				_,
 				_,

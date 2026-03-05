@@ -21,7 +21,6 @@ serde = { features = ["derive"], workspace = true, default-features = true }
 
 subsoil = { workspace = true, default-features = true }
 soil-state-machine = { workspace = true, default-features = true }
-soil-trie = { workspace = true, default-features = true }
 trie-db = { workspace = true, default-features = true }
 
 jsonrpsee = { features = ["client-core", "macros", "server-core"], workspace = true }

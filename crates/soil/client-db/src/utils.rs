@@ -34,7 +34,7 @@ use soil_runtime::{
 		Zero,
 	},
 };
-use soil_trie::DBValue;
+use subsoil::trie::DBValue;
 
 /// Number of columns in the db. Must be the same for both full && light dbs.
 /// Otherwise RocksDb will fail to open database && check its type.

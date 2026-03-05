@@ -34,7 +34,7 @@
 //! taken into account when limiting the [`SharedTrieCache`]. This means that for the lifetime of a
 //! [`LocalTrieCache`] the actual memory usage could be above the allowed maximum.
 
-use crate::{Error, NodeCodec};
+use super::{Error, NodeCodec};
 use hash_db::Hasher;
 use metrics::{HitStatsSnapshot, TrieHitStatsSnapshot};
 use nohash_hasher::BuildNoHashHasher;
@@ -835,7 +835,7 @@ impl<'a, H: Hasher> trie_db::TrieCache<NodeCodec<H>> for TrieCache<'a, H> {
 
 		tracing::trace!(
 			target: LOG_TARGET,
-			key = ?subsoil::core::hexdisplay::HexDisplay::from(&key),
+			key = ?crate::core::hexdisplay::HexDisplay::from(&key),
 			found = res.is_some(),
 			"Looked up value for key",
 		);
@@ -846,7 +846,7 @@ impl<'a, H: Hasher> trie_db::TrieCache<NodeCodec<H>> for TrieCache<'a, H> {
 	fn cache_value_for_key(&mut self, key: &[u8], data: CachedValue<H::Out>) {
 		tracing::trace!(
 			target: LOG_TARGET,
-			key = ?subsoil::core::hexdisplay::HexDisplay::from(&key),
+			key = ?crate::core::hexdisplay::HexDisplay::from(&key),
 			"Caching value for key",
 		);
 
@@ -858,13 +858,13 @@ impl<'a, H: Hasher> trie_db::TrieCache<NodeCodec<H>> for TrieCache<'a, H> {
 mod tests {
 	use super::*;
 	use rand::{thread_rng, Rng};
-	use subsoil::core::H256;
+	use crate::core::H256;
 	use trie_db::{Bytes, Trie, TrieDBBuilder, TrieDBMutBuilder, TrieHash, TrieMut};
 
-	type MemoryDB = crate::MemoryDB<subsoil::core::Blake2Hasher>;
-	type Layout = crate::LayoutV1<subsoil::core::Blake2Hasher>;
-	type Cache = super::SharedTrieCache<subsoil::core::Blake2Hasher>;
-	type Recorder = crate::recorder::Recorder<subsoil::core::Blake2Hasher>;
+	type MemoryDB = super::super::MemoryDB<crate::core::Blake2Hasher>;
+	type Layout = super::super::LayoutV1<crate::core::Blake2Hasher>;
+	type Cache = super::SharedTrieCache<crate::core::Blake2Hasher>;
+	type Recorder = super::super::recorder::Recorder<crate::core::Blake2Hasher>;
 
 	const TEST_DATA: &[(&[u8], &[u8])] =
 		&[(b"key1", b"val1"), (b"key2", &[2; 64]), (b"key3", b"val3"), (b"key4", &[4; 64])];

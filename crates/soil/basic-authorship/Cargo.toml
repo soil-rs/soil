@@ -31,7 +31,6 @@ subsoil = { workspace = true, default-features = true, optional = true}
 soil-inherents = { workspace = true, default-features = true, optional = true}
 soil-runtime = { workspace = true, default-features = true, optional = true}
 soil-state-machine = { workspace = true, default-features = true, optional = true}
-soil-trie = { workspace = true, default-features = true, optional = true}
 
 [features]
 default = ["std"]
@@ -51,7 +50,6 @@ std = [
 	"soil-state-machine",
 	"soil-telemetry",
 	"soil-transaction-pool-api",
-	"soil-trie",
 	"soil-api/std",
 	"subsoil/std",
 	"soil-inherents/std",
@@ -60,7 +58,6 @@ std = [
 	"soil-state-machine/std",
 	"soil-telemetry/std",
 	"soil-transaction-pool-api/std",
-	"soil-trie/std",
 ]
 
 [dev-dependencies]

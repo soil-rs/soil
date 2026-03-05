@@ -28,7 +28,7 @@ use super::{ProofToHashes, ProvingTrie, TrieError};
 use crate::{Decode, DispatchError, Encode};
 use alloc::vec::Vec;
 use codec::MaxEncodedLen;
-use soil_trie::{
+use subsoil::trie::{
 	trie_types::{TrieDBBuilder, TrieDBMutBuilderV1},
 	LayoutV1, MemoryDB, RandomState, Trie, TrieMut,
 };
@@ -56,7 +56,7 @@ where
 	/// values of the proof, else the verifier will complain that extra nodes are provided in the
 	/// proof that are not needed.
 	pub fn create_multi_proof(&self, keys: &[Key]) -> Result<Vec<u8>, DispatchError> {
-		soil_trie::generate_trie_proof::<LayoutV1<Hashing>, _, _, _>(
+		subsoil::trie::generate_trie_proof::<LayoutV1<Hashing>, _, _, _>(
 			&self.db,
 			self.root,
 			&keys.into_iter().map(|k| k.encode()).collect::<Vec<Vec<u8>>>(),
@@ -107,7 +107,7 @@ where
 
 	/// Create a compact merkle proof needed to prove a single key and its value are in the trie.
 	fn create_proof(&self, key: &Key) -> Result<Vec<u8>, DispatchError> {
-		soil_trie::generate_trie_proof::<LayoutV1<Hashing>, _, _, _>(
+		subsoil::trie::generate_trie_proof::<LayoutV1<Hashing>, _, _, _>(
 			&self.db,
 			self.root,
 			&[key.encode()],
@@ -158,7 +158,7 @@ where
 {
 	let structured_proof: Vec<Vec<u8>> =
 		Decode::decode(&mut &proof[..]).map_err(|_| TrieError::DecodeError)?;
-	soil_trie::verify_trie_proof::<LayoutV1<Hashing>, _, _, _>(
+	subsoil::trie::verify_trie_proof::<LayoutV1<Hashing>, _, _, _>(
 		&root,
 		&structured_proof,
 		&[(key.encode(), Some(value.encode()))],
@@ -184,7 +184,7 @@ where
 		.map(|(key, value)| (key.encode(), Some(value.encode())))
 		.collect::<Vec<(Vec<u8>, Option<Vec<u8>>)>>();
 
-	soil_trie::verify_trie_proof::<LayoutV1<Hashing>, _, _, _>(
+	subsoil::trie::verify_trie_proof::<LayoutV1<Hashing>, _, _, _>(
 		&root,
 		&structured_proof,
 		&items_encoded,
@@ -204,7 +204,7 @@ mod tests {
 
 	// The expected root hash for an empty trie.
 	fn empty_root() -> H256 {
-		soil_trie::empty_trie_root::<LayoutV1<BlakeTwo256>>()
+		subsoil::trie::empty_trie_root::<LayoutV1<BlakeTwo256>>()
 	}
 
 	fn create_balance_trie() -> BalanceTrie {

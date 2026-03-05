@@ -62,7 +62,6 @@ soil-state-machine = { workspace = true, default-features = true, optional = tru
 subsoil = { workspace = true, default-features = true, optional = true}
 soil-transaction-pool = { workspace = true, default-features = true, optional = true}
 soil-transaction-storage-proof = { workspace = true, default-features = true, optional = true}
-soil-trie = { workspace = true, default-features = true, optional = true}
 soil-version = { workspace = true, default-features = true, optional = true}
 static_init = { workspace = true, optional = true}
 tempfile = { workspace = true, optional = true}
@@ -123,7 +122,6 @@ std = [
 	"soil-transaction-pool",
 	"soil-transaction-pool-api",
 	"soil-transaction-storage-proof",
-	"soil-trie",
 	"soil-utils",
 	"soil-version",
 	"static_init",
@@ -155,7 +153,6 @@ std = [
 	"soil-transaction-pool/std",
 	"soil-transaction-pool-api/std",
 	"soil-transaction-storage-proof/std",
-	"soil-trie/std",
 	"soil-utils/std",
 	"soil-version/std",
 ]

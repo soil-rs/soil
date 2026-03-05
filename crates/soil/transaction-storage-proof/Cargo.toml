@@ -23,7 +23,6 @@ soil-api = { workspace = true }
 subsoil = { optional = true, workspace = true }
 soil-inherents = { workspace = true }
 soil-runtime = { workspace = true }
-soil-trie = { optional = true, workspace = true }
 
 [features]
 default = ["std"]
@@ -35,5 +34,4 @@ std = [
 	"subsoil/std",
 	"soil-inherents/std",
 	"soil-runtime/std",
-	"soil-trie/std",
 ]

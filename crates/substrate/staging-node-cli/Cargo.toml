@@ -170,7 +170,6 @@ subsoil-crypto-hashing = { workspace = true, default-features = true }
 soil-application-crypto = { workspace = true, default-features = true }
 soil-inherents = { workspace = true, default-features = true }
 soil-state-machine = { workspace = true, default-features = true }
-soil-trie = { workspace = true, default-features = true }
 criterion = { features = ["async_tokio"], workspace = true, default-features = true }
 nix = { features = ["signal"], workspace = true }
 pretty_assertions.workspace = true

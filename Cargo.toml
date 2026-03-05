@@ -97,7 +97,6 @@ members = [
 	"crates/soil/transaction-pool",
 	"crates/soil/transaction-pool-api",
 	"crates/soil/transaction-storage-proof",
-	"crates/soil/trie",
 	"crates/soil/utils",
 	"crates/soil/version",
 	"crates/subsoil-version-proc-macro",
@@ -566,7 +565,6 @@ soil-test-primitives = { path = "crates/soil/test-primitives" }
 soil-timestamp = { path = "crates/soil/timestamp", default-features = false }
 soil-transaction-pool = { path = "crates/soil/transaction-pool", default-features = false }
 soil-transaction-storage-proof = { path = "crates/soil/transaction-storage-proof", default-features = false }
-soil-trie = { path = "crates/soil/trie", default-features = false }
 soil-version = { path = "crates/soil/version", default-features = false }
 subsoil-version-proc-macro = { path = "crates/subsoil-version-proc-macro", default-features = false }
 subkey = { path = "crates/substrate/subkey", default-features = false }

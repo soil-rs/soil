@@ -46,7 +46,6 @@ soil-session = { workspace = true }
 soil-state-machine = { workspace = true }
 soil-statement-store = { workspace = true }
 soil-transaction-pool = { workspace = true }
-soil-trie = { workspace = true }
 soil-version = { workspace = true }
 trie-db = { workspace = true }
 
@@ -111,7 +110,6 @@ std = [
 	"soil-state-machine/std",
 	"soil-statement-store/std",
 	"soil-transaction-pool/std",
-	"soil-trie/std",
 	"soil-version/std",
 	"substrate-wasm-builder",
 	"tracing/std",

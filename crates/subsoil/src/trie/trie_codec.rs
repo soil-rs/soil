@@ -20,7 +20,7 @@
 //! This uses compact proof from trie crate and extends
 //! it to substrate specific layout and child trie system.
 
-use crate::{CompactProof, HashDBT, TrieConfiguration, TrieHash, EMPTY_PREFIX};
+use super::{CompactProof, HashDBT, TrieConfiguration, TrieHash, EMPTY_PREFIX};
 use alloc::{boxed::Box, vec::Vec};
 use trie_db::{CError, Trie};
 
@@ -76,11 +76,11 @@ where
 	let mut child_tries = Vec::new();
 	{
 		// fetch child trie roots
-		let trie = crate::TrieDBBuilder::<L>::new(db, &top_root).build();
+		let trie = super::TrieDBBuilder::<L>::new(db, &top_root).build();
 
 		let mut iter = trie.iter()?;
 
-		let childtrie_roots = subsoil::core::storage::well_known_keys::DEFAULT_CHILD_STORAGE_KEY_PREFIX;
+		let childtrie_roots = crate::core::storage::well_known_keys::DEFAULT_CHILD_STORAGE_KEY_PREFIX;
 		if iter.seek(childtrie_roots).is_ok() {
 			loop {
 				match iter.next() {
@@ -157,11 +157,11 @@ where
 {
 	let mut child_tries = Vec::new();
 	let mut compact_proof = {
-		let trie = crate::TrieDBBuilder::<L>::new(partial_db, root).build();
+		let trie = super::TrieDBBuilder::<L>::new(partial_db, root).build();
 
 		let mut iter = trie.iter()?;
 
-		let childtrie_roots = subsoil::core::storage::well_known_keys::DEFAULT_CHILD_STORAGE_KEY_PREFIX;
+		let childtrie_roots = crate::core::storage::well_known_keys::DEFAULT_CHILD_STORAGE_KEY_PREFIX;
 		if iter.seek(childtrie_roots).is_ok() {
 			loop {
 				match iter.next() {
@@ -195,7 +195,7 @@ where
 			continue;
 		}
 
-		let trie = crate::TrieDBBuilder::<L>::new(partial_db, &child_root).build();
+		let trie = super::TrieDBBuilder::<L>::new(partial_db, &child_root).build();
 		let child_proof = trie_db::encode_compact::<L>(&trie)?;
 
 		compact_proof.extend(child_proof);
@@ -207,16 +207,16 @@ where
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use crate::{delta_trie_root, recorder::IgnoredNodes, HashDB, StorageProof};
+	use super::super::{delta_trie_root, recorder::IgnoredNodes, HashDB, StorageProof};
 	use codec::Encode;
 	use hash_db::AsHashDB;
-	use subsoil::core::{Blake2Hasher, H256};
+	use crate::core::{Blake2Hasher, H256};
 	use std::collections::HashSet;
 	use trie_db::{DBValue, Trie, TrieDBBuilder, TrieDBMutBuilder, TrieHash, TrieMut};
 
-	type MemoryDB = crate::MemoryDB<subsoil::core::Blake2Hasher>;
-	type Layout = crate::LayoutV1<subsoil::core::Blake2Hasher>;
-	type Recorder = crate::recorder::Recorder<subsoil::core::Blake2Hasher>;
+	type MemoryDB = super::super::MemoryDB<crate::core::Blake2Hasher>;
+	type Layout = super::super::LayoutV1<crate::core::Blake2Hasher>;
+	type Recorder = super::super::recorder::Recorder<crate::core::Blake2Hasher>;
 
 	fn create_trie(num_keys: u32) -> (MemoryDB, TrieHash<Layout>) {
 		let mut db = MemoryDB::default();
@@ -241,10 +241,10 @@ mod tests {
 		write: MemoryDB,
 	}
 
-	impl hash_db::HashDB<subsoil::core::Blake2Hasher, DBValue> for Overlay<'_> {
+	impl hash_db::HashDB<crate::core::Blake2Hasher, DBValue> for Overlay<'_> {
 		fn get(
 			&self,
-			key: &<subsoil::core::Blake2Hasher as hash_db::Hasher>::Out,
+			key: &<crate::core::Blake2Hasher as hash_db::Hasher>::Out,
 			prefix: hash_db::Prefix,
 		) -> Option<DBValue> {
 			HashDB::get(self.db, key, prefix)
@@ -252,7 +252,7 @@ mod tests {
 
 		fn contains(
 			&self,
-			key: &<subsoil::core::Blake2Hasher as hash_db::Hasher>::Out,
+			key: &<crate::core::Blake2Hasher as hash_db::Hasher>::Out,
 			prefix: hash_db::Prefix,
 		) -> bool {
 			HashDB::contains(self.db, key, prefix)
@@ -262,13 +262,13 @@ mod tests {
 			&mut self,
 			prefix: hash_db::Prefix,
 			value: &[u8],
-		) -> <subsoil::core::Blake2Hasher as hash_db::Hasher>::Out {
+		) -> <crate::core::Blake2Hasher as hash_db::Hasher>::Out {
 			self.write.insert(prefix, value)
 		}
 
 		fn emplace(
 			&mut self,
-			key: <subsoil::core::Blake2Hasher as hash_db::Hasher>::Out,
+			key: <crate::core::Blake2Hasher as hash_db::Hasher>::Out,
 			prefix: hash_db::Prefix,
 			value: DBValue,
 		) {
@@ -277,7 +277,7 @@ mod tests {
 
 		fn remove(
 			&mut self,
-			key: &<subsoil::core::Blake2Hasher as hash_db::Hasher>::Out,
+			key: &<crate::core::Blake2Hasher as hash_db::Hasher>::Out,
 			prefix: hash_db::Prefix,
 		) {
 			self.write.remove(key, prefix);
@@ -394,7 +394,7 @@ mod tests {
 
 		assert!(proof.encoded_size() > compact_proof.encoded_size());
 
-		let mut res_db = crate::MemoryDB::<Blake2Hasher>::new(&[]);
+		let mut res_db = super::super::MemoryDB::<Blake2Hasher>::new(&[]);
 		decode_compact::<Layout, _, _>(
 			&mut res_db,
 			compact_proof.iter_compact_encoded_nodes(),

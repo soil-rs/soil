@@ -522,10 +522,10 @@ pub use subsoil_api_proc_macro::mock_impl_runtime_apis;
 
 /// A type that records all accessed trie nodes and generates a proof out of it.
 #[cfg(feature = "std")]
-pub type ProofRecorder<B> = soil_trie::recorder::Recorder<HashingFor<B>>;
+pub type ProofRecorder<B> = subsoil::trie::recorder::Recorder<HashingFor<B>>;
 
 #[cfg(feature = "std")]
-pub type ProofRecorderIgnoredNodes<B> = soil_trie::recorder::IgnoredNodes<<B as BlockT>::Hash>;
+pub type ProofRecorderIgnoredNodes<B> = subsoil::trie::recorder::IgnoredNodes<<B as BlockT>::Hash>;
 
 #[cfg(feature = "std")]
 pub type StorageChanges<Block> = soil_state_machine::StorageChanges<HashingFor<Block>>;

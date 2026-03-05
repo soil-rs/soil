@@ -25,7 +25,6 @@ subsoil-api-proc-macro = { workspace = true }
 soil-runtime = { workspace = true }
 subsoil = { workspace = true }
 soil-state-machine = { optional = true, workspace = true }
-soil-trie = { optional = true, workspace = true }
 soil-version = { workspace = true }
 thiserror = { optional = true, workspace = true }
 
@@ -44,7 +43,6 @@ std = [
 	"soil-runtime/std",
 	"soil-state-machine/std",
 	"soil-test-primitives/std",
-	"soil-trie/std",
 	"soil-version/std",
 	"thiserror",
 ]

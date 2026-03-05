@@ -74,6 +74,17 @@ schnorrkel = { features = ["preaudit_deprecated"], workspace = true }
 k256 = { features = ["alloc", "ecdsa"], workspace = true }
 secp256k1 = { features = ["alloc", "recovery"], optional = true, workspace = true }
 
+# Dependencies from soil-trie
+ahash = { optional = true, workspace = true }
+foldhash = { workspace = true }
+hashbrown = { workspace = true }
+memory-db = { workspace = true }
+nohash-hasher = { optional = true, workspace = true }
+prometheus-endpoint = { optional = true, workspace = true, default-features = true }
+schnellru = { optional = true, workspace = true }
+trie-db = { workspace = true }
+trie-root = { workspace = true }
+
 # bls crypto
 sha2 = { optional = true, workspace = true }
 w3f-bls = { optional = true, workspace = true }
@@ -96,6 +107,8 @@ criterion = { workspace = true, default-features = true }
 serde_json = { workspace = true, default-features = true }
 rustversion = { workspace = true }
 trybuild = { workspace = true }
+trie-bench = { workspace = true }
+trie-standardmap = { workspace = true }
 
 [features]
 default = ["std"]
@@ -149,6 +162,15 @@ std = [
 	"ss58-registry/std",
 	"substrate-bip39/std",
 	"thiserror",
+	# soil-trie std features
+	"ahash",
+	"foldhash/std",
+	"memory-db/std",
+	"nohash-hasher",
+	"prometheus-endpoint",
+	"schnellru",
+	"trie-db/std",
+	"trie-root/std",
 	"w3f-bls?/std",
 	"zeroize/alloc",
 	"zeroize/std",

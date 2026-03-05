@@ -34,7 +34,7 @@ use subsoil::core::{
 	Hasher,
 };
 use soil_state_machine::backend::AsTrieBackend;
-use soil_trie::{
+use subsoil::trie::{
 	trie_types::{TrieDB, TrieDBBuilder},
 	KeySpacedDB, Trie,
 };

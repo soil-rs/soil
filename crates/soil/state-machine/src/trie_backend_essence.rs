@@ -32,7 +32,7 @@ use hash_db::{self, AsHashDB, HashDB, HashDBRef, Hasher, Prefix};
 #[cfg(feature = "std")]
 use parking_lot::RwLock;
 use subsoil::core::storage::{ChildInfo, ChildType, StateVersion};
-use soil_trie::{
+use subsoil::trie::{
 	child_delta_trie_root, delta_trie_root, empty_child_trie_root,
 	read_child_trie_first_descendant_value, read_child_trie_hash, read_child_trie_value,
 	read_trie_first_descendant_value, read_trie_value,
@@ -44,7 +44,7 @@ use soil_trie::{
 use std::collections::HashMap;
 // In this module, we only use layout for read operation and empty root,
 // where V1 and V0 are equivalent.
-use soil_trie::LayoutV1 as Layout;
+use subsoil::trie::LayoutV1 as Layout;
 
 #[cfg(not(feature = "std"))]
 macro_rules! format {
@@ -110,7 +110,7 @@ where
 		&mut self,
 		backend: &TrieBackendEssence<S, H, C, R>,
 		callback: impl FnOnce(
-			&soil_trie::TrieDB<Layout<H>>,
+			&subsoil::trie::TrieDB<Layout<H>>,
 			&mut TrieDBRawIterator<Layout<H>>,
 		) -> Option<core::result::Result<RE, Box<TrieError<<H as Hasher>::Out>>>>,
 	) -> Option<Result<RE>> {
@@ -373,7 +373,7 @@ where
 		&self,
 		root: H::Out,
 		child_info: Option<&ChildInfo>,
-		callback: impl FnOnce(&soil_trie::TrieDB<Layout<H>>) -> RE,
+		callback: impl FnOnce(&subsoil::trie::TrieDB<Layout<H>>) -> RE,
 	) -> RE {
 		let backend = self as &dyn HashDBRef<H, Vec<u8>>;
 		let db = child_info
@@ -636,10 +636,10 @@ where
 		let root = self.with_recorder_and_cache_for_storage_root(None, |recorder, cache| {
 			let mut eph = Ephemeral::new(self.backend_storage(), &mut write_overlay);
 			let res = match state_version {
-				StateVersion::V0 => delta_trie_root::<soil_trie::LayoutV0<H>, _, _, _, _, _>(
+				StateVersion::V0 => delta_trie_root::<subsoil::trie::LayoutV0<H>, _, _, _, _, _>(
 					&mut eph, self.root, delta, recorder, cache,
 				),
-				StateVersion::V1 => delta_trie_root::<soil_trie::LayoutV1<H>, _, _, _, _, _>(
+				StateVersion::V1 => delta_trie_root::<subsoil::trie::LayoutV1<H>, _, _, _, _, _>(
 					&mut eph, self.root, delta, recorder, cache,
 				),
 			};
@@ -665,7 +665,7 @@ where
 		state_version: StateVersion,
 	) -> (H::Out, bool, PrefixedMemoryDB<H>) {
 		let default_root = match child_info.child_type() {
-			ChildType::ParentKeyId => empty_child_trie_root::<soil_trie::LayoutV1<H>>(),
+			ChildType::ParentKeyId => empty_child_trie_root::<subsoil::trie::LayoutV1<H>>(),
 		};
 		let mut write_overlay = PrefixedMemoryDB::with_hasher(RandomState::default());
 		let child_root = match self.child_root(child_info) {
@@ -682,7 +682,7 @@ where
 				let mut eph = Ephemeral::new(self.backend_storage(), &mut write_overlay);
 				match match state_version {
 					StateVersion::V0 => {
-						child_delta_trie_root::<soil_trie::LayoutV0<H>, _, _, _, _, _, _>(
+						child_delta_trie_root::<subsoil::trie::LayoutV0<H>, _, _, _, _, _, _>(
 							child_info.keyspace(),
 							&mut eph,
 							child_root,
@@ -692,7 +692,7 @@ where
 						)
 					},
 					StateVersion::V1 => {
-						child_delta_trie_root::<soil_trie::LayoutV1<H>, _, _, _, _, _, _>(
+						child_delta_trie_root::<subsoil::trie::LayoutV1<H>, _, _, _, _, _, _>(
 							child_info.keyspace(),
 							&mut eph,
 							child_root,
@@ -797,10 +797,10 @@ impl<H: Hasher> TrieBackendStorage<H> for Arc<dyn Storage<H>> {
 	}
 }
 
-impl<H, KF> TrieBackendStorage<H> for soil_trie::GenericMemoryDB<H, KF>
+impl<H, KF> TrieBackendStorage<H> for subsoil::trie::GenericMemoryDB<H, KF>
 where
 	H: Hasher,
-	KF: soil_trie::KeyFunction<H> + Send + Sync,
+	KF: subsoil::trie::KeyFunction<H> + Send + Sync,
 {
 	fn get(&self, key: &H::Out, prefix: Prefix) -> Result<Option<DBValue>> {
 		Ok(hash_db::HashDB::get(self, key, prefix))
@@ -881,7 +881,7 @@ mod test {
 	use super::*;
 	use crate::{Backend, TrieBackend};
 	use subsoil::core::{Blake2Hasher, H256};
-	use soil_trie::{
+	use subsoil::trie::{
 		cache::LocalTrieCache, trie_types::TrieDBMutBuilderV1 as TrieDBMutBuilder, KeySpacedDBMut,
 		PrefixedMemoryDB, TrieMut,
 	};
@@ -918,7 +918,7 @@ mod test {
 		};
 
 		let essence_1 =
-			TrieBackendEssence::<_, _, LocalTrieCache<_>, soil_trie::recorder::Recorder<_>>::new(
+			TrieBackendEssence::<_, _, LocalTrieCache<_>, subsoil::trie::recorder::Recorder<_>>::new(
 				mdb, root_1,
 			);
 		let mdb = essence_1.backend_storage().clone();
@@ -931,7 +931,7 @@ mod test {
 		assert_eq!(essence_1.next_storage_key(b"6"), Ok(None));
 
 		let essence_2 =
-			TrieBackendEssence::<_, _, LocalTrieCache<_>, soil_trie::recorder::Recorder<_>>::new(
+			TrieBackendEssence::<_, _, LocalTrieCache<_>, subsoil::trie::recorder::Recorder<_>>::new(
 				mdb, root_2,
 			);
 

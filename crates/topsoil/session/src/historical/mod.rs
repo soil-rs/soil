@@ -39,7 +39,7 @@ use soil_runtime::{
 };
 use soil_session::{MembershipProof, ValidatorCount};
 use soil_staking::SessionIndex;
-use soil_trie::{
+use subsoil::trie::{
 	trie_types::{TrieDBBuilder, TrieDBMutBuilderV0},
 	LayoutV0, MemoryDB, RandomState, Recorder, StorageProof, Trie, TrieMut, TrieRecorder,
 };
@@ -55,7 +55,7 @@ const LOG_TARGET: &'static str = "runtime::historical";
 use crate::{self as topsoil_session, Pallet as Session};
 
 pub use pallet::*;
-use soil_trie::{accessed_nodes_tracker::AccessedNodesTracker, recorder_ext::RecorderExt};
+use subsoil::trie::{accessed_nodes_tracker::AccessedNodesTracker, recorder_ext::RecorderExt};
 
 #[topsoil_support::pallet]
 pub mod pallet {

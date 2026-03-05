@@ -152,7 +152,7 @@ pub use crate::{
 #[cfg(feature = "std")]
 mod std_reexport {
 	pub use crate::{testing::TestExternalities, trie_backend::create_proof_check_backend};
-	pub use soil_trie::{
+	pub use subsoil::trie::{
 		trie_types::{TrieDBMutV0, TrieDBMutV1},
 		CompactProof, DBValue, LayoutV0, LayoutV1, MemoryDB, StorageProof, TrieMut,
 	};
@@ -172,7 +172,7 @@ mod execution {
 		traits::{CallContext, CodeExecutor, RuntimeCode},
 	};
 	use subsoil::externalities::Extensions;
-	use soil_trie::PrefixedMemoryDB;
+	use subsoil::trie::PrefixedMemoryDB;
 	use std::collections::{HashMap, HashSet};
 
 	pub(crate) type CallResult<E> = Result<Vec<u8>, E>;
@@ -599,7 +599,7 @@ mod execution {
 			return Err(Box::new("Invalid start of range."));
 		}
 
-		let recorder = soil_trie::recorder::Recorder::default();
+		let recorder = subsoil::trie::recorder::Recorder::default();
 		let proving_backend =
 			TrieBackendBuilder::wrap(trie_backend).with_recorder(recorder.clone()).build();
 		let mut count = 0;
@@ -726,7 +726,7 @@ mod execution {
 		H: Hasher,
 		H::Out: Ord + Codec,
 	{
-		let recorder = soil_trie::recorder::Recorder::default();
+		let recorder = subsoil::trie::recorder::Recorder::default();
 		let proving_backend =
 			TrieBackendBuilder::wrap(trie_backend).with_recorder(recorder.clone()).build();
 		let mut count = 0;
@@ -1104,7 +1104,7 @@ mod tests {
 		H256,
 	};
 	use soil_runtime::traits::BlakeTwo256;
-	use soil_trie::{
+	use subsoil::trie::{
 		trie_types::{TrieDBMutBuilderV0, TrieDBMutBuilderV1},
 		KeySpacedDBMut, PrefixedMemoryDB,
 	};

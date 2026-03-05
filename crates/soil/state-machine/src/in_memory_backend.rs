@@ -25,7 +25,7 @@ use alloc::{collections::BTreeMap, vec::Vec};
 use codec::Codec;
 use hash_db::Hasher;
 use subsoil::core::storage::{ChildInfo, StateVersion, Storage};
-use soil_trie::{empty_trie_root, LayoutV1, PrefixedMemoryDB, RandomState};
+use subsoil::trie::{empty_trie_root, LayoutV1, PrefixedMemoryDB, RandomState};
 
 #[cfg(feature = "std")]
 use std::collections::HashMap as MapType;

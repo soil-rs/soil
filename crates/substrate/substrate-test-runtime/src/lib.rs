@@ -53,7 +53,7 @@ use topsoil_system::{
 use soil_application_crypto::{bls381, ecdsa_bls381};
 
 use subsoil::core::OpaqueMetadata;
-use soil_trie::{
+use subsoil::trie::{
 	trie_types::{TrieDBBuilder, TrieDBMutBuilderV1},
 	PrefixedMemoryDB, StorageProof,
 };
@@ -947,7 +947,7 @@ fn test_read_child_storage() {
 
 fn test_witness(proof: StorageProof, root: crate::Hash) {
 	use subsoil::externalities::Externalities;
-	let db: soil_trie::MemoryDB<crate::Hashing> = proof.into_memory_db();
+	let db: subsoil::trie::MemoryDB<crate::Hashing> = proof.into_memory_db();
 	let backend =
 		soil_state_machine::TrieBackendBuilder::<_, crate::Hashing>::new(db, root).build();
 	let mut overlay = soil_state_machine::OverlayedChanges::default();
@@ -1217,12 +1217,12 @@ mod tests {
 		runtime_api.test_storage(best_hash).unwrap();
 	}
 
-	fn witness_backend() -> (soil_trie::MemoryDB<crate::Hashing>, crate::Hash) {
+	fn witness_backend() -> (subsoil::trie::MemoryDB<crate::Hashing>, crate::Hash) {
 		let mut root = crate::Hash::default();
-		let mut mdb = soil_trie::MemoryDB::<crate::Hashing>::default();
+		let mut mdb = subsoil::trie::MemoryDB::<crate::Hashing>::default();
 		{
 			let mut trie =
-				soil_trie::trie_types::TrieDBMutBuilderV1::new(&mut mdb, &mut root).build();
+				subsoil::trie::trie_types::TrieDBMutBuilderV1::new(&mut mdb, &mut root).build();
 			trie.insert(b"value3", &[142]).expect("insert failed");
 			trie.insert(b"value4", &[124]).expect("insert failed");
 		};

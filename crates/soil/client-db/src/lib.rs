@@ -119,7 +119,7 @@ use soil_state_machine::{
 	StorageValue, UsageInfo as StateUsageInfo,
 };
 #[cfg(feature = "std")]
-use soil_trie::{cache::SharedTrieCache, prefixed_key, MemoryDB, MerkleValue, PrefixedMemoryDB};
+use subsoil::trie::{cache::SharedTrieCache, prefixed_key, MemoryDB, MerkleValue, PrefixedMemoryDB};
 #[cfg(feature = "std")]
 use utils::BLOCK_GAP_CURRENT_VERSION;
 
@@ -1170,7 +1170,7 @@ impl<Block: BlockT> EmptyStorage<Block> {
 		let mut root = Block::Hash::default();
 		let mut mdb = MemoryDB::<HashingFor<Block>>::default();
 		// both triedbmut are the same on empty storage.
-		soil_trie::trie_types::TrieDBMutBuilderV1::<HashingFor<Block>>::new(&mut mdb, &mut root)
+		subsoil::trie::trie_types::TrieDBMutBuilderV1::<HashingFor<Block>>::new(&mut mdb, &mut root)
 			.build();
 		EmptyStorage(root)
 	}
@@ -1243,7 +1243,7 @@ pub struct Backend<Block: BlockT> {
 	io_stats: FrozenForDuration<(kvdb::IoStats, StateUsageInfo)>,
 	state_usage: Arc<StateUsageStats>,
 	genesis_state: RwLock<Option<Arc<DbGenesisStorage<Block>>>>,
-	shared_trie_cache: Option<soil_trie::cache::SharedTrieCache<HashingFor<Block>>>,
+	shared_trie_cache: Option<subsoil::trie::cache::SharedTrieCache<HashingFor<Block>>>,
 	pruning_filters: Vec<Arc<dyn PruningFilter>>,
 }
 
@@ -1360,7 +1360,7 @@ impl<Block: BlockT> Backend<Block> {
 	#[cfg(feature = "runtime-benchmarks")]
 	pub fn expose_shared_trie_cache(
 		&self,
-	) -> Option<soil_trie::cache::SharedTrieCache<HashingFor<Block>>> {
+	) -> Option<subsoil::trie::cache::SharedTrieCache<HashingFor<Block>>> {
 		self.shared_trie_cache.clone()
 	}
 
@@ -1408,7 +1408,7 @@ impl<Block: BlockT> Backend<Block> {
 				);
 			}
 
-			SharedTrieCache::new(soil_trie::cache::CacheSize::new(maximum_size), config.metrics_registry.as_ref())
+			SharedTrieCache::new(subsoil::trie::cache::CacheSize::new(maximum_size), config.metrics_registry.as_ref())
 		});
 
 		let backend = Backend {
@@ -3197,7 +3197,7 @@ pub(crate) mod tests {
 					.db
 					.get(
 						columns::STATE,
-						&soil_trie::prefixed_key::<BlakeTwo256>(&key, EMPTY_PREFIX)
+						&subsoil::trie::prefixed_key::<BlakeTwo256>(&key, EMPTY_PREFIX)
 					)
 					.unwrap(),
 				&b"hello"[..]
@@ -3237,7 +3237,7 @@ pub(crate) mod tests {
 					.db
 					.get(
 						columns::STATE,
-						&soil_trie::prefixed_key::<BlakeTwo256>(&key, EMPTY_PREFIX)
+						&subsoil::trie::prefixed_key::<BlakeTwo256>(&key, EMPTY_PREFIX)
 					)
 					.unwrap(),
 				&b"hello"[..]
@@ -3274,7 +3274,7 @@ pub(crate) mod tests {
 			assert!(backend
 				.storage
 				.db
-				.get(columns::STATE, &soil_trie::prefixed_key::<BlakeTwo256>(&key, EMPTY_PREFIX))
+				.get(columns::STATE, &subsoil::trie::prefixed_key::<BlakeTwo256>(&key, EMPTY_PREFIX))
 				.is_some());
 			hash
 		};
@@ -3333,7 +3333,7 @@ pub(crate) mod tests {
 			assert!(backend
 				.storage
 				.db
-				.get(columns::STATE, &soil_trie::prefixed_key::<BlakeTwo256>(&key, EMPTY_PREFIX))
+				.get(columns::STATE, &subsoil::trie::prefixed_key::<BlakeTwo256>(&key, EMPTY_PREFIX))
 				.is_none());
 			hash
 		};
@@ -3345,7 +3345,7 @@ pub(crate) mod tests {
 		assert!(backend
 			.storage
 			.db
-			.get(columns::STATE, &soil_trie::prefixed_key::<BlakeTwo256>(&key, EMPTY_PREFIX))
+			.get(columns::STATE, &subsoil::trie::prefixed_key::<BlakeTwo256>(&key, EMPTY_PREFIX))
 			.is_none());
 	}
 

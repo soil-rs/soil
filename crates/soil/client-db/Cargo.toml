@@ -40,7 +40,6 @@ soil-blockchain = { workspace = true, default-features = true, optional = true}
 subsoil = { workspace = true, default-features = true, optional = true}
 soil-runtime = { workspace = true, default-features = true, optional = true}
 soil-state-machine = { workspace = true, default-features = true, optional = true}
-soil-trie = { workspace = true, default-features = true, optional = true}
 sysinfo = { workspace = true, optional = true}
 
 [dev-dependencies]
@@ -73,14 +72,12 @@ std = [
 	"soil-runtime",
 	"soil-state-db",
 	"soil-state-machine",
-	"soil-trie",
 	"sysinfo",
 	"subsoil/std",
 	"soil-client-api/std",
 	"soil-runtime/std",
 	"soil-state-db/std",
 	"soil-state-machine/std",
-	"soil-trie/std",
 ]
 default = ["std"]
 test-helpers = []

@@ -31,13 +31,13 @@ use hash_db::HashDB;
 use hash_db::Hasher;
 use subsoil::core::storage::{ChildInfo, StateVersion};
 #[cfg(feature = "std")]
-use soil_trie::{
+use subsoil::trie::{
 	cache::{LocalTrieCache, TrieCache},
 	MemoryDB,
 };
 #[cfg(not(feature = "std"))]
-use soil_trie::{Error, NodeCodec};
-use soil_trie::{MerkleValue, PrefixedMemoryDB, StorageProof, TrieRecorderProvider};
+use subsoil::trie::{Error, NodeCodec};
+use subsoil::trie::{MerkleValue, PrefixedMemoryDB, StorageProof, TrieRecorderProvider};
 
 use trie_db::TrieCache as TrieCacheT;
 #[cfg(not(feature = "std"))]
@@ -46,7 +46,7 @@ use trie_db::{node::NodeOwned, CachedValue};
 /// A provider of trie caches that are compatible with [`trie_db::TrieDB`].
 pub trait TrieCacheProvider<H: Hasher> {
 	/// Cache type that implements [`trie_db::TrieCache`].
-	type Cache<'a>: TrieCacheT<soil_trie::NodeCodec<H>> + 'a
+	type Cache<'a>: TrieCacheT<subsoil::trie::NodeCodec<H>> + 'a
 	where
 		Self: 'a;
 
@@ -168,7 +168,7 @@ impl<H: Hasher> TrieCacheProvider<H> for UnimplementedCacheProvider<H> {
 #[cfg(not(feature = "std"))]
 pub struct UnimplementedRecorderProvider<H> {
 	// Not strictly necessary, but the H bound allows to use this as a drop-in
-	// replacement for the [`soil_trie::recorder::Recorder`] in no-std contexts.
+	// replacement for the [`subsoil::trie::recorder::Recorder`] in no-std contexts.
 	_phantom: core::marker::PhantomData<H>,
 }
 
@@ -206,7 +206,7 @@ type DefaultCache<H> = LocalTrieCache<H>;
 type DefaultCache<H> = UnimplementedCacheProvider<H>;
 
 #[cfg(feature = "std")]
-type DefaultRecorder<H> = soil_trie::recorder::Recorder<H>;
+type DefaultRecorder<H> = subsoil::trie::recorder::Recorder<H>;
 
 #[cfg(not(feature = "std"))]
 type DefaultRecorder<H> = UnimplementedRecorderProvider<H>;
@@ -579,7 +579,7 @@ pub mod tests {
 	use codec::Encode;
 	use subsoil::core::H256;
 	use soil_runtime::traits::BlakeTwo256;
-	use soil_trie::{
+	use subsoil::trie::{
 		cache::{CacheSize, SharedTrieCache},
 		trie_types::{TrieDBBuilder, TrieDBMutBuilderV0, TrieDBMutBuilderV1},
 		KeySpacedDBMut, PrefixedMemoryDB, Trie, TrieCache, TrieMut,
@@ -589,7 +589,7 @@ pub mod tests {
 
 	const CHILD_KEY_1: &[u8] = b"sub1";
 
-	type Recorder = soil_trie::recorder::Recorder<BlakeTwo256>;
+	type Recorder = subsoil::trie::recorder::Recorder<BlakeTwo256>;
 	type Cache = LocalTrieCache<BlakeTwo256>;
 	type SharedCache = SharedTrieCache<BlakeTwo256>;
 
@@ -656,8 +656,8 @@ pub mod tests {
 			let mut sub_root = Vec::new();
 			root.encode_to(&mut sub_root);
 
-			fn build<L: soil_trie::TrieLayout>(
-				mut trie: soil_trie::TrieDBMut<L>,
+			fn build<L: subsoil::trie::TrieLayout>(
+				mut trie: subsoil::trie::TrieDBMut<L>,
 				child_info: &ChildInfo,
 				sub_root: &[u8],
 			) {
@@ -1372,9 +1372,9 @@ pub mod tests {
 				let hash = BlakeTwo256::hash(&node);
 				// Only insert the node/value that contains the important data.
 				if hash != value_hash {
-					let node = soil_trie::NodeCodec::<BlakeTwo256>::decode(&node)
+					let node = subsoil::trie::NodeCodec::<BlakeTwo256>::decode(&node)
 						.unwrap()
-						.to_owned_node::<soil_trie::LayoutV1<BlakeTwo256>>()
+						.to_owned_node::<subsoil::trie::LayoutV1<BlakeTwo256>>()
 						.unwrap();
 
 					if let Some(data) = node.data() {

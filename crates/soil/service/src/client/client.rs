@@ -76,7 +76,7 @@ use soil_state_machine::{
 	ChildStorageCollection, KeyValueStates, KeyValueStorageLevel, StorageCollection,
 	MAX_NESTED_TRIE_DEPTH,
 };
-use soil_trie::{proof_size_extension::ProofSizeExt, CompactProof, MerkleValue, StorageProof};
+use subsoil::trie::{proof_size_extension::ProofSizeExt, CompactProof, MerkleValue, StorageProof};
 use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedSender};
 use std::{
 	collections::{HashMap, HashSet},
@@ -1388,7 +1388,7 @@ where
 	) -> soil_blockchain::Result<(KeyValueStates, usize)> {
 		let mut db = soil_state_machine::MemoryDB::<HashingFor<Block>>::new(&[]);
 		// Compact encoding
-		soil_trie::decode_compact::<soil_state_machine::LayoutV0<HashingFor<Block>>, _, _>(
+		subsoil::trie::decode_compact::<soil_state_machine::LayoutV0<HashingFor<Block>>, _, _>(
 			&mut db,
 			proof.iter_compact_encoded_nodes(),
 			Some(&root),

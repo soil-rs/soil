@@ -32,7 +32,6 @@ serde = { features = ["alloc", "derive"], optional = true, workspace = true }
 soil-application-crypto = { workspace = true }
 soil-io = { workspace = true }
 subsoil = { workspace = true }
-soil-trie = { workspace = true }
 strum = { workspace = true, features = ["derive"] }
 tracing = { workspace = true, features = ["log"], default-features = false }
 
@@ -68,7 +67,6 @@ std = [
 	"subsoil/std",
 	"soil-io/std",
 	"soil-state-machine/std",
-	"soil-trie/std",
 	"strum/std",
 	"tracing/std",
 	"tuplex/std",

@@ -24,7 +24,7 @@ use crate::{Decode, DecodeWithMemTracking, DispatchError, Encode, MaxEncodedLen,
 #[cfg(feature = "serde")]
 use crate::{Deserialize, Serialize};
 use alloc::vec::Vec;
-use soil_trie::{trie_types::TrieError as SpTrieError, VerifyError};
+use subsoil::trie::{trie_types::TrieError as SpTrieError, VerifyError};
 
 /// A runtime friendly error type for tries.
 #[derive(

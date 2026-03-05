@@ -77,7 +77,7 @@ fn construct_block<E: Externalities>(
 	parent_hash: Hash,
 	extrinsics: Vec<CheckedExtrinsic>,
 ) -> (Vec<u8>, Hash) {
-	use soil_trie::{LayoutV0, TrieConfiguration};
+	use subsoil::trie::{LayoutV0, TrieConfiguration};
 
 	// sign extrinsics.
 	let extrinsics = extrinsics.into_iter().map(sign).collect::<Vec<_>>();
