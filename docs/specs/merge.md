@@ -2,9 +2,14 @@
 
 ## Motivation
 
-The current workspace has 152 crates across `soil/`, `substrate/`, and `substrate-client/`.
+The current workspace has 152 crates across `soil/`, `substrate/`, and `substrate-client/`
+(including subfolders like `substrate-client/consensus/`).
 The dependency graph contains 5 circular dependency clusters (SCCs) and 17 topological layers.
 Many crates are always used together (high Jaccard similarity) and share the same versioning cadence.
+
+> **Note:** SCC analysis must include `dev-dependencies` — cycles through test crates
+> are real compilation-order constraints. Also check subfolders (e.g.
+> `substrate-client/consensus/{aura,babe,beefy,grandpa,pow,slots}/`).
 
 ### Guiding principles
 
@@ -112,9 +117,9 @@ consumers already have or that the linker strips if unused.
 Pulls in `tokio`, `jsonrpsee`, `futures` — heavy async runtime deps that production
 nodes shouldn't be forced to compile.
 
-### `soil-client` — Client infrastructure (~16 crates → 1)
+### `soil-client` — Client infrastructure (~22 crates → 1)
 
-The SCC:client-executor cluster plus tightly coupled crates.
+The SCC:client-executor cluster plus tightly coupled crates and consensus engine wrappers.
 
 | Absorb | Reason |
 |---|---|
@@ -131,6 +136,12 @@ The SCC:client-executor cluster plus tightly coupled crates.
 | sc-keystore | Wraps soil-keystore (6 reverse deps) |
 | sc-consensus | Wraps soil-consensus (12 reverse deps) |
 | sc-transaction-pool | Wraps soil-transaction-pool (9 reverse deps) |
+| sc-consensus-aura | Wraps soil-consensus-aura, wires engine into client |
+| sc-consensus-babe | Wraps soil-consensus-babe, wires engine into client |
+| sc-consensus-beefy | Wraps soil-consensus-beefy, also needs network |
+| sc-consensus-grandpa | Wraps soil-consensus-grandpa, also needs network + chain-spec + client-db |
+| sc-consensus-pow | Wraps soil-consensus-pow |
+| sc-consensus-slots | Wraps soil-consensus-slots |
 
 ### `soil-network` — Networking stack (~10 crates → 1)
 
@@ -190,7 +201,7 @@ Re-exports everything. Consumers write `soil = { features = ["client", "aura", "
 | **subsoil** | primitives, types, runtime, state-machine, trie, api, crypto utils | ~33 |
 | **soil-consensus** | base consensus + slots + epochs + block-builder + all engines | ~11 |
 | **soil-consensus-manual-seal** | kept separate (heavy async deps) | 1 |
-| **soil-client** | client-api, executor, blockchain, db, tx-pool, sc-* wrappers | ~16 |
+| **soil-client** | client-api, executor, blockchain, db, tx-pool, sc-* wrappers, sc-consensus-* engines | ~22 |
 | **soil-network** | p2p, sync, gossip, statements | ~10 |
 | **soil-rpc** | rpc server, spec, endpoints | ~8 |
 | **soil-service** | service, chain-spec, cli, infra | ~10 |
