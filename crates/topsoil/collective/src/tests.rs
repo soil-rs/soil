@@ -36,7 +36,8 @@ use topsoil_support::{
 use topsoil_system::{EnsureRoot, EventRecord, Phase};
 
 pub type Block = subsoil::runtime::generic::Block<Header, UncheckedExtrinsic>;
-pub type UncheckedExtrinsic = subsoil::runtime::generic::UncheckedExtrinsic<u32, RuntimeCall, u64, ()>;
+pub type UncheckedExtrinsic =
+	subsoil::runtime::generic::UncheckedExtrinsic<u32, RuntimeCall, u64, ()>;
 
 topsoil_support::construct_runtime!(
 	pub enum Test

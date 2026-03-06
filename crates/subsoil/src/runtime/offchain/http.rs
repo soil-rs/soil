@@ -48,10 +48,10 @@
 //! assert_eq!(body.error(), &None);
 //! ```
 
-use alloc::{str, vec, vec::Vec};
 use crate::core::offchain::{
 	HttpError, HttpRequestId as RequestId, HttpRequestStatus as RequestStatus, Timestamp,
 };
+use alloc::{str, vec, vec::Vec};
 
 /// Request method (HTTP verb)
 #[derive(Clone, PartialEq, Eq, Debug)]
@@ -324,7 +324,8 @@ impl Response {
 	/// Retrieve the headers for this response.
 	pub fn headers(&mut self) -> &Headers {
 		if self.headers.is_none() {
-			self.headers = Some(Headers { raw: crate::io::offchain::http_response_headers(self.id) });
+			self.headers =
+				Some(Headers { raw: crate::io::offchain::http_response_headers(self.id) });
 		}
 		self.headers.as_ref().expect("Headers were just set; qed")
 	}

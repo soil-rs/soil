@@ -35,13 +35,13 @@ use super::metrics::{InstanceMetrics, Metrics};
 
 use sc_rpc::utils::{RingBuffer, Subscription};
 use soil_client::blockchain::HeaderBackend;
-use subsoil::core::Bytes;
-use subsoil::runtime::traits::Block as BlockT;
 use soil_client::transaction_pool::{
 	error::IntoPoolError, BlockHash, TransactionFor, TransactionPool, TransactionSource,
 	TransactionStatus,
 };
 use std::sync::Arc;
+use subsoil::core::Bytes;
+use subsoil::runtime::traits::Block as BlockT;
 
 pub(crate) const LOG_TARGET: &str = "rpc-spec-v2";
 

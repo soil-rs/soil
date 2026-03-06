@@ -20,8 +20,8 @@
 
 use soil_network::ReputationChange;
 use soil_network_types::PeerId;
-use subsoil::runtime::traits::{Block, NumberFor, Zero};
 use std::collections::{HashMap, VecDeque};
+use subsoil::runtime::traits::{Block, NumberFor, Zero};
 
 /// Report specifying a reputation change for a given peer.
 #[derive(Debug, PartialEq)]

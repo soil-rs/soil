@@ -19,10 +19,10 @@
 //! Functionality for reading and storing children hashes from db.
 
 use super::DbHash;
-use codec::{Decode, Encode};
 use crate::blockchain;
-use subsoil::database::{Database, Transaction};
+use codec::{Decode, Encode};
 use std::hash::Hash;
+use subsoil::database::{Database, Transaction};
 
 /// Returns the hashes of the children blocks of the block with `parent_hash`.
 pub fn read_children<

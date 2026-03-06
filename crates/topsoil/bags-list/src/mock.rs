@@ -19,8 +19,8 @@
 
 use super::*;
 use crate::{self as bags_list};
-use subsoil::runtime::BuildStorage;
 use std::collections::HashMap;
+use subsoil::runtime::BuildStorage;
 use topsoil_election_provider_support::VoteWeight;
 use topsoil_support::{derive_impl, parameter_types};
 

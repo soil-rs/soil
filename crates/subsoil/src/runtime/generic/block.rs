@@ -23,6 +23,7 @@ use ::std::fmt;
 #[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
 
+use crate::runtime::Debug;
 use crate::runtime::{
 	codec::{Codec, Decode, DecodeWithMemTracking, Encode, EncodeLike},
 	traits::{
@@ -31,9 +32,8 @@ use crate::runtime::{
 	},
 	Justifications, OpaqueExtrinsic,
 };
-use alloc::vec::Vec;
 use ::core::marker::PhantomData;
-use crate::runtime::Debug;
+use alloc::vec::Vec;
 
 /// Something to identify a block.
 #[derive(PartialEq, Eq, Clone, Encode, Decode, Debug)]

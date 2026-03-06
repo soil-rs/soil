@@ -71,7 +71,6 @@
 //! println!("Generated block: {:?}", block.block);
 //! ```
 
-
 mod basic_authorship;
 
 pub use crate::basic_authorship::{Proposer, ProposerFactory, DEFAULT_BLOCK_SIZE_LIMIT};

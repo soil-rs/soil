@@ -19,6 +19,7 @@ use super::*;
 use crate::{self as multi_phase, signed::GeometricDepositBase, unsigned::MinerConfig};
 use multi_phase::unsigned::{IndexAssignmentOf, VoterOf};
 use parking_lot::RwLock;
+use std::sync::Arc;
 use subsoil::core::{
 	offchain::{
 		testing::{PoolState, TestOffchainExt, TestTransactionPoolExt},
@@ -36,7 +37,6 @@ use subsoil::runtime::{
 	traits::{BlakeTwo256, Convert, IdentityLookup},
 	BuildStorage, PerU16, Percent,
 };
-use std::sync::Arc;
 use topsoil_election_provider_support::{
 	bounds::{DataProviderBounds, ElectionBounds, ElectionBoundsBuilder},
 	data_provider, onchain, ElectionDataProvider, NposSolution, SequentialPhragmen,

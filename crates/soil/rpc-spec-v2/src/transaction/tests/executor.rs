@@ -16,8 +16,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-use subsoil::core::{testing::TaskExecutor, traits::SpawnNamed};
 use std::sync::{atomic::AtomicUsize, Arc};
+use subsoil::core::{testing::TaskExecutor, traits::SpawnNamed};
 use tokio::sync::mpsc;
 
 /// Wrap the `TaskExecutor` to know when the broadcast future is dropped.

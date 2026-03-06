@@ -17,7 +17,6 @@
 
 //! Intermediate representation of the runtime metadata.
 
-
 // Re-export.
 #[doc(hidden)]
 pub use frame_metadata;

@@ -21,13 +21,13 @@
 use hash_db::Prefix;
 use kvdb::KeyValueDB;
 use rand::Rng;
-use subsoil::state_machine::Backend as _;
-use subsoil::trie::{trie_types::TrieDBMutBuilderV1, TrieMut as _};
 use std::{
 	borrow::Cow,
 	collections::HashMap,
 	sync::{Arc, LazyLock},
 };
+use subsoil::state_machine::Backend as _;
+use subsoil::trie::{trie_types::TrieDBMutBuilderV1, TrieMut as _};
 
 use node_primitives::Hash;
 
@@ -181,7 +181,8 @@ impl core::Benchmark for TrieReadBenchmark {
 		let storage: Arc<dyn subsoil::state_machine::Storage<subsoil::core::Blake2Hasher>> =
 			Arc::new(Storage(db.open(self.database_type)));
 
-		let trie_backend = subsoil::state_machine::TrieBackendBuilder::new(storage, self.root).build();
+		let trie_backend =
+			subsoil::state_machine::TrieBackendBuilder::new(storage, self.root).build();
 		for (warmup_key, warmup_value) in self.warmup_keys.iter() {
 			let value = trie_backend
 				.storage(&warmup_key[..])

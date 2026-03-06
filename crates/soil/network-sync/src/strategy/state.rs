@@ -38,11 +38,11 @@ use soil_client::consensus::BlockOrigin;
 use soil_network::{IfDisconnected, ProtocolName};
 use soil_network_common::sync::message::BlockAnnounce;
 use soil_network_types::PeerId;
+use std::{any::Any, collections::HashMap, sync::Arc};
 use subsoil::runtime::{
 	traits::{Block as BlockT, Header, NumberFor},
 	Justifications, SaturatedConversion,
 };
-use std::{any::Any, collections::HashMap, sync::Arc};
 
 mod rep {
 	use soil_network::ReputationChange as Rep;
@@ -399,8 +399,8 @@ mod test {
 		strategy::state_sync::{ImportResult, StateSyncProgress, StateSyncProvider},
 	};
 	use codec::Decode;
-	use soil_client::block_builder::BlockBuilderBuilder;
 	use sc_consensus::{ImportedAux, ImportedState};
+	use soil_client::block_builder::BlockBuilderBuilder;
 	use soil_client::client_api::KeyValueStates;
 	use subsoil::core::H256;
 	use subsoil::runtime::traits::Zero;

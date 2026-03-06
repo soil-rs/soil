@@ -51,12 +51,12 @@ use super::{
 	node::{Node, NodeId, NodeRef, NodeRole},
 	ExtendedBalance, IdentifierT, StakedAssignment,
 };
+use crate::arithmetic::traits::{Bounded, Zero};
 use alloc::{
 	collections::btree_map::{BTreeMap, Entry::*},
 	vec,
 	vec::Vec,
 };
-use crate::arithmetic::traits::{Bounded, Zero};
 
 /// Map type used for reduce_4. Can be easily swapped with HashMap.
 type Map<A> = BTreeMap<(A, A), A>;

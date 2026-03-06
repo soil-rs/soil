@@ -25,10 +25,10 @@ use crate::{
 };
 use soil_client::blockchain::{Backend as BlockchainBackend, HeaderBackend};
 use soil_client::client_api::Backend as ClientBackend;
-use subsoil::consensus::grandpa::{AuthorityList, SetId, GRANDPA_ENGINE_ID};
 use soil_network_sync::strategy::warp::{
 	EncodedProof, VerificationResult, Verifier, WarpSyncProvider,
 };
+use subsoil::consensus::grandpa::{AuthorityList, SetId, GRANDPA_ENGINE_ID};
 use subsoil::runtime::{
 	generic::BlockId,
 	traits::{Block as BlockT, Header as HeaderT, NumberFor, One},
@@ -395,9 +395,9 @@ mod tests {
 	use soil_client::block_builder::BlockBuilderBuilder;
 	use soil_client::blockchain::HeaderBackend;
 	use soil_client::consensus::BlockOrigin;
+	use std::sync::Arc;
 	use subsoil::consensus::grandpa::GRANDPA_ENGINE_ID;
 	use subsoil::keyring::Ed25519Keyring;
-	use std::sync::Arc;
 	use substrate_test_runtime_client::{
 		BlockBuilderExt, ClientBlockImportExt, ClientExt, DefaultTestClientBuilderExt,
 		TestClientBuilder, TestClientBuilderExt,
@@ -444,7 +444,10 @@ mod tests {
 				let digest = subsoil::runtime::generic::DigestItem::Consensus(
 					subsoil::consensus::grandpa::GRANDPA_ENGINE_ID,
 					subsoil::consensus::grandpa::ConsensusLog::ScheduledChange(
-						subsoil::consensus::grandpa::ScheduledChange { delay: 0u64, next_authorities },
+						subsoil::consensus::grandpa::ScheduledChange {
+							delay: 0u64,
+							next_authorities,
+						},
 					)
 					.encode(),
 				);

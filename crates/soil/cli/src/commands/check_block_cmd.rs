@@ -23,8 +23,8 @@ use crate::{
 };
 use clap::Parser;
 use soil_client::client_api::{BlockBackend, HeaderBackend};
-use subsoil::runtime::traits::{Block as BlockT, Header as HeaderT};
 use std::{fmt::Debug, str::FromStr, sync::Arc};
+use subsoil::runtime::traits::{Block as BlockT, Header as HeaderT};
 
 /// The `check-block` command used to validate blocks.
 #[derive(Debug, Clone, Parser)]

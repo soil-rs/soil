@@ -25,14 +25,14 @@ use kitchensink_runtime::{
 use serde::{Deserialize, Serialize};
 use soil_authority_discovery::AuthorityId as AuthorityDiscoveryId;
 use soil_chain_spec::ChainSpecExtension;
-use subsoil::consensus::babe::AuthorityId as BabeId;
-use subsoil::consensus::beefy::ecdsa_crypto::AuthorityId as BeefyId;
-use subsoil::consensus::grandpa::AuthorityId as GrandpaId;
-use subsoil::core::crypto::UncheckedInto;
 use soil_mixnet::types::AuthorityId as MixnetId;
 use soil_service::ChainType;
 use soil_service::Properties;
 use soil_telemetry::TelemetryEndpoints;
+use subsoil::consensus::babe::AuthorityId as BabeId;
+use subsoil::consensus::beefy::ecdsa_crypto::AuthorityId as BeefyId;
+use subsoil::consensus::grandpa::AuthorityId as GrandpaId;
+use subsoil::core::crypto::UncheckedInto;
 use topsoil_im_online::sr25519::AuthorityId as ImOnlineId;
 
 pub use kitchensink_runtime::RuntimeGenesisConfig;
@@ -425,8 +425,8 @@ pub(crate) mod tests {
 	use super::*;
 	use crate::service::{new_full_base, NewFullBase};
 	use kitchensink_runtime::genesis_config_presets::well_known_including_eth_accounts;
-	use subsoil::runtime::{AccountId32, BuildStorage};
 	use soil_service_test;
+	use subsoil::runtime::{AccountId32, BuildStorage};
 
 	/// Local testnet config (single validator - Alice).
 	pub fn integration_test_config_with_single_authority() -> ChainSpec {

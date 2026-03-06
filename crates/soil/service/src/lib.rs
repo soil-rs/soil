@@ -42,8 +42,11 @@ use futures::{pin_mut, FutureExt, StreamExt};
 use jsonrpsee::RpcModule;
 use log::{debug, error, trace, warn};
 use soil_client::blockchain::HeaderMetadata;
-use soil_client::client_api::{blockchain::HeaderBackend, BlockBackend, BlockchainEvents, ProofProvider};
+use soil_client::client_api::{
+	blockchain::HeaderBackend, BlockBackend, BlockchainEvents, ProofProvider,
+};
 use soil_client::consensus::SyncOracle;
+use soil_client::utils::mpsc::TracingUnboundedReceiver;
 use soil_network::{
 	config::MultiaddrWithPeerId, service::traits::NetworkService, NetworkBackend, NetworkBlock,
 	NetworkPeers, NetworkStateInfo,
@@ -52,7 +55,6 @@ use soil_network_sync::SyncingService;
 use soil_network_types::PeerId;
 use soil_rpc_server::Server;
 use subsoil::runtime::traits::{Block as BlockT, Header as HeaderT};
-use soil_client::utils::mpsc::TracingUnboundedReceiver;
 
 pub use self::{
 	builder::{
@@ -89,13 +91,13 @@ use crate::config::RpcConfiguration;
 use prometheus_endpoint::Registry;
 pub use sc_consensus::ImportQueue;
 pub use sc_rpc::{RandomIntegerSubscriptionId, RandomStringSubscriptionId};
-pub use soil_client::tracing::TracingReceiver;
 pub use sc_transaction_pool::TransactionPoolOptions;
 pub use soil_client::executor::NativeExecutionDispatch;
+pub use soil_client::tracing::TracingReceiver;
+pub use soil_client::transaction_pool::{error::IntoPoolError, InPoolTransaction, TransactionPool};
 pub use soil_network_sync::WarpSyncConfig;
 #[doc(hidden)]
 pub use soil_network_transactions::config::{TransactionImport, TransactionImportFuture};
-pub use soil_client::transaction_pool::{error::IntoPoolError, InPoolTransaction, TransactionPool};
 #[doc(hidden)]
 pub use std::{ops::Deref, result::Result, sync::Arc};
 pub use task_manager::{
@@ -480,7 +482,10 @@ fn transactions_to_propagate<Pool, B, H, E>(pool: &Pool) -> Vec<(H, Arc<B::Extri
 where
 	Pool: TransactionPool<Block = B, Hash = H, Error = E>,
 	B: BlockT,
-	H: std::hash::Hash + Eq + subsoil::runtime::traits::Member + subsoil::runtime::traits::MaybeSerialize,
+	H: std::hash::Hash
+		+ Eq
+		+ subsoil::runtime::traits::Member
+		+ subsoil::runtime::traits::MaybeSerialize,
 	E: IntoPoolError + From<soil_client::transaction_pool::error::Error>,
 {
 	pool.ready()
@@ -505,7 +510,10 @@ where
 		+ 'static,
 	Pool: 'static + TransactionPool<Block = B, Hash = H, Error = E>,
 	B: BlockT,
-	H: std::hash::Hash + Eq + subsoil::runtime::traits::Member + subsoil::runtime::traits::MaybeSerialize,
+	H: std::hash::Hash
+		+ Eq
+		+ subsoil::runtime::traits::Member
+		+ subsoil::runtime::traits::MaybeSerialize,
 	E: 'static + IntoPoolError + From<soil_client::transaction_pool::error::Error>,
 {
 	fn transactions(&self) -> Vec<(H, Arc<B::Extrinsic>)> {

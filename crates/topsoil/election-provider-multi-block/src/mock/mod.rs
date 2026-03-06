@@ -33,6 +33,8 @@ use crate::{
 use codec::{Decode, Encode, MaxEncodedLen};
 use parking_lot::RwLock;
 pub use signed::*;
+pub use staking::*;
+use std::{sync::Arc, vec};
 use subsoil::core::{
 	offchain::{
 		testing::{PoolState, TestOffchainExt, TestTransactionPoolExt},
@@ -46,8 +48,6 @@ use subsoil::runtime::{
 	traits::{BlakeTwo256, IdentityLookup},
 	BuildStorage, PerU16, Perbill,
 };
-pub use staking::*;
-use std::{sync::Arc, vec};
 use topsoil_election_provider_support::{
 	bounds::{ElectionBounds, ElectionBoundsBuilder},
 	InstantElectionProvider, NposSolution, SequentialPhragmen,
@@ -456,7 +456,9 @@ impl ExtBuilder {
 	}
 
 	/// Warning: this does not execute the post-sanity-checks.
-	pub(crate) fn build_offchainify(self) -> (subsoil::io::TestExternalities, Arc<RwLock<PoolState>>) {
+	pub(crate) fn build_offchainify(
+		self,
+	) -> (subsoil::io::TestExternalities, Arc<RwLock<PoolState>>) {
 		let mut ext = self.build_unchecked();
 		let (offchain, _offchain_state) = TestOffchainExt::new();
 		let (pool, pool_state) = TestTransactionPoolExt::new();
@@ -533,7 +535,8 @@ pub fn solution_from_supports(
 	snapshot_page: PageIndex,
 ) -> TestNposSolution {
 	let staked = subsoil::npos_elections::supports_to_staked_assignment(supports);
-	let assignments = subsoil::npos_elections::assignment_staked_to_ratio_normalized(staked).unwrap();
+	let assignments =
+		subsoil::npos_elections::assignment_staked_to_ratio_normalized(staked).unwrap();
 
 	let voters = crate::Snapshot::<Runtime>::voters(snapshot_page).unwrap();
 	let targets = crate::Snapshot::<Runtime>::targets().unwrap();

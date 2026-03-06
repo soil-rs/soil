@@ -99,11 +99,7 @@ pub const KEY_TYPE: KeyTypeId = KeyTypeId(*b"btc!");
 pub mod crypto {
 	use super::KEY_TYPE;
 	use subsoil::core::sr25519::Signature as Sr25519Signature;
-	use subsoil::runtime::{
-		app_crypto::sr25519,
-		traits::Verify,
-		MultiSignature, MultiSigner,
-	};
+	use subsoil::runtime::{app_crypto::sr25519, traits::Verify, MultiSignature, MultiSigner};
 	subsoil::app_crypto!(sr25519, KEY_TYPE);
 
 	pub struct TestAuthId;

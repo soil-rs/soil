@@ -965,7 +965,9 @@ pub mod pallet {
 
 impl<T: Config> Pallet<T> {
 	#[cfg(any(feature = "try-runtime", test, feature = "runtime-benchmarks"))]
-	pub(crate) fn do_try_state(_n: BlockNumberFor<T>) -> Result<(), subsoil::runtime::TryRuntimeError> {
+	pub(crate) fn do_try_state(
+		_n: BlockNumberFor<T>,
+	) -> Result<(), subsoil::runtime::TryRuntimeError> {
 		Submissions::<T>::sanity_check_round(Self::current_round())
 	}
 

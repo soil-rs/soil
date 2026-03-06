@@ -28,11 +28,11 @@ pub use crate::core::{
 };
 
 #[doc(hidden)]
+pub use ::core::ops::Deref;
+#[doc(hidden)]
 pub use alloc::vec::Vec;
 #[doc(hidden)]
 pub use codec;
-#[doc(hidden)]
-pub use ::core::ops::Deref;
 #[doc(hidden)]
 pub use scale_info;
 #[doc(hidden)]
@@ -167,7 +167,9 @@ macro_rules! app_crypto_pair_common {
 			fn from_seed(seed: &Self::Seed) -> Self {
 				Self(<$pair>::from_seed(seed))
 			}
-			fn from_seed_slice(seed: &[u8]) -> Result<Self, $crate::application_crypto::SecretStringError> {
+			fn from_seed_slice(
+				seed: &[u8],
+			) -> Result<Self, $crate::application_crypto::SecretStringError> {
 				<$pair>::from_seed_slice(seed).map(Self)
 			}
 			fn verify<M: AsRef<[u8]>>(
@@ -431,8 +433,9 @@ macro_rules! app_crypto_public_common_if_serde {
 			{
 				use $crate::application_crypto::{module_format_string_prelude::*, Ss58Codec};
 
-				Public::from_ss58check(&String::deserialize(deserializer)?)
-					.map_err(|e| $crate::application_crypto::serde::de::Error::custom(format!("{:?}", e)))
+				Public::from_ss58check(&String::deserialize(deserializer)?).map_err(|e| {
+					$crate::application_crypto::serde::de::Error::custom(format!("{:?}", e))
+				})
 			}
 		}
 	};

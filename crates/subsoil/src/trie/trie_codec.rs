@@ -80,7 +80,8 @@ where
 
 		let mut iter = trie.iter()?;
 
-		let childtrie_roots = crate::core::storage::well_known_keys::DEFAULT_CHILD_STORAGE_KEY_PREFIX;
+		let childtrie_roots =
+			crate::core::storage::well_known_keys::DEFAULT_CHILD_STORAGE_KEY_PREFIX;
 		if iter.seek(childtrie_roots).is_ok() {
 			loop {
 				match iter.next() {
@@ -161,7 +162,8 @@ where
 
 		let mut iter = trie.iter()?;
 
-		let childtrie_roots = crate::core::storage::well_known_keys::DEFAULT_CHILD_STORAGE_KEY_PREFIX;
+		let childtrie_roots =
+			crate::core::storage::well_known_keys::DEFAULT_CHILD_STORAGE_KEY_PREFIX;
 		if iter.seek(childtrie_roots).is_ok() {
 			loop {
 				match iter.next() {
@@ -206,11 +208,11 @@ where
 
 #[cfg(test)]
 mod tests {
-	use super::*;
 	use super::super::{delta_trie_root, recorder::IgnoredNodes, HashDB, StorageProof};
+	use super::*;
+	use crate::core::{Blake2Hasher, H256};
 	use codec::Encode;
 	use hash_db::AsHashDB;
-	use crate::core::{Blake2Hasher, H256};
 	use std::collections::HashSet;
 	use trie_db::{DBValue, Trie, TrieDBBuilder, TrieDBMutBuilder, TrieHash, TrieMut};
 

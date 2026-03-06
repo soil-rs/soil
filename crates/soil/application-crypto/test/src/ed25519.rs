@@ -17,6 +17,7 @@
 
 //! Integration tests for ed25519
 
+use std::sync::Arc;
 use subsoil::api::{ApiExt, ProvideRuntimeApi};
 use subsoil::application_crypto::{ed25519::AppPair, RuntimePublic};
 use subsoil::core::{
@@ -26,7 +27,6 @@ use subsoil::core::{
 	testing::ED25519,
 };
 use subsoil::keystore::{testing::MemoryKeystore, Keystore, KeystoreExt};
-use std::sync::Arc;
 use substrate_test_runtime_client::{
 	runtime::{TestAPI, TEST_OWNER},
 	DefaultTestClientBuilderExt, TestClientBuilder, TestClientBuilderExt,

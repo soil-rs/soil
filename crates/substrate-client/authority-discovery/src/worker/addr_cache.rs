@@ -22,13 +22,13 @@ use serde::{Deserialize, Serialize};
 use soil_authority_discovery::AuthorityId;
 use soil_network::{multiaddr::Protocol, Multiaddr};
 use soil_network_types::PeerId;
-use subsoil::runtime::DeserializeOwned;
 use std::{
 	collections::{hash_map::Entry, HashMap, HashSet},
 	fs::File,
 	io::{self, BufReader, Write},
 	path::Path,
 };
+use subsoil::runtime::DeserializeOwned;
 
 /// Cache for [`AuthorityId`] -> [`HashSet<Multiaddr>`] and [`PeerId`] -> [`HashSet<AuthorityId>`]
 /// mappings.

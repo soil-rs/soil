@@ -56,11 +56,11 @@ use crate::{
 use alloc::vec::Vec;
 use codec::{Decode, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;
+use soil_staking::{EraIndex, StakingInterface};
 use subsoil::runtime::{
 	traits::{Saturating, Zero},
 	Debug, DispatchResult,
 };
-use soil_staking::{EraIndex, StakingInterface};
 use topsoil_support::{
 	ensure,
 	pallet_prelude::DecodeWithMemTracking,

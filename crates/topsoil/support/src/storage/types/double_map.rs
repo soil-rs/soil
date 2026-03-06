@@ -817,9 +817,9 @@ where
 mod test {
 	use super::*;
 	use crate::{hash::*, storage::types::ValueQuery};
+	use std::collections::BTreeSet;
 	use subsoil::io::{hashing::twox_128, TestExternalities};
 	use subsoil::metadata_ir::{StorageEntryModifierIR, StorageEntryTypeIR, StorageHasherIR};
-	use std::collections::BTreeSet;
 
 	struct Prefix;
 	impl StorageInstance for Prefix {
@@ -1017,7 +1017,8 @@ mod test {
 						},
 						default: Option::<u32>::None.encode(),
 						docs: vec![],
-						deprecation_info: subsoil::metadata_ir::ItemDeprecationInfoIR::NotDeprecated
+						deprecation_info:
+							subsoil::metadata_ir::ItemDeprecationInfoIR::NotDeprecated
 					},
 					StorageEntryMetadataIR {
 						name: "foo",
@@ -1032,7 +1033,8 @@ mod test {
 						},
 						default: 97u32.encode(),
 						docs: vec![],
-						deprecation_info: subsoil::metadata_ir::ItemDeprecationInfoIR::NotDeprecated
+						deprecation_info:
+							subsoil::metadata_ir::ItemDeprecationInfoIR::NotDeprecated
 					}
 				]
 			);

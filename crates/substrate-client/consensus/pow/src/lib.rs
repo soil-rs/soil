@@ -52,20 +52,20 @@ use sc_consensus::{
 	BasicQueue, BlockCheckParams, BlockImport, BlockImportParams, BoxBlockImport,
 	BoxJustificationImport, ForkChoiceStrategy, ImportResult, Verifier,
 };
-use subsoil::api::ProvideRuntimeApi;
-use subsoil::block_builder::BlockBuilder as BlockBuilderApi;
 use soil_client::blockchain::HeaderBackend;
 use soil_client::client_api::{self, backend::AuxStore, BlockOf, BlockchainEvents};
 use soil_client::consensus::{
 	Environment, Error as ConsensusError, ProposeArgs, Proposer, SelectChain, SyncOracle,
 };
+use std::{cmp::Ordering, marker::PhantomData, sync::Arc, time::Duration};
+use subsoil::api::ProvideRuntimeApi;
+use subsoil::block_builder::BlockBuilder as BlockBuilderApi;
 use subsoil::consensus::pow::{Seal, TotalDifficulty, POW_ENGINE_ID};
 use subsoil::inherents::{CreateInherentDataProviders, InherentDataProvider};
 use subsoil::runtime::{
 	generic::{BlockId, Digest, DigestItem},
 	traits::{Block as BlockT, Header as HeaderT},
 };
-use std::{cmp::Ordering, marker::PhantomData, sync::Arc, time::Duration};
 
 const LOG_TARGET: &str = "pow";
 

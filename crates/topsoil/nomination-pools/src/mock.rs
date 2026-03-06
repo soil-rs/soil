@@ -17,10 +17,10 @@
 
 use super::*;
 use crate::{self as pools};
-use subsoil::runtime::{BuildStorage, DispatchResult, FixedU128};
 use soil_staking::{
 	Agent, DelegationInterface, DelegationMigrator, Delegator, OnStakingUpdate, Stake,
 };
+use subsoil::runtime::{BuildStorage, DispatchResult, FixedU128};
 use topsoil_support::{
 	assert_ok, derive_impl, ord_parameter_types, parameter_types,
 	traits::{fungible::Mutate, VariantCountOf},

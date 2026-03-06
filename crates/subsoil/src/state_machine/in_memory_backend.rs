@@ -21,11 +21,11 @@ use super::{
 	backend::Backend, trie_backend::TrieBackend, StorageCollection, StorageKey, StorageValue,
 	TrieBackendBuilder,
 };
+use crate::core::storage::{ChildInfo, StateVersion, Storage};
+use crate::trie::{empty_trie_root, LayoutV1, PrefixedMemoryDB, RandomState};
 use alloc::{collections::BTreeMap, vec::Vec};
 use codec::Codec;
 use hash_db::Hasher;
-use crate::core::storage::{ChildInfo, StateVersion, Storage};
-use crate::trie::{empty_trie_root, LayoutV1, PrefixedMemoryDB, RandomState};
 
 #[cfg(feature = "std")]
 use std::collections::HashMap as MapType;
@@ -195,9 +195,9 @@ where
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use crate::state_machine::backend::{AsTrieBackend, Backend};
 	use crate::core::storage::StateVersion;
 	use crate::runtime::traits::BlakeTwo256;
+	use crate::state_machine::backend::{AsTrieBackend, Backend};
 
 	/// Assert in memory backend with only child trie keys works as trie backend.
 	#[test]

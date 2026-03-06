@@ -52,7 +52,10 @@ where
 }
 
 /// Check that the inherents are valid.
-pub async fn check_inherents_with_data<Block: BlockT, Client: crate::api::ProvideRuntimeApi<Block>>(
+pub async fn check_inherents_with_data<
+	Block: BlockT,
+	Client: crate::api::ProvideRuntimeApi<Block>,
+>(
 	client: std::sync::Arc<Client>,
 	at_hash: Block::Hash,
 	block: Block,

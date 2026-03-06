@@ -90,14 +90,16 @@ use codec::{Decode, DecodeAll, Encode};
 use log::{debug, trace};
 use prometheus_endpoint::{register, CounterVec, Opts, PrometheusError, Registry, U64};
 use rand::seq::SliceRandom;
-use subsoil::consensus::grandpa::AuthorityId;
+use soil_client::utils::mpsc::{
+	tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender,
+};
 use soil_network::ReputationChange;
 use soil_network_common::role::ObservedRole;
 use soil_network_gossip::{MessageIntent, ValidatorContext};
 use soil_network_types::PeerId;
-use subsoil::runtime::traits::{Block as BlockT, NumberFor, Zero};
 use soil_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG};
-use soil_client::utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
+use subsoil::consensus::grandpa::AuthorityId;
+use subsoil::runtime::traits::{Block as BlockT, NumberFor, Zero};
 
 use super::{benefit, cost, Round, SetId, NEIGHBOR_REBROADCAST_PERIOD};
 use crate::{environment, CatchUp, CompactCommit, SignedMessage, LOG_TARGET};
@@ -1676,10 +1678,10 @@ pub(super) struct PeerReport {
 mod tests {
 	use super::{super::NEIGHBOR_REBROADCAST_PERIOD, environment::SharedVoterSetState, *};
 	use crate::communication;
-	use subsoil::core::{crypto::UncheckedFrom, H256};
 	use soil_network::config::Role;
 	use soil_network_gossip::Validator as GossipValidatorT;
 	use std::time::Instant;
+	use subsoil::core::{crypto::UncheckedFrom, H256};
 	use substrate_test_runtime_client::runtime::{Block, Header};
 
 	// some random config (not really needed)

@@ -18,11 +18,11 @@
 use codec::Codec;
 use scale_info::TypeInfo;
 
-use alloc::vec::Vec;
-use ::core::fmt::Debug;
 use crate::core::crypto::{
 	CryptoType, CryptoTypeId, IsWrappedBy, KeyTypeId, Pair, Public, Signature,
 };
+use ::core::fmt::Debug;
+use alloc::vec::Vec;
 
 /// Application-specific cryptographic object.
 ///

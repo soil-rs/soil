@@ -18,13 +18,13 @@
 //! *Ed-on-BLS12-377* types and host functions.
 
 use super::utils::{self, HostcallResult, FAIL_MSG};
-use alloc::vec::Vec;
-use ark_ec::{AffineRepr, CurveConfig, CurveGroup};
-use ark_ed_on_bls12_377_ext::CurveHooks;
 use crate::runtime_interface::{
 	pass_by::{PassFatPointerAndRead, PassFatPointerAndWrite},
 	runtime_interface,
 };
+use alloc::vec::Vec;
+use ark_ec::{AffineRepr, CurveConfig, CurveGroup};
+use ark_ed_on_bls12_377_ext::CurveHooks;
 
 /// Group configuration.
 pub type EdwardsConfig = ark_ed_on_bls12_377_ext::EdwardsConfig<HostHooks>;

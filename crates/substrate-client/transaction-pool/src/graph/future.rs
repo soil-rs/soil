@@ -22,9 +22,9 @@ use std::{
 	sync::Arc,
 };
 
+use std::time::Instant;
 use subsoil::core::hexdisplay::HexDisplay;
 use subsoil::runtime::transaction_validity::TransactionTag as Tag;
-use std::time::Instant;
 
 use super::base_pool::Transaction;
 use crate::{common::tracing_log_xt::log_xt_trace, LOG_TARGET};

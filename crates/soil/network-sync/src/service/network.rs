@@ -19,12 +19,14 @@
 use futures::{channel::oneshot, StreamExt};
 use soil_network_types::PeerId;
 
+use soil_client::utils::mpsc::{
+	tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender,
+};
 use soil_network::{
 	request_responses::{IfDisconnected, RequestFailure},
 	types::ProtocolName,
 	NetworkPeers, NetworkRequest, ReputationChange,
 };
-use soil_client::utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
 
 use std::sync::Arc;
 

@@ -21,8 +21,8 @@ use futures::{
 	channel::{mpsc, oneshot},
 	SinkExt,
 };
-use subsoil::core::Bytes;
 use std::future::Future;
+use subsoil::core::Bytes;
 
 /// The other end of an [`Api`]. This should be passed to [`run`](super::run::run).
 pub struct ApiBackend {

@@ -25,8 +25,8 @@ use super::{
 	balance, setup_inputs, BalancingConfig, CandidatePtr, ElectionResult, ExtendedBalance,
 	IdentifierT, PerThing128, VoteWeight, Voter,
 };
-use alloc::{rc::Rc, vec, vec::Vec};
 use crate::arithmetic::{traits::Bounded, PerThing, Rational128};
+use alloc::{rc::Rc, vec, vec::Vec};
 
 /// Execute the phragmms method.
 ///
@@ -232,8 +232,8 @@ pub(crate) fn apply_elected<AccountId: IdentifierT>(
 mod tests {
 	use super::*;
 	use crate::npos_elections::Assignment;
-	use alloc::rc::Rc;
 	use crate::runtime::{Perbill, Percent};
+	use alloc::rc::Rc;
 
 	#[test]
 	fn basic_election_manual_works() {

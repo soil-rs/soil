@@ -18,19 +18,18 @@
 
 //! Generic utilities for epoch-based consensus engines.
 
-
 pub mod migration;
 
 use codec::{Decode, Encode};
 use fork_tree::{FilterAction, ForkTree};
 use soil_client::blockchain::{Error as ClientError, HeaderBackend, HeaderMetadata};
 use soil_client::client_api::utils::is_descendent_of;
-use subsoil::runtime::traits::{Block as BlockT, NumberFor, One, Zero};
 use std::{
 	borrow::{Borrow, BorrowMut},
 	collections::BTreeMap,
 	ops::{Add, Sub},
 };
+use subsoil::runtime::traits::{Block as BlockT, NumberFor, One, Zero};
 
 /// A builder for `is_descendent_of` functions.
 pub trait IsDescendentOfBuilder<Hash> {

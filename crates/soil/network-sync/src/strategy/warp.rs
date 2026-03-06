@@ -40,11 +40,11 @@ use soil_network_common::sync::message::{
 	BlockAnnounce, BlockAttributes, BlockData, BlockRequest, Direction, FromBlock,
 };
 use soil_network_types::PeerId;
+use std::{any::Any, collections::HashMap, fmt, sync::Arc};
 use subsoil::runtime::{
 	traits::{Block as BlockT, Header, NumberFor, Zero},
 	Justifications, SaturatedConversion,
 };
-use std::{any::Any, collections::HashMap, fmt, sync::Arc};
 
 /// Number of peers that need to be connected before warp sync is started.
 const MIN_PEERS_TO_START_WARP_SYNC: usize = 3;
@@ -790,12 +790,12 @@ mod test {
 	use crate::{mock::MockBlockDownloader, service::network::NetworkServiceProvider};
 	use soil_client::block_builder::BlockBuilderBuilder;
 	use soil_client::blockchain::{BlockStatus, Error as BlockchainError, HeaderBackend, Info};
+	use std::{io::ErrorKind, sync::Arc};
 	use subsoil::core::H256;
 	use subsoil::runtime::{
 		traits::{Block as BlockT, Header as HeaderT, NumberFor},
 		ConsensusEngineId,
 	};
-	use std::{io::ErrorKind, sync::Arc};
 	use substrate_test_runtime_client::{
 		runtime::{Block, Hash},
 		BlockBuilderExt, DefaultTestClientBuilderExt, TestClientBuilder, TestClientBuilderExt,

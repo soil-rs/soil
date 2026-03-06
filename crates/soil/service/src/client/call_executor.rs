@@ -17,20 +17,22 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 use super::{code_provider::CodeProvider, ClientConfig};
-use subsoil::api::ProofRecorder;
 use soil_client::client_api::{
 	backend, call_executor::CallExecutor, execution_extensions::ExecutionExtensions, HeaderBackend,
 	TrieCacheContext,
 };
-use subsoil::core::traits::{CallContext, CodeExecutor};
 use soil_client::executor::{RuntimeVersion, RuntimeVersionOf};
+use std::{cell::RefCell, sync::Arc};
+use subsoil::api::ProofRecorder;
+use subsoil::core::traits::{CallContext, CodeExecutor};
 use subsoil::externalities::Extensions;
 use subsoil::runtime::{
 	generic::BlockId,
 	traits::{Block as BlockT, HashingFor},
 };
-use subsoil::state_machine::{backend::AsTrieBackend, OverlayedChanges, StateMachine, StorageProof};
-use std::{cell::RefCell, sync::Arc};
+use subsoil::state_machine::{
+	backend::AsTrieBackend, OverlayedChanges, StateMachine, StorageProof,
+};
 
 /// Call executor that executes methods locally, querying all required
 /// data from local backend.
@@ -105,8 +107,9 @@ where
 		let state = self.backend.state_at(at_hash, context.into())?;
 
 		let state_runtime_code = subsoil::state_machine::backend::BackendRuntimeCode::new(&state);
-		let runtime_code =
-			state_runtime_code.runtime_code().map_err(soil_client::blockchain::Error::RuntimeCode)?;
+		let runtime_code = state_runtime_code
+			.runtime_code()
+			.map_err(soil_client::blockchain::Error::RuntimeCode)?;
 
 		let runtime_code = self.code_provider.maybe_override_code(runtime_code, &state, at_hash)?.0;
 
@@ -146,8 +149,9 @@ where
 		// make sure we use the caching layers.
 		let state_runtime_code = subsoil::state_machine::backend::BackendRuntimeCode::new(&state);
 
-		let runtime_code =
-			state_runtime_code.runtime_code().map_err(soil_client::blockchain::Error::RuntimeCode)?;
+		let runtime_code = state_runtime_code
+			.runtime_code()
+			.map_err(soil_client::blockchain::Error::RuntimeCode)?;
 		let runtime_code = self.code_provider.maybe_override_code(runtime_code, &state, at_hash)?.0;
 		let mut extensions = extensions.borrow_mut();
 
@@ -190,12 +194,16 @@ where
 		.map_err(Into::into)
 	}
 
-	fn runtime_version(&self, at_hash: Block::Hash) -> soil_client::blockchain::Result<RuntimeVersion> {
+	fn runtime_version(
+		&self,
+		at_hash: Block::Hash,
+	) -> soil_client::blockchain::Result<RuntimeVersion> {
 		let state = self.backend.state_at(at_hash, backend::TrieCacheContext::Untrusted)?;
 		let state_runtime_code = subsoil::state_machine::backend::BackendRuntimeCode::new(&state);
 
-		let runtime_code =
-			state_runtime_code.runtime_code().map_err(soil_client::blockchain::Error::RuntimeCode)?;
+		let runtime_code = state_runtime_code
+			.runtime_code()
+			.map_err(soil_client::blockchain::Error::RuntimeCode)?;
 		self.code_provider
 			.maybe_override_code(runtime_code, &state, at_hash)
 			.map(|(_, v)| v)
@@ -213,9 +221,11 @@ where
 
 		let trie_backend = state.as_trie_backend();
 
-		let state_runtime_code = subsoil::state_machine::backend::BackendRuntimeCode::new(trie_backend);
-		let runtime_code =
-			state_runtime_code.runtime_code().map_err(soil_client::blockchain::Error::RuntimeCode)?;
+		let state_runtime_code =
+			subsoil::state_machine::backend::BackendRuntimeCode::new(trie_backend);
+		let runtime_code = state_runtime_code
+			.runtime_code()
+			.map_err(soil_client::blockchain::Error::RuntimeCode)?;
 		let runtime_code = self.code_provider.maybe_override_code(runtime_code, &state, at_hash)?.0;
 
 		subsoil::state_machine::prove_execution_on_trie_backend(

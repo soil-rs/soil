@@ -27,9 +27,11 @@ use std::{
 	time::Duration,
 };
 
+use soil_client::utils::mpsc::{
+	tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender,
+};
 use soil_network_types::PeerId;
 use subsoil::runtime::traits::{Block as BlockT, NumberFor};
-use soil_client::utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
 
 use super::gossip::{GossipMessage, NeighborPacket};
 use crate::LOG_TARGET;

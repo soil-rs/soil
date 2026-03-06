@@ -16,6 +16,7 @@
 // limitations under the License.
 
 //! Integration tests for ecdsa
+use std::sync::Arc;
 use subsoil::api::{ApiExt, ProvideRuntimeApi};
 use subsoil::application_crypto::{ecdsa::AppPair, RuntimePublic};
 use subsoil::core::{
@@ -25,7 +26,6 @@ use subsoil::core::{
 	testing::ECDSA,
 };
 use subsoil::keystore::{testing::MemoryKeystore, Keystore, KeystoreExt};
-use std::sync::Arc;
 use substrate_test_runtime_client::{
 	runtime::{TestAPI, TEST_OWNER},
 	DefaultTestClientBuilderExt, TestClientBuilder, TestClientBuilderExt,

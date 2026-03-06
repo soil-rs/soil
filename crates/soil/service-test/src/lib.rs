@@ -18,18 +18,17 @@
 
 //! Service integration test utils.
 
-
 use futures::{task::Poll, Future, TryFutureExt as _};
 use log::{debug, info};
 use parking_lot::Mutex;
 use soil_client::blockchain::HeaderBackend;
 use soil_client::client_api::{Backend, CallExecutor};
+use soil_client::transaction_pool::TransactionPool;
 use soil_network::{
 	config::{MultiaddrWithPeerId, NetworkConfiguration, TransportConfig},
 	multiaddr, NetworkBlock, NetworkPeers, NetworkStateInfo,
 };
 use soil_network_sync::SyncingService;
-use subsoil::runtime::traits::Block as BlockT;
 use soil_service::{
 	client::Client,
 	config::{
@@ -39,8 +38,8 @@ use soil_service::{
 	BlocksPruning, ChainSpecExtension, Configuration, Error, GenericChainSpec, Role,
 	SpawnTaskHandle, TaskManager,
 };
-use soil_client::transaction_pool::TransactionPool;
 use std::{iter, net::Ipv4Addr, pin::Pin, sync::Arc, task::Context, time::Duration};
+use subsoil::runtime::traits::Block as BlockT;
 use tempfile::TempDir;
 use tokio::{runtime::Runtime, time};
 

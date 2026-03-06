@@ -20,11 +20,13 @@
 pub mod base16;
 pub mod base2;
 
-use crate::runtime::{Decode, DecodeWithMemTracking, DispatchError, Encode, MaxEncodedLen, TypeInfo};
+use crate::runtime::{
+	Decode, DecodeWithMemTracking, DispatchError, Encode, MaxEncodedLen, TypeInfo,
+};
 #[cfg(feature = "serde")]
 use crate::runtime::{Deserialize, Serialize};
-use alloc::vec::Vec;
 use crate::trie::{trie_types::TrieError as SpTrieError, VerifyError};
+use alloc::vec::Vec;
 
 /// A runtime friendly error type for tries.
 #[derive(

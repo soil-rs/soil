@@ -21,8 +21,10 @@
 
 use std::sync::Arc;
 
-use crate::executor::wasmtime::runtime::{InstanceCounter, ReleaseInstanceHandle, Store, StoreData};
 use crate::executor::common::error::{Backtrace, Error, MessageWithBacktrace, Result, WasmError};
+use crate::executor::wasmtime::runtime::{
+	InstanceCounter, ReleaseInstanceHandle, Store, StoreData,
+};
 use subsoil::wasm_interface::{Pointer, WordSize};
 use wasmtime::{AsContext, AsContextMut, Engine, Instance, InstancePre, Memory};
 

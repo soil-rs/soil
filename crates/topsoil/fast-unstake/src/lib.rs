@@ -149,8 +149,8 @@ pub mod pallet {
 	use super::*;
 	use crate::types::*;
 	use alloc::vec::Vec;
-	use subsoil::runtime::{traits::Zero, DispatchResult};
 	use soil_staking::{EraIndex, StakingInterface};
+	use subsoil::runtime::{traits::Zero, DispatchResult};
 	use topsoil_support::{
 		pallet_prelude::*,
 		traits::{Defensive, ReservableCurrency, StorageVersion},

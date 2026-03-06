@@ -22,8 +22,8 @@ use std::{marker::PhantomData, sync::Arc};
 
 use codec::Encode;
 use soil_client::client_api::{backend::Backend, BlockImportOperation};
-use subsoil::core::storage::{well_known_keys, StateVersion, Storage};
 use soil_client::executor::RuntimeVersionOf;
+use subsoil::core::storage::{well_known_keys, StateVersion, Storage};
 use subsoil::runtime::{
 	traits::{Block as BlockT, Hash as HashT, HashingFor, Header as HeaderT, Zero},
 	BuildStorage,
@@ -86,7 +86,9 @@ pub trait BuildGenesisBlock<Block: BlockT> {
 
 	/// Returns the built genesis block along with the block import operation
 	/// after setting the genesis storage.
-	fn build_genesis_block(self) -> soil_client::blockchain::Result<(Block, Self::BlockImportOperation)>;
+	fn build_genesis_block(
+		self,
+	) -> soil_client::blockchain::Result<(Block, Self::BlockImportOperation)>;
 }
 
 /// Default genesis block builder in Substrate.
@@ -106,8 +108,9 @@ impl<Block: BlockT, B: Backend<Block>, E: RuntimeVersionOf> GenesisBlockBuilder<
 		backend: Arc<B>,
 		executor: E,
 	) -> soil_client::blockchain::Result<Self> {
-		let genesis_storage =
-			build_genesis_storage.build_storage().map_err(soil_client::blockchain::Error::Storage)?;
+		let genesis_storage = build_genesis_storage
+			.build_storage()
+			.map_err(soil_client::blockchain::Error::Storage)?;
 		Self::new_with_storage(genesis_storage, commit_genesis_state, backend, executor)
 	}
 
@@ -133,7 +136,9 @@ impl<Block: BlockT, B: Backend<Block>, E: RuntimeVersionOf> BuildGenesisBlock<Bl
 {
 	type BlockImportOperation = <B as Backend<Block>>::BlockImportOperation;
 
-	fn build_genesis_block(self) -> soil_client::blockchain::Result<(Block, Self::BlockImportOperation)> {
+	fn build_genesis_block(
+		self,
+	) -> soil_client::blockchain::Result<(Block, Self::BlockImportOperation)> {
 		let Self { genesis_storage, commit_genesis_state, backend, executor, _phantom } = self;
 
 		let genesis_state_version =

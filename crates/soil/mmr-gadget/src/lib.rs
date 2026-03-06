@@ -46,13 +46,15 @@ use crate::offchain_mmr::OffchainMmr;
 use futures::StreamExt;
 use log::{debug, error, trace, warn};
 use sc_offchain::OffchainDb;
-use subsoil::api::ProvideRuntimeApi;
 use soil_client::blockchain::{HeaderBackend, HeaderMetadata};
-use soil_client::client_api::{Backend, BlockchainEvents, FinalityNotification, FinalityNotifications};
+use soil_client::client_api::{
+	Backend, BlockchainEvents, FinalityNotification, FinalityNotifications,
+};
+use std::{marker::PhantomData, sync::Arc};
+use subsoil::api::ProvideRuntimeApi;
 use subsoil::consensus::beefy::MmrRootHash;
 use subsoil::mmr::{utils, LeafIndex, MmrApi};
 use subsoil::runtime::traits::{Block, Header, NumberFor};
-use std::{marker::PhantomData, sync::Arc};
 
 /// Logging target for the mmr gadget.
 pub const LOG_TARGET: &str = "mmr";
@@ -221,8 +223,8 @@ where
 #[cfg(test)]
 mod tests {
 	use crate::test_utils::run_test_with_mmr_gadget;
-	use subsoil::runtime::generic::BlockId;
 	use std::time::Duration;
+	use subsoil::runtime::generic::BlockId;
 
 	#[test]
 	fn mmr_first_block_is_computed_correctly() {

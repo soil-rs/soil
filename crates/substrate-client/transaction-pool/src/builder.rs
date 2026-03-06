@@ -26,10 +26,10 @@ use crate::{
 	TransactionPoolWrapper, LOG_TARGET,
 };
 use prometheus_endpoint::Registry as PrometheusRegistry;
-use subsoil::core::traits::SpawnEssentialNamed;
-use subsoil::runtime::traits::Block as BlockT;
 use soil_client::transaction_pool::{LocalTransactionPool, MaintainedTransactionPool};
 use std::{marker::PhantomData, sync::Arc, time::Duration};
+use subsoil::core::traits::SpawnEssentialNamed;
+use subsoil::runtime::traits::Block as BlockT;
 
 /// The type of transaction pool.
 #[derive(Debug, Clone)]

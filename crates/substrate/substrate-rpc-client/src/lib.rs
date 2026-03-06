@@ -39,8 +39,8 @@
 
 use async_trait::async_trait;
 use serde::de::DeserializeOwned;
-use subsoil::runtime::traits::{Block as BlockT, Header as HeaderT};
 use std::collections::VecDeque;
+use subsoil::runtime::traits::{Block as BlockT, Header as HeaderT};
 
 pub use jsonrpsee::{
 	core::{
@@ -199,8 +199,8 @@ where
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use subsoil::runtime::testing::{Block as TBlock, Header, MockCallU64, TestXt, H256};
 	use std::sync::Arc;
+	use subsoil::runtime::testing::{Block as TBlock, Header, MockCallU64, TestXt, H256};
 	use tokio::sync::Mutex;
 
 	type UncheckedXt = TestXt<MockCallU64, ()>;

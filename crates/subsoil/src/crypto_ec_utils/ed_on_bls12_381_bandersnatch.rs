@@ -18,13 +18,13 @@
 //! *Ed-on-BLS12-381-Bandersnatch* types and host functions.
 
 use super::utils::{self, HostcallResult, FAIL_MSG};
-use alloc::vec::Vec;
-use ark_ec::{AffineRepr, CurveConfig, CurveGroup};
-use ark_ed_on_bls12_381_bandersnatch_ext::CurveHooks;
 use crate::runtime_interface::{
 	pass_by::{PassFatPointerAndRead, PassFatPointerAndWrite},
 	runtime_interface,
 };
+use alloc::vec::Vec;
+use ark_ec::{AffineRepr, CurveConfig, CurveGroup};
+use ark_ed_on_bls12_381_bandersnatch_ext::CurveHooks;
 
 /// Group configuration.
 pub type BandersnatchConfig = ark_ed_on_bls12_381_bandersnatch_ext::BandersnatchConfig<HostHooks>;

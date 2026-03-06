@@ -18,7 +18,6 @@
 
 //! Common data structures of the networking layer.
 
-
 pub mod message;
 pub mod role;
 pub mod sync;

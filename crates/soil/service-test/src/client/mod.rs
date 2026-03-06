@@ -19,28 +19,30 @@
 use async_channel::TryRecvError;
 use codec::{Decode, Encode, Joiner};
 use futures::executor::block_on;
-use soil_client::block_builder::BlockBuilderBuilder;
 use sc_consensus::{
 	BlockCheckParams, BlockImport, BlockImportParams, ForkChoiceStrategy, ImportResult,
 };
-use subsoil::api::ProvideRuntimeApi;
+use soil_client::block_builder::BlockBuilderBuilder;
 use soil_client::client_api::{
 	in_mem, Backend as BackendT, BlockBackend, BlockchainEvents, ExecutorProvider,
 	FinalityNotifications, HeaderBackend, StorageProvider,
 };
-use soil_client::db::{Backend, BlocksPruning, DatabaseSettings, DatabaseSource, PruningMode};
 use soil_client::consensus::{BlockOrigin, Error as ConsensusError, SelectChain};
-use subsoil::core::{testing::TaskExecutor, traits::CallContext, H256};
+use soil_client::db::{Backend, BlocksPruning, DatabaseSettings, DatabaseSource, PruningMode};
 use soil_client::executor::WasmExecutor;
+use soil_service::client::{new_with_backend, Client, LocalCallExecutor};
+use std::{collections::HashSet, sync::Arc};
+use subsoil::api::ProvideRuntimeApi;
+use subsoil::core::{testing::TaskExecutor, traits::CallContext, H256};
 use subsoil::runtime::{
 	generic::BlockId,
 	traits::{BlakeTwo256, Block as BlockT, Header as HeaderT},
 	ConsensusEngineId, Justifications, StateVersion,
 };
-use soil_service::client::{new_with_backend, Client, LocalCallExecutor};
-use subsoil::state_machine::{backend::Backend as _, InMemoryBackend, OverlayedChanges, StateMachine};
+use subsoil::state_machine::{
+	backend::Backend as _, InMemoryBackend, OverlayedChanges, StateMachine,
+};
 use subsoil::storage::{ChildInfo, StorageKey};
-use std::{collections::HashSet, sync::Arc};
 use substrate_test_runtime::TestAPI;
 use substrate_test_runtime_client::{
 	runtime::{
@@ -1577,8 +1579,9 @@ fn doesnt_import_blocks_that_revert_finality() {
 	);
 
 	let import_err = block_on(client.import(BlockOrigin::Own, b3)).err().unwrap();
-	let expected_err =
-		ConsensusError::ClientImport(soil_client::blockchain::Error::NotInFinalizedChain.to_string());
+	let expected_err = ConsensusError::ClientImport(
+		soil_client::blockchain::Error::NotInFinalizedChain.to_string(),
+	);
 
 	assert_eq!(import_err.to_string(), expected_err.to_string());
 
@@ -1601,8 +1604,9 @@ fn doesnt_import_blocks_that_revert_finality() {
 	let c1 = c1.build().unwrap().block;
 
 	let import_err = block_on(client.import(BlockOrigin::Own, c1)).err().unwrap();
-	let expected_err =
-		ConsensusError::ClientImport(soil_client::blockchain::Error::NotInFinalizedChain.to_string());
+	let expected_err = ConsensusError::ClientImport(
+		soil_client::blockchain::Error::NotInFinalizedChain.to_string(),
+	);
 
 	assert_eq!(import_err.to_string(), expected_err.to_string());
 
@@ -2259,12 +2263,12 @@ fn use_dalek_ext_works() {
 
 	let client = TestClientBuilder::new().build();
 
-	client
-		.execution_extensions()
-		.set_extensions_factory(soil_client::client_api::execution_extensions::ExtensionBeforeBlock::<
-		Block,
-		subsoil::io::UseDalekExt,
-	>::new(1));
+	client.execution_extensions().set_extensions_factory(
+		soil_client::client_api::execution_extensions::ExtensionBeforeBlock::<
+			Block,
+			subsoil::io::UseDalekExt,
+		>::new(1),
+	);
 
 	let a1 = BlockBuilderBuilder::new(&client)
 		.on_parent_block(client.chain_info().genesis_hash)

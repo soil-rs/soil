@@ -21,9 +21,9 @@
 //! `CompatibleDigestItem` trait to appear in public interfaces.
 
 use super::AURA_ENGINE_ID;
-use codec::{Codec, Encode};
 use crate::consensus::slots::Slot;
 use crate::runtime::generic::DigestItem;
+use codec::{Codec, Encode};
 
 /// A digest item which is usable with aura consensus.
 pub trait CompatibleDigestItem<Signature>: Sized {

@@ -27,7 +27,6 @@ use super::{
 	TrieBackendBuilder,
 };
 
-use hash_db::{HashDB, Hasher};
 use crate::core::{
 	offchain::testing::TestPersistentOffchainDB,
 	storage::{
@@ -37,6 +36,7 @@ use crate::core::{
 };
 use crate::externalities::{Extension, ExtensionStore, Extensions};
 use crate::trie::{recorder::Recorder, PrefixedMemoryDB, StorageProof};
+use hash_db::{HashDB, Hasher};
 
 /// Simple HashMap-based Externalities impl.
 pub struct TestExternalities<H>
@@ -265,7 +265,8 @@ where
 		let mut proving_ext =
 			Ext::new(&mut self.overlay, &proving_backend, Some(&mut self.extensions));
 
-		let outcome = crate::externalities::set_and_run_with_externalities(&mut proving_ext, execute);
+		let outcome =
+			crate::externalities::set_and_run_with_externalities(&mut proving_ext, execute);
 		let proof = proving_backend.extract_proof().expect("Failed to extract storage proof");
 
 		(outcome, proof)

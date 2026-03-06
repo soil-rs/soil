@@ -45,7 +45,7 @@
 //! (Module-level doc warning: missing_docs inherited from crate)
 
 #[doc(hidden)]
-pub use alloc::vec::Vec;
+pub use crate::std;
 #[doc(hidden)]
 pub use ::codec;
 #[doc(hidden)]
@@ -54,12 +54,12 @@ pub use ::scale_info;
 #[doc(hidden)]
 pub use ::serde;
 #[doc(hidden)]
-pub use crate::std;
+pub use alloc::vec::Vec;
 
 #[doc(hidden)]
-pub use ::paste;
-#[doc(hidden)]
 pub use crate::arithmetic::traits::Saturating;
+#[doc(hidden)]
+pub use ::paste;
 
 #[doc(hidden)]
 pub use crate::application_crypto as app_crypto;
@@ -212,9 +212,9 @@ impl From<Justification> for Justifications {
 
 use traits::{Lazy, Verify};
 
-use traits::{IdentifyAccount, LazyExtrinsic};
 #[cfg(feature = "serde")]
 pub use serde::{de::DeserializeOwned, Deserialize, Serialize};
+use traits::{IdentifyAccount, LazyExtrinsic};
 
 /// Complex storage builder stuff.
 #[cfg(feature = "std")]
@@ -226,7 +226,8 @@ pub trait BuildStorage {
 		Ok(storage)
 	}
 	/// Assimilate the storage for this module into pre-existing overlays.
-	fn assimilate_storage(&self, storage: &mut crate::core::storage::Storage) -> Result<(), String>;
+	fn assimilate_storage(&self, storage: &mut crate::core::storage::Storage)
+		-> Result<(), String>;
 }
 
 /// Something that can build the genesis storage of a module.
@@ -244,7 +245,10 @@ pub trait BuildModuleGenesisStorage<T, I>: Sized {
 
 #[cfg(feature = "std")]
 impl BuildStorage for crate::core::storage::Storage {
-	fn assimilate_storage(&self, storage: &mut crate::core::storage::Storage) -> Result<(), String> {
+	fn assimilate_storage(
+		&self,
+		storage: &mut crate::core::storage::Storage,
+	) -> Result<(), String> {
 		storage.top.extend(self.top.iter().map(|(k, v)| (k.clone(), v.clone())));
 		for (k, other_map) in self.children_default.iter() {
 			let k = k.clone();
@@ -1134,11 +1138,11 @@ mod tests {
 	use super::traits::BlakeTwo256;
 
 	use super::*;
-	use codec::{Decode, Encode};
 	use crate::core::crypto::Pair;
 	use crate::hex2array;
 	use crate::io::TestExternalities;
 	use crate::state_machine::create_proof_check_backend;
+	use codec::{Decode, Encode};
 
 	#[test]
 	fn opaque_extrinsic_serialization() {
@@ -1249,8 +1253,8 @@ mod tests {
 
 	#[test]
 	fn execute_and_generate_proof_works() {
-		use codec::Encode;
 		use crate::state_machine::Backend;
+		use codec::Encode;
 		let mut ext = TestExternalities::default();
 
 		ext.insert(b"a".to_vec(), vec![1u8; 33]);

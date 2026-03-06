@@ -17,10 +17,10 @@
 
 //! Helpers for checking for duplicate nodes.
 
+use crate::core::{Decode, Encode};
 use alloc::collections::BTreeSet;
 use core::hash::Hash;
 use scale_info::TypeInfo;
-use crate::core::{Decode, Encode};
 use trie_db::{RecordedForKey, TrieAccess, TrieRecorder};
 
 /// Error associated with the `AccessedNodesTracker` module.
@@ -74,8 +74,8 @@ impl<H: Hash + Ord> TrieRecorder<H> for AccessedNodesTracker<H> {
 
 #[cfg(test)]
 pub mod tests {
-	use super::*;
 	use super::super::{tests::create_storage_proof, StorageProof};
+	use super::*;
 	use hash_db::Hasher;
 	use trie_db::{Trie, TrieDBBuilder};
 

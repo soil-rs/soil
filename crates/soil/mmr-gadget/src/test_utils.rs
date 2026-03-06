@@ -20,26 +20,28 @@
 
 use crate::MmrGadget;
 use parking_lot::Mutex;
-use soil_client::block_builder::BlockBuilderBuilder;
 use sc_offchain::OffchainDb;
-use subsoil::api::{ApiRef, ProvideRuntimeApi};
-use soil_client::blockchain::{BlockStatus, CachedHeaderMetadata, HeaderBackend, HeaderMetadata, Info};
+use soil_client::block_builder::BlockBuilderBuilder;
+use soil_client::blockchain::{
+	BlockStatus, CachedHeaderMetadata, HeaderBackend, HeaderMetadata, Info,
+};
 use soil_client::client_api::{
 	Backend as BackendT, BlockchainEvents, FinalityNotifications, ImportNotifications,
 	StorageEventStream, StorageKey,
 };
 use soil_client::consensus::BlockOrigin;
+use std::{future::Future, sync::Arc, time::Duration};
+use subsoil::api::{ApiRef, ProvideRuntimeApi};
 use subsoil::core::{
 	offchain::{DbExternalities, StorageKind},
 	H256,
 };
-use subsoil::mmr as mmr;
+use subsoil::mmr;
 use subsoil::mmr::{utils::NodesUtils, LeafIndex, NodeIndex};
 use subsoil::runtime::{
 	generic::BlockId,
 	traits::{Block as BlockT, Header as HeaderT},
 };
-use std::{future::Future, sync::Arc, time::Duration};
 use substrate_test_runtime_client::{
 	runtime::{Block, BlockNumber, Hash, Header},
 	Backend, BlockBuilderExt, Client, ClientBlockImportExt, ClientExt, DefaultTestClientBuilderExt,
@@ -262,11 +264,17 @@ impl HeaderBackend<Block> for MockClient {
 		self.client.lock().status(hash)
 	}
 
-	fn number(&self, hash: Hash) -> soil_client::client_api::blockchain::Result<Option<BlockNumber>> {
+	fn number(
+		&self,
+		hash: Hash,
+	) -> soil_client::client_api::blockchain::Result<Option<BlockNumber>> {
 		self.client.lock().number(hash)
 	}
 
-	fn hash(&self, number: BlockNumber) -> soil_client::client_api::blockchain::Result<Option<Hash>> {
+	fn hash(
+		&self,
+		number: BlockNumber,
+	) -> soil_client::client_api::blockchain::Result<Option<Hash>> {
 		self.client.lock().hash(number)
 	}
 }

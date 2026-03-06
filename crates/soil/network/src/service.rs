@@ -79,12 +79,14 @@ use prometheus_endpoint::Registry;
 use soil_network_types::kad::{Key as KademliaKey, Record};
 
 use soil_client::client_api::BlockBackend;
+use soil_client::utils::mpsc::{
+	tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender,
+};
 use soil_network_common::{
 	role::{ObservedRole, Roles},
 	ExHashT,
 };
 use subsoil::runtime::traits::Block as BlockT;
-use soil_client::utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
 
 pub use behaviour::{InboundFailure, OutboundFailure, ResponseFailure};
 pub use libp2p::identity::{DecodingError, Keypair, PublicKey};

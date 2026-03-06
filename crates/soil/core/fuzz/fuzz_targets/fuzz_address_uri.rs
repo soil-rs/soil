@@ -23,8 +23,8 @@ extern crate subsoil;
 
 use libfuzzer_sys::fuzz_target;
 use regex::Regex;
-use subsoil::core::crypto::AddressUri;
 use std::sync::LazyLock;
+use subsoil::core::crypto::AddressUri;
 
 static SECRET_PHRASE_REGEX: LazyLock<Regex> = LazyLock::new(|| {
 	Regex::new(r"^(?P<phrase>[a-zA-Z0-9 ]+)?(?P<path>(//?[^/]+)*)(///(?P<password>.*))?$")

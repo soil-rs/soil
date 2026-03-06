@@ -19,21 +19,21 @@
 //! A set of APIs supported by the client along with their primitives.
 
 use crate::consensus::BlockOrigin;
+use std::{
+	collections::HashSet,
+	fmt::{self, Debug},
+	sync::Arc,
+};
 use subsoil::core::storage::StorageKey;
 use subsoil::runtime::{
 	generic::SignedBlock,
 	traits::{Block as BlockT, NumberFor},
 	Justifications,
 };
-use std::{
-	collections::HashSet,
-	fmt::{self, Debug},
-	sync::Arc,
-};
 
-use crate::blockchain::Info;
 use super::notifications::StorageEventStream;
 use super::{FinalizeSummary, ImportSummary, StaleBlock};
+use crate::blockchain::Info;
 
 use crate::blockchain;
 use crate::transaction_pool::ChainEvent;
@@ -152,10 +152,16 @@ pub trait BlockBackend<Block: BlockT> {
 	) -> crate::blockchain::Result<crate::consensus::BlockStatus>;
 
 	/// Get block justifications for the block with the given hash.
-	fn justifications(&self, hash: Block::Hash) -> crate::blockchain::Result<Option<Justifications>>;
+	fn justifications(
+		&self,
+		hash: Block::Hash,
+	) -> crate::blockchain::Result<Option<Justifications>>;
 
 	/// Get block hash by number.
-	fn block_hash(&self, number: NumberFor<Block>) -> crate::blockchain::Result<Option<Block::Hash>>;
+	fn block_hash(
+		&self,
+		number: NumberFor<Block>,
+	) -> crate::blockchain::Result<Option<Block::Hash>>;
 
 	/// Get single indexed transaction by content hash.
 	///

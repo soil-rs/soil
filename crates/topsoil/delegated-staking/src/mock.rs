@@ -26,9 +26,9 @@ use topsoil_support::{
 
 use subsoil::runtime::{traits::IdentityLookup, BuildStorage, Perbill};
 
+use soil_staking::{Agent, Stake, StakingInterface};
 use subsoil::core::{ConstBool, U256};
 use subsoil::runtime::traits::Convert;
-use soil_staking::{Agent, Stake, StakingInterface};
 use topsoil_election_provider_support::{
 	bounds::{ElectionBounds, ElectionBoundsBuilder},
 	onchain, SequentialPhragmen,

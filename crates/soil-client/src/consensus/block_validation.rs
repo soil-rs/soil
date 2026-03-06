@@ -19,8 +19,8 @@
 
 use super::BlockStatus;
 use futures::FutureExt as _;
-use subsoil::runtime::traits::Block;
 use std::{error::Error, future::Future, pin::Pin, sync::Arc};
+use subsoil::runtime::traits::Block;
 
 /// A type which provides access to chain information.
 pub trait Chain<B: Block> {

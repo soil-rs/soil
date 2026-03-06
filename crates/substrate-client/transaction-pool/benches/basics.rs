@@ -22,7 +22,7 @@ use criterion::{criterion_group, criterion_main, Criterion};
 use futures::executor::block_on;
 use sc_transaction_pool::*;
 use soil_client::blockchain::HashAndNumber;
-use subsoil_crypto_hashing::blake2_256;
+use std::sync::Arc;
 use subsoil::runtime::{
 	generic::BlockId,
 	traits::{Block as BlockT, NumberFor},
@@ -31,7 +31,7 @@ use subsoil::runtime::{
 		ValidTransaction,
 	},
 };
-use std::sync::Arc;
+use subsoil_crypto_hashing::blake2_256;
 use substrate_test_runtime::{AccountId, Block, Extrinsic, ExtrinsicBuilder, TransferData, H256};
 
 #[derive(Clone, Debug, Default)]

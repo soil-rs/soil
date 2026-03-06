@@ -331,7 +331,6 @@
 //! The chain spec can be extended with other fields that are opaque to the default chain spec.
 //! Specific node implementations will need to be able to deserialize these extensions.
 
-
 mod chain_spec;
 mod extension;
 mod genesis_block;
@@ -355,10 +354,10 @@ pub use self::{
 };
 pub use soil_chain_spec_derive::{ChainSpecExtension, ChainSpecGroup};
 
-use subsoil::core::storage::Storage;
 use soil_network::config::MultiaddrWithPeerId;
-use subsoil::runtime::BuildStorage;
 use soil_telemetry::TelemetryEndpoints;
+use subsoil::core::storage::Storage;
+use subsoil::runtime::BuildStorage;
 
 /// The type of chain.
 ///

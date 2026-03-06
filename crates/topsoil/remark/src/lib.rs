@@ -74,7 +74,11 @@ pub mod pallet {
 			let content_hash = subsoil::io::hashing::blake2_256(&remark);
 			let extrinsic_index = <topsoil_system::Pallet<T>>::extrinsic_index()
 				.ok_or_else(|| Error::<T>::BadContext)?;
-			subsoil::io::transaction_index::index(extrinsic_index, remark.len() as u32, content_hash);
+			subsoil::io::transaction_index::index(
+				extrinsic_index,
+				remark.len() as u32,
+				content_hash,
+			);
 			Self::deposit_event(Event::Stored { sender, content_hash: content_hash.into() });
 			Ok(().into())
 		}

@@ -31,11 +31,11 @@ use prometheus_endpoint::{
 };
 use soil_client::blockchain::Error as ClientError;
 use soil_network_types::PeerId;
-use subsoil::runtime::traits::{Block as BlockT, NumberFor, Zero};
 use std::{
 	collections::{HashMap, HashSet, VecDeque},
 	time::{Duration, Instant},
 };
+use subsoil::runtime::traits::{Block as BlockT, NumberFor, Zero};
 
 // Time to wait before trying to get the same extra data from the same peer.
 const EXTRA_RETRY_WAIT: Duration = Duration::from_secs(10);

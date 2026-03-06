@@ -21,9 +21,11 @@
 #![allow(dead_code)]
 
 use rand::{self, seq::SliceRandom, Rng, RngCore};
-use subsoil::npos_elections::{phragmms, seq_phragmen, BalancingConfig, ElectionResult, VoteWeight};
-use subsoil::runtime::Perbill;
 use std::collections::{BTreeMap, HashSet};
+use subsoil::npos_elections::{
+	phragmms, seq_phragmen, BalancingConfig, ElectionResult, VoteWeight,
+};
+use subsoil::runtime::Perbill;
 
 /// converts x into the range [a, b] in a pseudo-fair way.
 pub fn to_range(x: usize, a: usize, b: usize) -> usize {

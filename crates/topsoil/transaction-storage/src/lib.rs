@@ -33,11 +33,11 @@ extern crate alloc;
 use alloc::vec::Vec;
 use codec::{Decode, Encode, MaxEncodedLen};
 use core::fmt::Debug;
-use subsoil::runtime::traits::{BlakeTwo256, Dispatchable, Hash, One, Saturating, Zero};
 use soil_transaction_storage_proof::{
 	encode_index, num_chunks, random_chunk, ChunkIndex, InherentError, TransactionStorageProof,
 	CHUNK_SIZE, INHERENT_IDENTIFIER,
 };
+use subsoil::runtime::traits::{BlakeTwo256, Dispatchable, Hash, One, Saturating, Zero};
 use topsoil_support::{
 	dispatch::GetDispatchInfo,
 	pallet_prelude::InvalidTransaction,
@@ -302,8 +302,10 @@ pub mod pallet {
 			let chunks: Vec<_> = data.chunks(CHUNK_SIZE).map(|c| c.to_vec()).collect();
 			let chunk_count = chunks.len() as u32;
 			debug_assert_eq!(chunk_count, num_chunks(data.len() as u32));
-			let root =
-				subsoil::io::trie::blake2_256_ordered_root(chunks, subsoil::runtime::StateVersion::V1);
+			let root = subsoil::io::trie::blake2_256_ordered_root(
+				chunks,
+				subsoil::runtime::StateVersion::V1,
+			);
 
 			let content_hash = subsoil::io::hashing::blake2_256(&data);
 			let extrinsic_index =

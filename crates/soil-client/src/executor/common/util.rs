@@ -19,8 +19,8 @@
 //! Utilities used by all backends
 
 use super::error::Result;
-use subsoil::wasm_interface::Pointer;
 use std::ops::Range;
+use subsoil::wasm_interface::Pointer;
 
 /// Construct a range from an offset to a data length after the offset.
 /// Returns None if the end of the range would exceed some maximum offset.

@@ -28,7 +28,6 @@ use crate::{
 };
 use futures::{Future, FutureExt, Stream, StreamExt};
 use parking_lot::RwLock;
-use subsoil::runtime::traits::Block as BlockT;
 use soil_client::transaction_pool::{TransactionStatus, TransactionStatusStream, TxIndex};
 use soil_client::utils::mpsc;
 use std::{
@@ -36,6 +35,7 @@ use std::{
 	pin::Pin,
 	sync::Arc,
 };
+use subsoil::runtime::traits::Block as BlockT;
 use tokio_stream::StreamMap;
 use tracing::trace;
 

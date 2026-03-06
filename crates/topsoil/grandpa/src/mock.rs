@@ -22,6 +22,7 @@
 use crate::{self as topsoil_grandpa, AuthorityId, AuthorityList, Config, ConsensusLog};
 use codec::Encode;
 use finality_grandpa;
+use soil_staking::{EraIndex, SessionIndex};
 use subsoil::consensus::grandpa::{RoundNumber, SetId, GRANDPA_ENGINE_ID};
 use subsoil::core::{ConstBool, H256};
 use subsoil::keyring::Ed25519Keyring;
@@ -31,7 +32,6 @@ use subsoil::runtime::{
 	traits::OpaqueKeys,
 	BuildStorage, DigestItem, Perbill,
 };
-use soil_staking::{EraIndex, SessionIndex};
 use topsoil_election_provider_support::{
 	bounds::{ElectionBounds, ElectionBoundsBuilder},
 	onchain, SequentialPhragmen,

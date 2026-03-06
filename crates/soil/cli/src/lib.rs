@@ -43,8 +43,8 @@ pub use config::*;
 pub use error::*;
 pub use params::*;
 pub use runner::*;
-pub use soil_client::tracing::logging::LoggerBuilder;
 pub use signals::Signals;
+pub use soil_client::tracing::logging::LoggerBuilder;
 pub use soil_service::{ChainSpec, Role};
 pub use subsoil::version::RuntimeVersion;
 

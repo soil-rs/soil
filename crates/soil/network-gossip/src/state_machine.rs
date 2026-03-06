@@ -25,8 +25,8 @@ use soil_network_types::PeerId;
 use prometheus_endpoint::{register, Counter, PrometheusError, Registry, U64};
 use soil_network::{types::ProtocolName, NotificationService};
 use soil_network_common::role::ObservedRole;
-use subsoil::runtime::traits::{Block as BlockT, Hash, HashingFor};
 use std::{collections::HashMap, iter, sync::Arc, time, time::Instant};
+use subsoil::runtime::traits::{Block as BlockT, Hash, HashingFor};
 
 // FIXME: Add additional spam/DoS attack protection: https://github.com/paritytech/substrate/issues/1115
 // NOTE: The current value is adjusted based on largest production network deployment (Kusama) and
@@ -549,14 +549,14 @@ mod tests {
 		NetworkBlock, NetworkEventStream, NetworkPeers, ReputationChange,
 	};
 	use soil_network_types::multiaddr::Multiaddr;
-	use subsoil::runtime::{
-		testing::{Block as RawBlock, MockCallU64, TestXt, H256},
-		traits::NumberFor,
-	};
 	use std::{
 		collections::HashSet,
 		pin::Pin,
 		sync::{Arc, Mutex},
+	};
+	use subsoil::runtime::{
+		testing::{Block as RawBlock, MockCallU64, TestXt, H256},
+		traits::NumberFor,
 	};
 
 	type Block = RawBlock<TestXt<MockCallU64, ()>>;

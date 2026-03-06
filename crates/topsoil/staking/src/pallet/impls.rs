@@ -17,18 +17,18 @@
 
 //! Implementations for the Staking FRAME Pallet.
 
-use subsoil::runtime::{
-	traits::{
-		Bounded, CheckedAdd, Convert, One, SaturatedConversion, Saturating, StaticLookup, Zero,
-	},
-	ArithmeticError, DispatchResult, Perbill, Percent,
-};
 use soil_staking::{
 	currency_to_vote::CurrencyToVote,
 	offence::{OffenceDetails, OnOffenceHandler},
 	EraIndex, OnStakingUpdate, Page, SessionIndex, Stake,
 	StakingAccount::{self, Controller, Stash},
 	StakingInterface,
+};
+use subsoil::runtime::{
+	traits::{
+		Bounded, CheckedAdd, Convert, One, SaturatedConversion, Saturating, StaticLookup, Zero,
+	},
+	ArithmeticError, DispatchResult, Perbill, Percent,
 };
 use topsoil_election_provider_support::{
 	bounds::{CountBound, SizeBound},

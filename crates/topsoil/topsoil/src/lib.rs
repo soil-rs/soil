@@ -409,11 +409,11 @@ pub mod runtime {
 		pub use subsoil::api::impl_runtime_apis;
 
 		// Types often used in the runtime APIs.
-		pub use subsoil::core::OpaqueMetadata;
 		pub use soil_genesis_builder::{
 			PresetId, Result as GenesisBuilderResult, DEV_RUNTIME_PRESET,
 			LOCAL_TESTNET_RUNTIME_PRESET,
 		};
+		pub use subsoil::core::OpaqueMetadata;
 		pub use subsoil::inherents::{CheckInherentsResult, InherentData};
 		pub use subsoil::keyring::Sr25519Keyring;
 		pub use subsoil::runtime::{ApplyExtrinsicResult, ExtrinsicInclusionMode};
@@ -434,14 +434,14 @@ pub mod runtime {
 	// moved to file similarly.
 	#[allow(ambiguous_glob_reexports)]
 	pub mod apis {
-		pub use subsoil::api::{self, *};
-		pub use subsoil::block_builder::*;
-		pub use subsoil::consensus::aura::*;
-		pub use subsoil::consensus::grandpa::*;
 		pub use soil_genesis_builder::*;
 		pub use soil_offchain::*;
 		pub use soil_session::runtime_api::*;
 		pub use soil_transaction_pool::runtime_api::*;
+		pub use subsoil::api::{self, *};
+		pub use subsoil::block_builder::*;
+		pub use subsoil::consensus::aura::*;
+		pub use subsoil::consensus::grandpa::*;
 		pub use topsoil_system_rpc_runtime_api::*;
 	}
 
@@ -632,19 +632,19 @@ pub mod deps {
 	pub use scale_info;
 
 	#[cfg(feature = "runtime")]
+	pub use soil_genesis_builder;
+	#[cfg(feature = "runtime")]
+	pub use soil_offchain;
+	#[cfg(feature = "runtime")]
 	pub use subsoil::block_builder;
 	#[cfg(feature = "runtime")]
 	pub use subsoil::consensus::aura;
 	#[cfg(feature = "runtime")]
 	pub use subsoil::consensus::grandpa;
 	#[cfg(feature = "runtime")]
-	pub use soil_genesis_builder;
-	#[cfg(feature = "runtime")]
 	pub use subsoil::inherents;
 	#[cfg(feature = "runtime")]
 	pub use subsoil::keyring;
-	#[cfg(feature = "runtime")]
-	pub use soil_offchain;
 	#[cfg(feature = "runtime")]
 	pub use subsoil::storage;
 	#[cfg(feature = "runtime")]

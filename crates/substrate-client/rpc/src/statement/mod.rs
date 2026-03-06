@@ -24,13 +24,13 @@ use jsonrpsee::{
 	core::{async_trait, RpcResult},
 	Extensions, PendingSubscriptionSink,
 };
-use subsoil::core::Bytes;
 /// Re-export the API for backward compatibility.
 pub use soil_rpc_api::statement::{error::Error, StatementApiServer};
 use soil_statement_store::{
 	OptimizedTopicFilter, StatementEvent, StatementSource, SubmitResult, TopicFilter,
 };
 use std::sync::Arc;
+use subsoil::core::Bytes;
 const LOG_TARGET: &str = "statement-store-rpc";
 // The maximum size of a chunk of statements to send in a single JSON response. This is needed to
 // avoid hitting the maximum JSON size limit in the RPC response. Each statement is SCALE-encoded

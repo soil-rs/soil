@@ -20,12 +20,12 @@ use crate::LOG_TARGET;
 use log::trace;
 use soil_network_common::sync::message;
 use soil_network_types::PeerId;
-use subsoil::runtime::traits::{Block as BlockT, NumberFor, One};
 use std::{
 	cmp,
 	collections::{BTreeMap, HashMap},
 	ops::Range,
 };
+use subsoil::runtime::traits::{Block as BlockT, NumberFor, One};
 
 /// Block data with origin.
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -268,9 +268,9 @@ impl<B: BlockT> BlockCollection<B> {
 #[cfg(test)]
 mod test {
 	use super::{BlockCollection, BlockData, BlockRangeState};
-	use subsoil::core::H256;
 	use soil_network_common::sync::message;
 	use soil_network_types::PeerId;
+	use subsoil::core::H256;
 	use subsoil::runtime::testing::{Block as RawBlock, MockCallU64, TestXt};
 
 	type Block = RawBlock<TestXt<MockCallU64, ()>>;

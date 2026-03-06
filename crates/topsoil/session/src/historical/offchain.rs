@@ -24,11 +24,11 @@
 //! and the off-chain indexing API.
 
 use alloc::vec::Vec;
+use soil_session::MembershipProof;
 use subsoil::runtime::{
 	offchain::storage::{MutateStorageError, StorageRetrievalError, StorageValueRef},
 	KeyTypeId,
 };
-use soil_session::MembershipProof;
 
 use super::{shared, Config, IdentificationTuple, ProvingTrie};
 use crate::{Pallet as SessionModule, SessionIndex};

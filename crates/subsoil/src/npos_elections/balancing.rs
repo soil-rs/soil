@@ -27,8 +27,8 @@
 //! See [`balance`] for more information.
 
 use super::{BalancingConfig, Edge, ExtendedBalance, IdentifierT, Voter};
-use alloc::vec::Vec;
 use crate::arithmetic::traits::Zero;
+use alloc::vec::Vec;
 
 /// Balance the weight distribution of a given `voters` at most `iterations` times, or up until the
 /// point where the biggest difference created per iteration of all stakes is `tolerance`. If this

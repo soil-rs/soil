@@ -18,7 +18,6 @@
 
 //! Prometheus basic proposer metrics.
 
-
 use prometheus_endpoint::{
 	prometheus::CounterVec, register, Gauge, Histogram, HistogramOpts, Opts, PrometheusError,
 	Registry, U64,

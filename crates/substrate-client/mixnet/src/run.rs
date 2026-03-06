@@ -42,26 +42,26 @@ use mixnet::{
 	reply_manager::{ReplyContext, ReplyManager},
 	request_manager::RequestManager,
 };
-use subsoil::api::{ApiExt, ProvideRuntimeApi};
 use soil_client::client_api::{BlockchainEvents, HeaderBackend};
 use soil_client::consensus::SyncOracle;
-use subsoil::keystore::{KeystoreExt, KeystorePtr};
+use soil_client::transaction_pool::{
+	LocalTransactionPool, OffchainTransactionPoolFactory, TransactionPool,
+};
 use soil_mixnet::{runtime_api::MixnetApi, types::Mixnode};
 use soil_network::{
 	service::traits::{NetworkService, NotificationEvent, ValidationResult},
 	NetworkPeers, NetworkStateInfo, NotificationService, ProtocolName,
 };
+use std::{
+	sync::Arc,
+	time::{Duration, Instant},
+};
+use subsoil::api::{ApiExt, ProvideRuntimeApi};
+use subsoil::keystore::{KeystoreExt, KeystorePtr};
 use subsoil::runtime::{
 	traits::{Block, Header},
 	transaction_validity::TransactionSource,
 	Saturating,
-};
-use soil_client::transaction_pool::{
-	LocalTransactionPool, OffchainTransactionPoolFactory, TransactionPool,
-};
-use std::{
-	sync::Arc,
-	time::{Duration, Instant},
 };
 
 const LOG_TARGET: &str = "mixnet";

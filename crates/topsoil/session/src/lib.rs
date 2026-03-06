@@ -125,11 +125,11 @@ use core::{
 	ops::{Rem, Sub},
 };
 use disabling::DisablingStrategy;
+use soil_staking::{offence::OffenceSeverity, SessionIndex};
 use subsoil::runtime::{
 	traits::{AtLeast32BitUnsigned, Convert, Member, One, OpaqueKeys, Zero},
 	ConsensusEngineId, DispatchError, KeyTypeId, Permill, RuntimeAppPublic,
 };
-use soil_staking::{offence::OffenceSeverity, SessionIndex};
 use topsoil_support::{
 	dispatch::DispatchResult,
 	ensure,

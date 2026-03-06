@@ -19,11 +19,11 @@
 
 #![cfg(test)]
 
-use subsoil::runtime::{testing::UintAuthorityId, traits::ConvertInto, BuildStorage, Permill};
 use soil_staking::{
 	offence::{OffenceError, ReportOffence},
 	SessionIndex,
 };
+use subsoil::runtime::{testing::UintAuthorityId, traits::ConvertInto, BuildStorage, Permill};
 use topsoil_session::historical as pallet_session_historical;
 use topsoil_support::{
 	derive_impl, parameter_types,

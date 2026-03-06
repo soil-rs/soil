@@ -22,8 +22,8 @@ use crate::core::{
 	hash::{H256, H512},
 };
 
-use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use ::core::marker::PhantomData;
+use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;
 
 #[cfg(feature = "serde")]
@@ -241,7 +241,12 @@ mod public_bytes {
 		#[cfg(feature = "std")]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			let s = self.to_ss58check();
-			write!(f, "{} ({}...)", crate::core::hexdisplay::HexDisplay::from(&self.as_ref()), &s[0..8])
+			write!(
+				f,
+				"{} ({}...)",
+				crate::core::hexdisplay::HexDisplay::from(&self.as_ref()),
+				&s[0..8]
+			)
 		}
 
 		#[cfg(not(feature = "std"))]

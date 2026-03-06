@@ -20,8 +20,8 @@ use crate::{CliConfiguration, DatabaseParams, PruningParams, Result as CliResult
 use codec::{Decode, Encode};
 use soil_client::blockchain::Info;
 use soil_client::client_api::{backend::Backend as BackendT, blockchain::HeaderBackend};
-use subsoil::runtime::traits::{Block as BlockT, Header as HeaderT};
 use std::{fmt::Debug, io};
+use subsoil::runtime::traits::{Block as BlockT, Header as HeaderT};
 
 /// The `chain-info` subcommand used to output db meta columns information.
 #[derive(Debug, Clone, clap::Parser)]

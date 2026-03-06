@@ -20,9 +20,13 @@
 //! that expect this inherent.
 
 use crate::Error;
-use subsoil::api::ProvideRuntimeApi;
 use soil_client::blockchain::HeaderBackend;
 use soil_client::client_api::{AuxStore, UsageProvider};
+use std::{
+	sync::{atomic, Arc},
+	time::SystemTime,
+};
+use subsoil::api::ProvideRuntimeApi;
 use subsoil::consensus::aura::{
 	sr25519::{AuthorityId, AuthoritySignature},
 	AuraApi,
@@ -32,10 +36,6 @@ use subsoil::consensus::slots::{Slot, SlotDuration};
 use subsoil::inherents::{InherentData, InherentDataProvider, InherentIdentifier};
 use subsoil::runtime::traits::{Block as BlockT, Zero};
 use subsoil::timestamp::{InherentType, INHERENT_IDENTIFIER};
-use std::{
-	sync::{atomic, Arc},
-	time::SystemTime,
-};
 
 /// Provide duration since unix epoch in millisecond for timestamp inherent.
 /// Mocks the timestamp inherent to always produce a valid timestamp for the next slot.

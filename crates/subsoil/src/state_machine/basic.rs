@@ -18,14 +18,6 @@
 //! Basic implementation for Externalities.
 
 use super::{Backend, OverlayedChanges, StorageKey, StorageValue};
-use alloc::{boxed::Box, collections::BTreeMap, vec::Vec};
-use codec::Encode;
-use core::{
-	any::{Any, TypeId},
-	iter::FromIterator,
-};
-use hash_db::Hasher;
-use log::warn;
 use crate::core::{
 	storage::{
 		well_known_keys::is_child_storage_key, ChildInfo, StateVersion, Storage, TrackedStorageKey,
@@ -35,6 +27,14 @@ use crate::core::{
 };
 use crate::externalities::{Extension, Extensions, MultiRemovalResults};
 use crate::trie::{empty_child_trie_root, LayoutV0, LayoutV1, TrieConfiguration};
+use alloc::{boxed::Box, collections::BTreeMap, vec::Vec};
+use codec::Encode;
+use core::{
+	any::{Any, TypeId},
+	iter::FromIterator,
+};
+use hash_db::Hasher;
+use log::warn;
 
 /// Simple Map-based Externalities impl.
 #[derive(Debug)]

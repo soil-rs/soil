@@ -24,8 +24,8 @@ use crate::{
 use clap::Parser;
 use log::info;
 use soil_client::client_api::{HeaderBackend, StorageProvider, UsageProvider};
-use subsoil::runtime::traits::{Block as BlockT, Header as HeaderT};
 use std::{fmt::Debug, io::Write, str::FromStr, sync::Arc};
+use subsoil::runtime::traits::{Block as BlockT, Header as HeaderT};
 
 /// The `export-state` command used to export the state of a given block into
 /// a chain spec.

@@ -84,7 +84,10 @@ impl topsoil_session::SessionHandler<AccountId> for TestSessionHandler {
 	// corresponds to the opaque key id above
 	const KEY_TYPE_IDS: &'static [KeyTypeId] = &[KeyTypeId([100u8, 117u8, 109u8, 121u8])];
 
-	fn on_genesis_session<Ks: subsoil::runtime::traits::OpaqueKeys>(_validators: &[(AccountId, Ks)]) {}
+	fn on_genesis_session<Ks: subsoil::runtime::traits::OpaqueKeys>(
+		_validators: &[(AccountId, Ks)],
+	) {
+	}
 
 	fn on_new_session<Ks: subsoil::runtime::traits::OpaqueKeys>(
 		_: bool,

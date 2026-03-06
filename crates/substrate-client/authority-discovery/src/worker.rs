@@ -44,21 +44,21 @@ use prost::Message;
 use rand::{seq::SliceRandom, thread_rng};
 
 use schema::PeerSignature;
-use subsoil::api::{ApiError, ProvideRuntimeApi};
 use soil_authority_discovery::{
 	AuthorityDiscoveryApi, AuthorityId, AuthorityPair, AuthoritySignature,
 };
 use soil_client::blockchain::HeaderBackend;
-use subsoil::core::{
-	crypto::{key_types, ByteArray, Pair},
-	traits::SpawnNamed,
-};
-use subsoil::keystore::{Keystore, KeystorePtr};
 use soil_network::{
 	config::DEFAULT_KADEMLIA_REPLICATION_FACTOR, event::DhtEvent, multiaddr, KademliaKey,
 	Multiaddr, NetworkDHTProvider, NetworkSigner, NetworkStateInfo,
 };
 use soil_network_types::{multihash::Code, PeerId};
+use subsoil::api::{ApiError, ProvideRuntimeApi};
+use subsoil::core::{
+	crypto::{key_types, ByteArray, Pair},
+	traits::SpawnNamed,
+};
+use subsoil::keystore::{Keystore, KeystorePtr};
 use subsoil::runtime::traits::Block as BlockT;
 
 mod addr_cache;

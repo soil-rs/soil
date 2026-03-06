@@ -23,7 +23,6 @@ use prometheus_endpoint::Registry;
 pub use sc_transaction_pool::TransactionPoolOptions;
 use soil_chain_spec::ChainSpec;
 pub use soil_client::db::{BlocksPruning, Database, DatabaseSource, PruningMode};
-use subsoil::core::crypto::SecretString;
 pub use soil_client::executor::{WasmExecutionMethod, WasmtimeInstantiationStrategy};
 pub use soil_network::{
 	config::{
@@ -45,6 +44,7 @@ use std::{
 	num::NonZeroU32,
 	path::{Path, PathBuf},
 };
+use subsoil::core::crypto::SecretString;
 use tempfile::TempDir;
 
 /// Service configuration.

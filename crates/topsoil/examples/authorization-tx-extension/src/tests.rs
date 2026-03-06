@@ -129,7 +129,8 @@ fn create_coowned_asset_works() {
 			(&(ext_version, &create_asset_call), &inner_ext, inner_ext.implicit().unwrap());
 		// Create Alice's signature.
 		let alice_inner_sig = MultiSignature::Sr25519(
-			inner_payload.using_encoded(|e| alice_keyring.sign(&subsoil::io::hashing::blake2_256(e))),
+			inner_payload
+				.using_encoded(|e| alice_keyring.sign(&subsoil::io::hashing::blake2_256(e))),
 		);
 		// Create Bob's signature.
 		let bob_inner_sig = MultiSignature::Sr25519(
@@ -221,7 +222,8 @@ fn inner_authorization_works() {
 		let inner_payload = (&create_asset_call, &inner_ext, inner_ext.implicit().unwrap());
 		// Create Alice's signature.
 		let alice_inner_sig = MultiSignature::Sr25519(
-			inner_payload.using_encoded(|e| alice_keyring.sign(&subsoil::io::hashing::blake2_256(e))),
+			inner_payload
+				.using_encoded(|e| alice_keyring.sign(&subsoil::io::hashing::blake2_256(e))),
 		);
 		// Create Bob's signature.
 		let bob_inner_sig = MultiSignature::Sr25519(

@@ -30,15 +30,11 @@ use rand::Rng;
 use sc_consensus::{
 	BlockCheckParams, BlockImportParams, ForkChoiceStrategy, ImportResult, StateAction,
 };
-use subsoil::api::{
-	ApiExt, ApiRef, CallApiAt, CallApiAtParams, ConstructRuntimeApi, Core as CoreApi,
-	ProvideRuntimeApi,
-};
+use soil_chain_spec::{resolve_state_version_from_wasm, BuildGenesisBlock};
 use soil_client::blockchain::{
 	self as blockchain, Backend as ChainBackend, CachedHeaderMetadata, Error,
 	HeaderBackend as ChainHeaderBackend, HeaderMetadata, Info as BlockchainInfo,
 };
-use soil_chain_spec::{resolve_state_version_from_wasm, BuildGenesisBlock};
 use soil_client::client_api::{
 	backend::{
 		self, apply_aux, BlockImportOperation, ClientImportOperation, FinalizeSummary, Finalizer,
@@ -57,7 +53,18 @@ use soil_client::client_api::{
 use soil_client::consensus::{BlockOrigin, BlockStatus, Error as ConsensusError};
 use soil_client::executor::RuntimeVersion;
 use soil_telemetry::{telemetry, TelemetryHandle, SUBSTRATE_INFO};
+use subsoil::api::{
+	ApiExt, ApiRef, CallApiAt, CallApiAtParams, ConstructRuntimeApi, Core as CoreApi,
+	ProvideRuntimeApi,
+};
 
+use soil_client::utils::mpsc::{tracing_unbounded, TracingUnboundedSender};
+use std::{
+	collections::{HashMap, HashSet},
+	marker::PhantomData,
+	path::PathBuf,
+	sync::Arc,
+};
 use subsoil::core::{
 	storage::{ChildInfo, ChildType, PrefixedStorageKey, StorageChild, StorageData, StorageKey},
 	traits::{CallContext, SpawnNamed},
@@ -77,13 +84,6 @@ use subsoil::state_machine::{
 	MAX_NESTED_TRIE_DEPTH,
 };
 use subsoil::trie::{proof_size_extension::ProofSizeExt, CompactProof, MerkleValue, StorageProof};
-use soil_client::utils::mpsc::{tracing_unbounded, TracingUnboundedSender};
-use std::{
-	collections::{HashMap, HashSet},
-	marker::PhantomData,
-	path::PathBuf,
-	sync::Arc,
-};
 
 use super::call_executor::LocalCallExecutor;
 use subsoil::core::traits::CodeExecutor;
@@ -450,7 +450,10 @@ where
 	}
 
 	/// Get the RuntimeVersion at a given block.
-	pub fn runtime_version_at(&self, hash: Block::Hash) -> soil_client::blockchain::Result<RuntimeVersion> {
+	pub fn runtime_version_at(
+		&self,
+		hash: Block::Hash,
+	) -> soil_client::blockchain::Result<RuntimeVersion> {
 		CallExecutor::runtime_version(&self.executor, hash)
 	}
 
@@ -898,8 +901,11 @@ where
 		}
 
 		// Find tree route from last finalized to given block.
-		let route_from_finalized =
-			soil_client::blockchain::tree_route(self.backend.blockchain(), info.finalized_hash, hash)?;
+		let route_from_finalized = soil_client::blockchain::tree_route(
+			self.backend.blockchain(),
+			info.finalized_hash,
+			hash,
+		)?;
 
 		if let Some(retracted) = route_from_finalized.retracted().get(0) {
 			warn!(
@@ -921,8 +927,11 @@ where
 			.number(hash)?
 			.ok_or(Error::MissingHeader(format!("{hash:?}")))?;
 		if self.backend.blockchain().leaves()?.len() > 1 || info.best_number < block_number {
-			let route_from_best =
-				soil_client::blockchain::tree_route(self.backend.blockchain(), info.best_hash, hash)?;
+			let route_from_best = soil_client::blockchain::tree_route(
+				self.backend.blockchain(),
+				info.best_hash,
+				hash,
+			)?;
 
 			// If the block is not a direct ancestor of the current best chain,
 			// then some other block is the common ancestor.
@@ -1586,7 +1595,10 @@ where
 		self.backend.blockchain().info()
 	}
 
-	fn status(&self, hash: Block::Hash) -> soil_client::blockchain::Result<blockchain::BlockStatus> {
+	fn status(
+		&self,
+		hash: Block::Hash,
+	) -> soil_client::blockchain::Result<blockchain::BlockStatus> {
 		self.backend.blockchain().status(hash)
 	}
 
@@ -1597,7 +1609,10 @@ where
 		self.backend.blockchain().number(hash)
 	}
 
-	fn hash(&self, number: NumberFor<Block>) -> soil_client::blockchain::Result<Option<Block::Hash>> {
+	fn hash(
+		&self,
+		number: NumberFor<Block>,
+	) -> soil_client::blockchain::Result<Option<Block::Hash>> {
 		self.backend.blockchain().hash(number)
 	}
 }
@@ -1611,7 +1626,10 @@ where
 {
 	type Error = Error;
 
-	fn to_hash(&self, block_id: &BlockId<Block>) -> soil_client::blockchain::Result<Option<Block::Hash>> {
+	fn to_hash(
+		&self,
+		block_id: &BlockId<Block>,
+	) -> soil_client::blockchain::Result<Option<Block::Hash>> {
 		self.block_hash_from_id(block_id)
 	}
 
@@ -1638,7 +1656,10 @@ where
 		self.backend.blockchain().info()
 	}
 
-	fn status(&self, hash: Block::Hash) -> soil_client::blockchain::Result<blockchain::BlockStatus> {
+	fn status(
+		&self,
+		hash: Block::Hash,
+	) -> soil_client::blockchain::Result<blockchain::BlockStatus> {
 		(**self).status(hash)
 	}
 
@@ -1649,7 +1670,10 @@ where
 		(**self).number(hash)
 	}
 
-	fn hash(&self, number: NumberFor<Block>) -> soil_client::blockchain::Result<Option<Block::Hash>> {
+	fn hash(
+		&self,
+		number: NumberFor<Block>,
+	) -> soil_client::blockchain::Result<Option<Block::Hash>> {
 		(**self).hash(number)
 	}
 }
@@ -1677,7 +1701,10 @@ where
 {
 	type StateBackend = B::State;
 
-	fn call_api_at(&self, params: CallApiAtParams<Block>) -> Result<Vec<u8>, subsoil::api::ApiError> {
+	fn call_api_at(
+		&self,
+		params: CallApiAtParams<Block>,
+	) -> Result<Vec<u8>, subsoil::api::ApiError> {
 		self.executor
 			.contextual_call(
 				params.at,
@@ -1691,7 +1718,10 @@ where
 			.map_err(Into::into)
 	}
 
-	fn runtime_version_at(&self, hash: Block::Hash) -> Result<RuntimeVersion, subsoil::api::ApiError> {
+	fn runtime_version_at(
+		&self,
+		hash: Block::Hash,
+	) -> Result<RuntimeVersion, subsoil::api::ApiError> {
 		CallExecutor::runtime_version(&self.executor, hash).map_err(Into::into)
 	}
 
@@ -1968,7 +1998,10 @@ where
 		self.body(hash)
 	}
 
-	fn block(&self, hash: Block::Hash) -> soil_client::blockchain::Result<Option<SignedBlock<Block>>> {
+	fn block(
+		&self,
+		hash: Block::Hash,
+	) -> soil_client::blockchain::Result<Option<SignedBlock<Block>>> {
 		Ok(match (self.header(hash)?, self.body(hash)?, self.justifications(hash)?) {
 			(Some(header), Some(extrinsics), justifications) => {
 				Some(SignedBlock { block: Block::new(header, extrinsics), justifications })
@@ -1981,15 +2014,24 @@ where
 		Client::block_status(self, hash)
 	}
 
-	fn justifications(&self, hash: Block::Hash) -> soil_client::blockchain::Result<Option<Justifications>> {
+	fn justifications(
+		&self,
+		hash: Block::Hash,
+	) -> soil_client::blockchain::Result<Option<Justifications>> {
 		self.backend.blockchain().justifications(hash)
 	}
 
-	fn block_hash(&self, number: NumberFor<Block>) -> soil_client::blockchain::Result<Option<Block::Hash>> {
+	fn block_hash(
+		&self,
+		number: NumberFor<Block>,
+	) -> soil_client::blockchain::Result<Option<Block::Hash>> {
 		self.backend.blockchain().hash(number)
 	}
 
-	fn indexed_transaction(&self, hash: Block::Hash) -> soil_client::blockchain::Result<Option<Vec<u8>>> {
+	fn indexed_transaction(
+		&self,
+		hash: Block::Hash,
+	) -> soil_client::blockchain::Result<Option<Vec<u8>>> {
 		self.backend.blockchain().indexed_transaction(hash)
 	}
 

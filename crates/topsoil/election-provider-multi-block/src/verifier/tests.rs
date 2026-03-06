@@ -119,7 +119,9 @@ mod feasibility_check {
 
 			assert_noop!(
 				VerifierPallet::feasibility_check_page_inner(paged.solution_pages[0].clone(), 0),
-				FeasibilityError::NposElection(subsoil::npos_elections::Error::SolutionInvalidIndex)
+				FeasibilityError::NposElection(
+					subsoil::npos_elections::Error::SolutionInvalidIndex
+				)
 			);
 		})
 	}
@@ -1063,7 +1065,9 @@ mod multi_page_sync_verification {
 					paged.score,
 				)
 				.unwrap_err(),
-				FeasibilityError::NposElection(subsoil::npos_elections::Error::SolutionInvalidIndex)
+				FeasibilityError::NposElection(
+					subsoil::npos_elections::Error::SolutionInvalidIndex
+				)
 			);
 
 			assert_eq!(

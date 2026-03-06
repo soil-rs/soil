@@ -19,12 +19,12 @@
 
 use codec::{Decode, Encode};
 use parking_lot::RwLock;
+use std::collections::{btree_set::BTreeSet, HashMap, VecDeque};
 use subsoil::runtime::{
 	generic::BlockId,
 	traits::{Block as BlockT, Header as HeaderT, NumberFor, Zero},
 	Justifications,
 };
-use std::collections::{btree_set::BTreeSet, HashMap, VecDeque};
 use tracing::{debug, warn};
 
 use super::{

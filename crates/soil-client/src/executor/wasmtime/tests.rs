@@ -16,12 +16,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-use codec::{Decode as _, Encode as _};
 use crate::executor::common::{
 	error::Error,
 	runtime_blob::RuntimeBlob,
 	wasm_runtime::{HeapAllocStrategy, WasmModule, DEFAULT_HEAP_ALLOC_STRATEGY},
 };
+use codec::{Decode as _, Encode as _};
 use soil_runtime_test::wasm_binary_unwrap;
 
 use crate::executor::wasmtime::InstantiationStrategy;
@@ -156,9 +156,15 @@ impl RuntimeBuilder {
 			// Delay the removal of the temporary directory until we're dropped.
 			self.tmpdir = Some(dir);
 
-			let artifact = crate::executor::wasmtime::prepare_runtime_artifact(blob, &config.semantics).unwrap();
+			let artifact =
+				crate::executor::wasmtime::prepare_runtime_artifact(blob, &config.semantics)
+					.unwrap();
 			std::fs::write(&path, artifact).unwrap();
-			unsafe { crate::executor::wasmtime::create_runtime_from_artifact::<HostFunctions>(&path, config) }
+			unsafe {
+				crate::executor::wasmtime::create_runtime_from_artifact::<HostFunctions>(
+					&path, config,
+				)
+			}
 		} else {
 			crate::executor::wasmtime::create_runtime::<HostFunctions>(blob, config)
 		}

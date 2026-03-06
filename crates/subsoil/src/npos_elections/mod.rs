@@ -72,13 +72,13 @@
 //!
 //! More information can be found at: <https://arxiv.org/abs/2004.12990>
 
+use crate::arithmetic::{traits::Zero, Normalizable, PerThing, Rational128, ThresholdOrd};
 use alloc::{collections::btree_map::BTreeMap, rc::Rc, vec, vec::Vec};
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use core::{cell::RefCell, cmp::Ordering, fmt::Debug};
 use scale_info::TypeInfo;
 #[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
-use crate::arithmetic::{traits::Zero, Normalizable, PerThing, Rational128, ThresholdOrd};
 
 #[cfg(test)]
 mod mock;

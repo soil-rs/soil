@@ -22,8 +22,8 @@ use crate::{
 };
 use array_bytes::bytes2hex;
 use clap::Parser;
-use subsoil::core::crypto::SecretString;
 use std::io::{BufRead, Write};
+use subsoil::core::crypto::SecretString;
 
 /// The `sign` command
 #[derive(Debug, Clone, Parser)]

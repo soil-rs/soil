@@ -17,6 +17,7 @@
 
 //! Generic implementation of an unchecked (pre-verification) extrinsic.
 
+use crate::io::hashing::blake2_256;
 use crate::runtime::{
 	generic::{CheckedExtrinsic, ExtrinsicFormat},
 	traits::{
@@ -27,6 +28,10 @@ use crate::runtime::{
 	transaction_validity::{InvalidTransaction, TransactionValidityError},
 	OpaqueExtrinsic,
 };
+use crate::weights::Weight;
+use ::core::fmt::{
+	Debug, {self},
+};
 #[cfg(all(not(feature = "std"), feature = "serde"))]
 use alloc::format;
 use alloc::{vec, vec::Vec};
@@ -34,12 +39,7 @@ use codec::{
 	Compact, CountedInput, Decode, DecodeWithMemLimit, DecodeWithMemTracking, Encode, EncodeLike,
 	Input,
 };
-use ::core::fmt::{
-	Debug, {self},
-};
 use scale_info::{build::Fields, meta_type, Path, StaticTypeInfo, Type, TypeInfo, TypeParameter};
-use crate::io::hashing::blake2_256;
-use crate::weights::Weight;
 
 /// Type to represent the version of the [Extension](TransactionExtension) used in this extrinsic.
 pub type ExtensionVersion = u8;
@@ -899,13 +899,12 @@ mod legacy {
 #[cfg(test)]
 mod tests {
 	use super::{legacy::UncheckedExtrinsicV4, *};
+	use crate::io::hashing::blake2_256;
 	use crate::runtime::{
 		codec::{Decode, Encode},
-		
 		testing::TestSignature as TestSig,
 		traits::{FakeDispatchable, IdentityLookup, TransactionExtension},
 	};
-	use crate::io::hashing::blake2_256;
 
 	type TestContext = IdentityLookup<u64>;
 	type TestAccountId = u64;

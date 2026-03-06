@@ -19,17 +19,16 @@
 #![deny(warnings)]
 #![forbid(unsafe_code, missing_docs, unused_variables, unused_imports)]
 
-
 pub mod digests;
 pub mod inherents;
 
+use crate::runtime::{traits::Header, ConsensusEngineId};
 #[cfg(not(feature = "std"))]
 use alloc::vec::Vec;
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;
 #[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
-use crate::runtime::{traits::Header, ConsensusEngineId};
 
 use digests::{NextConfigDescriptor, NextEpochDescriptor};
 
@@ -281,8 +280,8 @@ pub fn check_equivocation_proof<H>(proof: EquivocationProof<H>) -> bool
 where
 	H: Header,
 {
-	use digests::*;
 	use crate::application_crypto::RuntimeAppPublic;
+	use digests::*;
 
 	let find_pre_digest =
 		|header: &H| header.digest().logs().iter().find_map(|log| log.as_babe_pre_digest());

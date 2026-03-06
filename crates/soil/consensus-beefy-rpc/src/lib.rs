@@ -21,8 +21,8 @@
 #![warn(missing_docs)]
 
 use parking_lot::RwLock;
-use subsoil::consensus::beefy::AuthorityIdBound;
 use std::sync::Arc;
+use subsoil::consensus::beefy::AuthorityIdBound;
 
 use sc_rpc::{
 	utils::{BoundedVecDeque, PendingSubscription},

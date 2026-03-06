@@ -21,8 +21,8 @@
 use crate::{Epoch, EpochChanges, PersistedEpoch, PersistedEpochHeader};
 use codec::{Decode, Encode};
 use fork_tree::ForkTree;
-use subsoil::runtime::traits::{Block as BlockT, NumberFor};
 use std::collections::BTreeMap;
+use subsoil::runtime::traits::{Block as BlockT, NumberFor};
 
 /// Legacy definition of epoch changes.
 #[derive(Clone, Encode, Decode)]

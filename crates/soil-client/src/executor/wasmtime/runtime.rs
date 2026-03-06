@@ -24,16 +24,13 @@ use crate::executor::wasmtime::{
 	util::{self, replace_strategy_if_broken},
 };
 
-use parking_lot::Mutex;
-use subsoil::allocator::{AllocationStats, FreeingBumpHeapAllocator};
 use crate::executor::common::{
 	error::{Error, Result, WasmError},
 	runtime_blob::RuntimeBlob,
 	util::checked_range,
 	wasm_runtime::{HeapAllocStrategy, WasmInstance, WasmModule},
 };
-use subsoil::runtime_interface::unpack_ptr_and_len;
-use subsoil::wasm_interface::{HostFunctions, Pointer, WordSize};
+use parking_lot::Mutex;
 use std::{
 	path::{Path, PathBuf},
 	sync::{
@@ -41,6 +38,9 @@ use std::{
 		Arc,
 	},
 };
+use subsoil::allocator::{AllocationStats, FreeingBumpHeapAllocator};
+use subsoil::runtime_interface::unpack_ptr_and_len;
+use subsoil::wasm_interface::{HostFunctions, Pointer, WordSize};
 use wasmtime::{AsContext, Cache, CacheConfig, Engine, Memory};
 
 const MAX_INSTANCE_COUNT: u32 = 64;
@@ -612,7 +612,11 @@ where
 	};
 
 	let mut linker = wasmtime::Linker::new(&engine);
-	crate::executor::wasmtime::imports::prepare_imports::<H>(&mut linker, &module, config.allow_missing_func_imports)?;
+	crate::executor::wasmtime::imports::prepare_imports::<H>(
+		&mut linker,
+		&module,
+		config.allow_missing_func_imports,
+	)?;
 
 	let instance_pre = linker
 		.instantiate_pre(&module)

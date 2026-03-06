@@ -24,8 +24,8 @@ use std::{fmt, fs, io, path::Path, sync::Arc};
 use log::{debug, info};
 
 use super::{Database, DatabaseSource, DbHash};
-use codec::Decode;
 use crate::client_api::blockchain::{BlockGap, BlockGapType};
+use codec::Decode;
 use subsoil::database::Transaction;
 use subsoil::runtime::{
 	generic::BlockId,
@@ -172,7 +172,8 @@ pub fn block_id_to_lookup_key<Block>(
 ) -> Result<Option<Vec<u8>>, crate::blockchain::Error>
 where
 	Block: BlockT,
-	::subsoil::runtime::traits::NumberFor<Block>: UniqueSaturatedFrom<u64> + UniqueSaturatedInto<u64>,
+	::subsoil::runtime::traits::NumberFor<Block>:
+		UniqueSaturatedFrom<u64> + UniqueSaturatedInto<u64>,
 {
 	Ok(match id {
 		BlockId::Number(n) => db.get(key_lookup_col, number_index_key(n)?.as_ref()),
@@ -481,7 +482,10 @@ pub fn read_header<Block: BlockT>(
 pub fn read_meta<Block>(
 	db: &dyn Database<DbHash>,
 	col_header: u32,
-) -> Result<Meta<<<Block as BlockT>::Header as HeaderT>::Number, Block::Hash>, crate::blockchain::Error>
+) -> Result<
+	Meta<<<Block as BlockT>::Header as HeaderT>::Number, Block::Hash>,
+	crate::blockchain::Error,
+>
 where
 	Block: BlockT,
 {

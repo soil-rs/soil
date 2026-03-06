@@ -140,12 +140,12 @@ pub use pallet::*;
 use types::*;
 
 use core::convert::TryInto;
+use soil_staking::{Agent, Delegator, EraIndex, StakingInterface, StakingUnchecked};
 use subsoil::io::hashing::blake2_256;
 use subsoil::runtime::{
 	traits::{CheckedAdd, CheckedSub, TrailingZeroInput, Zero},
 	ArithmeticError, Debug, DispatchResult, Perbill, Saturating,
 };
-use soil_staking::{Agent, Delegator, EraIndex, StakingInterface, StakingUnchecked};
 use topsoil_support::{
 	pallet_prelude::*,
 	traits::{

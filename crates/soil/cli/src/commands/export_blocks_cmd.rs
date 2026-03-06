@@ -24,9 +24,9 @@ use crate::{
 use clap::Parser;
 use log::info;
 use soil_client::client_api::{BlockBackend, HeaderBackend, UsageProvider};
-use subsoil::runtime::traits::{Block as BlockT, Header as HeaderT};
 use soil_service::{chain_ops::export_blocks, config::DatabaseSource};
 use std::{fmt::Debug, fs, io, path::PathBuf, str::FromStr, sync::Arc};
+use subsoil::runtime::traits::{Block as BlockT, Header as HeaderT};
 
 /// The `export-blocks` command used to export blocks.
 #[derive(Debug, Clone, Parser)]

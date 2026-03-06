@@ -1977,7 +1977,9 @@ mod feasibility_check {
 			});
 			assert_noop!(
 				MultiPhase::feasibility_check(raw, COMPUTE),
-				FeasibilityError::NposElection(subsoil::npos_elections::Error::SolutionInvalidIndex)
+				FeasibilityError::NposElection(
+					subsoil::npos_elections::Error::SolutionInvalidIndex
+				)
 			);
 		})
 	}
@@ -2005,7 +2007,9 @@ mod feasibility_check {
 			);
 			assert_noop!(
 				MultiPhase::feasibility_check(solution, COMPUTE),
-				FeasibilityError::NposElection(subsoil::npos_elections::Error::SolutionInvalidIndex),
+				FeasibilityError::NposElection(
+					subsoil::npos_elections::Error::SolutionInvalidIndex
+				),
 			);
 		})
 	}

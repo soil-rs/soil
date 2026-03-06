@@ -27,8 +27,8 @@ use soil_client::transaction_pool::{
 use crate::hex_string;
 use futures::StreamExt;
 
-use subsoil::runtime::traits::Block as BlockT;
 use std::{collections::HashMap, pin::Pin, sync::Arc};
+use subsoil::runtime::traits::Block as BlockT;
 use substrate_test_runtime_transaction_pool::TestApi;
 use tokio::sync::mpsc;
 

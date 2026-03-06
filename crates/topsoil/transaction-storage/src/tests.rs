@@ -19,8 +19,8 @@
 
 use super::{Pallet as TransactionStorage, *};
 use crate::mock::*;
-use subsoil::runtime::{DispatchError, TokenError::FundsUnavailable};
 use soil_transaction_storage_proof::{registration::build_proof, CHUNK_SIZE};
+use subsoil::runtime::{DispatchError, TokenError::FundsUnavailable};
 use topsoil_support::{assert_noop, assert_ok};
 use topsoil_system::RawOrigin;
 

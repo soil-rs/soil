@@ -223,8 +223,10 @@ mod tests {
 	type Nonce = u64;
 	type BlockNumber = u64;
 
-	pub type Header = subsoil::runtime::generic::Header<BlockNumber, subsoil::runtime::traits::BlakeTwo256>;
-	pub type UncheckedExtrinsic = subsoil::runtime::generic::UncheckedExtrinsic<AccountId, (), (), ()>;
+	pub type Header =
+		subsoil::runtime::generic::Header<BlockNumber, subsoil::runtime::traits::BlakeTwo256>;
+	pub type UncheckedExtrinsic =
+		subsoil::runtime::generic::UncheckedExtrinsic<AccountId, (), (), ()>;
 	pub type Block = subsoil::runtime::generic::Block<Header, UncheckedExtrinsic>;
 
 	topsoil_support::construct_runtime!(

@@ -24,10 +24,10 @@ use super::{
 	traits::{self, BlakeTwo256, Dispatchable, LazyExtrinsic, OpaqueKeys},
 	DispatchResultWithInfo, KeyTypeId, OpaqueExtrinsic,
 };
-use serde::{de::Error as DeError, Deserialize, Deserializer, Serialize};
 use crate::core::crypto::{key_types, ByteArray, CryptoType, Dummy};
 pub use crate::core::{sr25519, H256};
 use ::std::{cell::RefCell, fmt::Debug};
+use serde::{de::Error as DeError, Deserialize, Deserializer, Serialize};
 
 /// A dummy type which can be used instead of regular cryptographic primitives.
 ///

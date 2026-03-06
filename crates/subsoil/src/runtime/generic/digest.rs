@@ -24,6 +24,7 @@ use codec::DecodeAll;
 #[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
 
+use crate::runtime::Debug;
 use crate::runtime::{
 	codec::{Decode, DecodeWithMemTracking, Encode, Error, Input},
 	scale_info::{
@@ -32,7 +33,6 @@ use crate::runtime::{
 	},
 	ConsensusEngineId,
 };
-use crate::runtime::Debug;
 
 /// Generic header digest.
 #[derive(PartialEq, Eq, Clone, Encode, Decode, DecodeWithMemTracking, Debug, TypeInfo, Default)]

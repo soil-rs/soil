@@ -22,8 +22,8 @@
 
 use crate::transaction::event::{TransactionError, TransactionEvent};
 use jsonrpsee::types::error::ErrorObject;
-use subsoil::runtime::transaction_validity::InvalidTransaction;
 use soil_client::transaction_pool::error::Error as PoolError;
+use subsoil::runtime::transaction_validity::InvalidTransaction;
 
 /// Transaction RPC errors.
 #[derive(Debug, thiserror::Error)]

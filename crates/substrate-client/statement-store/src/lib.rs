@@ -55,13 +55,9 @@ use futures::FutureExt;
 use metrics::MetricsLink as PrometheusMetrics;
 use parking_lot::{lock_api::RwLockUpgradableReadGuard, RwLock};
 use prometheus_endpoint::Registry as PrometheusRegistry;
-use soil_client::keystore::LocalKeystore;
 use soil_client::blockchain::HeaderBackend;
 use soil_client::client_api::{backend::StorageProvider, Backend, StorageKey};
-use subsoil::core::{
-	crypto::UncheckedFrom, hexdisplay::HexDisplay, traits::SpawnNamed, Decode, Encode,
-};
-use subsoil::runtime::traits::Block as BlockT;
+use soil_client::keystore::LocalKeystore;
 use soil_statement_store::{
 	runtime_api::{StatementSource, StatementStoreExt},
 	AccountId, BlockHash, Channel, DecryptionKey, FilterDecision, Hash, InvalidReason,
@@ -75,6 +71,10 @@ use std::{
 	time::{Duration, Instant},
 };
 pub use subscription::StatementStoreSubscriptionApi;
+use subsoil::core::{
+	crypto::UncheckedFrom, hexdisplay::HexDisplay, traits::SpawnNamed, Decode, Encode,
+};
+use subsoil::runtime::traits::Block as BlockT;
 
 const KEY_VERSION: &[u8] = b"version".as_slice();
 const CURRENT_VERSION: u32 = 1;
@@ -1496,11 +1496,11 @@ mod tests {
 
 	use crate::{col, Store};
 	use soil_client::keystore::Keystore;
-	use subsoil::core::{Decode, Encode, Pair};
 	use soil_statement_store::{
 		AccountId, Channel, DecryptionKey, InvalidReason, Proof, Statement, StatementSource,
 		StatementStore, SubmitResult, Topic,
 	};
+	use subsoil::core::{Decode, Encode, Pair};
 
 	type Extrinsic = subsoil::runtime::OpaqueExtrinsic;
 	type Hash = subsoil::core::H256;
@@ -1645,7 +1645,10 @@ mod tests {
 				block_gap: None,
 			}
 		}
-		fn status(&self, _hash: Hash) -> soil_client::blockchain::Result<soil_client::blockchain::BlockStatus> {
+		fn status(
+			&self,
+			_hash: Hash,
+		) -> soil_client::blockchain::Result<soil_client::blockchain::BlockStatus> {
 			unimplemented!()
 		}
 		fn number(&self, _hash: Hash) -> soil_client::blockchain::Result<Option<BlockNumber>> {

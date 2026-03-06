@@ -214,8 +214,9 @@ impl<BlockNumber: Clone + core::fmt::Debug + AtLeast32BitUnsigned> TryState<Bloc
 				let functions: &[fn(BlockNumber, Select) -> Result<(), TryRuntimeError>] =
 					&[for_tuples!(#( Tuple::try_state ),*)];
 				let skip = n.clone() % (functions.len() as u32).into();
-				let skip: u32 =
-					skip.try_into().unwrap_or_else(|_| subsoil::runtime::traits::Bounded::max_value());
+				let skip: u32 = skip
+					.try_into()
+					.unwrap_or_else(|_| subsoil::runtime::traits::Bounded::max_value());
 				let mut result = Ok(());
 				for try_state_fn in functions.iter().cycle().skip(skip as usize).take(len as usize)
 				{

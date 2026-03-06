@@ -23,9 +23,9 @@ use crate::{
 };
 use clap::Parser;
 use soil_client::keystore::LocalKeystore;
+use soil_service::config::{BasePath, KeystoreConfig};
 use subsoil::core::crypto::{KeyTypeId, SecretString};
 use subsoil::keystore::KeystorePtr;
-use soil_service::config::{BasePath, KeystoreConfig};
 
 /// The `insert` command
 #[derive(Debug, Clone, Parser)]
@@ -94,9 +94,9 @@ fn to_vec<P: subsoil::core::Pair>(uri: &str, pass: Option<SecretString>) -> Resu
 #[cfg(test)]
 mod tests {
 	use super::*;
+	use soil_service::{ChainSpec, ChainType, GenericChainSpec, NoExtension};
 	use subsoil::core::{sr25519::Pair, ByteArray, Pair as _};
 	use subsoil::keystore::Keystore;
-	use soil_service::{ChainSpec, ChainType, GenericChainSpec, NoExtension};
 	use tempfile::TempDir;
 
 	struct Cli;

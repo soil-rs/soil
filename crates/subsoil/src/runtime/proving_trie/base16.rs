@@ -26,12 +26,12 @@
 
 use super::{ProofToHashes, ProvingTrie, TrieError};
 use crate::runtime::{Decode, DispatchError, Encode};
-use alloc::vec::Vec;
-use codec::MaxEncodedLen;
 use crate::trie::{
 	trie_types::{TrieDBBuilder, TrieDBMutBuilderV1},
 	LayoutV1, MemoryDB, RandomState, Trie, TrieMut,
 };
+use alloc::vec::Vec;
+use codec::MaxEncodedLen;
 
 /// A helper structure for building a basic base-16 merkle trie and creating compact proofs for that
 /// trie. Proofs are created with latest substrate trie format (`LayoutV1`), and are not compatible
@@ -195,8 +195,8 @@ where
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use crate::runtime::traits::BlakeTwo256;
 	use crate::core::H256;
+	use crate::runtime::traits::BlakeTwo256;
 	use ::std::collections::BTreeMap;
 
 	// A trie which simulates a trie of accounts (u32) and balances (u128).

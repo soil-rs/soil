@@ -135,11 +135,11 @@ mod tests {
 
 	use codec::{Decode, Encode};
 	use jsonrpsee::{core::EmptyServerParams as EmptyParams, types::SubscriptionId, RpcModule};
-	use soil_client::block_builder::BlockBuilderBuilder;
 	use sc_consensus_grandpa::{
 		report, AuthorityId, FinalityProof, GrandpaJustification, GrandpaJustificationSender,
 	};
 	use sc_rpc::testing::test_executor;
+	use soil_client::block_builder::BlockBuilderBuilder;
 	use soil_client::blockchain::HeaderBackend;
 	use subsoil::core::crypto::ByteArray;
 	use subsoil::keyring::Ed25519Keyring;

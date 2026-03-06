@@ -21,6 +21,7 @@ use super::{
 	currency, substrate_test_pallet, wasm_binary_unwrap, AccountId, Balance, RuntimeGenesisConfig,
 };
 use codec::Encode;
+use soil_service::construct_genesis_block;
 use subsoil::core::{
 	sr25519,
 	storage::{well_known_keys, StateVersion, Storage},
@@ -31,7 +32,6 @@ use subsoil::runtime::{
 	traits::{Block as BlockT, Hash as HashT, Header as HeaderT},
 	BuildStorage,
 };
-use soil_service::construct_genesis_block;
 
 /// Builder for generating storage from substrate-test-runtime genesis config.
 ///

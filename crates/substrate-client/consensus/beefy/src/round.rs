@@ -20,13 +20,13 @@ use crate::LOG_TARGET;
 
 use codec::{Decode, Encode};
 use log::{debug, info};
+use std::collections::BTreeMap;
 use subsoil::application_crypto::RuntimeAppPublic;
 use subsoil::consensus::beefy::{
 	AuthorityIdBound, Commitment, DoubleVotingProof, SignedCommitment, ValidatorSet,
 	ValidatorSetId, VoteMessage,
 };
 use subsoil::runtime::traits::{Block, NumberFor};
-use std::collections::BTreeMap;
 
 /// Tracks for each round which validators have voted/signed and
 /// whether the local `self` validator has voted/signed.

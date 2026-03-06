@@ -19,9 +19,9 @@
 //! Keystore (and session key management) for ed25519 based chains like Polkadot.
 
 #![warn(missing_docs)]
+use std::io;
 use subsoil::core::crypto::KeyTypeId;
 use subsoil::keystore::Error as TraitError;
-use std::io;
 
 /// Local keystore implementation
 mod local;

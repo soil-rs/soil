@@ -898,9 +898,11 @@ fn valid_equivocation_reports_dont_pay_fees() {
 			generate_equivocation_proof(0, &offending_authority_pair, CurrentSlot::<Test>::get());
 
 		// create the key ownership proof.
-		let key_owner_proof =
-			Historical::prove((subsoil::consensus::babe::KEY_TYPE, &offending_authority_pair.public()))
-				.unwrap();
+		let key_owner_proof = Historical::prove((
+			subsoil::consensus::babe::KEY_TYPE,
+			&offending_authority_pair.public(),
+		))
+		.unwrap();
 
 		// check the dispatch info for the call.
 		let info = Call::<Test>::report_equivocation_unsigned {

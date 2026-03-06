@@ -20,9 +20,9 @@
 use codec::Encode;
 use mmr_lib::helper;
 
+use crate::runtime::traits::{CheckedAdd, CheckedSub, Header, One};
 #[cfg(not(feature = "std"))]
 use alloc::vec::Vec;
-use crate::runtime::traits::{CheckedAdd, CheckedSub, Header, One};
 
 use super::{Error, LeafIndex, NodeIndex};
 

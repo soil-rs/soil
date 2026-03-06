@@ -19,8 +19,7 @@ use crate::{Config, Pallet};
 use codec::{Decode, DecodeWithMemTracking, Encode};
 use scale_info::TypeInfo;
 use subsoil::runtime::{
-	traits::TransactionExtension,
-	transaction_validity::TransactionValidityError,
+	traits::TransactionExtension, transaction_validity::TransactionValidityError,
 };
 
 /// Ensure the runtime version registered in the transaction is the same as at present.

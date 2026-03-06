@@ -21,8 +21,8 @@
 use soil_client::blockchain::{Backend, HeaderBackend};
 use soil_client::client_api::backend;
 use soil_client::consensus::{Error as ConsensusError, SelectChain};
-use subsoil::runtime::traits::{Block as BlockT, Header, NumberFor};
 use std::{marker::PhantomData, sync::Arc};
+use subsoil::runtime::traits::{Block as BlockT, Header, NumberFor};
 
 /// Implement Longest Chain Select implementation
 /// where 'longest' is defined as the highest number of blocks

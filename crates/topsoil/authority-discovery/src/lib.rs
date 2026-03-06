@@ -214,8 +214,8 @@ mod tests {
 	use super::*;
 	use crate as topsoil_authority_discovery;
 	use alloc::vec;
-	use subsoil::application_crypto::Pair;
 	use soil_authority_discovery::AuthorityPair;
+	use subsoil::application_crypto::Pair;
 	use subsoil::core::crypto::key_types;
 	use subsoil::io::TestExternalities;
 	use subsoil::runtime::{

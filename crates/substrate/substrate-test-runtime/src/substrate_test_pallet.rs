@@ -40,7 +40,9 @@ pub mod pallet {
 	use super::*;
 	use crate::TransferData;
 	use subsoil::core::storage::well_known_keys;
-	use subsoil::runtime::{traits::BlakeTwo256, transaction_validity::TransactionPriority, Perbill};
+	use subsoil::runtime::{
+		traits::BlakeTwo256, transaction_validity::TransactionPriority, Perbill,
+	};
 	use topsoil_system::pallet_prelude::*;
 
 	#[pallet::pallet]

@@ -34,9 +34,7 @@ use futures::{
 	task::LocalSpawn,
 };
 use prometheus_endpoint::prometheus::default_registry;
-use subsoil::api::{ApiRef, ProvideRuntimeApi};
 use soil_client::client_api::HeaderBackend;
-use subsoil::keystore::{testing::MemoryKeystore, Keystore};
 use soil_network::{
 	service::signature::{Keypair, SigningError},
 	PublicKey, Signature,
@@ -46,6 +44,8 @@ use soil_network_types::{
 	multiaddr::{Multiaddr, Protocol},
 	PeerId,
 };
+use subsoil::api::{ApiRef, ProvideRuntimeApi};
+use subsoil::keystore::{testing::MemoryKeystore, Keystore};
 use subsoil::runtime::traits::{Block as BlockT, NumberFor, Zero};
 use substrate_test_runtime_client::runtime::Block;
 
@@ -87,7 +87,10 @@ impl<Block: BlockT> HeaderBackend<Block> for TestApi {
 	fn status(
 		&self,
 		_hash: Block::Hash,
-	) -> std::result::Result<soil_client::client_api::blockchain::BlockStatus, soil_client::blockchain::Error> {
+	) -> std::result::Result<
+		soil_client::client_api::blockchain::BlockStatus,
+		soil_client::blockchain::Error,
+	> {
 		Ok(soil_client::client_api::blockchain::BlockStatus::Unknown)
 	}
 

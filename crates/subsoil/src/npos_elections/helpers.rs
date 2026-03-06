@@ -21,8 +21,8 @@ use super::{
 	Assignment, Error, ExtendedBalance, IdentifierT, PerThing128, StakedAssignment, Supports,
 	VoteWeight,
 };
-use alloc::{collections::BTreeMap, vec::Vec};
 use crate::arithmetic::PerThing;
+use alloc::{collections::BTreeMap, vec::Vec};
 
 /// Converts a vector of ratio assignments into ones with absolute budget value.
 ///

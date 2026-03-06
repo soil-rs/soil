@@ -37,10 +37,7 @@
 //! needed must be provided in the given directory.
 
 use soil_client::blockchain::Result;
-use subsoil::core::traits::{FetchRuntimeCode, RuntimeCode, WrappedRuntimeCode};
 use soil_client::executor::RuntimeVersionOf;
-use subsoil::state_machine::BasicExternalities;
-use subsoil::version::RuntimeVersion;
 use std::{
 	collections::{hash_map::DefaultHasher, HashMap},
 	fs,
@@ -48,6 +45,9 @@ use std::{
 	path::{Path, PathBuf},
 	time::{Duration, Instant},
 };
+use subsoil::core::traits::{FetchRuntimeCode, RuntimeCode, WrappedRuntimeCode};
+use subsoil::state_machine::BasicExternalities;
+use subsoil::version::RuntimeVersion;
 
 /// The interval in that we will print a warning when a wasm blob `spec_name`
 /// doesn't match with the on-chain `spec_name`.

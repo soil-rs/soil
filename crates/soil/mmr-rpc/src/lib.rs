@@ -20,7 +20,6 @@
 
 //! Node-specific RPC methods for interaction with Merkle Mountain Range pallet.
 
-
 use std::{marker::PhantomData, sync::Arc};
 
 use codec::{Codec, Decode, Encode};
@@ -31,8 +30,8 @@ use jsonrpsee::{
 };
 use serde::{Deserialize, Serialize};
 
-use subsoil::api::{ApiExt, ProvideRuntimeApi};
 use soil_client::blockchain::HeaderBackend;
+use subsoil::api::{ApiExt, ProvideRuntimeApi};
 use subsoil::core::{
 	offchain::{storage::OffchainDb, OffchainDbExt, OffchainStorage},
 	Bytes,

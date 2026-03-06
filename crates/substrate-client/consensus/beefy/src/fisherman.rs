@@ -18,10 +18,11 @@
 
 use crate::{error::Error, keystore::BeefyKeystore, round::Rounds, LOG_TARGET};
 use log::{debug, error, warn};
-use subsoil::api::ProvideRuntimeApi;
-use subsoil::application_crypto::RuntimeAppPublic;
 use soil_client::blockchain::HeaderBackend;
 use soil_client::client_api::Backend;
+use std::{marker::PhantomData, sync::Arc};
+use subsoil::api::ProvideRuntimeApi;
+use subsoil::application_crypto::RuntimeAppPublic;
 use subsoil::consensus::beefy::{
 	check_double_voting_proof, AuthorityIdBound, BeefyApi, DoubleVotingProof,
 	OpaqueKeyOwnershipProof, ValidatorSetId,
@@ -30,7 +31,6 @@ use subsoil::runtime::{
 	generic::BlockId,
 	traits::{Block, NumberFor},
 };
-use std::{marker::PhantomData, sync::Arc};
 
 /// Helper struct containing the key ownership proof for a validator.
 pub struct ProvedValidator {

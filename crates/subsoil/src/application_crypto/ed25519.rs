@@ -71,7 +71,11 @@ impl RuntimePublic for Public {
 		proof_of_possession: &Self::ProofOfPossession,
 	) -> bool {
 		let proof_of_possession_statement = Pair::proof_of_possession_statement(owner);
-		crate::io::crypto::ed25519_verify(&proof_of_possession, &proof_of_possession_statement, &self)
+		crate::io::crypto::ed25519_verify(
+			&proof_of_possession,
+			&proof_of_possession_statement,
+			&self,
+		)
 	}
 
 	fn to_raw_vec(&self) -> Vec<u8> {

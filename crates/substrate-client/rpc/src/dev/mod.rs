@@ -23,17 +23,17 @@
 mod tests;
 
 use jsonrpsee::Extensions;
-use subsoil::api::{ApiExt, Core, ProvideRuntimeApi};
 use soil_client::client_api::{BlockBackend, HeaderBackend};
-use subsoil::core::Encode;
 use soil_rpc_api::{check_if_safe, dev::error::Error};
-use subsoil::runtime::{
-	generic::DigestItem,
-	traits::{Block as BlockT, Header},
-};
 use std::{
 	marker::{PhantomData, Send, Sync},
 	sync::Arc,
+};
+use subsoil::api::{ApiExt, Core, ProvideRuntimeApi};
+use subsoil::core::Encode;
+use subsoil::runtime::{
+	generic::DigestItem,
+	traits::{Block as BlockT, Header},
 };
 
 pub use soil_rpc_api::dev::{BlockStats, DevApiServer};

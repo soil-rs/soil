@@ -17,12 +17,12 @@
 
 use super::*;
 use crate::{mock::*, Event};
+use soil_staking::{Agent, DelegationInterface};
 use subsoil::runtime::{
 	bounded_btree_map,
 	traits::{BadOrigin, Dispatchable},
 	FixedU128,
 };
-use soil_staking::{Agent, DelegationInterface};
 use topsoil_balances::Event as BEvent;
 use topsoil_support::{assert_err, assert_noop, assert_ok, hypothetically};
 

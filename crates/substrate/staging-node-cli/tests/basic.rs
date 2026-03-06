@@ -176,7 +176,10 @@ fn block_with_size(time: u64, nonce: u32, size: usize) -> (Vec<u8>, Hash) {
 				function: RuntimeCall::Timestamp(topsoil_timestamp::Call::set { now: time * 1000 }),
 			},
 			CheckedExtrinsic {
-				format: subsoil::runtime::generic::ExtrinsicFormat::Signed(alice(), tx_ext(nonce, 0)),
+				format: subsoil::runtime::generic::ExtrinsicFormat::Signed(
+					alice(),
+					tx_ext(nonce, 0),
+				),
 				function: RuntimeCall::System(topsoil_system::Call::remark {
 					remark: vec![0; size],
 				}),

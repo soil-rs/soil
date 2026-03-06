@@ -86,7 +86,9 @@ where
 
 /// Convert BEEFY secp256k1 public keys into Ethereum addresses
 pub struct BeefyEcdsaToEthereum;
-impl Convert<subsoil::consensus::beefy::ecdsa_crypto::AuthorityId, Vec<u8>> for BeefyEcdsaToEthereum {
+impl Convert<subsoil::consensus::beefy::ecdsa_crypto::AuthorityId, Vec<u8>>
+	for BeefyEcdsaToEthereum
+{
 	fn convert(beefy_id: subsoil::consensus::beefy::ecdsa_crypto::AuthorityId) -> Vec<u8> {
 		subsoil::core::ecdsa::Public::from(beefy_id)
 			.to_eth_address()
@@ -98,7 +100,8 @@ impl Convert<subsoil::consensus::beefy::ecdsa_crypto::AuthorityId, Vec<u8>> for 
 	}
 }
 
-type MerkleRootOf<T> = <<T as topsoil_mmr::Config>::Hashing as subsoil::runtime::traits::Hash>::Output;
+type MerkleRootOf<T> =
+	<<T as topsoil_mmr::Config>::Hashing as subsoil::runtime::traits::Hash>::Output;
 
 #[topsoil_support::pallet]
 pub mod pallet {
@@ -169,7 +172,8 @@ impl<T: Config> LeafDataProvider for Pallet<T> {
 	}
 }
 
-impl<T> subsoil::consensus::beefy::OnNewValidatorSet<<T as topsoil_beefy::Config>::BeefyId> for Pallet<T>
+impl<T> subsoil::consensus::beefy::OnNewValidatorSet<<T as topsoil_beefy::Config>::BeefyId>
+	for Pallet<T>
 where
 	T: pallet::Config,
 {

@@ -22,10 +22,6 @@ mod offchain;
 
 use self::changeset::OverlayedChangeSet;
 use super::{backend::Backend, stats::StateMachineStats, BackendTransaction, DefaultError};
-use alloc::{collections::btree_set::BTreeSet, vec::Vec};
-use codec::{Decode, Encode};
-use hash_db::Hasher;
-pub use offchain::OffchainOverlayedChanges;
 use crate::core::{
 	offchain::OffchainOverlayedChange,
 	storage::{well_known_keys::EXTRINSIC_INDEX, ChildInfo, StateVersion},
@@ -33,6 +29,10 @@ use crate::core::{
 #[cfg(feature = "std")]
 use crate::externalities::{Extension, Extensions, TransactionType};
 use crate::trie::{empty_child_trie_root, LayoutV1};
+use alloc::{collections::btree_set::BTreeSet, vec::Vec};
+use codec::{Decode, Encode};
+use hash_db::Hasher;
+pub use offchain::OffchainOverlayedChanges;
 
 #[cfg(not(feature = "std"))]
 use alloc::collections::btree_map::BTreeMap as Map;
@@ -908,9 +908,9 @@ impl<'a> OverlayedExtensions<'a> {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use crate::state_machine::{Ext, new_in_mem, InMemoryBackend};
-	use array_bytes::bytes2hex;
 	use crate::core::{traits::Externalities, Blake2Hasher};
+	use crate::state_machine::{new_in_mem, Ext, InMemoryBackend};
+	use array_bytes::bytes2hex;
 	use std::collections::BTreeMap;
 
 	fn assert_extrinsics(

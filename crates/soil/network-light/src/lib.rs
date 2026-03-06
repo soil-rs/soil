@@ -18,6 +18,5 @@
 
 //! Light client data structures of the networking layer.
 
-
 pub mod light_client_requests;
 mod schema;

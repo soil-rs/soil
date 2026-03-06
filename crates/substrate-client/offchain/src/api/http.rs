@@ -36,8 +36,9 @@ use hyper::body::Body as _;
 use hyper_rustls::{HttpsConnector, HttpsConnectorBuilder};
 use hyper_util::{client::legacy as client, rt::TokioExecutor};
 use once_cell::sync::Lazy;
-use subsoil::core::offchain::{HttpError, HttpRequestId, HttpRequestStatus, Timestamp};
-use soil_client::utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
+use soil_client::utils::mpsc::{
+	tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender,
+};
 use std::{
 	fmt,
 	io::Read as _,
@@ -45,6 +46,7 @@ use std::{
 	sync::Arc,
 	task::{Context, Poll},
 };
+use subsoil::core::offchain::{HttpError, HttpRequestId, HttpRequestStatus, Timestamp};
 
 const LOG_TARGET: &str = "offchain-worker::http";
 
@@ -783,10 +785,10 @@ mod tests {
 	use core::convert::Infallible;
 	use futures::future;
 	use http_body_util::BodyExt;
+	use std::sync::LazyLock;
 	use subsoil::core::offchain::{
 		Duration, Externalities, HttpError, HttpRequestId, HttpRequestStatus,
 	};
-	use std::sync::LazyLock;
 
 	// Using LazyLock to avoid spawning lots of different SharedClients,
 	// as spawning a SharedClient is CPU-intensive and opens lots of fds.

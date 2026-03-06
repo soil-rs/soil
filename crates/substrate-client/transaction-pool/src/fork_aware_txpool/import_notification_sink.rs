@@ -97,8 +97,10 @@ where
 	/// It returns a tuple containing the output stream and the command controller, allowing
 	/// external components to control this stream.
 	fn event_stream() -> (StreamOf<I>, Controller<Command<K, I>>) {
-		let (sender, receiver) =
-			soil_client::utils::mpsc::tracing_unbounded::<Command<K, I>>("import-notification-sink", 16);
+		let (sender, receiver) = soil_client::utils::mpsc::tracing_unbounded::<Command<K, I>>(
+			"import-notification-sink",
+			16,
+		);
 
 		let ctx = Self { stream_map: StreamMap::new(), command_receiver: receiver };
 

@@ -22,8 +22,6 @@ use super::overlayed_changes::OverlayedExtensions;
 use super::{
 	backend::Backend, IndexOperation, IterArgs, OverlayedChanges, StorageKey, StorageValue,
 };
-use codec::{Compact, CompactLen, Decode, Encode};
-use hash_db::Hasher;
 #[cfg(feature = "std")]
 use crate::core::hexdisplay::HexDisplay;
 use crate::core::storage::{
@@ -32,6 +30,8 @@ use crate::core::storage::{
 #[cfg(feature = "std")]
 use crate::externalities::TransactionType;
 use crate::externalities::{Extension, ExtensionStore, Externalities, MultiRemovalResults};
+use codec::{Compact, CompactLen, Decode, Encode};
+use hash_db::Hasher;
 
 #[cfg(feature = "std")]
 #[allow(unused_imports)]
@@ -835,14 +835,14 @@ where
 
 #[cfg(test)]
 mod tests {
-	use super::*;
 	use super::super::InMemoryBackend;
-	use codec::{Decode, Encode};
+	use super::*;
 	use crate::core::{
 		storage::{Storage, StorageChild},
 		Blake2Hasher,
 	};
 	use crate::map;
+	use codec::{Decode, Encode};
 
 	type TestBackend = InMemoryBackend<Blake2Hasher>;
 	type TestExt<'a> = Ext<'a, Blake2Hasher, TestBackend>;

@@ -21,9 +21,9 @@ use super::{
 	codec::{Decode, Encode},
 	Debug,
 };
+use crate::weights::Weight;
 use alloc::{vec, vec::Vec};
 use scale_info::TypeInfo;
-use crate::weights::Weight;
 
 /// Priority for a transaction. Additive. Higher is better.
 pub type TransactionPriority = u64;

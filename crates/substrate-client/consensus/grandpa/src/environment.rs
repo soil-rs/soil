@@ -34,20 +34,20 @@ use log::{debug, warn};
 use parking_lot::RwLock;
 use prometheus_endpoint::{register, Counter, Gauge, PrometheusError, U64};
 
-use subsoil::api::ApiExt;
 use soil_client::blockchain::HeaderMetadata;
 use soil_client::client_api::{
 	backend::{apply_aux, Backend as BackendT},
 	utils::is_descendent_of,
 };
 use soil_client::consensus::SelectChain as SelectChainT;
+use soil_client::transaction_pool::OffchainTransactionPoolFactory;
+use soil_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG, CONSENSUS_INFO};
+use subsoil::api::ApiExt;
 use subsoil::consensus::grandpa::{
 	AuthorityId, AuthoritySignature, Equivocation, EquivocationProof, GrandpaApi, RoundNumber,
 	SetId, GRANDPA_ENGINE_ID,
 };
 use subsoil::runtime::traits::{Block as BlockT, Header as HeaderT, NumberFor, Zero};
-use soil_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG, CONSENSUS_INFO};
-use soil_client::transaction_pool::OffchainTransactionPoolFactory;
 
 use crate::{
 	authorities::{AuthoritySet, SharedAuthoritySet},

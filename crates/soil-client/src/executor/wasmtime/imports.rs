@@ -16,10 +16,10 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-use crate::executor::wasmtime::{host::HostContext, runtime::StoreData};
 use crate::executor::common::error::WasmError;
-use subsoil::wasm_interface::{FunctionContext, HostFunctions};
+use crate::executor::wasmtime::{host::HostContext, runtime::StoreData};
 use std::collections::HashMap;
+use subsoil::wasm_interface::{FunctionContext, HostFunctions};
 use wasmtime::{ExternType, FuncType, ImportType, Linker, Module};
 
 /// Goes over all imports of a module and prepares the given linker for instantiation of the module.

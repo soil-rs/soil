@@ -107,8 +107,8 @@ pub(crate) mod tests {
 	use super::*;
 	use crate::test_utils::{run_test_with_mmr_gadget_pre_post_using_client, MmrBlock, MockClient};
 	use parking_lot::Mutex;
-	use subsoil::runtime::generic::BlockId;
 	use std::{sync::Arc, time::Duration};
+	use subsoil::runtime::generic::BlockId;
 	use substrate_test_runtime_client::{runtime::Block, Backend};
 
 	#[test]

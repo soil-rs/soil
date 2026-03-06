@@ -82,7 +82,9 @@ pub trait DispatchTransaction<Call: Dispatchable> {
 		extension_version: ExtensionVersion,
 		substitute: impl FnOnce(
 			Self::Origin,
-		) -> crate::runtime::DispatchResultWithInfo<<Call as Dispatchable>::PostInfo>,
+		) -> crate::runtime::DispatchResultWithInfo<
+			<Call as Dispatchable>::PostInfo,
+		>,
 	) -> Self::Result;
 }
 
@@ -169,7 +171,9 @@ where
 		extension_version: ExtensionVersion,
 		substitute: impl FnOnce(
 			Self::Origin,
-		) -> crate::runtime::DispatchResultWithInfo<<Call as Dispatchable>::PostInfo>,
+		) -> crate::runtime::DispatchResultWithInfo<
+			<Call as Dispatchable>::PostInfo,
+		>,
 	) -> Self::Result {
 		let (pre, origin) =
 			self.validate_and_prepare(origin, &call, info, len, extension_version)?;

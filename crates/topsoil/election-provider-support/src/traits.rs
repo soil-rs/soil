@@ -96,8 +96,9 @@ where
 		A: IdentifierT,
 	{
 		let ratio = self.into_assignment(voter_at, target_at)?;
-		let staked =
-			subsoil::npos_elections::helpers::assignment_ratio_to_staked_normalized(ratio, stake_of)?;
+		let staked = subsoil::npos_elections::helpers::assignment_ratio_to_staked_normalized(
+			ratio, stake_of,
+		)?;
 		let supports = subsoil::npos_elections::to_supports(&staked);
 		Ok(supports.evaluate())
 	}

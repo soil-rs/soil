@@ -20,8 +20,8 @@
 
 #![allow(deprecated)]
 
-use scale_info::TypeInfo;
 use crate::runtime::Debug;
+use scale_info::TypeInfo;
 
 use crate::runtime::{
 	traits::{AsSystemOriginSigner, SignedExtension, ValidateResult},

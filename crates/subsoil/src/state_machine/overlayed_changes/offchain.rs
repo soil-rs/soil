@@ -18,8 +18,8 @@
 //! Overlayed changes for offchain indexing.
 
 use super::changeset::OverlayedMap;
-use alloc::vec::Vec;
 use crate::core::offchain::OffchainOverlayedChange;
+use alloc::vec::Vec;
 
 /// In-memory storage for offchain workers recoding changes for the actual offchain storage
 /// implementation.

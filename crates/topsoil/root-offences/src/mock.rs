@@ -19,8 +19,10 @@ use super::*;
 use crate as root_offences;
 
 use alloc::collections::btree_map::BTreeMap;
-use subsoil::runtime::{curve::PiecewiseLinear, testing::UintAuthorityId, traits::Zero, BuildStorage};
 use soil_staking::{EraIndex, SessionIndex};
+use subsoil::runtime::{
+	curve::PiecewiseLinear, testing::UintAuthorityId, traits::Zero, BuildStorage,
+};
 use topsoil_election_provider_support::{
 	bounds::{ElectionBounds, ElectionBoundsBuilder},
 	onchain, SequentialPhragmen,

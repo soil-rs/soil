@@ -268,7 +268,8 @@ pub mod pallet {
 				// Total genesis `balance` minus `liquid` equals funds locked for vesting
 				let locked = balance.saturating_sub(liquid);
 				let length_as_balance = T::BlockNumberToBalance::convert(length);
-				let per_block = locked / length_as_balance.max(subsoil::runtime::traits::One::one());
+				let per_block =
+					locked / length_as_balance.max(subsoil::runtime::traits::One::one());
 				let vesting_info = VestingInfo::new(locked, per_block, begin);
 				if !vesting_info.is_valid() {
 					panic!("Invalid VestingInfo params at genesis")

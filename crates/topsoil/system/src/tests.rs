@@ -17,13 +17,13 @@
 
 use crate::*;
 use mock::{RuntimeOrigin, *};
+use std::collections::BTreeSet;
 use subsoil::core::{hexdisplay::HexDisplay, H256};
 use subsoil::runtime::{
 	generic::{Digest, DigestItem},
 	traits::{BlakeTwo256, Header},
 	DispatchError, DispatchErrorWithPostInfo,
 };
-use std::collections::BTreeSet;
 use substrate_test_runtime_client::WasmExecutor;
 use topsoil_support::{
 	assert_noop, assert_ok,
@@ -651,7 +651,9 @@ fn set_code_checks_works() {
 		let read_runtime_version = ReadRuntimeVersion(version.encode());
 
 		let mut ext = new_test_ext();
-		ext.register_extension(subsoil::core::traits::ReadRuntimeVersionExt::new(read_runtime_version));
+		ext.register_extension(subsoil::core::traits::ReadRuntimeVersionExt::new(
+			read_runtime_version,
+		));
 		ext.execute_with(|| {
 			let res = System::set_code(RawOrigin::Root.into(), vec![1, 2, 3, 4]);
 

@@ -18,12 +18,14 @@
 //! Test utilities
 
 use crate::{self as topsoil_staking, *};
-use subsoil::core::ConstBool;
-use subsoil::io;
-use subsoil::runtime::{curve::PiecewiseLinear, testing::UintAuthorityId, traits::Zero, BuildStorage};
 use soil_staking::{
 	offence::{OffenceDetails, OnOffenceHandler},
 	OnStakingUpdate, StakingAccount,
+};
+use subsoil::core::ConstBool;
+use subsoil::io;
+use subsoil::runtime::{
+	curve::PiecewiseLinear, testing::UintAuthorityId, traits::Zero, BuildStorage,
 };
 use topsoil_election_provider_support::{
 	bounds::{ElectionBounds, ElectionBoundsBuilder},

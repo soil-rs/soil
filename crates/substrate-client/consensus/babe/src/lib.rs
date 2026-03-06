@@ -99,9 +99,6 @@ use sc_consensus_slots::{
 	check_equivocation, BackoffAuthoringBlocksStrategy, CheckedHeader, InherentDataProviderExt,
 	SlotInfo, StorageChanges,
 };
-use subsoil::api::{ApiExt, ProvideRuntimeApi};
-use subsoil::application_crypto::AppCrypto;
-use subsoil::block_builder::BlockBuilder as BlockBuilderApi;
 use soil_client::blockchain::{
 	Backend as _, BlockStatus, Error as ClientError, HeaderBackend, HeaderMetadata,
 	Result as ClientResult,
@@ -110,12 +107,19 @@ use soil_client::client_api::{
 	backend::AuxStore, AuxDataOperations, Backend as BackendT, FinalityNotification,
 	PreCommitActions, UsageProvider,
 };
-use soil_client::consensus::{BlockOrigin, Environment, Error as ConsensusError, Proposer, SelectChain};
-use subsoil::consensus::babe::{inherents::BabeInherentData, SlotDuration};
+use soil_client::consensus::{
+	BlockOrigin, Environment, Error as ConsensusError, Proposer, SelectChain,
+};
+use soil_client::transaction_pool::OffchainTransactionPoolFactory;
 use soil_consensus_epochs::{
 	descendent_query, Epoch as EpochT, EpochChangesFor, SharedEpochChanges, ViableEpoch,
 	ViableEpochDescriptor,
 };
+use soil_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG, CONSENSUS_TRACE};
+use subsoil::api::{ApiExt, ProvideRuntimeApi};
+use subsoil::application_crypto::AppCrypto;
+use subsoil::block_builder::BlockBuilder as BlockBuilderApi;
+use subsoil::consensus::babe::{inherents::BabeInherentData, SlotDuration};
 use subsoil::consensus::slots::Slot;
 use subsoil::core::traits::SpawnEssentialNamed;
 use subsoil::inherents::{CreateInherentDataProviders, InherentDataProvider};
@@ -125,8 +129,6 @@ use subsoil::runtime::{
 	traits::{Block as BlockT, Header, NumberFor, SaturatedConversion, Zero},
 	DigestItem,
 };
-use soil_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG, CONSENSUS_TRACE};
-use soil_client::transaction_pool::OffchainTransactionPoolFactory;
 
 pub use sc_consensus_slots::SlotProportion;
 pub use soil_client::consensus::SyncOracle;
@@ -803,7 +805,11 @@ where
 		});
 	}
 
-	fn pre_digest_data(&self, _slot: Slot, claim: &Self::Claim) -> Vec<subsoil::runtime::DigestItem> {
+	fn pre_digest_data(
+		&self,
+		_slot: Slot,
+		claim: &Self::Claim,
+	) -> Vec<subsoil::runtime::DigestItem> {
 		vec![<DigestItem as CompatibleDigestItem>::babe_pre_digest(claim.0.clone())]
 	}
 

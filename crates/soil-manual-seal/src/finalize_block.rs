@@ -20,8 +20,8 @@
 
 use crate::rpc;
 use soil_client::client_api::backend::{Backend as ClientBackend, Finalizer};
-use subsoil::runtime::{traits::Block as BlockT, Justification};
 use std::{marker::PhantomData, sync::Arc};
+use subsoil::runtime::{traits::Block as BlockT, Justification};
 
 /// params for block finalization.
 pub struct FinalizeBlockParams<B: BlockT, F, CB> {

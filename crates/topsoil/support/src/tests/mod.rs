@@ -607,7 +607,8 @@ fn expected_metadata() -> PalletStorageMetadataIR {
 				},
 				default: vec![0, 0, 0, 0, 0, 0, 0, 0],
 				docs: vec![],
-				deprecation_info: subsoil::metadata_ir::ItemDeprecationInfoIR::DeprecatedWithoutNote,
+				deprecation_info:
+					subsoil::metadata_ir::ItemDeprecationInfoIR::DeprecatedWithoutNote,
 			},
 			StorageEntryMetadataIR {
 				name: "OptionLinkedMap",

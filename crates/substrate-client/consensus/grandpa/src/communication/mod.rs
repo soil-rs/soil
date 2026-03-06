@@ -46,11 +46,11 @@ use finality_grandpa::{
 	voter_set::VoterSet,
 	Message::{Precommit, Prevote, PrimaryPropose},
 };
-use subsoil::keystore::KeystorePtr;
 use soil_network::{NetworkBlock, NetworkSyncForkRequest, NotificationService, ReputationChange};
 use soil_network_gossip::{GossipEngine, Network as GossipNetwork};
-use subsoil::runtime::traits::{Block as BlockT, Hash as HashT, Header as HeaderT, NumberFor};
 use soil_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG, CONSENSUS_INFO};
+use subsoil::keystore::KeystorePtr;
+use subsoil::runtime::traits::{Block as BlockT, Hash as HashT, Header as HeaderT, NumberFor};
 
 use crate::{
 	environment::HasVoted, CatchUp, Commit, CommunicationIn, CommunicationOutH, CompactCommit,
@@ -59,9 +59,11 @@ use crate::{
 use gossip::{
 	FullCatchUpMessage, FullCommitMessage, GossipMessage, GossipValidator, PeerReport, VoteMessage,
 };
-use subsoil::consensus::grandpa::{AuthorityId, AuthoritySignature, RoundNumber, SetId as SetIdNumber};
-use soil_network_sync::SyncEventStream;
 use soil_client::utils::mpsc::TracingUnboundedReceiver;
+use soil_network_sync::SyncEventStream;
+use subsoil::consensus::grandpa::{
+	AuthorityId, AuthoritySignature, RoundNumber, SetId as SetIdNumber,
+};
 
 pub mod gossip;
 mod periodic;

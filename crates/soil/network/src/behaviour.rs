@@ -41,12 +41,12 @@ use libp2p::{
 };
 
 use parking_lot::Mutex;
-use subsoil::runtime::traits::Block as BlockT;
 use std::{
 	collections::HashSet,
 	sync::Arc,
 	time::{Duration, Instant},
 };
+use subsoil::runtime::traits::Block as BlockT;
 
 pub use crate::request_responses::{InboundFailure, OutboundFailure, ResponseFailure};
 

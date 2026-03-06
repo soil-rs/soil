@@ -17,10 +17,9 @@
 
 //! Primitives for slots-based consensus engines.
 
-
+use crate::timestamp::Timestamp;
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;
-use crate::timestamp::Timestamp;
 
 /// Unit type wrapper that represents a slot.
 #[derive(

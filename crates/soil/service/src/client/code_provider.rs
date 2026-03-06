@@ -18,11 +18,11 @@
 
 use super::{client::ClientConfig, wasm_override::WasmOverride, wasm_substitutes::WasmSubstitutes};
 use soil_client::client_api::{backend, TrieCacheContext};
-use subsoil::core::traits::{FetchRuntimeCode, RuntimeCode};
 use soil_client::executor::{RuntimeVersion, RuntimeVersionOf};
+use std::sync::Arc;
+use subsoil::core::traits::{FetchRuntimeCode, RuntimeCode};
 use subsoil::runtime::traits::Block as BlockT;
 use subsoil::state_machine::{Ext, OverlayedChanges};
-use std::sync::Arc;
 
 /// Provider for fetching `:code` of a block.
 ///
@@ -85,13 +85,16 @@ where
 		let state = self.backend.state_at(block, TrieCacheContext::Untrusted)?;
 
 		let state_runtime_code = subsoil::state_machine::backend::BackendRuntimeCode::new(&state);
-		let runtime_code =
-			state_runtime_code.runtime_code().map_err(soil_client::blockchain::Error::RuntimeCode)?;
+		let runtime_code = state_runtime_code
+			.runtime_code()
+			.map_err(soil_client::blockchain::Error::RuntimeCode)?;
 
 		self.maybe_override_code_internal(runtime_code, &state, block, true)
 			.and_then(|r| {
 				r.0.fetch_runtime_code().map(Into::into).ok_or_else(|| {
-					soil_client::blockchain::Error::Backend("Could not find `:code` in backend.".into())
+					soil_client::blockchain::Error::Backend(
+						"Could not find `:code` in backend.".into(),
+					)
 				})
 			})
 	}
@@ -171,12 +174,12 @@ mod tests {
 	use super::*;
 	use backend::Backend;
 	use soil_client::client_api::{in_mem, HeaderBackend};
+	use soil_client::executor::WasmExecutor;
+	use std::collections::HashMap;
 	use subsoil::core::{
 		testing::TaskExecutor,
 		traits::{FetchRuntimeCode, WrappedRuntimeCode},
 	};
-	use soil_client::executor::WasmExecutor;
-	use std::collections::HashMap;
 	use substrate_test_runtime_client::{runtime, GenesisInit};
 
 	#[test]

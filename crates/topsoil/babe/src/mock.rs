@@ -19,6 +19,7 @@
 
 use crate::{self as topsoil_babe, Config, CurrentSlot};
 use codec::Encode;
+use soil_staking::{EraIndex, SessionIndex};
 use subsoil::consensus::babe::{AuthorityId, AuthorityPair, Randomness, Slot, VrfSignature};
 use subsoil::core::{
 	crypto::{Pair, VrfSecret},
@@ -31,7 +32,6 @@ use subsoil::runtime::{
 	traits::{Header as _, OpaqueKeys},
 	BuildStorage, DispatchError, Perbill,
 };
-use soil_staking::{EraIndex, SessionIndex};
 use topsoil_election_provider_support::{
 	bounds::{ElectionBounds, ElectionBoundsBuilder},
 	onchain, SequentialPhragmen,
@@ -255,9 +255,14 @@ pub fn make_primary_pre_digest(
 	vrf_signature: VrfSignature,
 ) -> Digest {
 	let digest_data = subsoil::consensus::babe::digests::PreDigest::Primary(
-		subsoil::consensus::babe::digests::PrimaryPreDigest { authority_index, slot, vrf_signature },
+		subsoil::consensus::babe::digests::PrimaryPreDigest {
+			authority_index,
+			slot,
+			vrf_signature,
+		},
 	);
-	let log = DigestItem::PreRuntime(subsoil::consensus::babe::BABE_ENGINE_ID, digest_data.encode());
+	let log =
+		DigestItem::PreRuntime(subsoil::consensus::babe::BABE_ENGINE_ID, digest_data.encode());
 	Digest { logs: vec![log] }
 }
 
@@ -268,7 +273,8 @@ pub fn make_secondary_plain_pre_digest(
 	let digest_data = subsoil::consensus::babe::digests::PreDigest::SecondaryPlain(
 		subsoil::consensus::babe::digests::SecondaryPlainPreDigest { authority_index, slot },
 	);
-	let log = DigestItem::PreRuntime(subsoil::consensus::babe::BABE_ENGINE_ID, digest_data.encode());
+	let log =
+		DigestItem::PreRuntime(subsoil::consensus::babe::BABE_ENGINE_ID, digest_data.encode());
 	Digest { logs: vec![log] }
 }
 
@@ -284,7 +290,8 @@ pub fn make_secondary_vrf_pre_digest(
 			vrf_signature,
 		},
 	);
-	let log = DigestItem::PreRuntime(subsoil::consensus::babe::BABE_ENGINE_ID, digest_data.encode());
+	let log =
+		DigestItem::PreRuntime(subsoil::consensus::babe::BABE_ENGINE_ID, digest_data.encode());
 	Digest { logs: vec![log] }
 }
 
@@ -292,8 +299,11 @@ pub fn make_vrf_signature_and_randomness(
 	slot: Slot,
 	pair: &subsoil::consensus::babe::AuthorityPair,
 ) -> (VrfSignature, Randomness) {
-	let transcript =
-		subsoil::consensus::babe::make_vrf_transcript(&topsoil_babe::Randomness::<Test>::get(), slot, 0);
+	let transcript = subsoil::consensus::babe::make_vrf_transcript(
+		&topsoil_babe::Randomness::<Test>::get(),
+		slot,
+		0,
+	);
 
 	let randomness = pair
 		.as_ref()
@@ -320,7 +330,9 @@ pub fn new_test_ext_with_pairs(
 	(pairs, new_test_ext_raw_authorities(public))
 }
 
-pub fn new_test_ext_raw_authorities(authorities: Vec<AuthorityId>) -> subsoil::io::TestExternalities {
+pub fn new_test_ext_raw_authorities(
+	authorities: Vec<AuthorityId>,
+) -> subsoil::io::TestExternalities {
 	subsoil::tracing::try_init_simple();
 	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 

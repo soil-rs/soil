@@ -18,14 +18,14 @@
 //! Cryptographic utilities.
 
 use crate::core::{ed25519, sr25519, U256};
+use ::core::hash::Hash;
+#[doc(hidden)]
+pub use ::core::ops::Deref;
 use alloc::{format, str, vec::Vec};
 #[cfg(feature = "serde")]
 use alloc::{string::String, vec};
 use bip39::{Language, Mnemonic};
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
-use ::core::hash::Hash;
-#[doc(hidden)]
-pub use ::core::ops::Deref;
 #[cfg(feature = "std")]
 use itertools::Itertools;
 #[cfg(feature = "std")]

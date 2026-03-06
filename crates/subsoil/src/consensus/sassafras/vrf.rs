@@ -18,10 +18,10 @@
 //! Utilities related to VRF input, pre-output and signatures.
 
 use super::{Randomness, TicketBody, TicketId};
+use crate::consensus::slots::Slot;
 #[cfg(not(feature = "std"))]
 use alloc::vec::Vec;
 use codec::Encode;
-use crate::consensus::slots::Slot;
 
 pub use crate::core::bandersnatch::{
 	ring_vrf::{RingProver, RingVerifier, RingVerifierKey, RingVrfSignature},

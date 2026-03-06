@@ -17,12 +17,10 @@
 
 //! Primitives for Substrate Proof-of-Work (PoW) consensus.
 
-
-
+use crate::runtime::ConsensusEngineId;
 #[cfg(not(feature = "std"))]
 use alloc::vec::Vec;
 use codec::Decode;
-use crate::runtime::ConsensusEngineId;
 
 /// The `ConsensusEngineId` of PoW.
 pub const POW_ENGINE_ID: ConsensusEngineId = [b'p', b'o', b'w', b'_'];

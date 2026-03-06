@@ -22,8 +22,8 @@ use crate::mock::{
 	logger::{self, Threshold},
 	new_test_ext, root, LoggerCall, RuntimeCall, Scheduler, Test, *,
 };
-use subsoil::runtime::traits::Hash;
 use subsoil::assert_eq_uvec;
+use subsoil::runtime::traits::Hash;
 use topsoil_support::{
 	assert_err, assert_noop, assert_ok,
 	traits::{Contains, GetStorageVersion, OnInitialize, QueryPreimage, StorePreimage},

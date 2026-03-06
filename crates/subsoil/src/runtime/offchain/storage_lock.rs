@@ -61,14 +61,14 @@
 //! }
 //! ```
 
+use crate::core::offchain::{Duration, Timestamp};
+use crate::io::offchain;
 use crate::runtime::{
 	offchain::storage::{MutateStorageError, StorageRetrievalError, StorageValueRef},
 	traits::BlockNumberProvider,
 };
-use codec::{Codec, Decode, Encode};
 use ::core::fmt;
-use crate::core::offchain::{Duration, Timestamp};
-use crate::io::offchain;
+use codec::{Codec, Decode, Encode};
 
 /// Default expiry duration for time based locks in milliseconds.
 const STORAGE_LOCK_DEFAULT_EXPIRY_DURATION: Duration = Duration::from_millis(20_000);

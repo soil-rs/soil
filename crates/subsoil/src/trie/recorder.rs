@@ -524,8 +524,8 @@ impl<'a, H: Hasher> trie_db::TrieRecorder<H::Out> for TrieRecorder<'a, H> {
 
 #[cfg(test)]
 mod tests {
-	use super::*;
 	use super::super::tests::create_trie;
+	use super::*;
 	use trie_db::{Trie, TrieDBBuilder, TrieRecorder};
 
 	type MemoryDB = super::super::MemoryDB<crate::core::Blake2Hasher>;

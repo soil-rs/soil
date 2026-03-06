@@ -35,11 +35,9 @@ use futures::{future::join_all, FutureExt};
 use itertools::Itertools;
 use parking_lot::RwLock;
 use soil_client::blockchain::HashAndNumber;
-use subsoil::runtime::{
-	traits::Block as BlockT,
-	transaction_validity::{InvalidTransaction, TransactionValidityError},
+use soil_client::transaction_pool::{
+	error::IntoMetricsLabel, TransactionPriority, TransactionSource,
 };
-use soil_client::transaction_pool::{error::IntoMetricsLabel, TransactionPriority, TransactionSource};
 use std::{
 	collections::HashSet,
 	future::Future,
@@ -53,6 +51,10 @@ use std::{
 		Arc,
 	},
 	time::Instant,
+};
+use subsoil::runtime::{
+	traits::Block as BlockT,
+	transaction_validity::{InvalidTransaction, TransactionValidityError},
 };
 use tracing::{debug, trace};
 
@@ -469,7 +471,8 @@ where
 		&self,
 		tx_hash: ExtrinsicHash<ChainApi>,
 		tx: TxInMemPool<ChainApi, Block>,
-	) -> Result<InsertionInfo<ExtrinsicHash<ChainApi>>, soil_client::transaction_pool::error::Error> {
+	) -> Result<InsertionInfo<ExtrinsicHash<ChainApi>>, soil_client::transaction_pool::error::Error>
+	{
 		let mut transactions = self.transactions.write().await;
 
 		let bytes = self.transactions.bytes();
@@ -516,7 +519,8 @@ where
 		source: TransactionSource,
 		validated_at: u64,
 		watched: bool,
-	) -> Result<InsertionInfo<ExtrinsicHash<ChainApi>>, soil_client::transaction_pool::error::Error> {
+	) -> Result<InsertionInfo<ExtrinsicHash<ChainApi>>, soil_client::transaction_pool::error::Error>
+	{
 		let (hash, length) = self.api.hash_and_length(&new_tx);
 		let new_tx =
 			TxInMemPool::new_with_priority(watched, source, new_tx, length, priority, validated_at);
@@ -527,7 +531,9 @@ where
 		let mut transactions = self.transactions.write().await;
 
 		if transactions.contains_key(&hash) {
-			return Err(soil_client::transaction_pool::error::Error::AlreadyImported(Box::new(hash)));
+			return Err(soil_client::transaction_pool::error::Error::AlreadyImported(Box::new(
+				hash,
+			)));
 		}
 
 		// When pushing higher prio transaction, we need to find a number of lower prio txs, such
@@ -558,8 +564,9 @@ where
 		source: TransactionSource,
 		validated_at: u64,
 		xts: &[ExtrinsicFor<ChainApi>],
-	) -> Vec<Result<InsertionInfo<ExtrinsicHash<ChainApi>>, soil_client::transaction_pool::error::Error>>
-	{
+	) -> Vec<
+		Result<InsertionInfo<ExtrinsicHash<ChainApi>>, soil_client::transaction_pool::error::Error>,
+	> {
 		let insert_futures = xts.into_iter().map(|xt| {
 			let api = self.api.clone();
 			let xt = xt.clone();
@@ -580,7 +587,8 @@ where
 		source: TransactionSource,
 		validated_at: u64,
 		xt: ExtrinsicFor<ChainApi>,
-	) -> Result<InsertionInfo<ExtrinsicHash<ChainApi>>, soil_client::transaction_pool::error::Error> {
+	) -> Result<InsertionInfo<ExtrinsicHash<ChainApi>>, soil_client::transaction_pool::error::Error>
+	{
 		let (hash, length) = self.api.hash_and_length(&xt);
 		self.try_insert(hash, TxInMemPool::new_watched(source, xt.clone(), length, validated_at))
 			.await
@@ -816,8 +824,9 @@ where
 }
 
 /// Convenient return type of extend_unwatched
-type ExtendUnwatchedResult<ChainApi> =
-	Vec<Result<InsertionInfo<ExtrinsicHash<ChainApi>>, soil_client::transaction_pool::error::Error>>;
+type ExtendUnwatchedResult<ChainApi> = Vec<
+	Result<InsertionInfo<ExtrinsicHash<ChainApi>>, soil_client::transaction_pool::error::Error>,
+>;
 
 /// Convenient return type of try_insert_with_replacement
 type TryInsertWithReplacementResult<ChainApi> =
@@ -972,7 +981,8 @@ where
 		source: TransactionSource,
 		validated_at: u64,
 		watched: bool,
-	) -> Result<InsertionInfo<ExtrinsicHash<ChainApi>>, soil_client::transaction_pool::error::Error> {
+	) -> Result<InsertionInfo<ExtrinsicHash<ChainApi>>, soil_client::transaction_pool::error::Error>
+	{
 		let (response, request) = TxMemPoolSyncRequest::try_insert_with_replacement(
 			self.clone(),
 			new_tx,
@@ -990,8 +1000,9 @@ where
 		source: TransactionSource,
 		validated_at: u64,
 		xts: Vec<ExtrinsicFor<ChainApi>>,
-	) -> Vec<Result<InsertionInfo<ExtrinsicHash<ChainApi>>, soil_client::transaction_pool::error::Error>>
-	{
+	) -> Vec<
+		Result<InsertionInfo<ExtrinsicHash<ChainApi>>, soil_client::transaction_pool::error::Error>,
+	> {
 		let (response, request) =
 			TxMemPoolSyncRequest::extend_unwatched(self.clone(), source, validated_at, xts);
 		let _ = self.sync_channel.send(request);

@@ -28,7 +28,6 @@ use crate::{
 	LOG_TARGET,
 };
 use futures::stream::StreamExt;
-use subsoil::runtime::traits::Block as BlockT;
 use soil_client::transaction_pool::TransactionStatus;
 use soil_client::utils::mpsc;
 use std::{
@@ -39,6 +38,7 @@ use std::{
 	fmt::{self, Debug, Formatter},
 	pin::Pin,
 };
+use subsoil::runtime::traits::Block as BlockT;
 use tokio_stream::StreamMap;
 use tracing::{debug, trace};
 

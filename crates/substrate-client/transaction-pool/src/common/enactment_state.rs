@@ -20,8 +20,8 @@
 
 use crate::LOG_TARGET;
 use soil_client::blockchain::TreeRoute;
-use subsoil::runtime::traits::{Block as BlockT, NumberFor, Saturating};
 use soil_client::transaction_pool::ChainEvent;
+use subsoil::runtime::traits::{Block as BlockT, NumberFor, Saturating};
 use tracing::{debug, trace};
 
 /// The threshold since the last update where we will skip any maintenance for blocks.
@@ -192,9 +192,9 @@ where
 mod enactment_state_tests {
 	use super::{EnactmentAction, EnactmentState};
 	use soil_client::blockchain::{HashAndNumber, TreeRoute};
-	use subsoil::runtime::traits::NumberFor;
 	use soil_client::transaction_pool::ChainEvent;
 	use std::sync::Arc;
+	use subsoil::runtime::traits::NumberFor;
 	use substrate_test_runtime_client::runtime::{Block, Hash};
 
 	// some helpers for convenient blocks' hash naming

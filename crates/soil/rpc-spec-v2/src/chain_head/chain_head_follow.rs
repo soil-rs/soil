@@ -33,7 +33,6 @@ use futures::{
 use log::debug;
 use sc_rpc::utils::Subscription;
 use schnellru::{ByLength, LruMap};
-use subsoil::api::CallApiAt;
 use soil_client::blockchain::{
 	Backend as BlockChainBackend, Error as BlockChainError, HeaderBackend, HeaderMetadata, Info,
 };
@@ -41,13 +40,14 @@ use soil_client::client_api::{
 	Backend, BlockBackend, BlockImportNotification, BlockchainEvents, FinalityNotification,
 	StaleBlock,
 };
-use subsoil::runtime::{
-	traits::{Block as BlockT, Header as HeaderT, NumberFor},
-	SaturatedConversion, Saturating,
-};
 use std::{
 	collections::{HashSet, VecDeque},
 	sync::Arc,
+};
+use subsoil::api::CallApiAt;
+use subsoil::runtime::{
+	traits::{Block as BlockT, Header as HeaderT, NumberFor},
+	SaturatedConversion, Saturating,
 };
 /// The maximum number of finalized blocks provided by the
 /// `Initialized` event.
@@ -581,8 +581,11 @@ where
 			}
 
 			if let Some(best_block_hash) = self.current_best_block {
-				let ancestor =
-					soil_client::blockchain::lowest_common_ancestor(&*self.client, *hash, best_block_hash)?;
+				let ancestor = soil_client::blockchain::lowest_common_ancestor(
+					&*self.client,
+					*hash,
+					best_block_hash,
+				)?;
 
 				// If we end up here and the `best_block` is a descendent of the finalized block
 				// (last block in the list), it means that there were skipped notifications.

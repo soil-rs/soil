@@ -24,14 +24,14 @@ mod tests;
 use self::error::Error;
 use jsonrpsee::{core::async_trait, Extensions};
 use parking_lot::RwLock;
-use subsoil::core::{
-	offchain::{OffchainStorage, StorageKind},
-	Bytes,
-};
 use soil_rpc_api::check_if_safe;
 /// Re-export the API for backward compatibility.
 pub use soil_rpc_api::offchain::*;
 use std::sync::Arc;
+use subsoil::core::{
+	offchain::{OffchainStorage, StorageKind},
+	Bytes,
+};
 
 /// Offchain API
 #[derive(Debug)]

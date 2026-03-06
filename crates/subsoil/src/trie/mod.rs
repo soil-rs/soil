@@ -642,9 +642,9 @@ mod trie_constants {
 #[cfg(test)]
 mod tests {
 	use super::*;
+	use crate::core::Blake2Hasher;
 	use codec::{Compact, Decode, Encode};
 	use hash_db::{HashDB, Hasher};
-	use crate::core::Blake2Hasher;
 	use trie_db::{DBValue, NodeCodec as NodeCodecT, Trie, TrieMut};
 	use trie_standardmap::{Alphabet, StandardMap, ValueMode};
 

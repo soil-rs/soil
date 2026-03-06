@@ -19,11 +19,11 @@
 //! Block import helpers.
 
 use serde::{Deserialize, Serialize};
+use std::{any::Any, borrow::Cow, collections::HashMap, sync::Arc};
 use subsoil::runtime::{
 	traits::{Block as BlockT, HashingFor, Header as HeaderT, NumberFor},
 	DigestItem, Justification, Justifications,
 };
-use std::{any::Any, borrow::Cow, collections::HashMap, sync::Arc};
 
 use soil_client::consensus::{BlockOrigin, Error};
 

@@ -35,7 +35,9 @@ use schnorrkel::{
 	ExpansionMode, Keypair, MiniSecretKey, PublicKey, SecretKey,
 };
 
-use crate::core::crypto::{CryptoType, CryptoTypeId, Derive, Public as TraitPublic, SignatureBytes};
+use crate::core::crypto::{
+	CryptoType, CryptoTypeId, Derive, Public as TraitPublic, SignatureBytes,
+};
 use codec::{Decode, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;
 

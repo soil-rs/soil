@@ -85,11 +85,13 @@ pub fn convert_to_latest(old: ApplyExtrinsicResult) -> crate::runtime::ApplyExtr
 			DispatchError::Other(s) => crate::runtime::DispatchError::Other(s),
 			DispatchError::CannotLookup => crate::runtime::DispatchError::CannotLookup,
 			DispatchError::BadOrigin => crate::runtime::DispatchError::BadOrigin,
-			DispatchError::Module(err) => crate::runtime::DispatchError::Module(crate::runtime::ModuleError {
-				index: err.index,
-				error: [err.error, 0, 0, 0],
-				message: err.message,
-			}),
+			DispatchError::Module(err) => {
+				crate::runtime::DispatchError::Module(crate::runtime::ModuleError {
+					index: err.index,
+					error: [err.error, 0, 0, 0],
+					message: err.message,
+				})
+			},
 			DispatchError::ConsumerRemaining => crate::runtime::DispatchError::ConsumerRemaining,
 			DispatchError::NoProviders => crate::runtime::DispatchError::NoProviders,
 			DispatchError::TooManyConsumers => crate::runtime::DispatchError::TooManyConsumers,

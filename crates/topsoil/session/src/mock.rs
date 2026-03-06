@@ -23,14 +23,14 @@ use crate as topsoil_session;
 use crate::historical as pallet_session_historical;
 
 use codec::Encode;
+use soil_staking::SessionIndex;
+use std::collections::BTreeMap;
 use subsoil::core::crypto::key_types::DUMMY;
 use subsoil::runtime::{
 	testing::UintAuthorityId,
 	traits::{Convert, OpaqueKeys},
 	BuildStorage,
 };
-use soil_staking::SessionIndex;
-use std::collections::BTreeMap;
 use topsoil_balances::{self, AccountData};
 use topsoil_support::{derive_impl, parameter_types, traits::ConstU64};
 

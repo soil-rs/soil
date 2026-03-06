@@ -17,8 +17,8 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 use codec::DecodeAll;
-use subsoil::application_crypto::RuntimeAppPublic;
 use soil_client::consensus::Error as ConsensusError;
+use subsoil::application_crypto::RuntimeAppPublic;
 use subsoil::consensus::beefy::{
 	AuthorityIdBound, KnownSignature, ValidatorSet, ValidatorSetId, VersionedFinalityProof,
 };

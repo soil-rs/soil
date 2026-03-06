@@ -19,12 +19,12 @@
 
 #![cfg(test)]
 
-use alloc::collections::btree_map::BTreeMap;
 use crate::arithmetic::{
 	traits::{One, SaturatedConversion, Zero},
 	PerThing,
 };
 use crate::assert_eq_error_rate;
+use alloc::collections::btree_map::BTreeMap;
 
 use super::{seq_phragmen, Assignment, ElectionResult, ExtendedBalance, PerThing128, VoteWeight};
 

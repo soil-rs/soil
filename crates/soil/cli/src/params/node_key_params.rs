@@ -17,10 +17,10 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 use clap::Args;
-use subsoil::core::H256;
 use soil_network::config::{ed25519, NodeKeyConfig};
 use soil_service::Role;
 use std::{path::PathBuf, str::FromStr};
+use subsoil::core::H256;
 
 use crate::{arg_enums::NodeKeyType, error, Error};
 

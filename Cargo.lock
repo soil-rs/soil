@@ -9258,7 +9258,6 @@ dependencies = [
  "hash-db",
  "indexmap",
  "is-terminal",
- "kitchensink-runtime",
  "kvdb",
  "kvdb-memorydb",
  "kvdb-rocksdb",
@@ -9285,7 +9284,6 @@ dependencies = [
  "subsoil-derive",
  "substrate-prometheus-endpoint",
  "substrate-test-runtime",
- "substrate-test-runtime-client",
  "sysinfo",
  "tempfile",
  "thiserror 1.0.69",
@@ -9962,6 +9960,15 @@ dependencies = [
  "soil-client",
  "thiserror 1.0.69",
  "wasm-timer",
+]
+
+[[package]]
+name = "soil-test"
+version = "0.1.0"
+dependencies = [
+ "soil-client",
+ "subsoil",
+ "substrate-test-runtime-client",
 ]
 
 [[package]]

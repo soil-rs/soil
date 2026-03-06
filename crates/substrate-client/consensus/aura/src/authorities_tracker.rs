@@ -23,8 +23,8 @@ use std::{fmt::Debug, sync::Arc};
 use codec::Codec;
 use fork_tree::ForkTree;
 use parking_lot::RwLock;
-use subsoil::api::ProvideRuntimeApi;
 use soil_client::blockchain::{HeaderBackend, HeaderMetadata};
+use subsoil::api::ProvideRuntimeApi;
 use subsoil::consensus::aura::{AuraApi, ConsensusLog, AURA_ENGINE_ID};
 use subsoil::core::Pair;
 use subsoil::runtime::{
@@ -54,7 +54,9 @@ impl<P, B, C> AuthoritiesTracker<P, B, C>
 where
 	P: Pair,
 	B: Block,
-	C: HeaderBackend<B> + HeaderMetadata<B, Error = soil_client::blockchain::Error> + ProvideRuntimeApi<B>,
+	C: HeaderBackend<B>
+		+ HeaderMetadata<B, Error = soil_client::blockchain::Error>
+		+ ProvideRuntimeApi<B>,
 	P::Public: Codec + Debug,
 	C::Api: AuraApi<B, AuthorityId<P>>,
 {
@@ -71,8 +73,10 @@ where
 
 		// Fetch authorities from cache, if available.
 		let authorities = {
-			let is_descendent_of =
-				soil_client::client_api::utils::is_descendent_of(&*self.client, Some((hash, parent_hash)));
+			let is_descendent_of = soil_client::client_api::utils::is_descendent_of(
+				&*self.client,
+				Some((hash, parent_hash)),
+			);
 			let authorities_cache = self.authorities.read();
 			authorities_cache
 				.find_node_where(&hash, &number, &is_descendent_of, &|_| true)
@@ -139,8 +143,10 @@ where
 				number,
 			);
 			self.prune_finalized()?;
-			let is_descendent_of =
-				soil_client::client_api::utils::is_descendent_of(&*self.client, Some((hash, parent_hash)));
+			let is_descendent_of = soil_client::client_api::utils::is_descendent_of(
+				&*self.client,
+				Some((hash, parent_hash)),
+			);
 			let mut authorities_cache = self.authorities.write();
 			authorities_cache
 				.import(hash, number, authorities_change, &is_descendent_of)
@@ -154,7 +160,8 @@ where
 	}
 
 	fn prune_finalized(&self) -> Result<(), String> {
-		let is_descendent_of = soil_client::client_api::utils::is_descendent_of(&*self.client, None);
+		let is_descendent_of =
+			soil_client::client_api::utils::is_descendent_of(&*self.client, None);
 		let info = self.client.info();
 		let mut authorities_cache = self.authorities.write();
 		let _pruned = authorities_cache

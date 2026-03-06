@@ -21,16 +21,16 @@ use crate::DenyUnsafe;
 use assert_matches::assert_matches;
 use futures::prelude::*;
 use jsonrpsee::{core::EmptyServerParams as EmptyParams, MethodsError as RpcError, RpcModule};
-use subsoil::core::H256;
+use soil_client::utils::mpsc::tracing_unbounded;
 use soil_network::{self, config::Role, PeerId};
 use soil_rpc_api::system::helpers::PeerInfo;
-use soil_client::utils::mpsc::tracing_unbounded;
 use std::{
 	env,
 	io::{BufRead, BufReader, Write},
 	process::{Command, Stdio},
 	thread,
 };
+use subsoil::core::H256;
 use substrate_test_runtime_client::runtime::Block;
 
 struct Status {
@@ -347,7 +347,8 @@ fn test_add_reset_log_filter() {
 
 	// Enter log generation / filter reload
 	if std::env::var("TEST_LOG_FILTER").is_ok() {
-		let mut builder = soil_client::tracing::logging::LoggerBuilder::new("test_before_add=debug");
+		let mut builder =
+			soil_client::tracing::logging::LoggerBuilder::new("test_before_add=debug");
 		builder.with_log_reloading(true);
 		builder.init().unwrap();
 

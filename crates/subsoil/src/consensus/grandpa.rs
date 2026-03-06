@@ -17,20 +17,18 @@
 
 //! Primitives for GRANDPA integration, suitable for WASM compilation.
 
-
-
 #[cfg(feature = "serde")]
 use serde::Serialize;
 
-use alloc::vec::Vec;
-use codec::{Codec, Decode, DecodeWithMemTracking, Encode};
-use scale_info::TypeInfo;
 #[cfg(feature = "std")]
 use crate::keystore::KeystorePtr;
 use crate::runtime::{
 	traits::{Header as HeaderT, NumberFor},
 	ConsensusEngineId, Debug, OpaqueValue,
 };
+use alloc::vec::Vec;
+use codec::{Codec, Decode, DecodeWithMemTracking, Encode};
+use scale_info::TypeInfo;
 
 /// The log target to be used by client code.
 pub const CLIENT_LOG_TARGET: &str = "grandpa";

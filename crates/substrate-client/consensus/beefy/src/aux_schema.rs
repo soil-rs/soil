@@ -89,8 +89,8 @@ where
 pub(crate) mod tests {
 	use super::*;
 	use crate::tests::BeefyTestNet;
-	use subsoil::consensus::beefy::ecdsa_crypto;
 	use soil_network_test::TestNetFactory;
+	use subsoil::consensus::beefy::ecdsa_crypto;
 
 	// also used in tests.rs
 	pub fn verify_persisted_version<B: BlockT, BE: Backend<B>>(backend: &BE) -> bool {

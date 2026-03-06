@@ -40,11 +40,11 @@ use soil_client::consensus::BlockOrigin;
 use soil_network::ProtocolName;
 use soil_network_common::sync::message::BlockAnnounce;
 use soil_network_types::PeerId;
+use std::any::Any;
 use subsoil::runtime::{
 	traits::{Block as BlockT, NumberFor},
 	Justifications,
 };
-use std::any::Any;
 
 /// Syncing strategy for syncing engine to use
 pub trait SyncingStrategy<B: BlockT>: Send

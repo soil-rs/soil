@@ -40,16 +40,16 @@ use futures::{Stream, StreamExt};
 use itertools::Itertools;
 
 use crate::LOG_TARGET;
-use subsoil::core::{traits::SpawnNamed, Bytes, Encode};
+use soil_client::utils::id_sequence::SeqID;
 pub use soil_statement_store::StatementStore;
 use soil_statement_store::{
 	OptimizedTopicFilter, Result, Statement, StatementEvent, Topic, MAX_TOPICS,
 };
-use soil_client::utils::id_sequence::SeqID;
 use std::{
 	collections::{hash_map::Entry, HashMap, HashSet},
 	sync::atomic::AtomicU64,
 };
+use subsoil::core::{traits::SpawnNamed, Bytes, Encode};
 
 /// Trait for initiating statement store subscriptions from the RPC module.
 pub trait StatementStoreSubscriptionApi: Send + Sync {
@@ -468,8 +468,8 @@ mod tests {
 	use crate::tests::signed_statement;
 
 	use super::*;
-	use subsoil::core::Decode;
 	use soil_statement_store::Topic;
+	use subsoil::core::Decode;
 
 	fn unwrap_statement(item: StatementEvent) -> Bytes {
 		match item {

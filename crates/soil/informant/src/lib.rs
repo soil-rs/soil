@@ -37,14 +37,14 @@ use soil_network::NetworkStatusProvider;
 #[cfg(feature = "std")]
 use soil_network_sync::{SyncStatusProvider, SyncingService};
 #[cfg(feature = "std")]
-use subsoil::runtime::traits::{Block as BlockT, Header};
-#[cfg(feature = "std")]
 use std::{
 	collections::VecDeque,
 	fmt::{Debug, Display},
 	sync::Arc,
 	time::Duration,
 };
+#[cfg(feature = "std")]
+use subsoil::runtime::traits::{Block as BlockT, Header};
 
 #[cfg(feature = "std")]
 mod display;

@@ -26,8 +26,8 @@ use fork_tree::{FilterAction, ForkTree};
 use log::debug;
 use parking_lot::MappedMutexGuard;
 use sc_consensus::shared_data::{SharedData, SharedDataLocked};
-use subsoil::consensus::grandpa::{AuthorityId, AuthorityList};
 use soil_telemetry::{telemetry, TelemetryHandle, CONSENSUS_INFO};
+use subsoil::consensus::grandpa::{AuthorityId, AuthorityList};
 
 use crate::{SetId, LOG_TARGET};
 

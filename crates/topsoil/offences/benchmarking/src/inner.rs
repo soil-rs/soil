@@ -18,11 +18,11 @@
 //! Offences pallet benchmarking.
 
 use alloc::{vec, vec::Vec};
+use soil_staking::offence::ReportOffence;
 use subsoil::runtime::{
 	traits::{Convert, Saturating, StaticLookup},
 	Perbill,
 };
-use soil_staking::offence::ReportOffence;
 use topsoil_babe::EquivocationOffence as BabeEquivocationOffence;
 use topsoil_balances::Config as BalancesConfig;
 use topsoil_benchmarking::v2::*;

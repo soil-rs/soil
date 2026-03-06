@@ -39,6 +39,7 @@ use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 pub use node_primitives::{AccountId, Signature};
 use node_primitives::{AccountIndex, Balance, BlockNumber, Hash, Moment, Nonce};
 use soil_authority_discovery::AuthorityId as AuthorityDiscoveryId;
+use static_assertions::const_assert;
 use subsoil::consensus::beefy::{
 	ecdsa_crypto::{AuthorityId as BeefyId, Signature as BeefySignature},
 	mmr::MmrLeafVersion,
@@ -60,7 +61,6 @@ use subsoil::std::{borrow::Cow, prelude::*};
 #[cfg(any(feature = "std", test))]
 use subsoil::version::NativeVersion;
 use subsoil::version::RuntimeVersion;
-use static_assertions::const_assert;
 use topsoil_asset_conversion::{AccountIdConverter, Ascending, Chain, WithFirstAsset};
 use topsoil_asset_conversion_tx_payment::SwapAssetAdapter;
 use topsoil_broker::{CoreAssignment, CoreIndex, CoretimeInterface, PartsOf57600, TaskId};

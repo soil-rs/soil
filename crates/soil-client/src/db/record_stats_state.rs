@@ -19,6 +19,7 @@
 //! Provides [`RecordStatsState`] for recording stats about state access.
 
 use super::stats::StateUsageStats;
+use std::sync::Arc;
 use subsoil::core::storage::ChildInfo;
 use subsoil::runtime::{
 	traits::{Block as BlockT, HashingFor},
@@ -29,7 +30,6 @@ use subsoil::state_machine::{
 	BackendTransaction, IterArgs, StorageIterator, StorageKey, StorageValue, TrieBackend,
 };
 use subsoil::trie::MerkleValue;
-use std::sync::Arc;
 
 /// State abstraction for recording stats about state access.
 pub struct RecordStatsState<S, B: BlockT> {

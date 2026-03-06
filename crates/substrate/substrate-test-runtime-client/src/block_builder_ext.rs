@@ -43,7 +43,8 @@ pub trait BlockBuilderExt {
 	) -> Result<(), soil_client::blockchain::Error>;
 }
 
-impl<'a, A> BlockBuilderExt for soil_client::block_builder::BlockBuilder<'a, substrate_test_runtime::Block, A>
+impl<'a, A> BlockBuilderExt
+	for soil_client::block_builder::BlockBuilder<'a, substrate_test_runtime::Block, A>
 where
 	A: ProvideRuntimeApi<substrate_test_runtime::Block>
 		+ subsoil::api::CallApiAt<substrate_test_runtime::Block>

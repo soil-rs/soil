@@ -20,12 +20,12 @@
 
 use super::{Epoch, AUTHORING_SCORE_LENGTH, AUTHORING_SCORE_VRF_CONTEXT};
 use codec::Encode;
+use soil_consensus_epochs::Epoch as EpochT;
 use subsoil::application_crypto::AppCrypto;
 use subsoil::consensus::babe::{
 	digests::{PreDigest, PrimaryPreDigest, SecondaryPlainPreDigest, SecondaryVRFPreDigest},
 	make_vrf_sign_data, AuthorityId, BabeAuthorityWeight, Randomness, Slot,
 };
-use soil_consensus_epochs::Epoch as EpochT;
 use subsoil::core::{
 	crypto::{ByteArray, Wraps},
 	U256,
@@ -108,8 +108,9 @@ pub(super) fn secondary_slot_author(
 		return None;
 	}
 
-	let rand =
-		U256::from_big_endian(&(randomness, slot).using_encoded(subsoil_crypto_hashing::blake2_256));
+	let rand = U256::from_big_endian(
+		&(randomness, slot).using_encoded(subsoil_crypto_hashing::blake2_256),
+	);
 
 	let authorities_len = U256::from(authorities.len());
 	let idx = rand % authorities_len;

@@ -1547,7 +1547,10 @@ mod test {
 			topsoil_support::assert_err!(
 				StateTrieMigration::continue_migrate(
 					RuntimeOrigin::signed(1),
-					MigrationLimits { item: 5, size: subsoil::runtime::traits::Bounded::max_value() },
+					MigrationLimits {
+						item: 5,
+						size: subsoil::runtime::traits::Bounded::max_value()
+					},
 					Bounded::max_value(),
 					MigrationProcess::<Test>::get()
 				),
@@ -1863,8 +1866,8 @@ mod remote_tests_local {
 		*,
 	};
 	use remote_externalities::{Mode, OfflineConfig, OnlineConfig, SnapshotConfig};
-	use subsoil::runtime::traits::Bounded;
 	use std::env::var as env_var;
+	use subsoil::runtime::traits::Bounded;
 
 	// we only use the hash type from this, so using the mock should be fine.
 	type Extrinsic = subsoil::runtime::testing::TestXt<MockCall, ()>;

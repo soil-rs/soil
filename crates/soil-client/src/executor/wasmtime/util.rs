@@ -16,11 +16,11 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-use crate::executor::wasmtime::{runtime::StoreData, InstantiationStrategy};
 use crate::executor::common::{
 	error::{Error, Result},
 	util::checked_range,
 };
+use crate::executor::wasmtime::{runtime::StoreData, InstantiationStrategy};
 use subsoil::wasm_interface::Pointer;
 use wasmtime::{AsContext, AsContextMut};
 

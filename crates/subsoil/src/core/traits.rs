@@ -17,8 +17,8 @@
 
 //! Shareable Substrate traits.
 
-use alloc::{borrow::Cow, boxed::Box, string::String, vec::Vec};
 use ::core::fmt::{Debug, Display};
+use alloc::{borrow::Cow, boxed::Box, string::String, vec::Vec};
 
 pub use crate::externalities::{Externalities, ExternalitiesExt};
 

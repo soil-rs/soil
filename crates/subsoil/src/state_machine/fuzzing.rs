@@ -17,16 +17,16 @@
 
 //! State machine fuzzing implementation, behind `fuzzing` feature.
 
-use super::{ext::Ext, *};
 use super::ext::StorageAppend;
-use arbitrary::Arbitrary;
-#[cfg(test)]
-use codec::Encode;
-use hash_db::Hasher;
+use super::{ext::Ext, *};
 use crate::core::{storage::StateVersion, traits::Externalities};
 #[cfg(test)]
 use crate::runtime::traits::BlakeTwo256;
 use crate::trie::PrefixedMemoryDB;
+use arbitrary::Arbitrary;
+#[cfg(test)]
+use codec::Encode;
+use hash_db::Hasher;
 use std::collections::BTreeMap;
 
 #[derive(Arbitrary, Debug, Clone)]

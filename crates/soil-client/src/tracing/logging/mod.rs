@@ -33,9 +33,9 @@ pub(crate) type DefaultLogger = stderr_writer::MakeStderrWriter;
 pub use directives::*;
 pub use subsoil_derive::*;
 
+use ::tracing::Subscriber;
 use is_terminal::IsTerminal;
 use std::io;
-use ::tracing::Subscriber;
 use tracing_subscriber::{
 	filter::LevelFilter,
 	fmt::{
@@ -352,6 +352,7 @@ impl LoggerBuilder {
 #[cfg(test)]
 mod tests {
 	use super::*;
+	use ::tracing::{metadata::Kind, subscriber::Interest, Callsite, Level, Metadata};
 	use log::info;
 	use std::{
 		collections::BTreeMap,
@@ -362,7 +363,6 @@ mod tests {
 			Arc,
 		},
 	};
-	use ::tracing::{metadata::Kind, subscriber::Interest, Callsite, Level, Metadata};
 
 	const EXPECTED_LOG_MESSAGE: &'static str = "yeah logging works as expected";
 	const EXPECTED_NODE_NAME: &'static str = "THE_NODE";

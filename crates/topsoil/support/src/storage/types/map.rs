@@ -819,7 +819,8 @@ mod test {
 						},
 						default: Option::<u32>::None.encode(),
 						docs: vec![],
-						deprecation_info: subsoil::metadata_ir::ItemDeprecationInfoIR::NotDeprecated
+						deprecation_info:
+							subsoil::metadata_ir::ItemDeprecationInfoIR::NotDeprecated
 					},
 					StorageEntryMetadataIR {
 						name: "foo",
@@ -831,7 +832,8 @@ mod test {
 						},
 						default: 97u32.encode(),
 						docs: vec![],
-						deprecation_info: subsoil::metadata_ir::ItemDeprecationInfoIR::NotDeprecated
+						deprecation_info:
+							subsoil::metadata_ir::ItemDeprecationInfoIR::NotDeprecated
 					}
 				]
 			);

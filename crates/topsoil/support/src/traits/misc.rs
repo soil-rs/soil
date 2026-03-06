@@ -747,7 +747,11 @@ pub trait HandleLifetime<T> {
 impl<T> HandleLifetime<T> for () {}
 
 pub trait Time {
-	type Moment: subsoil::arithmetic::traits::AtLeast32Bit + Parameter + Default + Copy + MaxEncodedLen;
+	type Moment: subsoil::arithmetic::traits::AtLeast32Bit
+		+ Parameter
+		+ Default
+		+ Copy
+		+ MaxEncodedLen;
 
 	fn now() -> Self::Moment;
 }

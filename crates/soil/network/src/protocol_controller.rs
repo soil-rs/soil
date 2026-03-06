@@ -46,13 +46,15 @@ use crate::peer_store::{PeerStoreProvider, ProtocolHandle as ProtocolHandleT};
 use futures::{channel::oneshot, future::Either, FutureExt, StreamExt};
 use libp2p::PeerId;
 use log::{debug, error, trace, warn};
-use subsoil::arithmetic::traits::SaturatedConversion;
-use soil_client::utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
+use soil_client::utils::mpsc::{
+	tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender,
+};
 use std::{
 	collections::{HashMap, HashSet},
 	sync::Arc,
 	time::{Duration, Instant},
 };
+use subsoil::arithmetic::traits::SaturatedConversion;
 use wasm_timer::Delay;
 
 /// Log target for this file.
@@ -868,8 +870,8 @@ mod tests {
 		ReputationChange,
 	};
 	use libp2p::PeerId;
-	use soil_network_common::role::ObservedRole;
 	use soil_client::utils::mpsc::{tracing_unbounded, TryRecvError};
+	use soil_network_common::role::ObservedRole;
 	use std::collections::HashSet;
 
 	mockall::mock! {

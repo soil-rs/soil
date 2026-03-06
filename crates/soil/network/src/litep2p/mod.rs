@@ -75,10 +75,10 @@ use prometheus_endpoint::Registry;
 use soil_network_types::kad::{Key as RecordKey, PeerRecord, Record as P2PRecord};
 
 use soil_client::client_api::BlockBackend;
+use soil_client::utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver};
 use soil_network_common::{role::Roles, ExHashT};
 use soil_network_types::PeerId;
 use subsoil::runtime::traits::Block as BlockT;
-use soil_client::utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver};
 
 use std::{
 	cmp,

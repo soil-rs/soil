@@ -27,13 +27,13 @@
 //! or are completely standalone, but heavily inspired by Polkadot.
 
 use super::{ecdsa_crypto::AuthorityId, ConsensusLog, MmrRootHash, BEEFY_ENGINE_ID};
-use alloc::vec::Vec;
-use codec::{Decode, Encode, MaxEncodedLen};
-use scale_info::TypeInfo;
 use crate::runtime::{
 	generic::OpaqueDigestItemId,
 	traits::{Block, Header},
 };
+use alloc::vec::Vec;
+use codec::{Decode, Encode, MaxEncodedLen};
+use scale_info::TypeInfo;
 
 /// A provider for extra data that gets added to the Mmr leaf
 pub trait BeefyDataProvider<ExtraData> {
@@ -150,12 +150,12 @@ pub use mmr_root_provider::MmrRootProvider;
 #[cfg(feature = "std")]
 mod mmr_root_provider {
 	use super::*;
-	use crate::consensus::beefy::{known_payloads, payload::PayloadProvider, Payload};
-	use alloc::sync::Arc;
-	use core::marker::PhantomData;
 	use crate::api::ProvideRuntimeApi;
+	use crate::consensus::beefy::{known_payloads, payload::PayloadProvider, Payload};
 	use crate::mmr::MmrApi;
 	use crate::runtime::traits::NumberFor;
+	use alloc::sync::Arc;
+	use core::marker::PhantomData;
 
 	/// A [`super::Payload`] provider where payload is Merkle Mountain Range root hash.
 	///

@@ -16,8 +16,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-use subsoil::core::offchain::{storage::InMemOffchainStorage, OffchainStorage};
 use std::sync::Arc;
+use subsoil::core::offchain::{storage::InMemOffchainStorage, OffchainStorage};
 
 type TestBackend = soil_client::client_api::in_mem::Backend<substrate_test_runtime::Block>;
 

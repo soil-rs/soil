@@ -62,8 +62,6 @@ use log::{debug, error, info};
 use parking_lot::RwLock;
 use prometheus_endpoint::{PrometheusError, Registry};
 use sc_consensus::BlockImport;
-use subsoil::api::ProvideRuntimeApi;
-use subsoil::application_crypto::AppCrypto;
 use soil_client::blockchain::{
 	Error as ClientError, HeaderBackend, HeaderMetadata, Result as ClientResult,
 };
@@ -73,19 +71,21 @@ use soil_client::client_api::{
 	BlockchainEvents, CallExecutor, ExecutorProvider, Finalizer, LockImportRun, StorageProvider,
 };
 use soil_client::consensus::SelectChain;
+use soil_client::transaction_pool::OffchainTransactionPoolFactory;
+use soil_client::utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver};
+use soil_network::{types::ProtocolName, NetworkBackend, NotificationService};
+use soil_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG, CONSENSUS_INFO};
+use subsoil::api::ProvideRuntimeApi;
+use subsoil::application_crypto::AppCrypto;
 use subsoil::consensus::grandpa::{
 	AuthorityList, AuthoritySignature, SetId, CLIENT_LOG_TARGET as LOG_TARGET,
 };
 use subsoil::core::{crypto::ByteArray, traits::CallContext};
 use subsoil::keystore::KeystorePtr;
-use soil_network::{types::ProtocolName, NetworkBackend, NotificationService};
 use subsoil::runtime::{
 	generic::BlockId,
 	traits::{Block as BlockT, NumberFor, Zero},
 };
-use soil_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG, CONSENSUS_INFO};
-use soil_client::transaction_pool::OffchainTransactionPoolFactory;
-use soil_client::utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver};
 
 pub use finality_grandpa::BlockNumberOps;
 use finality_grandpa::{voter, voter_set::VoterSet, Error as GrandpaError};
@@ -148,11 +148,11 @@ use environment::{Environment, VoterSetState};
 use until_imported::UntilGlobalMessageBlocksImported;
 
 // Re-export these two because it's just so damn convenient.
+use std::marker::PhantomData;
 pub use subsoil::consensus::grandpa::{
 	AuthorityId, AuthorityPair, CatchUp, Commit, CompactCommit, GrandpaApi, Message, Precommit,
 	Prevote, PrimaryPropose, ScheduledChange, SignedMessage, GRANDPA_ENGINE_ID,
 };
-use std::marker::PhantomData;
 
 /// Filter that preserves blocks with GRANDPA justifications during pruning.
 ///

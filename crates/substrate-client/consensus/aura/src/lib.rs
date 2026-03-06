@@ -40,17 +40,19 @@ use sc_consensus_slots::{
 	BackoffAuthoringBlocksStrategy, InherentDataProviderExt, SimpleSlotWorkerToSlotWorker,
 	SlotInfo, StorageChanges,
 };
-use subsoil::api::{Core, ProvideRuntimeApi};
-use subsoil::application_crypto::AppPublic;
 use soil_client::blockchain::HeaderBackend;
 use soil_client::client_api::{backend::AuxStore, BlockOf};
-use soil_client::consensus::{BlockOrigin, Environment, Error as ConsensusError, Proposer, SelectChain};
+use soil_client::consensus::{
+	BlockOrigin, Environment, Error as ConsensusError, Proposer, SelectChain,
+};
+use soil_telemetry::TelemetryHandle;
+use subsoil::api::{Core, ProvideRuntimeApi};
+use subsoil::application_crypto::AppPublic;
 use subsoil::consensus::slots::Slot;
 use subsoil::core::crypto::Pair;
 use subsoil::inherents::CreateInherentDataProviders;
 use subsoil::keystore::KeystorePtr;
 use subsoil::runtime::traits::{Block as BlockT, Header, Member, NumberFor};
-use soil_telemetry::TelemetryHandle;
 
 mod authorities_tracker;
 mod import_queue;
@@ -381,7 +383,11 @@ where
 		crate::standalone::claim_slot::<P>(slot, authorities, &self.keystore).await
 	}
 
-	fn pre_digest_data(&self, slot: Slot, _claim: &Self::Claim) -> Vec<subsoil::runtime::DigestItem> {
+	fn pre_digest_data(
+		&self,
+		slot: Slot,
+		_claim: &Self::Claim,
+	) -> Vec<subsoil::runtime::DigestItem> {
 		vec![crate::standalone::pre_digest::<P>(slot)]
 	}
 
@@ -548,23 +554,23 @@ where
 mod tests {
 	use super::*;
 	use parking_lot::Mutex;
-	use soil_client::block_builder::BlockBuilderBuilder;
 	use sc_consensus::BoxJustificationImport;
 	use sc_consensus_slots::{BackoffAuthoringOnFinalizedHeadLagging, SimpleSlotWorker};
-	use soil_client::keystore::LocalKeystore;
-	use subsoil::application_crypto::{key_types::AURA, AppCrypto};
+	use soil_client::block_builder::BlockBuilderBuilder;
 	use soil_client::client_api::BlockchainEvents;
 	use soil_client::consensus::{NoNetwork as DummyOracle, Proposal, ProposeArgs};
-	use subsoil::consensus::aura::sr25519::AuthorityPair;
-	use subsoil::keyring::sr25519::Keyring;
-	use subsoil::keystore::Keystore;
+	use soil_client::keystore::LocalKeystore;
 	use soil_network_test::{Block as TestBlock, *};
-	use subsoil::runtime::traits::{Block as BlockT, Header as _};
-	use subsoil::timestamp::Timestamp;
 	use std::{
 		task::Poll,
 		time::{Duration, Instant},
 	};
+	use subsoil::application_crypto::{key_types::AURA, AppCrypto};
+	use subsoil::consensus::aura::sr25519::AuthorityPair;
+	use subsoil::keyring::sr25519::Keyring;
+	use subsoil::keystore::Keystore;
+	use subsoil::runtime::traits::{Block as BlockT, Header as _};
+	use subsoil::timestamp::Timestamp;
 	use substrate_test_runtime_client::{
 		runtime::{Header, H256},
 		TestClient,

@@ -123,8 +123,8 @@ mod test {
 	use super::*;
 	use crate::mock::{new_test_ext, with_on_offence_fractions, Runtime as T, KIND};
 	use codec::Encode;
-	use subsoil::runtime::Perbill;
 	use soil_staking::offence::OffenceDetails;
+	use subsoil::runtime::Perbill;
 
 	#[test]
 	fn migration_to_v1_works() {

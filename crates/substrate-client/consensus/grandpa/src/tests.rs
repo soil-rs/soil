@@ -28,34 +28,34 @@ use sc_consensus::{
 	BlockImport, BlockImportParams, BoxJustificationImport, ForkChoiceStrategy, ImportResult,
 	ImportedAux,
 };
-use subsoil::api::{ApiRef, ProvideRuntimeApi};
 use soil_client::consensus::{BlockOrigin, Error as ConsensusError, SelectChain};
+use soil_client::transaction_pool::RejectAllTxPool;
+use soil_network::config::Role;
+use soil_network_test::{
+	Block, BlockImportAdapter, FullPeerConfig, Hash, PassThroughVerifier, Peer, PeersClient,
+	PeersFullClient, TestClient, TestNetFactory,
+};
+use std::{collections::HashSet, pin::Pin};
+use subsoil::api::{ApiRef, ProvideRuntimeApi};
 use subsoil::consensus::grandpa::{
 	AuthorityList, EquivocationProof, GrandpaApi, OpaqueKeyOwnershipProof, GRANDPA_ENGINE_ID,
 };
 use subsoil::core::H256;
 use subsoil::keyring::Ed25519Keyring;
 use subsoil::keystore::{testing::MemoryKeystore, Keystore, KeystorePtr};
-use soil_network::config::Role;
-use soil_network_test::{
-	Block, BlockImportAdapter, FullPeerConfig, Hash, PassThroughVerifier, Peer, PeersClient,
-	PeersFullClient, TestClient, TestNetFactory,
-};
 use subsoil::runtime::{
 	codec::Encode,
 	generic::{BlockId, DigestItem},
 	traits::{Block as BlockT, Header as HeaderT},
 	Justifications,
 };
-use soil_client::transaction_pool::RejectAllTxPool;
-use std::{collections::HashSet, pin::Pin};
 use substrate_test_runtime_client::{runtime::BlockNumber, BlockBuilderExt};
 use tokio::runtime::Handle;
 
 use authorities::AuthoritySet;
 use communication::grandpa_protocol_name;
-use soil_client::block_builder::{BlockBuilder, BlockBuilderBuilder};
 use sc_consensus::LongestChain;
+use soil_client::block_builder::{BlockBuilder, BlockBuilderBuilder};
 use subsoil::application_crypto::key_types::GRANDPA;
 
 type TestLinkHalf =
@@ -2215,7 +2215,8 @@ async fn grandpa_environment_doesnt_send_equivocation_reports_for_itself() {
 
 	// reporting the equivocation should fail since the offender is a local
 	// authority (i.e. we have keys in our keystore for the given id)
-	let equivocation_proof = subsoil::consensus::grandpa::Equivocation::Prevote(equivocation.clone());
+	let equivocation_proof =
+		subsoil::consensus::grandpa::Equivocation::Prevote(equivocation.clone());
 	assert!(matches!(environment.report_equivocation(equivocation_proof), Err(Error::Safety(_))));
 
 	// if we set the equivocation offender to another id for which we don't have

@@ -343,7 +343,8 @@ impl pallet2::Config<pallet::Instance1> for Runtime {
 
 pub type Header = subsoil::runtime::generic::Header<u32, subsoil::runtime::traits::BlakeTwo256>;
 pub type Block = subsoil::runtime::generic::Block<Header, UncheckedExtrinsic>;
-pub type UncheckedExtrinsic = subsoil::runtime::generic::UncheckedExtrinsic<u32, RuntimeCall, (), ()>;
+pub type UncheckedExtrinsic =
+	subsoil::runtime::generic::UncheckedExtrinsic<u32, RuntimeCall, (), ()>;
 
 topsoil_support::construct_runtime!(
 	pub struct Runtime

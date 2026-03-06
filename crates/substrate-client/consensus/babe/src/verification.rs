@@ -24,6 +24,7 @@ use crate::{
 };
 use log::{debug, trace};
 use sc_consensus_slots::CheckedHeader;
+use soil_consensus_epochs::Epoch as EpochT;
 use subsoil::consensus::babe::{
 	digests::{
 		CompatibleDigestItem, PreDigest, PrimaryPreDigest, SecondaryPlainPreDigest,
@@ -31,7 +32,6 @@ use subsoil::consensus::babe::{
 	},
 	make_vrf_sign_data, AuthorityPair, AuthoritySignature,
 };
-use soil_consensus_epochs::Epoch as EpochT;
 use subsoil::consensus::slots::Slot;
 use subsoil::core::{
 	crypto::{VrfPublic, Wraps},

@@ -23,8 +23,8 @@ use crate::{
 	with_crypto_scheme, CryptoSchemeFlag, Error, KeystoreParams, NetworkSchemeFlag, OutputTypeFlag,
 };
 use clap::Parser;
-use subsoil::core::crypto::{ExposeSecret, SecretString, SecretUri, Ss58Codec};
 use std::str::FromStr;
+use subsoil::core::crypto::{ExposeSecret, SecretString, SecretUri, Ss58Codec};
 
 /// The `inspect` command
 #[derive(Debug, Parser)]
@@ -216,11 +216,13 @@ mod tests {
 
 		let password = "test12245";
 		let seed_with_password = format!("{}///{}", seed, password);
-		let valid_public_with_password =
-			subsoil::core::sr25519::Pair::from_string_with_seed(&seed_with_password, Some(password))
-				.expect("Valid")
-				.0
-				.public();
+		let valid_public_with_password = subsoil::core::sr25519::Pair::from_string_with_seed(
+			&seed_with_password,
+			Some(password),
+		)
+		.expect("Valid")
+		.0
+		.public();
 		let valid_public_hex_with_password =
 			array_bytes::bytes2hex("0x", valid_public_with_password.as_slice());
 		let valid_accountid_with_password =

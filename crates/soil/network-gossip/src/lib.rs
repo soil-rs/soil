@@ -61,7 +61,6 @@
 //! These status packets will typically contain light pieces of information
 //! used to inform peers of a current view of protocol state.
 
-
 pub use self::{
 	bridge::GossipEngine,
 	state_machine::TopicNotification,
@@ -74,8 +73,8 @@ use soil_network_types::{
 	multiaddr::{Multiaddr, Protocol},
 	PeerId,
 };
-use subsoil::runtime::traits::{Block as BlockT, NumberFor};
 use std::iter;
+use subsoil::runtime::traits::{Block as BlockT, NumberFor};
 
 mod bridge;
 mod state_machine;

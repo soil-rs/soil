@@ -17,9 +17,9 @@
 
 //! Substrate core types and inherents for timestamps.
 
-use codec::{Decode, Encode};
-use ::core::time::Duration;
 use crate::inherents::{InherentData, InherentIdentifier, IsFatalError};
+use ::core::time::Duration;
+use codec::{Decode, Encode};
 
 /// The identifier for the `timestamp` inherent.
 pub const INHERENT_IDENTIFIER: InherentIdentifier = *b"timstap0";

@@ -20,12 +20,11 @@
 #![deny(warnings)]
 #![forbid(unsafe_code, missing_docs, unused_variables, unused_imports)]
 
-
+use crate::core::crypto::KeyTypeId;
+use crate::runtime::ConsensusEngineId;
 use alloc::vec::Vec;
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;
-use crate::core::crypto::KeyTypeId;
-use crate::runtime::ConsensusEngineId;
 
 pub use crate::consensus::slots::{Slot, SlotDuration};
 

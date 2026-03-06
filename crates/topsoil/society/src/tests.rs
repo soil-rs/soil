@@ -21,8 +21,8 @@ use super::*;
 use migrations::v0;
 use mock::*;
 
-use subsoil_crypto_hashing::blake2_256;
 use subsoil::runtime::traits::BadOrigin;
+use subsoil_crypto_hashing::blake2_256;
 use topsoil_support::{assert_noop, assert_ok};
 use BidKind::*;
 use VouchingStatus::*;

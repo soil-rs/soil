@@ -24,12 +24,7 @@ use crate::{
 };
 use serde::{Deserialize, Serialize};
 use serde_json as json;
-use subsoil::core::{
-	storage::{ChildInfo, Storage, StorageChild, StorageData, StorageKey},
-	Bytes,
-};
 use soil_network::config::MultiaddrWithPeerId;
-use subsoil::runtime::BuildStorage;
 use soil_telemetry::TelemetryEndpoints;
 use std::{
 	borrow::Cow,
@@ -38,6 +33,11 @@ use std::{
 	marker::PhantomData,
 	path::PathBuf,
 };
+use subsoil::core::{
+	storage::{ChildInfo, Storage, StorageChild, StorageData, StorageKey},
+	Bytes,
+};
+use subsoil::runtime::BuildStorage;
 
 #[derive(Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -1032,7 +1032,9 @@ mod tests {
 
 	#[test]
 	fn generate_chain_spec_with_full_config_works() {
-		let j = include_str!("../../../substrate/substrate-test-runtime/res/default_genesis_config.json");
+		let j = include_str!(
+			"../../../substrate/substrate-test-runtime/res/default_genesis_config.json"
+		);
 		let output = ChainSpec::<()>::builder(
 			substrate_test_runtime::wasm_binary_unwrap().into(),
 			Default::default(),
@@ -1152,7 +1154,9 @@ mod tests {
 
 	#[test]
 	fn update_code_works_with_runtime_genesis_config() {
-		let j = include_str!("../../../substrate/substrate-test-runtime/res/default_genesis_config.json");
+		let j = include_str!(
+			"../../../substrate/substrate-test-runtime/res/default_genesis_config.json"
+		);
 		let chain_spec = ChainSpec::<()>::builder(
 			substrate_test_runtime::wasm_binary_unwrap().into(),
 			Default::default(),
@@ -1175,7 +1179,9 @@ mod tests {
 
 	#[test]
 	fn update_code_works_for_raw() {
-		let j = include_str!("../../../substrate/substrate-test-runtime/res/default_genesis_config.json");
+		let j = include_str!(
+			"../../../substrate/substrate-test-runtime/res/default_genesis_config.json"
+		);
 		let chain_spec = ChainSpec::<()>::builder(
 			substrate_test_runtime::wasm_binary_unwrap().into(),
 			Default::default(),

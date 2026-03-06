@@ -31,10 +31,10 @@ macro_rules! map {
 	);
 }
 
+use ::core::ops::Deref;
 use alloc::vec::Vec;
 #[doc(hidden)]
 pub use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
-use ::core::ops::Deref;
 use scale_info::TypeInfo;
 #[cfg(feature = "serde")]
 pub use serde;
@@ -93,6 +93,7 @@ pub use self::hasher::blake2::Blake2Hasher;
 pub use self::hasher::keccak::KeccakHasher;
 pub use hash_db::Hasher;
 
+pub use crate::storage;
 pub use bounded_collections as bounded;
 #[cfg(feature = "std")]
 pub use bounded_collections::{bounded_btree_map, bounded_vec};
@@ -101,7 +102,6 @@ pub use bounded_collections::{
 	ConstU128, ConstU16, ConstU32, ConstU64, ConstU8, ConstUint, Get, GetDefault, TryCollect,
 	TypedGet,
 };
-pub use crate::storage;
 
 #[doc(hidden)]
 pub use crate::std;

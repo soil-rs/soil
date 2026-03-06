@@ -19,9 +19,9 @@
 //! Tests for fork-aware transaction pool.
 
 use sc_transaction_pool::{ChainApi, PoolLimit};
-use subsoil::runtime::transaction_validity::TransactionSource;
 use soil_client::transaction_pool::ChainEvent;
 use std::sync::Arc;
+use subsoil::runtime::transaction_validity::TransactionSource;
 use substrate_test_runtime_client::{
 	runtime::{Block, Hash, Header},
 	Sr25519Keyring::*,

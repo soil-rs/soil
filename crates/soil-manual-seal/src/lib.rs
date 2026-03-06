@@ -42,13 +42,13 @@ use soil_client::client_api::{
 #[cfg(feature = "std")]
 use soil_client::consensus::{Environment, Proposer, SelectChain};
 #[cfg(feature = "std")]
+use std::{marker::PhantomData, sync::Arc, time::Duration};
+#[cfg(feature = "std")]
 use subsoil::core::traits::SpawnNamed;
 #[cfg(feature = "std")]
 use subsoil::inherents::CreateInherentDataProviders;
 #[cfg(feature = "std")]
 use subsoil::runtime::{traits::Block as BlockT, ConsensusEngineId};
-#[cfg(feature = "std")]
-use std::{marker::PhantomData, sync::Arc, time::Duration};
 
 #[cfg(feature = "std")]
 mod error;
@@ -71,9 +71,9 @@ pub use self::{
 	seal_block::{seal_block, SealBlockParams, MAX_PROPOSAL_DURATION},
 };
 #[cfg(feature = "std")]
-use subsoil::api::ProvideRuntimeApi;
-#[cfg(feature = "std")]
 use soil_client::transaction_pool::TransactionPool;
+#[cfg(feature = "std")]
+use subsoil::api::ProvideRuntimeApi;
 
 #[cfg(feature = "std")]
 const LOG_TARGET: &str = "manual-seal";
@@ -376,13 +376,13 @@ mod tests {
 	use assert_matches::assert_matches;
 	use sc_consensus::ImportedAux;
 	use sc_transaction_pool::{BasicPool, FullChainApi, Options, RevalidationType};
-	use subsoil::api::StorageProof;
 	use soil_basic_authorship::ProposerFactory;
-	use subsoil::inherents::InherentData;
-	use subsoil::runtime::generic::{Digest, DigestItem};
 	use soil_client::transaction_pool::{
 		MaintainedTransactionPool, TransactionPool, TransactionSource,
 	};
+	use subsoil::api::StorageProof;
+	use subsoil::inherents::InherentData;
+	use subsoil::runtime::generic::{Digest, DigestItem};
 	use substrate_test_runtime_client::{
 		DefaultTestClientBuilderExt, Sr25519Keyring::*, TestClientBuilder, TestClientBuilderExt,
 	};

@@ -17,6 +17,21 @@
 
 //! Primitives for the runtime modules.
 
+use crate::application_crypto::AppCrypto;
+pub use crate::arithmetic::traits::{
+	checked_pow, ensure_pow, AtLeast32Bit, AtLeast32BitUnsigned, Bounded, CheckedAdd, CheckedDiv,
+	CheckedMul, CheckedShl, CheckedShr, CheckedSub, Ensure, EnsureAdd, EnsureAddAssign, EnsureDiv,
+	EnsureDivAssign, EnsureFixedPointNumber, EnsureFrom, EnsureInto, EnsureMul, EnsureMulAssign,
+	EnsureOp, EnsureOpAssign, EnsureSub, EnsureSubAssign, IntegerSquareRoot, One,
+	SaturatedConversion, Saturating, UniqueSaturatedFrom, UniqueSaturatedInto, Zero,
+};
+#[doc(hidden)]
+pub use crate::core::{
+	parameter_types, ConstBool, ConstI128, ConstI16, ConstI32, ConstI64, ConstI8, ConstInt,
+	ConstU128, ConstU16, ConstU32, ConstU64, ConstU8, ConstUint, Get, GetDefault, TryCollect,
+	TypedGet,
+};
+use crate::core::{storage::StateVersion, Hasher, TypeId, U256};
 use crate::runtime::{
 	generic::Digest,
 	scale_info::{StaticTypeInfo, TypeInfo},
@@ -26,34 +41,19 @@ use crate::runtime::{
 	},
 	DispatchResult, KeyTypeId, OpaqueExtrinsic,
 };
-use alloc::vec::Vec;
-use codec::{
-	Codec, Decode, DecodeWithMemTracking, Encode, EncodeLike, FullCodec, HasCompact, MaxEncodedLen,
-};
 #[doc(hidden)]
 pub use ::core::{fmt::Debug, marker::PhantomData};
-use impl_trait_for_tuples::impl_for_tuples;
-#[cfg(feature = "serde")]
-use serde::{de::DeserializeOwned, Deserialize, Serialize};
-use crate::application_crypto::AppCrypto;
-pub use crate::arithmetic::traits::{
-	checked_pow, ensure_pow, AtLeast32Bit, AtLeast32BitUnsigned, Bounded, CheckedAdd, CheckedDiv,
-	CheckedMul, CheckedShl, CheckedShr, CheckedSub, Ensure, EnsureAdd, EnsureAddAssign, EnsureDiv,
-	EnsureDivAssign, EnsureFixedPointNumber, EnsureFrom, EnsureInto, EnsureMul, EnsureMulAssign,
-	EnsureOp, EnsureOpAssign, EnsureSub, EnsureSubAssign, IntegerSquareRoot, One,
-	SaturatedConversion, Saturating, UniqueSaturatedFrom, UniqueSaturatedInto, Zero,
-};
-use crate::core::{storage::StateVersion, Hasher, TypeId, U256};
-#[doc(hidden)]
-pub use crate::core::{
-	parameter_types, ConstBool, ConstI128, ConstI16, ConstI32, ConstI64, ConstI8, ConstInt,
-	ConstU128, ConstU16, ConstU32, ConstU64, ConstU8, ConstUint, Get, GetDefault, TryCollect,
-	TypedGet,
-};
 #[cfg(feature = "std")]
 use ::std::fmt::Display;
 #[cfg(feature = "std")]
 use ::std::str::FromStr;
+use alloc::vec::Vec;
+use codec::{
+	Codec, Decode, DecodeWithMemTracking, Encode, EncodeLike, FullCodec, HasCompact, MaxEncodedLen,
+};
+use impl_trait_for_tuples::impl_for_tuples;
+#[cfg(feature = "serde")]
+use serde::{de::DeserializeOwned, Deserialize, Serialize};
 
 pub mod transaction_extension;
 pub use transaction_extension::{
@@ -159,7 +159,11 @@ impl Verify for crate::core::ecdsa::Signature {
 #[cfg(feature = "bls-experimental")]
 impl Verify for crate::core::ecdsa_bls381::Signature {
 	type Signer = crate::core::ecdsa_bls381::Public;
-	fn verify<L: Lazy<[u8]>>(&self, mut msg: L, signer: &crate::core::ecdsa_bls381::Public) -> bool {
+	fn verify<L: Lazy<[u8]>>(
+		&self,
+		mut msg: L,
+		signer: &crate::core::ecdsa_bls381::Public,
+	) -> bool {
 		<crate::core::ecdsa_bls381::Pair as crate::core::Pair>::verify(self, msg.get(), signer)
 	}
 }
@@ -1608,8 +1612,10 @@ pub trait Dispatchable {
 		+ Printable
 		+ ExtensionPostDispatchWeightHandler<Self::Info>;
 	/// Actually dispatch this call and return the result of it.
-	fn dispatch(self, origin: Self::RuntimeOrigin)
-		-> crate::runtime::DispatchResultWithInfo<Self::PostInfo>;
+	fn dispatch(
+		self,
+		origin: Self::RuntimeOrigin,
+	) -> crate::runtime::DispatchResultWithInfo<Self::PostInfo>;
 }
 
 /// Shortcut to reference the `RuntimeOrigin` type of a `Dispatchable`.
@@ -2593,7 +2599,6 @@ impl BlockNumberProvider for () {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use crate::runtime::codec::{Decode, Encode, Input};
 	#[cfg(feature = "bls-experimental")]
 	use crate::core::ecdsa_bls381;
 	use crate::core::{
@@ -2602,6 +2607,7 @@ mod tests {
 		proof_of_possession::ProofOfPossessionGenerator,
 		sr25519,
 	};
+	use crate::runtime::codec::{Decode, Encode, Input};
 	use ::std::sync::Arc;
 
 	macro_rules! signature_verify_test {

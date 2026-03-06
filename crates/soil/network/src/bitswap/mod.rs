@@ -37,8 +37,8 @@ use schema::bitswap::{
 };
 use soil_client::client_api::BlockBackend;
 use soil_network_types::PeerId;
-use subsoil::runtime::traits::Block as BlockT;
 use std::{io, sync::Arc, time::Duration};
+use subsoil::runtime::traits::Block as BlockT;
 use unsigned_varint::encode as varint_encode;
 
 mod schema;
@@ -296,11 +296,11 @@ mod tests {
 	use super::*;
 	use futures::channel::oneshot;
 	use litep2p::types::multihash::Code;
-	use soil_client::block_builder::BlockBuilderBuilder;
 	use schema::bitswap::{
 		message::{wantlist::Entry, Wantlist},
 		Message as BitswapMessage,
 	};
+	use soil_client::block_builder::BlockBuilderBuilder;
 	use soil_client::consensus::BlockOrigin;
 	use subsoil::runtime::codec::Encode;
 	use substrate_test_runtime::ExtrinsicBuilder;

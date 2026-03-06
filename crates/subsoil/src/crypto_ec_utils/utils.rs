@@ -22,6 +22,7 @@
 // suppress the expected warning.
 #![allow(unused)]
 
+use crate::runtime_interface::RIType;
 use alloc::{vec, vec::Vec};
 use ark_ec::{
 	pairing::{MillerLoopOutput, Pairing},
@@ -34,7 +35,6 @@ use ark_scale::{
 	scale::{Decode, Encode, Output},
 	ArkScaleMaxEncodedLen, MaxEncodedLen,
 };
-use crate::runtime_interface::RIType;
 
 /// Unexpected failure message.
 pub const FAIL_MSG: &str = "Unexpected failure, bad arguments, broken host/runtime contract; qed";

@@ -18,8 +18,8 @@
 
 //! Helper methods dedicated to timestamps.
 
-use subsoil::core::offchain::Timestamp;
 use std::time::{Duration, SystemTime};
+use subsoil::core::offchain::Timestamp;
 
 /// Returns the current time as a `Timestamp`.
 pub fn now() -> Timestamp {

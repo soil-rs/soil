@@ -358,6 +358,7 @@ use alloc::{collections::btree_map::BTreeMap, vec::Vec};
 use codec::{Codec, DecodeWithMemTracking};
 use core::{fmt::Debug, ops::Div};
 use scale_info::TypeInfo;
+use soil_staking::{EraIndex, StakingInterface};
 use subsoil::core::U256;
 use subsoil::runtime::{
 	traits::{
@@ -366,7 +367,6 @@ use subsoil::runtime::{
 	},
 	FixedPointNumber, Perbill,
 };
-use soil_staking::{EraIndex, StakingInterface};
 use topsoil_support::{
 	defensive, defensive_assert, ensure,
 	pallet_prelude::{MaxEncodedLen, *},

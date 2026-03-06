@@ -46,8 +46,12 @@ pub use tx_ext::*;
 mod tx_ext {
 	use super::*;
 
-	pub type UncheckedExtrinsic =
-		subsoil::runtime::generic::UncheckedExtrinsic<AccountId, RuntimeCall, Signature, TxExtension>;
+	pub type UncheckedExtrinsic = subsoil::runtime::generic::UncheckedExtrinsic<
+		AccountId,
+		RuntimeCall,
+		Signature,
+		TxExtension,
+	>;
 
 	/// Transaction extension.
 	pub type TxExtension = (topsoil_verify_signature::VerifySignature<Runtime>, TxBareExtension);

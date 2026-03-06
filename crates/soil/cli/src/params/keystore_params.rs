@@ -18,12 +18,12 @@
 
 use crate::{error, error::Result};
 use clap::Args;
-use subsoil::core::crypto::SecretString;
 use soil_service::config::KeystoreConfig;
 use std::{
 	fs,
 	path::{Path, PathBuf},
 };
+use subsoil::core::crypto::SecretString;
 
 /// default sub directory for the key store
 const DEFAULT_KEYSTORE_CONFIG_PATH: &str = "keystore";

@@ -15,13 +15,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+use super::LOG_TARGET;
 /// ! Provides the [`SharedNodeCache`], the [`SharedValueCache`] and the [`SharedTrieCache`]
 /// ! that combines both caches and is exported to the outside.
 use super::{
 	metrics::Metrics, CacheSize, LocalNodeCacheConfig, LocalNodeCacheLimiter,
 	LocalValueCacheConfig, LocalValueCacheLimiter, NodeCached, TrieHitStats, TrieHitStatsSnapshot,
 };
-use super::LOG_TARGET;
 use core::{hash::Hash, time::Duration};
 use hash_db::Hasher;
 use nohash_hasher::BuildNoHashHasher;

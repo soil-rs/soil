@@ -60,8 +60,10 @@ pub mod pallet {
 pub type BlockNumber = u32;
 pub type Nonce = u64;
 pub type AccountId = u64;
-pub type Header = subsoil::runtime::generic::Header<BlockNumber, subsoil::runtime::traits::BlakeTwo256>;
-pub type UncheckedExtrinsic = subsoil::runtime::generic::UncheckedExtrinsic<u32, RuntimeCall, (), ()>;
+pub type Header =
+	subsoil::runtime::generic::Header<BlockNumber, subsoil::runtime::traits::BlakeTwo256>;
+pub type UncheckedExtrinsic =
+	subsoil::runtime::generic::UncheckedExtrinsic<u32, RuntimeCall, (), ()>;
 pub type Block = subsoil::runtime::generic::Block<Header, UncheckedExtrinsic>;
 
 #[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]

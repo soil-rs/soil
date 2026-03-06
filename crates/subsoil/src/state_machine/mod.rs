@@ -160,9 +160,6 @@ mod execution {
 	use super::backend::AsTrieBackend;
 
 	use super::*;
-	use codec::Codec;
-	use hash_db::Hasher;
-	use smallvec::SmallVec;
 	use crate::core::{
 		hexdisplay::HexDisplay,
 		storage::{ChildInfo, ChildType, PrefixedStorageKey},
@@ -170,6 +167,9 @@ mod execution {
 	};
 	use crate::externalities::Extensions;
 	use crate::trie::PrefixedMemoryDB;
+	use codec::Codec;
+	use hash_db::Hasher;
+	use smallvec::SmallVec;
 	use std::collections::{HashMap, HashSet};
 
 	pub(crate) type CallResult<E> = Result<Vec<u8>, E>;
@@ -1090,10 +1090,8 @@ mod execution {
 
 #[cfg(test)]
 mod tests {
-	use super::{backend::AsTrieBackend, ext::Ext, *};
 	use self::{execution::CallResult, in_memory_backend::new_in_mem};
-	use assert_matches::assert_matches;
-	use codec::Encode;
+	use super::{backend::AsTrieBackend, ext::Ext, *};
 	use crate::core::{
 		storage::{ChildInfo, StateVersion},
 		traits::{CallContext, CodeExecutor, Externalities, RuntimeCode},
@@ -1105,6 +1103,8 @@ mod tests {
 		trie_types::{TrieDBMutBuilderV0, TrieDBMutBuilderV1},
 		KeySpacedDBMut, PrefixedMemoryDB,
 	};
+	use assert_matches::assert_matches;
+	use codec::Encode;
 	use std::collections::{BTreeMap, HashMap};
 
 	#[derive(Clone)]

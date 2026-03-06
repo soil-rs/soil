@@ -20,17 +20,17 @@
 use super::{ConfigOp, Event, *};
 use crate::{asset, ledger::StakingLedgerInspect};
 use mock::*;
+use soil_staking::{
+	offence::{OffenceDetails, OnOffenceHandler},
+	SessionIndex, StakingAccount,
+};
 use subsoil::assert_eq_error_rate;
+use subsoil::assert_eq_uvec;
 use subsoil::runtime::{
 	bounded_vec,
 	traits::{BadOrigin, Dispatchable},
 	Perbill, Percent, Perquintill, Rounding, TokenError,
 };
-use soil_staking::{
-	offence::{OffenceDetails, OnOffenceHandler},
-	SessionIndex, StakingAccount,
-};
-use subsoil::assert_eq_uvec;
 use topsoil_balances::Error as BalancesError;
 use topsoil_election_provider_support::{
 	bounds::{DataProviderBounds, ElectionBoundsBuilder},

@@ -29,19 +29,21 @@ use futures::{
 use log::{debug, error, info, log_enabled, trace, warn, Level};
 use prometheus_endpoint::Registry as PrometheusRegistry;
 use soil_client::block_builder::{BlockBuilderApi, BlockBuilderBuilder};
-use subsoil::api::{ApiExt, CallApiAt, ProvideRuntimeApi};
-use soil_client::blockchain::{ApplyExtrinsicFailed::Validity, Error::ApplyExtrinsicFailed, HeaderBackend};
+use soil_client::blockchain::{
+	ApplyExtrinsicFailed::Validity, Error::ApplyExtrinsicFailed, HeaderBackend,
+};
 use soil_client::consensus::{Proposal, ProposeArgs};
+use soil_client::transaction_pool::{InPoolTransaction, TransactionPool, TxInvalidityReportMap};
+use soil_proposer_metrics::{EndProposingReason, MetricsLink as PrometheusMetrics};
+use soil_telemetry::{telemetry, TelemetryHandle, CONSENSUS_INFO};
+use std::{pin::Pin, sync::Arc, time};
+use subsoil::api::{ApiExt, CallApiAt, ProvideRuntimeApi};
 use subsoil::core::traits::SpawnNamed;
 use subsoil::inherents::InherentData;
-use soil_proposer_metrics::{EndProposingReason, MetricsLink as PrometheusMetrics};
 use subsoil::runtime::{
 	traits::{BlakeTwo256, Block as BlockT, Hash as HashT, Header as HeaderT},
 	ExtrinsicInclusionMode, Percent, SaturatedConversion,
 };
-use soil_telemetry::{telemetry, TelemetryHandle, CONSENSUS_INFO};
-use soil_client::transaction_pool::{InPoolTransaction, TransactionPool, TxInvalidityReportMap};
-use std::{pin::Pin, sync::Arc, time};
 
 /// Default block size limit in bytes used by [`Proposer`].
 ///
@@ -583,12 +585,12 @@ mod tests {
 	use futures::executor::block_on;
 	use parking_lot::Mutex;
 	use sc_transaction_pool::BasicPool;
-	use subsoil::api::Core;
 	use soil_client::blockchain::HeaderBackend;
 	use soil_client::client_api::{Backend, TrieCacheContext};
 	use soil_client::consensus::{BlockOrigin, Environment};
-	use subsoil::runtime::{generic::BlockId, traits::NumberFor, Perbill};
 	use soil_client::transaction_pool::{ChainEvent, MaintainedTransactionPool, TransactionSource};
+	use subsoil::api::Core;
+	use subsoil::runtime::{generic::BlockId, traits::NumberFor, Perbill};
 	use substrate_test_runtime_client::{
 		prelude::*,
 		runtime::{Block as TestBlock, Extrinsic, ExtrinsicBuilder, Transfer},

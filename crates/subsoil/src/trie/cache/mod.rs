@@ -857,8 +857,8 @@ impl<'a, H: Hasher> trie_db::TrieCache<NodeCodec<H>> for TrieCache<'a, H> {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use rand::{thread_rng, Rng};
 	use crate::core::H256;
+	use rand::{thread_rng, Rng};
 	use trie_db::{Bytes, Trie, TrieDBBuilder, TrieDBMutBuilder, TrieHash, TrieMut};
 
 	type MemoryDB = super::super::MemoryDB<crate::core::Blake2Hasher>;

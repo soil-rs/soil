@@ -51,7 +51,7 @@ extern crate alloc;
 use alloc::{collections::btree_set::BTreeSet, vec::Vec};
 pub use pallet::*;
 use topsoil::{
-	deps::{subsoil::core::OpaquePeerId as PeerId, io},
+	deps::{io, subsoil::core::OpaquePeerId as PeerId},
 	prelude::*,
 };
 pub use weights::WeightInfo;

@@ -15,11 +15,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+use crate::application_crypto::RuntimeAppPublic;
 use alloc::{vec, vec::Vec};
 use codec::{Decode, DecodeWithMemTracking, Encode, Error, Input};
 use core::cmp;
 use scale_info::TypeInfo;
-use crate::application_crypto::RuntimeAppPublic;
 
 use super::{BeefyAuthorityId, Payload, ValidatorSet, ValidatorSetId};
 
@@ -334,9 +334,9 @@ mod tests {
 
 	use super::*;
 	use crate::consensus::beefy::{ecdsa_crypto::Signature as EcdsaSignature, known_payloads};
-	use codec::Decode;
 	use crate::core::Pair;
 	use crate::crypto_hashing::keccak_256;
+	use codec::Decode;
 
 	#[cfg(feature = "bls-experimental")]
 	use crate::consensus::beefy::bls_crypto::Signature as BlsSignature;

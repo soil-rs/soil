@@ -26,7 +26,6 @@
 //! - Use [`StatementHandlerPrototype::build`] then [`StatementHandler::run`] to obtain a
 //! `Future` that processes statements.
 
-
 use crate::config::*;
 
 use codec::{Compact, Decode, Encode, MaxEncodedLen};
@@ -56,7 +55,6 @@ use soil_network::{
 };
 use soil_network_sync::{SyncEvent, SyncEventStream};
 use soil_network_types::PeerId;
-use subsoil::runtime::traits::Block as BlockT;
 use soil_statement_store::{
 	FilterDecision, Hash, Statement, StatementSource, StatementStore, SubmitResult,
 };
@@ -68,6 +66,7 @@ use std::{
 	sync::Arc,
 	time::Instant,
 };
+use subsoil::runtime::traits::Block as BlockT;
 use tokio::time::timeout;
 pub mod config;
 

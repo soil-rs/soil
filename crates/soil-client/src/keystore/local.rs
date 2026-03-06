@@ -19,12 +19,6 @@
 //! Local keystore implementation
 
 use parking_lot::RwLock;
-use subsoil::application_crypto::{AppCrypto, AppPair, IsWrappedBy};
-use subsoil::core::{
-	crypto::{ByteArray, ExposeSecret, KeyTypeId, Pair as CorePair, SecretString, VrfSecret},
-	ecdsa, ed25519, sr25519,
-};
-use subsoil::keystore::{Error as TraitError, Keystore, KeystorePtr};
 use std::{
 	collections::HashMap,
 	fs::{self, File},
@@ -32,6 +26,12 @@ use std::{
 	path::PathBuf,
 	sync::Arc,
 };
+use subsoil::application_crypto::{AppCrypto, AppPair, IsWrappedBy};
+use subsoil::core::{
+	crypto::{ByteArray, ExposeSecret, KeyTypeId, Pair as CorePair, SecretString, VrfSecret},
+	ecdsa, ed25519, sr25519,
+};
+use subsoil::keystore::{Error as TraitError, Keystore, KeystorePtr};
 
 subsoil::keystore::bandersnatch_experimental_enabled! {
 use subsoil::core::bandersnatch;
@@ -652,9 +652,9 @@ impl KeystoreInner {
 #[cfg(test)]
 mod tests {
 	use super::*;
+	use std::{fs, str::FromStr};
 	use subsoil::application_crypto::{ed25519, sr25519, AppPublic};
 	use subsoil::core::{crypto::Ss58Codec, testing::SR25519, Pair};
-	use std::{fs, str::FromStr};
 	use tempfile::TempDir;
 
 	const TEST_KEY_TYPE: KeyTypeId = KeyTypeId(*b"test");

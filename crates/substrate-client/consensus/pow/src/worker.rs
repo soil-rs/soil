@@ -26,11 +26,6 @@ use parking_lot::Mutex;
 use sc_consensus::{BlockImportParams, BoxBlockImport, StateAction, StorageChanges};
 use soil_client::client_api::ImportNotifications;
 use soil_client::consensus::{BlockOrigin, Proposal};
-use subsoil::runtime::{
-	generic::BlockId,
-	traits::{Block as BlockT, Header as HeaderT},
-	DigestItem,
-};
 use std::{
 	pin::Pin,
 	sync::{
@@ -38,6 +33,11 @@ use std::{
 		Arc,
 	},
 	time::Duration,
+};
+use subsoil::runtime::{
+	generic::BlockId,
+	traits::{Block as BlockT, Header as HeaderT},
+	DigestItem,
 };
 
 use crate::{PowAlgorithm, PowIntermediate, Seal, INTERMEDIATE_KEY, LOG_TARGET, POW_ENGINE_ID};

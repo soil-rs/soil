@@ -17,11 +17,11 @@
 
 use super::*;
 
+use storage::StorageDoubleMap;
 use subsoil::runtime::{
 	traits::{CheckedAdd, CheckedSub, Zero},
 	ArithmeticError,
 };
-use storage::StorageDoubleMap;
 use topsoil_assets::BalanceOnHold;
 use topsoil_support::traits::{
 	fungibles::{Dust, Inspect, InspectHold, MutateHold, Unbalanced, UnbalancedHold},

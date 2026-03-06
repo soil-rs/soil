@@ -17,8 +17,6 @@
 
 //! The block builder runtime api.
 
-
-
 #[cfg(feature = "std")]
 mod client_side;
 

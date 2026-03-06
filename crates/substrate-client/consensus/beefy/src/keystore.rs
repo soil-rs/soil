@@ -20,8 +20,8 @@ use log::warn;
 
 use subsoil::application_crypto::{key_types::BEEFY as BEEFY_KEY_TYPE, RuntimeAppPublic};
 
-use subsoil::keystore::KeystorePtr;
 use std::marker::PhantomData;
+use subsoil::keystore::KeystorePtr;
 
 use subsoil::consensus::beefy::{AuthorityIdBound, BeefyAuthorityId};
 

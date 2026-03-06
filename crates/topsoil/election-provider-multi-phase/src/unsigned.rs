@@ -650,7 +650,9 @@ impl<T: MinerConfig> Miner<T> {
 	pub fn trim_assignments_length(
 		max_allowed_length: u32,
 		assignments: &mut Vec<IndexAssignmentOf<T>>,
-		encoded_size_of: impl Fn(&[IndexAssignmentOf<T>]) -> Result<usize, subsoil::npos_elections::Error>,
+		encoded_size_of: impl Fn(
+			&[IndexAssignmentOf<T>],
+		) -> Result<usize, subsoil::npos_elections::Error>,
 	) -> Result<usize, MinerError> {
 		// Perform a binary search for the max subset of which can fit into the allowed
 		// length. Having discovered that, we can truncate efficiently.

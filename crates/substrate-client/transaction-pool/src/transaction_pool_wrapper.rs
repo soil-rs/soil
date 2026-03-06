@@ -25,13 +25,13 @@ use crate::{
 	ChainApi, FullChainApi, ReadyIteratorFor,
 };
 use async_trait::async_trait;
-use subsoil::runtime::traits::Block as BlockT;
 use soil_client::transaction_pool::{
 	ChainEvent, ImportNotificationStream, LocalTransactionFor, LocalTransactionPool,
 	MaintainedTransactionPool, PoolStatus, ReadyTransactions, TransactionFor, TransactionPool,
 	TransactionSource, TransactionStatusStreamFor, TxHash, TxInvalidityReportMap,
 };
 use std::{collections::HashMap, pin::Pin, sync::Arc};
+use subsoil::runtime::traits::Block as BlockT;
 
 /// The wrapper for actual object providing implementation of TransactionPool.
 ///

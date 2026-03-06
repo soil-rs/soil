@@ -43,12 +43,12 @@ use futures::{future::BoxFuture, pin_mut, prelude::*};
 use libp2p::PeerId;
 use log::trace;
 use parking_lot::Mutex;
-use soil_client::block_builder::{BlockBuilder, BlockBuilderBuilder};
 use sc_consensus::{
 	BasicQueue, BlockCheckParams, BlockImport, BlockImportParams, BoxJustificationImport,
 	ForkChoiceStrategy, ImportQueue, ImportResult, JustificationImport, JustificationSyncLink,
 	LongestChain, Verifier,
 };
+use soil_client::block_builder::{BlockBuilder, BlockBuilderBuilder};
 use soil_client::blockchain::{
 	Backend as BlockchainBackend, HeaderBackend, Info as BlockchainInfo, Result as ClientResult,
 };
@@ -61,7 +61,6 @@ use soil_client::consensus::{
 	block_validation::{BlockAnnounceValidator, DefaultBlockAnnounceValidator},
 	BlockOrigin, Error as ConsensusError, SyncOracle,
 };
-use subsoil::core::H256;
 use soil_network::{
 	config::{
 		FullNetworkConfiguration, MultiaddrWithPeerId, NetworkConfiguration, NonDefaultSetConfig,
@@ -89,13 +88,14 @@ use soil_network_sync::{
 	warp_request_handler,
 };
 use soil_network_types::{build_multiaddr, multiaddr::Multiaddr};
+use soil_service::client::Client;
+use subsoil::core::H256;
 use subsoil::runtime::{
 	codec::{Decode, Encode},
 	generic::BlockId,
 	traits::{Block as BlockT, Header as HeaderT, NumberFor, Zero},
 	Digest, Justification, Justifications,
 };
-use soil_service::client::Client;
 use substrate_test_runtime_client::Sr25519Keyring;
 pub use substrate_test_runtime_client::{
 	runtime::{Block, ExtrinsicBuilder, Hash, Header, Transfer},

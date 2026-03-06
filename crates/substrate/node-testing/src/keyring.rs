@@ -22,9 +22,9 @@ use codec::Encode;
 use kitchensink_runtime::{CheckedExtrinsic, SessionKeys, TxExtension, UncheckedExtrinsic};
 use node_primitives::{AccountId, Balance, Nonce};
 use subsoil::core::{crypto::get_public_from_string_or_panic, ecdsa, ed25519, sr25519};
-use subsoil_crypto_hashing::blake2_256;
 use subsoil::keyring::Sr25519Keyring;
 use subsoil::runtime::generic::{self, Era, ExtrinsicFormat};
+use subsoil_crypto_hashing::blake2_256;
 
 /// Alice's account id.
 pub fn alice() -> AccountId {

@@ -25,13 +25,13 @@ use log::{debug, error, trace, warn};
 use soil_client::consensus::block_validation::Validation;
 use soil_network_common::sync::message::BlockAnnounce;
 use soil_network_types::PeerId;
-use subsoil::runtime::traits::{Block as BlockT, Header, Zero};
 use std::{
 	collections::{hash_map::Entry, HashMap},
 	default::Default,
 	pin::Pin,
 	task::{Context, Poll},
 };
+use subsoil::runtime::traits::{Block as BlockT, Header, Zero};
 
 /// Maximum number of concurrent block announce validations.
 ///
@@ -105,7 +105,9 @@ pub(crate) struct BlockAnnounceValidator<B: BlockT> {
 
 impl<B: BlockT> BlockAnnounceValidator<B> {
 	pub(crate) fn new(
-		validator: Box<dyn soil_client::consensus::block_validation::BlockAnnounceValidator<B> + Send>,
+		validator: Box<
+			dyn soil_client::consensus::block_validation::BlockAnnounceValidator<B> + Send,
+		>,
 	) -> Self {
 		Self {
 			validator,

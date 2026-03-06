@@ -26,6 +26,7 @@ use log::{debug, error, info, warn};
 use sc_offchain::OffchainDb;
 use soil_client::blockchain::CachedHeaderMetadata;
 use soil_client::client_api::{Backend, FinalityNotification};
+use std::{collections::VecDeque, sync::Arc};
 use subsoil::consensus::beefy::MmrRootHash;
 use subsoil::core::offchain::{DbExternalities, StorageKind};
 use subsoil::mmr::{utils, utils::NodesUtils, MmrApi, NodeIndex};
@@ -33,7 +34,6 @@ use subsoil::runtime::{
 	traits::{Block, Header, NumberFor, One},
 	Saturating,
 };
-use std::{collections::VecDeque, sync::Arc};
 
 /// `OffchainMMR` exposes MMR offchain canonicalization and pruning logic.
 pub struct OffchainMmr<B: Block, BE: Backend<B>, C> {
@@ -281,8 +281,8 @@ where
 mod tests {
 	use crate::test_utils::{run_test_with_mmr_gadget, run_test_with_mmr_gadget_pre_post};
 	use parking_lot::Mutex;
-	use subsoil::runtime::generic::BlockId;
 	use std::{sync::Arc, time::Duration};
+	use subsoil::runtime::generic::BlockId;
 
 	#[test]
 	fn canonicalize_and_prune_works_correctly() {

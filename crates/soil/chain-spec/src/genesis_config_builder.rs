@@ -20,16 +20,16 @@
 
 use codec::{Decode, Encode};
 use serde_json::{from_slice, Value};
-use subsoil::core::{
-	storage::Storage,
-	traits::{CallContext, CodeExecutor, Externalities, FetchRuntimeCode, RuntimeCode},
-};
 pub use soil_client::executor::wasm_interface::HostFunctions;
 use soil_client::executor::{error::Result, WasmExecutor};
 use soil_genesis_builder::{PresetId, Result as BuildResult};
 pub use soil_genesis_builder::{DEV_RUNTIME_PRESET, LOCAL_TESTNET_RUNTIME_PRESET};
-use subsoil::state_machine::BasicExternalities;
 use std::borrow::Cow;
+use subsoil::core::{
+	storage::Storage,
+	traits::{CallContext, CodeExecutor, Externalities, FetchRuntimeCode, RuntimeCode},
+};
+use subsoil::state_machine::BasicExternalities;
 
 /// A utility that facilitates calling the GenesisBuilder API from the runtime wasm code blob.
 ///
@@ -177,8 +177,8 @@ where
 mod tests {
 	use super::*;
 	use serde_json::{from_str, json};
-	pub use subsoil::consensus::babe::{AllowedSlots, BabeEpochConfiguration};
 	pub use soil_genesis_builder::PresetId;
+	pub use subsoil::consensus::babe::{AllowedSlots, BabeEpochConfiguration};
 
 	#[test]
 	fn list_presets_works() {

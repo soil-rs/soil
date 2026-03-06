@@ -43,16 +43,16 @@ use sc_consensus_grandpa::{
 	FinalityProofProvider, GrandpaJustificationStream, SharedAuthoritySet, SharedVoterState,
 };
 pub use sc_rpc::SubscriptionTaskExecutor;
-use subsoil::api::ProvideRuntimeApi;
-use subsoil::application_crypto::RuntimeAppPublic;
-use subsoil::block_builder::BlockBuilder;
 use soil_client::blockchain::{Error as BlockChainError, HeaderBackend, HeaderMetadata};
 use soil_client::client_api::AuxStore;
 use soil_client::consensus::SelectChain;
+use soil_client::transaction_pool::TransactionPool;
+use subsoil::api::ProvideRuntimeApi;
+use subsoil::application_crypto::RuntimeAppPublic;
+use subsoil::block_builder::BlockBuilder;
 use subsoil::consensus::babe::BabeApi;
 use subsoil::consensus::beefy::AuthorityIdBound;
 use subsoil::keystore::KeystorePtr;
-use soil_client::transaction_pool::TransactionPool;
 
 /// Extra dependencies for BABE.
 pub struct BabeDeps {
@@ -154,7 +154,8 @@ where
 	P: TransactionPool + 'static,
 	SC: SelectChain<Block> + 'static,
 	B: soil_client::client_api::Backend<Block> + Send + Sync + 'static,
-	B::State: soil_client::client_api::backend::StateBackend<subsoil::runtime::traits::HashingFor<Block>>,
+	B::State:
+		soil_client::client_api::backend::StateBackend<subsoil::runtime::traits::HashingFor<Block>>,
 	AuthorityId: AuthorityIdBound,
 	<AuthorityId as RuntimeAppPublic>::Signature: Send + Sync,
 {

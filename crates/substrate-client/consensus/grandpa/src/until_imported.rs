@@ -37,9 +37,9 @@ use log::{debug, warn};
 use parking_lot::Mutex;
 use prometheus_endpoint::{register, Gauge, PrometheusError, Registry, U64};
 use soil_client::client_api::{BlockImportNotification, ImportNotifications};
+use soil_client::utils::mpsc::TracingUnboundedReceiver;
 use subsoil::consensus::grandpa::AuthorityId;
 use subsoil::runtime::traits::{Block as BlockT, Header as HeaderT, NumberFor};
-use soil_client::utils::mpsc::TracingUnboundedReceiver;
 
 use std::{
 	collections::{HashMap, VecDeque},
@@ -567,8 +567,8 @@ mod tests {
 	use futures_timer::Delay;
 	use soil_client::client_api::BlockImportNotification;
 	use soil_client::consensus::BlockOrigin;
-	use subsoil::core::crypto::UncheckedFrom;
 	use soil_client::utils::mpsc::{tracing_unbounded, TracingUnboundedSender};
+	use subsoil::core::crypto::UncheckedFrom;
 	use substrate_test_runtime_client::runtime::{Block, Hash, Header};
 
 	#[derive(Clone)]

@@ -18,9 +18,9 @@
 
 //! Errors that can occur during the service operation.
 
-use soil_client::keystore;
 use soil_client::blockchain;
 use soil_client::consensus;
+use soil_client::keystore;
 
 /// Service Result typedef.
 pub type Result<T> = std::result::Result<T, Error>;

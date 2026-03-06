@@ -48,7 +48,9 @@ use parking_lot::Mutex;
 #[cfg(feature = "std")]
 use serde::Serialize;
 #[cfg(feature = "std")]
-use soil_client::utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
+use soil_client::utils::mpsc::{
+	tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender,
+};
 use std::{
 	collections::{
 		hash_map::Entry::{Occupied, Vacant},

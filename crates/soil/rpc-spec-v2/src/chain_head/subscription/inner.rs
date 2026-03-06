@@ -19,12 +19,12 @@
 use futures::channel::oneshot;
 use parking_lot::Mutex;
 use soil_client::client_api::Backend;
-use subsoil::runtime::traits::Block as BlockT;
 use std::{
 	collections::{hash_map::Entry, HashMap, HashSet},
 	sync::Arc,
 	time::{Duration, Instant},
 };
+use subsoil::runtime::traits::Block as BlockT;
 
 use crate::chain_head::{
 	subscription::SubscriptionManagementError, FollowEventReceiver, FollowEventSender,
@@ -785,8 +785,8 @@ mod tests {
 	use jsonrpsee::ConnectionId;
 	use soil_client::block_builder::BlockBuilderBuilder;
 	use soil_client::consensus::BlockOrigin;
-	use subsoil::core::{testing::TaskExecutor, H256};
 	use soil_service::client::new_with_backend;
+	use subsoil::core::{testing::TaskExecutor, H256};
 	use substrate_test_runtime_client::{
 		prelude::*,
 		runtime::{Block, RuntimeApi},

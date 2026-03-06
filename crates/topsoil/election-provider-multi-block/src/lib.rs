@@ -1615,8 +1615,10 @@ impl<T: Config> Pallet<T> {
 		let ref_time_ratio =
 			subsoil::runtime::Percent::from_rational(op_weight.ref_time(), limit_weight.ref_time());
 		let proof_size_kb = op_weight.proof_size() / WEIGHT_PROOF_SIZE_PER_KB;
-		let proof_size_ratio =
-			subsoil::runtime::Percent::from_rational(op_weight.proof_size(), limit_weight.proof_size());
+		let proof_size_ratio = subsoil::runtime::Percent::from_rational(
+			op_weight.proof_size(),
+			limit_weight.proof_size(),
+		);
 		let limit_ms = limit_weight.ref_time() / WEIGHT_REF_TIME_PER_MILLIS;
 		let limit_kb = limit_weight.proof_size() / WEIGHT_PROOF_SIZE_PER_KB;
 		log::info!(

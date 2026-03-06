@@ -496,7 +496,10 @@ impl OnRuntimeUpgrade for CustomOnRuntimeUpgrade {
 
 	#[cfg(feature = "try-runtime")]
 	fn post_upgrade(_state: Vec<u8>) -> Result<(), TryRuntimeError> {
-		assert_eq!(&subsoil::io::storage::get(TEST_KEY_2).unwrap()[..], *b"try_runtime_upgrade_works");
+		assert_eq!(
+			&subsoil::io::storage::get(TEST_KEY_2).unwrap()[..],
+			*b"try_runtime_upgrade_works"
+		);
 		Ok(())
 	}
 }
@@ -1354,7 +1357,10 @@ fn try_runtime_upgrade_works() {
 		ExecutiveWithoutMigrations::try_runtime_upgrade(UpgradeCheckSelect::All).unwrap();
 
 		// Make sure the test storages were set
-		assert_eq!(&subsoil::io::storage::get(TEST_KEY_2).unwrap()[..], *b"try_runtime_upgrade_works");
+		assert_eq!(
+			&subsoil::io::storage::get(TEST_KEY_2).unwrap()[..],
+			*b"try_runtime_upgrade_works"
+		);
 	});
 }
 

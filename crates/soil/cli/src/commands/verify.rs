@@ -20,8 +20,8 @@
 
 use crate::{error, params::MessageParams, utils, with_crypto_scheme, CryptoSchemeFlag};
 use clap::Parser;
-use subsoil::core::crypto::{ByteArray, Ss58Codec};
 use std::io::BufRead;
+use subsoil::core::crypto::{ByteArray, Ss58Codec};
 
 /// The `verify` command
 #[derive(Debug, Clone, Parser)]

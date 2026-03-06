@@ -28,7 +28,6 @@ use futures::{
 	task::{Context, Poll},
 };
 use log::error;
-use subsoil::arithmetic::traits::SaturatedConversion;
 use std::{
 	backtrace::Backtrace,
 	pin::Pin,
@@ -37,6 +36,7 @@ use std::{
 		Arc,
 	},
 };
+use subsoil::arithmetic::traits::SaturatedConversion;
 
 /// Wrapper Type around [`async_channel::Sender`] that increases the global
 /// measure when a message is added.

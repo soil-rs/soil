@@ -81,7 +81,6 @@ use libp2p::{
 };
 use linked_hash_set::LinkedHashSet;
 use log::{debug, error, info, trace, warn};
-use subsoil::core::hexdisplay::HexDisplay;
 use std::{
 	cmp,
 	collections::{hash_map::Entry, HashMap, HashSet, VecDeque},
@@ -89,6 +88,7 @@ use std::{
 	task::{Context, Poll},
 	time::{Duration, Instant},
 };
+use subsoil::core::hexdisplay::HexDisplay;
 
 /// Logging target for the file.
 const LOG_TARGET: &str = "sub-libp2p::discovery";

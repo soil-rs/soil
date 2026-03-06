@@ -22,10 +22,10 @@ use super::{
 	BabeEpochConfiguration, Randomness, Slot, BABE_ENGINE_ID,
 };
 
-#[cfg(not(feature = "std"))]
-use alloc::vec::Vec;
 use crate::core::sr25519::vrf::VrfSignature;
 use crate::runtime::DigestItem;
+#[cfg(not(feature = "std"))]
+use alloc::vec::Vec;
 
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;

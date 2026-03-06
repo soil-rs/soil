@@ -25,8 +25,8 @@ use crate::application_crypto::{AppCrypto, AppPair, RuntimeAppPublic, Wraps};
 use crate::core::{ecdsa, Pair};
 use crate::runtime::traits::{BlockNumber, Header as HeaderT};
 
-use codec::Encode;
 use crate::crypto_hashing::keccak_256;
+use codec::Encode;
 use std::{collections::HashMap, marker::PhantomData, sync::LazyLock};
 use strum::IntoEnumIterator;
 

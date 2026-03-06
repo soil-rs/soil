@@ -38,6 +38,16 @@ use jsonrpsee::core::params::ArrayParams;
 use log::*;
 use parallel::{run_workers, ProcessResult};
 use serde::de::DeserializeOwned;
+use std::{
+	collections::{BTreeSet, VecDeque},
+	future::Future,
+	ops::{Deref, DerefMut},
+	sync::{
+		atomic::{AtomicUsize, Ordering},
+		Arc, Mutex,
+	},
+	time::Duration,
+};
 use subsoil::core::{
 	hexdisplay::HexDisplay,
 	storage::{
@@ -50,16 +60,6 @@ use subsoil::runtime::{
 	StateVersion,
 };
 use subsoil::state_machine::TestExternalities;
-use std::{
-	collections::{BTreeSet, VecDeque},
-	future::Future,
-	ops::{Deref, DerefMut},
-	sync::{
-		atomic::{AtomicUsize, Ordering},
-		Arc, Mutex,
-	},
-	time::Duration,
-};
 use substrate_rpc_client::{rpc_params, BatchRequestBuilder, ChainApi, ClientT, StateApi};
 
 use crate::key_range::{initialize_work_queue, subdivide_remaining_range};
@@ -1152,8 +1152,8 @@ mod tests {
 			.await
 			.expect("Can't read state snapshot file")
 			.execute_with(|| {
-				let key =
-					subsoil::io::storage::next_key(&[]).expect("some key must exist in the snapshot");
+				let key = subsoil::io::storage::next_key(&[])
+					.expect("some key must exist in the snapshot");
 				assert!(subsoil::io::storage::get(&key).is_some());
 				key
 			});

@@ -17,6 +17,7 @@
 
 use codec::{Decode, DecodeWithMemTracking, Encode};
 use scale_info::TypeInfo;
+use soil_staking::{EraIndex, SessionIndex};
 use subsoil::core::{crypto::KeyTypeId, ConstBool, ConstU128};
 use subsoil::runtime::{
 	app_crypto::ecdsa::Public,
@@ -25,7 +26,6 @@ use subsoil::runtime::{
 	traits::{Header as HeaderT, OpaqueKeys},
 	BuildStorage, Perbill,
 };
-use soil_staking::{EraIndex, SessionIndex};
 use subsoil::state_machine::BasicExternalities;
 use topsoil_election_provider_support::{
 	bounds::{ElectionBounds, ElectionBoundsBuilder},

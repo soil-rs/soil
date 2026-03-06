@@ -21,9 +21,9 @@
 //! implement `Encode`/`Decode`.
 
 use super::{ProofToHashes, ProvingTrie, TrieError};
+use crate::binary_merkle_tree::{merkle_proof, merkle_root, MerkleProof};
 use crate::runtime::{Decode, DispatchError, Encode};
 use alloc::{collections::BTreeMap, vec::Vec};
-use crate::binary_merkle_tree::{merkle_proof, merkle_root, MerkleProof};
 use codec::MaxEncodedLen;
 
 /// A helper structure for building a basic base-2 merkle trie and creating compact proofs for that
@@ -159,8 +159,8 @@ where
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use crate::runtime::traits::BlakeTwo256;
 	use crate::core::H256;
+	use crate::runtime::traits::BlakeTwo256;
 	use ::std::collections::BTreeMap;
 
 	// A trie which simulates a trie of accounts (u32) and balances (u128).

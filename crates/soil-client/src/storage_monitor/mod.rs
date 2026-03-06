@@ -16,14 +16,13 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-
 use clap::Args;
-use subsoil::core::traits::SpawnEssentialNamed;
 use std::{
 	io,
 	path::{Path, PathBuf},
 	time::Duration,
 };
+use subsoil::core::traits::SpawnEssentialNamed;
 
 const LOG_TARGET: &str = "storage-monitor";
 

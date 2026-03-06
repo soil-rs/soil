@@ -18,8 +18,8 @@
 
 use super::*;
 
-use subsoil::runtime::testing::{Block as RawBlock, TestXt, H256 as Hash};
 use std::iter::{empty, Empty};
+use subsoil::runtime::testing::{Block as RawBlock, TestXt, H256 as Hash};
 
 type TestChangeSet = (
 	Vec<(StorageKey, Option<StorageData>)>,

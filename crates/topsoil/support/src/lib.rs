@@ -63,13 +63,12 @@ pub mod __private {
 	pub use scale_info;
 	pub use serde;
 	pub use serde_json;
+	pub use subsoil;
 	pub use subsoil::core::{Get, OpaqueMetadata, Void};
-	pub use subsoil_derive;
 	pub use subsoil::inherents;
 	#[cfg(feature = "std")]
 	pub use subsoil::io::TestExternalities;
 	pub use subsoil::io::{self, hashing, storage::root as storage_root};
-	pub use subsoil;
 	pub use subsoil::metadata_ir;
 	#[cfg(feature = "std")]
 	pub use subsoil::runtime::{bounded_btree_map, bounded_vec};
@@ -81,6 +80,7 @@ pub mod __private {
 	pub use subsoil::state_machine::BasicExternalities;
 	pub use subsoil::std;
 	pub use subsoil::tracing;
+	pub use subsoil_derive;
 	pub use tt_call::*;
 }
 

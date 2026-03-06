@@ -22,11 +22,11 @@
 use crate as offences;
 use crate::Config;
 use codec::Encode;
-use subsoil::runtime::{traits::IdentityLookup, BuildStorage, Perbill};
 use soil_staking::{
 	offence::{self, Kind, OffenceDetails},
 	SessionIndex,
 };
+use subsoil::runtime::{traits::IdentityLookup, BuildStorage, Perbill};
 use topsoil_support::{
 	derive_impl, parameter_types,
 	traits::ConstU32,

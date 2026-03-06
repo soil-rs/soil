@@ -38,10 +38,10 @@ pub mod wasmtime;
 mod executor;
 mod wasm_runtime;
 
-pub use codec::Codec;
 #[allow(deprecated)]
 pub use self::executor::NativeElseWasmExecutor;
 pub use self::executor::{with_externalities_safe, NativeExecutionDispatch, WasmExecutor};
+pub use codec::Codec;
 #[doc(hidden)]
 pub use subsoil::core::traits::Externalities;
 pub use subsoil::version::{NativeVersion, RuntimeVersion};
@@ -50,11 +50,11 @@ pub use subsoil::wasm_interface;
 pub use subsoil::wasm_interface::HostFunctions;
 pub use wasm_runtime::{read_embedded_version, WasmExecutionMethod};
 
+pub use self::wasmtime::InstantiationStrategy as WasmtimeInstantiationStrategy;
 pub use common::{
 	error,
 	wasm_runtime::{HeapAllocStrategy, DEFAULT_HEAP_ALLOC_PAGES, DEFAULT_HEAP_ALLOC_STRATEGY},
 };
-pub use self::wasmtime::InstantiationStrategy as WasmtimeInstantiationStrategy;
 
 /// Extracts the runtime version of a given runtime code.
 pub trait RuntimeVersionOf {
@@ -70,8 +70,8 @@ pub trait RuntimeVersionOf {
 mod tests {
 	use super::*;
 	use common::runtime_blob::RuntimeBlob;
-	use subsoil::io::TestExternalities;
 	use soil_runtime_test::wasm_binary_unwrap;
+	use subsoil::io::TestExternalities;
 
 	#[test]
 	fn call_in_interpreted_wasm_works() {

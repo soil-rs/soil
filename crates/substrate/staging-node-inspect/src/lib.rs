@@ -30,12 +30,12 @@ pub mod command;
 use codec::{Decode, Encode};
 use soil_client::blockchain::HeaderBackend;
 use soil_client::client_api::BlockBackend;
+use std::{fmt, fmt::Debug, marker::PhantomData, str::FromStr};
 use subsoil::core::hexdisplay::HexDisplay;
 use subsoil::runtime::{
 	generic::BlockId,
 	traits::{Block, Hash, HashingFor, NumberFor},
 };
-use std::{fmt, fmt::Debug, marker::PhantomData, str::FromStr};
 
 /// A helper type for a generic block input.
 pub type BlockAddressFor<TBlock> =
@@ -97,7 +97,8 @@ pub trait ChainAccess<TBlock: Block>: HeaderBackend<TBlock> + BlockBackend<TBloc
 impl<T, TBlock> ChainAccess<TBlock> for T
 where
 	TBlock: Block,
-	T: soil_client::blockchain::HeaderBackend<TBlock> + soil_client::client_api::BlockBackend<TBlock>,
+	T: soil_client::blockchain::HeaderBackend<TBlock>
+		+ soil_client::client_api::BlockBackend<TBlock>,
 {
 }
 

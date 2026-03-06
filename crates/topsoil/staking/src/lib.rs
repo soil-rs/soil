@@ -312,16 +312,16 @@ extern crate alloc;
 use alloc::{collections::btree_map::BTreeMap, vec, vec::Vec};
 use codec::{Decode, DecodeWithMemTracking, Encode, HasCompact, MaxEncodedLen};
 use scale_info::TypeInfo;
-use subsoil::runtime::{
-	curve::PiecewiseLinear,
-	traits::{AtLeast32BitUnsigned, Convert, StaticLookup, Zero},
-	Debug, Perbill, Perquintill, Rounding, Saturating,
-};
 use soil_staking::{
 	offence::{Offence, OffenceError, OffenceSeverity, ReportOffence},
 	EraIndex, ExposurePage, OnStakingUpdate, Page, PagedExposureMetadata, SessionIndex,
 };
 pub use soil_staking::{Exposure, IndividualExposure, StakerStatus};
+use subsoil::runtime::{
+	curve::PiecewiseLinear,
+	traits::{AtLeast32BitUnsigned, Convert, StaticLookup, Zero},
+	Debug, Perbill, Perquintill, Rounding, Saturating,
+};
 use topsoil_election_provider_support::ElectionProvider;
 use topsoil_support::{
 	defensive, defensive_assert,

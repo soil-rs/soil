@@ -41,7 +41,6 @@
 //! See `RefWindow` for pruning algorithm details. `StateDb` prunes on each canonicalization until
 //! pruning constraints are satisfied.
 
-
 mod noncanonical;
 mod pruning;
 #[cfg(test)]

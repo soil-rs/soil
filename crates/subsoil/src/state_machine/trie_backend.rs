@@ -25,10 +25,6 @@ use super::{
 	Backend, StorageKey, StorageValue,
 };
 
-use codec::Codec;
-#[cfg(feature = "std")]
-use hash_db::HashDB;
-use hash_db::Hasher;
 use crate::core::storage::{ChildInfo, StateVersion};
 #[cfg(feature = "std")]
 use crate::trie::{
@@ -38,6 +34,10 @@ use crate::trie::{
 #[cfg(not(feature = "std"))]
 use crate::trie::{Error, NodeCodec};
 use crate::trie::{MerkleValue, PrefixedMemoryDB, StorageProof, TrieRecorderProvider};
+use codec::Codec;
+#[cfg(feature = "std")]
+use hash_db::HashDB;
+use hash_db::Hasher;
 
 use trie_db::TrieCache as TrieCacheT;
 #[cfg(not(feature = "std"))]
@@ -576,7 +576,6 @@ pub mod tests {
 	use crate::state_machine::{new_in_mem, InMemoryBackend};
 
 	use super::*;
-	use codec::Encode;
 	use crate::core::H256;
 	use crate::runtime::traits::BlakeTwo256;
 	use crate::trie::{
@@ -584,6 +583,7 @@ pub mod tests {
 		trie_types::{TrieDBBuilder, TrieDBMutBuilderV0, TrieDBMutBuilderV1},
 		KeySpacedDBMut, PrefixedMemoryDB, Trie, TrieCache, TrieMut,
 	};
+	use codec::Encode;
 	use std::iter;
 	use trie_db::NodeCodec;
 

@@ -28,13 +28,13 @@ pub mod leaves;
 pub mod notifications;
 pub mod proof_provider;
 
+pub use crate::blockchain;
+pub use crate::blockchain::HeaderBackend;
 pub use backend::*;
 pub use call_executor::*;
 pub use client::*;
 pub use notifications::*;
 pub use proof_provider::*;
-pub use crate::blockchain;
-pub use crate::blockchain::HeaderBackend;
 
 pub use subsoil::state_machine::{CompactProof, StorageProof};
 pub use subsoil::storage::{ChildInfo, PrefixedStorageKey, StorageData, StorageKey};

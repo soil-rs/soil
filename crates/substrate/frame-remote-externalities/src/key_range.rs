@@ -17,11 +17,11 @@
 
 //! Key range management for parallel storage fetching.
 
-use subsoil::core::storage::StorageKey;
 use std::{
 	collections::VecDeque,
 	sync::{Arc, Mutex},
 };
+use subsoil::core::storage::StorageKey;
 
 /// Default page size for fetching keys.
 pub(crate) const DEFAULT_PAGE_SIZE: u32 = 1000;

@@ -19,15 +19,14 @@
 
 #![warn(missing_docs)]
 
-
 pub use mmr_lib;
 
+use crate::runtime::traits;
 #[cfg(not(feature = "std"))]
 use alloc::vec::Vec;
 use codec::{Decode, DecodeWithMemTracking, Encode};
 use core::fmt;
 use scale_info::TypeInfo;
-use crate::runtime::traits;
 
 pub mod utils;
 
@@ -482,9 +481,9 @@ crate::api::decl_runtime_apis! {
 mod tests {
 	use super::*;
 
-	use codec::Decode;
 	use crate::core::H256;
 	use crate::runtime::traits::Keccak256;
+	use codec::Decode;
 
 	pub(crate) fn hex(s: &str) -> H256 {
 		s.parse().unwrap()

@@ -18,13 +18,13 @@
 //! Structs and helpers for distributing a voter's stake among various winners.
 
 use super::{ExtendedBalance, IdentifierT, PerThing128};
-use alloc::vec::Vec;
-#[cfg(feature = "serde")]
-use codec::{Decode, Encode};
 use crate::arithmetic::{
 	traits::{Bounded, Zero},
 	Normalizable, PerThing,
 };
+use alloc::vec::Vec;
+#[cfg(feature = "serde")]
+use codec::{Decode, Encode};
 use core::fmt::Debug;
 
 /// A voter's stake assignment among a set of targets, represented as ratios.

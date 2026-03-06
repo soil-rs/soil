@@ -21,6 +21,7 @@ use std::{
 	vec,
 };
 
+use soil_session::MembershipProof;
 use subsoil::consensus::beefy::{
 	check_double_voting_proof, ecdsa_crypto,
 	known_payloads::MMR_ROOT_ID,
@@ -31,7 +32,6 @@ use subsoil::consensus::beefy::{
 	Payload, ValidatorSet, ValidatorSetId, KEY_TYPE as BEEFY_KEY_TYPE,
 };
 use subsoil::runtime::{DigestItem, Perbill};
-use soil_session::MembershipProof;
 use topsoil_support::{
 	assert_err, assert_ok,
 	dispatch::{DispatchResultWithPostInfo, Pays},

@@ -18,6 +18,11 @@
 //! Read-only version of Externalities.
 
 use super::{Backend, StorageKey, StorageValue};
+use crate::core::{
+	storage::{ChildInfo, StateVersion, TrackedStorageKey},
+	traits::Externalities,
+};
+use crate::externalities::MultiRemovalResults;
 use alloc::{boxed::Box, vec::Vec};
 use codec::Encode;
 use core::{
@@ -25,11 +30,6 @@ use core::{
 	marker::PhantomData,
 };
 use hash_db::Hasher;
-use crate::core::{
-	storage::{ChildInfo, StateVersion, TrackedStorageKey},
-	traits::Externalities,
-};
-use crate::externalities::MultiRemovalResults;
 
 /// Trait for inspecting state in any backend.
 ///

@@ -18,8 +18,8 @@
 //! Generic implementation of an extrinsic that has passed the verification
 //! stage.
 
-use codec::Encode;
 use crate::weights::Weight;
+use codec::Encode;
 
 use crate::runtime::{
 	traits::{

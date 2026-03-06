@@ -21,8 +21,8 @@
 use futures::prelude::*;
 use soil_network::MAX_RESPONSE_SIZE;
 use soil_network_common::ExHashT;
-use subsoil::runtime::traits::Block as BlockT;
 use std::{collections::HashMap, future::Future, pin::Pin, sync::Arc, time};
+use subsoil::runtime::traits::Block as BlockT;
 
 /// Interval at which we propagate transactions;
 pub(crate) const PROPAGATE_TIMEOUT: time::Duration = time::Duration::from_millis(2900);

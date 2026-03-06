@@ -17,6 +17,7 @@
 
 //! Generic implementation of a block header.
 
+use crate::core::U256;
 use crate::runtime::{
 	codec::{Codec, Decode, DecodeWithMemTracking, Encode},
 	generic::Digest,
@@ -25,7 +26,6 @@ use crate::runtime::{
 };
 #[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
-use crate::core::U256;
 
 /// Abstraction over a block header for a substrate chain.
 #[derive(Encode, Decode, DecodeWithMemTracking, PartialEq, Eq, Clone, Debug, TypeInfo)]

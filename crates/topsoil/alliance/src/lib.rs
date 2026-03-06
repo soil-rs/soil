@@ -1173,7 +1173,8 @@ impl<T: Config<I>, I: 'static> Pallet<T, I> {
 	///
 	/// * The set of accounts in `RetiringMembers` storage must be identical to the set of members
 	///   with the `Retiring` role.
-	fn try_state_retiring_members_are_consistent() -> Result<(), subsoil::runtime::TryRuntimeError> {
+	fn try_state_retiring_members_are_consistent() -> Result<(), subsoil::runtime::TryRuntimeError>
+	{
 		let retiring_in_members = Members::<T, I>::get(MemberRole::Retiring);
 		let retiring_keys_count = RetiringMembers::<T, I>::iter_keys().count();
 

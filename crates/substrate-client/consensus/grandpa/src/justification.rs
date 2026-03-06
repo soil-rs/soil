@@ -48,7 +48,9 @@ pub struct GrandpaJustification<Block: BlockT> {
 impl<Block: BlockT> From<subsoil::consensus::grandpa::GrandpaJustification<Block::Header>>
 	for GrandpaJustification<Block>
 {
-	fn from(justification: subsoil::consensus::grandpa::GrandpaJustification<Block::Header>) -> Self {
+	fn from(
+		justification: subsoil::consensus::grandpa::GrandpaJustification<Block::Header>,
+	) -> Self {
 		Self { justification, _block: Default::default() }
 	}
 }
@@ -122,7 +124,8 @@ impl<Block: BlockT> GrandpaJustification<Block> {
 			}
 		}
 
-		Ok(subsoil::consensus::grandpa::GrandpaJustification { round, commit, votes_ancestries }.into())
+		Ok(subsoil::consensus::grandpa::GrandpaJustification { round, commit, votes_ancestries }
+			.into())
 	}
 
 	/// Decode a GRANDPA justification and validate the commit and the votes'

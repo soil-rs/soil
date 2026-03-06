@@ -22,14 +22,14 @@ use codec::Encode;
 use futures::channel::{oneshot, oneshot::Canceled};
 use log::{debug, warn};
 use parking_lot::Mutex;
-use subsoil::consensus::beefy::{AuthorityIdBound, ValidatorSet};
 use soil_network::{
 	request_responses::{IfDisconnected, RequestFailure},
 	NetworkRequest, ProtocolName,
 };
 use soil_network_types::PeerId;
-use subsoil::runtime::traits::{Block, NumberFor};
 use std::{collections::VecDeque, result::Result, sync::Arc};
+use subsoil::consensus::beefy::{AuthorityIdBound, ValidatorSet};
+use subsoil::runtime::traits::{Block, NumberFor};
 
 use crate::{
 	communication::{

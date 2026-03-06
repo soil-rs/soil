@@ -18,12 +18,12 @@
 
 use criterion::{criterion_group, criterion_main, Criterion};
 use sc_statement_store::Store;
-use subsoil::core::Pair;
-use subsoil::runtime::codec::Encode;
 use soil_statement_store::{
 	DecryptionKey, Statement, StatementSource, StatementStore, SubmitResult, Topic,
 };
 use std::sync::Arc;
+use subsoil::core::Pair;
+use subsoil::runtime::codec::Encode;
 
 type Extrinsic = subsoil::runtime::OpaqueExtrinsic;
 type Hash = subsoil::core::H256;
@@ -156,7 +156,10 @@ impl soil_client::blockchain::HeaderBackend<Block> for TestClient {
 			block_gap: None,
 		}
 	}
-	fn status(&self, _hash: Hash) -> soil_client::blockchain::Result<soil_client::blockchain::BlockStatus> {
+	fn status(
+		&self,
+		_hash: Hash,
+	) -> soil_client::blockchain::Result<soil_client::blockchain::BlockStatus> {
 		unimplemented!()
 	}
 	fn number(&self, _hash: Hash) -> soil_client::blockchain::Result<Option<BlockNumber>> {

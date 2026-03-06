@@ -168,10 +168,9 @@ where
 			.map_err(Error::LoadingEpochDataFailed)?;
 
 		let finalized_hash = self.client.info().finalized_hash;
-		let finalized_header = self
-			.client
-			.header(finalized_hash)?
-			.ok_or_else(|| soil_client::blockchain::Error::MissingHeader(finalized_hash.to_string()))?;
+		let finalized_header = self.client.header(finalized_hash)?.ok_or_else(|| {
+			soil_client::blockchain::Error::MissingHeader(finalized_hash.to_string())
+		})?;
 
 		let finalized_block_weight =
 			sc_consensus_babe::aux_schema::load_block_weight(&*self.client, finalized_hash)?

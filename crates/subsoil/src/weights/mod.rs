@@ -20,16 +20,16 @@
 mod weight_meter;
 mod weight_v2;
 
+use crate::arithmetic::{
+	traits::{BaseArithmetic, SaturatedConversion, Unsigned},
+	Perbill,
+};
 use bounded_collections::Get;
 use codec::{Decode, Encode};
 use scale_info::TypeInfo;
 #[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
 use smallvec::SmallVec;
-use crate::arithmetic::{
-	traits::{BaseArithmetic, SaturatedConversion, Unsigned},
-	Perbill,
-};
 
 pub use weight_meter::*;
 pub use weight_v2::*;

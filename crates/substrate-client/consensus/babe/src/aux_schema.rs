@@ -24,11 +24,11 @@ use log::info;
 use crate::{migration::EpochV0, Epoch, LOG_TARGET};
 use soil_client::blockchain::{Error as ClientError, Result as ClientResult};
 use soil_client::client_api::backend::AuxStore;
-use subsoil::consensus::babe::{BabeBlockWeight, BabeConfiguration};
 use soil_consensus_epochs::{
 	migration::{EpochChangesV0For, EpochChangesV1For},
 	EpochChangesFor, SharedEpochChanges,
 };
+use subsoil::consensus::babe::{BabeBlockWeight, BabeConfiguration};
 use subsoil::runtime::traits::Block as BlockT;
 
 const BABE_EPOCH_CHANGES_VERSION: &[u8] = b"babe_epoch_changes_version";
@@ -145,10 +145,10 @@ mod test {
 	use crate::migration::EpochV0;
 	use fork_tree::ForkTree;
 	use soil_client::consensus::Error as ConsensusError;
-	use subsoil::consensus::babe::AllowedSlots;
 	use soil_consensus_epochs::{EpochHeader, PersistedEpoch, PersistedEpochHeader};
-	use subsoil::core::H256;
 	use soil_network_test::Block as TestBlock;
+	use subsoil::consensus::babe::AllowedSlots;
+	use subsoil::core::H256;
 	use subsoil::runtime::traits::NumberFor;
 	use substrate_test_runtime_client;
 

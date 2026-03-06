@@ -36,18 +36,14 @@ use log::{debug, error, info, trace, warn};
 use parking_lot::Mutex;
 use prometheus_endpoint::Registry;
 use sc_consensus::BlockImport;
-use subsoil::api::ProvideRuntimeApi;
 use soil_client::blockchain::{Backend as BlockchainBackend, HeaderBackend};
-use soil_client::client_api::{Backend, BlockBackend, BlockchainEvents, FinalityNotification, Finalizer};
-use soil_client::consensus::{Error as ConsensusError, SyncOracle};
-use subsoil::consensus::beefy::{
-	AuthorityIdBound, BeefyApi, ConsensusLog, PayloadProvider, ValidatorSet, BEEFY_ENGINE_ID,
+use soil_client::client_api::{
+	Backend, BlockBackend, BlockchainEvents, FinalityNotification, Finalizer,
 };
-use subsoil::keystore::KeystorePtr;
+use soil_client::consensus::{Error as ConsensusError, SyncOracle};
+use soil_client::utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver};
 use soil_network::{NetworkRequest, NotificationService, ProtocolName};
 use soil_network_gossip::{GossipEngine, Network as GossipNetwork, Syncing as GossipSyncing};
-use subsoil::runtime::traits::{Block, Header as HeaderT, NumberFor, Zero};
-use soil_client::utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver};
 use std::{
 	collections::{BTreeMap, VecDeque},
 	future::Future,
@@ -56,6 +52,12 @@ use std::{
 	sync::Arc,
 	time::Duration,
 };
+use subsoil::api::ProvideRuntimeApi;
+use subsoil::consensus::beefy::{
+	AuthorityIdBound, BeefyApi, ConsensusLog, PayloadProvider, ValidatorSet, BEEFY_ENGINE_ID,
+};
+use subsoil::keystore::KeystorePtr;
+use subsoil::runtime::traits::{Block, Header as HeaderT, NumberFor, Zero};
 
 mod aux_schema;
 mod error;

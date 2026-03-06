@@ -27,12 +27,12 @@ use log::debug;
 use sc_consensus::ImportedState;
 use smallvec::SmallVec;
 use soil_client::client_api::{CompactProof, KeyValueStates, ProofProvider};
+use std::{collections::HashMap, fmt, sync::Arc};
 use subsoil::core::storage::well_known_keys;
 use subsoil::runtime::{
 	traits::{Block as BlockT, Header, NumberFor},
 	Justifications,
 };
-use std::{collections::HashMap, fmt, sync::Arc};
 
 /// Generic state sync provider. Used for mocking in tests.
 pub trait StateSyncProvider<B: BlockT>: Send + Sync {

@@ -229,8 +229,8 @@ impl CompactProof {
 
 #[cfg(test)]
 pub mod tests {
-	use super::*;
 	use super::super::{tests::create_storage_proof, StorageProof};
+	use super::*;
 
 	type Hasher = crate::core::Blake2Hasher;
 	type Layout = super::super::LayoutV1<Hasher>;

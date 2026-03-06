@@ -28,12 +28,6 @@ use serde_json::{de::IoRead as JsonIoRead, Deserializer, StreamDeserializer};
 use soil_chain_spec::ChainSpec;
 use soil_client::client_api::HeaderBackend;
 use soil_client::consensus::BlockOrigin;
-use subsoil::runtime::{
-	generic::SignedBlock,
-	traits::{
-		Block as BlockT, CheckedDiv, Header, MaybeSerializeDeserialize, NumberFor, Saturating, Zero,
-	},
-};
 use std::{
 	io::Read,
 	pin::Pin,
@@ -43,6 +37,12 @@ use std::{
 	},
 	task::Poll,
 	time::{Duration, Instant},
+};
+use subsoil::runtime::{
+	generic::SignedBlock,
+	traits::{
+		Block as BlockT, CheckedDiv, Header, MaybeSerializeDeserialize, NumberFor, Saturating, Zero,
+	},
 };
 
 /// Number of blocks we will add to the queue before waiting for the queue to catch up.

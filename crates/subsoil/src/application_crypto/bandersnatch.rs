@@ -18,8 +18,8 @@
 //! Bandersnatch VRF application crypto types.
 
 use super::{KeyTypeId, RuntimePublic};
-use alloc::vec::Vec;
 pub use crate::core::bandersnatch::*;
+use alloc::vec::Vec;
 
 use crate::core::{
 	crypto::CryptoType,

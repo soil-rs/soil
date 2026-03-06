@@ -23,14 +23,14 @@
 
 use crate::executor::error::{Error, WasmError};
 
-use codec::Decode;
-use parking_lot::Mutex;
-use schnellru::{ByLength, LruMap};
-use subsoil::core::traits::{Externalities, FetchRuntimeCode, RuntimeCode};
 use crate::executor::common::{
 	runtime_blob::RuntimeBlob,
 	wasm_runtime::{HeapAllocStrategy, WasmInstance, WasmModule},
 };
+use codec::Decode;
+use parking_lot::Mutex;
+use schnellru::{ByLength, LruMap};
+use subsoil::core::traits::{Externalities, FetchRuntimeCode, RuntimeCode};
 use subsoil::version::RuntimeVersion;
 use subsoil::wasm_interface::HostFunctions;
 
@@ -444,8 +444,8 @@ where
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use std::borrow::Cow;
 	use codec::Encode;
+	use std::borrow::Cow;
 	use subsoil::api::{Core, RuntimeApiInfo};
 	use subsoil::version::RuntimeVersion;
 	use subsoil::wasm_interface::HostFunctions;
@@ -550,8 +550,9 @@ mod tests {
 			system_version: 1,
 		};
 
-		let embedded = subsoil::version::embed::embed_runtime_version(&wasm, runtime_version.clone())
-			.expect("Embedding works");
+		let embedded =
+			subsoil::version::embed::embed_runtime_version(&wasm, runtime_version.clone())
+				.expect("Embedding works");
 
 		let blob = RuntimeBlob::new(&embedded).expect("Embedded blob is valid");
 		let read_version = read_embedded_version(&blob)

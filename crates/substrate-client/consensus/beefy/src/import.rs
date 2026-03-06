@@ -20,8 +20,8 @@ use std::sync::Arc;
 
 use log::debug;
 
-use subsoil::api::ProvideRuntimeApi;
 use soil_client::consensus::Error as ConsensusError;
+use subsoil::api::ProvideRuntimeApi;
 use subsoil::consensus::beefy::{AuthorityIdBound, BeefyApi, BEEFY_ENGINE_ID};
 use subsoil::runtime::{
 	traits::{Block as BlockT, Header as HeaderT, NumberFor},

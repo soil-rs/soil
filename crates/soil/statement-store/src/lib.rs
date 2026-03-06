@@ -297,7 +297,8 @@ impl Proof {
 			Proof::Sr25519 { signer, .. } => *signer,
 			Proof::Ed25519 { signer, .. } => *signer,
 			Proof::Secp256k1Ecdsa { signer, .. } => {
-				<subsoil::runtime::traits::BlakeTwo256 as subsoil::core::Hasher>::hash(signer).into()
+				<subsoil::runtime::traits::BlakeTwo256 as subsoil::core::Hasher>::hash(signer)
+					.into()
 			},
 			Proof::OnChain { who, .. } => *who,
 		}
@@ -577,7 +578,9 @@ impl Statement {
 				let public = subsoil::core::ecdsa::Public::from(*signer);
 				if signature.verify(to_sign.as_slice(), &public) {
 					let sender_hash =
-						<subsoil::runtime::traits::BlakeTwo256 as subsoil::core::Hasher>::hash(signer);
+						<subsoil::runtime::traits::BlakeTwo256 as subsoil::core::Hasher>::hash(
+							signer,
+						);
 					SignatureVerificationResult::Valid(sender_hash.into())
 				} else {
 					SignatureVerificationResult::Invalid

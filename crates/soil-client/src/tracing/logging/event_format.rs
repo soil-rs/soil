@@ -17,9 +17,9 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 use super::fast_local_time::FastLocalTime;
+use ::tracing::{Event, Level, Subscriber};
 use console::style;
 use std::fmt;
-use ::tracing::{Event, Level, Subscriber};
 use tracing_log::NormalizeEvent;
 use tracing_subscriber::{
 	fmt::{format, time::FormatTime, FmtContext, FormatEvent, FormatFields},

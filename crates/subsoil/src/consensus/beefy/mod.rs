@@ -30,7 +30,6 @@
 //! it will use a different set of keys. For Polkadot use case we plan to use `secp256k1` for BEEFY,
 //! while GRANDPA uses `ed25519`.
 
-
 mod commitment;
 mod payload;
 
@@ -44,10 +43,6 @@ pub mod test_utils;
 pub use commitment::{Commitment, KnownSignature, SignedCommitment, VersionedFinalityProof};
 pub use payload::{known_payloads, BeefyPayloadId, Payload, PayloadProvider};
 
-use alloc::vec::Vec;
-use codec::{Codec, Decode, DecodeWithMemTracking, Encode};
-use core::fmt::{Debug, Display};
-use scale_info::TypeInfo;
 pub use crate::application_crypto::key_types::BEEFY as KEY_TYPE;
 use crate::application_crypto::{AppPublic, RuntimeAppPublic};
 use crate::core::H256;
@@ -58,6 +53,10 @@ use crate::runtime::{
 	OpaqueValue,
 };
 use crate::weights::Weight;
+use alloc::vec::Vec;
+use codec::{Codec, Decode, DecodeWithMemTracking, Encode};
+use core::fmt::{Debug, Display};
+use scale_info::TypeInfo;
 use KEY_TYPE as BEEFY_KEY_TYPE;
 
 /// Trait representing BEEFY authority id, including custom signature verification.
@@ -105,15 +104,15 @@ pub mod ecdsa_crypto {
 	#[cfg(feature = "std")]
 	use super::Vec;
 	use super::{AuthorityIdBound, BeefyAuthorityId, RuntimeAppPublic, BEEFY_KEY_TYPE};
-	#[cfg(feature = "std")]
-	use core::fmt::Debug;
-	use crate::application_crypto::{ecdsa};
+	use crate::application_crypto::ecdsa;
 	use crate::core::crypto::Wraps;
 	#[cfg(feature = "std")]
 	use crate::core::ByteArray;
 	use crate::crypto_hashing::keccak_256;
 	#[cfg(feature = "std")]
 	use crate::keystore::KeystorePtr;
+	#[cfg(feature = "std")]
+	use core::fmt::Debug;
 
 	crate::app_crypto!(ecdsa, BEEFY_KEY_TYPE);
 
@@ -172,12 +171,12 @@ pub mod bls_crypto {
 	#[cfg(feature = "std")]
 	use super::Vec;
 	use super::{AuthorityIdBound, BeefyAuthorityId, RuntimeAppPublic, BEEFY_KEY_TYPE};
-	#[cfg(feature = "std")]
-	use core::fmt::Debug;
-	use crate::application_crypto::{bls381};
+	use crate::application_crypto::bls381;
 	use crate::core::{bls381::Pair as BlsPair, crypto::Wraps, ByteArray, Pair as _};
 	#[cfg(feature = "std")]
 	use crate::keystore::KeystorePtr;
+	#[cfg(feature = "std")]
+	use core::fmt::Debug;
 
 	crate::app_crypto!(bls381, BEEFY_KEY_TYPE);
 
@@ -232,13 +231,13 @@ pub mod ecdsa_bls_crypto {
 	#[cfg(feature = "std")]
 	use super::Vec;
 	use super::{AuthorityIdBound, BeefyAuthorityId, RuntimeAppPublic, BEEFY_KEY_TYPE};
-	#[cfg(feature = "std")]
-	use core::fmt::Debug;
-	use crate::application_crypto::{ecdsa_bls381};
+	use crate::application_crypto::ecdsa_bls381;
 	use crate::core::{crypto::Wraps, ecdsa_bls381::Pair as EcdsaBlsPair, ByteArray};
 	#[cfg(feature = "std")]
 	use crate::keystore::KeystorePtr;
 	use crate::runtime::traits::Keccak256;
+	#[cfg(feature = "std")]
+	use core::fmt::Debug;
 
 	crate::app_crypto!(ecdsa_bls381, BEEFY_KEY_TYPE);
 

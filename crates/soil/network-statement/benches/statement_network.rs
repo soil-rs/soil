@@ -19,7 +19,6 @@
 use criterion::{criterion_group, criterion_main, Criterion};
 use futures::{stream, Stream, StreamExt};
 use sc_statement_store::Store;
-use subsoil::core::Pair;
 use soil_network::{
 	service::traits::{NotificationEvent, NotificationService},
 	utils::LruHashSet,
@@ -41,6 +40,7 @@ use std::{
 	pin::Pin,
 	sync::Arc,
 };
+use subsoil::core::Pair;
 use substrate_test_runtime_client::{executor::WasmExecutor, DefaultTestClientBuilderExt};
 
 const STATEMENT_DATA_SIZE: usize = 256;

@@ -18,13 +18,13 @@
 //! *BLS12-381* types and host functions.
 
 use super::utils::{self, HostcallResult, FAIL_MSG};
-use alloc::vec::Vec;
-use ark_bls12_381_ext::CurveHooks;
-use ark_ec::{pairing::Pairing, AffineRepr, CurveGroup};
 use crate::runtime_interface::{
 	pass_by::{PassFatPointerAndRead, PassFatPointerAndReadWrite, PassFatPointerAndWrite},
 	runtime_interface,
 };
+use alloc::vec::Vec;
+use ark_bls12_381_ext::CurveHooks;
+use ark_ec::{pairing::Pairing, AffineRepr, CurveGroup};
 
 /// Configuration for *BLS12-381* curve.
 pub type Config = ark_bls12_381_ext::Config<HostHooks>;

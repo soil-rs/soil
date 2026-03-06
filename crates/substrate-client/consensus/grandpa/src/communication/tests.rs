@@ -25,8 +25,9 @@ use super::{
 use crate::{communication::grandpa_protocol_name, environment::SharedVoterSetState};
 use codec::{DecodeAll, Encode};
 use futures::prelude::*;
-use subsoil::consensus::grandpa::AuthorityList;
-use subsoil::keyring::Ed25519Keyring;
+use soil_client::utils::mpsc::{
+	tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender,
+};
 use soil_network::{
 	config::{MultiaddrWithPeerId, Role},
 	event::Event as NetworkEvent,
@@ -40,9 +41,10 @@ use soil_network_gossip::Validator;
 use soil_network_sync::{SyncEvent as SyncStreamEvent, SyncEventStream};
 use soil_network_test::{Block, Hash};
 use soil_network_types::PeerId;
-use subsoil::runtime::traits::NumberFor;
-use soil_client::utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
 use std::{collections::HashSet, pin::Pin, sync::Arc, task::Poll};
+use subsoil::consensus::grandpa::AuthorityList;
+use subsoil::keyring::Ed25519Keyring;
+use subsoil::runtime::traits::NumberFor;
 
 #[derive(Debug)]
 pub(crate) enum Event {

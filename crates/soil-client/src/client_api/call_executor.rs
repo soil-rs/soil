@@ -18,12 +18,12 @@
 
 //! A method call executor interface.
 
-use subsoil::core::traits::CallContext;
 use crate::executor::{RuntimeVersion, RuntimeVersionOf};
+use std::cell::RefCell;
+use subsoil::core::traits::CallContext;
 use subsoil::externalities::Extensions;
 use subsoil::runtime::traits::{Block as BlockT, HashingFor};
 use subsoil::state_machine::{OverlayedChanges, StorageProof};
-use std::cell::RefCell;
 
 use super::execution_extensions::ExecutionExtensions;
 use subsoil::api::ProofRecorder;
@@ -81,7 +81,8 @@ pub trait CallExecutor<B: BlockT>: RuntimeVersionOf {
 	/// Extract RuntimeVersion of given block
 	///
 	/// No changes are made.
-	fn runtime_version(&self, at_hash: B::Hash) -> Result<RuntimeVersion, crate::blockchain::Error>;
+	fn runtime_version(&self, at_hash: B::Hash)
+		-> Result<RuntimeVersion, crate::blockchain::Error>;
 
 	/// Prove the execution of the given `method`.
 	///

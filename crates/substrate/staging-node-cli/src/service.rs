@@ -33,20 +33,20 @@ use node_primitives::Block;
 use sc_consensus_babe::{self, SlotProportion};
 use sc_statement_store::Store as StatementStore;
 use sc_transaction_pool::TransactionPoolHandle;
-use subsoil::api::ProvideRuntimeApi;
 use soil_client::client_api::{Backend, BlockBackend};
-use subsoil::core::crypto::Pair;
+use soil_client::transaction_pool::OffchainTransactionPoolFactory;
 use soil_network::{
 	event::Event, service::traits::NetworkService, NetworkBackend, NetworkEventStream,
 };
 use soil_network_sync::{strategy::warp::WarpSyncConfig, SyncingService};
-use subsoil::runtime::{generic, traits::Block as BlockT, SaturatedConversion};
 use soil_service::{config::Configuration, error::Error as ServiceError, RpcHandlers, TaskManager};
 use soil_sysinfo::SUBSTRATE_REFERENCE_HARDWARE;
 use soil_telemetry::{Telemetry, TelemetryWorker};
-use soil_client::transaction_pool::OffchainTransactionPoolFactory;
 use soil_transaction_storage_proof::runtime_api::TransactionStorageApi;
 use std::{path::Path, sync::Arc};
+use subsoil::api::ProvideRuntimeApi;
+use subsoil::core::crypto::Pair;
+use subsoil::runtime::{generic, traits::Block as BlockT, SaturatedConversion};
 use topsoil_system_rpc_runtime_api::AccountNonceApi;
 
 /// Host functions required for kitchensink runtime and Substrate node.
@@ -888,10 +888,14 @@ mod tests {
 	use node_primitives::{Block, DigestItem, Signature};
 	use sc_consensus::{BlockImport, BlockImportParams, ForkChoiceStrategy};
 	use sc_consensus_babe::{BabeIntermediate, CompatibleDigestItem, INTERMEDIATE_KEY};
-	use soil_client::keystore::LocalKeystore;
 	use soil_client::client_api::BlockBackend;
 	use soil_client::consensus::{BlockOrigin, Environment, Proposer};
+	use soil_client::keystore::LocalKeystore;
+	use soil_client::transaction_pool::ChainEvent;
+	use soil_client::transaction_pool::MaintainedTransactionPool;
 	use soil_consensus_epochs::descendent_query;
+	use soil_service_test::TestNetNode;
+	use std::sync::Arc;
 	use subsoil::core::crypto::Pair;
 	use subsoil::inherents::InherentDataProvider;
 	use subsoil::keyring::Sr25519Keyring;
@@ -902,10 +906,6 @@ mod tests {
 		traits::{Block as BlockT, Header as HeaderT, IdentifyAccount, Verify},
 		RuntimeAppPublic,
 	};
-	use soil_service_test::TestNetNode;
-	use soil_client::transaction_pool::ChainEvent;
-	use soil_client::transaction_pool::MaintainedTransactionPool;
-	use std::sync::Arc;
 
 	type AccountPublic = <Signature as Verify>::Signer;
 
@@ -1050,7 +1050,11 @@ mod tests {
 				// add it to a digest item.
 				let to_sign = pre_hash.encode();
 				let signature = keystore
-					.sr25519_sign(subsoil::consensus::babe::AuthorityId::ID, alice.as_ref(), &to_sign)
+					.sr25519_sign(
+						subsoil::consensus::babe::AuthorityId::ID,
+						alice.as_ref(),
+						&to_sign,
+					)
 					.unwrap()
 					.unwrap();
 				let item = <DigestItem as CompatibleDigestItem>::babe_seal(signature.into());

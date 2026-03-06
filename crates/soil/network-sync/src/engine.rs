@@ -46,6 +46,9 @@ use sc_consensus::{import_queue::ImportQueueService, IncomingBlock};
 use soil_client::blockchain::{Error as ClientError, HeaderMetadata};
 use soil_client::client_api::{BlockBackend, HeaderBackend, ProofProvider};
 use soil_client::consensus::{block_validation::BlockAnnounceValidator, BlockOrigin};
+use soil_client::utils::mpsc::{
+	tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender,
+};
 use soil_network::{
 	config::{FullNetworkConfiguration, NotificationHandshake, ProtocolId, SetConfig},
 	peer_store::PeerStoreProvider,
@@ -67,7 +70,6 @@ use subsoil::runtime::{
 	traits::{Block as BlockT, Header, NumberFor, Zero},
 	Justifications,
 };
-use soil_client::utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
 
 use std::{
 	collections::{HashMap, HashSet},

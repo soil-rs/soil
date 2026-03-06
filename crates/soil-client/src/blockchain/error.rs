@@ -17,11 +17,11 @@
 
 //! Substrate client possible errors.
 
-use codec::Error as CodecError;
-use subsoil::api::ApiError;
 use crate::consensus;
-use subsoil::runtime::transaction_validity::TransactionValidityError;
+use codec::Error as CodecError;
 use std::{self, result};
+use subsoil::api::ApiError;
+use subsoil::runtime::transaction_validity::TransactionValidityError;
 
 /// Client Result type alias
 pub type Result<T> = result::Result<T, Error>;

@@ -862,7 +862,8 @@ mod test {
 						},
 						default: Option::<u32>::None.encode(),
 						docs: vec![],
-						deprecation_info: subsoil::metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
+						deprecation_info:
+							subsoil::metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
 					},
 					StorageEntryMetadataIR {
 						name: "Foo",
@@ -874,7 +875,8 @@ mod test {
 						},
 						default: 98u32.encode(),
 						docs: vec![],
-						deprecation_info: subsoil::metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
+						deprecation_info:
+							subsoil::metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
 					}
 				]
 			);
@@ -1075,7 +1077,8 @@ mod test {
 						},
 						default: Option::<u32>::None.encode(),
 						docs: vec![],
-						deprecation_info: subsoil::metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
+						deprecation_info:
+							subsoil::metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
 					},
 					StorageEntryMetadataIR {
 						name: "Foo",
@@ -1090,7 +1093,8 @@ mod test {
 						},
 						default: 98u32.encode(),
 						docs: vec![],
-						deprecation_info: subsoil::metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
+						deprecation_info:
+							subsoil::metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
 					}
 				]
 			);
@@ -1327,7 +1331,8 @@ mod test {
 						},
 						default: Option::<u32>::None.encode(),
 						docs: vec![],
-						deprecation_info: subsoil::metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
+						deprecation_info:
+							subsoil::metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
 					},
 					StorageEntryMetadataIR {
 						name: "Foo",
@@ -1343,7 +1348,8 @@ mod test {
 						},
 						default: 98u32.encode(),
 						docs: vec![],
-						deprecation_info: subsoil::metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
+						deprecation_info:
+							subsoil::metadata_ir::ItemDeprecationInfoIR::NotDeprecated,
 					}
 				]
 			);

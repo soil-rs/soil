@@ -31,13 +31,6 @@
 pub mod block;
 pub mod logging;
 
-use rustc_hash::FxHashMap;
-use serde::ser::{Serialize, SerializeMap, Serializer};
-use subsoil::tracing::{WASM_NAME_KEY, WASM_TARGET_KEY, WASM_TRACE_IDENTIFIER};
-use std::{
-	fmt,
-	time::{Duration, Instant},
-};
 use ::tracing::{
 	event::Event,
 	field::{Field, Visit},
@@ -45,6 +38,13 @@ use ::tracing::{
 	subscriber::Subscriber,
 	Level,
 };
+use rustc_hash::FxHashMap;
+use serde::ser::{Serialize, SerializeMap, Serializer};
+use std::{
+	fmt,
+	time::{Duration, Instant},
+};
+use subsoil::tracing::{WASM_NAME_KEY, WASM_TARGET_KEY, WASM_TRACE_IDENTIFIER};
 use tracing_subscriber::{
 	layer::{Context, Layer},
 	registry::LookupSpan,

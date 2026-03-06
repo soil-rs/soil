@@ -30,9 +30,9 @@ use soil_network_types::ed25519;
 use std::{collections::HashSet, sync::Arc};
 
 use soil_authority_discovery::AuthorityId;
+use soil_network::{multiaddr::Protocol, Multiaddr, PeerId};
 use subsoil::core::{crypto::key_types, testing::TaskExecutor, traits::SpawnNamed};
 use subsoil::keystore::{testing::MemoryKeystore, Keystore};
-use soil_network::{multiaddr::Protocol, Multiaddr, PeerId};
 
 pub(super) fn create_spawner() -> Box<dyn SpawnNamed> {
 	Box::new(TaskExecutor::new())
@@ -100,8 +100,9 @@ async fn cryptos_are_compatible() {
 	let libp2p_keypair = ed25519::Keypair::generate();
 	let libp2p_public = libp2p_keypair.public();
 
-	let sp_core_secret =
-		{ subsoil::core::ed25519::Pair::from_seed_slice(&libp2p_keypair.secret().as_ref()).unwrap() };
+	let sp_core_secret = {
+		subsoil::core::ed25519::Pair::from_seed_slice(&libp2p_keypair.secret().as_ref()).unwrap()
+	};
 	let sp_core_public = sp_core_secret.public();
 
 	let message = b"we are more powerful than not to be better";

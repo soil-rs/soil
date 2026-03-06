@@ -31,8 +31,8 @@
 //! performed through the methods exposed by the [`StakingLedger`] implementation in order to ensure
 //! state consistency.
 
-use subsoil::runtime::DispatchResult;
 use soil_staking::{StakingAccount, StakingInterface};
+use subsoil::runtime::DispatchResult;
 use topsoil_support::{defensive, ensure, traits::Defensive};
 
 use crate::{

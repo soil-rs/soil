@@ -40,12 +40,14 @@
 
 use crate::import_queue::{JustificationImportResult, Link, RuntimeOrigin};
 use futures::prelude::*;
-use subsoil::runtime::traits::{Block as BlockT, NumberFor};
-use soil_client::utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
+use soil_client::utils::mpsc::{
+	tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender,
+};
 use std::{
 	pin::Pin,
 	task::{Context, Poll},
 };
+use subsoil::runtime::traits::{Block as BlockT, NumberFor};
 
 use super::BlockImportResult;
 

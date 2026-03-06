@@ -18,11 +18,11 @@
 //! Configuration types for remote externalities.
 
 use codec::{Compact, Decode, Encode};
-use subsoil::runtime::{traits::Block as BlockT, StateVersion};
 use std::{
 	fs,
 	path::{Path, PathBuf},
 };
+use subsoil::runtime::{traits::Block as BlockT, StateVersion};
 
 use crate::Result;
 

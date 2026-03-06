@@ -247,7 +247,8 @@ mod benchmarks {
 
 	#[benchmark(pov_mode = Measured)]
 	fn measured_storage_value_read_linear_size(l: Linear<0, { 1 << 22 }>) {
-		let v: subsoil::runtime::BoundedVec<u8, _> = alloc::vec![0u8; l as usize].try_into().unwrap();
+		let v: subsoil::runtime::BoundedVec<u8, _> =
+			alloc::vec![0u8; l as usize].try_into().unwrap();
 		LargeValue::<T>::put(&v);
 		#[block]
 		{
@@ -257,7 +258,8 @@ mod benchmarks {
 
 	#[benchmark(pov_mode = MaxEncodedLen)]
 	fn mel_storage_value_read_linear_size(l: Linear<0, { 1 << 22 }>) {
-		let v: subsoil::runtime::BoundedVec<u8, _> = alloc::vec![0u8; l as usize].try_into().unwrap();
+		let v: subsoil::runtime::BoundedVec<u8, _> =
+			alloc::vec![0u8; l as usize].try_into().unwrap();
 		LargeValue::<T>::put(&v);
 		#[block]
 		{
@@ -267,7 +269,8 @@ mod benchmarks {
 
 	#[benchmark(pov_mode = Measured)]
 	fn measured_storage_double_value_read_linear_size(l: Linear<0, { 1 << 22 }>) {
-		let v: subsoil::runtime::BoundedVec<u8, _> = alloc::vec![0u8; l as usize].try_into().unwrap();
+		let v: subsoil::runtime::BoundedVec<u8, _> =
+			alloc::vec![0u8; l as usize].try_into().unwrap();
 		LargeValue::<T>::put(&v);
 		LargeValue2::<T>::put(&v);
 		#[block]
@@ -279,7 +282,8 @@ mod benchmarks {
 
 	#[benchmark(pov_mode = MaxEncodedLen)]
 	fn mel_storage_double_value_read_linear_size(l: Linear<0, { 1 << 22 }>) {
-		let v: subsoil::runtime::BoundedVec<u8, _> = alloc::vec![0u8; l as usize].try_into().unwrap();
+		let v: subsoil::runtime::BoundedVec<u8, _> =
+			alloc::vec![0u8; l as usize].try_into().unwrap();
 		LargeValue::<T>::put(&v);
 		LargeValue2::<T>::put(&v);
 		#[block]
@@ -293,7 +297,8 @@ mod benchmarks {
 		Pov::LargeValue2: Measured
 	})]
 	fn mel_mixed_storage_double_value_read_linear_size(l: Linear<0, { 1 << 22 }>) {
-		let v: subsoil::runtime::BoundedVec<u8, _> = alloc::vec![0u8; l as usize].try_into().unwrap();
+		let v: subsoil::runtime::BoundedVec<u8, _> =
+			alloc::vec![0u8; l as usize].try_into().unwrap();
 		LargeValue::<T>::put(&v);
 		LargeValue2::<T>::put(&v);
 		#[block]
@@ -307,7 +312,8 @@ mod benchmarks {
 		Pov::LargeValue2: MaxEncodedLen
 	})]
 	fn measured_mixed_storage_double_value_read_linear_size(l: Linear<0, { 1 << 22 }>) {
-		let v: subsoil::runtime::BoundedVec<u8, _> = alloc::vec![0u8; l as usize].try_into().unwrap();
+		let v: subsoil::runtime::BoundedVec<u8, _> =
+			alloc::vec![0u8; l as usize].try_into().unwrap();
 		LargeValue::<T>::put(&v);
 		LargeValue2::<T>::put(&v);
 		#[block]

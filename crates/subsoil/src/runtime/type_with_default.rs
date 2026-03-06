@@ -18,7 +18,7 @@
 //! Provides a type that wraps another type and provides a default value.
 
 use super::traits::{Bounded, One, Zero};
-use codec::{Compact, CompactAs, Decode, DecodeWithMemTracking, Encode, HasCompact, MaxEncodedLen};
+use crate::core::Get;
 use ::core::{
 	fmt::Display,
 	marker::PhantomData,
@@ -27,12 +27,12 @@ use ::core::{
 		RemAssign, Shl, Shr, Sub, SubAssign,
 	},
 };
+use codec::{Compact, CompactAs, Decode, DecodeWithMemTracking, Encode, HasCompact, MaxEncodedLen};
 use num_traits::{
 	CheckedAdd, CheckedDiv, CheckedMul, CheckedNeg, CheckedRem, CheckedShl, CheckedShr, CheckedSub,
 	Num, NumCast, PrimInt, Saturating, ToPrimitive,
 };
 use scale_info::{StaticTypeInfo, TypeInfo};
-use crate::core::Get;
 
 #[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
@@ -523,9 +523,9 @@ impl<T: HasCompact, D: Get<T>> CompactAs for TypeWithDefault<T, D> {
 #[cfg(test)]
 mod tests {
 	use super::TypeWithDefault;
-	use scale_info::TypeInfo;
 	use crate::arithmetic::traits::{AtLeast16Bit, AtLeast32Bit, AtLeast8Bit};
 	use crate::core::Get;
+	use scale_info::TypeInfo;
 
 	#[test]
 	#[allow(dead_code)]

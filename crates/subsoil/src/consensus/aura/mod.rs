@@ -17,11 +17,9 @@
 
 //! Primitives for Aura.
 
-
-
+use crate::runtime::ConsensusEngineId;
 use alloc::vec::Vec;
 use codec::{Codec, Decode, Encode};
-use crate::runtime::ConsensusEngineId;
 
 pub mod digests;
 pub mod inherents;

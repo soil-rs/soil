@@ -23,9 +23,9 @@ use crate::{
 };
 use clap::Parser;
 use soil_client::client_api::{Backend, UsageProvider};
-use subsoil::runtime::traits::{Block as BlockT, Header as HeaderT, NumberFor};
 use soil_service::chain_ops::revert_chain;
 use std::{fmt::Debug, str::FromStr, sync::Arc};
+use subsoil::runtime::traits::{Block as BlockT, Header as HeaderT, NumberFor};
 
 /// The `revert` command used revert the chain to a previous state.
 #[derive(Debug, Parser)]

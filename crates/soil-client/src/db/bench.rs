@@ -23,6 +23,11 @@ use hash_db::{Hasher as DbHasher, Prefix};
 use kvdb::{DBTransaction, KeyValueDB};
 use linked_hash_map::LinkedHashMap;
 use parking_lot::Mutex;
+use std::{
+	cell::{Cell, RefCell},
+	collections::HashMap,
+	sync::Arc,
+};
 use subsoil::core::{
 	hexdisplay::HexDisplay,
 	storage::{ChildInfo, TrackedStorageKey},
@@ -35,11 +40,6 @@ use subsoil::state_machine::{
 use subsoil::trie::{
 	cache::{CacheSize, SharedTrieCache},
 	prefixed_key, MemoryDB, MerkleValue,
-};
-use std::{
-	cell::{Cell, RefCell},
-	collections::HashMap,
-	sync::Arc,
 };
 
 type State<H> = DbState<H>;
@@ -682,9 +682,10 @@ mod test {
 			.collect(),
 			..subsoil::runtime::Storage::default()
 		};
-		let bench_state =
-			BenchmarkingState::<HashingFor<crate::db::tests::Block>>::new(storage, None, false, true)
-				.unwrap();
+		let bench_state = BenchmarkingState::<HashingFor<crate::db::tests::Block>>::new(
+			storage, None, false, true,
+		)
+		.unwrap();
 
 		assert_eq!(bench_state.read_write_count(), (0, 0, 0, 0));
 		assert_eq!(bench_state.keys(Default::default()).unwrap().count(), 1);

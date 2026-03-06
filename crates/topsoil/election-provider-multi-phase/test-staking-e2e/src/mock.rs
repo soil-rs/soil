@@ -17,6 +17,11 @@
 
 #![allow(dead_code)]
 
+use soil_staking::{
+	offence::{OffenceDetails, OnOffenceHandler},
+	Agent, DelegationInterface, EraIndex, SessionIndex, StakingInterface,
+};
+use std::collections::BTreeMap;
 use subsoil::core::{ConstBool, ConstU32, Get};
 use subsoil::npos_elections::{ElectionScore, VoteWeight};
 use subsoil::runtime::{
@@ -28,11 +33,6 @@ use subsoil::runtime::{
 	traits::Zero,
 	transaction_validity, BuildStorage, PerU16, Perbill, Percent,
 };
-use soil_staking::{
-	offence::{OffenceDetails, OnOffenceHandler},
-	Agent, DelegationInterface, EraIndex, SessionIndex, StakingInterface,
-};
-use std::collections::BTreeMap;
 use topsoil_support::{
 	assert_ok, parameter_types, traits,
 	traits::{Hooks, UnfilteredDispatchable, VariantCountOf},

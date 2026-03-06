@@ -22,29 +22,31 @@
 pub mod client_ext;
 
 pub use self::client_ext::{BlockOrigin, ClientBlockImportExt, ClientExt};
-pub use soil_client::client_api::{execution_extensions::ExecutionExtensions, BadBlocks, ForkBlocks};
-pub use soil_client::db::{self, Backend, BlocksPruning};
+pub use soil_client::client_api::{
+	execution_extensions::ExecutionExtensions, BadBlocks, ForkBlocks,
+};
 pub use soil_client::consensus;
+pub use soil_client::db::{self, Backend, BlocksPruning};
 pub use soil_client::executor::{self, WasmExecutionMethod, WasmExecutor};
+pub use soil_service::{client, RpcHandlers};
 pub use subsoil::keyring::{Ed25519Keyring, Sr25519Keyring};
 pub use subsoil::keystore::{Keystore, KeystorePtr};
 pub use subsoil::runtime::{Storage, StorageChild};
-pub use soil_service::{client, RpcHandlers};
 
 use futures::{future::Future, stream::StreamExt};
 use serde::Deserialize;
 use soil_client::client_api::BlockchainEvents;
-use subsoil::core::{storage::ChildInfo, testing::TaskExecutor};
-use subsoil::runtime::{
-	codec::Encode,
-	traits::{Block as BlockT, Header},
-	OpaqueExtrinsic,
-};
 use soil_service::client::{ClientConfig, LocalCallExecutor};
 use std::{
 	collections::{HashMap, HashSet},
 	pin::Pin,
 	sync::Arc,
+};
+use subsoil::core::{storage::ChildInfo, testing::TaskExecutor};
+use subsoil::runtime::{
+	codec::Encode,
+	traits::{Block as BlockT, Header},
+	OpaqueExtrinsic,
 };
 
 /// A genesis storage initialization trait.

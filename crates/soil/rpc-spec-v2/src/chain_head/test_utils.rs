@@ -19,8 +19,9 @@
 //! Test utilities.
 
 use parking_lot::Mutex;
-use subsoil::api::{CallApiAt, CallApiAtParams};
-use soil_client::blockchain::{BlockStatus, CachedHeaderMetadata, HeaderBackend, HeaderMetadata, Info};
+use soil_client::blockchain::{
+	BlockStatus, CachedHeaderMetadata, HeaderBackend, HeaderMetadata, Info,
+};
 use soil_client::client_api::{
 	execution_extensions::ExecutionExtensions, BlockBackend, BlockImportNotification,
 	BlockchainEvents, CallExecutor, ChildInfo, ExecutorProvider, FinalityNotification,
@@ -28,14 +29,15 @@ use soil_client::client_api::{
 	StaleBlock, StorageData, StorageEventStream, StorageKey, StorageProvider,
 };
 use soil_client::consensus::BlockOrigin;
+use soil_client::utils::mpsc::{tracing_unbounded, TracingUnboundedSender};
+use std::sync::Arc;
+use subsoil::api::{CallApiAt, CallApiAtParams};
 use subsoil::runtime::{
 	generic::SignedBlock,
 	traits::{Block as BlockT, Header as HeaderT, NumberFor},
 	Justifications,
 };
-use soil_client::utils::mpsc::{tracing_unbounded, TracingUnboundedSender};
 use subsoil::version::RuntimeVersion;
-use std::sync::Arc;
 use substrate_test_runtime::{Block, Hash, Header, H256};
 
 /// A mock client used for testing.
@@ -237,11 +239,17 @@ impl<
 impl<Block: BlockT, Client: CallApiAt<Block>> CallApiAt<Block> for ChainHeadMockClient<Client> {
 	type StateBackend = <Client as CallApiAt<Block>>::StateBackend;
 
-	fn call_api_at(&self, params: CallApiAtParams<Block>) -> Result<Vec<u8>, subsoil::api::ApiError> {
+	fn call_api_at(
+		&self,
+		params: CallApiAtParams<Block>,
+	) -> Result<Vec<u8>, subsoil::api::ApiError> {
 		self.client.call_api_at(params)
 	}
 
-	fn runtime_version_at(&self, hash: Block::Hash) -> Result<RuntimeVersion, subsoil::api::ApiError> {
+	fn runtime_version_at(
+		&self,
+		hash: Block::Hash,
+	) -> Result<RuntimeVersion, subsoil::api::ApiError> {
 		self.client.runtime_version_at(hash)
 	}
 
@@ -268,7 +276,10 @@ impl<Block: BlockT, Client: BlockBackend<Block>> BlockBackend<Block>
 		self.client.block_body(hash)
 	}
 
-	fn block(&self, hash: Block::Hash) -> soil_client::blockchain::Result<Option<SignedBlock<Block>>> {
+	fn block(
+		&self,
+		hash: Block::Hash,
+	) -> soil_client::blockchain::Result<Option<SignedBlock<Block>>> {
 		self.client.block(hash)
 	}
 
@@ -279,15 +290,24 @@ impl<Block: BlockT, Client: BlockBackend<Block>> BlockBackend<Block>
 		self.client.block_status(hash)
 	}
 
-	fn justifications(&self, hash: Block::Hash) -> soil_client::blockchain::Result<Option<Justifications>> {
+	fn justifications(
+		&self,
+		hash: Block::Hash,
+	) -> soil_client::blockchain::Result<Option<Justifications>> {
 		self.client.justifications(hash)
 	}
 
-	fn block_hash(&self, number: NumberFor<Block>) -> soil_client::blockchain::Result<Option<Block::Hash>> {
+	fn block_hash(
+		&self,
+		number: NumberFor<Block>,
+	) -> soil_client::blockchain::Result<Option<Block::Hash>> {
 		self.client.block_hash(number)
 	}
 
-	fn indexed_transaction(&self, hash: Block::Hash) -> soil_client::blockchain::Result<Option<Vec<u8>>> {
+	fn indexed_transaction(
+		&self,
+		hash: Block::Hash,
+	) -> soil_client::blockchain::Result<Option<Vec<u8>>> {
 		self.client.indexed_transaction(hash)
 	}
 
@@ -355,15 +375,19 @@ where
 		info
 	}
 
-	fn status(&self, hash: Block::Hash) -> soil_client::client_api::blockchain::Result<BlockStatus> {
+	fn status(
+		&self,
+		hash: Block::Hash,
+	) -> soil_client::client_api::blockchain::Result<BlockStatus> {
 		self.client.status(hash)
 	}
 
 	fn number(
 		&self,
 		hash: Block::Hash,
-	) -> soil_client::client_api::blockchain::Result<Option<<<Block as BlockT>::Header as HeaderT>::Number>>
-	{
+	) -> soil_client::client_api::blockchain::Result<
+		Option<<<Block as BlockT>::Header as HeaderT>::Number>,
+	> {
 		self.client.number(hash)
 	}
 

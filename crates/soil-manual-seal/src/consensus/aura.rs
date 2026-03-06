@@ -21,8 +21,9 @@
 
 use crate::{ConsensusDataProvider, Error};
 use sc_consensus::BlockImportParams;
-use subsoil::api::{ProvideRuntimeApi, StorageProof};
 use soil_client::client_api::{AuxStore, UsageProvider};
+use std::{marker::PhantomData, sync::Arc};
+use subsoil::api::{ProvideRuntimeApi, StorageProof};
 use subsoil::consensus::aura::{
 	digests::CompatibleDigestItem,
 	sr25519::{AuthorityId, AuthoritySignature},
@@ -31,7 +32,6 @@ use subsoil::consensus::aura::{
 use subsoil::inherents::InherentData;
 use subsoil::runtime::{traits::Block as BlockT, Digest, DigestItem};
 use subsoil::timestamp::TimestampInherentData;
-use std::{marker::PhantomData, sync::Arc};
 
 /// Consensus data provider for Aura. This allows to use manual-seal driven nodes to author valid
 /// AURA blocks. It will inspect incoming [`InherentData`] and look for included timestamps. Based

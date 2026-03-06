@@ -24,13 +24,13 @@ use crate::runtime::{
 	},
 	DispatchResult,
 };
-use alloc::vec::Vec;
-use codec::{Codec, Decode, DecodeWithMemTracking, Encode};
+use crate::weights::Weight;
 use ::core::fmt::Debug;
 #[doc(hidden)]
 pub use ::core::marker::PhantomData;
+use alloc::vec::Vec;
+use codec::{Codec, Decode, DecodeWithMemTracking, Encode};
 use impl_trait_for_tuples::impl_for_tuples;
-use crate::weights::Weight;
 use tuplex::{PopFront, PushBack};
 
 use super::{
@@ -710,8 +710,8 @@ mod test {
 
 	#[test]
 	fn test_implications_on_nested_structure() {
-		use scale_info::TypeInfo;
 		use ::std::cell::RefCell;
+		use scale_info::TypeInfo;
 
 		#[derive(Clone, Debug, Eq, PartialEq, Encode, Decode, DecodeWithMemTracking, TypeInfo)]
 		struct MockExtension {

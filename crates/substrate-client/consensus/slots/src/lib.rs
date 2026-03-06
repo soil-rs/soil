@@ -36,16 +36,16 @@ use futures::{future::Either, Future, TryFutureExt};
 use futures_timer::Delay;
 use log::{debug, info, warn};
 use sc_consensus::{BlockImport, JustificationSyncLink};
-use subsoil::arithmetic::traits::BaseArithmetic;
 use soil_client::consensus::{Proposal, ProposeArgs, Proposer, SelectChain, SyncOracle};
-use subsoil::consensus::slots::{Slot, SlotDuration};
-use subsoil::inherents::CreateInherentDataProviders;
-use subsoil::runtime::traits::{Block as BlockT, HashingFor, Header as HeaderT};
 use soil_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG, CONSENSUS_INFO, CONSENSUS_WARN};
 use std::{
 	ops::Deref,
 	time::{Duration, Instant},
 };
+use subsoil::arithmetic::traits::BaseArithmetic;
+use subsoil::consensus::slots::{Slot, SlotDuration};
+use subsoil::inherents::CreateInherentDataProviders;
+use subsoil::runtime::traits::{Block as BlockT, HashingFor, Header as HeaderT};
 
 const LOG_TARGET: &str = "slots";
 
@@ -128,7 +128,8 @@ pub trait SimpleSlotWorker<B: BlockT> {
 	fn notify_slot(&self, _header: &B::Header, _slot: Slot, _aux_data: &Self::AuxData) {}
 
 	/// Return the pre digest data to include in a block authored with the given claim.
-	fn pre_digest_data(&self, slot: Slot, claim: &Self::Claim) -> Vec<subsoil::runtime::DigestItem>;
+	fn pre_digest_data(&self, slot: Slot, claim: &Self::Claim)
+		-> Vec<subsoil::runtime::DigestItem>;
 
 	/// Returns a function which produces a `BlockImportParams`.
 	async fn block_import_params(
@@ -798,8 +799,8 @@ impl<N> BackoffAuthoringBlocksStrategy<N> for () {
 #[cfg(test)]
 mod test {
 	use super::*;
-	use subsoil::runtime::traits::NumberFor;
 	use std::time::{Duration, Instant};
+	use subsoil::runtime::traits::NumberFor;
 	use substrate_test_runtime_client::runtime::{Block, Header};
 
 	const SLOT_DURATION: Duration = Duration::from_millis(6000);

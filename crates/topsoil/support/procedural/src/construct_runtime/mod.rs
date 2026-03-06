@@ -387,7 +387,8 @@ fn construct_runtime_final_expansion(
 
 	let topsoil_system = generate_access_from_frame_or_crate("topsoil-system")?;
 	let block = quote!(<#name as #topsoil_system::Config>::Block);
-	let unchecked_extrinsic = quote!(<#block as #scrate::subsoil::runtime::traits::Block>::Extrinsic);
+	let unchecked_extrinsic =
+		quote!(<#block as #scrate::subsoil::runtime::traits::Block>::Extrinsic);
 
 	let outer_event =
 		expand::expand_outer_enum(&name, &pallets, &scrate, expand::OuterEnumType::Event)?;

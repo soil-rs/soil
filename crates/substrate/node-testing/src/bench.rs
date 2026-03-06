@@ -39,24 +39,24 @@ use kitchensink_runtime::{
 	RuntimeCall, Signature, SystemCall, UncheckedExtrinsic,
 };
 use node_primitives::Block;
-use soil_client::block_builder::BlockBuilderBuilder;
 use sc_consensus::{BlockImport, BlockImportParams, ForkChoiceStrategy, ImportResult, ImportedAux};
+use soil_client::block_builder::BlockBuilderBuilder;
+use soil_client::client_api::{execution_extensions::ExecutionExtensions, UsageProvider};
+use soil_client::consensus::BlockOrigin;
+use soil_client::db::PruningMode;
+use soil_client::executor::{WasmExecutionMethod, WasmtimeInstantiationStrategy};
 use subsoil::api::ProvideRuntimeApi;
 use subsoil::block_builder::BlockBuilder;
-use soil_client::client_api::{execution_extensions::ExecutionExtensions, UsageProvider};
-use soil_client::db::PruningMode;
-use soil_client::consensus::BlockOrigin;
 use subsoil::core::{
 	crypto::get_public_from_string_or_panic, ed25519, sr25519, traits::SpawnNamed, Pair,
 };
-use subsoil_crypto_hashing::blake2_256;
-use soil_client::executor::{WasmExecutionMethod, WasmtimeInstantiationStrategy};
 use subsoil::inherents::InherentData;
 use subsoil::runtime::{
 	generic::{self, ExtrinsicFormat, Preamble},
 	traits::{Block as BlockT, IdentifyAccount, Verify},
 	OpaqueExtrinsic,
 };
+use subsoil_crypto_hashing::blake2_256;
 
 /// Keyring full of accounts for benching.
 ///
@@ -621,7 +621,10 @@ impl BenchKeyring {
 }
 
 impl subsoil::runtime::BuildStorage for BenchKeyring {
-	fn assimilate_storage(&self, storage: &mut subsoil::core::storage::Storage) -> Result<(), String> {
+	fn assimilate_storage(
+		&self,
+		storage: &mut subsoil::core::storage::Storage,
+	) -> Result<(), String> {
 		storage.top.insert(
 			subsoil::core::storage::well_known_keys::CODE.to_vec(),
 			kitchensink_runtime::wasm_binary_unwrap().into(),

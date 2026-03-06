@@ -27,7 +27,8 @@ use topsoil_support::{derive_impl, traits::ConstU32};
 pub type BlockNumber = u64;
 pub type Header = subsoil::runtime::generic::Header<u32, subsoil::runtime::traits::BlakeTwo256>;
 pub type Block = subsoil::runtime::generic::Block<Header, UncheckedExtrinsic>;
-pub type UncheckedExtrinsic = subsoil::runtime::generic::UncheckedExtrinsic<u32, RuntimeCall, (), ()>;
+pub type UncheckedExtrinsic =
+	subsoil::runtime::generic::UncheckedExtrinsic<u32, RuntimeCall, (), ()>;
 
 #[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
 impl topsoil_system::Config for Runtime {

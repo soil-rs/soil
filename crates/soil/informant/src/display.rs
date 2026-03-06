@@ -21,8 +21,8 @@ use log::info;
 use soil_client::client_api::ClientInfo;
 use soil_network::NetworkStatus;
 use soil_network_sync::{SyncState, SyncStatus, WarpSyncPhase, WarpSyncProgress};
-use subsoil::runtime::traits::{Block as BlockT, CheckedDiv, NumberFor, Saturating, Zero};
 use std::{fmt, time::Instant};
+use subsoil::runtime::traits::{Block as BlockT, CheckedDiv, NumberFor, Saturating, Zero};
 
 use crate::PrintFullHashOnDebugLogging;
 

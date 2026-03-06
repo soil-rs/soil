@@ -18,13 +18,13 @@
 //! *BW6-761* types and host functions.
 
 use super::utils::{self, HostcallResult, FAIL_MSG};
-use alloc::vec::Vec;
-use ark_bw6_761_ext::CurveHooks;
-use ark_ec::{pairing::Pairing, AffineRepr, CurveGroup};
 use crate::runtime_interface::{
 	pass_by::{PassFatPointerAndRead, PassFatPointerAndReadWrite, PassFatPointerAndWrite},
 	runtime_interface,
 };
+use alloc::vec::Vec;
+use ark_bw6_761_ext::CurveHooks;
+use ark_ec::{pairing::Pairing, AffineRepr, CurveGroup};
 
 /// Configuration for *BW6-761* curve.
 pub type Config = ark_bw6_761_ext::Config<HostHooks>;

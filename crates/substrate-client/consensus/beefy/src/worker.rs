@@ -36,10 +36,17 @@ use subsoil::application_crypto::RuntimeAppPublic;
 use codec::{Codec, Decode, DecodeAll, Encode};
 use futures::{stream::Fuse, FutureExt, StreamExt};
 use log::{debug, error, info, trace, warn};
-use subsoil::api::ProvideRuntimeApi;
-use subsoil::arithmetic::traits::{AtLeast32Bit, Saturating};
 use soil_client::client_api::{Backend, HeaderBackend};
 use soil_client::consensus::SyncOracle;
+use soil_client::utils::notification::NotificationReceiver;
+use std::{
+	collections::{BTreeMap, VecDeque},
+	fmt::Debug,
+	marker::PhantomData,
+	sync::Arc,
+};
+use subsoil::api::ProvideRuntimeApi;
+use subsoil::arithmetic::traits::{AtLeast32Bit, Saturating};
 use subsoil::consensus::beefy::{
 	AuthorityIdBound, BeefyApi, Commitment, DoubleVotingProof, PayloadProvider, ValidatorSet,
 	VersionedFinalityProof, VoteMessage, BEEFY_ENGINE_ID,
@@ -48,13 +55,6 @@ use subsoil::runtime::{
 	generic::BlockId,
 	traits::{Block, Header, NumberFor, Zero},
 	SaturatedConversion,
-};
-use soil_client::utils::notification::NotificationReceiver;
-use std::{
-	collections::{BTreeMap, VecDeque},
-	fmt::Debug,
-	marker::PhantomData,
-	sync::Arc,
 };
 
 /// Bound for the number of pending justifications - use 2400 - the max number
@@ -1040,6 +1040,9 @@ pub(crate) mod tests {
 	use parking_lot::Mutex;
 	use soil_client::blockchain::Backend as BlockchainBackendT;
 	use soil_client::client_api::{Backend as BackendT, HeaderBackend};
+	use soil_network_gossip::GossipEngine;
+	use soil_network_sync::SyncingService;
+	use soil_network_test::TestNetFactory;
 	use subsoil::consensus::beefy::{
 		ecdsa_crypto, known_payloads,
 		known_payloads::MMR_ROOT_ID,
@@ -1047,9 +1050,6 @@ pub(crate) mod tests {
 		test_utils::{generate_double_voting_proof, Keyring},
 		ConsensusLog, Payload, SignedCommitment,
 	};
-	use soil_network_gossip::GossipEngine;
-	use soil_network_sync::SyncingService;
-	use soil_network_test::TestNetFactory;
 	use subsoil::runtime::traits::{Header as HeaderT, One};
 	use substrate_test_runtime_client::{
 		runtime::{Block, Digest, DigestItem, Header},

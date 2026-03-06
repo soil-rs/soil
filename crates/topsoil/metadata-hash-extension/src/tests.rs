@@ -19,12 +19,12 @@ use crate::CheckMetadataHash;
 use codec::{Decode, Encode};
 use frame_metadata::RuntimeMetadataPrefixed;
 use merkleized_metadata::{generate_metadata_digest, ExtraInfo};
+use soil_transaction_pool::runtime_api::TaggedTransactionQueue;
 use subsoil::api::{Metadata, ProvideRuntimeApi};
 use subsoil::runtime::{
 	traits::{ExtrinsicLike, TransactionExtension},
 	transaction_validity::{TransactionSource, UnknownTransaction},
 };
-use soil_transaction_pool::runtime_api::TaggedTransactionQueue;
 use substrate_test_runtime_client::{
 	prelude::*,
 	runtime::{self, ExtrinsicBuilder},
@@ -154,8 +154,12 @@ mod docs {
 		type Signature = ();
 
 		/// Unchecked extrinsic type as expected by this runtime.
-		pub type UncheckedExtrinsic =
-			subsoil::runtime::generic::UncheckedExtrinsic<Address, RuntimeCall, Signature, TxExtension>;
+		pub type UncheckedExtrinsic = subsoil::runtime::generic::UncheckedExtrinsic<
+			Address,
+			RuntimeCall,
+			Signature,
+			TxExtension,
+		>;
 	}
 
 	// Put here to not have it in the docs as well.

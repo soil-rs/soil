@@ -28,7 +28,6 @@
 //! | `"perfmap"` | perfmap profiling       |
 //! | other value | No profiling (warning)  |
 
-
 mod host;
 mod imports;
 mod instance_wrapper;
@@ -38,12 +37,12 @@ mod util;
 #[cfg(test)]
 mod tests;
 
+pub use crate::executor::common::{
+	runtime_blob::RuntimeBlob,
+	wasm_runtime::{HeapAllocStrategy, WasmModule},
+};
 pub use runtime::{
 	create_runtime, create_runtime_from_artifact, create_runtime_from_artifact_bytes,
 	prepare_runtime_artifact, Config, DeterministicStackLimit, InstantiationStrategy, Semantics,
 	WasmtimeRuntime,
-};
-pub use crate::executor::common::{
-	runtime_blob::RuntimeBlob,
-	wasm_runtime::{HeapAllocStrategy, WasmModule},
 };

@@ -25,9 +25,9 @@ use async_trait::async_trait;
 use codec::Codec;
 use futures::Stream;
 use serde::{de::DeserializeOwned, Deserialize, Serialize};
+use std::{collections::HashMap, hash::Hash, marker::PhantomData, pin::Pin, sync::Arc};
 use subsoil::core::offchain::TransactionPoolExt;
 use subsoil::runtime::traits::{Block as BlockT, Member};
-use std::{collections::HashMap, hash::Hash, marker::PhantomData, pin::Pin, sync::Arc};
 
 const LOG_TARGET: &str = "txpool::api";
 
@@ -251,7 +251,8 @@ pub trait TransactionPool: Send + Sync {
 		Hash = TxHash<Self>,
 	>;
 	/// Error type.
-	type Error: From<crate::transaction_pool::error::Error> + crate::transaction_pool::error::IntoPoolError;
+	type Error: From<crate::transaction_pool::error::Error>
+		+ crate::transaction_pool::error::IntoPoolError;
 
 	// *** RPC
 
@@ -420,7 +421,8 @@ pub trait LocalTransactionPool: Send + Sync {
 	/// Transaction hash type.
 	type Hash: Hash + Eq + Member + Serialize;
 	/// Error type.
-	type Error: From<crate::transaction_pool::error::Error> + crate::transaction_pool::error::IntoPoolError;
+	type Error: From<crate::transaction_pool::error::Error>
+		+ crate::transaction_pool::error::IntoPoolError;
 
 	/// Submits the given local unverified transaction to the pool blocking the
 	/// current thread for any necessary pre-verification.

@@ -18,8 +18,13 @@
 
 //! In memory client backend
 
-use parking_lot::RwLock;
 use crate::blockchain::{CachedHeaderMetadata, HeaderMetadata};
+use parking_lot::RwLock;
+use std::{
+	collections::{HashMap, HashSet},
+	ptr,
+	sync::Arc,
+};
 use subsoil::core::{
 	offchain::storage::InMemOffchainStorage as OffchainStorage, storage::well_known_keys,
 };
@@ -31,11 +36,6 @@ use subsoil::runtime::{
 use subsoil::state_machine::{
 	Backend as StateBackend, BackendTransaction, ChildStorageCollection, InMemoryBackend,
 	IndexOperation, StorageCollection,
-};
-use std::{
-	collections::{HashMap, HashSet},
-	ptr,
-	sync::Arc,
 };
 
 use super::{
@@ -411,7 +411,10 @@ impl<Block: BlockT> blockchain::Backend<Block> for Blockchain<Block> {
 			.and_then(|b| b.extrinsics().map(|x| x.to_vec())))
 	}
 
-	fn justifications(&self, hash: Block::Hash) -> crate::blockchain::Result<Option<Justifications>> {
+	fn justifications(
+		&self,
+		hash: Block::Hash,
+	) -> crate::blockchain::Result<Option<Justifications>> {
 		Ok(self.storage.read().blocks.get(&hash).and_then(|b| b.justifications().cloned()))
 	}
 
@@ -427,7 +430,10 @@ impl<Block: BlockT> blockchain::Backend<Block> for Blockchain<Block> {
 		unimplemented!()
 	}
 
-	fn indexed_transaction(&self, _hash: Block::Hash) -> crate::blockchain::Result<Option<Vec<u8>>> {
+	fn indexed_transaction(
+		&self,
+		_hash: Block::Hash,
+	) -> crate::blockchain::Result<Option<Vec<u8>>> {
 		unimplemented!("Not supported by the in-mem backend.")
 	}
 

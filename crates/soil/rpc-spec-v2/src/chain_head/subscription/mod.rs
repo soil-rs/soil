@@ -19,8 +19,8 @@
 use jsonrpsee::ConnectionId;
 use parking_lot::RwLock;
 use soil_client::client_api::Backend;
-use subsoil::runtime::traits::Block as BlockT;
 use std::{sync::Arc, time::Duration};
+use subsoil::runtime::traits::Block as BlockT;
 
 mod error;
 mod inner;

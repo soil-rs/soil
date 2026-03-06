@@ -17,6 +17,7 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 use codec::{Decode, Encode};
+use soil_client::executor::error::Result;
 use subsoil::consensus::babe::{
 	digests::{PreDigest, SecondaryPlainPreDigest},
 	Slot, BABE_ENGINE_ID,
@@ -26,7 +27,6 @@ use subsoil::core::{
 	sr25519::Signature,
 	traits::{CallContext, CodeExecutor, RuntimeCode},
 };
-use soil_client::executor::error::Result;
 use subsoil::runtime::{
 	traits::{BlakeTwo256, Header as HeaderT},
 	ApplyExtrinsicResult, Digest, DigestItem, MultiSignature, MultiSigner,
@@ -41,15 +41,15 @@ use kitchensink_runtime::{
 };
 use node_primitives::{BlockNumber, Hash};
 use node_testing::keyring::*;
-use subsoil::externalities::Externalities;
 use staging_node_cli::service::RuntimeExecutor;
+use subsoil::externalities::Externalities;
 
 pub const TEST_KEY_TYPE_ID: KeyTypeId = KeyTypeId(*b"test");
 
 pub mod sr25519 {
 	mod app_sr25519 {
 		use super::super::TEST_KEY_TYPE_ID;
-		use subsoil::application_crypto::{sr25519};
+		use subsoil::application_crypto::sr25519;
 		subsoil::app_crypto!(sr25519, TEST_KEY_TYPE_ID);
 	}
 

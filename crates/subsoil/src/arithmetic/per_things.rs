@@ -141,7 +141,12 @@ pub trait PerThing:
 	+ Pow<usize, Output = Self>
 {
 	/// The data type used to build this per-thingy.
-	type Inner: BaseArithmetic + Unsigned + Copy + Into<u128> + fmt::Debug + crate::arithmetic::MultiplyRational;
+	type Inner: BaseArithmetic
+		+ Unsigned
+		+ Copy
+		+ Into<u128>
+		+ fmt::Debug
+		+ crate::arithmetic::MultiplyRational;
 
 	/// A data type larger than `Self::Inner`, used to avoid overflow in some computations.
 	/// It must be able to compute `ACCURACY^2`.

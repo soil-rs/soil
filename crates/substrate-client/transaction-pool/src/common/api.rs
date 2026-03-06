@@ -27,21 +27,21 @@ use async_trait::async_trait;
 use codec::Encode;
 use futures::future::{Future, FutureExt};
 use prometheus_endpoint::Registry as PrometheusRegistry;
-use subsoil::api::{ApiExt, ProvideRuntimeApi};
 use soil_client::blockchain::{HeaderMetadata, TreeRoute};
 use soil_client::client_api::{blockchain::HeaderBackend, BlockBackend};
-use subsoil::core::traits::SpawnEssentialNamed;
-use subsoil::runtime::{
-	generic::BlockId,
-	traits::{self, Block as BlockT, BlockIdTo},
-	transaction_validity::{TransactionSource, TransactionValidity},
-};
 use soil_transaction_pool::runtime_api::TaggedTransactionQueue;
 use std::{
 	marker::PhantomData,
 	pin::Pin,
 	sync::Arc,
 	time::{Duration, Instant},
+};
+use subsoil::api::{ApiExt, ProvideRuntimeApi};
+use subsoil::core::traits::SpawnEssentialNamed;
+use subsoil::runtime::{
+	generic::BlockId,
+	traits::{self, Block as BlockT, BlockIdTo},
+	transaction_validity::{TransactionSource, TransactionValidity},
 };
 use tokio::sync::{mpsc, oneshot, Mutex};
 
@@ -307,7 +307,8 @@ where
 		from: <Self::Block as BlockT>::Hash,
 		to: <Self::Block as BlockT>::Hash,
 	) -> Result<TreeRoute<Self::Block>, Self::Error> {
-		soil_client::blockchain::tree_route::<Block, Client>(&*self.client, from, to).map_err(Into::into)
+		soil_client::blockchain::tree_route::<Block, Client>(&*self.client, from, to)
+			.map_err(Into::into)
 	}
 }
 

@@ -42,17 +42,24 @@ use futures::{
 	Future, FutureExt, StreamExt,
 };
 use parking_lot::Mutex;
-use soil_client::block_builder::BlockBuilderBuilder;
 use sc_consensus::{
 	BlockImport, BlockImportParams, BoxJustificationImport, ForkChoiceStrategy, ImportResult,
 	ImportedAux,
 };
-use subsoil::api::{ApiRef, ProvideRuntimeApi};
-use subsoil::application_crypto::key_types::BEEFY as BEEFY_KEY_TYPE;
+use soil_client::block_builder::BlockBuilderBuilder;
 use soil_client::client_api::{
 	Backend as BackendT, BlockchainEvents, FinalityNotifications, HeaderBackend,
 };
 use soil_client::consensus::BlockOrigin;
+use soil_client::utils::{mpsc::TracingUnboundedReceiver, notification::NotificationReceiver};
+use soil_network::{config::RequestResponseConfig, ProtocolName};
+use soil_network_test::{
+	Block, BlockImportAdapter, FullPeerConfig, PassThroughVerifier, Peer, PeersClient,
+	PeersFullClient, TestNetFactory,
+};
+use std::{marker::PhantomData, sync::Arc, task::Poll};
+use subsoil::api::{ApiRef, ProvideRuntimeApi};
+use subsoil::application_crypto::key_types::BEEFY as BEEFY_KEY_TYPE;
 use subsoil::consensus::beefy::{
 	ecdsa_crypto,
 	ecdsa_crypto::{AuthorityId, Signature},
@@ -66,18 +73,11 @@ use subsoil::consensus::beefy::{
 use subsoil::core::H256;
 use subsoil::keystore::{testing::MemoryKeystore, Keystore, KeystorePtr};
 use subsoil::mmr::{Error as MmrError, MmrApi};
-use soil_network::{config::RequestResponseConfig, ProtocolName};
-use soil_network_test::{
-	Block, BlockImportAdapter, FullPeerConfig, PassThroughVerifier, Peer, PeersClient,
-	PeersFullClient, TestNetFactory,
-};
 use subsoil::runtime::{
 	codec::{Decode, Encode},
 	traits::{Header as HeaderT, NumberFor},
 	DigestItem, EncodedJustification, Justifications,
 };
-use soil_client::utils::{mpsc::TracingUnboundedReceiver, notification::NotificationReceiver};
-use std::{marker::PhantomData, sync::Arc, task::Poll};
 use substrate_test_runtime_client::{BlockBuilderExt, ClientExt};
 use tokio::time::Duration;
 

@@ -19,12 +19,12 @@
 
 #![cfg(test)]
 
+use std::cell::RefCell;
 use subsoil::runtime::{
 	testing::H256,
 	traits::{BlakeTwo256, IdentityLookup},
 	BuildStorage,
 };
-use std::cell::RefCell;
 use topsoil_support::{derive_impl, parameter_types, traits::ConstU32};
 
 #[topsoil_support::pallet(dev_mode)]

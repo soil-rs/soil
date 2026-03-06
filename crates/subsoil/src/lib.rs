@@ -5,41 +5,41 @@ pub extern crate alloc;
 
 pub use subsoil_crypto_hashing as crypto_hashing;
 
-#[allow(clippy::module_inception)]
-pub mod std;
-#[cfg(feature = "std")]
-pub mod database;
-#[cfg(feature = "std")]
-pub mod panic_handler;
-pub mod arithmetic;
-pub mod wasm_interface;
-pub mod metadata_ir;
-pub mod tracing;
-pub mod binary_merkle_tree;
-pub mod externalities;
-pub mod storage;
-pub mod weights;
-#[allow(clippy::module_inception)]
-pub mod core;
-pub mod keystore;
 #[cfg(feature = "std")]
 pub mod allocator;
-pub mod runtime_interface;
-pub mod trie;
-pub mod state_machine;
-pub mod io;
-pub mod application_crypto;
-pub mod runtime;
-pub mod version;
 pub mod api;
-pub mod keyring;
-pub mod crypto_ec_utils;
-pub mod npos_elections;
-pub mod inherents;
-pub mod timestamp;
+pub mod application_crypto;
+pub mod arithmetic;
+pub mod binary_merkle_tree;
 pub mod block_builder;
 pub mod consensus;
+#[allow(clippy::module_inception)]
+pub mod core;
+pub mod crypto_ec_utils;
+#[cfg(feature = "std")]
+pub mod database;
+pub mod externalities;
+pub mod inherents;
+pub mod io;
+pub mod keyring;
+pub mod keystore;
+pub mod metadata_ir;
 pub mod mmr;
+pub mod npos_elections;
+#[cfg(feature = "std")]
+pub mod panic_handler;
+pub mod runtime;
+pub mod runtime_interface;
+pub mod state_machine;
+#[allow(clippy::module_inception)]
+pub mod std;
+pub mod storage;
+pub mod timestamp;
+pub mod tracing;
+pub mod trie;
+pub mod version;
+pub mod wasm_interface;
+pub mod weights;
 
 /// Panic when the vectors are different, without taking the order into account.
 #[macro_export]

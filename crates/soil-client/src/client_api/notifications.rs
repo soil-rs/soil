@@ -29,9 +29,9 @@ use futures::Stream;
 
 use prometheus_endpoint::Registry as PrometheusRegistry;
 
+use crate::utils::pubsub::{Hub, Receiver};
 use subsoil::core::storage::{StorageData, StorageKey};
 use subsoil::runtime::traits::Block as BlockT;
-use crate::utils::pubsub::{Hub, Receiver};
 
 mod registry;
 

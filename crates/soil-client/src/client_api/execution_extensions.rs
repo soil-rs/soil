@@ -23,10 +23,10 @@
 //! extensions to support APIs for particular execution context & capabilities.
 
 use parking_lot::RwLock;
+use std::{marker::PhantomData, sync::Arc};
 use subsoil::core::traits::{ReadRuntimeVersion, ReadRuntimeVersionExt};
 use subsoil::externalities::{Extension, Extensions};
 use subsoil::runtime::traits::{Block as BlockT, NumberFor};
-use std::{marker::PhantomData, sync::Arc};
 
 /// Generate the starting set of [`Extensions`].
 ///

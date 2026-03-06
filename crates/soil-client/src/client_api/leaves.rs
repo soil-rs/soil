@@ -18,11 +18,11 @@
 
 //! Helper for managing the set of available leaves in the chain for DB implementations.
 
-use codec::{Decode, Encode};
 use crate::blockchain::{Error, Result};
+use codec::{Decode, Encode};
+use std::{cmp::Reverse, collections::BTreeMap};
 use subsoil::database::{Database, Transaction};
 use subsoil::runtime::traits::AtLeast32Bit;
-use std::{cmp::Reverse, collections::BTreeMap};
 
 type DbHash = subsoil::core::H256;
 

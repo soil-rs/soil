@@ -30,12 +30,12 @@ use async_trait::async_trait;
 use node_primitives::Block;
 use node_testing::bench::{BenchDb, BlockType, DatabaseType, KeyTypes};
 use soil_client::consensus::{Environment, ProposeArgs, Proposer};
-use subsoil::inherents::InherentDataProvider;
-use subsoil::runtime::OpaqueExtrinsic;
 use soil_client::transaction_pool::{
 	ImportNotificationStream, PoolStatus, ReadyTransactions, TransactionFor, TransactionSource,
 	TransactionStatusStreamFor, TxHash, TxInvalidityReportMap,
 };
+use subsoil::inherents::InherentDataProvider;
+use subsoil::runtime::OpaqueExtrinsic;
 
 use crate::{
 	common::SizeType,

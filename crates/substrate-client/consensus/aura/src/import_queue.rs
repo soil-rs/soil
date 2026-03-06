@@ -30,11 +30,13 @@ use sc_consensus::{
 	import_queue::{BasicQueue, BoxJustificationImport, DefaultImportQueue, Verifier},
 };
 use sc_consensus_slots::{check_equivocation, CheckedHeader, InherentDataProviderExt};
-use subsoil::api::{ApiExt, ProvideRuntimeApi};
-use subsoil::block_builder::BlockBuilder as BlockBuilderApi;
 use soil_client::blockchain::{HeaderBackend, HeaderMetadata};
 use soil_client::client_api::{backend::AuxStore, BlockOf, UsageProvider};
 use soil_client::consensus::Error as ConsensusError;
+use soil_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG, CONSENSUS_TRACE};
+use std::{fmt::Debug, sync::Arc};
+use subsoil::api::{ApiExt, ProvideRuntimeApi};
+use subsoil::block_builder::BlockBuilder as BlockBuilderApi;
 use subsoil::consensus::aura::{inherents::AuraInherentData, AuraApi};
 use subsoil::consensus::slots::Slot;
 use subsoil::core::crypto::Pair;
@@ -43,8 +45,6 @@ use subsoil::runtime::{
 	traits::{Block as BlockT, Header, NumberFor},
 	DigestItem,
 };
-use soil_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG, CONSENSUS_TRACE};
-use std::{fmt::Debug, sync::Arc};
 
 /// check a header has been signed by the right key. If the slot is too far in the future, an error
 /// will be returned. If it's successful, returns the pre-header and the digest item

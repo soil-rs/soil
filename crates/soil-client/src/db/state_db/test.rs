@@ -19,11 +19,11 @@
 //! Test utils
 
 use super::{ChangeSet, CommitSet, DBValue, MetaDb, NodeDb};
-use subsoil::core::H256;
 use std::{
 	collections::HashMap,
 	sync::{Arc, RwLock},
 };
+use subsoil::core::H256;
 
 #[derive(Default, Debug, Clone)]
 pub struct TestDb(Arc<RwLock<TestDbInner>>);

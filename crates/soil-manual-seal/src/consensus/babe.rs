@@ -29,12 +29,12 @@ use soil_client::client_api::{AuxStore, UsageProvider};
 use soil_consensus_epochs::{
 	descendent_query, EpochHeader, SharedEpochChanges, ViableEpochDescriptor,
 };
-use subsoil::keystore::KeystorePtr;
 use std::sync::Arc;
+use subsoil::keystore::KeystorePtr;
 
 use sc_consensus::{BlockImportParams, ForkChoiceStrategy, Verifier};
-use subsoil::api::{ProvideRuntimeApi, StorageProof};
 use soil_client::blockchain::{HeaderBackend, HeaderMetadata};
+use subsoil::api::{ProvideRuntimeApi, StorageProof};
 use subsoil::consensus::babe::{
 	digests::{NextEpochDescriptor, PreDigest, SecondaryPlainPreDigest},
 	inherents::BabeInherentData,

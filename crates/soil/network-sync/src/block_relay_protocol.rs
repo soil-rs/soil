@@ -21,8 +21,8 @@ use futures::channel::oneshot;
 use soil_network::{request_responses::RequestFailure, NetworkBackend, ProtocolName};
 use soil_network_common::sync::message::{BlockData, BlockRequest};
 use soil_network_types::PeerId;
-use subsoil::runtime::traits::Block as BlockT;
 use std::{fmt, sync::Arc};
+use subsoil::runtime::traits::Block as BlockT;
 
 /// The serving side of the block relay protocol. It runs a single instance
 /// of the server task that processes the incoming protocol messages.

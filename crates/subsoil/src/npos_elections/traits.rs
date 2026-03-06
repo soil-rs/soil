@@ -18,8 +18,8 @@
 //! Traits for the npos-election operations.
 
 use super::ExtendedBalance;
-use core::{fmt::Debug, ops::Mul};
 use crate::arithmetic::PerThing;
+use core::{fmt::Debug, ops::Mul};
 
 /// an aggregator trait for a generic type of a voter/target identifier. This usually maps to
 /// substrate's account id.

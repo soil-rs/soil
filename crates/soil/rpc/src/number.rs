@@ -19,8 +19,8 @@
 //! string.
 
 use serde::{Deserialize, Serialize};
-use subsoil::core::U256;
 use std::fmt::Debug;
+use subsoil::core::U256;
 
 /// A number type that can be serialized both as a number or a string that encodes a number in a
 /// string.
