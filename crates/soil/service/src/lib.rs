@@ -89,7 +89,7 @@ use crate::config::RpcConfiguration;
 use prometheus_endpoint::Registry;
 pub use sc_consensus::ImportQueue;
 pub use sc_rpc::{RandomIntegerSubscriptionId, RandomStringSubscriptionId};
-pub use sc_tracing::TracingReceiver;
+pub use soil_client::tracing::TracingReceiver;
 pub use sc_transaction_pool::TransactionPoolOptions;
 pub use soil_client::executor::NativeExecutionDispatch;
 pub use soil_network_sync::WarpSyncConfig;

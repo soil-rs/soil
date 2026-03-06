@@ -208,7 +208,7 @@ fn build_handler(
 		Some(wasm_executor),
 	);
 	let client = Arc::new(client);
-	let keystore = Arc::new(sc_keystore::LocalKeystore::in_memory());
+	let keystore = Arc::new(soil_client::keystore::LocalKeystore::in_memory());
 	let statement_store = Store::new(
 		&path,
 		Default::default(),

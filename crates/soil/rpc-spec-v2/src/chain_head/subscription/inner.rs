@@ -783,7 +783,7 @@ impl<Block: BlockT, BE: Backend<Block>> SubscriptionsInner<Block, BE> {
 mod tests {
 	use super::*;
 	use jsonrpsee::ConnectionId;
-	use sc_block_builder::BlockBuilderBuilder;
+	use soil_client::block_builder::BlockBuilderBuilder;
 	use soil_client::consensus::BlockOrigin;
 	use subsoil::core::{testing::TaskExecutor, H256};
 	use soil_service::client::new_with_backend;

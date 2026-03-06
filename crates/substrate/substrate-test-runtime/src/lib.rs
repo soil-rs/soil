@@ -1149,7 +1149,7 @@ mod tests {
 	use super::*;
 	use codec::Encode;
 	use pretty_assertions::assert_eq;
-	use sc_block_builder::BlockBuilderBuilder;
+	use soil_client::block_builder::BlockBuilderBuilder;
 	use subsoil::api::{ApiExt, ProvideRuntimeApi};
 	use soil_client::consensus::BlockOrigin;
 	use subsoil::core::{storage::well_known_keys::HEAP_PAGES, traits::CallContext};

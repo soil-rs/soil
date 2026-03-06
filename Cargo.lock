@@ -6160,7 +6160,6 @@ dependencies = [
  "log",
  "node-primitives",
  "parity-scale-codec",
- "sc-block-builder",
  "sc-consensus",
  "soil-client",
  "soil-service",
@@ -8064,16 +8063,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "sc-block-builder"
-version = "0.33.0"
-dependencies = [
- "parity-scale-codec",
- "soil-client",
- "subsoil",
- "substrate-test-runtime-client",
-]
-
-[[package]]
 name = "sc-consensus"
 version = "0.33.0"
 dependencies = [
@@ -8101,10 +8090,8 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "parking_lot 0.12.5",
- "sc-block-builder",
  "sc-consensus",
  "sc-consensus-slots",
- "sc-keystore",
  "soil-client",
  "soil-network",
  "soil-network-test",
@@ -8130,7 +8117,6 @@ dependencies = [
  "num-traits",
  "parity-scale-codec",
  "parking_lot 0.12.5",
- "sc-block-builder",
  "sc-consensus",
  "sc-consensus-slots",
  "soil-client",
@@ -8156,7 +8142,6 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "parking_lot 0.12.5",
- "sc-block-builder",
  "sc-consensus",
  "serde",
  "soil-client",
@@ -8190,7 +8175,6 @@ dependencies = [
  "parity-scale-codec",
  "parking_lot 0.12.5",
  "rand 0.8.5",
- "sc-block-builder",
  "sc-consensus",
  "serde_json",
  "soil-chain-spec",
@@ -8244,18 +8228,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "sc-keystore"
-version = "25.0.0"
-dependencies = [
- "array-bytes 6.2.3",
- "parking_lot 0.12.5",
- "serde_json",
- "subsoil",
- "tempfile",
- "thiserror 1.0.69",
-]
-
-[[package]]
 name = "sc-mixnet"
 version = "0.4.0"
 dependencies = [
@@ -8296,7 +8268,6 @@ dependencies = [
  "parking_lot 0.12.5",
  "rand 0.8.5",
  "rustls",
- "sc-block-builder",
  "sc-transaction-pool",
  "soil-client",
  "soil-network",
@@ -8322,11 +8293,8 @@ dependencies = [
  "parity-scale-codec",
  "parking_lot 0.12.5",
  "pretty_assertions",
- "sc-block-builder",
- "sc-keystore",
  "sc-mixnet",
  "sc-statement-store",
- "sc-tracing",
  "sc-transaction-pool",
  "serde_json",
  "soil-chain-spec",
@@ -8355,7 +8323,6 @@ dependencies = [
  "log",
  "parity-db",
  "parking_lot 0.12.5",
- "sc-keystore",
  "soil-client",
  "soil-network-statement",
  "soil-statement-store",
@@ -8363,30 +8330,6 @@ dependencies = [
  "substrate-prometheus-endpoint",
  "tempfile",
  "tokio",
-]
-
-[[package]]
-name = "sc-tracing"
-version = "28.0.0"
-dependencies = [
- "chrono",
- "console",
- "criterion",
- "is-terminal",
- "libc",
- "log",
- "parity-scale-codec",
- "parking_lot 0.12.5",
- "regex",
- "rustc-hash 1.1.0",
- "serde",
- "soil-client",
- "subsoil",
- "subsoil-derive",
- "thiserror 1.0.69",
- "tracing",
- "tracing-log",
- "tracing-subscriber",
 ]
 
 [[package]]
@@ -8407,7 +8350,6 @@ dependencies = [
  "parity-scale-codec",
  "parking_lot 0.12.5",
  "rstest",
- "sc-block-builder",
  "serde",
  "serde_json",
  "soil-client",
@@ -9220,7 +9162,6 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "parking_lot 0.12.5",
- "sc-block-builder",
  "sc-transaction-pool",
  "soil-client",
  "soil-proposer-metrics",
@@ -9282,9 +9223,7 @@ dependencies = [
  "rand 0.8.5",
  "regex",
  "rpassword",
- "sc-keystore",
  "sc-mixnet",
- "sc-tracing",
  "sc-transaction-pool",
  "serde",
  "serde_json",
@@ -9308,7 +9247,9 @@ dependencies = [
  "async-channel 1.9.0",
  "async-trait",
  "cargo_metadata",
+ "chrono",
  "clap",
+ "console",
  "criterion",
  "fnv",
  "fs4",
@@ -9316,10 +9257,12 @@ dependencies = [
  "futures-timer",
  "hash-db",
  "indexmap",
+ "is-terminal",
  "kitchensink-runtime",
  "kvdb",
  "kvdb-memorydb",
  "kvdb-rocksdb",
+ "libc",
  "linked-hash-map",
  "log",
  "parity-db",
@@ -9329,8 +9272,9 @@ dependencies = [
  "polkavm",
  "prometheus",
  "rand 0.8.5",
+ "regex",
+ "rustc-hash 1.1.0",
  "rustix 1.1.4",
- "sc-tracing",
  "schnellru",
  "serde",
  "serde_json",
@@ -9338,6 +9282,7 @@ dependencies = [
  "strum 0.26.3",
  "subsoil",
  "subsoil-crypto-hashing",
+ "subsoil-derive",
  "substrate-prometheus-endpoint",
  "substrate-test-runtime",
  "substrate-test-runtime-client",
@@ -9346,6 +9291,7 @@ dependencies = [
  "thiserror 1.0.69",
  "tokio",
  "tracing",
+ "tracing-log",
  "tracing-subscriber",
  "wasm-instrument",
  "wasmtime",
@@ -9409,7 +9355,6 @@ dependencies = [
  "jsonrpsee",
  "log",
  "parity-scale-codec",
- "sc-block-builder",
  "sc-consensus-grandpa",
  "sc-rpc",
  "serde",
@@ -9488,7 +9433,6 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "parking_lot 0.12.5",
- "sc-block-builder",
  "sc-offchain",
  "soil-client",
  "subsoil",
@@ -9538,7 +9482,6 @@ dependencies = [
  "prost 0.12.6",
  "prost-build 0.13.5",
  "rand 0.8.5",
- "sc-block-builder",
  "schnellru",
  "serde",
  "serde_json",
@@ -9624,7 +9567,6 @@ dependencies = [
  "governor",
  "log",
  "parity-scale-codec",
- "sc-keystore",
  "sc-statement-store",
  "soil-client",
  "soil-network",
@@ -9654,7 +9596,6 @@ dependencies = [
  "prost 0.12.6",
  "prost-build 0.13.5",
  "quickcheck",
- "sc-block-builder",
  "sc-consensus",
  "schnellru",
  "smallvec",
@@ -9683,7 +9624,6 @@ dependencies = [
  "log",
  "parking_lot 0.12.5",
  "rand 0.8.5",
- "sc-block-builder",
  "sc-consensus",
  "soil-client",
  "soil-network",
@@ -9818,7 +9758,6 @@ dependencies = [
  "parking_lot 0.12.5",
  "pretty_assertions",
  "rand 0.8.5",
- "sc-block-builder",
  "sc-rpc",
  "sc-transaction-pool",
  "schnellru",
@@ -9874,9 +9813,7 @@ dependencies = [
  "pin-project",
  "rand 0.8.5",
  "sc-consensus",
- "sc-keystore",
  "sc-rpc",
- "sc-tracing",
  "sc-transaction-pool",
  "schnellru",
  "serde",
@@ -9920,7 +9857,6 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "parking_lot 0.12.5",
- "sc-block-builder",
  "sc-consensus",
  "soil-client",
  "soil-network",
@@ -10079,7 +10015,6 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "rustversion",
- "sc-block-builder",
  "scale-info",
  "soil-client",
  "static_assertions",
@@ -10261,7 +10196,6 @@ dependencies = [
  "rand 0.8.5",
  "regex",
  "sc-authority-discovery",
- "sc-block-builder",
  "sc-consensus",
  "sc-consensus-aura",
  "sc-consensus-babe",
@@ -10269,12 +10203,10 @@ dependencies = [
  "sc-consensus-grandpa",
  "sc-consensus-pow",
  "sc-consensus-slots",
- "sc-keystore",
  "sc-mixnet",
  "sc-offchain",
  "sc-rpc",
  "sc-statement-store",
- "sc-tracing",
  "sc-transaction-pool",
  "scale-info",
  "serde",
@@ -10727,7 +10659,6 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "pretty_assertions",
- "sc-block-builder",
  "scale-info",
  "serde",
  "serde_json",
@@ -10762,7 +10693,6 @@ name = "substrate-test-runtime-client"
 version = "2.0.0"
 dependencies = [
  "futures",
- "sc-block-builder",
  "sc-consensus",
  "soil-client",
  "subsoil",

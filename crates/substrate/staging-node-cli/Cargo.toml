@@ -76,7 +76,6 @@ topsoil-im-online = { workspace = true, default-features = true }
 topsoil-transaction-payment-rpc = { workspace = true, default-features = true }
 sc-authority-discovery = { workspace = true, default-features = true }
 soil-basic-authorship = { workspace = true, default-features = true }
-sc-block-builder = { workspace = true, default-features = true }
 soil-chain-spec = { workspace = true, default-features = true }
 soil-cli = { workspace = true, default-features = true }
 sc-consensus = { workspace = true, default-features = true }
@@ -92,7 +91,6 @@ soil-manual-seal = { workspace = true, default-features = true }
 sc-consensus-pow = { workspace = true, default-features = true }
 sc-consensus-slots = { workspace = true, default-features = true }
 soil-informant = { workspace = true, default-features = true }
-sc-keystore = { workspace = true, default-features = true }
 sc-mixnet = { workspace = true, default-features = true }
 soil-network = { workspace = true, default-features = true }
 soil-network-common = { workspace = true, default-features = true }
@@ -113,7 +111,6 @@ sc-statement-store = { workspace = true, default-features = true }
 soil-sync-state-rpc = { workspace = true, default-features = true }
 soil-sysinfo = { workspace = true, default-features = true }
 soil-telemetry = { workspace = true, default-features = true }
-sc-tracing = { workspace = true, default-features = true }
 sc-transaction-pool = { workspace = true, default-features = true }
 soil-authority-discovery = { workspace = true, default-features = true }
 soil-client = { workspace = true, default-features = true }

@@ -32,7 +32,6 @@ tokio = { workspace = true, default-features = true }
 wasm-timer = { workspace = true }
 
 [dev-dependencies]
-sc-block-builder = { workspace = true, default-features = true }
 soil-network-test = { workspace = true }
 serde = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }

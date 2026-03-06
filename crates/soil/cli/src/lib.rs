@@ -43,7 +43,7 @@ pub use config::*;
 pub use error::*;
 pub use params::*;
 pub use runner::*;
-pub use sc_tracing::logging::LoggerBuilder;
+pub use soil_client::tracing::logging::LoggerBuilder;
 pub use signals::Signals;
 pub use soil_service::{ChainSpec, Role};
 pub use subsoil::version::RuntimeVersion;
@@ -188,10 +188,10 @@ pub trait SubstrateCli: Sized {
 	///
 	/// Example:
 	/// ```
-	/// use sc_tracing::{SpanDatum, TraceEvent};
+	/// use soil_client::tracing::{SpanDatum, TraceEvent};
 	/// struct TestProfiler;
 	///
-	/// impl sc_tracing::TraceHandler for TestProfiler {
+	/// impl soil_client::tracing::TraceHandler for TestProfiler {
 	///  	fn handle_span(&self, sd: &SpanDatum) {}
 	/// 		fn handle_event(&self, _event: &TraceEvent) {}
 	/// };

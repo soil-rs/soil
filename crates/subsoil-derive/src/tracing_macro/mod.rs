@@ -58,12 +58,16 @@ pub(crate) fn prefix_logs_with(arg: TokenStream, item: TokenStream) -> TokenStre
 
 fn resolve_sc_tracing() -> Result<Path> {
 	match crate_name("polkadot-sdk") {
-		Ok(FoundCrate::Itself) => syn::parse_str("polkadot_sdk::sc_tracing"),
-		Ok(FoundCrate::Name(sdk_name)) => syn::parse_str(&format!("{}::sc_tracing", sdk_name)),
-		Err(_) => match crate_name("sc-tracing") {
-			Ok(FoundCrate::Itself) => syn::parse_str("sc_tracing"),
-			Ok(FoundCrate::Name(name)) => syn::parse_str(&name),
-			Err(e) => Err(syn::Error::new(Span::call_site(), e)),
+		Ok(FoundCrate::Itself) => syn::parse_str("polkadot_sdk::soil_client::tracing"),
+		Ok(FoundCrate::Name(sdk_name)) => syn::parse_str(&format!("{}::soil_client::tracing", sdk_name)),
+		Err(_) => match crate_name("soil-client") {
+			Ok(FoundCrate::Itself) => syn::parse_str("crate::tracing"),
+			Ok(FoundCrate::Name(name)) => syn::parse_str(&format!("{}::tracing", name)),
+			Err(_) => match crate_name("sc-tracing") {
+				Ok(FoundCrate::Itself) => syn::parse_str("sc_tracing"),
+				Ok(FoundCrate::Name(name)) => syn::parse_str(&name),
+				Err(e) => Err(syn::Error::new(Span::call_site(), e)),
+			},
 		},
 	}
 }

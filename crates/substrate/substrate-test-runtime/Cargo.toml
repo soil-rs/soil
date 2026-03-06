@@ -47,7 +47,6 @@ tracing = { workspace = true, default-features = false }
 [dev-dependencies]
 futures = { workspace = true }
 pretty_assertions = { workspace = true }
-sc-block-builder = { workspace = true, default-features = true }
 soil-chain-spec = { workspace = true, default-features = true }
 serde = { features = ["alloc", "derive"], workspace = true }
 soil-client = { workspace = true, default-features = true }

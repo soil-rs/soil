@@ -327,7 +327,7 @@ where
 mod tests {
 	use super::*;
 	use futures::executor::block_on;
-	use sc_block_builder::BlockBuilderBuilder;
+	use soil_client::block_builder::BlockBuilderBuilder;
 	use sc_transaction_pool::BasicPool;
 	use soil_client::client_api::Backend as _;
 	use soil_client::consensus::BlockOrigin;

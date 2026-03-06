@@ -17,7 +17,7 @@
 
 //! Block Builder extensions for tests.
 
-use sc_block_builder::BlockBuilderApi;
+use soil_client::block_builder::BlockBuilderApi;
 use subsoil::api::{ApiExt, ProvideRuntimeApi};
 use substrate_test_runtime::*;
 
@@ -43,7 +43,7 @@ pub trait BlockBuilderExt {
 	) -> Result<(), soil_client::blockchain::Error>;
 }
 
-impl<'a, A> BlockBuilderExt for sc_block_builder::BlockBuilder<'a, substrate_test_runtime::Block, A>
+impl<'a, A> BlockBuilderExt for soil_client::block_builder::BlockBuilder<'a, substrate_test_runtime::Block, A>
 where
 	A: ProvideRuntimeApi<substrate_test_runtime::Block>
 		+ subsoil::api::CallApiAt<substrate_test_runtime::Block>

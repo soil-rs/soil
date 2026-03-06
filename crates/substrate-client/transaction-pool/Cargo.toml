@@ -47,7 +47,6 @@ chrono = { workspace = true }
 criterion = { workspace = true, default-features = true }
 env_logger = { workspace = true }
 rstest = { workspace = true }
-sc-block-builder = { workspace = true, default-features = true }
 serde = { workspace = true }
 serde_json = { workspace = true }
 substrate-test-runtime = { workspace = true }

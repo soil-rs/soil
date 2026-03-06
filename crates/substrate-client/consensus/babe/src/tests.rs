@@ -20,7 +20,7 @@
 
 use super::*;
 use authorship::claim_slot;
-use sc_block_builder::{BlockBuilder, BlockBuilderBuilder};
+use soil_client::block_builder::{BlockBuilder, BlockBuilderBuilder};
 use sc_consensus::{BoxBlockImport, BoxJustificationImport};
 use sc_consensus_slots::BackoffAuthoringOnFinalizedHeadLagging;
 use subsoil::application_crypto::key_types::BABE;

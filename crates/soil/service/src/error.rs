@@ -18,7 +18,7 @@
 
 //! Errors that can occur during the service operation.
 
-use sc_keystore;
+use soil_client::keystore;
 use soil_client::blockchain;
 use soil_client::consensus;
 
@@ -43,7 +43,7 @@ pub enum Error {
 	Network(#[from] soil_network::error::Error),
 
 	#[error(transparent)]
-	Keystore(#[from] sc_keystore::Error),
+	Keystore(#[from] soil_client::keystore::Error),
 
 	#[error(transparent)]
 	Telemetry(#[from] soil_telemetry::Error),

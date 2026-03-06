@@ -9,3 +9,6 @@ pub mod storage_monitor;
 pub mod transaction_pool;
 pub mod client_api;
 pub mod utils;
+pub mod tracing;
+pub mod block_builder;
+pub mod keystore;

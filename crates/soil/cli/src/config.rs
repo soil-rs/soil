@@ -25,7 +25,7 @@ use crate::{
 };
 use log::warn;
 use names::{Generator, Name};
-use sc_tracing::logging::LoggerBuilder;
+use soil_client::tracing::logging::LoggerBuilder;
 use soil_service::{
 	config::{
 		BasePath, Configuration, DatabaseSource, ExecutorConfiguration, IpNetwork, KeystoreConfig,
@@ -620,10 +620,10 @@ pub trait CliConfiguration<DCV: DefaultConfigurationValues = ()>: Sized {
 	///
 	/// Example:
 	/// ```
-	/// use sc_tracing::{SpanDatum, TraceEvent};
+	/// use soil_client::tracing::{SpanDatum, TraceEvent};
 	/// struct TestProfiler;
 	///
-	/// impl sc_tracing::TraceHandler for TestProfiler {
+	/// impl soil_client::tracing::TraceHandler for TestProfiler {
 	///  	fn handle_span(&self, sd: &SpanDatum) {}
 	/// 		fn handle_event(&self, _event: &TraceEvent) {}
 	/// };

@@ -399,7 +399,7 @@ mod test {
 		strategy::state_sync::{ImportResult, StateSyncProgress, StateSyncProvider},
 	};
 	use codec::Decode;
-	use sc_block_builder::BlockBuilderBuilder;
+	use soil_client::block_builder::BlockBuilderBuilder;
 	use sc_consensus::{ImportedAux, ImportedState};
 	use soil_client::client_api::KeyValueStates;
 	use subsoil::core::H256;

@@ -40,7 +40,6 @@ tracing = { workspace = true, default-features = true }
 
 [dev-dependencies]
 async-trait = { workspace = true }
-sc-block-builder = { workspace = true, default-features = true }
 sc-transaction-pool = { workspace = true, default-features = true }
 soil-client = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }

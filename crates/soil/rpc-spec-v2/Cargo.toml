@@ -45,7 +45,6 @@ assert_matches = { workspace = true }
 async-trait = { workspace = true }
 jsonrpsee = { workspace = true, features = ["server", "ws-client"] }
 pretty_assertions = { workspace = true }
-sc-block-builder = { workspace = true, default-features = true }
 sc-rpc = { workspace = true, default-features = true, features = ["test-helpers"] }
 soil-service = { workspace = true, default-features = true }
 sc-transaction-pool = { workspace = true, default-features = true }

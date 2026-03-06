@@ -888,7 +888,7 @@ mod tests {
 	use node_primitives::{Block, DigestItem, Signature};
 	use sc_consensus::{BlockImport, BlockImportParams, ForkChoiceStrategy};
 	use sc_consensus_babe::{BabeIntermediate, CompatibleDigestItem, INTERMEDIATE_KEY};
-	use sc_keystore::LocalKeystore;
+	use soil_client::keystore::LocalKeystore;
 	use soil_client::client_api::BlockBackend;
 	use soil_client::consensus::{BlockOrigin, Environment, Proposer};
 	use soil_consensus_epochs::descendent_query;

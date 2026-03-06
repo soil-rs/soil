@@ -39,7 +39,7 @@ use kitchensink_runtime::{
 	RuntimeCall, Signature, SystemCall, UncheckedExtrinsic,
 };
 use node_primitives::Block;
-use sc_block_builder::BlockBuilderBuilder;
+use soil_client::block_builder::BlockBuilderBuilder;
 use sc_consensus::{BlockImport, BlockImportParams, ForkChoiceStrategy, ImportResult, ImportedAux};
 use subsoil::api::ProvideRuntimeApi;
 use subsoil::block_builder::BlockBuilder;

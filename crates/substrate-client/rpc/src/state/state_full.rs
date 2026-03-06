@@ -32,7 +32,7 @@ use crate::{
 
 use futures::{future, stream, StreamExt};
 use jsonrpsee::{core::async_trait, types::ErrorObject, PendingSubscriptionSink};
-use sc_tracing::block::TracingExecuteBlock;
+use soil_client::tracing::block::TracingExecuteBlock;
 use subsoil::api::{CallApiAt, Metadata, ProvideRuntimeApi};
 use soil_client::blockchain::{
 	CachedHeaderMetadata, Error as ClientError, HeaderBackend, HeaderMetadata,
@@ -479,7 +479,7 @@ where
 		storage_keys: Option<String>,
 		methods: Option<String>,
 	) -> std::result::Result<soil_rpc::tracing::TraceBlockResponse, Error> {
-		sc_tracing::block::BlockExecutor::new(
+		soil_client::tracing::block::BlockExecutor::new(
 			self.client.clone(),
 			block,
 			targets,

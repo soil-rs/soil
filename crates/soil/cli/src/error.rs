@@ -69,7 +69,7 @@ pub enum Error {
 	KeystoreOperation,
 
 	#[error("Key storage issue encountered")]
-	KeyStorage(#[from] sc_keystore::Error),
+	KeyStorage(#[from] soil_client::keystore::Error),
 
 	#[error("Invalid hexadecimal string data, {0:?}")]
 	HexDataConversion(array_bytes::Error),
@@ -79,7 +79,7 @@ pub enum Error {
 	Application(#[from] Box<dyn std::error::Error + Send + Sync + 'static>),
 
 	#[error(transparent)]
-	GlobalLoggerError(#[from] sc_tracing::logging::Error),
+	GlobalLoggerError(#[from] soil_client::tracing::logging::Error),
 
 	#[error(
 		"Starting an authorithy without network key in {0}.

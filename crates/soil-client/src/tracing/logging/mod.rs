@@ -35,7 +35,7 @@ pub use subsoil_derive::*;
 
 use is_terminal::IsTerminal;
 use std::io;
-use tracing::Subscriber;
+use ::tracing::Subscriber;
 use tracing_subscriber::{
 	filter::LevelFilter,
 	fmt::{
@@ -63,7 +63,7 @@ pub type Result<T> = std::result::Result<T, Error>;
 #[error(transparent)]
 pub enum Error {
 	IoError(#[from] io::Error),
-	SetGlobalDefaultError(#[from] tracing::subscriber::SetGlobalDefaultError),
+	SetGlobalDefaultError(#[from] ::tracing::subscriber::SetGlobalDefaultError),
 	DirectiveParseError(#[from] tracing_subscriber::filter::ParseError),
 	SetLoggerError(#[from] tracing_log::log_tracer::SetLoggerError),
 }
@@ -217,8 +217,8 @@ where
 /// A builder that is used to initialize the global logger.
 pub struct LoggerBuilder {
 	directives: String,
-	profiling: Option<(crate::TracingReceiver, String)>,
-	custom_profiler: Option<Box<dyn crate::TraceHandler>>,
+	profiling: Option<(super::TracingReceiver, String)>,
+	custom_profiler: Option<Box<dyn super::TraceHandler>>,
 	log_reloading: bool,
 	force_colors: Option<bool>,
 	detailed_output: bool,
@@ -240,7 +240,7 @@ impl LoggerBuilder {
 	/// Set up the profiling.
 	pub fn with_profiling<S: Into<String>>(
 		&mut self,
-		tracing_receiver: crate::TracingReceiver,
+		tracing_receiver: super::TracingReceiver,
 		profiling_targets: S,
 	) -> &mut Self {
 		self.profiling = Some((tracing_receiver, profiling_targets.into()));
@@ -250,7 +250,7 @@ impl LoggerBuilder {
 	/// Add a custom profiler.
 	pub fn with_custom_profiling(
 		&mut self,
-		custom_profiler: Box<dyn crate::TraceHandler>,
+		custom_profiler: Box<dyn super::TraceHandler>,
 	) -> &mut Self {
 		self.custom_profiler = Some(custom_profiler);
 		self
@@ -293,13 +293,13 @@ impl LoggerBuilder {
 					|builder| enable_log_reloading!(builder),
 				)?;
 				let mut profiling =
-					crate::ProfilingLayer::new(tracing_receiver, &profiling_targets);
+					super::ProfilingLayer::new(tracing_receiver, &profiling_targets);
 
 				self.custom_profiler
 					.into_iter()
 					.for_each(|profiler| profiling.add_handler(profiler));
 
-				tracing::subscriber::set_global_default(subscriber.with(profiling))?;
+				::tracing::subscriber::set_global_default(subscriber.with(profiling))?;
 
 				Ok(())
 			} else {
@@ -311,13 +311,13 @@ impl LoggerBuilder {
 					|builder| builder,
 				)?;
 				let mut profiling =
-					crate::ProfilingLayer::new(tracing_receiver, &profiling_targets);
+					super::ProfilingLayer::new(tracing_receiver, &profiling_targets);
 
 				self.custom_profiler
 					.into_iter()
 					.for_each(|profiler| profiling.add_handler(profiler));
 
-				tracing::subscriber::set_global_default(subscriber.with(profiling))?;
+				::tracing::subscriber::set_global_default(subscriber.with(profiling))?;
 
 				Ok(())
 			}
@@ -330,7 +330,7 @@ impl LoggerBuilder {
 				|builder| enable_log_reloading!(builder),
 			)?;
 
-			tracing::subscriber::set_global_default(subscriber)?;
+			::tracing::subscriber::set_global_default(subscriber)?;
 
 			Ok(())
 		} else {
@@ -342,7 +342,7 @@ impl LoggerBuilder {
 				|builder| builder,
 			)?;
 
-			tracing::subscriber::set_global_default(subscriber)?;
+			::tracing::subscriber::set_global_default(subscriber)?;
 
 			Ok(())
 		}
@@ -352,7 +352,7 @@ impl LoggerBuilder {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use crate as sc_tracing;
+	use crate::tracing as sc_tracing;
 	use log::info;
 	use std::{
 		collections::BTreeMap,
@@ -363,7 +363,7 @@ mod tests {
 			Arc,
 		},
 	};
-	use tracing::{metadata::Kind, subscriber::Interest, Callsite, Level, Metadata};
+	use ::tracing::{metadata::Kind, subscriber::Interest, Callsite, Level, Metadata};
 
 	const EXPECTED_LOG_MESSAGE: &'static str = "yeah logging works as expected";
 	const EXPECTED_NODE_NAME: &'static str = "THE_NODE";
@@ -398,7 +398,7 @@ mod tests {
 				"grandpa=debug,sync=trace,client=warn,telemetry,something-with-dash=error";
 			init_logger(&test_directives);
 
-			tracing::dispatcher::get_default(|dispatcher| {
+			::tracing::dispatcher::get_default(|dispatcher| {
 				let test_filter = |target, level| {
 					struct DummyCallSite;
 					impl Callsite for DummyCallSite {
@@ -408,7 +408,7 @@ mod tests {
 						}
 					}
 
-					let metadata = tracing::metadata!(
+					let metadata = ::tracing::metadata!(
 						name: "",
 						target: target,
 						level: level,
@@ -491,7 +491,7 @@ mod tests {
 		}
 	}
 
-	#[crate::logging::prefix_logs_with(EXPECTED_NODE_NAME)]
+	#[crate::tracing::logging::prefix_logs_with(EXPECTED_NODE_NAME)]
 	fn prefix_in_log_lines_process() {
 		log::info!("{}", EXPECTED_LOG_MESSAGE);
 	}
@@ -552,7 +552,7 @@ mod tests {
 			let mut builder = LoggerBuilder::new("");
 
 			if let Ok(targets) = env::var("TRACING_TARGETS") {
-				builder.with_profiling(crate::TracingReceiver::Log, targets);
+				builder.with_profiling(super::TracingReceiver::Log, targets);
 			}
 
 			builder.init().unwrap();

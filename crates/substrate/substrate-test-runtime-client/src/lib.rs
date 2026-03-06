@@ -47,7 +47,7 @@ pub mod prelude {
 	// Keyring
 	pub use super::Sr25519Keyring;
 	pub use futures::executor::block_on;
-	pub use sc_block_builder::BlockBuilderBuilder;
+	pub use soil_client::block_builder::BlockBuilderBuilder;
 	pub use soil_client::blockchain::HeaderBackend;
 }
 

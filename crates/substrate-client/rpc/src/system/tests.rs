@@ -347,7 +347,7 @@ fn test_add_reset_log_filter() {
 
 	// Enter log generation / filter reload
 	if std::env::var("TEST_LOG_FILTER").is_ok() {
-		let mut builder = sc_tracing::logging::LoggerBuilder::new("test_before_add=debug");
+		let mut builder = soil_client::tracing::logging::LoggerBuilder::new("test_before_add=debug");
 		builder.with_log_reloading(true);
 		builder.init().unwrap();
 

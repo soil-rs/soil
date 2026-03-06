@@ -548,10 +548,10 @@ where
 mod tests {
 	use super::*;
 	use parking_lot::Mutex;
-	use sc_block_builder::BlockBuilderBuilder;
+	use soil_client::block_builder::BlockBuilderBuilder;
 	use sc_consensus::BoxJustificationImport;
 	use sc_consensus_slots::{BackoffAuthoringOnFinalizedHeadLagging, SimpleSlotWorker};
-	use sc_keystore::LocalKeystore;
+	use soil_client::keystore::LocalKeystore;
 	use subsoil::application_crypto::{key_types::AURA, AppCrypto};
 	use soil_client::client_api::BlockchainEvents;
 	use soil_client::consensus::{NoNetwork as DummyOracle, Proposal, ProposeArgs};

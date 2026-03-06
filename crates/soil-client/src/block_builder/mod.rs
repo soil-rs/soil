@@ -32,7 +32,7 @@ use subsoil::api::{
 	ApiExt, ApiRef, CallApiAt, Core, ProofRecorder, ProvideRuntimeApi, StorageChanges,
 	TransactionOutcome,
 };
-use soil_client::blockchain::{ApplyExtrinsicFailed, Error, HeaderBackend};
+use crate::blockchain::{ApplyExtrinsicFailed, Error, HeaderBackend};
 use subsoil::core::traits::CallContext;
 use subsoil::externalities::Extensions;
 use subsoil::runtime::{
@@ -339,7 +339,7 @@ where
 		let storage_changes = self
 			.api
 			.into_storage_changes(&state, self.parent_hash)
-			.map_err(soil_client::blockchain::Error::StorageChanges)?;
+			.map_err(crate::blockchain::Error::StorageChanges)?;
 
 		Ok(BuiltBlock { block: <Block as BlockT>::new(header, self.extrinsics), storage_changes })
 	}
@@ -380,7 +380,7 @@ where
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use soil_client::blockchain::HeaderBackend;
+	use crate::blockchain::HeaderBackend;
 	use subsoil::core::Blake2Hasher;
 	use subsoil::state_machine::Backend;
 	use substrate_test_runtime_client::{

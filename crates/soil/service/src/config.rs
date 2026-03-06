@@ -108,7 +108,7 @@ pub struct Configuration {
 	/// Tracing targets
 	pub tracing_targets: Option<String>,
 	/// Tracing receiver
-	pub tracing_receiver: sc_tracing::TracingReceiver,
+	pub tracing_receiver: soil_client::tracing::TracingReceiver,
 	/// Announce block automatically after they have been imported
 	pub announce_block: bool,
 	/// Data path root for the configured chain.

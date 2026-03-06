@@ -24,7 +24,7 @@ use futures::{
 	prelude::*,
 	task::Poll,
 };
-use sc_block_builder::BlockBuilderBuilder;
+use soil_client::block_builder::BlockBuilderBuilder;
 use sc_transaction_pool::*;
 use soil_client::blockchain::HeaderBackend;
 use soil_client::client_api::client::BlockchainEvents;

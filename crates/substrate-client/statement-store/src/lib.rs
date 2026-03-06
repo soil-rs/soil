@@ -55,7 +55,7 @@ use futures::FutureExt;
 use metrics::MetricsLink as PrometheusMetrics;
 use parking_lot::{lock_api::RwLockUpgradableReadGuard, RwLock};
 use prometheus_endpoint::Registry as PrometheusRegistry;
-use sc_keystore::LocalKeystore;
+use soil_client::keystore::LocalKeystore;
 use soil_client::blockchain::HeaderBackend;
 use soil_client::client_api::{backend::StorageProvider, Backend, StorageKey};
 use subsoil::core::{
@@ -1495,7 +1495,7 @@ impl StatementStoreSubscriptionApi for Store {
 mod tests {
 
 	use crate::{col, Store};
-	use sc_keystore::Keystore;
+	use soil_client::keystore::Keystore;
 	use subsoil::core::{Decode, Encode, Pair};
 	use soil_statement_store::{
 		AccountId, Channel, DecryptionKey, InvalidReason, Proof, Statement, StatementSource,
@@ -1663,7 +1663,7 @@ mod tests {
 		let client = std::sync::Arc::new(TestClient);
 		let mut path: std::path::PathBuf = temp_dir.path().into();
 		path.push("db");
-		let keystore = std::sync::Arc::new(sc_keystore::LocalKeystore::in_memory());
+		let keystore = std::sync::Arc::new(soil_client::keystore::LocalKeystore::in_memory());
 		let store = Store::new::<Block, TestClient, TestBackend>(
 			&path,
 			Default::default(),

@@ -25,7 +25,7 @@ use tracing_subscriber::fmt::{
 fn bench_fast_local_time(c: &mut Criterion) {
 	c.bench_function("fast_local_time", |b| {
 		let mut buffer = String::new();
-		let t = sc_tracing::logging::FastLocalTime { with_fractional: true };
+		let t = soil_client::tracing::logging::FastLocalTime { with_fractional: true };
 		b.iter(|| {
 			buffer.clear();
 			let mut writer = format::Writer::new(&mut buffer);

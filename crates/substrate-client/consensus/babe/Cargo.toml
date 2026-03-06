@@ -37,7 +37,6 @@ subsoil = { workspace = true, default-features = true }
 thiserror = { workspace = true }
 
 [dev-dependencies]
-sc-block-builder = { workspace = true, default-features = true }
 soil-network-test = { workspace = true }
 subsoil = { workspace = true, default-features = true }
 substrate-test-runtime-client = { workspace = true }

@@ -43,7 +43,7 @@ use futures::{future::BoxFuture, pin_mut, prelude::*};
 use libp2p::PeerId;
 use log::trace;
 use parking_lot::Mutex;
-use sc_block_builder::{BlockBuilder, BlockBuilderBuilder};
+use soil_client::block_builder::{BlockBuilder, BlockBuilderBuilder};
 use sc_consensus::{
 	BasicQueue, BlockCheckParams, BlockImport, BlockImportParams, BoxJustificationImport,
 	ForkChoiceStrategy, ImportQueue, ImportResult, JustificationImport, JustificationSyncLink,

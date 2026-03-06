@@ -28,16 +28,16 @@ use std::{
 
 use codec::Encode;
 use parking_lot::Mutex;
-use tracing::{
+use ::tracing::{
 	dispatcher,
 	span::{Attributes, Id, Record},
 	Dispatch, Level, Subscriber,
 };
 
-use crate::{SpanDatum, TraceEvent, Values};
+use super::{SpanDatum, TraceEvent, Values};
 use subsoil::api::{Core, ProvideRuntimeApi};
-use soil_client::blockchain::HeaderBackend;
-use soil_client::client_api::BlockBackend;
+use crate::blockchain::HeaderBackend;
+use crate::client_api::BlockBackend;
 use subsoil::core::hexdisplay::HexDisplay;
 use subsoil::tracing::rpc::{BlockTrace, Span, TraceBlockResponse};
 use subsoil::runtime::{
@@ -62,7 +62,7 @@ pub trait TracingExecuteBlock<Block: BlockT>: Send + Sync {
 	///
 	/// The execution should be done sync on the same thread, because the caller will register
 	/// special tracing collectors.
-	fn execute_block(&self, orig_hash: Block::Hash, block: Block) -> soil_client::blockchain::Result<()>;
+	fn execute_block(&self, orig_hash: Block::Hash, block: Block) -> crate::blockchain::Result<()>;
 }
 
 /// Default implementation of [`ExecuteBlock`].
@@ -85,7 +85,7 @@ where
 	Client::Api: Core<Block>,
 	Block: BlockT,
 {
-	fn execute_block(&self, _: Block::Hash, block: Block) -> soil_client::blockchain::Result<()> {
+	fn execute_block(&self, _: Block::Hash, block: Block) -> crate::blockchain::Result<()> {
 		self.client
 			.runtime_api()
 			.execute_block(*block.header().parent_hash(), block.into())
@@ -102,7 +102,7 @@ pub type TraceBlockResult<T> = Result<T, Error>;
 #[non_exhaustive]
 pub enum Error {
 	#[error("Invalid block Id: {0}")]
-	InvalidBlockId(#[from] soil_client::blockchain::Error),
+	InvalidBlockId(#[from] crate::blockchain::Error),
 	#[error("Missing block component: {0}")]
 	MissingBlockComponent(String),
 	#[error("Dispatch error: {0}")]
@@ -119,7 +119,7 @@ struct BlockSubscriber {
 impl BlockSubscriber {
 	fn new(targets: &str) -> Self {
 		let next_id = AtomicU64::new(1);
-		let mut targets: Vec<_> = targets.split(',').map(crate::parse_target).collect();
+		let mut targets: Vec<_> = targets.split(',').map(super::parse_target).collect();
 		// Ensure that WASM traces are always enabled
 		// Filtering happens when decoding the actual target / level
 		targets.push((WASM_TRACE_IDENTIFIER.to_owned(), Level::TRACE));
@@ -133,7 +133,7 @@ impl BlockSubscriber {
 }
 
 impl Subscriber for BlockSubscriber {
-	fn enabled(&self, metadata: &tracing::Metadata<'_>) -> bool {
+	fn enabled(&self, metadata: &::tracing::Metadata<'_>) -> bool {
 		if !metadata.is_span() && metadata.fields().field(REQUIRED_EVENT_FIELD).is_none() {
 			return false;
 		}
@@ -180,8 +180,8 @@ impl Subscriber for BlockSubscriber {
 		unimplemented!("record_follows_from is not implemented");
 	}
 
-	fn event(&self, event: &tracing::Event<'_>) {
-		let mut values = crate::Values::default();
+	fn event(&self, event: &::tracing::Event<'_>) {
+		let mut values = Values::default();
 		event.record(&mut values);
 		let parent_id = event.parent().cloned();
 		let trace_event = TraceEvent {
@@ -248,7 +248,7 @@ where
 	/// and filter out events which do not have keys starting with one of the
 	/// prefixes in `Self::storage_keys`.
 	pub fn trace_block(&self) -> TraceBlockResult<TraceBlockResponse> {
-		tracing::debug!(target: "state_tracing", "Tracing block: {}", self.block);
+		::tracing::debug!(target: "state_tracing", "Tracing block: {}", self.block);
 		// Prepare the block
 		let mut header = self
 			.client
@@ -260,7 +260,7 @@ where
 			.block_body(self.block)
 			.map_err(Error::InvalidBlockId)?
 			.ok_or_else(|| Error::MissingBlockComponent("Extrinsics not found".to_string()))?;
-		tracing::debug!(target: "state_tracing", "Found {} extrinsics", extrinsics.len());
+		::tracing::debug!(target: "state_tracing", "Found {} extrinsics", extrinsics.len());
 		let parent_hash = *header.parent_hash();
 		// Remove all `Seal`s as they are added by the consensus engines after building the block.
 		// On import they are normally removed by the consensus engine.
@@ -272,7 +272,7 @@ where
 		let dispatch = Dispatch::new(block_subscriber);
 
 		{
-			let dispatcher_span = tracing::debug_span!(
+			let dispatcher_span = ::tracing::debug_span!(
 				target: "state_tracing",
 				"execute_block",
 				extrinsics_len = block.extrinsics().len(),
@@ -280,7 +280,7 @@ where
 			let _guard = dispatcher_span.enter();
 
 			if let Err(e) = dispatcher::with_default(&dispatch, || {
-				let span = tracing::info_span!(target: TRACE_TARGET, "trace_block");
+				let span = ::tracing::info_span!(target: TRACE_TARGET, "trace_block");
 				let _enter = span.enter();
 				self.execute_block.execute_block(self.block, block)
 			}) {
@@ -320,7 +320,7 @@ where
 			})
 			.map(|s| s.into())
 			.collect();
-		tracing::debug!(target: "state_tracing", "Captured {} spans and {} events", spans.len(), events.len());
+		::tracing::debug!(target: "state_tracing", "Captured {} spans and {} events", spans.len(), events.len());
 
 		Ok(TraceBlockResponse::BlockTrace(BlockTrace {
 			block_hash: block_id_as_string(BlockId::<Block>::Hash(self.block)),
@@ -370,7 +370,7 @@ fn patch_and_filter(mut span: SpanDatum, targets: &str) -> Option<Span> {
 
 /// Check if a `target` matches any `targets` by prefix
 fn check_target(targets: &str, target: &str, level: &Level) -> bool {
-	for (t, l) in targets.split(',').map(crate::parse_target) {
+	for (t, l) in targets.split(',').map(super::parse_target) {
 		if target.starts_with(t.as_str()) && level <= &l {
 			return true;
 		}

@@ -41,7 +41,7 @@ subsoil::keystore::bls_experimental_enabled! {
 use subsoil::core::{bls381, ecdsa_bls381, KeccakHasher, proof_of_possession::ProofOfPossessionGenerator};
 }
 
-use crate::{Error, Result};
+use super::{Error, Result};
 
 /// A local based keystore that is either memory-based or filesystem-based.
 pub struct LocalKeystore(RwLock<KeystoreInner>);

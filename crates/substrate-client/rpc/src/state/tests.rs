@@ -22,7 +22,7 @@ use crate::testing::{allow_unsafe, test_executor, timeout_secs};
 use assert_matches::assert_matches;
 use futures::executor;
 use jsonrpsee::{core::EmptyServerParams as EmptyParams, MethodsError as RpcError};
-use sc_block_builder::BlockBuilderBuilder;
+use soil_client::block_builder::BlockBuilderBuilder;
 use soil_client::consensus::BlockOrigin;
 use subsoil::core::{hash::H256, storage::ChildInfo};
 use std::sync::Arc;

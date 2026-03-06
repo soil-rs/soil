@@ -392,7 +392,7 @@ mod tests {
 	use crate::{AuthoritySetChanges, GrandpaJustification};
 	use codec::Encode;
 	use rand::prelude::*;
-	use sc_block_builder::BlockBuilderBuilder;
+	use soil_client::block_builder::BlockBuilderBuilder;
 	use soil_client::blockchain::HeaderBackend;
 	use soil_client::consensus::BlockOrigin;
 	use subsoil::consensus::grandpa::GRANDPA_ENGINE_ID;

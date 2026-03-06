@@ -23,7 +23,6 @@ futures = { workspace = true }
 log = { workspace = true, default-features = true }
 parking_lot = { workspace = true, default-features = true }
 prometheus-endpoint = { workspace = true, default-features = true }
-sc-block-builder = { workspace = true, default-features = true }
 sc-consensus = { workspace = true, default-features = true }
 sc-consensus-slots = { workspace = true, default-features = true }
 soil-telemetry = { workspace = true, default-features = true }
@@ -32,7 +31,6 @@ subsoil = { workspace = true }
 thiserror = { workspace = true }
 
 [dev-dependencies]
-sc-keystore = { workspace = true, default-features = true }
 soil-network = { workspace = true, default-features = true }
 soil-network-test = { workspace = true }
 subsoil = { workspace = true, default-features = true }

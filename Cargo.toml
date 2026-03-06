@@ -227,7 +227,6 @@ members = [
 	"crates/substrate/substrate-test-runtime-transaction-pool",
 	"crates/substrate/substrate-wasm-builder",
 	"crates/substrate-client/authority-discovery",
-	"crates/substrate-client/block-builder",
 	"crates/substrate-client/consensus/aura",
 	"crates/substrate-client/consensus/babe",
 	"crates/substrate-client/consensus/beefy",
@@ -235,12 +234,10 @@ members = [
 	"crates/substrate-client/consensus/grandpa",
 	"crates/substrate-client/consensus/pow",
 	"crates/substrate-client/consensus/slots",
-	"crates/substrate-client/keystore",
 	"crates/substrate-client/mixnet",
 	"crates/substrate-client/offchain",
 	"crates/substrate-client/rpc",
 	"crates/substrate-client/statement-store",
-	"crates/substrate-client/tracing",
 	"crates/substrate-client/transaction-pool",
 ]
 
@@ -428,7 +425,6 @@ prometheus-endpoint = { path = "crates/substrate/substrate-prometheus-endpoint",
 remote-externalities = { path = "crates/substrate/frame-remote-externalities", default-features = false, package = "frame-remote-externalities" }
 sc-authority-discovery = { path = "crates/substrate-client/authority-discovery", default-features = false }
 soil-basic-authorship = { path = "crates/soil/basic-authorship", default-features = false }
-sc-block-builder = { path = "crates/substrate-client/block-builder", default-features = false }
 soil-chain-spec = { path = "crates/soil/chain-spec", default-features = false }
 soil-chain-spec-derive = { path = "crates/soil/chain-spec-derive", default-features = false }
 soil-cli = { path = "crates/soil/cli", default-features = false }
@@ -446,7 +442,6 @@ soil-manual-seal = { path = "crates/soil-manual-seal", default-features = false 
 sc-consensus-pow = { path = "crates/substrate-client/consensus/pow", default-features = false }
 sc-consensus-slots = { path = "crates/substrate-client/consensus/slots", default-features = false }
 soil-informant = { path = "crates/soil/informant", default-features = false }
-sc-keystore = { path = "crates/substrate-client/keystore", default-features = false }
 sc-mixnet = { path = "crates/substrate-client/mixnet", default-features = false }
 soil-network = { path = "crates/soil/network", default-features = false }
 soil-network-common = { path = "crates/soil/network-common", default-features = false }
@@ -471,7 +466,6 @@ sc-statement-store = { default-features = false, path = "crates/substrate-client
 soil-sync-state-rpc = { path = "crates/soil/sync-state-rpc", default-features = false }
 soil-sysinfo = { path = "crates/soil/sysinfo", default-features = false }
 soil-telemetry = { path = "crates/soil/telemetry", default-features = false }
-sc-tracing = { path = "crates/substrate-client/tracing", default-features = false }
 sc-transaction-pool = { path = "crates/substrate-client/transaction-pool", default-features = false }
 soil-authority-discovery = { path = "crates/soil/authority-discovery", default-features = false }
 subsoil = { path = "crates/subsoil", default-features = false }

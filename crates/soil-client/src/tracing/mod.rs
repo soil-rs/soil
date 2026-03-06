@@ -38,7 +38,7 @@ use std::{
 	fmt,
 	time::{Duration, Instant},
 };
-use tracing::{
+use ::tracing::{
 	event::Event,
 	field::{Field, Visit},
 	span::{Attributes, Id, Record},
@@ -51,7 +51,7 @@ use tracing_subscriber::{
 };
 
 #[doc(hidden)]
-pub use tracing;
+pub use ::tracing;
 
 const ZERO_DURATION: Duration = Duration::from_nanos(0);
 
@@ -489,7 +489,7 @@ mod tests {
 	}
 
 	fn setup_subscriber() -> (
-		impl tracing::Subscriber + Send + Sync,
+		impl ::tracing::Subscriber + Send + Sync,
 		Arc<Mutex<Vec<SpanDatum>>>,
 		Arc<Mutex<Vec<TraceEvent>>>,
 	) {
@@ -504,8 +504,8 @@ mod tests {
 	#[test]
 	fn test_span() {
 		let (sub, spans, events) = setup_subscriber();
-		let _sub_guard = tracing::subscriber::set_default(sub);
-		let span = tracing::info_span!(target: "test_target", "test_span1");
+		let _sub_guard = ::tracing::subscriber::set_default(sub);
+		let span = ::tracing::info_span!(target: "test_target", "test_span1");
 		assert_eq!(spans.lock().len(), 0);
 		assert_eq!(events.lock().len(), 0);
 		let _guard = span.enter();
@@ -525,10 +525,10 @@ mod tests {
 	#[test]
 	fn test_span_parent_id() {
 		let (sub, spans, _events) = setup_subscriber();
-		let _sub_guard = tracing::subscriber::set_default(sub);
-		let span1 = tracing::info_span!(target: "test_target", "test_span1");
+		let _sub_guard = ::tracing::subscriber::set_default(sub);
+		let span1 = ::tracing::info_span!(target: "test_target", "test_span1");
 		let _guard1 = span1.enter();
-		let span2 = tracing::info_span!(target: "test_target", "test_span2");
+		let span2 = ::tracing::info_span!(target: "test_target", "test_span2");
 		let _guard2 = span2.enter();
 		drop(_guard2);
 		drop(span2);
@@ -542,12 +542,12 @@ mod tests {
 	#[test]
 	fn test_span_values() {
 		let (sub, spans, _events) = setup_subscriber();
-		let _sub_guard = tracing::subscriber::set_default(sub);
+		let _sub_guard = ::tracing::subscriber::set_default(sub);
 		let test_bool = true;
 		let test_u64 = 1u64;
 		let test_i64 = 2i64;
 		let test_str = "test_str";
-		let span = tracing::info_span!(
+		let span = ::tracing::info_span!(
 			target: "test_target",
 			"test_span1",
 			test_bool,
@@ -571,8 +571,8 @@ mod tests {
 	#[test]
 	fn test_event() {
 		let (sub, _spans, events) = setup_subscriber();
-		let _sub_guard = tracing::subscriber::set_default(sub);
-		tracing::event!(target: "test_target", tracing::Level::INFO, "test_event");
+		let _sub_guard = ::tracing::subscriber::set_default(sub);
+		::tracing::event!(target: "test_target", ::tracing::Level::INFO, "test_event");
 		let mut te1 = events.lock().remove(0);
 		assert_eq!(
 			te1.values.string_values.remove(&"message".to_owned()).unwrap(),
@@ -583,14 +583,14 @@ mod tests {
 	#[test]
 	fn test_event_parent_id() {
 		let (sub, spans, events) = setup_subscriber();
-		let _sub_guard = tracing::subscriber::set_default(sub);
+		let _sub_guard = ::tracing::subscriber::set_default(sub);
 
 		// enter span
-		let span1 = tracing::info_span!(target: "test_target", "test_span1");
+		let span1 = ::tracing::info_span!(target: "test_target", "test_span1");
 		let _guard1 = span1.enter();
 
 		// emit event
-		tracing::event!(target: "test_target", tracing::Level::INFO, "test_event");
+		::tracing::event!(target: "test_target", ::tracing::Level::INFO, "test_event");
 
 		// exit span
 		drop(_guard1);
@@ -619,16 +619,16 @@ mod tests {
 			assert!(res.success());
 		} else {
 			let (sub, spans, events) = setup_subscriber();
-			let _sub_guard = tracing::subscriber::set_global_default(sub);
-			let span1 = tracing::info_span!(target: "test_target", "test_span1");
+			let _sub_guard = ::tracing::subscriber::set_global_default(sub);
+			let span1 = ::tracing::info_span!(target: "test_target", "test_span1");
 			let _guard1 = span1.enter();
 
 			let (tx, rx): (Sender<bool>, Receiver<bool>) = mpsc::channel();
 			let handle = thread::spawn(move || {
-				let span2 = tracing::info_span!(target: "test_target", "test_span2");
+				let span2 = ::tracing::info_span!(target: "test_target", "test_span2");
 				let _guard2 = span2.enter();
 				// emit event
-				tracing::event!(target: "test_target", tracing::Level::INFO, "test_event1");
+				::tracing::event!(target: "test_target", ::tracing::Level::INFO, "test_event1");
 				let _ = rx.recv();
 				// guard2 and span2 dropped / exited
 			});
@@ -639,7 +639,7 @@ mod tests {
 			}
 
 			// emit new event (will be second item in Vec) while span2 still active in other thread
-			tracing::event!(target: "test_target", tracing::Level::INFO, "test_event2");
+			::tracing::event!(target: "test_target", ::tracing::Level::INFO, "test_event2");
 
 			// stop thread and drop span
 			let _ = tx.send(false);
@@ -655,7 +655,7 @@ mod tests {
 			drop(span1);
 
 			// emit event with no parent
-			tracing::event!(target: "test_target", tracing::Level::INFO, "test_event3");
+			::tracing::event!(target: "test_target", ::tracing::Level::INFO, "test_event3");
 
 			let span1 = spans.lock().remove(0);
 			let event2 = events.lock().remove(0);

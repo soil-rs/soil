@@ -207,7 +207,7 @@ fn setup_store(keypair: &subsoil::core::ed25519::Pair) -> (Store, tempfile::Temp
 	let client = Arc::new(TestClient);
 	let mut path: std::path::PathBuf = temp_dir.path().into();
 	path.push("db");
-	let keystore = Arc::new(sc_keystore::LocalKeystore::in_memory());
+	let keystore = Arc::new(soil_client::keystore::LocalKeystore::in_memory());
 	let store = Store::new::<Block, TestClient, TestBackend>(
 		&path,
 		Default::default(),

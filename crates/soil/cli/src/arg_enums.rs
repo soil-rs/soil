@@ -106,10 +106,10 @@ pub enum TracingReceiver {
 	Log,
 }
 
-impl Into<sc_tracing::TracingReceiver> for TracingReceiver {
-	fn into(self) -> sc_tracing::TracingReceiver {
+impl Into<soil_client::tracing::TracingReceiver> for TracingReceiver {
+	fn into(self) -> soil_client::tracing::TracingReceiver {
 		match self {
-			TracingReceiver::Log => sc_tracing::TracingReceiver::Log,
+			TracingReceiver::Log => soil_client::tracing::TracingReceiver::Log,
 		}
 	}
 }

@@ -18,7 +18,7 @@
 
 use super::*;
 use crate::DenyUnsafe;
-use sc_block_builder::BlockBuilderBuilder;
+use soil_client::block_builder::BlockBuilderBuilder;
 use soil_client::blockchain::HeaderBackend;
 use soil_client::consensus::BlockOrigin;
 use substrate_test_runtime_client::{prelude::*, runtime::Block};

@@ -26,7 +26,7 @@ use jsonrpsee::{
 	core::{async_trait, JsonValue},
 	Extensions,
 };
-use sc_tracing::logging;
+use soil_client::tracing::logging;
 use soil_rpc_api::check_if_safe;
 use subsoil::runtime::traits::{self, Header as HeaderT};
 use soil_client::utils::mpsc::TracingUnboundedSender;

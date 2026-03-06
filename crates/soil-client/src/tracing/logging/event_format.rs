@@ -16,10 +16,10 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-use crate::logging::fast_local_time::FastLocalTime;
+use super::fast_local_time::FastLocalTime;
 use console::style;
 use std::fmt;
-use tracing::{Event, Level, Subscriber};
+use ::tracing::{Event, Level, Subscriber};
 use tracing_log::NormalizeEvent;
 use tracing_subscriber::{
 	fmt::{format, time::FormatTime, FmtContext, FormatEvent, FormatFields},

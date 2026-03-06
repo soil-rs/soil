@@ -8,6 +8,22 @@ homepage.workspace = true
 repository.workspace = true
 description = "Substrate client libraries"
 
+[[bench]]
+name = "bench"
+harness = false
+
+[[bench]]
+name = "interest_cache_realistic"
+harness = false
+
+[[bench]]
+name = "interest_cache_diverse"
+harness = false
+
+[[bench]]
+name = "interest_cache_multithreaded"
+harness = false
+
 [lints]
 workspace = true
 
@@ -67,10 +83,21 @@ kvdb-rocksdb = { optional = true, workspace = true }
 linked-hash-map = { workspace = true }
 parity-db = { workspace = true }
 sysinfo = { workspace = true }
+# tracing deps
+chrono = { workspace = true }
+console = { workspace = true }
+is-terminal = { workspace = true }
+libc = { workspace = true }
+rustc-hash = { workspace = true }
+subsoil-derive = { workspace = true }
+tracing-log = { workspace = true, features = ["interest-cache"] }
+tracing-subscriber = { workspace = true, features = ["env-filter", "parking_lot"] }
+# keystore deps
+array-bytes = { workspace = true, default-features = true }
+serde_json = { workspace = true, default-features = true }
 
 [dev-dependencies]
 futures = { workspace = true }
-serde_json = { workspace = true, default-features = true }
 tokio = { features = ["macros"], workspace = true, default-features = true }
 # executor-wasmtime test deps
 cargo_metadata = { workspace = true }
@@ -79,18 +106,18 @@ soil-runtime-test = { workspace = true }
 tempfile = { workspace = true }
 wat = { workspace = true }
 # executor test deps
-array-bytes = { workspace = true, default-features = true }
 assert_matches = { workspace = true }
-sc-tracing = { workspace = true, default-features = true }
 subsoil-crypto-hashing = { workspace = true, default-features = true }
 substrate-test-runtime = { workspace = true }
-tracing-subscriber = { workspace = true }
+tracing-subscriber = { workspace = true, features = ["chrono", "parking_lot"] }
 # client-db test deps
 criterion = { workspace = true, default-features = true }
 kvdb-rocksdb = { workspace = true }
 rand = { workspace = true, default-features = true }
 kitchensink-runtime = { workspace = true }
 substrate-test-runtime-client = { workspace = true }
+# tracing test deps
+regex = { workspace = true }
 
 [features]
 # This crate does not have `no_std` support, we just require this for tests
@@ -101,3 +128,6 @@ runtime-benchmarks = [
 ]
 rocksdb = ["kvdb-rocksdb", "subsoil/rocksdb"]
 jemalloc-allocator = ["kvdb-rocksdb?/jemalloc"]
+# Keystore features
+bls-experimental = ["subsoil/bls-experimental"]
+bandersnatch-experimental = ["subsoil/bandersnatch-experimental"]

@@ -22,7 +22,7 @@ use crate::{
 	utils, with_crypto_scheme, CryptoScheme, Error, KeystoreParams, SharedParams, SubstrateCli,
 };
 use clap::Parser;
-use sc_keystore::LocalKeystore;
+use soil_client::keystore::LocalKeystore;
 use subsoil::core::crypto::{KeyTypeId, SecretString};
 use subsoil::keystore::KeystorePtr;
 use soil_service::config::{BasePath, KeystoreConfig};

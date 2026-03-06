@@ -42,7 +42,7 @@ use futures::{
 	Future, FutureExt, StreamExt,
 };
 use parking_lot::Mutex;
-use sc_block_builder::BlockBuilderBuilder;
+use soil_client::block_builder::BlockBuilderBuilder;
 use sc_consensus::{
 	BlockImport, BlockImportParams, BoxJustificationImport, ForkChoiceStrategy, ImportResult,
 	ImportedAux,

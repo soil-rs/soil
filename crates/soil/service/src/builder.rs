@@ -30,7 +30,7 @@ use jsonrpsee::RpcModule;
 use log::{debug, error, info};
 use prometheus_endpoint::Registry;
 use sc_consensus::import_queue::{ImportQueue, ImportQueueService};
-use sc_keystore::LocalKeystore;
+use soil_client::keystore::LocalKeystore;
 use sc_rpc::{
 	author::AuthorApiServer,
 	chain::ChainApiServer,
@@ -39,7 +39,7 @@ use sc_rpc::{
 	system::SystemApiServer,
 	DenyUnsafe, SubscriptionTaskExecutor,
 };
-use sc_tracing::block::TracingExecuteBlock;
+use soil_client::tracing::block::TracingExecuteBlock;
 use subsoil::api::{CallApiAt, ProvideRuntimeApi};
 use soil_client::blockchain::{HeaderBackend, HeaderMetadata};
 use soil_chain_spec::{get_extension, ChainSpec};
