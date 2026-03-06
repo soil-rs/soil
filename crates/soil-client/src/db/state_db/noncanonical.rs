@@ -20,7 +20,7 @@
 //! Maintains trees of block overlays and allows discarding trees/roots
 //! The overlays are added in `insert` and removed in `canonicalize`.
 
-use crate::{LOG_TARGET, LOG_TARGET_PIN};
+use super::{LOG_TARGET, LOG_TARGET_PIN};
 
 use super::{to_meta_key, ChangeSet, CommitSet, DBValue, Error, Hash, MetaDb, StateDbError};
 use codec::{Decode, Encode};
@@ -571,7 +571,7 @@ impl<BlockHash: Hash, Key: Hash> NonCanonicalOverlay<BlockHash, Key> {
 #[cfg(test)]
 mod tests {
 	use super::{to_journal_key, NonCanonicalOverlay};
-	use crate::{
+	use crate::db::state_db::{
 		test::{make_changeset, make_db},
 		ChangeSet, CommitSet, MetaDb, StateDbError,
 	};

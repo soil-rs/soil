@@ -21,7 +21,7 @@
 use crate::LOG_TARGET;
 use codec::{Decode, Encode};
 use log::{info, trace};
-use soil_blockchain::{Error as ClientError, Result as ClientResult};
+use soil_client::blockchain::{Error as ClientError, Result as ClientResult};
 use soil_client_api::backend::AuxStore;
 use subsoil::runtime::traits::{Block, NumberFor};
 
@@ -81,7 +81,7 @@ where
 pub(crate) fn load_or_init_state<B, BE>(
 	backend: &BE,
 	default: NumberFor<B>,
-) -> soil_blockchain::Result<NumberFor<B>>
+) -> soil_client::blockchain::Result<NumberFor<B>>
 where
 	B: Block,
 	BE: AuxStore,

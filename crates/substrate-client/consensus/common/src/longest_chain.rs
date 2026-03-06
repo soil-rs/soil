@@ -18,7 +18,7 @@
 
 //! Longest chain implementation
 
-use soil_blockchain::{Backend, HeaderBackend};
+use soil_client::blockchain::{Backend, HeaderBackend};
 use soil_client_api::backend;
 use soil_client::consensus::{Error as ConsensusError, SelectChain};
 use subsoil::runtime::traits::{Block as BlockT, Header, NumberFor};
@@ -48,7 +48,7 @@ where
 		LongestChain { backend, _phantom: Default::default() }
 	}
 
-	fn best_hash(&self) -> soil_blockchain::Result<<Block as BlockT>::Hash> {
+	fn best_hash(&self) -> soil_client::blockchain::Result<<Block as BlockT>::Hash> {
 		let info = self.backend.blockchain().info();
 		let import_lock = self.backend.get_import_lock();
 		let best_hash = self
@@ -59,7 +59,7 @@ where
 		Ok(best_hash)
 	}
 
-	fn best_header(&self) -> soil_blockchain::Result<<Block as BlockT>::Header> {
+	fn best_header(&self) -> soil_client::blockchain::Result<<Block as BlockT>::Header> {
 		let best_hash = self.best_hash()?;
 		Ok(self
 			.backend
@@ -81,8 +81,8 @@ where
 		&self,
 		base_hash: Block::Hash,
 		maybe_max_number: Option<NumberFor<Block>>,
-	) -> soil_blockchain::Result<Block::Hash> {
-		use soil_blockchain::Error::{Application, MissingHeader};
+	) -> soil_client::blockchain::Result<Block::Hash> {
+		use soil_client::blockchain::Error::{Application, MissingHeader};
 		let blockchain = self.backend.blockchain();
 
 		let mut current_head = self.best_header()?;
@@ -127,7 +127,7 @@ where
 		Ok(best_hash)
 	}
 
-	fn leaves(&self) -> Result<Vec<<Block as BlockT>::Hash>, soil_blockchain::Error> {
+	fn leaves(&self) -> Result<Vec<<Block as BlockT>::Hash>, soil_client::blockchain::Error> {
 		self.backend.blockchain().leaves()
 	}
 }

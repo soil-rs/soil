@@ -64,7 +64,7 @@ use prometheus_endpoint::{PrometheusError, Registry};
 use sc_consensus::BlockImport;
 use subsoil::api::ProvideRuntimeApi;
 use subsoil::application_crypto::AppCrypto;
-use soil_blockchain::{
+use soil_client::blockchain::{
 	Error as ClientError, HeaderBackend, HeaderMetadata, Result as ClientResult,
 };
 use soil_client_api::{
@@ -319,7 +319,7 @@ pub trait ClientForGrandpa<Block, BE>:
 	LockImportRun<Block, BE>
 	+ Finalizer<Block, BE>
 	+ AuxStore
-	+ HeaderMetadata<Block, Error = soil_blockchain::Error>
+	+ HeaderMetadata<Block, Error = soil_client::blockchain::Error>
 	+ HeaderBackend<Block>
 	+ BlockchainEvents<Block>
 	+ ProvideRuntimeApi<Block>
@@ -339,7 +339,7 @@ where
 	T: LockImportRun<Block, BE>
 		+ Finalizer<Block, BE>
 		+ AuxStore
-		+ HeaderMetadata<Block, Error = soil_blockchain::Error>
+		+ HeaderMetadata<Block, Error = soil_client::blockchain::Error>
 		+ HeaderBackend<Block>
 		+ BlockchainEvents<Block>
 		+ ProvideRuntimeApi<Block>
@@ -750,7 +750,7 @@ pub fn grandpa_peers_set_config<B: BlockT, N: NetworkBackend<B, <B as BlockT>::H
 /// block import worker that has already been instantiated with `block_import`.
 pub fn run_grandpa_voter<Block: BlockT, BE: 'static, C, N, S, SC, VR>(
 	grandpa_params: GrandpaParams<Block, C, N, S, SC, VR>,
-) -> soil_blockchain::Result<impl Future<Output = ()> + Send>
+) -> soil_client::blockchain::Result<impl Future<Output = ()> + Send>
 where
 	BE: Backend<Block> + 'static,
 	N: NetworkT<Block> + Sync + 'static,

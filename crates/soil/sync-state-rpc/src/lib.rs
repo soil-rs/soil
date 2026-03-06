@@ -49,7 +49,7 @@ use jsonrpsee::{
 };
 
 use sc_consensus_babe::{BabeWorkerHandle, Error as BabeError};
-use soil_blockchain::HeaderBackend;
+use soil_client::blockchain::HeaderBackend;
 use soil_client_api::StorageData;
 use subsoil::runtime::traits::{Block as BlockT, NumberFor};
 
@@ -61,7 +61,7 @@ type SharedAuthoritySet<TBl> =
 #[allow(missing_docs)]
 pub enum Error<Block: BlockT> {
 	#[error(transparent)]
-	Blockchain(#[from] soil_blockchain::Error),
+	Blockchain(#[from] soil_client::blockchain::Error),
 
 	#[error("Failed to load the block weight for block {0:?}")]
 	LoadingBlockWeightFailed(Block::Hash),
@@ -171,7 +171,7 @@ where
 		let finalized_header = self
 			.client
 			.header(finalized_hash)?
-			.ok_or_else(|| soil_blockchain::Error::MissingHeader(finalized_hash.to_string()))?;
+			.ok_or_else(|| soil_client::blockchain::Error::MissingHeader(finalized_hash.to_string()))?;
 
 		let finalized_block_weight =
 			sc_consensus_babe::aux_schema::load_block_weight(&*self.client, finalized_hash)?

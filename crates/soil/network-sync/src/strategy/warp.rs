@@ -34,7 +34,7 @@ use crate::{
 use codec::{Decode, Encode};
 use futures::{channel::oneshot, FutureExt};
 use log::{debug, error, trace, warn};
-use soil_blockchain::HeaderBackend;
+use soil_client::blockchain::HeaderBackend;
 use soil_network::{IfDisconnected, ProtocolName};
 use soil_network_common::sync::message::{
 	BlockAnnounce, BlockAttributes, BlockData, BlockRequest, Direction, FromBlock,
@@ -789,7 +789,7 @@ mod test {
 	use super::*;
 	use crate::{mock::MockBlockDownloader, service::network::NetworkServiceProvider};
 	use sc_block_builder::BlockBuilderBuilder;
-	use soil_blockchain::{BlockStatus, Error as BlockchainError, HeaderBackend, Info};
+	use soil_client::blockchain::{BlockStatus, Error as BlockchainError, HeaderBackend, Info};
 	use subsoil::core::H256;
 	use subsoil::runtime::{
 		traits::{Block as BlockT, Header as HeaderT, NumberFor},

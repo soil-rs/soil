@@ -15,7 +15,6 @@ members = [
 	"crates/soil/application-crypto/test",
 	"crates/soil/authority-discovery",
 	"crates/soil/basic-authorship",
-	"crates/soil/blockchain",
 	"crates/soil/chain-spec",
 	"crates/soil/chain-spec-derive",
 	"crates/soil/cli",
@@ -63,7 +62,6 @@ members = [
 	"crates/soil/service-test",
 	"crates/soil/session",
 	"crates/soil/staking",
-	"crates/soil/state-db",
 	"crates/soil/statement-store",
 	"crates/soil/sync-state-rpc",
 	"crates/soil/sysinfo",
@@ -482,7 +480,6 @@ soil-runtime-test = { path = "crates/soil/runtime-test" }
 soil-runtime-utilities = { path = "crates/soil/runtime-utilities", default-features = true }
 soil-service = { path = "crates/soil/service", default-features = false }
 soil-service-test = { path = "crates/soil/service-test" }
-soil-state-db = { path = "crates/soil/state-db", default-features = false }
 sc-statement-store = { default-features = false, path = "crates/substrate-client/statement-store" }
 soil-sync-state-rpc = { path = "crates/soil/sync-state-rpc", default-features = false }
 soil-sysinfo = { path = "crates/soil/sysinfo", default-features = false }
@@ -491,7 +488,6 @@ sc-tracing = { path = "crates/substrate-client/tracing", default-features = fals
 sc-transaction-pool = { path = "crates/substrate-client/transaction-pool", default-features = false }
 soil-transaction-pool-api = { path = "crates/soil/transaction-pool-api", default-features = false }
 soil-authority-discovery = { path = "crates/soil/authority-discovery", default-features = false }
-soil-blockchain = { path = "crates/soil/blockchain", default-features = false }
 subsoil = { path = "crates/subsoil", default-features = false }
 subsoil-crypto-hashing = { path = "crates/subsoil-crypto-hashing", default-features = false }
 subsoil-derive = { path = "crates/subsoil-derive" }

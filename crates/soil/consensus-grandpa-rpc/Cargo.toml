@@ -13,6 +13,7 @@ homepage.workspace = true
 workspace = true
 
 [dependencies]
+soil-client = { workspace = true, default-features = true }
 codec = { features = ["derive"], workspace = true, default-features = true}
 finality-grandpa = { features = ["derive-codec"], workspace = true, default-features = true}
 futures = { workspace = true}
@@ -22,7 +23,6 @@ soil-client-api = { workspace = true, default-features = true}
 sc-consensus-grandpa = { workspace = true, default-features = true}
 sc-rpc = { workspace = true, default-features = true}
 serde = { features = ["derive"], workspace = true, default-features = true}
-soil-blockchain = { workspace = true, default-features = true}
 subsoil = { workspace = true, default-features = true}
 thiserror = { workspace = true}
 

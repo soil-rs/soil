@@ -31,7 +31,6 @@ soil-network = { workspace = true, default-features = true}
 soil-network-sync = { workspace = true, default-features = true}
 soil-service = { workspace = true, default-features = true}
 soil-transaction-pool-api = { workspace = true, default-features = true}
-soil-blockchain = { workspace = true, default-features = true}
 soil-client = { workspace = true, default-features = true}
 subsoil = { workspace = true, default-features = true }
 substrate-test-runtime = { workspace = true}

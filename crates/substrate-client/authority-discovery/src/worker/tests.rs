@@ -67,7 +67,7 @@ impl<Block: BlockT> HeaderBackend<Block> for TestApi {
 	fn header(
 		&self,
 		_hash: Block::Hash,
-	) -> std::result::Result<Option<Block::Header>, soil_blockchain::Error> {
+	) -> std::result::Result<Option<Block::Header>, soil_client::blockchain::Error> {
 		Ok(None)
 	}
 
@@ -87,21 +87,21 @@ impl<Block: BlockT> HeaderBackend<Block> for TestApi {
 	fn status(
 		&self,
 		_hash: Block::Hash,
-	) -> std::result::Result<soil_client_api::blockchain::BlockStatus, soil_blockchain::Error> {
+	) -> std::result::Result<soil_client_api::blockchain::BlockStatus, soil_client::blockchain::Error> {
 		Ok(soil_client_api::blockchain::BlockStatus::Unknown)
 	}
 
 	fn number(
 		&self,
 		_hash: Block::Hash,
-	) -> std::result::Result<Option<NumberFor<Block>>, soil_blockchain::Error> {
+	) -> std::result::Result<Option<NumberFor<Block>>, soil_client::blockchain::Error> {
 		Ok(None)
 	}
 
 	fn hash(
 		&self,
 		_number: NumberFor<Block>,
-	) -> std::result::Result<Option<Block::Hash>, soil_blockchain::Error> {
+	) -> std::result::Result<Option<Block::Hash>, soil_client::blockchain::Error> {
 		Ok(None)
 	}
 }

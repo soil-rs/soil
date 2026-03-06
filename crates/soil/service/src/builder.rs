@@ -41,7 +41,7 @@ use sc_rpc::{
 };
 use sc_tracing::block::TracingExecuteBlock;
 use subsoil::api::{CallApiAt, ProvideRuntimeApi};
-use soil_blockchain::{HeaderBackend, HeaderMetadata};
+use soil_client::blockchain::{HeaderBackend, HeaderMetadata};
 use soil_chain_spec::{get_extension, ChainSpec};
 use soil_client_api::{
 	execution_extensions::ExecutionExtensions, proof_provider::ProofProvider, BadBlocks,
@@ -395,7 +395,7 @@ pub fn new_wasm_executor<H: HostFunctions>(config: &ExecutorConfiguration) -> Wa
 /// If any filter returns `true` for a block's justifications, the block will not be pruned.
 pub fn new_db_backend<Block>(
 	settings: DatabaseSettings,
-) -> Result<Arc<Backend<Block>>, soil_blockchain::Error>
+) -> Result<Arc<Backend<Block>>, soil_client::blockchain::Error>
 where
 	Block: BlockT,
 {
@@ -423,7 +423,7 @@ pub fn new_client<E, Block, RA, G>(
 		Block,
 		RA,
 	>,
-	soil_blockchain::Error,
+	soil_client::blockchain::Error,
 >
 where
 	Block: BlockT,
@@ -506,10 +506,10 @@ pub fn spawn_tasks<TBl, TBackend, TExPool, TRpc, TCl>(
 ) -> Result<RpcHandlers, Error>
 where
 	TCl: ProvideRuntimeApi<TBl>
-		+ HeaderMetadata<TBl, Error = soil_blockchain::Error>
+		+ HeaderMetadata<TBl, Error = soil_client::blockchain::Error>
 		+ Chain<TBl>
 		+ BlockBackend<TBl>
-		+ BlockIdTo<TBl, Error = soil_blockchain::Error>
+		+ BlockIdTo<TBl, Error = soil_client::blockchain::Error>
 		+ ProofProvider<TBl>
 		+ HeaderBackend<TBl>
 		+ BlockchainEvents<TBl>
@@ -832,7 +832,7 @@ where
 	TCl: ProvideRuntimeApi<TBl>
 		+ BlockchainEvents<TBl>
 		+ HeaderBackend<TBl>
-		+ HeaderMetadata<TBl, Error = soil_blockchain::Error>
+		+ HeaderMetadata<TBl, Error = soil_client::blockchain::Error>
 		+ ExecutorProvider<TBl>
 		+ CallApiAt<TBl>
 		+ ProofProvider<TBl>
@@ -1006,10 +1006,10 @@ pub fn build_network<Block, Net, TxPool, IQ, Client>(
 where
 	Block: BlockT,
 	Client: ProvideRuntimeApi<Block>
-		+ HeaderMetadata<Block, Error = soil_blockchain::Error>
+		+ HeaderMetadata<Block, Error = soil_client::blockchain::Error>
 		+ Chain<Block>
 		+ BlockBackend<Block>
-		+ BlockIdTo<Block, Error = soil_blockchain::Error>
+		+ BlockIdTo<Block, Error = soil_client::blockchain::Error>
 		+ ProofProvider<Block>
 		+ HeaderBackend<Block>
 		+ BlockchainEvents<Block>
@@ -1172,10 +1172,10 @@ pub fn build_network_advanced<Block, Net, TxPool, IQ, Client>(
 where
 	Block: BlockT,
 	Client: ProvideRuntimeApi<Block>
-		+ HeaderMetadata<Block, Error = soil_blockchain::Error>
+		+ HeaderMetadata<Block, Error = soil_client::blockchain::Error>
 		+ Chain<Block>
 		+ BlockBackend<Block>
-		+ BlockIdTo<Block, Error = soil_blockchain::Error>
+		+ BlockIdTo<Block, Error = soil_client::blockchain::Error>
 		+ ProofProvider<Block>
 		+ HeaderBackend<Block>
 		+ BlockchainEvents<Block>
@@ -1367,7 +1367,7 @@ where
 	Block: BlockT,
 	Client: HeaderBackend<Block>
 		+ BlockBackend<Block>
-		+ HeaderMetadata<Block, Error = soil_blockchain::Error>
+		+ HeaderMetadata<Block, Error = soil_client::blockchain::Error>
 		+ ProofProvider<Block>
 		+ Send
 		+ Sync
@@ -1483,7 +1483,7 @@ where
 	Block: BlockT,
 	Client: HeaderBackend<Block>
 		+ BlockBackend<Block>
-		+ HeaderMetadata<Block, Error = soil_blockchain::Error>
+		+ HeaderMetadata<Block, Error = soil_client::blockchain::Error>
 		+ ProofProvider<Block>
 		+ Send
 		+ Sync

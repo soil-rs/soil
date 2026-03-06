@@ -24,7 +24,7 @@
 //! the death list.
 //! The changes are journaled in the DB.
 
-use crate::{
+use super::{
 	noncanonical::LAST_CANONICAL, to_meta_key, CommitSet, Error, Hash, MetaDb, StateDbError,
 	DEFAULT_MAX_BLOCK_CONSTRAINT, LOG_TARGET,
 };
@@ -440,7 +440,7 @@ impl<BlockHash: Hash, Key: Hash, D: MetaDb> RefWindow<BlockHash, Key, D> {
 #[cfg(test)]
 mod tests {
 	use super::{to_journal_key, DeathRowQueue, HaveBlock, JournalRecord, RefWindow, LAST_PRUNED};
-	use crate::{
+	use crate::db::state_db::{
 		noncanonical::LAST_CANONICAL,
 		test::{make_commit, make_db, TestDb},
 		to_meta_key, CommitSet, Error, Hash, StateDbError, DEFAULT_MAX_BLOCK_CONSTRAINT,

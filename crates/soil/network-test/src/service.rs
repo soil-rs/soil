@@ -19,7 +19,7 @@
 use futures::prelude::*;
 
 use sc_consensus::{ImportQueue, Link};
-use soil_blockchain::HeaderBackend;
+use soil_client::blockchain::HeaderBackend;
 use soil_network::{
 	config::{self, FullNetworkConfiguration, MultiaddrWithPeerId, ProtocolId, TransportConfig},
 	event::Event,

@@ -42,7 +42,7 @@ use sc_consensus_slots::{
 };
 use subsoil::api::{Core, ProvideRuntimeApi};
 use subsoil::application_crypto::AppPublic;
-use soil_blockchain::HeaderBackend;
+use soil_client::blockchain::HeaderBackend;
 use soil_client_api::{backend::AuxStore, BlockOf};
 use soil_client::consensus::{BlockOrigin, Environment, Error as ConsensusError, Proposer, SelectChain};
 use subsoil::consensus::slots::Slot;
@@ -482,7 +482,7 @@ pub enum Error<B: BlockT> {
 	BadSignature(B::Hash),
 	/// Client Error
 	#[error(transparent)]
-	Client(soil_blockchain::Error),
+	Client(soil_client::blockchain::Error),
 	/// Inherents Error
 	#[error("Inherent error: {0}")]
 	Inherent(subsoil::inherents::Error),
@@ -572,7 +572,7 @@ mod tests {
 
 	const SLOT_DURATION_MS: u64 = 1000;
 
-	type Error = soil_blockchain::Error;
+	type Error = soil_client::blockchain::Error;
 
 	struct DummyFactory(Arc<TestClient>);
 	struct DummyProposer(Arc<TestClient>);

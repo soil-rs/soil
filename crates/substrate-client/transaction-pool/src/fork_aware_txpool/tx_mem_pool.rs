@@ -34,7 +34,7 @@
 use futures::{future::join_all, FutureExt};
 use itertools::Itertools;
 use parking_lot::RwLock;
-use soil_blockchain::HashAndNumber;
+use soil_client::blockchain::HashAndNumber;
 use subsoil::runtime::{
 	traits::Block as BlockT,
 	transaction_validity::{InvalidTransaction, TransactionValidityError},

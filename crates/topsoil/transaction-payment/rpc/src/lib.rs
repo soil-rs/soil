@@ -29,7 +29,7 @@ use jsonrpsee::{
 	},
 };
 use subsoil::api::ProvideRuntimeApi;
-use soil_blockchain::HeaderBackend;
+use soil_client::blockchain::HeaderBackend;
 use subsoil::core::Bytes;
 use soil_rpc::number::NumberOrHex;
 use subsoil::runtime::traits::{Block as BlockT, MaybeDisplay};

@@ -60,7 +60,7 @@ pub trait CallExecutor<B: BlockT>: RuntimeVersionOf {
 		method: &str,
 		call_data: &[u8],
 		context: CallContext,
-	) -> Result<Vec<u8>, soil_blockchain::Error>;
+	) -> Result<Vec<u8>, soil_client::blockchain::Error>;
 
 	/// Execute a contextual call on top of state in a block of a given hash.
 	///
@@ -76,12 +76,12 @@ pub trait CallExecutor<B: BlockT>: RuntimeVersionOf {
 		proof_recorder: &Option<ProofRecorder<B>>,
 		call_context: CallContext,
 		extensions: &RefCell<Extensions>,
-	) -> soil_blockchain::Result<Vec<u8>>;
+	) -> soil_client::blockchain::Result<Vec<u8>>;
 
 	/// Extract RuntimeVersion of given block
 	///
 	/// No changes are made.
-	fn runtime_version(&self, at_hash: B::Hash) -> Result<RuntimeVersion, soil_blockchain::Error>;
+	fn runtime_version(&self, at_hash: B::Hash) -> Result<RuntimeVersion, soil_client::blockchain::Error>;
 
 	/// Prove the execution of the given `method`.
 	///
@@ -91,5 +91,5 @@ pub trait CallExecutor<B: BlockT>: RuntimeVersionOf {
 		at_hash: B::Hash,
 		method: &str,
 		call_data: &[u8],
-	) -> Result<(Vec<u8>, StorageProof), soil_blockchain::Error>;
+	) -> Result<(Vec<u8>, StorageProof), soil_client::blockchain::Error>;
 }

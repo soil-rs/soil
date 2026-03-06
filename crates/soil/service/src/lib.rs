@@ -41,7 +41,7 @@ use codec::{Decode, Encode};
 use futures::{pin_mut, FutureExt, StreamExt};
 use jsonrpsee::RpcModule;
 use log::{debug, error, trace, warn};
-use soil_blockchain::HeaderMetadata;
+use soil_client::blockchain::HeaderMetadata;
 use soil_client_api::{blockchain::HeaderBackend, BlockBackend, BlockchainEvents, ProofProvider};
 use soil_client::consensus::SyncOracle;
 use soil_network::{
@@ -182,7 +182,7 @@ async fn build_network_future<
 	C: BlockchainEvents<B>
 		+ HeaderBackend<B>
 		+ BlockBackend<B>
-		+ HeaderMetadata<B, Error = soil_blockchain::Error>
+		+ HeaderMetadata<B, Error = soil_client::blockchain::Error>
 		+ ProofProvider<B>
 		+ Send
 		+ Sync
@@ -249,7 +249,7 @@ pub async fn build_system_rpc_future<
 	C: BlockchainEvents<B>
 		+ HeaderBackend<B>
 		+ BlockBackend<B>
-		+ HeaderMetadata<B, Error = soil_blockchain::Error>
+		+ HeaderMetadata<B, Error = soil_client::blockchain::Error>
 		+ ProofProvider<B>
 		+ Send
 		+ Sync
@@ -498,7 +498,7 @@ impl<B, H, C, Pool, E> soil_network_transactions::config::TransactionPool<H, B>
 where
 	C: HeaderBackend<B>
 		+ BlockBackend<B>
-		+ HeaderMetadata<B, Error = soil_blockchain::Error>
+		+ HeaderMetadata<B, Error = soil_client::blockchain::Error>
 		+ ProofProvider<B>
 		+ Send
 		+ Sync

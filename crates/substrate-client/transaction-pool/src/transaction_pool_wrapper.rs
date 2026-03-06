@@ -45,7 +45,7 @@ where
 		+ soil_client_api::BlockBackend<Block>
 		+ soil_client_api::blockchain::HeaderBackend<Block>
 		+ subsoil::runtime::traits::BlockIdTo<Block>
-		+ soil_blockchain::HeaderMetadata<Block, Error = soil_blockchain::Error>
+		+ soil_client::blockchain::HeaderMetadata<Block, Error = soil_client::blockchain::Error>
 		+ 'static,
 	Client::Api: soil_transaction_pool::runtime_api::TaggedTransactionQueue<Block>;
 
@@ -57,7 +57,7 @@ where
 		+ soil_client_api::BlockBackend<Block>
 		+ soil_client_api::blockchain::HeaderBackend<Block>
 		+ subsoil::runtime::traits::BlockIdTo<Block>
-		+ soil_blockchain::HeaderMetadata<Block, Error = soil_blockchain::Error>
+		+ soil_client::blockchain::HeaderMetadata<Block, Error = soil_client::blockchain::Error>
 		+ 'static,
 	Client::Api: soil_transaction_pool::runtime_api::TaggedTransactionQueue<Block>,
 {
@@ -156,7 +156,7 @@ where
 		+ soil_client_api::BlockBackend<Block>
 		+ soil_client_api::blockchain::HeaderBackend<Block>
 		+ subsoil::runtime::traits::BlockIdTo<Block>
-		+ soil_blockchain::HeaderMetadata<Block, Error = soil_blockchain::Error>
+		+ soil_client::blockchain::HeaderMetadata<Block, Error = soil_client::blockchain::Error>
 		+ 'static,
 	Client::Api: soil_transaction_pool::runtime_api::TaggedTransactionQueue<Block>,
 {
@@ -172,7 +172,7 @@ where
 		+ soil_client_api::BlockBackend<Block>
 		+ soil_client_api::blockchain::HeaderBackend<Block>
 		+ subsoil::runtime::traits::BlockIdTo<Block>
-		+ soil_blockchain::HeaderMetadata<Block, Error = soil_blockchain::Error>
+		+ soil_client::blockchain::HeaderMetadata<Block, Error = soil_client::blockchain::Error>
 		+ 'static,
 	Client::Api: soil_transaction_pool::runtime_api::TaggedTransactionQueue<Block>,
 {

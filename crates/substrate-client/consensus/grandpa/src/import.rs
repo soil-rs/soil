@@ -27,7 +27,7 @@ use sc_consensus::{
 	BlockCheckParams, BlockImport, BlockImportParams, ImportResult, JustificationImport,
 };
 use subsoil::api::{Core, RuntimeApiInfo};
-use soil_blockchain::BlockStatus;
+use soil_client::blockchain::BlockStatus;
 use soil_client_api::{backend::Backend, utils::is_descendent_of};
 use soil_client::consensus::{BlockOrigin, Error as ConsensusError, SelectChain};
 use subsoil::consensus::grandpa::{ConsensusLog, GrandpaApi, ScheduledChange, SetId, GRANDPA_ENGINE_ID};
@@ -809,7 +809,7 @@ where
 		let justification = match justification {
 			Err(e) => {
 				return match e {
-					soil_blockchain::Error::OutdatedJustification => {
+					soil_client::blockchain::Error::OutdatedJustification => {
 						Err(ConsensusError::OutdatedJustification)
 					},
 					_ => Err(ConsensusError::ClientImport(e.to_string())),

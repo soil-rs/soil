@@ -29,7 +29,7 @@ use futures_timer::Delay;
 #[cfg(feature = "std")]
 use log::{debug, info, log_enabled, trace};
 #[cfg(feature = "std")]
-use soil_blockchain::HeaderMetadata;
+use soil_client::blockchain::HeaderMetadata;
 #[cfg(feature = "std")]
 use soil_client_api::{BlockchainEvents, UsageProvider};
 #[cfg(feature = "std")]
@@ -132,7 +132,7 @@ where
 		if let Some((ref last_num, ref last_hash)) = last_best {
 			if n.header.parent_hash() != last_hash && n.is_new_best {
 				let maybe_ancestor =
-					soil_blockchain::lowest_common_ancestor(&*client, *last_hash, n.hash);
+					soil_client::blockchain::lowest_common_ancestor(&*client, *last_hash, n.hash);
 
 				match maybe_ancestor {
 					Ok(ref ancestor) if ancestor.hash != *last_hash => info!(

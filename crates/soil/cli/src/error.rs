@@ -39,7 +39,7 @@ pub enum Error {
 	Service(#[from] soil_service::Error),
 
 	#[error(transparent)]
-	Client(#[from] soil_blockchain::Error),
+	Client(#[from] soil_client::blockchain::Error),
 
 	#[error(transparent)]
 	Codec(#[from] codec::Error),

@@ -25,7 +25,7 @@ use crate::{
 use futures::channel::mpsc::{channel, Sender};
 use indexmap::IndexMap;
 use parking_lot::{Mutex, RwLock};
-use soil_blockchain::HashAndNumber;
+use soil_client::blockchain::HashAndNumber;
 use subsoil::runtime::{
 	traits::SaturatedConversion,
 	transaction_validity::{TransactionTag as Tag, ValidTransaction},

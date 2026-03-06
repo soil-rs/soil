@@ -357,7 +357,7 @@
 //! [`submit`]: ../struct.ForkAwareTxPool.html#method.submit_at
 //! [`submit_and_watch`]: ../struct.ForkAwareTxPool.html#method.submit_and_watch
 //! [`ReadyPoll`]: ../fork_aware_txpool/fork_aware_txpool/struct.ReadyPoll.html
-//! [`TreeRoute`]: soil_blockchain::TreeRoute
+//! [`TreeRoute`]: soil_client::blockchain::TreeRoute
 //! [runtime_api::validate]: soil_transaction_pool::runtime_api::TaggedTransactionQueue::validate_transaction
 //! [`notification_future`]: crate::common::notification_future
 //! [`EnactmentState`]: crate::common::enactment_state::EnactmentState

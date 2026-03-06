@@ -18,7 +18,7 @@
 
 //! # WASM substitutes
 
-use soil_blockchain::{HeaderBackend, Result};
+use soil_client::blockchain::{HeaderBackend, Result};
 use soil_client_api::backend;
 use subsoil::core::traits::{FetchRuntimeCode, RuntimeCode, WrappedRuntimeCode};
 use soil_executor::RuntimeVersionOf;
@@ -83,7 +83,7 @@ pub enum WasmSubstituteError {
 	VersionInvalid(String),
 }
 
-impl From<WasmSubstituteError> for soil_blockchain::Error {
+impl From<WasmSubstituteError> for soil_client::blockchain::Error {
 	fn from(err: WasmSubstituteError) -> Self {
 		Self::Application(Box::new(err))
 	}

@@ -34,7 +34,7 @@ use log::debug;
 use prost::Message;
 use schnellru::{ByLength, LruMap};
 
-use soil_blockchain::HeaderBackend;
+use soil_client::blockchain::HeaderBackend;
 use soil_client_api::BlockBackend;
 use soil_network::{
 	config::ProtocolId,
@@ -503,7 +503,7 @@ enum HandleRequestError {
 	#[error("Failed to parse BlockRequest::direction.")]
 	ParseDirection,
 	#[error(transparent)]
-	Client(#[from] soil_blockchain::Error),
+	Client(#[from] soil_client::blockchain::Error),
 	#[error("Failed to send response.")]
 	SendResponse,
 }

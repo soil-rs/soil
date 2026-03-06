@@ -140,7 +140,7 @@ mod tests {
 		report, AuthorityId, FinalityProof, GrandpaJustification, GrandpaJustificationSender,
 	};
 	use sc_rpc::testing::test_executor;
-	use soil_blockchain::HeaderBackend;
+	use soil_client::blockchain::HeaderBackend;
 	use subsoil::core::crypto::ByteArray;
 	use subsoil::keyring::Ed25519Keyring;
 	use subsoil::runtime::traits::{Block as BlockT, Header as HeaderT};

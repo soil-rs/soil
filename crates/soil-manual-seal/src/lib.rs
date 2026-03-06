@@ -33,7 +33,7 @@ use sc_consensus::{
 	import_queue::{BasicQueue, BoxBlockImport, Verifier},
 };
 #[cfg(feature = "std")]
-use soil_blockchain::HeaderBackend;
+use soil_client::blockchain::HeaderBackend;
 #[cfg(feature = "std")]
 use soil_client_api::{
 	backend::{Backend as ClientBackend, Finalizer},

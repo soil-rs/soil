@@ -24,7 +24,6 @@ sc-block-builder = { workspace = true, default-features = true}
 soil-proposer-metrics = { workspace = true, default-features = true}
 soil-telemetry = { workspace = true, default-features = true}
 soil-transaction-pool-api = { workspace = true, default-features = true}
-soil-blockchain = { workspace = true, default-features = true}
 soil-client = { workspace = true, default-features = true}
 subsoil = { workspace = true, default-features = true}
 

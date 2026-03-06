@@ -38,7 +38,7 @@ pub enum Error {
 	HashingAuthorityId(#[from] soil_network_types::multihash::Error),
 
 	#[error("Failed calling into the Substrate runtime: {0}")]
-	CallingRuntime(#[from] soil_blockchain::Error),
+	CallingRuntime(#[from] soil_client::blockchain::Error),
 
 	#[error("Received a dht record with a key that does not match any in-flight awaited keys.")]
 	ReceivingUnexpectedRecord,

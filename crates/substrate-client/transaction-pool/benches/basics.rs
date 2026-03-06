@@ -21,7 +21,7 @@ use codec::Encode;
 use criterion::{criterion_group, criterion_main, Criterion};
 use futures::executor::block_on;
 use sc_transaction_pool::*;
-use soil_blockchain::HashAndNumber;
+use soil_client::blockchain::HashAndNumber;
 use subsoil_crypto_hashing::blake2_256;
 use subsoil::runtime::{
 	generic::BlockId,
@@ -143,7 +143,7 @@ impl ChainApi for TestApi {
 		&self,
 		_from: <Self::Block as BlockT>::Hash,
 		_to: <Self::Block as BlockT>::Hash,
-	) -> Result<soil_blockchain::TreeRoute<Self::Block>, Self::Error> {
+	) -> Result<soil_client::blockchain::TreeRoute<Self::Block>, Self::Error> {
 		unimplemented!()
 	}
 }

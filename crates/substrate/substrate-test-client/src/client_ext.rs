@@ -32,7 +32,7 @@ pub trait ClientExt<Block: BlockT>: Sized {
 		&self,
 		hash: Block::Hash,
 		justification: Option<Justification>,
-	) -> soil_blockchain::Result<()>;
+	) -> soil_client::blockchain::Result<()>;
 
 	/// Returns hash of the genesis block.
 	fn genesis_hash(&self) -> <Block as BlockT>::Hash;
@@ -75,7 +75,7 @@ where
 		&self,
 		hash: Block::Hash,
 		justification: Option<Justification>,
-	) -> soil_blockchain::Result<()> {
+	) -> soil_client::blockchain::Result<()> {
 		Finalizer::finalize_block(self, hash, justification, true)
 	}
 

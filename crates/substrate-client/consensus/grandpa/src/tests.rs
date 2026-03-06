@@ -205,7 +205,7 @@ subsoil::api::mock_impl_runtime_apis! {
 }
 
 impl GenesisAuthoritySetProvider<Block> for TestApi {
-	fn get(&self) -> soil_blockchain::Result<AuthorityList> {
+	fn get(&self) -> soil_client::blockchain::Result<AuthorityList> {
 		Ok(self.genesis_authorities.clone())
 	}
 }

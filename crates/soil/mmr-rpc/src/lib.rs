@@ -32,7 +32,7 @@ use jsonrpsee::{
 use serde::{Deserialize, Serialize};
 
 use subsoil::api::{ApiExt, ProvideRuntimeApi};
-use soil_blockchain::HeaderBackend;
+use soil_client::blockchain::HeaderBackend;
 use subsoil::core::{
 	offchain::{storage::OffchainDb, OffchainDbExt, OffchainStorage},
 	Bytes,

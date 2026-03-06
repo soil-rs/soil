@@ -36,7 +36,7 @@
 //! required to overrides multiple runtimes, multiple WASM blobs matching each of the spec versions
 //! needed must be provided in the given directory.
 
-use soil_blockchain::Result;
+use soil_client::blockchain::Result;
 use subsoil::core::traits::{FetchRuntimeCode, RuntimeCode, WrappedRuntimeCode};
 use soil_executor::RuntimeVersionOf;
 use subsoil::state_machine::BasicExternalities;
@@ -109,7 +109,7 @@ pub enum WasmOverrideError {
 	DuplicateRuntime(Vec<String>),
 }
 
-impl From<WasmOverrideError> for soil_blockchain::Error {
+impl From<WasmOverrideError> for soil_client::blockchain::Error {
 	fn from(err: WasmOverrideError) -> Self {
 		Self::Application(Box::new(err))
 	}
@@ -173,7 +173,7 @@ impl WasmOverride {
 	where
 		E: RuntimeVersionOf,
 	{
-		let handle_err = |e: std::io::Error| -> soil_blockchain::Error {
+		let handle_err = |e: std::io::Error| -> soil_client::blockchain::Error {
 			WasmOverrideError::Io(dir.to_owned(), e).into()
 		};
 
@@ -320,7 +320,7 @@ mod tests {
 			let scraped = WasmOverride::scrape_overrides(dir, exec);
 
 			match scraped {
-				Err(soil_blockchain::Error::Application(e)) => {
+				Err(soil_client::blockchain::Error::Application(e)) => {
 					match e.downcast_ref::<WasmOverrideError>() {
 						Some(WasmOverrideError::DuplicateRuntime(duplicates)) => {
 							assert_eq!(duplicates.len(), 1);

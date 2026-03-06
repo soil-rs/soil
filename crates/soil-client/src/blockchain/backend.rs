@@ -27,7 +27,7 @@ use subsoil::runtime::{
 use std::collections::{btree_set::BTreeSet, HashMap, VecDeque};
 use tracing::{debug, warn};
 
-use crate::{
+use super::{
 	error::{Error, Result},
 	header_metadata::HeaderMetadata,
 	tree_route, CachedHeaderMetadata,
@@ -229,7 +229,7 @@ pub trait Backend<Block: BlockT>:
 		//
 		// FIXME #1558 only issue this warning when not on a dead fork
 		warn!(
-			target: crate::LOG_TARGET,
+			target: super::LOG_TARGET,
 			"Block {:?} exists in chain but not found when following all leaves backwards",
 			base_hash,
 		);
@@ -264,7 +264,7 @@ pub trait Backend<Block: BlockT>:
 
 		let now = std::time::Instant::now();
 		debug!(
-			target: crate::LOG_TARGET,
+			target: super::LOG_TARGET,
 			?leaves,
 			?finalized_block_hash,
 			?finalized_block_number,
@@ -297,7 +297,7 @@ pub trait Backend<Block: BlockT>:
 			let mut current_header_metadata =
 				MinimalBlockMetadata::from(&self.header_metadata(leaf_hash).map_err(|err| {
 					debug!(
-						target: crate::LOG_TARGET,
+						target: super::LOG_TARGET,
 						?leaf_hash,
 						?err,
 						elapsed = ?now.elapsed(),
@@ -311,7 +311,7 @@ pub trait Backend<Block: BlockT>:
 			if leaf_hash == genesis_hash {
 				result.displaced_leaves.push((leaf_number, leaf_hash));
 				debug!(
-					target: crate::LOG_TARGET,
+					target: super::LOG_TARGET,
 					?leaf_hash,
 					elapsed = ?now.elapsed(),
 					"Added genesis leaf to displaced leaves."
@@ -320,7 +320,7 @@ pub trait Backend<Block: BlockT>:
 			}
 
 			debug!(
-				target: crate::LOG_TARGET,
+				target: super::LOG_TARGET,
 				?leaf_number,
 				?leaf_hash,
 				elapsed = ?now.elapsed(),
@@ -341,7 +341,7 @@ pub trait Backend<Block: BlockT>:
 						current_header_metadata = MinimalBlockMetadata::from(
 							&self.header_metadata(parent_hash).map_err(|err| {
 								debug!(
-									target: crate::LOG_TARGET,
+									target: super::LOG_TARGET,
 									?err,
 									?parent_hash,
 									?leaf_hash,
@@ -363,7 +363,7 @@ pub trait Backend<Block: BlockT>:
 			// checked again later
 			if current_header_metadata.hash == finalized_block_hash {
 				debug!(
-					target: crate::LOG_TARGET,
+					target: super::LOG_TARGET,
 					?leaf_hash,
 					elapsed = ?now.elapsed(),
 					"Leaf points to the finalized header, skipping for now.",
@@ -378,7 +378,7 @@ pub trait Backend<Block: BlockT>:
 			displaced_blocks_candidates.push(current_header_metadata.hash);
 
 			debug!(
-				target: crate::LOG_TARGET,
+				target: super::LOG_TARGET,
 				current_hash = ?current_header_metadata.hash,
 				current_num = ?current_header_metadata.number,
 				?finalized_block_number,
@@ -398,7 +398,7 @@ pub trait Backend<Block: BlockT>:
 								Ok(metadata) => metadata,
 								Err(Error::UnknownBlock(_)) => {
 									debug!(
-										target: crate::LOG_TARGET,
+										target: super::LOG_TARGET,
 										distance_from_finalized,
 										hash = ?to_fetch.parent,
 										number = ?to_fetch.number,
@@ -409,7 +409,7 @@ pub trait Backend<Block: BlockT>:
 								},
 								Err(err) => {
 									debug!(
-										target: crate::LOG_TARGET,
+										target: super::LOG_TARGET,
 										hash = ?to_fetch.parent,
 										number = ?to_fetch.number,
 										?err,
@@ -431,7 +431,7 @@ pub trait Backend<Block: BlockT>:
 					result.displaced_leaves.push((leaf_number, leaf_hash));
 
 					debug!(
-						target: crate::LOG_TARGET,
+						target: super::LOG_TARGET,
 						?leaf_hash,
 						elapsed = ?now.elapsed(),
 						"Leaf is ancestor of finalized block."
@@ -452,7 +452,7 @@ pub trait Backend<Block: BlockT>:
 					result.displaced_leaves.push((leaf_number, leaf_hash));
 
 					debug!(
-						target: crate::LOG_TARGET,
+						target: super::LOG_TARGET,
 						?leaf_hash,
 						elapsed = ?now.elapsed(),
 						"Found displaced leaf."
@@ -462,7 +462,7 @@ pub trait Backend<Block: BlockT>:
 
 				// Store displaced block and look deeper for block on finalized chain
 				debug!(
-					target: crate::LOG_TARGET,
+					target: super::LOG_TARGET,
 					?parent_hash,
 					elapsed = ?now.elapsed(),
 					"Found displaced block. Looking further.",
@@ -471,7 +471,7 @@ pub trait Backend<Block: BlockT>:
 				current_header_metadata = MinimalBlockMetadata::from(
 					&self.header_metadata(parent_hash).map_err(|err| {
 						debug!(
-							target: crate::LOG_TARGET,
+							target: super::LOG_TARGET,
 							?err,
 							?parent_hash,
 							elapsed = ?now.elapsed(),
@@ -488,7 +488,7 @@ pub trait Backend<Block: BlockT>:
 		result.displaced_blocks.dedup();
 
 		debug!(
-			target: crate::LOG_TARGET,
+			target: super::LOG_TARGET,
 			%finalized_block_hash,
 			?finalized_block_number,
 			?result,

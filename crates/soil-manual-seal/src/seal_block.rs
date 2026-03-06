@@ -23,7 +23,7 @@ use codec::Encode;
 use futures::prelude::*;
 use sc_consensus::{BlockImport, BlockImportParams, ForkChoiceStrategy, ImportResult, StateAction};
 use subsoil::api::{ProofRecorder, ProvideRuntimeApi};
-use soil_blockchain::HeaderBackend;
+use soil_client::blockchain::HeaderBackend;
 use soil_client::consensus::{self, BlockOrigin, Environment, ProposeArgs, Proposer, SelectChain};
 use subsoil::externalities::Extensions;
 use subsoil::inherents::{CreateInherentDataProviders, InherentDataProvider};

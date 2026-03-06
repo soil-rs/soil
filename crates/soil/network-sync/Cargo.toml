@@ -33,7 +33,6 @@ soil-network-common = { workspace = true, default-features = true}
 soil-network-types = { workspace = true, default-features = true}
 schnellru = { workspace = true}
 smallvec = { workspace = true, default-features = true}
-soil-blockchain = { workspace = true, default-features = true}
 soil-client = { workspace = true, default-features = true}
 thiserror = { workspace = true}
 tokio = { features = ["macros", "time"], workspace = true, default-features = true}

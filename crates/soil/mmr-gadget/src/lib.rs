@@ -47,7 +47,7 @@ use futures::StreamExt;
 use log::{debug, error, trace, warn};
 use sc_offchain::OffchainDb;
 use subsoil::api::ProvideRuntimeApi;
-use soil_blockchain::{HeaderBackend, HeaderMetadata};
+use soil_client::blockchain::{HeaderBackend, HeaderMetadata};
 use soil_client_api::{Backend, BlockchainEvents, FinalityNotification, FinalityNotifications};
 use subsoil::consensus::beefy::MmrRootHash;
 use subsoil::mmr::{utils, LeafIndex, MmrApi};

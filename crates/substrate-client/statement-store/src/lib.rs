@@ -56,7 +56,7 @@ use metrics::MetricsLink as PrometheusMetrics;
 use parking_lot::{lock_api::RwLockUpgradableReadGuard, RwLock};
 use prometheus_endpoint::Registry as PrometheusRegistry;
 use sc_keystore::LocalKeystore;
-use soil_blockchain::HeaderBackend;
+use soil_client::blockchain::HeaderBackend;
 use soil_client_api::{backend::StorageProvider, Backend, StorageKey};
 use subsoil::core::{
 	crypto::UncheckedFrom, hexdisplay::HexDisplay, traits::SpawnNamed, Decode, Encode,
@@ -1521,7 +1521,7 @@ mod tests {
 			&self,
 			_hash: Hash,
 			key: &soil_client_api::StorageKey,
-		) -> soil_blockchain::Result<Option<soil_client_api::StorageData>> {
+		) -> soil_client::blockchain::Result<Option<soil_client_api::StorageData>> {
 			use soil_statement_store::StatementAllowance;
 
 			assert_eq!(&key.0[0..21], b":statement_allowance:" as &[u8],);
@@ -1546,7 +1546,7 @@ mod tests {
 			&self,
 			_hash: Hash,
 			_key: &soil_client_api::StorageKey,
-		) -> soil_blockchain::Result<Option<Hash>> {
+		) -> soil_client::blockchain::Result<Option<Hash>> {
 			unimplemented!()
 		}
 
@@ -1555,7 +1555,7 @@ mod tests {
 			_hash: Hash,
 			_prefix: Option<&soil_client_api::StorageKey>,
 			_start_key: Option<&soil_client_api::StorageKey>,
-		) -> soil_blockchain::Result<
+		) -> soil_client::blockchain::Result<
 			soil_client_api::backend::KeysIter<
 				<TestBackend as soil_client_api::Backend<Block>>::State,
 				Block,
@@ -1569,7 +1569,7 @@ mod tests {
 			_hash: Hash,
 			_prefix: Option<&soil_client_api::StorageKey>,
 			_start_key: Option<&soil_client_api::StorageKey>,
-		) -> soil_blockchain::Result<
+		) -> soil_client::blockchain::Result<
 			soil_client_api::backend::PairsIter<
 				<TestBackend as soil_client_api::Backend<Block>>::State,
 				Block,
@@ -1583,7 +1583,7 @@ mod tests {
 			_hash: Hash,
 			_child_info: &soil_client_api::ChildInfo,
 			_key: &soil_client_api::StorageKey,
-		) -> soil_blockchain::Result<Option<soil_client_api::StorageData>> {
+		) -> soil_client::blockchain::Result<Option<soil_client_api::StorageData>> {
 			unimplemented!()
 		}
 
@@ -1593,7 +1593,7 @@ mod tests {
 			_child_info: soil_client_api::ChildInfo,
 			_prefix: Option<&soil_client_api::StorageKey>,
 			_start_key: Option<&soil_client_api::StorageKey>,
-		) -> soil_blockchain::Result<
+		) -> soil_client::blockchain::Result<
 			soil_client_api::backend::KeysIter<
 				<TestBackend as soil_client_api::Backend<Block>>::State,
 				Block,
@@ -1607,7 +1607,7 @@ mod tests {
 			_hash: Hash,
 			_child_info: &soil_client_api::ChildInfo,
 			_key: &soil_client_api::StorageKey,
-		) -> soil_blockchain::Result<Option<Hash>> {
+		) -> soil_client::blockchain::Result<Option<Hash>> {
 			unimplemented!()
 		}
 
@@ -1615,7 +1615,7 @@ mod tests {
 			&self,
 			_hash: Hash,
 			_key: &soil_client_api::StorageKey,
-		) -> soil_blockchain::Result<Option<soil_client_api::MerkleValue<Hash>>> {
+		) -> soil_client::blockchain::Result<Option<soil_client_api::MerkleValue<Hash>>> {
 			unimplemented!()
 		}
 
@@ -1624,17 +1624,17 @@ mod tests {
 			_hash: Hash,
 			_child_info: &soil_client_api::ChildInfo,
 			_key: &soil_client_api::StorageKey,
-		) -> soil_blockchain::Result<Option<soil_client_api::MerkleValue<Hash>>> {
+		) -> soil_client::blockchain::Result<Option<soil_client_api::MerkleValue<Hash>>> {
 			unimplemented!()
 		}
 	}
 
-	impl soil_blockchain::HeaderBackend<Block> for TestClient {
-		fn header(&self, _hash: Hash) -> soil_blockchain::Result<Option<Header>> {
+	impl soil_client::blockchain::HeaderBackend<Block> for TestClient {
+		fn header(&self, _hash: Hash) -> soil_client::blockchain::Result<Option<Header>> {
 			unimplemented!()
 		}
-		fn info(&self) -> soil_blockchain::Info<Block> {
-			soil_blockchain::Info {
+		fn info(&self) -> soil_client::blockchain::Info<Block> {
+			soil_client::blockchain::Info {
 				best_hash: CORRECT_BLOCK_HASH.into(),
 				best_number: 0,
 				genesis_hash: Default::default(),
@@ -1645,13 +1645,13 @@ mod tests {
 				block_gap: None,
 			}
 		}
-		fn status(&self, _hash: Hash) -> soil_blockchain::Result<soil_blockchain::BlockStatus> {
+		fn status(&self, _hash: Hash) -> soil_client::blockchain::Result<soil_client::blockchain::BlockStatus> {
 			unimplemented!()
 		}
-		fn number(&self, _hash: Hash) -> soil_blockchain::Result<Option<BlockNumber>> {
+		fn number(&self, _hash: Hash) -> soil_client::blockchain::Result<Option<BlockNumber>> {
 			unimplemented!()
 		}
-		fn hash(&self, _number: BlockNumber) -> soil_blockchain::Result<Option<Hash>> {
+		fn hash(&self, _number: BlockNumber) -> soil_client::blockchain::Result<Option<Hash>> {
 			unimplemented!()
 		}
 	}

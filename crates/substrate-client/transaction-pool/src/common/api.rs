@@ -28,7 +28,7 @@ use codec::Encode;
 use futures::future::{Future, FutureExt};
 use prometheus_endpoint::Registry as PrometheusRegistry;
 use subsoil::api::{ApiExt, ProvideRuntimeApi};
-use soil_blockchain::{HeaderMetadata, TreeRoute};
+use soil_client::blockchain::{HeaderMetadata, TreeRoute};
 use soil_client_api::{blockchain::HeaderBackend, BlockBackend};
 use subsoil::core::traits::SpawnEssentialNamed;
 use subsoil::runtime::{
@@ -190,7 +190,7 @@ where
 		+ BlockBackend<Block>
 		+ BlockIdTo<Block>
 		+ HeaderBackend<Block>
-		+ HeaderMetadata<Block, Error = soil_blockchain::Error>,
+		+ HeaderMetadata<Block, Error = soil_client::blockchain::Error>,
 	Client: Send + Sync + 'static,
 	Client::Api: TaggedTransactionQueue<Block>,
 {
@@ -307,7 +307,7 @@ where
 		from: <Self::Block as BlockT>::Hash,
 		to: <Self::Block as BlockT>::Hash,
 	) -> Result<TreeRoute<Self::Block>, Self::Error> {
-		soil_blockchain::tree_route::<Block, Client>(&*self.client, from, to).map_err(Into::into)
+		soil_client::blockchain::tree_route::<Block, Client>(&*self.client, from, to).map_err(Into::into)
 	}
 }
 
@@ -325,7 +325,7 @@ where
 		+ BlockBackend<Block>
 		+ BlockIdTo<Block>
 		+ HeaderBackend<Block>
-		+ HeaderMetadata<Block, Error = soil_blockchain::Error>,
+		+ HeaderMetadata<Block, Error = soil_client::blockchain::Error>,
 	Client: Send + Sync + 'static,
 	Client::Api: TaggedTransactionQueue<Block>,
 {

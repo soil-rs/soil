@@ -39,7 +39,7 @@ use futures::FutureExt;
 use jsonrpsee::{core::async_trait, PendingSubscriptionSink};
 use sc_rpc::utils::Subscription;
 use subsoil::api::{CallApiAt, CallContext};
-use soil_blockchain::{
+use soil_client::blockchain::{
 	Backend as BlockChainBackend, Error as BlockChainError, HeaderBackend, HeaderMetadata,
 };
 use soil_client_api::{

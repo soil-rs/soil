@@ -30,7 +30,7 @@ use log::{debug, error, info, log_enabled, trace, warn, Level};
 use prometheus_endpoint::Registry as PrometheusRegistry;
 use sc_block_builder::{BlockBuilderApi, BlockBuilderBuilder};
 use subsoil::api::{ApiExt, CallApiAt, ProvideRuntimeApi};
-use soil_blockchain::{ApplyExtrinsicFailed::Validity, Error::ApplyExtrinsicFailed, HeaderBackend};
+use soil_client::blockchain::{ApplyExtrinsicFailed::Validity, Error::ApplyExtrinsicFailed, HeaderBackend};
 use soil_client::consensus::{Proposal, ProposeArgs};
 use subsoil::core::traits::SpawnNamed;
 use subsoil::inherents::InherentData;
@@ -201,7 +201,7 @@ where
 {
 	type CreateProposer = future::Ready<Result<Self::Proposer, Self::Error>>;
 	type Proposer = Proposer<Block, C, A>;
-	type Error = soil_blockchain::Error;
+	type Error = soil_client::blockchain::Error;
 
 	fn init(&mut self, parent_header: &<Block as BlockT>::Header) -> Self::CreateProposer {
 		future::ready(Ok(self.init_with_now(parent_header, Box::new(time::Instant::now))))
@@ -230,7 +230,7 @@ where
 	C::Api: ApiExt<Block> + BlockBuilderApi<Block>,
 {
 	type Proposal = Pin<Box<dyn Future<Output = Result<Proposal<Block>, Self::Error>> + Send>>;
-	type Error = soil_blockchain::Error;
+	type Error = soil_client::blockchain::Error;
 
 	fn propose(self, args: ProposeArgs<Block>) -> Self::Proposal {
 		Self::propose_block(self, args).boxed()
@@ -253,7 +253,7 @@ where
 	pub async fn propose_block(
 		self,
 		args: ProposeArgs<Block>,
-	) -> Result<Proposal<Block>, soil_blockchain::Error> {
+	) -> Result<Proposal<Block>, soil_client::blockchain::Error> {
 		let (tx, rx) = oneshot::channel();
 		let spawn_handle = self.spawn_handle.clone();
 
@@ -279,7 +279,7 @@ where
 	async fn propose_with(
 		self,
 		args: ProposeArgs<Block>,
-	) -> Result<Proposal<Block>, soil_blockchain::Error> {
+	) -> Result<Proposal<Block>, soil_client::blockchain::Error> {
 		let ProposeArgs {
 			inherent_data,
 			inherent_digests,
@@ -321,7 +321,7 @@ where
 		&self,
 		block_builder: &mut sc_block_builder::BlockBuilder<'_, Block, C>,
 		inherent_data: InherentData,
-	) -> Result<(), soil_blockchain::Error> {
+	) -> Result<(), soil_client::blockchain::Error> {
 		let create_inherents_start = time::Instant::now();
 
 		let inherent_identifiers = log_enabled!(target: LOG_TARGET, Level::Debug).then(|| {
@@ -376,7 +376,7 @@ where
 		block_builder: &mut sc_block_builder::BlockBuilder<'_, Block, C>,
 		deadline: time::Instant,
 		block_size_limit: Option<usize>,
-	) -> Result<EndProposingReason, soil_blockchain::Error> {
+	) -> Result<EndProposingReason, soil_client::blockchain::Error> {
 		// proceed with transactions
 		// We calculate soft deadline used only in case we start skipping transactions.
 		let now = (self.now)();
@@ -584,7 +584,7 @@ mod tests {
 	use parking_lot::Mutex;
 	use sc_transaction_pool::BasicPool;
 	use subsoil::api::Core;
-	use soil_blockchain::HeaderBackend;
+	use soil_client::blockchain::HeaderBackend;
 	use soil_client_api::{Backend, TrieCacheContext};
 	use soil_client::consensus::{BlockOrigin, Environment};
 	use subsoil::runtime::{generic::BlockId, traits::NumberFor, Perbill};

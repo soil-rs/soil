@@ -1038,7 +1038,7 @@ pub(crate) mod tests {
 	};
 	use futures::{future::poll_fn, task::Poll};
 	use parking_lot::Mutex;
-	use soil_blockchain::Backend as BlockchainBackendT;
+	use soil_client::blockchain::Backend as BlockchainBackendT;
 	use soil_client_api::{Backend as BackendT, HeaderBackend};
 	use subsoil::consensus::beefy::{
 		ecdsa_crypto, known_payloads,

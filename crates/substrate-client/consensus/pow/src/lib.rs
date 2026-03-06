@@ -54,7 +54,7 @@ use sc_consensus::{
 };
 use subsoil::api::ProvideRuntimeApi;
 use subsoil::block_builder::BlockBuilder as BlockBuilderApi;
-use soil_blockchain::HeaderBackend;
+use soil_client::blockchain::HeaderBackend;
 use soil_client_api::{self, backend::AuxStore, BlockOf, BlockchainEvents};
 use soil_client::consensus::{
 	Environment, Error as ConsensusError, ProposeArgs, Proposer, SelectChain, SyncOracle,
@@ -84,7 +84,7 @@ pub enum Error<B: BlockT> {
 	#[error("Fetching best header failed using select chain: {0}")]
 	BestHeaderSelectChain(ConsensusError),
 	#[error("Fetching best header failed: {0}")]
-	BestHeader(soil_blockchain::Error),
+	BestHeader(soil_client::blockchain::Error),
 	#[error("Best header does not exist")]
 	NoBestHeader,
 	#[error("Block proposing error: {0}")]
@@ -105,7 +105,7 @@ pub enum Error<B: BlockT> {
 	#[error("Multiple pre-runtime digests")]
 	MultiplePreRuntimeDigests,
 	#[error(transparent)]
-	Client(soil_blockchain::Error),
+	Client(soil_client::blockchain::Error),
 	#[error(transparent)]
 	Codec(codec::Error),
 	#[error("{0}")]

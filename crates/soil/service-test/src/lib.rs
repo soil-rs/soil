@@ -22,7 +22,7 @@
 use futures::{task::Poll, Future, TryFutureExt as _};
 use log::{debug, info};
 use parking_lot::Mutex;
-use soil_blockchain::HeaderBackend;
+use soil_client::blockchain::HeaderBackend;
 use soil_client_api::{Backend, CallExecutor};
 use soil_network::{
 	config::{MultiaddrWithPeerId, NetworkConfiguration, TransportConfig},

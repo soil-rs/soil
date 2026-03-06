@@ -55,7 +55,6 @@ schnellru = { workspace = true}
 serde = { features = ["derive"], workspace = true, default-features = true}
 serde_json = { workspace = true, default-features = true}
 smallvec = { workspace = true, default-features = true}
-soil-blockchain = { workspace = true, default-features = true}
 thiserror = { workspace = true}
 tokio = { features = ["macros", "sync"], workspace = true, default-features = true}
 tokio-stream = { workspace = true}

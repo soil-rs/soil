@@ -24,7 +24,7 @@
 use std::{marker::PhantomData, pin::Pin, sync::Arc};
 
 use crate::{graph::ChainApi, LOG_TARGET};
-use soil_blockchain::HashAndNumber;
+use soil_client::blockchain::HashAndNumber;
 use subsoil::runtime::traits::Block as BlockT;
 use soil_client::utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
 

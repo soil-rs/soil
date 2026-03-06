@@ -49,7 +49,7 @@ impl soil_client_api::StorageProvider<Block, TestBackend> for TestClient {
 		&self,
 		_hash: Hash,
 		_key: &soil_client_api::StorageKey,
-	) -> soil_blockchain::Result<Option<soil_client_api::StorageData>> {
+	) -> soil_client::blockchain::Result<Option<soil_client_api::StorageData>> {
 		Ok(Some(soil_client_api::StorageData((100_000, 1_000_000).encode())))
 	}
 
@@ -57,7 +57,7 @@ impl soil_client_api::StorageProvider<Block, TestBackend> for TestClient {
 		&self,
 		_hash: Hash,
 		_key: &soil_client_api::StorageKey,
-	) -> soil_blockchain::Result<Option<Hash>> {
+	) -> soil_client::blockchain::Result<Option<Hash>> {
 		unimplemented!()
 	}
 
@@ -66,7 +66,7 @@ impl soil_client_api::StorageProvider<Block, TestBackend> for TestClient {
 		_hash: Hash,
 		_prefix: Option<&soil_client_api::StorageKey>,
 		_start_key: Option<&soil_client_api::StorageKey>,
-	) -> soil_blockchain::Result<
+	) -> soil_client::blockchain::Result<
 		soil_client_api::backend::KeysIter<
 			<TestBackend as soil_client_api::Backend<Block>>::State,
 			Block,
@@ -80,7 +80,7 @@ impl soil_client_api::StorageProvider<Block, TestBackend> for TestClient {
 		_hash: Hash,
 		_prefix: Option<&soil_client_api::StorageKey>,
 		_start_key: Option<&soil_client_api::StorageKey>,
-	) -> soil_blockchain::Result<
+	) -> soil_client::blockchain::Result<
 		soil_client_api::backend::PairsIter<
 			<TestBackend as soil_client_api::Backend<Block>>::State,
 			Block,
@@ -94,7 +94,7 @@ impl soil_client_api::StorageProvider<Block, TestBackend> for TestClient {
 		_hash: Hash,
 		_child_info: &soil_client_api::ChildInfo,
 		_key: &soil_client_api::StorageKey,
-	) -> soil_blockchain::Result<Option<soil_client_api::StorageData>> {
+	) -> soil_client::blockchain::Result<Option<soil_client_api::StorageData>> {
 		unimplemented!()
 	}
 
@@ -104,7 +104,7 @@ impl soil_client_api::StorageProvider<Block, TestBackend> for TestClient {
 		_child_info: soil_client_api::ChildInfo,
 		_prefix: Option<&soil_client_api::StorageKey>,
 		_start_key: Option<&soil_client_api::StorageKey>,
-	) -> soil_blockchain::Result<
+	) -> soil_client::blockchain::Result<
 		soil_client_api::backend::KeysIter<
 			<TestBackend as soil_client_api::Backend<Block>>::State,
 			Block,
@@ -118,7 +118,7 @@ impl soil_client_api::StorageProvider<Block, TestBackend> for TestClient {
 		_hash: Hash,
 		_child_info: &soil_client_api::ChildInfo,
 		_key: &soil_client_api::StorageKey,
-	) -> soil_blockchain::Result<Option<Hash>> {
+	) -> soil_client::blockchain::Result<Option<Hash>> {
 		unimplemented!()
 	}
 
@@ -126,7 +126,7 @@ impl soil_client_api::StorageProvider<Block, TestBackend> for TestClient {
 		&self,
 		_hash: Hash,
 		_key: &soil_client_api::StorageKey,
-	) -> soil_blockchain::Result<Option<soil_client_api::MerkleValue<Hash>>> {
+	) -> soil_client::blockchain::Result<Option<soil_client_api::MerkleValue<Hash>>> {
 		unimplemented!()
 	}
 
@@ -135,17 +135,17 @@ impl soil_client_api::StorageProvider<Block, TestBackend> for TestClient {
 		_hash: Hash,
 		_child_info: &soil_client_api::ChildInfo,
 		_key: &soil_client_api::StorageKey,
-	) -> soil_blockchain::Result<Option<soil_client_api::MerkleValue<Hash>>> {
+	) -> soil_client::blockchain::Result<Option<soil_client_api::MerkleValue<Hash>>> {
 		unimplemented!()
 	}
 }
 
-impl soil_blockchain::HeaderBackend<Block> for TestClient {
-	fn header(&self, _hash: Hash) -> soil_blockchain::Result<Option<Header>> {
+impl soil_client::blockchain::HeaderBackend<Block> for TestClient {
+	fn header(&self, _hash: Hash) -> soil_client::blockchain::Result<Option<Header>> {
 		unimplemented!()
 	}
-	fn info(&self) -> soil_blockchain::Info<Block> {
-		soil_blockchain::Info {
+	fn info(&self) -> soil_client::blockchain::Info<Block> {
+		soil_client::blockchain::Info {
 			best_hash: CORRECT_BLOCK_HASH.into(),
 			best_number: 0,
 			genesis_hash: Default::default(),
@@ -156,13 +156,13 @@ impl soil_blockchain::HeaderBackend<Block> for TestClient {
 			block_gap: None,
 		}
 	}
-	fn status(&self, _hash: Hash) -> soil_blockchain::Result<soil_blockchain::BlockStatus> {
+	fn status(&self, _hash: Hash) -> soil_client::blockchain::Result<soil_client::blockchain::BlockStatus> {
 		unimplemented!()
 	}
-	fn number(&self, _hash: Hash) -> soil_blockchain::Result<Option<BlockNumber>> {
+	fn number(&self, _hash: Hash) -> soil_client::blockchain::Result<Option<BlockNumber>> {
 		unimplemented!()
 	}
-	fn hash(&self, _number: BlockNumber) -> soil_blockchain::Result<Option<Hash>> {
+	fn hash(&self, _number: BlockNumber) -> soil_client::blockchain::Result<Option<Hash>> {
 		unimplemented!()
 	}
 }

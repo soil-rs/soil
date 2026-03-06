@@ -27,7 +27,7 @@ use finality_grandpa::{voter, voter_set::VoterSet, BlockNumberOps, Error as Gran
 use futures::prelude::*;
 use log::{debug, info, warn};
 
-use soil_blockchain::HeaderMetadata;
+use soil_client::blockchain::HeaderMetadata;
 use soil_client_api::backend::Backend;
 use soil_client::consensus::SelectChain;
 use subsoil::consensus::grandpa::AuthorityId;
@@ -56,7 +56,7 @@ impl<'a, Block, Client> finality_grandpa::Chain<Block::Hash, NumberFor<Block>>
 	for ObserverChain<'a, Block, Client>
 where
 	Block: BlockT,
-	Client: HeaderMetadata<Block, Error = soil_blockchain::Error>,
+	Client: HeaderMetadata<Block, Error = soil_client::blockchain::Error>,
 	NumberFor<Block>: BlockNumberOps,
 {
 	fn ancestry(
@@ -170,7 +170,7 @@ pub fn run_grandpa_observer<BE, Block: BlockT, Client, N, S, SC>(
 	network: N,
 	sync: S,
 	notification_service: Box<dyn NotificationService>,
-) -> soil_blockchain::Result<impl Future<Output = ()> + Send>
+) -> soil_client::blockchain::Result<impl Future<Output = ()> + Send>
 where
 	BE: Backend<Block> + Unpin + 'static,
 	N: NetworkT<Block>,
@@ -410,7 +410,7 @@ mod tests {
 		communication::tests::{make_test_network, Event},
 	};
 	use assert_matches::assert_matches;
-	use soil_blockchain::HeaderBackend as _;
+	use soil_client::blockchain::HeaderBackend as _;
 	use soil_network_types::PeerId;
 	use soil_client::utils::mpsc::tracing_unbounded;
 	use substrate_test_runtime_client::{TestClientBuilder, TestClientBuilderExt};

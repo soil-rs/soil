@@ -268,7 +268,7 @@ pub enum BitswapError {
 
 	/// Client backend error.
 	#[error(transparent)]
-	Client(#[from] soil_blockchain::Error),
+	Client(#[from] soil_client::blockchain::Error),
 
 	/// Error parsing CID
 	#[error(transparent)]

@@ -33,7 +33,7 @@ use subsoil::runtime::{
 pub fn resolve_state_version_from_wasm<E, H>(
 	storage: &Storage,
 	executor: &E,
-) -> soil_blockchain::Result<StateVersion>
+) -> soil_client::blockchain::Result<StateVersion>
 where
 	E: RuntimeVersionOf,
 	H: HashT,
@@ -48,10 +48,10 @@ where
 			hash: <H as HashT>::hash(wasm).encode(),
 		};
 		let runtime_version = RuntimeVersionOf::runtime_version(executor, &mut ext, &runtime_code)
-			.map_err(|e| soil_blockchain::Error::VersionInvalid(e.to_string()))?;
+			.map_err(|e| soil_client::blockchain::Error::VersionInvalid(e.to_string()))?;
 		Ok(runtime_version.state_version())
 	} else {
-		Err(soil_blockchain::Error::VersionInvalid(
+		Err(soil_client::blockchain::Error::VersionInvalid(
 			"Runtime missing from initial storage, could not read state version.".to_string(),
 		))
 	}
@@ -86,7 +86,7 @@ pub trait BuildGenesisBlock<Block: BlockT> {
 
 	/// Returns the built genesis block along with the block import operation
 	/// after setting the genesis storage.
-	fn build_genesis_block(self) -> soil_blockchain::Result<(Block, Self::BlockImportOperation)>;
+	fn build_genesis_block(self) -> soil_client::blockchain::Result<(Block, Self::BlockImportOperation)>;
 }
 
 /// Default genesis block builder in Substrate.
@@ -105,9 +105,9 @@ impl<Block: BlockT, B: Backend<Block>, E: RuntimeVersionOf> GenesisBlockBuilder<
 		commit_genesis_state: bool,
 		backend: Arc<B>,
 		executor: E,
-	) -> soil_blockchain::Result<Self> {
+	) -> soil_client::blockchain::Result<Self> {
 		let genesis_storage =
-			build_genesis_storage.build_storage().map_err(soil_blockchain::Error::Storage)?;
+			build_genesis_storage.build_storage().map_err(soil_client::blockchain::Error::Storage)?;
 		Self::new_with_storage(genesis_storage, commit_genesis_state, backend, executor)
 	}
 
@@ -117,7 +117,7 @@ impl<Block: BlockT, B: Backend<Block>, E: RuntimeVersionOf> GenesisBlockBuilder<
 		commit_genesis_state: bool,
 		backend: Arc<B>,
 		executor: E,
-	) -> soil_blockchain::Result<Self> {
+	) -> soil_client::blockchain::Result<Self> {
 		Ok(Self {
 			genesis_storage,
 			commit_genesis_state,
@@ -133,7 +133,7 @@ impl<Block: BlockT, B: Backend<Block>, E: RuntimeVersionOf> BuildGenesisBlock<Bl
 {
 	type BlockImportOperation = <B as Backend<Block>>::BlockImportOperation;
 
-	fn build_genesis_block(self) -> soil_blockchain::Result<(Block, Self::BlockImportOperation)> {
+	fn build_genesis_block(self) -> soil_client::blockchain::Result<(Block, Self::BlockImportOperation)> {
 		let Self { genesis_storage, commit_genesis_state, backend, executor, _phantom } = self;
 
 		let genesis_state_version =

@@ -46,7 +46,7 @@ use substrate_test_runtime_client::DefaultTestClientBuilderExt;
 
 type Item = DigestItem;
 
-type Error = soil_blockchain::Error;
+type Error = soil_client::blockchain::Error;
 
 type TestClient = substrate_test_runtime_client::client::Client<
 	substrate_test_runtime_client::Backend,

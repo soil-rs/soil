@@ -23,7 +23,7 @@ use async_trait::async_trait;
 use codec::Encode;
 use parking_lot::RwLock;
 use sc_transaction_pool::{ChainApi, ValidateTransactionPriority};
-use soil_blockchain::{CachedHeaderMetadata, HashAndNumber, TreeRoute};
+use soil_client::blockchain::{CachedHeaderMetadata, HashAndNumber, TreeRoute};
 use subsoil::runtime::{
 	generic::{self, BlockId},
 	traits::{
@@ -329,8 +329,8 @@ impl TestApi {
 		&self,
 		from: Hash,
 		to: Hash,
-	) -> Result<soil_blockchain::TreeRoute<Block>, Error> {
-		soil_blockchain::tree_route(self, from, to)
+	) -> Result<soil_client::blockchain::TreeRoute<Block>, Error> {
+		soil_client::blockchain::tree_route(self, from, to)
 	}
 
 	/// Helper function for mapping block number to hash. Use if mapping shall not fail.
@@ -536,11 +536,11 @@ impl ChainApi for TestApi {
 		from: <Self::Block as BlockT>::Hash,
 		to: <Self::Block as BlockT>::Hash,
 	) -> Result<TreeRoute<Self::Block>, Self::Error> {
-		soil_blockchain::tree_route::<Block, TestApi>(self, from, to).map_err(Into::into)
+		soil_client::blockchain::tree_route::<Block, TestApi>(self, from, to).map_err(Into::into)
 	}
 }
 
-impl soil_blockchain::HeaderMetadata<Block> for TestApi {
+impl soil_client::blockchain::HeaderMetadata<Block> for TestApi {
 	type Error = Error;
 
 	fn header_metadata(&self, hash: Hash) -> Result<CachedHeaderMetadata<Block>, Self::Error> {

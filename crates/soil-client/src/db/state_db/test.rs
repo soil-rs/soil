@@ -18,7 +18,7 @@
 
 //! Test utils
 
-use crate::{ChangeSet, CommitSet, DBValue, MetaDb, NodeDb};
+use super::{ChangeSet, CommitSet, DBValue, MetaDb, NodeDb};
 use subsoil::core::H256;
 use std::{
 	collections::HashMap,

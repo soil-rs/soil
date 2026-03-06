@@ -115,7 +115,6 @@ soil-rpc-api = { workspace = true, default-features = true }
 soil-rpc-server = { workspace = true, default-features = true }
 soil-rpc-spec-v2 = { workspace = true, default-features = true }
 soil-service = { workspace = true, default-features = true }
-soil-state-db = { workspace = true, default-features = true }
 sc-statement-store = { workspace = true, default-features = true }
 soil-sync-state-rpc = { workspace = true, default-features = true }
 soil-sysinfo = { workspace = true, default-features = true }
@@ -124,7 +123,6 @@ sc-tracing = { workspace = true, default-features = true }
 sc-transaction-pool = { workspace = true, default-features = true }
 soil-transaction-pool-api = { workspace = true, default-features = true }
 soil-authority-discovery = { workspace = true, default-features = true }
-soil-blockchain = { workspace = true, default-features = true }
 soil-client = { workspace = true, default-features = true }
 soil-genesis-builder = { workspace = true, default-features = true }
 soil-mixnet = { workspace = true, default-features = true }

@@ -39,7 +39,7 @@ use async_trait::async_trait;
 use futures::{channel::oneshot, future, prelude::*, Future, FutureExt};
 use parking_lot::Mutex;
 use prometheus_endpoint::Registry as PrometheusRegistry;
-use soil_blockchain::{HashAndNumber, TreeRoute};
+use soil_client::blockchain::{HashAndNumber, TreeRoute};
 use subsoil::core::traits::SpawnEssentialNamed;
 use subsoil::runtime::{
 	generic::BlockId,
@@ -429,7 +429,7 @@ where
 		+ subsoil::runtime::traits::BlockIdTo<Block>
 		+ soil_client_api::ExecutorProvider<Block>
 		+ soil_client_api::UsageProvider<Block>
-		+ soil_blockchain::HeaderMetadata<Block, Error = soil_blockchain::Error>
+		+ soil_client::blockchain::HeaderMetadata<Block, Error = soil_client::blockchain::Error>
 		+ Send
 		+ Sync
 		+ 'static,
@@ -468,7 +468,7 @@ where
 		+ soil_client_api::BlockBackend<Block>
 		+ soil_client_api::blockchain::HeaderBackend<Block>
 		+ subsoil::runtime::traits::BlockIdTo<Block>
-		+ soil_blockchain::HeaderMetadata<Block, Error = soil_blockchain::Error>,
+		+ soil_client::blockchain::HeaderMetadata<Block, Error = soil_client::blockchain::Error>,
 	Client: Send + Sync + 'static,
 	Client::Api: soil_transaction_pool::runtime_api::TaggedTransactionQueue<Block>,
 {

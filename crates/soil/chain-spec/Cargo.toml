@@ -16,6 +16,7 @@ workspace = true
 targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
+soil-client = { workspace = true, default-features = true }
 array-bytes = { workspace = true, default-features = true}
 clap = { features = ["derive"], optional = true, workspace = true }
 codec = { features = ["derive"], workspace = true}
@@ -28,7 +29,6 @@ soil-network = { workspace = true, default-features = true}
 soil-telemetry = { workspace = true, default-features = true}
 serde = { features = ["derive"], workspace = true, default-features = true}
 serde_json = { workspace = true, default-features = true}
-soil-blockchain = { workspace = true, default-features = true}
 subsoil-crypto-hashing = { workspace = true, default-features = true}
 soil-genesis-builder = { workspace = true, default-features = true}
 subsoil = { workspace = true, default-features = true }

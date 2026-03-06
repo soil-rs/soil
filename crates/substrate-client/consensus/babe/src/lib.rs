@@ -102,7 +102,7 @@ use sc_consensus_slots::{
 use subsoil::api::{ApiExt, ProvideRuntimeApi};
 use subsoil::application_crypto::AppCrypto;
 use subsoil::block_builder::BlockBuilder as BlockBuilderApi;
-use soil_blockchain::{
+use soil_client::blockchain::{
 	Backend as _, BlockStatus, Error as ClientError, HeaderBackend, HeaderMetadata,
 	Result as ClientResult,
 };
@@ -321,7 +321,7 @@ pub enum Error<B: BlockT> {
 	VrfThresholdExceeded(u128),
 	/// Could not fetch parent header
 	#[error("Could not fetch parent header: {0}")]
-	FetchParentHeader(soil_blockchain::Error),
+	FetchParentHeader(soil_client::blockchain::Error),
 	/// Expected epoch change to happen.
 	#[error("Expected epoch change to happen at {0:?}, s{1}")]
 	ExpectedEpochChange(B::Hash, Slot),
@@ -348,13 +348,13 @@ pub enum Error<B: BlockT> {
 	BackgroundWorkerTerminated,
 	/// Client error
 	#[error(transparent)]
-	Client(soil_blockchain::Error),
+	Client(soil_client::blockchain::Error),
 	/// Runtime Api error.
 	#[error(transparent)]
 	RuntimeApi(subsoil::api::ApiError),
 	/// Fork tree error
 	#[error(transparent)]
-	ForkTree(Box<fork_tree::Error<soil_blockchain::Error>>),
+	ForkTree(Box<fork_tree::Error<soil_client::blockchain::Error>>),
 }
 
 impl<B: BlockT> From<Error<B>> for String {
@@ -402,7 +402,7 @@ where
 		},
 		Some(2) => runtime_api.configuration(at_hash)?,
 		_ => {
-			return Err(soil_blockchain::Error::VersionInvalid(
+			return Err(soil_client::blockchain::Error::VersionInvalid(
 				"Unsupported or invalid BabeApi version".to_string(),
 			))
 		},
@@ -992,7 +992,7 @@ pub struct BabeVerifier<Block: BlockT, Client> {
 impl<Block, Client> Verifier<Block> for BabeVerifier<Block, Client>
 where
 	Block: BlockT,
-	Client: HeaderMetadata<Block, Error = soil_blockchain::Error>
+	Client: HeaderMetadata<Block, Error = soil_client::blockchain::Error>
 		+ HeaderBackend<Block>
 		+ ProvideRuntimeApi<Block>
 		+ Send
@@ -1173,7 +1173,7 @@ where
 	Inner: BlockImport<Block> + Send + Sync,
 	Inner::Error: Into<ConsensusError>,
 	Client: HeaderBackend<Block>
-		+ HeaderMetadata<Block, Error = soil_blockchain::Error>
+		+ HeaderMetadata<Block, Error = soil_client::blockchain::Error>
 		+ AuxStore
 		+ ProvideRuntimeApi<Block>
 		+ Send
@@ -1444,7 +1444,7 @@ where
 	Inner: BlockImport<Block> + Send + Sync,
 	Inner::Error: Into<ConsensusError>,
 	Client: HeaderBackend<Block>
-		+ HeaderMetadata<Block, Error = soil_blockchain::Error>
+		+ HeaderMetadata<Block, Error = soil_client::blockchain::Error>
 		+ AuxStore
 		+ ProvideRuntimeApi<Block>
 		+ Send
@@ -1757,7 +1757,7 @@ fn prune_finalized<Block, Client>(
 ) -> Result<(), ConsensusError>
 where
 	Block: BlockT,
-	Client: HeaderBackend<Block> + HeaderMetadata<Block, Error = soil_blockchain::Error>,
+	Client: HeaderBackend<Block> + HeaderMetadata<Block, Error = soil_client::blockchain::Error>,
 {
 	let info = client.info();
 
@@ -1802,7 +1802,7 @@ pub fn block_import<Client, Block: BlockT, I, CIDP, SC>(
 where
 	Client: AuxStore
 		+ HeaderBackend<Block>
-		+ HeaderMetadata<Block, Error = soil_blockchain::Error>
+		+ HeaderMetadata<Block, Error = soil_client::blockchain::Error>
 		+ PreCommitActions<Block>
 		+ 'static,
 {
@@ -1882,7 +1882,7 @@ where
 	BI: BlockImport<Block, Error = ConsensusError> + Send + Sync + 'static,
 	Client: ProvideRuntimeApi<Block>
 		+ HeaderBackend<Block>
-		+ HeaderMetadata<Block, Error = soil_blockchain::Error>
+		+ HeaderMetadata<Block, Error = soil_client::blockchain::Error>
 		+ AuxStore
 		+ Send
 		+ Sync
@@ -1924,7 +1924,7 @@ pub fn revert<Block, Client, Backend>(
 where
 	Block: BlockT,
 	Client: AuxStore
-		+ HeaderMetadata<Block, Error = soil_blockchain::Error>
+		+ HeaderMetadata<Block, Error = soil_client::blockchain::Error>
 		+ HeaderBackend<Block>
 		+ ProvideRuntimeApi<Block>
 		+ UsageProvider<Block>,
@@ -1963,7 +1963,7 @@ where
 	let mut weight_keys = HashSet::with_capacity(revertible.saturated_into());
 
 	let leaves = backend.blockchain().leaves()?.into_iter().filter(|&leaf| {
-		soil_blockchain::tree_route(&*client, revert_up_to_hash, leaf)
+		soil_client::blockchain::tree_route(&*client, revert_up_to_hash, leaf)
 			.map(|route| route.retracted().is_empty())
 			.unwrap_or_default()
 	});
@@ -2003,7 +2003,7 @@ fn query_epoch_changes<Block, Client>(
 >
 where
 	Block: BlockT,
-	Client: HeaderBackend<Block> + HeaderMetadata<Block, Error = soil_blockchain::Error>,
+	Client: HeaderBackend<Block> + HeaderMetadata<Block, Error = soil_client::blockchain::Error>,
 {
 	let epoch_changes = epoch_changes.shared_data();
 	let epoch_descriptor = epoch_changes

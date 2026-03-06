@@ -23,7 +23,7 @@ use crate::{
 	best_justification, find_scheduled_change, AuthoritySetChanges, AuthoritySetHardFork,
 	BlockNumberOps, GrandpaJustification, SharedAuthoritySet,
 };
-use soil_blockchain::{Backend as BlockchainBackend, HeaderBackend};
+use soil_client::blockchain::{Backend as BlockchainBackend, HeaderBackend};
 use soil_client_api::Backend as ClientBackend;
 use subsoil::consensus::grandpa::{AuthorityList, SetId, GRANDPA_ENGINE_ID};
 use soil_network_sync::strategy::warp::{
@@ -45,7 +45,7 @@ pub enum Error {
 	DecodeScale(#[from] codec::Error),
 	/// Client backend error.
 	#[error("{0}")]
-	Client(#[from] soil_blockchain::Error),
+	Client(#[from] soil_client::blockchain::Error),
 	/// Invalid request data.
 	#[error("{0}")]
 	InvalidRequest(String),
@@ -393,7 +393,7 @@ mod tests {
 	use codec::Encode;
 	use rand::prelude::*;
 	use sc_block_builder::BlockBuilderBuilder;
-	use soil_blockchain::HeaderBackend;
+	use soil_client::blockchain::HeaderBackend;
 	use soil_client::consensus::BlockOrigin;
 	use subsoil::consensus::grandpa::GRANDPA_ENGINE_ID;
 	use subsoil::keyring::Ed25519Keyring;

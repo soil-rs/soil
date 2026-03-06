@@ -20,7 +20,7 @@ use crate::{common::tracing_log_xt::log_xt_trace, LOG_TARGET};
 use async_trait::async_trait;
 use futures::channel::mpsc::Receiver;
 use indexmap::IndexMap;
-use soil_blockchain::{HashAndNumber, TreeRoute};
+use soil_client::blockchain::{HashAndNumber, TreeRoute};
 use subsoil::runtime::{
 	generic::BlockId,
 	traits::{self, Block as BlockT, SaturatedConversion},

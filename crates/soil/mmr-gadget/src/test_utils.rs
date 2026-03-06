@@ -23,7 +23,7 @@ use parking_lot::Mutex;
 use sc_block_builder::BlockBuilderBuilder;
 use sc_offchain::OffchainDb;
 use subsoil::api::{ApiRef, ProvideRuntimeApi};
-use soil_blockchain::{BlockStatus, CachedHeaderMetadata, HeaderBackend, HeaderMetadata, Info};
+use soil_client::blockchain::{BlockStatus, CachedHeaderMetadata, HeaderBackend, HeaderMetadata, Info};
 use soil_client_api::{
 	Backend as BackendT, BlockchainEvents, FinalityNotifications, ImportNotifications,
 	StorageEventStream, StorageKey,

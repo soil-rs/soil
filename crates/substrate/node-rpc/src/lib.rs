@@ -46,7 +46,7 @@ pub use sc_rpc::SubscriptionTaskExecutor;
 use subsoil::api::ProvideRuntimeApi;
 use subsoil::application_crypto::RuntimeAppPublic;
 use subsoil::block_builder::BlockBuilder;
-use soil_blockchain::{Error as BlockChainError, HeaderBackend, HeaderMetadata};
+use soil_client::blockchain::{Error as BlockChainError, HeaderBackend, HeaderMetadata};
 use soil_client_api::AuxStore;
 use soil_client::consensus::SelectChain;
 use subsoil::consensus::babe::BabeApi;

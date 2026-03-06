@@ -51,7 +51,7 @@ use prometheus_endpoint::{register, Gauge, PrometheusError, Registry, U64};
 use prost::Message;
 use sc_consensus::{BlockImportError, BlockImportStatus, IncomingBlock};
 use subsoil::arithmetic::traits::Saturating;
-use soil_blockchain::{Error as ClientError, HeaderBackend, HeaderMetadata};
+use soil_client::blockchain::{Error as ClientError, HeaderBackend, HeaderMetadata};
 use soil_client_api::{blockchain::BlockGap, BlockBackend, ProofProvider};
 use soil_client::consensus::{BlockOrigin, BlockStatus};
 use soil_network::{IfDisconnected, ProtocolName};
@@ -440,7 +440,7 @@ where
 	B: BlockT,
 	Client: HeaderBackend<B>
 		+ BlockBackend<B>
-		+ HeaderMetadata<B, Error = soil_blockchain::Error>
+		+ HeaderMetadata<B, Error = soil_client::blockchain::Error>
 		+ ProofProvider<B>
 		+ Send
 		+ Sync
@@ -1045,7 +1045,7 @@ where
 	B: BlockT,
 	Client: HeaderBackend<B>
 		+ BlockBackend<B>
-		+ HeaderMetadata<B, Error = soil_blockchain::Error>
+		+ HeaderMetadata<B, Error = soil_client::blockchain::Error>
 		+ ProofProvider<B>
 		+ Send
 		+ Sync
@@ -2474,16 +2474,16 @@ fn is_descendent_of<Block, T>(
 	client: &T,
 	base: &Block::Hash,
 	block: &Block::Hash,
-) -> soil_blockchain::Result<bool>
+) -> soil_client::blockchain::Result<bool>
 where
 	Block: BlockT,
-	T: HeaderMetadata<Block, Error = soil_blockchain::Error> + ?Sized,
+	T: HeaderMetadata<Block, Error = soil_client::blockchain::Error> + ?Sized,
 {
 	if base == block {
 		return Ok(false);
 	}
 
-	let ancestor = soil_blockchain::lowest_common_ancestor(client, *block, *base)?;
+	let ancestor = soil_client::blockchain::lowest_common_ancestor(client, *block, *base)?;
 
 	Ok(ancestor.hash == *base)
 }

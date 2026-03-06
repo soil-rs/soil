@@ -82,7 +82,7 @@ pub struct JustificationRequest<B: Block> {
 #[derive(Debug, thiserror::Error)]
 pub enum Error {
 	#[error(transparent)]
-	Client(#[from] soil_blockchain::Error),
+	Client(#[from] soil_client::blockchain::Error),
 
 	#[error(transparent)]
 	RuntimeApi(#[from] subsoil::api::ApiError),

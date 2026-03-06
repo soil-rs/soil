@@ -40,7 +40,6 @@ async-trait = { workspace = true }
 criterion = { workspace = true, default-features = true }
 sc-keystore = { workspace = true, default-features = true }
 sc-statement-store = { workspace = true, default-features = true }
-soil-blockchain = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
 substrate-test-runtime-client = { workspace = true }
 tempfile = { workspace = true }

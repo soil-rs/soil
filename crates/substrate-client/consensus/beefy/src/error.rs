@@ -20,7 +20,7 @@
 //!
 //! Used for BEEFY gadget internal error handling only
 
-use soil_blockchain::Error as ClientError;
+use soil_client::blockchain::Error as ClientError;
 use std::fmt::Debug;
 
 #[derive(Debug, thiserror::Error)]

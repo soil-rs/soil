@@ -25,7 +25,7 @@ use crate::{
 use async_trait::async_trait;
 use codec::Encode;
 use parking_lot::Mutex;
-use soil_blockchain::{HashAndNumber, TreeRoute};
+use soil_client::blockchain::{HashAndNumber, TreeRoute};
 use subsoil::runtime::{
 	generic::BlockId,
 	traits::{Block as BlockT, Hash},

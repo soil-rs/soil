@@ -28,7 +28,7 @@ pub mod cli;
 pub mod command;
 
 use codec::{Decode, Encode};
-use soil_blockchain::HeaderBackend;
+use soil_client::blockchain::HeaderBackend;
 use soil_client_api::BlockBackend;
 use subsoil::core::hexdisplay::HexDisplay;
 use subsoil::runtime::{
@@ -85,7 +85,7 @@ pub enum Error {
 	Codec(#[from] codec::Error),
 	/// Error accessing blockchain DB.
 	#[error(transparent)]
-	Blockchain(#[from] soil_blockchain::Error),
+	Blockchain(#[from] soil_client::blockchain::Error),
 	/// Given block has not been found.
 	#[error("{0}")]
 	NotFound(String),
@@ -97,7 +97,7 @@ pub trait ChainAccess<TBlock: Block>: HeaderBackend<TBlock> + BlockBackend<TBloc
 impl<T, TBlock> ChainAccess<TBlock> for T
 where
 	TBlock: Block,
-	T: soil_blockchain::HeaderBackend<TBlock> + soil_client_api::BlockBackend<TBlock>,
+	T: soil_client::blockchain::HeaderBackend<TBlock> + soil_client_api::BlockBackend<TBlock>,
 {
 }
 

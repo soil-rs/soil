@@ -21,7 +21,7 @@
 use crate::{error::Error, worker::PersistedState, LOG_TARGET};
 use codec::{Decode, Encode};
 use log::{debug, trace, warn};
-use soil_blockchain::{Error as ClientError, Result as ClientResult};
+use soil_client::blockchain::{Error as ClientError, Result as ClientResult};
 use soil_client_api::{backend::AuxStore, Backend};
 use subsoil::consensus::beefy::AuthorityIdBound;
 use subsoil::runtime::traits::Block as BlockT;

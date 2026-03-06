@@ -34,7 +34,7 @@ use std::sync::Arc;
 
 use sc_consensus::{BlockImportParams, ForkChoiceStrategy, Verifier};
 use subsoil::api::{ProvideRuntimeApi, StorageProof};
-use soil_blockchain::{HeaderBackend, HeaderMetadata};
+use soil_client::blockchain::{HeaderBackend, HeaderMetadata};
 use subsoil::consensus::babe::{
 	digests::{NextEpochDescriptor, PreDigest, SecondaryPlainPreDigest},
 	inherents::BabeInherentData,
@@ -92,7 +92,7 @@ impl<B: BlockT, C> BabeVerifier<B, C> {
 impl<B, C> Verifier<B> for BabeVerifier<B, C>
 where
 	B: BlockT,
-	C: HeaderBackend<B> + HeaderMetadata<B, Error = soil_blockchain::Error>,
+	C: HeaderBackend<B> + HeaderMetadata<B, Error = soil_client::blockchain::Error>,
 {
 	async fn verify(
 		&self,
@@ -136,7 +136,7 @@ where
 	C: AuxStore
 		+ HeaderBackend<B>
 		+ ProvideRuntimeApi<B>
-		+ HeaderMetadata<B, Error = soil_blockchain::Error>
+		+ HeaderMetadata<B, Error = soil_client::blockchain::Error>
 		+ UsageProvider<B>,
 	C::Api: BabeApi<B>,
 {
@@ -183,7 +183,7 @@ where
 	B: BlockT,
 	C: AuxStore
 		+ HeaderBackend<B>
-		+ HeaderMetadata<B, Error = soil_blockchain::Error>
+		+ HeaderMetadata<B, Error = soil_client::blockchain::Error>
 		+ UsageProvider<B>
 		+ ProvideRuntimeApi<B>,
 	C::Api: BabeApi<B>,

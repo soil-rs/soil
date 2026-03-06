@@ -35,7 +35,7 @@ use crate::{
 use log::{debug, error, info, warn};
 use prometheus_endpoint::Registry;
 use sc_consensus::{BlockImportError, BlockImportStatus};
-use soil_blockchain::{Error as ClientError, HeaderBackend, HeaderMetadata};
+use soil_client::blockchain::{Error as ClientError, HeaderBackend, HeaderMetadata};
 use soil_client_api::{BlockBackend, ProofProvider};
 use soil_network::ProtocolName;
 use soil_network_common::sync::{message::BlockAnnounce, SyncMode};
@@ -101,7 +101,7 @@ where
 	B: BlockT,
 	Client: HeaderBackend<B>
 		+ BlockBackend<B>
-		+ HeaderMetadata<B, Error = soil_blockchain::Error>
+		+ HeaderMetadata<B, Error = soil_client::blockchain::Error>
 		+ ProofProvider<B>
 		+ Send
 		+ Sync
@@ -340,7 +340,7 @@ where
 	B: BlockT,
 	Client: HeaderBackend<B>
 		+ BlockBackend<B>
-		+ HeaderMetadata<B, Error = soil_blockchain::Error>
+		+ HeaderMetadata<B, Error = soil_client::blockchain::Error>
 		+ ProofProvider<B>
 		+ Send
 		+ Sync

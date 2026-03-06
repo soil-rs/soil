@@ -16,9 +16,9 @@ workspace = true
 targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
+soil-client = { workspace = true, default-features = true }
 subsoil = { workspace = true }
 codec = { features = ["derive"], workspace = true, default-features = true }
-soil-blockchain = { workspace = true, default-features = true }
 
 [dev-dependencies]
 substrate-test-runtime-client = { workspace = true }

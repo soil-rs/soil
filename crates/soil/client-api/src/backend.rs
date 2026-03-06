@@ -74,7 +74,7 @@ pub struct ImportSummary<Block: BlockT> {
 	/// Tree route from old best to new best.
 	///
 	/// If `None`, there was no re-org while importing.
-	pub tree_route: Option<soil_blockchain::TreeRoute<Block>>,
+	pub tree_route: Option<soil_client::blockchain::TreeRoute<Block>>,
 	/// What notify action to take for this import.
 	pub import_notification_action: ImportNotificationAction,
 }
@@ -118,7 +118,7 @@ pub fn apply_aux<'a, 'b: 'a, 'c: 'a, B, Block, D, I>(
 	operation: &mut ClientImportOperation<Block, B>,
 	insert: I,
 	delete: D,
-) -> soil_blockchain::Result<()>
+) -> soil_client::blockchain::Result<()>
 where
 	Block: BlockT,
 	B: Backend<Block>,
@@ -172,7 +172,7 @@ pub trait BlockImportOperation<Block: BlockT> {
 	/// Returns pending state.
 	///
 	/// Returns None for backends with locally-unavailable state data.
-	fn state(&self) -> soil_blockchain::Result<Option<&Self::State>>;
+	fn state(&self) -> soil_client::blockchain::Result<Option<&Self::State>>;
 
 	/// Append block data to the transaction.
 	///
@@ -193,13 +193,13 @@ pub trait BlockImportOperation<Block: BlockT> {
 		justifications: Option<Justifications>,
 		state: NewBlockState,
 		register_as_leaf: bool,
-	) -> soil_blockchain::Result<()>;
+	) -> soil_client::blockchain::Result<()>;
 
 	/// Inject storage data into the database.
 	fn update_db_storage(
 		&mut self,
 		update: BackendTransaction<HashingFor<Block>>,
-	) -> soil_blockchain::Result<()>;
+	) -> soil_client::blockchain::Result<()>;
 
 	/// Set genesis state. If `commit` is `false` the state is saved in memory, but is not written
 	/// to the database.
@@ -208,34 +208,34 @@ pub trait BlockImportOperation<Block: BlockT> {
 		storage: Storage,
 		commit: bool,
 		state_version: StateVersion,
-	) -> soil_blockchain::Result<Block::Hash>;
+	) -> soil_client::blockchain::Result<Block::Hash>;
 
 	/// Inject storage data into the database replacing any existing data.
 	fn reset_storage(
 		&mut self,
 		storage: Storage,
 		state_version: StateVersion,
-	) -> soil_blockchain::Result<Block::Hash>;
+	) -> soil_client::blockchain::Result<Block::Hash>;
 
 	/// Set storage changes.
 	fn update_storage(
 		&mut self,
 		update: StorageCollection,
 		child_update: ChildStorageCollection,
-	) -> soil_blockchain::Result<()>;
+	) -> soil_client::blockchain::Result<()>;
 
 	/// Write offchain storage changes to the database.
 	fn update_offchain_storage(
 		&mut self,
 		_offchain_update: OffchainChangesCollection,
-	) -> soil_blockchain::Result<()> {
+	) -> soil_client::blockchain::Result<()> {
 		Ok(())
 	}
 
 	/// Insert auxiliary keys.
 	///
 	/// Values are `None` if should be deleted.
-	fn insert_aux<I>(&mut self, ops: I) -> soil_blockchain::Result<()>
+	fn insert_aux<I>(&mut self, ops: I) -> soil_client::blockchain::Result<()>
 	where
 		I: IntoIterator<Item = (Vec<u8>, Option<Vec<u8>>)>;
 
@@ -245,17 +245,17 @@ pub trait BlockImportOperation<Block: BlockT> {
 		&mut self,
 		hash: Block::Hash,
 		justification: Option<Justification>,
-	) -> soil_blockchain::Result<()>;
+	) -> soil_client::blockchain::Result<()>;
 
 	/// Mark a block as new head. If both block import and set head are specified, set head
 	/// overrides block import's best block rule.
-	fn mark_head(&mut self, hash: Block::Hash) -> soil_blockchain::Result<()>;
+	fn mark_head(&mut self, hash: Block::Hash) -> soil_client::blockchain::Result<()>;
 
 	/// Add a transaction index operation.
 	fn update_transaction_index(
 		&mut self,
 		index: Vec<IndexOperation>,
-	) -> soil_blockchain::Result<()>;
+	) -> soil_client::blockchain::Result<()>;
 
 	/// Configure whether to create a block gap if newly imported block is missing parent
 	fn set_create_gap(&mut self, create_gap: bool);
@@ -267,7 +267,7 @@ pub trait LockImportRun<Block: BlockT, B: Backend<Block>> {
 	fn lock_import_and_run<R, Err, F>(&self, f: F) -> Result<R, Err>
 	where
 		F: FnOnce(&mut ClientImportOperation<Block, B>) -> Result<R, Err>,
-		Err: From<soil_blockchain::Error>;
+		Err: From<soil_client::blockchain::Error>;
 }
 
 /// Finalize Facilities
@@ -287,7 +287,7 @@ pub trait Finalizer<Block: BlockT, B: Backend<Block>> {
 		block: Block::Hash,
 		justification: Option<Justification>,
 		notify: bool,
-	) -> soil_blockchain::Result<()>;
+	) -> soil_client::blockchain::Result<()>;
 
 	/// Finalize a block.
 	///
@@ -307,7 +307,7 @@ pub trait Finalizer<Block: BlockT, B: Backend<Block>> {
 		block: Block::Hash,
 		justification: Option<Justification>,
 		notify: bool,
-	) -> soil_blockchain::Result<()>;
+	) -> soil_client::blockchain::Result<()>;
 }
 
 /// Provides access to an auxiliary database.
@@ -329,10 +329,10 @@ pub trait AuxStore {
 		&self,
 		insert: I,
 		delete: D,
-	) -> soil_blockchain::Result<()>;
+	) -> soil_client::blockchain::Result<()>;
 
 	/// Query auxiliary data from key-value store.
-	fn get_aux(&self, key: &[u8]) -> soil_blockchain::Result<Option<Vec<u8>>>;
+	fn get_aux(&self, key: &[u8]) -> soil_client::blockchain::Result<Option<Vec<u8>>>;
 }
 
 /// An `Iterator` that iterates keys in a given block under a prefix.
@@ -445,14 +445,14 @@ pub trait StorageProvider<Block: BlockT, B: Backend<Block>> {
 		&self,
 		hash: Block::Hash,
 		key: &StorageKey,
-	) -> soil_blockchain::Result<Option<StorageData>>;
+	) -> soil_client::blockchain::Result<Option<StorageData>>;
 
 	/// Given a block's `Hash` and a key, return the value under the hash in that block.
 	fn storage_hash(
 		&self,
 		hash: Block::Hash,
 		key: &StorageKey,
-	) -> soil_blockchain::Result<Option<Block::Hash>>;
+	) -> soil_client::blockchain::Result<Option<Block::Hash>>;
 
 	/// Given a block's `Hash` and a key prefix, returns a `KeysIter` iterates matching storage
 	/// keys in that block.
@@ -461,7 +461,7 @@ pub trait StorageProvider<Block: BlockT, B: Backend<Block>> {
 		hash: Block::Hash,
 		prefix: Option<&StorageKey>,
 		start_key: Option<&StorageKey>,
-	) -> soil_blockchain::Result<KeysIter<B::State, Block>>;
+	) -> soil_client::blockchain::Result<KeysIter<B::State, Block>>;
 
 	/// Given a block's `Hash` and a key prefix, returns an iterator over the storage keys and
 	/// values in that block.
@@ -470,7 +470,7 @@ pub trait StorageProvider<Block: BlockT, B: Backend<Block>> {
 		hash: <Block as BlockT>::Hash,
 		prefix: Option<&StorageKey>,
 		start_key: Option<&StorageKey>,
-	) -> soil_blockchain::Result<PairsIter<B::State, Block>>;
+	) -> soil_client::blockchain::Result<PairsIter<B::State, Block>>;
 
 	/// Given a block's `Hash`, a key and a child storage key, return the value under the key in
 	/// that block.
@@ -479,7 +479,7 @@ pub trait StorageProvider<Block: BlockT, B: Backend<Block>> {
 		hash: Block::Hash,
 		child_info: &ChildInfo,
 		key: &StorageKey,
-	) -> soil_blockchain::Result<Option<StorageData>>;
+	) -> soil_client::blockchain::Result<Option<StorageData>>;
 
 	/// Given a block's `Hash` and a key `prefix` and a child storage key,
 	/// returns a `KeysIter` that iterates matching storage keys in that block.
@@ -489,7 +489,7 @@ pub trait StorageProvider<Block: BlockT, B: Backend<Block>> {
 		child_info: ChildInfo,
 		prefix: Option<&StorageKey>,
 		start_key: Option<&StorageKey>,
-	) -> soil_blockchain::Result<KeysIter<B::State, Block>>;
+	) -> soil_client::blockchain::Result<KeysIter<B::State, Block>>;
 
 	/// Given a block's `Hash`, a key and a child storage key, return the hash under the key in that
 	/// block.
@@ -498,14 +498,14 @@ pub trait StorageProvider<Block: BlockT, B: Backend<Block>> {
 		hash: Block::Hash,
 		child_info: &ChildInfo,
 		key: &StorageKey,
-	) -> soil_blockchain::Result<Option<Block::Hash>>;
+	) -> soil_client::blockchain::Result<Option<Block::Hash>>;
 
 	/// Given a block's `Hash` and a key, return the closest merkle value.
 	fn closest_merkle_value(
 		&self,
 		hash: Block::Hash,
 		key: &StorageKey,
-	) -> soil_blockchain::Result<Option<MerkleValue<Block::Hash>>>;
+	) -> soil_client::blockchain::Result<Option<MerkleValue<Block::Hash>>>;
 
 	/// Given a block's `Hash`, a key and a child storage key, return the closest merkle value.
 	fn child_closest_merkle_value(
@@ -513,7 +513,7 @@ pub trait StorageProvider<Block: BlockT, B: Backend<Block>> {
 		hash: Block::Hash,
 		child_info: &ChildInfo,
 		key: &StorageKey,
-	) -> soil_blockchain::Result<Option<MerkleValue<Block::Hash>>>;
+	) -> soil_client::blockchain::Result<Option<MerkleValue<Block::Hash>>>;
 }
 
 /// Specify the desired trie cache context when calling [`Backend::state_at`].
@@ -584,20 +584,20 @@ pub trait Backend<Block: BlockT>: AuxStore + Send + Sync {
 	/// Begin a new block insertion transaction with given parent block id.
 	///
 	/// When constructing the genesis, this is called with all-zero hash.
-	fn begin_operation(&self) -> soil_blockchain::Result<Self::BlockImportOperation>;
+	fn begin_operation(&self) -> soil_client::blockchain::Result<Self::BlockImportOperation>;
 
 	/// Note an operation to contain state transition.
 	fn begin_state_operation(
 		&self,
 		operation: &mut Self::BlockImportOperation,
 		block: Block::Hash,
-	) -> soil_blockchain::Result<()>;
+	) -> soil_client::blockchain::Result<()>;
 
 	/// Commit block insertion.
 	fn commit_operation(
 		&self,
 		transaction: Self::BlockImportOperation,
-	) -> soil_blockchain::Result<()>;
+	) -> soil_client::blockchain::Result<()>;
 
 	/// Finalize block with given `hash`.
 	///
@@ -606,7 +606,7 @@ pub trait Backend<Block: BlockT>: AuxStore + Send + Sync {
 		&self,
 		hash: Block::Hash,
 		justification: Option<Justification>,
-	) -> soil_blockchain::Result<()>;
+	) -> soil_client::blockchain::Result<()>;
 
 	/// Append justification to the block with the given `hash`.
 	///
@@ -615,7 +615,7 @@ pub trait Backend<Block: BlockT>: AuxStore + Send + Sync {
 		&self,
 		hash: Block::Hash,
 		justification: Justification,
-	) -> soil_blockchain::Result<()>;
+	) -> soil_client::blockchain::Result<()>;
 
 	/// Returns reference to blockchain backend.
 	fn blockchain(&self) -> &Self::Blockchain;
@@ -629,7 +629,7 @@ pub trait Backend<Block: BlockT>: AuxStore + Send + Sync {
 	/// Pin the block to keep body, justification and state available after pruning.
 	/// Number of pins are reference counted. Users need to make sure to perform
 	/// one call to [`Self::unpin_block`] per call to [`Self::pin_block`].
-	fn pin_block(&self, hash: Block::Hash) -> soil_blockchain::Result<()>;
+	fn pin_block(&self, hash: Block::Hash) -> soil_client::blockchain::Result<()>;
 
 	/// Unpin the block to allow pruning.
 	fn unpin_block(&self, hash: Block::Hash);
@@ -644,7 +644,7 @@ pub trait Backend<Block: BlockT>: AuxStore + Send + Sync {
 		&self,
 		hash: Block::Hash,
 		trie_cache_context: TrieCacheContext,
-	) -> soil_blockchain::Result<Self::State>;
+	) -> soil_client::blockchain::Result<Self::State>;
 
 	/// Attempts to revert the chain by `n` blocks. If `revert_finalized` is set it will attempt to
 	/// revert past any finalized block, this is unsafe and can potentially leave the node in an
@@ -657,10 +657,10 @@ pub trait Backend<Block: BlockT>: AuxStore + Send + Sync {
 		&self,
 		n: NumberFor<Block>,
 		revert_finalized: bool,
-	) -> soil_blockchain::Result<(NumberFor<Block>, HashSet<Block::Hash>)>;
+	) -> soil_client::blockchain::Result<(NumberFor<Block>, HashSet<Block::Hash>)>;
 
 	/// Discard non-best, unfinalized leaf block.
-	fn remove_leaf_block(&self, hash: Block::Hash) -> soil_blockchain::Result<()>;
+	fn remove_leaf_block(&self, hash: Block::Hash) -> soil_client::blockchain::Result<()>;
 
 	/// Insert auxiliary data into key-value store.
 	fn insert_aux<
@@ -673,11 +673,11 @@ pub trait Backend<Block: BlockT>: AuxStore + Send + Sync {
 		&self,
 		insert: I,
 		delete: D,
-	) -> soil_blockchain::Result<()> {
+	) -> soil_client::blockchain::Result<()> {
 		AuxStore::insert_aux(self, insert, delete)
 	}
 	/// Query auxiliary data from key-value store.
-	fn get_aux(&self, key: &[u8]) -> soil_blockchain::Result<Option<Vec<u8>>> {
+	fn get_aux(&self, key: &[u8]) -> soil_client::blockchain::Result<Option<Vec<u8>>> {
 		AuxStore::get_aux(self, key)
 	}
 

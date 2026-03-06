@@ -712,7 +712,7 @@ fn choose_pruning_mode(
 
 #[cfg(test)]
 mod tests {
-	use crate::{
+	use crate::db::state_db::{
 		test::{make_changeset, make_db, TestDb},
 		Constraints, Error, IsPruned, PruningMode, StateDb, StateDbError,
 	};

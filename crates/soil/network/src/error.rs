@@ -36,7 +36,7 @@ pub enum Error {
 
 	/// Client error
 	#[error(transparent)]
-	Client(#[from] Box<soil_blockchain::Error>),
+	Client(#[from] Box<soil_client::blockchain::Error>),
 	/// The same bootnode (based on address) is registered with two different peer ids.
 	#[error(
 		"The same bootnode (`{address}`) is registered with two different peer ids: `{first_id}` and `{second_id}`"

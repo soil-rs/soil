@@ -12,13 +12,13 @@ description = "Transaction pool client facing API."
 workspace = true
 
 [dependencies]
+soil-client = { workspace = true, default-features = true }
 async-trait = { workspace = true, optional = true}
 codec = { workspace = true, default-features = true, optional = true}
 futures = { workspace = true, optional = true}
 indexmap = { workspace = true, optional = true}
 log = { workspace = true, default-features = true, optional = true}
 serde = { features = ["derive"], workspace = true, default-features = true, optional = true}
-soil-blockchain = { workspace = true, default-features = true, optional = true}
 subsoil = { workspace = true, optional = true}
 strum = { workspace = true, features = ["derive"], optional = true}
 thiserror = { workspace = true, optional = true}
@@ -32,7 +32,6 @@ std = [
 	"indexmap",
 	"log",
 	"serde",
-	"soil-blockchain",
 	"subsoil",
 	"strum",
 	"thiserror",

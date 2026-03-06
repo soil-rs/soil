@@ -28,7 +28,7 @@ use crate::SubscriptionTaskExecutor;
 use jsonrpsee::{core::async_trait, Extensions, PendingSubscriptionSink};
 use sc_tracing::block::TracingExecuteBlock;
 use subsoil::api::{CallApiAt, Metadata, ProvideRuntimeApi};
-use soil_blockchain::{HeaderBackend, HeaderMetadata};
+use soil_client::blockchain::{HeaderBackend, HeaderMetadata};
 use soil_client_api::{
 	Backend, BlockBackend, BlockchainEvents, ExecutorProvider, ProofProvider, StorageProvider,
 };
@@ -174,7 +174,7 @@ where
 	Client: ExecutorProvider<Block>
 		+ StorageProvider<Block, BE>
 		+ ProofProvider<Block>
-		+ HeaderMetadata<Block, Error = soil_blockchain::Error>
+		+ HeaderMetadata<Block, Error = soil_client::blockchain::Error>
 		+ BlockchainEvents<Block>
 		+ CallApiAt<Block>
 		+ HeaderBackend<Block>
@@ -497,6 +497,6 @@ where
 	}
 }
 
-fn client_err(err: soil_blockchain::Error) -> Error {
+fn client_err(err: soil_client::blockchain::Error) -> Error {
 	Error::Client(Box::new(err))
 }

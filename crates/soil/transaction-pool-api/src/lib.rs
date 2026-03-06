@@ -408,7 +408,7 @@ pub enum ChainEvent<B: BlockT> {
 		/// Tree route from old best to new best parent that was calculated on import.
 		///
 		/// If `None`, no re-org happened on import.
-		tree_route: Option<Arc<soil_blockchain::TreeRoute<B>>>,
+		tree_route: Option<Arc<soil_client::blockchain::TreeRoute<B>>>,
 	},
 	/// An existing block has been finalized.
 	Finalized {

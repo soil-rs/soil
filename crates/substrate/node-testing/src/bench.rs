@@ -481,8 +481,8 @@ impl BenchDb {
 		let start = std::time::Instant::now();
 		for opaque in self.block_content(content, &client) {
 			match block.push(opaque) {
-				Err(soil_blockchain::Error::ApplyExtrinsicFailed(
-					soil_blockchain::ApplyExtrinsicFailed::Validity(e),
+				Err(soil_client::blockchain::Error::ApplyExtrinsicFailed(
+					soil_client::blockchain::ApplyExtrinsicFailed::Validity(e),
 				)) if e.exhausted_resources() => break,
 				Err(err) => panic!("Error pushing transaction: {:?}", err),
 				Ok(_) => {},

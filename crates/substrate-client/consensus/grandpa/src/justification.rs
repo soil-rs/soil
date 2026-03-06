@@ -24,7 +24,7 @@ use std::{
 
 use codec::{Decode, DecodeAll, Encode};
 use finality_grandpa::{voter_set::VoterSet, Error as GrandpaError};
-use soil_blockchain::{Error as ClientError, HeaderBackend};
+use soil_client::blockchain::{Error as ClientError, HeaderBackend};
 use subsoil::consensus::grandpa::AuthorityId;
 use subsoil::runtime::traits::{Block as BlockT, Header as HeaderT, NumberFor};
 

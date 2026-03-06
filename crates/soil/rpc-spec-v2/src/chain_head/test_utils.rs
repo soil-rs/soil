@@ -20,7 +20,7 @@
 
 use parking_lot::Mutex;
 use subsoil::api::{CallApiAt, CallApiAtParams};
-use soil_blockchain::{BlockStatus, CachedHeaderMetadata, HeaderBackend, HeaderMetadata, Info};
+use soil_client::blockchain::{BlockStatus, CachedHeaderMetadata, HeaderBackend, HeaderMetadata, Info};
 use soil_client_api::{
 	execution_extensions::ExecutionExtensions, BlockBackend, BlockImportNotification,
 	BlockchainEvents, CallExecutor, ChildInfo, ExecutorProvider, FinalityNotification,
@@ -127,7 +127,7 @@ impl<Client> BlockchainEvents<Block> for ChainHeadMockClient<Client> {
 		&self,
 		_filter_keys: Option<&[StorageKey]>,
 		_child_filter_keys: Option<&[(StorageKey, Option<Vec<StorageKey>>)]>,
-	) -> soil_blockchain::Result<StorageEventStream<Hash>> {
+	) -> soil_client::blockchain::Result<StorageEventStream<Hash>> {
 		unimplemented!()
 	}
 }
@@ -158,7 +158,7 @@ impl<
 		&self,
 		hash: Block::Hash,
 		key: &StorageKey,
-	) -> soil_blockchain::Result<Option<StorageData>> {
+	) -> soil_client::blockchain::Result<Option<StorageData>> {
 		self.client.storage(hash, key)
 	}
 
@@ -166,7 +166,7 @@ impl<
 		&self,
 		hash: Block::Hash,
 		key: &StorageKey,
-	) -> soil_blockchain::Result<Option<Block::Hash>> {
+	) -> soil_client::blockchain::Result<Option<Block::Hash>> {
 		self.client.storage_hash(hash, key)
 	}
 
@@ -175,7 +175,7 @@ impl<
 		hash: Block::Hash,
 		prefix: Option<&StorageKey>,
 		start_key: Option<&StorageKey>,
-	) -> soil_blockchain::Result<KeysIter<BE::State, Block>> {
+	) -> soil_client::blockchain::Result<KeysIter<BE::State, Block>> {
 		self.client.storage_keys(hash, prefix, start_key)
 	}
 
@@ -184,7 +184,7 @@ impl<
 		hash: <Block as BlockT>::Hash,
 		prefix: Option<&StorageKey>,
 		start_key: Option<&StorageKey>,
-	) -> soil_blockchain::Result<PairsIter<BE::State, Block>> {
+	) -> soil_client::blockchain::Result<PairsIter<BE::State, Block>> {
 		self.client.storage_pairs(hash, prefix, start_key)
 	}
 
@@ -193,7 +193,7 @@ impl<
 		hash: Block::Hash,
 		child_info: &ChildInfo,
 		key: &StorageKey,
-	) -> soil_blockchain::Result<Option<StorageData>> {
+	) -> soil_client::blockchain::Result<Option<StorageData>> {
 		self.client.child_storage(hash, child_info, key)
 	}
 
@@ -203,7 +203,7 @@ impl<
 		child_info: ChildInfo,
 		prefix: Option<&StorageKey>,
 		start_key: Option<&StorageKey>,
-	) -> soil_blockchain::Result<KeysIter<BE::State, Block>> {
+	) -> soil_client::blockchain::Result<KeysIter<BE::State, Block>> {
 		self.client.child_storage_keys(hash, child_info, prefix, start_key)
 	}
 
@@ -212,7 +212,7 @@ impl<
 		hash: Block::Hash,
 		child_info: &ChildInfo,
 		key: &StorageKey,
-	) -> soil_blockchain::Result<Option<Block::Hash>> {
+	) -> soil_client::blockchain::Result<Option<Block::Hash>> {
 		self.client.child_storage_hash(hash, child_info, key)
 	}
 
@@ -220,7 +220,7 @@ impl<
 		&self,
 		hash: Block::Hash,
 		key: &StorageKey,
-	) -> soil_blockchain::Result<Option<MerkleValue<Block::Hash>>> {
+	) -> soil_client::blockchain::Result<Option<MerkleValue<Block::Hash>>> {
 		self.client.closest_merkle_value(hash, key)
 	}
 
@@ -229,7 +229,7 @@ impl<
 		hash: Block::Hash,
 		child_info: &ChildInfo,
 		key: &StorageKey,
-	) -> soil_blockchain::Result<Option<MerkleValue<Block::Hash>>> {
+	) -> soil_client::blockchain::Result<Option<MerkleValue<Block::Hash>>> {
 		self.client.child_closest_merkle_value(hash, child_info, key)
 	}
 }
@@ -264,41 +264,41 @@ impl<Block: BlockT, Client: BlockBackend<Block>> BlockBackend<Block>
 	fn block_body(
 		&self,
 		hash: Block::Hash,
-	) -> soil_blockchain::Result<Option<Vec<<Block as BlockT>::Extrinsic>>> {
+	) -> soil_client::blockchain::Result<Option<Vec<<Block as BlockT>::Extrinsic>>> {
 		self.client.block_body(hash)
 	}
 
-	fn block(&self, hash: Block::Hash) -> soil_blockchain::Result<Option<SignedBlock<Block>>> {
+	fn block(&self, hash: Block::Hash) -> soil_client::blockchain::Result<Option<SignedBlock<Block>>> {
 		self.client.block(hash)
 	}
 
 	fn block_status(
 		&self,
 		hash: Block::Hash,
-	) -> soil_blockchain::Result<soil_client::consensus::BlockStatus> {
+	) -> soil_client::blockchain::Result<soil_client::consensus::BlockStatus> {
 		self.client.block_status(hash)
 	}
 
-	fn justifications(&self, hash: Block::Hash) -> soil_blockchain::Result<Option<Justifications>> {
+	fn justifications(&self, hash: Block::Hash) -> soil_client::blockchain::Result<Option<Justifications>> {
 		self.client.justifications(hash)
 	}
 
-	fn block_hash(&self, number: NumberFor<Block>) -> soil_blockchain::Result<Option<Block::Hash>> {
+	fn block_hash(&self, number: NumberFor<Block>) -> soil_client::blockchain::Result<Option<Block::Hash>> {
 		self.client.block_hash(number)
 	}
 
-	fn indexed_transaction(&self, hash: Block::Hash) -> soil_blockchain::Result<Option<Vec<u8>>> {
+	fn indexed_transaction(&self, hash: Block::Hash) -> soil_client::blockchain::Result<Option<Vec<u8>>> {
 		self.client.indexed_transaction(hash)
 	}
 
-	fn has_indexed_transaction(&self, hash: Block::Hash) -> soil_blockchain::Result<bool> {
+	fn has_indexed_transaction(&self, hash: Block::Hash) -> soil_client::blockchain::Result<bool> {
 		self.client.has_indexed_transaction(hash)
 	}
 
 	fn block_indexed_body(
 		&self,
 		hash: Block::Hash,
-	) -> soil_blockchain::Result<Option<Vec<Vec<u8>>>> {
+	) -> soil_client::blockchain::Result<Option<Vec<Vec<u8>>>> {
 		self.client.block_indexed_body(hash)
 	}
 
@@ -340,7 +340,7 @@ where
 	fn header(
 		&self,
 		hash: Block::Hash,
-	) -> soil_blockchain::Result<Option<<Block as BlockT>::Header>> {
+	) -> soil_client::blockchain::Result<Option<<Block as BlockT>::Header>> {
 		self.client.header(hash)
 	}
 
@@ -370,7 +370,7 @@ where
 	fn hash(
 		&self,
 		number: <<Block as BlockT>::Header as HeaderT>::Number,
-	) -> soil_blockchain::Result<Option<Block::Hash>> {
+	) -> soil_client::blockchain::Result<Option<Block::Hash>> {
 		self.client.hash(number)
 	}
 }

@@ -35,7 +35,7 @@ use parking_lot::RwLock;
 use prometheus_endpoint::{register, Counter, Gauge, PrometheusError, U64};
 
 use subsoil::api::ApiExt;
-use soil_blockchain::HeaderMetadata;
+use soil_client::blockchain::HeaderMetadata;
 use soil_client_api::{
 	backend::{apply_aux, Backend as BackendT},
 	utils::is_descendent_of,
@@ -616,13 +616,13 @@ pub(crate) fn ancestry<Block: BlockT, Client>(
 	block: Block::Hash,
 ) -> Result<Vec<Block::Hash>, GrandpaError>
 where
-	Client: HeaderMetadata<Block, Error = soil_blockchain::Error>,
+	Client: HeaderMetadata<Block, Error = soil_client::blockchain::Error>,
 {
 	if base == block {
 		return Err(GrandpaError::NotDescendent);
 	}
 
-	let tree_route_res = soil_blockchain::tree_route(&**client, block, base);
+	let tree_route_res = soil_client::blockchain::tree_route(&**client, block, base);
 
 	let tree_route = match tree_route_res {
 		Ok(tree_route) => tree_route,

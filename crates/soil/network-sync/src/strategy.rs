@@ -35,7 +35,7 @@ use crate::{
 	types::{BadPeer, SyncStatus},
 };
 use sc_consensus::{BlockImportError, BlockImportStatus, IncomingBlock};
-use soil_blockchain::Error as ClientError;
+use soil_client::blockchain::Error as ClientError;
 use soil_client::consensus::BlockOrigin;
 use soil_network::ProtocolName;
 use soil_network_common::sync::message::BlockAnnounce;

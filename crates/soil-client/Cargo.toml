@@ -29,6 +29,11 @@ parking_lot = { workspace = true, default-features = true }
 prometheus = { workspace = true }
 # maybe-compressed-blob deps
 zstd = { workspace = true }
+# state-db deps
+codec = { features = ["derive"], workspace = true, default-features = true }
+# blockchain deps
+schnellru = { workspace = true }
+tracing = { workspace = true, default-features = true }
 
 [dev-dependencies]
 futures = { workspace = true }

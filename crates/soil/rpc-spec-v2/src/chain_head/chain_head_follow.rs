@@ -34,7 +34,7 @@ use log::debug;
 use sc_rpc::utils::Subscription;
 use schnellru::{ByLength, LruMap};
 use subsoil::api::CallApiAt;
-use soil_blockchain::{
+use soil_client::blockchain::{
 	Backend as BlockChainBackend, Error as BlockChainError, HeaderBackend, HeaderMetadata, Info,
 };
 use soil_client_api::{
@@ -324,7 +324,7 @@ where
 		}
 
 		for leaf in leaves {
-			let tree_route = soil_blockchain::tree_route(blockchain, finalized, leaf)?;
+			let tree_route = soil_client::blockchain::tree_route(blockchain, finalized, leaf)?;
 
 			let blocks = tree_route.enacted().iter().map(|block| block.hash);
 			if !tree_route.retracted().is_empty() {
@@ -582,7 +582,7 @@ where
 
 			if let Some(best_block_hash) = self.current_best_block {
 				let ancestor =
-					soil_blockchain::lowest_common_ancestor(&*self.client, *hash, best_block_hash)?;
+					soil_client::blockchain::lowest_common_ancestor(&*self.client, *hash, best_block_hash)?;
 
 				// If we end up here and the `best_block` is a descendent of the finalized block
 				// (last block in the list), it means that there were skipped notifications.
@@ -678,7 +678,7 @@ where
 				//
 				// However, we double check if the best block is a descendant of the last finalized
 				// block to ensure we don't miss any events.
-				let ancestor = soil_blockchain::lowest_common_ancestor(
+				let ancestor = soil_client::blockchain::lowest_common_ancestor(
 					&*self.client,
 					last_finalized,
 					current_best_block,

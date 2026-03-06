@@ -48,7 +48,7 @@ use subsoil::api::{ApiError, ProvideRuntimeApi};
 use soil_authority_discovery::{
 	AuthorityDiscoveryApi, AuthorityId, AuthorityPair, AuthoritySignature,
 };
-use soil_blockchain::HeaderBackend;
+use soil_client::blockchain::HeaderBackend;
 use subsoil::core::{
 	crypto::{key_types, ByteArray, Pair},
 	traits::SpawnNamed,

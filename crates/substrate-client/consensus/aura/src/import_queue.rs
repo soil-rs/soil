@@ -32,7 +32,7 @@ use sc_consensus::{
 use sc_consensus_slots::{check_equivocation, CheckedHeader, InherentDataProviderExt};
 use subsoil::api::{ApiExt, ProvideRuntimeApi};
 use subsoil::block_builder::BlockBuilder as BlockBuilderApi;
-use soil_blockchain::{HeaderBackend, HeaderMetadata};
+use soil_client::blockchain::{HeaderBackend, HeaderMetadata};
 use soil_client_api::{backend::AuxStore, BlockOf, UsageProvider};
 use soil_client::consensus::Error as ConsensusError;
 use subsoil::consensus::aura::{inherents::AuraInherentData, AuraApi};
@@ -133,7 +133,7 @@ impl<B, C, P, CIDP> Verifier<B> for AuraVerifier<C, P, CIDP, B>
 where
 	B: BlockT,
 	C: HeaderBackend<B>
-		+ HeaderMetadata<B, Error = soil_blockchain::Error>
+		+ HeaderMetadata<B, Error = soil_client::blockchain::Error>
 		+ ProvideRuntimeApi<B>
 		+ Send
 		+ Sync
@@ -175,7 +175,7 @@ where
 			.create_inherent_data_providers
 			.create_inherent_data_providers(parent_hash, ())
 			.await
-			.map_err(|e| Error::<B>::Client(soil_blockchain::Error::Application(e)))?;
+			.map_err(|e| Error::<B>::Client(soil_client::blockchain::Error::Application(e)))?;
 
 		let mut inherent_data = create_inherent_data_providers
 			.create_inherent_data()
@@ -333,7 +333,7 @@ where
 		+ AuxStore
 		+ UsageProvider<Block>
 		+ HeaderBackend<Block>
-		+ HeaderMetadata<Block, Error = soil_blockchain::Error>,
+		+ HeaderMetadata<Block, Error = soil_client::blockchain::Error>,
 	I: BlockImport<Block, Error = ConsensusError> + Send + Sync + 'static,
 	P: Pair + 'static,
 	P::Public: Codec + Debug,

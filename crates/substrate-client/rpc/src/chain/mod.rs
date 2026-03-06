@@ -37,7 +37,7 @@ use subsoil::runtime::{
 
 use self::error::Error;
 
-use soil_blockchain::HeaderBackend;
+use soil_client::blockchain::HeaderBackend;
 use soil_client_api::BlockBackend;
 pub use soil_rpc_api::chain::*;
 
@@ -171,6 +171,6 @@ where
 	}
 }
 
-fn client_err(err: soil_blockchain::Error) -> Error {
+fn client_err(err: soil_client::blockchain::Error) -> Error {
 	Error::Client(Box::new(err))
 }

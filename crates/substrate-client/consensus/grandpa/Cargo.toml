@@ -43,7 +43,6 @@ soil-network-types = { workspace = true, default-features = true }
 soil-telemetry = { workspace = true, default-features = true }
 soil-transaction-pool-api = { workspace = true, default-features = true }
 serde_json = { workspace = true, default-features = true }
-soil-blockchain = { workspace = true, default-features = true }
 soil-client = { workspace = true, default-features = true }
 subsoil = { workspace = true }
 subsoil-crypto-hashing = { workspace = true, default-features = true }

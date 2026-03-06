@@ -19,7 +19,7 @@
 //! Errors that can occur during the service operation.
 
 use sc_keystore;
-use soil_blockchain;
+use soil_client::blockchain;
 use soil_client::consensus;
 
 /// Service Result typedef.
@@ -31,7 +31,7 @@ pub type Result<T> = std::result::Result<T, Error>;
 #[non_exhaustive]
 pub enum Error {
 	#[error(transparent)]
-	Client(#[from] soil_blockchain::Error),
+	Client(#[from] soil_client::blockchain::Error),
 
 	#[error(transparent)]
 	Io(#[from] std::io::Error),

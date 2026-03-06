@@ -24,7 +24,7 @@ use codec::Codec;
 use fork_tree::ForkTree;
 use parking_lot::RwLock;
 use subsoil::api::ProvideRuntimeApi;
-use soil_blockchain::{HeaderBackend, HeaderMetadata};
+use soil_client::blockchain::{HeaderBackend, HeaderMetadata};
 use subsoil::consensus::aura::{AuraApi, ConsensusLog, AURA_ENGINE_ID};
 use subsoil::core::Pair;
 use subsoil::runtime::{
@@ -54,7 +54,7 @@ impl<P, B, C> AuthoritiesTracker<P, B, C>
 where
 	P: Pair,
 	B: Block,
-	C: HeaderBackend<B> + HeaderMetadata<B, Error = soil_blockchain::Error> + ProvideRuntimeApi<B>,
+	C: HeaderBackend<B> + HeaderMetadata<B, Error = soil_client::blockchain::Error> + ProvideRuntimeApi<B>,
 	P::Public: Codec + Debug,
 	C::Api: AuraApi<B, AuthorityId<P>>,
 {

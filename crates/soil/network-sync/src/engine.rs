@@ -43,7 +43,7 @@ use schnellru::{ByLength, LruMap};
 use tokio::time::{Interval, MissedTickBehavior};
 
 use sc_consensus::{import_queue::ImportQueueService, IncomingBlock};
-use soil_blockchain::{Error as ClientError, HeaderMetadata};
+use soil_client::blockchain::{Error as ClientError, HeaderMetadata};
 use soil_client_api::{BlockBackend, HeaderBackend, ProofProvider};
 use soil_client::consensus::{block_validation::BlockAnnounceValidator, BlockOrigin};
 use soil_network::{
@@ -267,7 +267,7 @@ where
 	B: BlockT,
 	Client: HeaderBackend<B>
 		+ BlockBackend<B>
-		+ HeaderMetadata<B, Error = soil_blockchain::Error>
+		+ HeaderMetadata<B, Error = soil_client::blockchain::Error>
 		+ ProofProvider<B>
 		+ Send
 		+ Sync

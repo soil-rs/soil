@@ -1578,7 +1578,7 @@ fn doesnt_import_blocks_that_revert_finality() {
 
 	let import_err = block_on(client.import(BlockOrigin::Own, b3)).err().unwrap();
 	let expected_err =
-		ConsensusError::ClientImport(soil_blockchain::Error::NotInFinalizedChain.to_string());
+		ConsensusError::ClientImport(soil_client::blockchain::Error::NotInFinalizedChain.to_string());
 
 	assert_eq!(import_err.to_string(), expected_err.to_string());
 
@@ -1602,7 +1602,7 @@ fn doesnt_import_blocks_that_revert_finality() {
 
 	let import_err = block_on(client.import(BlockOrigin::Own, c1)).err().unwrap();
 	let expected_err =
-		ConsensusError::ClientImport(soil_blockchain::Error::NotInFinalizedChain.to_string());
+		ConsensusError::ClientImport(soil_client::blockchain::Error::NotInFinalizedChain.to_string());
 
 	assert_eq!(import_err.to_string(), expected_err.to_string());
 

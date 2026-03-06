@@ -34,7 +34,7 @@ use futures::{future, stream, StreamExt};
 use jsonrpsee::{core::async_trait, types::ErrorObject, PendingSubscriptionSink};
 use sc_tracing::block::TracingExecuteBlock;
 use subsoil::api::{CallApiAt, Metadata, ProvideRuntimeApi};
-use soil_blockchain::{
+use soil_client::blockchain::{
 	CachedHeaderMetadata, Error as ClientError, HeaderBackend, HeaderMetadata,
 	Result as ClientResult,
 };
@@ -76,7 +76,7 @@ where
 	Client: StorageProvider<Block, BE>
 		+ HeaderBackend<Block>
 		+ BlockBackend<Block>
-		+ HeaderMetadata<Block, Error = soil_blockchain::Error>,
+		+ HeaderMetadata<Block, Error = soil_client::blockchain::Error>,
 	Block: BlockT + 'static,
 {
 	/// Create new state API backend for full nodes.
@@ -184,7 +184,7 @@ where
 		+ StorageProvider<Block, BE>
 		+ ProofProvider<Block>
 		+ HeaderBackend<Block>
-		+ HeaderMetadata<Block, Error = soil_blockchain::Error>
+		+ HeaderMetadata<Block, Error = soil_client::blockchain::Error>
 		+ BlockchainEvents<Block>
 		+ CallApiAt<Block>
 		+ ProvideRuntimeApi<Block>
@@ -501,7 +501,7 @@ where
 		+ ProofProvider<Block>
 		+ HeaderBackend<Block>
 		+ BlockBackend<Block>
-		+ HeaderMetadata<Block, Error = soil_blockchain::Error>
+		+ HeaderMetadata<Block, Error = soil_client::blockchain::Error>
 		+ BlockchainEvents<Block>
 		+ CallApiAt<Block>
 		+ ProvideRuntimeApi<Block>
@@ -522,7 +522,7 @@ where
 					Some((ChildType::ParentKeyId, storage_key)) => {
 						ChildInfo::new_default(storage_key)
 					},
-					None => return Err(soil_blockchain::Error::InvalidChildStorageKey),
+					None => return Err(soil_client::blockchain::Error::InvalidChildStorageKey),
 				};
 				self.client
 					.read_child_proof(
@@ -549,7 +549,7 @@ where
 					Some((ChildType::ParentKeyId, storage_key)) => {
 						ChildInfo::new_default(storage_key)
 					},
-					None => return Err(soil_blockchain::Error::InvalidChildStorageKey),
+					None => return Err(soil_client::blockchain::Error::InvalidChildStorageKey),
 				};
 				self.client.child_storage_keys(block, child_info, Some(&prefix), None)
 			})
@@ -571,7 +571,7 @@ where
 					Some((ChildType::ParentKeyId, storage_key)) => {
 						ChildInfo::new_default(storage_key)
 					},
-					None => return Err(soil_blockchain::Error::InvalidChildStorageKey),
+					None => return Err(soil_client::blockchain::Error::InvalidChildStorageKey),
 				};
 				self.client.child_storage_keys(
 					block,
@@ -596,7 +596,7 @@ where
 					Some((ChildType::ParentKeyId, storage_key)) => {
 						ChildInfo::new_default(storage_key)
 					},
-					None => return Err(soil_blockchain::Error::InvalidChildStorageKey),
+					None => return Err(soil_client::blockchain::Error::InvalidChildStorageKey),
 				};
 				self.client.child_storage(block, &child_info, &key)
 			})
@@ -614,7 +614,7 @@ where
 		{
 			Arc::new(ChildInfo::new_default(storage_key))
 		} else {
-			return Err(client_err(soil_blockchain::Error::InvalidChildStorageKey));
+			return Err(client_err(soil_client::blockchain::Error::InvalidChildStorageKey));
 		};
 		let block = self.block_or_best(block).map_err(client_err)?;
 		let client = self.client.clone();
@@ -638,7 +638,7 @@ where
 					Some((ChildType::ParentKeyId, storage_key)) => {
 						ChildInfo::new_default(storage_key)
 					},
-					None => return Err(soil_blockchain::Error::InvalidChildStorageKey),
+					None => return Err(soil_client::blockchain::Error::InvalidChildStorageKey),
 				};
 				self.client.child_storage_hash(block, &child_info, &key)
 			})

@@ -40,7 +40,7 @@ use log::{trace, warn};
 use std::sync::Arc;
 
 use codec::{Decode, Encode};
-use soil_blockchain::{Backend as BlockchainBackend, HeaderBackend};
+use soil_client::blockchain::{Backend as BlockchainBackend, HeaderBackend};
 use soil_client_api::backend::Backend;
 use subsoil::consensus::grandpa::GRANDPA_ENGINE_ID;
 use subsoil::runtime::{
@@ -157,7 +157,7 @@ pub enum FinalityProofError {
 	BlockNotInAuthoritySetChanges,
 	/// Errors originating from the client.
 	#[error(transparent)]
-	Client(#[from] soil_blockchain::Error),
+	Client(#[from] soil_client::blockchain::Error),
 }
 
 /// Prove finality for the given block number by returning a justification for the last block of
@@ -281,7 +281,7 @@ mod tests {
 		current_set_id: SetId,
 		current_authorities: subsoil::consensus::grandpa::AuthorityList,
 		remote_proof: Vec<u8>,
-	) -> soil_blockchain::Result<super::FinalityProof<Block::Header>>
+	) -> soil_client::blockchain::Result<super::FinalityProof<Block::Header>>
 	where
 		NumberFor<Block>: BlockNumberOps,
 	{

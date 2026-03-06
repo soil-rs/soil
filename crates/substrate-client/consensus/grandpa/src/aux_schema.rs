@@ -25,7 +25,7 @@ use finality_grandpa::round::State as RoundState;
 use log::{info, warn};
 
 use fork_tree::ForkTree;
-use soil_blockchain::{Error as ClientError, Result as ClientResult};
+use soil_client::blockchain::{Error as ClientError, Result as ClientResult};
 use soil_client_api::backend::AuxStore;
 use subsoil::consensus::grandpa::{AuthorityList, RoundNumber, SetId};
 use subsoil::runtime::traits::{Block as BlockT, NumberFor};
