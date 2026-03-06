@@ -28,7 +28,7 @@ use jsonrpsee::{
 };
 
 use subsoil::api::ApiExt;
-use soil_block_builder::BlockBuilder;
+use subsoil::block_builder::BlockBuilder;
 use soil_blockchain::HeaderBackend;
 use subsoil::core::{hexdisplay::HexDisplay, Bytes};
 use subsoil::runtime::{legacy, traits};

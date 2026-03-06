@@ -101,7 +101,7 @@ use sc_consensus_slots::{
 };
 use subsoil::api::{ApiExt, ProvideRuntimeApi};
 use subsoil::application_crypto::AppCrypto;
-use soil_block_builder::BlockBuilder as BlockBuilderApi;
+use subsoil::block_builder::BlockBuilder as BlockBuilderApi;
 use soil_blockchain::{
 	Backend as _, BlockStatus, Error as ClientError, HeaderBackend, HeaderMetadata,
 	Result as ClientResult,
@@ -1317,9 +1317,9 @@ where
 				.map_err(|e| ConsensusError::Other(Box::new(e)))?;
 			inherent_data.babe_replace_inherent_data(slot);
 
-			use soil_block_builder::CheckInherentsError;
+			use subsoil::block_builder::CheckInherentsError;
 
-			soil_block_builder::check_inherents_with_data(
+			subsoil::block_builder::check_inherents_with_data(
 				self.client.clone(),
 				at_hash,
 				new_block.clone(),

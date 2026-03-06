@@ -15,7 +15,6 @@ members = [
 	"crates/soil/application-crypto/test",
 	"crates/soil/authority-discovery",
 	"crates/soil/basic-authorship",
-	"crates/soil/block-builder",
 	"crates/soil/blockchain",
 	"crates/soil/chain-spec",
 	"crates/soil/chain-spec-derive",
@@ -504,7 +503,6 @@ sc-transaction-pool = { path = "crates/substrate-client/transaction-pool", defau
 soil-transaction-pool-api = { path = "crates/soil/transaction-pool-api", default-features = false }
 soil-utils = { path = "crates/soil/utils", default-features = false }
 soil-authority-discovery = { path = "crates/soil/authority-discovery", default-features = false }
-soil-block-builder = { path = "crates/soil/block-builder", default-features = false }
 soil-blockchain = { path = "crates/soil/blockchain", default-features = false }
 soil-consensus = { path = "crates/soil/consensus", default-features = false }
 soil-consensus-aura = { path = "crates/soil/consensus-aura", default-features = false }

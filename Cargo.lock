@@ -4679,7 +4679,6 @@ dependencies = [
  "scale-info",
  "serde_json",
  "soil-authority-discovery",
- "soil-block-builder",
  "soil-chain-spec-derive",
  "soil-consensus-aura",
  "soil-consensus-babe",
@@ -6123,7 +6122,6 @@ dependencies = [
  "sc-consensus-grandpa",
  "sc-mixnet",
  "sc-rpc",
- "soil-block-builder",
  "soil-blockchain",
  "soil-chain-spec",
  "soil-client-api",
@@ -6177,7 +6175,6 @@ dependencies = [
  "parity-scale-codec",
  "sc-block-builder",
  "sc-consensus",
- "soil-block-builder",
  "soil-blockchain",
  "soil-client-api",
  "soil-client-db",
@@ -8089,7 +8086,6 @@ name = "sc-block-builder"
 version = "0.33.0"
 dependencies = [
  "parity-scale-codec",
- "soil-block-builder",
  "soil-blockchain",
  "subsoil",
  "substrate-test-runtime-client",
@@ -8130,7 +8126,6 @@ dependencies = [
  "sc-consensus",
  "sc-consensus-slots",
  "sc-keystore",
- "soil-block-builder",
  "soil-blockchain",
  "soil-client-api",
  "soil-consensus",
@@ -8162,7 +8157,6 @@ dependencies = [
  "sc-block-builder",
  "sc-consensus",
  "sc-consensus-slots",
- "soil-block-builder",
  "soil-blockchain",
  "soil-client-api",
  "soil-consensus",
@@ -8266,7 +8260,6 @@ dependencies = [
  "parity-scale-codec",
  "parking_lot 0.12.5",
  "sc-consensus",
- "soil-block-builder",
  "soil-blockchain",
  "soil-client-api",
  "soil-consensus",
@@ -9300,13 +9293,6 @@ dependencies = [
  "subsoil",
  "substrate-prometheus-endpoint",
  "substrate-test-runtime-client",
-]
-
-[[package]]
-name = "soil-block-builder"
-version = "26.0.0"
-dependencies = [
- "subsoil",
 ]
 
 [[package]]
@@ -11030,7 +11016,6 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "sc-transaction-pool",
- "soil-block-builder",
  "soil-blockchain",
  "soil-rpc-api",
  "soil-transaction-pool-api",
@@ -11113,7 +11098,6 @@ dependencies = [
  "scale-info",
  "serde",
  "serde_json",
- "soil-block-builder",
  "soil-chain-spec",
  "soil-consensus",
  "soil-consensus-aura",
@@ -11944,7 +11928,6 @@ dependencies = [
  "parity-scale-codec",
  "scale-info",
  "serde",
- "soil-block-builder",
  "soil-consensus-aura",
  "soil-consensus-grandpa",
  "soil-genesis-builder",

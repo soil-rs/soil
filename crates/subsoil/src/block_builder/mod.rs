@@ -17,9 +17,7 @@
 
 //! The block builder runtime api.
 
-#![cfg_attr(not(feature = "std"), no_std)]
 
-extern crate alloc;
 
 #[cfg(feature = "std")]
 mod client_side;
@@ -27,10 +25,10 @@ mod client_side;
 #[cfg(feature = "std")]
 pub use client_side::*;
 
-use subsoil::inherents::{CheckInherentsResult, InherentData};
-use subsoil::runtime::{traits::Block as BlockT, ApplyExtrinsicResult};
+use crate::inherents::{CheckInherentsResult, InherentData};
+use crate::runtime::{traits::Block as BlockT, ApplyExtrinsicResult};
 
-subsoil::api::decl_runtime_apis! {
+crate::api::decl_runtime_apis! {
 	/// The `BlockBuilder` api trait that provides the required functionality for building a block.
 	#[api_version(6)]
 	pub trait BlockBuilder {
@@ -43,7 +41,7 @@ subsoil::api::decl_runtime_apis! {
 		#[changed_in(6)]
 		fn apply_extrinsic(
 			extrinsic: <Block as BlockT>::Extrinsic,
-		) -> subsoil::runtime::legacy::byte_sized_error::ApplyExtrinsicResult;
+		) -> crate::runtime::legacy::byte_sized_error::ApplyExtrinsicResult;
 
 		/// Finish the current block.
 		#[renamed("finalise_block", 3)]

@@ -147,7 +147,6 @@ topsoil-whitelist = { workspace = true }
 soil-chain-spec-derive = { workspace = true }
 subsoil = { workspace = true }
 soil-authority-discovery = { workspace = true }
-soil-block-builder = { workspace = true }
 soil-consensus-aura = { workspace = true }
 soil-consensus-babe = { workspace = true }
 soil-consensus-beefy = { workspace = true }
@@ -294,7 +293,6 @@ std = [
 	"serde_json/std",
 	"subsoil/std",
 	"soil-authority-discovery/std",
-	"soil-block-builder/std",
 	"soil-consensus-aura/std",
 	"soil-consensus-babe/std",
 	"soil-consensus-beefy/std",

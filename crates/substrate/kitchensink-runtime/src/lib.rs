@@ -3043,7 +3043,7 @@ subsoil::api::impl_runtime_apis! {
 		}
 	}
 
-	impl soil_block_builder::BlockBuilder<Block> for Runtime {
+	impl subsoil::block_builder::BlockBuilder<Block> for Runtime {
 		fn apply_extrinsic(extrinsic: <Block as BlockT>::Extrinsic) -> ApplyExtrinsicResult {
 			Executive::apply_extrinsic(extrinsic)
 		}

@@ -15,26 +15,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::BlockBuilder;
+use super::BlockBuilder;
 
-use subsoil::inherents::{InherentData, InherentDataProvider, InherentIdentifier};
-use subsoil::runtime::traits::Block as BlockT;
+use crate::inherents::{InherentData, InherentDataProvider, InherentIdentifier};
+use crate::runtime::traits::Block as BlockT;
 
 /// Errors that occur when creating and checking on the client side.
 #[derive(Debug)]
 pub enum CheckInherentsError {
 	/// Create inherents error.
-	CreateInherentData(subsoil::inherents::Error),
+	CreateInherentData(crate::inherents::Error),
 	/// Client Error
-	Client(subsoil::api::ApiError),
+	Client(crate::api::ApiError),
 	/// Check inherents error
-	CheckInherents(subsoil::inherents::Error),
+	CheckInherents(crate::inherents::Error),
 	/// Unknown inherent error for identifier
 	CheckInherentsUnknownError(InherentIdentifier),
 }
 
 /// Create inherent data and check that the inherents are valid.
-pub async fn check_inherents<Block: BlockT, Client: subsoil::api::ProvideRuntimeApi<Block>>(
+pub async fn check_inherents<Block: BlockT, Client: crate::api::ProvideRuntimeApi<Block>>(
 	client: std::sync::Arc<Client>,
 	at_hash: Block::Hash,
 	block: Block,
@@ -52,7 +52,7 @@ where
 }
 
 /// Check that the inherents are valid.
-pub async fn check_inherents_with_data<Block: BlockT, Client: subsoil::api::ProvideRuntimeApi<Block>>(
+pub async fn check_inherents_with_data<Block: BlockT, Client: crate::api::ProvideRuntimeApi<Block>>(
 	client: std::sync::Arc<Client>,
 	at_hash: Block::Hash,
 	block: Block,

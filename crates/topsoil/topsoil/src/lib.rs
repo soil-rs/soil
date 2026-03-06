@@ -435,7 +435,7 @@ pub mod runtime {
 	#[allow(ambiguous_glob_reexports)]
 	pub mod apis {
 		pub use subsoil::api::{self, *};
-		pub use soil_block_builder::*;
+		pub use subsoil::block_builder::*;
 		pub use soil_consensus_aura::*;
 		pub use soil_consensus_grandpa::*;
 		pub use soil_genesis_builder::*;
@@ -632,7 +632,7 @@ pub mod deps {
 	pub use scale_info;
 
 	#[cfg(feature = "runtime")]
-	pub use soil_block_builder;
+	pub use subsoil::block_builder;
 	#[cfg(feature = "runtime")]
 	pub use soil_consensus_aura;
 	#[cfg(feature = "runtime")]
