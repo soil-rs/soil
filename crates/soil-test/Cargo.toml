@@ -1,0 +1,21 @@
+[package]
+name = "soil-test"
+version = "0.1.0"
+authors.workspace = true
+edition.workspace = true
+license.workspace = true
+publish = false
+homepage.workspace = true
+repository.workspace = true
+
+[lints]
+workspace = true
+
+[package.metadata.docs.rs]
+targets = ["x86_64-unknown-linux-gnu"]
+
+[dependencies]
+soil-client = { workspace = true, features = ["test-helpers"], default-features = true }
+subsoil = { workspace = true, default-features = true }
+substrate-test-runtime-client = { workspace = true }
+

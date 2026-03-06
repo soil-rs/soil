@@ -47,6 +47,7 @@ members = [
 	"crates/soil/rpc-api",
 	"crates/soil/rpc-server",
 	"crates/soil/rpc-spec-v2",
+	"crates/soil-test",
 	"crates/soil/runtime-interface/test",
 	"crates/soil/runtime-interface/test-wasm",
 	"crates/soil/runtime-interface/test-wasm-deprecated",
@@ -458,6 +459,7 @@ sc-rpc = { path = "crates/substrate-client/rpc", default-features = false }
 soil-rpc-api = { path = "crates/soil/rpc-api", default-features = false }
 soil-rpc-server = { path = "crates/soil/rpc-server", default-features = false }
 soil-rpc-spec-v2 = { path = "crates/soil/rpc-spec-v2", default-features = false }
+soil-test = { path = "crates/soil-test" }
 soil-runtime-test = { path = "crates/soil/runtime-test" }
 soil-runtime-utilities = { path = "crates/soil/runtime-utilities", default-features = true }
 soil-service = { path = "crates/soil/service", default-features = false }

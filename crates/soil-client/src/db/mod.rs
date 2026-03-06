@@ -26,7 +26,6 @@
 //!
 //! Finality implies canonicality but not vice-versa.
 
-
 pub mod state_db;
 
 pub mod offchain;
@@ -53,15 +52,14 @@ use std::{
 	sync::Arc,
 };
 
+use self::state_db::{IsPruned, LastCanonicalized, StateDb};
+use self::utils::BLOCK_GAP_CURRENT_VERSION;
 use self::{
 	pinned_blocks_cache::PinnedBlocksCache,
 	record_stats_state::RecordStatsState,
 	stats::StateUsageStats,
 	utils::{meta_keys, read_db, read_meta, remove_from_db, DatabaseType, Meta},
 };
-use codec::{Decode, Encode};
-use hash_db::Prefix;
-use subsoil::arithmetic::traits::Saturating;
 use crate::blockchain::{
 	Backend as _, CachedHeaderMetadata, DisplacedLeavesAfterFinalization, Error as ClientError,
 	HeaderBackend, HeaderMetadata, HeaderMetadataCache, Result as ClientResult,
@@ -73,6 +71,9 @@ use crate::client_api::{
 	utils::is_descendent_of,
 	IoInfo, MemoryInfo, MemorySize, TrieCacheContext, UsageInfo,
 };
+use codec::{Decode, Encode};
+use hash_db::Prefix;
+use subsoil::arithmetic::traits::Saturating;
 use subsoil::core::{
 	offchain::OffchainOverlayedChange,
 	storage::{well_known_keys, ChildInfo},
@@ -86,19 +87,19 @@ use subsoil::runtime::{
 	},
 	Justification, Justifications, StateVersion, Storage,
 };
-use self::state_db::{IsPruned, LastCanonicalized, StateDb};
 use subsoil::state_machine::{
 	backend::{AsTrieBackend, Backend as StateBackend},
 	BackendTransaction, ChildStorageCollection, DBValue, IndexOperation, IterArgs,
 	OffchainChangesCollection, StateMachineStats, StorageCollection, StorageIterator, StorageKey,
 	StorageValue, UsageInfo as StateUsageInfo,
 };
-use subsoil::trie::{cache::SharedTrieCache, prefixed_key, MemoryDB, MerkleValue, PrefixedMemoryDB};
-use self::utils::BLOCK_GAP_CURRENT_VERSION;
+use subsoil::trie::{
+	cache::SharedTrieCache, prefixed_key, MemoryDB, MerkleValue, PrefixedMemoryDB,
+};
 
 // Re-export the Database trait so that one can pass an implementation of it.
-pub use subsoil::database::Database;
 pub use self::state_db::PruningMode;
+pub use subsoil::database::Database;
 
 pub use bench::BenchmarkingState;
 
@@ -125,11 +126,14 @@ where
 const CACHE_HEADERS: usize = 8;
 
 /// DB-backed patricia trie state, transaction type is an overlay of changes to commit.
-pub type DbState<H> = subsoil::state_machine::TrieBackend<Arc<dyn subsoil::state_machine::Storage<H>>, H>;
+pub type DbState<H> =
+	subsoil::state_machine::TrieBackend<Arc<dyn subsoil::state_machine::Storage<H>>, H>;
 
 /// Builder for [`DbState`].
-pub type DbStateBuilder<Hasher> =
-	subsoil::state_machine::TrieBackendBuilder<Arc<dyn subsoil::state_machine::Storage<Hasher>>, Hasher>;
+pub type DbStateBuilder<Hasher> = subsoil::state_machine::TrieBackendBuilder<
+	Arc<dyn subsoil::state_machine::Storage<Hasher>>,
+	Hasher,
+>;
 
 /// Length of a [`DbHash`].
 const DB_HASH_LEN: usize = 32;
@@ -730,7 +734,10 @@ impl<Block: BlockT> crate::client_api::blockchain::HeaderBackend<Block> for Bloc
 		}
 	}
 
-	fn status(&self, hash: Block::Hash) -> ClientResult<crate::client_api::blockchain::BlockStatus> {
+	fn status(
+		&self,
+		hash: Block::Hash,
+	) -> ClientResult<crate::client_api::blockchain::BlockStatus> {
 		match self.header(hash)?.is_some() {
 			true => Ok(crate::client_api::blockchain::BlockStatus::InChain),
 			false => Ok(crate::client_api::blockchain::BlockStatus::Unknown),
@@ -1096,8 +1103,10 @@ impl<Block: BlockT> EmptyStorage<Block> {
 		let mut root = Block::Hash::default();
 		let mut mdb = MemoryDB::<HashingFor<Block>>::default();
 		// both triedbmut are the same on empty storage.
-		subsoil::trie::trie_types::TrieDBMutBuilderV1::<HashingFor<Block>>::new(&mut mdb, &mut root)
-			.build();
+		subsoil::trie::trie_types::TrieDBMutBuilderV1::<HashingFor<Block>>::new(
+			&mut mdb, &mut root,
+		)
+		.build();
 		EmptyStorage(root)
 	}
 }
@@ -1262,7 +1271,9 @@ impl<Block: BlockT> Backend<Block> {
 	///
 	/// Should only be needed for benchmarking.
 	#[cfg(feature = "runtime-benchmarks")]
-	pub fn expose_db(&self) -> (Arc<dyn subsoil::database::Database<DbHash>>, subsoil::database::ColumnId) {
+	pub fn expose_db(
+		&self,
+	) -> (Arc<dyn subsoil::database::Database<DbHash>>, subsoil::database::ColumnId) {
 		(self.storage.db.clone(), columns::STATE)
 	}
 
@@ -1702,9 +1713,11 @@ impl<Block: BlockT> Backend<Block> {
 					.storage
 					.state_db
 					.insert_block(&hash, number_u64, pending_block.header.parent_hash(), changeset)
-					.map_err(|e: self::state_db::Error<subsoil::database::error::DatabaseError>| {
-						crate::blockchain::Error::from_state_db(e)
-					})?;
+					.map_err(
+						|e: self::state_db::Error<subsoil::database::error::DatabaseError>| {
+							crate::blockchain::Error::from_state_db(e)
+						},
+					)?;
 				apply_state_commit(&mut transaction, commit);
 				if number <= last_finalized_num {
 					// Canonicalize in the db when re-importing existing blocks with state.
@@ -1990,7 +2003,8 @@ impl<Block: BlockT> Backend<Block> {
 			LastCanonicalized::NotCanonicalizing => false,
 		};
 
-		if requires_canonicalization && crate::client_api::Backend::have_state_at(self, f_hash, f_num)
+		if requires_canonicalization
+			&& crate::client_api::Backend::have_state_at(self, f_hash, f_num)
 		{
 			let commit = self.storage.state_db.canonicalize_block(&f_hash).map_err(
 				crate::blockchain::Error::from_state_db::<
@@ -2803,12 +2817,12 @@ impl<Block: BlockT> crate::client_api::backend::LocalBackend<Block> for Backend<
 pub(crate) mod tests {
 	use super::*;
 	use super::{columns, utils::number_and_hash_to_lookup_key};
-	use hash_db::{HashDB, EMPTY_PREFIX};
 	use crate::blockchain::{lowest_common_ancestor, tree_route};
 	use crate::client_api::{
 		backend::{Backend as BTrait, BlockImportOperation as Op},
 		blockchain::Backend as BLBTrait,
 	};
+	use hash_db::{HashDB, EMPTY_PREFIX};
 	use subsoil::core::H256;
 	use subsoil::runtime::{
 		testing::{Block as RawBlock, Header, MockCallU64, TestXt},
@@ -3187,7 +3201,10 @@ pub(crate) mod tests {
 			assert!(backend
 				.storage
 				.db
-				.get(columns::STATE, &subsoil::trie::prefixed_key::<BlakeTwo256>(&key, EMPTY_PREFIX))
+				.get(
+					columns::STATE,
+					&subsoil::trie::prefixed_key::<BlakeTwo256>(&key, EMPTY_PREFIX)
+				)
 				.is_some());
 			hash
 		};
@@ -3246,7 +3263,10 @@ pub(crate) mod tests {
 			assert!(backend
 				.storage
 				.db
-				.get(columns::STATE, &subsoil::trie::prefixed_key::<BlakeTwo256>(&key, EMPTY_PREFIX))
+				.get(
+					columns::STATE,
+					&subsoil::trie::prefixed_key::<BlakeTwo256>(&key, EMPTY_PREFIX)
+				)
 				.is_none());
 			hash
 		};
@@ -3852,9 +3872,9 @@ pub(crate) mod tests {
 		assert!(tree_route.retracted().is_empty());
 	}
 
-	// test_leaves_with_complex_block_tree, test_children_with_complex_block_tree,
-	// and test_blockchain_query_by_number_gets_canonical moved to tests/db_backend.rs
-	// (integration tests) to avoid circular dev-dep "multiple crate versions" issue.
+	// Runtime-backed integration tests for the backend live in the `soil-test`
+	// crate to keep `soil-client` free of the `substrate-test-runtime-client`
+	// dev-dependency.
 
 	#[test]
 	fn test_leaves_pruned_on_finality() {
@@ -4534,7 +4554,10 @@ pub(crate) mod tests {
 		};
 		let mut op = backend.begin_operation().unwrap();
 		op.set_block_data(header, None, None, None, NewBlockState::Best, true).unwrap();
-		assert!(matches!(backend.commit_operation(op), Err(crate::blockchain::Error::SetHeadTooOld)));
+		assert!(matches!(
+			backend.commit_operation(op),
+			Err(crate::blockchain::Error::SetHeadTooOld)
+		));
 
 		// Insert 2 as best again.
 		let header = backend.blockchain().header(block2).unwrap().unwrap();

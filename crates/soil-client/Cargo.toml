@@ -114,8 +114,6 @@ tracing-subscriber = { workspace = true, features = ["chrono", "parking_lot"] }
 criterion = { workspace = true, default-features = true }
 kvdb-rocksdb = { workspace = true }
 rand = { workspace = true, default-features = true }
-kitchensink-runtime = { workspace = true }
-substrate-test-runtime-client = { workspace = true }
 # tracing test deps
 regex = { workspace = true }
 # utils test deps

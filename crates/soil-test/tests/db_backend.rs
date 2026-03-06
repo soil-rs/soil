@@ -1,10 +1,5 @@
-// Integration tests for db backend that use substrate-test-runtime-client.
-// These must be integration tests (not unit tests) because soil-client and
-// substrate-test-runtime-client have a circular dev-dependency, causing
-// "multiple versions of crate" errors when compiled as unit tests.
-
-use std::sync::Arc;
 use soil_client::db::Backend;
+use std::sync::Arc;
 
 #[test]
 fn test_leaves_with_complex_block_tree() {

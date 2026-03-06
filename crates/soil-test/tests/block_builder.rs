@@ -1,8 +1,3 @@
-// Integration tests for block_builder that use substrate-test-runtime-client.
-// These must be integration tests (not unit tests) because soil-client and
-// substrate-test-runtime-client have a circular dev-dependency, causing
-// "multiple versions of crate" errors when compiled as unit tests.
-
 use soil_client::block_builder::BlockBuilderBuilder;
 use soil_client::blockchain::HeaderBackend;
 use subsoil::api::ProofRecorder;
@@ -95,7 +90,6 @@ fn failing_extrinsic_rolls_back_changes_in_storage_proof() {
 
 	let proof_empty_block = proof_recorder.drain_storage_proof().encoded_size();
 
-	// Ensure that we rolled back the changes of the panicked transaction.
 	assert!(proof_without_panic > proof_with_panic);
 	assert!(proof_without_panic > proof_empty_block);
 	assert_eq!(proof_empty_block, proof_with_panic);

@@ -28,11 +28,12 @@
 
 use codec::Encode;
 
+use crate::blockchain::{ApplyExtrinsicFailed, Error, HeaderBackend};
+use std::marker::PhantomData;
 use subsoil::api::{
 	ApiExt, ApiRef, CallApiAt, Core, ProofRecorder, ProvideRuntimeApi, StorageChanges,
 	TransactionOutcome,
 };
-use crate::blockchain::{ApplyExtrinsicFailed, Error, HeaderBackend};
 use subsoil::core::traits::CallContext;
 use subsoil::externalities::Extensions;
 use subsoil::runtime::{
@@ -40,7 +41,6 @@ use subsoil::runtime::{
 	traits::{Block as BlockT, Hash, HashingFor, Header as HeaderT, NumberFor, One},
 	Digest, ExtrinsicInclusionMode,
 };
-use std::marker::PhantomData;
 
 pub use subsoil::block_builder::BlockBuilder as BlockBuilderApi;
 
@@ -377,5 +377,5 @@ where
 	}
 }
 
-// Tests moved to tests/block_builder.rs (integration tests) to avoid circular
-// dev-dep "multiple crate versions" issue with substrate-test-runtime-client.
+// Runtime-backed integration tests live in the `soil-test` crate to keep
+// `soil-client` free of the `substrate-test-runtime-client` dev-dependency.
