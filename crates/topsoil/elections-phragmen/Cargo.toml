@@ -28,7 +28,6 @@ soil-staking = { workspace = true }
 [dev-dependencies]
 topsoil-balances = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
-substrate-test-utils = { workspace = true }
 
 [features]
 default = ["std"]

@@ -1310,7 +1310,7 @@ mod tests {
 	use super::*;
 	use crate as elections_phragmen;
 	use subsoil::runtime::{testing::Header, BuildStorage};
-	use substrate_test_utils::assert_eq_uvec;
+	use subsoil::assert_eq_uvec;
 	use topsoil_support::{
 		assert_noop, assert_ok, derive_impl,
 		dispatch::DispatchResultWithPostInfo,

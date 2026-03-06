@@ -11052,10 +11052,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "substrate-test-utils"
-version = "4.0.0-dev"
-
-[[package]]
 name = "substrate-wasm-builder"
 version = "17.0.0"
 dependencies = [
@@ -12069,7 +12065,6 @@ dependencies = [
  "parity-scale-codec",
  "scale-info",
  "subsoil",
- "substrate-test-utils",
  "topsoil-balances",
  "topsoil-benchmarking",
  "topsoil-election-provider-support",
@@ -12494,7 +12489,6 @@ dependencies = [
  "scale-info",
  "soil-staking",
  "subsoil",
- "substrate-test-utils",
  "topsoil-balances",
  "topsoil-benchmarking",
  "topsoil-support",
@@ -13276,7 +13270,6 @@ dependencies = [
  "parity-scale-codec",
  "scale-info",
  "subsoil",
- "substrate-test-utils",
  "topsoil-benchmarking",
  "topsoil-preimage",
  "topsoil-support",
@@ -13361,7 +13354,6 @@ dependencies = [
  "serde",
  "soil-staking",
  "subsoil",
- "substrate-test-utils",
  "topsoil-authorship",
  "topsoil-bags-list",
  "topsoil-balances",

@@ -237,7 +237,6 @@ members = [
 	"crates/substrate/substrate-test-runtime",
 	"crates/substrate/substrate-test-runtime-client",
 	"crates/substrate/substrate-test-runtime-transaction-pool",
-	"crates/substrate/substrate-test-utils",
 	"crates/substrate/substrate-wasm-builder",
 	"crates/substrate-client/authority-discovery",
 	"crates/substrate-client/block-builder",
@@ -526,7 +525,6 @@ substrate-test-client = { path = "crates/substrate/substrate-test-client" }
 substrate-test-runtime = { path = "crates/substrate/substrate-test-runtime" }
 substrate-test-runtime-client = { path = "crates/substrate/substrate-test-runtime-client" }
 substrate-test-runtime-transaction-pool = { path = "crates/substrate/substrate-test-runtime-transaction-pool" }
-substrate-test-utils = { path = "crates/substrate/substrate-test-utils" }
 substrate-wasm-builder = { path = "crates/substrate/substrate-wasm-builder", default-features = false }
 test-pallet = { path = "crates/topsoil/support/test/pallet", default-features = false, package = "topsoil-support-test-pallet" }
 

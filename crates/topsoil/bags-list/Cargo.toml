@@ -40,7 +40,6 @@ subsoil = { workspace = true }
 topsoil-benchmarking = { workspace = true, default-features = true }
 topsoil-election-provider-support = { workspace = true, default-features = true }
 topsoil-balances = { workspace = true, default-features = true }
-substrate-test-utils = { workspace = true }
 
 [features]
 default = ["std"]

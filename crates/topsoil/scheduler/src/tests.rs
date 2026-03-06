@@ -23,7 +23,7 @@ use crate::mock::{
 	new_test_ext, root, LoggerCall, RuntimeCall, Scheduler, Test, *,
 };
 use subsoil::runtime::traits::Hash;
-use substrate_test_utils::assert_eq_uvec;
+use subsoil::assert_eq_uvec;
 use topsoil_support::{
 	assert_err, assert_noop, assert_ok,
 	traits::{Contains, GetStorageVersion, OnInitialize, QueryPreimage, StorePreimage},
