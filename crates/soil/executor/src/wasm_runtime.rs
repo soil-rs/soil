@@ -536,9 +536,9 @@ mod tests {
 
 	#[test]
 	fn embed_runtime_version_works() {
-		let wasm = soil_maybe_compressed_blob::decompress(
+		let wasm = soil_client::maybe_compressed_blob::decompress(
 			substrate_test_runtime::wasm_binary_unwrap(),
-			soil_maybe_compressed_blob::CODE_BLOB_BOMB_LIMIT,
+			soil_client::maybe_compressed_blob::CODE_BLOB_BOMB_LIMIT,
 		)
 		.expect("Decompressing works");
 		let runtime_version = RuntimeVersion {

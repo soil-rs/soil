@@ -37,7 +37,7 @@ use subsoil::runtime::{
 	Justification,
 };
 use soil_telemetry::TelemetryHandle;
-use soil_utils::mpsc::TracingUnboundedSender;
+use soil_client::utils::mpsc::TracingUnboundedSender;
 
 use crate::{
 	authorities::{AuthoritySet, DelayKind, PendingChange, SharedAuthoritySet},

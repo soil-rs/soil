@@ -25,6 +25,7 @@ name = "request_response_protocol"
 harness = false
 
 [dependencies]
+soil-client = { workspace = true, default-features = true }
 array-bytes = { workspace = true, default-features = true}
 async-channel = { workspace = true}
 async-trait = { workspace = true}
@@ -50,7 +51,6 @@ rand = { workspace = true, default-features = true}
 soil-client-api = { workspace = true, default-features = true}
 soil-network-common = { workspace = true, default-features = true}
 soil-network-types = { workspace = true, default-features = true}
-soil-utils = { workspace = true, default-features = true}
 schnellru = { workspace = true}
 serde = { features = ["derive"], workspace = true, default-features = true}
 serde_json = { workspace = true, default-features = true}

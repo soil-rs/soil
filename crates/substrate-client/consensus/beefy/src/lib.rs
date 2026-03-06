@@ -47,7 +47,7 @@ use subsoil::keystore::KeystorePtr;
 use soil_network::{NetworkRequest, NotificationService, ProtocolName};
 use soil_network_gossip::{GossipEngine, Network as GossipNetwork, Syncing as GossipSyncing};
 use subsoil::runtime::traits::{Block, Header as HeaderT, NumberFor, Zero};
-use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver};
+use soil_client::utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver};
 use std::{
 	collections::{BTreeMap, VecDeque},
 	future::Future,
@@ -91,7 +91,7 @@ const LOG_TARGET: &str = "beefy";
 const HEADER_SYNC_DELAY: Duration = Duration::from_secs(60);
 
 type FinalityNotifications<Block> =
-	soil_utils::mpsc::TracingUnboundedReceiver<UnpinnedFinalityNotification<Block>>;
+	soil_client::utils::mpsc::TracingUnboundedReceiver<UnpinnedFinalityNotification<Block>>;
 /// A convenience BEEFY client trait that defines all the type bounds a BEEFY client
 /// has to satisfy. Ideally that should actually be a trait alias. Unfortunately as
 /// of today, Rust does not allow a type alias to be used as a trait bound. Tracking

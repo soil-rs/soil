@@ -77,7 +77,7 @@ use subsoil::state_machine::{
 	MAX_NESTED_TRIE_DEPTH,
 };
 use subsoil::trie::{proof_size_extension::ProofSizeExt, CompactProof, MerkleValue, StorageProof};
-use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedSender};
+use soil_client::utils::mpsc::{tracing_unbounded, TracingUnboundedSender};
 use std::{
 	collections::{HashMap, HashSet},
 	marker::PhantomData,

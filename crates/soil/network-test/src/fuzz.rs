@@ -30,7 +30,7 @@ use soil_network::{
 	protocol_controller::{IncomingIndex, Message, ProtoSetConfig, ProtocolController, SetId},
 	ReputationChange,
 };
-use soil_utils::mpsc::tracing_unbounded;
+use soil_client::utils::mpsc::tracing_unbounded;
 use std::{
 	collections::{HashMap, HashSet},
 	sync::Arc,

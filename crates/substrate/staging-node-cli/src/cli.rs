@@ -58,7 +58,7 @@ pub struct Cli {
 
 	#[allow(missing_docs)]
 	#[clap(flatten)]
-	pub storage_monitor: soil_storage_monitor::StorageMonitorParams,
+	pub storage_monitor: soil_client::storage_monitor::StorageMonitorParams,
 }
 
 /// Possible subcommands of the main binary.

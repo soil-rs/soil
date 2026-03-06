@@ -33,7 +33,7 @@ use libp2p::{
 	swarm::{Swarm, SwarmEvent},
 	PeerId,
 };
-use soil_utils::mpsc::tracing_unbounded;
+use soil_client::utils::mpsc::tracing_unbounded;
 use std::{collections::HashSet, iter, num::NonZeroUsize, pin::Pin, sync::Arc, time::Duration};
 
 use litep2p::{

@@ -24,7 +24,7 @@ use jsonrpsee::{core::EmptyServerParams as EmptyParams, MethodsError as RpcError
 use subsoil::core::H256;
 use soil_network::{self, config::Role, PeerId};
 use soil_rpc_api::system::helpers::PeerInfo;
-use soil_utils::mpsc::tracing_unbounded;
+use soil_client::utils::mpsc::tracing_unbounded;
 use std::{
 	env,
 	io::{BufRead, BufReader, Write},

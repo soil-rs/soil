@@ -61,7 +61,7 @@ use gossip::{
 };
 use subsoil::consensus::grandpa::{AuthorityId, AuthoritySignature, RoundNumber, SetId as SetIdNumber};
 use soil_network_sync::SyncEventStream;
-use soil_utils::mpsc::TracingUnboundedReceiver;
+use soil_client::utils::mpsc::TracingUnboundedReceiver;
 
 pub mod gossip;
 mod periodic;

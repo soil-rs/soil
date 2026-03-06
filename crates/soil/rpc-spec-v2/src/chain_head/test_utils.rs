@@ -33,7 +33,7 @@ use subsoil::runtime::{
 	traits::{Block as BlockT, Header as HeaderT, NumberFor},
 	Justifications,
 };
-use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedSender};
+use soil_client::utils::mpsc::{tracing_unbounded, TracingUnboundedSender};
 use subsoil::version::RuntimeVersion;
 use std::sync::Arc;
 use substrate_test_runtime::{Block, Hash, Header, H256};

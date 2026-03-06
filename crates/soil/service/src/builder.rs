@@ -92,7 +92,7 @@ use subsoil::runtime::traits::{Block as BlockT, BlockIdTo, NumberFor, Zero};
 use subsoil::storage::{ChildInfo, ChildType, PrefixedStorageKey};
 use soil_telemetry::{telemetry, ConnectionMessage, Telemetry, TelemetryHandle, SUBSTRATE_INFO};
 use soil_transaction_pool_api::{MaintainedTransactionPool, TransactionPool};
-use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedSender};
+use soil_client::utils::mpsc::{tracing_unbounded, TracingUnboundedSender};
 use std::{
 	str::FromStr,
 	sync::Arc,

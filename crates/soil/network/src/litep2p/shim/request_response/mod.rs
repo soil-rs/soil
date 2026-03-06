@@ -38,7 +38,7 @@ use litep2p::{
 };
 
 use soil_network_types::PeerId;
-use soil_utils::mpsc::{TracingUnboundedReceiver, TracingUnboundedSender};
+use soil_client::utils::mpsc::{TracingUnboundedReceiver, TracingUnboundedSender};
 
 use std::{
 	collections::HashMap,

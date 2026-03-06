@@ -35,7 +35,7 @@ use subsoil::keystore::KeystorePtr;
 use soil_network::NotificationService;
 use subsoil::runtime::traits::{Block as BlockT, NumberFor};
 use soil_telemetry::TelemetryHandle;
-use soil_utils::mpsc::TracingUnboundedReceiver;
+use soil_client::utils::mpsc::TracingUnboundedReceiver;
 
 use crate::{
 	authorities::SharedAuthoritySet,
@@ -412,7 +412,7 @@ mod tests {
 	use assert_matches::assert_matches;
 	use soil_blockchain::HeaderBackend as _;
 	use soil_network_types::PeerId;
-	use soil_utils::mpsc::tracing_unbounded;
+	use soil_client::utils::mpsc::tracing_unbounded;
 	use substrate_test_runtime_client::{TestClientBuilder, TestClientBuilderExt};
 
 	use futures::executor;

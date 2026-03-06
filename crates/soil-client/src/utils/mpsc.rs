@@ -19,7 +19,7 @@
 
 pub use async_channel::{TryRecvError, TrySendError};
 
-use crate::metrics::{
+use crate::utils::metrics::{
 	DROPPED_LABEL, RECEIVED_LABEL, SENT_LABEL, UNBOUNDED_CHANNELS_COUNTER, UNBOUNDED_CHANNELS_SIZE,
 };
 use async_channel::{Receiver, Sender};
@@ -212,7 +212,7 @@ impl<T> FusedStream for TracingUnboundedReceiver<T> {
 
 #[cfg(test)]
 mod tests {
-	use super::tracing_unbounded;
+	use crate::utils::tracing_unbounded;
 	use async_channel::{self, RecvError, TryRecvError};
 
 	#[test]

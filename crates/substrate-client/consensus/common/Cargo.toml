@@ -24,7 +24,6 @@ parking_lot = { workspace = true, default-features = true }
 prometheus-endpoint = { workspace = true, default-features = true }
 soil-client-api = { workspace = true, default-features = true }
 soil-network-types = { workspace = true, default-features = true }
-soil-utils = { workspace = true, default-features = true }
 serde = { features = ["derive"], workspace = true, default-features = true }
 soil-blockchain = { workspace = true, default-features = true }
 soil-client = { workspace = true, default-features = true }

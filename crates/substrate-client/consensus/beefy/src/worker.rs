@@ -49,7 +49,7 @@ use subsoil::runtime::{
 	traits::{Block, Header, NumberFor, Zero},
 	SaturatedConversion,
 };
-use soil_utils::notification::NotificationReceiver;
+use soil_client::utils::notification::NotificationReceiver;
 use std::{
 	collections::{BTreeMap, VecDeque},
 	fmt::Debug,

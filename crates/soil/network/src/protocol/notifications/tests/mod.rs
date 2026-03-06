@@ -41,7 +41,7 @@ use libp2p::{
 	},
 	yamux, Multiaddr, PeerId, SwarmBuilder, Transport,
 };
-use soil_utils::mpsc::tracing_unbounded;
+use soil_client::utils::mpsc::tracing_unbounded;
 use std::{
 	iter,
 	sync::Arc,

@@ -39,7 +39,7 @@ use prometheus_endpoint::{register, Gauge, PrometheusError, Registry, U64};
 use soil_client_api::{BlockImportNotification, ImportNotifications};
 use subsoil::consensus::grandpa::AuthorityId;
 use subsoil::runtime::traits::{Block as BlockT, Header as HeaderT, NumberFor};
-use soil_utils::mpsc::TracingUnboundedReceiver;
+use soil_client::utils::mpsc::TracingUnboundedReceiver;
 
 use std::{
 	collections::{HashMap, VecDeque},
@@ -568,7 +568,7 @@ mod tests {
 	use soil_client_api::BlockImportNotification;
 	use soil_client::consensus::BlockOrigin;
 	use subsoil::core::crypto::UncheckedFrom;
-	use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedSender};
+	use soil_client::utils::mpsc::{tracing_unbounded, TracingUnboundedSender};
 	use substrate_test_runtime_client::runtime::{Block, Hash, Header};
 
 	#[derive(Clone)]

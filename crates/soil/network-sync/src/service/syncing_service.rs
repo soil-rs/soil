@@ -26,7 +26,7 @@ use sc_consensus::{
 };
 use soil_network::{NetworkBlock, NetworkSyncForkRequest};
 use subsoil::runtime::traits::{Block as BlockT, NumberFor};
-use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedSender};
+use soil_client::utils::mpsc::{tracing_unbounded, TracingUnboundedSender};
 
 use std::{
 	pin::Pin,

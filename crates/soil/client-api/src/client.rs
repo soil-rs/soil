@@ -37,7 +37,7 @@ use crate::{
 
 use soil_blockchain;
 use soil_transaction_pool_api::ChainEvent;
-use soil_utils::mpsc::{TracingUnboundedReceiver, TracingUnboundedSender};
+use soil_client::utils::mpsc::{TracingUnboundedReceiver, TracingUnboundedSender};
 
 /// Type that implements `futures::Stream` of block import events.
 pub type ImportNotifications<Block> = TracingUnboundedReceiver<BlockImportNotification<Block>>;

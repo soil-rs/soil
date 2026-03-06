@@ -24,7 +24,7 @@ use soil_network::{
 	types::ProtocolName,
 	NetworkPeers, NetworkRequest, ReputationChange,
 };
-use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
+use soil_client::utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
 
 use std::sync::Arc;
 

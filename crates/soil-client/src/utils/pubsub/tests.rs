@@ -18,7 +18,7 @@
 use futures::StreamExt;
 use tokio_test::block_on;
 
-use super::*;
+use crate::utils::*;
 
 mod normal_operation;
 mod panicking_registry;

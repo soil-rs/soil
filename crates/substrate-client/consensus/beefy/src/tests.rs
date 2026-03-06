@@ -76,7 +76,7 @@ use subsoil::runtime::{
 	traits::{Header as HeaderT, NumberFor},
 	DigestItem, EncodedJustification, Justifications,
 };
-use soil_utils::{mpsc::TracingUnboundedReceiver, notification::NotificationReceiver};
+use soil_client::utils::{mpsc::TracingUnboundedReceiver, notification::NotificationReceiver};
 use std::{marker::PhantomData, sync::Arc, task::Poll};
 use substrate_test_runtime_client::{BlockBuilderExt, ClientExt};
 use tokio::time::Duration;

@@ -32,7 +32,7 @@ use prometheus_endpoint::{
 #[cfg(doc)]
 use soil_transaction_pool_api::TransactionPool;
 use soil_transaction_pool_api::TransactionStatus;
-use soil_utils::mpsc;
+use soil_client::utils::mpsc;
 use std::{
 	collections::{hash_map::Entry, HashMap},
 	future::Future,

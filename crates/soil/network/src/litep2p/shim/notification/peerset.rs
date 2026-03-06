@@ -49,7 +49,7 @@ use futures_timer::Delay;
 use litep2p::protocol::notification::NotificationError;
 
 use soil_network_types::PeerId;
-use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
+use soil_client::utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
 
 use std::{
 	collections::{HashMap, HashSet},

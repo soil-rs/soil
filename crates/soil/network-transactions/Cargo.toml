@@ -25,7 +25,6 @@ soil-network = { workspace = true, default-features = true}
 soil-network-common = { workspace = true, default-features = true}
 soil-network-sync = { workspace = true, default-features = true}
 soil-network-types = { workspace = true, default-features = true}
-soil-utils = { workspace = true, default-features = true}
 soil-client = { workspace = true, default-features = true}
 subsoil = { workspace = true}
 

@@ -50,7 +50,7 @@ use soil_network_types::{
 	multiaddr::{Multiaddr, Protocol},
 	PeerId,
 };
-use soil_utils::mpsc::TracingUnboundedSender;
+use soil_client::utils::mpsc::TracingUnboundedSender;
 
 use std::{
 	collections::{HashMap, HashSet},

@@ -17,7 +17,7 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 use subsoil::runtime::traits::Block as BlockT;
-use soil_utils::notification::{NotificationSender, NotificationStream, TracingKeyStr};
+use soil_client::utils::notification::{NotificationSender, NotificationStream, TracingKeyStr};
 
 use crate::justification::BeefyVersionedFinalityProof;
 

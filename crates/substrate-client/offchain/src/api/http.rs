@@ -37,7 +37,7 @@ use hyper_rustls::{HttpsConnector, HttpsConnectorBuilder};
 use hyper_util::{client::legacy as client, rt::TokioExecutor};
 use once_cell::sync::Lazy;
 use subsoil::core::offchain::{HttpError, HttpRequestId, HttpRequestStatus, Timestamp};
-use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
+use soil_client::utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
 use std::{
 	fmt,
 	io::Read as _,

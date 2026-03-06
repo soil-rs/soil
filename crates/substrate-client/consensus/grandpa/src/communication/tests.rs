@@ -41,7 +41,7 @@ use soil_network_sync::{SyncEvent as SyncStreamEvent, SyncEventStream};
 use soil_network_test::{Block, Hash};
 use soil_network_types::PeerId;
 use subsoil::runtime::traits::NumberFor;
-use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
+use soil_client::utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
 use std::{collections::HashSet, pin::Pin, sync::Arc, task::Poll};
 
 #[derive(Debug)]

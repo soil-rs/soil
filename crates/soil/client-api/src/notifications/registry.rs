@@ -23,7 +23,7 @@ use subsoil::core::hexdisplay::HexDisplay;
 use fnv::{FnvHashMap, FnvHashSet};
 use prometheus_endpoint::{register, CounterVec, Opts, U64};
 
-use soil_utils::{
+use soil_client::utils::{
 	id_sequence::SeqID as SubscriberId,
 	pubsub::{Dispatch, Subscribe, Unsubscribe},
 };

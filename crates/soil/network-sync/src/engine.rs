@@ -67,7 +67,7 @@ use subsoil::runtime::{
 	traits::{Block as BlockT, Header, NumberFor, Zero},
 	Justifications,
 };
-use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
+use soil_client::utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
 
 use std::{
 	collections::{HashMap, HashSet},

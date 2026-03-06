@@ -31,9 +31,9 @@ parking_lot = { workspace = true, default-features = true }
 prometheus-endpoint = { workspace = true, default-features = true }
 soil-client-api = { workspace = true, default-features = true }
 soil-transaction-pool-api = { workspace = true, default-features = true }
-soil-utils = { workspace = true, default-features = true }
 serde = { features = ["derive"], workspace = true, default-features = true }
 soil-blockchain = { workspace = true, default-features = true }
+soil-client = { workspace = true, default-features = true }
 subsoil-crypto-hashing = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
 soil-transaction-pool = { workspace = true, default-features = true }
@@ -53,7 +53,6 @@ rstest = { workspace = true }
 sc-block-builder = { workspace = true, default-features = true }
 serde = { workspace = true }
 serde_json = { workspace = true }
-soil-client = { workspace = true, default-features = true }
 substrate-test-runtime = { workspace = true }
 substrate-test-runtime-client = { workspace = true }
 substrate-test-runtime-transaction-pool = { workspace = true }

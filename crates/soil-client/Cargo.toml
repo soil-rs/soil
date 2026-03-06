@@ -13,10 +13,23 @@ workspace = true
 
 [dependencies]
 subsoil = { workspace = true, default-features = true }
+# consensus deps
 async-trait = { workspace = true }
 futures = { features = ["thread-pool"], workspace = true }
 log = { workspace = true, default-features = true }
 thiserror = { workspace = true }
+# storage-monitor deps
+clap = { features = ["derive", "string"], workspace = true }
+fs4 = { workspace = true }
+tokio = { features = ["time"], workspace = true, default-features = true }
+# utils deps
+async-channel = { workspace = true }
+futures-timer = { workspace = true }
+parking_lot = { workspace = true, default-features = true }
+prometheus = { workspace = true }
+# maybe-compressed-blob deps
+zstd = { workspace = true }
 
 [dev-dependencies]
 futures = { workspace = true }
+tokio = { features = ["macros"], workspace = true, default-features = true }

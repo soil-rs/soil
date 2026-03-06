@@ -52,7 +52,7 @@ use soil_network_sync::SyncingService;
 use soil_network_types::PeerId;
 use soil_rpc_server::Server;
 use subsoil::runtime::traits::{Block as BlockT, Header as HeaderT};
-use soil_utils::mpsc::TracingUnboundedReceiver;
+use soil_client::utils::mpsc::TracingUnboundedReceiver;
 
 pub use self::{
 	builder::{

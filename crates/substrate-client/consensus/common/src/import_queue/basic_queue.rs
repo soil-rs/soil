@@ -26,7 +26,7 @@ use subsoil::runtime::{
 	traits::{Block as BlockT, Header as HeaderT, NumberFor},
 	Justification, Justifications,
 };
-use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
+use soil_client::utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
 use std::pin::Pin;
 
 use crate::{

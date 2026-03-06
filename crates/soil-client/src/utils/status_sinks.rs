@@ -15,7 +15,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
+use crate::utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
 use futures::{lock::Mutex, prelude::*};
 use futures_timer::Delay;
 use std::{
@@ -183,8 +183,8 @@ impl<T> futures::Future for YieldAfter<T> {
 
 #[cfg(test)]
 mod tests {
-	use super::StatusSinks;
-	use crate::mpsc::tracing_unbounded;
+	use crate::utils::StatusSinks;
+	use crate::utils::mpsc::tracing_unbounded;
 	use futures::prelude::*;
 	use std::time::Duration;
 

@@ -35,7 +35,6 @@ members = [
 	"crates/soil/executor-wasmtime",
 	"crates/soil/genesis-builder",
 	"crates/soil/informant",
-	"crates/soil/maybe-compressed-blob",
 	"crates/soil/mixnet",
 	"crates/soil/mmr-gadget",
 	"crates/soil/mmr-rpc",
@@ -66,7 +65,6 @@ members = [
 	"crates/soil/staking",
 	"crates/soil/state-db",
 	"crates/soil/statement-store",
-	"crates/soil/storage-monitor",
 	"crates/soil/sync-state-rpc",
 	"crates/soil/sysinfo",
 	"crates/soil/telemetry",
@@ -74,7 +72,6 @@ members = [
 	"crates/soil/transaction-pool",
 	"crates/soil/transaction-pool-api",
 	"crates/soil/transaction-storage-proof",
-	"crates/soil/utils",
 	"crates/topsoil/alliance",
 	"crates/topsoil/asset-conversion",
 	"crates/topsoil/asset-conversion/ops",
@@ -487,21 +484,18 @@ soil-service = { path = "crates/soil/service", default-features = false }
 soil-service-test = { path = "crates/soil/service-test" }
 soil-state-db = { path = "crates/soil/state-db", default-features = false }
 sc-statement-store = { default-features = false, path = "crates/substrate-client/statement-store" }
-soil-storage-monitor = { path = "crates/soil/storage-monitor", default-features = false }
 soil-sync-state-rpc = { path = "crates/soil/sync-state-rpc", default-features = false }
 soil-sysinfo = { path = "crates/soil/sysinfo", default-features = false }
 soil-telemetry = { path = "crates/soil/telemetry", default-features = false }
 sc-tracing = { path = "crates/substrate-client/tracing", default-features = false }
 sc-transaction-pool = { path = "crates/substrate-client/transaction-pool", default-features = false }
 soil-transaction-pool-api = { path = "crates/soil/transaction-pool-api", default-features = false }
-soil-utils = { path = "crates/soil/utils", default-features = false }
 soil-authority-discovery = { path = "crates/soil/authority-discovery", default-features = false }
 soil-blockchain = { path = "crates/soil/blockchain", default-features = false }
 subsoil = { path = "crates/subsoil", default-features = false }
 subsoil-crypto-hashing = { path = "crates/subsoil-crypto-hashing", default-features = false }
 subsoil-derive = { path = "crates/subsoil-derive" }
 soil-genesis-builder = { path = "crates/soil/genesis-builder", default-features = false }
-soil-maybe-compressed-blob = { path = "crates/soil/maybe-compressed-blob", default-features = false }
 soil-mixnet = { path = "crates/soil/mixnet", default-features = false }
 soil-offchain = { path = "crates/soil/offchain", default-features = false }
 soil-rpc = { path = "crates/soil/rpc", default-features = false }

@@ -31,7 +31,7 @@ use std::{
 	task::{Context, Poll},
 };
 
-use crate::pubsub::{Hub, Receiver};
+use crate::utils::pubsub::{Hub, Receiver};
 
 mod registry;
 use registry::Registry;

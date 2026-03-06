@@ -8098,7 +8098,6 @@ dependencies = [
  "soil-client-api",
  "soil-network-types",
  "soil-test-primitives",
- "soil-utils",
  "subsoil",
  "substrate-prometheus-endpoint",
  "thiserror 1.0.69",
@@ -8185,7 +8184,6 @@ dependencies = [
  "soil-network-sync",
  "soil-network-test",
  "soil-network-types",
- "soil-utils",
  "subsoil",
  "substrate-prometheus-endpoint",
  "substrate-test-runtime-client",
@@ -8227,7 +8225,6 @@ dependencies = [
  "soil-network-types",
  "soil-telemetry",
  "soil-transaction-pool-api",
- "soil-utils",
  "subsoil",
  "subsoil-crypto-hashing",
  "substrate-prometheus-endpoint",
@@ -8337,7 +8334,6 @@ dependencies = [
  "soil-network-types",
  "soil-offchain",
  "soil-transaction-pool-api",
- "soil-utils",
  "subsoil",
  "substrate-test-runtime-client",
  "threadpool",
@@ -8376,7 +8372,6 @@ dependencies = [
  "soil-session",
  "soil-statement-store",
  "soil-transaction-pool-api",
- "soil-utils",
  "subsoil",
  "subsoil-crypto-hashing",
  "substrate-test-runtime-client",
@@ -8397,10 +8392,10 @@ dependencies = [
  "parking_lot 0.12.5",
  "sc-keystore",
  "soil-blockchain",
+ "soil-client",
  "soil-client-api",
  "soil-network-statement",
  "soil-statement-store",
- "soil-utils",
  "subsoil",
  "substrate-prometheus-endpoint",
  "tempfile",
@@ -8458,7 +8453,6 @@ dependencies = [
  "soil-client-api",
  "soil-transaction-pool",
  "soil-transaction-pool-api",
- "soil-utils",
  "strum 0.26.3",
  "subsoil",
  "subsoil-crypto-hashing",
@@ -9355,12 +9349,12 @@ dependencies = [
  "serde",
  "serde_json",
  "soil-blockchain",
+ "soil-client",
  "soil-client-api",
  "soil-client-db",
  "soil-network",
  "soil-service",
  "soil-telemetry",
- "soil-utils",
  "subsoil",
  "tempfile",
  "thiserror 1.0.69",
@@ -9371,11 +9365,19 @@ dependencies = [
 name = "soil-client"
 version = "0.1.0"
 dependencies = [
+ "async-channel 1.9.0",
  "async-trait",
+ "clap",
+ "fs4",
  "futures",
+ "futures-timer",
  "log",
+ "parking_lot 0.12.5",
+ "prometheus",
  "subsoil",
  "thiserror 1.0.69",
+ "tokio",
+ "zstd 0.12.4",
 ]
 
 [[package]]
@@ -9391,7 +9393,6 @@ dependencies = [
  "soil-client",
  "soil-executor",
  "soil-transaction-pool-api",
- "soil-utils",
  "subsoil",
  "substrate-prometheus-endpoint",
  "substrate-test-runtime",
@@ -9509,10 +9510,10 @@ dependencies = [
  "paste",
  "sc-tracing",
  "schnellru",
+ "soil-client",
  "soil-executor-common",
  "soil-executor-polkavm",
  "soil-executor-wasmtime",
- "soil-maybe-compressed-blob",
  "soil-runtime-test",
  "subsoil",
  "subsoil-crypto-hashing",
@@ -9528,7 +9529,7 @@ name = "soil-executor-common"
 version = "0.29.0"
 dependencies = [
  "polkavm",
- "soil-maybe-compressed-blob",
+ "soil-client",
  "subsoil",
  "thiserror 1.0.69",
  "wasm-instrument",
@@ -9619,14 +9620,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "soil-maybe-compressed-blob"
-version = "11.0.0"
-dependencies = [
- "thiserror 1.0.69",
- "zstd 0.12.4",
-]
-
-[[package]]
 name = "soil-mixnet"
 version = "0.4.0"
 dependencies = [
@@ -9705,7 +9698,6 @@ dependencies = [
  "soil-client-api",
  "soil-network-common",
  "soil-network-types",
- "soil-utils",
  "subsoil",
  "subsoil-crypto-hashing",
  "substrate-prometheus-endpoint",
@@ -9827,7 +9819,6 @@ dependencies = [
  "soil-network-common",
  "soil-network-types",
  "soil-test-primitives",
- "soil-utils",
  "subsoil",
  "substrate-prometheus-endpoint",
  "substrate-test-runtime-client",
@@ -9859,7 +9850,6 @@ dependencies = [
  "soil-network-sync",
  "soil-network-types",
  "soil-service",
- "soil-utils",
  "subsoil",
  "substrate-test-runtime",
  "substrate-test-runtime-client",
@@ -9879,7 +9869,6 @@ dependencies = [
  "soil-network-common",
  "soil-network-sync",
  "soil-network-types",
- "soil-utils",
  "subsoil",
  "substrate-prometheus-endpoint",
 ]
@@ -9997,11 +9986,9 @@ dependencies = [
  "soil-chain-spec",
  "soil-client",
  "soil-client-api",
- "soil-maybe-compressed-blob",
  "soil-rpc",
  "soil-service",
  "soil-transaction-pool-api",
- "soil-utils",
  "subsoil",
  "substrate-prometheus-endpoint",
  "substrate-test-runtime",
@@ -10077,7 +10064,6 @@ dependencies = [
  "soil-transaction-pool",
  "soil-transaction-pool-api",
  "soil-transaction-storage-proof",
- "soil-utils",
  "static_init",
  "subsoil",
  "substrate-prometheus-endpoint",
@@ -10171,18 +10157,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "soil-storage-monitor"
-version = "0.16.0"
-dependencies = [
- "clap",
- "fs4",
- "log",
- "subsoil",
- "thiserror 1.0.69",
- "tokio",
-]
-
-[[package]]
 name = "soil-sync-state-rpc"
 version = "0.34.0"
 dependencies = [
@@ -10231,7 +10205,7 @@ dependencies = [
  "rand 0.8.5",
  "serde",
  "serde_json",
- "soil-utils",
+ "soil-client",
  "thiserror 1.0.69",
  "wasm-timer",
 ]
@@ -10278,20 +10252,6 @@ dependencies = [
  "parity-scale-codec",
  "scale-info",
  "subsoil",
-]
-
-[[package]]
-name = "soil-utils"
-version = "14.0.0"
-dependencies = [
- "async-channel 1.9.0",
- "futures",
- "futures-timer",
- "log",
- "parking_lot 0.12.5",
- "prometheus",
- "subsoil",
- "tokio-test",
 ]
 
 [[package]]
@@ -10539,7 +10499,6 @@ dependencies = [
  "soil-genesis-builder",
  "soil-informant",
  "soil-manual-seal",
- "soil-maybe-compressed-blob",
  "soil-mixnet",
  "soil-mmr-gadget",
  "soil-mmr-rpc",
@@ -10560,13 +10519,11 @@ dependencies = [
  "soil-service-test",
  "soil-state-db",
  "soil-statement-store",
- "soil-storage-monitor",
  "soil-sync-state-rpc",
  "soil-sysinfo",
  "soil-telemetry",
  "soil-transaction-pool-api",
  "soil-transaction-storage-proof",
- "soil-utils",
  "soketto",
  "staging-chain-spec-builder",
  "staging-node-inspect",
@@ -11066,8 +11023,8 @@ dependencies = [
  "parity-wasm",
  "polkavm-linker",
  "shlex",
+ "soil-client",
  "soil-executor",
- "soil-maybe-compressed-blob",
  "strum 0.26.3",
  "subsoil",
  "tempfile",
@@ -11640,17 +11597,6 @@ dependencies = [
  "pin-project-lite",
  "tokio",
  "tokio-util",
-]
-
-[[package]]
-name = "tokio-test"
-version = "0.4.5"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3f6d24790a10a7af737693a3e8f1d03faef7e6ca0cc99aae5066f533766de545"
-dependencies = [
- "futures-core",
- "tokio",
- "tokio-stream",
 ]
 
 [[package]]

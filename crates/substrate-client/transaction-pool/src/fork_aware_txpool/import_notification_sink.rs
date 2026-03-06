@@ -28,7 +28,7 @@ use futures::{
 	Future, FutureExt,
 };
 use parking_lot::RwLock;
-use soil_utils::mpsc;
+use soil_client::utils::mpsc;
 use std::{
 	collections::HashSet,
 	fmt::{self, Debug, Formatter},
@@ -98,7 +98,7 @@ where
 	/// external components to control this stream.
 	fn event_stream() -> (StreamOf<I>, Controller<Command<K, I>>) {
 		let (sender, receiver) =
-			soil_utils::mpsc::tracing_unbounded::<Command<K, I>>("import-notification-sink", 16);
+			soil_client::utils::mpsc::tracing_unbounded::<Command<K, I>>("import-notification-sink", 16);
 
 		let ctx = Self { stream_map: StreamMap::new(), command_receiver: receiver };
 

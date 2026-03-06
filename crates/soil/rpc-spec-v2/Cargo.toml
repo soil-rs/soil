@@ -51,10 +51,8 @@ sc-block-builder = { workspace = true, default-features = true }
 sc-rpc = { workspace = true, default-features = true, features = ["test-helpers"] }
 soil-service = { workspace = true, default-features = true }
 sc-transaction-pool = { workspace = true, default-features = true }
-soil-utils = { workspace = true, default-features = true }
 serde_json = { workspace = true, default-features = true }
 soil-client = { workspace = true, default-features = true }
-soil-maybe-compressed-blob = { workspace = true, default-features = true }
 substrate-test-runtime = { workspace = true }
 substrate-test-runtime-client = { workspace = true }
 substrate-test-runtime-transaction-pool = { workspace = true }

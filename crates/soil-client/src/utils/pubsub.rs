@@ -45,7 +45,7 @@ use futures::stream::{FusedStream, Stream};
 use parking_lot::ReentrantMutex;
 use std::cell::RefCell;
 
-use crate::{
+use crate::utils::{
 	id_sequence::SeqID,
 	mpsc::{TracingUnboundedReceiver, TracingUnboundedSender},
 };
@@ -88,7 +88,7 @@ pub trait Dispatch<M> {
 ///
 /// Does the subscription and dispatch.
 /// The exact subscription and routing behaviour is to be implemented by the Registry (of type `R`).
-/// The Hub under the hood uses the channel defined in `crate::mpsc` module.
+/// The Hub under the hood uses the channel defined in `crate::utils::mpsc` module.
 #[derive(Debug)]
 pub struct Hub<M, R> {
 	tracing_key: &'static str,
@@ -112,7 +112,7 @@ where
 
 #[derive(Debug)]
 struct Shared<M, R> {
-	id_sequence: crate::id_sequence::IDSequence,
+	id_sequence: crate::utils::id_sequence::IDSequence,
 	registry: R,
 	sinks: HashMap<SeqID, TracingUnboundedSender<M>>,
 }
@@ -177,7 +177,7 @@ impl<M, R> Hub<M, R> {
 		// have the sink disposed.
 		shared_borrowed.registry.subscribe(subs_key, subs_id);
 
-		let (tx, rx) = crate::mpsc::tracing_unbounded(self.tracing_key, queue_size_warning);
+		let (tx, rx) = crate::utils::mpsc::tracing_unbounded(self.tracing_key, queue_size_warning);
 		assert!(shared_borrowed.sinks.insert(subs_id, tx).is_none(), "Used IDSequence to create another ID. Should be unique until u64 is overflowed. Should be unique.");
 
 		Receiver { shared: Arc::downgrade(&self.shared), subs_id, rx }

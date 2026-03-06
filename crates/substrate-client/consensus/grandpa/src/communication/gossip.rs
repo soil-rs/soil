@@ -97,7 +97,7 @@ use soil_network_gossip::{MessageIntent, ValidatorContext};
 use soil_network_types::PeerId;
 use subsoil::runtime::traits::{Block as BlockT, NumberFor, Zero};
 use soil_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG};
-use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
+use soil_client::utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
 
 use super::{benefit, cost, Round, SetId, NEIGHBOR_REBROADCAST_PERIOD};
 use crate::{environment, CatchUp, CompactCommit, SignedMessage, LOG_TARGET};

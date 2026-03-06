@@ -85,7 +85,7 @@ use subsoil::runtime::{
 };
 use soil_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG, CONSENSUS_INFO};
 use soil_transaction_pool_api::OffchainTransactionPoolFactory;
-use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver};
+use soil_client::utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver};
 
 pub use finality_grandpa::BlockNumberOps;
 use finality_grandpa::{voter, voter_set::VoterSet, Error as GrandpaError};

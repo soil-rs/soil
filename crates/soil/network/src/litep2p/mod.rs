@@ -78,7 +78,7 @@ use soil_client_api::BlockBackend;
 use soil_network_common::{role::Roles, ExHashT};
 use soil_network_types::PeerId;
 use subsoil::runtime::traits::Block as BlockT;
-use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver};
+use soil_client::utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver};
 
 use std::{
 	cmp,

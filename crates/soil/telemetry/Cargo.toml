@@ -24,7 +24,7 @@ log = { workspace = true, default-features = true, optional = true}
 parking_lot = { workspace = true, default-features = true, optional = true}
 pin-project = { workspace = true, optional = true}
 rand = { workspace = true, default-features = true, optional = true}
-soil-utils = { workspace = true, default-features = true, optional = true}
+soil-client = { workspace = true, default-features = true, optional = true}
 serde = { features = ["derive"], workspace = true, default-features = true, optional = true}
 serde_json = { workspace = true, default-features = true, optional = true}
 thiserror = { workspace = true, optional = true}
@@ -42,7 +42,7 @@ std = [
 	"rand",
 	"serde",
 	"serde_json",
-	"soil-utils",
+	"soil-client",
 	"thiserror",
 	"wasm-timer",
 ]

@@ -117,19 +117,16 @@ soil-rpc-spec-v2 = { workspace = true, default-features = true }
 soil-service = { workspace = true, default-features = true }
 soil-state-db = { workspace = true, default-features = true }
 sc-statement-store = { workspace = true, default-features = true }
-soil-storage-monitor = { workspace = true, default-features = true }
 soil-sync-state-rpc = { workspace = true, default-features = true }
 soil-sysinfo = { workspace = true, default-features = true }
 soil-telemetry = { workspace = true, default-features = true }
 sc-tracing = { workspace = true, default-features = true }
 sc-transaction-pool = { workspace = true, default-features = true }
 soil-transaction-pool-api = { workspace = true, default-features = true }
-soil-utils = { workspace = true, default-features = true }
 soil-authority-discovery = { workspace = true, default-features = true }
 soil-blockchain = { workspace = true, default-features = true }
 soil-client = { workspace = true, default-features = true }
 soil-genesis-builder = { workspace = true, default-features = true }
-soil-maybe-compressed-blob = { workspace = true, default-features = true }
 soil-mixnet = { workspace = true, default-features = true }
 soil-rpc = { workspace = true, default-features = true }
 soil-statement-store = { workspace = true, default-features = true }
@@ -181,7 +178,7 @@ clap_complete = { optional = true, workspace = true }
 node-inspect = { optional = true, workspace = true, default-features = true }
 
 soil-cli = { optional = true, workspace = true, default-features = true }
-soil-storage-monitor = { optional = true, workspace = true, default-features = true }
+soil-client = { workspace = true, default-features = true }
 substrate-build-script-utils = { optional = true, workspace = true, default-features = true }
 
 [features]
@@ -191,7 +188,6 @@ cli = [
 	"clap_complete",
 	"node-inspect",
 	"dep:soil-cli",
-	"dep:soil-storage-monitor",
 	"dep:substrate-build-script-utils"]
 runtime-benchmarks = [
 	"kitchensink-runtime/runtime-benchmarks",

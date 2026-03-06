@@ -21,7 +21,7 @@ use chrono::prelude::*;
 use futures::{future::FutureExt, Future};
 use log::info;
 use soil_service::{Configuration, Error as ServiceError, TaskManager};
-use soil_utils::metrics::{TOKIO_THREADS_ALIVE, TOKIO_THREADS_TOTAL};
+use soil_client::utils::metrics::{TOKIO_THREADS_ALIVE, TOKIO_THREADS_TOTAL};
 use std::{marker::PhantomData, time::Duration};
 
 /// Build a tokio runtime with all features.

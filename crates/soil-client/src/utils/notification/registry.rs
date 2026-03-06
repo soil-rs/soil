@@ -17,7 +17,7 @@
 
 use std::collections::HashSet;
 
-use crate::{
+use crate::utils::{
 	id_sequence::SeqID,
 	pubsub::{Dispatch, Subscribe, Unsubscribe},
 };

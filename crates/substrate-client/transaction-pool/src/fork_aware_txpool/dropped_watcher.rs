@@ -30,7 +30,7 @@ use crate::{
 use futures::stream::StreamExt;
 use subsoil::runtime::traits::Block as BlockT;
 use soil_transaction_pool_api::TransactionStatus;
-use soil_utils::mpsc;
+use soil_client::utils::mpsc;
 use std::{
 	collections::{
 		hash_map::{Entry, OccupiedEntry},
@@ -342,7 +342,7 @@ where
 	fn event_stream() -> (StreamOfDropped<C>, Controller<Command<C>>) {
 		// note: 64 allows to avoid warning messages during execution of unit tests.
 		const CHANNEL_SIZE: usize = 64;
-		let (sender, command_receiver) = soil_utils::mpsc::tracing_unbounded::<Command<C>>(
+		let (sender, command_receiver) = soil_client::utils::mpsc::tracing_unbounded::<Command<C>>(
 			"tx-pool-dropped-watcher-cmd-stream",
 			CHANNEL_SIZE,
 		);

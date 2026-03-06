@@ -33,7 +33,7 @@ use soil_client_api::{Backend, UnpinWorkerMessage};
 
 use schnellru::Limiter;
 use subsoil::runtime::traits::Block as BlockT;
-use soil_utils::mpsc::TracingUnboundedReceiver;
+use soil_client::utils::mpsc::TracingUnboundedReceiver;
 
 const LOG_TARGET: &str = "db::notification_pinning";
 const NOTIFICATION_PINNING_LIMIT: usize = 1024;
@@ -194,7 +194,7 @@ mod tests {
 	use soil_client_api::{Backend, UnpinWorkerMessage};
 	use subsoil::core::H256;
 	use subsoil::runtime::traits::Block as BlockT;
-	use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver};
+	use soil_client::utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver};
 
 	type Block = substrate_test_runtime_client::runtime::Block;
 

@@ -30,7 +30,7 @@ use futures::{Future, FutureExt, Stream, StreamExt};
 use parking_lot::RwLock;
 use subsoil::runtime::traits::Block as BlockT;
 use soil_transaction_pool_api::{TransactionStatus, TransactionStatusStream, TxIndex};
-use soil_utils::mpsc;
+use soil_client::utils::mpsc;
 use std::{
 	collections::{hash_map::Entry, HashMap, HashSet},
 	pin::Pin,
