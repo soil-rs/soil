@@ -9498,36 +9498,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "soil-consensus-manual-seal"
-version = "0.35.0"
-dependencies = [
- "assert_matches",
- "async-trait",
- "futures",
- "futures-timer",
- "jsonrpsee",
- "log",
- "parity-scale-codec",
- "sc-consensus",
- "sc-consensus-aura",
- "sc-consensus-babe",
- "sc-transaction-pool",
- "serde",
- "soil-basic-authorship",
- "soil-blockchain",
- "soil-client-api",
- "soil-consensus",
- "soil-consensus-epochs",
- "soil-transaction-pool-api",
- "subsoil",
- "substrate-prometheus-endpoint",
- "substrate-test-runtime-client",
- "substrate-test-runtime-transaction-pool",
- "thiserror 1.0.69",
- "tokio",
-]
-
-[[package]]
 name = "soil-executor"
 version = "0.32.0"
 dependencies = [
@@ -9617,6 +9587,36 @@ dependencies = [
  "soil-network",
  "soil-network-sync",
  "subsoil",
+]
+
+[[package]]
+name = "soil-manual-seal"
+version = "0.35.0"
+dependencies = [
+ "assert_matches",
+ "async-trait",
+ "futures",
+ "futures-timer",
+ "jsonrpsee",
+ "log",
+ "parity-scale-codec",
+ "sc-consensus",
+ "sc-consensus-aura",
+ "sc-consensus-babe",
+ "sc-transaction-pool",
+ "serde",
+ "soil-basic-authorship",
+ "soil-blockchain",
+ "soil-client-api",
+ "soil-consensus",
+ "soil-consensus-epochs",
+ "soil-transaction-pool-api",
+ "subsoil",
+ "substrate-prometheus-endpoint",
+ "substrate-test-runtime-client",
+ "substrate-test-runtime-transaction-pool",
+ "thiserror 1.0.69",
+ "tokio",
 ]
 
 [[package]]
@@ -10534,13 +10534,13 @@ dependencies = [
  "soil-consensus-beefy-rpc",
  "soil-consensus-epochs",
  "soil-consensus-grandpa-rpc",
- "soil-consensus-manual-seal",
  "soil-executor",
  "soil-executor-common",
  "soil-executor-polkavm",
  "soil-executor-wasmtime",
  "soil-genesis-builder",
  "soil-informant",
+ "soil-manual-seal",
  "soil-maybe-compressed-blob",
  "soil-mixnet",
  "soil-mmr-gadget",
