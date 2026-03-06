@@ -30,8 +30,8 @@ use prometheus_endpoint::{
 	Histogram, Opts, PrometheusError, Registry, U64,
 };
 #[cfg(doc)]
-use soil_transaction_pool_api::TransactionPool;
-use soil_transaction_pool_api::TransactionStatus;
+use soil_client::transaction_pool::TransactionPool;
+use soil_client::transaction_pool::TransactionStatus;
 use soil_client::utils::mpsc;
 use std::{
 	collections::{hash_map::Entry, HashMap},

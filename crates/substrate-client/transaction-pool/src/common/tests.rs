@@ -33,7 +33,7 @@ use subsoil::runtime::{
 		InvalidTransaction, TransactionSource, TransactionValidity, ValidTransaction,
 	},
 };
-use soil_transaction_pool_api::error;
+use soil_client::transaction_pool::error;
 use std::{collections::HashSet, sync::Arc};
 use substrate_test_runtime::{
 	substrate_test_pallet::pallet::Call as PalletCall, BalancesCall, Block, BlockNumber, Extrinsic,

@@ -84,7 +84,7 @@ use subsoil::runtime::{
 	traits::{Block as BlockT, NumberFor, Zero},
 };
 use soil_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG, CONSENSUS_INFO};
-use soil_transaction_pool_api::OffchainTransactionPoolFactory;
+use soil_client::transaction_pool::OffchainTransactionPoolFactory;
 use soil_client::utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver};
 
 pub use finality_grandpa::BlockNumberOps;

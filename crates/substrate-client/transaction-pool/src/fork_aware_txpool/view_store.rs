@@ -41,7 +41,7 @@ use subsoil::runtime::{
 	traits::{Block as BlockT, Header, One, Saturating},
 	transaction_validity::{InvalidTransaction, TransactionValidityError},
 };
-use soil_transaction_pool_api::{
+use soil_client::transaction_pool::{
 	error::Error as PoolError, PoolStatus, TransactionTag as Tag, TxInvalidityReportMap,
 };
 use std::{

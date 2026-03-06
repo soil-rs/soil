@@ -55,7 +55,7 @@ fn to_tag(nonce: u64, from: AccountId) -> Tag {
 #[async_trait]
 impl ChainApi for TestApi {
 	type Block = Block;
-	type Error = soil_transaction_pool_api::error::Error;
+	type Error = soil_client::transaction_pool::error::Error;
 
 	async fn validate_transaction(
 		&self,

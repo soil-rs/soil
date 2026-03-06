@@ -32,8 +32,8 @@ use soil_service::{
 	},
 	BasePath, Configuration, Role,
 };
-use soil_transaction_pool_api::TransactionPool as _;
-use soil_transaction_pool_api::{TransactionSource, TransactionStatus};
+use soil_client::transaction_pool::TransactionPool as _;
+use soil_client::transaction_pool::{TransactionSource, TransactionStatus};
 use staging_node_cli as node_cli;
 use tokio::runtime::Handle;
 

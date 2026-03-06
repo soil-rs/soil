@@ -47,7 +47,7 @@ use subsoil::runtime::{
 	traits::{Block as BlockT, Header as HeaderT},
 	Justifications,
 };
-use soil_transaction_pool_api::RejectAllTxPool;
+use soil_client::transaction_pool::RejectAllTxPool;
 use std::{collections::HashSet, pin::Pin};
 use substrate_test_runtime_client::{runtime::BlockNumber, BlockBuilderExt};
 use tokio::runtime::Handle;

@@ -26,7 +26,7 @@ use crate::{
 };
 use async_trait::async_trait;
 use subsoil::runtime::traits::Block as BlockT;
-use soil_transaction_pool_api::{
+use soil_client::transaction_pool::{
 	ChainEvent, ImportNotificationStream, LocalTransactionFor, LocalTransactionPool,
 	MaintainedTransactionPool, PoolStatus, ReadyTransactions, TransactionFor, TransactionPool,
 	TransactionSource, TransactionStatusStreamFor, TxHash, TxInvalidityReportMap,

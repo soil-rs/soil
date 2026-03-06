@@ -121,7 +121,6 @@ soil-sysinfo = { workspace = true, default-features = true }
 soil-telemetry = { workspace = true, default-features = true }
 sc-tracing = { workspace = true, default-features = true }
 sc-transaction-pool = { workspace = true, default-features = true }
-soil-transaction-pool-api = { workspace = true, default-features = true }
 soil-authority-discovery = { workspace = true, default-features = true }
 soil-client = { workspace = true, default-features = true }
 soil-genesis-builder = { workspace = true, default-features = true }

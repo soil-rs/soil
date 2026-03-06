@@ -39,7 +39,7 @@ use soil_service::{
 	BlocksPruning, ChainSpecExtension, Configuration, Error, GenericChainSpec, Role,
 	SpawnTaskHandle, TaskManager,
 };
-use soil_transaction_pool_api::TransactionPool;
+use soil_client::transaction_pool::TransactionPool;
 use std::{iter, net::Ipv4Addr, pin::Pin, sync::Arc, task::Context, time::Duration};
 use tempfile::TempDir;
 use tokio::{runtime::Runtime, time};
@@ -501,7 +501,7 @@ pub fn sync<E, Fb, F, B, ExF, U>(
 	let first_user_data = &network.full_nodes[0].2;
 	let best_block = first_service.client().info().best_hash;
 	let extrinsic = extrinsic_factory(&first_service, first_user_data);
-	let source = soil_transaction_pool_api::TransactionSource::External;
+	let source = soil_client::transaction_pool::TransactionSource::External;
 
 	futures::executor::block_on(
 		first_service.transaction_pool().submit_one(best_block, source, extrinsic),

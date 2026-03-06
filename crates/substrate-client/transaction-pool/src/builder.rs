@@ -28,7 +28,7 @@ use crate::{
 use prometheus_endpoint::Registry as PrometheusRegistry;
 use subsoil::core::traits::SpawnEssentialNamed;
 use subsoil::runtime::traits::Block as BlockT;
-use soil_transaction_pool_api::{LocalTransactionPool, MaintainedTransactionPool};
+use soil_client::transaction_pool::{LocalTransactionPool, MaintainedTransactionPool};
 use std::{marker::PhantomData, sync::Arc, time::Duration};
 
 /// The type of transaction pool.

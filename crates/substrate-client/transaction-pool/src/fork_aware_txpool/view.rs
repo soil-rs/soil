@@ -40,7 +40,7 @@ use subsoil::runtime::{
 	generic::BlockId, traits::Block as BlockT, transaction_validity::TransactionValidityError,
 	SaturatedConversion,
 };
-use soil_transaction_pool_api::{error::Error as TxPoolError, PoolStatus, TransactionStatus};
+use soil_client::transaction_pool::{error::Error as TxPoolError, PoolStatus, TransactionStatus};
 use soil_client::utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
 use std::{sync::Arc, time::Instant};
 use tracing::{debug, instrument, trace, Level};
@@ -363,7 +363,7 @@ where
 			.api()
 			.validate_transaction_blocking(
 				self.at.hash,
-				soil_transaction_pool_api::TransactionSource::Local,
+				soil_client::transaction_pool::TransactionSource::Local,
 				Arc::from(xt.clone()),
 			)?
 			.map_err(|e| {

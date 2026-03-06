@@ -35,7 +35,7 @@ use soil_client::blockchain::HeaderBackend;
 use soil_client_api::BlockchainEvents;
 use subsoil::core::Bytes;
 use subsoil::runtime::traits::Block as BlockT;
-use soil_transaction_pool_api::{
+use soil_client::transaction_pool::{
 	error::IntoPoolError, TransactionFor, TransactionPool, TransactionSource,
 };
 use std::{collections::HashMap, sync::Arc};

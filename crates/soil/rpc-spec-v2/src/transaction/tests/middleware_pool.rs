@@ -19,7 +19,7 @@
 use async_trait::async_trait;
 use codec::Encode;
 use sc_transaction_pool::BasicPool;
-use soil_transaction_pool_api::{
+use soil_client::transaction_pool::{
 	ImportNotificationStream, PoolStatus, ReadyTransactions, TransactionFor, TransactionPool,
 	TransactionSource, TransactionStatusStreamFor, TxHash, TxInvalidityReportMap,
 };
@@ -35,9 +35,9 @@ use tokio::sync::mpsc;
 pub type Block = substrate_test_runtime_client::runtime::Block;
 
 pub type TxTestPool = MiddlewarePool;
-pub type TxStatusType<Pool> = soil_transaction_pool_api::TransactionStatus<
-	soil_transaction_pool_api::TxHash<Pool>,
-	soil_transaction_pool_api::BlockHash<Pool>,
+pub type TxStatusType<Pool> = soil_client::transaction_pool::TransactionStatus<
+	soil_client::transaction_pool::TxHash<Pool>,
+	soil_client::transaction_pool::BlockHash<Pool>,
 >;
 pub type TxStatusTypeTest = TxStatusType<TxTestPool>;
 
@@ -46,7 +46,7 @@ pub type TxStatusTypeTest = TxStatusType<TxTestPool>;
 pub enum MiddlewarePoolEvent {
 	TransactionStatus {
 		transaction: String,
-		status: soil_transaction_pool_api::TransactionStatus<
+		status: soil_client::transaction_pool::TransactionStatus<
 			<Block as BlockT>::Hash,
 			<Block as BlockT>::Hash,
 		>,

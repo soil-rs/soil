@@ -40,7 +40,7 @@ use subsoil::runtime::{
 	ExtrinsicInclusionMode, Percent, SaturatedConversion,
 };
 use soil_telemetry::{telemetry, TelemetryHandle, CONSENSUS_INFO};
-use soil_transaction_pool_api::{InPoolTransaction, TransactionPool, TxInvalidityReportMap};
+use soil_client::transaction_pool::{InPoolTransaction, TransactionPool, TxInvalidityReportMap};
 use std::{pin::Pin, sync::Arc, time};
 
 /// Default block size limit in bytes used by [`Proposer`].
@@ -588,7 +588,7 @@ mod tests {
 	use soil_client_api::{Backend, TrieCacheContext};
 	use soil_client::consensus::{BlockOrigin, Environment};
 	use subsoil::runtime::{generic::BlockId, traits::NumberFor, Perbill};
-	use soil_transaction_pool_api::{ChainEvent, MaintainedTransactionPool, TransactionSource};
+	use soil_client::transaction_pool::{ChainEvent, MaintainedTransactionPool, TransactionSource};
 	use substrate_test_runtime_client::{
 		prelude::*,
 		runtime::{Block as TestBlock, Extrinsic, ExtrinsicBuilder, Transfer},

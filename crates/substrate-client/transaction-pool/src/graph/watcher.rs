@@ -19,7 +19,7 @@
 //! Extrinsics status updates.
 
 use futures::Stream;
-use soil_transaction_pool_api::TransactionStatus;
+use soil_client::transaction_pool::TransactionStatus;
 use soil_client::utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
 
 /// Extrinsic watcher.

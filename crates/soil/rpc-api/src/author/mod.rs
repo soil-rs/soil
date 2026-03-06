@@ -21,7 +21,7 @@
 use error::Error;
 use jsonrpsee::proc_macros::rpc;
 use subsoil::core::Bytes;
-use soil_transaction_pool_api::TransactionStatus;
+use soil_client::transaction_pool::TransactionStatus;
 
 pub mod error;
 pub mod hash;

@@ -32,7 +32,7 @@ use node_testing::bench::{BenchDb, BlockType, DatabaseType, KeyTypes};
 use soil_client::consensus::{Environment, ProposeArgs, Proposer};
 use subsoil::inherents::InherentDataProvider;
 use subsoil::runtime::OpaqueExtrinsic;
-use soil_transaction_pool_api::{
+use soil_client::transaction_pool::{
 	ImportNotificationStream, PoolStatus, ReadyTransactions, TransactionFor, TransactionSource,
 	TransactionStatusStreamFor, TxHash, TxInvalidityReportMap,
 };
@@ -178,7 +178,7 @@ impl From<OpaqueExtrinsic> for PoolTransaction {
 	}
 }
 
-impl soil_transaction_pool_api::InPoolTransaction for PoolTransaction {
+impl soil_client::transaction_pool::InPoolTransaction for PoolTransaction {
 	type Transaction = Arc<OpaqueExtrinsic>;
 	type Hash = node_primitives::Hash;
 
@@ -228,11 +228,11 @@ impl ReadyTransactions for TransactionsIterator {
 }
 
 #[async_trait]
-impl soil_transaction_pool_api::TransactionPool for Transactions {
+impl soil_client::transaction_pool::TransactionPool for Transactions {
 	type Block = Block;
 	type Hash = node_primitives::Hash;
 	type InPoolTransaction = PoolTransaction;
-	type Error = soil_transaction_pool_api::error::Error;
+	type Error = soil_client::transaction_pool::error::Error;
 
 	/// Asynchronously imports a bunch of unverified transactions to the pool.
 	async fn submit_at(

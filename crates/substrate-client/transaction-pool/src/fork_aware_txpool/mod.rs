@@ -332,22 +332,22 @@
 //! [`vp::enforce_limits`]: ../graph/validated_pool/struct.ValidatedPool.html#method.enforce_limits
 //! [`create_dropped_by_limits_stream`]: ../graph/validated_pool/struct.ValidatedPool.html#method.create_dropped_by_limits_stream
 //! [`create_aggregated_stream`]: ../graph/validated_pool/struct.ValidatedPool.html#method.create_aggregated_stream
-//! [`ChainEvent`]: soil_transaction_pool_api::ChainEvent
-//! [`TransactionStatusStreamFor`]: soil_transaction_pool_api::TransactionStatusStreamFor
-//! [`api_submit`]: soil_transaction_pool_api::TransactionPool::submit_at
-//! [`api_submit_and_watch`]: soil_transaction_pool_api::TransactionPool::submit_and_watch
-//! [`ready_at_with_timeout`]: soil_transaction_pool_api::TransactionPool::ready_at_with_timeout
-//! [`TransactionSource`]: soil_transaction_pool_api::TransactionSource
-//! [TransactionPool API]: soil_transaction_pool_api::TransactionPool
-//! [`TransactionStatus`]:soil_transaction_pool_api::TransactionStatus
-//! [`Ready`]:soil_transaction_pool_api::TransactionStatus::Ready
-//! [`Future`]:soil_transaction_pool_api::TransactionStatus::Future
-//! [`Broadcast`]:soil_transaction_pool_api::TransactionStatus::Broadcast
-//! [`Invalid`]:soil_transaction_pool_api::TransactionStatus::Invalid
-//! [`InBlock`]:soil_transaction_pool_api::TransactionStatus::InBlock
-//! [`Finalized`]:soil_transaction_pool_api::TransactionStatus::Finalized
-//! [`Dropped`]:soil_transaction_pool_api::TransactionStatus::Dropped
-//! [`ReadyTransactions`]:soil_transaction_pool_api::ReadyTransactions
+//! [`ChainEvent`]: soil_client::transaction_pool::ChainEvent
+//! [`TransactionStatusStreamFor`]: soil_client::transaction_pool::TransactionStatusStreamFor
+//! [`api_submit`]: soil_client::transaction_pool::TransactionPool::submit_at
+//! [`api_submit_and_watch`]: soil_client::transaction_pool::TransactionPool::submit_and_watch
+//! [`ready_at_with_timeout`]: soil_client::transaction_pool::TransactionPool::ready_at_with_timeout
+//! [`TransactionSource`]: soil_client::transaction_pool::TransactionSource
+//! [TransactionPool API]: soil_client::transaction_pool::TransactionPool
+//! [`TransactionStatus`]:soil_client::transaction_pool::TransactionStatus
+//! [`Ready`]:soil_client::transaction_pool::TransactionStatus::Ready
+//! [`Future`]:soil_client::transaction_pool::TransactionStatus::Future
+//! [`Broadcast`]:soil_client::transaction_pool::TransactionStatus::Broadcast
+//! [`Invalid`]:soil_client::transaction_pool::TransactionStatus::Invalid
+//! [`InBlock`]:soil_client::transaction_pool::TransactionStatus::InBlock
+//! [`Finalized`]:soil_client::transaction_pool::TransactionStatus::Finalized
+//! [`Dropped`]:soil_client::transaction_pool::TransactionStatus::Dropped
+//! [`ReadyTransactions`]:soil_client::transaction_pool::ReadyTransactions
 //! [`dropped_monitor_task`]: ForkAwareTxPool::dropped_monitor_task
 //! [`ready_poll`]: ForkAwareTxPool::ready_poll
 //! [`ready_at_light`]: ForkAwareTxPool::ready_at_light

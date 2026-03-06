@@ -27,7 +27,7 @@ use fatp_common::{
 use futures::{executor::block_on, FutureExt};
 use sc_transaction_pool::ChainApi;
 use subsoil::runtime::transaction_validity::{InvalidTransaction, TransactionValidityError};
-use soil_transaction_pool_api::{
+use soil_client::transaction_pool::{
 	error::{Error as TxPoolError, IntoPoolError},
 	MaintainedTransactionPool, TransactionPool, TransactionStatus,
 };

@@ -40,7 +40,7 @@ use subsoil::runtime::{
 	generic::{Digest, DigestItem},
 	traits::Block as BlockT,
 };
-use soil_transaction_pool_api::RejectAllTxPool;
+use soil_client::transaction_pool::RejectAllTxPool;
 use std::{cell::RefCell, task::Poll};
 use substrate_test_runtime_client::DefaultTestClientBuilderExt;
 

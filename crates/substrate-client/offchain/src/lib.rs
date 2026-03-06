@@ -49,7 +49,7 @@ use subsoil::externalities::Extension;
 use subsoil::keystore::{KeystoreExt, KeystorePtr};
 use soil_network::{NetworkPeers, NetworkStateInfo};
 use subsoil::runtime::traits::{self, Header};
-use soil_transaction_pool_api::OffchainTransactionPoolFactory;
+use soil_client::transaction_pool::OffchainTransactionPoolFactory;
 use threadpool::ThreadPool;
 
 mod api;
@@ -336,7 +336,7 @@ mod tests {
 	};
 	use soil_network_types::PeerId;
 	use subsoil::runtime::traits::Block as BlockT;
-	use soil_transaction_pool_api::{InPoolTransaction, TransactionPool};
+	use soil_client::transaction_pool::{InPoolTransaction, TransactionPool};
 	use std::{collections::HashSet, sync::Arc};
 	use substrate_test_runtime_client::{
 		runtime::{

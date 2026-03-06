@@ -29,7 +29,7 @@ use crate::{
 };
 use futures::stream::StreamExt;
 use subsoil::runtime::traits::Block as BlockT;
-use soil_transaction_pool_api::TransactionStatus;
+use soil_client::transaction_pool::TransactionStatus;
 use soil_client::utils::mpsc;
 use std::{
 	collections::{

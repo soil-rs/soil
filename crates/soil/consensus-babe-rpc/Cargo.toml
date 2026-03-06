@@ -28,6 +28,5 @@ thiserror = { workspace = true}
 
 [dev-dependencies]
 sc-consensus = { workspace = true, default-features = true }
-soil-transaction-pool-api = { workspace = true, default-features = true }
 substrate-test-runtime-client = { workspace = true }
 tokio = { workspace = true, default-features = true }

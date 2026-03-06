@@ -34,7 +34,7 @@ use subsoil::runtime::{
 	traits::Block as _,
 	transaction_validity::{TransactionSource, ValidTransaction},
 };
-use soil_transaction_pool_api::{
+use soil_client::transaction_pool::{
 	ChainEvent, MaintainedTransactionPool, TransactionPool, TransactionStatus,
 };
 use std::{collections::BTreeSet, pin::Pin, sync::Arc};

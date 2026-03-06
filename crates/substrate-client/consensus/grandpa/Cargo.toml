@@ -41,7 +41,6 @@ soil-network-gossip = { workspace = true, default-features = true }
 soil-network-sync = { workspace = true, default-features = true }
 soil-network-types = { workspace = true, default-features = true }
 soil-telemetry = { workspace = true, default-features = true }
-soil-transaction-pool-api = { workspace = true, default-features = true }
 serde_json = { workspace = true, default-features = true }
 soil-client = { workspace = true, default-features = true }
 subsoil = { workspace = true }

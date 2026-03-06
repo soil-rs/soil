@@ -44,7 +44,7 @@ use subsoil::runtime::{generic, traits::Block as BlockT, SaturatedConversion};
 use soil_service::{config::Configuration, error::Error as ServiceError, RpcHandlers, TaskManager};
 use soil_sysinfo::SUBSTRATE_REFERENCE_HARDWARE;
 use soil_telemetry::{Telemetry, TelemetryWorker};
-use soil_transaction_pool_api::OffchainTransactionPoolFactory;
+use soil_client::transaction_pool::OffchainTransactionPoolFactory;
 use soil_transaction_storage_proof::runtime_api::TransactionStorageApi;
 use std::{path::Path, sync::Arc};
 use topsoil_system_rpc_runtime_api::AccountNonceApi;
@@ -903,8 +903,8 @@ mod tests {
 		RuntimeAppPublic,
 	};
 	use soil_service_test::TestNetNode;
-	use soil_transaction_pool_api::ChainEvent;
-	use soil_transaction_pool_api::MaintainedTransactionPool;
+	use soil_client::transaction_pool::ChainEvent;
+	use soil_client::transaction_pool::MaintainedTransactionPool;
 	use std::sync::Arc;
 
 	type AccountPublic = <Signature as Verify>::Signer;

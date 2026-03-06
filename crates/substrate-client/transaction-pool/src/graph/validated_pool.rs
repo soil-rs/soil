@@ -30,7 +30,7 @@ use subsoil::runtime::{
 	traits::SaturatedConversion,
 	transaction_validity::{TransactionTag as Tag, ValidTransaction},
 };
-use soil_transaction_pool_api::{error, PoolStatus, ReadyTransactions, TransactionPriority};
+use soil_client::transaction_pool::{error, PoolStatus, ReadyTransactions, TransactionPriority};
 use std::{
 	collections::{HashMap, HashSet},
 	sync::Arc,

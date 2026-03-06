@@ -28,7 +28,7 @@ use soil_client::consensus::{self, BlockOrigin, Environment, ProposeArgs, Propos
 use subsoil::externalities::Extensions;
 use subsoil::inherents::{CreateInherentDataProviders, InherentDataProvider};
 use subsoil::runtime::traits::{Block as BlockT, Header as HeaderT};
-use soil_transaction_pool_api::TransactionPool;
+use soil_client::transaction_pool::TransactionPool;
 use subsoil::trie::proof_size_extension::ProofSizeExt;
 use std::{sync::Arc, time::Duration};
 

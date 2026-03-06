@@ -36,7 +36,7 @@ use crate::{
 };
 
 use soil_client::blockchain;
-use soil_transaction_pool_api::ChainEvent;
+use soil_client::transaction_pool::ChainEvent;
 use soil_client::utils::mpsc::{TracingUnboundedReceiver, TracingUnboundedSender};
 
 /// Type that implements `futures::Stream` of block import events.

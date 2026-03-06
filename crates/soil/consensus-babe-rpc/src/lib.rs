@@ -200,7 +200,7 @@ mod tests {
 	use subsoil::keyring::Sr25519Keyring;
 	use subsoil::keystore::{testing::MemoryKeystore, Keystore};
 	use soil_rpc_api::DenyUnsafe;
-	use soil_transaction_pool_api::{OffchainTransactionPoolFactory, RejectAllTxPool};
+	use soil_client::transaction_pool::{OffchainTransactionPoolFactory, RejectAllTxPool};
 	use substrate_test_runtime_client::{
 		runtime::Block, Backend, DefaultTestClientBuilderExt, TestClient, TestClientBuilder,
 		TestClientBuilderExt,

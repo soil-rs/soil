@@ -32,7 +32,7 @@ use subsoil::runtime::{
 		TransactionTag as Tag,
 	},
 };
-use soil_transaction_pool_api::{error, InPoolTransaction, PoolStatus};
+use soil_client::transaction_pool::{error, InPoolTransaction, PoolStatus};
 use tracing::{trace, warn};
 
 use super::{

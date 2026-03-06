@@ -56,7 +56,7 @@ use subsoil::runtime::{
 	transaction_validity::TransactionSource,
 	Saturating,
 };
-use soil_transaction_pool_api::{
+use soil_client::transaction_pool::{
 	LocalTransactionPool, OffchainTransactionPoolFactory, TransactionPool,
 };
 use std::{

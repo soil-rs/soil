@@ -31,7 +31,6 @@ soil-consensus-grandpa-rpc = { workspace = true, default-features = true }
 sc-mixnet = { workspace = true, default-features = true }
 sc-rpc = { workspace = true, default-features = true }
 soil-sync-state-rpc = { workspace = true, default-features = true }
-soil-transaction-pool-api = { workspace = true, default-features = true }
 soil-client = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
 substrate-frame-rpc-system = { workspace = true, default-features = true }

@@ -34,7 +34,7 @@ use subsoil::runtime::{
 		ValidTransaction,
 	},
 };
-use soil_transaction_pool_api::error::IntoMetricsLabel;
+use soil_client::transaction_pool::error::IntoMetricsLabel;
 use std::{
 	collections::{BTreeMap, HashMap, HashSet},
 	sync::Arc,
@@ -50,10 +50,10 @@ use substrate_test_runtime_client::{
 /// Error type used by [`TestApi`].
 #[derive(Debug, thiserror::Error)]
 #[error(transparent)]
-pub struct Error(#[from] pub soil_transaction_pool_api::error::Error);
+pub struct Error(#[from] pub soil_client::transaction_pool::error::Error);
 
-impl soil_transaction_pool_api::error::IntoPoolError for Error {
-	fn into_pool_error(self) -> Result<soil_transaction_pool_api::error::Error, Self> {
+impl soil_client::transaction_pool::error::IntoPoolError for Error {
+	fn into_pool_error(self) -> Result<soil_client::transaction_pool::error::Error, Self> {
 		Ok(self.0)
 	}
 }

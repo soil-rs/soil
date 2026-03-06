@@ -24,7 +24,7 @@ use soil_network::{config::Role, NetworkStatus, NetworkStatusProvider};
 use soil_network_sync::{SyncStatus, SyncStatusProvider};
 use subsoil::runtime::traits::{Block, NumberFor, SaturatedConversion, UniqueSaturatedInto};
 use soil_telemetry::{telemetry, TelemetryHandle, SUBSTRATE_INFO};
-use soil_transaction_pool_api::{MaintainedTransactionPool, PoolStatus};
+use soil_client::transaction_pool::{MaintainedTransactionPool, PoolStatus};
 use soil_client::utils::metrics::register_globals;
 use std::{
 	sync::Arc,

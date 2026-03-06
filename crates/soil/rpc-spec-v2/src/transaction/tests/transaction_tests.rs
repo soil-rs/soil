@@ -24,7 +24,7 @@ use assert_matches::assert_matches;
 use codec::Encode;
 use jsonrpsee::rpc_params;
 use subsoil::core::H256;
-use soil_transaction_pool_api::{ChainEvent, MaintainedTransactionPool};
+use soil_client::transaction_pool::{ChainEvent, MaintainedTransactionPool};
 use std::{sync::Arc, vec};
 use substrate_test_runtime_client::Sr25519Keyring::*;
 use substrate_test_runtime_transaction_pool::uxt;

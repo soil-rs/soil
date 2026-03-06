@@ -34,7 +34,6 @@ rustls = { workspace = true }
 soil-client-api = { workspace = true, default-features = true }
 soil-network = { workspace = true, default-features = true }
 soil-network-types = { workspace = true, default-features = true }
-soil-transaction-pool-api = { workspace = true, default-features = true }
 soil-offchain = { workspace = true, default-features = true }
 subsoil = { workspace = true }
 threadpool = { workspace = true }

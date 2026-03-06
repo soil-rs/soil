@@ -18,7 +18,7 @@
 
 //! Transaction pool error.
 
-use soil_transaction_pool_api::error::Error as TxPoolError;
+use soil_client::transaction_pool::error::Error as TxPoolError;
 
 /// Transaction pool result.
 pub type Result<T> = std::result::Result<T, Error>;
@@ -41,7 +41,7 @@ pub enum Error {
 	RuntimeApi(String),
 }
 
-impl soil_transaction_pool_api::error::IntoPoolError for Error {
+impl soil_client::transaction_pool::error::IntoPoolError for Error {
 	fn into_pool_error(self) -> std::result::Result<TxPoolError, Self> {
 		match self {
 			Error::Pool(e) => Ok(e),
@@ -50,7 +50,7 @@ impl soil_transaction_pool_api::error::IntoPoolError for Error {
 	}
 }
 
-impl soil_transaction_pool_api::error::IntoMetricsLabel for Error {
+impl soil_client::transaction_pool::error::IntoMetricsLabel for Error {
 	fn label(&self) -> String {
 		self.as_ref().to_string()
 	}

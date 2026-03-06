@@ -52,7 +52,7 @@ use soil_client::consensus::SelectChain;
 use subsoil::consensus::babe::BabeApi;
 use subsoil::consensus::beefy::AuthorityIdBound;
 use subsoil::keystore::KeystorePtr;
-use soil_transaction_pool_api::TransactionPool;
+use soil_client::transaction_pool::TransactionPool;
 
 /// Extra dependencies for BABE.
 pub struct BabeDeps {

@@ -68,7 +68,6 @@ members = [
 	"crates/soil/telemetry",
 	"crates/soil/test-primitives",
 	"crates/soil/transaction-pool",
-	"crates/soil/transaction-pool-api",
 	"crates/soil/transaction-storage-proof",
 	"crates/topsoil/alliance",
 	"crates/topsoil/asset-conversion",
@@ -486,7 +485,6 @@ soil-sysinfo = { path = "crates/soil/sysinfo", default-features = false }
 soil-telemetry = { path = "crates/soil/telemetry", default-features = false }
 sc-tracing = { path = "crates/substrate-client/tracing", default-features = false }
 sc-transaction-pool = { path = "crates/substrate-client/transaction-pool", default-features = false }
-soil-transaction-pool-api = { path = "crates/soil/transaction-pool-api", default-features = false }
 soil-authority-discovery = { path = "crates/soil/authority-discovery", default-features = false }
 subsoil = { path = "crates/subsoil", default-features = false }
 subsoil-crypto-hashing = { path = "crates/subsoil-crypto-hashing", default-features = false }

@@ -29,7 +29,7 @@ use crate::{
 use futures::{Future, FutureExt, Stream, StreamExt};
 use parking_lot::RwLock;
 use subsoil::runtime::traits::Block as BlockT;
-use soil_transaction_pool_api::{TransactionStatus, TransactionStatusStream, TxIndex};
+use soil_client::transaction_pool::{TransactionStatus, TransactionStatusStream, TxIndex};
 use soil_client::utils::mpsc;
 use std::{
 	collections::{hash_map::Entry, HashMap, HashSet},
@@ -245,7 +245,7 @@ where
 ///
 /// For every view, an aggregated stream of transactions events can be added. The events are
 /// flattened and sent out to the external listener for individual transactions. (The *external*
-/// term here means that it can be exposed to [`soil_transaction_pool_api::TransactionPool`] API
+/// term here means that it can be exposed to [`soil_client::transaction_pool::TransactionPool`] API
 /// client e.g. over RPC.)
 ///
 /// The listener allows to add and remove view's stream.
@@ -564,7 +564,7 @@ where
 	///
 	/// This method initializes an `ExternalWatcherContext` for the provided transaction hash, sets
 	/// up the necessary communication channel with listener's task, and unfolds an external
-	/// (meaning that it can be exposed to [`soil_transaction_pool_api::TransactionPool`] API client
+	/// (meaning that it can be exposed to [`soil_client::transaction_pool::TransactionPool`] API client
 	/// e.g. rpc) stream of transaction status events. If an external watcher is already present for
 	/// the given transaction, it returns `None`.
 	///

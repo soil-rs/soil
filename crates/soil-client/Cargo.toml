@@ -34,7 +34,12 @@ codec = { features = ["derive"], workspace = true, default-features = true }
 # blockchain deps
 schnellru = { workspace = true }
 tracing = { workspace = true, default-features = true }
+# transaction_pool deps
+indexmap = { workspace = true }
+serde = { features = ["derive"], workspace = true, default-features = true }
+strum = { workspace = true, features = ["derive"] }
 
 [dev-dependencies]
 futures = { workspace = true }
+serde_json = { workspace = true, default-features = true }
 tokio = { features = ["macros"], workspace = true, default-features = true }

@@ -28,7 +28,7 @@ use subsoil::runtime::{
 		TransactionSource, TransactionTag as Tag, TransactionValidity, TransactionValidityError,
 	},
 };
-use soil_transaction_pool_api::error;
+use soil_client::transaction_pool::error;
 use std::{
 	collections::HashMap,
 	sync::Arc,
@@ -610,7 +610,7 @@ mod tests {
 	use futures::executor::block_on;
 	use parking_lot::Mutex;
 	use subsoil::runtime::transaction_validity::TransactionSource;
-	use soil_transaction_pool_api::TransactionStatus;
+	use soil_client::transaction_pool::TransactionStatus;
 	use std::{collections::HashMap, time::Instant};
 	use substrate_test_runtime::{AccountId, ExtrinsicBuilder, Transfer, H256};
 	use substrate_test_runtime_client::Sr25519Keyring::{Alice, Bob};
@@ -1246,7 +1246,7 @@ mod tests {
 					block_on(pool.submit_one(&api.expect_hash_and_number(1), SOURCE, xt.into()));
 				assert!(matches!(
 					result,
-					Err(soil_transaction_pool_api::error::Error::ImmediatelyDropped)
+					Err(soil_client::transaction_pool::error::Error::ImmediatelyDropped)
 				));
 			}
 			{

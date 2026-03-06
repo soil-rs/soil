@@ -35,7 +35,7 @@ use subsoil::keystore::{KeystoreExt, KeystorePtr};
 use soil_rpc_api::check_if_safe;
 use subsoil::runtime::traits::Block as BlockT;
 use soil_session::SessionKeys;
-use soil_transaction_pool_api::{
+use soil_client::transaction_pool::{
 	error::IntoPoolError, BlockHash, InPoolTransaction, TransactionFor, TransactionPool,
 	TransactionSource, TxHash, TxInvalidityReportMap,
 };

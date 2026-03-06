@@ -73,7 +73,7 @@ pub use self::{
 #[cfg(feature = "std")]
 use subsoil::api::ProvideRuntimeApi;
 #[cfg(feature = "std")]
-use soil_transaction_pool_api::TransactionPool;
+use soil_client::transaction_pool::TransactionPool;
 
 #[cfg(feature = "std")]
 const LOG_TARGET: &str = "manual-seal";
@@ -380,7 +380,7 @@ mod tests {
 	use soil_basic_authorship::ProposerFactory;
 	use subsoil::inherents::InherentData;
 	use subsoil::runtime::generic::{Digest, DigestItem};
-	use soil_transaction_pool_api::{
+	use soil_client::transaction_pool::{
 		MaintainedTransactionPool, TransactionPool, TransactionSource,
 	};
 	use substrate_test_runtime_client::{
@@ -745,7 +745,7 @@ mod tests {
 
 		let header = client.header(created_block.hash).expect("db error").expect("imported above");
 		assert_eq!(header.number, 1);
-		pool.maintain(soil_transaction_pool_api::ChainEvent::NewBestBlock {
+		pool.maintain(soil_client::transaction_pool::ChainEvent::NewBestBlock {
 			hash: header.hash(),
 			tree_route: None,
 		})

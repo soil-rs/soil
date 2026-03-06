@@ -126,7 +126,7 @@ use subsoil::runtime::{
 	DigestItem,
 };
 use soil_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG, CONSENSUS_TRACE};
-use soil_transaction_pool_api::OffchainTransactionPoolFactory;
+use soil_client::transaction_pool::OffchainTransactionPoolFactory;
 
 pub use sc_consensus_slots::SlotProportion;
 pub use soil_client::consensus::SyncOracle;

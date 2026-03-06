@@ -48,7 +48,7 @@ use subsoil::runtime::{
 	},
 	transaction_validity::{TransactionTag as Tag, TransactionValidityError},
 };
-use soil_transaction_pool_api::{
+use soil_client::transaction_pool::{
 	error::Error as TxPoolError, ChainEvent, ImportNotificationStream, MaintainedTransactionPool,
 	PoolStatus, TransactionFor, TransactionPool, TransactionSource, TransactionStatusStreamFor,
 	TxHash, TxInvalidityReportMap,
@@ -460,7 +460,7 @@ where
 	}
 }
 
-impl<Block, Client> soil_transaction_pool_api::LocalTransactionPool
+impl<Block, Client> soil_client::transaction_pool::LocalTransactionPool
 	for BasicPool<FullChainApi<Client, Block>, Block>
 where
 	Block: BlockT,
@@ -479,7 +479,7 @@ where
 	fn submit_local(
 		&self,
 		at: Block::Hash,
-		xt: soil_transaction_pool_api::LocalTransactionFor<Self>,
+		xt: soil_client::transaction_pool::LocalTransactionFor<Self>,
 	) -> Result<Self::Hash, Self::Error> {
 		let validity = self
 			.api
