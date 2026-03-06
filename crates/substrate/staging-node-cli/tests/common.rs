@@ -26,7 +26,7 @@ use subsoil::core::{
 	sr25519::Signature,
 	traits::{CallContext, CodeExecutor, RuntimeCode},
 };
-use soil_executor::error::Result;
+use soil_client::executor::error::Result;
 use subsoil::runtime::{
 	traits::{BlakeTwo256, Header as HeaderT},
 	ApplyExtrinsicResult, Digest, DigestItem, MultiSignature, MultiSigner,

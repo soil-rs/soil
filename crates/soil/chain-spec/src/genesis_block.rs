@@ -23,7 +23,7 @@ use std::{marker::PhantomData, sync::Arc};
 use codec::Encode;
 use soil_client_api::{backend::Backend, BlockImportOperation};
 use subsoil::core::storage::{well_known_keys, StateVersion, Storage};
-use soil_executor::RuntimeVersionOf;
+use soil_client::executor::RuntimeVersionOf;
 use subsoil::runtime::{
 	traits::{Block as BlockT, Hash as HashT, HashingFor, Header as HeaderT, Zero},
 	BuildStorage,

@@ -28,7 +28,7 @@ use subsoil::core::{
 	storage::well_known_keys,
 	traits::{CallContext, CodeExecutor, RuntimeCode},
 };
-use soil_executor::{Externalities, RuntimeVersionOf};
+use soil_client::executor::{Externalities, RuntimeVersionOf};
 use subsoil::runtime::{generic::ExtrinsicFormat, traits::BlakeTwo256};
 use subsoil::state_machine::TestExternalities as CoreTestExternalities;
 use staging_node_cli::service::RuntimeExecutor;

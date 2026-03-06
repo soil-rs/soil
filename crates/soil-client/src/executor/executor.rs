@@ -16,7 +16,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-use crate::{
+use crate::executor::{
 	error::{Error, Result},
 	wasm_runtime::{RuntimeCache, WasmExecutionMethod},
 	RuntimeVersionOf,
@@ -31,7 +31,7 @@ use std::{
 
 use codec::Encode;
 use subsoil::core::traits::{CallContext, CodeExecutor, Externalities, RuntimeCode};
-use soil_executor_common::{
+use crate::executor::common::{
 	runtime_blob::RuntimeBlob,
 	wasm_runtime::{
 		AllocationStats, HeapAllocStrategy, WasmInstance, WasmModule, DEFAULT_HEAP_ALLOC_STRATEGY,
@@ -424,7 +424,7 @@ where
 		call_data: &[u8],
 		allocation_stats_out: &mut Option<AllocationStats>,
 	) -> std::result::Result<Vec<u8>, Error> {
-		let module = crate::wasm_runtime::create_wasm_runtime_with_code::<H>(
+		let module = crate::executor::wasm_runtime::create_wasm_runtime_with_code::<H>(
 			self.method,
 			self.default_onchain_heap_alloc_strategy,
 			runtime_blob,
@@ -462,7 +462,7 @@ where
 		let runtime_blob = RuntimeBlob::uncompress_if_needed(wasm_code)
 			.map_err(|e| format!("Failed to create runtime blob: {:?}", e))?;
 
-		if let Some(version) = crate::wasm_runtime::read_embedded_version(&runtime_blob)
+		if let Some(version) = crate::executor::wasm_runtime::read_embedded_version(&runtime_blob)
 			.map_err(|e| format!("Failed to read the static section: {:?}", e))
 			.map(|v| v.map(|v| v.encode()))?
 		{

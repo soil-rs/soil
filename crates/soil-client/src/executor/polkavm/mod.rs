@@ -18,7 +18,7 @@
 
 
 use polkavm::{CallError, Caller, Reg};
-use soil_executor_common::{
+use crate::executor::common::{
 	error::{Error, WasmError},
 	wasm_runtime::{AllocationStats, WasmInstance, WasmModule},
 };

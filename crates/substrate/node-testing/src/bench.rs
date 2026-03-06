@@ -50,7 +50,7 @@ use subsoil::core::{
 	crypto::get_public_from_string_or_panic, ed25519, sr25519, traits::SpawnNamed, Pair,
 };
 use subsoil_crypto_hashing::blake2_256;
-use soil_executor::{WasmExecutionMethod, WasmtimeInstantiationStrategy};
+use soil_client::executor::{WasmExecutionMethod, WasmtimeInstantiationStrategy};
 use subsoil::inherents::InherentData;
 use subsoil::runtime::{
 	generic::{self, ExtrinsicFormat, Preamble},
@@ -266,7 +266,7 @@ impl SpawnNamed for TaskExecutor {
 pub struct BlockContentIterator<'a> {
 	iteration: usize,
 	content: BlockContent,
-	runtime_version: soil_executor::RuntimeVersion,
+	runtime_version: soil_client::executor::RuntimeVersion,
 	genesis_hash: node_primitives::Hash,
 	keyring: &'a BenchKeyring,
 }
@@ -397,7 +397,7 @@ impl BenchDb {
 		let task_executor = TaskExecutor::new();
 
 		let backend = soil_service::new_db_backend(db_config).expect("Should not fail");
-		let executor = soil_executor::WasmExecutor::builder()
+		let executor = soil_client::executor::WasmExecutor::builder()
 			.with_execution_method(WasmExecutionMethod::Compiled {
 				instantiation_strategy: WasmtimeInstantiationStrategy::PoolingCopyOnWrite,
 			})

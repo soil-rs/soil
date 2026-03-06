@@ -28,7 +28,7 @@ use subsoil::core::{
 	traits::{CallContext, CodeExecutor, FetchRuntimeCode, RuntimeCode},
 	OpaqueMetadata,
 };
-use soil_executor::WasmExecutor;
+use soil_client::executor::WasmExecutor;
 use subsoil::state_machine::BasicExternalities;
 use subsoil::wasm_interface::HostFunctions;
 use std::borrow::Cow;

@@ -53,7 +53,7 @@ use soil_client::consensus::block_validation::{
 	BlockAnnounceValidator, Chain, DefaultBlockAnnounceValidator,
 };
 use subsoil::core::traits::{CodeExecutor, SpawnNamed};
-use soil_executor::{
+use soil_client::executor::{
 	wasm_interface::HostFunctions, HeapAllocStrategy, NativeExecutionDispatch,
 	RuntimeVersionOf, WasmExecutor, DEFAULT_HEAP_ALLOC_STRATEGY,
 };
@@ -362,15 +362,15 @@ fn warm_up_trie_cache<TBl: BlockT>(
 	Ok(())
 }
 
-/// Creates a [`NativeElseWasmExecutor`](soil_executor::NativeElseWasmExecutor) according to
+/// Creates a [`NativeElseWasmExecutor`](soil_client::executor::NativeElseWasmExecutor) according to
 /// [`Configuration`].
 #[deprecated(note = "Please switch to `new_wasm_executor`. Will be removed at end of 2024.")]
 #[allow(deprecated)]
 pub fn new_native_or_wasm_executor<D: NativeExecutionDispatch>(
 	config: &Configuration,
-) -> soil_executor::NativeElseWasmExecutor<D> {
+) -> soil_client::executor::NativeElseWasmExecutor<D> {
 	#[allow(deprecated)]
-	soil_executor::NativeElseWasmExecutor::new_with_wasm_executor(new_wasm_executor(
+	soil_client::executor::NativeElseWasmExecutor::new_with_wasm_executor(new_wasm_executor(
 		&config.executor,
 	))
 }

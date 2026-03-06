@@ -26,7 +26,6 @@ sc-block-builder = { workspace = true, default-features = true}
 soil-client-api = { workspace = true, default-features = true}
 soil-client-db = { workspace = true}
 sc-consensus = { workspace = true, default-features = true}
-soil-executor = { workspace = true, default-features = true}
 soil-network = { workspace = true, default-features = true}
 soil-network-sync = { workspace = true, default-features = true}
 soil-service = { workspace = true, default-features = true}

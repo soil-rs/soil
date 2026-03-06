@@ -93,10 +93,6 @@ soil-consensus-grandpa-rpc = { workspace = true, default-features = true }
 soil-manual-seal = { workspace = true, default-features = true }
 sc-consensus-pow = { workspace = true, default-features = true }
 sc-consensus-slots = { workspace = true, default-features = true }
-soil-executor = { workspace = true, default-features = true }
-soil-executor-common = { workspace = true, default-features = true }
-soil-executor-polkavm = { workspace = true, default-features = true }
-soil-executor-wasmtime = { workspace = true, default-features = true }
 soil-informant = { workspace = true, default-features = true }
 sc-keystore = { workspace = true, default-features = true }
 sc-mixnet = { workspace = true, default-features = true }

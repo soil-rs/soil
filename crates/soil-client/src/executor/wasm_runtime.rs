@@ -21,13 +21,13 @@
 //! The primary means of accessing the runtimes is through a cache which saves the reusable
 //! components of the runtime that are expensive to initialize.
 
-use crate::error::{Error, WasmError};
+use crate::executor::error::{Error, WasmError};
 
 use codec::Decode;
 use parking_lot::Mutex;
 use schnellru::{ByLength, LruMap};
 use subsoil::core::traits::{Externalities, FetchRuntimeCode, RuntimeCode};
-use soil_executor_common::{
+use crate::executor::common::{
 	runtime_blob::RuntimeBlob,
 	wasm_runtime::{HeapAllocStrategy, WasmInstance, WasmModule},
 };
@@ -46,7 +46,7 @@ pub enum WasmExecutionMethod {
 	/// Uses the Wasmtime compiled runtime.
 	Compiled {
 		/// The instantiation strategy to use.
-		instantiation_strategy: soil_executor_wasmtime::InstantiationStrategy,
+		instantiation_strategy: crate::executor::wasmtime::InstantiationStrategy,
 	},
 }
 
@@ -54,7 +54,7 @@ impl Default for WasmExecutionMethod {
 	fn default() -> Self {
 		Self::Compiled {
 			instantiation_strategy:
-				soil_executor_wasmtime::InstantiationStrategy::PoolingCopyOnWrite,
+				crate::executor::wasmtime::InstantiationStrategy::PoolingCopyOnWrite,
 		}
 	}
 }
@@ -299,17 +299,17 @@ where
 	H: HostFunctions,
 {
 	if let Some(blob) = blob.as_polkavm_blob() {
-		return soil_executor_polkavm::create_runtime::<H>(blob);
+		return crate::executor::polkavm::create_runtime::<H>(blob);
 	}
 
 	match wasm_method {
 		WasmExecutionMethod::Compiled { instantiation_strategy } => {
-			soil_executor_wasmtime::create_runtime::<H>(
+			crate::executor::wasmtime::create_runtime::<H>(
 				blob,
-				soil_executor_wasmtime::Config {
+				crate::executor::wasmtime::Config {
 					allow_missing_func_imports,
 					cache_path: cache_path.map(ToOwned::to_owned),
-					semantics: soil_executor_wasmtime::Semantics {
+					semantics: crate::executor::wasmtime::Semantics {
 						heap_alloc_strategy,
 						instantiation_strategy,
 						deterministic_stack_limit: None,
@@ -397,7 +397,7 @@ where
 {
 	// The incoming code may be actually compressed. We decompress it here and then work with
 	// the uncompressed code from now on.
-	let blob = soil_executor_common::runtime_blob::RuntimeBlob::uncompress_if_needed(code)?;
+	let blob = crate::executor::common::runtime_blob::RuntimeBlob::uncompress_if_needed(code)?;
 
 	// Use the runtime blob to scan if there is any metadata embedded into the wasm binary
 	// pertaining to runtime version. We do it before consuming the runtime blob for creating the
@@ -424,7 +424,7 @@ where
 			// The following unwind safety assertion is OK because if the method call panics, the
 			// runtime will be dropped.
 			let runtime = AssertUnwindSafe(runtime.as_ref());
-			crate::executor::with_externalities_safe(&mut **ext, move || {
+			crate::executor::executor::with_externalities_safe(&mut **ext, move || {
 				runtime.new_instance()?.call("Core_version".into(), &[])
 			})
 			.map_err(|_| WasmError::Instantiation("panic in call to get runtime version".into()))?
@@ -443,10 +443,8 @@ where
 
 #[cfg(test)]
 mod tests {
-	extern crate alloc;
-
 	use super::*;
-	use alloc::borrow::Cow;
+	use std::borrow::Cow;
 	use codec::Encode;
 	use subsoil::api::{Core, RuntimeApiInfo};
 	use subsoil::version::RuntimeVersion;
@@ -536,9 +534,9 @@ mod tests {
 
 	#[test]
 	fn embed_runtime_version_works() {
-		let wasm = soil_client::maybe_compressed_blob::decompress(
+		let wasm = crate::maybe_compressed_blob::decompress(
 			substrate_test_runtime::wasm_binary_unwrap(),
-			soil_client::maybe_compressed_blob::CODE_BLOB_BOMB_LIMIT,
+			crate::maybe_compressed_blob::CODE_BLOB_BOMB_LIMIT,
 		)
 		.expect("Decompressing works");
 		let runtime_version = RuntimeVersion {

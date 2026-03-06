@@ -18,7 +18,7 @@
 
 //! Defines the compiled Wasm runtime that uses Wasmtime internally.
 
-use crate::{
+use crate::executor::wasmtime::{
 	host::HostState,
 	instance_wrapper::{EntryPoint, InstanceWrapper, MemoryWrapper},
 	util::{self, replace_strategy_if_broken},
@@ -26,7 +26,7 @@ use crate::{
 
 use parking_lot::Mutex;
 use subsoil::allocator::{AllocationStats, FreeingBumpHeapAllocator};
-use soil_executor_common::{
+use crate::executor::common::{
 	error::{Error, Result, WasmError},
 	runtime_blob::RuntimeBlob,
 	util::checked_range,
@@ -612,7 +612,7 @@ where
 	};
 
 	let mut linker = wasmtime::Linker::new(&engine);
-	crate::imports::prepare_imports::<H>(&mut linker, &module, config.allow_missing_func_imports)?;
+	crate::executor::wasmtime::imports::prepare_imports::<H>(&mut linker, &module, config.allow_missing_func_imports)?;
 
 	let instance_pre = linker
 		.instantiate_pre(&module)

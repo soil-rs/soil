@@ -41,7 +41,7 @@ use std::{
 	pin::Pin,
 	sync::Arc,
 };
-use substrate_test_runtime_client::{soil_executor::WasmExecutor, DefaultTestClientBuilderExt};
+use substrate_test_runtime_client::{executor::WasmExecutor, DefaultTestClientBuilderExt};
 
 const STATEMENT_DATA_SIZE: usize = 256;
 

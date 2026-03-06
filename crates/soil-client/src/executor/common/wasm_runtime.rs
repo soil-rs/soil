@@ -18,7 +18,7 @@
 
 //! Definitions for a wasm runtime.
 
-use crate::error::Error;
+use super::error::Error;
 
 pub use subsoil::allocator::AllocationStats;
 

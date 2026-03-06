@@ -32,7 +32,6 @@ soil-chain-spec = { workspace = true, default-features = true}
 soil-client-api = { workspace = true, default-features = true}
 soil-client-db = { workspace = true}
 sc-consensus = { workspace = true, default-features = true}
-soil-executor = { workspace = true, default-features = true}
 soil-informant = { workspace = true, default-features = true}
 sc-keystore = { workspace = true, default-features = true}
 soil-network = { workspace = true, default-features = true}

@@ -19,7 +19,7 @@
 //! A method call executor interface.
 
 use subsoil::core::traits::CallContext;
-use soil_executor::{RuntimeVersion, RuntimeVersionOf};
+use soil_client::executor::{RuntimeVersion, RuntimeVersionOf};
 use subsoil::externalities::Extensions;
 use subsoil::runtime::traits::{Block as BlockT, HashingFor};
 use subsoil::state_machine::{OverlayedChanges, StorageProof};

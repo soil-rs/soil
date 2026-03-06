@@ -16,8 +16,7 @@ targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
 subsoil = { workspace = true, default-features = true }
-soil-executor = { workspace = true, default-features = true }
-soil-executor-common = { workspace = true, default-features = true }
+soil-client = { workspace = true, default-features = true }
 sp-runtime-interface-test-wasm = { workspace = true }
 sp-runtime-interface-test-wasm-deprecated = { workspace = true }
 tracing = { workspace = true, default-features = true }

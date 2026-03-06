@@ -55,7 +55,7 @@ use soil_client_api::{
 	ProofProvider, StaleBlock, TrieCacheContext, UnpinWorkerMessage, UsageProvider,
 };
 use soil_client::consensus::{BlockOrigin, BlockStatus, Error as ConsensusError};
-use soil_executor::RuntimeVersion;
+use soil_client::executor::RuntimeVersion;
 use soil_telemetry::{telemetry, TelemetryHandle, SUBSTRATE_INFO};
 
 use subsoil::core::{
@@ -193,7 +193,7 @@ pub fn new_with_backend<B, E, Block, G, RA>(
 	config: ClientConfig<Block>,
 ) -> soil_client::blockchain::Result<Client<B, LocalCallExecutor<Block, B, E>, Block, RA>>
 where
-	E: CodeExecutor + soil_executor::RuntimeVersionOf,
+	E: CodeExecutor + soil_client::executor::RuntimeVersionOf,
 	G: BuildGenesisBlock<
 		Block,
 		BlockImportOperation = <B as backend::Backend<Block>>::BlockImportOperation,

@@ -30,16 +30,18 @@
 
 #![warn(missing_docs)]
 
+pub mod common;
+pub mod polkavm;
+pub mod wasmtime;
+
 #[macro_use]
 mod executor;
-#[cfg(test)]
-mod integration_tests;
 mod wasm_runtime;
 
 pub use codec::Codec;
 #[allow(deprecated)]
-pub use executor::NativeElseWasmExecutor;
-pub use executor::{with_externalities_safe, NativeExecutionDispatch, WasmExecutor};
+pub use self::executor::NativeElseWasmExecutor;
+pub use self::executor::{with_externalities_safe, NativeExecutionDispatch, WasmExecutor};
 #[doc(hidden)]
 pub use subsoil::core::traits::Externalities;
 pub use subsoil::version::{NativeVersion, RuntimeVersion};
@@ -48,11 +50,11 @@ pub use subsoil::wasm_interface;
 pub use subsoil::wasm_interface::HostFunctions;
 pub use wasm_runtime::{read_embedded_version, WasmExecutionMethod};
 
-pub use soil_executor_common::{
+pub use common::{
 	error,
 	wasm_runtime::{HeapAllocStrategy, DEFAULT_HEAP_ALLOC_PAGES, DEFAULT_HEAP_ALLOC_STRATEGY},
 };
-pub use soil_executor_wasmtime::InstantiationStrategy as WasmtimeInstantiationStrategy;
+pub use self::wasmtime::InstantiationStrategy as WasmtimeInstantiationStrategy;
 
 /// Extracts the runtime version of a given runtime code.
 pub trait RuntimeVersionOf {
@@ -67,7 +69,7 @@ pub trait RuntimeVersionOf {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use soil_executor_common::runtime_blob::RuntimeBlob;
+	use common::runtime_blob::RuntimeBlob;
 	use subsoil::io::TestExternalities;
 	use soil_runtime_test::wasm_binary_unwrap;
 

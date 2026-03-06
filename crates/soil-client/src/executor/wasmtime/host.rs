@@ -24,7 +24,7 @@ use wasmtime::Caller;
 use subsoil::allocator::{AllocationStats, FreeingBumpHeapAllocator};
 use subsoil::wasm_interface::{Pointer, WordSize};
 
-use crate::{instance_wrapper::MemoryWrapper, runtime::StoreData, util};
+use crate::executor::wasmtime::{instance_wrapper::MemoryWrapper, runtime::StoreData, util};
 
 /// The state required to construct a HostContext context. The context only lasts for one host
 /// call, whereas the state is maintained for the duration of a Wasm runtime call, which may make

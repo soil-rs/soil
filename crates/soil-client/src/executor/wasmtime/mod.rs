@@ -43,7 +43,7 @@ pub use runtime::{
 	prepare_runtime_artifact, Config, DeterministicStackLimit, InstantiationStrategy, Semantics,
 	WasmtimeRuntime,
 };
-pub use soil_executor_common::{
+pub use crate::executor::common::{
 	runtime_blob::RuntimeBlob,
 	wasm_runtime::{HeapAllocStrategy, WasmModule},
 };

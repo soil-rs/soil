@@ -34,7 +34,6 @@ array-bytes = { optional = true, workspace = true, default-features = true }
 codec = { optional = true, workspace = true, default-features = true }
 frame-metadata = { features = ["current", "unstable"], optional = true, workspace = true, default-features = true }
 merkleized-metadata = { optional = true, workspace = true }
-soil-executor = { optional = true, workspace = true, default-features = true }
 shlex = { workspace = true }
 subsoil = { workspace = true, default-features = true, optional = true }
 
@@ -51,6 +50,5 @@ metadata-hash = [
 	"codec",
 	"frame-metadata",
 	"merkleized-metadata",
-	"soil-executor",
 	"subsoil",
 ]

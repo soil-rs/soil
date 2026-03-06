@@ -1356,8 +1356,8 @@ mod tests {
 		use serde_json::json;
 		use subsoil::application_crypto::Ss58Codec;
 		use subsoil::core::traits::Externalities;
-		use soil_executor::{error::Result, WasmExecutor};
-		use soil_executor_common::runtime_blob::RuntimeBlob;
+		use soil_client::executor::{error::Result, WasmExecutor};
+		use soil_client::executor::common::runtime_blob::RuntimeBlob;
 		use soil_genesis_builder::Result as BuildResult;
 		use subsoil::state_machine::BasicExternalities;
 		use std::{fs, io::Write};

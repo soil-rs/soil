@@ -17,14 +17,14 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 use codec::{Decode as _, Encode as _};
-use soil_executor_common::{
+use crate::executor::common::{
 	error::Error,
 	runtime_blob::RuntimeBlob,
 	wasm_runtime::{HeapAllocStrategy, WasmModule, DEFAULT_HEAP_ALLOC_STRATEGY},
 };
 use soil_runtime_test::wasm_binary_unwrap;
 
-use crate::InstantiationStrategy;
+use crate::executor::wasmtime::InstantiationStrategy;
 
 type HostFunctions = subsoil::io::SubstrateHostFunctions;
 
@@ -35,28 +35,28 @@ macro_rules! test_wasm_execution {
 			#[test]
 			fn [<$method_name _recreate_instance_cow>]() {
 				$method_name(
-					InstantiationStrategy::RecreateInstanceCopyOnWrite
+					$crate::executor::wasmtime::InstantiationStrategy::RecreateInstanceCopyOnWrite
 				);
 			}
 
 			#[test]
 			fn [<$method_name _recreate_instance_vanilla>]() {
 				$method_name(
-					InstantiationStrategy::RecreateInstance
+					$crate::executor::wasmtime::InstantiationStrategy::RecreateInstance
 				);
 			}
 
 			#[test]
 			fn [<$method_name _pooling_cow>]() {
 				$method_name(
-					InstantiationStrategy::PoolingCopyOnWrite
+					$crate::executor::wasmtime::InstantiationStrategy::PoolingCopyOnWrite
 				);
 			}
 
 			#[test]
 			fn [<$method_name _pooling_vanilla>]() {
 				$method_name(
-					InstantiationStrategy::Pooling
+					$crate::executor::wasmtime::InstantiationStrategy::Pooling
 				);
 			}
 		}
@@ -127,13 +127,13 @@ impl RuntimeBuilder {
 				.expect("failed to create a runtime blob out of test runtime")
 		};
 
-		let config = crate::Config {
+		let config = crate::executor::wasmtime::Config {
 			allow_missing_func_imports: true,
 			cache_path: None,
-			semantics: crate::Semantics {
+			semantics: crate::executor::wasmtime::Semantics {
 				instantiation_strategy: self.instantiation_strategy,
 				deterministic_stack_limit: match self.deterministic_stack {
-					true => Some(crate::DeterministicStackLimit {
+					true => Some(crate::executor::wasmtime::DeterministicStackLimit {
 						logical_max: 65536,
 						native_stack_max: 256 * 1024 * 1024,
 					}),
@@ -156,11 +156,11 @@ impl RuntimeBuilder {
 			// Delay the removal of the temporary directory until we're dropped.
 			self.tmpdir = Some(dir);
 
-			let artifact = crate::prepare_runtime_artifact(blob, &config.semantics).unwrap();
+			let artifact = crate::executor::wasmtime::prepare_runtime_artifact(blob, &config.semantics).unwrap();
 			std::fs::write(&path, artifact).unwrap();
-			unsafe { crate::create_runtime_from_artifact::<HostFunctions>(&path, config) }
+			unsafe { crate::executor::wasmtime::create_runtime_from_artifact::<HostFunctions>(&path, config) }
 		} else {
-			crate::create_runtime::<HostFunctions>(blob, config)
+			crate::executor::wasmtime::create_runtime::<HostFunctions>(blob, config)
 		}
 		.expect("cannot create runtime")
 	}
@@ -458,12 +458,12 @@ fn test_max_memory_pages(
 #[cfg_attr(build_profile = "debug", ignore)]
 #[test]
 fn test_instances_without_reuse_are_not_leaked() {
-	let runtime = crate::create_runtime::<HostFunctions>(
+	let runtime = crate::executor::wasmtime::create_runtime::<HostFunctions>(
 		RuntimeBlob::uncompress_if_needed(wasm_binary_unwrap()).unwrap(),
-		crate::Config {
+		crate::executor::wasmtime::Config {
 			allow_missing_func_imports: true,
 			cache_path: None,
-			semantics: crate::Semantics {
+			semantics: crate::executor::wasmtime::Semantics {
 				instantiation_strategy: InstantiationStrategy::RecreateInstance,
 				deterministic_stack_limit: None,
 				canonicalize_nans: false,
@@ -505,7 +505,7 @@ fn test_rustix_version_matches_with_wasmtime() {
 	let our_rustix = metadata
 		.packages
 		.iter()
-		.find(|pkg| pkg.name == "soil-executor-wasmtime")
+		.find(|pkg| pkg.name == "soil-client")
 		.unwrap()
 		.dependencies
 		.iter()
@@ -515,7 +515,7 @@ fn test_rustix_version_matches_with_wasmtime() {
 	if wasmtime_rustix.req != our_rustix.req {
 		panic!(
 			"our version of rustix ({0}) doesn't match wasmtime's ({1}); \
-				bump the version in `soil-executor-wasmtime`'s `Cargo.toml' to '{1}' and try again",
+				bump the version in `soil-client`'s `Cargo.toml' to '{1}' and try again",
 			our_rustix.req, wasmtime_rustix.req,
 		);
 	}

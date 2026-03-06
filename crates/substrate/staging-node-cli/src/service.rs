@@ -64,7 +64,7 @@ pub type HostFunctions = (
 
 /// A specialized `WasmExecutor` intended to use across substrate node. It provides all required
 /// HostFunctions.
-pub type RuntimeExecutor = soil_executor::WasmExecutor<HostFunctions>;
+pub type RuntimeExecutor = soil_client::executor::WasmExecutor<HostFunctions>;
 
 /// The full client type definition.
 pub type FullClient = soil_service::TFullClient<Block, RuntimeApi, RuntimeExecutor>;

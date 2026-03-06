@@ -18,7 +18,7 @@
 
 //! Utilities used by all backends
 
-use crate::error::Result;
+use super::error::Result;
 use subsoil::wasm_interface::Pointer;
 use std::ops::Range;
 

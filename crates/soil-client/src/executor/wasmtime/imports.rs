@@ -16,8 +16,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-use crate::{host::HostContext, runtime::StoreData};
-use soil_executor_common::error::WasmError;
+use crate::executor::wasmtime::{host::HostContext, runtime::StoreData};
+use crate::executor::common::error::WasmError;
 use subsoil::wasm_interface::{FunctionContext, HostFunctions};
 use std::collections::HashMap;
 use wasmtime::{ExternType, FuncType, ImportType, Linker, Module};

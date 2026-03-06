@@ -38,7 +38,7 @@
 
 use soil_client::blockchain::Result;
 use subsoil::core::traits::{FetchRuntimeCode, RuntimeCode, WrappedRuntimeCode};
-use soil_executor::RuntimeVersionOf;
+use soil_client::executor::RuntimeVersionOf;
 use subsoil::state_machine::BasicExternalities;
 use subsoil::version::RuntimeVersion;
 use std::{
@@ -264,7 +264,7 @@ pub fn dummy_overrides() -> WasmOverride {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use soil_executor::{HeapAllocStrategy, WasmExecutor};
+	use soil_client::executor::{HeapAllocStrategy, WasmExecutor};
 	use std::fs::{self, File};
 
 	fn executor() -> WasmExecutor {

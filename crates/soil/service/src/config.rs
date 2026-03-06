@@ -24,7 +24,7 @@ pub use sc_transaction_pool::TransactionPoolOptions;
 use soil_chain_spec::ChainSpec;
 pub use soil_client_db::{BlocksPruning, Database, DatabaseSource, PruningMode};
 use subsoil::core::crypto::SecretString;
-pub use soil_executor::{WasmExecutionMethod, WasmtimeInstantiationStrategy};
+pub use soil_client::executor::{WasmExecutionMethod, WasmtimeInstantiationStrategy};
 pub use soil_network::{
 	config::{
 		MultiaddrWithPeerId, NetworkConfiguration, NodeKeyConfig, NonDefaultSetConfig, ProtocolId,

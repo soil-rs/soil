@@ -25,7 +25,7 @@ pub use self::client_ext::{BlockOrigin, ClientBlockImportExt, ClientExt};
 pub use soil_client_api::{execution_extensions::ExecutionExtensions, BadBlocks, ForkBlocks};
 pub use soil_client_db::{self, Backend, BlocksPruning};
 pub use soil_client::consensus;
-pub use soil_executor::{self, WasmExecutionMethod, WasmExecutor};
+pub use soil_client::executor::{self, WasmExecutionMethod, WasmExecutor};
 pub use subsoil::keyring::{Ed25519Keyring, Sr25519Keyring};
 pub use subsoil::keystore::{Keystore, KeystorePtr};
 pub use subsoil::runtime::{Storage, StorageChild};
@@ -187,7 +187,7 @@ impl<Block: BlockT, ExecutorDispatch, Backend, G: GenesisInit>
 	)
 	where
 		ExecutorDispatch: soil_client_api::CallExecutor<Block>
-			+ soil_executor::RuntimeVersionOf
+			+ soil_client::executor::RuntimeVersionOf
 			+ Clone
 			+ 'static,
 		Backend: soil_client_api::backend::Backend<Block>,
@@ -264,7 +264,7 @@ impl<Block: BlockT, H, Backend, G: GenesisInit>
 	where
 		I: Into<Option<WasmExecutor<H>>>,
 		Backend: soil_client_api::backend::Backend<Block> + 'static,
-		H: soil_executor::HostFunctions,
+		H: soil_client::executor::HostFunctions,
 	{
 		let executor = executor.into().unwrap_or_else(|| WasmExecutor::<H>::builder().build());
 		let executor = LocalCallExecutor::new(

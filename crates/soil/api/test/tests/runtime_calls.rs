@@ -40,7 +40,7 @@ use substrate_test_runtime_client::{
 
 use codec::Encode;
 use soil_client::consensus::SelectChain;
-use substrate_test_runtime_client::soil_executor::WasmExecutor;
+use substrate_test_runtime_client::executor::WasmExecutor;
 
 #[test]
 fn calling_runtime_function() {

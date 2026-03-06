@@ -16,7 +16,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-use crate::{error::WasmError, wasm_runtime::HeapAllocStrategy};
+use crate::executor::common::{error::WasmError, wasm_runtime::HeapAllocStrategy};
 use polkavm::ArcBytes;
 use wasm_instrument::parity_wasm::elements::{
 	deserialize_buffer, serialize, ExportEntry, External, Internal, MemorySection, MemoryType,
@@ -36,10 +36,10 @@ enum BlobKind {
 impl RuntimeBlob {
 	/// Create `RuntimeBlob` from the given WASM or PolkaVM compressed program blob.
 	///
-	/// See [`soil_maybe_compressed_blob`] for details about decompression.
+	/// See [`crate::maybe_compressed_blob`] for details about decompression.
 	pub fn uncompress_if_needed(wasm_code: &[u8]) -> Result<Self, WasmError> {
-		use soil_client::maybe_compressed_blob::CODE_BLOB_BOMB_LIMIT;
-		let wasm_code = soil_client::maybe_compressed_blob::decompress(wasm_code, CODE_BLOB_BOMB_LIMIT)
+		use crate::maybe_compressed_blob::CODE_BLOB_BOMB_LIMIT;
+		let wasm_code = crate::maybe_compressed_blob::decompress(wasm_code, CODE_BLOB_BOMB_LIMIT)
 			.map_err(|e| WasmError::Other(format!("Decompression error: {:?}", e)))?;
 		Self::new(&wasm_code)
 	}
@@ -52,7 +52,7 @@ impl RuntimeBlob {
 	/// variable is set to `1`.
 	pub fn new(raw_blob: &[u8]) -> Result<Self, WasmError> {
 		if raw_blob.starts_with(b"PVM\0") {
-			if crate::is_polkavm_enabled() {
+			if crate::executor::common::is_polkavm_enabled() {
 				let raw = ArcBytes::from(raw_blob);
 				let blob = polkavm::ProgramBlob::parse(raw.clone())?;
 				return Ok(Self(BlobKind::PolkaVM((blob, raw))));

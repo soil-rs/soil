@@ -16,8 +16,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-use crate::{runtime::StoreData, InstantiationStrategy};
-use soil_executor_common::{
+use crate::executor::wasmtime::{runtime::StoreData, InstantiationStrategy};
+use crate::executor::common::{
 	error::{Error, Result},
 	util::checked_range,
 };

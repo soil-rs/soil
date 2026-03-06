@@ -31,5 +31,5 @@ pub enum Error {
 	#[error("Stable metadata version not found")]
 	StableMetadataVersionNotFound,
 	#[error("WASM executor error: {0}")]
-	Executor(#[from] soil_executor_common::error::Error),
+	Executor(#[from] soil_client::executor::common::error::Error),
 }

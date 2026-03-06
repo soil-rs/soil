@@ -19,7 +19,7 @@
 use super::{client::ClientConfig, wasm_override::WasmOverride, wasm_substitutes::WasmSubstitutes};
 use soil_client_api::{backend, TrieCacheContext};
 use subsoil::core::traits::{FetchRuntimeCode, RuntimeCode};
-use soil_executor::{RuntimeVersion, RuntimeVersionOf};
+use soil_client::executor::{RuntimeVersion, RuntimeVersionOf};
 use subsoil::runtime::traits::Block as BlockT;
 use subsoil::state_machine::{Ext, OverlayedChanges};
 use std::sync::Arc;
@@ -175,7 +175,7 @@ mod tests {
 		testing::TaskExecutor,
 		traits::{FetchRuntimeCode, WrappedRuntimeCode},
 	};
-	use soil_executor::WasmExecutor;
+	use soil_client::executor::WasmExecutor;
 	use std::collections::HashMap;
 	use substrate_test_runtime_client::{runtime, GenesisInit};
 

@@ -12,7 +12,7 @@ description = "Substrate client libraries"
 workspace = true
 
 [dependencies]
-subsoil = { workspace = true, default-features = true }
+subsoil = { features = ["wasm-interface-wasmtime"], workspace = true, default-features = true }
 # consensus deps
 async-trait = { workspace = true }
 futures = { features = ["thread-pool"], workspace = true }
@@ -38,8 +38,43 @@ tracing = { workspace = true, default-features = true }
 indexmap = { workspace = true }
 serde = { features = ["derive"], workspace = true, default-features = true }
 strum = { workspace = true, features = ["derive"] }
+# executor-common deps
+polkavm = { workspace = true }
+wasm-instrument = { workspace = true, default-features = true }
+# executor-wasmtime deps
+anyhow = { workspace = true }
+wasmtime = { features = [
+	"addr2line",
+	"cache",
+	"cranelift",
+	"demangle",
+	"gc",
+	"gc-null",
+	"parallel-compilation",
+	"pooling-allocator",
+	"profiling",
+	"threads",
+], workspace = true }
+rustix = { features = ["fs", "mm", "param", "std", "use-libc"], workspace = true }
 
 [dev-dependencies]
 futures = { workspace = true }
 serde_json = { workspace = true, default-features = true }
 tokio = { features = ["macros"], workspace = true, default-features = true }
+# executor-wasmtime test deps
+cargo_metadata = { workspace = true }
+paste = { workspace = true, default-features = true }
+soil-runtime-test = { workspace = true }
+tempfile = { workspace = true }
+wat = { workspace = true }
+# executor test deps
+array-bytes = { workspace = true, default-features = true }
+assert_matches = { workspace = true }
+sc-tracing = { workspace = true, default-features = true }
+subsoil-crypto-hashing = { workspace = true, default-features = true }
+substrate-test-runtime = { workspace = true }
+tracing-subscriber = { workspace = true }
+
+[features]
+# This crate does not have `no_std` support, we just require this for tests
+wasm-extern-trace = []

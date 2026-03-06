@@ -28,10 +28,6 @@ members = [
 	"crates/soil-manual-seal",
 	"crates/soil/core/fuzz",
 	"crates/subsoil-crypto-hashing",
-	"crates/soil/executor",
-	"crates/soil/executor-common",
-	"crates/soil/executor-polkavm",
-	"crates/soil/executor-wasmtime",
 	"crates/soil/genesis-builder",
 	"crates/soil/informant",
 	"crates/soil/mixnet",
@@ -453,10 +449,6 @@ soil-consensus-grandpa-rpc = { path = "crates/soil/consensus-grandpa-rpc", defau
 soil-manual-seal = { path = "crates/soil-manual-seal", default-features = false }
 sc-consensus-pow = { path = "crates/substrate-client/consensus/pow", default-features = false }
 sc-consensus-slots = { path = "crates/substrate-client/consensus/slots", default-features = false }
-soil-executor = { path = "crates/soil/executor", default-features = false }
-soil-executor-common = { path = "crates/soil/executor-common", default-features = false }
-soil-executor-polkavm = { path = "crates/soil/executor-polkavm", default-features = false }
-soil-executor-wasmtime = { path = "crates/soil/executor-wasmtime", default-features = false }
 soil-informant = { path = "crates/soil/informant", default-features = false }
 sc-keystore = { path = "crates/substrate-client/keystore", default-features = false }
 sc-mixnet = { path = "crates/substrate-client/mixnet", default-features = false }

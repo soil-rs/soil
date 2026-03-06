@@ -16,10 +16,13 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-use std::env;
+//! A set of common definitions that are needed for defining execution engines.
 
-fn main() {
-	if let Ok(profile) = env::var("PROFILE") {
-		println!("cargo:rustc-cfg=build_profile=\"{}\"", profile);
-	}
+pub mod error;
+pub mod runtime_blob;
+pub mod util;
+pub mod wasm_runtime;
+
+pub(crate) fn is_polkavm_enabled() -> bool {
+	std::env::var_os("SUBSTRATE_ENABLE_POLKAVM").map_or(false, |value| value == "1")
 }

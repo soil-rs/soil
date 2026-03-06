@@ -23,7 +23,7 @@ use soil_client_api::{
 	TrieCacheContext,
 };
 use subsoil::core::traits::{CallContext, CodeExecutor};
-use soil_executor::{RuntimeVersion, RuntimeVersionOf};
+use soil_client::executor::{RuntimeVersion, RuntimeVersionOf};
 use subsoil::externalities::Extensions;
 use subsoil::runtime::{
 	generic::BlockId,
@@ -240,7 +240,7 @@ where
 		&self,
 		ext: &mut dyn subsoil::externalities::Externalities,
 		runtime_code: &subsoil::core::traits::RuntimeCode,
-	) -> Result<subsoil::version::RuntimeVersion, soil_executor::error::Error> {
+	) -> Result<subsoil::version::RuntimeVersion, soil_client::executor::error::Error> {
 		RuntimeVersionOf::runtime_version(&self.executor, ext, runtime_code)
 	}
 }

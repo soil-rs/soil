@@ -20,7 +20,7 @@ use codec::{Decode, Encode};
 use frame_metadata::{RuntimeMetadata, RuntimeMetadataPrefixed};
 use merkleized_metadata::{generate_metadata_digest, ExtraInfo};
 use subsoil::core::traits::{CallContext, CodeExecutor, RuntimeCode, WrappedRuntimeCode};
-use soil_executor::WasmExecutor;
+use soil_client::executor::WasmExecutor;
 use std::path::Path;
 
 /// The host functions that we provide when calling into the wasm file.

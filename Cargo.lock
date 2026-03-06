@@ -6167,7 +6167,6 @@ dependencies = [
  "soil-client",
  "soil-client-api",
  "soil-client-db",
- "soil-executor",
  "soil-service",
  "staging-node-cli",
  "subsoil",
@@ -9268,7 +9267,6 @@ dependencies = [
  "soil-chain-spec-derive",
  "soil-client",
  "soil-client-api",
- "soil-executor",
  "soil-genesis-builder",
  "soil-network",
  "soil-telemetry",
@@ -9328,8 +9326,12 @@ dependencies = [
 name = "soil-client"
 version = "0.1.0"
 dependencies = [
+ "anyhow",
+ "array-bytes 6.2.3",
+ "assert_matches",
  "async-channel 1.9.0",
  "async-trait",
+ "cargo_metadata",
  "clap",
  "fs4",
  "futures",
@@ -9338,15 +9340,27 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "parking_lot 0.12.5",
+ "paste",
+ "polkavm",
  "prometheus",
+ "rustix 1.1.4",
+ "sc-tracing",
  "schnellru",
  "serde",
  "serde_json",
+ "soil-runtime-test",
  "strum 0.26.3",
  "subsoil",
+ "subsoil-crypto-hashing",
+ "substrate-test-runtime",
+ "tempfile",
  "thiserror 1.0.69",
  "tokio",
  "tracing",
+ "tracing-subscriber",
+ "wasm-instrument",
+ "wasmtime",
+ "wat",
  "zstd 0.12.4",
 ]
 
@@ -9360,7 +9374,6 @@ dependencies = [
  "parity-scale-codec",
  "parking_lot 0.12.5",
  "soil-client",
- "soil-executor",
  "subsoil",
  "substrate-prometheus-endpoint",
  "substrate-test-runtime",
@@ -9460,73 +9473,6 @@ dependencies = [
  "substrate-test-runtime-client",
  "thiserror 1.0.69",
  "tokio",
-]
-
-[[package]]
-name = "soil-executor"
-version = "0.32.0"
-dependencies = [
- "array-bytes 6.2.3",
- "assert_matches",
- "criterion",
- "num_cpus",
- "parity-scale-codec",
- "parking_lot 0.12.5",
- "paste",
- "sc-tracing",
- "schnellru",
- "soil-client",
- "soil-executor-common",
- "soil-executor-polkavm",
- "soil-executor-wasmtime",
- "soil-runtime-test",
- "subsoil",
- "subsoil-crypto-hashing",
- "substrate-test-runtime",
- "tempfile",
- "tracing",
- "tracing-subscriber",
- "wat",
-]
-
-[[package]]
-name = "soil-executor-common"
-version = "0.29.0"
-dependencies = [
- "polkavm",
- "soil-client",
- "subsoil",
- "thiserror 1.0.69",
- "wasm-instrument",
-]
-
-[[package]]
-name = "soil-executor-polkavm"
-version = "0.29.0"
-dependencies = [
- "log",
- "polkavm",
- "soil-executor-common",
- "subsoil",
-]
-
-[[package]]
-name = "soil-executor-wasmtime"
-version = "0.29.0"
-dependencies = [
- "anyhow",
- "cargo_metadata",
- "log",
- "parity-scale-codec",
- "parking_lot 0.12.5",
- "paste",
- "rustix 1.1.4",
- "soil-executor-common",
- "soil-runtime-test",
- "subsoil",
- "tempfile",
- "wasmtime",
- "wat",
 ]
 
 [[package]]
@@ -9968,8 +9914,7 @@ name = "soil-runtime-utilities"
 version = "0.1.0"
 dependencies = [
  "parity-scale-codec",
- "soil-executor",
- "soil-executor-common",
+ "soil-client",
  "subsoil",
  "subsoil-crypto-hashing",
  "subxt",
@@ -10003,7 +9948,6 @@ dependencies = [
  "soil-client",
  "soil-client-api",
  "soil-client-db",
- "soil-executor",
  "soil-informant",
  "soil-network",
  "soil-network-common",
@@ -10046,7 +9990,6 @@ dependencies = [
  "soil-client",
  "soil-client-api",
  "soil-client-db",
- "soil-executor",
  "soil-network",
  "soil-network-sync",
  "soil-service",
@@ -10258,8 +10201,7 @@ dependencies = [
 name = "sp-runtime-interface-test"
 version = "2.0.0"
 dependencies = [
- "soil-executor",
- "soil-executor-common",
+ "soil-client",
  "sp-runtime-interface-test-wasm",
  "sp-runtime-interface-test-wasm-deprecated",
  "subsoil",
@@ -10416,10 +10358,6 @@ dependencies = [
  "soil-consensus-beefy-rpc",
  "soil-consensus-epochs",
  "soil-consensus-grandpa-rpc",
- "soil-executor",
- "soil-executor-common",
- "soil-executor-polkavm",
- "soil-executor-wasmtime",
  "soil-genesis-builder",
  "soil-informant",
  "soil-manual-seal",
@@ -10848,7 +10786,6 @@ dependencies = [
  "soil-client",
  "soil-client-api",
  "soil-client-db",
- "soil-executor",
  "soil-service",
  "subsoil",
  "tokio",
@@ -10869,8 +10806,6 @@ dependencies = [
  "serde_json",
  "soil-chain-spec",
  "soil-client",
- "soil-executor",
- "soil-executor-common",
  "soil-genesis-builder",
  "soil-offchain",
  "soil-service",
@@ -10942,7 +10877,6 @@ dependencies = [
  "polkavm-linker",
  "shlex",
  "soil-client",
- "soil-executor",
  "strum 0.26.3",
  "subsoil",
  "tempfile",

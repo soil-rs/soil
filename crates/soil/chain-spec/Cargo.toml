@@ -24,7 +24,6 @@ docify = { workspace = true}
 memmap2 = { workspace = true}
 soil-chain-spec-derive = { workspace = true, default-features = true}
 soil-client-api = { workspace = true, default-features = true}
-soil-executor = { workspace = true, default-features = true}
 soil-network = { workspace = true, default-features = true}
 soil-telemetry = { workspace = true, default-features = true}
 serde = { features = ["derive"], workspace = true, default-features = true}
