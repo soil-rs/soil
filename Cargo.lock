@@ -4683,7 +4683,6 @@ dependencies = [
  "soil-consensus-aura",
  "soil-consensus-babe",
  "soil-consensus-beefy",
- "soil-consensus-grandpa",
  "soil-genesis-builder",
  "soil-mixnet",
  "soil-mmr-primitives",
@@ -8230,7 +8229,6 @@ dependencies = [
  "soil-client-api",
  "soil-client-db",
  "soil-consensus",
- "soil-consensus-grandpa",
  "soil-network",
  "soil-network-common",
  "soil-network-gossip",
@@ -9528,18 +9526,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "soil-consensus-grandpa"
-version = "13.0.0"
-dependencies = [
- "finality-grandpa",
- "log",
- "parity-scale-codec",
- "scale-info",
- "serde",
- "subsoil",
-]
-
-[[package]]
 name = "soil-consensus-grandpa-rpc"
 version = "0.19.0"
 dependencies = [
@@ -9554,7 +9540,6 @@ dependencies = [
  "serde",
  "soil-blockchain",
  "soil-client-api",
- "soil-consensus-grandpa",
  "subsoil",
  "substrate-test-runtime-client",
  "thiserror 1.0.69",
@@ -10629,7 +10614,6 @@ dependencies = [
  "soil-consensus-beefy",
  "soil-consensus-beefy-rpc",
  "soil-consensus-epochs",
- "soil-consensus-grandpa",
  "soil-consensus-grandpa-rpc",
  "soil-consensus-manual-seal",
  "soil-executor",
@@ -10849,6 +10833,7 @@ dependencies = [
  "ed25519-zebra",
  "either",
  "environmental",
+ "finality-grandpa",
  "foldhash 0.1.5",
  "frame-metadata",
  "futures",
@@ -11092,7 +11077,6 @@ dependencies = [
  "soil-consensus",
  "soil-consensus-aura",
  "soil-consensus-babe",
- "soil-consensus-grandpa",
  "soil-executor",
  "soil-executor-common",
  "soil-genesis-builder",
@@ -11919,7 +11903,6 @@ dependencies = [
  "scale-info",
  "serde",
  "soil-consensus-aura",
- "soil-consensus-grandpa",
  "soil-genesis-builder",
  "soil-offchain",
  "soil-session",
@@ -12774,7 +12757,6 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "scale-info",
- "soil-consensus-grandpa",
  "soil-session",
  "soil-staking",
  "subsoil",

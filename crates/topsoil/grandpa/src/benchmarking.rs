@@ -48,17 +48,17 @@ mod benchmarks {
 			165, 203, 92, 16, 146, 120, 190, 229, 251, 129, 29, 45, 32, 29, 6,
 		];
 
-		let equivocation_proof1: soil_consensus_grandpa::EquivocationProof<H256, u64> =
+		let equivocation_proof1: subsoil::consensus::grandpa::EquivocationProof<H256, u64> =
 			Decode::decode(&mut &EQUIVOCATION_PROOF_BLOB[..]).unwrap();
 
 		let equivocation_proof2 = equivocation_proof1.clone();
 
 		#[block]
 		{
-			soil_consensus_grandpa::check_equivocation_proof(equivocation_proof1);
+			subsoil::consensus::grandpa::check_equivocation_proof(equivocation_proof1);
 		}
 
-		assert!(soil_consensus_grandpa::check_equivocation_proof(equivocation_proof2));
+		assert!(subsoil::consensus::grandpa::check_equivocation_proof(equivocation_proof2));
 	}
 
 	#[benchmark]

@@ -758,29 +758,29 @@ impl_runtime_apis! {
 		}
 	}
 
-	impl soil_consensus_grandpa::GrandpaApi<Block> for Runtime {
-		fn grandpa_authorities() -> soil_consensus_grandpa::AuthorityList {
+	impl subsoil::consensus::grandpa::GrandpaApi<Block> for Runtime {
+		fn grandpa_authorities() -> subsoil::consensus::grandpa::AuthorityList {
 			Vec::new()
 		}
 
-		fn current_set_id() -> soil_consensus_grandpa::SetId {
+		fn current_set_id() -> subsoil::consensus::grandpa::SetId {
 			0
 		}
 
 		fn submit_report_equivocation_unsigned_extrinsic(
-			_equivocation_proof: soil_consensus_grandpa::EquivocationProof<
+			_equivocation_proof: subsoil::consensus::grandpa::EquivocationProof<
 			<Block as BlockT>::Hash,
 			NumberFor<Block>,
 			>,
-			_key_owner_proof: soil_consensus_grandpa::OpaqueKeyOwnershipProof,
+			_key_owner_proof: subsoil::consensus::grandpa::OpaqueKeyOwnershipProof,
 		) -> Option<()> {
 			None
 		}
 
 		fn generate_key_ownership_proof(
-			_set_id: soil_consensus_grandpa::SetId,
-			_authority_id: soil_consensus_grandpa::AuthorityId,
-		) -> Option<soil_consensus_grandpa::OpaqueKeyOwnershipProof> {
+			_set_id: subsoil::consensus::grandpa::SetId,
+			_authority_id: subsoil::consensus::grandpa::AuthorityId,
+		) -> Option<subsoil::consensus::grandpa::OpaqueKeyOwnershipProof> {
 			None
 		}
 	}

@@ -25,7 +25,7 @@ use std::{
 use codec::{Decode, DecodeAll, Encode};
 use finality_grandpa::{voter_set::VoterSet, Error as GrandpaError};
 use soil_blockchain::{Error as ClientError, HeaderBackend};
-use soil_consensus_grandpa::AuthorityId;
+use subsoil::consensus::grandpa::AuthorityId;
 use subsoil::runtime::traits::{Block as BlockT, Header as HeaderT, NumberFor};
 
 use crate::{AuthorityList, Commit, Error};
@@ -41,22 +41,22 @@ use crate::{AuthorityList, Commit, Error};
 #[derive(Clone, Encode, Decode, PartialEq, Eq, Debug)]
 pub struct GrandpaJustification<Block: BlockT> {
 	/// The GRANDPA justification for block finality.
-	pub justification: soil_consensus_grandpa::GrandpaJustification<Block::Header>,
+	pub justification: subsoil::consensus::grandpa::GrandpaJustification<Block::Header>,
 	_block: PhantomData<Block>,
 }
 
-impl<Block: BlockT> From<soil_consensus_grandpa::GrandpaJustification<Block::Header>>
+impl<Block: BlockT> From<subsoil::consensus::grandpa::GrandpaJustification<Block::Header>>
 	for GrandpaJustification<Block>
 {
-	fn from(justification: soil_consensus_grandpa::GrandpaJustification<Block::Header>) -> Self {
+	fn from(justification: subsoil::consensus::grandpa::GrandpaJustification<Block::Header>) -> Self {
 		Self { justification, _block: Default::default() }
 	}
 }
 
-impl<Block: BlockT> Into<soil_consensus_grandpa::GrandpaJustification<Block::Header>>
+impl<Block: BlockT> Into<subsoil::consensus::grandpa::GrandpaJustification<Block::Header>>
 	for GrandpaJustification<Block>
 {
-	fn into(self) -> soil_consensus_grandpa::GrandpaJustification<Block::Header> {
+	fn into(self) -> subsoil::consensus::grandpa::GrandpaJustification<Block::Header> {
 		self.justification
 	}
 }
@@ -122,7 +122,7 @@ impl<Block: BlockT> GrandpaJustification<Block> {
 			}
 		}
 
-		Ok(soil_consensus_grandpa::GrandpaJustification { round, commit, votes_ancestries }.into())
+		Ok(subsoil::consensus::grandpa::GrandpaJustification { round, commit, votes_ancestries }.into())
 	}
 
 	/// Decode a GRANDPA justification and validate the commit and the votes'
@@ -205,7 +205,7 @@ impl<Block: BlockT> GrandpaJustification<Block> {
 		let mut buf = Vec::new();
 		let mut visited_hashes = HashSet::new();
 		for signed in self.justification.commit.precommits.iter() {
-			let signature_result = soil_consensus_grandpa::check_message_signature_with_buffer(
+			let signature_result = subsoil::consensus::grandpa::check_message_signature_with_buffer(
 				&finality_grandpa::Message::Precommit(signed.precommit.clone()),
 				&signed.id,
 				&signed.signature,
@@ -214,15 +214,15 @@ impl<Block: BlockT> GrandpaJustification<Block> {
 				&mut buf,
 			);
 			match signature_result {
-				soil_consensus_grandpa::SignatureResult::Invalid => {
+				subsoil::consensus::grandpa::SignatureResult::Invalid => {
 					return Err(ClientError::BadJustification(
 						"invalid signature for precommit in grandpa justification".to_string(),
 					))
 				},
-				soil_consensus_grandpa::SignatureResult::OutdatedSet => {
+				subsoil::consensus::grandpa::SignatureResult::OutdatedSet => {
 					return Err(ClientError::OutdatedJustification)
 				},
-				soil_consensus_grandpa::SignatureResult::Valid => {},
+				subsoil::consensus::grandpa::SignatureResult::Valid => {},
 			}
 
 			if base_hash == signed.precommit.target_hash {

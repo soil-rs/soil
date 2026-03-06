@@ -31,14 +31,14 @@
 extern crate alloc;
 
 // Re-export since this is necessary for `impl_apis` in runtime.
-pub use soil_consensus_grandpa::{
+pub use subsoil::consensus::grandpa::{
 	self as fg_primitives, AuthorityId, AuthorityList, AuthorityWeight,
 };
 
 use alloc::{boxed::Box, vec::Vec};
 use codec::{Decode, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;
-use soil_consensus_grandpa::{
+use subsoil::consensus::grandpa::{
 	ConsensusLog, EquivocationProof, ScheduledChange, SetId, GRANDPA_ENGINE_ID,
 	RUNTIME_LOG_TARGET as LOG_TARGET,
 };

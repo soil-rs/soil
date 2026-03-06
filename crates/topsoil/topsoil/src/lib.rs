@@ -437,7 +437,7 @@ pub mod runtime {
 		pub use subsoil::api::{self, *};
 		pub use subsoil::block_builder::*;
 		pub use soil_consensus_aura::*;
-		pub use soil_consensus_grandpa::*;
+		pub use subsoil::consensus::grandpa::*;
 		pub use soil_genesis_builder::*;
 		pub use soil_offchain::*;
 		pub use soil_session::runtime_api::*;
@@ -636,7 +636,7 @@ pub mod deps {
 	#[cfg(feature = "runtime")]
 	pub use soil_consensus_aura;
 	#[cfg(feature = "runtime")]
-	pub use soil_consensus_grandpa;
+	pub use subsoil::consensus::grandpa;
 	#[cfg(feature = "runtime")]
 	pub use soil_genesis_builder;
 	#[cfg(feature = "runtime")]

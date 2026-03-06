@@ -52,6 +52,9 @@ smallvec = { workspace = true, default-features = true }
 wasmtime = { optional = true, workspace = true }
 parity-wasm = { optional = true, workspace = true }
 
+# Dependencies from consensus primitives
+finality-grandpa = { features = ["derive-codec"], workspace = true }
+
 # Dependencies from soil-runtime
 either = { workspace = true }
 strum = { workspace = true, features = ["derive"] }
@@ -148,6 +151,8 @@ default = ["std"]
 std = [
 	# soil-inherents std features
 	"async-trait",
+	# consensus primitives std features
+	"finality-grandpa/std",
 	"bytes/std",
 	"subsoil-crypto-hashing/std",
 	"bounded-collections/std",

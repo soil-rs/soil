@@ -30,7 +30,6 @@ soil-service = { optional = true, workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 soil-consensus-aura = { features = ["serde"], workspace = true }
 soil-consensus-babe = { features = ["serde"], workspace = true }
-soil-consensus-grandpa = { features = ["serde"], workspace = true }
 subsoil-crypto-hashing = { workspace = true }
 subsoil-derive = { workspace = true }
 soil-genesis-builder = { workspace = true }
@@ -38,7 +37,7 @@ soil-offchain = { workspace = true }
 soil-session = { workspace = true }
 soil-statement-store = { workspace = true }
 soil-transaction-pool = { workspace = true }
-subsoil = { workspace = true }
+subsoil = { features = ["serde"], workspace = true }
 trie-db = { workspace = true }
 
 # 3rd party
@@ -86,7 +85,6 @@ std = [
 	"subsoil/std",
 	"soil-consensus-aura/std",
 	"soil-consensus-babe/std",
-	"soil-consensus-grandpa/std",
 	"subsoil-crypto-hashing/std",
 	"soil-genesis-builder/std",
 	"soil-offchain/std",

@@ -43,7 +43,7 @@ use soil_consensus_beefy::{
 	ecdsa_crypto::{AuthorityId as BeefyId, Signature as BeefySignature},
 	mmr::MmrLeafVersion,
 };
-use soil_consensus_grandpa::AuthorityId as GrandpaId;
+use subsoil::consensus::grandpa::AuthorityId as GrandpaId;
 use subsoil::core::{crypto::KeyTypeId, OpaqueMetadata};
 use subsoil::inherents::{CheckInherentsResult, InherentData};
 use subsoil::runtime::{
@@ -3077,21 +3077,21 @@ subsoil::api::impl_runtime_apis! {
 		}
 	}
 
-	impl soil_consensus_grandpa::GrandpaApi<Block> for Runtime {
-		fn grandpa_authorities() -> soil_consensus_grandpa::AuthorityList {
+	impl subsoil::consensus::grandpa::GrandpaApi<Block> for Runtime {
+		fn grandpa_authorities() -> subsoil::consensus::grandpa::AuthorityList {
 			Grandpa::grandpa_authorities()
 		}
 
-		fn current_set_id() -> soil_consensus_grandpa::SetId {
+		fn current_set_id() -> subsoil::consensus::grandpa::SetId {
 			topsoil_grandpa::CurrentSetId::<Runtime>::get()
 		}
 
 		fn submit_report_equivocation_unsigned_extrinsic(
-			equivocation_proof: soil_consensus_grandpa::EquivocationProof<
+			equivocation_proof: subsoil::consensus::grandpa::EquivocationProof<
 				<Block as BlockT>::Hash,
 				NumberFor<Block>,
 			>,
-			key_owner_proof: soil_consensus_grandpa::OpaqueKeyOwnershipProof,
+			key_owner_proof: subsoil::consensus::grandpa::OpaqueKeyOwnershipProof,
 		) -> Option<()> {
 			let key_owner_proof = key_owner_proof.decode()?;
 
@@ -3102,14 +3102,14 @@ subsoil::api::impl_runtime_apis! {
 		}
 
 		fn generate_key_ownership_proof(
-			_set_id: soil_consensus_grandpa::SetId,
+			_set_id: subsoil::consensus::grandpa::SetId,
 			authority_id: GrandpaId,
-		) -> Option<soil_consensus_grandpa::OpaqueKeyOwnershipProof> {
+		) -> Option<subsoil::consensus::grandpa::OpaqueKeyOwnershipProof> {
 			use codec::Encode;
 
-			Historical::prove((soil_consensus_grandpa::KEY_TYPE, authority_id))
+			Historical::prove((subsoil::consensus::grandpa::KEY_TYPE, authority_id))
 				.map(|p| p.encode())
-				.map(soil_consensus_grandpa::OpaqueKeyOwnershipProof::new)
+				.map(subsoil::consensus::grandpa::OpaqueKeyOwnershipProof::new)
 		}
 	}
 
