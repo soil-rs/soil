@@ -107,15 +107,15 @@ For each crate:
 
 ## Progress
 
-- [ ] Commit 1: Merge `soil-consensus-slots`
-- [ ] Commit 2: Merge `soil-block-builder`
-- [ ] Commit 3: Merge `soil-consensus-pow`
-- [ ] Commit 4: Merge `soil-consensus-grandpa`
-- [ ] Commit 5: Merge `soil-consensus-beefy`
-- [ ] Commit 6: Merge `soil-consensus-aura`
-- [ ] Commit 7: Merge `soil-consensus-babe`
-- [ ] Commit 8: Merge `soil-consensus-sassafras`
-- [ ] Update `docs/specs/merge.md` — mark Phase 2a complete
+- [x] Commit 1: Merge `soil-consensus-slots` → `subsoil::consensus::slots`
+- [x] Commit 2: Merge `soil-block-builder` → `subsoil::block_builder`
+- [x] Commit 3: Merge `soil-consensus-pow` → `subsoil::consensus::pow`
+- [x] Commit 4: Merge `soil-consensus-grandpa` → `subsoil::consensus::grandpa`
+- [x] Commit 5: Merge `soil-consensus-beefy` → `subsoil::consensus::beefy` (also merged `soil-mmr-primitives` → `subsoil::mmr` to break cyclic dep)
+- [x] Commit 6: Merge `soil-consensus-aura` → `subsoil::consensus::aura`
+- [x] Commit 7: Merge `soil-consensus-babe` → `subsoil::consensus::babe`
+- [x] Commit 8: Merge `soil-consensus-sassafras` → `subsoil::consensus::sassafras`
+- [x] Update `docs/specs/merge.md` — mark Phase 2a complete
 
 ## Verification
 

@@ -117,26 +117,13 @@ Merged. Eliminated the old SCC 1 (Primitives, 10 crates) and absorbed ~30 crates
 
 ### `subsoil` ← consensus primitives (~12 more crates)
 
-The consensus engine primitives merge into `subsoil` rather than a separate crate.
-All their deps (`codec`, `scale-info`, `serde`, `strum`, `async-trait`) are already
-in `subsoil`; only `finality-grandpa` (lightweight) and `soil-mmr-primitives` are new.
-This avoids a confusing naming split between a `soil-consensus` primitives crate and
-`soil-client` which would also contain consensus client code.
+Merged. 8 consensus engine primitive crates absorbed into `subsoil::consensus::*` and
+`subsoil::block_builder`. Also merged `soil-mmr-primitives` into `subsoil::mmr` (needed
+by beefy, was creating a cyclic dependency). Added `finality-grandpa` and `mmr-lib` as
+new deps. Total: 9 crates absorbed.
 
-| Absorb | Reason |
-|---|---|
-| soil-consensus-slots | Slot-based helper, all deps already in subsoil |
-| soil-block-builder | Block building, only dep is subsoil |
-| soil-consensus-aura | Engine, only adds `codec`/`scale-info` (already in subsoil) |
-| soil-consensus-babe | Engine, only adds `codec`/`scale-info`/`serde` (already in subsoil) |
-| soil-consensus-grandpa | Engine, adds `finality-grandpa` (lightweight, new) |
-| soil-consensus-beefy | Engine, adds `soil-mmr-primitives` (new, itself only deps on subsoil) |
-| soil-consensus-sassafras | Engine, only adds `codec`/`scale-info`/`serde` (already in subsoil) |
-| soil-consensus-pow | Engine, only adds `codec` (already in subsoil) |
-| soil-consensus-epochs | Epoch tracking (std-only: deps are fork-tree, blockchain, client-api) |
-| soil-consensus-babe-rpc | RPC (std-only: jsonrpsee, sc-consensus-babe) |
-| soil-consensus-grandpa-rpc | RPC (std-only: jsonrpsee, sc-consensus-grandpa) |
-| soil-consensus-beefy-rpc | RPC (std-only: jsonrpsee, sc-consensus-beefy) |
+Deferred: `soil-consensus-epochs`, `soil-consensus-babe-rpc`, `soil-consensus-grandpa-rpc`,
+`soil-consensus-beefy-rpc` — std-only crates with client-side deps, destination TBD.
 
 > **Note:** The current `soil-consensus` crate (client-side traits: `Environment`,
 > `Proposer`, `SyncOracle`, `BlockStatus`, `BlockOrigin`) is std-only and has zero
