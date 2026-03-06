@@ -16,50 +16,22 @@ workspace = true
 targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
-array-bytes = { workspace = true, default-features = true, optional = true}
+array-bytes = { workspace = true, default-features = true}
 clap = { features = ["derive"], optional = true, workspace = true }
-codec = { features = ["derive"], workspace = true, optional = true}
-docify = { workspace = true, optional = true}
-memmap2 = { workspace = true, optional = true}
-soil-chain-spec-derive = { workspace = true, default-features = true, optional = true}
-soil-client-api = { workspace = true, default-features = true, optional = true}
-soil-executor = { workspace = true, default-features = true, optional = true}
-soil-network = { workspace = true, default-features = true, optional = true}
-soil-telemetry = { workspace = true, default-features = true, optional = true}
-serde = { features = ["derive"], workspace = true, default-features = true, optional = true}
-serde_json = { workspace = true, default-features = true, optional = true}
-soil-blockchain = { workspace = true, default-features = true, optional = true}
-subsoil-crypto-hashing = { workspace = true, default-features = true, optional = true}
-soil-genesis-builder = { workspace = true, default-features = true, optional = true}
-subsoil = { workspace = true, default-features = true, optional = true }
-
-[features]
-default = ["std"]
-std = [
-	"array-bytes",
-	"clap",
-	"codec",
-	"docify",
-	"memmap2",
-	"serde",
-	"serde_json",
-	"soil-blockchain",
-	"soil-chain-spec-derive",
-	"soil-client-api",
-	"subsoil",
-	"subsoil-crypto-hashing",
-	"soil-executor",
-	"soil-genesis-builder",
-	"soil-network",
-	"soil-telemetry",
-	"soil-client-api/std",
-	"subsoil/std",
-	"subsoil-crypto-hashing/std",
-	"soil-executor/std",
-	"soil-genesis-builder/std",
-	"soil-network/std",
-	"soil-telemetry/std",
-]
+codec = { features = ["derive"], workspace = true}
+docify = { workspace = true}
+memmap2 = { workspace = true}
+soil-chain-spec-derive = { workspace = true, default-features = true}
+soil-client-api = { workspace = true, default-features = true}
+soil-executor = { workspace = true, default-features = true}
+soil-network = { workspace = true, default-features = true}
+soil-telemetry = { workspace = true, default-features = true}
+serde = { features = ["derive"], workspace = true, default-features = true}
+serde_json = { workspace = true, default-features = true}
+soil-blockchain = { workspace = true, default-features = true}
+subsoil-crypto-hashing = { workspace = true, default-features = true}
+soil-genesis-builder = { workspace = true, default-features = true}
+subsoil = { workspace = true, default-features = true }
 
 [dev-dependencies]
 pretty_assertions = { workspace = true }

@@ -57,10 +57,7 @@ std = [
 	"soil-consensus-epochs",
 	"soil-transaction-pool-api",
 	"thiserror",
-	"soil-client-api/std",
-	"soil-consensus-epochs/std",
-	"subsoil/std",
-	"soil-transaction-pool-api/std"]
+	"subsoil/std"]
 
 [dev-dependencies]
 assert_matches = { workspace = true }

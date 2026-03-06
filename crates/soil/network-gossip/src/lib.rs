@@ -61,38 +61,27 @@
 //! These status packets will typically contain light pieces of information
 //! used to inform peers of a current view of protocol state.
 
-#![cfg_attr(not(feature = "std"), no_std)]
 
-#[cfg(feature = "std")]
 pub use self::{
 	bridge::GossipEngine,
 	state_machine::TopicNotification,
 	validator::{DiscardAll, MessageIntent, ValidationResult, Validator, ValidatorContext},
 };
 
-#[cfg(feature = "std")]
 use soil_network::{types::ProtocolName, NetworkBlock, NetworkEventStream, NetworkPeers};
-#[cfg(feature = "std")]
 use soil_network_sync::SyncEventStream;
-#[cfg(feature = "std")]
 use soil_network_types::{
 	multiaddr::{Multiaddr, Protocol},
 	PeerId,
 };
-#[cfg(feature = "std")]
 use subsoil::runtime::traits::{Block as BlockT, NumberFor};
-#[cfg(feature = "std")]
 use std::iter;
 
-#[cfg(feature = "std")]
 mod bridge;
-#[cfg(feature = "std")]
 mod state_machine;
-#[cfg(feature = "std")]
 mod validator;
 
 /// Abstraction over a network.
-#[cfg(feature = "std")]
 pub trait Network<B: BlockT>: NetworkPeers + NetworkEventStream {
 	fn add_set_reserved(&self, who: PeerId, protocol: ProtocolName) {
 		let addr = Multiaddr::empty().with(Protocol::P2p(*who.as_ref()));
@@ -109,12 +98,9 @@ pub trait Network<B: BlockT>: NetworkPeers + NetworkEventStream {
 	}
 }
 
-#[cfg(feature = "std")]
 impl<T, B: BlockT> Network<B> for T where T: NetworkPeers + NetworkEventStream {}
 
 /// Abstraction over the syncing subsystem.
-#[cfg(feature = "std")]
 pub trait Syncing<B: BlockT>: SyncEventStream + NetworkBlock<B::Hash, NumberFor<B>> {}
 
-#[cfg(feature = "std")]
 impl<T, B: BlockT> Syncing<B> for T where T: SyncEventStream + NetworkBlock<B::Hash, NumberFor<B>> {}

@@ -18,28 +18,18 @@
 
 //! Service integration test utils.
 
-#![cfg_attr(not(feature = "std"), no_std)]
 
-#[cfg(feature = "std")]
 use futures::{task::Poll, Future, TryFutureExt as _};
-#[cfg(feature = "std")]
 use log::{debug, info};
-#[cfg(feature = "std")]
 use parking_lot::Mutex;
-#[cfg(feature = "std")]
 use soil_blockchain::HeaderBackend;
-#[cfg(feature = "std")]
 use soil_client_api::{Backend, CallExecutor};
-#[cfg(feature = "std")]
 use soil_network::{
 	config::{MultiaddrWithPeerId, NetworkConfiguration, TransportConfig},
 	multiaddr, NetworkBlock, NetworkPeers, NetworkStateInfo,
 };
-#[cfg(feature = "std")]
 use soil_network_sync::SyncingService;
-#[cfg(feature = "std")]
 use subsoil::runtime::traits::Block as BlockT;
-#[cfg(feature = "std")]
 use soil_service::{
 	client::Client,
 	config::{
@@ -49,24 +39,17 @@ use soil_service::{
 	BlocksPruning, ChainSpecExtension, Configuration, Error, GenericChainSpec, Role,
 	SpawnTaskHandle, TaskManager,
 };
-#[cfg(feature = "std")]
 use soil_transaction_pool_api::TransactionPool;
-#[cfg(feature = "std")]
 use std::{iter, net::Ipv4Addr, pin::Pin, sync::Arc, task::Context, time::Duration};
-#[cfg(feature = "std")]
 use tempfile::TempDir;
-#[cfg(feature = "std")]
 use tokio::{runtime::Runtime, time};
 
 #[cfg(test)]
-#[cfg(feature = "std")]
 mod client;
 
 /// Maximum duration of single wait call.
-#[cfg(feature = "std")]
 const MAX_WAIT_TIME: Duration = Duration::from_secs(60 * 3);
 
-#[cfg(feature = "std")]
 struct TestNet<E, F, U> {
 	runtime: Runtime,
 	authority_nodes: Vec<(usize, F, U, MultiaddrWithPeerId)>,
@@ -76,7 +59,6 @@ struct TestNet<E, F, U> {
 	nodes: usize,
 }
 
-#[cfg(feature = "std")]
 impl<E, F, U> Drop for TestNet<E, F, U> {
 	fn drop(&mut self) {
 		// Drop the nodes before dropping the runtime, as the runtime otherwise waits for all
@@ -86,7 +68,6 @@ impl<E, F, U> Drop for TestNet<E, F, U> {
 	}
 }
 
-#[cfg(feature = "std")]
 pub trait TestNetNode: Clone + Future<Output = Result<(), Error>> + Send + 'static {
 	type Block: BlockT;
 	type Backend: Backend<Self::Block>;
@@ -101,7 +82,6 @@ pub trait TestNetNode: Clone + Future<Output = Result<(), Error>> + Send + 'stat
 	fn spawn_handle(&self) -> SpawnTaskHandle;
 }
 
-#[cfg(feature = "std")]
 pub struct TestNetComponents<TBl: BlockT, TBackend, TExec, TRtApi, TExPool> {
 	task_manager: Arc<Mutex<TaskManager>>,
 	client: Arc<Client<TBackend, TExec, TBl, TRtApi>>,
@@ -110,7 +90,6 @@ pub struct TestNetComponents<TBl: BlockT, TBackend, TExec, TRtApi, TExPool> {
 	sync: Arc<SyncingService<TBl>>,
 }
 
-#[cfg(feature = "std")]
 impl<TBl: BlockT, TBackend, TExec, TRtApi, TExPool>
 	TestNetComponents<TBl, TBackend, TExec, TRtApi, TExPool>
 {
@@ -131,7 +110,6 @@ impl<TBl: BlockT, TBackend, TExec, TRtApi, TExPool>
 	}
 }
 
-#[cfg(feature = "std")]
 impl<TBl: BlockT, TBackend, TExec, TRtApi, TExPool> Clone
 	for TestNetComponents<TBl, TBackend, TExec, TRtApi, TExPool>
 {
@@ -146,7 +124,6 @@ impl<TBl: BlockT, TBackend, TExec, TRtApi, TExPool> Clone
 	}
 }
 
-#[cfg(feature = "std")]
 impl<TBl: BlockT, TBackend, TExec, TRtApi, TExPool> Future
 	for TestNetComponents<TBl, TBackend, TExec, TRtApi, TExPool>
 {
@@ -157,7 +134,6 @@ impl<TBl: BlockT, TBackend, TExec, TRtApi, TExPool> Future
 	}
 }
 
-#[cfg(feature = "std")]
 impl<TBl, TBackend, TExec, TRtApi, TExPool> TestNetNode
 	for TestNetComponents<TBl, TBackend, TExec, TRtApi, TExPool>
 where
@@ -190,7 +166,6 @@ where
 	}
 }
 
-#[cfg(feature = "std")]
 impl<E, F, U> TestNet<E, F, U>
 where
 	F: Clone + Send + 'static,
@@ -222,7 +197,6 @@ where
 	}
 }
 
-#[cfg(feature = "std")]
 fn node_config<E: ChainSpecExtension + Clone + 'static + Send + Sync>(
 	index: usize,
 	spec: &GenericChainSpec<E>,
@@ -299,7 +273,6 @@ fn node_config<E: ChainSpecExtension + Clone + 'static + Send + Sync>(
 	}
 }
 
-#[cfg(feature = "std")]
 impl<E, F, U> TestNet<E, F, U>
 where
 	F: TestNetNode,
@@ -385,7 +358,6 @@ where
 	}
 }
 
-#[cfg(feature = "std")]
 fn tempdir_with_prefix(prefix: &str) -> TempDir {
 	tempfile::Builder::new()
 		.prefix(prefix)
@@ -393,7 +365,6 @@ fn tempdir_with_prefix(prefix: &str) -> TempDir {
 		.expect("Error creating test dir")
 }
 
-#[cfg(feature = "std")]
 pub fn connectivity<E, Fb, F>(spec: GenericChainSpec<E>, full_builder: Fb)
 where
 	E: ChainSpecExtension + Clone + 'static + Send + Sync,
@@ -470,7 +441,6 @@ where
 	}
 }
 
-#[cfg(feature = "std")]
 pub fn sync<E, Fb, F, B, ExF, U>(
 	spec: GenericChainSpec<E>,
 	full_builder: Fb,
@@ -541,7 +511,6 @@ pub fn sync<E, Fb, F, B, ExF, U>(
 	network.run_until_all_full(|_index, service| service.transaction_pool().ready().count() == 1);
 }
 
-#[cfg(feature = "std")]
 pub fn consensus<E, Fb, F>(
 	spec: GenericChainSpec<E>,
 	full_builder: Fb,

@@ -18,51 +18,34 @@
 
 //! RPC API for GRANDPA.
 #![warn(missing_docs)]
-#![cfg_attr(not(feature = "std"), no_std)]
 
-#[cfg(feature = "std")]
 use futures::StreamExt;
-#[cfg(feature = "std")]
 use log::warn;
-#[cfg(feature = "std")]
 use std::sync::Arc;
 
-#[cfg(feature = "std")]
 use jsonrpsee::{
 	core::{async_trait, server::PendingSubscriptionSink},
 	proc_macros::rpc,
 };
 
-#[cfg(feature = "std")]
 mod error;
-#[cfg(feature = "std")]
 mod finality;
-#[cfg(feature = "std")]
 mod notification;
-#[cfg(feature = "std")]
 mod report;
 
-#[cfg(feature = "std")]
 use error::Error;
-#[cfg(feature = "std")]
 use finality::{EncodedFinalityProof, RpcFinalityProofProvider};
-#[cfg(feature = "std")]
 use notification::JustificationNotification;
-#[cfg(feature = "std")]
 use report::{ReportAuthoritySet, ReportVoterState, ReportedRoundStates};
-#[cfg(feature = "std")]
 use sc_consensus_grandpa::GrandpaJustificationStream;
-#[cfg(feature = "std")]
 use sc_rpc::{
 	utils::{BoundedVecDeque, PendingSubscription},
 	SubscriptionTaskExecutor,
 };
-#[cfg(feature = "std")]
 use subsoil::runtime::traits::{Block as BlockT, NumberFor};
 
 /// Provides RPC methods for interacting with GRANDPA.
 #[rpc(client, server)]
-#[cfg(feature = "std")]
 pub trait GrandpaApi<Notification, Hash, Number> {
 	/// Returns the state of the current best round state as well as the
 	/// ongoing background rounds.
@@ -85,7 +68,6 @@ pub trait GrandpaApi<Notification, Hash, Number> {
 }
 
 /// Provides RPC methods for interacting with GRANDPA.
-#[cfg(feature = "std")]
 pub struct Grandpa<AuthoritySet, VoterState, Block: BlockT, ProofProvider> {
 	executor: SubscriptionTaskExecutor,
 	authority_set: AuthoritySet,
@@ -93,7 +75,6 @@ pub struct Grandpa<AuthoritySet, VoterState, Block: BlockT, ProofProvider> {
 	justification_stream: GrandpaJustificationStream<Block>,
 	finality_proof_provider: Arc<ProofProvider>,
 }
-#[cfg(feature = "std")]
 impl<AuthoritySet, VoterState, Block: BlockT, ProofProvider>
 	Grandpa<AuthoritySet, VoterState, Block, ProofProvider>
 {
@@ -110,7 +91,6 @@ impl<AuthoritySet, VoterState, Block: BlockT, ProofProvider>
 }
 
 #[async_trait]
-#[cfg(feature = "std")]
 impl<AuthoritySet, VoterState, Block, ProofProvider>
 	GrandpaApiServer<JustificationNotification, Block::Hash, NumberFor<Block>>
 	for Grandpa<AuthoritySet, VoterState, Block, ProofProvider>
@@ -149,7 +129,6 @@ where
 }
 
 #[cfg(test)]
-#[cfg(feature = "std")]
 mod tests {
 	use super::*;
 	use std::{collections::HashSet, sync::Arc};

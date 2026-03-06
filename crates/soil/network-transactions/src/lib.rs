@@ -26,21 +26,14 @@
 //! - Use [`TransactionsHandlerPrototype::build`] then [`TransactionsHandler::run`] to obtain a
 //! `Future` that processes transactions.
 
-#![cfg_attr(not(feature = "std"), no_std)]
 
-#[cfg(feature = "std")]
 use crate::config::*;
 
-#[cfg(feature = "std")]
 use codec::{Decode, Encode};
-#[cfg(feature = "std")]
 use futures::{prelude::*, stream::FuturesUnordered};
-#[cfg(feature = "std")]
 use log::{debug, trace, warn};
 
-#[cfg(feature = "std")]
 use prometheus_endpoint::{register, Counter, PrometheusError, Registry, U64};
-#[cfg(feature = "std")]
 use soil_network::{
 	config::{NonReservedPeerMode, ProtocolId, SetConfig},
 	error, multiaddr,
@@ -53,18 +46,12 @@ use soil_network::{
 	utils::{interval, LruHashSet},
 	NetworkBackend, NetworkEventStream, NetworkPeers,
 };
-#[cfg(feature = "std")]
 use soil_network_common::{role::ObservedRole, ExHashT};
-#[cfg(feature = "std")]
 use soil_network_sync::{SyncEvent, SyncEventStream};
-#[cfg(feature = "std")]
 use soil_network_types::PeerId;
-#[cfg(feature = "std")]
 use subsoil::runtime::traits::Block as BlockT;
-#[cfg(feature = "std")]
 use soil_utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
 
-#[cfg(feature = "std")]
 use std::{
 	collections::{hash_map::Entry, HashMap},
 	iter,
@@ -74,18 +61,14 @@ use std::{
 	task::Poll,
 };
 
-#[cfg(feature = "std")]
 pub mod config;
 
 /// A set of transactions.
-#[cfg(feature = "std")]
 pub type Transactions<E> = Vec<E>;
 
 /// Logging target for the file.
-#[cfg(feature = "std")]
 const LOG_TARGET: &str = "sync";
 
-#[cfg(feature = "std")]
 mod rep {
 	use soil_network::ReputationChange as Rep;
 	/// Reputation change when a peer sends us any transaction.
@@ -101,12 +84,10 @@ mod rep {
 	pub const BAD_TRANSACTION: Rep = Rep::new(-(1 << 12), "Bad transaction");
 }
 
-#[cfg(feature = "std")]
 struct Metrics {
 	propagated_transactions: Counter<U64>,
 }
 
-#[cfg(feature = "std")]
 impl Metrics {
 	fn register(r: &Registry) -> Result<Self, PrometheusError> {
 		Ok(Self {
@@ -121,16 +102,13 @@ impl Metrics {
 	}
 }
 
-#[cfg(feature = "std")]
 struct PendingTransaction<H> {
 	validation: TransactionImportFuture,
 	tx_hash: H,
 }
 
-#[cfg(feature = "std")]
 impl<H> Unpin for PendingTransaction<H> {}
 
-#[cfg(feature = "std")]
 impl<H: ExHashT> Future for PendingTransaction<H> {
 	type Output = (H, TransactionImport);
 
@@ -144,7 +122,6 @@ impl<H: ExHashT> Future for PendingTransaction<H> {
 }
 
 /// Prototype for a [`TransactionsHandler`].
-#[cfg(feature = "std")]
 pub struct TransactionsHandlerPrototype {
 	/// Name of the transaction protocol.
 	protocol_name: ProtocolName,
@@ -153,7 +130,6 @@ pub struct TransactionsHandlerPrototype {
 	notification_service: Box<dyn NotificationService>,
 }
 
-#[cfg(feature = "std")]
 impl TransactionsHandlerPrototype {
 	/// Create a new instance.
 	pub fn new<
@@ -240,12 +216,10 @@ impl TransactionsHandlerPrototype {
 }
 
 /// Controls the behaviour of a [`TransactionsHandler`] it is connected to.
-#[cfg(feature = "std")]
 pub struct TransactionsHandlerController<H: ExHashT> {
 	to_handler: TracingUnboundedSender<ToHandler<H>>,
 }
 
-#[cfg(feature = "std")]
 impl<H: ExHashT> TransactionsHandlerController<H> {
 	/// You may call this when new transactions are imported by the transaction pool.
 	///
@@ -264,14 +238,12 @@ impl<H: ExHashT> TransactionsHandlerController<H> {
 	}
 }
 
-#[cfg(feature = "std")]
 enum ToHandler<H: ExHashT> {
 	PropagateTransactions,
 	PropagateTransaction(H),
 }
 
 /// Handler for transactions. Call [`TransactionsHandler::run`] to start the processing.
-#[cfg(feature = "std")]
 pub struct TransactionsHandler<
 	B: BlockT + 'static,
 	H: ExHashT,
@@ -306,14 +278,12 @@ pub struct TransactionsHandler<
 
 /// Peer information
 #[derive(Debug)]
-#[cfg(feature = "std")]
 struct Peer<H: ExHashT> {
 	/// Holds a set of transactions known to this peer.
 	known_transactions: LruHashSet<H>,
 	role: ObservedRole,
 }
 
-#[cfg(feature = "std")]
 impl<B, H, N, S> TransactionsHandler<B, H, N, S>
 where
 	B: BlockT + 'static,

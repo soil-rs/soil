@@ -20,48 +20,34 @@
 
 //! Node-specific RPC methods for interaction with Merkle Mountain Range pallet.
 
-#![cfg_attr(not(feature = "std"), no_std)]
 
-#[cfg(feature = "std")]
 use std::{marker::PhantomData, sync::Arc};
 
-#[cfg(feature = "std")]
 use codec::{Codec, Decode, Encode};
-#[cfg(feature = "std")]
 use jsonrpsee::{
 	core::{async_trait, RpcResult},
 	proc_macros::rpc,
 	types::{error::ErrorObject, ErrorObjectOwned},
 };
-#[cfg(feature = "std")]
 use serde::{Deserialize, Serialize};
 
-#[cfg(feature = "std")]
 use subsoil::api::{ApiExt, ProvideRuntimeApi};
-#[cfg(feature = "std")]
 use soil_blockchain::HeaderBackend;
-#[cfg(feature = "std")]
 use subsoil::core::{
 	offchain::{storage::OffchainDb, OffchainDbExt, OffchainStorage},
 	Bytes,
 };
-#[cfg(feature = "std")]
 use subsoil::mmr::{AncestryProof as MmrAncestryProof, Error as MmrError, LeafProof};
-#[cfg(feature = "std")]
 use subsoil::runtime::traits::{Block as BlockT, NumberFor};
 
-#[cfg(feature = "std")]
 pub use subsoil::mmr::MmrApi as MmrRuntimeApi;
 
-#[cfg(feature = "std")]
 const RUNTIME_ERROR: i32 = 8000;
-#[cfg(feature = "std")]
 const MMR_ERROR: i32 = 8010;
 
 /// Retrieved MMR leaves and their proof.
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 #[serde(rename_all = "camelCase")]
-#[cfg(feature = "std")]
 pub struct LeavesProof<BlockHash> {
 	/// Block hash the proof was generated for.
 	pub block_hash: BlockHash,
@@ -71,7 +57,6 @@ pub struct LeavesProof<BlockHash> {
 	pub proof: Bytes,
 }
 
-#[cfg(feature = "std")]
 impl<BlockHash> LeavesProof<BlockHash> {
 	/// Create new `LeavesProof` from a given vector of `Leaf` and a
 	/// [subsoil::mmr::LeafProof].
@@ -90,7 +75,6 @@ impl<BlockHash> LeavesProof<BlockHash> {
 
 /// MMR RPC methods.
 #[rpc(client, server)]
-#[cfg(feature = "std")]
 pub trait MmrApi<BlockHash, BlockNumber, MmrHash> {
 	/// Get the MMR root hash for the current best block.
 	#[method(name = "mmr_root")]
@@ -173,14 +157,12 @@ pub trait MmrApi<BlockHash, BlockNumber, MmrHash> {
 }
 
 /// MMR RPC methods.
-#[cfg(feature = "std")]
 pub struct Mmr<Client, Block, S> {
 	client: Arc<Client>,
 	offchain_db: OffchainDb<S>,
 	_marker: PhantomData<Block>,
 }
 
-#[cfg(feature = "std")]
 impl<C, B, S> Mmr<C, B, S> {
 	/// Create new `Mmr` with the given reference to the client.
 	pub fn new(client: Arc<C>, offchain_storage: S) -> Self {
@@ -189,7 +171,6 @@ impl<C, B, S> Mmr<C, B, S> {
 }
 
 #[async_trait]
-#[cfg(feature = "std")]
 impl<Client, Block, MmrHash, S> MmrApiServer<<Block as BlockT>::Hash, NumberFor<Block>, MmrHash>
 	for Mmr<Client, (Block, MmrHash), S>
 where
@@ -289,7 +270,6 @@ where
 }
 
 /// Converts an mmr-specific error into a [`CallError`].
-#[cfg(feature = "std")]
 fn mmr_error_into_rpc_error(err: MmrError) -> ErrorObjectOwned {
 	let error_code = MMR_ERROR
 		+ match err {
@@ -305,12 +285,10 @@ fn mmr_error_into_rpc_error(err: MmrError) -> ErrorObjectOwned {
 }
 
 /// Converts a runtime trap into a [`CallError`].
-#[cfg(feature = "std")]
 fn runtime_error_into_rpc_error(err: impl std::fmt::Debug) -> ErrorObjectOwned {
 	ErrorObject::owned(RUNTIME_ERROR, "Runtime trapped", Some(format!("{:?}", err)))
 }
 
-#[cfg(feature = "std")]
 fn invalid_params(e: impl std::error::Error) -> ErrorObjectOwned {
 	ErrorObject::owned(
 		jsonrpsee::types::error::ErrorCode::InvalidParams.code(),
@@ -320,7 +298,6 @@ fn invalid_params(e: impl std::error::Error) -> ErrorObjectOwned {
 }
 
 #[cfg(test)]
-#[cfg(feature = "std")]
 mod tests {
 	use super::*;
 	use subsoil::core::H256;

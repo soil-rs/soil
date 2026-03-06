@@ -16,29 +16,22 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-#![cfg_attr(not(feature = "std"), no_std)]
 
-#[cfg(feature = "std")]
 use clap::Args;
-#[cfg(feature = "std")]
 use subsoil::core::traits::SpawnEssentialNamed;
-#[cfg(feature = "std")]
 use std::{
 	io,
 	path::{Path, PathBuf},
 	time::Duration,
 };
 
-#[cfg(feature = "std")]
 const LOG_TARGET: &str = "storage-monitor";
 
 /// Result type used in this crate.
-#[cfg(feature = "std")]
 pub type Result<T> = std::result::Result<T, Error>;
 
 /// Error type used in this crate.
 #[derive(Debug, thiserror::Error)]
-#[cfg(feature = "std")]
 pub enum Error {
 	#[error("IO Error")]
 	IOError(#[from] io::Error),
@@ -48,7 +41,6 @@ pub enum Error {
 
 /// Parameters used to create the storage monitor.
 #[derive(Default, Debug, Clone, Args)]
-#[cfg(feature = "std")]
 pub struct StorageMonitorParams {
 	/// Required available space on database storage.
 	///
@@ -65,7 +57,6 @@ pub struct StorageMonitorParams {
 }
 
 /// Storage monitor service: checks the available space for the filesystem for given path.
-#[cfg(feature = "std")]
 pub struct StorageMonitorService {
 	/// watched path
 	path: PathBuf,
@@ -75,7 +66,6 @@ pub struct StorageMonitorService {
 	polling_period: Duration,
 }
 
-#[cfg(feature = "std")]
 impl StorageMonitorService {
 	/// Creates new StorageMonitorService for given client config
 	pub fn try_spawn(

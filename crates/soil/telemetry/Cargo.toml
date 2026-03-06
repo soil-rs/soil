@@ -45,5 +45,4 @@ std = [
 	"soil-utils",
 	"thiserror",
 	"wasm-timer",
-	"soil-utils/std",
 ]

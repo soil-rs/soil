@@ -27,39 +27,24 @@
 //! Finality implies canonicality but not vice-versa.
 
 #![warn(missing_docs)]
-#![cfg_attr(not(feature = "std"), no_std)]
 
-#[cfg(feature = "std")]
 pub mod offchain;
 
-#[cfg(feature = "std")]
 pub mod bench;
 
-#[cfg(feature = "std")]
 mod children;
-#[cfg(feature = "std")]
 mod parity_db;
-#[cfg(feature = "std")]
 mod pinned_blocks_cache;
-#[cfg(feature = "std")]
 mod record_stats_state;
-#[cfg(feature = "std")]
 mod stats;
 #[cfg(any(feature = "rocksdb", test))]
-#[cfg(feature = "std")]
 mod upgrade;
-#[cfg(feature = "std")]
 mod utils;
 
-#[cfg(feature = "std")]
 use linked_hash_map::LinkedHashMap;
-#[cfg(feature = "std")]
 use log::{debug, trace, warn};
-#[cfg(feature = "std")]
 use parking_lot::{Mutex, RwLock};
-#[cfg(feature = "std")]
 use prometheus_endpoint::Registry;
-#[cfg(feature = "std")]
 use std::{
 	collections::{HashMap, HashSet},
 	io,
@@ -67,25 +52,19 @@ use std::{
 	sync::Arc,
 };
 
-#[cfg(feature = "std")]
 use crate::{
 	pinned_blocks_cache::PinnedBlocksCache,
 	record_stats_state::RecordStatsState,
 	stats::StateUsageStats,
 	utils::{meta_keys, read_db, read_meta, remove_from_db, DatabaseType, Meta},
 };
-#[cfg(feature = "std")]
 use codec::{Decode, Encode};
-#[cfg(feature = "std")]
 use hash_db::Prefix;
-#[cfg(feature = "std")]
 use subsoil::arithmetic::traits::Saturating;
-#[cfg(feature = "std")]
 use soil_blockchain::{
 	Backend as _, CachedHeaderMetadata, DisplacedLeavesAfterFinalization, Error as ClientError,
 	HeaderBackend, HeaderMetadata, HeaderMetadataCache, Result as ClientResult,
 };
-#[cfg(feature = "std")]
 use soil_client_api::{
 	backend::NewBlockState,
 	blockchain::{BlockGap, BlockGapType},
@@ -93,14 +72,11 @@ use soil_client_api::{
 	utils::is_descendent_of,
 	IoInfo, MemoryInfo, MemorySize, TrieCacheContext, UsageInfo,
 };
-#[cfg(feature = "std")]
 use subsoil::core::{
 	offchain::OffchainOverlayedChange,
 	storage::{well_known_keys, ChildInfo},
 };
-#[cfg(feature = "std")]
 use subsoil::database::Transaction;
-#[cfg(feature = "std")]
 use subsoil::runtime::{
 	generic::BlockId,
 	traits::{
@@ -109,34 +85,26 @@ use subsoil::runtime::{
 	},
 	Justification, Justifications, StateVersion, Storage,
 };
-#[cfg(feature = "std")]
 use soil_state_db::{IsPruned, LastCanonicalized, StateDb};
-#[cfg(feature = "std")]
 use subsoil::state_machine::{
 	backend::{AsTrieBackend, Backend as StateBackend},
 	BackendTransaction, ChildStorageCollection, DBValue, IndexOperation, IterArgs,
 	OffchainChangesCollection, StateMachineStats, StorageCollection, StorageIterator, StorageKey,
 	StorageValue, UsageInfo as StateUsageInfo,
 };
-#[cfg(feature = "std")]
 use subsoil::trie::{cache::SharedTrieCache, prefixed_key, MemoryDB, MerkleValue, PrefixedMemoryDB};
-#[cfg(feature = "std")]
 use utils::BLOCK_GAP_CURRENT_VERSION;
 
 // Re-export the Database trait so that one can pass an implementation of it.
-#[cfg(feature = "std")]
 pub use subsoil::database::Database;
-#[cfg(feature = "std")]
 pub use soil_state_db::PruningMode;
 
-#[cfg(feature = "std")]
 pub use bench::BenchmarkingState;
 
 /// Filter to determine if a block should be excluded from pruning.
 ///
 /// Note: This filter only affects **block body** (and future header) pruning.
 /// It does **not** affect state pruning, which is configured separately.
-#[cfg(feature = "std")]
 pub trait PruningFilter: Send + Sync {
 	/// Check if a block with the given justifications should be preserved.
 	///
@@ -144,7 +112,6 @@ pub trait PruningFilter: Send + Sync {
 	fn should_retain(&self, justifications: &Justifications) -> bool;
 }
 
-#[cfg(feature = "std")]
 impl<F> PruningFilter for F
 where
 	F: Fn(&Justifications) -> bool + Send + Sync,
@@ -154,29 +121,23 @@ where
 	}
 }
 
-#[cfg(feature = "std")]
 const CACHE_HEADERS: usize = 8;
 
 /// DB-backed patricia trie state, transaction type is an overlay of changes to commit.
-#[cfg(feature = "std")]
 pub type DbState<H> = subsoil::state_machine::TrieBackend<Arc<dyn subsoil::state_machine::Storage<H>>, H>;
 
 /// Builder for [`DbState`].
-#[cfg(feature = "std")]
 pub type DbStateBuilder<Hasher> =
 	subsoil::state_machine::TrieBackendBuilder<Arc<dyn subsoil::state_machine::Storage<Hasher>>, Hasher>;
 
 /// Length of a [`DbHash`].
-#[cfg(feature = "std")]
 const DB_HASH_LEN: usize = 32;
 
 /// Hash type that this backend uses for the database.
-#[cfg(feature = "std")]
 pub type DbHash = subsoil::core::H256;
 
 /// An extrinsic entry in the database.
 #[derive(Debug, Encode, Decode)]
-#[cfg(feature = "std")]
 enum DbExtrinsic<B: BlockT> {
 	/// Extrinsic that contains indexed data.
 	Indexed {
@@ -193,14 +154,12 @@ enum DbExtrinsic<B: BlockT> {
 ///
 /// It makes sure that the hash we are using stays pinned in storage
 /// until this structure is dropped.
-#[cfg(feature = "std")]
 pub struct RefTrackingState<Block: BlockT> {
 	state: DbState<HashingFor<Block>>,
 	storage: Arc<StorageDb<Block>>,
 	parent_hash: Option<Block::Hash>,
 }
 
-#[cfg(feature = "std")]
 impl<B: BlockT> RefTrackingState<B> {
 	fn new(
 		state: DbState<HashingFor<B>>,
@@ -211,7 +170,6 @@ impl<B: BlockT> RefTrackingState<B> {
 	}
 }
 
-#[cfg(feature = "std")]
 impl<B: BlockT> Drop for RefTrackingState<B> {
 	fn drop(&mut self) {
 		if let Some(hash) = &self.parent_hash {
@@ -220,7 +178,6 @@ impl<B: BlockT> Drop for RefTrackingState<B> {
 	}
 }
 
-#[cfg(feature = "std")]
 impl<Block: BlockT> std::fmt::Debug for RefTrackingState<Block> {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		write!(f, "Block {:?}", self.parent_hash)
@@ -228,12 +185,10 @@ impl<Block: BlockT> std::fmt::Debug for RefTrackingState<Block> {
 }
 
 /// A raw iterator over the `RefTrackingState`.
-#[cfg(feature = "std")]
 pub struct RawIter<B: BlockT> {
 	inner: <DbState<HashingFor<B>> as StateBackend<HashingFor<B>>>::RawIter,
 }
 
-#[cfg(feature = "std")]
 impl<B: BlockT> StorageIterator<HashingFor<B>> for RawIter<B> {
 	type Backend = RefTrackingState<B>;
 	type Error = <DbState<HashingFor<B>> as StateBackend<HashingFor<B>>>::Error;
@@ -254,7 +209,6 @@ impl<B: BlockT> StorageIterator<HashingFor<B>> for RawIter<B> {
 	}
 }
 
-#[cfg(feature = "std")]
 impl<B: BlockT> StateBackend<HashingFor<B>> for RefTrackingState<B> {
 	type Error = <DbState<HashingFor<B>> as StateBackend<HashingFor<B>>>::Error;
 	type TrieBackendStorage =
@@ -354,7 +308,6 @@ impl<B: BlockT> StateBackend<HashingFor<B>> for RefTrackingState<B> {
 	}
 }
 
-#[cfg(feature = "std")]
 impl<B: BlockT> AsTrieBackend<HashingFor<B>> for RefTrackingState<B> {
 	type TrieBackendStorage =
 		<DbState<HashingFor<B>> as StateBackend<HashingFor<B>>>::TrieBackendStorage;
@@ -367,7 +320,6 @@ impl<B: BlockT> AsTrieBackend<HashingFor<B>> for RefTrackingState<B> {
 }
 
 /// Database settings.
-#[cfg(feature = "std")]
 pub struct DatabaseSettings {
 	/// The maximum trie cache size in bytes.
 	///
@@ -393,7 +345,6 @@ pub struct DatabaseSettings {
 
 /// Block pruning settings.
 #[derive(Debug, Clone, Copy, PartialEq)]
-#[cfg(feature = "std")]
 pub enum BlocksPruning {
 	/// Keep full block history, of every block that was ever imported.
 	KeepAll,
@@ -403,7 +354,6 @@ pub enum BlocksPruning {
 	Some(u32),
 }
 
-#[cfg(feature = "std")]
 impl BlocksPruning {
 	/// True if this is an archive pruning mode (either KeepAll or KeepFinalized).
 	pub fn is_archive(&self) -> bool {
@@ -416,7 +366,6 @@ impl BlocksPruning {
 
 /// Where to find the database..
 #[derive(Debug, Clone)]
-#[cfg(feature = "std")]
 pub enum DatabaseSource {
 	/// Check given path, and see if there is an existing database there. If it's either `RocksDb`
 	/// or `ParityDb`, use it. If there is none, create a new instance of `ParityDb`.
@@ -453,7 +402,6 @@ pub enum DatabaseSource {
 	},
 }
 
-#[cfg(feature = "std")]
 impl DatabaseSource {
 	/// Return path for databases that are stored on disk.
 	pub fn path(&self) -> Option<&Path> {
@@ -491,7 +439,6 @@ impl DatabaseSource {
 	}
 }
 
-#[cfg(feature = "std")]
 impl std::fmt::Display for DatabaseSource {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		let name = match self {
@@ -505,7 +452,6 @@ impl std::fmt::Display for DatabaseSource {
 	}
 }
 
-#[cfg(feature = "std")]
 pub(crate) mod columns {
 	pub const META: u32 = crate::utils::COLUMN_META;
 	pub const STATE: u32 = 1;
@@ -523,7 +469,6 @@ pub(crate) mod columns {
 	pub const BODY_INDEX: u32 = 12;
 }
 
-#[cfg(feature = "std")]
 struct PendingBlock<Block: BlockT> {
 	header: Block::Header,
 	justifications: Option<Justifications>,
@@ -535,10 +480,8 @@ struct PendingBlock<Block: BlockT> {
 
 // wrapper that implements trait required for state_db
 #[derive(Clone)]
-#[cfg(feature = "std")]
 struct StateMetaDb(Arc<dyn Database<DbHash>>);
 
-#[cfg(feature = "std")]
 impl soil_state_db::MetaDb for StateMetaDb {
 	type Error = subsoil::database::error::DatabaseError;
 
@@ -547,7 +490,6 @@ impl soil_state_db::MetaDb for StateMetaDb {
 	}
 }
 
-#[cfg(feature = "std")]
 struct MetaUpdate<Block: BlockT> {
 	pub hash: Block::Hash,
 	pub number: NumberFor<Block>,
@@ -556,7 +498,6 @@ struct MetaUpdate<Block: BlockT> {
 	pub with_state: bool,
 }
 
-#[cfg(feature = "std")]
 fn cache_header<Hash: std::cmp::Eq + std::hash::Hash, Header>(
 	cache: &mut LinkedHashMap<Hash, Option<Header>>,
 	hash: Hash,
@@ -569,7 +510,6 @@ fn cache_header<Hash: std::cmp::Eq + std::hash::Hash, Header>(
 }
 
 /// Block database
-#[cfg(feature = "std")]
 pub struct BlockchainDb<Block: BlockT> {
 	db: Arc<dyn Database<DbHash>>,
 	meta: Arc<RwLock<Meta<NumberFor<Block>, Block::Hash>>>,
@@ -579,7 +519,6 @@ pub struct BlockchainDb<Block: BlockT> {
 	pinned_blocks_cache: Arc<RwLock<PinnedBlocksCache<Block>>>,
 }
 
-#[cfg(feature = "std")]
 impl<Block: BlockT> BlockchainDb<Block> {
 	fn new(db: Arc<dyn Database<DbHash>>) -> ClientResult<Self> {
 		let meta = read_meta::<Block>(&*db, columns::HEADER)?;
@@ -760,7 +699,6 @@ impl<Block: BlockT> BlockchainDb<Block> {
 	}
 }
 
-#[cfg(feature = "std")]
 impl<Block: BlockT> soil_client_api::blockchain::HeaderBackend<Block> for BlockchainDb<Block> {
 	fn header(&self, hash: Block::Hash) -> ClientResult<Option<Block::Header>> {
 		let mut cache = self.header_cache.lock();
@@ -813,7 +751,6 @@ impl<Block: BlockT> soil_client_api::blockchain::HeaderBackend<Block> for Blockc
 	}
 }
 
-#[cfg(feature = "std")]
 impl<Block: BlockT> soil_client_api::blockchain::Backend<Block> for BlockchainDb<Block> {
 	fn body(&self, hash: Block::Hash) -> ClientResult<Option<Vec<Block::Extrinsic>>> {
 		let cache = self.pinned_blocks_cache.read();
@@ -887,7 +824,6 @@ impl<Block: BlockT> soil_client_api::blockchain::Backend<Block> for BlockchainDb
 	}
 }
 
-#[cfg(feature = "std")]
 impl<Block: BlockT> HeaderMetadata<Block> for BlockchainDb<Block> {
 	type Error = soil_blockchain::Error;
 
@@ -925,7 +861,6 @@ impl<Block: BlockT> HeaderMetadata<Block> for BlockchainDb<Block> {
 }
 
 /// Database transaction
-#[cfg(feature = "std")]
 pub struct BlockImportOperation<Block: BlockT> {
 	old_state: RecordStatsState<RefTrackingState<Block>, Block>,
 	db_updates: PrefixedMemoryDB<HashingFor<Block>>,
@@ -942,7 +877,6 @@ pub struct BlockImportOperation<Block: BlockT> {
 	index_ops: Vec<IndexOperation>,
 }
 
-#[cfg(feature = "std")]
 impl<Block: BlockT> BlockImportOperation<Block> {
 	fn apply_offchain(&mut self, transaction: &mut Transaction<DbHash>) {
 		let mut count = 0;
@@ -998,7 +932,6 @@ impl<Block: BlockT> BlockImportOperation<Block> {
 	}
 }
 
-#[cfg(feature = "std")]
 impl<Block: BlockT> soil_client_api::backend::BlockImportOperation<Block>
 	for BlockImportOperation<Block>
 {
@@ -1110,14 +1043,12 @@ impl<Block: BlockT> soil_client_api::backend::BlockImportOperation<Block>
 	}
 }
 
-#[cfg(feature = "std")]
 struct StorageDb<Block: BlockT> {
 	pub db: Arc<dyn Database<DbHash>>,
 	pub state_db: StateDb<Block::Hash, Vec<u8>, StateMetaDb>,
 	prefix_keys: bool,
 }
 
-#[cfg(feature = "std")]
 impl<Block: BlockT> subsoil::state_machine::Storage<HashingFor<Block>> for StorageDb<Block> {
 	fn get(&self, key: &Block::Hash, prefix: Prefix) -> Result<Option<DBValue>, String> {
 		if self.prefix_keys {
@@ -1130,7 +1061,6 @@ impl<Block: BlockT> subsoil::state_machine::Storage<HashingFor<Block>> for Stora
 	}
 }
 
-#[cfg(feature = "std")]
 impl<Block: BlockT> soil_state_db::NodeDb for StorageDb<Block> {
 	type Error = io::Error;
 	type Key = [u8];
@@ -1140,20 +1070,17 @@ impl<Block: BlockT> soil_state_db::NodeDb for StorageDb<Block> {
 	}
 }
 
-#[cfg(feature = "std")]
 struct DbGenesisStorage<Block: BlockT> {
 	root: Block::Hash,
 	storage: PrefixedMemoryDB<HashingFor<Block>>,
 }
 
-#[cfg(feature = "std")]
 impl<Block: BlockT> DbGenesisStorage<Block> {
 	pub fn new(root: Block::Hash, storage: PrefixedMemoryDB<HashingFor<Block>>) -> Self {
 		DbGenesisStorage { root, storage }
 	}
 }
 
-#[cfg(feature = "std")]
 impl<Block: BlockT> subsoil::state_machine::Storage<HashingFor<Block>> for DbGenesisStorage<Block> {
 	fn get(&self, key: &Block::Hash, prefix: Prefix) -> Result<Option<DBValue>, String> {
 		use hash_db::HashDB;
@@ -1161,10 +1088,8 @@ impl<Block: BlockT> subsoil::state_machine::Storage<HashingFor<Block>> for DbGen
 	}
 }
 
-#[cfg(feature = "std")]
 struct EmptyStorage<Block: BlockT>(pub Block::Hash);
 
-#[cfg(feature = "std")]
 impl<Block: BlockT> EmptyStorage<Block> {
 	pub fn new() -> Self {
 		let mut root = Block::Hash::default();
@@ -1176,7 +1101,6 @@ impl<Block: BlockT> EmptyStorage<Block> {
 	}
 }
 
-#[cfg(feature = "std")]
 impl<Block: BlockT> subsoil::state_machine::Storage<HashingFor<Block>> for EmptyStorage<Block> {
 	fn get(&self, _key: &Block::Hash, _prefix: Prefix) -> Result<Option<DBValue>, String> {
 		Ok(None)
@@ -1186,7 +1110,6 @@ impl<Block: BlockT> subsoil::state_machine::Storage<HashingFor<Block>> for Empty
 /// Frozen `value` at time `at`.
 ///
 /// Used as inner structure under lock in `FrozenForDuration`.
-#[cfg(feature = "std")]
 struct Frozen<T: Clone> {
 	at: std::time::Instant,
 	value: Option<T>,
@@ -1197,13 +1120,11 @@ struct Frozen<T: Clone> {
 /// If time `duration` not passed since the value was instantiated,
 /// current frozen value is returned. Otherwise, you have to provide
 /// a new value which will be again frozen for `duration`.
-#[cfg(feature = "std")]
 pub(crate) struct FrozenForDuration<T: Clone> {
 	duration: std::time::Duration,
 	value: parking_lot::Mutex<Frozen<T>>,
 }
 
-#[cfg(feature = "std")]
 impl<T: Clone> FrozenForDuration<T> {
 	fn new(duration: std::time::Duration) -> Self {
 		Self { duration, value: Frozen { at: std::time::Instant::now(), value: None }.into() }
@@ -1231,7 +1152,6 @@ impl<T: Clone> FrozenForDuration<T> {
 ///
 /// Disk backend keeps data in a key-value store. In archive mode, trie nodes are kept from all
 /// blocks. Otherwise, trie nodes are kept only from some recent blocks.
-#[cfg(feature = "std")]
 pub struct Backend<Block: BlockT> {
 	storage: Arc<StorageDb<Block>>,
 	offchain_storage: offchain::LocalStorage,
@@ -1247,7 +1167,6 @@ pub struct Backend<Block: BlockT> {
 	pruning_filters: Vec<Arc<dyn PruningFilter>>,
 }
 
-#[cfg(feature = "std")]
 impl<Block: BlockT> Backend<Block> {
 	/// Create a new instance of database backend.
 	///
@@ -2227,7 +2146,6 @@ impl<Block: BlockT> Backend<Block> {
 	}
 }
 
-#[cfg(feature = "std")]
 fn apply_state_commit(
 	transaction: &mut Transaction<DbHash>,
 	commit: soil_state_db::CommitSet<Vec<u8>>,
@@ -2246,7 +2164,6 @@ fn apply_state_commit(
 	}
 }
 
-#[cfg(feature = "std")]
 fn apply_index_ops<Block: BlockT>(
 	transaction: &mut Transaction<DbHash>,
 	body: Vec<Block::Extrinsic>,
@@ -2306,7 +2223,6 @@ fn apply_index_ops<Block: BlockT>(
 	extrinsic_index.encode()
 }
 
-#[cfg(feature = "std")]
 fn apply_indexed_body<Block: BlockT>(transaction: &mut Transaction<DbHash>, body: Vec<Vec<u8>>) {
 	for extrinsic in body {
 		let hash = subsoil::runtime::traits::BlakeTwo256::hash(&extrinsic);
@@ -2314,7 +2230,6 @@ fn apply_indexed_body<Block: BlockT>(transaction: &mut Transaction<DbHash>, body
 	}
 }
 
-#[cfg(feature = "std")]
 impl<Block> soil_client_api::backend::AuxStore for Backend<Block>
 where
 	Block: BlockT,
@@ -2346,7 +2261,6 @@ where
 	}
 }
 
-#[cfg(feature = "std")]
 impl<Block: BlockT> soil_client_api::backend::Backend<Block> for Backend<Block> {
 	type BlockImportOperation = BlockImportOperation<Block>;
 	type Blockchain = BlockchainDb<Block>;
@@ -2882,11 +2796,9 @@ impl<Block: BlockT> soil_client_api::backend::Backend<Block> for Backend<Block> 
 	}
 }
 
-#[cfg(feature = "std")]
 impl<Block: BlockT> soil_client_api::backend::LocalBackend<Block> for Backend<Block> {}
 
 #[cfg(test)]
-#[cfg(feature = "std")]
 pub(crate) mod tests {
 	use super::*;
 	use crate::{columns, utils::number_and_hash_to_lookup_key};

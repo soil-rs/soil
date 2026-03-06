@@ -38,8 +38,5 @@ std = [
 	"soil-network",
 	"soil-network-sync",
 	"subsoil",
-	"soil-client-api/std",
-	"soil-network/std",
-	"soil-network-sync/std",
 	"subsoil/std",
 ]

@@ -29,47 +29,32 @@
 //! wasm engine used, instance cache.
 
 #![warn(missing_docs)]
-#![cfg_attr(not(feature = "std"), no_std)]
 
 #[macro_use]
-#[cfg(feature = "std")]
 mod executor;
 #[cfg(test)]
-#[cfg(feature = "std")]
 mod integration_tests;
-#[cfg(feature = "std")]
 mod wasm_runtime;
 
-#[cfg(feature = "std")]
 pub use codec::Codec;
 #[allow(deprecated)]
-#[cfg(feature = "std")]
 pub use executor::NativeElseWasmExecutor;
-#[cfg(feature = "std")]
 pub use executor::{with_externalities_safe, NativeExecutionDispatch, WasmExecutor};
 #[doc(hidden)]
-#[cfg(feature = "std")]
 pub use subsoil::core::traits::Externalities;
-#[cfg(feature = "std")]
 pub use subsoil::version::{NativeVersion, RuntimeVersion};
 #[doc(hidden)]
-#[cfg(feature = "std")]
 pub use subsoil::wasm_interface;
-#[cfg(feature = "std")]
 pub use subsoil::wasm_interface::HostFunctions;
-#[cfg(feature = "std")]
 pub use wasm_runtime::{read_embedded_version, WasmExecutionMethod};
 
-#[cfg(feature = "std")]
 pub use soil_executor_common::{
 	error,
 	wasm_runtime::{HeapAllocStrategy, DEFAULT_HEAP_ALLOC_PAGES, DEFAULT_HEAP_ALLOC_STRATEGY},
 };
-#[cfg(feature = "std")]
 pub use soil_executor_wasmtime::InstantiationStrategy as WasmtimeInstantiationStrategy;
 
 /// Extracts the runtime version of a given runtime code.
-#[cfg(feature = "std")]
 pub trait RuntimeVersionOf {
 	/// Extract [`RuntimeVersion`] of the given `runtime_code`.
 	fn runtime_version(
@@ -80,7 +65,6 @@ pub trait RuntimeVersionOf {
 }
 
 #[cfg(test)]
-#[cfg(feature = "std")]
 mod tests {
 	use super::*;
 	use soil_executor_common::runtime_blob::RuntimeBlob;

@@ -16,17 +16,10 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-#![cfg_attr(not(feature = "std"), no_std)]
 
-#[cfg(feature = "std")]
 pub mod ed25519;
-#[cfg(feature = "std")]
 pub mod kad;
-#[cfg(feature = "std")]
 pub mod multiaddr;
-#[cfg(feature = "std")]
 pub mod multihash;
-#[cfg(feature = "std")]
 mod peer_id;
-#[cfg(feature = "std")]
 pub use peer_id::PeerId;

@@ -16,29 +16,14 @@ workspace = true
 targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
-codec = { workspace = true, default-features = true, optional = true}
+codec = { workspace = true, default-features = true}
 
-soil-executor = { workspace = true, default-features = true, optional = true}
-soil-executor-common = { workspace = true, default-features = true, optional = true}
-subsoil-crypto-hashing = { workspace = true, default-features = true, optional = true}
-subsoil = { workspace = true, default-features = true, optional = true}
+soil-executor = { workspace = true, default-features = true}
+soil-executor-common = { workspace = true, default-features = true}
+subsoil-crypto-hashing = { workspace = true, default-features = true}
+subsoil = { workspace = true, default-features = true}
 
-thiserror = { workspace = true, optional = true}
-
-[features]
-default = ["std"]
-std = [
-	"codec",
-	"subsoil",
-	"subsoil-crypto-hashing",
-	"soil-executor",
-	"soil-executor-common",
-	"thiserror",
-	"subsoil/std",
-	"subsoil-crypto-hashing/std",
-	"soil-executor/std",
-	"soil-executor-common/std",
-]
+thiserror = { workspace = true}
 
 [dev-dependencies]
 subxt = { workspace = true, features = ["native"] }

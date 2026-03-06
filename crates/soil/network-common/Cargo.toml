@@ -16,15 +16,8 @@ workspace = true
 targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
-bitflags = { workspace = true, optional = true}
-codec = { features = ["derive"], workspace = true, default-features = true, optional = true}
-subsoil = { workspace = true, optional = true}
+bitflags = { workspace = true}
+codec = { features = ["derive"], workspace = true, default-features = true}
+subsoil = { workspace = true}
 
 [features]
-default = ["std"]
-std = [
-	"bitflags",
-	"codec",
-	"subsoil",
-	"subsoil/std",
-]

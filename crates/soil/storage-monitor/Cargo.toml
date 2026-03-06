@@ -12,21 +12,11 @@ homepage.workspace = true
 workspace = true
 
 [dependencies]
-clap = { features = ["derive", "string"], workspace = true, optional = true}
-fs4 = { workspace = true, optional = true}
-log = { workspace = true, default-features = true, optional = true}
-subsoil = { workspace = true, default-features = true, optional = true}
-thiserror = { workspace = true, optional = true}
-tokio = { features = ["time"], workspace = true, default-features = true, optional = true}
+clap = { features = ["derive", "string"], workspace = true}
+fs4 = { workspace = true}
+log = { workspace = true, default-features = true}
+subsoil = { workspace = true, default-features = true}
+thiserror = { workspace = true}
+tokio = { features = ["time"], workspace = true, default-features = true}
 
 [features]
-default = ["std"]
-std = [
-	"clap",
-	"fs4",
-	"log",
-	"subsoil",
-	"thiserror",
-	"tokio",
-	"subsoil/std",
-]

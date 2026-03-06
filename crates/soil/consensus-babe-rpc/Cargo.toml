@@ -16,33 +16,16 @@ workspace = true
 targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
-futures = { workspace = true, optional = true}
-jsonrpsee = { features = ["client-core", "macros", "server-core"], workspace = true, optional = true}
-sc-consensus-babe = { workspace = true, default-features = true, optional = true}
-soil-consensus-epochs = { workspace = true, default-features = true, optional = true}
-soil-rpc-api = { workspace = true, default-features = true, optional = true}
-serde = { features = ["derive"], workspace = true, default-features = true, optional = true}
-soil-blockchain = { workspace = true, default-features = true, optional = true}
-soil-consensus = { workspace = true, default-features = true, optional = true}
-subsoil = { workspace = true, default-features = true, optional = true}
-thiserror = { workspace = true, optional = true}
-
-[features]
-default = ["std"]
-std = [
-	"futures",
-	"jsonrpsee",
-	"sc-consensus-babe",
-	"serde",
-	"subsoil",
-	"soil-blockchain",
-	"soil-consensus",
-	"soil-consensus-epochs",
-	"soil-rpc-api",
-	"thiserror",
-	"subsoil/std",
-	"soil-consensus-epochs/std",
-	"soil-rpc-api/std"]
+futures = { workspace = true}
+jsonrpsee = { features = ["client-core", "macros", "server-core"], workspace = true}
+sc-consensus-babe = { workspace = true, default-features = true}
+soil-consensus-epochs = { workspace = true, default-features = true}
+soil-rpc-api = { workspace = true, default-features = true}
+serde = { features = ["derive"], workspace = true, default-features = true}
+soil-blockchain = { workspace = true, default-features = true}
+soil-consensus = { workspace = true, default-features = true}
+subsoil = { workspace = true, default-features = true}
+thiserror = { workspace = true}
 
 [dev-dependencies]
 sc-consensus = { workspace = true, default-features = true }

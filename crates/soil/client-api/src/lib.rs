@@ -18,54 +18,34 @@
 
 //! Substrate client interfaces.
 #![warn(missing_docs)]
-#![cfg_attr(not(feature = "std"), no_std)]
 
-#[cfg(feature = "std")]
 pub mod backend;
-#[cfg(feature = "std")]
 pub mod call_executor;
-#[cfg(feature = "std")]
 pub mod client;
-#[cfg(feature = "std")]
 pub mod execution_extensions;
-#[cfg(feature = "std")]
 pub mod in_mem;
-#[cfg(feature = "std")]
 pub mod leaves;
-#[cfg(feature = "std")]
 pub mod notifications;
-#[cfg(feature = "std")]
 pub mod proof_provider;
 
-#[cfg(feature = "std")]
 pub use backend::*;
-#[cfg(feature = "std")]
 pub use call_executor::*;
-#[cfg(feature = "std")]
 pub use client::*;
-#[cfg(feature = "std")]
 pub use notifications::*;
-#[cfg(feature = "std")]
 pub use proof_provider::*;
-#[cfg(feature = "std")]
 pub use soil_blockchain as blockchain;
-#[cfg(feature = "std")]
 pub use soil_blockchain::HeaderBackend;
 
-#[cfg(feature = "std")]
 pub use subsoil::state_machine::{CompactProof, StorageProof};
-#[cfg(feature = "std")]
 pub use subsoil::storage::{ChildInfo, PrefixedStorageKey, StorageData, StorageKey};
 
 /// Usage Information Provider interface
-#[cfg(feature = "std")]
 pub trait UsageProvider<Block: subsoil::runtime::traits::Block> {
 	/// Get usage info about current client.
 	fn usage_info(&self) -> ClientInfo<Block>;
 }
 
 /// Utility methods for the client.
-#[cfg(feature = "std")]
 pub mod utils {
 	use soil_blockchain::{Error, HeaderBackend, HeaderMetadata};
 	use subsoil::runtime::traits::Block as BlockT;

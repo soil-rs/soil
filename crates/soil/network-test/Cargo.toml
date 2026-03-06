@@ -16,65 +16,29 @@ workspace = true
 targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
-async-channel = { workspace = true, optional = true}
-async-trait = { workspace = true, optional = true}
-futures = { workspace = true, optional = true}
-futures-timer = { workspace = true, optional = true}
-libp2p = { workspace = true, optional = true}
-log = { workspace = true, default-features = true, optional = true}
-parking_lot = { workspace = true, default-features = true, optional = true}
-rand = { workspace = true, default-features = true, optional = true}
-sc-block-builder = { workspace = true, default-features = true, optional = true}
-soil-client-api = { workspace = true, default-features = true, optional = true}
-sc-consensus = { workspace = true, default-features = true, optional = true}
-soil-network = { workspace = true, default-features = true, optional = true}
-soil-network-common = { workspace = true, default-features = true, optional = true}
-soil-network-light = { workspace = true, default-features = true, optional = true}
-soil-network-sync = { workspace = true, default-features = true, optional = true}
-soil-network-types = { workspace = true, default-features = true, optional = true}
-soil-service = { workspace = true, optional = true}
-soil-utils = { workspace = true, default-features = true, optional = true}
-soil-blockchain = { workspace = true, default-features = true, optional = true}
-soil-consensus = { workspace = true, default-features = true, optional = true}
-subsoil = { workspace = true, default-features = true, optional = true }
-substrate-test-runtime = { workspace = true, optional = true}
-substrate-test-runtime-client = { workspace = true, optional = true}
-tokio = { workspace = true, default-features = true, optional = true}
+async-channel = { workspace = true}
+async-trait = { workspace = true}
+futures = { workspace = true}
+futures-timer = { workspace = true}
+libp2p = { workspace = true}
+log = { workspace = true, default-features = true}
+parking_lot = { workspace = true, default-features = true}
+rand = { workspace = true, default-features = true}
+sc-block-builder = { workspace = true, default-features = true}
+soil-client-api = { workspace = true, default-features = true}
+sc-consensus = { workspace = true, default-features = true}
+soil-network = { workspace = true, default-features = true}
+soil-network-common = { workspace = true, default-features = true}
+soil-network-light = { workspace = true, default-features = true}
+soil-network-sync = { workspace = true, default-features = true}
+soil-network-types = { workspace = true, default-features = true}
+soil-service = { workspace = true}
+soil-utils = { workspace = true, default-features = true}
+soil-blockchain = { workspace = true, default-features = true}
+soil-consensus = { workspace = true, default-features = true}
+subsoil = { workspace = true, default-features = true }
+substrate-test-runtime = { workspace = true}
+substrate-test-runtime-client = { workspace = true}
+tokio = { workspace = true, default-features = true}
 
 [features]
-default = ["std"]
-std = [
-	"async-channel",
-	"async-trait",
-	"futures",
-	"futures-timer",
-	"libp2p",
-	"log",
-	"parking_lot",
-	"rand",
-	"sc-block-builder",
-	"sc-consensus",
-	"soil-blockchain",
-	"soil-client-api",
-	"soil-consensus",
-	"subsoil",
-	"soil-network",
-	"soil-network-common",
-	"soil-network-light",
-	"soil-network-sync",
-	"soil-network-types",
-	"soil-service",
-	"soil-utils",
-	"substrate-test-runtime",
-	"substrate-test-runtime-client",
-	"tokio",
-	"soil-client-api/std",
-	"subsoil/std",
-	"soil-network/std",
-	"soil-network-common/std",
-	"soil-network-light/std",
-	"soil-network-sync/std",
-	"soil-network-types/std",
-	"soil-service/std",
-	"soil-utils/std",
-]

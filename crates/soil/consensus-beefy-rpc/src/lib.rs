@@ -19,48 +19,35 @@
 //! RPC API for BEEFY.
 
 #![warn(missing_docs)]
-#![cfg_attr(not(feature = "std"), no_std)]
 
-#[cfg(feature = "std")]
 use parking_lot::RwLock;
-#[cfg(feature = "std")]
 use subsoil::consensus::beefy::AuthorityIdBound;
-#[cfg(feature = "std")]
 use std::sync::Arc;
 
-#[cfg(feature = "std")]
 use sc_rpc::{
 	utils::{BoundedVecDeque, PendingSubscription},
 	SubscriptionTaskExecutor,
 };
-#[cfg(feature = "std")]
 use subsoil::application_crypto::RuntimeAppPublic;
-#[cfg(feature = "std")]
 use subsoil::runtime::traits::Block as BlockT;
 
-#[cfg(feature = "std")]
 use futures::{task::SpawnError, FutureExt, StreamExt};
-#[cfg(feature = "std")]
 use jsonrpsee::{
 	core::async_trait,
 	proc_macros::rpc,
 	types::{ErrorObject, ErrorObjectOwned},
 	PendingSubscriptionSink,
 };
-#[cfg(feature = "std")]
 use log::warn;
 
-#[cfg(feature = "std")]
 use sc_consensus_beefy::communication::notification::{
 	BeefyBestBlockStream, BeefyVersionedFinalityProofStream,
 };
 
-#[cfg(feature = "std")]
 mod notification;
 
 #[derive(Debug, thiserror::Error)]
 /// Top-level error type for the RPC handler
-#[cfg(feature = "std")]
 pub enum Error {
 	/// The BEEFY RPC endpoint is not ready.
 	#[error("BEEFY RPC endpoint not ready")]
@@ -71,7 +58,6 @@ pub enum Error {
 }
 
 /// The error codes returned by jsonrpc.
-#[cfg(feature = "std")]
 pub enum ErrorCode {
 	/// Returned when BEEFY RPC endpoint is not ready.
 	NotReady = 1,
@@ -79,7 +65,6 @@ pub enum ErrorCode {
 	TaskFailure = 2,
 }
 
-#[cfg(feature = "std")]
 impl From<Error> for ErrorCode {
 	fn from(error: Error) -> Self {
 		match error {
@@ -89,7 +74,6 @@ impl From<Error> for ErrorCode {
 	}
 }
 
-#[cfg(feature = "std")]
 impl From<Error> for ErrorObjectOwned {
 	fn from(error: Error) -> Self {
 		let message = error.to_string();
@@ -100,7 +84,6 @@ impl From<Error> for ErrorObjectOwned {
 
 // Provides RPC methods for interacting with BEEFY.
 #[rpc(client, server)]
-#[cfg(feature = "std")]
 pub trait BeefyApi<Notification, Hash> {
 	/// Returns the block most recently finalized by BEEFY, alongside its justification.
 	#[subscription(
@@ -120,14 +103,12 @@ pub trait BeefyApi<Notification, Hash> {
 }
 
 /// Implements the BeefyApi RPC trait for interacting with BEEFY.
-#[cfg(feature = "std")]
 pub struct Beefy<Block: BlockT, AuthorityId: AuthorityIdBound> {
 	finality_proof_stream: BeefyVersionedFinalityProofStream<Block, AuthorityId>,
 	beefy_best_block: Arc<RwLock<Option<Block::Hash>>>,
 	executor: SubscriptionTaskExecutor,
 }
 
-#[cfg(feature = "std")]
 impl<Block, AuthorityId> Beefy<Block, AuthorityId>
 where
 	Block: BlockT,
@@ -154,7 +135,6 @@ where
 }
 
 #[async_trait]
-#[cfg(feature = "std")]
 impl<Block, AuthorityId> BeefyApiServer<notification::EncodedVersionedFinalityProof, Block::Hash>
 	for Beefy<Block, AuthorityId>
 where
@@ -180,7 +160,6 @@ where
 }
 
 #[cfg(test)]
-#[cfg(feature = "std")]
 mod tests {
 	use super::*;
 

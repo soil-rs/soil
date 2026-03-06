@@ -17,40 +17,18 @@ workspace = true
 targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
-ahash = { workspace = true, optional = true}
-futures = { workspace = true, optional = true}
-futures-timer = { workspace = true, optional = true}
-log = { workspace = true, default-features = true, optional = true}
-prometheus-endpoint = { workspace = true, default-features = true, optional = true}
-soil-network = { workspace = true, default-features = true, optional = true}
-soil-network-common = { workspace = true, default-features = true, optional = true}
-soil-network-sync = { workspace = true, default-features = true, optional = true}
-soil-network-types = { workspace = true, default-features = true, optional = true}
-schnellru = { workspace = true, optional = true}
-subsoil = { workspace = true, optional = true}
-tracing = { workspace = true, default-features = true, optional = true}
-
-[features]
-default = ["std"]
-std = [
-	"ahash",
-	"futures",
-	"futures-timer",
-	"log",
-	"prometheus-endpoint",
-	"schnellru",
-	"soil-network",
-	"soil-network-common",
-	"soil-network-sync",
-	"soil-network-types",
-	"subsoil",
-	"tracing",
-	"soil-network/std",
-	"soil-network-common/std",
-	"soil-network-sync/std",
-	"soil-network-types/std",
-	"subsoil/std",
-]
+ahash = { workspace = true}
+futures = { workspace = true}
+futures-timer = { workspace = true}
+log = { workspace = true, default-features = true}
+prometheus-endpoint = { workspace = true, default-features = true}
+soil-network = { workspace = true, default-features = true}
+soil-network-common = { workspace = true, default-features = true}
+soil-network-sync = { workspace = true, default-features = true}
+soil-network-types = { workspace = true, default-features = true}
+schnellru = { workspace = true}
+subsoil = { workspace = true}
+tracing = { workspace = true, default-features = true}
 
 [dev-dependencies]
 async-trait = { workspace = true }

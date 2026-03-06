@@ -242,56 +242,33 @@
 //!
 //! More precise usage details are still being worked on and will likely change in the future.
 
-#![cfg_attr(not(feature = "std"), no_std)]
 
-#[cfg(feature = "std")]
 mod behaviour;
-#[cfg(feature = "std")]
 mod bitswap;
-#[cfg(feature = "std")]
 mod litep2p;
-#[cfg(feature = "std")]
 mod protocol;
 
 #[cfg(test)]
-#[cfg(feature = "std")]
 mod mock;
 
-#[cfg(feature = "std")]
 pub mod config;
-#[cfg(feature = "std")]
 pub mod discovery;
-#[cfg(feature = "std")]
 pub mod error;
-#[cfg(feature = "std")]
 pub mod event;
-#[cfg(feature = "std")]
 pub mod network_state;
-#[cfg(feature = "std")]
 pub mod peer_info;
-#[cfg(feature = "std")]
 pub mod peer_store;
-#[cfg(feature = "std")]
 pub mod protocol_controller;
-#[cfg(feature = "std")]
 pub mod request_responses;
-#[cfg(feature = "std")]
 pub mod service;
-#[cfg(feature = "std")]
 pub mod transport;
-#[cfg(feature = "std")]
 pub mod types;
-#[cfg(feature = "std")]
 pub mod utils;
 
-#[cfg(feature = "std")]
 pub use crate::litep2p::Litep2pNetworkBackend;
-#[cfg(feature = "std")]
 pub use event::{DhtEvent, Event};
 #[doc(inline)]
-#[cfg(feature = "std")]
 pub use request_responses::{Config, IfDisconnected, RequestFailure};
-#[cfg(feature = "std")]
 pub use service::{
 	metrics::NotificationMetrics,
 	signature::Signature,
@@ -305,21 +282,17 @@ pub use service::{
 	DecodingError, Keypair, NetworkService, NetworkWorker, NotificationSender, OutboundFailure,
 	PublicKey,
 };
-#[cfg(feature = "std")]
 pub use soil_network_common::{
 	role::{ObservedRole, Roles},
 	types::ReputationChange,
 };
-#[cfg(feature = "std")]
 pub use soil_network_types::{
 	multiaddr::{self, Multiaddr},
 	PeerId,
 };
-#[cfg(feature = "std")]
 pub use types::ProtocolName;
 
 /// Log target for `soil-network`.
-#[cfg(feature = "std")]
 const LOG_TARGET: &str = "sub-libp2p";
 
 /// The maximum allowed number of established connections per peer.
@@ -329,13 +302,10 @@ const LOG_TARGET: &str = "sub-libp2p";
 /// avoid unnecessary and nondeterministic connection closure in
 /// case of (possibly repeated) simultaneous dialing attempts between
 /// two peers, the per-peer connection limit is not set to 1 but 2.
-#[cfg(feature = "std")]
 const MAX_CONNECTIONS_PER_PEER: usize = 2;
 
 /// The maximum number of concurrent established connections that were incoming.
-#[cfg(feature = "std")]
 const MAX_CONNECTIONS_ESTABLISHED_INCOMING: u32 = 10_000;
 
 /// Maximum response size limit.
-#[cfg(feature = "std")]
 pub const MAX_RESPONSE_SIZE: u64 = 16 * 1024 * 1024;

@@ -14,29 +14,14 @@ workspace = true
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-codec = { workspace = true, default-features = true, optional = true}
-futures = { workspace = true, optional = true}
-log = { workspace = true, default-features = true, optional = true}
-soil-client-api = { workspace = true, default-features = true, optional = true}
-sc-offchain = { workspace = true, default-features = true, optional = true}
-soil-blockchain = { workspace = true, default-features = true, optional = true}
-soil-consensus = { workspace = true, default-features = true, optional = true}
-subsoil = { workspace = true, default-features = true, optional = true}
-
-[features]
-default = ["std"]
-std = [
-	"codec",
-	"futures",
-	"log",
-	"sc-offchain",
-	"soil-blockchain",
-	"soil-client-api",
-	"soil-consensus",
-	"soil-client-api/std",
-	"subsoil",
-	"subsoil/std",
-]
+codec = { workspace = true, default-features = true}
+futures = { workspace = true}
+log = { workspace = true, default-features = true}
+soil-client-api = { workspace = true, default-features = true}
+sc-offchain = { workspace = true, default-features = true}
+soil-blockchain = { workspace = true, default-features = true}
+soil-consensus = { workspace = true, default-features = true}
+subsoil = { workspace = true, default-features = true}
 
 [dev-dependencies]
 parking_lot = { workspace = true, default-features = true }

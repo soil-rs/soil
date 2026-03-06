@@ -36,46 +36,29 @@
 //! in the MMR.
 
 #![warn(missing_docs)]
-#![cfg_attr(not(feature = "std"), no_std)]
 
-#[cfg(feature = "std")]
 mod aux_schema;
-#[cfg(feature = "std")]
 mod offchain_mmr;
 #[cfg(test)]
-#[cfg(feature = "std")]
 pub mod test_utils;
 
-#[cfg(feature = "std")]
 use crate::offchain_mmr::OffchainMmr;
-#[cfg(feature = "std")]
 use futures::StreamExt;
-#[cfg(feature = "std")]
 use log::{debug, error, trace, warn};
-#[cfg(feature = "std")]
 use sc_offchain::OffchainDb;
-#[cfg(feature = "std")]
 use subsoil::api::ProvideRuntimeApi;
-#[cfg(feature = "std")]
 use soil_blockchain::{HeaderBackend, HeaderMetadata};
-#[cfg(feature = "std")]
 use soil_client_api::{Backend, BlockchainEvents, FinalityNotification, FinalityNotifications};
-#[cfg(feature = "std")]
 use subsoil::consensus::beefy::MmrRootHash;
-#[cfg(feature = "std")]
 use subsoil::mmr::{utils, LeafIndex, MmrApi};
-#[cfg(feature = "std")]
 use subsoil::runtime::traits::{Block, Header, NumberFor};
-#[cfg(feature = "std")]
 use std::{marker::PhantomData, sync::Arc};
 
 /// Logging target for the mmr gadget.
-#[cfg(feature = "std")]
 pub const LOG_TARGET: &str = "mmr";
 
 /// A convenience MMR client trait that defines all the type bounds a MMR client
 /// has to satisfy and defines some helper methods.
-#[cfg(feature = "std")]
 pub trait MmrClient<B, BE>:
 	BlockchainEvents<B> + HeaderBackend<B> + HeaderMetadata<B> + ProvideRuntimeApi<B>
 where
@@ -121,7 +104,6 @@ where
 	}
 }
 
-#[cfg(feature = "std")]
 impl<B, BE, T> MmrClient<B, BE> for T
 where
 	B: Block,
@@ -132,7 +114,6 @@ where
 	// empty
 }
 
-#[cfg(feature = "std")]
 struct OffchainMmrBuilder<B: Block, BE: Backend<B>, C> {
 	backend: Arc<BE>,
 	client: Arc<C>,
@@ -142,7 +123,6 @@ struct OffchainMmrBuilder<B: Block, BE: Backend<B>, C> {
 	_phantom: PhantomData<B>,
 }
 
-#[cfg(feature = "std")]
 impl<B, BE, C> OffchainMmrBuilder<B, BE, C>
 where
 	B: Block,
@@ -183,14 +163,12 @@ where
 }
 
 /// A MMR Gadget.
-#[cfg(feature = "std")]
 pub struct MmrGadget<B: Block, BE: Backend<B>, C> {
 	finality_notifications: FinalityNotifications<B>,
 
 	_phantom: PhantomData<(B, BE, C)>,
 }
 
-#[cfg(feature = "std")]
 impl<B, BE, C> MmrGadget<B, BE, C>
 where
 	B: Block,
@@ -241,7 +219,6 @@ where
 }
 
 #[cfg(test)]
-#[cfg(feature = "std")]
 mod tests {
 	use crate::test_utils::run_test_with_mmr_gadget;
 	use subsoil::runtime::generic::BlockId;

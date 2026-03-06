@@ -23,51 +23,29 @@
 #![warn(missing_docs)]
 #![warn(unused_extern_crates)]
 #![warn(unused_imports)]
-#![cfg_attr(not(feature = "std"), no_std)]
 
-#[cfg(feature = "std")]
 use clap::{CommandFactory, FromArgMatches, Parser};
-#[cfg(feature = "std")]
 use log::warn;
-#[cfg(feature = "std")]
 use soil_service::Configuration;
 
-#[cfg(feature = "std")]
 pub mod arg_enums;
-#[cfg(feature = "std")]
 pub mod commands;
-#[cfg(feature = "std")]
 mod config;
-#[cfg(feature = "std")]
 mod error;
-#[cfg(feature = "std")]
 mod params;
-#[cfg(feature = "std")]
 mod runner;
-#[cfg(feature = "std")]
 mod signals;
 
-#[cfg(feature = "std")]
 pub use arg_enums::*;
-#[cfg(feature = "std")]
 pub use clap;
-#[cfg(feature = "std")]
 pub use commands::*;
-#[cfg(feature = "std")]
 pub use config::*;
-#[cfg(feature = "std")]
 pub use error::*;
-#[cfg(feature = "std")]
 pub use params::*;
-#[cfg(feature = "std")]
 pub use runner::*;
-#[cfg(feature = "std")]
 pub use sc_tracing::logging::LoggerBuilder;
-#[cfg(feature = "std")]
 pub use signals::Signals;
-#[cfg(feature = "std")]
 pub use soil_service::{ChainSpec, Role};
-#[cfg(feature = "std")]
 pub use subsoil::version::RuntimeVersion;
 
 /// Substrate client CLI
@@ -75,7 +53,6 @@ pub use subsoil::version::RuntimeVersion;
 /// This trait needs to be implemented on the root CLI struct of the application. It will provide
 /// the implementation `name`, `version`, `executable name`, `description`, `author`, `support_url`,
 /// `copyright start year` and most importantly: how to load the chain spec.
-#[cfg(feature = "std")]
 pub trait SubstrateCli: Sized {
 	/// Implementation name.
 	fn impl_name() -> String;

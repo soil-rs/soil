@@ -54,5 +54,4 @@ std = [
 	"tokio",
 	"tower",
 	"tower-http",
-	"soil-rpc-api/std",
 ]

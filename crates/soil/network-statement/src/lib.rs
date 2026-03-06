@@ -26,30 +26,22 @@
 //! - Use [`StatementHandlerPrototype::build`] then [`StatementHandler::run`] to obtain a
 //! `Future` that processes statements.
 
-#![cfg_attr(not(feature = "std"), no_std)]
 
-#[cfg(feature = "std")]
 use crate::config::*;
 
-#[cfg(feature = "std")]
 use codec::{Compact, Decode, Encode, MaxEncodedLen};
 #[cfg(any(test, feature = "test-helpers"))]
-#[cfg(feature = "std")]
 use futures::future::pending;
-#[cfg(feature = "std")]
 use futures::{channel::oneshot, future::FusedFuture, prelude::*, stream::FuturesUnordered};
-#[cfg(feature = "std")]
 use governor::{
 	clock::DefaultClock,
 	state::{InMemoryState, NotKeyed},
 	Quota, RateLimiter,
 };
-#[cfg(feature = "std")]
 use prometheus_endpoint::{
 	exponential_buckets, register, Counter, Gauge, Histogram, HistogramOpts, PrometheusError,
 	Registry, U64,
 };
-#[cfg(feature = "std")]
 use soil_network::{
 	config::{NonReservedPeerMode, SetConfig},
 	error, multiaddr,
@@ -62,17 +54,12 @@ use soil_network::{
 	utils::{interval, LruHashSet},
 	NetworkBackend, NetworkEventStream, NetworkPeers,
 };
-#[cfg(feature = "std")]
 use soil_network_sync::{SyncEvent, SyncEventStream};
-#[cfg(feature = "std")]
 use soil_network_types::PeerId;
-#[cfg(feature = "std")]
 use subsoil::runtime::traits::Block as BlockT;
-#[cfg(feature = "std")]
 use soil_statement_store::{
 	FilterDecision, Hash, Statement, StatementSource, StatementStore, SubmitResult,
 };
-#[cfg(feature = "std")]
 use std::{
 	collections::{hash_map::Entry, HashMap, HashSet, VecDeque},
 	iter,
@@ -81,19 +68,14 @@ use std::{
 	sync::Arc,
 	time::Instant,
 };
-#[cfg(feature = "std")]
 use tokio::time::timeout;
-#[cfg(feature = "std")]
 pub mod config;
 
 /// A set of statements.
-#[cfg(feature = "std")]
 pub type Statements = Vec<Statement>;
 /// Future resolving to statement import result.
-#[cfg(feature = "std")]
 pub type StatementImportFuture = oneshot::Receiver<SubmitResult>;
 
-#[cfg(feature = "std")]
 mod rep {
 	use soil_network::ReputationChange as Rep;
 	/// Reputation change when a peer sends us any statement.
@@ -113,16 +95,12 @@ mod rep {
 	pub const STATEMENT_FLOODING: Rep = Rep::new_fatal("Statement flooding");
 }
 
-#[cfg(feature = "std")]
 const LOG_TARGET: &str = "statement-gossip";
 /// Maximim time we wait for sending a notification to a peer.
-#[cfg(feature = "std")]
 const SEND_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(10);
 /// Interval for sending statement batches during initial sync to new peers.
-#[cfg(feature = "std")]
 const INITIAL_SYNC_BURST_INTERVAL: std::time::Duration = std::time::Duration::from_millis(100);
 
-#[cfg(feature = "std")]
 struct Metrics {
 	propagated_statements: Counter<U64>,
 	known_statements_received: Counter<U64>,
@@ -142,7 +120,6 @@ struct Metrics {
 	statement_flooding_detected: Counter<U64>,
 }
 
-#[cfg(feature = "std")]
 impl Metrics {
 	fn register(r: &Registry) -> Result<Self, PrometheusError> {
 		Ok(Self {
@@ -273,13 +250,11 @@ impl Metrics {
 }
 
 /// Prototype for a [`StatementHandler`].
-#[cfg(feature = "std")]
 pub struct StatementHandlerPrototype {
 	protocol_name: ProtocolName,
 	notification_service: Box<dyn NotificationService>,
 }
 
-#[cfg(feature = "std")]
 impl StatementHandlerPrototype {
 	/// Create a new instance.
 	pub fn new<
@@ -412,7 +387,6 @@ impl StatementHandlerPrototype {
 }
 
 /// Handler for statements. Call [`StatementHandler::run`] to start the processing.
-#[cfg(feature = "std")]
 pub struct StatementHandler<
 	N: NetworkPeers + NetworkEventStream,
 	S: SyncEventStream + soil_consensus::SyncOracle,
@@ -457,12 +431,10 @@ pub struct StatementHandler<
 /// The token bucket allows short bursts up to the per-second limit while enforcing
 /// the average rate over time.
 #[derive(Debug)]
-#[cfg(feature = "std")]
 struct PeerRateLimiter {
 	limiter: RateLimiter<NotKeyed, InMemoryState, DefaultClock>,
 }
 
-#[cfg(feature = "std")]
 impl PeerRateLimiter {
 	fn new(statements_per_second: NonZeroU32, burst: NonZeroU32) -> Self {
 		let quota = Quota::per_second(statements_per_second).allow_burst(burst);
@@ -485,7 +457,6 @@ impl PeerRateLimiter {
 /// Peer information
 #[cfg_attr(not(any(test, feature = "test-helpers")), doc(hidden))]
 #[derive(Debug)]
-#[cfg(feature = "std")]
 pub struct Peer {
 	/// Holds a set of statements known to this peer.
 	known_statements: LruHashSet<Hash>,
@@ -494,14 +465,12 @@ pub struct Peer {
 }
 
 /// Tracks pending initial sync state for a peer (hashes only, statements fetched on-demand).
-#[cfg(feature = "std")]
 struct PendingInitialSync {
 	hashes: Vec<Hash>,
 	started_at: Instant,
 }
 
 /// Result of finding a sendable chunk of statements.
-#[cfg(feature = "std")]
 enum ChunkResult {
 	/// Found a chunk that fits. Contains the end index (exclusive).
 	Send(usize),
@@ -510,7 +479,6 @@ enum ChunkResult {
 }
 
 /// Result of sending a chunk of statements.
-#[cfg(feature = "std")]
 enum SendChunkResult {
 	/// Successfully sent a chunk of N statements.
 	Sent(usize),
@@ -526,7 +494,6 @@ enum SendChunkResult {
 ///
 /// This reserves space for encoding the length of the vector (Compact<u32>),
 /// ensuring the final encoded message fits within MAX_STATEMENT_NOTIFICATION_SIZE.
-#[cfg(feature = "std")]
 fn max_statement_payload_size() -> usize {
 	MAX_STATEMENT_NOTIFICATION_SIZE as usize - Compact::<u32>::max_encoded_len()
 }
@@ -537,7 +504,6 @@ fn max_statement_payload_size() -> usize {
 /// Uses an incremental approach: adds statements one by one until the limit is reached.
 /// This is efficient because we only compute sizes for statements we'll actually send
 /// in this chunk, rather than computing sizes for all statements upfront.
-#[cfg(feature = "std")]
 fn find_sendable_chunk(statements: &[&Statement]) -> ChunkResult {
 	if statements.is_empty() {
 		return ChunkResult::Send(0);
@@ -572,7 +538,6 @@ fn find_sendable_chunk(statements: &[&Statement]) -> ChunkResult {
 	}
 }
 
-#[cfg(feature = "std")]
 impl Peer {
 	/// Create a new peer for testing/benchmarking purposes.
 	#[cfg(any(test, feature = "test-helpers"))]
@@ -585,7 +550,6 @@ impl Peer {
 	}
 }
 
-#[cfg(feature = "std")]
 impl<N, S> StatementHandler<N, S>
 where
 	N: NetworkPeers + NetworkEventStream,
@@ -1130,7 +1094,6 @@ where
 }
 
 #[cfg(test)]
-#[cfg(feature = "std")]
 mod tests {
 
 	use super::*;

@@ -16,25 +16,18 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 #![allow(missing_docs)]
-#![cfg_attr(not(feature = "std"), no_std)]
 
 #[cfg(test)]
-#[cfg(feature = "std")]
 mod block_import;
 #[cfg(test)]
-#[cfg(feature = "std")]
 mod conformance;
 #[cfg(test)]
-#[cfg(feature = "std")]
 mod fuzz;
 #[cfg(test)]
-#[cfg(feature = "std")]
 mod service;
 #[cfg(test)]
-#[cfg(feature = "std")]
 mod sync;
 
-#[cfg(feature = "std")]
 use std::{
 	collections::HashMap,
 	pin::Pin,
@@ -46,40 +39,29 @@ use std::{
 	time::Duration,
 };
 
-#[cfg(feature = "std")]
 use futures::{future::BoxFuture, pin_mut, prelude::*};
-#[cfg(feature = "std")]
 use libp2p::PeerId;
-#[cfg(feature = "std")]
 use log::trace;
-#[cfg(feature = "std")]
 use parking_lot::Mutex;
-#[cfg(feature = "std")]
 use sc_block_builder::{BlockBuilder, BlockBuilderBuilder};
-#[cfg(feature = "std")]
 use sc_consensus::{
 	BasicQueue, BlockCheckParams, BlockImport, BlockImportParams, BoxJustificationImport,
 	ForkChoiceStrategy, ImportQueue, ImportResult, JustificationImport, JustificationSyncLink,
 	LongestChain, Verifier,
 };
-#[cfg(feature = "std")]
 use soil_blockchain::{
 	Backend as BlockchainBackend, HeaderBackend, Info as BlockchainInfo, Result as ClientResult,
 };
-#[cfg(feature = "std")]
 use soil_client_api::{
 	backend::{AuxStore, Backend, Finalizer},
 	BlockBackend, BlockImportNotification, BlockchainEvents, FinalityNotification,
 	FinalityNotifications, ImportNotifications,
 };
-#[cfg(feature = "std")]
 use soil_consensus::{
 	block_validation::{BlockAnnounceValidator, DefaultBlockAnnounceValidator},
 	BlockOrigin, Error as ConsensusError, SyncOracle,
 };
-#[cfg(feature = "std")]
 use subsoil::core::H256;
-#[cfg(feature = "std")]
 use soil_network::{
 	config::{
 		FullNetworkConfiguration, MultiaddrWithPeerId, NetworkConfiguration, NonDefaultSetConfig,
@@ -91,11 +73,8 @@ use soil_network::{
 	NetworkBlock, NetworkService, NetworkStateInfo, NetworkSyncForkRequest, NetworkWorker,
 	NotificationMetrics, NotificationService,
 };
-#[cfg(feature = "std")]
 use soil_network_common::role::Roles;
-#[cfg(feature = "std")]
 use soil_network_light::light_client_requests::handler::LightClientRequestHandler;
-#[cfg(feature = "std")]
 use soil_network_sync::{
 	block_request_handler::BlockRequestHandler,
 	service::{network::NetworkServiceProvider, syncing_service::SyncingService},
@@ -109,36 +88,28 @@ use soil_network_sync::{
 	},
 	warp_request_handler,
 };
-#[cfg(feature = "std")]
 use soil_network_types::{build_multiaddr, multiaddr::Multiaddr};
-#[cfg(feature = "std")]
 use subsoil::runtime::{
 	codec::{Decode, Encode},
 	generic::BlockId,
 	traits::{Block as BlockT, Header as HeaderT, NumberFor, Zero},
 	Digest, Justification, Justifications,
 };
-#[cfg(feature = "std")]
 use soil_service::client::Client;
-#[cfg(feature = "std")]
 use substrate_test_runtime_client::Sr25519Keyring;
-#[cfg(feature = "std")]
 pub use substrate_test_runtime_client::{
 	runtime::{Block, ExtrinsicBuilder, Hash, Header, Transfer},
 	TestClient, TestClientBuilder, TestClientBuilderExt,
 };
-#[cfg(feature = "std")]
 use tokio::time::timeout;
 
 /// A Verifier that accepts all blocks and passes them on with the configured
 /// finality to be imported.
 #[derive(Clone)]
-#[cfg(feature = "std")]
 pub struct PassThroughVerifier {
 	finalized: bool,
 }
 
-#[cfg(feature = "std")]
 impl PassThroughVerifier {
 	/// Create a new instance.
 	///
@@ -150,7 +121,6 @@ impl PassThroughVerifier {
 
 /// This `Verifier` accepts all data as valid.
 #[async_trait::async_trait]
-#[cfg(feature = "std")]
 impl<B: BlockT> Verifier<B> for PassThroughVerifier {
 	async fn verify(
 		&self,
@@ -164,7 +134,6 @@ impl<B: BlockT> Verifier<B> for PassThroughVerifier {
 	}
 }
 
-#[cfg(feature = "std")]
 pub type PeersFullClient = Client<
 	substrate_test_runtime_client::Backend,
 	substrate_test_runtime_client::ExecutorDispatch,
@@ -173,13 +142,11 @@ pub type PeersFullClient = Client<
 >;
 
 #[derive(Clone)]
-#[cfg(feature = "std")]
 pub struct PeersClient {
 	client: Arc<PeersFullClient>,
 	backend: Arc<substrate_test_runtime_client::Backend>,
 }
 
-#[cfg(feature = "std")]
 impl PeersClient {
 	pub fn as_client(&self) -> Arc<PeersFullClient> {
 		self.client.clone()
@@ -248,7 +215,6 @@ impl PeersClient {
 }
 
 #[async_trait::async_trait]
-#[cfg(feature = "std")]
 impl BlockImport<Block> for PeersClient {
 	type Error = ConsensusError;
 
@@ -267,7 +233,6 @@ impl BlockImport<Block> for PeersClient {
 	}
 }
 
-#[cfg(feature = "std")]
 pub struct Peer<D, BlockImport> {
 	pub data: D,
 	client: PeersClient,
@@ -287,7 +252,6 @@ pub struct Peer<D, BlockImport> {
 	notification_services: HashMap<ProtocolName, Box<dyn NotificationService>>,
 }
 
-#[cfg(feature = "std")]
 impl<D, B> Peer<D, B>
 where
 	B: BlockImport<Block, Error = ConsensusError> + Send + Sync,
@@ -645,13 +609,11 @@ where
 	}
 }
 
-#[cfg(feature = "std")]
 pub trait BlockImportAdapterFull:
 	BlockImport<Block, Error = ConsensusError> + Send + Sync + Clone
 {
 }
 
-#[cfg(feature = "std")]
 impl<T> BlockImportAdapterFull for T where
 	T: BlockImport<Block, Error = ConsensusError> + Send + Sync + Clone
 {
@@ -663,13 +625,11 @@ impl<T> BlockImportAdapterFull for T where
 /// This is required as the `TestNetFactory` trait does not distinguish between
 /// full and light nodes.
 #[derive(Clone)]
-#[cfg(feature = "std")]
 pub struct BlockImportAdapter<I> {
 	inner: I,
 	import_errors: Arc<AtomicU32>,
 }
 
-#[cfg(feature = "std")]
 impl<I> BlockImportAdapter<I> {
 	/// Create a new instance of `Self::Full`.
 	pub fn new(inner: I) -> Self {
@@ -683,7 +643,6 @@ impl<I> BlockImportAdapter<I> {
 }
 
 #[async_trait::async_trait]
-#[cfg(feature = "std")]
 impl<I> BlockImport<Block> for BlockImportAdapter<I>
 where
 	I: BlockImport<Block, Error = ConsensusError> + Send + Sync,
@@ -717,14 +676,12 @@ where
 }
 
 /// Implements `Verifier` and keeps track of failed verifications.
-#[cfg(feature = "std")]
 struct VerifierAdapter<B: BlockT> {
 	verifier: Arc<futures::lock::Mutex<Box<dyn Verifier<B>>>>,
 	failed_verifications: Arc<Mutex<HashMap<B::Hash, String>>>,
 }
 
 #[async_trait::async_trait]
-#[cfg(feature = "std")]
 impl<B: BlockT> Verifier<B> for VerifierAdapter<B> {
 	async fn verify(&self, block: BlockImportParams<B>) -> Result<BlockImportParams<B>, String> {
 		let hash = block.header.hash();
@@ -734,7 +691,6 @@ impl<B: BlockT> Verifier<B> for VerifierAdapter<B> {
 	}
 }
 
-#[cfg(feature = "std")]
 impl<B: BlockT> Clone for VerifierAdapter<B> {
 	fn clone(&self) -> Self {
 		Self {
@@ -744,7 +700,6 @@ impl<B: BlockT> Clone for VerifierAdapter<B> {
 	}
 }
 
-#[cfg(feature = "std")]
 impl<B: BlockT> VerifierAdapter<B> {
 	fn new(verifier: impl Verifier<B> + 'static) -> Self {
 		VerifierAdapter {
@@ -754,15 +709,12 @@ impl<B: BlockT> VerifierAdapter<B> {
 	}
 }
 
-#[cfg(feature = "std")]
 struct TestWarpSyncProvider<B: BlockT>(Arc<dyn HeaderBackend<B>>);
 
-#[cfg(feature = "std")]
 struct TestVerifier<B: BlockT> {
 	genesis_hash: B::Hash,
 }
 
-#[cfg(feature = "std")]
 impl<B: BlockT> WarpVerifier<B> for TestVerifier<B> {
 	fn verify(
 		&mut self,
@@ -782,7 +734,6 @@ impl<B: BlockT> WarpVerifier<B> for TestVerifier<B> {
 	}
 }
 
-#[cfg(feature = "std")]
 impl<B: BlockT> WarpSyncProvider<B> for TestWarpSyncProvider<B> {
 	fn generate(
 		&self,
@@ -801,7 +752,6 @@ impl<B: BlockT> WarpSyncProvider<B> for TestWarpSyncProvider<B> {
 
 /// Configuration for a full peer.
 #[derive(Default)]
-#[cfg(feature = "std")]
 pub struct FullPeerConfig {
 	/// Pruning window size.
 	///
@@ -832,7 +782,6 @@ pub struct FullPeerConfig {
 }
 
 #[async_trait::async_trait]
-#[cfg(feature = "std")]
 pub trait TestNetFactory: Default + Sized + Send {
 	type Verifier: 'static + Verifier<Block>;
 	type BlockImport: BlockImport<Block, Error = ConsensusError> + Clone + Send + Sync + 'static;
@@ -1293,12 +1242,10 @@ pub trait TestNetFactory: Default + Sized + Send {
 }
 
 #[derive(Default)]
-#[cfg(feature = "std")]
 pub struct TestNet {
 	peers: Vec<Peer<(), PeersClient>>,
 }
 
-#[cfg(feature = "std")]
 impl TestNetFactory for TestNet {
 	type Verifier = PassThroughVerifier;
 	type PeerData = ();
@@ -1336,11 +1283,9 @@ impl TestNetFactory for TestNet {
 	}
 }
 
-#[cfg(feature = "std")]
 pub struct ForceFinalized(PeersClient);
 
 #[async_trait::async_trait]
-#[cfg(feature = "std")]
 impl JustificationImport<Block> for ForceFinalized {
 	type Error = ConsensusError;
 
@@ -1361,10 +1306,8 @@ impl JustificationImport<Block> for ForceFinalized {
 }
 
 #[derive(Default)]
-#[cfg(feature = "std")]
 pub struct JustificationTestNet(TestNet);
 
-#[cfg(feature = "std")]
 impl TestNetFactory for JustificationTestNet {
 	type Verifier = PassThroughVerifier;
 	type PeerData = ();

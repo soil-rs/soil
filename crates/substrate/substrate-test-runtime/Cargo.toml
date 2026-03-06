@@ -75,7 +75,6 @@ std = [
 	"topsoil-balances/std",
 	"topsoil-timestamp/std",
 	"topsoil-utility/std",
-	"soil-executor/std",
 	"soil-service",
 	"scale-info/std",
 	"serde/std",

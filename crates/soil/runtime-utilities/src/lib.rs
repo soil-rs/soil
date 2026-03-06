@@ -21,31 +21,21 @@
 //! Provides convenient APIs to ease calling functions contained by a FRAME
 //! runtime WASM blob.
 #![warn(missing_docs)]
-#![cfg_attr(not(feature = "std"), no_std)]
 
-#[cfg(feature = "std")]
 use codec::{Decode, Encode};
-#[cfg(feature = "std")]
 use error::{Error, Result};
-#[cfg(feature = "std")]
 use subsoil::core::{
 	traits::{CallContext, CodeExecutor, FetchRuntimeCode, RuntimeCode},
 	OpaqueMetadata,
 };
-#[cfg(feature = "std")]
 use soil_executor::WasmExecutor;
-#[cfg(feature = "std")]
 use subsoil::state_machine::BasicExternalities;
-#[cfg(feature = "std")]
 use subsoil::wasm_interface::HostFunctions;
-#[cfg(feature = "std")]
 use std::borrow::Cow;
 
-#[cfg(feature = "std")]
 pub mod error;
 
 /// Fetches the latest metadata from the given runtime blob.
-#[cfg(feature = "std")]
 pub fn fetch_latest_metadata_from_code_blob<HF: HostFunctions>(
 	executor: &WasmExecutor<HF>,
 	code_bytes: Cow<[u8]>,
@@ -76,20 +66,17 @@ pub fn fetch_latest_metadata_from_code_blob<HF: HostFunctions>(
 	}
 }
 
-#[cfg(feature = "std")]
 struct BasicCodeFetcher<'a> {
 	code: Cow<'a, [u8]>,
 	hash: Vec<u8>,
 }
 
-#[cfg(feature = "std")]
 impl<'a> FetchRuntimeCode for BasicCodeFetcher<'a> {
 	fn fetch_runtime_code(&self) -> Option<Cow<'_, [u8]>> {
 		Some(self.code.as_ref().into())
 	}
 }
 
-#[cfg(feature = "std")]
 impl<'a> BasicCodeFetcher<'a> {
 	fn new(code: Cow<'a, [u8]>) -> Self {
 		Self { hash: subsoil_crypto_hashing::blake2_256(&code).to_vec(), code }
@@ -105,13 +92,11 @@ impl<'a> BasicCodeFetcher<'a> {
 }
 
 /// Simple utility that is used to call into the runtime.
-#[cfg(feature = "std")]
 pub struct RuntimeCaller<'a, 'b, HF: HostFunctions> {
 	executor: &'b WasmExecutor<HF>,
 	code_fetcher: BasicCodeFetcher<'a>,
 }
 
-#[cfg(feature = "std")]
 impl<'a, 'b, HF: HostFunctions> RuntimeCaller<'a, 'b, HF> {
 	/// Instantiate a new runtime caller.
 	pub fn new(executor: &'b WasmExecutor<HF>, code_bytes: Cow<'a, [u8]>) -> Self {

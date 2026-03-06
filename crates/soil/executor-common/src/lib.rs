@@ -20,15 +20,10 @@
 
 #![warn(missing_docs)]
 #![deny(unused_crate_dependencies)]
-#![cfg_attr(not(feature = "std"), no_std)]
 
-#[cfg(feature = "std")]
 pub mod error;
-#[cfg(feature = "std")]
 pub mod runtime_blob;
-#[cfg(feature = "std")]
 pub mod util;
-#[cfg(feature = "std")]
 pub mod wasm_runtime;
 
 pub(crate) fn is_polkavm_enabled() -> bool {

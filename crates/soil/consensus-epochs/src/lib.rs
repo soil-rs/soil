@@ -18,22 +18,14 @@
 
 //! Generic utilities for epoch-based consensus engines.
 
-#![cfg_attr(not(feature = "std"), no_std)]
 
-#[cfg(feature = "std")]
 pub mod migration;
 
-#[cfg(feature = "std")]
 use codec::{Decode, Encode};
-#[cfg(feature = "std")]
 use fork_tree::{FilterAction, ForkTree};
-#[cfg(feature = "std")]
 use soil_blockchain::{Error as ClientError, HeaderBackend, HeaderMetadata};
-#[cfg(feature = "std")]
 use soil_client_api::utils::is_descendent_of;
-#[cfg(feature = "std")]
 use subsoil::runtime::traits::{Block as BlockT, NumberFor, One, Zero};
-#[cfg(feature = "std")]
 use std::{
 	borrow::{Borrow, BorrowMut},
 	collections::BTreeMap,
@@ -41,7 +33,6 @@ use std::{
 };
 
 /// A builder for `is_descendent_of` functions.
-#[cfg(feature = "std")]
 pub trait IsDescendentOfBuilder<Hash> {
 	/// The error returned by the function.
 	type Error: std::error::Error;
@@ -59,17 +50,14 @@ pub trait IsDescendentOfBuilder<Hash> {
 }
 
 /// Produce a descendent query object given the client.
-#[cfg(feature = "std")]
 pub fn descendent_query<H, Block>(client: &H) -> HeaderBackendDescendentBuilder<&H, Block> {
 	HeaderBackendDescendentBuilder(client, std::marker::PhantomData)
 }
 
 /// Wrapper to get around unconstrained type errors when implementing
 /// `IsDescendentOfBuilder` for header backends.
-#[cfg(feature = "std")]
 pub struct HeaderBackendDescendentBuilder<H, Block>(H, std::marker::PhantomData<Block>);
 
-#[cfg(feature = "std")]
 impl<'a, H, Block> IsDescendentOfBuilder<Block::Hash>
 	for HeaderBackendDescendentBuilder<&'a H, Block>
 where
@@ -91,7 +79,6 @@ where
 ///
 /// Once an epoch is created, it must have a known `start_slot` and `end_slot`, which cannot be
 /// changed. Consensus engine may modify any other data in the epoch, if needed.
-#[cfg(feature = "std")]
 pub trait Epoch: std::fmt::Debug {
 	/// Descriptor for the next epoch.
 	type NextEpochDescriptor;
@@ -107,7 +94,6 @@ pub trait Epoch: std::fmt::Debug {
 	fn increment(&self, descriptor: Self::NextEpochDescriptor) -> Self;
 }
 
-#[cfg(feature = "std")]
 impl<'a, E: Epoch> From<&'a E> for EpochHeader<E> {
 	fn from(epoch: &'a E) -> EpochHeader<E> {
 		Self { start_slot: epoch.start_slot(), end_slot: epoch.end_slot() }
@@ -116,7 +102,6 @@ impl<'a, E: Epoch> From<&'a E> for EpochHeader<E> {
 
 /// Header of epoch data, consisting of start and end slot.
 #[derive(Eq, PartialEq, Encode, Decode, Debug)]
-#[cfg(feature = "std")]
 pub struct EpochHeader<E: Epoch> {
 	/// The starting slot of the epoch.
 	pub start_slot: E::Slot,
@@ -125,7 +110,6 @@ pub struct EpochHeader<E: Epoch> {
 	pub end_slot: E::Slot,
 }
 
-#[cfg(feature = "std")]
 impl<E: Epoch> Clone for EpochHeader<E> {
 	fn clone(&self) -> Self {
 		Self { start_slot: self.start_slot, end_slot: self.end_slot }
@@ -134,7 +118,6 @@ impl<E: Epoch> Clone for EpochHeader<E> {
 
 /// Position of the epoch identifier.
 #[derive(PartialEq, Eq, PartialOrd, Ord, Copy, Clone, Debug)]
-#[cfg(feature = "std")]
 pub enum EpochIdentifierPosition {
 	/// The identifier points to a genesis epoch `epoch_0`.
 	Genesis0,
@@ -146,7 +129,6 @@ pub enum EpochIdentifierPosition {
 
 /// Epoch identifier.
 #[derive(PartialEq, Eq, PartialOrd, Ord, Clone, Debug)]
-#[cfg(feature = "std")]
 pub struct EpochIdentifier<Hash, Number> {
 	/// Location of the epoch.
 	pub position: EpochIdentifierPosition,
@@ -160,7 +142,6 @@ pub struct EpochIdentifier<Hash, Number> {
 ///
 /// If this is the first non-genesis block in the chain, then it will
 /// hold an `UnimportedGenesis` epoch.
-#[cfg(feature = "std")]
 pub enum ViableEpoch<E, ERef = E> {
 	/// Unimported genesis viable epoch data.
 	UnimportedGenesis(E),
@@ -168,7 +149,6 @@ pub enum ViableEpoch<E, ERef = E> {
 	Signaled(ERef),
 }
 
-#[cfg(feature = "std")]
 impl<E, ERef> AsRef<E> for ViableEpoch<E, ERef>
 where
 	ERef: Borrow<E>,
@@ -181,7 +161,6 @@ where
 	}
 }
 
-#[cfg(feature = "std")]
 impl<E, ERef> AsMut<E> for ViableEpoch<E, ERef>
 where
 	ERef: BorrowMut<E>,
@@ -194,7 +173,6 @@ where
 	}
 }
 
-#[cfg(feature = "std")]
 impl<E, ERef> ViableEpoch<E, ERef>
 where
 	E: Epoch + Clone,
@@ -234,7 +212,6 @@ where
 
 /// Descriptor for a viable epoch.
 #[derive(PartialEq, Eq, Clone, Debug)]
-#[cfg(feature = "std")]
 pub enum ViableEpochDescriptor<Hash, Number, E: Epoch> {
 	/// The epoch is an unimported genesis, with given start slot number.
 	UnimportedGenesis(E::Slot),
@@ -242,7 +219,6 @@ pub enum ViableEpochDescriptor<Hash, Number, E: Epoch> {
 	Signaled(EpochIdentifier<Hash, Number>, EpochHeader<E>),
 }
 
-#[cfg(feature = "std")]
 impl<Hash, Number, E: Epoch> ViableEpochDescriptor<Hash, Number, E> {
 	/// Start slot of the descriptor.
 	pub fn start_slot(&self) -> E::Slot {
@@ -255,7 +231,6 @@ impl<Hash, Number, E: Epoch> ViableEpochDescriptor<Hash, Number, E> {
 
 /// Persisted epoch stored in EpochChanges.
 #[derive(Clone, Encode, Decode, Debug)]
-#[cfg(feature = "std")]
 pub enum PersistedEpoch<E> {
 	/// Genesis persisted epoch data. epoch_0, epoch_1.
 	Genesis(E, E),
@@ -263,7 +238,6 @@ pub enum PersistedEpoch<E> {
 	Regular(E),
 }
 
-#[cfg(feature = "std")]
 impl<E> PersistedEpoch<E> {
 	/// Returns if this is a genesis epoch.
 	pub fn is_genesis(&self) -> bool {
@@ -271,7 +245,6 @@ impl<E> PersistedEpoch<E> {
 	}
 }
 
-#[cfg(feature = "std")]
 impl<'a, E: Epoch> From<&'a PersistedEpoch<E>> for PersistedEpochHeader<E> {
 	fn from(epoch: &'a PersistedEpoch<E>) -> Self {
 		match epoch {
@@ -283,7 +256,6 @@ impl<'a, E: Epoch> From<&'a PersistedEpoch<E>> for PersistedEpochHeader<E> {
 	}
 }
 
-#[cfg(feature = "std")]
 impl<E: Epoch> PersistedEpoch<E> {
 	/// Map the epoch to a different type using a conversion function.
 	pub fn map<B, F, Hash, Number>(self, h: &Hash, n: &Number, f: &mut F) -> PersistedEpoch<B>
@@ -302,7 +274,6 @@ impl<E: Epoch> PersistedEpoch<E> {
 
 /// Persisted epoch header stored in ForkTree.
 #[derive(Encode, Decode, PartialEq, Eq, Debug)]
-#[cfg(feature = "std")]
 pub enum PersistedEpochHeader<E: Epoch> {
 	/// Genesis persisted epoch header. epoch_0, epoch_1.
 	Genesis(EpochHeader<E>, EpochHeader<E>),
@@ -310,7 +281,6 @@ pub enum PersistedEpochHeader<E: Epoch> {
 	Regular(EpochHeader<E>),
 }
 
-#[cfg(feature = "std")]
 impl<E: Epoch> Clone for PersistedEpochHeader<E> {
 	fn clone(&self) -> Self {
 		match self {
@@ -320,7 +290,6 @@ impl<E: Epoch> Clone for PersistedEpochHeader<E> {
 	}
 }
 
-#[cfg(feature = "std")]
 impl<E: Epoch> PersistedEpochHeader<E> {
 	/// Map the epoch header to a different type.
 	pub fn map<B>(self) -> PersistedEpochHeader<B>
@@ -344,10 +313,8 @@ impl<E: Epoch> PersistedEpochHeader<E> {
 ///
 /// Create this with `ViableEpoch::increment`.
 #[must_use = "Freshly-incremented epoch must be imported with `EpochChanges::import`"]
-#[cfg(feature = "std")]
 pub struct IncrementedEpoch<E: Epoch>(PersistedEpoch<E>);
 
-#[cfg(feature = "std")]
 impl<E: Epoch> AsRef<E> for IncrementedEpoch<E> {
 	fn as_ref(&self) -> &E {
 		match self.0 {
@@ -373,14 +340,12 @@ impl<E: Epoch> AsRef<E> for IncrementedEpoch<E> {
 ///
 /// Further epochs (epoch_2, ..., epoch_n) each get their own entry.
 #[derive(Clone, Encode, Decode, Debug)]
-#[cfg(feature = "std")]
 pub struct EpochChanges<Hash, Number, E: Epoch> {
 	inner: ForkTree<Hash, Number, PersistedEpochHeader<E>>,
 	epochs: BTreeMap<(Hash, Number), PersistedEpoch<E>>,
 }
 
 // create a fake header hash which hasn't been included in the chain.
-#[cfg(feature = "std")]
 fn fake_head_hash<H: AsRef<[u8]> + AsMut<[u8]> + Clone>(parent_hash: &H) -> H {
 	let mut h = parent_hash.clone();
 	// dirty trick: flip the first bit of the parent hash to create a hash
@@ -389,7 +354,6 @@ fn fake_head_hash<H: AsRef<[u8]> + AsMut<[u8]> + Clone>(parent_hash: &H) -> H {
 	h
 }
 
-#[cfg(feature = "std")]
 impl<Hash, Number, E: Epoch> Default for EpochChanges<Hash, Number, E>
 where
 	Hash: PartialEq + Ord,
@@ -400,7 +364,6 @@ where
 	}
 }
 
-#[cfg(feature = "std")]
 impl<Hash, Number, E: Epoch> EpochChanges<Hash, Number, E>
 where
 	Hash: PartialEq + Ord + AsRef<[u8]> + AsMut<[u8]> + Copy + std::fmt::Debug,
@@ -749,17 +712,14 @@ where
 }
 
 /// Type alias to produce the epoch-changes tree from a block type.
-#[cfg(feature = "std")]
 pub type EpochChangesFor<Block, Epoch> =
 	EpochChanges<<Block as BlockT>::Hash, NumberFor<Block>, Epoch>;
 
 /// A shared epoch changes tree.
-#[cfg(feature = "std")]
 pub type SharedEpochChanges<Block, Epoch> =
 	sc_consensus::shared_data::SharedData<EpochChangesFor<Block, Epoch>>;
 
 #[cfg(test)]
-#[cfg(feature = "std")]
 mod tests {
 	use super::{Epoch as EpochT, *};
 

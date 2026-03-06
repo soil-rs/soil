@@ -331,20 +331,13 @@
 //! The chain spec can be extended with other fields that are opaque to the default chain spec.
 //! Specific node implementations will need to be able to deserialize these extensions.
 
-#![cfg_attr(not(feature = "std"), no_std)]
 
-#[cfg(feature = "std")]
 mod chain_spec;
-#[cfg(feature = "std")]
 mod extension;
-#[cfg(feature = "std")]
 mod genesis_block;
-#[cfg(feature = "std")]
 mod genesis_config_builder;
-#[cfg(feature = "std")]
 pub mod json_patch;
 
-#[cfg(feature = "std")]
 pub use self::{
 	chain_spec::{
 		set_code_substitute_in_json_chain_spec, update_code_in_json_chain_spec,
@@ -360,16 +353,11 @@ pub use self::{
 	},
 	json_patch::merge as json_merge,
 };
-#[cfg(feature = "std")]
 pub use soil_chain_spec_derive::{ChainSpecExtension, ChainSpecGroup};
 
-#[cfg(feature = "std")]
 use subsoil::core::storage::Storage;
-#[cfg(feature = "std")]
 use soil_network::config::MultiaddrWithPeerId;
-#[cfg(feature = "std")]
 use subsoil::runtime::BuildStorage;
-#[cfg(feature = "std")]
 use soil_telemetry::TelemetryEndpoints;
 
 /// The type of chain.
@@ -378,7 +366,6 @@ use soil_telemetry::TelemetryEndpoints;
 /// additional information or enabling additional features.
 #[derive(serde::Serialize, serde::Deserialize, Debug, PartialEq, Clone)]
 #[cfg_attr(feature = "clap", derive(clap::ValueEnum))]
-#[cfg(feature = "std")]
 pub enum ChainType {
 	/// A development chain that runs mainly on one node.
 	Development,
@@ -391,7 +378,6 @@ pub enum ChainType {
 	Custom(String),
 }
 
-#[cfg(feature = "std")]
 impl Default for ChainType {
 	fn default() -> Self {
 		Self::Live
@@ -399,11 +385,9 @@ impl Default for ChainType {
 }
 
 /// Arbitrary properties defined in chain spec as a JSON object
-#[cfg(feature = "std")]
 pub type Properties = serde_json::map::Map<String, serde_json::Value>;
 
 /// Common interface of a chain specification.
-#[cfg(feature = "std")]
 pub trait ChainSpec: BuildStorage + Send + Sync {
 	/// Spec name.
 	fn name(&self) -> &str;
@@ -443,7 +427,6 @@ pub trait ChainSpec: BuildStorage + Send + Sync {
 	fn code_substitutes(&self) -> std::collections::BTreeMap<String, Vec<u8>>;
 }
 
-#[cfg(feature = "std")]
 impl std::fmt::Debug for dyn ChainSpec {
 	fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 		write!(f, "ChainSpec(name = {:?}, id = {:?})", self.name(), self.id())

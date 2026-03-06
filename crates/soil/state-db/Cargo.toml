@@ -16,17 +16,9 @@ workspace = true
 targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
-codec = { features = ["derive"], workspace = true, default-features = true, optional = true}
-log = { workspace = true, default-features = true, optional = true}
-parking_lot = { workspace = true, default-features = true, optional = true}
-subsoil = { workspace = true, default-features = true, optional = true}
+codec = { features = ["derive"], workspace = true, default-features = true}
+log = { workspace = true, default-features = true}
+parking_lot = { workspace = true, default-features = true}
+subsoil = { workspace = true, default-features = true}
 
 [features]
-default = ["std"]
-std = [
-	"codec",
-	"log",
-	"parking_lot",
-	"subsoil",
-	"subsoil/std",
-]

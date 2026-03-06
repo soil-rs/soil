@@ -16,19 +16,10 @@ workspace = true
 targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
-log = { workspace = true, optional = true}
-polkavm = { workspace = true, optional = true}
+log = { workspace = true}
+polkavm = { workspace = true}
 
-soil-executor-common = { workspace = true, default-features = true, optional = true}
-subsoil = { workspace = true, default-features = true, optional = true}
+soil-executor-common = { workspace = true, default-features = true}
+subsoil = { workspace = true, default-features = true}
 
 [features]
-default = ["std"]
-std = [
-	"log",
-	"polkavm",
-	"soil-executor-common",
-	"subsoil",
-	"soil-executor-common/std",
-	"subsoil/std",
-]

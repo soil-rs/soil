@@ -17,38 +17,18 @@ workspace = true
 targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
-codec = { features = ["derive"], workspace = true, optional = true}
-fnv = { workspace = true, optional = true}
-futures = { workspace = true, optional = true}
-log = { workspace = true, default-features = true, optional = true}
-parking_lot = { workspace = true, default-features = true, optional = true}
-prometheus-endpoint = { workspace = true, default-features = true, optional = true}
-soil-executor = { workspace = true, default-features = true, optional = true}
-soil-transaction-pool-api = { workspace = true, default-features = true, optional = true}
-soil-utils = { workspace = true, default-features = true, optional = true}
-soil-blockchain = { workspace = true, default-features = true, optional = true}
-soil-consensus = { workspace = true, default-features = true, optional = true}
-subsoil = { workspace = true, default-features = true, optional = true}
-
-[features]
-default = ["std"]
-std = [
-	"codec",
-	"fnv",
-	"futures",
-	"log",
-	"parking_lot",
-	"prometheus-endpoint",
-	"soil-blockchain",
-	"soil-consensus",
-	"subsoil",
-	"soil-executor",
-	"soil-transaction-pool-api",
-	"soil-utils",
-	"subsoil/std",
-	"soil-executor/std",
-	"soil-transaction-pool-api/std",
-	"soil-utils/std"]
+codec = { features = ["derive"], workspace = true}
+fnv = { workspace = true}
+futures = { workspace = true}
+log = { workspace = true, default-features = true}
+parking_lot = { workspace = true, default-features = true}
+prometheus-endpoint = { workspace = true, default-features = true}
+soil-executor = { workspace = true, default-features = true}
+soil-transaction-pool-api = { workspace = true, default-features = true}
+soil-utils = { workspace = true, default-features = true}
+soil-blockchain = { workspace = true, default-features = true}
+soil-consensus = { workspace = true, default-features = true}
+subsoil = { workspace = true, default-features = true}
 
 [dev-dependencies]
 substrate-test-runtime = { workspace = true }

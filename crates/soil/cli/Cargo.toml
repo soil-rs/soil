@@ -17,78 +17,40 @@ targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
 subsoil = { workspace = true }
-array-bytes = { workspace = true, default-features = true, optional = true}
-bip39 = { workspace = true, default-features = true, features = ["rand"], optional = true}
-chrono = { workspace = true, optional = true}
-clap = { features = ["derive", "string", "wrap_help"], workspace = true, optional = true}
-codec = { workspace = true, default-features = true, optional = true}
-fdlimit = { workspace = true, optional = true}
-futures = { workspace = true, optional = true}
-itertools = { workspace = true, optional = true}
-libp2p-identity = { features = ["ed25519", "peerid"], workspace = true, optional = true}
-log = { workspace = true, default-features = true, optional = true}
-names = { workspace = true, optional = true}
-rand = { workspace = true, default-features = true, optional = true}
-regex = { workspace = true, optional = true}
-rpassword = { workspace = true, optional = true}
-soil-client-api = { workspace = true, default-features = true, optional = true}
-soil-client-db = { workspace = true, default-features = false, optional = true}
-sc-keystore = { workspace = true, default-features = true, optional = true}
-sc-mixnet = { workspace = true, default-features = true, optional = true}
-soil-network = { workspace = true, default-features = true, optional = true}
-soil-service = { workspace = true, default-features = false, optional = true}
-soil-telemetry = { workspace = true, default-features = true, optional = true}
-sc-tracing = { workspace = true, default-features = true, optional = true}
-sc-transaction-pool = { workspace = true, default-features = true, optional = true}
-soil-utils = { workspace = true, default-features = true, optional = true}
-serde = { workspace = true, default-features = true, optional = true}
-serde_json = { workspace = true, default-features = true, optional = true}
-soil-blockchain = { workspace = true, default-features = true, optional = true}
-thiserror = { workspace = true, optional = true}
-tokio = { features = ["parking_lot", "rt-multi-thread", "signal"], workspace = true, default-features = true, optional = true}
+array-bytes = { workspace = true, default-features = true}
+bip39 = { workspace = true, default-features = true, features = ["rand"]}
+chrono = { workspace = true}
+clap = { features = ["derive", "string", "wrap_help"], workspace = true}
+codec = { workspace = true, default-features = true}
+fdlimit = { workspace = true}
+futures = { workspace = true}
+itertools = { workspace = true}
+libp2p-identity = { features = ["ed25519", "peerid"], workspace = true}
+log = { workspace = true, default-features = true}
+names = { workspace = true}
+rand = { workspace = true, default-features = true}
+regex = { workspace = true}
+rpassword = { workspace = true}
+soil-client-api = { workspace = true, default-features = true}
+soil-client-db = { workspace = true, default-features = false}
+sc-keystore = { workspace = true, default-features = true}
+sc-mixnet = { workspace = true, default-features = true}
+soil-network = { workspace = true, default-features = true}
+soil-service = { workspace = true, default-features = false}
+soil-telemetry = { workspace = true, default-features = true}
+sc-tracing = { workspace = true, default-features = true}
+sc-transaction-pool = { workspace = true, default-features = true}
+soil-utils = { workspace = true, default-features = true}
+serde = { workspace = true, default-features = true}
+serde_json = { workspace = true, default-features = true}
+soil-blockchain = { workspace = true, default-features = true}
+thiserror = { workspace = true}
+tokio = { features = ["parking_lot", "rt-multi-thread", "signal"], workspace = true, default-features = true}
 
 [dev-dependencies]
 futures-timer = { workspace = true }
 tempfile = { workspace = true }
 
 [features]
-std = [
-	"array-bytes",
-	"bip39",
-	"chrono",
-	"clap",
-	"codec",
-	"fdlimit",
-	"futures",
-	"itertools",
-	"libp2p-identity",
-	"log",
-	"names",
-	"rand",
-	"regex",
-	"rpassword",
-	"sc-keystore",
-	"sc-mixnet",
-	"sc-tracing",
-	"sc-transaction-pool",
-	"serde",
-	"serde_json",
-	"soil-blockchain",
-	"soil-client-api",
-	"soil-client-db",
-	"soil-network",
-	"subsoil/std",
-	"soil-service",
-	"soil-telemetry",
-	"soil-utils",
-	"thiserror",
-	"tokio",
-	"soil-client-api/std",
-	"soil-client-db/std",
-	"soil-network/std",
-	"soil-service/std",
-	"soil-telemetry/std",
-	"soil-utils/std",
-]
-default = ["std", "rocksdb"]
+default = ["rocksdb"]
 rocksdb = ["soil-client-db/rocksdb"]

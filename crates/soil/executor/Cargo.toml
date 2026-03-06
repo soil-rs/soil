@@ -22,14 +22,14 @@ harness = false
 
 [dependencies]
 subsoil = { workspace = true }
-parking_lot = { workspace = true, default-features = true, optional = true}
-schnellru = { workspace = true, optional = true}
-tracing = { workspace = true, default-features = true, optional = true}
+parking_lot = { workspace = true, default-features = true}
+schnellru = { workspace = true}
+tracing = { workspace = true, default-features = true}
 
-codec = { workspace = true, default-features = true, optional = true}
-soil-executor-common = { workspace = true, default-features = true, optional = true}
-soil-executor-polkavm = { workspace = true, default-features = true, optional = true}
-soil-executor-wasmtime = { workspace = true, default-features = true, optional = true}
+codec = { workspace = true, default-features = true}
+soil-executor-common = { workspace = true, default-features = true}
+soil-executor-polkavm = { workspace = true, default-features = true}
+soil-executor-wasmtime = { workspace = true, default-features = true}
 [dev-dependencies]
 array-bytes = { workspace = true, default-features = true }
 assert_matches = { workspace = true }
@@ -46,18 +46,5 @@ tracing-subscriber = { workspace = true }
 wat = { workspace = true }
 
 [features]
-default = ["std"]
 # This crate does not have `no_std` support, we just require this for tests
-std = [
-	"codec",
-	"parking_lot",
-	"schnellru",
-	"soil-executor-common",
-	"soil-executor-polkavm",
-	"soil-executor-wasmtime",
-	"subsoil/std",
-	"tracing",
-	"soil-executor-common/std",
-	"soil-executor-polkavm/std",
-	"soil-executor-wasmtime/std"]
 wasm-extern-trace = []

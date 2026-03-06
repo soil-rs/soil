@@ -12,32 +12,16 @@ homepage.workspace = true
 workspace = true
 
 [dependencies]
-codec = { features = ["derive"], workspace = true, default-features = true, optional = true}
-futures = { workspace = true, optional = true}
-jsonrpsee = { features = ["client-core", "macros", "server-core"], workspace = true, optional = true}
-log = { workspace = true, default-features = true, optional = true}
-parking_lot = { workspace = true, default-features = true, optional = true}
-sc-consensus-beefy = { workspace = true, default-features = true, optional = true}
-sc-rpc = { workspace = true, default-features = true, optional = true}
-serde = { features = ["derive"], workspace = true, default-features = true, optional = true}
-subsoil = { workspace = true, default-features = true, optional = true}
-thiserror = { workspace = true, optional = true}
-
-[features]
-default = ["std"]
-std = [
-	"codec",
-	"futures",
-	"jsonrpsee",
-	"log",
-	"parking_lot",
-	"sc-consensus-beefy",
-	"sc-rpc",
-	"serde",
-	"subsoil",
-	"thiserror",
-	"subsoil/std",
-]
+codec = { features = ["derive"], workspace = true, default-features = true}
+futures = { workspace = true}
+jsonrpsee = { features = ["client-core", "macros", "server-core"], workspace = true}
+log = { workspace = true, default-features = true}
+parking_lot = { workspace = true, default-features = true}
+sc-consensus-beefy = { workspace = true, default-features = true}
+sc-rpc = { workspace = true, default-features = true}
+serde = { features = ["derive"], workspace = true, default-features = true}
+subsoil = { workspace = true, default-features = true}
+thiserror = { workspace = true}
 
 [dev-dependencies]
 sc-rpc = { features = ["test-helpers"], workspace = true, default-features = true }

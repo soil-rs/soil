@@ -41,52 +41,34 @@
 //! See `RefWindow` for pruning algorithm details. `StateDb` prunes on each canonicalization until
 //! pruning constraints are satisfied.
 
-#![cfg_attr(not(feature = "std"), no_std)]
 
-#[cfg(feature = "std")]
 mod noncanonical;
-#[cfg(feature = "std")]
 mod pruning;
 #[cfg(test)]
-#[cfg(feature = "std")]
 mod test;
 
-#[cfg(feature = "std")]
 use codec::Codec;
-#[cfg(feature = "std")]
 use log::trace;
-#[cfg(feature = "std")]
 use noncanonical::NonCanonicalOverlay;
-#[cfg(feature = "std")]
 use parking_lot::RwLock;
-#[cfg(feature = "std")]
 use pruning::{HaveBlock, RefWindow};
-#[cfg(feature = "std")]
 use std::{
 	collections::{hash_map::Entry, HashMap},
 	fmt,
 };
 
-#[cfg(feature = "std")]
 const LOG_TARGET: &str = "state-db";
-#[cfg(feature = "std")]
 const LOG_TARGET_PIN: &str = "state-db::pin";
-#[cfg(feature = "std")]
 const PRUNING_MODE: &[u8] = b"mode";
-#[cfg(feature = "std")]
 const PRUNING_MODE_ARCHIVE: &[u8] = b"archive";
-#[cfg(feature = "std")]
 const PRUNING_MODE_ARCHIVE_CANON: &[u8] = b"archive_canonical";
-#[cfg(feature = "std")]
 const PRUNING_MODE_CONSTRAINED: &[u8] = b"constrained";
 pub(crate) const DEFAULT_MAX_BLOCK_CONSTRAINT: u32 = 256;
 
 /// Database value type.
-#[cfg(feature = "std")]
 pub type DBValue = Vec<u8>;
 
 /// Basic set of requirements for the Block hash and node key types.
-#[cfg(feature = "std")]
 pub trait Hash:
 	Send
 	+ Sync
@@ -101,7 +83,6 @@ pub trait Hash:
 	+ 'static
 {
 }
-#[cfg(feature = "std")]
 impl<
 		T: Send
 			+ Sync
@@ -119,7 +100,6 @@ impl<
 }
 
 /// Backend database trait. Read-only.
-#[cfg(feature = "std")]
 pub trait MetaDb {
 	type Error: fmt::Debug;
 
@@ -128,7 +108,6 @@ pub trait MetaDb {
 }
 
 /// Backend database trait. Read-only.
-#[cfg(feature = "std")]
 pub trait NodeDb {
 	type Key: ?Sized;
 	type Error: fmt::Debug;
@@ -139,7 +118,6 @@ pub trait NodeDb {
 
 /// Error type.
 #[derive(Eq, PartialEq)]
-#[cfg(feature = "std")]
 pub enum Error<E> {
 	/// Database backend error.
 	Db(E),
@@ -147,7 +125,6 @@ pub enum Error<E> {
 }
 
 #[derive(Eq, PartialEq)]
-#[cfg(feature = "std")]
 pub enum StateDbError {
 	/// `Codec` decoding error.
 	Decoding(codec::Error),
@@ -171,7 +148,6 @@ pub enum StateDbError {
 	BlockMissing,
 }
 
-#[cfg(feature = "std")]
 impl<E> From<StateDbError> for Error<E> {
 	fn from(inner: StateDbError) -> Self {
 		Self::StateDb(inner)
@@ -180,20 +156,17 @@ impl<E> From<StateDbError> for Error<E> {
 
 /// Pinning error type.
 #[derive(Debug)]
-#[cfg(feature = "std")]
 pub enum PinError {
 	/// Trying to pin invalid block.
 	InvalidBlock,
 }
 
-#[cfg(feature = "std")]
 impl<E: fmt::Debug> From<codec::Error> for Error<E> {
 	fn from(x: codec::Error) -> Self {
 		StateDbError::Decoding(x).into()
 	}
 }
 
-#[cfg(feature = "std")]
 impl<E: fmt::Debug> fmt::Debug for Error<E> {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 		match self {
@@ -203,7 +176,6 @@ impl<E: fmt::Debug> fmt::Debug for Error<E> {
 	}
 }
 
-#[cfg(feature = "std")]
 impl fmt::Debug for StateDbError {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 		match self {
@@ -231,7 +203,6 @@ impl fmt::Debug for StateDbError {
 
 /// A set of state node changes.
 #[derive(Default, Debug, Clone)]
-#[cfg(feature = "std")]
 pub struct ChangeSet<H: Hash> {
 	/// Inserted nodes.
 	pub inserted: Vec<(H, DBValue)>,
@@ -241,7 +212,6 @@ pub struct ChangeSet<H: Hash> {
 
 /// A set of changes to the backing database.
 #[derive(Default, Debug, Clone)]
-#[cfg(feature = "std")]
 pub struct CommitSet<H: Hash> {
 	/// State node changes.
 	pub data: ChangeSet<H>,
@@ -251,7 +221,6 @@ pub struct CommitSet<H: Hash> {
 
 /// Pruning constraints. If none are specified pruning is
 #[derive(Debug, Clone, Eq, PartialEq)]
-#[cfg(feature = "std")]
 pub struct Constraints {
 	/// Maximum blocks. Defaults to 0 when unspecified, effectively keeping only non-canonical
 	/// states.
@@ -260,7 +229,6 @@ pub struct Constraints {
 
 /// Pruning mode.
 #[derive(Debug, Clone, Eq, PartialEq)]
-#[cfg(feature = "std")]
 pub enum PruningMode {
 	/// Maintain a pruning window.
 	Constrained(Constraints),
@@ -270,7 +238,6 @@ pub enum PruningMode {
 	ArchiveCanonical,
 }
 
-#[cfg(feature = "std")]
 impl PruningMode {
 	/// Create a mode that keeps given number of blocks.
 	pub fn blocks_pruning(n: u32) -> PruningMode {
@@ -304,21 +271,18 @@ impl PruningMode {
 	}
 }
 
-#[cfg(feature = "std")]
 impl Default for PruningMode {
 	fn default() -> Self {
 		PruningMode::Constrained(Default::default())
 	}
 }
 
-#[cfg(feature = "std")]
 impl Default for Constraints {
 	fn default() -> Self {
 		Self { max_blocks: Some(DEFAULT_MAX_BLOCK_CONSTRAINT) }
 	}
 }
 
-#[cfg(feature = "std")]
 fn to_meta_key<S: Codec>(suffix: &[u8], data: &S) -> Vec<u8> {
 	let mut buffer = data.encode();
 	buffer.extend(suffix);
@@ -327,7 +291,6 @@ fn to_meta_key<S: Codec>(suffix: &[u8], data: &S) -> Vec<u8> {
 
 /// Status information about the last canonicalized block.
 #[derive(Clone, Debug, PartialEq, Eq)]
-#[cfg(feature = "std")]
 pub enum LastCanonicalized {
 	/// Not yet have canonicalized any block.
 	None,
@@ -337,7 +300,6 @@ pub enum LastCanonicalized {
 	NotCanonicalizing,
 }
 
-#[cfg(feature = "std")]
 pub struct StateDbSync<BlockHash: Hash, Key: Hash, D: MetaDb> {
 	mode: PruningMode,
 	non_canonical: NonCanonicalOverlay<BlockHash, Key>,
@@ -346,7 +308,6 @@ pub struct StateDbSync<BlockHash: Hash, Key: Hash, D: MetaDb> {
 	ref_counting: bool,
 }
 
-#[cfg(feature = "std")]
 impl<BlockHash: Hash, Key: Hash, D: MetaDb> StateDbSync<BlockHash, Key, D> {
 	fn new(
 		mode: PruningMode,
@@ -569,12 +530,10 @@ impl<BlockHash: Hash, Key: Hash, D: MetaDb> StateDbSync<BlockHash, Key, D> {
 
 /// State DB maintenance. See module description.
 /// Can be shared across threads.
-#[cfg(feature = "std")]
 pub struct StateDb<BlockHash: Hash, Key: Hash, D: MetaDb> {
 	db: RwLock<StateDbSync<BlockHash, Key, D>>,
 }
 
-#[cfg(feature = "std")]
 impl<BlockHash: Hash, Key: Hash, D: MetaDb> StateDb<BlockHash, Key, D> {
 	/// Create an instance of [`StateDb`].
 	pub fn open(
@@ -709,7 +668,6 @@ impl<BlockHash: Hash, Key: Hash, D: MetaDb> StateDb<BlockHash, Key, D> {
 
 /// The result return by `StateDb::is_pruned`
 #[derive(Debug, PartialEq, Eq)]
-#[cfg(feature = "std")]
 pub enum IsPruned {
 	/// Definitely pruned
 	Pruned,
@@ -719,7 +677,6 @@ pub enum IsPruned {
 	MaybePruned,
 }
 
-#[cfg(feature = "std")]
 fn fetch_stored_pruning_mode<D: MetaDb>(db: &D) -> Result<Option<PruningMode>, Error<D::Error>> {
 	let meta_key_mode = to_meta_key(PRUNING_MODE, &());
 	if let Some(stored_mode) = db.get_meta(&meta_key_mode).map_err(Error::Db)? {
@@ -737,7 +694,6 @@ fn fetch_stored_pruning_mode<D: MetaDb>(db: &D) -> Result<Option<PruningMode>, E
 	}
 }
 
-#[cfg(feature = "std")]
 fn choose_pruning_mode(
 	stored: PruningMode,
 	requested: PruningMode,
@@ -755,7 +711,6 @@ fn choose_pruning_mode(
 }
 
 #[cfg(test)]
-#[cfg(feature = "std")]
 mod tests {
 	use crate::{
 		test::{make_changeset, make_db, TestDb},

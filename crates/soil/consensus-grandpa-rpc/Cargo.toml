@@ -13,37 +13,18 @@ homepage.workspace = true
 workspace = true
 
 [dependencies]
-codec = { features = ["derive"], workspace = true, default-features = true, optional = true}
-finality-grandpa = { features = ["derive-codec"], workspace = true, default-features = true, optional = true}
-futures = { workspace = true, optional = true}
-jsonrpsee = { features = ["client-core", "macros", "server-core"], workspace = true, optional = true}
-log = { workspace = true, default-features = true, optional = true}
-soil-client-api = { workspace = true, default-features = true, optional = true}
-sc-consensus-grandpa = { workspace = true, default-features = true, optional = true}
-sc-rpc = { workspace = true, default-features = true, optional = true}
-serde = { features = ["derive"], workspace = true, default-features = true, optional = true}
-soil-blockchain = { workspace = true, default-features = true, optional = true}
-subsoil = { workspace = true, default-features = true, optional = true}
-thiserror = { workspace = true, optional = true}
-
-[features]
-default = ["std"]
-std = [
-	"codec",
-	"finality-grandpa",
-	"futures",
-	"jsonrpsee",
-	"log",
-	"sc-consensus-grandpa",
-	"sc-rpc",
-	"serde",
-	"soil-blockchain",
-	"soil-client-api",
-	"subsoil",
-	"thiserror",
-	"soil-client-api/std",
-	"subsoil/std",
-]
+codec = { features = ["derive"], workspace = true, default-features = true}
+finality-grandpa = { features = ["derive-codec"], workspace = true, default-features = true}
+futures = { workspace = true}
+jsonrpsee = { features = ["client-core", "macros", "server-core"], workspace = true}
+log = { workspace = true, default-features = true}
+soil-client-api = { workspace = true, default-features = true}
+sc-consensus-grandpa = { workspace = true, default-features = true}
+sc-rpc = { workspace = true, default-features = true}
+serde = { features = ["derive"], workspace = true, default-features = true}
+soil-blockchain = { workspace = true, default-features = true}
+subsoil = { workspace = true, default-features = true}
+thiserror = { workspace = true}
 
 [dev-dependencies]
 sc-block-builder = { workspace = true, default-features = true }

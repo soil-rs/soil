@@ -23,22 +23,22 @@ harness = false
 bench = false
 
 [dependencies]
-codec = { features = ["derive"], workspace = true, default-features = true, optional = true}
-hash-db = { workspace = true, default-features = true, optional = true}
-kvdb = { workspace = true, optional = true}
-kvdb-memorydb = { workspace = true, optional = true}
+codec = { features = ["derive"], workspace = true, default-features = true}
+hash-db = { workspace = true, default-features = true}
+kvdb = { workspace = true}
+kvdb-memorydb = { workspace = true}
 kvdb-rocksdb = { optional = true, workspace = true }
-linked-hash-map = { workspace = true, optional = true}
-log = { workspace = true, default-features = true, optional = true}
-parity-db = { workspace = true, optional = true}
-parking_lot = { workspace = true, default-features = true, optional = true}
-prometheus-endpoint = { workspace = true, default-features = true, optional = true}
-soil-client-api = { workspace = true, default-features = true, optional = true}
-soil-state-db = { workspace = true, default-features = true, optional = true}
-schnellru = { workspace = true, optional = true}
-soil-blockchain = { workspace = true, default-features = true, optional = true}
-subsoil = { workspace = true, default-features = true, optional = true}
-sysinfo = { workspace = true, optional = true}
+linked-hash-map = { workspace = true}
+log = { workspace = true, default-features = true}
+parity-db = { workspace = true}
+parking_lot = { workspace = true, default-features = true}
+prometheus-endpoint = { workspace = true, default-features = true}
+soil-client-api = { workspace = true, default-features = true}
+soil-state-db = { workspace = true, default-features = true}
+schnellru = { workspace = true}
+soil-blockchain = { workspace = true, default-features = true}
+subsoil = { workspace = true, default-features = true}
+sysinfo = { workspace = true}
 
 [dev-dependencies]
 array-bytes = { workspace = true, default-features = true }
@@ -50,28 +50,6 @@ substrate-test-runtime-client = { workspace = true }
 tempfile = { workspace = true }
 
 [features]
-std = [
-	"codec",
-	"hash-db",
-	"kvdb",
-	"kvdb-memorydb",
-	"kvdb-rocksdb",
-	"linked-hash-map",
-	"log",
-	"parity-db",
-	"parking_lot",
-	"prometheus-endpoint",
-	"schnellru",
-	"subsoil",
-	"soil-blockchain",
-	"soil-client-api",
-	"soil-state-db",
-	"sysinfo",
-	"subsoil/std",
-	"soil-client-api/std",
-	"soil-state-db/std",
-]
-default = ["std"]
 test-helpers = []
 runtime-benchmarks = [
 	"subsoil/runtime-benchmarks",

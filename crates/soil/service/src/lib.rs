@@ -21,63 +21,39 @@
 
 #![warn(missing_docs)]
 #![recursion_limit = "1024"]
-#![cfg_attr(not(feature = "std"), no_std)]
 
-#[cfg(feature = "std")]
 pub mod chain_ops;
-#[cfg(feature = "std")]
 pub mod client;
-#[cfg(feature = "std")]
 pub mod config;
-#[cfg(feature = "std")]
 pub mod error;
 
-#[cfg(feature = "std")]
 mod builder;
-#[cfg(feature = "std")]
 mod metrics;
-#[cfg(feature = "std")]
 mod task_manager;
 
-#[cfg(feature = "std")]
 use crate::config::Multiaddr;
-#[cfg(feature = "std")]
 use std::{
 	collections::HashMap,
 	net::{Ipv4Addr, Ipv6Addr, SocketAddr, SocketAddrV4, SocketAddrV6},
 };
 
-#[cfg(feature = "std")]
 use codec::{Decode, Encode};
-#[cfg(feature = "std")]
 use futures::{pin_mut, FutureExt, StreamExt};
-#[cfg(feature = "std")]
 use jsonrpsee::RpcModule;
-#[cfg(feature = "std")]
 use log::{debug, error, trace, warn};
-#[cfg(feature = "std")]
 use soil_blockchain::HeaderMetadata;
-#[cfg(feature = "std")]
 use soil_client_api::{blockchain::HeaderBackend, BlockBackend, BlockchainEvents, ProofProvider};
-#[cfg(feature = "std")]
 use soil_consensus::SyncOracle;
-#[cfg(feature = "std")]
 use soil_network::{
 	config::MultiaddrWithPeerId, service::traits::NetworkService, NetworkBackend, NetworkBlock,
 	NetworkPeers, NetworkStateInfo,
 };
-#[cfg(feature = "std")]
 use soil_network_sync::SyncingService;
-#[cfg(feature = "std")]
 use soil_network_types::PeerId;
-#[cfg(feature = "std")]
 use soil_rpc_server::Server;
-#[cfg(feature = "std")]
 use subsoil::runtime::traits::{Block as BlockT, Header as HeaderT};
-#[cfg(feature = "std")]
 use soil_utils::mpsc::TracingUnboundedReceiver;
 
-#[cfg(feature = "std")]
 pub use self::{
 	builder::{
 		build_default_block_downloader, build_default_syncing_engine, build_network,
@@ -93,64 +69,44 @@ pub use self::{
 	metrics::MetricsService,
 };
 #[allow(deprecated)]
-#[cfg(feature = "std")]
 pub use builder::new_native_or_wasm_executor;
 
-#[cfg(feature = "std")]
 pub use soil_chain_spec::{
 	construct_genesis_block, resolve_state_version_from_wasm, BuildGenesisBlock,
 	GenesisBlockBuilder,
 };
 
-#[cfg(feature = "std")]
 pub use config::{
 	BasePath, BlocksPruning, Configuration, DatabaseSource, PruningMode, Role, RpcMethods, TaskType,
 };
-#[cfg(feature = "std")]
 pub use soil_chain_spec::{
 	ChainSpec, ChainType, Extension as ChainSpecExtension, GenericChainSpec, NoExtension,
 	Properties,
 };
-#[cfg(feature = "std")]
 pub use soil_client_db::PruningFilter;
 
-#[cfg(feature = "std")]
 use crate::config::RpcConfiguration;
-#[cfg(feature = "std")]
 use prometheus_endpoint::Registry;
-#[cfg(feature = "std")]
 pub use sc_consensus::ImportQueue;
-#[cfg(feature = "std")]
 pub use sc_rpc::{RandomIntegerSubscriptionId, RandomStringSubscriptionId};
-#[cfg(feature = "std")]
 pub use sc_tracing::TracingReceiver;
-#[cfg(feature = "std")]
 pub use sc_transaction_pool::TransactionPoolOptions;
-#[cfg(feature = "std")]
 pub use soil_executor::NativeExecutionDispatch;
-#[cfg(feature = "std")]
 pub use soil_network_sync::WarpSyncConfig;
 #[doc(hidden)]
-#[cfg(feature = "std")]
 pub use soil_network_transactions::config::{TransactionImport, TransactionImportFuture};
-#[cfg(feature = "std")]
 pub use soil_transaction_pool_api::{error::IntoPoolError, InPoolTransaction, TransactionPool};
 #[doc(hidden)]
-#[cfg(feature = "std")]
 pub use std::{ops::Deref, result::Result, sync::Arc};
-#[cfg(feature = "std")]
 pub use task_manager::{
 	SpawnEssentialTaskHandle, SpawnTaskHandle, Task, TaskManager, TaskRegistry, DEFAULT_GROUP_NAME,
 };
-#[cfg(feature = "std")]
 use tokio::runtime::Handle;
 
-#[cfg(feature = "std")]
 const DEFAULT_PROTOCOL_ID: &str = "sup";
 
 /// A running RPC service that can perform in-memory RPC queries.
 #[derive(Clone)]
-#[cfg(feature = "std")]
 pub struct RpcHandlers {
 	// This is legacy and may be removed at some point, it was for WASM stuff before smoldot was a
 	// thing. https://github.com/paritytech/polkadot-sdk/pull/5038#discussion_r1694971805
@@ -161,7 +117,6 @@ pub struct RpcHandlers {
 	listen_addresses: Vec<Multiaddr>,
 }
 
-#[cfg(feature = "std")]
 impl RpcHandlers {
 	/// Create PRC handlers instance.
 	pub fn new(rpc_module: Arc<RpcModule<()>>, listen_addresses: Vec<Multiaddr>) -> Self {
@@ -202,7 +157,6 @@ impl RpcHandlers {
 }
 
 /// An incomplete set of chain components, but enough to run the chain ops subcommands.
-#[cfg(feature = "std")]
 pub struct PartialComponents<Client, Backend, SelectChain, ImportQueue, TransactionPool, Other> {
 	/// A shared client instance.
 	pub client: Arc<Client>,
@@ -222,7 +176,6 @@ pub struct PartialComponents<Client, Backend, SelectChain, ImportQueue, Transact
 	pub other: Other,
 }
 
-#[cfg(feature = "std")]
 /// Builds a future that continuously polls the network.
 async fn build_network_future<
 	B: BlockT,
@@ -290,7 +243,6 @@ async fn build_network_future<
 	}
 }
 
-#[cfg(feature = "std")]
 /// Builds a future that processes system RPC requests.
 pub async fn build_system_rpc_future<
 	B: BlockT,
@@ -429,7 +381,6 @@ pub async fn build_system_rpc_future<
 }
 
 /// Starts RPC servers.
-#[cfg(feature = "std")]
 pub fn start_rpc_servers<R>(
 	rpc_configuration: &RpcConfiguration,
 	registry: Option<&Registry>,
@@ -510,13 +461,11 @@ where
 }
 
 /// Transaction pool adapter.
-#[cfg(feature = "std")]
 pub struct TransactionPoolAdapter<C, P> {
 	pool: Arc<P>,
 	client: Arc<C>,
 }
 
-#[cfg(feature = "std")]
 impl<C, P> TransactionPoolAdapter<C, P> {
 	/// Constructs a new instance of [`TransactionPoolAdapter`].
 	pub fn new(pool: Arc<P>, client: Arc<C>) -> Self {
@@ -527,7 +476,6 @@ impl<C, P> TransactionPoolAdapter<C, P> {
 /// Get transactions for propagation.
 ///
 /// Function extracted to simplify the test and prevent creating `ServiceFactory`.
-#[cfg(feature = "std")]
 fn transactions_to_propagate<Pool, B, H, E>(pool: &Pool) -> Vec<(H, Arc<B::Extrinsic>)>
 where
 	Pool: TransactionPool<Block = B, Hash = H, Error = E>,
@@ -545,7 +493,6 @@ where
 		.collect()
 }
 
-#[cfg(feature = "std")]
 impl<B, H, C, Pool, E> soil_network_transactions::config::TransactionPool<H, B>
 	for TransactionPoolAdapter<C, Pool>
 where
@@ -624,7 +571,6 @@ where
 }
 
 #[cfg(test)]
-#[cfg(feature = "std")]
 mod tests {
 	use super::*;
 	use futures::executor::block_on;

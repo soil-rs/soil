@@ -28,30 +28,21 @@
 //! | `"perfmap"` | perfmap profiling       |
 //! | other value | No profiling (warning)  |
 
-#![cfg_attr(not(feature = "std"), no_std)]
 
-#[cfg(feature = "std")]
 mod host;
-#[cfg(feature = "std")]
 mod imports;
-#[cfg(feature = "std")]
 mod instance_wrapper;
-#[cfg(feature = "std")]
 mod runtime;
-#[cfg(feature = "std")]
 mod util;
 
 #[cfg(test)]
-#[cfg(feature = "std")]
 mod tests;
 
-#[cfg(feature = "std")]
 pub use runtime::{
 	create_runtime, create_runtime_from_artifact, create_runtime_from_artifact_bytes,
 	prepare_runtime_artifact, Config, DeterministicStackLimit, InstantiationStrategy, Semantics,
 	WasmtimeRuntime,
 };
-#[cfg(feature = "std")]
 pub use soil_executor_common::{
 	runtime_blob::RuntimeBlob,
 	wasm_runtime::{HeapAllocStrategy, WasmModule},
