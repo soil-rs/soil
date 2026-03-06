@@ -40,3 +40,24 @@ pub mod timestamp;
 pub mod block_builder;
 pub mod consensus;
 pub mod mmr;
+
+/// Panic when the vectors are different, without taking the order into account.
+#[macro_export]
+macro_rules! assert_eq_uvec {
+	( $x:expr, $y:expr $(,)? ) => {
+		$crate::__assert_eq_uvec!($x, $y);
+		$crate::__assert_eq_uvec!($y, $x);
+	};
+}
+
+#[macro_export]
+#[doc(hidden)]
+macro_rules! __assert_eq_uvec {
+	( $x:expr, $y:expr ) => {
+		$x.iter().for_each(|e| {
+			if !$y.contains(e) {
+				panic!("vectors not equal: {:?} != {:?}", $x, $y);
+			}
+		});
+	};
+}

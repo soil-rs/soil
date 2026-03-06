@@ -145,7 +145,6 @@ trie-standardmap = { workspace = true }
 zstd = { workspace = true }
 ark-ff = { workspace = true }
 ark-std = { workspace = true }
-substrate-test-utils = { workspace = true }
 
 [features]
 default = ["std"]

@@ -10801,7 +10801,6 @@ dependencies = [
  "subsoil-derive",
  "substrate-bip39",
  "substrate-prometheus-endpoint",
- "substrate-test-utils",
  "thiserror 1.0.69",
  "tracing",
  "tracing-core",
