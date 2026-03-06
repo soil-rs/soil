@@ -72,7 +72,7 @@ impl ChainInfoCmd {
 	where
 		B: BlockT,
 	{
-		let db_config = soil_client_db::DatabaseSettings {
+		let db_config = soil_client::db::DatabaseSettings {
 			trie_cache_maximum_size: config.trie_cache_maximum_size,
 			state_pruning: config.state_pruning.clone(),
 			source: config.database.clone(),

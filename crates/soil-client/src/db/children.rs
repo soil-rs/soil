@@ -18,9 +18,9 @@
 
 //! Functionality for reading and storing children hashes from db.
 
-use crate::DbHash;
+use super::DbHash;
 use codec::{Decode, Encode};
-use soil_client::blockchain;
+use crate::blockchain;
 use subsoil::database::{Database, Transaction};
 use std::hash::Hash;
 
@@ -33,7 +33,7 @@ pub fn read_children<
 	column: u32,
 	prefix: &[u8],
 	parent_hash: K,
-) -> soil_client::blockchain::Result<Vec<V>> {
+) -> crate::blockchain::Result<Vec<V>> {
 	let mut buf = prefix.to_vec();
 	parent_hash.using_encoded(|s| buf.extend(s));
 
@@ -46,7 +46,7 @@ pub fn read_children<
 
 	let children: Vec<V> = match Decode::decode(&mut &raw_val[..]) {
 		Ok(children) => children,
-		Err(_) => return Err(soil_client::blockchain::Error::Backend("Error decoding children".into())),
+		Err(_) => return Err(crate::blockchain::Error::Backend("Error decoding children".into())),
 	};
 
 	Ok(children)

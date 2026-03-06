@@ -83,7 +83,7 @@ pub use soil_chain_spec::{
 	ChainSpec, ChainType, Extension as ChainSpecExtension, GenericChainSpec, NoExtension,
 	Properties,
 };
-pub use soil_client_db::PruningFilter;
+pub use soil_client::db::PruningFilter;
 
 use crate::config::RpcConfiguration;
 use prometheus_endpoint::Registry;

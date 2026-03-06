@@ -22,7 +22,7 @@ pub use jsonrpsee::server::BatchRequestConfig as RpcBatchRequestConfig;
 use prometheus_endpoint::Registry;
 pub use sc_transaction_pool::TransactionPoolOptions;
 use soil_chain_spec::ChainSpec;
-pub use soil_client_db::{BlocksPruning, Database, DatabaseSource, PruningMode};
+pub use soil_client::db::{BlocksPruning, Database, DatabaseSource, PruningMode};
 use subsoil::core::crypto::SecretString;
 pub use soil_client::executor::{WasmExecutionMethod, WasmtimeInstantiationStrategy};
 pub use soil_network::{
@@ -229,8 +229,8 @@ impl Configuration {
 	}
 
 	/// Returns the database config for creating the backend.
-	pub fn db_config(&self) -> soil_client_db::DatabaseSettings {
-		soil_client_db::DatabaseSettings {
+	pub fn db_config(&self) -> soil_client::db::DatabaseSettings {
+		soil_client::db::DatabaseSettings {
 			trie_cache_maximum_size: self.trie_cache_maximum_size,
 			state_pruning: self.state_pruning.clone(),
 			source: self.database.clone(),

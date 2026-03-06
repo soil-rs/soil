@@ -220,7 +220,7 @@ impl AsyncApi {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use soil_client_db::offchain::LocalStorage;
+	use soil_client::db::offchain::LocalStorage;
 	use subsoil::core::offchain::{storage::OffchainDb, DbExternalities, Externalities, StorageKind};
 	use soil_network::{
 		config::MultiaddrWithPeerId, types::ProtocolName, NetworkPeers, NetworkStateInfo,

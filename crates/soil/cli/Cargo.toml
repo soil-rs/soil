@@ -31,7 +31,6 @@ names = { workspace = true}
 rand = { workspace = true, default-features = true}
 regex = { workspace = true}
 rpassword = { workspace = true}
-soil-client-db = { workspace = true, default-features = false}
 sc-keystore = { workspace = true, default-features = true}
 sc-mixnet = { workspace = true, default-features = true}
 soil-network = { workspace = true, default-features = true}
@@ -51,4 +50,4 @@ tempfile = { workspace = true }
 
 [features]
 default = ["rocksdb"]
-rocksdb = ["soil-client-db/rocksdb"]
+rocksdb = ["soil-client/rocksdb"]

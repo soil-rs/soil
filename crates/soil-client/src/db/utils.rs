@@ -23,9 +23,9 @@ use std::{fmt, fs, io, path::Path, sync::Arc};
 
 use log::{debug, info};
 
-use crate::{Database, DatabaseSource, DbHash};
+use super::{Database, DatabaseSource, DbHash};
 use codec::Decode;
-use soil_client::client_api::blockchain::{BlockGap, BlockGapType};
+use crate::client_api::blockchain::{BlockGap, BlockGapType};
 use subsoil::database::Transaction;
 use subsoil::runtime::{
 	generic::BlockId,
@@ -101,9 +101,9 @@ pub enum DatabaseType {
 ///
 /// In the current database schema, this kind of key is only used for
 /// lookups into an index, NOT for storing header data or others.
-pub fn number_index_key<N: TryInto<u32>>(n: N) -> soil_client::blockchain::Result<NumberIndexKey> {
+pub fn number_index_key<N: TryInto<u32>>(n: N) -> crate::blockchain::Result<NumberIndexKey> {
 	let n = n.try_into().map_err(|_| {
-		soil_client::blockchain::Error::Backend("Block number cannot be converted to u32".into())
+		crate::blockchain::Error::Backend("Block number cannot be converted to u32".into())
 	})?;
 
 	Ok([(n >> 24) as u8, ((n >> 16) & 0xff) as u8, ((n >> 8) & 0xff) as u8, (n & 0xff) as u8])
@@ -111,7 +111,7 @@ pub fn number_index_key<N: TryInto<u32>>(n: N) -> soil_client::blockchain::Resul
 
 /// Convert number and hash into long lookup key for blocks that are
 /// not in the canonical chain.
-pub fn number_and_hash_to_lookup_key<N, H>(number: N, hash: H) -> soil_client::blockchain::Result<Vec<u8>>
+pub fn number_and_hash_to_lookup_key<N, H>(number: N, hash: H) -> crate::blockchain::Result<Vec<u8>>
 where
 	N: TryInto<u32>,
 	H: AsRef<[u8]>,
@@ -126,7 +126,7 @@ pub fn remove_number_to_key_mapping<N: TryInto<u32>>(
 	transaction: &mut Transaction<DbHash>,
 	key_lookup_col: u32,
 	number: N,
-) -> soil_client::blockchain::Result<()> {
+) -> crate::blockchain::Result<()> {
 	transaction.remove(key_lookup_col, number_index_key(number)?.as_ref());
 	Ok(())
 }
@@ -138,7 +138,7 @@ pub fn insert_number_to_key_mapping<N: TryInto<u32> + Clone, H: AsRef<[u8]>>(
 	key_lookup_col: u32,
 	number: N,
 	hash: H,
-) -> soil_client::blockchain::Result<()> {
+) -> crate::blockchain::Result<()> {
 	transaction.set_from_vec(
 		key_lookup_col,
 		number_index_key(number.clone())?.as_ref(),
@@ -153,7 +153,7 @@ pub fn insert_hash_to_key_mapping<N: TryInto<u32>, H: AsRef<[u8]> + Clone>(
 	key_lookup_col: u32,
 	number: N,
 	hash: H,
-) -> soil_client::blockchain::Result<()> {
+) -> crate::blockchain::Result<()> {
 	transaction.set_from_vec(
 		key_lookup_col,
 		hash.as_ref(),
@@ -169,7 +169,7 @@ pub fn block_id_to_lookup_key<Block>(
 	db: &dyn Database<DbHash>,
 	key_lookup_col: u32,
 	id: BlockId<Block>,
-) -> Result<Option<Vec<u8>>, soil_client::blockchain::Error>
+) -> Result<Option<Vec<u8>>, crate::blockchain::Error>
 where
 	Block: BlockT,
 	::subsoil::runtime::traits::NumberFor<Block>: UniqueSaturatedFrom<u64> + UniqueSaturatedInto<u64>,
@@ -266,9 +266,9 @@ impl fmt::Display for OpenDbError {
 	}
 }
 
-impl From<OpenDbError> for soil_client::blockchain::Error {
+impl From<OpenDbError> for crate::blockchain::Error {
 	fn from(err: OpenDbError) -> Self {
-		soil_client::blockchain::Error::Backend(err.to_string())
+		crate::blockchain::Error::Backend(err.to_string())
 	}
 }
 
@@ -293,12 +293,12 @@ impl From<io::Error> for OpenDbError {
 }
 
 fn open_parity_db<Block: BlockT>(path: &Path, db_type: DatabaseType, create: bool) -> OpenDbResult {
-	match crate::parity_db::open(path, db_type, create, false) {
+	match super::parity_db::open(path, db_type, create, false) {
 		Ok(db) => Ok(db),
 		Err(parity_db::Error::InvalidConfiguration(_)) => {
 			log::warn!("Invalid parity db configuration, attempting database metadata update.");
 			// Try to update the database with the new config
-			Ok(crate::parity_db::open(path, db_type, create, true)?)
+			Ok(super::parity_db::open(path, db_type, create, true)?)
 		},
 		Err(e) => Err(e.into()),
 	}
@@ -312,10 +312,10 @@ fn open_kvdb_rocksdb<Block: BlockT>(
 	cache_size: usize,
 ) -> OpenDbResult {
 	// first upgrade database to required version
-	match crate::upgrade::upgrade_db::<Block>(path, db_type) {
+	match super::upgrade::upgrade_db::<Block>(path, db_type) {
 		// in case of missing version file, assume that database simply does not exist at given
 		// location
-		Ok(_) | Err(crate::upgrade::UpgradeError::MissingDatabaseVersionFile) => (),
+		Ok(_) | Err(super::upgrade::UpgradeError::MissingDatabaseVersionFile) => (),
 		Err(err) => return Err(io::Error::new(io::ErrorKind::Other, err.to_string()).into()),
 	}
 
@@ -330,7 +330,7 @@ fn open_kvdb_rocksdb<Block: BlockT>(
 			let other_col_budget = (cache_size - state_col_budget) / (NUM_COLUMNS as usize - 1);
 
 			for i in 0..NUM_COLUMNS {
-				if i == crate::columns::STATE {
+				if i == super::columns::STATE {
 					memory_budget.insert(i, state_col_budget);
 				} else {
 					memory_budget.insert(i, other_col_budget);
@@ -350,7 +350,7 @@ fn open_kvdb_rocksdb<Block: BlockT>(
 
 	let db = kvdb_rocksdb::Database::open(&db_config, path)?;
 	// write database version only after the database is successfully opened
-	crate::upgrade::update_version(path)?;
+	super::upgrade::update_version(path)?;
 	Ok(subsoil::database::as_rocksdb_database(db))
 }
 
@@ -433,7 +433,7 @@ pub fn read_db<Block>(
 	col_index: u32,
 	col: u32,
 	id: BlockId<Block>,
-) -> soil_client::blockchain::Result<Option<DBValue>>
+) -> crate::blockchain::Result<Option<DBValue>>
 where
 	Block: BlockT,
 {
@@ -450,7 +450,7 @@ pub fn remove_from_db<Block>(
 	col_index: u32,
 	col: u32,
 	id: BlockId<Block>,
-) -> soil_client::blockchain::Result<()>
+) -> crate::blockchain::Result<()>
 where
 	Block: BlockT,
 {
@@ -467,11 +467,11 @@ pub fn read_header<Block: BlockT>(
 	col_index: u32,
 	col: u32,
 	id: BlockId<Block>,
-) -> soil_client::blockchain::Result<Option<Block::Header>> {
+) -> crate::blockchain::Result<Option<Block::Header>> {
 	match read_db(db, col_index, col, id)? {
 		Some(header) => match Block::Header::decode(&mut &header[..]) {
 			Ok(header) => Ok(Some(header)),
-			Err(_) => Err(soil_client::blockchain::Error::Backend("Error decoding header".into())),
+			Err(_) => Err(crate::blockchain::Error::Backend("Error decoding header".into())),
 		},
 		None => Ok(None),
 	}
@@ -481,7 +481,7 @@ pub fn read_header<Block: BlockT>(
 pub fn read_meta<Block>(
 	db: &dyn Database<DbHash>,
 	col_header: u32,
-) -> Result<Meta<<<Block as BlockT>::Header as HeaderT>::Number, Block::Hash>, soil_client::blockchain::Error>
+) -> Result<Meta<<<Block as BlockT>::Header as HeaderT>::Number, Block::Hash>, crate::blockchain::Error>
 where
 	Block: BlockT,
 {
@@ -500,7 +500,7 @@ where
 		},
 	};
 
-	let load_meta_block = |desc, key| -> Result<_, soil_client::blockchain::Error> {
+	let load_meta_block = |desc, key| -> Result<_, crate::blockchain::Error> {
 		if let Some(Some(header)) = db
 			.get(COLUMN_META, key)
 			.and_then(|id| db.get(col_header, &id).map(|b| Block::Header::decode(&mut &b[..]).ok()))
@@ -548,7 +548,7 @@ where
 				.get(COLUMN_META, meta_keys::BLOCK_GAP)
 				.and_then(|d| Decode::decode(&mut d.as_slice()).ok()),
 			v => {
-				return Err(soil_client::blockchain::Error::Backend(format!(
+				return Err(crate::blockchain::Error::Backend(format!(
 					"Unsupported block gap DB version: {v}"
 				)))
 			},
@@ -570,11 +570,11 @@ where
 /// Read genesis hash from database.
 pub fn read_genesis_hash<Hash: Decode>(
 	db: &dyn Database<DbHash>,
-) -> soil_client::blockchain::Result<Option<Hash>> {
+) -> crate::blockchain::Result<Option<Hash>> {
 	match db.get(COLUMN_META, meta_keys::GENESIS_HASH) {
 		Some(h) => match Decode::decode(&mut &h[..]) {
 			Ok(h) => Ok(Some(h)),
-			Err(err) => Err(soil_client::blockchain::Error::Backend(format!(
+			Err(err) => Err(crate::blockchain::Error::Backend(format!(
 				"Error decoding genesis hash: {}",
 				err
 			))),

@@ -26,7 +26,7 @@ pub use substrate_test_client::*;
 use node_cli::service::RuntimeExecutor;
 
 /// Default backend type.
-pub type Backend = soil_client_db::Backend<node_primitives::Block>;
+pub type Backend = soil_client::db::Backend<node_primitives::Block>;
 
 /// Test client type.
 pub type Client = client::Client<

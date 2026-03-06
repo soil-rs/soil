@@ -217,7 +217,7 @@ fn ensure_correct_instance_is_selected() {
 	};
 	let params = (&config, &whitelist);
 
-	let state = soil_client_db::BenchmarkingState::<subsoil::runtime::traits::BlakeTwo256>::new(
+	let state = soil_client::db::BenchmarkingState::<subsoil::runtime::traits::BlakeTwo256>::new(
 		Default::default(),
 		None,
 		false,

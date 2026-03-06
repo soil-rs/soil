@@ -28,7 +28,7 @@ use soil_client::client_api::{
 	in_mem, Backend as BackendT, BlockBackend, BlockchainEvents, ExecutorProvider,
 	FinalityNotifications, HeaderBackend, StorageProvider,
 };
-use soil_client_db::{Backend, BlocksPruning, DatabaseSettings, DatabaseSource, PruningMode};
+use soil_client::db::{Backend, BlocksPruning, DatabaseSettings, DatabaseSource, PruningMode};
 use soil_client::consensus::{BlockOrigin, Error as ConsensusError, SelectChain};
 use subsoil::core::{testing::TaskExecutor, traits::CallContext, H256};
 use soil_client::executor::WasmExecutor;

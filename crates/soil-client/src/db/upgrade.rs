@@ -24,7 +24,7 @@ use std::{
 	path::{Path, PathBuf},
 };
 
-use crate::{columns, utils::DatabaseType};
+use super::{columns, utils::DatabaseType};
 use codec::{Decode, Encode};
 use kvdb_rocksdb::{Database, DatabaseConfig};
 use subsoil::runtime::traits::Block as BlockT;
@@ -194,7 +194,7 @@ fn version_file_path(path: &Path) -> PathBuf {
 #[cfg(all(test, feature = "rocksdb"))]
 mod tests {
 	use super::*;
-	use crate::{tests::Block, DatabaseSource};
+	use super::{tests::Block, DatabaseSource};
 
 	fn create_db(db_path: &Path, version: Option<u32>) {
 		if let Some(version) = version {
@@ -204,14 +204,14 @@ mod tests {
 		}
 	}
 
-	fn open_database(db_path: &Path, db_type: DatabaseType) -> soil_client::blockchain::Result<()> {
-		crate::utils::open_database::<Block>(
+	fn open_database(db_path: &Path, db_type: DatabaseType) -> crate::blockchain::Result<()> {
+		super::utils::open_database::<Block>(
 			&DatabaseSource::RocksDb { path: db_path.to_owned(), cache_size: 128 },
 			db_type,
 			true,
 		)
 		.map(|_| ())
-		.map_err(|e| soil_client::blockchain::Error::Backend(e.to_string()))
+		.map_err(|e| crate::blockchain::Error::Backend(e.to_string()))
 	}
 
 	#[test]

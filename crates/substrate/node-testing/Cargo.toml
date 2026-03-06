@@ -28,10 +28,9 @@ node-primitives = { workspace = true, default-features = true }
 topsoil-asset-conversion = { workspace = true, default-features = true }
 topsoil-asset-conversion-tx-payment = { workspace = true, default-features = true }
 sc-block-builder = { workspace = true, default-features = true }
-soil-client-db = { features = ["rocksdb"], workspace = true, default-features = true }
 sc-consensus = { workspace = true, default-features = true }
 soil-service = { features = ["rocksdb"], workspace = true, default-features = true }
-soil-client = { workspace = true, default-features = true }
+soil-client = { features = ["rocksdb"], workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
 subsoil-crypto-hashing = { workspace = true, default-features = true }
 substrate-test-client = { workspace = true }

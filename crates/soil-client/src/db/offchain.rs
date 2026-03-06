@@ -20,7 +20,7 @@
 
 use std::{collections::HashMap, sync::Arc};
 
-use crate::{columns, Database, DbHash, Transaction};
+use super::{columns, Database, DbHash, Transaction};
 use log::error;
 use parking_lot::Mutex;
 
@@ -41,7 +41,7 @@ impl LocalStorage {
 	/// Create new offchain storage for tests (backed by memorydb)
 	#[cfg(any(feature = "test-helpers", test))]
 	pub fn new_test() -> Self {
-		let db = kvdb_memorydb::create(crate::utils::NUM_COLUMNS);
+		let db = kvdb_memorydb::create(super::utils::NUM_COLUMNS);
 		let db = subsoil::database::as_database(db);
 		Self::new(db as _)
 	}

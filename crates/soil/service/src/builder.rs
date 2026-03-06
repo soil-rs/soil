@@ -48,7 +48,7 @@ use soil_client::client_api::{
 	BlockBackend, BlockchainEvents, ExecutorProvider, ForkBlocks, KeysIter, StorageProvider,
 	TrieCacheContext, UsageProvider,
 };
-use soil_client_db::{Backend, BlocksPruning, DatabaseSettings, PruningMode};
+use soil_client::db::{Backend, BlocksPruning, DatabaseSettings, PruningMode};
 use soil_client::consensus::block_validation::{
 	BlockAnnounceValidator, Chain, DefaultBlockAnnounceValidator,
 };
@@ -144,7 +144,7 @@ pub fn new_full_client<TBl, TRtApi, TExec>(
 	config: &Configuration,
 	telemetry: Option<TelemetryHandle>,
 	executor: TExec,
-	pruning_filters: Vec<Arc<dyn soil_client_db::PruningFilter>>,
+	pruning_filters: Vec<Arc<dyn soil_client::db::PruningFilter>>,
 ) -> Result<TFullClient<TBl, TRtApi, TExec>, Error>
 where
 	TBl: BlockT,
@@ -162,7 +162,7 @@ pub fn new_full_parts_record_import<TBl, TRtApi, TExec>(
 	telemetry: Option<TelemetryHandle>,
 	executor: TExec,
 	enable_import_proof_recording: bool,
-	pruning_filters: Vec<Arc<dyn soil_client_db::PruningFilter>>,
+	pruning_filters: Vec<Arc<dyn soil_client::db::PruningFilter>>,
 ) -> Result<TFullParts<TBl, TRtApi, TExec>, Error>
 where
 	TBl: BlockT,
@@ -197,7 +197,7 @@ pub fn new_full_parts<TBl, TRtApi, TExec>(
 	config: &Configuration,
 	telemetry: Option<TelemetryHandle>,
 	executor: TExec,
-	pruning_filters: Vec<Arc<dyn soil_client_db::PruningFilter>>,
+	pruning_filters: Vec<Arc<dyn soil_client::db::PruningFilter>>,
 ) -> Result<TFullParts<TBl, TRtApi, TExec>, Error>
 where
 	TBl: BlockT,

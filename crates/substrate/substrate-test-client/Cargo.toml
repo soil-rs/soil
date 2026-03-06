@@ -20,11 +20,10 @@ array-bytes = { workspace = true, default-features = true }
 async-trait = { workspace = true }
 codec = { workspace = true, default-features = true }
 futures = { workspace = true }
-soil-client-db = { features = ["test-helpers"], workspace = true, default-features = true }
 sc-consensus = { workspace = true, default-features = true }
 soil-service = { workspace = true, default-features = true }
 serde = { workspace = true, default-features = true }
 serde_json = { workspace = true, default-features = true }
-soil-client = { workspace = true, default-features = true }
+soil-client = { features = ["test-helpers"], workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
 tokio = { features = ["sync"], workspace = true, default-features = true }

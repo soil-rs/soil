@@ -18,7 +18,7 @@
 
 //! State backend that's useful for benchmarking
 
-use crate::{DbState, DbStateBuilder};
+use super::{DbState, DbStateBuilder};
 use hash_db::{Hasher as DbHasher, Prefix};
 use kvdb::{DBTransaction, KeyValueDB};
 use linked_hash_map::LinkedHashMap;
@@ -663,7 +663,7 @@ impl<Hasher: Hash> std::fmt::Debug for BenchmarkingState<Hasher> {
 
 #[cfg(test)]
 mod test {
-	use crate::bench::BenchmarkingState;
+	use super::bench::BenchmarkingState;
 	use subsoil::runtime::traits::HashingFor;
 	use subsoil::state_machine::backend::Backend as _;
 
@@ -683,7 +683,7 @@ mod test {
 			..subsoil::runtime::Storage::default()
 		};
 		let bench_state =
-			BenchmarkingState::<HashingFor<crate::tests::Block>>::new(storage, None, false, true)
+			BenchmarkingState::<HashingFor<super::tests::Block>>::new(storage, None, false, true)
 				.unwrap();
 
 		assert_eq!(bench_state.read_write_count(), (0, 0, 0, 0));
@@ -693,7 +693,7 @@ mod test {
 
 	#[test]
 	fn read_to_main_and_child_tries() {
-		let bench_state = BenchmarkingState::<HashingFor<crate::tests::Block>>::new(
+		let bench_state = BenchmarkingState::<HashingFor<super::tests::Block>>::new(
 			Default::default(),
 			None,
 			false,

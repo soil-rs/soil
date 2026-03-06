@@ -18,7 +18,7 @@
 
 //! Provides [`RecordStatsState`] for recording stats about state access.
 
-use crate::stats::StateUsageStats;
+use super::stats::StateUsageStats;
 use subsoil::core::storage::ChildInfo;
 use subsoil::runtime::{
 	traits::{Block as BlockT, HashingFor},

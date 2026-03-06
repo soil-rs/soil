@@ -44,7 +44,7 @@ use sc_consensus::{BlockImport, BlockImportParams, ForkChoiceStrategy, ImportRes
 use subsoil::api::ProvideRuntimeApi;
 use subsoil::block_builder::BlockBuilder;
 use soil_client::client_api::{execution_extensions::ExecutionExtensions, UsageProvider};
-use soil_client_db::PruningMode;
+use soil_client::db::PruningMode;
 use soil_client::consensus::BlockOrigin;
 use subsoil::core::{
 	crypto::get_public_from_string_or_panic, ed25519, sr25519, traits::SpawnNamed, Pair,
@@ -220,10 +220,10 @@ pub enum DatabaseType {
 }
 
 impl DatabaseType {
-	fn into_settings(self, path: PathBuf) -> soil_client_db::DatabaseSource {
+	fn into_settings(self, path: PathBuf) -> soil_client::db::DatabaseSource {
 		match self {
-			Self::RocksDb => soil_client_db::DatabaseSource::RocksDb { path, cache_size: 512 },
-			Self::ParityDb => soil_client_db::DatabaseSource::ParityDb { path },
+			Self::RocksDb => soil_client::db::DatabaseSource::RocksDb { path, cache_size: 512 },
+			Self::ParityDb => soil_client::db::DatabaseSource::ParityDb { path },
 		}
 	}
 }
@@ -386,11 +386,11 @@ impl BenchDb {
 		dir: &std::path::Path,
 		keyring: &BenchKeyring,
 	) -> (Client, std::sync::Arc<Backend>, TaskExecutor) {
-		let db_config = soil_client_db::DatabaseSettings {
+		let db_config = soil_client::db::DatabaseSettings {
 			trie_cache_maximum_size: Some(16 * 1024 * 1024),
 			state_pruning: Some(PruningMode::ArchiveAll),
 			source: database_type.into_settings(dir.into()),
-			blocks_pruning: soil_client_db::BlocksPruning::KeepAll,
+			blocks_pruning: soil_client::db::BlocksPruning::KeepAll,
 			pruning_filters: Default::default(),
 			metrics_registry: None,
 		};

@@ -162,7 +162,7 @@ use std::marker::PhantomData;
 #[derive(Debug, Clone)]
 pub struct GrandpaPruningFilter;
 
-impl soil_client_db::PruningFilter for GrandpaPruningFilter {
+impl soil_client::db::PruningFilter for GrandpaPruningFilter {
 	fn should_retain(&self, justifications: &subsoil::runtime::Justifications) -> bool {
 		justifications.get(GRANDPA_ENGINE_ID).is_some()
 	}

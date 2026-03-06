@@ -250,11 +250,11 @@ mod tests {
 				transaction_pool: Default::default(),
 				network: NetworkConfiguration::new_memory(),
 				keystore: soil_service::config::KeystoreConfig::InMemory,
-				database: soil_client_db::DatabaseSource::ParityDb { path: root.clone() },
+				database: soil_client::db::DatabaseSource::ParityDb { path: root.clone() },
 				trie_cache_maximum_size: None,
 				warm_up_trie_cache: None,
 				state_pruning: None,
-				blocks_pruning: soil_client_db::BlocksPruning::KeepAll,
+				blocks_pruning: soil_client::db::BlocksPruning::KeepAll,
 				chain_spec: Box::new(
 					GenericChainSpec::<NoExtension, ()>::builder(
 						Default::default(),
