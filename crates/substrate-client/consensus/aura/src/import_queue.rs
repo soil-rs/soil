@@ -31,12 +31,12 @@ use sc_consensus::{
 };
 use sc_consensus_slots::{check_equivocation, CheckedHeader, InherentDataProviderExt};
 use subsoil::api::{ApiExt, ProvideRuntimeApi};
-use soil_block_builder::BlockBuilder as BlockBuilderApi;
+use subsoil::block_builder::BlockBuilder as BlockBuilderApi;
 use soil_blockchain::{HeaderBackend, HeaderMetadata};
 use soil_client_api::{backend::AuxStore, BlockOf, UsageProvider};
 use soil_consensus::Error as ConsensusError;
-use soil_consensus_aura::{inherents::AuraInherentData, AuraApi};
-use soil_consensus_slots::Slot;
+use subsoil::consensus::aura::{inherents::AuraInherentData, AuraApi};
+use subsoil::consensus::slots::Slot;
 use subsoil::core::crypto::Pair;
 use subsoil::inherents::{CreateInherentDataProviders, InherentDataProvider as _};
 use subsoil::runtime::{
@@ -214,7 +214,7 @@ where
 						.has_api_with::<dyn BlockBuilderApi<B>, _>(parent_hash, |v| v >= 2)
 						.map_err(|e| e.to_string())?
 					{
-						soil_block_builder::check_inherents_with_data(
+						subsoil::block_builder::check_inherents_with_data(
 							self.client.clone(),
 							parent_hash,
 							new_block.clone(),

@@ -22,7 +22,7 @@
 use crate::{self as topsoil_grandpa, AuthorityId, AuthorityList, Config, ConsensusLog};
 use codec::Encode;
 use finality_grandpa;
-use soil_consensus_grandpa::{RoundNumber, SetId, GRANDPA_ENGINE_ID};
+use subsoil::consensus::grandpa::{RoundNumber, SetId, GRANDPA_ENGINE_ID};
 use subsoil::core::{ConstBool, H256};
 use subsoil::keyring::Ed25519Keyring;
 use subsoil::runtime::{
@@ -317,12 +317,12 @@ pub fn generate_equivocation_proof(
 	set_id: SetId,
 	vote1: (RoundNumber, H256, u64, &Ed25519Keyring),
 	vote2: (RoundNumber, H256, u64, &Ed25519Keyring),
-) -> soil_consensus_grandpa::EquivocationProof<H256, u64> {
+) -> subsoil::consensus::grandpa::EquivocationProof<H256, u64> {
 	let signed_prevote = |round, hash, number, keyring: &Ed25519Keyring| {
 		let prevote = finality_grandpa::Prevote { target_hash: hash, target_number: number };
 
 		let prevote_msg = finality_grandpa::Message::Prevote(prevote.clone());
-		let payload = soil_consensus_grandpa::localized_payload(round, set_id, &prevote_msg);
+		let payload = subsoil::consensus::grandpa::localized_payload(round, set_id, &prevote_msg);
 		let signed = keyring.sign(&payload).into();
 		(prevote, signed)
 	};
@@ -330,9 +330,9 @@ pub fn generate_equivocation_proof(
 	let (prevote1, signed1) = signed_prevote(vote1.0, vote1.1, vote1.2, vote1.3);
 	let (prevote2, signed2) = signed_prevote(vote2.0, vote2.1, vote2.2, vote2.3);
 
-	soil_consensus_grandpa::EquivocationProof::new(
+	subsoil::consensus::grandpa::EquivocationProof::new(
 		set_id,
-		soil_consensus_grandpa::Equivocation::Prevote(finality_grandpa::Equivocation {
+		subsoil::consensus::grandpa::Equivocation::Prevote(finality_grandpa::Equivocation {
 			round_number: vote1.0,
 			identity: vote1.3.public().into(),
 			first: (prevote1, signed1),

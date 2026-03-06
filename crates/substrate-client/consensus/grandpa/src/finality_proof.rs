@@ -42,7 +42,7 @@ use std::sync::Arc;
 use codec::{Decode, Encode};
 use soil_blockchain::{Backend as BlockchainBackend, HeaderBackend};
 use soil_client_api::backend::Backend;
-use soil_consensus_grandpa::GRANDPA_ENGINE_ID;
+use subsoil::consensus::grandpa::GRANDPA_ENGINE_ID;
 use subsoil::runtime::{
 	generic::BlockId,
 	traits::{Block as BlockT, Header as HeaderT, NumberFor, One},
@@ -264,7 +264,7 @@ mod tests {
 	use sc_block_builder::BlockBuilderBuilder;
 	use soil_client_api::{apply_aux, LockImportRun};
 	use soil_consensus::BlockOrigin;
-	use soil_consensus_grandpa::GRANDPA_ENGINE_ID as ID;
+	use subsoil::consensus::grandpa::GRANDPA_ENGINE_ID as ID;
 	use subsoil::core::crypto::UncheckedFrom;
 	use subsoil::keyring::Ed25519Keyring;
 	use substrate_test_runtime_client::{
@@ -279,7 +279,7 @@ mod tests {
 	/// AND if at least one of those headers is invalid, all other MUST be considered invalid.
 	fn check_finality_proof<Block: BlockT>(
 		current_set_id: SetId,
-		current_authorities: soil_consensus_grandpa::AuthorityList,
+		current_authorities: subsoil::consensus::grandpa::AuthorityList,
 		remote_proof: Vec<u8>,
 	) -> soil_blockchain::Result<super::FinalityProof<Block::Header>>
 	where
@@ -409,7 +409,7 @@ mod tests {
 		};
 
 		let grandpa_just: GrandpaJustification<Block> =
-			soil_consensus_grandpa::GrandpaJustification::<Header> {
+			subsoil::consensus::grandpa::GrandpaJustification::<Header> {
 				round: 8,
 				votes_ancestries: Vec::new(),
 				commit,
@@ -449,7 +449,7 @@ mod tests {
 			};
 
 			let msg = finality_grandpa::Message::Precommit(precommit.clone());
-			let encoded = soil_consensus_grandpa::localized_payload(round, set_id, &msg);
+			let encoded = subsoil::consensus::grandpa::localized_payload(round, set_id, &msg);
 			let signature = voter.sign(&encoded[..]).into();
 
 			let signed_precommit = finality_grandpa::SignedPrecommit {

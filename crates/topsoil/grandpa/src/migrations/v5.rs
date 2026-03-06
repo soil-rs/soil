@@ -19,7 +19,7 @@ use crate::{BoundedAuthorityList, Pallet};
 use alloc::vec::Vec;
 use codec::Decode;
 use core::marker::PhantomData;
-use soil_consensus_grandpa::AuthorityList;
+use subsoil::consensus::grandpa::AuthorityList;
 use topsoil_support::{
 	migrations::VersionedMigration,
 	storage,

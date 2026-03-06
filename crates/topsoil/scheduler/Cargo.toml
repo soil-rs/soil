@@ -24,7 +24,6 @@ subsoil = { workspace = true }
 
 [dev-dependencies]
 topsoil-preimage = { workspace = true, default-features = true }
-substrate-test-utils = { workspace = true }
 
 [features]
 default = ["std"]

@@ -30,7 +30,7 @@ use soil_staking::{
 	offence::{OffenceDetails, OnOffenceHandler},
 	SessionIndex, StakingAccount,
 };
-use substrate_test_utils::assert_eq_uvec;
+use subsoil::assert_eq_uvec;
 use topsoil_balances::Error as BalancesError;
 use topsoil_election_provider_support::{
 	bounds::{DataProviderBounds, ElectionBoundsBuilder},

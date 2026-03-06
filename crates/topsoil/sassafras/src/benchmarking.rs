@@ -18,7 +18,7 @@
 //! Benchmarks for the Sassafras pallet.
 
 use crate::*;
-use soil_consensus_sassafras::{vrf::VrfSignature, EphemeralPublic, EpochConfiguration};
+use subsoil::consensus::sassafras::{vrf::VrfSignature, EphemeralPublic, EpochConfiguration};
 
 use topsoil_benchmarking::v2::*;
 use topsoil_support::traits::Hooks;

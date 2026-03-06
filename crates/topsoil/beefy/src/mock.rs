@@ -40,10 +40,10 @@ use topsoil_system::pallet_prelude::HeaderFor;
 
 use crate as topsoil_beefy;
 
-pub use soil_consensus_beefy::{
+pub use subsoil::consensus::beefy::{
 	ecdsa_crypto::AuthorityId as BeefyId, ConsensusLog, BEEFY_ENGINE_ID,
 };
-use soil_consensus_beefy::{AncestryHelper, AncestryHelperWeightInfo, Commitment};
+use subsoil::consensus::beefy::{AncestryHelper, AncestryHelperWeightInfo, Commitment};
 
 subsoil::impl_opaque_keys! {
 	pub struct MockSessionKeys {

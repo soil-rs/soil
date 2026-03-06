@@ -22,7 +22,7 @@ use crate::{
 };
 use codec::{Decode, Encode};
 use soil_consensus_epochs::Epoch as EpochT;
-use soil_consensus_slots::Slot;
+use subsoil::consensus::slots::Slot;
 
 /// BABE epoch information, version 0.
 #[derive(Decode, Encode, PartialEq, Eq, Clone, Debug)]
@@ -66,7 +66,7 @@ impl EpochT for EpochV0 {
 impl EpochV0 {
 	/// Migrate the struct to current epoch version.
 	pub fn migrate(self, config: &BabeConfiguration) -> Epoch {
-		soil_consensus_babe::Epoch {
+		subsoil::consensus::babe::Epoch {
 			epoch_index: self.epoch_index,
 			start_slot: self.start_slot,
 			duration: self.duration,

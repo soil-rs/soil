@@ -42,7 +42,6 @@ topsoil-staking-reward-curve = { workspace = true, default-features = true }
 topsoil-timestamp = { workspace = true, default-features = true }
 rand_chacha = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
-substrate-test-utils = { workspace = true }
 
 [features]
 default = ["std"]

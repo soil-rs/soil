@@ -15,7 +15,6 @@ members = [
 	"crates/soil/application-crypto/test",
 	"crates/soil/authority-discovery",
 	"crates/soil/basic-authorship",
-	"crates/soil/block-builder",
 	"crates/soil/blockchain",
 	"crates/soil/chain-spec",
 	"crates/soil/chain-spec-derive",
@@ -23,18 +22,11 @@ members = [
 	"crates/soil/client-api",
 	"crates/soil/client-db",
 	"crates/soil/consensus",
-	"crates/soil/consensus-aura",
-	"crates/soil/consensus-babe",
 	"crates/soil/consensus-babe-rpc",
-	"crates/soil/consensus-beefy",
 	"crates/soil/consensus-beefy-rpc",
 	"crates/soil/consensus-epochs",
-	"crates/soil/consensus-grandpa",
 	"crates/soil/consensus-grandpa-rpc",
 	"crates/soil/consensus-manual-seal",
-	"crates/soil/consensus-pow",
-	"crates/soil/consensus-sassafras",
-	"crates/soil/consensus-slots",
 	"crates/soil/core/fuzz",
 	"crates/subsoil-crypto-hashing",
 	"crates/soil/executor",
@@ -44,7 +36,6 @@ members = [
 	"crates/soil/genesis-builder",
 	"crates/soil/informant",
 	"crates/soil/maybe-compressed-blob",
-	"crates/soil/merkle-mountain-range",
 	"crates/soil/mixnet",
 	"crates/soil/mmr-gadget",
 	"crates/soil/mmr-rpc",
@@ -246,7 +237,6 @@ members = [
 	"crates/substrate/substrate-test-runtime",
 	"crates/substrate/substrate-test-runtime-client",
 	"crates/substrate/substrate-test-runtime-transaction-pool",
-	"crates/substrate/substrate-test-utils",
 	"crates/substrate/substrate-wasm-builder",
 	"crates/substrate-client/authority-discovery",
 	"crates/substrate-client/block-builder",
@@ -505,23 +495,14 @@ sc-transaction-pool = { path = "crates/substrate-client/transaction-pool", defau
 soil-transaction-pool-api = { path = "crates/soil/transaction-pool-api", default-features = false }
 soil-utils = { path = "crates/soil/utils", default-features = false }
 soil-authority-discovery = { path = "crates/soil/authority-discovery", default-features = false }
-soil-block-builder = { path = "crates/soil/block-builder", default-features = false }
 soil-blockchain = { path = "crates/soil/blockchain", default-features = false }
 soil-consensus = { path = "crates/soil/consensus", default-features = false }
-soil-consensus-aura = { path = "crates/soil/consensus-aura", default-features = false }
-soil-consensus-babe = { path = "crates/soil/consensus-babe", default-features = false }
-soil-consensus-beefy = { path = "crates/soil/consensus-beefy", default-features = false }
-soil-consensus-grandpa = { path = "crates/soil/consensus-grandpa", default-features = false }
-soil-consensus-pow = { path = "crates/soil/consensus-pow", default-features = false }
-soil-consensus-sassafras = { path = "crates/soil/consensus-sassafras", default-features = false }
-soil-consensus-slots = { path = "crates/soil/consensus-slots", default-features = false }
 subsoil = { path = "crates/subsoil", default-features = false }
 subsoil-crypto-hashing = { path = "crates/subsoil-crypto-hashing", default-features = false }
 subsoil-derive = { path = "crates/subsoil-derive" }
 soil-genesis-builder = { path = "crates/soil/genesis-builder", default-features = false }
 soil-maybe-compressed-blob = { path = "crates/soil/maybe-compressed-blob", default-features = false }
 soil-mixnet = { path = "crates/soil/mixnet", default-features = false }
-soil-mmr-primitives = { path = "crates/soil/merkle-mountain-range", default-features = false }
 soil-offchain = { path = "crates/soil/offchain", default-features = false }
 soil-rpc = { path = "crates/soil/rpc", default-features = false }
 sp-runtime-interface-test-wasm = { path = "crates/soil/runtime-interface/test-wasm" }
@@ -544,7 +525,6 @@ substrate-test-client = { path = "crates/substrate/substrate-test-client" }
 substrate-test-runtime = { path = "crates/substrate/substrate-test-runtime" }
 substrate-test-runtime-client = { path = "crates/substrate/substrate-test-runtime-client" }
 substrate-test-runtime-transaction-pool = { path = "crates/substrate/substrate-test-runtime-transaction-pool" }
-substrate-test-utils = { path = "crates/substrate/substrate-test-utils" }
 substrate-wasm-builder = { path = "crates/substrate/substrate-wasm-builder", default-features = false }
 test-pallet = { path = "crates/topsoil/support/test/pallet", default-features = false, package = "topsoil-support-test-pallet" }
 

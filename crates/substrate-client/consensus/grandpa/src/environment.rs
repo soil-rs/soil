@@ -41,7 +41,7 @@ use soil_client_api::{
 	utils::is_descendent_of,
 };
 use soil_consensus::SelectChain as SelectChainT;
-use soil_consensus_grandpa::{
+use subsoil::consensus::grandpa::{
 	AuthorityId, AuthoritySignature, Equivocation, EquivocationProof, GrandpaApi, RoundNumber,
 	SetId, GRANDPA_ENGINE_ID,
 };

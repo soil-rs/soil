@@ -22,8 +22,8 @@
 
 use sc_consensus_beefy as beefy;
 use sc_consensus_grandpa as grandpa;
-use soil_consensus_babe::inherents::BabeCreateInherentDataProviders;
-use soil_consensus_beefy as beefy_primitives;
+use subsoil::consensus::babe::inherents::BabeCreateInherentDataProviders;
+use subsoil::consensus::beefy as beefy_primitives;
 
 use crate::Cli;
 use codec::Encode;
@@ -270,7 +270,7 @@ pub fn new_partial(
 		Arc::new(move |_, _| async move {
 			let timestamp = subsoil::timestamp::InherentDataProvider::from_system_time();
 			let slot =
-			soil_consensus_babe::inherents::InherentDataProvider::from_timestamp_and_slot_duration(
+			subsoil::consensus::babe::inherents::InherentDataProvider::from_timestamp_and_slot_duration(
 				*timestamp,
 				slot_duration,
 			);
@@ -625,7 +625,7 @@ pub fn new_full_base<N: NetworkBackend<Block, <Block as BlockT>::Hash>>(
 					let timestamp = subsoil::timestamp::InherentDataProvider::from_system_time();
 
 					let slot =
-						soil_consensus_babe::inherents::InherentDataProvider::from_timestamp_and_slot_duration(
+						subsoil::consensus::babe::inherents::InherentDataProvider::from_timestamp_and_slot_duration(
 							*timestamp,
 							slot_duration,
 						);
@@ -707,7 +707,7 @@ pub fn new_full_base<N: NetworkBackend<Block, <Block as BlockT>::Hash>>(
 	let beefy_params = beefy::BeefyParams {
 		client: client.clone(),
 		backend: backend.clone(),
-		payload_provider: soil_consensus_beefy::mmr::MmrRootProvider::new(client.clone()),
+		payload_provider: subsoil::consensus::beefy::mmr::MmrRootProvider::new(client.clone()),
 		runtime: client.clone(),
 		key_store: keystore.clone(),
 		network_params,
@@ -732,7 +732,7 @@ pub fn new_full_base<N: NetworkBackend<Block, <Block as BlockT>::Hash>>(
 			soil_mmr_gadget::MmrGadget::start(
 				client.clone(),
 				backend.clone(),
-				soil_mmr_primitives::INDEXING_PREFIX.to_vec(),
+				subsoil::mmr::INDEXING_PREFIX.to_vec(),
 			),
 		);
 	}
@@ -920,7 +920,7 @@ mod tests {
 		let keystore: KeystorePtr = LocalKeystore::open(keystore_path.path(), None)
 			.expect("Creates keystore")
 			.into();
-		let alice: soil_consensus_babe::AuthorityId = keystore
+		let alice: subsoil::consensus::babe::AuthorityId = keystore
 			.sr25519_generate_new(BABE, Some("//Alice"))
 			.expect("Creates authority pair")
 			.into();
@@ -1018,7 +1018,7 @@ mod tests {
 						subsoil::timestamp::InherentDataProvider::new(
 							std::time::Duration::from_millis(SLOT_DURATION * slot).into(),
 						),
-						soil_consensus_babe::inherents::InherentDataProvider::new(slot.into()),
+						subsoil::consensus::babe::inherents::InherentDataProvider::new(slot.into()),
 					)
 						.create_inherent_data(),
 				)
@@ -1050,7 +1050,7 @@ mod tests {
 				// add it to a digest item.
 				let to_sign = pre_hash.encode();
 				let signature = keystore
-					.sr25519_sign(soil_consensus_babe::AuthorityId::ID, alice.as_ref(), &to_sign)
+					.sr25519_sign(subsoil::consensus::babe::AuthorityId::ID, alice.as_ref(), &to_sign)
 					.unwrap()
 					.unwrap();
 				let item = <DigestItem as CompatibleDigestItem>::babe_seal(signature.into());

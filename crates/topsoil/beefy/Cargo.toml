@@ -20,7 +20,6 @@ topsoil-authorship = { workspace = true }
 topsoil-session = { workspace = true }
 scale-info = { features = ["derive", "serde"], workspace = true }
 serde = { optional = true, workspace = true, default-features = true }
-soil-consensus-beefy = { features = ["serde"], workspace = true }
 soil-session = { workspace = true }
 soil-staking = { features = ["serde"], workspace = true }
 subsoil = { workspace = true }
@@ -51,7 +50,6 @@ std = [
 	"topsoil-timestamp/std",
 	"scale-info/std",
 	"serde/std",
-	"soil-consensus-beefy/std",
 	"subsoil/std",
 	"soil-session/std",
 	"soil-staking/std",

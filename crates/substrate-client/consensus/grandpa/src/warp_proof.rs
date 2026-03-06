@@ -25,7 +25,7 @@ use crate::{
 };
 use soil_blockchain::{Backend as BlockchainBackend, HeaderBackend};
 use soil_client_api::Backend as ClientBackend;
-use soil_consensus_grandpa::{AuthorityList, SetId, GRANDPA_ENGINE_ID};
+use subsoil::consensus::grandpa::{AuthorityList, SetId, GRANDPA_ENGINE_ID};
 use soil_network_sync::strategy::warp::{
 	EncodedProof, VerificationResult, Verifier, WarpSyncProvider,
 };
@@ -395,7 +395,7 @@ mod tests {
 	use sc_block_builder::BlockBuilderBuilder;
 	use soil_blockchain::HeaderBackend;
 	use soil_consensus::BlockOrigin;
-	use soil_consensus_grandpa::GRANDPA_ENGINE_ID;
+	use subsoil::consensus::grandpa::GRANDPA_ENGINE_ID;
 	use subsoil::keyring::Ed25519Keyring;
 	use std::sync::Arc;
 	use substrate_test_runtime_client::{
@@ -442,9 +442,9 @@ mod tests {
 					.collect::<Vec<_>>();
 
 				let digest = subsoil::runtime::generic::DigestItem::Consensus(
-					soil_consensus_grandpa::GRANDPA_ENGINE_ID,
-					soil_consensus_grandpa::ConsensusLog::ScheduledChange(
-						soil_consensus_grandpa::ScheduledChange { delay: 0u64, next_authorities },
+					subsoil::consensus::grandpa::GRANDPA_ENGINE_ID,
+					subsoil::consensus::grandpa::ConsensusLog::ScheduledChange(
+						subsoil::consensus::grandpa::ScheduledChange { delay: 0u64, next_authorities },
 					)
 					.encode(),
 				);
@@ -470,7 +470,7 @@ mod tests {
 
 					let msg = finality_grandpa::Message::Precommit(precommit.clone());
 					let encoded =
-						soil_consensus_grandpa::localized_payload(42, current_set_id, &msg);
+						subsoil::consensus::grandpa::localized_payload(42, current_set_id, &msg);
 					let signature = keyring.sign(&encoded[..]).into();
 
 					let precommit = finality_grandpa::SignedPrecommit {

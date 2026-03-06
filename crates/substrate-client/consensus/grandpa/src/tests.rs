@@ -30,7 +30,7 @@ use sc_consensus::{
 };
 use subsoil::api::{ApiRef, ProvideRuntimeApi};
 use soil_consensus::{BlockOrigin, Error as ConsensusError, SelectChain};
-use soil_consensus_grandpa::{
+use subsoil::consensus::grandpa::{
 	AuthorityList, EquivocationProof, GrandpaApi, OpaqueKeyOwnershipProof, GRANDPA_ENGINE_ID,
 };
 use subsoil::core::H256;
@@ -414,7 +414,7 @@ fn add_scheduled_change(builder: &mut impl BlockBuilderExt, change: ScheduledCha
 	builder
 		.push_deposit_log_digest_item(DigestItem::Consensus(
 			GRANDPA_ENGINE_ID,
-			soil_consensus_grandpa::ConsensusLog::ScheduledChange(change).encode(),
+			subsoil::consensus::grandpa::ConsensusLog::ScheduledChange(change).encode(),
 		))
 		.unwrap();
 }
@@ -427,7 +427,7 @@ fn add_forced_change(
 	builder
 		.push_deposit_log_digest_item(DigestItem::Consensus(
 			GRANDPA_ENGINE_ID,
-			soil_consensus_grandpa::ConsensusLog::ForcedChange(median_last_finalized, change)
+			subsoil::consensus::grandpa::ConsensusLog::ForcedChange(median_last_finalized, change)
 				.encode(),
 		))
 		.unwrap();
@@ -2031,7 +2031,7 @@ async fn justification_with_equivocation() {
 			let precommit = finality_grandpa::Precommit { target_hash, target_number };
 
 			let msg = finality_grandpa::Message::Precommit(precommit.clone());
-			let encoded = soil_consensus_grandpa::localized_payload(round, set_id, &msg);
+			let encoded = subsoil::consensus::grandpa::localized_payload(round, set_id, &msg);
 
 			let precommit = finality_grandpa::SignedPrecommit {
 				precommit: precommit.clone(),
@@ -2104,7 +2104,7 @@ async fn imports_justification_for_regular_blocks_on_import() {
 		let precommit = finality_grandpa::Precommit { target_hash: hash, target_number: number };
 
 		let msg = finality_grandpa::Message::Precommit(precommit.clone());
-		let encoded = soil_consensus_grandpa::localized_payload(round, set_id, &msg);
+		let encoded = subsoil::consensus::grandpa::localized_payload(round, set_id, &msg);
 		let signature = peers[0].sign(&encoded[..]).into();
 
 		let precommit = finality_grandpa::SignedPrecommit {
@@ -2215,13 +2215,13 @@ async fn grandpa_environment_doesnt_send_equivocation_reports_for_itself() {
 
 	// reporting the equivocation should fail since the offender is a local
 	// authority (i.e. we have keys in our keystore for the given id)
-	let equivocation_proof = soil_consensus_grandpa::Equivocation::Prevote(equivocation.clone());
+	let equivocation_proof = subsoil::consensus::grandpa::Equivocation::Prevote(equivocation.clone());
 	assert!(matches!(environment.report_equivocation(equivocation_proof), Err(Error::Safety(_))));
 
 	// if we set the equivocation offender to another id for which we don't have
 	// keys it should work
 	equivocation.identity = TryFrom::try_from(&[1; 32][..]).unwrap();
-	let equivocation_proof = soil_consensus_grandpa::Equivocation::Prevote(equivocation);
+	let equivocation_proof = subsoil::consensus::grandpa::Equivocation::Prevote(equivocation);
 	environment.report_equivocation(equivocation_proof).unwrap();
 }
 

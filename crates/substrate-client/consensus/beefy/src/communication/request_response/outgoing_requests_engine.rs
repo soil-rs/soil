@@ -22,7 +22,7 @@ use codec::Encode;
 use futures::channel::{oneshot, oneshot::Canceled};
 use log::{debug, warn};
 use parking_lot::Mutex;
-use soil_consensus_beefy::{AuthorityIdBound, ValidatorSet};
+use subsoil::consensus::beefy::{AuthorityIdBound, ValidatorSet};
 use soil_network::{
 	request_responses::{IfDisconnected, RequestFailure},
 	NetworkRequest, ProtocolName,

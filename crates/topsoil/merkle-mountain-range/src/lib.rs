@@ -63,7 +63,7 @@ use log;
 
 use topsoil::prelude::*;
 
-pub use soil_mmr_primitives::{
+pub use subsoil::mmr::{
 	self as primitives, utils, utils::NodesUtils, AncestryProof, Error, FullLeaf, LeafDataProvider,
 	LeafIndex, LeafProof, NodeIndex, OnNewRoot,
 };

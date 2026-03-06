@@ -4679,17 +4679,9 @@ dependencies = [
  "scale-info",
  "serde_json",
  "soil-authority-discovery",
- "soil-block-builder",
  "soil-chain-spec-derive",
- "soil-consensus-aura",
- "soil-consensus-babe",
- "soil-consensus-beefy",
- "soil-consensus-grandpa",
- "soil-consensus-pow",
- "soil-consensus-slots",
  "soil-genesis-builder",
  "soil-mixnet",
- "soil-mmr-primitives",
  "soil-offchain",
  "soil-session",
  "soil-staking",
@@ -6124,14 +6116,11 @@ dependencies = [
  "sc-consensus-grandpa",
  "sc-mixnet",
  "sc-rpc",
- "soil-block-builder",
  "soil-blockchain",
  "soil-chain-spec",
  "soil-client-api",
  "soil-consensus",
- "soil-consensus-babe",
  "soil-consensus-babe-rpc",
- "soil-consensus-beefy",
  "soil-consensus-beefy-rpc",
  "soil-consensus-grandpa-rpc",
  "soil-mmr-rpc",
@@ -6178,7 +6167,6 @@ dependencies = [
  "parity-scale-codec",
  "sc-block-builder",
  "sc-consensus",
- "soil-block-builder",
  "soil-blockchain",
  "soil-client-api",
  "soil-client-db",
@@ -8090,7 +8078,6 @@ name = "sc-block-builder"
 version = "0.33.0"
 dependencies = [
  "parity-scale-codec",
- "soil-block-builder",
  "soil-blockchain",
  "subsoil",
  "substrate-test-runtime-client",
@@ -8131,12 +8118,9 @@ dependencies = [
  "sc-consensus",
  "sc-consensus-slots",
  "sc-keystore",
- "soil-block-builder",
  "soil-blockchain",
  "soil-client-api",
  "soil-consensus",
- "soil-consensus-aura",
- "soil-consensus-slots",
  "soil-network",
  "soil-network-test",
  "soil-telemetry",
@@ -8164,13 +8148,10 @@ dependencies = [
  "sc-block-builder",
  "sc-consensus",
  "sc-consensus-slots",
- "soil-block-builder",
  "soil-blockchain",
  "soil-client-api",
  "soil-consensus",
- "soil-consensus-babe",
  "soil-consensus-epochs",
- "soil-consensus-slots",
  "soil-network-test",
  "soil-telemetry",
  "soil-transaction-pool-api",
@@ -8199,8 +8180,6 @@ dependencies = [
  "soil-blockchain",
  "soil-client-api",
  "soil-consensus",
- "soil-consensus-beefy",
- "soil-mmr-primitives",
  "soil-network",
  "soil-network-gossip",
  "soil-network-sync",
@@ -8240,7 +8219,6 @@ dependencies = [
  "soil-client-api",
  "soil-client-db",
  "soil-consensus",
- "soil-consensus-grandpa",
  "soil-network",
  "soil-network-common",
  "soil-network-gossip",
@@ -8269,11 +8247,9 @@ dependencies = [
  "parity-scale-codec",
  "parking_lot 0.12.5",
  "sc-consensus",
- "soil-block-builder",
  "soil-blockchain",
  "soil-client-api",
  "soil-consensus",
- "soil-consensus-pow",
  "subsoil",
  "substrate-prometheus-endpoint",
  "thiserror 1.0.69",
@@ -8292,7 +8268,6 @@ dependencies = [
  "soil-blockchain",
  "soil-client-api",
  "soil-consensus",
- "soil-consensus-slots",
  "soil-telemetry",
  "subsoil",
  "substrate-test-runtime-client",
@@ -9307,13 +9282,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "soil-block-builder"
-version = "26.0.0"
-dependencies = [
- "subsoil",
-]
-
-[[package]]
 name = "soil-blockchain"
 version = "28.0.0"
 dependencies = [
@@ -9343,7 +9311,6 @@ dependencies = [
  "soil-blockchain",
  "soil-chain-spec-derive",
  "soil-client-api",
- "soil-consensus-babe",
  "soil-executor",
  "soil-genesis-builder",
  "soil-network",
@@ -9460,29 +9427,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "soil-consensus-aura"
-version = "0.32.0"
-dependencies = [
- "async-trait",
- "parity-scale-codec",
- "scale-info",
- "soil-consensus-slots",
- "subsoil",
-]
-
-[[package]]
-name = "soil-consensus-babe"
-version = "0.32.0"
-dependencies = [
- "async-trait",
- "parity-scale-codec",
- "scale-info",
- "serde",
- "soil-consensus-slots",
- "subsoil",
-]
-
-[[package]]
 name = "soil-consensus-babe-rpc"
 version = "0.34.0"
 dependencies = [
@@ -9493,7 +9437,6 @@ dependencies = [
  "serde",
  "soil-blockchain",
  "soil-consensus",
- "soil-consensus-babe",
  "soil-consensus-epochs",
  "soil-rpc-api",
  "soil-transaction-pool-api",
@@ -9501,21 +9444,6 @@ dependencies = [
  "substrate-test-runtime-client",
  "thiserror 1.0.69",
  "tokio",
-]
-
-[[package]]
-name = "soil-consensus-beefy"
-version = "13.0.0"
-dependencies = [
- "array-bytes 6.2.3",
- "parity-scale-codec",
- "scale-info",
- "serde",
- "soil-mmr-primitives",
- "strum 0.26.3",
- "subsoil",
- "subsoil-crypto-hashing",
- "w3f-bls",
 ]
 
 [[package]]
@@ -9530,7 +9458,6 @@ dependencies = [
  "sc-consensus-beefy",
  "sc-rpc",
  "serde",
- "soil-consensus-beefy",
  "subsoil",
  "substrate-test-runtime-client",
  "thiserror 1.0.69",
@@ -9550,18 +9477,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "soil-consensus-grandpa"
-version = "13.0.0"
-dependencies = [
- "finality-grandpa",
- "log",
- "parity-scale-codec",
- "scale-info",
- "serde",
- "subsoil",
-]
-
-[[package]]
 name = "soil-consensus-grandpa-rpc"
 version = "0.19.0"
 dependencies = [
@@ -9576,7 +9491,6 @@ dependencies = [
  "serde",
  "soil-blockchain",
  "soil-client-api",
- "soil-consensus-grandpa",
  "subsoil",
  "substrate-test-runtime-client",
  "thiserror 1.0.69",
@@ -9603,10 +9517,7 @@ dependencies = [
  "soil-blockchain",
  "soil-client-api",
  "soil-consensus",
- "soil-consensus-aura",
- "soil-consensus-babe",
  "soil-consensus-epochs",
- "soil-consensus-slots",
  "soil-transaction-pool-api",
  "subsoil",
  "substrate-prometheus-endpoint",
@@ -9614,35 +9525,6 @@ dependencies = [
  "substrate-test-runtime-transaction-pool",
  "thiserror 1.0.69",
  "tokio",
-]
-
-[[package]]
-name = "soil-consensus-pow"
-version = "0.32.0"
-dependencies = [
- "parity-scale-codec",
- "subsoil",
-]
-
-[[package]]
-name = "soil-consensus-sassafras"
-version = "0.3.4-dev"
-dependencies = [
- "parity-scale-codec",
- "scale-info",
- "serde",
- "soil-consensus-slots",
- "subsoil",
-]
-
-[[package]]
-name = "soil-consensus-slots"
-version = "0.32.0"
-dependencies = [
- "parity-scale-codec",
- "scale-info",
- "serde",
- "subsoil",
 ]
 
 [[package]]
@@ -9767,26 +9649,9 @@ dependencies = [
  "soil-blockchain",
  "soil-client-api",
  "soil-consensus",
- "soil-consensus-beefy",
- "soil-mmr-primitives",
  "subsoil",
  "substrate-test-runtime-client",
  "tokio",
-]
-
-[[package]]
-name = "soil-mmr-primitives"
-version = "26.0.0"
-dependencies = [
- "array-bytes 6.2.3",
- "log",
- "parity-scale-codec",
- "polkadot-ckb-merkle-mountain-range",
- "scale-info",
- "serde",
- "subsoil",
- "subsoil-derive",
- "thiserror 1.0.69",
 ]
 
 [[package]]
@@ -9798,7 +9663,6 @@ dependencies = [
  "serde",
  "serde_json",
  "soil-blockchain",
- "soil-mmr-primitives",
  "subsoil",
 ]
 
@@ -10666,12 +10530,9 @@ dependencies = [
  "soil-client-api",
  "soil-client-db",
  "soil-consensus",
- "soil-consensus-babe",
  "soil-consensus-babe-rpc",
- "soil-consensus-beefy",
  "soil-consensus-beefy-rpc",
  "soil-consensus-epochs",
- "soil-consensus-grandpa",
  "soil-consensus-grandpa-rpc",
  "soil-consensus-manual-seal",
  "soil-executor",
@@ -10683,7 +10544,6 @@ dependencies = [
  "soil-maybe-compressed-blob",
  "soil-mixnet",
  "soil-mmr-gadget",
- "soil-mmr-primitives",
  "soil-mmr-rpc",
  "soil-network",
  "soil-network-common",
@@ -10891,6 +10751,7 @@ dependencies = [
  "ed25519-zebra",
  "either",
  "environmental",
+ "finality-grandpa",
  "foldhash 0.1.5",
  "frame-metadata",
  "futures",
@@ -10914,6 +10775,7 @@ dependencies = [
  "parity-wasm",
  "parking_lot 0.12.5",
  "paste",
+ "polkadot-ckb-merkle-mountain-range",
  "polkavm-derive",
  "pretty_assertions",
  "primitive-types",
@@ -10939,7 +10801,6 @@ dependencies = [
  "subsoil-derive",
  "substrate-bip39",
  "substrate-prometheus-endpoint",
- "substrate-test-utils",
  "thiserror 1.0.69",
  "tracing",
  "tracing-core",
@@ -11048,7 +10909,6 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "sc-transaction-pool",
- "soil-block-builder",
  "soil-blockchain",
  "soil-rpc-api",
  "soil-transaction-pool-api",
@@ -11131,12 +10991,8 @@ dependencies = [
  "scale-info",
  "serde",
  "serde_json",
- "soil-block-builder",
  "soil-chain-spec",
  "soil-consensus",
- "soil-consensus-aura",
- "soil-consensus-babe",
- "soil-consensus-grandpa",
  "soil-executor",
  "soil-executor-common",
  "soil-genesis-builder",
@@ -11194,10 +11050,6 @@ dependencies = [
  "substrate-test-runtime-client",
  "thiserror 1.0.69",
 ]
-
-[[package]]
-name = "substrate-test-utils"
-version = "4.0.0-dev"
 
 [[package]]
 name = "substrate-wasm-builder"
@@ -11962,9 +11814,6 @@ dependencies = [
  "parity-scale-codec",
  "scale-info",
  "serde",
- "soil-block-builder",
- "soil-consensus-aura",
- "soil-consensus-grandpa",
  "soil-genesis-builder",
  "soil-offchain",
  "soil-session",
@@ -12151,7 +12000,6 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "scale-info",
- "soil-consensus-aura",
  "subsoil",
  "topsoil-support",
  "topsoil-system",
@@ -12191,7 +12039,6 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "scale-info",
- "soil-consensus-babe",
  "soil-session",
  "soil-staking",
  "subsoil",
@@ -12218,7 +12065,6 @@ dependencies = [
  "parity-scale-codec",
  "scale-info",
  "subsoil",
- "substrate-test-utils",
  "topsoil-balances",
  "topsoil-benchmarking",
  "topsoil-election-provider-support",
@@ -12273,7 +12119,6 @@ dependencies = [
  "parity-scale-codec",
  "scale-info",
  "serde",
- "soil-consensus-beefy",
  "soil-session",
  "soil-staking",
  "subsoil",
@@ -12298,7 +12143,6 @@ dependencies = [
  "parity-scale-codec",
  "scale-info",
  "serde",
- "soil-consensus-beefy",
  "soil-staking",
  "subsoil",
  "topsoil-balances",
@@ -12645,7 +12489,6 @@ dependencies = [
  "scale-info",
  "soil-staking",
  "subsoil",
- "substrate-test-utils",
  "topsoil-balances",
  "topsoil-benchmarking",
  "topsoil-support",
@@ -12819,7 +12662,6 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "scale-info",
- "soil-consensus-grandpa",
  "soil-session",
  "soil-staking",
  "subsoil",
@@ -12994,7 +12836,6 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "scale-info",
- "soil-mmr-primitives",
  "subsoil",
  "topsoil",
 ]
@@ -13413,7 +13254,6 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "scale-info",
- "soil-consensus-sassafras",
  "subsoil",
  "subsoil-crypto-hashing",
  "topsoil-benchmarking",
@@ -13430,7 +13270,6 @@ dependencies = [
  "parity-scale-codec",
  "scale-info",
  "subsoil",
- "substrate-test-utils",
  "topsoil-benchmarking",
  "topsoil-preimage",
  "topsoil-support",
@@ -13515,7 +13354,6 @@ dependencies = [
  "serde",
  "soil-staking",
  "subsoil",
- "substrate-test-utils",
  "topsoil-authorship",
  "topsoil-bags-list",
  "topsoil-balances",

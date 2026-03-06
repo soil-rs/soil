@@ -23,7 +23,7 @@ use subsoil::application_crypto::{key_types::BEEFY as BEEFY_KEY_TYPE, RuntimeApp
 use subsoil::keystore::KeystorePtr;
 use std::marker::PhantomData;
 
-use soil_consensus_beefy::{AuthorityIdBound, BeefyAuthorityId};
+use subsoil::consensus::beefy::{AuthorityIdBound, BeefyAuthorityId};
 
 use crate::{error, LOG_TARGET};
 
@@ -99,7 +99,7 @@ impl<AuthorityId: AuthorityIdBound> BeefyKeystore<AuthorityId> {
 		Ok(signature)
 	}
 
-	/// Returns a vector of [`soil_consensus_beefy::crypto::Public`] keys which are currently
+	/// Returns a vector of [`subsoil::consensus::beefy::crypto::Public`] keys which are currently
 	/// supported (i.e. found in the keystore).
 	pub fn public_keys(&self) -> Result<Vec<AuthorityId>, error::Error> {
 		let store = self.0.clone().ok_or_else(|| error::Error::Keystore("no Keystore".into()))?;
@@ -135,8 +135,8 @@ impl<AuthorityId: AuthorityIdBound> From<Option<KeystorePtr>> for BeefyKeystore<
 pub mod tests {
 	use subsoil::application_crypto::AppCrypto;
 	#[cfg(feature = "bls-experimental")]
-	use soil_consensus_beefy::ecdsa_bls_crypto;
-	use soil_consensus_beefy::{
+	use subsoil::consensus::beefy::ecdsa_bls_crypto;
+	use subsoil::consensus::beefy::{
 		ecdsa_crypto,
 		test_utils::{BeefySignerAuthority, Keyring},
 	};
@@ -400,7 +400,7 @@ pub mod tests {
 	#[test]
 	fn sign_error_for_ecdsa() {
 		sign_error::<ecdsa_crypto::AuthorityId>(
-			"soil_consensus_beefy::ecdsa_crypto::Public::try_sign_with_store() failed",
+			"subsoil::consensus::beefy::ecdsa_crypto::Public::try_sign_with_store() failed",
 		);
 	}
 
@@ -408,7 +408,7 @@ pub mod tests {
 	#[test]
 	fn sign_error_for_ecdsa_n_bls() {
 		sign_error::<ecdsa_bls_crypto::AuthorityId>(
-			"soil_consensus_beefy::ecdsa_bls_crypto::Public::try_sign_with_store() failed",
+			"subsoil::consensus::beefy::ecdsa_bls_crypto::Public::try_sign_with_store() failed",
 		);
 	}
 

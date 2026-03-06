@@ -52,6 +52,10 @@ smallvec = { workspace = true, default-features = true }
 wasmtime = { optional = true, workspace = true }
 parity-wasm = { optional = true, workspace = true }
 
+# Dependencies from consensus primitives
+finality-grandpa = { features = ["derive-codec"], workspace = true }
+mmr-lib = { workspace = true, default-features = false }
+
 # Dependencies from soil-runtime
 either = { workspace = true }
 strum = { workspace = true, features = ["derive"] }
@@ -141,13 +145,15 @@ trie-standardmap = { workspace = true }
 zstd = { workspace = true }
 ark-ff = { workspace = true }
 ark-std = { workspace = true }
-substrate-test-utils = { workspace = true }
 
 [features]
 default = ["std"]
 std = [
 	# soil-inherents std features
 	"async-trait",
+	# consensus primitives std features
+	"finality-grandpa/std",
+	"mmr-lib/std",
 	"bytes/std",
 	"subsoil-crypto-hashing/std",
 	"bounded-collections/std",

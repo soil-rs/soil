@@ -46,12 +46,12 @@ use subsoil::core::{
 	Bytes,
 };
 #[cfg(feature = "std")]
-use soil_mmr_primitives::{AncestryProof as MmrAncestryProof, Error as MmrError, LeafProof};
+use subsoil::mmr::{AncestryProof as MmrAncestryProof, Error as MmrError, LeafProof};
 #[cfg(feature = "std")]
 use subsoil::runtime::traits::{Block as BlockT, NumberFor};
 
 #[cfg(feature = "std")]
-pub use soil_mmr_primitives::MmrApi as MmrRuntimeApi;
+pub use subsoil::mmr::MmrApi as MmrRuntimeApi;
 
 #[cfg(feature = "std")]
 const RUNTIME_ERROR: i32 = 8000;
@@ -67,14 +67,14 @@ pub struct LeavesProof<BlockHash> {
 	pub block_hash: BlockHash,
 	/// SCALE-encoded vector of `LeafData`.
 	pub leaves: Bytes,
-	/// SCALE-encoded proof data. See [soil_mmr_primitives::LeafProof].
+	/// SCALE-encoded proof data. See [subsoil::mmr::LeafProof].
 	pub proof: Bytes,
 }
 
 #[cfg(feature = "std")]
 impl<BlockHash> LeavesProof<BlockHash> {
 	/// Create new `LeavesProof` from a given vector of `Leaf` and a
-	/// [soil_mmr_primitives::LeafProof].
+	/// [subsoil::mmr::LeafProof].
 	pub fn new<Leaf, MmrHash>(
 		block_hash: BlockHash,
 		leaves: Vec<Leaf>,

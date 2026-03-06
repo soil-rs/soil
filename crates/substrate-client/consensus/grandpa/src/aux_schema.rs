@@ -27,7 +27,7 @@ use log::{info, warn};
 use fork_tree::ForkTree;
 use soil_blockchain::{Error as ClientError, Result as ClientResult};
 use soil_client_api::backend::AuxStore;
-use soil_consensus_grandpa::{AuthorityList, RoundNumber, SetId};
+use subsoil::consensus::grandpa::{AuthorityList, RoundNumber, SetId};
 use subsoil::runtime::traits::{Block as BlockT, NumberFor};
 
 use crate::{
@@ -508,7 +508,7 @@ pub(crate) fn load_authorities<B: AuxStore, H: Decode, N: Decode + Clone + Ord>(
 #[cfg(test)]
 mod test {
 	use super::*;
-	use soil_consensus_grandpa::AuthorityId;
+	use subsoil::consensus::grandpa::AuthorityId;
 	use subsoil::core::{crypto::UncheckedFrom, H256};
 	use substrate_test_runtime_client::{self, runtime::Block};
 

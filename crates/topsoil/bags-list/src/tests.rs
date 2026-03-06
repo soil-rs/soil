@@ -20,7 +20,7 @@ use topsoil_support::{assert_noop, assert_ok, assert_storage_noop, traits::Integ
 use super::*;
 use list::Bag;
 use mock::{test_utils::*, *};
-use substrate_test_utils::assert_eq_uvec;
+use subsoil::assert_eq_uvec;
 use topsoil_election_provider_support::{SortedListProvider, VoteWeight};
 
 #[docify::export]

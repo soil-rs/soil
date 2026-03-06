@@ -21,7 +21,7 @@
 use super::{Epoch, AUTHORING_SCORE_LENGTH, AUTHORING_SCORE_VRF_CONTEXT};
 use codec::Encode;
 use subsoil::application_crypto::AppCrypto;
-use soil_consensus_babe::{
+use subsoil::consensus::babe::{
 	digests::{PreDigest, PrimaryPreDigest, SecondaryPlainPreDigest, SecondaryVRFPreDigest},
 	make_vrf_sign_data, AuthorityId, BabeAuthorityWeight, Randomness, Slot,
 };
@@ -272,7 +272,7 @@ fn claim_primary_slot(
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use soil_consensus_babe::{
+	use subsoil::consensus::babe::{
 		AllowedSlots, AuthorityId, BabeEpochConfiguration, Epoch, RANDOMNESS_LENGTH,
 	};
 	use subsoil::core::{crypto::Pair as _, sr25519::Pair};

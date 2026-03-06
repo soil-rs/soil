@@ -73,7 +73,7 @@ use soil_client_api::{
 	BlockchainEvents, CallExecutor, ExecutorProvider, Finalizer, LockImportRun, StorageProvider,
 };
 use soil_consensus::SelectChain;
-use soil_consensus_grandpa::{
+use subsoil::consensus::grandpa::{
 	AuthorityList, AuthoritySignature, SetId, CLIENT_LOG_TARGET as LOG_TARGET,
 };
 use subsoil::core::{crypto::ByteArray, traits::CallContext};
@@ -148,7 +148,7 @@ use environment::{Environment, VoterSetState};
 use until_imported::UntilGlobalMessageBlocksImported;
 
 // Re-export these two because it's just so damn convenient.
-pub use soil_consensus_grandpa::{
+pub use subsoil::consensus::grandpa::{
 	AuthorityId, AuthorityPair, CatchUp, Commit, CompactCommit, GrandpaApi, Message, Precommit,
 	Prevote, PrimaryPropose, ScheduledChange, SignedMessage, GRANDPA_ENGINE_ID,
 };

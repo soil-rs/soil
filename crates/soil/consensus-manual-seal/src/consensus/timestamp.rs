@@ -23,12 +23,12 @@ use crate::Error;
 use subsoil::api::ProvideRuntimeApi;
 use soil_blockchain::HeaderBackend;
 use soil_client_api::{AuxStore, UsageProvider};
-use soil_consensus_aura::{
+use subsoil::consensus::aura::{
 	sr25519::{AuthorityId, AuthoritySignature},
 	AuraApi,
 };
-use soil_consensus_babe::BabeApi;
-use soil_consensus_slots::{Slot, SlotDuration};
+use subsoil::consensus::babe::BabeApi;
+use subsoil::consensus::slots::{Slot, SlotDuration};
 use subsoil::inherents::{InherentData, InherentDataProvider, InherentIdentifier};
 use subsoil::runtime::traits::{Block as BlockT, Zero};
 use subsoil::timestamp::{InherentType, INHERENT_IDENTIFIER};

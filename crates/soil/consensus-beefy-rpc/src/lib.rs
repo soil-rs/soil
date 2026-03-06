@@ -24,7 +24,7 @@
 #[cfg(feature = "std")]
 use parking_lot::RwLock;
 #[cfg(feature = "std")]
-use soil_consensus_beefy::AuthorityIdBound;
+use subsoil::consensus::beefy::AuthorityIdBound;
 #[cfg(feature = "std")]
 use std::sync::Arc;
 
@@ -190,7 +190,7 @@ mod tests {
 		communication::notification::BeefyVersionedFinalityProofSender,
 		justification::BeefyVersionedFinalityProof,
 	};
-	use soil_consensus_beefy::{ecdsa_crypto, known_payloads, Payload, SignedCommitment};
+	use subsoil::consensus::beefy::{ecdsa_crypto, known_payloads, Payload, SignedCommitment};
 	use subsoil::runtime::traits::{BlakeTwo256, Hash};
 	use substrate_test_runtime_client::runtime::Block;
 
@@ -292,7 +292,7 @@ mod tests {
 		let payload =
 			Payload::from_single_entry(known_payloads::MMR_ROOT_ID, "Hello World!".encode());
 		BeefyVersionedFinalityProof::<Block, ecdsa_crypto::AuthorityId>::V1(SignedCommitment {
-			commitment: soil_consensus_beefy::Commitment {
+			commitment: subsoil::consensus::beefy::Commitment {
 				payload,
 				block_number: 5,
 				validator_set_id: 0,

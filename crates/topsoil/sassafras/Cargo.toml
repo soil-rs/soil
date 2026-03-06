@@ -26,8 +26,7 @@ topsoil-support = { workspace = true }
 topsoil-system = { workspace = true }
 log = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
-soil-consensus-sassafras = { features = ["serde"], workspace = true }
-subsoil = { workspace = true }
+subsoil = { features = ["bandersnatch-experimental", "serde"], workspace = true }
 
 [dev-dependencies]
 array-bytes = { workspace = true, default-features = true }
@@ -43,7 +42,6 @@ std = [
 	"topsoil-system/std",
 	"log/std",
 	"scale-info/std",
-	"soil-consensus-sassafras/std",
 	"subsoil/std",
 ]
 runtime-benchmarks = [

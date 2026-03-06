@@ -53,13 +53,13 @@ use sc_consensus::{
 	BoxJustificationImport, ForkChoiceStrategy, ImportResult, Verifier,
 };
 use subsoil::api::ProvideRuntimeApi;
-use soil_block_builder::BlockBuilder as BlockBuilderApi;
+use subsoil::block_builder::BlockBuilder as BlockBuilderApi;
 use soil_blockchain::HeaderBackend;
 use soil_client_api::{self, backend::AuxStore, BlockOf, BlockchainEvents};
 use soil_consensus::{
 	Environment, Error as ConsensusError, ProposeArgs, Proposer, SelectChain, SyncOracle,
 };
-use soil_consensus_pow::{Seal, TotalDifficulty, POW_ENGINE_ID};
+use subsoil::consensus::pow::{Seal, TotalDifficulty, POW_ENGINE_ID};
 use subsoil::inherents::{CreateInherentDataProviders, InherentDataProvider};
 use subsoil::runtime::{
 	generic::{BlockId, Digest, DigestItem},
@@ -270,13 +270,13 @@ where
 		at_hash: B::Hash,
 		inherent_data_providers: CIDP::InherentDataProviders,
 	) -> Result<(), Error<B>> {
-		use soil_block_builder::CheckInherentsError;
+		use subsoil::block_builder::CheckInherentsError;
 
 		if *block.header().number() < self.check_inherents_after {
 			return Ok(());
 		}
 
-		soil_block_builder::check_inherents(
+		subsoil::block_builder::check_inherents(
 			self.client.clone(),
 			at_hash,
 			block,

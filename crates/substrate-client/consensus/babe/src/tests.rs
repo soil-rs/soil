@@ -26,12 +26,12 @@ use sc_consensus_slots::BackoffAuthoringOnFinalizedHeadLagging;
 use subsoil::application_crypto::key_types::BABE;
 use soil_client_api::{BlockchainEvents, Finalizer};
 use soil_consensus::{NoNetwork as DummyOracle, Proposal, ProposeArgs};
-use soil_consensus_babe::{
+use subsoil::consensus::babe::{
 	inherents::{BabeCreateInherentDataProviders, InherentDataProvider},
 	make_vrf_sign_data, AllowedSlots, AuthorityId, AuthorityPair, Slot,
 };
 use soil_consensus_epochs::{EpochIdentifier, EpochIdentifierPosition};
-use soil_consensus_slots::SlotDuration;
+use subsoil::consensus::slots::SlotDuration;
 use subsoil::core::crypto::Pair;
 use subsoil::keyring::Sr25519Keyring;
 use subsoil::keystore::{testing::MemoryKeystore, Keystore};
@@ -494,7 +494,7 @@ fn claim_epoch_slots() {
 	let authority = Sr25519Keyring::Alice;
 	let keystore = create_keystore(authority);
 
-	let mut epoch: Epoch = soil_consensus_babe::Epoch {
+	let mut epoch: Epoch = subsoil::consensus::babe::Epoch {
 		start_slot: 0.into(),
 		authorities: vec![(authority.public().into(), 1)],
 		randomness: [0; 32],
@@ -545,7 +545,7 @@ fn claim_vrf_check() {
 
 	let public = authority.public();
 
-	let epoch: Epoch = soil_consensus_babe::Epoch {
+	let epoch: Epoch = subsoil::consensus::babe::Epoch {
 		start_slot: 0.into(),
 		authorities: vec![(public.into(), 1)],
 		randomness: [0; 32],

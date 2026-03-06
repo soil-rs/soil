@@ -24,7 +24,7 @@ use log::info;
 use crate::{migration::EpochV0, Epoch, LOG_TARGET};
 use soil_blockchain::{Error as ClientError, Result as ClientResult};
 use soil_client_api::backend::AuxStore;
-use soil_consensus_babe::{BabeBlockWeight, BabeConfiguration};
+use subsoil::consensus::babe::{BabeBlockWeight, BabeConfiguration};
 use soil_consensus_epochs::{
 	migration::{EpochChangesV0For, EpochChangesV1For},
 	EpochChangesFor, SharedEpochChanges,
@@ -145,7 +145,7 @@ mod test {
 	use crate::migration::EpochV0;
 	use fork_tree::ForkTree;
 	use soil_consensus::Error as ConsensusError;
-	use soil_consensus_babe::AllowedSlots;
+	use subsoil::consensus::babe::AllowedSlots;
 	use soil_consensus_epochs::{EpochHeader, PersistedEpoch, PersistedEpochHeader};
 	use subsoil::core::H256;
 	use soil_network_test::Block as TestBlock;

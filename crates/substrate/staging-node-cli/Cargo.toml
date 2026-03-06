@@ -128,13 +128,9 @@ soil-utils = { workspace = true, default-features = true }
 soil-authority-discovery = { workspace = true, default-features = true }
 soil-blockchain = { workspace = true, default-features = true }
 soil-consensus = { workspace = true, default-features = true }
-soil-consensus-babe = { workspace = true, default-features = true }
-soil-consensus-beefy = { workspace = true, default-features = true }
-soil-consensus-grandpa = { workspace = true, default-features = true }
 soil-genesis-builder = { workspace = true, default-features = true }
 soil-maybe-compressed-blob = { workspace = true, default-features = true }
 soil-mixnet = { workspace = true, default-features = true }
-soil-mmr-primitives = { workspace = true, default-features = true }
 soil-rpc = { workspace = true, default-features = true }
 soil-statement-store = { workspace = true, default-features = true }
 soil-transaction-storage-proof = { workspace = true, default-features = true }

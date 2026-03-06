@@ -59,7 +59,7 @@ use crate::{
 use gossip::{
 	FullCatchUpMessage, FullCommitMessage, GossipMessage, GossipValidator, PeerReport, VoteMessage,
 };
-use soil_consensus_grandpa::{AuthorityId, AuthoritySignature, RoundNumber, SetId as SetIdNumber};
+use subsoil::consensus::grandpa::{AuthorityId, AuthoritySignature, RoundNumber, SetId as SetIdNumber};
 use soil_network_sync::SyncEventStream;
 use soil_utils::mpsc::TracingUnboundedReceiver;
 
@@ -762,7 +762,7 @@ impl<Block: BlockT> Sink<Message<Block::Header>> for OutgoingMessages<Block> {
 		// when locals exist, sign messages on import
 		if let Some(ref keystore) = self.keystore {
 			let target_hash = *(msg.target().0);
-			let signed = soil_consensus_grandpa::sign_message(
+			let signed = subsoil::consensus::grandpa::sign_message(
 				keystore.keystore(),
 				msg,
 				keystore.local_id().clone(),
@@ -863,7 +863,7 @@ fn check_compact_commit<Block: BlockT>(
 		use crate::communication::gossip::Misbehavior;
 		use finality_grandpa::Message as GrandpaMessage;
 
-		if !soil_consensus_grandpa::check_message_signature_with_buffer(
+		if !subsoil::consensus::grandpa::check_message_signature_with_buffer(
 			&GrandpaMessage::Precommit(precommit.clone()),
 			id,
 			sig,
@@ -957,7 +957,7 @@ fn check_catch_up<Block: BlockT>(
 		for (msg, id, sig) in messages {
 			signatures_checked += 1;
 
-			if !soil_consensus_grandpa::check_message_signature_with_buffer(
+			if !subsoil::consensus::grandpa::check_message_signature_with_buffer(
 				&msg, id, sig, round, set_id, buf,
 			)
 			.is_valid()

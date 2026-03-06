@@ -101,7 +101,7 @@ use sc_consensus_slots::{
 };
 use subsoil::api::{ApiExt, ProvideRuntimeApi};
 use subsoil::application_crypto::AppCrypto;
-use soil_block_builder::BlockBuilder as BlockBuilderApi;
+use subsoil::block_builder::BlockBuilder as BlockBuilderApi;
 use soil_blockchain::{
 	Backend as _, BlockStatus, Error as ClientError, HeaderBackend, HeaderMetadata,
 	Result as ClientResult,
@@ -111,12 +111,12 @@ use soil_client_api::{
 	PreCommitActions, UsageProvider,
 };
 use soil_consensus::{BlockOrigin, Environment, Error as ConsensusError, Proposer, SelectChain};
-use soil_consensus_babe::{inherents::BabeInherentData, SlotDuration};
+use subsoil::consensus::babe::{inherents::BabeInherentData, SlotDuration};
 use soil_consensus_epochs::{
 	descendent_query, Epoch as EpochT, EpochChangesFor, SharedEpochChanges, ViableEpoch,
 	ViableEpochDescriptor,
 };
-use soil_consensus_slots::Slot;
+use subsoil::consensus::slots::Slot;
 use subsoil::core::traits::SpawnEssentialNamed;
 use subsoil::inherents::{CreateInherentDataProviders, InherentDataProvider};
 use subsoil::keystore::KeystorePtr;
@@ -130,7 +130,7 @@ use soil_transaction_pool_api::OffchainTransactionPoolFactory;
 
 pub use sc_consensus_slots::SlotProportion;
 pub use soil_consensus::SyncOracle;
-pub use soil_consensus_babe::{
+pub use subsoil::consensus::babe::{
 	digests::{
 		CompatibleDigestItem, NextConfigDescriptor, NextEpochDescriptor, PreDigest,
 		PrimaryPreDigest, SecondaryPlainPreDigest,
@@ -160,10 +160,10 @@ const AUTHORING_SCORE_LENGTH: usize = 16;
 
 /// BABE epoch information
 #[derive(Clone, Debug, PartialEq, Eq, Encode, Decode)]
-pub struct Epoch(soil_consensus_babe::Epoch);
+pub struct Epoch(subsoil::consensus::babe::Epoch);
 
 impl Deref for Epoch {
-	type Target = soil_consensus_babe::Epoch;
+	type Target = subsoil::consensus::babe::Epoch;
 
 	fn deref(&self) -> &Self::Target {
 		&self.0
@@ -176,8 +176,8 @@ impl DerefMut for Epoch {
 	}
 }
 
-impl From<soil_consensus_babe::Epoch> for Epoch {
-	fn from(epoch: soil_consensus_babe::Epoch) -> Self {
+impl From<subsoil::consensus::babe::Epoch> for Epoch {
+	fn from(epoch: subsoil::consensus::babe::Epoch) -> Self {
 		Epoch(epoch)
 	}
 }
@@ -190,7 +190,7 @@ impl EpochT for Epoch {
 		&self,
 		(descriptor, config): (NextEpochDescriptor, BabeEpochConfiguration),
 	) -> Epoch {
-		soil_consensus_babe::Epoch {
+		subsoil::consensus::babe::Epoch {
 			epoch_index: self.epoch_index + 1,
 			start_slot: self.start_slot + self.duration,
 			duration: self.duration,
@@ -215,7 +215,7 @@ impl Epoch {
 	///
 	/// This is defined to start at the slot of the first block, so that has to be provided.
 	pub fn genesis(genesis_config: &BabeConfiguration, slot: Slot) -> Epoch {
-		soil_consensus_babe::Epoch {
+		subsoil::consensus::babe::Epoch {
 			epoch_index: 0,
 			start_slot: slot,
 			duration: genesis_config.epoch_length,
@@ -1317,9 +1317,9 @@ where
 				.map_err(|e| ConsensusError::Other(Box::new(e)))?;
 			inherent_data.babe_replace_inherent_data(slot);
 
-			use soil_block_builder::CheckInherentsError;
+			use subsoil::block_builder::CheckInherentsError;
 
-			soil_block_builder::check_inherents_with_data(
+			subsoil::block_builder::check_inherents_with_data(
 				self.client.clone(),
 				at_hash,
 				new_block.clone(),

@@ -46,7 +46,7 @@ use soil_blockchain::{Error as BlockChainError, HeaderBackend, HeaderMetadata};
 #[cfg(feature = "std")]
 use soil_consensus::{Error as ConsensusError, SelectChain};
 #[cfg(feature = "std")]
-use soil_consensus_babe::{digests::PreDigest, AuthorityId, BabeApi as BabeRuntimeApi};
+use subsoil::consensus::babe::{digests::PreDigest, AuthorityId, BabeApi as BabeRuntimeApi};
 #[cfg(feature = "std")]
 use soil_consensus_epochs::Epoch as EpochT;
 #[cfg(feature = "std")]
@@ -220,7 +220,7 @@ impl From<Error> for ErrorObjectOwned {
 mod tests {
 	use super::*;
 	use sc_consensus_babe::ImportQueueParams;
-	use soil_consensus_babe::inherents::InherentDataProvider;
+	use subsoil::consensus::babe::inherents::InherentDataProvider;
 	use subsoil::core::{crypto::key_types::BABE, testing::TaskExecutor};
 	use subsoil::keyring::Sr25519Keyring;
 	use subsoil::keystore::{testing::MemoryKeystore, Keystore};

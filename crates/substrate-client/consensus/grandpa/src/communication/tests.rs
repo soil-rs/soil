@@ -25,7 +25,7 @@ use super::{
 use crate::{communication::grandpa_protocol_name, environment::SharedVoterSetState};
 use codec::{DecodeAll, Encode};
 use futures::prelude::*;
-use soil_consensus_grandpa::AuthorityList;
+use subsoil::consensus::grandpa::AuthorityList;
 use subsoil::keyring::Ed25519Keyring;
 use soil_network::{
 	config::{MultiaddrWithPeerId, Role},
@@ -307,7 +307,7 @@ fn config() -> crate::Config {
 fn voter_set_state() -> SharedVoterSetState<Block> {
 	use crate::{authorities::AuthoritySet, environment::VoterSetState};
 	use finality_grandpa::round::State as RoundState;
-	use soil_consensus_grandpa::AuthorityId;
+	use subsoil::consensus::grandpa::AuthorityId;
 	use subsoil::core::{crypto::ByteArray, H256};
 
 	let state = RoundState::genesis((H256::zero(), 0));
@@ -378,7 +378,7 @@ fn good_commit_leads_to_relay() {
 		let target_number = 500;
 
 		let precommit = finality_grandpa::Precommit { target_hash, target_number };
-		let payload = soil_consensus_grandpa::localized_payload(
+		let payload = subsoil::consensus::grandpa::localized_payload(
 			round,
 			set_id,
 			&finality_grandpa::Message::Precommit(precommit.clone()),
@@ -391,7 +391,7 @@ fn good_commit_leads_to_relay() {
 			precommits.push(precommit.clone());
 
 			let signature =
-				soil_consensus_grandpa::AuthoritySignature::from(key.sign(&payload[..]));
+				subsoil::consensus::grandpa::AuthoritySignature::from(key.sign(&payload[..]));
 			auth_data.push((signature, public[i].0.clone()))
 		}
 
@@ -530,7 +530,7 @@ fn bad_commit_leads_to_report() {
 		let target_number = 500;
 
 		let precommit = finality_grandpa::Precommit { target_hash, target_number };
-		let payload = soil_consensus_grandpa::localized_payload(
+		let payload = subsoil::consensus::grandpa::localized_payload(
 			round,
 			set_id,
 			&finality_grandpa::Message::Precommit(precommit.clone()),
@@ -543,7 +543,7 @@ fn bad_commit_leads_to_report() {
 			precommits.push(precommit.clone());
 
 			let signature =
-				soil_consensus_grandpa::AuthoritySignature::from(key.sign(&payload[..]));
+				subsoil::consensus::grandpa::AuthoritySignature::from(key.sign(&payload[..]));
 			auth_data.push((signature, public[i].0.clone()))
 		}
 

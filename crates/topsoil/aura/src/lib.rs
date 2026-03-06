@@ -43,7 +43,7 @@ extern crate alloc;
 use alloc::vec::Vec;
 use codec::{Decode, Encode, MaxEncodedLen};
 use log;
-use soil_consensus_aura::{AuthorityIndex, ConsensusLog, Slot, AURA_ENGINE_ID};
+use subsoil::consensus::aura::{AuthorityIndex, ConsensusLog, Slot, AURA_ENGINE_ID};
 use subsoil::runtime::{
 	generic::DigestItem,
 	traits::{IsMember, Member, SaturatedConversion, Saturating, Zero},

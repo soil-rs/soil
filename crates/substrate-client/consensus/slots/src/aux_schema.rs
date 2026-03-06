@@ -21,7 +21,7 @@
 use codec::{Decode, Encode};
 use soil_blockchain::{Error as ClientError, Result as ClientResult};
 use soil_client_api::backend::AuxStore;
-use soil_consensus_slots::{EquivocationProof, Slot};
+use subsoil::consensus::slots::{EquivocationProof, Slot};
 use subsoil::runtime::traits::Header;
 
 const SLOT_HEADER_MAP_KEY: &[u8] = b"slot_header_map";

@@ -90,7 +90,7 @@ use codec::{Decode, DecodeAll, Encode};
 use log::{debug, trace};
 use prometheus_endpoint::{register, CounterVec, Opts, PrometheusError, Registry, U64};
 use rand::seq::SliceRandom;
-use soil_consensus_grandpa::AuthorityId;
+use subsoil::consensus::grandpa::AuthorityId;
 use soil_network::ReputationChange;
 use soil_network_common::role::ObservedRole;
 use soil_network_gossip::{MessageIntent, ValidatorContext};
@@ -924,7 +924,7 @@ impl<Block: BlockT> Inner<Block> {
 			return Action::Discard(cost::UNKNOWN_VOTER);
 		}
 
-		if !soil_consensus_grandpa::check_message_signature(
+		if !subsoil::consensus::grandpa::check_message_signature(
 			&full.message.message,
 			&full.message.id,
 			&full.message.signature,

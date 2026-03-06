@@ -20,7 +20,7 @@
 #![cfg(test)]
 
 use crate as topsoil_aura;
-use soil_consensus_aura::{ed25519::AuthorityId, AuthorityIndex};
+use subsoil::consensus::aura::{ed25519::AuthorityId, AuthorityIndex};
 use subsoil::runtime::{testing::UintAuthorityId, BuildStorage};
 use topsoil_support::{
 	derive_impl, parameter_types,

@@ -375,7 +375,7 @@ mod tests {
 			};
 
 			let msg = finality_grandpa::Message::Precommit(precommit.clone());
-			let encoded = soil_consensus_grandpa::localized_payload(round, set_id, &msg);
+			let encoded = subsoil::consensus::grandpa::localized_payload(round, set_id, &msg);
 			let signature = peers[0].sign(&encoded[..]).into();
 
 			let precommit = finality_grandpa::SignedPrecommit {

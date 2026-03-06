@@ -40,7 +40,7 @@ use subsoil::api::ProvideRuntimeApi;
 use soil_blockchain::{Backend as BlockchainBackend, HeaderBackend};
 use soil_client_api::{Backend, BlockBackend, BlockchainEvents, FinalityNotification, Finalizer};
 use soil_consensus::{Error as ConsensusError, SyncOracle};
-use soil_consensus_beefy::{
+use subsoil::consensus::beefy::{
 	AuthorityIdBound, BeefyApi, ConsensusLog, PayloadProvider, ValidatorSet, BEEFY_ENGINE_ID,
 };
 use subsoil::keystore::KeystorePtr;

@@ -305,7 +305,7 @@ mod test {
 	use super::*;
 	use crate::mock::*;
 	use alloc::borrow::Cow;
-	use substrate_test_utils::assert_eq_uvec;
+	use subsoil::assert_eq_uvec;
 	use topsoil_support::Hashable;
 
 	#[test]

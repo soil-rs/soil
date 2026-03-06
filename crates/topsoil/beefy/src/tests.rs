@@ -21,7 +21,7 @@ use std::{
 	vec,
 };
 
-use soil_consensus_beefy::{
+use subsoil::consensus::beefy::{
 	check_double_voting_proof, ecdsa_crypto,
 	known_payloads::MMR_ROOT_ID,
 	test_utils::{

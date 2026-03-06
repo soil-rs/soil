@@ -25,7 +25,7 @@ use crate::mock::{
 	Test, Timestamp,
 };
 use codec::Encode;
-use soil_consensus_aura::{Slot, AURA_ENGINE_ID};
+use subsoil::consensus::aura::{Slot, AURA_ENGINE_ID};
 use subsoil::runtime::{Digest, DigestItem, TryRuntimeError};
 use topsoil_support::traits::Hooks;
 

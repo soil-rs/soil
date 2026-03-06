@@ -28,9 +28,6 @@ topsoil-support = { workspace = true }
 topsoil-system = { workspace = true }
 
 # primitive types used for developing FRAME runtimes.
-soil-block-builder = { optional = true, workspace = true }
-soil-consensus-aura = { optional = true, workspace = true }
-soil-consensus-grandpa = { optional = true, workspace = true }
 soil-genesis-builder = { optional = true, workspace = true }
 soil-offchain = { optional = true, workspace = true }
 soil-session = { optional = true, workspace = true }
@@ -64,9 +61,6 @@ std = [
 	"scale-info/std",
 	"serde/std",
 	"subsoil/std",
-	"soil-block-builder?/std",
-	"soil-consensus-aura?/std",
-	"soil-consensus-grandpa?/std",
 	"soil-genesis-builder?/std",
 	"soil-offchain?/std",
 	"soil-session?/std",
@@ -87,9 +81,6 @@ experimental = ["topsoil-support/experimental"]
 runtime = [
 	"topsoil-executive",
 	"topsoil-system-rpc-runtime-api",
-	"soil-block-builder",
-	"soil-consensus-aura",
-	"soil-consensus-grandpa",
 	"soil-genesis-builder",
 	"soil-offchain",
 	"soil-session",

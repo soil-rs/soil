@@ -29,7 +29,7 @@ use subsoil::application_crypto::{AppCrypto, AppPublic};
 use soil_blockchain::Result as CResult;
 use soil_client_api::UsageProvider;
 use soil_consensus::Error as ConsensusError;
-use soil_consensus_slots::Slot;
+use subsoil::consensus::slots::Slot;
 use subsoil::core::crypto::{ByteArray, Pair};
 use subsoil::keystore::KeystorePtr;
 use subsoil::runtime::{

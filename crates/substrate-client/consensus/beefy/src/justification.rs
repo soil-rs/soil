@@ -19,7 +19,7 @@
 use codec::DecodeAll;
 use subsoil::application_crypto::RuntimeAppPublic;
 use soil_consensus::Error as ConsensusError;
-use soil_consensus_beefy::{
+use subsoil::consensus::beefy::{
 	AuthorityIdBound, KnownSignature, ValidatorSet, ValidatorSetId, VersionedFinalityProof,
 };
 use subsoil::runtime::traits::{Block as BlockT, NumberFor};
@@ -81,7 +81,7 @@ pub(crate) fn verify_with_validator_set<'a, Block: BlockT, AuthorityId: Authorit
 #[cfg(test)]
 pub(crate) mod tests {
 	use codec::Encode;
-	use soil_consensus_beefy::{
+	use subsoil::consensus::beefy::{
 		ecdsa_crypto, known_payloads, test_utils::Keyring, Commitment, Payload, SignedCommitment,
 		VersionedFinalityProof,
 	};

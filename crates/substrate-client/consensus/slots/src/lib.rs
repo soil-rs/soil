@@ -38,7 +38,7 @@ use log::{debug, info, warn};
 use sc_consensus::{BlockImport, JustificationSyncLink};
 use subsoil::arithmetic::traits::BaseArithmetic;
 use soil_consensus::{Proposal, ProposeArgs, Proposer, SelectChain, SyncOracle};
-use soil_consensus_slots::{Slot, SlotDuration};
+use subsoil::consensus::slots::{Slot, SlotDuration};
 use subsoil::inherents::CreateInherentDataProviders;
 use subsoil::runtime::traits::{Block as BlockT, HashingFor, Header as HeaderT};
 use soil_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG, CONSENSUS_INFO, CONSENSUS_WARN};

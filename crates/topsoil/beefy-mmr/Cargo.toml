@@ -24,7 +24,6 @@ topsoil-mmr = { workspace = true }
 topsoil-session = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { optional = true, workspace = true, default-features = true }
-soil-consensus-beefy = { workspace = true }
 
 [dev-dependencies]
 array-bytes = { workspace = true, default-features = true }
@@ -47,7 +46,6 @@ std = [
 	"topsoil-session/std",
 	"scale-info/std",
 	"serde",
-	"soil-consensus-beefy/std",
 	"soil-staking/std"]
 try-runtime = [
 	"topsoil-support/try-runtime",

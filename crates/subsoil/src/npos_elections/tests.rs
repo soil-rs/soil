@@ -22,7 +22,7 @@ use super::{
 	Assignment, BalancingConfig, ElectionResult, ExtendedBalance, StakedAssignment, Support, Voter,
 };
 use crate::arithmetic::{PerU16, Perbill, Percent, Permill};
-use substrate_test_utils::assert_eq_uvec;
+use crate::assert_eq_uvec;
 
 #[test]
 fn float_phragmen_poc_works() {

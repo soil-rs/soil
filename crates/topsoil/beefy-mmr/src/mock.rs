@@ -18,7 +18,7 @@
 use std::vec;
 
 use codec::Encode;
-use soil_consensus_beefy::mmr::MmrLeafVersion;
+use subsoil::consensus::beefy::mmr::MmrLeafVersion;
 use subsoil::io::TestExternalities;
 use subsoil::runtime::{
 	app_crypto::ecdsa::Public,
@@ -33,7 +33,7 @@ use topsoil_support::{
 
 use crate as topsoil_beefy_mmr;
 
-pub use soil_consensus_beefy::{
+pub use subsoil::consensus::beefy::{
 	ecdsa_crypto::AuthorityId as BeefyId, mmr::BeefyDataProvider, ConsensusLog, BEEFY_ENGINE_ID,
 };
 use subsoil::core::offchain::{testing::TestOffchainExt, OffchainDbExt, OffchainWorkerExt};
@@ -83,7 +83,7 @@ impl topsoil_session::Config for Test {
 	type KeyDeposit = ();
 }
 
-pub type MmrLeaf = soil_consensus_beefy::mmr::MmrLeaf<
+pub type MmrLeaf = subsoil::consensus::beefy::mmr::MmrLeaf<
 	topsoil_system::pallet_prelude::BlockNumberFor<Test>,
 	<Test as topsoil_system::Config>::Hash,
 	crate::MerkleRootOf<Test>,
