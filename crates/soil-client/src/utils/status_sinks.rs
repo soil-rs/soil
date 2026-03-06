@@ -183,7 +183,7 @@ impl<T> futures::Future for YieldAfter<T> {
 
 #[cfg(test)]
 mod tests {
-	use crate::utils::StatusSinks;
+	use super::StatusSinks;
 	use crate::utils::mpsc::tracing_unbounded;
 	use futures::prelude::*;
 	use std::time::Duration;

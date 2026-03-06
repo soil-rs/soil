@@ -118,6 +118,8 @@ kitchensink-runtime = { workspace = true }
 substrate-test-runtime-client = { workspace = true }
 # tracing test deps
 regex = { workspace = true }
+# utils test deps
+tokio-test = { workspace = true }
 
 [features]
 # This crate does not have `no_std` support, we just require this for tests

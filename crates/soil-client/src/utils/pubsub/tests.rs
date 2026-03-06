@@ -16,9 +16,10 @@
 // limitations under the License.
 
 use futures::StreamExt;
+use std::collections::HashMap;
 use tokio_test::block_on;
 
-use crate::utils::*;
+use super::*;
 
 mod normal_operation;
 mod panicking_registry;

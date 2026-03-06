@@ -194,7 +194,7 @@ fn version_file_path(path: &Path) -> PathBuf {
 #[cfg(all(test, feature = "rocksdb"))]
 mod tests {
 	use super::*;
-	use super::{tests::Block, DatabaseSource};
+	use crate::db::{tests::Block, DatabaseSource};
 
 	fn create_db(db_path: &Path, version: Option<u32>) {
 		if let Some(version) = version {
@@ -205,7 +205,7 @@ mod tests {
 	}
 
 	fn open_database(db_path: &Path, db_type: DatabaseType) -> crate::blockchain::Result<()> {
-		super::utils::open_database::<Block>(
+		crate::db::utils::open_database::<Block>(
 			&DatabaseSource::RocksDb { path: db_path.to_owned(), cache_size: 128 },
 			db_type,
 			true,

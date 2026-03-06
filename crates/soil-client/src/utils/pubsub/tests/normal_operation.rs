@@ -15,7 +15,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::utils::*;
+use super::*;
 
 #[test]
 fn positive_rx_receives_relevant_messages_and_terminates_upon_hub_drop() {

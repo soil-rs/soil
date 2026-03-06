@@ -352,7 +352,6 @@ impl LoggerBuilder {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use crate::tracing as sc_tracing;
 	use log::info;
 	use std::{
 		collections::BTreeMap,
@@ -552,7 +551,7 @@ mod tests {
 			let mut builder = LoggerBuilder::new("");
 
 			if let Ok(targets) = env::var("TRACING_TARGETS") {
-				builder.with_profiling(super::TracingReceiver::Log, targets);
+				builder.with_profiling(crate::tracing::TracingReceiver::Log, targets);
 			}
 
 			builder.init().unwrap();

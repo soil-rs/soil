@@ -2802,7 +2802,7 @@ impl<Block: BlockT> crate::client_api::backend::LocalBackend<Block> for Backend<
 #[cfg(test)]
 pub(crate) mod tests {
 	use super::*;
-	use crate::{columns, utils::number_and_hash_to_lookup_key};
+	use super::{columns, utils::number_and_hash_to_lookup_key};
 	use hash_db::{HashDB, EMPTY_PREFIX};
 	use crate::blockchain::{lowest_common_ancestor, tree_route};
 	use crate::client_api::{
@@ -3852,28 +3852,9 @@ pub(crate) mod tests {
 		assert!(tree_route.retracted().is_empty());
 	}
 
-	#[test]
-	fn test_leaves_with_complex_block_tree() {
-		let backend: Arc<Backend<substrate_test_runtime_client::runtime::Block>> =
-			Arc::new(Backend::new_test(20, 20));
-		substrate_test_runtime_client::trait_tests::test_leaves_for_backend(backend);
-	}
-
-	#[test]
-	fn test_children_with_complex_block_tree() {
-		let backend: Arc<Backend<substrate_test_runtime_client::runtime::Block>> =
-			Arc::new(Backend::new_test(20, 20));
-		substrate_test_runtime_client::trait_tests::test_children_for_backend(backend);
-	}
-
-	#[test]
-	fn test_blockchain_query_by_number_gets_canonical() {
-		let backend: Arc<Backend<substrate_test_runtime_client::runtime::Block>> =
-			Arc::new(Backend::new_test(20, 20));
-		substrate_test_runtime_client::trait_tests::test_blockchain_query_by_number_gets_canonical(
-			backend,
-		);
-	}
+	// test_leaves_with_complex_block_tree, test_children_with_complex_block_tree,
+	// and test_blockchain_query_by_number_gets_canonical moved to tests/db_backend.rs
+	// (integration tests) to avoid circular dev-dep "multiple crate versions" issue.
 
 	#[test]
 	fn test_leaves_pruned_on_finality() {

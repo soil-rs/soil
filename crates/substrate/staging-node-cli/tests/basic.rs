@@ -706,7 +706,7 @@ fn successful_execution_gives_ok() {
 #[test]
 fn should_import_block_with_test_client() {
 	use node_testing::client::{
-		soil_client::consensus::BlockOrigin, ClientBlockImportExt, TestClientBuilder, TestClientBuilderExt,
+		BlockOrigin, ClientBlockImportExt, TestClientBuilder, TestClientBuilderExt,
 	};
 
 	let client = TestClientBuilder::new().build();
