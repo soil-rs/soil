@@ -82,10 +82,10 @@ mod tests {
 	use super::*;
 	use codec::Decode;
 
-	use crate::{ecdsa_crypto::Signature as EcdsaSignature, known_payloads, Payload};
+	use crate::consensus::beefy::{ecdsa_crypto::Signature as EcdsaSignature, known_payloads, Payload};
 
 	#[cfg(feature = "bls-experimental")]
-	use crate::bls_crypto::Signature as BlsSignature;
+	use crate::consensus::beefy::bls_crypto::Signature as BlsSignature;
 
 	#[cfg(feature = "bls-experimental")]
 	use w3f_bls::{

@@ -333,17 +333,18 @@ impl<N, S> From<SignedCommitment<N, S>> for VersionedFinalityProof<N, S> {
 mod tests {
 
 	use super::*;
-	use super::{ecdsa_crypto::Signature as EcdsaSignature, known_payloads};
+	use crate::consensus::beefy::{ecdsa_crypto::Signature as EcdsaSignature, known_payloads};
 	use codec::Decode;
 	use crate::core::Pair;
 	use crate::crypto_hashing::keccak_256;
 
 	#[cfg(feature = "bls-experimental")]
-	use super::bls_crypto::Signature as BlsSignature;
+	use crate::consensus::beefy::bls_crypto::Signature as BlsSignature;
 
 	type TestCommitment = Commitment<u128>;
 
-	const LARGE_RAW_COMMITMENT: &[u8] = include_bytes!("../test-res/large-raw-commitment");
+	const LARGE_RAW_COMMITMENT: &[u8] =
+		include_bytes!("../../../test-res/beefy/large-raw-commitment");
 
 	// Types for bls-less commitment
 	type TestEcdsaSignedCommitment = SignedCommitment<u128, EcdsaSignature>;
@@ -507,7 +508,7 @@ mod tests {
 	fn commitment_ordering() {
 		fn commitment(
 			block_number: u128,
-			validator_set_id: crate::ValidatorSetId,
+			validator_set_id: super::ValidatorSetId,
 		) -> TestCommitment {
 			let payload =
 				Payload::from_single_entry(known_payloads::MMR_ROOT_ID, "Hello World!".encode());

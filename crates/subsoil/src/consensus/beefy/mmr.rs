@@ -207,7 +207,7 @@ mod mmr_root_provider {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use crate::H256;
+	use crate::core::H256;
 	use crate::runtime::{traits::BlakeTwo256, Digest, DigestItem, OpaqueExtrinsic};
 
 	#[test]

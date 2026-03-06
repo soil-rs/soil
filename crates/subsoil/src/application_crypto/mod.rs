@@ -444,6 +444,16 @@ macro_rules! app_crypto_public_common_if_serde {
 macro_rules! app_crypto_public_common_if_serde {
 	() => {
 		impl $crate::application_crypto::Derive for Public {}
+
+		impl ::core::fmt::Display for Public {
+			fn fmt(&self, f: &mut ::core::fmt::Formatter) -> ::core::fmt::Result {
+				let bytes: &[u8] = self.as_ref();
+				for byte in bytes {
+					write!(f, "{:02x}", byte)?;
+				}
+				Ok(())
+			}
+		}
 	};
 }
 
