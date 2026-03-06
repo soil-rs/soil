@@ -34,7 +34,7 @@ use subsoil::api::{ApiExt, ProvideRuntimeApi};
 use subsoil::block_builder::BlockBuilder as BlockBuilderApi;
 use soil_blockchain::{HeaderBackend, HeaderMetadata};
 use soil_client_api::{backend::AuxStore, BlockOf, UsageProvider};
-use soil_consensus::Error as ConsensusError;
+use soil_client::consensus::Error as ConsensusError;
 use subsoil::consensus::aura::{inherents::AuraInherentData, AuraApi};
 use subsoil::consensus::slots::Slot;
 use subsoil::core::crypto::Pair;
@@ -321,7 +321,7 @@ pub fn import_queue<P, Block, I, C, S, CIDP>(
 		telemetry,
 		compatibility_mode,
 	}: ImportQueueParams<Block, I, C, S, CIDP>,
-) -> Result<DefaultImportQueue<Block>, soil_consensus::Error>
+) -> Result<DefaultImportQueue<Block>, soil_client::consensus::Error>
 where
 	Block: BlockT,
 	C::Api: BlockBuilderApi<Block> + AuraApi<Block, AuthorityId<P>> + ApiExt<Block>,

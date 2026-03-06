@@ -45,7 +45,7 @@ use tokio::time::{Interval, MissedTickBehavior};
 use sc_consensus::{import_queue::ImportQueueService, IncomingBlock};
 use soil_blockchain::{Error as ClientError, HeaderMetadata};
 use soil_client_api::{BlockBackend, HeaderBackend, ProofProvider};
-use soil_consensus::{block_validation::BlockAnnounceValidator, BlockOrigin};
+use soil_client::consensus::{block_validation::BlockAnnounceValidator, BlockOrigin};
 use soil_network::{
 	config::{FullNetworkConfiguration, NotificationHandshake, ProtocolId, SetConfig},
 	peer_store::PeerStoreProvider,

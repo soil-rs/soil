@@ -119,7 +119,7 @@ impl SyncEventStream for TestSync {
 	}
 }
 
-impl soil_consensus::SyncOracle for TestSync {
+impl soil_client::consensus::SyncOracle for TestSync {
 	fn is_major_syncing(&self) -> bool {
 		unimplemented!()
 	}

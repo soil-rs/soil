@@ -40,7 +40,7 @@ use soil_client_api::{
 	client::BlockchainEvents,
 };
 #[cfg(feature = "std")]
-use soil_consensus::{Environment, Proposer, SelectChain};
+use soil_client::consensus::{Environment, Proposer, SelectChain};
 #[cfg(feature = "std")]
 use subsoil::core::traits::SpawnNamed;
 #[cfg(feature = "std")]
@@ -193,7 +193,7 @@ pub async fn run_manual_seal<B, BI, CB, E, C, TP, SC, CS, CIDP>(
 	}: ManualSealParams<B, BI, E, C, TP, SC, CS, CIDP>,
 ) where
 	B: BlockT + 'static,
-	BI: BlockImport<B, Error = soil_consensus::Error> + Send + Sync + 'static,
+	BI: BlockImport<B, Error = soil_client::consensus::Error> + Send + Sync + 'static,
 	C: HeaderBackend<B> + Finalizer<B, CB> + ProvideRuntimeApi<B> + 'static,
 	CB: ClientBackend<B> + 'static,
 	E: Environment<B> + 'static,
@@ -251,7 +251,7 @@ pub async fn run_instant_seal<B, BI, CB, E, C, TP, SC, CIDP>(
 	}: InstantSealParams<B, BI, E, C, TP, SC, CIDP>,
 ) where
 	B: BlockT + 'static,
-	BI: BlockImport<B, Error = soil_consensus::Error> + Send + Sync + 'static,
+	BI: BlockImport<B, Error = soil_client::consensus::Error> + Send + Sync + 'static,
 	C: HeaderBackend<B> + Finalizer<B, CB> + ProvideRuntimeApi<B> + 'static,
 	CB: ClientBackend<B> + 'static,
 	E: Environment<B> + 'static,
@@ -300,7 +300,7 @@ pub async fn run_instant_seal_and_finalize<B, BI, CB, E, C, TP, SC, CIDP>(
 	}: InstantSealParams<B, BI, E, C, TP, SC, CIDP>,
 ) where
 	B: BlockT + 'static,
-	BI: BlockImport<B, Error = soil_consensus::Error> + Send + Sync + 'static,
+	BI: BlockImport<B, Error = soil_client::consensus::Error> + Send + Sync + 'static,
 	C: HeaderBackend<B> + Finalizer<B, CB> + ProvideRuntimeApi<B> + 'static,
 	CB: ClientBackend<B> + 'static,
 	E: Environment<B> + 'static,

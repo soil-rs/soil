@@ -49,7 +49,7 @@ use soil_client_api::{
 	TrieCacheContext, UsageProvider,
 };
 use soil_client_db::{Backend, BlocksPruning, DatabaseSettings, PruningMode};
-use soil_consensus::block_validation::{
+use soil_client::consensus::block_validation::{
 	BlockAnnounceValidator, Chain, DefaultBlockAnnounceValidator,
 };
 use subsoil::core::traits::{CodeExecutor, SpawnNamed};

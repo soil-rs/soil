@@ -19,7 +19,7 @@
 //! Warp syncing strategy. Bootstraps chain by downloading warp proofs and state.
 
 use sc_consensus::IncomingBlock;
-use soil_consensus::BlockOrigin;
+use soil_client::consensus::BlockOrigin;
 
 use crate::{
 	block_relay_protocol::{BlockDownloader, BlockResponseError},

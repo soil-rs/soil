@@ -26,7 +26,7 @@ use sc_consensus::{
 	BlockImport, StateAction,
 };
 use soil_blockchain::{ApplyExtrinsicFailed::Validity, Error::ApplyExtrinsicFailed};
-use soil_consensus::BlockOrigin;
+use soil_client::consensus::BlockOrigin;
 use subsoil::keyring::Sr25519Keyring;
 use subsoil::runtime::{
 	generic,

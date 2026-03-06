@@ -263,7 +263,7 @@ mod tests {
 	use futures::executor::block_on;
 	use sc_block_builder::BlockBuilderBuilder;
 	use soil_client_api::{apply_aux, LockImportRun};
-	use soil_consensus::BlockOrigin;
+	use soil_client::consensus::BlockOrigin;
 	use subsoil::consensus::grandpa::GRANDPA_ENGINE_ID as ID;
 	use subsoil::core::crypto::UncheckedFrom;
 	use subsoil::keyring::Ed25519Keyring;

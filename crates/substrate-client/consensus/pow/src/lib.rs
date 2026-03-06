@@ -56,7 +56,7 @@ use subsoil::api::ProvideRuntimeApi;
 use subsoil::block_builder::BlockBuilder as BlockBuilderApi;
 use soil_blockchain::HeaderBackend;
 use soil_client_api::{self, backend::AuxStore, BlockOf, BlockchainEvents};
-use soil_consensus::{
+use soil_client::consensus::{
 	Environment, Error as ConsensusError, ProposeArgs, Proposer, SelectChain, SyncOracle,
 };
 use subsoil::consensus::pow::{Seal, TotalDifficulty, POW_ENGINE_ID};
@@ -465,7 +465,7 @@ pub fn import_queue<B, Algorithm>(
 	algorithm: Algorithm,
 	spawner: &impl subsoil::core::traits::SpawnEssentialNamed,
 	registry: Option<&Registry>,
-) -> Result<PowImportQueue<B>, soil_consensus::Error>
+) -> Result<PowImportQueue<B>, soil_client::consensus::Error>
 where
 	B: BlockT,
 	Algorithm: PowAlgorithm<B> + Clone + Send + Sync + 'static,

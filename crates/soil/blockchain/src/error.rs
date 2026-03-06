@@ -19,7 +19,7 @@
 
 use codec::Error as CodecError;
 use subsoil::api::ApiError;
-use soil_consensus;
+use soil_client::consensus;
 use subsoil::runtime::transaction_validity::TransactionValidityError;
 use std::{self, result};
 
@@ -50,7 +50,7 @@ pub enum Error {
 	OneShotCancelled(#[from] futures::channel::oneshot::Canceled),
 
 	#[error(transparent)]
-	Consensus(#[from] soil_consensus::Error),
+	Consensus(#[from] soil_client::consensus::Error),
 
 	#[error("Backend error: {0}")]
 	Backend(String),

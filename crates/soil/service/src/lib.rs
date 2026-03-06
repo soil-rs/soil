@@ -43,7 +43,7 @@ use jsonrpsee::RpcModule;
 use log::{debug, error, trace, warn};
 use soil_blockchain::HeaderMetadata;
 use soil_client_api::{blockchain::HeaderBackend, BlockBackend, BlockchainEvents, ProofProvider};
-use soil_consensus::SyncOracle;
+use soil_client::consensus::SyncOracle;
 use soil_network::{
 	config::MultiaddrWithPeerId, service::traits::NetworkService, NetworkBackend, NetworkBlock,
 	NetworkPeers, NetworkStateInfo,
@@ -575,7 +575,7 @@ mod tests {
 	use super::*;
 	use futures::executor::block_on;
 	use sc_transaction_pool::BasicPool;
-	use soil_consensus::SelectChain;
+	use soil_client::consensus::SelectChain;
 	use substrate_test_runtime_client::{
 		prelude::*,
 		runtime::{ExtrinsicBuilder, Transfer, TransferData},

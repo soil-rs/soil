@@ -177,7 +177,7 @@ impl TransactionsHandlerPrototype {
 		B: BlockT + 'static,
 		H: ExHashT,
 		N: NetworkPeers + NetworkEventStream,
-		S: SyncEventStream + soil_consensus::SyncOracle,
+		S: SyncEventStream + soil_client::consensus::SyncOracle,
 	>(
 		self,
 		network: N,
@@ -248,7 +248,7 @@ pub struct TransactionsHandler<
 	B: BlockT + 'static,
 	H: ExHashT,
 	N: NetworkPeers + NetworkEventStream,
-	S: SyncEventStream + soil_consensus::SyncOracle,
+	S: SyncEventStream + soil_client::consensus::SyncOracle,
 > {
 	protocol_name: ProtocolName,
 	/// Interval at which we call `propagate_transactions`.
@@ -289,7 +289,7 @@ where
 	B: BlockT + 'static,
 	H: ExHashT,
 	N: NetworkPeers + NetworkEventStream,
-	S: SyncEventStream + soil_consensus::SyncOracle,
+	S: SyncEventStream + soil_client::consensus::SyncOracle,
 {
 	/// Turns the [`TransactionsHandler`] into a future that should run forever and not be
 	/// interrupted.

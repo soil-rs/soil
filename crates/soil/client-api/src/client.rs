@@ -18,7 +18,7 @@
 
 //! A set of APIs supported by the client along with their primitives.
 
-use soil_consensus::BlockOrigin;
+use soil_client::consensus::BlockOrigin;
 use subsoil::core::storage::StorageKey;
 use subsoil::runtime::{
 	generic::SignedBlock,
@@ -149,7 +149,7 @@ pub trait BlockBackend<Block: BlockT> {
 	fn block_status(
 		&self,
 		hash: Block::Hash,
-	) -> soil_blockchain::Result<soil_consensus::BlockStatus>;
+	) -> soil_blockchain::Result<soil_client::consensus::BlockStatus>;
 
 	/// Get block justifications for the block with the given hash.
 	fn justifications(&self, hash: Block::Hash) -> soil_blockchain::Result<Option<Justifications>>;

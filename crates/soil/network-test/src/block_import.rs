@@ -24,7 +24,7 @@ use sc_consensus::{
 	import_single_block, BasicQueue, BlockImportError, BlockImportStatus, ImportedAux,
 	IncomingBlock,
 };
-use soil_consensus::BlockOrigin;
+use soil_client::consensus::BlockOrigin;
 use substrate_test_runtime_client::{
 	self,
 	prelude::*,

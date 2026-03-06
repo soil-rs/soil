@@ -21,7 +21,6 @@ members = [
 	"crates/soil/cli",
 	"crates/soil/client-api",
 	"crates/soil/client-db",
-	"crates/soil/consensus",
 	"crates/soil/consensus-babe-rpc",
 	"crates/soil/consensus-beefy-rpc",
 	"crates/soil/consensus-epochs",
@@ -498,7 +497,6 @@ soil-transaction-pool-api = { path = "crates/soil/transaction-pool-api", default
 soil-utils = { path = "crates/soil/utils", default-features = false }
 soil-authority-discovery = { path = "crates/soil/authority-discovery", default-features = false }
 soil-blockchain = { path = "crates/soil/blockchain", default-features = false }
-soil-consensus = { path = "crates/soil/consensus", default-features = false }
 subsoil = { path = "crates/subsoil", default-features = false }
 subsoil-crypto-hashing = { path = "crates/subsoil-crypto-hashing", default-features = false }
 subsoil-derive = { path = "crates/subsoil-derive" }

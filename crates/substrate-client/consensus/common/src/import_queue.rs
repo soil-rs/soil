@@ -33,7 +33,7 @@ use std::{
 	time::{Duration, Instant},
 };
 
-use soil_consensus::{error::Error as ConsensusError, BlockOrigin};
+use soil_client::consensus::{error::Error as ConsensusError, BlockOrigin};
 use subsoil::runtime::{
 	traits::{Block as BlockT, Header as _, NumberFor},
 	Justifications,

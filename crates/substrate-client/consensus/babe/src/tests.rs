@@ -25,7 +25,7 @@ use sc_consensus::{BoxBlockImport, BoxJustificationImport};
 use sc_consensus_slots::BackoffAuthoringOnFinalizedHeadLagging;
 use subsoil::application_crypto::key_types::BABE;
 use soil_client_api::{BlockchainEvents, Finalizer};
-use soil_consensus::{NoNetwork as DummyOracle, Proposal, ProposeArgs};
+use soil_client::consensus::{NoNetwork as DummyOracle, Proposal, ProposeArgs};
 use subsoil::consensus::babe::{
 	inherents::{BabeCreateInherentDataProviders, InherentDataProvider},
 	make_vrf_sign_data, AllowedSlots, AuthorityId, AuthorityPair, Slot,

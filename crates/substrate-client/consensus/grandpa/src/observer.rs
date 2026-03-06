@@ -29,7 +29,7 @@ use log::{debug, info, warn};
 
 use soil_blockchain::HeaderMetadata;
 use soil_client_api::backend::Backend;
-use soil_consensus::SelectChain;
+use soil_client::consensus::SelectChain;
 use subsoil::consensus::grandpa::AuthorityId;
 use subsoil::keystore::KeystorePtr;
 use soil_network::NotificationService;

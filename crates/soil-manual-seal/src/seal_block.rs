@@ -24,7 +24,7 @@ use futures::prelude::*;
 use sc_consensus::{BlockImport, BlockImportParams, ForkChoiceStrategy, ImportResult, StateAction};
 use subsoil::api::{ProofRecorder, ProvideRuntimeApi};
 use soil_blockchain::HeaderBackend;
-use soil_consensus::{self, BlockOrigin, Environment, ProposeArgs, Proposer, SelectChain};
+use soil_client::consensus::{self, BlockOrigin, Environment, ProposeArgs, Proposer, SelectChain};
 use subsoil::externalities::Extensions;
 use subsoil::inherents::{CreateInherentDataProviders, InherentDataProvider};
 use subsoil::runtime::traits::{Block as BlockT, Header as HeaderT};
@@ -79,7 +79,7 @@ pub async fn seal_block<B, BI, SC, C, E, TP, CIDP>(
 	}: SealBlockParams<'_, B, BI, SC, C, E, TP, CIDP>,
 ) where
 	B: BlockT,
-	BI: BlockImport<B, Error = soil_consensus::Error> + Send + Sync + 'static,
+	BI: BlockImport<B, Error = soil_client::consensus::Error> + Send + Sync + 'static,
 	C: HeaderBackend<B> + ProvideRuntimeApi<B>,
 	E: Environment<B>,
 	E::Proposer: Proposer<B>,

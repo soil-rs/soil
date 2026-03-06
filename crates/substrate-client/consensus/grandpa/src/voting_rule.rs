@@ -331,7 +331,7 @@ where
 mod tests {
 	use super::*;
 	use sc_block_builder::BlockBuilderBuilder;
-	use soil_consensus::BlockOrigin;
+	use soil_client::consensus::BlockOrigin;
 	use subsoil::runtime::traits::Header as _;
 
 	use substrate_test_runtime_client::{

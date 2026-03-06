@@ -297,7 +297,7 @@ impl StatementHandlerPrototype {
 	/// Gossiping is enabled when major syncing is done.
 	pub fn build<
 		N: NetworkPeers + NetworkEventStream,
-		S: SyncEventStream + soil_consensus::SyncOracle,
+		S: SyncEventStream + soil_client::consensus::SyncOracle,
 	>(
 		self,
 		network: N,
@@ -389,7 +389,7 @@ impl StatementHandlerPrototype {
 /// Handler for statements. Call [`StatementHandler::run`] to start the processing.
 pub struct StatementHandler<
 	N: NetworkPeers + NetworkEventStream,
-	S: SyncEventStream + soil_consensus::SyncOracle,
+	S: SyncEventStream + soil_client::consensus::SyncOracle,
 > {
 	protocol_name: ProtocolName,
 	/// Interval at which we call `propagate_statements`.
@@ -553,7 +553,7 @@ impl Peer {
 impl<N, S> StatementHandler<N, S>
 where
 	N: NetworkPeers + NetworkEventStream,
-	S: SyncEventStream + soil_consensus::SyncOracle,
+	S: SyncEventStream + soil_client::consensus::SyncOracle,
 {
 	/// Create a new `StatementHandler` for testing/benchmarking purposes.
 	#[cfg(any(test, feature = "test-helpers"))]
@@ -1215,7 +1215,7 @@ mod tests {
 		}
 	}
 
-	impl soil_consensus::SyncOracle for TestSync {
+	impl soil_client::consensus::SyncOracle for TestSync {
 		fn is_major_syncing(&self) -> bool {
 			false
 		}

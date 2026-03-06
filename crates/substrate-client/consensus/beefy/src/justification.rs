@@ -18,7 +18,7 @@
 
 use codec::DecodeAll;
 use subsoil::application_crypto::RuntimeAppPublic;
-use soil_consensus::Error as ConsensusError;
+use soil_client::consensus::Error as ConsensusError;
 use subsoil::consensus::beefy::{
 	AuthorityIdBound, KnownSignature, ValidatorSet, ValidatorSetId, VersionedFinalityProof,
 };

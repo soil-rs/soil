@@ -21,7 +21,7 @@ use crate::testing::{test_executor, timeout_secs};
 use assert_matches::assert_matches;
 use jsonrpsee::core::EmptyServerParams as EmptyParams;
 use sc_block_builder::BlockBuilderBuilder;
-use soil_consensus::BlockOrigin;
+use soil_client::consensus::BlockOrigin;
 use soil_rpc::list::ListOrValue;
 use substrate_test_runtime_client::{
 	prelude::*,

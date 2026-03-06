@@ -23,7 +23,7 @@ use std::collections::HashSet;
 use parking_lot::RwLock;
 
 use subsoil::api::CallContext;
-use soil_consensus::BlockOrigin;
+use soil_client::consensus::BlockOrigin;
 use subsoil::core::offchain::OffchainStorage;
 use subsoil::runtime::{
 	traits::{Block as BlockT, HashingFor, NumberFor},

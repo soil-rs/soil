@@ -119,7 +119,7 @@ where
 				pre_digest.slot(),
 			)
 			.map_err(|e| format!("failed to fetch epoch_descriptor: {}", e))?
-			.ok_or_else(|| format!("{}", soil_consensus::Error::InvalidAuthoritiesSet))?;
+			.ok_or_else(|| format!("{}", soil_client::consensus::Error::InvalidAuthoritiesSet))?;
 		// drop the lock
 		drop(epoch_changes);
 
@@ -165,13 +165,13 @@ where
 				slot,
 			)
 			.map_err(|e| Error::StringError(format!("failed to fetch epoch_descriptor: {}", e)))?
-			.ok_or(soil_consensus::Error::InvalidAuthoritiesSet)?;
+			.ok_or(soil_client::consensus::Error::InvalidAuthoritiesSet)?;
 
 		let epoch = epoch_changes
 			.viable_epoch(&epoch_descriptor, |slot| Epoch::genesis(&self.config, slot))
 			.ok_or_else(|| {
 				log::info!(target: LOG_TARGET, "create_digest: no viable_epoch :(");
-				soil_consensus::Error::InvalidAuthoritiesSet
+				soil_client::consensus::Error::InvalidAuthoritiesSet
 			})?;
 
 		Ok(epoch.as_ref().clone())
@@ -217,13 +217,13 @@ where
 				.map_err(|e| {
 					Error::StringError(format!("failed to fetch epoch_descriptor: {}", e))
 				})?
-				.ok_or(soil_consensus::Error::InvalidAuthoritiesSet)?;
+				.ok_or(soil_client::consensus::Error::InvalidAuthoritiesSet)?;
 
 			match epoch_descriptor {
 				ViableEpochDescriptor::Signaled(identifier, _epoch_header) => {
 					let epoch_mut = epoch_changes
 						.epoch_mut(&identifier)
-						.ok_or(soil_consensus::Error::InvalidAuthoritiesSet)?;
+						.ok_or(soil_client::consensus::Error::InvalidAuthoritiesSet)?;
 
 					// mutate the current epoch
 					epoch_mut.authorities = self.authorities.clone();
@@ -268,7 +268,7 @@ where
 				slot,
 			)
 			.map_err(|e| Error::StringError(format!("failed to fetch epoch_descriptor: {}", e)))?
-			.ok_or(soil_consensus::Error::InvalidAuthoritiesSet)?;
+			.ok_or(soil_client::consensus::Error::InvalidAuthoritiesSet)?;
 		// drop the lock
 		drop(epoch_changes);
 		// a quick check to see if we're in the authorities

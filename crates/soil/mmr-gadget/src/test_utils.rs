@@ -28,7 +28,7 @@ use soil_client_api::{
 	Backend as BackendT, BlockchainEvents, FinalityNotifications, ImportNotifications,
 	StorageEventStream, StorageKey,
 };
-use soil_consensus::BlockOrigin;
+use soil_client::consensus::BlockOrigin;
 use subsoil::core::{
 	offchain::{DbExternalities, StorageKind},
 	H256,

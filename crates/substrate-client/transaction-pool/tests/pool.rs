@@ -28,7 +28,7 @@ use sc_block_builder::BlockBuilderBuilder;
 use sc_transaction_pool::*;
 use soil_blockchain::HeaderBackend;
 use soil_client_api::client::BlockchainEvents;
-use soil_consensus::BlockOrigin;
+use soil_client::consensus::BlockOrigin;
 use subsoil::runtime::{
 	generic::BlockId,
 	traits::Block as _,

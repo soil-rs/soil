@@ -301,7 +301,7 @@ mod tests {
 		message::{wantlist::Entry, Wantlist},
 		Message as BitswapMessage,
 	};
-	use soil_consensus::BlockOrigin;
+	use soil_client::consensus::BlockOrigin;
 	use subsoil::runtime::codec::Encode;
 	use substrate_test_runtime::ExtrinsicBuilder;
 	use substrate_test_runtime_client::{self, prelude::*, TestClientBuilder};

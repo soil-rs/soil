@@ -39,7 +39,7 @@ use log::{debug, error, info, trace, warn};
 use subsoil::api::ProvideRuntimeApi;
 use subsoil::arithmetic::traits::{AtLeast32Bit, Saturating};
 use soil_client_api::{Backend, HeaderBackend};
-use soil_consensus::SyncOracle;
+use soil_client::consensus::SyncOracle;
 use subsoil::consensus::beefy::{
 	AuthorityIdBound, BeefyApi, Commitment, DoubleVotingProof, PayloadProvider, ValidatorSet,
 	VersionedFinalityProof, VoteMessage, BEEFY_ENGINE_ID,

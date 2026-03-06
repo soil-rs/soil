@@ -72,7 +72,7 @@ use soil_client_api::{
 	utils::is_descendent_of,
 	BlockchainEvents, CallExecutor, ExecutorProvider, Finalizer, LockImportRun, StorageProvider,
 };
-use soil_consensus::SelectChain;
+use soil_client::consensus::SelectChain;
 use subsoil::consensus::grandpa::{
 	AuthorityList, AuthoritySignature, SetId, CLIENT_LOG_TARGET as LOG_TARGET,
 };
@@ -324,7 +324,7 @@ pub trait ClientForGrandpa<Block, BE>:
 	+ BlockchainEvents<Block>
 	+ ProvideRuntimeApi<Block>
 	+ ExecutorProvider<Block>
-	+ BlockImport<Block, Error = soil_consensus::Error>
+	+ BlockImport<Block, Error = soil_client::consensus::Error>
 	+ StorageProvider<Block, BE>
 where
 	BE: Backend<Block>,
@@ -344,7 +344,7 @@ where
 		+ BlockchainEvents<Block>
 		+ ProvideRuntimeApi<Block>
 		+ ExecutorProvider<Block>
-		+ BlockImport<Block, Error = soil_consensus::Error>
+		+ BlockImport<Block, Error = soil_client::consensus::Error>
 		+ StorageProvider<Block, BE>,
 {
 }

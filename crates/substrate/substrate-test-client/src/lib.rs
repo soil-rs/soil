@@ -24,7 +24,7 @@ pub mod client_ext;
 pub use self::client_ext::{BlockOrigin, ClientBlockImportExt, ClientExt};
 pub use soil_client_api::{execution_extensions::ExecutionExtensions, BadBlocks, ForkBlocks};
 pub use soil_client_db::{self, Backend, BlocksPruning};
-pub use soil_consensus;
+pub use soil_client::consensus;
 pub use soil_executor::{self, WasmExecutionMethod, WasmExecutor};
 pub use subsoil::keyring::{Ed25519Keyring, Sr25519Keyring};
 pub use subsoil::keystore::{Keystore, KeystorePtr};

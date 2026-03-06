@@ -144,7 +144,7 @@ mod test {
 	use super::*;
 	use crate::migration::EpochV0;
 	use fork_tree::ForkTree;
-	use soil_consensus::Error as ConsensusError;
+	use soil_client::consensus::Error as ConsensusError;
 	use subsoil::consensus::babe::AllowedSlots;
 	use soil_consensus_epochs::{EpochHeader, PersistedEpoch, PersistedEpochHeader};
 	use subsoil::core::H256;

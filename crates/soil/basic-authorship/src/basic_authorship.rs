@@ -31,7 +31,7 @@ use prometheus_endpoint::Registry as PrometheusRegistry;
 use sc_block_builder::{BlockBuilderApi, BlockBuilderBuilder};
 use subsoil::api::{ApiExt, CallApiAt, ProvideRuntimeApi};
 use soil_blockchain::{ApplyExtrinsicFailed::Validity, Error::ApplyExtrinsicFailed, HeaderBackend};
-use soil_consensus::{Proposal, ProposeArgs};
+use soil_client::consensus::{Proposal, ProposeArgs};
 use subsoil::core::traits::SpawnNamed;
 use subsoil::inherents::InherentData;
 use soil_proposer_metrics::{EndProposingReason, MetricsLink as PrometheusMetrics};
@@ -67,7 +67,7 @@ pub struct ProposerFactory<A, C> {
 	metrics: PrometheusMetrics,
 	/// The default block size limit.
 	///
-	/// If no `block_size_limit` is passed to [`soil_consensus::Proposer::propose`], this block size
+	/// If no `block_size_limit` is passed to [`soil_client::consensus::Proposer::propose`], this block size
 	/// limit will be used.
 	default_block_size_limit: usize,
 	/// Soft deadline percentage of hard deadline.
@@ -132,7 +132,7 @@ impl<A, C> ProposerFactory<A, C> {
 	/// The default value for the block size limit is:
 	/// [`DEFAULT_BLOCK_SIZE_LIMIT`].
 	///
-	/// If there is no block size limit passed to [`soil_consensus::Proposer::propose`], this value
+	/// If there is no block size limit passed to [`soil_client::consensus::Proposer::propose`], this value
 	/// will be used.
 	pub fn set_default_block_size_limit(&mut self, limit: usize) {
 		self.default_block_size_limit = limit;
@@ -192,7 +192,7 @@ where
 	}
 }
 
-impl<A, Block, C> soil_consensus::Environment<Block> for ProposerFactory<A, C>
+impl<A, Block, C> soil_client::consensus::Environment<Block> for ProposerFactory<A, C>
 where
 	A: TransactionPool<Block = Block> + 'static,
 	Block: BlockT,
@@ -222,7 +222,7 @@ pub struct Proposer<Block: BlockT, C, A: TransactionPool> {
 	telemetry: Option<TelemetryHandle>,
 }
 
-impl<A, Block, C> soil_consensus::Proposer<Block> for Proposer<Block, C, A>
+impl<A, Block, C> soil_client::consensus::Proposer<Block> for Proposer<Block, C, A>
 where
 	A: TransactionPool<Block = Block> + 'static,
 	Block: BlockT,
@@ -586,7 +586,7 @@ mod tests {
 	use subsoil::api::Core;
 	use soil_blockchain::HeaderBackend;
 	use soil_client_api::{Backend, TrieCacheContext};
-	use soil_consensus::{BlockOrigin, Environment};
+	use soil_client::consensus::{BlockOrigin, Environment};
 	use subsoil::runtime::{generic::BlockId, traits::NumberFor, Perbill};
 	use soil_transaction_pool_api::{ChainEvent, MaintainedTransactionPool, TransactionSource};
 	use substrate_test_runtime_client::{

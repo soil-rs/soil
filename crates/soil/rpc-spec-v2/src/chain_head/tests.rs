@@ -35,7 +35,7 @@ use sc_block_builder::BlockBuilderBuilder;
 use sc_rpc::testing::TokioTestExecutor;
 use soil_blockchain::HeaderBackend;
 use soil_client_api::ChildInfo;
-use soil_consensus::BlockOrigin;
+use soil_client::consensus::BlockOrigin;
 use subsoil::core::{
 	storage::well_known_keys::{self, CODE},
 	Blake2Hasher, Hasher,

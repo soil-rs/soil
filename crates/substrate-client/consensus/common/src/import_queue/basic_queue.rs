@@ -21,7 +21,7 @@ use futures::{
 };
 use log::{debug, trace};
 use prometheus_endpoint::Registry;
-use soil_consensus::BlockOrigin;
+use soil_client::consensus::BlockOrigin;
 use subsoil::runtime::{
 	traits::{Block as BlockT, Header as HeaderT, NumberFor},
 	Justification, Justifications,
@@ -362,7 +362,7 @@ impl<B: BlockT> BlockImportWorker<B> {
 				});
 				match result {
 					Ok(()) => JustificationImportResult::Success,
-					Err(soil_consensus::Error::OutdatedJustification) => {
+					Err(soil_client::consensus::Error::OutdatedJustification) => {
 						JustificationImportResult::OutdatedJustification
 					},
 					Err(_) => JustificationImportResult::Failure,
@@ -527,7 +527,7 @@ mod tests {
 
 	#[async_trait::async_trait]
 	impl BlockImport<Block> for () {
-		type Error = soil_consensus::Error;
+		type Error = soil_client::consensus::Error;
 
 		async fn check_block(
 			&self,
@@ -546,7 +546,7 @@ mod tests {
 
 	#[async_trait::async_trait]
 	impl JustificationImport<Block> for () {
-		type Error = soil_consensus::Error;
+		type Error = soil_client::consensus::Error;
 
 		async fn on_start(&mut self) -> Vec<(Hash, BlockNumber)> {
 			Vec::new()

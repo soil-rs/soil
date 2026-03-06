@@ -37,7 +37,7 @@ use futures_timer::Delay;
 use log::{debug, info, warn};
 use sc_consensus::{BlockImport, JustificationSyncLink};
 use subsoil::arithmetic::traits::BaseArithmetic;
-use soil_consensus::{Proposal, ProposeArgs, Proposer, SelectChain, SyncOracle};
+use soil_client::consensus::{Proposal, ProposeArgs, Proposer, SelectChain, SyncOracle};
 use subsoil::consensus::slots::{Slot, SlotDuration};
 use subsoil::inherents::CreateInherentDataProviders;
 use subsoil::runtime::traits::{Block as BlockT, HashingFor, Header as HeaderT};
@@ -84,7 +84,7 @@ pub trait SimpleSlotWorker<B: BlockT> {
 	type JustificationSyncLink: JustificationSyncLink<B>;
 
 	/// The type of future resolving to the proposer.
-	type CreateProposer: Future<Output = Result<Self::Proposer, soil_consensus::Error>>
+	type CreateProposer: Future<Output = Result<Self::Proposer, soil_client::consensus::Error>>
 		+ Send
 		+ Unpin
 		+ 'static;
@@ -109,7 +109,7 @@ pub trait SimpleSlotWorker<B: BlockT> {
 		&self,
 		header: &B::Header,
 		slot: Slot,
-	) -> Result<Self::AuxData, soil_consensus::Error>;
+	) -> Result<Self::AuxData, soil_client::consensus::Error>;
 
 	/// Returns the number of authorities.
 	/// None indicate that the authorities information is incomplete.
@@ -139,7 +139,7 @@ pub trait SimpleSlotWorker<B: BlockT> {
 		storage_changes: StorageChanges<B>,
 		public: Self::Claim,
 		aux_data: Self::AuxData,
-	) -> Result<sc_consensus::BlockImportParams<B>, soil_consensus::Error>;
+	) -> Result<sc_consensus::BlockImportParams<B>, soil_client::consensus::Error>;
 
 	/// Whether to force authoring if offline.
 	fn force_authoring(&self) -> bool;
@@ -202,7 +202,7 @@ pub trait SimpleSlotWorker<B: BlockT> {
 
 		let proposing = proposer
 			.propose(propose_args)
-			.map_err(|e| soil_consensus::Error::ClientImport(e.to_string()));
+			.map_err(|e| soil_client::consensus::Error::ClientImport(e.to_string()));
 
 		let proposal = match futures::future::select(
 			proposing,

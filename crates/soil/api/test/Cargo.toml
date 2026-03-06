@@ -23,7 +23,7 @@ codec = { workspace = true, default-features = true }
 rustversion = { workspace = true }
 sc-block-builder = { workspace = true, default-features = true }
 scale-info = { features = ["derive"], workspace = true }
-soil-consensus = { workspace = true, default-features = true }
+soil-client = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
 substrate-test-runtime-client = { workspace = true }
 trybuild = { workspace = true }

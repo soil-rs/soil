@@ -15,7 +15,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::error::Error;
+use super::error::Error;
 use subsoil::runtime::traits::{Block as BlockT, NumberFor};
 
 /// The SelectChain trait defines the strategy upon which the head is chosen

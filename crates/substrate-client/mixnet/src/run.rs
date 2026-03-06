@@ -44,7 +44,7 @@ use mixnet::{
 };
 use subsoil::api::{ApiExt, ProvideRuntimeApi};
 use soil_client_api::{BlockchainEvents, HeaderBackend};
-use soil_consensus::SyncOracle;
+use soil_client::consensus::SyncOracle;
 use subsoil::keystore::{KeystoreExt, KeystorePtr};
 use soil_mixnet::{runtime_api::MixnetApi, types::Mixnode};
 use soil_network::{

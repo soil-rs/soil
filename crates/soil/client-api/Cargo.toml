@@ -27,7 +27,7 @@ soil-executor = { workspace = true, default-features = true}
 soil-transaction-pool-api = { workspace = true, default-features = true}
 soil-utils = { workspace = true, default-features = true}
 soil-blockchain = { workspace = true, default-features = true}
-soil-consensus = { workspace = true, default-features = true}
+soil-client = { workspace = true, default-features = true}
 subsoil = { workspace = true, default-features = true}
 
 [dev-dependencies]

@@ -157,7 +157,7 @@ impl<Block: BlockT> GrandpaJustification<Block> {
 		NumberFor<Block>: finality_grandpa::BlockNumberOps,
 	{
 		let voters = VoterSet::new(authorities.iter().cloned())
-			.ok_or(ClientError::Consensus(soil_consensus::Error::InvalidAuthoritiesSet))?;
+			.ok_or(ClientError::Consensus(soil_client::consensus::Error::InvalidAuthoritiesSet))?;
 
 		self.verify_with_voter_set(set_id, &voters)
 	}

@@ -31,7 +31,7 @@ use soil_client_api::{
 	backend,
 	blockchain::{Backend as BlockChainBackendT, HeaderBackend},
 };
-use soil_consensus::BlockOrigin;
+use soil_client::consensus::BlockOrigin;
 use subsoil::runtime::traits::Block as BlockT;
 use substrate_test_runtime::Transfer;
 

@@ -34,7 +34,7 @@ sc-consensus = { workspace = true, default-features = true }
 soil-executor = { workspace = true, default-features = true }
 soil-service = { features = ["rocksdb"], workspace = true, default-features = true }
 soil-blockchain = { workspace = true, default-features = true }
-soil-consensus = { workspace = true, default-features = true }
+soil-client = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
 subsoil-crypto-hashing = { workspace = true, default-features = true }
 substrate-test-client = { workspace = true }

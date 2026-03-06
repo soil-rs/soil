@@ -394,7 +394,7 @@ mod tests {
 	use rand::prelude::*;
 	use sc_block_builder::BlockBuilderBuilder;
 	use soil_blockchain::HeaderBackend;
-	use soil_consensus::BlockOrigin;
+	use soil_client::consensus::BlockOrigin;
 	use subsoil::consensus::grandpa::GRANDPA_ENGINE_ID;
 	use subsoil::keyring::Ed25519Keyring;
 	use std::sync::Arc;

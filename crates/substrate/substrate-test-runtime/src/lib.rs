@@ -1151,7 +1151,7 @@ mod tests {
 	use pretty_assertions::assert_eq;
 	use sc_block_builder::BlockBuilderBuilder;
 	use subsoil::api::{ApiExt, ProvideRuntimeApi};
-	use soil_consensus::BlockOrigin;
+	use soil_client::consensus::BlockOrigin;
 	use subsoil::core::{storage::well_known_keys::HEAP_PAGES, traits::CallContext};
 	use subsoil::runtime::{
 		traits::{DispatchTransaction, Hash as _},

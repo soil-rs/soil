@@ -70,7 +70,7 @@ assert_matches = { workspace = true }
 cid = { workspace = true }
 multistream-select = { workspace = true }
 sc-block-builder = { workspace = true, default-features = true }
-soil-consensus = { workspace = true, default-features = true }
+soil-client = { workspace = true, default-features = true }
 subsoil-crypto-hashing = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
 substrate-test-runtime = { workspace = true }

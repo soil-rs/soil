@@ -110,7 +110,7 @@ use soil_client_api::{
 	backend::AuxStore, AuxDataOperations, Backend as BackendT, FinalityNotification,
 	PreCommitActions, UsageProvider,
 };
-use soil_consensus::{BlockOrigin, Environment, Error as ConsensusError, Proposer, SelectChain};
+use soil_client::consensus::{BlockOrigin, Environment, Error as ConsensusError, Proposer, SelectChain};
 use subsoil::consensus::babe::{inherents::BabeInherentData, SlotDuration};
 use soil_consensus_epochs::{
 	descendent_query, Epoch as EpochT, EpochChangesFor, SharedEpochChanges, ViableEpoch,
@@ -129,7 +129,7 @@ use soil_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG, CONSENSUS_TRAC
 use soil_transaction_pool_api::OffchainTransactionPoolFactory;
 
 pub use sc_consensus_slots::SlotProportion;
-pub use soil_consensus::SyncOracle;
+pub use soil_client::consensus::SyncOracle;
 pub use subsoil::consensus::babe::{
 	digests::{
 		CompatibleDigestItem, NextConfigDescriptor, NextEpochDescriptor, PreDigest,
@@ -1181,7 +1181,7 @@ where
 	Client::Api: BlockBuilderApi<Block> + BabeApi<Block> + ApiExt<Block>,
 	CIDP: CreateInherentDataProviders<Block, ()>,
 	CIDP::InherentDataProviders: InherentDataProviderExt + Send,
-	SC: soil_consensus::SelectChain<Block> + 'static,
+	SC: soil_client::consensus::SelectChain<Block> + 'static,
 {
 	/// Import whole state after warp sync.
 	// This function makes multiple transactions to the DB. If one of them fails we may

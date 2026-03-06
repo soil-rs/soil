@@ -28,7 +28,7 @@ use subsoil::api::{Core, ProvideRuntimeApi};
 use subsoil::application_crypto::{AppCrypto, AppPublic};
 use soil_blockchain::Result as CResult;
 use soil_client_api::UsageProvider;
-use soil_consensus::Error as ConsensusError;
+use soil_client::consensus::Error as ConsensusError;
 use subsoil::consensus::slots::Slot;
 use subsoil::core::crypto::{ByteArray, Pair};
 use subsoil::keystore::KeystorePtr;

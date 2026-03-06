@@ -29,7 +29,7 @@ use sc_consensus::{
 use subsoil::api::{Core, RuntimeApiInfo};
 use soil_blockchain::BlockStatus;
 use soil_client_api::{backend::Backend, utils::is_descendent_of};
-use soil_consensus::{BlockOrigin, Error as ConsensusError, SelectChain};
+use soil_client::consensus::{BlockOrigin, Error as ConsensusError, SelectChain};
 use subsoil::consensus::grandpa::{ConsensusLog, GrandpaApi, ScheduledChange, SetId, GRANDPA_ENGINE_ID};
 use subsoil::runtime::{
 	generic::OpaqueDigestItemId,

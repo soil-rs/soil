@@ -20,7 +20,7 @@
 
 use sc_keystore;
 use soil_blockchain;
-use soil_consensus;
+use soil_client::consensus;
 
 /// Service Result typedef.
 pub type Result<T> = std::result::Result<T, Error>;
@@ -37,7 +37,7 @@ pub enum Error {
 	Io(#[from] std::io::Error),
 
 	#[error(transparent)]
-	Consensus(#[from] soil_consensus::Error),
+	Consensus(#[from] soil_client::consensus::Error),
 
 	#[error(transparent)]
 	Network(#[from] soil_network::error::Error),

@@ -330,7 +330,7 @@ mod tests {
 	use sc_block_builder::BlockBuilderBuilder;
 	use sc_transaction_pool::BasicPool;
 	use soil_client_api::Backend as _;
-	use soil_consensus::BlockOrigin;
+	use soil_client::consensus::BlockOrigin;
 	use soil_network::{
 		config::MultiaddrWithPeerId, types::ProtocolName, Multiaddr, ObservedRole, ReputationChange,
 	};

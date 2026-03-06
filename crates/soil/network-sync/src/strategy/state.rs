@@ -34,7 +34,7 @@ use log::{debug, error, trace};
 use prost::Message;
 use sc_consensus::{BlockImportError, BlockImportStatus, IncomingBlock};
 use soil_client_api::ProofProvider;
-use soil_consensus::BlockOrigin;
+use soil_client::consensus::BlockOrigin;
 use soil_network::{IfDisconnected, ProtocolName};
 use soil_network_common::sync::message::BlockAnnounce;
 use soil_network_types::PeerId;

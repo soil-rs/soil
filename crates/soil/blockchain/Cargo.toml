@@ -21,7 +21,7 @@ codec = { features = ["derive"], workspace = true }
 futures = { workspace = true }
 parking_lot = { workspace = true, default-features = true }
 schnellru = { workspace = true }
-soil-consensus = { workspace = true, default-features = true }
+soil-client = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
 thiserror = { workspace = true }
 tracing = { workspace = true, default-features = true }

@@ -29,7 +29,7 @@ sc-consensus = { workspace = true, default-features = true }
 sc-consensus-slots = { workspace = true, default-features = true }
 soil-telemetry = { workspace = true, default-features = true }
 soil-blockchain = { workspace = true, default-features = true }
-soil-consensus = { workspace = true, default-features = true }
+soil-client = { workspace = true, default-features = true }
 subsoil = { workspace = true }
 thiserror = { workspace = true }
 

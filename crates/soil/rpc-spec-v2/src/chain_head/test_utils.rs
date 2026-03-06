@@ -27,7 +27,7 @@ use soil_client_api::{
 	FinalityNotifications, FinalizeSummary, ImportNotifications, KeysIter, MerkleValue, PairsIter,
 	StaleBlock, StorageData, StorageEventStream, StorageKey, StorageProvider,
 };
-use soil_consensus::BlockOrigin;
+use soil_client::consensus::BlockOrigin;
 use subsoil::runtime::{
 	generic::SignedBlock,
 	traits::{Block as BlockT, Header as HeaderT, NumberFor},
@@ -275,7 +275,7 @@ impl<Block: BlockT, Client: BlockBackend<Block>> BlockBackend<Block>
 	fn block_status(
 		&self,
 		hash: Block::Hash,
-	) -> soil_blockchain::Result<soil_consensus::BlockStatus> {
+	) -> soil_blockchain::Result<soil_client::consensus::BlockStatus> {
 		self.client.block_status(hash)
 	}
 

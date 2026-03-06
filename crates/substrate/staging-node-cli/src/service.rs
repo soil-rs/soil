@@ -890,7 +890,7 @@ mod tests {
 	use sc_consensus_babe::{BabeIntermediate, CompatibleDigestItem, INTERMEDIATE_KEY};
 	use sc_keystore::LocalKeystore;
 	use soil_client_api::BlockBackend;
-	use soil_consensus::{BlockOrigin, Environment, Proposer};
+	use soil_client::consensus::{BlockOrigin, Environment, Proposer};
 	use soil_consensus_epochs::descendent_query;
 	use subsoil::core::crypto::Pair;
 	use subsoil::inherents::InherentDataProvider;
@@ -1030,7 +1030,7 @@ mod tests {
 					let proposer = proposer_factory.init(&parent_header).await.unwrap();
 					Proposer::propose(
 						proposer,
-						soil_consensus::ProposeArgs {
+						soil_client::consensus::ProposeArgs {
 							inherent_data,
 							inherent_digests: digest,
 							max_duration: std::time::Duration::from_secs(1),

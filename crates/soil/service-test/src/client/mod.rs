@@ -29,7 +29,7 @@ use soil_client_api::{
 	FinalityNotifications, HeaderBackend, StorageProvider,
 };
 use soil_client_db::{Backend, BlocksPruning, DatabaseSettings, DatabaseSource, PruningMode};
-use soil_consensus::{BlockOrigin, Error as ConsensusError, SelectChain};
+use soil_client::consensus::{BlockOrigin, Error as ConsensusError, SelectChain};
 use subsoil::core::{testing::TaskExecutor, traits::CallContext, H256};
 use soil_executor::WasmExecutor;
 use subsoil::runtime::{
@@ -1759,7 +1759,7 @@ fn respects_block_rules() {
 
 #[test]
 fn returns_status_for_pruned_blocks() {
-	use soil_consensus::BlockStatus;
+	use soil_client::consensus::BlockStatus;
 	subsoil::tracing::try_init_simple();
 	let tmp = tempfile::tempdir().unwrap();
 

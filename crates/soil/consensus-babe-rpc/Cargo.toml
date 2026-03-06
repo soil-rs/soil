@@ -23,7 +23,7 @@ soil-consensus-epochs = { workspace = true, default-features = true}
 soil-rpc-api = { workspace = true, default-features = true}
 serde = { features = ["derive"], workspace = true, default-features = true}
 soil-blockchain = { workspace = true, default-features = true}
-soil-consensus = { workspace = true, default-features = true}
+soil-client = { workspace = true, default-features = true}
 subsoil = { workspace = true, default-features = true}
 thiserror = { workspace = true}
 

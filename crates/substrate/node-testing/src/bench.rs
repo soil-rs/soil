@@ -45,7 +45,7 @@ use subsoil::api::ProvideRuntimeApi;
 use subsoil::block_builder::BlockBuilder;
 use soil_client_api::{execution_extensions::ExecutionExtensions, UsageProvider};
 use soil_client_db::PruningMode;
-use soil_consensus::BlockOrigin;
+use soil_client::consensus::BlockOrigin;
 use subsoil::core::{
 	crypto::get_public_from_string_or_panic, ed25519, sr25519, traits::SpawnNamed, Pair,
 };

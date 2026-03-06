@@ -52,7 +52,7 @@ use subsoil::application_crypto::key_types::BEEFY as BEEFY_KEY_TYPE;
 use soil_client_api::{
 	Backend as BackendT, BlockchainEvents, FinalityNotifications, HeaderBackend,
 };
-use soil_consensus::BlockOrigin;
+use soil_client::consensus::BlockOrigin;
 use subsoil::consensus::beefy::{
 	ecdsa_crypto,
 	ecdsa_crypto::{AuthorityId, Signature},

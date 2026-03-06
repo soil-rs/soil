@@ -34,7 +34,7 @@ use sc_consensus_babe::{authorship, BabeWorkerHandle};
 use subsoil::api::ProvideRuntimeApi;
 use subsoil::application_crypto::AppCrypto;
 use soil_blockchain::{Error as BlockChainError, HeaderBackend, HeaderMetadata};
-use soil_consensus::{Error as ConsensusError, SelectChain};
+use soil_client::consensus::{Error as ConsensusError, SelectChain};
 use subsoil::consensus::babe::{digests::PreDigest, AuthorityId, BabeApi as BabeRuntimeApi};
 use soil_consensus_epochs::Epoch as EpochT;
 use subsoil::core::crypto::ByteArray;

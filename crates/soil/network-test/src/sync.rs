@@ -18,7 +18,7 @@
 
 use super::*;
 use futures::Future;
-use soil_consensus::{block_validation::Validation, BlockOrigin};
+use soil_client::consensus::{block_validation::Validation, BlockOrigin};
 use subsoil::runtime::Justifications;
 use substrate_test_runtime::Header;
 

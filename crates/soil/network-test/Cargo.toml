@@ -35,7 +35,7 @@ soil-network-types = { workspace = true, default-features = true}
 soil-service = { workspace = true}
 soil-utils = { workspace = true, default-features = true}
 soil-blockchain = { workspace = true, default-features = true}
-soil-consensus = { workspace = true, default-features = true}
+soil-client = { workspace = true, default-features = true}
 subsoil = { workspace = true, default-features = true }
 substrate-test-runtime = { workspace = true}
 substrate-test-runtime-client = { workspace = true}

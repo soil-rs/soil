@@ -22,7 +22,7 @@
 use crate::{futures_stream::FuturesStream, LOG_TARGET};
 use futures::{stream::FusedStream, Future, FutureExt, Stream, StreamExt};
 use log::{debug, error, trace, warn};
-use soil_consensus::block_validation::Validation;
+use soil_client::consensus::block_validation::Validation;
 use soil_network_common::sync::message::BlockAnnounce;
 use soil_network_types::PeerId;
 use subsoil::runtime::traits::{Block as BlockT, Header, Zero};
@@ -94,7 +94,7 @@ enum AllocateSlotForBlockAnnounceValidation {
 
 pub(crate) struct BlockAnnounceValidator<B: BlockT> {
 	/// A type to check incoming block announcements.
-	validator: Box<dyn soil_consensus::block_validation::BlockAnnounceValidator<B> + Send>,
+	validator: Box<dyn soil_client::consensus::block_validation::BlockAnnounceValidator<B> + Send>,
 	/// All block announcements that are currently being validated.
 	validations: FuturesStream<
 		Pin<Box<dyn Future<Output = BlockAnnounceValidationResult<B::Header>> + Send>>,
@@ -105,7 +105,7 @@ pub(crate) struct BlockAnnounceValidator<B: BlockT> {
 
 impl<B: BlockT> BlockAnnounceValidator<B> {
 	pub(crate) fn new(
-		validator: Box<dyn soil_consensus::block_validation::BlockAnnounceValidator<B> + Send>,
+		validator: Box<dyn soil_client::consensus::block_validation::BlockAnnounceValidator<B> + Send>,
 	) -> Self {
 		Self {
 			validator,
@@ -310,7 +310,7 @@ impl<B: BlockT> FusedStream for BlockAnnounceValidator<B> {
 mod tests {
 	use super::*;
 	use crate::block_announce_validator::AllocateSlotForBlockAnnounceValidation;
-	use soil_consensus::block_validation::DefaultBlockAnnounceValidator;
+	use soil_client::consensus::block_validation::DefaultBlockAnnounceValidator;
 	use soil_network_types::PeerId;
 	use substrate_test_runtime_client::runtime::Block;
 

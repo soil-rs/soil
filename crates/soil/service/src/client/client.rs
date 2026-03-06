@@ -54,7 +54,7 @@ use soil_client_api::{
 	CallExecutor, ExecutorProvider, KeysIter, OnFinalityAction, OnImportAction, PairsIter,
 	ProofProvider, StaleBlock, TrieCacheContext, UnpinWorkerMessage, UsageProvider,
 };
-use soil_consensus::{BlockOrigin, BlockStatus, Error as ConsensusError};
+use soil_client::consensus::{BlockOrigin, BlockStatus, Error as ConsensusError};
 use soil_executor::RuntimeVersion;
 use soil_telemetry::{telemetry, TelemetryHandle, SUBSTRATE_INFO};
 
@@ -2068,7 +2068,7 @@ where
 	}
 }
 
-impl<BE, E, B, RA> soil_consensus::block_validation::Chain<B> for Client<BE, E, B, RA>
+impl<BE, E, B, RA> soil_client::consensus::block_validation::Chain<B> for Client<BE, E, B, RA>
 where
 	BE: backend::Backend<B>,
 	E: CallExecutor<B>,

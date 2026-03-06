@@ -28,7 +28,7 @@ soil-network-sync = { workspace = true, default-features = true }
 soil-network-types = { workspace = true, default-features = true }
 soil-utils = { workspace = true, default-features = true }
 soil-blockchain = { workspace = true, default-features = true }
-soil-consensus = { workspace = true, default-features = true }
+soil-client = { workspace = true, default-features = true }
 subsoil = { workspace = true }
 thiserror = { workspace = true }
 tokio = { workspace = true, default-features = true }

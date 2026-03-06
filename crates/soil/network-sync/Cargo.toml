@@ -35,7 +35,7 @@ soil-utils = { workspace = true, default-features = true}
 schnellru = { workspace = true}
 smallvec = { workspace = true, default-features = true}
 soil-blockchain = { workspace = true, default-features = true}
-soil-consensus = { workspace = true, default-features = true}
+soil-client = { workspace = true, default-features = true}
 thiserror = { workspace = true}
 tokio = { features = ["macros", "time"], workspace = true, default-features = true}
 tokio-stream = { workspace = true}

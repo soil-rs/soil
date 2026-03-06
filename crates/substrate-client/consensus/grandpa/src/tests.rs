@@ -29,7 +29,7 @@ use sc_consensus::{
 	ImportedAux,
 };
 use subsoil::api::{ApiRef, ProvideRuntimeApi};
-use soil_consensus::{BlockOrigin, Error as ConsensusError, SelectChain};
+use soil_client::consensus::{BlockOrigin, Error as ConsensusError, SelectChain};
 use subsoil::consensus::grandpa::{
 	AuthorityList, EquivocationProof, GrandpaApi, OpaqueKeyOwnershipProof, GRANDPA_ENGINE_ID,
 };
@@ -1826,7 +1826,7 @@ async fn grandpa_environment_checks_if_best_block_is_descendent_of_finality_targ
 #[tokio::test]
 async fn grandpa_environment_uses_round_base_block_for_voting_if_finality_target_errors() {
 	use finality_grandpa::voter::Environment;
-	use soil_consensus::SelectChain;
+	use soil_client::consensus::SelectChain;
 
 	let peers = &[Ed25519Keyring::Alice];
 	let voters = make_ids(peers);

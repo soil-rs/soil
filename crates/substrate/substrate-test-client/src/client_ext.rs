@@ -19,11 +19,11 @@
 
 use sc_consensus::{BlockImport, BlockImportParams, ForkChoiceStrategy};
 use soil_client_api::{backend::Finalizer, client::BlockBackend};
-use soil_consensus::Error as ConsensusError;
+use soil_client::consensus::Error as ConsensusError;
 use subsoil::runtime::{traits::Block as BlockT, Justification, Justifications};
 use soil_service::client::Client;
 
-pub use soil_consensus::BlockOrigin;
+pub use soil_client::consensus::BlockOrigin;
 
 /// Extension trait for a test client.
 pub trait ClientExt<Block: BlockT>: Sized {

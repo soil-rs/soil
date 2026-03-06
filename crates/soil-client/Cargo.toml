@@ -13,3 +13,10 @@ workspace = true
 
 [dependencies]
 subsoil = { workspace = true, default-features = true }
+async-trait = { workspace = true }
+futures = { features = ["thread-pool"], workspace = true }
+log = { workspace = true, default-features = true }
+thiserror = { workspace = true }
+
+[dev-dependencies]
+futures = { workspace = true }

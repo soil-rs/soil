@@ -44,7 +44,7 @@ use subsoil::api::{Core, ProvideRuntimeApi};
 use subsoil::application_crypto::AppPublic;
 use soil_blockchain::HeaderBackend;
 use soil_client_api::{backend::AuxStore, BlockOf};
-use soil_consensus::{BlockOrigin, Environment, Error as ConsensusError, Proposer, SelectChain};
+use soil_client::consensus::{BlockOrigin, Environment, Error as ConsensusError, Proposer, SelectChain};
 use subsoil::consensus::slots::Slot;
 use subsoil::core::crypto::Pair;
 use subsoil::inherents::CreateInherentDataProviders;
@@ -63,7 +63,7 @@ pub use import_queue::{
 	ImportQueueParams,
 };
 pub use sc_consensus_slots::SlotProportion;
-pub use soil_consensus::SyncOracle;
+pub use soil_client::consensus::SyncOracle;
 pub use subsoil::consensus::aura::{
 	digests::CompatibleDigestItem,
 	inherents::{InherentDataProvider, InherentType as AuraInherent, INHERENT_IDENTIFIER},
@@ -554,7 +554,7 @@ mod tests {
 	use sc_keystore::LocalKeystore;
 	use subsoil::application_crypto::{key_types::AURA, AppCrypto};
 	use soil_client_api::BlockchainEvents;
-	use soil_consensus::{NoNetwork as DummyOracle, Proposal, ProposeArgs};
+	use soil_client::consensus::{NoNetwork as DummyOracle, Proposal, ProposeArgs};
 	use subsoil::consensus::aura::sr25519::AuthorityPair;
 	use subsoil::keyring::sr25519::Keyring;
 	use subsoil::keystore::Keystore;

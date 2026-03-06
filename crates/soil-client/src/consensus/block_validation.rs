@@ -17,7 +17,7 @@
 
 //! Block announcement validation.
 
-use crate::BlockStatus;
+use super::BlockStatus;
 use futures::FutureExt as _;
 use subsoil::runtime::traits::Block;
 use std::{error::Error, future::Future, pin::Pin, sync::Arc};
