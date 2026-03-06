@@ -23,7 +23,7 @@ use crate::Error;
 use subsoil::api::ProvideRuntimeApi;
 use soil_blockchain::HeaderBackend;
 use soil_client_api::{AuxStore, UsageProvider};
-use soil_consensus_aura::{
+use subsoil::consensus::aura::{
 	sr25519::{AuthorityId, AuthoritySignature},
 	AuraApi,
 };

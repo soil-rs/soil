@@ -22,7 +22,6 @@ members = [
 	"crates/soil/client-api",
 	"crates/soil/client-db",
 	"crates/soil/consensus",
-	"crates/soil/consensus-aura",
 	"crates/soil/consensus-babe",
 	"crates/soil/consensus-babe-rpc",
 	"crates/soil/consensus-beefy-rpc",
@@ -501,7 +500,6 @@ soil-utils = { path = "crates/soil/utils", default-features = false }
 soil-authority-discovery = { path = "crates/soil/authority-discovery", default-features = false }
 soil-blockchain = { path = "crates/soil/blockchain", default-features = false }
 soil-consensus = { path = "crates/soil/consensus", default-features = false }
-soil-consensus-aura = { path = "crates/soil/consensus-aura", default-features = false }
 soil-consensus-babe = { path = "crates/soil/consensus-babe", default-features = false }
 soil-consensus-sassafras = { path = "crates/soil/consensus-sassafras", default-features = false }
 subsoil = { path = "crates/subsoil", default-features = false }

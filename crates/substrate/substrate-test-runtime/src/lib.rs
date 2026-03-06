@@ -80,7 +80,7 @@ pub use soil_consensus_babe::{AllowedSlots, BabeEpochConfiguration, Slot};
 pub use topsoil_balances::Call as BalancesCall;
 pub use topsoil_utility::Call as UtilityCall;
 
-pub type AuraId = soil_consensus_aura::sr25519::AuthorityId;
+pub type AuraId = subsoil::consensus::aura::sr25519::AuthorityId;
 #[cfg(feature = "std")]
 pub use extrinsic::{ExtrinsicBuilder, Transfer};
 
@@ -681,9 +681,9 @@ impl_runtime_apis! {
 		}
 	}
 
-	impl soil_consensus_aura::AuraApi<Block, AuraId> for Runtime {
-		fn slot_duration() -> soil_consensus_aura::SlotDuration {
-			soil_consensus_aura::SlotDuration::from_millis(1000)
+	impl subsoil::consensus::aura::AuraApi<Block, AuraId> for Runtime {
+		fn slot_duration() -> subsoil::consensus::aura::SlotDuration {
+			subsoil::consensus::aura::SlotDuration::from_millis(1000)
 		}
 
 		fn authorities() -> Vec<AuraId> {

@@ -4680,7 +4680,6 @@ dependencies = [
  "serde_json",
  "soil-authority-discovery",
  "soil-chain-spec-derive",
- "soil-consensus-aura",
  "soil-consensus-babe",
  "soil-genesis-builder",
  "soil-mixnet",
@@ -8124,7 +8123,6 @@ dependencies = [
  "soil-blockchain",
  "soil-client-api",
  "soil-consensus",
- "soil-consensus-aura",
  "soil-network",
  "soil-network-test",
  "soil-telemetry",
@@ -9433,16 +9431,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "soil-consensus-aura"
-version = "0.32.0"
-dependencies = [
- "async-trait",
- "parity-scale-codec",
- "scale-info",
- "subsoil",
-]
-
-[[package]]
 name = "soil-consensus-babe"
 version = "0.32.0"
 dependencies = [
@@ -9545,7 +9533,6 @@ dependencies = [
  "soil-blockchain",
  "soil-client-api",
  "soil-consensus",
- "soil-consensus-aura",
  "soil-consensus-babe",
  "soil-consensus-epochs",
  "soil-transaction-pool-api",
@@ -11035,7 +11022,6 @@ dependencies = [
  "serde_json",
  "soil-chain-spec",
  "soil-consensus",
- "soil-consensus-aura",
  "soil-consensus-babe",
  "soil-executor",
  "soil-executor-common",
@@ -11862,7 +11848,6 @@ dependencies = [
  "parity-scale-codec",
  "scale-info",
  "serde",
- "soil-consensus-aura",
  "soil-genesis-builder",
  "soil-offchain",
  "soil-session",
@@ -12049,7 +12034,6 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "scale-info",
- "soil-consensus-aura",
  "subsoil",
  "topsoil-support",
  "topsoil-system",

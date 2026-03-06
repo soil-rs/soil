@@ -23,7 +23,7 @@ use crate::{ConsensusDataProvider, Error};
 use sc_consensus::BlockImportParams;
 use subsoil::api::{ProvideRuntimeApi, StorageProof};
 use soil_client_api::{AuxStore, UsageProvider};
-use soil_consensus_aura::{
+use subsoil::consensus::aura::{
 	digests::CompatibleDigestItem,
 	sr25519::{AuthorityId, AuthoritySignature},
 	AuraApi, Slot, SlotDuration,
@@ -48,7 +48,7 @@ where
 	B: BlockT,
 {
 	/// Creates a new instance of the [`AuraConsensusDataProvider`], requires that `client`
-	/// implements [`soil_consensus_aura::AuraApi`]
+	/// implements [`subsoil::consensus::aura::AuraApi`]
 	pub fn new<C>(client: Arc<C>) -> Self
 	where
 		C: AuxStore + ProvideRuntimeApi<B> + UsageProvider<B>,

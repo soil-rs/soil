@@ -17,24 +17,22 @@
 
 //! Primitives for Aura.
 
-#![cfg_attr(not(feature = "std"), no_std)]
 
-extern crate alloc;
 
 use alloc::vec::Vec;
 use codec::{Codec, Decode, Encode};
-use subsoil::runtime::ConsensusEngineId;
+use crate::runtime::ConsensusEngineId;
 
 pub mod digests;
 pub mod inherents;
 
 pub mod sr25519 {
 	mod app_sr25519 {
-		use subsoil::application_crypto::{key_types::AURA, sr25519};
-		subsoil::app_crypto!(sr25519, AURA);
+		use crate::application_crypto::{key_types::AURA, sr25519};
+		crate::app_crypto!(sr25519, AURA);
 	}
 
-	subsoil::with_pair! {
+	crate::with_pair! {
 		/// An Aura authority keypair using S/R 25519 as its crypto.
 		pub type AuthorityPair = app_sr25519::Pair;
 	}
@@ -48,11 +46,11 @@ pub mod sr25519 {
 
 pub mod ed25519 {
 	mod app_ed25519 {
-		use subsoil::application_crypto::{ed25519, key_types::AURA};
-		subsoil::app_crypto!(ed25519, AURA);
+		use crate::application_crypto::{ed25519, key_types::AURA};
+		crate::app_crypto!(ed25519, AURA);
 	}
 
-	subsoil::with_pair! {
+	crate::with_pair! {
 		/// An Aura authority keypair using Ed25519 as its crypto.
 		pub type AuthorityPair = app_ed25519::Pair;
 	}
@@ -64,7 +62,7 @@ pub mod ed25519 {
 	pub type AuthorityId = app_ed25519::Public;
 }
 
-pub use subsoil::consensus::slots::{Slot, SlotDuration};
+pub use crate::consensus::slots::{Slot, SlotDuration};
 
 /// The `ConsensusEngineId` of AuRa.
 pub const AURA_ENGINE_ID: ConsensusEngineId = [b'a', b'u', b'r', b'a'];
@@ -83,7 +81,7 @@ pub enum ConsensusLog<AuthorityId: Codec> {
 	OnDisabled(AuthorityIndex),
 }
 
-subsoil::api::decl_runtime_apis! {
+crate::api::decl_runtime_apis! {
 	/// API necessary for block authorship with aura.
 	pub trait AuraApi<AuthorityId: Codec> {
 		/// Returns the slot duration for Aura.

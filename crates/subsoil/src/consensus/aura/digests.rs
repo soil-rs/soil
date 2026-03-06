@@ -20,10 +20,10 @@
 //! This implements the digests for AuRa, to allow the private
 //! `CompatibleDigestItem` trait to appear in public interfaces.
 
-use crate::AURA_ENGINE_ID;
+use super::AURA_ENGINE_ID;
 use codec::{Codec, Encode};
-use subsoil::consensus::slots::Slot;
-use subsoil::runtime::generic::DigestItem;
+use crate::consensus::slots::Slot;
+use crate::runtime::generic::DigestItem;
 
 /// A digest item which is usable with aura consensus.
 pub trait CompatibleDigestItem<Signature>: Sized {

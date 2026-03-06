@@ -64,7 +64,7 @@ pub use import_queue::{
 };
 pub use sc_consensus_slots::SlotProportion;
 pub use soil_consensus::SyncOracle;
-pub use soil_consensus_aura::{
+pub use subsoil::consensus::aura::{
 	digests::CompatibleDigestItem,
 	inherents::{InherentDataProvider, InherentType as AuraInherent, INHERENT_IDENTIFIER},
 	AuraApi, ConsensusLog, SlotDuration, AURA_ENGINE_ID,
@@ -555,7 +555,7 @@ mod tests {
 	use subsoil::application_crypto::{key_types::AURA, AppCrypto};
 	use soil_client_api::BlockchainEvents;
 	use soil_consensus::{NoNetwork as DummyOracle, Proposal, ProposeArgs};
-	use soil_consensus_aura::sr25519::AuthorityPair;
+	use subsoil::consensus::aura::sr25519::AuthorityPair;
 	use subsoil::keyring::sr25519::Keyring;
 	use subsoil::keystore::Keystore;
 	use soil_network_test::{Block as TestBlock, *};

@@ -25,7 +25,7 @@ use fork_tree::ForkTree;
 use parking_lot::RwLock;
 use subsoil::api::ProvideRuntimeApi;
 use soil_blockchain::{HeaderBackend, HeaderMetadata};
-use soil_consensus_aura::{AuraApi, ConsensusLog, AURA_ENGINE_ID};
+use subsoil::consensus::aura::{AuraApi, ConsensusLog, AURA_ENGINE_ID};
 use subsoil::core::Pair;
 use subsoil::runtime::{
 	generic::OpaqueDigestItemId,

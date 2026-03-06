@@ -34,7 +34,6 @@ soil-transaction-pool-api = { workspace = true, default-features = true, optiona
 serde = { features = ["derive"], workspace = true, default-features = true, optional = true}
 soil-blockchain = { workspace = true, default-features = true, optional = true}
 soil-consensus = { workspace = true, default-features = true, optional = true}
-soil-consensus-aura = { workspace = true, default-features = true, optional = true}
 soil-consensus-babe = { workspace = true, default-features = true, optional = true}
 thiserror = { workspace = true, optional = true}
 
@@ -56,13 +55,11 @@ std = [
 	"soil-blockchain",
 	"soil-client-api",
 	"soil-consensus",
-	"soil-consensus-aura",
 	"soil-consensus-babe",
 	"soil-consensus-epochs",
 	"soil-transaction-pool-api",
 	"thiserror",
 	"soil-client-api/std",
-	"soil-consensus-aura/std",
 	"soil-consensus-babe/std",
 	"soil-consensus-epochs/std",
 	"subsoil/std",
