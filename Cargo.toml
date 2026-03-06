@@ -31,7 +31,6 @@ members = [
 	"crates/soil/consensus-grandpa",
 	"crates/soil/consensus-grandpa-rpc",
 	"crates/soil/consensus-manual-seal",
-	"crates/soil/consensus-pow",
 	"crates/soil/consensus-sassafras",
 	"crates/soil/core/fuzz",
 	"crates/subsoil-crypto-hashing",
@@ -509,7 +508,6 @@ soil-consensus-aura = { path = "crates/soil/consensus-aura", default-features = 
 soil-consensus-babe = { path = "crates/soil/consensus-babe", default-features = false }
 soil-consensus-beefy = { path = "crates/soil/consensus-beefy", default-features = false }
 soil-consensus-grandpa = { path = "crates/soil/consensus-grandpa", default-features = false }
-soil-consensus-pow = { path = "crates/soil/consensus-pow", default-features = false }
 soil-consensus-sassafras = { path = "crates/soil/consensus-sassafras", default-features = false }
 subsoil = { path = "crates/subsoil", default-features = false }
 subsoil-crypto-hashing = { path = "crates/subsoil-crypto-hashing", default-features = false }

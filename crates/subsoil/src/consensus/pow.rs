@@ -17,14 +17,12 @@
 
 //! Primitives for Substrate Proof-of-Work (PoW) consensus.
 
-#![cfg_attr(not(feature = "std"), no_std)]
 
-extern crate alloc;
 
 #[cfg(not(feature = "std"))]
 use alloc::vec::Vec;
 use codec::Decode;
-use subsoil::runtime::ConsensusEngineId;
+use crate::runtime::ConsensusEngineId;
 
 /// The `ConsensusEngineId` of PoW.
 pub const POW_ENGINE_ID: ConsensusEngineId = [b'p', b'o', b'w', b'_'];
@@ -37,7 +35,7 @@ pub trait TotalDifficulty {
 	fn increment(&mut self, other: Self);
 }
 
-impl TotalDifficulty for subsoil::core::U256 {
+impl TotalDifficulty for crate::core::U256 {
 	fn increment(&mut self, other: Self) {
 		let ret = self.saturating_add(other);
 		*self = ret;
@@ -51,7 +49,7 @@ impl TotalDifficulty for u128 {
 	}
 }
 
-subsoil::api::decl_runtime_apis! {
+crate::api::decl_runtime_apis! {
 	/// API necessary for timestamp-based difficulty adjustment algorithms.
 	pub trait TimestampApi<Moment: Decode> {
 		/// Return the timestamp in the current block.

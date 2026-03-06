@@ -59,7 +59,7 @@ use soil_client_api::{self, backend::AuxStore, BlockOf, BlockchainEvents};
 use soil_consensus::{
 	Environment, Error as ConsensusError, ProposeArgs, Proposer, SelectChain, SyncOracle,
 };
-use soil_consensus_pow::{Seal, TotalDifficulty, POW_ENGINE_ID};
+use subsoil::consensus::pow::{Seal, TotalDifficulty, POW_ENGINE_ID};
 use subsoil::inherents::{CreateInherentDataProviders, InherentDataProvider};
 use subsoil::runtime::{
 	generic::{BlockId, Digest, DigestItem},

@@ -4684,7 +4684,6 @@ dependencies = [
  "soil-consensus-babe",
  "soil-consensus-beefy",
  "soil-consensus-grandpa",
- "soil-consensus-pow",
  "soil-genesis-builder",
  "soil-mixnet",
  "soil-mmr-primitives",
@@ -8263,7 +8262,6 @@ dependencies = [
  "soil-blockchain",
  "soil-client-api",
  "soil-consensus",
- "soil-consensus-pow",
  "subsoil",
  "substrate-prometheus-endpoint",
  "thiserror 1.0.69",
@@ -9593,14 +9591,6 @@ dependencies = [
  "substrate-test-runtime-transaction-pool",
  "thiserror 1.0.69",
  "tokio",
-]
-
-[[package]]
-name = "soil-consensus-pow"
-version = "0.32.0"
-dependencies = [
- "parity-scale-codec",
- "subsoil",
 ]
 
 [[package]]
