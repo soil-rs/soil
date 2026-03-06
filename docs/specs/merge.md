@@ -144,40 +144,59 @@ with client-side deps.
 > `no_std` consumers — all 33 dependents are client-side. It will be **renamed to
 > `soil-consensus-common`** and ultimately absorbed into `soil-client`.
 
-### `soil-manual-seal` — Kept separate (renamed from `soil-consensus-manual-seal`)
+### `soil-manual-seal` — Kept separate (renamed from `soil-consensus-manual-seal`) ✅ COMPLETE
 
 Pulls in `tokio`, `jsonrpsee`, `futures` — heavy async runtime deps that production
 nodes shouldn't be forced to compile. Despite having `#![cfg_attr(not(feature = "std"), no_std)]`,
 the crate has zero no_std content — every item is behind `#[cfg(feature = "std")]`.
 No split needed; just rename and keep as a standalone std-only crate.
 
-### `soil-client` — Client infrastructure (~24 crates → 1)
+### `soil-client` — Client infrastructure (~16 crates → 1) ✅ PHASE 1 COMPLETE
 
-The client-executor core (part of SCC 1) plus tightly coupled crates and consensus engine wrappers.
+The client-executor core (part of SCC 1) plus tightly coupled std-only crates.
 
-| Absorb | Reason |
+**Merged (16 crates):**
+
+| Absorbed | Module path |
 |---|---|
-| soil-consensus-common (née soil-consensus) | Client-side consensus traits (`Proposer`, `SyncOracle`, etc.), std-only, 33 reverse deps — all client-side |
-| soil-client-api | 39 reverse deps, SCC 1 with executor |
-| soil-executor + common + polkavm + wasmtime | SCC 1 with client-api via sc-tracing |
-| soil-blockchain | Depth 8, 34 reverse deps, tight with client-api |
-| soil-client-db + soil-state-db | Storage backend |
-| soil-transaction-pool + -api | Always together |
-| soil-offchain | Always with client |
-| soil-genesis-builder | Client-side |
-| soil-storage + soil-storage-monitor | Trivial |
-| sc-tracing | SCC 1 with client-api/executor |
-| sc-block-builder | Wraps soil-block-builder (14 reverse deps) |
-| sc-keystore | Wraps soil-keystore (6 reverse deps) |
-| sc-consensus | Wraps soil-consensus-common (12 reverse deps) |
-| sc-transaction-pool | Wraps soil-transaction-pool (9 reverse deps) |
-| sc-consensus-aura | Wraps soil-consensus-aura, wires engine into client |
-| sc-consensus-babe | Wraps soil-consensus-babe, wires engine into client |
-| sc-consensus-beefy | Wraps soil-consensus-beefy, also needs network |
-| sc-consensus-grandpa | Wraps soil-consensus-grandpa, also needs network + chain-spec + client-db |
-| sc-consensus-pow | Wraps soil-consensus-pow |
-| sc-consensus-slots | Wraps soil-consensus-slots |
-| soil-consensus-epochs | Epoch tracking, used by sc-consensus-babe/slots |
+| soil-consensus (client-side traits) | `soil_client::consensus` |
+| soil-client-api | `soil_client::client_api` |
+| soil-executor + common + polkavm + wasmtime | `soil_client::executor::{common,polkavm,wasmtime}` |
+| soil-blockchain | `soil_client::blockchain` |
+| soil-client-db + soil-state-db | `soil_client::db::{state_db}` |
+| soil-transaction-pool-api | `soil_client::transaction_pool` |
+| soil-storage-monitor | `soil_client::storage_monitor` |
+| soil-utils | `soil_client::utils` |
+| soil-maybe-compressed-blob | `soil_client::maybe_compressed_blob` |
+| sc-tracing | `soil_client::tracing` |
+| sc-block-builder | `soil_client::block_builder` |
+| sc-keystore | `soil_client::keystore` |
+
+> **Prerequisite:** RPC tracing types (BlockTrace, Event, Span, Data, TraceError,
+> TraceBlockResponse) were moved from `soil-rpc::tracing` to `subsoil::tracing::rpc`
+> to break the `sc-tracing → soil-rpc → soil-client` cycle.
+
+**Deferred (not merged — depend on soil-network-types or soil-telemetry, creating future cycles):**
+
+| Crate | Reason deferred |
+|---|---|
+| sc-consensus | Depends on soil-network-types → future soil-network |
+| sc-transaction-pool | Depends on soil-network-types |
+| soil-consensus-epochs | Depends on sc-consensus |
+| sc-consensus-aura | Depends on soil-telemetry → future soil-service |
+| sc-consensus-babe | Depends on soil-telemetry |
+| sc-consensus-beefy | Depends on soil-network-* |
+| sc-consensus-grandpa | Depends on soil-network-* |
+| sc-consensus-pow | Depends on sc-consensus |
+| sc-consensus-slots | Depends on soil-telemetry |
+
+**Not merged (no_std primitives used by WASM runtimes):**
+
+| Crate | Reason |
+|---|---|
+| soil-offchain-primitives | `#![cfg_attr(not(feature = "std"), no_std)]`, used by topsoil crates |
+| soil-genesis-builder | `#![cfg_attr(not(feature = "std"), no_std)]`, used by topsoil crates |
+| soil-transaction-pool (primitives) | `#![cfg_attr(not(feature = "std"), no_std)]`, used by topsoil crates |
 
 ### `soil-network` — Networking stack (~10 crates → 1)
 
@@ -238,8 +257,8 @@ Re-exports everything. Consumers write `soil = { features = ["client", "aura", "
 | New crate | Absorbs | ~Count | Status |
 |---|---|---|---|
 | **subsoil** | primitives + consensus engines (slots, aura, babe, grandpa, beefy, pow, sassafras, block-builder, mmr) | ~39 | Phase 1 ✅, Phase 2 ✅ |
-| **soil-manual-seal** | renamed from soil-consensus-manual-seal (heavy async deps) | 1 | Pending |
-| **soil-client** | consensus-common, client-api, executor, blockchain, db, tx-pool, epochs, sc-* wrappers, sc-consensus-* engines | ~24 | Pending |
+| **soil-manual-seal** | renamed from soil-consensus-manual-seal (heavy async deps) | 1 | ✅ |
+| **soil-client** | consensus-common, client-api, executor (4), blockchain, db (2), tx-pool-api, storage-monitor, utils, maybe-compressed-blob, sc-tracing, sc-block-builder, sc-keystore | ~16 | Phase 1 ✅ (9 deferred) |
 | **soil-network** | p2p, sync, gossip, statements | ~10 | Pending |
 | **soil-rpc** | rpc server, spec, endpoints, consensus-*-rpc | ~11 | Pending |
 | **soil-service** | service, chain-spec, cli, infra | ~10 | Pending |
