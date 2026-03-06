@@ -184,10 +184,10 @@ pub const VERSION: RuntimeVersion = RuntimeVersion {
 };
 
 /// The BABE epoch configuration at genesis.
-pub const BABE_GENESIS_EPOCH_CONFIG: soil_consensus_babe::BabeEpochConfiguration =
-	soil_consensus_babe::BabeEpochConfiguration {
+pub const BABE_GENESIS_EPOCH_CONFIG: subsoil::consensus::babe::BabeEpochConfiguration =
+	subsoil::consensus::babe::BabeEpochConfiguration {
 		c: PRIMARY_PROBABILITY,
-		allowed_slots: soil_consensus_babe::AllowedSlots::PrimaryAndSecondaryPlainSlots,
+		allowed_slots: subsoil::consensus::babe::AllowedSlots::PrimaryAndSecondaryPlainSlots,
 	};
 
 /// Native version.
@@ -3169,10 +3169,10 @@ subsoil::api::impl_runtime_apis! {
 		}
 	}
 
-	impl soil_consensus_babe::BabeApi<Block> for Runtime {
-		fn configuration() -> soil_consensus_babe::BabeConfiguration {
+	impl subsoil::consensus::babe::BabeApi<Block> for Runtime {
+		fn configuration() -> subsoil::consensus::babe::BabeConfiguration {
 			let epoch_config = Babe::epoch_config().unwrap_or(BABE_GENESIS_EPOCH_CONFIG);
-			soil_consensus_babe::BabeConfiguration {
+			subsoil::consensus::babe::BabeConfiguration {
 				slot_duration: Babe::slot_duration(),
 				epoch_length: EpochDuration::get(),
 				c: epoch_config.c,
@@ -3182,32 +3182,32 @@ subsoil::api::impl_runtime_apis! {
 			}
 		}
 
-		fn current_epoch_start() -> soil_consensus_babe::Slot {
+		fn current_epoch_start() -> subsoil::consensus::babe::Slot {
 			Babe::current_epoch_start()
 		}
 
-		fn current_epoch() -> soil_consensus_babe::Epoch {
+		fn current_epoch() -> subsoil::consensus::babe::Epoch {
 			Babe::current_epoch()
 		}
 
-		fn next_epoch() -> soil_consensus_babe::Epoch {
+		fn next_epoch() -> subsoil::consensus::babe::Epoch {
 			Babe::next_epoch()
 		}
 
 		fn generate_key_ownership_proof(
-			_slot: soil_consensus_babe::Slot,
-			authority_id: soil_consensus_babe::AuthorityId,
-		) -> Option<soil_consensus_babe::OpaqueKeyOwnershipProof> {
+			_slot: subsoil::consensus::babe::Slot,
+			authority_id: subsoil::consensus::babe::AuthorityId,
+		) -> Option<subsoil::consensus::babe::OpaqueKeyOwnershipProof> {
 			use codec::Encode;
 
-			Historical::prove((soil_consensus_babe::KEY_TYPE, authority_id))
+			Historical::prove((subsoil::consensus::babe::KEY_TYPE, authority_id))
 				.map(|p| p.encode())
-				.map(soil_consensus_babe::OpaqueKeyOwnershipProof::new)
+				.map(subsoil::consensus::babe::OpaqueKeyOwnershipProof::new)
 		}
 
 		fn submit_report_equivocation_unsigned_extrinsic(
-			equivocation_proof: soil_consensus_babe::EquivocationProof<<Block as BlockT>::Header>,
-			key_owner_proof: soil_consensus_babe::OpaqueKeyOwnershipProof,
+			equivocation_proof: subsoil::consensus::babe::EquivocationProof<<Block as BlockT>::Header>,
+			key_owner_proof: subsoil::consensus::babe::OpaqueKeyOwnershipProof,
 		) -> Option<()> {
 			let key_owner_proof = key_owner_proof.decode()?;
 

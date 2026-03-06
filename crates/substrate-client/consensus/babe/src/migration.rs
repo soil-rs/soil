@@ -66,7 +66,7 @@ impl EpochT for EpochV0 {
 impl EpochV0 {
 	/// Migrate the struct to current epoch version.
 	pub fn migrate(self, config: &BabeConfiguration) -> Epoch {
-		soil_consensus_babe::Epoch {
+		subsoil::consensus::babe::Epoch {
 			epoch_index: self.epoch_index,
 			start_slot: self.start_slot,
 			duration: self.duration,

@@ -75,7 +75,7 @@ use subsoil::runtime::{
 use subsoil::version::NativeVersion;
 use subsoil::version::RuntimeVersion;
 
-pub use soil_consensus_babe::{AllowedSlots, BabeEpochConfiguration, Slot};
+pub use subsoil::consensus::babe::{AllowedSlots, BabeEpochConfiguration, Slot};
 
 pub use topsoil_balances::Call as BalancesCall;
 pub use topsoil_utility::Call as UtilityCall;
@@ -691,10 +691,10 @@ impl_runtime_apis! {
 		}
 	}
 
-	impl soil_consensus_babe::BabeApi<Block> for Runtime {
-		fn configuration() -> soil_consensus_babe::BabeConfiguration {
+	impl subsoil::consensus::babe::BabeApi<Block> for Runtime {
+		fn configuration() -> subsoil::consensus::babe::BabeConfiguration {
 			let epoch_config = Babe::epoch_config().unwrap_or(TEST_RUNTIME_BABE_EPOCH_CONFIGURATION);
-			soil_consensus_babe::BabeConfiguration {
+			subsoil::consensus::babe::BabeConfiguration {
 				slot_duration: Babe::slot_duration(),
 				epoch_length: EpochDuration::get(),
 				c: epoch_config.c,
@@ -708,27 +708,27 @@ impl_runtime_apis! {
 			Babe::current_epoch_start()
 		}
 
-		fn current_epoch() -> soil_consensus_babe::Epoch {
+		fn current_epoch() -> subsoil::consensus::babe::Epoch {
 			Babe::current_epoch()
 		}
 
-		fn next_epoch() -> soil_consensus_babe::Epoch {
+		fn next_epoch() -> subsoil::consensus::babe::Epoch {
 			Babe::next_epoch()
 		}
 
 		fn submit_report_equivocation_unsigned_extrinsic(
-			_equivocation_proof: soil_consensus_babe::EquivocationProof<
+			_equivocation_proof: subsoil::consensus::babe::EquivocationProof<
 			<Block as BlockT>::Header,
 			>,
-			_key_owner_proof: soil_consensus_babe::OpaqueKeyOwnershipProof,
+			_key_owner_proof: subsoil::consensus::babe::OpaqueKeyOwnershipProof,
 		) -> Option<()> {
 			None
 		}
 
 		fn generate_key_ownership_proof(
-			_slot: soil_consensus_babe::Slot,
-			_authority_id: soil_consensus_babe::AuthorityId,
-		) -> Option<soil_consensus_babe::OpaqueKeyOwnershipProof> {
+			_slot: subsoil::consensus::babe::Slot,
+			_authority_id: subsoil::consensus::babe::AuthorityId,
+		) -> Option<subsoil::consensus::babe::OpaqueKeyOwnershipProof> {
 			None
 		}
 	}

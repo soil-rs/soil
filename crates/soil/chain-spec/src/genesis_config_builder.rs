@@ -177,7 +177,7 @@ where
 mod tests {
 	use super::*;
 	use serde_json::{from_str, json};
-	pub use soil_consensus_babe::{AllowedSlots, BabeEpochConfiguration};
+	pub use subsoil::consensus::babe::{AllowedSlots, BabeEpochConfiguration};
 	pub use soil_genesis_builder::PresetId;
 
 	#[test]

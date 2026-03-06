@@ -35,7 +35,7 @@ use std::sync::Arc;
 use sc_consensus::{BlockImportParams, ForkChoiceStrategy, Verifier};
 use subsoil::api::{ProvideRuntimeApi, StorageProof};
 use soil_blockchain::{HeaderBackend, HeaderMetadata};
-use soil_consensus_babe::{
+use subsoil::consensus::babe::{
 	digests::{NextEpochDescriptor, PreDigest, SecondaryPlainPreDigest},
 	inherents::BabeInherentData,
 	AuthorityId, BabeApi, BabeAuthorityWeight, BabeConfiguration, ConsensusLog, BABE_ENGINE_ID,

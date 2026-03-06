@@ -27,7 +27,7 @@ use subsoil::consensus::aura::{
 	sr25519::{AuthorityId, AuthoritySignature},
 	AuraApi,
 };
-use soil_consensus_babe::BabeApi;
+use subsoil::consensus::babe::BabeApi;
 use subsoil::consensus::slots::{Slot, SlotDuration};
 use subsoil::inherents::{InherentData, InherentDataProvider, InherentIdentifier};
 use subsoil::runtime::traits::{Block as BlockT, Zero};

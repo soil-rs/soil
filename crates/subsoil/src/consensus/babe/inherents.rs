@@ -17,21 +17,21 @@
 
 //! Inherents for BABE
 
-use subsoil::inherents::{Error, InherentData, InherentIdentifier};
+use crate::inherents::{Error, InherentData, InherentIdentifier};
 
 /// The BABE inherent identifier.
 pub const INHERENT_IDENTIFIER: InherentIdentifier = *b"babeslot";
 
 /// The type of the BABE inherent.
-pub type InherentType = subsoil::consensus::slots::Slot;
+pub type InherentType = crate::consensus::slots::Slot;
 
 /// Create inherent data providers for BABE with timestamp.
 #[cfg(feature = "std")]
 pub type BabeCreateInherentDataProviders<Block> = std::sync::Arc<
-	dyn subsoil::inherents::CreateInherentDataProviders<
+	dyn crate::inherents::CreateInherentDataProviders<
 		Block,
 		(),
-		InherentDataProviders = (InherentDataProvider, subsoil::timestamp::InherentDataProvider),
+		InherentDataProviders = (InherentDataProvider, crate::timestamp::InherentDataProvider),
 	>,
 >;
 
@@ -70,8 +70,8 @@ impl InherentDataProvider {
 	/// Creates the inherent data provider by calculating the slot from the given
 	/// `timestamp` and `duration`.
 	pub fn from_timestamp_and_slot_duration(
-		timestamp: subsoil::timestamp::Timestamp,
-		slot_duration: subsoil::consensus::slots::SlotDuration,
+		timestamp: crate::timestamp::Timestamp,
+		slot_duration: crate::consensus::slots::SlotDuration,
 	) -> Self {
 		let slot = InherentType::from_timestamp(timestamp, slot_duration);
 
@@ -95,7 +95,7 @@ impl core::ops::Deref for InherentDataProvider {
 
 #[cfg(feature = "std")]
 #[async_trait::async_trait]
-impl subsoil::inherents::InherentDataProvider for InherentDataProvider {
+impl crate::inherents::InherentDataProvider for InherentDataProvider {
 	async fn provide_inherent_data(&self, inherent_data: &mut InherentData) -> Result<(), Error> {
 		inherent_data.put_data(INHERENT_IDENTIFIER, &self.slot)
 	}

@@ -24,7 +24,6 @@ soil-rpc-api = { workspace = true, default-features = true, optional = true}
 serde = { features = ["derive"], workspace = true, default-features = true, optional = true}
 soil-blockchain = { workspace = true, default-features = true, optional = true}
 soil-consensus = { workspace = true, default-features = true, optional = true}
-soil-consensus-babe = { workspace = true, default-features = true, optional = true}
 subsoil = { workspace = true, default-features = true, optional = true}
 thiserror = { workspace = true, optional = true}
 
@@ -38,12 +37,10 @@ std = [
 	"subsoil",
 	"soil-blockchain",
 	"soil-consensus",
-	"soil-consensus-babe",
 	"soil-consensus-epochs",
 	"soil-rpc-api",
 	"thiserror",
 	"subsoil/std",
-	"soil-consensus-babe/std",
 	"soil-consensus-epochs/std",
 	"soil-rpc-api/std"]
 

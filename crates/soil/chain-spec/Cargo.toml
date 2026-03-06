@@ -64,5 +64,4 @@ std = [
 [dev-dependencies]
 pretty_assertions = { workspace = true }
 regex = { workspace = true }
-soil-consensus-babe = { features = ["serde"], workspace = true }
 substrate-test-runtime = { workspace = true }

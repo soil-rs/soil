@@ -24,7 +24,7 @@ use crate::{
 };
 use log::{debug, trace};
 use sc_consensus_slots::CheckedHeader;
-use soil_consensus_babe::{
+use subsoil::consensus::babe::{
 	digests::{
 		CompatibleDigestItem, PreDigest, PrimaryPreDigest, SecondaryPlainPreDigest,
 		SecondaryVRFPreDigest,

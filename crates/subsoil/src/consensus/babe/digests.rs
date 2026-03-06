@@ -24,8 +24,8 @@ use super::{
 
 #[cfg(not(feature = "std"))]
 use alloc::vec::Vec;
-use subsoil::core::sr25519::vrf::VrfSignature;
-use subsoil::runtime::DigestItem;
+use crate::core::sr25519::vrf::VrfSignature;
+use crate::runtime::DigestItem;
 
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;
@@ -108,7 +108,7 @@ impl PreDigest {
 
 	/// Returns the weight _added_ by this digest, not the cumulative weight
 	/// of the chain.
-	pub fn added_weight(&self) -> crate::BabeBlockWeight {
+	pub fn added_weight(&self) -> super::BabeBlockWeight {
 		match self {
 			PreDigest::Primary(_) => 1,
 			PreDigest::SecondaryPlain(_) | PreDigest::SecondaryVRF(_) => 0,

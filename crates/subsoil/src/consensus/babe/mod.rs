@@ -18,9 +18,7 @@
 //! Primitives for BABE.
 #![deny(warnings)]
 #![forbid(unsafe_code, missing_docs, unused_variables, unused_imports)]
-#![cfg_attr(not(feature = "std"), no_std)]
 
-extern crate alloc;
 
 pub mod digests;
 pub mod inherents;
@@ -31,20 +29,20 @@ use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;
 #[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
-use subsoil::runtime::{traits::Header, ConsensusEngineId};
+use crate::runtime::{traits::Header, ConsensusEngineId};
 
-use crate::digests::{NextConfigDescriptor, NextEpochDescriptor};
+use digests::{NextConfigDescriptor, NextEpochDescriptor};
 
-pub use subsoil::core::sr25519::vrf::{
+pub use crate::core::sr25519::vrf::{
 	VrfInput, VrfPreOutput, VrfProof, VrfSignData, VrfSignature, VrfTranscript,
 };
 
 /// Key type for BABE module.
-pub const KEY_TYPE: subsoil::core::crypto::KeyTypeId = subsoil::application_crypto::key_types::BABE;
+pub const KEY_TYPE: crate::core::crypto::KeyTypeId = crate::application_crypto::key_types::BABE;
 
 mod app {
-	use subsoil::application_crypto::{key_types::BABE, sr25519};
-	subsoil::app_crypto!(sr25519, BABE);
+	use crate::application_crypto::{key_types::BABE, sr25519};
+	crate::app_crypto!(sr25519, BABE);
 }
 
 /// VRF context used for per-slot randomness generation.
@@ -82,10 +80,10 @@ pub const MEDIAN_ALGORITHM_CARDINALITY: usize = 1200; // arbitrary suggestion by
 /// The index of an authority.
 pub type AuthorityIndex = u32;
 
-pub use subsoil::consensus::slots::{Slot, SlotDuration};
+pub use crate::consensus::slots::{Slot, SlotDuration};
 
 /// An equivocation proof for multiple block authorships on the same slot (i.e. double vote).
-pub type EquivocationProof<H> = subsoil::consensus::slots::EquivocationProof<H, AuthorityId>;
+pub type EquivocationProof<H> = crate::consensus::slots::EquivocationProof<H, AuthorityId>;
 
 /// The weight of an authority.
 // NOTE: we use a unique name for the weight to avoid conflicts with other
@@ -284,7 +282,7 @@ where
 	H: Header,
 {
 	use digests::*;
-	use subsoil::application_crypto::RuntimeAppPublic;
+	use crate::application_crypto::RuntimeAppPublic;
 
 	let find_pre_digest =
 		|header: &H| header.digest().logs().iter().find_map(|log| log.as_babe_pre_digest());
@@ -394,7 +392,7 @@ pub fn epoch_start_slot(epoch_index: u64, genesis_slot: Slot, epoch_duration: u6
 		.into()
 }
 
-subsoil::api::decl_runtime_apis! {
+crate::api::decl_runtime_apis! {
 	/// API necessary for block authorship with BABE.
 	#[api_version(2)]
 	pub trait BabeApi {

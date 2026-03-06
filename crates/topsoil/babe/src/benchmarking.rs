@@ -58,17 +58,17 @@ mod benchmarks {
 			175, 145, 255, 7, 121, 133,
 		];
 
-		let equivocation_proof1: soil_consensus_babe::EquivocationProof<Header> =
+		let equivocation_proof1: subsoil::consensus::babe::EquivocationProof<Header> =
 			Decode::decode(&mut &EQUIVOCATION_PROOF_BLOB[..]).unwrap();
 
 		let equivocation_proof2 = equivocation_proof1.clone();
 
 		#[block]
 		{
-			soil_consensus_babe::check_equivocation_proof::<Header>(equivocation_proof1);
+			subsoil::consensus::babe::check_equivocation_proof::<Header>(equivocation_proof1);
 		}
 
-		assert!(soil_consensus_babe::check_equivocation_proof::<Header>(equivocation_proof2));
+		assert!(subsoil::consensus::babe::check_equivocation_proof::<Header>(equivocation_proof2));
 	}
 
 	impl_benchmark_test_suite!(Pallet, crate::mock::new_test_ext(3), crate::mock::Test,);

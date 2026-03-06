@@ -25,7 +25,7 @@ extern crate alloc;
 
 use alloc::{boxed::Box, vec, vec::Vec};
 use codec::{Decode, Encode};
-use soil_consensus_babe::{
+use subsoil::consensus::babe::{
 	digests::{NextConfigDescriptor, NextEpochDescriptor, PreDigest},
 	AllowedSlots, BabeAuthorityWeight, BabeEpochConfiguration, ConsensusLog, Epoch,
 	EquivocationProof, Randomness as BabeRandomness, Slot, BABE_ENGINE_ID, RANDOMNESS_LENGTH,
@@ -48,7 +48,7 @@ use topsoil_support::{
 };
 use topsoil_system::pallet_prelude::{BlockNumberFor, HeaderFor};
 
-pub use soil_consensus_babe::AuthorityId;
+pub use subsoil::consensus::babe::AuthorityId;
 
 const LOG_TARGET: &str = "runtime::babe";
 
@@ -359,7 +359,7 @@ pub mod pallet {
 						.get(authority_index as usize)
 						.and_then(|(authority, _)| {
 							let public = authority.as_inner_ref();
-							let transcript = soil_consensus_babe::make_vrf_transcript(
+							let transcript = subsoil::consensus::babe::make_vrf_transcript(
 								&Randomness::<T>::get(),
 								CurrentSlot::<T>::get(),
 								EpochIndex::<T>::get(),
@@ -636,7 +636,7 @@ impl<T: Config> Pallet<T> {
 		// will be using the randomness and authorities for that epoch that had
 		// been previously announced for epoch N+1, and the randomness collected
 		// during the current epoch (N) will be used for epoch N+5.
-		let epoch_index = soil_consensus_babe::epoch_index(
+		let epoch_index = subsoil::consensus::babe::epoch_index(
 			CurrentSlot::<T>::get(),
 			GenesisSlot::<T>::get(),
 			T::EpochDuration::get(),
@@ -721,7 +721,7 @@ impl<T: Config> Pallet<T> {
 	/// Only guaranteed to give correct results after `initialize` of the first
 	/// block in the chain (as its result is based off of `GenesisSlot`).
 	pub fn current_epoch_start() -> Slot {
-		soil_consensus_babe::epoch_start_slot(
+		subsoil::consensus::babe::epoch_start_slot(
 			EpochIndex::<T>::get(),
 			GenesisSlot::<T>::get(),
 			T::EpochDuration::get(),
@@ -749,7 +749,7 @@ impl<T: Config> Pallet<T> {
 			 if u64 is not enough we should crash for safety; qed.",
 		);
 
-		let start_slot = soil_consensus_babe::epoch_start_slot(
+		let start_slot = subsoil::consensus::babe::epoch_start_slot(
 			next_epoch_index,
 			GenesisSlot::<T>::get(),
 			T::EpochDuration::get(),

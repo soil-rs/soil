@@ -4680,7 +4680,6 @@ dependencies = [
  "serde_json",
  "soil-authority-discovery",
  "soil-chain-spec-derive",
- "soil-consensus-babe",
  "soil-genesis-builder",
  "soil-mixnet",
  "soil-offchain",
@@ -6121,7 +6120,6 @@ dependencies = [
  "soil-chain-spec",
  "soil-client-api",
  "soil-consensus",
- "soil-consensus-babe",
  "soil-consensus-babe-rpc",
  "soil-consensus-beefy-rpc",
  "soil-consensus-grandpa-rpc",
@@ -8153,7 +8151,6 @@ dependencies = [
  "soil-blockchain",
  "soil-client-api",
  "soil-consensus",
- "soil-consensus-babe",
  "soil-consensus-epochs",
  "soil-network-test",
  "soil-telemetry",
@@ -9314,7 +9311,6 @@ dependencies = [
  "soil-blockchain",
  "soil-chain-spec-derive",
  "soil-client-api",
- "soil-consensus-babe",
  "soil-executor",
  "soil-genesis-builder",
  "soil-network",
@@ -9431,17 +9427,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "soil-consensus-babe"
-version = "0.32.0"
-dependencies = [
- "async-trait",
- "parity-scale-codec",
- "scale-info",
- "serde",
- "subsoil",
-]
-
-[[package]]
 name = "soil-consensus-babe-rpc"
 version = "0.34.0"
 dependencies = [
@@ -9452,7 +9437,6 @@ dependencies = [
  "serde",
  "soil-blockchain",
  "soil-consensus",
- "soil-consensus-babe",
  "soil-consensus-epochs",
  "soil-rpc-api",
  "soil-transaction-pool-api",
@@ -9533,7 +9517,6 @@ dependencies = [
  "soil-blockchain",
  "soil-client-api",
  "soil-consensus",
- "soil-consensus-babe",
  "soil-consensus-epochs",
  "soil-transaction-pool-api",
  "subsoil",
@@ -10557,7 +10540,6 @@ dependencies = [
  "soil-client-api",
  "soil-client-db",
  "soil-consensus",
- "soil-consensus-babe",
  "soil-consensus-babe-rpc",
  "soil-consensus-beefy-rpc",
  "soil-consensus-epochs",
@@ -11022,7 +11004,6 @@ dependencies = [
  "serde_json",
  "soil-chain-spec",
  "soil-consensus",
- "soil-consensus-babe",
  "soil-executor",
  "soil-executor-common",
  "soil-genesis-builder",
@@ -12073,7 +12054,6 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "scale-info",
- "soil-consensus-babe",
  "soil-session",
  "soil-staking",
  "subsoil",

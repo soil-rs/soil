@@ -111,7 +111,7 @@ use soil_client_api::{
 	PreCommitActions, UsageProvider,
 };
 use soil_consensus::{BlockOrigin, Environment, Error as ConsensusError, Proposer, SelectChain};
-use soil_consensus_babe::{inherents::BabeInherentData, SlotDuration};
+use subsoil::consensus::babe::{inherents::BabeInherentData, SlotDuration};
 use soil_consensus_epochs::{
 	descendent_query, Epoch as EpochT, EpochChangesFor, SharedEpochChanges, ViableEpoch,
 	ViableEpochDescriptor,
@@ -130,7 +130,7 @@ use soil_transaction_pool_api::OffchainTransactionPoolFactory;
 
 pub use sc_consensus_slots::SlotProportion;
 pub use soil_consensus::SyncOracle;
-pub use soil_consensus_babe::{
+pub use subsoil::consensus::babe::{
 	digests::{
 		CompatibleDigestItem, NextConfigDescriptor, NextEpochDescriptor, PreDigest,
 		PrimaryPreDigest, SecondaryPlainPreDigest,
@@ -160,10 +160,10 @@ const AUTHORING_SCORE_LENGTH: usize = 16;
 
 /// BABE epoch information
 #[derive(Clone, Debug, PartialEq, Eq, Encode, Decode)]
-pub struct Epoch(soil_consensus_babe::Epoch);
+pub struct Epoch(subsoil::consensus::babe::Epoch);
 
 impl Deref for Epoch {
-	type Target = soil_consensus_babe::Epoch;
+	type Target = subsoil::consensus::babe::Epoch;
 
 	fn deref(&self) -> &Self::Target {
 		&self.0
@@ -176,8 +176,8 @@ impl DerefMut for Epoch {
 	}
 }
 
-impl From<soil_consensus_babe::Epoch> for Epoch {
-	fn from(epoch: soil_consensus_babe::Epoch) -> Self {
+impl From<subsoil::consensus::babe::Epoch> for Epoch {
+	fn from(epoch: subsoil::consensus::babe::Epoch) -> Self {
 		Epoch(epoch)
 	}
 }
@@ -190,7 +190,7 @@ impl EpochT for Epoch {
 		&self,
 		(descriptor, config): (NextEpochDescriptor, BabeEpochConfiguration),
 	) -> Epoch {
-		soil_consensus_babe::Epoch {
+		subsoil::consensus::babe::Epoch {
 			epoch_index: self.epoch_index + 1,
 			start_slot: self.start_slot + self.duration,
 			duration: self.duration,
@@ -215,7 +215,7 @@ impl Epoch {
 	///
 	/// This is defined to start at the slot of the first block, so that has to be provided.
 	pub fn genesis(genesis_config: &BabeConfiguration, slot: Slot) -> Epoch {
-		soil_consensus_babe::Epoch {
+		subsoil::consensus::babe::Epoch {
 			epoch_index: 0,
 			start_slot: slot,
 			duration: genesis_config.epoch_length,

@@ -19,7 +19,7 @@
 
 use crate::{self as topsoil_babe, Config, CurrentSlot};
 use codec::Encode;
-use soil_consensus_babe::{AuthorityId, AuthorityPair, Randomness, Slot, VrfSignature};
+use subsoil::consensus::babe::{AuthorityId, AuthorityPair, Randomness, Slot, VrfSignature};
 use subsoil::core::{
 	crypto::{Pair, VrfSecret},
 	ConstBool, U256,
@@ -250,54 +250,54 @@ pub fn start_era(era_index: EraIndex) {
 }
 
 pub fn make_primary_pre_digest(
-	authority_index: soil_consensus_babe::AuthorityIndex,
-	slot: soil_consensus_babe::Slot,
+	authority_index: subsoil::consensus::babe::AuthorityIndex,
+	slot: subsoil::consensus::babe::Slot,
 	vrf_signature: VrfSignature,
 ) -> Digest {
-	let digest_data = soil_consensus_babe::digests::PreDigest::Primary(
-		soil_consensus_babe::digests::PrimaryPreDigest { authority_index, slot, vrf_signature },
+	let digest_data = subsoil::consensus::babe::digests::PreDigest::Primary(
+		subsoil::consensus::babe::digests::PrimaryPreDigest { authority_index, slot, vrf_signature },
 	);
-	let log = DigestItem::PreRuntime(soil_consensus_babe::BABE_ENGINE_ID, digest_data.encode());
+	let log = DigestItem::PreRuntime(subsoil::consensus::babe::BABE_ENGINE_ID, digest_data.encode());
 	Digest { logs: vec![log] }
 }
 
 pub fn make_secondary_plain_pre_digest(
-	authority_index: soil_consensus_babe::AuthorityIndex,
-	slot: soil_consensus_babe::Slot,
+	authority_index: subsoil::consensus::babe::AuthorityIndex,
+	slot: subsoil::consensus::babe::Slot,
 ) -> Digest {
-	let digest_data = soil_consensus_babe::digests::PreDigest::SecondaryPlain(
-		soil_consensus_babe::digests::SecondaryPlainPreDigest { authority_index, slot },
+	let digest_data = subsoil::consensus::babe::digests::PreDigest::SecondaryPlain(
+		subsoil::consensus::babe::digests::SecondaryPlainPreDigest { authority_index, slot },
 	);
-	let log = DigestItem::PreRuntime(soil_consensus_babe::BABE_ENGINE_ID, digest_data.encode());
+	let log = DigestItem::PreRuntime(subsoil::consensus::babe::BABE_ENGINE_ID, digest_data.encode());
 	Digest { logs: vec![log] }
 }
 
 pub fn make_secondary_vrf_pre_digest(
-	authority_index: soil_consensus_babe::AuthorityIndex,
-	slot: soil_consensus_babe::Slot,
+	authority_index: subsoil::consensus::babe::AuthorityIndex,
+	slot: subsoil::consensus::babe::Slot,
 	vrf_signature: VrfSignature,
 ) -> Digest {
-	let digest_data = soil_consensus_babe::digests::PreDigest::SecondaryVRF(
-		soil_consensus_babe::digests::SecondaryVRFPreDigest {
+	let digest_data = subsoil::consensus::babe::digests::PreDigest::SecondaryVRF(
+		subsoil::consensus::babe::digests::SecondaryVRFPreDigest {
 			authority_index,
 			slot,
 			vrf_signature,
 		},
 	);
-	let log = DigestItem::PreRuntime(soil_consensus_babe::BABE_ENGINE_ID, digest_data.encode());
+	let log = DigestItem::PreRuntime(subsoil::consensus::babe::BABE_ENGINE_ID, digest_data.encode());
 	Digest { logs: vec![log] }
 }
 
 pub fn make_vrf_signature_and_randomness(
 	slot: Slot,
-	pair: &soil_consensus_babe::AuthorityPair,
+	pair: &subsoil::consensus::babe::AuthorityPair,
 ) -> (VrfSignature, Randomness) {
 	let transcript =
-		soil_consensus_babe::make_vrf_transcript(&topsoil_babe::Randomness::<Test>::get(), slot, 0);
+		subsoil::consensus::babe::make_vrf_transcript(&topsoil_babe::Randomness::<Test>::get(), slot, 0);
 
 	let randomness = pair
 		.as_ref()
-		.make_bytes(soil_consensus_babe::RANDOMNESS_VRF_CONTEXT, &transcript);
+		.make_bytes(subsoil::consensus::babe::RANDOMNESS_VRF_CONTEXT, &transcript);
 
 	let signature = pair.as_ref().vrf_sign(&transcript.into());
 
@@ -369,8 +369,8 @@ pub fn generate_equivocation_proof(
 	offender_authority_index: u32,
 	offender_authority_pair: &AuthorityPair,
 	slot: Slot,
-) -> soil_consensus_babe::EquivocationProof<Header> {
-	use soil_consensus_babe::digests::CompatibleDigestItem;
+) -> subsoil::consensus::babe::EquivocationProof<Header> {
+	use subsoil::consensus::babe::digests::CompatibleDigestItem;
 
 	let current_block = System::block_number();
 	let current_slot = CurrentSlot::<Test>::get();
@@ -410,7 +410,7 @@ pub fn generate_equivocation_proof(
 	seal_header(&mut h1);
 	seal_header(&mut h2);
 
-	soil_consensus_babe::EquivocationProof {
+	subsoil::consensus::babe::EquivocationProof {
 		slot,
 		offender: offender_authority_pair.public(),
 		first_header: h1,

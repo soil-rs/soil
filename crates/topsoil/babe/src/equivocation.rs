@@ -38,7 +38,7 @@ use log::{error, info};
 use topsoil_support::traits::{Get, KeyOwnerProofSystem};
 use topsoil_system::pallet_prelude::HeaderFor;
 
-use soil_consensus_babe::{AuthorityId, EquivocationProof, Slot, KEY_TYPE};
+use subsoil::consensus::babe::{AuthorityId, EquivocationProof, Slot, KEY_TYPE};
 use subsoil::runtime::{
 	transaction_validity::{
 		InvalidTransaction, TransactionPriority, TransactionSource, TransactionValidity,
@@ -147,7 +147,7 @@ where
 		let (equivocation_proof, key_owner_proof) = evidence;
 
 		// Check the membership proof to extract the offender's id
-		let key = (soil_consensus_babe::KEY_TYPE, equivocation_proof.offender.clone());
+		let key = (subsoil::consensus::babe::KEY_TYPE, equivocation_proof.offender.clone());
 		let offender =
 			P::check_proof(key, key_owner_proof.clone()).ok_or(InvalidTransaction::BadProof)?;
 
@@ -169,7 +169,7 @@ where
 		let slot = equivocation_proof.slot;
 
 		// Validate the equivocation proof (check votes are different and signatures are valid)
-		if !soil_consensus_babe::check_equivocation_proof(equivocation_proof) {
+		if !subsoil::consensus::babe::check_equivocation_proof(equivocation_proof) {
 			return Err(Error::<T>::InvalidEquivocationProof.into());
 		}
 

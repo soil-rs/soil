@@ -25,7 +25,7 @@ use kitchensink_runtime::{
 use serde::{Deserialize, Serialize};
 use soil_authority_discovery::AuthorityId as AuthorityDiscoveryId;
 use soil_chain_spec::ChainSpecExtension;
-use soil_consensus_babe::AuthorityId as BabeId;
+use subsoil::consensus::babe::AuthorityId as BabeId;
 use subsoil::consensus::beefy::ecdsa_crypto::AuthorityId as BeefyId;
 use subsoil::consensus::grandpa::AuthorityId as GrandpaId;
 use subsoil::core::crypto::UncheckedInto;

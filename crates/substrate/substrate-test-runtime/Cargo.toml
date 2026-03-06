@@ -28,7 +28,6 @@ topsoil-timestamp = { workspace = true }
 topsoil-utility = { workspace = true }
 soil-service = { optional = true, workspace = true }
 scale-info = { features = ["derive"], workspace = true }
-soil-consensus-babe = { features = ["serde"], workspace = true }
 subsoil-crypto-hashing = { workspace = true }
 subsoil-derive = { workspace = true }
 soil-genesis-builder = { workspace = true }
@@ -82,7 +81,6 @@ std = [
 	"serde/std",
 	"serde_json/std",
 	"subsoil/std",
-	"soil-consensus-babe/std",
 	"subsoil-crypto-hashing/std",
 	"soil-genesis-builder/std",
 	"soil-offchain/std",
