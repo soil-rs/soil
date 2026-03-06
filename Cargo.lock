@@ -9528,16 +9528,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "soil-consensus-sassafras"
-version = "0.3.4-dev"
-dependencies = [
- "parity-scale-codec",
- "scale-info",
- "serde",
- "subsoil",
-]
-
-[[package]]
 name = "soil-executor"
 version = "0.32.0"
 dependencies = [
@@ -13271,7 +13261,6 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "scale-info",
- "soil-consensus-sassafras",
  "subsoil",
  "subsoil-crypto-hashing",
  "topsoil-benchmarking",

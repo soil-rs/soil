@@ -17,7 +17,7 @@
 
 //! Sassafras digests structures and helpers.
 
-use crate::{
+use super::{
 	ticket::TicketClaim, vrf::VrfSignature, AuthorityId, AuthorityIndex, AuthoritySignature,
 	EpochConfiguration, Randomness, Slot, SASSAFRAS_ENGINE_ID,
 };
@@ -27,7 +27,7 @@ use scale_info::TypeInfo;
 
 #[cfg(not(feature = "std"))]
 use alloc::vec::Vec;
-use subsoil::runtime::DigestItem;
+use crate::runtime::DigestItem;
 
 /// Epoch slot claim digest entry.
 ///

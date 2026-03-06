@@ -27,7 +27,6 @@ members = [
 	"crates/soil/consensus-epochs",
 	"crates/soil/consensus-grandpa-rpc",
 	"crates/soil/consensus-manual-seal",
-	"crates/soil/consensus-sassafras",
 	"crates/soil/core/fuzz",
 	"crates/subsoil-crypto-hashing",
 	"crates/soil/executor",
@@ -499,7 +498,6 @@ soil-utils = { path = "crates/soil/utils", default-features = false }
 soil-authority-discovery = { path = "crates/soil/authority-discovery", default-features = false }
 soil-blockchain = { path = "crates/soil/blockchain", default-features = false }
 soil-consensus = { path = "crates/soil/consensus", default-features = false }
-soil-consensus-sassafras = { path = "crates/soil/consensus-sassafras", default-features = false }
 subsoil = { path = "crates/subsoil", default-features = false }
 subsoil-crypto-hashing = { path = "crates/subsoil-crypto-hashing", default-features = false }
 subsoil-derive = { path = "crates/subsoil-derive" }

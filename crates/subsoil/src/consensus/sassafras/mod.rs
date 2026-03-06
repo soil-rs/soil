@@ -19,17 +19,15 @@
 
 #![deny(warnings)]
 #![forbid(unsafe_code, missing_docs, unused_variables, unused_imports)]
-#![cfg_attr(not(feature = "std"), no_std)]
 
-extern crate alloc;
 
 use alloc::vec::Vec;
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;
-use subsoil::core::crypto::KeyTypeId;
-use subsoil::runtime::ConsensusEngineId;
+use crate::core::crypto::KeyTypeId;
+use crate::runtime::ConsensusEngineId;
 
-pub use subsoil::consensus::slots::{Slot, SlotDuration};
+pub use crate::consensus::slots::{Slot, SlotDuration};
 
 #[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
@@ -44,12 +42,12 @@ pub use ticket::{
 };
 
 mod app {
-	use subsoil::application_crypto::{bandersnatch, key_types::SASSAFRAS};
-	subsoil::app_crypto!(bandersnatch, SASSAFRAS);
+	use crate::application_crypto::{bandersnatch, key_types::SASSAFRAS};
+	crate::app_crypto!(bandersnatch, SASSAFRAS);
 }
 
 /// Key type identifier.
-pub const KEY_TYPE: KeyTypeId = subsoil::application_crypto::key_types::SASSAFRAS;
+pub const KEY_TYPE: KeyTypeId = crate::application_crypto::key_types::SASSAFRAS;
 
 /// Consensus engine identifier.
 pub const SASSAFRAS_ENGINE_ID: ConsensusEngineId = *b"SASS";
@@ -77,7 +75,7 @@ pub type AuthorityId = app::Public;
 pub type SassafrasBlockWeight = u32;
 
 /// An equivocation proof for multiple block authorships on the same slot (i.e. double vote).
-pub type EquivocationProof<H> = subsoil::consensus::slots::EquivocationProof<H, AuthorityId>;
+pub type EquivocationProof<H> = crate::consensus::slots::EquivocationProof<H, AuthorityId>;
 
 /// Randomness required by some protocol's operations.
 pub type Randomness = [u8; RANDOMNESS_LENGTH];
@@ -144,7 +142,7 @@ pub struct Epoch {
 pub struct OpaqueKeyOwnershipProof(Vec<u8>);
 
 // Runtime API.
-subsoil::api::decl_runtime_apis! {
+crate::api::decl_runtime_apis! {
 	/// API necessary for block authorship with Sassafras.
 	pub trait SassafrasApi {
 		/// Get ring context to be used for ticket construction and verification.

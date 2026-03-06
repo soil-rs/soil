@@ -17,11 +17,11 @@
 
 //! Primitives related to tickets.
 
-use crate::vrf::RingVrfSignature;
+use super::vrf::RingVrfSignature;
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;
 
-pub use subsoil::core::ed25519::{Public as EphemeralPublic, Signature as EphemeralSignature};
+pub use crate::core::ed25519::{Public as EphemeralPublic, Signature as EphemeralSignature};
 
 /// Ticket identifier.
 ///

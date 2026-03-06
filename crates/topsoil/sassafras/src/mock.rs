@@ -19,7 +19,7 @@
 
 use crate::{self as topsoil_sassafras, EpochChangeInternalTrigger, *};
 
-use soil_consensus_sassafras::{
+use subsoil::consensus::sassafras::{
 	digests::SlotClaim,
 	vrf::{RingProver, VrfSignature},
 	AuthorityIndex, AuthorityPair, EpochConfiguration, Slot, TicketBody, TicketEnvelope, TicketId,

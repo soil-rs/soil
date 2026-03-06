@@ -17,13 +17,13 @@
 
 //! Utilities related to VRF input, pre-output and signatures.
 
-use crate::{Randomness, TicketBody, TicketId};
+use super::{Randomness, TicketBody, TicketId};
 #[cfg(not(feature = "std"))]
 use alloc::vec::Vec;
 use codec::Encode;
-use subsoil::consensus::slots::Slot;
+use crate::consensus::slots::Slot;
 
-pub use subsoil::core::bandersnatch::{
+pub use crate::core::bandersnatch::{
 	ring_vrf::{RingProver, RingVerifier, RingVerifierKey, RingVrfSignature},
 	vrf::{VrfInput, VrfPreOutput, VrfSignData, VrfSignature},
 };
@@ -32,7 +32,7 @@ pub use subsoil::core::bandersnatch::{
 pub const RING_SIZE: usize = 1024;
 
 /// Bandersnatch VRF [`RingContext`] specialization for Sassafras using [`RING_SIZE`].
-pub type RingContext = subsoil::core::bandersnatch::ring_vrf::RingContext<RING_SIZE>;
+pub type RingContext = crate::core::bandersnatch::ring_vrf::RingContext<RING_SIZE>;
 
 /// Input for slot claim
 pub fn slot_claim_input(randomness: &Randomness, slot: Slot, epoch: u64) -> VrfInput {

@@ -54,7 +54,7 @@ use log::{debug, error, trace, warn};
 use scale_info::TypeInfo;
 
 use alloc::vec::Vec;
-use soil_consensus_sassafras::{
+use subsoil::consensus::sassafras::{
 	digests::{ConsensusLog, NextEpochDescriptor, SlotClaim},
 	vrf, AuthorityId, Epoch, EpochConfiguration, Randomness, Slot, TicketBody, TicketEnvelope,
 	TicketId, RANDOMNESS_LENGTH, SASSAFRAS_ENGINE_ID,
@@ -386,7 +386,7 @@ pub mod pallet {
 			// Compute tickets threshold
 			let next_config =
 				NextEpochConfig::<T>::get().unwrap_or_else(|| EpochConfig::<T>::get());
-			let ticket_threshold = soil_consensus_sassafras::ticket_id_threshold(
+			let ticket_threshold = subsoil::consensus::sassafras::ticket_id_threshold(
 				next_config.redundancy_factor,
 				epoch_length as u32,
 				next_config.attempts_number,
