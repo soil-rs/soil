@@ -8424,7 +8424,6 @@ dependencies = [
  "serde",
  "soil-blockchain",
  "soil-client-api",
- "soil-rpc",
  "subsoil",
  "subsoil-derive",
  "thiserror 1.0.69",
@@ -9925,7 +9924,6 @@ dependencies = [
 name = "soil-rpc"
 version = "26.0.0"
 dependencies = [
- "rustc-hash 1.1.0",
  "serde",
  "serde_json",
  "subsoil",
@@ -10782,6 +10780,7 @@ dependencies = [
  "rand 0.8.5",
  "ref-cast",
  "regex",
+ "rustc-hash 1.1.0",
  "rustversion",
  "scale-info",
  "schemars",

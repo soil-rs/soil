@@ -39,7 +39,7 @@ use subsoil::api::{Core, ProvideRuntimeApi};
 use soil_blockchain::HeaderBackend;
 use soil_client_api::BlockBackend;
 use subsoil::core::hexdisplay::HexDisplay;
-use soil_rpc::tracing::{BlockTrace, Span, TraceBlockResponse};
+use subsoil::tracing::rpc::{BlockTrace, Span, TraceBlockResponse};
 use subsoil::runtime::{
 	generic::BlockId,
 	traits::{Block as BlockT, Header},

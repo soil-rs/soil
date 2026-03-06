@@ -45,6 +45,7 @@ array-bytes = { workspace = true, default-features = true }
 hash-db = { workspace = true }
 impl-serde = { optional = true, workspace = true }
 ref-cast = { workspace = true }
+rustc-hash = { optional = true, workspace = true }
 subsoil-derive = { workspace = true }
 bounded-collections = { workspace = true, features = ["scale-codec"] }
 schemars = { optional = true, workspace = true }
@@ -173,6 +174,7 @@ std = [
 	"tracing-core/std",
 	"tracing-subscriber",
 	"tracing/std",
+	"rustc-hash",
 	"with-tracing",
 	"impl-serde/std",
 	# soil-core std features

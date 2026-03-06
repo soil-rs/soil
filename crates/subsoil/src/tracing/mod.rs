@@ -106,6 +106,8 @@ pub use self::types::{WASM_NAME_KEY, WASM_TARGET_KEY, WASM_TRACE_IDENTIFIER};
 /// and call `set_tracing_subscriber` at the very beginning of your execution –
 /// the default subscriber is doing nothing, so any spans or events happening before
 /// will not be recorded!
+#[cfg(feature = "std")]
+pub mod rpc;
 mod types;
 
 /// Try to init a simple tracing subscriber with log compatibility layer.
