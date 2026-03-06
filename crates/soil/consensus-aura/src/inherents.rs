@@ -22,7 +22,7 @@ use subsoil::inherents::{Error, InherentData, InherentIdentifier};
 pub const INHERENT_IDENTIFIER: InherentIdentifier = *b"auraslot";
 
 /// The type of the Aura inherent.
-pub type InherentType = soil_consensus_slots::Slot;
+pub type InherentType = subsoil::consensus::slots::Slot;
 
 /// Auxiliary trait to extract Aura inherent data.
 pub trait AuraInherentData {
@@ -60,7 +60,7 @@ impl InherentDataProvider {
 	/// `timestamp` and `duration`.
 	pub fn from_timestamp_and_slot_duration(
 		timestamp: subsoil::timestamp::Timestamp,
-		slot_duration: soil_consensus_slots::SlotDuration,
+		slot_duration: subsoil::consensus::slots::SlotDuration,
 	) -> Self {
 		let slot = InherentType::from_timestamp(timestamp, slot_duration);
 

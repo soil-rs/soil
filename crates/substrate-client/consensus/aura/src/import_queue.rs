@@ -36,7 +36,7 @@ use soil_blockchain::{HeaderBackend, HeaderMetadata};
 use soil_client_api::{backend::AuxStore, BlockOf, UsageProvider};
 use soil_consensus::Error as ConsensusError;
 use soil_consensus_aura::{inherents::AuraInherentData, AuraApi};
-use soil_consensus_slots::Slot;
+use subsoil::consensus::slots::Slot;
 use subsoil::core::crypto::Pair;
 use subsoil::inherents::{CreateInherentDataProviders, InherentDataProvider as _};
 use subsoil::runtime::{

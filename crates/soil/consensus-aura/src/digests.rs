@@ -22,7 +22,7 @@
 
 use crate::AURA_ENGINE_ID;
 use codec::{Codec, Encode};
-use soil_consensus_slots::Slot;
+use subsoil::consensus::slots::Slot;
 use subsoil::runtime::generic::DigestItem;
 
 /// A digest item which is usable with aura consensus.

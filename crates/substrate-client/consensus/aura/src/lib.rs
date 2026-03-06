@@ -45,7 +45,7 @@ use subsoil::application_crypto::AppPublic;
 use soil_blockchain::HeaderBackend;
 use soil_client_api::{backend::AuxStore, BlockOf};
 use soil_consensus::{BlockOrigin, Environment, Error as ConsensusError, Proposer, SelectChain};
-use soil_consensus_slots::Slot;
+use subsoil::consensus::slots::Slot;
 use subsoil::core::crypto::Pair;
 use subsoil::inherents::CreateInherentDataProviders;
 use subsoil::keystore::KeystorePtr;

@@ -4686,7 +4686,6 @@ dependencies = [
  "soil-consensus-beefy",
  "soil-consensus-grandpa",
  "soil-consensus-pow",
- "soil-consensus-slots",
  "soil-genesis-builder",
  "soil-mixnet",
  "soil-mmr-primitives",
@@ -8136,7 +8135,6 @@ dependencies = [
  "soil-client-api",
  "soil-consensus",
  "soil-consensus-aura",
- "soil-consensus-slots",
  "soil-network",
  "soil-network-test",
  "soil-telemetry",
@@ -8170,7 +8168,6 @@ dependencies = [
  "soil-consensus",
  "soil-consensus-babe",
  "soil-consensus-epochs",
- "soil-consensus-slots",
  "soil-network-test",
  "soil-telemetry",
  "soil-transaction-pool-api",
@@ -8292,7 +8289,6 @@ dependencies = [
  "soil-blockchain",
  "soil-client-api",
  "soil-consensus",
- "soil-consensus-slots",
  "soil-telemetry",
  "subsoil",
  "substrate-test-runtime-client",
@@ -9466,7 +9462,6 @@ dependencies = [
  "async-trait",
  "parity-scale-codec",
  "scale-info",
- "soil-consensus-slots",
  "subsoil",
 ]
 
@@ -9478,7 +9473,6 @@ dependencies = [
  "parity-scale-codec",
  "scale-info",
  "serde",
- "soil-consensus-slots",
  "subsoil",
 ]
 
@@ -9606,7 +9600,6 @@ dependencies = [
  "soil-consensus-aura",
  "soil-consensus-babe",
  "soil-consensus-epochs",
- "soil-consensus-slots",
  "soil-transaction-pool-api",
  "subsoil",
  "substrate-prometheus-endpoint",
@@ -9627,17 +9620,6 @@ dependencies = [
 [[package]]
 name = "soil-consensus-sassafras"
 version = "0.3.4-dev"
-dependencies = [
- "parity-scale-codec",
- "scale-info",
- "serde",
- "soil-consensus-slots",
- "subsoil",
-]
-
-[[package]]
-name = "soil-consensus-slots"
-version = "0.32.0"
 dependencies = [
  "parity-scale-codec",
  "scale-info",

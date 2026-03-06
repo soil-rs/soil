@@ -116,7 +116,7 @@ use soil_consensus_epochs::{
 	descendent_query, Epoch as EpochT, EpochChangesFor, SharedEpochChanges, ViableEpoch,
 	ViableEpochDescriptor,
 };
-use soil_consensus_slots::Slot;
+use subsoil::consensus::slots::Slot;
 use subsoil::core::traits::SpawnEssentialNamed;
 use subsoil::inherents::{CreateInherentDataProviders, InherentDataProvider};
 use subsoil::keystore::KeystorePtr;

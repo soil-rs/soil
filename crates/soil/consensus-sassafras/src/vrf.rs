@@ -21,7 +21,7 @@ use crate::{Randomness, TicketBody, TicketId};
 #[cfg(not(feature = "std"))]
 use alloc::vec::Vec;
 use codec::Encode;
-use soil_consensus_slots::Slot;
+use subsoil::consensus::slots::Slot;
 
 pub use subsoil::core::bandersnatch::{
 	ring_vrf::{RingProver, RingVerifier, RingVerifierKey, RingVrfSignature},

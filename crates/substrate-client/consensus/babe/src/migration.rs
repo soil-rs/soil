@@ -22,7 +22,7 @@ use crate::{
 };
 use codec::{Decode, Encode};
 use soil_consensus_epochs::Epoch as EpochT;
-use soil_consensus_slots::Slot;
+use subsoil::consensus::slots::Slot;
 
 /// BABE epoch information, version 0.
 #[derive(Decode, Encode, PartialEq, Eq, Clone, Debug)]

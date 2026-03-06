@@ -82,10 +82,10 @@ pub const MEDIAN_ALGORITHM_CARDINALITY: usize = 1200; // arbitrary suggestion by
 /// The index of an authority.
 pub type AuthorityIndex = u32;
 
-pub use soil_consensus_slots::{Slot, SlotDuration};
+pub use subsoil::consensus::slots::{Slot, SlotDuration};
 
 /// An equivocation proof for multiple block authorships on the same slot (i.e. double vote).
-pub type EquivocationProof<H> = soil_consensus_slots::EquivocationProof<H, AuthorityId>;
+pub type EquivocationProof<H> = subsoil::consensus::slots::EquivocationProof<H, AuthorityId>;
 
 /// The weight of an authority.
 // NOTE: we use a unique name for the weight to avoid conflicts with other

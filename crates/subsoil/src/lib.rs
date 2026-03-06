@@ -37,3 +37,4 @@ pub mod crypto_ec_utils;
 pub mod npos_elections;
 pub mod inherents;
 pub mod timestamp;
+pub mod consensus;

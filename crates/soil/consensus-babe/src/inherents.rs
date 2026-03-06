@@ -23,7 +23,7 @@ use subsoil::inherents::{Error, InherentData, InherentIdentifier};
 pub const INHERENT_IDENTIFIER: InherentIdentifier = *b"babeslot";
 
 /// The type of the BABE inherent.
-pub type InherentType = soil_consensus_slots::Slot;
+pub type InherentType = subsoil::consensus::slots::Slot;
 
 /// Create inherent data providers for BABE with timestamp.
 #[cfg(feature = "std")]
@@ -71,7 +71,7 @@ impl InherentDataProvider {
 	/// `timestamp` and `duration`.
 	pub fn from_timestamp_and_slot_duration(
 		timestamp: subsoil::timestamp::Timestamp,
-		slot_duration: soil_consensus_slots::SlotDuration,
+		slot_duration: subsoil::consensus::slots::SlotDuration,
 	) -> Self {
 		let slot = InherentType::from_timestamp(timestamp, slot_duration);
 

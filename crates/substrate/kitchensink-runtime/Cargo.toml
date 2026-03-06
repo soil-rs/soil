@@ -153,7 +153,6 @@ soil-consensus-babe = { workspace = true }
 soil-consensus-beefy = { workspace = true }
 soil-consensus-grandpa = { workspace = true }
 soil-consensus-pow = { workspace = true }
-soil-consensus-slots = { workspace = true }
 subsoil-crypto-hashing = { workspace = true }
 soil-genesis-builder = { workspace = true }
 soil-mixnet = { workspace = true }
@@ -301,7 +300,6 @@ std = [
 	"soil-consensus-beefy/std",
 	"soil-consensus-grandpa/std",
 	"soil-consensus-pow/std",
-	"soil-consensus-slots/std",
 	"subsoil-crypto-hashing/std",
 	"soil-genesis-builder/std",
 	"soil-mixnet/std",

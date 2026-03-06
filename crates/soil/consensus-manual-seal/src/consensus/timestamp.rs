@@ -28,7 +28,7 @@ use soil_consensus_aura::{
 	AuraApi,
 };
 use soil_consensus_babe::BabeApi;
-use soil_consensus_slots::{Slot, SlotDuration};
+use subsoil::consensus::slots::{Slot, SlotDuration};
 use subsoil::inherents::{InherentData, InherentDataProvider, InherentIdentifier};
 use subsoil::runtime::traits::{Block as BlockT, Zero};
 use subsoil::timestamp::{InherentType, INHERENT_IDENTIFIER};

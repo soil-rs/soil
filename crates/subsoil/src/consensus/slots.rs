@@ -17,11 +17,10 @@
 
 //! Primitives for slots-based consensus engines.
 
-#![cfg_attr(not(feature = "std"), no_std)]
 
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;
-use subsoil::timestamp::Timestamp;
+use crate::timestamp::Timestamp;
 
 /// Unit type wrapper that represents a slot.
 #[derive(

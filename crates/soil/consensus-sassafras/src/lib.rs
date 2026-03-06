@@ -29,7 +29,7 @@ use scale_info::TypeInfo;
 use subsoil::core::crypto::KeyTypeId;
 use subsoil::runtime::ConsensusEngineId;
 
-pub use soil_consensus_slots::{Slot, SlotDuration};
+pub use subsoil::consensus::slots::{Slot, SlotDuration};
 
 #[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
@@ -77,7 +77,7 @@ pub type AuthorityId = app::Public;
 pub type SassafrasBlockWeight = u32;
 
 /// An equivocation proof for multiple block authorships on the same slot (i.e. double vote).
-pub type EquivocationProof<H> = soil_consensus_slots::EquivocationProof<H, AuthorityId>;
+pub type EquivocationProof<H> = subsoil::consensus::slots::EquivocationProof<H, AuthorityId>;
 
 /// Randomness required by some protocol's operations.
 pub type Randomness = [u8; RANDOMNESS_LENGTH];
