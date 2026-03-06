@@ -2,10 +2,12 @@
 
 ## Motivation
 
-The current workspace has 152 crates across `soil/`, `substrate/`, and `substrate-client/`
-(including subfolders like `substrate-client/consensus/`).
-The dependency graph contains 5 circular dependency clusters (SCCs) and 17 topological layers.
-Many crates are always used together (high Jaccard similarity) and share the same versioning cadence.
+The current workspace has 119 non-topsoil crates across `soil/`, `substrate/`,
+`substrate-client/`, and `subsoil` (including subfolders like
+`substrate-client/consensus/`). After the `subsoil` merge the dependency graph
+contains 3 circular dependency clusters (SCCs), all through dev-dependencies
+(there are zero production-only cycles). Many crates are always used together
+(high Jaccard similarity) and share the same versioning cadence.
 
 > **Note:** SCC analysis must include `dev-dependencies` — cycles through test crates
 > are real compilation-order constraints. Also check subfolders (e.g.
@@ -16,125 +18,157 @@ Many crates are always used together (high Jaccard similarity) and share the sam
 - **Merge when no new feature flag is needed.** If no consumer ever needs one without the other, they belong together. Unused code is dead-code-eliminated by the linker.
 - **Stop merging when transitive deps would grow for existing consumers.** If absorbing a crate would force new heavy third-party deps (e.g. libp2p) on consumers that don't need them, that's a real boundary — use a feature flag or keep it separate.
 - **A crate should represent a decision boundary**, not a file boundary. The question is "would a consumer ever want this *without* that?"
-- **Consensus engines merge into the base crate.** The engines only depend on `codec`/`scale-info`/`serde` (already universal) plus one or two lightweight crates (`finality-grandpa`, `strum`). Unused engines are dead-code-eliminated. Exception: `manual-seal` stays separate because it pulls in `tokio`/`jsonrpsee`/`futures`.
+- **Consensus engine primitives merge into `subsoil`.** The engines only depend on `codec`/`scale-info`/`serde` (already in subsoil) plus one or two lightweight crates (`finality-grandpa`, `strum`). Unused engines are dead-code-eliminated. Exception: `manual-seal` stays separate because it pulls in `tokio`/`jsonrpsee`/`futures`.
 
 ## Circular dependency clusters (SCCs)
 
-These crates are already logically one unit. Each cycle collapses by merging into a single crate.
+These crates are already logically one unit. Each cycle collapses by merging
+into a single crate. **All current cycles are through dev-dependencies only** —
+there are no production-dep cycles remaining.
 
-### SCC 1: Primitives (10 crates)
+> **History:** Before the `subsoil` merge there were 5 SCCs. SCC 1 (Primitives,
+> 10 crates) was eliminated by merging into `subsoil`. The old SCC 2
+> (Client-Executor), SCC 4 (Statement), and SCC 5 (Service-RPC) collapsed into
+> one mega-cluster (now SCC 1) because they are connected through shared
+> dev-dependency edges (primarily via `substrate-test-runtime-client`). The old
+> SCC 3 (Crypto-Hashing) evolved into SCC 2 now that both proc-macros live
+> inside `subsoil`.
 
-```
-soil-api ↔ soil-runtime ↔ soil-io ↔ soil-runtime-interface ↔ soil-state-machine ↔ soil-trie
-soil-version ↔ soil-version-proc-macro
-soil-application-crypto → soil-io
-binary-merkle-tree → soil-runtime
-```
+### SCC 1: Client-Network-Service mega-cluster (25 crates)
 
-### SCC 2: Client-Executor (3 crates)
-
-```
-sc-tracing → soil-client-api → soil-executor → sc-tracing
-```
-
-### SCC 3: Crypto-Hashing (2 crates)
+All cycles go through dev-dependencies (`substrate-test-runtime-client`,
+`substrate-test-runtime`, etc.). The production-dep subgraph is acyclic.
 
 ```
-soil-crypto-hashing ↔ soil-crypto-hashing-proc-macro
+Client core:
+  soil-client-api -[dep]-> soil-executor
+  soil-executor   -[dev]-> sc-tracing, substrate-test-runtime
+  sc-tracing      -[dep]-> soil-client-api
+  soil-client-db  -[dep]-> soil-client-api
+
+Network:
+  soil-network            -[dep]-> soil-client-api
+  soil-network-sync       -[dep]-> sc-consensus, soil-client-api, soil-network
+  soil-network-light      -[dep]-> soil-client-api, soil-network
+  soil-network-statement  -[dep]-> soil-network, soil-network-sync
+  soil-network-transactions -[dep]-> soil-network, soil-network-sync
+  sc-mixnet               -[dep]-> soil-client-api, soil-network
+
+Statement:
+  sc-statement-store      -[dep]-> soil-client-api, soil-network-statement
+  soil-network-statement  -[dev]-> sc-statement-store
+
+RPC:
+  soil-rpc-api     -[dep]-> sc-mixnet, soil-chain-spec
+  soil-rpc-server  -[dep]-> soil-rpc-api
+  sc-rpc           -[dep]-> sc-block-builder, sc-mixnet, sc-statement-store, sc-tracing,
+                             soil-chain-spec, soil-client-api, soil-rpc-api
+  soil-rpc-spec-v2 -[dep]-> sc-rpc, soil-chain-spec, soil-client-api
+
+Service:
+  soil-service    -[dep]-> sc-consensus, sc-rpc, sc-tracing, sc-transaction-pool,
+                           soil-chain-spec, soil-client-api, soil-client-db,
+                           soil-executor, soil-informant, soil-network,
+                           soil-network-light, soil-network-sync,
+                           soil-network-transactions, soil-rpc-server, soil-rpc-spec-v2
+  soil-chain-spec -[dep]-> soil-client-api, soil-executor, soil-network
+  soil-informant  -[dep]-> soil-client-api, soil-network, soil-network-sync
+
+Consensus/Transaction client wrappers:
+  sc-consensus         -[dep]-> soil-client-api
+  sc-block-builder     -[dev]-> substrate-test-runtime-client
+  sc-transaction-pool  -[dep]-> soil-client-api
+
+Test infra (glue that creates most cycles):
+  substrate-test-runtime              -[dep]-> soil-service
+  substrate-test-runtime              -[dev]-> sc-block-builder, soil-chain-spec,
+                                               soil-executor, substrate-test-runtime-client
+  substrate-test-runtime-client       -[dep]-> sc-block-builder, sc-consensus,
+                                               soil-client-api, substrate-test-client,
+                                               substrate-test-runtime
+  substrate-test-client               -[dep]-> sc-consensus, soil-client-api,
+                                               soil-client-db, soil-executor, soil-service
+  substrate-test-runtime-transaction-pool -[dep]-> sc-transaction-pool,
+                                                   substrate-test-runtime-client
 ```
 
-### SCC 4: Statement (2 crates)
+### SCC 2: Subsoil core (3 crates)
 
 ```
-sc-statement-store ↔ soil-network-statement
+subsoil              -[dep]-> subsoil-crypto-hashing, subsoil-derive
+subsoil-crypto-hashing -[dev]-> subsoil-derive
+subsoil-derive       -[dep]-> subsoil-crypto-hashing
+subsoil-derive       -[dev]-> subsoil
 ```
 
-### SCC 5: Service-RPC (2 crates)
+### SCC 3: Node CLI (3 crates)
 
 ```
-soil-rpc-spec-v2 ↔ soil-service
+staging-node-cli        -[dev]-> node-testing, substrate-cli-test-utils
+node-testing            -[dep]-> staging-node-cli
+substrate-cli-test-utils -[dep]-> staging-node-cli
 ```
 
 ## Target structure
 
-### `subsoil` — Primitives foundation (~30 crates → 1)
+### `subsoil` — Primitives foundation (~30 crates → 1) ✅ COMPLETE
 
-The SCC:primitives nucleus plus everything it depends on at depth ≤ 7.
+Merged. Eliminated the old SCC 1 (Primitives, 10 crates) and absorbed ~30 crates total.
 
-| Absorb | Current depth | Reason |
-|---|---|---|
-| soil-core | 3 | Heart of primitives |
-| soil-io | 5 (SCC) | Cyclic with runtime/trie |
-| soil-runtime | 5 (SCC) | Cyclic with io/state-machine |
-| soil-state-machine | 5 (SCC) | Cyclic with runtime/trie |
-| soil-trie | 5 (SCC) | Cyclic with runtime |
-| soil-api + proc-macro | 5 (SCC) | Cyclic with runtime |
-| soil-version + proc-macro | 5 (SCC) | Cyclic with runtime |
-| soil-runtime-interface + proc-macro | 5 (SCC) | Cyclic with io |
-| soil-application-crypto | 5 (SCC) | Cyclic with io |
-| binary-merkle-tree | 5 (SCC) | Cyclic with runtime |
-| soil-crypto-hashing + proc-macro | 0 (SCC) | Cyclic pair, dep of core |
-| soil-std | 0 | Leaf, dep of core |
-| soil-debug-derive | 0 | Leaf, dep of core |
-| soil-tracing + proc-macro | 0 | Leaf, 21 reverse deps |
-| soil-panic-handler | 0 | Leaf, dep of state-machine |
-| soil-wasm-interface | 0 | Leaf, dep of allocator/executor |
-| soil-storage | 1 | Dep of core/externalities |
-| soil-externalities | 2 | Dep of core/io/state-machine |
-| soil-arithmetic | 1 | Dep of runtime, used broadly |
-| soil-weights | 2 | Dep of runtime |
-| soil-metadata-ir | 0 | Dep of api |
-| soil-allocator | 4 | Tiny, wasm-only |
-| soil-inherents | 6 | Tiny trait, dep of consensus/timestamp |
-| soil-timestamp | 7 | Tiny, just inherents+runtime |
-| soil-keystore | 4 | Dep of io, 19 reverse deps |
-| soil-database | 0 | Trait-only, 4 reverse deps |
-| soil-keyring | 6 | Test/dev identities, only deps are core+runtime |
-| soil-crypto-ec-utils | 6 | EC helpers, only dep is runtime-interface |
-| soil-npos-elections | 6 | Election math, only deps are arithmetic+core+runtime |
+### `subsoil` ← consensus primitives (~12 more crates)
 
-### `soil-consensus` — Consensus framework + engines (~11 crates → 1)
-
-Base consensus traits, shared helpers, and all engine implementations. The engines only add
-lightweight external deps (`codec`, `scale-info`, `serde`, `finality-grandpa`, `strum`) that
-consumers already have or that the linker strips if unused.
+The consensus engine primitives merge into `subsoil` rather than a separate crate.
+All their deps (`codec`, `scale-info`, `serde`, `strum`, `async-trait`) are already
+in `subsoil`; only `finality-grandpa` (lightweight) and `soil-mmr-primitives` are new.
+This avoids a confusing naming split between a `soil-consensus` primitives crate and
+`soil-client` which would also contain consensus client code.
 
 | Absorb | Reason |
 |---|---|
-| soil-consensus | Base traits (depth 7, 25 reverse deps) |
-| soil-consensus-slots | Slot-based helper (depth 8, 7 reverse deps) |
-| soil-consensus-epochs | Epoch tracking (depth 12, deps are blockchain+client-api+runtime) |
-| soil-block-builder | Block building (depth 7, 6 reverse deps) |
-| soil-consensus-aura | Engine, only adds `codec`/`scale-info` |
-| soil-consensus-babe + `-rpc` | Engine, only adds `codec`/`scale-info`/`serde` |
-| soil-consensus-grandpa + `-rpc` | Engine, adds `finality-grandpa` (lightweight) |
-| soil-consensus-beefy + `-rpc` | Engine, adds `strum` (trivial) |
-| soil-consensus-sassafras | Engine, only adds `codec`/`scale-info`/`serde` |
-| soil-consensus-pow | Engine, only adds `codec` |
+| soil-consensus-slots | Slot-based helper, all deps already in subsoil |
+| soil-block-builder | Block building, only dep is subsoil |
+| soil-consensus-aura | Engine, only adds `codec`/`scale-info` (already in subsoil) |
+| soil-consensus-babe | Engine, only adds `codec`/`scale-info`/`serde` (already in subsoil) |
+| soil-consensus-grandpa | Engine, adds `finality-grandpa` (lightweight, new) |
+| soil-consensus-beefy | Engine, adds `soil-mmr-primitives` (new, itself only deps on subsoil) |
+| soil-consensus-sassafras | Engine, only adds `codec`/`scale-info`/`serde` (already in subsoil) |
+| soil-consensus-pow | Engine, only adds `codec` (already in subsoil) |
+| soil-consensus-epochs | Epoch tracking (std-only: deps are fork-tree, blockchain, client-api) |
+| soil-consensus-babe-rpc | RPC (std-only: jsonrpsee, sc-consensus-babe) |
+| soil-consensus-grandpa-rpc | RPC (std-only: jsonrpsee, sc-consensus-grandpa) |
+| soil-consensus-beefy-rpc | RPC (std-only: jsonrpsee, sc-consensus-beefy) |
 
-### `soil-consensus-manual-seal` — Kept separate
+> **Note:** The current `soil-consensus` crate (client-side traits: `Environment`,
+> `Proposer`, `SyncOracle`, `BlockStatus`, `BlockOrigin`) is std-only and has zero
+> `no_std` consumers — all 33 dependents are client-side. It will be **renamed to
+> `soil-consensus-common`** and ultimately absorbed into `soil-client`.
+
+### `soil-manual-seal` — Kept separate (renamed from `soil-consensus-manual-seal`)
 
 Pulls in `tokio`, `jsonrpsee`, `futures` — heavy async runtime deps that production
-nodes shouldn't be forced to compile.
+nodes shouldn't be forced to compile. Despite having `#![cfg_attr(not(feature = "std"), no_std)]`,
+the crate has zero no_std content — every item is behind `#[cfg(feature = "std")]`.
+No split needed; just rename and keep as a standalone std-only crate.
 
-### `soil-client` — Client infrastructure (~22 crates → 1)
+### `soil-client` — Client infrastructure (~23 crates → 1)
 
-The SCC:client-executor cluster plus tightly coupled crates and consensus engine wrappers.
+The client-executor core (part of SCC 1) plus tightly coupled crates and consensus engine wrappers.
 
 | Absorb | Reason |
 |---|---|
-| soil-client-api | 39 reverse deps, SCC with executor |
-| soil-executor + common + polkavm + wasmtime | SCC with client-api via sc-tracing |
+| soil-consensus-common (née soil-consensus) | Client-side consensus traits (`Proposer`, `SyncOracle`, etc.), std-only, 33 reverse deps — all client-side |
+| soil-client-api | 39 reverse deps, SCC 1 with executor |
+| soil-executor + common + polkavm + wasmtime | SCC 1 with client-api via sc-tracing |
 | soil-blockchain | Depth 8, 34 reverse deps, tight with client-api |
 | soil-client-db + soil-state-db | Storage backend |
 | soil-transaction-pool + -api | Always together |
 | soil-offchain | Always with client |
 | soil-genesis-builder | Client-side |
 | soil-storage + soil-storage-monitor | Trivial |
-| sc-tracing | In SCC with client-api/executor |
+| sc-tracing | SCC 1 with client-api/executor |
 | sc-block-builder | Wraps soil-block-builder (14 reverse deps) |
 | sc-keystore | Wraps soil-keystore (6 reverse deps) |
-| sc-consensus | Wraps soil-consensus (12 reverse deps) |
+| sc-consensus | Wraps soil-consensus-common (12 reverse deps) |
 | sc-transaction-pool | Wraps soil-transaction-pool (9 reverse deps) |
 | sc-consensus-aura | Wraps soil-consensus-aura, wires engine into client |
 | sc-consensus-babe | Wraps soil-consensus-babe, wires engine into client |
@@ -149,7 +183,7 @@ The SCC:client-executor cluster plus tightly coupled crates and consensus engine
 |---|---|
 | soil-network + soil-network-common + soil-network-types | Always together |
 | soil-network-sync + soil-network-gossip + soil-network-light | Always with network |
-| soil-network-transactions + soil-network-statement + sc-statement-store | SCC pair collapses |
+| soil-network-transactions + soil-network-statement + sc-statement-store | SCC 1 pair collapses |
 | sc-mixnet | Wraps soil-mixnet |
 
 ### `soil-rpc` — RPC layer (~8 crates → 1)
@@ -157,7 +191,7 @@ The SCC:client-executor cluster plus tightly coupled crates and consensus engine
 | Absorb | Reason |
 |---|---|
 | soil-rpc + soil-rpc-api + soil-rpc-server | Always together |
-| soil-rpc-spec-v2 | SCC with service, logically RPC |
+| soil-rpc-spec-v2 | SCC 1 with service, logically RPC |
 | soil-mmr-rpc, soil-sync-state-rpc | RPC endpoints |
 | sc-rpc | Wraps soil-rpc |
 | substrate-frame-rpc-system, substrate-frame-rpc-support | RPC helpers |
@@ -168,7 +202,7 @@ The SCC:client-executor cluster plus tightly coupled crates and consensus engine
 
 | Absorb | Reason |
 |---|---|
-| soil-service | SCC with rpc-spec-v2 |
+| soil-service | SCC 1 with rpc-spec-v2 |
 | soil-chain-spec + derive | Dep of service |
 | soil-cli | Always with service |
 | soil-basic-authorship | Block proposer, dep of service |
@@ -196,16 +230,17 @@ Re-exports everything. Consumers write `soil = { features = ["client", "aura", "
 
 ## Summary
 
-| New crate | Absorbs | ~Count |
-|---|---|---|
-| **subsoil** | primitives, types, runtime, state-machine, trie, api, crypto utils | ~33 |
-| **soil-consensus** | base consensus + slots + epochs + block-builder + all engines | ~11 |
-| **soil-consensus-manual-seal** | kept separate (heavy async deps) | 1 |
-| **soil-client** | client-api, executor, blockchain, db, tx-pool, sc-* wrappers, sc-consensus-* engines | ~22 |
-| **soil-network** | p2p, sync, gossip, statements | ~10 |
-| **soil-rpc** | rpc server, spec, endpoints | ~8 |
-| **soil-service** | service, chain-spec, cli, infra | ~10 |
-| **misc standalone** | mmr, mixnet, staking, fork-tree, test crates | ~12 |
-| **soil** | umbrella re-export | 1 |
+| New crate | Absorbs | ~Count | Status |
+|---|---|---|---|
+| **subsoil** | primitives + consensus engines (slots, aura, babe, grandpa, beefy, pow, sassafras, epochs, block-builder, RPC) | ~45 | Phase 1 ✅, Phase 2 pending |
+| **soil-manual-seal** | renamed from soil-consensus-manual-seal (heavy async deps) | 1 | Pending |
+| **soil-client** | consensus-common, client-api, executor, blockchain, db, tx-pool, sc-* wrappers, sc-consensus-* engines | ~23 | Pending |
+| **soil-network** | p2p, sync, gossip, statements | ~10 | Pending |
+| **soil-rpc** | rpc server, spec, endpoints | ~8 | Pending |
+| **soil-service** | service, chain-spec, cli, infra | ~10 | Pending |
+| **misc standalone** | mmr, mixnet, staking, fork-tree, test crates | ~12 | — |
+| **soil** | umbrella re-export | 1 | Pending |
 
-**152 crates → ~15.** All 5 circular dependency clusters become crate-internal.
+**119 non-topsoil crates → ~14.** All 3 remaining circular dependency clusters
+(all dev-dep-only) become crate-internal. SCC 1 (25 crates) spans client,
+network, RPC, and service — those merges will collapse it entirely.
