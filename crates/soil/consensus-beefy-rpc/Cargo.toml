@@ -20,7 +20,6 @@ parking_lot = { workspace = true, default-features = true, optional = true}
 sc-consensus-beefy = { workspace = true, default-features = true, optional = true}
 sc-rpc = { workspace = true, default-features = true, optional = true}
 serde = { features = ["derive"], workspace = true, default-features = true, optional = true}
-soil-consensus-beefy = { workspace = true, default-features = true, optional = true}
 subsoil = { workspace = true, default-features = true, optional = true}
 thiserror = { workspace = true, optional = true}
 
@@ -36,10 +35,8 @@ std = [
 	"sc-rpc",
 	"serde",
 	"subsoil",
-	"soil-consensus-beefy",
 	"thiserror",
 	"subsoil/std",
-	"soil-consensus-beefy/std",
 ]
 
 [dev-dependencies]

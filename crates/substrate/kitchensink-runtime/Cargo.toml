@@ -149,11 +149,9 @@ subsoil = { workspace = true }
 soil-authority-discovery = { workspace = true }
 soil-consensus-aura = { workspace = true }
 soil-consensus-babe = { workspace = true }
-soil-consensus-beefy = { workspace = true }
 subsoil-crypto-hashing = { workspace = true }
 soil-genesis-builder = { workspace = true }
 soil-mixnet = { workspace = true }
-soil-mmr-primitives = { workspace = true }
 soil-offchain = { workspace = true }
 soil-session = { workspace = true }
 soil-staking = { workspace = true }
@@ -293,11 +291,9 @@ std = [
 	"soil-authority-discovery/std",
 	"soil-consensus-aura/std",
 	"soil-consensus-babe/std",
-	"soil-consensus-beefy/std",
 	"subsoil-crypto-hashing/std",
 	"soil-genesis-builder/std",
 	"soil-mixnet/std",
-	"soil-mmr-primitives/std",
 	"soil-offchain/std",
 	"soil-session/std",
 	"soil-staking/std",

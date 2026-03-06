@@ -17,10 +17,8 @@
 
 //! Merkle Mountain Range primitive types.
 
-#![cfg_attr(not(feature = "std"), no_std)]
 #![warn(missing_docs)]
 
-extern crate alloc;
 
 pub use mmr_lib;
 
@@ -29,7 +27,7 @@ use alloc::vec::Vec;
 use codec::{Decode, DecodeWithMemTracking, Encode};
 use core::fmt;
 use scale_info::TypeInfo;
-use subsoil::runtime::traits;
+use crate::runtime::traits;
 
 pub mod utils;
 
@@ -109,7 +107,7 @@ pub struct OpaqueLeaf(
 	/// Raw bytes of the leaf type encoded in its compact form.
 	///
 	/// NOTE it DOES NOT include length prefix (like `Vec<u8>` encoding would).
-	#[cfg_attr(feature = "serde", serde(with = "subsoil::core::bytes"))]
+	#[cfg_attr(feature = "serde", serde(with = "crate::core::bytes"))]
 	pub Vec<u8>,
 );
 
@@ -437,7 +435,7 @@ impl Error {
 	}
 }
 
-subsoil::api::decl_runtime_apis! {
+crate::api::decl_runtime_apis! {
 	/// API to interact with MMR pallet.
 	#[api_version(3)]
 	pub trait MmrApi<Hash: codec::Codec, BlockNumber: codec::Codec> {
@@ -485,8 +483,8 @@ mod tests {
 	use super::*;
 
 	use codec::Decode;
-	use subsoil::core::H256;
-	use subsoil::runtime::traits::Keccak256;
+	use crate::core::H256;
+	use crate::runtime::traits::Keccak256;
 
 	pub(crate) fn hex(s: &str) -> H256 {
 		s.parse().unwrap()

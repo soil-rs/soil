@@ -50,7 +50,7 @@ use soil_blockchain::{Error as BlockChainError, HeaderBackend, HeaderMetadata};
 use soil_client_api::AuxStore;
 use soil_consensus::SelectChain;
 use soil_consensus_babe::BabeApi;
-use soil_consensus_beefy::AuthorityIdBound;
+use subsoil::consensus::beefy::AuthorityIdBound;
 use subsoil::keystore::KeystorePtr;
 use soil_transaction_pool_api::TransactionPool;
 

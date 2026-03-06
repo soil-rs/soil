@@ -23,7 +23,7 @@
 use sc_consensus_beefy as beefy;
 use sc_consensus_grandpa as grandpa;
 use soil_consensus_babe::inherents::BabeCreateInherentDataProviders;
-use soil_consensus_beefy as beefy_primitives;
+use subsoil::consensus::beefy as beefy_primitives;
 
 use crate::Cli;
 use codec::Encode;
@@ -707,7 +707,7 @@ pub fn new_full_base<N: NetworkBackend<Block, <Block as BlockT>::Hash>>(
 	let beefy_params = beefy::BeefyParams {
 		client: client.clone(),
 		backend: backend.clone(),
-		payload_provider: soil_consensus_beefy::mmr::MmrRootProvider::new(client.clone()),
+		payload_provider: subsoil::consensus::beefy::mmr::MmrRootProvider::new(client.clone()),
 		runtime: client.clone(),
 		key_store: keystore.clone(),
 		network_params,
@@ -732,7 +732,7 @@ pub fn new_full_base<N: NetworkBackend<Block, <Block as BlockT>::Hash>>(
 			soil_mmr_gadget::MmrGadget::start(
 				client.clone(),
 				backend.clone(),
-				soil_mmr_primitives::INDEXING_PREFIX.to_vec(),
+				subsoil::mmr::INDEXING_PREFIX.to_vec(),
 			),
 		);
 	}

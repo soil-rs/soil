@@ -40,7 +40,7 @@ use subsoil::api::ProvideRuntimeApi;
 use subsoil::arithmetic::traits::{AtLeast32Bit, Saturating};
 use soil_client_api::{Backend, HeaderBackend};
 use soil_consensus::SyncOracle;
-use soil_consensus_beefy::{
+use subsoil::consensus::beefy::{
 	AuthorityIdBound, BeefyApi, Commitment, DoubleVotingProof, PayloadProvider, ValidatorSet,
 	VersionedFinalityProof, VoteMessage, BEEFY_ENGINE_ID,
 };
@@ -1040,7 +1040,7 @@ pub(crate) mod tests {
 	use parking_lot::Mutex;
 	use soil_blockchain::Backend as BlockchainBackendT;
 	use soil_client_api::{Backend as BackendT, HeaderBackend};
-	use soil_consensus_beefy::{
+	use subsoil::consensus::beefy::{
 		ecdsa_crypto, known_payloads,
 		known_payloads::MMR_ROOT_ID,
 		mmr::MmrRootProvider,

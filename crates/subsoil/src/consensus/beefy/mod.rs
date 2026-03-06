@@ -15,7 +15,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#![cfg_attr(not(feature = "std"), no_std)]
 #![warn(missing_docs)]
 
 //! Primitives for BEEFY protocol.
@@ -31,7 +30,6 @@
 //! it will use a different set of keys. For Polkadot use case we plan to use `secp256k1` for BEEFY,
 //! while GRANDPA uses `ed25519`.
 
-extern crate alloc;
 
 mod commitment;
 mod payload;
@@ -50,16 +48,16 @@ use alloc::vec::Vec;
 use codec::{Codec, Decode, DecodeWithMemTracking, Encode};
 use core::fmt::{Debug, Display};
 use scale_info::TypeInfo;
-pub use subsoil::application_crypto::key_types::BEEFY as KEY_TYPE;
-use subsoil::application_crypto::{AppPublic, RuntimeAppPublic};
-use subsoil::core::H256;
+pub use crate::application_crypto::key_types::BEEFY as KEY_TYPE;
+use crate::application_crypto::{AppPublic, RuntimeAppPublic};
+use crate::core::H256;
 #[cfg(feature = "std")]
-use subsoil::keystore::KeystorePtr;
-use subsoil::runtime::{
+use crate::keystore::KeystorePtr;
+use crate::runtime::{
 	traits::{Header as HeaderT, Keccak256, NumberFor},
 	OpaqueValue,
 };
-use subsoil::weights::Weight;
+use crate::weights::Weight;
 use KEY_TYPE as BEEFY_KEY_TYPE;
 
 /// Trait representing BEEFY authority id, including custom signature verification.
@@ -76,7 +74,7 @@ pub trait BeefyAuthorityId: RuntimeAppPublic {
 		&self,
 		store: KeystorePtr,
 		msg: &[u8],
-	) -> Result<Option<impl AsRef<[u8]> + Debug>, subsoil::keystore::Error>;
+	) -> Result<Option<impl AsRef<[u8]> + Debug>, crate::keystore::Error>;
 
 	/// Verify a signature.
 	///
@@ -109,15 +107,15 @@ pub mod ecdsa_crypto {
 	use super::{AuthorityIdBound, BeefyAuthorityId, RuntimeAppPublic, BEEFY_KEY_TYPE};
 	#[cfg(feature = "std")]
 	use core::fmt::Debug;
-	use subsoil::application_crypto::{ecdsa};
-	use subsoil::core::crypto::Wraps;
+	use crate::application_crypto::{ecdsa};
+	use crate::core::crypto::Wraps;
 	#[cfg(feature = "std")]
-	use subsoil::core::ByteArray;
-	use subsoil_crypto_hashing::keccak_256;
+	use crate::core::ByteArray;
+	use crate::crypto_hashing::keccak_256;
 	#[cfg(feature = "std")]
-	use subsoil::keystore::KeystorePtr;
+	use crate::keystore::KeystorePtr;
 
-	subsoil::app_crypto!(ecdsa, BEEFY_KEY_TYPE);
+	crate::app_crypto!(ecdsa, BEEFY_KEY_TYPE);
 
 	/// Identity of a BEEFY authority using ECDSA as its crypto.
 	pub type AuthorityId = Public;
@@ -134,9 +132,9 @@ pub mod ecdsa_crypto {
 		#[cfg(feature = "std")]
 		fn try_sign_with_store(
 			&self,
-			store: subsoil::keystore::KeystorePtr,
+			store: crate::keystore::KeystorePtr,
 			msg: &[u8],
-		) -> Result<Option<impl AsRef<[u8]> + Debug>, subsoil::keystore::Error> {
+		) -> Result<Option<impl AsRef<[u8]> + Debug>, crate::keystore::Error> {
 			let msg_hash = keccak_256(msg);
 			let public = ecdsa::Public::try_from(self.as_slice()).unwrap();
 			store.ecdsa_sign_prehashed(BEEFY_KEY_TYPE, &public, &msg_hash)
@@ -144,7 +142,7 @@ pub mod ecdsa_crypto {
 
 		fn verify(&self, signature: &<Self as RuntimeAppPublic>::Signature, msg: &[u8]) -> bool {
 			let msg_hash = keccak_256(msg);
-			match subsoil::io::crypto::secp256k1_ecdsa_recover_compressed(
+			match crate::io::crypto::secp256k1_ecdsa_recover_compressed(
 				signature.as_inner_ref().as_ref(),
 				&msg_hash,
 			) {
@@ -176,12 +174,12 @@ pub mod bls_crypto {
 	use super::{AuthorityIdBound, BeefyAuthorityId, RuntimeAppPublic, BEEFY_KEY_TYPE};
 	#[cfg(feature = "std")]
 	use core::fmt::Debug;
-	use subsoil::application_crypto::{bls381};
-	use subsoil::core::{bls381::Pair as BlsPair, crypto::Wraps, ByteArray, Pair as _};
+	use crate::application_crypto::{bls381};
+	use crate::core::{bls381::Pair as BlsPair, crypto::Wraps, ByteArray, Pair as _};
 	#[cfg(feature = "std")]
-	use subsoil::keystore::KeystorePtr;
+	use crate::keystore::KeystorePtr;
 
-	subsoil::app_crypto!(bls381, BEEFY_KEY_TYPE);
+	crate::app_crypto!(bls381, BEEFY_KEY_TYPE);
 
 	/// Identity of a BEEFY authority using BLS as its crypto.
 	pub type AuthorityId = Public;
@@ -198,9 +196,9 @@ pub mod bls_crypto {
 		#[cfg(feature = "std")]
 		fn try_sign_with_store(
 			&self,
-			store: subsoil::keystore::KeystorePtr,
+			store: crate::keystore::KeystorePtr,
 			msg: &[u8],
-		) -> Result<Option<impl AsRef<[u8]> + Debug>, subsoil::keystore::Error> {
+		) -> Result<Option<impl AsRef<[u8]> + Debug>, crate::keystore::Error> {
 			let public = bls381::Public::try_from(self.as_slice()).unwrap();
 			store.bls381_sign(BEEFY_KEY_TYPE, &public, msg)
 		}
@@ -236,13 +234,13 @@ pub mod ecdsa_bls_crypto {
 	use super::{AuthorityIdBound, BeefyAuthorityId, RuntimeAppPublic, BEEFY_KEY_TYPE};
 	#[cfg(feature = "std")]
 	use core::fmt::Debug;
-	use subsoil::application_crypto::{ecdsa_bls381};
-	use subsoil::core::{crypto::Wraps, ecdsa_bls381::Pair as EcdsaBlsPair, ByteArray};
+	use crate::application_crypto::{ecdsa_bls381};
+	use crate::core::{crypto::Wraps, ecdsa_bls381::Pair as EcdsaBlsPair, ByteArray};
 	#[cfg(feature = "std")]
-	use subsoil::keystore::KeystorePtr;
-	use subsoil::runtime::traits::Keccak256;
+	use crate::keystore::KeystorePtr;
+	use crate::runtime::traits::Keccak256;
 
-	subsoil::app_crypto!(ecdsa_bls381, BEEFY_KEY_TYPE);
+	crate::app_crypto!(ecdsa_bls381, BEEFY_KEY_TYPE);
 
 	/// Identity of a BEEFY authority using (ECDSA,BLS) as its crypto.
 	pub type AuthorityId = Public;
@@ -259,9 +257,9 @@ pub mod ecdsa_bls_crypto {
 		#[cfg(feature = "std")]
 		fn try_sign_with_store(
 			&self,
-			store: subsoil::keystore::KeystorePtr,
+			store: crate::keystore::KeystorePtr,
 			msg: &[u8],
-		) -> Result<Option<impl AsRef<[u8]> + Debug>, subsoil::keystore::Error> {
+		) -> Result<Option<impl AsRef<[u8]> + Debug>, crate::keystore::Error> {
 			let public = ecdsa_bls381::Public::try_from(self.as_slice()).unwrap();
 			store.ecdsa_bls381_sign_with_keccak256(BEEFY_KEY_TYPE, &public, &msg)
 		}
@@ -288,7 +286,7 @@ pub mod ecdsa_bls_crypto {
 }
 
 /// The `ConsensusEngineId` of BEEFY.
-pub const BEEFY_ENGINE_ID: subsoil::runtime::ConsensusEngineId = *b"BEEF";
+pub const BEEFY_ENGINE_ID: crate::runtime::ConsensusEngineId = *b"BEEF";
 
 /// Authority set id starts with zero at BEEFY pallet genesis.
 pub const GENESIS_AUTHORITY_SET_ID: u64 = 0;
@@ -540,7 +538,7 @@ pub trait AncestryHelperWeightInfo<Header: HeaderT>: AncestryHelper<Header> {
 /// sure that all usages of `OpaqueKeyOwnershipProof` refer to the same type.
 pub type OpaqueKeyOwnershipProof = OpaqueValue;
 
-subsoil::api::decl_runtime_apis! {
+crate::api::decl_runtime_apis! {
 	/// API necessary for BEEFY voters.
 	#[api_version(6)]
 	pub trait BeefyApi<AuthorityId> where
@@ -616,9 +614,9 @@ subsoil::api::decl_runtime_apis! {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use subsoil::application_crypto::ecdsa::{self, Public};
-	use subsoil::core::crypto::{Pair, Wraps};
-	use subsoil_crypto_hashing::keccak_256;
+	use crate::application_crypto::ecdsa::{self, Public};
+	use crate::core::crypto::{Pair, Wraps};
+	use crate::crypto_hashing::keccak_256;
 
 	#[test]
 	fn validator_set() {

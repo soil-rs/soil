@@ -19,12 +19,12 @@
 use codec::Encode;
 use serde::{Deserialize, Serialize};
 
-use soil_consensus_beefy::AuthorityIdBound;
+use subsoil::consensus::beefy::AuthorityIdBound;
 use subsoil::runtime::traits::Block as BlockT;
 
 /// An encoded finality proof proving that the given header has been finalized.
 /// The given bytes should be the SCALE-encoded representation of a
-/// `soil_consensus_beefy::VersionedFinalityProof`.
+/// `subsoil::consensus::beefy::VersionedFinalityProof`.
 #[derive(Clone, Serialize, Deserialize)]
 pub struct EncodedVersionedFinalityProof(subsoil::core::Bytes);
 

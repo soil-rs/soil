@@ -23,7 +23,7 @@
 //! verification. This allows lowering the data and computation cost of verifying the
 //! signed commitment.
 
-use crate::commitment::{Commitment, SignedCommitment};
+use super::commitment::{Commitment, SignedCommitment};
 use alloc::vec::Vec;
 
 /// A light form of [SignedCommitment].
@@ -76,8 +76,8 @@ impl<TBlockNumber, TSignatureAccumulator>
 
 #[cfg(test)]
 mod tests {
-	use subsoil::core::Pair;
-	use subsoil_crypto_hashing::keccak_256;
+	use crate::core::Pair;
+	use crate::crypto_hashing::keccak_256;
 
 	use super::*;
 	use codec::Decode;
@@ -112,7 +112,7 @@ mod tests {
 
 	// The mock signatures are equivalent to the ones produced by the BEEFY keystore
 	fn mock_ecdsa_signatures() -> (EcdsaSignature, EcdsaSignature) {
-		let alice = subsoil::core::ecdsa::Pair::from_string("//Alice", None).unwrap();
+		let alice = crate::core::ecdsa::Pair::from_string("//Alice", None).unwrap();
 
 		let msg = keccak_256(b"This is the first message");
 		let sig1 = alice.sign_prehashed(&msg);
@@ -127,7 +127,7 @@ mod tests {
 	// BLS signatures
 	#[cfg(feature = "bls-experimental")]
 	fn mock_bls_signatures() -> (BlsSignature, BlsSignature) {
-		let alice = subsoil::core::bls::Pair::from_string("//Alice", None).unwrap();
+		let alice = crate::core::bls::Pair::from_string("//Alice", None).unwrap();
 
 		let msg = b"This is the first message";
 		let sig1 = alice.sign(msg);

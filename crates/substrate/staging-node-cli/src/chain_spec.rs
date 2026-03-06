@@ -26,7 +26,7 @@ use serde::{Deserialize, Serialize};
 use soil_authority_discovery::AuthorityId as AuthorityDiscoveryId;
 use soil_chain_spec::ChainSpecExtension;
 use soil_consensus_babe::AuthorityId as BabeId;
-use soil_consensus_beefy::ecdsa_crypto::AuthorityId as BeefyId;
+use subsoil::consensus::beefy::ecdsa_crypto::AuthorityId as BeefyId;
 use subsoil::consensus::grandpa::AuthorityId as GrandpaId;
 use subsoil::core::crypto::UncheckedInto;
 use soil_mixnet::types::AuthorityId as MixnetId;

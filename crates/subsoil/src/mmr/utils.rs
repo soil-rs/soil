@@ -22,9 +22,9 @@ use mmr_lib::helper;
 
 #[cfg(not(feature = "std"))]
 use alloc::vec::Vec;
-use subsoil::runtime::traits::{CheckedAdd, CheckedSub, Header, One};
+use crate::runtime::traits::{CheckedAdd, CheckedSub, Header, One};
 
-use crate::{Error, LeafIndex, NodeIndex};
+use super::{Error, LeafIndex, NodeIndex};
 
 /// Get the first block with MMR.
 pub fn first_mmr_block_num<H: Header>(

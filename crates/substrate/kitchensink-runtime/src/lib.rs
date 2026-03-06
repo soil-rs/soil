@@ -39,7 +39,7 @@ use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 pub use node_primitives::{AccountId, Signature};
 use node_primitives::{AccountIndex, Balance, BlockNumber, Hash, Moment, Nonce};
 use soil_authority_discovery::AuthorityId as AuthorityDiscoveryId;
-use soil_consensus_beefy::{
+use subsoil::consensus::beefy::{
 	ecdsa_crypto::{AuthorityId as BeefyId, Signature as BeefySignature},
 	mmr::MmrLeafVersion,
 };
@@ -3355,22 +3355,22 @@ subsoil::api::impl_runtime_apis! {
 	}
 
 	#[api_version(6)]
-	impl soil_consensus_beefy::BeefyApi<Block, BeefyId> for Runtime {
+	impl subsoil::consensus::beefy::BeefyApi<Block, BeefyId> for Runtime {
 		fn beefy_genesis() -> Option<BlockNumber> {
 			topsoil_beefy::GenesisBlock::<Runtime>::get()
 		}
 
-		fn validator_set() -> Option<soil_consensus_beefy::ValidatorSet<BeefyId>> {
+		fn validator_set() -> Option<subsoil::consensus::beefy::ValidatorSet<BeefyId>> {
 			Beefy::validator_set()
 		}
 
 		fn submit_report_double_voting_unsigned_extrinsic(
-			equivocation_proof: soil_consensus_beefy::DoubleVotingProof<
+			equivocation_proof: subsoil::consensus::beefy::DoubleVotingProof<
 				BlockNumber,
 				BeefyId,
 				BeefySignature,
 			>,
-			key_owner_proof: soil_consensus_beefy::OpaqueKeyOwnershipProof,
+			key_owner_proof: subsoil::consensus::beefy::OpaqueKeyOwnershipProof,
 		) -> Option<()> {
 			let key_owner_proof = key_owner_proof.decode()?;
 
@@ -3382,12 +3382,12 @@ subsoil::api::impl_runtime_apis! {
 
 		fn submit_report_fork_voting_unsigned_extrinsic(
 			equivocation_proof:
-				soil_consensus_beefy::ForkVotingProof<
+				subsoil::consensus::beefy::ForkVotingProof<
 					<Block as BlockT>::Header,
 					BeefyId,
 					subsoil::runtime::OpaqueValue
 				>,
-			key_owner_proof: soil_consensus_beefy::OpaqueKeyOwnershipProof,
+			key_owner_proof: subsoil::consensus::beefy::OpaqueKeyOwnershipProof,
 		) -> Option<()> {
 			Beefy::submit_unsigned_fork_voting_report(
 				equivocation_proof.try_into()?,
@@ -3396,8 +3396,8 @@ subsoil::api::impl_runtime_apis! {
 		}
 
 		fn submit_report_future_block_voting_unsigned_extrinsic(
-			equivocation_proof: soil_consensus_beefy::FutureBlockVotingProof<BlockNumber, BeefyId>,
-			key_owner_proof: soil_consensus_beefy::OpaqueKeyOwnershipProof,
+			equivocation_proof: subsoil::consensus::beefy::FutureBlockVotingProof<BlockNumber, BeefyId>,
+			key_owner_proof: subsoil::consensus::beefy::OpaqueKeyOwnershipProof,
 		) -> Option<()> {
 			Beefy::submit_unsigned_future_block_voting_report(
 				equivocation_proof,
@@ -3406,12 +3406,12 @@ subsoil::api::impl_runtime_apis! {
 		}
 
 		fn generate_key_ownership_proof(
-			_set_id: soil_consensus_beefy::ValidatorSetId,
+			_set_id: subsoil::consensus::beefy::ValidatorSetId,
 			authority_id: BeefyId,
-		) -> Option<soil_consensus_beefy::OpaqueKeyOwnershipProof> {
-			Historical::prove((soil_consensus_beefy::KEY_TYPE, authority_id))
+		) -> Option<subsoil::consensus::beefy::OpaqueKeyOwnershipProof> {
+			Historical::prove((subsoil::consensus::beefy::KEY_TYPE, authority_id))
 				.map(|p| p.encode())
-				.map(soil_consensus_beefy::OpaqueKeyOwnershipProof::new)
+				.map(subsoil::consensus::beefy::OpaqueKeyOwnershipProof::new)
 		}
 	}
 

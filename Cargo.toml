@@ -25,7 +25,6 @@ members = [
 	"crates/soil/consensus-aura",
 	"crates/soil/consensus-babe",
 	"crates/soil/consensus-babe-rpc",
-	"crates/soil/consensus-beefy",
 	"crates/soil/consensus-beefy-rpc",
 	"crates/soil/consensus-epochs",
 	"crates/soil/consensus-grandpa-rpc",
@@ -40,7 +39,6 @@ members = [
 	"crates/soil/genesis-builder",
 	"crates/soil/informant",
 	"crates/soil/maybe-compressed-blob",
-	"crates/soil/merkle-mountain-range",
 	"crates/soil/mixnet",
 	"crates/soil/mmr-gadget",
 	"crates/soil/mmr-rpc",
@@ -505,7 +503,6 @@ soil-blockchain = { path = "crates/soil/blockchain", default-features = false }
 soil-consensus = { path = "crates/soil/consensus", default-features = false }
 soil-consensus-aura = { path = "crates/soil/consensus-aura", default-features = false }
 soil-consensus-babe = { path = "crates/soil/consensus-babe", default-features = false }
-soil-consensus-beefy = { path = "crates/soil/consensus-beefy", default-features = false }
 soil-consensus-sassafras = { path = "crates/soil/consensus-sassafras", default-features = false }
 subsoil = { path = "crates/subsoil", default-features = false }
 subsoil-crypto-hashing = { path = "crates/subsoil-crypto-hashing", default-features = false }
@@ -513,7 +510,6 @@ subsoil-derive = { path = "crates/subsoil-derive" }
 soil-genesis-builder = { path = "crates/soil/genesis-builder", default-features = false }
 soil-maybe-compressed-blob = { path = "crates/soil/maybe-compressed-blob", default-features = false }
 soil-mixnet = { path = "crates/soil/mixnet", default-features = false }
-soil-mmr-primitives = { path = "crates/soil/merkle-mountain-range", default-features = false }
 soil-offchain = { path = "crates/soil/offchain", default-features = false }
 soil-rpc = { path = "crates/soil/rpc", default-features = false }
 sp-runtime-interface-test-wasm = { path = "crates/soil/runtime-interface/test-wasm" }

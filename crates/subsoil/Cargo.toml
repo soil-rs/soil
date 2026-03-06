@@ -54,6 +54,7 @@ parity-wasm = { optional = true, workspace = true }
 
 # Dependencies from consensus primitives
 finality-grandpa = { features = ["derive-codec"], workspace = true }
+mmr-lib = { workspace = true, default-features = false }
 
 # Dependencies from soil-runtime
 either = { workspace = true }
@@ -153,6 +154,7 @@ std = [
 	"async-trait",
 	# consensus primitives std features
 	"finality-grandpa/std",
+	"mmr-lib/std",
 	"bytes/std",
 	"subsoil-crypto-hashing/std",
 	"bounded-collections/std",

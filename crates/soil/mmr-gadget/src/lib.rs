@@ -61,9 +61,9 @@ use soil_blockchain::{HeaderBackend, HeaderMetadata};
 #[cfg(feature = "std")]
 use soil_client_api::{Backend, BlockchainEvents, FinalityNotification, FinalityNotifications};
 #[cfg(feature = "std")]
-use soil_consensus_beefy::MmrRootHash;
+use subsoil::consensus::beefy::MmrRootHash;
 #[cfg(feature = "std")]
-use soil_mmr_primitives::{utils, LeafIndex, MmrApi};
+use subsoil::mmr::{utils, LeafIndex, MmrApi};
 #[cfg(feature = "std")]
 use subsoil::runtime::traits::{Block, Header, NumberFor};
 #[cfg(feature = "std")]

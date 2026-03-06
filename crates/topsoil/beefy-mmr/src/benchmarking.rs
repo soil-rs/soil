@@ -22,7 +22,7 @@
 use super::*;
 use crate::Pallet as BeefyMmr;
 use codec::Encode;
-use soil_consensus_beefy::Payload;
+use subsoil::consensus::beefy::Payload;
 use subsoil::runtime::traits::One;
 use topsoil_benchmarking::v2::*;
 use topsoil_mmr::{Nodes, Pallet as Mmr};
@@ -30,12 +30,12 @@ use topsoil_support::traits::Hooks;
 use topsoil_system::{Config as SystemConfig, Pallet as System};
 
 pub trait Config:
-	topsoil_mmr::Config<Hashing = soil_consensus_beefy::MmrHashing> + crate::Config
+	topsoil_mmr::Config<Hashing = subsoil::consensus::beefy::MmrHashing> + crate::Config
 {
 }
 
 impl<T> Config for T where
-	T: topsoil_mmr::Config<Hashing = soil_consensus_beefy::MmrHashing> + crate::Config
+	T: topsoil_mmr::Config<Hashing = subsoil::consensus::beefy::MmrHashing> + crate::Config
 {
 }
 

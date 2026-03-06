@@ -26,11 +26,11 @@
 //! but we imagine they will be useful for other chains that either want to bridge with Polkadot
 //! or are completely standalone, but heavily inspired by Polkadot.
 
-use crate::{ecdsa_crypto::AuthorityId, ConsensusLog, MmrRootHash, BEEFY_ENGINE_ID};
+use super::{ecdsa_crypto::AuthorityId, ConsensusLog, MmrRootHash, BEEFY_ENGINE_ID};
 use alloc::vec::Vec;
 use codec::{Decode, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;
-use subsoil::runtime::{
+use crate::runtime::{
 	generic::OpaqueDigestItemId,
 	traits::{Block, Header},
 };
@@ -109,7 +109,7 @@ pub struct BeefyAuthoritySet<AuthoritySetCommitment> {
 	/// Id is required to correlate BEEFY signed commitments with the validator set.
 	/// Light Client can easily verify that the commitment witness it is getting is
 	/// produced by the latest validator set.
-	pub id: crate::ValidatorSetId,
+	pub id: super::ValidatorSetId,
 	/// Number of validators in the set.
 	///
 	/// Some BEEFY Light Clients may use an interactive protocol to verify only a subset
@@ -150,14 +150,14 @@ pub use mmr_root_provider::MmrRootProvider;
 #[cfg(feature = "std")]
 mod mmr_root_provider {
 	use super::*;
-	use crate::{known_payloads, payload::PayloadProvider, Payload};
+	use crate::consensus::beefy::{known_payloads, payload::PayloadProvider, Payload};
 	use alloc::sync::Arc;
 	use core::marker::PhantomData;
-	use subsoil::api::ProvideRuntimeApi;
-	use soil_mmr_primitives::MmrApi;
-	use subsoil::runtime::traits::NumberFor;
+	use crate::api::ProvideRuntimeApi;
+	use crate::mmr::MmrApi;
+	use crate::runtime::traits::NumberFor;
 
-	/// A [`crate::Payload`] provider where payload is Merkle Mountain Range root hash.
+	/// A [`super::Payload`] provider where payload is Merkle Mountain Range root hash.
 	///
 	/// Encoded payload contains a [`crate::MmrRootHash`] type (i.e. 32-bytes hash).
 	pub struct MmrRootProvider<B, R> {
@@ -208,7 +208,7 @@ mod mmr_root_provider {
 mod tests {
 	use super::*;
 	use crate::H256;
-	use subsoil::runtime::{traits::BlakeTwo256, Digest, DigestItem, OpaqueExtrinsic};
+	use crate::runtime::{traits::BlakeTwo256, Digest, DigestItem, OpaqueExtrinsic};
 
 	#[test]
 	fn should_construct_version_correctly() {
@@ -235,8 +235,8 @@ mod tests {
 
 	#[test]
 	fn extract_mmr_root_digest() {
-		type Header = subsoil::runtime::generic::Header<u64, BlakeTwo256>;
-		type Block = subsoil::runtime::generic::Block<Header, OpaqueExtrinsic>;
+		type Header = crate::runtime::generic::Header<u64, BlakeTwo256>;
+		type Block = crate::runtime::generic::Block<Header, OpaqueExtrinsic>;
 		let mut header = Header::new(
 			1u64,
 			Default::default(),

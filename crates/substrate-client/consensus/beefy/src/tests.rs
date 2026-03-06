@@ -53,7 +53,7 @@ use soil_client_api::{
 	Backend as BackendT, BlockchainEvents, FinalityNotifications, HeaderBackend,
 };
 use soil_consensus::BlockOrigin;
-use soil_consensus_beefy::{
+use subsoil::consensus::beefy::{
 	ecdsa_crypto,
 	ecdsa_crypto::{AuthorityId, Signature},
 	known_payloads,
@@ -65,7 +65,7 @@ use soil_consensus_beefy::{
 };
 use subsoil::core::H256;
 use subsoil::keystore::{testing::MemoryKeystore, Keystore, KeystorePtr};
-use soil_mmr_primitives::{Error as MmrError, MmrApi};
+use subsoil::mmr::{Error as MmrError, MmrApi};
 use soil_network::{config::RequestResponseConfig, ProtocolName};
 use soil_network_test::{
 	Block, BlockImportAdapter, FullPeerConfig, PassThroughVerifier, Peer, PeersClient,
@@ -530,7 +530,7 @@ async fn wait_for_beefy_signed_commitments(
 			let expected = expected.next();
 			async move {
 				let signed_commitment = match versioned_finality_proof {
-					soil_consensus_beefy::VersionedFinalityProof::V1(sc) => sc,
+					subsoil::consensus::beefy::VersionedFinalityProof::V1(sc) => sc,
 				};
 				let commitment_block_num = signed_commitment.commitment.block_number;
 				assert_eq!(expected, Some(commitment_block_num).as_ref());

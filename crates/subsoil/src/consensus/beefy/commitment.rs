@@ -19,9 +19,9 @@ use alloc::{vec, vec::Vec};
 use codec::{Decode, DecodeWithMemTracking, Encode, Error, Input};
 use core::cmp;
 use scale_info::TypeInfo;
-use subsoil::application_crypto::RuntimeAppPublic;
+use crate::application_crypto::RuntimeAppPublic;
 
-use crate::{BeefyAuthorityId, Payload, ValidatorSet, ValidatorSetId};
+use super::{BeefyAuthorityId, Payload, ValidatorSet, ValidatorSetId};
 
 /// A commitment signature, accompanied by the id of the validator that it belongs to.
 #[derive(Debug)]
@@ -333,13 +333,13 @@ impl<N, S> From<SignedCommitment<N, S>> for VersionedFinalityProof<N, S> {
 mod tests {
 
 	use super::*;
-	use crate::{ecdsa_crypto::Signature as EcdsaSignature, known_payloads};
+	use super::{ecdsa_crypto::Signature as EcdsaSignature, known_payloads};
 	use codec::Decode;
-	use subsoil::core::Pair;
-	use subsoil_crypto_hashing::keccak_256;
+	use crate::core::Pair;
+	use crate::crypto_hashing::keccak_256;
 
 	#[cfg(feature = "bls-experimental")]
-	use crate::bls_crypto::Signature as BlsSignature;
+	use super::bls_crypto::Signature as BlsSignature;
 
 	type TestCommitment = Commitment<u128>;
 
@@ -359,7 +359,7 @@ mod tests {
 	// Generates mock aggregatable ecdsa signature for generating test commitment
 	// BLS signatures
 	fn mock_ecdsa_signatures() -> (EcdsaSignature, EcdsaSignature) {
-		let alice = subsoil::core::ecdsa::Pair::from_string("//Alice", None).unwrap();
+		let alice = crate::core::ecdsa::Pair::from_string("//Alice", None).unwrap();
 
 		let msg = keccak_256(b"This is the first message");
 		let sig1 = alice.sign_prehashed(&msg);
@@ -374,7 +374,7 @@ mod tests {
 	// BLS signatures
 	#[cfg(feature = "bls-experimental")]
 	fn mock_bls_signatures() -> (BlsSignature, BlsSignature) {
-		let alice = subsoil::core::bls::Pair::from_string("//Alice", None).unwrap();
+		let alice = crate::core::bls::Pair::from_string("//Alice", None).unwrap();
 
 		let msg = b"This is the first message";
 		let sig1 = alice.sign(msg);

@@ -21,7 +21,7 @@ use crate::LOG_TARGET;
 use codec::{Decode, Encode};
 use log::{debug, info};
 use subsoil::application_crypto::RuntimeAppPublic;
-use soil_consensus_beefy::{
+use subsoil::consensus::beefy::{
 	AuthorityIdBound, Commitment, DoubleVotingProof, SignedCommitment, ValidatorSet,
 	ValidatorSetId, VoteMessage,
 };
@@ -221,7 +221,7 @@ where
 mod tests {
 	use soil_network_test::Block;
 
-	use soil_consensus_beefy::{
+	use subsoil::consensus::beefy::{
 		ecdsa_crypto, known_payloads::MMR_ROOT_ID, test_utils::Keyring, Commitment,
 		DoubleVotingProof, Payload, SignedCommitment, ValidatorSet, VoteMessage,
 	};

@@ -18,14 +18,14 @@
 use alloc::{vec, vec::Vec};
 use codec::{Decode, DecodeWithMemTracking, Encode};
 use scale_info::TypeInfo;
-use subsoil::runtime::traits::Block;
+use crate::runtime::traits::Block;
 
 /// Id of different payloads in the [`crate::Commitment`] data.
 pub type BeefyPayloadId = [u8; 2];
 
 /// Registry of all known [`BeefyPayloadId`].
 pub mod known_payloads {
-	use crate::BeefyPayloadId;
+	use super::BeefyPayloadId;
 
 	/// A [`Payload`](super::Payload) identifier for Merkle Mountain Range root hash.
 	///

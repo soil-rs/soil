@@ -16,17 +16,17 @@
 // limitations under the License.
 
 #[cfg(feature = "bls-experimental")]
-use crate::ecdsa_bls_crypto;
-use crate::{
+use super::ecdsa_bls_crypto;
+use super::{
 	ecdsa_crypto, AuthorityIdBound, Commitment, DoubleVotingProof, ForkVotingProof,
 	FutureBlockVotingProof, Payload, ValidatorSetId, VoteMessage,
 };
-use subsoil::application_crypto::{AppCrypto, AppPair, RuntimeAppPublic, Wraps};
-use subsoil::core::{ecdsa, Pair};
-use subsoil::runtime::traits::{BlockNumber, Header as HeaderT};
+use crate::application_crypto::{AppCrypto, AppPair, RuntimeAppPublic, Wraps};
+use crate::core::{ecdsa, Pair};
+use crate::runtime::traits::{BlockNumber, Header as HeaderT};
 
 use codec::Encode;
-use subsoil_crypto_hashing::keccak_256;
+use crate::crypto_hashing::keccak_256;
 use std::{collections::HashMap, marker::PhantomData, sync::LazyLock};
 use strum::IntoEnumIterator;
 
@@ -111,7 +111,7 @@ static PUBLIC_KEYS: LazyLock<HashMap<Keyring<ecdsa_crypto::AuthorityId>, ecdsa_c
 	LazyLock::new(|| {
 		PRIVATE_KEYS
 			.iter()
-			.map(|(name, pair)| (name.clone(), subsoil::application_crypto::Pair::public(pair)))
+			.map(|(name, pair)| (name.clone(), crate::application_crypto::Pair::public(pair)))
 			.collect()
 	});
 

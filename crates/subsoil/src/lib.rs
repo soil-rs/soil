@@ -39,3 +39,4 @@ pub mod inherents;
 pub mod timestamp;
 pub mod block_builder;
 pub mod consensus;
+pub mod mmr;

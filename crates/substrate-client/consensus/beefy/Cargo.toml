@@ -29,7 +29,6 @@ soil-network-types = { workspace = true, default-features = true }
 soil-utils = { workspace = true, default-features = true }
 soil-blockchain = { workspace = true, default-features = true }
 soil-consensus = { workspace = true, default-features = true }
-soil-consensus-beefy = { workspace = true, default-features = true }
 subsoil = { workspace = true }
 thiserror = { workspace = true }
 tokio = { workspace = true, default-features = true }
@@ -39,7 +38,6 @@ wasm-timer = { workspace = true }
 sc-block-builder = { workspace = true, default-features = true }
 soil-network-test = { workspace = true }
 serde = { workspace = true, default-features = true }
-soil-mmr-primitives = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
 substrate-test-runtime-client = { workspace = true }
 
@@ -50,5 +48,4 @@ std = [
 	"subsoil/std",
 ]
 bls-experimental = [
-	"subsoil/bls-experimental",
-	"soil-consensus-beefy/bls-experimental"]
+	"subsoil/bls-experimental"]

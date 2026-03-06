@@ -21,8 +21,6 @@ soil-client-api = { workspace = true, default-features = true, optional = true}
 sc-offchain = { workspace = true, default-features = true, optional = true}
 soil-blockchain = { workspace = true, default-features = true, optional = true}
 soil-consensus = { workspace = true, default-features = true, optional = true}
-soil-consensus-beefy = { workspace = true, default-features = true, optional = true}
-soil-mmr-primitives = { workspace = true, default-features = true, optional = true}
 subsoil = { workspace = true, default-features = true, optional = true}
 
 [features]
@@ -35,13 +33,9 @@ std = [
 	"soil-blockchain",
 	"soil-client-api",
 	"soil-consensus",
-	"soil-consensus-beefy",
-	"soil-mmr-primitives",
 	"soil-client-api/std",
-	"soil-consensus-beefy/std",
 	"subsoil",
 	"subsoil/std",
-	"soil-mmr-primitives/std",
 ]
 
 [dev-dependencies]

@@ -33,8 +33,8 @@ use subsoil::core::{
 	offchain::{DbExternalities, StorageKind},
 	H256,
 };
-use soil_mmr_primitives as mmr;
-use soil_mmr_primitives::{utils::NodesUtils, LeafIndex, NodeIndex};
+use subsoil::mmr as mmr;
+use subsoil::mmr::{utils::NodesUtils, LeafIndex, NodeIndex};
 use subsoil::runtime::{
 	generic::BlockId,
 	traits::{Block as BlockT, Header as HeaderT},

@@ -4682,10 +4682,8 @@ dependencies = [
  "soil-chain-spec-derive",
  "soil-consensus-aura",
  "soil-consensus-babe",
- "soil-consensus-beefy",
  "soil-genesis-builder",
  "soil-mixnet",
- "soil-mmr-primitives",
  "soil-offchain",
  "soil-session",
  "soil-staking",
@@ -6126,7 +6124,6 @@ dependencies = [
  "soil-consensus",
  "soil-consensus-babe",
  "soil-consensus-babe-rpc",
- "soil-consensus-beefy",
  "soil-consensus-beefy-rpc",
  "soil-consensus-grandpa-rpc",
  "soil-mmr-rpc",
@@ -8188,8 +8185,6 @@ dependencies = [
  "soil-blockchain",
  "soil-client-api",
  "soil-consensus",
- "soil-consensus-beefy",
- "soil-mmr-primitives",
  "soil-network",
  "soil-network-gossip",
  "soil-network-sync",
@@ -9480,21 +9475,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "soil-consensus-beefy"
-version = "13.0.0"
-dependencies = [
- "array-bytes 6.2.3",
- "parity-scale-codec",
- "scale-info",
- "serde",
- "soil-mmr-primitives",
- "strum 0.26.3",
- "subsoil",
- "subsoil-crypto-hashing",
- "w3f-bls",
-]
-
-[[package]]
 name = "soil-consensus-beefy-rpc"
 version = "13.0.0"
 dependencies = [
@@ -9506,7 +9486,6 @@ dependencies = [
  "sc-consensus-beefy",
  "sc-rpc",
  "serde",
- "soil-consensus-beefy",
  "subsoil",
  "substrate-test-runtime-client",
  "thiserror 1.0.69",
@@ -9710,26 +9689,9 @@ dependencies = [
  "soil-blockchain",
  "soil-client-api",
  "soil-consensus",
- "soil-consensus-beefy",
- "soil-mmr-primitives",
  "subsoil",
  "substrate-test-runtime-client",
  "tokio",
-]
-
-[[package]]
-name = "soil-mmr-primitives"
-version = "26.0.0"
-dependencies = [
- "array-bytes 6.2.3",
- "log",
- "parity-scale-codec",
- "polkadot-ckb-merkle-mountain-range",
- "scale-info",
- "serde",
- "subsoil",
- "subsoil-derive",
- "thiserror 1.0.69",
 ]
 
 [[package]]
@@ -9741,7 +9703,6 @@ dependencies = [
  "serde",
  "serde_json",
  "soil-blockchain",
- "soil-mmr-primitives",
  "subsoil",
 ]
 
@@ -10611,7 +10572,6 @@ dependencies = [
  "soil-consensus",
  "soil-consensus-babe",
  "soil-consensus-babe-rpc",
- "soil-consensus-beefy",
  "soil-consensus-beefy-rpc",
  "soil-consensus-epochs",
  "soil-consensus-grandpa-rpc",
@@ -10625,7 +10585,6 @@ dependencies = [
  "soil-maybe-compressed-blob",
  "soil-mixnet",
  "soil-mmr-gadget",
- "soil-mmr-primitives",
  "soil-mmr-rpc",
  "soil-network",
  "soil-network-common",
@@ -10857,6 +10816,7 @@ dependencies = [
  "parity-wasm",
  "parking_lot 0.12.5",
  "paste",
+ "polkadot-ckb-merkle-mountain-range",
  "polkavm-derive",
  "pretty_assertions",
  "primitive-types",
@@ -12211,7 +12171,6 @@ dependencies = [
  "parity-scale-codec",
  "scale-info",
  "serde",
- "soil-consensus-beefy",
  "soil-session",
  "soil-staking",
  "subsoil",
@@ -12236,7 +12195,6 @@ dependencies = [
  "parity-scale-codec",
  "scale-info",
  "serde",
- "soil-consensus-beefy",
  "soil-staking",
  "subsoil",
  "topsoil-balances",
@@ -12931,7 +12889,6 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "scale-info",
- "soil-mmr-primitives",
  "subsoil",
  "topsoil",
 ]
