@@ -22,7 +22,7 @@ use std::collections::{HashMap, HashSet};
 
 use subsoil::runtime::traits::{Block as BlockT, NumberFor};
 
-use soil_client_api::{BadBlocks, ForkBlocks};
+use soil_client::client_api::{BadBlocks, ForkBlocks};
 
 /// Chain specification rules lookup result.
 pub enum LookupResult<B: BlockT> {

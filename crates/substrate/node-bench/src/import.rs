@@ -34,7 +34,7 @@ use std::borrow::Cow;
 
 use node_primitives::Block;
 use node_testing::bench::{BenchDb, BlockType, DatabaseType, KeyTypes};
-use soil_client_api::backend::Backend;
+use soil_client::client_api::backend::Backend;
 
 use crate::{
 	common::SizeType,

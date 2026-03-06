@@ -21,7 +21,7 @@
 use std::{marker::PhantomData, sync::Arc};
 
 use codec::Encode;
-use soil_client_api::{backend::Backend, BlockImportOperation};
+use soil_client::client_api::{backend::Backend, BlockImportOperation};
 use subsoil::core::storage::{well_known_keys, StateVersion, Storage};
 use soil_client::executor::RuntimeVersionOf;
 use subsoil::runtime::{

@@ -19,7 +19,7 @@
 use futures_timer::Delay;
 use prometheus_endpoint::{register, Gauge, GaugeVec, Opts, PrometheusError, Registry, U64};
 use subsoil::api::ProvideRuntimeApi;
-use soil_client_api::{ClientInfo, UsageProvider};
+use soil_client::client_api::{ClientInfo, UsageProvider};
 use soil_network::{config::Role, NetworkStatus, NetworkStatusProvider};
 use soil_network_sync::{SyncStatus, SyncStatusProvider};
 use subsoil::runtime::traits::{Block, NumberFor, SaturatedConversion, UniqueSaturatedInto};

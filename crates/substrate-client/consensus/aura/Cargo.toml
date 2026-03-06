@@ -24,7 +24,6 @@ log = { workspace = true, default-features = true }
 parking_lot = { workspace = true, default-features = true }
 prometheus-endpoint = { workspace = true, default-features = true }
 sc-block-builder = { workspace = true, default-features = true }
-soil-client-api = { workspace = true, default-features = true }
 sc-consensus = { workspace = true, default-features = true }
 sc-consensus-slots = { workspace = true, default-features = true }
 soil-telemetry = { workspace = true, default-features = true }

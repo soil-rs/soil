@@ -35,7 +35,7 @@ use sc_consensus::{
 #[cfg(feature = "std")]
 use soil_client::blockchain::HeaderBackend;
 #[cfg(feature = "std")]
-use soil_client_api::{
+use soil_client::client_api::{
 	backend::{Backend as ClientBackend, Finalizer},
 	client::BlockchainEvents,
 };

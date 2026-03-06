@@ -24,7 +24,7 @@ use litep2p::protocol::libp2p::bitswap::{
 	BitswapEvent, BitswapHandle, BlockPresenceType, Config, ResponseType, WantType,
 };
 
-use soil_client_api::BlockBackend;
+use soil_client::client_api::BlockBackend;
 use subsoil::runtime::traits::Block as BlockT;
 
 use std::{future::Future, pin::Pin, sync::Arc};

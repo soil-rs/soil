@@ -43,7 +43,7 @@ use sc_tracing::block::TracingExecuteBlock;
 use subsoil::api::{CallApiAt, ProvideRuntimeApi};
 use soil_client::blockchain::{HeaderBackend, HeaderMetadata};
 use soil_chain_spec::{get_extension, ChainSpec};
-use soil_client_api::{
+use soil_client::client_api::{
 	execution_extensions::ExecutionExtensions, proof_provider::ProofProvider, BadBlocks,
 	BlockBackend, BlockchainEvents, ExecutorProvider, ForkBlocks, KeysIter, StorageProvider,
 	TrieCacheContext, UsageProvider,
@@ -220,7 +220,7 @@ where
 	TExec: CodeExecutor + RuntimeVersionOf + Clone,
 	TBuildGenesisBlock: BuildGenesisBlock<
 		TBl,
-		BlockImportOperation = <Backend<TBl> as soil_client_api::backend::Backend<TBl>>::BlockImportOperation
+		BlockImportOperation = <Backend<TBl> as soil_client::client_api::backend::Backend<TBl>>::BlockImportOperation
 	>,
 {
 	let keystore_container = KeystoreContainer::new(&config.keystore)?;
@@ -317,7 +317,7 @@ fn warm_up_trie_cache<TBl: BlockT>(
 	backend: Arc<TFullBackend<TBl>>,
 	storage_root: TBl::Hash,
 ) -> Result<(), Error> {
-	use soil_client_api::backend::Backend;
+	use soil_client::client_api::backend::Backend;
 	use subsoil::state_machine::Backend as StateBackend;
 
 	let untrusted_state = || backend.state_at(storage_root, TrieCacheContext::Untrusted);
@@ -430,7 +430,7 @@ where
 	E: CodeExecutor + RuntimeVersionOf,
 	G: BuildGenesisBlock<
 		Block,
-		BlockImportOperation = <Backend<Block> as soil_client_api::backend::Backend<Block>>::BlockImportOperation
+		BlockImportOperation = <Backend<Block> as soil_client::client_api::backend::Backend<Block>>::BlockImportOperation
 	>,
 {
 	let executor = crate::client::LocalCallExecutor::new(
@@ -527,7 +527,7 @@ where
 	TBl: BlockT,
 	TBl::Hash: Unpin,
 	TBl::Header: Unpin,
-	TBackend: 'static + soil_client_api::backend::Backend<TBl> + Send,
+	TBackend: 'static + soil_client::client_api::backend::Backend<TBl> + Send,
 	TExPool: MaintainedTransactionPool<Block = TBl, Hash = <TBl as BlockT>::Hash> + 'static,
 {
 	let chain_info = client.usage_info().chain;
@@ -841,7 +841,7 @@ where
 		+ Send
 		+ Sync
 		+ 'static,
-	TBackend: soil_client_api::backend::Backend<TBl> + 'static,
+	TBackend: soil_client::client_api::backend::Backend<TBl> + 'static,
 	<TCl as ProvideRuntimeApi<TBl>>::Api: soil_session::SessionKeys<TBl> + subsoil::api::Metadata<TBl>,
 	TExPool: MaintainedTransactionPool<Block = TBl, Hash = <TBl as BlockT>::Hash> + 'static,
 	TBl::Hash: Unpin,

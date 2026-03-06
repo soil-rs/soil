@@ -20,7 +20,7 @@
 use codec::DecodeAll;
 use futures::{channel::oneshot, StreamExt};
 use log::{debug, trace};
-use soil_client_api::BlockBackend;
+use soil_client::client_api::BlockBackend;
 use subsoil::consensus::beefy::BEEFY_ENGINE_ID;
 use soil_network::{
 	config as netconfig, service::traits::RequestResponseConfig, types::ProtocolName,

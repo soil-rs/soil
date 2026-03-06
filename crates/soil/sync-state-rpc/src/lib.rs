@@ -50,7 +50,7 @@ use jsonrpsee::{
 
 use sc_consensus_babe::{BabeWorkerHandle, Error as BabeError};
 use soil_client::blockchain::HeaderBackend;
-use soil_client_api::StorageData;
+use soil_client::client_api::StorageData;
 use subsoil::runtime::traits::{Block as BlockT, NumberFor};
 
 type SharedAuthoritySet<TBl> =
@@ -142,7 +142,7 @@ pub struct SyncState<Block: BlockT, Client> {
 impl<Block, Client> SyncState<Block, Client>
 where
 	Block: BlockT,
-	Client: HeaderBackend<Block> + soil_client_api::AuxStore + 'static,
+	Client: HeaderBackend<Block> + soil_client::client_api::AuxStore + 'static,
 {
 	/// Create a new sync state RPC helper.
 	pub fn new(
@@ -190,7 +190,7 @@ where
 impl<Block, Backend> SyncStateApiServer<Block> for SyncState<Block, Backend>
 where
 	Block: BlockT,
-	Backend: HeaderBackend<Block> + soil_client_api::AuxStore + 'static,
+	Backend: HeaderBackend<Block> + soil_client::client_api::AuxStore + 'static,
 {
 	async fn system_gen_sync_spec(&self, raw: bool) -> Result<serde_json::Value, Error<Block>> {
 		let current_sync_state = self.build_sync_state().await?;

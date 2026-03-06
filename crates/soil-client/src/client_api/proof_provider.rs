@@ -17,7 +17,7 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 //! Proof utilities
-use crate::{CompactProof, StorageProof};
+use super::{CompactProof, StorageProof};
 use subsoil::runtime::traits::Block as BlockT;
 use subsoil::state_machine::{KeyValueStates, KeyValueStorageLevel};
 use subsoil::storage::ChildInfo;
@@ -29,7 +29,7 @@ pub trait ProofProvider<Block: BlockT> {
 		&self,
 		hash: Block::Hash,
 		keys: &mut dyn Iterator<Item = &[u8]>,
-	) -> soil_client::blockchain::Result<StorageProof>;
+	) -> crate::blockchain::Result<StorageProof>;
 
 	/// Reads child storage value at a given block + storage_key + key, returning
 	/// read proof.
@@ -38,7 +38,7 @@ pub trait ProofProvider<Block: BlockT> {
 		hash: Block::Hash,
 		child_info: &ChildInfo,
 		keys: &mut dyn Iterator<Item = &[u8]>,
-	) -> soil_client::blockchain::Result<StorageProof>;
+	) -> crate::blockchain::Result<StorageProof>;
 
 	/// Execute a call to a contract on top of state in a block of given hash
 	/// AND returning execution proof.
@@ -49,7 +49,7 @@ pub trait ProofProvider<Block: BlockT> {
 		hash: Block::Hash,
 		method: &str,
 		call_data: &[u8],
-	) -> soil_client::blockchain::Result<(Vec<u8>, StorageProof)>;
+	) -> crate::blockchain::Result<(Vec<u8>, StorageProof)>;
 
 	/// Given a `Hash` iterate over all storage values starting at `start_keys`.
 	/// Last `start_keys` element contains last accessed key value.
@@ -64,7 +64,7 @@ pub trait ProofProvider<Block: BlockT> {
 		hash: Block::Hash,
 		start_keys: &[Vec<u8>],
 		size_limit: usize,
-	) -> soil_client::blockchain::Result<(CompactProof, u32)>;
+	) -> crate::blockchain::Result<(CompactProof, u32)>;
 
 	/// Given a `Hash` iterate over all storage values starting at `start_key`.
 	/// Returns collected keys and values.
@@ -79,7 +79,7 @@ pub trait ProofProvider<Block: BlockT> {
 		hash: Block::Hash,
 		start_key: &[Vec<u8>],
 		size_limit: usize,
-	) -> soil_client::blockchain::Result<Vec<(KeyValueStorageLevel, bool)>>;
+	) -> crate::blockchain::Result<Vec<(KeyValueStorageLevel, bool)>>;
 
 	/// Verify read storage proof for a set of keys.
 	/// Returns collected key-value pairs and the nested state
@@ -89,5 +89,5 @@ pub trait ProofProvider<Block: BlockT> {
 		root: Block::Hash,
 		proof: CompactProof,
 		start_keys: &[Vec<u8>],
-	) -> soil_client::blockchain::Result<(KeyValueStates, usize)>;
+	) -> crate::blockchain::Result<(KeyValueStates, usize)>;
 }

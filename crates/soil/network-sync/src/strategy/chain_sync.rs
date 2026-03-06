@@ -52,7 +52,7 @@ use prost::Message;
 use sc_consensus::{BlockImportError, BlockImportStatus, IncomingBlock};
 use subsoil::arithmetic::traits::Saturating;
 use soil_client::blockchain::{Error as ClientError, HeaderBackend, HeaderMetadata};
-use soil_client_api::{blockchain::BlockGap, BlockBackend, ProofProvider};
+use soil_client::client_api::{blockchain::BlockGap, BlockBackend, ProofProvider};
 use soil_client::consensus::{BlockOrigin, BlockStatus};
 use soil_network::{IfDisconnected, ProtocolName};
 use soil_network_common::sync::message::{

@@ -24,7 +24,7 @@ use sc_block_builder::{BlockBuilder, BlockBuilderBuilder};
 use sc_consensus::{BoxBlockImport, BoxJustificationImport};
 use sc_consensus_slots::BackoffAuthoringOnFinalizedHeadLagging;
 use subsoil::application_crypto::key_types::BABE;
-use soil_client_api::{BlockchainEvents, Finalizer};
+use soil_client::client_api::{BlockchainEvents, Finalizer};
 use soil_client::consensus::{NoNetwork as DummyOracle, Proposal, ProposeArgs};
 use subsoil::consensus::babe::{
 	inherents::{BabeCreateInherentDataProviders, InherentDataProvider},

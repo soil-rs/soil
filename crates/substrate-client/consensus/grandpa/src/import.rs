@@ -28,7 +28,7 @@ use sc_consensus::{
 };
 use subsoil::api::{Core, RuntimeApiInfo};
 use soil_client::blockchain::BlockStatus;
-use soil_client_api::{backend::Backend, utils::is_descendent_of};
+use soil_client::client_api::{backend::Backend, utils::is_descendent_of};
 use soil_client::consensus::{BlockOrigin, Error as ConsensusError, SelectChain};
 use subsoil::consensus::grandpa::{ConsensusLog, GrandpaApi, ScheduledChange, SetId, GRANDPA_ENGINE_ID};
 use subsoil::runtime::{
@@ -456,7 +456,7 @@ where
 				]
 				.concat();
 				if let Ok(Some(id)) =
-					self.inner.storage(hash, &soil_client_api::StorageKey(k.to_vec()))
+					self.inner.storage(hash, &soil_client::client_api::StorageKey(k.to_vec()))
 				{
 					if let Ok(id) = SetId::decode(&mut id.0.as_ref()) {
 						return Ok(id);

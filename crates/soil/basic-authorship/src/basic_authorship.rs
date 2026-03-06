@@ -585,7 +585,7 @@ mod tests {
 	use sc_transaction_pool::BasicPool;
 	use subsoil::api::Core;
 	use soil_client::blockchain::HeaderBackend;
-	use soil_client_api::{Backend, TrieCacheContext};
+	use soil_client::client_api::{Backend, TrieCacheContext};
 	use soil_client::consensus::{BlockOrigin, Environment};
 	use subsoil::runtime::{generic::BlockId, traits::NumberFor, Perbill};
 	use soil_client::transaction_pool::{ChainEvent, MaintainedTransactionPool, TransactionSource};

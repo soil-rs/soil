@@ -18,7 +18,7 @@
 
 use super::{code_provider::CodeProvider, ClientConfig};
 use subsoil::api::ProofRecorder;
-use soil_client_api::{
+use soil_client::client_api::{
 	backend, call_executor::CallExecutor, execution_extensions::ExecutionExtensions, HeaderBackend,
 	TrieCacheContext,
 };

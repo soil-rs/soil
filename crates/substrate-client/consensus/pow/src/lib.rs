@@ -55,7 +55,7 @@ use sc_consensus::{
 use subsoil::api::ProvideRuntimeApi;
 use subsoil::block_builder::BlockBuilder as BlockBuilderApi;
 use soil_client::blockchain::HeaderBackend;
-use soil_client_api::{self, backend::AuxStore, BlockOf, BlockchainEvents};
+use soil_client::client_api::{self, backend::AuxStore, BlockOf, BlockchainEvents};
 use soil_client::consensus::{
 	Environment, Error as ConsensusError, ProposeArgs, Proposer, SelectChain, SyncOracle,
 };

@@ -31,7 +31,6 @@ names = { workspace = true}
 rand = { workspace = true, default-features = true}
 regex = { workspace = true}
 rpassword = { workspace = true}
-soil-client-api = { workspace = true, default-features = true}
 soil-client-db = { workspace = true, default-features = false}
 sc-keystore = { workspace = true, default-features = true}
 sc-mixnet = { workspace = true, default-features = true}

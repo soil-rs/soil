@@ -48,9 +48,9 @@ const STAGING_TELEMETRY_URL: &str = "wss://telemetry.polkadot.io/submit/";
 #[serde(rename_all = "camelCase")]
 pub struct Extensions {
 	/// Block numbers with known hashes.
-	pub fork_blocks: soil_client_api::ForkBlocks<Block>,
+	pub fork_blocks: soil_client::client_api::ForkBlocks<Block>,
 	/// Known bad block hashes.
-	pub bad_blocks: soil_client_api::BadBlocks<Block>,
+	pub bad_blocks: soil_client::client_api::BadBlocks<Block>,
 	/// The light sync state extension used by the sync-state rpc.
 	pub light_sync_state: soil_sync_state_rpc::LightSyncStateExtension,
 }

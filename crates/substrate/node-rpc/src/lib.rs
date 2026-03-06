@@ -47,7 +47,7 @@ use subsoil::api::ProvideRuntimeApi;
 use subsoil::application_crypto::RuntimeAppPublic;
 use subsoil::block_builder::BlockBuilder;
 use soil_client::blockchain::{Error as BlockChainError, HeaderBackend, HeaderMetadata};
-use soil_client_api::AuxStore;
+use soil_client::client_api::AuxStore;
 use soil_client::consensus::SelectChain;
 use subsoil::consensus::babe::BabeApi;
 use subsoil::consensus::beefy::AuthorityIdBound;
@@ -135,7 +135,7 @@ pub fn create_full<C, P, SC, B, AuthorityId>(
 ) -> Result<RpcModule<()>, Box<dyn std::error::Error + Send + Sync>>
 where
 	C: ProvideRuntimeApi<Block>
-		+ soil_client_api::BlockBackend<Block>
+		+ soil_client::client_api::BlockBackend<Block>
 		+ HeaderBackend<Block>
 		+ AuxStore
 		+ HeaderMetadata<Block, Error = BlockChainError>
@@ -153,8 +153,8 @@ where
 	C::Api: BlockBuilder<Block>,
 	P: TransactionPool + 'static,
 	SC: SelectChain<Block> + 'static,
-	B: soil_client_api::Backend<Block> + Send + Sync + 'static,
-	B::State: soil_client_api::backend::StateBackend<subsoil::runtime::traits::HashingFor<Block>>,
+	B: soil_client::client_api::Backend<Block> + Send + Sync + 'static,
+	B::State: soil_client::client_api::backend::StateBackend<subsoil::runtime::traits::HashingFor<Block>>,
 	AuthorityId: AuthorityIdBound,
 	<AuthorityId as RuntimeAppPublic>::Signature: Send + Sync,
 {

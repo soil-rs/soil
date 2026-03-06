@@ -34,7 +34,7 @@ use sc_consensus_babe::{self, SlotProportion};
 use sc_statement_store::Store as StatementStore;
 use sc_transaction_pool::TransactionPoolHandle;
 use subsoil::api::ProvideRuntimeApi;
-use soil_client_api::{Backend, BlockBackend};
+use soil_client::client_api::{Backend, BlockBackend};
 use subsoil::core::crypto::Pair;
 use soil_network::{
 	event::Event, service::traits::NetworkService, NetworkBackend, NetworkEventStream,
@@ -889,7 +889,7 @@ mod tests {
 	use sc_consensus::{BlockImport, BlockImportParams, ForkChoiceStrategy};
 	use sc_consensus_babe::{BabeIntermediate, CompatibleDigestItem, INTERMEDIATE_KEY};
 	use sc_keystore::LocalKeystore;
-	use soil_client_api::BlockBackend;
+	use soil_client::client_api::BlockBackend;
 	use soil_client::consensus::{BlockOrigin, Environment, Proposer};
 	use soil_consensus_epochs::descendent_query;
 	use subsoil::core::crypto::Pair;

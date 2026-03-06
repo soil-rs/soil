@@ -29,7 +29,7 @@ use futures::future::{Future, FutureExt};
 use prometheus_endpoint::Registry as PrometheusRegistry;
 use subsoil::api::{ApiExt, ProvideRuntimeApi};
 use soil_client::blockchain::{HeaderMetadata, TreeRoute};
-use soil_client_api::{blockchain::HeaderBackend, BlockBackend};
+use soil_client::client_api::{blockchain::HeaderBackend, BlockBackend};
 use subsoil::core::traits::SpawnEssentialNamed;
 use subsoil::runtime::{
 	generic::BlockId,

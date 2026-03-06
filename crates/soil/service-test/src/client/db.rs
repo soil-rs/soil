@@ -19,7 +19,7 @@
 use subsoil::core::offchain::{storage::InMemOffchainStorage, OffchainStorage};
 use std::sync::Arc;
 
-type TestBackend = soil_client_api::in_mem::Backend<substrate_test_runtime::Block>;
+type TestBackend = soil_client::client_api::in_mem::Backend<substrate_test_runtime::Block>;
 
 #[test]
 fn test_leaves_with_complex_block_tree() {

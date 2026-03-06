@@ -43,7 +43,7 @@ use sc_consensus_slots::{
 use subsoil::api::{Core, ProvideRuntimeApi};
 use subsoil::application_crypto::AppPublic;
 use soil_client::blockchain::HeaderBackend;
-use soil_client_api::{backend::AuxStore, BlockOf};
+use soil_client::client_api::{backend::AuxStore, BlockOf};
 use soil_client::consensus::{BlockOrigin, Environment, Error as ConsensusError, Proposer, SelectChain};
 use subsoil::consensus::slots::Slot;
 use subsoil::core::crypto::Pair;
@@ -553,7 +553,7 @@ mod tests {
 	use sc_consensus_slots::{BackoffAuthoringOnFinalizedHeadLagging, SimpleSlotWorker};
 	use sc_keystore::LocalKeystore;
 	use subsoil::application_crypto::{key_types::AURA, AppCrypto};
-	use soil_client_api::BlockchainEvents;
+	use soil_client::client_api::BlockchainEvents;
 	use soil_client::consensus::{NoNetwork as DummyOracle, Proposal, ProposeArgs};
 	use subsoil::consensus::aura::sr25519::AuthorityPair;
 	use subsoil::keyring::sr25519::Keyring;

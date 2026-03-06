@@ -22,7 +22,7 @@
 pub mod client_ext;
 
 pub use self::client_ext::{BlockOrigin, ClientBlockImportExt, ClientExt};
-pub use soil_client_api::{execution_extensions::ExecutionExtensions, BadBlocks, ForkBlocks};
+pub use soil_client::client_api::{execution_extensions::ExecutionExtensions, BadBlocks, ForkBlocks};
 pub use soil_client_db::{self, Backend, BlocksPruning};
 pub use soil_client::consensus;
 pub use soil_client::executor::{self, WasmExecutionMethod, WasmExecutor};
@@ -33,7 +33,7 @@ pub use soil_service::{client, RpcHandlers};
 
 use futures::{future::Future, stream::StreamExt};
 use serde::Deserialize;
-use soil_client_api::BlockchainEvents;
+use soil_client::client_api::BlockchainEvents;
 use subsoil::core::{storage::ChildInfo, testing::TaskExecutor};
 use subsoil::runtime::{
 	codec::Encode,
@@ -186,12 +186,12 @@ impl<Block: BlockT, ExecutorDispatch, Backend, G: GenesisInit>
 		sc_consensus::LongestChain<Backend, Block>,
 	)
 	where
-		ExecutorDispatch: soil_client_api::CallExecutor<Block>
+		ExecutorDispatch: soil_client::client_api::CallExecutor<Block>
 			+ soil_client::executor::RuntimeVersionOf
 			+ Clone
 			+ 'static,
-		Backend: soil_client_api::backend::Backend<Block>,
-		<Backend as soil_client_api::backend::Backend<Block>>::OffchainStorage: 'static,
+		Backend: soil_client::client_api::backend::Backend<Block>,
+		<Backend as soil_client::client_api::backend::Backend<Block>>::OffchainStorage: 'static,
 	{
 		let storage = {
 			let mut storage = self.genesis_init.genesis_storage();
@@ -263,7 +263,7 @@ impl<Block: BlockT, H, Backend, G: GenesisInit>
 	)
 	where
 		I: Into<Option<WasmExecutor<H>>>,
-		Backend: soil_client_api::backend::Backend<Block> + 'static,
+		Backend: soil_client::client_api::backend::Backend<Block> + 'static,
 		H: soil_client::executor::HostFunctions,
 	{
 		let executor = executor.into().unwrap_or_else(|| WasmExecutor::<H>::builder().build());

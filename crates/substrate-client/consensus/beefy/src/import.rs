@@ -29,7 +29,7 @@ use subsoil::runtime::{
 };
 
 use sc_consensus::{BlockCheckParams, BlockImport, BlockImportParams, ImportResult};
-use soil_client_api::{backend::Backend, TrieCacheContext};
+use soil_client::client_api::{backend::Backend, TrieCacheContext};
 
 use crate::{
 	communication::notification::BeefyVersionedFinalityProofSender,

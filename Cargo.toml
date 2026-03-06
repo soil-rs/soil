@@ -18,7 +18,6 @@ members = [
 	"crates/soil/chain-spec",
 	"crates/soil/chain-spec-derive",
 	"crates/soil/cli",
-	"crates/soil/client-api",
 	"crates/soil/client-db",
 	"crates/soil/consensus-babe-rpc",
 	"crates/soil/consensus-beefy-rpc",
@@ -435,7 +434,6 @@ soil-chain-spec = { path = "crates/soil/chain-spec", default-features = false }
 soil-chain-spec-derive = { path = "crates/soil/chain-spec-derive", default-features = false }
 soil-cli = { path = "crates/soil/cli", default-features = false }
 soil-client = { path = "crates/soil-client", default-features = false }
-soil-client-api = { path = "crates/soil/client-api", default-features = false }
 soil-client-db = { path = "crates/soil/client-db", default-features = false }
 sc-consensus = { path = "crates/substrate-client/consensus/common", default-features = false }
 sc-consensus-aura = { path = "crates/substrate-client/consensus/aura", default-features = false }

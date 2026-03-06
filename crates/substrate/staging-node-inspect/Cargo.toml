@@ -19,7 +19,6 @@ soil-client = { workspace = true, default-features = true }
 clap = { features = ["derive"], workspace = true }
 codec = { workspace = true, default-features = true }
 soil-cli = { workspace = true }
-soil-client-api = { workspace = true, default-features = true }
 soil-service = { workspace = true }
 subsoil = { workspace = true, default-features = true }
 soil-statement-store = { workspace = true, default-features = true }

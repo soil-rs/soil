@@ -20,7 +20,7 @@
 //! payload.
 
 use codec::{Decode, Encode};
-use soil_client_api::StorageProof;
+use soil_client::client_api::StorageProof;
 use soil_network_common::message::RequestId;
 
 /// Remote call response.
@@ -46,7 +46,7 @@ pub struct RemoteReadResponse {
 /// Generic types.
 pub mod generic {
 	use codec::{Decode, Encode, Input};
-	use soil_client_api::StorageProof;
+	use soil_client::client_api::StorageProof;
 	use soil_network_common::{message::RequestId, role::Roles};
 	use subsoil::runtime::ConsensusEngineId;
 

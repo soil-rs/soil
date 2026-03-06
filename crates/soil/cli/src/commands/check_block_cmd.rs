@@ -22,7 +22,7 @@ use crate::{
 	CliConfiguration,
 };
 use clap::Parser;
-use soil_client_api::{BlockBackend, HeaderBackend};
+use soil_client::client_api::{BlockBackend, HeaderBackend};
 use subsoil::runtime::traits::{Block as BlockT, Header as HeaderT};
 use std::{fmt::Debug, str::FromStr, sync::Arc};
 

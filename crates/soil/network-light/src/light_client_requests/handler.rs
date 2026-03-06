@@ -27,7 +27,7 @@ use codec::{self, Decode, Encode};
 use futures::prelude::*;
 use log::{debug, trace};
 use prost::Message;
-use soil_client_api::{BlockBackend, ProofProvider};
+use soil_client::client_api::{BlockBackend, ProofProvider};
 use subsoil::core::{
 	hexdisplay::HexDisplay,
 	storage::{ChildInfo, ChildType, PrefixedStorageKey},

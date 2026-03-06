@@ -28,7 +28,7 @@ use futures::prelude::*;
 use log::{debug, info, warn};
 
 use soil_client::blockchain::HeaderMetadata;
-use soil_client_api::backend::Backend;
+use soil_client::client_api::backend::Backend;
 use soil_client::consensus::SelectChain;
 use subsoil::consensus::grandpa::AuthorityId;
 use subsoil::keystore::KeystorePtr;

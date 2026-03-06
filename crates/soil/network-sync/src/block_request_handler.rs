@@ -35,7 +35,7 @@ use prost::Message;
 use schnellru::{ByLength, LruMap};
 
 use soil_client::blockchain::HeaderBackend;
-use soil_client_api::BlockBackend;
+use soil_client::client_api::BlockBackend;
 use soil_network::{
 	config::ProtocolId,
 	request_responses::{IfDisconnected, IncomingRequest, OutgoingResponse, RequestFailure},

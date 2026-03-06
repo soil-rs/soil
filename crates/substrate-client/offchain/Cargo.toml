@@ -31,7 +31,6 @@ once_cell = { workspace = true }
 parking_lot = { workspace = true, default-features = true }
 rand = { workspace = true, default-features = true }
 rustls = { workspace = true }
-soil-client-api = { workspace = true, default-features = true }
 soil-network = { workspace = true, default-features = true }
 soil-network-types = { workspace = true, default-features = true }
 soil-offchain = { workspace = true, default-features = true }

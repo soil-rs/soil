@@ -106,7 +106,7 @@ use soil_client::blockchain::{
 	Backend as _, BlockStatus, Error as ClientError, HeaderBackend, HeaderMetadata,
 	Result as ClientResult,
 };
-use soil_client_api::{
+use soil_client::client_api::{
 	backend::AuxStore, AuxDataOperations, Backend as BackendT, FinalityNotification,
 	PreCommitActions, UsageProvider,
 };

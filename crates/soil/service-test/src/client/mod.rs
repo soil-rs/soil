@@ -24,7 +24,7 @@ use sc_consensus::{
 	BlockCheckParams, BlockImport, BlockImportParams, ForkChoiceStrategy, ImportResult,
 };
 use subsoil::api::ProvideRuntimeApi;
-use soil_client_api::{
+use soil_client::client_api::{
 	in_mem, Backend as BackendT, BlockBackend, BlockchainEvents, ExecutorProvider,
 	FinalityNotifications, HeaderBackend, StorageProvider,
 };
@@ -2099,7 +2099,7 @@ fn storage_keys_works() {
 fn cleans_up_closed_notification_sinks_on_block_import() {
 	use substrate_test_runtime_client::GenesisInit;
 
-	let backend = Arc::new(soil_client_api::in_mem::Backend::new());
+	let backend = Arc::new(soil_client::client_api::in_mem::Backend::new());
 	let executor = WasmExecutor::default();
 	let client_config = soil_service::ClientConfig::default();
 
@@ -2261,7 +2261,7 @@ fn use_dalek_ext_works() {
 
 	client
 		.execution_extensions()
-		.set_extensions_factory(soil_client_api::execution_extensions::ExtensionBeforeBlock::<
+		.set_extensions_factory(soil_client::client_api::execution_extensions::ExtensionBeforeBlock::<
 		Block,
 		subsoil::io::UseDalekExt,
 	>::new(1));

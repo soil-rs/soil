@@ -31,7 +31,7 @@ use log::{debug, info, log_enabled, trace};
 #[cfg(feature = "std")]
 use soil_client::blockchain::HeaderMetadata;
 #[cfg(feature = "std")]
-use soil_client_api::{BlockchainEvents, UsageProvider};
+use soil_client::client_api::{BlockchainEvents, UsageProvider};
 #[cfg(feature = "std")]
 use soil_network::NetworkStatusProvider;
 #[cfg(feature = "std")]

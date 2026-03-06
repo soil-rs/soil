@@ -20,7 +20,7 @@
 
 use codec::{Decode, Encode};
 use soil_client::blockchain::{Error as ClientError, Result as ClientResult};
-use soil_client_api::backend::AuxStore;
+use soil_client::client_api::backend::AuxStore;
 use subsoil::consensus::slots::{EquivocationProof, Slot};
 use subsoil::runtime::traits::Header;
 

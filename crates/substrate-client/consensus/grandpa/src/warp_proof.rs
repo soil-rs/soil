@@ -24,7 +24,7 @@ use crate::{
 	BlockNumberOps, GrandpaJustification, SharedAuthoritySet,
 };
 use soil_client::blockchain::{Backend as BlockchainBackend, HeaderBackend};
-use soil_client_api::Backend as ClientBackend;
+use soil_client::client_api::Backend as ClientBackend;
 use subsoil::consensus::grandpa::{AuthorityList, SetId, GRANDPA_ENGINE_ID};
 use soil_network_sync::strategy::warp::{
 	EncodedProof, VerificationResult, Verifier, WarpSyncProvider,

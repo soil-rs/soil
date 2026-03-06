@@ -33,7 +33,7 @@ use sc_consensus_slots::{check_equivocation, CheckedHeader, InherentDataProvider
 use subsoil::api::{ApiExt, ProvideRuntimeApi};
 use subsoil::block_builder::BlockBuilder as BlockBuilderApi;
 use soil_client::blockchain::{HeaderBackend, HeaderMetadata};
-use soil_client_api::{backend::AuxStore, BlockOf, UsageProvider};
+use soil_client::client_api::{backend::AuxStore, BlockOf, UsageProvider};
 use soil_client::consensus::Error as ConsensusError;
 use subsoil::consensus::aura::{inherents::AuraInherentData, AuraApi};
 use subsoil::consensus::slots::Slot;
@@ -62,7 +62,7 @@ fn check_header<C, B: BlockT, P: Pair>(
 where
 	P::Public: Codec,
 	P::Signature: Codec,
-	C: soil_client_api::backend::AuxStore,
+	C: soil_client::client_api::backend::AuxStore,
 {
 	let check_result =
 		crate::standalone::check_header_slot_and_seal::<B, P>(slot_now, header, authorities);
@@ -137,7 +137,7 @@ where
 		+ ProvideRuntimeApi<B>
 		+ Send
 		+ Sync
-		+ soil_client_api::backend::AuxStore,
+		+ soil_client::client_api::backend::AuxStore,
 	C::Api: BlockBuilderApi<B> + AuraApi<B, AuthorityId<P>> + ApiExt<B>,
 	P: Pair,
 	P::Public: Codec + Debug,

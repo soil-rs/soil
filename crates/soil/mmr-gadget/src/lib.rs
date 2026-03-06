@@ -48,7 +48,7 @@ use log::{debug, error, trace, warn};
 use sc_offchain::OffchainDb;
 use subsoil::api::ProvideRuntimeApi;
 use soil_client::blockchain::{HeaderBackend, HeaderMetadata};
-use soil_client_api::{Backend, BlockchainEvents, FinalityNotification, FinalityNotifications};
+use soil_client::client_api::{Backend, BlockchainEvents, FinalityNotification, FinalityNotifications};
 use subsoil::consensus::beefy::MmrRootHash;
 use subsoil::mmr::{utils, LeafIndex, MmrApi};
 use subsoil::runtime::traits::{Block, Header, NumberFor};

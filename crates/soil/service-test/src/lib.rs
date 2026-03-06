@@ -23,7 +23,7 @@ use futures::{task::Poll, Future, TryFutureExt as _};
 use log::{debug, info};
 use parking_lot::Mutex;
 use soil_client::blockchain::HeaderBackend;
-use soil_client_api::{Backend, CallExecutor};
+use soil_client::client_api::{Backend, CallExecutor};
 use soil_network::{
 	config::{MultiaddrWithPeerId, NetworkConfiguration, TransportConfig},
 	multiaddr, NetworkBlock, NetworkPeers, NetworkStateInfo,
@@ -138,7 +138,7 @@ impl<TBl, TBackend, TExec, TRtApi, TExPool> TestNetNode
 	for TestNetComponents<TBl, TBackend, TExec, TRtApi, TExPool>
 where
 	TBl: BlockT,
-	TBackend: soil_client_api::Backend<TBl> + Send + Sync + 'static,
+	TBackend: soil_client::client_api::Backend<TBl> + Send + Sync + 'static,
 	TExec: CallExecutor<TBl> + Send + Sync + 'static,
 	TRtApi: Send + Sync + 'static,
 	TExPool: TransactionPool<Block = TBl> + Send + Sync + 'static,

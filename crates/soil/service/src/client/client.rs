@@ -39,7 +39,7 @@ use soil_client::blockchain::{
 	HeaderBackend as ChainHeaderBackend, HeaderMetadata, Info as BlockchainInfo,
 };
 use soil_chain_spec::{resolve_state_version_from_wasm, BuildGenesisBlock};
-use soil_client_api::{
+use soil_client::client_api::{
 	backend::{
 		self, apply_aux, BlockImportOperation, ClientImportOperation, FinalizeSummary, Finalizer,
 		ImportNotificationAction, ImportSummary, LockImportRun, NewBlockState, StorageProvider,

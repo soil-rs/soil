@@ -17,7 +17,7 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 use super::{client::ClientConfig, wasm_override::WasmOverride, wasm_substitutes::WasmSubstitutes};
-use soil_client_api::{backend, TrieCacheContext};
+use soil_client::client_api::{backend, TrieCacheContext};
 use subsoil::core::traits::{FetchRuntimeCode, RuntimeCode};
 use soil_client::executor::{RuntimeVersion, RuntimeVersionOf};
 use subsoil::runtime::traits::Block as BlockT;
@@ -170,7 +170,7 @@ where
 mod tests {
 	use super::*;
 	use backend::Backend;
-	use soil_client_api::{in_mem, HeaderBackend};
+	use soil_client::client_api::{in_mem, HeaderBackend};
 	use subsoil::core::{
 		testing::TaskExecutor,
 		traits::{FetchRuntimeCode, WrappedRuntimeCode},

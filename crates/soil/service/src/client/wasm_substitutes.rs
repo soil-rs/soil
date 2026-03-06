@@ -19,7 +19,7 @@
 //! # WASM substitutes
 
 use soil_client::blockchain::{HeaderBackend, Result};
-use soil_client_api::backend;
+use soil_client::client_api::backend;
 use subsoil::core::traits::{FetchRuntimeCode, RuntimeCode, WrappedRuntimeCode};
 use soil_client::executor::RuntimeVersionOf;
 use subsoil::runtime::traits::{Block as BlockT, NumberFor};

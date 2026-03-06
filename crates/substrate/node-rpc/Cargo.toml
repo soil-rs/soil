@@ -21,7 +21,6 @@ soil-mmr-rpc = { workspace = true, default-features = true }
 node-primitives = { workspace = true, default-features = true }
 topsoil-transaction-payment-rpc = { workspace = true, default-features = true }
 soil-chain-spec = { workspace = true, default-features = true }
-soil-client-api = { workspace = true, default-features = true }
 sc-consensus-babe = { workspace = true, default-features = true }
 soil-consensus-babe-rpc = { workspace = true, default-features = true }
 sc-consensus-beefy = { workspace = true, default-features = true }

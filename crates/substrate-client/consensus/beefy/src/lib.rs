@@ -38,7 +38,7 @@ use prometheus_endpoint::Registry;
 use sc_consensus::BlockImport;
 use subsoil::api::ProvideRuntimeApi;
 use soil_client::blockchain::{Backend as BlockchainBackend, HeaderBackend};
-use soil_client_api::{Backend, BlockBackend, BlockchainEvents, FinalityNotification, Finalizer};
+use soil_client::client_api::{Backend, BlockBackend, BlockchainEvents, FinalityNotification, Finalizer};
 use soil_client::consensus::{Error as ConsensusError, SyncOracle};
 use subsoil::consensus::beefy::{
 	AuthorityIdBound, BeefyApi, ConsensusLog, PayloadProvider, ValidatorSet, BEEFY_ENGINE_ID,
@@ -491,7 +491,7 @@ where
 }
 
 /// Finality notification for consumption by BEEFY worker.
-/// This is a stripped down version of `soil_client_api::FinalityNotification` which does not keep
+/// This is a stripped down version of `soil_client::client_api::FinalityNotification` which does not keep
 /// blocks pinned.
 struct UnpinnedFinalityNotification<B: Block> {
 	/// Finalized block header hash.
@@ -658,7 +658,7 @@ pub async fn start_beefy_gadget<B, BE, C, N, P, R, S, AuthorityId>(
 /// Produce a future that transformes finality notifications into a struct that does not keep blocks
 /// pinned.
 fn finality_notification_transformer_future<B>(
-	mut finality_notifications: soil_client_api::FinalityNotifications<B>,
+	mut finality_notifications: soil_client::client_api::FinalityNotifications<B>,
 ) -> (
 	Pin<Box<futures::future::Fuse<impl Future<Output = ()> + Sized>>>,
 	Fuse<TracingUnboundedReceiver<UnpinnedFinalityNotification<B>>>,

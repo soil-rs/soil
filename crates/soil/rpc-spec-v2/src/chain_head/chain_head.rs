@@ -44,7 +44,7 @@ use log::debug;
 use sc_rpc::utils::Subscription;
 use subsoil::api::CallApiAt;
 use soil_client::blockchain::{Error as BlockChainError, HeaderBackend, HeaderMetadata};
-use soil_client_api::{
+use soil_client::client_api::{
 	Backend, BlockBackend, BlockchainEvents, CallExecutor, ChildInfo, ExecutorProvider, StorageKey,
 	StorageProvider,
 };

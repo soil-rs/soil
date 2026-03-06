@@ -187,7 +187,7 @@ pub trait TestClientBuilderExt<B>: Sized {
 impl<B> TestClientBuilderExt<B>
 	for TestClientBuilder<client::LocalCallExecutor<substrate_test_runtime::Block, B, WasmExecutor>, B>
 where
-	B: soil_client_api::backend::Backend<substrate_test_runtime::Block> + 'static,
+	B: soil_client::client_api::backend::Backend<substrate_test_runtime::Block> + 'static,
 {
 	fn genesis_init_mut(&mut self) -> &mut GenesisParameters {
 		Self::genesis_init_mut(self)

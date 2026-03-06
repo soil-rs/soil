@@ -18,7 +18,7 @@
 
 //! A set of APIs supported by the client along with their primitives.
 
-use soil_client::consensus::BlockOrigin;
+use crate::consensus::BlockOrigin;
 use subsoil::core::storage::StorageKey;
 use subsoil::runtime::{
 	generic::SignedBlock,
@@ -31,13 +31,13 @@ use std::{
 	sync::Arc,
 };
 
-use crate::{
-	blockchain::Info, notifications::StorageEventStream, FinalizeSummary, ImportSummary, StaleBlock,
-};
+use crate::blockchain::Info;
+use super::notifications::StorageEventStream;
+use super::{FinalizeSummary, ImportSummary, StaleBlock};
 
-use soil_client::blockchain;
-use soil_client::transaction_pool::ChainEvent;
-use soil_client::utils::mpsc::{TracingUnboundedReceiver, TracingUnboundedSender};
+use crate::blockchain;
+use crate::transaction_pool::ChainEvent;
+use crate::utils::mpsc::{TracingUnboundedReceiver, TracingUnboundedSender};
 
 /// Type that implements `futures::Stream` of block import events.
 pub type ImportNotifications<Block> = TracingUnboundedReceiver<BlockImportNotification<Block>>;
@@ -93,7 +93,7 @@ pub trait BlockchainEvents<Block: BlockT> {
 		&self,
 		filter_keys: Option<&[StorageKey]>,
 		child_filter_keys: Option<&[(StorageKey, Option<Vec<StorageKey>>)]>,
-	) -> soil_client::blockchain::Result<StorageEventStream<Block::Hash>>;
+	) -> crate::blockchain::Result<StorageEventStream<Block::Hash>>;
 }
 
 /// List of operations to be performed on storage aux data.
@@ -130,7 +130,7 @@ pub trait BlockBackend<Block: BlockT> {
 	fn block_body(
 		&self,
 		hash: Block::Hash,
-	) -> soil_client::blockchain::Result<Option<Vec<<Block as BlockT>::Extrinsic>>>;
+	) -> crate::blockchain::Result<Option<Vec<<Block as BlockT>::Extrinsic>>>;
 
 	/// Get all indexed transactions for a block,
 	/// including renewed transactions.
@@ -140,31 +140,31 @@ pub trait BlockBackend<Block: BlockT> {
 	fn block_indexed_body(
 		&self,
 		hash: Block::Hash,
-	) -> soil_client::blockchain::Result<Option<Vec<Vec<u8>>>>;
+	) -> crate::blockchain::Result<Option<Vec<Vec<u8>>>>;
 
 	/// Get full block by hash.
-	fn block(&self, hash: Block::Hash) -> soil_client::blockchain::Result<Option<SignedBlock<Block>>>;
+	fn block(&self, hash: Block::Hash) -> crate::blockchain::Result<Option<SignedBlock<Block>>>;
 
 	/// Get block status by block hash.
 	fn block_status(
 		&self,
 		hash: Block::Hash,
-	) -> soil_client::blockchain::Result<soil_client::consensus::BlockStatus>;
+	) -> crate::blockchain::Result<crate::consensus::BlockStatus>;
 
 	/// Get block justifications for the block with the given hash.
-	fn justifications(&self, hash: Block::Hash) -> soil_client::blockchain::Result<Option<Justifications>>;
+	fn justifications(&self, hash: Block::Hash) -> crate::blockchain::Result<Option<Justifications>>;
 
 	/// Get block hash by number.
-	fn block_hash(&self, number: NumberFor<Block>) -> soil_client::blockchain::Result<Option<Block::Hash>>;
+	fn block_hash(&self, number: NumberFor<Block>) -> crate::blockchain::Result<Option<Block::Hash>>;
 
 	/// Get single indexed transaction by content hash.
 	///
 	/// Note that this will only fetch transactions
 	/// that are indexed by the runtime with `storage_index_transaction`.
-	fn indexed_transaction(&self, hash: Block::Hash) -> soil_client::blockchain::Result<Option<Vec<u8>>>;
+	fn indexed_transaction(&self, hash: Block::Hash) -> crate::blockchain::Result<Option<Vec<u8>>>;
 
 	/// Check if transaction index exists.
-	fn has_indexed_transaction(&self, hash: Block::Hash) -> soil_client::blockchain::Result<bool> {
+	fn has_indexed_transaction(&self, hash: Block::Hash) -> crate::blockchain::Result<bool> {
 		Ok(self.indexed_transaction(hash)?.is_some())
 	}
 
@@ -179,7 +179,7 @@ pub trait ProvideUncles<Block: BlockT> {
 		&self,
 		target_hash: Block::Hash,
 		max_generation: NumberFor<Block>,
-	) -> soil_client::blockchain::Result<Vec<Block::Header>>;
+	) -> crate::blockchain::Result<Vec<Block::Header>>;
 }
 
 /// Client info
@@ -335,7 +335,7 @@ pub enum UnpinWorkerMessage<Block: BlockT> {
 
 /// Keeps a specific block pinned while the handle is alive.
 /// Once the last handle instance for a given block is dropped, the
-/// block is unpinned in the [`Backend`](crate::backend::Backend::unpin_block).
+/// block is unpinned in the [`Backend`](crate::client_api::backend::Backend::unpin_block).
 #[derive(Debug, Clone)]
 pub struct UnpinHandle<Block: BlockT>(Arc<UnpinHandleInner<Block>>);
 
@@ -368,7 +368,7 @@ pub struct BlockImportNotification<Block: BlockT> {
 	/// Tree route from old best to new best parent.
 	///
 	/// If `None`, there was no re-org while importing.
-	pub tree_route: Option<Arc<soil_client::blockchain::TreeRoute<Block>>>,
+	pub tree_route: Option<Arc<crate::blockchain::TreeRoute<Block>>>,
 	/// Handle to unpin the block this notification is for
 	unpin_handle: UnpinHandle<Block>,
 }
@@ -380,7 +380,7 @@ impl<Block: BlockT> BlockImportNotification<Block> {
 		origin: BlockOrigin,
 		header: Block::Header,
 		is_new_best: bool,
-		tree_route: Option<Arc<soil_client::blockchain::TreeRoute<Block>>>,
+		tree_route: Option<Arc<crate::blockchain::TreeRoute<Block>>>,
 		unpin_worker_sender: TracingUnboundedSender<UnpinWorkerMessage<Block>>,
 	) -> Self {
 		Self {

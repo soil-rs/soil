@@ -31,7 +31,6 @@ node-testing = { workspace = true }
 parity-db = { workspace = true }
 rand = { features = ["small_rng"], workspace = true, default-features = true }
 soil-basic-authorship = { workspace = true, default-features = true }
-soil-client-api = { workspace = true, default-features = true }
 sc-transaction-pool = { workspace = true, default-features = true }
 serde = { workspace = true, default-features = true }
 serde_json = { workspace = true, default-features = true }

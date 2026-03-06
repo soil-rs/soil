@@ -35,7 +35,7 @@ use schema::bitswap::{
 	message::{wantlist::WantType, Block as MessageBlock, BlockPresence, BlockPresenceType},
 	Message as BitswapMessage,
 };
-use soil_client_api::BlockBackend;
+use soil_client::client_api::BlockBackend;
 use soil_network_types::PeerId;
 use subsoil::runtime::traits::Block as BlockT;
 use std::{io, sync::Arc, time::Duration};

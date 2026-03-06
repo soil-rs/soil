@@ -37,7 +37,7 @@ pub(crate) const STAT_SLIDING_WINDOW: u64 = 3;
 pub async fn notification_future<Client, Pool, Block>(client: Arc<Client>, txpool: Arc<Pool>)
 where
 	Block: subsoil::runtime::traits::Block,
-	Client: soil_client_api::BlockchainEvents<Block>,
+	Client: soil_client::client_api::BlockchainEvents<Block>,
 	Pool: soil_client::transaction_pool::MaintainedTransactionPool<Block = Block>,
 {
 	let import_stream = client

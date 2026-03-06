@@ -25,5 +25,5 @@ trie-db = { workspace = true, default-features = true }
 jsonrpsee = { features = ["client-core", "macros", "server-core"], workspace = true }
 
 # Substrate Dependencies
-soil-client-api = { workspace = true, default-features = true }
+soil-client = { workspace = true, default-features = true }
 soil-rpc-api = { workspace = true, default-features = true }

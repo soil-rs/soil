@@ -19,7 +19,7 @@
 //! Helper for managing the set of available leaves in the chain for DB implementations.
 
 use codec::{Decode, Encode};
-use soil_client::blockchain::{Error, Result};
+use crate::blockchain::{Error, Result};
 use subsoil::database::{Database, Transaction};
 use subsoil::runtime::traits::AtLeast32Bit;
 use std::{cmp::Reverse, collections::BTreeMap};

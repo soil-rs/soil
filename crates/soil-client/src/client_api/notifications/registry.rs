@@ -23,7 +23,7 @@ use subsoil::core::hexdisplay::HexDisplay;
 use fnv::{FnvHashMap, FnvHashSet};
 use prometheus_endpoint::{register, CounterVec, Opts, U64};
 
-use soil_client::utils::{
+use crate::utils::{
 	id_sequence::SeqID as SubscriberId,
 	pubsub::{Dispatch, Subscribe, Unsubscribe},
 };
@@ -142,7 +142,7 @@ impl<'a> Subscribe<SubscribeOp<'a>> for Registry {
 			.insert(subs_id, SubscriberSink::new(subs_id, keys, child_keys))
 			.is_some()
 		{
-			log::warn!("The `subscribe`-method has been passed a non-unique subs_id (in `soil-client-api::notifications`)");
+			log::warn!("The `subscribe`-method has been passed a non-unique subs_id (in `soil-client::client_api::notifications`)");
 		}
 	}
 }

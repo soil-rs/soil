@@ -30,7 +30,7 @@ use prost::Message;
 use schnellru::{ByLength, LruMap};
 use soil_network_types::PeerId;
 
-use soil_client_api::{BlockBackend, ProofProvider};
+use soil_client::client_api::{BlockBackend, ProofProvider};
 use soil_network::{
 	config::ProtocolId,
 	request_responses::{IncomingRequest, OutgoingResponse},

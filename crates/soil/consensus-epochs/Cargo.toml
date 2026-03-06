@@ -19,7 +19,6 @@ targets = ["x86_64-unknown-linux-gnu"]
 soil-client = { workspace = true, default-features = true }
 codec = { features = ["derive"], workspace = true, default-features = true}
 fork-tree = { workspace = true, default-features = true}
-soil-client-api = { workspace = true, default-features = true}
 sc-consensus = { workspace = true, default-features = true}
 subsoil = { workspace = true}
 

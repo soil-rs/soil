@@ -41,7 +41,7 @@ use std::sync::Arc;
 
 use codec::{Decode, Encode};
 use soil_client::blockchain::{Backend as BlockchainBackend, HeaderBackend};
-use soil_client_api::backend::Backend;
+use soil_client::client_api::backend::Backend;
 use subsoil::consensus::grandpa::GRANDPA_ENGINE_ID;
 use subsoil::runtime::{
 	generic::BlockId,
@@ -262,7 +262,7 @@ mod tests {
 	use crate::{authorities::AuthoritySetChanges, BlockNumberOps, ClientError, SetId};
 	use futures::executor::block_on;
 	use sc_block_builder::BlockBuilderBuilder;
-	use soil_client_api::{apply_aux, LockImportRun};
+	use soil_client::client_api::{apply_aux, LockImportRun};
 	use soil_client::consensus::BlockOrigin;
 	use subsoil::consensus::grandpa::GRANDPA_ENGINE_ID as ID;
 	use subsoil::core::crypto::UncheckedFrom;

@@ -67,7 +67,7 @@ use subsoil::application_crypto::AppCrypto;
 use soil_client::blockchain::{
 	Error as ClientError, HeaderBackend, HeaderMetadata, Result as ClientResult,
 };
-use soil_client_api::{
+use soil_client::client_api::{
 	backend::{AuxStore, Backend},
 	utils::is_descendent_of,
 	BlockchainEvents, CallExecutor, ExecutorProvider, Finalizer, LockImportRun, StorageProvider,

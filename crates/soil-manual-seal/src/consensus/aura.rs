@@ -22,7 +22,7 @@
 use crate::{ConsensusDataProvider, Error};
 use sc_consensus::BlockImportParams;
 use subsoil::api::{ProvideRuntimeApi, StorageProof};
-use soil_client_api::{AuxStore, UsageProvider};
+use soil_client::client_api::{AuxStore, UsageProvider};
 use subsoil::consensus::aura::{
 	digests::CompatibleDigestItem,
 	sr25519::{AuthorityId, AuthoritySignature},

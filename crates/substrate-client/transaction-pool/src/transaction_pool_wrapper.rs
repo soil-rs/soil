@@ -42,8 +42,8 @@ pub struct TransactionPoolWrapper<Block, Client>(
 where
 	Block: BlockT,
 	Client: subsoil::api::ProvideRuntimeApi<Block>
-		+ soil_client_api::BlockBackend<Block>
-		+ soil_client_api::blockchain::HeaderBackend<Block>
+		+ soil_client::client_api::BlockBackend<Block>
+		+ soil_client::client_api::blockchain::HeaderBackend<Block>
 		+ subsoil::runtime::traits::BlockIdTo<Block>
 		+ soil_client::blockchain::HeaderMetadata<Block, Error = soil_client::blockchain::Error>
 		+ 'static,
@@ -54,8 +54,8 @@ impl<Block, Client> TransactionPool for TransactionPoolWrapper<Block, Client>
 where
 	Block: BlockT,
 	Client: subsoil::api::ProvideRuntimeApi<Block>
-		+ soil_client_api::BlockBackend<Block>
-		+ soil_client_api::blockchain::HeaderBackend<Block>
+		+ soil_client::client_api::BlockBackend<Block>
+		+ soil_client::client_api::blockchain::HeaderBackend<Block>
 		+ subsoil::runtime::traits::BlockIdTo<Block>
 		+ soil_client::blockchain::HeaderMetadata<Block, Error = soil_client::blockchain::Error>
 		+ 'static,
@@ -153,8 +153,8 @@ impl<Block, Client> MaintainedTransactionPool for TransactionPoolWrapper<Block, 
 where
 	Block: BlockT,
 	Client: subsoil::api::ProvideRuntimeApi<Block>
-		+ soil_client_api::BlockBackend<Block>
-		+ soil_client_api::blockchain::HeaderBackend<Block>
+		+ soil_client::client_api::BlockBackend<Block>
+		+ soil_client::client_api::blockchain::HeaderBackend<Block>
 		+ subsoil::runtime::traits::BlockIdTo<Block>
 		+ soil_client::blockchain::HeaderMetadata<Block, Error = soil_client::blockchain::Error>
 		+ 'static,
@@ -169,8 +169,8 @@ impl<Block, Client> LocalTransactionPool for TransactionPoolWrapper<Block, Clien
 where
 	Block: BlockT,
 	Client: subsoil::api::ProvideRuntimeApi<Block>
-		+ soil_client_api::BlockBackend<Block>
-		+ soil_client_api::blockchain::HeaderBackend<Block>
+		+ soil_client::client_api::BlockBackend<Block>
+		+ soil_client::client_api::blockchain::HeaderBackend<Block>
 		+ subsoil::runtime::traits::BlockIdTo<Block>
 		+ soil_client::blockchain::HeaderMetadata<Block, Error = soil_client::blockchain::Error>
 		+ 'static,

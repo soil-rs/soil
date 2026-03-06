@@ -37,7 +37,7 @@ use subsoil::api::CallApiAt;
 use soil_client::blockchain::{
 	Backend as BlockChainBackend, Error as BlockChainError, HeaderBackend, HeaderMetadata, Info,
 };
-use soil_client_api::{
+use soil_client::client_api::{
 	Backend, BlockBackend, BlockImportNotification, BlockchainEvents, FinalityNotification,
 	StaleBlock,
 };

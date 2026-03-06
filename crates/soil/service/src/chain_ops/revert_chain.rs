@@ -18,7 +18,7 @@
 
 use crate::error::Error;
 use log::info;
-use soil_client_api::{Backend, UsageProvider};
+use soil_client::client_api::{Backend, UsageProvider};
 use subsoil::runtime::traits::{Block as BlockT, NumberFor, Zero};
 use std::sync::Arc;
 

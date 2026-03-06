@@ -65,7 +65,7 @@ use soil_client::blockchain::{
 	Backend as _, CachedHeaderMetadata, DisplacedLeavesAfterFinalization, Error as ClientError,
 	HeaderBackend, HeaderMetadata, HeaderMetadataCache, Result as ClientResult,
 };
-use soil_client_api::{
+use soil_client::client_api::{
 	backend::NewBlockState,
 	blockchain::{BlockGap, BlockGapType},
 	leaves::{FinalizationOutcome, LeafSet},
@@ -699,7 +699,7 @@ impl<Block: BlockT> BlockchainDb<Block> {
 	}
 }
 
-impl<Block: BlockT> soil_client_api::blockchain::HeaderBackend<Block> for BlockchainDb<Block> {
+impl<Block: BlockT> soil_client::client_api::blockchain::HeaderBackend<Block> for BlockchainDb<Block> {
 	fn header(&self, hash: Block::Hash) -> ClientResult<Option<Block::Header>> {
 		let mut cache = self.header_cache.lock();
 		if let Some(result) = cache.get_refresh(&hash) {
@@ -715,9 +715,9 @@ impl<Block: BlockT> soil_client_api::blockchain::HeaderBackend<Block> for Blockc
 		Ok(header)
 	}
 
-	fn info(&self) -> soil_client_api::blockchain::Info<Block> {
+	fn info(&self) -> soil_client::client_api::blockchain::Info<Block> {
 		let meta = self.meta.read();
-		soil_client_api::blockchain::Info {
+		soil_client::client_api::blockchain::Info {
 			best_hash: meta.best_hash,
 			best_number: meta.best_number,
 			genesis_hash: meta.genesis_hash,
@@ -729,10 +729,10 @@ impl<Block: BlockT> soil_client_api::blockchain::HeaderBackend<Block> for Blockc
 		}
 	}
 
-	fn status(&self, hash: Block::Hash) -> ClientResult<soil_client_api::blockchain::BlockStatus> {
+	fn status(&self, hash: Block::Hash) -> ClientResult<soil_client::client_api::blockchain::BlockStatus> {
 		match self.header(hash)?.is_some() {
-			true => Ok(soil_client_api::blockchain::BlockStatus::InChain),
-			false => Ok(soil_client_api::blockchain::BlockStatus::Unknown),
+			true => Ok(soil_client::client_api::blockchain::BlockStatus::InChain),
+			false => Ok(soil_client::client_api::blockchain::BlockStatus::Unknown),
 		}
 	}
 
@@ -751,7 +751,7 @@ impl<Block: BlockT> soil_client_api::blockchain::HeaderBackend<Block> for Blockc
 	}
 }
 
-impl<Block: BlockT> soil_client_api::blockchain::Backend<Block> for BlockchainDb<Block> {
+impl<Block: BlockT> soil_client::client_api::blockchain::Backend<Block> for BlockchainDb<Block> {
 	fn body(&self, hash: Block::Hash) -> ClientResult<Option<Vec<Block::Extrinsic>>> {
 		let cache = self.pinned_blocks_cache.read();
 		if let Some(result) = cache.body(&hash) {
@@ -932,7 +932,7 @@ impl<Block: BlockT> BlockImportOperation<Block> {
 	}
 }
 
-impl<Block: BlockT> soil_client_api::backend::BlockImportOperation<Block>
+impl<Block: BlockT> soil_client::client_api::backend::BlockImportOperation<Block>
 	for BlockImportOperation<Block>
 {
 	type State = RecordStatsState<RefTrackingState<Block>, Block>;
@@ -1349,7 +1349,7 @@ impl<Block: BlockT> Backend<Block> {
 		let info = backend.blockchain.info();
 		if info.finalized_state.is_none()
 			&& info.finalized_hash != Default::default()
-			&& soil_client_api::Backend::have_state_at(
+			&& soil_client::client_api::Backend::have_state_at(
 				&backend,
 				info.finalized_hash,
 				info.finalized_number,
@@ -1475,7 +1475,7 @@ impl<Block: BlockT> Backend<Block> {
 		// TODO: ensure best chain contains this block.
 		let number = *header.number();
 		self.ensure_sequential_finalization(header, last_finalized)?;
-		let with_state = soil_client_api::Backend::have_state_at(self, hash, number);
+		let with_state = soil_client::client_api::Backend::have_state_at(self, hash, number);
 
 		self.note_finalized(
 			transaction,
@@ -1515,7 +1515,7 @@ impl<Block: BlockT> Backend<Block> {
 		for to_canonicalize in
 			best_canonical + 1..=best_number.saturating_sub(self.canonicalization_delay)
 		{
-			let hash_to_canonicalize = soil_client_api::blockchain::HeaderBackend::hash(
+			let hash_to_canonicalize = soil_client::client_api::blockchain::HeaderBackend::hash(
 				&self.blockchain,
 				to_canonicalize.saturated_into(),
 			)?
@@ -1527,7 +1527,7 @@ impl<Block: BlockT> Backend<Block> {
 				))
 			})?;
 
-			if !soil_client_api::Backend::have_state_at(
+			if !soil_client::client_api::Backend::have_state_at(
 				self,
 				hash_to_canonicalize,
 				to_canonicalize.saturated_into(),
@@ -1911,7 +1911,7 @@ impl<Block: BlockT> Backend<Block> {
 
 		if let Some(set_head) = operation.set_head {
 			if let Some(header) =
-				soil_client_api::blockchain::HeaderBackend::header(&self.blockchain, set_head)?
+				soil_client::client_api::blockchain::HeaderBackend::header(&self.blockchain, set_head)?
 			{
 				let number = header.number();
 				let hash = header.hash();
@@ -1989,7 +1989,7 @@ impl<Block: BlockT> Backend<Block> {
 			LastCanonicalized::NotCanonicalizing => false,
 		};
 
-		if requires_canonicalization && soil_client_api::Backend::have_state_at(self, f_hash, f_num)
+		if requires_canonicalization && soil_client::client_api::Backend::have_state_at(self, f_hash, f_num)
 		{
 			let commit = self.storage.state_db.canonicalize_block(&f_hash).map_err(
 				soil_client::blockchain::Error::from_state_db::<
@@ -2230,7 +2230,7 @@ fn apply_indexed_body<Block: BlockT>(transaction: &mut Transaction<DbHash>, body
 	}
 }
 
-impl<Block> soil_client_api::backend::AuxStore for Backend<Block>
+impl<Block> soil_client::client_api::backend::AuxStore for Backend<Block>
 where
 	Block: BlockT,
 {
@@ -2261,7 +2261,7 @@ where
 	}
 }
 
-impl<Block: BlockT> soil_client_api::backend::Backend<Block> for Backend<Block> {
+impl<Block: BlockT> soil_client::client_api::backend::Backend<Block> for Backend<Block> {
 	type BlockImportOperation = BlockImportOperation<Block>;
 	type Blockchain = BlockchainDb<Block>;
 	type State = RecordStatsState<RefTrackingState<Block>, Block>;
@@ -2796,7 +2796,7 @@ impl<Block: BlockT> soil_client_api::backend::Backend<Block> for Backend<Block> 
 	}
 }
 
-impl<Block: BlockT> soil_client_api::backend::LocalBackend<Block> for Backend<Block> {}
+impl<Block: BlockT> soil_client::client_api::backend::LocalBackend<Block> for Backend<Block> {}
 
 #[cfg(test)]
 pub(crate) mod tests {
@@ -2804,7 +2804,7 @@ pub(crate) mod tests {
 	use crate::{columns, utils::number_and_hash_to_lookup_key};
 	use hash_db::{HashDB, EMPTY_PREFIX};
 	use soil_client::blockchain::{lowest_common_ancestor, tree_route};
-	use soil_client_api::{
+	use soil_client::client_api::{
 		backend::{Backend as BTrait, BlockImportOperation as Op},
 		blockchain::Backend as BLBTrait,
 	};
@@ -3915,7 +3915,7 @@ pub(crate) mod tests {
 
 	#[test]
 	fn test_finalize_block_with_justification() {
-		use soil_client_api::blockchain::Backend as BlockChainBackend;
+		use soil_client::client_api::blockchain::Backend as BlockChainBackend;
 
 		let backend = Backend::<Block>::new_test(10, 10);
 
@@ -3933,7 +3933,7 @@ pub(crate) mod tests {
 
 	#[test]
 	fn test_append_justification_to_finalized_block() {
-		use soil_client_api::blockchain::Backend as BlockChainBackend;
+		use soil_client::client_api::blockchain::Backend as BlockChainBackend;
 
 		let backend = Backend::<Block>::new_test(10, 10);
 
@@ -4721,7 +4721,7 @@ pub(crate) mod tests {
 		let ensure_pruned = |hash, number: u32| {
 			assert_eq!(
 				backend.blockchain.status(hash).unwrap(),
-				soil_client_api::blockchain::BlockStatus::Unknown
+				soil_client::client_api::blockchain::BlockStatus::Unknown
 			);
 			assert!(
 				backend

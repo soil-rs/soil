@@ -23,7 +23,7 @@ use crate::{
 };
 use clap::Parser;
 use log::info;
-use soil_client_api::{HeaderBackend, StorageProvider, UsageProvider};
+use soil_client::client_api::{HeaderBackend, StorageProvider, UsageProvider};
 use subsoil::runtime::traits::{Block as BlockT, Header as HeaderT};
 use std::{fmt::Debug, io::Write, str::FromStr, sync::Arc};
 
@@ -58,7 +58,7 @@ impl ExportStateCmd {
 	where
 		B: BlockT,
 		C: UsageProvider<B> + StorageProvider<B, BA> + HeaderBackend<B>,
-		BA: soil_client_api::backend::Backend<B>,
+		BA: soil_client::client_api::backend::Backend<B>,
 		<B::Hash as FromStr>::Err: Debug,
 		<<B::Header as HeaderT>::Number as FromStr>::Err: Debug,
 	{

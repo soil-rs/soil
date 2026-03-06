@@ -49,7 +49,7 @@ use sc_consensus::{
 };
 use subsoil::api::{ApiRef, ProvideRuntimeApi};
 use subsoil::application_crypto::key_types::BEEFY as BEEFY_KEY_TYPE;
-use soil_client_api::{
+use soil_client::client_api::{
 	Backend as BackendT, BlockchainEvents, FinalityNotifications, HeaderBackend,
 };
 use soil_client::consensus::BlockOrigin;
@@ -768,7 +768,7 @@ async fn correct_beefy_payload() {
 #[tokio::test]
 async fn beefy_importing_justifications() {
 	use futures::{future::poll_fn, task::Poll};
-	use soil_client_api::BlockBackend;
+	use soil_client::client_api::BlockBackend;
 
 	subsoil::tracing::try_init_simple();
 

@@ -29,7 +29,7 @@ use jsonrpsee::{core::async_trait, Extensions, PendingSubscriptionSink};
 use sc_tracing::block::TracingExecuteBlock;
 use subsoil::api::{CallApiAt, Metadata, ProvideRuntimeApi};
 use soil_client::blockchain::{HeaderBackend, HeaderMetadata};
-use soil_client_api::{
+use soil_client::client_api::{
 	Backend, BlockBackend, BlockchainEvents, ExecutorProvider, ProofProvider, StorageProvider,
 };
 use subsoil::core::{

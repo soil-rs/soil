@@ -126,8 +126,8 @@ pub trait FullClientTransactionPool<Block, Client>:
 where
 	Block: BlockT,
 	Client: subsoil::api::ProvideRuntimeApi<Block>
-		+ soil_client_api::BlockBackend<Block>
-		+ soil_client_api::blockchain::HeaderBackend<Block>
+		+ soil_client::client_api::BlockBackend<Block>
+		+ soil_client::client_api::blockchain::HeaderBackend<Block>
 		+ subsoil::runtime::traits::BlockIdTo<Block>
 		+ soil_client::blockchain::HeaderMetadata<Block, Error = soil_client::blockchain::Error>
 		+ 'static,
@@ -139,8 +139,8 @@ impl<Block, Client, P> FullClientTransactionPool<Block, Client> for P
 where
 	Block: BlockT,
 	Client: subsoil::api::ProvideRuntimeApi<Block>
-		+ soil_client_api::BlockBackend<Block>
-		+ soil_client_api::blockchain::HeaderBackend<Block>
+		+ soil_client::client_api::BlockBackend<Block>
+		+ soil_client::client_api::blockchain::HeaderBackend<Block>
 		+ subsoil::runtime::traits::BlockIdTo<Block>
 		+ soil_client::blockchain::HeaderMetadata<Block, Error = soil_client::blockchain::Error>
 		+ 'static,
@@ -182,11 +182,11 @@ impl<'a, Client, Block> Builder<'a, Block, Client>
 where
 	Block: BlockT,
 	Client: subsoil::api::ProvideRuntimeApi<Block>
-		+ soil_client_api::BlockBackend<Block>
-		+ soil_client_api::blockchain::HeaderBackend<Block>
+		+ soil_client::client_api::BlockBackend<Block>
+		+ soil_client::client_api::blockchain::HeaderBackend<Block>
 		+ subsoil::runtime::traits::BlockIdTo<Block>
-		+ soil_client_api::ExecutorProvider<Block>
-		+ soil_client_api::UsageProvider<Block>
+		+ soil_client::client_api::ExecutorProvider<Block>
+		+ soil_client::client_api::UsageProvider<Block>
 		+ soil_client::blockchain::HeaderMetadata<Block, Error = soil_client::blockchain::Error>
 		+ Send
 		+ Sync

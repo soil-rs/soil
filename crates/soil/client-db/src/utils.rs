@@ -25,7 +25,7 @@ use log::{debug, info};
 
 use crate::{Database, DatabaseSource, DbHash};
 use codec::Decode;
-use soil_client_api::blockchain::{BlockGap, BlockGapType};
+use soil_client::client_api::blockchain::{BlockGap, BlockGapType};
 use subsoil::database::Transaction;
 use subsoil::runtime::{
 	generic::BlockId,

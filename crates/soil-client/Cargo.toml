@@ -56,6 +56,9 @@ wasmtime = { features = [
 	"threads",
 ], workspace = true }
 rustix = { features = ["fs", "mm", "param", "std", "use-libc"], workspace = true }
+# client-api deps
+fnv = { workspace = true }
+prometheus-endpoint = { workspace = true, default-features = true }
 
 [dev-dependencies]
 futures = { workspace = true }

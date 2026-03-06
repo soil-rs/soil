@@ -18,7 +18,7 @@
 
 use criterion::{criterion_group, criterion_main, BatchSize, Criterion};
 use rand::{distributions::Uniform, rngs::StdRng, Rng, SeedableRng};
-use soil_client_api::{
+use soil_client::client_api::{
 	Backend as _, BlockImportOperation, NewBlockState, StateBackend, TrieCacheContext,
 };
 use soil_client_db::{Backend, BlocksPruning, DatabaseSettings, DatabaseSource, PruningMode};

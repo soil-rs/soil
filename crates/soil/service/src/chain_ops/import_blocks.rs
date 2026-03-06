@@ -26,7 +26,7 @@ use sc_consensus::import_queue::{
 };
 use serde_json::{de::IoRead as JsonIoRead, Deserializer, StreamDeserializer};
 use soil_chain_spec::ChainSpec;
-use soil_client_api::HeaderBackend;
+use soil_client::client_api::HeaderBackend;
 use soil_client::consensus::BlockOrigin;
 use subsoil::runtime::{
 	generic::SignedBlock,

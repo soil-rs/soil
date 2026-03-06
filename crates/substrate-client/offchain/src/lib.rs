@@ -43,7 +43,7 @@ use futures::{
 };
 use parking_lot::Mutex;
 use subsoil::api::{ApiExt, ProvideRuntimeApi};
-use soil_client_api::BlockchainEvents;
+use soil_client::client_api::BlockchainEvents;
 use subsoil::core::{offchain, traits::SpawnNamed};
 use subsoil::externalities::Extension;
 use subsoil::keystore::{KeystoreExt, KeystorePtr};
@@ -329,7 +329,7 @@ mod tests {
 	use futures::executor::block_on;
 	use sc_block_builder::BlockBuilderBuilder;
 	use sc_transaction_pool::BasicPool;
-	use soil_client_api::Backend as _;
+	use soil_client::client_api::Backend as _;
 	use soil_client::consensus::BlockOrigin;
 	use soil_network::{
 		config::MultiaddrWithPeerId, types::ProtocolName, Multiaddr, ObservedRole, ReputationChange,

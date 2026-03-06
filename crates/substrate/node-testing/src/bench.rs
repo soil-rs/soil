@@ -43,7 +43,7 @@ use sc_block_builder::BlockBuilderBuilder;
 use sc_consensus::{BlockImport, BlockImportParams, ForkChoiceStrategy, ImportResult, ImportedAux};
 use subsoil::api::ProvideRuntimeApi;
 use subsoil::block_builder::BlockBuilder;
-use soil_client_api::{execution_extensions::ExecutionExtensions, UsageProvider};
+use soil_client::client_api::{execution_extensions::ExecutionExtensions, UsageProvider};
 use soil_client_db::PruningMode;
 use soil_client::consensus::BlockOrigin;
 use subsoil::core::{

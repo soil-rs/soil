@@ -26,7 +26,6 @@ log = { workspace = true, default-features = true}
 mockall = { workspace = true}
 prometheus-endpoint = { workspace = true, default-features = true}
 prost = { workspace = true}
-soil-client-api = { workspace = true, default-features = true}
 sc-consensus = { workspace = true, default-features = true}
 soil-network = { workspace = true, default-features = true}
 soil-network-common = { workspace = true, default-features = true}

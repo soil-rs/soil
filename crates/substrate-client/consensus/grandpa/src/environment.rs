@@ -36,7 +36,7 @@ use prometheus_endpoint::{register, Counter, Gauge, PrometheusError, U64};
 
 use subsoil::api::ApiExt;
 use soil_client::blockchain::HeaderMetadata;
-use soil_client_api::{
+use soil_client::client_api::{
 	backend::{apply_aux, Backend as BackendT},
 	utils::is_descendent_of,
 };

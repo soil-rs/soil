@@ -41,7 +41,6 @@ libc = { workspace = true }
 log = { workspace = true, default-features = true }
 parking_lot = { workspace = true, default-features = true }
 rustc-hash = { workspace = true }
-soil-client-api = { workspace = true, default-features = true }
 subsoil-derive = { workspace = true }
 serde = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }

@@ -23,7 +23,7 @@ use log::info;
 
 use crate::{migration::EpochV0, Epoch, LOG_TARGET};
 use soil_client::blockchain::{Error as ClientError, Result as ClientResult};
-use soil_client_api::backend::AuxStore;
+use soil_client::client_api::backend::AuxStore;
 use subsoil::consensus::babe::{BabeBlockWeight, BabeConfiguration};
 use soil_consensus_epochs::{
 	migration::{EpochChangesV0For, EpochChangesV1For},

@@ -79,7 +79,6 @@ soil-basic-authorship = { workspace = true, default-features = true }
 sc-block-builder = { workspace = true, default-features = true }
 soil-chain-spec = { workspace = true, default-features = true }
 soil-cli = { workspace = true, default-features = true }
-soil-client-api = { workspace = true, default-features = true }
 soil-client-db = { workspace = true, default-features = true }
 sc-consensus = { workspace = true, default-features = true }
 sc-consensus-aura = { workspace = true, default-features = true }

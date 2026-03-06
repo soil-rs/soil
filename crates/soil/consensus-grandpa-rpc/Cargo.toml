@@ -19,7 +19,6 @@ finality-grandpa = { features = ["derive-codec"], workspace = true, default-feat
 futures = { workspace = true}
 jsonrpsee = { features = ["client-core", "macros", "server-core"], workspace = true}
 log = { workspace = true, default-features = true}
-soil-client-api = { workspace = true, default-features = true}
 sc-consensus-grandpa = { workspace = true, default-features = true}
 sc-rpc = { workspace = true, default-features = true}
 serde = { features = ["derive"], workspace = true, default-features = true}

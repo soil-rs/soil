@@ -18,7 +18,7 @@
 //! Client extension for tests.
 
 use sc_consensus::{BlockImport, BlockImportParams, ForkChoiceStrategy};
-use soil_client_api::{backend::Finalizer, client::BlockBackend};
+use soil_client::client_api::{backend::Finalizer, client::BlockBackend};
 use soil_client::consensus::Error as ConsensusError;
 use subsoil::runtime::{traits::Block as BlockT, Justification, Justifications};
 use soil_service::client::Client;
@@ -66,8 +66,8 @@ pub trait ClientBlockImportExt<Block: BlockT>: Sized {
 
 impl<B, E, RA, Block> ClientExt<Block> for Client<B, E, Block, RA>
 where
-	B: soil_client_api::backend::Backend<Block>,
-	E: soil_client_api::CallExecutor<Block> + soil_client::executor::RuntimeVersionOf + 'static,
+	B: soil_client::client_api::backend::Backend<Block>,
+	E: soil_client::client_api::CallExecutor<Block> + soil_client::executor::RuntimeVersionOf + 'static,
 	Self: BlockImport<Block, Error = ConsensusError>,
 	Block: BlockT,
 {

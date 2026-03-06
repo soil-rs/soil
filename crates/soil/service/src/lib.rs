@@ -42,7 +42,7 @@ use futures::{pin_mut, FutureExt, StreamExt};
 use jsonrpsee::RpcModule;
 use log::{debug, error, trace, warn};
 use soil_client::blockchain::HeaderMetadata;
-use soil_client_api::{blockchain::HeaderBackend, BlockBackend, BlockchainEvents, ProofProvider};
+use soil_client::client_api::{blockchain::HeaderBackend, BlockBackend, BlockchainEvents, ProofProvider};
 use soil_client::consensus::SyncOracle;
 use soil_network::{
 	config::MultiaddrWithPeerId, service::traits::NetworkService, NetworkBackend, NetworkBlock,

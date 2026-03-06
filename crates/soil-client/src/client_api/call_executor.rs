@@ -19,13 +19,13 @@
 //! A method call executor interface.
 
 use subsoil::core::traits::CallContext;
-use soil_client::executor::{RuntimeVersion, RuntimeVersionOf};
+use crate::executor::{RuntimeVersion, RuntimeVersionOf};
 use subsoil::externalities::Extensions;
 use subsoil::runtime::traits::{Block as BlockT, HashingFor};
 use subsoil::state_machine::{OverlayedChanges, StorageProof};
 use std::cell::RefCell;
 
-use crate::execution_extensions::ExecutionExtensions;
+use super::execution_extensions::ExecutionExtensions;
 use subsoil::api::ProofRecorder;
 
 /// Executor Provider
@@ -46,7 +46,7 @@ pub trait CallExecutor<B: BlockT>: RuntimeVersionOf {
 	type Error: subsoil::state_machine::Error;
 
 	/// The backend used by the node.
-	type Backend: crate::backend::Backend<B>;
+	type Backend: super::backend::Backend<B>;
 
 	/// Returns the [`ExecutionExtensions`].
 	fn execution_extensions(&self) -> &ExecutionExtensions<B>;
@@ -60,7 +60,7 @@ pub trait CallExecutor<B: BlockT>: RuntimeVersionOf {
 		method: &str,
 		call_data: &[u8],
 		context: CallContext,
-	) -> Result<Vec<u8>, soil_client::blockchain::Error>;
+	) -> Result<Vec<u8>, crate::blockchain::Error>;
 
 	/// Execute a contextual call on top of state in a block of a given hash.
 	///
@@ -76,12 +76,12 @@ pub trait CallExecutor<B: BlockT>: RuntimeVersionOf {
 		proof_recorder: &Option<ProofRecorder<B>>,
 		call_context: CallContext,
 		extensions: &RefCell<Extensions>,
-	) -> soil_client::blockchain::Result<Vec<u8>>;
+	) -> crate::blockchain::Result<Vec<u8>>;
 
 	/// Extract RuntimeVersion of given block
 	///
 	/// No changes are made.
-	fn runtime_version(&self, at_hash: B::Hash) -> Result<RuntimeVersion, soil_client::blockchain::Error>;
+	fn runtime_version(&self, at_hash: B::Hash) -> Result<RuntimeVersion, crate::blockchain::Error>;
 
 	/// Prove the execution of the given `method`.
 	///
@@ -91,5 +91,5 @@ pub trait CallExecutor<B: BlockT>: RuntimeVersionOf {
 		at_hash: B::Hash,
 		method: &str,
 		call_data: &[u8],
-	) -> Result<(Vec<u8>, StorageProof), soil_client::blockchain::Error>;
+	) -> Result<(Vec<u8>, StorageProof), crate::blockchain::Error>;
 }

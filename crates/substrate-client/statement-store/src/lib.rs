@@ -57,7 +57,7 @@ use parking_lot::{lock_api::RwLockUpgradableReadGuard, RwLock};
 use prometheus_endpoint::Registry as PrometheusRegistry;
 use sc_keystore::LocalKeystore;
 use soil_client::blockchain::HeaderBackend;
-use soil_client_api::{backend::StorageProvider, Backend, StorageKey};
+use soil_client::client_api::{backend::StorageProvider, Backend, StorageKey};
 use subsoil::core::{
 	crypto::UncheckedFrom, hexdisplay::HexDisplay, traits::SpawnNamed, Decode, Encode,
 };
@@ -1514,14 +1514,14 @@ mod tests {
 	#[derive(Clone)]
 	pub(crate) struct TestClient;
 
-	pub(crate) type TestBackend = soil_client_api::in_mem::Backend<Block>;
+	pub(crate) type TestBackend = soil_client::client_api::in_mem::Backend<Block>;
 
-	impl soil_client_api::StorageProvider<Block, TestBackend> for TestClient {
+	impl soil_client::client_api::StorageProvider<Block, TestBackend> for TestClient {
 		fn storage(
 			&self,
 			_hash: Hash,
-			key: &soil_client_api::StorageKey,
-		) -> soil_client::blockchain::Result<Option<soil_client_api::StorageData>> {
+			key: &soil_client::client_api::StorageKey,
+		) -> soil_client::blockchain::Result<Option<soil_client::client_api::StorageData>> {
 			use soil_statement_store::StatementAllowance;
 
 			assert_eq!(&key.0[0..21], b":statement_allowance:" as &[u8],);
@@ -1539,13 +1539,13 @@ mod tests {
 				42 => StatementAllowance::new(42, (42 * crate::MAX_STATEMENT_SIZE) as u32),
 				_ => StatementAllowance::new(100, 1000),
 			};
-			Ok(Some(soil_client_api::StorageData(allowance.encode())))
+			Ok(Some(soil_client::client_api::StorageData(allowance.encode())))
 		}
 
 		fn storage_hash(
 			&self,
 			_hash: Hash,
-			_key: &soil_client_api::StorageKey,
+			_key: &soil_client::client_api::StorageKey,
 		) -> soil_client::blockchain::Result<Option<Hash>> {
 			unimplemented!()
 		}
@@ -1553,11 +1553,11 @@ mod tests {
 		fn storage_keys(
 			&self,
 			_hash: Hash,
-			_prefix: Option<&soil_client_api::StorageKey>,
-			_start_key: Option<&soil_client_api::StorageKey>,
+			_prefix: Option<&soil_client::client_api::StorageKey>,
+			_start_key: Option<&soil_client::client_api::StorageKey>,
 		) -> soil_client::blockchain::Result<
-			soil_client_api::backend::KeysIter<
-				<TestBackend as soil_client_api::Backend<Block>>::State,
+			soil_client::client_api::backend::KeysIter<
+				<TestBackend as soil_client::client_api::Backend<Block>>::State,
 				Block,
 			>,
 		> {
@@ -1567,11 +1567,11 @@ mod tests {
 		fn storage_pairs(
 			&self,
 			_hash: Hash,
-			_prefix: Option<&soil_client_api::StorageKey>,
-			_start_key: Option<&soil_client_api::StorageKey>,
+			_prefix: Option<&soil_client::client_api::StorageKey>,
+			_start_key: Option<&soil_client::client_api::StorageKey>,
 		) -> soil_client::blockchain::Result<
-			soil_client_api::backend::PairsIter<
-				<TestBackend as soil_client_api::Backend<Block>>::State,
+			soil_client::client_api::backend::PairsIter<
+				<TestBackend as soil_client::client_api::Backend<Block>>::State,
 				Block,
 			>,
 		> {
@@ -1581,21 +1581,21 @@ mod tests {
 		fn child_storage(
 			&self,
 			_hash: Hash,
-			_child_info: &soil_client_api::ChildInfo,
-			_key: &soil_client_api::StorageKey,
-		) -> soil_client::blockchain::Result<Option<soil_client_api::StorageData>> {
+			_child_info: &soil_client::client_api::ChildInfo,
+			_key: &soil_client::client_api::StorageKey,
+		) -> soil_client::blockchain::Result<Option<soil_client::client_api::StorageData>> {
 			unimplemented!()
 		}
 
 		fn child_storage_keys(
 			&self,
 			_hash: Hash,
-			_child_info: soil_client_api::ChildInfo,
-			_prefix: Option<&soil_client_api::StorageKey>,
-			_start_key: Option<&soil_client_api::StorageKey>,
+			_child_info: soil_client::client_api::ChildInfo,
+			_prefix: Option<&soil_client::client_api::StorageKey>,
+			_start_key: Option<&soil_client::client_api::StorageKey>,
 		) -> soil_client::blockchain::Result<
-			soil_client_api::backend::KeysIter<
-				<TestBackend as soil_client_api::Backend<Block>>::State,
+			soil_client::client_api::backend::KeysIter<
+				<TestBackend as soil_client::client_api::Backend<Block>>::State,
 				Block,
 			>,
 		> {
@@ -1605,8 +1605,8 @@ mod tests {
 		fn child_storage_hash(
 			&self,
 			_hash: Hash,
-			_child_info: &soil_client_api::ChildInfo,
-			_key: &soil_client_api::StorageKey,
+			_child_info: &soil_client::client_api::ChildInfo,
+			_key: &soil_client::client_api::StorageKey,
 		) -> soil_client::blockchain::Result<Option<Hash>> {
 			unimplemented!()
 		}
@@ -1614,17 +1614,17 @@ mod tests {
 		fn closest_merkle_value(
 			&self,
 			_hash: Hash,
-			_key: &soil_client_api::StorageKey,
-		) -> soil_client::blockchain::Result<Option<soil_client_api::MerkleValue<Hash>>> {
+			_key: &soil_client::client_api::StorageKey,
+		) -> soil_client::blockchain::Result<Option<soil_client::client_api::MerkleValue<Hash>>> {
 			unimplemented!()
 		}
 
 		fn child_closest_merkle_value(
 			&self,
 			_hash: Hash,
-			_child_info: &soil_client_api::ChildInfo,
-			_key: &soil_client_api::StorageKey,
-		) -> soil_client::blockchain::Result<Option<soil_client_api::MerkleValue<Hash>>> {
+			_child_info: &soil_client::client_api::ChildInfo,
+			_key: &soil_client::client_api::StorageKey,
+		) -> soil_client::blockchain::Result<Option<soil_client::client_api::MerkleValue<Hash>>> {
 			unimplemented!()
 		}
 	}

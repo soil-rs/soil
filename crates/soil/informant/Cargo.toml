@@ -21,7 +21,6 @@ console = { workspace = true, optional = true}
 futures = { workspace = true, optional = true}
 futures-timer = { workspace = true, optional = true}
 log = { workspace = true, default-features = true, optional = true}
-soil-client-api = { workspace = true, default-features = true, optional = true}
 soil-network = { workspace = true, default-features = true, optional = true}
 soil-network-sync = { workspace = true, default-features = true, optional = true}
 subsoil = { workspace = true, optional = true}
@@ -33,7 +32,6 @@ std = [
 	"futures",
 	"futures-timer",
 	"log",
-	"soil-client-api",
 	"soil-network",
 	"soil-network-sync",
 	"subsoil",

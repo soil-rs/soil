@@ -78,7 +78,7 @@ use parking_lot::Mutex;
 use prometheus_endpoint::Registry;
 use soil_network_types::kad::{Key as KademliaKey, Record};
 
-use soil_client_api::BlockBackend;
+use soil_client::client_api::BlockBackend;
 use soil_network_common::{
 	role::{ObservedRole, Roles},
 	ExHashT,

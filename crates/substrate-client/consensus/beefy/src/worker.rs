@@ -38,7 +38,7 @@ use futures::{stream::Fuse, FutureExt, StreamExt};
 use log::{debug, error, info, trace, warn};
 use subsoil::api::ProvideRuntimeApi;
 use subsoil::arithmetic::traits::{AtLeast32Bit, Saturating};
-use soil_client_api::{Backend, HeaderBackend};
+use soil_client::client_api::{Backend, HeaderBackend};
 use soil_client::consensus::SyncOracle;
 use subsoil::consensus::beefy::{
 	AuthorityIdBound, BeefyApi, Commitment, DoubleVotingProof, PayloadProvider, ValidatorSet,
@@ -1039,7 +1039,7 @@ pub(crate) mod tests {
 	use futures::{future::poll_fn, task::Poll};
 	use parking_lot::Mutex;
 	use soil_client::blockchain::Backend as BlockchainBackendT;
-	use soil_client_api::{Backend as BackendT, HeaderBackend};
+	use soil_client::client_api::{Backend as BackendT, HeaderBackend};
 	use subsoil::consensus::beefy::{
 		ecdsa_crypto, known_payloads,
 		known_payloads::MMR_ROOT_ID,

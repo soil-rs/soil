@@ -21,7 +21,7 @@ use log::{debug, error, warn};
 use subsoil::api::ProvideRuntimeApi;
 use subsoil::application_crypto::RuntimeAppPublic;
 use soil_client::blockchain::HeaderBackend;
-use soil_client_api::Backend;
+use soil_client::client_api::Backend;
 use subsoil::consensus::beefy::{
 	check_double_voting_proof, AuthorityIdBound, BeefyApi, DoubleVotingProof,
 	OpaqueKeyOwnershipProof, ValidatorSetId,

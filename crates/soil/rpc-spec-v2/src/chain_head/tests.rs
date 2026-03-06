@@ -34,7 +34,7 @@ use jsonrpsee::{
 use sc_block_builder::BlockBuilderBuilder;
 use sc_rpc::testing::TokioTestExecutor;
 use soil_client::blockchain::HeaderBackend;
-use soil_client_api::ChildInfo;
+use soil_client::client_api::ChildInfo;
 use soil_client::consensus::BlockOrigin;
 use subsoil::core::{
 	storage::well_known_keys::{self, CODE},
@@ -2663,7 +2663,7 @@ async fn follow_report_multiple_pruned_block() {
 #[tokio::test]
 async fn pin_block_references() {
 	// Manually construct an in-memory backend and client.
-	let backend = Arc::new(soil_client_api::in_mem::Backend::new());
+	let backend = Arc::new(soil_client::client_api::in_mem::Backend::new());
 	let executor = substrate_test_runtime_client::WasmExecutor::default();
 	let client_config = soil_service::ClientConfig::default();
 
@@ -2704,7 +2704,7 @@ async fn pin_block_references() {
 	.into_rpc();
 
 	async fn wait_pinned_references<Block: BlockT>(
-		backend: &Arc<soil_client_api::in_mem::Backend<Block>>,
+		backend: &Arc<soil_client::client_api::in_mem::Backend<Block>>,
 		hash: &Block::Hash,
 		target: i64,
 	) {

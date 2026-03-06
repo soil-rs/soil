@@ -35,7 +35,7 @@ use futures::{
 };
 use prometheus_endpoint::prometheus::default_registry;
 use subsoil::api::{ApiRef, ProvideRuntimeApi};
-use soil_client_api::HeaderBackend;
+use soil_client::client_api::HeaderBackend;
 use subsoil::keystore::{testing::MemoryKeystore, Keystore};
 use soil_network::{
 	service::signature::{Keypair, SigningError},
@@ -71,8 +71,8 @@ impl<Block: BlockT> HeaderBackend<Block> for TestApi {
 		Ok(None)
 	}
 
-	fn info(&self) -> soil_client_api::blockchain::Info<Block> {
-		soil_client_api::blockchain::Info {
+	fn info(&self) -> soil_client::client_api::blockchain::Info<Block> {
+		soil_client::client_api::blockchain::Info {
 			best_hash: Default::default(),
 			best_number: Zero::zero(),
 			finalized_hash: Default::default(),
@@ -87,8 +87,8 @@ impl<Block: BlockT> HeaderBackend<Block> for TestApi {
 	fn status(
 		&self,
 		_hash: Block::Hash,
-	) -> std::result::Result<soil_client_api::blockchain::BlockStatus, soil_client::blockchain::Error> {
-		Ok(soil_client_api::blockchain::BlockStatus::Unknown)
+	) -> std::result::Result<soil_client::client_api::blockchain::BlockStatus, soil_client::blockchain::Error> {
+		Ok(soil_client::client_api::blockchain::BlockStatus::Unknown)
 	}
 
 	fn number(
