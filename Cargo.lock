@@ -9368,6 +9368,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "soil-client"
+version = "0.1.0"
+dependencies = [
+ "subsoil",
+]
+
+[[package]]
 name = "soil-client-api"
 version = "28.0.0"
 dependencies = [

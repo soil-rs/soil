@@ -1,0 +1,15 @@
+[package]
+name = "soil-client"
+version = "0.1.0"
+authors.workspace = true
+edition.workspace = true
+license.workspace = true
+homepage.workspace = true
+repository.workspace = true
+description = "Substrate client libraries"
+
+[lints]
+workspace = true
+
+[dependencies]
+subsoil = { workspace = true, default-features = true }

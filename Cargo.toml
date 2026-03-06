@@ -26,6 +26,7 @@ members = [
 	"crates/soil/consensus-beefy-rpc",
 	"crates/soil/consensus-epochs",
 	"crates/soil/consensus-grandpa-rpc",
+	"crates/soil-client",
 	"crates/soil-manual-seal",
 	"crates/soil/core/fuzz",
 	"crates/subsoil-crypto-hashing",
@@ -444,6 +445,7 @@ sc-block-builder = { path = "crates/substrate-client/block-builder", default-fea
 soil-chain-spec = { path = "crates/soil/chain-spec", default-features = false }
 soil-chain-spec-derive = { path = "crates/soil/chain-spec-derive", default-features = false }
 soil-cli = { path = "crates/soil/cli", default-features = false }
+soil-client = { path = "crates/soil-client", default-features = false }
 soil-client-api = { path = "crates/soil/client-api", default-features = false }
 soil-client-db = { path = "crates/soil/client-db", default-features = false }
 sc-consensus = { path = "crates/substrate-client/consensus/common", default-features = false }
