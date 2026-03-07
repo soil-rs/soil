@@ -18,18 +18,18 @@
 
 use std::{collections::HashSet, fmt::Debug};
 
-use crate::ServicetoWorkerMsg;
+use super::ServicetoWorkerMsg;
 
 use futures::{
 	channel::{mpsc, oneshot},
 	SinkExt,
 };
 
-use soil_authority_discovery::AuthorityId;
+use crate::AuthorityId;
 use soil_network::types::PeerId;
 use soil_network::Multiaddr;
 
-/// Service to interact with the [`crate::Worker`].
+/// Service to interact with the [`super::Worker`].
 #[derive(Clone)]
 pub struct Service {
 	to_worker: mpsc::Sender<ServicetoWorkerMsg>,
@@ -41,8 +41,8 @@ impl Debug for Service {
 	}
 }
 
-/// A [`Service`] allows to interact with a [`crate::Worker`], e.g. by querying the
-/// [`crate::Worker`]'s local address cache for a given [`AuthorityId`].
+/// A [`Service`] allows to interact with a [`super::Worker`], e.g. by querying the
+/// [`super::Worker`]'s local address cache for a given [`AuthorityId`].
 impl Service {
 	pub(crate) fn new(to_worker: mpsc::Sender<ServicetoWorkerMsg>) -> Self {
 		Self { to_worker }
@@ -52,7 +52,7 @@ impl Service {
 	/// cache.
 	///
 	/// Returns `None` if no entry was present or connection to the
-	/// [`crate::Worker`] failed.
+	/// [`super::Worker`] failed.
 	///
 	/// Note: [`Multiaddr`]s returned always include a [`PeerId`] via a
 	/// [`soil_network::types::multiaddr::Protocol::P2p`] component. Equality of
@@ -78,7 +78,7 @@ impl Service {
 	/// cache.
 	///
 	/// Returns `None` if no entry was present or connection to the
-	/// [`crate::Worker`] failed.
+	/// [`super::Worker`] failed.
 	pub async fn get_authority_ids_by_peer_id(
 		&mut self,
 		peer_id: PeerId,

@@ -20,13 +20,8 @@
 //! This pallet is used by the `client/authority-discovery` and by polkadot's parachain logic
 //! to retrieve the current and the next set of authorities.
 
-// Ensure we're `no_std` when compiling for Wasm.
-#![cfg_attr(not(feature = "std"), no_std)]
-
-extern crate alloc;
-
 use alloc::vec::Vec;
-use soil_authority_discovery::AuthorityId;
+use crate::AuthorityId;
 use topsoil_support::{
 	traits::{Get, OneSessionHandler},
 	WeakBoundedVec,
@@ -212,9 +207,9 @@ impl<T: Config> Pallet<T> {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use crate as topsoil_authority_discovery;
+	use crate as plant_authority_discovery;
 	use alloc::vec;
-	use soil_authority_discovery::AuthorityPair;
+	use crate::AuthorityPair;
 	use subsoil::application_crypto::Pair;
 	use subsoil::core::crypto::key_types;
 	use subsoil::io::TestExternalities;
@@ -233,7 +228,7 @@ mod tests {
 			System: topsoil_system,
 			Session: topsoil_session,
 			Balances: topsoil_balances,
-			AuthorityDiscovery: topsoil_authority_discovery,
+			AuthorityDiscovery: plant_authority_discovery,
 		}
 	);
 
@@ -348,7 +343,7 @@ mod tests {
 		// Build genesis.
 		let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 
-		topsoil_authority_discovery::GenesisConfig::<Test> { keys: vec![], ..Default::default() }
+		plant_authority_discovery::GenesisConfig::<Test> { keys: vec![], ..Default::default() }
 			.assimilate_storage(&mut t)
 			.unwrap();
 

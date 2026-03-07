@@ -23,7 +23,7 @@ use kitchensink_runtime::{
 	wasm_binary_unwrap, Block, MaxNominations, StakerStatus,
 };
 use serde::{Deserialize, Serialize};
-use soil_authority_discovery::AuthorityId as AuthorityDiscoveryId;
+use plant_authority_discovery::AuthorityId as AuthorityDiscoveryId;
 use soil_chain_spec::ChainSpecExtension;
 use soil_service::ChainType;
 use soil_service::Properties;

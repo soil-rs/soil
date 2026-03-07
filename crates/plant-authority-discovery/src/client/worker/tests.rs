@@ -23,7 +23,7 @@ use std::{
 	time::Instant,
 };
 
-use crate::tests::{create_spawner, test_config};
+use super::super::tests::{create_spawner, test_config};
 
 use super::*;
 use futures::{

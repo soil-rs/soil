@@ -24,7 +24,7 @@ use crate::{
 	BABE_GENESIS_EPOCH_CONFIG,
 };
 use alloc::{vec, vec::Vec};
-use soil_authority_discovery::AuthorityId as AuthorityDiscoveryId;
+use plant_authority_discovery::AuthorityId as AuthorityDiscoveryId;
 use subsoil::genesis_builder::PresetId;
 use subsoil::consensus::babe::AuthorityId as BabeId;
 use subsoil::consensus::beefy::ecdsa_crypto::AuthorityId as BeefyId;

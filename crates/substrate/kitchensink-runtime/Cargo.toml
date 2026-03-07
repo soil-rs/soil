@@ -58,7 +58,7 @@ plant-assets-freezer = { workspace = true }
 plant-assets-holder = { workspace = true }
 plant-atomic-swap = { workspace = true }
 topsoil-aura = { workspace = true }
-topsoil-authority-discovery = { workspace = true }
+plant-authority-discovery = { workspace = true }
 topsoil-authorship = { workspace = true }
 topsoil-babe = { workspace = true }
 plant-bags-list = { workspace = true }
@@ -146,7 +146,6 @@ plant-vesting = { workspace = true }
 plant-whitelist = { workspace = true }
 soil-chain-spec-derive = { workspace = true }
 subsoil = { workspace = true }
-soil-authority-discovery = { workspace = true }
 subsoil-crypto-hashing = { workspace = true }
 soil-statement-store = { workspace = true }
 soil-transaction-storage-proof = { workspace = true }
@@ -190,7 +189,7 @@ std = [
 	"plant-assets-holder/std",
 	"plant-atomic-swap/std",
 	"topsoil-aura/std",
-	"topsoil-authority-discovery/std",
+	"plant-authority-discovery/std",
 	"topsoil-authorship/std",
 	"topsoil-babe/std",
 	"plant-bags-list/std",
@@ -280,7 +279,6 @@ std = [
 	"scale-info/std",
 	"serde_json/std",
 	"subsoil/std",
-	"soil-authority-discovery/std",
 	"subsoil-crypto-hashing/std",
 	"soil-statement-store/std",
 	"soil-transaction-storage-proof/std",
@@ -397,7 +395,7 @@ try-runtime = [
 	"plant-assets-holder/try-runtime",
 	"plant-atomic-swap/try-runtime",
 	"topsoil-aura/try-runtime",
-	"topsoil-authority-discovery/try-runtime",
+	"plant-authority-discovery/try-runtime",
 	"topsoil-authorship/try-runtime",
 	"topsoil-babe/try-runtime",
 	"plant-bags-list/try-runtime",

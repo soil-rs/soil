@@ -14,7 +14,7 @@ members = [
 	"crates/soil-babe",
 	"crates/soil-aura",
 	"crates/soil-beefy",
-	"crates/soil/authority-discovery",
+	"crates/plant-authority-discovery",
 	"crates/soil-chain-spec",
 	"crates/soil-chain-spec-derive",
 	"crates/soil-cli",
@@ -49,7 +49,6 @@ members = [
 	"contrib/plant-assets-holder",
 	"contrib/plant-atomic-swap",
 	"crates/topsoil/aura",
-	"crates/topsoil/authority-discovery",
 	"crates/topsoil/authorship",
 	"crates/topsoil/babe",
 	"contrib/plant-bags-list",
@@ -200,7 +199,6 @@ members = [
 	"crates/substrate/substrate-test-runtime-client",
 	"crates/substrate/substrate-test-runtime-transaction-pool",
 	"crates/substrate/substrate-wasm-builder",
-	"crates/substrate-client/authority-discovery",
 	"crates/substrate-client/offchain",
 	"crates/soil-txpool",
 ]
@@ -286,7 +284,7 @@ plant-assets-freezer = { path = "contrib/plant-assets-freezer", default-features
 plant-assets-holder = { path = "contrib/plant-assets-holder", default-features = false }
 plant-atomic-swap = { default-features = false, path = "contrib/plant-atomic-swap" }
 topsoil-aura = { path = "crates/topsoil/aura", default-features = false }
-topsoil-authority-discovery = { path = "crates/topsoil/authority-discovery", default-features = false }
+plant-authority-discovery = { path = "crates/plant-authority-discovery", default-features = false }
 topsoil-authorship = { path = "crates/topsoil/authorship", default-features = false }
 topsoil-babe = { path = "crates/topsoil/babe", default-features = false }
 plant-bags-list = { path = "contrib/plant-bags-list", default-features = false }
@@ -386,7 +384,6 @@ plant-vesting = { path = "contrib/plant-vesting", default-features = false }
 plant-whitelist = { path = "contrib/plant-whitelist", default-features = false }
 prometheus-endpoint = { path = "crates/substrate/substrate-prometheus-endpoint", default-features = false, package = "substrate-prometheus-endpoint" }
 remote-externalities = { path = "crates/substrate/frame-remote-externalities", default-features = false, package = "frame-remote-externalities" }
-sc-authority-discovery = { path = "crates/substrate-client/authority-discovery", default-features = false }
 soil-chain-spec = { path = "crates/soil-chain-spec", default-features = false }
 soil-chain-spec-derive = { path = "crates/soil-chain-spec-derive", default-features = false }
 soil-cli = { path = "crates/soil-cli", default-features = false }
@@ -407,7 +404,6 @@ soil-service = { path = "crates/soil-service", default-features = false }
 soil-sync-state-rpc = { path = "crates/soil-sync-state-rpc", default-features = false }
 soil-telemetry = { path = "crates/soil-telemetry", default-features = false }
 soil-txpool = { path = "crates/soil-txpool", default-features = false }
-soil-authority-discovery = { path = "crates/soil/authority-discovery", default-features = false }
 subsoil = { path = "crates/subsoil", default-features = false }
 subsoil-crypto-hashing = { path = "crates/subsoil-crypto-hashing", default-features = false }
 subsoil-derive = { path = "crates/subsoil-derive" }

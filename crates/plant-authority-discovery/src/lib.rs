@@ -15,7 +15,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//! Runtime Api to help discover authorities.
+//! Authority discovery pallet and primitives.
+//!
+//! This crate provides:
+//! - Primitive types (`AuthorityId`, `AuthorityPair`, `AuthoritySignature`) and the
+//!   `AuthorityDiscoveryApi` runtime API.
+//! - A FRAME pallet for tracking current and next authority sets.
+//! - A client-side service (behind the `std` feature) for publishing and discovering
+//!   authority addresses on the DHT.
 
 #![cfg_attr(not(feature = "std"), no_std)]
 
@@ -49,3 +56,9 @@ subsoil::api::decl_runtime_apis! {
 		fn authorities() -> Vec<AuthorityId>;
 	}
 }
+
+pub mod pallet;
+pub use pallet::*;
+
+#[cfg(feature = "std")]
+pub mod client;

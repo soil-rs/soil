@@ -16,7 +16,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-use crate::{
+use super::{
 	new_worker_and_service_with_config,
 	worker::{
 		tests::{TestApi, TestNetwork},
@@ -29,7 +29,7 @@ use futures::{channel::mpsc::channel, executor::LocalPool, task::LocalSpawn};
 use soil_network::types::ed25519;
 use std::{collections::HashSet, sync::Arc};
 
-use soil_authority_discovery::AuthorityId;
+use crate::AuthorityId;
 use soil_network::{multiaddr::Protocol, Multiaddr, PeerId};
 use subsoil::core::{crypto::key_types, testing::TaskExecutor, traits::SpawnNamed};
 use subsoil::keystore::{testing::MemoryKeystore, Keystore};
@@ -145,7 +145,7 @@ async fn when_addr_cache_is_persisted_with_authority_ids_then_when_worker_is_cre
 	{
 		let mut addr_cache = AddrCache::default();
 		addr_cache.insert(remote_authority_id.clone(), vec![remote_addr.clone()]);
-		let path_to_save = cache_path.join(crate::worker::ADDR_CACHE_FILE_NAME);
+		let path_to_save = cache_path.join(super::worker::ADDR_CACHE_FILE_NAME);
 		addr_cache.serialize_and_persist(&path_to_save);
 	}
 
@@ -153,7 +153,7 @@ async fn when_addr_cache_is_persisted_with_authority_ids_then_when_worker_is_cre
 
 	// ACT
 	// Create a worker with the persisted cache
-	let worker = crate::worker::Worker::new(
+	let worker = super::worker::Worker::new(
 		from_service,
 		Arc::new(TestApi { authorities: vec![] }),
 		Arc::new(TestNetwork::default()),

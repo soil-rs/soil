@@ -1,0 +1,98 @@
+[package]
+name = "plant-authority-discovery"
+version = "29.0.0"
+authors.workspace = true
+edition.workspace = true
+build = "build.rs"
+license.workspace = true
+homepage.workspace = true
+repository.workspace = true
+description = "Authority discovery pallet and client service"
+
+[lints]
+workspace = true
+
+[package.metadata.docs.rs]
+targets = ["x86_64-unknown-linux-gnu"]
+
+[dependencies]
+# no_std core (primitives + pallet)
+codec = { features = ["derive"], workspace = true }
+scale-info = { features = ["derive"], workspace = true }
+subsoil = { workspace = true }
+topsoil-support = { workspace = true }
+topsoil-system = { workspace = true }
+topsoil-session = { features = ["historical"], workspace = true }
+
+# std-only client service deps (optional, activated by std feature)
+async-trait = { workspace = true, optional = true }
+futures = { workspace = true, optional = true }
+futures-timer = { workspace = true, optional = true }
+ip_network = { workspace = true, optional = true }
+linked_hash_set = { workspace = true, optional = true }
+log = { workspace = true, default-features = true, optional = true }
+prometheus-endpoint = { workspace = true, default-features = true, optional = true }
+prost = { workspace = true, optional = true }
+rand = { workspace = true, default-features = true, optional = true }
+serde = { workspace = true, optional = true }
+serde_json = { workspace = true, optional = true }
+soil-client = { workspace = true, default-features = true, optional = true }
+soil-network = { workspace = true, default-features = true, optional = true }
+soil-service = { workspace = true, optional = true }
+thiserror = { workspace = true, optional = true }
+tokio = { workspace = true, optional = true }
+
+[dev-dependencies]
+hex = { workspace = true }
+quickcheck = { workspace = true }
+subsoil = { workspace = true, default-features = true }
+substrate-test-runtime-client = { workspace = true }
+tempfile = { workspace = true }
+topsoil-balances = { workspace = true }
+
+[build-dependencies]
+prost-build = { workspace = true, optional = true }
+
+[features]
+default = ["std"]
+std = [
+	"codec/std",
+	"scale-info/std",
+	"subsoil/std",
+	"topsoil-support/std",
+	"topsoil-system/std",
+	"topsoil-session/std",
+	# client service deps
+	"dep:async-trait",
+	"dep:futures",
+	"dep:futures-timer",
+	"dep:ip_network",
+	"dep:linked_hash_set",
+	"dep:log",
+	"dep:prometheus-endpoint",
+	"dep:prost",
+	"dep:prost-build",
+	"dep:rand",
+	"dep:serde",
+	"dep:serde_json",
+	"dep:soil-client",
+	"dep:soil-network",
+	"dep:soil-service",
+	"dep:thiserror",
+	"dep:tokio",
+]
+serde = [
+	"scale-info/serde",
+	"subsoil/serde",
+]
+try-runtime = [
+	"topsoil-support/try-runtime",
+	"topsoil-system/try-runtime",
+	"topsoil-session/try-runtime",
+	"subsoil/try-runtime",
+]
+runtime-benchmarks = [
+	"topsoil-support/runtime-benchmarks",
+	"topsoil-system/runtime-benchmarks",
+	"topsoil-session/runtime-benchmarks",
+]

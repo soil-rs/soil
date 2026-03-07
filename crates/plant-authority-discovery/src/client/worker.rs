@@ -16,8 +16,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-pub(crate) use crate::worker::addr_cache::AddrCache;
-use crate::{
+pub(crate) use self::addr_cache::AddrCache;
+use super::{
 	error::{Error, Result},
 	interval::ExpIncInterval,
 	ServicetoWorkerMsg, WorkerConfig,
@@ -44,7 +44,7 @@ use prost::Message;
 use rand::{seq::SliceRandom, thread_rng};
 
 use schema::PeerSignature;
-use soil_authority_discovery::{
+use crate::{
 	AuthorityDiscoveryApi, AuthorityId, AuthorityPair, AuthoritySignature,
 };
 use soil_client::blockchain::HeaderBackend;
@@ -121,9 +121,9 @@ pub enum Role {
 ///    4. Add the retrieved external addresses as priority nodes to the
 ///    network peerset.
 ///
-///    5. Allow querying of the collected addresses via the [`crate::Service`].
+///    5. Allow querying of the collected addresses via the [`super::Service`].
 pub struct Worker<Client, Block: BlockT, DhtEventStream> {
-	/// Channel receiver for messages send by a [`crate::Service`].
+	/// Channel receiver for messages send by a [`super::Service`].
 	from_service: Fuse<mpsc::Receiver<ServicetoWorkerMsg>>,
 
 	client: Arc<Client>,
@@ -213,7 +213,7 @@ struct RecordInfo {
 	record: Record,
 }
 
-/// Wrapper for [`AuthorityDiscoveryApi`](soil_authority_discovery::AuthorityDiscoveryApi). Can be
+/// Wrapper for [`AuthorityDiscoveryApi`](crate::AuthorityDiscoveryApi). Can be
 /// be implemented by any struct without dependency on the runtime.
 #[async_trait::async_trait]
 pub trait AuthorityDiscovery<Block: BlockT> {

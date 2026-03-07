@@ -16,10 +16,10 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-use crate::error::Error;
+use crate::client::error::Error;
 use log::{info, warn};
 use serde::{Deserialize, Serialize};
-use soil_authority_discovery::AuthorityId;
+use crate::AuthorityId;
 use soil_network::types::PeerId;
 use soil_network::{multiaddr::Protocol, Multiaddr};
 use std::{
@@ -303,7 +303,7 @@ mod tests {
 	use quickcheck::{Arbitrary, Gen, QuickCheck, TestResult};
 	use soil_network::types::multihash::{Code, Multihash};
 
-	use soil_authority_discovery::{AuthorityId, AuthorityPair};
+	use crate::{AuthorityId, AuthorityPair};
 	use subsoil::core::crypto::Pair;
 
 	#[derive(Clone, Debug)]

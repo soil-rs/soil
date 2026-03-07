@@ -16,18 +16,15 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-#![warn(missing_docs)]
-#![recursion_limit = "1024"]
-
-//! Substrate authority discovery.
+//! Substrate authority discovery client service.
 //!
-//! This crate enables Substrate authorities to discover and directly connect to
+//! This module enables Substrate authorities to discover and directly connect to
 //! other authorities. It is split into two components the [`Worker`] and the
 //! [`Service`].
 //!
 //! See [`Worker`] and [`Service`] for more documentation.
 
-pub use crate::{
+pub use self::{
 	error::Error,
 	service::Service,
 	worker::{AuthorityDiscovery, NetworkProvider, Role, Worker},
@@ -40,7 +37,7 @@ use futures::{
 	Stream,
 };
 
-use soil_authority_discovery::AuthorityId;
+use crate::AuthorityId;
 use soil_client::blockchain::HeaderBackend;
 use soil_network::types::PeerId;
 use soil_network::{event::DhtEvent, Multiaddr};

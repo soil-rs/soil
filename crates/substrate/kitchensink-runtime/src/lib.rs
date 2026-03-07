@@ -38,7 +38,7 @@ use alloc::{vec, vec::Vec};
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 pub use node_primitives::{AccountId, Signature};
 use node_primitives::{AccountIndex, Balance, BlockNumber, Hash, Moment, Nonce};
-use soil_authority_discovery::AuthorityId as AuthorityDiscoveryId;
+use plant_authority_discovery::AuthorityId as AuthorityDiscoveryId;
 use static_assertions::const_assert;
 use subsoil::consensus::beefy::{
 	ecdsa_crypto::{AuthorityId as BeefyId, Signature as BeefySignature},
@@ -1597,7 +1597,7 @@ impl topsoil_offences::Config for Runtime {
 	type OnOffenceHandler = Staking;
 }
 
-impl topsoil_authority_discovery::Config for Runtime {
+impl plant_authority_discovery::Config for Runtime {
 	type MaxAuthorities = MaxAuthorities;
 }
 
@@ -2554,7 +2554,7 @@ mod runtime {
 	pub type ImOnline = topsoil_im_online::Pallet<Runtime>;
 
 	#[runtime::pallet_index(24)]
-	pub type AuthorityDiscovery = topsoil_authority_discovery::Pallet<Runtime>;
+	pub type AuthorityDiscovery = plant_authority_discovery::Pallet<Runtime>;
 
 	#[runtime::pallet_index(25)]
 	pub type Offences = topsoil_offences::Pallet<Runtime>;
@@ -3218,7 +3218,7 @@ subsoil::api::impl_runtime_apis! {
 		}
 	}
 
-	impl soil_authority_discovery::AuthorityDiscoveryApi<Block> for Runtime {
+	impl plant_authority_discovery::AuthorityDiscoveryApi<Block> for Runtime {
 		fn authorities() -> Vec<AuthorityDiscoveryId> {
 			AuthorityDiscovery::authorities()
 		}
