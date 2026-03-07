@@ -87,7 +87,6 @@ soil-network = { workspace = true, default-features = true }
 sc-offchain = { workspace = true, default-features = true }
 soil-service = { workspace = true, default-features = true }
 soil-sync-state-rpc = { workspace = true, default-features = true }
-soil-sysinfo = { workspace = true, default-features = true }
 soil-telemetry = { workspace = true, default-features = true }
 soil-txpool = { workspace = true, default-features = true }
 soil-authority-discovery = { workspace = true, default-features = true }

@@ -2,6 +2,7 @@
 name = "soil-service"
 version = "0.35.0"
 authors.workspace = true
+build = "build.rs"
 edition.workspace = true
 license.workspace = true
 homepage.workspace = true
@@ -19,20 +20,23 @@ targets = ["x86_64-unknown-linux-gnu"]
 async-trait = { workspace = true}
 codec = { workspace = true, default-features = true}
 console = { workspace = true, default-features = true}
+derive_more = { workspace = true, default-features = true}
 directories = { workspace = true}
 exit-future = { workspace = true}
 futures = { workspace = true}
 futures-timer = { workspace = true}
 jsonrpsee = { features = ["server"], workspace = true}
+libc = { workspace = true, default-features = true}
 log = { workspace = true, default-features = true}
 parking_lot = { workspace = true, default-features = true}
 pin-project = { workspace = true}
 prometheus-endpoint = { workspace = true, default-features = true}
 rand = { workspace = true, default-features = true}
+rand_pcg = { workspace = true, default-features = true}
+regex = { workspace = true, default-features = true}
 soil-chain-spec = { workspace = true, default-features = true}
 soil-network = { workspace = true, default-features = true}
 soil-rpc = { workspace = true, default-features = true }
-soil-sysinfo = { workspace = true, default-features = true}
 soil-telemetry = { workspace = true, default-features = true}
 soil-txpool = { workspace = true, default-features = true}
 schnellru = { workspace = true}
@@ -41,6 +45,7 @@ serde_json = { workspace = true, default-features = true}
 soil-client = { workspace = true, default-features = true}
 soil-session = { workspace = true, default-features = true}
 subsoil = { workspace = true, default-features = true}
+subsoil-crypto-hashing = { workspace = true, default-features = true}
 soil-transaction-pool = { workspace = true, default-features = true}
 soil-transaction-storage-proof = { workspace = true, default-features = true}
 static_init = { workspace = true}

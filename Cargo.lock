@@ -9374,16 +9374,20 @@ version = "0.35.0"
 dependencies = [
  "async-trait",
  "console",
+ "derive_more 0.99.20",
  "directories",
  "exit-future",
  "futures",
  "futures-timer",
  "jsonrpsee",
+ "libc",
  "log",
  "parity-scale-codec",
  "parking_lot 0.12.5",
  "pin-project",
  "rand 0.8.5",
+ "rand_pcg",
+ "regex",
  "schnellru",
  "serde",
  "serde_json",
@@ -9392,13 +9396,13 @@ dependencies = [
  "soil-network",
  "soil-rpc",
  "soil-session",
- "soil-sysinfo",
  "soil-telemetry",
  "soil-transaction-pool",
  "soil-transaction-storage-proof",
  "soil-txpool",
  "static_init",
  "subsoil",
+ "subsoil-crypto-hashing",
  "substrate-prometheus-endpoint",
  "substrate-test-runtime",
  "substrate-test-runtime-client",
@@ -9487,24 +9491,6 @@ dependencies = [
  "soil-grandpa",
  "subsoil",
  "thiserror 1.0.69",
-]
-
-[[package]]
-name = "soil-sysinfo"
-version = "27.0.0"
-dependencies = [
- "derive_more 0.99.20",
- "futures",
- "libc",
- "log",
- "rand 0.8.5",
- "rand_pcg",
- "regex",
- "serde",
- "serde_json",
- "soil-telemetry",
- "subsoil",
- "subsoil-crypto-hashing",
 ]
 
 [[package]]
@@ -9827,7 +9813,6 @@ dependencies = [
  "soil-service-test",
  "soil-statement-store",
  "soil-sync-state-rpc",
- "soil-sysinfo",
  "soil-telemetry",
  "soil-transaction-storage-proof",
  "soil-txpool",

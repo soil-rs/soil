@@ -39,8 +39,8 @@ use soil_network::sync::{strategy::warp::WarpSyncConfig, SyncingService};
 use soil_network::{
 	event::Event, service::traits::NetworkService, NetworkBackend, NetworkEventStream,
 };
+use soil_service::sysinfo::SUBSTRATE_REFERENCE_HARDWARE;
 use soil_service::{config::Configuration, error::Error as ServiceError, RpcHandlers, TaskManager};
-use soil_sysinfo::SUBSTRATE_REFERENCE_HARDWARE;
 use soil_telemetry::{Telemetry, TelemetryWorker};
 use soil_transaction_storage_proof::runtime_api::TransactionStorageApi;
 use soil_txpool::TransactionPoolHandle;
@@ -437,7 +437,10 @@ pub fn new_full_base<N: NetworkBackend<Block, <Block as BlockT>::Hash>>(
 		.then(|| {
 			config.database.path().map(|database_path| {
 				let _ = std::fs::create_dir_all(&database_path);
-				soil_sysinfo::gather_hwbench(Some(database_path), &SUBSTRATE_REFERENCE_HARDWARE)
+				soil_service::sysinfo::gather_hwbench(
+					Some(database_path),
+					&SUBSTRATE_REFERENCE_HARDWARE,
+				)
 			})
 		})
 		.flatten();
@@ -576,7 +579,7 @@ pub fn new_full_base<N: NetworkBackend<Block, <Block as BlockT>::Hash>>(
 	})?;
 
 	if let Some(hwbench) = hwbench {
-		soil_sysinfo::print_hwbench(&hwbench);
+		soil_service::sysinfo::print_hwbench(&hwbench);
 		match SUBSTRATE_REFERENCE_HARDWARE.check_hardware(&hwbench, false) {
 			Err(err) if role.is_authority() => {
 				log::warn!(
@@ -592,7 +595,7 @@ pub fn new_full_base<N: NetworkBackend<Block, <Block as BlockT>::Hash>>(
 			task_manager.spawn_handle().spawn(
 				"telemetry_hwbench",
 				None,
-				soil_sysinfo::initialize_hwbench_telemetry(telemetry_handle, hwbench),
+				soil_service::sysinfo::initialize_hwbench_telemetry(telemetry_handle, hwbench),
 			);
 		}
 	}

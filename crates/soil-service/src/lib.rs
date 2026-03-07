@@ -29,6 +29,7 @@ pub mod config;
 pub mod error;
 pub mod informant;
 pub mod proposer_metrics;
+pub mod sysinfo;
 
 mod builder;
 mod metrics;

@@ -540,8 +540,8 @@ where
 	)
 	.map_err(|e| Error::Application(Box::new(e)))?;
 
-	let sysinfo = soil_sysinfo::gather_sysinfo();
-	soil_sysinfo::print_sysinfo(&sysinfo);
+	let sysinfo = crate::sysinfo::gather_sysinfo();
+	crate::sysinfo::print_sysinfo(&sysinfo);
 
 	let telemetry = telemetry
 		.map(|telemetry| {
@@ -753,9 +753,9 @@ where
 		name,
 		implementation,
 		version,
-		target_os: soil_sysinfo::TARGET_OS.into(),
-		target_arch: soil_sysinfo::TARGET_ARCH.into(),
-		target_env: soil_sysinfo::TARGET_ENV.into(),
+		target_os: crate::sysinfo::TARGET_OS.into(),
+		target_arch: crate::sysinfo::TARGET_ARCH.into(),
+		target_env: crate::sysinfo::TARGET_ENV.into(),
 		config: String::new(),
 		chain,
 		genesis_hash: format!("{:?}", genesis_hash),

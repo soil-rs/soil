@@ -16,7 +16,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-use crate::{ExecutionLimit, HwBench};
+use super::{ExecutionLimit, HwBench};
 
 use soil_telemetry::SysInfo;
 use subsoil::core::{sr25519, Pair};
@@ -325,10 +325,10 @@ pub fn gather_sysinfo() -> SysInfo {
 	};
 
 	#[cfg(target_os = "linux")]
-	crate::sysinfo_linux::gather_linux_sysinfo(&mut sysinfo);
+	super::sysinfo_linux::gather_linux_sysinfo(&mut sysinfo);
 
 	#[cfg(target_os = "freebsd")]
-	crate::sysinfo_freebsd::gather_freebsd_sysinfo(&mut sysinfo);
+	super::sysinfo_freebsd::gather_freebsd_sysinfo(&mut sysinfo);
 
 	sysinfo
 }

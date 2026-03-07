@@ -46,7 +46,6 @@ members = [
 	"crates/soil/staking",
 	"crates/soil/statement-store",
 	"crates/soil/sync-state-rpc",
-	"crates/soil/sysinfo",
 	"crates/soil/telemetry",
 	"crates/soil/test-primitives",
 	"crates/soil/transaction-pool",
@@ -419,7 +418,6 @@ soil-runtime-utilities = { path = "crates/soil/runtime-utilities", default-featu
 soil-service = { path = "crates/soil-service", default-features = false }
 soil-service-test = { path = "crates/soil/service-test" }
 soil-sync-state-rpc = { path = "crates/soil/sync-state-rpc", default-features = false }
-soil-sysinfo = { path = "crates/soil/sysinfo", default-features = false }
 soil-telemetry = { path = "crates/soil/telemetry", default-features = false }
 soil-txpool = { path = "crates/soil-txpool", default-features = false }
 soil-authority-discovery = { path = "crates/soil/authority-discovery", default-features = false }
