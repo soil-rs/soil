@@ -64,8 +64,7 @@ RPC:
 Service / assembly:
   soil-service
   soil-chain-spec
-  soil-informant
-  sc-transaction-pool
+  soil-txpool
 
 Test infrastructure:
   substrate-test-client
@@ -239,13 +238,18 @@ crates for sync-state generation.
 | soil-sysinfo | System metrics |
 | soil-proposer-metrics | Metrics |
 
+Merged. `soil-service` now owns service assembly, block authorship support,
+informant output, and sysinfo/benchmarking support. `soil-cli`,
+`soil-chain-spec`, and `soil-telemetry` remain separate by design.
+
 ### `soil-txpool` — Transaction pool service layer (1 crate)
 
 | Absorb | Reason |
 |---|---|
 | sc-transaction-pool | Shared service-side infra used by service, manual seal, and node/CLI crates |
 
-Kept separate from both `soil-consensus` and `soil-service`. It is reusable
+Merged as the standalone flattened crate `soil-txpool`. It remains separate
+from both `soil-consensus` and `soil-service` because it is reusable
 service-side infrastructure, not a consensus-engine choice and not just service
 assembly glue.
 
@@ -278,13 +282,12 @@ Re-exports everything. Consumers write `soil = { features = ["client", "aura", "
 | **soil-{aura,babe,beefy,grandpa,pow}** | selectable consensus engines; babe/beefy/grandpa also absorb their RPC crates | 8 → 5 | ✅ |
 | **soil-network** | p2p, common/types, light, sync, gossip, transactions, statements, mixnet service | ~10 | ✅ |
 | **soil-rpc** | rpc api/handlers, server, v2 spec, mmr endpoint, state-trie-migration endpoint, rpc client (excluding frame-rpc helper crates tied to topsoil and `soil-sync-state-rpc`) | ~8 | ✅ |
-| **soil-service** | service, authorship, informant, sysinfo, metrics | ~5 | Pending |
-| **soil-txpool** | sc-transaction-pool | 1 | Pending |
+| **soil-service** | service, authorship, informant, sysinfo, metrics | ~5 | ✅ |
+| **soil-txpool** | sc-transaction-pool | 1 | ✅ |
 | **misc standalone** | mmr, staking, fork-tree, test crates | ~12 | — |
 | **soil** | umbrella re-export | 1 | Pending |
 
 **96 non-topsoil crates → low-teens major crates plus a small set of intentional
-standalones.** All 3 remaining circular dependency clusters are still
-dev-dep-only. SCC 1 is now down to 14 crates after the `soil-network` and
-`soil-rpc` merges; the remaining work is concentrated in `soil-service` and
-`soil-txpool`.
+standalones.** The planned core crate consolidation is complete. Remaining SCCs
+are dev-dependency-only, and the leftover standalone crates stay separate by
+design rather than as unfinished merge work.

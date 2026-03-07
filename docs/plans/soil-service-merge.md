@@ -45,7 +45,7 @@ Locked standalones for this phase:
 - [x] Step 5: Merge `soil-proposer-metrics` and `soil-basic-authorship`.
 - [x] Step 6: Merge `soil-informant` into `soil_service::informant`.
 - [x] Step 7: Merge `soil-sysinfo` into `soil_service::sysinfo`.
-- [ ] Step 8: Final consistency pass and spec update.
+- [x] Step 8: Final consistency pass and spec update.
 
 ## Validation Log
 
