@@ -32,10 +32,10 @@ pub use aux_schema::{check_equivocation, MAX_SLOT_CAPACITY, PRUNING_BOUND};
 use slots::Slots;
 pub use slots::{time_until_next_slot, SlotInfo};
 
+use crate::{BlockImport, JustificationSyncLink};
 use futures::{future::Either, Future, TryFutureExt};
 use futures_timer::Delay;
 use log::{debug, info, warn};
-use crate::{BlockImport, JustificationSyncLink};
 use soil_client::consensus::{Proposal, ProposeArgs, Proposer, SelectChain, SyncOracle};
 use soil_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG, CONSENSUS_INFO, CONSENSUS_WARN};
 use std::{

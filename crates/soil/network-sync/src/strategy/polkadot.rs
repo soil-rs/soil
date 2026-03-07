@@ -34,9 +34,9 @@ use crate::{
 };
 use log::{debug, error, info, warn};
 use prometheus_endpoint::Registry;
-use soil_consensus::{BlockImportError, BlockImportStatus};
 use soil_client::blockchain::{Error as ClientError, HeaderBackend, HeaderMetadata};
 use soil_client::client_api::{BlockBackend, ProofProvider};
+use soil_consensus::{BlockImportError, BlockImportStatus};
 use soil_network::ProtocolName;
 use soil_network_common::sync::{message::BlockAnnounce, SyncMode};
 use soil_network_types::PeerId;

@@ -47,7 +47,6 @@ use soil_client::consensus::SyncOracle;
 use soil_client::transaction_pool::{
 	LocalTransactionPool, OffchainTransactionPoolFactory, TransactionPool,
 };
-use soil_mixnet::{runtime_api::MixnetApi, types::Mixnode};
 use soil_network::{
 	service::traits::{NetworkService, NotificationEvent, ValidationResult},
 	NetworkPeers, NetworkStateInfo, NotificationService, ProtocolName,
@@ -58,6 +57,7 @@ use std::{
 };
 use subsoil::api::{ApiExt, ProvideRuntimeApi};
 use subsoil::keystore::{KeystoreExt, KeystorePtr};
+use subsoil::mixnet::{runtime_api::MixnetApi, types::Mixnode};
 use subsoil::runtime::{
 	traits::{Block, Header},
 	transaction_validity::TransactionSource,

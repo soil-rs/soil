@@ -1,8 +1,8 @@
 // This file is part of Substrate.
-
+//
 // Copyright (C) Parity Technologies (UK) Ltd.
 // SPDX-License-Identifier: Apache-2.0
-
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -22,8 +22,8 @@ use codec::{Decode, Encode};
 use scale_info::TypeInfo;
 
 mod app {
-	use subsoil::application_crypto::{key_types::MIXNET, sr25519};
-	subsoil::app_crypto!(sr25519, MIXNET);
+	use crate::application_crypto::{key_types::MIXNET, sr25519};
+	crate::app_crypto!(sr25519, MIXNET);
 }
 
 /// Authority public session key, used to verify registration signatures.

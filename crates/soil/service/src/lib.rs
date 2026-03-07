@@ -89,12 +89,12 @@ pub use soil_client::db::PruningFilter;
 
 use crate::config::RpcConfiguration;
 use prometheus_endpoint::Registry;
-pub use soil_consensus::ImportQueue;
 pub use sc_rpc::{RandomIntegerSubscriptionId, RandomStringSubscriptionId};
 pub use sc_transaction_pool::TransactionPoolOptions;
 pub use soil_client::executor::NativeExecutionDispatch;
 pub use soil_client::tracing::TracingReceiver;
 pub use soil_client::transaction_pool::{error::IntoPoolError, InPoolTransaction, TransactionPool};
+pub use soil_consensus::ImportQueue;
 pub use soil_network_sync::WarpSyncConfig;
 #[doc(hidden)]
 pub use soil_network_transactions::config::{TransactionImport, TransactionImportFuture};

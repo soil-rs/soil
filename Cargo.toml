@@ -29,7 +29,6 @@ members = [
 	"crates/soil/genesis-builder",
 	"crates/soil-grandpa",
 	"crates/soil/informant",
-	"crates/soil/mixnet",
 	"crates/soil/mmr-gadget",
 	"crates/soil/mmr-rpc",
 	"crates/soil/network",
@@ -464,7 +463,6 @@ subsoil = { path = "crates/subsoil", default-features = false }
 subsoil-crypto-hashing = { path = "crates/subsoil-crypto-hashing", default-features = false }
 subsoil-derive = { path = "crates/subsoil-derive" }
 soil-genesis-builder = { path = "crates/soil/genesis-builder", default-features = false }
-soil-mixnet = { path = "crates/soil/mixnet", default-features = false }
 soil-offchain = { path = "crates/soil/offchain", default-features = false }
 soil-rpc = { path = "crates/soil/rpc", default-features = false }
 sp-runtime-interface-test-wasm = { path = "crates/soil/runtime-interface/test-wasm" }

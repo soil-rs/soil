@@ -20,13 +20,13 @@
 
 use super::*;
 use authorship::claim_slot;
-use soil_consensus::{BoxBlockImport, BoxJustificationImport};
-use soil_consensus::slots::BackoffAuthoringOnFinalizedHeadLagging;
 use soil_client::block_builder::{BlockBuilder, BlockBuilderBuilder};
 use soil_client::client_api::{BlockchainEvents, Finalizer};
 use soil_client::consensus::{NoNetwork as DummyOracle, Proposal, ProposeArgs};
 use soil_client::transaction_pool::RejectAllTxPool;
 use soil_consensus::epochs::{EpochIdentifier, EpochIdentifierPosition};
+use soil_consensus::slots::BackoffAuthoringOnFinalizedHeadLagging;
+use soil_consensus::{BoxBlockImport, BoxJustificationImport};
 use soil_network_test::{Block as TestBlock, *};
 use std::{cell::RefCell, task::Poll};
 use subsoil::application_crypto::key_types::BABE;

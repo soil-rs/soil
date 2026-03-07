@@ -23,9 +23,9 @@ use futures::{
 use futures_timer::Delay;
 use log::*;
 use parking_lot::Mutex;
-use soil_consensus::{BlockImportParams, BoxBlockImport, StateAction, StorageChanges};
 use soil_client::client_api::ImportNotifications;
 use soil_client::consensus::{BlockOrigin, Proposal};
+use soil_consensus::{BlockImportParams, BoxBlockImport, StateAction, StorageChanges};
 use std::{
 	pin::Pin,
 	sync::{

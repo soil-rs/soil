@@ -16,8 +16,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-use codec::Encode;
 use crate::GrandpaJustification;
+use codec::Encode;
 use serde::{Deserialize, Serialize};
 use subsoil::runtime::traits::Block as BlockT;
 

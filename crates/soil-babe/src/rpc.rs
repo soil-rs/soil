@@ -213,8 +213,8 @@ mod tests {
 		keystore.into()
 	}
 
-	fn test_babe_rpc_module() -> Babe<Block, TestClient, soil_consensus::LongestChain<Backend, Block>>
-	{
+	fn test_babe_rpc_module(
+	) -> Babe<Block, TestClient, soil_consensus::LongestChain<Backend, Block>> {
 		let builder = TestClientBuilder::new();
 		let (client, longest_chain) = builder.build_with_longest_chain();
 		let client = Arc::new(client);

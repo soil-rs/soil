@@ -33,11 +33,11 @@ mod finality;
 mod notification;
 mod report;
 
+use crate::GrandpaJustificationStream;
 use error::Error;
 use finality::{EncodedFinalityProof, RpcFinalityProofProvider};
 use notification::JustificationNotification;
 use report::{ReportAuthoritySet, ReportVoterState, ReportedRoundStates};
-use crate::GrandpaJustificationStream;
 use sc_rpc::{
 	utils::{BoundedVecDeque, PendingSubscription},
 	SubscriptionTaskExecutor,
@@ -105,11 +105,10 @@ where
 	}
 
 	fn subscribe_justifications(&self, pending: PendingSubscriptionSink) {
-		let stream = self.justification_stream.subscribe(100_000).map(
-			|x: crate::GrandpaJustification<Block>| {
-				JustificationNotification::from(x)
-			},
-		);
+		let stream = self
+			.justification_stream
+			.subscribe(100_000)
+			.map(|x: crate::GrandpaJustification<Block>| JustificationNotification::from(x));
 
 		sc_rpc::utils::spawn_subscription_task(
 			&self.executor,
@@ -133,11 +132,11 @@ mod tests {
 	use super::*;
 	use std::{collections::HashSet, sync::Arc};
 
-	use codec::{Decode, Encode};
-	use jsonrpsee::{core::EmptyServerParams as EmptyParams, types::SubscriptionId, RpcModule};
 	use crate::{
 		report, AuthorityId, FinalityProof, GrandpaJustification, GrandpaJustificationSender,
 	};
+	use codec::{Decode, Encode};
+	use jsonrpsee::{core::EmptyServerParams as EmptyParams, types::SubscriptionId, RpcModule};
 	use sc_rpc::testing::test_executor;
 	use soil_client::block_builder::BlockBuilderBuilder;
 	use soil_client::blockchain::HeaderBackend;

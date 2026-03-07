@@ -24,6 +24,7 @@ pub mod io;
 pub mod keyring;
 pub mod keystore;
 pub mod metadata_ir;
+pub mod mixnet;
 pub mod mmr;
 pub mod npos_elections;
 #[cfg(feature = "std")]

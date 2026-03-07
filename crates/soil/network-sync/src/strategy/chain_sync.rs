@@ -49,10 +49,10 @@ use futures::{channel::oneshot, FutureExt};
 use log::{debug, error, info, trace, warn};
 use prometheus_endpoint::{register, Gauge, PrometheusError, Registry, U64};
 use prost::Message;
-use soil_consensus::{BlockImportError, BlockImportStatus, IncomingBlock};
 use soil_client::blockchain::{Error as ClientError, HeaderBackend, HeaderMetadata};
 use soil_client::client_api::{blockchain::BlockGap, BlockBackend, ProofProvider};
 use soil_client::consensus::{BlockOrigin, BlockStatus};
+use soil_consensus::{BlockImportError, BlockImportStatus, IncomingBlock};
 use soil_network::{IfDisconnected, ProtocolName};
 use soil_network_common::sync::message::{
 	BlockAnnounce, BlockAttributes, BlockData, BlockRequest, BlockResponse, Direction, FromBlock,

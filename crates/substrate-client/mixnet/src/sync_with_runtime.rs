@@ -25,18 +25,18 @@ use mixnet::core::{
 	Mixnet, Mixnode as CoreMixnode, MixnodesErr as CoreMixnodesErr, RelSessionIndex,
 	SessionPhase as CoreSessionPhase, SessionStatus as CoreSessionStatus,
 };
-use soil_mixnet::{
+use soil_network_types::{
+	multiaddr::{multiaddr, Multiaddr, Protocol},
+	PeerId,
+};
+use subsoil::api::{ApiError, ApiRef};
+use subsoil::mixnet::{
 	runtime_api::MixnetApi,
 	types::{
 		Mixnode as RuntimeMixnode, MixnodesErr as RuntimeMixnodesErr,
 		SessionPhase as RuntimeSessionPhase, SessionStatus as RuntimeSessionStatus,
 	},
 };
-use soil_network_types::{
-	multiaddr::{multiaddr, Multiaddr, Protocol},
-	PeerId,
-};
-use subsoil::api::{ApiError, ApiRef};
 use subsoil::runtime::traits::Block;
 
 const LOG_TARGET: &str = "mixnet";

@@ -30,9 +30,9 @@ use codec::Encode;
 use futures::prelude::*;
 use kitchensink_runtime::RuntimeApi;
 use node_primitives::Block;
-use soil_babe::{self, SlotProportion};
 use sc_statement_store::Store as StatementStore;
 use sc_transaction_pool::TransactionPoolHandle;
+use soil_babe::{self, SlotProportion};
 use soil_client::client_api::{Backend, BlockBackend};
 use soil_client::transaction_pool::OffchainTransactionPoolFactory;
 use soil_network::{
@@ -900,7 +900,6 @@ mod tests {
 		Address, BalancesCall, RuntimeCall, TxExtension,
 	};
 	use node_primitives::{Block, DigestItem, Signature};
-	use soil_consensus::{BlockImport, BlockImportParams, ForkChoiceStrategy};
 	use soil_babe::{BabeIntermediate, CompatibleDigestItem, INTERMEDIATE_KEY};
 	use soil_client::client_api::BlockBackend;
 	use soil_client::consensus::{BlockOrigin, Environment, Proposer};
@@ -908,6 +907,7 @@ mod tests {
 	use soil_client::transaction_pool::ChainEvent;
 	use soil_client::transaction_pool::MaintainedTransactionPool;
 	use soil_consensus::epochs::descendent_query;
+	use soil_consensus::{BlockImport, BlockImportParams, ForkChoiceStrategy};
 	use soil_service_test::TestNetNode;
 	use std::sync::Arc;
 	use subsoil::core::crypto::Pair;

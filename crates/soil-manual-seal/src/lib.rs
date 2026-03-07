@@ -28,11 +28,6 @@ use futures_timer::Delay;
 #[cfg(feature = "std")]
 use prometheus_endpoint::Registry;
 #[cfg(feature = "std")]
-use soil_consensus::{
-	block_import::{BlockImport, BlockImportParams, ForkChoiceStrategy},
-	import_queue::{BasicQueue, BoxBlockImport, Verifier},
-};
-#[cfg(feature = "std")]
 use soil_client::blockchain::HeaderBackend;
 #[cfg(feature = "std")]
 use soil_client::client_api::{
@@ -41,6 +36,11 @@ use soil_client::client_api::{
 };
 #[cfg(feature = "std")]
 use soil_client::consensus::{Environment, Proposer, SelectChain};
+#[cfg(feature = "std")]
+use soil_consensus::{
+	block_import::{BlockImport, BlockImportParams, ForkChoiceStrategy},
+	import_queue::{BasicQueue, BoxBlockImport, Verifier},
+};
 #[cfg(feature = "std")]
 use std::{marker::PhantomData, sync::Arc, time::Duration};
 #[cfg(feature = "std")]
@@ -374,12 +374,12 @@ pub async fn run_delayed_finalize<B, CB, C, S>(
 mod tests {
 	use super::*;
 	use assert_matches::assert_matches;
-	use soil_consensus::ImportedAux;
 	use sc_transaction_pool::{BasicPool, FullChainApi, Options, RevalidationType};
 	use soil_basic_authorship::ProposerFactory;
 	use soil_client::transaction_pool::{
 		MaintainedTransactionPool, TransactionPool, TransactionSource,
 	};
+	use soil_consensus::ImportedAux;
 	use subsoil::api::StorageProof;
 	use subsoil::inherents::InherentData;
 	use subsoil::runtime::generic::{Digest, DigestItem};

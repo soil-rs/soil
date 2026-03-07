@@ -1,8 +1,8 @@
 // This file is part of Substrate.
-
+//
 // Copyright (C) Parity Technologies (UK) Ltd.
 // SPDX-License-Identifier: Apache-2.0
-
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -20,7 +20,7 @@
 use super::types::{Mixnode, MixnodesErr, SessionIndex, SessionStatus};
 use alloc::vec::Vec;
 
-subsoil::api::decl_runtime_apis! {
+crate::api::decl_runtime_apis! {
 	/// API to query the mixnet session status and mixnode sets, and to register mixnodes.
 	pub trait MixnetApi {
 		/// Get the index and phase of the current session.

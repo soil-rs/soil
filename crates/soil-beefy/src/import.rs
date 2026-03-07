@@ -28,8 +28,8 @@ use subsoil::runtime::{
 	EncodedJustification,
 };
 
-use soil_consensus::{BlockCheckParams, BlockImport, BlockImportParams, ImportResult};
 use soil_client::client_api::{backend::Backend, TrieCacheContext};
+use soil_consensus::{BlockCheckParams, BlockImport, BlockImportParams, ImportResult};
 
 use crate::{
 	communication::notification::BeefyVersionedFinalityProofSender,

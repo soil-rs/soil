@@ -21,10 +21,10 @@ use crate::types::{ExtendedPeerInfo, SyncEvent, SyncEventStream, SyncStatus, Syn
 use futures::{channel::oneshot, Stream};
 use soil_network_types::PeerId;
 
+use soil_client::utils::mpsc::{tracing_unbounded, TracingUnboundedSender};
 use soil_consensus::{
 	BlockImportError, BlockImportStatus, JustificationImportResult, JustificationSyncLink, Link,
 };
-use soil_client::utils::mpsc::{tracing_unbounded, TracingUnboundedSender};
 use soil_network::{NetworkBlock, NetworkSyncForkRequest};
 use subsoil::runtime::traits::{Block as BlockT, NumberFor};
 

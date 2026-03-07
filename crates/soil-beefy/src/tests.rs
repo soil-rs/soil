@@ -42,16 +42,16 @@ use futures::{
 	Future, FutureExt, StreamExt,
 };
 use parking_lot::Mutex;
-use soil_consensus::{
-	BlockImport, BlockImportParams, BoxJustificationImport, ForkChoiceStrategy, ImportResult,
-	ImportedAux,
-};
 use soil_client::block_builder::BlockBuilderBuilder;
 use soil_client::client_api::{
 	Backend as BackendT, BlockchainEvents, FinalityNotifications, HeaderBackend,
 };
 use soil_client::consensus::BlockOrigin;
 use soil_client::utils::{mpsc::TracingUnboundedReceiver, notification::NotificationReceiver};
+use soil_consensus::{
+	BlockImport, BlockImportParams, BoxJustificationImport, ForkChoiceStrategy, ImportResult,
+	ImportedAux,
+};
 use soil_network::{config::RequestResponseConfig, ProtocolName};
 use soil_network_test::{
 	Block, BlockImportAdapter, FullPeerConfig, PassThroughVerifier, Peer, PeersClient,

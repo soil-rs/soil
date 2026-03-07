@@ -21,9 +21,9 @@
 
 use futures::channel::{mpsc::SendError, oneshot};
 use jsonrpsee::types::error::{ErrorObject, ErrorObjectOwned};
-use soil_consensus::ImportResult;
 use soil_client::blockchain::Error as BlockchainError;
 use soil_client::consensus::Error as ConsensusError;
+use soil_consensus::ImportResult;
 use subsoil::inherents::Error as InherentsError;
 
 /// Error code for rpc

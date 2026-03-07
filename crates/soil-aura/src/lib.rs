@@ -35,16 +35,16 @@ use std::{fmt::Debug, marker::PhantomData, pin::Pin, sync::Arc};
 use codec::Codec;
 use futures::prelude::*;
 
-use soil_consensus::{BlockImport, BlockImportParams, ForkChoiceStrategy, StateAction};
-use soil_consensus::slots::{
-	BackoffAuthoringBlocksStrategy, InherentDataProviderExt, SimpleSlotWorkerToSlotWorker,
-	SlotInfo, StorageChanges,
-};
 use soil_client::blockchain::HeaderBackend;
 use soil_client::client_api::{backend::AuxStore, BlockOf};
 use soil_client::consensus::{
 	BlockOrigin, Environment, Error as ConsensusError, Proposer, SelectChain,
 };
+use soil_consensus::slots::{
+	BackoffAuthoringBlocksStrategy, InherentDataProviderExt, SimpleSlotWorkerToSlotWorker,
+	SlotInfo, StorageChanges,
+};
+use soil_consensus::{BlockImport, BlockImportParams, ForkChoiceStrategy, StateAction};
 use soil_telemetry::TelemetryHandle;
 use subsoil::api::{Core, ProvideRuntimeApi};
 use subsoil::application_crypto::AppPublic;
@@ -64,8 +64,8 @@ pub use import_queue::{
 	build_verifier, import_queue, AuraVerifier, BuildVerifierParams, CheckForEquivocation,
 	ImportQueueParams,
 };
-pub use soil_consensus::slots::SlotProportion;
 pub use soil_client::consensus::SyncOracle;
+pub use soil_consensus::slots::SlotProportion;
 pub use subsoil::consensus::aura::{
 	digests::CompatibleDigestItem,
 	inherents::{InherentDataProvider, InherentType as AuraInherent, INHERENT_IDENTIFIER},
@@ -554,12 +554,12 @@ where
 mod tests {
 	use super::*;
 	use parking_lot::Mutex;
-	use soil_consensus::BoxJustificationImport;
-	use soil_consensus::slots::{BackoffAuthoringOnFinalizedHeadLagging, SimpleSlotWorker};
 	use soil_client::block_builder::BlockBuilderBuilder;
 	use soil_client::client_api::BlockchainEvents;
 	use soil_client::consensus::{NoNetwork as DummyOracle, Proposal, ProposeArgs};
 	use soil_client::keystore::LocalKeystore;
+	use soil_consensus::slots::{BackoffAuthoringOnFinalizedHeadLagging, SimpleSlotWorker};
+	use soil_consensus::BoxJustificationImport;
 	use soil_network_test::{Block as TestBlock, *};
 	use std::{
 		task::Poll,

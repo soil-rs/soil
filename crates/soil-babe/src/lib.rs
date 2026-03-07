@@ -90,17 +90,6 @@ use log::{debug, info, log, trace, warn};
 use parking_lot::Mutex;
 use prometheus_endpoint::Registry;
 
-use soil_consensus::{
-	block_import::{
-		BlockCheckParams, BlockImport, BlockImportParams, ForkChoiceStrategy, ImportResult,
-		StateAction,
-	},
-	import_queue::{BasicQueue, BoxJustificationImport, DefaultImportQueue, Verifier},
-};
-use soil_consensus::slots::{
-	check_equivocation, BackoffAuthoringBlocksStrategy, CheckedHeader, InherentDataProviderExt,
-	SlotInfo, StorageChanges,
-};
 use soil_client::blockchain::{
 	Backend as _, BlockStatus, Error as ClientError, HeaderBackend, HeaderMetadata,
 	Result as ClientResult,
@@ -117,6 +106,17 @@ use soil_consensus::epochs::{
 	descendent_query, Epoch as EpochT, EpochChangesFor, SharedEpochChanges, ViableEpoch,
 	ViableEpochDescriptor,
 };
+use soil_consensus::slots::{
+	check_equivocation, BackoffAuthoringBlocksStrategy, CheckedHeader, InherentDataProviderExt,
+	SlotInfo, StorageChanges,
+};
+use soil_consensus::{
+	block_import::{
+		BlockCheckParams, BlockImport, BlockImportParams, ForkChoiceStrategy, ImportResult,
+		StateAction,
+	},
+	import_queue::{BasicQueue, BoxJustificationImport, DefaultImportQueue, Verifier},
+};
 use soil_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG, CONSENSUS_TRACE};
 use subsoil::api::{ApiExt, ProvideRuntimeApi};
 use subsoil::application_crypto::AppCrypto;
@@ -132,8 +132,8 @@ use subsoil::runtime::{
 	DigestItem,
 };
 
-pub use soil_consensus::slots::SlotProportion;
 pub use soil_client::consensus::SyncOracle;
+pub use soil_consensus::slots::SlotProportion;
 pub use subsoil::consensus::babe::{
 	digests::{
 		CompatibleDigestItem, NextConfigDescriptor, NextEpochDescriptor, PreDigest,

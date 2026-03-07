@@ -43,11 +43,6 @@ use futures::{future::BoxFuture, pin_mut, prelude::*};
 use libp2p::PeerId;
 use log::trace;
 use parking_lot::Mutex;
-use soil_consensus::{
-	BasicQueue, BlockCheckParams, BlockImport, BlockImportParams, BoxJustificationImport,
-	ForkChoiceStrategy, ImportQueue, ImportResult, JustificationImport, JustificationSyncLink,
-	LongestChain, Verifier,
-};
 use soil_client::block_builder::{BlockBuilder, BlockBuilderBuilder};
 use soil_client::blockchain::{
 	Backend as BlockchainBackend, HeaderBackend, Info as BlockchainInfo, Result as ClientResult,
@@ -60,6 +55,11 @@ use soil_client::client_api::{
 use soil_client::consensus::{
 	block_validation::{BlockAnnounceValidator, DefaultBlockAnnounceValidator},
 	BlockOrigin, Error as ConsensusError, SyncOracle,
+};
+use soil_consensus::{
+	BasicQueue, BlockCheckParams, BlockImport, BlockImportParams, BoxJustificationImport,
+	ForkChoiceStrategy, ImportQueue, ImportResult, JustificationImport, JustificationSyncLink,
+	LongestChain, Verifier,
 };
 use soil_network::{
 	config::{

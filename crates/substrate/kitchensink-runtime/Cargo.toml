@@ -149,7 +149,6 @@ subsoil = { workspace = true }
 soil-authority-discovery = { workspace = true }
 subsoil-crypto-hashing = { workspace = true }
 soil-genesis-builder = { workspace = true }
-soil-mixnet = { workspace = true }
 soil-offchain = { workspace = true }
 soil-session = { workspace = true }
 soil-staking = { workspace = true }
@@ -289,7 +288,6 @@ std = [
 	"soil-authority-discovery/std",
 	"subsoil-crypto-hashing/std",
 	"soil-genesis-builder/std",
-	"soil-mixnet/std",
 	"soil-offchain/std",
 	"soil-session/std",
 	"soil-staking/std",

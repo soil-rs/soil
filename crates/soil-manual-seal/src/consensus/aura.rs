@@ -20,8 +20,8 @@
 //! runtimes that expect the aura-specific digests.
 
 use crate::{ConsensusDataProvider, Error};
-use soil_consensus::BlockImportParams;
 use soil_client::client_api::{AuxStore, UsageProvider};
+use soil_consensus::BlockImportParams;
 use std::{marker::PhantomData, sync::Arc};
 use subsoil::api::{ProvideRuntimeApi, StorageProof};
 use subsoil::consensus::aura::{
@@ -54,8 +54,8 @@ where
 		C: AuxStore + ProvideRuntimeApi<B> + UsageProvider<B>,
 		C::Api: AuraApi<B, AuthorityId>,
 	{
-		let slot_duration = soil_aura::slot_duration(&*client)
-			.expect("slot_duration is always present; qed.");
+		let slot_duration =
+			soil_aura::slot_duration(&*client).expect("slot_duration is always present; qed.");
 
 		Self { slot_duration, _phantom: PhantomData }
 	}

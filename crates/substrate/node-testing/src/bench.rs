@@ -39,12 +39,14 @@ use kitchensink_runtime::{
 	RuntimeCall, Signature, SystemCall, UncheckedExtrinsic,
 };
 use node_primitives::Block;
-use soil_consensus::{BlockImport, BlockImportParams, ForkChoiceStrategy, ImportResult, ImportedAux};
 use soil_client::block_builder::BlockBuilderBuilder;
 use soil_client::client_api::{execution_extensions::ExecutionExtensions, UsageProvider};
 use soil_client::consensus::BlockOrigin;
 use soil_client::db::PruningMode;
 use soil_client::executor::{WasmExecutionMethod, WasmtimeInstantiationStrategy};
+use soil_consensus::{
+	BlockImport, BlockImportParams, ForkChoiceStrategy, ImportResult, ImportedAux,
+};
 use subsoil::api::ProvideRuntimeApi;
 use subsoil::block_builder::BlockBuilder;
 use subsoil::core::{

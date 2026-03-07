@@ -48,14 +48,14 @@ use codec::{Decode, Encode};
 use futures::{Future, StreamExt};
 use log::*;
 use prometheus_endpoint::Registry;
-use soil_consensus::{
-	BasicQueue, BlockCheckParams, BlockImport, BlockImportParams, BoxBlockImport,
-	BoxJustificationImport, ForkChoiceStrategy, ImportResult, Verifier,
-};
 use soil_client::blockchain::HeaderBackend;
 use soil_client::client_api::{self, backend::AuxStore, BlockOf, BlockchainEvents};
 use soil_client::consensus::{
 	Environment, Error as ConsensusError, ProposeArgs, Proposer, SelectChain, SyncOracle,
+};
+use soil_consensus::{
+	BasicQueue, BlockCheckParams, BlockImport, BlockImportParams, BoxBlockImport,
+	BoxJustificationImport, ForkChoiceStrategy, ImportResult, Verifier,
 };
 use std::{cmp::Ordering, marker::PhantomData, sync::Arc, time::Duration};
 use subsoil::api::ProvideRuntimeApi;

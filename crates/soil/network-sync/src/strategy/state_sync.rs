@@ -24,9 +24,9 @@ use crate::{
 };
 use codec::{Decode, Encode};
 use log::debug;
-use soil_consensus::ImportedState;
 use smallvec::SmallVec;
 use soil_client::client_api::{CompactProof, KeyValueStates, ProofProvider};
+use soil_consensus::ImportedState;
 use std::{collections::HashMap, fmt, sync::Arc};
 use subsoil::core::storage::well_known_keys;
 use subsoil::runtime::{

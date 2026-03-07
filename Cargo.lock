@@ -4681,7 +4681,6 @@ dependencies = [
  "soil-authority-discovery",
  "soil-chain-spec-derive",
  "soil-genesis-builder",
- "soil-mixnet",
  "soil-offchain",
  "soil-session",
  "soil-staking",
@@ -8074,7 +8073,6 @@ dependencies = [
  "parity-scale-codec",
  "parking_lot 0.12.5",
  "soil-client",
- "soil-mixnet",
  "soil-network",
  "soil-network-types",
  "subsoil",
@@ -9321,15 +9319,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "soil-mixnet"
-version = "0.4.0"
-dependencies = [
- "parity-scale-codec",
- "scale-info",
- "subsoil",
-]
-
-[[package]]
 name = "soil-mmr-gadget"
 version = "29.0.0"
 dependencies = [
@@ -10148,7 +10137,6 @@ dependencies = [
  "soil-grandpa",
  "soil-informant",
  "soil-manual-seal",
- "soil-mixnet",
  "soil-mmr-gadget",
  "soil-mmr-rpc",
  "soil-network",
@@ -12413,7 +12401,6 @@ dependencies = [
  "parity-scale-codec",
  "scale-info",
  "serde",
- "soil-mixnet",
  "subsoil",
  "topsoil",
 ]

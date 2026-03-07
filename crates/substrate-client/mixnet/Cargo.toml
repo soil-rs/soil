@@ -30,5 +30,4 @@ soil-network = { workspace = true, default-features = true }
 soil-network-types = { workspace = true, default-features = true }
 soil-client = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
-soil-mixnet = { workspace = true, default-features = true }
 thiserror = { workspace = true }

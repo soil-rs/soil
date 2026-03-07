@@ -40,9 +40,7 @@ use jsonrpsee::{
 };
 use log::warn;
 
-use crate::communication::notification::{
-	BeefyBestBlockStream, BeefyVersionedFinalityProofStream,
-};
+use crate::communication::notification::{BeefyBestBlockStream, BeefyVersionedFinalityProofStream};
 use crate::rpc_notification as notification;
 
 #[derive(Debug, thiserror::Error)]
@@ -162,12 +160,12 @@ where
 mod tests {
 	use super::*;
 
-	use codec::{Decode, Encode};
-	use jsonrpsee::{core::EmptyServerParams as EmptyParams, RpcModule};
 	use crate::{
 		communication::notification::BeefyVersionedFinalityProofSender,
 		justification::BeefyVersionedFinalityProof,
 	};
+	use codec::{Decode, Encode};
+	use jsonrpsee::{core::EmptyServerParams as EmptyParams, RpcModule};
 	use subsoil::consensus::beefy::{ecdsa_crypto, known_payloads, Payload, SignedCommitment};
 	use subsoil::runtime::traits::{BlakeTwo256, Hash};
 	use substrate_test_runtime_client::runtime::Block;

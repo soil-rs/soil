@@ -61,7 +61,6 @@ use futures::{prelude::*, StreamExt};
 use log::{debug, error, info};
 use parking_lot::RwLock;
 use prometheus_endpoint::{PrometheusError, Registry};
-use soil_consensus::BlockImport;
 use soil_client::blockchain::{
 	Error as ClientError, HeaderBackend, HeaderMetadata, Result as ClientResult,
 };
@@ -73,6 +72,7 @@ use soil_client::client_api::{
 use soil_client::consensus::SelectChain;
 use soil_client::transaction_pool::OffchainTransactionPoolFactory;
 use soil_client::utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver};
+use soil_consensus::BlockImport;
 use soil_network::{types::ProtocolName, NetworkBackend, NotificationService};
 use soil_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG, CONSENSUS_INFO};
 use subsoil::api::ProvideRuntimeApi;

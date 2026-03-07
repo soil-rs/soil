@@ -29,7 +29,6 @@ use futures::{select, FutureExt, StreamExt};
 use jsonrpsee::RpcModule;
 use log::{debug, error, info};
 use prometheus_endpoint::Registry;
-use soil_consensus::import_queue::{ImportQueue, ImportQueueService};
 use sc_rpc::{
 	author::AuthorApiServer,
 	chain::ChainApiServer,
@@ -57,6 +56,7 @@ use soil_client::keystore::LocalKeystore;
 use soil_client::tracing::block::TracingExecuteBlock;
 use soil_client::transaction_pool::{MaintainedTransactionPool, TransactionPool};
 use soil_client::utils::mpsc::{tracing_unbounded, TracingUnboundedSender};
+use soil_consensus::import_queue::{ImportQueue, ImportQueueService};
 use soil_network::{
 	config::{FullNetworkConfiguration, ProtocolId, SyncMode},
 	multiaddr::Protocol,

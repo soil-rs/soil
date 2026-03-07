@@ -3473,20 +3473,20 @@ subsoil::api::impl_runtime_apis! {
 		}
 	}
 
-	impl soil_mixnet::runtime_api::MixnetApi<Block> for Runtime {
-		fn session_status() -> soil_mixnet::types::SessionStatus {
+	impl subsoil::mixnet::runtime_api::MixnetApi<Block> for Runtime {
+		fn session_status() -> subsoil::mixnet::types::SessionStatus {
 			Mixnet::session_status()
 		}
 
-		fn prev_mixnodes() -> Result<Vec<soil_mixnet::types::Mixnode>, soil_mixnet::types::MixnodesErr> {
+		fn prev_mixnodes() -> Result<Vec<subsoil::mixnet::types::Mixnode>, subsoil::mixnet::types::MixnodesErr> {
 			Mixnet::prev_mixnodes()
 		}
 
-		fn current_mixnodes() -> Result<Vec<soil_mixnet::types::Mixnode>, soil_mixnet::types::MixnodesErr> {
+		fn current_mixnodes() -> Result<Vec<subsoil::mixnet::types::Mixnode>, subsoil::mixnet::types::MixnodesErr> {
 			Mixnet::current_mixnodes()
 		}
 
-		fn maybe_register(session_index: soil_mixnet::types::SessionIndex, mixnode: soil_mixnet::types::Mixnode) -> bool {
+		fn maybe_register(session_index: subsoil::mixnet::types::SessionIndex, mixnode: subsoil::mixnet::types::Mixnode) -> bool {
 			Mixnet::maybe_register(session_index, mixnode)
 		}
 	}

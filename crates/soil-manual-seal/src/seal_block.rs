@@ -21,10 +21,12 @@
 use crate::{rpc, ConsensusDataProvider, CreatedBlock, Error};
 use codec::Encode;
 use futures::prelude::*;
-use soil_consensus::{BlockImport, BlockImportParams, ForkChoiceStrategy, ImportResult, StateAction};
 use soil_client::blockchain::HeaderBackend;
 use soil_client::consensus::{self, BlockOrigin, Environment, ProposeArgs, Proposer, SelectChain};
 use soil_client::transaction_pool::TransactionPool;
+use soil_consensus::{
+	BlockImport, BlockImportParams, ForkChoiceStrategy, ImportResult, StateAction,
+};
 use std::{sync::Arc, time::Duration};
 use subsoil::api::{ProofRecorder, ProvideRuntimeApi};
 use subsoil::externalities::Extensions;
