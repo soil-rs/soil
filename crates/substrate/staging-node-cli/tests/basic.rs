@@ -726,7 +726,7 @@ fn default_config_as_json_works() {
 	let r = executor_call(
 		&mut t,
 		"GenesisBuilder_get_preset",
-		&None::<&soil_genesis_builder::PresetId>.encode(),
+		&None::<&subsoil::genesis_builder::PresetId>.encode(),
 	)
 	.0
 	.unwrap();

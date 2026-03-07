@@ -31,8 +31,6 @@ topsoil-session = { workspace = true }
 topsoil-session-benchmarking = { workspace = true }
 plant-staking = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
-soil-staking = { workspace = true }
-
 [dev-dependencies]
 plant-staking-reward-curve = { workspace = true, default-features = true }
 topsoil-timestamp = { workspace = true, default-features = true }
@@ -58,7 +56,6 @@ std = [
 	"topsoil-timestamp/std",
 	"scale-info/std",
 	"subsoil/std",
-	"soil-staking/std",
 ]
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",
@@ -75,5 +72,4 @@ runtime-benchmarks = [
 	"plant-staking/runtime-benchmarks",
 	"topsoil-timestamp/runtime-benchmarks",
 	"subsoil/runtime-benchmarks",
-	"soil-staking/runtime-benchmarks",
 ]

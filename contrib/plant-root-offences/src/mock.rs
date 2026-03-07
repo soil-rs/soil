@@ -19,7 +19,7 @@ use super::*;
 use crate as root_offences;
 
 use alloc::collections::btree_map::BTreeMap;
-use soil_staking::{EraIndex, SessionIndex};
+use subsoil::staking::{EraIndex, SessionIndex};
 use subsoil::runtime::{
 	curve::PiecewiseLinear, testing::UintAuthorityId, traits::Zero, BuildStorage,
 };

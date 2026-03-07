@@ -23,7 +23,6 @@ subsoil = { workspace = true }
 frame-metadata = { features = ["current", "unstable"], workspace = true, default-features = true }
 merkleized-metadata = { workspace = true }
 subsoil = { workspace = true, default-features = true }
-soil-transaction-pool = { workspace = true, default-features = true }
 substrate-test-runtime-client = { workspace = true }
 substrate-wasm-builder = { features = ["metadata-hash"], workspace = true, default-features = true }
 

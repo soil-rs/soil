@@ -30,8 +30,8 @@ use alloc::{boxed::Box, vec::Vec};
 use codec::{Encode, MaxEncodedLen};
 use log;
 
-use soil_session::{GetSessionNumber, GetValidatorCount};
-use soil_staking::{offence::OffenceReportSystem, SessionIndex};
+use subsoil::session::{GetSessionNumber, GetValidatorCount};
+use subsoil::staking::{offence::OffenceReportSystem, SessionIndex};
 use subsoil::consensus::beefy::{
 	AncestryHelper, AncestryHelperWeightInfo, AuthorityIndex, BeefyAuthorityId, ConsensusLog,
 	DoubleVotingProof, ForkVotingProof, FutureBlockVotingProof, OnNewValidatorSet, ValidatorSet,

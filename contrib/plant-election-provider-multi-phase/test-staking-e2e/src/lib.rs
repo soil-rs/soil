@@ -309,7 +309,7 @@ fn automatic_unbonding_pools() {
 
 	// closure to fetch the staking unlocking chunks of an account.
 	let unlocking_chunks_of = |account: AccountId| -> usize {
-		Staking::ledger(soil_staking::StakingAccount::Controller(account))
+		Staking::ledger(subsoil::staking::StakingAccount::Controller(account))
 			.unwrap()
 			.unlocking
 			.len()

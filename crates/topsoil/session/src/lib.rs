@@ -125,7 +125,7 @@ use core::{
 	ops::{Rem, Sub},
 };
 use disabling::DisablingStrategy;
-use soil_staking::{offence::OffenceSeverity, SessionIndex};
+use subsoil::staking::{offence::OffenceSeverity, SessionIndex};
 use subsoil::runtime::{
 	traits::{AtLeast32BitUnsigned, Convert, Member, One, OpaqueKeys, Zero},
 	ConsensusEngineId, DispatchError, KeyTypeId, Permill, RuntimeAppPublic,
@@ -1159,7 +1159,7 @@ impl<T: Config> ValidatorSet<T::AccountId> for Pallet<T> {
 	type ValidatorId = T::ValidatorId;
 	type ValidatorIdOf = T::ValidatorIdOf;
 
-	fn session_index() -> soil_staking::SessionIndex {
+	fn session_index() -> subsoil::staking::SessionIndex {
 		CurrentIndex::<T>::get()
 	}
 

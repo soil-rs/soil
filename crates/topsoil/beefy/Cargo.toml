@@ -20,9 +20,7 @@ topsoil-authorship = { workspace = true }
 topsoil-session = { workspace = true }
 scale-info = { features = ["derive", "serde"], workspace = true }
 serde = { optional = true, workspace = true, default-features = true }
-soil-session = { workspace = true }
-soil-staking = { features = ["serde"], workspace = true }
-subsoil = { workspace = true }
+subsoil = { features = ["serde"], workspace = true }
 
 [dev-dependencies]
 plant-election-provider-support = { workspace = true, default-features = true }
@@ -31,7 +29,6 @@ topsoil-offences = { workspace = true, default-features = true }
 plant-staking = { workspace = true, default-features = true }
 plant-staking-reward-curve = { workspace = true, default-features = true }
 topsoil-timestamp = { workspace = true, default-features = true }
-soil-staking = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
 
 [features]
@@ -51,8 +48,6 @@ std = [
 	"scale-info/std",
 	"serde/std",
 	"subsoil/std",
-	"soil-session/std",
-	"soil-staking/std",
 ]
 try-runtime = [
 	"plant-election-provider-support/try-runtime",

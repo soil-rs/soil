@@ -552,7 +552,7 @@ impl topsoil_babe::Config for Runtime {
 	type WeightInfo = ();
 	type MaxAuthorities = MaxAuthorities;
 	type MaxNominators = MaxNominators;
-	type KeyOwnerProof = soil_session::MembershipProof;
+	type KeyOwnerProof = subsoil::session::MembershipProof;
 	type EquivocationReportSystem =
 		topsoil_babe::EquivocationReportSystem<Self, Offences, Historical, ReportLongevity>;
 }
@@ -699,9 +699,9 @@ plant_staking_reward_curve::build! {
 }
 
 parameter_types! {
-	pub const SessionsPerEra: soil_staking::SessionIndex = 6;
-	pub const BondingDuration: soil_staking::EraIndex = 24 * 28;
-	pub const SlashDeferDuration: soil_staking::EraIndex = 24 * 7; // 1/4 the bonding duration.
+	pub const SessionsPerEra: subsoil::staking::SessionIndex = 6;
+	pub const BondingDuration: subsoil::staking::EraIndex = 24 * 28;
+	pub const SlashDeferDuration: subsoil::staking::EraIndex = 24 * 7; // 1/4 the bonding duration.
 	pub const RewardCurve: &'static PiecewiseLinear<'static> = &REWARD_CURVE;
 	pub const MaxNominators: u32 = 64;
 	pub const MaxControllersInDeprecationBatch: u32 = 5900;
@@ -723,7 +723,7 @@ impl plant_staking::Config for Runtime {
 	type Currency = Balances;
 	type CurrencyBalance = Balance;
 	type UnixTime = Timestamp;
-	type CurrencyToVote = soil_staking::currency_to_vote::U128CurrencyToVote;
+	type CurrencyToVote = subsoil::staking::currency_to_vote::U128CurrencyToVote;
 	type RewardRemainder = ResolveTo<TreasuryAccount, Balances>;
 	type RuntimeEvent = RuntimeEvent;
 	type RuntimeHoldReason = RuntimeHoldReason;
@@ -1227,7 +1227,7 @@ impl plant_elections_phragmen::Config for Runtime {
 	// NOTE: this implies that council's genesis members cannot be set directly and must come from
 	// this module.
 	type InitializeMembers = Council;
-	type CurrencyToVote = soil_staking::currency_to_vote::U128CurrencyToVote;
+	type CurrencyToVote = subsoil::staking::currency_to_vote::U128CurrencyToVote;
 	type CandidacyBond = CandidacyBond;
 	type VotingBondBase = VotingBondBase;
 	type VotingBondFactor = VotingBondFactor;
@@ -1611,7 +1611,7 @@ impl topsoil_grandpa::Config for Runtime {
 	type MaxAuthorities = MaxAuthorities;
 	type MaxNominators = MaxNominators;
 	type MaxSetIdSessionEntries = MaxSetIdSessionEntries;
-	type KeyOwnerProof = soil_session::MembershipProof;
+	type KeyOwnerProof = subsoil::session::MembershipProof;
 	type EquivocationReportSystem =
 		topsoil_grandpa::EquivocationReportSystem<Self, Offences, Historical, ReportLongevity>;
 }
@@ -2806,7 +2806,7 @@ impl topsoil_beefy::Config for Runtime {
 	type OnNewValidatorSet = MmrLeaf;
 	type AncestryHelper = MmrLeaf;
 	type WeightInfo = ();
-	type KeyOwnerProof = soil_session::MembershipProof;
+	type KeyOwnerProof = subsoil::session::MembershipProof;
 	type EquivocationReportSystem =
 		topsoil_beefy::EquivocationReportSystem<Self, Offences, Historical, ReportLongevity>;
 }
@@ -3061,7 +3061,7 @@ subsoil::api::impl_runtime_apis! {
 		}
 	}
 
-	impl soil_transaction_pool::runtime_api::TaggedTransactionQueue<Block> for Runtime {
+	impl subsoil::txpool::runtime_api::TaggedTransactionQueue<Block> for Runtime {
 		fn validate_transaction(
 			source: TransactionSource,
 			tx: <Block as BlockT>::Extrinsic,
@@ -3071,7 +3071,7 @@ subsoil::api::impl_runtime_apis! {
 		}
 	}
 
-	impl soil_offchain::OffchainWorkerApi<Block> for Runtime {
+	impl subsoil::offchain_worker::OffchainWorkerApi<Block> for Runtime {
 		fn offchain_worker(header: &<Block as BlockT>::Header) {
 			Executive::offchain_worker(header)
 		}
@@ -3160,11 +3160,11 @@ subsoil::api::impl_runtime_apis! {
 			Staking::api_nominations_quota(balance)
 		}
 
-		fn eras_stakers_page_count(era: soil_staking::EraIndex, account: AccountId) -> soil_staking::Page {
+		fn eras_stakers_page_count(era: subsoil::staking::EraIndex, account: AccountId) -> subsoil::staking::Page {
 			Staking::api_eras_stakers_page_count(era, account)
 		}
 
-		fn pending_rewards(era: soil_staking::EraIndex, account: AccountId) -> bool {
+		fn pending_rewards(era: subsoil::staking::EraIndex, account: AccountId) -> bool {
 			Staking::api_pending_rewards(era, account)
 		}
 	}
@@ -3491,8 +3491,8 @@ subsoil::api::impl_runtime_apis! {
 		}
 	}
 
-	impl soil_session::SessionKeys<Block> for Runtime {
-		fn generate_session_keys(owner: Vec<u8>, seed: Option<Vec<u8>>) -> soil_session::OpaqueGeneratedSessionKeys {
+	impl subsoil::session::SessionKeys<Block> for Runtime {
+		fn generate_session_keys(owner: Vec<u8>, seed: Option<Vec<u8>>) -> subsoil::session::OpaqueGeneratedSessionKeys {
 			SessionKeys::generate(&owner, seed).into()
 		}
 
@@ -3612,16 +3612,16 @@ subsoil::api::impl_runtime_apis! {
 		}
 	}
 
-	impl soil_genesis_builder::GenesisBuilder<Block> for Runtime {
-		fn build_state(config: Vec<u8>) -> soil_genesis_builder::Result {
+	impl subsoil::genesis_builder::GenesisBuilder<Block> for Runtime {
+		fn build_state(config: Vec<u8>) -> subsoil::genesis_builder::Result {
 			build_state::<RuntimeGenesisConfig>(config)
 		}
 
-		fn get_preset(id: &Option<soil_genesis_builder::PresetId>) -> Option<Vec<u8>> {
+		fn get_preset(id: &Option<subsoil::genesis_builder::PresetId>) -> Option<Vec<u8>> {
 			get_preset::<RuntimeGenesisConfig>(id, &genesis_config_presets::get_preset)
 		}
 
-		fn preset_names() -> Vec<soil_genesis_builder::PresetId> {
+		fn preset_names() -> Vec<subsoil::genesis_builder::PresetId> {
 			genesis_config_presets::preset_names()
 		}
 	}

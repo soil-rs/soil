@@ -34,7 +34,7 @@ use soil_client::transaction_pool::{
 	error::IntoPoolError, BlockHash, InPoolTransaction, TransactionFor, TransactionPool,
 	TransactionSource, TxHash, TxInvalidityReportMap,
 };
-use soil_session::SessionKeys;
+use subsoil::session::SessionKeys;
 use std::sync::Arc;
 use subsoil::api::{ApiExt, ProvideRuntimeApi};
 use subsoil::core::Bytes;

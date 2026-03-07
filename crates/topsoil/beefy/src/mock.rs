@@ -17,7 +17,7 @@
 
 use codec::{Decode, DecodeWithMemTracking, Encode};
 use scale_info::TypeInfo;
-use soil_staking::{EraIndex, SessionIndex};
+use subsoil::staking::{EraIndex, SessionIndex};
 use subsoil::core::{crypto::KeyTypeId, ConstBool, ConstU128};
 use subsoil::runtime::{
 	app_crypto::ecdsa::Public,

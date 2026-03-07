@@ -17,7 +17,7 @@
 
 use super::*;
 use crate::{self as pools};
-use soil_staking::{
+use subsoil::staking::{
 	Agent, DelegationInterface, DelegationMigrator, Delegator, OnStakingUpdate, Stake,
 };
 use subsoil::runtime::{BuildStorage, DispatchResult, FixedU128};
@@ -84,7 +84,7 @@ impl StakingMock {
 	}
 }
 
-impl soil_staking::StakingInterface for StakingMock {
+impl subsoil::staking::StakingInterface for StakingMock {
 	type Balance = Balance;
 	type AccountId = AccountId;
 	type CurrencyToVote = ();
@@ -110,9 +110,9 @@ impl soil_staking::StakingInterface for StakingMock {
 
 	fn status(
 		_: &Self::AccountId,
-	) -> Result<soil_staking::StakerStatus<Self::AccountId>, DispatchError> {
+	) -> Result<subsoil::staking::StakerStatus<Self::AccountId>, DispatchError> {
 		Nominations::get()
-			.map(|noms| soil_staking::StakerStatus::Nominator(noms))
+			.map(|noms| subsoil::staking::StakerStatus::Nominator(noms))
 			.ok_or(DispatchError::Other("NotStash"))
 	}
 
@@ -236,7 +236,7 @@ impl soil_staking::StakingInterface for StakingMock {
 	}
 
 	#[cfg(feature = "runtime-benchmarks")]
-	fn max_exposure_page_size() -> soil_staking::Page {
+	fn max_exposure_page_size() -> subsoil::staking::Page {
 		unimplemented!("method currently not used in testing")
 	}
 

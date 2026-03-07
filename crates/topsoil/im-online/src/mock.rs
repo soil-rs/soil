@@ -19,7 +19,7 @@
 
 #![cfg(test)]
 
-use soil_staking::{
+use subsoil::staking::{
 	offence::{OffenceError, ReportOffence},
 	SessionIndex,
 };

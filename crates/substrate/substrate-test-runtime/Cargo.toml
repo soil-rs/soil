@@ -30,11 +30,7 @@ soil-service = { optional = true, workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 subsoil-crypto-hashing = { workspace = true }
 subsoil-derive = { workspace = true }
-soil-genesis-builder = { workspace = true }
-soil-offchain = { workspace = true }
-soil-session = { workspace = true }
 soil-statement-store = { workspace = true }
-soil-transaction-pool = { workspace = true }
 subsoil = { features = ["serde"], workspace = true }
 trie-db = { workspace = true }
 
@@ -78,11 +74,7 @@ std = [
 	"serde_json/std",
 	"subsoil/std",
 	"subsoil-crypto-hashing/std",
-	"soil-genesis-builder/std",
-	"soil-offchain/std",
-	"soil-session/std",
 	"soil-statement-store/std",
-	"soil-transaction-pool/std",
 	"substrate-wasm-builder",
 	"tracing/std",
 	"trie-db/std"]

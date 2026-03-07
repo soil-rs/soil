@@ -22,7 +22,6 @@ topsoil-system = { workspace = true }
 log = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { optional = true, workspace = true, default-features = true }
-soil-staking = { workspace = true }
 subsoil = { workspace = true }
 
 [dev-dependencies]
@@ -38,13 +37,11 @@ std = [
 	"scale-info/std",
 	"serde",
 	"subsoil/std",
-	"soil-staking/std",
 ]
 runtime-benchmarks = [
 	"topsoil-support/runtime-benchmarks",
 	"topsoil-system/runtime-benchmarks",
 	"subsoil/runtime-benchmarks",
-	"soil-staking/runtime-benchmarks",
 ]
 try-runtime = [
 	"topsoil-support/try-runtime",

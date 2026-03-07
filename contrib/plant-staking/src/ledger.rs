@@ -31,7 +31,7 @@
 //! performed through the methods exposed by the [`StakingLedger`] implementation in order to ensure
 //! state consistency.
 
-use soil_staking::{StakingAccount, StakingInterface};
+use subsoil::staking::{StakingAccount, StakingInterface};
 use subsoil::runtime::DispatchResult;
 use topsoil_support::{defensive, ensure, traits::Defensive};
 
@@ -293,7 +293,7 @@ pub struct StakingLedgerInspect<T: Config> {
 	pub active: BalanceOf<T>,
 	pub unlocking: topsoil_support::BoundedVec<UnlockChunk<BalanceOf<T>>, T::MaxUnlockingChunks>,
 	pub legacy_claimed_rewards:
-		topsoil_support::BoundedVec<soil_staking::EraIndex, T::HistoryDepth>,
+		topsoil_support::BoundedVec<subsoil::staking::EraIndex, T::HistoryDepth>,
 }
 
 #[cfg(test)]

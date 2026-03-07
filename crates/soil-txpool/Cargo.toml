@@ -33,7 +33,6 @@ serde = { features = ["derive"], workspace = true, default-features = true }
 soil-client = { workspace = true, default-features = true }
 subsoil-crypto-hashing = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
-soil-transaction-pool = { workspace = true, default-features = true }
 strum = { workspace = true, features = ["derive"] }
 thiserror = { workspace = true }
 tokio = { workspace = true, default-features = true, features = ["macros", "time"] }

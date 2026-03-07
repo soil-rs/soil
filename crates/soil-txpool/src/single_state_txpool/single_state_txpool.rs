@@ -433,7 +433,7 @@ where
 		+ Send
 		+ Sync
 		+ 'static,
-	Client::Api: soil_transaction_pool::runtime_api::TaggedTransactionQueue<Block>,
+	Client::Api: subsoil::txpool::runtime_api::TaggedTransactionQueue<Block>,
 {
 	/// Create new basic transaction pool for a full node with the provided api.
 	pub fn new_full(
@@ -470,7 +470,7 @@ where
 		+ subsoil::runtime::traits::BlockIdTo<Block>
 		+ soil_client::blockchain::HeaderMetadata<Block, Error = soil_client::blockchain::Error>,
 	Client: Send + Sync + 'static,
-	Client::Api: soil_transaction_pool::runtime_api::TaggedTransactionQueue<Block>,
+	Client::Api: subsoil::txpool::runtime_api::TaggedTransactionQueue<Block>,
 {
 	type Block = Block;
 	type Hash = graph::ExtrinsicHash<FullChainApi<Client, Block>>;

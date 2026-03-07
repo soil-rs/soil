@@ -22,8 +22,8 @@ use codec::{Decode, Encode};
 use serde_json::{from_slice, Value};
 pub use soil_client::executor::wasm_interface::HostFunctions;
 use soil_client::executor::{error::Result, WasmExecutor};
-use soil_genesis_builder::{PresetId, Result as BuildResult};
-pub use soil_genesis_builder::{DEV_RUNTIME_PRESET, LOCAL_TESTNET_RUNTIME_PRESET};
+use subsoil::genesis_builder::{PresetId, Result as BuildResult};
+pub use subsoil::genesis_builder::{DEV_RUNTIME_PRESET, LOCAL_TESTNET_RUNTIME_PRESET};
 use std::borrow::Cow;
 use subsoil::core::{
 	storage::Storage,
@@ -85,7 +85,7 @@ where
 	/// Returns a json representation of the default `RuntimeGenesisConfig` provided by the
 	/// `runtime`.
 	///
-	/// Calls [`GenesisBuilder::get_preset`](soil_genesis_builder::GenesisBuilder::get_preset) in the
+	/// Calls [`GenesisBuilder::get_preset`](subsoil::genesis_builder::GenesisBuilder::get_preset) in the
 	/// `runtime` with `None` argument.
 	pub fn get_default_config(&self) -> core::result::Result<Value, String> {
 		self.get_named_preset(None)
@@ -93,7 +93,7 @@ where
 
 	/// Returns a JSON blob representation of the builtin `GenesisConfig` identified by `id`.
 	///
-	/// Calls [`GenesisBuilder::get_preset`](soil_genesis_builder::GenesisBuilder::get_preset)
+	/// Calls [`GenesisBuilder::get_preset`](subsoil::genesis_builder::GenesisBuilder::get_preset)
 	/// provided by the `runtime`.
 	pub fn get_named_preset(&self, id: Option<&String>) -> core::result::Result<Value, String> {
 		let mut t = BasicExternalities::new_empty();
@@ -111,7 +111,7 @@ where
 		}
 	}
 
-	/// Calls [`soil_genesis_builder::GenesisBuilder::build_state`] provided by runtime.
+	/// Calls [`subsoil::genesis_builder::GenesisBuilder::build_state`] provided by runtime.
 	pub fn get_storage_for_config(&self, config: Value) -> core::result::Result<Storage, String> {
 		let mut ext = BasicExternalities::new_empty();
 
@@ -177,7 +177,7 @@ where
 mod tests {
 	use super::*;
 	use serde_json::{from_str, json};
-	pub use soil_genesis_builder::PresetId;
+	pub use subsoil::genesis_builder::PresetId;
 	pub use subsoil::consensus::babe::{AllowedSlots, BabeEpochConfiguration};
 
 	#[test]

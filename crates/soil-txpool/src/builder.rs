@@ -131,7 +131,7 @@ where
 		+ subsoil::runtime::traits::BlockIdTo<Block>
 		+ soil_client::blockchain::HeaderMetadata<Block, Error = soil_client::blockchain::Error>
 		+ 'static,
-	Client::Api: soil_transaction_pool::runtime_api::TaggedTransactionQueue<Block>,
+	Client::Api: subsoil::txpool::runtime_api::TaggedTransactionQueue<Block>,
 {
 }
 
@@ -144,7 +144,7 @@ where
 		+ subsoil::runtime::traits::BlockIdTo<Block>
 		+ soil_client::blockchain::HeaderMetadata<Block, Error = soil_client::blockchain::Error>
 		+ 'static,
-	Client::Api: soil_transaction_pool::runtime_api::TaggedTransactionQueue<Block>,
+	Client::Api: subsoil::txpool::runtime_api::TaggedTransactionQueue<Block>,
 	P: MaintainedTransactionPool<
 			Block = Block,
 			Hash = ExtrinsicHash<FullChainApi<Client, Block>>,
@@ -192,7 +192,7 @@ where
 		+ Sync
 		+ 'static,
 	<Block as BlockT>::Hash: std::marker::Unpin,
-	Client::Api: soil_transaction_pool::runtime_api::TaggedTransactionQueue<Block>,
+	Client::Api: subsoil::txpool::runtime_api::TaggedTransactionQueue<Block>,
 {
 	/// Creates new instance of `Builder`
 	pub fn new(

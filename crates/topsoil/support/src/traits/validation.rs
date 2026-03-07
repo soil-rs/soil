@@ -20,7 +20,7 @@
 use crate::{dispatch::Parameter, weights::Weight};
 use alloc::{vec, vec::Vec};
 use codec::{Codec, Decode, MaxEncodedLen};
-use soil_staking::SessionIndex;
+use subsoil::staking::SessionIndex;
 use subsoil::runtime::{
 	traits::{Convert, Zero},
 	BoundToRuntimeAppPublic, ConsensusEngineId, Permill, RuntimeAppPublic,

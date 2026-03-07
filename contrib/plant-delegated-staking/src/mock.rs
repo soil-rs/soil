@@ -26,7 +26,7 @@ use topsoil_support::{
 
 use subsoil::runtime::{traits::IdentityLookup, BuildStorage, Perbill};
 
-use soil_staking::{Agent, Stake, StakingInterface};
+use subsoil::staking::{Agent, Stake, StakingInterface};
 use subsoil::core::{ConstBool, U256};
 use subsoil::runtime::traits::Convert;
 use plant_election_provider_support::{
@@ -203,19 +203,19 @@ impl ExtBuilder {
 				GENESIS_VALIDATOR,
 				GENESIS_VALIDATOR,
 				1000,
-				soil_staking::StakerStatus::<AccountId>::Validator,
+				subsoil::staking::StakerStatus::<AccountId>::Validator,
 			),
 			(
 				GENESIS_NOMINATOR_ONE,
 				GENESIS_NOMINATOR_ONE,
 				100,
-				soil_staking::StakerStatus::<AccountId>::Nominator(vec![1]),
+				subsoil::staking::StakerStatus::<AccountId>::Nominator(vec![1]),
 			),
 			(
 				GENESIS_NOMINATOR_TWO,
 				GENESIS_NOMINATOR_TWO,
 				200,
-				soil_staking::StakerStatus::<AccountId>::Nominator(vec![1]),
+				subsoil::staking::StakerStatus::<AccountId>::Nominator(vec![1]),
 			),
 		];
 
@@ -298,7 +298,7 @@ pub(crate) fn setup_delegation_stake(
 	delegated_amount
 }
 
-pub(crate) fn start_era(era: soil_staking::EraIndex) {
+pub(crate) fn start_era(era: subsoil::staking::EraIndex) {
 	CurrentEra::<T>::set(Some(era));
 	ActiveEra::<T>::set(Some(ActiveEraInfo { index: era, start: None }));
 }

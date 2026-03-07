@@ -29,7 +29,7 @@ use futures::future::{Future, FutureExt};
 use prometheus_endpoint::Registry as PrometheusRegistry;
 use soil_client::blockchain::{HeaderMetadata, TreeRoute};
 use soil_client::client_api::{blockchain::HeaderBackend, BlockBackend};
-use soil_transaction_pool::runtime_api::TaggedTransactionQueue;
+use subsoil::txpool::runtime_api::TaggedTransactionQueue;
 use std::{
 	marker::PhantomData,
 	pin::Pin,

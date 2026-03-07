@@ -22,7 +22,7 @@
 use crate::{self as topsoil_grandpa, AuthorityId, AuthorityList, Config, ConsensusLog};
 use codec::Encode;
 use finality_grandpa;
-use soil_staking::{EraIndex, SessionIndex};
+use subsoil::staking::{EraIndex, SessionIndex};
 use subsoil::consensus::grandpa::{RoundNumber, SetId, GRANDPA_ENGINE_ID};
 use subsoil::core::{ConstBool, H256};
 use subsoil::keyring::Ed25519Keyring;
@@ -202,7 +202,7 @@ impl Config for Test {
 	type MaxAuthorities = ConstU32<100>;
 	type MaxNominators = ConstU32<1000>;
 	type MaxSetIdSessionEntries = MaxSetIdSessionEntries;
-	type KeyOwnerProof = soil_session::MembershipProof;
+	type KeyOwnerProof = subsoil::session::MembershipProof;
 	type EquivocationReportSystem =
 		super::EquivocationReportSystem<Self, Offences, Historical, ReportLongevity>;
 }

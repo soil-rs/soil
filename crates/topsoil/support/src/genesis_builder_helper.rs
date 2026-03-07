@@ -15,18 +15,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//! Helper functions for implementing [`soil_genesis_builder::GenesisBuilder`] for runtimes.
+//! Helper functions for implementing [`subsoil::genesis_builder::GenesisBuilder`] for runtimes.
 //!
-//! Provides common logic. For more info refer to [`soil_genesis_builder::GenesisBuilder`].
+//! Provides common logic. For more info refer to [`subsoil::genesis_builder::GenesisBuilder`].
 
 extern crate alloc;
 
 use alloc::{format, vec::Vec};
-use soil_genesis_builder::{PresetId, Result as BuildResult};
+use subsoil::genesis_builder::{PresetId, Result as BuildResult};
 use topsoil_support::traits::BuildGenesisConfig;
 
 /// Build `GenesisConfig` from a JSON blob not using any defaults and store it in the storage. For
-/// more info refer to [`soil_genesis_builder::GenesisBuilder::build_state`].
+/// more info refer to [`subsoil::genesis_builder::GenesisBuilder::build_state`].
 pub fn build_state<GC: BuildGenesisConfig>(json: Vec<u8>) -> BuildResult {
 	let gc =
 		serde_json::from_slice::<GC>(&json).map_err(|e| format!("Invalid JSON blob: {}", e))?;
@@ -37,7 +37,7 @@ pub fn build_state<GC: BuildGenesisConfig>(json: Vec<u8>) -> BuildResult {
 /// Get the default `GenesisConfig` as a JSON blob if `name` is None.
 ///
 /// Query of named presets is delegetaed to provided `preset_for_name` closure. For more info refer
-/// to [`soil_genesis_builder::GenesisBuilder::get_preset`].
+/// to [`subsoil::genesis_builder::GenesisBuilder::get_preset`].
 pub fn get_preset<GC>(
 	name: &Option<PresetId>,
 	preset_for_name: impl FnOnce(&PresetId) -> Option<Vec<u8>>,

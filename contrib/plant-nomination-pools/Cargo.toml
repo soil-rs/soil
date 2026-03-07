@@ -23,8 +23,6 @@ scale-info = { features = ["derive"], workspace = true }
 topsoil-support = { workspace = true }
 topsoil-system = { workspace = true }
 log = { workspace = true }
-soil-staking = { workspace = true }
-
 # Optional: use for testing and/or fuzzing
 topsoil-balances = { optional = true, workspace = true }
 subsoil = { workspace = true }
@@ -43,14 +41,12 @@ std = [
 	"topsoil-balances?/std",
 	"scale-info/std",
 	"subsoil/std",
-	"soil-staking/std",
 ]
 runtime-benchmarks = [
 	"topsoil-support/runtime-benchmarks",
 	"topsoil-system/runtime-benchmarks",
 	"topsoil-balances?/runtime-benchmarks",
 	"subsoil/runtime-benchmarks",
-	"soil-staking/runtime-benchmarks",
 ]
 try-runtime = [
 	"topsoil-support/try-runtime",

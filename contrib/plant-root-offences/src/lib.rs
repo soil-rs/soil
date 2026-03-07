@@ -30,14 +30,14 @@ mod tests;
 extern crate alloc;
 use alloc::{vec, vec::Vec};
 pub use pallet::*;
-use soil_staking::offence::{Kind, Offence, OnOffenceHandler};
+use subsoil::staking::offence::{Kind, Offence, OnOffenceHandler};
 use subsoil::runtime::{traits::Convert, Perbill};
 use topsoil_session::historical::IdentificationTuple;
 
 #[topsoil_support::pallet]
 pub mod pallet {
 	use super::*;
-	use soil_staking::{offence::ReportOffence, SessionIndex};
+	use subsoil::staking::{offence::ReportOffence, SessionIndex};
 	use topsoil_support::pallet_prelude::*;
 	use topsoil_system::pallet_prelude::*;
 
@@ -123,7 +123,7 @@ pub mod pallet {
 		FailedToGetActiveEra,
 	}
 
-	type OffenceDetails<T> = soil_staking::offence::OffenceDetails<
+	type OffenceDetails<T> = subsoil::staking::offence::OffenceDetails<
 		<T as topsoil_system::Config>::AccountId,
 		IdentificationTuple<T>,
 	>;

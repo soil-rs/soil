@@ -148,12 +148,7 @@ soil-chain-spec-derive = { workspace = true }
 subsoil = { workspace = true }
 soil-authority-discovery = { workspace = true }
 subsoil-crypto-hashing = { workspace = true }
-soil-genesis-builder = { workspace = true }
-soil-offchain = { workspace = true }
-soil-session = { workspace = true }
-soil-staking = { workspace = true }
 soil-statement-store = { workspace = true }
-soil-transaction-pool = { workspace = true }
 soil-transaction-storage-proof = { workspace = true }
 substrate-bip39 = { workspace = true }
 
@@ -287,12 +282,7 @@ std = [
 	"subsoil/std",
 	"soil-authority-discovery/std",
 	"subsoil-crypto-hashing/std",
-	"soil-genesis-builder/std",
-	"soil-offchain/std",
-	"soil-session/std",
-	"soil-staking/std",
 	"soil-statement-store/std",
-	"soil-transaction-pool/std",
 	"soil-transaction-storage-proof/std",
 	"substrate-bip39/std",
 	"substrate-wasm-builder"]
@@ -386,7 +376,7 @@ runtime-benchmarks = [
 	"rand",
 	"rand_pcg",
 	"subsoil/runtime-benchmarks",
-	"soil-staking/runtime-benchmarks"]
+]
 try-runtime = [
 	"topsoil/try-runtime",
 	"topsoil-benchmarking-pallet-pov/try-runtime",

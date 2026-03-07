@@ -22,7 +22,7 @@ use crate::{asset, ConfigOp, Pallet as Staking};
 use testing_utils::*;
 
 use codec::Decode;
-use soil_staking::{currency_to_vote::CurrencyToVote, SessionIndex};
+use subsoil::staking::{currency_to_vote::CurrencyToVote, SessionIndex};
 use subsoil::runtime::{
 	traits::{Bounded, One, StaticLookup, TrailingZeroInput, Zero},
 	Perbill, Percent, Saturating,

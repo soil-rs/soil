@@ -28,8 +28,6 @@ serde = { optional = true, workspace = true, default-features = true }
 [dev-dependencies]
 array-bytes = { workspace = true, default-features = true }
 topsoil-balances = { workspace = true }
-soil-staking = { workspace = true, default-features = true }
-
 [features]
 default = ["std"]
 std = [
@@ -46,7 +44,7 @@ std = [
 	"topsoil-session/std",
 	"scale-info/std",
 	"serde",
-	"soil-staking/std"]
+]
 try-runtime = [
 	"topsoil-support/try-runtime",
 	"topsoil-system/try-runtime",
@@ -63,4 +61,4 @@ runtime-benchmarks = [
 	"plant-mmr/runtime-benchmarks",
 	"topsoil-session/runtime-benchmarks",
 	"subsoil/runtime-benchmarks",
-	"soil-staking/runtime-benchmarks"]
+]

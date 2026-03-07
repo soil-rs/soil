@@ -60,7 +60,7 @@ use subsoil::trie::{
 use trie_db::{Trie, TrieMut};
 
 use serde_json::json;
-use soil_genesis_builder::PresetId;
+use subsoil::genesis_builder::PresetId;
 use subsoil::api::{decl_runtime_apis, impl_runtime_apis};
 pub use subsoil::core::hash::H256;
 use subsoil::inherents::{CheckInherentsResult, InherentData};
@@ -538,7 +538,7 @@ impl_runtime_apis! {
 		}
 	}
 
-	impl soil_transaction_pool::runtime_api::TaggedTransactionQueue<Block> for Runtime {
+	impl subsoil::txpool::runtime_api::TaggedTransactionQueue<Block> for Runtime {
 		fn validate_transaction(
 			source: TransactionSource,
 			utx: <Block as BlockT>::Extrinsic,
@@ -733,7 +733,7 @@ impl_runtime_apis! {
 		}
 	}
 
-	impl soil_offchain::OffchainWorkerApi<Block> for Runtime {
+	impl subsoil::offchain_worker::OffchainWorkerApi<Block> for Runtime {
 		fn offchain_worker(header: &<Block as BlockT>::Header) {
 			let ext = Extrinsic::new_bare(
 				substrate_test_pallet::pallet::Call::storage_change{
@@ -746,8 +746,8 @@ impl_runtime_apis! {
 		}
 	}
 
-	impl soil_session::SessionKeys<Block> for Runtime {
-		fn generate_session_keys(owner: Vec<u8>, _: Option<Vec<u8>>) -> soil_session::OpaqueGeneratedSessionKeys {
+	impl subsoil::session::SessionKeys<Block> for Runtime {
+		fn generate_session_keys(owner: Vec<u8>, _: Option<Vec<u8>>) -> subsoil::session::OpaqueGeneratedSessionKeys {
 			SessionKeys::generate(&owner, None).into()
 		}
 
@@ -785,8 +785,8 @@ impl_runtime_apis! {
 		}
 	}
 
-	impl soil_genesis_builder::GenesisBuilder<Block> for Runtime {
-		fn build_state(config: Vec<u8>) -> soil_genesis_builder::Result {
+	impl subsoil::genesis_builder::GenesisBuilder<Block> for Runtime {
+		fn build_state(config: Vec<u8>) -> subsoil::genesis_builder::Result {
 			build_state::<RuntimeGenesisConfig>(config)
 		}
 
@@ -1356,7 +1356,7 @@ mod tests {
 		use serde_json::json;
 		use soil_client::executor::common::runtime_blob::RuntimeBlob;
 		use soil_client::executor::{error::Result, WasmExecutor};
-		use soil_genesis_builder::Result as BuildResult;
+		use subsoil::genesis_builder::Result as BuildResult;
 		use std::{fs, io::Write};
 		use storage_key_generator::hex;
 		use subsoil::application_crypto::Ss58Codec;

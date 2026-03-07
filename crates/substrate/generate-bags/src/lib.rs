@@ -69,7 +69,7 @@ fn existential_weight<T: plant_staking::Config>(
 	total_issuance: u128,
 	minimum_balance: u128,
 ) -> VoteWeight {
-	use soil_staking::currency_to_vote::CurrencyToVote;
+	use subsoil::staking::currency_to_vote::CurrencyToVote;
 
 	T::CurrencyToVote::to_vote(
 		minimum_balance

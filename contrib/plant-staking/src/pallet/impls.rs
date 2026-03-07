@@ -17,7 +17,7 @@
 
 //! Implementations for the Staking FRAME Pallet.
 
-use soil_staking::{
+use subsoil::staking::{
 	currency_to_vote::CurrencyToVote,
 	offence::{OffenceDetails, OnOffenceHandler},
 	EraIndex, OnStakingUpdate, Page, SessionIndex, Stake,
@@ -2094,7 +2094,7 @@ impl<T: Config> StakingInterface for Pallet<T> {
 	}
 	fn status(
 		who: &Self::AccountId,
-	) -> Result<soil_staking::StakerStatus<Self::AccountId>, DispatchError> {
+	) -> Result<subsoil::staking::StakerStatus<Self::AccountId>, DispatchError> {
 		if !StakingLedger::<T>::is_bonded(StakingAccount::Stash(who.clone())) {
 			return Err(Error::<T>::NotStash.into());
 		}
@@ -2102,7 +2102,7 @@ impl<T: Config> StakingInterface for Pallet<T> {
 		let is_validator = Validators::<T>::contains_key(&who);
 		let is_nominator = Nominators::<T>::get(&who);
 
-		use soil_staking::StakerStatus;
+		use subsoil::staking::StakerStatus;
 		match (is_validator, is_nominator.is_some()) {
 			(false, false) => Ok(StakerStatus::Idle),
 			(true, false) => Ok(StakerStatus::Validator),
@@ -2129,7 +2129,7 @@ impl<T: Config> StakingInterface for Pallet<T> {
 		SlashRewardFraction::<T>::get()
 	}
 
-	soil_staking::runtime_benchmarks_enabled! {
+	subsoil::staking::runtime_benchmarks_enabled! {
 		fn nominations(who: &Self::AccountId) -> Option<Vec<T::AccountId>> {
 			Nominators::<T>::get(who).map(|n| n.targets.into_inner())
 		}
@@ -2157,7 +2157,7 @@ impl<T: Config> StakingInterface for Pallet<T> {
 	}
 }
 
-impl<T: Config> soil_staking::StakingUnchecked for Pallet<T> {
+impl<T: Config> subsoil::staking::StakingUnchecked for Pallet<T> {
 	fn migrate_to_virtual_staker(who: &Self::AccountId) -> DispatchResult {
 		asset::kill_stake::<T>(who)?;
 		VirtualStakers::<T>::insert(who, ());
@@ -2417,7 +2417,7 @@ impl<T: Config> Pallet<T> {
 	/// * Paged exposures metadata (`ErasStakersOverview`) matches the paged exposures state.
 	fn check_paged_exposures() -> Result<(), TryRuntimeError> {
 		use alloc::collections::btree_map::BTreeMap;
-		use soil_staking::PagedExposureMetadata;
+		use subsoil::staking::PagedExposureMetadata;
 
 		// Sanity check for the paged exposure of the active era.
 		let mut exposures: BTreeMap<T::AccountId, PagedExposureMetadata<BalanceOf<T>>> =

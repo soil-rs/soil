@@ -28,7 +28,6 @@ soil-telemetry = { workspace = true, default-features = true}
 serde = { features = ["derive"], workspace = true, default-features = true}
 serde_json = { workspace = true, default-features = true}
 subsoil-crypto-hashing = { workspace = true, default-features = true}
-soil-genesis-builder = { workspace = true, default-features = true}
 subsoil = { workspace = true, default-features = true }
 
 [dev-dependencies]

@@ -219,7 +219,7 @@ pub fn staging_testnet_config() -> ChainSpec {
 		.with_name("Staging Testnet")
 		.with_id("staging_testnet")
 		.with_chain_type(ChainType::Live)
-		.with_genesis_config_preset_name(soil_genesis_builder::LOCAL_TESTNET_RUNTIME_PRESET)
+		.with_genesis_config_preset_name(subsoil::genesis_builder::LOCAL_TESTNET_RUNTIME_PRESET)
 		.with_genesis_config_patch(staging_testnet_genesis_patch())
 		.with_telemetry_endpoints(
 			TelemetryEndpoints::new(vec![(STAGING_TELEMETRY_URL.to_string(), 0)])
@@ -406,7 +406,7 @@ pub fn development_config() -> ChainSpec {
 		.with_id("dev")
 		.with_chain_type(ChainType::Development)
 		.with_properties(props())
-		.with_genesis_config_preset_name(soil_genesis_builder::DEV_RUNTIME_PRESET)
+		.with_genesis_config_preset_name(subsoil::genesis_builder::DEV_RUNTIME_PRESET)
 		.build()
 }
 
@@ -416,7 +416,7 @@ pub fn local_testnet_config() -> ChainSpec {
 		.with_name("Local Testnet")
 		.with_id("local_testnet")
 		.with_chain_type(ChainType::Local)
-		.with_genesis_config_preset_name(soil_genesis_builder::LOCAL_TESTNET_RUNTIME_PRESET)
+		.with_genesis_config_preset_name(subsoil::genesis_builder::LOCAL_TESTNET_RUNTIME_PRESET)
 		.build()
 }
 
@@ -434,7 +434,7 @@ pub(crate) mod tests {
 			.with_name("Integration Test")
 			.with_id("test")
 			.with_chain_type(ChainType::Development)
-			.with_genesis_config_preset_name(soil_genesis_builder::DEV_RUNTIME_PRESET)
+			.with_genesis_config_preset_name(subsoil::genesis_builder::DEV_RUNTIME_PRESET)
 			.build()
 	}
 
@@ -444,7 +444,7 @@ pub(crate) mod tests {
 			.with_name("Integration Test")
 			.with_id("test")
 			.with_chain_type(ChainType::Local)
-			.with_genesis_config_preset_name(soil_genesis_builder::LOCAL_TESTNET_RUNTIME_PRESET)
+			.with_genesis_config_preset_name(subsoil::genesis_builder::LOCAL_TESTNET_RUNTIME_PRESET)
 			.build()
 	}
 

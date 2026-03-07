@@ -17,7 +17,7 @@
 
 use super::{Config, Kind, OffenceDetails, Pallet, Perbill, SessionIndex, LOG_TARGET};
 use alloc::vec::Vec;
-use soil_staking::offence::OnOffenceHandler;
+use subsoil::staking::offence::OnOffenceHandler;
 use topsoil_support::{
 	pallet_prelude::ValueQuery,
 	storage_alias,
@@ -123,7 +123,7 @@ mod test {
 	use super::*;
 	use crate::mock::{new_test_ext, with_on_offence_fractions, Runtime as T, KIND};
 	use codec::Encode;
-	use soil_staking::offence::OffenceDetails;
+	use subsoil::staking::offence::OffenceDetails;
 	use subsoil::runtime::Perbill;
 
 	#[test]

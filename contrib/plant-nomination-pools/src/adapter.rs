@@ -16,7 +16,7 @@
 // limitations under the License.
 
 use crate::*;
-use soil_staking::{Agent, DelegationInterface, DelegationMigrator, Delegator};
+use subsoil::staking::{Agent, DelegationInterface, DelegationMigrator, Delegator};
 use topsoil_support::traits::tokens::{Fortitude::Polite, Preservation::Expendable};
 
 /// Types of stake strategies.

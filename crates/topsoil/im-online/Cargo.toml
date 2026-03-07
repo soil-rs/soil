@@ -24,8 +24,6 @@ log = { workspace = true }
 topsoil-authorship = { workspace = true }
 scale-info = { features = ["derive", "serde"], workspace = true }
 subsoil = { features = ["serde"], workspace = true }
-soil-staking = { features = ["serde"], workspace = true }
-
 [dev-dependencies]
 topsoil-balances = { workspace = true }
 topsoil-session = { workspace = true, default-features = true }
@@ -43,7 +41,6 @@ std = [
 	"topsoil-session/std",
 	"scale-info/std",
 	"subsoil/std",
-	"soil-staking/std",
 ]
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",
@@ -52,7 +49,6 @@ runtime-benchmarks = [
 	"topsoil-balances/runtime-benchmarks",
 	"topsoil-session/runtime-benchmarks",
 	"subsoil/runtime-benchmarks",
-	"soil-staking/runtime-benchmarks",
 ]
 try-runtime = [
 	"topsoil-support/try-runtime",

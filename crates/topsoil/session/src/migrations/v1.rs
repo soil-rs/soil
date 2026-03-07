@@ -16,7 +16,7 @@
 // limitations under the License.
 
 use crate::{Config, DisabledValidators as NewDisabledValidators, Pallet, Vec};
-use soil_staking::offence::OffenceSeverity;
+use subsoil::staking::offence::OffenceSeverity;
 use topsoil_support::{
 	pallet_prelude::{Get, ValueQuery, Weight},
 	traits::UncheckedOnRuntimeUpgrade,

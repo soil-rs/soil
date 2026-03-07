@@ -25,7 +25,7 @@ use crate::{
 };
 use alloc::{vec, vec::Vec};
 use soil_authority_discovery::AuthorityId as AuthorityDiscoveryId;
-use soil_genesis_builder::PresetId;
+use subsoil::genesis_builder::PresetId;
 use subsoil::consensus::babe::AuthorityId as BabeId;
 use subsoil::consensus::beefy::ecdsa_crypto::AuthorityId as BeefyId;
 use subsoil::consensus::grandpa::AuthorityId as GrandpaId;
@@ -105,7 +105,7 @@ pub fn get_preset(id: &PresetId) -> Option<Vec<u8>> {
 	let endowed = well_known_including_eth_accounts();
 
 	let patch = match id.as_ref() {
-		soil_genesis_builder::DEV_RUNTIME_PRESET => kitchensink_genesis(
+		subsoil::genesis_builder::DEV_RUNTIME_PRESET => kitchensink_genesis(
 			// Use stash as controller account, otherwise grandpa can't load the authority set at
 			// genesis.
 			vec![(alice_stash.clone(), alice_stash.clone(), alice_session_keys)],
@@ -113,7 +113,7 @@ pub fn get_preset(id: &PresetId) -> Option<Vec<u8>> {
 			endowed,
 			vec![validator(alice_stash.clone())],
 		),
-		soil_genesis_builder::LOCAL_TESTNET_RUNTIME_PRESET => kitchensink_genesis(
+		subsoil::genesis_builder::LOCAL_TESTNET_RUNTIME_PRESET => kitchensink_genesis(
 			vec![
 				// Use stash as controller account, otherwise grandpa can't load the authority set
 				// at genesis.
@@ -137,8 +137,8 @@ pub fn get_preset(id: &PresetId) -> Option<Vec<u8>> {
 /// List of supported presets.
 pub fn preset_names() -> Vec<PresetId> {
 	vec![
-		PresetId::from(soil_genesis_builder::DEV_RUNTIME_PRESET),
-		PresetId::from(soil_genesis_builder::LOCAL_TESTNET_RUNTIME_PRESET),
+		PresetId::from(subsoil::genesis_builder::DEV_RUNTIME_PRESET),
+		PresetId::from(subsoil::genesis_builder::LOCAL_TESTNET_RUNTIME_PRESET),
 	]
 }
 

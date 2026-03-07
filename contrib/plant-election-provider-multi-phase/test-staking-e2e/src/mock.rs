@@ -17,7 +17,7 @@
 
 #![allow(dead_code)]
 
-use soil_staking::{
+use subsoil::staking::{
 	offence::{OffenceDetails, OnOffenceHandler},
 	Agent, DelegationInterface, EraIndex, SessionIndex, StakingInterface,
 };
@@ -243,9 +243,9 @@ const THRESHOLDS: [VoteWeight; 9] = [10, 20, 30, 40, 50, 60, 1_000, 2_000, 10_00
 
 parameter_types! {
 	pub static BagThresholds: &'static [subsoil::npos_elections::VoteWeight] = &THRESHOLDS;
-	pub const SessionsPerEra: soil_staking::SessionIndex = 2;
-	pub static BondingDuration: soil_staking::EraIndex = 28;
-	pub const SlashDeferDuration: soil_staking::EraIndex = 7; // 1/4 the bonding duration.
+	pub const SessionsPerEra: subsoil::staking::SessionIndex = 2;
+	pub static BondingDuration: subsoil::staking::EraIndex = 28;
+	pub const SlashDeferDuration: subsoil::staking::EraIndex = 7; // 1/4 the bonding duration.
 }
 
 impl plant_bags_list::Config for Runtime {

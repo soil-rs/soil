@@ -105,7 +105,7 @@ use codec::{Decode, DecodeWithMemTracking, Encode};
 use core::cmp::Ordering;
 use log;
 use scale_info::TypeInfo;
-use soil_staking::currency_to_vote::CurrencyToVote;
+use subsoil::staking::currency_to_vote::CurrencyToVote;
 use subsoil::npos_elections::{ElectionResult, ExtendedBalance};
 use subsoil::runtime::{
 	traits::{Saturating, StaticLookup, Zero},

@@ -312,11 +312,11 @@ extern crate alloc;
 use alloc::{collections::btree_map::BTreeMap, vec, vec::Vec};
 use codec::{Decode, DecodeWithMemTracking, Encode, HasCompact, MaxEncodedLen};
 use scale_info::TypeInfo;
-use soil_staking::{
+use subsoil::staking::{
 	offence::{Offence, OffenceError, OffenceSeverity, ReportOffence},
 	EraIndex, ExposurePage, OnStakingUpdate, Page, PagedExposureMetadata, SessionIndex,
 };
-pub use soil_staking::{Exposure, IndividualExposure, StakerStatus};
+pub use subsoil::staking::{Exposure, IndividualExposure, StakerStatus};
 use subsoil::runtime::{
 	curve::PiecewiseLinear,
 	traits::{AtLeast32BitUnsigned, Convert, StaticLookup, Zero},
@@ -1097,7 +1097,7 @@ impl<T: Config> Convert<T::AccountId, Option<Exposure<T::AccountId, BalanceOf<T>
 ///
 /// ```ignore
 /// impl topsoil_session::historical::Config for Runtime {
-///     type FullIdentification = soil_staking::Exposure<AccountId, Balance>;
+///     type FullIdentification = subsoil::staking::Exposure<AccountId, Balance>;
 ///     type IdentificationOf = plant_staking::DefaultExposureOf<Self>
 /// }
 /// ```

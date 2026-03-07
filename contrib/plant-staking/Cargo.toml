@@ -25,8 +25,7 @@ topsoil-authorship = { workspace = true }
 topsoil-session = { features = ["historical"], workspace = true }
 scale-info = { features = ["derive", "serde"], workspace = true }
 serde = { features = ["alloc", "derive"], workspace = true }
-soil-staking = { features = ["serde"], workspace = true }
-subsoil = { workspace = true }
+subsoil = { features = ["serde"], workspace = true }
 
 # Optional imports for benchmarking
 topsoil-benchmarking = { optional = true, workspace = true }
@@ -60,7 +59,6 @@ std = [
 	"scale-info/std",
 	"serde/std",
 	"subsoil/std",
-	"soil-staking/std",
 ]
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",
@@ -73,7 +71,6 @@ runtime-benchmarks = [
 	"topsoil-timestamp/runtime-benchmarks",
 	"rand_chacha",
 	"subsoil/runtime-benchmarks",
-	"soil-staking/runtime-benchmarks",
 ]
 try-runtime = [
 	"plant-election-provider-support/try-runtime",

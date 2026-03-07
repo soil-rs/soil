@@ -38,8 +38,8 @@
 use alloc::{boxed::Box, vec, vec::Vec};
 use codec::{self as codec, Decode, Encode};
 use log::{error, info};
-use soil_session::{GetSessionNumber, GetValidatorCount};
-use soil_staking::{
+use subsoil::session::{GetSessionNumber, GetValidatorCount};
+use subsoil::staking::{
 	offence::{Kind, Offence, OffenceReportSystem, ReportOffence},
 	SessionIndex,
 };

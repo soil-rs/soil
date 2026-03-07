@@ -25,9 +25,7 @@ topsoil-authorship = { workspace = true }
 topsoil-session = { workspace = true }
 topsoil-timestamp = { workspace = true }
 scale-info = { features = ["derive", "serde"], workspace = true }
-soil-session = { workspace = true }
-soil-staking = { features = ["serde"], workspace = true }
-subsoil = { workspace = true }
+subsoil = { features = ["serde"], workspace = true }
 
 [dev-dependencies]
 plant-election-provider-support = { workspace = true, default-features = true }
@@ -54,8 +52,6 @@ std = [
 	"topsoil-timestamp/std",
 	"scale-info/std",
 	"subsoil/std",
-	"soil-session/std",
-	"soil-staking/std",
 ]
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",
@@ -68,7 +64,6 @@ runtime-benchmarks = [
 	"plant-staking/runtime-benchmarks",
 	"topsoil-timestamp/runtime-benchmarks",
 	"subsoil/runtime-benchmarks",
-	"soil-staking/runtime-benchmarks",
 ]
 try-runtime = [
 	"plant-election-provider-support/try-runtime",

@@ -88,7 +88,7 @@ use alloc::{vec, vec::Vec};
 use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 pub use pallet::*;
 use scale_info::TypeInfo;
-use soil_staking::{
+use subsoil::staking::{
 	offence::{Kind, Offence, ReportOffence},
 	SessionIndex,
 };

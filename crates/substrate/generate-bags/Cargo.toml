@@ -17,8 +17,7 @@ plant-election-provider-support = { workspace = true, default-features = true }
 topsoil-support = { workspace = true, default-features = true }
 topsoil-system = { workspace = true, default-features = true }
 plant-staking = { workspace = true, default-features = true }
-soil-staking = { workspace = true, default-features = true }
-
+subsoil = { workspace = true, default-features = true }
 # third party
 chrono = { workspace = true }
 num-format = { workspace = true }

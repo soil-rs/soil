@@ -43,8 +43,6 @@ serde_json = { workspace = true, default-features = true }
 soil-chain-spec = { workspace = true, default-features = true }
 soil-client = { workspace = true, default-features = true }
 soil-network = { workspace = true, default-features = true }
-soil-offchain = { workspace = true, default-features = true }
-soil-session = { workspace = true, default-features = true }
 soil-statement-store = { features = ["serde"], workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
 thiserror = { workspace = true }

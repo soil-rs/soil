@@ -21,7 +21,7 @@
 
 use crate::{types::*, *};
 use alloc::vec::Vec;
-use soil_staking::{EraIndex, StakingInterface};
+use subsoil::staking::{EraIndex, StakingInterface};
 use subsoil::runtime::traits::Zero;
 use topsoil_benchmarking::v2::*;
 use topsoil_support::{

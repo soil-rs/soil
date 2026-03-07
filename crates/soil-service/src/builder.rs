@@ -521,8 +521,8 @@ where
 		+ 'static,
 	<TCl as ProvideRuntimeApi<TBl>>::Api:
 		subsoil::api::Metadata<TBl>
-			+ soil_transaction_pool::runtime_api::TaggedTransactionQueue<TBl>
-			+ soil_session::SessionKeys<TBl>
+			+ subsoil::txpool::runtime_api::TaggedTransactionQueue<TBl>
+			+ subsoil::session::SessionKeys<TBl>
 			+ subsoil::api::ApiExt<TBl>,
 	TBl: BlockT,
 	TBl::Hash: Unpin,
@@ -532,7 +532,7 @@ where
 {
 	let chain_info = client.usage_info().chain;
 
-	soil_session::generate_initial_session_keys(
+	subsoil::session::generate_initial_session_keys(
 		client.clone(),
 		chain_info.best_hash,
 		config.dev_key_seed.clone().map(|s| vec![s]).unwrap_or_default(),
@@ -843,7 +843,7 @@ where
 		+ 'static,
 	TBackend: soil_client::client_api::backend::Backend<TBl> + 'static,
 	<TCl as ProvideRuntimeApi<TBl>>::Api:
-		soil_session::SessionKeys<TBl> + subsoil::api::Metadata<TBl>,
+		subsoil::session::SessionKeys<TBl> + subsoil::api::Metadata<TBl>,
 	TExPool: MaintainedTransactionPool<Block = TBl, Hash = <TBl as BlockT>::Hash> + 'static,
 	TBl::Hash: Unpin,
 	TBl::Header: Unpin,

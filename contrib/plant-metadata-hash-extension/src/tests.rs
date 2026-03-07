@@ -19,7 +19,7 @@ use crate::CheckMetadataHash;
 use codec::{Decode, Encode};
 use frame_metadata::RuntimeMetadataPrefixed;
 use merkleized_metadata::{generate_metadata_digest, ExtraInfo};
-use soil_transaction_pool::runtime_api::TaggedTransactionQueue;
+use subsoil::txpool::runtime_api::TaggedTransactionQueue;
 use subsoil::api::{Metadata, ProvideRuntimeApi};
 use subsoil::runtime::{
 	traits::{ExtrinsicLike, TransactionExtension},

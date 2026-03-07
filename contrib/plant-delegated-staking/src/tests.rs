@@ -19,7 +19,7 @@
 
 use super::*;
 use crate::mock::*;
-use soil_staking::{Agent, DelegationInterface, Delegator, StakerStatus};
+use subsoil::staking::{Agent, DelegationInterface, Delegator, StakerStatus};
 use plant_nomination_pools::{Error as PoolsError, Event as PoolsEvent};
 use plant_staking::{Error as StakingError, RewardDestination};
 use topsoil_support::{assert_noop, assert_ok, traits::fungible::InspectHold};
@@ -342,7 +342,7 @@ fn allow_full_amount_to_be_delegated() {
 /// Integration tests with topsoil-staking.
 mod staking_integration {
 	use super::*;
-	use soil_staking::Stake;
+	use subsoil::staking::Stake;
 
 	#[test]
 	fn bond() {

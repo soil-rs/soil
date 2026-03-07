@@ -18,7 +18,7 @@
 //! Test utilities
 
 use crate::{self as plant_staking, *};
-use soil_staking::{
+use subsoil::staking::{
 	offence::{OffenceDetails, OnOffenceHandler},
 	OnStakingUpdate, StakingAccount,
 };
@@ -636,7 +636,7 @@ pub(crate) fn bond_virtual_nominator(
 	target: Vec<AccountId>,
 ) {
 	// Bond who virtually.
-	assert_ok!(<Staking as soil_staking::StakingUnchecked>::virtual_bond(&who, val, &payee));
+	assert_ok!(<Staking as subsoil::staking::StakingUnchecked>::virtual_bond(&who, val, &payee));
 	assert_ok!(Staking::nominate(RuntimeOrigin::signed(who), target));
 }
 

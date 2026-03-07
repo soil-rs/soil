@@ -31,9 +31,9 @@ subsoil::api::decl_runtime_apis! {
 		fn nominations_quota(balance: Balance) -> u32;
 
 		/// Returns the page count of exposures for a validator `account` in a given era.
-		fn eras_stakers_page_count(era: soil_staking::EraIndex, account: AccountId) -> soil_staking::Page;
+		fn eras_stakers_page_count(era: subsoil::staking::EraIndex, account: AccountId) -> subsoil::staking::Page;
 
 		/// Returns true if a validator `account` has pages to be claimed for the given era.
-		fn pending_rewards(era: soil_staking::EraIndex, account: AccountId) -> bool;
+		fn pending_rewards(era: subsoil::staking::EraIndex, account: AccountId) -> bool;
 	}
 }

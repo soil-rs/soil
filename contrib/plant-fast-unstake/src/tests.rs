@@ -30,7 +30,7 @@ use topsoil_support::{
 	},
 };
 
-use soil_staking::StakingInterface;
+use subsoil::staking::StakingInterface;
 use subsoil::runtime::traits::BadOrigin;
 
 #[test]

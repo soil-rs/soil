@@ -56,7 +56,7 @@ use crate::{
 use alloc::vec::Vec;
 use codec::{Decode, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;
-use soil_staking::{EraIndex, StakingInterface};
+use subsoil::staking::{EraIndex, StakingInterface};
 use subsoil::runtime::{
 	traits::{Saturating, Zero},
 	Debug, DispatchResult,
@@ -559,7 +559,7 @@ pub fn do_slash<T: Config>(
 	slash_era: EraIndex,
 ) {
 	let mut ledger =
-		match Pallet::<T>::ledger(soil_staking::StakingAccount::Stash(stash.clone())).defensive() {
+		match Pallet::<T>::ledger(subsoil::staking::StakingAccount::Stash(stash.clone())).defensive() {
 			Ok(ledger) => ledger,
 			Err(_) => return, // nothing to do.
 		};

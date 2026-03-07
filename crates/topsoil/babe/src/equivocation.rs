@@ -38,8 +38,8 @@ use log::{error, info};
 use topsoil_support::traits::{Get, KeyOwnerProofSystem};
 use topsoil_system::pallet_prelude::HeaderFor;
 
-use soil_session::{GetSessionNumber, GetValidatorCount};
-use soil_staking::{
+use subsoil::session::{GetSessionNumber, GetValidatorCount};
+use subsoil::staking::{
 	offence::{Kind, Offence, OffenceReportSystem, ReportOffence},
 	SessionIndex,
 };

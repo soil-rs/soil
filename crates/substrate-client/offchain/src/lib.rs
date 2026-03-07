@@ -54,7 +54,7 @@ use threadpool::ThreadPool;
 
 mod api;
 
-pub use soil_offchain::{OffchainWorkerApi, STORAGE_PREFIX};
+pub use subsoil::offchain_worker::{OffchainWorkerApi, STORAGE_PREFIX};
 pub use subsoil::core::offchain::storage::OffchainDb;
 
 const LOG_TARGET: &str = "offchain-worker";
@@ -503,7 +503,7 @@ mod tests {
 		let block = block_builder.build().unwrap().block;
 		block_on(client.import(BlockOrigin::Own, block.clone())).unwrap();
 
-		assert_eq!(value, &offchain_db.get(soil_offchain::STORAGE_PREFIX, &key).unwrap());
+		assert_eq!(value, &offchain_db.get(subsoil::offchain_worker::STORAGE_PREFIX, &key).unwrap());
 
 		let mut block_builder = BlockBuilderBuilder::new(&*client)
 			.on_parent_block(block.hash())
@@ -516,6 +516,6 @@ mod tests {
 		let block = block_builder.build().unwrap().block;
 		block_on(client.import(BlockOrigin::Own, block)).unwrap();
 
-		assert!(offchain_db.get(soil_offchain::STORAGE_PREFIX, &key).is_none());
+		assert!(offchain_db.get(subsoil::offchain_worker::STORAGE_PREFIX, &key).is_none());
 	}
 }

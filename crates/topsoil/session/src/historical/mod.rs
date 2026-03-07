@@ -33,8 +33,8 @@ mod shared;
 use alloc::vec::Vec;
 use codec::{Decode, Encode};
 use core::fmt::Debug;
-use soil_session::{MembershipProof, ValidatorCount};
-use soil_staking::SessionIndex;
+use subsoil::session::{MembershipProof, ValidatorCount};
+use subsoil::staking::SessionIndex;
 use subsoil::runtime::{
 	traits::{Convert, OpaqueKeys},
 	KeyTypeId,
@@ -154,7 +154,7 @@ impl<T: Config> ValidatorSet<T::AccountId> for Pallet<T> {
 	type ValidatorId = T::ValidatorId;
 	type ValidatorIdOf = T::ValidatorIdOf;
 
-	fn session_index() -> soil_staking::SessionIndex {
+	fn session_index() -> subsoil::staking::SessionIndex {
 		super::Pallet::<T>::current_index()
 	}
 

@@ -17,7 +17,7 @@
 
 use super::*;
 use crate::{mock::*, Event};
-use soil_staking::{Agent, DelegationInterface};
+use subsoil::staking::{Agent, DelegationInterface};
 use subsoil::runtime::{
 	bounded_btree_map,
 	traits::{BadOrigin, Dispatchable},

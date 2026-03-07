@@ -81,7 +81,7 @@
 //!
 //! > A member can have up to [`Config::MaxUnbonding`] distinct active unbonding requests.
 //!
-//! Second, once [`soil_staking::StakingInterface::bonding_duration`] eras have passed, the member can
+//! Second, once [`subsoil::staking::StakingInterface::bonding_duration`] eras have passed, the member can
 //! call [`Call::withdraw_unbonded`] to withdraw any funds that are free.
 //!
 //! For design docs see the [bonded pool](#bonded-pool) and [unbonding sub
@@ -313,7 +313,7 @@
 //! This scheme "averages" out the points value in the unbonded pool.
 //!
 //! Once a members `unbonding_era` is older than `current_era -
-//! [soil_staking::StakingInterface::bonding_duration]`, it can can cash it's points out of the
+//! [subsoil::staking::StakingInterface::bonding_duration]`, it can can cash it's points out of the
 //! corresponding unbonding pool. If it's `unbonding_era` is older than `current_era -
 //! TotalUnbondingPools`, it can cash it's points from the unbonded pool.
 //!
@@ -326,7 +326,7 @@
 //!
 //! This section assumes that the slash computation is executed by
 //! `plant_staking::StakingLedger::slash`, which passes the information to this pallet via
-//! [`soil_staking::OnStakingUpdate::on_slash`].
+//! [`subsoil::staking::OnStakingUpdate::on_slash`].
 //!
 //! Unbonding pools need to be slashed to ensure all nominators whom where in the bonded pool while
 //! it was backing a validator that equivocated are punished. Without these measures a member could
@@ -358,7 +358,7 @@ use alloc::{collections::btree_map::BTreeMap, vec::Vec};
 use codec::{Codec, DecodeWithMemTracking};
 use core::{fmt::Debug, ops::Div};
 use scale_info::TypeInfo;
-use soil_staking::{EraIndex, StakingInterface};
+use subsoil::staking::{EraIndex, StakingInterface};
 use subsoil::core::U256;
 use subsoil::runtime::{
 	traits::{
@@ -4221,10 +4221,10 @@ impl<T: Config> Pallet<T> {
 	}
 }
 
-impl<T: Config> soil_staking::OnStakingUpdate<T::AccountId, BalanceOf<T>> for Pallet<T> {
+impl<T: Config> subsoil::staking::OnStakingUpdate<T::AccountId, BalanceOf<T>> for Pallet<T> {
 	/// Reduces the balances of the [`SubPools`], that belong to the pool involved in the
 	/// slash, to the amount that is defined in the `slashed_unlocking` field of
-	/// [`soil_staking::OnStakingUpdate::on_slash`]
+	/// [`subsoil::staking::OnStakingUpdate::on_slash`]
 	///
 	/// Emits the `PoolsSlashed` event.
 	fn on_slash(

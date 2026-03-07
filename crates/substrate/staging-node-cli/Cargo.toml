@@ -91,7 +91,6 @@ soil-telemetry = { workspace = true, default-features = true }
 soil-txpool = { workspace = true, default-features = true }
 soil-authority-discovery = { workspace = true, default-features = true }
 soil-client = { workspace = true, default-features = true }
-soil-genesis-builder = { workspace = true, default-features = true }
 soil-rpc = { workspace = true, default-features = true }
 soil-statement-store = { workspace = true, default-features = true }
 soil-transaction-storage-proof = { workspace = true, default-features = true }

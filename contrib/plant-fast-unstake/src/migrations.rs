@@ -18,7 +18,7 @@
 pub mod v1 {
 	use crate::{types::BalanceOf, *};
 	use alloc::vec::Vec;
-	use soil_staking::EraIndex;
+	use subsoil::staking::EraIndex;
 	use topsoil_support::{
 		storage::unhashed,
 		traits::{Defensive, Get, GetStorageVersion, OnRuntimeUpgrade},

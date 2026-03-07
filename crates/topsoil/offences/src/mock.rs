@@ -22,7 +22,7 @@
 use crate as offences;
 use crate::Config;
 use codec::Encode;
-use soil_staking::{
+use subsoil::staking::{
 	offence::{self, Kind, OffenceDetails},
 	SessionIndex,
 };

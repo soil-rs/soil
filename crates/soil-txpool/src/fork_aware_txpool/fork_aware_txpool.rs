@@ -2079,7 +2079,7 @@ where
 		+ Send
 		+ Sync
 		+ 'static,
-	Client::Api: soil_transaction_pool::runtime_api::TaggedTransactionQueue<Block>,
+	Client::Api: subsoil::txpool::runtime_api::TaggedTransactionQueue<Block>,
 	<Block as BlockT>::Hash: std::marker::Unpin,
 {
 	/// Create new fork aware transaction pool for a full node with the provided api.

@@ -18,7 +18,7 @@
 //! Benchmarks for the nomination pools coupled with the staking and bags list pallets.
 
 use alloc::{vec, vec::Vec};
-use soil_staking::{EraIndex, StakingUnchecked};
+use subsoil::staking::{EraIndex, StakingUnchecked};
 use subsoil::runtime::{
 	traits::{Bounded, StaticLookup, Zero},
 	Perbill,

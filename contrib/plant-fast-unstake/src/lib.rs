@@ -127,7 +127,7 @@ pub mod weights;
 
 // some extra imports for docs to link properly.
 #[cfg(doc)]
-pub use soil_staking::StakingInterface;
+pub use subsoil::staking::StakingInterface;
 #[cfg(doc)]
 pub use topsoil_support::traits::Hooks;
 
@@ -149,7 +149,7 @@ pub mod pallet {
 	use super::*;
 	use crate::types::*;
 	use alloc::vec::Vec;
-	use soil_staking::{EraIndex, StakingInterface};
+	use subsoil::staking::{EraIndex, StakingInterface};
 	use subsoil::runtime::{traits::Zero, DispatchResult};
 	use topsoil_support::{
 		pallet_prelude::*,

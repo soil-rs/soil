@@ -149,9 +149,9 @@ impl BeefyDataProvider<Vec<u8>> for DummyDataProvider {
 
 pub struct MockSessionManager;
 impl topsoil_session::SessionManager<u64> for MockSessionManager {
-	fn end_session(_: soil_staking::SessionIndex) {}
-	fn start_session(_: soil_staking::SessionIndex) {}
-	fn new_session(idx: soil_staking::SessionIndex) -> Option<Vec<u64>> {
+	fn end_session(_: subsoil::staking::SessionIndex) {}
+	fn start_session(_: subsoil::staking::SessionIndex) {}
+	fn new_session(idx: subsoil::staking::SessionIndex) -> Option<Vec<u64>> {
 		if idx == 0 || idx == 1 {
 			Some(vec![1, 2])
 		} else if idx == 2 {

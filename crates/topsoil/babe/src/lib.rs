@@ -25,8 +25,8 @@ extern crate alloc;
 
 use alloc::{boxed::Box, vec, vec::Vec};
 use codec::{Decode, Encode};
-use soil_session::{GetSessionNumber, GetValidatorCount};
-use soil_staking::{offence::OffenceReportSystem, SessionIndex};
+use subsoil::session::{GetSessionNumber, GetValidatorCount};
+use subsoil::staking::{offence::OffenceReportSystem, SessionIndex};
 use subsoil::consensus::babe::{
 	digests::{NextConfigDescriptor, NextEpochDescriptor, PreDigest},
 	AllowedSlots, BabeAuthorityWeight, BabeEpochConfiguration, ConsensusLog, Epoch,

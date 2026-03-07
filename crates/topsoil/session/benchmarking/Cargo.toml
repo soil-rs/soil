@@ -23,7 +23,7 @@ topsoil-system = { workspace = true }
 topsoil-session = { workspace = true }
 plant-staking = { workspace = true }
 rand = { features = ["std_rng"], workspace = true }
-soil-session = { workspace = true }
+subsoil = { workspace = true }
 
 [dev-dependencies]
 codec = { features = ["derive"], workspace = true, default-features = true }
@@ -33,8 +33,6 @@ plant-staking-reward-curve = { workspace = true, default-features = true }
 topsoil-timestamp = { workspace = true, default-features = true }
 scale-info = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
-soil-staking = { workspace = true }
-
 [features]
 default = ["std"]
 std = [
@@ -46,8 +44,6 @@ std = [
 	"plant-staking/std",
 	"rand/std",
 	"subsoil/std",
-	"soil-session/std",
-	"soil-staking/std",
 ]
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",
@@ -59,5 +55,4 @@ runtime-benchmarks = [
 	"plant-staking/runtime-benchmarks",
 	"topsoil-timestamp/runtime-benchmarks",
 	"subsoil/runtime-benchmarks",
-	"soil-staking/runtime-benchmarks",
 ]

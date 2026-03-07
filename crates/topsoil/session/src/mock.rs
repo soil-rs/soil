@@ -23,7 +23,7 @@ use crate as topsoil_session;
 use crate::historical as pallet_session_historical;
 
 use codec::Encode;
-use soil_staking::SessionIndex;
+use subsoil::staking::SessionIndex;
 use std::collections::BTreeMap;
 use subsoil::core::crypto::key_types::DUMMY;
 use subsoil::runtime::{

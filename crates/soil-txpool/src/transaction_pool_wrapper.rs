@@ -47,7 +47,7 @@ where
 		+ subsoil::runtime::traits::BlockIdTo<Block>
 		+ soil_client::blockchain::HeaderMetadata<Block, Error = soil_client::blockchain::Error>
 		+ 'static,
-	Client::Api: soil_transaction_pool::runtime_api::TaggedTransactionQueue<Block>;
+	Client::Api: subsoil::txpool::runtime_api::TaggedTransactionQueue<Block>;
 
 #[async_trait]
 impl<Block, Client> TransactionPool for TransactionPoolWrapper<Block, Client>
@@ -59,7 +59,7 @@ where
 		+ subsoil::runtime::traits::BlockIdTo<Block>
 		+ soil_client::blockchain::HeaderMetadata<Block, Error = soil_client::blockchain::Error>
 		+ 'static,
-	Client::Api: soil_transaction_pool::runtime_api::TaggedTransactionQueue<Block>,
+	Client::Api: subsoil::txpool::runtime_api::TaggedTransactionQueue<Block>,
 {
 	type Block = Block;
 	type Hash = ExtrinsicHash<FullChainApi<Client, Block>>;
@@ -158,7 +158,7 @@ where
 		+ subsoil::runtime::traits::BlockIdTo<Block>
 		+ soil_client::blockchain::HeaderMetadata<Block, Error = soil_client::blockchain::Error>
 		+ 'static,
-	Client::Api: soil_transaction_pool::runtime_api::TaggedTransactionQueue<Block>,
+	Client::Api: subsoil::txpool::runtime_api::TaggedTransactionQueue<Block>,
 {
 	async fn maintain(&self, event: ChainEvent<Self::Block>) {
 		self.0.maintain(event).await;
@@ -174,7 +174,7 @@ where
 		+ subsoil::runtime::traits::BlockIdTo<Block>
 		+ soil_client::blockchain::HeaderMetadata<Block, Error = soil_client::blockchain::Error>
 		+ 'static,
-	Client::Api: soil_transaction_pool::runtime_api::TaggedTransactionQueue<Block>,
+	Client::Api: subsoil::txpool::runtime_api::TaggedTransactionQueue<Block>,
 {
 	type Block = Block;
 	type Hash = ExtrinsicHash<FullChainApi<Client, Block>>;

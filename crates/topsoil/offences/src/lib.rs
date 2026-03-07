@@ -31,7 +31,7 @@ extern crate alloc;
 use alloc::vec::Vec;
 use codec::Encode;
 use core::marker::PhantomData;
-use soil_staking::{
+use subsoil::staking::{
 	offence::{Kind, Offence, OffenceDetails, OffenceError, OnOffenceHandler, ReportOffence},
 	SessionIndex,
 };

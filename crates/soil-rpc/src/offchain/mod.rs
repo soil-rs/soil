@@ -59,7 +59,7 @@ impl<T: OffchainStorage + 'static> OffchainApiServer for Offchain<T> {
 		check_if_safe(ext)?;
 
 		let prefix = match kind {
-			StorageKind::PERSISTENT => soil_offchain::STORAGE_PREFIX,
+			StorageKind::PERSISTENT => subsoil::offchain_worker::STORAGE_PREFIX,
 			StorageKind::LOCAL => return Err(Error::UnavailableStorageKind),
 		};
 		self.storage.write().set(prefix, &key, &value);
@@ -75,7 +75,7 @@ impl<T: OffchainStorage + 'static> OffchainApiServer for Offchain<T> {
 		check_if_safe(ext)?;
 
 		let prefix = match kind {
-			StorageKind::PERSISTENT => soil_offchain::STORAGE_PREFIX,
+			StorageKind::PERSISTENT => subsoil::offchain_worker::STORAGE_PREFIX,
 			StorageKind::LOCAL => return Err(Error::UnavailableStorageKind),
 		};
 		self.storage.write().remove(prefix, &key);
@@ -92,7 +92,7 @@ impl<T: OffchainStorage + 'static> OffchainApiServer for Offchain<T> {
 		check_if_safe(ext)?;
 
 		let prefix = match kind {
-			StorageKind::PERSISTENT => soil_offchain::STORAGE_PREFIX,
+			StorageKind::PERSISTENT => subsoil::offchain_worker::STORAGE_PREFIX,
 			StorageKind::LOCAL => return Err(Error::UnavailableStorageKind),
 		};
 

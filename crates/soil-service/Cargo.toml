@@ -43,10 +43,8 @@ schnellru = { workspace = true}
 serde = { workspace = true, default-features = true}
 serde_json = { workspace = true, default-features = true}
 soil-client = { workspace = true, default-features = true}
-soil-session = { workspace = true, default-features = true}
 subsoil = { workspace = true, default-features = true}
 subsoil-crypto-hashing = { workspace = true, default-features = true}
-soil-transaction-pool = { workspace = true, default-features = true}
 soil-transaction-storage-proof = { workspace = true, default-features = true}
 static_init = { workspace = true}
 tempfile = { workspace = true}

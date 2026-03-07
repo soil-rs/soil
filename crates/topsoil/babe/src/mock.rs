@@ -19,7 +19,7 @@
 
 use crate::{self as topsoil_babe, Config, CurrentSlot};
 use codec::Encode;
-use soil_staking::{EraIndex, SessionIndex};
+use subsoil::staking::{EraIndex, SessionIndex};
 use subsoil::consensus::babe::{AuthorityId, AuthorityPair, Randomness, Slot, VrfSignature};
 use subsoil::core::{
 	crypto::{Pair, VrfSecret},
@@ -198,7 +198,7 @@ impl Config for Test {
 	type WeightInfo = ();
 	type MaxAuthorities = ConstU32<10>;
 	type MaxNominators = ConstU32<100>;
-	type KeyOwnerProof = soil_session::MembershipProof;
+	type KeyOwnerProof = subsoil::session::MembershipProof;
 	type EquivocationReportSystem =
 		super::EquivocationReportSystem<Self, Offences, Historical, ReportLongevity>;
 }

@@ -24,7 +24,7 @@
 //! and the off-chain indexing API.
 
 use alloc::vec::Vec;
-use soil_session::MembershipProof;
+use subsoil::session::MembershipProof;
 use subsoil::runtime::{
 	offchain::storage::{MutateStorageError, StorageRetrievalError, StorageValueRef},
 	KeyTypeId,
