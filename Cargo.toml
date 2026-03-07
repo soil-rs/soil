@@ -38,7 +38,6 @@ members = [
 	"crates/soil/offchain",
 	"crates/soil/proposer-metrics",
 	"crates/soil-rpc",
-	"crates/soil/rpc-spec-v2",
 	"crates/soil-test",
 	"crates/soil/runtime-interface/test",
 	"crates/soil/runtime-interface/test-wasm",
@@ -424,7 +423,6 @@ soil-network = { path = "crates/soil-network", default-features = false }
 soil-network-test = { path = "crates/soil/network-test" }
 sc-offchain = { path = "crates/substrate-client/offchain", default-features = false }
 soil-proposer-metrics = { path = "crates/soil/proposer-metrics", default-features = false }
-soil-rpc-spec-v2 = { path = "crates/soil/rpc-spec-v2", default-features = false }
 soil-test = { path = "crates/soil-test" }
 soil-runtime-test = { path = "crates/soil/runtime-test" }
 soil-runtime-utilities = { path = "crates/soil/runtime-utilities", default-features = true }

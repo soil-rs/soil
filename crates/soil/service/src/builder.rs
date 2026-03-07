@@ -73,6 +73,12 @@ use soil_network::{
 	},
 	NetworkBackend, NetworkStateInfo,
 };
+use soil_rpc::v2::{
+	archive::ArchiveApiServer,
+	chain_head::ChainHeadApiServer,
+	chain_spec::ChainSpecApiServer,
+	transaction::{TransactionApiServer, TransactionBroadcastApiServer},
+};
 use soil_rpc::{
 	author::AuthorApiServer,
 	chain::ChainApiServer,
@@ -80,12 +86,6 @@ use soil_rpc::{
 	state::{ChildStateApiServer, StateApiServer},
 	system::SystemApiServer,
 	DenyUnsafe, SubscriptionTaskExecutor,
-};
-use soil_rpc_spec_v2::{
-	archive::ArchiveApiServer,
-	chain_head::ChainHeadApiServer,
-	chain_spec::ChainSpecApiServer,
-	transaction::{TransactionApiServer, TransactionBroadcastApiServer},
 };
 use soil_telemetry::{telemetry, ConnectionMessage, Telemetry, TelemetryHandle, SUBSTRATE_INFO};
 use std::{
@@ -622,7 +622,7 @@ where
 	// RPC).
 	let rpc_v2_metrics = config
 		.prometheus_registry()
-		.map(|registry| soil_rpc_spec_v2::transaction::TransactionMetrics::new(registry))
+		.map(|registry| soil_rpc::v2::transaction::TransactionMetrics::new(registry))
 		.transpose()?;
 
 	let gen_rpc_module = || {
@@ -801,7 +801,7 @@ pub struct GenRpcModuleParams<'a, TBl: BlockT, TBackend, TCl, TRpc, TExPool> {
 	/// RPC builder.
 	pub rpc_builder: &'a dyn Fn(SubscriptionTaskExecutor) -> Result<RpcModule<TRpc>, Error>,
 	/// Transaction metrics handle.
-	pub metrics: Option<soil_rpc_spec_v2::transaction::TransactionMetrics>,
+	pub metrics: Option<soil_rpc::v2::transaction::TransactionMetrics>,
 	/// Optional [`TracingExecuteBlock`] handle.
 	///
 	/// Will be used by the `trace_block` RPC to execute the actual block.
@@ -871,7 +871,7 @@ where
 
 	const MAX_TRANSACTION_PER_CONNECTION: usize = 16;
 
-	let transaction_broadcast_rpc_v2 = soil_rpc_spec_v2::transaction::TransactionBroadcast::new(
+	let transaction_broadcast_rpc_v2 = soil_rpc::v2::transaction::TransactionBroadcast::new(
 		client.clone(),
 		transaction_pool.clone(),
 		task_executor.clone(),
@@ -879,7 +879,7 @@ where
 	)
 	.into_rpc();
 
-	let transaction_v2 = soil_rpc_spec_v2::transaction::Transaction::new(
+	let transaction_v2 = soil_rpc::v2::transaction::Transaction::new(
 		client.clone(),
 		transaction_pool.clone(),
 		task_executor.clone(),
@@ -887,12 +887,12 @@ where
 	)
 	.into_rpc();
 
-	let chain_head_v2 = soil_rpc_spec_v2::chain_head::ChainHead::new(
+	let chain_head_v2 = soil_rpc::v2::chain_head::ChainHead::new(
 		client.clone(),
 		backend.clone(),
 		task_executor.clone(),
 		// Defaults to sensible limits for the `ChainHead`.
-		soil_rpc_spec_v2::chain_head::ChainHeadConfig::default(),
+		soil_rpc::v2::chain_head::ChainHeadConfig::default(),
 	)
 	.into_rpc();
 
@@ -904,7 +904,7 @@ where
 		&& blocks_pruning.is_archive();
 	let genesis_hash = client.hash(Zero::zero()).ok().flatten().expect("Genesis block exists; qed");
 	if is_archive_node {
-		let archive_v2 = soil_rpc_spec_v2::archive::Archive::new(
+		let archive_v2 = soil_rpc::v2::archive::Archive::new(
 			client.clone(),
 			backend.clone(),
 			genesis_hash,
@@ -915,7 +915,7 @@ where
 	}
 
 	// ChainSpec RPC-v2.
-	let chain_spec_v2 = soil_rpc_spec_v2::chain_spec::ChainSpec::new(
+	let chain_spec_v2 = soil_rpc::v2::chain_spec::ChainSpec::new(
 		chain_spec.name().into(),
 		genesis_hash,
 		chain_spec.properties(),

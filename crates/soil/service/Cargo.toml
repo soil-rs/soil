@@ -31,7 +31,6 @@ rand = { workspace = true, default-features = true}
 soil-chain-spec = { workspace = true, default-features = true}
 soil-informant = { workspace = true, default-features = true}
 soil-network = { workspace = true, default-features = true}
-soil-rpc-spec-v2 = { workspace = true, default-features = true}
 soil-rpc = { workspace = true, default-features = true }
 soil-sysinfo = { workspace = true, default-features = true}
 soil-telemetry = { workspace = true, default-features = true}

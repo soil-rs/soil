@@ -33,6 +33,7 @@ pub mod statement;
 pub mod system;
 pub mod tracing;
 pub mod utils;
+pub mod v2;
 
 pub use api::{check_if_safe, DenyUnsafe, UnsafeRpcError};
 pub use jsonrpsee::core::id_providers::{
