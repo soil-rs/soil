@@ -19,13 +19,13 @@
 use futures::channel::oneshot;
 
 use soil_consensus::{BlockImportError, BlockImportStatus};
+use soil_network::common::role::ObservedRole;
 use soil_network::{
 	config::MultiaddrWithPeerId,
 	request_responses::{IfDisconnected, RequestFailure},
 	types::ProtocolName,
 	NetworkPeers, NetworkRequest, NetworkSyncForkRequest, ReputationChange,
 };
-use soil_network_common::role::ObservedRole;
 use soil_network_types::{multiaddr::Multiaddr, PeerId};
 use subsoil::runtime::traits::{Block as BlockT, NumberFor};
 

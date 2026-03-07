@@ -466,11 +466,11 @@ mod tests {
 		// Report 2 peers with a negative reputation.
 		handle.report_peer(
 			peer_a,
-			soil_network_common::types::ReputationChange { value: i32::MIN, reason: "test".into() },
+			crate::common::types::ReputationChange { value: i32::MIN, reason: "test".into() },
 		);
 		handle.report_peer(
 			peer_b,
-			soil_network_common::types::ReputationChange { value: i32::MIN, reason: "test".into() },
+			crate::common::types::ReputationChange { value: i32::MIN, reason: "test".into() },
 		);
 
 		// Advance time to propagate peers.

@@ -34,8 +34,8 @@ use crate::{
 use futures::{channel::oneshot, Stream};
 use prometheus_endpoint::Registry;
 
+use crate::common::{role::ObservedRole, ExHashT};
 use soil_client::client_api::BlockBackend;
-use soil_network_common::{role::ObservedRole, ExHashT};
 pub use soil_network_types::{
 	kad::{Key as KademliaKey, Record},
 	multiaddr::Multiaddr,

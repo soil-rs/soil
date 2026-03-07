@@ -21,12 +21,12 @@
 
 use crate::service::{metrics::PeerStoreMetrics, traits::PeerStore as PeerStoreT};
 
+use crate::common::{role::ObservedRole, types::ReputationChange};
 use libp2p::PeerId;
 use log::trace;
 use parking_lot::Mutex;
 use partial_sort::PartialSort;
 use prometheus_endpoint::Registry;
-use soil_network_common::{role::ObservedRole, types::ReputationChange};
 use std::{
 	cmp::{Ord, Ordering, PartialOrd},
 	collections::{hash_map::Entry, HashMap, HashSet},
@@ -558,11 +558,11 @@ mod tests {
 		// Report 2 peers with a negative reputation.
 		handle.report_peer(
 			peer_a,
-			soil_network_common::types::ReputationChange { value: i32::MIN, reason: "test".into() },
+			crate::common::types::ReputationChange { value: i32::MIN, reason: "test".into() },
 		);
 		handle.report_peer(
 			peer_b,
-			soil_network_common::types::ReputationChange { value: i32::MIN, reason: "test".into() },
+			crate::common::types::ReputationChange { value: i32::MIN, reason: "test".into() },
 		);
 
 		// Advance time to propagate banned peers.

@@ -35,10 +35,10 @@ use codec::{Decode, Encode};
 use futures::{channel::oneshot, FutureExt};
 use log::{debug, error, trace, warn};
 use soil_client::blockchain::HeaderBackend;
-use soil_network::{IfDisconnected, ProtocolName};
-use soil_network_common::sync::message::{
+use soil_network::common::sync::message::{
 	BlockAnnounce, BlockAttributes, BlockData, BlockRequest, Direction, FromBlock,
 };
+use soil_network::{IfDisconnected, ProtocolName};
 use soil_network_types::PeerId;
 use std::{any::Any, collections::HashMap, fmt, sync::Arc};
 use subsoil::runtime::{

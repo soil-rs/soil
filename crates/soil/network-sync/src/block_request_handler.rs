@@ -36,6 +36,7 @@ use schnellru::{ByLength, LruMap};
 
 use soil_client::blockchain::HeaderBackend;
 use soil_client::client_api::BlockBackend;
+use soil_network::common::sync::message::{BlockAttributes, BlockData, BlockRequest, FromBlock};
 use soil_network::{
 	config::ProtocolId,
 	request_responses::{IfDisconnected, IncomingRequest, OutgoingResponse, RequestFailure},
@@ -43,7 +44,6 @@ use soil_network::{
 	types::ProtocolName,
 	NetworkBackend, MAX_RESPONSE_SIZE,
 };
-use soil_network_common::sync::message::{BlockAttributes, BlockData, BlockRequest, FromBlock};
 use soil_network_types::PeerId;
 use subsoil::runtime::{
 	generic::BlockId,

@@ -26,8 +26,8 @@ use crate::{
 use futures::{channel::oneshot::Canceled, executor::block_on};
 use soil_client::block_builder::BlockBuilderBuilder;
 use soil_client::blockchain::HeaderBackend;
+use soil_network::common::sync::message::{BlockAnnounce, BlockData, BlockState, FromBlock};
 use soil_network::RequestFailure;
-use soil_network_common::sync::message::{BlockAnnounce, BlockData, BlockState, FromBlock};
 use std::sync::Mutex;
 use substrate_test_runtime_client::{
 	runtime::{Block, Hash, Header},

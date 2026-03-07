@@ -19,7 +19,7 @@
 //! Common syncing types.
 
 use futures::Stream;
-use soil_network_common::{role::Roles, types::ReputationChange};
+use soil_network::common::{role::Roles, types::ReputationChange};
 
 use crate::strategy::{state_sync::StateSyncProgress, warp::WarpSyncProgress};
 

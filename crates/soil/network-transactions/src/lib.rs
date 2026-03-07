@@ -36,6 +36,7 @@ use prometheus_endpoint::{register, Counter, PrometheusError, Registry, U64};
 use soil_client::utils::mpsc::{
 	tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender,
 };
+use soil_network::common::{role::ObservedRole, ExHashT};
 use soil_network::{
 	config::{NonReservedPeerMode, ProtocolId, SetConfig},
 	error, multiaddr,
@@ -48,7 +49,6 @@ use soil_network::{
 	utils::{interval, LruHashSet},
 	NetworkBackend, NetworkEventStream, NetworkPeers,
 };
-use soil_network_common::{role::ObservedRole, ExHashT};
 use soil_network_sync::{SyncEvent, SyncEventStream};
 use soil_network_types::PeerId;
 use subsoil::runtime::traits::Block as BlockT;

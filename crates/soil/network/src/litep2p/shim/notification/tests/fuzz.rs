@@ -35,7 +35,7 @@ use rand::{
 	seq::IteratorRandom,
 };
 
-use soil_network_common::types::ReputationChange;
+use crate::common::types::ReputationChange;
 use soil_network_types::PeerId;
 
 use std::{

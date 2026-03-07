@@ -9264,7 +9264,6 @@ dependencies = [
  "soil-client",
  "soil-consensus",
  "soil-network",
- "soil-network-common",
  "soil-network-gossip",
  "soil-network-sync",
  "soil-network-test",
@@ -9354,6 +9353,7 @@ dependencies = [
  "async-channel 1.9.0",
  "async-trait",
  "asynchronous-codec 0.6.2",
+ "bitflags 1.3.2",
  "bytes",
  "cid",
  "criterion",
@@ -9380,7 +9380,6 @@ dependencies = [
  "serde_json",
  "smallvec",
  "soil-client",
- "soil-network-common",
  "soil-network-types",
  "subsoil",
  "subsoil-crypto-hashing",
@@ -9399,15 +9398,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "soil-network-common"
-version = "0.33.0"
-dependencies = [
- "bitflags 1.3.2",
- "parity-scale-codec",
- "subsoil",
-]
-
-[[package]]
 name = "soil-network-gossip"
 version = "0.34.0"
 dependencies = [
@@ -9420,7 +9410,6 @@ dependencies = [
  "quickcheck",
  "schnellru",
  "soil-network",
- "soil-network-common",
  "soil-network-sync",
  "soil-network-types",
  "subsoil",
@@ -9463,7 +9452,6 @@ dependencies = [
  "sc-statement-store",
  "soil-client",
  "soil-network",
- "soil-network-common",
  "soil-network-sync",
  "soil-network-types",
  "soil-statement-store",
@@ -9494,7 +9482,6 @@ dependencies = [
  "soil-client",
  "soil-consensus",
  "soil-network",
- "soil-network-common",
  "soil-network-types",
  "soil-test-primitives",
  "subsoil",
@@ -9520,7 +9507,6 @@ dependencies = [
  "soil-client",
  "soil-consensus",
  "soil-network",
- "soil-network-common",
  "soil-network-light",
  "soil-network-sync",
  "soil-network-types",
@@ -9541,7 +9527,6 @@ dependencies = [
  "parity-scale-codec",
  "soil-client",
  "soil-network",
- "soil-network-common",
  "soil-network-sync",
  "soil-network-types",
  "subsoil",
@@ -9732,7 +9717,6 @@ dependencies = [
  "soil-consensus",
  "soil-informant",
  "soil-network",
- "soil-network-common",
  "soil-network-light",
  "soil-network-sync",
  "soil-network-transactions",
@@ -10140,7 +10124,6 @@ dependencies = [
  "soil-mmr-gadget",
  "soil-mmr-rpc",
  "soil-network",
- "soil-network-common",
  "soil-network-gossip",
  "soil-network-light",
  "soil-network-statement",

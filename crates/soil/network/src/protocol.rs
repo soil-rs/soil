@@ -35,9 +35,9 @@ use libp2p::{
 };
 use log::{debug, warn};
 
+use crate::common::{role::Roles, types::ReputationChange};
 use codec::DecodeAll;
 use soil_client::utils::mpsc::TracingUnboundedReceiver;
-use soil_network_common::{role::Roles, types::ReputationChange};
 use subsoil::runtime::traits::Block as BlockT;
 
 use std::{collections::HashSet, iter, sync::Arc, task::Poll};

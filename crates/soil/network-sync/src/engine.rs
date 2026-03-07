@@ -49,6 +49,10 @@ use soil_client::utils::mpsc::{
 	tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender,
 };
 use soil_consensus::{import_queue::ImportQueueService, IncomingBlock};
+use soil_network::common::{
+	role::Roles,
+	sync::message::{BlockAnnounce, BlockAnnouncesHandshake, BlockState},
+};
 use soil_network::{
 	config::{FullNetworkConfiguration, NotificationHandshake, ProtocolId, SetConfig},
 	peer_store::PeerStoreProvider,
@@ -60,10 +64,6 @@ use soil_network::{
 	types::ProtocolName,
 	utils::LruHashSet,
 	NetworkBackend, NotificationService, ReputationChange,
-};
-use soil_network_common::{
-	role::Roles,
-	sync::message::{BlockAnnounce, BlockAnnouncesHandshake, BlockState},
 };
 use soil_network_types::PeerId;
 use subsoil::runtime::{

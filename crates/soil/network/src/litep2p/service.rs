@@ -42,11 +42,11 @@ use litep2p::{
 use parking_lot::RwLock;
 use soil_network_types::kad::{Key as KademliaKey, Record};
 
-use soil_client::utils::mpsc::TracingUnboundedSender;
-use soil_network_common::{
+use crate::common::{
 	role::{ObservedRole, Roles},
 	types::ReputationChange,
 };
+use soil_client::utils::mpsc::TracingUnboundedSender;
 use soil_network_types::{
 	multiaddr::{Multiaddr, Protocol},
 	PeerId,

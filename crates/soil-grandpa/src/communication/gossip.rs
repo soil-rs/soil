@@ -93,8 +93,8 @@ use rand::seq::SliceRandom;
 use soil_client::utils::mpsc::{
 	tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender,
 };
+use soil_network::common::role::ObservedRole;
 use soil_network::ReputationChange;
-use soil_network_common::role::ObservedRole;
 use soil_network_gossip::{MessageIntent, ValidatorContext};
 use soil_network_types::PeerId;
 use soil_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG};

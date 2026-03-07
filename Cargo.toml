@@ -32,7 +32,6 @@ members = [
 	"crates/soil/mmr-gadget",
 	"crates/soil/mmr-rpc",
 	"crates/soil/network",
-	"crates/soil/network-common",
 	"crates/soil/network-gossip",
 	"crates/soil/network-light",
 	"crates/soil/network-statement",
@@ -434,7 +433,6 @@ soil-pow = { path = "crates/soil-pow", default-features = false }
 soil-informant = { path = "crates/soil/informant", default-features = false }
 sc-mixnet = { path = "crates/substrate-client/mixnet", default-features = false }
 soil-network = { path = "crates/soil/network", default-features = false }
-soil-network-common = { path = "crates/soil/network-common", default-features = false }
 soil-network-gossip = { path = "crates/soil/network-gossip", default-features = false }
 soil-network-light = { path = "crates/soil/network-light", default-features = false }
 soil-network-statement = { default-features = false, path = "crates/soil/network-statement" }

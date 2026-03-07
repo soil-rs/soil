@@ -32,7 +32,6 @@ soil-chain-spec = { workspace = true, default-features = true}
 soil-consensus = { workspace = true, default-features = true}
 soil-informant = { workspace = true, default-features = true}
 soil-network = { workspace = true, default-features = true}
-soil-network-common = { workspace = true, default-features = true}
 soil-network-light = { workspace = true, default-features = true}
 soil-network-sync = { workspace = true, default-features = true}
 soil-network-transactions = { workspace = true, default-features = true}

@@ -23,7 +23,7 @@ use crate::{futures_stream::FuturesStream, LOG_TARGET};
 use futures::{stream::FusedStream, Future, FutureExt, Stream, StreamExt};
 use log::{debug, error, trace, warn};
 use soil_client::consensus::block_validation::Validation;
-use soil_network_common::sync::message::BlockAnnounce;
+use soil_network::common::sync::message::BlockAnnounce;
 use soil_network_types::PeerId;
 use std::{
 	collections::{hash_map::Entry, HashMap},

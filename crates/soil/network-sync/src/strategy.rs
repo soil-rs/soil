@@ -37,8 +37,8 @@ use crate::{
 use soil_client::blockchain::Error as ClientError;
 use soil_client::consensus::BlockOrigin;
 use soil_consensus::{BlockImportError, BlockImportStatus, IncomingBlock};
+use soil_network::common::sync::message::BlockAnnounce;
 use soil_network::ProtocolName;
-use soil_network_common::sync::message::BlockAnnounce;
 use soil_network_types::PeerId;
 use std::any::Any;
 use subsoil::runtime::{

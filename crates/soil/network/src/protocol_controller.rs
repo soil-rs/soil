@@ -865,13 +865,13 @@ impl ProtocolController {
 #[cfg(test)]
 mod tests {
 	use super::*;
+	use crate::common::role::ObservedRole;
 	use crate::{
 		peer_store::{PeerStoreProvider, ProtocolHandle as ProtocolHandleT},
 		ReputationChange,
 	};
 	use libp2p::PeerId;
 	use soil_client::utils::mpsc::{tracing_unbounded, TryRecvError};
-	use soil_network_common::role::ObservedRole;
 	use std::collections::HashSet;
 
 	mockall::mock! {

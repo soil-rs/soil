@@ -60,7 +60,7 @@ service-side networking crates into the flattened `soil-network` layout. See
 
 - [x] Step 1: Create this progress file.
 - [x] Step 2: Merge `soil-mixnet` into `subsoil`.
-- [ ] Step 3: Merge `soil-network-common` into `soil_network::common`.
+- [x] Step 3: Merge `soil-network-common` into `soil_network::common`.
 - [ ] Step 4: Merge `soil-network-types` into `soil_network::types`.
 - [ ] Step 5: Merge `soil-network-light` into `soil_network::light`.
 - [ ] Step 6: Merge `soil-network-sync` into `soil_network::sync`.

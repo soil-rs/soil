@@ -189,7 +189,7 @@ async fn build_network_future<
 		+ Send
 		+ Sync
 		+ 'static,
-	H: soil_network_common::ExHashT,
+	H: soil_network::common::ExHashT,
 	N: NetworkBackend<B, <B as BlockT>::Hash>,
 >(
 	network: N,
@@ -256,7 +256,7 @@ pub async fn build_system_rpc_future<
 		+ Send
 		+ Sync
 		+ 'static,
-	H: soil_network_common::ExHashT,
+	H: soil_network::common::ExHashT,
 >(
 	role: Role,
 	network_service: Arc<dyn NetworkService>,

@@ -53,10 +53,10 @@ use soil_client::blockchain::{Error as ClientError, HeaderBackend, HeaderMetadat
 use soil_client::client_api::{blockchain::BlockGap, BlockBackend, ProofProvider};
 use soil_client::consensus::{BlockOrigin, BlockStatus};
 use soil_consensus::{BlockImportError, BlockImportStatus, IncomingBlock};
-use soil_network::{IfDisconnected, ProtocolName};
-use soil_network_common::sync::message::{
+use soil_network::common::sync::message::{
 	BlockAnnounce, BlockAttributes, BlockData, BlockRequest, BlockResponse, Direction, FromBlock,
 };
+use soil_network::{IfDisconnected, ProtocolName};
 use soil_network_types::PeerId;
 use subsoil::arithmetic::traits::Saturating;
 use subsoil::runtime::{

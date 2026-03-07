@@ -27,7 +27,6 @@ governor = { workspace = true}
 log = { workspace = true, default-features = true}
 prometheus-endpoint = { workspace = true, default-features = true}
 soil-network = { workspace = true, default-features = true}
-soil-network-common = { workspace = true, default-features = true}
 soil-network-sync = { workspace = true, default-features = true}
 soil-network-types = { workspace = true, default-features = true}
 soil-client = { workspace = true, default-features = true}

@@ -19,9 +19,9 @@
 //! Network packet message types. These get serialized and put into the lower level protocol
 //! payload.
 
+use crate::common::message::RequestId;
 use codec::{Decode, Encode};
 use soil_client::client_api::StorageProof;
-use soil_network_common::message::RequestId;
 
 /// Remote call response.
 #[derive(Debug, PartialEq, Eq, Clone, Encode, Decode)]
@@ -45,9 +45,9 @@ pub struct RemoteReadResponse {
 
 /// Generic types.
 pub mod generic {
+	use crate::common::{message::RequestId, role::Roles};
 	use codec::{Decode, Encode, Input};
 	use soil_client::client_api::StorageProof;
-	use soil_network_common::{message::RequestId, role::Roles};
 	use subsoil::runtime::ConsensusEngineId;
 
 	/// Consensus is mostly opaque to us

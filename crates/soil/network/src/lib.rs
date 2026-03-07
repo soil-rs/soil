@@ -244,6 +244,7 @@
 
 mod behaviour;
 mod bitswap;
+pub mod common;
 mod litep2p;
 mod protocol;
 
@@ -265,6 +266,10 @@ pub mod types;
 pub mod utils;
 
 pub use crate::litep2p::Litep2pNetworkBackend;
+pub use common::{
+	role::{ObservedRole, Roles},
+	types::ReputationChange,
+};
 pub use event::{DhtEvent, Event};
 #[doc(inline)]
 pub use request_responses::{Config, IfDisconnected, RequestFailure};
@@ -280,10 +285,6 @@ pub use service::{
 	},
 	DecodingError, Keypair, NetworkService, NetworkWorker, NotificationSender, OutboundFailure,
 	PublicKey,
-};
-pub use soil_network_common::{
-	role::{ObservedRole, Roles},
-	types::ReputationChange,
 };
 pub use soil_network_types::{
 	multiaddr::{self, Multiaddr},

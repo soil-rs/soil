@@ -16,7 +16,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-use soil_network_common::role::ObservedRole;
+use soil_network::common::role::ObservedRole;
 use soil_network_types::PeerId;
 use subsoil::runtime::traits::Block as BlockT;
 

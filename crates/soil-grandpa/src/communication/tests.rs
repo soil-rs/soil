@@ -28,6 +28,7 @@ use futures::prelude::*;
 use soil_client::utils::mpsc::{
 	tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender,
 };
+use soil_network::common::role::{ObservedRole, Roles};
 use soil_network::{
 	config::{MultiaddrWithPeerId, Role},
 	event::Event as NetworkEvent,
@@ -36,7 +37,6 @@ use soil_network::{
 	Multiaddr, NetworkBlock, NetworkEventStream, NetworkPeers, NetworkSyncForkRequest,
 	ReputationChange,
 };
-use soil_network_common::role::{ObservedRole, Roles};
 use soil_network_gossip::Validator;
 use soil_network_sync::{SyncEvent as SyncStreamEvent, SyncEventStream};
 use soil_network_test::{Block, Hash};

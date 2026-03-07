@@ -78,13 +78,13 @@ use parking_lot::Mutex;
 use prometheus_endpoint::Registry;
 use soil_network_types::kad::{Key as KademliaKey, Record};
 
+use crate::common::{
+	role::{ObservedRole, Roles},
+	ExHashT,
+};
 use soil_client::client_api::BlockBackend;
 use soil_client::utils::mpsc::{
 	tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender,
-};
-use soil_network_common::{
-	role::{ObservedRole, Roles},
-	ExHashT,
 };
 use subsoil::runtime::traits::Block as BlockT;
 

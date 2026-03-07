@@ -46,7 +46,7 @@ use codec::Encode;
 use prometheus_endpoint::Registry;
 use zeroize::Zeroize;
 
-pub use soil_network_common::{
+pub use crate::common::{
 	role::{Role, Roles},
 	sync::SyncMode,
 	ExHashT,

@@ -27,7 +27,7 @@ use soil_network::{
 	Roles,
 };
 
-use soil_network_common::sync::message::BlockAnnouncesHandshake;
+use soil_network::common::sync::message::BlockAnnouncesHandshake;
 use std::{sync::Arc, time::Duration};
 use subsoil::runtime::traits::Zero;
 use substrate_test_runtime_client::runtime;

@@ -23,8 +23,8 @@ use schnellru::{ByLength, LruMap};
 use soil_network_types::PeerId;
 
 use prometheus_endpoint::{register, Counter, PrometheusError, Registry, U64};
+use soil_network::common::role::ObservedRole;
 use soil_network::{types::ProtocolName, NotificationService};
-use soil_network_common::role::ObservedRole;
 use std::{collections::HashMap, iter, sync::Arc, time, time::Instant};
 use subsoil::runtime::traits::{Block as BlockT, Hash, HashingFor};
 

@@ -61,6 +61,7 @@ use soil_consensus::{
 	ForkChoiceStrategy, ImportQueue, ImportResult, JustificationImport, JustificationSyncLink,
 	LongestChain, Verifier,
 };
+use soil_network::common::role::Roles;
 use soil_network::{
 	config::{
 		FullNetworkConfiguration, MultiaddrWithPeerId, NetworkConfiguration, NonDefaultSetConfig,
@@ -72,7 +73,6 @@ use soil_network::{
 	NetworkBlock, NetworkService, NetworkStateInfo, NetworkSyncForkRequest, NetworkWorker,
 	NotificationMetrics, NotificationService,
 };
-use soil_network_common::role::Roles;
 use soil_network_light::light_client_requests::handler::LightClientRequestHandler;
 use soil_network_sync::{
 	block_request_handler::BlockRequestHandler,
