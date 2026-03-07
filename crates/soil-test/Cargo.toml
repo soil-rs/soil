@@ -54,6 +54,7 @@ static_assertions = { workspace = true, default-features = true }
 trybuild = { workspace = true }
 
 [features]
+default = ["serde"]
 bls-experimental = ["substrate-test-runtime-client/bls-experimental"]
 disable-ui-tests = []
 enable-staging-api = []

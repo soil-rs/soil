@@ -43,7 +43,7 @@ Deferred and explicitly out of scope for this pass:
 - [x] Step 2: Merge `sp-application-crypto-test`.
 - [x] Step 3: Merge `sp-runtime-interface-test`.
 - [x] Step 4: Merge `sp-api-test`.
-- [ ] Step 5: Final consistency pass and spec update.
+- [x] Step 5: Final consistency pass and spec update.
 
 ## Validation Log
 
@@ -58,3 +58,8 @@ Deferred and explicitly out of scope for this pass:
   `cargo test -p soil-test --test api_runtime_calls --release`
   `cargo bench -p soil-test --bench api_bench --no-run`
   `RUN_UI_TESTS=1 TRYBUILD=overwrite cargo test -p soil-test --test api_trybuild --release`
+- Final:
+  `cargo test -p soil-test --release`
+  `cargo test -p soil-chain-spec --lib --release`
+  `cargo check --tests --release -p soil-client -p soil-network -p soil-grandpa -p soil-beefy -p soil-aura -p soil-babe`
+  `cargo test --all --release`
