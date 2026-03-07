@@ -8174,23 +8174,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "sc-consensus-pow"
-version = "0.33.0"
-dependencies = [
- "async-trait",
- "futures",
- "futures-timer",
- "log",
- "parity-scale-codec",
- "parking_lot 0.12.5",
- "soil-client",
- "soil-consensus",
- "subsoil",
- "substrate-prometheus-endpoint",
- "thiserror 1.0.69",
-]
-
-[[package]]
 name = "sc-mixnet"
 version = "0.4.0"
 dependencies = [
@@ -9654,6 +9637,23 @@ dependencies = [
 ]
 
 [[package]]
+name = "soil-pow"
+version = "0.33.0"
+dependencies = [
+ "async-trait",
+ "futures",
+ "futures-timer",
+ "log",
+ "parity-scale-codec",
+ "parking_lot 0.12.5",
+ "soil-client",
+ "soil-consensus",
+ "subsoil",
+ "substrate-prometheus-endpoint",
+ "thiserror 1.0.69",
+]
+
+[[package]]
 name = "soil-proposer-metrics"
 version = "0.17.0"
 dependencies = [
@@ -10180,7 +10180,6 @@ dependencies = [
  "sc-consensus-babe",
  "sc-consensus-beefy",
  "sc-consensus-grandpa",
- "sc-consensus-pow",
  "sc-mixnet",
  "sc-offchain",
  "sc-rpc",
@@ -10212,6 +10211,7 @@ dependencies = [
  "soil-network-sync",
  "soil-network-transactions",
  "soil-network-types",
+ "soil-pow",
  "soil-proposer-metrics",
  "soil-rpc",
  "soil-rpc-api",

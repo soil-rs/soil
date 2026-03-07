@@ -40,6 +40,7 @@ members = [
 	"crates/soil/network-test",
 	"crates/soil/network-transactions",
 	"crates/soil/network-types",
+	"crates/soil-pow",
 	"crates/soil/npos-elections/fuzzer",
 	"crates/soil/offchain",
 	"crates/soil/proposer-metrics",
@@ -232,7 +233,6 @@ members = [
 	"crates/substrate-client/consensus/babe",
 	"crates/substrate-client/consensus/beefy",
 	"crates/substrate-client/consensus/grandpa",
-	"crates/substrate-client/consensus/pow",
 	"crates/substrate-client/mixnet",
 	"crates/substrate-client/offchain",
 	"crates/substrate-client/rpc",
@@ -437,7 +437,7 @@ soil-consensus-beefy-rpc = { path = "crates/soil/consensus-beefy-rpc", default-f
 sc-consensus-grandpa = { path = "crates/substrate-client/consensus/grandpa", default-features = false }
 soil-consensus-grandpa-rpc = { path = "crates/soil/consensus-grandpa-rpc", default-features = false }
 soil-manual-seal = { path = "crates/soil-manual-seal", default-features = false }
-sc-consensus-pow = { path = "crates/substrate-client/consensus/pow", default-features = false }
+soil-pow = { path = "crates/soil-pow", default-features = false }
 soil-informant = { path = "crates/soil/informant", default-features = false }
 sc-mixnet = { path = "crates/substrate-client/mixnet", default-features = false }
 soil-network = { path = "crates/soil/network", default-features = false }

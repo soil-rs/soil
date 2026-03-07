@@ -46,7 +46,7 @@ consensus crates into the new flattened `soil-*` layout. See
 - [x] Step 2: Merge `sc-consensus` into `soil-consensus`.
 - [x] Step 3: Merge `sc-consensus-slots` into `soil-consensus::slots`.
 - [x] Step 4: Merge `soil-consensus-epochs` into `soil-consensus::epochs`.
-- [ ] Step 5: Merge `sc-consensus-pow` into `soil-pow`.
+- [x] Step 5: Merge `sc-consensus-pow` into `soil-pow`.
 - [ ] Step 6: Merge `sc-consensus-aura` into `soil-aura`.
 - [ ] Step 7: Merge `sc-consensus-babe` and `soil-consensus-babe-rpc` into
       `soil-babe`.
@@ -64,3 +64,5 @@ consensus crates into the new flattened `soil-*` layout. See
   `cargo check -p soil-consensus -p soil-manual-seal -p soil-network-sync -p soil-service -p staging-node-cli -p substrate-test-runtime-client`
 - Step 4:
   `cargo check -p soil-consensus -p soil-manual-seal -p soil-network-sync -p soil-service -p staging-node-cli -p substrate-test-runtime-client`
+- Step 5:
+  `cargo check -p soil-pow -p staging-node-cli`
