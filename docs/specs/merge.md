@@ -229,12 +229,11 @@ recreate a cycle because `soil-rpc` already contains the merged BABE and
 GRANDPA RPC surfaces while `soil-sync-state-rpc` depends on the consensus
 crates for sync-state generation.
 
-### `soil-service` — Node assembly (~10 crates → 1)
+### `soil-service` — Node assembly (~8 crates → 1)
 
 | Absorb | Reason |
 |---|---|
 | soil-service | SCC 1 with rpc-spec-v2 |
-| soil-chain-spec + derive | Dep of service |
 | soil-cli | Always with service |
 | soil-basic-authorship | Block proposer, dep of service |
 | soil-informant | Log output, dep of service |
@@ -258,6 +257,7 @@ assembly glue.
 | Crate | Reason |
 |---|---|
 | soil-mmr-gadget | MMR gadget is opt-in (primitives merged into subsoil) |
+| soil-chain-spec + derive | Shared by `soil-rpc`, so folding it into `soil-service` would recreate a `soil-rpc <-> soil-service` cycle |
 | soil-staking, soil-session | Domain-specific primitives |
 | soil-statement-store | Standalone feature |
 | fork-tree | Generic data structure |
@@ -279,7 +279,7 @@ Re-exports everything. Consumers write `soil = { features = ["client", "aura", "
 | **soil-{aura,babe,beefy,grandpa,pow}** | selectable consensus engines; babe/beefy/grandpa also absorb their RPC crates | 8 → 5 | ✅ |
 | **soil-network** | p2p, common/types, light, sync, gossip, transactions, statements, mixnet service | ~10 | ✅ |
 | **soil-rpc** | rpc api/handlers, server, v2 spec, mmr endpoint, state-trie-migration endpoint, rpc client (excluding frame-rpc helper crates tied to topsoil and `soil-sync-state-rpc`) | ~8 | ✅ |
-| **soil-service** | service, chain-spec, cli, infra | ~9 | Pending |
+| **soil-service** | service, cli, authorship, infra | ~8 | Pending |
 | **soil-txpool** | sc-transaction-pool | 1 | Pending |
 | **misc standalone** | mmr, staking, fork-tree, test crates | ~12 | — |
 | **soil** | umbrella re-export | 1 | Pending |
