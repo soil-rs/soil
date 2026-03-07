@@ -9138,19 +9138,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "soil-informant"
-version = "0.33.0"
-dependencies = [
- "console",
- "futures",
- "futures-timer",
- "log",
- "soil-client",
- "soil-network",
- "subsoil",
-]
-
-[[package]]
 name = "soil-manual-seal"
 version = "0.35.0"
 dependencies = [
@@ -9386,6 +9373,7 @@ name = "soil-service"
 version = "0.35.0"
 dependencies = [
  "async-trait",
+ "console",
  "directories",
  "exit-future",
  "futures",
@@ -9401,7 +9389,6 @@ dependencies = [
  "serde_json",
  "soil-chain-spec",
  "soil-client",
- "soil-informant",
  "soil-network",
  "soil-rpc",
  "soil-session",
@@ -9831,7 +9818,6 @@ dependencies = [
  "soil-consensus",
  "soil-genesis-builder",
  "soil-grandpa",
- "soil-informant",
  "soil-manual-seal",
  "soil-mmr-gadget",
  "soil-network",

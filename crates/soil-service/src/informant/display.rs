@@ -24,7 +24,7 @@ use soil_network::NetworkStatus;
 use std::{fmt, time::Instant};
 use subsoil::runtime::traits::{Block as BlockT, CheckedDiv, NumberFor, Saturating, Zero};
 
-use crate::PrintFullHashOnDebugLogging;
+use super::PrintFullHashOnDebugLogging;
 
 /// State of the informant display system.
 ///

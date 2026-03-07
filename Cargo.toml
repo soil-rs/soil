@@ -27,7 +27,6 @@ members = [
 	"crates/subsoil-crypto-hashing",
 	"crates/soil/genesis-builder",
 	"crates/soil-grandpa",
-	"crates/soil/informant",
 	"crates/soil/mmr-gadget",
 	"crates/soil-network",
 	"crates/soil/network-test",
@@ -411,7 +410,6 @@ soil-beefy = { path = "crates/soil-beefy", default-features = false }
 soil-grandpa = { path = "crates/soil-grandpa", default-features = false }
 soil-manual-seal = { path = "crates/soil-manual-seal", default-features = false }
 soil-pow = { path = "crates/soil-pow", default-features = false }
-soil-informant = { path = "crates/soil/informant", default-features = false }
 soil-network = { path = "crates/soil-network", default-features = false }
 soil-network-test = { path = "crates/soil/network-test" }
 sc-offchain = { path = "crates/substrate-client/offchain", default-features = false }

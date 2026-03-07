@@ -27,6 +27,7 @@ pub mod chain_ops;
 pub mod client;
 pub mod config;
 pub mod error;
+pub mod informant;
 pub mod proposer_metrics;
 
 mod builder;

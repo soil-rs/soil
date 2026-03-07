@@ -83,7 +83,6 @@ soil-beefy = { workspace = true, default-features = true }
 soil-grandpa = { workspace = true, default-features = true }
 soil-manual-seal = { workspace = true, default-features = true }
 soil-pow = { workspace = true, default-features = true }
-soil-informant = { workspace = true, default-features = true }
 soil-network = { workspace = true, default-features = true }
 sc-offchain = { workspace = true, default-features = true }
 soil-service = { workspace = true, default-features = true }

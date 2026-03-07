@@ -674,7 +674,7 @@ where
 	spawn_handle.spawn(
 		"informant",
 		None,
-		soil_informant::build(client.clone(), network, sync_service.clone()),
+		crate::informant::build(client.clone(), network, sync_service.clone()),
 	);
 
 	task_manager.keep_alive((config.base_path, rpc_server_handle));
