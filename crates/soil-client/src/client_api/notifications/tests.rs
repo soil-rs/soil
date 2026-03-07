@@ -19,7 +19,7 @@
 use super::*;
 
 use std::iter::{empty, Empty};
-use subsoil::runtime::testing::{Block as RawBlock, TestXt, H256 as Hash};
+use subsoil::runtime::testing::{Block as RawBlock, MockCallU64, TestXt, H256 as Hash};
 
 type TestChangeSet = (
 	Vec<(StorageKey, Option<StorageData>)>,
@@ -50,7 +50,7 @@ impl PartialEq for StorageChangeSet {
 	}
 }
 
-type Block = RawBlock<TestXt<substrate_test_runtime::RuntimeCall, ()>>;
+type Block = RawBlock<TestXt<MockCallU64, ()>>;
 
 #[test]
 fn triggering_change_should_notify_wildcard_listeners() {

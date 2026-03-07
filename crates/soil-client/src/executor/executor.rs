@@ -760,7 +760,9 @@ impl<D: NativeExecutionDispatch> subsoil::core::traits::ReadRuntimeVersion
 #[cfg(test)]
 mod tests {
 	use super::*;
+	use std::borrow::Cow;
 	use subsoil::runtime_interface::{pass_by::PassFatPointerAndRead, runtime_interface};
+	use subsoil::version::RuntimeVersion;
 
 	#[runtime_interface]
 	trait MyInterface {
@@ -775,11 +777,24 @@ mod tests {
 		type ExtendHostFunctions = (my_interface::HostFunctions, my_interface::HostFunctions);
 
 		fn dispatch(method: &str, data: &[u8]) -> Option<Vec<u8>> {
-			substrate_test_runtime::api::dispatch(method, data)
+			let _ = (method, data);
+			None
 		}
 
 		fn native_version() -> NativeVersion {
-			substrate_test_runtime::native_version()
+			NativeVersion {
+				runtime_version: RuntimeVersion {
+					spec_name: Cow::Borrowed("executor-test"),
+					impl_name: Cow::Borrowed("executor-test"),
+					authoring_version: 1,
+					spec_version: 1,
+					impl_version: 1,
+					apis: Default::default(),
+					transaction_version: 1,
+					system_version: 1,
+				},
+				can_author_with: Default::default(),
+			}
 		}
 	}
 

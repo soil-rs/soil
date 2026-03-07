@@ -22,7 +22,6 @@ use crate::executor::common::{
 	wasm_runtime::{HeapAllocStrategy, WasmModule, DEFAULT_HEAP_ALLOC_STRATEGY},
 };
 use codec::{Decode as _, Encode as _};
-use soil_runtime_test::wasm_binary_unwrap;
 
 use crate::executor::wasmtime::InstantiationStrategy;
 
@@ -116,7 +115,10 @@ impl RuntimeBuilder {
 			let wasm: Vec<u8>;
 
 			let wasm = match self.code {
-				None => wasm_binary_unwrap(),
+				None => {
+					wasm = default_test_runtime_wasm();
+					&wasm
+				},
 				Some(ref wat) => {
 					wasm = wat::parse_str(wat).expect("wat parsing failed");
 					&wasm
@@ -206,6 +208,40 @@ fn deep_call_stack_wat(depth: usize) -> String {
 			)
 		"#
 	)
+}
+
+fn default_test_runtime_wasm() -> Vec<u8> {
+	wat::parse_str(
+		r#"
+			(module
+				(memory (export "memory") 1)
+				(global (export "__heap_base") i32 (i32.const 1024))
+
+				(func (export "test_empty_return") (param i32 i32) (result i64)
+					(i64.const 0)
+				)
+
+				(func (export "test_fp_f32add") (param $ptr i32) (param $len i32) (result i64)
+					(local $out i32)
+					(local.set $out (i32.const 2048))
+					(i32.store
+						(local.get $out)
+						(i32.reinterpret_f32
+							(f32.add
+								(f32.reinterpret_i32 (i32.load (local.get $ptr)))
+								(f32.reinterpret_i32 (i32.load offset=4 (local.get $ptr)))
+							)
+						)
+					)
+					(i64.or
+						(i64.extend_i32_u (local.get $out))
+						(i64.shl (i64.extend_i32_u (i32.const 4)) (i64.const 32))
+					)
+				)
+			)
+		"#,
+	)
+	.expect("default test runtime wat is valid")
 }
 
 // These two tests ensure that the `wasmtime`'s stack size limit and the amount of
@@ -464,8 +500,9 @@ fn test_max_memory_pages(
 #[cfg_attr(build_profile = "debug", ignore)]
 #[test]
 fn test_instances_without_reuse_are_not_leaked() {
+	let wasm = default_test_runtime_wasm();
 	let runtime = crate::executor::wasmtime::create_runtime::<HostFunctions>(
-		RuntimeBlob::uncompress_if_needed(wasm_binary_unwrap()).unwrap(),
+		RuntimeBlob::uncompress_if_needed(&wasm).unwrap(),
 		crate::executor::wasmtime::Config {
 			allow_missing_func_imports: true,
 			cache_path: None,

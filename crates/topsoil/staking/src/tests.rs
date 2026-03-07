@@ -7129,10 +7129,8 @@ mod staking_unchecked {
 				let expected_validator_balance = validator_balance.saturating_sub(validator_stake);
 				let actual_validator_balance = asset::stakeable_balance::<Test>(&11);
 				assert!(
-					actual_validator_balance
-						>= expected_validator_balance.saturating_sub(1)
-						&& actual_validator_balance
-							<= expected_validator_balance.saturating_add(1),
+					actual_validator_balance >= expected_validator_balance.saturating_sub(1)
+						&& actual_validator_balance <= expected_validator_balance.saturating_add(1),
 					"{:?} != {:?} (with error rate {:?})",
 					expected_validator_balance,
 					actual_validator_balance,

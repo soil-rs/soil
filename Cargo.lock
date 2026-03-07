@@ -9277,13 +9277,11 @@ dependencies = [
  "schnellru",
  "serde",
  "serde_json",
- "soil-runtime-test",
  "strum 0.26.3",
  "subsoil",
  "subsoil-crypto-hashing",
  "subsoil-derive",
  "substrate-prometheus-endpoint",
- "substrate-test-runtime",
  "sysinfo",
  "tempfile",
  "thiserror 1.0.69",
@@ -9969,6 +9967,7 @@ dependencies = [
  "soil-client",
  "subsoil",
  "substrate-test-runtime-client",
+ "wat",
 ]
 
 [[package]]

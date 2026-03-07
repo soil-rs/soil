@@ -102,13 +102,11 @@ tokio = { features = ["macros"], workspace = true, default-features = true }
 # executor-wasmtime test deps
 cargo_metadata = { workspace = true }
 paste = { workspace = true, default-features = true }
-soil-runtime-test = { workspace = true }
 tempfile = { workspace = true }
 wat = { workspace = true }
 # executor test deps
 assert_matches = { workspace = true }
 subsoil-crypto-hashing = { workspace = true, default-features = true }
-substrate-test-runtime = { workspace = true }
 tracing-subscriber = { workspace = true, features = ["chrono", "parking_lot"] }
 # client-db test deps
 criterion = { workspace = true, default-features = true }

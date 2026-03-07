@@ -829,8 +829,13 @@ pub fn check_genesis_storage(storage: &Storage) -> crate::blockchain::Result<()>
 mod tests {
 	use super::{Blockchain, NewBlockState};
 	use crate::blockchain::Backend;
-	use subsoil::runtime::{traits::Header as HeaderT, ConsensusEngineId, Justifications};
-	use substrate_test_runtime::{Block, Header, H256};
+	use subsoil::runtime::{
+		testing::{Block as RawBlock, Header, MockCallU64, TestXt, H256},
+		traits::Header as HeaderT,
+		ConsensusEngineId, Justifications,
+	};
+
+	type Block = RawBlock<TestXt<MockCallU64, ()>>;
 
 	pub const ID1: ConsensusEngineId = *b"TST1";
 	pub const ID2: ConsensusEngineId = *b"TST2";

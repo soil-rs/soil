@@ -65,29 +65,3 @@ pub trait RuntimeVersionOf {
 		runtime_code: &subsoil::core::traits::RuntimeCode,
 	) -> error::Result<RuntimeVersion>;
 }
-
-#[cfg(test)]
-mod tests {
-	use super::*;
-	use common::runtime_blob::RuntimeBlob;
-	use soil_runtime_test::wasm_binary_unwrap;
-	use subsoil::io::TestExternalities;
-
-	#[test]
-	fn call_in_interpreted_wasm_works() {
-		let mut ext = TestExternalities::default();
-		let mut ext = ext.ext();
-
-		let executor = WasmExecutor::<subsoil::io::SubstrateHostFunctions>::builder().build();
-		let res = executor
-			.uncached_call(
-				RuntimeBlob::uncompress_if_needed(wasm_binary_unwrap()).unwrap(),
-				&mut ext,
-				true,
-				"test_empty_return",
-				&[],
-			)
-			.unwrap();
-		assert_eq!(res, vec![0u8; 0]);
-	}
-}

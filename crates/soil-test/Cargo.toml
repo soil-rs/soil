@@ -18,4 +18,4 @@ targets = ["x86_64-unknown-linux-gnu"]
 soil-client = { workspace = true, features = ["test-helpers"], default-features = true }
 subsoil = { workspace = true, default-features = true }
 substrate-test-runtime-client = { workspace = true }
-
+wat = { workspace = true }

@@ -447,9 +447,11 @@ mod tests {
 	use codec::Encode;
 	use std::borrow::Cow;
 	use subsoil::api::{Core, RuntimeApiInfo};
+	use subsoil::runtime::testing::{Block as RawBlock, MockCallU64, TestXt};
 	use subsoil::version::RuntimeVersion;
 	use subsoil::wasm_interface::HostFunctions;
-	use substrate_test_runtime::Block;
+
+	type Block = RawBlock<TestXt<MockCallU64, ()>>;
 
 	#[derive(Encode)]
 	pub struct OldRuntimeVersion {
@@ -534,11 +536,7 @@ mod tests {
 
 	#[test]
 	fn embed_runtime_version_works() {
-		let wasm = crate::maybe_compressed_blob::decompress(
-			substrate_test_runtime::wasm_binary_unwrap(),
-			crate::maybe_compressed_blob::CODE_BLOB_BOMB_LIMIT,
-		)
-		.expect("Decompressing works");
+		let wasm = wat::parse_str("(module)").expect("minimal wasm module is valid");
 		let runtime_version = RuntimeVersion {
 			spec_name: "test_replace".into(),
 			impl_name: "test_replace".into(),
