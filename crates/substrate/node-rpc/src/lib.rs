@@ -35,7 +35,7 @@ use std::sync::Arc;
 
 use jsonrpsee::RpcModule;
 use node_primitives::{AccountId, Balance, Block, BlockNumber, Hash, Nonce};
-use sc_consensus_babe::BabeWorkerHandle;
+use soil_babe::BabeWorkerHandle;
 use sc_consensus_beefy::communication::notification::{
 	BeefyBestBlockStream, BeefyVersionedFinalityProofStream,
 };
@@ -164,7 +164,7 @@ where
 		mixnet::MixnetApiServer,
 		statement::StatementApiServer,
 	};
-	use soil_consensus_babe_rpc::{Babe, BabeApiServer};
+	use soil_babe::rpc::{Babe, BabeApiServer};
 	use soil_consensus_beefy_rpc::{Beefy, BeefyApiServer};
 	use soil_consensus_grandpa_rpc::{Grandpa, GrandpaApiServer};
 	use soil_mmr_rpc::{Mmr, MmrApiServer};

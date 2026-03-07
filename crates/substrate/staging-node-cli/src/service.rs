@@ -30,7 +30,7 @@ use codec::Encode;
 use futures::prelude::*;
 use kitchensink_runtime::RuntimeApi;
 use node_primitives::Block;
-use sc_consensus_babe::{self, SlotProportion};
+use soil_babe::{self, SlotProportion};
 use sc_statement_store::Store as StatementStore;
 use sc_transaction_pool::TransactionPoolHandle;
 use soil_client::client_api::{Backend, BlockBackend};
@@ -185,7 +185,7 @@ pub fn new_partial(
 				sc_rpc::SubscriptionTaskExecutor,
 			) -> Result<jsonrpsee::RpcModule<()>, soil_service::Error>,
 			(
-				sc_consensus_babe::BabeBlockImport<
+				soil_babe::BabeBlockImport<
 					Block,
 					FullClient,
 					FullBeefyBlockImport<FullGrandpaBlockImport>,
@@ -193,7 +193,7 @@ pub fn new_partial(
 					FullSelectChain,
 				>,
 				grandpa::LinkHalf<Block, FullClient, FullSelectChain>,
-				sc_consensus_babe::BabeLink<Block>,
+				soil_babe::BabeLink<Block>,
 				beefy::BeefyVoterLinks<Block, beefy_primitives::ecdsa_crypto::AuthorityId>,
 			),
 			grandpa::SharedVoterState,
@@ -261,9 +261,9 @@ pub fn new_partial(
 			config.prometheus_registry().cloned(),
 		);
 
-	let babe_config = sc_consensus_babe::configuration(&*client)?;
+	let babe_config = soil_babe::configuration(&*client)?;
 	let slot_duration = babe_config.slot_duration();
-	let (block_import, babe_link) = sc_consensus_babe::block_import(
+	let (block_import, babe_link) = soil_babe::block_import(
 		babe_config,
 		beefy_block_import,
 		client.clone(),
@@ -281,7 +281,7 @@ pub fn new_partial(
 	)?;
 
 	let (import_queue, babe_worker_handle) =
-		sc_consensus_babe::import_queue(sc_consensus_babe::ImportQueueParams {
+		soil_babe::import_queue(soil_babe::ImportQueueParams {
 			link: babe_link.clone(),
 			block_import: block_import.clone(),
 			justification_import: Some(Box::new(justification_import)),
@@ -411,14 +411,14 @@ pub fn new_full_base<N: NetworkBackend<Block, <Block as BlockT>::Hash>>(
 	statement_network_workers: usize,
 	statement_rate_limit: u32,
 	with_startup_data: impl FnOnce(
-		&sc_consensus_babe::BabeBlockImport<
+		&soil_babe::BabeBlockImport<
 			Block,
 			FullClient,
 			FullBeefyBlockImport<FullGrandpaBlockImport>,
 			BabeCreateInherentDataProviders<Block>,
 			FullSelectChain,
 		>,
-		&sc_consensus_babe::BabeLink<Block>,
+		&soil_babe::BabeLink<Block>,
 	),
 ) -> Result<NewFullBase, ServiceError> {
 	let is_offchain_indexing_enabled = config.offchain_worker.indexing_enabled;
@@ -611,7 +611,7 @@ pub fn new_full_base<N: NetworkBackend<Block, <Block as BlockT>::Hash>>(
 
 		let client_clone = client.clone();
 		let slot_duration = babe_link.config().slot_duration();
-		let babe_config = sc_consensus_babe::BabeParams {
+		let babe_config = soil_babe::BabeParams {
 			keystore: keystore_container.keystore(),
 			client: client.clone(),
 			select_chain,
@@ -649,7 +649,7 @@ pub fn new_full_base<N: NetworkBackend<Block, <Block as BlockT>::Hash>>(
 			telemetry: telemetry.as_ref().map(|x| x.handle()),
 		};
 
-		let babe = sc_consensus_babe::start_babe(babe_config)?;
+		let babe = soil_babe::start_babe(babe_config)?;
 		task_manager.spawn_essential_handle().spawn_blocking(
 			"babe-proposer",
 			Some("block-authoring"),
@@ -901,7 +901,7 @@ mod tests {
 	};
 	use node_primitives::{Block, DigestItem, Signature};
 	use soil_consensus::{BlockImport, BlockImportParams, ForkChoiceStrategy};
-	use sc_consensus_babe::{BabeIntermediate, CompatibleDigestItem, INTERMEDIATE_KEY};
+	use soil_babe::{BabeIntermediate, CompatibleDigestItem, INTERMEDIATE_KEY};
 	use soil_client::client_api::BlockBackend;
 	use soil_client::consensus::{BlockOrigin, Environment, Proposer};
 	use soil_client::keystore::LocalKeystore;
@@ -960,8 +960,8 @@ mod tests {
 						false,
 						1,
 						50_000,
-						|block_import: &sc_consensus_babe::BabeBlockImport<Block, _, _, _, _>,
-						 babe_link: &sc_consensus_babe::BabeLink<Block>| {
+						|block_import: &soil_babe::BabeBlockImport<Block, _, _, _, _>,
+						 babe_link: &soil_babe::BabeLink<Block>| {
 							setup_handles = Some((block_import.clone(), babe_link.clone()));
 						},
 					)?;
@@ -1013,12 +1013,12 @@ mod tests {
 						.epoch_changes()
 						.shared_data()
 						.epoch_data(&epoch_descriptor, |slot| {
-							sc_consensus_babe::Epoch::genesis(babe_link.config(), slot)
+							soil_babe::Epoch::genesis(babe_link.config(), slot)
 						})
 						.unwrap();
 
 					if let Some(babe_pre_digest) =
-						sc_consensus_babe::authorship::claim_slot(slot.into(), &epoch, &keystore)
+						soil_babe::authorship::claim_slot(slot.into(), &epoch, &keystore)
 							.map(|(digest, _)| digest)
 					{
 						break (babe_pre_digest, epoch_descriptor);

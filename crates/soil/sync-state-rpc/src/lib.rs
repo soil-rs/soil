@@ -48,7 +48,7 @@ use jsonrpsee::{
 	types::{ErrorObject, ErrorObjectOwned},
 };
 
-use sc_consensus_babe::{BabeWorkerHandle, Error as BabeError};
+use soil_babe::{BabeWorkerHandle, Error as BabeError};
 use soil_client::blockchain::HeaderBackend;
 use soil_client::client_api::StorageData;
 use subsoil::runtime::traits::{Block as BlockT, NumberFor};
@@ -114,9 +114,9 @@ pub struct LightSyncState<Block: BlockT> {
 	pub finalized_block_header: <Block as BlockT>::Header,
 	/// The epoch changes tree for babe.
 	#[serde(serialize_with = "serialize_encoded")]
-	pub babe_epoch_changes: soil_consensus::epochs::EpochChangesFor<Block, sc_consensus_babe::Epoch>,
+	pub babe_epoch_changes: soil_consensus::epochs::EpochChangesFor<Block, soil_babe::Epoch>,
 	/// The babe weight of the finalized block.
-	pub babe_finalized_block_weight: sc_consensus_babe::BabeBlockWeight,
+	pub babe_finalized_block_weight: soil_babe::BabeBlockWeight,
 	/// The authority set for grandpa.
 	#[serde(serialize_with = "serialize_encoded")]
 	pub grandpa_authority_set:
@@ -173,7 +173,7 @@ where
 		})?;
 
 		let finalized_block_weight =
-			sc_consensus_babe::aux_schema::load_block_weight(&*self.client, finalized_hash)?
+			soil_babe::aux_schema::load_block_weight(&*self.client, finalized_hash)?
 				.ok_or(Error::LoadingBlockWeightFailed(finalized_hash))?;
 
 		Ok(LightSyncState {

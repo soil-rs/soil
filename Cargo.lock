@@ -6109,14 +6109,13 @@ version = "3.0.0-dev"
 dependencies = [
  "jsonrpsee",
  "node-primitives",
- "sc-consensus-babe",
  "sc-consensus-beefy",
  "sc-consensus-grandpa",
  "sc-mixnet",
  "sc-rpc",
+ "soil-babe",
  "soil-chain-spec",
  "soil-client",
- "soil-consensus-babe-rpc",
  "soil-consensus-beefy-rpc",
  "soil-consensus-grandpa-rpc",
  "soil-mmr-rpc",
@@ -8063,31 +8062,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "sc-consensus-babe"
-version = "0.34.0"
-dependencies = [
- "async-trait",
- "fork-tree",
- "futures",
- "log",
- "num-bigint",
- "num-rational",
- "num-traits",
- "parity-scale-codec",
- "parking_lot 0.12.5",
- "soil-client",
- "soil-consensus",
- "soil-network-test",
- "soil-telemetry",
- "subsoil",
- "subsoil-crypto-hashing",
- "substrate-prometheus-endpoint",
- "substrate-test-runtime-client",
- "thiserror 1.0.69",
- "tokio",
-]
-
-[[package]]
 name = "sc-consensus-beefy"
 version = "13.0.0"
 dependencies = [
@@ -9101,6 +9075,34 @@ dependencies = [
 ]
 
 [[package]]
+name = "soil-babe"
+version = "0.34.0"
+dependencies = [
+ "async-trait",
+ "fork-tree",
+ "futures",
+ "jsonrpsee",
+ "log",
+ "num-bigint",
+ "num-rational",
+ "num-traits",
+ "parity-scale-codec",
+ "parking_lot 0.12.5",
+ "serde",
+ "soil-client",
+ "soil-consensus",
+ "soil-network-test",
+ "soil-rpc-api",
+ "soil-telemetry",
+ "subsoil",
+ "subsoil-crypto-hashing",
+ "substrate-prometheus-endpoint",
+ "substrate-test-runtime-client",
+ "thiserror 1.0.69",
+ "tokio",
+]
+
+[[package]]
 name = "soil-basic-authorship"
 version = "0.34.0"
 dependencies = [
@@ -9266,23 +9268,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "soil-consensus-babe-rpc"
-version = "0.34.0"
-dependencies = [
- "futures",
- "jsonrpsee",
- "sc-consensus-babe",
- "serde",
- "soil-client",
- "soil-consensus",
- "soil-rpc-api",
- "subsoil",
- "substrate-test-runtime-client",
- "thiserror 1.0.69",
- "tokio",
-]
-
-[[package]]
 name = "soil-consensus-beefy-rpc"
 version = "13.0.0"
 dependencies = [
@@ -9354,10 +9339,10 @@ dependencies = [
  "jsonrpsee",
  "log",
  "parity-scale-codec",
- "sc-consensus-babe",
  "sc-transaction-pool",
  "serde",
  "soil-aura",
+ "soil-babe",
  "soil-basic-authorship",
  "soil-client",
  "soil-consensus",
@@ -9886,10 +9871,10 @@ version = "0.34.0"
 dependencies = [
  "jsonrpsee",
  "parity-scale-codec",
- "sc-consensus-babe",
  "sc-consensus-grandpa",
  "serde",
  "serde_json",
+ "soil-babe",
  "soil-chain-spec",
  "soil-client",
  "soil-consensus",
@@ -10176,7 +10161,6 @@ dependencies = [
  "rand 0.8.5",
  "regex",
  "sc-authority-discovery",
- "sc-consensus-babe",
  "sc-consensus-beefy",
  "sc-consensus-grandpa",
  "sc-mixnet",
@@ -10189,12 +10173,12 @@ dependencies = [
  "serde_json",
  "soil-aura",
  "soil-authority-discovery",
+ "soil-babe",
  "soil-basic-authorship",
  "soil-chain-spec",
  "soil-cli",
  "soil-client",
  "soil-consensus",
- "soil-consensus-babe-rpc",
  "soil-consensus-beefy-rpc",
  "soil-consensus-grandpa-rpc",
  "soil-genesis-builder",

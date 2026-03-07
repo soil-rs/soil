@@ -80,8 +80,7 @@ soil-chain-spec = { workspace = true, default-features = true }
 soil-cli = { workspace = true, default-features = true }
 soil-consensus = { workspace = true, default-features = true }
 soil-aura = { workspace = true, default-features = true }
-sc-consensus-babe = { workspace = true, default-features = true }
-soil-consensus-babe-rpc = { workspace = true, default-features = true }
+soil-babe = { workspace = true, default-features = true }
 sc-consensus-beefy = { workspace = true, default-features = true }
 soil-consensus-beefy-rpc = { workspace = true, default-features = true }
 sc-consensus-grandpa = { workspace = true, default-features = true }
