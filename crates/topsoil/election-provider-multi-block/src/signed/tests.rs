@@ -1530,6 +1530,7 @@ mod defensive_tests {
 	}
 
 	#[test]
+	#[cfg(debug_assertions)]
 	#[should_panic(expected = "Defensive failure has been triggered!")]
 	fn get_score_defensive_when_no_leader() {
 		// Test that get_score() triggers defensive failure when no leader exists
@@ -1546,6 +1547,7 @@ mod defensive_tests {
 	}
 
 	#[test]
+	#[cfg(debug_assertions)]
 	#[should_panic(expected = "Defensive failure has been triggered!")]
 	fn get_page_defensive_when_no_leader() {
 		// Test that get_page() triggers defensive failure when no leader exists

@@ -367,6 +367,13 @@ async fn syncs_all_forks() {
 	let b2 = net.peer(1).push_blocks(4, false).pop().unwrap();
 
 	net.run_until_sync().await;
+	while !net.peer(0).has_block(b1)
+		|| !net.peer(0).has_block(b2)
+		|| !net.peer(1).has_block(b1)
+		|| !net.peer(1).has_block(b2)
+	{
+		net.run_until_idle().await;
+	}
 	// Check that all peers have all of the branches.
 	assert!(net.peer(0).has_block(b1));
 	assert!(net.peer(0).has_block(b2));

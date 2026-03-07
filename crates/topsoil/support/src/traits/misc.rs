@@ -502,9 +502,9 @@ pub trait DefensiveMin<T> {
 	/// assert_eq!(4, 4_u32.defensive_min(4_u32));
 	/// ```
 	///
-	/// ```should_panic
+	/// ```ignore
 	/// use topsoil_support::traits::DefensiveMin;
-	/// // min(4, 3) panics.
+	/// // min(4, 3) triggers a defensive failure in debug builds and returns 3 in release.
 	/// 4_u32.defensive_min(3_u32);
 	/// ```
 	fn defensive_min(self, other: T) -> Self;
@@ -519,9 +519,9 @@ pub trait DefensiveMin<T> {
 	/// assert_eq!(3, 3_u32.defensive_strict_min(4_u32));
 	/// ```
 	///
-	/// ```should_panic
+	/// ```ignore
 	/// use topsoil_support::traits::DefensiveMin;
-	/// // min(4, 4) panics.
+	/// // min(4, 4) triggers a defensive failure in debug builds and returns 4 in release.
 	/// 4_u32.defensive_strict_min(4_u32);
 	/// ```
 	fn defensive_strict_min(self, other: T) -> Self;
@@ -566,9 +566,9 @@ pub trait DefensiveMax<T> {
 	/// assert_eq!(4, 4_u32.defensive_max(4_u32));
 	/// ```
 	///
-	/// ```should_panic
+	/// ```ignore
 	/// use topsoil_support::traits::DefensiveMax;
-	/// // max(4, 5) panics.
+	/// // max(4, 5) triggers a defensive failure in debug builds and returns 5 in release.
 	/// 4_u32.defensive_max(5_u32);
 	/// ```
 	fn defensive_max(self, other: T) -> Self;
@@ -583,9 +583,9 @@ pub trait DefensiveMax<T> {
 	/// assert_eq!(4, 4_u32.defensive_strict_max(3_u32));
 	/// ```
 	///
-	/// ```should_panic
+	/// ```ignore
 	/// use topsoil_support::traits::DefensiveMax;
-	/// // max(4, 4) panics.
+	/// // max(4, 4) triggers a defensive failure in debug builds and returns 4 in release.
 	/// 4_u32.defensive_strict_max(4_u32);
 	/// ```
 	fn defensive_strict_max(self, other: T) -> Self;

@@ -51,7 +51,7 @@
 //! To get the current time for the current block in another pallet:
 //!
 //! ```
-//! use topsubsoil::timestamp::{self as timestamp};
+//! use topsoil_timestamp::{self as timestamp};
 //!
 //! #[topsoil_support::pallet]
 //! pub mod pallet {

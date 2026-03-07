@@ -33,7 +33,6 @@ use futures::{
 	sink::SinkExt,
 	task::LocalSpawn,
 };
-use prometheus_endpoint::prometheus::default_registry;
 use soil_client::client_api::HeaderBackend;
 use soil_network::{
 	service::signature::{Keypair, SigningError},
@@ -48,6 +47,10 @@ use subsoil::api::{ApiRef, ProvideRuntimeApi};
 use subsoil::keystore::{testing::MemoryKeystore, Keystore};
 use subsoil::runtime::traits::{Block as BlockT, NumberFor, Zero};
 use substrate_test_runtime_client::runtime::Block;
+
+fn test_registry() -> prometheus_endpoint::Registry {
+	prometheus_endpoint::Registry::new()
+}
 
 #[derive(Clone)]
 pub(crate) struct TestApi {
@@ -1165,7 +1168,7 @@ async fn lookup_throttling() {
 		network.clone(),
 		dht_event_rx.boxed(),
 		Role::Discover,
-		Some(default_registry().clone()),
+		Some(test_registry()),
 		test_config(Some(path)),
 		create_spawner(),
 	);
@@ -1286,7 +1289,7 @@ async fn test_handle_put_record_request() {
 		network.clone(),
 		dht_event_rx.boxed(),
 		Role::Discover,
-		Some(default_registry().clone()),
+		Some(test_registry()),
 		test_config(Some(path)),
 		create_spawner(),
 	);

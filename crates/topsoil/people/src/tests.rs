@@ -768,6 +768,7 @@ mod chunks {
 	use topsoil_support::traits::Get;
 
 	#[test]
+	#[cfg(debug_assertions)]
 	#[should_panic]
 	fn no_chunks_first_page() {
 		new_test_ext().execute_with(|| {
@@ -777,6 +778,7 @@ mod chunks {
 	}
 
 	#[test]
+	#[cfg(debug_assertions)]
 	#[should_panic]
 	fn no_chunks_second_page() {
 		new_test_ext().execute_with(|| {
@@ -790,7 +792,48 @@ mod chunks {
 	}
 
 	#[test]
+	#[cfg(debug_assertions)]
 	#[should_panic]
+	fn insufficient_chunks() {
+		new_test_ext().execute_with(|| {
+			let drain = Chunks::<Test>::drain();
+			for _ in drain {}
+			let chunk_page_size: u32 = <Test as Config>::ChunkPageSize::get();
+			let chunks: BoundedVec<(), _> = [(); 4096]
+				.into_iter()
+				.take(chunk_page_size as usize - 1)
+				.collect::<Vec<_>>()
+				.try_into()
+				.unwrap();
+			Chunks::<Test>::insert(0, chunks);
+			assert!(PeoplePallet::fetch_chunks(0..(chunk_page_size as usize + 1)).is_err());
+		})
+	}
+
+	#[test]
+	#[cfg(not(debug_assertions))]
+	fn no_chunks_first_page() {
+		new_test_ext().execute_with(|| {
+			Chunks::<Test>::remove(0);
+			assert!(PeoplePallet::fetch_chunks(0..5).is_err());
+		})
+	}
+
+	#[test]
+	#[cfg(not(debug_assertions))]
+	fn no_chunks_second_page() {
+		new_test_ext().execute_with(|| {
+			let chunk_page_size: u32 = <Test as Config>::ChunkPageSize::get();
+			Chunks::<Test>::remove(1);
+			assert!(PeoplePallet::fetch_chunks(
+				(chunk_page_size - 1) as usize..(chunk_page_size * 2) as usize
+			)
+			.is_err());
+		})
+	}
+
+	#[test]
+	#[cfg(not(debug_assertions))]
 	fn insufficient_chunks() {
 		new_test_ext().execute_with(|| {
 			let drain = Chunks::<Test>::drain();

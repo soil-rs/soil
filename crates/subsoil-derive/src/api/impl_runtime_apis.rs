@@ -300,7 +300,7 @@ fn generate_runtime_api_base_structures() -> Result<TokenStream> {
 					at: <Block as #crate_::BlockT>::Hash,
 				) -> std::result::Result<bool, #crate_::ApiError> where Self: Sized {
 					#crate_::CallApiAt::<Block>::runtime_version_at(self.call, at)
-					.map(|v| #crate_::RuntimeVersion::has_api_with(&v, &A::ID, |v| v == A::VERSION))
+						.map(|v| #crate_::RuntimeVersion::has_api_with(&v, &A::ID, |v| v == A::VERSION))
 				}
 
 				fn has_api_with<A: #crate_::RuntimeApiInfo + ?Sized, P: Fn(u32) -> bool>(
@@ -309,7 +309,7 @@ fn generate_runtime_api_base_structures() -> Result<TokenStream> {
 					pred: P,
 				) -> std::result::Result<bool, #crate_::ApiError> where Self: Sized {
 					#crate_::CallApiAt::<Block>::runtime_version_at(self.call, at)
-					.map(|v| #crate_::RuntimeVersion::has_api_with(&v, &A::ID, pred))
+						.map(|v| #crate_::RuntimeVersion::has_api_with(&v, &A::ID, pred))
 				}
 
 				fn api_version<A: #crate_::RuntimeApiInfo + ?Sized>(
@@ -317,7 +317,7 @@ fn generate_runtime_api_base_structures() -> Result<TokenStream> {
 					at: <Block as #crate_::BlockT>::Hash,
 				) -> std::result::Result<Option<u32>, #crate_::ApiError> where Self: Sized {
 					#crate_::CallApiAt::<Block>::runtime_version_at(self.call, at)
-					.map(|v| #crate_::RuntimeVersion::api_version(&v, &A::ID))
+						.map(|v| #crate_::RuntimeVersion::api_version(&v, &A::ID))
 				}
 
 				fn record_proof(&mut self) {
@@ -332,9 +332,7 @@ fn generate_runtime_api_base_structures() -> Result<TokenStream> {
 					std::clone::Clone::clone(&self.recorder)
 				}
 
-				fn extract_proof(
-					&mut self,
-				) -> std::option::Option<#crate_::StorageProof> {
+				fn extract_proof(&mut self) -> std::option::Option<#crate_::StorageProof> {
 					let recorder = std::option::Option::take(&mut self.recorder);
 					std::option::Option::map(recorder, |recorder| {
 						#crate_::ProofRecorder::<Block>::drain_storage_proof(recorder)
@@ -345,20 +343,23 @@ fn generate_runtime_api_base_structures() -> Result<TokenStream> {
 					&self,
 					backend: &B,
 					parent_hash: Block::Hash,
-				) -> ::core::result::Result<
-					#crate_::StorageChanges<Block>,
-				String
-					> where Self: Sized {
-						let state_version = #crate_::CallApiAt::<Block>::runtime_version_at(self.call, std::clone::Clone::clone(&parent_hash))
-							.map(|v| #crate_::RuntimeVersion::state_version(&v))
-							.map_err(|e| format!("Failed to get state version: {}", e))?;
+				) -> ::core::result::Result<#crate_::StorageChanges<Block>, String>
+				where
+					Self: Sized,
+				{
+					let state_version = #crate_::CallApiAt::<Block>::runtime_version_at(
+						self.call,
+						std::clone::Clone::clone(&parent_hash),
+					)
+					.map(|v| #crate_::RuntimeVersion::state_version(&v))
+					.map_err(|e| format!("Failed to get state version: {}", e))?;
 
-						#crate_::OverlayedChanges::drain_storage_changes(
-							&mut std::cell::RefCell::borrow_mut(&self.changes),
-							backend,
-							state_version,
-						)
-					}
+					#crate_::OverlayedChanges::drain_storage_changes(
+						&mut std::cell::RefCell::borrow_mut(&self.changes),
+						backend,
+						state_version,
+					)
+				}
 
 				fn set_call_context(&mut self, call_context: #crate_::CallContext) {
 					self.call_context = call_context;
@@ -417,8 +418,6 @@ fn generate_runtime_api_base_structures() -> Result<TokenStream> {
 							#crate_::TransactionType::Host,
 						);
 
-						// Will panic on an `Err` below, however we should call commit
-						// on the recorder and the changes together.
 						std::result::Result::and(res, std::result::Result::map_err(res2, drop))
 					} else {
 						let res = if let Some(recorder) = &self.recorder {
@@ -436,8 +435,6 @@ fn generate_runtime_api_base_structures() -> Result<TokenStream> {
 							#crate_::TransactionType::Host,
 						);
 
-						// Will panic on an `Err` below, however we should call commit
-						// on the recorder and the changes together.
 						std::result::Result::and(res, std::result::Result::map_err(res2, drop))
 					};
 
@@ -679,6 +676,7 @@ impl<'a> Fold for ApiRuntimeImplToApiRuntimeApiImpl<'a> {
 
 /// Generate the implementations of the runtime apis for the `RuntimeApi` type.
 fn generate_api_impl_for_runtime_api(impls: &[ItemImpl]) -> Result<TokenStream> {
+	let crate_ = generate_crate_access();
 	let mut result = Vec::with_capacity(impls.len());
 
 	for impl_ in impls {
@@ -696,9 +694,7 @@ fn generate_api_impl_for_runtime_api(impls: &[ItemImpl]) -> Result<TokenStream> 
 		result.push(processed_impl);
 	}
 
-	let crate_ = generate_crate_access();
-
-	Ok(quote!( #crate_::std_enabled! { #( #result )* } ))
+	Ok(quote!( #( #crate_::std_enabled! { #result } )* ))
 }
 
 fn populate_runtime_api_versions(

@@ -32,23 +32,22 @@ async fn running_the_node_works_and_can_be_interrupted() {
 	common::run_with_timeout(Duration::from_secs(60 * 10), async move {
 		async fn run_command_and_kill(signal: Signal) {
 			let base_path = tempdir().expect("could not create a temp dir");
+			let rpc_port = common::find_free_tcp_port();
 			let mut cmd = common::KillChildOnDrop(
 				Command::new(cargo_bin("substrate-node"))
-					.stdout(process::Stdio::piped())
-					.stderr(process::Stdio::piped())
+					.stdout(process::Stdio::null())
+					.stderr(process::Stdio::null())
 					.args(&["--dev", "-d"])
 					.arg(base_path.path())
+					.arg("--rpc-port")
+					.arg(rpc_port.to_string())
 					.arg("--db=paritydb")
 					.arg("--no-hardware-benchmarks")
 					.spawn()
 					.unwrap(),
 			);
 
-			let stderr = cmd.stderr.take().unwrap();
-
-			let ws_url = common::extract_info_from_output(stderr).0.ws_url;
-
-			common::wait_n_finalized_blocks(3, &ws_url).await;
+			common::wait_n_finalized_blocks(3, &common::ws_url_from_port(rpc_port)).await;
 
 			cmd.assert_still_running();
 
@@ -74,10 +73,8 @@ async fn running_two_nodes_with_the_same_ws_port_should_work() {
 		let mut first_node = common::KillChildOnDrop(common::start_node());
 		let mut second_node = common::KillChildOnDrop(common::start_node());
 
-		let stderr = first_node.stderr.take().unwrap();
-		let ws_url = common::extract_info_from_output(stderr).0.ws_url;
-
-		common::wait_n_finalized_blocks(3, &ws_url).await;
+		common::wait_n_finalized_blocks(3, &common::ws_url_from_port(common::START_NODE_RPC_PORT))
+			.await;
 
 		first_node.assert_still_running();
 		second_node.assert_still_running();

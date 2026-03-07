@@ -380,8 +380,10 @@ mod tests {
 			None
 		} else {
 			let output = Command::new(env::current_exe().unwrap())
+				.arg("--nocapture")
 				.arg(test_name)
 				.env("RUN_FORKED_TEST", "1")
+				.env("RUST_LOG", "info")
 				.output()
 				.unwrap();
 
@@ -439,6 +441,7 @@ mod tests {
 		let executable = env::current_exe().unwrap();
 		let output = Command::new(executable)
 			.env("ENABLE_LOGGING", "1")
+			.env("RUST_LOG", "info")
 			.args(&["--nocapture", "log_something_with_dash_target_name"])
 			.output()
 			.unwrap();
@@ -471,6 +474,7 @@ mod tests {
 		let executable = env::current_exe().unwrap();
 		let output = Command::new(executable)
 			.env("ENABLE_LOGGING", "1")
+			.env("RUST_LOG", "info")
 			.args(&["--nocapture", "prefix_in_log_lines_entrypoint"])
 			.output()
 			.unwrap();
@@ -516,6 +520,7 @@ mod tests {
 		let executable = env::current_exe().unwrap();
 		let output = Command::new(executable)
 			.env("ENABLE_LOGGING", "1")
+			.env("RUST_LOG", "info")
 			.args(&["--nocapture", "do_not_write_with_colors_on_tty_entrypoint"])
 			.output()
 			.unwrap();

@@ -219,7 +219,9 @@ impl Write for StderrWriter {
 impl Drop for StderrWriter {
 	fn drop(&mut self) {
 		let buf = self.buffer.take().expect("buffer is only None after `drop`; qed");
-		if self.sync_flush_on_drop || buf.len() >= SYNC_FLUSH_THRESHOLD {
+		if self.sync_flush_on_drop || buf.len() >= SYNC_FLUSH_THRESHOLD || self.original_len == 0 {
+			// Flush the first buffered line immediately so short-lived subprocesses do not
+			// terminate before the background flusher has a chance to run.
 			flush_logs(buf);
 		} else if self.original_len < ASYNC_FLUSH_THRESHOLD && buf.len() >= ASYNC_FLUSH_THRESHOLD {
 			ASYNC_FLUSH_CONDVAR.notify_one();

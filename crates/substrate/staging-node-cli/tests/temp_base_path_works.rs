@@ -40,8 +40,8 @@ async fn temp_base_path_works() {
 				.unwrap(),
 		);
 
-		let mut stderr = child.stderr.take().unwrap();
-		let node_info = common::extract_info_from_output(&mut stderr).0;
+		let stderr = child.stderr.take().unwrap();
+		let node_info = common::extract_info_from_output(stderr).0;
 
 		// Let it produce some blocks.
 		common::wait_n_finalized_blocks(3, &node_info.ws_url).await;

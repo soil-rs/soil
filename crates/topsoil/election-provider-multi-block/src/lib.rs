@@ -2712,36 +2712,35 @@ mod phase_rotation {
 	#[test]
 	#[cfg_attr(debug_assertions, should_panic(expected = "Defensive failure has been triggered!"))]
 	fn target_snapshot_failed_event_emitted() {
-		ExtBuilder::full()
-				.pages(2)
-				.election_start(13)
-				.build_and_execute(|| {
-					// Create way more targets than the TargetSnapshotPerBlock limit (4)
-					// This will cause bounds.slice_exhausted(&targets) to return true
-					let too_many_targets: Vec<AccountId> = (1..=100).collect();
-					Targets::set(too_many_targets);
+		let mut ext = ExtBuilder::full().pages(2).election_start(13).build_unchecked();
+		ext.execute_with(|| {
+			// Create way more targets than the TargetSnapshotPerBlock limit (4)
+			// This will cause bounds.slice_exhausted(&targets) to return true.
+			let too_many_targets: Vec<AccountId> = (1..=100).collect();
+			Targets::set(too_many_targets);
 
-					roll_to(13);
-					assert_eq!(MultiBlock::current_phase(), Phase::Snapshot(2));
+			Pallet::<Runtime>::roll_to(13, false);
+			assert_eq!(MultiBlock::current_phase(), Phase::Snapshot(2));
 
-					// Clear any existing events
-					let _ = multi_block_events_since_last_call();
+			// Clear any existing events.
+			let _ = multi_block_events_since_last_call();
 
-					// Roll to next block - on_initialize will be in Phase::Snapshot(2) where x == T::Pages::get()
-					// This triggers target snapshot creation, which should fail due to too many targets
-					roll_to(14);
+			// Roll to next block - on_initialize will be in Phase::Snapshot(2) where x ==
+			// T::Pages::get(). This triggers target snapshot creation, which should fail due to
+			// too many targets.
+			Pallet::<Runtime>::roll_to(14, false);
 
-					// Verify that UnexpectedTargetSnapshotFailed event was emitted
-					let events = multi_block_events_since_last_call();
-					assert!(
-						events.contains(&Event::UnexpectedTargetSnapshotFailed),
-						"UnexpectedTargetSnapshotFailed event should have been emitted when target snapshot creation fails. Events: {:?}",
-						events
-					);
+			// Verify that UnexpectedTargetSnapshotFailed event was emitted.
+			let events = multi_block_events_since_last_call();
+			assert!(
+				events.contains(&Event::UnexpectedTargetSnapshotFailed),
+				"UnexpectedTargetSnapshotFailed event should have been emitted when target snapshot creation fails. Events: {:?}",
+				events
+			);
 
-					// Verify phase transition still happened despite the failure
-					assert_eq!(MultiBlock::current_phase(), Phase::Snapshot(1));
-				});
+			// Verify phase transition still happened despite the failure.
+			assert_eq!(MultiBlock::current_phase(), Phase::Snapshot(1));
+		});
 	}
 }
 

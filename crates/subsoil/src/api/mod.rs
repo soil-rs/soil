@@ -846,6 +846,56 @@ decl_runtime_apis! {
 	}
 }
 
-crate::generate_feature_enabled_macro!(std_enabled, feature = "std", $);
-crate::generate_feature_enabled_macro!(std_disabled, not(feature = "std"), $);
-crate::generate_feature_enabled_macro!(frame_metadata_enabled, feature = "frame-metadata", $);
+#[cfg(feature = "std")]
+#[macro_export]
+#[doc(hidden)]
+macro_rules! __subsoil_api_std_enabled {
+	( $( $input:tt )* ) => {
+		$( $input )*
+	};
+}
+
+#[cfg(not(feature = "std"))]
+#[macro_export]
+#[doc(hidden)]
+macro_rules! __subsoil_api_std_enabled {
+	( $( $input:tt )* ) => {};
+}
+
+pub use __subsoil_api_std_enabled as std_enabled;
+
+#[cfg(not(feature = "std"))]
+#[macro_export]
+#[doc(hidden)]
+macro_rules! __subsoil_api_std_disabled {
+	( $( $input:tt )* ) => {
+		$( $input )*
+	};
+}
+
+#[cfg(feature = "std")]
+#[macro_export]
+#[doc(hidden)]
+macro_rules! __subsoil_api_std_disabled {
+	( $( $input:tt )* ) => {};
+}
+
+pub use __subsoil_api_std_disabled as std_disabled;
+
+#[cfg(feature = "frame-metadata")]
+#[macro_export]
+#[doc(hidden)]
+macro_rules! __subsoil_api_frame_metadata_enabled {
+	( $( $input:tt )* ) => {
+		$( $input )*
+	};
+}
+
+#[cfg(not(feature = "frame-metadata"))]
+#[macro_export]
+#[doc(hidden)]
+macro_rules! __subsoil_api_frame_metadata_enabled {
+	( $( $input:tt )* ) => {};
+}
+
+pub use __subsoil_api_frame_metadata_enabled as frame_metadata_enabled;

@@ -27,6 +27,7 @@ use topsoil_support::traits::{
 type DapPallet = crate::Pallet<Test>;
 
 #[test]
+#[cfg(debug_assertions)]
 #[should_panic(expected = "Failed to deposit slash to DAP buffer")]
 fn on_unbalanced_panics_when_buffer_not_funded_and_deposit_below_ed() {
 	new_test_ext(false).execute_with(|| {

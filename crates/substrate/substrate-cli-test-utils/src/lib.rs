@@ -27,12 +27,28 @@ use regex::Regex;
 use soil_rpc::{list::ListOrValue, number::NumberOrHex};
 use std::{
 	io::{BufRead, BufReader, Read},
+	net::TcpListener,
 	ops::{Deref, DerefMut},
 	path::{Path, PathBuf},
 	process::{self, Child, Command},
+	sync::mpsc,
+	thread,
 	time::Duration,
 };
 use tokio::io::{AsyncBufReadExt, AsyncRead};
+
+pub const START_NODE_RPC_PORT: u16 = 45789;
+
+pub fn find_free_tcp_port() -> u16 {
+	let listener = TcpListener::bind(("127.0.0.1", 0)).unwrap();
+	let port = listener.local_addr().unwrap().port();
+	drop(listener);
+	port
+}
+
+pub fn ws_url_from_port(port: u16) -> String {
+	format!("ws://127.0.0.1:{port}")
+}
 
 /// Similar to [`crate::start_node`] spawns a node, but works in environments where the substrate
 /// binary is not accessible with `cargo_bin("substrate-node")`, and allows customising the args
@@ -70,7 +86,7 @@ pub fn start_node_inline(args: Vec<&str>) -> Result<(), soil_service::error::Err
 ///
 /// This function creates a new Substrate node using the `substrate` binary.
 /// It configures the node to run in development mode (`--dev`) with a temporary chain (`--tmp`),
-/// sets the WebSocket port to 45789 (`--ws-port=45789`).
+/// sets the JSON-RPC port to 45789.
 ///
 /// # Returns
 ///
@@ -92,12 +108,15 @@ pub fn start_node_inline(args: Vec<&str>) -> Result<(), soil_service::error::Err
 ///
 /// [`Child`]: std::process::Child
 pub fn start_node() -> Child {
-	Command::new(cargo_bin("substrate-node"))
-		.stdout(process::Stdio::piped())
-		.stderr(process::Stdio::piped())
-		.args(&["--dev", "--tmp", "--rpc-port=45789", "--no-hardware-benchmarks"])
-		.spawn()
-		.unwrap()
+	let mut command = Command::new(cargo_bin("substrate-node"));
+	command
+		.stdout(process::Stdio::null())
+		.stderr(process::Stdio::null())
+		.arg("--dev")
+		.arg("--tmp")
+		.arg(format!("--rpc-port={}", START_NODE_RPC_PORT))
+		.arg("--no-hardware-benchmarks");
+	command.spawn().unwrap()
 }
 
 /// Builds the Substrate project using the provided arguments.
@@ -214,7 +233,14 @@ pub async fn wait_n_finalized_blocks(n: usize, url: &str) {
 	let mut built_blocks = std::collections::HashSet::new();
 	let block_duration = Duration::from_secs(2);
 	let mut interval = tokio::time::interval(block_duration);
-	let rpc = ws_client(url).await.unwrap();
+	let rpc = loop {
+		match ws_client(url).await {
+			Ok(rpc) => break rpc,
+			Err(_) => {
+				interval.tick().await;
+			},
+		}
+	};
 
 	loop {
 		if let Ok(block) = ChainApi::<(), Hash, Header, ()>::finalized_head(&rpc).await {
@@ -230,23 +256,22 @@ pub async fn wait_n_finalized_blocks(n: usize, url: &str) {
 /// Run the node for a while (3 blocks)
 pub async fn run_node_for_a_while(base_path: &Path, args: &[&str]) {
 	run_with_timeout(Duration::from_secs(60 * 10), async move {
-		let mut cmd = Command::new(cargo_bin("substrate-node"))
-			.stdout(process::Stdio::piped())
-			.stderr(process::Stdio::piped())
+		let rpc_port = find_free_tcp_port();
+		let cmd = Command::new(cargo_bin("substrate-node"))
+			.stdout(process::Stdio::null())
+			.stderr(process::Stdio::null())
 			.args(args)
+			.arg("--rpc-port")
+			.arg(rpc_port.to_string())
 			.arg("-d")
 			.arg(base_path)
 			.spawn()
 			.unwrap();
 
-		let stderr = cmd.stderr.take().unwrap();
-
 		let mut child = KillChildOnDrop(cmd);
 
-		let ws_url = extract_info_from_output(stderr).0.ws_url;
-
 		// Let it produce some blocks.
-		wait_n_finalized_blocks(3, &ws_url).await;
+		wait_n_finalized_blocks(3, &ws_url_from_port(rpc_port)).await;
 
 		child.assert_still_running();
 
@@ -327,32 +352,63 @@ pub struct NodeInfo {
 /// Extract [`NodeInfo`] from a running node by parsing its output.
 ///
 /// Returns the [`NodeInfo`] and all the read data.
-pub fn extract_info_from_output(read: impl Read + Send) -> (NodeInfo, String) {
-	let mut data = String::new();
+pub fn extract_info_from_output(read: impl Read + Send + 'static) -> (NodeInfo, String) {
+	let (tx, rx) = mpsc::sync_channel(1);
 
-	let ws_url = BufReader::new(read)
-		.lines()
-		.find_map(|line| {
-			let line = line.expect("failed to obtain next line while extracting node info");
-			data.push_str(&line);
-			data.push_str("\n");
+	thread::spawn(move || {
+		let re = Regex::new(r"Database: .+ at (\S+)").unwrap();
+		let mut data = String::new();
+		let mut ws_url = None;
+		let mut db_path = None;
+		let mut sent = false;
 
-			// does the line contain our port (we expect this specific output from substrate).
-			let sock_addr = match line.split_once("Running JSON-RPC server: addr=") {
-				None => return None,
-				Some((_, after)) => after.split_once(",").unwrap().0,
+		for line in BufReader::new(read).lines() {
+			let line = match line {
+				Ok(line) => line,
+				Err(error) => {
+					let _ = tx.send(Err(format!(
+						"failed to obtain next line while extracting node info: {error}\n{data}"
+					)));
+					return;
+				},
 			};
 
-			Some(format!("ws://{}", sock_addr))
-		})
-		.unwrap_or_else(|| {
+			data.push_str(&line);
+			data.push('\n');
+
+			if db_path.is_none() {
+				db_path = re.captures(&line).map(|captures| PathBuf::from(&captures[1]));
+			}
+
+			if ws_url.is_none() {
+				ws_url = line
+					.split_once("Running JSON-RPC server: addr=")
+					.map(|(_, after)| after.split_once(",").unwrap().0)
+					.map(|sock_addr| format!("ws://{sock_addr}"));
+			}
+
+			if !sent {
+				if let (Some(ws_url), Some(db_path)) = (ws_url.as_ref(), db_path.as_ref()) {
+					let _ = tx.send(Ok((
+						NodeInfo { ws_url: ws_url.clone(), db_path: db_path.clone() },
+						data.clone(),
+					)));
+					sent = true;
+				}
+			}
+		}
+
+		if !sent {
+			let _ = tx.send(Err(data));
+		}
+	});
+
+	match rx.recv_timeout(Duration::from_secs(60)) {
+		Ok(Ok(result)) => result,
+		Ok(Err(data)) => {
 			eprintln!("Observed node output:\n{}", data);
-			panic!("We should get a WebSocket address")
-		});
-
-	// Database path is printed before the ws url!
-	let re = Regex::new(r"Database: .+ at (\S+)").unwrap();
-	let db_path = PathBuf::from(re.captures(data.as_str()).unwrap().get(1).unwrap().as_str());
-
-	(NodeInfo { ws_url, db_path }, data)
+			panic!("We should get node info from process output");
+		},
+		Err(error) => panic!("Timed out waiting for node info from process output: {error}"),
+	}
 }

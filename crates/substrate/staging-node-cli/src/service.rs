@@ -840,27 +840,41 @@ pub fn new_full(config: Configuration, cli: Cli) -> Result<TaskManager, ServiceE
 
 	let task_manager = match config.network.network_backend {
 		soil_network::config::NetworkBackendType::Libp2p => {
-			let task_manager = new_full_base::<soil_network::NetworkWorker<_, _>>(
+			let NewFullBase {
+				mut task_manager,
+				client,
+				network,
+				sync,
+				transaction_pool,
+				rpc_handlers,
+			} = new_full_base::<soil_network::NetworkWorker<_, _>>(
 				config,
 				mixnet_config,
 				cli.no_hardware_benchmarks,
 				cli.statement_network_workers,
 				cli.statement_rate_limit,
 				|_, _| (),
-			)
-			.map(|NewFullBase { task_manager, .. }| task_manager)?;
+			)?;
+			task_manager.keep_alive((client, network, sync, transaction_pool, rpc_handlers));
 			task_manager
 		},
 		soil_network::config::NetworkBackendType::Litep2p => {
-			let task_manager = new_full_base::<soil_network::Litep2pNetworkBackend>(
+			let NewFullBase {
+				mut task_manager,
+				client,
+				network,
+				sync,
+				transaction_pool,
+				rpc_handlers,
+			} = new_full_base::<soil_network::Litep2pNetworkBackend>(
 				config,
 				mixnet_config,
 				cli.no_hardware_benchmarks,
 				cli.statement_network_workers,
 				cli.statement_rate_limit,
 				|_, _| (),
-			)
-			.map(|NewFullBase { task_manager, .. }| task_manager)?;
+			)?;
+			task_manager.keep_alive((client, network, sync, transaction_pool, rpc_handlers));
 			task_manager
 		},
 	};

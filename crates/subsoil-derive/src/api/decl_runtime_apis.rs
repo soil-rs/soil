@@ -595,7 +595,7 @@ fn generate_client_side_decls(decls: &[ItemTrait]) -> Result<TokenStream> {
 			#crate_::std_enabled! {
 				#[allow(deprecated)]
 				#decl
-			 }
+			}
 			#runtime_info
 			#( #errors )*
 		));

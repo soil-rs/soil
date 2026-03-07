@@ -1367,15 +1367,32 @@ fn ready_but_perm_overweight_does_not_panic() {
 	use MessageOrigin::*;
 
 	build_and_execute::<Test>(|| {
-		MessageQueue::enqueue_message(msg("weight=9"), Here);
-		assert_eq!(MessageQueue::service_queues(8.into_weight()), 0.into_weight());
+		set_weight("bump_service_head", 1.into_weight());
+		set_weight("service_queue_base", 1.into_weight());
+		set_weight("service_page_base_completion", 1.into_weight());
+
+		MessageQueue::enqueue_message(msg("weight=200"), Here);
+		assert_eq!(MessageQueue::service_queues(8.into_weight()), 4.into_weight());
+		assert_last_event::<Test>(
+			Event::OverweightEnqueued {
+				id: blake2_256(b"weight=200"),
+				origin: Here,
+				message_index: 0,
+				page_index: 0,
+			}
+			.into(),
+		);
 		assert_ring(&[]);
-		// Force it back into the ready ring.
+		assert_eq!(BookStateFor::<Test>::get(Here).message_count, 1);
+
+		// Force the permanently overweight queue back into the ready ring.
 		knit(&Here);
 		assert_ring(&[Here]);
-		assert_eq!(MessageQueue::service_queues(Weight::MAX), 0.into_weight());
-		// Unready again.
+
+		let consumed = MessageQueue::service_queues(Weight::MAX);
+		assert!(!consumed.is_zero());
 		assert_ring(&[]);
+		assert_eq!(BookStateFor::<Test>::get(Here).message_count, 1);
 	});
 }
 
