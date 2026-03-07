@@ -79,10 +79,10 @@ impl SlotTimestampProvider {
 		C: AuxStore + HeaderBackend<B> + ProvideRuntimeApi<B> + UsageProvider<B>,
 		C::Api: AuraApi<B, AuthorityId>,
 	{
-		let slot_duration = sc_consensus_aura::slot_duration(&*client)?;
+		let slot_duration = soil_aura::slot_duration(&*client)?;
 
 		let time = Self::with_header(&client, slot_duration, |header| {
-			let slot_number = *sc_consensus_aura::find_pre_digest::<B, AuthoritySignature>(&header)
+			let slot_number = *soil_aura::find_pre_digest::<B, AuthoritySignature>(&header)
 				.map_err(|err| format!("{}", err))?;
 			Ok(slot_number)
 		})?;

@@ -54,7 +54,7 @@ where
 		C: AuxStore + ProvideRuntimeApi<B> + UsageProvider<B>,
 		C::Api: AuraApi<B, AuthorityId>,
 	{
-		let slot_duration = sc_consensus_aura::slot_duration(&*client)
+		let slot_duration = soil_aura::slot_duration(&*client)
 			.expect("slot_duration is always present; qed.");
 
 		Self { slot_duration, _phantom: PhantomData }

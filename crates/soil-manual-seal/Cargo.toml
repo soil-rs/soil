@@ -25,7 +25,7 @@ jsonrpsee = { features = ["client-core", "macros", "server-core"], workspace = t
 log = { workspace = true, default-features = true, optional = true}
 prometheus-endpoint = { workspace = true, default-features = true, optional = true}
 soil-consensus = { workspace = true, default-features = true, optional = true}
-sc-consensus-aura = { workspace = true, default-features = true, optional = true}
+soil-aura = { workspace = true, default-features = true, optional = true}
 sc-consensus-babe = { workspace = true, default-features = true, optional = true}
 sc-transaction-pool = { workspace = true, default-features = true, optional = true}
 serde = { features = ["derive"], workspace = true, default-features = true, optional = true}
@@ -43,7 +43,7 @@ std = [
 	"log",
 	"prometheus-endpoint",
 	"soil-consensus",
-	"sc-consensus-aura",
+	"soil-aura",
 	"sc-consensus-babe",
 	"sc-transaction-pool",
 	"serde",

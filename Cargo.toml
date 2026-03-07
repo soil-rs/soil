@@ -13,6 +13,7 @@ members = [
 	"crates/subsoil-derive",
 	"crates/soil/api/test",
 	"crates/soil/application-crypto/test",
+	"crates/soil-aura",
 	"crates/soil/authority-discovery",
 	"crates/soil/basic-authorship",
 	"crates/soil/chain-spec",
@@ -229,7 +230,6 @@ members = [
 	"crates/substrate/substrate-test-runtime-transaction-pool",
 	"crates/substrate/substrate-wasm-builder",
 	"crates/substrate-client/authority-discovery",
-	"crates/substrate-client/consensus/aura",
 	"crates/substrate-client/consensus/babe",
 	"crates/substrate-client/consensus/beefy",
 	"crates/substrate-client/consensus/grandpa",
@@ -429,7 +429,7 @@ soil-chain-spec-derive = { path = "crates/soil/chain-spec-derive", default-featu
 soil-cli = { path = "crates/soil/cli", default-features = false }
 soil-client = { path = "crates/soil-client", default-features = false }
 soil-consensus = { path = "crates/soil-consensus", default-features = false }
-sc-consensus-aura = { path = "crates/substrate-client/consensus/aura", default-features = false }
+soil-aura = { path = "crates/soil-aura", default-features = false }
 sc-consensus-babe = { path = "crates/substrate-client/consensus/babe", default-features = false }
 soil-consensus-babe-rpc = { path = "crates/soil/consensus-babe-rpc", default-features = false }
 sc-consensus-beefy = { path = "crates/substrate-client/consensus/beefy", default-features = false }

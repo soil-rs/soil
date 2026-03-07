@@ -8063,29 +8063,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "sc-consensus-aura"
-version = "0.34.0"
-dependencies = [
- "async-trait",
- "fork-tree",
- "futures",
- "log",
- "parity-scale-codec",
- "parking_lot 0.12.5",
- "soil-client",
- "soil-consensus",
- "soil-network",
- "soil-network-test",
- "soil-telemetry",
- "subsoil",
- "substrate-prometheus-endpoint",
- "substrate-test-runtime-client",
- "tempfile",
- "thiserror 1.0.69",
- "tokio",
-]
-
-[[package]]
 name = "sc-consensus-babe"
 version = "0.34.0"
 dependencies = [
@@ -9092,6 +9069,29 @@ dependencies = [
 ]
 
 [[package]]
+name = "soil-aura"
+version = "0.34.0"
+dependencies = [
+ "async-trait",
+ "fork-tree",
+ "futures",
+ "log",
+ "parity-scale-codec",
+ "parking_lot 0.12.5",
+ "soil-client",
+ "soil-consensus",
+ "soil-network",
+ "soil-network-test",
+ "soil-telemetry",
+ "subsoil",
+ "substrate-prometheus-endpoint",
+ "substrate-test-runtime-client",
+ "tempfile",
+ "thiserror 1.0.69",
+ "tokio",
+]
+
+[[package]]
 name = "soil-authority-discovery"
 version = "26.0.0"
 dependencies = [
@@ -9354,10 +9354,10 @@ dependencies = [
  "jsonrpsee",
  "log",
  "parity-scale-codec",
- "sc-consensus-aura",
  "sc-consensus-babe",
  "sc-transaction-pool",
  "serde",
+ "soil-aura",
  "soil-basic-authorship",
  "soil-client",
  "soil-consensus",
@@ -10176,7 +10176,6 @@ dependencies = [
  "rand 0.8.5",
  "regex",
  "sc-authority-discovery",
- "sc-consensus-aura",
  "sc-consensus-babe",
  "sc-consensus-beefy",
  "sc-consensus-grandpa",
@@ -10188,6 +10187,7 @@ dependencies = [
  "scale-info",
  "serde",
  "serde_json",
+ "soil-aura",
  "soil-authority-discovery",
  "soil-basic-authorship",
  "soil-chain-spec",
