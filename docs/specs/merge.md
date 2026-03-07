@@ -208,13 +208,13 @@ Merged. `soil-network` now owns the p2p/common/types/light/sync/gossip/
 transactions/statement/statement_store/mixnet service stack. Runtime-facing
 mixnet protocol types remain in `subsoil::mixnet`.
 
-### `soil-rpc` — RPC layer (~11 crates → 1)
+### `soil-rpc` — RPC layer (~8 crates → 1)
 
 | Absorb | Reason |
 |---|---|
 | soil-rpc + soil-rpc-api + soil-rpc-server | Always together |
 | soil-rpc-spec-v2 | SCC 1 with service, logically RPC |
-| soil-mmr-rpc, soil-sync-state-rpc | RPC endpoints |
+| soil-mmr-rpc | RPC endpoint |
 | sc-rpc | Wraps soil-rpc |
 | substrate-state-trie-migration-rpc | RPC endpoint |
 | substrate-rpc-client | RPC client |
@@ -223,6 +223,11 @@ mixnet protocol types remain in `subsoil::mixnet`.
 They have direct non-dev dependencies on `topsoil-system-rpc-runtime-api` and
 `topsoil-support` respectively, so folding them into `soil-rpc` would pull
 topsoil crate dependencies into the merged RPC boundary.
+
+`soil-sync-state-rpc` also stays separate. Folding it into `soil-rpc` would
+recreate a cycle because `soil-rpc` already contains the merged BABE and
+GRANDPA RPC surfaces while `soil-sync-state-rpc` depends on the consensus
+crates for sync-state generation.
 
 ### `soil-service` — Node assembly (~10 crates → 1)
 
@@ -273,7 +278,7 @@ Re-exports everything. Consumers write `soil = { features = ["client", "aura", "
 | **soil-consensus** | sc-consensus, sc-consensus-slots, soil-consensus-epochs | 3 | ✅ |
 | **soil-{aura,babe,beefy,grandpa,pow}** | selectable consensus engines; babe/beefy/grandpa also absorb their RPC crates | 8 → 5 | ✅ |
 | **soil-network** | p2p, common/types, light, sync, gossip, transactions, statements, mixnet service | ~10 | ✅ |
-| **soil-rpc** | rpc server, spec, endpoints, rpc client (excluding frame-rpc helper crates tied to topsoil) | ~9 | Pending |
+| **soil-rpc** | rpc api/handlers, server, v2 spec, mmr endpoint, state-trie-migration endpoint, rpc client (excluding frame-rpc helper crates tied to topsoil and `soil-sync-state-rpc`) | ~8 | ✅ |
 | **soil-service** | service, chain-spec, cli, infra | ~9 | Pending |
 | **soil-txpool** | sc-transaction-pool | 1 | Pending |
 | **misc standalone** | mmr, staking, fork-tree, test crates | ~12 | — |
@@ -281,6 +286,6 @@ Re-exports everything. Consumers write `soil = { features = ["client", "aura", "
 
 **96 non-topsoil crates → low-teens major crates plus a small set of intentional
 standalones.** All 3 remaining circular dependency clusters are still
-dev-dep-only. SCC 1 is now down to 14 crates after the `soil-network` merge;
-the remaining work is concentrated in `soil-rpc`, `soil-service`, and
+dev-dep-only. SCC 1 is now down to 14 crates after the `soil-network` and
+`soil-rpc` merges; the remaining work is concentrated in `soil-service` and
 `soil-txpool`.

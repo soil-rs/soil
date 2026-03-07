@@ -9,11 +9,12 @@ frame RPC helpers separate.
 
 - Move the existing `soil-rpc` crate to the flattened path `crates/soil-rpc`.
 - Merge `soil-rpc-api`, `sc-rpc`, `soil-rpc-server`, `soil-rpc-spec-v2`,
-  `soil-mmr-rpc`, `soil-sync-state-rpc`,
-  `substrate-state-trie-migration-rpc`, and `substrate-rpc-client` into
-  `soil-rpc`.
+  `soil-mmr-rpc`, `substrate-state-trie-migration-rpc`, and
+  `substrate-rpc-client` into `soil-rpc`.
 - Keep `substrate-frame-rpc-system` and `substrate-frame-rpc-support`
   separate.
+- Keep `soil-sync-state-rpc` separate because folding it into `soil-rpc` would
+  recreate a cycle through the merged BABE and GRANDPA RPC surfaces.
 - Use hard renames only. Remove each old crate as soon as its replacement lands.
 - Keep this file updated in every merge commit so progress is accurate at
   `HEAD`.
@@ -56,7 +57,7 @@ consensus crates for sync-state generation.
 - [x] Step 9: Merge `substrate-state-trie-migration-rpc` into
       `soil_rpc::state_trie_migration`.
 - [x] Step 10: Merge `substrate-rpc-client` into `soil_rpc::client`.
-- [ ] Step 11: Final consistency pass and spec update.
+- [x] Step 11: Final consistency pass and spec update.
 
 ## Validation Log
 
