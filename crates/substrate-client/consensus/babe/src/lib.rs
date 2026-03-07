@@ -88,7 +88,7 @@ use log::{debug, info, log, trace, warn};
 use parking_lot::Mutex;
 use prometheus_endpoint::Registry;
 
-use sc_consensus::{
+use soil_consensus::{
 	block_import::{
 		BlockCheckParams, BlockImport, BlockImportParams, ForkChoiceStrategy, ImportResult,
 		StateAction,
@@ -497,7 +497,7 @@ where
 	E::Proposer: Proposer<B, Error = Error>,
 	I: BlockImport<B, Error = ConsensusError> + Send + Sync + 'static,
 	SO: SyncOracle + Send + Sync + Clone + 'static,
-	L: sc_consensus::JustificationSyncLink<B> + 'static,
+	L: soil_consensus::JustificationSyncLink<B> + 'static,
 	CIDP: CreateInherentDataProviders<B, ()> + Send + Sync + 'static,
 	CIDP::InherentDataProviders: InherentDataProviderExt + Send,
 	BS: BackoffAuthoringBlocksStrategy<NumberFor<B>> + Send + Sync + 'static,
@@ -721,7 +721,7 @@ where
 	E::Proposer: Proposer<B, Error = Error>,
 	I: BlockImport<B> + Send + Sync + 'static,
 	SO: SyncOracle + Send + Clone + Sync,
-	L: sc_consensus::JustificationSyncLink<B>,
+	L: soil_consensus::JustificationSyncLink<B>,
 	BS: BackoffAuthoringBlocksStrategy<NumberFor<B>> + Send + Sync,
 	Error: std::error::Error + Send + From<ConsensusError> + From<I::Error> + 'static,
 {
@@ -839,7 +839,7 @@ where
 		import_block.post_digests.push(digest_item);
 		import_block.body = Some(body);
 		import_block.state_action =
-			StateAction::ApplyChanges(sc_consensus::StorageChanges::Changes(storage_changes));
+			StateAction::ApplyChanges(soil_consensus::StorageChanges::Changes(storage_changes));
 		import_block
 			.insert_intermediate(INTERMEDIATE_KEY, BabeIntermediate::<B> { epoch_descriptor });
 

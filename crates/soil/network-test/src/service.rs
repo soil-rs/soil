@@ -18,7 +18,7 @@
 
 use futures::prelude::*;
 
-use sc_consensus::{ImportQueue, Link};
+use soil_consensus::{ImportQueue, Link};
 use soil_client::blockchain::HeaderBackend;
 use soil_network::{
 	config::{self, FullNetworkConfiguration, MultiaddrWithPeerId, ProtocolId, TransportConfig},
@@ -133,19 +133,19 @@ impl TestNetworkBuilder {
 		struct PassThroughVerifier(bool);
 
 		#[async_trait::async_trait]
-		impl<B: BlockT> sc_consensus::Verifier<B> for PassThroughVerifier {
+		impl<B: BlockT> soil_consensus::Verifier<B> for PassThroughVerifier {
 			async fn verify(
 				&self,
-				mut block: sc_consensus::BlockImportParams<B>,
-			) -> Result<sc_consensus::BlockImportParams<B>, String> {
+				mut block: soil_consensus::BlockImportParams<B>,
+			) -> Result<soil_consensus::BlockImportParams<B>, String> {
 				block.finalized = self.0;
-				block.fork_choice = Some(sc_consensus::ForkChoiceStrategy::LongestChain);
+				block.fork_choice = Some(soil_consensus::ForkChoiceStrategy::LongestChain);
 				Ok(block)
 			}
 		}
 
 		let mut import_queue =
-			self.import_queue.unwrap_or(Box::new(sc_consensus::BasicQueue::new(
+			self.import_queue.unwrap_or(Box::new(soil_consensus::BasicQueue::new(
 				PassThroughVerifier(false),
 				Box::new(client.clone()),
 				None,

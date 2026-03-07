@@ -48,7 +48,7 @@ use codec::{Decode, Encode};
 use futures::{Future, StreamExt};
 use log::*;
 use prometheus_endpoint::Registry;
-use sc_consensus::{
+use soil_consensus::{
 	BasicQueue, BlockCheckParams, BlockImport, BlockImportParams, BoxBlockImport,
 	BoxJustificationImport, ForkChoiceStrategy, ImportResult, Verifier,
 };
@@ -508,7 +508,7 @@ where
 	E::Error: std::fmt::Debug,
 	E::Proposer: Proposer<Block>,
 	SO: SyncOracle + Clone + Send + Sync + 'static,
-	L: sc_consensus::JustificationSyncLink<Block>,
+	L: soil_consensus::JustificationSyncLink<Block>,
 	CIDP: CreateInherentDataProviders<Block, ()>,
 {
 	let mut timer = UntilImportedOrTimeout::new(client.import_notification_stream(), timeout);

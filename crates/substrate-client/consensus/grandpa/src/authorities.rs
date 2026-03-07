@@ -25,7 +25,7 @@ use finality_grandpa::voter_set::VoterSet;
 use fork_tree::{FilterAction, ForkTree};
 use log::debug;
 use parking_lot::MappedMutexGuard;
-use sc_consensus::shared_data::{SharedData, SharedDataLocked};
+use soil_consensus::shared_data::{SharedData, SharedDataLocked};
 use soil_telemetry::{telemetry, TelemetryHandle, CONSENSUS_INFO};
 use subsoil::consensus::grandpa::{AuthorityId, AuthorityList};
 

@@ -43,7 +43,7 @@ use futures::{future::BoxFuture, pin_mut, prelude::*};
 use libp2p::PeerId;
 use log::trace;
 use parking_lot::Mutex;
-use sc_consensus::{
+use soil_consensus::{
 	BasicQueue, BlockCheckParams, BlockImport, BlockImportParams, BoxJustificationImport,
 	ForkChoiceStrategy, ImportQueue, ImportResult, JustificationImport, JustificationSyncLink,
 	LongestChain, Verifier,

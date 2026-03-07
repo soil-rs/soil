@@ -20,7 +20,7 @@
 
 use super::*;
 use authorship::claim_slot;
-use sc_consensus::{BoxBlockImport, BoxJustificationImport};
+use soil_consensus::{BoxBlockImport, BoxJustificationImport};
 use sc_consensus_slots::BackoffAuthoringOnFinalizedHeadLagging;
 use soil_client::block_builder::{BlockBuilder, BlockBuilderBuilder};
 use soil_client::client_api::{BlockchainEvents, Finalizer};
@@ -69,7 +69,7 @@ type BabeBlockImport = PanickingBlockImport<
 		TestClient,
 		Arc<TestClient>,
 		BabeCreateInherentDataProviders<TestBlock>,
-		sc_consensus::LongestChain<substrate_test_runtime_client::Backend, Block>,
+		soil_consensus::LongestChain<substrate_test_runtime_client::Backend, Block>,
 	>,
 >;
 

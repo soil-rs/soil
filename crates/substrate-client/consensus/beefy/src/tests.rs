@@ -42,7 +42,7 @@ use futures::{
 	Future, FutureExt, StreamExt,
 };
 use parking_lot::Mutex;
-use sc_consensus::{
+use soil_consensus::{
 	BlockImport, BlockImportParams, BoxJustificationImport, ForkChoiceStrategy, ImportResult,
 	ImportedAux,
 };

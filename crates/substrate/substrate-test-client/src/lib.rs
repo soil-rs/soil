@@ -185,7 +185,7 @@ impl<Block: BlockT, ExecutorDispatch, Backend, G: GenesisInit>
 		executor: ExecutorDispatch,
 	) -> (
 		client::Client<Backend, ExecutorDispatch, Block, RuntimeApi>,
-		sc_consensus::LongestChain<Backend, Block>,
+		soil_consensus::LongestChain<Backend, Block>,
 	)
 	where
 		ExecutorDispatch: soil_client::client_api::CallExecutor<Block>
@@ -241,7 +241,7 @@ impl<Block: BlockT, ExecutorDispatch, Backend, G: GenesisInit>
 		)
 		.expect("Creates new client");
 
-		let longest_chain = sc_consensus::LongestChain::new(self.backend);
+		let longest_chain = soil_consensus::LongestChain::new(self.backend);
 
 		(client, longest_chain)
 	}
@@ -261,7 +261,7 @@ impl<Block: BlockT, H, Backend, G: GenesisInit>
 			Block,
 			RuntimeApi,
 		>,
-		sc_consensus::LongestChain<Backend, Block>,
+		soil_consensus::LongestChain<Backend, Block>,
 	)
 	where
 		I: Into<Option<WasmExecutor<H>>>,

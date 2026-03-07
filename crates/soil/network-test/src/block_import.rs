@@ -20,7 +20,7 @@
 
 use super::*;
 use futures::executor::block_on;
-use sc_consensus::{
+use soil_consensus::{
 	import_single_block, BasicQueue, BlockImportError, BlockImportStatus, ImportedAux,
 	IncomingBlock,
 };

@@ -32,7 +32,7 @@ use soil_consensus_epochs::{
 use std::sync::Arc;
 use subsoil::keystore::KeystorePtr;
 
-use sc_consensus::{BlockImportParams, ForkChoiceStrategy, Verifier};
+use soil_consensus::{BlockImportParams, ForkChoiceStrategy, Verifier};
 use soil_client::blockchain::{HeaderBackend, HeaderMetadata};
 use subsoil::api::{ProvideRuntimeApi, StorageProof};
 use subsoil::consensus::babe::{

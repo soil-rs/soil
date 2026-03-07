@@ -22,7 +22,7 @@ use codec::Decode;
 use log::debug;
 use parking_lot::Mutex;
 
-use sc_consensus::{
+use soil_consensus::{
 	shared_data::{SharedDataLocked, SharedDataLockedUpgradable},
 	BlockCheckParams, BlockImport, BlockImportParams, ImportResult, JustificationImport,
 };

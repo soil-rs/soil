@@ -24,7 +24,7 @@ use futures::{
 	SinkExt,
 };
 use jsonrpsee::{core::async_trait, proc_macros::rpc};
-use sc_consensus::ImportedAux;
+use soil_consensus::ImportedAux;
 use serde::{Deserialize, Serialize};
 use subsoil::runtime::EncodedJustification;
 

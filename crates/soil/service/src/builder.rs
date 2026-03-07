@@ -29,7 +29,7 @@ use futures::{select, FutureExt, StreamExt};
 use jsonrpsee::RpcModule;
 use log::{debug, error, info};
 use prometheus_endpoint::Registry;
-use sc_consensus::import_queue::{ImportQueue, ImportQueueService};
+use soil_consensus::import_queue::{ImportQueue, ImportQueueService};
 use sc_rpc::{
 	author::AuthorApiServer,
 	chain::ChainApiServer,

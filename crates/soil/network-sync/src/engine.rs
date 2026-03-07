@@ -42,7 +42,7 @@ use prometheus_endpoint::{
 use schnellru::{ByLength, LruMap};
 use tokio::time::{Interval, MissedTickBehavior};
 
-use sc_consensus::{import_queue::ImportQueueService, IncomingBlock};
+use soil_consensus::{import_queue::ImportQueueService, IncomingBlock};
 use soil_client::blockchain::{Error as ClientError, HeaderMetadata};
 use soil_client::client_api::{BlockBackend, HeaderBackend, ProofProvider};
 use soil_client::consensus::{block_validation::BlockAnnounceValidator, BlockOrigin};
@@ -676,17 +676,17 @@ where
 			},
 			ToServiceCommand::JustificationImported(peer_id, hash, number, import_result) => {
 				let success =
-					matches!(import_result, sc_consensus::JustificationImportResult::Success);
+					matches!(import_result, soil_consensus::JustificationImportResult::Success);
 				self.strategy.on_justification_import(hash, number, success);
 
 				match import_result {
-					sc_consensus::JustificationImportResult::OutdatedJustification => {
+					soil_consensus::JustificationImportResult::OutdatedJustification => {
 						log::info!(
 							target: LOG_TARGET,
 							"💔 Outdated justification provided by {peer_id} for #{hash}",
 						);
 					},
-					sc_consensus::JustificationImportResult::Failure => {
+					soil_consensus::JustificationImportResult::Failure => {
 						log::info!(
 							target: LOG_TARGET,
 							"💔 Invalid justification provided by {peer_id} for #{hash}",
@@ -698,7 +698,7 @@ where
 							ReputationChange::new_fatal("Invalid justification"),
 						);
 					},
-					sc_consensus::JustificationImportResult::Success => {
+					soil_consensus::JustificationImportResult::Success => {
 						log::debug!(
 							target: LOG_TARGET,
 							"Justification for block #{hash} ({number}) imported from {peer_id} successfully",

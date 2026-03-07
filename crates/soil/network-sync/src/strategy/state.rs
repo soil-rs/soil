@@ -32,7 +32,7 @@ use crate::{
 use futures::{channel::oneshot, FutureExt};
 use log::{debug, error, trace};
 use prost::Message;
-use sc_consensus::{BlockImportError, BlockImportStatus, IncomingBlock};
+use soil_consensus::{BlockImportError, BlockImportStatus, IncomingBlock};
 use soil_client::client_api::ProofProvider;
 use soil_client::consensus::BlockOrigin;
 use soil_network::{IfDisconnected, ProtocolName};
@@ -399,7 +399,7 @@ mod test {
 		strategy::state_sync::{ImportResult, StateSyncProgress, StateSyncProvider},
 	};
 	use codec::Decode;
-	use sc_consensus::{ImportedAux, ImportedState};
+	use soil_consensus::{ImportedAux, ImportedState};
 	use soil_client::block_builder::BlockBuilderBuilder;
 	use soil_client::client_api::KeyValueStates;
 	use subsoil::core::H256;

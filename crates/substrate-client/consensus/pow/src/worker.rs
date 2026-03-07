@@ -23,7 +23,7 @@ use futures::{
 use futures_timer::Delay;
 use log::*;
 use parking_lot::Mutex;
-use sc_consensus::{BlockImportParams, BoxBlockImport, StateAction, StorageChanges};
+use soil_consensus::{BlockImportParams, BoxBlockImport, StateAction, StorageChanges};
 use soil_client::client_api::ImportNotifications;
 use soil_client::consensus::{BlockOrigin, Proposal};
 use std::{
@@ -71,7 +71,7 @@ pub struct Version(usize);
 pub struct MiningHandle<
 	Block: BlockT,
 	Algorithm: PowAlgorithm<Block>,
-	L: sc_consensus::JustificationSyncLink<Block>,
+	L: soil_consensus::JustificationSyncLink<Block>,
 > {
 	version: Arc<AtomicUsize>,
 	algorithm: Arc<Algorithm>,
@@ -85,7 +85,7 @@ where
 	Block: BlockT,
 	Algorithm: PowAlgorithm<Block>,
 	Algorithm::Difficulty: 'static + Send,
-	L: sc_consensus::JustificationSyncLink<Block>,
+	L: soil_consensus::JustificationSyncLink<Block>,
 {
 	fn increment_version(&self) {
 		self.version.fetch_add(1, Ordering::SeqCst);
@@ -219,7 +219,7 @@ impl<Block, Algorithm, L> Clone for MiningHandle<Block, Algorithm, L>
 where
 	Block: BlockT,
 	Algorithm: PowAlgorithm<Block>,
-	L: sc_consensus::JustificationSyncLink<Block>,
+	L: soil_consensus::JustificationSyncLink<Block>,
 {
 	fn clone(&self) -> Self {
 		Self {

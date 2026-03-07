@@ -21,7 +21,7 @@ use crate::types::{ExtendedPeerInfo, SyncEvent, SyncEventStream, SyncStatus, Syn
 use futures::{channel::oneshot, Stream};
 use soil_network_types::PeerId;
 
-use sc_consensus::{
+use soil_consensus::{
 	BlockImportError, BlockImportStatus, JustificationImportResult, JustificationSyncLink, Link,
 };
 use soil_client::utils::mpsc::{tracing_unbounded, TracingUnboundedSender};

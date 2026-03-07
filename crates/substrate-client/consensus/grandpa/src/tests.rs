@@ -24,7 +24,7 @@ use async_trait::async_trait;
 use environment::HasVoted;
 use futures_timer::Delay;
 use parking_lot::{Mutex, RwLock};
-use sc_consensus::{
+use soil_consensus::{
 	BlockImport, BlockImportParams, BoxJustificationImport, ForkChoiceStrategy, ImportResult,
 	ImportedAux,
 };
@@ -54,7 +54,7 @@ use tokio::runtime::Handle;
 
 use authorities::AuthoritySet;
 use communication::grandpa_protocol_name;
-use sc_consensus::LongestChain;
+use soil_consensus::LongestChain;
 use soil_client::block_builder::{BlockBuilder, BlockBuilderBuilder};
 use subsoil::application_crypto::key_types::GRANDPA;
 
@@ -1839,7 +1839,7 @@ async fn grandpa_environment_uses_round_base_block_for_voting_if_finality_target
 		peer.take_notification_service(&grandpa_protocol_name::NAME.into()).unwrap();
 	let link = peer.data.lock().take().unwrap();
 	let client = peer.client().as_client().clone();
-	let select_chain = sc_consensus::LongestChain::new(peer.client().as_backend());
+	let select_chain = soil_consensus::LongestChain::new(peer.client().as_backend());
 
 	// create a chain that is 10 blocks long
 	peer.push_blocks(10, false);

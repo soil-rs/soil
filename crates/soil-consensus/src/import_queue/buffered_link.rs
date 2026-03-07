@@ -23,8 +23,8 @@
 //! # Example
 //!
 //! ```
-//! use sc_consensus::import_queue::Link;
-//! # use sc_consensus::import_queue::buffered_link::buffered_link;
+//! use soil_consensus::import_queue::Link;
+//! # use soil_consensus::import_queue::buffered_link::buffered_link;
 //! # use soil_test_primitives::Block;
 //! # struct DummyLink; impl Link<Block> for DummyLink {}
 //! # let my_link = DummyLink;

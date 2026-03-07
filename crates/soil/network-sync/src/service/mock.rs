@@ -18,7 +18,7 @@
 
 use futures::channel::oneshot;
 
-use sc_consensus::{BlockImportError, BlockImportStatus};
+use soil_consensus::{BlockImportError, BlockImportStatus};
 use soil_network::{
 	config::MultiaddrWithPeerId,
 	request_responses::{IfDisconnected, RequestFailure},
@@ -43,7 +43,7 @@ mockall::mock! {
 		fn set_sync_fork_request(&self, peers: Vec<PeerId>, hash: B::Hash, number: NumberFor<B>);
 	}
 
-	impl<B: BlockT> sc_consensus::Link<B> for ChainSyncInterface<B> {
+	impl<B: BlockT> soil_consensus::Link<B> for ChainSyncInterface<B> {
 		fn blocks_processed(
 			&self,
 			imported: usize,
@@ -55,13 +55,13 @@ mockall::mock! {
 			who: PeerId,
 			hash: &B::Hash,
 			number: NumberFor<B>,
-			import_result: sc_consensus::JustificationImportResult,
+			import_result: soil_consensus::JustificationImportResult,
 		);
 		fn request_justification(&self, hash: &B::Hash, number: NumberFor<B>);
 	}
 }
 
-impl<B: BlockT> sc_consensus::JustificationSyncLink<B> for MockChainSyncInterface<B> {
+impl<B: BlockT> soil_consensus::JustificationSyncLink<B> for MockChainSyncInterface<B> {
 	fn request_justification(&self, hash: &B::Hash, number: NumberFor<B>) {
 		self.justification_sync_link_request_justification(hash, number);
 	}

@@ -21,7 +21,7 @@
 use crate::{rpc, ConsensusDataProvider, CreatedBlock, Error};
 use codec::Encode;
 use futures::prelude::*;
-use sc_consensus::{BlockImport, BlockImportParams, ForkChoiceStrategy, ImportResult, StateAction};
+use soil_consensus::{BlockImport, BlockImportParams, ForkChoiceStrategy, ImportResult, StateAction};
 use soil_client::blockchain::HeaderBackend;
 use soil_client::consensus::{self, BlockOrigin, Environment, ProposeArgs, Proposer, SelectChain};
 use soil_client::transaction_pool::TransactionPool;
@@ -150,7 +150,7 @@ pub async fn seal_block<B, BI, SC, C, E, TP, CIDP>(
 		params.body = Some(body);
 		params.finalized = finalize;
 		params.fork_choice = Some(ForkChoiceStrategy::LongestChain);
-		params.state_action = StateAction::ApplyChanges(sc_consensus::StorageChanges::Changes(
+		params.state_action = StateAction::ApplyChanges(soil_consensus::StorageChanges::Changes(
 			proposal.storage_changes,
 		));
 

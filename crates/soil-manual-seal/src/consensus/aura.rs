@@ -20,7 +20,7 @@
 //! runtimes that expect the aura-specific digests.
 
 use crate::{ConsensusDataProvider, Error};
-use sc_consensus::BlockImportParams;
+use soil_consensus::BlockImportParams;
 use soil_client::client_api::{AuxStore, UsageProvider};
 use std::{marker::PhantomData, sync::Arc};
 use subsoil::api::{ProvideRuntimeApi, StorageProof};

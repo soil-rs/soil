@@ -25,7 +25,7 @@ use crate::{
 use codec::Codec;
 use log::{debug, info, trace};
 use prometheus_endpoint::Registry;
-use sc_consensus::{
+use soil_consensus::{
 	block_import::{BlockImport, BlockImportParams, ForkChoiceStrategy},
 	import_queue::{BasicQueue, BoxJustificationImport, DefaultImportQueue, Verifier},
 };

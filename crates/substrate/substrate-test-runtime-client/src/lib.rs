@@ -23,7 +23,7 @@ pub mod trait_tests;
 
 mod block_builder_ext;
 
-pub use sc_consensus::LongestChain;
+pub use soil_consensus::LongestChain;
 use std::sync::Arc;
 pub use substrate_test_client::*;
 pub use substrate_test_runtime as runtime;
@@ -178,7 +178,7 @@ pub trait TestClientBuilderExt<B>: Sized {
 	/// Build the test client and longest chain selector.
 	fn build_with_longest_chain(
 		self,
-	) -> (Client<B>, sc_consensus::LongestChain<B, substrate_test_runtime::Block>);
+	) -> (Client<B>, soil_consensus::LongestChain<B, substrate_test_runtime::Block>);
 
 	/// Build the test client and the backend.
 	fn build_with_backend(self) -> (Client<B>, Arc<B>);
@@ -195,7 +195,7 @@ where
 
 	fn build_with_longest_chain(
 		self,
-	) -> (Client<B>, sc_consensus::LongestChain<B, substrate_test_runtime::Block>) {
+	) -> (Client<B>, soil_consensus::LongestChain<B, substrate_test_runtime::Block>) {
 		self.build_with_native_executor(None)
 	}
 

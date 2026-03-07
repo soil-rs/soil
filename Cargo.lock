@@ -6160,8 +6160,8 @@ dependencies = [
  "log",
  "node-primitives",
  "parity-scale-codec",
- "sc-consensus",
  "soil-client",
+ "soil-consensus",
  "soil-service",
  "staging-node-cli",
  "subsoil",
@@ -8063,24 +8063,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "sc-consensus"
-version = "0.33.0"
-dependencies = [
- "async-trait",
- "futures",
- "log",
- "mockall",
- "parking_lot 0.12.5",
- "serde",
- "soil-client",
- "soil-network-types",
- "soil-test-primitives",
- "subsoil",
- "substrate-prometheus-endpoint",
- "thiserror 1.0.69",
-]
-
-[[package]]
 name = "sc-consensus-aura"
 version = "0.34.0"
 dependencies = [
@@ -8090,9 +8072,9 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "parking_lot 0.12.5",
- "sc-consensus",
  "sc-consensus-slots",
  "soil-client",
+ "soil-consensus",
  "soil-network",
  "soil-network-test",
  "soil-telemetry",
@@ -8117,9 +8099,9 @@ dependencies = [
  "num-traits",
  "parity-scale-codec",
  "parking_lot 0.12.5",
- "sc-consensus",
  "sc-consensus-slots",
  "soil-client",
+ "soil-consensus",
  "soil-consensus-epochs",
  "soil-network-test",
  "soil-telemetry",
@@ -8142,9 +8124,9 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "parking_lot 0.12.5",
- "sc-consensus",
  "serde",
  "soil-client",
+ "soil-consensus",
  "soil-network",
  "soil-network-gossip",
  "soil-network-sync",
@@ -8175,10 +8157,10 @@ dependencies = [
  "parity-scale-codec",
  "parking_lot 0.12.5",
  "rand 0.8.5",
- "sc-consensus",
  "serde_json",
  "soil-chain-spec",
  "soil-client",
+ "soil-consensus",
  "soil-network",
  "soil-network-common",
  "soil-network-gossip",
@@ -8204,8 +8186,8 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "parking_lot 0.12.5",
- "sc-consensus",
  "soil-client",
+ "soil-consensus",
  "subsoil",
  "substrate-prometheus-endpoint",
  "thiserror 1.0.69",
@@ -8220,8 +8202,8 @@ dependencies = [
  "futures-timer",
  "log",
  "parity-scale-codec",
- "sc-consensus",
  "soil-client",
+ "soil-consensus",
  "soil-telemetry",
  "subsoil",
  "substrate-test-runtime-client",
@@ -9297,15 +9279,33 @@ dependencies = [
 ]
 
 [[package]]
+name = "soil-consensus"
+version = "0.33.0"
+dependencies = [
+ "async-trait",
+ "futures",
+ "log",
+ "mockall",
+ "parking_lot 0.12.5",
+ "serde",
+ "soil-client",
+ "soil-network-types",
+ "soil-test-primitives",
+ "subsoil",
+ "substrate-prometheus-endpoint",
+ "thiserror 1.0.69",
+]
+
+[[package]]
 name = "soil-consensus-babe-rpc"
 version = "0.34.0"
 dependencies = [
  "futures",
  "jsonrpsee",
- "sc-consensus",
  "sc-consensus-babe",
  "serde",
  "soil-client",
+ "soil-consensus",
  "soil-consensus-epochs",
  "soil-rpc-api",
  "subsoil",
@@ -9338,8 +9338,8 @@ version = "0.33.0"
 dependencies = [
  "fork-tree",
  "parity-scale-codec",
- "sc-consensus",
  "soil-client",
+ "soil-consensus",
  "subsoil",
 ]
 
@@ -9397,13 +9397,13 @@ dependencies = [
  "jsonrpsee",
  "log",
  "parity-scale-codec",
- "sc-consensus",
  "sc-consensus-aura",
  "sc-consensus-babe",
  "sc-transaction-pool",
  "serde",
  "soil-basic-authorship",
  "soil-client",
+ "soil-consensus",
  "soil-consensus-epochs",
  "subsoil",
  "substrate-prometheus-endpoint",
@@ -9593,10 +9593,10 @@ dependencies = [
  "prost 0.12.6",
  "prost-build 0.13.5",
  "quickcheck",
- "sc-consensus",
  "schnellru",
  "smallvec",
  "soil-client",
+ "soil-consensus",
  "soil-network",
  "soil-network-common",
  "soil-network-types",
@@ -9621,8 +9621,8 @@ dependencies = [
  "log",
  "parking_lot 0.12.5",
  "rand 0.8.5",
- "sc-consensus",
  "soil-client",
+ "soil-consensus",
  "soil-network",
  "soil-network-common",
  "soil-network-light",
@@ -9809,7 +9809,6 @@ dependencies = [
  "parking_lot 0.12.5",
  "pin-project",
  "rand 0.8.5",
- "sc-consensus",
  "sc-rpc",
  "sc-transaction-pool",
  "schnellru",
@@ -9817,6 +9816,7 @@ dependencies = [
  "serde_json",
  "soil-chain-spec",
  "soil-client",
+ "soil-consensus",
  "soil-informant",
  "soil-network",
  "soil-network-common",
@@ -9854,8 +9854,8 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "parking_lot 0.12.5",
- "sc-consensus",
  "soil-client",
+ "soil-consensus",
  "soil-network",
  "soil-network-sync",
  "soil-service",
@@ -10203,7 +10203,6 @@ dependencies = [
  "rand 0.8.5",
  "regex",
  "sc-authority-discovery",
- "sc-consensus",
  "sc-consensus-aura",
  "sc-consensus-babe",
  "sc-consensus-beefy",
@@ -10223,6 +10222,7 @@ dependencies = [
  "soil-chain-spec",
  "soil-cli",
  "soil-client",
+ "soil-consensus",
  "soil-consensus-babe-rpc",
  "soil-consensus-beefy-rpc",
  "soil-consensus-epochs",
@@ -10648,10 +10648,10 @@ dependencies = [
  "async-trait",
  "futures",
  "parity-scale-codec",
- "sc-consensus",
  "serde",
  "serde_json",
  "soil-client",
+ "soil-consensus",
  "soil-service",
  "subsoil",
  "tokio",
@@ -10700,8 +10700,8 @@ name = "substrate-test-runtime-client"
 version = "2.0.0"
 dependencies = [
  "futures",
- "sc-consensus",
  "soil-client",
+ "soil-consensus",
  "subsoil",
  "substrate-test-client",
  "substrate-test-runtime",

@@ -24,7 +24,7 @@ use crate::{
 };
 use codec::{Decode, Encode};
 use log::debug;
-use sc_consensus::ImportedState;
+use soil_consensus::ImportedState;
 use smallvec::SmallVec;
 use soil_client::client_api::{CompactProof, KeyValueStates, ProofProvider};
 use std::{collections::HashMap, fmt, sync::Arc};

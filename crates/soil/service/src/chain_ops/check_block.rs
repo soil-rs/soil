@@ -18,7 +18,7 @@
 
 use crate::error::Error;
 use codec::Encode;
-use sc_consensus::import_queue::ImportQueue;
+use soil_consensus::import_queue::ImportQueue;
 use soil_client::client_api::{BlockBackend, HeaderBackend};
 use subsoil::runtime::{generic::BlockId, traits::Block as BlockT};
 

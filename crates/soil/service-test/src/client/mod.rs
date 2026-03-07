@@ -19,7 +19,7 @@
 use async_channel::TryRecvError;
 use codec::{Decode, Encode, Joiner};
 use futures::executor::block_on;
-use sc_consensus::{
+use soil_consensus::{
 	BlockCheckParams, BlockImport, BlockImportParams, ForkChoiceStrategy, ImportResult,
 };
 use soil_client::block_builder::BlockBuilderBuilder;

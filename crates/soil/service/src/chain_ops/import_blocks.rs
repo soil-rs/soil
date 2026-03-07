@@ -21,7 +21,7 @@ use codec::{Decode, IoReader as CodecIoReader};
 use futures::{future, prelude::*};
 use futures_timer::Delay;
 use log::{info, warn};
-use sc_consensus::import_queue::{
+use soil_consensus::import_queue::{
 	BlockImportError, BlockImportStatus, ImportQueue, IncomingBlock, Link,
 };
 use serde_json::{de::IoRead as JsonIoRead, Deserializer, StreamDeserializer};

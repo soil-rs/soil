@@ -28,7 +28,7 @@ use subsoil::runtime::{
 	EncodedJustification,
 };
 
-use sc_consensus::{BlockCheckParams, BlockImport, BlockImportParams, ImportResult};
+use soil_consensus::{BlockCheckParams, BlockImport, BlockImportParams, ImportResult};
 use soil_client::client_api::{backend::Backend, TrieCacheContext};
 
 use crate::{

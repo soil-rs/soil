@@ -24,7 +24,7 @@ futures-timer = { workspace = true, optional = true}
 jsonrpsee = { features = ["client-core", "macros", "server-core"], workspace = true, optional = true}
 log = { workspace = true, default-features = true, optional = true}
 prometheus-endpoint = { workspace = true, default-features = true, optional = true}
-sc-consensus = { workspace = true, default-features = true, optional = true}
+soil-consensus = { workspace = true, default-features = true, optional = true}
 sc-consensus-aura = { workspace = true, default-features = true, optional = true}
 sc-consensus-babe = { workspace = true, default-features = true, optional = true}
 soil-consensus-epochs = { workspace = true, default-features = true, optional = true}
@@ -43,7 +43,7 @@ std = [
 	"jsonrpsee",
 	"log",
 	"prometheus-endpoint",
-	"sc-consensus",
+	"soil-consensus",
 	"sc-consensus-aura",
 	"sc-consensus-babe",
 	"sc-transaction-pool",

@@ -20,7 +20,7 @@ array-bytes = { workspace = true, default-features = true }
 async-trait = { workspace = true }
 codec = { workspace = true, default-features = true }
 futures = { workspace = true }
-sc-consensus = { workspace = true, default-features = true }
+soil-consensus = { workspace = true, default-features = true }
 soil-service = { workspace = true, default-features = true }
 serde = { workspace = true, default-features = true }
 serde_json = { workspace = true, default-features = true }

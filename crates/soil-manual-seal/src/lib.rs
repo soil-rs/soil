@@ -28,7 +28,7 @@ use futures_timer::Delay;
 #[cfg(feature = "std")]
 use prometheus_endpoint::Registry;
 #[cfg(feature = "std")]
-use sc_consensus::{
+use soil_consensus::{
 	block_import::{BlockImport, BlockImportParams, ForkChoiceStrategy},
 	import_queue::{BasicQueue, BoxBlockImport, Verifier},
 };
@@ -374,7 +374,7 @@ pub async fn run_delayed_finalize<B, CB, C, S>(
 mod tests {
 	use super::*;
 	use assert_matches::assert_matches;
-	use sc_consensus::ImportedAux;
+	use soil_consensus::ImportedAux;
 	use sc_transaction_pool::{BasicPool, FullChainApi, Options, RevalidationType};
 	use soil_basic_authorship::ProposerFactory;
 	use soil_client::transaction_pool::{

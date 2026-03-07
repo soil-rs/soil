@@ -61,7 +61,7 @@ use futures::{prelude::*, StreamExt};
 use log::{debug, error, info};
 use parking_lot::RwLock;
 use prometheus_endpoint::{PrometheusError, Registry};
-use sc_consensus::BlockImport;
+use soil_consensus::BlockImport;
 use soil_client::blockchain::{
 	Error as ClientError, HeaderBackend, HeaderMetadata, Result as ClientResult,
 };

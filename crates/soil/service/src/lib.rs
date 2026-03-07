@@ -89,7 +89,7 @@ pub use soil_client::db::PruningFilter;
 
 use crate::config::RpcConfiguration;
 use prometheus_endpoint::Registry;
-pub use sc_consensus::ImportQueue;
+pub use soil_consensus::ImportQueue;
 pub use sc_rpc::{RandomIntegerSubscriptionId, RandomStringSubscriptionId};
 pub use sc_transaction_pool::TransactionPoolOptions;
 pub use soil_client::executor::NativeExecutionDispatch;

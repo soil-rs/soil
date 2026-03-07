@@ -27,7 +27,7 @@ use log::{debug, info, trace, warn};
 use parking_lot::{Mutex, RwLock};
 use prometheus_endpoint::Registry;
 use rand::Rng;
-use sc_consensus::{
+use soil_consensus::{
 	BlockCheckParams, BlockImportParams, ForkChoiceStrategy, ImportResult, StateAction,
 };
 use soil_chain_spec::{resolve_state_version_from_wasm, BuildGenesisBlock};
@@ -148,7 +148,7 @@ impl<H> PrePostHeader<H> {
 
 enum PrepareStorageChangesResult<Block: BlockT> {
 	Discard(ImportResult),
-	Import(Option<sc_consensus::StorageChanges<Block>>),
+	Import(Option<soil_consensus::StorageChanges<Block>>),
 }
 /// Client configuration items.
 #[derive(Debug, Clone)]
@@ -462,7 +462,7 @@ where
 		&self,
 		operation: &mut ClientImportOperation<Block, B>,
 		import_block: BlockImportParams<Block>,
-		storage_changes: Option<sc_consensus::StorageChanges<Block>>,
+		storage_changes: Option<soil_consensus::StorageChanges<Block>>,
 	) -> soil_client::blockchain::Result<ImportResult>
 	where
 		Self: ProvideRuntimeApi<Block>,
@@ -552,7 +552,7 @@ where
 		justifications: Option<Justifications>,
 		body: Option<Vec<Block::Extrinsic>>,
 		indexed_body: Option<Vec<Vec<u8>>>,
-		storage_changes: Option<sc_consensus::StorageChanges<Block>>,
+		storage_changes: Option<soil_consensus::StorageChanges<Block>>,
 		finalized: bool,
 		aux: Vec<(Vec<u8>, Option<Vec<u8>>)>,
 		fork_choice: ForkChoiceStrategy,
@@ -604,7 +604,7 @@ where
 		let storage_changes = match storage_changes {
 			Some(storage_changes) => {
 				let storage_changes = match storage_changes {
-					sc_consensus::StorageChanges::Changes(storage_changes) => {
+					soil_consensus::StorageChanges::Changes(storage_changes) => {
 						self.backend.begin_state_operation(&mut operation.op, parent_hash)?;
 						let (main_sc, child_sc, offchain_sc, tx, _, tx_index) =
 							storage_changes.into_inner();
@@ -619,7 +619,7 @@ where
 
 						Some((main_sc, child_sc))
 					},
-					sc_consensus::StorageChanges::Import(changes) => {
+					soil_consensus::StorageChanges::Import(changes) => {
 						let mut storage = subsoil::storage::Storage::default();
 						for state in changes.state.0.into_iter() {
 							if state.parent_storage_keys.is_empty() && state.state_root.is_empty() {
@@ -825,7 +825,7 @@ where
 			},
 			(
 				BlockStatus::InChainPruned,
-				StateAction::ApplyChanges(sc_consensus::StorageChanges::Changes(_)),
+				StateAction::ApplyChanges(soil_consensus::StorageChanges::Changes(_)),
 			) => return Ok(PrepareStorageChangesResult::Discard(ImportResult::MissingState)),
 			(_, StateAction::ApplyChanges(changes)) => (true, Some(changes)),
 			(_, StateAction::Skip) => (false, None),
@@ -873,7 +873,7 @@ where
 				{
 					return Err(Error::InvalidStateRoot);
 				}
-				Some(sc_consensus::StorageChanges::Changes(gen_storage_changes))
+				Some(soil_consensus::StorageChanges::Changes(gen_storage_changes))
 			},
 			// No block body, no storage changes
 			(true, None, None) => None,
@@ -1746,7 +1746,7 @@ where
 /// objects. Otherwise, importing blocks directly into the client would be bypassing
 /// important verification work.
 #[async_trait::async_trait]
-impl<B, E, Block, RA> sc_consensus::BlockImport<Block> for &Client<B, E, Block, RA>
+impl<B, E, Block, RA> soil_consensus::BlockImport<Block> for &Client<B, E, Block, RA>
 where
 	B: backend::Backend<Block>,
 	E: CallExecutor<Block> + Send + Sync,
@@ -1857,7 +1857,7 @@ where
 }
 
 #[async_trait::async_trait]
-impl<B, E, Block, RA> sc_consensus::BlockImport<Block> for Client<B, E, Block, RA>
+impl<B, E, Block, RA> soil_consensus::BlockImport<Block> for Client<B, E, Block, RA>
 where
 	B: backend::Backend<Block>,
 	E: CallExecutor<Block> + Send + Sync,

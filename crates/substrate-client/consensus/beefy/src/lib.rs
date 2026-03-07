@@ -35,7 +35,7 @@ use futures::{stream::Fuse, FutureExt, StreamExt};
 use log::{debug, error, info, trace, warn};
 use parking_lot::Mutex;
 use prometheus_endpoint::Registry;
-use sc_consensus::BlockImport;
+use soil_consensus::BlockImport;
 use soil_client::blockchain::{Backend as BlockchainBackend, HeaderBackend};
 use soil_client::client_api::{
 	Backend, BlockBackend, BlockchainEvents, FinalityNotification, Finalizer,

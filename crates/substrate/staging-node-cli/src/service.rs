@@ -69,7 +69,7 @@ pub type RuntimeExecutor = soil_client::executor::WasmExecutor<HostFunctions>;
 /// The full client type definition.
 pub type FullClient = soil_service::TFullClient<Block, RuntimeApi, RuntimeExecutor>;
 type FullBackend = soil_service::TFullBackend<Block>;
-type FullSelectChain = sc_consensus::LongestChain<FullBackend, Block>;
+type FullSelectChain = soil_consensus::LongestChain<FullBackend, Block>;
 type FullGrandpaBlockImport =
 	grandpa::GrandpaBlockImport<FullBackend, Block, FullClient, FullSelectChain>;
 type FullBeefyBlockImport<InnerBlockImport> = beefy::import::BeefyBlockImport<
@@ -178,7 +178,7 @@ pub fn new_partial(
 		FullClient,
 		FullBackend,
 		FullSelectChain,
-		sc_consensus::DefaultImportQueue<Block>,
+		soil_consensus::DefaultImportQueue<Block>,
 		sc_transaction_pool::TransactionPoolHandle<Block, FullClient>,
 		(
 			impl Fn(
@@ -231,7 +231,7 @@ pub fn new_partial(
 		telemetry
 	});
 
-	let select_chain = sc_consensus::LongestChain::new(backend.clone());
+	let select_chain = soil_consensus::LongestChain::new(backend.clone());
 
 	let transaction_pool = Arc::from(
 		sc_transaction_pool::Builder::new(
@@ -900,7 +900,7 @@ mod tests {
 		Address, BalancesCall, RuntimeCall, TxExtension,
 	};
 	use node_primitives::{Block, DigestItem, Signature};
-	use sc_consensus::{BlockImport, BlockImportParams, ForkChoiceStrategy};
+	use soil_consensus::{BlockImport, BlockImportParams, ForkChoiceStrategy};
 	use sc_consensus_babe::{BabeIntermediate, CompatibleDigestItem, INTERMEDIATE_KEY};
 	use soil_client::client_api::BlockBackend;
 	use soil_client::consensus::{BlockOrigin, Environment, Proposer};
