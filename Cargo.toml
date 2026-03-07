@@ -32,7 +32,6 @@ members = [
 	"crates/soil/mmr-gadget",
 	"crates/soil/mmr-rpc",
 	"crates/soil/network",
-	"crates/soil/network-statement",
 	"crates/soil/network-test",
 	"crates/soil-pow",
 	"crates/soil/npos-elections/fuzzer",
@@ -226,7 +225,6 @@ members = [
 	"crates/substrate-client/mixnet",
 	"crates/substrate-client/offchain",
 	"crates/substrate-client/rpc",
-	"crates/substrate-client/statement-store",
 	"crates/substrate-client/transaction-pool",
 ]
 
@@ -428,7 +426,6 @@ soil-pow = { path = "crates/soil-pow", default-features = false }
 soil-informant = { path = "crates/soil/informant", default-features = false }
 sc-mixnet = { path = "crates/substrate-client/mixnet", default-features = false }
 soil-network = { path = "crates/soil/network", default-features = false }
-soil-network-statement = { default-features = false, path = "crates/soil/network-statement" }
 soil-network-test = { path = "crates/soil/network-test" }
 sc-offchain = { path = "crates/substrate-client/offchain", default-features = false }
 soil-proposer-metrics = { path = "crates/soil/proposer-metrics", default-features = false }
@@ -441,7 +438,6 @@ soil-runtime-test = { path = "crates/soil/runtime-test" }
 soil-runtime-utilities = { path = "crates/soil/runtime-utilities", default-features = true }
 soil-service = { path = "crates/soil/service", default-features = false }
 soil-service-test = { path = "crates/soil/service-test" }
-sc-statement-store = { default-features = false, path = "crates/substrate-client/statement-store" }
 soil-sync-state-rpc = { path = "crates/soil/sync-state-rpc", default-features = false }
 soil-sysinfo = { path = "crates/soil/sysinfo", default-features = false }
 soil-telemetry = { path = "crates/soil/telemetry", default-features = false }

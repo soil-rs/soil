@@ -99,11 +99,12 @@ async fn send_in_chunks(
 
 /// Trait alias for statement store API required by the RPC.
 pub trait StatementStoreApi:
-	soil_statement_store::StatementStore + sc_statement_store::StatementStoreSubscriptionApi
+	soil_statement_store::StatementStore + soil_network::statement_store::StatementStoreSubscriptionApi
 {
 }
 impl<T> StatementStoreApi for T where
-	T: soil_statement_store::StatementStore + sc_statement_store::StatementStoreSubscriptionApi
+	T: soil_statement_store::StatementStore
+		+ soil_network::statement_store::StatementStoreSubscriptionApi
 {
 }
 /// Statement store API

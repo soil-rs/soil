@@ -30,11 +30,12 @@ use codec::Encode;
 use futures::prelude::*;
 use kitchensink_runtime::RuntimeApi;
 use node_primitives::Block;
-use sc_statement_store::Store as StatementStore;
 use sc_transaction_pool::TransactionPoolHandle;
 use soil_babe::{self, SlotProportion};
 use soil_client::client_api::{Backend, BlockBackend};
 use soil_client::transaction_pool::OffchainTransactionPoolFactory;
+use soil_network::statement::StatementHandlerPrototype;
+use soil_network::statement_store::Store as StatementStore;
 use soil_network::sync::{strategy::warp::WarpSyncConfig, SyncingService};
 use soil_network::{
 	event::Event, service::traits::NetworkService, NetworkBackend, NetworkEventStream,
@@ -294,7 +295,7 @@ pub fn new_partial(
 
 	let import_setup = (block_import, grandpa_link, babe_link, beefy_voter_links);
 
-	let statement_store = sc_statement_store::Store::new_shared(
+	let statement_store = StatementStore::new_shared(
 		&config.data_path,
 		Default::default(),
 		client.clone(),
@@ -498,13 +499,12 @@ pub fn new_full_base<N: NetworkBackend<Block, <Block as BlockT>::Hash>>(
 	net_config.add_notification_protocol(beefy_notification_config);
 	net_config.add_request_response_protocol(beefy_req_resp_cfg);
 
-	let (statement_handler_proto, statement_config) =
-		soil_network_statement::StatementHandlerPrototype::new::<_, _, N>(
-			genesis_hash,
-			config.chain_spec.fork_id(),
-			metrics.clone(),
-			Arc::clone(&peer_store_handle),
-		);
+	let (statement_handler_proto, statement_config) = StatementHandlerPrototype::new::<_, _, N>(
+		genesis_hash,
+		config.chain_spec.fork_id(),
+		metrics.clone(),
+		Arc::clone(&peer_store_handle),
+	);
 	net_config.add_notification_protocol(statement_config);
 
 	let mixnet_protocol_name =

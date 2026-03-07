@@ -26,12 +26,12 @@ parking_lot = { workspace = true, default-features = true }
 soil-chain-spec = { workspace = true, default-features = true }
 sc-mixnet = { workspace = true, default-features = true }
 soil-rpc-api = { workspace = true, default-features = true }
-sc-statement-store = { workspace = true, default-features = true }
 serde_json = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
 soil-offchain = { workspace = true, default-features = true }
 soil-rpc = { workspace = true, default-features = true }
 soil-session = { workspace = true, default-features = true }
+soil-network = { workspace = true, default-features = true }
 soil-statement-store = { workspace = true, default-features = true }
 tokio = { workspace = true, default-features = true }
 
@@ -39,7 +39,6 @@ tokio = { workspace = true, default-features = true }
 assert_matches = { workspace = true }
 futures-timer = { workspace = true }
 pretty_assertions = { workspace = true }
-soil-network = { workspace = true, default-features = true }
 sc-transaction-pool = { workspace = true, default-features = true }
 soil-client = { workspace = true, default-features = true }
 subsoil-crypto-hashing = { workspace = true, default-features = true }

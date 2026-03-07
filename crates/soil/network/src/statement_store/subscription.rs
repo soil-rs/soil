@@ -39,7 +39,7 @@ const SUBSCRIPTION_BUFFER_SIZE: usize = 128;
 use futures::{Stream, StreamExt};
 use itertools::Itertools;
 
-use crate::LOG_TARGET;
+use super::LOG_TARGET;
 use soil_client::utils::id_sequence::SeqID;
 pub use soil_statement_store::StatementStore;
 use soil_statement_store::{

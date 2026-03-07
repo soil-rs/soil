@@ -8119,7 +8119,6 @@ dependencies = [
  "parking_lot 0.12.5",
  "pretty_assertions",
  "sc-mixnet",
- "sc-statement-store",
  "sc-transaction-pool",
  "serde_json",
  "soil-chain-spec",
@@ -8133,26 +8132,6 @@ dependencies = [
  "subsoil",
  "subsoil-crypto-hashing",
  "substrate-test-runtime-client",
- "tempfile",
- "tokio",
-]
-
-[[package]]
-name = "sc-statement-store"
-version = "10.0.0"
-dependencies = [
- "async-channel 1.9.0",
- "criterion",
- "futures",
- "itertools 0.11.0",
- "log",
- "parity-db",
- "parking_lot 0.12.5",
- "soil-client",
- "soil-network-statement",
- "soil-statement-store",
- "subsoil",
- "substrate-prometheus-endpoint",
  "tempfile",
  "tokio",
 ]
@@ -9352,7 +9331,9 @@ dependencies = [
  "fork-tree",
  "futures",
  "futures-timer",
+ "governor",
  "ip_network",
+ "itertools 0.11.0",
  "libp2p",
  "libp2p-identity",
  "libp2p-kad",
@@ -9363,6 +9344,7 @@ dependencies = [
  "multiaddr 0.18.2",
  "multihash 0.19.3",
  "multistream-select",
+ "parity-db",
  "parity-scale-codec",
  "parking_lot 0.12.5",
  "partial_sort",
@@ -9378,6 +9360,7 @@ dependencies = [
  "smallvec",
  "soil-client",
  "soil-consensus",
+ "soil-statement-store",
  "soil-test-primitives",
  "subsoil",
  "subsoil-crypto-hashing",
@@ -9394,29 +9377,6 @@ dependencies = [
  "void",
  "wasm-timer",
  "zeroize",
-]
-
-[[package]]
-name = "soil-network-statement"
-version = "0.16.0"
-dependencies = [
- "array-bytes 6.2.3",
- "async-channel 1.9.0",
- "async-trait",
- "criterion",
- "futures",
- "governor",
- "log",
- "parity-scale-codec",
- "sc-statement-store",
- "soil-client",
- "soil-network",
- "soil-statement-store",
- "subsoil",
- "substrate-prometheus-endpoint",
- "substrate-test-runtime-client",
- "tempfile",
- "tokio",
 ]
 
 [[package]]
@@ -9985,7 +9945,6 @@ dependencies = [
  "sc-mixnet",
  "sc-offchain",
  "sc-rpc",
- "sc-statement-store",
  "sc-transaction-pool",
  "scale-info",
  "serde",
@@ -10006,7 +9965,6 @@ dependencies = [
  "soil-mmr-gadget",
  "soil-mmr-rpc",
  "soil-network",
- "soil-network-statement",
  "soil-pow",
  "soil-proposer-metrics",
  "soil-rpc",

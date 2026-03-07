@@ -265,6 +265,8 @@ pub mod peer_store;
 pub mod protocol_controller;
 pub mod request_responses;
 pub mod service;
+pub mod statement;
+pub mod statement_store;
 pub mod sync;
 pub mod transactions;
 pub mod transport;

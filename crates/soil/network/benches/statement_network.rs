@@ -18,20 +18,20 @@
 
 use criterion::{criterion_group, criterion_main, Criterion};
 use futures::{stream, Stream, StreamExt};
-use sc_statement_store::Store;
 use soil_network::sync::{SyncEvent, SyncEventStream};
 use soil_network::types::PeerId;
 use soil_network::{
 	service::traits::{NotificationEvent, NotificationService},
+	statement::{
+		config::{
+			DEFAULT_STATEMENTS_PER_SECOND, MAX_KNOWN_STATEMENTS, MAX_PENDING_STATEMENTS,
+			STATEMENTS_BURST_COEFFICIENT,
+		},
+		Peer, StatementHandler,
+	},
+	statement_store::Store,
 	utils::LruHashSet,
 	NetworkPeers,
-};
-use soil_network_statement::{
-	config::{
-		DEFAULT_STATEMENTS_PER_SECOND, MAX_KNOWN_STATEMENTS, MAX_PENDING_STATEMENTS,
-		STATEMENTS_BURST_COEFFICIENT,
-	},
-	Peer, StatementHandler,
 };
 use soil_statement_store::{Statement, StatementSource, StatementStore};
 use std::{

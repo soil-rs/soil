@@ -50,7 +50,7 @@
 mod metrics;
 mod subscription;
 
-use crate::subscription::{SubscriptionStatementsStream, SubscriptionsHandle};
+use self::subscription::{SubscriptionStatementsStream, SubscriptionsHandle};
 use futures::FutureExt;
 use metrics::MetricsLink as PrometheusMetrics;
 use parking_lot::{lock_api::RwLockUpgradableReadGuard, RwLock};
@@ -91,7 +91,7 @@ pub const DEFAULT_MAX_TOTAL_SIZE: usize = 2 * 1024 * 1024 * 1024; // 2GiB
 /// The maximum size of a single statement in bytes.
 /// Accounts for the 1-byte vector length prefix when statements are gossiped as `Vec<Statement>`.
 pub const MAX_STATEMENT_SIZE: usize =
-	soil_network_statement::config::MAX_STATEMENT_NOTIFICATION_SIZE as usize - 1;
+	crate::statement::config::MAX_STATEMENT_NOTIFICATION_SIZE as usize - 1;
 
 /// Maximum number of statements to expire in a single iteration.
 const MAX_EXPIRY_STATEMENTS_PER_ITERATION: usize = 10_000;

@@ -26,7 +26,7 @@
 //! - Use [`StatementHandlerPrototype::build`] then [`StatementHandler::run`] to obtain a
 //! `Future` that processes statements.
 
-use crate::config::*;
+use self::config::*;
 
 use codec::{Compact, Decode, Encode, MaxEncodedLen};
 #[cfg(any(test, feature = "test-helpers"))]

@@ -17,7 +17,7 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 use criterion::{criterion_group, criterion_main, Criterion};
-use sc_statement_store::Store;
+use soil_network::statement_store::Store;
 use soil_statement_store::{
 	DecryptionKey, Statement, StatementSource, StatementStore, SubmitResult, Topic,
 };

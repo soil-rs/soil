@@ -467,7 +467,7 @@ pub(crate) mod tests {
 					None,
 					false,
 					1,
-					soil_network_statement::config::DEFAULT_STATEMENTS_PER_SECOND,
+					soil_network::statement::config::DEFAULT_STATEMENTS_PER_SECOND,
 					|_, _| (),
 				)?;
 			Ok(soil_service_test::TestNetComponents::new(

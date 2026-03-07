@@ -88,7 +88,6 @@ soil-pow = { workspace = true, default-features = true }
 soil-informant = { workspace = true, default-features = true }
 sc-mixnet = { workspace = true, default-features = true }
 soil-network = { workspace = true, default-features = true }
-soil-network-statement = { workspace = true, default-features = true }
 sc-offchain = { workspace = true, default-features = true }
 soil-proposer-metrics = { workspace = true, default-features = true }
 sc-rpc = { workspace = true, default-features = true }
@@ -96,7 +95,6 @@ soil-rpc-api = { workspace = true, default-features = true }
 soil-rpc-server = { workspace = true, default-features = true }
 soil-rpc-spec-v2 = { workspace = true, default-features = true }
 soil-service = { workspace = true, default-features = true }
-sc-statement-store = { workspace = true, default-features = true }
 soil-sync-state-rpc = { workspace = true, default-features = true }
 soil-sysinfo = { workspace = true, default-features = true }
 soil-telemetry = { workspace = true, default-features = true }

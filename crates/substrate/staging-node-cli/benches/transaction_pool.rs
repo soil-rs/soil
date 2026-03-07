@@ -102,7 +102,7 @@ fn new_node(tokio_handle: Handle) -> node_cli::service::NewFullBase {
 			None,
 			false,
 			1,
-			soil_network_statement::config::DEFAULT_STATEMENTS_PER_SECOND,
+			soil_network::statement::config::DEFAULT_STATEMENTS_PER_SECOND,
 			|_, _| (),
 		)
 		.expect("Creates node")
