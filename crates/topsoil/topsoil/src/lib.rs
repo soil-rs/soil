@@ -409,7 +409,7 @@ pub mod runtime {
 		pub use subsoil::api::impl_runtime_apis;
 
 		// Types often used in the runtime APIs.
-		pub use soil_genesis_builder::{
+		pub use subsoil::genesis_builder::{
 			PresetId, Result as GenesisBuilderResult, DEV_RUNTIME_PRESET,
 			LOCAL_TESTNET_RUNTIME_PRESET,
 		};
@@ -430,14 +430,13 @@ pub mod runtime {
 	/// ```
 	// TODO: This is because of wildcard imports, and it should be not needed once we can avoid
 	// that. Imports like that are needed because we seem to need some unknown types in the macro
-	// expansion. See `soil_session::runtime_api::*;` as one example. All runtime api decls should be
-	// moved to file similarly.
+	// expansion. All runtime api decls should be moved to file similarly.
 	#[allow(ambiguous_glob_reexports)]
 	pub mod apis {
-		pub use soil_genesis_builder::*;
-		pub use soil_offchain::*;
-		pub use soil_session::runtime_api::*;
-		pub use soil_transaction_pool::runtime_api::*;
+		pub use subsoil::genesis_builder::*;
+		pub use subsoil::offchain_worker::*;
+		pub use subsoil::session::runtime_api::*;
+		pub use subsoil::txpool::runtime_api::*;
 		pub use subsoil::api::{self, *};
 		pub use subsoil::block_builder::*;
 		pub use subsoil::consensus::aura::*;
@@ -632,9 +631,9 @@ pub mod deps {
 	pub use scale_info;
 
 	#[cfg(feature = "runtime")]
-	pub use soil_genesis_builder;
+	pub use subsoil::genesis_builder;
 	#[cfg(feature = "runtime")]
-	pub use soil_offchain;
+	pub use subsoil::offchain_worker;
 	#[cfg(feature = "runtime")]
 	pub use subsoil::block_builder;
 	#[cfg(feature = "runtime")]

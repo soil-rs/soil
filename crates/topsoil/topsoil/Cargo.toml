@@ -27,12 +27,6 @@ subsoil = { workspace = true }
 topsoil-support = { workspace = true }
 topsoil-system = { workspace = true }
 
-# primitive types used for developing FRAME runtimes.
-soil-genesis-builder = { optional = true, workspace = true }
-soil-offchain = { optional = true, workspace = true }
-soil-session = { optional = true, workspace = true }
-soil-transaction-pool = { optional = true, workspace = true }
-
 topsoil-executive = { optional = true, workspace = true }
 topsoil-system-rpc-runtime-api = { optional = true, workspace = true }
 
@@ -60,11 +54,7 @@ std = [
 	"log/std",
 	"scale-info/std",
 	"serde/std",
-	"subsoil/std",
-	"soil-genesis-builder?/std",
-	"soil-offchain?/std",
-	"soil-session?/std",
-	"soil-transaction-pool?/std"]
+	"subsoil/std"]
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",
 	"topsoil-support/runtime-benchmarks",
@@ -80,8 +70,4 @@ try-runtime = [
 experimental = ["topsoil-support/experimental"]
 runtime = [
 	"topsoil-executive",
-	"topsoil-system-rpc-runtime-api",
-	"soil-genesis-builder",
-	"soil-offchain",
-	"soil-session",
-	"soil-transaction-pool"]
+	"topsoil-system-rpc-runtime-api"]
