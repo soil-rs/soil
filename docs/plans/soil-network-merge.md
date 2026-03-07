@@ -78,7 +78,7 @@ service-side networking crates into the flattened `soil-network` layout. See
 - Step 3:
   `cargo check -p soil-network -p soil-network-sync -p soil-grandpa -p soil-service -p soil-network-test`
 - Step 4:
-  `cargo check -p soil-network -p soil-network-sync -p soil-grandpa -p soil-beefy -p sc-authority-discovery -p sc-offchain -p sc-mixnet -p soil-consensus -p staging-node-cli`
+  `cargo check -p soil-network -p soil-network-sync -p soil-grandpa -p soil-beefy -p sc-authority-discovery -p soil-offchain -p sc-mixnet -p soil-consensus -p staging-node-cli`
 - Step 5:
   `cargo check -p soil-network -p soil-network-light -p soil-service -p soil-network-test -p staging-node-cli`
 - Step 6:

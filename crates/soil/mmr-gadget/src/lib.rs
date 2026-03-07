@@ -45,7 +45,7 @@ pub mod test_utils;
 use crate::offchain_mmr::OffchainMmr;
 use futures::StreamExt;
 use log::{debug, error, trace, warn};
-use sc_offchain::OffchainDb;
+use soil_offchain::OffchainDb;
 use soil_client::blockchain::{HeaderBackend, HeaderMetadata};
 use soil_client::client_api::{
 	Backend, BlockchainEvents, FinalityNotification, FinalityNotifications,

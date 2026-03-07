@@ -1,6 +1,6 @@
 [package]
 description = "Substrate offchain workers"
-name = "sc-offchain"
+name = "soil-offchain"
 version = "29.0.0"
 license.workspace = true
 authors.workspace = true

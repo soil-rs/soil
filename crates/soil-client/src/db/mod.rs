@@ -900,7 +900,7 @@ impl<Block: BlockT> BlockImportOperation<Block> {
 		}
 
 		if count > 0 {
-			log::debug!(target: "sc_offchain", "Applied {count} offchain indexing changes.");
+			log::debug!(target: "soil_offchain", "Applied {count} offchain indexing changes.");
 		}
 	}
 

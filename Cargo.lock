@@ -9430,35 +9430,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "sc-offchain"
-version = "29.0.0"
-dependencies = [
- "async-trait",
- "bytes",
- "fnv",
- "futures",
- "futures-timer",
- "http-body-util",
- "hyper 1.8.1",
- "hyper-rustls",
- "hyper-util",
- "num_cpus",
- "once_cell",
- "parity-scale-codec",
- "parking_lot 0.12.5",
- "rand 0.8.5",
- "rustls",
- "soil-client",
- "soil-network",
- "soil-txpool",
- "subsoil",
- "substrate-test-runtime-client",
- "threadpool",
- "tokio",
- "tracing",
-]
-
-[[package]]
 name = "scale-bits"
 version = "0.7.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -10526,8 +10497,8 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "parking_lot 0.12.5",
- "sc-offchain",
  "soil-client",
+ "soil-offchain",
  "subsoil",
  "substrate-test-runtime-client",
  "tokio",
@@ -10602,6 +10573,35 @@ dependencies = [
  "void",
  "wasm-timer",
  "zeroize",
+]
+
+[[package]]
+name = "soil-offchain"
+version = "29.0.0"
+dependencies = [
+ "async-trait",
+ "bytes",
+ "fnv",
+ "futures",
+ "futures-timer",
+ "http-body-util",
+ "hyper 1.8.1",
+ "hyper-rustls",
+ "hyper-util",
+ "num_cpus",
+ "once_cell",
+ "parity-scale-codec",
+ "parking_lot 0.12.5",
+ "rand 0.8.5",
+ "rustls",
+ "soil-client",
+ "soil-network",
+ "soil-txpool",
+ "subsoil",
+ "substrate-test-runtime-client",
+ "threadpool",
+ "tokio",
+ "tracing",
 ]
 
 [[package]]
@@ -11047,7 +11047,6 @@ dependencies = [
  "pretty_assertions",
  "rand 0.8.5",
  "regex",
- "sc-offchain",
  "scale-info",
  "serde",
  "serde_json",
@@ -11062,6 +11061,7 @@ dependencies = [
  "soil-manual-seal",
  "soil-mmr-gadget",
  "soil-network",
+ "soil-offchain",
  "soil-pow",
  "soil-rpc",
  "soil-service",

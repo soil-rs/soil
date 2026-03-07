@@ -23,7 +23,7 @@
 
 use crate::{aux_schema, MmrClient, LOG_TARGET};
 use log::{debug, error, info, warn};
-use sc_offchain::OffchainDb;
+use soil_offchain::OffchainDb;
 use soil_client::blockchain::CachedHeaderMetadata;
 use soil_client::client_api::{Backend, FinalityNotification};
 use std::{collections::VecDeque, sync::Arc};

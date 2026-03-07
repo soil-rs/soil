@@ -806,7 +806,7 @@ pub fn new_full_base<N: NetworkBackend<Block, <Block as BlockT>::Hash>>(
 
 	if enable_offchain_worker {
 		let offchain_workers =
-			sc_offchain::OffchainWorkers::new(sc_offchain::OffchainWorkerOptions {
+			soil_offchain::OffchainWorkers::new(soil_offchain::OffchainWorkerOptions {
 				runtime_api_provider: client.clone(),
 				keystore: Some(keystore_container.keystore()),
 				offchain_db: backend.offchain_storage(),

@@ -199,7 +199,7 @@ members = [
 	"crates/substrate/substrate-test-runtime-client",
 	"crates/substrate/substrate-test-runtime-transaction-pool",
 	"crates/substrate/substrate-wasm-builder",
-	"crates/substrate-client/offchain",
+	"crates/soil-offchain",
 	"crates/soil-txpool",
 ]
 
@@ -396,7 +396,7 @@ soil-grandpa = { path = "crates/soil-grandpa", default-features = false }
 soil-manual-seal = { path = "crates/soil-manual-seal", default-features = false }
 soil-pow = { path = "crates/soil-pow", default-features = false }
 soil-network = { path = "crates/soil-network", default-features = false }
-sc-offchain = { path = "crates/substrate-client/offchain", default-features = false }
+soil-offchain = { path = "crates/soil-offchain", default-features = false }
 soil-test = { path = "crates/soil-test" }
 soil-runtime-test = { path = "crates/soil/runtime-test" }
 soil-runtime-utilities = { path = "crates/soil/runtime-utilities", default-features = true }

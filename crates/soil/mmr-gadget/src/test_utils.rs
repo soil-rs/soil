@@ -20,7 +20,7 @@
 
 use crate::MmrGadget;
 use parking_lot::Mutex;
-use sc_offchain::OffchainDb;
+use soil_offchain::OffchainDb;
 use soil_client::block_builder::BlockBuilderBuilder;
 use soil_client::blockchain::{
 	BlockStatus, CachedHeaderMetadata, HeaderBackend, HeaderMetadata, Info,
