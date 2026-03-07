@@ -36,7 +36,7 @@ members = [
 	"crates/soil/runtime-utilities",
 	"crates/soil-service",
 	"crates/soil/statement-store",
-	"crates/soil/sync-state-rpc",
+	"crates/soil-sync-state-rpc",
 	"crates/soil-telemetry",
 	"crates/soil/transaction-storage-proof",
 	"contrib/plant-alliance",
@@ -404,7 +404,7 @@ soil-test = { path = "crates/soil-test" }
 soil-runtime-test = { path = "crates/soil/runtime-test" }
 soil-runtime-utilities = { path = "crates/soil/runtime-utilities", default-features = true }
 soil-service = { path = "crates/soil-service", default-features = false }
-soil-sync-state-rpc = { path = "crates/soil/sync-state-rpc", default-features = false }
+soil-sync-state-rpc = { path = "crates/soil-sync-state-rpc", default-features = false }
 soil-telemetry = { path = "crates/soil-telemetry", default-features = false }
 soil-txpool = { path = "crates/soil-txpool", default-features = false }
 soil-authority-discovery = { path = "crates/soil/authority-discovery", default-features = false }
