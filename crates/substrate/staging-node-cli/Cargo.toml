@@ -131,7 +131,7 @@ wat = { workspace = true }
 
 # These testing-only dependencies are not exported by the Polkadot-SDK crate:
 node-testing = { workspace = true }
-soil-service-test = { workspace = true }
+soil-test = { workspace = true }
 substrate-cli-test-utils = { workspace = true }
 [build-dependencies]
 clap = { optional = true, workspace = true }

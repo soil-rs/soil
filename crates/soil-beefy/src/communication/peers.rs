@@ -89,7 +89,7 @@ mod tests {
 	#[test]
 	fn should_track_known_peers_progress() {
 		let (alice, bob, charlie) = (PeerId::random(), PeerId::random(), PeerId::random());
-		let mut peers = KnownPeers::<soil_network_test::Block>::new();
+		let mut peers = KnownPeers::<soil_test::network::Block>::new();
 		assert!(peers.live.is_empty());
 
 		// 'Tracked' Bob seen voting for 5.

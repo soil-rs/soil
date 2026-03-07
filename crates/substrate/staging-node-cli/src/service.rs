@@ -912,7 +912,7 @@ mod tests {
 	use soil_client::transaction_pool::ChainEvent;
 	use soil_client::transaction_pool::MaintainedTransactionPool;
 	use soil_consensus::epochs::descendent_query;
-	use soil_service_test::TestNetNode;
+	use soil_test::service::TestNetNode;
 	use std::sync::Arc;
 	use subsoil::core::crypto::Pair;
 	use subsoil::inherents::InherentDataProvider;
@@ -953,7 +953,7 @@ mod tests {
 		let charlie = Arc::new(Sr25519Keyring::Charlie.pair());
 		let mut index = 0;
 
-		soil_service_test::sync(
+		soil_test::service::sync(
 			chain_spec,
 			|config| {
 				let mut setup_handles = None;
@@ -970,7 +970,7 @@ mod tests {
 						},
 					)?;
 
-				let node = soil_service_test::TestNetComponents::new(
+				let node = soil_test::service::TestNetComponents::new(
 					task_manager,
 					client,
 					network,
@@ -1171,7 +1171,7 @@ mod tests {
 	fn test_consensus() {
 		subsoil::tracing::try_init_simple();
 
-		soil_service_test::consensus(
+		soil_test::service::consensus(
 			crate::chain_spec::tests::integration_test_config_with_two_authorities(),
 			|config| {
 				let NewFullBase { task_manager, client, network, sync, transaction_pool, .. } =
@@ -1183,7 +1183,7 @@ mod tests {
 						50_000,
 						|_, _| (),
 					)?;
-				Ok(soil_service_test::TestNetComponents::new(
+				Ok(soil_test::service::TestNetComponents::new(
 					task_manager,
 					client,
 					network,

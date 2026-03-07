@@ -33,7 +33,7 @@ wasm-timer = { workspace = true }
 
 [dev-dependencies]
 soil-rpc = { features = ["test-helpers"], workspace = true, default-features = true }
-soil-network-test = { workspace = true }
+soil-test = { workspace = true }
 serde = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
 substrate-test-runtime-client = { workspace = true }

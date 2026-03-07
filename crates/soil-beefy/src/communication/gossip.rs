@@ -494,7 +494,7 @@ where
 pub(crate) mod tests {
 	use super::*;
 	use crate::{communication::peers::PeerReport, keystore::BeefyKeystore};
-	use soil_network_test::Block;
+	use soil_test::network::Block;
 	use subsoil::application_crypto::key_types::BEEFY as BEEFY_KEY_TYPE;
 	use subsoil::consensus::beefy::{
 		ecdsa_crypto, known_payloads, test_utils::Keyring, Commitment, MmrRootHash, Payload,

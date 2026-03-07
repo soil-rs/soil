@@ -8873,8 +8873,8 @@ dependencies = [
  "soil-client",
  "soil-consensus",
  "soil-network",
- "soil-network-test",
  "soil-telemetry",
+ "soil-test",
  "subsoil",
  "substrate-prometheus-endpoint",
  "substrate-test-runtime-client",
@@ -8909,9 +8909,9 @@ dependencies = [
  "serde",
  "soil-client",
  "soil-consensus",
- "soil-network-test",
  "soil-rpc",
  "soil-telemetry",
+ "soil-test",
  "subsoil",
  "subsoil-crypto-hashing",
  "substrate-prometheus-endpoint",
@@ -8936,8 +8936,8 @@ dependencies = [
  "soil-client",
  "soil-consensus",
  "soil-network",
- "soil-network-test",
  "soil-rpc",
+ "soil-test",
  "subsoil",
  "substrate-prometheus-endpoint",
  "substrate-test-runtime-client",
@@ -9052,7 +9052,7 @@ dependencies = [
  "schnellru",
  "serde",
  "serde_json",
- "soil-test-primitives",
+ "soil-test",
  "strum 0.26.3",
  "subsoil",
  "subsoil-crypto-hashing",
@@ -9086,7 +9086,7 @@ dependencies = [
  "serde",
  "soil-client",
  "soil-telemetry",
- "soil-test-primitives",
+ "soil-test",
  "subsoil",
  "substrate-test-runtime-client",
  "thiserror 1.0.69",
@@ -9126,9 +9126,9 @@ dependencies = [
  "soil-client",
  "soil-consensus",
  "soil-network",
- "soil-network-test",
  "soil-rpc",
  "soil-telemetry",
+ "soil-test",
  "subsoil",
  "subsoil-crypto-hashing",
  "substrate-prometheus-endpoint",
@@ -9231,7 +9231,7 @@ dependencies = [
  "smallvec",
  "soil-client",
  "soil-statement-store",
- "soil-test-primitives",
+ "soil-test",
  "subsoil",
  "subsoil-crypto-hashing",
  "substrate-prometheus-endpoint",
@@ -9247,28 +9247,6 @@ dependencies = [
  "void",
  "wasm-timer",
  "zeroize",
-]
-
-[[package]]
-name = "soil-network-test"
-version = "0.8.0"
-dependencies = [
- "async-channel 1.9.0",
- "async-trait",
- "futures",
- "futures-timer",
- "libp2p",
- "log",
- "parking_lot 0.12.5",
- "rand 0.8.5",
- "soil-client",
- "soil-consensus",
- "soil-network",
- "soil-service",
- "subsoil",
- "substrate-test-runtime",
- "substrate-test-runtime-client",
- "tokio",
 ]
 
 [[package]]
@@ -9414,28 +9392,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "soil-service-test"
-version = "2.0.0"
-dependencies = [
- "array-bytes 6.2.3",
- "async-channel 1.9.0",
- "fdlimit",
- "futures",
- "log",
- "parity-scale-codec",
- "parking_lot 0.12.5",
- "soil-client",
- "soil-consensus",
- "soil-network",
- "soil-service",
- "subsoil",
- "substrate-test-runtime",
- "substrate-test-runtime-client",
- "tempfile",
- "tokio",
-]
-
-[[package]]
 name = "soil-session"
 version = "27.0.0"
 dependencies = [
@@ -9515,20 +9471,28 @@ dependencies = [
 name = "soil-test"
 version = "0.1.0"
 dependencies = [
- "soil-client",
- "subsoil",
- "substrate-test-runtime-client",
- "wat",
-]
-
-[[package]]
-name = "soil-test-primitives"
-version = "2.0.0"
-dependencies = [
+ "async-channel 1.9.0",
+ "async-trait",
+ "fdlimit",
+ "futures",
+ "futures-timer",
+ "libp2p",
+ "log",
  "parity-scale-codec",
+ "parking_lot 0.12.5",
+ "rand 0.8.5",
  "scale-info",
  "serde",
+ "soil-client",
+ "soil-consensus",
+ "soil-network",
+ "soil-service",
  "subsoil",
+ "substrate-test-runtime",
+ "substrate-test-runtime-client",
+ "tempfile",
+ "tokio",
+ "wat",
 ]
 
 [[package]]
@@ -9810,10 +9774,10 @@ dependencies = [
  "soil-pow",
  "soil-rpc",
  "soil-service",
- "soil-service-test",
  "soil-statement-store",
  "soil-sync-state-rpc",
  "soil-telemetry",
+ "soil-test",
  "soil-transaction-storage-proof",
  "soil-txpool",
  "soketto",

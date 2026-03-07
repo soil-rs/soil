@@ -117,7 +117,7 @@ rand = { workspace = true, default-features = true }
 regex = { workspace = true }
 # utils test deps
 tokio-test = { workspace = true }
-soil-test-primitives = { workspace = true }
+soil-test = { workspace = true }
 
 [features]
 # This crate does not have `no_std` support, we just require this for tests

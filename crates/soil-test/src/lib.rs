@@ -1,5 +1,9 @@
 //! Shared utilities for integration tests.
 
+pub mod network;
+pub mod primitives;
+pub mod service;
+
 /// A minimal runtime ABI-compatible Wasm module that returns an empty byte slice from
 /// `test_empty_return`.
 pub fn empty_return_runtime_wasm() -> Vec<u8> {

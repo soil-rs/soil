@@ -1042,7 +1042,7 @@ pub(crate) mod tests {
 	use soil_client::client_api::{Backend as BackendT, HeaderBackend};
 	use soil_network::gossip::GossipEngine;
 	use soil_network::sync::SyncingService;
-	use soil_network_test::TestNetFactory;
+	use soil_test::network::TestNetFactory;
 	use subsoil::consensus::beefy::{
 		ecdsa_crypto, known_payloads,
 		known_payloads::MMR_ROOT_ID,

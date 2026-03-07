@@ -29,7 +29,6 @@ members = [
 	"crates/soil-grandpa",
 	"crates/soil/mmr-gadget",
 	"crates/soil-network",
-	"crates/soil/network-test",
 	"crates/soil-pow",
 	"crates/soil/npos-elections/fuzzer",
 	"crates/soil/offchain",
@@ -41,13 +40,11 @@ members = [
 	"crates/soil/runtime-test",
 	"crates/soil/runtime-utilities",
 	"crates/soil-service",
-	"crates/soil/service-test",
 	"crates/soil/session",
 	"crates/soil/staking",
 	"crates/soil/statement-store",
 	"crates/soil/sync-state-rpc",
 	"crates/soil-telemetry",
-	"crates/soil/test-primitives",
 	"crates/soil/transaction-pool",
 	"crates/soil/transaction-storage-proof",
 	"crates/topsoil/alliance",
@@ -410,13 +407,11 @@ soil-grandpa = { path = "crates/soil-grandpa", default-features = false }
 soil-manual-seal = { path = "crates/soil-manual-seal", default-features = false }
 soil-pow = { path = "crates/soil-pow", default-features = false }
 soil-network = { path = "crates/soil-network", default-features = false }
-soil-network-test = { path = "crates/soil/network-test" }
 sc-offchain = { path = "crates/substrate-client/offchain", default-features = false }
 soil-test = { path = "crates/soil-test" }
 soil-runtime-test = { path = "crates/soil/runtime-test" }
 soil-runtime-utilities = { path = "crates/soil/runtime-utilities", default-features = true }
 soil-service = { path = "crates/soil-service", default-features = false }
-soil-service-test = { path = "crates/soil/service-test" }
 soil-sync-state-rpc = { path = "crates/soil/sync-state-rpc", default-features = false }
 soil-telemetry = { path = "crates/soil-telemetry", default-features = false }
 soil-txpool = { path = "crates/soil-txpool", default-features = false }
@@ -432,7 +427,6 @@ sp-runtime-interface-test-wasm-deprecated = { path = "crates/soil/runtime-interf
 soil-session = { path = "crates/soil/session", default-features = false }
 soil-staking = { path = "crates/soil/staking", default-features = false }
 soil-statement-store = { path = "crates/soil/statement-store", default-features = false }
-soil-test-primitives = { path = "crates/soil/test-primitives" }
 soil-transaction-pool = { path = "crates/soil/transaction-pool", default-features = false }
 soil-transaction-storage-proof = { path = "crates/soil/transaction-storage-proof", default-features = false }
 subkey = { path = "crates/substrate/subkey", default-features = false }

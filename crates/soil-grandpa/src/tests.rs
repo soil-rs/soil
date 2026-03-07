@@ -31,7 +31,7 @@ use soil_client::import::{
 };
 use soil_client::transaction_pool::RejectAllTxPool;
 use soil_network::config::Role;
-use soil_network_test::{
+use soil_test::network::{
 	Block, BlockImportAdapter, FullPeerConfig, Hash, PassThroughVerifier, Peer, PeersClient,
 	PeersFullClient, TestClient, TestNetFactory,
 };

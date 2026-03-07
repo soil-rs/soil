@@ -31,5 +31,5 @@ thiserror = { workspace = true }
 soil-telemetry = { workspace = true, default-features = true }
 
 [dev-dependencies]
-soil-test-primitives = { workspace = true }
+soil-test = { workspace = true }
 substrate-test-runtime-client = { workspace = true }

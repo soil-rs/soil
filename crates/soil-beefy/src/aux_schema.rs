@@ -89,7 +89,7 @@ where
 pub(crate) mod tests {
 	use super::*;
 	use crate::tests::BeefyTestNet;
-	use soil_network_test::TestNetFactory;
+	use soil_test::network::TestNetFactory;
 	use subsoil::consensus::beefy::ecdsa_crypto;
 
 	// also used in tests.rs

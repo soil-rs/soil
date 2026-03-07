@@ -53,7 +53,7 @@ use soil_client::import::{
 };
 use soil_client::utils::{mpsc::TracingUnboundedReceiver, notification::NotificationReceiver};
 use soil_network::{config::RequestResponseConfig, ProtocolName};
-use soil_network_test::{
+use soil_test::network::{
 	Block, BlockImportAdapter, FullPeerConfig, PassThroughVerifier, Peer, PeersClient,
 	PeersFullClient, TestNetFactory,
 };

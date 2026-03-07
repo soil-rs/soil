@@ -280,7 +280,7 @@ pub use subsoil_derive::decl_runtime_apis;
 /// extern crate alloc;
 /// #
 /// # use subsoil::runtime::{ExtrinsicInclusionMode, traits::Block as BlockT};
-/// # use soil_test_primitives::Block;
+/// # use soil_test::primitives::Block;
 /// #
 /// # /// The declaration of the `Runtime` type is done by the `construct_runtime!` macro
 /// # /// in a real runtime.
@@ -423,7 +423,7 @@ pub use subsoil_derive::impl_runtime_apis;
 ///
 /// ```ignore
 /// # use subsoil::runtime::traits::Block as BlockT;
-/// # use soil_test_primitives::Block;
+/// # use soil_test::primitives::Block;
 /// #
 /// # subsoil::api::decl_runtime_apis! {
 /// #     /// Declare the api trait.
@@ -477,7 +477,7 @@ pub use subsoil_derive::impl_runtime_apis;
 /// ## Example
 /// ```ignore
 /// # use subsoil::runtime::traits::Block as BlockT;
-/// # use soil_test_primitives::Block;
+/// # use soil_test::primitives::Block;
 /// # use codec;
 /// #
 /// # subsoil::api::decl_runtime_apis! {

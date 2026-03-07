@@ -443,7 +443,7 @@ mod tests {
 	use crate::sync::strategy::chain_sync::PeerSync;
 	use quickcheck::{Arbitrary, Gen, QuickCheck};
 	use soil_client::blockchain::Error as ClientError;
-	use soil_test_primitives::{Block, BlockNumber, Hash};
+	use soil_test::primitives::{Block, BlockNumber, Hash};
 	use std::collections::{HashMap, HashSet};
 
 	#[test]

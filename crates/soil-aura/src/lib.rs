@@ -561,7 +561,7 @@ mod tests {
 	use soil_client::import::BoxJustificationImport;
 	use soil_client::keystore::LocalKeystore;
 	use soil_consensus::slots::{BackoffAuthoringOnFinalizedHeadLagging, SimpleSlotWorker};
-	use soil_network_test::{Block as TestBlock, *};
+	use soil_test::network::{Block as TestBlock, *};
 	use std::{
 		task::Poll,
 		time::{Duration, Instant},

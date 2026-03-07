@@ -31,7 +31,7 @@ thiserror = { workspace = true }
 
 [dev-dependencies]
 soil-network = { workspace = true, default-features = true }
-soil-network-test = { workspace = true }
+soil-test = { workspace = true }
 subsoil = { workspace = true, default-features = true }
 substrate-test-runtime-client = { workspace = true }
 tempfile = { workspace = true }

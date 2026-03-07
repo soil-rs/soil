@@ -146,7 +146,7 @@ mod test {
 	use fork_tree::ForkTree;
 	use soil_client::consensus::Error as ConsensusError;
 	use soil_consensus::epochs::{EpochHeader, PersistedEpoch, PersistedEpochHeader};
-	use soil_network_test::Block as TestBlock;
+	use soil_test::network::Block as TestBlock;
 	use subsoil::consensus::babe::AllowedSlots;
 	use subsoil::core::H256;
 	use subsoil::runtime::traits::NumberFor;

@@ -37,7 +37,7 @@ subsoil = { workspace = true, default-features = true }
 thiserror = { workspace = true }
 
 [dev-dependencies]
-soil-network-test = { workspace = true }
+soil-test = { workspace = true }
 subsoil = { workspace = true, default-features = true }
 substrate-test-runtime-client = { workspace = true }
 tokio = { workspace = true, default-features = true }

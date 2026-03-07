@@ -40,7 +40,7 @@ use soil_network::{
 	Multiaddr, NetworkBlock, NetworkEventStream, NetworkPeers, NetworkSyncForkRequest,
 	ReputationChange,
 };
-use soil_network_test::{Block, Hash};
+use soil_test::network::{Block, Hash};
 use std::{collections::HashSet, pin::Pin, sync::Arc, task::Poll};
 use subsoil::consensus::grandpa::AuthorityList;
 use subsoil::keyring::Ed25519Keyring;

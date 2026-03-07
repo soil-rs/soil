@@ -15,18 +15,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//! The Substrate test primitives to share
-
-#![cfg_attr(not(feature = "std"), no_std)]
-
-extern crate alloc;
+//! Shared test primitives.
 
 use codec::{Decode, DecodeWithMemTracking, Encode};
 
 pub use subsoil::application_crypto as soil_application_crypto;
 use subsoil::application_crypto::sr25519;
 
-use alloc::vec::Vec;
+use std::vec::Vec;
 pub use subsoil::core::hash::H256;
 use subsoil::runtime::{
 	traits::{BlakeTwo256, ExtrinsicLike, LazyExtrinsic, Verify},

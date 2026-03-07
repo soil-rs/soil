@@ -513,7 +513,7 @@ mod tests {
 	};
 	use futures::{executor::block_on, Future};
 	use parking_lot::Mutex;
-	use soil_test_primitives::{Block, BlockNumber, Hash, Header};
+	use soil_test::primitives::{Block, BlockNumber, Hash, Header};
 
 	#[async_trait::async_trait]
 	impl Verifier<Block> for () {
