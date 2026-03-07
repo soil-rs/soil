@@ -17,9 +17,9 @@ members = [
 	"crates/soil-aura",
 	"crates/soil-beefy",
 	"crates/soil/authority-discovery",
-	"crates/soil/chain-spec",
-	"crates/soil/chain-spec-derive",
-	"crates/soil/cli",
+	"crates/soil-chain-spec",
+	"crates/soil-chain-spec-derive",
+	"crates/soil-cli",
 	"crates/soil-consensus",
 	"crates/soil-client",
 	"crates/soil-manual-seal",
@@ -46,7 +46,7 @@ members = [
 	"crates/soil/staking",
 	"crates/soil/statement-store",
 	"crates/soil/sync-state-rpc",
-	"crates/soil/telemetry",
+	"crates/soil-telemetry",
 	"crates/soil/test-primitives",
 	"crates/soil/transaction-pool",
 	"crates/soil/transaction-storage-proof",
@@ -398,9 +398,9 @@ topsoil-whitelist = { path = "crates/topsoil/whitelist", default-features = fals
 prometheus-endpoint = { path = "crates/substrate/substrate-prometheus-endpoint", default-features = false, package = "substrate-prometheus-endpoint" }
 remote-externalities = { path = "crates/substrate/frame-remote-externalities", default-features = false, package = "frame-remote-externalities" }
 sc-authority-discovery = { path = "crates/substrate-client/authority-discovery", default-features = false }
-soil-chain-spec = { path = "crates/soil/chain-spec", default-features = false }
-soil-chain-spec-derive = { path = "crates/soil/chain-spec-derive", default-features = false }
-soil-cli = { path = "crates/soil/cli", default-features = false }
+soil-chain-spec = { path = "crates/soil-chain-spec", default-features = false }
+soil-chain-spec-derive = { path = "crates/soil-chain-spec-derive", default-features = false }
+soil-cli = { path = "crates/soil-cli", default-features = false }
 soil-client = { path = "crates/soil-client", default-features = false }
 soil-consensus = { path = "crates/soil-consensus", default-features = false }
 soil-aura = { path = "crates/soil-aura", default-features = false }
@@ -418,7 +418,7 @@ soil-runtime-utilities = { path = "crates/soil/runtime-utilities", default-featu
 soil-service = { path = "crates/soil-service", default-features = false }
 soil-service-test = { path = "crates/soil/service-test" }
 soil-sync-state-rpc = { path = "crates/soil/sync-state-rpc", default-features = false }
-soil-telemetry = { path = "crates/soil/telemetry", default-features = false }
+soil-telemetry = { path = "crates/soil-telemetry", default-features = false }
 soil-txpool = { path = "crates/soil-txpool", default-features = false }
 soil-authority-discovery = { path = "crates/soil/authority-discovery", default-features = false }
 subsoil = { path = "crates/subsoil", default-features = false }
