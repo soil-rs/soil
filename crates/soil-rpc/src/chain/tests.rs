@@ -17,12 +17,12 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 use super::*;
+use crate::list::ListOrValue;
 use crate::testing::{test_executor, timeout_secs};
 use assert_matches::assert_matches;
 use jsonrpsee::core::EmptyServerParams as EmptyParams;
 use soil_client::block_builder::BlockBuilderBuilder;
 use soil_client::consensus::BlockOrigin;
-use soil_rpc::list::ListOrValue;
 use substrate_test_runtime_client::{
 	prelude::*,
 	runtime::{Block, Header, H256},

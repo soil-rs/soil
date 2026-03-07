@@ -18,14 +18,14 @@
 
 //! Substrate statement store API.
 
+/// Re-export the API for backward compatibility.
+pub use crate::api::statement::{error::Error, StatementApiServer};
 use codec::Decode;
 use futures::FutureExt;
 use jsonrpsee::{
 	core::{async_trait, RpcResult},
 	Extensions, PendingSubscriptionSink,
 };
-/// Re-export the API for backward compatibility.
-pub use soil_rpc::api::statement::{error::Error, StatementApiServer};
 use soil_statement_store::{
 	OptimizedTopicFilter, StatementEvent, StatementSource, SubmitResult, TopicFilter,
 };

@@ -27,9 +27,9 @@ use std::sync::Arc;
 
 use crate::SubscriptionTaskExecutor;
 
+use crate::{list::ListOrValue, number::NumberOrHex};
 use jsonrpsee::{core::async_trait, PendingSubscriptionSink};
 use soil_client::client_api::BlockchainEvents;
-use soil_rpc::{list::ListOrValue, number::NumberOrHex};
 use subsoil::runtime::{
 	generic::SignedBlock,
 	traits::{Block as BlockT, NumberFor},
@@ -37,9 +37,9 @@ use subsoil::runtime::{
 
 use self::error::Error;
 
+pub use crate::api::chain::*;
 use soil_client::blockchain::HeaderBackend;
 use soil_client::client_api::BlockBackend;
-pub use soil_rpc::api::chain::*;
 
 /// Blockchain backend API
 #[async_trait]

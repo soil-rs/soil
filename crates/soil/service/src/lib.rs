@@ -89,7 +89,6 @@ pub use soil_client::db::PruningFilter;
 
 use crate::config::RpcConfiguration;
 use prometheus_endpoint::Registry;
-pub use sc_rpc::{RandomIntegerSubscriptionId, RandomStringSubscriptionId};
 pub use sc_transaction_pool::TransactionPoolOptions;
 pub use soil_client::executor::NativeExecutionDispatch;
 pub use soil_client::import::ImportQueue;
@@ -98,6 +97,7 @@ pub use soil_client::transaction_pool::{error::IntoPoolError, InPoolTransaction,
 pub use soil_network::sync::WarpSyncConfig;
 #[doc(hidden)]
 pub use soil_network::transactions::config::{TransactionImport, TransactionImportFuture};
+pub use soil_rpc::{RandomIntegerSubscriptionId, RandomStringSubscriptionId};
 #[doc(hidden)]
 pub use std::{ops::Deref, result::Result, sync::Arc};
 pub use task_manager::{
@@ -262,7 +262,7 @@ pub async fn build_system_rpc_future<
 	network_service: Arc<dyn NetworkService>,
 	sync_service: Arc<SyncingService<B>>,
 	client: Arc<C>,
-	mut rpc_rx: TracingUnboundedReceiver<sc_rpc::system::Request<B>>,
+	mut rpc_rx: TracingUnboundedReceiver<soil_rpc::system::Request<B>>,
 	should_have_peers: bool,
 ) {
 	// Current best block at initialization, to report to the RPC layer.
@@ -276,9 +276,9 @@ pub async fn build_system_rpc_future<
 		};
 
 		match req {
-			sc_rpc::system::Request::Health(sender) => match sync_service.peers_info().await {
+			soil_rpc::system::Request::Health(sender) => match sync_service.peers_info().await {
 				Ok(info) => {
-					let _ = sender.send(sc_rpc::system::Health {
+					let _ = sender.send(soil_rpc::system::Health {
 						peers: info.len(),
 						is_syncing: sync_service.is_major_syncing(),
 						should_have_peers,
@@ -286,10 +286,10 @@ pub async fn build_system_rpc_future<
 				},
 				Err(_) => log::error!("`SyncingEngine` shut down"),
 			},
-			sc_rpc::system::Request::LocalPeerId(sender) => {
+			soil_rpc::system::Request::LocalPeerId(sender) => {
 				let _ = sender.send(network_service.local_peer_id().to_base58());
 			},
-			sc_rpc::system::Request::LocalListenAddresses(sender) => {
+			soil_rpc::system::Request::LocalListenAddresses(sender) => {
 				let peer_id = (network_service.local_peer_id()).into();
 				let p2p_proto_suffix = soil_network::multiaddr::Protocol::P2p(peer_id);
 				let addresses = network_service
@@ -299,11 +299,11 @@ pub async fn build_system_rpc_future<
 					.collect();
 				let _ = sender.send(addresses);
 			},
-			sc_rpc::system::Request::Peers(sender) => match sync_service.peers_info().await {
+			soil_rpc::system::Request::Peers(sender) => match sync_service.peers_info().await {
 				Ok(info) => {
 					let _ = sender.send(
 						info.into_iter()
-							.map(|(peer_id, p)| sc_rpc::system::PeerInfo {
+							.map(|(peer_id, p)| soil_rpc::system::PeerInfo {
 								peer_id: peer_id.to_base58(),
 								roles: format!("{:?}", p.roles),
 								best_hash: p.best_hash,
@@ -314,7 +314,7 @@ pub async fn build_system_rpc_future<
 				},
 				Err(_) => log::error!("`SyncingEngine` shut down"),
 			},
-			sc_rpc::system::Request::NetworkState(sender) => {
+			soil_rpc::system::Request::NetworkState(sender) => {
 				let network_state = network_service.network_state().await;
 				if let Ok(network_state) = network_state {
 					if let Ok(network_state) = serde_json::to_value(network_state) {
@@ -324,26 +324,26 @@ pub async fn build_system_rpc_future<
 					break;
 				}
 			},
-			sc_rpc::system::Request::NetworkAddReservedPeer(peer_addr, sender) => {
+			soil_rpc::system::Request::NetworkAddReservedPeer(peer_addr, sender) => {
 				let result = match MultiaddrWithPeerId::try_from(peer_addr) {
 					Ok(peer) => network_service.add_reserved_peer(peer),
 					Err(err) => Err(err.to_string()),
 				};
-				let x = result.map_err(sc_rpc::system::error::Error::MalformattedPeerArg);
+				let x = result.map_err(soil_rpc::system::error::Error::MalformattedPeerArg);
 				let _ = sender.send(x);
 			},
-			sc_rpc::system::Request::NetworkRemoveReservedPeer(peer_id, sender) => {
+			soil_rpc::system::Request::NetworkRemoveReservedPeer(peer_id, sender) => {
 				let _ = match peer_id.parse::<PeerId>() {
 					Ok(peer_id) => {
 						network_service.remove_reserved_peer(peer_id);
 						sender.send(Ok(()))
 					},
-					Err(e) => sender.send(Err(sc_rpc::system::error::Error::MalformattedPeerArg(
-						e.to_string(),
-					))),
+					Err(e) => sender.send(Err(
+						soil_rpc::system::error::Error::MalformattedPeerArg(e.to_string()),
+					)),
 				};
 			},
-			sc_rpc::system::Request::NetworkReservedPeers(sender) => {
+			soil_rpc::system::Request::NetworkReservedPeers(sender) => {
 				let Ok(reserved_peers) = network_service.reserved_peers().await else {
 					break;
 				};
@@ -351,8 +351,8 @@ pub async fn build_system_rpc_future<
 				let _ =
 					sender.send(reserved_peers.iter().map(|peer_id| peer_id.to_base58()).collect());
 			},
-			sc_rpc::system::Request::NodeRoles(sender) => {
-				use sc_rpc::system::NodeRole;
+			soil_rpc::system::Request::NodeRoles(sender) => {
+				use soil_rpc::system::NodeRole;
 
 				let node_role = match role {
 					Role::Authority { .. } => NodeRole::Authority,
@@ -361,8 +361,8 @@ pub async fn build_system_rpc_future<
 
 				let _ = sender.send(vec![node_role]);
 			},
-			sc_rpc::system::Request::SyncState(sender) => {
-				use sc_rpc::system::SyncState;
+			soil_rpc::system::Request::SyncState(sender) => {
+				use soil_rpc::system::SyncState;
 
 				match sync_service.status().await.map(|status| status.best_seen_block) {
 					Ok(best_seen_block) => {

@@ -29,14 +29,6 @@ use futures::{select, FutureExt, StreamExt};
 use jsonrpsee::RpcModule;
 use log::{debug, error, info};
 use prometheus_endpoint::Registry;
-use sc_rpc::{
-	author::AuthorApiServer,
-	chain::ChainApiServer,
-	offchain::OffchainApiServer,
-	state::{ChildStateApiServer, StateApiServer},
-	system::SystemApiServer,
-	DenyUnsafe, SubscriptionTaskExecutor,
-};
 use soil_chain_spec::{get_extension, ChainSpec};
 use soil_client::blockchain::{HeaderBackend, HeaderMetadata};
 use soil_client::client_api::{
@@ -80,6 +72,14 @@ use soil_network::{
 		NotificationMetrics,
 	},
 	NetworkBackend, NetworkStateInfo,
+};
+use soil_rpc::{
+	author::AuthorApiServer,
+	chain::ChainApiServer,
+	offchain::OffchainApiServer,
+	state::{ChildStateApiServer, StateApiServer},
+	system::SystemApiServer,
+	DenyUnsafe, SubscriptionTaskExecutor,
 };
 use soil_rpc_spec_v2::{
 	archive::ArchiveApiServer,
@@ -472,7 +472,7 @@ pub struct SpawnTasksParams<'a, TBl: BlockT, TCl, TExPool, TRpc, Backend> {
 	/// A shared network instance.
 	pub network: Arc<dyn soil_network::service::traits::NetworkService>,
 	/// A Sender for RPC requests.
-	pub system_rpc_tx: TracingUnboundedSender<sc_rpc::system::Request<TBl>>,
+	pub system_rpc_tx: TracingUnboundedSender<soil_rpc::system::Request<TBl>>,
 	/// Controller for transactions handlers
 	pub tx_handler_controller:
 		soil_network::transactions::TransactionsHandlerController<<TBl as BlockT>::Hash>,
@@ -785,7 +785,7 @@ pub struct GenRpcModuleParams<'a, TBl: BlockT, TBackend, TCl, TRpc, TExPool> {
 	/// Keystore handle.
 	pub keystore: KeystorePtr,
 	/// Sender for system requests.
-	pub system_rpc_tx: TracingUnboundedSender<sc_rpc::system::Request<TBl>>,
+	pub system_rpc_tx: TracingUnboundedSender<soil_rpc::system::Request<TBl>>,
 	/// Implementation name of this node.
 	pub impl_name: String,
 	/// Implementation version of this node.
@@ -848,7 +848,7 @@ where
 	TBl::Hash: Unpin,
 	TBl::Header: Unpin,
 {
-	let system_info = sc_rpc::system::SystemInfo {
+	let system_info = soil_rpc::system::SystemInfo {
 		chain_name: chain_spec.name().into(),
 		impl_name,
 		impl_version,
@@ -860,9 +860,9 @@ where
 	let task_executor = Arc::new(spawn_handle);
 
 	let (chain, state, child_state) = {
-		let chain = sc_rpc::chain::new_full(client.clone(), task_executor.clone()).into_rpc();
+		let chain = soil_rpc::chain::new_full(client.clone(), task_executor.clone()).into_rpc();
 		let (state, child_state) =
-			sc_rpc::state::new_full(client.clone(), task_executor.clone(), execute_block);
+			soil_rpc::state::new_full(client.clone(), task_executor.clone(), execute_block);
 		let state = state.into_rpc();
 		let child_state = child_state.into_rpc();
 
@@ -922,7 +922,7 @@ where
 	)
 	.into_rpc();
 
-	let author = sc_rpc::author::Author::new(
+	let author = soil_rpc::author::Author::new(
 		client.clone(),
 		transaction_pool,
 		keystore,
@@ -930,10 +930,10 @@ where
 	)
 	.into_rpc();
 
-	let system = sc_rpc::system::System::new(system_info, system_rpc_tx).into_rpc();
+	let system = soil_rpc::system::System::new(system_info, system_rpc_tx).into_rpc();
 
 	if let Some(storage) = backend.offchain_storage() {
-		let offchain = sc_rpc::offchain::Offchain::new(storage).into_rpc();
+		let offchain = soil_rpc::offchain::Offchain::new(storage).into_rpc();
 
 		rpc_api.merge(offchain).map_err(|e| Error::Application(e.into()))?;
 	}
@@ -998,7 +998,7 @@ pub fn build_network<Block, Net, TxPool, IQ, Client>(
 ) -> Result<
 	(
 		Arc<dyn soil_network::service::traits::NetworkService>,
-		TracingUnboundedSender<sc_rpc::system::Request<Block>>,
+		TracingUnboundedSender<soil_rpc::system::Request<Block>>,
 		soil_network::transactions::TransactionsHandlerController<<Block as BlockT>::Hash>,
 		Arc<SyncingService<Block>>,
 	),
@@ -1164,7 +1164,7 @@ pub fn build_network_advanced<Block, Net, TxPool, IQ, Client>(
 ) -> Result<
 	(
 		Arc<dyn soil_network::service::traits::NetworkService>,
-		TracingUnboundedSender<sc_rpc::system::Request<Block>>,
+		TracingUnboundedSender<soil_rpc::system::Request<Block>>,
 		soil_network::transactions::TransactionsHandlerController<<Block as BlockT>::Hash>,
 		Arc<SyncingService<Block>>,
 	),

@@ -21,6 +21,7 @@
 #[cfg(test)]
 mod tests;
 
+use crate::check_if_safe;
 use futures::channel::oneshot;
 use jsonrpsee::{
 	core::{async_trait, JsonValue},
@@ -28,11 +29,10 @@ use jsonrpsee::{
 };
 use soil_client::tracing::logging;
 use soil_client::utils::mpsc::TracingUnboundedSender;
-use soil_rpc::check_if_safe;
 use subsoil::runtime::traits::{self, Header as HeaderT};
 
 pub use self::helpers::{Health, NodeRole, PeerInfo, SyncState, SystemInfo};
-pub use soil_rpc::api::system::*;
+pub use crate::api::system::*;
 
 /// System API implementation
 pub struct System<B: traits::Block> {

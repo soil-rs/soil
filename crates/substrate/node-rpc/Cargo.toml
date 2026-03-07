@@ -25,7 +25,7 @@ soil-babe = { workspace = true, default-features = true }
 soil-beefy = { workspace = true, default-features = true }
 soil-grandpa = { workspace = true, default-features = true }
 soil-network = { workspace = true, default-features = true }
-sc-rpc = { workspace = true, default-features = true }
+soil-rpc = { workspace = true, default-features = true }
 soil-sync-state-rpc = { workspace = true, default-features = true }
 soil-client = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }

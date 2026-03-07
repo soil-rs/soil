@@ -33,12 +33,12 @@ use jsonrpsee::{core::async_trait, PendingSubscriptionSink};
 
 use super::metrics::{InstanceMetrics, Metrics};
 
-use sc_rpc::utils::{RingBuffer, Subscription};
 use soil_client::blockchain::HeaderBackend;
 use soil_client::transaction_pool::{
 	error::IntoPoolError, BlockHash, TransactionFor, TransactionPool, TransactionSource,
 	TransactionStatus,
 };
+use soil_rpc::utils::{RingBuffer, Subscription};
 use std::sync::Arc;
 use subsoil::core::Bytes;
 use subsoil::runtime::traits::Block as BlockT;
@@ -154,7 +154,7 @@ where
 			};
 		};
 
-		sc_rpc::utils::spawn_subscription_task(&self.executor, fut);
+		soil_rpc::utils::spawn_subscription_task(&self.executor, fut);
 	}
 }
 

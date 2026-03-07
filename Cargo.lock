@@ -6108,7 +6108,6 @@ version = "3.0.0-dev"
 dependencies = [
  "jsonrpsee",
  "node-primitives",
- "sc-rpc",
  "soil-babe",
  "soil-beefy",
  "soil-chain-spec",
@@ -6116,6 +6115,7 @@ dependencies = [
  "soil-grandpa",
  "soil-mmr-rpc",
  "soil-network",
+ "soil-rpc",
  "soil-sync-state-rpc",
  "subsoil",
  "substrate-frame-rpc-system",
@@ -8086,35 +8086,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "sc-rpc"
-version = "29.0.0"
-dependencies = [
- "assert_matches",
- "async-channel 1.9.0",
- "futures",
- "futures-timer",
- "jsonrpsee",
- "log",
- "parity-scale-codec",
- "parking_lot 0.12.5",
- "pretty_assertions",
- "sc-transaction-pool",
- "serde_json",
- "soil-chain-spec",
- "soil-client",
- "soil-network",
- "soil-offchain",
- "soil-rpc",
- "soil-session",
- "soil-statement-store",
- "subsoil",
- "subsoil-crypto-hashing",
- "substrate-test-runtime-client",
- "tempfile",
- "tokio",
-]
-
-[[package]]
 name = "sc-transaction-pool"
 version = "28.0.0"
 dependencies = [
@@ -9016,12 +8987,12 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "parking_lot 0.12.5",
- "sc-rpc",
  "serde",
  "soil-client",
  "soil-consensus",
  "soil-network",
  "soil-network-test",
+ "soil-rpc",
  "subsoil",
  "substrate-prometheus-endpoint",
  "substrate-test-runtime-client",
@@ -9204,7 +9175,6 @@ dependencies = [
  "parity-scale-codec",
  "parking_lot 0.12.5",
  "rand 0.8.5",
- "sc-rpc",
  "serde",
  "serde_json",
  "soil-chain-spec",
@@ -9212,6 +9182,7 @@ dependencies = [
  "soil-consensus",
  "soil-network",
  "soil-network-test",
+ "soil-rpc",
  "soil-telemetry",
  "subsoil",
  "subsoil-crypto-hashing",
@@ -9416,17 +9387,31 @@ dependencies = [
 name = "soil-rpc"
 version = "26.0.0"
 dependencies = [
+ "assert_matches",
+ "async-channel 1.9.0",
+ "futures",
+ "futures-timer",
  "jsonrpsee",
+ "log",
  "parity-scale-codec",
+ "parking_lot 0.12.5",
+ "pretty_assertions",
+ "sc-transaction-pool",
  "scale-info",
  "serde",
  "serde_json",
  "soil-chain-spec",
  "soil-client",
  "soil-network",
+ "soil-offchain",
+ "soil-session",
  "soil-statement-store",
  "subsoil",
+ "subsoil-crypto-hashing",
+ "substrate-test-runtime-client",
+ "tempfile",
  "thiserror 1.0.69",
+ "tokio",
 ]
 
 [[package]]
@@ -9469,7 +9454,6 @@ dependencies = [
  "parking_lot 0.12.5",
  "pretty_assertions",
  "rand 0.8.5",
- "sc-rpc",
  "sc-transaction-pool",
  "schnellru",
  "serde",
@@ -9523,7 +9507,6 @@ dependencies = [
  "parking_lot 0.12.5",
  "pin-project",
  "rand 0.8.5",
- "sc-rpc",
  "sc-transaction-pool",
  "schnellru",
  "serde",
@@ -9532,6 +9515,7 @@ dependencies = [
  "soil-client",
  "soil-informant",
  "soil-network",
+ "soil-rpc",
  "soil-rpc-server",
  "soil-rpc-spec-v2",
  "soil-session",
@@ -9911,7 +9895,6 @@ dependencies = [
  "regex",
  "sc-authority-discovery",
  "sc-offchain",
- "sc-rpc",
  "sc-transaction-pool",
  "scale-info",
  "serde",

@@ -35,7 +35,6 @@ use std::sync::Arc;
 
 use jsonrpsee::RpcModule;
 use node_primitives::{AccountId, Balance, Block, BlockNumber, Hash, Nonce};
-pub use sc_rpc::SubscriptionTaskExecutor;
 use soil_babe::BabeWorkerHandle;
 use soil_beefy::communication::notification::{
 	BeefyBestBlockStream, BeefyVersionedFinalityProofStream,
@@ -47,6 +46,7 @@ use soil_client::transaction_pool::TransactionPool;
 use soil_grandpa::{
 	FinalityProofProvider, GrandpaJustificationStream, SharedAuthoritySet, SharedVoterState,
 };
+pub use soil_rpc::SubscriptionTaskExecutor;
 use subsoil::api::ProvideRuntimeApi;
 use subsoil::application_crypto::RuntimeAppPublic;
 use subsoil::block_builder::BlockBuilder;
@@ -89,7 +89,7 @@ pub struct BeefyDeps<AuthorityId: AuthorityIdBound> {
 /// Extra dependencies for statement store
 pub struct StatementStoreDeps {
 	/// Shared statement store reference.
-	pub statement_store: Arc<dyn sc_rpc::statement::StatementStoreApi>,
+	pub statement_store: Arc<dyn soil_rpc::statement::StatementStoreApi>,
 	/// Executor to drive the subscription manager in the statement store RPC handler.
 	pub subscription_executor: SubscriptionTaskExecutor,
 }
@@ -159,15 +159,15 @@ where
 	AuthorityId: AuthorityIdBound,
 	<AuthorityId as RuntimeAppPublic>::Signature: Send + Sync,
 {
-	use sc_rpc::{
-		dev::{Dev, DevApiServer},
-		mixnet::MixnetApiServer,
-		statement::StatementApiServer,
-	};
 	use soil_babe::rpc::{Babe, BabeApiServer};
 	use soil_beefy::rpc::{Beefy, BeefyApiServer};
 	use soil_grandpa::rpc::{Grandpa, GrandpaApiServer};
 	use soil_mmr_rpc::{Mmr, MmrApiServer};
+	use soil_rpc::{
+		dev::{Dev, DevApiServer},
+		mixnet::MixnetApiServer,
+		statement::StatementApiServer,
+	};
 	use soil_sync_state_rpc::{SyncState, SyncStateApiServer};
 	use substrate_frame_rpc_system::{System, SystemApiServer};
 	use substrate_state_trie_migration_rpc::{StateMigration, StateMigrationApiServer};
@@ -219,7 +219,7 @@ where
 
 	io.merge(StateMigration::new(client.clone(), backend).into_rpc())?;
 	io.merge(Dev::new(client).into_rpc())?;
-	let statement_store_rpc = sc_rpc::statement::StatementStore::new(
+	let statement_store_rpc = soil_rpc::statement::StatementStore::new(
 		statement_store_deps.statement_store,
 		statement_store_deps.subscription_executor,
 	)
@@ -227,7 +227,7 @@ where
 	io.merge(statement_store_rpc)?;
 
 	if let Some(mixnet_api) = mixnet_api {
-		let mixnet = sc_rpc::mixnet::Mixnet::new(mixnet_api).into_rpc();
+		let mixnet = soil_rpc::mixnet::Mixnet::new(mixnet_api).into_rpc();
 		io.merge(mixnet)?;
 	}
 

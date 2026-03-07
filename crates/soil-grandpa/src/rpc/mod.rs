@@ -38,7 +38,7 @@ use error::Error;
 use finality::{EncodedFinalityProof, RpcFinalityProofProvider};
 use notification::JustificationNotification;
 use report::{ReportAuthoritySet, ReportVoterState, ReportedRoundStates};
-use sc_rpc::{
+use soil_rpc::{
 	utils::{BoundedVecDeque, PendingSubscription},
 	SubscriptionTaskExecutor,
 };
@@ -110,7 +110,7 @@ where
 			.subscribe(100_000)
 			.map(|x: crate::GrandpaJustification<Block>| JustificationNotification::from(x));
 
-		sc_rpc::utils::spawn_subscription_task(
+		soil_rpc::utils::spawn_subscription_task(
 			&self.executor,
 			PendingSubscription::from(pending).pipe_from_stream(stream, BoundedVecDeque::default()),
 		);
@@ -137,9 +137,9 @@ mod tests {
 	};
 	use codec::{Decode, Encode};
 	use jsonrpsee::{core::EmptyServerParams as EmptyParams, types::SubscriptionId, RpcModule};
-	use sc_rpc::testing::test_executor;
 	use soil_client::block_builder::BlockBuilderBuilder;
 	use soil_client::blockchain::HeaderBackend;
+	use soil_rpc::testing::test_executor;
 	use subsoil::core::crypto::ByteArray;
 	use subsoil::keyring::Ed25519Keyring;
 	use subsoil::runtime::traits::{Block as BlockT, Header as HeaderT};

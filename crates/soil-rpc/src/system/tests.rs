@@ -17,13 +17,13 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 use super::{helpers::SyncState, *};
+use crate::api::system::helpers::PeerInfo;
 use crate::DenyUnsafe;
 use assert_matches::assert_matches;
 use futures::prelude::*;
 use jsonrpsee::{core::EmptyServerParams as EmptyParams, MethodsError as RpcError, RpcModule};
 use soil_client::utils::mpsc::tracing_unbounded;
 use soil_network::{self, config::Role, PeerId};
-use soil_rpc::api::system::helpers::PeerInfo;
 use std::{
 	env,
 	io::{BufRead, BufReader, Write},

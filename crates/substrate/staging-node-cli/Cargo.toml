@@ -89,7 +89,6 @@ soil-informant = { workspace = true, default-features = true }
 soil-network = { workspace = true, default-features = true }
 sc-offchain = { workspace = true, default-features = true }
 soil-proposer-metrics = { workspace = true, default-features = true }
-sc-rpc = { workspace = true, default-features = true }
 soil-rpc-server = { workspace = true, default-features = true }
 soil-rpc-spec-v2 = { workspace = true, default-features = true }
 soil-service = { workspace = true, default-features = true }

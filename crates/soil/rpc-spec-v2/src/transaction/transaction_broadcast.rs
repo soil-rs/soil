@@ -250,7 +250,7 @@ where
 			broadcast_ids.insert(id.clone(), BroadcastState { handle, tx_hash });
 		}
 
-		sc_rpc::utils::spawn_subscription_task(&self.executor, fut);
+		soil_rpc::utils::spawn_subscription_task(&self.executor, fut);
 
 		Ok(Some(id))
 	}

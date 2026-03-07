@@ -24,7 +24,7 @@ use parking_lot::RwLock;
 use std::sync::Arc;
 use subsoil::consensus::beefy::AuthorityIdBound;
 
-use sc_rpc::{
+use soil_rpc::{
 	utils::{BoundedVecDeque, PendingSubscription},
 	SubscriptionTaskExecutor,
 };
@@ -145,7 +145,7 @@ where
 			.subscribe(100_000)
 			.map(|vfp| notification::EncodedVersionedFinalityProof::new::<Block, AuthorityId>(vfp));
 
-		sc_rpc::utils::spawn_subscription_task(
+		soil_rpc::utils::spawn_subscription_task(
 			&self.executor,
 			PendingSubscription::from(pending).pipe_from_stream(stream, BoundedVecDeque::default()),
 		);
@@ -187,9 +187,12 @@ mod tests {
 		let (finality_proof_sender, finality_proof_stream) =
 			BeefyVersionedFinalityProofStream::<Block, ecdsa_crypto::AuthorityId>::channel();
 
-		let handler =
-			Beefy::new(finality_proof_stream, best_block_stream, sc_rpc::testing::test_executor())
-				.expect("Setting up the BEEFY RPC handler works");
+		let handler = Beefy::new(
+			finality_proof_stream,
+			best_block_stream,
+			soil_rpc::testing::test_executor(),
+		)
+		.expect("Setting up the BEEFY RPC handler works");
 
 		(handler.into_rpc(), finality_proof_sender)
 	}

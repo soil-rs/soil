@@ -25,13 +25,13 @@ mod utils;
 mod tests;
 
 use crate::SubscriptionTaskExecutor;
+use crate::{check_if_safe, DenyUnsafe};
 use jsonrpsee::{core::async_trait, Extensions, PendingSubscriptionSink};
 use soil_client::blockchain::{HeaderBackend, HeaderMetadata};
 use soil_client::client_api::{
 	Backend, BlockBackend, BlockchainEvents, ExecutorProvider, ProofProvider, StorageProvider,
 };
 use soil_client::tracing::block::TracingExecuteBlock;
-use soil_rpc::{check_if_safe, DenyUnsafe};
 use std::sync::Arc;
 use subsoil::api::{CallApiAt, Metadata, ProvideRuntimeApi};
 use subsoil::core::{
@@ -41,7 +41,7 @@ use subsoil::core::{
 use subsoil::runtime::traits::Block as BlockT;
 use subsoil::version::RuntimeVersion;
 
-pub use soil_rpc::api::{child_state::*, state::*};
+pub use crate::api::{child_state::*, state::*};
 
 const STORAGE_KEYS_PAGED_MAX_COUNT: u32 = 1000;
 
@@ -147,7 +147,7 @@ where
 		targets: Option<String>,
 		storage_keys: Option<String>,
 		methods: Option<String>,
-	) -> Result<soil_rpc::tracing::TraceBlockResponse, Error>;
+	) -> Result<crate::tracing::TraceBlockResponse, Error>;
 
 	/// New runtime version subscription
 	fn subscribe_runtime_version(&self, pending: PendingSubscriptionSink);
@@ -324,7 +324,7 @@ where
 		targets: Option<String>,
 		storage_keys: Option<String>,
 		methods: Option<String>,
-	) -> Result<soil_rpc::tracing::TraceBlockResponse, Error> {
+	) -> Result<crate::tracing::TraceBlockResponse, Error> {
 		check_if_safe(ext)?;
 		self.backend
 			.trace_block(block, targets, storage_keys, methods)

@@ -16,30 +16,32 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-//! Substrate RPC implementation.
-//!
-//! A core implementation of Substrate RPC interfaces.
+//! Substrate mixnet API.
 
-#![warn(missing_docs)]
+use crate::api::mixnet::error::Error;
+pub use crate::api::mixnet::MixnetApiServer;
+use jsonrpsee::core::async_trait;
+use soil_network::mixnet::Api;
+use subsoil::core::Bytes;
 
-pub use jsonrpsee::core::id_providers::{
-	RandomIntegerIdProvider as RandomIntegerSubscriptionId,
-	RandomStringIdProvider as RandomStringSubscriptionId,
-};
-pub use soil_rpc::DenyUnsafe;
+/// Mixnet API.
+pub struct Mixnet(futures::lock::Mutex<Api>);
 
-pub mod author;
-pub mod chain;
-pub mod dev;
-pub mod mixnet;
-pub mod offchain;
-pub mod state;
-pub mod statement;
-pub mod system;
-pub mod utils;
+impl Mixnet {
+	/// Create a new mixnet API instance.
+	pub fn new(api: Api) -> Self {
+		Self(futures::lock::Mutex::new(api))
+	}
+}
 
-#[cfg(any(test, feature = "test-helpers"))]
-pub mod testing;
-
-/// Task executor that is being used by RPC subscriptions.
-pub type SubscriptionTaskExecutor = std::sync::Arc<dyn subsoil::core::traits::SpawnNamed>;
+#[async_trait]
+impl MixnetApiServer for Mixnet {
+	async fn submit_extrinsic(&self, extrinsic: Bytes) -> Result<(), Error> {
+		// We only hold the lock while pushing the request into the requests channel
+		let fut = {
+			let mut api = self.0.lock().await;
+			api.submit_extrinsic(extrinsic).await
+		};
+		Ok(fut.await.map_err(Error)?)
+	}
+}

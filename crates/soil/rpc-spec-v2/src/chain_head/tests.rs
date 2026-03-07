@@ -31,11 +31,11 @@ use jsonrpsee::{
 	},
 	rpc_params, MethodsError as Error, RpcModule,
 };
-use sc_rpc::testing::TokioTestExecutor;
 use soil_client::block_builder::BlockBuilderBuilder;
 use soil_client::blockchain::HeaderBackend;
 use soil_client::client_api::ChildInfo;
 use soil_client::consensus::BlockOrigin;
+use soil_rpc::testing::TokioTestExecutor;
 use soil_service::client::new_with_backend;
 use std::{
 	collections::{HashMap, HashSet, VecDeque},

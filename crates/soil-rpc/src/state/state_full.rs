@@ -30,6 +30,7 @@ use crate::{
 	DenyUnsafe, SubscriptionTaskExecutor,
 };
 
+use crate::api::state::ReadProof;
 use futures::{future, stream, StreamExt};
 use jsonrpsee::{core::async_trait, types::ErrorObject, PendingSubscriptionSink};
 use soil_client::blockchain::{
@@ -41,7 +42,6 @@ use soil_client::client_api::{
 	StorageProvider,
 };
 use soil_client::tracing::block::TracingExecuteBlock;
-use soil_rpc::api::state::ReadProof;
 use subsoil::api::{CallApiAt, Metadata, ProvideRuntimeApi};
 use subsoil::core::{
 	storage::{
@@ -478,7 +478,7 @@ where
 		targets: Option<String>,
 		storage_keys: Option<String>,
 		methods: Option<String>,
-	) -> std::result::Result<soil_rpc::tracing::TraceBlockResponse, Error> {
+	) -> std::result::Result<crate::tracing::TraceBlockResponse, Error> {
 		soil_client::tracing::block::BlockExecutor::new(
 			self.client.clone(),
 			block,

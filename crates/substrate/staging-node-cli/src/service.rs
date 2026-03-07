@@ -183,7 +183,7 @@ pub fn new_partial(
 		sc_transaction_pool::TransactionPoolHandle<Block, FullClient>,
 		(
 			impl Fn(
-				sc_rpc::SubscriptionTaskExecutor,
+				soil_rpc::SubscriptionTaskExecutor,
 			) -> Result<jsonrpsee::RpcModule<()>, soil_service::Error>,
 			(
 				soil_babe::BabeBlockImport<

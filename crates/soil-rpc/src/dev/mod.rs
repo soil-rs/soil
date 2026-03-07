@@ -22,9 +22,9 @@
 #[cfg(test)]
 mod tests;
 
+use crate::{api::dev::error::Error, check_if_safe};
 use jsonrpsee::Extensions;
 use soil_client::client_api::{BlockBackend, HeaderBackend};
-use soil_rpc::{api::dev::error::Error, check_if_safe};
 use std::{
 	marker::{PhantomData, Send, Sync},
 	sync::Arc,
@@ -36,7 +36,7 @@ use subsoil::runtime::{
 	traits::{Block as BlockT, Header},
 };
 
-pub use soil_rpc::api::dev::{BlockStats, DevApiServer};
+pub use crate::api::dev::{BlockStats, DevApiServer};
 
 type HasherOf<Block> = <<Block as BlockT>::Header as Header>::Hashing;
 

@@ -222,7 +222,6 @@ members = [
 	"crates/substrate/substrate-wasm-builder",
 	"crates/substrate-client/authority-discovery",
 	"crates/substrate-client/offchain",
-	"crates/substrate-client/rpc",
 	"crates/substrate-client/transaction-pool",
 ]
 
@@ -426,7 +425,6 @@ soil-network = { path = "crates/soil-network", default-features = false }
 soil-network-test = { path = "crates/soil/network-test" }
 sc-offchain = { path = "crates/substrate-client/offchain", default-features = false }
 soil-proposer-metrics = { path = "crates/soil/proposer-metrics", default-features = false }
-sc-rpc = { path = "crates/substrate-client/rpc", default-features = false }
 soil-rpc-server = { path = "crates/soil/rpc-server", default-features = false }
 soil-rpc-spec-v2 = { path = "crates/soil/rpc-spec-v2", default-features = false }
 soil-test = { path = "crates/soil-test" }

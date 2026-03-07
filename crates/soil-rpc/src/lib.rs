@@ -20,11 +20,30 @@
 #![warn(missing_docs)]
 
 pub mod api;
+pub mod author;
+pub mod chain;
+pub mod dev;
 pub mod list;
+pub mod mixnet;
 pub mod number;
+pub mod offchain;
+pub mod state;
+pub mod statement;
+pub mod system;
 pub mod tracing;
+pub mod utils;
 
 pub use api::{check_if_safe, DenyUnsafe, UnsafeRpcError};
+pub use jsonrpsee::core::id_providers::{
+	RandomIntegerIdProvider as RandomIntegerSubscriptionId,
+	RandomStringIdProvider as RandomStringSubscriptionId,
+};
+
+#[cfg(any(test, feature = "test-helpers"))]
+pub mod testing;
+
+/// Task executor that is being used by RPC subscriptions.
+pub type SubscriptionTaskExecutor = std::sync::Arc<dyn subsoil::core::traits::SpawnNamed>;
 
 /// A util function to assert the result of serialization and deserialization is the same.
 #[cfg(test)]

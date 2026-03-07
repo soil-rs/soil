@@ -31,7 +31,6 @@ use futures::{
 	stream::{self, Stream, StreamExt, TryStreamExt},
 };
 use log::debug;
-use sc_rpc::utils::Subscription;
 use schnellru::{ByLength, LruMap};
 use soil_client::blockchain::{
 	Backend as BlockChainBackend, Error as BlockChainError, HeaderBackend, HeaderMetadata, Info,
@@ -40,6 +39,7 @@ use soil_client::client_api::{
 	Backend, BlockBackend, BlockImportNotification, BlockchainEvents, FinalityNotification,
 	StaleBlock,
 };
+use soil_rpc::utils::Subscription;
 use std::{
 	collections::{HashSet, VecDeque},
 	sync::Arc,
@@ -733,7 +733,7 @@ where
 		tokio::pin!(stream);
 
 		let sink_future =
-			sink.pipe_from_try_stream(stream, sc_rpc::utils::BoundedVecDeque::new(buffer_cap));
+			sink.pipe_from_try_stream(stream, soil_rpc::utils::BoundedVecDeque::new(buffer_cap));
 
 		let result = tokio::select! {
 			_ = rx_stop => Ok(()),

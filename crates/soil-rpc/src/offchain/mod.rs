@@ -22,11 +22,11 @@
 mod tests;
 
 use self::error::Error;
+/// Re-export the API for backward compatibility.
+pub use crate::api::offchain::*;
+use crate::check_if_safe;
 use jsonrpsee::{core::async_trait, Extensions};
 use parking_lot::RwLock;
-/// Re-export the API for backward compatibility.
-pub use soil_rpc::api::offchain::*;
-use soil_rpc::check_if_safe;
 use std::sync::Arc;
 use subsoil::core::{
 	offchain::{OffchainStorage, StorageKind},
