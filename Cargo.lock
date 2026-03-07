@@ -4852,16 +4852,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6800badb6cb2082ffd7b6a67e6125bb39f18782f793520caee8cb8846be06112"
 
 [[package]]
-name = "libfuzzer-sys"
-version = "0.4.12"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f12a681b7dd8ce12bff52488013ba614b869148d54dd79836ab85aafdd53f08d"
-dependencies = [
- "arbitrary",
- "cc",
-]
-
-[[package]]
 name = "libm"
 version = "0.2.16"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -10828,6 +10818,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "soil-test-fuzz"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "honggfuzz",
+ "rand 0.8.5",
+ "regex",
+ "subsoil",
+]
+
+[[package]]
 name = "soil-transaction-storage-proof"
 version = "26.0.0"
 dependencies = [
@@ -10889,15 +10890,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "sp-core-fuzz"
-version = "0.0.0"
-dependencies = [
- "libfuzzer-sys",
- "regex",
- "subsoil",
-]
-
-[[package]]
 name = "sp-crypto-hashing"
 version = "0.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -10909,16 +10901,6 @@ dependencies = [
  "sha2 0.10.9",
  "sha3",
  "twox-hash 1.6.3",
-]
-
-[[package]]
-name = "sp-npos-elections-fuzzer"
-version = "2.0.0-alpha.5"
-dependencies = [
- "clap",
- "honggfuzz",
- "rand 0.8.5",
- "subsoil",
 ]
 
 [[package]]

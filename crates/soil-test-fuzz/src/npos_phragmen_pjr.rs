@@ -23,11 +23,11 @@
 //! Honggfuzz shuts down each individual loop iteration after a configurable time limit.
 //! It can be helpful to run a single iteration on your hardware to help benchmark how long that
 //! time limit should reasonably be. Simply run the program without the `fuzzing` configuration to
-//! run a single iteration: `cargo run --bin phragmen_pjr`.
+//! run a single iteration: `cargo run -p soil-test-fuzz --bin npos_phragmen_pjr`.
 //!
 //! ## Running
 //!
-//! Run with `HFUZZ_RUN_ARGS="-t 10" cargo hfuzz run phragmen_pjr`.
+//! Run with `HFUZZ_RUN_ARGS="-t 10" cargo hfuzz run npos_phragmen_pjr`.
 //!
 //! Note the environment variable: by default, `cargo hfuzz` shuts down each iteration after 1
 //! second of runtime. We significantly increase that to ensure that the fuzzing gets a chance to
@@ -36,7 +36,7 @@
 //! ## Debugging a panic
 //!
 //! Once a panic is found, it can be debugged with
-//! `HFUZZ_RUN_ARGS="-t 10" cargo hfuzz run-debug phragmen_pjr hfuzz_workspace/phragmen_pjr/*.fuzz`.
+//! `HFUZZ_RUN_ARGS="-t 10" cargo hfuzz run-debug npos_phragmen_pjr hfuzz_workspace/npos_phragmen_pjr/*.fuzz`.
 
 #[cfg(fuzzing)]
 use honggfuzz::fuzz;
@@ -44,8 +44,8 @@ use honggfuzz::fuzz;
 #[cfg(not(fuzzing))]
 use clap::Parser;
 
-mod common;
-use common::{generate_random_npos_inputs, to_range};
+mod npos_common;
+use npos_common::{generate_random_npos_inputs, to_range};
 use rand::{self, SeedableRng};
 use subsoil::npos_elections::{
 	pjr_check_core, seq_phragmen_core, setup_inputs, standard_threshold,

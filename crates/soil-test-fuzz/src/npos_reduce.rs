@@ -23,17 +23,17 @@
 //!
 //! # Running
 //!
-//! Run with `cargo hfuzz run reduce`. `honggfuzz`.
+//! Run with `cargo hfuzz run npos_reduce`. `honggfuzz`.
 //!
 //! # Debugging a panic
 //!
 //! Once a panic is found, it can be debugged with
-//! `cargo hfuzz run-debug reduce hfuzz_workspace/reduce/*.fuzz`.
+//! `cargo hfuzz run-debug npos_reduce hfuzz_workspace/npos_reduce/*.fuzz`.
 
 use honggfuzz::fuzz;
 
-mod common;
-use common::to_range;
+mod npos_common;
+use npos_common::to_range;
 use rand::{self, Rng, RngCore, SeedableRng};
 use subsoil::npos_elections::{reduce, to_support_map, ExtendedBalance, StakedAssignment};
 

@@ -1,13 +1,12 @@
 [package]
-name = "sp-npos-elections-fuzzer"
-version = "2.0.0-alpha.5"
+name = "soil-test-fuzz"
+version = "0.1.0"
 authors.workspace = true
 edition.workspace = true
 license.workspace = true
 homepage.workspace = true
 repository.workspace = true
-description = "Fuzzer for phragmén implementation."
-documentation = "https://docs.rs/sp-npos-elections-fuzzer"
+description = "Workspace fuzz harnesses for Soil crates."
 publish = false
 
 [lints]
@@ -17,23 +16,28 @@ workspace = true
 targets = ["x86_64-unknown-linux-gnu"]
 
 [[bin]]
-name = "reduce"
-path = "src/reduce.rs"
+name = "core_address_uri"
+path = "src/core_address_uri.rs"
 
 [[bin]]
-name = "phragmen_balancing"
-path = "src/phragmen_balancing.rs"
+name = "npos_reduce"
+path = "src/npos_reduce.rs"
 
 [[bin]]
-name = "phragmms_balancing"
-path = "src/phragmms_balancing.rs"
+name = "npos_phragmen_balancing"
+path = "src/npos_phragmen_balancing.rs"
 
 [[bin]]
-name = "phragmen_pjr"
-path = "src/phragmen_pjr.rs"
+name = "npos_phragmms_balancing"
+path = "src/npos_phragmms_balancing.rs"
+
+[[bin]]
+name = "npos_phragmen_pjr"
+path = "src/npos_phragmen_pjr.rs"
 
 [dependencies]
 clap = { features = ["derive"], workspace = true }
 honggfuzz = { workspace = true }
 rand = { features = ["small_rng", "std"], workspace = true, default-features = true }
+regex = { workspace = true }
 subsoil = { workspace = true, default-features = true }
