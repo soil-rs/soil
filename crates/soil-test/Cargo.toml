@@ -32,9 +32,13 @@ soil-client = { workspace = true, features = ["test-helpers"], default-features 
 soil-consensus = { workspace = true, default-features = true }
 soil-network = { workspace = true, default-features = true }
 soil-service = { workspace = true, default-features = true }
+sp-runtime-interface-test-wasm = { workspace = true }
+sp-runtime-interface-test-wasm-deprecated = { workspace = true }
 subsoil = { workspace = true, default-features = true }
 tempfile = { workspace = true }
 tokio = { workspace = true, default-features = true }
+tracing = { workspace = true, default-features = true }
+tracing-core = { workspace = true, default-features = true }
 substrate-test-runtime = { workspace = true }
 substrate-test-runtime-client = { workspace = true }
 wat = { workspace = true }

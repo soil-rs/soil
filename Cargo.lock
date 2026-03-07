@@ -9488,11 +9488,15 @@ dependencies = [
  "soil-consensus",
  "soil-network",
  "soil-service",
+ "sp-runtime-interface-test-wasm",
+ "sp-runtime-interface-test-wasm-deprecated",
  "subsoil",
  "substrate-test-runtime",
  "substrate-test-runtime-client",
  "tempfile",
  "tokio",
+ "tracing",
+ "tracing-core",
  "wat",
 ]
 
@@ -9613,18 +9617,6 @@ dependencies = [
  "honggfuzz",
  "rand 0.8.5",
  "subsoil",
-]
-
-[[package]]
-name = "sp-runtime-interface-test"
-version = "2.0.0"
-dependencies = [
- "soil-client",
- "sp-runtime-interface-test-wasm",
- "sp-runtime-interface-test-wasm-deprecated",
- "subsoil",
- "tracing",
- "tracing-core",
 ]
 
 [[package]]

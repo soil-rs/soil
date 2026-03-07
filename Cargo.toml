@@ -33,7 +33,6 @@ members = [
 	"crates/soil/offchain",
 	"crates/soil-rpc",
 	"crates/soil-test",
-	"crates/soil/runtime-interface/test",
 	"crates/soil/runtime-interface/test-wasm",
 	"crates/soil/runtime-interface/test-wasm-deprecated",
 	"crates/soil/runtime-test",
