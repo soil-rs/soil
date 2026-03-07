@@ -290,6 +290,6 @@ mod tests {
 		assert_eq!(original_peer_id.to_bytes(), peer_id.to_bytes());
 
 		let key = peer_id.into_ed25519().unwrap();
-		assert_eq!(PeerId::from_ed25519(&key).unwrap(), original_peer_id.into());
+		assert_eq!(PeerId::from_ed25519(&key).unwrap(), PeerId::from(original_peer_id));
 	}
 }

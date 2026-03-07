@@ -38,25 +38,22 @@ there are no production-dep cycles remaining.
 > 10 crates) was eliminated by merging into `subsoil`. The old Client-Executor,
 > Statement, and Service-RPC SCCs collapsed into one larger dev-only cluster
 > through shared test-runtime edges. Since then, the `soil-client` consolidation
-> removed the client/executor half of that cluster entirely. The remaining large
-> SCC is now a network/RPC/service/test-infra cluster rather than a
-> client-network-service mega-cluster.
+> removed the client/executor half of that cluster, and the `soil-network`
+> merge collapsed the split network/statement/mixnet crates. The remaining
+> large SCC is now a smaller service/RPC/network/consensus test cluster rather
+> than a client-network-service mega-cluster.
 
-### SCC 1: Network-RPC-Service test cluster (19 crates)
+### SCC 1: Service-RPC-Network-Consensus test cluster (14 crates)
 
 All cycles go through dev-dependencies (`substrate-test-runtime-client`,
 `substrate-test-runtime`, etc.). The production-dep subgraph is acyclic.
-`soil-client` is no longer part of this SCC.
+`soil-client` is no longer part of this SCC, and the old split
+network/statement/mixnet crates have been collapsed into `soil-network`.
 
 ```
-Network / statement:
+Network / consensus:
+  soil-consensus
   soil-network
-  soil-network-light
-  soil-network-sync
-  soil-network-statement
-  soil-network-transactions
-  sc-mixnet
-  sc-statement-store
 
 RPC:
   soil-rpc-api
@@ -193,7 +190,7 @@ The RPC companion crates move with their engine crates rather than into
 `soil-rpc`. This matches how users configure nodes: consensus selection is an
 explicit choice.
 
-### `soil-network` — Networking stack (~10 crates → 1)
+### `soil-network` — Networking stack (~10 crates → 1) ✅ COMPLETE
 
 | Absorb | Reason |
 |---|---|
@@ -201,6 +198,10 @@ explicit choice.
 | soil-network-sync + soil-network-gossip + soil-network-light | Always with network |
 | soil-network-transactions + soil-network-statement + sc-statement-store | SCC 1 pair collapses |
 | sc-mixnet | Service-side mixnet integration over `soil-network` + `subsoil::mixnet` |
+
+Merged. `soil-network` now owns the p2p/common/types/light/sync/gossip/
+transactions/statement/statement_store/mixnet service stack. Runtime-facing
+mixnet protocol types remain in `subsoil::mixnet`.
 
 ### `soil-rpc` — RPC layer (~11 crates → 1)
 
@@ -262,15 +263,15 @@ Re-exports everything. Consumers write `soil = { features = ["client", "aura", "
 | **soil-client** | client-api, executor (4), blockchain, db (2), tx-pool-api, storage-monitor, utils, maybe-compressed-blob, sc-tracing, sc-block-builder, sc-keystore | ~16 | ✅ |
 | **soil-consensus** | sc-consensus, sc-consensus-slots, soil-consensus-epochs | 3 | ✅ |
 | **soil-{aura,babe,beefy,grandpa,pow}** | selectable consensus engines; babe/beefy/grandpa also absorb their RPC crates | 8 → 5 | ✅ |
-| **soil-network** | p2p, sync, gossip, statements | ~10 | Pending |
+| **soil-network** | p2p, common/types, light, sync, gossip, transactions, statements, mixnet service | ~10 | ✅ |
 | **soil-rpc** | rpc server, spec, endpoints, rpc client/helpers | ~11 | Pending |
 | **soil-service** | service, chain-spec, cli, infra | ~9 | Pending |
 | **soil-txpool** | sc-transaction-pool | 1 | Pending |
-| **misc standalone** | mmr, mixnet, staking, fork-tree, test crates | ~12 | — |
+| **misc standalone** | mmr, staking, fork-tree, test crates | ~12 | — |
 | **soil** | umbrella re-export | 1 | Pending |
 
 **96 non-topsoil crates → low-teens major crates plus a small set of intentional
-standalones.** All 3 remaining circular dependency clusters (all dev-dep-only)
-become crate-internal. SCC 1 (19 crates) is now a network/RPC/service/test
-cluster — `soil-client` is already out of it, and the remaining merges will
-collapse the rest.
+standalones.** All 3 remaining circular dependency clusters are still
+dev-dep-only. SCC 1 is now down to 14 crates after the `soil-network` merge;
+the remaining work is concentrated in `soil-rpc`, `soil-service`, and
+`soil-txpool`.

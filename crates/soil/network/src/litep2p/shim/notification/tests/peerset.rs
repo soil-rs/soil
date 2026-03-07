@@ -64,7 +64,7 @@ async fn inbound_substream_for_outbound_peer() {
 		false,
 		Default::default(),
 		Default::default(),
-		peerstore_handle,
+		peerstore_handle.clone(),
 	);
 	assert_eq!(peerset.num_in(), 0usize);
 	assert_eq!(peerset.num_out(), 0usize);
@@ -113,7 +113,7 @@ async fn canceled_peer_gets_banned() {
 		true,
 		peers.clone(),
 		Default::default(),
-		peerstore_handle,
+		peerstore_handle.clone(),
 	);
 	assert_eq!(peerset.num_in(), 0usize);
 	assert_eq!(peerset.num_out(), 0usize);
@@ -1156,7 +1156,7 @@ async fn reserved_only_rejects_non_reserved_peers() {
 		true,
 		reserved_peers.clone(),
 		connected_peers.clone(),
-		peerstore_handle,
+		peerstore_handle.clone(),
 	);
 	assert_eq!(peerset.num_in(), 0usize);
 	assert_eq!(peerset.num_out(), 0usize);
@@ -1196,6 +1196,9 @@ async fn reserved_only_rejects_non_reserved_peers() {
 
 	// Step 2. Ensure non-reserved peers are rejected.
 	let normal_peers: Vec<PeerId> = vec![PeerId::random(), PeerId::random(), PeerId::random()];
+	for peer in &normal_peers {
+		peerstore_handle.add_known_peer(*peer);
+	}
 	{
 		// Report the peers as inbound for validation purposes.
 		for peer in &normal_peers {

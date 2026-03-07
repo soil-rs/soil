@@ -324,7 +324,7 @@ async fn feedback_works() {
 
 	let rx = match rx.recv().await {
 		Ok(IncomingRequest { peer, payload, pending_response }) => {
-			assert_eq!(peer, peer2.into());
+			assert_eq!(peer, PeerId::from(peer2));
 			assert_eq!(payload, vec![1, 2, 3, 4]);
 
 			let (tx, rx) = oneshot::channel();
@@ -474,7 +474,7 @@ async fn fallback_request_compatible_peers() {
 
 	match rx2.recv().await {
 		Ok(IncomingRequest { peer, payload, pending_response }) => {
-			assert_eq!(peer, peer1.into());
+			assert_eq!(peer, PeerId::from(peer1));
 			assert_eq!(payload, vec![1, 2, 3, 4]);
 			pending_response
 				.send(OutgoingResponse {
@@ -616,7 +616,7 @@ async fn fallback_request_old_peer_receives() {
 
 	match rx2.recv().await {
 		Ok(IncomingRequest { peer, payload, pending_response }) => {
-			assert_eq!(peer, peer1.into());
+			assert_eq!(peer, PeerId::from(peer1));
 			assert_eq!(payload, vec![1, 3, 3, 7]);
 			pending_response
 				.send(OutgoingResponse {
@@ -758,7 +758,7 @@ async fn fallback_request_old_peer_sends() {
 
 	match rx_fallback.recv().await {
 		Ok(IncomingRequest { peer, payload, pending_response }) => {
-			assert_eq!(peer, peer2.into());
+			assert_eq!(peer, PeerId::from(peer2));
 			assert_eq!(payload, vec![1, 2, 3, 4]);
 			pending_response
 				.send(OutgoingResponse {

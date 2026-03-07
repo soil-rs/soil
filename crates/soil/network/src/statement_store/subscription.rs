@@ -465,7 +465,7 @@ impl Stream for SubscriptionStatementsStream {
 #[cfg(test)]
 mod tests {
 
-	use crate::tests::signed_statement;
+	use super::super::tests::signed_statement;
 
 	use super::*;
 	use soil_statement_store::Topic;

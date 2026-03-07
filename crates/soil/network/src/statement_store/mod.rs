@@ -1494,7 +1494,7 @@ impl StatementStoreSubscriptionApi for Store {
 #[cfg(test)]
 mod tests {
 
-	use crate::{col, Store};
+	use super::{col, Store, MAX_STATEMENT_SIZE};
 	use soil_client::keystore::Keystore;
 	use soil_statement_store::{
 		AccountId, Channel, DecryptionKey, InvalidReason, Proof, Statement, StatementSource,
@@ -1536,7 +1536,7 @@ mod tests {
 				2 => StatementAllowance::new(2, 1000),
 				3 => StatementAllowance::new(3, 1000),
 				4 => StatementAllowance::new(4, 1000),
-				42 => StatementAllowance::new(42, (42 * crate::MAX_STATEMENT_SIZE) as u32),
+				42 => StatementAllowance::new(42, (42 * MAX_STATEMENT_SIZE) as u32),
 				_ => StatementAllowance::new(100, 1000),
 			};
 			Ok(Some(soil_client::client_api::StorageData(allowance.encode())))
@@ -1943,21 +1943,18 @@ mod tests {
 	#[test]
 	fn max_statement_size_for_gossiping() {
 		let (store, _temp) = test_store();
-		store.index.write().options.max_total_size = 42 * crate::MAX_STATEMENT_SIZE;
+		store.index.write().options.max_total_size = 42 * MAX_STATEMENT_SIZE;
 
 		assert_eq!(
 			store.submit(
-				statement(42, 1, Some(1), crate::MAX_STATEMENT_SIZE - 500),
+				statement(42, 1, Some(1), MAX_STATEMENT_SIZE - 500),
 				StatementSource::Local
 			),
 			SubmitResult::New
 		);
 
 		assert!(matches!(
-			store.submit(
-				statement(42, 2, Some(1), 2 * crate::MAX_STATEMENT_SIZE),
-				StatementSource::Local
-			),
+			store.submit(statement(42, 2, Some(1), 2 * MAX_STATEMENT_SIZE), StatementSource::Local),
 			SubmitResult::Invalid(_)
 		));
 	}

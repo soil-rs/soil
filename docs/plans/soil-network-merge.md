@@ -69,7 +69,7 @@ service-side networking crates into the flattened `soil-network` layout. See
 - [x] Step 9: Merge `soil-network-statement` and `sc-statement-store` into
       `soil_network::{statement,statement_store}`.
 - [x] Step 10: Merge `sc-mixnet` into `soil_network::mixnet`.
-- [ ] Step 11: Final consistency pass and spec update.
+- [x] Step 11: Final consistency pass and spec update.
 
 ## Validation Log
 
@@ -93,3 +93,9 @@ service-side networking crates into the flattened `soil-network` layout. See
   `cargo check -p soil-network -p soil-cli -p soil-rpc-api -p sc-rpc -p node-rpc -p staging-node-cli`
 - Step 11:
   `cargo test --all --release`
+  Additional fallout reruns:
+  `cargo test -p soil-network reserved_only_rejects_non_reserved_peers --release -- --nocapture`
+  `cargo test -p staging-node-cli --test telemetry --release -- --nocapture`
+  `cargo test -p soil-network libp2p_disconnects_libp2p_substream --release -- --nocapture`
+  `cargo test -p soil-network-test syncs_all_forks_from_single_peer --release -- --nocapture`
+  `cargo test -p soil-network --doc --release`

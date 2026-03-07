@@ -120,12 +120,12 @@ impl fmt::Debug for ProtocolId {
 /// # Example
 ///
 /// ```
-/// # use crate::types::{multiaddr::Multiaddr, PeerId};
+/// # use soil_network::types::{multiaddr::Multiaddr, PeerId};
 /// use soil_network::config::parse_str_addr;
 /// let (peer_id, addr) = parse_str_addr(
 /// 	"/ip4/198.51.100.19/tcp/30333/p2p/QmSk5HQbn6LhUwDiNMseVUjuRYhEtYj4aUZ6WfWoGURpdV"
 /// ).unwrap();
-/// assert_eq!(peer_id, "QmSk5HQbn6LhUwDiNMseVUjuRYhEtYj4aUZ6WfWoGURpdV".parse::<PeerId>().unwrap().into());
+/// assert_eq!(peer_id, "QmSk5HQbn6LhUwDiNMseVUjuRYhEtYj4aUZ6WfWoGURpdV".parse::<PeerId>().unwrap());
 /// assert_eq!(addr, "/ip4/198.51.100.19/tcp/30333".parse::<Multiaddr>().unwrap());
 /// ```
 pub fn parse_str_addr(addr_str: &str) -> Result<(PeerId, Multiaddr), ParseErr> {
@@ -151,7 +151,7 @@ pub fn parse_addr(mut addr: Multiaddr) -> Result<(PeerId, Multiaddr), ParseErr> 
 /// # Example
 ///
 /// ```
-/// # use crate::types::{multiaddr::Multiaddr, PeerId};
+/// # use soil_network::types::{multiaddr::Multiaddr, PeerId};
 /// use soil_network::config::MultiaddrWithPeerId;
 /// let addr: MultiaddrWithPeerId =
 /// 	"/ip4/198.51.100.19/tcp/30333/p2p/QmSk5HQbn6LhUwDiNMseVUjuRYhEtYj4aUZ6WfWoGURpdV".parse().unwrap();

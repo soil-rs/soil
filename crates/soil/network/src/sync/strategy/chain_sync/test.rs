@@ -425,7 +425,7 @@ fn do_ancestor_search_when_common_block_to_best_queued_gap_is_to_big() {
 						Ok(BlockImportStatus::ImportedUnknown(
 							*b.header().number(),
 							Default::default(),
-							Some(peer_id1),
+							Some(peer_id1.into()),
 						)),
 						b.hash(),
 					)
@@ -642,7 +642,7 @@ fn can_sync_huge_fork() {
 						Ok(BlockImportStatus::ImportedUnknown(
 							*b.header().number(),
 							Default::default(),
-							Some(peer_id1),
+							Some(peer_id1.into()),
 						)),
 						b.hash(),
 					)
@@ -810,7 +810,7 @@ fn syncs_fork_without_duplicate_requests() {
 					Ok(BlockImportStatus::ImportedUnknown(
 						*b.header().number(),
 						Default::default(),
-						Some(peer_id1),
+						Some(peer_id1.into()),
 					)),
 					b.hash(),
 				)
@@ -1263,7 +1263,7 @@ fn sync_verification_failed_with_gap_filled() {
 					Ok(BlockImportStatus::ImportedUnknown(
 						*b.header().number(),
 						Default::default(),
-						Some(peer_id1),
+						Some(peer_id1.into()),
 					)),
 					b.hash(),
 				)
@@ -1359,7 +1359,7 @@ fn sync_gap_filled_regardless_of_blocks_origin() {
 			Ok(BlockImportStatus::ImportedUnknown(
 				*blocks[0].header().number(),
 				Default::default(),
-				Some(peer_id1),
+				Some(peer_id1.into()),
 			)),
 			blocks[0].hash(),
 		)];
@@ -1379,7 +1379,10 @@ fn sync_gap_filled_regardless_of_blocks_origin() {
 
 		// Announce the block as known.
 		let results = [(
-			Ok(BlockImportStatus::ImportedKnown(*blocks[0].header().number(), Some(peer_id1))),
+			Ok(BlockImportStatus::ImportedKnown(
+				*blocks[0].header().number(),
+				Some(peer_id1.into()),
+			)),
 			blocks[0].hash(),
 		)];
 

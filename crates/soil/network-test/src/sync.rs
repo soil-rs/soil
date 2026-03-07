@@ -1045,8 +1045,20 @@ async fn syncs_all_forks_from_single_peer() {
 
 	net.run_until_sync().await;
 
-	assert!(net.peer(1).client().header(branch1).unwrap().is_some());
-	assert!(net.peer(1).client().header(branch2).unwrap().is_some());
+	futures::future::poll_fn::<(), _>(|cx| {
+		net.poll(cx);
+
+		if net.peer(1).client().header(branch1).unwrap().is_none() {
+			return Poll::Pending;
+		}
+
+		if net.peer(1).client().header(branch2).unwrap().is_none() {
+			return Poll::Pending;
+		}
+
+		Poll::Ready(())
+	})
+	.await;
 }
 
 #[tokio::test(flavor = "multi_thread", worker_threads = 2)]

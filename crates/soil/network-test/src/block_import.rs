@@ -31,7 +31,7 @@ use substrate_test_runtime_client::{
 	runtime::{Block, Hash},
 };
 
-fn prepare_good_block() -> (TestClient, Hash, u64, PeerId, IncomingBlock<Block>) {
+fn prepare_good_block() -> (TestClient, Hash, u64, soil_network::PeerId, IncomingBlock<Block>) {
 	let client = substrate_test_runtime_client::new();
 	let block = BlockBuilderBuilder::new(&client)
 		.on_parent_block(client.chain_info().best_hash)
@@ -46,7 +46,7 @@ fn prepare_good_block() -> (TestClient, Hash, u64, PeerId, IncomingBlock<Block>)
 	let (hash, number) = (client.block_hash(1).unwrap().unwrap(), 1);
 	let header = client.header(hash).unwrap();
 	let justifications = client.justifications(hash).unwrap();
-	let peer_id = PeerId::random();
+	let peer_id = soil_network::PeerId::random();
 	(
 		client,
 		hash,
