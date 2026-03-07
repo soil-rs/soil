@@ -15,31 +15,29 @@
 
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
+use crate::consensus::BlockOrigin;
+use crate::utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
 use futures::{
 	prelude::*,
 	task::{Context, Poll},
 };
 use log::{debug, trace};
 use prometheus_endpoint::Registry;
-use soil_client::consensus::BlockOrigin;
-use soil_client::utils::mpsc::{
-	tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender,
-};
 use std::pin::Pin;
 use subsoil::runtime::{
 	traits::{Block as BlockT, Header as HeaderT, NumberFor},
 	Justification, Justifications,
 };
 
-use crate::{
-	import_queue::{
+use crate::import::{
+	metrics::Metrics,
+	queue::{
 		buffered_link::{self, BufferedLinkReceiver, BufferedLinkSender},
 		import_single_block_metered, verify_single_block_metered, BlockImportError,
 		BlockImportStatus, BoxBlockImport, BoxJustificationImport, ImportQueue, ImportQueueService,
 		IncomingBlock, JustificationImportResult, Link, RuntimeOrigin,
 		SingleBlockVerificationOutcome, Verifier, LOG_TARGET,
 	},
-	metrics::Metrics,
 };
 
 /// Interface to a basic block import queue that is importing blocks sequentially in a separate
@@ -364,7 +362,7 @@ impl<B: BlockT> BlockImportWorker<B> {
 				});
 				match result {
 					Ok(()) => JustificationImportResult::Success,
-					Err(soil_client::consensus::Error::OutdatedJustification) => {
+					Err(crate::consensus::Error::OutdatedJustification) => {
 						JustificationImportResult::OutdatedJustification
 					},
 					Err(_) => JustificationImportResult::Failure,
@@ -511,7 +509,7 @@ mod tests {
 		block_import::{
 			BlockCheckParams, BlockImport, BlockImportParams, ImportResult, JustificationImport,
 		},
-		import_queue::Verifier,
+		import::queue::Verifier,
 	};
 	use futures::{executor::block_on, Future};
 	use parking_lot::Mutex;
@@ -529,7 +527,7 @@ mod tests {
 
 	#[async_trait::async_trait]
 	impl BlockImport<Block> for () {
-		type Error = soil_client::consensus::Error;
+		type Error = crate::consensus::Error;
 
 		async fn check_block(
 			&self,
@@ -548,7 +546,7 @@ mod tests {
 
 	#[async_trait::async_trait]
 	impl JustificationImport<Block> for () {
-		type Error = soil_client::consensus::Error;
+		type Error = crate::consensus::Error;
 
 		async fn on_start(&mut self) -> Vec<(Hash, BlockNumber)> {
 			Vec::new()

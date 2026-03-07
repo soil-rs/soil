@@ -22,7 +22,7 @@ use super::{
 };
 use rand::Rng;
 use serde_with::{DeserializeFromStr, SerializeDisplay};
-use soil_consensus::import_queue::RuntimeOrigin;
+use soil_client::import::RuntimeOrigin;
 
 use std::{fmt, hash::Hash, str::FromStr};
 

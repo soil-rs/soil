@@ -23,10 +23,7 @@ use node_cli::service::{create_extrinsic, FullClient};
 use soil_client::block_builder::{BlockBuilderBuilder, BuiltBlock};
 use soil_client::blockchain::{ApplyExtrinsicFailed::Validity, Error::ApplyExtrinsicFailed};
 use soil_client::consensus::BlockOrigin;
-use soil_consensus::{
-	block_import::{BlockImportParams, ForkChoiceStrategy},
-	BlockImport, StateAction,
-};
+use soil_client::import::{BlockImport, BlockImportParams, ForkChoiceStrategy, StateAction};
 use soil_service::config::{ExecutorConfiguration, RpcConfiguration};
 use soil_service::{
 	config::{
@@ -132,8 +129,9 @@ fn extrinsic_set_time(now: u64) -> OpaqueExtrinsic {
 
 fn import_block(client: &FullClient, built: BuiltBlock<node_primitives::Block>) {
 	let mut params = BlockImportParams::new(BlockOrigin::File, built.block.header);
-	params.state_action =
-		StateAction::ApplyChanges(soil_consensus::StorageChanges::Changes(built.storage_changes));
+	params.state_action = StateAction::ApplyChanges(soil_client::import::StorageChanges::Changes(
+		built.storage_changes,
+	));
 	params.fork_choice = Some(ForkChoiceStrategy::LongestChain);
 	futures::executor::block_on(client.import_block(params))
 		.expect("importing a block doesn't fail");

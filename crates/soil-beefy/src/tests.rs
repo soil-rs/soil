@@ -47,11 +47,11 @@ use soil_client::client_api::{
 	Backend as BackendT, BlockchainEvents, FinalityNotifications, HeaderBackend,
 };
 use soil_client::consensus::BlockOrigin;
-use soil_client::utils::{mpsc::TracingUnboundedReceiver, notification::NotificationReceiver};
-use soil_consensus::{
+use soil_client::import::{
 	BlockImport, BlockImportParams, BoxJustificationImport, ForkChoiceStrategy, ImportResult,
 	ImportedAux,
 };
+use soil_client::utils::{mpsc::TracingUnboundedReceiver, notification::NotificationReceiver};
 use soil_network::{config::RequestResponseConfig, ProtocolName};
 use soil_network_test::{
 	Block, BlockImportAdapter, FullPeerConfig, PassThroughVerifier, Peer, PeersClient,

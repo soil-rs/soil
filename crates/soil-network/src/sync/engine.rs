@@ -47,10 +47,10 @@ use tokio::time::{Interval, MissedTickBehavior};
 use soil_client::blockchain::{Error as ClientError, HeaderMetadata};
 use soil_client::client_api::{BlockBackend, HeaderBackend, ProofProvider};
 use soil_client::consensus::{block_validation::BlockAnnounceValidator, BlockOrigin};
+use soil_client::import::{ImportQueueService, IncomingBlock};
 use soil_client::utils::mpsc::{
 	tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender,
 };
-use soil_consensus::{import_queue::ImportQueueService, IncomingBlock};
 use soil_network::common::{
 	role::Roles,
 	sync::message::{BlockAnnounce, BlockAnnouncesHandshake, BlockState},
@@ -677,18 +677,20 @@ where
 				self.strategy.on_blocks_processed(imported, count, results);
 			},
 			ToServiceCommand::JustificationImported(peer_id, hash, number, import_result) => {
-				let success =
-					matches!(import_result, soil_consensus::JustificationImportResult::Success);
+				let success = matches!(
+					import_result,
+					soil_client::import::JustificationImportResult::Success
+				);
 				self.strategy.on_justification_import(hash, number, success);
 
 				match import_result {
-					soil_consensus::JustificationImportResult::OutdatedJustification => {
+					soil_client::import::JustificationImportResult::OutdatedJustification => {
 						log::info!(
 							target: LOG_TARGET,
 							"💔 Outdated justification provided by {peer_id} for #{hash}",
 						);
 					},
-					soil_consensus::JustificationImportResult::Failure => {
+					soil_client::import::JustificationImportResult::Failure => {
 						log::info!(
 							target: LOG_TARGET,
 							"💔 Invalid justification provided by {peer_id} for #{hash}",
@@ -700,7 +702,7 @@ where
 							ReputationChange::new_fatal("Invalid justification"),
 						);
 					},
-					soil_consensus::JustificationImportResult::Success => {
+					soil_client::import::JustificationImportResult::Success => {
 						log::debug!(
 							target: LOG_TARGET,
 							"Justification for block #{hash} ({number}) imported from {peer_id} successfully",

@@ -101,6 +101,10 @@ use soil_client::client_api::{
 use soil_client::consensus::{
 	BlockOrigin, Environment, Error as ConsensusError, Proposer, SelectChain,
 };
+use soil_client::import::{
+	BasicQueue, BlockCheckParams, BlockImport, BlockImportParams, BoxJustificationImport,
+	DefaultImportQueue, ForkChoiceStrategy, ImportResult, StateAction, Verifier,
+};
 use soil_client::transaction_pool::OffchainTransactionPoolFactory;
 use soil_consensus::epochs::{
 	descendent_query, Epoch as EpochT, EpochChangesFor, SharedEpochChanges, ViableEpoch,
@@ -109,13 +113,6 @@ use soil_consensus::epochs::{
 use soil_consensus::slots::{
 	check_equivocation, BackoffAuthoringBlocksStrategy, CheckedHeader, InherentDataProviderExt,
 	SlotInfo, StorageChanges,
-};
-use soil_consensus::{
-	block_import::{
-		BlockCheckParams, BlockImport, BlockImportParams, ForkChoiceStrategy, ImportResult,
-		StateAction,
-	},
-	import_queue::{BasicQueue, BoxJustificationImport, DefaultImportQueue, Verifier},
 };
 use soil_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG, CONSENSUS_TRACE};
 use subsoil::api::{ApiExt, ProvideRuntimeApi};
@@ -499,7 +496,7 @@ where
 	E::Proposer: Proposer<B, Error = Error>,
 	I: BlockImport<B, Error = ConsensusError> + Send + Sync + 'static,
 	SO: SyncOracle + Send + Sync + Clone + 'static,
-	L: soil_consensus::JustificationSyncLink<B> + 'static,
+	L: soil_client::import::JustificationSyncLink<B> + 'static,
 	CIDP: CreateInherentDataProviders<B, ()> + Send + Sync + 'static,
 	CIDP::InherentDataProviders: InherentDataProviderExt + Send,
 	BS: BackoffAuthoringBlocksStrategy<NumberFor<B>> + Send + Sync + 'static,
@@ -723,7 +720,7 @@ where
 	E::Proposer: Proposer<B, Error = Error>,
 	I: BlockImport<B> + Send + Sync + 'static,
 	SO: SyncOracle + Send + Clone + Sync,
-	L: soil_consensus::JustificationSyncLink<B>,
+	L: soil_client::import::JustificationSyncLink<B>,
 	BS: BackoffAuthoringBlocksStrategy<NumberFor<B>> + Send + Sync,
 	Error: std::error::Error + Send + From<ConsensusError> + From<I::Error> + 'static,
 {
@@ -840,8 +837,9 @@ where
 		let mut import_block = BlockImportParams::new(BlockOrigin::Own, header);
 		import_block.post_digests.push(digest_item);
 		import_block.body = Some(body);
-		import_block.state_action =
-			StateAction::ApplyChanges(soil_consensus::StorageChanges::Changes(storage_changes));
+		import_block.state_action = StateAction::ApplyChanges(
+			soil_client::import::StorageChanges::Changes(storage_changes),
+		);
 		import_block
 			.insert_intermediate(INTERMEDIATE_KEY, BabeIntermediate::<B> { epoch_descriptor });
 

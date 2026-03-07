@@ -19,7 +19,7 @@
 //! Extensions for manual seal to produce blocks valid for any runtime.
 use super::Error;
 
-use soil_consensus::BlockImportParams;
+use soil_client::import::BlockImportParams;
 use subsoil::api::StorageProof;
 use subsoil::inherents::InherentData;
 use subsoil::runtime::{traits::Block as BlockT, Digest};

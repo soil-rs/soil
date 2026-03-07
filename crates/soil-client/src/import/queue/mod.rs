@@ -33,13 +33,13 @@ use std::{
 	time::{Duration, Instant},
 };
 
-use soil_client::consensus::{error::Error as ConsensusError, BlockOrigin};
+use crate::consensus::{error::Error as ConsensusError, BlockOrigin};
 use subsoil::runtime::{
 	traits::{Block as BlockT, Header as _, NumberFor},
 	Justifications,
 };
 
-use crate::{
+use super::{
 	block_import::{
 		BlockCheckParams, BlockImport, BlockImportParams, ImportResult, ImportedAux, ImportedState,
 		JustificationImport, StateAction,
@@ -399,7 +399,7 @@ pub(crate) async fn verify_single_block_metered<B: BlockT, V: Verifier<B>>(
 	import_block.indexed_body = block.indexed_body;
 
 	if let Some(state) = block.state {
-		let changes = crate::block_import::StorageChanges::Import(state);
+		let changes = super::block_import::StorageChanges::Import(state);
 		import_block.state_action = StateAction::ApplyChanges(changes);
 	} else if block.skip_execution {
 		import_block.state_action = StateAction::Skip;

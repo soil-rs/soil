@@ -25,11 +25,11 @@ use parking_lot::Mutex;
 use soil_client::blockchain::BlockStatus;
 use soil_client::client_api::{backend::Backend, utils::is_descendent_of};
 use soil_client::consensus::{BlockOrigin, Error as ConsensusError, SelectChain};
-use soil_client::utils::mpsc::TracingUnboundedSender;
-use soil_consensus::{
-	shared_data::{SharedDataLocked, SharedDataLockedUpgradable},
+use soil_client::import::{
 	BlockCheckParams, BlockImport, BlockImportParams, ImportResult, JustificationImport,
 };
+use soil_client::utils::mpsc::TracingUnboundedSender;
+use soil_consensus::shared_data::{SharedDataLocked, SharedDataLockedUpgradable};
 use soil_telemetry::TelemetryHandle;
 use subsoil::api::{Core, RuntimeApiInfo};
 use subsoil::consensus::grandpa::{

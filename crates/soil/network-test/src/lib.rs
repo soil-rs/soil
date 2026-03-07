@@ -56,11 +56,12 @@ use soil_client::consensus::{
 	block_validation::{BlockAnnounceValidator, DefaultBlockAnnounceValidator},
 	BlockOrigin, Error as ConsensusError, SyncOracle,
 };
-use soil_consensus::{
+use soil_client::import::{
 	BasicQueue, BlockCheckParams, BlockImport, BlockImportParams, BoxJustificationImport,
 	ForkChoiceStrategy, ImportQueue, ImportResult, JustificationImport, JustificationSyncLink,
-	LongestChain, Verifier,
+	Verifier,
 };
+use soil_consensus::LongestChain;
 use soil_network::common::role::Roles;
 use soil_network::light::light_client_requests::handler::LightClientRequestHandler;
 use soil_network::sync::{

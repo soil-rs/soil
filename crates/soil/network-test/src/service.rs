@@ -19,7 +19,7 @@
 use futures::prelude::*;
 
 use soil_client::blockchain::HeaderBackend;
-use soil_consensus::{ImportQueue, Link};
+use soil_client::import::{ImportQueue, Link};
 use soil_network::common::role::Roles;
 use soil_network::light::light_client_requests::handler::LightClientRequestHandler;
 use soil_network::sync::{
@@ -133,19 +133,19 @@ impl TestNetworkBuilder {
 		struct PassThroughVerifier(bool);
 
 		#[async_trait::async_trait]
-		impl<B: BlockT> soil_consensus::Verifier<B> for PassThroughVerifier {
+		impl<B: BlockT> soil_client::import::Verifier<B> for PassThroughVerifier {
 			async fn verify(
 				&self,
-				mut block: soil_consensus::BlockImportParams<B>,
-			) -> Result<soil_consensus::BlockImportParams<B>, String> {
+				mut block: soil_client::import::BlockImportParams<B>,
+			) -> Result<soil_client::import::BlockImportParams<B>, String> {
 				block.finalized = self.0;
-				block.fork_choice = Some(soil_consensus::ForkChoiceStrategy::LongestChain);
+				block.fork_choice = Some(soil_client::import::ForkChoiceStrategy::LongestChain);
 				Ok(block)
 			}
 		}
 
 		let mut import_queue =
-			self.import_queue.unwrap_or(Box::new(soil_consensus::BasicQueue::new(
+			self.import_queue.unwrap_or(Box::new(soil_client::import::BasicQueue::new(
 				PassThroughVerifier(false),
 				Box::new(client.clone()),
 				None,

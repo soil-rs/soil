@@ -37,9 +37,8 @@ use soil_client::client_api::{
 #[cfg(feature = "std")]
 use soil_client::consensus::{Environment, Proposer, SelectChain};
 #[cfg(feature = "std")]
-use soil_consensus::{
-	block_import::{BlockImport, BlockImportParams, ForkChoiceStrategy},
-	import_queue::{BasicQueue, BoxBlockImport, Verifier},
+use soil_client::import::{
+	BasicQueue, BlockImport, BlockImportParams, BoxBlockImport, ForkChoiceStrategy, Verifier,
 };
 #[cfg(feature = "std")]
 use std::{marker::PhantomData, sync::Arc, time::Duration};
@@ -376,10 +375,10 @@ mod tests {
 	use assert_matches::assert_matches;
 	use sc_transaction_pool::{BasicPool, FullChainApi, Options, RevalidationType};
 	use soil_basic_authorship::ProposerFactory;
+	use soil_client::import::ImportedAux;
 	use soil_client::transaction_pool::{
 		MaintainedTransactionPool, TransactionPool, TransactionSource,
 	};
-	use soil_consensus::ImportedAux;
 	use subsoil::api::StorageProof;
 	use subsoil::inherents::InherentData;
 	use subsoil::runtime::generic::{Digest, DigestItem};

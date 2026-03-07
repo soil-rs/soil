@@ -18,7 +18,7 @@
 
 use futures::channel::oneshot;
 
-use soil_consensus::{import_queue::RuntimeOrigin, BlockImportError, BlockImportStatus};
+use soil_client::import::{BlockImportError, BlockImportStatus, RuntimeOrigin};
 use soil_network::common::role::ObservedRole;
 use soil_network::types::{multiaddr::Multiaddr, PeerId};
 use soil_network::{
@@ -43,7 +43,7 @@ mockall::mock! {
 		fn set_sync_fork_request(&self, peers: Vec<PeerId>, hash: B::Hash, number: NumberFor<B>);
 	}
 
-	impl<B: BlockT> soil_consensus::Link<B> for ChainSyncInterface<B> {
+	impl<B: BlockT> soil_client::import::Link<B> for ChainSyncInterface<B> {
 		fn blocks_processed(
 			&self,
 			imported: usize,
@@ -55,13 +55,13 @@ mockall::mock! {
 			who: RuntimeOrigin,
 			hash: &B::Hash,
 			number: NumberFor<B>,
-			import_result: soil_consensus::JustificationImportResult,
+			import_result: soil_client::import::JustificationImportResult,
 		);
 		fn request_justification(&self, hash: &B::Hash, number: NumberFor<B>);
 	}
 }
 
-impl<B: BlockT> soil_consensus::JustificationSyncLink<B> for MockChainSyncInterface<B> {
+impl<B: BlockT> soil_client::import::JustificationSyncLink<B> for MockChainSyncInterface<B> {
 	fn request_justification(&self, hash: &B::Hash, number: NumberFor<B>) {
 		self.justification_sync_link_request_justification(hash, number);
 	}

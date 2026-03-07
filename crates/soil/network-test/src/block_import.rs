@@ -21,7 +21,7 @@
 use super::*;
 use futures::executor::block_on;
 use soil_client::consensus::BlockOrigin;
-use soil_consensus::{
+use soil_client::import::{
 	import_single_block, BasicQueue, BlockImportError, BlockImportStatus, ImportedAux,
 	IncomingBlock,
 };

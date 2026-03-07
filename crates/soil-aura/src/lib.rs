@@ -40,11 +40,11 @@ use soil_client::client_api::{backend::AuxStore, BlockOf};
 use soil_client::consensus::{
 	BlockOrigin, Environment, Error as ConsensusError, Proposer, SelectChain,
 };
+use soil_client::import::{BlockImport, BlockImportParams, ForkChoiceStrategy, StateAction};
 use soil_consensus::slots::{
 	BackoffAuthoringBlocksStrategy, InherentDataProviderExt, SimpleSlotWorkerToSlotWorker,
 	SlotInfo, StorageChanges,
 };
-use soil_consensus::{BlockImport, BlockImportParams, ForkChoiceStrategy, StateAction};
 use soil_telemetry::TelemetryHandle;
 use subsoil::api::{Core, ProvideRuntimeApi};
 use subsoil::application_crypto::AppPublic;
@@ -186,7 +186,7 @@ where
 	PF: Environment<B, Error = Error> + Send + Sync + 'static,
 	PF::Proposer: Proposer<B, Error = Error>,
 	SO: SyncOracle + Send + Sync + Clone,
-	L: soil_consensus::JustificationSyncLink<B>,
+	L: soil_client::import::JustificationSyncLink<B>,
 	CIDP: CreateInherentDataProviders<B, ()> + Send + 'static,
 	CIDP::InherentDataProviders: InherentDataProviderExt + Send,
 	BS: BackoffAuthoringBlocksStrategy<NumberFor<B>> + Send + Sync + 'static,
@@ -290,7 +290,7 @@ where
 	I: BlockImport<B> + Send + Sync + 'static,
 	Error: std::error::Error + Send + From<ConsensusError> + 'static,
 	SO: SyncOracle + Send + Sync + Clone,
-	L: soil_consensus::JustificationSyncLink<B>,
+	L: soil_client::import::JustificationSyncLink<B>,
 	BS: BackoffAuthoringBlocksStrategy<NumberFor<B>> + Send + Sync + 'static,
 {
 	AuraWorker {
@@ -340,7 +340,7 @@ where
 	P::Public: AppPublic + Member,
 	P::Signature: TryFrom<Vec<u8>> + Member + Codec,
 	SO: SyncOracle + Send + Clone + Sync,
-	L: soil_consensus::JustificationSyncLink<B>,
+	L: soil_client::import::JustificationSyncLink<B>,
 	BS: BackoffAuthoringBlocksStrategy<NumberFor<B>> + Send + Sync + 'static,
 	Error: std::error::Error + Send + From<ConsensusError> + 'static,
 {
@@ -399,15 +399,16 @@ where
 		storage_changes: StorageChanges<B>,
 		public: Self::Claim,
 		_authorities: Self::AuxData,
-	) -> Result<soil_consensus::BlockImportParams<B>, ConsensusError> {
+	) -> Result<soil_client::import::BlockImportParams<B>, ConsensusError> {
 		let signature_digest_item =
 			crate::standalone::seal::<_, P>(header_hash, &public, &self.keystore)?;
 
 		let mut import_block = BlockImportParams::new(BlockOrigin::Own, header);
 		import_block.post_digests.push(signature_digest_item);
 		import_block.body = Some(body);
-		import_block.state_action =
-			StateAction::ApplyChanges(soil_consensus::StorageChanges::Changes(storage_changes));
+		import_block.state_action = StateAction::ApplyChanges(
+			soil_client::import::StorageChanges::Changes(storage_changes),
+		);
 		import_block.fork_choice = Some(ForkChoiceStrategy::LongestChain);
 
 		Ok(import_block)
@@ -557,9 +558,9 @@ mod tests {
 	use soil_client::block_builder::BlockBuilderBuilder;
 	use soil_client::client_api::BlockchainEvents;
 	use soil_client::consensus::{NoNetwork as DummyOracle, Proposal, ProposeArgs};
+	use soil_client::import::BoxJustificationImport;
 	use soil_client::keystore::LocalKeystore;
 	use soil_consensus::slots::{BackoffAuthoringOnFinalizedHeadLagging, SimpleSlotWorker};
-	use soil_consensus::BoxJustificationImport;
 	use soil_network_test::{Block as TestBlock, *};
 	use std::{
 		task::Poll,

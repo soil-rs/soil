@@ -54,7 +54,7 @@ use prost::Message;
 use soil_client::blockchain::{Error as ClientError, HeaderBackend, HeaderMetadata};
 use soil_client::client_api::{blockchain::BlockGap, BlockBackend, ProofProvider};
 use soil_client::consensus::{BlockOrigin, BlockStatus};
-use soil_consensus::{BlockImportError, BlockImportStatus, IncomingBlock};
+use soil_client::import::{BlockImportError, BlockImportStatus, IncomingBlock};
 use soil_network::common::sync::message::{
 	BlockAnnounce, BlockAttributes, BlockData, BlockRequest, BlockResponse, Direction, FromBlock,
 };

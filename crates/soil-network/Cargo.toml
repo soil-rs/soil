@@ -77,7 +77,6 @@ serde = { features = ["derive"], workspace = true, default-features = true}
 serde_json = { workspace = true, default-features = true}
 serde_with = { workspace = true}
 smallvec = { workspace = true, default-features = true}
-soil-consensus = { workspace = true, default-features = true}
 soil-statement-store = { workspace = true, default-features = true }
 thiserror = { workspace = true}
 tokio = { features = ["macros", "sync", "time"], workspace = true, default-features = true}

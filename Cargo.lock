@@ -9123,6 +9123,7 @@ dependencies = [
  "libc",
  "linked-hash-map",
  "log",
+ "mockall",
  "parity-db",
  "parity-scale-codec",
  "parking_lot 0.12.5",
@@ -9164,7 +9165,6 @@ dependencies = [
  "futures",
  "futures-timer",
  "log",
- "mockall",
  "parity-scale-codec",
  "parking_lot 0.12.5",
  "serde",
@@ -9172,7 +9172,6 @@ dependencies = [
  "soil-telemetry",
  "soil-test-primitives",
  "subsoil",
- "substrate-prometheus-endpoint",
  "substrate-test-runtime-client",
  "thiserror 1.0.69",
 ]

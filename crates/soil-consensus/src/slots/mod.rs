@@ -32,11 +32,11 @@ pub use aux_schema::{check_equivocation, MAX_SLOT_CAPACITY, PRUNING_BOUND};
 use slots::Slots;
 pub use slots::{time_until_next_slot, SlotInfo};
 
-use crate::{BlockImport, JustificationSyncLink};
 use futures::{future::Either, Future, TryFutureExt};
 use futures_timer::Delay;
 use log::{debug, info, warn};
 use soil_client::consensus::{Proposal, ProposeArgs, Proposer, SelectChain, SyncOracle};
+use soil_client::import::{BlockImport, BlockImportParams, JustificationSyncLink};
 use soil_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG, CONSENSUS_INFO, CONSENSUS_WARN};
 use std::{
 	ops::Deref,
@@ -140,7 +140,7 @@ pub trait SimpleSlotWorker<B: BlockT> {
 		storage_changes: StorageChanges<B>,
 		public: Self::Claim,
 		aux_data: Self::AuxData,
-	) -> Result<crate::BlockImportParams<B>, soil_client::consensus::Error>;
+	) -> Result<BlockImportParams<B>, soil_client::consensus::Error>;
 
 	/// Whether to force authoring if offline.
 	fn force_authoring(&self) -> bool;

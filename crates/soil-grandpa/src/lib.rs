@@ -70,9 +70,9 @@ use soil_client::client_api::{
 	BlockchainEvents, CallExecutor, ExecutorProvider, Finalizer, LockImportRun, StorageProvider,
 };
 use soil_client::consensus::SelectChain;
+use soil_client::import::BlockImport;
 use soil_client::transaction_pool::OffchainTransactionPoolFactory;
 use soil_client::utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver};
-use soil_consensus::BlockImport;
 use soil_network::{types::ProtocolName, NetworkBackend, NotificationService};
 use soil_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG, CONSENSUS_INFO};
 use subsoil::api::ProvideRuntimeApi;

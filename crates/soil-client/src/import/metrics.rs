@@ -25,7 +25,7 @@ use prometheus_endpoint::{
 
 use subsoil::runtime::traits::{Block as BlockT, NumberFor};
 
-use crate::import_queue::{BlockImportError, BlockImportStatus};
+use super::queue::{BlockImportError, BlockImportStatus};
 
 /// Generic Prometheus metrics for common consensus functionality.
 #[derive(Clone)]

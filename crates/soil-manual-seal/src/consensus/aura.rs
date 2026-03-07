@@ -21,7 +21,7 @@
 
 use crate::{ConsensusDataProvider, Error};
 use soil_client::client_api::{AuxStore, UsageProvider};
-use soil_consensus::BlockImportParams;
+use soil_client::import::BlockImportParams;
 use std::{marker::PhantomData, sync::Arc};
 use subsoil::api::{ProvideRuntimeApi, StorageProof};
 use subsoil::consensus::aura::{

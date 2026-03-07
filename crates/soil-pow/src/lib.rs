@@ -53,7 +53,7 @@ use soil_client::client_api::{self, backend::AuxStore, BlockOf, BlockchainEvents
 use soil_client::consensus::{
 	Environment, Error as ConsensusError, ProposeArgs, Proposer, SelectChain, SyncOracle,
 };
-use soil_consensus::{
+use soil_client::import::{
 	BasicQueue, BlockCheckParams, BlockImport, BlockImportParams, BoxBlockImport,
 	BoxJustificationImport, ForkChoiceStrategy, ImportResult, Verifier,
 };
@@ -508,7 +508,7 @@ where
 	E::Error: std::fmt::Debug,
 	E::Proposer: Proposer<Block>,
 	SO: SyncOracle + Clone + Send + Sync + 'static,
-	L: soil_consensus::JustificationSyncLink<Block>,
+	L: soil_client::import::JustificationSyncLink<Block>,
 	CIDP: CreateInherentDataProviders<Block, ()>,
 {
 	let mut timer = UntilImportedOrTimeout::new(client.import_notification_stream(), timeout);

@@ -28,11 +28,11 @@ use prometheus_endpoint::Registry;
 use soil_client::blockchain::{HeaderBackend, HeaderMetadata};
 use soil_client::client_api::{backend::AuxStore, BlockOf, UsageProvider};
 use soil_client::consensus::Error as ConsensusError;
-use soil_consensus::slots::{check_equivocation, CheckedHeader, InherentDataProviderExt};
-use soil_consensus::{
-	block_import::{BlockImport, BlockImportParams, ForkChoiceStrategy},
-	import_queue::{BasicQueue, BoxJustificationImport, DefaultImportQueue, Verifier},
+use soil_client::import::{
+	BasicQueue, BlockImport, BlockImportParams, BoxJustificationImport, DefaultImportQueue,
+	ForkChoiceStrategy, Verifier,
 };
+use soil_consensus::slots::{check_equivocation, CheckedHeader, InherentDataProviderExt};
 use soil_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG, CONSENSUS_TRACE};
 use std::{fmt::Debug, sync::Arc};
 use subsoil::api::{ApiExt, ProvideRuntimeApi};

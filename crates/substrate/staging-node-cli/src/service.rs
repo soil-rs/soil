@@ -179,7 +179,7 @@ pub fn new_partial(
 		FullClient,
 		FullBackend,
 		FullSelectChain,
-		soil_consensus::DefaultImportQueue<Block>,
+		soil_client::import::DefaultImportQueue<Block>,
 		sc_transaction_pool::TransactionPoolHandle<Block, FullClient>,
 		(
 			impl Fn(
@@ -904,11 +904,11 @@ mod tests {
 	use soil_babe::{BabeIntermediate, CompatibleDigestItem, INTERMEDIATE_KEY};
 	use soil_client::client_api::BlockBackend;
 	use soil_client::consensus::{BlockOrigin, Environment, Proposer};
+	use soil_client::import::{BlockImport, BlockImportParams, ForkChoiceStrategy};
 	use soil_client::keystore::LocalKeystore;
 	use soil_client::transaction_pool::ChainEvent;
 	use soil_client::transaction_pool::MaintainedTransactionPool;
 	use soil_consensus::epochs::descendent_query;
-	use soil_consensus::{BlockImport, BlockImportParams, ForkChoiceStrategy};
 	use soil_service_test::TestNetNode;
 	use std::sync::Arc;
 	use subsoil::core::crypto::Pair;

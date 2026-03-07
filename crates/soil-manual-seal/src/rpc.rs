@@ -25,7 +25,7 @@ use futures::{
 };
 use jsonrpsee::{core::async_trait, proc_macros::rpc};
 use serde::{Deserialize, Serialize};
-use soil_consensus::ImportedAux;
+use soil_client::import::ImportedAux;
 use subsoil::runtime::EncodedJustification;
 
 /// Sender passed to the authorship task to report errors or successes.

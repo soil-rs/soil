@@ -44,7 +44,7 @@ use soil_client::client_api::{execution_extensions::ExecutionExtensions, UsagePr
 use soil_client::consensus::BlockOrigin;
 use soil_client::db::PruningMode;
 use soil_client::executor::{WasmExecutionMethod, WasmtimeInstantiationStrategy};
-use soil_consensus::{
+use soil_client::import::{
 	BlockImport, BlockImportParams, ForkChoiceStrategy, ImportResult, ImportedAux,
 };
 use subsoil::api::ProvideRuntimeApi;

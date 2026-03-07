@@ -27,7 +27,7 @@ use soil_client::client_api::{
 use soil_client::consensus::{BlockOrigin, Error as ConsensusError, SelectChain};
 use soil_client::db::{Backend, BlocksPruning, DatabaseSettings, DatabaseSource, PruningMode};
 use soil_client::executor::WasmExecutor;
-use soil_consensus::{
+use soil_client::import::{
 	BlockCheckParams, BlockImport, BlockImportParams, ForkChoiceStrategy, ImportResult,
 };
 use soil_service::client::{new_with_backend, Client, LocalCallExecutor};

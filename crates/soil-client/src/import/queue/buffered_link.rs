@@ -23,8 +23,8 @@
 //! # Example
 //!
 //! ```
-//! use soil_consensus::import_queue::Link;
-//! # use soil_consensus::import_queue::buffered_link::buffered_link;
+//! use soil_client::import::Link;
+//! # use soil_client::import::queue::buffered_link::buffered_link;
 //! # use soil_test_primitives::Block;
 //! # struct DummyLink; impl Link<Block> for DummyLink {}
 //! # let my_link = DummyLink;
@@ -38,11 +38,9 @@
 //! });
 //! ```
 
-use crate::import_queue::{JustificationImportResult, Link, RuntimeOrigin};
+use super::{JustificationImportResult, Link, RuntimeOrigin};
+use crate::utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender};
 use futures::prelude::*;
-use soil_client::utils::mpsc::{
-	tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender,
-};
 use std::{
 	pin::Pin,
 	task::{Context, Poll},

@@ -25,9 +25,7 @@ use serde_json::{de::IoRead as JsonIoRead, Deserializer, StreamDeserializer};
 use soil_chain_spec::ChainSpec;
 use soil_client::client_api::HeaderBackend;
 use soil_client::consensus::BlockOrigin;
-use soil_consensus::import_queue::{
-	BlockImportError, BlockImportStatus, ImportQueue, IncomingBlock, Link,
-};
+use soil_client::import::{BlockImportError, BlockImportStatus, ImportQueue, IncomingBlock, Link};
 use std::{
 	io::Read,
 	pin::Pin,

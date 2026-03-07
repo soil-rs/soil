@@ -21,13 +21,13 @@ use crate::sync::types::{
 };
 
 use futures::{channel::oneshot, Stream};
+use soil_client::import::{
+	BlockImportError, BlockImportStatus, JustificationImportResult, JustificationSyncLink, Link,
+	RuntimeOrigin,
+};
 use soil_network::types::PeerId;
 
 use soil_client::utils::mpsc::{tracing_unbounded, TracingUnboundedSender};
-use soil_consensus::{
-	import_queue::RuntimeOrigin, BlockImportError, BlockImportStatus, JustificationImportResult,
-	JustificationSyncLink, Link,
-};
 use soil_network::{NetworkBlock, NetworkSyncForkRequest};
 use subsoil::runtime::traits::{Block as BlockT, NumberFor};
 

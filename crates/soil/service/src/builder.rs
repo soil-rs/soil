@@ -52,11 +52,11 @@ use soil_client::executor::{
 	wasm_interface::HostFunctions, HeapAllocStrategy, NativeExecutionDispatch, RuntimeVersionOf,
 	WasmExecutor, DEFAULT_HEAP_ALLOC_STRATEGY,
 };
+use soil_client::import::{ImportQueue, ImportQueueService};
 use soil_client::keystore::LocalKeystore;
 use soil_client::tracing::block::TracingExecuteBlock;
 use soil_client::transaction_pool::{MaintainedTransactionPool, TransactionPool};
 use soil_client::utils::mpsc::{tracing_unbounded, TracingUnboundedSender};
-use soil_consensus::import_queue::{ImportQueue, ImportQueueService};
 use soil_network::common::role::{Role, Roles};
 use soil_network::light::light_client_requests::handler::LightClientRequestHandler;
 use soil_network::sync::{

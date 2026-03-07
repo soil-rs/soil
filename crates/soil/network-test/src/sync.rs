@@ -1416,7 +1416,7 @@ async fn syncs_huge_blocks() {
 /// Test syncing 512 blocks with 900 KiB headers (empty bodies) to test large header handling.
 #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
 async fn syncs_blocks_with_large_headers() {
-	use soil_consensus::ForkChoiceStrategy;
+	use soil_client::import::ForkChoiceStrategy;
 	use subsoil::runtime::{
 		generic::{BlockId, DigestItem},
 		Digest,

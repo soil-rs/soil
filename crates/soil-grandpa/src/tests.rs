@@ -25,11 +25,11 @@ use environment::HasVoted;
 use futures_timer::Delay;
 use parking_lot::{Mutex, RwLock};
 use soil_client::consensus::{BlockOrigin, Error as ConsensusError, SelectChain};
-use soil_client::transaction_pool::RejectAllTxPool;
-use soil_consensus::{
+use soil_client::import::{
 	BlockImport, BlockImportParams, BoxJustificationImport, ForkChoiceStrategy, ImportResult,
 	ImportedAux,
 };
+use soil_client::transaction_pool::RejectAllTxPool;
 use soil_network::config::Role;
 use soil_network_test::{
 	Block, BlockImportAdapter, FullPeerConfig, Hash, PassThroughVerifier, Peer, PeersClient,
