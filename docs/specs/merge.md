@@ -100,12 +100,14 @@ substrate-cli-test-utils -[dep]-> staging-node-cli
 
 Merged. Eliminated the old SCC 1 (Primitives, 10 crates) and absorbed ~30 crates total.
 
-### `subsoil` ← consensus primitives (~12 more crates)
+### `subsoil` ← consensus primitives and runtime-facing protocols (~13 more crates)
 
 Merged. 8 consensus engine primitive crates absorbed into `subsoil::consensus::*` and
 `subsoil::block_builder`. Also merged `soil-mmr-primitives` into `subsoil::mmr` (needed
 by beefy, was creating a cyclic dependency). Added `finality-grandpa` and `mmr-lib` as
-new deps. Total: 9 crates absorbed.
+new deps. `soil-mixnet` also belongs here as a small runtime-facing protocol/types crate:
+it is used by runtimes and topsoil pallets, and should not be pulled behind the heavy
+`soil-network` boundary. Total: 10 crates absorbed.
 
 Deferred from the primitives merge: client-side consensus support crates and
 RPC-facing consensus crates. These stay out of `subsoil` and are handled as part
@@ -198,7 +200,7 @@ explicit choice.
 | soil-network + soil-network-common + soil-network-types | Always together |
 | soil-network-sync + soil-network-gossip + soil-network-light | Always with network |
 | soil-network-transactions + soil-network-statement + sc-statement-store | SCC 1 pair collapses |
-| sc-mixnet | Wraps soil-mixnet |
+| sc-mixnet | Service-side mixnet integration over `soil-network` + `subsoil::mixnet` |
 
 ### `soil-rpc` — RPC layer (~11 crates → 1)
 
@@ -241,7 +243,6 @@ assembly glue.
 | Crate | Reason |
 |---|---|
 | soil-mmr-gadget | MMR gadget is opt-in (primitives merged into subsoil) |
-| soil-mixnet | Opt-in protocol |
 | soil-staking, soil-session | Domain-specific primitives |
 | soil-statement-store | Standalone feature |
 | fork-tree | Generic data structure |
@@ -256,7 +257,7 @@ Re-exports everything. Consumers write `soil = { features = ["client", "aura", "
 
 | New crate | Absorbs | ~Count | Status |
 |---|---|---|---|
-| **subsoil** | primitives + consensus engines (slots, aura, babe, grandpa, beefy, pow, sassafras, block-builder, mmr) | ~39 | Phase 1 ✅, Phase 2 ✅ |
+| **subsoil** | primitives + consensus engines (slots, aura, babe, grandpa, beefy, pow, sassafras, block-builder, mmr) + mixnet protocol | ~40 | Phase 1 ✅, Phase 2 ✅ |
 | **soil-manual-seal** | renamed from soil-consensus-manual-seal (heavy async deps) | 1 | ✅ |
 | **soil-client** | client-api, executor (4), blockchain, db (2), tx-pool-api, storage-monitor, utils, maybe-compressed-blob, sc-tracing, sc-block-builder, sc-keystore | ~16 | ✅ |
 | **soil-consensus** | sc-consensus, sc-consensus-slots, soil-consensus-epochs | 3 | ✅ |
