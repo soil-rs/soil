@@ -52,7 +52,7 @@ consensus crates into the new flattened `soil-*` layout. See
       `soil-babe`.
 - [x] Step 8: Merge `sc-consensus-grandpa` and
       `soil-consensus-grandpa-rpc` into `soil-grandpa`.
-- [ ] Step 9: Merge `sc-consensus-beefy` and `soil-consensus-beefy-rpc` into
+- [x] Step 9: Merge `sc-consensus-beefy` and `soil-consensus-beefy-rpc` into
       `soil-beefy`.
 - [ ] Step 10: Final consistency pass and spec update.
 
@@ -72,3 +72,5 @@ consensus crates into the new flattened `soil-*` layout. See
   `cargo check -p soil-babe -p node-rpc -p soil-manual-seal -p soil-sync-state-rpc -p staging-node-cli`
 - Step 8:
   `cargo check -p soil-grandpa -p node-rpc -p soil-sync-state-rpc -p staging-node-cli`
+- Step 9:
+  `cargo check -p soil-beefy -p node-rpc -p staging-node-cli`

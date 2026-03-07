@@ -40,11 +40,10 @@ use jsonrpsee::{
 };
 use log::warn;
 
-use sc_consensus_beefy::communication::notification::{
+use crate::communication::notification::{
 	BeefyBestBlockStream, BeefyVersionedFinalityProofStream,
 };
-
-mod notification;
+use crate::rpc_notification as notification;
 
 #[derive(Debug, thiserror::Error)]
 /// Top-level error type for the RPC handler
@@ -165,7 +164,7 @@ mod tests {
 
 	use codec::{Decode, Encode};
 	use jsonrpsee::{core::EmptyServerParams as EmptyParams, RpcModule};
-	use sc_consensus_beefy::{
+	use crate::{
 		communication::notification::BeefyVersionedFinalityProofSender,
 		justification::BeefyVersionedFinalityProof,
 	};

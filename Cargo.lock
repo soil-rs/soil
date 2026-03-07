@@ -6109,13 +6109,12 @@ version = "3.0.0-dev"
 dependencies = [
  "jsonrpsee",
  "node-primitives",
- "sc-consensus-beefy",
  "sc-mixnet",
  "sc-rpc",
  "soil-babe",
+ "soil-beefy",
  "soil-chain-spec",
  "soil-client",
- "soil-consensus-beefy-rpc",
  "soil-grandpa",
  "soil-mmr-rpc",
  "soil-sync-state-rpc",
@@ -8061,33 +8060,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "sc-consensus-beefy"
-version = "13.0.0"
-dependencies = [
- "array-bytes 6.2.3",
- "async-channel 1.9.0",
- "async-trait",
- "futures",
- "log",
- "parity-scale-codec",
- "parking_lot 0.12.5",
- "serde",
- "soil-client",
- "soil-consensus",
- "soil-network",
- "soil-network-gossip",
- "soil-network-sync",
- "soil-network-test",
- "soil-network-types",
- "subsoil",
- "substrate-prometheus-endpoint",
- "substrate-test-runtime-client",
- "thiserror 1.0.69",
- "tokio",
- "wasm-timer",
-]
-
-[[package]]
 name = "sc-mixnet"
 version = "0.4.0"
 dependencies = [
@@ -9083,6 +9055,35 @@ dependencies = [
 ]
 
 [[package]]
+name = "soil-beefy"
+version = "13.0.0"
+dependencies = [
+ "array-bytes 6.2.3",
+ "async-channel 1.9.0",
+ "async-trait",
+ "futures",
+ "jsonrpsee",
+ "log",
+ "parity-scale-codec",
+ "parking_lot 0.12.5",
+ "sc-rpc",
+ "serde",
+ "soil-client",
+ "soil-consensus",
+ "soil-network",
+ "soil-network-gossip",
+ "soil-network-sync",
+ "soil-network-test",
+ "soil-network-types",
+ "subsoil",
+ "substrate-prometheus-endpoint",
+ "substrate-test-runtime-client",
+ "thiserror 1.0.69",
+ "tokio",
+ "wasm-timer",
+]
+
+[[package]]
 name = "soil-chain-spec"
 version = "28.0.0"
 dependencies = [
@@ -9228,24 +9229,6 @@ dependencies = [
  "substrate-prometheus-endpoint",
  "substrate-test-runtime-client",
  "thiserror 1.0.69",
-]
-
-[[package]]
-name = "soil-consensus-beefy-rpc"
-version = "13.0.0"
-dependencies = [
- "futures",
- "jsonrpsee",
- "log",
- "parity-scale-codec",
- "parking_lot 0.12.5",
- "sc-consensus-beefy",
- "sc-rpc",
- "serde",
- "subsoil",
- "substrate-test-runtime-client",
- "thiserror 1.0.69",
- "tokio",
 ]
 
 [[package]]
@@ -10144,7 +10127,6 @@ dependencies = [
  "rand 0.8.5",
  "regex",
  "sc-authority-discovery",
- "sc-consensus-beefy",
  "sc-mixnet",
  "sc-offchain",
  "sc-rpc",
@@ -10157,11 +10139,11 @@ dependencies = [
  "soil-authority-discovery",
  "soil-babe",
  "soil-basic-authorship",
+ "soil-beefy",
  "soil-chain-spec",
  "soil-cli",
  "soil-client",
  "soil-consensus",
- "soil-consensus-beefy-rpc",
  "soil-genesis-builder",
  "soil-grandpa",
  "soil-informant",

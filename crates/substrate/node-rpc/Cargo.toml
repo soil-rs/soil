@@ -22,8 +22,7 @@ node-primitives = { workspace = true, default-features = true }
 topsoil-transaction-payment-rpc = { workspace = true, default-features = true }
 soil-chain-spec = { workspace = true, default-features = true }
 soil-babe = { workspace = true, default-features = true }
-sc-consensus-beefy = { workspace = true, default-features = true }
-soil-consensus-beefy-rpc = { workspace = true, default-features = true }
+soil-beefy = { workspace = true, default-features = true }
 soil-grandpa = { workspace = true, default-features = true }
 sc-mixnet = { workspace = true, default-features = true }
 sc-rpc = { workspace = true, default-features = true }

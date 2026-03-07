@@ -63,12 +63,14 @@ mod aux_schema;
 mod error;
 mod keystore;
 mod metrics;
+mod rpc_notification;
 mod round;
 mod worker;
 
 pub mod communication;
 pub mod import;
 pub mod justification;
+pub mod rpc;
 
 use crate::{
 	communication::gossip::GossipValidator,
