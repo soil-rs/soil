@@ -53,7 +53,7 @@ use soil_network::{
 	config::MultiaddrWithPeerId, service::traits::NetworkService, NetworkBackend, NetworkBlock,
 	NetworkPeers, NetworkStateInfo,
 };
-use soil_rpc_server::Server;
+use soil_rpc::server::Server;
 use subsoil::runtime::traits::{Block as BlockT, Header as HeaderT};
 
 pub use self::{
@@ -388,12 +388,12 @@ pub fn start_rpc_servers<R>(
 	registry: Option<&Registry>,
 	tokio_handle: &Handle,
 	gen_rpc_module: R,
-	rpc_id_provider: Option<Box<dyn soil_rpc_server::SubscriptionIdProvider>>,
+	rpc_id_provider: Option<Box<dyn soil_rpc::server::SubscriptionIdProvider>>,
 ) -> Result<Server, error::Error>
 where
 	R: Fn() -> Result<RpcModule<()>, Error>,
 {
-	let endpoints: Vec<soil_rpc_server::RpcEndpoint> = if let Some(endpoints) =
+	let endpoints: Vec<soil_rpc::server::RpcEndpoint> = if let Some(endpoints) =
 		rpc_configuration.addr.as_ref()
 	{
 		endpoints.clone()
@@ -403,7 +403,7 @@ where
 		let ipv4 = SocketAddr::V4(SocketAddrV4::new(Ipv4Addr::LOCALHOST, rpc_configuration.port));
 
 		vec![
-			soil_rpc_server::RpcEndpoint {
+			soil_rpc::server::RpcEndpoint {
 				batch_config: rpc_configuration.batch_config,
 				cors: rpc_configuration.cors.clone(),
 				listen_addr: ipv4,
@@ -419,7 +419,7 @@ where
 				retry_random_port: true,
 				is_optional: false,
 			},
-			soil_rpc_server::RpcEndpoint {
+			soil_rpc::server::RpcEndpoint {
 				batch_config: rpc_configuration.batch_config,
 				cors: rpc_configuration.cors.clone(),
 				listen_addr: ipv6,
@@ -438,10 +438,10 @@ where
 		]
 	};
 
-	let metrics = soil_rpc_server::RpcMetrics::new(registry)?;
+	let metrics = soil_rpc::server::RpcMetrics::new(registry)?;
 	let rpc_api = gen_rpc_module()?;
 
-	let server_config = soil_rpc_server::Config {
+	let server_config = soil_rpc::server::Config {
 		endpoints,
 		rpc_api,
 		metrics,
@@ -455,7 +455,7 @@ where
 	// `block_in_place` is a hack to allow callers to call `block_on` prior to
 	// calling `start_rpc_servers`.
 	match tokio::task::block_in_place(|| {
-		tokio_handle.block_on(soil_rpc_server::start_server(server_config))
+		tokio_handle.block_on(soil_rpc::server::start_server(server_config))
 	}) {
 		Ok(server) => Ok(server),
 		Err(e) => Err(Error::Application(e)),

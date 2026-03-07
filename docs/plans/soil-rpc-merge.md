@@ -44,7 +44,7 @@ frame RPC helpers separate.
 - [x] Step 2: Flatten the existing `soil-rpc` crate to `crates/soil-rpc`.
 - [x] Step 3: Merge `soil-rpc-api` into `soil_rpc::api`.
 - [x] Step 4: Merge `sc-rpc` into the root handler modules of `soil-rpc`.
-- [ ] Step 5: Merge `soil-rpc-server` into `soil_rpc::server`.
+- [x] Step 5: Merge `soil-rpc-server` into `soil_rpc::server`.
 - [ ] Step 6: Merge `soil-rpc-spec-v2` into `soil_rpc::v2`.
 - [ ] Step 7: Merge `soil-mmr-rpc` into `soil_rpc::mmr`.
 - [ ] Step 8: Merge `soil-sync-state-rpc` into `soil_rpc::sync_state`.

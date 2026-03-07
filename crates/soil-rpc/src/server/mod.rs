@@ -19,17 +19,12 @@
 //! Substrate RPC servers.
 
 #![warn(missing_docs)]
-#![cfg_attr(not(feature = "std"), no_std)]
 
-#[cfg(feature = "std")]
 pub mod middleware;
-#[cfg(feature = "std")]
 pub mod utils;
 
-#[cfg(feature = "std")]
 use std::{error::Error as StdError, net::SocketAddr, time::Duration};
 
-#[cfg(feature = "std")]
 use jsonrpsee::{
 	core::BoxError,
 	server::{
@@ -37,30 +32,22 @@ use jsonrpsee::{
 	},
 	Methods, RpcModule,
 };
-#[cfg(feature = "std")]
 use tower::Service;
-#[cfg(feature = "std")]
 use utils::{
 	build_rpc_api, deny_unsafe, format_listen_addrs, get_proxy_ip, ListenAddrError, RpcSettings,
 };
 
-#[cfg(feature = "std")]
 pub use ip_network::IpNetwork;
-#[cfg(feature = "std")]
 pub use jsonrpsee::{
 	core::id_providers::{RandomIntegerIdProvider, RandomStringIdProvider},
 	server::{middleware::rpc::RpcServiceBuilder, BatchRequestConfig},
 };
-#[cfg(feature = "std")]
 pub use middleware::{Metrics, MiddlewareLayer, NodeHealthProxyLayer, RpcMetrics};
-#[cfg(feature = "std")]
 pub use utils::{RpcEndpoint, RpcMethods};
 
-#[cfg(feature = "std")]
 const MEGABYTE: u32 = 1024 * 1024;
 
 /// Type to encapsulate the server handle and listening address.
-#[cfg(feature = "std")]
 pub struct Server {
 	/// Handle to the rpc server
 	handle: ServerHandle,
@@ -68,7 +55,6 @@ pub struct Server {
 	listen_addrs: Vec<SocketAddr>,
 }
 
-#[cfg(feature = "std")]
 impl Server {
 	/// Creates a new Server.
 	pub fn new(handle: ServerHandle, listen_addrs: Vec<SocketAddr>) -> Server {
@@ -87,7 +73,6 @@ impl Server {
 	}
 }
 
-#[cfg(feature = "std")]
 impl Drop for Server {
 	fn drop(&mut self) {
 		// This doesn't not wait for the server to be stopped but fires the signal.
@@ -96,7 +81,6 @@ impl Drop for Server {
 }
 
 /// Trait for providing subscription IDs that can be cloned.
-#[cfg(feature = "std")]
 pub trait SubscriptionIdProvider:
 	jsonrpsee::core::traits::IdProvider + dyn_clone::DynClone
 {
@@ -106,7 +90,6 @@ dyn_clone::clone_trait_object!(SubscriptionIdProvider);
 
 /// RPC server configuration.
 #[derive(Debug)]
-#[cfg(feature = "std")]
 pub struct Config<M: Send + Sync + 'static> {
 	/// RPC interfaces to start.
 	pub endpoints: Vec<RpcEndpoint>,
@@ -123,7 +106,6 @@ pub struct Config<M: Send + Sync + 'static> {
 }
 
 #[derive(Debug, Clone)]
-#[cfg(feature = "std")]
 struct PerConnection {
 	methods: Methods,
 	stop_handle: StopHandle,

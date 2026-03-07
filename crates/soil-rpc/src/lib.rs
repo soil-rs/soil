@@ -27,6 +27,7 @@ pub mod list;
 pub mod mixnet;
 pub mod number;
 pub mod offchain;
+pub mod server;
 pub mod state;
 pub mod statement;
 pub mod system;

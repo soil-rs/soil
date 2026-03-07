@@ -34,7 +34,7 @@ pub use soil_network::{
 	},
 	Multiaddr,
 };
-pub use soil_rpc_server::{
+pub use soil_rpc::server::{
 	IpNetwork, RpcEndpoint, RpcMethods, SubscriptionIdProvider as RpcSubscriptionIdProvider,
 };
 pub use soil_telemetry::TelemetryEndpoints;

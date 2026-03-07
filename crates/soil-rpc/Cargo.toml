@@ -18,10 +18,18 @@ targets = ["x86_64-unknown-linux-gnu"]
 [dependencies]
 async-channel = { workspace = true }
 codec = { workspace = true, default-features = true }
+dyn-clone = { workspace = true }
+forwarded-header-value = { workspace = true }
 futures = { workspace = true }
-jsonrpsee = { features = ["client-core", "macros", "server-core"], workspace = true }
+governor = { workspace = true }
+http = { workspace = true }
+http-body-util = { workspace = true }
+hyper = { workspace = true }
+ip_network = { workspace = true }
+jsonrpsee = { features = ["client-core", "macros", "server", "server-core"], workspace = true }
 log = { workspace = true, default-features = true }
 parking_lot = { workspace = true, default-features = true }
+prometheus-endpoint = { workspace = true, default-features = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { features = ["derive"], workspace = true, default-features = true }
 serde_json = { workspace = true, default-features = true }
@@ -34,6 +42,8 @@ soil-statement-store = { features = ["serde"], workspace = true, default-feature
 subsoil = { workspace = true, default-features = true }
 thiserror = { workspace = true }
 tokio = { workspace = true, default-features = true }
+tower = { workspace = true, features = ["util"] }
+tower-http = { workspace = true, features = ["cors"] }
 
 [dev-dependencies]
 assert_matches = { workspace = true }
