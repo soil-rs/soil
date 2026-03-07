@@ -10464,13 +10464,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "soil-genesis-builder"
-version = "0.8.0"
-dependencies = [
- "subsoil",
-]
-
-[[package]]
 name = "soil-grandpa"
 version = "0.19.0"
 dependencies = [
@@ -10618,13 +10611,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "soil-offchain"
-version = "26.0.0"
-dependencies = [
- "subsoil",
-]
-
-[[package]]
 name = "soil-pow"
 version = "0.33.0"
 dependencies = [
@@ -10756,20 +10742,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "soil-session"
-version = "27.0.0"
-dependencies = [
- "subsoil",
-]
-
-[[package]]
-name = "soil-staking"
-version = "26.0.0"
-dependencies = [
- "subsoil",
-]
-
-[[package]]
 name = "soil-statement-store"
 version = "10.0.0"
 dependencies = [
@@ -10859,13 +10831,6 @@ dependencies = [
  "tracing-core",
  "trybuild",
  "wat",
-]
-
-[[package]]
-name = "soil-transaction-pool"
-version = "26.0.0"
-dependencies = [
- "subsoil",
 ]
 
 [[package]]
