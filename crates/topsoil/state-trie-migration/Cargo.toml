@@ -23,7 +23,7 @@ log = { workspace = true }
 remote-externalities = { optional = true, workspace = true, default-features = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { optional = true, workspace = true, default-features = true }
-substrate-state-trie-migration-rpc = { optional = true, workspace = true, default-features = true }
+soil-rpc = { optional = true, workspace = true, default-features = true }
 thousands = { optional = true, workspace = true }
 zstd = { optional = true, workspace = true }
 subsoil = { workspace = true }
@@ -63,7 +63,7 @@ remote-test = [
 	"remote-externalities",
 	"serde",
 	"std",
-	"substrate-state-trie-migration-rpc",
+	"soil-rpc",
 	"thousands",
 	"zstd",
 ]

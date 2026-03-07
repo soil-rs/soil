@@ -164,13 +164,13 @@ where
 	use soil_grandpa::rpc::{Grandpa, GrandpaApiServer};
 	use soil_rpc::{
 		dev::{Dev, DevApiServer},
-		mmr::{Mmr, MmrApiServer},
 		mixnet::MixnetApiServer,
+		mmr::{Mmr, MmrApiServer},
+		state_trie_migration::{StateMigration, StateMigrationApiServer},
 		statement::StatementApiServer,
 	};
 	use soil_sync_state_rpc::{SyncState, SyncStateApiServer};
 	use substrate_frame_rpc_system::{System, SystemApiServer};
-	use substrate_state_trie_migration_rpc::{StateMigration, StateMigrationApiServer};
 	use topsoil_transaction_payment_rpc::{TransactionPayment, TransactionPaymentApiServer};
 
 	let mut io = RpcModule::new(());

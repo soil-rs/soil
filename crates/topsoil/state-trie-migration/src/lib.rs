@@ -1790,8 +1790,7 @@ pub(crate) mod remote_tests {
 		// set the version to 1, as if the upgrade happened.
 		ext.state_version = subsoil::core::storage::StateVersion::V1;
 
-		let status =
-			substrate_state_trie_migration_rpc::migration_status(&ext.as_backend()).unwrap();
+		let status = soil_rpc::state_trie_migration::migration_status(&ext.as_backend()).unwrap();
 		assert!(
 			status.top_remaining_to_migrate > 0,
 			"no node needs migrating, this probably means that state was initialized with `StateVersion::V1`",
@@ -1851,8 +1850,7 @@ pub(crate) mod remote_tests {
 			)
 		});
 
-		let status =
-			substrate_state_trie_migration_rpc::migration_status(&ext.as_backend()).unwrap();
+		let status = soil_rpc::state_trie_migration::migration_status(&ext.as_backend()).unwrap();
 		assert_eq!(status.top_remaining_to_migrate, 0);
 		assert_eq!(status.child_remaining_to_migrate, 0);
 	}

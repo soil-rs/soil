@@ -40,6 +40,11 @@ frame RPC helpers separate.
 
 ## Progress
 
+Step 8 is intentionally left unmerged for now. Folding `soil-sync-state-rpc`
+into `soil-rpc` would create a cycle because `soil-rpc` already contains the
+merged BABE and GRANDPA RPC surfaces while `soil-sync-state-rpc` depends on the
+consensus crates for sync-state generation.
+
 - [x] Step 1: Create this progress file.
 - [x] Step 2: Flatten the existing `soil-rpc` crate to `crates/soil-rpc`.
 - [x] Step 3: Merge `soil-rpc-api` into `soil_rpc::api`.
@@ -48,7 +53,7 @@ frame RPC helpers separate.
 - [x] Step 6: Merge `soil-rpc-spec-v2` into `soil_rpc::v2`.
 - [x] Step 7: Merge `soil-mmr-rpc` into `soil_rpc::mmr`.
 - [ ] Step 8: Merge `soil-sync-state-rpc` into `soil_rpc::sync_state`.
-- [ ] Step 9: Merge `substrate-state-trie-migration-rpc` into
+- [x] Step 9: Merge `substrate-state-trie-migration-rpc` into
       `soil_rpc::state_trie_migration`.
 - [ ] Step 10: Merge `substrate-rpc-client` into `soil_rpc::client`.
 - [ ] Step 11: Final consistency pass and spec update.

@@ -30,6 +30,7 @@ pub mod number;
 pub mod offchain;
 pub mod server;
 pub mod state;
+pub mod state_trie_migration;
 pub mod statement;
 pub mod system;
 pub mod tracing;

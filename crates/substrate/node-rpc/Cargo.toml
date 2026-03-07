@@ -29,4 +29,3 @@ soil-sync-state-rpc = { workspace = true, default-features = true }
 soil-client = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
 substrate-frame-rpc-system = { workspace = true, default-features = true }
-substrate-state-trie-migration-rpc = { workspace = true, default-features = true }

@@ -107,7 +107,6 @@ substrate-frame-rpc-support = { workspace = true, default-features = true }
 substrate-frame-rpc-system = { workspace = true, default-features = true }
 prometheus-endpoint = { workspace = true, default-features = true }
 substrate-rpc-client = { workspace = true, default-features = true }
-substrate-state-trie-migration-rpc = { workspace = true, default-features = true }
 substrate-wasm-builder = { workspace = true, default-features = true }
 # Shared code between the staging node and kitchensink runtime:
 kitchensink-runtime = { workspace = true }
