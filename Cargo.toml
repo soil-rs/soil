@@ -13,7 +13,6 @@ members = [
 	"crates/subsoil-derive",
 	"crates/soil/api/test",
 	"crates/soil-babe",
-	"crates/soil/application-crypto/test",
 	"crates/soil-aura",
 	"crates/soil-beefy",
 	"crates/soil/authority-discovery",

@@ -16,7 +16,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-use crate::conformance::setup::{
+use super::setup::{
 	connect_backends, connect_notifications, create_network_backend, NetworkBackendClient,
 };
 
