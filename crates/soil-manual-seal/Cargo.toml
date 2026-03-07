@@ -27,7 +27,6 @@ prometheus-endpoint = { workspace = true, default-features = true, optional = tr
 soil-consensus = { workspace = true, default-features = true, optional = true}
 sc-consensus-aura = { workspace = true, default-features = true, optional = true}
 sc-consensus-babe = { workspace = true, default-features = true, optional = true}
-soil-consensus-epochs = { workspace = true, default-features = true, optional = true}
 sc-transaction-pool = { workspace = true, default-features = true, optional = true}
 serde = { features = ["derive"], workspace = true, default-features = true, optional = true}
 soil-client = { workspace = true, default-features = true, optional = true}
@@ -49,7 +48,6 @@ std = [
 	"sc-transaction-pool",
 	"serde",
 	"soil-client",
-	"soil-consensus-epochs",
 	"thiserror",
 	"subsoil/std"]
 

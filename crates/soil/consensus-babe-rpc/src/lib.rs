@@ -32,7 +32,7 @@ use serde::{Deserialize, Serialize};
 use sc_consensus_babe::{authorship, BabeWorkerHandle};
 use soil_client::blockchain::{Error as BlockChainError, HeaderBackend, HeaderMetadata};
 use soil_client::consensus::{Error as ConsensusError, SelectChain};
-use soil_consensus_epochs::Epoch as EpochT;
+use soil_consensus::epochs::Epoch as EpochT;
 use soil_rpc_api::{check_if_safe, UnsafeRpcError};
 use subsoil::api::ProvideRuntimeApi;
 use subsoil::application_crypto::AppCrypto;

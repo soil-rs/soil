@@ -84,7 +84,6 @@ sc-consensus-babe = { workspace = true, default-features = true }
 soil-consensus-babe-rpc = { workspace = true, default-features = true }
 sc-consensus-beefy = { workspace = true, default-features = true }
 soil-consensus-beefy-rpc = { workspace = true, default-features = true }
-soil-consensus-epochs = { workspace = true, default-features = true }
 sc-consensus-grandpa = { workspace = true, default-features = true }
 soil-consensus-grandpa-rpc = { workspace = true, default-features = true }
 soil-manual-seal = { workspace = true, default-features = true }

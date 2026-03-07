@@ -24,7 +24,7 @@ use crate::{
 };
 use log::{debug, trace};
 use soil_consensus::slots::CheckedHeader;
-use soil_consensus_epochs::Epoch as EpochT;
+use soil_consensus::epochs::Epoch as EpochT;
 use subsoil::consensus::babe::{
 	digests::{
 		CompatibleDigestItem, PreDigest, PrimaryPreDigest, SecondaryPlainPreDigest,

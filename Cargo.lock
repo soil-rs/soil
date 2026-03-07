@@ -8100,7 +8100,6 @@ dependencies = [
  "parking_lot 0.12.5",
  "soil-client",
  "soil-consensus",
- "soil-consensus-epochs",
  "soil-network-test",
  "soil-telemetry",
  "subsoil",
@@ -9265,6 +9264,7 @@ name = "soil-consensus"
 version = "0.33.0"
 dependencies = [
  "async-trait",
+ "fork-tree",
  "futures",
  "futures-timer",
  "log",
@@ -9292,7 +9292,6 @@ dependencies = [
  "serde",
  "soil-client",
  "soil-consensus",
- "soil-consensus-epochs",
  "soil-rpc-api",
  "subsoil",
  "substrate-test-runtime-client",
@@ -9316,17 +9315,6 @@ dependencies = [
  "substrate-test-runtime-client",
  "thiserror 1.0.69",
  "tokio",
-]
-
-[[package]]
-name = "soil-consensus-epochs"
-version = "0.33.0"
-dependencies = [
- "fork-tree",
- "parity-scale-codec",
- "soil-client",
- "soil-consensus",
- "subsoil",
 ]
 
 [[package]]
@@ -9390,7 +9378,6 @@ dependencies = [
  "soil-basic-authorship",
  "soil-client",
  "soil-consensus",
- "soil-consensus-epochs",
  "subsoil",
  "substrate-prometheus-endpoint",
  "substrate-test-runtime-client",
@@ -9905,7 +9892,7 @@ dependencies = [
  "serde_json",
  "soil-chain-spec",
  "soil-client",
- "soil-consensus-epochs",
+ "soil-consensus",
  "subsoil",
  "thiserror 1.0.69",
 ]
@@ -10210,7 +10197,6 @@ dependencies = [
  "soil-consensus",
  "soil-consensus-babe-rpc",
  "soil-consensus-beefy-rpc",
- "soil-consensus-epochs",
  "soil-consensus-grandpa-rpc",
  "soil-genesis-builder",
  "soil-informant",

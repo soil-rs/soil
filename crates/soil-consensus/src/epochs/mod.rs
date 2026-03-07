@@ -716,7 +716,7 @@ pub type EpochChangesFor<Block, Epoch> =
 
 /// A shared epoch changes tree.
 pub type SharedEpochChanges<Block, Epoch> =
-	soil_consensus::shared_data::SharedData<EpochChangesFor<Block, Epoch>>;
+	crate::shared_data::SharedData<EpochChangesFor<Block, Epoch>>;
 
 #[cfg(test)]
 mod tests {

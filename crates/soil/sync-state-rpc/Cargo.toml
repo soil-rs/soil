@@ -19,8 +19,8 @@ soil-client = { workspace = true, default-features = true }
 codec = { workspace = true, default-features = true}
 jsonrpsee = { features = ["client-core", "macros", "server-core"], workspace = true}
 soil-chain-spec = { workspace = true, default-features = true}
+soil-consensus = { workspace = true, default-features = true}
 sc-consensus-babe = { workspace = true, default-features = true}
-soil-consensus-epochs = { workspace = true, default-features = true}
 sc-consensus-grandpa = { workspace = true, default-features = true}
 serde = { features = ["derive"], workspace = true, default-features = true}
 serde_json = { workspace = true, default-features = true}

@@ -18,7 +18,7 @@
 
 //! Migration types for epoch changes.
 
-use crate::{Epoch, EpochChanges, PersistedEpoch, PersistedEpochHeader};
+use super::{Epoch, EpochChanges, PersistedEpoch, PersistedEpochHeader};
 use codec::{Decode, Encode};
 use fork_tree::ForkTree;
 use std::collections::BTreeMap;

@@ -111,7 +111,7 @@ use soil_client::consensus::{
 	BlockOrigin, Environment, Error as ConsensusError, Proposer, SelectChain,
 };
 use soil_client::transaction_pool::OffchainTransactionPoolFactory;
-use soil_consensus_epochs::{
+use soil_consensus::epochs::{
 	descendent_query, Epoch as EpochT, EpochChangesFor, SharedEpochChanges, ViableEpoch,
 	ViableEpochDescriptor,
 };

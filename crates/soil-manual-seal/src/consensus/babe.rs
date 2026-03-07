@@ -26,7 +26,7 @@ use sc_consensus_babe::{
 	authorship, find_pre_digest, BabeIntermediate, CompatibleDigestItem, Epoch, INTERMEDIATE_KEY,
 };
 use soil_client::client_api::{AuxStore, UsageProvider};
-use soil_consensus_epochs::{
+use soil_consensus::epochs::{
 	descendent_query, EpochHeader, SharedEpochChanges, ViableEpochDescriptor,
 };
 use std::sync::Arc;

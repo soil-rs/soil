@@ -19,6 +19,7 @@
 //! Collection of common consensus specific implementations
 
 pub mod block_import;
+pub mod epochs;
 pub mod import_queue;
 pub mod metrics;
 pub mod slots;

@@ -20,7 +20,6 @@ members = [
 	"crates/soil/cli",
 	"crates/soil/consensus-babe-rpc",
 	"crates/soil/consensus-beefy-rpc",
-	"crates/soil/consensus-epochs",
 	"crates/soil/consensus-grandpa-rpc",
 	"crates/soil-consensus",
 	"crates/soil-client",
@@ -435,7 +434,6 @@ sc-consensus-babe = { path = "crates/substrate-client/consensus/babe", default-f
 soil-consensus-babe-rpc = { path = "crates/soil/consensus-babe-rpc", default-features = false }
 sc-consensus-beefy = { path = "crates/substrate-client/consensus/beefy", default-features = false }
 soil-consensus-beefy-rpc = { path = "crates/soil/consensus-beefy-rpc", default-features = false }
-soil-consensus-epochs = { path = "crates/soil/consensus-epochs", default-features = false }
 sc-consensus-grandpa = { path = "crates/substrate-client/consensus/grandpa", default-features = false }
 soil-consensus-grandpa-rpc = { path = "crates/soil/consensus-grandpa-rpc", default-features = false }
 soil-manual-seal = { path = "crates/soil-manual-seal", default-features = false }

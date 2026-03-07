@@ -20,7 +20,7 @@
 
 use super::{Epoch, AUTHORING_SCORE_LENGTH, AUTHORING_SCORE_VRF_CONTEXT};
 use codec::Encode;
-use soil_consensus_epochs::Epoch as EpochT;
+use soil_consensus::epochs::Epoch as EpochT;
 use subsoil::application_crypto::AppCrypto;
 use subsoil::consensus::babe::{
 	digests::{PreDigest, PrimaryPreDigest, SecondaryPlainPreDigest, SecondaryVRFPreDigest},

@@ -907,7 +907,7 @@ mod tests {
 	use soil_client::keystore::LocalKeystore;
 	use soil_client::transaction_pool::ChainEvent;
 	use soil_client::transaction_pool::MaintainedTransactionPool;
-	use soil_consensus_epochs::descendent_query;
+	use soil_consensus::epochs::descendent_query;
 	use soil_service_test::TestNetNode;
 	use std::sync::Arc;
 	use subsoil::core::crypto::Pair;

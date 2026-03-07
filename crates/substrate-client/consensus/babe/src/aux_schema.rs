@@ -24,7 +24,7 @@ use log::info;
 use crate::{migration::EpochV0, Epoch, LOG_TARGET};
 use soil_client::blockchain::{Error as ClientError, Result as ClientResult};
 use soil_client::client_api::backend::AuxStore;
-use soil_consensus_epochs::{
+use soil_consensus::epochs::{
 	migration::{EpochChangesV0For, EpochChangesV1For},
 	EpochChangesFor, SharedEpochChanges,
 };
@@ -145,7 +145,7 @@ mod test {
 	use crate::migration::EpochV0;
 	use fork_tree::ForkTree;
 	use soil_client::consensus::Error as ConsensusError;
-	use soil_consensus_epochs::{EpochHeader, PersistedEpoch, PersistedEpochHeader};
+	use soil_consensus::epochs::{EpochHeader, PersistedEpoch, PersistedEpochHeader};
 	use soil_network_test::Block as TestBlock;
 	use subsoil::consensus::babe::AllowedSlots;
 	use subsoil::core::H256;
