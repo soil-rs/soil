@@ -62,7 +62,8 @@ use soil_consensus::{
 	LongestChain, Verifier,
 };
 use soil_network::common::role::Roles;
-use soil_network::types::{build_multiaddr, multiaddr::Multiaddr};
+use soil_network::light::light_client_requests::handler::LightClientRequestHandler;
+use soil_network::{build_multiaddr, types::multiaddr::Multiaddr};
 use soil_network::{
 	config::{
 		FullNetworkConfiguration, MultiaddrWithPeerId, NetworkConfiguration, NonDefaultSetConfig,
@@ -74,7 +75,6 @@ use soil_network::{
 	NetworkBlock, NetworkService, NetworkStateInfo, NetworkSyncForkRequest, NetworkWorker,
 	NotificationMetrics, NotificationService,
 };
-use soil_network_light::light_client_requests::handler::LightClientRequestHandler;
 use soil_network_sync::{
 	block_request_handler::BlockRequestHandler,
 	service::{network::NetworkServiceProvider, syncing_service::SyncingService},

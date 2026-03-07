@@ -18,7 +18,7 @@
 
 //! Helpers for outgoing and incoming light client requests.
 
-use soil_network::{
+use crate::{
 	config::ProtocolId, request_responses::IncomingRequest, NetworkBackend, MAX_RESPONSE_SIZE,
 };
 use subsoil::runtime::traits::Block;

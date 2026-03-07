@@ -21,6 +21,7 @@ use futures::prelude::*;
 use soil_client::blockchain::HeaderBackend;
 use soil_consensus::{ImportQueue, Link};
 use soil_network::common::role::Roles;
+use soil_network::light::light_client_requests::handler::LightClientRequestHandler;
 use soil_network::{
 	config::{self, FullNetworkConfiguration, MultiaddrWithPeerId, ProtocolId, TransportConfig},
 	event::Event,
@@ -29,7 +30,6 @@ use soil_network::{
 	Multiaddr, NetworkEventStream, NetworkPeers, NetworkService, NetworkStateInfo, NetworkWorker,
 	NotificationMetrics, NotificationService, PeerId,
 };
-use soil_network_light::light_client_requests::handler::LightClientRequestHandler;
 use soil_network_sync::{
 	block_request_handler::BlockRequestHandler,
 	engine::SyncingEngine,

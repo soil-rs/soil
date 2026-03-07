@@ -58,6 +58,7 @@ use soil_client::transaction_pool::{MaintainedTransactionPool, TransactionPool};
 use soil_client::utils::mpsc::{tracing_unbounded, TracingUnboundedSender};
 use soil_consensus::import_queue::{ImportQueue, ImportQueueService};
 use soil_network::common::role::{Role, Roles};
+use soil_network::light::light_client_requests::handler::LightClientRequestHandler;
 use soil_network::{
 	config::{FullNetworkConfiguration, ProtocolId, SyncMode},
 	multiaddr::Protocol,
@@ -67,7 +68,6 @@ use soil_network::{
 	},
 	NetworkBackend, NetworkStateInfo,
 };
-use soil_network_light::light_client_requests::handler::LightClientRequestHandler;
 use soil_network_sync::{
 	block_relay_protocol::{BlockDownloader, BlockRelayParams},
 	block_request_handler::BlockRequestHandler,

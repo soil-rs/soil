@@ -245,6 +245,7 @@
 mod behaviour;
 mod bitswap;
 pub mod common;
+pub mod light;
 mod litep2p;
 mod protocol;
 

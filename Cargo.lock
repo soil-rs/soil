@@ -9418,23 +9418,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "soil-network-light"
-version = "0.33.0"
-dependencies = [
- "array-bytes 6.2.3",
- "async-channel 1.9.0",
- "futures",
- "log",
- "parity-scale-codec",
- "prost 0.12.6",
- "prost-build 0.13.5",
- "soil-client",
- "soil-network",
- "subsoil",
- "thiserror 1.0.69",
-]
-
-[[package]]
 name = "soil-network-statement"
 version = "0.16.0"
 dependencies = [
@@ -9502,7 +9485,6 @@ dependencies = [
  "soil-client",
  "soil-consensus",
  "soil-network",
- "soil-network-light",
  "soil-network-sync",
  "soil-service",
  "subsoil",
@@ -9689,7 +9671,6 @@ dependencies = [
  "soil-consensus",
  "soil-informant",
  "soil-network",
- "soil-network-light",
  "soil-network-sync",
  "soil-network-transactions",
  "soil-rpc-server",
@@ -10096,7 +10077,6 @@ dependencies = [
  "soil-mmr-rpc",
  "soil-network",
  "soil-network-gossip",
- "soil-network-light",
  "soil-network-statement",
  "soil-network-sync",
  "soil-network-transactions",

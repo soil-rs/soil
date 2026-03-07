@@ -89,7 +89,6 @@ soil-informant = { workspace = true, default-features = true }
 sc-mixnet = { workspace = true, default-features = true }
 soil-network = { workspace = true, default-features = true }
 soil-network-gossip = { workspace = true, default-features = true }
-soil-network-light = { workspace = true, default-features = true }
 soil-network-statement = { workspace = true, default-features = true }
 soil-network-sync = { workspace = true, default-features = true }
 soil-network-transactions = { workspace = true, default-features = true }

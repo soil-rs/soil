@@ -22,18 +22,18 @@
 //! `crate::request_responses::RequestResponsesBehaviour` with
 //! [`LightClientRequestHandler`](handler::LightClientRequestHandler).
 
-use crate::schema;
+use crate::light::schema;
+use crate::types::PeerId;
+use crate::{
+	config::ProtocolId,
+	request_responses::{IncomingRequest, OutgoingResponse},
+	NetworkBackend, ReputationChange,
+};
 use codec::{self, Decode, Encode};
 use futures::prelude::*;
 use log::{debug, trace};
 use prost::Message;
 use soil_client::client_api::{BlockBackend, ProofProvider};
-use soil_network::types::PeerId;
-use soil_network::{
-	config::ProtocolId,
-	request_responses::{IncomingRequest, OutgoingResponse},
-	NetworkBackend, ReputationChange,
-};
 use std::{marker::PhantomData, sync::Arc};
 use subsoil::core::{
 	hexdisplay::HexDisplay,
