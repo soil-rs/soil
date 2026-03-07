@@ -19,6 +19,7 @@ pub mod crypto_ec_utils;
 #[cfg(feature = "std")]
 pub mod database;
 pub mod externalities;
+pub mod genesis_builder;
 pub mod inherents;
 pub mod io;
 pub mod keyring;
@@ -27,6 +28,7 @@ pub mod metadata_ir;
 pub mod mixnet;
 pub mod mmr;
 pub mod npos_elections;
+pub mod offchain_worker;
 #[cfg(feature = "std")]
 pub mod panic_handler;
 pub mod runtime;
@@ -40,6 +42,7 @@ pub mod storage;
 pub mod timestamp;
 pub mod tracing;
 pub mod trie;
+pub mod txpool;
 pub mod version;
 pub mod wasm_interface;
 pub mod weights;
