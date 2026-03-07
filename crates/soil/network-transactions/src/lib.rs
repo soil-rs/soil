@@ -37,6 +37,7 @@ use soil_client::utils::mpsc::{
 	tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender,
 };
 use soil_network::common::{role::ObservedRole, ExHashT};
+use soil_network::sync::{SyncEvent, SyncEventStream};
 use soil_network::types::PeerId;
 use soil_network::{
 	config::{NonReservedPeerMode, ProtocolId, SetConfig},
@@ -50,7 +51,6 @@ use soil_network::{
 	utils::{interval, LruHashSet},
 	NetworkBackend, NetworkEventStream, NetworkPeers,
 };
-use soil_network_sync::{SyncEvent, SyncEventStream};
 use subsoil::runtime::traits::Block as BlockT;
 
 use std::{

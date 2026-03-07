@@ -18,7 +18,7 @@
 
 use futures::channel::oneshot;
 
-use soil_consensus::{BlockImportError, BlockImportStatus};
+use soil_consensus::{import_queue::RuntimeOrigin, BlockImportError, BlockImportStatus};
 use soil_network::common::role::ObservedRole;
 use soil_network::types::{multiaddr::Multiaddr, PeerId};
 use soil_network::{
@@ -52,7 +52,7 @@ mockall::mock! {
 		);
 		fn justification_imported(
 			&self,
-			who: PeerId,
+			who: RuntimeOrigin,
 			hash: &B::Hash,
 			number: NumberFor<B>,
 			import_result: soil_consensus::JustificationImportResult,

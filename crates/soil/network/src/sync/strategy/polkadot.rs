@@ -20,16 +20,18 @@
 //! and specific syncing algorithms.
 
 use crate::{
-	block_relay_protocol::BlockDownloader,
-	block_request_handler::MAX_BLOCKS_IN_RESPONSE,
-	service::network::NetworkServiceHandle,
-	strategy::{
-		chain_sync::{ChainSync, ChainSyncMode},
-		state::StateStrategy,
-		warp::{WarpSync, WarpSyncConfig},
-		StrategyKey, SyncingAction, SyncingStrategy,
+	sync::{
+		block_relay_protocol::BlockDownloader,
+		block_request_handler::MAX_BLOCKS_IN_RESPONSE,
+		service::network::NetworkServiceHandle,
+		strategy::{
+			chain_sync::{ChainSync, ChainSyncMode},
+			state::StateStrategy,
+			warp::{WarpSync, WarpSyncConfig},
+			StrategyKey, SyncingAction, SyncingStrategy,
+		},
+		types::SyncStatus,
 	},
-	types::SyncStatus,
 	LOG_TARGET,
 };
 use log::{debug, error, info, warn};

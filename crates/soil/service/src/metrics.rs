@@ -21,8 +21,8 @@ use prometheus_endpoint::{register, Gauge, GaugeVec, Opts, PrometheusError, Regi
 use soil_client::client_api::{ClientInfo, UsageProvider};
 use soil_client::transaction_pool::{MaintainedTransactionPool, PoolStatus};
 use soil_client::utils::metrics::register_globals;
+use soil_network::sync::{SyncStatus, SyncStatusProvider};
 use soil_network::{config::Role, NetworkStatus, NetworkStatusProvider};
-use soil_network_sync::{SyncStatus, SyncStatusProvider};
 use soil_telemetry::{telemetry, TelemetryHandle, SUBSTRATE_INFO};
 use std::{
 	sync::Arc,

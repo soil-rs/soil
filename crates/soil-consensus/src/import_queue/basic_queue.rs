@@ -154,7 +154,7 @@ impl<B: BlockT> ImportQueueService<B> for BasicQueueHandle<B> {
 	) {
 		for justification in justifications {
 			let res = self.justification_sender.unbounded_send(
-				worker_messages::ImportJustification(who, hash, number, justification),
+				worker_messages::ImportJustification(who.clone(), hash, number, justification),
 			);
 
 			if res.is_err() {
@@ -642,7 +642,7 @@ mod tests {
 			let hash = Hash::random();
 			finality_sender
 				.unbounded_send(worker_messages::ImportJustification(
-					soil_network::types::PeerId::random(),
+					RuntimeOrigin::from(vec![1, 2, 3]),
 					hash,
 					1,
 					(*b"TEST", Vec::new()),

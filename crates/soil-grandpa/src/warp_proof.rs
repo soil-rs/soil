@@ -25,7 +25,7 @@ use crate::{
 };
 use soil_client::blockchain::{Backend as BlockchainBackend, HeaderBackend};
 use soil_client::client_api::Backend as ClientBackend;
-use soil_network_sync::strategy::warp::{
+use soil_network::sync::strategy::warp::{
 	EncodedProof, VerificationResult, Verifier, WarpSyncProvider,
 };
 use subsoil::consensus::grandpa::{AuthorityList, SetId, GRANDPA_ENGINE_ID};

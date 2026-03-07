@@ -19,7 +19,7 @@
 //! [`BlockAnnounceValidator`] is responsible for async validation of block announcements.
 //! [`Stream`] implemented by [`BlockAnnounceValidator`] never terminates.
 
-use crate::{futures_stream::FuturesStream, LOG_TARGET};
+use crate::{sync::futures_stream::FuturesStream, LOG_TARGET};
 use futures::{stream::FusedStream, Future, FutureExt, Stream, StreamExt};
 use log::{debug, error, trace, warn};
 use soil_client::consensus::block_validation::Validation;
@@ -311,7 +311,7 @@ impl<B: BlockT> FusedStream for BlockAnnounceValidator<B> {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use crate::block_announce_validator::AllocateSlotForBlockAnnounceValidation;
+	use crate::sync::block_announce_validator::AllocateSlotForBlockAnnounceValidation;
 	use soil_client::consensus::block_validation::DefaultBlockAnnounceValidator;
 	use soil_network::types::PeerId;
 	use substrate_test_runtime_client::runtime::Block;

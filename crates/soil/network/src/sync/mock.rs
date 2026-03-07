@@ -18,7 +18,7 @@
 
 //! Contains mock implementations of `ChainSync` and 'BlockDownloader'.
 
-use crate::block_relay_protocol::{BlockDownloader as BlockDownloaderT, BlockResponseError};
+use crate::sync::block_relay_protocol::{BlockDownloader as BlockDownloaderT, BlockResponseError};
 
 use futures::channel::oneshot;
 use soil_network::common::sync::message::{BlockData, BlockRequest};

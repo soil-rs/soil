@@ -22,7 +22,7 @@ use futures::{channel::oneshot, stream::StreamExt};
 use log::debug;
 
 use crate::{
-	strategy::warp::{EncodedProof, WarpProofRequest, WarpSyncProvider},
+	sync::strategy::warp::{EncodedProof, WarpProofRequest, WarpSyncProvider},
 	LOG_TARGET,
 };
 use soil_network::{

@@ -60,7 +60,7 @@ use gossip::{
 	FullCatchUpMessage, FullCommitMessage, GossipMessage, GossipValidator, PeerReport, VoteMessage,
 };
 use soil_client::utils::mpsc::TracingUnboundedReceiver;
-use soil_network_sync::SyncEventStream;
+use soil_network::sync::SyncEventStream;
 use subsoil::consensus::grandpa::{
 	AuthorityId, AuthoritySignature, RoundNumber, SetId as SetIdNumber,
 };

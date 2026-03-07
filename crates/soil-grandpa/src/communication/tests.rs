@@ -29,6 +29,7 @@ use soil_client::utils::mpsc::{
 	tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender,
 };
 use soil_network::common::role::{ObservedRole, Roles};
+use soil_network::sync::{SyncEvent as SyncStreamEvent, SyncEventStream};
 use soil_network::types::PeerId;
 use soil_network::{
 	config::{MultiaddrWithPeerId, Role},
@@ -39,7 +40,6 @@ use soil_network::{
 	ReputationChange,
 };
 use soil_network_gossip::Validator;
-use soil_network_sync::{SyncEvent as SyncStreamEvent, SyncEventStream};
 use soil_network_test::{Block, Hash};
 use std::{collections::HashSet, pin::Pin, sync::Arc, task::Poll};
 use subsoil::consensus::grandpa::AuthorityList;

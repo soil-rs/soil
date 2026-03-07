@@ -19,7 +19,7 @@
 //! `crate::request_responses::RequestResponsesBehaviour`.
 
 use crate::{
-	schema::v1::{KeyValueStateEntry, StateEntry, StateRequest, StateResponse},
+	sync::schema::v1::{KeyValueStateEntry, StateEntry, StateRequest, StateResponse},
 	LOG_TARGET,
 };
 

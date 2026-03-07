@@ -19,7 +19,7 @@
 //! [`PendingResponses`] is responsible for keeping track of pending responses and
 //! polling them. [`Stream`] implemented by [`PendingResponses`] never terminates.
 
-use crate::{strategy::StrategyKey, LOG_TARGET};
+use crate::{sync::strategy::StrategyKey, LOG_TARGET};
 use futures::{
 	channel::oneshot,
 	future::BoxFuture,

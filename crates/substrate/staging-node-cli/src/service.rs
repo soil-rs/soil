@@ -35,10 +35,10 @@ use sc_transaction_pool::TransactionPoolHandle;
 use soil_babe::{self, SlotProportion};
 use soil_client::client_api::{Backend, BlockBackend};
 use soil_client::transaction_pool::OffchainTransactionPoolFactory;
+use soil_network::sync::{strategy::warp::WarpSyncConfig, SyncingService};
 use soil_network::{
 	event::Event, service::traits::NetworkService, NetworkBackend, NetworkEventStream,
 };
-use soil_network_sync::{strategy::warp::WarpSyncConfig, SyncingService};
 use soil_service::{config::Configuration, error::Error as ServiceError, RpcHandlers, TaskManager};
 use soil_sysinfo::SUBSTRATE_REFERENCE_HARDWARE;
 use soil_telemetry::{Telemetry, TelemetryWorker};

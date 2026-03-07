@@ -39,6 +39,7 @@ either = { workspace = true, default-features = true}
 fnv = { workspace = true}
 futures = { workspace = true}
 futures-timer = { workspace = true}
+fork-tree = { workspace = true, default-features = true}
 ip_network = { workspace = true}
 libp2p-identity = { features = ["ed25519", "peerid", "rand"], workspace = true}
 libp2p-kad = { workspace = true, default-features = false}
@@ -60,8 +61,9 @@ serde = { features = ["derive"], workspace = true, default-features = true}
 serde_json = { workspace = true, default-features = true}
 serde_with = { workspace = true}
 smallvec = { workspace = true, default-features = true}
+soil-consensus = { workspace = true, default-features = true}
 thiserror = { workspace = true}
-tokio = { features = ["macros", "sync"], workspace = true, default-features = true}
+tokio = { features = ["macros", "sync", "time"], workspace = true, default-features = true}
 tokio-stream = { workspace = true}
 unsigned-varint = { features = ["asynchronous_codec", "futures"], workspace = true}
 void = { workspace = true}
@@ -73,7 +75,9 @@ subsoil = { workspace = true, default-features = true}
 assert_matches = { workspace = true }
 cid = { workspace = true }
 multistream-select = { workspace = true }
+quickcheck = { workspace = true }
 soil-client = { workspace = true, default-features = true }
+soil-test-primitives = { workspace = true }
 subsoil-crypto-hashing = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
 substrate-test-runtime = { workspace = true }

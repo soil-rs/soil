@@ -22,6 +22,13 @@ use soil_client::blockchain::HeaderBackend;
 use soil_consensus::{ImportQueue, Link};
 use soil_network::common::role::Roles;
 use soil_network::light::light_client_requests::handler::LightClientRequestHandler;
+use soil_network::sync::{
+	block_request_handler::BlockRequestHandler,
+	engine::SyncingEngine,
+	service::network::NetworkServiceProvider,
+	state_request_handler::StateRequestHandler,
+	strategy::polkadot::{PolkadotSyncingStrategy, PolkadotSyncingStrategyConfig},
+};
 use soil_network::{
 	config::{self, FullNetworkConfiguration, MultiaddrWithPeerId, ProtocolId, TransportConfig},
 	event::Event,
@@ -29,13 +36,6 @@ use soil_network::{
 	service::traits::{NotificationEvent, ValidationResult},
 	Multiaddr, NetworkEventStream, NetworkPeers, NetworkService, NetworkStateInfo, NetworkWorker,
 	NotificationMetrics, NotificationService, PeerId,
-};
-use soil_network_sync::{
-	block_request_handler::BlockRequestHandler,
-	engine::SyncingEngine,
-	service::network::NetworkServiceProvider,
-	state_request_handler::StateRequestHandler,
-	strategy::polkadot::{PolkadotSyncingStrategy, PolkadotSyncingStrategyConfig},
 };
 use subsoil::runtime::traits::{Block as BlockT, Zero};
 use substrate_test_runtime_client::{

@@ -33,9 +33,9 @@ use soil_client::blockchain::HeaderMetadata;
 #[cfg(feature = "std")]
 use soil_client::client_api::{BlockchainEvents, UsageProvider};
 #[cfg(feature = "std")]
-use soil_network::NetworkStatusProvider;
+use soil_network::sync::{SyncStatusProvider, SyncingService};
 #[cfg(feature = "std")]
-use soil_network_sync::{SyncStatusProvider, SyncingService};
+use soil_network::NetworkStatusProvider;
 #[cfg(feature = "std")]
 use std::{
 	collections::VecDeque,

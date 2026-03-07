@@ -29,7 +29,7 @@ pub mod state;
 pub mod state_sync;
 pub mod warp;
 
-use crate::{
+use crate::sync::{
 	pending_responses::ResponseFuture,
 	service::network::NetworkServiceHandle,
 	types::{BadPeer, SyncStatus},

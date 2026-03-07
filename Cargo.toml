@@ -34,7 +34,6 @@ members = [
 	"crates/soil/network",
 	"crates/soil/network-gossip",
 	"crates/soil/network-statement",
-	"crates/soil/network-sync",
 	"crates/soil/network-test",
 	"crates/soil/network-transactions",
 	"crates/soil-pow",
@@ -433,7 +432,6 @@ sc-mixnet = { path = "crates/substrate-client/mixnet", default-features = false 
 soil-network = { path = "crates/soil/network", default-features = false }
 soil-network-gossip = { path = "crates/soil/network-gossip", default-features = false }
 soil-network-statement = { default-features = false, path = "crates/soil/network-statement" }
-soil-network-sync = { path = "crates/soil/network-sync", default-features = false }
 soil-network-test = { path = "crates/soil/network-test" }
 soil-network-transactions = { path = "crates/soil/network-transactions", default-features = false }
 sc-offchain = { path = "crates/substrate-client/offchain", default-features = false }

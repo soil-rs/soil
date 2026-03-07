@@ -22,6 +22,7 @@ use super::{
 };
 use rand::Rng;
 use serde_with::{DeserializeFromStr, SerializeDisplay};
+use soil_consensus::import_queue::RuntimeOrigin;
 
 use std::{fmt, hash::Hash, str::FromStr};
 
@@ -156,6 +157,46 @@ impl From<&libp2p_identity::PeerId> for PeerId {
 impl From<&PeerId> for libp2p_identity::PeerId {
 	fn from(peer_id: &PeerId) -> Self {
 		libp2p_identity::PeerId::from_bytes(&peer_id.to_bytes()).expect("to succeed")
+	}
+}
+
+impl From<PeerId> for RuntimeOrigin {
+	fn from(peer_id: PeerId) -> Self {
+		RuntimeOrigin::from(peer_id.to_bytes())
+	}
+}
+
+impl From<&PeerId> for RuntimeOrigin {
+	fn from(peer_id: &PeerId) -> Self {
+		RuntimeOrigin::from(peer_id.to_bytes())
+	}
+}
+
+impl PartialEq<PeerId> for RuntimeOrigin {
+	fn eq(&self, other: &PeerId) -> bool {
+		self.as_bytes() == other.to_bytes().as_slice()
+	}
+}
+
+impl PartialEq<RuntimeOrigin> for PeerId {
+	fn eq(&self, other: &RuntimeOrigin) -> bool {
+		self.to_bytes().as_slice() == other.as_bytes()
+	}
+}
+
+impl TryFrom<RuntimeOrigin> for PeerId {
+	type Error = Error;
+
+	fn try_from(origin: RuntimeOrigin) -> Result<Self, Self::Error> {
+		PeerId::from_bytes(origin.as_bytes())
+	}
+}
+
+impl TryFrom<&RuntimeOrigin> for PeerId {
+	type Error = Error;
+
+	fn try_from(origin: &RuntimeOrigin) -> Result<Self, Self::Error> {
+		PeerId::from_bytes(origin.as_bytes())
 	}
 }
 

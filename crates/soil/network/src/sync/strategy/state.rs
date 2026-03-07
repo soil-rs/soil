@@ -19,14 +19,16 @@
 //! State sync strategy.
 
 use crate::{
-	schema::v1::{StateRequest, StateResponse},
-	service::network::NetworkServiceHandle,
-	strategy::{
-		disconnected_peers::DisconnectedPeers,
-		state_sync::{ImportResult, StateSync, StateSyncProvider},
-		StrategyKey, SyncingAction,
+	sync::{
+		schema::v1::{StateRequest, StateResponse},
+		service::network::NetworkServiceHandle,
+		strategy::{
+			disconnected_peers::DisconnectedPeers,
+			state_sync::{ImportResult, StateSync, StateSyncProvider},
+			StrategyKey, SyncingAction,
+		},
+		types::{BadPeer, SyncState, SyncStatus},
 	},
-	types::{BadPeer, SyncState, SyncStatus},
 	LOG_TARGET,
 };
 use futures::{channel::oneshot, FutureExt};
@@ -393,7 +395,7 @@ impl<B: BlockT> StateStrategy<B> {
 #[cfg(test)]
 mod test {
 	use super::*;
-	use crate::{
+	use crate::sync::{
 		schema::v1::{StateRequest, StateResponse},
 		service::network::NetworkServiceProvider,
 		strategy::state_sync::{ImportResult, StateSyncProgress, StateSyncProvider},

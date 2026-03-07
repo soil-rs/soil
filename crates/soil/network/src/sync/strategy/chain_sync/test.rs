@@ -19,7 +19,7 @@
 //! Tests of [`ChainSync`].
 
 use super::*;
-use crate::{
+use crate::sync::{
 	block_relay_protocol::BlockResponseError, mock::MockBlockDownloader,
 	service::network::NetworkServiceProvider,
 };

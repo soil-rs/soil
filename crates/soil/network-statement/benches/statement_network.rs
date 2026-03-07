@@ -19,6 +19,7 @@
 use criterion::{criterion_group, criterion_main, Criterion};
 use futures::{stream, Stream, StreamExt};
 use sc_statement_store::Store;
+use soil_network::sync::{SyncEvent, SyncEventStream};
 use soil_network::types::PeerId;
 use soil_network::{
 	service::traits::{NotificationEvent, NotificationService},
@@ -32,7 +33,6 @@ use soil_network_statement::{
 	},
 	Peer, StatementHandler,
 };
-use soil_network_sync::{SyncEvent, SyncEventStream};
 use soil_statement_store::{Statement, StatementSource, StatementStore};
 use std::{
 	collections::HashMap,

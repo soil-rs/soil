@@ -22,7 +22,6 @@ futures = { workspace = true, optional = true}
 futures-timer = { workspace = true, optional = true}
 log = { workspace = true, default-features = true, optional = true}
 soil-network = { workspace = true, default-features = true, optional = true}
-soil-network-sync = { workspace = true, default-features = true, optional = true}
 subsoil = { workspace = true, optional = true}
 
 [features]
@@ -33,7 +32,6 @@ std = [
 	"futures-timer",
 	"log",
 	"soil-network",
-	"soil-network-sync",
 	"subsoil",
 	"subsoil/std",
 ]

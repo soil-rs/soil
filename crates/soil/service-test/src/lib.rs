@@ -24,11 +24,11 @@ use parking_lot::Mutex;
 use soil_client::blockchain::HeaderBackend;
 use soil_client::client_api::{Backend, CallExecutor};
 use soil_client::transaction_pool::TransactionPool;
+use soil_network::sync::SyncingService;
 use soil_network::{
 	config::{MultiaddrWithPeerId, NetworkConfiguration, TransportConfig},
 	multiaddr, NetworkBlock, NetworkPeers, NetworkStateInfo,
 };
-use soil_network_sync::SyncingService;
 use soil_service::{
 	client::Client,
 	config::{

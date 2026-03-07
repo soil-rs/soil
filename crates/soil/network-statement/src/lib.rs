@@ -41,6 +41,7 @@ use prometheus_endpoint::{
 	exponential_buckets, register, Counter, Gauge, Histogram, HistogramOpts, PrometheusError,
 	Registry, U64,
 };
+use soil_network::sync::{SyncEvent, SyncEventStream};
 use soil_network::types::PeerId;
 use soil_network::{
 	config::{NonReservedPeerMode, SetConfig},
@@ -54,7 +55,6 @@ use soil_network::{
 	utils::{interval, LruHashSet},
 	NetworkBackend, NetworkEventStream, NetworkPeers,
 };
-use soil_network_sync::{SyncEvent, SyncEventStream};
 use soil_statement_store::{
 	FilterDecision, Hash, Statement, StatementSource, StatementStore, SubmitResult,
 };
@@ -1209,7 +1209,7 @@ mod tests {
 		fn event_stream(
 			&self,
 			_name: &'static str,
-		) -> Pin<Box<dyn Stream<Item = soil_network_sync::types::SyncEvent> + Send>> {
+		) -> Pin<Box<dyn Stream<Item = soil_network::sync::types::SyncEvent> + Send>> {
 			unimplemented!()
 		}
 	}
@@ -1482,7 +1482,7 @@ mod tests {
 			network: network.clone(),
 			sync: TestSync {},
 			sync_event_stream: (Box::pin(futures::stream::pending())
-				as Pin<Box<dyn Stream<Item = soil_network_sync::types::SyncEvent> + Send>>)
+				as Pin<Box<dyn Stream<Item = soil_network::sync::types::SyncEvent> + Send>>)
 				.fuse(),
 			peers,
 			statement_store: Arc::new(statement_store.clone()),
@@ -1689,7 +1689,7 @@ mod tests {
 			network: network.clone(),
 			sync: TestSync {},
 			sync_event_stream: (Box::pin(futures::stream::pending())
-				as Pin<Box<dyn Stream<Item = soil_network_sync::types::SyncEvent> + Send>>)
+				as Pin<Box<dyn Stream<Item = soil_network::sync::types::SyncEvent> + Send>>)
 				.fuse(),
 			peers: HashMap::new(),
 			statement_store: Arc::new(statement_store.clone()),

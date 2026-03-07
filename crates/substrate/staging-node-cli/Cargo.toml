@@ -90,7 +90,6 @@ sc-mixnet = { workspace = true, default-features = true }
 soil-network = { workspace = true, default-features = true }
 soil-network-gossip = { workspace = true, default-features = true }
 soil-network-statement = { workspace = true, default-features = true }
-soil-network-sync = { workspace = true, default-features = true }
 soil-network-transactions = { workspace = true, default-features = true }
 sc-offchain = { workspace = true, default-features = true }
 soil-proposer-metrics = { workspace = true, default-features = true }

@@ -21,7 +21,7 @@
 //! that don't make sense after one of the forks is finalized).
 
 use crate::{
-	strategy::chain_sync::{PeerSync, PeerSyncState},
+	sync::strategy::chain_sync::{PeerSync, PeerSyncState},
 	LOG_TARGET,
 };
 use fork_tree::ForkTree;
@@ -440,7 +440,7 @@ impl<'a, B: BlockT> Matcher<'a, B> {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use crate::strategy::chain_sync::PeerSync;
+	use crate::sync::strategy::chain_sync::PeerSync;
 	use quickcheck::{Arbitrary, Gen, QuickCheck};
 	use soil_client::blockchain::Error as ClientError;
 	use soil_test_primitives::{Block, BlockNumber, Hash};

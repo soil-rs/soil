@@ -24,7 +24,6 @@ log = { workspace = true, default-features = true}
 parking_lot = { workspace = true, default-features = true}
 soil-consensus = { workspace = true, default-features = true}
 soil-network = { workspace = true, default-features = true}
-soil-network-sync = { workspace = true, default-features = true}
 soil-service = { workspace = true, default-features = true}
 soil-client = { workspace = true, default-features = true}
 subsoil = { workspace = true, default-features = true }

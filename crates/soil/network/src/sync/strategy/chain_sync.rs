@@ -29,18 +29,20 @@
 //! order to update it.
 
 use crate::{
-	block_relay_protocol::{BlockDownloader, BlockResponseError},
-	blocks::BlockCollection,
-	justification_requests::ExtraRequests,
-	schema::v1::{StateRequest, StateResponse},
-	service::network::NetworkServiceHandle,
-	strategy::{
-		disconnected_peers::DisconnectedPeers,
-		state_sync::{ImportResult, StateSync, StateSyncProvider},
-		warp::{WarpSyncPhase, WarpSyncProgress},
-		StrategyKey, SyncingAction, SyncingStrategy,
+	sync::{
+		block_relay_protocol::{BlockDownloader, BlockResponseError},
+		blocks::BlockCollection,
+		justification_requests::ExtraRequests,
+		schema::v1::{StateRequest, StateResponse},
+		service::network::NetworkServiceHandle,
+		strategy::{
+			disconnected_peers::DisconnectedPeers,
+			state_sync::{ImportResult, StateSync, StateSyncProvider},
+			warp::{WarpSyncPhase, WarpSyncProgress},
+			StrategyKey, SyncingAction, SyncingStrategy,
+		},
+		types::{BadPeer, SyncState, SyncStatus},
 	},
-	types::{BadPeer, SyncState, SyncStatus},
 	LOG_TARGET,
 };
 
@@ -792,7 +794,9 @@ where
 
 			match result {
 				Ok(BlockImportStatus::ImportedKnown(number, peer_id)) => {
-					if let Some(peer) = peer_id {
+					if let Some(peer) =
+						peer_id.as_ref().and_then(|peer| PeerId::try_from(peer).ok())
+					{
 						self.update_peer_common_number(&peer, number);
 					}
 					self.complete_gap_if_target(number);
@@ -815,16 +819,20 @@ where
 					}
 
 					if aux.bad_justification {
-						if let Some(ref peer) = peer_id {
+						if let Some(peer) =
+							peer_id.as_ref().and_then(|peer| PeerId::try_from(peer).ok())
+						{
 							warn!("💔 Sent block with bad justification to import");
 							self.actions.push(SyncingAction::DropPeer(BadPeer(
-								*peer,
+								peer,
 								rep::BAD_JUSTIFICATION,
 							)));
 						}
 					}
 
-					if let Some(peer) = peer_id {
+					if let Some(peer) =
+						peer_id.as_ref().and_then(|peer| PeerId::try_from(peer).ok())
+					{
 						self.update_peer_common_number(&peer, number);
 					}
 					let state_sync_complete =
@@ -843,7 +851,7 @@ where
 					self.complete_gap_if_target(number);
 				},
 				Err(BlockImportError::IncompleteHeader(peer_id)) => {
-					if let Some(peer) = peer_id {
+					if let Some(peer) = peer_id.and_then(|peer| PeerId::try_from(peer).ok()) {
 						warn!(
 							target: LOG_TARGET,
 							"💔 Peer sent block with incomplete header to import",
@@ -855,14 +863,15 @@ where
 				},
 				Err(BlockImportError::VerificationFailed(peer_id, e)) => {
 					let extra_message = peer_id
-						.map_or_else(|| "".into(), |peer| format!(" received from ({peer})"));
+						.as_ref()
+						.map_or_else(|| "".into(), |peer| format!(" received from ({peer:?})"));
 
 					warn!(
 						target: LOG_TARGET,
 						"💔 Verification failed for block {hash:?}{extra_message}: {e:?}",
 					);
 
-					if let Some(peer) = peer_id {
+					if let Some(peer) = peer_id.and_then(|peer| PeerId::try_from(peer).ok()) {
 						self.actions
 							.push(SyncingAction::DropPeer(BadPeer(peer, rep::VERIFICATION_FAIL)));
 					}
@@ -870,10 +879,10 @@ where
 					self.restart();
 				},
 				Err(BlockImportError::BadBlock(peer_id)) => {
-					if let Some(peer) = peer_id {
+					if let Some(peer) = peer_id.and_then(|peer| PeerId::try_from(peer).ok()) {
 						warn!(
 							target: LOG_TARGET,
-							"💔 Block {hash:?} received from peer {peer} has been blacklisted",
+							"💔 Block {hash:?} received from peer {peer:?} has been blacklisted",
 						);
 						self.actions.push(SyncingAction::DropPeer(BadPeer(peer, rep::BAD_BLOCK)));
 					}
@@ -1346,7 +1355,7 @@ where
 										body: block_data.block.body,
 										indexed_body: block_data.block.indexed_body,
 										justifications,
-										origin: block_data.origin,
+										origin: block_data.origin.map(Into::into),
 										allow_missing_state: true,
 										// Warp-synced blocks are header-only. Allow re-import to
 										// store bodies if gap sync requested them.
@@ -1398,7 +1407,7 @@ where
 									body: b.body,
 									indexed_body: None,
 									justifications,
-									origin: Some(*peer_id),
+									origin: Some((*peer_id).into()),
 									allow_missing_state: true,
 									import_existing: self.import_existing,
 									skip_execution: self.skip_execution(),
@@ -1540,7 +1549,7 @@ where
 							body: b.body,
 							indexed_body: None,
 							justifications,
-							origin: Some(*peer_id),
+							origin: Some((*peer_id).into()),
 							allow_missing_state: true,
 							import_existing: false,
 							skip_execution: true,
@@ -1920,7 +1929,7 @@ where
 					body: block_data.block.body,
 					indexed_body: block_data.block.indexed_body,
 					justifications,
-					origin: block_data.origin,
+					origin: block_data.origin.map(Into::into),
 					allow_missing_state: true,
 					import_existing: self.import_existing,
 					skip_execution: self.skip_execution(),

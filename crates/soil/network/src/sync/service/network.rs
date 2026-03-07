@@ -30,7 +30,7 @@ use soil_network::{
 
 use std::sync::Arc;
 
-/// Network-related services required by `soil-network-sync`
+/// Network-related services required by `soil-network::sync`
 pub trait Network: NetworkPeers + NetworkRequest {}
 
 impl<T> Network for T where T: NetworkPeers + NetworkRequest {}
@@ -138,7 +138,7 @@ impl NetworkServiceProvider {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use crate::service::mock::MockNetwork;
+	use crate::sync::service::mock::MockNetwork;
 
 	// typical pattern in `Protocol` code where peer is disconnected
 	// and then reported

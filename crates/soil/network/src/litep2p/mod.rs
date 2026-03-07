@@ -361,7 +361,7 @@ impl<B: BlockT + 'static, H: ExHashT> NetworkBackend<B, H> for Litep2pNetworkBac
 			.network_config
 			.boot_nodes
 			.into_iter()
-			.filter(|boot_node| boot_node.peer_id != local_peer_id.into())
+			.filter(|boot_node| boot_node.peer_id != PeerId::from(&local_peer_id))
 			.collect();
 		params.network_config.network_config.default_peers_set.reserved_nodes = params
 			.network_config
@@ -370,7 +370,7 @@ impl<B: BlockT + 'static, H: ExHashT> NetworkBackend<B, H> for Litep2pNetworkBac
 			.reserved_nodes
 			.into_iter()
 			.filter(|reserved_node| {
-				if reserved_node.peer_id == local_peer_id.into() {
+				if reserved_node.peer_id == PeerId::from(&local_peer_id) {
 					log::warn!(
 						target: LOG_TARGET,
 						"Local peer ID used in reserved node, ignoring: {reserved_node}",

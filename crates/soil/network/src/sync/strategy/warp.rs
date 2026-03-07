@@ -22,13 +22,15 @@ use soil_client::consensus::BlockOrigin;
 use soil_consensus::IncomingBlock;
 
 use crate::{
-	block_relay_protocol::{BlockDownloader, BlockResponseError},
-	service::network::NetworkServiceHandle,
-	strategy::{
-		chain_sync::validate_blocks, disconnected_peers::DisconnectedPeers, StrategyKey,
-		SyncingAction,
+	sync::{
+		block_relay_protocol::{BlockDownloader, BlockResponseError},
+		service::network::NetworkServiceHandle,
+		strategy::{
+			chain_sync::validate_blocks, disconnected_peers::DisconnectedPeers, StrategyKey,
+			SyncingAction,
+		},
+		types::{BadPeer, SyncState, SyncStatus},
 	},
-	types::{BadPeer, SyncState, SyncStatus},
 	LOG_TARGET,
 };
 use codec::{Decode, Encode};
@@ -409,7 +411,7 @@ where
 					body: None,
 					indexed_body: None,
 					justifications: Some(justifications),
-					origin: Some(*peer_id),
+					origin: Some((*peer_id).into()),
 					// We are still in warp sync, so we don't have the state. This means
 					// we also can't execute the block.
 					allow_missing_state: true,
@@ -787,7 +789,7 @@ where
 #[cfg(test)]
 mod test {
 	use super::*;
-	use crate::{mock::MockBlockDownloader, service::network::NetworkServiceProvider};
+	use crate::sync::{mock::MockBlockDownloader, service::network::NetworkServiceProvider};
 	use soil_client::block_builder::BlockBuilderBuilder;
 	use soil_client::blockchain::{BlockStatus, Error as BlockchainError, HeaderBackend, Info};
 	use std::{io::ErrorKind, sync::Arc};

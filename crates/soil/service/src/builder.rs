@@ -59,16 +59,7 @@ use soil_client::utils::mpsc::{tracing_unbounded, TracingUnboundedSender};
 use soil_consensus::import_queue::{ImportQueue, ImportQueueService};
 use soil_network::common::role::{Role, Roles};
 use soil_network::light::light_client_requests::handler::LightClientRequestHandler;
-use soil_network::{
-	config::{FullNetworkConfiguration, ProtocolId, SyncMode},
-	multiaddr::Protocol,
-	service::{
-		traits::{PeerStore, RequestResponseConfig},
-		NotificationMetrics,
-	},
-	NetworkBackend, NetworkStateInfo,
-};
-use soil_network_sync::{
+use soil_network::sync::{
 	block_relay_protocol::{BlockDownloader, BlockRelayParams},
 	block_request_handler::BlockRequestHandler,
 	engine::SyncingEngine,
@@ -80,6 +71,15 @@ use soil_network_sync::{
 	},
 	warp_request_handler::RequestHandler as WarpSyncRequestHandler,
 	SyncingService, WarpSyncConfig,
+};
+use soil_network::{
+	config::{FullNetworkConfiguration, ProtocolId, SyncMode},
+	multiaddr::Protocol,
+	service::{
+		traits::{PeerStore, RequestResponseConfig},
+		NotificationMetrics,
+	},
+	NetworkBackend, NetworkStateInfo,
 };
 use soil_rpc_spec_v2::{
 	archive::ArchiveApiServer,

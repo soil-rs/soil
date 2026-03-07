@@ -32,7 +32,6 @@ soil-chain-spec = { workspace = true, default-features = true}
 soil-consensus = { workspace = true, default-features = true}
 soil-informant = { workspace = true, default-features = true}
 soil-network = { workspace = true, default-features = true}
-soil-network-sync = { workspace = true, default-features = true}
 soil-network-transactions = { workspace = true, default-features = true}
 sc-rpc = { workspace = true, default-features = true}
 soil-rpc-server = { workspace = true, default-features = true}

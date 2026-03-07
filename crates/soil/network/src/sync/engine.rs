@@ -20,16 +20,18 @@
 //! to tip and keep the blockchain up to date with network updates.
 
 use crate::{
-	block_announce_validator::{
-		BlockAnnounceValidationResult, BlockAnnounceValidator as BlockAnnounceValidatorStream,
+	sync::{
+		block_announce_validator::{
+			BlockAnnounceValidationResult, BlockAnnounceValidator as BlockAnnounceValidatorStream,
+		},
+		pending_responses::{PendingResponses, ResponseEvent},
+		service::{
+			self,
+			syncing_service::{SyncingService, ToServiceCommand},
+		},
+		strategy::{SyncingAction, SyncingStrategy},
+		types::{BadPeer, ExtendedPeerInfo, SyncEvent},
 	},
-	pending_responses::{PendingResponses, ResponseEvent},
-	service::{
-		self,
-		syncing_service::{SyncingService, ToServiceCommand},
-	},
-	strategy::{SyncingAction, SyncingStrategy},
-	types::{BadPeer, ExtendedPeerInfo, SyncEvent},
 	LOG_TARGET,
 };
 
@@ -1139,6 +1141,7 @@ where
 			metrics.import_queue_justifications_submitted.inc();
 		}
 
-		self.import_queue.import_justifications(peer_id, hash, number, justifications);
+		self.import_queue
+			.import_justifications(peer_id.into(), hash, number, justifications);
 	}
 }

@@ -63,19 +63,7 @@ use soil_consensus::{
 };
 use soil_network::common::role::Roles;
 use soil_network::light::light_client_requests::handler::LightClientRequestHandler;
-use soil_network::{build_multiaddr, types::multiaddr::Multiaddr};
-use soil_network::{
-	config::{
-		FullNetworkConfiguration, MultiaddrWithPeerId, NetworkConfiguration, NonDefaultSetConfig,
-		NonReservedPeerMode, ProtocolId, Role, SyncMode, TransportConfig,
-	},
-	peer_store::PeerStore,
-	request_responses::ProtocolConfig as RequestResponseConfig,
-	types::ProtocolName,
-	NetworkBlock, NetworkService, NetworkStateInfo, NetworkSyncForkRequest, NetworkWorker,
-	NotificationMetrics, NotificationService,
-};
-use soil_network_sync::{
+use soil_network::sync::{
 	block_request_handler::BlockRequestHandler,
 	service::{network::NetworkServiceProvider, syncing_service::SyncingService},
 	state_request_handler::StateRequestHandler,
@@ -87,6 +75,18 @@ use soil_network_sync::{
 		},
 	},
 	warp_request_handler,
+};
+use soil_network::{build_multiaddr, types::multiaddr::Multiaddr};
+use soil_network::{
+	config::{
+		FullNetworkConfiguration, MultiaddrWithPeerId, NetworkConfiguration, NonDefaultSetConfig,
+		NonReservedPeerMode, ProtocolId, Role, SyncMode, TransportConfig,
+	},
+	peer_store::PeerStore,
+	request_responses::ProtocolConfig as RequestResponseConfig,
+	types::ProtocolName,
+	NetworkBlock, NetworkService, NetworkStateInfo, NetworkSyncForkRequest, NetworkWorker,
+	NotificationMetrics, NotificationService,
 };
 use soil_service::client::Client;
 use subsoil::core::H256;
@@ -1002,7 +1002,7 @@ pub trait TestNetFactory: Default + Sized + Send {
 		);
 
 		let (engine, sync_service, block_announce_config) =
-			soil_network_sync::engine::SyncingEngine::new(
+			soil_network::sync::engine::SyncingEngine::new(
 				Roles::from(if config.is_authority { &Role::Authority } else { &Role::Full }),
 				client.clone(),
 				None,

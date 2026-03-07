@@ -283,14 +283,14 @@ where
 		network_config.boot_nodes = network_config
 			.boot_nodes
 			.into_iter()
-			.filter(|boot_node| boot_node.peer_id != local_peer_id.into())
+			.filter(|boot_node| boot_node.peer_id != crate::PeerId::from(&local_peer_id))
 			.collect();
 		network_config.default_peers_set.reserved_nodes = network_config
 			.default_peers_set
 			.reserved_nodes
 			.into_iter()
 			.filter(|reserved_node| {
-				if reserved_node.peer_id == local_peer_id.into() {
+				if reserved_node.peer_id == crate::PeerId::from(&local_peer_id) {
 					warn!(
 						target: LOG_TARGET,
 						"Local peer ID used in reserved node, ignoring: {}",
@@ -1046,7 +1046,7 @@ where
 
 	fn add_reserved_peer(&self, peer: MultiaddrWithPeerId) -> Result<(), String> {
 		// Make sure the local peer ID is never added as a reserved peer.
-		if peer.peer_id == self.local_peer_id.into() {
+		if peer.peer_id == crate::PeerId::from(&self.local_peer_id) {
 			return Err("Local peer ID cannot be added as a reserved peer.".to_string());
 		}
 

@@ -16,14 +16,17 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-use crate::types::{ExtendedPeerInfo, SyncEvent, SyncEventStream, SyncStatus, SyncStatusProvider};
+use crate::sync::types::{
+	ExtendedPeerInfo, SyncEvent, SyncEventStream, SyncStatus, SyncStatusProvider,
+};
 
 use futures::{channel::oneshot, Stream};
 use soil_network::types::PeerId;
 
 use soil_client::utils::mpsc::{tracing_unbounded, TracingUnboundedSender};
 use soil_consensus::{
-	BlockImportError, BlockImportStatus, JustificationImportResult, JustificationSyncLink, Link,
+	import_queue::RuntimeOrigin, BlockImportError, BlockImportStatus, JustificationImportResult,
+	JustificationSyncLink, Link,
 };
 use soil_network::{NetworkBlock, NetworkSyncForkRequest};
 use subsoil::runtime::traits::{Block as BlockT, NumberFor};
@@ -191,11 +194,12 @@ impl<B: BlockT> Link<B> for SyncingService<B> {
 
 	fn justification_imported(
 		&self,
-		who: PeerId,
+		who: RuntimeOrigin,
 		hash: &B::Hash,
 		number: NumberFor<B>,
 		import_result: JustificationImportResult,
 	) {
+		let Ok(who) = PeerId::try_from(&who) else { return };
 		let _ = self.tx.unbounded_send(ToServiceCommand::JustificationImported(
 			who,
 			*hash,

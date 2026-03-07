@@ -21,7 +21,7 @@
 use futures::Stream;
 use soil_network::common::{role::Roles, types::ReputationChange};
 
-use crate::strategy::{state_sync::StateSyncProgress, warp::WarpSyncProgress};
+use crate::sync::strategy::{state_sync::StateSyncProgress, warp::WarpSyncProgress};
 
 use soil_network::types::PeerId;
 use subsoil::runtime::traits::{Block as BlockT, NumberFor};

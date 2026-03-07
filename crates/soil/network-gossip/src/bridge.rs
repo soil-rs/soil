@@ -21,12 +21,12 @@ use crate::{
 	Network, Syncing, Validator,
 };
 
+use soil_network::sync::SyncEvent;
 use soil_network::{
 	service::traits::{NotificationEvent, ValidationResult},
 	types::ProtocolName,
 	NotificationService, ReputationChange,
 };
-use soil_network_sync::SyncEvent;
 
 use futures::{
 	channel::mpsc::{channel, Receiver, Sender},
@@ -358,13 +358,13 @@ mod tests {
 	};
 	use quickcheck::{Arbitrary, Gen, QuickCheck};
 	use soil_network::common::role::ObservedRole;
+	use soil_network::sync::SyncEventStream;
 	use soil_network::types::multiaddr::Multiaddr;
 	use soil_network::{
 		config::MultiaddrWithPeerId,
 		service::traits::{Direction, MessageSink, NotificationEvent},
 		Event, NetworkBlock, NetworkEventStream, NetworkPeers, NotificationService, Roles,
 	};
-	use soil_network_sync::SyncEventStream;
 	use std::{
 		collections::HashSet,
 		sync::{Arc, Mutex},

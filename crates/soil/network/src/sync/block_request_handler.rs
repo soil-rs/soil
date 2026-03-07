@@ -19,12 +19,16 @@
 //! `crate::request_responses::RequestResponsesBehaviour`.
 
 use crate::{
-	block_relay_protocol::{BlockDownloader, BlockRelayParams, BlockResponseError, BlockServer},
-	schema::v1::{
-		block_request::FromBlock as FromBlockSchema, BlockRequest as BlockRequestSchema,
-		BlockResponse as BlockResponseSchema, BlockResponse, Direction,
+	sync::{
+		block_relay_protocol::{
+			BlockDownloader, BlockRelayParams, BlockResponseError, BlockServer,
+		},
+		schema::v1::{
+			block_request::FromBlock as FromBlockSchema, BlockRequest as BlockRequestSchema,
+			BlockResponse as BlockResponseSchema, BlockResponse, Direction,
+		},
+		service::network::NetworkServiceHandle,
 	},
-	service::network::NetworkServiceHandle,
 	LOG_TARGET,
 };
 
@@ -218,7 +222,7 @@ where
 		pending_response: oneshot::Sender<OutgoingResponse>,
 		peer: &PeerId,
 	) -> Result<(), HandleRequestError> {
-		let request = crate::schema::v1::BlockRequest::decode(&payload[..])?;
+		let request = crate::sync::schema::v1::BlockRequest::decode(&payload[..])?;
 
 		let from_block_id = match request.from_block.ok_or(HandleRequestError::MissingFromField)? {
 			FromBlockSchema::Hash(ref h) => {
@@ -429,7 +433,7 @@ where
 				Vec::new()
 			};
 
-			let block_data = crate::schema::v1::BlockData {
+			let block_data = crate::sync::schema::v1::BlockData {
 				hash: hash.encode(),
 				header: if get_header { header.encode() } else { Vec::new() },
 				body,

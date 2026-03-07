@@ -242,6 +242,8 @@
 //!
 //! More precise usage details are still being worked on and will likely change in the future.
 
+extern crate self as soil_network;
+
 mod behaviour;
 mod bitswap;
 pub mod common;
@@ -262,6 +264,7 @@ pub mod peer_store;
 pub mod protocol_controller;
 pub mod request_responses;
 pub mod service;
+pub mod sync;
 pub mod transport;
 pub mod types;
 pub mod utils;

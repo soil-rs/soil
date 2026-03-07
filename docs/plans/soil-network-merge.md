@@ -63,7 +63,7 @@ service-side networking crates into the flattened `soil-network` layout. See
 - [x] Step 3: Merge `soil-network-common` into `soil_network::common`.
 - [x] Step 4: Merge `soil-network-types` into `soil_network::types`.
 - [x] Step 5: Merge `soil-network-light` into `soil_network::light`.
-- [ ] Step 6: Merge `soil-network-sync` into `soil_network::sync`.
+- [x] Step 6: Merge `soil-network-sync` into `soil_network::sync`.
 - [ ] Step 7: Merge `soil-network-gossip` into `soil_network::gossip`.
 - [ ] Step 8: Merge `soil-network-transactions` into `soil_network::transactions`.
 - [ ] Step 9: Merge `soil-network-statement` and `sc-statement-store` into
@@ -82,7 +82,7 @@ service-side networking crates into the flattened `soil-network` layout. See
 - Step 5:
   `cargo check -p soil-network -p soil-network-light -p soil-service -p soil-network-test -p staging-node-cli`
 - Step 6:
-  `cargo check -p soil-network -p soil-network-sync -p soil-service -p soil-informant -p soil-grandpa -p soil-beefy -p soil-network-test -p staging-node-cli`
+  `cargo check -p soil-network -p soil-service -p soil-informant -p soil-grandpa -p soil-beefy -p soil-network-test -p staging-node-cli`
 - Step 7:
   `cargo check -p soil-network -p soil-network-gossip -p soil-grandpa -p soil-beefy -p staging-node-cli`
 - Step 8:

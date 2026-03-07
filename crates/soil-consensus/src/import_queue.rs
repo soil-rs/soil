@@ -67,8 +67,32 @@ pub type BoxBlockImport<B> = Box<dyn BlockImport<B, Error = ConsensusError> + Se
 pub type BoxJustificationImport<B> =
 	Box<dyn JustificationImport<B, Error = ConsensusError> + Send + Sync>;
 
-/// Maps to the RuntimeOrigin used by the network.
-pub type RuntimeOrigin = soil_network::types::PeerId;
+/// Opaque identifier of the source that supplied network-imported data.
+#[derive(Clone, Debug, PartialEq, Eq, Hash)]
+pub struct RuntimeOrigin(Vec<u8>);
+
+impl RuntimeOrigin {
+	/// Create a runtime origin from its byte representation.
+	pub fn from_bytes(bytes: Vec<u8>) -> Self {
+		Self(bytes)
+	}
+
+	/// Return the raw byte representation.
+	pub fn as_bytes(&self) -> &[u8] {
+		&self.0
+	}
+
+	/// Consume the origin and return its raw bytes.
+	pub fn into_bytes(self) -> Vec<u8> {
+		self.0
+	}
+}
+
+impl From<Vec<u8>> for RuntimeOrigin {
+	fn from(bytes: Vec<u8>) -> Self {
+		Self::from_bytes(bytes)
+	}
+}
 
 /// Block data used by the queue.
 #[derive(Debug, PartialEq, Eq, Clone)]
@@ -318,7 +342,7 @@ pub(crate) async fn verify_single_block_metered<B: BlockT, V: Verifier<B>>(
 
 	let Some(header) = block.header else {
 		if let Some(ref peer) = peer {
-			debug!(target: LOG_TARGET, "Header {} was not provided by {peer} ", block.hash);
+			debug!(target: LOG_TARGET, "Header {} was not provided by {:?} ", block.hash, peer);
 		} else {
 			debug!(target: LOG_TARGET, "Header {} was not provided ", block.hash);
 		}
@@ -346,7 +370,7 @@ pub(crate) async fn verify_single_block_metered<B: BlockT, V: Verifier<B>>(
 		number,
 		hash,
 		parent_hash,
-		peer,
+		peer.clone(),
 		import_handle
 			.check_block(BlockCheckParams {
 				hash,
@@ -387,7 +411,7 @@ pub(crate) async fn verify_single_block_metered<B: BlockT, V: Verifier<B>>(
 		if let Some(ref peer) = peer {
 			trace!(
 				target: LOG_TARGET,
-				"Verifying {}({}) from {} failed: {}",
+				"Verifying {}({}) from {:?} failed: {}",
 				number,
 				hash,
 				peer,
@@ -399,7 +423,7 @@ pub(crate) async fn verify_single_block_metered<B: BlockT, V: Verifier<B>>(
 		if let Some(metrics) = metrics {
 			metrics.report_verification(false, started.elapsed());
 		}
-		BlockImportError::VerificationFailed(peer, msg)
+		BlockImportError::VerificationFailed(peer.clone(), msg)
 	})?;
 
 	let verification_time = started.elapsed();

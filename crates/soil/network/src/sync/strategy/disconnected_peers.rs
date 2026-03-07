@@ -16,7 +16,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-use crate::types::BadPeer;
+use crate::sync::types::BadPeer;
 use schnellru::{ByLength, LruMap};
 use soil_network::types::PeerId;
 use soil_network::ReputationChange as Rep;
