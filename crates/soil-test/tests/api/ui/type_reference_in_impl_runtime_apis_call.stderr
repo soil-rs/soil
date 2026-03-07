@@ -1,0 +1,72 @@
+error[E0603]: struct `RuntimeVersion` is private
+  --> tests/api/ui/type_reference_in_impl_runtime_apis_call.rs:39:33
+   |
+39 |         fn version() -> subsoil::api::RuntimeVersion {
+   |                                       ^^^^^^^^^^^^^^ private struct
+   |
+note: the struct `RuntimeVersion` is defined here
+  --> $WORKSPACE/crates/subsoil/src/api/mod.rs
+   |
+   | use crate::version::RuntimeVersion;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: consider importing one of these structs instead
+   |
+39 -         fn version() -> subsoil::api::RuntimeVersion {
+39 +         fn version() -> soil_client::executor::RuntimeVersion {
+   |
+39 -         fn version() -> subsoil::api::RuntimeVersion {
+39 +         fn version() -> subsoil::version::RuntimeVersion {
+   |
+39 -         fn version() -> subsoil::api::RuntimeVersion {
+39 +         fn version() -> substrate_test_runtime_client::executor::RuntimeVersion {
+   |
+help: import `RuntimeVersion` directly
+   |
+39 -         fn version() -> subsoil::api::RuntimeVersion {
+39 +         fn version() -> subsoil::version::RuntimeVersion {
+   |
+
+error[E0053]: method `test` has an incompatible type for trait
+  --> tests/api/ui/type_reference_in_impl_runtime_apis_call.rs:33:17
+   |
+33 |         fn test(data: &u64) {
+   |                       ^^^^ expected `u64`, found `&u64`
+   |
+note: type in trait
+  --> tests/api/ui/type_reference_in_impl_runtime_apis_call.rs:27:17
+   |
+27 |         fn test(data: u64);
+   |                       ^^^
+   = note: expected signature `fn(u64)`
+              found signature `fn(&u64)`
+help: change the parameter type to match the trait
+   |
+33 -         fn test(data: &u64) {
+33 +         fn test(data: u64) {
+   |
+
+error[E0308]: mismatched types
+  --> tests/api/ui/type_reference_in_impl_runtime_apis_call.rs:33:11
+   |
+31 | / subsoil::api::impl_runtime_apis! {
+32 | |     impl self::Api<Block> for Runtime {
+33 | |         fn test(data: &u64) {
+   | |                 ^^^^^^^ expected `u64`, found `&u64`
+34 | |             unimplemented!()
+...  |
+49 | | }
+   | |_- arguments to this function are incorrect
+   |
+note: associated function defined here
+  --> tests/api/ui/type_reference_in_impl_runtime_apis_call.rs:27:6
+   |
+27 |         fn test(data: u64);
+   |            ^^^^ ----
+
+warning: unused variable: `data`
+  --> tests/api/ui/type_reference_in_impl_runtime_apis_call.rs:33:11
+   |
+33 |         fn test(data: &u64) {
+   |                 ^^^^ help: if this is intentional, prefix it with an underscore: `_data`
+   |
+   = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default

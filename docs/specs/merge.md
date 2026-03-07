@@ -253,6 +253,29 @@ from both `soil-consensus` and `soil-service` because it is reusable
 service-side infrastructure, not a consensus-engine choice and not just service
 assembly glue.
 
+### `soil-test` — Shared test support and lighter test suites (~6 crates → 1) IN PROGRESS
+
+The default home for reusable non-runtime test helpers and smaller test-only
+crates.
+
+| Absorb | Reason |
+|---|---|
+| soil-network-test | Reusable network test harness |
+| soil-service-test | Reusable service test harness |
+| soil-test-primitives | Shared test primitive types |
+| sp-application-crypto-test | Lighter test-only suite |
+| sp-runtime-interface-test | Lighter test-only suite using external wasm fixtures |
+| sp-api-test | Tests, benches, and trybuild UI coverage belong together in one test package |
+
+Deferred from this consolidation:
+- `soil-runtime-test`
+- `sp-runtime-interface-test-wasm`
+- `sp-runtime-interface-test-wasm-deprecated`
+- larger `substrate-*`, `node-*`, and runtime test crates
+
+These stay separate for now because they are either artifact-producing fixture
+packages or significantly heavier test/runtime infrastructure.
+
 ### Misc standalone (kept separate)
 
 | Crate | Reason |
@@ -265,7 +288,8 @@ assembly glue.
 | soil-statement-store | Standalone feature |
 | fork-tree | Generic data structure |
 | substrate-bip39, substrate-prometheus-endpoint | Independent utilities |
-| soil-test and all other test/bench crates | Stay separate |
+| soil-test | Consolidated home for immediate shared test helpers and lighter test suites |
+| remaining test/bench crates | Deferred when they are artifact-producing or intentionally large |
 
 ### `soil` — Umbrella re-export
 
@@ -284,7 +308,8 @@ Re-exports everything. Consumers write `soil = { features = ["client", "aura", "
 | **soil-rpc** | rpc api/handlers, server, v2 spec, mmr endpoint, state-trie-migration endpoint, rpc client (excluding frame-rpc helper crates tied to topsoil and `soil-sync-state-rpc`) | ~8 | ✅ |
 | **soil-service** | service, authorship, informant, sysinfo, metrics | ~5 | ✅ |
 | **soil-txpool** | sc-transaction-pool | 1 | ✅ |
-| **misc standalone** | mmr, staking, fork-tree, test crates | ~12 | — |
+| **soil-test** | network/service helpers, test primitives, api/application-crypto/runtime-interface test suites | ~6 | In progress |
+| **misc standalone** | mmr, staking, fork-tree, deferred heavy test crates | ~12 | — |
 | **soil** | umbrella re-export | 1 | Pending |
 
 **96 non-topsoil crates → low-teens major crates plus a small set of intentional

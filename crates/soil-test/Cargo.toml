@@ -14,6 +14,10 @@ workspace = true
 [package.metadata.docs.rs]
 targets = ["x86_64-unknown-linux-gnu"]
 
+[[bench]]
+name = "api_bench"
+harness = false
+
 [dependencies]
 array-bytes = { workspace = true, default-features = true }
 async-channel = { workspace = true }
@@ -43,6 +47,14 @@ substrate-test-runtime = { workspace = true }
 substrate-test-runtime-client = { workspace = true }
 wat = { workspace = true }
 
+[dev-dependencies]
+criterion = { workspace = true, default-features = true }
+rustversion = { workspace = true }
+static_assertions = { workspace = true, default-features = true }
+trybuild = { workspace = true }
+
 [features]
 bls-experimental = ["substrate-test-runtime-client/bls-experimental"]
+disable-ui-tests = []
+enable-staging-api = []
 serde = ["dep:serde", "subsoil/serde"]

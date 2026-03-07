@@ -9474,6 +9474,7 @@ dependencies = [
  "array-bytes 6.2.3",
  "async-channel 1.9.0",
  "async-trait",
+ "criterion",
  "fdlimit",
  "futures",
  "futures-timer",
@@ -9482,6 +9483,7 @@ dependencies = [
  "parity-scale-codec",
  "parking_lot 0.12.5",
  "rand 0.8.5",
+ "rustversion",
  "scale-info",
  "serde",
  "soil-client",
@@ -9490,6 +9492,7 @@ dependencies = [
  "soil-service",
  "sp-runtime-interface-test-wasm",
  "sp-runtime-interface-test-wasm-deprecated",
+ "static_assertions",
  "subsoil",
  "substrate-test-runtime",
  "substrate-test-runtime-client",
@@ -9497,6 +9500,7 @@ dependencies = [
  "tokio",
  "tracing",
  "tracing-core",
+ "trybuild",
  "wat",
 ]
 
@@ -9567,23 +9571,6 @@ dependencies = [
  "log",
  "rand 0.8.5",
  "sha1",
-]
-
-[[package]]
-name = "sp-api-test"
-version = "2.0.1"
-dependencies = [
- "criterion",
- "futures",
- "log",
- "parity-scale-codec",
- "rustversion",
- "scale-info",
- "soil-client",
- "static_assertions",
- "subsoil",
- "substrate-test-runtime-client",
- "trybuild",
 ]
 
 [[package]]
