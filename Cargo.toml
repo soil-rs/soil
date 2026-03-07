@@ -37,7 +37,7 @@ members = [
 	"crates/soil/npos-elections/fuzzer",
 	"crates/soil/offchain",
 	"crates/soil/proposer-metrics",
-	"crates/soil/rpc",
+	"crates/soil-rpc",
 	"crates/soil/rpc-api",
 	"crates/soil/rpc-server",
 	"crates/soil/rpc-spec-v2",
@@ -446,7 +446,7 @@ subsoil-crypto-hashing = { path = "crates/subsoil-crypto-hashing", default-featu
 subsoil-derive = { path = "crates/subsoil-derive" }
 soil-genesis-builder = { path = "crates/soil/genesis-builder", default-features = false }
 soil-offchain = { path = "crates/soil/offchain", default-features = false }
-soil-rpc = { path = "crates/soil/rpc", default-features = false }
+soil-rpc = { path = "crates/soil-rpc", default-features = false }
 sp-runtime-interface-test-wasm = { path = "crates/soil/runtime-interface/test-wasm" }
 sp-runtime-interface-test-wasm-deprecated = { path = "crates/soil/runtime-interface/test-wasm-deprecated" }
 soil-session = { path = "crates/soil/session", default-features = false }
