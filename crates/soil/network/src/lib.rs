@@ -210,7 +210,7 @@
 //! `soil-network` automatically tries to open a substream towards each node for which the legacy
 //! Substream substream is open. The handshake is then performed automatically.
 //!
-//! For example, the `sc-consensus-grandpa` crate registers the `/paritytech/grandpa/1`
+//! For example, the `soil-grandpa` crate registers the `/paritytech/grandpa/1`
 //! notifications protocol.
 //!
 //! At the moment, for backwards-compatibility, notification protocols are tied to the legacy

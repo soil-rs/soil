@@ -157,7 +157,7 @@ stack. They are handled in the next sections, not deferred back into
 | soil-genesis-builder | `#![cfg_attr(not(feature = "std"), no_std)]`, used by topsoil crates |
 | soil-transaction-pool (primitives) | `#![cfg_attr(not(feature = "std"), no_std)]`, used by topsoil crates |
 
-### `soil-consensus` — Shared consensus support (3 crates → 1)
+### `soil-consensus` — Shared consensus support (3 crates → 1) ✅ COMPLETE
 
 Shared std-only support used by multiple consensus engines and by service/network
 integration. This reuses the `soil-consensus` name after the former
@@ -173,7 +173,7 @@ This crate is intentionally slightly "fatter" than the old split. It avoids a
 feature matrix and keeps the dependency graph simpler. None of these crates pull
 in libp2p-class dependencies.
 
-### Selectable consensus crates (8 crates → 5)
+### Selectable consensus crates (8 crates → 5) ✅ COMPLETE
 
 Users explicitly choose one or more consensus engines on top of
 `soil-client`/`soil-network`/`soil-rpc`/`soil-service` (or the umbrella `soil`
@@ -259,8 +259,8 @@ Re-exports everything. Consumers write `soil = { features = ["client", "aura", "
 | **subsoil** | primitives + consensus engines (slots, aura, babe, grandpa, beefy, pow, sassafras, block-builder, mmr) | ~39 | Phase 1 ✅, Phase 2 ✅ |
 | **soil-manual-seal** | renamed from soil-consensus-manual-seal (heavy async deps) | 1 | ✅ |
 | **soil-client** | client-api, executor (4), blockchain, db (2), tx-pool-api, storage-monitor, utils, maybe-compressed-blob, sc-tracing, sc-block-builder, sc-keystore | ~16 | ✅ |
-| **soil-consensus** | sc-consensus, sc-consensus-slots, soil-consensus-epochs | 3 | Pending |
-| **soil-{aura,babe,beefy,grandpa,pow}** | selectable consensus engines; babe/beefy/grandpa also absorb their RPC crates | 8 → 5 | Pending |
+| **soil-consensus** | sc-consensus, sc-consensus-slots, soil-consensus-epochs | 3 | ✅ |
+| **soil-{aura,babe,beefy,grandpa,pow}** | selectable consensus engines; babe/beefy/grandpa also absorb their RPC crates | 8 → 5 | ✅ |
 | **soil-network** | p2p, sync, gossip, statements | ~10 | Pending |
 | **soil-rpc** | rpc server, spec, endpoints, rpc client/helpers | ~11 | Pending |
 | **soil-service** | service, chain-spec, cli, infra | ~9 | Pending |

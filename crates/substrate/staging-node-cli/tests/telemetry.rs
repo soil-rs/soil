@@ -18,6 +18,7 @@
 
 use assert_cmd::cargo::cargo_bin;
 use std::{process, time::Duration};
+use tokio::sync::oneshot;
 
 use crate::common::KillChildOnDrop;
 
@@ -36,8 +37,11 @@ async fn telemetry_works() {
 		let mut server = websocket_server::WsServer::new(config).await.unwrap();
 
 		let addr = server.local_addr().unwrap();
+		let (ready_tx, ready_rx) = oneshot::channel();
 
 		let server_task = tokio::spawn(async move {
+			let mut ready_tx = Some(ready_tx);
+
 			loop {
 				use websocket_server::Event;
 				match server.next_event().await {
@@ -53,7 +57,9 @@ async fn telemetry_works() {
 						let object =
 							json.as_object().unwrap().get("payload").unwrap().as_object().unwrap();
 						if matches!(object.get("best"), Some(serde_json::Value::String(_))) {
-							break;
+							if let Some(ready_tx) = ready_tx.take() {
+								let _ = ready_tx.send(());
+							}
 						}
 					},
 
@@ -81,12 +87,13 @@ async fn telemetry_works() {
 				.unwrap(),
 		);
 
-		server_task.await.expect("server task panicked");
+		ready_rx.await.expect("telemetry payload was never observed");
 
 		substrate.assert_still_running();
 
 		// Stop the process
 		substrate.stop();
+		server_task.abort();
 	})
 	.await;
 }
