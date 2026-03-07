@@ -173,7 +173,7 @@ pub fn create_extrinsic(
 /// Creates a new partial node.
 pub fn new_partial(
 	config: &Configuration,
-	mixnet_config: Option<&sc_mixnet::Config>,
+	mixnet_config: Option<&soil_network::mixnet::Config>,
 ) -> Result<
 	soil_service::PartialComponents<
 		FullClient,
@@ -200,7 +200,7 @@ pub fn new_partial(
 			grandpa::SharedVoterState,
 			Option<Telemetry>,
 			Arc<StatementStore>,
-			Option<sc_mixnet::ApiBackend>,
+			Option<soil_network::mixnet::ApiBackend>,
 		),
 	>,
 	ServiceError,
@@ -305,7 +305,8 @@ pub fn new_partial(
 	)
 	.map_err(|e| ServiceError::Other(format!("Statement store error: {:?}", e)))?;
 
-	let (mixnet_api, mixnet_api_backend) = mixnet_config.map(sc_mixnet::Api::new).unzip();
+	let (mixnet_api, mixnet_api_backend) =
+		mixnet_config.map(soil_network::mixnet::Api::new).unzip();
 
 	let (rpc_extensions_builder, rpc_setup) = {
 		let (_, grandpa_link, _, _) = &import_setup;
@@ -407,7 +408,7 @@ pub struct NewFullBase {
 /// Creates a full service from the configuration.
 pub fn new_full_base<N: NetworkBackend<Block, <Block as BlockT>::Hash>>(
 	config: Configuration,
-	mixnet_config: Option<sc_mixnet::Config>,
+	mixnet_config: Option<soil_network::mixnet::Config>,
 	disable_hardware_benchmarks: bool,
 	statement_network_workers: usize,
 	statement_rate_limit: u32,
@@ -508,9 +509,9 @@ pub fn new_full_base<N: NetworkBackend<Block, <Block as BlockT>::Hash>>(
 	net_config.add_notification_protocol(statement_config);
 
 	let mixnet_protocol_name =
-		sc_mixnet::protocol_name(genesis_hash.as_ref(), config.chain_spec.fork_id());
+		soil_network::mixnet::protocol_name(genesis_hash.as_ref(), config.chain_spec.fork_id());
 	let mixnet_notification_service = mixnet_config.as_ref().map(|mixnet_config| {
-		let (config, notification_service) = sc_mixnet::peers_set_config::<_, N>(
+		let (config, notification_service) = soil_network::mixnet::peers_set_config::<_, N>(
 			mixnet_protocol_name.clone(),
 			mixnet_config,
 			metrics.clone(),
@@ -542,7 +543,7 @@ pub fn new_full_base<N: NetworkBackend<Block, <Block as BlockT>::Hash>>(
 		})?;
 
 	if let Some(mixnet_config) = mixnet_config {
-		let mixnet = sc_mixnet::run(
+		let mixnet = soil_network::mixnet::run(
 			mixnet_config,
 			mixnet_api_backend.expect("Mixnet API backend created if mixnet enabled"),
 			client.clone(),

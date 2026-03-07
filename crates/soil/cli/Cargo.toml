@@ -31,7 +31,6 @@ names = { workspace = true}
 rand = { workspace = true, default-features = true}
 regex = { workspace = true}
 rpassword = { workspace = true}
-sc-mixnet = { workspace = true, default-features = true}
 soil-network = { workspace = true, default-features = true}
 soil-service = { workspace = true, default-features = false}
 soil-telemetry = { workspace = true, default-features = true}

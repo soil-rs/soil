@@ -115,7 +115,7 @@ pub struct FullDeps<C, P, SC, B, AuthorityId: AuthorityIdBound> {
 	/// The backend used by the node.
 	pub backend: Arc<B>,
 	/// Mixnet API.
-	pub mixnet_api: Option<sc_mixnet::Api>,
+	pub mixnet_api: Option<soil_network::mixnet::Api>,
 }
 
 /// Instantiate all Full RPC extensions.

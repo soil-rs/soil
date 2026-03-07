@@ -40,7 +40,9 @@ array-bytes = { workspace = true, default-features = true}
 async-channel = { workspace = true}
 async-trait = { workspace = true}
 asynchronous-codec = { workspace = true}
+arrayvec = { workspace = true }
 bs58 = { workspace = true, default-features = true}
+blake2 = { workspace = true, default-features = true }
 bytes = { workspace = true, default-features = true}
 bitflags = { workspace = true}
 codec = { features = ["derive"], workspace = true, default-features = true}
@@ -60,6 +62,7 @@ linked_hash_set = { workspace = true}
 litep2p = { workspace = true}
 log = { workspace = true, default-features = true}
 mockall = { workspace = true}
+mixnet = { workspace = true }
 multiaddr = { workspace = true}
 multihash = { workspace = true}
 parking_lot = { workspace = true, default-features = true}

@@ -68,7 +68,7 @@ service-side networking crates into the flattened `soil-network` layout. See
 - [x] Step 8: Merge `soil-network-transactions` into `soil_network::transactions`.
 - [x] Step 9: Merge `soil-network-statement` and `sc-statement-store` into
       `soil_network::{statement,statement_store}`.
-- [ ] Step 10: Merge `sc-mixnet` into `soil_network::mixnet`.
+- [x] Step 10: Merge `sc-mixnet` into `soil_network::mixnet`.
 - [ ] Step 11: Final consistency pass and spec update.
 
 ## Validation Log

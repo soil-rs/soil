@@ -24,7 +24,6 @@ jsonrpsee = { features = ["server"], workspace = true }
 log = { workspace = true, default-features = true }
 parking_lot = { workspace = true, default-features = true }
 soil-chain-spec = { workspace = true, default-features = true }
-sc-mixnet = { workspace = true, default-features = true }
 soil-rpc-api = { workspace = true, default-features = true }
 serde_json = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }

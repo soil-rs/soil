@@ -249,6 +249,7 @@ mod bitswap;
 pub mod common;
 pub mod light;
 mod litep2p;
+pub mod mixnet;
 mod protocol;
 
 #[cfg(test)]
