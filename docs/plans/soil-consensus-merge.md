@@ -50,7 +50,7 @@ consensus crates into the new flattened `soil-*` layout. See
 - [x] Step 6: Merge `sc-consensus-aura` into `soil-aura`.
 - [x] Step 7: Merge `sc-consensus-babe` and `soil-consensus-babe-rpc` into
       `soil-babe`.
-- [ ] Step 8: Merge `sc-consensus-grandpa` and
+- [x] Step 8: Merge `sc-consensus-grandpa` and
       `soil-consensus-grandpa-rpc` into `soil-grandpa`.
 - [ ] Step 9: Merge `sc-consensus-beefy` and `soil-consensus-beefy-rpc` into
       `soil-beefy`.
@@ -70,3 +70,5 @@ consensus crates into the new flattened `soil-*` layout. See
   `cargo check -p soil-aura -p soil-manual-seal -p staging-node-cli`
 - Step 7:
   `cargo check -p soil-babe -p node-rpc -p soil-manual-seal -p soil-sync-state-rpc -p staging-node-cli`
+- Step 8:
+  `cargo check -p soil-grandpa -p node-rpc -p soil-sync-state-rpc -p staging-node-cli`

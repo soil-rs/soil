@@ -24,8 +24,7 @@ soil-chain-spec = { workspace = true, default-features = true }
 soil-babe = { workspace = true, default-features = true }
 sc-consensus-beefy = { workspace = true, default-features = true }
 soil-consensus-beefy-rpc = { workspace = true, default-features = true }
-sc-consensus-grandpa = { workspace = true, default-features = true }
-soil-consensus-grandpa-rpc = { workspace = true, default-features = true }
+soil-grandpa = { workspace = true, default-features = true }
 sc-mixnet = { workspace = true, default-features = true }
 sc-rpc = { workspace = true, default-features = true }
 soil-sync-state-rpc = { workspace = true, default-features = true }

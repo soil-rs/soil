@@ -39,7 +39,7 @@ use soil_babe::BabeWorkerHandle;
 use sc_consensus_beefy::communication::notification::{
 	BeefyBestBlockStream, BeefyVersionedFinalityProofStream,
 };
-use sc_consensus_grandpa::{
+use soil_grandpa::{
 	FinalityProofProvider, GrandpaJustificationStream, SharedAuthoritySet, SharedVoterState,
 };
 pub use sc_rpc::SubscriptionTaskExecutor;
@@ -166,7 +166,7 @@ where
 	};
 	use soil_babe::rpc::{Babe, BabeApiServer};
 	use soil_consensus_beefy_rpc::{Beefy, BeefyApiServer};
-	use soil_consensus_grandpa_rpc::{Grandpa, GrandpaApiServer};
+	use soil_grandpa::rpc::{Grandpa, GrandpaApiServer};
 	use soil_mmr_rpc::{Mmr, MmrApiServer};
 	use soil_sync_state_rpc::{SyncState, SyncStateApiServer};
 	use substrate_frame_rpc_system::{System, SystemApiServer};

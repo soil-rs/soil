@@ -21,7 +21,7 @@
 //! Service implementation. Specialized wrapper over substrate service.
 
 use sc_consensus_beefy as beefy;
-use sc_consensus_grandpa as grandpa;
+use soil_grandpa as grandpa;
 use subsoil::consensus::babe::inherents::BabeCreateInherentDataProviders;
 use subsoil::consensus::beefy as beefy_primitives;
 

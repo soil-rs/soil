@@ -21,13 +21,13 @@ members = [
 	"crates/soil/chain-spec-derive",
 	"crates/soil/cli",
 	"crates/soil/consensus-beefy-rpc",
-	"crates/soil/consensus-grandpa-rpc",
 	"crates/soil-consensus",
 	"crates/soil-client",
 	"crates/soil-manual-seal",
 	"crates/soil/core/fuzz",
 	"crates/subsoil-crypto-hashing",
 	"crates/soil/genesis-builder",
+	"crates/soil-grandpa",
 	"crates/soil/informant",
 	"crates/soil/mixnet",
 	"crates/soil/mmr-gadget",
@@ -231,7 +231,6 @@ members = [
 	"crates/substrate/substrate-wasm-builder",
 	"crates/substrate-client/authority-discovery",
 	"crates/substrate-client/consensus/beefy",
-	"crates/substrate-client/consensus/grandpa",
 	"crates/substrate-client/mixnet",
 	"crates/substrate-client/offchain",
 	"crates/substrate-client/rpc",
@@ -432,8 +431,7 @@ soil-aura = { path = "crates/soil-aura", default-features = false }
 soil-babe = { path = "crates/soil-babe", default-features = false }
 sc-consensus-beefy = { path = "crates/substrate-client/consensus/beefy", default-features = false }
 soil-consensus-beefy-rpc = { path = "crates/soil/consensus-beefy-rpc", default-features = false }
-sc-consensus-grandpa = { path = "crates/substrate-client/consensus/grandpa", default-features = false }
-soil-consensus-grandpa-rpc = { path = "crates/soil/consensus-grandpa-rpc", default-features = false }
+soil-grandpa = { path = "crates/soil-grandpa", default-features = false }
 soil-manual-seal = { path = "crates/soil-manual-seal", default-features = false }
 soil-pow = { path = "crates/soil-pow", default-features = false }
 soil-informant = { path = "crates/soil/informant", default-features = false }

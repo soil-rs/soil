@@ -6110,14 +6110,13 @@ dependencies = [
  "jsonrpsee",
  "node-primitives",
  "sc-consensus-beefy",
- "sc-consensus-grandpa",
  "sc-mixnet",
  "sc-rpc",
  "soil-babe",
  "soil-chain-spec",
  "soil-client",
  "soil-consensus-beefy-rpc",
- "soil-consensus-grandpa-rpc",
+ "soil-grandpa",
  "soil-mmr-rpc",
  "soil-sync-state-rpc",
  "subsoil",
@@ -8089,42 +8088,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "sc-consensus-grandpa"
-version = "0.19.0"
-dependencies = [
- "ahash 0.8.12",
- "array-bytes 6.2.3",
- "assert_matches",
- "async-trait",
- "dyn-clone",
- "finality-grandpa",
- "fork-tree",
- "futures",
- "futures-timer",
- "log",
- "parity-scale-codec",
- "parking_lot 0.12.5",
- "rand 0.8.5",
- "serde_json",
- "soil-chain-spec",
- "soil-client",
- "soil-consensus",
- "soil-network",
- "soil-network-common",
- "soil-network-gossip",
- "soil-network-sync",
- "soil-network-test",
- "soil-network-types",
- "soil-telemetry",
- "subsoil",
- "subsoil-crypto-hashing",
- "substrate-prometheus-endpoint",
- "substrate-test-runtime-client",
- "thiserror 1.0.69",
- "tokio",
-]
-
-[[package]]
 name = "sc-mixnet"
 version = "0.4.0"
 dependencies = [
@@ -9286,25 +9249,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "soil-consensus-grandpa-rpc"
-version = "0.19.0"
-dependencies = [
- "finality-grandpa",
- "futures",
- "jsonrpsee",
- "log",
- "parity-scale-codec",
- "sc-consensus-grandpa",
- "sc-rpc",
- "serde",
- "soil-client",
- "subsoil",
- "substrate-test-runtime-client",
- "thiserror 1.0.69",
- "tokio",
-]
-
-[[package]]
 name = "soil-genesis-builder"
 version = "0.8.0"
 dependencies = [
@@ -9312,6 +9256,45 @@ dependencies = [
  "scale-info",
  "serde_json",
  "subsoil",
+]
+
+[[package]]
+name = "soil-grandpa"
+version = "0.19.0"
+dependencies = [
+ "ahash 0.8.12",
+ "array-bytes 6.2.3",
+ "assert_matches",
+ "async-trait",
+ "dyn-clone",
+ "finality-grandpa",
+ "fork-tree",
+ "futures",
+ "futures-timer",
+ "jsonrpsee",
+ "log",
+ "parity-scale-codec",
+ "parking_lot 0.12.5",
+ "rand 0.8.5",
+ "sc-rpc",
+ "serde",
+ "serde_json",
+ "soil-chain-spec",
+ "soil-client",
+ "soil-consensus",
+ "soil-network",
+ "soil-network-common",
+ "soil-network-gossip",
+ "soil-network-sync",
+ "soil-network-test",
+ "soil-network-types",
+ "soil-telemetry",
+ "subsoil",
+ "subsoil-crypto-hashing",
+ "substrate-prometheus-endpoint",
+ "substrate-test-runtime-client",
+ "thiserror 1.0.69",
+ "tokio",
 ]
 
 [[package]]
@@ -9871,13 +9854,13 @@ version = "0.34.0"
 dependencies = [
  "jsonrpsee",
  "parity-scale-codec",
- "sc-consensus-grandpa",
  "serde",
  "serde_json",
  "soil-babe",
  "soil-chain-spec",
  "soil-client",
  "soil-consensus",
+ "soil-grandpa",
  "subsoil",
  "thiserror 1.0.69",
 ]
@@ -10162,7 +10145,6 @@ dependencies = [
  "regex",
  "sc-authority-discovery",
  "sc-consensus-beefy",
- "sc-consensus-grandpa",
  "sc-mixnet",
  "sc-offchain",
  "sc-rpc",
@@ -10180,8 +10162,8 @@ dependencies = [
  "soil-client",
  "soil-consensus",
  "soil-consensus-beefy-rpc",
- "soil-consensus-grandpa-rpc",
  "soil-genesis-builder",
+ "soil-grandpa",
  "soil-informant",
  "soil-manual-seal",
  "soil-mixnet",
