@@ -20,8 +20,8 @@ use crate::error::Error;
 use log::{info, warn};
 use serde::{Deserialize, Serialize};
 use soil_authority_discovery::AuthorityId;
+use soil_network::types::PeerId;
 use soil_network::{multiaddr::Protocol, Multiaddr};
-use soil_network_types::PeerId;
 use std::{
 	collections::{hash_map::Entry, HashMap, HashSet},
 	fs::File,
@@ -301,7 +301,7 @@ mod tests {
 	use super::*;
 
 	use quickcheck::{Arbitrary, Gen, QuickCheck, TestResult};
-	use soil_network_types::multihash::{Code, Multihash};
+	use soil_network::types::multihash::{Code, Multihash};
 
 	use soil_authority_discovery::{AuthorityId, AuthorityPair};
 	use subsoil::core::crypto::Pair;

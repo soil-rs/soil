@@ -27,8 +27,8 @@ mod schema_v2 {
 use super::*;
 use codec::Encode;
 use prost::Message;
+use soil_network::types::ed25519::Keypair;
 use soil_network::{Multiaddr, PeerId};
-use soil_network_types::ed25519::Keypair;
 
 #[test]
 fn v2_decodes_v1() {

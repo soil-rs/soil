@@ -234,7 +234,7 @@ impl ProtocolHandle {
 }
 
 impl ProtocolHandleT for ProtocolHandle {
-	fn disconnect_peer(&self, peer_id: soil_network_types::PeerId) {
+	fn disconnect_peer(&self, peer_id: crate::types::PeerId) {
 		let _ = self.actions_tx.unbounded_send(Action::DisconnectPeer(peer_id.into()));
 	}
 }
@@ -816,14 +816,8 @@ impl ProtocolController {
 			.reserved_nodes
 			.keys()
 			.map(From::from)
-			.collect::<HashSet<soil_network_types::PeerId>>()
-			.union(
-				&self
-					.nodes
-					.keys()
-					.map(From::from)
-					.collect::<HashSet<soil_network_types::PeerId>>(),
-			)
+			.collect::<HashSet<crate::types::PeerId>>()
+			.union(&self.nodes.keys().map(From::from).collect::<HashSet<crate::types::PeerId>>())
 			.cloned()
 			.collect();
 
@@ -879,15 +873,15 @@ mod tests {
 		pub PeerStoreHandle {}
 
 		impl PeerStoreProvider for PeerStoreHandle {
-			fn is_banned(&self, peer_id: &soil_network_types::PeerId) -> bool;
+			fn is_banned(&self, peer_id: &crate::types::PeerId) -> bool;
 			fn register_protocol(&self, protocol_handle: Arc<dyn ProtocolHandleT>);
-			fn report_disconnect(&self, peer_id: soil_network_types::PeerId);
-			fn set_peer_role(&self, peer_id: &soil_network_types::PeerId, role: ObservedRole);
-			fn report_peer(&self, peer_id: soil_network_types::PeerId, change: ReputationChange);
-			fn peer_reputation(&self, peer_id: &soil_network_types::PeerId) -> i32;
-			fn peer_role(&self, peer_id: &soil_network_types::PeerId) -> Option<ObservedRole>;
-			fn outgoing_candidates(&self, count: usize, ignored: HashSet<soil_network_types::PeerId>) -> Vec<soil_network_types::PeerId>;
-			fn add_known_peer(&self, peer_id: soil_network_types::PeerId);
+			fn report_disconnect(&self, peer_id: crate::types::PeerId);
+			fn set_peer_role(&self, peer_id: &crate::types::PeerId, role: ObservedRole);
+			fn report_peer(&self, peer_id: crate::types::PeerId, change: ReputationChange);
+			fn peer_reputation(&self, peer_id: &crate::types::PeerId) -> i32;
+			fn peer_role(&self, peer_id: &crate::types::PeerId) -> Option<ObservedRole>;
+			fn outgoing_candidates(&self, count: usize, ignored: HashSet<crate::types::PeerId>) -> Vec<crate::types::PeerId>;
+			fn add_known_peer(&self, peer_id: crate::types::PeerId);
 		}
 	}
 
@@ -1487,7 +1481,7 @@ mod tests {
 		peer_store
 			.expect_outgoing_candidates()
 			.once()
-			.return_const(Vec::<soil_network_types::PeerId>::new());
+			.return_const(Vec::<crate::types::PeerId>::new());
 
 		let (_handle, mut controller) =
 			ProtocolController::new(SetId::from(0), config, tx, Arc::new(peer_store));

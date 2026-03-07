@@ -17,7 +17,7 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 use soil_network::common::role::ObservedRole;
-use soil_network_types::PeerId;
+use soil_network::types::PeerId;
 use subsoil::runtime::traits::Block as BlockT;
 
 /// Validates consensus messages.

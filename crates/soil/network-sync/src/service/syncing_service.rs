@@ -19,7 +19,7 @@
 use crate::types::{ExtendedPeerInfo, SyncEvent, SyncEventStream, SyncStatus, SyncStatusProvider};
 
 use futures::{channel::oneshot, Stream};
-use soil_network_types::PeerId;
+use soil_network::types::PeerId;
 
 use soil_client::utils::mpsc::{tracing_unbounded, TracingUnboundedSender};
 use soil_consensus::{

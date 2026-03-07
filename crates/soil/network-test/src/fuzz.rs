@@ -331,7 +331,7 @@ async fn test_once() {
 				2 => {
 					if let Some(id) = known_nodes.keys().choose(&mut rng) {
 						let val = Uniform::new_inclusive(i32::MIN, i32::MAX).sample(&mut rng);
-						let peer: soil_network_types::PeerId = id.into();
+						let peer: soil_network::types::PeerId = id.into();
 						peer_store_handle.report_peer(peer, ReputationChange::new(val, ""));
 					}
 				},

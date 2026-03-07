@@ -31,7 +31,7 @@ use parking_lot::Mutex;
 use prometheus_endpoint::Registry;
 use wasm_timer::Delay;
 
-use soil_network_types::PeerId;
+use crate::types::PeerId;
 
 use std::{
 	collections::{HashMap, HashSet},
@@ -446,9 +446,9 @@ mod tests {
 
 	#[test]
 	fn report_banned_peers() {
-		let peer_a = soil_network_types::PeerId::random();
-		let peer_b = soil_network_types::PeerId::random();
-		let peer_c = soil_network_types::PeerId::random();
+		let peer_a = crate::types::PeerId::random();
+		let peer_b = crate::types::PeerId::random();
+		let peer_c = crate::types::PeerId::random();
 
 		let metrics_registry = prometheus_endpoint::Registry::new();
 		let mut peerstore = Peerstore::new(

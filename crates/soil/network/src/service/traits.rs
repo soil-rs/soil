@@ -35,12 +35,12 @@ use futures::{channel::oneshot, Stream};
 use prometheus_endpoint::Registry;
 
 use crate::common::{role::ObservedRole, ExHashT};
-use soil_client::client_api::BlockBackend;
-pub use soil_network_types::{
+pub use crate::types::{
 	kad::{Key as KademliaKey, Record},
 	multiaddr::Multiaddr,
 	PeerId,
 };
+use soil_client::client_api::BlockBackend;
 use subsoil::runtime::traits::Block as BlockT;
 
 use std::{
@@ -186,7 +186,7 @@ pub trait NetworkSigner {
 	/// Returns `Err(())` if public cannot be parsed into a valid ed25519 public key.
 	fn verify(
 		&self,
-		peer_id: soil_network_types::PeerId,
+		peer_id: crate::types::PeerId,
 		public_key: &Vec<u8>,
 		signature: &Vec<u8>,
 		message: &Vec<u8>,
@@ -204,7 +204,7 @@ where
 
 	fn verify(
 		&self,
-		peer_id: soil_network_types::PeerId,
+		peer_id: crate::types::PeerId,
 		public_key: &Vec<u8>,
 		signature: &Vec<u8>,
 		message: &Vec<u8>,

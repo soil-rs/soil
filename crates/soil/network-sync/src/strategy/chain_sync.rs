@@ -56,8 +56,8 @@ use soil_consensus::{BlockImportError, BlockImportStatus, IncomingBlock};
 use soil_network::common::sync::message::{
 	BlockAnnounce, BlockAttributes, BlockData, BlockRequest, BlockResponse, Direction, FromBlock,
 };
+use soil_network::types::PeerId;
 use soil_network::{IfDisconnected, ProtocolName};
-use soil_network_types::PeerId;
 use subsoil::arithmetic::traits::Saturating;
 use subsoil::runtime::{
 	traits::{

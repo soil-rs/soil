@@ -218,7 +218,7 @@ impl RequestResponseConfigT for ProtocolConfig {
 #[derive(Debug)]
 pub struct IncomingRequest {
 	/// Who sent the request.
-	pub peer: soil_network_types::PeerId,
+	pub peer: crate::types::PeerId,
 
 	/// Request sent by the remote. Will always be smaller than
 	/// [`ProtocolConfig::max_request_size`].

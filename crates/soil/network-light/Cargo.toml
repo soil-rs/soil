@@ -24,7 +24,6 @@ futures = { workspace = true}
 log = { workspace = true, default-features = true}
 prost = { workspace = true}
 soil-network = { workspace = true, default-features = true}
-soil-network-types = { workspace = true, default-features = true}
 subsoil = { workspace = true, default-features = true}
 thiserror = { workspace = true}
 

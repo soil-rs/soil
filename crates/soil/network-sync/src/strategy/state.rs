@@ -36,8 +36,8 @@ use soil_client::client_api::ProofProvider;
 use soil_client::consensus::BlockOrigin;
 use soil_consensus::{BlockImportError, BlockImportStatus, IncomingBlock};
 use soil_network::common::sync::message::BlockAnnounce;
+use soil_network::types::PeerId;
 use soil_network::{IfDisconnected, ProtocolName};
-use soil_network_types::PeerId;
 use std::{any::Any, collections::HashMap, sync::Arc};
 use subsoil::runtime::{
 	traits::{Block as BlockT, Header, NumberFor},

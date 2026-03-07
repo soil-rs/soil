@@ -62,6 +62,7 @@ use soil_consensus::{
 	LongestChain, Verifier,
 };
 use soil_network::common::role::Roles;
+use soil_network::types::{build_multiaddr, multiaddr::Multiaddr};
 use soil_network::{
 	config::{
 		FullNetworkConfiguration, MultiaddrWithPeerId, NetworkConfiguration, NonDefaultSetConfig,
@@ -87,7 +88,6 @@ use soil_network_sync::{
 	},
 	warp_request_handler,
 };
-use soil_network_types::{build_multiaddr, multiaddr::Multiaddr};
 use soil_service::client::Client;
 use subsoil::core::H256;
 use subsoil::runtime::{

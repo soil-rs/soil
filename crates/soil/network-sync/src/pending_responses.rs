@@ -29,8 +29,8 @@ use futures::{
 use log::error;
 use std::any::Any;
 
+use soil_network::types::PeerId;
 use soil_network::{request_responses::RequestFailure, types::ProtocolName};
-use soil_network_types::PeerId;
 use std::task::{Context, Poll, Waker};
 use tokio_stream::StreamMap;
 

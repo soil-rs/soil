@@ -159,7 +159,7 @@ async fn test_libp2p_litep2p_connectivity() {
 		}
 	};
 	let libp2p_address = libp2p_address.with_p2p(*libp2p.local_peer_id()).unwrap();
-	let libp2p_address: soil_network_types::multiaddr::Multiaddr = libp2p_address.clone().into();
+	let libp2p_address: crate::types::multiaddr::Multiaddr = libp2p_address.clone().into();
 	litep2p.dial_address(libp2p_address.into()).await.unwrap();
 
 	let mut libp2p_connected = false;
@@ -198,7 +198,7 @@ async fn libp2p_to_litep2p_substream() {
 	let litep2p_peer = *litep2p.local_peer_id();
 
 	let litep2p_address = litep2p.listen_addresses().into_iter().next().unwrap().clone();
-	let address: soil_network_types::multiaddr::Multiaddr = litep2p_address.clone().into();
+	let address: crate::types::multiaddr::Multiaddr = litep2p_address.clone().into();
 	let address: libp2p::multiaddr::Multiaddr = address.into();
 	libp2p.dial(address).unwrap();
 
@@ -288,7 +288,7 @@ async fn litep2p_rejects_libp2p_substream() {
 	let litep2p_peer = *litep2p.local_peer_id();
 
 	let litep2p_address = litep2p.listen_addresses().into_iter().next().unwrap().clone();
-	let address: soil_network_types::multiaddr::Multiaddr = litep2p_address.clone().into();
+	let address: crate::types::multiaddr::Multiaddr = litep2p_address.clone().into();
 	let address: libp2p::multiaddr::Multiaddr = address.into();
 	libp2p.dial(address).unwrap();
 
@@ -528,7 +528,7 @@ async fn libp2p_disconnects_litep2p_substream() {
 	let litep2p_peer = *litep2p.local_peer_id();
 
 	let litep2p_address = litep2p.listen_addresses().into_iter().next().unwrap().clone();
-	let address: soil_network_types::multiaddr::Multiaddr = litep2p_address.clone().into();
+	let address: crate::types::multiaddr::Multiaddr = litep2p_address.clone().into();
 	let address: libp2p::multiaddr::Multiaddr = address.into();
 	libp2p.dial(address).unwrap();
 
@@ -596,7 +596,7 @@ async fn libp2p_disconnects_litep2p_substream() {
 					SwarmEvent::Behaviour(NotificationsOut::CustomProtocolClosed { .. }) => {
 						// At this point libp2p is disconnected from litep2p.
 						// However, litep2p still thinks its connected to libp2p and this notification is entirely lost.
-						let libp2p_peer: soil_network_types::PeerId = libp2p_peer.into();
+						let libp2p_peer: crate::types::PeerId = libp2p_peer.into();
 						handle.send_sync_notification(libp2p_peer.into(), vec![5, 5, 5, 5]).unwrap();
 						handle.send_async_notification(libp2p_peer.into(), vec![6, 6, 6, 6]).await.unwrap();
 					}
@@ -678,7 +678,7 @@ async fn litep2p_disconnects_libp2p_substream() {
 	let litep2p_peer = *litep2p.local_peer_id();
 
 	let litep2p_address = litep2p.listen_addresses().into_iter().next().unwrap().clone();
-	let address: soil_network_types::multiaddr::Multiaddr = litep2p_address.clone().into();
+	let address: crate::types::multiaddr::Multiaddr = litep2p_address.clone().into();
 	let address: libp2p::multiaddr::Multiaddr = address.into();
 	libp2p.dial(address).unwrap();
 
@@ -719,7 +719,7 @@ async fn litep2p_disconnects_libp2p_substream() {
 							// Disconnect the peer.
 							log::info!("Disconnecting peer: {peer_id:?}");
 
-							let libp2p_peer: soil_network_types::PeerId = libp2p_peer.into();
+							let libp2p_peer: crate::types::PeerId = libp2p_peer.into();
 							handle.close_substream(libp2p_peer.into()).await;
 
 							// After closing the substream set the timer to 6s to ensure the connection does

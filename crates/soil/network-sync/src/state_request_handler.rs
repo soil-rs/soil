@@ -28,7 +28,7 @@ use futures::{channel::oneshot, stream::StreamExt};
 use log::{debug, trace};
 use prost::Message;
 use schnellru::{ByLength, LruMap};
-use soil_network_types::PeerId;
+use soil_network::types::PeerId;
 
 use soil_client::client_api::{BlockBackend, ProofProvider};
 use soil_network::{

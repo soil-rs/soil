@@ -32,6 +32,7 @@ use crate::{
 	ProtocolName, RequestFailure, Signature,
 };
 
+use crate::types::kad::{Key as KademliaKey, Record};
 use codec::DecodeAll;
 use futures::{channel::oneshot, stream::BoxStream};
 use libp2p::identity::SigningError;
@@ -40,17 +41,16 @@ use litep2p::{
 	types::multiaddr::Multiaddr as LiteP2pMultiaddr,
 };
 use parking_lot::RwLock;
-use soil_network_types::kad::{Key as KademliaKey, Record};
 
 use crate::common::{
 	role::{ObservedRole, Roles},
 	types::ReputationChange,
 };
-use soil_client::utils::mpsc::TracingUnboundedSender;
-use soil_network_types::{
+use crate::types::{
 	multiaddr::{Multiaddr, Protocol},
 	PeerId,
 };
+use soil_client::utils::mpsc::TracingUnboundedSender;
 
 use std::{
 	collections::{HashMap, HashSet},
@@ -91,7 +91,7 @@ pub enum NetworkServiceCommand {
 		/// Record.
 		record: Record,
 		/// Peers we want to put the record.
-		peers: Vec<soil_network_types::PeerId>,
+		peers: Vec<crate::types::PeerId>,
 		/// If we should update the local storage or not.
 		update_local_storage: bool,
 	},
@@ -292,7 +292,7 @@ impl NetworkDHTProvider for Litep2pNetworkService {
 				key: record.key.to_vec().into(),
 				value: record.value,
 				publisher: record.publisher.map(|peer_id| {
-					let peer_id: soil_network_types::PeerId = peer_id.into();
+					let peer_id: crate::types::PeerId = peer_id.into();
 					peer_id.into()
 				}),
 				expires: record.expires,

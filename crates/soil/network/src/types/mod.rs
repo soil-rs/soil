@@ -18,6 +18,13 @@
 
 //! `soil-network` type definitions
 
+pub mod ed25519;
+pub mod kad;
+pub mod multiaddr;
+pub mod multihash;
+mod peer_id;
+pub use peer_id::PeerId;
+
 use std::{
 	borrow::Borrow,
 	fmt,

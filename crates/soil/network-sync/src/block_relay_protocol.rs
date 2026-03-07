@@ -19,8 +19,8 @@
 
 use futures::channel::oneshot;
 use soil_network::common::sync::message::{BlockData, BlockRequest};
+use soil_network::types::PeerId;
 use soil_network::{request_responses::RequestFailure, NetworkBackend, ProtocolName};
-use soil_network_types::PeerId;
 use std::{fmt, sync::Arc};
 use subsoil::runtime::traits::Block as BlockT;
 

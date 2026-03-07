@@ -34,7 +34,7 @@ use futures::{
 };
 use log::trace;
 use prometheus_endpoint::Registry;
-use soil_network_types::PeerId;
+use soil_network::types::PeerId;
 use std::{
 	collections::{HashMap, VecDeque},
 	pin::Pin,
@@ -358,13 +358,13 @@ mod tests {
 	};
 	use quickcheck::{Arbitrary, Gen, QuickCheck};
 	use soil_network::common::role::ObservedRole;
+	use soil_network::types::multiaddr::Multiaddr;
 	use soil_network::{
 		config::MultiaddrWithPeerId,
 		service::traits::{Direction, MessageSink, NotificationEvent},
 		Event, NetworkBlock, NetworkEventStream, NetworkPeers, NotificationService, Roles,
 	};
 	use soil_network_sync::SyncEventStream;
-	use soil_network_types::multiaddr::Multiaddr;
 	use std::{
 		collections::HashSet,
 		sync::{Arc, Mutex},

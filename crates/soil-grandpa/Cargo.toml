@@ -36,7 +36,6 @@ soil-consensus = { workspace = true, default-features = true }
 soil-network = { workspace = true, default-features = true }
 soil-network-gossip = { workspace = true, default-features = true }
 soil-network-sync = { workspace = true, default-features = true }
-soil-network-types = { workspace = true, default-features = true }
 soil-telemetry = { workspace = true, default-features = true }
 serde = { features = ["derive"], workspace = true, default-features = true}
 serde_json = { workspace = true, default-features = true }

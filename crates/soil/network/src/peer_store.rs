@@ -63,41 +63,41 @@ const FORGET_AFTER: Duration = Duration::from_secs(3600);
 /// Trait describing the required functionality from a `Peerset` handle.
 pub trait ProtocolHandle: Debug + Send + Sync {
 	/// Disconnect peer.
-	fn disconnect_peer(&self, peer_id: soil_network_types::PeerId);
+	fn disconnect_peer(&self, peer_id: crate::types::PeerId);
 }
 
 /// Trait providing peer reputation management and connection candidates.
 pub trait PeerStoreProvider: Debug + Send + Sync {
 	/// Check whether the peer is banned.
-	fn is_banned(&self, peer_id: &soil_network_types::PeerId) -> bool;
+	fn is_banned(&self, peer_id: &crate::types::PeerId) -> bool;
 
 	/// Register a protocol handle to disconnect peers whose reputation drops below the threshold.
 	fn register_protocol(&self, protocol_handle: Arc<dyn ProtocolHandle>);
 
 	/// Report peer disconnection for reputation adjustment.
-	fn report_disconnect(&self, peer_id: soil_network_types::PeerId);
+	fn report_disconnect(&self, peer_id: crate::types::PeerId);
 
 	/// Adjust peer reputation.
-	fn report_peer(&self, peer_id: soil_network_types::PeerId, change: ReputationChange);
+	fn report_peer(&self, peer_id: crate::types::PeerId, change: ReputationChange);
 
 	/// Set peer role.
-	fn set_peer_role(&self, peer_id: &soil_network_types::PeerId, role: ObservedRole);
+	fn set_peer_role(&self, peer_id: &crate::types::PeerId, role: ObservedRole);
 
 	/// Get peer reputation.
-	fn peer_reputation(&self, peer_id: &soil_network_types::PeerId) -> i32;
+	fn peer_reputation(&self, peer_id: &crate::types::PeerId) -> i32;
 
 	/// Get peer role, if available.
-	fn peer_role(&self, peer_id: &soil_network_types::PeerId) -> Option<ObservedRole>;
+	fn peer_role(&self, peer_id: &crate::types::PeerId) -> Option<ObservedRole>;
 
 	/// Get candidates with highest reputations for initiating outgoing connections.
 	fn outgoing_candidates(
 		&self,
 		count: usize,
-		ignored: HashSet<soil_network_types::PeerId>,
-	) -> Vec<soil_network_types::PeerId>;
+		ignored: HashSet<crate::types::PeerId>,
+	) -> Vec<crate::types::PeerId>;
 
 	/// Add known peer.
-	fn add_known_peer(&self, peer_id: soil_network_types::PeerId);
+	fn add_known_peer(&self, peer_id: crate::types::PeerId);
 }
 
 /// Actual implementation of peer reputations and connection candidates provider.
@@ -107,7 +107,7 @@ pub struct PeerStoreHandle {
 }
 
 impl PeerStoreProvider for PeerStoreHandle {
-	fn is_banned(&self, peer_id: &soil_network_types::PeerId) -> bool {
+	fn is_banned(&self, peer_id: &crate::types::PeerId) -> bool {
 		self.inner.lock().is_banned(&peer_id.into())
 	}
 
@@ -115,34 +115,34 @@ impl PeerStoreProvider for PeerStoreHandle {
 		self.inner.lock().register_protocol(protocol_handle);
 	}
 
-	fn report_disconnect(&self, peer_id: soil_network_types::PeerId) {
+	fn report_disconnect(&self, peer_id: crate::types::PeerId) {
 		let mut inner = self.inner.lock();
 		inner.report_disconnect(peer_id.into())
 	}
 
-	fn report_peer(&self, peer_id: soil_network_types::PeerId, change: ReputationChange) {
+	fn report_peer(&self, peer_id: crate::types::PeerId, change: ReputationChange) {
 		let mut inner = self.inner.lock();
 		inner.report_peer(peer_id.into(), change)
 	}
 
-	fn set_peer_role(&self, peer_id: &soil_network_types::PeerId, role: ObservedRole) {
+	fn set_peer_role(&self, peer_id: &crate::types::PeerId, role: ObservedRole) {
 		let mut inner = self.inner.lock();
 		inner.set_peer_role(&peer_id.into(), role)
 	}
 
-	fn peer_reputation(&self, peer_id: &soil_network_types::PeerId) -> i32 {
+	fn peer_reputation(&self, peer_id: &crate::types::PeerId) -> i32 {
 		self.inner.lock().peer_reputation(&peer_id.into())
 	}
 
-	fn peer_role(&self, peer_id: &soil_network_types::PeerId) -> Option<ObservedRole> {
+	fn peer_role(&self, peer_id: &crate::types::PeerId) -> Option<ObservedRole> {
 		self.inner.lock().peer_role(&peer_id.into())
 	}
 
 	fn outgoing_candidates(
 		&self,
 		count: usize,
-		ignored: HashSet<soil_network_types::PeerId>,
-	) -> Vec<soil_network_types::PeerId> {
+		ignored: HashSet<crate::types::PeerId>,
+	) -> Vec<crate::types::PeerId> {
 		self.inner
 			.lock()
 			.outgoing_candidates(count, ignored.iter().map(|peer_id| (*peer_id).into()).collect())
@@ -151,7 +151,7 @@ impl PeerStoreProvider for PeerStoreHandle {
 			.collect()
 	}
 
-	fn add_known_peer(&self, peer_id: soil_network_types::PeerId) {
+	fn add_known_peer(&self, peer_id: crate::types::PeerId) {
 		self.inner.lock().add_known_peer(peer_id.into());
 	}
 }
@@ -538,9 +538,9 @@ mod tests {
 
 	#[test]
 	fn report_banned_peers() {
-		let peer_a = soil_network_types::PeerId::random();
-		let peer_b = soil_network_types::PeerId::random();
-		let peer_c = soil_network_types::PeerId::random();
+		let peer_a = crate::types::PeerId::random();
+		let peer_b = crate::types::PeerId::random();
+		let peer_c = crate::types::PeerId::random();
 
 		let metrics_registry = prometheus_endpoint::Registry::new();
 		let peerstore = PeerStore::new(

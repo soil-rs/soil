@@ -17,7 +17,7 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 use mixnet::core::PeerId as CorePeerId;
-use soil_network_types::PeerId;
+use soil_network::types::PeerId;
 
 /// Convert a libp2p [`PeerId`] into a mixnet core [`PeerId`](CorePeerId).
 ///

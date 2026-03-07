@@ -25,7 +25,7 @@ use mixnet::core::{
 	Mixnet, Mixnode as CoreMixnode, MixnodesErr as CoreMixnodesErr, RelSessionIndex,
 	SessionPhase as CoreSessionPhase, SessionStatus as CoreSessionStatus,
 };
-use soil_network_types::{
+use soil_network::types::{
 	multiaddr::{multiaddr, Multiaddr, Protocol},
 	PeerId,
 };

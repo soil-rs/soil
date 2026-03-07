@@ -490,7 +490,7 @@ impl<B: BlockT, N: Network<B>, S: Syncing<B>> NetworkBridge<B, N, S> {
 	/// connected to (NOTE: this assumption will change in the future #3629).
 	pub(crate) fn set_sync_fork_request(
 		&self,
-		peers: Vec<soil_network_types::PeerId>,
+		peers: Vec<soil_network::types::PeerId>,
 		hash: B::Hash,
 		number: NumberFor<B>,
 	) {

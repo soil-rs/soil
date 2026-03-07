@@ -16,7 +16,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-use crate::{
+use super::{
 	multiaddr::{Multiaddr, Protocol},
 	multihash::{Code, Error, Multihash},
 };
@@ -191,7 +191,7 @@ pub enum ParseError {
 	#[error("unsupported multihash code '{0}'")]
 	UnsupportedCode(u64),
 	#[error("invalid multihash")]
-	InvalidMultihash(#[from] crate::multihash::Error),
+	InvalidMultihash(#[from] super::multihash::Error),
 }
 
 impl FromStr for PeerId {

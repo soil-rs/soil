@@ -476,7 +476,7 @@ impl DiscoveryBehaviour {
 	pub fn put_record_to(
 		&mut self,
 		record: Record,
-		peers: HashSet<soil_network_types::PeerId>,
+		peers: HashSet<crate::types::PeerId>,
 		update_local_storage: bool,
 	) {
 		if let Some(kad) = self.kademlia.as_mut() {
@@ -621,12 +621,7 @@ pub enum DiscoveryOut {
 	ValueFound(PeerRecord, Duration),
 
 	/// The DHT received a put record request.
-	PutRecordRequest(
-		RecordKey,
-		Vec<u8>,
-		Option<soil_network_types::PeerId>,
-		Option<std::time::Instant>,
-	),
+	PutRecordRequest(RecordKey, Vec<u8>, Option<crate::types::PeerId>, Option<std::time::Instant>),
 
 	/// The record requested was not found in the DHT.
 	///

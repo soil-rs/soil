@@ -38,8 +38,8 @@ use soil_client::blockchain::{Error as ClientError, HeaderBackend, HeaderMetadat
 use soil_client::client_api::{BlockBackend, ProofProvider};
 use soil_consensus::{BlockImportError, BlockImportStatus};
 use soil_network::common::sync::{message::BlockAnnounce, SyncMode};
+use soil_network::types::PeerId;
 use soil_network::ProtocolName;
-use soil_network_types::PeerId;
 use std::{any::Any, collections::HashMap, sync::Arc};
 use subsoil::runtime::traits::{Block as BlockT, Header, NumberFor};
 

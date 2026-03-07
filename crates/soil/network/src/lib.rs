@@ -266,6 +266,10 @@ pub mod types;
 pub mod utils;
 
 pub use crate::litep2p::Litep2pNetworkBackend;
+pub use crate::types::{
+	multiaddr::{self, Multiaddr},
+	PeerId,
+};
 pub use common::{
 	role::{ObservedRole, Roles},
 	types::ReputationChange,
@@ -285,10 +289,6 @@ pub use service::{
 	},
 	DecodingError, Keypair, NetworkService, NetworkWorker, NotificationSender, OutboundFailure,
 	PublicKey,
-};
-pub use soil_network_types::{
-	multiaddr::{self, Multiaddr},
-	PeerId,
 };
 pub use types::ProtocolName;
 

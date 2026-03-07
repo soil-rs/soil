@@ -35,8 +35,8 @@ pub use crate::{
 	types::ProtocolName,
 };
 
-pub use soil_network_types::{build_multiaddr, ed25519};
-use soil_network_types::{
+pub use crate::{build_multiaddr, types::ed25519};
+use crate::types::{
 	multiaddr::{self, Multiaddr},
 	PeerId,
 };
@@ -120,7 +120,7 @@ impl fmt::Debug for ProtocolId {
 /// # Example
 ///
 /// ```
-/// # use soil_network_types::{multiaddr::Multiaddr, PeerId};
+/// # use crate::types::{multiaddr::Multiaddr, PeerId};
 /// use soil_network::config::parse_str_addr;
 /// let (peer_id, addr) = parse_str_addr(
 /// 	"/ip4/198.51.100.19/tcp/30333/p2p/QmSk5HQbn6LhUwDiNMseVUjuRYhEtYj4aUZ6WfWoGURpdV"
@@ -151,7 +151,7 @@ pub fn parse_addr(mut addr: Multiaddr) -> Result<(PeerId, Multiaddr), ParseErr> 
 /// # Example
 ///
 /// ```
-/// # use soil_network_types::{multiaddr::Multiaddr, PeerId};
+/// # use crate::types::{multiaddr::Multiaddr, PeerId};
 /// use soil_network::config::MultiaddrWithPeerId;
 /// let addr: MultiaddrWithPeerId =
 /// 	"/ip4/198.51.100.19/tcp/30333/p2p/QmSk5HQbn6LhUwDiNMseVUjuRYhEtYj4aUZ6WfWoGURpdV".parse().unwrap();

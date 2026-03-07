@@ -20,7 +20,7 @@ use crate::{MessageIntent, Network, ValidationResult, Validator, ValidatorContex
 
 use ahash::AHashSet;
 use schnellru::{ByLength, LruMap};
-use soil_network_types::PeerId;
+use soil_network::types::PeerId;
 
 use prometheus_endpoint::{register, Counter, PrometheusError, Registry, U64};
 use soil_network::common::role::ObservedRole;
@@ -544,11 +544,11 @@ impl Metrics {
 mod tests {
 	use super::*;
 	use futures::prelude::*;
+	use soil_network::types::multiaddr::Multiaddr;
 	use soil_network::{
 		config::MultiaddrWithPeerId, event::Event, service::traits::NotificationEvent, MessageSink,
 		NetworkBlock, NetworkEventStream, NetworkPeers, ReputationChange,
 	};
-	use soil_network_types::multiaddr::Multiaddr;
 	use std::{
 		collections::HashSet,
 		pin::Pin,

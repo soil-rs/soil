@@ -18,7 +18,7 @@
 
 //! Ed25519 keys.
 
-use crate::PeerId;
+use super::PeerId;
 use core::{cmp, fmt, hash};
 use ed25519_dalek::{self as ed25519, Signer as _, Verifier as _};
 use libp2p_identity::ed25519 as libp2p_ed25519;

@@ -53,6 +53,7 @@ use soil_network::common::{
 	role::Roles,
 	sync::message::{BlockAnnounce, BlockAnnouncesHandshake, BlockState},
 };
+use soil_network::types::PeerId;
 use soil_network::{
 	config::{FullNetworkConfiguration, NotificationHandshake, ProtocolId, SetConfig},
 	peer_store::PeerStoreProvider,
@@ -65,7 +66,6 @@ use soil_network::{
 	utils::LruHashSet,
 	NetworkBackend, NotificationService, ReputationChange,
 };
-use soil_network_types::PeerId;
 use subsoil::runtime::{
 	traits::{Block as BlockT, Header, NumberFor, Zero},
 	Justifications,

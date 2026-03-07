@@ -30,7 +30,7 @@ use crate::{
 use futures::prelude::*;
 use litep2p::protocol::notification::NotificationError;
 
-use soil_network_types::PeerId;
+use crate::types::PeerId;
 
 use std::{
 	collections::HashSet,

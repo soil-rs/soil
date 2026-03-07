@@ -24,7 +24,7 @@ use futures::{stream::FusedStream, Future, FutureExt, Stream, StreamExt};
 use log::{debug, error, trace, warn};
 use soil_client::consensus::block_validation::Validation;
 use soil_network::common::sync::message::BlockAnnounce;
-use soil_network_types::PeerId;
+use soil_network::types::PeerId;
 use std::{
 	collections::{hash_map::Entry, HashMap},
 	default::Default,
@@ -313,7 +313,7 @@ mod tests {
 	use super::*;
 	use crate::block_announce_validator::AllocateSlotForBlockAnnounceValidation;
 	use soil_client::consensus::block_validation::DefaultBlockAnnounceValidator;
-	use soil_network_types::PeerId;
+	use soil_network::types::PeerId;
 	use substrate_test_runtime_client::runtime::Block;
 
 	#[test]

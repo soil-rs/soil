@@ -261,7 +261,7 @@ impl<'a> From<Protocol<'a>> for Multiaddr {
 /// Example:
 ///
 /// ```rust
-/// use soil_network_types::build_multiaddr;
+/// use soil_network::build_multiaddr;
 /// let addr = build_multiaddr!(Ip4([127, 0, 0, 1]), Tcp(10500u16));
 /// ```
 ///
@@ -274,14 +274,14 @@ macro_rules! build_multiaddr {
     ($($comp:ident $(($param:expr))*),+) => {
         {
             use std::iter;
-            let elem = iter::empty::<$crate::multiaddr::Protocol>();
+            let elem = iter::empty::<$crate::types::multiaddr::Protocol>();
             $(
                 let elem = {
-                    let cmp = $crate::multiaddr::Protocol::$comp $(( $param.into() ))*;
+                    let cmp = $crate::types::multiaddr::Protocol::$comp $(( $param.into() ))*;
                     elem.chain(iter::once(cmp))
                 };
             )+
-            elem.collect::<$crate::multiaddr::Multiaddr>()
+            elem.collect::<$crate::types::multiaddr::Multiaddr>()
         }
     }
 }

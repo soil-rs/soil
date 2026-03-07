@@ -67,12 +67,12 @@ pub use self::{
 	validator::{DiscardAll, MessageIntent, ValidationResult, Validator, ValidatorContext},
 };
 
-use soil_network::{types::ProtocolName, NetworkBlock, NetworkEventStream, NetworkPeers};
-use soil_network_sync::SyncEventStream;
-use soil_network_types::{
+use soil_network::types::{
 	multiaddr::{Multiaddr, Protocol},
 	PeerId,
 };
+use soil_network::{types::ProtocolName, NetworkBlock, NetworkEventStream, NetworkPeers};
+use soil_network_sync::SyncEventStream;
 use std::iter;
 use subsoil::runtime::traits::{Block as BlockT, NumberFor};
 

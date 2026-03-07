@@ -332,10 +332,10 @@ mod tests {
 	use soil_client::client_api::Backend as _;
 	use soil_client::consensus::BlockOrigin;
 	use soil_client::transaction_pool::{InPoolTransaction, TransactionPool};
+	use soil_network::types::PeerId;
 	use soil_network::{
 		config::MultiaddrWithPeerId, types::ProtocolName, Multiaddr, ObservedRole, ReputationChange,
 	};
-	use soil_network_types::PeerId;
 	use std::{collections::HashSet, sync::Arc};
 	use subsoil::runtime::traits::Block as BlockT;
 	use substrate_test_runtime_client::{

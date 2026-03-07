@@ -36,7 +36,7 @@ use futures::{channel::mpsc, future, stream::Fuse, FutureExt, Stream, StreamExt}
 use codec::{Decode, Encode};
 use ip_network::IpNetwork;
 use linked_hash_set::LinkedHashSet;
-use soil_network_types::kad::{Key, PeerRecord, Record};
+use soil_network::types::kad::{Key, PeerRecord, Record};
 
 use log::{debug, error, info, trace};
 use prometheus_endpoint::{register, Counter, CounterVec, Gauge, Opts, U64};
@@ -48,11 +48,11 @@ use soil_authority_discovery::{
 	AuthorityDiscoveryApi, AuthorityId, AuthorityPair, AuthoritySignature,
 };
 use soil_client::blockchain::HeaderBackend;
+use soil_network::types::{multihash::Code, PeerId};
 use soil_network::{
 	config::DEFAULT_KADEMLIA_REPLICATION_FACTOR, event::DhtEvent, multiaddr, KademliaKey,
 	Multiaddr, NetworkDHTProvider, NetworkSigner, NetworkStateInfo,
 };
-use soil_network_types::{multihash::Code, PeerId};
 use subsoil::api::{ApiError, ProvideRuntimeApi};
 use subsoil::core::{
 	crypto::{key_types, ByteArray, Pair},

@@ -34,14 +34,14 @@ use futures::{
 	task::LocalSpawn,
 };
 use soil_client::client_api::HeaderBackend;
-use soil_network::{
-	service::signature::{Keypair, SigningError},
-	PublicKey, Signature,
-};
-use soil_network_types::{
+use soil_network::types::{
 	kad::Key as KademliaKey,
 	multiaddr::{Multiaddr, Protocol},
 	PeerId,
+};
+use soil_network::{
+	service::signature::{Keypair, SigningError},
+	PublicKey, Signature,
 };
 use subsoil::api::{ApiRef, ProvideRuntimeApi};
 use subsoil::keystore::{testing::MemoryKeystore, Keystore};
@@ -133,16 +133,16 @@ pub enum TestNetworkEvent {
 }
 
 pub struct TestNetwork {
-	peer_id: soil_network_types::PeerId,
+	peer_id: soil_network::types::PeerId,
 	identity: Keypair,
 	external_addresses: Vec<Multiaddr>,
 	// Whenever functions on `TestNetwork` are called, the function arguments are added to the
 	// vectors below.
 	pub put_value_call: Arc<Mutex<Vec<(KademliaKey, Vec<u8>)>>>,
-	pub put_value_to_call: Arc<Mutex<Vec<(Record, HashSet<soil_network_types::PeerId>, bool)>>>,
+	pub put_value_to_call: Arc<Mutex<Vec<(Record, HashSet<soil_network::types::PeerId>, bool)>>>,
 	pub get_value_call: Arc<Mutex<Vec<KademliaKey>>>,
 	pub store_value_call: Arc<
-		Mutex<Vec<(KademliaKey, Vec<u8>, Option<soil_network_types::PeerId>, Option<Instant>)>>,
+		Mutex<Vec<(KademliaKey, Vec<u8>, Option<soil_network::types::PeerId>, Option<Instant>)>>,
 	>,
 
 	event_sender: mpsc::UnboundedSender<TestNetworkEvent>,
@@ -183,7 +183,7 @@ impl NetworkSigner for TestNetwork {
 
 	fn verify(
 		&self,
-		peer_id: soil_network_types::PeerId,
+		peer_id: soil_network::types::PeerId,
 		public_key: &Vec<u8>,
 		signature: &Vec<u8>,
 		message: &Vec<u8>,
@@ -210,7 +210,7 @@ impl NetworkDHTProvider for TestNetwork {
 	fn put_record_to(
 		&self,
 		record: Record,
-		peers: HashSet<soil_network_types::PeerId>,
+		peers: HashSet<soil_network::types::PeerId>,
 		update_local_storage: bool,
 	) {
 		self.put_value_to_call.lock().unwrap().push((
@@ -258,7 +258,7 @@ impl NetworkDHTProvider for TestNetwork {
 }
 
 impl NetworkStateInfo for TestNetwork {
-	fn local_peer_id(&self) -> soil_network_types::PeerId {
+	fn local_peer_id(&self) -> soil_network::types::PeerId {
 		self.peer_id.into()
 	}
 
@@ -285,7 +285,7 @@ impl<'a> NetworkSigner for TestSigner<'a> {
 
 	fn verify(
 		&self,
-		_: soil_network_types::PeerId,
+		_: soil_network::types::PeerId,
 		_: &Vec<u8>,
 		_: &Vec<u8>,
 		_: &Vec<u8>,

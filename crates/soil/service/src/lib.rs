@@ -47,12 +47,12 @@ use soil_client::client_api::{
 };
 use soil_client::consensus::SyncOracle;
 use soil_client::utils::mpsc::TracingUnboundedReceiver;
+use soil_network::types::PeerId;
 use soil_network::{
 	config::MultiaddrWithPeerId, service::traits::NetworkService, NetworkBackend, NetworkBlock,
 	NetworkPeers, NetworkStateInfo,
 };
 use soil_network_sync::SyncingService;
-use soil_network_types::PeerId;
 use soil_rpc_server::Server;
 use subsoil::runtime::traits::{Block as BlockT, Header as HeaderT};
 

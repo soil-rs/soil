@@ -41,6 +41,7 @@ use prometheus_endpoint::{
 	exponential_buckets, register, Counter, Gauge, Histogram, HistogramOpts, PrometheusError,
 	Registry, U64,
 };
+use soil_network::types::PeerId;
 use soil_network::{
 	config::{NonReservedPeerMode, SetConfig},
 	error, multiaddr,
@@ -54,7 +55,6 @@ use soil_network::{
 	NetworkBackend, NetworkEventStream, NetworkPeers,
 };
 use soil_network_sync::{SyncEvent, SyncEventStream};
-use soil_network_types::PeerId;
 use soil_statement_store::{
 	FilterDecision, Hash, Statement, StatementSource, StatementStore, SubmitResult,
 };

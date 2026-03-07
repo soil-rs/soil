@@ -35,7 +35,7 @@ pub enum Error {
 	VerifyingDhtPayload,
 
 	#[error("Failed to hash the authority id to be used as a dht key.")]
-	HashingAuthorityId(#[from] soil_network_types::multihash::Error),
+	HashingAuthorityId(#[from] soil_network::types::multihash::Error),
 
 	#[error("Failed calling into the Substrate runtime: {0}")]
 	CallingRuntime(#[from] soil_client::blockchain::Error),

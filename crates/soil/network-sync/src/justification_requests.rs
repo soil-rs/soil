@@ -30,7 +30,7 @@ use prometheus_endpoint::{
 	prometheus::core::GenericGauge, register, GaugeVec, Opts, PrometheusError, Registry, U64,
 };
 use soil_client::blockchain::Error as ClientError;
-use soil_network_types::PeerId;
+use soil_network::types::PeerId;
 use std::{
 	collections::{HashMap, HashSet, VecDeque},
 	time::{Duration, Instant},

@@ -24,7 +24,7 @@ use crate::types::ProtocolName;
 use bytes::Bytes;
 
 use crate::common::role::ObservedRole;
-use soil_network_types::{
+use crate::types::{
 	kad::{Key, PeerRecord},
 	multiaddr::Multiaddr,
 	PeerId,

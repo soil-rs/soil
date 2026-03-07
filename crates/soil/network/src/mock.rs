@@ -24,7 +24,7 @@ use crate::{
 };
 
 use crate::common::role::ObservedRole;
-use soil_network_types::PeerId;
+use crate::types::PeerId;
 
 use std::{collections::HashSet, sync::Arc};
 

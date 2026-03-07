@@ -26,8 +26,8 @@ use futures::{
 };
 
 use soil_authority_discovery::AuthorityId;
+use soil_network::types::PeerId;
 use soil_network::Multiaddr;
-use soil_network_types::PeerId;
 
 /// Service to interact with the [`crate::Worker`].
 #[derive(Clone)]
@@ -55,7 +55,7 @@ impl Service {
 	/// [`crate::Worker`] failed.
 	///
 	/// Note: [`Multiaddr`]s returned always include a [`PeerId`] via a
-	/// [`soil_network_types::multiaddr::Protocol::P2p`] component. Equality of
+	/// [`soil_network::types::multiaddr::Protocol::P2p`] component. Equality of
 	/// [`PeerId`]s across [`Multiaddr`]s returned by a single call is not
 	/// enforced today, given that there are still authorities out there
 	/// publishing the addresses of their sentry nodes on the DHT. In the future

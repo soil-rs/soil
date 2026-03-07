@@ -18,8 +18,8 @@
 
 //! Logic for keeping track of BEEFY peers.
 
+use soil_network::types::PeerId;
 use soil_network::ReputationChange;
-use soil_network_types::PeerId;
 use std::collections::{HashMap, VecDeque};
 use subsoil::runtime::traits::{Block, NumberFor, Zero};
 

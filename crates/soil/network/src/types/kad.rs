@@ -16,7 +16,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-use crate::{multihash::Multihash, PeerId};
+use super::{multihash::Multihash, PeerId};
 use bytes::Bytes;
 use libp2p_kad::RecordKey as Libp2pKey;
 use litep2p::protocol::libp2p::kademlia::{Record as Litep2pRecord, RecordKey as Litep2pKey};

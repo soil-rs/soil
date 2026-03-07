@@ -35,7 +35,6 @@ soil-network = { workspace = true, default-features = true}
 soil-network-light = { workspace = true, default-features = true}
 soil-network-sync = { workspace = true, default-features = true}
 soil-network-transactions = { workspace = true, default-features = true}
-soil-network-types = { workspace = true, default-features = true}
 sc-rpc = { workspace = true, default-features = true}
 soil-rpc-server = { workspace = true, default-features = true}
 soil-rpc-spec-v2 = { workspace = true, default-features = true}

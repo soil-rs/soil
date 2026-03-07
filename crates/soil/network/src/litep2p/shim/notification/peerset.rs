@@ -48,10 +48,10 @@ use futures::{channel::oneshot, future::BoxFuture, stream::FuturesUnordered, Str
 use futures_timer::Delay;
 use litep2p::protocol::notification::NotificationError;
 
+use crate::types::PeerId;
 use soil_client::utils::mpsc::{
 	tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender,
 };
-use soil_network_types::PeerId;
 
 use std::{
 	collections::{HashMap, HashSet},

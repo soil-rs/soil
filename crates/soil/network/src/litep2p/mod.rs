@@ -47,6 +47,7 @@ use crate::{
 	NetworkStatus, NotificationService, ProtocolName,
 };
 
+use crate::types::kad::{Key as RecordKey, PeerRecord, Record as P2PRecord};
 use codec::Encode;
 use futures::StreamExt;
 use litep2p::{
@@ -72,12 +73,11 @@ use litep2p::{
 	Litep2p, Litep2pEvent, ProtocolName as Litep2pProtocolName,
 };
 use prometheus_endpoint::Registry;
-use soil_network_types::kad::{Key as RecordKey, PeerRecord, Record as P2PRecord};
 
 use crate::common::{role::Roles, ExHashT};
+use crate::types::PeerId;
 use soil_client::client_api::BlockBackend;
 use soil_client::utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver};
-use soil_network_types::PeerId;
 use subsoil::runtime::traits::Block as BlockT;
 
 use std::{
@@ -283,7 +283,7 @@ impl Litep2pNetworkBackend {
 			.listen_addresses
 			.iter()
 			.filter_map(|address| {
-				use soil_network_types::multiaddr::Protocol;
+				use crate::types::multiaddr::Protocol;
 
 				let mut iter = address.iter();
 
@@ -483,7 +483,7 @@ impl<B: BlockT + 'static, H: ExHashT> NetworkBackend<B, H> for Litep2pNetworkBac
 		// collect known addresses
 		let known_addresses: HashMap<litep2p::PeerId, Vec<Multiaddr>> =
 			known_addresses.into_iter().fold(HashMap::new(), |mut acc, (peer, address)| {
-				use soil_network_types::multiaddr::Protocol;
+				use crate::types::multiaddr::Protocol;
 
 				let address = match address.iter().last() {
 					Some(Protocol::Ws(_) | Protocol::Wss(_) | Protocol::Tcp(_)) => {
@@ -596,7 +596,7 @@ impl<B: BlockT + 'static, H: ExHashT> NetworkBackend<B, H> for Litep2pNetworkBac
 	}
 
 	fn peer_store(
-		bootnodes: Vec<soil_network_types::PeerId>,
+		bootnodes: Vec<crate::types::PeerId>,
 		metrics_registry: Option<Registry>,
 	) -> Self::PeerStore {
 		Peerstore::new(bootnodes, metrics_registry)
@@ -854,13 +854,13 @@ impl<B: BlockT + 'static, H: ExHashT> NetworkBackend<B, H> for Litep2pNetworkBac
 							continue
 						}
 
-						let peer_id: soil_network_types::PeerId = record.peer.into();
+						let peer_id: crate::types::PeerId = record.peer.into();
 						let record = PeerRecord {
 							record: P2PRecord {
 								key: record.record.key.to_vec().into(),
 								value: record.record.value,
 								publisher: record.record.publisher.map(|peer_id| {
-									let peer_id: soil_network_types::PeerId = peer_id.into();
+									let peer_id: crate::types::PeerId = peer_id.into();
 									peer_id.into()
 								}),
 								expires: record.record.expires,

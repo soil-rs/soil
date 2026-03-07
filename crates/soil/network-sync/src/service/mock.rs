@@ -20,13 +20,13 @@ use futures::channel::oneshot;
 
 use soil_consensus::{BlockImportError, BlockImportStatus};
 use soil_network::common::role::ObservedRole;
+use soil_network::types::{multiaddr::Multiaddr, PeerId};
 use soil_network::{
 	config::MultiaddrWithPeerId,
 	request_responses::{IfDisconnected, RequestFailure},
 	types::ProtocolName,
 	NetworkPeers, NetworkRequest, NetworkSyncForkRequest, ReputationChange,
 };
-use soil_network_types::{multiaddr::Multiaddr, PeerId};
 use subsoil::runtime::traits::{Block as BlockT, NumberFor};
 
 use std::collections::HashSet;
@@ -108,7 +108,7 @@ mockall::mock! {
 		) -> Result<(), String>;
 		fn sync_num_connected(&self) -> usize;
 		fn peer_role(&self, peer_id: PeerId, handshake: Vec<u8>) -> Option<ObservedRole>;
-		async fn reserved_peers(&self) -> Result<Vec<soil_network_types::PeerId>, ()>;
+		async fn reserved_peers(&self) -> Result<Vec<soil_network::types::PeerId>, ()>;
 	}
 
 	#[async_trait::async_trait]

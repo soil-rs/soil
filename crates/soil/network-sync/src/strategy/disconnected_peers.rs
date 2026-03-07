@@ -18,8 +18,8 @@
 
 use crate::types::BadPeer;
 use schnellru::{ByLength, LruMap};
+use soil_network::types::PeerId;
 use soil_network::ReputationChange as Rep;
-use soil_network_types::PeerId;
 
 const LOG_TARGET: &str = "sync::disconnected_peers";
 

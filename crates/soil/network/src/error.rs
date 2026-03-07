@@ -20,7 +20,7 @@
 
 use crate::{config::TransportConfig, types::ProtocolName};
 
-use soil_network_types::{multiaddr::Multiaddr, PeerId};
+use crate::types::{multiaddr::Multiaddr, PeerId};
 
 use std::fmt;
 

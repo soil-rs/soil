@@ -27,6 +27,7 @@ use crate::{
 	MAX_RESPONSE_SIZE,
 };
 
+use crate::types::PeerId;
 use futures::StreamExt;
 use litep2p::types::cid::{Cid, Error as CidError, Version as CidVersion};
 use log::{debug, error, trace};
@@ -36,7 +37,6 @@ use schema::bitswap::{
 	Message as BitswapMessage,
 };
 use soil_client::client_api::BlockBackend;
-use soil_network_types::PeerId;
 use std::{io, sync::Arc, time::Duration};
 use subsoil::runtime::traits::Block as BlockT;
 use unsigned_varint::encode as varint_encode;

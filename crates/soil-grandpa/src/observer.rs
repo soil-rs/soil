@@ -412,7 +412,7 @@ mod tests {
 	use assert_matches::assert_matches;
 	use soil_client::blockchain::HeaderBackend as _;
 	use soil_client::utils::mpsc::tracing_unbounded;
-	use soil_network_types::PeerId;
+	use soil_network::types::PeerId;
 	use substrate_test_runtime_client::{TestClientBuilder, TestClientBuilderExt};
 
 	use futures::executor;

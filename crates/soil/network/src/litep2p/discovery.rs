@@ -26,6 +26,7 @@ use crate::{
 	peer_store::PeerStoreProvider,
 };
 
+use crate::types::kad::Key as KademliaKey;
 use array_bytes::bytes2hex;
 use futures::{FutureExt, Stream};
 use futures_timer::Delay;
@@ -48,7 +49,6 @@ use litep2p::{
 };
 use parking_lot::RwLock;
 use schnellru::{ByLength, LruMap};
-use soil_network_types::kad::Key as KademliaKey;
 
 use std::{
 	cmp,
@@ -430,7 +430,7 @@ impl Discovery {
 	pub async fn put_value_to_peers(
 		&mut self,
 		record: Record,
-		peers: Vec<soil_network_types::PeerId>,
+		peers: Vec<crate::types::PeerId>,
 		update_local_storage: bool,
 	) -> QueryId {
 		self.kademlia_handle
@@ -450,7 +450,7 @@ impl Discovery {
 		&mut self,
 		key: KademliaKey,
 		value: Vec<u8>,
-		publisher: Option<soil_network_types::PeerId>,
+		publisher: Option<crate::types::PeerId>,
 		expires: Option<Instant>,
 	) {
 		log::debug!(

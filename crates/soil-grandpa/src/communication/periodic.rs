@@ -30,7 +30,7 @@ use std::{
 use soil_client::utils::mpsc::{
 	tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender,
 };
-use soil_network_types::PeerId;
+use soil_network::types::PeerId;
 use subsoil::runtime::traits::{Block as BlockT, NumberFor};
 
 use super::gossip::{GossipMessage, NeighborPacket};
@@ -46,7 +46,7 @@ impl<B: BlockT> NeighborPacketSender<B> {
 	/// Send a neighbor packet for the background worker to gossip to peers.
 	pub fn send(
 		&self,
-		who: Vec<soil_network_types::PeerId>,
+		who: Vec<soil_network::types::PeerId>,
 		neighbor_packet: NeighborPacket<NumberFor<B>>,
 	) {
 		if let Err(err) = self.0.unbounded_send((who, neighbor_packet)) {

@@ -26,8 +26,8 @@ pub use incoming_requests_handler::BeefyJustifsRequestHandler;
 use std::time::Duration;
 
 use codec::{Decode, Encode, Error as CodecError};
+use soil_network::types::PeerId;
 use soil_network::NetworkBackend;
-use soil_network_types::PeerId;
 use subsoil::runtime::traits::{Block, NumberFor};
 
 use crate::communication::{beefy_protocol_name::justifications_protocol_name, peers::PeerReport};

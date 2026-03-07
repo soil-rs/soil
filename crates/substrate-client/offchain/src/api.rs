@@ -22,8 +22,8 @@ use crate::NetworkProvider;
 use codec::{Decode, Encode};
 use futures::Future;
 pub use http::SharedClient;
+use soil_network::types::PeerId;
 use soil_network::Multiaddr;
-use soil_network_types::PeerId;
 use subsoil::core::{
 	offchain::{
 		self, HttpError, HttpRequestId, HttpRequestStatus, OpaqueMultiaddr, OpaqueNetworkState,
