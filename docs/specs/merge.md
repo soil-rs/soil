@@ -216,9 +216,13 @@ mixnet protocol types remain in `subsoil::mixnet`.
 | soil-rpc-spec-v2 | SCC 1 with service, logically RPC |
 | soil-mmr-rpc, soil-sync-state-rpc | RPC endpoints |
 | sc-rpc | Wraps soil-rpc |
-| substrate-frame-rpc-system, substrate-frame-rpc-support | RPC helpers |
 | substrate-state-trie-migration-rpc | RPC endpoint |
 | substrate-rpc-client | RPC client |
+
+`substrate-frame-rpc-system` and `substrate-frame-rpc-support` stay separate.
+They have direct non-dev dependencies on `topsoil-system-rpc-runtime-api` and
+`topsoil-support` respectively, so folding them into `soil-rpc` would pull
+topsoil crate dependencies into the merged RPC boundary.
 
 ### `soil-service` — Node assembly (~10 crates → 1)
 
@@ -269,7 +273,7 @@ Re-exports everything. Consumers write `soil = { features = ["client", "aura", "
 | **soil-consensus** | sc-consensus, sc-consensus-slots, soil-consensus-epochs | 3 | ✅ |
 | **soil-{aura,babe,beefy,grandpa,pow}** | selectable consensus engines; babe/beefy/grandpa also absorb their RPC crates | 8 → 5 | ✅ |
 | **soil-network** | p2p, common/types, light, sync, gossip, transactions, statements, mixnet service | ~10 | ✅ |
-| **soil-rpc** | rpc server, spec, endpoints, rpc client/helpers | ~11 | Pending |
+| **soil-rpc** | rpc server, spec, endpoints, rpc client (excluding frame-rpc helper crates tied to topsoil) | ~9 | Pending |
 | **soil-service** | service, chain-spec, cli, infra | ~9 | Pending |
 | **soil-txpool** | sc-transaction-pool | 1 | Pending |
 | **misc standalone** | mmr, staking, fork-tree, test crates | ~12 | — |
