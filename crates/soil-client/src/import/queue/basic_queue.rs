@@ -506,7 +506,7 @@ impl Future for Yield {
 mod tests {
 	use super::*;
 	use crate::{
-		block_import::{
+		import::block_import::{
 			BlockCheckParams, BlockImport, BlockImportParams, ImportResult, JustificationImport,
 		},
 		import::queue::Verifier,

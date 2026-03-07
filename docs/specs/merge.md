@@ -158,9 +158,9 @@ stack. They are handled in the next sections, not deferred back into
 
 ### `soil-consensus` — Shared consensus support (3 crates → 1) ✅ COMPLETE
 
-Shared std-only support used by multiple consensus engines and by service/network
-integration. This reuses the `soil-consensus` name after the former
-client-traits crate was absorbed into `soil-client`.
+Shared std-only support used by multiple consensus engines. This reuses the
+`soil-consensus` name after the former client-traits crate was absorbed into
+`soil-client`.
 
 | Absorb | Reason |
 |---|---|
@@ -171,6 +171,11 @@ client-traits crate was absorbed into `soil-client`.
 This crate is intentionally slightly "fatter" than the old split. It avoids a
 feature matrix and keeps the dependency graph simpler. None of these crates pull
 in libp2p-class dependencies.
+
+The client import pipeline no longer lives here. Block import / import queue
+plumbing moved to `soil_client::import`, so `soil-consensus` stays on the
+consensus-engine side of the dependency graph instead of being pulled in by
+`soil-network` for sync coordination.
 
 ### Selectable consensus crates (8 crates → 5) ✅ COMPLETE
 
