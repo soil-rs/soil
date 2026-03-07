@@ -31,6 +31,7 @@ pub mod npos_elections;
 pub mod panic_handler;
 pub mod runtime;
 pub mod runtime_interface;
+pub mod session;
 pub mod staking;
 pub mod state_machine;
 #[allow(clippy::module_inception)]
