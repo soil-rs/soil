@@ -95,7 +95,7 @@ use soil_consensus::{
 	},
 	import_queue::{BasicQueue, BoxJustificationImport, DefaultImportQueue, Verifier},
 };
-use sc_consensus_slots::{
+use soil_consensus::slots::{
 	check_equivocation, BackoffAuthoringBlocksStrategy, CheckedHeader, InherentDataProviderExt,
 	SlotInfo, StorageChanges,
 };
@@ -130,7 +130,7 @@ use subsoil::runtime::{
 	DigestItem,
 };
 
-pub use sc_consensus_slots::SlotProportion;
+pub use soil_consensus::slots::SlotProportion;
 pub use soil_client::consensus::SyncOracle;
 pub use subsoil::consensus::babe::{
 	digests::{
@@ -524,10 +524,10 @@ where
 
 	info!(target: LOG_TARGET, "👶 Starting BABE Authorship worker");
 
-	let slot_worker = sc_consensus_slots::start_slot_worker(
+	let slot_worker = soil_consensus::slots::start_slot_worker(
 		babe_link.config.slot_duration(),
 		select_chain,
-		sc_consensus_slots::SimpleSlotWorkerToSlotWorker(worker),
+		soil_consensus::slots::SimpleSlotWorkerToSlotWorker(worker),
 		sync_oracle,
 		create_inherent_data_providers,
 	);
@@ -711,7 +711,7 @@ struct BabeSlotWorker<B: BlockT, C, E, I, SO, L, BS> {
 }
 
 #[async_trait::async_trait]
-impl<B, C, E, I, Error, SO, L, BS> sc_consensus_slots::SimpleSlotWorker<B>
+impl<B, C, E, I, Error, SO, L, BS> soil_consensus::slots::SimpleSlotWorker<B>
 	for BabeSlotWorker<B, C, E, I, SO, L, BS>
 where
 	B: BlockT,
@@ -886,12 +886,12 @@ where
 	fn proposing_remaining_duration(&self, slot_info: &SlotInfo<B>) -> Duration {
 		let parent_slot = find_pre_digest::<B>(&slot_info.chain_head).ok().map(|d| d.slot());
 
-		sc_consensus_slots::proposing_remaining_duration(
+		soil_consensus::slots::proposing_remaining_duration(
 			parent_slot,
 			slot_info,
 			&self.block_proposal_slot_portion,
 			self.max_block_proposal_slot_portion.as_ref(),
-			sc_consensus_slots::SlotLenienceType::Exponential,
+			soil_consensus::slots::SlotLenienceType::Exponential,
 			self.logging_target(),
 		)
 	}

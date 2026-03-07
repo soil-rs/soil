@@ -37,7 +37,7 @@ use subsoil::runtime::{
 	DigestItem,
 };
 
-pub use sc_consensus_slots::check_equivocation;
+pub use soil_consensus::slots::check_equivocation;
 
 use super::{
 	AuraApi, AuthorityId, CompatibilityMode, CompatibleDigestItem, SlotDuration, LOG_TARGET,

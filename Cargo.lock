@@ -8072,7 +8072,6 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "parking_lot 0.12.5",
- "sc-consensus-slots",
  "soil-client",
  "soil-consensus",
  "soil-network",
@@ -8099,7 +8098,6 @@ dependencies = [
  "num-traits",
  "parity-scale-codec",
  "parking_lot 0.12.5",
- "sc-consensus-slots",
  "soil-client",
  "soil-consensus",
  "soil-consensus-epochs",
@@ -8191,22 +8189,6 @@ dependencies = [
  "subsoil",
  "substrate-prometheus-endpoint",
  "thiserror 1.0.69",
-]
-
-[[package]]
-name = "sc-consensus-slots"
-version = "0.33.0"
-dependencies = [
- "async-trait",
- "futures",
- "futures-timer",
- "log",
- "parity-scale-codec",
- "soil-client",
- "soil-consensus",
- "soil-telemetry",
- "subsoil",
- "substrate-test-runtime-client",
 ]
 
 [[package]]
@@ -9284,15 +9266,19 @@ version = "0.33.0"
 dependencies = [
  "async-trait",
  "futures",
+ "futures-timer",
  "log",
  "mockall",
+ "parity-scale-codec",
  "parking_lot 0.12.5",
  "serde",
  "soil-client",
  "soil-network-types",
+ "soil-telemetry",
  "soil-test-primitives",
  "subsoil",
  "substrate-prometheus-endpoint",
+ "substrate-test-runtime-client",
  "thiserror 1.0.69",
 ]
 
@@ -10208,7 +10194,6 @@ dependencies = [
  "sc-consensus-beefy",
  "sc-consensus-grandpa",
  "sc-consensus-pow",
- "sc-consensus-slots",
  "sc-mixnet",
  "sc-offchain",
  "sc-rpc",

@@ -23,7 +23,7 @@ use crate::{
 	AUTHORING_SCORE_VRF_CONTEXT, LOG_TARGET,
 };
 use log::{debug, trace};
-use sc_consensus_slots::CheckedHeader;
+use soil_consensus::slots::CheckedHeader;
 use soil_consensus_epochs::Epoch as EpochT;
 use subsoil::consensus::babe::{
 	digests::{

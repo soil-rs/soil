@@ -21,7 +21,7 @@
 use super::*;
 use authorship::claim_slot;
 use soil_consensus::{BoxBlockImport, BoxJustificationImport};
-use sc_consensus_slots::BackoffAuthoringOnFinalizedHeadLagging;
+use soil_consensus::slots::BackoffAuthoringOnFinalizedHeadLagging;
 use soil_client::block_builder::{BlockBuilder, BlockBuilderBuilder};
 use soil_client::client_api::{BlockchainEvents, Finalizer};
 use soil_client::consensus::{NoNetwork as DummyOracle, Proposal, ProposeArgs};

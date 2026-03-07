@@ -16,26 +16,10 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-//! Collection of common consensus specific implementations
+use std::env;
 
-pub mod block_import;
-pub mod import_queue;
-pub mod metrics;
-pub mod slots;
-
-pub use block_import::{
-	BlockCheckParams, BlockImport, BlockImportParams, ForkChoiceStrategy, ImportResult,
-	ImportedAux, ImportedState, JustificationImport, JustificationSyncLink, StateAction,
-	StorageChanges,
-};
-pub use import_queue::{
-	import_single_block, BasicQueue, BlockImportError, BlockImportStatus, BoxBlockImport,
-	BoxJustificationImport, DefaultImportQueue, ImportQueue, IncomingBlock,
-	JustificationImportResult, Link, Verifier,
-};
-
-mod longest_chain;
-
-pub mod shared_data;
-
-pub use longest_chain::LongestChain;
+fn main() {
+	if let Ok(profile) = env::var("PROFILE") {
+		println!("cargo:rustc-cfg=build_profile=\"{}\"", profile);
+	}
+}

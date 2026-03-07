@@ -234,7 +234,6 @@ members = [
 	"crates/substrate-client/consensus/beefy",
 	"crates/substrate-client/consensus/grandpa",
 	"crates/substrate-client/consensus/pow",
-	"crates/substrate-client/consensus/slots",
 	"crates/substrate-client/mixnet",
 	"crates/substrate-client/offchain",
 	"crates/substrate-client/rpc",
@@ -441,7 +440,6 @@ sc-consensus-grandpa = { path = "crates/substrate-client/consensus/grandpa", def
 soil-consensus-grandpa-rpc = { path = "crates/soil/consensus-grandpa-rpc", default-features = false }
 soil-manual-seal = { path = "crates/soil-manual-seal", default-features = false }
 sc-consensus-pow = { path = "crates/substrate-client/consensus/pow", default-features = false }
-sc-consensus-slots = { path = "crates/substrate-client/consensus/slots", default-features = false }
 soil-informant = { path = "crates/soil/informant", default-features = false }
 sc-mixnet = { path = "crates/substrate-client/mixnet", default-features = false }
 soil-network = { path = "crates/soil/network", default-features = false }
