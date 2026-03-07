@@ -373,11 +373,11 @@ pub async fn run_delayed_finalize<B, CB, C, S>(
 mod tests {
 	use super::*;
 	use assert_matches::assert_matches;
-	use soil_basic_authorship::ProposerFactory;
 	use soil_client::import::ImportedAux;
 	use soil_client::transaction_pool::{
 		MaintainedTransactionPool, TransactionPool, TransactionSource,
 	};
+	use soil_service::basic_authorship::ProposerFactory;
 	use soil_txpool::{BasicPool, FullChainApi, Options, RevalidationType};
 	use subsoil::api::StorageProof;
 	use subsoil::inherents::InherentData;

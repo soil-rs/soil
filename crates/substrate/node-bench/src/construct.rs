@@ -120,7 +120,7 @@ impl core::Benchmark for ConstructionBenchmark {
 			std::thread::park_timeout(std::time::Duration::from_secs(3));
 		}
 
-		let mut proposer_factory = soil_basic_authorship::ProposerFactory::new(
+		let mut proposer_factory = soil_service::basic_authorship::ProposerFactory::new(
 			context.spawn_handle.clone(),
 			context.client.clone(),
 			self.transactions.clone().into(),

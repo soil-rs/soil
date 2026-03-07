@@ -6088,8 +6088,8 @@ dependencies = [
  "rand 0.8.5",
  "serde",
  "serde_json",
- "soil-basic-authorship",
  "soil-client",
+ "soil-service",
  "soil-txpool",
  "subsoil",
  "tempfile",
@@ -8921,23 +8921,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "soil-basic-authorship"
-version = "0.34.0"
-dependencies = [
- "futures",
- "log",
- "parity-scale-codec",
- "parking_lot 0.12.5",
- "soil-client",
- "soil-proposer-metrics",
- "soil-telemetry",
- "soil-txpool",
- "subsoil",
- "substrate-prometheus-endpoint",
- "substrate-test-runtime-client",
-]
-
-[[package]]
 name = "soil-beefy"
 version = "13.0.0"
 dependencies = [
@@ -9181,9 +9164,9 @@ dependencies = [
  "serde",
  "soil-aura",
  "soil-babe",
- "soil-basic-authorship",
  "soil-client",
  "soil-consensus",
+ "soil-service",
  "soil-txpool",
  "subsoil",
  "substrate-prometheus-endpoint",
@@ -9323,14 +9306,6 @@ dependencies = [
  "subsoil",
  "substrate-prometheus-endpoint",
  "thiserror 1.0.69",
-]
-
-[[package]]
-name = "soil-proposer-metrics"
-version = "0.17.0"
-dependencies = [
- "log",
- "substrate-prometheus-endpoint",
 ]
 
 [[package]]
@@ -9849,7 +9824,6 @@ dependencies = [
  "soil-aura",
  "soil-authority-discovery",
  "soil-babe",
- "soil-basic-authorship",
  "soil-beefy",
  "soil-chain-spec",
  "soil-cli",
@@ -9862,7 +9836,6 @@ dependencies = [
  "soil-mmr-gadget",
  "soil-network",
  "soil-pow",
- "soil-proposer-metrics",
  "soil-rpc",
  "soil-service",
  "soil-service-test",

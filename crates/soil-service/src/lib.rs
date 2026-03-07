@@ -22,10 +22,12 @@
 #![warn(missing_docs)]
 #![recursion_limit = "1024"]
 
+pub mod basic_authorship;
 pub mod chain_ops;
 pub mod client;
 pub mod config;
 pub mod error;
+pub mod proposer_metrics;
 
 mod builder;
 mod metrics;

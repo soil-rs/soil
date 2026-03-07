@@ -20,6 +20,7 @@
 
 // FIXME #1021 move this into sp-consensus
 
+use crate::proposer_metrics::{EndProposingReason, MetricsLink as PrometheusMetrics};
 use codec::Encode;
 use futures::{
 	channel::oneshot,
@@ -34,7 +35,6 @@ use soil_client::blockchain::{
 };
 use soil_client::consensus::{Proposal, ProposeArgs};
 use soil_client::transaction_pool::{InPoolTransaction, TransactionPool, TxInvalidityReportMap};
-use soil_proposer_metrics::{EndProposingReason, MetricsLink as PrometheusMetrics};
 use soil_telemetry::{telemetry, TelemetryHandle, CONSENSUS_INFO};
 use std::{pin::Pin, sync::Arc, time};
 use subsoil::api::{ApiExt, CallApiAt, ProvideRuntimeApi};

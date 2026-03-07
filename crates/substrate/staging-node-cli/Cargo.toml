@@ -74,7 +74,6 @@ topsoil-asset-conversion-tx-payment = { workspace = true, default-features = tru
 topsoil-im-online = { workspace = true, default-features = true }
 topsoil-transaction-payment-rpc = { workspace = true, default-features = true }
 sc-authority-discovery = { workspace = true, default-features = true }
-soil-basic-authorship = { workspace = true, default-features = true }
 soil-chain-spec = { workspace = true, default-features = true }
 soil-cli = { workspace = true, default-features = true }
 soil-consensus = { workspace = true, default-features = true }
@@ -87,7 +86,6 @@ soil-pow = { workspace = true, default-features = true }
 soil-informant = { workspace = true, default-features = true }
 soil-network = { workspace = true, default-features = true }
 sc-offchain = { workspace = true, default-features = true }
-soil-proposer-metrics = { workspace = true, default-features = true }
 soil-service = { workspace = true, default-features = true }
 soil-sync-state-rpc = { workspace = true, default-features = true }
 soil-sysinfo = { workspace = true, default-features = true }

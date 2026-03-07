@@ -21,7 +21,7 @@
 //! # Example
 //!
 //! ```
-//! # use soil_basic_authorship::ProposerFactory;
+//! # use soil_service::basic_authorship::ProposerFactory;
 //! # use soil_client::consensus::{Environment, Proposer, ProposeArgs};
 //! # use subsoil::runtime::generic::BlockId;
 //! # use std::{sync::Arc, time::Duration};
@@ -73,5 +73,5 @@
 
 mod basic_authorship;
 
-pub use crate::basic_authorship::{Proposer, ProposerFactory, DEFAULT_BLOCK_SIZE_LIMIT};
+pub use self::basic_authorship::{Proposer, ProposerFactory, DEFAULT_BLOCK_SIZE_LIMIT};
 pub use soil_client::consensus::ProposeArgs;

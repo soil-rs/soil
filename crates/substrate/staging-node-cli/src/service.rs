@@ -602,7 +602,7 @@ pub fn new_full_base<N: NetworkBackend<Block, <Block as BlockT>::Hash>>(
 	(with_startup_data)(&block_import, &babe_link);
 
 	if let soil_service::config::Role::Authority { .. } = &role {
-		let proposer = soil_basic_authorship::ProposerFactory::new(
+		let proposer = soil_service::basic_authorship::ProposerFactory::new(
 			task_manager.spawn_handle(),
 			client.clone(),
 			transaction_pool.clone(),
@@ -985,7 +985,7 @@ mod tests {
 					ChainEvent::NewBestBlock { hash: parent_header.hash(), tree_route: None },
 				));
 
-				let mut proposer_factory = soil_basic_authorship::ProposerFactory::new(
+				let mut proposer_factory = soil_service::basic_authorship::ProposerFactory::new(
 					service.spawn_handle(),
 					service.client(),
 					service.transaction_pool(),

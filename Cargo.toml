@@ -17,7 +17,6 @@ members = [
 	"crates/soil-aura",
 	"crates/soil-beefy",
 	"crates/soil/authority-discovery",
-	"crates/soil/basic-authorship",
 	"crates/soil/chain-spec",
 	"crates/soil/chain-spec-derive",
 	"crates/soil/cli",
@@ -35,7 +34,6 @@ members = [
 	"crates/soil-pow",
 	"crates/soil/npos-elections/fuzzer",
 	"crates/soil/offchain",
-	"crates/soil/proposer-metrics",
 	"crates/soil-rpc",
 	"crates/soil-test",
 	"crates/soil/runtime-interface/test",
@@ -402,7 +400,6 @@ topsoil-whitelist = { path = "crates/topsoil/whitelist", default-features = fals
 prometheus-endpoint = { path = "crates/substrate/substrate-prometheus-endpoint", default-features = false, package = "substrate-prometheus-endpoint" }
 remote-externalities = { path = "crates/substrate/frame-remote-externalities", default-features = false, package = "frame-remote-externalities" }
 sc-authority-discovery = { path = "crates/substrate-client/authority-discovery", default-features = false }
-soil-basic-authorship = { path = "crates/soil/basic-authorship", default-features = false }
 soil-chain-spec = { path = "crates/soil/chain-spec", default-features = false }
 soil-chain-spec-derive = { path = "crates/soil/chain-spec-derive", default-features = false }
 soil-cli = { path = "crates/soil/cli", default-features = false }
@@ -418,7 +415,6 @@ soil-informant = { path = "crates/soil/informant", default-features = false }
 soil-network = { path = "crates/soil-network", default-features = false }
 soil-network-test = { path = "crates/soil/network-test" }
 sc-offchain = { path = "crates/substrate-client/offchain", default-features = false }
-soil-proposer-metrics = { path = "crates/soil/proposer-metrics", default-features = false }
 soil-test = { path = "crates/soil-test" }
 soil-runtime-test = { path = "crates/soil/runtime-test" }
 soil-runtime-utilities = { path = "crates/soil/runtime-utilities", default-features = true }
