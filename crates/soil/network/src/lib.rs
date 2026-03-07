@@ -266,6 +266,7 @@ pub mod protocol_controller;
 pub mod request_responses;
 pub mod service;
 pub mod sync;
+pub mod transactions;
 pub mod transport;
 pub mod types;
 pub mod utils;

@@ -65,7 +65,7 @@ service-side networking crates into the flattened `soil-network` layout. See
 - [x] Step 5: Merge `soil-network-light` into `soil_network::light`.
 - [x] Step 6: Merge `soil-network-sync` into `soil_network::sync`.
 - [x] Step 7: Merge `soil-network-gossip` into `soil_network::gossip`.
-- [ ] Step 8: Merge `soil-network-transactions` into `soil_network::transactions`.
+- [x] Step 8: Merge `soil-network-transactions` into `soil_network::transactions`.
 - [ ] Step 9: Merge `soil-network-statement` and `sc-statement-store` into
       `soil_network::{statement,statement_store}`.
 - [ ] Step 10: Merge `sc-mixnet` into `soil_network::mixnet`.
@@ -86,7 +86,7 @@ service-side networking crates into the flattened `soil-network` layout. See
 - Step 7:
   `cargo check -p soil-network -p soil-grandpa -p soil-beefy -p staging-node-cli`
 - Step 8:
-  `cargo check -p soil-network -p soil-network-transactions -p soil-service -p staging-node-cli`
+  `cargo check -p soil-network -p soil-service -p staging-node-cli`
 - Step 9:
   `cargo check -p soil-network -p sc-rpc -p staging-node-cli -p soil-network-test`
 - Step 10:

@@ -97,7 +97,7 @@ pub use soil_client::transaction_pool::{error::IntoPoolError, InPoolTransaction,
 pub use soil_consensus::ImportQueue;
 pub use soil_network::sync::WarpSyncConfig;
 #[doc(hidden)]
-pub use soil_network_transactions::config::{TransactionImport, TransactionImportFuture};
+pub use soil_network::transactions::config::{TransactionImport, TransactionImportFuture};
 #[doc(hidden)]
 pub use std::{ops::Deref, result::Result, sync::Arc};
 pub use task_manager::{
@@ -498,7 +498,7 @@ where
 		.collect()
 }
 
-impl<B, H, C, Pool, E> soil_network_transactions::config::TransactionPool<H, B>
+impl<B, H, C, Pool, E> soil_network::transactions::config::TransactionPool<H, B>
 	for TransactionPoolAdapter<C, Pool>
 where
 	C: HeaderBackend<B>

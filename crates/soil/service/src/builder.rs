@@ -475,7 +475,7 @@ pub struct SpawnTasksParams<'a, TBl: BlockT, TCl, TExPool, TRpc, Backend> {
 	pub system_rpc_tx: TracingUnboundedSender<sc_rpc::system::Request<TBl>>,
 	/// Controller for transactions handlers
 	pub tx_handler_controller:
-		soil_network_transactions::TransactionsHandlerController<<TBl as BlockT>::Hash>,
+		soil_network::transactions::TransactionsHandlerController<<TBl as BlockT>::Hash>,
 	/// Syncing service.
 	pub sync_service: Arc<SyncingService<TBl>>,
 	/// Telemetry instance for this node.
@@ -685,7 +685,7 @@ where
 /// Returns a future that forwards imported transactions to the transaction networking protocol.
 pub async fn propagate_transaction_notifications<Block, ExPool>(
 	transaction_pool: Arc<ExPool>,
-	tx_handler_controller: soil_network_transactions::TransactionsHandlerController<
+	tx_handler_controller: soil_network::transactions::TransactionsHandlerController<
 		<Block as BlockT>::Hash,
 	>,
 	telemetry: Option<TelemetryHandle>,
@@ -999,7 +999,7 @@ pub fn build_network<Block, Net, TxPool, IQ, Client>(
 	(
 		Arc<dyn soil_network::service::traits::NetworkService>,
 		TracingUnboundedSender<sc_rpc::system::Request<Block>>,
-		soil_network_transactions::TransactionsHandlerController<<Block as BlockT>::Hash>,
+		soil_network::transactions::TransactionsHandlerController<<Block as BlockT>::Hash>,
 		Arc<SyncingService<Block>>,
 	),
 	Error,
@@ -1165,7 +1165,7 @@ pub fn build_network_advanced<Block, Net, TxPool, IQ, Client>(
 	(
 		Arc<dyn soil_network::service::traits::NetworkService>,
 		TracingUnboundedSender<sc_rpc::system::Request<Block>>,
-		soil_network_transactions::TransactionsHandlerController<<Block as BlockT>::Hash>,
+		soil_network::transactions::TransactionsHandlerController<<Block as BlockT>::Hash>,
 		Arc<SyncingService<Block>>,
 	),
 	Error,
@@ -1226,7 +1226,7 @@ where
 
 	// Create transactions protocol and add it to the list of supported protocols of
 	let (transactions_handler_proto, transactions_config) =
-		soil_network_transactions::TransactionsHandlerPrototype::new::<_, Block, Net>(
+		soil_network::transactions::TransactionsHandlerPrototype::new::<_, Block, Net>(
 			protocol_id.clone(),
 			genesis_hash,
 			fork_id,

@@ -9442,20 +9442,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "soil-network-transactions"
-version = "0.33.0"
-dependencies = [
- "array-bytes 6.2.3",
- "futures",
- "log",
- "parity-scale-codec",
- "soil-client",
- "soil-network",
- "subsoil",
- "substrate-prometheus-endpoint",
-]
-
-[[package]]
 name = "soil-offchain"
 version = "26.0.0"
 dependencies = [
@@ -9618,7 +9604,6 @@ dependencies = [
  "soil-consensus",
  "soil-informant",
  "soil-network",
- "soil-network-transactions",
  "soil-rpc-server",
  "soil-rpc-spec-v2",
  "soil-session",
@@ -10022,7 +10007,6 @@ dependencies = [
  "soil-mmr-rpc",
  "soil-network",
  "soil-network-statement",
- "soil-network-transactions",
  "soil-pow",
  "soil-proposer-metrics",
  "soil-rpc",

@@ -26,7 +26,7 @@
 //! - Use [`TransactionsHandlerPrototype::build`] then [`TransactionsHandler::run`] to obtain a
 //! `Future` that processes transactions.
 
-use crate::config::*;
+use crate::transactions::config::*;
 
 use codec::{Decode, Encode};
 use futures::{prelude::*, stream::FuturesUnordered};
