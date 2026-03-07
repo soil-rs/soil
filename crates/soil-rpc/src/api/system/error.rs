@@ -16,55 +16,54 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-//! State RPC errors.
+//! System RPC module errors.
 
-use jsonrpsee::types::error::{ErrorObject, ErrorObjectOwned};
+use super::helpers::Health;
+use jsonrpsee::types::{
+	error::{ErrorCode, ErrorObject},
+	ErrorObjectOwned,
+};
 
-/// State RPC Result type.
+/// System RPC Result type.
 pub type Result<T> = std::result::Result<T, Error>;
 
-/// State RPC errors.
+/// System RPC errors.
 #[derive(Debug, thiserror::Error)]
 pub enum Error {
-	/// Client error.
-	#[error("Client error: {}", .0)]
-	Client(#[from] Box<dyn std::error::Error + Send + Sync>),
 	/// Provided block range couldn't be resolved to a list of blocks.
-	#[error("Cannot resolve a block range ['{:?}' ... '{:?}]. {}", .from, .to, .details)]
-	InvalidBlockRange {
-		/// Beginning of the block range.
-		from: String,
-		/// End of the block range.
-		to: String,
-		/// Details of the error message.
-		details: String,
-	},
-	/// Provided count exceeds maximum value.
-	#[error("count exceeds maximum value. value: {}, max: {}", .value, .max)]
-	InvalidCount {
-		/// Provided value
-		value: u32,
-		/// Maximum allowed value
-		max: u32,
-	},
+	#[error("Node is not fully functional: {}", .0)]
+	NotHealthy(Health),
+	/// Peer argument is malformatted.
+	#[error("{0}")]
+	MalformattedPeerArg(String),
 	/// Call to an unsafe RPC was denied.
 	#[error(transparent)]
-	UnsafeRpcCalled(#[from] crate::policy::UnsafeRpcError),
+	UnsafeRpcCalled(#[from] crate::api::policy::UnsafeRpcError),
+	/// Internal error.
+	#[error("{0}")]
+	Internal(String),
 }
 
-/// Base code for all state errors.
-const BASE_ERROR: i32 = crate::error::base::STATE;
+// Base code for all system errors.
+const BASE_ERROR: i32 = crate::api::error::base::SYSTEM;
+// Provided block range couldn't be resolved to a list of blocks.
+const NOT_HEALTHY_ERROR: i32 = BASE_ERROR + 1;
+// Peer argument is malformatted.
+const MALFORMATTED_PEER_ARG_ERROR: i32 = BASE_ERROR + 2;
 
 impl From<Error> for ErrorObjectOwned {
 	fn from(e: Error) -> ErrorObjectOwned {
 		match e {
-			Error::InvalidBlockRange { .. } => {
-				ErrorObject::owned(BASE_ERROR + 1, e.to_string(), None::<()>)
+			Error::NotHealthy(ref h) => {
+				ErrorObject::owned(NOT_HEALTHY_ERROR, e.to_string(), Some(h))
 			},
-			Error::InvalidCount { .. } => {
-				ErrorObject::owned(BASE_ERROR + 2, e.to_string(), None::<()>)
+			Error::MalformattedPeerArg(e) => {
+				ErrorObject::owned(MALFORMATTED_PEER_ARG_ERROR, e, None::<()>)
 			},
-			e => ErrorObject::owned(BASE_ERROR + 3, e.to_string(), None::<()>),
+			Error::UnsafeRpcCalled(e) => e.into(),
+			Error::Internal(e) => {
+				ErrorObjectOwned::owned(ErrorCode::InternalError.code(), e, None::<()>)
+			},
 		}
 	}
 }

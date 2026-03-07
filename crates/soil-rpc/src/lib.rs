@@ -19,9 +19,12 @@
 
 #![warn(missing_docs)]
 
+pub mod api;
 pub mod list;
 pub mod number;
 pub mod tracing;
+
+pub use api::{check_if_safe, DenyUnsafe, UnsafeRpcError};
 
 /// A util function to assert the result of serialization and deserialization is the same.
 #[cfg(test)]

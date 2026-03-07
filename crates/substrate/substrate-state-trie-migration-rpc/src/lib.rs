@@ -25,7 +25,7 @@ use jsonrpsee::{
 };
 use serde::{Deserialize, Serialize};
 use soil_client::client_api::TrieCacheContext;
-use soil_rpc_api::check_if_safe;
+use soil_rpc::check_if_safe;
 use std::sync::Arc;
 use subsoil::runtime::traits::Block as BlockT;
 

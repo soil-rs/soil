@@ -17,7 +17,7 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 //! Substrate child state API
-use crate::state::{Error, ReadProof};
+use crate::api::state::{Error, ReadProof};
 use jsonrpsee::proc_macros::rpc;
 use subsoil::core::storage::{PrefixedStorageKey, StorageData, StorageKey};
 

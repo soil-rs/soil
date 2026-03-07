@@ -27,7 +27,7 @@ ip_network = { workspace = true, optional = true}
 jsonrpsee = { features = ["server"], workspace = true, optional = true}
 log = { workspace = true, default-features = true, optional = true}
 prometheus-endpoint = { workspace = true, default-features = true, optional = true}
-soil-rpc-api = { workspace = true, optional = true}
+soil-rpc = { workspace = true, optional = true }
 serde = { workspace = true, optional = true}
 serde_json = { workspace = true, default-features = true, optional = true}
 tokio = { features = ["parking_lot"], workspace = true, default-features = true, optional = true}
@@ -50,7 +50,7 @@ std = [
 	"prometheus-endpoint",
 	"serde",
 	"serde_json",
-	"soil-rpc-api",
+	"soil-rpc",
 	"tokio",
 	"tower",
 	"tower-http",

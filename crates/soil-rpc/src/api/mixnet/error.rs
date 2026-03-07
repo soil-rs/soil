@@ -25,7 +25,7 @@ use soil_network::mixnet::{Error as MixnetError, PostErr, RemoteErr, TopologyErr
 pub struct Error(pub MixnetError);
 
 /// Base code for all mixnet errors.
-const BASE_ERROR: i32 = crate::error::base::MIXNET;
+const BASE_ERROR: i32 = crate::api::error::base::MIXNET;
 
 impl From<Error> for ErrorObjectOwned {
 	fn from(err: Error) -> Self {

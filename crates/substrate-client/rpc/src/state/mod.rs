@@ -31,7 +31,7 @@ use soil_client::client_api::{
 	Backend, BlockBackend, BlockchainEvents, ExecutorProvider, ProofProvider, StorageProvider,
 };
 use soil_client::tracing::block::TracingExecuteBlock;
-use soil_rpc_api::{check_if_safe, DenyUnsafe};
+use soil_rpc::{check_if_safe, DenyUnsafe};
 use std::sync::Arc;
 use subsoil::api::{CallApiAt, Metadata, ProvideRuntimeApi};
 use subsoil::core::{
@@ -41,7 +41,7 @@ use subsoil::core::{
 use subsoil::runtime::traits::Block as BlockT;
 use subsoil::version::RuntimeVersion;
 
-pub use soil_rpc_api::{child_state::*, state::*};
+pub use soil_rpc::api::{child_state::*, state::*};
 
 const STORAGE_KEYS_PAGED_MAX_COUNT: u32 = 1000;
 

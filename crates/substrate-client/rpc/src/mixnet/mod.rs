@@ -20,8 +20,8 @@
 
 use jsonrpsee::core::async_trait;
 use soil_network::mixnet::Api;
-use soil_rpc_api::mixnet::error::Error;
-pub use soil_rpc_api::mixnet::MixnetApiServer;
+use soil_rpc::api::mixnet::error::Error;
+pub use soil_rpc::api::mixnet::MixnetApiServer;
 use subsoil::core::Bytes;
 
 /// Mixnet API.

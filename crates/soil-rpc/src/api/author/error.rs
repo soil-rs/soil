@@ -53,11 +53,11 @@ pub enum Error {
 	MissingSessionKeysApi,
 	/// Call to an unsafe RPC was denied.
 	#[error(transparent)]
-	UnsafeRpcCalled(#[from] crate::policy::UnsafeRpcError),
+	UnsafeRpcCalled(#[from] crate::api::policy::UnsafeRpcError),
 }
 
 /// Base code for all authorship errors.
-const BASE_ERROR: i32 = crate::error::base::AUTHOR;
+const BASE_ERROR: i32 = crate::api::error::base::AUTHOR;
 /// Extrinsic has an invalid format.
 const BAD_FORMAT: i32 = BASE_ERROR + 1;
 /// Error during transaction verification in runtime.

@@ -26,4 +26,4 @@ jsonrpsee = { features = ["client-core", "macros", "server-core"], workspace = t
 
 # Substrate Dependencies
 soil-client = { workspace = true, default-features = true }
-soil-rpc-api = { workspace = true, default-features = true }
+soil-rpc = { workspace = true, default-features = true }

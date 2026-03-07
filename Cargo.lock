@@ -8105,7 +8105,6 @@ dependencies = [
  "soil-network",
  "soil-offchain",
  "soil-rpc",
- "soil-rpc-api",
  "soil-session",
  "soil-statement-store",
  "subsoil",
@@ -8978,7 +8977,7 @@ dependencies = [
  "soil-client",
  "soil-consensus",
  "soil-network-test",
- "soil-rpc-api",
+ "soil-rpc",
  "soil-telemetry",
  "subsoil",
  "subsoil-crypto-hashing",
@@ -9417,15 +9416,6 @@ dependencies = [
 name = "soil-rpc"
 version = "26.0.0"
 dependencies = [
- "serde",
- "serde_json",
- "subsoil",
-]
-
-[[package]]
-name = "soil-rpc-api"
-version = "0.33.0"
-dependencies = [
  "jsonrpsee",
  "parity-scale-codec",
  "scale-info",
@@ -9434,7 +9424,6 @@ dependencies = [
  "soil-chain-spec",
  "soil-client",
  "soil-network",
- "soil-rpc",
  "soil-statement-store",
  "subsoil",
  "thiserror 1.0.69",
@@ -9456,7 +9445,7 @@ dependencies = [
  "log",
  "serde",
  "serde_json",
- "soil-rpc-api",
+ "soil-rpc",
  "substrate-prometheus-endpoint",
  "tokio",
  "tower",
@@ -9946,7 +9935,6 @@ dependencies = [
  "soil-pow",
  "soil-proposer-metrics",
  "soil-rpc",
- "soil-rpc-api",
  "soil-rpc-server",
  "soil-rpc-spec-v2",
  "soil-service",
@@ -10278,7 +10266,7 @@ dependencies = [
  "parity-scale-codec",
  "scale-info",
  "serde",
- "soil-rpc-api",
+ "soil-rpc",
  "subsoil",
  "tokio",
  "topsoil-support",
@@ -10297,7 +10285,7 @@ dependencies = [
  "parity-scale-codec",
  "sc-transaction-pool",
  "soil-client",
- "soil-rpc-api",
+ "soil-rpc",
  "subsoil",
  "substrate-test-runtime-client",
  "tokio",
@@ -10325,7 +10313,7 @@ dependencies = [
  "jsonrpsee",
  "log",
  "serde",
- "soil-rpc-api",
+ "soil-rpc",
  "subsoil",
  "tokio",
 ]
@@ -10338,7 +10326,7 @@ dependencies = [
  "parity-scale-codec",
  "serde",
  "soil-client",
- "soil-rpc-api",
+ "soil-rpc",
  "subsoil",
  "trie-db",
 ]

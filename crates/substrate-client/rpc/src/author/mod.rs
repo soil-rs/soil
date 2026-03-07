@@ -33,7 +33,7 @@ use soil_client::transaction_pool::{
 	error::IntoPoolError, BlockHash, InPoolTransaction, TransactionFor, TransactionPool,
 	TransactionSource, TxHash, TxInvalidityReportMap,
 };
-use soil_rpc_api::check_if_safe;
+use soil_rpc::check_if_safe;
 use soil_session::SessionKeys;
 use std::sync::Arc;
 use subsoil::api::{ApiExt, ProvideRuntimeApi};
@@ -42,7 +42,7 @@ use subsoil::keystore::{KeystoreExt, KeystorePtr};
 use subsoil::runtime::traits::Block as BlockT;
 
 /// Re-export the API for backward compatibility.
-pub use soil_rpc_api::author::*;
+pub use soil_rpc::api::author::*;
 
 /// Authoring API
 pub struct Author<P, Client> {

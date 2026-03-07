@@ -15,7 +15,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//! Combines [soil_rpc_api::state::StateApiClient] with [topsoil_support::storage::generator] traits
+//! Combines [soil_rpc::api::state::StateApiClient] with [topsoil_support::storage::generator] traits
 //! to provide strongly typed chain state queries over rpc.
 
 #![warn(missing_docs)]
@@ -24,7 +24,7 @@ use codec::{DecodeAll, FullCodec, FullEncode};
 use core::marker::PhantomData;
 use jsonrpsee::core::ClientError as RpcError;
 use serde::{de::DeserializeOwned, Serialize};
-use soil_rpc_api::state::StateApiClient;
+use soil_rpc::api::state::StateApiClient;
 use subsoil::storage::{StorageData, StorageKey};
 use topsoil_support::storage::generator::{StorageDoubleMap, StorageMap, StorageValue};
 
@@ -36,7 +36,7 @@ use topsoil_support::storage::generator::{StorageDoubleMap, StorageMap, StorageV
 /// # use codec::Encode;
 /// # use topsoil_support::{construct_runtime, derive_impl, traits::ConstU32};
 /// # use substrate_frame_rpc_support::StorageQuery;
-/// # use soil_rpc_api::state::StateApiClient;
+/// # use soil_rpc::api::state::StateApiClient;
 /// # use subsoil::runtime::{traits::{BlakeTwo256, IdentityLookup}, testing::Header};
 /// #
 /// # construct_runtime!(

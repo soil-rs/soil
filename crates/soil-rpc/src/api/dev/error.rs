@@ -40,11 +40,11 @@ pub enum Error {
 	WitnessCompactionFailed,
 	/// The method is marked as unsafe but unsafe flag wasn't supplied on the CLI.
 	#[error(transparent)]
-	UnsafeRpcCalled(#[from] crate::policy::UnsafeRpcError),
+	UnsafeRpcCalled(#[from] crate::api::policy::UnsafeRpcError),
 }
 
 /// Base error code for all dev errors.
-const BASE_ERROR: i32 = crate::error::base::DEV;
+const BASE_ERROR: i32 = crate::api::error::base::DEV;
 
 impl From<Error> for ErrorObjectOwned {
 	fn from(e: Error) -> Self {

@@ -41,7 +41,7 @@ use soil_client::client_api::{
 	StorageProvider,
 };
 use soil_client::tracing::block::TracingExecuteBlock;
-use soil_rpc_api::state::ReadProof;
+use soil_rpc::api::state::ReadProof;
 use subsoil::api::{CallApiAt, Metadata, ProvideRuntimeApi};
 use subsoil::core::{
 	storage::{

@@ -24,7 +24,7 @@ use codec::Encode;
 use jsonrpsee::{core::EmptyServerParams as EmptyParams, MethodsError as RpcError, RpcModule};
 use sc_transaction_pool::{BasicPool, FullChainApi};
 use soil_client::transaction_pool::TransactionStatus;
-use soil_rpc_api::DenyUnsafe;
+use soil_rpc::DenyUnsafe;
 use std::sync::Arc;
 use subsoil::core::{
 	bytes::to_hex,

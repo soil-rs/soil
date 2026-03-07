@@ -28,11 +28,11 @@ use jsonrpsee::{
 };
 use soil_client::tracing::logging;
 use soil_client::utils::mpsc::TracingUnboundedSender;
-use soil_rpc_api::check_if_safe;
+use soil_rpc::check_if_safe;
 use subsoil::runtime::traits::{self, Header as HeaderT};
 
 pub use self::helpers::{Health, NodeRole, PeerInfo, SyncState, SystemInfo};
-pub use soil_rpc_api::system::*;
+pub use soil_rpc::api::system::*;
 
 /// System API implementation
 pub struct System<B: traits::Block> {

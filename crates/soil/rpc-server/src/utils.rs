@@ -30,7 +30,7 @@ use forwarded_header_value::ForwardedHeaderValue;
 use http::header::{HeaderName, HeaderValue};
 use ip_network::IpNetwork;
 use jsonrpsee::{server::middleware::http::HostFilterLayer, RpcModule};
-use soil_rpc_api::DenyUnsafe;
+use soil_rpc::DenyUnsafe;
 use tower_http::cors::{AllowOrigin, CorsLayer};
 
 const X_FORWARDED_FOR: HeaderName = HeaderName::from_static("x-forwarded-for");

@@ -28,7 +28,7 @@ num-traits = { workspace = true, default-features = true }
 parking_lot = { workspace = true, default-features = true }
 prometheus-endpoint = { workspace = true, default-features = true }
 soil-consensus = { workspace = true, default-features = true }
-soil-rpc-api = { workspace = true, default-features = true}
+soil-rpc = { workspace = true, default-features = true }
 soil-telemetry = { workspace = true, default-features = true }
 serde = { features = ["derive"], workspace = true, default-features = true}
 soil-client = { workspace = true, default-features = true }

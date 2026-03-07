@@ -25,7 +25,7 @@ use jsonrpsee::{
 	Extensions, PendingSubscriptionSink,
 };
 /// Re-export the API for backward compatibility.
-pub use soil_rpc_api::statement::{error::Error, StatementApiServer};
+pub use soil_rpc::api::statement::{error::Error, StatementApiServer};
 use soil_statement_store::{
 	OptimizedTopicFilter, StatementEvent, StatementSource, SubmitResult, TopicFilter,
 };

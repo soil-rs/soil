@@ -17,7 +17,7 @@
 
 //! # Shared JSON-RPC client related code and abstractions.
 //!
-//! It exposes a `WebSocket JSON-RPC` client that implements the RPC interface in `soil-rpc-api`
+//! It exposes a `WebSocket JSON-RPC` client that implements the RPC interface in `soil-rpc`
 //! along with some abstractions.
 //!
 //! ## Usage
@@ -51,7 +51,7 @@ pub use jsonrpsee::{
 	rpc_params,
 	ws_client::{WsClient, WsClientBuilder},
 };
-pub use soil_rpc_api::{
+pub use soil_rpc::api::{
 	author::AuthorApiClient as AuthorApi, chain::ChainApiClient as ChainApi,
 	child_state::ChildStateApiClient as ChildStateApi, dev::DevApiClient as DevApi,
 	offchain::OffchainApiClient as OffchainApi, state::StateApiClient as StateApi,

@@ -16,36 +16,31 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-//! Offchain RPC errors.
+//! Error helpers for Chain RPC module.
 
-use jsonrpsee::types::error::{ErrorObject, ErrorObjectOwned};
-
-/// Offchain RPC Result type.
+use jsonrpsee::types::{error::ErrorObject, ErrorObjectOwned};
+/// Chain RPC Result type.
 pub type Result<T> = std::result::Result<T, Error>;
 
-/// Offchain RPC errors.
+/// Chain RPC errors.
 #[derive(Debug, thiserror::Error)]
 pub enum Error {
-	/// Unavailable storage kind error.
-	#[error("This storage kind is not available yet.")]
-	UnavailableStorageKind,
-	/// Call to an unsafe RPC was denied.
-	#[error(transparent)]
-	UnsafeRpcCalled(#[from] crate::policy::UnsafeRpcError),
+	/// Client error.
+	#[error("Client error: {}", .0)]
+	Client(#[from] Box<dyn std::error::Error + Send + Sync>),
+	/// Other error type.
+	#[error("{0}")]
+	Other(String),
 }
 
-/// Base error code for all offchain errors.
-const BASE_ERROR: i32 = crate::error::base::OFFCHAIN;
+/// Base error code for all chain errors.
+const BASE_ERROR: i32 = crate::api::error::base::CHAIN;
 
 impl From<Error> for ErrorObjectOwned {
-	fn from(e: Error) -> Self {
+	fn from(e: Error) -> ErrorObjectOwned {
 		match e {
-			Error::UnavailableStorageKind => ErrorObject::owned(
-				BASE_ERROR + 1,
-				"This storage kind is not available yet",
-				None::<()>,
-			),
-			Error::UnsafeRpcCalled(e) => e.into(),
+			Error::Other(message) => ErrorObject::owned(BASE_ERROR + 1, message, None::<()>),
+			e => ErrorObject::owned(BASE_ERROR + 2, e.to_string(), None::<()>),
 		}
 	}
 }

@@ -31,11 +31,11 @@ pub enum Error {
 	StatementStore(String),
 	/// Call to an unsafe RPC was denied.
 	#[error(transparent)]
-	UnsafeRpcCalled(#[from] crate::policy::UnsafeRpcError),
+	UnsafeRpcCalled(#[from] crate::api::policy::UnsafeRpcError),
 }
 
 /// Base error code for all statement errors.
-const BASE_ERROR: i32 = crate::error::base::STATEMENT;
+const BASE_ERROR: i32 = crate::api::error::base::STATEMENT;
 
 impl From<Error> for ErrorObjectOwned {
 	fn from(e: Error) -> Self {

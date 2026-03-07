@@ -21,7 +21,7 @@
 use std::{future::Future, sync::Arc};
 
 use jsonrpsee::Extensions;
-use soil_rpc_api::DenyUnsafe;
+use soil_rpc::DenyUnsafe;
 
 /// A task executor that can be used for running RPC tests.
 ///

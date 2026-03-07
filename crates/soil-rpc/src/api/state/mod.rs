@@ -299,5 +299,5 @@ pub trait StateApi<Hash> {
 		targets: Option<String>,
 		storage_keys: Option<String>,
 		methods: Option<String>,
-	) -> Result<soil_rpc::tracing::TraceBlockResponse, Error>;
+	) -> Result<crate::tracing::TraceBlockResponse, Error>;
 }

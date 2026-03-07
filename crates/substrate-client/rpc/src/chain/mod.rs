@@ -39,7 +39,7 @@ use self::error::Error;
 
 use soil_client::blockchain::HeaderBackend;
 use soil_client::client_api::BlockBackend;
-pub use soil_rpc_api::chain::*;
+pub use soil_rpc::api::chain::*;
 
 /// Blockchain backend API
 #[async_trait]

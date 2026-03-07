@@ -33,7 +33,7 @@ use crate::{authorship, BabeWorkerHandle};
 use soil_client::blockchain::{Error as BlockChainError, HeaderBackend, HeaderMetadata};
 use soil_client::consensus::{Error as ConsensusError, SelectChain};
 use soil_consensus::epochs::Epoch as EpochT;
-use soil_rpc_api::{check_if_safe, UnsafeRpcError};
+use soil_rpc::{check_if_safe, UnsafeRpcError};
 use subsoil::api::ProvideRuntimeApi;
 use subsoil::application_crypto::AppCrypto;
 use subsoil::consensus::babe::{digests::PreDigest, AuthorityId, BabeApi as BabeRuntimeApi};
@@ -195,7 +195,7 @@ mod tests {
 	use super::*;
 	use crate::ImportQueueParams;
 	use soil_client::transaction_pool::{OffchainTransactionPoolFactory, RejectAllTxPool};
-	use soil_rpc_api::DenyUnsafe;
+	use soil_rpc::DenyUnsafe;
 	use subsoil::consensus::babe::inherents::InherentDataProvider;
 	use subsoil::core::{crypto::key_types::BABE, testing::TaskExecutor};
 	use subsoil::keyring::Sr25519Keyring;

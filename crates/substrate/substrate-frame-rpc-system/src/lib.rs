@@ -118,7 +118,7 @@ where
 		extrinsic: Bytes,
 		at: Option<<Block as traits::Block>::Hash>,
 	) -> RpcResult<Bytes> {
-		soil_rpc_api::check_if_safe(ext)?;
+		soil_rpc::check_if_safe(ext)?;
 
 		let api = self.client.runtime_api();
 		let best_hash = at.unwrap_or_else(||
@@ -219,7 +219,7 @@ mod tests {
 	use assert_matches::assert_matches;
 	use futures::executor::block_on;
 	use sc_transaction_pool::BasicPool;
-	use soil_rpc_api::DenyUnsafe;
+	use soil_rpc::DenyUnsafe;
 	use subsoil::runtime::{
 		transaction_validity::{InvalidTransaction, TransactionValidityError},
 		ApplyExtrinsicResult,

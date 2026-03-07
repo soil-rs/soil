@@ -26,7 +26,7 @@ pub use jsonrpsee::core::id_providers::{
 	RandomIntegerIdProvider as RandomIntegerSubscriptionId,
 	RandomStringIdProvider as RandomStringSubscriptionId,
 };
-pub use soil_rpc_api::DenyUnsafe;
+pub use soil_rpc::DenyUnsafe;
 
 pub mod author;
 pub mod chain;
