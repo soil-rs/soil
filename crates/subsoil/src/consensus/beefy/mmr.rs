@@ -48,7 +48,7 @@ impl BeefyDataProvider<Vec<u8>> for () {
 	}
 }
 
-/// A standard leaf that gets added every block to the MMR constructed by Substrate's `topsoil_mmr`.
+/// A standard leaf that gets added every block to the MMR constructed by Substrate's `plant_mmr`.
 #[derive(Debug, PartialEq, Eq, Clone, Encode, Decode, TypeInfo)]
 pub struct MmrLeaf<BlockNumber, Hash, MerkleRoot, ExtraData> {
 	/// Version of the leaf format.

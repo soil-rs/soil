@@ -83,8 +83,8 @@ pub fn tx_ext(nonce: Nonce, extra_fee: Balance) -> TxExtension {
 		topsoil_system::CheckEra::from(Era::mortal(256, 0)),
 		topsoil_system::CheckNonce::from(nonce),
 		topsoil_system::CheckWeight::new(),
-		topsoil_asset_conversion_tx_payment::ChargeAssetTxPayment::from(extra_fee, None),
-		topsoil_metadata_hash_extension::CheckMetadataHash::new(false),
+		plant_asset_conversion_tx_payment::ChargeAssetTxPayment::from(extra_fee, None),
+		plant_metadata_hash_extension::CheckMetadataHash::new(false),
 		topsoil_system::WeightReclaim::new(),
 	)
 }

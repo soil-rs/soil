@@ -34,7 +34,7 @@ use topsoil_session::{
 	historical::{Config as HistoricalConfig, IdentificationTuple},
 	Config as SessionConfig, Pallet as Session,
 };
-use topsoil_staking::{
+use plant_staking::{
 	Config as StakingConfig, Exposure, IndividualExposure, MaxNominationsOf, Pallet as Staking,
 	RewardDestination, ValidatorPrefs,
 };
@@ -86,7 +86,7 @@ struct Offender<T: Config> {
 }
 
 fn bond_amount<T: Config>() -> BalanceOf<T> {
-	topsoil_staking::asset::existential_deposit::<T>().saturating_mul(10_000u32.into())
+	plant_staking::asset::existential_deposit::<T>().saturating_mul(10_000u32.into())
 }
 
 fn create_offender<T: Config>(n: u32, nominators: u32) -> Result<Offender<T>, &'static str> {
@@ -96,7 +96,7 @@ fn create_offender<T: Config>(n: u32, nominators: u32) -> Result<Offender<T>, &'
 	let amount = bond_amount::<T>();
 	// add twice as much balance to prevent the account from being killed.
 	let free_amount = amount.saturating_mul(2u32.into());
-	topsoil_staking::asset::set_stakeable_balance::<T>(&stash, free_amount);
+	plant_staking::asset::set_stakeable_balance::<T>(&stash, free_amount);
 	Staking::<T>::bond(
 		RawOrigin::Signed(stash.clone()).into(),
 		amount,
@@ -118,7 +118,7 @@ fn create_offender<T: Config>(n: u32, nominators: u32) -> Result<Offender<T>, &'
 	for i in 0..nominators {
 		let nominator_stash: T::AccountId =
 			account("nominator stash", n * MAX_NOMINATORS + i, SEED);
-		topsoil_staking::asset::set_stakeable_balance::<T>(&nominator_stash, free_amount);
+		plant_staking::asset::set_stakeable_balance::<T>(&nominator_stash, free_amount);
 
 		Staking::<T>::bond(
 			RawOrigin::Signed(nominator_stash.clone()).into(),
@@ -170,8 +170,8 @@ fn make_offenders<T: Config>(
 		})
 		.collect::<Vec<IdentificationTuple<T>>>();
 
-	if topsoil_staking::ActiveEra::<T>::get().is_none() {
-		topsoil_staking::ActiveEra::<T>::put(topsoil_staking::ActiveEraInfo {
+	if plant_staking::ActiveEra::<T>::get().is_none() {
+		plant_staking::ActiveEra::<T>::put(plant_staking::ActiveEraInfo {
 			index: 0,
 			start: Some(0),
 		});
@@ -184,7 +184,7 @@ fn make_offenders<T: Config>(
 fn assert_all_slashes_applied<T>(offender_count: usize)
 where
 	T: Config,
-	<T as topsoil_system::Config>::RuntimeEvent: TryInto<topsoil_staking::Event<T>>,
+	<T as topsoil_system::Config>::RuntimeEvent: TryInto<plant_staking::Event<T>>,
 	<T as topsoil_system::Config>::RuntimeEvent: TryInto<topsoil_balances::Event<T>>,
 	<T as topsoil_system::Config>::RuntimeEvent: TryInto<topsoil_offences::Event>,
 	<T as topsoil_system::Config>::RuntimeEvent: TryInto<topsoil_system::Event<T>>,
@@ -194,7 +194,7 @@ where
 	assert_eq!(System::<T>::read_events_for_pallet::<topsoil_balances::Event<T>>().len(), 3);
 	// (n nominators + one validator) * slashed + Slash Reported + Slash Computed
 	assert_eq!(
-		System::<T>::read_events_for_pallet::<topsoil_staking::Event<T>>().len(),
+		System::<T>::read_events_for_pallet::<plant_staking::Event<T>>().len(),
 		1 * (offender_count + 1) as usize + 1
 	);
 	// offence
@@ -205,7 +205,7 @@ where
 
 #[benchmarks(
 	where
-		<T as topsoil_system::Config>::RuntimeEvent: TryInto<topsoil_staking::Event<T>>,
+		<T as topsoil_system::Config>::RuntimeEvent: TryInto<plant_staking::Event<T>>,
 		<T as topsoil_system::Config>::RuntimeEvent: TryInto<topsoil_balances::Event<T>>,
 		<T as topsoil_system::Config>::RuntimeEvent: TryInto<topsoil_offences::Event>,
 		<T as topsoil_system::Config>::RuntimeEvent: TryInto<topsoil_system::Event<T>>,

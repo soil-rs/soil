@@ -1293,7 +1293,7 @@ macro_rules! impl_benchmark_test {
 
 /// This creates a test suite which runs the module's benchmarks.
 ///
-/// When called in `topsoil_example_basic` as
+/// When called in `plant_example_basic` as
 ///
 /// ```rust,ignore
 /// impl_benchmark_test_suite!(Pallet, crate::tests::new_test_ext(), crate::tests::Test);
@@ -1319,7 +1319,7 @@ macro_rules! impl_benchmark_test {
 /// }
 /// ```
 ///
-/// When called inside the `benchmarks` macro of the `topsoil_example_basic` as
+/// When called inside the `benchmarks` macro of the `plant_example_basic` as
 ///
 /// ```rust,ignore
 /// benchmarks! {
@@ -1805,15 +1805,15 @@ pub fn show_benchmark_debug_info(
 ///
 /// ```ignore
 /// add_benchmark!(params, batches, topsoil_balances, Balances); // topsoil_balances.rs
-/// add_benchmark!(params, batches, topsoil_collective, Council); // pallet_collective_council.rs
-/// add_benchmark!(params, batches, topsoil_collective, TechnicalCommittee); // pallet_collective_technical_committee.rs
+/// add_benchmark!(params, batches, plant_collective, Council); // pallet_collective_council.rs
+/// add_benchmark!(params, batches, plant_collective, TechnicalCommittee); // pallet_collective_technical_committee.rs
 /// ```
 ///
 /// You can manipulate this suffixed string by using a type alias if needed. For example:
 ///
 /// ```ignore
 /// type Council2 = TechnicalCommittee;
-/// add_benchmark!(params, batches, topsoil_collective, Council2); // pallet_collective_council_2.rs
+/// add_benchmark!(params, batches, plant_collective, Council2); // pallet_collective_council_2.rs
 /// ```
 #[macro_export]
 macro_rules! add_benchmark {

@@ -31,11 +31,11 @@ subsoil = { features = ["serde"], workspace = true }
 [dev-dependencies]
 finality-grandpa = { features = ["derive-codec"], workspace = true, default-features = true }
 topsoil-benchmarking = { workspace = true, default-features = true }
-topsoil-election-provider-support = { workspace = true, default-features = true }
+plant-election-provider-support = { workspace = true, default-features = true }
 topsoil-balances = { workspace = true, default-features = true }
 topsoil-offences = { workspace = true, default-features = true }
-topsoil-staking = { workspace = true, default-features = true }
-topsoil-staking-reward-curve = { workspace = true, default-features = true }
+plant-staking = { workspace = true, default-features = true }
+plant-staking-reward-curve = { workspace = true, default-features = true }
 topsoil-timestamp = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
 
@@ -44,7 +44,7 @@ default = ["std"]
 std = [
 	"codec/std",
 	"topsoil-benchmarking?/std",
-	"topsoil-election-provider-support/std",
+	"plant-election-provider-support/std",
 	"topsoil-support/std",
 	"topsoil-system/std",
 	"log/std",
@@ -52,7 +52,7 @@ std = [
 	"topsoil-balances/std",
 	"topsoil-offences/std",
 	"topsoil-session/std",
-	"topsoil-staking/std",
+	"plant-staking/std",
 	"topsoil-timestamp/std",
 	"scale-info/std",
 	"subsoil/std",
@@ -61,26 +61,26 @@ std = [
 ]
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",
-	"topsoil-election-provider-support/runtime-benchmarks",
+	"plant-election-provider-support/runtime-benchmarks",
 	"topsoil-support/runtime-benchmarks",
 	"topsoil-system/runtime-benchmarks",
 	"topsoil-balances/runtime-benchmarks",
 	"topsoil-offences/runtime-benchmarks",
 	"topsoil-session/runtime-benchmarks",
-	"topsoil-staking/runtime-benchmarks",
+	"plant-staking/runtime-benchmarks",
 	"topsoil-timestamp/runtime-benchmarks",
 	"subsoil/runtime-benchmarks",
 	"soil-staking/runtime-benchmarks",
 ]
 try-runtime = [
-	"topsoil-election-provider-support/try-runtime",
+	"plant-election-provider-support/try-runtime",
 	"topsoil-support/try-runtime",
 	"topsoil-system/try-runtime",
 	"topsoil-authorship/try-runtime",
 	"topsoil-balances/try-runtime",
 	"topsoil-offences/try-runtime",
 	"topsoil-session/try-runtime",
-	"topsoil-staking/try-runtime",
+	"plant-staking/try-runtime",
 	"topsoil-timestamp/try-runtime",
 	"subsoil/try-runtime",
 ]

@@ -1,0 +1,51 @@
+[package]
+name = "plant-examples"
+version = "4.0.0-dev"
+authors.workspace = true
+edition.workspace = true
+license.workspace = true
+homepage.workspace = true
+repository.workspace = true
+description = "The single package with examples of various types of FRAME pallets"
+publish = false
+
+[lints]
+workspace = true
+
+[package.metadata.docs.rs]
+targets = ["x86_64-unknown-linux-gnu"]
+
+[dependencies]
+plant-default-config-example = { workspace = true }
+plant-dev-mode = { workspace = true }
+plant-example-authorization-tx-extension = { workspace = true }
+plant-example-basic = { workspace = true }
+plant-example-frame-crate = { workspace = true }
+plant-example-kitchensink = { workspace = true }
+plant-example-offchain-worker = { workspace = true }
+plant-example-single-block-migrations = { workspace = true }
+plant-example-split = { workspace = true }
+
+[features]
+default = ["std"]
+std = [
+	"plant-default-config-example/std",
+	"plant-dev-mode/std",
+	"plant-example-authorization-tx-extension/std",
+	"plant-example-basic/std",
+	"plant-example-frame-crate/std",
+	"plant-example-kitchensink/std",
+	"plant-example-offchain-worker/std",
+	"plant-example-single-block-migrations/std",
+	"plant-example-split/std",
+]
+try-runtime = [
+	"plant-default-config-example/try-runtime",
+	"plant-dev-mode/try-runtime",
+	"plant-example-authorization-tx-extension/try-runtime",
+	"plant-example-basic/try-runtime",
+	"plant-example-kitchensink/try-runtime",
+	"plant-example-offchain-worker/try-runtime",
+	"plant-example-single-block-migrations/try-runtime",
+	"plant-example-split/try-runtime",
+]

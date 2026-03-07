@@ -18,7 +18,7 @@ targets = ["x86_64-unknown-linux-gnu"]
 [dependencies]
 codec = { workspace = true }
 topsoil-benchmarking = { workspace = true }
-topsoil-election-provider-support = { workspace = true }
+plant-election-provider-support = { workspace = true }
 topsoil-support = { workspace = true }
 topsoil-system = { workspace = true }
 log = { workspace = true }
@@ -29,12 +29,12 @@ topsoil-im-online = { workspace = true }
 topsoil-offences = { workspace = true }
 topsoil-session = { workspace = true }
 topsoil-session-benchmarking = { workspace = true }
-topsoil-staking = { workspace = true }
+plant-staking = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 soil-staking = { workspace = true }
 
 [dev-dependencies]
-topsoil-staking-reward-curve = { workspace = true, default-features = true }
+plant-staking-reward-curve = { workspace = true, default-features = true }
 topsoil-timestamp = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
 
@@ -43,7 +43,7 @@ default = ["std"]
 std = [
 	"codec/std",
 	"topsoil-benchmarking/std",
-	"topsoil-election-provider-support/std",
+	"plant-election-provider-support/std",
 	"topsoil-support/std",
 	"topsoil-system/std",
 	"log/std",
@@ -54,7 +54,7 @@ std = [
 	"topsoil-offences/std",
 	"topsoil-session-benchmarking/std",
 	"topsoil-session/std",
-	"topsoil-staking/std",
+	"plant-staking/std",
 	"topsoil-timestamp/std",
 	"scale-info/std",
 	"subsoil/std",
@@ -62,7 +62,7 @@ std = [
 ]
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",
-	"topsoil-election-provider-support/runtime-benchmarks",
+	"plant-election-provider-support/runtime-benchmarks",
 	"topsoil-support/runtime-benchmarks",
 	"topsoil-system/runtime-benchmarks",
 	"topsoil-babe/runtime-benchmarks",
@@ -72,7 +72,7 @@ runtime-benchmarks = [
 	"topsoil-offences/runtime-benchmarks",
 	"topsoil-session-benchmarking/runtime-benchmarks",
 	"topsoil-session/runtime-benchmarks",
-	"topsoil-staking/runtime-benchmarks",
+	"plant-staking/runtime-benchmarks",
 	"topsoil-timestamp/runtime-benchmarks",
 	"subsoil/runtime-benchmarks",
 	"soil-staking/runtime-benchmarks",

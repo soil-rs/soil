@@ -22,7 +22,7 @@ use subsoil::runtime::{
 	testing::{Header, UintAuthorityId},
 	BuildStorage, KeyTypeId, Perbill,
 };
-use topsoil_election_provider_support::{
+use plant_election_provider_support::{
 	bounds::{ElectionBounds, ElectionBoundsBuilder},
 	onchain, SequentialPhragmen,
 };
@@ -56,7 +56,7 @@ impl topsoil_timestamp::Config for Test {
 impl topsoil_session::historical::Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type FullIdentification = ();
-	type FullIdentificationOf = topsoil_staking::UnitIdentificationOf<Self>;
+	type FullIdentificationOf = plant_staking::UnitIdentificationOf<Self>;
 }
 
 subsoil::impl_opaque_keys! {
@@ -113,7 +113,7 @@ impl topsoil_session_benchmarking::Config for Test {
 	}
 }
 
-topsoil_staking_reward_curve::build! {
+plant_staking_reward_curve::build! {
 	const I_NPOS: subsoil::runtime::curve::PiecewiseLinear<'static> = curve!(
 		min_inflation: 0_025_000,
 		max_inflation: 0_100_000,
@@ -141,20 +141,20 @@ impl onchain::Config for OnChainSeqPhragmen {
 	type Bounds = ElectionsBounds;
 }
 
-#[derive_impl(topsoil_staking::config_preludes::TestDefaultConfig)]
-impl topsoil_staking::Config for Test {
+#[derive_impl(plant_staking::config_preludes::TestDefaultConfig)]
+impl plant_staking::Config for Test {
 	type OldCurrency = Balances;
 	type Currency = Balances;
 	type CurrencyBalance = <Self as topsoil_balances::Config>::Balance;
 	type UnixTime = topsoil_timestamp::Pallet<Self>;
 	type AdminOrigin = topsoil_system::EnsureRoot<Self::AccountId>;
 	type SessionInterface = Self;
-	type EraPayout = topsoil_staking::ConvertCurve<RewardCurve>;
+	type EraPayout = plant_staking::ConvertCurve<RewardCurve>;
 	type NextNewSession = Session;
 	type ElectionProvider = onchain::OnChainExecution<OnChainSeqPhragmen>;
 	type GenesisElectionProvider = Self::ElectionProvider;
-	type VoterList = topsoil_staking::UseNominatorsAndValidatorsMap<Self>;
-	type TargetList = topsoil_staking::UseValidatorsMap<Self>;
+	type VoterList = plant_staking::UseNominatorsAndValidatorsMap<Self>;
+	type TargetList = plant_staking::UseValidatorsMap<Self>;
 }
 
 impl topsoil_im_online::Config for Test {
@@ -203,7 +203,7 @@ topsoil_support::construct_runtime!(
 	{
 		System: system::{Pallet, Call, Event<T>},
 		Balances: topsoil_balances,
-		Staking: topsoil_staking,
+		Staking: plant_staking,
 		Session: topsoil_session,
 		ImOnline: topsoil_im_online::{Pallet, Call, Storage, Event<T>, ValidateUnsigned, Config<T>},
 		Offences: topsoil_offences::{Pallet, Storage, Event},

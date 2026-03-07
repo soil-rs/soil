@@ -1,0 +1,37 @@
+[package]
+name = "plant-atomic-swap"
+version = "28.0.0"
+authors.workspace = true
+edition.workspace = true
+license.workspace = true
+homepage.workspace = true
+repository.workspace = true
+description = "FRAME atomic swap pallet"
+readme = "README.md"
+
+[lints]
+workspace = true
+
+[package.metadata.docs.rs]
+targets = ["x86_64-unknown-linux-gnu"]
+
+[dependencies]
+codec = { workspace = true }
+topsoil = { workspace = true, features = ["runtime"] }
+scale-info = { features = ["derive"], workspace = true }
+
+[dev-dependencies]
+topsoil-balances = { workspace = true, default-features = true }
+
+[features]
+default = ["std"]
+std = [
+	"codec/std",
+	"topsoil/std",
+	"topsoil-balances/std",
+	"scale-info/std",
+]
+try-runtime = [
+	"topsoil/try-runtime",
+	"topsoil-balances/try-runtime",
+]

@@ -26,7 +26,7 @@ use subsoil::runtime::{
 	traits::{BadOrigin, BlakeTwo256, Dispatchable, Hash},
 	BuildStorage, DispatchError, TokenError,
 };
-use topsoil_collective::{EnsureProportionAtLeast, Instance1};
+use plant_collective::{EnsureProportionAtLeast, Instance1};
 use topsoil_support::{
 	assert_err_ignore_postinfo, assert_noop, assert_ok, derive_impl,
 	dispatch::{DispatchErrorWithPostInfo, Pays},
@@ -132,8 +132,8 @@ topsoil_support::construct_runtime!(
 		System: topsoil_system,
 		Timestamp: topsoil_timestamp,
 		Balances: topsoil_balances,
-		RootTesting: topsoil_root_testing,
-		Council: topsoil_collective::<Instance1>,
+		RootTesting: plant_root_testing,
+		Council: plant_collective::<Instance1>,
 		Utility: utility,
 		Example: example,
 		Democracy: mock_democracy,
@@ -157,7 +157,7 @@ impl topsoil_balances::Config for Test {
 	type AccountStore = System;
 }
 
-impl topsoil_root_testing::Config for Test {
+impl plant_root_testing::Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 }
 
@@ -179,15 +179,15 @@ parameter_types! {
 	pub MaxProposalWeight: Weight = subsoil::runtime::Perbill::from_percent(50) * BlockWeights::get().max_block;
 }
 
-type CouncilCollective = topsoil_collective::Instance1;
-impl topsoil_collective::Config<CouncilCollective> for Test {
+type CouncilCollective = plant_collective::Instance1;
+impl plant_collective::Config<CouncilCollective> for Test {
 	type RuntimeOrigin = RuntimeOrigin;
 	type Proposal = RuntimeCall;
 	type RuntimeEvent = RuntimeEvent;
 	type MotionDuration = MotionDuration;
 	type MaxProposals = MaxProposals;
 	type MaxMembers = MaxMembers;
-	type DefaultVote = topsoil_collective::PrimeDefaultVote;
+	type DefaultVote = plant_collective::PrimeDefaultVote;
 	type WeightInfo = ();
 	type SetMembersOrigin = topsoil_system::EnsureRoot<Self::AccountId>;
 	type MaxProposalWeight = MaxProposalWeight;
@@ -230,7 +230,7 @@ type ExampleCall = example::Call<Test>;
 type UtilityCall = crate::Call<Test>;
 
 use topsoil_balances::Call as BalancesCall;
-use topsoil_root_testing::Call as RootTestingCall;
+use plant_root_testing::Call as RootTestingCall;
 use topsoil_system::Call as SystemCall;
 use topsoil_timestamp::Call as TimestampCall;
 
@@ -243,7 +243,7 @@ pub fn new_test_ext() -> subsoil::io::TestExternalities {
 	.assimilate_storage(&mut t)
 	.unwrap();
 
-	topsoil_collective::GenesisConfig::<Test, Instance1> {
+	plant_collective::GenesisConfig::<Test, Instance1> {
 		members: vec![1, 2, 3],
 		phantom: Default::default(),
 	}
@@ -840,7 +840,7 @@ fn batch_works_with_council_origin() {
 			proposal_len
 		));
 
-		System::assert_last_event(RuntimeEvent::Council(topsoil_collective::Event::Executed {
+		System::assert_last_event(RuntimeEvent::Council(plant_collective::Event::Executed {
 			proposal_hash: hash,
 			result: Ok(()),
 		}));
@@ -877,7 +877,7 @@ fn force_batch_works_with_council_origin() {
 			proposal_len
 		));
 
-		System::assert_last_event(RuntimeEvent::Council(topsoil_collective::Event::Executed {
+		System::assert_last_event(RuntimeEvent::Council(plant_collective::Event::Executed {
 			proposal_hash: hash,
 			result: Ok(()),
 		}));
@@ -888,7 +888,7 @@ fn force_batch_works_with_council_origin() {
 fn batch_all_works_with_council_origin() {
 	new_test_ext().execute_with(|| {
 		assert_ok!(Utility::batch_all(
-			RuntimeOrigin::from(topsoil_collective::RawOrigin::Members(3, 3)),
+			RuntimeOrigin::from(plant_collective::RawOrigin::Members(3, 3)),
 			vec![RuntimeCall::Democracy(mock_democracy::Call::external_propose_majority {})]
 		));
 	})

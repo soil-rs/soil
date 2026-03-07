@@ -1,0 +1,41 @@
+[package]
+name = "plant-nis"
+version = "28.0.0"
+authors.workspace = true
+edition.workspace = true
+license.workspace = true
+homepage.workspace = true
+repository.workspace = true
+description = "FRAME pallet for rewarding account freezing."
+readme = "README.md"
+
+[lints]
+workspace = true
+
+[package.metadata.docs.rs]
+targets = ["x86_64-unknown-linux-gnu"]
+
+[dependencies]
+codec = { features = ["derive"], workspace = true }
+topsoil = { workspace = true, features = ["runtime"] }
+scale-info = { features = ["derive"], workspace = true }
+
+[dev-dependencies]
+topsoil-balances = { workspace = true, default-features = true }
+subsoil = { workspace = true, default-features = true }
+
+[features]
+default = ["std"]
+std = [
+	"codec/std",
+	"topsoil/std",
+	"scale-info/std",
+]
+runtime-benchmarks = [
+	"topsoil/runtime-benchmarks",
+	"topsoil-balances/runtime-benchmarks",
+]
+try-runtime = [
+	"topsoil/try-runtime",
+	"topsoil-balances/try-runtime",
+]

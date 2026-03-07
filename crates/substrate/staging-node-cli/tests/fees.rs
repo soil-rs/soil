@@ -60,9 +60,9 @@ fn fee_multiplier_increases_and_decreases_on_big_weight() {
 			},
 			CheckedExtrinsic {
 				format: subsoil::runtime::generic::ExtrinsicFormat::Signed(charlie(), tx_ext(0, 0)),
-				function: RuntimeCall::Sudo(topsoil_sudo::Call::sudo {
+				function: RuntimeCall::Sudo(plant_sudo::Call::sudo {
 					call: Box::new(RuntimeCall::RootTesting(
-						topsoil_root_testing::Call::fill_block { ratio: Perbill::from_percent(60) },
+						plant_root_testing::Call::fill_block { ratio: Perbill::from_percent(60) },
 					)),
 				}),
 			},

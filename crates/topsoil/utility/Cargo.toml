@@ -25,8 +25,8 @@ subsoil = { workspace = true }
 
 [dev-dependencies]
 topsoil-balances = { workspace = true, default-features = true }
-topsoil-collective = { workspace = true, default-features = true }
-topsoil-root-testing = { workspace = true, default-features = true }
+plant-collective = { workspace = true, default-features = true }
+plant-root-testing = { workspace = true, default-features = true }
 topsoil-timestamp = { workspace = true, default-features = true }
 
 [features]
@@ -44,7 +44,7 @@ runtime-benchmarks = [
 	"topsoil-support/runtime-benchmarks",
 	"topsoil-system/runtime-benchmarks",
 	"topsoil-balances/runtime-benchmarks",
-	"topsoil-collective/runtime-benchmarks",
+	"plant-collective/runtime-benchmarks",
 	"topsoil-timestamp/runtime-benchmarks",
 	"subsoil/runtime-benchmarks",
 ]
@@ -52,8 +52,8 @@ try-runtime = [
 	"topsoil-support/try-runtime",
 	"topsoil-system/try-runtime",
 	"topsoil-balances/try-runtime",
-	"topsoil-collective/try-runtime",
-	"topsoil-root-testing/try-runtime",
+	"plant-collective/try-runtime",
+	"plant-root-testing/try-runtime",
 	"topsoil-timestamp/try-runtime",
 	"subsoil/try-runtime",
 ]

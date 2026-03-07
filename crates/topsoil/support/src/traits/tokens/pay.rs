@@ -180,7 +180,7 @@ pub trait PayWithSource {
 }
 
 /// Implementation of the `PayWithSource` trait using multiple fungible asset classes (e.g.,
-/// `topsoil_assets`)
+/// `plant_assets`)
 pub struct PayWithFungibles<F, A>(core::marker::PhantomData<(F, A)>);
 impl<A, F> topsoil_support::traits::tokens::PayWithSource for PayWithFungibles<F, A>
 where

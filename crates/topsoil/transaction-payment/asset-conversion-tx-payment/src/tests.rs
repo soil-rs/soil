@@ -270,7 +270,7 @@ fn transaction_payment_in_asset_possible() {
 			// check that fee was charged in the given asset
 			assert_eq!(Assets::balance(asset_id, caller), balance - fee_in_asset);
 
-			System::assert_has_event(RuntimeEvent::Assets(topsoil_assets::Event::Withdrawn {
+			System::assert_has_event(RuntimeEvent::Assets(plant_assets::Event::Withdrawn {
 				asset_id,
 				who: caller,
 				amount: fee_in_asset,
@@ -480,7 +480,7 @@ fn asset_transaction_payment_with_tip_and_refund() {
 			)
 			.unwrap();
 
-			System::assert_has_event(RuntimeEvent::Assets(topsoil_assets::Event::Withdrawn {
+			System::assert_has_event(RuntimeEvent::Assets(plant_assets::Event::Withdrawn {
 				asset_id,
 				who: caller,
 				amount: fee_in_asset,
@@ -505,7 +505,7 @@ fn asset_transaction_payment_with_tip_and_refund() {
 			);
 			assert_eq!(Balances::free_balance(caller), 20 * balance_factor);
 
-			System::assert_has_event(RuntimeEvent::Assets(topsoil_assets::Event::Deposited {
+			System::assert_has_event(RuntimeEvent::Assets(plant_assets::Event::Deposited {
 				asset_id,
 				who: caller,
 				amount: expected_token_refund,

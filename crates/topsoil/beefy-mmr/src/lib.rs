@@ -49,7 +49,7 @@ use subsoil::consensus::beefy::{
 	AncestryHelper, AncestryHelperWeightInfo, Commitment, ConsensusLog,
 	ValidatorSet as BeefyValidatorSet,
 };
-use topsoil_mmr::{primitives::AncestryProof, LeafDataProvider, NodesUtils, ParentNumberAndHash};
+use plant_mmr::{primitives::AncestryProof, LeafDataProvider, NodesUtils, ParentNumberAndHash};
 
 use topsoil_support::{crypto::ecdsa::ECDSAExt, pallet_prelude::Weight, traits::Get};
 use topsoil_system::pallet_prelude::{BlockNumberFor, HeaderFor};
@@ -67,10 +67,10 @@ mod weights;
 /// A BEEFY consensus digest item with MMR root hash.
 pub struct DepositBeefyDigest<T>(core::marker::PhantomData<T>);
 
-impl<T> topsoil_mmr::primitives::OnNewRoot<subsoil::consensus::beefy::MmrRootHash>
+impl<T> plant_mmr::primitives::OnNewRoot<subsoil::consensus::beefy::MmrRootHash>
 	for DepositBeefyDigest<T>
 where
-	T: topsoil_mmr::Config<Hashing = subsoil::consensus::beefy::MmrHashing>,
+	T: plant_mmr::Config<Hashing = subsoil::consensus::beefy::MmrHashing>,
 	T: topsoil_beefy::Config,
 {
 	fn on_new_root(root: &subsoil::consensus::beefy::MmrRootHash) {
@@ -101,7 +101,7 @@ impl Convert<subsoil::consensus::beefy::ecdsa_crypto::AuthorityId, Vec<u8>>
 }
 
 type MerkleRootOf<T> =
-	<<T as topsoil_mmr::Config>::Hashing as subsoil::runtime::traits::Hash>::Output;
+	<<T as plant_mmr::Config>::Hashing as subsoil::runtime::traits::Hash>::Output;
 
 #[topsoil_support::pallet]
 pub mod pallet {
@@ -117,7 +117,7 @@ pub mod pallet {
 	/// The module's configuration trait.
 	#[pallet::config]
 	#[pallet::disable_frame_system_supertrait_check]
-	pub trait Config: topsoil_mmr::Config + topsoil_beefy::Config {
+	pub trait Config: plant_mmr::Config + topsoil_beefy::Config {
 		/// Current leaf version.
 		///
 		/// Specifies the version number added to every leaf that get's appended to the MMR.
@@ -192,13 +192,13 @@ where
 
 impl<T: Config> AncestryHelper<HeaderFor<T>> for Pallet<T>
 where
-	T: topsoil_mmr::Config<Hashing = subsoil::consensus::beefy::MmrHashing>,
+	T: plant_mmr::Config<Hashing = subsoil::consensus::beefy::MmrHashing>,
 {
 	type Proof = AncestryProof<MerkleRootOf<T>>;
 	type ValidationContext = MerkleRootOf<T>;
 
 	fn is_proof_optimal(proof: &Self::Proof) -> bool {
-		let is_proof_optimal = topsoil_mmr::Pallet::<T>::is_ancestry_proof_optimal(proof);
+		let is_proof_optimal = plant_mmr::Pallet::<T>::is_ancestry_proof_optimal(proof);
 
 		// We don't check the proof size when running benchmarks, since we use mock proofs
 		// which would cause the test to fail.
@@ -232,7 +232,7 @@ where
 		context: Self::ValidationContext,
 	) -> bool {
 		let commitment_leaf_count =
-			match topsoil_mmr::Pallet::<T>::block_num_to_leaf_count(commitment.block_number) {
+			match plant_mmr::Pallet::<T>::block_num_to_leaf_count(commitment.block_number) {
 				Ok(commitment_leaf_count) => commitment_leaf_count,
 				Err(_) => {
 					// We can't prove that the commitment is non-canonical if the
@@ -248,7 +248,7 @@ where
 
 		let canonical_mmr_root = context;
 		let canonical_prev_root =
-			match topsoil_mmr::Pallet::<T>::verify_ancestry_proof(canonical_mmr_root, proof) {
+			match plant_mmr::Pallet::<T>::verify_ancestry_proof(canonical_mmr_root, proof) {
 				Ok(canonical_prev_root) => canonical_prev_root,
 				Err(_) => {
 					// Can't prove that the commitment is non-canonical if the proof
@@ -289,7 +289,7 @@ where
 
 impl<T: Config> AncestryHelperWeightInfo<HeaderFor<T>> for Pallet<T>
 where
-	T: topsoil_mmr::Config<Hashing = subsoil::consensus::beefy::MmrHashing>,
+	T: plant_mmr::Config<Hashing = subsoil::consensus::beefy::MmrHashing>,
 {
 	fn is_proof_optimal(proof: &<Self as AncestryHelper<HeaderFor<T>>>::Proof) -> Weight {
 		<T as Config>::WeightInfo::n_leafs_proof_is_optimal(proof.leaf_count.saturated_into())
@@ -356,7 +356,7 @@ impl<T: Config> Pallet<T> {
 			);
 		}
 		let keyset_commitment = subsoil::binary_merkle_tree::merkle_root::<
-			<T as topsoil_mmr::Config>::Hashing,
+			<T as plant_mmr::Config>::Hashing,
 			_,
 		>(beefy_addresses)
 		.into();

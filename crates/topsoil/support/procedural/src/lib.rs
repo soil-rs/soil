@@ -1224,7 +1224,7 @@ pub fn runtime(attr: TokenStream, item: TokenStream) -> TokenStream {
 
 /// Mark a module that contains dynamic parameters.
 ///
-/// See the `topsoil_parameters` for a full example.
+/// See the `plant_parameters` for a full example.
 ///
 /// # Arguments
 ///
@@ -1249,7 +1249,7 @@ pub fn dynamic_params(attrs: TokenStream, input: TokenStream) -> TokenStream {
 
 /// Define a module inside a [`macro@dynamic_params`] module that contains dynamic parameters.
 ///
-/// See the `topsoil_parameters` for a full example.
+/// See the `plant_parameters` for a full example.
 ///
 /// # Argument
 ///

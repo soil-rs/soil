@@ -35,10 +35,10 @@ primitive-types = { features = ["codec", "num-traits", "scale-info"], workspace 
 topsoil = { workspace = true }
 topsoil-benchmarking = { workspace = true }
 topsoil-benchmarking-pallet-pov = { workspace = true }
-topsoil-election-provider-solution-type = { workspace = true }
-topsoil-election-provider-support = { workspace = true }
+plant-election-provider-solution-type = { workspace = true }
+plant-election-provider-support = { workspace = true }
 topsoil-executive = { workspace = true }
-topsoil-metadata-hash-extension = { workspace = true }
+plant-metadata-hash-extension = { workspace = true }
 topsoil-support = { features = ["tuples-96"], workspace = true }
 topsoil-support-procedural = { workspace = true }
 topsoil-support-procedural-tools-derive = { workspace = true }
@@ -46,104 +46,104 @@ topsoil-system = { workspace = true }
 topsoil-system-benchmarking = { workspace = true }
 topsoil-system-rpc-runtime-api = { workspace = true }
 topsoil-try-runtime = { workspace = true }
-topsoil-alliance = { workspace = true }
-topsoil-asset-conversion = { workspace = true }
-topsoil-asset-conversion-ops = { workspace = true }
-topsoil-asset-conversion-tx-payment = { workspace = true }
-topsoil-asset-rate = { workspace = true }
-topsoil-asset-rewards = { workspace = true }
+plant-alliance = { workspace = true }
+plant-asset-conversion = { workspace = true }
+plant-asset-conversion-ops = { workspace = true }
+plant-asset-conversion-tx-payment = { workspace = true }
+plant-asset-rate = { workspace = true }
+plant-asset-rewards = { workspace = true }
 topsoil-asset-tx-payment = { workspace = true }
-topsoil-assets = { workspace = true }
-topsoil-assets-freezer = { workspace = true }
-topsoil-assets-holder = { workspace = true }
-topsoil-atomic-swap = { workspace = true }
+plant-assets = { workspace = true }
+plant-assets-freezer = { workspace = true }
+plant-assets-holder = { workspace = true }
+plant-atomic-swap = { workspace = true }
 topsoil-aura = { workspace = true }
 topsoil-authority-discovery = { workspace = true }
 topsoil-authorship = { workspace = true }
 topsoil-babe = { workspace = true }
-topsoil-bags-list = { workspace = true }
+plant-bags-list = { workspace = true }
 topsoil-balances = { workspace = true }
 topsoil-beefy = { workspace = true }
 topsoil-beefy-mmr = { workspace = true }
-topsoil-bounties = { workspace = true }
-topsoil-broker = { workspace = true }
-topsoil-child-bounties = { workspace = true }
-topsoil-collective = { workspace = true }
-topsoil-conviction-voting = { workspace = true }
-topsoil-core-fellowship = { workspace = true }
-topsoil-dap = { workspace = true }
-topsoil-delegated-staking = { workspace = true }
-topsoil-democracy = { workspace = true }
-topsoil-dev-mode = { workspace = true }
-topsoil-dummy-dim = { workspace = true }
-topsoil-election-provider-multi-phase = { workspace = true }
-topsoil-election-provider-support-benchmarking = { workspace = true }
-topsoil-elections-phragmen = { workspace = true }
-topsoil-fast-unstake = { workspace = true }
-topsoil-glutton = { workspace = true }
+plant-bounties = { workspace = true }
+plant-broker = { workspace = true }
+plant-child-bounties = { workspace = true }
+plant-collective = { workspace = true }
+plant-conviction-voting = { workspace = true }
+plant-core-fellowship = { workspace = true }
+plant-dap = { workspace = true }
+plant-delegated-staking = { workspace = true }
+plant-democracy = { workspace = true }
+plant-dev-mode = { workspace = true }
+plant-dummy-dim = { workspace = true }
+plant-election-provider-multi-phase = { workspace = true }
+plant-election-provider-support-benchmarking = { workspace = true }
+plant-elections-phragmen = { workspace = true }
+plant-fast-unstake = { workspace = true }
+plant-glutton = { workspace = true }
 topsoil-grandpa = { workspace = true }
-topsoil-identity = { workspace = true }
+plant-identity = { workspace = true }
 topsoil-im-online = { workspace = true }
-topsoil-indices = { workspace = true }
-topsoil-insecure-randomness-collective-flip = { workspace = true }
-topsoil-lottery = { workspace = true }
-topsoil-membership = { workspace = true }
-topsoil-message-queue = { workspace = true }
-topsoil-meta-tx = { workspace = true }
-topsoil-mixnet = { workspace = true }
-topsoil-mmr = { workspace = true }
-topsoil-multi-asset-bounties = { workspace = true }
-topsoil-multisig = { workspace = true }
-topsoil-nft-fractionalization = { workspace = true }
-topsoil-nfts = { workspace = true }
-topsoil-nfts-runtime-api = { workspace = true }
-topsoil-nis = { workspace = true }
-topsoil-node-authorization = { workspace = true }
-topsoil-nomination-pools = { workspace = true }
-topsoil-nomination-pools-benchmarking = { workspace = true }
-topsoil-nomination-pools-runtime-api = { workspace = true }
+plant-indices = { workspace = true }
+plant-insecure-randomness-collective-flip = { workspace = true }
+plant-lottery = { workspace = true }
+plant-membership = { workspace = true }
+plant-message-queue = { workspace = true }
+plant-meta-tx = { workspace = true }
+plant-mixnet = { workspace = true }
+plant-mmr = { workspace = true }
+plant-multi-asset-bounties = { workspace = true }
+plant-multisig = { workspace = true }
+plant-nft-fractionalization = { workspace = true }
+plant-nfts = { workspace = true }
+plant-nfts-runtime-api = { workspace = true }
+plant-nis = { workspace = true }
+plant-node-authorization = { workspace = true }
+plant-nomination-pools = { workspace = true }
+plant-nomination-pools-benchmarking = { workspace = true }
+plant-nomination-pools-runtime-api = { workspace = true }
 topsoil-offences = { workspace = true }
 topsoil-offences-benchmarking = { workspace = true }
-topsoil-oracle = { workspace = true }
-topsoil-oracle-runtime-api = { workspace = true }
-topsoil-origin-restriction = { workspace = true }
-topsoil-paged-list = { workspace = true }
-topsoil-parameters = { workspace = true }
-topsoil-people = { workspace = true }
-topsoil-preimage = { workspace = true }
-topsoil-proxy = { workspace = true }
-topsoil-ranked-collective = { workspace = true }
-topsoil-recovery = { workspace = true }
-topsoil-referenda = { workspace = true }
-topsoil-remark = { workspace = true }
-topsoil-root-offences = { workspace = true }
-topsoil-root-testing = { workspace = true }
-topsoil-safe-mode = { workspace = true }
-topsoil-salary = { workspace = true }
-topsoil-scheduler = { workspace = true }
-topsoil-scored-pool = { workspace = true }
+plant-oracle = { workspace = true }
+plant-oracle-runtime-api = { workspace = true }
+plant-origin-restriction = { workspace = true }
+plant-paged-list = { workspace = true }
+plant-parameters = { workspace = true }
+plant-people = { workspace = true }
+plant-preimage = { workspace = true }
+plant-proxy = { workspace = true }
+plant-ranked-collective = { workspace = true }
+plant-recovery = { workspace = true }
+plant-referenda = { workspace = true }
+plant-remark = { workspace = true }
+plant-root-offences = { workspace = true }
+plant-root-testing = { workspace = true }
+plant-safe-mode = { workspace = true }
+plant-salary = { workspace = true }
+plant-scheduler = { workspace = true }
+plant-scored-pool = { workspace = true }
 topsoil-session = { workspace = true }
 topsoil-session-benchmarking = { workspace = true }
-topsoil-society = { workspace = true }
-topsoil-staking = { workspace = true }
-topsoil-staking-reward-curve = { workspace = true }
-topsoil-staking-reward-fn = { workspace = true }
-topsoil-staking-runtime-api = { workspace = true }
-topsoil-state-trie-migration = { workspace = true }
-topsoil-statement = { workspace = true }
-topsoil-sudo = { workspace = true }
+plant-society = { workspace = true }
+plant-staking = { workspace = true }
+plant-staking-reward-curve = { workspace = true }
+plant-staking-reward-fn = { workspace = true }
+plant-staking-runtime-api = { workspace = true }
+plant-state-trie-migration = { workspace = true }
+plant-statement = { workspace = true }
+plant-sudo = { workspace = true }
 topsoil-timestamp = { workspace = true }
-topsoil-tips = { workspace = true }
+plant-tips = { workspace = true }
 topsoil-transaction-payment = { workspace = true }
 topsoil-transaction-payment-rpc-runtime-api = { workspace = true }
 topsoil-transaction-storage = { workspace = true }
-topsoil-treasury = { workspace = true }
-topsoil-tx-pause = { workspace = true }
-topsoil-uniques = { workspace = true }
+plant-treasury = { workspace = true }
+plant-tx-pause = { workspace = true }
+plant-uniques = { workspace = true }
 topsoil-utility = { workspace = true }
-topsoil-verify-signature = { workspace = true }
-topsoil-vesting = { workspace = true }
-topsoil-whitelist = { workspace = true }
+plant-verify-signature = { workspace = true }
+plant-vesting = { workspace = true }
+plant-whitelist = { workspace = true }
 soil-chain-spec-derive = { workspace = true }
 subsoil = { workspace = true }
 soil-authority-discovery = { workspace = true }
@@ -172,9 +172,9 @@ std = [
 	"topsoil/std",
 	"topsoil-benchmarking/std",
 	"topsoil-benchmarking-pallet-pov/std",
-	"topsoil-election-provider-support/std",
+	"plant-election-provider-support/std",
 	"topsoil-executive/std",
-	"topsoil-metadata-hash-extension/std",
+	"plant-metadata-hash-extension/std",
 	"topsoil-support/std",
 	"topsoil-support-procedural/std",
 	"topsoil-system/std",
@@ -183,103 +183,103 @@ std = [
 	"topsoil-try-runtime/std",
 	"log/std",
 	"node-primitives/std",
-	"topsoil-alliance/std",
-	"topsoil-asset-conversion/std",
-	"topsoil-asset-conversion-ops/std",
-	"topsoil-asset-conversion-tx-payment/std",
-	"topsoil-asset-rate/std",
-	"topsoil-asset-rewards/std",
+	"plant-alliance/std",
+	"plant-asset-conversion/std",
+	"plant-asset-conversion-ops/std",
+	"plant-asset-conversion-tx-payment/std",
+	"plant-asset-rate/std",
+	"plant-asset-rewards/std",
 	"topsoil-asset-tx-payment/std",
-	"topsoil-assets/std",
-	"topsoil-assets-freezer/std",
-	"topsoil-assets-holder/std",
-	"topsoil-atomic-swap/std",
+	"plant-assets/std",
+	"plant-assets-freezer/std",
+	"plant-assets-holder/std",
+	"plant-atomic-swap/std",
 	"topsoil-aura/std",
 	"topsoil-authority-discovery/std",
 	"topsoil-authorship/std",
 	"topsoil-babe/std",
-	"topsoil-bags-list/std",
+	"plant-bags-list/std",
 	"topsoil-balances/std",
 	"topsoil-beefy/std",
 	"topsoil-beefy-mmr/std",
-	"topsoil-bounties/std",
-	"topsoil-broker/std",
-	"topsoil-child-bounties/std",
-	"topsoil-collective/std",
-	"topsoil-conviction-voting/std",
-	"topsoil-core-fellowship/std",
-	"topsoil-dap/std",
-	"topsoil-delegated-staking/std",
-	"topsoil-democracy/std",
-	"topsoil-dev-mode/std",
-	"topsoil-dummy-dim/std",
-	"topsoil-election-provider-multi-phase/std",
-	"topsoil-election-provider-support-benchmarking/std",
-	"topsoil-elections-phragmen/std",
-	"topsoil-fast-unstake/std",
-	"topsoil-glutton/std",
+	"plant-bounties/std",
+	"plant-broker/std",
+	"plant-child-bounties/std",
+	"plant-collective/std",
+	"plant-conviction-voting/std",
+	"plant-core-fellowship/std",
+	"plant-dap/std",
+	"plant-delegated-staking/std",
+	"plant-democracy/std",
+	"plant-dev-mode/std",
+	"plant-dummy-dim/std",
+	"plant-election-provider-multi-phase/std",
+	"plant-election-provider-support-benchmarking/std",
+	"plant-elections-phragmen/std",
+	"plant-fast-unstake/std",
+	"plant-glutton/std",
 	"topsoil-grandpa/std",
-	"topsoil-identity/std",
+	"plant-identity/std",
 	"topsoil-im-online/std",
-	"topsoil-indices/std",
-	"topsoil-insecure-randomness-collective-flip/std",
-	"topsoil-lottery/std",
-	"topsoil-membership/std",
-	"topsoil-message-queue/std",
-	"topsoil-meta-tx/std",
-	"topsoil-mixnet/std",
-	"topsoil-mmr/std",
-	"topsoil-multi-asset-bounties/std",
-	"topsoil-multisig/std",
-	"topsoil-nft-fractionalization/std",
-	"topsoil-nfts/std",
-	"topsoil-nfts-runtime-api/std",
-	"topsoil-nis/std",
-	"topsoil-node-authorization/std",
-	"topsoil-nomination-pools/std",
-	"topsoil-nomination-pools-benchmarking/std",
-	"topsoil-nomination-pools-runtime-api/std",
+	"plant-indices/std",
+	"plant-insecure-randomness-collective-flip/std",
+	"plant-lottery/std",
+	"plant-membership/std",
+	"plant-message-queue/std",
+	"plant-meta-tx/std",
+	"plant-mixnet/std",
+	"plant-mmr/std",
+	"plant-multi-asset-bounties/std",
+	"plant-multisig/std",
+	"plant-nft-fractionalization/std",
+	"plant-nfts/std",
+	"plant-nfts-runtime-api/std",
+	"plant-nis/std",
+	"plant-node-authorization/std",
+	"plant-nomination-pools/std",
+	"plant-nomination-pools-benchmarking/std",
+	"plant-nomination-pools-runtime-api/std",
 	"topsoil-offences/std",
 	"topsoil-offences-benchmarking/std",
-	"topsoil-oracle/std",
-	"topsoil-oracle-runtime-api/std",
-	"topsoil-origin-restriction/std",
-	"topsoil-paged-list/std",
-	"topsoil-parameters/std",
-	"topsoil-people/std",
-	"topsoil-preimage/std",
-	"topsoil-proxy/std",
-	"topsoil-ranked-collective/std",
-	"topsoil-recovery/std",
-	"topsoil-referenda/std",
-	"topsoil-remark/std",
-	"topsoil-root-offences/std",
-	"topsoil-root-testing/std",
-	"topsoil-safe-mode/std",
-	"topsoil-salary/std",
-	"topsoil-scheduler/std",
-	"topsoil-scored-pool/std",
+	"plant-oracle/std",
+	"plant-oracle-runtime-api/std",
+	"plant-origin-restriction/std",
+	"plant-paged-list/std",
+	"plant-parameters/std",
+	"plant-people/std",
+	"plant-preimage/std",
+	"plant-proxy/std",
+	"plant-ranked-collective/std",
+	"plant-recovery/std",
+	"plant-referenda/std",
+	"plant-remark/std",
+	"plant-root-offences/std",
+	"plant-root-testing/std",
+	"plant-safe-mode/std",
+	"plant-salary/std",
+	"plant-scheduler/std",
+	"plant-scored-pool/std",
 	"topsoil-session/std",
 	"topsoil-session-benchmarking/std",
-	"topsoil-society/std",
-	"topsoil-staking/std",
-	"topsoil-staking-reward-fn/std",
-	"topsoil-staking-runtime-api/std",
-	"topsoil-state-trie-migration/std",
-	"topsoil-statement/std",
-	"topsoil-sudo/std",
+	"plant-society/std",
+	"plant-staking/std",
+	"plant-staking-reward-fn/std",
+	"plant-staking-runtime-api/std",
+	"plant-state-trie-migration/std",
+	"plant-statement/std",
+	"plant-sudo/std",
 	"topsoil-timestamp/std",
-	"topsoil-tips/std",
+	"plant-tips/std",
 	"topsoil-transaction-payment/std",
 	"topsoil-transaction-payment-rpc-runtime-api/std",
 	"topsoil-transaction-storage/std",
-	"topsoil-treasury/std",
-	"topsoil-tx-pause/std",
-	"topsoil-uniques/std",
+	"plant-treasury/std",
+	"plant-tx-pause/std",
+	"plant-uniques/std",
 	"topsoil-utility/std",
-	"topsoil-verify-signature/std",
-	"topsoil-vesting/std",
-	"topsoil-whitelist/std",
+	"plant-verify-signature/std",
+	"plant-vesting/std",
+	"plant-whitelist/std",
 	"primitive-types/std",
 	"rand?/std",
 	"scale-info/std",
@@ -300,89 +300,89 @@ runtime-benchmarks = [
 	"topsoil/runtime-benchmarks",
 	"topsoil-benchmarking/runtime-benchmarks",
 	"topsoil-benchmarking-pallet-pov/runtime-benchmarks",
-	"topsoil-election-provider-support/runtime-benchmarks",
+	"plant-election-provider-support/runtime-benchmarks",
 	"topsoil-support/runtime-benchmarks",
 	"topsoil-system/runtime-benchmarks",
 	"topsoil-system-benchmarking/runtime-benchmarks",
-	"topsoil-alliance/runtime-benchmarks",
-	"topsoil-asset-conversion/runtime-benchmarks",
-	"topsoil-asset-conversion-ops/runtime-benchmarks",
-	"topsoil-asset-conversion-tx-payment/runtime-benchmarks",
-	"topsoil-asset-rate/runtime-benchmarks",
-	"topsoil-asset-rewards/runtime-benchmarks",
+	"plant-alliance/runtime-benchmarks",
+	"plant-asset-conversion/runtime-benchmarks",
+	"plant-asset-conversion-ops/runtime-benchmarks",
+	"plant-asset-conversion-tx-payment/runtime-benchmarks",
+	"plant-asset-rate/runtime-benchmarks",
+	"plant-asset-rewards/runtime-benchmarks",
 	"topsoil-asset-tx-payment/runtime-benchmarks",
-	"topsoil-assets/runtime-benchmarks",
-	"topsoil-assets-freezer/runtime-benchmarks",
-	"topsoil-assets-holder/runtime-benchmarks",
+	"plant-assets/runtime-benchmarks",
+	"plant-assets-freezer/runtime-benchmarks",
+	"plant-assets-holder/runtime-benchmarks",
 	"topsoil-babe/runtime-benchmarks",
-	"topsoil-bags-list/runtime-benchmarks",
+	"plant-bags-list/runtime-benchmarks",
 	"topsoil-balances/runtime-benchmarks",
 	"topsoil-beefy-mmr/runtime-benchmarks",
-	"topsoil-bounties/runtime-benchmarks",
-	"topsoil-broker/runtime-benchmarks",
-	"topsoil-child-bounties/runtime-benchmarks",
-	"topsoil-collective/runtime-benchmarks",
-	"topsoil-conviction-voting/runtime-benchmarks",
-	"topsoil-core-fellowship/runtime-benchmarks",
-	"topsoil-dap/runtime-benchmarks",
-	"topsoil-delegated-staking/runtime-benchmarks",
-	"topsoil-democracy/runtime-benchmarks",
-	"topsoil-dummy-dim/runtime-benchmarks",
-	"topsoil-election-provider-multi-phase/runtime-benchmarks",
-	"topsoil-election-provider-support-benchmarking/runtime-benchmarks",
-	"topsoil-elections-phragmen/runtime-benchmarks",
-	"topsoil-fast-unstake/runtime-benchmarks",
-	"topsoil-glutton/runtime-benchmarks",
+	"plant-bounties/runtime-benchmarks",
+	"plant-broker/runtime-benchmarks",
+	"plant-child-bounties/runtime-benchmarks",
+	"plant-collective/runtime-benchmarks",
+	"plant-conviction-voting/runtime-benchmarks",
+	"plant-core-fellowship/runtime-benchmarks",
+	"plant-dap/runtime-benchmarks",
+	"plant-delegated-staking/runtime-benchmarks",
+	"plant-democracy/runtime-benchmarks",
+	"plant-dummy-dim/runtime-benchmarks",
+	"plant-election-provider-multi-phase/runtime-benchmarks",
+	"plant-election-provider-support-benchmarking/runtime-benchmarks",
+	"plant-elections-phragmen/runtime-benchmarks",
+	"plant-fast-unstake/runtime-benchmarks",
+	"plant-glutton/runtime-benchmarks",
 	"topsoil-grandpa/runtime-benchmarks",
-	"topsoil-identity/runtime-benchmarks",
+	"plant-identity/runtime-benchmarks",
 	"topsoil-im-online/runtime-benchmarks",
-	"topsoil-indices/runtime-benchmarks",
-	"topsoil-lottery/runtime-benchmarks",
-	"topsoil-membership/runtime-benchmarks",
-	"topsoil-message-queue/runtime-benchmarks",
-	"topsoil-meta-tx/runtime-benchmarks",
-	"topsoil-mmr/runtime-benchmarks",
-	"topsoil-multi-asset-bounties/runtime-benchmarks",
-	"topsoil-multisig/runtime-benchmarks",
-	"topsoil-nft-fractionalization/runtime-benchmarks",
-	"topsoil-nfts/runtime-benchmarks",
-	"topsoil-nis/runtime-benchmarks",
-	"topsoil-nomination-pools/runtime-benchmarks",
-	"topsoil-nomination-pools-benchmarking/runtime-benchmarks",
+	"plant-indices/runtime-benchmarks",
+	"plant-lottery/runtime-benchmarks",
+	"plant-membership/runtime-benchmarks",
+	"plant-message-queue/runtime-benchmarks",
+	"plant-meta-tx/runtime-benchmarks",
+	"plant-mmr/runtime-benchmarks",
+	"plant-multi-asset-bounties/runtime-benchmarks",
+	"plant-multisig/runtime-benchmarks",
+	"plant-nft-fractionalization/runtime-benchmarks",
+	"plant-nfts/runtime-benchmarks",
+	"plant-nis/runtime-benchmarks",
+	"plant-nomination-pools/runtime-benchmarks",
+	"plant-nomination-pools-benchmarking/runtime-benchmarks",
 	"topsoil-offences/runtime-benchmarks",
 	"topsoil-offences-benchmarking/runtime-benchmarks",
-	"topsoil-oracle/runtime-benchmarks",
-	"topsoil-origin-restriction/runtime-benchmarks",
-	"topsoil-paged-list/runtime-benchmarks",
-	"topsoil-parameters/runtime-benchmarks",
-	"topsoil-people/runtime-benchmarks",
-	"topsoil-preimage/runtime-benchmarks",
-	"topsoil-proxy/runtime-benchmarks",
-	"topsoil-ranked-collective/runtime-benchmarks",
-	"topsoil-recovery/runtime-benchmarks",
-	"topsoil-referenda/runtime-benchmarks",
-	"topsoil-remark/runtime-benchmarks",
-	"topsoil-root-offences/runtime-benchmarks",
-	"topsoil-safe-mode/runtime-benchmarks",
-	"topsoil-salary/runtime-benchmarks",
-	"topsoil-scheduler/runtime-benchmarks",
+	"plant-oracle/runtime-benchmarks",
+	"plant-origin-restriction/runtime-benchmarks",
+	"plant-paged-list/runtime-benchmarks",
+	"plant-parameters/runtime-benchmarks",
+	"plant-people/runtime-benchmarks",
+	"plant-preimage/runtime-benchmarks",
+	"plant-proxy/runtime-benchmarks",
+	"plant-ranked-collective/runtime-benchmarks",
+	"plant-recovery/runtime-benchmarks",
+	"plant-referenda/runtime-benchmarks",
+	"plant-remark/runtime-benchmarks",
+	"plant-root-offences/runtime-benchmarks",
+	"plant-safe-mode/runtime-benchmarks",
+	"plant-salary/runtime-benchmarks",
+	"plant-scheduler/runtime-benchmarks",
 	"topsoil-session/runtime-benchmarks",
 	"topsoil-session-benchmarking/runtime-benchmarks",
-	"topsoil-society/runtime-benchmarks",
-	"topsoil-staking/runtime-benchmarks",
-	"topsoil-state-trie-migration/runtime-benchmarks",
-	"topsoil-sudo/runtime-benchmarks",
+	"plant-society/runtime-benchmarks",
+	"plant-staking/runtime-benchmarks",
+	"plant-state-trie-migration/runtime-benchmarks",
+	"plant-sudo/runtime-benchmarks",
 	"topsoil-timestamp/runtime-benchmarks",
-	"topsoil-tips/runtime-benchmarks",
+	"plant-tips/runtime-benchmarks",
 	"topsoil-transaction-payment/runtime-benchmarks",
 	"topsoil-transaction-storage/runtime-benchmarks",
-	"topsoil-treasury/runtime-benchmarks",
-	"topsoil-tx-pause/runtime-benchmarks",
-	"topsoil-uniques/runtime-benchmarks",
+	"plant-treasury/runtime-benchmarks",
+	"plant-tx-pause/runtime-benchmarks",
+	"plant-uniques/runtime-benchmarks",
 	"topsoil-utility/runtime-benchmarks",
-	"topsoil-verify-signature/runtime-benchmarks",
-	"topsoil-vesting/runtime-benchmarks",
-	"topsoil-whitelist/runtime-benchmarks",
+	"plant-verify-signature/runtime-benchmarks",
+	"plant-vesting/runtime-benchmarks",
+	"plant-whitelist/runtime-benchmarks",
 	"rand",
 	"rand_pcg",
 	"subsoil/runtime-benchmarks",
@@ -390,97 +390,97 @@ runtime-benchmarks = [
 try-runtime = [
 	"topsoil/try-runtime",
 	"topsoil-benchmarking-pallet-pov/try-runtime",
-	"topsoil-election-provider-support/try-runtime",
+	"plant-election-provider-support/try-runtime",
 	"topsoil-executive/try-runtime",
 	"topsoil-support/try-runtime",
 	"topsoil-system/try-runtime",
 	"topsoil-try-runtime/try-runtime",
-	"topsoil-alliance/try-runtime",
-	"topsoil-asset-conversion/try-runtime",
-	"topsoil-asset-conversion-ops/try-runtime",
-	"topsoil-asset-conversion-tx-payment/try-runtime",
-	"topsoil-asset-rate/try-runtime",
-	"topsoil-asset-rewards/try-runtime",
+	"plant-alliance/try-runtime",
+	"plant-asset-conversion/try-runtime",
+	"plant-asset-conversion-ops/try-runtime",
+	"plant-asset-conversion-tx-payment/try-runtime",
+	"plant-asset-rate/try-runtime",
+	"plant-asset-rewards/try-runtime",
 	"topsoil-asset-tx-payment/try-runtime",
-	"topsoil-assets/try-runtime",
-	"topsoil-assets-freezer/try-runtime",
-	"topsoil-assets-holder/try-runtime",
-	"topsoil-atomic-swap/try-runtime",
+	"plant-assets/try-runtime",
+	"plant-assets-freezer/try-runtime",
+	"plant-assets-holder/try-runtime",
+	"plant-atomic-swap/try-runtime",
 	"topsoil-aura/try-runtime",
 	"topsoil-authority-discovery/try-runtime",
 	"topsoil-authorship/try-runtime",
 	"topsoil-babe/try-runtime",
-	"topsoil-bags-list/try-runtime",
+	"plant-bags-list/try-runtime",
 	"topsoil-balances/try-runtime",
 	"topsoil-beefy/try-runtime",
 	"topsoil-beefy-mmr/try-runtime",
-	"topsoil-bounties/try-runtime",
-	"topsoil-broker/try-runtime",
-	"topsoil-child-bounties/try-runtime",
-	"topsoil-collective/try-runtime",
-	"topsoil-conviction-voting/try-runtime",
-	"topsoil-core-fellowship/try-runtime",
-	"topsoil-dap/try-runtime",
-	"topsoil-delegated-staking/try-runtime",
-	"topsoil-democracy/try-runtime",
-	"topsoil-dev-mode/try-runtime",
-	"topsoil-dummy-dim/try-runtime",
-	"topsoil-election-provider-multi-phase/try-runtime",
-	"topsoil-elections-phragmen/try-runtime",
-	"topsoil-fast-unstake/try-runtime",
-	"topsoil-glutton/try-runtime",
+	"plant-bounties/try-runtime",
+	"plant-broker/try-runtime",
+	"plant-child-bounties/try-runtime",
+	"plant-collective/try-runtime",
+	"plant-conviction-voting/try-runtime",
+	"plant-core-fellowship/try-runtime",
+	"plant-dap/try-runtime",
+	"plant-delegated-staking/try-runtime",
+	"plant-democracy/try-runtime",
+	"plant-dev-mode/try-runtime",
+	"plant-dummy-dim/try-runtime",
+	"plant-election-provider-multi-phase/try-runtime",
+	"plant-elections-phragmen/try-runtime",
+	"plant-fast-unstake/try-runtime",
+	"plant-glutton/try-runtime",
 	"topsoil-grandpa/try-runtime",
-	"topsoil-identity/try-runtime",
+	"plant-identity/try-runtime",
 	"topsoil-im-online/try-runtime",
-	"topsoil-indices/try-runtime",
-	"topsoil-insecure-randomness-collective-flip/try-runtime",
-	"topsoil-lottery/try-runtime",
-	"topsoil-membership/try-runtime",
-	"topsoil-message-queue/try-runtime",
-	"topsoil-meta-tx/try-runtime",
-	"topsoil-mixnet/try-runtime",
-	"topsoil-mmr/try-runtime",
-	"topsoil-multi-asset-bounties/try-runtime",
-	"topsoil-multisig/try-runtime",
-	"topsoil-nft-fractionalization/try-runtime",
-	"topsoil-nfts/try-runtime",
-	"topsoil-nis/try-runtime",
-	"topsoil-node-authorization/try-runtime",
-	"topsoil-nomination-pools/try-runtime",
+	"plant-indices/try-runtime",
+	"plant-insecure-randomness-collective-flip/try-runtime",
+	"plant-lottery/try-runtime",
+	"plant-membership/try-runtime",
+	"plant-message-queue/try-runtime",
+	"plant-meta-tx/try-runtime",
+	"plant-mixnet/try-runtime",
+	"plant-mmr/try-runtime",
+	"plant-multi-asset-bounties/try-runtime",
+	"plant-multisig/try-runtime",
+	"plant-nft-fractionalization/try-runtime",
+	"plant-nfts/try-runtime",
+	"plant-nis/try-runtime",
+	"plant-node-authorization/try-runtime",
+	"plant-nomination-pools/try-runtime",
 	"topsoil-offences/try-runtime",
-	"topsoil-oracle/try-runtime",
-	"topsoil-origin-restriction/try-runtime",
-	"topsoil-paged-list/try-runtime",
-	"topsoil-parameters/try-runtime",
-	"topsoil-people/try-runtime",
-	"topsoil-preimage/try-runtime",
-	"topsoil-proxy/try-runtime",
-	"topsoil-ranked-collective/try-runtime",
-	"topsoil-recovery/try-runtime",
-	"topsoil-referenda/try-runtime",
-	"topsoil-remark/try-runtime",
-	"topsoil-root-offences/try-runtime",
-	"topsoil-root-testing/try-runtime",
-	"topsoil-safe-mode/try-runtime",
-	"topsoil-salary/try-runtime",
-	"topsoil-scheduler/try-runtime",
-	"topsoil-scored-pool/try-runtime",
+	"plant-oracle/try-runtime",
+	"plant-origin-restriction/try-runtime",
+	"plant-paged-list/try-runtime",
+	"plant-parameters/try-runtime",
+	"plant-people/try-runtime",
+	"plant-preimage/try-runtime",
+	"plant-proxy/try-runtime",
+	"plant-ranked-collective/try-runtime",
+	"plant-recovery/try-runtime",
+	"plant-referenda/try-runtime",
+	"plant-remark/try-runtime",
+	"plant-root-offences/try-runtime",
+	"plant-root-testing/try-runtime",
+	"plant-safe-mode/try-runtime",
+	"plant-salary/try-runtime",
+	"plant-scheduler/try-runtime",
+	"plant-scored-pool/try-runtime",
 	"topsoil-session/try-runtime",
-	"topsoil-society/try-runtime",
-	"topsoil-staking/try-runtime",
-	"topsoil-state-trie-migration/try-runtime",
-	"topsoil-statement/try-runtime",
-	"topsoil-sudo/try-runtime",
+	"plant-society/try-runtime",
+	"plant-staking/try-runtime",
+	"plant-state-trie-migration/try-runtime",
+	"plant-statement/try-runtime",
+	"plant-sudo/try-runtime",
 	"topsoil-timestamp/try-runtime",
-	"topsoil-tips/try-runtime",
+	"plant-tips/try-runtime",
 	"topsoil-transaction-payment/try-runtime",
 	"topsoil-transaction-storage/try-runtime",
-	"topsoil-treasury/try-runtime",
-	"topsoil-tx-pause/try-runtime",
-	"topsoil-uniques/try-runtime",
+	"plant-treasury/try-runtime",
+	"plant-tx-pause/try-runtime",
+	"plant-uniques/try-runtime",
 	"topsoil-utility/try-runtime",
-	"topsoil-verify-signature/try-runtime",
-	"topsoil-vesting/try-runtime",
-	"topsoil-whitelist/try-runtime",
+	"plant-verify-signature/try-runtime",
+	"plant-vesting/try-runtime",
+	"plant-whitelist/try-runtime",
 	"subsoil/try-runtime"]
 metadata-hash = ["substrate-wasm-builder/metadata-hash"]

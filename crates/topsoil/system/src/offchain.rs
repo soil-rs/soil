@@ -26,7 +26,7 @@
 //!
 //! ## Usage
 //!
-//! Please refer to [`example-offchain-worker`](../../topsoil_example_offchain_worker/index.html) for
+//! Please refer to [`example-offchain-worker`](../../plant_example_offchain_worker/index.html) for
 //! a concrete example usage of this crate.
 //!
 //! ### Submit a raw unsigned transaction
@@ -46,7 +46,7 @@
 //! #### Submit an unsigned transaction with a signed payload
 //!
 //! Initially, a payload instance that implements the `SignedPayload` trait should be defined.
-//! See [`PricePayload`](../../topsoil_example_offchain_worker/struct.PricePayload.html)
+//! See [`PricePayload`](../../plant_example_offchain_worker/struct.PricePayload.html)
 //!
 //! The payload type that is defined defined can then be signed and submitted onchain.
 //!

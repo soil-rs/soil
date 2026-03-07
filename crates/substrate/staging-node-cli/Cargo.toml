@@ -62,7 +62,7 @@ serde_json = { workspace = true, default-features = true }
 subxt-signer = { workspace = true, features = ["unstable-eth"] }
 
 # Substrate dependencies (formerly via polkadot-sdk umbrella):
-topsoil-metadata-hash-extension = { workspace = true, default-features = true }
+plant-metadata-hash-extension = { workspace = true, default-features = true }
 topsoil-system = { workspace = true, default-features = true }
 topsoil-system-rpc-runtime-api = { workspace = true, default-features = true }
 fork-tree = { workspace = true, default-features = true }
@@ -70,7 +70,7 @@ remote-externalities = { workspace = true, default-features = true }
 topsoil-support-procedural-tools = { workspace = true, default-features = true }
 generate-bags = { workspace = true, default-features = true }
 soil-mmr-gadget = { workspace = true, default-features = true }
-topsoil-asset-conversion-tx-payment = { workspace = true, default-features = true }
+plant-asset-conversion-tx-payment = { workspace = true, default-features = true }
 topsoil-im-online = { workspace = true, default-features = true }
 topsoil-transaction-payment-rpc = { workspace = true, default-features = true }
 sc-authority-discovery = { workspace = true, default-features = true }
@@ -110,13 +110,13 @@ node-rpc = { workspace = true }
 [dev-dependencies]
 assert_cmd = { workspace = true }
 topsoil-support = { workspace = true, default-features = true }
-topsoil-bags-list = { workspace = true, default-features = true }
+plant-bags-list = { workspace = true, default-features = true }
 topsoil-balances = { workspace = true, default-features = true }
-topsoil-root-testing = { workspace = true, default-features = true }
-topsoil-sudo = { workspace = true, default-features = true }
+plant-root-testing = { workspace = true, default-features = true }
+plant-sudo = { workspace = true, default-features = true }
 topsoil-timestamp = { workspace = true, default-features = true }
 topsoil-transaction-payment = { workspace = true, default-features = true }
-topsoil-treasury = { workspace = true, default-features = true }
+plant-treasury = { workspace = true, default-features = true }
 subsoil-crypto-hashing = { workspace = true, default-features = true }
 criterion = { features = ["async_tokio"], workspace = true, default-features = true }
 nix = { features = ["signal"], workspace = true }

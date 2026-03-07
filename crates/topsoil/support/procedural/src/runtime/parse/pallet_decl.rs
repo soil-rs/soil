@@ -30,7 +30,7 @@ pub struct PalletDeclaration {
 	/// `pub type System = topsoil_system::Pallet<Runtime>`.
 	pub runtime_param: Option<Ident>,
 	/// The instance of the pallet, e.g. `Instance1` in `pub type Council =
-	/// topsoil_collective<Instance1>`.
+	/// plant_collective<Instance1>`.
 	pub instance: Option<Ident>,
 }
 

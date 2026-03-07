@@ -20,7 +20,7 @@ topsoil-support = { workspace = true }
 topsoil-system = { workspace = true }
 log = { workspace = true }
 topsoil-beefy = { workspace = true }
-topsoil-mmr = { workspace = true }
+plant-mmr = { workspace = true }
 topsoil-session = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { optional = true, workspace = true, default-features = true }
@@ -42,7 +42,7 @@ std = [
 	"log/std",
 	"topsoil-balances/std",
 	"topsoil-beefy/std",
-	"topsoil-mmr/std",
+	"plant-mmr/std",
 	"topsoil-session/std",
 	"scale-info/std",
 	"serde",
@@ -52,7 +52,7 @@ try-runtime = [
 	"topsoil-system/try-runtime",
 	"topsoil-balances/try-runtime",
 	"topsoil-beefy/try-runtime",
-	"topsoil-mmr/try-runtime",
+	"plant-mmr/try-runtime",
 	"topsoil-session/try-runtime",
 	"subsoil/try-runtime"]
 runtime-benchmarks = [
@@ -60,7 +60,7 @@ runtime-benchmarks = [
 	"topsoil-support/runtime-benchmarks",
 	"topsoil-system/runtime-benchmarks",
 	"topsoil-balances/runtime-benchmarks",
-	"topsoil-mmr/runtime-benchmarks",
+	"plant-mmr/runtime-benchmarks",
 	"topsoil-session/runtime-benchmarks",
 	"subsoil/runtime-benchmarks",
 	"soil-staking/runtime-benchmarks"]

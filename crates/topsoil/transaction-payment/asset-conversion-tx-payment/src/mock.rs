@@ -14,13 +14,13 @@
 // limitations under the License.
 
 use super::*;
-use crate as topsoil_asset_conversion_tx_payment;
+use crate as plant_asset_conversion_tx_payment;
 
 use subsoil::runtime::{
 	traits::{AccountIdConversion, IdentityLookup, SaturatedConversion},
 	Permill,
 };
-use topsoil_asset_conversion::{Ascending, Chain, WithFirstAsset};
+use plant_asset_conversion::{Ascending, Chain, WithFirstAsset};
 use topsoil_support::{
 	derive_impl,
 	dispatch::DispatchClass,
@@ -53,10 +53,10 @@ topsoil_support::construct_runtime!(
 		System: system,
 		Balances: topsoil_balances,
 		TransactionPayment: topsoil_transaction_payment,
-		Assets: topsoil_assets,
-		PoolAssets: topsoil_assets::<Instance2>,
-		AssetConversion: topsoil_asset_conversion,
-		AssetTxPayment: topsoil_asset_conversion_tx_payment,
+		Assets: plant_assets,
+		PoolAssets: plant_assets::<Instance2>,
+		AssetConversion: plant_asset_conversion,
+		AssetTxPayment: plant_asset_conversion_tx_payment,
 	}
 );
 
@@ -184,7 +184,7 @@ impl topsoil_transaction_payment::Config for Runtime {
 
 type AssetId = u32;
 
-impl topsoil_assets::Config for Runtime {
+impl plant_assets::Config for Runtime {
 	type RuntimeEvent = RuntimeEvent;
 	type Balance = Balance;
 	type AssetId = AssetId;
@@ -205,12 +205,12 @@ impl topsoil_assets::Config for Runtime {
 	type CallbackHandle = ();
 	type WeightInfo = ();
 	type RemoveItemsLimit = ConstU32<1000>;
-	topsoil_assets::runtime_benchmarks_enabled! {
+	plant_assets::runtime_benchmarks_enabled! {
 		type BenchmarkHelper = ();
 	}
 }
 
-impl topsoil_assets::Config<Instance2> for Runtime {
+impl plant_assets::Config<Instance2> for Runtime {
 	type RuntimeEvent = RuntimeEvent;
 	type Balance = u64;
 	type RemoveItemsLimit = ConstU32<1000>;
@@ -231,7 +231,7 @@ impl topsoil_assets::Config<Instance2> for Runtime {
 	type Extra = ();
 	type WeightInfo = ();
 	type CallbackHandle = ();
-	topsoil_assets::runtime_benchmarks_enabled! {
+	plant_assets::runtime_benchmarks_enabled! {
 		type BenchmarkHelper = ();
 	}
 }
@@ -247,14 +247,14 @@ ord_parameter_types! {
 	pub const AssetConversionOrigin: u64 = AccountIdConversion::<u64>::into_account_truncating(&AssetConversionPalletId::get());
 }
 
-pub type PoolIdToAccountId = topsoil_asset_conversion::AccountIdConverter<
+pub type PoolIdToAccountId = plant_asset_conversion::AccountIdConverter<
 	AssetConversionPalletId,
 	(NativeOrWithId<u32>, NativeOrWithId<u32>),
 >;
 
 type NativeAndAssets = UnionOf<Balances, Assets, NativeFromLeft, NativeOrWithId<u32>, AccountId>;
 
-impl topsoil_asset_conversion::Config for Runtime {
+impl plant_asset_conversion::Config for Runtime {
 	type RuntimeEvent = RuntimeEvent;
 	type Balance = Balance;
 	type HigherPrecisionBalance = u128;
@@ -276,7 +276,7 @@ impl topsoil_asset_conversion::Config for Runtime {
 	type MaxSwapPathLength = MaxSwapPathLength;
 	type MintMinLiquidity = ConstU64<100>; // 100 is good enough when the main currency has 12 decimals.
 	type WeightInfo = ();
-	topsoil_asset_conversion::runtime_benchmarks_enabled! {
+	plant_asset_conversion::runtime_benchmarks_enabled! {
 		type BenchmarkHelper = ();
 	}
 }

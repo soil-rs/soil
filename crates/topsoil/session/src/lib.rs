@@ -88,7 +88,7 @@
 //!
 //! ### Example from the FRAME
 //!
-//! The [Staking pallet](../topsoil_staking/index.html) uses the Session pallet to get the validator
+//! The [Staking pallet](../plant_staking/index.html) uses the Session pallet to get the validator
 //! set.
 //!
 //! ```
@@ -102,7 +102,7 @@
 //!
 //! ## Related Pallets
 //!
-//! - [Staking](../topsoil_staking/index.html)
+//! - [Staking](../plant_staking/index.html)
 
 #![cfg_attr(not(feature = "std"), no_std)]
 

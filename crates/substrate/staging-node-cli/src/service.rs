@@ -135,10 +135,10 @@ pub fn create_extrinsic(
 			)),
 			topsoil_system::CheckNonce::<kitchensink_runtime::Runtime>::from(nonce),
 			topsoil_system::CheckWeight::<kitchensink_runtime::Runtime>::new(),
-			topsoil_asset_conversion_tx_payment::ChargeAssetTxPayment::<
+			plant_asset_conversion_tx_payment::ChargeAssetTxPayment::<
 				kitchensink_runtime::Runtime,
 			>::from(tip, None),
-			topsoil_metadata_hash_extension::CheckMetadataHash::new(false),
+			plant_metadata_hash_extension::CheckMetadataHash::new(false),
 			topsoil_system::WeightReclaim::<kitchensink_runtime::Runtime>::new(),
 		);
 
@@ -1116,9 +1116,9 @@ mod tests {
 				let check_nonce = topsoil_system::CheckNonce::from(index);
 				let check_weight = topsoil_system::CheckWeight::new();
 				let tx_payment =
-					topsoil_asset_conversion_tx_payment::ChargeAssetTxPayment::from(0, None);
+					plant_asset_conversion_tx_payment::ChargeAssetTxPayment::from(0, None);
 				let weight_reclaim = topsoil_system::WeightReclaim::new();
-				let metadata_hash = topsoil_metadata_hash_extension::CheckMetadataHash::new(false);
+				let metadata_hash = plant_metadata_hash_extension::CheckMetadataHash::new(false);
 				let tx_ext: TxExtension = (
 					authorize_call,
 					check_non_zero_sender,

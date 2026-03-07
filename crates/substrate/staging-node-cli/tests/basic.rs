@@ -383,7 +383,7 @@ fn full_native_block_import_works() {
 			EventRecord {
 				phase: Phase::ApplyExtrinsic(1),
 				event: RuntimeEvent::Balances(topsoil_balances::Event::Deposit {
-					who: topsoil_treasury::Pallet::<Runtime>::account_id(),
+					who: plant_treasury::Pallet::<Runtime>::account_id(),
 					amount: fees_after_refund,
 				}),
 				topics: vec![],
@@ -417,7 +417,7 @@ fn full_native_block_import_works() {
 				!matches!(
 					ev.event,
 					RuntimeEvent::VoterList(
-						topsoil_bags_list::Event::<Runtime, _>::ScoreUpdated { .. }
+						plant_bags_list::Event::<Runtime, _>::ScoreUpdated { .. }
 					)
 				)
 			})
@@ -443,7 +443,7 @@ fn full_native_block_import_works() {
 		let events = vec![
 			EventRecord {
 				phase: Phase::Initialization,
-				event: RuntimeEvent::Treasury(topsoil_treasury::Event::UpdatedInactive {
+				event: RuntimeEvent::Treasury(plant_treasury::Event::UpdatedInactive {
 					reactivated: 0,
 					deactivated: pot,
 				}),
@@ -480,7 +480,7 @@ fn full_native_block_import_works() {
 			EventRecord {
 				phase: Phase::ApplyExtrinsic(1),
 				event: RuntimeEvent::Balances(topsoil_balances::Event::Deposit {
-					who: topsoil_treasury::Pallet::<Runtime>::account_id(),
+					who: plant_treasury::Pallet::<Runtime>::account_id(),
 					amount: fees_after_refund,
 				}),
 				topics: vec![],
@@ -527,7 +527,7 @@ fn full_native_block_import_works() {
 			EventRecord {
 				phase: Phase::ApplyExtrinsic(2),
 				event: RuntimeEvent::Balances(topsoil_balances::Event::Deposit {
-					who: topsoil_treasury::Pallet::<Runtime>::account_id(),
+					who: plant_treasury::Pallet::<Runtime>::account_id(),
 					amount: fees_after_refund,
 				}),
 				topics: vec![],

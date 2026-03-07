@@ -1,0 +1,22 @@
+[package]
+name = "plant-oracle-runtime-api"
+version = "1.0.0"
+authors = ["Acala Developers", "Parity Technologies <admin@parity.io>"]
+edition.workspace = true
+license.workspace = true
+homepage.workspace = true
+repository.workspace = true
+description = "Runtime API for the oracle pallet."
+
+[dependencies]
+codec = { workspace = true, features = ["derive"] }
+scale-info = { workspace = true }
+subsoil = { workspace = true }
+
+
+[features]
+default = ["std"]
+std = [
+	"codec/std",
+	"scale-info/std",
+	"subsoil/std"]

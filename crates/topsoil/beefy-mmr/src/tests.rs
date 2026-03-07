@@ -44,7 +44,7 @@ pub fn beefy_log(log: ConsensusLog<BeefyId>) -> DigestItem {
 }
 
 fn read_mmr_leaf(ext: &mut TestExternalities, key: Vec<u8>) -> MmrLeaf {
-	type Node = topsoil_mmr::primitives::DataOrHash<Keccak256, MmrLeaf>;
+	type Node = plant_mmr::primitives::DataOrHash<Keccak256, MmrLeaf>;
 	ext.persist_offchain_overlay();
 	let offchain_db = ext.offchain_db();
 	offchain_db
@@ -95,7 +95,7 @@ fn should_contain_mmr_digest() {
 #[test]
 fn should_contain_valid_leaf_data() {
 	fn node_offchain_key(pos: usize, parent_hash: H256) -> Vec<u8> {
-		(<Test as topsoil_mmr::Config>::INDEXING_PREFIX, pos as u64, parent_hash).encode()
+		(<Test as plant_mmr::Config>::INDEXING_PREFIX, pos as u64, parent_hash).encode()
 	}
 
 	let mut ext = new_test_ext(vec![1, 2, 3, 4]);

@@ -1,0 +1,68 @@
+[package]
+name = "plant-delegated-staking"
+version = "1.0.0"
+authors.workspace = true
+edition.workspace = true
+license.workspace = true
+homepage.workspace = true
+repository.workspace = true
+description = "FRAME delegated staking pallet"
+
+[package.metadata.docs.rs]
+targets = ["x86_64-unknown-linux-gnu"]
+
+[dependencies]
+codec = { features = ["derive"], workspace = true }
+topsoil-support = { workspace = true }
+topsoil-system = { workspace = true }
+log = { workspace = true }
+scale-info = { features = ["derive"], workspace = true }
+soil-staking = { workspace = true }
+subsoil = { workspace = true }
+
+[dev-dependencies]
+plant-election-provider-support = { workspace = true }
+topsoil-balances = { workspace = true, default-features = true }
+plant-nomination-pools = { workspace = true, default-features = true }
+plant-staking = { workspace = true, default-features = true }
+plant-staking-reward-curve = { workspace = true, default-features = true }
+topsoil-timestamp = { workspace = true, default-features = true }
+subsoil = { workspace = true, default-features = true }
+
+[features]
+default = ["std"]
+std = [
+	"codec/std",
+	"plant-election-provider-support/std",
+	"topsoil-support/std",
+	"topsoil-system/std",
+	"log/std",
+	"topsoil-balances/std",
+	"plant-nomination-pools/std",
+	"plant-staking/std",
+	"topsoil-timestamp/std",
+	"scale-info/std",
+	"subsoil/std",
+	"soil-staking/std",
+]
+runtime-benchmarks = [
+	"plant-election-provider-support/runtime-benchmarks",
+	"topsoil-support/runtime-benchmarks",
+	"topsoil-system/runtime-benchmarks",
+	"topsoil-balances/runtime-benchmarks",
+	"plant-nomination-pools/runtime-benchmarks",
+	"plant-staking/runtime-benchmarks",
+	"topsoil-timestamp/runtime-benchmarks",
+	"subsoil/runtime-benchmarks",
+	"soil-staking/runtime-benchmarks",
+]
+try-runtime = [
+	"plant-election-provider-support/try-runtime",
+	"topsoil-support/try-runtime",
+	"topsoil-system/try-runtime",
+	"topsoil-balances/try-runtime",
+	"plant-nomination-pools/try-runtime",
+	"plant-staking/try-runtime",
+	"topsoil-timestamp/try-runtime",
+	"subsoil/try-runtime",
+]

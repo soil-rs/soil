@@ -25,17 +25,17 @@ use codec::Encode;
 use subsoil::consensus::beefy::Payload;
 use subsoil::runtime::traits::One;
 use topsoil_benchmarking::v2::*;
-use topsoil_mmr::{Nodes, Pallet as Mmr};
+use plant_mmr::{Nodes, Pallet as Mmr};
 use topsoil_support::traits::Hooks;
 use topsoil_system::{Config as SystemConfig, Pallet as System};
 
 pub trait Config:
-	topsoil_mmr::Config<Hashing = subsoil::consensus::beefy::MmrHashing> + crate::Config
+	plant_mmr::Config<Hashing = subsoil::consensus::beefy::MmrHashing> + crate::Config
 {
 }
 
 impl<T> Config for T where
-	T: topsoil_mmr::Config<Hashing = subsoil::consensus::beefy::MmrHashing> + crate::Config
+	T: plant_mmr::Config<Hashing = subsoil::consensus::beefy::MmrHashing> + crate::Config
 {
 }
 
@@ -53,7 +53,7 @@ mod benchmarks {
 	/// if the proof is optimal.
 	#[benchmark]
 	fn n_leafs_proof_is_optimal(n: Linear<2, 512>) {
-		topsoil_mmr::UseLocalStorage::<T>::set(true);
+		plant_mmr::UseLocalStorage::<T>::set(true);
 
 		for block_num in 1..=n {
 			init_block::<T>(block_num);
@@ -69,7 +69,7 @@ mod benchmarks {
 
 	#[benchmark]
 	fn extract_validation_context() {
-		topsoil_mmr::UseLocalStorage::<T>::set(true);
+		plant_mmr::UseLocalStorage::<T>::set(true);
 
 		init_block::<T>(1);
 		let header = System::<T>::finalize();
@@ -87,7 +87,7 @@ mod benchmarks {
 
 	#[benchmark]
 	fn read_peak() {
-		topsoil_mmr::UseLocalStorage::<T>::set(true);
+		plant_mmr::UseLocalStorage::<T>::set(true);
 
 		init_block::<T>(1);
 
@@ -105,7 +105,7 @@ mod benchmarks {
 	/// the verification. We need to account for the peaks separately.
 	#[benchmark]
 	fn n_items_proof_is_non_canonical(n: Linear<2, 512>) {
-		topsoil_mmr::UseLocalStorage::<T>::set(true);
+		plant_mmr::UseLocalStorage::<T>::set(true);
 
 		for block_num in 1..=n {
 			init_block::<T>(block_num);

@@ -40,7 +40,7 @@ topsoil_support::construct_runtime!(
 		System: system,
 		Balances: topsoil_balances,
 		TransactionPayment: topsoil_transaction_payment,
-		Assets: topsoil_assets,
+		Assets: plant_assets,
 		Authorship: topsoil_authorship,
 		AssetTxPayment: topsoil_asset_tx_payment,
 	}
@@ -125,7 +125,7 @@ impl topsoil_transaction_payment::Config for Runtime {
 
 type AssetId = u32;
 
-impl topsoil_assets::Config for Runtime {
+impl plant_assets::Config for Runtime {
 	type RuntimeEvent = RuntimeEvent;
 	type Balance = Balance;
 	type AssetId = AssetId;
@@ -146,7 +146,7 @@ impl topsoil_assets::Config for Runtime {
 	type CallbackHandle = ();
 	type WeightInfo = ();
 	type RemoveItemsLimit = ConstU32<1000>;
-	topsoil_assets::runtime_benchmarks_enabled! {
+	plant_assets::runtime_benchmarks_enabled! {
 		type BenchmarkHelper = ();
 	}
 }
@@ -199,7 +199,7 @@ impl Config for Runtime {
 	type RuntimeEvent = RuntimeEvent;
 	type Fungibles = Assets;
 	type OnChargeAssetTransaction = FungiblesAdapter<
-		topsoil_assets::BalanceToAssetBalance<Balances, Runtime, ConvertInto>,
+		plant_assets::BalanceToAssetBalance<Balances, Runtime, ConvertInto>,
 		CreditToBlockAuthor,
 	>;
 	type WeightInfo = MockWeights;

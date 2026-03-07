@@ -156,7 +156,7 @@ pub type Pair = subsoil::core::sr25519::Pair;
 pub type TxExtension = (
 	(CheckNonce<Runtime>, CheckWeight<Runtime>),
 	CheckSubstrateCall,
-	topsoil_metadata_hash_extension::CheckMetadataHash<Runtime>,
+	plant_metadata_hash_extension::CheckMetadataHash<Runtime>,
 	topsoil_system::WeightReclaim<Runtime>,
 );
 /// The payload being signed in transactions.

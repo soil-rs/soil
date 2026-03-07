@@ -321,7 +321,7 @@ fn report_equivocation_current_set_works(
 	let initial_slashable_balance = 10_000;
 
 	ExtBuilder::default().add_authorities(authorities).build_and_execute(|| {
-		assert_eq!(topsoil_staking::CurrentEra::<Test>::get(), Some(0));
+		assert_eq!(plant_staking::CurrentEra::<Test>::get(), Some(0));
 		assert_eq!(Session::current_index(), 0);
 
 		start_era(1);
@@ -339,7 +339,7 @@ fn report_equivocation_current_set_works(
 
 			assert_eq!(
 				Staking::eras_stakers(1, &validator),
-				topsoil_staking::Exposure {
+				plant_staking::Exposure {
 					total: initial_slashable_balance,
 					own: initial_slashable_balance,
 					others: vec![]
@@ -381,7 +381,7 @@ fn report_equivocation_current_set_works(
 		}
 		assert_eq!(
 			Staking::eras_stakers(2, &equivocation_validator_id),
-			topsoil_staking::Exposure { total: 0, own: 0, others: vec![] },
+			plant_staking::Exposure { total: 0, own: 0, others: vec![] },
 		);
 
 		// check that the balances of all other validators are left intact.
@@ -395,7 +395,7 @@ fn report_equivocation_current_set_works(
 
 			assert_eq!(
 				Staking::eras_stakers(2, &validator),
-				topsoil_staking::Exposure {
+				plant_staking::Exposure {
 					total: initial_slashable_balance,
 					own: initial_slashable_balance,
 					others: vec![]
@@ -438,7 +438,7 @@ fn report_equivocation_old_set_works(
 
 			assert_eq!(
 				Staking::eras_stakers(2, &validator),
-				topsoil_staking::Exposure {
+				plant_staking::Exposure {
 					total: initial_slashable_balance,
 					own: initial_slashable_balance,
 					others: vec![]
@@ -478,7 +478,7 @@ fn report_equivocation_old_set_works(
 		}
 		assert_eq!(
 			Staking::eras_stakers(3, &equivocation_validator_id),
-			topsoil_staking::Exposure { total: 0, own: 0, others: vec![] },
+			plant_staking::Exposure { total: 0, own: 0, others: vec![] },
 		);
 
 		// check that the balances of all other validators are left intact.
@@ -492,7 +492,7 @@ fn report_equivocation_old_set_works(
 
 			assert_eq!(
 				Staking::eras_stakers(3, &validator),
-				topsoil_staking::Exposure {
+				plant_staking::Exposure {
 					total: initial_slashable_balance,
 					own: initial_slashable_balance,
 					others: vec![]
@@ -1011,7 +1011,7 @@ fn report_fork_voting_invalid_context() {
 
 	let mut era = 1;
 	let block_num = ext.execute_with(|| {
-		assert_eq!(topsoil_staking::CurrentEra::<Test>::get(), Some(0));
+		assert_eq!(plant_staking::CurrentEra::<Test>::get(), Some(0));
 		assert_eq!(Session::current_index(), 0);
 		start_era(era);
 
@@ -1035,7 +1035,7 @@ fn report_fork_voting_invalid_context() {
 
 			assert_eq!(
 				Staking::eras_stakers(era, validator),
-				topsoil_staking::Exposure { total: 10_000, own: 10_000, others: vec![] },
+				plant_staking::Exposure { total: 10_000, own: 10_000, others: vec![] },
 			);
 		}
 

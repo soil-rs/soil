@@ -52,7 +52,7 @@ construct_runtime!(
 		System: topsoil_system,
 		Session: topsoil_session,
 		Balances: topsoil_balances,
-		Mmr: topsoil_mmr,
+		Mmr: plant_mmr,
 		Beefy: topsoil_beefy,
 		BeefyMmr: topsoil_beefy_mmr,
 	}
@@ -90,7 +90,7 @@ pub type MmrLeaf = subsoil::consensus::beefy::mmr::MmrLeaf<
 	Vec<u8>,
 >;
 
-impl topsoil_mmr::Config for Test {
+impl plant_mmr::Config for Test {
 	const INDEXING_PREFIX: &'static [u8] = b"mmr";
 
 	type Hashing = Keccak256;
@@ -99,7 +99,7 @@ impl topsoil_mmr::Config for Test {
 
 	type OnNewRoot = topsoil_beefy_mmr::DepositBeefyDigest<Test>;
 
-	type BlockHashProvider = topsoil_mmr::DefaultBlockHashProvider<Test>;
+	type BlockHashProvider = plant_mmr::DefaultBlockHashProvider<Test>;
 
 	type WeightInfo = ();
 
@@ -139,7 +139,7 @@ impl BeefyDataProvider<Vec<u8>> for DummyDataProvider {
 	fn extra_data() -> Vec<u8> {
 		let mut col = vec![(15, vec![1, 2, 3]), (5, vec![4, 5, 6])];
 		col.sort();
-		subsoil::binary_merkle_tree::merkle_root::<<Test as topsoil_mmr::Config>::Hashing, _>(
+		subsoil::binary_merkle_tree::merkle_root::<<Test as plant_mmr::Config>::Hashing, _>(
 			col.into_iter().map(|pair| pair.encode()),
 		)
 		.as_ref()

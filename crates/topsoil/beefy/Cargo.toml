@@ -25,11 +25,11 @@ soil-staking = { features = ["serde"], workspace = true }
 subsoil = { workspace = true }
 
 [dev-dependencies]
-topsoil-election-provider-support = { workspace = true, default-features = true }
+plant-election-provider-support = { workspace = true, default-features = true }
 topsoil-balances = { workspace = true, default-features = true }
 topsoil-offences = { workspace = true, default-features = true }
-topsoil-staking = { workspace = true, default-features = true }
-topsoil-staking-reward-curve = { workspace = true, default-features = true }
+plant-staking = { workspace = true, default-features = true }
+plant-staking-reward-curve = { workspace = true, default-features = true }
 topsoil-timestamp = { workspace = true, default-features = true }
 soil-staking = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
@@ -38,7 +38,7 @@ subsoil = { workspace = true, default-features = true }
 default = ["std"]
 std = [
 	"codec/std",
-	"topsoil-election-provider-support/std",
+	"plant-election-provider-support/std",
 	"topsoil-support/std",
 	"topsoil-system/std",
 	"log/std",
@@ -46,7 +46,7 @@ std = [
 	"topsoil-balances/std",
 	"topsoil-offences/std",
 	"topsoil-session/std",
-	"topsoil-staking/std",
+	"plant-staking/std",
 	"topsoil-timestamp/std",
 	"scale-info/std",
 	"serde/std",
@@ -55,14 +55,14 @@ std = [
 	"soil-staking/std",
 ]
 try-runtime = [
-	"topsoil-election-provider-support/try-runtime",
+	"plant-election-provider-support/try-runtime",
 	"topsoil-support/try-runtime",
 	"topsoil-system/try-runtime",
 	"topsoil-authorship/try-runtime",
 	"topsoil-balances/try-runtime",
 	"topsoil-offences/try-runtime",
 	"topsoil-session/try-runtime",
-	"topsoil-staking/try-runtime",
+	"plant-staking/try-runtime",
 	"topsoil-timestamp/try-runtime",
 	"subsoil/try-runtime",
 ]

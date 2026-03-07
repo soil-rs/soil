@@ -32,7 +32,7 @@ use subsoil::runtime::{
 	traits::OpaqueKeys,
 	BuildStorage, DigestItem, Perbill,
 };
-use topsoil_election_provider_support::{
+use plant_election_provider_support::{
 	bounds::{ElectionBounds, ElectionBoundsBuilder},
 	onchain, SequentialPhragmen,
 };
@@ -51,7 +51,7 @@ topsoil_support::construct_runtime!(
 		Authorship: topsoil_authorship,
 		Timestamp: topsoil_timestamp,
 		Balances: topsoil_balances,
-		Staking: topsoil_staking,
+		Staking: plant_staking,
 		Session: topsoil_session,
 		Grandpa: topsoil_grandpa,
 		Offences: topsoil_offences,
@@ -112,7 +112,7 @@ impl topsoil_session::Config for Test {
 impl topsoil_session::historical::Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type FullIdentification = ();
-	type FullIdentificationOf = topsoil_staking::UnitIdentificationOf<Self>;
+	type FullIdentificationOf = plant_staking::UnitIdentificationOf<Self>;
 }
 
 impl topsoil_authorship::Config for Test {
@@ -135,7 +135,7 @@ impl topsoil_timestamp::Config for Test {
 	type WeightInfo = ();
 }
 
-topsoil_staking_reward_curve::build! {
+plant_staking_reward_curve::build! {
 	const REWARD_CURVE: PiecewiseLinear<'static> = curve!(
 		min_inflation: 0_025_000u64,
 		max_inflation: 0_100_000,
@@ -165,8 +165,8 @@ impl onchain::Config for OnChainSeqPhragmen {
 	type Bounds = ElectionsBoundsOnChain;
 }
 
-#[derive_impl(topsoil_staking::config_preludes::TestDefaultConfig)]
-impl topsoil_staking::Config for Test {
+#[derive_impl(plant_staking::config_preludes::TestDefaultConfig)]
+impl plant_staking::Config for Test {
 	type OldCurrency = Balances;
 	type Currency = Balances;
 	type CurrencyBalance = <Self as topsoil_balances::Config>::Balance;
@@ -175,13 +175,13 @@ impl topsoil_staking::Config for Test {
 	type AdminOrigin = topsoil_system::EnsureRoot<Self::AccountId>;
 	type SessionInterface = Self;
 	type UnixTime = topsoil_timestamp::Pallet<Test>;
-	type EraPayout = topsoil_staking::ConvertCurve<RewardCurve>;
+	type EraPayout = plant_staking::ConvertCurve<RewardCurve>;
 	type NextNewSession = Session;
 	type ElectionProvider = onchain::OnChainExecution<OnChainSeqPhragmen>;
 	type GenesisElectionProvider = Self::ElectionProvider;
-	type VoterList = topsoil_staking::UseNominatorsAndValidatorsMap<Self>;
-	type TargetList = topsoil_staking::UseValidatorsMap<Self>;
-	type NominationsQuota = topsoil_staking::FixedNominationsQuota<16>;
+	type VoterList = plant_staking::UseNominatorsAndValidatorsMap<Self>;
+	type TargetList = plant_staking::UseValidatorsMap<Self>;
+	type NominationsQuota = plant_staking::FixedNominationsQuota<16>;
 }
 
 impl topsoil_offences::Config for Test {
@@ -258,13 +258,13 @@ pub fn new_test_ext_raw_authorities(authorities: AuthorityList) -> subsoil::io::
 
 	// controllers are the same as stash
 	let stakers: Vec<_> = (0..authorities.len())
-		.map(|i| (i as u64, i as u64, 10_000, topsoil_staking::StakerStatus::<u64>::Validator))
+		.map(|i| (i as u64, i as u64, 10_000, plant_staking::StakerStatus::<u64>::Validator))
 		.collect();
 
-	let staking_config = topsoil_staking::GenesisConfig::<Test> {
+	let staking_config = plant_staking::GenesisConfig::<Test> {
 		stakers,
 		validator_count: 8,
-		force_era: topsoil_staking::Forcing::ForceNew,
+		force_era: plant_staking::Forcing::ForceNew,
 		minimum_validator_count: 0,
 		invulnerables: vec![],
 		..Default::default()
@@ -305,7 +305,7 @@ pub fn start_session(session_index: SessionIndex) {
 
 pub fn start_era(era_index: EraIndex) {
 	start_session((era_index * 3).into());
-	assert_eq!(topsoil_staking::CurrentEra::<Test>::get(), Some(era_index));
+	assert_eq!(plant_staking::CurrentEra::<Test>::get(), Some(era_index));
 }
 
 pub fn initialize_block(number: u64, parent_hash: H256) {

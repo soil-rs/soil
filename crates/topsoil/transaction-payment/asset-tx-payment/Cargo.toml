@@ -30,7 +30,7 @@ scale-info = { features = ["derive"], workspace = true }
 serde = { optional = true, workspace = true, default-features = true }
 
 [dev-dependencies]
-topsoil-assets = { workspace = true, default-features = true }
+plant-assets = { workspace = true, default-features = true }
 topsoil-authorship = { workspace = true, default-features = true }
 topsoil-balances = { workspace = true, default-features = true }
 
@@ -50,7 +50,7 @@ runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",
 	"topsoil-support/runtime-benchmarks",
 	"topsoil-system/runtime-benchmarks",
-	"topsoil-assets/runtime-benchmarks",
+	"plant-assets/runtime-benchmarks",
 	"topsoil-balances/runtime-benchmarks",
 	"topsoil-transaction-payment/runtime-benchmarks",
 	"subsoil/runtime-benchmarks",
@@ -58,7 +58,7 @@ runtime-benchmarks = [
 try-runtime = [
 	"topsoil-support/try-runtime",
 	"topsoil-system/try-runtime",
-	"topsoil-assets/try-runtime",
+	"plant-assets/try-runtime",
 	"topsoil-authorship/try-runtime",
 	"topsoil-balances/try-runtime",
 	"topsoil-transaction-payment/try-runtime",

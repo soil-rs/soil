@@ -18,9 +18,9 @@
 //! Some configurable implementations as associated type for the substrate runtime.
 
 use alloc::boxed::Box;
-use topsoil_alliance::{IdentityVerifier, ProposalIndex, ProposalProvider};
+use plant_alliance::{IdentityVerifier, ProposalIndex, ProposalProvider};
 use topsoil_asset_tx_payment::HandleCredit;
-use topsoil_identity::legacy::IdentityField;
+use plant_identity::legacy::IdentityField;
 use topsoil_support::{
 	pallet_prelude::*,
 	traits::{
@@ -62,7 +62,7 @@ impl IdentityVerifier<AccountId> for AllianceIdentityVerifier {
 	}
 
 	fn has_good_judgement(who: &AccountId) -> bool {
-		use topsoil_identity::{IdentityOf, Judgement};
+		use plant_identity::{IdentityOf, Judgement};
 		IdentityOf::<Runtime>::get(who)
 			.map(|registration| registration.judgements)
 			.map_or(false, |judgements| {
@@ -73,7 +73,7 @@ impl IdentityVerifier<AccountId> for AllianceIdentityVerifier {
 	}
 
 	fn super_account_id(who: &AccountId) -> Option<AccountId> {
-		use topsoil_identity::SuperOf;
+		use plant_identity::SuperOf;
 		SuperOf::<Runtime>::get(who).map(|parent| parent.0)
 	}
 }
@@ -108,7 +108,7 @@ impl ProposalProvider<AccountId, Hash, RuntimeCall> for AllianceProposalProvider
 	}
 
 	fn proposal_of(proposal_hash: Hash) -> Option<RuntimeCall> {
-		topsoil_collective::ProposalOf::<Runtime, AllianceCollective>::get(proposal_hash)
+		plant_collective::ProposalOf::<Runtime, AllianceCollective>::get(proposal_hash)
 	}
 }
 

@@ -39,7 +39,7 @@
 //!
 //! Each of these can be used to construct and represent ratios within our runtime.
 //! You will find types like [`Perbill`](Perbill) being used often in pallet
-//! development.  `topsoil_referenda` is a good example of a pallet which makes good use of fixed
+//! development.  `plant_referenda` is a good example of a pallet which makes good use of fixed
 //! point arithmetic, as it relies on representing various curves and thresholds relating to
 //! governance.
 //!

@@ -44,8 +44,8 @@
 //! implementation. You can check out the topsoil-uniques tests if you want more examples of usage.
 //!
 //! ```rust,ignore
-//! type Collection = topsoil_uniques::asset_ops::Collection<Uniques>;
-//! type Item = topsoil_uniques::asset_ops::Item<Uniques>;
+//! type Collection = plant_uniques::asset_ops::Collection<Uniques>;
+//! type Item = plant_uniques::asset_ops::Item<Uniques>;
 //!
 //! // Collection creation
 //! //
@@ -71,7 +71,7 @@
 //! let metadata = Collection::inspect(&collection_id, Bytes::default()).unwrap();
 //!
 //! // Get collection attribute
-//! use topsoil_uniques::asset_strategies::Attribute;
+//! use plant_uniques::asset_strategies::Attribute;
 //! let attr_key = "example-key";
 //! let attr_value = Collection::inspect(
 //!    &collection_id,

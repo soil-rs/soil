@@ -200,7 +200,7 @@ pub struct PalletDeclaration {
 	pub index: Option<u8>,
 	/// The path of the pallet, e.g. `topsoil_system` in `System: topsoil_system`.
 	pub path: PalletPath,
-	/// The instance of the pallet, e.g. `Instance1` in `Council: topsoil_collective::<Instance1>`.
+	/// The instance of the pallet, e.g. `Instance1` in `Council: plant_collective::<Instance1>`.
 	pub instance: Option<Ident>,
 	/// The declared pallet parts,
 	/// e.g. `Some([Pallet, Call])` for `System: system::{Pallet, Call}`
@@ -588,7 +588,7 @@ pub struct Pallet {
 	pub index: u8,
 	/// The path of the pallet, e.g. `topsoil_system` in `System: topsoil_system`.
 	pub path: PalletPath,
-	/// The instance of the pallet, e.g. `Instance1` in `Council: topsoil_collective::<Instance1>`.
+	/// The instance of the pallet, e.g. `Instance1` in `Council: plant_collective::<Instance1>`.
 	pub instance: Option<Ident>,
 	/// The pallet parts to use for the pallet.
 	pub pallet_parts: Vec<PalletPart>,

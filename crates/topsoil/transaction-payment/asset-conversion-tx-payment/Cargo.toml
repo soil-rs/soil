@@ -1,5 +1,5 @@
 [package]
-name = "topsoil-asset-conversion-tx-payment"
+name = "plant-asset-conversion-tx-payment"
 version = "10.0.0"
 authors.workspace = true
 edition.workspace = true
@@ -21,13 +21,13 @@ codec = { features = ["derive"], workspace = true }
 topsoil-benchmarking = { optional = true, workspace = true }
 topsoil-support = { workspace = true }
 topsoil-system = { workspace = true }
-topsoil-asset-conversion = { workspace = true }
+plant-asset-conversion = { workspace = true }
 topsoil-transaction-payment = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 subsoil = { workspace = true }
 
 [dev-dependencies]
-topsoil-assets = { workspace = true, default-features = true }
+plant-assets = { workspace = true, default-features = true }
 topsoil-balances = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
 
@@ -38,7 +38,7 @@ std = [
 	"topsoil-benchmarking?/std",
 	"topsoil-support/std",
 	"topsoil-system/std",
-	"topsoil-asset-conversion/std",
+	"plant-asset-conversion/std",
 	"topsoil-transaction-payment/std",
 	"scale-info/std",
 	"subsoil/std",
@@ -47,8 +47,8 @@ runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",
 	"topsoil-support/runtime-benchmarks",
 	"topsoil-system/runtime-benchmarks",
-	"topsoil-asset-conversion/runtime-benchmarks",
-	"topsoil-assets/runtime-benchmarks",
+	"plant-asset-conversion/runtime-benchmarks",
+	"plant-assets/runtime-benchmarks",
 	"topsoil-balances/runtime-benchmarks",
 	"topsoil-transaction-payment/runtime-benchmarks",
 	"subsoil/runtime-benchmarks",
@@ -56,8 +56,8 @@ runtime-benchmarks = [
 try-runtime = [
 	"topsoil-support/try-runtime",
 	"topsoil-system/try-runtime",
-	"topsoil-asset-conversion/try-runtime",
-	"topsoil-assets/try-runtime",
+	"plant-asset-conversion/try-runtime",
+	"plant-assets/try-runtime",
 	"topsoil-balances/try-runtime",
 	"topsoil-transaction-payment/try-runtime",
 	"subsoil/try-runtime",

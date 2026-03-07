@@ -17,7 +17,7 @@
 
 //! Adapter to use `fungibles::*` implementations as `fungible::*`.
 //!
-//! This allows for a `fungibles` asset, e.g. from the `topsoil_assets` pallet, to be used when a
+//! This allows for a `fungibles` asset, e.g. from the `plant_assets` pallet, to be used when a
 //! `fungible` asset is expected.
 //!
 //! See the [`crate::traits::fungible`] doc for more information about fungible traits.
