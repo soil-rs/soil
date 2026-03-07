@@ -26,6 +26,7 @@ harness = false
 
 [dependencies]
 soil-client = { workspace = true, default-features = true }
+ahash = { workspace = true}
 array-bytes = { workspace = true, default-features = true}
 async-channel = { workspace = true}
 async-trait = { workspace = true}
@@ -65,6 +66,7 @@ soil-consensus = { workspace = true, default-features = true}
 thiserror = { workspace = true}
 tokio = { features = ["macros", "sync", "time"], workspace = true, default-features = true}
 tokio-stream = { workspace = true}
+tracing = { workspace = true, default-features = true}
 unsigned-varint = { features = ["asynchronous_codec", "futures"], workspace = true}
 void = { workspace = true}
 wasm-timer = { workspace = true}

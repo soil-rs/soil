@@ -9064,7 +9064,6 @@ dependencies = [
  "soil-client",
  "soil-consensus",
  "soil-network",
- "soil-network-gossip",
  "soil-network-test",
  "subsoil",
  "substrate-prometheus-endpoint",
@@ -9256,7 +9255,6 @@ dependencies = [
  "soil-client",
  "soil-consensus",
  "soil-network",
- "soil-network-gossip",
  "soil-network-test",
  "soil-telemetry",
  "subsoil",
@@ -9337,6 +9335,7 @@ dependencies = [
 name = "soil-network"
 version = "0.34.0"
 dependencies = [
+ "ahash 0.8.12",
  "array-bytes 6.2.3",
  "assert_matches",
  "async-channel 1.9.0",
@@ -9390,30 +9389,11 @@ dependencies = [
  "tokio",
  "tokio-stream",
  "tokio-util",
+ "tracing",
  "unsigned-varint 0.7.2",
  "void",
  "wasm-timer",
  "zeroize",
-]
-
-[[package]]
-name = "soil-network-gossip"
-version = "0.34.0"
-dependencies = [
- "ahash 0.8.12",
- "async-trait",
- "futures",
- "futures-timer",
- "log",
- "parity-scale-codec",
- "quickcheck",
- "schnellru",
- "soil-network",
- "subsoil",
- "substrate-prometheus-endpoint",
- "substrate-test-runtime-client",
- "tokio",
- "tracing",
 ]
 
 [[package]]
@@ -10041,7 +10021,6 @@ dependencies = [
  "soil-mmr-gadget",
  "soil-mmr-rpc",
  "soil-network",
- "soil-network-gossip",
  "soil-network-statement",
  "soil-network-transactions",
  "soil-pow",

@@ -46,8 +46,8 @@ use finality_grandpa::{
 	voter_set::VoterSet,
 	Message::{Precommit, Prevote, PrimaryPropose},
 };
+use soil_network::gossip::{GossipEngine, Network as GossipNetwork};
 use soil_network::{NetworkBlock, NetworkSyncForkRequest, NotificationService, ReputationChange};
-use soil_network_gossip::{GossipEngine, Network as GossipNetwork};
 use soil_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG, CONSENSUS_INFO};
 use subsoil::keystore::KeystorePtr;
 use subsoil::runtime::traits::{Block as BlockT, Hash as HashT, Header as HeaderT, NumberFor};
@@ -552,7 +552,7 @@ fn incoming_global<B: BlockT>(
 	let process_commit = {
 		let telemetry = telemetry.clone();
 		move |msg: FullCommitMessage<B>,
-		      mut notification: soil_network_gossip::TopicNotification,
+		      mut notification: soil_network::gossip::TopicNotification,
 		      gossip_engine: &Arc<Mutex<GossipEngine<B>>>,
 		      gossip_validator: &Arc<GossipValidator<B>>,
 		      voters: &VoterSet<AuthorityId>| {
@@ -620,7 +620,7 @@ fn incoming_global<B: BlockT>(
 	};
 
 	let process_catch_up = move |msg: FullCatchUpMessage<B>,
-	                             mut notification: soil_network_gossip::TopicNotification,
+	                             mut notification: soil_network::gossip::TopicNotification,
 	                             gossip_engine: &Arc<Mutex<GossipEngine<B>>>,
 	                             gossip_validator: &Arc<GossipValidator<B>>,
 	                             voters: &VoterSet<AuthorityId>| {

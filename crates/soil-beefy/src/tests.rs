@@ -1492,7 +1492,7 @@ async fn gossipped_finality_proofs() {
 		end: 10,
 		validator_set: &validator_set,
 	});
-	let mut charlie_gossip_engine = soil_network_gossip::GossipEngine::new(
+	let mut charlie_gossip_engine = soil_network::gossip::GossipEngine::new(
 		charlie.network_service().clone(),
 		charlie.sync_service().clone(),
 		charlie.take_notification_service(&beefy_gossip_proto_name()).unwrap(),

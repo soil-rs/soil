@@ -1040,8 +1040,8 @@ pub(crate) mod tests {
 	use parking_lot::Mutex;
 	use soil_client::blockchain::Backend as BlockchainBackendT;
 	use soil_client::client_api::{Backend as BackendT, HeaderBackend};
+	use soil_network::gossip::GossipEngine;
 	use soil_network::sync::SyncingService;
-	use soil_network_gossip::GossipEngine;
 	use soil_network_test::TestNetFactory;
 	use subsoil::consensus::beefy::{
 		ecdsa_crypto, known_payloads,

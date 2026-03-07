@@ -29,6 +29,7 @@ use soil_client::utils::mpsc::{
 	tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender,
 };
 use soil_network::common::role::{ObservedRole, Roles};
+use soil_network::gossip::Validator;
 use soil_network::sync::{SyncEvent as SyncStreamEvent, SyncEventStream};
 use soil_network::types::PeerId;
 use soil_network::{
@@ -39,7 +40,6 @@ use soil_network::{
 	Multiaddr, NetworkBlock, NetworkEventStream, NetworkPeers, NetworkSyncForkRequest,
 	ReputationChange,
 };
-use soil_network_gossip::Validator;
 use soil_network_test::{Block, Hash};
 use std::{collections::HashSet, pin::Pin, sync::Arc, task::Poll};
 use subsoil::consensus::grandpa::AuthorityList;
@@ -159,7 +159,7 @@ impl NetworkSyncForkRequest<Hash, NumberFor<Block>> for TestNetwork {
 	fn set_sync_fork_request(&self, _peers: Vec<PeerId>, _hash: Hash, _number: NumberFor<Block>) {}
 }
 
-impl soil_network_gossip::ValidatorContext<Block> for TestNetwork {
+impl soil_network::gossip::ValidatorContext<Block> for TestNetwork {
 	fn broadcast_topic(&mut self, _: Hash, _: bool) {}
 
 	fn broadcast_message(&mut self, _: Hash, _: Vec<u8>, _: bool) {}
@@ -359,7 +359,7 @@ fn make_ids(keys: &[Ed25519Keyring]) -> AuthorityList {
 
 struct NoopContext;
 
-impl soil_network_gossip::ValidatorContext<Block> for NoopContext {
+impl soil_network::gossip::ValidatorContext<Block> for NoopContext {
 	fn broadcast_topic(&mut self, _: Hash, _: bool) {}
 	fn broadcast_message(&mut self, _: Hash, _: Vec<u8>, _: bool) {}
 	fn send_message(&mut self, _: &PeerId, _: Vec<u8>) {}
@@ -667,7 +667,7 @@ fn peer_with_higher_view_leads_to_catch_up_request() {
 
 			// neighbor packets are always discard
 			match result {
-				soil_network_gossip::ValidationResult::Discard => {},
+				soil_network::gossip::ValidationResult::Discard => {},
 				_ => panic!("wrong expected outcome from neighbor validation"),
 			}
 

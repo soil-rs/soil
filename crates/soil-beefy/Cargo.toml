@@ -24,7 +24,6 @@ prometheus-endpoint = { workspace = true, default-features = true }
 sc-rpc = { workspace = true, default-features = true}
 soil-consensus = { workspace = true, default-features = true }
 soil-network = { workspace = true, default-features = true }
-soil-network-gossip = { workspace = true, default-features = true }
 serde = { features = ["derive"], workspace = true, default-features = true }
 soil-client = { workspace = true, default-features = true }
 subsoil = { workspace = true }

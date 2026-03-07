@@ -42,8 +42,8 @@ use soil_client::client_api::{
 use soil_client::consensus::{Error as ConsensusError, SyncOracle};
 use soil_client::utils::mpsc::{tracing_unbounded, TracingUnboundedReceiver};
 use soil_consensus::BlockImport;
+use soil_network::gossip::{GossipEngine, Network as GossipNetwork, Syncing as GossipSyncing};
 use soil_network::{NetworkRequest, NotificationService, ProtocolName};
-use soil_network_gossip::{GossipEngine, Network as GossipNetwork, Syncing as GossipSyncing};
 use std::{
 	collections::{BTreeMap, VecDeque},
 	future::Future,

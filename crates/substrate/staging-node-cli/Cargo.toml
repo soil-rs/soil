@@ -88,7 +88,6 @@ soil-pow = { workspace = true, default-features = true }
 soil-informant = { workspace = true, default-features = true }
 sc-mixnet = { workspace = true, default-features = true }
 soil-network = { workspace = true, default-features = true }
-soil-network-gossip = { workspace = true, default-features = true }
 soil-network-statement = { workspace = true, default-features = true }
 soil-network-transactions = { workspace = true, default-features = true }
 sc-offchain = { workspace = true, default-features = true }

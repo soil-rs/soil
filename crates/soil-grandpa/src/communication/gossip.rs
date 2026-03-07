@@ -94,9 +94,9 @@ use soil_client::utils::mpsc::{
 	tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender,
 };
 use soil_network::common::role::ObservedRole;
+use soil_network::gossip::{MessageIntent, ValidatorContext};
 use soil_network::types::PeerId;
 use soil_network::ReputationChange;
-use soil_network_gossip::{MessageIntent, ValidatorContext};
 use soil_telemetry::{telemetry, TelemetryHandle, CONSENSUS_DEBUG};
 use subsoil::consensus::grandpa::AuthorityId;
 use subsoil::runtime::traits::{Block as BlockT, NumberFor, Zero};
@@ -1494,7 +1494,7 @@ impl<Block: BlockT> GossipValidator<Block> {
 	}
 }
 
-impl<Block: BlockT> soil_network_gossip::Validator<Block> for GossipValidator<Block> {
+impl<Block: BlockT> soil_network::gossip::Validator<Block> for GossipValidator<Block> {
 	fn new_peer(
 		&self,
 		context: &mut dyn ValidatorContext<Block>,
@@ -1527,7 +1527,7 @@ impl<Block: BlockT> soil_network_gossip::Validator<Block> for GossipValidator<Bl
 		context: &mut dyn ValidatorContext<Block>,
 		who: &PeerId,
 		data: &[u8],
-	) -> soil_network_gossip::ValidationResult<Block::Hash> {
+	) -> soil_network::gossip::ValidationResult<Block::Hash> {
 		let (action, broadcast_topics, peer_reply) = self.do_validate(who, data);
 
 		// not with lock held!
@@ -1543,15 +1543,15 @@ impl<Block: BlockT> soil_network_gossip::Validator<Block> for GossipValidator<Bl
 			Action::Keep(topic, cb) => {
 				self.report(*who, cb);
 				context.broadcast_message(topic, data.to_vec(), false);
-				soil_network_gossip::ValidationResult::ProcessAndKeep(topic)
+				soil_network::gossip::ValidationResult::ProcessAndKeep(topic)
 			},
 			Action::ProcessAndDiscard(topic, cb) => {
 				self.report(*who, cb);
-				soil_network_gossip::ValidationResult::ProcessAndDiscard(topic)
+				soil_network::gossip::ValidationResult::ProcessAndDiscard(topic)
 			},
 			Action::Discard(cb) => {
 				self.report(*who, cb);
-				soil_network_gossip::ValidationResult::Discard
+				soil_network::gossip::ValidationResult::Discard
 			},
 		}
 	}
@@ -1679,7 +1679,7 @@ mod tests {
 	use super::{super::NEIGHBOR_REBROADCAST_PERIOD, environment::SharedVoterSetState, *};
 	use crate::communication;
 	use soil_network::config::Role;
-	use soil_network_gossip::Validator as GossipValidatorT;
+	use soil_network::gossip::Validator as GossipValidatorT;
 	use std::time::Instant;
 	use subsoil::core::{crypto::UncheckedFrom, H256};
 	use substrate_test_runtime_client::runtime::{Block, Header};

@@ -18,9 +18,9 @@
 
 use std::{collections::BTreeSet, sync::Arc, time::Duration};
 
+use soil_network::gossip::{MessageIntent, ValidationResult, Validator, ValidatorContext};
 use soil_network::types::PeerId;
 use soil_network::{NetworkPeers, ReputationChange};
-use soil_network_gossip::{MessageIntent, ValidationResult, Validator, ValidatorContext};
 use subsoil::runtime::traits::{Block, Hash, Header, NumberFor};
 
 use codec::{Decode, DecodeAll, Encode};
