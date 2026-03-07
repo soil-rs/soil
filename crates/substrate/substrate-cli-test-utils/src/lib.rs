@@ -228,7 +228,7 @@ pub async fn run_with_timeout(timeout: Duration, future: impl futures::Future<Ou
 
 /// Wait for at least n blocks to be finalized from a specified node
 pub async fn wait_n_finalized_blocks(n: usize, url: &str) {
-	use substrate_rpc_client::{ws_client, ChainApi};
+	use soil_rpc::client::{ws_client, ChainApi};
 
 	let mut built_blocks = std::collections::HashSet::new();
 	let block_duration = Duration::from_secs(2);
@@ -282,7 +282,7 @@ pub async fn run_node_for_a_while(base_path: &Path, args: &[&str]) {
 }
 
 pub async fn block_hash(block_number: u64, url: &str) -> Result<Hash, String> {
-	use substrate_rpc_client::{ws_client, ChainApi};
+	use soil_rpc::client::{ws_client, ChainApi};
 
 	let rpc = ws_client(url).await.unwrap();
 

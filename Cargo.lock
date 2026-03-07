@@ -3151,10 +3151,10 @@ dependencies = [
  "parity-scale-codec",
  "rand 0.8.5",
  "serde",
+ "soil-rpc",
  "spinners",
  "subsoil",
  "subsoil-crypto-hashing",
- "substrate-rpc-client",
  "tokio",
  "topsoil-support",
 ]
@@ -9883,7 +9883,6 @@ dependencies = [
  "substrate-frame-rpc-support",
  "substrate-frame-rpc-system",
  "substrate-prometheus-endpoint",
- "substrate-rpc-client",
  "substrate-wasm-builder",
  "subxt-signer",
  "tempfile",
@@ -10181,7 +10180,6 @@ dependencies = [
  "soil-rpc",
  "soil-service",
  "staging-node-cli",
- "substrate-rpc-client",
  "tokio",
 ]
 
@@ -10229,19 +10227,6 @@ dependencies = [
  "log",
  "prometheus",
  "thiserror 1.0.69",
- "tokio",
-]
-
-[[package]]
-name = "substrate-rpc-client"
-version = "0.33.0"
-dependencies = [
- "async-trait",
- "jsonrpsee",
- "log",
- "serde",
- "soil-rpc",
- "subsoil",
  "tokio",
 ]
 

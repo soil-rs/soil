@@ -25,7 +25,6 @@ regex = { workspace = true }
 soil-cli = { workspace = true, default-features = false }
 soil-service = { workspace = true, default-features = false }
 soil-rpc = { workspace = true, default-features = true }
-substrate-rpc-client = { workspace = true, default-features = true }
 tokio = { features = ["full"], workspace = true, default-features = true }
 
 [features]

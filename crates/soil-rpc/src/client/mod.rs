@@ -23,7 +23,7 @@
 //! ## Usage
 //!
 //! ```no_run
-//! # use substrate_rpc_client::{ws_client, StateApi};
+//! # use soil_rpc::client::{ws_client, StateApi};
 //! # use subsoil::core::{H256, storage::StorageKey};
 //!
 //! #[tokio::main]
@@ -42,6 +42,12 @@ use serde::de::DeserializeOwned;
 use std::collections::VecDeque;
 use subsoil::runtime::traits::{Block as BlockT, Header as HeaderT};
 
+pub use crate::api::{
+	author::AuthorApiClient as AuthorApi, chain::ChainApiClient as ChainApi,
+	child_state::ChildStateApiClient as ChildStateApi, dev::DevApiClient as DevApi,
+	offchain::OffchainApiClient as OffchainApi, state::StateApiClient as StateApi,
+	system::SystemApiClient as SystemApi,
+};
 pub use jsonrpsee::{
 	core::{
 		client::{ClientT, Error, Subscription, SubscriptionClientT},
@@ -50,12 +56,6 @@ pub use jsonrpsee::{
 	},
 	rpc_params,
 	ws_client::{WsClient, WsClientBuilder},
-};
-pub use soil_rpc::api::{
-	author::AuthorApiClient as AuthorApi, chain::ChainApiClient as ChainApi,
-	child_state::ChildStateApiClient as ChildStateApi, dev::DevApiClient as DevApi,
-	offchain::OffchainApiClient as OffchainApi, state::StateApiClient as StateApi,
-	system::SystemApiClient as SystemApi,
 };
 
 /// Create a new `WebSocket` connection with shared settings.

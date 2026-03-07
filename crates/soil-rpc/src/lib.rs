@@ -22,6 +22,7 @@
 pub mod api;
 pub mod author;
 pub mod chain;
+pub mod client;
 pub mod dev;
 pub mod list;
 pub mod mixnet;

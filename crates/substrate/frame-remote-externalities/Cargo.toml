@@ -25,7 +25,7 @@ serde = { workspace = true, default-features = true }
 subsoil = { workspace = true }
 subsoil-crypto-hashing = { workspace = true, default-features = true }
 spinners = { workspace = true }
-substrate-rpc-client = { workspace = true, default-features = true }
+soil-rpc = { workspace = true, default-features = true }
 tokio = { features = [
 	"macros",
 	"rt-multi-thread",

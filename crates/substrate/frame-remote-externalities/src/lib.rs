@@ -38,6 +38,7 @@ use jsonrpsee::core::params::ArrayParams;
 use log::*;
 use parallel::{run_workers, ProcessResult};
 use serde::de::DeserializeOwned;
+use soil_rpc::client::{rpc_params, BatchRequestBuilder, ChainApi, ClientT, StateApi};
 use std::{
 	collections::{BTreeSet, VecDeque},
 	future::Future,
@@ -60,7 +61,6 @@ use subsoil::runtime::{
 	StateVersion,
 };
 use subsoil::state_machine::TestExternalities;
-use substrate_rpc_client::{rpc_params, BatchRequestBuilder, ChainApi, ClientT, StateApi};
 
 use crate::key_range::{initialize_work_queue, subdivide_remaining_range};
 
@@ -669,7 +669,7 @@ where
 
 		loop {
 			let rpc_result = with_timeout(
-				substrate_rpc_client::ChildStateApi::storage_keys_paged(
+				soil_rpc::client::ChildStateApi::storage_keys_paged(
 					client.ws_client.as_ref(),
 					top_key.clone(),
 					Some(StorageKey(vec![])),

@@ -55,7 +55,7 @@ consensus crates for sync-state generation.
 - [ ] Step 8: Merge `soil-sync-state-rpc` into `soil_rpc::sync_state`.
 - [x] Step 9: Merge `substrate-state-trie-migration-rpc` into
       `soil_rpc::state_trie_migration`.
-- [ ] Step 10: Merge `substrate-rpc-client` into `soil_rpc::client`.
+- [x] Step 10: Merge `substrate-rpc-client` into `soil_rpc::client`.
 - [ ] Step 11: Final consistency pass and spec update.
 
 ## Validation Log

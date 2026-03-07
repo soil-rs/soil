@@ -210,7 +210,6 @@ members = [
 	"crates/substrate/substrate-frame-rpc-support",
 	"crates/substrate/substrate-frame-rpc-system",
 	"crates/substrate/substrate-prometheus-endpoint",
-	"crates/substrate/substrate-rpc-client",
 	"crates/substrate/substrate-test-client",
 	"crates/substrate/substrate-test-runtime",
 	"crates/substrate/substrate-test-runtime-client",
@@ -450,7 +449,6 @@ substrate-build-script-utils = { path = "crates/substrate/substrate-build-script
 substrate-cli-test-utils = { path = "crates/substrate/substrate-cli-test-utils" }
 substrate-frame-rpc-support = { default-features = false, path = "crates/substrate/substrate-frame-rpc-support" }
 substrate-frame-rpc-system = { path = "crates/substrate/substrate-frame-rpc-system", default-features = false }
-substrate-rpc-client = { path = "crates/substrate/substrate-rpc-client", default-features = false }
 substrate-test-client = { path = "crates/substrate/substrate-test-client" }
 substrate-test-runtime = { path = "crates/substrate/substrate-test-runtime" }
 substrate-test-runtime-client = { path = "crates/substrate/substrate-test-runtime-client" }
