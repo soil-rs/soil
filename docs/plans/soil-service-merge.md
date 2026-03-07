@@ -41,7 +41,7 @@ Locked standalones for this phase:
 - [x] Step 1: Create this progress file.
 - [ ] Step 2: Update `docs/specs/merge.md` to the final remaining scope.
 - [x] Step 3: Rename `sc-transaction-pool` to `soil-txpool`.
-- [ ] Step 4: Flatten the existing `soil-service` crate to `crates/soil-service`.
+- [x] Step 4: Flatten the existing `soil-service` crate to `crates/soil-service`.
 - [ ] Step 5: Merge `soil-proposer-metrics` and `soil-basic-authorship`.
 - [ ] Step 6: Merge `soil-informant` into `soil_service::informant`.
 - [ ] Step 7: Merge `soil-sysinfo` into `soil_service::sysinfo`.
