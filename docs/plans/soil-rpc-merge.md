@@ -46,7 +46,7 @@ frame RPC helpers separate.
 - [x] Step 4: Merge `sc-rpc` into the root handler modules of `soil-rpc`.
 - [x] Step 5: Merge `soil-rpc-server` into `soil_rpc::server`.
 - [x] Step 6: Merge `soil-rpc-spec-v2` into `soil_rpc::v2`.
-- [ ] Step 7: Merge `soil-mmr-rpc` into `soil_rpc::mmr`.
+- [x] Step 7: Merge `soil-mmr-rpc` into `soil_rpc::mmr`.
 - [ ] Step 8: Merge `soil-sync-state-rpc` into `soil_rpc::sync_state`.
 - [ ] Step 9: Merge `substrate-state-trie-migration-rpc` into
       `soil_rpc::state_trie_migration`.

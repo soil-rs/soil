@@ -143,7 +143,7 @@ where
 		+ Send
 		+ 'static,
 	C::Api: substrate_frame_rpc_system::AccountNonceApi<Block, AccountId, Nonce>,
-	C::Api: soil_mmr_rpc::MmrRuntimeApi<
+	C::Api: soil_rpc::mmr::MmrRuntimeApi<
 		Block,
 		<Block as subsoil::runtime::traits::Block>::Hash,
 		BlockNumber,
@@ -162,9 +162,9 @@ where
 	use soil_babe::rpc::{Babe, BabeApiServer};
 	use soil_beefy::rpc::{Beefy, BeefyApiServer};
 	use soil_grandpa::rpc::{Grandpa, GrandpaApiServer};
-	use soil_mmr_rpc::{Mmr, MmrApiServer};
 	use soil_rpc::{
 		dev::{Dev, DevApiServer},
+		mmr::{Mmr, MmrApiServer},
 		mixnet::MixnetApiServer,
 		statement::StatementApiServer,
 	};

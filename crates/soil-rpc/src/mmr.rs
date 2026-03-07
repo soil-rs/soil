@@ -16,8 +16,6 @@
 // limitations under the License.
 
 #![warn(missing_docs)]
-#![warn(unused_crate_dependencies)]
-
 //! Node-specific RPC methods for interaction with Merkle Mountain Range pallet.
 
 use std::{marker::PhantomData, sync::Arc};

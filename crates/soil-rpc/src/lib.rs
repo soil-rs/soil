@@ -25,6 +25,7 @@ pub mod chain;
 pub mod dev;
 pub mod list;
 pub mod mixnet;
+pub mod mmr;
 pub mod number;
 pub mod offchain;
 pub mod server;

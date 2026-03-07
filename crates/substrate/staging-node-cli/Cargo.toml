@@ -70,7 +70,6 @@ remote-externalities = { workspace = true, default-features = true }
 topsoil-support-procedural-tools = { workspace = true, default-features = true }
 generate-bags = { workspace = true, default-features = true }
 soil-mmr-gadget = { workspace = true, default-features = true }
-soil-mmr-rpc = { workspace = true, default-features = true }
 topsoil-asset-conversion-tx-payment = { workspace = true, default-features = true }
 topsoil-im-online = { workspace = true, default-features = true }
 topsoil-transaction-payment-rpc = { workspace = true, default-features = true }

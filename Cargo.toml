@@ -30,7 +30,6 @@ members = [
 	"crates/soil-grandpa",
 	"crates/soil/informant",
 	"crates/soil/mmr-gadget",
-	"crates/soil/mmr-rpc",
 	"crates/soil-network",
 	"crates/soil/network-test",
 	"crates/soil-pow",
@@ -287,7 +286,6 @@ topsoil-try-runtime = { path = "crates/topsoil/try-runtime", default-features = 
 generate-bags = { path = "crates/substrate/generate-bags", default-features = false }
 kitchensink-runtime = { path = "crates/substrate/kitchensink-runtime" }
 soil-mmr-gadget = { path = "crates/soil/mmr-gadget", default-features = false }
-soil-mmr-rpc = { path = "crates/soil/mmr-rpc", default-features = false }
 node-cli = { path = "crates/substrate/staging-node-cli", package = "staging-node-cli" }
 node-inspect = { path = "crates/substrate/staging-node-inspect", default-features = false, package = "staging-node-inspect" }
 node-primitives = { path = "crates/substrate/node-primitives", default-features = false }

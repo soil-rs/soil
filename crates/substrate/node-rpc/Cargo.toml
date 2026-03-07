@@ -17,7 +17,6 @@ targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
 jsonrpsee = { features = ["server"], workspace = true }
-soil-mmr-rpc = { workspace = true, default-features = true }
 node-primitives = { workspace = true, default-features = true }
 topsoil-transaction-payment-rpc = { workspace = true, default-features = true }
 soil-chain-spec = { workspace = true, default-features = true }
