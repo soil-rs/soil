@@ -30,7 +30,6 @@ use codec::Encode;
 use futures::prelude::*;
 use kitchensink_runtime::RuntimeApi;
 use node_primitives::Block;
-use sc_transaction_pool::TransactionPoolHandle;
 use soil_babe::{self, SlotProportion};
 use soil_client::client_api::{Backend, BlockBackend};
 use soil_client::transaction_pool::OffchainTransactionPoolFactory;
@@ -44,6 +43,7 @@ use soil_service::{config::Configuration, error::Error as ServiceError, RpcHandl
 use soil_sysinfo::SUBSTRATE_REFERENCE_HARDWARE;
 use soil_telemetry::{Telemetry, TelemetryWorker};
 use soil_transaction_storage_proof::runtime_api::TransactionStorageApi;
+use soil_txpool::TransactionPoolHandle;
 use std::{path::Path, sync::Arc};
 use subsoil::api::ProvideRuntimeApi;
 use subsoil::core::crypto::Pair;
@@ -82,7 +82,7 @@ type FullBeefyBlockImport<InnerBlockImport> = beefy::import::BeefyBlockImport<
 >;
 
 /// The transaction pool type definition.
-pub type TransactionPool = sc_transaction_pool::TransactionPoolHandle<Block, FullClient>;
+pub type TransactionPool = soil_txpool::TransactionPoolHandle<Block, FullClient>;
 
 /// The minimum period of blocks on which justifications will be
 /// imported and generated.
@@ -180,7 +180,7 @@ pub fn new_partial(
 		FullBackend,
 		FullSelectChain,
 		soil_client::import::DefaultImportQueue<Block>,
-		sc_transaction_pool::TransactionPoolHandle<Block, FullClient>,
+		soil_txpool::TransactionPoolHandle<Block, FullClient>,
 		(
 			impl Fn(
 				soil_rpc::SubscriptionTaskExecutor,
@@ -235,7 +235,7 @@ pub fn new_partial(
 	let select_chain = soil_consensus::LongestChain::new(backend.clone());
 
 	let transaction_pool = Arc::from(
-		sc_transaction_pool::Builder::new(
+		soil_txpool::Builder::new(
 			task_manager.spawn_essential_handle(),
 			client.clone(),
 			config.role.is_authority().into(),

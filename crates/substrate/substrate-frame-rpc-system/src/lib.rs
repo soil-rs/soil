@@ -218,8 +218,8 @@ mod tests {
 
 	use assert_matches::assert_matches;
 	use futures::executor::block_on;
-	use sc_transaction_pool::BasicPool;
 	use soil_rpc::DenyUnsafe;
+	use soil_txpool::BasicPool;
 	use subsoil::runtime::{
 		transaction_validity::{InvalidTransaction, TransactionValidityError},
 		ApplyExtrinsicResult,

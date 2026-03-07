@@ -327,7 +327,6 @@ where
 mod tests {
 	use super::*;
 	use futures::executor::block_on;
-	use sc_transaction_pool::BasicPool;
 	use soil_client::block_builder::BlockBuilderBuilder;
 	use soil_client::client_api::Backend as _;
 	use soil_client::consensus::BlockOrigin;
@@ -336,6 +335,7 @@ mod tests {
 	use soil_network::{
 		config::MultiaddrWithPeerId, types::ProtocolName, Multiaddr, ObservedRole, ReputationChange,
 	};
+	use soil_txpool::BasicPool;
 	use std::{collections::HashSet, sync::Arc};
 	use subsoil::runtime::traits::Block as BlockT;
 	use substrate_test_runtime_client::{

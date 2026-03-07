@@ -20,7 +20,6 @@
 
 pub use jsonrpsee::server::BatchRequestConfig as RpcBatchRequestConfig;
 use prometheus_endpoint::Registry;
-pub use sc_transaction_pool::TransactionPoolOptions;
 use soil_chain_spec::ChainSpec;
 pub use soil_client::db::{BlocksPruning, Database, DatabaseSource, PruningMode};
 pub use soil_client::executor::{WasmExecutionMethod, WasmtimeInstantiationStrategy};
@@ -38,6 +37,7 @@ pub use soil_rpc::server::{
 	IpNetwork, RpcEndpoint, RpcMethods, SubscriptionIdProvider as RpcSubscriptionIdProvider,
 };
 pub use soil_telemetry::TelemetryEndpoints;
+pub use soil_txpool::TransactionPoolOptions;
 use std::{
 	io, iter,
 	net::SocketAddr,

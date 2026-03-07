@@ -18,8 +18,8 @@
 
 //! Tests for fork-aware transaction pool.
 
-use sc_transaction_pool::{ChainApi, PoolLimit};
 use soil_client::transaction_pool::ChainEvent;
+use soil_txpool::{ChainApi, PoolLimit};
 use std::sync::Arc;
 use subsoil::runtime::transaction_validity::TransactionSource;
 use substrate_test_runtime_client::{
@@ -29,7 +29,7 @@ use substrate_test_runtime_client::{
 use substrate_test_runtime_transaction_pool::{uxt, TestApi};
 pub const LOG_TARGET: &str = "txpool";
 
-use sc_transaction_pool::ForkAwareTxPool;
+use soil_txpool::ForkAwareTxPool;
 
 pub fn invalid_hash() -> Hash {
 	Default::default()
@@ -67,8 +67,8 @@ pub fn finalized_block_event(
 pub struct TestPoolBuilder {
 	api: Option<Arc<TestApi>>,
 	use_default_limits: bool,
-	ready_limits: sc_transaction_pool::PoolLimit,
-	future_limits: sc_transaction_pool::PoolLimit,
+	ready_limits: soil_txpool::PoolLimit,
+	future_limits: soil_txpool::PoolLimit,
 	mempool_max_transactions_count: usize,
 	finality_timeout_threshold: Option<usize>,
 }

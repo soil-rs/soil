@@ -18,11 +18,11 @@
 
 use async_trait::async_trait;
 use codec::Encode;
-use sc_transaction_pool::BasicPool;
 use soil_client::transaction_pool::{
 	ImportNotificationStream, PoolStatus, ReadyTransactions, TransactionFor, TransactionPool,
 	TransactionSource, TransactionStatusStreamFor, TxHash, TxInvalidityReportMap,
 };
+use soil_txpool::BasicPool;
 
 use crate::v2::hex_string;
 use futures::StreamExt;

@@ -34,7 +34,7 @@ rpassword = { workspace = true}
 soil-network = { workspace = true, default-features = true}
 soil-service = { workspace = true, default-features = false}
 soil-telemetry = { workspace = true, default-features = true}
-sc-transaction-pool = { workspace = true, default-features = true}
+soil-txpool = { workspace = true, default-features = true}
 soil-client = { workspace = true, default-features = true}
 serde = { workspace = true, default-features = true}
 serde_json = { workspace = true, default-features = true}

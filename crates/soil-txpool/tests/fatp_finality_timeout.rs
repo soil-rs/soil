@@ -26,10 +26,10 @@ use fatp_common::{
 	finalized_block_event, invalid_hash, new_best_block_event, TestPoolBuilder, LOG_TARGET, SOURCE,
 };
 use futures::{executor::block_on, FutureExt};
-use sc_transaction_pool::ChainApi;
 use soil_client::transaction_pool::{
 	MaintainedTransactionPool, TransactionPool, TransactionStatus,
 };
+use soil_txpool::ChainApi;
 use substrate_test_runtime_client::Sr25519Keyring::*;
 use substrate_test_runtime_transaction_pool::uxt;
 

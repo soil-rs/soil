@@ -20,8 +20,8 @@ use async_trait::async_trait;
 use codec::Encode;
 use criterion::{criterion_group, criterion_main, Criterion};
 use futures::executor::block_on;
-use sc_transaction_pool::*;
 use soil_client::blockchain::HashAndNumber;
+use soil_txpool::*;
 use std::sync::Arc;
 use subsoil::runtime::{
 	generic::BlockId,

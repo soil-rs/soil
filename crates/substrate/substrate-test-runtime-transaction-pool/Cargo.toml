@@ -21,7 +21,7 @@ codec = { workspace = true, default-features = true }
 futures = { workspace = true }
 log = { workspace = true }
 parking_lot = { workspace = true, default-features = true }
-sc-transaction-pool = { workspace = true, default-features = true }
+soil-txpool = { workspace = true, default-features = true }
 subsoil = { workspace = true }
 substrate-test-runtime-client = { workspace = true }
 thiserror = { workspace = true }

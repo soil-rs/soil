@@ -23,8 +23,8 @@ use crate::DenyUnsafe;
 use assert_matches::assert_matches;
 use codec::Encode;
 use jsonrpsee::{core::EmptyServerParams as EmptyParams, MethodsError as RpcError, RpcModule};
-use sc_transaction_pool::{BasicPool, FullChainApi};
 use soil_client::transaction_pool::TransactionStatus;
+use soil_txpool::{BasicPool, FullChainApi};
 use std::sync::Arc;
 use subsoil::core::{
 	bytes::to_hex,

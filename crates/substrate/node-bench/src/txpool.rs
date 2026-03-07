@@ -25,8 +25,8 @@ use std::borrow::Cow;
 
 use node_testing::bench::{BenchDb, BlockType, DatabaseType, KeyTypes};
 
-use sc_transaction_pool::BasicPool;
 use soil_client::transaction_pool::{TransactionPool, TransactionSource};
+use soil_txpool::BasicPool;
 
 use crate::core::{self, Mode, Path};
 

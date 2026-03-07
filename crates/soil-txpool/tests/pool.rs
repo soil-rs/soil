@@ -24,7 +24,6 @@ use futures::{
 	prelude::*,
 	task::Poll,
 };
-use sc_transaction_pool::*;
 use soil_client::block_builder::BlockBuilderBuilder;
 use soil_client::blockchain::HeaderBackend;
 use soil_client::client_api::client::BlockchainEvents;
@@ -32,6 +31,7 @@ use soil_client::consensus::BlockOrigin;
 use soil_client::transaction_pool::{
 	ChainEvent, MaintainedTransactionPool, TransactionPool, TransactionStatus,
 };
+use soil_txpool::*;
 use std::{collections::BTreeSet, pin::Pin, sync::Arc};
 use subsoil::runtime::{
 	generic::BlockId,
@@ -46,7 +46,7 @@ use substrate_test_runtime_client::{
 use substrate_test_runtime_transaction_pool::{uxt, TestApi};
 use tracing::{debug, trace};
 
-type Pool<Api> = sc_transaction_pool::Pool<Api, ()>;
+type Pool<Api> = soil_txpool::Pool<Api, ()>;
 
 const LOG_TARGET: &str = "txpool";
 

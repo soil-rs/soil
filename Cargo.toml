@@ -217,7 +217,7 @@ members = [
 	"crates/substrate/substrate-wasm-builder",
 	"crates/substrate-client/authority-discovery",
 	"crates/substrate-client/offchain",
-	"crates/substrate-client/transaction-pool",
+	"crates/soil-txpool",
 ]
 
 
@@ -427,7 +427,7 @@ soil-service-test = { path = "crates/soil/service-test" }
 soil-sync-state-rpc = { path = "crates/soil/sync-state-rpc", default-features = false }
 soil-sysinfo = { path = "crates/soil/sysinfo", default-features = false }
 soil-telemetry = { path = "crates/soil/telemetry", default-features = false }
-sc-transaction-pool = { path = "crates/substrate-client/transaction-pool", default-features = false }
+soil-txpool = { path = "crates/soil-txpool", default-features = false }
 soil-authority-discovery = { path = "crates/soil/authority-discovery", default-features = false }
 subsoil = { path = "crates/subsoil", default-features = false }
 subsoil-crypto-hashing = { path = "crates/subsoil-crypto-hashing", default-features = false }

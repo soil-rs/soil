@@ -584,11 +584,11 @@ mod tests {
 	use super::*;
 	use futures::executor::block_on;
 	use parking_lot::Mutex;
-	use sc_transaction_pool::BasicPool;
 	use soil_client::blockchain::HeaderBackend;
 	use soil_client::client_api::{Backend, TrieCacheContext};
 	use soil_client::consensus::{BlockOrigin, Environment};
 	use soil_client::transaction_pool::{ChainEvent, MaintainedTransactionPool, TransactionSource};
+	use soil_txpool::BasicPool;
 	use subsoil::api::Core;
 	use subsoil::runtime::{generic::BlockId, traits::NumberFor, Perbill};
 	use substrate_test_runtime_client::{

@@ -23,11 +23,11 @@ use fatp_common::{
 	test_chain_with_forks, LOG_TARGET, SOURCE,
 };
 use futures::{executor::block_on, task::Poll, FutureExt, StreamExt};
-use sc_transaction_pool::ChainApi;
 use soil_client::transaction_pool::{
 	error::Error as TxPoolError, ChainEvent, MaintainedTransactionPool, TransactionPool,
 	TransactionStatus,
 };
+use soil_txpool::ChainApi;
 use std::{sync::Arc, time::Duration};
 use subsoil::runtime::transaction_validity::InvalidTransaction;
 use substrate_test_runtime_client::Sr25519Keyring::*;

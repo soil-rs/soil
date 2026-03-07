@@ -89,7 +89,6 @@ pub use soil_client::db::PruningFilter;
 
 use crate::config::RpcConfiguration;
 use prometheus_endpoint::Registry;
-pub use sc_transaction_pool::TransactionPoolOptions;
 pub use soil_client::executor::NativeExecutionDispatch;
 pub use soil_client::import::ImportQueue;
 pub use soil_client::tracing::TracingReceiver;
@@ -98,6 +97,7 @@ pub use soil_network::sync::WarpSyncConfig;
 #[doc(hidden)]
 pub use soil_network::transactions::config::{TransactionImport, TransactionImportFuture};
 pub use soil_rpc::{RandomIntegerSubscriptionId, RandomStringSubscriptionId};
+pub use soil_txpool::TransactionPoolOptions;
 #[doc(hidden)]
 pub use std::{ops::Deref, result::Result, sync::Arc};
 pub use task_manager::{
@@ -529,7 +529,7 @@ where
 		let uxt = match Decode::decode(&mut &encoded[..]) {
 			Ok(uxt) => uxt,
 			Err(e) => {
-				debug!(target: sc_transaction_pool::LOG_TARGET, "Transaction invalid: {:?}", e);
+				debug!(target: soil_txpool::LOG_TARGET, "Transaction invalid: {:?}", e);
 				return Box::pin(futures::future::ready(TransactionImport::Bad));
 			},
 		};
@@ -548,7 +548,7 @@ where
 			{
 				Ok(_) => {
 					let elapsed = start.elapsed();
-					trace!(target: sc_transaction_pool::LOG_TARGET, "import transaction: {elapsed:?}");
+					trace!(target: soil_txpool::LOG_TARGET, "import transaction: {elapsed:?}");
 					TransactionImport::NewGood
 				},
 				Err(e) => match e.into_pool_error() {
@@ -582,8 +582,8 @@ where
 mod tests {
 	use super::*;
 	use futures::executor::block_on;
-	use sc_transaction_pool::BasicPool;
 	use soil_client::consensus::SelectChain;
+	use soil_txpool::BasicPool;
 	use substrate_test_runtime_client::{
 		prelude::*,
 		runtime::{ExtrinsicBuilder, Transfer, TransferData},

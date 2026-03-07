@@ -34,7 +34,7 @@ soil-network = { workspace = true, default-features = true}
 soil-rpc = { workspace = true, default-features = true }
 soil-sysinfo = { workspace = true, default-features = true}
 soil-telemetry = { workspace = true, default-features = true}
-sc-transaction-pool = { workspace = true, default-features = true}
+soil-txpool = { workspace = true, default-features = true}
 schnellru = { workspace = true}
 serde = { workspace = true, default-features = true}
 serde_json = { workspace = true, default-features = true}

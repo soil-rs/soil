@@ -567,7 +567,7 @@ where
 	spawn_handle.spawn(
 		"txpool-notifications",
 		Some("transaction-pool"),
-		sc_transaction_pool::notification_future(client.clone(), transaction_pool.clone()),
+		soil_txpool::notification_future(client.clone(), transaction_pool.clone()),
 	);
 
 	spawn_handle.spawn(

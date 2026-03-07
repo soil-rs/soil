@@ -22,9 +22,9 @@
 use async_trait::async_trait;
 use codec::Encode;
 use parking_lot::RwLock;
-use sc_transaction_pool::{ChainApi, ValidateTransactionPriority};
 use soil_client::blockchain::{CachedHeaderMetadata, HashAndNumber, TreeRoute};
 use soil_client::transaction_pool::error::IntoMetricsLabel;
+use soil_txpool::{ChainApi, ValidateTransactionPriority};
 use std::{
 	collections::{BTreeMap, HashMap, HashSet},
 	sync::Arc,
