@@ -7,7 +7,7 @@ service-side networking crates into the flattened `soil-network` layout. See
 ## Goals
 
 - Merge `soil-mixnet` into `subsoil::mixnet`.
-- Merge the service-side network crates into `crates/soil-network`:
+- Merge the service-side network crates into `main/soil-network`:
   - `soil-network-common`
   - `soil-network-types`
   - `soil-network-light`

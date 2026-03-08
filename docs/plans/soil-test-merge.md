@@ -1,12 +1,12 @@
 # Plan: Merge the Immediate Test Crates into `soil-test`
 
 Tracking the consolidation of the smaller reusable test crates into the
-single `crates/soil-test` package.
+single `harness/soil-test` package.
 
 Deferred and explicitly out of scope for this pass:
 - `soil-runtime-test`
-- `sp-runtime-interface-test-wasm`
-- `sp-runtime-interface-test-wasm-deprecated`
+- `soil-test-runtime-interface-wasm`
+- `soil-test-runtime-interface-wasm-deprecated`
 - all `substrate-*`, `node-*`, and `*runtime*` test crates not listed below
 
 ## Goals

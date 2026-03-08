@@ -1,5 +1,5 @@
 [package]
-name = "sp-runtime-interface-test-wasm"
+name = "soil-test-runtime-interface-wasm"
 version = "2.0.0"
 authors.workspace = true
 edition.workspace = true

@@ -9,17 +9,19 @@ from pathlib import Path
 
 # Order matters: longer prefixes first to avoid misclassification.
 GROUP_PATTERNS = [
-    ("substrate-client", re.compile(r"/crates/substrate-client/")),
-    ("substrate", re.compile(r"/crates/substrate/")),
-    ("topsoil", re.compile(r"/crates/topsoil(?:-|/)")),
-    ("soil", re.compile(r"/crates/soil(?:-|/)")),
+    ("contrib", re.compile(r"/contrib/")),
+    ("library", re.compile(r"/library/")),
+    ("runtime", re.compile(r"/runtime/")),
+    ("harness", re.compile(r"/harness/")),
+    ("main", re.compile(r"/main/")),
 ]
 
 GROUP_COLORS = {
-    "soil": "#b3d9ff",
-    "topsoil": "#b3ffb3",
-    "substrate": "#ffb3b3",
-    "substrate-client": "#ffffb3",
+    "main": "#b3d9ff",
+    "harness": "#ffffb3",
+    "runtime": "#b3ffb3",
+    "contrib": "#ffd9b3",
+    "library": "#ffb3b3",
 }
 
 

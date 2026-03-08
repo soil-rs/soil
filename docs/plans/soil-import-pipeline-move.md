@@ -8,7 +8,7 @@ the client layer where it belongs.
 ## Goals
 
 - Move the block import and import queue modules from `soil-consensus` into
-  `crates/soil-client/src/import/`.
+  `main/soil-client/src/import/`.
 - Expose the moved API as a flat `soil_client::import::*` surface.
 - Remove the moved exports from `soil-consensus`.
 - Rewrite all downstream consumers to import from `soil-client`.

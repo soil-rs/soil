@@ -20,8 +20,8 @@
 
 use subsoil::runtime_interface::*;
 
-use sp_runtime_interface_test_wasm::{test_api::HostFunctions, wasm_binary_unwrap};
-use sp_runtime_interface_test_wasm_deprecated::wasm_binary_unwrap as wasm_binary_deprecated_unwrap;
+use soil_test_runtime_interface_wasm::{test_api::HostFunctions, wasm_binary_unwrap};
+use soil_test_runtime_interface_wasm_deprecated::wasm_binary_unwrap as wasm_binary_deprecated_unwrap;
 
 use soil_client::executor::common::{runtime_blob::RuntimeBlob, wasm_runtime::AllocationStats};
 use subsoil::wasm_interface::{ExtendedHostFunctions, HostFunctions as HostFunctionsT};

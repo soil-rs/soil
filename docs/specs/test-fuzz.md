@@ -1,7 +1,7 @@
 # Merge `core/fuzz` and `npos-elections/fuzzer` into `soil-test-fuzz`
 
 ## Summary
-- Replace `crates/soil/core/fuzz` and `crates/soil/npos-elections/fuzzer` with one new package at `crates/soil-test-fuzz`.
+- Replace `crates/soil/core/fuzz` and `crates/soil/npos-elections/fuzzer` with one new package at `harness/soil-test-fuzz`.
 - Convert the `sp-core-fuzz` target from `cargo-fuzz`/`libfuzzer-sys` to `honggfuzz`.
 - Keep the crate as a normal workspace member; do not change `default-members` or create a separate fuzz workspace.
 - Normalize all runnable target names to domain-prefixed underscore names:
@@ -12,7 +12,7 @@
   - `reduce` -> `npos_reduce`
 
 ## Implementation Changes
-- Create `crates/soil-test-fuzz/Cargo.toml` as the only fuzz package under `crates/`, with:
+- Create `harness/soil-test-fuzz/Cargo.toml` as the only fuzz package under `crates/`, with:
   - package name `soil-test-fuzz`
   - version `0.1.0` to match the `soil-test` namespace convention
   - `publish = false`, workspace authors/homepage/repository/license/edition, and workspace lints
@@ -23,12 +23,12 @@
 
 - Update the workspace manifest in `Cargo.toml`:
   - remove members `crates/soil/core/fuzz` and `crates/soil/npos-elections/fuzzer`
-  - add member `crates/soil-test-fuzz`
+  - add member `harness/soil-test-fuzz`
   - remove workspace dependency `libfuzzer-sys`, since it is no longer used anywhere
   - keep `honggfuzz` unchanged
   - do not add `default-members`
 
-- Use a flat source layout in `crates/soil-test-fuzz/src/` to minimize churn:
+- Use a flat source layout in `harness/soil-test-fuzz/src/` to minimize churn:
   - `src/core_address_uri.rs`
   - `src/npos_phragmen_balancing.rs`
   - `src/npos_phragmms_balancing.rs`
@@ -49,7 +49,7 @@
   - keep `npos_phragmen_pjr`’s current non-fuzzing local-run mode and CLI behavior, only updating names/docs
   - keep the other npos bins as plain honggfuzz loop-based binaries
 
-- Add a short `crates/soil-test-fuzz/README.md` for developer experience:
+- Add a short `harness/soil-test-fuzz/README.md` for developer experience:
   - list the five target names
   - show canonical commands with `cargo hfuzz run <target>`
   - note that `npos_phragmen_pjr` also supports plain `cargo run -p soil-test-fuzz --bin npos_phragmen_pjr -- ...`

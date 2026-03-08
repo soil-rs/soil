@@ -269,8 +269,8 @@ crates.
 
 Deferred from this consolidation:
 - `soil-runtime-test`
-- `sp-runtime-interface-test-wasm`
-- `sp-runtime-interface-test-wasm-deprecated`
+- `soil-test-runtime-interface-wasm`
+- `soil-test-runtime-interface-wasm-deprecated`
 - larger `substrate-*`, `node-*`, and runtime test crates
 
 These stay separate for now because they are either artifact-producing fixture

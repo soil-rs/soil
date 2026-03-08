@@ -22,8 +22,8 @@ Consensus engine crates go under `subsoil::consensus::*`. Block builder stays at
 | 8 | soil-consensus-sassafras | `consensus::sassafras` | `crates/soil/consensus-sassafras/` | — (uses slots, needs `bandersnatch-experimental`) |
 
 **File structure:**
-- `crates/subsoil/src/consensus/mod.rs` declares consensus submodules (`slots`, `pow`, `grandpa`, `beefy`, `aura`, `babe`, `sassafras`). `lib.rs` adds `pub mod consensus;`.
-- `crates/subsoil/src/block_builder/` stays at top level. `lib.rs` adds `pub mod block_builder;`.
+- `main/subsoil/src/consensus/mod.rs` declares consensus submodules (`slots`, `pow`, `grandpa`, `beefy`, `aura`, `babe`, `sassafras`). `lib.rs` adds `pub mod consensus;`.
+- `main/subsoil/src/block_builder/` stays at top level. `lib.rs` adds `pub mod block_builder;`.
 
 **Deferred:** `soil-consensus-epochs`, `soil-consensus-babe-rpc`, `soil-consensus-grandpa-rpc`, `soil-consensus-beefy-rpc` — these are std-only crates with client-side deps. Their destination (subsoil vs soil-client) will be decided later.
 
@@ -45,8 +45,8 @@ Leaf crates first, then crates that depend on slots.
 For each crate:
 
 ### 1. Copy source files
-- Consensus crates → `crates/subsoil/src/consensus/$MOD.rs` (or `consensus/$MOD/mod.rs` if multi-file)
-- Block builder → `crates/subsoil/src/block_builder/mod.rs` (top level, multi-file)
+- Consensus crates → `main/subsoil/src/consensus/$MOD.rs` (or `consensus/$MOD/mod.rs` if multi-file)
+- Block builder → `main/subsoil/src/block_builder/mod.rs` (top level, multi-file)
 - Copy any test resources (e.g. beefy's `test-res/`)
 
 ### 2. Add module declaration
@@ -54,7 +54,7 @@ For each crate:
 - Block builder: add `pub mod block_builder;` to `lib.rs`
 - First consensus commit creates `consensus/mod.rs` and adds `pub mod consensus;` to `lib.rs`
 
-### 3. Update `crates/subsoil/Cargo.toml`
+### 3. Update `main/subsoil/Cargo.toml`
 - Add any new dependencies (with appropriate feature gating)
 - Add `/std` feature propagation for new deps
 
@@ -100,8 +100,8 @@ For each crate:
 ## Critical files
 
 - `Cargo.toml` (workspace root) — members + deps (every commit)
-- `crates/subsoil/Cargo.toml` — accumulates new deps
-- `crates/subsoil/src/lib.rs` — adds `pub mod` declarations
+- `main/subsoil/Cargo.toml` — accumulates new deps
+- `main/subsoil/src/lib.rs` — adds `pub mod` declarations
 - ~30 consumer `Cargo.toml` files
 - ~87 consumer `.rs` files for import rewrites
 

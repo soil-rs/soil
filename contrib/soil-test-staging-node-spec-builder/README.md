@@ -19,7 +19,7 @@ cargo install soil-test-staging-node-spec-builder --locked
 ```
 
 _Note:_ `soil-test-staging-node-spec-builder` binary is published on [crates.io](https://crates.io) under
-[`soil-test-staging-node-spec-builder`](https://crates.io/crates/soil-test-staging-node-spec-builder) due to a name conflict.
+[`soil-test-staging-node-spec-builder`](https://crates.io/harness/soil-test-staging-node-spec-builder) due to a name conflict.
 
 ## Usage
 

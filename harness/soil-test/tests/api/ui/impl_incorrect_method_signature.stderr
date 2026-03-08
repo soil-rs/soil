@@ -5,7 +5,7 @@ error[E0603]: struct `RuntimeVersion` is private
    |                                       ^^^^^^^^^^^^^^ private struct
    |
 note: the struct `RuntimeVersion` is defined here
-  --> $WORKSPACE/crates/subsoil/src/api/mod.rs
+  --> $WORKSPACE/main/subsoil/src/api/mod.rs
    |
    | use crate::version::RuntimeVersion;
    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

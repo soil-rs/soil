@@ -353,7 +353,7 @@ subsoil::wasm_export_functions! {
 
 	fn test_versioning_works() {
 		// we fix new api to accept only 42 as a proper input
-		// as opposed to sp-runtime-interface-test-wasm-deprecated::test_api::verify_input
+		// as opposed to soil-test-runtime-interface-wasm-deprecated::test_api::verify_input
 		// which accepted 42 and 50.
 		assert!(test_api::test_versioning(42));
 

@@ -7,13 +7,13 @@ consensus crates into the new flattened `soil-*` layout. See
 ## Goals
 
 - Merge `sc-consensus`, `sc-consensus-slots`, and `soil-consensus-epochs` into
-  `crates/soil-consensus`.
+  `main/soil-consensus`.
 - Merge the selectable consensus engines into flattened crates:
-  - `crates/soil-pow`
-  - `crates/soil-aura`
-  - `crates/soil-babe`
-  - `crates/soil-grandpa`
-  - `crates/soil-beefy`
+  - `main/soil-pow`
+  - `main/soil-aura`
+  - `main/soil-babe`
+  - `main/soil-grandpa`
+  - `main/soil-beefy`
 - Merge the BABE, GRANDPA, and BEEFY RPC crates into their engine crates as
   `rpc` modules.
 - Use hard renames only. Old crates are removed as soon as their replacements

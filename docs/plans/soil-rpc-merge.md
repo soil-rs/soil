@@ -1,13 +1,13 @@
 # Plan: Merge the RPC stack into `soil-rpc`
 
 Tracking the hard merge of the RPC-family crates into a single flattened
-`crates/soil-rpc` crate. This keeps RPC API, handlers, server, v2 surface,
+`main/soil-rpc` crate. This keeps RPC API, handlers, server, v2 surface,
 endpoint helpers, and client helpers in one crate while leaving the topsoil-tied
 frame RPC helpers separate.
 
 ## Goals
 
-- Move the existing `soil-rpc` crate to the flattened path `crates/soil-rpc`.
+- Move the existing `soil-rpc` crate to the flattened path `main/soil-rpc`.
 - Merge `soil-rpc-api`, `sc-rpc`, `soil-rpc-server`, `soil-rpc-spec-v2`,
   `soil-mmr-rpc`, `substrate-state-trie-migration-rpc`, and
   `substrate-rpc-client` into `soil-rpc`.
@@ -22,7 +22,7 @@ frame RPC helpers separate.
 ## Sequence
 
 1. Create this progress file.
-2. Flatten the existing `soil-rpc` crate to `crates/soil-rpc`.
+2. Flatten the existing `soil-rpc` crate to `main/soil-rpc`.
 3. Merge `soil-rpc-api` into `soil_rpc::api`.
 4. Merge `sc-rpc` into the root handler modules of `soil-rpc`.
 5. Merge `soil-rpc-server` into `soil_rpc::server`.
@@ -47,7 +47,7 @@ merged BABE and GRANDPA RPC surfaces while `soil-sync-state-rpc` depends on the
 consensus crates for sync-state generation.
 
 - [x] Step 1: Create this progress file.
-- [x] Step 2: Flatten the existing `soil-rpc` crate to `crates/soil-rpc`.
+- [x] Step 2: Flatten the existing `soil-rpc` crate to `main/soil-rpc`.
 - [x] Step 3: Merge `soil-rpc-api` into `soil_rpc::api`.
 - [x] Step 4: Merge `sc-rpc` into the root handler modules of `soil-rpc`.
 - [x] Step 5: Merge `soil-rpc-server` into `soil_rpc::server`.

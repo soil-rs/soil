@@ -1,28 +1,28 @@
 # Soil Test Node Rename Plan
 
 ## Summary
-- Move the full leaf-shaped staging/kitchensink node cluster from `crates/substrate/...` into flattened `contrib/soil-test-staging-node-*` packages.
-- Rename the full `substrate-test-*` family into flattened `crates/soil-test-node-*` packages, with `substrate-test-runtime-transaction-pool` specifically becoming `soil-test-node-runtime-txpool`.
+- Move the full leaf-shaped staging/kitchensink node cluster from `library/...` into flattened `contrib/soil-test-staging-node-*` packages.
+- Rename the full `substrate-test-*` family into flattened `harness/soil-test-node-*` packages, with `substrate-test-runtime-transaction-pool` specifically becoming `soil-test-node-runtime-txpool`.
 - Apply the rename end-to-end for both families: package names, folder names, workspace dependency keys, and Rust crate IDs/imports all change to the new `soil-test-*` names.
 - Maintain this file as the execution log, commit in logical increments during the work, and finish by running `cargo test --all --release` to green.
 
 ## Crate Mapping
 | Old path | New path | Old package | New package | Notes |
 | --- | --- | --- | --- | --- |
-| `crates/substrate/staging-node-cli` | `contrib/soil-test-staging-node-cli` | `staging-node-cli` | `soil-test-staging-node-cli` | binary/default-run `soil-test-staging-node` |
-| `crates/substrate/staging-chain-spec-builder` | `contrib/soil-test-staging-node-spec-builder` | `staging-chain-spec-builder` | `soil-test-staging-node-spec-builder` | binary `soil-test-staging-node-spec-builder` |
-| `crates/substrate/staging-node-inspect` | `contrib/soil-test-staging-node-inspect` | `staging-node-inspect` | `soil-test-staging-node-inspect` | |
-| `crates/substrate/node-primitives` | `contrib/soil-test-staging-node-primitives` | `node-primitives` | `soil-test-staging-node-primitives` | |
-| `crates/substrate/node-rpc` | `contrib/soil-test-staging-node-rpc` | `node-rpc` | `soil-test-staging-node-rpc` | |
-| `crates/substrate/node-testing` | `contrib/soil-test-staging-node-testing` | `node-testing` | `soil-test-staging-node-testing` | |
-| `crates/substrate/node-bench` | `contrib/soil-test-staging-node-bench` | `node-bench` | `soil-test-staging-node-bench` | binary follows package |
-| `crates/substrate/substrate-cli-test-utils` | `contrib/soil-test-staging-node-cli-test-utils` | `substrate-cli-test-utils` | `soil-test-staging-node-cli-test-utils` | |
-| `crates/substrate/node-runtime-generate-bags` | `contrib/soil-test-staging-node-generate-bags` | `node-runtime-generate-bags` | `soil-test-staging-node-generate-bags` | binary follows package |
-| `crates/substrate/kitchensink-runtime` | `contrib/soil-test-staging-node-runtime` | `kitchensink-runtime` | `soil-test-staging-node-runtime` | |
-| `crates/substrate/substrate-test-client` | `crates/soil-test-node-client` | `substrate-test-client` | `soil-test-node-client` | |
-| `crates/substrate/substrate-test-runtime` | `crates/soil-test-node-runtime` | `substrate-test-runtime` | `soil-test-node-runtime` | |
-| `crates/substrate/substrate-test-runtime-client` | `crates/soil-test-node-runtime-client` | `substrate-test-runtime-client` | `soil-test-node-runtime-client` | |
-| `crates/substrate/substrate-test-runtime-transaction-pool` | `crates/soil-test-node-runtime-txpool` | `substrate-test-runtime-transaction-pool` | `soil-test-node-runtime-txpool` | crate id `soil_test_node_runtime_txpool` |
+| `library/staging-node-cli` | `contrib/soil-test-staging-node-cli` | `staging-node-cli` | `soil-test-staging-node-cli` | binary/default-run `soil-test-staging-node` |
+| `library/staging-chain-spec-builder` | `contrib/soil-test-staging-node-spec-builder` | `staging-chain-spec-builder` | `soil-test-staging-node-spec-builder` | binary `soil-test-staging-node-spec-builder` |
+| `library/staging-node-inspect` | `contrib/soil-test-staging-node-inspect` | `staging-node-inspect` | `soil-test-staging-node-inspect` | |
+| `library/node-primitives` | `contrib/soil-test-staging-node-primitives` | `node-primitives` | `soil-test-staging-node-primitives` | |
+| `library/node-rpc` | `contrib/soil-test-staging-node-rpc` | `node-rpc` | `soil-test-staging-node-rpc` | |
+| `library/node-testing` | `contrib/soil-test-staging-node-testing` | `node-testing` | `soil-test-staging-node-testing` | |
+| `library/node-bench` | `contrib/soil-test-staging-node-bench` | `node-bench` | `soil-test-staging-node-bench` | binary follows package |
+| `library/substrate-cli-test-utils` | `contrib/soil-test-staging-node-cli-test-utils` | `substrate-cli-test-utils` | `soil-test-staging-node-cli-test-utils` | |
+| `library/node-runtime-generate-bags` | `contrib/soil-test-staging-node-generate-bags` | `node-runtime-generate-bags` | `soil-test-staging-node-generate-bags` | binary follows package |
+| `library/kitchensink-runtime` | `contrib/soil-test-staging-node-runtime` | `kitchensink-runtime` | `soil-test-staging-node-runtime` | |
+| `library/substrate-test-client` | `harness/soil-test-node-client` | `substrate-test-client` | `soil-test-node-client` | |
+| `library/substrate-test-runtime` | `harness/soil-test-node-runtime` | `substrate-test-runtime` | `soil-test-node-runtime` | |
+| `library/substrate-test-runtime-client` | `harness/soil-test-node-runtime-client` | `substrate-test-runtime-client` | `soil-test-node-runtime-client` | |
+| `library/substrate-test-runtime-transaction-pool` | `harness/soil-test-node-runtime-txpool` | `substrate-test-runtime-transaction-pool` | `soil-test-node-runtime-txpool` | crate id `soil_test_node_runtime_txpool` |
 
 ## Phase Checklist
 - [x] Create execution log before refactor edits.
@@ -42,7 +42,7 @@
 - 2026-03-08: Verified the `crates/* -> contrib/*` boundary at the manifest level. No manifest under `crates/` depends on any `soil-test-staging-node-*` package.
 - 2026-03-08: Broad workspace validation reached a clean compile with `cargo check --all`.
 - 2026-03-08: Installed `libclang-18-dev` so the renamed staging node binaries could build `librocksdb-sys` during command smoke checks.
-- 2026-03-08: The first full release test run failed in `soil-chain-spec` because `include_str!` paths still referenced `../../substrate/soil-test-node-runtime/res/...` after the in-place runtime move. Updated those paths to `../../soil-test-node-runtime/res/...` in `crates/soil-chain-spec/src/chain_spec.rs`.
+- 2026-03-08: The first full release test run failed in `soil-chain-spec` because `include_str!` paths still referenced `../../substrate/soil-test-node-runtime/res/...` after the in-place runtime move. Updated those paths to `../../soil-test-node-runtime/res/...` in `main/soil-chain-spec/src/chain_spec.rs`.
 - 2026-03-08: Re-ran `cargo test -p soil-chain-spec --lib --release` successfully after the path fix.
 - 2026-03-08: Final `cargo test --all --release` completed successfully with `EXIT_CODE=0`.
 
@@ -61,5 +61,5 @@
 - 2026-03-08: `cargo run -p soil-test-staging-node-cli --bin soil-test-staging-node -- --version` passed after installing `libclang-18-dev`.
 - 2026-03-08: `cargo run -p soil-test-staging-node-spec-builder --bin soil-test-staging-node-spec-builder -- --help` passed.
 - 2026-03-08: `cargo check --all` passed.
-- 2026-03-08: `cargo test -p soil-chain-spec --lib --release` passed after fixing the moved runtime resource paths in `crates/soil-chain-spec/src/chain_spec.rs`.
+- 2026-03-08: `cargo test -p soil-chain-spec --lib --release` passed after fixing the moved runtime resource paths in `main/soil-chain-spec/src/chain_spec.rs`.
 - 2026-03-08: `cargo test --all --release` passed with `EXIT_CODE=0`.

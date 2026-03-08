@@ -10862,8 +10862,8 @@ dependencies = [
  "soil-service",
  "soil-test-node-runtime",
  "soil-test-node-runtime-client",
- "sp-runtime-interface-test-wasm",
- "sp-runtime-interface-test-wasm-deprecated",
+ "soil-test-runtime-interface-wasm",
+ "soil-test-runtime-interface-wasm-deprecated",
  "static_assertions",
  "subsoil",
  "tempfile",
@@ -10967,6 +10967,23 @@ dependencies = [
  "soil-txpool",
  "subsoil",
  "thiserror 1.0.69",
+]
+
+[[package]]
+name = "soil-test-runtime-interface-wasm"
+version = "2.0.0"
+dependencies = [
+ "bytes",
+ "subsoil",
+ "substrate-wasm-builder",
+]
+
+[[package]]
+name = "soil-test-runtime-interface-wasm-deprecated"
+version = "2.0.0"
+dependencies = [
+ "subsoil",
+ "substrate-wasm-builder",
 ]
 
 [[package]]
@@ -11389,23 +11406,6 @@ dependencies = [
  "sha2 0.10.9",
  "sha3",
  "twox-hash 1.6.3",
-]
-
-[[package]]
-name = "sp-runtime-interface-test-wasm"
-version = "2.0.0"
-dependencies = [
- "bytes",
- "subsoil",
- "substrate-wasm-builder",
-]
-
-[[package]]
-name = "sp-runtime-interface-test-wasm-deprecated"
-version = "2.0.0"
-dependencies = [
- "subsoil",
- "substrate-wasm-builder",
 ]
 
 [[package]]
