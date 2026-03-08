@@ -1,0 +1,42 @@
+[package]
+name = "soil"
+version = "0.1.0"
+authors.workspace = true
+edition.workspace = true
+license.workspace = true
+homepage.workspace = true
+repository.workspace = true
+description = "Umbrella crate for Soil client and service crates"
+
+[lints]
+workspace = true
+
+[dependencies]
+soil-chain-spec = { workspace = true, default-features = true }
+soil-cli = { workspace = true, default-features = true }
+soil-client = { workspace = true, default-features = true }
+soil-consensus = { workspace = true, default-features = true }
+soil-network = { workspace = true, default-features = true }
+soil-offchain = { workspace = true, default-features = true }
+soil-rpc = { workspace = true, default-features = true }
+soil-service = { workspace = true, default-features = true }
+soil-sync-state-rpc = { workspace = true, default-features = true }
+soil-telemetry = { workspace = true, default-features = true }
+soil-txpool = { workspace = true, default-features = true }
+
+soil-aura = { optional = true, workspace = true, default-features = true }
+soil-babe = { optional = true, workspace = true, default-features = true }
+soil-beefy = { optional = true, workspace = true, default-features = true }
+soil-grandpa = { optional = true, workspace = true, default-features = true }
+soil-manual-seal = { optional = true, workspace = true, default-features = true }
+soil-pow = { optional = true, workspace = true, default-features = true }
+
+[features]
+default = []
+aura = ["dep:soil-aura"]
+babe = ["dep:soil-babe"]
+beefy = ["dep:soil-beefy"]
+grandpa = ["dep:soil-grandpa"]
+manual-seal = ["dep:soil-manual-seal"]
+pow = ["dep:soil-pow"]
+full = ["aura", "babe", "beefy", "grandpa", "manual-seal", "pow"]

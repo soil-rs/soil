@@ -11,6 +11,7 @@ resolver = "2"
 members = [
 	"main/subsoil",
 	"main/subsoil-macros",
+	"main/soil",
 	"main/soil-babe",
 	"main/soil-aura",
 	"main/soil-beefy",
@@ -236,6 +237,7 @@ zero-prefixed-literal = { level = "allow", priority = 2 }            # 00_1000_0
 
 # Substrate path dependencies
 soil-test-staging-node-spec-builder = { path = "contrib/soil-test-staging-node-spec-builder", default-features = false, package = "soil-test-staging-node-spec-builder" }
+soil = { path = "main/soil", default-features = false }
 soil-fork-tree = { path = "main/soil-fork-tree", default-features = false }
 topsoil = { path = "main/topsoil", default-features = false }
 topsoil-benchmarking = { path = "main/topsoil-benchmarking", default-features = false }

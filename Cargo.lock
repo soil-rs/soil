@@ -10200,6 +10200,29 @@ dependencies = [
 ]
 
 [[package]]
+name = "soil"
+version = "0.1.0"
+dependencies = [
+ "soil-aura",
+ "soil-babe",
+ "soil-beefy",
+ "soil-chain-spec",
+ "soil-cli",
+ "soil-client",
+ "soil-consensus",
+ "soil-grandpa",
+ "soil-manual-seal",
+ "soil-network",
+ "soil-offchain",
+ "soil-pow",
+ "soil-rpc",
+ "soil-service",
+ "soil-sync-state-rpc",
+ "soil-telemetry",
+ "soil-txpool",
+]
+
+[[package]]
 name = "soil-aura"
 version = "0.34.0"
 dependencies = [
