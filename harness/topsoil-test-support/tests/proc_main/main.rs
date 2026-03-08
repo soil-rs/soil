@@ -8,8 +8,8 @@
 use subsoil::io::{MultiRemovalResults, TestExternalities};
 #[cfg(test)]
 use subsoil::metadata_ir::{
-	PalletStorageMetadataIR, StorageEntryMetadataIR, StorageEntryModifierIR, StorageEntryTypeIR,
-	StorageHasherIR,
+	ItemDeprecationInfoIR, PalletStorageMetadataIR, StorageEntryMetadataIR,
+	StorageEntryModifierIR, StorageEntryTypeIR, StorageHasherIR,
 };
 #[cfg(test)]
 use subsoil::runtime::BuildStorage;
@@ -585,6 +585,7 @@ fn expected_metadata() -> PalletStorageMetadataIR {
 				},
 				default: vec![0, 0, 0, 0, 0, 0, 0, 0],
 				docs: vec![],
+				deprecation_info: ItemDeprecationInfoIR::NotDeprecated,
 			},
 			StorageEntryMetadataIR {
 				name: "OptionLinkedMap",
@@ -596,6 +597,7 @@ fn expected_metadata() -> PalletStorageMetadataIR {
 				},
 				default: vec![0],
 				docs: vec![],
+				deprecation_info: ItemDeprecationInfoIR::NotDeprecated,
 			},
 			StorageEntryMetadataIR {
 				name: "GenericData",
@@ -607,6 +609,7 @@ fn expected_metadata() -> PalletStorageMetadataIR {
 				},
 				default: vec![0, 0, 0, 0],
 				docs: vec![],
+				deprecation_info: ItemDeprecationInfoIR::NotDeprecated,
 			},
 			StorageEntryMetadataIR {
 				name: "GenericData2",
@@ -618,6 +621,7 @@ fn expected_metadata() -> PalletStorageMetadataIR {
 				},
 				default: vec![0],
 				docs: vec![],
+				deprecation_info: ItemDeprecationInfoIR::NotDeprecated,
 			},
 			StorageEntryMetadataIR {
 				name: "DataDM",
@@ -629,6 +633,7 @@ fn expected_metadata() -> PalletStorageMetadataIR {
 				},
 				default: vec![0, 0, 0, 0, 0, 0, 0, 0],
 				docs: vec![],
+				deprecation_info: ItemDeprecationInfoIR::NotDeprecated,
 			},
 			StorageEntryMetadataIR {
 				name: "GenericDataDM",
@@ -640,6 +645,7 @@ fn expected_metadata() -> PalletStorageMetadataIR {
 				},
 				default: vec![0, 0, 0, 0],
 				docs: vec![],
+				deprecation_info: ItemDeprecationInfoIR::NotDeprecated,
 			},
 			StorageEntryMetadataIR {
 				name: "GenericData2DM",
@@ -651,6 +657,7 @@ fn expected_metadata() -> PalletStorageMetadataIR {
 				},
 				default: vec![0],
 				docs: vec![],
+				deprecation_info: ItemDeprecationInfoIR::NotDeprecated,
 			},
 			StorageEntryMetadataIR {
 				name: "AppendableDM",
@@ -665,6 +672,7 @@ fn expected_metadata() -> PalletStorageMetadataIR {
 				},
 				default: vec![0],
 				docs: vec![],
+				deprecation_info: ItemDeprecationInfoIR::NotDeprecated,
 			},
 			StorageEntryMetadataIR {
 				name: "Total",
@@ -672,6 +680,7 @@ fn expected_metadata() -> PalletStorageMetadataIR {
 				ty: StorageEntryTypeIR::Plain(scale_info::meta_type::<(u32, u32)>()),
 				default: vec![0, 0, 0, 0, 0, 0, 0, 0],
 				docs: vec![" Some running total."],
+				deprecation_info: ItemDeprecationInfoIR::NotDeprecated,
 			},
 			StorageEntryMetadataIR {
 				name: "Numbers",
@@ -683,6 +692,7 @@ fn expected_metadata() -> PalletStorageMetadataIR {
 				},
 				default: vec![0],
 				docs: vec![" Numbers to be added into the total."],
+				deprecation_info: ItemDeprecationInfoIR::NotDeprecated,
 			},
 		],
 	}

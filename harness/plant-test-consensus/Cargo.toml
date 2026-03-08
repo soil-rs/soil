@@ -13,14 +13,14 @@ workspace = true
 codec = { features = ["derive"], workspace = true, default-features = true }
 finality-grandpa = { workspace = true, default-features = true }
 plant-authorship = { workspace = true, default-features = true }
-plant-babe = { features = ["runtime-benchmarks"], workspace = true, default-features = true }
-plant-balances = { features = ["runtime-benchmarks"], workspace = true, default-features = true }
+plant-babe = { workspace = true, default-features = true }
+plant-balances = { workspace = true, default-features = true }
 plant-election-provider = { workspace = true, default-features = true }
-plant-grandpa = { features = ["runtime-benchmarks"], workspace = true, default-features = true }
+plant-grandpa = { workspace = true, default-features = true }
 plant-im-online = { workspace = true, default-features = true }
-plant-offences = { features = ["runtime-benchmarks"], workspace = true, default-features = true }
-plant-session = { features = ["runtime-benchmarks"], workspace = true, default-features = true }
-plant-staking = { features = ["runtime-benchmarks"], workspace = true, default-features = true }
+plant-offences = { workspace = true, default-features = true }
+plant-session = { workspace = true, default-features = true }
+plant-staking = { workspace = true, default-features = true }
 plant-staking-macros = { workspace = true, default-features = true }
 plant-timestamp = { workspace = true, default-features = true }
 scale-info = { features = ["derive"], workspace = true, default-features = true }
@@ -28,3 +28,16 @@ subsoil = { workspace = true, default-features = true }
 topsoil-benchmarking = { workspace = true, default-features = true }
 topsoil-support = { workspace = true, default-features = true }
 topsoil-system = { workspace = true, default-features = true }
+
+[features]
+runtime-benchmarks = [
+	"plant-babe/runtime-benchmarks",
+	"plant-balances/runtime-benchmarks",
+	"plant-grandpa/runtime-benchmarks",
+	"plant-offences/runtime-benchmarks",
+	"plant-session/runtime-benchmarks",
+	"plant-staking/runtime-benchmarks",
+	"topsoil-benchmarking/runtime-benchmarks",
+	"topsoil-support/runtime-benchmarks",
+	"topsoil-system/runtime-benchmarks",
+]

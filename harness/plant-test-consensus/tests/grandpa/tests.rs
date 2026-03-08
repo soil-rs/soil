@@ -926,3 +926,25 @@ fn stalled_state_is_kept_on_schedule_change_failure() {
 		assert!(plant_grandpa::Stalled::<Test>::exists());
 	});
 }
+
+#[test]
+fn test_generate_equivocation_report_blob() {
+	let authorities = test_authorities();
+
+	let equivocation_authority_index = 0;
+	let equivocation_key = &authorities[equivocation_authority_index].0;
+	let equivocation_keyring = extract_keyring(equivocation_key);
+
+	new_test_ext_raw_authorities(authorities).execute_with(|| {
+		start_era(1);
+
+		let equivocation_proof = generate_equivocation_proof(
+			1,
+			(1, H256::random(), 10, &equivocation_keyring),
+			(1, H256::random(), 10, &equivocation_keyring),
+		);
+
+		println!("equivocation_proof: {:?}", equivocation_proof);
+		println!("equivocation_proof.encode(): {:?}", equivocation_proof.encode());
+	});
+}

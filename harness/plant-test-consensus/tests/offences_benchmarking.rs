@@ -6,6 +6,8 @@
 
 //! Mock file for offences benchmarking.
 
+#![cfg(feature = "runtime-benchmarks")]
+
 use std::vec;
 use std::vec::Vec;
 use codec::Encode;

@@ -61,39 +61,4 @@ mod benchmarks {
 		assert!(Stalled::<T>::get().is_some());
 	}
 
-	impl_benchmark_test_suite!(
-		Pallet,
-		crate::mock::new_test_ext(vec![(1, 1), (2, 1), (3, 1)]),
-		crate::mock::Test,
-	);
-}
-
-#[cfg(test)]
-mod tests {
-	use super::*;
-	use crate::mock::*;
-
-	#[test]
-	fn test_generate_equivocation_report_blob() {
-		let authorities = crate::tests::test_authorities();
-
-		let equivocation_authority_index = 0;
-		let equivocation_key = &authorities[equivocation_authority_index].0;
-		let equivocation_keyring = extract_keyring(equivocation_key);
-
-		new_test_ext_raw_authorities(authorities).execute_with(|| {
-			start_era(1);
-
-			// generate an equivocation proof, with two votes in the same round for
-			// different block hashes signed by the same key
-			let equivocation_proof = generate_equivocation_proof(
-				1,
-				(1, H256::random(), 10, &equivocation_keyring),
-				(1, H256::random(), 10, &equivocation_keyring),
-			);
-
-			println!("equivocation_proof: {:?}", equivocation_proof);
-			println!("equivocation_proof.encode(): {:?}", equivocation_proof.encode());
-		});
-	}
 }

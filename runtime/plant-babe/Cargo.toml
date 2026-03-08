@@ -27,6 +27,9 @@ plant-timestamp = { workspace = true }
 scale-info = { features = ["derive", "serde"], workspace = true }
 subsoil = { features = ["serde"], workspace = true }
 
+[dev-dependencies]
+topsoil-benchmarking = { workspace = true, default-features = true }
+
 [features]
 default = ["std"]
 std = [

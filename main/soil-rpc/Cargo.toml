@@ -59,6 +59,7 @@ jsonrpsee = { workspace = true, features = ["server", "ws-client"] }
 pretty_assertions = { workspace = true }
 soil-txpool = { workspace = true, default-features = true }
 serde_json = { workspace = true, default-features = true }
+subsoil-crypto-hashing = { workspace = true, default-features = true }
 soil-test-node-runtime = { workspace = true }
 soil-test-node-runtime-client = { workspace = true }
 soil-test-node-runtime-txpool = { workspace = true }

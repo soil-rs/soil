@@ -28,6 +28,9 @@ scale-info = { features = ["derive"], workspace = true }
 serde = { optional = true, workspace = true, default-features = true }
 subsoil = { workspace = true }
 
+[dev-dependencies]
+serde_json = { workspace = true, default-features = true }
+
 [features]
 default = ["std"]
 client = ["std", "dep:jsonrpsee", "dep:soil-client", "dep:soil-rpc"]

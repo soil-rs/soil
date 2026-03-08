@@ -6,6 +6,8 @@
 
 //! Mock file for session benchmarking.
 
+#![cfg(feature = "runtime-benchmarks")]
+
 use codec::Encode;
 use subsoil::runtime::{traits::{IdentityLookup, OpaqueKeys, One, StaticLookup}, BuildStorage, KeyTypeId};
 
