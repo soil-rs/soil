@@ -25,6 +25,7 @@ mod parity_db;
 mod pinned_blocks_cache;
 mod record_stats_state;
 mod stats;
+mod trie_cache_metrics;
 #[cfg(any(feature = "rocksdb", test))]
 mod upgrade;
 mod utils;
@@ -41,6 +42,7 @@ use std::{
 };
 
 use self::state_db::{IsPruned, LastCanonicalized, StateDb};
+use self::trie_cache_metrics::PrometheusTrieCacheMetrics;
 use self::utils::BLOCK_GAP_CURRENT_VERSION;
 use self::{
 	pinned_blocks_cache::PinnedBlocksCache,
@@ -1327,7 +1329,20 @@ impl<Block: BlockT> Backend<Block> {
 				);
 			}
 
-			SharedTrieCache::new(subsoil::trie::cache::CacheSize::new(maximum_size), config.metrics_registry.as_ref())
+			config
+				.metrics_registry
+				.as_ref()
+				.and_then(|registry| PrometheusTrieCacheMetrics::register(registry).ok())
+				.map(Arc::new)
+				.map_or_else(
+					|| SharedTrieCache::new(subsoil::trie::cache::CacheSize::new(maximum_size)),
+					|metrics| {
+						SharedTrieCache::with_metrics(
+							subsoil::trie::cache::CacheSize::new(maximum_size),
+							metrics,
+						)
+					},
+				)
 		});
 
 		let backend = Backend {

@@ -10488,7 +10488,7 @@ dependencies = [
 
 [[package]]
 name = "soil-manual-seal"
-version = "0.35.0"
+version = "0.2.0"
 dependencies = [
  "assert_matches",
  "async-trait",
@@ -11549,7 +11549,7 @@ dependencies = [
 
 [[package]]
 name = "subsoil"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "ahash 0.8.12",
  "anyhow",
@@ -11633,7 +11633,6 @@ dependencies = [
  "sha2 0.10.9",
  "simple-mermaid",
  "smallvec",
- "soil-prometheus",
  "ss58-registry",
  "static_assertions",
  "strum 0.26.3",

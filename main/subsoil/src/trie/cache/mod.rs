@@ -25,7 +25,6 @@
 
 use super::{Error, NodeCodec};
 use hash_db::Hasher;
-use metrics::{HitStatsSnapshot, TrieHitStatsSnapshot};
 use nohash_hasher::BuildNoHashHasher;
 use parking_lot::{Mutex, MutexGuard, RwLockWriteGuard};
 use schnellru::LruMap;
@@ -43,6 +42,7 @@ use trie_db::{node::NodeOwned, CachedValue};
 mod metrics;
 mod shared_cache;
 
+pub use metrics::{HitStatsSnapshot, SharedTrieCacheMetrics, TrieHitStatsSnapshot};
 pub use shared_cache::SharedTrieCache;
 
 use self::shared_cache::ValueCacheKeyHash;
@@ -575,8 +575,7 @@ impl<H: Hasher> Drop for LocalTrieCache<H> {
 		let metrics = shared_inner.metrics().cloned();
 		metrics.as_ref().map(|metrics| metrics.observe_hits_stats(&stats_snapshot));
 		{
-			let _node_update_duration =
-				metrics.as_ref().map(|metrics| metrics.start_shared_node_update_timer());
+			let node_update_started = std::time::Instant::now();
 			let node_cache = self.node_cache.get_mut();
 
 			metrics
@@ -586,8 +585,12 @@ impl<H: Hasher> Drop for LocalTrieCache<H> {
 			shared_inner.node_cache_mut().update(
 				node_cache.drain(),
 				&self.node_cache_config,
-				&metrics,
+				metrics.as_deref(),
 			);
+
+			metrics.as_ref().map(|metrics| {
+				metrics.observe_shared_node_update_duration(node_update_started.elapsed())
+			});
 		}
 
 		// Since the trie cache is not called from a time sensitive context like block authoring or
@@ -598,8 +601,7 @@ impl<H: Hasher> Drop for LocalTrieCache<H> {
 		}
 
 		{
-			let _node_update_duration =
-				metrics.as_ref().map(|metrics| metrics.start_shared_value_update_timer());
+			let value_update_started = std::time::Instant::now();
 			let value_cache = self.shared_value_cache_access.get_mut();
 			metrics
 				.as_ref()
@@ -609,8 +611,12 @@ impl<H: Hasher> Drop for LocalTrieCache<H> {
 				self.value_cache.get_mut().drain(),
 				value_cache.drain().map(|(key, ())| key),
 				&self.value_cache_config,
-				&metrics,
+				metrics.as_deref(),
 			);
+
+			metrics.as_ref().map(|metrics| {
+				metrics.observe_shared_value_update_duration(value_update_started.elapsed())
+			});
 		}
 	}
 }
@@ -878,7 +884,7 @@ mod tests {
 	fn basic_cache_works() {
 		let (db, root) = create_trie();
 
-		let shared_cache = Cache::new(CACHE_SIZE, None);
+		let shared_cache = Cache::new(CACHE_SIZE);
 		let local_cache = shared_cache.local_cache_untrusted();
 
 		{
@@ -929,7 +935,7 @@ mod tests {
 		// Use some long value to not have it inlined
 		let new_value = vec![23; 64];
 
-		let shared_cache = Cache::new(CACHE_SIZE, None);
+		let shared_cache = Cache::new(CACHE_SIZE);
 		let mut new_root = root;
 
 		{
@@ -964,7 +970,7 @@ mod tests {
 	fn trie_db_cache_and_recorder_work_together() {
 		let (db, root) = create_trie();
 
-		let shared_cache = Cache::new(CACHE_SIZE, None);
+		let shared_cache = Cache::new(CACHE_SIZE);
 
 		for i in 0..5 {
 			// Clear some of the caches.
@@ -1009,7 +1015,7 @@ mod tests {
 
 		let (db, root) = create_trie();
 
-		let shared_cache = Cache::new(CACHE_SIZE, None);
+		let shared_cache = Cache::new(CACHE_SIZE);
 
 		// Run this twice so that we use the data cache in the second run.
 		for i in 0..5 {
@@ -1060,7 +1066,7 @@ mod tests {
 	fn cache_lru_works() {
 		let (db, root) = create_trie();
 
-		let shared_cache = Cache::new(CACHE_SIZE, None);
+		let shared_cache = Cache::new(CACHE_SIZE);
 
 		{
 			let local_cache = shared_cache.local_cache_untrusted();
@@ -1148,7 +1154,7 @@ mod tests {
 	fn cache_respects_bounds() {
 		let (mut db, root) = create_trie();
 
-		let shared_cache = Cache::new(CACHE_SIZE, None);
+		let shared_cache = Cache::new(CACHE_SIZE);
 		{
 			let local_cache = shared_cache.local_cache_untrusted();
 
@@ -1182,7 +1188,7 @@ mod tests {
 		// Configure cache size to make sure it is large enough to hold all the data.
 		let cache_size = CacheSize::new(1024 * 1024 * 1024);
 		let num_test_keys: usize = 40000;
-		let shared_cache = Cache::new(cache_size, None);
+		let shared_cache = Cache::new(cache_size);
 
 		// Create a random array of bytes to use as a value.
 		let mut rng = thread_rng();
