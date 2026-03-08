@@ -23,6 +23,7 @@ use crate::v2::{
 	common::events::{StorageQuery, StorageQueryType, StorageResultType},
 	hex_string,
 };
+use crate::v2::chain_head::event::MethodResponseStarted;
 use assert_matches::assert_matches;
 use codec::{Decode, Encode};
 use futures::Future;
@@ -114,6 +115,21 @@ async fn does_not_produce_event<T: serde::de::DeserializeOwned + Debug>(
 	duration: std::time::Duration,
 ) {
 	tokio::time::timeout(duration, sub.next::<T>()).await.unwrap_err();
+}
+
+async fn expect_started_response<F, Fut>(mut call: F) -> MethodResponseStarted
+where
+	F: FnMut() -> Fut,
+	Fut: Future<Output = MethodResponse>,
+{
+	for _ in 0..20 {
+		match call().await {
+			MethodResponse::Started(started) => return started,
+			MethodResponse::LimitReached => tokio::time::sleep(Duration::from_millis(10)).await,
+		}
+	}
+
+	panic!("Expected started response");
 }
 
 async fn run_with_timeout<F: Future>(future: F) -> <F as Future>::Output {
@@ -601,17 +617,16 @@ async fn call_runtime() {
 	let alice_id = Sr25519Keyring::Alice.to_account_id();
 	// Hex encoded scale encoded bytes representing the call parameters.
 	let call_parameters = hex_string(&alice_id.encode());
-	let response: MethodResponse = api
-		.call(
+	let operation_id = expect_started_response(|| async {
+		api.call(
 			"chainHead_v1_call",
 			[&sub_id, &block_hash, "AccountNonceApi_account_nonce", &call_parameters],
 		)
 		.await
-		.unwrap();
-	let operation_id = match response {
-		MethodResponse::Started(started) => started.operation_id,
-		MethodResponse::LimitReached => panic!("Expected started response"),
-	};
+		.unwrap()
+	})
+	.await
+	.operation_id;
 
 	// Response propagated to `chainHead_follow`.
 	assert_matches!(
