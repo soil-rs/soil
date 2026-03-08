@@ -23,21 +23,21 @@ members = [
 	"crates/soil-manual-seal",
 	"crates/subsoil-crypto-hashing",
 	"crates/soil-grandpa",
-	"crates/soil/mmr-gadget",
+	"crates/soil-mmr-gadget",
 	"crates/soil-network",
 	"crates/soil-pow",
 	"crates/soil-test-fuzz",
 	"crates/soil-rpc",
 	"crates/soil-test",
-	"crates/soil/runtime-interface/test-wasm",
-	"crates/soil/runtime-interface/test-wasm-deprecated",
-	"crates/soil/runtime-test",
-	"crates/soil/runtime-utilities",
+	"crates/sp-runtime-interface-test-wasm",
+	"crates/sp-runtime-interface-test-wasm-deprecated",
+	"crates/soil-runtime-test",
+	"crates/soil-runtime-utilities",
 	"crates/soil-service",
-	"crates/soil/statement-store",
+	"crates/soil-statement-store",
 	"crates/soil-sync-state-rpc",
 	"crates/soil-telemetry",
-	"crates/soil/transaction-storage-proof",
+	"crates/soil-transaction-storage-proof",
 	"contrib/plant-alliance",
 	"crates/plant-asset-conversion",
 	"crates/plant-asset-conversion-ops",
@@ -260,7 +260,7 @@ topsoil-system-rpc-runtime-api = { path = "crates/topsoil-system-rpc-runtime-api
 topsoil-try-runtime = { path = "crates/topsoil-try-runtime", default-features = false }
 generate-bags = { path = "crates/substrate/generate-bags", default-features = false }
 soil-test-staging-node-runtime = { path = "contrib/soil-test-staging-node-runtime" }
-soil-mmr-gadget = { path = "crates/soil/mmr-gadget", default-features = false }
+soil-mmr-gadget = { path = "crates/soil-mmr-gadget", default-features = false }
 soil-test-staging-node-cli = { path = "contrib/soil-test-staging-node-cli", package = "soil-test-staging-node-cli" }
 soil-test-staging-node-inspect = { path = "contrib/soil-test-staging-node-inspect", default-features = false, package = "soil-test-staging-node-inspect" }
 soil-test-staging-node-primitives = { path = "contrib/soil-test-staging-node-primitives", default-features = false }
@@ -389,8 +389,8 @@ soil-pow = { path = "crates/soil-pow", default-features = false }
 soil-network = { path = "crates/soil-network", default-features = false }
 soil-offchain = { path = "crates/soil-offchain", default-features = false }
 soil-test = { path = "crates/soil-test" }
-soil-runtime-test = { path = "crates/soil/runtime-test" }
-soil-runtime-utilities = { path = "crates/soil/runtime-utilities", default-features = true }
+soil-runtime-test = { path = "crates/soil-runtime-test" }
+soil-runtime-utilities = { path = "crates/soil-runtime-utilities", default-features = true }
 soil-service = { path = "crates/soil-service", default-features = false }
 soil-sync-state-rpc = { path = "crates/soil-sync-state-rpc", default-features = false }
 soil-telemetry = { path = "crates/soil-telemetry", default-features = false }
@@ -399,10 +399,10 @@ subsoil = { path = "crates/subsoil", default-features = false }
 subsoil-crypto-hashing = { path = "crates/subsoil-crypto-hashing", default-features = false }
 subsoil-macros = { path = "crates/subsoil-macros" }
 soil-rpc = { path = "crates/soil-rpc", default-features = false }
-sp-runtime-interface-test-wasm = { path = "crates/soil/runtime-interface/test-wasm" }
-sp-runtime-interface-test-wasm-deprecated = { path = "crates/soil/runtime-interface/test-wasm-deprecated" }
-soil-statement-store = { path = "crates/soil/statement-store", default-features = false }
-soil-transaction-storage-proof = { path = "crates/soil/transaction-storage-proof", default-features = false }
+sp-runtime-interface-test-wasm = { path = "crates/sp-runtime-interface-test-wasm" }
+sp-runtime-interface-test-wasm-deprecated = { path = "crates/sp-runtime-interface-test-wasm-deprecated" }
+soil-statement-store = { path = "crates/soil-statement-store", default-features = false }
+soil-transaction-storage-proof = { path = "crates/soil-transaction-storage-proof", default-features = false }
 subkey = { path = "crates/substrate/subkey", default-features = false }
 substrate-bip39 = { path = "crates/substrate/substrate-bip39", default-features = false }
 substrate-build-script-utils = { path = "crates/substrate/substrate-build-script-utils", default-features = false }
