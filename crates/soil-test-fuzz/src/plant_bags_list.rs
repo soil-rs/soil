@@ -16,12 +16,12 @@
 // limitations under the License.
 
 //! # Running
-//! Running this fuzzer can be done with `cargo hfuzz run bags-list`. `honggfuzz` CLI options can
-//! be used by setting `HFUZZ_RUN_ARGS`, such as `-n 4` to use 4 threads.
+//! Running this fuzzer can be done with `cargo hfuzz run plant_bags_list`. `honggfuzz` CLI
+//! options can be used by setting `HFUZZ_RUN_ARGS`, such as `-n 4` to use 4 threads.
 //!
 //! # Debugging a panic
 //! Once a panic is found, it can be debugged with
-//! `cargo hfuzz run-debug fixed_point hfuzz_workspace/bags_list/*.fuzz`.
+//! `cargo hfuzz run-debug plant_bags_list hfuzz_workspace/plant_bags_list/*.fuzz`.
 //!
 //! # More information
 //! More information about `honggfuzz` can be found

@@ -6634,15 +6634,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "plant-bags-list-fuzzer"
-version = "4.0.0-dev"
-dependencies = [
- "honggfuzz",
- "plant-bags-list",
- "plant-election-provider",
-]
-
-[[package]]
 name = "plant-bags-list-remote-tests"
 version = "4.0.0-dev"
 dependencies = [
@@ -6924,18 +6915,6 @@ dependencies = [
  "topsoil-benchmarking",
  "topsoil-support",
  "topsoil-system",
-]
-
-[[package]]
-name = "plant-election-solution-type-fuzzer"
-version = "2.0.0-alpha.5"
-dependencies = [
- "honggfuzz",
- "parity-scale-codec",
- "plant-election-provider",
- "plant-election-provider-macros",
- "subsoil",
- "topsoil-support",
 ]
 
 [[package]]
@@ -10590,9 +10569,14 @@ version = "0.1.0"
 dependencies = [
  "clap",
  "honggfuzz",
+ "parity-scale-codec",
+ "plant-bags-list",
+ "plant-election-provider",
+ "plant-election-provider-macros",
  "rand 0.8.5",
  "regex",
  "subsoil",
+ "topsoil-support",
 ]
 
 [[package]]

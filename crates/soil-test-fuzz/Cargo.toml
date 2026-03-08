@@ -35,9 +35,34 @@ path = "src/npos_phragmms_balancing.rs"
 name = "npos_phragmen_pjr"
 path = "src/npos_phragmen_pjr.rs"
 
+[[bin]]
+name = "plant_bags_list"
+path = "src/plant_bags_list.rs"
+required-features = ["plant-bags-list-fuzz"]
+
+[[bin]]
+name = "plant_election_compact"
+path = "src/plant_election_compact.rs"
+required-features = ["plant-election-compact-fuzz"]
+
+[features]
+default = []
+plant-bags-list-fuzz = ["dep:plant-bags-list", "dep:plant-election-provider"]
+plant-election-compact-fuzz = [
+	"dep:codec",
+	"dep:plant-election-provider",
+	"dep:plant-election-provider-macros",
+	"dep:topsoil-support",
+]
+
 [dependencies]
 clap = { features = ["derive"], workspace = true }
+codec = { features = ["derive"], workspace = true, optional = true }
 honggfuzz = { workspace = true }
+plant-bags-list = { features = ["fuzz"], workspace = true, default-features = true, optional = true }
+plant-election-provider = { features = ["fuzz"], workspace = true, default-features = true, optional = true }
+plant-election-provider-macros = { workspace = true, default-features = true, optional = true }
 rand = { features = ["small_rng", "std"], workspace = true, default-features = true }
 regex = { workspace = true }
 subsoil = { workspace = true, default-features = true }
+topsoil-support = { workspace = true, default-features = true, optional = true }

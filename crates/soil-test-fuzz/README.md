@@ -9,6 +9,8 @@ Shared fuzz harnesses for Soil crates.
 - `npos_phragmen_balancing`
 - `npos_phragmms_balancing`
 - `npos_phragmen_pjr`
+- `plant_bags_list`
+- `plant_election_compact`
 
 ## Running
 
@@ -17,6 +19,8 @@ Run a target with honggfuzz:
 ```bash
 cargo hfuzz run core_address_uri
 cargo hfuzz run npos_phragmen_balancing
+cargo hfuzz run plant_bags_list
+cargo hfuzz run plant_election_compact
 ```
 
 `npos_phragmen_pjr` also supports a single local iteration without honggfuzz:
@@ -32,3 +36,5 @@ cargo run -p soil-test-fuzz --bin npos_phragmen_pjr -- --help
 - `phragmen_balancing` -> `npos_phragmen_balancing`
 - `phragmms_balancing` -> `npos_phragmms_balancing`
 - `phragmen_pjr` -> `npos_phragmen_pjr`
+- `bags-list` -> `plant_bags_list`
+- `compact` -> `plant_election_compact`
