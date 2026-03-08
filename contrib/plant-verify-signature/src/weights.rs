@@ -46,7 +46,7 @@
 // benchmark
 // pallet
 // --extrinsic=*
-// --runtime=target/production/wbuild/kitchensink-runtime/kitchensink_runtime.wasm
+// --runtime=target/production/wbuild/soil-test-staging-node-runtime/soil_test_staging_node_runtime.wasm
 // --pallet=plant_verify_signature
 // --header=/__w/polkadot-sdk/polkadot-sdk/substrate/HEADER
 // --output=/__w/polkadot-sdk/polkadot-sdk/substrate/frame/verify-signature/src/weights.rs

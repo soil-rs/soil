@@ -59,20 +59,20 @@ consensus crates into the new flattened `soil-*` layout. See
 ## Validation Log
 
 - Step 2:
-  `cargo check -p soil-consensus -p soil-manual-seal -p soil-network-sync -p soil-service -p staging-node-cli -p soil-test-node-runtime-client`
+  `cargo check -p soil-consensus -p soil-manual-seal -p soil-network-sync -p soil-service -p soil-test-staging-node-cli -p soil-test-node-runtime-client`
 - Step 3:
-  `cargo check -p soil-consensus -p soil-manual-seal -p soil-network-sync -p soil-service -p staging-node-cli -p soil-test-node-runtime-client`
+  `cargo check -p soil-consensus -p soil-manual-seal -p soil-network-sync -p soil-service -p soil-test-staging-node-cli -p soil-test-node-runtime-client`
 - Step 4:
-  `cargo check -p soil-consensus -p soil-manual-seal -p soil-network-sync -p soil-service -p staging-node-cli -p soil-test-node-runtime-client`
+  `cargo check -p soil-consensus -p soil-manual-seal -p soil-network-sync -p soil-service -p soil-test-staging-node-cli -p soil-test-node-runtime-client`
 - Step 5:
-  `cargo check -p soil-pow -p staging-node-cli`
+  `cargo check -p soil-pow -p soil-test-staging-node-cli`
 - Step 6:
-  `cargo check -p soil-aura -p soil-manual-seal -p staging-node-cli`
+  `cargo check -p soil-aura -p soil-manual-seal -p soil-test-staging-node-cli`
 - Step 7:
-  `cargo check -p soil-babe -p node-rpc -p soil-manual-seal -p soil-sync-state-rpc -p staging-node-cli`
+  `cargo check -p soil-babe -p soil-test-staging-node-rpc -p soil-manual-seal -p soil-sync-state-rpc -p soil-test-staging-node-cli`
 - Step 8:
-  `cargo check -p soil-grandpa -p node-rpc -p soil-sync-state-rpc -p staging-node-cli`
+  `cargo check -p soil-grandpa -p soil-test-staging-node-rpc -p soil-sync-state-rpc -p soil-test-staging-node-cli`
 - Step 9:
-  `cargo check -p soil-beefy -p node-rpc -p staging-node-cli`
+  `cargo check -p soil-beefy -p soil-test-staging-node-rpc -p soil-test-staging-node-cli`
 - Step 10:
   `cargo test --all --release`

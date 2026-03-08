@@ -74,28 +74,28 @@ service-side networking crates into the flattened `soil-network` layout. See
 ## Validation Log
 
 - Step 2:
-  `cargo check -p subsoil -p topsoil-mixnet -p kitchensink-runtime -p sc-mixnet -p staging-node-cli`
+  `cargo check -p subsoil -p topsoil-mixnet -p soil-test-staging-node-runtime -p sc-mixnet -p soil-test-staging-node-cli`
 - Step 3:
   `cargo check -p soil-network -p soil-network-sync -p soil-grandpa -p soil-service -p soil-network-test`
 - Step 4:
-  `cargo check -p soil-network -p soil-network-sync -p soil-grandpa -p soil-beefy -p sc-authority-discovery -p soil-offchain -p sc-mixnet -p soil-consensus -p staging-node-cli`
+  `cargo check -p soil-network -p soil-network-sync -p soil-grandpa -p soil-beefy -p sc-authority-discovery -p soil-offchain -p sc-mixnet -p soil-consensus -p soil-test-staging-node-cli`
 - Step 5:
-  `cargo check -p soil-network -p soil-network-light -p soil-service -p soil-network-test -p staging-node-cli`
+  `cargo check -p soil-network -p soil-network-light -p soil-service -p soil-network-test -p soil-test-staging-node-cli`
 - Step 6:
-  `cargo check -p soil-network -p soil-service -p soil-informant -p soil-grandpa -p soil-beefy -p soil-network-test -p staging-node-cli`
+  `cargo check -p soil-network -p soil-service -p soil-informant -p soil-grandpa -p soil-beefy -p soil-network-test -p soil-test-staging-node-cli`
 - Step 7:
-  `cargo check -p soil-network -p soil-grandpa -p soil-beefy -p staging-node-cli`
+  `cargo check -p soil-network -p soil-grandpa -p soil-beefy -p soil-test-staging-node-cli`
 - Step 8:
-  `cargo check -p soil-network -p soil-service -p staging-node-cli`
+  `cargo check -p soil-network -p soil-service -p soil-test-staging-node-cli`
 - Step 9:
-  `cargo check -p soil-network -p sc-rpc -p staging-node-cli -p soil-network-test`
+  `cargo check -p soil-network -p sc-rpc -p soil-test-staging-node-cli -p soil-network-test`
 - Step 10:
-  `cargo check -p soil-network -p soil-cli -p soil-rpc-api -p sc-rpc -p node-rpc -p staging-node-cli`
+  `cargo check -p soil-network -p soil-cli -p soil-rpc-api -p sc-rpc -p soil-test-staging-node-rpc -p soil-test-staging-node-cli`
 - Step 11:
   `cargo test --all --release`
   Additional fallout reruns:
   `cargo test -p soil-network reserved_only_rejects_non_reserved_peers --release -- --nocapture`
-  `cargo test -p staging-node-cli --test telemetry --release -- --nocapture`
+  `cargo test -p soil-test-staging-node-cli --test telemetry --release -- --nocapture`
   `cargo test -p soil-network libp2p_disconnects_libp2p_substream --release -- --nocapture`
   `cargo test -p soil-network-test syncs_all_forks_from_single_peer --release -- --nocapture`
   `cargo test -p soil-network --doc --release`

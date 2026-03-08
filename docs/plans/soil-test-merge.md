@@ -48,7 +48,7 @@ Deferred and explicitly out of scope for this pass:
 ## Validation Log
 
 - Step 1:
-  `cargo check -p soil-test -p soil-service -p soil-network -p staging-node-cli`
+  `cargo check -p soil-test -p soil-service -p soil-network -p soil-test-staging-node-cli`
 - Step 2:
   `cargo test -p soil-test application_crypto --release`
 - Step 3:

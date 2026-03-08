@@ -29,7 +29,7 @@ into a single crate. **All current cycles are through dev-dependencies only** �
 there are no production-dep cycles remaining.
 
 > **Note:** SCC analysis excludes topsoil (frame pallet) crates and
-> `kitchensink-runtime`. These are _consumers_ of the infrastructure crates —
+> `soil-test-staging-node-runtime`. These are _consumers_ of the infrastructure crates —
 > they don't participate in infrastructure cycles. Including them mostly pulls in
 > test-runtime edges and obscures the actual infrastructure boundaries. Topsoil
 > consolidation is a separate concern.
@@ -85,9 +85,9 @@ subsoil-derive       -[dev]-> subsoil
 ### SCC 3: Node CLI (3 crates)
 
 ```
-staging-node-cli        -[dev]-> node-testing, substrate-cli-test-utils
-node-testing            -[dep]-> staging-node-cli
-substrate-cli-test-utils -[dep]-> staging-node-cli
+soil-test-staging-node-cli        -[dev]-> soil-test-staging-node-testing, soil-test-staging-node-cli-test-utils
+soil-test-staging-node-testing            -[dep]-> soil-test-staging-node-cli
+soil-test-staging-node-cli-test-utils -[dep]-> soil-test-staging-node-cli
 ```
 
 ## Target structure

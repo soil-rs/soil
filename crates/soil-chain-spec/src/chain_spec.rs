@@ -283,7 +283,7 @@ enum Genesis {
 /// fields.
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "camelCase")]
-// we cannot #[serde(deny_unknown_fields)]. Otherwise chain-spec-builder will fail on any
+// we cannot #[serde(deny_unknown_fields)]. Otherwise soil-test-staging-node-spec-builder will fail on any
 // non-standard spec
 struct ClientSpec<E> {
 	name: String,
@@ -584,7 +584,7 @@ impl<E: serde::de::DeserializeOwned, EHF> ChainSpec<E, EHF> {
 /// Helper structure for serializing (and only serializing) the ChainSpec into JSON file. It
 /// represents the layout of `ChainSpec` JSON file.
 #[derive(Serialize, Deserialize)]
-// we cannot #[serde(deny_unknown_fields)]. Otherwise chain-spec-builder will fail on any
+// we cannot #[serde(deny_unknown_fields)]. Otherwise soil-test-staging-node-spec-builder will fail on any
 // non-standard spec.
 struct ChainSpecJsonContainer<E> {
 	#[serde(flatten)]

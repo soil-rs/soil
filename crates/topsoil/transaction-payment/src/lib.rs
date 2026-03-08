@@ -138,7 +138,7 @@ const LOG_TARGET: &str = "runtime::txpayment";
 /// - in an empty chain: `p >= v * k * (-s')`.
 ///
 /// For example, when all blocks are full and there are 28800 blocks per day (default in
-/// `substrate-node`) and v == 0.00001, s' == 0.1875, we'd have:
+/// `soil-test-staging-node`) and v == 0.00001, s' == 0.1875, we'd have:
 ///
 /// p >= 0.00001 * 28800 * 0.8125
 /// p >= 0.234

@@ -50,14 +50,14 @@ Locked standalones for this phase:
 ## Validation Log
 
 - Step 3:
-  `cargo check -p soil-txpool -p soil-service -p soil-manual-seal -p staging-node-cli -p node-bench -p substrate-frame-rpc-system -p soil-test-node-runtime-txpool`
+  `cargo check -p soil-txpool -p soil-service -p soil-manual-seal -p soil-test-staging-node-cli -p soil-test-staging-node-bench -p substrate-frame-rpc-system -p soil-test-node-runtime-txpool`
 - Step 4:
-  `cargo check -p soil-service -p soil-service-test -p node-testing -p soil-cli -p subkey -p staging-node-inspect -p substrate-cli-test-utils`
+  `cargo check -p soil-service -p soil-service-test -p soil-test-staging-node-testing -p soil-cli -p subkey -p soil-test-staging-node-inspect -p soil-test-staging-node-cli-test-utils`
 - Step 5:
-  `cargo check -p soil-service -p soil-manual-seal -p node-bench -p staging-node-cli`
+  `cargo check -p soil-service -p soil-manual-seal -p soil-test-staging-node-bench -p soil-test-staging-node-cli`
 - Step 6:
-  `cargo check -p soil-service -p staging-node-cli`
+  `cargo check -p soil-service -p soil-test-staging-node-cli`
 - Step 7:
-  `cargo check -p soil-service -p staging-node-cli`
+  `cargo check -p soil-service -p soil-test-staging-node-cli`
 - Step 8:
   `cargo test --all --release`

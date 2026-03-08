@@ -26,22 +26,33 @@
 
 ## Phase Checklist
 - [x] Create execution log before refactor edits.
-- [ ] Update workspace members and dependency key scaffolding.
-- [ ] Rename `substrate-test-*` crates and downstream uses.
-- [ ] Move staging/kitchensink cluster to `contrib/soil-test-staging-node-*`.
-- [ ] Rename command/doc/test surface to `soil-test-staging-node` names.
-- [ ] Validate leaf boundary: no `crates/*` manifest depends on `contrib/soil-test-staging-node-*`.
-- [ ] Run focused `cargo check` and command smoke checks.
+- [x] Update workspace members and dependency key scaffolding.
+- [x] Rename `substrate-test-*` crates and downstream uses.
+- [x] Move staging/kitchensink cluster to `contrib/soil-test-staging-node-*`.
+- [x] Rename command/doc/test surface to `soil-test-staging-node` names.
+- [x] Validate leaf boundary: no `crates/*` manifest depends on `contrib/soil-test-staging-node-*`.
+- [x] Run focused `cargo check` and command smoke checks.
 - [ ] Run `cargo check --all`.
 - [ ] Run `cargo test --all --release` and fix fallout until green.
 
 ## Progress Log
 - 2026-03-08: Created plan and execution log. Verified the key workspace entries still use the old `staging-node-*`, `node-*`, and `substrate-test-*` paths and package names.
+- 2026-03-08: Renamed `substrate-test-*` crates to `soil-test-node-*`, including `soil-test-node-runtime-txpool` for the former transaction-pool crate. Updated workspace members, workspace dependency keys, downstream manifests, Rust crate IDs/imports, and `Cargo.lock`.
+- 2026-03-08: Moved the full staging/kitchensink leaf cluster to `contrib/soil-test-staging-node-*`, rewired workspace membership/dependency keys, renamed the public binaries to `soil-test-staging-node` and `soil-test-staging-node-spec-builder`, and updated command/doc/test references accordingly.
+- 2026-03-08: Verified the `crates/* -> contrib/*` boundary at the manifest level. No manifest under `crates/` depends on any `soil-test-staging-node-*` package.
 
 ## Commit Log
-- Pending.
+- 2026-03-08: `74b964109d` `Rename substrate test node crates`
+- Pending: staging move and validation commit(s).
 
 ## Validation Results
-- Pending.
-- 2026-03-08: Renamed `substrate-test-*` crates to `soil-test-node-*`, including `soil-test-node-runtime-txpool` for the former transaction-pool crate. Updated workspace members, workspace dependency keys, downstream manifests, Rust crate IDs/imports, and `Cargo.lock`.
 - 2026-03-08: `cargo check -p soil-test-node-runtime --all-targets` passed after the rename.
+- 2026-03-08: `cargo metadata --no-deps` passed after the staging move.
+- 2026-03-08: `cargo check -p soil-test-staging-node-cli --all-targets` passed.
+- 2026-03-08: `cargo check -p soil-test-staging-node-spec-builder --all-targets` passed.
+- 2026-03-08: `cargo check -p soil-test-node-runtime-client --all-targets` passed.
+- 2026-03-08: `cargo check -p soil-test-node-runtime-txpool --all-targets` passed.
+- 2026-03-08: `cargo run -p soil-test-staging-node-cli --bin soil-test-staging-node -- --version` passed after installing `libclang-18-dev`.
+- 2026-03-08: `cargo run -p soil-test-staging-node-spec-builder --bin soil-test-staging-node-spec-builder -- --help` passed.
+- Pending: `cargo check --all`
+- Pending: `cargo test --all --release`

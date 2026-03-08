@@ -16,7 +16,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-//! Subkey utility, based on kitchensink_runtime.
+//! Subkey utility, based on soil_test_staging_node_runtime.
 
 fn main() -> Result<(), soil_cli::Error> {
 	subkey::run()

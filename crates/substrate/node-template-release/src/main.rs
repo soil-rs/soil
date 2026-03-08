@@ -361,8 +361,8 @@ fn main() {
 		Compression::default(),
 	);
 	let mut tar = tar::Builder::new(output);
-	tar.append_dir_all("substrate-node-template", node_template_path)
-		.expect("Writes substrate-node-template archive");
+	tar.append_dir_all("soil-test-staging-node-template", node_template_path)
+		.expect("Writes soil-test-staging-node-template archive");
 }
 
 #[cfg(test)]

@@ -81,10 +81,10 @@ For each crate:
 
 | Consumer | Crates it depends on |
 |---|---|
-| `kitchensink-runtime` | block-builder, aura, babe, beefy, grandpa, pow, slots |
+| `soil-test-staging-node-runtime` | block-builder, aura, babe, beefy, grandpa, pow, slots |
 | `soil-test-node-runtime` | block-builder, aura, babe, grandpa |
-| `staging-node-cli` | babe, beefy, grandpa |
-| `node-rpc` | block-builder, babe, beefy |
+| `soil-test-staging-node-cli` | babe, beefy, grandpa |
+| `soil-test-staging-node-rpc` | block-builder, babe, beefy |
 | `sc-consensus-babe` | babe, slots, block-builder |
 | `sc-consensus-aura` | aura, slots, block-builder |
 | `sc-consensus-grandpa` | grandpa |

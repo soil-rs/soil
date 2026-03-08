@@ -176,20 +176,20 @@ members = [
 	"crates/substrate/fork-tree",
 	"crates/substrate/frame-remote-externalities",
 	"crates/substrate/generate-bags",
-	"crates/substrate/kitchensink-runtime",
-	"crates/substrate/node-bench",
-	"crates/substrate/node-primitives",
-	"crates/substrate/node-rpc",
-	"crates/substrate/node-runtime-generate-bags",
+	"contrib/soil-test-staging-node-runtime",
+	"contrib/soil-test-staging-node-bench",
+	"contrib/soil-test-staging-node-primitives",
+	"contrib/soil-test-staging-node-rpc",
+	"contrib/soil-test-staging-node-generate-bags",
 	"crates/substrate/node-template-release",
-	"crates/substrate/node-testing",
-	"crates/substrate/staging-chain-spec-builder",
-	"crates/substrate/staging-node-cli",
-	"crates/substrate/staging-node-inspect",
+	"contrib/soil-test-staging-node-testing",
+	"contrib/soil-test-staging-node-spec-builder",
+	"contrib/soil-test-staging-node-cli",
+	"contrib/soil-test-staging-node-inspect",
 	"crates/substrate/subkey",
 	"crates/substrate/substrate-bip39",
 	"crates/substrate/substrate-build-script-utils",
-	"crates/substrate/substrate-cli-test-utils",
+	"contrib/soil-test-staging-node-cli-test-utils",
 	"crates/substrate/substrate-frame-rpc-support",
 	"crates/substrate/substrate-frame-rpc-system",
 	"crates/substrate/substrate-prometheus-endpoint",
@@ -245,7 +245,7 @@ zero-prefixed-literal = { level = "allow", priority = 2 }            # 00_1000_0
 [workspace.dependencies]
 
 # Substrate path dependencies
-chain-spec-builder = { path = "crates/substrate/staging-chain-spec-builder", default-features = false, package = "staging-chain-spec-builder" }
+soil-test-staging-node-spec-builder = { path = "contrib/soil-test-staging-node-spec-builder", default-features = false, package = "soil-test-staging-node-spec-builder" }
 fork-tree = { path = "crates/substrate/fork-tree", default-features = false }
 topsoil = { path = "crates/topsoil/topsoil", default-features = false }
 topsoil-benchmarking = { path = "crates/topsoil/benchmarking", default-features = false }
@@ -264,13 +264,13 @@ topsoil-system-benchmarking = { path = "crates/topsoil/system/benchmarking", def
 topsoil-system-rpc-runtime-api = { path = "crates/topsoil/system/rpc/runtime-api", default-features = false }
 topsoil-try-runtime = { path = "crates/topsoil/try-runtime", default-features = false }
 generate-bags = { path = "crates/substrate/generate-bags", default-features = false }
-kitchensink-runtime = { path = "crates/substrate/kitchensink-runtime" }
+soil-test-staging-node-runtime = { path = "contrib/soil-test-staging-node-runtime" }
 soil-mmr-gadget = { path = "crates/soil/mmr-gadget", default-features = false }
-node-cli = { path = "crates/substrate/staging-node-cli", package = "staging-node-cli" }
-node-inspect = { path = "crates/substrate/staging-node-inspect", default-features = false, package = "staging-node-inspect" }
-node-primitives = { path = "crates/substrate/node-primitives", default-features = false }
-node-rpc = { path = "crates/substrate/node-rpc" }
-node-testing = { path = "crates/substrate/node-testing" }
+soil-test-staging-node-cli = { path = "contrib/soil-test-staging-node-cli", package = "soil-test-staging-node-cli" }
+soil-test-staging-node-inspect = { path = "contrib/soil-test-staging-node-inspect", default-features = false, package = "soil-test-staging-node-inspect" }
+soil-test-staging-node-primitives = { path = "contrib/soil-test-staging-node-primitives", default-features = false }
+soil-test-staging-node-rpc = { path = "contrib/soil-test-staging-node-rpc" }
+soil-test-staging-node-testing = { path = "contrib/soil-test-staging-node-testing" }
 plant-alliance = { path = "contrib/plant-alliance", default-features = false }
 plant-asset-conversion = { path = "contrib/plant-asset-conversion", default-features = false }
 plant-asset-conversion-ops = { path = "contrib/plant-asset-conversion/ops", default-features = false }
@@ -414,7 +414,7 @@ soil-transaction-storage-proof = { path = "crates/soil/transaction-storage-proof
 subkey = { path = "crates/substrate/subkey", default-features = false }
 substrate-bip39 = { path = "crates/substrate/substrate-bip39", default-features = false }
 substrate-build-script-utils = { path = "crates/substrate/substrate-build-script-utils", default-features = false }
-substrate-cli-test-utils = { path = "crates/substrate/substrate-cli-test-utils" }
+soil-test-staging-node-cli-test-utils = { path = "contrib/soil-test-staging-node-cli-test-utils" }
 substrate-frame-rpc-support = { default-features = false, path = "crates/substrate/substrate-frame-rpc-support" }
 substrate-frame-rpc-system = { path = "crates/substrate/substrate-frame-rpc-system", default-features = false }
 soil-test-node-client = { path = "crates/soil-test-node-client" }

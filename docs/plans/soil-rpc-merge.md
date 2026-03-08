@@ -66,19 +66,19 @@ consensus crates for sync-state generation.
 - Step 3:
   `cargo check -p soil-rpc -p substrate-frame-rpc-system -p substrate-frame-rpc-support -p soil-babe -p substrate-rpc-client`
 - Step 4:
-  `cargo check -p soil-rpc -p soil-service -p node-rpc -p staging-node-cli`
+  `cargo check -p soil-rpc -p soil-service -p soil-test-staging-node-rpc -p soil-test-staging-node-cli`
 - Step 5:
-  `cargo check -p soil-rpc -p soil-service -p staging-node-cli`
+  `cargo check -p soil-rpc -p soil-service -p soil-test-staging-node-cli`
 - Step 6:
   `cargo test -p soil-rpc --release`
-  `cargo check -p soil-service -p staging-node-cli`
+  `cargo check -p soil-service -p soil-test-staging-node-cli`
 - Step 7:
-  `cargo check -p soil-rpc -p node-rpc -p staging-node-cli`
+  `cargo check -p soil-rpc -p soil-test-staging-node-rpc -p soil-test-staging-node-cli`
 - Step 8:
-  `cargo check -p soil-rpc -p node-rpc -p staging-node-cli`
+  `cargo check -p soil-rpc -p soil-test-staging-node-rpc -p soil-test-staging-node-cli`
 - Step 9:
-  `cargo check -p soil-rpc -p node-rpc -p staging-node-cli -p topsoil-state-trie-migration`
+  `cargo check -p soil-rpc -p soil-test-staging-node-rpc -p soil-test-staging-node-cli -p topsoil-state-trie-migration`
 - Step 10:
-  `cargo check -p soil-rpc -p substrate-cli-test-utils -p frame-remote-externalities -p staging-node-cli`
+  `cargo check -p soil-rpc -p soil-test-staging-node-cli-test-utils -p frame-remote-externalities -p soil-test-staging-node-cli`
 - Step 11:
   `cargo test --all --release`

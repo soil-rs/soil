@@ -29,7 +29,7 @@
 // benchmark
 // pallet
 // --extrinsic=all
-// --runtime=target/production/wbuild/kitchensink-runtime/kitchensink_runtime.wasm
+// --runtime=target/production/wbuild/soil-test-staging-node-runtime/soil_test_staging_node_runtime.wasm
 // --pallet=plant_oracle
 // --header=substrate/HEADER
 // --output=substrate/frame/honzon/oracle/src/weights.rs
