@@ -21,8 +21,8 @@ plant-election-provider = { workspace = true }
 topsoil-support = { workspace = true }
 topsoil-system = { workspace = true }
 log = { workspace = true }
-topsoil-authorship = { workspace = true }
-topsoil-session = { features = ["historical"], workspace = true }
+plant-authorship = { workspace = true }
+plant-session = { features = ["historical"], workspace = true }
 scale-info = { features = ["derive", "serde"], workspace = true }
 serde = { features = ["alloc", "derive"], workspace = true }
 subsoil = { features = ["serde"], workspace = true }
@@ -36,9 +36,9 @@ topsoil-benchmarking = { workspace = true, default-features = true }
 plant-election-provider = { workspace = true, default-features = true }
 topsoil-support = { features = ["experimental"], workspace = true, default-features = true }
 plant-bags-list = { workspace = true, default-features = true }
-topsoil-balances = { workspace = true, default-features = true }
+plant-balances = { workspace = true, default-features = true }
 plant-staking-macros = { workspace = true, default-features = true }
-topsoil-timestamp = { workspace = true, default-features = true }
+plant-timestamp = { workspace = true, default-features = true }
 rand_chacha = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
 
@@ -51,11 +51,11 @@ std = [
 	"topsoil-support/std",
 	"topsoil-system/std",
 	"log/std",
-	"topsoil-authorship/std",
+	"plant-authorship/std",
 	"plant-bags-list/std",
-	"topsoil-balances/std",
-	"topsoil-session/std",
-	"topsoil-timestamp/std",
+	"plant-balances/std",
+	"plant-session/std",
+	"plant-timestamp/std",
 	"scale-info/std",
 	"serde/std",
 	"subsoil/std",
@@ -66,9 +66,9 @@ runtime-benchmarks = [
 	"topsoil-support/runtime-benchmarks",
 	"topsoil-system/runtime-benchmarks",
 	"plant-bags-list/runtime-benchmarks",
-	"topsoil-balances/runtime-benchmarks",
-	"topsoil-session/runtime-benchmarks",
-	"topsoil-timestamp/runtime-benchmarks",
+	"plant-balances/runtime-benchmarks",
+	"plant-session/runtime-benchmarks",
+	"plant-timestamp/runtime-benchmarks",
 	"rand_chacha",
 	"subsoil/runtime-benchmarks",
 ]
@@ -76,10 +76,10 @@ try-runtime = [
 	"plant-election-provider/try-runtime",
 	"topsoil-support/try-runtime",
 	"topsoil-system/try-runtime",
-	"topsoil-authorship/try-runtime",
+	"plant-authorship/try-runtime",
 	"plant-bags-list/try-runtime",
-	"topsoil-balances/try-runtime",
-	"topsoil-session/try-runtime",
-	"topsoil-timestamp/try-runtime",
+	"plant-balances/try-runtime",
+	"plant-session/try-runtime",
+	"plant-timestamp/try-runtime",
 	"subsoil/try-runtime",
 ]

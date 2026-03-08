@@ -48,7 +48,7 @@ fn can_pause_all_calls_in_pallet_except_on_whitelist() {
 		assert_ok!(call_transfer(1, 1).dispatch(RuntimeOrigin::signed(0)));
 
 		let batch_call =
-			RuntimeCall::Utility(topsoil_utility::Call::batch { calls: vec![call_transfer(1, 1)] });
+			RuntimeCall::Utility(plant_utility::Call::batch { calls: vec![call_transfer(1, 1)] });
 		assert_ok!(batch_call.clone().dispatch(RuntimeOrigin::signed(0)));
 
 		assert_ok!(TxPause::pause(
@@ -88,7 +88,7 @@ fn can_unpause_specific_call() {
 fn can_filter_balance_in_batch_when_paused() {
 	new_test_ext().execute_with(|| {
 		let batch_call =
-			RuntimeCall::Utility(topsoil_utility::Call::batch { calls: vec![call_transfer(1, 1)] });
+			RuntimeCall::Utility(plant_utility::Call::batch { calls: vec![call_transfer(1, 1)] });
 
 		assert_ok!(TxPause::pause(
 			RuntimeOrigin::signed(mock::PauseOrigin::get()),
@@ -97,7 +97,7 @@ fn can_filter_balance_in_batch_when_paused() {
 
 		assert_ok!(batch_call.clone().dispatch(RuntimeOrigin::signed(0)));
 		System::assert_last_event(
-			topsoil_utility::Event::BatchInterrupted {
+			plant_utility::Event::BatchInterrupted {
 				index: 0,
 				error: topsoil_system::Error::<Test>::CallFiltered.into(),
 			}
@@ -147,7 +147,7 @@ fn fails_to_pause_unpausable_call_when_other_call_is_paused() {
 		assert_ok!(call_transfer(1, 1).dispatch(RuntimeOrigin::signed(0)));
 
 		let batch_call =
-			RuntimeCall::Utility(topsoil_utility::Call::batch { calls: vec![call_transfer(1, 1)] });
+			RuntimeCall::Utility(plant_utility::Call::batch { calls: vec![call_transfer(1, 1)] });
 		assert_ok!(batch_call.clone().dispatch(RuntimeOrigin::signed(0)));
 
 		assert_ok!(TxPause::pause(
@@ -208,11 +208,11 @@ fn fails_to_unpause_not_paused_pallet() {
 }
 
 pub fn call_transfer(dest: u64, value: u64) -> RuntimeCall {
-	RuntimeCall::Balances(topsoil_balances::Call::transfer_allow_death { dest, value })
+	RuntimeCall::Balances(plant_balances::Call::transfer_allow_death { dest, value })
 }
 
 pub fn call_transfer_keep_alive(dest: u64, value: u64) -> RuntimeCall {
-	RuntimeCall::Balances(topsoil_balances::Call::transfer_keep_alive { dest, value })
+	RuntimeCall::Balances(plant_balances::Call::transfer_keep_alive { dest, value })
 }
 
 pub fn full_name<T: Config>(pallet_name: &[u8], call_name: &[u8]) -> RuntimeCallNameOf<T> {

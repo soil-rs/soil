@@ -35,7 +35,7 @@ use plant_election_provider::{
 	data_provider, BoundedSupportsOf, DataProviderBounds, ElectionDataProvider, ElectionProvider,
 	PageIndex, ScoreProvider, SortedListProvider, TryFromOtherBounds, VoteWeight, VoterOf,
 };
-use topsoil_session::historical;
+use plant_session::historical;
 use topsoil_support::{
 	defensive,
 	dispatch::WithPostDispatchInfo,
@@ -1650,7 +1650,7 @@ impl<T: Config> ElectionDataProvider for Pallet<T> {
 ///
 /// Once the first new_session is planned, all session must start and then end in order, though
 /// some session can lag in between the newest session planned and the latest session started.
-impl<T: Config> topsoil_session::SessionManager<T::AccountId> for Pallet<T> {
+impl<T: Config> plant_session::SessionManager<T::AccountId> for Pallet<T> {
 	fn new_session(new_index: SessionIndex) -> Option<Vec<T::AccountId>> {
 		log!(trace, "planning new session {}", new_index);
 		CurrentPlannedSession::<T>::put(new_index);
@@ -1677,7 +1677,7 @@ impl<T: Config> historical::SessionManager<T::AccountId, Exposure<T::AccountId, 
 	fn new_session(
 		new_index: SessionIndex,
 	) -> Option<Vec<(T::AccountId, Exposure<T::AccountId, BalanceOf<T>>)>> {
-		<Self as topsoil_session::SessionManager<_>>::new_session(new_index).map(|validators| {
+		<Self as plant_session::SessionManager<_>>::new_session(new_index).map(|validators| {
 			validators
 				.into_iter()
 				.map(|v| {
@@ -1690,7 +1690,7 @@ impl<T: Config> historical::SessionManager<T::AccountId, Exposure<T::AccountId, 
 	fn new_session_genesis(
 		new_index: SessionIndex,
 	) -> Option<Vec<(T::AccountId, Exposure<T::AccountId, BalanceOf<T>>)>> {
-		<Self as topsoil_session::SessionManager<_>>::new_session_genesis(new_index).map(
+		<Self as plant_session::SessionManager<_>>::new_session_genesis(new_index).map(
 			|validators| {
 				validators
 					.into_iter()
@@ -1703,35 +1703,35 @@ impl<T: Config> historical::SessionManager<T::AccountId, Exposure<T::AccountId, 
 		)
 	}
 	fn start_session(start_index: SessionIndex) {
-		<Self as topsoil_session::SessionManager<_>>::start_session(start_index)
+		<Self as plant_session::SessionManager<_>>::start_session(start_index)
 	}
 	fn end_session(end_index: SessionIndex) {
-		<Self as topsoil_session::SessionManager<_>>::end_session(end_index)
+		<Self as plant_session::SessionManager<_>>::end_session(end_index)
 	}
 }
 
 impl<T: Config> historical::SessionManager<T::AccountId, ()> for Pallet<T> {
 	fn new_session(new_index: SessionIndex) -> Option<Vec<(T::AccountId, ())>> {
-		<Self as topsoil_session::SessionManager<_>>::new_session(new_index)
+		<Self as plant_session::SessionManager<_>>::new_session(new_index)
 			.map(|validators| validators.into_iter().map(|v| (v, ())).collect())
 	}
 	fn new_session_genesis(new_index: SessionIndex) -> Option<Vec<(T::AccountId, ())>> {
-		<Self as topsoil_session::SessionManager<_>>::new_session_genesis(new_index)
+		<Self as plant_session::SessionManager<_>>::new_session_genesis(new_index)
 			.map(|validators| validators.into_iter().map(|v| (v, ())).collect())
 	}
 	fn start_session(start_index: SessionIndex) {
-		<Self as topsoil_session::SessionManager<_>>::start_session(start_index)
+		<Self as plant_session::SessionManager<_>>::start_session(start_index)
 	}
 	fn end_session(end_index: SessionIndex) {
-		<Self as topsoil_session::SessionManager<_>>::end_session(end_index)
+		<Self as plant_session::SessionManager<_>>::end_session(end_index)
 	}
 }
 
 /// Add reward points to block authors:
 /// * 20 points to the block producer for producing a (non-uncle) block,
-impl<T> topsoil_authorship::EventHandler<T::AccountId, BlockNumberFor<T>> for Pallet<T>
+impl<T> plant_authorship::EventHandler<T::AccountId, BlockNumberFor<T>> for Pallet<T>
 where
-	T: Config + topsoil_authorship::Config + topsoil_session::Config,
+	T: Config + plant_authorship::Config + plant_session::Config,
 {
 	fn note_author(author: T::AccountId) {
 		<Self as RewardsReporter<T::AccountId>>::reward_by_ids(vec![(author, 20)])
@@ -1740,13 +1740,13 @@ where
 
 /// This is intended to be used with `FilterHistoricalOffences`.
 impl<T: Config>
-	OnOffenceHandler<T::AccountId, topsoil_session::historical::IdentificationTuple<T>, Weight>
+	OnOffenceHandler<T::AccountId, plant_session::historical::IdentificationTuple<T>, Weight>
 	for Pallet<T>
 where
-	T: topsoil_session::Config<ValidatorId = <T as topsoil_system::Config>::AccountId>,
-	T: topsoil_session::historical::Config,
-	T::SessionHandler: topsoil_session::SessionHandler<<T as topsoil_system::Config>::AccountId>,
-	T::SessionManager: topsoil_session::SessionManager<<T as topsoil_system::Config>::AccountId>,
+	T: plant_session::Config<ValidatorId = <T as topsoil_system::Config>::AccountId>,
+	T: plant_session::historical::Config,
+	T::SessionHandler: plant_session::SessionHandler<<T as topsoil_system::Config>::AccountId>,
+	T::SessionManager: plant_session::SessionManager<<T as topsoil_system::Config>::AccountId>,
 	T::ValidatorIdOf: Convert<
 		<T as topsoil_system::Config>::AccountId,
 		Option<<T as topsoil_system::Config>::AccountId>,
@@ -1755,7 +1755,7 @@ where
 	fn on_offence(
 		offenders: &[OffenceDetails<
 			T::AccountId,
-			topsoil_session::historical::IdentificationTuple<T>,
+			plant_session::historical::IdentificationTuple<T>,
 		>],
 		slash_fractions: &[Perbill],
 		slash_session: SessionIndex,

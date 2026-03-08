@@ -43,9 +43,9 @@ mod runtime {
 	#[runtime::pallet_index(0)]
 	pub type System = topsoil_system;
 	#[runtime::pallet_index(1)]
-	pub type Balances = topsoil_balances<Instance1>;
+	pub type Balances = plant_balances<Instance1>;
 	#[runtime::pallet_index(2)]
-	pub type NisBalances = topsoil_balances<Instance2>;
+	pub type NisBalances = plant_balances<Instance2>;
 	#[runtime::pallet_index(3)]
 	pub type Nis = plant_nis;
 }
@@ -53,10 +53,10 @@ mod runtime {
 #[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
 impl topsoil_system::Config for Test {
 	type Block = Block;
-	type AccountData = topsoil_balances::AccountData<Balance>;
+	type AccountData = plant_balances::AccountData<Balance>;
 }
 
-impl topsoil_balances::Config<topsoil_balances::Instance1> for Test {
+impl plant_balances::Config<plant_balances::Instance1> for Test {
 	type Balance = Balance;
 	type DustRemoval = ();
 	type RuntimeEvent = RuntimeEvent;
@@ -73,15 +73,15 @@ impl topsoil_balances::Config<topsoil_balances::Instance1> for Test {
 	type DoneSlashHandler = ();
 }
 
-impl topsoil_balances::Config<topsoil_balances::Instance2> for Test {
+impl plant_balances::Config<plant_balances::Instance2> for Test {
 	type Balance = u128;
 	type DustRemoval = ();
 	type RuntimeEvent = RuntimeEvent;
 	type ExistentialDeposit = ConstU128<1>;
 	type AccountStore = StorageMapShim<
-		topsoil_balances::Account<Test, topsoil_balances::Instance2>,
+		plant_balances::Account<Test, plant_balances::Instance2>,
 		u64,
-		topsoil_balances::AccountData<u128>,
+		plant_balances::AccountData<u128>,
 	>;
 	type WeightInfo = ();
 	type MaxLocks = ();
@@ -112,7 +112,7 @@ impl plant_nis::Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type PalletId = NisPalletId;
 	type Currency = Balances;
-	type CurrencyBalance = <Self as topsoil_balances::Config<topsoil_balances::Instance1>>::Balance;
+	type CurrencyBalance = <Self as plant_balances::Config<plant_balances::Instance1>>::Balance;
 	type FundOrigin = topsoil_system::EnsureSigned<Self::AccountId>;
 	type Deficit = ();
 	type IgnoredIssuance = IgnoredIssuance;
@@ -137,7 +137,7 @@ impl plant_nis::Config for Test {
 // our desired mockup.
 pub fn new_test_ext() -> subsoil::io::TestExternalities {
 	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
-	topsoil_balances::GenesisConfig::<Test, topsoil_balances::Instance1> {
+	plant_balances::GenesisConfig::<Test, plant_balances::Instance1> {
 		balances: vec![(1, 100), (2, 100), (3, 100), (4, 100)],
 		..Default::default()
 	}

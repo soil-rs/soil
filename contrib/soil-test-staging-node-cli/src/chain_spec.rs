@@ -33,7 +33,7 @@ use subsoil::consensus::beefy::ecdsa_crypto::AuthorityId as BeefyId;
 use subsoil::consensus::grandpa::AuthorityId as GrandpaId;
 use subsoil::core::crypto::UncheckedInto;
 use subsoil::mixnet::types::AuthorityId as MixnetId;
-use topsoil_im_online::sr25519::AuthorityId as ImOnlineId;
+use plant_im_online::sr25519::AuthorityId as ImOnlineId;
 
 pub use soil_test_staging_node_runtime::RuntimeGenesisConfig;
 pub use soil_test_staging_node_primitives::{AccountId, Balance, Signature};

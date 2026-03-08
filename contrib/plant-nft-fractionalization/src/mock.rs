@@ -35,7 +35,7 @@ construct_runtime!(
 		System: topsoil_system,
 		NftFractionalization: plant_nft_fractionalization,
 		Assets: plant_assets,
-		Balances: topsoil_balances,
+		Balances: plant_balances,
 		Nfts: plant_nfts,
 	}
 );
@@ -45,11 +45,11 @@ impl topsoil_system::Config for Test {
 	type AccountId = AccountId;
 	type Lookup = IdentityLookup<Self::AccountId>;
 	type Block = Block;
-	type AccountData = topsoil_balances::AccountData<u64>;
+	type AccountData = plant_balances::AccountData<u64>;
 }
 
-#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
-impl topsoil_balances::Config for Test {
+#[derive_impl(plant_balances::config_preludes::TestDefaultConfig)]
+impl plant_balances::Config for Test {
 	type AccountStore = System;
 }
 
@@ -129,7 +129,7 @@ impl Config for Test {
 	type NewAssetName = NewAssetName;
 	type NftCollectionId = <Self as plant_nfts::Config>::CollectionId;
 	type NftId = <Self as plant_nfts::Config>::ItemId;
-	type AssetBalance = <Self as topsoil_balances::Config>::Balance;
+	type AssetBalance = <Self as plant_balances::Config>::Balance;
 	type AssetId = <Self as plant_assets::Config>::AssetId;
 	type Assets = Assets;
 	type Nfts = Nfts;

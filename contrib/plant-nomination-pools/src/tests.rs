@@ -23,7 +23,7 @@ use subsoil::runtime::{
 	traits::{BadOrigin, Dispatchable},
 	FixedU128,
 };
-use topsoil_balances::Event as BEvent;
+use plant_balances::Event as BEvent;
 use topsoil_support::{assert_err, assert_noop, assert_ok, hypothetically};
 
 macro_rules! unbonding_pools_with_era {

@@ -421,15 +421,15 @@ impl topsoil_system::Config for Runtime {
 	type AccountId = AccountId;
 	type Lookup = subsoil::runtime::traits::IdentityLookup<Self::AccountId>;
 	type Block = Block;
-	type AccountData = topsoil_balances::AccountData<Balance>;
+	type AccountData = plant_balances::AccountData<Balance>;
 }
 
 parameter_types! {
 	pub static ExistentialDeposit: Balance = 5;
 }
 
-#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
-impl topsoil_balances::Config for Runtime {
+#[derive_impl(plant_balances::config_preludes::TestDefaultConfig)]
+impl plant_balances::Config for Runtime {
 	type Balance = Balance;
 	type ExistentialDeposit = ExistentialDeposit;
 	type AccountStore = System;
@@ -493,7 +493,7 @@ type Block = topsoil_system::mocking::MockBlock<Runtime>;
 topsoil_support::construct_runtime!(
 	pub enum Runtime {
 		System: topsoil_system,
-		Balances: topsoil_balances,
+		Balances: plant_balances,
 		Pools: pools,
 	}
 );
@@ -636,7 +636,7 @@ pub fn pool_events_since_last_call() -> Vec<super::Event<Runtime>> {
 }
 
 /// All events of the `Balances` pallet.
-pub fn balances_events_since_last_call() -> Vec<topsoil_balances::Event<Runtime>> {
+pub fn balances_events_since_last_call() -> Vec<plant_balances::Event<Runtime>> {
 	let events = System::events()
 		.into_iter()
 		.map(|r| r.event)

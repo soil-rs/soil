@@ -74,7 +74,7 @@ use topsoil_support::{
 	DebugNoBound, Parameter,
 };
 use topsoil_system::pallet_prelude::BlockNumberFor;
-use topsoil_transaction_payment::OnChargeTransaction;
+use plant_transaction_payment::OnChargeTransaction;
 
 /// The allowance for an entity, defining its usage limit and recovery rate.
 #[derive(Clone, Debug)]
@@ -115,7 +115,7 @@ pub mod pallet {
 	pub(crate) type OriginCallerFor<T> =
 		<<T as topsoil_system::Config>::RuntimeOrigin as OriginTrait>::PalletsOrigin;
 	pub(crate) type BalanceOf<T> =
-		<<T as topsoil_transaction_payment::Config>::OnChargeTransaction as OnChargeTransaction<
+		<<T as plant_transaction_payment::Config>::OnChargeTransaction as OnChargeTransaction<
 			T,
 		>>::Balance;
 
@@ -136,7 +136,7 @@ pub mod pallet {
 		topsoil_system::Config<
 			RuntimeCall: Dispatchable<Info = DispatchInfo, PostInfo = PostDispatchInfo>,
 			RuntimeOrigin: AsTransactionAuthorizedOrigin,
-		> + topsoil_transaction_payment::Config
+		> + plant_transaction_payment::Config
 		+ Send
 		+ Sync
 	{

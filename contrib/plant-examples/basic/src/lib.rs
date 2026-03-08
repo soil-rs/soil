@@ -93,7 +93,7 @@ pub mod weights;
 pub use weights::*;
 
 /// A type alias for the balance type from this pallet's point of view.
-type BalanceOf<T> = <T as topsoil_balances::Config>::Balance;
+type BalanceOf<T> = <T as plant_balances::Config>::Balance;
 const MILLICENTS: u32 = 1_000_000_000;
 
 // A custom weight calculator tailored for the dispatch call `set_dummy()`. This actually examines
@@ -116,9 +116,9 @@ const MILLICENTS: u32 = 1_000_000_000;
 //
 // Manually configuring weight is an advanced operation and what you really need may well be
 //   fulfilled by running the benchmarking toolchain. Refer to `benchmarking.rs` file.
-struct WeightForSetDummy<T: topsoil_balances::Config>(BalanceOf<T>);
+struct WeightForSetDummy<T: plant_balances::Config>(BalanceOf<T>);
 
-impl<T: topsoil_balances::Config> WeighData<(&BalanceOf<T>,)> for WeightForSetDummy<T> {
+impl<T: plant_balances::Config> WeighData<(&BalanceOf<T>,)> for WeightForSetDummy<T> {
 	fn weigh_data(&self, target: (&BalanceOf<T>,)) -> Weight {
 		let multiplier = self.0;
 		// *target.0 is the amount passed into the extrinsic
@@ -127,7 +127,7 @@ impl<T: topsoil_balances::Config> WeighData<(&BalanceOf<T>,)> for WeightForSetDu
 	}
 }
 
-impl<T: topsoil_balances::Config> ClassifyDispatch<(&BalanceOf<T>,)> for WeightForSetDummy<T> {
+impl<T: plant_balances::Config> ClassifyDispatch<(&BalanceOf<T>,)> for WeightForSetDummy<T> {
 	fn classify_dispatch(&self, target: (&BalanceOf<T>,)) -> DispatchClass {
 		if *target.0 > <BalanceOf<T>>::from(1000u32) {
 			DispatchClass::Operational
@@ -137,7 +137,7 @@ impl<T: topsoil_balances::Config> ClassifyDispatch<(&BalanceOf<T>,)> for WeightF
 	}
 }
 
-impl<T: topsoil_balances::Config> PaysFee<(&BalanceOf<T>,)> for WeightForSetDummy<T> {
+impl<T: plant_balances::Config> PaysFee<(&BalanceOf<T>,)> for WeightForSetDummy<T> {
 	fn pays_fee(&self, _target: (&BalanceOf<T>,)) -> Pays {
 		Pays::Yes
 	}
@@ -158,7 +158,7 @@ pub mod pallet {
 	///
 	/// `topsoil_system::Config` should always be included.
 	#[pallet::config]
-	pub trait Config: topsoil_balances::Config + topsoil_system::Config {
+	pub trait Config: plant_balances::Config + topsoil_system::Config {
 		// Setting a constant config parameter from the runtime
 		#[pallet::constant]
 		type MagicNumber: Get<Self::Balance>;

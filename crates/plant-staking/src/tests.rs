@@ -31,12 +31,12 @@ use subsoil::runtime::{
 	traits::{BadOrigin, Dispatchable},
 	Perbill, Percent, Perquintill, Rounding, TokenError,
 };
-use topsoil_balances::Error as BalancesError;
+use plant_balances::Error as BalancesError;
 use plant_election_provider::{
 	bounds::{DataProviderBounds, ElectionBoundsBuilder},
 	ElectionProvider, SortedListProvider, Support,
 };
-use topsoil_session::{disabling::UpToLimitWithReEnablingDisablingStrategy, Event as SessionEvent};
+use plant_session::{disabling::UpToLimitWithReEnablingDisablingStrategy, Event as SessionEvent};
 use topsoil_support::{
 	assert_noop, assert_ok, assert_storage_noop,
 	dispatch::{extract_actual_weight, GetDispatchInfo, WithPostDispatchInfo},
@@ -2137,7 +2137,7 @@ fn bond_with_no_staked_value() {
 			);
 			// bonded with absolute minimum value possible.
 			assert_ok!(Staking::bond(RuntimeOrigin::signed(1), 5, RewardDestination::Account(1)));
-			assert_eq!(topsoil_balances::Holds::<Test>::get(&1)[0].amount, 5);
+			assert_eq!(plant_balances::Holds::<Test>::get(&1)[0].amount, 5);
 
 			// unbonding even 1 will cause all to be unbonded.
 			assert_ok!(Staking::unbond(RuntimeOrigin::signed(1), 1));
@@ -2158,14 +2158,14 @@ fn bond_with_no_staked_value() {
 			// not yet removed.
 			assert_ok!(Staking::withdraw_unbonded(RuntimeOrigin::signed(1), 0));
 			assert!(Staking::ledger(1.into()).is_ok());
-			assert_eq!(topsoil_balances::Holds::<Test>::get(&1)[0].amount, 5);
+			assert_eq!(plant_balances::Holds::<Test>::get(&1)[0].amount, 5);
 
 			mock::start_active_era(3);
 
 			// poof. Account 1 is removed from the staking system.
 			assert_ok!(Staking::withdraw_unbonded(RuntimeOrigin::signed(1), 0));
 			assert!(Staking::ledger(1.into()).is_err());
-			assert_eq!(topsoil_balances::Holds::<Test>::get(&1).len(), 0);
+			assert_eq!(plant_balances::Holds::<Test>::get(&1).len(), 0);
 		});
 }
 
@@ -2439,9 +2439,9 @@ fn reward_validator_slashing_validator_does_not_overflow() {
 #[test]
 fn reward_from_authorship_event_handler_works() {
 	ExtBuilder::default().build_and_execute(|| {
-		use topsoil_authorship::EventHandler;
+		use plant_authorship::EventHandler;
 
-		assert_eq!(<topsoil_authorship::Pallet<Test>>::author(), Some(11));
+		assert_eq!(<plant_authorship::Pallet<Test>>::author(), Some(11));
 
 		Pallet::<Test>::note_author(11);
 		Pallet::<Test>::note_author(11);
@@ -3284,13 +3284,13 @@ fn zero_slash_keeps_nominators() {
 #[test]
 fn six_session_delay() {
 	ExtBuilder::default().initialize_first_session(false).build_and_execute(|| {
-		use topsoil_session::SessionManager;
+		use plant_session::SessionManager;
 
 		let val_set = Session::validators();
 		let init_session = Session::current_index();
 		let init_active_era = active_era();
 
-		// topsoil-session is delaying session by one, thus the next session to plan is +2.
+		// plant-session is delaying session by one, thus the next session to plan is +2.
 		assert_eq!(<Staking as SessionManager<_>>::new_session(init_session + 2), None);
 		assert_eq!(
 			<Staking as SessionManager<_>>::new_session(init_session + 3),
@@ -3466,7 +3466,7 @@ fn test_multi_page_payout_stakers_by_page() {
 		assert_eq!(actual_exposure_1.own(), 0);
 		assert_eq!(actual_exposure_1.others().len(), 100 - 64);
 
-		let pre_payout_total_issuance = topsoil_balances::TotalIssuance::<Test>::get();
+		let pre_payout_total_issuance = plant_balances::TotalIssuance::<Test>::get();
 		RewardOnUnbalanceWasCalled::set(false);
 		System::reset_events();
 
@@ -3488,9 +3488,9 @@ fn test_multi_page_payout_stakers_by_page() {
 		let controller_balance_after_p0_payout = asset::stakeable_balance::<Test>(&11);
 
 		// verify rewards have been paid out but still some left
-		assert!(topsoil_balances::TotalIssuance::<Test>::get() > pre_payout_total_issuance);
+		assert!(plant_balances::TotalIssuance::<Test>::get() > pre_payout_total_issuance);
 		assert!(
-			topsoil_balances::TotalIssuance::<Test>::get() < pre_payout_total_issuance + payout
+			plant_balances::TotalIssuance::<Test>::get() < pre_payout_total_issuance + payout
 		);
 
 		// verify the validator has been rewarded
@@ -3515,7 +3515,7 @@ fn test_multi_page_payout_stakers_by_page() {
 
 		// verify all rewards have been paid out
 		assert_eq_error_rate!(
-			topsoil_balances::TotalIssuance::<Test>::get(),
+			plant_balances::TotalIssuance::<Test>::get(),
 			pre_payout_total_issuance + payout,
 			2
 		);
@@ -3558,13 +3558,13 @@ fn test_multi_page_payout_stakers_by_page() {
 
 			// compute and ensure the reward amount is greater than zero.
 			let payout = current_total_payout_for_duration(reward_time_per_era());
-			let pre_payout_total_issuance = topsoil_balances::TotalIssuance::<Test>::get();
+			let pre_payout_total_issuance = plant_balances::TotalIssuance::<Test>::get();
 
 			mock::start_active_era(i);
 			RewardOnUnbalanceWasCalled::set(false);
 			mock::make_all_reward_payment(i - 1);
 			assert_eq_error_rate!(
-				topsoil_balances::TotalIssuance::<Test>::get(),
+				plant_balances::TotalIssuance::<Test>::get(),
 				pre_payout_total_issuance + payout,
 				2
 			);
@@ -3745,7 +3745,7 @@ fn test_multi_page_payout_stakers_backward_compatible() {
 		assert_eq!(actual_exposure_1.own(), 0);
 		assert_eq!(actual_exposure_1.others().len(), 100 - 64);
 
-		let pre_payout_total_issuance = topsoil_balances::TotalIssuance::<Test>::get();
+		let pre_payout_total_issuance = plant_balances::TotalIssuance::<Test>::get();
 		RewardOnUnbalanceWasCalled::set(false);
 
 		let controller_balance_before_p0_payout = asset::stakeable_balance::<Test>(&11);
@@ -3760,9 +3760,9 @@ fn test_multi_page_payout_stakers_backward_compatible() {
 		let controller_balance_after_p0_payout = asset::stakeable_balance::<Test>(&11);
 
 		// verify rewards have been paid out but still some left
-		assert!(topsoil_balances::TotalIssuance::<Test>::get() > pre_payout_total_issuance);
+		assert!(plant_balances::TotalIssuance::<Test>::get() > pre_payout_total_issuance);
 		assert!(
-			topsoil_balances::TotalIssuance::<Test>::get() < pre_payout_total_issuance + payout
+			plant_balances::TotalIssuance::<Test>::get() < pre_payout_total_issuance + payout
 		);
 
 		// verify the validator has been rewarded
@@ -3782,7 +3782,7 @@ fn test_multi_page_payout_stakers_backward_compatible() {
 
 		// verify all rewards have been paid out
 		assert_eq_error_rate!(
-			topsoil_balances::TotalIssuance::<Test>::get(),
+			plant_balances::TotalIssuance::<Test>::get(),
 			pre_payout_total_issuance + payout,
 			2
 		);
@@ -3826,13 +3826,13 @@ fn test_multi_page_payout_stakers_backward_compatible() {
 
 			// compute and ensure the reward amount is greater than zero.
 			let payout = current_total_payout_for_duration(reward_time_per_era());
-			let pre_payout_total_issuance = topsoil_balances::TotalIssuance::<Test>::get();
+			let pre_payout_total_issuance = plant_balances::TotalIssuance::<Test>::get();
 
 			mock::start_active_era(i);
 			RewardOnUnbalanceWasCalled::set(false);
 			mock::make_all_reward_payment(i - 1);
 			assert_eq_error_rate!(
-				topsoil_balances::TotalIssuance::<Test>::get(),
+				plant_balances::TotalIssuance::<Test>::get(),
 				pre_payout_total_issuance + payout,
 				2
 			);
@@ -4368,7 +4368,7 @@ fn offences_weight_calculated_correctly() {
 		let offenders: Vec<
 			OffenceDetails<
 				<Test as topsoil_system::Config>::AccountId,
-				topsoil_session::historical::IdentificationTuple<Test>,
+				plant_session::historical::IdentificationTuple<Test>,
 			>,
 		> = (1..10)
 			.map(|i| OffenceDetails {

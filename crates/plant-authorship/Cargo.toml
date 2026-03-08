@@ -1,0 +1,41 @@
+[package]
+name = "plant-authorship"
+version = "28.0.0"
+description = "Block and Uncle Author tracking for the FRAME"
+authors.workspace = true
+edition.workspace = true
+license.workspace = true
+homepage.workspace = true
+repository.workspace = true
+readme = "README.md"
+
+[lints]
+workspace = true
+
+[package.metadata.docs.rs]
+targets = ["x86_64-unknown-linux-gnu"]
+
+[dependencies]
+codec = { features = ["derive"], workspace = true }
+topsoil-support = { workspace = true }
+topsoil-system = { workspace = true }
+impl-trait-for-tuples = { workspace = true }
+scale-info = { features = ["derive"], workspace = true }
+
+[dev-dependencies]
+subsoil = { workspace = true, default-features = true }
+
+[features]
+default = ["std"]
+std = [
+	"codec/std",
+	"topsoil-support/std",
+	"topsoil-system/std",
+	"scale-info/std",
+	"subsoil/std",
+]
+try-runtime = [
+	"topsoil-support/try-runtime",
+	"topsoil-system/try-runtime",
+	"subsoil/try-runtime",
+]

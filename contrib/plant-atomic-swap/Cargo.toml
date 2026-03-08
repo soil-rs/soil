@@ -21,17 +21,17 @@ topsoil = { workspace = true, features = ["runtime"] }
 scale-info = { features = ["derive"], workspace = true }
 
 [dev-dependencies]
-topsoil-balances = { workspace = true, default-features = true }
+plant-balances = { workspace = true, default-features = true }
 
 [features]
 default = ["std"]
 std = [
 	"codec/std",
 	"topsoil/std",
-	"topsoil-balances/std",
+	"plant-balances/std",
 	"scale-info/std",
 ]
 try-runtime = [
 	"topsoil/try-runtime",
-	"topsoil-balances/try-runtime",
+	"plant-balances/try-runtime",
 ]

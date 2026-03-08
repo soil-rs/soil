@@ -50,7 +50,7 @@ impl ScoreProvider<AccountId> for StakingMock {
 #[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
 impl topsoil_system::Config for Runtime {
 	type Block = Block;
-	type AccountData = topsoil_balances::AccountData<Balance>;
+	type AccountData = plant_balances::AccountData<Balance>;
 }
 
 parameter_types! {

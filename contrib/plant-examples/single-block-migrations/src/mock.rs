@@ -35,7 +35,7 @@ type Block = topsoil_system::mocking::MockBlock<MockRuntime>;
 topsoil_support::construct_runtime!(
 	pub struct MockRuntime {
 		System: topsoil_system::{Pallet, Call, Config<T>, Storage, Event<T>},
-		Balances: topsoil_balances::{Pallet, Call, Storage, Config<T>, Event<T>},
+		Balances: plant_balances::{Pallet, Call, Storage, Config<T>, Event<T>},
 		Example: pallet_example_storage_migration::{Pallet, Call, Storage},
 	}
 );
@@ -43,12 +43,12 @@ topsoil_support::construct_runtime!(
 #[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
 impl topsoil_system::Config for MockRuntime {
 	type Block = Block;
-	type AccountData = topsoil_balances::AccountData<u64>;
+	type AccountData = plant_balances::AccountData<u64>;
 	type DbWeight = ParityDbWeight;
 }
 
-#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
-impl topsoil_balances::Config for MockRuntime {
+#[derive_impl(plant_balances::config_preludes::TestDefaultConfig)]
+impl plant_balances::Config for MockRuntime {
 	type AccountStore = System;
 }
 

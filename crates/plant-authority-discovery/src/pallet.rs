@@ -40,7 +40,7 @@ pub mod pallet {
 
 	#[pallet::config]
 	/// The pallet's config trait.
-	pub trait Config: topsoil_system::Config + topsoil_session::Config {
+	pub trait Config: topsoil_system::Config + plant_session::Config {
 		/// The maximum number of authorities that can be added.
 		type MaxAuthorities: Get<u32>;
 	}
@@ -226,8 +226,8 @@ mod tests {
 		pub enum Test
 		{
 			System: topsoil_system,
-			Session: topsoil_session,
-			Balances: topsoil_balances,
+			Session: plant_session,
+			Balances: plant_balances,
 			AuthorityDiscovery: plant_authority_discovery,
 		}
 	);
@@ -240,15 +240,15 @@ mod tests {
 		type MaxAuthorities = ConstU32<100>;
 	}
 
-	impl topsoil_session::Config for Test {
+	impl plant_session::Config for Test {
 		type SessionManager = ();
 		type Keys = UintAuthorityId;
-		type ShouldEndSession = topsoil_session::PeriodicSessions<Period, Offset>;
+		type ShouldEndSession = plant_session::PeriodicSessions<Period, Offset>;
 		type SessionHandler = TestSessionHandler;
 		type RuntimeEvent = RuntimeEvent;
 		type ValidatorId = AuthorityId;
 		type ValidatorIdOf = ConvertInto;
-		type NextSessionRotation = topsoil_session::PeriodicSessions<Period, Offset>;
+		type NextSessionRotation = plant_session::PeriodicSessions<Period, Offset>;
 		type DisablingStrategy = ();
 		type WeightInfo = ();
 		type Currency = Balances;
@@ -267,16 +267,16 @@ mod tests {
 		type AccountId = AuthorityId;
 		type Lookup = IdentityLookup<Self::AccountId>;
 		type Block = Block;
-		type AccountData = topsoil_balances::AccountData<u64>;
+		type AccountData = plant_balances::AccountData<u64>;
 	}
 
-	#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
-	impl topsoil_balances::Config for Test {
+	#[derive_impl(plant_balances::config_preludes::TestDefaultConfig)]
+	impl plant_balances::Config for Test {
 		type AccountStore = System;
 	}
 
 	pub struct TestSessionHandler;
-	impl topsoil_session::SessionHandler<AuthorityId> for TestSessionHandler {
+	impl plant_session::SessionHandler<AuthorityId> for TestSessionHandler {
 		const KEY_TYPE_IDS: &'static [KeyTypeId] = &[key_types::DUMMY];
 
 		fn on_new_session<Ks: OpaqueKeys>(
@@ -294,7 +294,7 @@ mod tests {
 	#[test]
 	fn authorities_returns_current_and_next_authority_set() {
 		// The whole authority discovery pallet ignores account ids, but we still need them for
-		// `topsoil_session::OneSessionHandler::on_new_session`, thus its safe to use the same value
+		// `plant_session::OneSessionHandler::on_new_session`, thus its safe to use the same value
 		// everywhere.
 		let account_id = AuthorityPair::from_seed_slice(vec![10; 32].as_ref()).unwrap().public();
 
@@ -309,7 +309,7 @@ mod tests {
 			.map(|i| AuthorityPair::from_seed_slice(vec![i; 32].as_ref()).unwrap().public())
 			.map(AuthorityId::from)
 			.collect();
-		// Needed for `topsoil_session::OneSessionHandler::on_new_session`.
+		// Needed for `plant_session::OneSessionHandler::on_new_session`.
 		let second_authorities_and_account_ids = second_authorities
 			.clone()
 			.into_iter()
@@ -321,7 +321,7 @@ mod tests {
 			.map(|i| AuthorityPair::from_seed_slice(vec![i; 32].as_ref()).unwrap().public())
 			.map(AuthorityId::from)
 			.collect();
-		// Needed for `topsoil_session::OneSessionHandler::on_new_session`.
+		// Needed for `plant_session::OneSessionHandler::on_new_session`.
 		let third_authorities_and_account_ids = third_authorities
 			.clone()
 			.into_iter()
@@ -333,7 +333,7 @@ mod tests {
 			.map(|i| AuthorityPair::from_seed_slice(vec![i; 32].as_ref()).unwrap().public())
 			.map(AuthorityId::from)
 			.collect();
-		// Needed for `topsoil_session::OneSessionHandler::on_new_session`.
+		// Needed for `plant_session::OneSessionHandler::on_new_session`.
 		let fourth_authorities_and_account_ids = fourth_authorities
 			.clone()
 			.into_iter()

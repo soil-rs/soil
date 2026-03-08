@@ -58,7 +58,7 @@
 // --no-storage-info
 // --no-min-squares
 // --no-median-slopes
-// --exclude-pallets=pallet_xcm,pallet_xcm_benchmarks::fungible,pallet_xcm_benchmarks::generic,plant_nomination_pools,plant_remark,topsoil_transaction_storage
+// --exclude-pallets=pallet_xcm,pallet_xcm_benchmarks::fungible,pallet_xcm_benchmarks::generic,plant_nomination_pools,plant_remark,plant_transaction_storage
 
 #![cfg_attr(rustfmt, rustfmt_skip)]
 #![allow(unused_parens)]

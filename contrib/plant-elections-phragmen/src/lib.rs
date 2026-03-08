@@ -1314,11 +1314,11 @@ mod tests {
 	#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
 	impl topsoil_system::Config for Test {
 		type Block = Block;
-		type AccountData = topsoil_balances::AccountData<u64>;
+		type AccountData = plant_balances::AccountData<u64>;
 	}
 
-	#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
-	impl topsoil_balances::Config for Test {
+	#[derive_impl(plant_balances::config_preludes::TestDefaultConfig)]
+	impl plant_balances::Config for Test {
 		type AccountStore = topsoil_system::Pallet<Test>;
 	}
 
@@ -1412,7 +1412,7 @@ mod tests {
 		pub enum Test
 		{
 			System: topsoil_system,
-			Balances: topsoil_balances,
+			Balances: plant_balances,
 			Elections: elections_phragmen,
 		}
 	);
@@ -1465,7 +1465,7 @@ mod tests {
 			});
 			let mut ext: subsoil::io::TestExternalities = RuntimeGenesisConfig {
 				system: topsoil_system::GenesisConfig::default(),
-				balances: topsoil_balances::GenesisConfig::<Test> {
+				balances: plant_balances::GenesisConfig::<Test> {
 					balances: vec![
 						(1, 10 * self.balance_factor),
 						(2, 20 * self.balance_factor),
@@ -2193,7 +2193,7 @@ mod tests {
 			assert_eq!(locked_stake_of(&2), 0);
 
 			assert_eq!(balances(&2), (20, 0));
-			assert_eq!(topsoil_balances::Locks::<Test>::get(&2).len(), 0);
+			assert_eq!(plant_balances::Locks::<Test>::get(&2).len(), 0);
 		});
 	}
 

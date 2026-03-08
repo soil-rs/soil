@@ -22,7 +22,7 @@ scale-info = { features = ["derive"], workspace = true }
 subsoil = { workspace = true }
 topsoil-support = { workspace = true }
 topsoil-system = { workspace = true }
-topsoil-session = { features = ["historical"], workspace = true }
+plant-session = { features = ["historical"], workspace = true }
 
 # std-only client service deps (optional, activated by std feature)
 async-trait = { workspace = true, optional = true }
@@ -48,7 +48,7 @@ quickcheck = { workspace = true }
 subsoil = { workspace = true, default-features = true }
 soil-test-node-runtime-client = { workspace = true }
 tempfile = { workspace = true }
-topsoil-balances = { workspace = true }
+plant-balances = { workspace = true }
 
 [build-dependencies]
 prost-build = { workspace = true, optional = true }
@@ -61,7 +61,7 @@ std = [
 	"subsoil/std",
 	"topsoil-support/std",
 	"topsoil-system/std",
-	"topsoil-session/std",
+	"plant-session/std",
 	# client service deps
 	"dep:async-trait",
 	"dep:futures",
@@ -88,11 +88,11 @@ serde = [
 try-runtime = [
 	"topsoil-support/try-runtime",
 	"topsoil-system/try-runtime",
-	"topsoil-session/try-runtime",
+	"plant-session/try-runtime",
 	"subsoil/try-runtime",
 ]
 runtime-benchmarks = [
 	"topsoil-support/runtime-benchmarks",
 	"topsoil-system/runtime-benchmarks",
-	"topsoil-session/runtime-benchmarks",
+	"plant-session/runtime-benchmarks",
 ]

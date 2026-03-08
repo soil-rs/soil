@@ -34,7 +34,7 @@ plant-identity = { workspace = true }
 
 [dev-dependencies]
 array-bytes = { workspace = true, default-features = true }
-topsoil-balances = { workspace = true, default-features = true }
+plant-balances = { workspace = true, default-features = true }
 plant-collective = { workspace = true, default-features = true }
 subsoil-crypto-hashing = { workspace = true }
 
@@ -46,7 +46,7 @@ std = [
 	"topsoil-support/std",
 	"topsoil-system/std",
 	"log/std",
-	"topsoil-balances/std",
+	"plant-balances/std",
 	"plant-collective?/std",
 	"plant-identity/std",
 	"scale-info/std",
@@ -58,7 +58,7 @@ runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",
 	"topsoil-support/runtime-benchmarks",
 	"topsoil-system/runtime-benchmarks",
-	"topsoil-balances/runtime-benchmarks",
+	"plant-balances/runtime-benchmarks",
 	"plant-collective/runtime-benchmarks",
 	"plant-identity/runtime-benchmarks",
 	"subsoil-crypto-hashing",
@@ -67,7 +67,7 @@ runtime-benchmarks = [
 try-runtime = [
 	"topsoil-support/try-runtime",
 	"topsoil-system/try-runtime",
-	"topsoil-balances/try-runtime",
+	"plant-balances/try-runtime",
 	"plant-collective?/try-runtime",
 	"plant-identity/try-runtime",
 	"subsoil/try-runtime",

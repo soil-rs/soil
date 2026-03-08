@@ -32,7 +32,7 @@ use topsoil_support::{
 	traits::ContainsPair,
 	weights::IdentityFee,
 };
-use topsoil_transaction_payment::ConstFeeMultiplier;
+use plant_transaction_payment::ConstFeeMultiplier;
 
 pub type AccountId = <Test as topsoil_system::Config>::AccountId;
 pub type BlockNumber = u64;
@@ -91,7 +91,7 @@ topsoil_support::construct_runtime!(
 		System: topsoil_system,
 		MockPallet: mock_pallet,
 		OriginsRestriction: crate,
-		TransactionPayment: topsoil_transaction_payment,
+		TransactionPayment: plant_transaction_payment,
 	}
 );
 
@@ -186,7 +186,7 @@ topsoil_support::parameter_types! {
 
 pub struct OnChargeTransaction;
 
-impl topsoil_transaction_payment::OnChargeTransaction<Test> for OnChargeTransaction {
+impl plant_transaction_payment::OnChargeTransaction<Test> for OnChargeTransaction {
 	type Balance = u64;
 	type LiquidityInfo = ();
 	fn withdraw_fee(
@@ -227,11 +227,11 @@ impl topsoil_transaction_payment::OnChargeTransaction<Test> for OnChargeTransact
 	}
 }
 
-impl topsoil_transaction_payment::TxCreditHold<Test> for OnChargeTransaction {
+impl plant_transaction_payment::TxCreditHold<Test> for OnChargeTransaction {
 	type Credit = ();
 }
 
-impl topsoil_transaction_payment::Config for Test {
+impl plant_transaction_payment::Config for Test {
 	type WeightInfo = ();
 	type RuntimeEvent = RuntimeEvent;
 	type WeightToFee = IdentityFee<u64>;

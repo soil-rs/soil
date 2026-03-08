@@ -19,7 +19,7 @@
 
 use crate::{mock::*, Event, *};
 use subsoil::runtime::{traits::Dispatchable, DispatchError};
-use topsoil_balances::Error as BalancesError;
+use plant_balances::Error as BalancesError;
 use topsoil_support::{assert_noop, assert_ok, traits::Currency};
 
 fn items() -> Vec<(u64, u32, u32)> {

@@ -70,11 +70,11 @@ use plant_election_provider::{
 	onchain, BalancingConfig, ElectionDataProvider, SequentialPhragmen, VoteWeight,
 };
 use plant_identity::legacy::IdentityInfo;
-use topsoil_im_online::sr25519::AuthorityId as ImOnlineId;
+use plant_im_online::sr25519::AuthorityId as ImOnlineId;
 use plant_nfts::PalletFeatures;
 use plant_nis::WithMaximumOf;
 use plant_nomination_pools::PoolId;
-use topsoil_session::historical as pallet_session_historical;
+use plant_session::historical as pallet_session_historical;
 use topsoil_support::weights::IdentityFee;
 use topsoil_support::{
 	derive_impl,
@@ -112,14 +112,14 @@ use topsoil_system::{
 	limits::{BlockLength, BlockWeights},
 	EnsureRoot, EnsureRootWithSuccess, EnsureSigned, EnsureSignedBy, EnsureWithSuccess,
 };
-use topsoil_transaction_payment::{FeeDetails, RuntimeDispatchInfo};
-pub use topsoil_transaction_payment::{FungibleAdapter, Multiplier, TargetedFeeAdjustment};
+use plant_transaction_payment::{FeeDetails, RuntimeDispatchInfo};
+pub use plant_transaction_payment::{FungibleAdapter, Multiplier, TargetedFeeAdjustment};
 use plant_tx_pause::RuntimeCallNameOf;
 
 #[cfg(any(feature = "std", test))]
 pub use subsoil::runtime::BuildStorage;
 #[cfg(any(feature = "std", test))]
-pub use topsoil_balances::Call as BalancesCall;
+pub use plant_balances::Call as BalancesCall;
 #[cfg(any(feature = "std", test))]
 pub use plant_sudo::Call as SudoCall;
 #[cfg(any(feature = "std", test))]
@@ -361,7 +361,7 @@ impl topsoil_system::Config for Runtime {
 	type Block = Block;
 	type BlockHashCount = BlockHashCount;
 	type Version = Version;
-	type AccountData = topsoil_balances::AccountData<Balance>;
+	type AccountData = plant_balances::AccountData<Balance>;
 	type SystemWeightInfo = topsoil_system::weights::SubstrateWeight<Runtime>;
 	type SS58Prefix = ConstU16<42>;
 	type MaxConsumers = ConstU32<16>;
@@ -371,11 +371,11 @@ impl topsoil_system::Config for Runtime {
 
 impl plant_insecure_randomness_collective_flip::Config for Runtime {}
 
-impl topsoil_utility::Config for Runtime {
+impl plant_utility::Config for Runtime {
 	type RuntimeEvent = RuntimeEvent;
 	type RuntimeCall = RuntimeCall;
 	type PalletsOrigin = OriginCaller;
-	type WeightInfo = topsoil_utility::weights::SubstrateWeight<Runtime>;
+	type WeightInfo = plant_utility::weights::SubstrateWeight<Runtime>;
 }
 
 parameter_types! {
@@ -544,17 +544,17 @@ parameter_types! {
 		BondingDuration::get() as u64 * SessionsPerEra::get() as u64 * EpochDuration::get();
 }
 
-impl topsoil_babe::Config for Runtime {
+impl plant_babe::Config for Runtime {
 	type EpochDuration = EpochDuration;
 	type ExpectedBlockTime = ExpectedBlockTime;
-	type EpochChangeTrigger = topsoil_babe::ExternalTrigger;
+	type EpochChangeTrigger = plant_babe::ExternalTrigger;
 	type DisabledValidators = Session;
 	type WeightInfo = ();
 	type MaxAuthorities = MaxAuthorities;
 	type MaxNominators = MaxNominators;
 	type KeyOwnerProof = subsoil::session::MembershipProof;
 	type EquivocationReportSystem =
-		topsoil_babe::EquivocationReportSystem<Self, Offences, Historical, ReportLongevity>;
+		plant_babe::EquivocationReportSystem<Self, Offences, Historical, ReportLongevity>;
 }
 
 parameter_types! {
@@ -577,7 +577,7 @@ parameter_types! {
 	pub const MaxReserves: u32 = 50;
 }
 
-impl topsoil_balances::Config for Runtime {
+impl plant_balances::Config for Runtime {
 	type RuntimeHoldReason = RuntimeHoldReason;
 	type RuntimeFreezeReason = RuntimeFreezeReason;
 	type MaxLocks = MaxLocks;
@@ -588,7 +588,7 @@ impl topsoil_balances::Config for Runtime {
 	type RuntimeEvent = RuntimeEvent;
 	type ExistentialDeposit = ExistentialDeposit;
 	type AccountStore = topsoil_system::Pallet<Runtime>;
-	type WeightInfo = topsoil_balances::weights::SubstrateWeight<Runtime>;
+	type WeightInfo = plant_balances::weights::SubstrateWeight<Runtime>;
 	type FreezeIdentifier = RuntimeFreezeReason;
 	type MaxFreezes = VariantCountOf<RuntimeFreezeReason>;
 	type DoneSlashHandler = ();
@@ -603,7 +603,7 @@ parameter_types! {
 	pub MaximumMultiplier: Multiplier = Bounded::max_value();
 }
 
-impl topsoil_transaction_payment::Config for Runtime {
+impl plant_transaction_payment::Config for Runtime {
 	type RuntimeEvent = RuntimeEvent;
 	type OnChargeTransaction = FungibleAdapter<Balances, ResolveTo<TreasuryAccount, Balances>>;
 	type OperationalFeeMultiplier = OperationalFeeMultiplier;
@@ -616,7 +616,7 @@ impl topsoil_transaction_payment::Config for Runtime {
 		MinimumMultiplier,
 		MaximumMultiplier,
 	>;
-	type WeightInfo = topsoil_transaction_payment::weights::SubstrateWeight<Runtime>;
+	type WeightInfo = plant_transaction_payment::weights::SubstrateWeight<Runtime>;
 }
 
 pub type AssetsFreezerInstance = plant_assets_freezer::Instance1;
@@ -643,15 +643,15 @@ parameter_types! {
 	pub const MinimumPeriod: Moment = SLOT_DURATION / 2;
 }
 
-impl topsoil_timestamp::Config for Runtime {
+impl plant_timestamp::Config for Runtime {
 	type Moment = Moment;
 	type OnTimestampSet = Babe;
 	type MinimumPeriod = MinimumPeriod;
-	type WeightInfo = topsoil_timestamp::weights::SubstrateWeight<Runtime>;
+	type WeightInfo = plant_timestamp::weights::SubstrateWeight<Runtime>;
 }
 
-impl topsoil_authorship::Config for Runtime {
-	type FindAuthor = topsoil_session::FindAccountFromAuthorIndex<Self, Babe>;
+impl plant_authorship::Config for Runtime {
+	type FindAuthor = plant_session::FindAccountFromAuthorIndex<Self, Babe>;
 	type EventHandler = (Staking, ImOnline);
 }
 
@@ -666,22 +666,22 @@ subsoil::impl_opaque_keys! {
 	}
 }
 
-impl topsoil_session::Config for Runtime {
+impl plant_session::Config for Runtime {
 	type RuntimeEvent = RuntimeEvent;
 	type ValidatorId = <Self as topsoil_system::Config>::AccountId;
 	type ValidatorIdOf = subsoil::runtime::traits::ConvertInto;
 	type ShouldEndSession = Babe;
 	type NextSessionRotation = Babe;
-	type SessionManager = topsoil_session::historical::NoteHistoricalRoot<Self, Staking>;
+	type SessionManager = plant_session::historical::NoteHistoricalRoot<Self, Staking>;
 	type SessionHandler = <SessionKeys as OpaqueKeys>::KeyTypeIdProviders;
 	type Keys = SessionKeys;
-	type DisablingStrategy = topsoil_session::disabling::UpToLimitWithReEnablingDisablingStrategy;
-	type WeightInfo = topsoil_session::weights::SubstrateWeight<Runtime>;
+	type DisablingStrategy = plant_session::disabling::UpToLimitWithReEnablingDisablingStrategy;
+	type WeightInfo = plant_session::weights::SubstrateWeight<Runtime>;
 	type Currency = Balances;
 	type KeyDeposit = ();
 }
 
-impl topsoil_session::historical::Config for Runtime {
+impl plant_session::historical::Config for Runtime {
 	type RuntimeEvent = RuntimeEvent;
 	type FullIdentification = ();
 	type FullIdentificationOf = plant_staking::UnitIdentificationOf<Self>;
@@ -1041,7 +1041,7 @@ impl plant_referenda::Config for Runtime {
 	type RuntimeCall = RuntimeCall;
 	type RuntimeEvent = RuntimeEvent;
 	type Scheduler = Scheduler;
-	type Currency = topsoil_balances::Pallet<Self>;
+	type Currency = plant_balances::Pallet<Self>;
 	type SubmitOrigin = EnsureSigned<AccountId>;
 	type CancelOrigin = EnsureRoot<AccountId>;
 	type KillOrigin = EnsureRoot<AccountId>;
@@ -1062,7 +1062,7 @@ impl plant_referenda::Config<plant_referenda::Instance2> for Runtime {
 	type RuntimeCall = RuntimeCall;
 	type RuntimeEvent = RuntimeEvent;
 	type Scheduler = Scheduler;
-	type Currency = topsoil_balances::Pallet<Self>;
+	type Currency = plant_balances::Pallet<Self>;
 	type SubmitOrigin = EnsureSigned<AccountId>;
 	type CancelOrigin = EnsureRoot<AccountId>;
 	type KillOrigin = EnsureRoot<AccountId>;
@@ -1579,21 +1579,21 @@ where
 	}
 }
 
-impl topsoil_im_online::Config for Runtime {
+impl plant_im_online::Config for Runtime {
 	type AuthorityId = ImOnlineId;
 	type RuntimeEvent = RuntimeEvent;
 	type NextSessionRotation = Babe;
 	type ValidatorSet = Historical;
 	type ReportUnresponsiveness = Offences;
 	type UnsignedPriority = ImOnlineUnsignedPriority;
-	type WeightInfo = topsoil_im_online::weights::SubstrateWeight<Runtime>;
+	type WeightInfo = plant_im_online::weights::SubstrateWeight<Runtime>;
 	type MaxKeys = MaxKeys;
 	type MaxPeerInHeartbeats = MaxPeerInHeartbeats;
 }
 
-impl topsoil_offences::Config for Runtime {
+impl plant_offences::Config for Runtime {
 	type RuntimeEvent = RuntimeEvent;
-	type IdentificationTuple = topsoil_session::historical::IdentificationTuple<Self>;
+	type IdentificationTuple = plant_session::historical::IdentificationTuple<Self>;
 	type OnOffenceHandler = Staking;
 }
 
@@ -1605,7 +1605,7 @@ parameter_types! {
 	pub const MaxSetIdSessionEntries: u32 = BondingDuration::get() * SessionsPerEra::get();
 }
 
-impl topsoil_grandpa::Config for Runtime {
+impl plant_grandpa::Config for Runtime {
 	type RuntimeEvent = RuntimeEvent;
 	type WeightInfo = ();
 	type MaxAuthorities = MaxAuthorities;
@@ -1613,7 +1613,7 @@ impl topsoil_grandpa::Config for Runtime {
 	type MaxSetIdSessionEntries = MaxSetIdSessionEntries;
 	type KeyOwnerProof = subsoil::session::MembershipProof;
 	type EquivocationReportSystem =
-		topsoil_grandpa::EquivocationReportSystem<Self, Offences, Historical, ReportLongevity>;
+		plant_grandpa::EquivocationReportSystem<Self, Offences, Historical, ReportLongevity>;
 }
 
 parameter_types! {
@@ -1726,7 +1726,7 @@ impl plant_mmr::Config for Runtime {
 	const INDEXING_PREFIX: &'static [u8] = b"mmr";
 	type Hashing = Keccak256;
 	type LeafData = plant_mmr::ParentNumberAndHash<Self>;
-	type OnNewRoot = topsoil_beefy_mmr::DepositBeefyDigest<Runtime>;
+	type OnNewRoot = plant_beefy_mmr::DepositBeefyDigest<Runtime>;
 	type BlockHashProvider = plant_mmr::DefaultBlockHashProvider<Runtime>;
 	type WeightInfo = ();
 	#[cfg(feature = "runtime-benchmarks")]
@@ -1737,9 +1737,9 @@ parameter_types! {
 	pub LeafVersion: MmrLeafVersion = MmrLeafVersion::new(0, 0);
 }
 
-impl topsoil_beefy_mmr::Config for Runtime {
+impl plant_beefy_mmr::Config for Runtime {
 	type LeafVersion = LeafVersion;
-	type BeefyAuthorityToMerkleLeaf = topsoil_beefy_mmr::BeefyEcdsaToEthereum;
+	type BeefyAuthorityToMerkleLeaf = plant_beefy_mmr::BeefyEcdsaToEthereum;
 	type LeafExtra = Vec<u8>;
 	type BeefyDataProvider = ();
 	type WeightInfo = ();
@@ -2072,7 +2072,7 @@ impl plant_nft_fractionalization::Config for Runtime {
 	type StringLimit = StringLimit;
 	type NftCollectionId = <Self as plant_nfts::Config>::CollectionId;
 	type NftId = <Self as plant_nfts::Config>::ItemId;
-	type AssetBalance = <Self as topsoil_balances::Config>::Balance;
+	type AssetBalance = <Self as plant_balances::Config>::Balance;
 	type AssetId = <Self as plant_assets::Config<Instance1>>::AssetId;
 	type Assets = Assets;
 	type Nfts = Nfts;
@@ -2118,17 +2118,17 @@ impl plant_nfts::Config for Runtime {
 	type BlockNumberProvider = topsoil_system::Pallet<Runtime>;
 }
 
-impl topsoil_transaction_storage::Config for Runtime {
+impl plant_transaction_storage::Config for Runtime {
 	type RuntimeEvent = RuntimeEvent;
 	type Currency = Balances;
 	type RuntimeHoldReason = RuntimeHoldReason;
 	type RuntimeCall = RuntimeCall;
 	type FeeDestination = ();
-	type WeightInfo = topsoil_transaction_storage::weights::SubstrateWeight<Runtime>;
+	type WeightInfo = plant_transaction_storage::weights::SubstrateWeight<Runtime>;
 	type MaxBlockTransactions =
-		ConstU32<{ topsoil_transaction_storage::DEFAULT_MAX_BLOCK_TRANSACTIONS }>;
+		ConstU32<{ plant_transaction_storage::DEFAULT_MAX_BLOCK_TRANSACTIONS }>;
 	type MaxTransactionSize =
-		ConstU32<{ topsoil_transaction_storage::DEFAULT_MAX_TRANSACTION_SIZE }>;
+		ConstU32<{ plant_transaction_storage::DEFAULT_MAX_TRANSACTION_SIZE }>;
 }
 
 impl plant_verify_signature::Config for Runtime {
@@ -2489,27 +2489,27 @@ mod runtime {
 	pub type System = topsoil_system::Pallet<Runtime>;
 
 	#[runtime::pallet_index(1)]
-	pub type Utility = topsoil_utility::Pallet<Runtime>;
+	pub type Utility = plant_utility::Pallet<Runtime>;
 
 	#[runtime::pallet_index(2)]
-	pub type Babe = topsoil_babe::Pallet<Runtime>;
+	pub type Babe = plant_babe::Pallet<Runtime>;
 
 	#[runtime::pallet_index(3)]
-	pub type Timestamp = topsoil_timestamp::Pallet<Runtime>;
+	pub type Timestamp = plant_timestamp::Pallet<Runtime>;
 
 	// Authorship must be before session in order to note author in the correct session and era
 	// for im-online and staking.
 	#[runtime::pallet_index(4)]
-	pub type Authorship = topsoil_authorship::Pallet<Runtime>;
+	pub type Authorship = plant_authorship::Pallet<Runtime>;
 
 	#[runtime::pallet_index(5)]
 	pub type Indices = plant_indices::Pallet<Runtime>;
 
 	#[runtime::pallet_index(6)]
-	pub type Balances = topsoil_balances::Pallet<Runtime>;
+	pub type Balances = plant_balances::Pallet<Runtime>;
 
 	#[runtime::pallet_index(7)]
-	pub type TransactionPayment = topsoil_transaction_payment::Pallet<Runtime>;
+	pub type TransactionPayment = plant_transaction_payment::Pallet<Runtime>;
 
 	#[runtime::pallet_index(9)]
 	pub type AssetConversionTxPayment = plant_asset_conversion_tx_payment::Pallet<Runtime>;
@@ -2521,7 +2521,7 @@ mod runtime {
 	pub type Staking = plant_staking::Pallet<Runtime>;
 
 	#[runtime::pallet_index(12)]
-	pub type Session = topsoil_session::Pallet<Runtime>;
+	pub type Session = plant_session::Pallet<Runtime>;
 
 	#[runtime::pallet_index(13)]
 	pub type Democracy = plant_democracy::Pallet<Runtime>;
@@ -2539,7 +2539,7 @@ mod runtime {
 	pub type TechnicalMembership = plant_membership::Pallet<Runtime, Instance1>;
 
 	#[runtime::pallet_index(18)]
-	pub type Grandpa = topsoil_grandpa::Pallet<Runtime>;
+	pub type Grandpa = plant_grandpa::Pallet<Runtime>;
 
 	#[runtime::pallet_index(19)]
 	pub type Treasury = plant_treasury::Pallet<Runtime>;
@@ -2551,13 +2551,13 @@ mod runtime {
 	pub type Sudo = plant_sudo::Pallet<Runtime>;
 
 	#[runtime::pallet_index(23)]
-	pub type ImOnline = topsoil_im_online::Pallet<Runtime>;
+	pub type ImOnline = plant_im_online::Pallet<Runtime>;
 
 	#[runtime::pallet_index(24)]
 	pub type AuthorityDiscovery = plant_authority_discovery::Pallet<Runtime>;
 
 	#[runtime::pallet_index(25)]
-	pub type Offences = topsoil_offences::Pallet<Runtime>;
+	pub type Offences = plant_offences::Pallet<Runtime>;
 
 	#[runtime::pallet_index(26)]
 	pub type Historical = pallet_session_historical::Pallet<Runtime>;
@@ -2606,7 +2606,7 @@ mod runtime {
 	pub type PoolAssets = plant_assets::Pallet<Runtime, Instance2>;
 
 	#[runtime::pallet_index(41)]
-	pub type Beefy = topsoil_beefy::Pallet<Runtime>;
+	pub type Beefy = plant_beefy::Pallet<Runtime>;
 
 	// MMR leaf construction must be after session in order to have a leaf's next_auth_set
 	// refer to block<N>. See issue polkadot-fellows/runtimes#160 for details.
@@ -2614,7 +2614,7 @@ mod runtime {
 	pub type Mmr = plant_mmr::Pallet<Runtime>;
 
 	#[runtime::pallet_index(43)]
-	pub type MmrLeaf = topsoil_beefy_mmr::Pallet<Runtime>;
+	pub type MmrLeaf = plant_beefy_mmr::Pallet<Runtime>;
 
 	#[runtime::pallet_index(44)]
 	pub type Lottery = plant_lottery::Pallet<Runtime>;
@@ -2638,7 +2638,7 @@ mod runtime {
 	pub type CoreFellowship = plant_core_fellowship::Pallet<Runtime>;
 
 	#[runtime::pallet_index(51)]
-	pub type TransactionStorage = topsoil_transaction_storage::Pallet<Runtime>;
+	pub type TransactionStorage = plant_transaction_storage::Pallet<Runtime>;
 
 	#[runtime::pallet_index(52)]
 	pub type VoterList = plant_bags_list::Pallet<Runtime, Instance1>;
@@ -2798,7 +2798,7 @@ parameter_types! {
 	pub const BeefySetIdSessionEntries: u32 = BondingDuration::get() * SessionsPerEra::get();
 }
 
-impl topsoil_beefy::Config for Runtime {
+impl plant_beefy::Config for Runtime {
 	type BeefyId = BeefyId;
 	type MaxAuthorities = MaxAuthorities;
 	type MaxNominators = ConstU32<0>;
@@ -2808,7 +2808,7 @@ impl topsoil_beefy::Config for Runtime {
 	type WeightInfo = ();
 	type KeyOwnerProof = subsoil::session::MembershipProof;
 	type EquivocationReportSystem =
-		topsoil_beefy::EquivocationReportSystem<Self, Offences, Historical, ReportLongevity>;
+		plant_beefy::EquivocationReportSystem<Self, Offences, Historical, ReportLongevity>;
 }
 
 parameter_types! {
@@ -2939,10 +2939,10 @@ mod benches {
 		[topsoil_benchmarking_pallet_pov, Pov]
 		[plant_alliance, Alliance]
 		[plant_assets, Assets]
-		[topsoil_babe, Babe]
+		[plant_babe, Babe]
 		[plant_bags_list, VoterList]
-		[topsoil_balances, Balances]
-		[topsoil_beefy_mmr, MmrLeaf]
+		[plant_balances, Balances]
+		[plant_beefy_mmr, MmrLeaf]
 		[plant_bounties, Bounties]
 		[plant_broker, Broker]
 		[plant_child_bounties, ChildBounties]
@@ -2953,16 +2953,16 @@ mod benches {
 		[plant_asset_conversion, AssetConversion]
 		[plant_asset_rewards, AssetRewards]
 		[plant_asset_conversion_tx_payment, AssetConversionTxPayment]
-		[topsoil_transaction_payment, TransactionPayment]
+		[plant_transaction_payment, TransactionPayment]
 		[plant_election_provider_multi_phase, ElectionProviderMultiPhase]
 		[plant_election_provider, EPSBench::<Runtime>]
 		[plant_elections_phragmen, Elections]
 		[plant_fast_unstake, FastUnstake]
 		[plant_nis, Nis]
 		[plant_parameters, Parameters]
-		[topsoil_grandpa, Grandpa]
+		[plant_grandpa, Grandpa]
 		[plant_identity, Identity]
-		[topsoil_im_online, ImOnline]
+		[plant_im_online, ImOnline]
 		[plant_indices, Indices]
 		[plant_lottery, Lottery]
 		[plant_membership, TechnicalMembership]
@@ -2971,7 +2971,7 @@ mod benches {
 		[plant_multi_asset_bounties, MultiAssetBounties]
 		[plant_multisig, Multisig]
 		[plant_nomination_pools, NominationPoolsBench::<Runtime>]
-		[topsoil_offences, OffencesBench::<Runtime>]
+		[plant_offences, OffencesBench::<Runtime>]
 		[plant_oracle, Oracle]
 		[plant_preimage, Preimage]
 		[plant_proxy, Proxy]
@@ -2982,22 +2982,22 @@ mod benches {
 		[plant_salary, Salary]
 		[plant_scheduler, Scheduler]
 		[plant_glutton, Glutton]
-		[topsoil_session, SessionBench::<Runtime>]
+		[plant_session, SessionBench::<Runtime>]
 		[plant_society, Society]
 		[plant_staking, Staking]
 		[plant_state_trie_migration, StateTrieMigration]
 		[plant_sudo, Sudo]
 		[topsoil_system, SystemBench::<Runtime>]
 		[frame_system_extensions, SystemExtensionsBench::<Runtime>]
-		[topsoil_timestamp, Timestamp]
+		[plant_timestamp, Timestamp]
 		[plant_tips, Tips]
-		[topsoil_transaction_storage, TransactionStorage]
+		[plant_transaction_storage, TransactionStorage]
 		[plant_treasury, Treasury]
 		[plant_asset_rate, AssetRate]
 		[plant_uniques, Uniques]
 		[plant_nfts, Nfts]
 		[plant_nft_fractionalization, NftFractionalization]
-		[topsoil_utility, Utility]
+		[plant_utility, Utility]
 		[plant_vesting, Vesting]
 		[plant_whitelist, Whitelist]
 		[plant_tx_pause, TxPause]
@@ -3083,7 +3083,7 @@ subsoil::api::impl_runtime_apis! {
 		}
 
 		fn current_set_id() -> subsoil::consensus::grandpa::SetId {
-			topsoil_grandpa::CurrentSetId::<Runtime>::get()
+			plant_grandpa::CurrentSetId::<Runtime>::get()
 		}
 
 		fn submit_report_equivocation_unsigned_extrinsic(
@@ -3256,7 +3256,7 @@ subsoil::api::impl_runtime_apis! {
 		}
 	}
 
-	impl topsoil_transaction_payment_rpc_runtime_api::TransactionPaymentApi<
+	impl plant_transaction_payment_rpc_runtime_api::TransactionPaymentApi<
 		Block,
 		Balance,
 	> for Runtime {
@@ -3293,7 +3293,7 @@ subsoil::api::impl_runtime_apis! {
 		}
 	}
 
-	impl topsoil_transaction_payment_rpc_runtime_api::TransactionPaymentCallApi<Block, Balance, RuntimeCall>
+	impl plant_transaction_payment_rpc_runtime_api::TransactionPaymentCallApi<Block, Balance, RuntimeCall>
 		for Runtime
 	{
 		fn query_call_info(call: RuntimeCall, len: u32) -> RuntimeDispatchInfo<Balance> {
@@ -3357,7 +3357,7 @@ subsoil::api::impl_runtime_apis! {
 	#[api_version(6)]
 	impl subsoil::consensus::beefy::BeefyApi<Block, BeefyId> for Runtime {
 		fn beefy_genesis() -> Option<BlockNumber> {
-			topsoil_beefy::GenesisBlock::<Runtime>::get()
+			plant_beefy::GenesisBlock::<Runtime>::get()
 		}
 
 		fn validator_set() -> Option<subsoil::consensus::beefy::ValidatorSet<BeefyId>> {
@@ -3549,8 +3549,8 @@ subsoil::api::impl_runtime_apis! {
 			// Trying to add benchmarks directly to the Session Pallet caused cyclic dependency
 			// issues. To get around that, we separated the Session benchmarks into its own crate,
 			// which is why we need these two lines below.
-			use topsoil_session_benchmarking::Pallet as SessionBench;
-			use topsoil_offences_benchmarking::Pallet as OffencesBench;
+			use plant_session_benchmarking::Pallet as SessionBench;
+			use plant_offences_benchmarking::Pallet as OffencesBench;
 			use plant_election_provider::benchmarking::Pallet as EPSBench;
 			use topsoil_system_benchmarking::Pallet as SystemBench;
 			use topsoil_system_benchmarking::extensions::Pallet as SystemExtensionsBench;
@@ -3575,24 +3575,24 @@ subsoil::api::impl_runtime_apis! {
 			// Trying to add benchmarks directly to the Session Pallet caused cyclic dependency
 			// issues. To get around that, we separated the Session benchmarks into its own crate,
 			// which is why we need these two lines below.
-			use topsoil_session_benchmarking::Pallet as SessionBench;
-			use topsoil_offences_benchmarking::Pallet as OffencesBench;
+			use plant_session_benchmarking::Pallet as SessionBench;
+			use plant_offences_benchmarking::Pallet as OffencesBench;
 			use plant_election_provider::benchmarking::Pallet as EPSBench;
 			use topsoil_system_benchmarking::Pallet as SystemBench;
 			use topsoil_system_benchmarking::extensions::Pallet as SystemExtensionsBench;
 			use baseline::Pallet as BaselineBench;
 			use plant_nomination_pools_benchmarking::Pallet as NominationPoolsBench;
 
-			impl topsoil_session_benchmarking::Config for Runtime {
+			impl plant_session_benchmarking::Config for Runtime {
 				fn generate_session_keys_and_proof(owner: Self::AccountId) -> (Self::Keys, Vec<u8>) {
 					let keys = SessionKeys::generate(&owner.encode(), None);
 					(keys.keys, keys.proof.encode())
 				}
 			}
-			impl topsoil_offences_benchmarking::Config for Runtime {}
+			impl plant_offences_benchmarking::Config for Runtime {}
 			impl plant_election_provider::benchmarking::Config for Runtime {}
 			impl topsoil_system_benchmarking::Config for Runtime {}
-			impl topsoil_transaction_payment::BenchmarkConfig for Runtime {}
+			impl plant_transaction_payment::BenchmarkConfig for Runtime {}
 			impl baseline::Config for Runtime {}
 			impl plant_nomination_pools_benchmarking::Config for Runtime {}
 

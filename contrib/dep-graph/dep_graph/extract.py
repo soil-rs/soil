@@ -11,7 +11,7 @@ from pathlib import Path
 GROUP_PATTERNS = [
     ("substrate-client", re.compile(r"/crates/substrate-client/")),
     ("substrate", re.compile(r"/crates/substrate/")),
-    ("topsoil", re.compile(r"/crates/topsoil/")),
+    ("topsoil", re.compile(r"/crates/topsoil(?:-|/)")),
     ("soil", re.compile(r"/crates/soil/")),
 ]
 

@@ -35,7 +35,7 @@ pub enum Error {
 	Signature(String),
 	#[error("Session uninitialized")]
 	UninitSession,
-	#[error("topsoil-beefy was reset")]
+	#[error("plant-beefy was reset")]
 	ConsensusReset,
 	#[error("Block import stream terminated")]
 	BlockImportStreamTerminated,

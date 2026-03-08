@@ -28,7 +28,7 @@ type Block = topsoil_system::mocking::MockBlockU32<Test>;
 construct_runtime!(
 	pub struct Test {
 		System: topsoil_system,
-		Balances: topsoil_balances,
+		Balances: plant_balances,
 		Multisig: plant_multisig,
 	}
 );
@@ -36,13 +36,13 @@ construct_runtime!(
 #[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
 impl topsoil_system::Config for Test {
 	type Block = Block;
-	type AccountData = topsoil_balances::AccountData<u64>;
+	type AccountData = plant_balances::AccountData<u64>;
 	// This pallet wishes to overwrite this.
 	type BaseCallFilter = TestBaseCallFilter;
 }
 
-#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
-impl topsoil_balances::Config for Test {
+#[derive_impl(plant_balances::config_preludes::TestDefaultConfig)]
+impl plant_balances::Config for Test {
 	type ReserveIdentifier = [u8; 8];
 	type AccountStore = System;
 }
@@ -75,11 +75,11 @@ impl Config for Test {
 	type BlockNumberProvider = topsoil_system::Pallet<Test>;
 }
 
-use topsoil_balances::{Call as BalancesCall, Error as BalancesError};
+use plant_balances::{Call as BalancesCall, Error as BalancesError};
 
 pub fn new_test_ext() -> TestState {
 	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
-	topsoil_balances::GenesisConfig::<Test> {
+	plant_balances::GenesisConfig::<Test> {
 		balances: vec![(1, 10), (2, 10), (3, 10), (4, 5), (5, 2)],
 		..Default::default()
 	}

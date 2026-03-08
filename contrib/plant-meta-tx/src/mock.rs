@@ -67,7 +67,7 @@ mod tx_ext {
 		topsoil_system::CheckMortality<Runtime>,
 		topsoil_system::CheckNonce<Runtime>,
 		topsoil_system::CheckWeight<Runtime>,
-		topsoil_transaction_payment::ChargeTransactionPayment<Runtime>,
+		plant_transaction_payment::ChargeTransactionPayment<Runtime>,
 	);
 
 	pub const META_EXTENSION_VERSION: ExtensionVersion = 0;
@@ -109,21 +109,21 @@ impl topsoil_system::Config for Runtime {
 	type AccountId = AccountId;
 	type Lookup = IdentityLookup<Self::AccountId>;
 	type Block = topsoil_system::mocking::MockBlock<Runtime>;
-	type AccountData = topsoil_balances::AccountData<<Self as topsoil_balances::Config>::Balance>;
+	type AccountData = plant_balances::AccountData<<Self as plant_balances::Config>::Balance>;
 }
 
-#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
-impl topsoil_balances::Config for Runtime {
+#[derive_impl(plant_balances::config_preludes::TestDefaultConfig)]
+impl plant_balances::Config for Runtime {
 	type ReserveIdentifier = [u8; 8];
 	type AccountStore = System;
 }
 
 pub const TX_FEE: u32 = 10;
 
-impl topsoil_transaction_payment::Config for Runtime {
+impl plant_transaction_payment::Config for Runtime {
 	type WeightInfo = ();
 	type RuntimeEvent = RuntimeEvent;
-	type OnChargeTransaction = topsoil_transaction_payment::FungibleAdapter<Balances, ()>;
+	type OnChargeTransaction = plant_transaction_payment::FungibleAdapter<Balances, ()>;
 	type OperationalFeeMultiplier = ConstU8<1>;
 	type WeightToFee = FixedFee<TX_FEE, Balance>;
 	type LengthToFee = NoFee<Balance>;
@@ -133,9 +133,9 @@ impl topsoil_transaction_payment::Config for Runtime {
 construct_runtime!(
 	pub enum Runtime {
 		System: topsoil_system,
-		Balances: topsoil_balances,
+		Balances: plant_balances,
 		MetaTx: plant_meta_tx,
-		TxPayment: topsoil_transaction_payment,
+		TxPayment: plant_transaction_payment,
 		VerifySignature: plant_verify_signature,
 	}
 );

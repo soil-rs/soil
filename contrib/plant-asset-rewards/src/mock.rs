@@ -42,7 +42,7 @@ construct_runtime!(
 	pub enum MockRuntime
 	{
 		System: topsoil_system,
-		Balances: topsoil_balances,
+		Balances: plant_balances,
 		Assets: plant_assets::<Instance1>,
 		AssetsFreezer: plant_assets_freezer::<Instance1>,
 		StakingRewards: plant_asset_rewards,
@@ -54,10 +54,10 @@ impl topsoil_system::Config for MockRuntime {
 	type AccountId = u128;
 	type Lookup = IdentityLookup<Self::AccountId>;
 	type Block = Block;
-	type AccountData = topsoil_balances::AccountData<u128>;
+	type AccountData = plant_balances::AccountData<u128>;
 }
 
-impl topsoil_balances::Config for MockRuntime {
+impl plant_balances::Config for MockRuntime {
 	type Balance = u128;
 	type DustRemoval = ();
 	type RuntimeEvent = RuntimeEvent;
@@ -155,7 +155,7 @@ parameter_types! {
 impl Config for MockRuntime {
 	type RuntimeEvent = RuntimeEvent;
 	type AssetId = NativeOrWithId<u32>;
-	type Balance = <Self as topsoil_balances::Config>::Balance;
+	type Balance = <Self as plant_balances::Config>::Balance;
 	type Assets = NativeAndAssets;
 	type AssetsFreezer = NativeAndAssetsFreezer;
 	type PalletId = StakingRewardsPalletId;
@@ -204,7 +204,7 @@ pub(crate) fn new_test_ext() -> subsoil::io::TestExternalities {
 	.unwrap();
 
 	let pool_zero_account_id = 31086825966906540362769395565;
-	topsoil_balances::GenesisConfig::<MockRuntime> {
+	plant_balances::GenesisConfig::<MockRuntime> {
 		balances: vec![
 			(0, 10000),
 			(1, 10000),

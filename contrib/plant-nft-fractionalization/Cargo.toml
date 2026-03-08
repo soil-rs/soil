@@ -24,7 +24,7 @@ plant-nfts = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 
 [dev-dependencies]
-topsoil-balances = { workspace = true, default-features = true }
+plant-balances = { workspace = true, default-features = true }
 
 [features]
 default = ["std"]
@@ -33,19 +33,19 @@ std = [
 	"topsoil/std",
 	"log/std",
 	"plant-assets/std",
-	"topsoil-balances/std",
+	"plant-balances/std",
 	"plant-nfts/std",
 	"scale-info/std",
 ]
 runtime-benchmarks = [
 	"topsoil/runtime-benchmarks",
 	"plant-assets/runtime-benchmarks",
-	"topsoil-balances/runtime-benchmarks",
+	"plant-balances/runtime-benchmarks",
 	"plant-nfts/runtime-benchmarks",
 ]
 try-runtime = [
 	"topsoil/try-runtime",
 	"plant-assets/try-runtime",
-	"topsoil-balances/try-runtime",
+	"plant-balances/try-runtime",
 	"plant-nfts/try-runtime",
 ]

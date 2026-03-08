@@ -77,8 +77,8 @@ use subsoil::version::RuntimeVersion;
 
 pub use subsoil::consensus::babe::{AllowedSlots, BabeEpochConfiguration, Slot};
 
-pub use topsoil_balances::Call as BalancesCall;
-pub use topsoil_utility::Call as UtilityCall;
+pub use plant_balances::Call as BalancesCall;
+pub use plant_utility::Call as UtilityCall;
 
 pub type AuraId = subsoil::consensus::aura::sr25519::AuthorityId;
 #[cfg(feature = "std")]
@@ -339,10 +339,10 @@ construct_runtime!(
 	pub enum Runtime
 	{
 		System: topsoil_system,
-		Babe: topsoil_babe,
+		Babe: plant_babe,
 		SubstrateTest: substrate_test_pallet::pallet,
-		Utility: topsoil_utility,
-		Balances: topsoil_balances,
+		Utility: plant_utility,
+		Balances: plant_balances,
 	}
 );
 
@@ -394,7 +394,7 @@ impl topsoil_system::pallet::Config for Runtime {
 	type AccountId = AccountId;
 	type Lookup = subsoil::runtime::traits::IdentityLookup<Self::AccountId>;
 	type Block = Block;
-	type AccountData = topsoil_balances::AccountData<Balance>;
+	type AccountData = plant_balances::AccountData<Balance>;
 }
 
 pub mod currency {
@@ -412,7 +412,7 @@ parameter_types! {
 	pub const MaxReserves: u32 = 50;
 }
 
-impl topsoil_balances::Config for Runtime {
+impl plant_balances::Config for Runtime {
 	type MaxLocks = MaxLocks;
 	type MaxReserves = MaxReserves;
 	type ReserveIdentifier = [u8; 8];
@@ -421,7 +421,7 @@ impl topsoil_balances::Config for Runtime {
 	type RuntimeEvent = RuntimeEvent;
 	type ExistentialDeposit = ExistentialDeposit;
 	type AccountStore = System;
-	type WeightInfo = topsoil_balances::weights::SubstrateWeight<Runtime>;
+	type WeightInfo = plant_balances::weights::SubstrateWeight<Runtime>;
 	type FreezeIdentifier = ();
 	type MaxFreezes = ();
 	type RuntimeHoldReason = RuntimeHoldReason;
@@ -429,7 +429,7 @@ impl topsoil_balances::Config for Runtime {
 	type DoneSlashHandler = ();
 }
 
-impl topsoil_utility::Config for Runtime {
+impl plant_utility::Config for Runtime {
 	type RuntimeEvent = RuntimeEvent;
 	type PalletsOrigin = OriginCaller;
 	type RuntimeCall = RuntimeCall;
@@ -438,22 +438,22 @@ impl topsoil_utility::Config for Runtime {
 
 impl substrate_test_pallet::Config for Runtime {}
 
-// Required for `topsoil_babe::Config`.
-impl topsoil_timestamp::Config for Runtime {
+// Required for `plant_babe::Config`.
+impl plant_timestamp::Config for Runtime {
 	type Moment = u64;
 	type OnTimestampSet = Babe;
 	type MinimumPeriod = ConstU64<500>;
-	type WeightInfo = topsoil_timestamp::weights::SubstrateWeight<Runtime>;
+	type WeightInfo = plant_timestamp::weights::SubstrateWeight<Runtime>;
 }
 
 parameter_types! {
 	pub const EpochDuration: u64 = 6;
 }
 
-impl topsoil_babe::Config for Runtime {
+impl plant_babe::Config for Runtime {
 	type EpochDuration = EpochDuration;
 	type ExpectedBlockTime = ConstU64<10_000>;
-	type EpochChangeTrigger = topsoil_babe::SameAuthoritiesForever;
+	type EpochChangeTrigger = plant_babe::SameAuthoritiesForever;
 	type DisabledValidators = ();
 	type KeyOwnerProof = subsoil::core::Void;
 	type EquivocationReportSystem = ();

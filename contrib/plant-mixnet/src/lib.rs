@@ -232,7 +232,7 @@ pub mod pallet {
 	}
 
 	/// Index of the current session. This may be offset relative to the session index tracked by
-	/// eg `topsoil_session`; mixnet session indices are independent.
+	/// eg `plant_session`; mixnet session indices are independent.
 	#[pallet::storage]
 	pub(crate) type CurrentSessionIndex<T> = StorageValue<_, SessionIndex, ValueQuery>;
 

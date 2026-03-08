@@ -36,7 +36,7 @@ topsoil_support::construct_runtime!(
 	pub enum Test
 	{
 		System: topsoil_system::{Pallet, Call, Config<T>, Storage, Event<T>},
-		Balances: topsoil_balances::{Pallet, Call, Storage, Config<T>, Event<T>},
+		Balances: plant_balances::{Pallet, Call, Storage, Config<T>, Event<T>},
 		Kitchensink: plant_example_kitchensink::{Pallet, Call, Storage, Config<T>, Event<T>},
 	}
 );
@@ -46,11 +46,11 @@ topsoil_support::construct_runtime!(
 #[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
 impl topsoil_system::Config for Test {
 	type Block = Block;
-	type AccountData = topsoil_balances::AccountData<u64>;
+	type AccountData = plant_balances::AccountData<u64>;
 }
 
-#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
-impl topsoil_balances::Config for Test {
+#[derive_impl(plant_balances::config_preludes::TestDefaultConfig)]
+impl plant_balances::Config for Test {
 	type AccountStore = System;
 	type WeightInfo = ();
 	type FreezeIdentifier = RuntimeFreezeReason;

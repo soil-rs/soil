@@ -44,7 +44,7 @@ impl topsoil_system::Config for Test {
 	type DbWeight = ();
 	type Version = ();
 	type PalletInfo = PalletInfo;
-	type AccountData = topsoil_balances::AccountData<u64>;
+	type AccountData = plant_balances::AccountData<u64>;
 	type OnNewAccount = ();
 	type OnKilledAccount = ();
 	type SystemWeightInfo = ();
@@ -62,13 +62,13 @@ pub enum HoldReason {
 	SafeMode,
 }
 
-#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
-impl topsoil_balances::Config for Test {
+#[derive_impl(plant_balances::config_preludes::TestDefaultConfig)]
+impl plant_balances::Config for Test {
 	type ExistentialDeposit = ConstU64<2>;
 	type AccountStore = System;
 }
 
-impl topsoil_utility::Config for Test {
+impl plant_utility::Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type RuntimeCall = RuntimeCall;
 	type PalletsOrigin = OriginCaller;
@@ -109,7 +109,7 @@ impl InstanceFilter<RuntimeCall> for ProxyType {
 			ProxyType::JustTransfer => {
 				matches!(
 					c,
-					RuntimeCall::Balances(topsoil_balances::Call::transfer_allow_death { .. })
+					RuntimeCall::Balances(plant_balances::Call::transfer_allow_death { .. })
 				)
 			},
 			ProxyType::JustUtility => matches!(c, RuntimeCall::Utility { .. }),
@@ -212,8 +212,8 @@ construct_runtime!(
 	pub enum Test
 	{
 		System: topsoil_system,
-		Balances: topsoil_balances,
-		Utility: topsoil_utility,
+		Balances: plant_balances,
+		Utility: plant_utility,
 		Proxy: plant_proxy,
 		SafeMode: plant_safe_mode,
 	}
@@ -225,7 +225,7 @@ pub const BAL_ACC1: u64 = 5678;
 pub fn new_test_ext() -> TestExternalities {
 	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 
-	topsoil_balances::GenesisConfig::<Test> {
+	plant_balances::GenesisConfig::<Test> {
 		// The 0 account is NOT a special origin, the rest may be.
 		balances: vec![(0, BAL_ACC0), (1, BAL_ACC1), (2, 5678), (3, 5678), (4, 5678)],
 		..Default::default()

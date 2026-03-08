@@ -36,7 +36,7 @@ topsoil_support::construct_runtime!(
 	pub enum Test
 	{
 		System: topsoil_system,
-		Balances: topsoil_balances,
+		Balances: plant_balances,
 		Society: plant_society,
 	}
 );
@@ -59,12 +59,12 @@ ord_parameter_types! {
 impl topsoil_system::Config for Test {
 	type AccountId = u128;
 	type Block = Block;
-	type AccountData = topsoil_balances::AccountData<u64>;
+	type AccountData = plant_balances::AccountData<u64>;
 	type Lookup = IdentityLookup<Self::AccountId>;
 }
 
-#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
-impl topsoil_balances::Config for Test {
+#[derive_impl(plant_balances::config_preludes::TestDefaultConfig)]
+impl plant_balances::Config for Test {
 	type ReserveIdentifier = [u8; 8];
 	type AccountStore = System;
 }
@@ -72,7 +72,7 @@ impl topsoil_balances::Config for Test {
 impl Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type PalletId = SocietyPalletId;
-	type Currency = topsoil_balances::Pallet<Self>;
+	type Currency = plant_balances::Pallet<Self>;
 	type Randomness = TestRandomness<Self>;
 	type GraceStrikes = ConstU32<1>;
 	type PeriodSpend = ConstU64<1000>;
@@ -117,7 +117,7 @@ impl EnvBuilder {
 	pub fn execute<R, F: FnOnce() -> R>(mut self, f: F) -> R {
 		let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 		self.balances.push((Society::account_id(), self.balance.max(self.pot)));
-		topsoil_balances::GenesisConfig::<Test> { balances: self.balances, ..Default::default() }
+		plant_balances::GenesisConfig::<Test> { balances: self.balances, ..Default::default() }
 			.assimilate_storage(&mut t)
 			.unwrap();
 		plant_society::GenesisConfig::<Test> { pot: self.pot }

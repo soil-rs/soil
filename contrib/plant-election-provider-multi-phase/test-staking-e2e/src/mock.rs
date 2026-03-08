@@ -70,11 +70,11 @@ topsoil_support::construct_runtime!(
 		Staking: plant_staking,
 		DelegatedStaking: plant_delegated_staking,
 		Pools: plant_nomination_pools,
-		Balances: topsoil_balances,
+		Balances: plant_balances,
 		BagsList: plant_bags_list,
-		Session: topsoil_session,
-		Historical: topsoil_session::historical,
-		Timestamp: topsoil_timestamp,
+		Session: plant_session,
+		Historical: plant_session::historical,
+		Timestamp: plant_timestamp,
 	}
 );
 
@@ -90,7 +90,7 @@ pub(crate) type Moment = u32;
 impl topsoil_system::Config for Runtime {
 	type AccountId = AccountId;
 	type Block = Block;
-	type AccountData = topsoil_balances::AccountData<Balance>;
+	type AccountData = plant_balances::AccountData<Balance>;
 	type Lookup = subsoil::runtime::traits::IdentityLookup<Self::AccountId>;
 }
 
@@ -104,8 +104,8 @@ parameter_types! {
 		);
 }
 
-#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
-impl topsoil_balances::Config for Runtime {
+#[derive_impl(plant_balances::config_preludes::TestDefaultConfig)]
+impl plant_balances::Config for Runtime {
 	type ExistentialDeposit = ExistentialDeposit;
 	type AccountStore = System;
 	type MaxFreezes = VariantCountOf<RuntimeFreezeReason>;
@@ -114,7 +114,7 @@ impl topsoil_balances::Config for Runtime {
 	type FreezeIdentifier = RuntimeFreezeReason;
 }
 
-impl topsoil_timestamp::Config for Runtime {
+impl plant_timestamp::Config for Runtime {
 	type Moment = Moment;
 	type OnTimestampSet = ();
 	type MinimumPeriod = traits::ConstU32<5>;
@@ -132,23 +132,23 @@ subsoil::impl_opaque_keys! {
 	}
 }
 
-impl topsoil_session::Config for Runtime {
-	type SessionManager = topsoil_session::historical::NoteHistoricalRoot<Runtime, Staking>;
+impl plant_session::Config for Runtime {
+	type SessionManager = plant_session::historical::NoteHistoricalRoot<Runtime, Staking>;
 	type Keys = SessionKeys;
-	type ShouldEndSession = topsoil_session::PeriodicSessions<Period, Offset>;
-	type NextSessionRotation = topsoil_session::PeriodicSessions<Period, Offset>;
+	type ShouldEndSession = plant_session::PeriodicSessions<Period, Offset>;
+	type NextSessionRotation = plant_session::PeriodicSessions<Period, Offset>;
 	type SessionHandler = (OtherSessionHandler,);
 	type RuntimeEvent = RuntimeEvent;
 	type ValidatorId = AccountId;
 	type ValidatorIdOf = subsoil::runtime::traits::ConvertInto;
-	type DisablingStrategy = topsoil_session::disabling::UpToLimitWithReEnablingDisablingStrategy<
+	type DisablingStrategy = plant_session::disabling::UpToLimitWithReEnablingDisablingStrategy<
 		SLASHING_DISABLING_FACTOR,
 	>;
 	type WeightInfo = ();
 	type Currency = Balances;
 	type KeyDeposit = ();
 }
-impl topsoil_session::historical::Config for Runtime {
+impl plant_session::historical::Config for Runtime {
 	type RuntimeEvent = RuntimeEvent;
 	type FullIdentification = ();
 	type FullIdentificationOf = plant_staking::UnitIdentificationOf<Self>;
@@ -582,7 +582,7 @@ impl ExtBuilder {
 		let mut storage =
 			topsoil_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
 
-		let _ = topsoil_balances::GenesisConfig::<Runtime> {
+		let _ = plant_balances::GenesisConfig::<Runtime> {
 			balances: self.balances_builder.balances.clone(),
 			..Default::default()
 		}
@@ -616,7 +616,7 @@ impl ExtBuilder {
 		}
 		.assimilate_storage(&mut storage);
 
-		let _ = topsoil_session::GenesisConfig::<Runtime> {
+		let _ = plant_session::GenesisConfig::<Runtime> {
 			// set the keys for the first session.
 			keys: stakers
 				.into_iter()
@@ -898,7 +898,7 @@ pub(crate) fn try_queue_solution(when: ElectionCompute) -> Result<(), String> {
 pub(crate) fn on_offence_now(
 	offenders: &[OffenceDetails<
 		AccountId,
-		topsoil_session::historical::IdentificationTuple<Runtime>,
+		plant_session::historical::IdentificationTuple<Runtime>,
 	>],
 	slash_fraction: &[Perbill],
 ) {

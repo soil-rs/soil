@@ -733,7 +733,7 @@ pub mod pallet {
 
 	/// The last planned session scheduled by the session pallet.
 	///
-	/// This is basically in sync with the call to [`topsoil_session::SessionManager::new_session`].
+	/// This is basically in sync with the call to [`plant_session::SessionManager::new_session`].
 	#[pallet::storage]
 	pub type CurrentPlannedSession<T> = StorageValue<_, SessionIndex, ValueQuery>;
 

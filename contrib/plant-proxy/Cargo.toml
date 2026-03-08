@@ -21,8 +21,8 @@ topsoil = { workspace = true, features = ["runtime"] }
 scale-info = { features = ["derive"], workspace = true }
 
 [dev-dependencies]
-topsoil-balances = { workspace = true, default-features = true }
-topsoil-utility = { workspace = true, default-features = true }
+plant-balances = { workspace = true, default-features = true }
+plant-utility = { workspace = true, default-features = true }
 
 [features]
 default = ["std"]
@@ -33,11 +33,11 @@ std = [
 ]
 runtime-benchmarks = [
 	"topsoil/runtime-benchmarks",
-	"topsoil-balances/runtime-benchmarks",
-	"topsoil-utility/runtime-benchmarks",
+	"plant-balances/runtime-benchmarks",
+	"plant-utility/runtime-benchmarks",
 ]
 try-runtime = [
 	"topsoil/try-runtime",
-	"topsoil-balances/try-runtime",
-	"topsoil-utility/try-runtime",
+	"plant-balances/try-runtime",
+	"plant-utility/try-runtime",
 ]

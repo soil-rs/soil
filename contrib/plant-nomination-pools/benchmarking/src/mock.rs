@@ -38,10 +38,10 @@ impl topsoil_system::Config for Runtime {
 	type AccountId = AccountId;
 	type Lookup = IdentityLookup<Self::AccountId>;
 	type Block = Block;
-	type AccountData = topsoil_balances::AccountData<Balance>;
+	type AccountData = plant_balances::AccountData<Balance>;
 }
 
-impl topsoil_timestamp::Config for Runtime {
+impl plant_timestamp::Config for Runtime {
 	type Moment = u64;
 	type OnTimestampSet = ();
 	type MinimumPeriod = ConstU64<5>;
@@ -52,8 +52,8 @@ parameter_types! {
 	pub const ExistentialDeposit: Balance = 10;
 }
 
-#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
-impl topsoil_balances::Config for Runtime {
+#[derive_impl(plant_balances::config_preludes::TestDefaultConfig)]
+impl plant_balances::Config for Runtime {
 	type Balance = Balance;
 	type ExistentialDeposit = ExistentialDeposit;
 	type AccountStore = System;
@@ -81,7 +81,7 @@ impl plant_staking::Config for Runtime {
 	type OldCurrency = Balances;
 	type Currency = Balances;
 	type CurrencyBalance = Balance;
-	type UnixTime = topsoil_timestamp::Pallet<Self>;
+	type UnixTime = plant_timestamp::Pallet<Self>;
 	type AdminOrigin = topsoil_system::EnsureRoot<Self::AccountId>;
 	type EraPayout = plant_staking::ConvertCurve<RewardCurve>;
 	type ElectionProvider =
@@ -166,8 +166,8 @@ type Block = topsoil_system::mocking::MockBlock<Runtime>;
 topsoil_support::construct_runtime!(
 	pub enum Runtime {
 		System: topsoil_system,
-		Timestamp: topsoil_timestamp,
-		Balances: topsoil_balances,
+		Timestamp: plant_timestamp,
+		Balances: plant_balances,
 		Staking: plant_staking,
 		VoterList: plant_bags_list::<Instance1>,
 		Pools: plant_nomination_pools,

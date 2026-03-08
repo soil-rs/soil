@@ -45,12 +45,12 @@ topsoil_support::construct_runtime!(
 	pub enum Test
 	{
 		System: topsoil_system,
-		Timestamp: topsoil_timestamp,
-		Balances: topsoil_balances,
+		Timestamp: plant_timestamp,
+		Balances: plant_balances,
 		Staking: plant_staking,
-		Session: topsoil_session,
+		Session: plant_session,
 		RootOffences: root_offences,
-		Historical: topsoil_session::historical,
+		Historical: plant_session::historical,
 	}
 );
 
@@ -83,11 +83,11 @@ impl subsoil::runtime::BoundToRuntimeAppPublic for OtherSessionHandler {
 #[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
 impl topsoil_system::Config for Test {
 	type Block = Block;
-	type AccountData = topsoil_balances::AccountData<u64>;
+	type AccountData = plant_balances::AccountData<u64>;
 }
 
-#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
-impl topsoil_balances::Config for Test {
+#[derive_impl(plant_balances::config_preludes::TestDefaultConfig)]
+impl plant_balances::Config for Test {
 	type AccountStore = System;
 }
 
@@ -132,7 +132,7 @@ parameter_types! {
 impl plant_staking::Config for Test {
 	type OldCurrency = Balances;
 	type Currency = Balances;
-	type CurrencyBalance = <Self as topsoil_balances::Config>::Balance;
+	type CurrencyBalance = <Self as plant_balances::Config>::Balance;
 	type UnixTime = Timestamp;
 	type SessionsPerEra = SessionsPerEra;
 	type SlashDeferDuration = SlashDeferDuration;
@@ -147,7 +147,7 @@ impl plant_staking::Config for Test {
 	type VoterList = plant_staking::UseNominatorsAndValidatorsMap<Self>;
 }
 
-impl topsoil_session::historical::Config for Test {
+impl plant_session::historical::Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type FullIdentification = ();
 	type FullIdentificationOf = plant_staking::UnitIdentificationOf<Self>;
@@ -159,22 +159,22 @@ subsoil::impl_opaque_keys! {
 	}
 }
 
-impl topsoil_session::Config for Test {
-	type SessionManager = topsoil_session::historical::NoteHistoricalRoot<Test, Staking>;
+impl plant_session::Config for Test {
+	type SessionManager = plant_session::historical::NoteHistoricalRoot<Test, Staking>;
 	type Keys = SessionKeys;
-	type ShouldEndSession = topsoil_session::PeriodicSessions<Period, Offset>;
+	type ShouldEndSession = plant_session::PeriodicSessions<Period, Offset>;
 	type SessionHandler = (OtherSessionHandler,);
 	type RuntimeEvent = RuntimeEvent;
 	type ValidatorId = AccountId;
 	type ValidatorIdOf = subsoil::runtime::traits::ConvertInto;
-	type NextSessionRotation = topsoil_session::PeriodicSessions<Period, Offset>;
+	type NextSessionRotation = plant_session::PeriodicSessions<Period, Offset>;
 	type DisablingStrategy = ();
 	type WeightInfo = ();
 	type Currency = Balances;
 	type KeyDeposit = ();
 }
 
-impl topsoil_timestamp::Config for Test {
+impl plant_timestamp::Config for Test {
 	type Moment = u64;
 	type OnTimestampSet = ();
 	type MinimumPeriod = ConstU64<5>;
@@ -209,7 +209,7 @@ impl ExtBuilder {
 	fn build(self) -> subsoil::io::TestExternalities {
 		let mut storage = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 
-		topsoil_balances::GenesisConfig::<Test> {
+		plant_balances::GenesisConfig::<Test> {
 			balances: vec![
 				// controllers (still used in some tests. Soon to be deprecated).
 				(10, self.balance_factor * 50),
@@ -253,7 +253,7 @@ impl ExtBuilder {
 		}
 		.assimilate_storage(&mut storage);
 
-		let _ = topsoil_session::GenesisConfig::<Test> {
+		let _ = plant_session::GenesisConfig::<Test> {
 			keys: stakers
 				.into_iter()
 				.map(|(id, ..)| (id, id, SessionKeys { other: id.into() }))

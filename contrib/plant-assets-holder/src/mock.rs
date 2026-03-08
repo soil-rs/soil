@@ -25,7 +25,7 @@ use subsoil::runtime::BuildStorage;
 use topsoil_support::{derive_impl, traits::AsEnsureOriginWithArg};
 
 pub type AccountId = <Test as topsoil_system::Config>::AccountId;
-pub type Balance = <Test as topsoil_balances::Config>::Balance;
+pub type Balance = <Test as plant_balances::Config>::Balance;
 pub type AssetId = <Test as plant_assets::Config>::AssetId;
 type Block = topsoil_system::mocking::MockBlock<Test>;
 
@@ -46,7 +46,7 @@ mod runtime {
 	#[runtime::pallet_index(0)]
 	pub type System = topsoil_system;
 	#[runtime::pallet_index(10)]
-	pub type Balances = topsoil_balances;
+	pub type Balances = plant_balances;
 	#[runtime::pallet_index(20)]
 	pub type Assets = plant_assets;
 	#[runtime::pallet_index(21)]
@@ -56,11 +56,11 @@ mod runtime {
 #[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
 impl topsoil_system::Config for Test {
 	type Block = Block;
-	type AccountData = topsoil_balances::AccountData<u64>;
+	type AccountData = plant_balances::AccountData<u64>;
 }
 
-#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig as topsoil_balances::DefaultConfig)]
-impl topsoil_balances::Config for Test {
+#[derive_impl(plant_balances::config_preludes::TestDefaultConfig as plant_balances::DefaultConfig)]
+impl plant_balances::Config for Test {
 	type AccountStore = System;
 }
 

@@ -24,7 +24,7 @@ use subsoil::runtime::{
 	traits::{Dispatchable, IdentifyAccount},
 	MultiSignature, MultiSigner,
 };
-use topsoil_balances::Error as BalancesError;
+use plant_balances::Error as BalancesError;
 use topsoil_support::{
 	assert_noop, assert_ok,
 	traits::{

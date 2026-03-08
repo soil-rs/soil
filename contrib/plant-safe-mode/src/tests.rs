@@ -151,7 +151,7 @@ fn can_filter_balance_calls_when_activated() {
 fn can_filter_balance_in_batch_when_activated() {
 	new_test_ext().execute_with(|| {
 		let batch_call =
-			RuntimeCall::Utility(topsoil_utility::Call::batch { calls: vec![call_transfer()] });
+			RuntimeCall::Utility(plant_utility::Call::batch { calls: vec![call_transfer()] });
 
 		assert_ok!(batch_call.clone().dispatch(RuntimeOrigin::signed(0)));
 
@@ -159,7 +159,7 @@ fn can_filter_balance_in_batch_when_activated() {
 
 		assert_ok!(batch_call.clone().dispatch(RuntimeOrigin::signed(0)));
 		System::assert_last_event(
-			topsoil_utility::Event::BatchInterrupted {
+			plant_utility::Event::BatchInterrupted {
 				index: 0,
 				error: topsoil_system::Error::<Test>::CallFiltered.into(),
 			}
@@ -583,7 +583,7 @@ fn fails_when_explicit_origin_required() {
 }
 
 fn call_transfer() -> RuntimeCall {
-	RuntimeCall::Balances(topsoil_balances::Call::transfer_allow_death { dest: 1, value: 1 })
+	RuntimeCall::Balances(plant_balances::Call::transfer_allow_death { dest: 1, value: 1 })
 }
 
 fn signed(who: u64) -> RuntimeOrigin {

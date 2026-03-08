@@ -1465,7 +1465,7 @@ fn poke_deposit_handles_insufficient_balance() {
 		// Should fail due to insufficient balance
 		assert_noop!(
 			Society::poke_deposit(Origin::signed(20)),
-			topsoil_balances::Error::<Test>::InsufficientBalance
+			plant_balances::Error::<Test>::InsufficientBalance
 		);
 	});
 }

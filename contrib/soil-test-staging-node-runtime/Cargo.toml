@@ -51,19 +51,19 @@ plant-asset-conversion-ops = { workspace = true }
 plant-asset-conversion-tx-payment = { workspace = true }
 plant-asset-rate = { workspace = true }
 plant-asset-rewards = { workspace = true }
-topsoil-asset-tx-payment = { workspace = true }
+plant-asset-tx-payment = { workspace = true }
 plant-assets = { workspace = true }
 plant-assets-freezer = { workspace = true }
 plant-assets-holder = { workspace = true }
 plant-atomic-swap = { workspace = true }
-topsoil-aura = { workspace = true }
+plant-aura = { workspace = true }
 plant-authority-discovery = { workspace = true }
-topsoil-authorship = { workspace = true }
-topsoil-babe = { workspace = true }
+plant-authorship = { workspace = true }
+plant-babe = { workspace = true }
 plant-bags-list = { workspace = true }
-topsoil-balances = { workspace = true }
-topsoil-beefy = { workspace = true }
-topsoil-beefy-mmr = { workspace = true }
+plant-balances = { workspace = true }
+plant-beefy = { workspace = true }
+plant-beefy-mmr = { workspace = true }
 plant-bounties = { workspace = true }
 plant-broker = { workspace = true }
 plant-child-bounties = { workspace = true }
@@ -79,9 +79,9 @@ plant-election-provider-multi-phase = { workspace = true }
 plant-elections-phragmen = { workspace = true }
 plant-fast-unstake = { workspace = true }
 plant-glutton = { workspace = true }
-topsoil-grandpa = { workspace = true }
+plant-grandpa = { workspace = true }
 plant-identity = { workspace = true }
-topsoil-im-online = { workspace = true }
+plant-im-online = { workspace = true }
 plant-indices = { workspace = true }
 plant-insecure-randomness-collective-flip = { workspace = true }
 plant-lottery = { workspace = true }
@@ -100,8 +100,8 @@ plant-node-authorization = { workspace = true }
 plant-nomination-pools = { workspace = true }
 plant-nomination-pools-benchmarking = { workspace = true }
 plant-nomination-pools-runtime-api = { workspace = true }
-topsoil-offences = { workspace = true }
-topsoil-offences-benchmarking = { workspace = true }
+plant-offences = { workspace = true }
+plant-offences-benchmarking = { workspace = true }
 plant-oracle = { workspace = true }
 plant-oracle-runtime-api = { workspace = true }
 plant-origin-restriction = { workspace = true }
@@ -120,23 +120,23 @@ plant-safe-mode = { workspace = true }
 plant-salary = { workspace = true }
 plant-scheduler = { workspace = true }
 plant-scored-pool = { workspace = true }
-topsoil-session = { workspace = true }
-topsoil-session-benchmarking = { workspace = true }
+plant-session = { workspace = true }
+plant-session-benchmarking = { workspace = true }
 plant-society = { workspace = true }
 plant-staking = { workspace = true }
 plant-staking-macros = { workspace = true }
 plant-state-trie-migration = { workspace = true }
 plant-statement = { workspace = true }
 plant-sudo = { workspace = true }
-topsoil-timestamp = { workspace = true }
+plant-timestamp = { workspace = true }
 plant-tips = { workspace = true }
-topsoil-transaction-payment = { workspace = true }
-topsoil-transaction-payment-rpc-runtime-api = { workspace = true }
-topsoil-transaction-storage = { workspace = true }
+plant-transaction-payment = { workspace = true }
+plant-transaction-payment-rpc-runtime-api = { workspace = true }
+plant-transaction-storage = { workspace = true }
 plant-treasury = { workspace = true }
 plant-tx-pause = { workspace = true }
 plant-uniques = { workspace = true }
-topsoil-utility = { workspace = true }
+plant-utility = { workspace = true }
 plant-verify-signature = { workspace = true }
 plant-vesting = { workspace = true }
 plant-whitelist = { workspace = true }
@@ -179,19 +179,19 @@ std = [
 	"plant-asset-conversion-tx-payment/std",
 	"plant-asset-rate/std",
 	"plant-asset-rewards/std",
-	"topsoil-asset-tx-payment/std",
+	"plant-asset-tx-payment/std",
 	"plant-assets/std",
 	"plant-assets-freezer/std",
 	"plant-assets-holder/std",
 	"plant-atomic-swap/std",
-	"topsoil-aura/std",
+	"plant-aura/std",
 	"plant-authority-discovery/std",
-	"topsoil-authorship/std",
-	"topsoil-babe/std",
+	"plant-authorship/std",
+	"plant-babe/std",
 	"plant-bags-list/std",
-	"topsoil-balances/std",
-	"topsoil-beefy/std",
-	"topsoil-beefy-mmr/std",
+	"plant-balances/std",
+	"plant-beefy/std",
+	"plant-beefy-mmr/std",
 	"plant-bounties/std",
 	"plant-broker/std",
 	"plant-child-bounties/std",
@@ -207,9 +207,9 @@ std = [
 	"plant-elections-phragmen/std",
 	"plant-fast-unstake/std",
 	"plant-glutton/std",
-	"topsoil-grandpa/std",
+	"plant-grandpa/std",
 	"plant-identity/std",
-	"topsoil-im-online/std",
+	"plant-im-online/std",
 	"plant-indices/std",
 	"plant-insecure-randomness-collective-flip/std",
 	"plant-lottery/std",
@@ -228,8 +228,8 @@ std = [
 	"plant-nomination-pools/std",
 	"plant-nomination-pools-benchmarking/std",
 	"plant-nomination-pools-runtime-api/std",
-	"topsoil-offences/std",
-	"topsoil-offences-benchmarking/std",
+	"plant-offences/std",
+	"plant-offences-benchmarking/std",
 	"plant-oracle/std",
 	"plant-oracle-runtime-api/std",
 	"plant-origin-restriction/std",
@@ -248,22 +248,22 @@ std = [
 	"plant-salary/std",
 	"plant-scheduler/std",
 	"plant-scored-pool/std",
-	"topsoil-session/std",
-	"topsoil-session-benchmarking/std",
+	"plant-session/std",
+	"plant-session-benchmarking/std",
 	"plant-society/std",
 	"plant-staking/std",
 	"plant-state-trie-migration/std",
 	"plant-statement/std",
 	"plant-sudo/std",
-	"topsoil-timestamp/std",
+	"plant-timestamp/std",
 	"plant-tips/std",
-	"topsoil-transaction-payment/std",
-	"topsoil-transaction-payment-rpc-runtime-api/std",
-	"topsoil-transaction-storage/std",
+	"plant-transaction-payment/std",
+	"plant-transaction-payment-rpc-runtime-api/std",
+	"plant-transaction-storage/std",
 	"plant-treasury/std",
 	"plant-tx-pause/std",
 	"plant-uniques/std",
-	"topsoil-utility/std",
+	"plant-utility/std",
 	"plant-verify-signature/std",
 	"plant-vesting/std",
 	"plant-whitelist/std",
@@ -291,14 +291,14 @@ runtime-benchmarks = [
 	"plant-asset-conversion-tx-payment/runtime-benchmarks",
 	"plant-asset-rate/runtime-benchmarks",
 	"plant-asset-rewards/runtime-benchmarks",
-	"topsoil-asset-tx-payment/runtime-benchmarks",
+	"plant-asset-tx-payment/runtime-benchmarks",
 	"plant-assets/runtime-benchmarks",
 	"plant-assets-freezer/runtime-benchmarks",
 	"plant-assets-holder/runtime-benchmarks",
-	"topsoil-babe/runtime-benchmarks",
+	"plant-babe/runtime-benchmarks",
 	"plant-bags-list/runtime-benchmarks",
-	"topsoil-balances/runtime-benchmarks",
-	"topsoil-beefy-mmr/runtime-benchmarks",
+	"plant-balances/runtime-benchmarks",
+	"plant-beefy-mmr/runtime-benchmarks",
 	"plant-bounties/runtime-benchmarks",
 	"plant-broker/runtime-benchmarks",
 	"plant-child-bounties/runtime-benchmarks",
@@ -313,9 +313,9 @@ runtime-benchmarks = [
 	"plant-elections-phragmen/runtime-benchmarks",
 	"plant-fast-unstake/runtime-benchmarks",
 	"plant-glutton/runtime-benchmarks",
-	"topsoil-grandpa/runtime-benchmarks",
+	"plant-grandpa/runtime-benchmarks",
 	"plant-identity/runtime-benchmarks",
-	"topsoil-im-online/runtime-benchmarks",
+	"plant-im-online/runtime-benchmarks",
 	"plant-indices/runtime-benchmarks",
 	"plant-lottery/runtime-benchmarks",
 	"plant-membership/runtime-benchmarks",
@@ -329,8 +329,8 @@ runtime-benchmarks = [
 	"plant-nis/runtime-benchmarks",
 	"plant-nomination-pools/runtime-benchmarks",
 	"plant-nomination-pools-benchmarking/runtime-benchmarks",
-	"topsoil-offences/runtime-benchmarks",
-	"topsoil-offences-benchmarking/runtime-benchmarks",
+	"plant-offences/runtime-benchmarks",
+	"plant-offences-benchmarking/runtime-benchmarks",
 	"plant-oracle/runtime-benchmarks",
 	"plant-origin-restriction/runtime-benchmarks",
 	"plant-paged-list/runtime-benchmarks",
@@ -346,20 +346,20 @@ runtime-benchmarks = [
 	"plant-safe-mode/runtime-benchmarks",
 	"plant-salary/runtime-benchmarks",
 	"plant-scheduler/runtime-benchmarks",
-	"topsoil-session/runtime-benchmarks",
-	"topsoil-session-benchmarking/runtime-benchmarks",
+	"plant-session/runtime-benchmarks",
+	"plant-session-benchmarking/runtime-benchmarks",
 	"plant-society/runtime-benchmarks",
 	"plant-staking/runtime-benchmarks",
 	"plant-state-trie-migration/runtime-benchmarks",
 	"plant-sudo/runtime-benchmarks",
-	"topsoil-timestamp/runtime-benchmarks",
+	"plant-timestamp/runtime-benchmarks",
 	"plant-tips/runtime-benchmarks",
-	"topsoil-transaction-payment/runtime-benchmarks",
-	"topsoil-transaction-storage/runtime-benchmarks",
+	"plant-transaction-payment/runtime-benchmarks",
+	"plant-transaction-storage/runtime-benchmarks",
 	"plant-treasury/runtime-benchmarks",
 	"plant-tx-pause/runtime-benchmarks",
 	"plant-uniques/runtime-benchmarks",
-	"topsoil-utility/runtime-benchmarks",
+	"plant-utility/runtime-benchmarks",
 	"plant-verify-signature/runtime-benchmarks",
 	"plant-vesting/runtime-benchmarks",
 	"plant-whitelist/runtime-benchmarks",
@@ -381,19 +381,19 @@ try-runtime = [
 	"plant-asset-conversion-tx-payment/try-runtime",
 	"plant-asset-rate/try-runtime",
 	"plant-asset-rewards/try-runtime",
-	"topsoil-asset-tx-payment/try-runtime",
+	"plant-asset-tx-payment/try-runtime",
 	"plant-assets/try-runtime",
 	"plant-assets-freezer/try-runtime",
 	"plant-assets-holder/try-runtime",
 	"plant-atomic-swap/try-runtime",
-	"topsoil-aura/try-runtime",
+	"plant-aura/try-runtime",
 	"plant-authority-discovery/try-runtime",
-	"topsoil-authorship/try-runtime",
-	"topsoil-babe/try-runtime",
+	"plant-authorship/try-runtime",
+	"plant-babe/try-runtime",
 	"plant-bags-list/try-runtime",
-	"topsoil-balances/try-runtime",
-	"topsoil-beefy/try-runtime",
-	"topsoil-beefy-mmr/try-runtime",
+	"plant-balances/try-runtime",
+	"plant-beefy/try-runtime",
+	"plant-beefy-mmr/try-runtime",
 	"plant-bounties/try-runtime",
 	"plant-broker/try-runtime",
 	"plant-child-bounties/try-runtime",
@@ -409,9 +409,9 @@ try-runtime = [
 	"plant-elections-phragmen/try-runtime",
 	"plant-fast-unstake/try-runtime",
 	"plant-glutton/try-runtime",
-	"topsoil-grandpa/try-runtime",
+	"plant-grandpa/try-runtime",
 	"plant-identity/try-runtime",
-	"topsoil-im-online/try-runtime",
+	"plant-im-online/try-runtime",
 	"plant-indices/try-runtime",
 	"plant-insecure-randomness-collective-flip/try-runtime",
 	"plant-lottery/try-runtime",
@@ -427,7 +427,7 @@ try-runtime = [
 	"plant-nis/try-runtime",
 	"plant-node-authorization/try-runtime",
 	"plant-nomination-pools/try-runtime",
-	"topsoil-offences/try-runtime",
+	"plant-offences/try-runtime",
 	"plant-oracle/try-runtime",
 	"plant-origin-restriction/try-runtime",
 	"plant-paged-list/try-runtime",
@@ -445,20 +445,20 @@ try-runtime = [
 	"plant-salary/try-runtime",
 	"plant-scheduler/try-runtime",
 	"plant-scored-pool/try-runtime",
-	"topsoil-session/try-runtime",
+	"plant-session/try-runtime",
 	"plant-society/try-runtime",
 	"plant-staking/try-runtime",
 	"plant-state-trie-migration/try-runtime",
 	"plant-statement/try-runtime",
 	"plant-sudo/try-runtime",
-	"topsoil-timestamp/try-runtime",
+	"plant-timestamp/try-runtime",
 	"plant-tips/try-runtime",
-	"topsoil-transaction-payment/try-runtime",
-	"topsoil-transaction-storage/try-runtime",
+	"plant-transaction-payment/try-runtime",
+	"plant-transaction-storage/try-runtime",
 	"plant-treasury/try-runtime",
 	"plant-tx-pause/try-runtime",
 	"plant-uniques/try-runtime",
-	"topsoil-utility/try-runtime",
+	"plant-utility/try-runtime",
 	"plant-verify-signature/try-runtime",
 	"plant-vesting/try-runtime",
 	"plant-whitelist/try-runtime",

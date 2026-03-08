@@ -224,7 +224,7 @@
 //! they received during the era. Points are added to a validator using the method
 //! [`topsoil_support::traits::RewardsReporter::reward_by_ids`] implemented by the [`Pallet`].
 //!
-//! [`Pallet`] implements [`topsoil_authorship::EventHandler`] to add reward points to block producer
+//! [`Pallet`] implements [`plant_authorship::EventHandler`] to add reward points to block producer
 //! and block producer of referenced uncles.
 //!
 //! The validator and its nominator split their reward as following:
@@ -280,8 +280,8 @@
 //!
 //! ## Related Modules
 //!
-//! - [Balances](../topsoil_balances/index.html): Used to manage values at stake.
-//! - [Session](../topsoil_session/index.html): Used to manage sessions. Also, a list of new
+//! - [Balances](../plant_balances/index.html): Used to manage values at stake.
+//! - [Session](../plant_session/index.html): Used to manage sessions. Also, a list of new
 //!   validators is stored in the Session pallet's `Validators` at the end of each era.
 
 #![cfg_attr(not(feature = "std"), no_std)]
@@ -931,7 +931,7 @@ impl<Balance, const MAX: u32> NominationsQuota<Balance> for FixedNominationsQuot
 
 /// Means for interacting with a specialized version of the `session` trait.
 ///
-/// This is needed because `Staking` sets the `ValidatorIdOf` of the `topsoil_session::Config`
+/// This is needed because `Staking` sets the `ValidatorIdOf` of the `plant_session::Config`
 pub trait SessionInterface<AccountId> {
 	/// Report an offending validator.
 	fn report_offence(validator: AccountId, severity: OffenceSeverity);
@@ -943,10 +943,10 @@ pub trait SessionInterface<AccountId> {
 
 impl<T: Config> SessionInterface<<T as topsoil_system::Config>::AccountId> for T
 where
-	T: topsoil_session::Config<ValidatorId = <T as topsoil_system::Config>::AccountId>,
-	T: topsoil_session::historical::Config,
-	T::SessionHandler: topsoil_session::SessionHandler<<T as topsoil_system::Config>::AccountId>,
-	T::SessionManager: topsoil_session::SessionManager<<T as topsoil_system::Config>::AccountId>,
+	T: plant_session::Config<ValidatorId = <T as topsoil_system::Config>::AccountId>,
+	T: plant_session::historical::Config,
+	T::SessionHandler: plant_session::SessionHandler<<T as topsoil_system::Config>::AccountId>,
+	T::SessionManager: plant_session::SessionManager<<T as topsoil_system::Config>::AccountId>,
 	T::ValidatorIdOf: Convert<
 		<T as topsoil_system::Config>::AccountId,
 		Option<<T as topsoil_system::Config>::AccountId>,
@@ -956,15 +956,15 @@ where
 		validator: <T as topsoil_system::Config>::AccountId,
 		severity: OffenceSeverity,
 	) {
-		<topsoil_session::Pallet<T>>::report_offence(validator, severity)
+		<plant_session::Pallet<T>>::report_offence(validator, severity)
 	}
 
 	fn validators() -> Vec<<T as topsoil_system::Config>::AccountId> {
-		<topsoil_session::Pallet<T>>::validators()
+		<plant_session::Pallet<T>>::validators()
 	}
 
 	fn prune_historical_up_to(up_to: SessionIndex) {
-		<topsoil_session::historical::Pallet<T>>::prune_up_to(up_to);
+		<plant_session::historical::Pallet<T>>::prune_up_to(up_to);
 	}
 }
 
@@ -1098,7 +1098,7 @@ impl<T: Config> Convert<T::AccountId, Option<Exposure<T::AccountId, BalanceOf<T>
 /// A typical usage of this type is:
 ///
 /// ```ignore
-/// impl topsoil_session::historical::Config for Runtime {
+/// impl plant_session::historical::Config for Runtime {
 ///     type FullIdentification = subsoil::staking::Exposure<AccountId, Balance>;
 ///     type IdentificationOf = plant_staking::DefaultExposureOf<Self>
 /// }
@@ -1119,7 +1119,7 @@ impl<T: Config> Convert<T::AccountId, Option<Exposure<T::AccountId, BalanceOf<T>
 /// `None` otherwise. Also see the documentation of [`DefaultExposureOf`] for more info.
 ///
 /// ```ignore
-/// impl topsoil_session::historical::Config for Runtime {
+/// impl plant_session::historical::Config for Runtime {
 ///     type FullIdentification = ();
 ///     type IdentificationOf = plant_staking::UnitIdentificationOf<Self>
 /// }

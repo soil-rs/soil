@@ -29,7 +29,7 @@ use topsoil_support::{
 	traits::{fungible::Mutate, Currency},
 };
 
-type UtilityCall = topsoil_utility::Call<Test>;
+type UtilityCall = plant_utility::Call<Test>;
 type BountiesCall = crate::Call<Test>;
 
 #[docify::export]

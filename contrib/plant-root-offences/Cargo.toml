@@ -19,16 +19,16 @@ targets = ["x86_64-unknown-linux-gnu"]
 codec = { features = ["derive"], workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 
-topsoil-session = { features = ["historical"], workspace = true }
+plant-session = { features = ["historical"], workspace = true }
 plant-staking = { workspace = true }
 
 topsoil-support = { workspace = true }
 topsoil-system = { workspace = true }
 subsoil = { workspace = true }
 [dev-dependencies]
-topsoil-balances = { workspace = true, default-features = true }
+plant-balances = { workspace = true, default-features = true }
 plant-staking-macros = { workspace = true, default-features = true }
-topsoil-timestamp = { workspace = true, default-features = true }
+plant-timestamp = { workspace = true, default-features = true }
 
 plant-election-provider = { workspace = true, default-features = true }
 
@@ -39,10 +39,10 @@ std = [
 	"plant-election-provider/std",
 	"topsoil-support/std",
 	"topsoil-system/std",
-	"topsoil-balances/std",
-	"topsoil-session/std",
+	"plant-balances/std",
+	"plant-session/std",
 	"plant-staking/std",
-	"topsoil-timestamp/std",
+	"plant-timestamp/std",
 	"scale-info/std",
 	"subsoil/std",
 ]
@@ -50,19 +50,19 @@ runtime-benchmarks = [
 	"plant-election-provider/runtime-benchmarks",
 	"topsoil-support/runtime-benchmarks",
 	"topsoil-system/runtime-benchmarks",
-	"topsoil-balances/runtime-benchmarks",
-	"topsoil-session/runtime-benchmarks",
+	"plant-balances/runtime-benchmarks",
+	"plant-session/runtime-benchmarks",
 	"plant-staking/runtime-benchmarks",
-	"topsoil-timestamp/runtime-benchmarks",
+	"plant-timestamp/runtime-benchmarks",
 	"subsoil/runtime-benchmarks",
 ]
 try-runtime = [
 	"plant-election-provider/try-runtime",
 	"topsoil-support/try-runtime",
 	"topsoil-system/try-runtime",
-	"topsoil-balances/try-runtime",
-	"topsoil-session/try-runtime",
+	"plant-balances/try-runtime",
+	"plant-session/try-runtime",
 	"plant-staking/try-runtime",
-	"topsoil-timestamp/try-runtime",
+	"plant-timestamp/try-runtime",
 	"subsoil/try-runtime",
 ]

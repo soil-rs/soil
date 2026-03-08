@@ -1183,7 +1183,7 @@ mod mock {
 		pub enum Test
 		{
 			System: topsoil_system,
-			Balances: topsoil_balances,
+			Balances: plant_balances,
 			StateTrieMigration: plant_state_trie_migration,
 		}
 	);
@@ -1195,7 +1195,7 @@ mod mock {
 	#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
 	impl topsoil_system::Config for Test {
 		type Block = Block;
-		type AccountData = topsoil_balances::AccountData<u64>;
+		type AccountData = plant_balances::AccountData<u64>;
 	}
 
 	parameter_types! {
@@ -1204,8 +1204,8 @@ mod mock {
 		pub const MigrationMaxKeyLen: u32 = 512;
 	}
 
-	#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
-	impl topsoil_balances::Config for Test {
+	#[derive_impl(plant_balances::config_preludes::TestDefaultConfig)]
+	impl plant_balances::Config for Test {
 		type ReserveIdentifier = [u8; 8];
 		type AccountStore = System;
 	}
@@ -1320,7 +1320,7 @@ mod mock {
 			topsoil_system::GenesisConfig::<Test>::default()
 				.assimilate_storage(&mut custom_storage)
 				.unwrap();
-			topsoil_balances::GenesisConfig::<Test> {
+			plant_balances::GenesisConfig::<Test> {
 				balances: vec![(1, 1000)],
 				..Default::default()
 			}

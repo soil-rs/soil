@@ -41,7 +41,7 @@ topsoil_support::construct_runtime!(
 	pub enum Test
 	{
 		System: topsoil_system,
-		Balances: topsoil_balances,
+		Balances: plant_balances,
 		Preimage: plant_preimage,
 		Scheduler: plant_scheduler,
 		Referenda: plant_referenda,
@@ -52,7 +52,7 @@ topsoil_support::construct_runtime!(
 pub struct BaseFilter;
 impl Contains<RuntimeCall> for BaseFilter {
 	fn contains(call: &RuntimeCall) -> bool {
-		!matches!(call, &RuntimeCall::Balances(topsoil_balances::Call::force_set_balance { .. }))
+		!matches!(call, &RuntimeCall::Balances(plant_balances::Call::force_set_balance { .. }))
 	}
 }
 
@@ -63,7 +63,7 @@ parameter_types! {
 impl topsoil_system::Config for Test {
 	type BaseCallFilter = BaseFilter;
 	type Block = Block;
-	type AccountData = topsoil_balances::AccountData<u64>;
+	type AccountData = plant_balances::AccountData<u64>;
 }
 impl plant_preimage::Config for Test {
 	type RuntimeEvent = RuntimeEvent;
@@ -85,8 +85,8 @@ impl plant_scheduler::Config for Test {
 	type Preimages = Preimage;
 	type BlockNumberProvider = topsoil_system::Pallet<Test>;
 }
-#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
-impl topsoil_balances::Config for Test {
+#[derive_impl(plant_balances::config_preludes::TestDefaultConfig)]
+impl plant_balances::Config for Test {
 	type AccountStore = System;
 }
 parameter_types! {
@@ -196,7 +196,7 @@ impl Config for Test {
 	type RuntimeCall = RuntimeCall;
 	type RuntimeEvent = RuntimeEvent;
 	type Scheduler = Scheduler;
-	type Currency = topsoil_balances::Pallet<Self>;
+	type Currency = plant_balances::Pallet<Self>;
 	type SubmitOrigin = topsoil_system::EnsureSigned<u64>;
 	type CancelOrigin = EnsureSignedBy<Four, u64>;
 	type KillOrigin = EnsureRoot<u64>;
@@ -223,7 +223,7 @@ impl ExtBuilder {
 	pub fn build(self) -> subsoil::io::TestExternalities {
 		let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 		let balances = vec![(1, 100), (2, 100), (3, 100), (4, 100), (5, 100), (6, 100)];
-		topsoil_balances::GenesisConfig::<Test> { balances, ..Default::default() }
+		plant_balances::GenesisConfig::<Test> { balances, ..Default::default() }
 			.assimilate_storage(&mut t)
 			.unwrap();
 		let mut ext = subsoil::io::TestExternalities::new(t);
@@ -290,12 +290,12 @@ impl<Class> VoteTally<u32, Class> for Tally {
 }
 
 pub fn set_balance_proposal(value: u64) -> Vec<u8> {
-	RuntimeCall::Balances(topsoil_balances::Call::force_set_balance { who: 42, new_free: value })
+	RuntimeCall::Balances(plant_balances::Call::force_set_balance { who: 42, new_free: value })
 		.encode()
 }
 
 pub fn set_balance_proposal_bounded(value: u64) -> BoundedCallOf<Test, ()> {
-	let c = RuntimeCall::Balances(topsoil_balances::Call::force_set_balance {
+	let c = RuntimeCall::Balances(plant_balances::Call::force_set_balance {
 		who: 42,
 		new_free: value,
 	});

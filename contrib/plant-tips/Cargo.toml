@@ -27,7 +27,7 @@ serde = { features = ["derive"], optional = true, workspace = true, default-feat
 subsoil = { workspace = true }
 
 [dev-dependencies]
-topsoil-balances = { workspace = true, default-features = true }
+plant-balances = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
 
 [features]
@@ -47,14 +47,14 @@ runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",
 	"topsoil-support/runtime-benchmarks",
 	"topsoil-system/runtime-benchmarks",
-	"topsoil-balances/runtime-benchmarks",
+	"plant-balances/runtime-benchmarks",
 	"plant-treasury/runtime-benchmarks",
 	"subsoil/runtime-benchmarks",
 ]
 try-runtime = [
 	"topsoil-support/try-runtime",
 	"topsoil-system/try-runtime",
-	"topsoil-balances/try-runtime",
+	"plant-balances/try-runtime",
 	"plant-treasury/try-runtime",
 	"subsoil/try-runtime",
 ]

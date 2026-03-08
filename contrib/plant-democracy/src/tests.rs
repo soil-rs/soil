@@ -23,7 +23,7 @@ use subsoil::runtime::{
 	traits::{BadOrigin, BlakeTwo256, Hash},
 	BuildStorage, Perbill,
 };
-use topsoil_balances::{BalanceLock, Error as BalancesError};
+use plant_balances::{BalanceLock, Error as BalancesError};
 use topsoil_support::{
 	assert_noop, assert_ok, derive_impl, ord_parameter_types, parameter_types,
 	traits::{
@@ -55,7 +55,7 @@ topsoil_support::construct_runtime!(
 	pub enum Test
 	{
 		System: topsoil_system,
-		Balances: topsoil_balances,
+		Balances: plant_balances,
 		Preimage: plant_preimage,
 		Scheduler: plant_scheduler,
 		Democracy: plant_democracy,
@@ -66,7 +66,7 @@ topsoil_support::construct_runtime!(
 pub struct BaseFilter;
 impl Contains<RuntimeCall> for BaseFilter {
 	fn contains(call: &RuntimeCall) -> bool {
-		!matches!(call, &RuntimeCall::Balances(topsoil_balances::Call::force_set_balance { .. }))
+		!matches!(call, &RuntimeCall::Balances(plant_balances::Call::force_set_balance { .. }))
 	}
 }
 
@@ -81,7 +81,7 @@ parameter_types! {
 impl topsoil_system::Config for Test {
 	type BaseCallFilter = BaseFilter;
 	type Block = Block;
-	type AccountData = topsoil_balances::AccountData<u64>;
+	type AccountData = plant_balances::AccountData<u64>;
 }
 parameter_types! {
 	pub MaximumSchedulerWeight: Weight = Perbill::from_percent(80) * BlockWeights::get().max_block;
@@ -109,8 +109,8 @@ impl plant_scheduler::Config for Test {
 	type BlockNumberProvider = topsoil_system::Pallet<Test>;
 }
 
-#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
-impl topsoil_balances::Config for Test {
+#[derive_impl(plant_balances::config_preludes::TestDefaultConfig)]
+impl plant_balances::Config for Test {
 	type AccountStore = System;
 }
 parameter_types! {
@@ -136,7 +136,7 @@ impl SortedMembers<u64> for OneToFive {
 
 impl Config for Test {
 	type RuntimeEvent = RuntimeEvent;
-	type Currency = topsoil_balances::Pallet<Self>;
+	type Currency = plant_balances::Pallet<Self>;
 	type EnactmentPeriod = ConstU64<2>;
 	type LaunchPeriod = ConstU64<2>;
 	type VotingPeriod = ConstU64<2>;
@@ -168,7 +168,7 @@ impl Config for Test {
 
 pub fn new_test_ext() -> subsoil::io::TestExternalities {
 	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
-	topsoil_balances::GenesisConfig::<Test> {
+	plant_balances::GenesisConfig::<Test> {
 		balances: vec![(1, 10), (2, 20), (3, 30), (4, 40), (5, 50), (6, 60)],
 		..Default::default()
 	}
@@ -187,12 +187,12 @@ fn params_should_work() {
 	new_test_ext().execute_with(|| {
 		assert_eq!(ReferendumCount::<Test>::get(), 0);
 		assert_eq!(Balances::free_balance(42), 0);
-		assert_eq!(topsoil_balances::TotalIssuance::<Test>::get(), 210);
+		assert_eq!(plant_balances::TotalIssuance::<Test>::get(), 210);
 	});
 }
 
 fn set_balance_proposal(value: u64) -> BoundedCallOf<Test> {
-	let inner = topsoil_balances::Call::force_set_balance { who: 42, new_free: value };
+	let inner = plant_balances::Call::force_set_balance { who: 42, new_free: value };
 	let outer = RuntimeCall::Balances(inner);
 	Preimage::bound(outer).unwrap()
 }

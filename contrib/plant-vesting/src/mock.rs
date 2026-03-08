@@ -27,19 +27,19 @@ topsoil_support::construct_runtime!(
 	pub enum Test
 	{
 		System: topsoil_system,
-		Balances: topsoil_balances,
+		Balances: plant_balances,
 		Vesting: plant_vesting,
 	}
 );
 
 #[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
 impl topsoil_system::Config for Test {
-	type AccountData = topsoil_balances::AccountData<u64>;
+	type AccountData = plant_balances::AccountData<u64>;
 	type Block = Block;
 }
 
-#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
-impl topsoil_balances::Config for Test {
+#[derive_impl(plant_balances::config_preludes::TestDefaultConfig)]
+impl plant_balances::Config for Test {
 	type AccountStore = System;
 	type ExistentialDeposit = ExistentialDeposit;
 }
@@ -85,7 +85,7 @@ impl ExtBuilder {
 	pub fn build(self) -> subsoil::io::TestExternalities {
 		EXISTENTIAL_DEPOSIT.with(|v| *v.borrow_mut() = self.existential_deposit);
 		let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
-		topsoil_balances::GenesisConfig::<Test> {
+		plant_balances::GenesisConfig::<Test> {
 			balances: vec![
 				(1, 10 * self.existential_deposit),
 				(2, 20 * self.existential_deposit),

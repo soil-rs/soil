@@ -148,7 +148,7 @@ where
 		<Block as subsoil::runtime::traits::Block>::Hash,
 		BlockNumber,
 	>,
-	C::Api: topsoil_transaction_payment_rpc::TransactionPaymentRuntimeApi<Block, Balance>,
+	C::Api: plant_transaction_payment_rpc::TransactionPaymentRuntimeApi<Block, Balance>,
 	C::Api: BabeApi<Block>,
 	C::Api: BlockBuilder<Block>,
 	P: TransactionPool + 'static,
@@ -171,7 +171,7 @@ where
 	};
 	use soil_sync_state_rpc::{SyncState, SyncStateApiServer};
 	use substrate_frame_rpc_system::{System, SystemApiServer};
-	use topsoil_transaction_payment_rpc::{TransactionPayment, TransactionPaymentApiServer};
+	use plant_transaction_payment_rpc::{TransactionPayment, TransactionPaymentApiServer};
 
 	let mut io = RpcModule::new(());
 

@@ -6441,12 +6441,12 @@ dependencies = [
  "array-bytes 6.2.3",
  "log",
  "parity-scale-codec",
+ "plant-balances",
  "plant-collective",
  "plant-identity",
  "scale-info",
  "subsoil",
  "subsoil-crypto-hashing",
- "topsoil-balances",
  "topsoil-benchmarking",
  "topsoil-support",
  "topsoil-system",
@@ -6459,10 +6459,10 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "plant-assets",
+ "plant-balances",
  "primitive-types",
  "scale-info",
  "subsoil",
- "topsoil-balances",
  "topsoil-benchmarking",
  "topsoil-support",
  "topsoil-system",
@@ -6476,10 +6476,10 @@ dependencies = [
  "parity-scale-codec",
  "plant-asset-conversion",
  "plant-assets",
+ "plant-balances",
  "primitive-types",
  "scale-info",
  "subsoil",
- "topsoil-balances",
  "topsoil-benchmarking",
  "topsoil-support",
  "topsoil-system",
@@ -6492,13 +6492,13 @@ dependencies = [
  "parity-scale-codec",
  "plant-asset-conversion",
  "plant-assets",
+ "plant-balances",
+ "plant-transaction-payment",
  "scale-info",
  "subsoil",
- "topsoil-balances",
  "topsoil-benchmarking",
  "topsoil-support",
  "topsoil-system",
- "topsoil-transaction-payment",
 ]
 
 [[package]]
@@ -6506,9 +6506,9 @@ name = "plant-asset-rate"
 version = "7.0.0"
 dependencies = [
  "parity-scale-codec",
+ "plant-balances",
  "scale-info",
  "subsoil",
- "topsoil-balances",
  "topsoil-benchmarking",
  "topsoil-support",
  "topsoil-system",
@@ -6521,10 +6521,27 @@ dependencies = [
  "parity-scale-codec",
  "plant-assets",
  "plant-assets-freezer",
+ "plant-balances",
  "primitive-types",
  "scale-info",
  "subsoil",
- "topsoil-balances",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "plant-asset-tx-payment"
+version = "28.0.0"
+dependencies = [
+ "parity-scale-codec",
+ "plant-assets",
+ "plant-authorship",
+ "plant-balances",
+ "plant-transaction-payment",
+ "scale-info",
+ "serde",
+ "subsoil",
  "topsoil-benchmarking",
  "topsoil-support",
  "topsoil-system",
@@ -6537,9 +6554,9 @@ dependencies = [
  "impl-trait-for-tuples",
  "log",
  "parity-scale-codec",
+ "plant-balances",
  "scale-info",
  "subsoil",
- "topsoil-balances",
  "topsoil-benchmarking",
  "topsoil-support",
  "topsoil-system",
@@ -6552,9 +6569,9 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "plant-assets",
+ "plant-balances",
  "scale-info",
  "topsoil",
- "topsoil-balances",
 ]
 
 [[package]]
@@ -6564,9 +6581,9 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "plant-assets",
+ "plant-balances",
  "scale-info",
  "subsoil",
- "topsoil-balances",
  "topsoil-benchmarking",
  "topsoil-support",
  "topsoil-system",
@@ -6577,9 +6594,22 @@ name = "plant-atomic-swap"
 version = "28.0.0"
 dependencies = [
  "parity-scale-codec",
+ "plant-balances",
  "scale-info",
  "topsoil",
- "topsoil-balances",
+]
+
+[[package]]
+name = "plant-aura"
+version = "27.0.0"
+dependencies = [
+ "log",
+ "parity-scale-codec",
+ "plant-timestamp",
+ "scale-info",
+ "subsoil",
+ "topsoil-support",
+ "topsoil-system",
 ]
 
 [[package]]
@@ -6594,6 +6624,8 @@ dependencies = [
  "linked_hash_set",
  "log",
  "parity-scale-codec",
+ "plant-balances",
+ "plant-session",
  "prost 0.12.6",
  "prost-build 0.13.5",
  "quickcheck",
@@ -6610,8 +6642,39 @@ dependencies = [
  "tempfile",
  "thiserror 1.0.69",
  "tokio",
- "topsoil-balances",
- "topsoil-session",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "plant-authorship"
+version = "28.0.0"
+dependencies = [
+ "impl-trait-for-tuples",
+ "parity-scale-codec",
+ "scale-info",
+ "subsoil",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "plant-babe"
+version = "28.0.0"
+dependencies = [
+ "log",
+ "parity-scale-codec",
+ "plant-authorship",
+ "plant-balances",
+ "plant-election-provider",
+ "plant-offences",
+ "plant-session",
+ "plant-staking",
+ "plant-staking-macros",
+ "plant-timestamp",
+ "scale-info",
+ "subsoil",
+ "topsoil-benchmarking",
  "topsoil-support",
  "topsoil-system",
 ]
@@ -6624,10 +6687,10 @@ dependencies = [
  "docify",
  "log",
  "parity-scale-codec",
+ "plant-balances",
  "plant-election-provider",
  "scale-info",
  "subsoil",
- "topsoil-balances",
  "topsoil-benchmarking",
  "topsoil-support",
  "topsoil-system",
@@ -6648,16 +6711,72 @@ dependencies = [
 ]
 
 [[package]]
+name = "plant-balances"
+version = "28.0.0"
+dependencies = [
+ "docify",
+ "log",
+ "parity-scale-codec",
+ "paste",
+ "plant-transaction-payment",
+ "scale-info",
+ "subsoil",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "plant-beefy"
+version = "28.0.0"
+dependencies = [
+ "log",
+ "parity-scale-codec",
+ "plant-authorship",
+ "plant-balances",
+ "plant-election-provider",
+ "plant-offences",
+ "plant-session",
+ "plant-staking",
+ "plant-staking-macros",
+ "plant-timestamp",
+ "scale-info",
+ "serde",
+ "subsoil",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "plant-beefy-mmr"
+version = "28.0.0"
+dependencies = [
+ "array-bytes 6.2.3",
+ "log",
+ "parity-scale-codec",
+ "plant-balances",
+ "plant-beefy",
+ "plant-mmr",
+ "plant-session",
+ "scale-info",
+ "serde",
+ "subsoil",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
 name = "plant-bounties"
 version = "27.0.0"
 dependencies = [
  "log",
  "parity-scale-codec",
  "plant-assets",
+ "plant-balances",
  "plant-treasury",
  "scale-info",
  "subsoil",
- "topsoil-balances",
  "topsoil-benchmarking",
  "topsoil-support",
  "topsoil-system",
@@ -6684,11 +6803,11 @@ version = "27.0.0"
 dependencies = [
  "log",
  "parity-scale-codec",
+ "plant-balances",
  "plant-bounties",
  "plant-treasury",
  "scale-info",
  "subsoil",
- "topsoil-balances",
  "topsoil-benchmarking",
  "topsoil-support",
  "topsoil-system",
@@ -6701,9 +6820,9 @@ dependencies = [
  "docify",
  "log",
  "parity-scale-codec",
+ "plant-balances",
  "scale-info",
  "subsoil",
- "topsoil-balances",
  "topsoil-benchmarking",
  "topsoil-support",
  "topsoil-system",
@@ -6715,10 +6834,10 @@ version = "28.0.0"
 dependencies = [
  "assert_matches",
  "parity-scale-codec",
+ "plant-balances",
  "scale-info",
  "serde",
  "subsoil",
- "topsoil-balances",
  "topsoil-benchmarking",
  "topsoil-support",
  "topsoil-system",
@@ -6744,9 +6863,9 @@ version = "0.1.0"
 dependencies = [
  "log",
  "parity-scale-codec",
+ "plant-balances",
  "scale-info",
  "subsoil",
- "topsoil-balances",
  "topsoil-benchmarking",
  "topsoil-support",
  "topsoil-system",
@@ -6770,16 +6889,16 @@ version = "1.0.0"
 dependencies = [
  "log",
  "parity-scale-codec",
+ "plant-balances",
  "plant-election-provider",
  "plant-nomination-pools",
  "plant-staking",
  "plant-staking-macros",
+ "plant-timestamp",
  "scale-info",
  "subsoil",
- "topsoil-balances",
  "topsoil-support",
  "topsoil-system",
- "topsoil-timestamp",
 ]
 
 [[package]]
@@ -6788,12 +6907,12 @@ version = "28.0.0"
 dependencies = [
  "log",
  "parity-scale-codec",
+ "plant-balances",
  "plant-preimage",
  "plant-scheduler",
  "scale-info",
  "serde",
  "subsoil",
- "topsoil-balances",
  "topsoil-benchmarking",
  "topsoil-support",
  "topsoil-system",
@@ -6805,9 +6924,9 @@ version = "10.0.0"
 dependencies = [
  "log",
  "parity-scale-codec",
+ "plant-balances",
  "scale-info",
  "subsoil",
- "topsoil-balances",
  "topsoil-support",
  "topsoil-system",
 ]
@@ -6849,18 +6968,18 @@ dependencies = [
  "parity-scale-codec",
  "parking_lot 0.12.5",
  "plant-bags-list",
+ "plant-balances",
  "plant-delegated-staking",
  "plant-election-provider",
  "plant-election-provider-multi-phase",
  "plant-nomination-pools",
+ "plant-session",
  "plant-staking",
+ "plant-timestamp",
  "scale-info",
  "subsoil",
- "topsoil-balances",
- "topsoil-session",
  "topsoil-support",
  "topsoil-system",
- "topsoil-timestamp",
 ]
 
 [[package]]
@@ -6886,11 +7005,11 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "parking_lot 0.12.5",
+ "plant-balances",
  "plant-election-provider",
  "rand 0.8.5",
  "scale-info",
  "subsoil",
- "topsoil-balances",
  "topsoil-benchmarking",
  "topsoil-support",
  "topsoil-system",
@@ -6905,13 +7024,13 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "parking_lot 0.12.5",
+ "plant-balances",
  "plant-election-provider",
  "rand 0.8.5",
  "scale-info",
  "strum 0.26.3",
  "subsoil",
  "tokio",
- "topsoil-balances",
  "topsoil-benchmarking",
  "topsoil-support",
  "topsoil-system",
@@ -6923,9 +7042,9 @@ version = "29.0.0"
 dependencies = [
  "log",
  "parity-scale-codec",
+ "plant-balances",
  "scale-info",
  "subsoil",
- "topsoil-balances",
  "topsoil-benchmarking",
  "topsoil-support",
  "topsoil-system",
@@ -6952,9 +7071,9 @@ version = "27.0.0"
 dependencies = [
  "log",
  "parity-scale-codec",
+ "plant-balances",
  "scale-info",
  "subsoil",
- "topsoil-balances",
  "topsoil-benchmarking",
  "topsoil-support",
  "topsoil-system",
@@ -6975,9 +7094,9 @@ version = "4.0.0-dev"
 dependencies = [
  "log",
  "parity-scale-codec",
+ "plant-balances",
  "scale-info",
  "subsoil",
- "topsoil-balances",
  "topsoil-benchmarking",
  "topsoil-support",
  "topsoil-system",
@@ -7003,9 +7122,9 @@ dependencies = [
  "docify",
  "log",
  "parity-scale-codec",
+ "plant-balances",
  "scale-info",
  "subsoil",
- "topsoil-balances",
  "topsoil-support",
  "topsoil-system",
 ]
@@ -7045,16 +7164,16 @@ dependencies = [
  "docify",
  "log",
  "parity-scale-codec",
+ "plant-balances",
  "plant-election-provider",
  "plant-staking",
  "plant-staking-macros",
+ "plant-timestamp",
  "scale-info",
  "subsoil",
- "topsoil-balances",
  "topsoil-benchmarking",
  "topsoil-support",
  "topsoil-system",
- "topsoil-timestamp",
 ]
 
 [[package]]
@@ -7072,15 +7191,53 @@ dependencies = [
 ]
 
 [[package]]
+name = "plant-grandpa"
+version = "28.0.0"
+dependencies = [
+ "finality-grandpa",
+ "log",
+ "parity-scale-codec",
+ "plant-authorship",
+ "plant-balances",
+ "plant-election-provider",
+ "plant-offences",
+ "plant-session",
+ "plant-staking",
+ "plant-staking-macros",
+ "plant-timestamp",
+ "scale-info",
+ "subsoil",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
 name = "plant-identity"
 version = "29.0.0"
 dependencies = [
  "enumflags2",
  "log",
  "parity-scale-codec",
+ "plant-balances",
  "scale-info",
  "subsoil",
- "topsoil-balances",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "plant-im-online"
+version = "27.0.0"
+dependencies = [
+ "log",
+ "parity-scale-codec",
+ "plant-authorship",
+ "plant-balances",
+ "plant-session",
+ "scale-info",
+ "subsoil",
  "topsoil-benchmarking",
  "topsoil-support",
  "topsoil-system",
@@ -7091,9 +7248,9 @@ name = "plant-indices"
 version = "28.0.0"
 dependencies = [
  "parity-scale-codec",
+ "plant-balances",
  "scale-info",
  "subsoil",
- "topsoil-balances",
  "topsoil-benchmarking",
  "topsoil-support",
  "topsoil-system",
@@ -7114,9 +7271,9 @@ name = "plant-lottery"
 version = "28.0.0"
 dependencies = [
  "parity-scale-codec",
+ "plant-balances",
  "scale-info",
  "subsoil",
- "topsoil-balances",
  "topsoil-benchmarking",
  "topsoil-support",
  "topsoil-support-test",
@@ -7160,15 +7317,15 @@ version = "0.1.0"
 dependencies = [
  "docify",
  "parity-scale-codec",
+ "plant-balances",
+ "plant-transaction-payment",
  "plant-verify-signature",
  "scale-info",
  "serde",
  "subsoil",
- "topsoil-balances",
  "topsoil-benchmarking",
  "topsoil-support",
  "topsoil-system",
- "topsoil-transaction-payment",
 ]
 
 [[package]]
@@ -7221,14 +7378,14 @@ dependencies = [
  "docify",
  "log",
  "parity-scale-codec",
+ "plant-balances",
  "plant-preimage",
+ "plant-utility",
  "scale-info",
  "subsoil",
- "topsoil-balances",
  "topsoil-benchmarking",
  "topsoil-support",
  "topsoil-system",
- "topsoil-utility",
 ]
 
 [[package]]
@@ -7237,9 +7394,9 @@ version = "28.0.0"
 dependencies = [
  "log",
  "parity-scale-codec",
+ "plant-balances",
  "scale-info",
  "topsoil",
- "topsoil-balances",
 ]
 
 [[package]]
@@ -7249,10 +7406,10 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "plant-assets",
+ "plant-balances",
  "plant-nfts",
  "scale-info",
  "topsoil",
- "topsoil-balances",
 ]
 
 [[package]]
@@ -7262,9 +7419,9 @@ dependencies = [
  "enumflags2",
  "log",
  "parity-scale-codec",
+ "plant-balances",
  "scale-info",
  "subsoil",
- "topsoil-balances",
  "topsoil-benchmarking",
  "topsoil-support",
  "topsoil-system",
@@ -7283,10 +7440,10 @@ name = "plant-nis"
 version = "28.0.0"
 dependencies = [
  "parity-scale-codec",
+ "plant-balances",
  "scale-info",
  "subsoil",
  "topsoil",
- "topsoil-balances",
 ]
 
 [[package]]
@@ -7306,9 +7463,9 @@ version = "25.0.0"
 dependencies = [
  "log",
  "parity-scale-codec",
+ "plant-balances",
  "scale-info",
  "subsoil",
- "topsoil-balances",
  "topsoil-support",
  "topsoil-system",
 ]
@@ -7319,18 +7476,18 @@ version = "26.0.0"
 dependencies = [
  "parity-scale-codec",
  "plant-bags-list",
+ "plant-balances",
  "plant-delegated-staking",
  "plant-election-provider",
  "plant-nomination-pools",
  "plant-staking",
  "plant-staking-macros",
+ "plant-timestamp",
  "scale-info",
  "subsoil",
- "topsoil-balances",
  "topsoil-benchmarking",
  "topsoil-support",
  "topsoil-system",
- "topsoil-timestamp",
 ]
 
 [[package]]
@@ -7353,6 +7510,43 @@ dependencies = [
  "parity-scale-codec",
  "plant-nomination-pools",
  "subsoil",
+]
+
+[[package]]
+name = "plant-offences"
+version = "27.0.0"
+dependencies = [
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "serde",
+ "subsoil",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "plant-offences-benchmarking"
+version = "28.0.0"
+dependencies = [
+ "log",
+ "parity-scale-codec",
+ "plant-babe",
+ "plant-balances",
+ "plant-election-provider",
+ "plant-grandpa",
+ "plant-im-online",
+ "plant-offences",
+ "plant-session",
+ "plant-session-benchmarking",
+ "plant-staking",
+ "plant-staking-macros",
+ "plant-timestamp",
+ "scale-info",
+ "subsoil",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
 ]
 
 [[package]]
@@ -7384,12 +7578,12 @@ version = "1.0.0"
 dependencies = [
  "log",
  "parity-scale-codec",
+ "plant-transaction-payment",
  "scale-info",
  "subsoil",
  "topsoil-benchmarking",
  "topsoil-support",
  "topsoil-system",
- "topsoil-transaction-payment",
 ]
 
 [[package]]
@@ -7420,11 +7614,11 @@ dependencies = [
  "docify",
  "parity-scale-codec",
  "paste",
+ "plant-balances",
  "plant-example-basic",
  "scale-info",
  "serde",
  "subsoil",
- "topsoil-balances",
  "topsoil-benchmarking",
  "topsoil-support",
  "topsoil-system",
@@ -7450,9 +7644,9 @@ version = "28.0.0"
 dependencies = [
  "log",
  "parity-scale-codec",
+ "plant-balances",
  "scale-info",
  "subsoil",
- "topsoil-balances",
  "topsoil-benchmarking",
  "topsoil-support",
  "topsoil-system",
@@ -7463,10 +7657,10 @@ name = "plant-proxy"
 version = "28.0.0"
 dependencies = [
  "parity-scale-codec",
+ "plant-balances",
+ "plant-utility",
  "scale-info",
  "topsoil",
- "topsoil-balances",
- "topsoil-utility",
 ]
 
 [[package]]
@@ -7488,10 +7682,10 @@ name = "plant-recovery"
 version = "28.0.0"
 dependencies = [
  "parity-scale-codec",
+ "plant-balances",
  "scale-info",
  "subsoil",
  "topsoil",
- "topsoil-balances",
 ]
 
 [[package]]
@@ -7501,12 +7695,12 @@ dependencies = [
  "assert_matches",
  "log",
  "parity-scale-codec",
+ "plant-balances",
  "plant-preimage",
  "plant-scheduler",
  "scale-info",
  "serde",
  "subsoil",
- "topsoil-balances",
  "topsoil-benchmarking",
  "topsoil-support",
  "topsoil-system",
@@ -7530,16 +7724,16 @@ name = "plant-root-offences"
 version = "25.0.0"
 dependencies = [
  "parity-scale-codec",
+ "plant-balances",
  "plant-election-provider",
+ "plant-session",
  "plant-staking",
  "plant-staking-macros",
+ "plant-timestamp",
  "scale-info",
  "subsoil",
- "topsoil-balances",
- "topsoil-session",
  "topsoil-support",
  "topsoil-system",
- "topsoil-timestamp",
 ]
 
 [[package]]
@@ -7559,11 +7753,11 @@ version = "9.0.0"
 dependencies = [
  "docify",
  "parity-scale-codec",
+ "plant-balances",
  "plant-proxy",
+ "plant-utility",
  "scale-info",
  "topsoil",
- "topsoil-balances",
- "topsoil-utility",
 ]
 
 [[package]]
@@ -7576,6 +7770,21 @@ dependencies = [
  "scale-info",
  "subsoil",
  "topsoil",
+]
+
+[[package]]
+name = "plant-sassafras"
+version = "0.3.5-dev"
+dependencies = [
+ "array-bytes 6.2.3",
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "subsoil",
+ "subsoil-crypto-hashing",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
 ]
 
 [[package]]
@@ -7598,9 +7807,43 @@ name = "plant-scored-pool"
 version = "28.0.0"
 dependencies = [
  "parity-scale-codec",
+ "plant-balances",
  "scale-info",
  "subsoil",
- "topsoil-balances",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "plant-session"
+version = "28.0.0"
+dependencies = [
+ "impl-trait-for-tuples",
+ "log",
+ "parity-scale-codec",
+ "plant-balances",
+ "plant-timestamp",
+ "scale-info",
+ "subsoil",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "plant-session-benchmarking"
+version = "28.0.0"
+dependencies = [
+ "parity-scale-codec",
+ "plant-balances",
+ "plant-election-provider",
+ "plant-session",
+ "plant-staking",
+ "plant-staking-macros",
+ "plant-timestamp",
+ "rand 0.8.5",
+ "scale-info",
+ "subsoil",
+ "topsoil-benchmarking",
  "topsoil-support",
  "topsoil-system",
 ]
@@ -7611,11 +7854,11 @@ version = "28.0.0"
 dependencies = [
  "log",
  "parity-scale-codec",
+ "plant-balances",
  "rand_chacha 0.3.1",
  "scale-info",
  "subsoil",
  "subsoil-crypto-hashing",
- "topsoil-balances",
  "topsoil-benchmarking",
  "topsoil-support",
  "topsoil-support-test",
@@ -7628,20 +7871,20 @@ version = "28.0.0"
 dependencies = [
  "log",
  "parity-scale-codec",
+ "plant-authorship",
  "plant-bags-list",
+ "plant-balances",
  "plant-election-provider",
+ "plant-session",
  "plant-staking-macros",
+ "plant-timestamp",
  "rand_chacha 0.3.1",
  "scale-info",
  "serde",
  "subsoil",
- "topsoil-authorship",
- "topsoil-balances",
  "topsoil-benchmarking",
- "topsoil-session",
  "topsoil-support",
  "topsoil-system",
- "topsoil-timestamp",
 ]
 
 [[package]]
@@ -7662,13 +7905,13 @@ dependencies = [
  "frame-remote-externalities",
  "log",
  "parity-scale-codec",
+ "plant-balances",
  "scale-info",
  "serde",
  "soil-rpc",
  "subsoil",
  "thousands",
  "tokio",
- "topsoil-balances",
  "topsoil-benchmarking",
  "topsoil-support",
  "topsoil-system",
@@ -7702,19 +7945,87 @@ dependencies = [
 ]
 
 [[package]]
+name = "plant-timestamp"
+version = "27.0.0"
+dependencies = [
+ "docify",
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "subsoil",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
 name = "plant-tips"
 version = "27.0.0"
 dependencies = [
  "log",
  "parity-scale-codec",
+ "plant-balances",
  "plant-treasury",
  "scale-info",
  "serde",
  "subsoil",
- "topsoil-balances",
  "topsoil-benchmarking",
  "topsoil-support",
  "topsoil-system",
+]
+
+[[package]]
+name = "plant-transaction-payment"
+version = "28.0.0"
+dependencies = [
+ "log",
+ "parity-scale-codec",
+ "plant-balances",
+ "scale-info",
+ "serde",
+ "serde_json",
+ "subsoil",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "plant-transaction-payment-rpc"
+version = "30.0.0"
+dependencies = [
+ "jsonrpsee",
+ "parity-scale-codec",
+ "plant-transaction-payment-rpc-runtime-api",
+ "soil-client",
+ "soil-rpc",
+ "subsoil",
+]
+
+[[package]]
+name = "plant-transaction-payment-rpc-runtime-api"
+version = "28.0.0"
+dependencies = [
+ "parity-scale-codec",
+ "plant-transaction-payment",
+ "subsoil",
+]
+
+[[package]]
+name = "plant-transaction-storage"
+version = "27.0.0"
+dependencies = [
+ "array-bytes 6.2.3",
+ "parity-scale-codec",
+ "plant-balances",
+ "scale-info",
+ "serde",
+ "soil-transaction-storage-proof",
+ "subsoil",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
+ "tracing",
 ]
 
 [[package]]
@@ -7725,14 +8036,14 @@ dependencies = [
  "impl-trait-for-tuples",
  "log",
  "parity-scale-codec",
+ "plant-balances",
+ "plant-utility",
  "scale-info",
  "serde",
  "subsoil",
- "topsoil-balances",
  "topsoil-benchmarking",
  "topsoil-support",
  "topsoil-system",
- "topsoil-utility",
 ]
 
 [[package]]
@@ -7741,11 +8052,11 @@ version = "9.0.0"
 dependencies = [
  "docify",
  "parity-scale-codec",
+ "plant-balances",
  "plant-proxy",
+ "plant-utility",
  "scale-info",
  "topsoil",
- "topsoil-balances",
- "topsoil-utility",
 ]
 
 [[package]]
@@ -7754,9 +8065,25 @@ version = "28.0.0"
 dependencies = [
  "log",
  "parity-scale-codec",
+ "plant-balances",
  "scale-info",
  "subsoil",
- "topsoil-balances",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "plant-utility"
+version = "28.0.0"
+dependencies = [
+ "parity-scale-codec",
+ "plant-balances",
+ "plant-collective",
+ "plant-root-testing",
+ "plant-timestamp",
+ "scale-info",
+ "subsoil",
  "topsoil-benchmarking",
  "topsoil-support",
  "topsoil-system",
@@ -7780,9 +8107,9 @@ version = "28.0.0"
 dependencies = [
  "log",
  "parity-scale-codec",
+ "plant-balances",
  "scale-info",
  "subsoil",
- "topsoil-balances",
  "topsoil-benchmarking",
  "topsoil-support",
  "topsoil-system",
@@ -7793,10 +8120,10 @@ name = "plant-whitelist"
 version = "27.0.0"
 dependencies = [
  "parity-scale-codec",
+ "plant-balances",
  "plant-preimage",
  "scale-info",
  "topsoil",
- "topsoil-balances",
 ]
 
 [[package]]
@@ -10588,7 +10915,11 @@ dependencies = [
  "futures",
  "log",
  "parity-scale-codec",
+ "plant-babe",
+ "plant-balances",
  "plant-metadata-hash-extension",
+ "plant-timestamp",
+ "plant-utility",
  "pretty_assertions",
  "scale-info",
  "serde",
@@ -10602,14 +10933,10 @@ dependencies = [
  "subsoil-crypto-hashing",
  "subsoil-macros",
  "substrate-wasm-builder",
- "topsoil-babe",
- "topsoil-balances",
  "topsoil-executive",
  "topsoil-support",
  "topsoil-system",
  "topsoil-system-rpc-runtime-api",
- "topsoil-timestamp",
- "topsoil-utility",
  "tracing",
  "trie-db",
 ]
@@ -10690,9 +11017,14 @@ dependencies = [
  "plant-asset-conversion-tx-payment",
  "plant-authority-discovery",
  "plant-bags-list",
+ "plant-balances",
+ "plant-im-online",
  "plant-metadata-hash-extension",
  "plant-root-testing",
  "plant-sudo",
+ "plant-timestamp",
+ "plant-transaction-payment",
+ "plant-transaction-payment-rpc",
  "plant-treasury",
  "pretty_assertions",
  "rand 0.8.5",
@@ -10741,15 +11073,10 @@ dependencies = [
  "tempfile",
  "tokio",
  "tokio-util",
- "topsoil-balances",
- "topsoil-im-online",
  "topsoil-support",
  "topsoil-support-procedural-tools",
  "topsoil-system",
  "topsoil-system-rpc-runtime-api",
- "topsoil-timestamp",
- "topsoil-transaction-payment",
- "topsoil-transaction-payment-rpc",
  "wat",
 ]
 
@@ -10804,6 +11131,7 @@ name = "soil-test-staging-node-rpc"
 version = "3.0.0-dev"
 dependencies = [
  "jsonrpsee",
+ "plant-transaction-payment-rpc",
  "soil-babe",
  "soil-beefy",
  "soil-chain-spec",
@@ -10815,7 +11143,6 @@ dependencies = [
  "soil-test-staging-node-primitives",
  "subsoil",
  "substrate-frame-rpc-system",
- "topsoil-transaction-payment-rpc",
 ]
 
 [[package]]
@@ -10831,12 +11158,19 @@ dependencies = [
  "plant-asset-conversion-tx-payment",
  "plant-asset-rate",
  "plant-asset-rewards",
+ "plant-asset-tx-payment",
  "plant-assets",
  "plant-assets-freezer",
  "plant-assets-holder",
  "plant-atomic-swap",
+ "plant-aura",
  "plant-authority-discovery",
+ "plant-authorship",
+ "plant-babe",
  "plant-bags-list",
+ "plant-balances",
+ "plant-beefy",
+ "plant-beefy-mmr",
  "plant-bounties",
  "plant-broker",
  "plant-child-bounties",
@@ -10853,7 +11187,9 @@ dependencies = [
  "plant-elections-phragmen",
  "plant-fast-unstake",
  "plant-glutton",
+ "plant-grandpa",
  "plant-identity",
+ "plant-im-online",
  "plant-indices",
  "plant-insecure-randomness-collective-flip",
  "plant-lottery",
@@ -10873,6 +11209,8 @@ dependencies = [
  "plant-nomination-pools",
  "plant-nomination-pools-benchmarking",
  "plant-nomination-pools-runtime-api",
+ "plant-offences",
+ "plant-offences-benchmarking",
  "plant-oracle",
  "plant-oracle-runtime-api",
  "plant-origin-restriction",
@@ -10891,16 +11229,23 @@ dependencies = [
  "plant-salary",
  "plant-scheduler",
  "plant-scored-pool",
+ "plant-session",
+ "plant-session-benchmarking",
  "plant-society",
  "plant-staking",
  "plant-staking-macros",
  "plant-state-trie-migration",
  "plant-statement",
  "plant-sudo",
+ "plant-timestamp",
  "plant-tips",
+ "plant-transaction-payment",
+ "plant-transaction-payment-rpc-runtime-api",
+ "plant-transaction-storage",
  "plant-treasury",
  "plant-tx-pause",
  "plant-uniques",
+ "plant-utility",
  "plant-verify-signature",
  "plant-vesting",
  "plant-whitelist",
@@ -10920,34 +11265,16 @@ dependencies = [
  "substrate-bip39",
  "substrate-wasm-builder",
  "topsoil",
- "topsoil-asset-tx-payment",
- "topsoil-aura",
- "topsoil-authorship",
- "topsoil-babe",
- "topsoil-balances",
- "topsoil-beefy",
- "topsoil-beefy-mmr",
  "topsoil-benchmarking",
  "topsoil-benchmarking-pallet-pov",
  "topsoil-executive",
- "topsoil-grandpa",
- "topsoil-im-online",
- "topsoil-offences",
- "topsoil-offences-benchmarking",
- "topsoil-session",
- "topsoil-session-benchmarking",
  "topsoil-support",
  "topsoil-support-procedural",
  "topsoil-support-procedural-tools-macros",
  "topsoil-system",
  "topsoil-system-benchmarking",
  "topsoil-system-rpc-runtime-api",
- "topsoil-timestamp",
- "topsoil-transaction-payment",
- "topsoil-transaction-payment-rpc-runtime-api",
- "topsoil-transaction-storage",
  "topsoil-try-runtime",
- "topsoil-utility",
 ]
 
 [[package]]
@@ -12211,125 +12538,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "topsoil-asset-tx-payment"
-version = "28.0.0"
-dependencies = [
- "parity-scale-codec",
- "plant-assets",
- "scale-info",
- "serde",
- "subsoil",
- "topsoil-authorship",
- "topsoil-balances",
- "topsoil-benchmarking",
- "topsoil-support",
- "topsoil-system",
- "topsoil-transaction-payment",
-]
-
-[[package]]
-name = "topsoil-aura"
-version = "27.0.0"
-dependencies = [
- "log",
- "parity-scale-codec",
- "scale-info",
- "subsoil",
- "topsoil-support",
- "topsoil-system",
- "topsoil-timestamp",
-]
-
-[[package]]
-name = "topsoil-authorship"
-version = "28.0.0"
-dependencies = [
- "impl-trait-for-tuples",
- "parity-scale-codec",
- "scale-info",
- "subsoil",
- "topsoil-support",
- "topsoil-system",
-]
-
-[[package]]
-name = "topsoil-babe"
-version = "28.0.0"
-dependencies = [
- "log",
- "parity-scale-codec",
- "plant-election-provider",
- "plant-staking",
- "plant-staking-macros",
- "scale-info",
- "subsoil",
- "topsoil-authorship",
- "topsoil-balances",
- "topsoil-benchmarking",
- "topsoil-offences",
- "topsoil-session",
- "topsoil-support",
- "topsoil-system",
- "topsoil-timestamp",
-]
-
-[[package]]
-name = "topsoil-balances"
-version = "28.0.0"
-dependencies = [
- "docify",
- "log",
- "parity-scale-codec",
- "paste",
- "scale-info",
- "subsoil",
- "topsoil-benchmarking",
- "topsoil-support",
- "topsoil-system",
- "topsoil-transaction-payment",
-]
-
-[[package]]
-name = "topsoil-beefy"
-version = "28.0.0"
-dependencies = [
- "log",
- "parity-scale-codec",
- "plant-election-provider",
- "plant-staking",
- "plant-staking-macros",
- "scale-info",
- "serde",
- "subsoil",
- "topsoil-authorship",
- "topsoil-balances",
- "topsoil-offences",
- "topsoil-session",
- "topsoil-support",
- "topsoil-system",
- "topsoil-timestamp",
-]
-
-[[package]]
-name = "topsoil-beefy-mmr"
-version = "28.0.0"
-dependencies = [
- "array-bytes 6.2.3",
- "log",
- "parity-scale-codec",
- "plant-mmr",
- "scale-info",
- "serde",
- "subsoil",
- "topsoil-balances",
- "topsoil-beefy",
- "topsoil-benchmarking",
- "topsoil-session",
- "topsoil-support",
- "topsoil-system",
-]
-
-[[package]]
 name = "topsoil-benchmarking"
 version = "28.0.0"
 dependencies = [
@@ -12369,138 +12577,14 @@ dependencies = [
  "array-bytes 6.2.3",
  "log",
  "parity-scale-codec",
+ "plant-balances",
+ "plant-transaction-payment",
  "scale-info",
  "soil-test-node-runtime-client",
  "subsoil",
- "topsoil-balances",
  "topsoil-support",
  "topsoil-system",
- "topsoil-transaction-payment",
  "topsoil-try-runtime",
-]
-
-[[package]]
-name = "topsoil-grandpa"
-version = "28.0.0"
-dependencies = [
- "finality-grandpa",
- "log",
- "parity-scale-codec",
- "plant-election-provider",
- "plant-staking",
- "plant-staking-macros",
- "scale-info",
- "subsoil",
- "topsoil-authorship",
- "topsoil-balances",
- "topsoil-benchmarking",
- "topsoil-offences",
- "topsoil-session",
- "topsoil-support",
- "topsoil-system",
- "topsoil-timestamp",
-]
-
-[[package]]
-name = "topsoil-im-online"
-version = "27.0.0"
-dependencies = [
- "log",
- "parity-scale-codec",
- "scale-info",
- "subsoil",
- "topsoil-authorship",
- "topsoil-balances",
- "topsoil-benchmarking",
- "topsoil-session",
- "topsoil-support",
- "topsoil-system",
-]
-
-[[package]]
-name = "topsoil-offences"
-version = "27.0.0"
-dependencies = [
- "log",
- "parity-scale-codec",
- "scale-info",
- "serde",
- "subsoil",
- "topsoil-support",
- "topsoil-system",
-]
-
-[[package]]
-name = "topsoil-offences-benchmarking"
-version = "28.0.0"
-dependencies = [
- "log",
- "parity-scale-codec",
- "plant-election-provider",
- "plant-staking",
- "plant-staking-macros",
- "scale-info",
- "subsoil",
- "topsoil-babe",
- "topsoil-balances",
- "topsoil-benchmarking",
- "topsoil-grandpa",
- "topsoil-im-online",
- "topsoil-offences",
- "topsoil-session",
- "topsoil-session-benchmarking",
- "topsoil-support",
- "topsoil-system",
- "topsoil-timestamp",
-]
-
-[[package]]
-name = "topsoil-sassafras"
-version = "0.3.5-dev"
-dependencies = [
- "array-bytes 6.2.3",
- "log",
- "parity-scale-codec",
- "scale-info",
- "subsoil",
- "subsoil-crypto-hashing",
- "topsoil-benchmarking",
- "topsoil-support",
- "topsoil-system",
-]
-
-[[package]]
-name = "topsoil-session"
-version = "28.0.0"
-dependencies = [
- "impl-trait-for-tuples",
- "log",
- "parity-scale-codec",
- "scale-info",
- "subsoil",
- "topsoil-balances",
- "topsoil-support",
- "topsoil-system",
- "topsoil-timestamp",
-]
-
-[[package]]
-name = "topsoil-session-benchmarking"
-version = "28.0.0"
-dependencies = [
- "parity-scale-codec",
- "plant-election-provider",
- "plant-staking",
- "plant-staking-macros",
- "rand 0.8.5",
- "scale-info",
- "subsoil",
- "topsoil-balances",
- "topsoil-benchmarking",
- "topsoil-session",
- "topsoil-support",
- "topsoil-system",
- "topsoil-timestamp",
 ]
 
 [[package]]
@@ -12669,96 +12753,12 @@ dependencies = [
 ]
 
 [[package]]
-name = "topsoil-timestamp"
-version = "27.0.0"
-dependencies = [
- "docify",
- "log",
- "parity-scale-codec",
- "scale-info",
- "subsoil",
- "topsoil-benchmarking",
- "topsoil-support",
- "topsoil-system",
-]
-
-[[package]]
-name = "topsoil-transaction-payment"
-version = "28.0.0"
-dependencies = [
- "log",
- "parity-scale-codec",
- "scale-info",
- "serde",
- "serde_json",
- "subsoil",
- "topsoil-balances",
- "topsoil-benchmarking",
- "topsoil-support",
- "topsoil-system",
-]
-
-[[package]]
-name = "topsoil-transaction-payment-rpc"
-version = "30.0.0"
-dependencies = [
- "jsonrpsee",
- "parity-scale-codec",
- "soil-client",
- "soil-rpc",
- "subsoil",
- "topsoil-transaction-payment-rpc-runtime-api",
-]
-
-[[package]]
-name = "topsoil-transaction-payment-rpc-runtime-api"
-version = "28.0.0"
-dependencies = [
- "parity-scale-codec",
- "subsoil",
- "topsoil-transaction-payment",
-]
-
-[[package]]
-name = "topsoil-transaction-storage"
-version = "27.0.0"
-dependencies = [
- "array-bytes 6.2.3",
- "parity-scale-codec",
- "scale-info",
- "serde",
- "soil-transaction-storage-proof",
- "subsoil",
- "topsoil-balances",
- "topsoil-benchmarking",
- "topsoil-support",
- "topsoil-system",
- "tracing",
-]
-
-[[package]]
 name = "topsoil-try-runtime"
 version = "0.34.0"
 dependencies = [
  "parity-scale-codec",
  "subsoil",
  "topsoil-support",
-]
-
-[[package]]
-name = "topsoil-utility"
-version = "28.0.0"
-dependencies = [
- "parity-scale-codec",
- "plant-collective",
- "plant-root-testing",
- "scale-info",
- "subsoil",
- "topsoil-balances",
- "topsoil-benchmarking",
- "topsoil-support",
- "topsoil-system",
- "topsoil-timestamp",
 ]
 
 [[package]]

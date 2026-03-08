@@ -43,7 +43,7 @@ topsoil_support::construct_runtime!(
 	pub enum Test
 	{
 		System: topsoil_system,
-		Balances: topsoil_balances,
+		Balances: plant_balances,
 		Collective: plant_collective::<Instance1>,
 		CollectiveMajority: plant_collective::<Instance2>,
 		DefaultCollective: plant_collective,
@@ -100,11 +100,11 @@ parameter_types! {
 #[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
 impl topsoil_system::Config for Test {
 	type Block = Block;
-	type AccountData = topsoil_balances::AccountData<u64>;
+	type AccountData = plant_balances::AccountData<u64>;
 }
 
-#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig as topsoil_balances::DefaultConfig)]
-impl topsoil_balances::Config for Test {
+#[derive_impl(plant_balances::config_preludes::TestDefaultConfig as plant_balances::DefaultConfig)]
+impl plant_balances::Config for Test {
 	type ReserveIdentifier = [u8; 8];
 	type AccountStore = System;
 	type RuntimeHoldReason = RuntimeHoldReason;
@@ -204,8 +204,8 @@ impl ExtBuilder {
 	pub fn build(self) -> subsoil::io::TestExternalities {
 		let mut ext: subsoil::io::TestExternalities = RuntimeGenesisConfig {
 			system: topsoil_system::GenesisConfig::default(),
-			// balances: topsoil_balances::GenesisConfig::default(),
-			balances: topsoil_balances::GenesisConfig {
+			// balances: plant_balances::GenesisConfig::default(),
+			balances: plant_balances::GenesisConfig {
 				balances: vec![(1, 100), (2, 200)],
 				..Default::default()
 			},
@@ -351,8 +351,8 @@ fn close_works() {
 		assert_eq!(
 			System::events(),
 			vec![
-				record(RuntimeEvent::Balances(topsoil_balances::Event::Held {
-					reason: <Test as topsoil_balances::Config>::RuntimeHoldReason::Collective(
+				record(RuntimeEvent::Balances(plant_balances::Event::Held {
+					reason: <Test as plant_balances::Config>::RuntimeHoldReason::Collective(
 						HoldReason::ProposalSubmission,
 					),
 					who: 1,
@@ -498,8 +498,8 @@ fn close_with_prime_works() {
 		assert_eq!(
 			System::events(),
 			vec![
-				record(RuntimeEvent::Balances(topsoil_balances::Event::Held {
-					reason: <Test as topsoil_balances::Config>::RuntimeHoldReason::Collective(
+				record(RuntimeEvent::Balances(plant_balances::Event::Held {
+					reason: <Test as plant_balances::Config>::RuntimeHoldReason::Collective(
 						HoldReason::ProposalSubmission,
 					),
 					who: 1,
@@ -573,8 +573,8 @@ fn close_with_voting_prime_works() {
 		assert_eq!(
 			System::events(),
 			vec![
-				record(RuntimeEvent::Balances(topsoil_balances::Event::Held {
-					reason: <Test as topsoil_balances::Config>::RuntimeHoldReason::Collective(
+				record(RuntimeEvent::Balances(plant_balances::Event::Held {
+					reason: <Test as plant_balances::Config>::RuntimeHoldReason::Collective(
 						HoldReason::ProposalSubmission,
 					),
 					who: 1,
@@ -666,8 +666,8 @@ fn close_with_no_prime_but_majority_works() {
 		assert_eq!(
 			System::events(),
 			vec![
-				record(RuntimeEvent::Balances(topsoil_balances::Event::Held {
-					reason: <Test as topsoil_balances::Config>::RuntimeHoldReason::Collective(
+				record(RuntimeEvent::Balances(plant_balances::Event::Held {
+					reason: <Test as plant_balances::Config>::RuntimeHoldReason::Collective(
 						HoldReason::ProposalSubmission,
 					),
 					who: 5,
@@ -712,8 +712,8 @@ fn close_with_no_prime_but_majority_works() {
 					proposal_hash: hash,
 					result: Err(DispatchError::BadOrigin)
 				})),
-				record(RuntimeEvent::Balances(topsoil_balances::Event::Released {
-					reason: <Test as topsoil_balances::Config>::RuntimeHoldReason::Collective(
+				record(RuntimeEvent::Balances(plant_balances::Event::Released {
+					reason: <Test as plant_balances::Config>::RuntimeHoldReason::Collective(
 						HoldReason::ProposalSubmission,
 					),
 					who: 5,
@@ -857,8 +857,8 @@ fn propose_works() {
 		assert_eq!(
 			System::events(),
 			vec![
-				record(RuntimeEvent::Balances(topsoil_balances::Event::Held {
-					reason: <Test as topsoil_balances::Config>::RuntimeHoldReason::Collective(
+				record(RuntimeEvent::Balances(plant_balances::Event::Held {
+					reason: <Test as plant_balances::Config>::RuntimeHoldReason::Collective(
 						HoldReason::ProposalSubmission,
 					),
 					who: 1,
@@ -1052,8 +1052,8 @@ fn motions_vote_after_works() {
 		assert_eq!(
 			System::events(),
 			vec![
-				record(RuntimeEvent::Balances(topsoil_balances::Event::Held {
-					reason: <Test as topsoil_balances::Config>::RuntimeHoldReason::Collective(
+				record(RuntimeEvent::Balances(plant_balances::Event::Held {
+					reason: <Test as plant_balances::Config>::RuntimeHoldReason::Collective(
 						HoldReason::ProposalSubmission,
 					),
 					who: 1,
@@ -1204,8 +1204,8 @@ fn motions_approval_with_enough_votes_and_lower_voting_threshold_works() {
 		assert_eq!(
 			System::events(),
 			vec![
-				record(RuntimeEvent::Balances(topsoil_balances::Event::Held {
-					reason: <Test as topsoil_balances::Config>::RuntimeHoldReason::Collective(
+				record(RuntimeEvent::Balances(plant_balances::Event::Held {
+					reason: <Test as plant_balances::Config>::RuntimeHoldReason::Collective(
 						HoldReason::ProposalSubmission,
 					),
 					who: 1,
@@ -1266,8 +1266,8 @@ fn motions_approval_with_enough_votes_and_lower_voting_threshold_works() {
 		assert_eq!(
 			System::events(),
 			vec![
-				record(RuntimeEvent::Balances(topsoil_balances::Event::Held {
-					reason: <Test as topsoil_balances::Config>::RuntimeHoldReason::Collective(
+				record(RuntimeEvent::Balances(plant_balances::Event::Held {
+					reason: <Test as plant_balances::Config>::RuntimeHoldReason::Collective(
 						HoldReason::ProposalSubmission,
 					),
 					who: 1,
@@ -1344,8 +1344,8 @@ fn motions_disapproval_works() {
 		assert_eq!(
 			System::events(),
 			vec![
-				record(RuntimeEvent::Balances(topsoil_balances::Event::Held {
-					reason: <Test as topsoil_balances::Config>::RuntimeHoldReason::Collective(
+				record(RuntimeEvent::Balances(plant_balances::Event::Held {
+					reason: <Test as plant_balances::Config>::RuntimeHoldReason::Collective(
 						HoldReason::ProposalSubmission,
 					),
 					who: 1,
@@ -1410,8 +1410,8 @@ fn motions_approval_works() {
 		assert_eq!(
 			System::events(),
 			vec![
-				record(RuntimeEvent::Balances(topsoil_balances::Event::Held {
-					reason: <Test as topsoil_balances::Config>::RuntimeHoldReason::Collective(
+				record(RuntimeEvent::Balances(plant_balances::Event::Held {
+					reason: <Test as plant_balances::Config>::RuntimeHoldReason::Collective(
 						HoldReason::ProposalSubmission,
 					),
 					who: 1,
@@ -1467,8 +1467,8 @@ fn motion_with_no_votes_closes_with_disapproval() {
 		));
 		assert_eq!(
 			System::events()[0],
-			record(RuntimeEvent::Balances(topsoil_balances::Event::Held {
-				reason: <Test as topsoil_balances::Config>::RuntimeHoldReason::Collective(
+			record(RuntimeEvent::Balances(plant_balances::Event::Held {
+				reason: <Test as plant_balances::Config>::RuntimeHoldReason::Collective(
 					HoldReason::ProposalSubmission,
 				),
 				who: 1,
@@ -1575,8 +1575,8 @@ fn disapprove_proposal_works() {
 		assert_eq!(
 			System::events(),
 			vec![
-				record(RuntimeEvent::Balances(topsoil_balances::Event::Held {
-					reason: <Test as topsoil_balances::Config>::RuntimeHoldReason::Collective(
+				record(RuntimeEvent::Balances(plant_balances::Event::Held {
+					reason: <Test as plant_balances::Config>::RuntimeHoldReason::Collective(
 						HoldReason::ProposalSubmission,
 					),
 					who: 1,
@@ -1718,8 +1718,8 @@ fn kill_proposal_with_deposit() {
 		assert_eq!(
 			System::events(),
 			vec![
-				record(RuntimeEvent::Balances(topsoil_balances::Event::BurnedHeld {
-					reason: <Test as topsoil_balances::Config>::RuntimeHoldReason::Collective(
+				record(RuntimeEvent::Balances(plant_balances::Event::BurnedHeld {
+					reason: <Test as plant_balances::Config>::RuntimeHoldReason::Collective(
 						HoldReason::ProposalSubmission,
 					),
 					who: 1,

@@ -87,8 +87,8 @@ pub fn sign(xt: CheckedExtrinsic) -> UncheckedExtrinsic {
 	soil_test_staging_node_testing::keyring::sign(xt, SPEC_VERSION, TRANSACTION_VERSION, GENESIS_HASH, None)
 }
 
-pub fn default_transfer_call() -> topsoil_balances::Call<Runtime> {
-	topsoil_balances::Call::<Runtime>::transfer_allow_death {
+pub fn default_transfer_call() -> plant_balances::Call<Runtime> {
+	plant_balances::Call::<Runtime>::transfer_allow_death {
 		dest: bob().into(),
 		value: 69 * DOLLARS,
 	}

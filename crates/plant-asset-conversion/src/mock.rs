@@ -46,7 +46,7 @@ construct_runtime!(
 	pub enum Test
 	{
 		System: topsoil_system,
-		Balances: topsoil_balances,
+		Balances: plant_balances,
 		Assets: plant_assets::<Instance1>,
 		PoolAssets: plant_assets::<Instance2>,
 		AssetConversion: plant_asset_conversion,
@@ -58,11 +58,11 @@ impl topsoil_system::Config for Test {
 	type AccountId = u128;
 	type Lookup = IdentityLookup<Self::AccountId>;
 	type Block = Block;
-	type AccountData = topsoil_balances::AccountData<u128>;
+	type AccountData = plant_balances::AccountData<u128>;
 }
 
-#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
-impl topsoil_balances::Config for Test {
+#[derive_impl(plant_balances::config_preludes::TestDefaultConfig)]
+impl plant_balances::Config for Test {
 	type Balance = u128;
 	type ExistentialDeposit = ConstU128<100>;
 	type AccountStore = System;
@@ -140,7 +140,7 @@ pub type WithFirstAssetLocator =
 
 impl Config for Test {
 	type RuntimeEvent = RuntimeEvent;
-	type Balance = <Self as topsoil_balances::Config>::Balance;
+	type Balance = <Self as plant_balances::Config>::Balance;
 	type HigherPrecisionBalance = subsoil::core::U256;
 	type AssetKind = NativeOrWithId<u32>;
 	type Assets = NativeAndAssets;
@@ -164,7 +164,7 @@ impl Config for Test {
 pub(crate) fn new_test_ext() -> subsoil::io::TestExternalities {
 	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 
-	topsoil_balances::GenesisConfig::<Test> {
+	plant_balances::GenesisConfig::<Test> {
 		balances: vec![(1, 10000), (2, 20000), (3, 30000), (4, 40000)],
 		..Default::default()
 	}

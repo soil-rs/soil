@@ -40,7 +40,7 @@ topsoil_support::construct_runtime!(
 	pub enum Test
 	{
 		System: topsoil_system,
-		Balances: topsoil_balances,
+		Balances: plant_balances,
 		Example: plant_dev_mode,
 	}
 );
@@ -62,7 +62,7 @@ impl topsoil_system::Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type Version = ();
 	type PalletInfo = PalletInfo;
-	type AccountData = topsoil_balances::AccountData<u64>;
+	type AccountData = plant_balances::AccountData<u64>;
 	type OnNewAccount = ();
 	type OnKilledAccount = ();
 	type SystemWeightInfo = ();
@@ -71,8 +71,8 @@ impl topsoil_system::Config for Test {
 	type MaxConsumers = topsoil_support::traits::ConstU32<16>;
 }
 
-#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
-impl topsoil_balances::Config for Test {
+#[derive_impl(plant_balances::config_preludes::TestDefaultConfig)]
+impl plant_balances::Config for Test {
 	type AccountStore = System;
 }
 

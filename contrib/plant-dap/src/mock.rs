@@ -28,7 +28,7 @@ type Block = topsoil_system::mocking::MockBlock<Test>;
 topsoil_support::construct_runtime!(
 	pub enum Test {
 		System: topsoil_system,
-		Balances: topsoil_balances,
+		Balances: plant_balances,
 		Dap: plant_dap,
 	}
 );
@@ -36,11 +36,11 @@ topsoil_support::construct_runtime!(
 #[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
 impl topsoil_system::Config for Test {
 	type Block = Block;
-	type AccountData = topsoil_balances::AccountData<u64>;
+	type AccountData = plant_balances::AccountData<u64>;
 }
 
-#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
-impl topsoil_balances::Config for Test {
+#[derive_impl(plant_balances::config_preludes::TestDefaultConfig)]
+impl plant_balances::Config for Test {
 	type AccountStore = System;
 	type ExistentialDeposit = ExistentialDeposit;
 }
@@ -64,7 +64,7 @@ pub fn new_test_ext(fund_buffer: bool) -> subsoil::io::TestExternalities {
 	}
 
 	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
-	topsoil_balances::GenesisConfig::<Test> { balances, ..Default::default() }
+	plant_balances::GenesisConfig::<Test> { balances, ..Default::default() }
 		.assimilate_storage(&mut t)
 		.unwrap();
 	t.into()

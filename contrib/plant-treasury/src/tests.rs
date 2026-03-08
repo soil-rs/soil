@@ -40,16 +40,16 @@ use super::*;
 use crate as treasury;
 
 type Block = topsoil_system::mocking::MockBlock<Test>;
-type UtilityCall = topsoil_utility::Call<Test>;
+type UtilityCall = plant_utility::Call<Test>;
 type TreasuryCall = crate::Call<Test>;
 
 topsoil_support::construct_runtime!(
 	pub enum Test
 	{
 		System: topsoil_system,
-		Balances: topsoil_balances,
+		Balances: plant_balances,
 		Treasury: treasury,
-		Utility: topsoil_utility,
+		Utility: plant_utility,
 	}
 );
 
@@ -58,15 +58,15 @@ impl topsoil_system::Config for Test {
 	type AccountId = u128; // u64 is not enough to hold bytes used to generate bounty account
 	type Lookup = IdentityLookup<Self::AccountId>;
 	type Block = Block;
-	type AccountData = topsoil_balances::AccountData<u64>;
+	type AccountData = plant_balances::AccountData<u64>;
 }
 
-#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
-impl topsoil_balances::Config for Test {
+#[derive_impl(plant_balances::config_preludes::TestDefaultConfig)]
+impl plant_balances::Config for Test {
 	type AccountStore = System;
 }
 
-impl topsoil_utility::Config for Test {
+impl plant_utility::Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type RuntimeCall = RuntimeCall;
 	type PalletsOrigin = OriginCaller;
@@ -179,7 +179,7 @@ impl<N: Get<u64>> ConversionFromAssetBalance<u64, u32, u64> for MulBy<N> {
 
 impl Config for Test {
 	type PalletId = TreasuryPalletId;
-	type Currency = topsoil_balances::Pallet<Test>;
+	type Currency = plant_balances::Pallet<Test>;
 	type RejectOrigin = topsoil_system::EnsureRoot<u128>;
 	type RuntimeEvent = RuntimeEvent;
 	type SpendPeriod = ConstU64<2>;
@@ -220,7 +220,7 @@ impl ExtBuilder {
 
 	pub fn build(self) -> subsoil::io::TestExternalities {
 		let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
-		topsoil_balances::GenesisConfig::<Test> {
+		plant_balances::GenesisConfig::<Test> {
 			// Total issuance will be 200 with treasury account initialized at ED.
 			balances: vec![(0, 100), (1, 98), (2, 1)],
 			..Default::default()
@@ -328,13 +328,13 @@ fn accepted_spend_proposal_ignored_outside_spend_period() {
 #[test]
 fn unused_pot_should_diminish() {
 	ExtBuilder::default().build().execute_with(|| {
-		let init_total_issuance = topsoil_balances::TotalIssuance::<Test>::get();
+		let init_total_issuance = plant_balances::TotalIssuance::<Test>::get();
 		Balances::make_free_balance_be(&Treasury::account_id(), 101);
-		assert_eq!(topsoil_balances::TotalIssuance::<Test>::get(), init_total_issuance + 100);
+		assert_eq!(plant_balances::TotalIssuance::<Test>::get(), init_total_issuance + 100);
 
 		go_to_block(2);
 		assert_eq!(Treasury::pot(), 50);
-		assert_eq!(topsoil_balances::TotalIssuance::<Test>::get(), init_total_issuance + 50);
+		assert_eq!(plant_balances::TotalIssuance::<Test>::get(), init_total_issuance + 50);
 	});
 }
 
@@ -409,7 +409,7 @@ fn treasury_account_doesnt_get_deleted() {
 #[test]
 fn inexistent_account_works() {
 	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
-	topsoil_balances::GenesisConfig::<Test> {
+	plant_balances::GenesisConfig::<Test> {
 		balances: vec![(0, 100), (1, 99), (2, 1)],
 		..Default::default()
 	}
@@ -448,7 +448,7 @@ fn inexistent_account_works() {
 fn genesis_funding_works() {
 	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	let initial_funding = 100;
-	topsoil_balances::GenesisConfig::<Test> {
+	plant_balances::GenesisConfig::<Test> {
 		// Total issuance will be 200 with treasury account initialized with 100.
 		balances: vec![(0, 100), (Treasury::account_id(), initial_funding)],
 		..Default::default()

@@ -47,12 +47,12 @@ pub const GENESIS_NOMINATOR_TWO: AccountId = 102;
 #[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
 impl topsoil_system::Config for Runtime {
 	type Block = Block;
-	type AccountData = topsoil_balances::AccountData<Balance>;
+	type AccountData = plant_balances::AccountData<Balance>;
 	type AccountId = AccountId;
 	type Lookup = IdentityLookup<Self::AccountId>;
 }
 
-impl topsoil_timestamp::Config for Runtime {
+impl plant_timestamp::Config for Runtime {
 	type Moment = u64;
 	type OnTimestampSet = ();
 	type MinimumPeriod = ConstU64<5>;
@@ -65,8 +65,8 @@ parameter_types! {
 	pub static ExistentialDeposit: Balance = 1;
 }
 
-#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
-impl topsoil_balances::Config for Runtime {
+#[derive_impl(plant_balances::config_preludes::TestDefaultConfig)]
+impl plant_balances::Config for Runtime {
 	type Balance = Balance;
 	type ExistentialDeposit = ExistentialDeposit;
 	type AccountStore = System;
@@ -106,7 +106,7 @@ impl onchain::Config for OnChainSeqPhragmen {
 impl plant_staking::Config for Runtime {
 	type OldCurrency = Balances;
 	type Currency = Balances;
-	type UnixTime = topsoil_timestamp::Pallet<Self>;
+	type UnixTime = plant_timestamp::Pallet<Self>;
 	type AdminOrigin = topsoil_system::EnsureRoot<Self::AccountId>;
 	type EraPayout = plant_staking::ConvertCurve<RewardCurve>;
 	type ElectionProvider = onchain::OnChainExecution<OnChainSeqPhragmen>;
@@ -171,8 +171,8 @@ impl plant_nomination_pools::Config for Runtime {
 topsoil_support::construct_runtime!(
 	pub enum Runtime {
 		System: topsoil_system,
-		Timestamp: topsoil_timestamp,
-		Balances: topsoil_balances,
+		Timestamp: plant_timestamp,
+		Balances: plant_balances,
 		Staking: plant_staking,
 		Pools: plant_nomination_pools,
 		DelegatedStaking: delegated_staking,
@@ -188,7 +188,7 @@ impl ExtBuilder {
 		let mut storage =
 			topsoil_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
 
-		let _ = topsoil_balances::GenesisConfig::<T> {
+		let _ = plant_balances::GenesisConfig::<T> {
 			balances: vec![
 				(GENESIS_VALIDATOR, 10000),
 				(GENESIS_NOMINATOR_ONE, 1000),

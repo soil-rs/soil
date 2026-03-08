@@ -28,18 +28,18 @@ topsoil_support::construct_runtime!(
 	{
 		System: topsoil_system,
 		AssetRate: plant_asset_rate,
-		Balances: topsoil_balances,
+		Balances: plant_balances,
 	}
 );
 
 #[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
 impl topsoil_system::Config for Test {
 	type Block = Block;
-	type AccountData = topsoil_balances::AccountData<u64>;
+	type AccountData = plant_balances::AccountData<u64>;
 }
 
-#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
-impl topsoil_balances::Config for Test {
+#[derive_impl(plant_balances::config_preludes::TestDefaultConfig)]
+impl plant_balances::Config for Test {
 	type AccountStore = System;
 }
 

@@ -20,7 +20,7 @@ topsoil-system = { workspace = true }
 subsoil = { workspace = true }
 
 [dev-dependencies]
-topsoil-balances = { workspace = true, default-features = true }
+plant-balances = { workspace = true, default-features = true }
 plant-example-basic = { workspace = true, default-features = true }
 
 [features]
@@ -38,14 +38,14 @@ runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",
 	"topsoil-support/runtime-benchmarks",
 	"topsoil-system/runtime-benchmarks",
-	"topsoil-balances/runtime-benchmarks",
+	"plant-balances/runtime-benchmarks",
 	"plant-example-basic/runtime-benchmarks",
 	"subsoil/runtime-benchmarks",
 ]
 try-runtime = [
 	"topsoil-support/try-runtime",
 	"topsoil-system/try-runtime",
-	"topsoil-balances/try-runtime",
+	"plant-balances/try-runtime",
 	"plant-example-basic/try-runtime",
 	"subsoil/try-runtime",
 ]

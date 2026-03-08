@@ -27,7 +27,7 @@ use mock::*;
 use subsoil::core::Get;
 use subsoil::runtime::Perbill;
 use topsoil_support::{assert_err, assert_ok};
-use topsoil_timestamp::Now;
+use plant_timestamp::Now;
 
 use crate::mock::RuntimeOrigin;
 
@@ -176,7 +176,7 @@ fn mass_slash_doesnt_enter_emergency_phase() {
 		}
 
 		// Ensure no more than disabling limit of validators (default 1/3) is disabled
-		let disabling_limit = topsoil_session::disabling::UpToLimitWithReEnablingDisablingStrategy::<
+		let disabling_limit = plant_session::disabling::UpToLimitWithReEnablingDisablingStrategy::<
 			SLASHING_DISABLING_FACTOR,
 		>::disable_limit(active_set_size_before_slash);
 		assert!(disabled.len() == disabling_limit);

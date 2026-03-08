@@ -47,7 +47,7 @@ pub use pallet::*;
 mod tests;
 
 /// A type alias for the balance type from this pallet's point of view.
-type BalanceOf<T> = <T as topsoil_balances::Config>::Balance;
+type BalanceOf<T> = <T as plant_balances::Config>::Balance;
 
 /// Enable `dev_mode` for this pallet.
 #[topsoil_support::pallet(dev_mode)]
@@ -57,7 +57,7 @@ pub mod pallet {
 	use topsoil_system::pallet_prelude::*;
 
 	#[pallet::config]
-	pub trait Config: topsoil_balances::Config + topsoil_system::Config {}
+	pub trait Config: plant_balances::Config + topsoil_system::Config {}
 
 	// Simple declaration of the `Pallet` type. It is placeholder we use to implement traits and
 	// method.

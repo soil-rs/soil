@@ -40,7 +40,7 @@ construct_runtime!(
 		System: topsoil_system,
 		Assets: plant_assets,
 		AssetsFreezer: plant_assets_freezer,
-		Balances: topsoil_balances,
+		Balances: plant_balances,
 	}
 );
 
@@ -62,7 +62,7 @@ impl topsoil_system::Config for Test {
 	type BlockHashCount = ConstU64<250>;
 	type Version = ();
 	type PalletInfo = PalletInfo;
-	type AccountData = topsoil_balances::AccountData<u64>;
+	type AccountData = plant_balances::AccountData<u64>;
 	type OnNewAccount = ();
 	type OnKilledAccount = ();
 	type SystemWeightInfo = ();
@@ -71,7 +71,7 @@ impl topsoil_system::Config for Test {
 	type MaxConsumers = ConstU32<16>;
 }
 
-impl topsoil_balances::Config for Test {
+impl plant_balances::Config for Test {
 	type MaxLocks = ();
 	type MaxReserves = ();
 	type ReserveIdentifier = [u8; 8];

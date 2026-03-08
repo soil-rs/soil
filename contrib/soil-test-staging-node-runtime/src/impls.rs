@@ -19,7 +19,7 @@
 
 use alloc::boxed::Box;
 use plant_alliance::{IdentityVerifier, ProposalIndex, ProposalProvider};
-use topsoil_asset_tx_payment::HandleCredit;
+use plant_asset_tx_payment::HandleCredit;
 use plant_identity::legacy::IdentityField;
 use topsoil_support::{
 	pallet_prelude::*,
@@ -48,7 +48,7 @@ impl OnUnbalanced<NegativeImbalance> for Author {
 pub struct CreditToBlockAuthor;
 impl HandleCredit<AccountId, Assets> for CreditToBlockAuthor {
 	fn handle_credit(credit: Credit<AccountId, Assets>) {
-		if let Some(author) = topsoil_authorship::Pallet::<Runtime>::author() {
+		if let Some(author) = plant_authorship::Pallet::<Runtime>::author() {
 			// Drop the result which will trigger the `OnDrop` of the imbalance in case of error.
 			let _ = Assets::resolve(&author, credit);
 		}
@@ -123,7 +123,7 @@ mod multiplier_tests {
 		dispatch::DispatchClass,
 		weights::{Weight, WeightToFee},
 	};
-	use topsoil_transaction_payment::{Multiplier, TargetedFeeAdjustment};
+	use plant_transaction_payment::{Multiplier, TargetedFeeAdjustment};
 
 	use crate::{
 		constants::{currency::*, time::*},
@@ -327,7 +327,7 @@ mod multiplier_tests {
 				fm = next;
 				iterations += 1;
 				let fee =
-					<Runtime as topsoil_transaction_payment::Config>::WeightToFee::weight_to_fee(
+					<Runtime as plant_transaction_payment::Config>::WeightToFee::weight_to_fee(
 						&tx_weight,
 					);
 				let adjusted_fee = fm.saturating_mul_acc_int(fee);

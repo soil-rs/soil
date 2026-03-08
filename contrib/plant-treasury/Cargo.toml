@@ -23,13 +23,13 @@ topsoil-support = { workspace = true }
 topsoil-system = { workspace = true }
 impl-trait-for-tuples = { workspace = true }
 log = { workspace = true }
-topsoil-balances = { workspace = true }
+plant-balances = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { features = ["derive"], optional = true, workspace = true, default-features = true }
 subsoil = { workspace = true }
 
 [dev-dependencies]
-topsoil-utility = { workspace = true, default-features = true }
+plant-utility = { workspace = true, default-features = true }
 
 [features]
 default = ["std"]
@@ -39,8 +39,8 @@ std = [
 	"topsoil-support/std",
 	"topsoil-system/std",
 	"log/std",
-	"topsoil-balances/std",
-	"topsoil-utility/std",
+	"plant-balances/std",
+	"plant-utility/std",
 	"scale-info/std",
 	"serde",
 	"subsoil/std",
@@ -49,14 +49,14 @@ runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",
 	"topsoil-support/runtime-benchmarks",
 	"topsoil-system/runtime-benchmarks",
-	"topsoil-balances/runtime-benchmarks",
-	"topsoil-utility/runtime-benchmarks",
+	"plant-balances/runtime-benchmarks",
+	"plant-utility/runtime-benchmarks",
 	"subsoil/runtime-benchmarks",
 ]
 try-runtime = [
 	"topsoil-support/try-runtime",
 	"topsoil-system/try-runtime",
-	"topsoil-balances/try-runtime",
-	"topsoil-utility/try-runtime",
+	"plant-balances/try-runtime",
+	"plant-utility/try-runtime",
 	"subsoil/try-runtime",
 ]

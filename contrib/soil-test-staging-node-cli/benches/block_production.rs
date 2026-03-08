@@ -121,7 +121,7 @@ fn new_node(tokio_handle: Handle) -> node_cli::service::NewFullBase {
 
 fn extrinsic_set_time(now: u64) -> OpaqueExtrinsic {
 	let utx: soil_test_staging_node_runtime::UncheckedExtrinsic = generic::UncheckedExtrinsic::new_bare(
-		soil_test_staging_node_runtime::RuntimeCall::Timestamp(topsoil_timestamp::Call::set { now }),
+		soil_test_staging_node_runtime::RuntimeCall::Timestamp(plant_timestamp::Call::set { now }),
 	)
 	.into();
 	utx.into()

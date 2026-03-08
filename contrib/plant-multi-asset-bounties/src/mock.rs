@@ -90,9 +90,9 @@ topsoil_support::construct_runtime!(
 	pub enum Test
 	{
 		System: topsoil_system,
-		Balances: topsoil_balances,
+		Balances: plant_balances,
 		Preimage: plant_preimage,
-		Utility: topsoil_utility,
+		Utility: plant_utility,
 		Bounties: plant_bounties,
 		Bounties1: plant_bounties::<Instance1>,
 	}
@@ -109,12 +109,12 @@ impl topsoil_system::Config for Test {
 	type AccountId = u128; // u64 is not enough to hold bytes used to generate bounty account
 	type Lookup = IdentityLookup<Self::AccountId>;
 	type Block = Block;
-	type AccountData = topsoil_balances::AccountData<u64>;
+	type AccountData = plant_balances::AccountData<u64>;
 	type DbWeight = ParityDbWeight;
 }
 
-#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
-impl topsoil_balances::Config for Test {
+#[derive_impl(plant_balances::config_preludes::TestDefaultConfig)]
+impl plant_balances::Config for Test {
 	type AccountStore = System;
 	type RuntimeHoldReason = RuntimeHoldReason;
 }
@@ -127,7 +127,7 @@ impl plant_preimage::Config for Test {
 	type Consideration = ();
 }
 
-impl topsoil_utility::Config for Test {
+impl plant_utility::Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type RuntimeCall = RuntimeCall;
 	type PalletsOrigin = OriginCaller;
@@ -172,7 +172,7 @@ parameter_types! {
 }
 
 impl Config for Test {
-	type Balance = <Self as topsoil_balances::Config>::Balance;
+	type Balance = <Self as plant_balances::Config>::Balance;
 	type RejectOrigin = topsoil_system::EnsureRoot<u128>;
 	type SpendOrigin = TestSpendOrigin;
 	type AssetKind = u32;
@@ -206,7 +206,7 @@ impl Config for Test {
 type CuratorDeposit =
 	CuratorDepositAmount<CuratorDepositMultiplier, CuratorDepositMin, CuratorDepositMax, Balance>;
 impl Config<Instance1> for Test {
-	type Balance = <Self as topsoil_balances::Config>::Balance;
+	type Balance = <Self as plant_balances::Config>::Balance;
 	type RejectOrigin = topsoil_system::EnsureRoot<u128>;
 	type SpendOrigin = TestSpendOrigin;
 	type AssetKind = u32;
@@ -246,7 +246,7 @@ impl ExtBuilder {
 	pub fn build(self) -> subsoil::io::TestExternalities {
 		let mut ext: subsoil::io::TestExternalities = RuntimeGenesisConfig {
 			system: topsoil_system::GenesisConfig::default(),
-			balances: topsoil_balances::GenesisConfig {
+			balances: plant_balances::GenesisConfig {
 				balances: vec![(0, 100), (1, 98), (2, 1)],
 				..Default::default()
 			},

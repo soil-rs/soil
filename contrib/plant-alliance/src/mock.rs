@@ -49,11 +49,11 @@ parameter_types! {
 #[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
 impl topsoil_system::Config for Test {
 	type Block = Block;
-	type AccountData = topsoil_balances::AccountData<u64>;
+	type AccountData = plant_balances::AccountData<u64>;
 }
 
-#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
-impl topsoil_balances::Config for Test {
+#[derive_impl(plant_balances::config_preludes::TestDefaultConfig)]
+impl plant_balances::Config for Test {
 	type AccountStore = System;
 }
 
@@ -254,7 +254,7 @@ topsoil_support::construct_runtime!(
 	pub enum Test
 	{
 		System: topsoil_system,
-		Balances: topsoil_balances,
+		Balances: plant_balances,
 		Identity: plant_identity,
 		AllianceMotion: plant_collective::<Instance1>,
 		Alliance: plant_alliance,
@@ -275,7 +275,7 @@ fn test_identity_info() -> IdentityInfo<MaxAdditionalFields> {
 	}
 }
 
-pub(super) fn test_identity_info_deposit() -> <Test as topsoil_balances::Config>::Balance {
+pub(super) fn test_identity_info_deposit() -> <Test as plant_balances::Config>::Balance {
 	let basic_deposit: u64 = <Test as plant_identity::Config>::BasicDeposit::get();
 	let byte_deposit: u64 = <Test as plant_identity::Config>::ByteDeposit::get();
 	byte_deposit * test_identity_info().encoded_size() as u64 + basic_deposit
@@ -284,7 +284,7 @@ pub(super) fn test_identity_info_deposit() -> <Test as topsoil_balances::Config>
 pub fn new_test_ext() -> subsoil::io::TestExternalities {
 	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 
-	topsoil_balances::GenesisConfig::<Test> {
+	plant_balances::GenesisConfig::<Test> {
 		balances: vec![
 			(1, 1000),
 			(2, 1000),

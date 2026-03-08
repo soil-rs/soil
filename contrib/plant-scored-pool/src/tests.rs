@@ -25,7 +25,7 @@ use topsoil_support::{assert_noop, assert_ok, traits::OnInitialize};
 
 type ScoredPool = Pallet<Test>;
 type System = topsoil_system::Pallet<Test>;
-type Balances = topsoil_balances::Pallet<Test>;
+type Balances = plant_balances::Pallet<Test>;
 
 #[test]
 fn query_membership_works() {
@@ -42,7 +42,7 @@ fn submit_candidacy_must_not_work() {
 	new_test_ext().execute_with(|| {
 		assert_noop!(
 			ScoredPool::submit_candidacy(RuntimeOrigin::signed(99)),
-			topsoil_balances::Error::<Test, _>::InsufficientBalance,
+			plant_balances::Error::<Test, _>::InsufficientBalance,
 		);
 		assert_noop!(
 			ScoredPool::submit_candidacy(RuntimeOrigin::signed(40)),

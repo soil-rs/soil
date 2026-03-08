@@ -28,13 +28,13 @@ topsoil-support = { workspace = true, default-features = true }
 topsoil-system = { workspace = true, default-features = true }
 
 plant-bags-list = { workspace = true, default-features = true }
-topsoil-balances = { workspace = true, default-features = true }
+plant-balances = { workspace = true, default-features = true }
 plant-delegated-staking = { workspace = true, default-features = true }
 plant-election-provider-multi-phase = { workspace = true, default-features = true }
 plant-nomination-pools = { workspace = true, default-features = true }
-topsoil-session = { workspace = true, default-features = true }
+plant-session = { workspace = true, default-features = true }
 plant-staking = { workspace = true, default-features = true }
-topsoil-timestamp = { workspace = true, default-features = true }
+plant-timestamp = { workspace = true, default-features = true }
 
 [features]
 try-runtime = [
@@ -42,12 +42,12 @@ try-runtime = [
 	"topsoil-support/try-runtime",
 	"topsoil-system/try-runtime",
 	"plant-bags-list/try-runtime",
-	"topsoil-balances/try-runtime",
+	"plant-balances/try-runtime",
 	"plant-delegated-staking/try-runtime",
 	"plant-election-provider-multi-phase/try-runtime",
 	"plant-nomination-pools/try-runtime",
-	"topsoil-session/try-runtime",
+	"plant-session/try-runtime",
 	"plant-staking/try-runtime",
-	"topsoil-timestamp/try-runtime",
+	"plant-timestamp/try-runtime",
 	"subsoil/try-runtime",
 ]

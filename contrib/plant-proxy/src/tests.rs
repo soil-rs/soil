@@ -29,9 +29,9 @@ type Block = topsoil_system::mocking::MockBlock<Test>;
 construct_runtime!(
 	pub struct Test {
 		System: topsoil_system,
-		Balances: topsoil_balances,
+		Balances: plant_balances,
 		Proxy: proxy,
-		Utility: topsoil_utility,
+		Utility: plant_utility,
 	}
 );
 
@@ -39,16 +39,16 @@ construct_runtime!(
 impl topsoil_system::Config for Test {
 	type Block = Block;
 	type BaseCallFilter = BaseFilter;
-	type AccountData = topsoil_balances::AccountData<u64>;
+	type AccountData = plant_balances::AccountData<u64>;
 }
 
-#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
-impl topsoil_balances::Config for Test {
+#[derive_impl(plant_balances::config_preludes::TestDefaultConfig)]
+impl plant_balances::Config for Test {
 	type ReserveIdentifier = [u8; 8];
 	type AccountStore = System;
 }
 
-impl topsoil_utility::Config for Test {
+impl plant_utility::Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type RuntimeCall = RuntimeCall;
 	type PalletsOrigin = OriginCaller;
@@ -86,7 +86,7 @@ impl topsoil::traits::InstanceFilter<RuntimeCall> for ProxyType {
 			ProxyType::JustTransfer => {
 				matches!(
 					c,
-					RuntimeCall::Balances(topsoil_balances::Call::transfer_allow_death { .. })
+					RuntimeCall::Balances(plant_balances::Call::transfer_allow_death { .. })
 				)
 			},
 			ProxyType::JustUtility => matches!(c, RuntimeCall::Utility { .. }),
@@ -132,15 +132,15 @@ impl Config for Test {
 }
 
 use super::{Call as ProxyCall, Event as ProxyEvent};
-use topsoil_balances::{Call as BalancesCall, Error as BalancesError, Event as BalancesEvent};
+use plant_balances::{Call as BalancesCall, Error as BalancesError, Event as BalancesEvent};
 use topsoil_system::Call as SystemCall;
-use topsoil_utility::{Call as UtilityCall, Event as UtilityEvent};
+use plant_utility::{Call as UtilityCall, Event as UtilityEvent};
 
 type SystemError = topsoil_system::Error<Test>;
 
 pub fn new_test_ext() -> TestState {
 	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
-	topsoil_balances::GenesisConfig::<Test> {
+	plant_balances::GenesisConfig::<Test> {
 		balances: vec![(1, 10), (2, 10), (3, 10), (4, 10), (5, 3)],
 		..Default::default()
 	}
@@ -333,7 +333,7 @@ fn filtering_works() {
 			ProxyEvent::ProxyExecuted { result: Err(SystemError::CallFiltered.into()) }.into(),
 		);
 
-		let derivative_id = topsoil_utility::derivative_account_id(1, 0);
+		let derivative_id = plant_utility::derivative_account_id(1, 0);
 		Balances::make_free_balance_be(&derivative_id, 1000);
 		let inner = Box::new(call_transfer(6, 1));
 

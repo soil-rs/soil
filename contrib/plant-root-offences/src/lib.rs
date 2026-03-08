@@ -32,7 +32,7 @@ use alloc::{vec, vec::Vec};
 pub use pallet::*;
 use subsoil::staking::offence::{Kind, Offence, OnOffenceHandler};
 use subsoil::runtime::{traits::Convert, Perbill};
-use topsoil_session::historical::IdentificationTuple;
+use plant_session::historical::IdentificationTuple;
 
 #[topsoil_support::pallet]
 pub mod pallet {
@@ -85,8 +85,8 @@ pub mod pallet {
 	pub trait Config:
 		topsoil_system::Config
 		+ plant_staking::Config
-		+ topsoil_session::Config<ValidatorId = <Self as topsoil_system::Config>::AccountId>
-		+ topsoil_session::historical::Config
+		+ plant_session::Config<ValidatorId = <Self as topsoil_system::Config>::AccountId>
+		+ plant_session::historical::Config
 	{
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self>>
@@ -99,7 +99,7 @@ pub mod pallet {
 
 		/// The offence report system provided by the runtime.
 		///
-		/// This is a way to give the offence to the `topsoil-offences` next.
+		/// This is a way to give the offence to the `plant-offences` next.
 		type ReportOffence: ReportOffence<
 			Self::AccountId,
 			IdentificationTuple<Self>,
@@ -170,10 +170,10 @@ pub mod pallet {
 		}
 
 		/// Same as [`Pallet::create_offence`], but it reports the offence directly to a
-		/// [`Config::ReportOffence`], aka topsoil-offences first.
+		/// [`Config::ReportOffence`], aka plant-offences first.
 		///
 		/// This is useful for more accurate testing of the e2e offence processing pipeline, as it
-		/// won't skip the `topsoil-offences` step.
+		/// won't skip the `plant-offences` step.
 		///
 		/// It generates an offence of type [`TestSpamOffence`], with cas a fixed `ID`, but can have
 		/// any `time_slot`, `session_index``, and `slash_fraction`. These values are the inputs of
@@ -225,7 +225,7 @@ pub mod pallet {
 			maybe_session_index: Option<SessionIndex>,
 		) {
 			let session_index = maybe_session_index.unwrap_or_else(|| {
-				<topsoil_session::Pallet<T> as topsoil_support::traits::ValidatorSet<
+				<plant_session::Pallet<T> as topsoil_support::traits::ValidatorSet<
 					T::AccountId,
 				>>::session_index()
 			});

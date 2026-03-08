@@ -1,0 +1,60 @@
+[package]
+name = "plant-im-online"
+version = "27.0.0"
+authors.workspace = true
+edition.workspace = true
+license.workspace = true
+homepage.workspace = true
+repository.workspace = true
+description = "FRAME's I'm online pallet"
+readme = "README.md"
+
+[lints]
+workspace = true
+
+[package.metadata.docs.rs]
+targets = ["x86_64-unknown-linux-gnu"]
+
+[dependencies]
+codec = { features = ["derive"], workspace = true }
+topsoil-benchmarking = { optional = true, workspace = true }
+topsoil-support = { workspace = true }
+topsoil-system = { workspace = true }
+log = { workspace = true }
+plant-authorship = { workspace = true }
+scale-info = { features = ["derive", "serde"], workspace = true }
+subsoil = { features = ["serde"], workspace = true }
+[dev-dependencies]
+plant-balances = { workspace = true }
+plant-session = { workspace = true, default-features = true }
+
+[features]
+default = ["std"]
+std = [
+	"codec/std",
+	"topsoil-benchmarking?/std",
+	"topsoil-support/std",
+	"topsoil-system/std",
+	"log/std",
+	"plant-authorship/std",
+	"plant-balances/std",
+	"plant-session/std",
+	"scale-info/std",
+	"subsoil/std",
+]
+runtime-benchmarks = [
+	"topsoil-benchmarking/runtime-benchmarks",
+	"topsoil-support/runtime-benchmarks",
+	"topsoil-system/runtime-benchmarks",
+	"plant-balances/runtime-benchmarks",
+	"plant-session/runtime-benchmarks",
+	"subsoil/runtime-benchmarks",
+]
+try-runtime = [
+	"topsoil-support/try-runtime",
+	"topsoil-system/try-runtime",
+	"plant-authorship/try-runtime",
+	"plant-balances/try-runtime",
+	"plant-session/try-runtime",
+	"subsoil/try-runtime",
+]

@@ -20,7 +20,7 @@ codec = { workspace = true }
 topsoil-support = { workspace = true }
 topsoil-system = { workspace = true }
 log = { workspace = true }
-topsoil-balances = { workspace = true }
+plant-balances = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 
 [dev-dependencies]
@@ -33,13 +33,13 @@ std = [
 	"topsoil-support/std",
 	"topsoil-system/std",
 	"log/std",
-	"topsoil-balances/std",
+	"plant-balances/std",
 	"scale-info/std",
 	"subsoil/std",
 ]
 try-runtime = [
 	"topsoil-support/try-runtime",
 	"topsoil-system/try-runtime",
-	"topsoil-balances/try-runtime",
+	"plant-balances/try-runtime",
 	"subsoil/try-runtime",
 ]

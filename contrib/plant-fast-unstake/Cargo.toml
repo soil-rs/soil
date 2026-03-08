@@ -29,10 +29,10 @@ docify = { workspace = true }
 subsoil = { workspace = true }
 
 [dev-dependencies]
-topsoil-balances = { workspace = true, default-features = true }
+plant-balances = { workspace = true, default-features = true }
 plant-staking = { workspace = true, default-features = true }
 plant-staking-macros = { workspace = true, default-features = true }
-topsoil-timestamp = { workspace = true, default-features = true }
+plant-timestamp = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
 
 [features]
@@ -44,9 +44,9 @@ std = [
 	"topsoil-support/std",
 	"topsoil-system/std",
 	"log/std",
-	"topsoil-balances/std",
+	"plant-balances/std",
 	"plant-staking/std",
-	"topsoil-timestamp/std",
+	"plant-timestamp/std",
 	"scale-info/std",
 	"subsoil/std",
 ]
@@ -55,17 +55,17 @@ runtime-benchmarks = [
 	"plant-election-provider/runtime-benchmarks",
 	"topsoil-support/runtime-benchmarks",
 	"topsoil-system/runtime-benchmarks",
-	"topsoil-balances/runtime-benchmarks",
+	"plant-balances/runtime-benchmarks",
 	"plant-staking/runtime-benchmarks",
-	"topsoil-timestamp/runtime-benchmarks",
+	"plant-timestamp/runtime-benchmarks",
 	"subsoil/runtime-benchmarks",
 ]
 try-runtime = [
 	"plant-election-provider/try-runtime",
 	"topsoil-support/try-runtime",
 	"topsoil-system/try-runtime",
-	"topsoil-balances/try-runtime",
+	"plant-balances/try-runtime",
 	"plant-staking/try-runtime",
-	"topsoil-timestamp/try-runtime",
+	"plant-timestamp/try-runtime",
 	"subsoil/try-runtime",
 ]

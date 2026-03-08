@@ -33,7 +33,7 @@ construct_runtime!(
 	pub enum Test
 	{
 		System: topsoil_system,
-		Balances: topsoil_balances,
+		Balances: plant_balances,
 		ScoredPool: plant_scored_pool,
 	}
 );
@@ -49,11 +49,11 @@ ord_parameter_types! {
 #[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
 impl topsoil_system::Config for Test {
 	type Block = Block;
-	type AccountData = topsoil_balances::AccountData<u64>;
+	type AccountData = plant_balances::AccountData<u64>;
 }
 
-#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
-impl topsoil_balances::Config for Test {
+#[derive_impl(plant_balances::config_preludes::TestDefaultConfig)]
+impl plant_balances::Config for Test {
 	type AccountStore = System;
 }
 
@@ -109,7 +109,7 @@ pub fn new_test_ext() -> subsoil::io::TestExternalities {
 	balances.push((40, 500_000));
 	balances.push((99, 1));
 
-	topsoil_balances::GenesisConfig::<Test> { balances, ..Default::default() }
+	plant_balances::GenesisConfig::<Test> { balances, ..Default::default() }
 		.assimilate_storage(&mut t)
 		.unwrap();
 	plant_scored_pool::GenesisConfig::<Test> {

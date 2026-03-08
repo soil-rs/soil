@@ -1,0 +1,64 @@
+[package]
+name = "plant-beefy-mmr"
+version = "28.0.0"
+authors.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "BEEFY + MMR runtime utilities"
+repository.workspace = true
+homepage.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+array-bytes = { optional = true, workspace = true, default-features = true }
+subsoil = { workspace = true }
+codec = { features = ["derive"], workspace = true }
+topsoil-benchmarking = { optional = true, workspace = true }
+topsoil-support = { workspace = true }
+topsoil-system = { workspace = true }
+log = { workspace = true }
+plant-beefy = { workspace = true }
+plant-mmr = { workspace = true }
+plant-session = { workspace = true }
+scale-info = { features = ["derive"], workspace = true }
+serde = { optional = true, workspace = true, default-features = true }
+
+[dev-dependencies]
+array-bytes = { workspace = true, default-features = true }
+plant-balances = { workspace = true }
+[features]
+default = ["std"]
+std = [
+	"array-bytes",
+	"subsoil/std",
+	"codec/std",
+	"topsoil-benchmarking/std",
+	"topsoil-support/std",
+	"topsoil-system/std",
+	"log/std",
+	"plant-balances/std",
+	"plant-beefy/std",
+	"plant-mmr/std",
+	"plant-session/std",
+	"scale-info/std",
+	"serde",
+]
+try-runtime = [
+	"topsoil-support/try-runtime",
+	"topsoil-system/try-runtime",
+	"plant-balances/try-runtime",
+	"plant-beefy/try-runtime",
+	"plant-mmr/try-runtime",
+	"plant-session/try-runtime",
+	"subsoil/try-runtime"]
+runtime-benchmarks = [
+	"topsoil-benchmarking/runtime-benchmarks",
+	"topsoil-support/runtime-benchmarks",
+	"topsoil-system/runtime-benchmarks",
+	"plant-balances/runtime-benchmarks",
+	"plant-mmr/runtime-benchmarks",
+	"plant-session/runtime-benchmarks",
+	"subsoil/runtime-benchmarks",
+]

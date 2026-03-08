@@ -56,7 +56,7 @@ pub type UncheckedExtrinsic =
 topsoil_support::construct_runtime!(
 	pub enum Runtime {
 		System: topsoil_system,
-		Balances: topsoil_balances,
+		Balances: plant_balances,
 		MultiPhase: multi_phase,
 	}
 );
@@ -227,7 +227,7 @@ impl topsoil_system::Config for Runtime {
 	type BlockWeights = BlockWeights;
 	type Version = ();
 	type PalletInfo = PalletInfo;
-	type AccountData = topsoil_balances::AccountData<u64>;
+	type AccountData = plant_balances::AccountData<u64>;
 	type OnNewAccount = ();
 	type OnKilledAccount = ();
 	type SystemWeightInfo = ();
@@ -244,8 +244,8 @@ parameter_types! {
 		);
 }
 
-#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
-impl topsoil_balances::Config for Runtime {
+#[derive_impl(plant_balances::config_preludes::TestDefaultConfig)]
+impl plant_balances::Config for Runtime {
 	type AccountStore = System;
 }
 
@@ -634,7 +634,7 @@ impl ExtBuilder {
 		let mut storage =
 			topsoil_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
 
-		let _ = topsoil_balances::GenesisConfig::<Runtime> {
+		let _ = plant_balances::GenesisConfig::<Runtime> {
 			balances: vec![
 				// bunch of account for submitting stuff only.
 				(99, 100),

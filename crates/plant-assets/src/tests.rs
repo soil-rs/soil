@@ -24,7 +24,7 @@ use subsoil::runtime::{
 	traits::{ConstU32, ConvertInto},
 	TokenError,
 };
-use topsoil_balances::Error as BalancesError;
+use plant_balances::Error as BalancesError;
 use topsoil_support::{
 	assert_noop, assert_ok,
 	dispatch::GetDispatchInfo,

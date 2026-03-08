@@ -58,7 +58,7 @@
 // --no-storage-info
 // --no-min-squares
 // --no-median-slopes
-// --exclude-pallets=pallet_xcm,pallet_xcm_benchmarks::fungible,pallet_xcm_benchmarks::generic,plant_nomination_pools,plant_remark,topsoil_transaction_storage,plant_election_provider_multi_block,plant_election_provider_multi_block::signed,plant_election_provider_multi_block::unsigned,plant_election_provider_multi_block::verifier
+// --exclude-pallets=pallet_xcm,pallet_xcm_benchmarks::fungible,pallet_xcm_benchmarks::generic,plant_nomination_pools,plant_remark,plant_transaction_storage,plant_election_provider_multi_block,plant_election_provider_multi_block::signed,plant_election_provider_multi_block::unsigned,plant_election_provider_multi_block::verifier
 
 #![cfg_attr(rustfmt, rustfmt_skip)]
 #![allow(unused_parens)]

@@ -45,7 +45,7 @@ topsoil_support::construct_runtime!(
 	pub enum Test
 	{
 		System: topsoil_system,
-		Balances: topsoil_balances,
+		Balances: plant_balances,
 		Treasury: plant_treasury,
 		Treasury1: plant_treasury::<Instance1>,
 		Tips: plant_tips,
@@ -62,11 +62,11 @@ impl topsoil_system::Config for Test {
 	type AccountId = u128; // u64 is not enough to hold bytes used to generate bounty account
 	type Lookup = IdentityLookup<Self::AccountId>;
 	type Block = Block;
-	type AccountData = topsoil_balances::AccountData<u64>;
+	type AccountData = plant_balances::AccountData<u64>;
 }
 
-#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
-impl topsoil_balances::Config for Test {
+#[derive_impl(plant_balances::config_preludes::TestDefaultConfig)]
+impl plant_balances::Config for Test {
 	type AccountStore = System;
 }
 parameter_types! {
@@ -103,7 +103,7 @@ parameter_types! {
 
 impl plant_treasury::Config for Test {
 	type PalletId = TreasuryPalletId;
-	type Currency = topsoil_balances::Pallet<Test>;
+	type Currency = plant_balances::Pallet<Test>;
 	type RejectOrigin = topsoil_system::EnsureRoot<u128>;
 	type RuntimeEvent = RuntimeEvent;
 	type SpendPeriod = ConstU64<2>;
@@ -126,7 +126,7 @@ impl plant_treasury::Config for Test {
 
 impl plant_treasury::Config<Instance1> for Test {
 	type PalletId = TreasuryPalletId2;
-	type Currency = topsoil_balances::Pallet<Test>;
+	type Currency = plant_balances::Pallet<Test>;
 	type RejectOrigin = topsoil_system::EnsureRoot<u128>;
 	type RuntimeEvent = RuntimeEvent;
 	type SpendPeriod = ConstU64<2>;
@@ -180,7 +180,7 @@ impl Config<Instance1> for Test {
 pub fn new_test_ext() -> subsoil::io::TestExternalities {
 	let mut ext: subsoil::io::TestExternalities = RuntimeGenesisConfig {
 		system: topsoil_system::GenesisConfig::default(),
-		balances: topsoil_balances::GenesisConfig {
+		balances: plant_balances::GenesisConfig {
 			balances: vec![(0, 100), (1, 98), (2, 1)],
 			..Default::default()
 		},
@@ -583,7 +583,7 @@ fn test_migration_v4() {
 fn genesis_funding_works() {
 	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	let initial_funding = 100;
-	topsoil_balances::GenesisConfig::<Test> {
+	plant_balances::GenesisConfig::<Test> {
 		// Total issuance will be 200 with treasury account initialized with 100.
 		balances: vec![(0, 100), (Treasury::account_id(), initial_funding)],
 		..Default::default()

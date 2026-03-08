@@ -34,7 +34,7 @@ topsoil_support::construct_runtime!(
 	pub enum Test
 	{
 		System: topsoil_system,
-		Balances: topsoil_balances,
+		Balances: plant_balances,
 		Voting: plant_conviction_voting,
 	}
 );
@@ -43,7 +43,7 @@ topsoil_support::construct_runtime!(
 pub struct BaseFilter;
 impl Contains<RuntimeCall> for BaseFilter {
 	fn contains(call: &RuntimeCall) -> bool {
-		!matches!(call, &RuntimeCall::Balances(topsoil_balances::Call::force_set_balance { .. }))
+		!matches!(call, &RuntimeCall::Balances(plant_balances::Call::force_set_balance { .. }))
 	}
 }
 
@@ -51,11 +51,11 @@ impl Contains<RuntimeCall> for BaseFilter {
 impl topsoil_system::Config for Test {
 	type BaseCallFilter = BaseFilter;
 	type Block = Block;
-	type AccountData = topsoil_balances::AccountData<u64>;
+	type AccountData = plant_balances::AccountData<u64>;
 }
 
-#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
-impl topsoil_balances::Config for Test {
+#[derive_impl(plant_balances::config_preludes::TestDefaultConfig)]
+impl plant_balances::Config for Test {
 	type AccountStore = System;
 }
 
@@ -150,7 +150,7 @@ impl Polling<TallyOf<Test>> for TestPolls {
 
 impl Config for Test {
 	type RuntimeEvent = RuntimeEvent;
-	type Currency = topsoil_balances::Pallet<Self>;
+	type Currency = plant_balances::Pallet<Self>;
 	type VoteLockingPeriod = ConstU64<3>;
 	type MaxVotes = ConstU32<3>;
 	type WeightInfo = ();
@@ -162,7 +162,7 @@ impl Config for Test {
 
 pub fn new_test_ext() -> subsoil::io::TestExternalities {
 	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
-	topsoil_balances::GenesisConfig::<Test> {
+	plant_balances::GenesisConfig::<Test> {
 		balances: vec![(1, 10), (2, 20), (3, 30), (4, 40), (5, 50), (6, 60)],
 		..Default::default()
 	}
@@ -177,7 +177,7 @@ pub fn new_test_ext() -> subsoil::io::TestExternalities {
 fn params_should_work() {
 	new_test_ext().execute_with(|| {
 		assert_eq!(Balances::free_balance(42), 0);
-		assert_eq!(topsoil_balances::TotalIssuance::<Test>::get(), 210);
+		assert_eq!(plant_balances::TotalIssuance::<Test>::get(), 210);
 	});
 }
 

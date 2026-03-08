@@ -71,7 +71,7 @@ pub type TargetIndex = u16;
 topsoil_support::construct_runtime!(
 	pub enum Runtime  {
 		System: topsoil_system,
-		Balances: topsoil_balances,
+		Balances: plant_balances,
 		MultiBlock: multi_block,
 		SignedPallet: signed_pallet,
 		VerifierPallet: verifier_pallet,
@@ -99,7 +99,7 @@ impl topsoil_system::Config for Runtime {
 	type Lookup = IdentityLookup<Self::AccountId>;
 	type BlockLength = ();
 	type BlockWeights = BlockWeights;
-	type AccountData = topsoil_balances::AccountData<Balance>;
+	type AccountData = plant_balances::AccountData<Balance>;
 	type Block = topsoil_system::mocking::MockBlock<Self>;
 	type DbWeight = DbWeight;
 }
@@ -114,8 +114,8 @@ parameter_types! {
 		);
 }
 
-#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
-impl topsoil_balances::Config for Runtime {
+#[derive_impl(plant_balances::config_preludes::TestDefaultConfig)]
+impl plant_balances::Config for Runtime {
 	type Balance = Balance;
 	type DustRemoval = ();
 	type ExistentialDeposit = ExistentialDeposit;
@@ -433,7 +433,7 @@ impl ExtBuilder {
 		let mut storage =
 			topsoil_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
 
-		let _ = topsoil_balances::GenesisConfig::<Runtime> {
+		let _ = plant_balances::GenesisConfig::<Runtime> {
 			balances: vec![
 				// bunch of account for submitting stuff only.
 				(91, 100),

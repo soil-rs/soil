@@ -118,7 +118,7 @@ impl GenesisStorageBuilder {
 
 		RuntimeGenesisConfig {
 			system: Default::default(),
-			babe: topsoil_babe::GenesisConfig {
+			babe: plant_babe::GenesisConfig {
 				authorities: authorities_sr25519
 					.clone()
 					.into_iter()
@@ -130,7 +130,7 @@ impl GenesisStorageBuilder {
 				authorities: authorities_sr25519.clone(),
 				..Default::default()
 			},
-			balances: topsoil_balances::GenesisConfig {
+			balances: plant_balances::GenesisConfig {
 				balances: self.balances.clone(),
 				..Default::default()
 			},

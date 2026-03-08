@@ -56,7 +56,7 @@ topsoil_support::construct_runtime!(
 	pub enum Test
 	{
 		System: topsoil_system,
-		Balances: topsoil_balances,
+		Balances: plant_balances,
 		Assets: plant_assets,
 		Bounties: plant_bounties,
 		Bounties1: plant_bounties::<Instance1>,
@@ -77,11 +77,11 @@ impl topsoil_system::Config for Test {
 	type AccountId = AccountId; // u64 is not enough to hold bytes used to generate bounty account
 	type Lookup = IdentityLookup<Self::AccountId>;
 	type Block = Block;
-	type AccountData = topsoil_balances::AccountData<u64>;
+	type AccountData = plant_balances::AccountData<u64>;
 }
 
-#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
-impl topsoil_balances::Config for Test {
+#[derive_impl(plant_balances::config_preludes::TestDefaultConfig)]
+impl plant_balances::Config for Test {
 	type AccountStore = System;
 }
 parameter_types! {
@@ -96,7 +96,7 @@ parameter_types! {
 
 impl plant_treasury::Config for Test {
 	type PalletId = TreasuryPalletId;
-	type Currency = topsoil_balances::Pallet<Test>;
+	type Currency = plant_balances::Pallet<Test>;
 	type RejectOrigin = topsoil_system::EnsureRoot<u128>;
 	type RuntimeEvent = RuntimeEvent;
 	type SpendPeriod = ConstU64<2>;
@@ -119,7 +119,7 @@ impl plant_treasury::Config for Test {
 
 impl plant_treasury::Config<Instance1> for Test {
 	type PalletId = TreasuryPalletId2;
-	type Currency = topsoil_balances::Pallet<Test>;
+	type Currency = plant_balances::Pallet<Test>;
 	type RejectOrigin = topsoil_system::EnsureRoot<u128>;
 	type RuntimeEvent = RuntimeEvent;
 	type SpendPeriod = ConstU64<2>;
@@ -216,7 +216,7 @@ impl ExtBuilder {
 	pub fn build(self) -> subsoil::io::TestExternalities {
 		let mut ext: subsoil::io::TestExternalities = RuntimeGenesisConfig {
 			system: topsoil_system::GenesisConfig::default(),
-			balances: topsoil_balances::GenesisConfig {
+			balances: plant_balances::GenesisConfig {
 				balances: vec![(0, 100), (1, 98), (2, 1)],
 				..Default::default()
 			},
@@ -308,13 +308,13 @@ fn accepted_spend_proposal_ignored_outside_spend_period() {
 #[test]
 fn unused_pot_should_diminish() {
 	ExtBuilder::default().build_and_execute(|| {
-		let init_total_issuance = topsoil_balances::TotalIssuance::<Test>::get();
+		let init_total_issuance = plant_balances::TotalIssuance::<Test>::get();
 		Balances::make_free_balance_be(&Treasury::account_id(), 101);
-		assert_eq!(topsoil_balances::TotalIssuance::<Test>::get(), init_total_issuance + 100);
+		assert_eq!(plant_balances::TotalIssuance::<Test>::get(), init_total_issuance + 100);
 
 		go_to_block(2);
 		assert_eq!(Treasury::pot(), 50);
-		assert_eq!(topsoil_balances::TotalIssuance::<Test>::get(), init_total_issuance + 50);
+		assert_eq!(plant_balances::TotalIssuance::<Test>::get(), init_total_issuance + 50);
 	});
 }
 
@@ -381,7 +381,7 @@ fn treasury_account_doesnt_get_deleted() {
 #[allow(deprecated)]
 fn inexistent_account_works() {
 	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
-	topsoil_balances::GenesisConfig::<Test> {
+	plant_balances::GenesisConfig::<Test> {
 		balances: vec![(0, 100), (1, 99), (2, 1)],
 		..Default::default()
 	}
@@ -745,7 +745,7 @@ fn assign_curator_works() {
 		);
 		assert_noop!(
 			Bounties::accept_curator(RuntimeOrigin::signed(4), 0),
-			topsoil_balances::Error::<Test, _>::InsufficientBalance
+			plant_balances::Error::<Test, _>::InsufficientBalance
 		);
 
 		Balances::make_free_balance_be(&4, 10);
@@ -1164,7 +1164,7 @@ fn test_migration_v4() {
 fn genesis_funding_works() {
 	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	let initial_funding = 100;
-	topsoil_balances::GenesisConfig::<Test> {
+	plant_balances::GenesisConfig::<Test> {
 		// Total issuance will be 200 with treasury account initialized with 100.
 		balances: vec![(0, 100), (Treasury::account_id(), initial_funding)],
 		..Default::default()
@@ -1464,7 +1464,7 @@ fn approve_bounty_with_curator_works() {
 
 		assert_noop!(
 			Bounties::accept_curator(RuntimeOrigin::signed(curator), 0),
-			topsoil_balances::Error::<Test, _>::InsufficientBalance
+			plant_balances::Error::<Test, _>::InsufficientBalance
 		);
 		Balances::make_free_balance_be(&curator, 6);
 		assert_ok!(Bounties::accept_curator(RuntimeOrigin::signed(curator), 0));
@@ -1703,7 +1703,7 @@ fn poke_deposit_fails_for_insufficient_balance() {
 		// Poke deposit should fail due to insufficient balance
 		assert_noop!(
 			Bounties::poke_deposit(RuntimeOrigin::signed(0), 0),
-			topsoil_balances::Error::<Test>::InsufficientBalance
+			plant_balances::Error::<Test>::InsufficientBalance
 		);
 	});
 }

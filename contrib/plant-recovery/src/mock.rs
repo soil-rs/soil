@@ -28,7 +28,7 @@ construct_runtime!(
 	pub enum Test
 	{
 		System: topsoil_system,
-		Balances: topsoil_balances,
+		Balances: plant_balances,
 		Recovery: recovery,
 	}
 );
@@ -36,15 +36,15 @@ construct_runtime!(
 #[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
 impl topsoil_system::Config for Test {
 	type Block = Block;
-	type AccountData = topsoil_balances::AccountData<u128>;
+	type AccountData = plant_balances::AccountData<u128>;
 }
 
 parameter_types! {
 	pub const ExistentialDeposit: u64 = 1;
 }
 
-#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
-impl topsoil_balances::Config for Test {
+#[derive_impl(plant_balances::config_preludes::TestDefaultConfig)]
+impl plant_balances::Config for Test {
 	type Balance = u128;
 	type ExistentialDeposit = ExistentialDeposit;
 	type AccountStore = System;
@@ -70,12 +70,12 @@ impl Config for Test {
 	type RecoveryDeposit = RecoveryDeposit;
 }
 
-pub type BalancesCall = topsoil_balances::Call<Test>;
+pub type BalancesCall = plant_balances::Call<Test>;
 pub type RecoveryCall = super::Call<Test>;
 
 pub fn new_test_ext() -> subsoil::io::TestExternalities {
 	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
-	topsoil_balances::GenesisConfig::<Test> {
+	plant_balances::GenesisConfig::<Test> {
 		balances: vec![(1, 100), (2, 100), (3, 100), (4, 100), (5, 100)],
 		..Default::default()
 	}

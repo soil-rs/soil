@@ -27,15 +27,15 @@ use topsoil::testing_prelude::*;
 impl topsoil_system::Config for Test {
 	type BaseCallFilter = InsideBoth<Everything, TxPause>;
 	type Block = Block;
-	type AccountData = topsoil_balances::AccountData<u64>;
+	type AccountData = plant_balances::AccountData<u64>;
 }
 
-#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
-impl topsoil_balances::Config for Test {
+#[derive_impl(plant_balances::config_preludes::TestDefaultConfig)]
+impl plant_balances::Config for Test {
 	type AccountStore = System;
 }
 
-impl topsoil_utility::Config for Test {
+impl plant_utility::Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type RuntimeCall = RuntimeCall;
 	type PalletsOrigin = OriginCaller;
@@ -76,7 +76,7 @@ impl InstanceFilter<RuntimeCall> for ProxyType {
 			ProxyType::JustTransfer => {
 				matches!(
 					c,
-					RuntimeCall::Balances(topsoil_balances::Call::transfer_allow_death { .. })
+					RuntimeCall::Balances(plant_balances::Call::transfer_allow_death { .. })
 				)
 			},
 			ProxyType::JustUtility => matches!(c, RuntimeCall::Utility { .. }),
@@ -139,8 +139,8 @@ construct_runtime!(
 	pub enum Test
 	{
 		System: topsoil_system,
-		Balances: topsoil_balances,
-		Utility: topsoil_utility,
+		Balances: plant_balances,
+		Utility: plant_utility,
 		Proxy: plant_proxy,
 		TxPause: plant_tx_pause,
 	}
@@ -149,7 +149,7 @@ construct_runtime!(
 pub fn new_test_ext() -> TestExternalities {
 	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
 
-	topsoil_balances::GenesisConfig::<Test> {
+	plant_balances::GenesisConfig::<Test> {
 		// The 0 account is NOT a special origin. The rest may be:
 		balances: vec![(0, 1234), (1, 5678), (2, 5678), (3, 5678), (4, 5678)],
 		..Default::default()

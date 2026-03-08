@@ -53,7 +53,7 @@ impl Default for ObsoleteReleases {
 #[storage_alias]
 type StorageVersion<T: Config> = StorageValue<Pallet<T>, ObsoleteReleases, ValueQuery>;
 
-/// Supports the migration of Validator Disabling from topsoil-staking to topsoil-session
+/// Supports the migration of Validator Disabling from topsoil-staking to plant-session
 pub mod v17 {
 	use super::*;
 
@@ -62,7 +62,7 @@ pub mod v17 {
 		StorageValue<Pallet<T>, BoundedVec<(u32, OffenceSeverity), ConstU32<333>>, ValueQuery>;
 
 	pub struct MigrateDisabledToSession<T>(core::marker::PhantomData<T>);
-	impl<T: Config> topsoil_session::migrations::v1::MigrateDisabledValidators
+	impl<T: Config> plant_session::migrations::v1::MigrateDisabledValidators
 		for MigrateDisabledToSession<T>
 	{
 		#[cfg(feature = "try-runtime")]
@@ -158,7 +158,7 @@ pub mod v15 {
 	use super::*;
 
 	// The disabling strategy used by staking pallet
-	type DefaultDisablingStrategy = topsoil_session::disabling::UpToLimitDisablingStrategy;
+	type DefaultDisablingStrategy = plant_session::disabling::UpToLimitDisablingStrategy;
 
 	#[storage_alias]
 	pub(crate) type DisabledValidators<T: Config> = StorageValue<Pallet<T>, Vec<u32>, ValueQuery>;

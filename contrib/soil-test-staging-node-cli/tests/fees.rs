@@ -56,7 +56,7 @@ fn fee_multiplier_increases_and_decreases_on_big_weight() {
 		vec![
 			CheckedExtrinsic {
 				format: subsoil::runtime::generic::ExtrinsicFormat::Bare,
-				function: RuntimeCall::Timestamp(topsoil_timestamp::Call::set { now: time1 }),
+				function: RuntimeCall::Timestamp(plant_timestamp::Call::set { now: time1 }),
 			},
 			CheckedExtrinsic {
 				format: subsoil::runtime::generic::ExtrinsicFormat::Signed(charlie(), tx_ext(0, 0)),
@@ -79,7 +79,7 @@ fn fee_multiplier_increases_and_decreases_on_big_weight() {
 		vec![
 			CheckedExtrinsic {
 				format: subsoil::runtime::generic::ExtrinsicFormat::Bare,
-				function: RuntimeCall::Timestamp(topsoil_timestamp::Call::set { now: time2 }),
+				function: RuntimeCall::Timestamp(plant_timestamp::Call::set { now: time2 }),
 			},
 			CheckedExtrinsic {
 				format: subsoil::runtime::generic::ExtrinsicFormat::Signed(charlie(), tx_ext(1, 0)),
@@ -141,7 +141,7 @@ fn transaction_fee_is_correct() {
 	t.insert(<topsoil_system::Account<Runtime>>::hashed_key_for(alice()), new_account_info(100));
 	t.insert(<topsoil_system::Account<Runtime>>::hashed_key_for(bob()), new_account_info(10));
 	t.insert(
-		<topsoil_balances::TotalIssuance<Runtime>>::hashed_key().to_vec(),
+		<plant_balances::TotalIssuance<Runtime>>::hashed_key().to_vec(),
 		(110 * DOLLARS).encode(),
 	);
 	t.insert(<topsoil_system::BlockHash<Runtime>>::hashed_key_for(0), vec![0u8; 32]);

@@ -34,11 +34,11 @@ use RuntimeParametersRenamed::*;
 #[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
 impl topsoil_system::Config for Runtime {
 	type Block = topsoil_system::mocking::MockBlock<Runtime>;
-	type AccountData = topsoil_balances::AccountData<<Self as topsoil_balances::Config>::Balance>;
+	type AccountData = plant_balances::AccountData<<Self as plant_balances::Config>::Balance>;
 }
 
-#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
-impl topsoil_balances::Config for Runtime {
+#[derive_impl(plant_balances::config_preludes::TestDefaultConfig)]
+impl plant_balances::Config for Runtime {
 	type AccountStore = System;
 }
 
@@ -98,7 +98,7 @@ construct_runtime!(
 		System: topsoil_system,
 		PalletParameters: crate,
 		Example: plant_example_basic,
-		Balances: topsoil_balances,
+		Balances: plant_balances,
 	}
 );
 

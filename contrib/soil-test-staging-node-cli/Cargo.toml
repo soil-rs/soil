@@ -71,8 +71,8 @@ topsoil-support-procedural-tools = { workspace = true, default-features = true }
 generate-bags = { workspace = true, default-features = true }
 soil-mmr-gadget = { workspace = true, default-features = true }
 plant-asset-conversion-tx-payment = { workspace = true, default-features = true }
-topsoil-im-online = { workspace = true, default-features = true }
-topsoil-transaction-payment-rpc = { workspace = true, default-features = true }
+plant-im-online = { workspace = true, default-features = true }
+plant-transaction-payment-rpc = { workspace = true, default-features = true }
 plant-authority-discovery = { workspace = true, default-features = true }
 soil-chain-spec = { workspace = true, default-features = true }
 soil-cli = { workspace = true, default-features = true }
@@ -109,11 +109,11 @@ soil-test-staging-node-rpc = { workspace = true }
 assert_cmd = { workspace = true }
 topsoil-support = { workspace = true, default-features = true }
 plant-bags-list = { workspace = true, default-features = true }
-topsoil-balances = { workspace = true, default-features = true }
+plant-balances = { workspace = true, default-features = true }
 plant-root-testing = { workspace = true, default-features = true }
 plant-sudo = { workspace = true, default-features = true }
-topsoil-timestamp = { workspace = true, default-features = true }
-topsoil-transaction-payment = { workspace = true, default-features = true }
+plant-timestamp = { workspace = true, default-features = true }
+plant-transaction-payment = { workspace = true, default-features = true }
 plant-treasury = { workspace = true, default-features = true }
 subsoil-crypto-hashing = { workspace = true, default-features = true }
 criterion = { features = ["async_tokio"], workspace = true, default-features = true }

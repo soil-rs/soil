@@ -36,17 +36,17 @@ fn should_submit_unsigned_transaction() {
 
 	t.execute_with(|| {
 		let signature =
-			topsoil_im_online::sr25519::AuthoritySignature::try_from(vec![0; 64]).unwrap();
-		let heartbeat_data = topsoil_im_online::Heartbeat {
+			plant_im_online::sr25519::AuthoritySignature::try_from(vec![0; 64]).unwrap();
+		let heartbeat_data = plant_im_online::Heartbeat {
 			block_number: 1,
 			session_index: 1,
 			authority_index: 0,
 			validators_len: 0,
 		};
 
-		let call = topsoil_im_online::Call::heartbeat { heartbeat: heartbeat_data, signature };
+		let call = plant_im_online::Call::heartbeat { heartbeat: heartbeat_data, signature };
 		let xt = generic::UncheckedExtrinsic::new_bare(call.into()).into();
-		SubmitTransaction::<Runtime, topsoil_im_online::Call<Runtime>>::submit_transaction(xt)
+		SubmitTransaction::<Runtime, plant_im_online::Call<Runtime>>::submit_transaction(xt)
 			.unwrap();
 
 		assert_eq!(state.read().transactions.len(), 1)
@@ -76,7 +76,7 @@ fn should_submit_signed_transaction() {
 	t.execute_with(|| {
 		let results =
 			Signer::<Runtime, TestAuthorityId>::all_accounts().send_signed_transaction(|_| {
-				topsoil_balances::Call::transfer_allow_death {
+				plant_balances::Call::transfer_allow_death {
 					dest: Alice.to_account_id().into(),
 					value: Default::default(),
 				}
@@ -107,7 +107,7 @@ fn should_submit_signed_twice_from_the_same_account() {
 	t.execute_with(|| {
 		let result =
 			Signer::<Runtime, TestAuthorityId>::any_account().send_signed_transaction(|_| {
-				topsoil_balances::Call::transfer_allow_death {
+				plant_balances::Call::transfer_allow_death {
 					dest: Alice.to_account_id().into(),
 					value: Default::default(),
 				}
@@ -119,7 +119,7 @@ fn should_submit_signed_twice_from_the_same_account() {
 		// submit another one from the same account. The nonce should be incremented.
 		let result =
 			Signer::<Runtime, TestAuthorityId>::any_account().send_signed_transaction(|_| {
-				topsoil_balances::Call::transfer_allow_death {
+				plant_balances::Call::transfer_allow_death {
 					dest: Alice.to_account_id().into(),
 					value: Default::default(),
 				}
@@ -158,7 +158,7 @@ fn should_submit_signed_twice_from_all_accounts() {
 	t.execute_with(|| {
 		let results = Signer::<Runtime, TestAuthorityId>::all_accounts()
 			.send_signed_transaction(|_| {
-				topsoil_balances::Call::transfer_allow_death { dest: Alice.to_account_id().into(), value: Default::default() }
+				plant_balances::Call::transfer_allow_death { dest: Alice.to_account_id().into(), value: Default::default() }
 			});
 
 		let len = results.len();
@@ -169,7 +169,7 @@ fn should_submit_signed_twice_from_all_accounts() {
 		// submit another one from the same account. The nonce should be incremented.
 		let results = Signer::<Runtime, TestAuthorityId>::all_accounts()
 			.send_signed_transaction(|_| {
-				topsoil_balances::Call::transfer_allow_death { dest: Alice.to_account_id().into(), value: Default::default() }
+				plant_balances::Call::transfer_allow_death { dest: Alice.to_account_id().into(), value: Default::default() }
 			});
 
 		let len = results.len();
@@ -219,7 +219,7 @@ fn submitted_transaction_should_be_valid() {
 	t.execute_with(|| {
 		let results =
 			Signer::<Runtime, TestAuthorityId>::all_accounts().send_signed_transaction(|_| {
-				topsoil_balances::Call::transfer_allow_death {
+				plant_balances::Call::transfer_allow_death {
 					dest: Alice.to_account_id().into(),
 					value: Default::default(),
 				}
@@ -239,7 +239,7 @@ fn submitted_transaction_should_be_valid() {
 		// add balance to the account
 		let author = extrinsic.preamble.clone().to_signed().clone().unwrap().0;
 		let address = Indices::lookup(author).unwrap();
-		let data = topsoil_balances::AccountData {
+		let data = plant_balances::AccountData {
 			free: ExistentialDeposit::get() * 10,
 			..Default::default()
 		};

@@ -39,7 +39,7 @@ fn create_tx_bare_ext(account: AccountId) -> TxBareExtension {
 			topsoil_system::Pallet::<Runtime>::account(&account).nonce,
 		),
 		topsoil_system::CheckWeight::<Runtime>::new(),
-		topsoil_transaction_payment::ChargeTransactionPayment::<Runtime>::from(0),
+		plant_transaction_payment::ChargeTransactionPayment::<Runtime>::from(0),
 	)
 }
 
@@ -335,7 +335,7 @@ fn meta_tx_call_fails() {
 		// Alice builds a meta transaction.
 
 		// transfer more than alice has
-		let transfer_call = RuntimeCall::Balances(topsoil_balances::Call::transfer_allow_death {
+		let transfer_call = RuntimeCall::Balances(plant_balances::Call::transfer_allow_death {
 			dest: bob_account.clone(),
 			value: alice_balance * 2,
 		});

@@ -21,7 +21,7 @@
 
 use super::{mock::*, *};
 use subsoil::runtime::MultiAddress::Id;
-use topsoil_balances::Error as BalancesError;
+use plant_balances::Error as BalancesError;
 use topsoil_support::{assert_noop, assert_ok, pallet_prelude::Pays};
 
 #[test]

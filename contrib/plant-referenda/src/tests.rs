@@ -22,7 +22,7 @@ use crate::mock::{RefState::*, *};
 use assert_matches::assert_matches;
 use codec::Decode;
 use subsoil::runtime::DispatchError::BadOrigin;
-use topsoil_balances::Error as BalancesError;
+use plant_balances::Error as BalancesError;
 use topsoil_support::{assert_noop, assert_ok, dispatch::RawOrigin, traits::Contains};
 
 #[test]
@@ -30,7 +30,7 @@ fn params_should_work() {
 	ExtBuilder::default().build_and_execute(|| {
 		assert_eq!(ReferendumCount::<Test>::get(), 0);
 		assert_eq!(Balances::free_balance(42), 0);
-		assert_eq!(topsoil_balances::TotalIssuance::<Test>::get(), 600);
+		assert_eq!(plant_balances::TotalIssuance::<Test>::get(), 600);
 	});
 }
 
@@ -693,7 +693,7 @@ fn zero_enactment_delay_executes_proposal_at_next_block() {
 			RuntimeOrigin::signed(1),
 			Box::new(RawOrigin::Signed(1).into()),
 			Preimage::bound(
-				topsoil_balances::Call::transfer_keep_alive { dest: 42, value: 20 }.into()
+				plant_balances::Call::transfer_keep_alive { dest: 42, value: 20 }.into()
 			)
 			.unwrap(),
 			DispatchTime::After(0),

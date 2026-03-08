@@ -33,7 +33,7 @@ use subsoil::core::{crypto::get_public_from_string_or_panic, sr25519};
 use subsoil::keyring::Sr25519Keyring;
 use subsoil::mixnet::types::AuthorityId as MixnetId;
 use subsoil::runtime::Perbill;
-use topsoil_im_online::sr25519::AuthorityId as ImOnlineId;
+use plant_im_online::sr25519::AuthorityId as ImOnlineId;
 use topsoil_support::build_struct_json_patch;
 
 pub const ENDOWMENT: Balance = 10_000_000 * DOLLARS;

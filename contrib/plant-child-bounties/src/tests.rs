@@ -52,7 +52,7 @@ topsoil_support::construct_runtime!(
 	pub enum Test
 	{
 		System: topsoil_system,
-		Balances: topsoil_balances,
+		Balances: plant_balances,
 		Bounties: plant_bounties,
 		Treasury: plant_treasury,
 		ChildBounties: plant_child_bounties,
@@ -78,11 +78,11 @@ impl topsoil_system::Config for Test {
 	type AccountId = AccountId;
 	type Lookup = IdentityLookup<Self::AccountId>;
 	type Block = Block;
-	type AccountData = topsoil_balances::AccountData<u64>;
+	type AccountData = plant_balances::AccountData<u64>;
 }
 
-#[derive_impl(topsoil_balances::config_preludes::TestDefaultConfig)]
-impl topsoil_balances::Config for Test {
+#[derive_impl(plant_balances::config_preludes::TestDefaultConfig)]
+impl plant_balances::Config for Test {
 	type AccountStore = System;
 }
 parameter_types! {
@@ -94,7 +94,7 @@ parameter_types! {
 
 impl plant_treasury::Config for Test {
 	type PalletId = TreasuryPalletId;
-	type Currency = topsoil_balances::Pallet<Test>;
+	type Currency = plant_balances::Pallet<Test>;
 	type RejectOrigin = topsoil_system::EnsureRoot<AccountId>;
 	type RuntimeEvent = RuntimeEvent;
 	type SpendPeriod = ConstU64<2>;
@@ -146,7 +146,7 @@ impl plant_child_bounties::Config for Test {
 
 pub fn new_test_ext() -> subsoil::io::TestExternalities {
 	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
-	topsoil_balances::GenesisConfig::<Test> {
+	plant_balances::GenesisConfig::<Test> {
 		// Total issuance will be 200 with treasury account initialized at ED.
 		balances: vec![(account_id(0), 100), (account_id(1), 98), (account_id(2), 1)],
 		..Default::default()

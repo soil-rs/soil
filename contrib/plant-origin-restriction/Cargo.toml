@@ -17,7 +17,7 @@ topsoil-benchmarking = { workspace = true, optional = true }
 topsoil-support = { workspace = true }
 topsoil-system = { workspace = true }
 log = { workspace = true }
-topsoil-transaction-payment = { workspace = true }
+plant-transaction-payment = { workspace = true }
 scale-info = { workspace = true, features = ["derive"] }
 subsoil = { workspace = true }
 
@@ -29,7 +29,7 @@ std = [
 	"topsoil-support/std",
 	"topsoil-system/std",
 	"log/std",
-	"topsoil-transaction-payment/std",
+	"plant-transaction-payment/std",
 	"scale-info/std",
 	"subsoil/std",
 ]
@@ -37,12 +37,12 @@ runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",
 	"topsoil-support/runtime-benchmarks",
 	"topsoil-system/runtime-benchmarks",
-	"topsoil-transaction-payment/runtime-benchmarks",
+	"plant-transaction-payment/runtime-benchmarks",
 	"subsoil/runtime-benchmarks",
 ]
 try-runtime = [
 	"topsoil-support/try-runtime",
 	"topsoil-system/try-runtime",
-	"topsoil-transaction-payment/try-runtime",
+	"plant-transaction-payment/try-runtime",
 	"subsoil/try-runtime",
 ]
