@@ -1,5 +1,5 @@
 [package]
-name = "soil-runtime-test"
+name = "soil-test-runtime"
 version = "2.0.0"
 authors.workspace = true
 edition.workspace = true

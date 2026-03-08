@@ -31,7 +31,7 @@ members = [
 	"harness/soil-test",
 	"harness/soil-test-runtime-interface-wasm",
 	"harness/soil-test-runtime-interface-wasm-deprecated",
-	"main/soil-runtime-test",
+	"harness/soil-test-runtime",
 	"main/soil-runtime-utilities",
 	"main/soil-service",
 	"main/soil-statement-store",
@@ -389,7 +389,7 @@ soil-pow = { path = "main/soil-pow", default-features = false }
 soil-network = { path = "main/soil-network", default-features = false }
 soil-offchain = { path = "main/soil-offchain", default-features = false }
 soil-test = { path = "harness/soil-test" }
-soil-runtime-test = { path = "main/soil-runtime-test" }
+soil-test-runtime = { path = "harness/soil-test-runtime" }
 soil-runtime-utilities = { path = "main/soil-runtime-utilities", default-features = true }
 soil-service = { path = "main/soil-service", default-features = false }
 soil-sync-state-rpc = { path = "main/soil-sync-state-rpc", default-features = false }
