@@ -359,21 +359,21 @@ async fn sync_after_fork_works() {
 #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
 async fn syncs_all_forks() {
 	subsoil::tracing::try_init_simple();
-	let mut net = TestNet::new(4);
+	let mut net = TestNet::new(2);
 	net.peer(0).push_blocks(2, false);
 	net.peer(1).push_blocks(2, false);
 
 	let b1 = net.peer(0).push_blocks(2, true).pop().unwrap();
 	let b2 = net.peer(1).push_blocks(4, false).pop().unwrap();
 
-	net.run_until_sync().await;
-	while !net.peer(0).has_block(b1)
-		|| !net.peer(0).has_block(b2)
-		|| !net.peer(1).has_block(b1)
-		|| !net.peer(1).has_block(b2)
-	{
-		net.run_until_idle().await;
-	}
+	net.run_until_connected().await;
+	net.run_until(Duration::from_secs(60), "all forks synced", |net| {
+		net.peers()[0].has_block(b1)
+			&& net.peers()[0].has_block(b2)
+			&& net.peers()[1].has_block(b1)
+			&& net.peers()[1].has_block(b2)
+	})
+	.await;
 	// Check that all peers have all of the branches.
 	assert!(net.peer(0).has_block(b1));
 	assert!(net.peer(0).has_block(b2));

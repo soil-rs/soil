@@ -1166,6 +1166,33 @@ pub trait TestNetFactory: Default + Sized + Send {
 		.expect("sync didn't happen within 10 mins");
 	}
 
+	/// Poll the network until `predicate` returns true or the timeout expires.
+	async fn run_until(
+		&mut self,
+		timeout_duration: Duration,
+		label: &'static str,
+		mut predicate: impl for<'a> FnMut(&'a Self) -> bool + Send,
+	)
+	where
+		Self: Sized,
+	{
+		timeout(timeout_duration, async {
+			loop {
+				futures::future::poll_fn::<(), _>(|cx| {
+					self.poll(cx);
+					Poll::Ready(())
+				})
+				.await;
+
+				if predicate(self) {
+					break;
+				}
+			}
+		})
+		.await
+		.unwrap_or_else(|_| panic!("{label} didn't happen within {:?}", timeout_duration));
+	}
+
 	/// Run the network until there are no pending packets.
 	///
 	/// Calls `poll_until_idle` repeatedly with the runtime passed as parameter.
