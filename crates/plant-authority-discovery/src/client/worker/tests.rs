@@ -46,7 +46,7 @@ use soil_network::{
 use subsoil::api::{ApiRef, ProvideRuntimeApi};
 use subsoil::keystore::{testing::MemoryKeystore, Keystore};
 use subsoil::runtime::traits::{Block as BlockT, NumberFor, Zero};
-use substrate_test_runtime_client::runtime::Block;
+use soil_test_node_runtime_client::runtime::Block;
 
 fn test_registry() -> prometheus_endpoint::Registry {
 	prometheus_endpoint::Registry::new()
@@ -629,7 +629,7 @@ struct DhtValueFoundTester {
 			TestApi,
 			subsoil::runtime::generic::Block<
 				subsoil::runtime::generic::Header<u64, subsoil::runtime::traits::BlakeTwo256>,
-				substrate_test_runtime_client::runtime::Extrinsic,
+				soil_test_node_runtime_client::runtime::Extrinsic,
 			>,
 			std::pin::Pin<Box<futures::channel::mpsc::Receiver<DhtEvent>>>,
 		>,

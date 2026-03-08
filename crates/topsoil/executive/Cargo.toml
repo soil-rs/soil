@@ -29,7 +29,7 @@ subsoil = { workspace = true }
 array-bytes = { workspace = true, default-features = true }
 topsoil-balances = { workspace = true, default-features = true }
 topsoil-transaction-payment = { workspace = true, default-features = true }
-substrate-test-runtime-client = { workspace = true }
+soil-test-node-runtime-client = { workspace = true }
 
 [features]
 default = ["std"]

@@ -382,10 +382,10 @@ mod tests {
 	use subsoil::api::StorageProof;
 	use subsoil::inherents::InherentData;
 	use subsoil::runtime::generic::{Digest, DigestItem};
-	use substrate_test_runtime_client::{
+	use soil_test_node_runtime_client::{
 		DefaultTestClientBuilderExt, Sr25519Keyring::*, TestClientBuilder, TestClientBuilderExt,
 	};
-	use substrate_test_runtime_transaction_pool::{uxt, TestApi};
+	use soil_test_node_runtime_txpool::{uxt, TestApi};
 
 	fn api() -> Arc<TestApi> {
 		Arc::new(TestApi::empty())

@@ -49,14 +49,14 @@ use subsoil::core::{
 };
 use subsoil::runtime::traits::Block as BlockT;
 use subsoil::version::RuntimeVersion;
-use substrate_test_runtime::Transfer;
-use substrate_test_runtime_client::{
+use soil_test_node_runtime::Transfer;
+use soil_test_node_runtime_client::{
 	prelude::*, runtime, runtime::RuntimeApi, Backend, BlockBuilderExt, Client,
 	ClientBlockImportExt, GenesisInit,
 };
 
-type Header = substrate_test_runtime_client::runtime::Header;
-type Block = substrate_test_runtime_client::runtime::Block;
+type Header = soil_test_node_runtime_client::runtime::Header;
+type Block = soil_test_node_runtime_client::runtime::Block;
 const MAX_PINNED_BLOCKS: usize = 32;
 const MAX_PINNED_SECS: u64 = 60;
 const MAX_OPERATIONS: usize = 16;
@@ -348,7 +348,7 @@ async fn follow_with_runtime() {
 	// Initialized must always be reported first.
 	let event: FollowEvent<String> = get_next_event(&mut sub).await;
 
-	// it is basically json-encoded substrate_test_runtime_client::runtime::VERSION
+	// it is basically json-encoded soil_test_node_runtime_client::runtime::VERSION
 	let runtime_str = "{\"specName\":\"test\",\"implName\":\"parity-test\",\"authoringVersion\":1,\
 		\"specVersion\":2,\"implVersion\":2,\"apis\":[[\"0xdf6acb689907609b\",5],\
 		[\"0x37e397fc7c91f5e4\",2],[\"0xd2bc9897eed08f15\",3],[\"0x40fe3ad401f8959a\",6],\
@@ -2664,11 +2664,11 @@ async fn follow_report_multiple_pruned_block() {
 async fn pin_block_references() {
 	// Manually construct an in-memory backend and client.
 	let backend = Arc::new(soil_client::client_api::in_mem::Backend::new());
-	let executor = substrate_test_runtime_client::WasmExecutor::default();
+	let executor = soil_test_node_runtime_client::WasmExecutor::default();
 	let client_config = soil_service::ClientConfig::default();
 
 	let genesis_block_builder = soil_service::GenesisBlockBuilder::new(
-		&substrate_test_runtime_client::GenesisParameters::default().genesis_storage(),
+		&soil_test_node_runtime_client::GenesisParameters::default().genesis_storage(),
 		!client_config.no_genesis,
 		backend.clone(),
 		executor.clone(),

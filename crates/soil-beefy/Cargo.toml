@@ -36,7 +36,7 @@ soil-rpc = { features = ["test-helpers"], workspace = true, default-features = t
 soil-test = { workspace = true }
 serde = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
-substrate-test-runtime-client = { workspace = true }
+soil-test-node-runtime-client = { workspace = true }
 
 [features]
 # This feature adds BLS crypto primitives. It should not be used in production since

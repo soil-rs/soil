@@ -23,8 +23,8 @@ use jsonrpsee::{rpc_params, MethodsError as Error};
 use soil_client::transaction_pool::{ChainEvent, MaintainedTransactionPool, TransactionPool};
 use soil_txpool::{Options, PoolLimit};
 use std::sync::Arc;
-use substrate_test_runtime_client::Sr25519Keyring::*;
-use substrate_test_runtime_transaction_pool::uxt;
+use soil_test_node_runtime_client::Sr25519Keyring::*;
+use soil_test_node_runtime_txpool::uxt;
 
 const MAX_TX_PER_CONNECTION: usize = 4;
 

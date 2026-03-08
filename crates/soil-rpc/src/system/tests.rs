@@ -31,7 +31,7 @@ use std::{
 	thread,
 };
 use subsoil::core::H256;
-use substrate_test_runtime_client::runtime::Block;
+use soil_test_node_runtime_client::runtime::Block;
 
 struct Status {
 	pub peers: usize,

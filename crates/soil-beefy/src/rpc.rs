@@ -168,7 +168,7 @@ mod tests {
 	use jsonrpsee::{core::EmptyServerParams as EmptyParams, RpcModule};
 	use subsoil::consensus::beefy::{ecdsa_crypto, known_payloads, Payload, SignedCommitment};
 	use subsoil::runtime::traits::{BlakeTwo256, Hash};
-	use substrate_test_runtime_client::runtime::Block;
+	use soil_test_node_runtime_client::runtime::Block;
 
 	fn setup_io_handler() -> (
 		RpcModule<Beefy<Block, ecdsa_crypto::AuthorityId>>,

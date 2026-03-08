@@ -35,7 +35,7 @@ use subsoil::runtime::{
 		InvalidTransaction, TransactionSource, TransactionValidity, ValidTransaction,
 	},
 };
-use substrate_test_runtime::{
+use soil_test_node_runtime::{
 	substrate_test_pallet::pallet::Call as PalletCall, BalancesCall, Block, BlockNumber, Extrinsic,
 	ExtrinsicBuilder, Hashing, RuntimeCall, Transfer, TransferData, H256,
 };

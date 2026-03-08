@@ -97,8 +97,8 @@ soil-client = { workspace = true, default-features = true }
 soil-test = { workspace = true }
 subsoil-crypto-hashing = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
-substrate-test-runtime = { workspace = true }
-substrate-test-runtime-client = { workspace = true }
+soil-test-node-runtime = { workspace = true }
+soil-test-node-runtime-client = { workspace = true }
 tempfile = { workspace = true }
 tokio = { features = ["macros", "rt-multi-thread"], workspace = true, default-features = true }
 tokio-util = { features = ["compat"], workspace = true }

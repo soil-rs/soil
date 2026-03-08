@@ -402,8 +402,8 @@ mod tests {
 		TimedTransactionSource,
 	};
 	use futures::executor::block_on;
-	use substrate_test_runtime::{AccountId, Transfer, H256};
-	use substrate_test_runtime_client::Sr25519Keyring::{Alice, Bob};
+	use soil_test_node_runtime::{AccountId, Transfer, H256};
+	use soil_test_node_runtime_client::Sr25519Keyring::{Alice, Bob};
 
 	#[test]
 	fn revalidation_queue_works() {

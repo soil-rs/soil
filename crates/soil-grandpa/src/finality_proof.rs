@@ -267,7 +267,7 @@ mod tests {
 	use subsoil::consensus::grandpa::GRANDPA_ENGINE_ID as ID;
 	use subsoil::core::crypto::UncheckedFrom;
 	use subsoil::keyring::Ed25519Keyring;
-	use substrate_test_runtime_client::{
+	use soil_test_node_runtime_client::{
 		runtime::{Block, Header, H256},
 		Backend as TestBackend, ClientBlockImportExt, ClientExt, DefaultTestClientBuilderExt,
 		TestClient, TestClientBuilder, TestClientBuilderExt,

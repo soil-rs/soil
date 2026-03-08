@@ -29,10 +29,10 @@ use futures::StreamExt;
 
 use std::{collections::HashMap, pin::Pin, sync::Arc};
 use subsoil::runtime::traits::Block as BlockT;
-use substrate_test_runtime_transaction_pool::TestApi;
+use soil_test_node_runtime_txpool::TestApi;
 use tokio::sync::mpsc;
 
-pub type Block = substrate_test_runtime_client::runtime::Block;
+pub type Block = soil_test_node_runtime_client::runtime::Block;
 
 pub type TxTestPool = MiddlewarePool;
 pub type TxStatusType<Pool> = soil_client::transaction_pool::TransactionStatus<

@@ -314,7 +314,7 @@ mod tests {
 	use crate::sync::block_announce_validator::AllocateSlotForBlockAnnounceValidation;
 	use soil_client::consensus::block_validation::DefaultBlockAnnounceValidator;
 	use soil_network::types::PeerId;
-	use substrate_test_runtime_client::runtime::Block;
+	use soil_test_node_runtime_client::runtime::Block;
 
 	#[test]
 	fn allocate_one_validation_slot() {

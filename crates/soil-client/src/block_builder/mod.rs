@@ -378,4 +378,4 @@ where
 }
 
 // Runtime-backed integration tests live in the `soil-test` crate to keep
-// `soil-client` free of the `substrate-test-runtime-client` dev-dependency.
+// `soil-client` free of the `soil-test-node-runtime-client` dev-dependency.

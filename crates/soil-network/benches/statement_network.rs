@@ -41,7 +41,7 @@ use std::{
 	sync::Arc,
 };
 use subsoil::core::Pair;
-use substrate_test_runtime_client::{executor::WasmExecutor, DefaultTestClientBuilderExt};
+use soil_test_node_runtime_client::{executor::WasmExecutor, DefaultTestClientBuilderExt};
 
 const STATEMENT_DATA_SIZE: usize = 256;
 
@@ -203,8 +203,8 @@ fn build_handler(
 	let wasm_executor = WasmExecutor::builder()
 		.with_max_runtime_instances(max_runtime_instances)
 		.build();
-	let (client, _) = substrate_test_runtime_client::TestClientBuilder::new()
-		.build_with_native_executor::<substrate_test_runtime_client::runtime::RuntimeApi, _>(
+	let (client, _) = soil_test_node_runtime_client::TestClientBuilder::new()
+		.build_with_native_executor::<soil_test_node_runtime_client::runtime::RuntimeApi, _>(
 		Some(wasm_executor),
 	);
 	let client = Arc::new(client);

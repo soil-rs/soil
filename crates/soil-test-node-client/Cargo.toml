@@ -1,5 +1,5 @@
 [package]
-name = "substrate-test-client"
+name = "soil-test-node-client"
 description = "Client testing utilities"
 version = "2.0.1"
 authors.workspace = true

@@ -85,7 +85,7 @@ pub(crate) mod tests {
 		ecdsa_crypto, known_payloads, test_utils::Keyring, Commitment, Payload, SignedCommitment,
 		VersionedFinalityProof,
 	};
-	use substrate_test_runtime_client::runtime::Block;
+	use soil_test_node_runtime_client::runtime::Block;
 
 	use super::*;
 	use crate::tests::make_beefy_ids;

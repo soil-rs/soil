@@ -54,8 +54,8 @@ tracing = { workspace = true, default-features = true}
 tracing-futures = { workspace = true}
 
 [dev-dependencies]
-substrate-test-runtime = { workspace = true }
-substrate-test-runtime-client = { workspace = true }
+soil-test-node-runtime = { workspace = true }
+soil-test-node-runtime-client = { workspace = true }
 
 [features]
 default = ["rocksdb"]

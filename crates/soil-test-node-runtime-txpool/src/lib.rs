@@ -39,7 +39,7 @@ use subsoil::runtime::{
 		ValidTransaction,
 	},
 };
-use substrate_test_runtime_client::{
+use soil_test_node_runtime_client::{
 	runtime::{
 		AccountId, Block, BlockNumber, Extrinsic, ExtrinsicBuilder, Hash, Header, Nonce, Transfer,
 		TransferData,

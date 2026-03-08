@@ -196,7 +196,7 @@ mod tests {
 	use subsoil::core::H256;
 	use subsoil::runtime::traits::Block as BlockT;
 
-	type Block = substrate_test_runtime_client::runtime::Block;
+	type Block = soil_test_node_runtime_client::runtime::Block;
 
 	use super::{NotificationPinningWorker, UnpinningByLengthLimiter};
 

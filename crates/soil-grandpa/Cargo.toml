@@ -48,7 +48,7 @@ finality-grandpa = { features = ["derive-codec", "test-helpers"], workspace = tr
 soil-rpc = { features = ["test-helpers"], workspace = true, default-features = true }
 soil-test = { workspace = true }
 subsoil = { workspace = true, default-features = true }
-substrate-test-runtime-client = { workspace = true }
+soil-test-node-runtime-client = { workspace = true }
 tokio = { workspace = true, default-features = true }
 
 [features]

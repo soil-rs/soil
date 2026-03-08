@@ -32,7 +32,7 @@ use subsoil::runtime::{
 	},
 };
 use subsoil_crypto_hashing::blake2_256;
-use substrate_test_runtime::{AccountId, Block, Extrinsic, ExtrinsicBuilder, TransferData, H256};
+use soil_test_node_runtime::{AccountId, Block, Extrinsic, ExtrinsicBuilder, TransferData, H256};
 
 #[derive(Clone, Debug, Default)]
 struct TestApi {

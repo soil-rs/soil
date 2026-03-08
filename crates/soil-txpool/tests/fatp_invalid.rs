@@ -31,8 +31,8 @@ use soil_client::transaction_pool::{
 };
 use soil_txpool::ChainApi;
 use subsoil::runtime::transaction_validity::{InvalidTransaction, TransactionValidityError};
-use substrate_test_runtime_client::Sr25519Keyring::*;
-use substrate_test_runtime_transaction_pool::uxt;
+use soil_test_node_runtime_client::Sr25519Keyring::*;
+use soil_test_node_runtime_txpool::uxt;
 use tracing::debug;
 
 #[test]

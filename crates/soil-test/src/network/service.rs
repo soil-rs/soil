@@ -38,7 +38,7 @@ use soil_network::{
 	NotificationMetrics, NotificationService, PeerId,
 };
 use subsoil::runtime::traits::{Block as BlockT, Zero};
-use substrate_test_runtime_client::{
+use soil_test_node_runtime_client::{
 	runtime::{Block as TestBlock, Hash as TestHash},
 	TestClientBuilder, TestClientBuilderExt as _,
 };
@@ -75,7 +75,7 @@ impl TestNetwork {
 struct TestNetworkBuilder {
 	import_queue: Option<Box<dyn ImportQueue<TestBlock>>>,
 	link: Option<Box<dyn Link<TestBlock>>>,
-	client: Option<Arc<substrate_test_runtime_client::TestClient>>,
+	client: Option<Arc<soil_test_node_runtime_client::TestClient>>,
 	listen_addresses: Vec<Multiaddr>,
 	set_config: Option<config::SetConfig>,
 	chain_sync_network: Option<NetworkServiceProvider>,
@@ -163,8 +163,8 @@ impl TestNetworkBuilder {
 		let mut block_relay_params =
 			BlockRequestHandler::new::<
 				NetworkWorker<
-					substrate_test_runtime_client::runtime::Block,
-					substrate_test_runtime_client::runtime::Hash,
+					soil_test_node_runtime_client::runtime::Block,
+					soil_test_node_runtime_client::runtime::Hash,
 				>,
 			>(chain_sync_network_handle.clone(), &protocol_id, None, client.clone(), 50);
 		tokio::spawn(Box::pin(async move {
@@ -174,8 +174,8 @@ impl TestNetworkBuilder {
 		let state_request_protocol_config = {
 			let (handler, protocol_config) = StateRequestHandler::new::<
 				NetworkWorker<
-					substrate_test_runtime_client::runtime::Block,
-					substrate_test_runtime_client::runtime::Hash,
+					soil_test_node_runtime_client::runtime::Block,
+					soil_test_node_runtime_client::runtime::Hash,
 				>,
 			>(&protocol_id, None, client.clone(), 50);
 			tokio::spawn(handler.run().boxed());
@@ -185,8 +185,8 @@ impl TestNetworkBuilder {
 		let light_client_request_protocol_config = {
 			let (handler, protocol_config) = LightClientRequestHandler::new::<
 				NetworkWorker<
-					substrate_test_runtime_client::runtime::Block,
-					substrate_test_runtime_client::runtime::Hash,
+					soil_test_node_runtime_client::runtime::Block,
+					soil_test_node_runtime_client::runtime::Hash,
 				>,
 			>(&protocol_id, None, client.clone());
 			tokio::spawn(handler.run().boxed());
@@ -264,11 +264,11 @@ impl TestNetworkBuilder {
 		let genesis_hash =
 			client.hash(Zero::zero()).ok().flatten().expect("Genesis block exists; qed");
 		let worker = NetworkWorker::<
-			substrate_test_runtime_client::runtime::Block,
-			substrate_test_runtime_client::runtime::Hash,
+			soil_test_node_runtime_client::runtime::Block,
+			soil_test_node_runtime_client::runtime::Hash,
 		>::new(config::Params::<
-			substrate_test_runtime_client::runtime::Block,
-			substrate_test_runtime_client::runtime::Hash,
+			soil_test_node_runtime_client::runtime::Block,
+			soil_test_node_runtime_client::runtime::Hash,
 			NetworkWorker<_, _>,
 		> {
 			block_announce_config,

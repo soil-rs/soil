@@ -26,7 +26,7 @@ use soil_client::block_builder::BlockBuilderBuilder;
 use soil_client::consensus::BlockOrigin;
 use std::sync::Arc;
 use subsoil::core::{hash::H256, storage::ChildInfo};
-use substrate_test_runtime_client::{
+use soil_test_node_runtime_client::{
 	prelude::*,
 	runtime::{ExtrinsicBuilder, Transfer},
 };
@@ -132,7 +132,7 @@ async fn should_return_storage_entries() {
 async fn should_return_child_storage() {
 	let child_info = ChildInfo::new_default(STORAGE_KEY);
 	let client = Arc::new(
-		substrate_test_runtime_client::TestClientBuilder::new()
+		soil_test_node_runtime_client::TestClientBuilder::new()
 			.add_child_storage(&child_info, "key", vec![42_u8])
 			.build(),
 	);
@@ -162,7 +162,7 @@ async fn should_return_child_storage() {
 async fn should_return_child_storage_entries() {
 	let child_info = ChildInfo::new_default(STORAGE_KEY);
 	let client = Arc::new(
-		substrate_test_runtime_client::TestClientBuilder::new()
+		soil_test_node_runtime_client::TestClientBuilder::new()
 			.add_child_storage(&child_info, "key1", vec![42_u8])
 			.add_child_storage(&child_info, "key2", vec![43_u8, 44])
 			.build(),
@@ -197,7 +197,7 @@ async fn should_return_child_storage_entries() {
 
 #[tokio::test]
 async fn should_call_contract() {
-	let client = Arc::new(substrate_test_runtime_client::new());
+	let client = Arc::new(soil_test_node_runtime_client::new());
 	let genesis_hash = client.genesis_hash();
 	let (client, _child) = new_full(client, test_executor(), None);
 
@@ -210,7 +210,7 @@ async fn should_call_contract() {
 #[tokio::test]
 async fn should_notify_about_storage_changes() {
 	let mut sub = {
-		let client = Arc::new(substrate_test_runtime_client::new());
+		let client = Arc::new(soil_test_node_runtime_client::new());
 		let (api, _child) = new_full(client.clone(), test_executor(), None);
 		let mut api_rpc = api.into_rpc();
 		api_rpc.extensions_mut().insert(DenyUnsafe::No);
@@ -249,7 +249,7 @@ async fn should_notify_about_storage_changes() {
 #[tokio::test]
 async fn should_send_initial_storage_changes_and_notifications() {
 	let mut sub = {
-		let client = Arc::new(substrate_test_runtime_client::new());
+		let client = Arc::new(soil_test_node_runtime_client::new());
 		let (api, _child) = new_full(client.clone(), test_executor(), None);
 
 		let alice_balance_key = [
@@ -461,16 +461,16 @@ async fn should_query_storage() {
 		);
 	}
 
-	run_tests(Arc::new(substrate_test_runtime_client::new())).await;
+	run_tests(Arc::new(soil_test_node_runtime_client::new())).await;
 	run_tests(Arc::new(TestClientBuilder::new().build())).await;
 }
 
 #[tokio::test]
 async fn should_return_runtime_version() {
-	let client = Arc::new(substrate_test_runtime_client::new());
+	let client = Arc::new(soil_test_node_runtime_client::new());
 	let (api, _child) = new_full(client.clone(), test_executor(), None);
 
-	// it is basically json-encoded substrate_test_runtime_client::runtime::VERSION
+	// it is basically json-encoded soil_test_node_runtime_client::runtime::VERSION
 	let result = "{\"specName\":\"test\",\"implName\":\"parity-test\",\"authoringVersion\":1,\
 		\"specVersion\":2,\"implVersion\":2,\"apis\":[[\"0xdf6acb689907609b\",5],\
 		[\"0x37e397fc7c91f5e4\",2],[\"0xd2bc9897eed08f15\",3],[\"0x40fe3ad401f8959a\",6],\
@@ -490,7 +490,7 @@ async fn should_return_runtime_version() {
 #[tokio::test]
 async fn should_notify_on_runtime_version_initially() {
 	let mut sub = {
-		let client = Arc::new(substrate_test_runtime_client::new());
+		let client = Arc::new(soil_test_node_runtime_client::new());
 		let (api, _child) = new_full(client, test_executor(), None);
 		let mut api_rpc = api.into_rpc();
 		api_rpc.extensions_mut().insert(DenyUnsafe::No);
@@ -517,7 +517,7 @@ fn should_deserialize_storage_key() {
 
 #[tokio::test]
 async fn wildcard_storage_subscriptions_are_rpc_unsafe() {
-	let client = Arc::new(substrate_test_runtime_client::new());
+	let client = Arc::new(soil_test_node_runtime_client::new());
 	let (api, _child) = new_full(client, test_executor(), None);
 	let mut api_rpc = api.into_rpc();
 	api_rpc.extensions_mut().insert(DenyUnsafe::Yes);
@@ -528,7 +528,7 @@ async fn wildcard_storage_subscriptions_are_rpc_unsafe() {
 
 #[tokio::test]
 async fn concrete_storage_subscriptions_are_rpc_safe() {
-	let client = Arc::new(substrate_test_runtime_client::new());
+	let client = Arc::new(soil_test_node_runtime_client::new());
 	let (api, _child) = new_full(client, test_executor(), None);
 	let mut api_rpc = api.into_rpc();
 	api_rpc.extensions_mut().insert(DenyUnsafe::Yes);

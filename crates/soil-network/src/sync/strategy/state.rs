@@ -406,7 +406,7 @@ mod test {
 	use soil_client::import::{ImportedAux, ImportedState};
 	use subsoil::core::H256;
 	use subsoil::runtime::traits::Zero;
-	use substrate_test_runtime_client::{
+	use soil_test_node_runtime_client::{
 		runtime::{Block, Hash},
 		BlockBuilderExt, DefaultTestClientBuilderExt, TestClientBuilder, TestClientBuilderExt,
 	};

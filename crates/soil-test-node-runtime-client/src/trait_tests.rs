@@ -33,12 +33,12 @@ use soil_client::client_api::{
 };
 use soil_client::consensus::BlockOrigin;
 use subsoil::runtime::traits::Block as BlockT;
-use substrate_test_runtime::Transfer;
+use soil_test_node_runtime::Transfer;
 
 /// helper to test the `leaves` implementation for various backends
 pub fn test_leaves_for_backend<B: 'static>(backend: Arc<B>)
 where
-	B: backend::Backend<substrate_test_runtime::Block>,
+	B: backend::Backend<soil_test_node_runtime::Block>,
 {
 	// block tree:
 	// G -> A1 -> A2 -> A3 -> A4 -> A5
@@ -213,7 +213,7 @@ where
 /// helper to test the `children` implementation for various backends
 pub fn test_children_for_backend<B: 'static>(backend: Arc<B>)
 where
-	B: backend::LocalBackend<substrate_test_runtime::Block>,
+	B: backend::LocalBackend<soil_test_node_runtime::Block>,
 {
 	// block tree:
 	// G -> A1 -> A2 -> A3 -> A4 -> A5
@@ -383,7 +383,7 @@ where
 
 pub fn test_blockchain_query_by_number_gets_canonical<B: 'static>(backend: Arc<B>)
 where
-	B: backend::LocalBackend<substrate_test_runtime::Block>,
+	B: backend::LocalBackend<soil_test_node_runtime::Block>,
 {
 	// block tree:
 	// G -> A1 -> A2 -> A3 -> A4 -> A5

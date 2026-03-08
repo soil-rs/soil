@@ -102,7 +102,7 @@ fn get_builder(suffix: &str, command_args: Vec<&str>) -> ChainSpecBuilder {
 fn test_create_default() {
 	const SUFFIX: &str = "00";
 	let mut builder = get_builder(SUFFIX, vec!["create", "-r", DUMMY_PATH, "default"]);
-	builder.set_create_cmd_runtime_code(substrate_test_runtime::WASM_BINARY.unwrap().into());
+	builder.set_create_cmd_runtime_code(soil_test_node_runtime::WASM_BINARY.unwrap().into());
 	builder.run().unwrap();
 	assert_output_eq_expected(true, SUFFIX, "tests/expected/create_default.json");
 }
@@ -112,7 +112,7 @@ fn test_create_with_named_preset() {
 	const SUFFIX: &str = "01";
 	let mut builder =
 		get_builder(SUFFIX, vec!["create", "-r", DUMMY_PATH, "named-preset", "staging"]);
-	builder.set_create_cmd_runtime_code(substrate_test_runtime::WASM_BINARY.unwrap().into());
+	builder.set_create_cmd_runtime_code(soil_test_node_runtime::WASM_BINARY.unwrap().into());
 	builder.run().unwrap();
 	assert_output_eq_expected(true, SUFFIX, "tests/expected/create_with_named_preset.json");
 }
@@ -122,7 +122,7 @@ fn test_create_with_patch() {
 	const SUFFIX: &str = "02";
 	let mut builder =
 		get_builder(SUFFIX, vec!["create", "-r", DUMMY_PATH, "patch", "tests/input/patch.json"]);
-	builder.set_create_cmd_runtime_code(substrate_test_runtime::WASM_BINARY.unwrap().into());
+	builder.set_create_cmd_runtime_code(soil_test_node_runtime::WASM_BINARY.unwrap().into());
 	builder.run().unwrap();
 	assert_output_eq_expected(true, SUFFIX, "tests/expected/create_with_patch.json");
 }
@@ -132,7 +132,7 @@ fn test_create_with_full() {
 	const SUFFIX: &str = "03";
 	let mut builder =
 		get_builder(SUFFIX, vec!["create", "-r", DUMMY_PATH, "full", "tests/input/full.json"]);
-	builder.set_create_cmd_runtime_code(substrate_test_runtime::WASM_BINARY.unwrap().into());
+	builder.set_create_cmd_runtime_code(soil_test_node_runtime::WASM_BINARY.unwrap().into());
 	builder.run().unwrap();
 	assert_output_eq_expected(true, SUFFIX, "tests/expected/create_with_full.json");
 }
@@ -144,7 +144,7 @@ fn test_create_with_params() {
 		SUFFIX,
 		vec!["create", "-r", DUMMY_PATH, "-n", "test_chain", "-i", "100", "-t", "live", "default"],
 	);
-	builder.set_create_cmd_runtime_code(substrate_test_runtime::WASM_BINARY.unwrap().into());
+	builder.set_create_cmd_runtime_code(soil_test_node_runtime::WASM_BINARY.unwrap().into());
 	builder.run().unwrap();
 	assert_output_eq_expected(true, SUFFIX, "tests/expected/create_with_params.json");
 }
@@ -169,7 +169,7 @@ fn test_create_parachain() {
 			"default",
 		],
 	);
-	builder.set_create_cmd_runtime_code(substrate_test_runtime::WASM_BINARY.unwrap().into());
+	builder.set_create_cmd_runtime_code(soil_test_node_runtime::WASM_BINARY.unwrap().into());
 	builder.run().unwrap();
 	assert_output_eq_expected(true, SUFFIX, "tests/expected/create_parachain.json");
 }
@@ -181,7 +181,7 @@ fn test_create_raw_storage() {
 		SUFFIX,
 		vec!["create", "-r", DUMMY_PATH, "-s", "patch", "tests/input/patch.json"],
 	);
-	builder.set_create_cmd_runtime_code(substrate_test_runtime::WASM_BINARY.unwrap().into());
+	builder.set_create_cmd_runtime_code(soil_test_node_runtime::WASM_BINARY.unwrap().into());
 	builder.run().unwrap();
 	assert_output_eq_expected(true, SUFFIX, "tests/expected/create_raw_storage.json");
 }
@@ -251,7 +251,7 @@ fn test_create_with_properties() {
 			"default",
 		],
 	);
-	builder.set_create_cmd_runtime_code(substrate_test_runtime::WASM_BINARY.unwrap().into());
+	builder.set_create_cmd_runtime_code(soil_test_node_runtime::WASM_BINARY.unwrap().into());
 	builder.run().unwrap();
 	assert_output_eq_expected(true, SUFFIX, "tests/expected/create_with_properties.json");
 }
@@ -267,7 +267,7 @@ fn cmd_create_default(runtime_path: &str) -> String {
 fn create_default() {
 	doc_assert(
 		cmd_create_default(
-			substrate_test_runtime::WASM_BINARY_PATH.expect("to be a valid path. qed"),
+			soil_test_node_runtime::WASM_BINARY_PATH.expect("to be a valid path. qed"),
 		),
 		"tests/expected/doc/create_default.json",
 		true,
@@ -285,7 +285,7 @@ fn cmd_display_default_preset(runtime_path: &str) -> String {
 fn display_default_preset() {
 	doc_assert(
 		cmd_display_default_preset(
-			substrate_test_runtime::WASM_BINARY_PATH.expect("to be a valid path. qed."),
+			soil_test_node_runtime::WASM_BINARY_PATH.expect("to be a valid path. qed."),
 		),
 		"tests/expected/doc/display_preset.json",
 		false,
@@ -303,7 +303,7 @@ fn cmd_display_preset(runtime_path: &str) -> String {
 fn display_preset() {
 	doc_assert(
 		cmd_display_preset(
-			substrate_test_runtime::WASM_BINARY_PATH.expect("to be a valid path. qed"),
+			soil_test_node_runtime::WASM_BINARY_PATH.expect("to be a valid path. qed"),
 		),
 		"tests/expected/doc/display_preset_staging.json",
 		false,
@@ -321,7 +321,7 @@ fn cmd_list_presets(runtime_path: &str) -> String {
 fn list_presets() {
 	doc_assert(
 		cmd_list_presets(
-			substrate_test_runtime::WASM_BINARY_PATH.expect("to be a valid path. qed"),
+			soil_test_node_runtime::WASM_BINARY_PATH.expect("to be a valid path. qed"),
 		),
 		"tests/expected/doc/list_presets.json",
 		false,
@@ -339,7 +339,7 @@ fn cmd_create_with_named_preset(runtime_path: &str) -> String {
 fn create_with_named_preset() {
 	doc_assert(
 		cmd_create_with_named_preset(
-			substrate_test_runtime::WASM_BINARY_PATH.expect("to be a valid path. qed"),
+			soil_test_node_runtime::WASM_BINARY_PATH.expect("to be a valid path. qed"),
 		),
 		"tests/expected/doc/create_with_named_preset_staging.json",
 		true,
@@ -357,7 +357,7 @@ fn cmd_create_with_patch_raw(runtime_path: &str) -> String {
 fn create_with_patch_raw() {
 	doc_assert(
 		cmd_create_with_patch_raw(
-			substrate_test_runtime::WASM_BINARY_PATH.expect("to be a valid path. qed"),
+			soil_test_node_runtime::WASM_BINARY_PATH.expect("to be a valid path. qed"),
 		),
 		"tests/expected/doc/create_with_patch_raw.json",
 		true,
@@ -375,7 +375,7 @@ fn cmd_create_with_patch_plain(runtime_path: &str) -> String {
 fn create_with_patch_plain() {
 	doc_assert(
 		cmd_create_with_patch_plain(
-			substrate_test_runtime::WASM_BINARY_PATH.expect("to be a valid path. qed"),
+			soil_test_node_runtime::WASM_BINARY_PATH.expect("to be a valid path. qed"),
 		),
 		"tests/expected/doc/create_with_patch_plain.json",
 		true,
@@ -393,7 +393,7 @@ fn cmd_create_full_plain(runtime_path: &str) -> String {
 fn create_full_plain() {
 	doc_assert(
 		cmd_create_full_plain(
-			substrate_test_runtime::WASM_BINARY_PATH.expect("to be a valid path. qed"),
+			soil_test_node_runtime::WASM_BINARY_PATH.expect("to be a valid path. qed"),
 		),
 		"tests/expected/doc/create_full_plain.json",
 		true,
@@ -411,7 +411,7 @@ fn cmd_create_full_raw(runtime_path: &str) -> String {
 fn create_full_raw() {
 	doc_assert(
 		cmd_create_full_raw(
-			substrate_test_runtime::WASM_BINARY_PATH.expect("to be a valid path. qed"),
+			soil_test_node_runtime::WASM_BINARY_PATH.expect("to be a valid path. qed"),
 		),
 		"tests/expected/doc/create_full_raw.json",
 		true,

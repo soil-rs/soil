@@ -45,7 +45,7 @@ the client layer where it belongs.
 - `cargo test -p soil-client --lib`
 - `cargo check -p soil-network -p soil-service -p soil-manual-seal`
 - `cargo check -p soil-aura -p soil-babe -p soil-pow -p soil-grandpa -p soil-beefy`
-- `cargo check -p staging-node-cli -p substrate-test-client -p substrate-test-runtime-client`
+- `cargo check -p staging-node-cli -p soil-test-node-client -p soil-test-node-runtime-client`
 - `cargo test -p soil-network-test --release`
 - `cargo test -p soil-network --release`
 - `cargo test -p staging-node-cli --release`

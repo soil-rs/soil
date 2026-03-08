@@ -281,7 +281,7 @@ mod tests {
 		F: Fn(&Path, &[u8], &WasmExecutor),
 	{
 		let exec = executor();
-		let bytes = substrate_test_runtime::wasm_binary_unwrap();
+		let bytes = soil_test_node_runtime::wasm_binary_unwrap();
 		let dir = tempfile::tempdir().expect("Create a temporary directory");
 		fun(dir.path(), bytes, &exec);
 		dir.close().expect("Temporary Directory should close");
@@ -293,7 +293,7 @@ mod tests {
 
 		let version = WasmOverride::runtime_version(
 			&executor,
-			substrate_test_runtime::wasm_binary_unwrap(),
+			soil_test_node_runtime::wasm_binary_unwrap(),
 			&[1],
 			Some(128),
 		)
@@ -308,7 +308,7 @@ mod tests {
 			let overrides =
 				WasmOverride::scrape_overrides(dir, exec).expect("HashMap of u32 and WasmBlob");
 			let wasm = overrides.get(&2).expect("WASM binary");
-			assert_eq!(wasm.code, substrate_test_runtime::wasm_binary_unwrap().to_vec())
+			assert_eq!(wasm.code, soil_test_node_runtime::wasm_binary_unwrap().to_vec())
 		});
 	}
 

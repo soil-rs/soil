@@ -33,4 +33,4 @@ subsoil = { workspace = true, default-features = true }
 [dev-dependencies]
 pretty_assertions = { workspace = true }
 regex = { workspace = true }
-substrate-test-runtime = { workspace = true }
+soil-test-node-runtime = { workspace = true }

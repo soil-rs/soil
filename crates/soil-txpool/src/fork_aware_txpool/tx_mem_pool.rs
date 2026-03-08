@@ -1034,8 +1034,8 @@ where
 #[cfg(test)]
 mod tx_mem_pool_tests {
 	use futures::future::join_all;
-	use substrate_test_runtime::{AccountId, Extrinsic, ExtrinsicBuilder, Transfer, H256};
-	use substrate_test_runtime_client::Sr25519Keyring::*;
+	use soil_test_node_runtime::{AccountId, Extrinsic, ExtrinsicBuilder, Transfer, H256};
+	use soil_test_node_runtime_client::Sr25519Keyring::*;
 
 	use crate::{
 		common::tests::TestApi, fork_aware_txpool::view_store::ViewStoreSubmitOutcome,

@@ -373,7 +373,7 @@ mod tests {
 		testing::H256,
 		traits::{Block as BlockT, NumberFor},
 	};
-	use substrate_test_runtime_client::runtime::Block;
+	use soil_test_node_runtime_client::runtime::Block;
 
 	#[derive(Clone, Default)]
 	struct TestNetwork {}

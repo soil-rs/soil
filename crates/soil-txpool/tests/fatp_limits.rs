@@ -29,8 +29,8 @@ use soil_client::transaction_pool::{
 };
 use soil_txpool::ChainApi;
 use std::thread::sleep;
-use substrate_test_runtime_client::Sr25519Keyring::*;
-use substrate_test_runtime_transaction_pool::uxt;
+use soil_test_node_runtime_client::Sr25519Keyring::*;
+use soil_test_node_runtime_txpool::uxt;
 use tracing::debug;
 
 #[test]
@@ -561,8 +561,8 @@ fn fatp_limits_watcher_empty_and_full_view_drops_with_event() {
 	assert_eq!(xt5_status, vec![TransactionStatus::Ready]);
 }
 
-fn large_uxt(x: usize) -> substrate_test_runtime::Extrinsic {
-	substrate_test_runtime::ExtrinsicBuilder::new_include_data(vec![x as u8; 1024]).build()
+fn large_uxt(x: usize) -> soil_test_node_runtime::Extrinsic {
+	soil_test_node_runtime::ExtrinsicBuilder::new_include_data(vec![x as u8; 1024]).build()
 }
 
 #[test]

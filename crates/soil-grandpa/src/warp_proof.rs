@@ -398,7 +398,7 @@ mod tests {
 	use std::sync::Arc;
 	use subsoil::consensus::grandpa::GRANDPA_ENGINE_ID;
 	use subsoil::keyring::Ed25519Keyring;
-	use substrate_test_runtime_client::{
+	use soil_test_node_runtime_client::{
 		BlockBuilderExt, ClientBlockImportExt, ClientExt, DefaultTestClientBuilderExt,
 		TestClientBuilder, TestClientBuilderExt,
 	};

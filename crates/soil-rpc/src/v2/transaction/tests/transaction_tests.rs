@@ -26,8 +26,8 @@ use jsonrpsee::rpc_params;
 use soil_client::transaction_pool::{ChainEvent, MaintainedTransactionPool};
 use std::{sync::Arc, vec};
 use subsoil::core::H256;
-use substrate_test_runtime_client::Sr25519Keyring::*;
-use substrate_test_runtime_transaction_pool::uxt;
+use soil_test_node_runtime_client::Sr25519Keyring::*;
+use soil_test_node_runtime_txpool::uxt;
 
 // Test helpers.
 use crate::v2::transaction::tests::setup::{setup_api_tx, ALICE_NONCE};

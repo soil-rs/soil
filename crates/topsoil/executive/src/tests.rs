@@ -1652,7 +1652,7 @@ fn is_inherent_works() {
 
 #[test]
 fn max_transaction_depth_is_respected() {
-	use substrate_test_runtime_client::{
+	use soil_test_node_runtime_client::{
 		prelude::*,
 		runtime::{ExtrinsicBuilder, RuntimeCall, UtilityCall},
 		BlockOrigin,

@@ -195,7 +195,7 @@ mod enactment_state_tests {
 	use soil_client::transaction_pool::ChainEvent;
 	use std::sync::Arc;
 	use subsoil::runtime::traits::NumberFor;
-	use substrate_test_runtime_client::runtime::{Block, Hash};
+	use soil_test_node_runtime_client::runtime::{Block, Hash};
 
 	// some helpers for convenient blocks' hash naming
 	fn a() -> HashAndNumber<Block> {

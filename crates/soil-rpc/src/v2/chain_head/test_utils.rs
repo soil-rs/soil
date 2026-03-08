@@ -38,7 +38,7 @@ use subsoil::runtime::{
 	Justifications,
 };
 use subsoil::version::RuntimeVersion;
-use substrate_test_runtime::{Block, Hash, Header, H256};
+use soil_test_node_runtime::{Block, Hash, Header, H256};
 
 /// A mock client used for testing.
 pub struct ChainHeadMockClient<Client> {

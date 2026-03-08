@@ -33,7 +33,7 @@ use soil_network::{
 use std::{sync::Arc, time::Duration};
 use subsoil::core::H256;
 use subsoil::runtime::traits::{Block as BlockT, Zero};
-use substrate_test_runtime_client::runtime;
+use soil_test_node_runtime_client::runtime;
 use tokio::{sync::Mutex, task::JoinHandle};
 
 const MAX_SIZE: u64 = 2u64.pow(30);

@@ -20,7 +20,7 @@ use super::*;
 use futures::Future;
 use soil_client::consensus::{block_validation::Validation, BlockOrigin};
 use subsoil::runtime::Justifications;
-use substrate_test_runtime::Header;
+use soil_test_node_runtime::Header;
 
 async fn test_ancestor_search_when_common_is(n: usize) {
 	subsoil::tracing::try_init_simple();
@@ -1386,7 +1386,7 @@ async fn warp_sync_to_target_block() {
 async fn syncs_huge_blocks() {
 	use subsoil::core::storage::well_known_keys::HEAP_PAGES;
 	use subsoil::runtime::codec::Encode;
-	use substrate_test_runtime_client::BlockBuilderExt;
+	use soil_test_node_runtime_client::BlockBuilderExt;
 
 	subsoil::tracing::try_init_simple();
 	let mut net = TestNet::new(2);

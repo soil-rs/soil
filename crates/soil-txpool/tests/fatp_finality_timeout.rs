@@ -30,8 +30,8 @@ use soil_client::transaction_pool::{
 	MaintainedTransactionPool, TransactionPool, TransactionStatus,
 };
 use soil_txpool::ChainApi;
-use substrate_test_runtime_client::Sr25519Keyring::*;
-use substrate_test_runtime_transaction_pool::uxt;
+use soil_test_node_runtime_client::Sr25519Keyring::*;
+use soil_test_node_runtime_txpool::uxt;
 
 #[test]
 fn fatp_finality_timeout_works() {

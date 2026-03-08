@@ -787,7 +787,7 @@ mod tests {
 	use soil_client::consensus::BlockOrigin;
 	use soil_service::client::new_with_backend;
 	use subsoil::core::{testing::TaskExecutor, H256};
-	use substrate_test_runtime_client::{
+	use soil_test_node_runtime_client::{
 		prelude::*,
 		runtime::{Block, RuntimeApi},
 		Client, ClientBlockImportExt, GenesisInit,
@@ -801,10 +801,10 @@ mod tests {
 		Arc<Client<soil_client::client_api::in_mem::Backend<Block>>>,
 	) {
 		let backend = Arc::new(soil_client::client_api::in_mem::Backend::new());
-		let executor = substrate_test_runtime_client::WasmExecutor::default();
+		let executor = soil_test_node_runtime_client::WasmExecutor::default();
 		let client_config = soil_service::ClientConfig::default();
 		let genesis_block_builder = soil_service::GenesisBlockBuilder::new(
-			&substrate_test_runtime_client::GenesisParameters::default().genesis_storage(),
+			&soil_test_node_runtime_client::GenesisParameters::default().genesis_storage(),
 			!client_config.no_genesis,
 			backend.clone(),
 			executor.clone(),

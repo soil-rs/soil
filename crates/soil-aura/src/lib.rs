@@ -572,7 +572,7 @@ mod tests {
 	use subsoil::keystore::Keystore;
 	use subsoil::runtime::traits::{Block as BlockT, Header as _};
 	use subsoil::timestamp::Timestamp;
-	use substrate_test_runtime_client::{
+	use soil_test_node_runtime_client::{
 		runtime::{Header, H256},
 		TestClient,
 	};

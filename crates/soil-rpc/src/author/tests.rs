@@ -36,7 +36,7 @@ use subsoil::core::{
 use subsoil::keystore::{testing::MemoryKeystore, Keystore};
 use subsoil::runtime::Perbill;
 use subsoil_crypto_hashing::blake2_256;
-use substrate_test_runtime_client::{
+use soil_test_node_runtime_client::{
 	self,
 	runtime::{Block, Extrinsic, ExtrinsicBuilder, SessionKeys, Transfer},
 	Backend, Client, DefaultTestClientBuilderExt, Sr25519Keyring, TestClientBuilderExt,
@@ -63,7 +63,7 @@ struct TestSetup {
 impl Default for TestSetup {
 	fn default() -> Self {
 		let keystore = Arc::new(MemoryKeystore::new());
-		let client = Arc::new(substrate_test_runtime_client::TestClientBuilder::new().build());
+		let client = Arc::new(soil_test_node_runtime_client::TestClientBuilder::new().build());
 
 		let spawner = subsoil::core::testing::TaskExecutor::new();
 		let pool = Arc::from(BasicPool::new_full(

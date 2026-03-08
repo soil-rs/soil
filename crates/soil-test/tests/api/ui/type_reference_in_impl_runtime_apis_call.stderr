@@ -18,7 +18,7 @@ help: consider importing one of these structs instead
 39 +         fn version() -> subsoil::version::RuntimeVersion {
    |
 39 -         fn version() -> subsoil::api::RuntimeVersion {
-39 +         fn version() -> substrate_test_runtime_client::executor::RuntimeVersion {
+39 +         fn version() -> soil_test_node_runtime_client::executor::RuntimeVersion {
    |
 help: import `RuntimeVersion` directly
    |

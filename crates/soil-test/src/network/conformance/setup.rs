@@ -30,7 +30,7 @@ use soil_network::{
 use soil_network::common::sync::message::BlockAnnouncesHandshake;
 use std::{sync::Arc, time::Duration};
 use subsoil::runtime::traits::Zero;
-use substrate_test_runtime_client::runtime;
+use soil_test_node_runtime_client::runtime;
 use tokio::sync::Mutex;
 
 /// High level network backend (litep2p or libp2p) test client.

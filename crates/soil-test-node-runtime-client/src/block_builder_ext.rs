@@ -19,14 +19,14 @@
 
 use soil_client::block_builder::BlockBuilderApi;
 use subsoil::api::{ApiExt, ProvideRuntimeApi};
-use substrate_test_runtime::*;
+use soil_test_node_runtime::*;
 
 /// Extension trait for test block builder.
 pub trait BlockBuilderExt {
 	/// Add transfer extrinsic to the block.
 	fn push_transfer(
 		&mut self,
-		transfer: substrate_test_runtime::Transfer,
+		transfer: soil_test_node_runtime::Transfer,
 	) -> Result<(), soil_client::blockchain::Error>;
 
 	/// Add unsigned storage change extrinsic to the block.
@@ -44,16 +44,16 @@ pub trait BlockBuilderExt {
 }
 
 impl<'a, A> BlockBuilderExt
-	for soil_client::block_builder::BlockBuilder<'a, substrate_test_runtime::Block, A>
+	for soil_client::block_builder::BlockBuilder<'a, soil_test_node_runtime::Block, A>
 where
-	A: ProvideRuntimeApi<substrate_test_runtime::Block>
-		+ subsoil::api::CallApiAt<substrate_test_runtime::Block>
+	A: ProvideRuntimeApi<soil_test_node_runtime::Block>
+		+ subsoil::api::CallApiAt<soil_test_node_runtime::Block>
 		+ 'a,
-	A::Api: BlockBuilderApi<substrate_test_runtime::Block> + ApiExt<substrate_test_runtime::Block>,
+	A::Api: BlockBuilderApi<soil_test_node_runtime::Block> + ApiExt<soil_test_node_runtime::Block>,
 {
 	fn push_transfer(
 		&mut self,
-		transfer: substrate_test_runtime::Transfer,
+		transfer: soil_test_node_runtime::Transfer,
 	) -> Result<(), soil_client::blockchain::Error> {
 		self.push(transfer.into_unchecked_extrinsic())
 	}

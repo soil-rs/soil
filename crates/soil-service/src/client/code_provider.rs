@@ -180,13 +180,13 @@ mod tests {
 		testing::TaskExecutor,
 		traits::{FetchRuntimeCode, WrappedRuntimeCode},
 	};
-	use substrate_test_runtime_client::{runtime, GenesisInit};
+	use soil_test_node_runtime_client::{runtime, GenesisInit};
 
 	#[test]
 	fn no_override_no_substitutes_work() {
 		let executor = WasmExecutor::default();
 
-		let code_fetcher = WrappedRuntimeCode(substrate_test_runtime::wasm_binary_unwrap().into());
+		let code_fetcher = WrappedRuntimeCode(soil_test_node_runtime::wasm_binary_unwrap().into());
 		let onchain_code = RuntimeCode {
 			code_fetcher: &code_fetcher,
 			heap_pages: Some(128),
@@ -200,7 +200,7 @@ mod tests {
 		let client_config = ClientConfig::default();
 
 		let genesis_block_builder = crate::GenesisBlockBuilder::new(
-			&substrate_test_runtime_client::GenesisParameters::default().genesis_storage(),
+			&soil_test_node_runtime_client::GenesisParameters::default().genesis_storage(),
 			!client_config.no_genesis,
 			backend.clone(),
 			executor.clone(),
@@ -249,7 +249,7 @@ mod tests {
 		let executor = WasmExecutor::default();
 
 		let overrides = crate::client::wasm_override::dummy_overrides();
-		let onchain_code = WrappedRuntimeCode(substrate_test_runtime::wasm_binary_unwrap().into());
+		let onchain_code = WrappedRuntimeCode(soil_test_node_runtime::wasm_binary_unwrap().into());
 		let onchain_code = RuntimeCode {
 			code_fetcher: &onchain_code,
 			heap_pages: Some(128),
@@ -263,7 +263,7 @@ mod tests {
 		let client_config = ClientConfig::default();
 
 		let genesis_block_builder = crate::GenesisBlockBuilder::new(
-			&substrate_test_runtime_client::GenesisParameters::default().genesis_storage(),
+			&soil_test_node_runtime_client::GenesisParameters::default().genesis_storage(),
 			!client_config.no_genesis,
 			backend.clone(),
 			executor.clone(),
@@ -317,10 +317,10 @@ mod tests {
 
 		// Let's only override the `spec_name` for our testing purposes.
 		let substitute = subsoil::version::embed::embed_runtime_version(
-			&substrate_test_runtime::WASM_BINARY_BLOATY.unwrap(),
+			&soil_test_node_runtime::WASM_BINARY_BLOATY.unwrap(),
 			subsoil::version::RuntimeVersion {
 				spec_name: SUBSTITUTE_SPEC_NAME.into(),
-				..substrate_test_runtime::VERSION
+				..soil_test_node_runtime::VERSION
 			},
 		)
 		.unwrap();
@@ -331,7 +331,7 @@ mod tests {
 		};
 
 		let genesis_block_builder = crate::GenesisBlockBuilder::new(
-			&substrate_test_runtime_client::GenesisParameters::default().genesis_storage(),
+			&soil_test_node_runtime_client::GenesisParameters::default().genesis_storage(),
 			!client_config.no_genesis,
 			backend.clone(),
 			executor.clone(),

@@ -109,7 +109,7 @@ pub(crate) mod tests {
 	use parking_lot::Mutex;
 	use std::{sync::Arc, time::Duration};
 	use subsoil::runtime::generic::BlockId;
-	use substrate_test_runtime_client::{runtime::Block, Backend};
+	use soil_test_node_runtime_client::{runtime::Block, Backend};
 
 	#[test]
 	fn should_load_persistent_sanity_checks() {

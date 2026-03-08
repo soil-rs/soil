@@ -59,11 +59,11 @@ consensus crates into the new flattened `soil-*` layout. See
 ## Validation Log
 
 - Step 2:
-  `cargo check -p soil-consensus -p soil-manual-seal -p soil-network-sync -p soil-service -p staging-node-cli -p substrate-test-runtime-client`
+  `cargo check -p soil-consensus -p soil-manual-seal -p soil-network-sync -p soil-service -p staging-node-cli -p soil-test-node-runtime-client`
 - Step 3:
-  `cargo check -p soil-consensus -p soil-manual-seal -p soil-network-sync -p soil-service -p staging-node-cli -p substrate-test-runtime-client`
+  `cargo check -p soil-consensus -p soil-manual-seal -p soil-network-sync -p soil-service -p staging-node-cli -p soil-test-node-runtime-client`
 - Step 4:
-  `cargo check -p soil-consensus -p soil-manual-seal -p soil-network-sync -p soil-service -p staging-node-cli -p substrate-test-runtime-client`
+  `cargo check -p soil-consensus -p soil-manual-seal -p soil-network-sync -p soil-service -p staging-node-cli -p soil-test-node-runtime-client`
 - Step 5:
   `cargo check -p soil-pow -p staging-node-cli`
 - Step 6:

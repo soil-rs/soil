@@ -25,12 +25,12 @@
 //! # use soil_client::consensus::{Environment, Proposer, ProposeArgs};
 //! # use subsoil::runtime::generic::BlockId;
 //! # use std::{sync::Arc, time::Duration};
-//! # use substrate_test_runtime_client::{
+//! # use soil_test_node_runtime_client::{
 //! #     runtime::Transfer, Sr25519Keyring,
 //! #     DefaultTestClientBuilderExt, TestClientBuilderExt,
 //! # };
 //! # use soil_txpool::{BasicPool, FullChainApi};
-//! # let client = Arc::new(substrate_test_runtime_client::new());
+//! # let client = Arc::new(soil_test_node_runtime_client::new());
 //! # let spawner = subsoil::core::testing::TaskExecutor::new();
 //! # let txpool = Arc::from(BasicPool::new_full(
 //! #     Default::default(),

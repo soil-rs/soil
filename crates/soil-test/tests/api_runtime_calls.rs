@@ -32,7 +32,7 @@ use subsoil::runtime::{
 use subsoil::state_machine::{create_proof_check_backend, execution_proof_check_on_trie_backend};
 use subsoil::{decl_extension, externalities::TransactionType};
 
-use substrate_test_runtime_client::{
+use soil_test_node_runtime_client::{
 	prelude::*,
 	runtime::{Block, Header, TestAPI, Transfer},
 	DefaultTestClientBuilderExt, TestClient, TestClientBuilder,
@@ -40,7 +40,7 @@ use substrate_test_runtime_client::{
 
 use codec::Encode;
 use soil_client::consensus::SelectChain;
-use substrate_test_runtime_client::executor::WasmExecutor;
+use soil_test_node_runtime_client::executor::WasmExecutor;
 
 #[test]
 fn calling_runtime_function() {
@@ -162,7 +162,7 @@ fn disable_logging_works() {
 
 		let mut builder = TestClientBuilder::new();
 		builder.genesis_init_mut().set_wasm_code(
-			substrate_test_runtime_client::runtime::wasm_binary_logging_disabled_unwrap().to_vec(),
+			soil_test_node_runtime_client::runtime::wasm_binary_logging_disabled_unwrap().to_vec(),
 		);
 
 		let client = builder.build();

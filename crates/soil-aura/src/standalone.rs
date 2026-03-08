@@ -328,7 +328,7 @@ mod tests {
 
 	#[test]
 	fn authorities_call_works() {
-		let client = substrate_test_runtime_client::new();
+		let client = soil_test_node_runtime_client::new();
 
 		assert_eq!(client.chain_info().best_number, 0);
 		assert_eq!(

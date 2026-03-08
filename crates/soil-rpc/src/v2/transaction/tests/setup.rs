@@ -28,12 +28,12 @@ use futures::Future;
 use jsonrpsee::RpcModule;
 use soil_txpool::*;
 use std::{pin::Pin, sync::Arc};
-use substrate_test_runtime_client::{prelude::*, Client};
-use substrate_test_runtime_transaction_pool::TestApi;
+use soil_test_node_runtime_client::{prelude::*, Client};
+use soil_test_node_runtime_txpool::TestApi;
 
 use crate::v2::transaction::tests::middleware_pool::{MiddlewarePool, MiddlewarePoolRecv};
 
-pub type Block = substrate_test_runtime_client::runtime::Block;
+pub type Block = soil_test_node_runtime_client::runtime::Block;
 
 /// Initial Alice account nonce.
 pub const ALICE_NONCE: u64 = 209;

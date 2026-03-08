@@ -303,12 +303,12 @@ mod tests {
 	use soil_client::block_builder::BlockBuilderBuilder;
 	use soil_client::consensus::BlockOrigin;
 	use subsoil::runtime::codec::Encode;
-	use substrate_test_runtime::ExtrinsicBuilder;
-	use substrate_test_runtime_client::{self, prelude::*, TestClientBuilder};
+	use soil_test_node_runtime::ExtrinsicBuilder;
+	use soil_test_node_runtime_client::{self, prelude::*, TestClientBuilder};
 
 	#[tokio::test]
 	async fn undecodable_message() {
-		let client = substrate_test_runtime_client::new();
+		let client = soil_test_node_runtime_client::new();
 		let (bitswap, config) = BitswapRequestHandler::new(Arc::new(client));
 
 		tokio::spawn(async move { bitswap.run().await });
@@ -336,7 +336,7 @@ mod tests {
 
 	#[tokio::test]
 	async fn empty_want_list() {
-		let client = substrate_test_runtime_client::new();
+		let client = soil_test_node_runtime_client::new();
 		let (bitswap, mut config) = BitswapRequestHandler::new(Arc::new(client));
 
 		tokio::spawn(async move { bitswap.run().await });
@@ -390,7 +390,7 @@ mod tests {
 
 	#[tokio::test]
 	async fn too_long_want_list() {
-		let client = substrate_test_runtime_client::new();
+		let client = soil_test_node_runtime_client::new();
 		let (bitswap, config) = BitswapRequestHandler::new(Arc::new(client));
 
 		tokio::spawn(async move { bitswap.run().await });

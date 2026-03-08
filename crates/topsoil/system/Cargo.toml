@@ -31,7 +31,7 @@ subsoil = { features = ["serde"], workspace = true }
 
 [dev-dependencies]
 criterion = { workspace = true, default-features = true }
-substrate-test-runtime-client = { workspace = true }
+soil-test-node-runtime-client = { workspace = true }
 
 [features]
 default = ["std"]

@@ -143,7 +143,7 @@ mod tests {
 	use subsoil::core::crypto::ByteArray;
 	use subsoil::keyring::Ed25519Keyring;
 	use subsoil::runtime::traits::{Block as BlockT, Header as HeaderT};
-	use substrate_test_runtime_client::{
+	use soil_test_node_runtime_client::{
 		runtime::{Block, Header, H256},
 		DefaultTestClientBuilderExt, TestClientBuilder, TestClientBuilderExt,
 	};

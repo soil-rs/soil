@@ -1051,7 +1051,7 @@ pub(crate) mod tests {
 		ConsensusLog, Payload, SignedCommitment,
 	};
 	use subsoil::runtime::traits::{Header as HeaderT, One};
-	use substrate_test_runtime_client::{
+	use soil_test_node_runtime_client::{
 		runtime::{Block, Digest, DigestItem, Header},
 		Backend,
 	};

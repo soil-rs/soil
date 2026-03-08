@@ -588,7 +588,7 @@ mod tests {
 	use futures::executor::block_on;
 	use soil_client::consensus::SelectChain;
 	use soil_txpool::BasicPool;
-	use substrate_test_runtime_client::{
+	use soil_test_node_runtime_client::{
 		prelude::*,
 		runtime::{ExtrinsicBuilder, Transfer, TransferData},
 	};

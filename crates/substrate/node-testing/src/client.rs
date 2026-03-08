@@ -20,7 +20,7 @@
 
 use subsoil::runtime::BuildStorage;
 /// Re-export test-client utilities.
-pub use substrate_test_client::*;
+pub use soil_test_node_client::*;
 
 /// Call executor for `kitchensink-runtime` `TestClient`.
 use node_cli::service::RuntimeExecutor;
@@ -40,7 +40,7 @@ pub type Client = client::Client<
 #[derive(Default)]
 pub struct GenesisParameters;
 
-impl substrate_test_client::GenesisInit for GenesisParameters {
+impl soil_test_node_client::GenesisInit for GenesisParameters {
 	fn genesis_storage(&self) -> Storage {
 		let mut storage = crate::genesis::config().build_storage().unwrap();
 		storage.top.insert(
@@ -61,7 +61,7 @@ pub trait TestClientBuilderExt: Sized {
 }
 
 impl TestClientBuilderExt
-	for substrate_test_client::TestClientBuilder<
+	for soil_test_node_client::TestClientBuilder<
 		node_primitives::Block,
 		client::LocalCallExecutor<node_primitives::Block, Backend, RuntimeExecutor>,
 		Backend,

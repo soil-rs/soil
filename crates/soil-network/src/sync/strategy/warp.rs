@@ -798,7 +798,7 @@ mod test {
 		traits::{Block as BlockT, Header as HeaderT, NumberFor},
 		ConsensusEngineId,
 	};
-	use substrate_test_runtime_client::{
+	use soil_test_node_runtime_client::{
 		runtime::{Block, Hash},
 		BlockBuilderExt, DefaultTestClientBuilderExt, TestClientBuilder, TestClientBuilderExt,
 	};

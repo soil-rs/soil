@@ -46,8 +46,8 @@ use subsoil::runtime::{
 	traits::{Block as BlockT, Header as HeaderT},
 	SaturatedConversion,
 };
-use substrate_test_runtime::Transfer;
-use substrate_test_runtime_client::{
+use soil_test_node_runtime::Transfer;
+use soil_test_node_runtime_client::{
 	prelude::*, runtime, Backend, BlockBuilderExt, Client, ClientBlockImportExt,
 };
 
@@ -58,8 +58,8 @@ const VALUE: &[u8] = b"hello world";
 const CHILD_STORAGE_KEY: &[u8] = b"child";
 const CHILD_VALUE: &[u8] = b"child value";
 
-type Header = substrate_test_runtime_client::runtime::Header;
-type Block = substrate_test_runtime_client::runtime::Block;
+type Header = soil_test_node_runtime_client::runtime::Header;
+type Block = soil_test_node_runtime_client::runtime::Block;
 
 fn setup_api() -> (Arc<Client<Backend>>, RpcModule<Archive<Backend, Block, Client<Backend>>>) {
 	let child_info = ChildInfo::new_default(CHILD_STORAGE_KEY);

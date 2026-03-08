@@ -25,13 +25,13 @@ mod block_builder_ext;
 
 pub use soil_consensus::LongestChain;
 use std::sync::Arc;
-pub use substrate_test_client::*;
-pub use substrate_test_runtime as runtime;
+pub use soil_test_node_client::*;
+pub use soil_test_node_runtime as runtime;
 
 pub use self::block_builder_ext::BlockBuilderExt;
 
 use subsoil::core::storage::ChildInfo;
-use substrate_test_runtime::genesismap::GenesisStorageBuilder;
+use soil_test_node_runtime::genesismap::GenesisStorageBuilder;
 
 /// A prelude to import in tests.
 pub mod prelude {
@@ -52,11 +52,11 @@ pub mod prelude {
 }
 
 /// Test client database backend.
-pub type Backend = substrate_test_client::Backend<substrate_test_runtime::Block>;
+pub type Backend = soil_test_node_client::Backend<soil_test_node_runtime::Block>;
 
 /// Test client executor.
 pub type ExecutorDispatch =
-	client::LocalCallExecutor<substrate_test_runtime::Block, Backend, WasmExecutor>;
+	client::LocalCallExecutor<soil_test_node_runtime::Block, Backend, WasmExecutor>;
 
 /// Parameters of test-client builder with test-runtime.
 #[derive(Default)]
@@ -89,8 +89,8 @@ impl GenesisInit for GenesisParameters {
 }
 
 /// A `TestClient` with `test-runtime` builder.
-pub type TestClientBuilder<E, B> = substrate_test_client::TestClientBuilder<
-	substrate_test_runtime::Block,
+pub type TestClientBuilder<E, B> = soil_test_node_client::TestClientBuilder<
+	soil_test_node_runtime::Block,
 	E,
 	B,
 	GenesisParameters,
@@ -99,9 +99,9 @@ pub type TestClientBuilder<E, B> = substrate_test_client::TestClientBuilder<
 /// Test client type with `WasmExecutor` and generic Backend.
 pub type Client<B> = client::Client<
 	B,
-	client::LocalCallExecutor<substrate_test_runtime::Block, B, WasmExecutor>,
-	substrate_test_runtime::Block,
-	substrate_test_runtime::RuntimeApi,
+	client::LocalCallExecutor<soil_test_node_runtime::Block, B, WasmExecutor>,
+	soil_test_node_runtime::Block,
+	soil_test_node_runtime::RuntimeApi,
 >;
 
 /// A test client with default backend.
@@ -178,16 +178,16 @@ pub trait TestClientBuilderExt<B>: Sized {
 	/// Build the test client and longest chain selector.
 	fn build_with_longest_chain(
 		self,
-	) -> (Client<B>, soil_consensus::LongestChain<B, substrate_test_runtime::Block>);
+	) -> (Client<B>, soil_consensus::LongestChain<B, soil_test_node_runtime::Block>);
 
 	/// Build the test client and the backend.
 	fn build_with_backend(self) -> (Client<B>, Arc<B>);
 }
 
 impl<B> TestClientBuilderExt<B>
-	for TestClientBuilder<client::LocalCallExecutor<substrate_test_runtime::Block, B, WasmExecutor>, B>
+	for TestClientBuilder<client::LocalCallExecutor<soil_test_node_runtime::Block, B, WasmExecutor>, B>
 where
-	B: soil_client::client_api::backend::Backend<substrate_test_runtime::Block> + 'static,
+	B: soil_client::client_api::backend::Backend<soil_test_node_runtime::Block> + 'static,
 {
 	fn genesis_init_mut(&mut self) -> &mut GenesisParameters {
 		Self::genesis_init_mut(self)
@@ -195,7 +195,7 @@ where
 
 	fn build_with_longest_chain(
 		self,
-	) -> (Client<B>, soil_consensus::LongestChain<B, substrate_test_runtime::Block>) {
+	) -> (Client<B>, soil_consensus::LongestChain<B, soil_test_node_runtime::Block>) {
 		self.build_with_native_executor(None)
 	}
 

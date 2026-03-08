@@ -3,14 +3,14 @@ use soil_client::blockchain::HeaderBackend;
 use subsoil::api::ProofRecorder;
 use subsoil::core::{Blake2Hasher, Encode};
 use subsoil::state_machine::Backend;
-use substrate_test_runtime_client::{
+use soil_test_node_runtime_client::{
 	runtime::{Block, ExtrinsicBuilder},
 	DefaultTestClientBuilderExt, TestClientBuilderExt,
 };
 
 #[test]
 fn block_building_storage_proof_does_not_include_runtime_by_default() {
-	let builder = substrate_test_runtime_client::TestClientBuilder::new();
+	let builder = soil_test_node_runtime_client::TestClientBuilder::new();
 	let client = builder.build();
 
 	let genesis_hash = client.info().best_hash;
@@ -43,7 +43,7 @@ fn block_building_storage_proof_does_not_include_runtime_by_default() {
 
 #[test]
 fn failing_extrinsic_rolls_back_changes_in_storage_proof() {
-	let builder = substrate_test_runtime_client::TestClientBuilder::new();
+	let builder = soil_test_node_runtime_client::TestClientBuilder::new();
 	let client = builder.build();
 	let genesis_hash = client.info().best_hash;
 

@@ -150,7 +150,7 @@ mod test {
 	use subsoil::consensus::babe::AllowedSlots;
 	use subsoil::core::H256;
 	use subsoil::runtime::traits::NumberFor;
-	use substrate_test_runtime_client;
+	use soil_test_node_runtime_client;
 
 	#[test]
 	fn load_decode_from_v0_epoch_changes() {
@@ -161,7 +161,7 @@ mod test {
 			epoch_index: 1,
 			duration: 100,
 		};
-		let client = substrate_test_runtime_client::new();
+		let client = soil_test_node_runtime_client::new();
 		let mut v0_tree = ForkTree::<H256, NumberFor<TestBlock>, _>::new();
 		v0_tree
 			.import::<_, ConsensusError>(

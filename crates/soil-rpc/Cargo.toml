@@ -62,9 +62,9 @@ soil-txpool = { workspace = true, default-features = true }
 serde_json = { workspace = true, default-features = true }
 soil-service = { workspace = true, default-features = true }
 subsoil-crypto-hashing = { workspace = true, default-features = true }
-substrate-test-runtime = { workspace = true }
-substrate-test-runtime-client = { workspace = true }
-substrate-test-runtime-transaction-pool = { workspace = true }
+soil-test-node-runtime = { workspace = true }
+soil-test-node-runtime-client = { workspace = true }
+soil-test-node-runtime-txpool = { workspace = true }
 tempfile = { workspace = true }
 
 [features]

@@ -42,17 +42,17 @@ use subsoil::runtime::{
 	generic::{Digest, DigestItem},
 	traits::Block as BlockT,
 };
-use substrate_test_runtime_client::DefaultTestClientBuilderExt;
+use soil_test_node_runtime_client::DefaultTestClientBuilderExt;
 
 type Item = DigestItem;
 
 type Error = soil_client::blockchain::Error;
 
-type TestClient = substrate_test_runtime_client::client::Client<
-	substrate_test_runtime_client::Backend,
-	substrate_test_runtime_client::ExecutorDispatch,
+type TestClient = soil_test_node_runtime_client::client::Client<
+	soil_test_node_runtime_client::Backend,
+	soil_test_node_runtime_client::ExecutorDispatch,
 	TestBlock,
-	substrate_test_runtime_client::runtime::RuntimeApi,
+	soil_test_node_runtime_client::runtime::RuntimeApi,
 >;
 
 #[derive(Copy, Clone, PartialEq)]
@@ -69,7 +69,7 @@ type BabeBlockImport = PanickingBlockImport<
 		TestClient,
 		Arc<TestClient>,
 		BabeCreateInherentDataProviders<TestBlock>,
-		soil_consensus::LongestChain<substrate_test_runtime_client::Backend, Block>,
+		soil_consensus::LongestChain<soil_test_node_runtime_client::Backend, Block>,
 	>,
 >;
 

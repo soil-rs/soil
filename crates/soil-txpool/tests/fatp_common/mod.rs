@@ -22,11 +22,11 @@ use soil_client::transaction_pool::ChainEvent;
 use soil_txpool::{ChainApi, PoolLimit};
 use std::sync::Arc;
 use subsoil::runtime::transaction_validity::TransactionSource;
-use substrate_test_runtime_client::{
+use soil_test_node_runtime_client::{
 	runtime::{Block, Hash, Header},
 	Sr25519Keyring::*,
 };
-use substrate_test_runtime_transaction_pool::{uxt, TestApi};
+use soil_test_node_runtime_txpool::{uxt, TestApi};
 pub const LOG_TARGET: &str = "txpool";
 
 use soil_txpool::ForkAwareTxPool;

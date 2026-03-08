@@ -49,7 +49,7 @@ use subsoil::runtime::{
 	traits::{Block as BlockT, Header as HeaderT},
 	Justifications,
 };
-use substrate_test_runtime_client::{runtime::BlockNumber, BlockBuilderExt};
+use soil_test_node_runtime_client::{runtime::BlockNumber, BlockBuilderExt};
 use tokio::runtime::Handle;
 
 use authorities::AuthoritySet;
@@ -59,14 +59,14 @@ use soil_consensus::LongestChain;
 use subsoil::application_crypto::key_types::GRANDPA;
 
 type TestLinkHalf =
-	LinkHalf<Block, PeersFullClient, LongestChain<substrate_test_runtime_client::Backend, Block>>;
+	LinkHalf<Block, PeersFullClient, LongestChain<soil_test_node_runtime_client::Backend, Block>>;
 type PeerData = Mutex<Option<TestLinkHalf>>;
 type GrandpaPeer = Peer<PeerData, GrandpaBlockImport>;
 type GrandpaBlockImport = crate::GrandpaBlockImport<
-	substrate_test_runtime_client::Backend,
+	soil_test_node_runtime_client::Backend,
 	Block,
 	PeersFullClient,
-	LongestChain<substrate_test_runtime_client::Backend, Block>,
+	LongestChain<soil_test_node_runtime_client::Backend, Block>,
 >;
 
 const JUSTIFICATION_IMPORT_PERIOD: u32 = 32;
@@ -1433,7 +1433,7 @@ async fn voter_catches_up_to_latest_round_when_behind() {
 }
 
 type TestEnvironment<N, S, SC, VR> =
-	Environment<substrate_test_runtime_client::Backend, Block, TestClient, N, S, SC, VR>;
+	Environment<soil_test_node_runtime_client::Backend, Block, TestClient, N, S, SC, VR>;
 
 fn test_environment_with_select_chain<N, S, VR, SC>(
 	link: &TestLinkHalf,
@@ -1497,7 +1497,7 @@ fn test_environment<N, S, VR>(
 	sync_service: S,
 	notification_service: Box<dyn NotificationService>,
 	voting_rule: VR,
-) -> TestEnvironment<N, S, LongestChain<substrate_test_runtime_client::Backend, Block>, VR>
+) -> TestEnvironment<N, S, LongestChain<soil_test_node_runtime_client::Backend, Block>, VR>
 where
 	N: NetworkT<Block>,
 	S: SyncingT<Block>,

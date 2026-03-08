@@ -801,7 +801,7 @@ mod test {
 	use super::*;
 	use std::time::{Duration, Instant};
 	use subsoil::runtime::traits::NumberFor;
-	use substrate_test_runtime_client::runtime::{Block, Header};
+	use soil_test_node_runtime_client::runtime::{Block, Header};
 
 	const SLOT_DURATION: Duration = Duration::from_millis(6000);
 

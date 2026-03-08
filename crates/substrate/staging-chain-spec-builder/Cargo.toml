@@ -38,7 +38,7 @@ subsoil = { workspace = true, default-features = true }
 [dev-dependencies]
 cmd_lib = { workspace = true }
 pretty_assertions = { workspace = true }
-substrate-test-runtime = { workspace = true }
+soil-test-node-runtime = { workspace = true }
 
 [features]
 # `cargo build --feature=generate-readme` updates the `README.md` file.

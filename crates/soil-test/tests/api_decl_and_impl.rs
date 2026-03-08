@@ -20,7 +20,7 @@ use subsoil::api::{
 };
 use subsoil::runtime::traits::Block as BlockT;
 
-use substrate_test_runtime_client::runtime::{Block, Hash};
+use soil_test_node_runtime_client::runtime::{Block, Hash};
 
 /// The declaration of the `Runtime` type is done by the `construct_runtime!` macro in a real
 /// runtime.
@@ -188,9 +188,9 @@ mock_impl_runtime_apis! {
 	}
 }
 
-type TestClient = substrate_test_runtime_client::client::Client<
-	substrate_test_runtime_client::Backend,
-	substrate_test_runtime_client::ExecutorDispatch,
+type TestClient = soil_test_node_runtime_client::client::Client<
+	soil_test_node_runtime_client::Backend,
+	soil_test_node_runtime_client::ExecutorDispatch,
 	Block,
 	RuntimeApi,
 >;

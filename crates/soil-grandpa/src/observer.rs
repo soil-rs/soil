@@ -413,7 +413,7 @@ mod tests {
 	use soil_client::blockchain::HeaderBackend as _;
 	use soil_client::utils::mpsc::tracing_unbounded;
 	use soil_network::types::PeerId;
-	use substrate_test_runtime_client::{TestClientBuilder, TestClientBuilderExt};
+	use soil_test_node_runtime_client::{TestClientBuilder, TestClientBuilderExt};
 
 	use futures::executor;
 

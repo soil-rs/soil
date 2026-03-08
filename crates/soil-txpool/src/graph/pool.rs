@@ -612,8 +612,8 @@ mod tests {
 	use soil_client::transaction_pool::TransactionStatus;
 	use std::{collections::HashMap, time::Instant};
 	use subsoil::runtime::transaction_validity::TransactionSource;
-	use substrate_test_runtime::{AccountId, ExtrinsicBuilder, Transfer, H256};
-	use substrate_test_runtime_client::Sr25519Keyring::{Alice, Bob};
+	use soil_test_node_runtime::{AccountId, ExtrinsicBuilder, Transfer, H256};
+	use soil_test_node_runtime_client::Sr25519Keyring::{Alice, Bob};
 
 	const SOURCE: TimedTransactionSource =
 		TimedTransactionSource { source: TransactionSource::External, timestamp: None };

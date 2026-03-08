@@ -3873,7 +3873,7 @@ pub(crate) mod tests {
 	}
 
 	// Runtime-backed integration tests for the backend live in the `soil-test`
-	// crate to keep `soil-client` free of the `substrate-test-runtime-client`
+	// crate to keep `soil-client` free of the `soil-test-node-runtime-client`
 	// dev-dependency.
 
 	#[test]

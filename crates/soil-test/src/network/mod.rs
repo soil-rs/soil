@@ -97,8 +97,8 @@ use subsoil::runtime::{
 	traits::{Block as BlockT, Header as HeaderT, NumberFor, Zero},
 	Digest, Justification, Justifications,
 };
-use substrate_test_runtime_client::Sr25519Keyring;
-pub use substrate_test_runtime_client::{
+use soil_test_node_runtime_client::Sr25519Keyring;
+pub use soil_test_node_runtime_client::{
 	runtime::{Block, ExtrinsicBuilder, Hash, Header, Transfer},
 	TestClient, TestClientBuilder, TestClientBuilderExt,
 };
@@ -136,16 +136,16 @@ impl<B: BlockT> Verifier<B> for PassThroughVerifier {
 }
 
 pub type PeersFullClient = Client<
-	substrate_test_runtime_client::Backend,
-	substrate_test_runtime_client::ExecutorDispatch,
+	soil_test_node_runtime_client::Backend,
+	soil_test_node_runtime_client::ExecutorDispatch,
 	Block,
-	substrate_test_runtime_client::runtime::RuntimeApi,
+	soil_test_node_runtime_client::runtime::RuntimeApi,
 >;
 
 #[derive(Clone)]
 pub struct PeersClient {
 	client: Arc<PeersFullClient>,
-	backend: Arc<substrate_test_runtime_client::Backend>,
+	backend: Arc<soil_test_node_runtime_client::Backend>,
 }
 
 impl PeersClient {
@@ -153,7 +153,7 @@ impl PeersClient {
 		self.client.clone()
 	}
 
-	pub fn as_backend(&self) -> Arc<substrate_test_runtime_client::Backend> {
+	pub fn as_backend(&self) -> Arc<soil_test_node_runtime_client::Backend> {
 		self.backend.clone()
 	}
 
@@ -243,8 +243,8 @@ pub struct Peer<D, BlockImport> {
 	/// We keep a copy of the block_import so that we can invoke it for locally-generated blocks,
 	/// instead of going through the import queue.
 	block_import: BlockImportAdapter<BlockImport>,
-	select_chain: Option<LongestChain<substrate_test_runtime_client::Backend, Block>>,
-	backend: Option<Arc<substrate_test_runtime_client::Backend>>,
+	select_chain: Option<LongestChain<soil_test_node_runtime_client::Backend, Block>>,
+	backend: Option<Arc<soil_test_node_runtime_client::Backend>>,
 	network: NetworkWorker<Block, <Block as BlockT>::Hash>,
 	sync_service: Arc<SyncingService<Block>>,
 	imported_blocks_stream: Pin<Box<dyn Stream<Item = BlockImportNotification<Block>> + Send>>,
@@ -270,7 +270,7 @@ where
 	// Returns a clone of the local SelectChain, only available on full nodes
 	pub fn select_chain(
 		&self,
-	) -> Option<LongestChain<substrate_test_runtime_client::Backend, Block>> {
+	) -> Option<LongestChain<soil_test_node_runtime_client::Backend, Block>> {
 		self.select_chain.clone()
 	}
 

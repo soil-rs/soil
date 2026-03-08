@@ -64,5 +64,5 @@ impl log::Log for RuntimeLogger {
 }
 
 // NOTE: runtime_logger integration test moved out of subsoil to avoid circular dev-dependency:
-// subsoil (dev-dep) -> substrate-test-runtime-client -> substrate-test-runtime -> subsoil (WASM)
+// subsoil (dev-dep) -> soil-test-node-runtime-client -> soil-test-node-runtime -> subsoil (WASM)
 // This creates two compilations of subsoil with different features, causing trait mismatches.

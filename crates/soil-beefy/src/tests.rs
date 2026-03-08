@@ -78,7 +78,7 @@ use subsoil::runtime::{
 	traits::{Header as HeaderT, NumberFor},
 	DigestItem, EncodedJustification, Justifications,
 };
-use substrate_test_runtime_client::{BlockBuilderExt, ClientExt};
+use soil_test_node_runtime_client::{BlockBuilderExt, ClientExt};
 use tokio::time::Duration;
 
 const GENESIS_HASH: H256 = H256::zero();
@@ -92,7 +92,7 @@ const ALTERNATE_BAD_MMR_ROOT: MmrRootHash = MmrRootHash::repeat_byte(0x13);
 
 type BeefyBlockImport = crate::BeefyBlockImport<
 	Block,
-	substrate_test_runtime_client::Backend,
+	soil_test_node_runtime_client::Backend,
 	TestApi,
 	BlockImportAdapter<PeersClient>,
 	AuthorityId,

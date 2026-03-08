@@ -1682,7 +1682,7 @@ mod tests {
 	use soil_network::gossip::Validator as GossipValidatorT;
 	use std::time::Instant;
 	use subsoil::core::{crypto::UncheckedFrom, H256};
-	use substrate_test_runtime_client::runtime::{Block, Header};
+	use soil_test_node_runtime_client::runtime::{Block, Header};
 
 	// some random config (not really needed)
 	fn config() -> crate::Config {

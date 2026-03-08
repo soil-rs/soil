@@ -338,7 +338,7 @@ mod tests {
 	use soil_txpool::BasicPool;
 	use std::{collections::HashSet, sync::Arc};
 	use subsoil::runtime::traits::Block as BlockT;
-	use substrate_test_runtime_client::{
+	use soil_test_node_runtime_client::{
 		runtime::{
 			substrate_test_pallet::pallet::Call as PalletCall, ExtrinsicBuilder, RuntimeCall,
 		},
@@ -444,7 +444,7 @@ mod tests {
 	fn should_call_into_runtime_and_produce_extrinsic() {
 		subsoil::tracing::try_init_simple();
 
-		let client = Arc::new(substrate_test_runtime_client::new());
+		let client = Arc::new(soil_test_node_runtime_client::new());
 		let spawner = subsoil::core::testing::TaskExecutor::new();
 		let pool = Arc::from(BasicPool::new_full(
 			Default::default(),
@@ -484,7 +484,7 @@ mod tests {
 
 		subsoil::tracing::try_init_simple();
 
-		let (client, backend) = substrate_test_runtime_client::TestClientBuilder::new()
+		let (client, backend) = soil_test_node_runtime_client::TestClientBuilder::new()
 			.enable_offchain_indexing_api()
 			.build_with_backend();
 		let client = Arc::new(client);

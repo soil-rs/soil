@@ -18,7 +18,7 @@
 use codec::{Decode, Encode};
 use scale_info::TypeInfo;
 use subsoil::runtime::traits::Block as BlockT;
-use substrate_test_runtime_client::runtime::Block;
+use soil_test_node_runtime_client::runtime::Block;
 
 struct Runtime {}
 

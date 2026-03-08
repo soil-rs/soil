@@ -54,6 +54,6 @@ std = [
 [dev-dependencies]
 assert_matches = { workspace = true }
 soil-service = { workspace = true, default-features = true }
-substrate-test-runtime-client = { workspace = true }
-substrate-test-runtime-transaction-pool = { workspace = true }
+soil-test-node-runtime-client = { workspace = true }
+soil-test-node-runtime-txpool = { workspace = true }
 tokio = { features = ["macros", "rt-multi-thread"], workspace = true, default-features = true }

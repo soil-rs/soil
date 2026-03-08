@@ -569,7 +569,7 @@ mod tests {
 	use soil_client::consensus::BlockOrigin;
 	use soil_client::utils::mpsc::{tracing_unbounded, TracingUnboundedSender};
 	use subsoil::core::crypto::UncheckedFrom;
-	use substrate_test_runtime_client::runtime::{Block, Hash, Header};
+	use soil_test_node_runtime_client::runtime::{Block, Hash, Header};
 
 	#[derive(Clone)]
 	struct TestChainState {

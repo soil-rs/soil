@@ -32,5 +32,5 @@ soil-service = { features = ["rocksdb"], workspace = true, default-features = tr
 soil-client = { features = ["rocksdb"], workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
 subsoil-crypto-hashing = { workspace = true, default-features = true }
-substrate-test-client = { workspace = true }
+soil-test-node-client = { workspace = true }
 tempfile = { workspace = true }

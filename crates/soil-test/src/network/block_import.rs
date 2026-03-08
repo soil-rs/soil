@@ -25,14 +25,14 @@ use soil_client::import::{
 	import_single_block, BasicQueue, BlockImportError, BlockImportStatus, ImportedAux,
 	IncomingBlock,
 };
-use substrate_test_runtime_client::{
+use soil_test_node_runtime_client::{
 	self,
 	prelude::*,
 	runtime::{Block, Hash},
 };
 
 fn prepare_good_block() -> (TestClient, Hash, u64, soil_network::PeerId, IncomingBlock<Block>) {
-	let client = substrate_test_runtime_client::new();
+	let client = soil_test_node_runtime_client::new();
 	let block = BlockBuilderBuilder::new(&client)
 		.on_parent_block(client.chain_info().best_hash)
 		.with_parent_block_number(client.chain_info().best_number)
@@ -75,7 +75,7 @@ fn import_single_good_block_works() {
 	expected_aux.is_new_best = true;
 
 	match block_on(import_single_block(
-		&mut substrate_test_runtime_client::new(),
+		&mut soil_test_node_runtime_client::new(),
 		BlockOrigin::File,
 		block,
 		&PassThroughVerifier::new(true),
@@ -105,7 +105,7 @@ fn import_single_good_block_without_header_fails() {
 	let (_, _, _, peer_id, mut block) = prepare_good_block();
 	block.header = None;
 	match block_on(import_single_block(
-		&mut substrate_test_runtime_client::new(),
+		&mut soil_test_node_runtime_client::new(),
 		BlockOrigin::File,
 		block,
 		&PassThroughVerifier::new(true),
@@ -124,7 +124,7 @@ fn async_import_queue_drops() {
 
 		let queue = BasicQueue::new(
 			verifier,
-			Box::new(substrate_test_runtime_client::new()),
+			Box::new(soil_test_node_runtime_client::new()),
 			None,
 			&executor,
 			None,

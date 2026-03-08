@@ -38,12 +38,12 @@ use subsoil::runtime::{
 	traits::Block as _,
 	transaction_validity::{TransactionSource, ValidTransaction},
 };
-use substrate_test_runtime_client::{
+use soil_test_node_runtime_client::{
 	runtime::{Block, Extrinsic, ExtrinsicBuilder, Hash, Header, Nonce, Transfer, TransferData},
 	ClientBlockImportExt,
 	Sr25519Keyring::*,
 };
-use substrate_test_runtime_transaction_pool::{uxt, TestApi};
+use soil_test_node_runtime_txpool::{uxt, TestApi};
 use tracing::{debug, trace};
 
 type Pool<Api> = soil_txpool::Pool<Api, ()>;
@@ -1011,7 +1011,7 @@ fn ready_set_should_eventually_resolve_when_block_update_arrives() {
 
 #[test]
 fn import_notification_to_pool_maintain_works() {
-	let client = Arc::new(substrate_test_runtime_client::new());
+	let client = Arc::new(soil_test_node_runtime_client::new());
 
 	let best_hash = client.info().best_hash;
 	let finalized_hash = client.info().finalized_hash;

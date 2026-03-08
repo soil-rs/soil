@@ -43,8 +43,8 @@ tempfile = { workspace = true }
 tokio = { workspace = true, default-features = true }
 tracing = { workspace = true, default-features = true }
 tracing-core = { workspace = true, default-features = true }
-substrate-test-runtime = { workspace = true }
-substrate-test-runtime-client = { workspace = true }
+soil-test-node-runtime = { workspace = true }
+soil-test-node-runtime-client = { workspace = true }
 wat = { workspace = true }
 
 [dev-dependencies]
@@ -55,7 +55,7 @@ trybuild = { workspace = true }
 
 [features]
 default = ["serde"]
-bls-experimental = ["substrate-test-runtime-client/bls-experimental"]
+bls-experimental = ["soil-test-node-runtime-client/bls-experimental"]
 disable-ui-tests = []
 enable-staging-api = []
 serde = ["dep:serde", "subsoil/serde"]

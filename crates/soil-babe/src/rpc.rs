@@ -200,7 +200,7 @@ mod tests {
 	use subsoil::core::{crypto::key_types::BABE, testing::TaskExecutor};
 	use subsoil::keyring::Sr25519Keyring;
 	use subsoil::keystore::{testing::MemoryKeystore, Keystore};
-	use substrate_test_runtime_client::{
+	use soil_test_node_runtime_client::{
 		runtime::Block, Backend, DefaultTestClientBuilderExt, TestClient, TestClientBuilder,
 		TestClientBuilderExt,
 	};

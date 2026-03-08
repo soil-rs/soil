@@ -45,8 +45,8 @@ there are no production-dep cycles remaining.
 
 ### SCC 1: Service-RPC-Network-Consensus test cluster (14 crates)
 
-All cycles go through dev-dependencies (`substrate-test-runtime-client`,
-`substrate-test-runtime`, etc.). The production-dep subgraph is acyclic.
+All cycles go through dev-dependencies (`soil-test-node-runtime-client`,
+`soil-test-node-runtime`, etc.). The production-dep subgraph is acyclic.
 `soil-client` is no longer part of this SCC, and the old split
 network/statement/mixnet crates have been collapsed into `soil-network`.
 
@@ -67,10 +67,10 @@ Service / assembly:
   soil-txpool
 
 Test infrastructure:
-  substrate-test-client
-  substrate-test-runtime
-  substrate-test-runtime-client
-  substrate-test-runtime-transaction-pool
+  soil-test-node-client
+  soil-test-node-runtime
+  soil-test-node-runtime-client
+  soil-test-node-runtime-txpool
 ```
 
 ### SCC 2: Subsoil core (3 crates)

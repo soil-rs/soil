@@ -184,7 +184,7 @@ mod tests {
 	fn list_presets_works() {
 		subsoil::tracing::try_init_simple();
 		let presets =
-			<GenesisConfigBuilderRuntimeCaller>::new(substrate_test_runtime::wasm_binary_unwrap())
+			<GenesisConfigBuilderRuntimeCaller>::new(soil_test_node_runtime::wasm_binary_unwrap())
 				.preset_names()
 				.unwrap();
 		assert_eq!(presets, vec![PresetId::from("foobar"), PresetId::from("staging"),]);
@@ -193,7 +193,7 @@ mod tests {
 	#[test]
 	fn get_default_config_works() {
 		let config =
-			<GenesisConfigBuilderRuntimeCaller>::new(substrate_test_runtime::wasm_binary_unwrap())
+			<GenesisConfigBuilderRuntimeCaller>::new(soil_test_node_runtime::wasm_binary_unwrap())
 				.get_default_config()
 				.unwrap();
 		let expected = r#"{"babe": {"authorities": [], "epochConfig": {"allowed_slots": "PrimaryAndSecondaryVRFSlots", "c": [1, 4]}}, "balances": {"balances": [], "devAccounts": null}, "substrateTest": {"authorities": []}, "system": {}}"#;
@@ -204,7 +204,7 @@ mod tests {
 	fn get_named_preset_works() {
 		subsoil::tracing::try_init_simple();
 		let config =
-			<GenesisConfigBuilderRuntimeCaller>::new(substrate_test_runtime::wasm_binary_unwrap())
+			<GenesisConfigBuilderRuntimeCaller>::new(soil_test_node_runtime::wasm_binary_unwrap())
 				.get_named_preset(Some(&"foobar".to_string()))
 				.unwrap();
 		let expected = r#"{"foo":"bar"}"#;
@@ -226,7 +226,7 @@ mod tests {
 		});
 
 		let storage =
-			<GenesisConfigBuilderRuntimeCaller>::new(substrate_test_runtime::wasm_binary_unwrap())
+			<GenesisConfigBuilderRuntimeCaller>::new(soil_test_node_runtime::wasm_binary_unwrap())
 				.get_storage_for_patch(patch)
 				.unwrap();
 

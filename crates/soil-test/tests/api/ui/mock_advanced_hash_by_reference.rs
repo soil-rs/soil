@@ -15,7 +15,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use substrate_test_runtime_client::runtime::Block;
+use soil_test_node_runtime_client::runtime::Block;
 use subsoil::api::ApiError;
 
 subsoil::api::decl_runtime_apis! {

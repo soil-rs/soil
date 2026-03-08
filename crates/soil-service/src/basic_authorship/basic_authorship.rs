@@ -591,7 +591,7 @@ mod tests {
 	use soil_txpool::BasicPool;
 	use subsoil::api::Core;
 	use subsoil::runtime::{generic::BlockId, traits::NumberFor, Perbill};
-	use substrate_test_runtime_client::{
+	use soil_test_node_runtime_client::{
 		prelude::*,
 		runtime::{Block as TestBlock, Extrinsic, ExtrinsicBuilder, Transfer},
 		TestClientBuilder, TestClientBuilderExt,
@@ -600,8 +600,8 @@ mod tests {
 	const SOURCE: TransactionSource = TransactionSource::External;
 
 	// Note:
-	// Maximum normal extrinsic size for `substrate_test_runtime` is ~65% of max_block (refer to
-	// `substrate_test_runtime::RuntimeBlockWeights` for details).
+	// Maximum normal extrinsic size for `soil_test_node_runtime` is ~65% of max_block (refer to
+	// `soil_test_node_runtime::RuntimeBlockWeights` for details).
 	// This extrinsic sizing allows for:
 	// - one huge xts + a lot of tiny dust
 	// - one huge, no medium,
@@ -625,7 +625,7 @@ mod tests {
 	#[test]
 	fn should_cease_building_block_when_deadline_is_reached() {
 		// given
-		let client = Arc::new(substrate_test_runtime_client::new());
+		let client = Arc::new(soil_test_node_runtime_client::new());
 		let spawner = subsoil::core::testing::TaskExecutor::new();
 		let txpool = Arc::from(BasicPool::new_full(
 			Default::default(),
@@ -679,7 +679,7 @@ mod tests {
 
 	#[test]
 	fn should_not_panic_when_deadline_is_reached() {
-		let client = Arc::new(substrate_test_runtime_client::new());
+		let client = Arc::new(soil_test_node_runtime_client::new());
 		let spawner = subsoil::core::testing::TaskExecutor::new();
 		let txpool = Arc::from(BasicPool::new_full(
 			Default::default(),
@@ -775,7 +775,7 @@ mod tests {
 	#[test]
 	fn should_not_remove_invalid_transactions_from_the_same_sender_after_one_was_invalid() {
 		// given
-		let client = Arc::new(substrate_test_runtime_client::new());
+		let client = Arc::new(soil_test_node_runtime_client::new());
 		let spawner = subsoil::core::testing::TaskExecutor::new();
 		let txpool = Arc::from(BasicPool::new_full(
 			Default::default(),
@@ -885,7 +885,7 @@ mod tests {
 
 	#[test]
 	fn should_cease_building_block_when_block_limit_is_reached() {
-		let client = Arc::new(substrate_test_runtime_client::new());
+		let client = Arc::new(soil_test_node_runtime_client::new());
 		let spawner = subsoil::core::testing::TaskExecutor::new();
 		let txpool = Arc::from(BasicPool::new_full(
 			Default::default(),
@@ -985,7 +985,7 @@ mod tests {
 	#[test]
 	fn should_keep_adding_transactions_after_exhausts_resources_before_soft_deadline() {
 		// given
-		let client = Arc::new(substrate_test_runtime_client::new());
+		let client = Arc::new(soil_test_node_runtime_client::new());
 		let spawner = subsoil::core::testing::TaskExecutor::new();
 		let txpool = Arc::from(BasicPool::new_full(
 			Default::default(),
@@ -1055,7 +1055,7 @@ mod tests {
 	#[test]
 	fn should_only_skip_up_to_some_limit_after_soft_deadline() {
 		// given
-		let client = Arc::new(substrate_test_runtime_client::new());
+		let client = Arc::new(soil_test_node_runtime_client::new());
 		let spawner = subsoil::core::testing::TaskExecutor::new();
 		let txpool = Arc::from(BasicPool::new_full(
 			Default::default(),

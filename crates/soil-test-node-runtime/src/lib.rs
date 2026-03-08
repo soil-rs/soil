@@ -84,7 +84,7 @@ pub type AuraId = subsoil::consensus::aura::sr25519::AuthorityId;
 #[cfg(feature = "std")]
 pub use extrinsic::{ExtrinsicBuilder, Transfer};
 
-const LOG_TARGET: &str = "substrate-test-runtime";
+const LOG_TARGET: &str = "soil-test-node-runtime";
 
 // Include the WASM binary
 #[cfg(feature = "std")]
@@ -1157,7 +1157,7 @@ mod tests {
 		traits::{DispatchTransaction, Hash as _},
 		transaction_validity::{InvalidTransaction, TransactionSource::External, ValidTransaction},
 	};
-	use substrate_test_runtime_client::{
+	use soil_test_node_runtime_client::{
 		prelude::*, runtime::TestAPI, DefaultTestClientBuilderExt, TestClientBuilder,
 	};
 	use topsoil_support::dispatch::DispatchInfo;

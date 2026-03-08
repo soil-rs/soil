@@ -26,7 +26,7 @@ use subsoil::core::{
 	testing::ECDSA,
 };
 use subsoil::keystore::{testing::MemoryKeystore, Keystore, KeystoreExt};
-use substrate_test_runtime_client::{
+use soil_test_node_runtime_client::{
 	runtime::{TestAPI, TEST_OWNER},
 	DefaultTestClientBuilderExt, TestClientBuilder, TestClientBuilderExt,
 };

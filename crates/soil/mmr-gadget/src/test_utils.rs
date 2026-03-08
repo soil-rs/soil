@@ -42,7 +42,7 @@ use subsoil::runtime::{
 	generic::BlockId,
 	traits::{Block as BlockT, Header as HeaderT},
 };
-use substrate_test_runtime_client::{
+use soil_test_node_runtime_client::{
 	runtime::{Block, BlockNumber, Hash, Header},
 	Backend, BlockBuilderExt, Client, ClientBlockImportExt, ClientExt, DefaultTestClientBuilderExt,
 	TestClientBuilder, TestClientBuilderExt,

@@ -29,7 +29,7 @@ use soil_client::blockchain::HeaderBackend;
 use soil_network::common::sync::message::{BlockAnnounce, BlockData, BlockState, FromBlock};
 use soil_network::RequestFailure;
 use std::sync::Mutex;
-use substrate_test_runtime_client::{
+use soil_test_node_runtime_client::{
 	runtime::{Block, Hash, Header},
 	BlockBuilderExt, ClientBlockImportExt, ClientExt, DefaultTestClientBuilderExt, TestClient,
 	TestClientBuilder, TestClientBuilderExt,

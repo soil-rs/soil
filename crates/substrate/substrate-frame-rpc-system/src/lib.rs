@@ -224,7 +224,7 @@ mod tests {
 		transaction_validity::{InvalidTransaction, TransactionValidityError},
 		ApplyExtrinsicResult,
 	};
-	use substrate_test_runtime_client::{runtime::Transfer, Sr25519Keyring};
+	use soil_test_node_runtime_client::{runtime::Transfer, Sr25519Keyring};
 
 	fn deny_unsafe() -> Extensions {
 		let mut ext = Extensions::new();
@@ -243,7 +243,7 @@ mod tests {
 		subsoil::tracing::try_init_simple();
 
 		// given
-		let client = Arc::new(substrate_test_runtime_client::new());
+		let client = Arc::new(soil_test_node_runtime_client::new());
 		let spawner = subsoil::core::testing::TaskExecutor::new();
 		let pool = Arc::from(BasicPool::new_full(
 			Default::default(),
@@ -284,7 +284,7 @@ mod tests {
 		subsoil::tracing::try_init_simple();
 
 		// given
-		let client = Arc::new(substrate_test_runtime_client::new());
+		let client = Arc::new(soil_test_node_runtime_client::new());
 		let spawner = subsoil::core::testing::TaskExecutor::new();
 		let pool = Arc::from(BasicPool::new_full(
 			Default::default(),
@@ -308,7 +308,7 @@ mod tests {
 		subsoil::tracing::try_init_simple();
 
 		// given
-		let client = Arc::new(substrate_test_runtime_client::new());
+		let client = Arc::new(soil_test_node_runtime_client::new());
 		let spawner = subsoil::core::testing::TaskExecutor::new();
 		let pool = Arc::from(BasicPool::new_full(
 			Default::default(),
@@ -344,7 +344,7 @@ mod tests {
 		subsoil::tracing::try_init_simple();
 
 		// given
-		let client = Arc::new(substrate_test_runtime_client::new());
+		let client = Arc::new(soil_test_node_runtime_client::new());
 		let spawner = subsoil::core::testing::TaskExecutor::new();
 		let pool = Arc::from(BasicPool::new_full(
 			Default::default(),

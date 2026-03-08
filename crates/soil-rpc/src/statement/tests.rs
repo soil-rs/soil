@@ -25,7 +25,7 @@ use soil_network::statement_store::Store;
 use soil_statement_store::{statement_allowance_key, Statement, StatementAllowance, Topic};
 use std::sync::Arc;
 use subsoil::core::traits::SpawnNamed;
-use substrate_test_runtime_client::{TestClientBuilder, TestClientBuilderExt};
+use soil_test_node_runtime_client::{TestClientBuilder, TestClientBuilderExt};
 
 async fn subscribe_to_topics(
 	api_rpc: &RpcModule<StatementStore>,
@@ -221,7 +221,7 @@ async fn check_submitted(
 #[tokio::test(flavor = "multi_thread", worker_threads = 10)]
 async fn subscribe_works_with_raw_json() {
 	let executor = test_executor();
-	let client = Arc::new(substrate_test_runtime_client::new());
+	let client = Arc::new(soil_test_node_runtime_client::new());
 	let temp_dir = tempfile::tempdir().expect("Failed to create temp dir");
 	let store = Store::new_shared(
 		temp_dir.path(),
@@ -253,7 +253,7 @@ async fn subscribe_works_with_raw_json() {
 #[tokio::test(flavor = "multi_thread", worker_threads = 10)]
 async fn subscribe_rejects_more_than_4_topics_in_match_all() {
 	let executor = test_executor();
-	let client = Arc::new(substrate_test_runtime_client::new());
+	let client = Arc::new(soil_test_node_runtime_client::new());
 	let temp_dir = tempfile::tempdir().expect("Failed to create temp dir");
 	let store = Store::new_shared(
 		temp_dir.path(),

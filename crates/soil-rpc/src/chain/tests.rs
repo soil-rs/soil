@@ -23,14 +23,14 @@ use assert_matches::assert_matches;
 use jsonrpsee::core::EmptyServerParams as EmptyParams;
 use soil_client::block_builder::BlockBuilderBuilder;
 use soil_client::consensus::BlockOrigin;
-use substrate_test_runtime_client::{
+use soil_test_node_runtime_client::{
 	prelude::*,
 	runtime::{Block, Header, H256},
 };
 
 #[tokio::test]
 async fn should_return_header() {
-	let client = Arc::new(substrate_test_runtime_client::new());
+	let client = Arc::new(soil_test_node_runtime_client::new());
 	let api = new_full(client.clone(), test_executor()).into_rpc();
 
 	let res: Header =
@@ -72,7 +72,7 @@ async fn should_return_header() {
 
 #[tokio::test]
 async fn should_return_a_block() {
-	let client = Arc::new(substrate_test_runtime_client::new());
+	let client = Arc::new(soil_test_node_runtime_client::new());
 	let api = new_full(client.clone(), test_executor()).into_rpc();
 
 	let block = BlockBuilderBuilder::new(&*client)
@@ -137,7 +137,7 @@ async fn should_return_a_block() {
 
 #[tokio::test]
 async fn should_return_block_hash() {
-	let client = Arc::new(substrate_test_runtime_client::new());
+	let client = Arc::new(soil_test_node_runtime_client::new());
 	let api = new_full(client.clone(), test_executor()).into_rpc();
 
 	let res: ListOrValue<Option<H256>> =
@@ -204,7 +204,7 @@ async fn should_return_block_hash() {
 
 #[tokio::test]
 async fn should_return_finalized_hash() {
-	let client = Arc::new(substrate_test_runtime_client::new());
+	let client = Arc::new(soil_test_node_runtime_client::new());
 	let api = new_full(client.clone(), test_executor()).into_rpc();
 
 	let res: H256 = api.call("chain_getFinalizedHead", EmptyParams::new()).await.unwrap();
@@ -248,7 +248,7 @@ async fn should_notify_about_finalized_block() {
 }
 
 async fn test_head_subscription(method: &str) {
-	let client = Arc::new(substrate_test_runtime_client::new());
+	let client = Arc::new(soil_test_node_runtime_client::new());
 
 	let mut sub = {
 		let api = new_full(client.clone(), test_executor()).into_rpc();

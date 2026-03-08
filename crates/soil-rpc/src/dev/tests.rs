@@ -21,11 +21,11 @@ use crate::DenyUnsafe;
 use soil_client::block_builder::BlockBuilderBuilder;
 use soil_client::blockchain::HeaderBackend;
 use soil_client::consensus::BlockOrigin;
-use substrate_test_runtime_client::{prelude::*, runtime::Block};
+use soil_test_node_runtime_client::{prelude::*, runtime::Block};
 
 #[tokio::test]
 async fn block_stats_work() {
-	let client = Arc::new(substrate_test_runtime_client::new());
+	let client = Arc::new(soil_test_node_runtime_client::new());
 	let mut api = <Dev<Block, _>>::new(client.clone()).into_rpc();
 	api.extensions_mut().insert(DenyUnsafe::No);
 
@@ -78,7 +78,7 @@ async fn block_stats_work() {
 
 #[tokio::test]
 async fn deny_unsafe_works() {
-	let client = Arc::new(substrate_test_runtime_client::new());
+	let client = Arc::new(soil_test_node_runtime_client::new());
 	let mut api = <Dev<Block, _>>::new(client.clone()).into_rpc();
 	api.extensions_mut().insert(DenyUnsafe::Yes);
 

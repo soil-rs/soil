@@ -6144,10 +6144,10 @@ dependencies = [
  "soil-client",
  "soil-consensus",
  "soil-service",
+ "soil-test-node-client",
  "staging-node-cli",
  "subsoil",
  "subsoil-crypto-hashing",
- "substrate-test-client",
  "tempfile",
  "topsoil-system",
 ]
@@ -6827,9 +6827,9 @@ dependencies = [
  "soil-client",
  "soil-network",
  "soil-service",
+ "soil-test-node-runtime-client",
  "subsoil",
  "substrate-prometheus-endpoint",
- "substrate-test-runtime-client",
  "tempfile",
  "thiserror 1.0.69",
  "tokio",
@@ -7437,8 +7437,8 @@ dependencies = [
  "merkleized-metadata",
  "parity-scale-codec",
  "scale-info",
+ "soil-test-node-runtime-client",
  "subsoil",
- "substrate-test-runtime-client",
  "substrate-wasm-builder",
  "topsoil-support",
  "topsoil-system",
@@ -10211,9 +10211,9 @@ dependencies = [
  "soil-network",
  "soil-telemetry",
  "soil-test",
+ "soil-test-node-runtime-client",
  "subsoil",
  "substrate-prometheus-endpoint",
- "substrate-test-runtime-client",
  "tempfile",
  "thiserror 1.0.69",
  "tokio",
@@ -10239,10 +10239,10 @@ dependencies = [
  "soil-rpc",
  "soil-telemetry",
  "soil-test",
+ "soil-test-node-runtime-client",
  "subsoil",
  "subsoil-crypto-hashing",
  "substrate-prometheus-endpoint",
- "substrate-test-runtime-client",
  "thiserror 1.0.69",
  "tokio",
 ]
@@ -10265,9 +10265,9 @@ dependencies = [
  "soil-network",
  "soil-rpc",
  "soil-test",
+ "soil-test-node-runtime-client",
  "subsoil",
  "substrate-prometheus-endpoint",
- "substrate-test-runtime-client",
  "thiserror 1.0.69",
  "tokio",
  "wasm-timer",
@@ -10290,9 +10290,9 @@ dependencies = [
  "soil-client",
  "soil-network",
  "soil-telemetry",
+ "soil-test-node-runtime",
  "subsoil",
  "subsoil-crypto-hashing",
- "substrate-test-runtime",
 ]
 
 [[package]]
@@ -10413,8 +10413,8 @@ dependencies = [
  "soil-client",
  "soil-telemetry",
  "soil-test",
+ "soil-test-node-runtime-client",
  "subsoil",
- "substrate-test-runtime-client",
  "thiserror 1.0.69",
 ]
 
@@ -10445,10 +10445,10 @@ dependencies = [
  "soil-rpc",
  "soil-telemetry",
  "soil-test",
+ "soil-test-node-runtime-client",
  "subsoil",
  "subsoil-crypto-hashing",
  "substrate-prometheus-endpoint",
- "substrate-test-runtime-client",
  "thiserror 1.0.69",
  "tokio",
 ]
@@ -10470,11 +10470,11 @@ dependencies = [
  "soil-client",
  "soil-consensus",
  "soil-service",
+ "soil-test-node-runtime-client",
+ "soil-test-node-runtime-txpool",
  "soil-txpool",
  "subsoil",
  "substrate-prometheus-endpoint",
- "substrate-test-runtime-client",
- "substrate-test-runtime-transaction-pool",
  "thiserror 1.0.69",
  "tokio",
 ]
@@ -10489,8 +10489,8 @@ dependencies = [
  "parking_lot 0.12.5",
  "soil-client",
  "soil-offchain",
+ "soil-test-node-runtime-client",
  "subsoil",
- "substrate-test-runtime-client",
  "tokio",
 ]
 
@@ -10548,11 +10548,11 @@ dependencies = [
  "soil-client",
  "soil-statement-store",
  "soil-test",
+ "soil-test-node-runtime",
+ "soil-test-node-runtime-client",
  "subsoil",
  "subsoil-crypto-hashing",
  "substrate-prometheus-endpoint",
- "substrate-test-runtime",
- "substrate-test-runtime-client",
  "tempfile",
  "thiserror 1.0.69",
  "tokio",
@@ -10586,9 +10586,9 @@ dependencies = [
  "rustls",
  "soil-client",
  "soil-network",
+ "soil-test-node-runtime-client",
  "soil-txpool",
  "subsoil",
- "substrate-test-runtime-client",
  "threadpool",
  "tokio",
  "tracing",
@@ -10646,13 +10646,13 @@ dependencies = [
  "soil-network",
  "soil-service",
  "soil-statement-store",
+ "soil-test-node-runtime",
+ "soil-test-node-runtime-client",
+ "soil-test-node-runtime-txpool",
  "soil-txpool",
  "subsoil",
  "subsoil-crypto-hashing",
  "substrate-prometheus-endpoint",
- "substrate-test-runtime",
- "substrate-test-runtime-client",
- "substrate-test-runtime-transaction-pool",
  "tempfile",
  "thiserror 1.0.69",
  "tokio",
@@ -10710,14 +10710,14 @@ dependencies = [
  "soil-network",
  "soil-rpc",
  "soil-telemetry",
+ "soil-test-node-runtime",
+ "soil-test-node-runtime-client",
  "soil-transaction-storage-proof",
  "soil-txpool",
  "static_init",
  "subsoil",
  "subsoil-crypto-hashing",
  "substrate-prometheus-endpoint",
- "substrate-test-runtime",
- "substrate-test-runtime-client",
  "tempfile",
  "thiserror 1.0.69",
  "tokio",
@@ -10803,12 +10803,12 @@ dependencies = [
  "soil-consensus",
  "soil-network",
  "soil-service",
+ "soil-test-node-runtime",
+ "soil-test-node-runtime-client",
  "sp-runtime-interface-test-wasm",
  "sp-runtime-interface-test-wasm-deprecated",
  "static_assertions",
  "subsoil",
- "substrate-test-runtime",
- "substrate-test-runtime-client",
  "tempfile",
  "tokio",
  "tracing",
@@ -10826,6 +10826,85 @@ dependencies = [
  "rand 0.8.5",
  "regex",
  "subsoil",
+]
+
+[[package]]
+name = "soil-test-node-client"
+version = "2.0.1"
+dependencies = [
+ "array-bytes 6.2.3",
+ "async-trait",
+ "futures",
+ "parity-scale-codec",
+ "serde",
+ "serde_json",
+ "soil-client",
+ "soil-consensus",
+ "soil-service",
+ "subsoil",
+ "tokio",
+]
+
+[[package]]
+name = "soil-test-node-runtime"
+version = "2.0.0"
+dependencies = [
+ "array-bytes 6.2.3",
+ "futures",
+ "log",
+ "parity-scale-codec",
+ "plant-metadata-hash-extension",
+ "pretty_assertions",
+ "scale-info",
+ "serde",
+ "serde_json",
+ "soil-chain-spec",
+ "soil-client",
+ "soil-service",
+ "soil-statement-store",
+ "soil-test-node-runtime-client",
+ "subsoil",
+ "subsoil-crypto-hashing",
+ "subsoil-derive",
+ "substrate-wasm-builder",
+ "topsoil-babe",
+ "topsoil-balances",
+ "topsoil-executive",
+ "topsoil-support",
+ "topsoil-system",
+ "topsoil-system-rpc-runtime-api",
+ "topsoil-timestamp",
+ "topsoil-utility",
+ "tracing",
+ "trie-db",
+]
+
+[[package]]
+name = "soil-test-node-runtime-client"
+version = "2.0.0"
+dependencies = [
+ "futures",
+ "soil-client",
+ "soil-consensus",
+ "soil-test-node-client",
+ "soil-test-node-runtime",
+ "subsoil",
+]
+
+[[package]]
+name = "soil-test-node-runtime-txpool"
+version = "2.0.0"
+dependencies = [
+ "async-trait",
+ "futures",
+ "log",
+ "parity-scale-codec",
+ "parking_lot 0.12.5",
+ "soil-client",
+ "soil-test-node-runtime-client",
+ "soil-txpool",
+ "subsoil",
+ "thiserror 1.0.69",
 ]
 
 [[package]]
@@ -10859,13 +10938,13 @@ dependencies = [
  "serde",
  "serde_json",
  "soil-client",
+ "soil-test-node-runtime",
+ "soil-test-node-runtime-client",
+ "soil-test-node-runtime-txpool",
  "strum 0.26.3",
  "subsoil",
  "subsoil-crypto-hashing",
  "substrate-prometheus-endpoint",
- "substrate-test-runtime",
- "substrate-test-runtime-client",
- "substrate-test-runtime-transaction-pool",
  "thiserror 1.0.69",
  "tokio",
  "tokio-stream",
@@ -10994,8 +11073,8 @@ dependencies = [
  "serde",
  "serde_json",
  "soil-chain-spec",
+ "soil-test-node-runtime",
  "subsoil",
- "substrate-test-runtime",
 ]
 
 [[package]]
@@ -11385,9 +11464,9 @@ dependencies = [
  "parity-scale-codec",
  "soil-client",
  "soil-rpc",
+ "soil-test-node-runtime-client",
  "soil-txpool",
  "subsoil",
- "substrate-test-runtime-client",
  "tokio",
  "topsoil-system-rpc-runtime-api",
 ]
@@ -11403,85 +11482,6 @@ dependencies = [
  "prometheus",
  "thiserror 1.0.69",
  "tokio",
-]
-
-[[package]]
-name = "substrate-test-client"
-version = "2.0.1"
-dependencies = [
- "array-bytes 6.2.3",
- "async-trait",
- "futures",
- "parity-scale-codec",
- "serde",
- "serde_json",
- "soil-client",
- "soil-consensus",
- "soil-service",
- "subsoil",
- "tokio",
-]
-
-[[package]]
-name = "substrate-test-runtime"
-version = "2.0.0"
-dependencies = [
- "array-bytes 6.2.3",
- "futures",
- "log",
- "parity-scale-codec",
- "plant-metadata-hash-extension",
- "pretty_assertions",
- "scale-info",
- "serde",
- "serde_json",
- "soil-chain-spec",
- "soil-client",
- "soil-service",
- "soil-statement-store",
- "subsoil",
- "subsoil-crypto-hashing",
- "subsoil-derive",
- "substrate-test-runtime-client",
- "substrate-wasm-builder",
- "topsoil-babe",
- "topsoil-balances",
- "topsoil-executive",
- "topsoil-support",
- "topsoil-system",
- "topsoil-system-rpc-runtime-api",
- "topsoil-timestamp",
- "topsoil-utility",
- "tracing",
- "trie-db",
-]
-
-[[package]]
-name = "substrate-test-runtime-client"
-version = "2.0.0"
-dependencies = [
- "futures",
- "soil-client",
- "soil-consensus",
- "subsoil",
- "substrate-test-client",
- "substrate-test-runtime",
-]
-
-[[package]]
-name = "substrate-test-runtime-transaction-pool"
-version = "2.0.0"
-dependencies = [
- "async-trait",
- "futures",
- "log",
- "parity-scale-codec",
- "parking_lot 0.12.5",
- "soil-client",
- "soil-txpool",
- "subsoil",
- "substrate-test-runtime-client",
- "thiserror 1.0.69",
 ]
 
 [[package]]
@@ -12416,8 +12416,8 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "scale-info",
+ "soil-test-node-runtime-client",
  "subsoil",
- "substrate-test-runtime-client",
  "topsoil-balances",
  "topsoil-support",
  "topsoil-system",
@@ -12688,8 +12688,8 @@ dependencies = [
  "parity-scale-codec",
  "scale-info",
  "serde",
+ "soil-test-node-runtime-client",
  "subsoil",
- "substrate-test-runtime-client",
  "topsoil-support",
 ]
 

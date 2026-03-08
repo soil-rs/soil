@@ -33,7 +33,7 @@ use subsoil::runtime::{
 	BuildStorage,
 };
 
-/// Builder for generating storage from substrate-test-runtime genesis config.
+/// Builder for generating storage from soil-test-node-runtime genesis config.
 ///
 /// Default storage can be extended with additional key-value pairs.
 pub struct GenesisStorageBuilder {
@@ -50,7 +50,7 @@ pub struct GenesisStorageBuilder {
 }
 
 impl Default for GenesisStorageBuilder {
-	/// Creates a builder with default settings for `substrate_test_runtime`.
+	/// Creates a builder with default settings for `soil_test_node_runtime`.
 	fn default() -> Self {
 		Self::new(
 			vec![
@@ -142,7 +142,7 @@ impl GenesisStorageBuilder {
 		let mut storage = self
 			.genesis_config()
 			.build_storage()
-			.expect("Build storage from substrate-test-runtime RuntimeGenesisConfig");
+			.expect("Build storage from soil-test-node-runtime RuntimeGenesisConfig");
 
 		if let Some(heap_pages) = self.heap_pages_override {
 			storage.top.insert(well_known_keys::HEAP_PAGES.into(), heap_pages.encode());

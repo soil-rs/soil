@@ -1,5 +1,5 @@
 [package]
-name = "substrate-test-runtime-transaction-pool"
+name = "soil-test-node-runtime-txpool"
 version = "2.0.0"
 authors.workspace = true
 edition.workspace = true
@@ -23,5 +23,5 @@ log = { workspace = true }
 parking_lot = { workspace = true, default-features = true }
 soil-txpool = { workspace = true, default-features = true }
 subsoil = { workspace = true }
-substrate-test-runtime-client = { workspace = true }
+soil-test-node-runtime-client = { workspace = true }
 thiserror = { workspace = true }

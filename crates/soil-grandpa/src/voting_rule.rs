@@ -334,7 +334,7 @@ mod tests {
 	use soil_client::consensus::BlockOrigin;
 	use subsoil::runtime::traits::Header as _;
 
-	use substrate_test_runtime_client::{
+	use soil_test_node_runtime_client::{
 		runtime::{Block, Header},
 		Backend, Client, ClientBlockImportExt, DefaultTestClientBuilderExt, TestClientBuilder,
 		TestClientBuilderExt,

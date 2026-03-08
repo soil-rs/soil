@@ -193,10 +193,10 @@ members = [
 	"crates/substrate/substrate-frame-rpc-support",
 	"crates/substrate/substrate-frame-rpc-system",
 	"crates/substrate/substrate-prometheus-endpoint",
-	"crates/substrate/substrate-test-client",
-	"crates/substrate/substrate-test-runtime",
-	"crates/substrate/substrate-test-runtime-client",
-	"crates/substrate/substrate-test-runtime-transaction-pool",
+	"crates/soil-test-node-client",
+	"crates/soil-test-node-runtime",
+	"crates/soil-test-node-runtime-client",
+	"crates/soil-test-node-runtime-txpool",
 	"crates/substrate/substrate-wasm-builder",
 	"crates/soil-offchain",
 	"crates/soil-txpool",
@@ -417,10 +417,10 @@ substrate-build-script-utils = { path = "crates/substrate/substrate-build-script
 substrate-cli-test-utils = { path = "crates/substrate/substrate-cli-test-utils" }
 substrate-frame-rpc-support = { default-features = false, path = "crates/substrate/substrate-frame-rpc-support" }
 substrate-frame-rpc-system = { path = "crates/substrate/substrate-frame-rpc-system", default-features = false }
-substrate-test-client = { path = "crates/substrate/substrate-test-client" }
-substrate-test-runtime = { path = "crates/substrate/substrate-test-runtime" }
-substrate-test-runtime-client = { path = "crates/substrate/substrate-test-runtime-client" }
-substrate-test-runtime-transaction-pool = { path = "crates/substrate/substrate-test-runtime-transaction-pool" }
+soil-test-node-client = { path = "crates/soil-test-node-client" }
+soil-test-node-runtime = { path = "crates/soil-test-node-runtime" }
+soil-test-node-runtime-client = { path = "crates/soil-test-node-runtime-client" }
+soil-test-node-runtime-txpool = { path = "crates/soil-test-node-runtime-txpool" }
 substrate-wasm-builder = { path = "crates/substrate/substrate-wasm-builder", default-features = false }
 test-pallet = { path = "crates/topsoil/support/test/pallet", default-features = false, package = "topsoil-support-test-pallet" }
 
