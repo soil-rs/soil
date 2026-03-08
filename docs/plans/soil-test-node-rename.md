@@ -32,18 +32,24 @@
 - [x] Rename command/doc/test surface to `soil-test-staging-node` names.
 - [x] Validate leaf boundary: no `crates/*` manifest depends on `contrib/soil-test-staging-node-*`.
 - [x] Run focused `cargo check` and command smoke checks.
-- [ ] Run `cargo check --all`.
-- [ ] Run `cargo test --all --release` and fix fallout until green.
+- [x] Run `cargo check --all`.
+- [x] Run `cargo test --all --release` and fix fallout until green.
 
 ## Progress Log
 - 2026-03-08: Created plan and execution log. Verified the key workspace entries still use the old `staging-node-*`, `node-*`, and `substrate-test-*` paths and package names.
 - 2026-03-08: Renamed `substrate-test-*` crates to `soil-test-node-*`, including `soil-test-node-runtime-txpool` for the former transaction-pool crate. Updated workspace members, workspace dependency keys, downstream manifests, Rust crate IDs/imports, and `Cargo.lock`.
 - 2026-03-08: Moved the full staging/kitchensink leaf cluster to `contrib/soil-test-staging-node-*`, rewired workspace membership/dependency keys, renamed the public binaries to `soil-test-staging-node` and `soil-test-staging-node-spec-builder`, and updated command/doc/test references accordingly.
 - 2026-03-08: Verified the `crates/* -> contrib/*` boundary at the manifest level. No manifest under `crates/` depends on any `soil-test-staging-node-*` package.
+- 2026-03-08: Broad workspace validation reached a clean compile with `cargo check --all`.
+- 2026-03-08: Installed `libclang-18-dev` so the renamed staging node binaries could build `librocksdb-sys` during command smoke checks.
+- 2026-03-08: The first full release test run failed in `soil-chain-spec` because `include_str!` paths still referenced `../../substrate/soil-test-node-runtime/res/...` after the in-place runtime move. Updated those paths to `../../soil-test-node-runtime/res/...` in `crates/soil-chain-spec/src/chain_spec.rs`.
+- 2026-03-08: Re-ran `cargo test -p soil-chain-spec --lib --release` successfully after the path fix.
+- 2026-03-08: Final `cargo test --all --release` completed successfully with `EXIT_CODE=0`.
 
 ## Commit Log
 - 2026-03-08: `74b964109d` `Rename substrate test node crates`
-- Pending: staging move and validation commit(s).
+- 2026-03-08: `ad4e1ee72f` `Move staging node family to contrib`
+- Pending: final validation/fix commit(s).
 
 ## Validation Results
 - 2026-03-08: `cargo check -p soil-test-node-runtime --all-targets` passed after the rename.
@@ -54,5 +60,6 @@
 - 2026-03-08: `cargo check -p soil-test-node-runtime-txpool --all-targets` passed.
 - 2026-03-08: `cargo run -p soil-test-staging-node-cli --bin soil-test-staging-node -- --version` passed after installing `libclang-18-dev`.
 - 2026-03-08: `cargo run -p soil-test-staging-node-spec-builder --bin soil-test-staging-node-spec-builder -- --help` passed.
-- Pending: `cargo check --all`
-- Pending: `cargo test --all --release`
+- 2026-03-08: `cargo check --all` passed.
+- 2026-03-08: `cargo test -p soil-chain-spec --lib --release` passed after fixing the moved runtime resource paths in `crates/soil-chain-spec/src/chain_spec.rs`.
+- 2026-03-08: `cargo test --all --release` passed with `EXIT_CODE=0`.
