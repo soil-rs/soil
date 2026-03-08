@@ -22,13 +22,13 @@ async-trait = { workspace = true }
 codec = { features = ["derive"], workspace = true, default-features = true }
 dyn-clone = { workspace = true }
 finality-grandpa = { features = ["derive-codec"], workspace = true, default-features = true }
-fork-tree = { workspace = true, default-features = true }
+soil-fork-tree = { workspace = true, default-features = true }
 futures = { workspace = true }
 futures-timer = { workspace = true }
 jsonrpsee = { features = ["client-core", "macros", "server-core"], workspace = true}
 log = { workspace = true, default-features = true }
 parking_lot = { workspace = true, default-features = true }
-prometheus-endpoint = { workspace = true, default-features = true }
+soil-prometheus = { workspace = true, default-features = true }
 rand = { workspace = true, default-features = true }
 soil-rpc = { workspace = true, default-features = true }
 soil-chain-spec = { workspace = true, default-features = true }

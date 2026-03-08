@@ -143,7 +143,7 @@ pub fn load_block_weight<H: Encode, B: AuxStore>(
 mod test {
 	use super::*;
 	use crate::migration::EpochV0;
-	use fork_tree::ForkTree;
+	use soil_fork_tree::ForkTree;
 	use soil_client::consensus::Error as ConsensusError;
 	use soil_consensus::epochs::{EpochHeader, PersistedEpoch, PersistedEpochHeader};
 	use soil_test::network::Block as TestBlock;

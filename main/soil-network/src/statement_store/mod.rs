@@ -54,7 +54,7 @@ use self::subscription::{SubscriptionStatementsStream, SubscriptionsHandle};
 use futures::FutureExt;
 use metrics::MetricsLink as PrometheusMetrics;
 use parking_lot::{lock_api::RwLockUpgradableReadGuard, RwLock};
-use prometheus_endpoint::Registry as PrometheusRegistry;
+use soil_prometheus::Registry as PrometheusRegistry;
 use soil_client::blockchain::HeaderBackend;
 use soil_client::client_api::{backend::StorageProvider, Backend, StorageKey};
 use soil_client::keystore::LocalKeystore;

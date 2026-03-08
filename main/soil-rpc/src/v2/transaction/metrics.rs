@@ -20,7 +20,7 @@
 
 use std::{collections::HashSet, time::Instant};
 
-use prometheus_endpoint::{
+use soil_prometheus::{
 	exponential_buckets, linear_buckets, register, Histogram, HistogramOpts, PrometheusError,
 	Registry,
 };

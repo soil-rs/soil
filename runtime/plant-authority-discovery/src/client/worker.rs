@@ -39,7 +39,7 @@ use linked_hash_set::LinkedHashSet;
 use soil_network::types::kad::{Key, PeerRecord, Record};
 
 use log::{debug, error, info, trace};
-use prometheus_endpoint::{register, Counter, CounterVec, Gauge, Opts, U64};
+use soil_prometheus::{register, Counter, CounterVec, Gauge, Opts, U64};
 use prost::Message;
 use rand::{seq::SliceRandom, thread_rng};
 
@@ -257,7 +257,7 @@ where
 		network: Arc<dyn NetworkProvider>,
 		dht_event_rx: DhtEventStream,
 		role: Role,
-		prometheus_registry: Option<prometheus_endpoint::Registry>,
+		prometheus_registry: Option<soil_prometheus::Registry>,
 		config: WorkerConfig,
 		spawner: impl SpawnNamed + 'static,
 	) -> Self {
@@ -1210,7 +1210,7 @@ pub(crate) struct Metrics {
 }
 
 impl Metrics {
-	pub(crate) fn register(registry: &prometheus_endpoint::Registry) -> Result<Self> {
+	pub(crate) fn register(registry: &soil_prometheus::Registry) -> Result<Self> {
 		Ok(Self {
 			publish: register(
 				Counter::new(

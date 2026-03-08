@@ -19,7 +19,7 @@
 //! Transaction pool Prometheus metrics for single-state transaction pool.
 
 use crate::common::metrics::{GenericMetricsLink, MetricsRegistrant};
-use prometheus_endpoint::{register, Counter, PrometheusError, Registry, U64};
+use soil_prometheus::{register, Counter, PrometheusError, Registry, U64};
 
 pub type MetricsLink = GenericMetricsLink<Metrics>;
 

@@ -34,7 +34,7 @@ use crate::{
 use futures::{stream::Fuse, FutureExt, StreamExt};
 use log::{debug, error, info, trace, warn};
 use parking_lot::Mutex;
-use prometheus_endpoint::Registry;
+use soil_prometheus::Registry;
 use soil_client::blockchain::{Backend as BlockchainBackend, HeaderBackend};
 use soil_client::client_api::{
 	Backend, BlockBackend, BlockchainEvents, FinalityNotification, Finalizer,

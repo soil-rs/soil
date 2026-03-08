@@ -32,7 +32,7 @@ use codec::{Decode, Encode};
 use futures::{prelude::*, stream::FuturesUnordered};
 use log::{debug, trace, warn};
 
-use prometheus_endpoint::{register, Counter, PrometheusError, Registry, U64};
+use soil_prometheus::{register, Counter, PrometheusError, Registry, U64};
 use soil_client::utils::mpsc::{
 	tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender,
 };

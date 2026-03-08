@@ -51,7 +51,7 @@ either = { workspace = true, default-features = true}
 fnv = { workspace = true}
 futures = { workspace = true}
 futures-timer = { workspace = true}
-fork-tree = { workspace = true, default-features = true}
+soil-fork-tree = { workspace = true, default-features = true}
 governor = { workspace = true}
 ip_network = { workspace = true}
 itertools = { workspace = true}
@@ -69,7 +69,7 @@ parking_lot = { workspace = true, default-features = true}
 parity-db = { workspace = true }
 partial_sort = { workspace = true}
 pin-project = { workspace = true}
-prometheus-endpoint = { workspace = true, default-features = true}
+soil-prometheus = { workspace = true, default-features = true}
 prost = { workspace = true}
 rand = { workspace = true, default-features = true}
 schnellru = { workspace = true}

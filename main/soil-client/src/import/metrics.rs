@@ -18,7 +18,7 @@
 
 //! Metering tools for consensus
 
-use prometheus_endpoint::{
+use soil_prometheus::{
 	register, CounterVec, Histogram, HistogramOpts, HistogramVec, Opts, PrometheusError, Registry,
 	U64,
 };

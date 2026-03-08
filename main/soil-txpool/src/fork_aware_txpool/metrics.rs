@@ -25,7 +25,7 @@ use crate::{
 	LOG_TARGET,
 };
 use futures::{FutureExt, StreamExt};
-use prometheus_endpoint::{
+use soil_prometheus::{
 	exponential_buckets, histogram_opts, linear_buckets, register, Counter, CounterVec, Gauge,
 	Histogram, Opts, PrometheusError, Registry, U64,
 };

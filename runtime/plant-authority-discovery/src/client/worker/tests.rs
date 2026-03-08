@@ -48,8 +48,8 @@ use subsoil::keystore::{testing::MemoryKeystore, Keystore};
 use subsoil::runtime::traits::{Block as BlockT, NumberFor, Zero};
 use soil_test_node_runtime_client::runtime::Block;
 
-fn test_registry() -> prometheus_endpoint::Registry {
-	prometheus_endpoint::Registry::new()
+fn test_registry() -> soil_prometheus::Registry {
+	soil_prometheus::Registry::new()
 }
 
 #[derive(Clone)]
@@ -324,7 +324,7 @@ async fn new_registers_metrics() {
 	let key_store = MemoryKeystore::new();
 	let test_api = Arc::new(TestApi { authorities: vec![] });
 
-	let registry = prometheus_endpoint::Registry::new();
+	let registry = soil_prometheus::Registry::new();
 
 	let tempdir = tempfile::tempdir().unwrap();
 	let path = tempdir.path().to_path_buf();
@@ -1080,7 +1080,7 @@ async fn addresses_to_publish_adds_p2p() {
 		network.clone(),
 		Box::pin(dht_event_rx),
 		Role::PublishAndDiscover(MemoryKeystore::new().into()),
-		Some(prometheus_endpoint::Registry::new()),
+		Some(soil_prometheus::Registry::new()),
 		test_config(Some(path)),
 		create_spawner(),
 	);
@@ -1121,7 +1121,7 @@ async fn addresses_to_publish_respects_existing_p2p_protocol() {
 		network.clone(),
 		Box::pin(dht_event_rx),
 		Role::PublishAndDiscover(MemoryKeystore::new().into()),
-		Some(prometheus_endpoint::Registry::new()),
+		Some(soil_prometheus::Registry::new()),
 		test_config(Some(path)),
 		create_spawner(),
 	);

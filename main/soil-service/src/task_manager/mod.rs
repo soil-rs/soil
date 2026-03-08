@@ -25,7 +25,7 @@ use futures::{
 	Future, FutureExt, StreamExt,
 };
 use parking_lot::Mutex;
-use prometheus_endpoint::{
+use soil_prometheus::{
 	exponential_buckets, register, CounterVec, HistogramOpts, HistogramVec, Opts, PrometheusError,
 	Registry, U64,
 };

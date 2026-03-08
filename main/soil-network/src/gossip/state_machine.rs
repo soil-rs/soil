@@ -22,7 +22,7 @@ use ahash::AHashSet;
 use schnellru::{ByLength, LruMap};
 use soil_network::types::PeerId;
 
-use prometheus_endpoint::{register, Counter, PrometheusError, Registry, U64};
+use soil_prometheus::{register, Counter, PrometheusError, Registry, U64};
 use soil_network::common::role::ObservedRole;
 use soil_network::{types::ProtocolName, NotificationService};
 use std::{collections::HashMap, iter, sync::Arc, time, time::Instant};

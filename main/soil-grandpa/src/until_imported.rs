@@ -35,7 +35,7 @@ use futures::{
 use futures_timer::Delay;
 use log::{debug, warn};
 use parking_lot::Mutex;
-use prometheus_endpoint::{register, Gauge, PrometheusError, Registry, U64};
+use soil_prometheus::{register, Gauge, PrometheusError, Registry, U64};
 use soil_client::client_api::{BlockImportNotification, ImportNotifications};
 use soil_client::utils::mpsc::TracingUnboundedReceiver;
 use subsoil::consensus::grandpa::AuthorityId;

@@ -43,7 +43,7 @@ pub use crate::{build_multiaddr, types::ed25519};
 
 use crate::service::{ensure_addresses_consistent_with_transport, traits::NetworkBackend};
 use codec::Encode;
-use prometheus_endpoint::Registry;
+use soil_prometheus::Registry;
 use zeroize::Zeroize;
 
 pub use crate::common::{

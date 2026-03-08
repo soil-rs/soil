@@ -22,7 +22,7 @@ use futures::{
 	task::{Context, Poll},
 };
 use log::{debug, trace};
-use prometheus_endpoint::Registry;
+use soil_prometheus::Registry;
 use std::pin::Pin;
 use subsoil::runtime::{
 	traits::{Block as BlockT, Header as HeaderT, NumberFor},

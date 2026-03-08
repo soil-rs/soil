@@ -65,7 +65,7 @@ pub enum Error {
 	CannotSign(String),
 
 	#[error("Failed to register Prometheus metric.")]
-	Prometheus(#[from] prometheus_endpoint::PrometheusError),
+	Prometheus(#[from] soil_prometheus::PrometheusError),
 
 	#[error("Received authority record that contains addresses with multiple peer ids")]
 	ReceivingDhtValueFoundEventWithDifferentPeerIds,

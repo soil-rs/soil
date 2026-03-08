@@ -88,7 +88,7 @@
 use ahash::{AHashMap, AHashSet};
 use codec::{Decode, DecodeAll, Encode};
 use log::{debug, trace};
-use prometheus_endpoint::{register, CounterVec, Opts, PrometheusError, Registry, U64};
+use soil_prometheus::{register, CounterVec, Opts, PrometheusError, Registry, U64};
 use rand::seq::SliceRandom;
 use soil_client::utils::mpsc::{
 	tracing_unbounded, TracingUnboundedReceiver, TracingUnboundedSender,
@@ -1303,7 +1303,7 @@ pub(crate) struct Metrics {
 
 impl Metrics {
 	pub(crate) fn register(
-		registry: &prometheus_endpoint::Registry,
+		registry: &soil_prometheus::Registry,
 	) -> Result<Self, PrometheusError> {
 		Ok(Self {
 			messages_validated: register(

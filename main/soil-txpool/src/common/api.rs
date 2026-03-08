@@ -26,7 +26,7 @@ use crate::{
 use async_trait::async_trait;
 use codec::Encode;
 use futures::future::{Future, FutureExt};
-use prometheus_endpoint::Registry as PrometheusRegistry;
+use soil_prometheus::Registry as PrometheusRegistry;
 use soil_client::blockchain::{HeaderMetadata, TreeRoute};
 use soil_client::client_api::{blockchain::HeaderBackend, BlockBackend};
 use subsoil::txpool::runtime_api::TaggedTransactionQueue;

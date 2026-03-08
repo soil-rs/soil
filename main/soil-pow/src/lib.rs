@@ -47,7 +47,7 @@ use crate::worker::UntilImportedOrTimeout;
 use codec::{Decode, Encode};
 use futures::{Future, StreamExt};
 use log::*;
-use prometheus_endpoint::Registry;
+use soil_prometheus::Registry;
 use soil_client::blockchain::HeaderBackend;
 use soil_client::client_api::{self, backend::AuxStore, BlockOf, BlockchainEvents};
 use soil_client::consensus::{

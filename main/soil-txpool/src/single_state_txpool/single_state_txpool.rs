@@ -38,7 +38,7 @@ use crate::{
 use async_trait::async_trait;
 use futures::{channel::oneshot, future, prelude::*, Future, FutureExt};
 use parking_lot::Mutex;
-use prometheus_endpoint::Registry as PrometheusRegistry;
+use soil_prometheus::Registry as PrometheusRegistry;
 use soil_client::blockchain::{HashAndNumber, TreeRoute};
 use soil_client::transaction_pool::{
 	error::Error as TxPoolError, ChainEvent, ImportNotificationStream, MaintainedTransactionPool,

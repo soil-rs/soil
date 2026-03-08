@@ -18,7 +18,7 @@
 
 use crate::{service::traits::BandwidthSink, ProtocolName};
 
-use prometheus_endpoint::{
+use soil_prometheus::{
 	self as prometheus, Counter, CounterVec, Gauge, GaugeVec, HistogramOpts, MetricSource, Opts,
 	PrometheusError, Registry, SourcedCounter, SourcedGauge, U64,
 };
@@ -31,7 +31,7 @@ use std::{
 	},
 };
 
-pub use prometheus_endpoint::{Histogram, HistogramVec};
+pub use soil_prometheus::{Histogram, HistogramVec};
 
 /// Registers all networking metrics with the given registry.
 pub fn register(registry: &Registry, sources: MetricSources) -> Result<Metrics, PrometheusError> {

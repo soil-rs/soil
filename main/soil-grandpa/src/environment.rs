@@ -32,7 +32,7 @@ use futures::prelude::*;
 use futures_timer::Delay;
 use log::{debug, warn};
 use parking_lot::RwLock;
-use prometheus_endpoint::{register, Counter, Gauge, PrometheusError, U64};
+use soil_prometheus::{register, Counter, Gauge, PrometheusError, U64};
 
 use soil_client::blockchain::HeaderMetadata;
 use soil_client::client_api::{
@@ -396,7 +396,7 @@ pub(crate) struct Metrics {
 
 impl Metrics {
 	pub(crate) fn register(
-		registry: &prometheus_endpoint::Registry,
+		registry: &soil_prometheus::Registry,
 	) -> Result<Self, PrometheusError> {
 		Ok(Self {
 			finality_grandpa_round: register(

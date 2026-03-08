@@ -1,6 +1,6 @@
 [package]
 description = "Endpoint to expose Prometheus metrics"
-name = "substrate-prometheus-endpoint"
+name = "soil-prometheus"
 version = "0.17.0"
 license.workspace = true
 authors.workspace = true

@@ -3081,13 +3081,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "77ce24cb58228fbb8aa041425bb1050850ac19177686ea6e0f41a70416f56fdb"
 
 [[package]]
-name = "fork-tree"
-version = "12.0.0"
-dependencies = [
- "parity-scale-codec",
-]
-
-[[package]]
 name = "form_urlencoded"
 version = "1.2.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -6635,10 +6628,10 @@ dependencies = [
  "serde_json",
  "soil-client",
  "soil-network",
+ "soil-prometheus",
  "soil-service",
  "soil-test-node-runtime-client",
  "subsoil",
- "substrate-prometheus-endpoint",
  "tempfile",
  "thiserror 1.0.69",
  "tokio",
@@ -10211,19 +10204,19 @@ name = "soil-aura"
 version = "0.34.0"
 dependencies = [
  "async-trait",
- "fork-tree",
  "futures",
  "log",
  "parity-scale-codec",
  "parking_lot 0.12.5",
  "soil-client",
  "soil-consensus",
+ "soil-fork-tree",
  "soil-network",
+ "soil-prometheus",
  "soil-telemetry",
  "soil-test",
  "soil-test-node-runtime-client",
  "subsoil",
- "substrate-prometheus-endpoint",
  "tempfile",
  "thiserror 1.0.69",
  "tokio",
@@ -10234,7 +10227,6 @@ name = "soil-babe"
 version = "0.34.0"
 dependencies = [
  "async-trait",
- "fork-tree",
  "futures",
  "jsonrpsee",
  "log",
@@ -10246,13 +10238,14 @@ dependencies = [
  "serde",
  "soil-client",
  "soil-consensus",
+ "soil-fork-tree",
+ "soil-prometheus",
  "soil-rpc",
  "soil-telemetry",
  "soil-test",
  "soil-test-node-runtime-client",
  "subsoil",
  "subsoil-crypto-hashing",
- "substrate-prometheus-endpoint",
  "thiserror 1.0.69",
  "tokio",
 ]
@@ -10273,11 +10266,11 @@ dependencies = [
  "soil-client",
  "soil-consensus",
  "soil-network",
+ "soil-prometheus",
  "soil-rpc",
  "soil-test",
  "soil-test-node-runtime-client",
  "subsoil",
- "substrate-prometheus-endpoint",
  "thiserror 1.0.69",
  "tokio",
  "wasm-timer",
@@ -10388,12 +10381,12 @@ dependencies = [
  "schnellru",
  "serde",
  "serde_json",
+ "soil-prometheus",
  "soil-test",
  "strum 0.26.3",
  "subsoil",
  "subsoil-crypto-hashing",
  "subsoil-macros",
- "substrate-prometheus-endpoint",
  "sysinfo",
  "tempfile",
  "thiserror 1.0.69",
@@ -10413,7 +10406,6 @@ name = "soil-consensus"
 version = "0.33.0"
 dependencies = [
  "async-trait",
- "fork-tree",
  "futures",
  "futures-timer",
  "log",
@@ -10421,11 +10413,19 @@ dependencies = [
  "parking_lot 0.12.5",
  "serde",
  "soil-client",
+ "soil-fork-tree",
  "soil-telemetry",
  "soil-test",
  "soil-test-node-runtime-client",
  "subsoil",
  "thiserror 1.0.69",
+]
+
+[[package]]
+name = "soil-fork-tree"
+version = "12.0.0"
+dependencies = [
+ "parity-scale-codec",
 ]
 
 [[package]]
@@ -10438,7 +10438,6 @@ dependencies = [
  "async-trait",
  "dyn-clone",
  "finality-grandpa",
- "fork-tree",
  "futures",
  "futures-timer",
  "jsonrpsee",
@@ -10451,14 +10450,15 @@ dependencies = [
  "soil-chain-spec",
  "soil-client",
  "soil-consensus",
+ "soil-fork-tree",
  "soil-network",
+ "soil-prometheus",
  "soil-rpc",
  "soil-telemetry",
  "soil-test",
  "soil-test-node-runtime-client",
  "subsoil",
  "subsoil-crypto-hashing",
- "substrate-prometheus-endpoint",
  "thiserror 1.0.69",
  "tokio",
 ]
@@ -10479,12 +10479,12 @@ dependencies = [
  "soil-babe",
  "soil-client",
  "soil-consensus",
+ "soil-prometheus",
  "soil-service",
  "soil-test-node-runtime-client",
  "soil-test-node-runtime-txpool",
  "soil-txpool",
  "subsoil",
- "substrate-prometheus-endpoint",
  "thiserror 1.0.69",
  "tokio",
 ]
@@ -10524,7 +10524,6 @@ dependencies = [
  "ed25519-dalek",
  "either",
  "fnv",
- "fork-tree",
  "futures",
  "futures-timer",
  "governor",
@@ -10556,13 +10555,14 @@ dependencies = [
  "serde_with",
  "smallvec",
  "soil-client",
+ "soil-fork-tree",
+ "soil-prometheus",
  "soil-statement-store",
  "soil-test",
  "soil-test-node-runtime",
  "soil-test-node-runtime-client",
  "subsoil",
  "subsoil-crypto-hashing",
- "substrate-prometheus-endpoint",
  "tempfile",
  "thiserror 1.0.69",
  "tokio",
@@ -10616,9 +10616,22 @@ dependencies = [
  "parking_lot 0.12.5",
  "soil-client",
  "soil-consensus",
+ "soil-prometheus",
  "subsoil",
- "substrate-prometheus-endpoint",
  "thiserror 1.0.69",
+]
+
+[[package]]
+name = "soil-prometheus"
+version = "0.17.0"
+dependencies = [
+ "http-body-util",
+ "hyper 1.8.1",
+ "hyper-util",
+ "log",
+ "prometheus",
+ "thiserror 1.0.69",
+ "tokio",
 ]
 
 [[package]]
@@ -10654,6 +10667,7 @@ dependencies = [
  "soil-chain-spec",
  "soil-client",
  "soil-network",
+ "soil-prometheus",
  "soil-service",
  "soil-statement-store",
  "soil-test-node-runtime",
@@ -10662,7 +10676,6 @@ dependencies = [
  "soil-txpool",
  "subsoil",
  "subsoil-crypto-hashing",
- "substrate-prometheus-endpoint",
  "tempfile",
  "thiserror 1.0.69",
  "tokio",
@@ -10710,6 +10723,7 @@ dependencies = [
  "soil-chain-spec",
  "soil-client",
  "soil-network",
+ "soil-prometheus",
  "soil-rpc",
  "soil-telemetry",
  "soil-test-node-runtime",
@@ -10719,7 +10733,6 @@ dependencies = [
  "static_init",
  "subsoil",
  "subsoil-crypto-hashing",
- "substrate-prometheus-endpoint",
  "tempfile",
  "thiserror 1.0.69",
  "tokio",
@@ -10976,7 +10989,6 @@ dependencies = [
  "clap",
  "clap_complete",
  "criterion",
- "fork-tree",
  "frame-remote-externalities",
  "futures",
  "generate-bags",
@@ -11008,12 +11020,14 @@ dependencies = [
  "soil-cli",
  "soil-client",
  "soil-consensus",
+ "soil-fork-tree",
  "soil-grandpa",
  "soil-manual-seal",
  "soil-mmr-gadget",
  "soil-network",
  "soil-offchain",
  "soil-pow",
+ "soil-prometheus",
  "soil-rpc",
  "soil-service",
  "soil-statement-store",
@@ -11036,7 +11050,6 @@ dependencies = [
  "substrate-build-script-utils",
  "substrate-frame-rpc-support",
  "substrate-frame-rpc-system",
- "substrate-prometheus-endpoint",
  "substrate-wasm-builder",
  "subxt-signer",
  "tempfile",
@@ -11228,7 +11241,6 @@ dependencies = [
  "subsoil",
  "subsoil-crypto-hashing",
  "subsoil-macros",
- "substrate-bip39",
  "substrate-wasm-builder",
  "topsoil",
  "topsoil-benchmarking",
@@ -11313,13 +11325,13 @@ dependencies = [
  "serde",
  "serde_json",
  "soil-client",
+ "soil-prometheus",
  "soil-test-node-runtime",
  "soil-test-node-runtime-client",
  "soil-test-node-runtime-txpool",
  "strum 0.26.3",
  "subsoil",
  "subsoil-crypto-hashing",
- "substrate-prometheus-endpoint",
  "thiserror 1.0.69",
  "tokio",
  "tokio-stream",
@@ -11558,6 +11570,7 @@ dependencies = [
  "hash-db",
  "hash256-std-hasher",
  "hashbrown 0.15.5",
+ "hmac 0.12.1",
  "impl-serde",
  "impl-trait-for-tuples",
  "integer-sqrt",
@@ -11575,6 +11588,7 @@ dependencies = [
  "parity-wasm",
  "parking_lot 0.12.5",
  "paste",
+ "pbkdf2",
  "polkadot-ckb-merkle-mountain-range",
  "polkavm-derive",
  "pretty_assertions",
@@ -11583,6 +11597,7 @@ dependencies = [
  "ref-cast",
  "regex",
  "rustc-hash 1.1.0",
+ "rustc-hex",
  "rustversion",
  "scale-info",
  "schemars",
@@ -11595,13 +11610,12 @@ dependencies = [
  "sha2 0.10.9",
  "simple-mermaid",
  "smallvec",
+ "soil-prometheus",
  "ss58-registry",
  "static_assertions",
  "strum 0.26.3",
  "subsoil-crypto-hashing",
  "subsoil-macros",
- "substrate-bip39",
- "substrate-prometheus-endpoint",
  "thiserror 1.0.69",
  "tracing",
  "tracing-core",
@@ -11651,19 +11665,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "substrate-bip39"
-version = "0.4.7"
-dependencies = [
- "bip39",
- "hmac 0.12.1",
- "pbkdf2",
- "rustc-hex",
- "schnorrkel 0.11.5",
- "sha2 0.10.9",
- "zeroize",
-]
-
-[[package]]
 name = "substrate-build-script-utils"
 version = "11.0.0"
 
@@ -11699,19 +11700,6 @@ dependencies = [
  "subsoil",
  "tokio",
  "topsoil-system-rpc-runtime-api",
-]
-
-[[package]]
-name = "substrate-prometheus-endpoint"
-version = "0.17.0"
-dependencies = [
- "http-body-util",
- "hyper 1.8.1",
- "hyper-util",
- "log",
- "prometheus",
- "thiserror 1.0.69",
- "tokio",
 ]
 
 [[package]]

@@ -20,7 +20,7 @@
 
 use super::{Epoch, EpochChanges, PersistedEpoch, PersistedEpochHeader};
 use codec::{Decode, Encode};
-use fork_tree::ForkTree;
+use soil_fork_tree::ForkTree;
 use std::collections::BTreeMap;
 use subsoil::runtime::traits::{Block as BlockT, NumberFor};
 

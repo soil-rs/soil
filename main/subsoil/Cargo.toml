@@ -69,13 +69,14 @@ bitflags = { workspace = true }
 bs58 = { optional = true, workspace = true }
 futures = { optional = true, workspace = true }
 hash256-std-hasher = { workspace = true }
+hmac = { workspace = true }
 itertools = { optional = true, workspace = true }
 paste = { workspace = true, default-features = true }
+pbkdf2 = { workspace = true }
 primitive-types = { features = ["codec", "scale-info"], workspace = true }
 rand = { features = ["small_rng"], optional = true, workspace = true, default-features = true }
 secrecy = { features = ["alloc"], workspace = true }
 ss58-registry = { workspace = true }
-substrate-bip39 = { workspace = true }
 thiserror = { optional = true, workspace = true }
 zeroize = { workspace = true }
 
@@ -94,13 +95,13 @@ foldhash = { workspace = true }
 hashbrown = { workspace = true }
 memory-db = { workspace = true }
 nohash-hasher = { optional = true, workspace = true }
-prometheus-endpoint = { optional = true, workspace = true, default-features = true }
+soil-prometheus = { optional = true, workspace = true, default-features = true }
 schnellru = { optional = true, workspace = true }
 trie-db = { workspace = true }
 trie-root = { workspace = true }
 
 # bls crypto
-sha2 = { optional = true, workspace = true }
+sha2 = { workspace = true }
 w3f-bls = { optional = true, workspace = true }
 # bandersnatch crypto
 ark-vrf = { optional = true, workspace = true, features = ["bandersnatch", "ring"] }
@@ -138,6 +139,7 @@ rand = { workspace = true, default-features = true }
 criterion = { workspace = true, default-features = true }
 serde_json = { workspace = true, default-features = true }
 rustversion = { workspace = true }
+rustc-hex = { workspace = true, default-features = true }
 trybuild = { workspace = true }
 assert_matches = { workspace = true }
 pretty_assertions = { workspace = true }
@@ -200,16 +202,15 @@ std = [
 	"schnorrkel/std",
 	"secp256k1/global-context",
 	"secp256k1/std",
-	"sha2?/std",
+	"sha2/std",
 	"ss58-registry/std",
-	"substrate-bip39/std",
 	"thiserror",
 	# soil-trie std features
 	"ahash",
 	"foldhash/std",
 	"memory-db/std",
 	"nohash-hasher",
-	"prometheus-endpoint",
+	"soil-prometheus",
 	"schnellru",
 	"trie-db/std",
 	"trie-root/std",
@@ -268,7 +269,7 @@ json-schema = ["dep:schemars"]
 
 # soil-core features
 full_crypto = ["blake2"]
-bls-experimental = ["sha2", "w3f-bls"]
+bls-experimental = ["w3f-bls"]
 bandersnatch-experimental = ["ark-vrf"]
 
 # soil-crypto-ec-utils features

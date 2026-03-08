@@ -28,7 +28,7 @@ indexmap = { workspace = true }
 itertools = { workspace = true }
 linked-hash-map = { workspace = true }
 parking_lot = { workspace = true, default-features = true }
-prometheus-endpoint = { workspace = true, default-features = true }
+soil-prometheus = { workspace = true, default-features = true }
 serde = { features = ["derive"], workspace = true, default-features = true }
 soil-client = { workspace = true, default-features = true }
 subsoil-crypto-hashing = { workspace = true, default-features = true }

@@ -35,7 +35,7 @@ use crate::{
 	LOG_TARGET,
 };
 use log::{debug, error, info, warn};
-use prometheus_endpoint::Registry;
+use soil_prometheus::Registry;
 use soil_client::blockchain::{Error as ClientError, HeaderBackend, HeaderMetadata};
 use soil_client::client_api::{BlockBackend, ProofProvider};
 use soil_client::import::{BlockImportError, BlockImportStatus};

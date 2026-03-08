@@ -32,7 +32,7 @@
 use futures::{channel::mpsc, prelude::*};
 use log::{debug, trace};
 use parking_lot::Mutex;
-use prometheus_endpoint::Registry;
+use soil_prometheus::Registry;
 use std::{
 	pin::Pin,
 	sync::Arc,

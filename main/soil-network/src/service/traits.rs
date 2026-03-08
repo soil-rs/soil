@@ -32,7 +32,7 @@ use crate::{
 };
 
 use futures::{channel::oneshot, Stream};
-use prometheus_endpoint::Registry;
+use soil_prometheus::Registry;
 
 use crate::common::{role::ObservedRole, ExHashT};
 pub use crate::types::{

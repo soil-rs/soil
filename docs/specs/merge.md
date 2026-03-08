@@ -18,7 +18,7 @@ same versioning cadence.
 
 - **Merge when no new feature flag is needed.** If no consumer ever needs one without the other, they belong together. Unused code is dead-code-eliminated by the linker.
 - **Stop merging when transitive deps would grow for existing consumers.** If absorbing a crate would force new heavy third-party deps (e.g. libp2p) on consumers that don't need them, that's a real boundary — use a feature flag or keep it separate.
-- **Prefer fewer crates over feature matrices when the extra deps are light.** Telemetry, fork-tree, or RPC stack deps are acceptable in exchange for simpler testing and a smaller crate graph. Reserve feature gating for genuinely heavy boundaries such as libp2p-class dependencies.
+- **Prefer fewer crates over feature matrices when the extra deps are light.** Telemetry, soil-fork-tree, or RPC stack deps are acceptable in exchange for simpler testing and a smaller crate graph. Reserve feature gating for genuinely heavy boundaries such as libp2p-class dependencies.
 - **A crate should represent a decision boundary**, not a file boundary. The question is "would a consumer ever want this *without* that?"
 - **Consensus engine primitives merge into `subsoil`.** The engines only depend on `codec`/`scale-info`/`serde` (already in subsoil) plus one or two lightweight crates (`finality-grandpa`, `strum`). Unused engines are dead-code-eliminated. Exception: `manual-seal` stays separate because it pulls in `tokio`/`jsonrpsee`/`futures`.
 
@@ -286,8 +286,8 @@ packages or significantly heavier test/runtime infrastructure.
 | soil-telemetry | Shared by `soil-chain-spec` and consensus crates; folding it into `soil-service` would recreate a cycle through `soil-rpc` |
 | soil-staking, soil-session | Domain-specific primitives |
 | soil-statement-store | Standalone feature |
-| fork-tree | Generic data structure |
-| substrate-bip39, substrate-prometheus-endpoint | Independent utilities |
+| soil-fork-tree | Generic data structure |
+| substrate-bip39, soil-prometheus | Independent utilities |
 | soil-test | Consolidated home for immediate shared test helpers and lighter test suites |
 | remaining test/bench crates | Deferred when they are artifact-producing or intentionally large |
 
@@ -309,7 +309,7 @@ Re-exports everything. Consumers write `soil = { features = ["client", "aura", "
 | **soil-service** | service, authorship, informant, sysinfo, metrics | ~5 | ✅ |
 | **soil-txpool** | sc-transaction-pool | 1 | ✅ |
 | **soil-test** | network/service helpers, test primitives, api/application-crypto/runtime-interface test suites | ~6 | In progress |
-| **misc standalone** | mmr, staking, fork-tree, deferred heavy test crates | ~12 | — |
+| **misc standalone** | mmr, staking, soil-fork-tree, deferred heavy test crates | ~12 | — |
 | **soil** | umbrella re-export | 1 | Pending |
 
 **96 non-topsoil crates → low-teens major crates plus a small set of intentional

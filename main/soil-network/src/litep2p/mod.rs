@@ -72,7 +72,7 @@ use litep2p::{
 	},
 	Litep2p, Litep2pEvent, ProtocolName as Litep2pProtocolName,
 };
-use prometheus_endpoint::Registry;
+use soil_prometheus::Registry;
 
 use crate::common::{role::Roles, ExHashT};
 use crate::types::PeerId;

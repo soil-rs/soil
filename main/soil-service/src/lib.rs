@@ -92,7 +92,7 @@ pub use soil_chain_spec::{
 pub use soil_client::db::PruningFilter;
 
 use crate::config::RpcConfiguration;
-use prometheus_endpoint::Registry;
+use soil_prometheus::Registry;
 pub use soil_client::executor::NativeExecutionDispatch;
 pub use soil_client::import::ImportQueue;
 pub use soil_client::tracing::TracingReceiver;

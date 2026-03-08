@@ -24,7 +24,7 @@ use codec::{Decode, Encode};
 use finality_grandpa::round::State as RoundState;
 use log::{info, warn};
 
-use fork_tree::ForkTree;
+use soil_fork_tree::ForkTree;
 use soil_client::blockchain::{Error as ClientError, Result as ClientResult};
 use soil_client::client_api::backend::AuxStore;
 use subsoil::consensus::grandpa::{AuthorityList, RoundNumber, SetId};

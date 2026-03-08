@@ -21,7 +21,7 @@
 pub mod migration;
 
 use codec::{Decode, Encode};
-use fork_tree::{FilterAction, ForkTree};
+use soil_fork_tree::{FilterAction, ForkTree};
 use soil_client::blockchain::{Error as ClientError, HeaderBackend, HeaderMetadata};
 use soil_client::client_api::utils::is_descendent_of;
 use std::{
@@ -195,7 +195,7 @@ where
 	}
 
 	/// Increment the epoch, yielding an `IncrementedEpoch` to be imported
-	/// into the fork-tree.
+	/// into the soil-fork-tree.
 	pub fn increment(&self, next_descriptor: E::NextEpochDescriptor) -> IncrementedEpoch<E> {
 		let next = self.as_ref().increment(next_descriptor);
 		let to_persist = match *self {
@@ -308,7 +308,7 @@ impl<E: Epoch> PersistedEpochHeader<E> {
 	}
 }
 
-/// A fresh, incremented epoch to import into the underlying fork-tree.
+/// A fresh, incremented epoch to import into the underlying soil-fork-tree.
 ///
 /// Create this with `ViableEpoch::increment`.
 #[must_use = "Freshly-incremented epoch must be imported with `EpochChanges::import`"]
@@ -404,7 +404,7 @@ where
 		hash: &Hash,
 		number: Number,
 		slot: E::Slot,
-	) -> Result<(), fork_tree::Error<D::Error>> {
+	) -> Result<(), soil_fork_tree::Error<D::Error>> {
 		let is_descendent_of = descendent_of_builder.build_is_descendent_of(None);
 
 		let predicate = |epoch: &PersistedEpochHeader<E>| match *epoch {
@@ -537,7 +537,7 @@ where
 		parent_number: Number,
 		slot: E::Slot,
 		make_genesis: G,
-	) -> Result<Option<E>, fork_tree::Error<D::Error>>
+	) -> Result<Option<E>, soil_fork_tree::Error<D::Error>>
 	where
 		G: FnOnce(E::Slot) -> E,
 		E: Clone,
@@ -562,13 +562,13 @@ where
 		parent_hash: &Hash,
 		parent_number: Number,
 		slot: E::Slot,
-	) -> Result<Option<ViableEpochDescriptor<Hash, Number, E>>, fork_tree::Error<D::Error>> {
+	) -> Result<Option<ViableEpochDescriptor<Hash, Number, E>>, soil_fork_tree::Error<D::Error>> {
 		if parent_number == Zero::zero() {
 			// need to insert the genesis epoch.
 			return Ok(Some(ViableEpochDescriptor::UnimportedGenesis(slot)));
 		}
 
-		// find_node_where will give you the node in the fork-tree which is an ancestor
+		// find_node_where will give you the node in the soil-fork-tree which is an ancestor
 		// of the `parent_hash` by default. if the last epoch was signalled at the parent_hash,
 		// then it won't be returned. we need to create a new fake chain head hash which
 		// "descends" from our parent-hash.
@@ -636,7 +636,7 @@ where
 		number: Number,
 		parent_hash: Hash,
 		epoch: IncrementedEpoch<E>,
-	) -> Result<(), fork_tree::Error<D::Error>> {
+	) -> Result<(), soil_fork_tree::Error<D::Error>> {
 		let is_descendent_of =
 			descendent_of_builder.build_is_descendent_of(Some((hash, parent_hash)));
 		let IncrementedEpoch(epoch) = epoch;
@@ -645,7 +645,7 @@ where
 		let res = self.inner.import(hash, number, header, &is_descendent_of);
 
 		match res {
-			Ok(_) | Err(fork_tree::Error::Duplicate) => {
+			Ok(_) | Err(soil_fork_tree::Error::Duplicate) => {
 				self.epochs.insert((hash, number), epoch);
 				Ok(())
 			},
@@ -661,14 +661,14 @@ where
 		let persisted = PersistedEpoch::Regular(current);
 		let header = PersistedEpochHeader::from(&persisted);
 		let _res = self.inner.import(parent_hash, number - One::one(), header, &|_, _| {
-			Ok(false) as Result<bool, fork_tree::Error<ClientError>>
+			Ok(false) as Result<bool, soil_fork_tree::Error<ClientError>>
 		});
 		self.epochs.insert((parent_hash, number - One::one()), persisted);
 
 		let persisted = PersistedEpoch::Regular(next);
 		let header = PersistedEpochHeader::from(&persisted);
 		let _res = self.inner.import(hash, number, header, &|_, _| {
-			Ok(true) as Result<bool, fork_tree::Error<ClientError>>
+			Ok(true) as Result<bool, soil_fork_tree::Error<ClientError>>
 		});
 		self.epochs.insert((hash, number), persisted);
 	}

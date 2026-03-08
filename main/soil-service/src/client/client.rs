@@ -25,7 +25,7 @@ use super::{
 use crate::client::notification_pinning::NotificationPinningWorker;
 use log::{debug, info, trace, warn};
 use parking_lot::{Mutex, RwLock};
-use prometheus_endpoint::Registry;
+use soil_prometheus::Registry;
 use rand::Rng;
 use soil_chain_spec::{resolve_state_version_from_wasm, BuildGenesisBlock};
 use soil_client::blockchain::{

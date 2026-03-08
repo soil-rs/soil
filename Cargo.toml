@@ -164,7 +164,7 @@ members = [
 	"contrib/plant-vesting",
 	"contrib/plant-whitelist",
 
-	"library/fork-tree",
+	"main/soil-fork-tree",
 	"library/frame-remote-externalities",
 	"library/generate-bags",
 	"contrib/soil-test-staging-node-runtime",
@@ -178,12 +178,11 @@ members = [
 	"contrib/soil-test-staging-node-cli",
 	"contrib/soil-test-staging-node-inspect",
 	"library/subkey",
-	"library/substrate-bip39",
-	"library/substrate-build-script-utils",
+		"library/substrate-build-script-utils",
 	"contrib/soil-test-staging-node-cli-test-utils",
 	"library/substrate-frame-rpc-support",
 	"library/substrate-frame-rpc-system",
-	"library/substrate-prometheus-endpoint",
+	"main/soil-prometheus",
 	"harness/soil-test-node-client",
 	"harness/soil-test-node-runtime",
 	"harness/soil-test-node-runtime-client",
@@ -237,7 +236,7 @@ zero-prefixed-literal = { level = "allow", priority = 2 }            # 00_1000_0
 
 # Substrate path dependencies
 soil-test-staging-node-spec-builder = { path = "contrib/soil-test-staging-node-spec-builder", default-features = false, package = "soil-test-staging-node-spec-builder" }
-fork-tree = { path = "library/fork-tree", default-features = false }
+soil-fork-tree = { path = "main/soil-fork-tree", default-features = false }
 topsoil = { path = "main/topsoil", default-features = false }
 topsoil-benchmarking = { path = "main/topsoil-benchmarking", default-features = false }
 topsoil-benchmarking-pallet-pov = { default-features = false, path = "main/topsoil-benchmarking-pallet-pov" }
@@ -365,7 +364,7 @@ plant-utility = { path = "runtime/plant-utility", default-features = false }
 plant-verify-signature = { path = "contrib/plant-verify-signature", default-features = false }
 plant-vesting = { path = "contrib/plant-vesting", default-features = false }
 plant-whitelist = { path = "contrib/plant-whitelist", default-features = false }
-prometheus-endpoint = { path = "library/substrate-prometheus-endpoint", default-features = false, package = "substrate-prometheus-endpoint" }
+soil-prometheus = { path = "main/soil-prometheus", default-features = false }
 remote-externalities = { path = "library/frame-remote-externalities", default-features = false, package = "frame-remote-externalities" }
 soil-chain-spec = { path = "main/soil-chain-spec", default-features = false }
 soil-chain-spec-macros = { path = "main/soil-chain-spec-macros", default-features = false }
@@ -396,7 +395,6 @@ soil-test-runtime-interface-wasm-deprecated = { path = "harness/soil-test-runtim
 soil-statement-store = { path = "main/soil-statement-store", default-features = false }
 soil-transaction-storage-proof = { path = "main/soil-transaction-storage-proof", default-features = false }
 subkey = { path = "library/subkey", default-features = false }
-substrate-bip39 = { path = "library/substrate-bip39", default-features = false }
 substrate-build-script-utils = { path = "library/substrate-build-script-utils", default-features = false }
 soil-test-staging-node-cli-test-utils = { path = "contrib/soil-test-staging-node-cli-test-utils" }
 substrate-frame-rpc-support = { default-features = false, path = "library/substrate-frame-rpc-support" }
@@ -820,7 +818,6 @@ sha2 = { opt-level = 3 }
 sha3 = { opt-level = 3 }
 smallvec = { opt-level = 3 }
 snow = { opt-level = 3 }
-substrate-bip39 = { opt-level = 3 }
 twox-hash = { opt-level = 3 }
 uint = { opt-level = 3 }
 wasmi = { opt-level = 3 }

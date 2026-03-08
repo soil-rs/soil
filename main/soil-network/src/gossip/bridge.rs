@@ -33,7 +33,7 @@ use futures::{
 	prelude::*,
 };
 use log::trace;
-use prometheus_endpoint::Registry;
+use soil_prometheus::Registry;
 use soil_network::types::PeerId;
 use std::{
 	collections::{HashMap, VecDeque},

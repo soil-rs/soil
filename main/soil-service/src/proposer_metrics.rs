@@ -18,7 +18,7 @@
 
 //! Prometheus basic proposer metrics.
 
-use prometheus_endpoint::{
+use soil_prometheus::{
 	prometheus::CounterVec, register, Gauge, Histogram, HistogramOpts, Opts, PrometheusError,
 	Registry, U64,
 };

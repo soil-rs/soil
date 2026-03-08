@@ -44,7 +44,7 @@ mod utils;
 use linked_hash_map::LinkedHashMap;
 use log::{debug, trace, warn};
 use parking_lot::{Mutex, RwLock};
-use prometheus_endpoint::Registry;
+use soil_prometheus::Registry;
 use std::{
 	collections::{HashMap, HashSet},
 	io,

@@ -35,7 +35,7 @@ use crate::event::Event;
 
 use futures::{prelude::*, ready, stream::FusedStream};
 use log::{debug, error};
-use prometheus_endpoint::{register, CounterVec, GaugeVec, Opts, PrometheusError, Registry, U64};
+use soil_prometheus::{register, CounterVec, GaugeVec, Opts, PrometheusError, Registry, U64};
 use std::{
 	backtrace::Backtrace,
 	cell::RefCell,

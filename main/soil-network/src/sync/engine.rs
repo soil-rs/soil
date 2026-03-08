@@ -38,7 +38,7 @@ use crate::{
 use codec::{Decode, DecodeAll, Encode};
 use futures::{channel::oneshot, StreamExt};
 use log::{debug, error, trace, warn};
-use prometheus_endpoint::{
+use soil_prometheus::{
 	register, Counter, Gauge, MetricSource, Opts, PrometheusError, Registry, SourcedGauge, U64,
 };
 use schnellru::{ByLength, LruMap};
@@ -148,7 +148,7 @@ impl MajorSyncingGauge {
 	/// Registers the [`MajorSyncGauge`] metric whose value is
 	/// obtained from the given `AtomicBool`.
 	fn register(registry: &Registry, value: Arc<AtomicBool>) -> Result<(), PrometheusError> {
-		prometheus_endpoint::register(
+		soil_prometheus::register(
 			SourcedGauge::new(
 				&Opts::new(
 					"substrate_sub_libp2p_is_major_syncing",

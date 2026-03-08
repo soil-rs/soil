@@ -856,7 +856,7 @@ mod test {
 
 	impl std::error::Error for TestError {}
 
-	fn test_fork_tree<'a>(
+	fn test_soil_fork_tree<'a>(
 	) -> (ForkTree<&'a str, u64, u32>, impl Fn(&&str, &&str) -> Result<bool, TestError>) {
 		let mut tree = ForkTree::new();
 
@@ -925,7 +925,7 @@ mod test {
 
 	#[test]
 	fn import_doesnt_revert() {
-		let (mut tree, is_descendent_of) = test_fork_tree();
+		let (mut tree, is_descendent_of) = test_soil_fork_tree();
 
 		tree.finalize_root(&"A");
 
@@ -936,7 +936,7 @@ mod test {
 
 	#[test]
 	fn import_doesnt_add_duplicates() {
-		let (mut tree, is_descendent_of) = test_fork_tree();
+		let (mut tree, is_descendent_of) = test_soil_fork_tree();
 
 		assert_eq!(tree.import("A", 10, 1, &is_descendent_of), Err(Error::Duplicate));
 
@@ -950,7 +950,7 @@ mod test {
 	#[test]
 	fn finalize_root_works() {
 		let finalize_a = || {
-			let (mut tree, ..) = test_fork_tree();
+			let (mut tree, ..) = test_soil_fork_tree();
 
 			assert_eq!(tree.roots().map(|(h, n, _)| (*h, *n)).collect::<Vec<_>>(), vec![("A", 10)]);
 
@@ -992,7 +992,7 @@ mod test {
 
 	#[test]
 	fn finalize_works() {
-		let (mut tree, is_descendent_of) = test_fork_tree();
+		let (mut tree, is_descendent_of) = test_soil_fork_tree();
 
 		let original_roots = tree.roots.clone();
 
@@ -1047,7 +1047,7 @@ mod test {
 
 	#[test]
 	fn finalize_with_ancestor_works() {
-		let (mut tree, is_descendent_of) = test_fork_tree();
+		let (mut tree, is_descendent_of) = test_soil_fork_tree();
 
 		let original_roots = tree.roots.clone();
 
@@ -1226,7 +1226,7 @@ mod test {
 
 	#[test]
 	fn iter_iterates_in_preorder() {
-		let (tree, ..) = test_fork_tree();
+		let (tree, ..) = test_soil_fork_tree();
 		assert_eq!(
 			tree.iter().map(|(h, n, _)| (*h, *n)).collect::<Vec<_>>(),
 			vec![
@@ -1306,9 +1306,9 @@ mod test {
 
 	#[test]
 	fn map_works() {
-		let (mut tree, _) = test_fork_tree();
+		let (mut tree, _) = test_soil_fork_tree();
 
-		// Extend the single root fork-tree to also exercise the roots order during map.
+		// Extend the single root soil-fork-tree to also exercise the roots order during map.
 		let is_descendent_of = |_: &&str, _: &&str| -> Result<bool, TestError> { Ok(false) };
 		let is_root = tree.import("A1", 10, 1, &is_descendent_of).unwrap();
 		assert!(is_root);
@@ -1328,7 +1328,7 @@ mod test {
 
 	#[test]
 	fn prune_works_for_in_tree_hashes() {
-		let (mut tree, is_descendent_of) = test_fork_tree();
+		let (mut tree, is_descendent_of) = test_soil_fork_tree();
 
 		let removed = tree.prune(&"C", &30, &is_descendent_of, &|_| true).unwrap();
 
@@ -1355,7 +1355,7 @@ mod test {
 
 	#[test]
 	fn prune_works_for_out_of_tree_hashes() {
-		let (mut tree, is_descendent_of) = test_fork_tree();
+		let (mut tree, is_descendent_of) = test_soil_fork_tree();
 
 		let removed = tree.prune(&"c", &25, &is_descendent_of, &|_| true).unwrap();
 
@@ -1374,7 +1374,7 @@ mod test {
 
 	#[test]
 	fn prune_works_for_not_direct_ancestor() {
-		let (mut tree, is_descendent_of) = test_fork_tree();
+		let (mut tree, is_descendent_of) = test_soil_fork_tree();
 
 		// This is to re-root the tree not at the immediate ancestor, but the one just before.
 		let removed = tree.prune(&"m", &45, &is_descendent_of, &|height| *height == 3).unwrap();
@@ -1391,7 +1391,7 @@ mod test {
 
 	#[test]
 	fn prune_works_for_far_away_ancestor() {
-		let (mut tree, is_descendent_of) = test_fork_tree();
+		let (mut tree, is_descendent_of) = test_soil_fork_tree();
 
 		let removed = tree.prune(&"m", &45, &is_descendent_of, &|height| *height == 2).unwrap();
 
@@ -1439,7 +1439,7 @@ mod test {
 
 	#[test]
 	fn rebalance_works() {
-		let (mut tree, _) = test_fork_tree();
+		let (mut tree, _) = test_soil_fork_tree();
 
 		// the tree is automatically rebalanced on import, therefore we should iterate in preorder
 		// exploring the longest forks first. check the ascii art above to understand the expected
@@ -1470,7 +1470,7 @@ mod test {
 
 	#[test]
 	fn drain_filter_works() {
-		let (mut tree, _) = test_fork_tree();
+		let (mut tree, _) = test_soil_fork_tree();
 
 		let filter = |h: &&str, _: &u64, _: &u32| match *h {
 			"A" | "B" | "F" | "G" => FilterAction::KeepNode,
@@ -1494,7 +1494,7 @@ mod test {
 
 	#[test]
 	fn find_node_index_works() {
-		let (tree, is_descendent_of) = test_fork_tree();
+		let (tree, is_descendent_of) = test_soil_fork_tree();
 
 		let path = tree
 			.find_node_index_where(&"D", &40, &is_descendent_of, &|_| true)
@@ -1563,7 +1563,7 @@ mod test {
 
 	#[test]
 	fn find_node_works() {
-		let (tree, is_descendent_of) = test_fork_tree();
+		let (tree, is_descendent_of) = test_soil_fork_tree();
 
 		let node = tree.find_node_where(&"B", &20, &is_descendent_of, &|_| true).unwrap().unwrap();
 		assert_eq!((node.hash, node.number), ("A", 10));
@@ -1580,7 +1580,7 @@ mod test {
 
 	#[test]
 	fn post_order_traversal_requirement() {
-		let (mut tree, is_descendent_of) = test_fork_tree();
+		let (mut tree, is_descendent_of) = test_soil_fork_tree();
 
 		// Test for the post-order DFS traversal requirement as specified by the
 		// `find_node_index_where` and `import` comments.

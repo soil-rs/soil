@@ -60,7 +60,7 @@ use codec::Decode;
 use futures::{prelude::*, StreamExt};
 use log::{debug, error, info};
 use parking_lot::RwLock;
-use prometheus_endpoint::{PrometheusError, Registry};
+use soil_prometheus::{PrometheusError, Registry};
 use soil_client::blockchain::{
 	Error as ClientError, HeaderBackend, HeaderMetadata, Result as ClientResult,
 };
@@ -709,7 +709,7 @@ pub struct GrandpaParams<Block: BlockT, C, N, S, SC, VR> {
 	/// A voting rule used to potentially restrict target votes.
 	pub voting_rule: VR,
 	/// The prometheus metrics registry.
-	pub prometheus_registry: Option<prometheus_endpoint::Registry>,
+	pub prometheus_registry: Option<soil_prometheus::Registry>,
 	/// The voter state is exposed at an RPC endpoint.
 	pub shared_voter_state: SharedVoterState,
 	/// TelemetryHandle instance.
@@ -914,7 +914,7 @@ where
 		voting_rule: VR,
 		persistent_data: PersistentData<Block>,
 		voter_commands_rx: TracingUnboundedReceiver<VoterCommand<Block::Hash, NumberFor<Block>>>,
-		prometheus_registry: Option<prometheus_endpoint::Registry>,
+		prometheus_registry: Option<soil_prometheus::Registry>,
 		shared_voter_state: SharedVoterState,
 		justification_sender: GrandpaJustificationSender<Block>,
 		telemetry: Option<TelemetryHandle>,

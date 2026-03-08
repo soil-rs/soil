@@ -22,7 +22,7 @@ use std::{cmp::Ord, fmt::Debug, ops::Add};
 
 use codec::{Decode, Encode};
 use finality_grandpa::voter_set::VoterSet;
-use fork_tree::{FilterAction, ForkTree};
+use soil_fork_tree::{FilterAction, ForkTree};
 use log::debug;
 use parking_lot::MappedMutexGuard;
 use soil_consensus::shared_data::{SharedData, SharedDataLocked};
@@ -48,14 +48,14 @@ pub enum Error<N, E> {
 	)]
 	ForcedAuthoritySetChangeDependencyUnsatisfied(N),
 	#[error("Invalid operation in the pending changes tree: {0}")]
-	ForkTree(fork_tree::Error<E>),
+	ForkTree(soil_fork_tree::Error<E>),
 }
 
-impl<N, E> From<fork_tree::Error<E>> for Error<N, E> {
-	fn from(err: fork_tree::Error<E>) -> Error<N, E> {
+impl<N, E> From<soil_fork_tree::Error<E>> for Error<N, E> {
+	fn from(err: soil_fork_tree::Error<E>) -> Error<N, E> {
 		match err {
-			fork_tree::Error::Client(err) => Error::Client(err),
-			fork_tree::Error::Duplicate => Error::DuplicateAuthoritySetChange,
+			soil_fork_tree::Error::Client(err) => Error::Client(err),
+			soil_fork_tree::Error::Duplicate => Error::DuplicateAuthoritySetChange,
 			err => Error::ForkTree(err),
 		}
 	}
@@ -559,7 +559,7 @@ where
 			is_descendent_of,
 			|change| change.effective_number() <= finalized_number,
 		)? {
-			fork_tree::FinalizationResult::Changed(change) => {
+			soil_fork_tree::FinalizationResult::Changed(change) => {
 				status.changed = true;
 
 				let pending_forced_changes = std::mem::take(&mut self.pending_forced_changes);
@@ -596,7 +596,7 @@ where
 					status.new_set_block = Some((finalized_hash, finalized_number));
 				}
 			},
-			fork_tree::FinalizationResult::Unchanged => {},
+			soil_fork_tree::FinalizationResult::Unchanged => {},
 		}
 
 		Ok(status)
@@ -1051,7 +1051,7 @@ mod tests {
 		// trying to finalize past `change_c` without finalizing `change_a` first
 		assert!(matches!(
 			authorities.apply_standard_changes("hash_d", 40, &is_descendent_of, false, None),
-			Err(Error::ForkTree(fork_tree::Error::UnfinalizedAncestor))
+			Err(Error::ForkTree(soil_fork_tree::Error::UnfinalizedAncestor))
 		));
 		assert_eq!(authorities.authority_set_changes, AuthoritySetChanges::empty());
 

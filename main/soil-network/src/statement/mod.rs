@@ -37,7 +37,7 @@ use governor::{
 	state::{InMemoryState, NotKeyed},
 	Quota, RateLimiter,
 };
-use prometheus_endpoint::{
+use soil_prometheus::{
 	exponential_buckets, register, Counter, Gauge, Histogram, HistogramOpts, PrometheusError,
 	Registry, U64,
 };

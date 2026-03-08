@@ -26,7 +26,7 @@ use libp2p::PeerId;
 use log::trace;
 use parking_lot::Mutex;
 use partial_sort::PartialSort;
-use prometheus_endpoint::Registry;
+use soil_prometheus::Registry;
 use std::{
 	cmp::{Ord, Ordering, PartialOrd},
 	collections::{hash_map::Entry, HashMap, HashSet},
@@ -542,7 +542,7 @@ mod tests {
 		let peer_b = crate::types::PeerId::random();
 		let peer_c = crate::types::PeerId::random();
 
-		let metrics_registry = prometheus_endpoint::Registry::new();
+		let metrics_registry = soil_prometheus::Registry::new();
 		let peerstore = PeerStore::new(
 			vec![peer_a, peer_b, peer_c].into_iter().map(Into::into).collect(),
 			Some(metrics_registry),

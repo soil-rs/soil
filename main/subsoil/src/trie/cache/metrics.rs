@@ -17,7 +17,7 @@
 
 //! Metrics for the trie cache.
 
-use prometheus_endpoint::{
+use soil_prometheus::{
 	exponential_buckets,
 	prometheus::{core::Collector, HistogramTimer},
 	CounterVec, GaugeVec, HistogramOpts, HistogramVec, Opts, PrometheusError, Registry, U64,

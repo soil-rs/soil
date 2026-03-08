@@ -21,7 +21,7 @@
 use std::{fmt::Debug, sync::Arc};
 
 use codec::Codec;
-use fork_tree::ForkTree;
+use soil_fork_tree::ForkTree;
 use parking_lot::RwLock;
 use soil_client::blockchain::{HeaderBackend, HeaderMetadata};
 use subsoil::api::ProvideRuntimeApi;

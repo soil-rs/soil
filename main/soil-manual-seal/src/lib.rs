@@ -26,7 +26,7 @@ use futures::prelude::*;
 #[cfg(feature = "std")]
 use futures_timer::Delay;
 #[cfg(feature = "std")]
-use prometheus_endpoint::Registry;
+use soil_prometheus::Registry;
 #[cfg(feature = "std")]
 use soil_client::blockchain::HeaderBackend;
 #[cfg(feature = "std")]

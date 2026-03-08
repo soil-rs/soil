@@ -55,7 +55,7 @@ pub enum Error {
 	TaskExecutorRequired,
 
 	#[error("Prometheus metrics error: {0}")]
-	Prometheus(#[from] prometheus_endpoint::PrometheusError),
+	Prometheus(#[from] soil_prometheus::PrometheusError),
 
 	#[error("Application: {0}")]
 	Application(#[from] Box<dyn std::error::Error + Send + Sync + 'static>),

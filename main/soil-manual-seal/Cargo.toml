@@ -23,7 +23,7 @@ futures = { workspace = true, optional = true}
 futures-timer = { workspace = true, optional = true}
 jsonrpsee = { features = ["client-core", "macros", "server-core"], workspace = true, optional = true}
 log = { workspace = true, default-features = true, optional = true}
-prometheus-endpoint = { workspace = true, default-features = true, optional = true}
+soil-prometheus = { workspace = true, default-features = true, optional = true}
 soil-consensus = { workspace = true, default-features = true, optional = true}
 soil-aura = { workspace = true, default-features = true, optional = true}
 soil-babe = { workspace = true, default-features = true, optional = true}
@@ -41,7 +41,7 @@ std = [
 	"futures-timer",
 	"jsonrpsee",
 	"log",
-	"prometheus-endpoint",
+	"soil-prometheus",
 	"soil-consensus",
 	"soil-aura",
 	"soil-babe",

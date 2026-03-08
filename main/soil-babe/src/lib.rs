@@ -88,7 +88,7 @@ use futures::{
 };
 use log::{debug, info, log, trace, warn};
 use parking_lot::Mutex;
-use prometheus_endpoint::Registry;
+use soil_prometheus::Registry;
 
 use soil_client::blockchain::{
 	Backend as _, BlockStatus, Error as ClientError, HeaderBackend, HeaderMetadata,
@@ -355,7 +355,7 @@ pub enum Error<B: BlockT> {
 	RuntimeApi(subsoil::api::ApiError),
 	/// Fork tree error
 	#[error(transparent)]
-	ForkTree(Box<fork_tree::Error<soil_client::blockchain::Error>>),
+	ForkTree(Box<soil_fork_tree::Error<soil_client::blockchain::Error>>),
 }
 
 impl<B: BlockT> From<Error<B>> for String {

@@ -52,6 +52,7 @@ pub use crate::crypto_hashing::{self as hashing, *};
 
 pub mod const_hex2array;
 pub mod crypto;
+mod crypto_bip39;
 pub mod hexdisplay;
 pub use paste;
 mod address_uri;

@@ -76,7 +76,7 @@ use libp2p::{
 use log::{debug, error, info, trace, warn};
 use metrics::{Histogram, MetricSources, Metrics};
 use parking_lot::Mutex;
-use prometheus_endpoint::Registry;
+use soil_prometheus::Registry;
 
 use crate::common::{
 	role::{ObservedRole, Roles},

@@ -19,7 +19,7 @@
 //! Service configuration.
 
 pub use jsonrpsee::server::BatchRequestConfig as RpcBatchRequestConfig;
-use prometheus_endpoint::Registry;
+use soil_prometheus::Registry;
 use soil_chain_spec::ChainSpec;
 pub use soil_client::db::{BlocksPruning, Database, DatabaseSource, PruningMode};
 pub use soil_client::executor::{WasmExecutionMethod, WasmtimeInstantiationStrategy};

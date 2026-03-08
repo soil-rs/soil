@@ -20,7 +20,7 @@
 
 use std::sync::Arc;
 
-use prometheus_endpoint::{
+use soil_prometheus::{
 	prometheus::HistogramTimer, register, Counter, CounterVec, Gauge, Histogram, HistogramOpts,
 	Opts, PrometheusError, Registry, U64,
 };

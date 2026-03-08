@@ -21,7 +21,7 @@ use super::*;
 use subsoil::core::hexdisplay::HexDisplay;
 
 use fnv::{FnvHashMap, FnvHashSet};
-use prometheus_endpoint::{register, CounterVec, Opts, U64};
+use soil_prometheus::{register, CounterVec, Opts, U64};
 
 use crate::utils::{
 	id_sequence::SeqID as SubscriberId,

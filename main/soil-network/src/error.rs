@@ -51,7 +51,7 @@ pub enum Error {
 	},
 	/// Prometheus metrics error.
 	#[error(transparent)]
-	Prometheus(#[from] prometheus_endpoint::PrometheusError),
+	Prometheus(#[from] soil_prometheus::PrometheusError),
 	/// The network addresses are invalid because they don't match the transport.
 	#[error(
 		"The following addresses are invalid because they don't match the transport: {addresses:?}"

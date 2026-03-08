@@ -27,7 +27,7 @@ use std::{
 
 use futures::Stream;
 
-use prometheus_endpoint::Registry as PrometheusRegistry;
+use soil_prometheus::Registry as PrometheusRegistry;
 
 use crate::utils::pubsub::{Hub, Receiver};
 use subsoil::core::storage::{StorageData, StorageKey};

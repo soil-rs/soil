@@ -142,7 +142,6 @@ subsoil = { workspace = true }
 subsoil-crypto-hashing = { workspace = true }
 soil-statement-store = { workspace = true }
 soil-transaction-storage-proof = { workspace = true }
-substrate-bip39 = { workspace = true }
 
 # shared code between runtime and node
 soil-test-staging-node-primitives = { workspace = true }
@@ -269,7 +268,6 @@ std = [
 	"subsoil-crypto-hashing/std",
 	"soil-statement-store/std",
 	"soil-transaction-storage-proof/std",
-	"substrate-bip39/std",
 	"substrate-wasm-builder"]
 runtime-benchmarks = [
 	"topsoil/runtime-benchmarks",

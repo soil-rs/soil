@@ -17,7 +17,7 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 use futures_timer::Delay;
-use prometheus_endpoint::{register, Gauge, GaugeVec, Opts, PrometheusError, Registry, U64};
+use soil_prometheus::{register, Gauge, GaugeVec, Opts, PrometheusError, Registry, U64};
 use soil_client::client_api::{ClientInfo, UsageProvider};
 use soil_client::transaction_pool::{MaintainedTransactionPool, PoolStatus};
 use soil_client::utils::metrics::register_globals;

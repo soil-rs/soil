@@ -19,7 +19,7 @@
 //! Wrapper around a `Future` that reports statistics about when the `Future` is polled.
 
 use futures::prelude::*;
-use prometheus_endpoint::{Counter, Histogram, U64};
+use soil_prometheus::{Counter, Histogram, U64};
 use std::{
 	fmt,
 	pin::Pin,

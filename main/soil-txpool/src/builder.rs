@@ -25,7 +25,7 @@ use crate::{
 	single_state_txpool::BasicPool as SingleStateFullPool,
 	TransactionPoolWrapper, LOG_TARGET,
 };
-use prometheus_endpoint::Registry as PrometheusRegistry;
+use soil_prometheus::Registry as PrometheusRegistry;
 use soil_client::transaction_pool::{LocalTransactionPool, MaintainedTransactionPool};
 use std::{marker::PhantomData, sync::Arc, time::Duration};
 use subsoil::core::traits::SpawnEssentialNamed;

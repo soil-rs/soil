@@ -28,7 +28,7 @@ use futures::{
 	future::{Future, FutureExt},
 };
 use log::{debug, error, info, log_enabled, trace, warn, Level};
-use prometheus_endpoint::Registry as PrometheusRegistry;
+use soil_prometheus::Registry as PrometheusRegistry;
 use soil_client::block_builder::{BlockBuilderApi, BlockBuilderBuilder};
 use soil_client::blockchain::{
 	ApplyExtrinsicFailed::Validity, Error::ApplyExtrinsicFailed, HeaderBackend,

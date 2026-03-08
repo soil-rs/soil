@@ -24,7 +24,7 @@ use crate::{
 };
 use codec::Codec;
 use log::{debug, info, trace};
-use prometheus_endpoint::Registry;
+use soil_prometheus::Registry;
 use soil_client::blockchain::{HeaderBackend, HeaderMetadata};
 use soil_client::client_api::{backend::AuxStore, BlockOf, UsageProvider};
 use soil_client::consensus::Error as ConsensusError;

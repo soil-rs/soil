@@ -18,7 +18,7 @@
 
 //! Transaction pool Prometheus metrics for implementation of Chain API.
 
-use prometheus_endpoint::{register, Counter, PrometheusError, Registry, U64};
+use soil_prometheus::{register, Counter, PrometheusError, Registry, U64};
 use std::sync::Arc;
 
 use crate::LOG_TARGET;

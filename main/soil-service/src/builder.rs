@@ -28,7 +28,7 @@ use crate::{
 use futures::{select, FutureExt, StreamExt};
 use jsonrpsee::RpcModule;
 use log::{debug, error, info};
-use prometheus_endpoint::Registry;
+use soil_prometheus::Registry;
 use soil_chain_spec::{get_extension, ChainSpec};
 use soil_client::blockchain::{HeaderBackend, HeaderMetadata};
 use soil_client::client_api::{
@@ -592,9 +592,9 @@ where
 				&config.impl_version,
 			)?;
 			spawn_handle.spawn(
-				"prometheus-endpoint",
+				"soil-prometheus",
 				None,
-				prometheus_endpoint::init_prometheus(port, registry).map(drop),
+				soil_prometheus::init_prometheus(port, registry).map(drop),
 			);
 
 			metrics
