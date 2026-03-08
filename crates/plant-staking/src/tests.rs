@@ -32,7 +32,7 @@ use subsoil::runtime::{
 	Perbill, Percent, Perquintill, Rounding, TokenError,
 };
 use topsoil_balances::Error as BalancesError;
-use plant_election_provider_support::{
+use plant_election_provider::{
 	bounds::{DataProviderBounds, ElectionBoundsBuilder},
 	ElectionProvider, SortedListProvider, Support,
 };
@@ -4731,7 +4731,7 @@ fn restricted_accounts_can_only_withdraw() {
 
 mod election_data_provider {
 	use super::*;
-	use plant_election_provider_support::ElectionDataProvider;
+	use plant_election_provider::ElectionDataProvider;
 
 	#[test]
 	fn targets_2sec_block() {
@@ -5694,7 +5694,7 @@ fn min_commission_works() {
 #[should_panic]
 #[cfg(debug_assertions)]
 fn change_of_absolute_max_nominations() {
-	use plant_election_provider_support::ElectionDataProvider;
+	use plant_election_provider::ElectionDataProvider;
 	ExtBuilder::default()
 		.add_staker(61, 61, 10, StakerStatus::Nominator(vec![1]))
 		.add_staker(71, 71, 10, StakerStatus::Nominator(vec![1, 2, 3]))
@@ -5825,7 +5825,7 @@ fn change_of_absolute_max_nominations() {
 
 #[test]
 fn nomination_quota_max_changes_decoding() {
-	use plant_election_provider_support::ElectionDataProvider;
+	use plant_election_provider::ElectionDataProvider;
 	ExtBuilder::default()
 		.add_staker(60, 61, 10, StakerStatus::Nominator(vec![1]))
 		.add_staker(70, 71, 10, StakerStatus::Nominator(vec![1, 2, 3]))
@@ -5864,7 +5864,7 @@ fn api_nominations_quota_works() {
 
 mod sorted_list_provider {
 	use super::*;
-	use plant_election_provider_support::SortedListProvider;
+	use plant_election_provider::SortedListProvider;
 
 	#[test]
 	fn re_nominate_does_not_change_counters_or_list() {

@@ -20,7 +20,7 @@
 // end::description[]
 
 // reexport proc macros
-pub use topsoil_support_procedural_tools_derive::*;
+pub use topsoil_support_procedural_tools_macros::*;
 
 use proc_macro_crate::{crate_name, FoundCrate};
 use quote::quote;

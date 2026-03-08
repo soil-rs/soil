@@ -21,7 +21,7 @@ use super::*;
 use crate::{self as bags_list};
 use std::collections::HashMap;
 use subsoil::runtime::BuildStorage;
-use plant_election_provider_support::VoteWeight;
+use plant_election_provider::VoteWeight;
 use topsoil_support::{derive_impl, parameter_types};
 
 pub type AccountId = <Runtime as topsoil_system::Config>::AccountId;
@@ -40,7 +40,7 @@ impl ScoreProvider<AccountId> for StakingMock {
 		NextVoteWeightMap::get().get(id).cloned()
 	}
 
-	plant_election_provider_support::runtime_benchmarks_or_std_enabled! {
+	plant_election_provider::runtime_benchmarks_or_std_enabled! {
 		fn set_score_of(id: &AccountId, weight: Self::Score) {
 			NEXT_VOTE_WEIGHT_MAP.with(|m| m.borrow_mut().insert(*id, weight));
 		}

@@ -23,7 +23,7 @@ use subsoil::runtime::{
 	traits::{SaturatedConversion, StaticLookup, Zero},
 	ArithmeticError, Perbill, Percent,
 };
-use plant_election_provider_support::{ElectionProvider, SortedListProvider, VoteWeight};
+use plant_election_provider::{ElectionProvider, SortedListProvider, VoteWeight};
 use topsoil_support::{
 	pallet_prelude::*,
 	traits::{
@@ -65,7 +65,7 @@ pub(crate) const SPECULATIVE_NUM_SPANS: u32 = 32;
 pub mod pallet {
 	use super::*;
 	use codec::HasCompact;
-	use plant_election_provider_support::ElectionDataProvider;
+	use plant_election_provider::ElectionDataProvider;
 
 	use crate::{BenchmarkingConfig, PagedExposureMetadata};
 
@@ -134,7 +134,7 @@ pub mod pallet {
 
 		/// Convert a balance into a number used for election calculation. This must fit into a
 		/// `u64` but is allowed to be sensibly lossy. The `u64` is used to communicate with the
-		/// [`plant_election_provider_support`] crate which accepts u64 numbers and does operations
+		/// [`plant_election_provider`] crate which accepts u64 numbers and does operations
 		/// in 128.
 		/// Consequently, the backward convert is used convert the u128s from sp-elections back to a
 		/// [`BalanceOf`].

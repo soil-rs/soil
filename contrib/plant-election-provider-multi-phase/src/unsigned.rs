@@ -33,7 +33,7 @@ use subsoil::runtime::{
 	offchain::storage::{MutateStorageError, StorageValueRef},
 	DispatchError, SaturatedConversion,
 };
-use plant_election_provider_support::{NposSolution, NposSolver, PerThing128, VoteWeight};
+use plant_election_provider::{NposSolution, NposSolver, PerThing128, VoteWeight};
 use topsoil_support::{
 	dispatch::DispatchResult,
 	ensure,
@@ -55,10 +55,10 @@ pub(crate) const OFFCHAIN_CACHED_CALL: &[u8] = b"parity/multi-phase-unsigned-ele
 
 /// A voter's fundamental data: their ID, their stake, and the list of candidates for whom they
 /// voted.
-pub type VoterOf<T> = plant_election_provider_support::VoterOf<<T as Config>::DataProvider>;
+pub type VoterOf<T> = plant_election_provider::VoterOf<<T as Config>::DataProvider>;
 
 /// Same as [`VoterOf`], but parameterized by the `MinerConfig`.
-pub type MinerVoterOf<T> = plant_election_provider_support::Voter<
+pub type MinerVoterOf<T> = plant_election_provider::Voter<
 	<T as MinerConfig>::AccountId,
 	<T as MinerConfig>::MaxVotesPerVoter,
 >;
@@ -69,9 +69,9 @@ pub type Assignment<T> = subsoil::npos_elections::Assignment<
 	SolutionAccuracyOf<T>,
 >;
 
-/// The [`IndexAssignment`][plant_election_provider_support::IndexAssignment] type specialized for a
+/// The [`IndexAssignment`][plant_election_provider::IndexAssignment] type specialized for a
 /// particular runtime `T`.
-pub type IndexAssignmentOf<T> = plant_election_provider_support::IndexAssignmentOf<SolutionOf<T>>;
+pub type IndexAssignmentOf<T> = plant_election_provider::IndexAssignmentOf<SolutionOf<T>>;
 
 /// Error type of the pallet's [`crate::Config::Solver`].
 pub type SolverErrorOf<T> = <<T as Config>::Solver as NposSolver>::Error;
@@ -1116,7 +1116,7 @@ mod tests {
 		traits::{Dispatchable, ValidateUnsigned, Zero},
 		ModuleError, PerU16,
 	};
-	use plant_election_provider_support::IndexAssignment;
+	use plant_election_provider::IndexAssignment;
 	use topsoil_support::{assert_noop, assert_ok, traits::OffchainWorker};
 
 	type Assignment = crate::unsigned::Assignment<Runtime>;
@@ -1948,7 +1948,7 @@ mod tests {
 	#[test]
 	fn mine_solution_always_respects_max_backers_per_winner() {
 		use crate::mock::MaxBackersPerWinner;
-		use plant_election_provider_support::BoundedSupport;
+		use plant_election_provider::BoundedSupport;
 
 		let targets = vec![10, 20, 30, 40];
 		let voters = vec![

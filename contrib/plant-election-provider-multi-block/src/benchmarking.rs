@@ -20,7 +20,7 @@ use crate::{
 	Config, CurrentPhase, Pallet, Phase, Snapshot,
 };
 use topsoil_benchmarking::v2::*;
-use plant_election_provider_support::{ElectionDataProvider, ElectionProvider};
+use plant_election_provider::{ElectionDataProvider, ElectionProvider};
 use topsoil_support::{assert_ok, pallet_prelude::*};
 
 const SNAPSHOT_NOT_BIG_ENOUGH: &'static str = "Snapshot page is not full, you should run this \

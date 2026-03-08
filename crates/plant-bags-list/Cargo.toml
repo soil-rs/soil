@@ -22,7 +22,7 @@ scale-info = { features = ["derive"], workspace = true }
 # primitives
 
 # FRAME
-plant-election-provider-support = { workspace = true }
+plant-election-provider = { workspace = true }
 topsoil-support = { workspace = true }
 topsoil-system = { workspace = true }
 
@@ -38,7 +38,7 @@ subsoil = { workspace = true }
 
 [dev-dependencies]
 topsoil-benchmarking = { workspace = true, default-features = true }
-plant-election-provider-support = { workspace = true, default-features = true }
+plant-election-provider = { workspace = true, default-features = true }
 topsoil-balances = { workspace = true, default-features = true }
 
 [features]
@@ -46,7 +46,7 @@ default = ["std"]
 std = [
 	"codec/std",
 	"topsoil-benchmarking?/std",
-	"plant-election-provider-support/std",
+	"plant-election-provider/std",
 	"topsoil-support/std",
 	"topsoil-system/std",
 	"log/std",
@@ -56,18 +56,18 @@ std = [
 ]
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",
-	"plant-election-provider-support/runtime-benchmarks",
+	"plant-election-provider/runtime-benchmarks",
 	"topsoil-support/runtime-benchmarks",
 	"topsoil-system/runtime-benchmarks",
 	"topsoil-balances/runtime-benchmarks",
 	"subsoil/runtime-benchmarks",
 ]
 fuzz = [
-	"plant-election-provider-support/fuzz",
+	"plant-election-provider/fuzz",
 	"topsoil-balances",
 ]
 try-runtime = [
-	"plant-election-provider-support/try-runtime",
+	"plant-election-provider/try-runtime",
 	"topsoil-support/try-runtime",
 	"topsoil-system/try-runtime",
 	"topsoil-balances?/try-runtime",

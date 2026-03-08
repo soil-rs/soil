@@ -1,5 +1,5 @@
 [package]
-name = "plant-election-provider-solution-type"
+name = "plant-election-provider-macros"
 version = "13.0.0"
 authors.workspace = true
 edition.workspace = true
@@ -30,6 +30,6 @@ subsoil = { workspace = true, default-features = true }
 # used by generate_solution_type:
 # NOTE: we have to explicitly specify `std` because of trybuild
 # https://github.com/paritytech/polkadot-sdk/pull/5167
-plant-election-provider-support = { workspace = true, default-features = true, features = ["std"] }
+plant-election-provider = { workspace = true, default-features = true, features = ["std"] }
 topsoil-support = { workspace = true, default-features = true }
 trybuild = { workspace = true }

@@ -76,10 +76,10 @@ Test infrastructure:
 ### SCC 2: Subsoil core (3 crates)
 
 ```
-subsoil              -[dep]-> subsoil-crypto-hashing, subsoil-derive
-subsoil-crypto-hashing -[dev]-> subsoil-derive
-subsoil-derive       -[dep]-> subsoil-crypto-hashing
-subsoil-derive       -[dev]-> subsoil
+subsoil              -[dep]-> subsoil-crypto-hashing, subsoil-macros
+subsoil-crypto-hashing -[dev]-> subsoil-macros
+subsoil-macros       -[dep]-> subsoil-crypto-hashing
+subsoil-macros       -[dev]-> subsoil
 ```
 
 ### SCC 3: Node CLI (3 crates)

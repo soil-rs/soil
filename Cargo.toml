@@ -10,13 +10,13 @@ resolver = "2"
 
 members = [
 	"crates/subsoil",
-	"crates/subsoil-derive",
+	"crates/subsoil-macros",
 	"crates/soil-babe",
 	"crates/soil-aura",
 	"crates/soil-beefy",
 	"crates/plant-authority-discovery",
 	"crates/soil-chain-spec",
-	"crates/soil-chain-spec-derive",
+	"crates/soil-chain-spec-macros",
 	"crates/soil-cli",
 	"crates/soil-consensus",
 	"crates/soil-client",
@@ -71,9 +71,8 @@ members = [
 	"contrib/plant-election-provider-multi-block",
 	"contrib/plant-election-provider-multi-phase",
 	"contrib/plant-election-provider-multi-phase/test-staking-e2e",
-	"crates/plant-election-provider-support",
-	"crates/plant-election-provider-support-benchmarking",
-	"crates/plant-election-provider-solution-type",
+	"crates/plant-election-provider",
+	"crates/plant-election-provider-macros",
 	"crates/plant-election-solution-type-fuzzer",
 	"contrib/plant-elections-phragmen",
 	"contrib/plant-examples",
@@ -147,7 +146,7 @@ members = [
 	"crates/topsoil/support",
 	"crates/topsoil/support/procedural",
 	"crates/topsoil/support/procedural/tools",
-	"crates/topsoil/support/procedural/tools/derive",
+	"crates/topsoil/support/procedural/tools/macros",
 	"crates/topsoil/support/test",
 	"crates/topsoil/support/test/compile_pass",
 	"crates/topsoil/support/test/pallet",
@@ -250,14 +249,14 @@ fork-tree = { path = "crates/substrate/fork-tree", default-features = false }
 topsoil = { path = "crates/topsoil/topsoil", default-features = false }
 topsoil-benchmarking = { path = "crates/topsoil/benchmarking", default-features = false }
 topsoil-benchmarking-pallet-pov = { default-features = false, path = "crates/topsoil/benchmarking/pov" }
-plant-election-provider-solution-type = { path = "crates/plant-election-provider-solution-type", default-features = false }
-plant-election-provider-support = { path = "crates/plant-election-provider-support", default-features = false }
+plant-election-provider-macros = { path = "crates/plant-election-provider-macros", default-features = false }
+plant-election-provider = { path = "crates/plant-election-provider", default-features = false }
 topsoil-executive = { path = "crates/topsoil/executive", default-features = false }
 plant-metadata-hash-extension = { path = "crates/plant-metadata-hash-extension", default-features = false }
 topsoil-support = { path = "crates/topsoil/support", default-features = false }
 topsoil-support-procedural = { path = "crates/topsoil/support/procedural", default-features = false }
 topsoil-support-procedural-tools = { path = "crates/topsoil/support/procedural/tools", default-features = false }
-topsoil-support-procedural-tools-derive = { path = "crates/topsoil/support/procedural/tools/derive", default-features = false }
+topsoil-support-procedural-tools-macros = { path = "crates/topsoil/support/procedural/tools/macros", default-features = false }
 topsoil-support-test = { path = "crates/topsoil/support/test" }
 topsoil-system = { path = "crates/topsoil/system", default-features = false }
 topsoil-system-benchmarking = { path = "crates/topsoil/system/benchmarking", default-features = false }
@@ -305,7 +304,6 @@ plant-dev-mode = { path = "contrib/plant-examples/dev-mode", default-features = 
 plant-dummy-dim = { path = "contrib/plant-dummy-dim", default-features = false }
 plant-election-provider-multi-block = { path = "contrib/plant-election-provider-multi-block", default-features = false }
 plant-election-provider-multi-phase = { path = "contrib/plant-election-provider-multi-phase", default-features = false }
-plant-election-provider-support-benchmarking = { path = "crates/plant-election-provider-support-benchmarking", default-features = false }
 plant-elections-phragmen = { path = "contrib/plant-elections-phragmen", default-features = false }
 plant-example-authorization-tx-extension = { path = "contrib/plant-examples/authorization-tx-extension", default-features = false }
 plant-example-basic = { path = "contrib/plant-examples/basic", default-features = false }
@@ -384,7 +382,7 @@ plant-whitelist = { path = "contrib/plant-whitelist", default-features = false }
 prometheus-endpoint = { path = "crates/substrate/substrate-prometheus-endpoint", default-features = false, package = "substrate-prometheus-endpoint" }
 remote-externalities = { path = "crates/substrate/frame-remote-externalities", default-features = false, package = "frame-remote-externalities" }
 soil-chain-spec = { path = "crates/soil-chain-spec", default-features = false }
-soil-chain-spec-derive = { path = "crates/soil-chain-spec-derive", default-features = false }
+soil-chain-spec-macros = { path = "crates/soil-chain-spec-macros", default-features = false }
 soil-cli = { path = "crates/soil-cli", default-features = false }
 soil-client = { path = "crates/soil-client", default-features = false }
 soil-consensus = { path = "crates/soil-consensus", default-features = false }
@@ -405,7 +403,7 @@ soil-telemetry = { path = "crates/soil-telemetry", default-features = false }
 soil-txpool = { path = "crates/soil-txpool", default-features = false }
 subsoil = { path = "crates/subsoil", default-features = false }
 subsoil-crypto-hashing = { path = "crates/subsoil-crypto-hashing", default-features = false }
-subsoil-derive = { path = "crates/subsoil-derive" }
+subsoil-macros = { path = "crates/subsoil-macros" }
 soil-rpc = { path = "crates/soil-rpc", default-features = false }
 sp-runtime-interface-test-wasm = { path = "crates/soil/runtime-interface/test-wasm" }
 sp-runtime-interface-test-wasm-deprecated = { path = "crates/soil/runtime-interface/test-wasm-deprecated" }

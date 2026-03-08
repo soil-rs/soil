@@ -40,7 +40,7 @@ use subsoil::runtime::{
 	traits::{SaturatedConversion, Saturating, Zero},
 };
 use subsoil::std::{collections::btree_map::BTreeMap, prelude::*};
-use plant_election_provider_support::{ExtendedBalance, NposSolver, Support, VoteWeight};
+use plant_election_provider::{ExtendedBalance, NposSolver, Support, VoteWeight};
 use topsoil_support::{traits::Get, BoundedVec};
 use topsoil_system::pallet_prelude::*;
 
@@ -215,7 +215,7 @@ pub struct BaseMiner<T: MinerConfig>(subsoil::std::marker::PhantomData<T>);
 ///
 /// The bounds of this are set such to only encapsulate a single page of a snapshot. The other
 /// counterpart is [`FullSupportsOfMiner`].
-pub type PageSupportsOfMiner<T> = plant_election_provider_support::BoundedSupports<
+pub type PageSupportsOfMiner<T> = plant_election_provider::BoundedSupports<
 	<T as MinerConfig>::AccountId,
 	<T as MinerConfig>::MaxWinnersPerPage,
 	<T as MinerConfig>::MaxBackersPerWinner,
@@ -235,7 +235,7 @@ impl<T: MinerConfig> topsoil_support::traits::Get<u32> for MaxWinnersFinal<T> {
 /// This should be used on a support instance that is encapsulating the full solution.
 ///
 /// Another way to look at it, this is never wrapped in a `Vec<_>`
-pub type FullSupportsOfMiner<T> = plant_election_provider_support::BoundedSupports<
+pub type FullSupportsOfMiner<T> = plant_election_provider::BoundedSupports<
 	<T as MinerConfig>::AccountId,
 	MaxWinnersFinal<T>,
 	<T as MinerConfig>::MaxBackersPerWinnerFinal,
@@ -1005,7 +1005,7 @@ mod trimming {
 	use super::*;
 	use crate::{mock::*, verifier::Verifier};
 	use subsoil::npos_elections::Support;
-	use plant_election_provider_support::TryFromUnboundedPagedSupports;
+	use plant_election_provider::TryFromUnboundedPagedSupports;
 
 	#[test]
 	fn solution_without_any_trimming() {
@@ -1401,7 +1401,7 @@ mod base_miner {
 	use crate::{mock::*, Snapshot};
 	use subsoil::npos_elections::Support;
 	use subsoil::runtime::PerU16;
-	use plant_election_provider_support::TryFromUnboundedPagedSupports;
+	use plant_election_provider::TryFromUnboundedPagedSupports;
 
 	#[test]
 	fn pagination_does_not_affect_score() {

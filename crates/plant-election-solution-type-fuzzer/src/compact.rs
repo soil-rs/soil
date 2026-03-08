@@ -18,7 +18,7 @@
 use honggfuzz::fuzz;
 use subsoil::arithmetic::Percent;
 use subsoil::runtime::codec::{Encode, Error};
-use plant_election_provider_solution_type::generate_solution_type;
+use plant_election_provider_macros::generate_solution_type;
 
 fn main() {
 	generate_solution_type!(

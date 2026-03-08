@@ -18,7 +18,7 @@ targets = ["x86_64-unknown-linux-gnu"]
 [dependencies]
 codec = { workspace = true }
 topsoil-benchmarking = { workspace = true }
-plant-election-provider-support = { workspace = true }
+plant-election-provider = { workspace = true }
 topsoil-support = { workspace = true }
 topsoil-system = { workspace = true }
 log = { workspace = true }
@@ -41,7 +41,7 @@ default = ["std"]
 std = [
 	"codec/std",
 	"topsoil-benchmarking/std",
-	"plant-election-provider-support/std",
+	"plant-election-provider/std",
 	"topsoil-support/std",
 	"topsoil-system/std",
 	"log/std",
@@ -59,7 +59,7 @@ std = [
 ]
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",
-	"plant-election-provider-support/runtime-benchmarks",
+	"plant-election-provider/runtime-benchmarks",
 	"topsoil-support/runtime-benchmarks",
 	"topsoil-system/runtime-benchmarks",
 	"topsoil-babe/runtime-benchmarks",

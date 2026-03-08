@@ -24,7 +24,7 @@ use subsoil::runtime::{
 	Perbill,
 };
 use topsoil_benchmarking::v2::*;
-use plant_election_provider_support::SortedListProvider;
+use plant_election_provider::SortedListProvider;
 use plant_nomination_pools::{
 	adapter::{Member, Pool, StakeStrategy, StakeStrategyType},
 	BalanceOf, BondExtra, BondedPoolInner, BondedPools, ClaimPermission, ClaimPermissions,

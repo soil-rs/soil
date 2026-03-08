@@ -27,7 +27,7 @@ use syn::{
 	visit::{self, Visit},
 	Ident,
 };
-use topsoil_support_procedural_tools_derive::{Parse, ToTokens};
+use topsoil_support_procedural_tools_macros::{Parse, ToTokens};
 
 /// stop parsing here getting remaining token as content
 /// Warn duplicate stream (part of)

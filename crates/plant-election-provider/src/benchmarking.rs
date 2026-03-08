@@ -15,14 +15,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//! Election provider support pallet benchmarking.
-//! This is separated into its own crate to avoid bloating the size of the runtime.
+//! Election provider benchmarking.
 
 use alloc::vec::Vec;
 use codec::Decode;
+use crate::{NposSolver, PhragMMS, SequentialPhragmen};
 use subsoil::runtime::Perbill;
 use topsoil_benchmarking::v2::*;
-use plant_election_provider_support::{NposSolver, PhragMMS, SequentialPhragmen};
 
 const VOTERS: [u32; 2] = [1_000, 2_000];
 const TARGETS: [u32; 2] = [500, 1_000];

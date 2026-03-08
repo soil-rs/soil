@@ -316,7 +316,7 @@ pub fn get_extension_mut<T: 'static>(e: &mut dyn GetExtension) -> Option<&mut T>
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use soil_chain_spec_derive::{ChainSpecExtension, ChainSpecGroup};
+	use soil_chain_spec_macros::{ChainSpecExtension, ChainSpecGroup};
 	// Make the proc macro work for tests and doc tests.
 	use crate as soil_chain_spec;
 

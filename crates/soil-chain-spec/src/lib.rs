@@ -352,7 +352,7 @@ pub use self::{
 	},
 	json_patch::merge as json_merge,
 };
-pub use soil_chain_spec_derive::{ChainSpecExtension, ChainSpecGroup};
+pub use soil_chain_spec_macros::{ChainSpecExtension, ChainSpecGroup};
 
 use soil_network::config::MultiaddrWithPeerId;
 use soil_telemetry::TelemetryEndpoints;

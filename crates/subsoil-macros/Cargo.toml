@@ -1,5 +1,5 @@
 [package]
-name = "subsoil-derive"
+name = "subsoil-macros"
 version = "0.1.0"
 authors.workspace = true
 edition.workspace = true

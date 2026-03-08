@@ -23,7 +23,7 @@ scale-info = { features = [
 	"derive",
 ], workspace = true }
 
-plant-election-provider-support = { workspace = true }
+plant-election-provider = { workspace = true }
 topsoil-support = { workspace = true }
 topsoil-system = { workspace = true }
 
@@ -43,7 +43,7 @@ default = ["std"]
 std = [
 	"codec/std",
 	"topsoil-benchmarking?/std",
-	"plant-election-provider-support/std",
+	"plant-election-provider/std",
 	"topsoil-support/std",
 	"topsoil-system/std",
 	"log/std",
@@ -54,7 +54,7 @@ std = [
 ]
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",
-	"plant-election-provider-support/runtime-benchmarks",
+	"plant-election-provider/runtime-benchmarks",
 	"topsoil-support/runtime-benchmarks",
 	"topsoil-system/runtime-benchmarks",
 	"topsoil-balances/runtime-benchmarks",
@@ -62,7 +62,7 @@ runtime-benchmarks = [
 	"subsoil/runtime-benchmarks",
 ]
 try-runtime = [
-	"plant-election-provider-support/try-runtime",
+	"plant-election-provider/try-runtime",
 	"topsoil-support/try-runtime",
 	"topsoil-system/try-runtime",
 	"topsoil-balances/try-runtime",

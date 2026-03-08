@@ -63,7 +63,7 @@ pub(crate) fn syn_err(message: &'static str) -> syn::Error {
 /// type, `u8` target type and `Perbill` accuracy with maximum of 4 edges per voter.
 ///
 /// ```
-/// # use plant_election_provider_solution_type::generate_solution_type;
+/// # use plant_election_provider_macros::generate_solution_type;
 /// # use subsoil::arithmetic::per_things::Perbill;
 /// # use topsoil_support::traits::ConstU32;
 /// generate_solution_type!(pub struct TestSolution::<
@@ -96,7 +96,7 @@ pub(crate) fn syn_err(message: &'static str) -> syn::Error {
 /// ```
 ///
 /// The given struct provides function to convert from/to `Assignment` as part of
-/// `plant_election_provider_support::NposSolution` trait:
+/// `plant_election_provider::NposSolution` trait:
 ///
 /// - `fn from_assignment<..>(..)`
 /// - `fn into_assignment<..>(..)`
@@ -108,8 +108,8 @@ pub(crate) fn syn_err(message: &'static str) -> syn::Error {
 /// for numbers will be used, similar to how `parity-scale-codec`'s `Compact` works.
 ///
 /// ```
-/// # use plant_election_provider_solution_type::generate_solution_type;
-/// # use plant_election_provider_support::NposSolution;
+/// # use plant_election_provider_macros::generate_solution_type;
+/// # use plant_election_provider::NposSolution;
 /// # use subsoil::arithmetic::per_things::Perbill;
 /// # use topsoil_support::traits::ConstU32;
 /// generate_solution_type!(
@@ -251,13 +251,13 @@ where
 }
 
 fn imports() -> Result<TokenStream2> {
-	match crate_name("plant-election-provider-support") {
+	match crate_name("plant-election-provider") {
 		Ok(FoundCrate::Itself) => Ok(quote! {
 			use crate as _feps;
 			use _feps::private as _fepsp;
 		}),
-		Ok(FoundCrate::Name(plant_election_provider_support)) => {
-			let ident = syn::Ident::new(&plant_election_provider_support, Span::call_site());
+		Ok(FoundCrate::Name(plant_election_provider)) => {
+			let ident = syn::Ident::new(&plant_election_provider, Span::call_site());
 			Ok(quote!(
 					use #ident as _feps;
 					use _feps::private as _fepsp;
@@ -267,7 +267,7 @@ fn imports() -> Result<TokenStream2> {
 			Ok(FoundCrate::Name(polkadot_sdk)) => {
 				let ident = syn::Ident::new(&polkadot_sdk, Span::call_site());
 				Ok(quote!(
-					use #ident::plant_election_provider_support as _feps;
+					use #ident::plant_election_provider as _feps;
 					use _feps::private as _fepsp;
 				))
 			},

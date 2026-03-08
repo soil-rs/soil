@@ -21,7 +21,7 @@ use super::*;
 use list::Bag;
 use mock::{test_utils::*, *};
 use subsoil::assert_eq_uvec;
-use plant_election_provider_support::{SortedListProvider, VoteWeight};
+use plant_election_provider::{SortedListProvider, VoteWeight};
 
 #[docify::export]
 #[test]

@@ -29,9 +29,9 @@ pub struct Pallet<T: Config>(System<T>);
 pub trait Config: topsoil_system::Config {
 	/// Adds ability to the Runtime to test against their sample code.
 	///
-	/// Default is `../res/soil_test_staging_node_runtime.compact.compressed.wasm`.
+	/// Default is `../res/kitchensink_runtime.compact.compressed.wasm`.
 	fn prepare_set_code_data() -> Vec<u8> {
-		include_bytes!("../res/soil_test_staging_node_runtime.compact.compressed.wasm").to_vec()
+		include_bytes!("../res/kitchensink_runtime.compact.compressed.wasm").to_vec()
 	}
 
 	/// Adds ability to the Runtime to prepare/initialize before running benchmark `set_code`.

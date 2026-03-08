@@ -80,7 +80,7 @@ pub mod __private {
 	pub use subsoil::state_machine::BasicExternalities;
 	pub use subsoil::std;
 	pub use subsoil::tracing;
-	pub use subsoil_derive;
+	pub use subsoil_macros;
 	pub use tt_call::*;
 }
 

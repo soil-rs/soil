@@ -21,7 +21,7 @@
 
 use codec::Encode;
 use subsoil::runtime::{traits::IdentityLookup, BuildStorage, KeyTypeId};
-use plant_election_provider_support::{
+use plant_election_provider::{
 	bounds::{ElectionBounds, ElectionBoundsBuilder},
 	onchain, SequentialPhragmen,
 };

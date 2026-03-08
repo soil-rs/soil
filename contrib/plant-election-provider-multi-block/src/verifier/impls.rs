@@ -30,7 +30,7 @@ use codec::{Decode, Encode, MaxEncodedLen};
 use pallet::*;
 use subsoil::npos_elections::{evaluate_support, ElectionScore};
 use subsoil::std::{collections::btree_map::BTreeMap, prelude::*};
-use plant_election_provider_support::{
+use plant_election_provider::{
 	ExtendedBalance, NposSolution, PageIndex, TryFromOtherBounds,
 };
 use topsoil_support::{
@@ -40,7 +40,7 @@ use topsoil_support::{
 };
 use topsoil_system::pallet_prelude::*;
 
-pub(crate) type SupportsOfVerifier<V> = plant_election_provider_support::BoundedSupports<
+pub(crate) type SupportsOfVerifier<V> = plant_election_provider::BoundedSupports<
 	<V as Verifier>::AccountId,
 	<V as Verifier>::MaxWinnersPerPage,
 	<V as Verifier>::MaxBackersPerWinner,

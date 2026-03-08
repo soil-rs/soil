@@ -85,7 +85,7 @@
 //! ## Example
 //!
 //! ```rust
-//! # use plant_election_provider_support::{*, data_provider};
+//! # use plant_election_provider::{*, data_provider};
 //! # use subsoil::npos_elections::{Support, Assignment};
 //! # use topsoil_support::traits::ConstU32;
 //! # use subsoil::runtime::bounded_vec;
@@ -154,9 +154,9 @@
 //!         type Pages = T::Pages;
 //!         type DataProvider = T::DataProvider;
 //!
-//! 		fn duration() -> <Self as plant_election_provider_support::ElectionProvider>::BlockNumber { todo!() }
+//! 		fn duration() -> <Self as plant_election_provider::ElectionProvider>::BlockNumber { todo!() }
 //!
-//! 		fn start() -> Result<(), <Self as plant_election_provider_support::ElectionProvider>::Error> { todo!() }
+//! 		fn start() -> Result<(), <Self as plant_election_provider::ElectionProvider>::Error> { todo!() }
 //!
 //!         fn elect(page: PageIndex) -> Result<BoundedSupportsOf<Self>, Self::Error> {
 //!             unimplemented!()
@@ -221,7 +221,7 @@ pub use subsoil::npos_elections::{
 	Support, Supports, VoteWeight,
 };
 /// Re-export the solution generation macro.
-pub use plant_election_provider_solution_type::generate_solution_type;
+pub use plant_election_provider_macros::generate_solution_type;
 pub use topsoil_support::{traits::Get, weights::Weight, BoundedVec, DefaultNoBound};
 pub use traits::NposSolution;
 
@@ -255,6 +255,8 @@ pub mod private {
 
 use private::__OrInvalidIndex;
 
+#[cfg(feature = "runtime-benchmarks")]
+pub mod benchmarking;
 pub mod weights;
 pub use weights::WeightInfo;
 

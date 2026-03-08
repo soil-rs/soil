@@ -25,7 +25,7 @@ use subsoil::npos_elections::ElectionScore;
 use subsoil::runtime::traits::One;
 use subsoil::std::boxed::Box;
 use topsoil_benchmarking::v2::*;
-use plant_election_provider_support::ElectionProvider;
+use plant_election_provider::ElectionProvider;
 use topsoil_support::pallet_prelude::*;
 use topsoil_system::RawOrigin;
 

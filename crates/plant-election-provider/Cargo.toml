@@ -1,12 +1,12 @@
 [package]
-name = "plant-election-provider-support-benchmarking"
-version = "27.0.0"
+name = "plant-election-provider"
+version = "28.0.0"
 authors.workspace = true
 edition.workspace = true
 license.workspace = true
 homepage.workspace = true
 repository.workspace = true
-description = "Benchmarking for election provider support onchain config trait"
+description = "election provider supporting traits"
 
 [lints]
 workspace = true
@@ -16,23 +16,36 @@ targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
 codec = { features = ["derive"], workspace = true }
+plant-election-provider-macros = { workspace = true, default-features = true }
 topsoil-benchmarking = { optional = true, workspace = true }
-plant-election-provider-support = { workspace = true }
+topsoil-support = { workspace = true }
 topsoil-system = { workspace = true }
+scale-info = { features = ["derive"], workspace = true }
 subsoil = { workspace = true }
+
+
+[dev-dependencies]
+rand = { features = ["small_rng"], workspace = true, default-features = true }
 
 [features]
 default = ["std"]
+fuzz = ["default"]
 std = [
 	"codec/std",
 	"topsoil-benchmarking?/std",
-	"plant-election-provider-support/std",
+	"topsoil-support/std",
 	"topsoil-system/std",
+	"scale-info/std",
 	"subsoil/std",
 ]
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",
-	"plant-election-provider-support/runtime-benchmarks",
+	"topsoil-support/runtime-benchmarks",
 	"topsoil-system/runtime-benchmarks",
 	"subsoil/runtime-benchmarks",
+]
+try-runtime = [
+	"topsoil-support/try-runtime",
+	"topsoil-system/try-runtime",
+	"subsoil/try-runtime",
 ]

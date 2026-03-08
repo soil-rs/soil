@@ -211,7 +211,7 @@ use subsoil::runtime::{
 	SaturatedConversion,
 };
 use subsoil::std::{borrow::ToOwned, boxed::Box, prelude::*};
-use plant_election_provider_support::{
+use plant_election_provider::{
 	onchain, BoundedSupportsOf, DataProviderBounds, ElectionDataProvider, ElectionProvider,
 	InstantElectionProvider,
 };
@@ -1565,7 +1565,7 @@ impl<T: Config> Pallet<T> {
 	/// anything. If so, it will re-collect the associated snapshot page and do the fallback. Else,
 	/// it will early return without touching the snapshot.
 	fn fallback_for_page(page: PageIndex) -> Result<BoundedSupportsOf<Self>, ElectionError<T>> {
-		use plant_election_provider_support::InstantElectionProvider;
+		use plant_election_provider::InstantElectionProvider;
 		let (voters, targets, desired_targets) = if T::Fallback::bother() {
 			(
 				Snapshot::<T>::voters(page).ok_or(ElectionError::Other("snapshot!"))?,
@@ -2034,7 +2034,7 @@ impl<T: Config> ElectionProvider for Pallet<T> {
 mod phase_rotation {
 	use super::{Event, *};
 	use crate::{mock::*, verifier::Status, Phase};
-	use plant_election_provider_support::ElectionProvider;
+	use plant_election_provider::ElectionProvider;
 	use topsoil_support::assert_ok;
 
 	#[test]
@@ -2753,7 +2753,7 @@ mod election_provider {
 		verifier::{AsynchronousVerifier, Status, Verifier},
 		Phase,
 	};
-	use plant_election_provider_support::{BoundedSupport, BoundedSupports, ElectionProvider};
+	use plant_election_provider::{BoundedSupport, BoundedSupports, ElectionProvider};
 	use topsoil_support::{
 		assert_storage_noop, testing_prelude::bounded_vec, unsigned::ValidateUnsigned,
 	};

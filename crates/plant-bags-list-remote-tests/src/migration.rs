@@ -48,7 +48,7 @@ pub async fn execute<Runtime, Block>(
 		let pre_migrate_nominator_count = <Nominators<Runtime>>::iter().count() as u32;
 		log::info!(target: LOG_TARGET, "Nominator count: {}", pre_migrate_nominator_count);
 
-		use plant_election_provider_support::SortedListProvider;
+		use plant_election_provider::SortedListProvider;
 		// run the actual migration
 		let moved = <Runtime as plant_staking::Config>::VoterList::unsafe_regenerate(
 			plant_staking::Nominators::<Runtime>::iter().map(|(n, _)| n),

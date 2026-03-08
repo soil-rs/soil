@@ -48,7 +48,7 @@ use subsoil::runtime::{
 	traits::{BlakeTwo256, IdentityLookup},
 	BuildStorage, PerU16, Perbill,
 };
-use plant_election_provider_support::{
+use plant_election_provider::{
 	bounds::{ElectionBounds, ElectionBoundsBuilder},
 	InstantElectionProvider, NposSolution, SequentialPhragmen,
 };
@@ -79,7 +79,7 @@ topsoil_support::construct_runtime!(
 	}
 );
 
-plant_election_provider_support::generate_solution_type!(
+plant_election_provider::generate_solution_type!(
 	pub struct TestNposSolution::<
 		VoterIndex = VoterIndex,
 		TargetIndex = TargetIndex,

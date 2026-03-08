@@ -116,7 +116,7 @@ pub mod embed;
 ///
 /// Including this macro in the context where there is no "std" feature and the code is not
 /// compiled to wasm can lead to cryptic linking errors.
-pub use subsoil_derive::runtime_version;
+pub use subsoil_macros::runtime_version;
 
 /// The identity of a particular API interface that the runtime might provide.
 ///
@@ -700,7 +700,7 @@ fn has_api_with<P: Fn(u32) -> bool>(apis: &ApisVec, id: &ApiId, predicate: P) ->
 
 /// Returns the version of the `Core` runtime api.
 pub fn core_version_from_apis(apis: &ApisVec) -> Option<u32> {
-	let id = subsoil_derive::blake2b_64!(b"Core");
+	let id = subsoil_macros::blake2b_64!(b"Core");
 	apis.iter().find(|(s, _v)| s == &id).map(|(_s, v)| *v)
 }
 

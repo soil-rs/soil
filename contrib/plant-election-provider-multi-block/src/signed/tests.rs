@@ -24,7 +24,7 @@ use crate::{
 };
 use subsoil::core::bounded_vec;
 use subsoil::npos_elections::ElectionScore;
-use plant_election_provider_support::{ElectionProvider, NposSolution};
+use plant_election_provider::{ElectionProvider, NposSolution};
 use topsoil_support::storage::unhashed;
 
 pub type T = Runtime;

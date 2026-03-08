@@ -30,7 +30,7 @@ use subsoil::runtime::{
 	},
 	ArithmeticError, DispatchResult, Perbill, Percent,
 };
-use plant_election_provider_support::{
+use plant_election_provider::{
 	bounds::{CountBound, SizeBound},
 	data_provider, BoundedSupportsOf, DataProviderBounds, ElectionDataProvider, ElectionProvider,
 	PageIndex, ScoreProvider, SortedListProvider, TryFromOtherBounds, VoteWeight, VoterOf,
@@ -748,7 +748,7 @@ impl<T: Config> Pallet<T> {
 		supports: BoundedSupportsOf<T::ElectionProvider>,
 	) -> BoundedVec<(T::AccountId, Exposure<T::AccountId, BalanceOf<T>>), MaxWinnersOf<T>> {
 		let total_issuance = asset::total_issuance::<T>();
-		let to_currency = |e: plant_election_provider_support::ExtendedBalance| {
+		let to_currency = |e: plant_election_provider::ExtendedBalance| {
 			T::CurrencyToVote::to_currency(e, total_issuance)
 		};
 

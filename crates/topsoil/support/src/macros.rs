@@ -183,7 +183,7 @@ macro_rules! parameter_types {
 		impl< $($ty_params),* > $name< $($ty_params),* > {
 			/// Returns the key for this parameter type.
 			pub fn key() -> [u8; 16] {
-				$crate::__private::subsoil_derive::twox_128!(b":", $name, b":")
+				$crate::__private::subsoil_macros::twox_128!(b":", $name, b":")
 			}
 
 			/// Set the value of this parameter type in the storage.

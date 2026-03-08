@@ -322,7 +322,7 @@ use subsoil::runtime::{
 	traits::{AtLeast32BitUnsigned, Convert, StaticLookup, Zero},
 	Debug, Perbill, Perquintill, Rounding, Saturating,
 };
-use plant_election_provider_support::ElectionProvider;
+use plant_election_provider::ElectionProvider;
 use topsoil_support::{
 	defensive, defensive_assert,
 	traits::{

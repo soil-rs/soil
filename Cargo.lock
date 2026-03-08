@@ -3356,7 +3356,7 @@ version = "28.0.0"
 dependencies = [
  "chrono",
  "num-format",
- "plant-election-provider-support",
+ "plant-election-provider",
  "plant-staking",
  "subsoil",
  "topsoil-support",
@@ -6624,7 +6624,7 @@ dependencies = [
  "docify",
  "log",
  "parity-scale-codec",
- "plant-election-provider-support",
+ "plant-election-provider",
  "scale-info",
  "subsoil",
  "topsoil-balances",
@@ -6639,7 +6639,7 @@ version = "4.0.0-dev"
 dependencies = [
  "honggfuzz",
  "plant-bags-list",
- "plant-election-provider-support",
+ "plant-election-provider",
 ]
 
 [[package]]
@@ -6649,7 +6649,7 @@ dependencies = [
  "frame-remote-externalities",
  "log",
  "plant-bags-list",
- "plant-election-provider-support",
+ "plant-election-provider",
  "plant-staking",
  "subsoil",
  "topsoil-support",
@@ -6779,7 +6779,7 @@ version = "1.0.0"
 dependencies = [
  "log",
  "parity-scale-codec",
- "plant-election-provider-support",
+ "plant-election-provider",
  "plant-nomination-pools",
  "plant-staking",
  "plant-staking-reward-curve",
@@ -6837,6 +6837,20 @@ dependencies = [
 ]
 
 [[package]]
+name = "plant-election-provider"
+version = "28.0.0"
+dependencies = [
+ "parity-scale-codec",
+ "plant-election-provider-macros",
+ "rand 0.8.5",
+ "scale-info",
+ "subsoil",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
 name = "plant-election-provider-e2e-test"
 version = "1.0.0"
 dependencies = [
@@ -6845,8 +6859,8 @@ dependencies = [
  "parking_lot 0.12.5",
  "plant-bags-list",
  "plant-delegated-staking",
+ "plant-election-provider",
  "plant-election-provider-multi-phase",
- "plant-election-provider-support",
  "plant-nomination-pools",
  "plant-staking",
  "scale-info",
@@ -6859,13 +6873,29 @@ dependencies = [
 ]
 
 [[package]]
+name = "plant-election-provider-macros"
+version = "13.0.0"
+dependencies = [
+ "parity-scale-codec",
+ "plant-election-provider",
+ "proc-macro-crate 3.4.0",
+ "proc-macro2",
+ "quote",
+ "scale-info",
+ "subsoil",
+ "syn 2.0.117",
+ "topsoil-support",
+ "trybuild",
+]
+
+[[package]]
 name = "plant-election-provider-multi-block"
 version = "0.9.0"
 dependencies = [
  "log",
  "parity-scale-codec",
  "parking_lot 0.12.5",
- "plant-election-provider-support",
+ "plant-election-provider",
  "rand 0.8.5",
  "scale-info",
  "subsoil",
@@ -6884,7 +6914,7 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "parking_lot 0.12.5",
- "plant-election-provider-support",
+ "plant-election-provider",
  "rand 0.8.5",
  "scale-info",
  "strum 0.26.3",
@@ -6897,53 +6927,13 @@ dependencies = [
 ]
 
 [[package]]
-name = "plant-election-provider-solution-type"
-version = "13.0.0"
-dependencies = [
- "parity-scale-codec",
- "plant-election-provider-support",
- "proc-macro-crate 3.4.0",
- "proc-macro2",
- "quote",
- "scale-info",
- "subsoil",
- "syn 2.0.117",
- "topsoil-support",
- "trybuild",
-]
-
-[[package]]
-name = "plant-election-provider-support"
-version = "28.0.0"
-dependencies = [
- "parity-scale-codec",
- "plant-election-provider-solution-type",
- "rand 0.8.5",
- "scale-info",
- "subsoil",
- "topsoil-support",
- "topsoil-system",
-]
-
-[[package]]
-name = "plant-election-provider-support-benchmarking"
-version = "27.0.0"
-dependencies = [
- "parity-scale-codec",
- "plant-election-provider-support",
- "subsoil",
- "topsoil-benchmarking",
- "topsoil-system",
-]
-
-[[package]]
 name = "plant-election-solution-type-fuzzer"
 version = "2.0.0-alpha.5"
 dependencies = [
  "honggfuzz",
  "parity-scale-codec",
- "plant-election-provider-solution-type",
- "plant-election-provider-support",
+ "plant-election-provider",
+ "plant-election-provider-macros",
  "subsoil",
  "topsoil-support",
 ]
@@ -7076,7 +7066,7 @@ dependencies = [
  "docify",
  "log",
  "parity-scale-codec",
- "plant-election-provider-support",
+ "plant-election-provider",
  "plant-staking",
  "plant-staking-reward-curve",
  "scale-info",
@@ -7351,7 +7341,7 @@ dependencies = [
  "parity-scale-codec",
  "plant-bags-list",
  "plant-delegated-staking",
- "plant-election-provider-support",
+ "plant-election-provider",
  "plant-nomination-pools",
  "plant-staking",
  "plant-staking-reward-curve",
@@ -7561,7 +7551,7 @@ name = "plant-root-offences"
 version = "25.0.0"
 dependencies = [
  "parity-scale-codec",
- "plant-election-provider-support",
+ "plant-election-provider",
  "plant-staking",
  "plant-staking-reward-curve",
  "scale-info",
@@ -7660,7 +7650,7 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "plant-bags-list",
- "plant-election-provider-support",
+ "plant-election-provider",
  "plant-staking-reward-curve",
  "rand_chacha 0.3.1",
  "scale-info",
@@ -10063,7 +10053,7 @@ dependencies = [
  "regex",
  "serde",
  "serde_json",
- "soil-chain-spec-derive",
+ "soil-chain-spec-macros",
  "soil-client",
  "soil-network",
  "soil-telemetry",
@@ -10073,7 +10063,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "soil-chain-spec-derive"
+name = "soil-chain-spec-macros"
 version = "11.0.0"
 dependencies = [
  "proc-macro-crate 3.4.0",
@@ -10159,7 +10149,7 @@ dependencies = [
  "strum 0.26.3",
  "subsoil",
  "subsoil-crypto-hashing",
- "subsoil-derive",
+ "subsoil-macros",
  "substrate-prometheus-endpoint",
  "sysinfo",
  "tempfile",
@@ -10642,7 +10632,7 @@ dependencies = [
  "soil-test-node-runtime-client",
  "subsoil",
  "subsoil-crypto-hashing",
- "subsoil-derive",
+ "subsoil-macros",
  "substrate-wasm-builder",
  "topsoil-babe",
  "topsoil-balances",
@@ -10890,10 +10880,8 @@ dependencies = [
  "plant-democracy",
  "plant-dev-mode",
  "plant-dummy-dim",
+ "plant-election-provider",
  "plant-election-provider-multi-phase",
- "plant-election-provider-solution-type",
- "plant-election-provider-support",
- "plant-election-provider-support-benchmarking",
  "plant-elections-phragmen",
  "plant-fast-unstake",
  "plant-glutton",
@@ -10955,14 +10943,14 @@ dependencies = [
  "rand_pcg",
  "scale-info",
  "serde_json",
- "soil-chain-spec-derive",
+ "soil-chain-spec-macros",
  "soil-statement-store",
  "soil-test-staging-node-primitives",
  "soil-transaction-storage-proof",
  "static_assertions",
  "subsoil",
  "subsoil-crypto-hashing",
- "subsoil-derive",
+ "subsoil-macros",
  "substrate-bip39",
  "substrate-wasm-builder",
  "topsoil",
@@ -10984,7 +10972,7 @@ dependencies = [
  "topsoil-session-benchmarking",
  "topsoil-support",
  "topsoil-support-procedural",
- "topsoil-support-procedural-tools-derive",
+ "topsoil-support-procedural-tools-macros",
  "topsoil-system",
  "topsoil-system-benchmarking",
  "topsoil-system-rpc-runtime-api",
@@ -11369,7 +11357,7 @@ dependencies = [
  "static_assertions",
  "strum 0.26.3",
  "subsoil-crypto-hashing",
- "subsoil-derive",
+ "subsoil-macros",
  "substrate-bip39",
  "substrate-prometheus-endpoint",
  "thiserror 1.0.69",
@@ -11398,12 +11386,12 @@ dependencies = [
  "digest 0.10.7",
  "sha2 0.10.9",
  "sha3",
- "subsoil-derive",
+ "subsoil-macros",
  "twox-hash 1.6.3",
 ]
 
 [[package]]
-name = "subsoil-derive"
+name = "subsoil-macros"
 version = "0.1.0"
 dependencies = [
  "Inflector",
@@ -12304,7 +12292,7 @@ version = "28.0.0"
 dependencies = [
  "log",
  "parity-scale-codec",
- "plant-election-provider-support",
+ "plant-election-provider",
  "plant-staking",
  "plant-staking-reward-curve",
  "scale-info",
@@ -12341,7 +12329,7 @@ version = "28.0.0"
 dependencies = [
  "log",
  "parity-scale-codec",
- "plant-election-provider-support",
+ "plant-election-provider",
  "plant-staking",
  "plant-staking-reward-curve",
  "scale-info",
@@ -12432,7 +12420,7 @@ dependencies = [
  "finality-grandpa",
  "log",
  "parity-scale-codec",
- "plant-election-provider-support",
+ "plant-election-provider",
  "plant-staking",
  "plant-staking-reward-curve",
  "scale-info",
@@ -12482,7 +12470,7 @@ version = "28.0.0"
 dependencies = [
  "log",
  "parity-scale-codec",
- "plant-election-provider-support",
+ "plant-election-provider",
  "plant-staking",
  "plant-staking-reward-curve",
  "scale-info",
@@ -12535,7 +12523,7 @@ name = "topsoil-session-benchmarking"
 version = "28.0.0"
 dependencies = [
  "parity-scale-codec",
- "plant-election-provider-support",
+ "plant-election-provider",
  "plant-staking",
  "plant-staking-reward-curve",
  "rand 0.8.5",
@@ -12572,7 +12560,7 @@ dependencies = [
  "serde_json",
  "subsoil",
  "subsoil-crypto-hashing",
- "subsoil-derive",
+ "subsoil-macros",
  "topsoil-support-procedural",
  "topsoil-system",
  "tt-call",
@@ -12613,11 +12601,11 @@ dependencies = [
  "proc-macro2",
  "quote",
  "syn 2.0.117",
- "topsoil-support-procedural-tools-derive",
+ "topsoil-support-procedural-tools-macros",
 ]
 
 [[package]]
-name = "topsoil-support-procedural-tools-derive"
+name = "topsoil-support-procedural-tools-macros"
 version = "11.0.0"
 dependencies = [
  "proc-macro2",

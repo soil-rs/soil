@@ -112,7 +112,7 @@ mod pallet {
 		type OffchainRepeat: Get<BlockNumberFor<Self>>;
 
 		/// The solver used in hte offchain worker miner
-		type OffchainSolver: plant_election_provider_support::NposSolver<
+		type OffchainSolver: plant_election_provider::NposSolver<
 			AccountId = Self::AccountId,
 		>;
 
@@ -371,7 +371,7 @@ mod pallet {
 
 #[cfg(test)]
 mod validate_unsigned {
-	use plant_election_provider_support::Support;
+	use plant_election_provider::Support;
 	use topsoil_support::{
 		pallet_prelude::InvalidTransaction,
 		unsigned::{TransactionSource, TransactionValidityError, ValidateUnsigned},

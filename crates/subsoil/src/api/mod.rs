@@ -254,7 +254,7 @@ use ::std::cell::RefCell;
 ///
 /// - Usage of `deprecated` attribute will propagate deprecation information to the metadata.
 /// - For general usage examples of `deprecated` attribute please refer to <https://doc.rust-lang.org/nightly/reference/attributes/diagnostics.html#the-deprecated-attribute>
-pub use subsoil_derive::decl_runtime_apis;
+pub use subsoil_macros::decl_runtime_apis;
 
 /// Tags given trait implementations as runtime apis.
 ///
@@ -406,7 +406,7 @@ pub use subsoil_derive::decl_runtime_apis;
 ///  // impl skipped
 /// }
 /// ```
-pub use subsoil_derive::impl_runtime_apis;
+pub use subsoil_macros::impl_runtime_apis;
 
 /// Mocks given trait implementations as runtime apis.
 ///
@@ -512,7 +512,7 @@ pub use subsoil_derive::impl_runtime_apis;
 ///
 /// # fn main() {}
 /// ```
-pub use subsoil_derive::mock_impl_runtime_apis;
+pub use subsoil_macros::mock_impl_runtime_apis;
 
 /// A type that records all accessed trie nodes and generates a proof out of it.
 #[cfg(feature = "std")]

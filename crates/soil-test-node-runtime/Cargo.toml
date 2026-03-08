@@ -29,7 +29,7 @@ topsoil-utility = { workspace = true }
 soil-service = { optional = true, workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 subsoil-crypto-hashing = { workspace = true }
-subsoil-derive = { workspace = true }
+subsoil-macros = { workspace = true }
 soil-statement-store = { workspace = true }
 subsoil = { features = ["serde"], workspace = true }
 trie-db = { workspace = true }

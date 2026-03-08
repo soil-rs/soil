@@ -32,7 +32,7 @@ use remote_externalities::{Builder, Mode, OnlineConfig};
 use subsoil::core::{ConstU32, H256};
 use subsoil::npos_elections::BalancingConfig;
 use subsoil::runtime::{Perbill, Weight};
-use plant_election_provider_support::generate_solution_type;
+use plant_election_provider::generate_solution_type;
 use topsoil_support::{
 	traits::Get,
 	weights::constants::{WEIGHT_PROOF_SIZE_PER_MB, WEIGHT_REF_TIME_PER_SECOND},
@@ -133,7 +133,7 @@ pub struct HackyGetSnapshot<T: MinerConfig>(PhantomData<T>);
 
 type UntypedSnapshotOf<T> = RoundSnapshot<
 	<T as MinerConfig>::AccountId,
-	plant_election_provider_support::Voter<
+	plant_election_provider::Voter<
 		<T as MinerConfig>::AccountId,
 		<T as MinerConfig>::MaxVotesPerVoter,
 	>,
@@ -170,7 +170,7 @@ impl Get<Option<BalancingConfig>> for Balancing {
 		Some(BalancingConfig { iterations: 10, tolerance: 0 })
 	}
 }
-pub type SolverOf<T> = plant_election_provider_support::SequentialPhragmen<
+pub type SolverOf<T> = plant_election_provider::SequentialPhragmen<
 	<T as MinerConfig>::AccountId,
 	Perbill,
 	Balancing,

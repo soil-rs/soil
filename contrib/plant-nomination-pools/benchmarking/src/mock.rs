@@ -20,7 +20,7 @@ use subsoil::runtime::{
 	traits::{Convert, IdentityLookup},
 	BuildStorage, FixedU128, Perbill,
 };
-use plant_election_provider_support::VoteWeight;
+use plant_election_provider::VoteWeight;
 use topsoil_support::{
 	derive_impl,
 	pallet_prelude::*,
@@ -85,7 +85,7 @@ impl plant_staking::Config for Runtime {
 	type AdminOrigin = topsoil_system::EnsureRoot<Self::AccountId>;
 	type EraPayout = plant_staking::ConvertCurve<RewardCurve>;
 	type ElectionProvider =
-		plant_election_provider_support::NoElection<(AccountId, BlockNumber, Staking, (), ())>;
+		plant_election_provider::NoElection<(AccountId, BlockNumber, Staking, (), ())>;
 	type GenesisElectionProvider = Self::ElectionProvider;
 	type VoterList = VoterList;
 	type TargetList = plant_staking::UseValidatorsMap<Self>;

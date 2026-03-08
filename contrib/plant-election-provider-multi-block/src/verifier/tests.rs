@@ -27,7 +27,7 @@ use crate::{
 use subsoil::core::bounded_vec;
 use subsoil::npos_elections::ElectionScore;
 use subsoil::runtime::{traits::Bounded, PerU16};
-use plant_election_provider_support::Support;
+use plant_election_provider::Support;
 use topsoil_support::{assert_noop, assert_ok};
 
 mod feasibility_check {
@@ -212,7 +212,7 @@ mod feasibility_check {
 			assert_noop!(
 				VerifierPallet::feasibility_check_page_inner(faulty_page, 0),
 				FeasibilityError::NposElection(
-					plant_election_provider_support::Error::DuplicateVoter
+					plant_election_provider::Error::DuplicateVoter
 				),
 			);
 		});
@@ -233,7 +233,7 @@ mod feasibility_check {
 			assert_noop!(
 				VerifierPallet::feasibility_check_page_inner(faulty_page, 0),
 				FeasibilityError::NposElection(
-					plant_election_provider_support::Error::DuplicateTarget
+					plant_election_provider::Error::DuplicateTarget
 				),
 			);
 		});
@@ -1050,7 +1050,7 @@ mod multi_page_sync_verification {
 	fn invalid_second_page() {
 		ExtBuilder::mock_signed().build_and_execute(|| {
 			// A solution that where the second validated page is invalid.
-			use plant_election_provider_support::traits::NposSolution;
+			use plant_election_provider::traits::NposSolution;
 			roll_to_snapshot_created();
 			let mut paged = mine_solution(2).unwrap();
 			paged.solution_pages.last_mut().map(|p| p.corrupt());

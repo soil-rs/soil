@@ -18,11 +18,6 @@
 //! Offences pallet benchmarking.
 
 use alloc::{vec, vec::Vec};
-use subsoil::staking::offence::ReportOffence;
-use subsoil::runtime::{
-	traits::{Convert, Saturating, StaticLookup},
-	Perbill,
-};
 use topsoil_babe::EquivocationOffence as BabeEquivocationOffence;
 use topsoil_balances::Config as BalancesConfig;
 use topsoil_benchmarking::v2::*;
@@ -38,7 +33,14 @@ use plant_staking::{
 	Config as StakingConfig, Exposure, IndividualExposure, MaxNominationsOf, Pallet as Staking,
 	RewardDestination, ValidatorPrefs,
 };
-use topsoil_support::traits::Get;
+use topsoil_support::{
+	runtime::{
+		traits::{Convert, Saturating, StaticLookup},
+		Perbill,
+	},
+	subsoil::staking::offence::ReportOffence,
+	traits::Get,
+};
 use topsoil_system::{Config as SystemConfig, Pallet as System, RawOrigin};
 
 const SEED: u32 = 0;

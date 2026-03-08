@@ -62,7 +62,7 @@ use subsoil::io::MultiRemovalResults;
 use subsoil::npos_elections::ElectionScore;
 use subsoil::runtime::{traits::Saturating, Perbill};
 use subsoil::std::prelude::*;
-use plant_election_provider_support::PageIndex;
+use plant_election_provider::PageIndex;
 use topsoil_support::{
 	dispatch::DispatchResultWithPostInfo,
 	pallet_prelude::{StorageDoubleMap, ValueQuery, *},

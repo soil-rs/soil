@@ -48,7 +48,7 @@ use plant_election_provider_multi_phase::{
 	unsigned::MinerConfig, Call, CurrentPhase, ElectionCompute, GeometricDepositBase,
 	QueuedSolution, SolutionAccuracyOf,
 };
-use plant_election_provider_support::{
+use plant_election_provider::{
 	bounds::ElectionBoundsBuilder, onchain, ElectionDataProvider, ExtendedBalance,
 	SequentialPhragmen, Weight,
 };
@@ -154,7 +154,7 @@ impl topsoil_session::historical::Config for Runtime {
 	type FullIdentificationOf = plant_staking::UnitIdentificationOf<Self>;
 }
 
-plant_election_provider_support::generate_solution_type!(
+plant_election_provider::generate_solution_type!(
 	#[compact]
 	pub struct MockNposSolution::<
 		VoterIndex = VoterIndex,
@@ -182,7 +182,7 @@ parameter_types! {
 	pub static MaxVotesPerVoter: u32 = 16;
 	pub static SignedFixedDeposit: Balance = 1;
 	pub static SignedDepositIncreaseFactor: Percent = Percent::from_percent(10);
-	pub static ElectionBounds: plant_election_provider_support::bounds::ElectionBounds = ElectionBoundsBuilder::default()
+	pub static ElectionBounds: plant_election_provider::bounds::ElectionBounds = ElectionBoundsBuilder::default()
 		.voters_count(1_000.into()).targets_count(1_000.into()).build();
 }
 
@@ -207,7 +207,7 @@ impl plant_election_provider_multi_phase::Config for Runtime {
 	type SlashHandler = ();
 	type RewardHandler = ();
 	type DataProvider = Staking;
-	type Fallback = plant_election_provider_support::NoElection<(
+	type Fallback = plant_election_provider::NoElection<(
 		AccountId,
 		BlockNumber,
 		Staking,

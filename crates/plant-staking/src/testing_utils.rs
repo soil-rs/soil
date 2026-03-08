@@ -28,7 +28,7 @@ use topsoil_benchmarking::account;
 use topsoil_system::RawOrigin;
 
 use subsoil::runtime::{traits::StaticLookup, Perbill};
-use plant_election_provider_support::SortedListProvider;
+use plant_election_provider::SortedListProvider;
 use topsoil_support::pallet_prelude::*;
 
 const SEED: u32 = 0;

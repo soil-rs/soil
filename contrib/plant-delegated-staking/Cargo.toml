@@ -20,7 +20,7 @@ scale-info = { features = ["derive"], workspace = true }
 subsoil = { workspace = true }
 
 [dev-dependencies]
-plant-election-provider-support = { workspace = true }
+plant-election-provider = { workspace = true }
 topsoil-balances = { workspace = true, default-features = true }
 plant-nomination-pools = { workspace = true, default-features = true }
 plant-staking = { workspace = true, default-features = true }
@@ -32,7 +32,7 @@ subsoil = { workspace = true, default-features = true }
 default = ["std"]
 std = [
 	"codec/std",
-	"plant-election-provider-support/std",
+	"plant-election-provider/std",
 	"topsoil-support/std",
 	"topsoil-system/std",
 	"log/std",
@@ -44,7 +44,7 @@ std = [
 	"subsoil/std",
 ]
 runtime-benchmarks = [
-	"plant-election-provider-support/runtime-benchmarks",
+	"plant-election-provider/runtime-benchmarks",
 	"topsoil-support/runtime-benchmarks",
 	"topsoil-system/runtime-benchmarks",
 	"topsoil-balances/runtime-benchmarks",
@@ -54,7 +54,7 @@ runtime-benchmarks = [
 	"subsoil/runtime-benchmarks",
 ]
 try-runtime = [
-	"plant-election-provider-support/try-runtime",
+	"plant-election-provider/try-runtime",
 	"topsoil-support/try-runtime",
 	"topsoil-system/try-runtime",
 	"topsoil-balances/try-runtime",

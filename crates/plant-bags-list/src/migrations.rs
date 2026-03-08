@@ -19,7 +19,7 @@
 
 use codec::{Decode, Encode};
 use core::marker::PhantomData;
-use plant_election_provider_support::ScoreProvider;
+use plant_election_provider::ScoreProvider;
 use topsoil_support::traits::OnRuntimeUpgrade;
 
 #[cfg(feature = "try-runtime")]

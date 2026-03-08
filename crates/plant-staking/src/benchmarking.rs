@@ -27,7 +27,7 @@ use subsoil::runtime::{
 	traits::{Bounded, One, StaticLookup, TrailingZeroInput, Zero},
 	Perbill, Percent, Saturating,
 };
-use plant_election_provider_support::{bounds::DataProviderBounds, SortedListProvider};
+use plant_election_provider::{bounds::DataProviderBounds, SortedListProvider};
 use topsoil_support::{
 	pallet_prelude::*,
 	storage::bounded_vec::BoundedVec,

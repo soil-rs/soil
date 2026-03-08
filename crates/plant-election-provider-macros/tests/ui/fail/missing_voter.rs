@@ -15,14 +15,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//! Election provider support pallet benchmarking.
+use plant_election_provider_macros::generate_solution_type;
 
-#![cfg_attr(not(feature = "std"), no_std)]
+generate_solution_type!(pub struct TestSolution::<
+	u16,
+	TargetIndex = u8,
+	Accuracy = Perbill,
+	MaxVoters = ConstU32::<10>,
+>(8));
 
-extern crate alloc;
-
-#[cfg(feature = "runtime-benchmarks")]
-pub mod inner;
-
-#[cfg(feature = "runtime-benchmarks")]
-pub use inner::*;
+fn main() {}

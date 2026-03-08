@@ -17,7 +17,7 @@
 
 use crate::{self as fast_unstake};
 use subsoil::runtime::{traits::IdentityLookup, BuildStorage};
-use plant_election_provider_support::PageIndex;
+use plant_election_provider::PageIndex;
 use topsoil_support::{
 	assert_ok, derive_impl,
 	pallet_prelude::*,
@@ -87,7 +87,7 @@ parameter_types! {
 
 pub struct MockElection;
 
-impl plant_election_provider_support::ElectionProvider for MockElection {
+impl plant_election_provider::ElectionProvider for MockElection {
 	type BlockNumber = BlockNumber;
 	type AccountId = AccountId;
 	type DataProvider = Staking;
@@ -99,7 +99,7 @@ impl plant_election_provider_support::ElectionProvider for MockElection {
 
 	fn elect(
 		_remaining_pages: PageIndex,
-	) -> Result<plant_election_provider_support::BoundedSupportsOf<Self>, Self::Error> {
+	) -> Result<plant_election_provider::BoundedSupportsOf<Self>, Self::Error> {
 		Err(())
 	}
 

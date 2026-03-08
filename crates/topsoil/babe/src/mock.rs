@@ -32,7 +32,7 @@ use subsoil::runtime::{
 	traits::{Header as _, OpaqueKeys},
 	BuildStorage, DispatchError, Perbill,
 };
-use plant_election_provider_support::{
+use plant_election_provider::{
 	bounds::{ElectionBounds, ElectionBoundsBuilder},
 	onchain, SequentialPhragmen,
 };

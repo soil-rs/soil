@@ -29,7 +29,7 @@ use subsoil::runtime::{traits::IdentityLookup, BuildStorage, Perbill};
 use subsoil::staking::{Agent, Stake, StakingInterface};
 use subsoil::core::{ConstBool, U256};
 use subsoil::runtime::traits::Convert;
-use plant_election_provider_support::{
+use plant_election_provider::{
 	bounds::{ElectionBounds, ElectionBoundsBuilder},
 	onchain, SequentialPhragmen,
 };

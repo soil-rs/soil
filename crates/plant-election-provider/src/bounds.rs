@@ -32,7 +32,7 @@
 //! [`ElectionBoundsBuilder`] helps defining the size and count bounds for both voters and targets.
 //!
 //! ```
-//! use plant_election_provider_support::bounds::*;
+//! use plant_election_provider::bounds::*;
 //!
 //! // unbounded limits are never exhausted.
 //! let unbounded = ElectionBoundsBuilder::default().build();

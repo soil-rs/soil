@@ -31,7 +31,7 @@ mod stderr_writer;
 pub(crate) type DefaultLogger = stderr_writer::MakeStderrWriter;
 
 pub use directives::*;
-pub use subsoil_derive::*;
+pub use subsoil_macros::*;
 
 use ::tracing::Subscriber;
 use is_terminal::IsTerminal;

@@ -36,7 +36,7 @@
 //! including its configuration trait, dispatchables, storage items, events and errors.
 //!
 //! This pallet provides an implementation of
-//! [`plant_election_provider_support::SortedListProvider`] and it can typically be used by another
+//! [`plant_election_provider::SortedListProvider`] and it can typically be used by another
 //! pallet via this API.
 //!
 //! ## Overview
@@ -122,7 +122,7 @@ pub mod example {}
 use alloc::{boxed::Box, vec::Vec};
 use codec::FullCodec;
 use subsoil::runtime::traits::{AtLeast32BitUnsigned, Bounded, StaticLookup};
-use plant_election_provider_support::{ScoreProvider, SortedListProvider};
+use plant_election_provider::{ScoreProvider, SortedListProvider};
 use topsoil_support::{
 	traits::Get,
 	weights::{Weight, WeightMeter},
@@ -752,7 +752,7 @@ impl<T: Config<I>, I: 'static> SortedListProvider<T::AccountId> for Pallet<T, I>
 		Self::do_try_state()
 	}
 
-	plant_election_provider_support::runtime_benchmarks_enabled! {
+	plant_election_provider::runtime_benchmarks_enabled! {
 		fn score_update_worst_case(who: &T::AccountId, is_increase: bool) -> Self::Score {
 			use topsoil_support::traits::Get as _;
 			let thresholds = T::BagThresholds::get();
@@ -783,7 +783,7 @@ impl<T: Config<I>, I: 'static> ScoreProvider<T::AccountId> for Pallet<T, I> {
 		Node::<T, I>::get(id).map(|node| node.score())
 	}
 
-	plant_election_provider_support::runtime_benchmarks_or_std_enabled! {
+	plant_election_provider::runtime_benchmarks_or_std_enabled! {
 		fn set_score_of(id: &T::AccountId, new_score: T::Score) {
 			ListNodes::<T, I>::mutate(id, |maybe_node| {
 				if let Some(node) = maybe_node.as_mut() {

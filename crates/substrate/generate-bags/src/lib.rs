@@ -57,7 +57,7 @@ use std::{
 	io::Write,
 	path::{Path, PathBuf},
 };
-use plant_election_provider_support::VoteWeight;
+use plant_election_provider::VoteWeight;
 use topsoil_support::traits::Get;
 
 /// Compute the existential weight for the specified configuration.

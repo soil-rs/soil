@@ -17,6 +17,6 @@ name = "bags-list"
 path = "src/main.rs"
 
 [dependencies]
-plant-election-provider-support = { features = ["fuzz"], workspace = true, default-features = true }
+plant-election-provider = { features = ["fuzz"], workspace = true, default-features = true }
 honggfuzz = { workspace = true }
 plant-bags-list = { features = ["fuzz"], workspace = true, default-features = true }

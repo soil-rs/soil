@@ -25,7 +25,7 @@ rand = { workspace = true, optional = true }
 rand_pcg = { workspace = true, optional = true }
 scale-info = { features = ["derive", "serde"], workspace = true }
 serde_json = { features = ["alloc", "arbitrary_precision"], workspace = true }
-subsoil-derive = { workspace = true }
+subsoil-macros = { workspace = true }
 static_assertions = { workspace = true, default-features = true }
 
 # pallet-asset-conversion: turn on "num-traits" feature
@@ -35,13 +35,12 @@ primitive-types = { features = ["codec", "num-traits", "scale-info"], workspace 
 topsoil = { workspace = true }
 topsoil-benchmarking = { workspace = true }
 topsoil-benchmarking-pallet-pov = { workspace = true }
-plant-election-provider-solution-type = { workspace = true }
-plant-election-provider-support = { workspace = true }
+plant-election-provider = { workspace = true }
 topsoil-executive = { workspace = true }
 plant-metadata-hash-extension = { workspace = true }
 topsoil-support = { features = ["tuples-96"], workspace = true }
 topsoil-support-procedural = { workspace = true }
-topsoil-support-procedural-tools-derive = { workspace = true }
+topsoil-support-procedural-tools-macros = { workspace = true }
 topsoil-system = { workspace = true }
 topsoil-system-benchmarking = { workspace = true }
 topsoil-system-rpc-runtime-api = { workspace = true }
@@ -77,7 +76,6 @@ plant-democracy = { workspace = true }
 plant-dev-mode = { workspace = true }
 plant-dummy-dim = { workspace = true }
 plant-election-provider-multi-phase = { workspace = true }
-plant-election-provider-support-benchmarking = { workspace = true }
 plant-elections-phragmen = { workspace = true }
 plant-fast-unstake = { workspace = true }
 plant-glutton = { workspace = true }
@@ -144,7 +142,7 @@ topsoil-utility = { workspace = true }
 plant-verify-signature = { workspace = true }
 plant-vesting = { workspace = true }
 plant-whitelist = { workspace = true }
-soil-chain-spec-derive = { workspace = true }
+soil-chain-spec-macros = { workspace = true }
 subsoil = { workspace = true }
 subsoil-crypto-hashing = { workspace = true }
 soil-statement-store = { workspace = true }
@@ -166,7 +164,7 @@ std = [
 	"topsoil/std",
 	"topsoil-benchmarking/std",
 	"topsoil-benchmarking-pallet-pov/std",
-	"plant-election-provider-support/std",
+	"plant-election-provider/std",
 	"topsoil-executive/std",
 	"plant-metadata-hash-extension/std",
 	"topsoil-support/std",
@@ -208,7 +206,6 @@ std = [
 	"plant-dev-mode/std",
 	"plant-dummy-dim/std",
 	"plant-election-provider-multi-phase/std",
-	"plant-election-provider-support-benchmarking/std",
 	"plant-elections-phragmen/std",
 	"plant-fast-unstake/std",
 	"plant-glutton/std",
@@ -288,7 +285,7 @@ runtime-benchmarks = [
 	"topsoil/runtime-benchmarks",
 	"topsoil-benchmarking/runtime-benchmarks",
 	"topsoil-benchmarking-pallet-pov/runtime-benchmarks",
-	"plant-election-provider-support/runtime-benchmarks",
+	"plant-election-provider/runtime-benchmarks",
 	"topsoil-support/runtime-benchmarks",
 	"topsoil-system/runtime-benchmarks",
 	"topsoil-system-benchmarking/runtime-benchmarks",
@@ -317,7 +314,6 @@ runtime-benchmarks = [
 	"plant-democracy/runtime-benchmarks",
 	"plant-dummy-dim/runtime-benchmarks",
 	"plant-election-provider-multi-phase/runtime-benchmarks",
-	"plant-election-provider-support-benchmarking/runtime-benchmarks",
 	"plant-elections-phragmen/runtime-benchmarks",
 	"plant-fast-unstake/runtime-benchmarks",
 	"plant-glutton/runtime-benchmarks",
@@ -378,7 +374,7 @@ runtime-benchmarks = [
 try-runtime = [
 	"topsoil/try-runtime",
 	"topsoil-benchmarking-pallet-pov/try-runtime",
-	"plant-election-provider-support/try-runtime",
+	"plant-election-provider/try-runtime",
 	"topsoil-executive/try-runtime",
 	"topsoil-support/try-runtime",
 	"topsoil-system/try-runtime",

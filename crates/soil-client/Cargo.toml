@@ -90,7 +90,7 @@ console = { workspace = true }
 is-terminal = { workspace = true }
 libc = { workspace = true }
 rustc-hash = { workspace = true }
-subsoil-derive = { workspace = true }
+subsoil-macros = { workspace = true }
 tracing-log = { workspace = true, features = ["interest-cache"] }
 tracing-subscriber = { workspace = true, features = ["env-filter", "parking_lot"] }
 # keystore deps

@@ -71,7 +71,7 @@
 //! - `num_votes` * [`Encode::size_hint`] of the `AccountId` type.
 
 use codec::Encode;
-use plant_election_provider_support::{
+use plant_election_provider::{
 	bounds::{DataProviderBounds, SizeBound},
 	ElectionDataProvider, VoterOf,
 };
@@ -176,7 +176,7 @@ mod tests {
 		BoundedVec, MaxNominationsOf,
 	};
 	use subsoil::core::bounded_vec;
-	use plant_election_provider_support::bounds::ElectionBoundsBuilder;
+	use plant_election_provider::bounds::ElectionBoundsBuilder;
 
 	type Voters = BoundedVec<AccountId, MaxNominationsOf<Test>>;
 

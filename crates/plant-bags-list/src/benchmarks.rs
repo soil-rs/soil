@@ -24,7 +24,7 @@ use subsoil::runtime::traits::One;
 use topsoil_benchmarking::v1::{
 	account, benchmarks_instance_pallet, whitelist_account, whitelisted_caller,
 };
-use plant_election_provider_support::ScoreProvider;
+use plant_election_provider::ScoreProvider;
 use topsoil_support::{assert_ok, traits::Get};
 use topsoil_system::RawOrigin as SystemOrigin;
 

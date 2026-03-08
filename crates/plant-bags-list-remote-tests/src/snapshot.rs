@@ -21,7 +21,7 @@ use subsoil::runtime::{
 	traits::{Block as BlockT, Zero},
 	DeserializeOwned,
 };
-use plant_election_provider_support::{
+use plant_election_provider::{
 	bounds::{CountBound, DataProviderBounds},
 	SortedListProvider,
 };
@@ -63,7 +63,7 @@ where
 		.unwrap();
 
 	ext.execute_with(|| {
-		use plant_election_provider_support::ElectionDataProvider;
+		use plant_election_provider::ElectionDataProvider;
 		log::info!(
 			target: crate::LOG_TARGET,
 			"{} nodes in bags list.",

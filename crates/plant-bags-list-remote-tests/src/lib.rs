@@ -18,7 +18,7 @@
 //! Utilities for remote-testing topsoil-bags-list.
 
 use plant_bags_list::Instance1;
-use plant_election_provider_support::ScoreProvider;
+use plant_election_provider::ScoreProvider;
 
 /// A common log target to use.
 pub const LOG_TARGET: &str = "runtime::bags-list::remote-tests";
@@ -50,7 +50,7 @@ pub fn display_and_check_bags<Runtime: RuntimeT<Instance1>>(
 	currency_unit: u64,
 	currency_name: &'static str,
 ) {
-	use plant_election_provider_support::SortedListProvider;
+	use plant_election_provider::SortedListProvider;
 	use topsoil_support::traits::Get;
 
 	let min_nominator_bond = <plant_staking::MinNominatorBond<Runtime>>::get();

@@ -65,7 +65,7 @@ use plant_asset_conversion::{AccountIdConverter, Ascending, Chain, WithFirstAsse
 use plant_asset_conversion_tx_payment::SwapAssetAdapter;
 use plant_broker::{CoreAssignment, CoreIndex, CoretimeInterface, PartsOf57600, TaskId};
 use plant_election_provider_multi_phase::{GeometricDepositBase, SolutionAccuracyOf};
-use plant_election_provider_support::{
+use plant_election_provider::{
 	bounds::{ElectionBounds, ElectionBoundsBuilder},
 	onchain, BalancingConfig, ElectionDataProvider, SequentialPhragmen, VoteWeight,
 };
@@ -791,7 +791,7 @@ parameter_types! {
 		.get(DispatchClass::Normal);
 }
 
-plant_election_provider_support::generate_solution_type!(
+plant_election_provider::generate_solution_type!(
 	#[compact]
 	pub struct NposSolution16::<
 		VoterIndex = u32,
@@ -809,7 +809,7 @@ parameter_types! {
 	pub ElectionBoundsOnChain: ElectionBounds = ElectionBoundsBuilder::default()
 		.voters_count(5_000.into()).targets_count(1_250.into()).build();
 
-	pub MaxNominations: u32 = <NposSolution16 as plant_election_provider_support::NposSolution>::LIMIT as u32;
+	pub MaxNominations: u32 = <NposSolution16 as plant_election_provider::NposSolution>::LIMIT as u32;
 	pub MaxElectingVotersSolution: u32 = 40_000;
 	// The maximum winners that can be elected by the Election pallet which is equivalent to the
 	// maximum active validators the staking pallet can have.
@@ -861,7 +861,7 @@ impl onchain::Config for OnChainSeqPhragmen {
 	type System = Runtime;
 	type Solver = SequentialPhragmen<AccountId, SolutionAccuracyOf<Runtime>>;
 	type DataProvider = Staking;
-	type WeightInfo = plant_election_provider_support::weights::SubstrateWeight<Runtime>;
+	type WeightInfo = plant_election_provider::weights::SubstrateWeight<Runtime>;
 	type Bounds = ElectionBoundsOnChain;
 	type MaxBackersPerWinner = MaxElectingVotersSolution;
 	type MaxWinnersPerPage = MaxActiveValidators;
@@ -2955,7 +2955,7 @@ mod benches {
 		[plant_asset_conversion_tx_payment, AssetConversionTxPayment]
 		[topsoil_transaction_payment, TransactionPayment]
 		[plant_election_provider_multi_phase, ElectionProviderMultiPhase]
-		[plant_election_provider_support_benchmarking, EPSBench::<Runtime>]
+		[plant_election_provider, EPSBench::<Runtime>]
 		[plant_elections_phragmen, Elections]
 		[plant_fast_unstake, FastUnstake]
 		[plant_nis, Nis]
@@ -3551,7 +3551,7 @@ subsoil::api::impl_runtime_apis! {
 			// which is why we need these two lines below.
 			use topsoil_session_benchmarking::Pallet as SessionBench;
 			use topsoil_offences_benchmarking::Pallet as OffencesBench;
-			use plant_election_provider_support_benchmarking::Pallet as EPSBench;
+			use plant_election_provider::benchmarking::Pallet as EPSBench;
 			use topsoil_system_benchmarking::Pallet as SystemBench;
 			use topsoil_system_benchmarking::extensions::Pallet as SystemExtensionsBench;
 			use baseline::Pallet as BaselineBench;
@@ -3577,7 +3577,7 @@ subsoil::api::impl_runtime_apis! {
 			// which is why we need these two lines below.
 			use topsoil_session_benchmarking::Pallet as SessionBench;
 			use topsoil_offences_benchmarking::Pallet as OffencesBench;
-			use plant_election_provider_support_benchmarking::Pallet as EPSBench;
+			use plant_election_provider::benchmarking::Pallet as EPSBench;
 			use topsoil_system_benchmarking::Pallet as SystemBench;
 			use topsoil_system_benchmarking::extensions::Pallet as SystemExtensionsBench;
 			use baseline::Pallet as BaselineBench;
@@ -3590,7 +3590,7 @@ subsoil::api::impl_runtime_apis! {
 				}
 			}
 			impl topsoil_offences_benchmarking::Config for Runtime {}
-			impl plant_election_provider_support_benchmarking::Config for Runtime {}
+			impl plant_election_provider::benchmarking::Config for Runtime {}
 			impl topsoil_system_benchmarking::Config for Runtime {}
 			impl topsoil_transaction_payment::BenchmarkConfig for Runtime {}
 			impl baseline::Config for Runtime {}

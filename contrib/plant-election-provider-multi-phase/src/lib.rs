@@ -23,9 +23,9 @@
 //! ## Phases
 //!
 //! The timeline of pallet is as follows. At each block,
-//! [`plant_election_provider_support::ElectionDataProvider::next_election_prediction`] is used to
+//! [`plant_election_provider::ElectionDataProvider::next_election_prediction`] is used to
 //! estimate the time remaining to the next call to
-//! [`plant_election_provider_support::ElectionProvider::elect`]. Based on this, a phase is chosen.
+//! [`plant_election_provider::ElectionProvider::elect`]. Based on this, a phase is chosen.
 //! The timeline is as follows.
 //!
 //! ```ignore
@@ -191,8 +191,8 @@
 //!
 //! ## Multi-page election support
 //!
-//! The [`plant_election_provider_support::ElectionDataProvider`] and
-//! [`plant_election_provider_support::ElectionProvider`] traits used by this pallet can support a
+//! The [`plant_election_provider::ElectionDataProvider`] and
+//! [`plant_election_provider::ElectionProvider`] traits used by this pallet can support a
 //! multi-page election.
 //!
 //! However, this pallet only supports single-page election and data
@@ -258,7 +258,7 @@ use subsoil::runtime::{
 	},
 	Debug, DispatchError, ModuleError, PerThing, Perbill, SaturatedConversion,
 };
-use plant_election_provider_support::{
+use plant_election_provider::{
 	bounds::{CountBound, ElectionBounds, SizeBound},
 	BoundedSupports, BoundedSupportsOf, ElectionDataProvider, ElectionProvider,
 	InstantElectionProvider, NposSolution, PageIndex,
@@ -594,7 +594,7 @@ pub use pallet::*;
 pub mod pallet {
 	use super::*;
 	use subsoil::runtime::traits::Convert;
-	use plant_election_provider_support::{InstantElectionProvider, NposSolver};
+	use plant_election_provider::{InstantElectionProvider, NposSolver};
 	use topsoil_support::{pallet_prelude::*, traits::EstimateCallFee};
 	use topsoil_system::pallet_prelude::*;
 
@@ -2075,7 +2075,7 @@ mod tests {
 		Phase,
 	};
 	use subsoil::npos_elections::{BalancingConfig, Support};
-	use plant_election_provider_support::bounds::ElectionBoundsBuilder;
+	use plant_election_provider::bounds::ElectionBoundsBuilder;
 	use topsoil_support::{assert_noop, assert_ok};
 
 	#[test]

@@ -27,7 +27,7 @@ use subsoil::runtime::{
 	BuildStorage, Perbill,
 };
 use subsoil::state_machine::BasicExternalities;
-use plant_election_provider_support::{
+use plant_election_provider::{
 	bounds::{ElectionBounds, ElectionBoundsBuilder},
 	onchain, SequentialPhragmen, Weight,
 };

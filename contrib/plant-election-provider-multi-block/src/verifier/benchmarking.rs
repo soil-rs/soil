@@ -21,7 +21,7 @@ use crate::{
 };
 use subsoil::std::prelude::*;
 use topsoil_benchmarking::v2::*;
-use plant_election_provider_support::{ElectionProvider, NposSolution};
+use plant_election_provider::{ElectionProvider, NposSolution};
 use topsoil_support::pallet_prelude::*;
 
 #[benchmarks(where

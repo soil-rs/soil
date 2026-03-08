@@ -23,8 +23,8 @@ path = "src/compact.rs"
 honggfuzz = { workspace = true }
 
 codec = { features = ["derive"], workspace = true }
-plant-election-provider-solution-type = { workspace = true, default-features = true }
-plant-election-provider-support = { workspace = true, default-features = true }
+plant-election-provider-macros = { workspace = true, default-features = true }
+plant-election-provider = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
 # used by generate_solution_type:
 topsoil-support = { workspace = true, default-features = true }

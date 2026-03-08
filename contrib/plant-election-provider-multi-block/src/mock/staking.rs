@@ -19,7 +19,7 @@ use super::{AccountId, MaxVotesPerVoter, Runtime};
 use crate::VoterOf;
 use subsoil::core::bounded_vec;
 use subsoil::std::prelude::*;
-use plant_election_provider_support::{
+use plant_election_provider::{
 	data_provider, DataProviderBounds, ElectionDataProvider, PageIndex, VoteWeight,
 };
 use topsoil_support::pallet_prelude::*;
@@ -136,7 +136,7 @@ impl ElectionDataProvider for MockStaking {
 
 	#[cfg(feature = "runtime-benchmarks")]
 	fn fetch_page(page: PageIndex) {
-		use plant_election_provider_support::ElectionProvider;
+		use plant_election_provider::ElectionProvider;
 		super::MultiBlock::elect(page).unwrap();
 	}
 

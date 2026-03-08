@@ -37,7 +37,7 @@ use subsoil::runtime::{
 	traits::{Convert, Saturating, Zero},
 	Debug, FixedPointNumber, FixedPointOperand, FixedU128, Percent,
 };
-use plant_election_provider_support::NposSolution;
+use plant_election_provider::NposSolution;
 use topsoil_support::traits::{
 	defensive_prelude::*, Currency, Get, OnUnbalanced, ReservableCurrency,
 };
@@ -569,7 +569,7 @@ mod tests {
 		mock::*, CurrentPhase, ElectionCompute, ElectionError, Error, Event, Perbill, Phase, Round,
 	};
 	use subsoil::runtime::Percent;
-	use plant_election_provider_support::bounds::ElectionBoundsBuilder;
+	use plant_election_provider::bounds::ElectionBoundsBuilder;
 	use topsoil_support::{assert_noop, assert_ok, assert_storage_noop};
 
 	#[test]

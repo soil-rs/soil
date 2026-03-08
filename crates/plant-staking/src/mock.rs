@@ -27,7 +27,7 @@ use subsoil::io;
 use subsoil::runtime::{
 	curve::PiecewiseLinear, testing::UintAuthorityId, traits::Zero, BuildStorage,
 };
-use plant_election_provider_support::{
+use plant_election_provider::{
 	bounds::{ElectionBounds, ElectionBoundsBuilder},
 	onchain, BoundedSupports, SequentialPhragmen, Support, VoteWeight,
 };

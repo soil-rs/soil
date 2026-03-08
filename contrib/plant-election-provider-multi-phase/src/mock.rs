@@ -37,7 +37,7 @@ use subsoil::runtime::{
 	traits::{BlakeTwo256, Convert, IdentityLookup},
 	BuildStorage, PerU16, Percent,
 };
-use plant_election_provider_support::{
+use plant_election_provider::{
 	bounds::{DataProviderBounds, ElectionBounds, ElectionBoundsBuilder},
 	data_provider, onchain, ElectionDataProvider, NposSolution, SequentialPhragmen,
 };
@@ -67,7 +67,7 @@ pub(crate) type BlockNumber = u64;
 pub(crate) type VoterIndex = u32;
 pub(crate) type TargetIndex = u16;
 
-plant_election_provider_support::generate_solution_type!(
+plant_election_provider::generate_solution_type!(
 	#[compact]
 	pub struct TestNposSolution::<
 		VoterIndex = VoterIndex,
@@ -433,7 +433,7 @@ impl crate::Config for Runtime {
 	type BenchmarkingConfig = TestBenchmarkingConfig;
 	type Fallback = MockFallback;
 	type GovernanceFallback =
-		plant_election_provider_support::onchain::OnChainExecution<OnChainSeqPhragmen>;
+		plant_election_provider::onchain::OnChainExecution<OnChainSeqPhragmen>;
 	type ForceOrigin = topsoil_system::EnsureRoot<AccountId>;
 	type MaxWinners = MaxWinners;
 	type MaxBackersPerWinner = MaxBackersPerWinner;

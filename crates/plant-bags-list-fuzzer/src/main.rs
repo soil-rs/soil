@@ -29,7 +29,7 @@
 
 use honggfuzz::fuzz;
 use plant_bags_list::mock::{AccountId, BagsList, ExtBuilder};
-use plant_election_provider_support::{SortedListProvider, VoteWeight};
+use plant_election_provider::{SortedListProvider, VoteWeight};
 
 const ID_RANGE: AccountId = 25_000;
 

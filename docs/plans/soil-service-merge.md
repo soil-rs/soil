@@ -7,7 +7,7 @@ Locked standalones for this phase:
 - `soil-cli`
 - `soil-telemetry`
 - `soil-chain-spec`
-- `soil-chain-spec-derive`
+- `soil-chain-spec-macros`
 
 ## Goals
 

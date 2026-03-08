@@ -22,7 +22,7 @@ use rand::{prelude::SliceRandom, rngs::SmallRng, SeedableRng};
 use subsoil::arithmetic::{per_things::Percent, traits::One};
 use subsoil::runtime::InnerOf;
 use topsoil_benchmarking::{v2::*, BenchmarkError};
-use plant_election_provider_support::{bounds::DataProviderBounds, IndexAssignment};
+use plant_election_provider::{bounds::DataProviderBounds, IndexAssignment};
 use topsoil_support::{
 	assert_ok,
 	traits::{Hooks, TryCollect},
