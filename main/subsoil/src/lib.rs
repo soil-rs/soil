@@ -1,3 +1,8 @@
+// This file is part of Soil.
+
+// Copyright (C) Soil contributors.
+// SPDX-License-Identifier: Apache-2.0 OR GPL-3.0-or-later WITH Classpath-exception-2.0
+
 #![cfg_attr(not(feature = "std"), no_std)]
 #![allow(macro_expanded_macro_exports_accessed_by_absolute_paths)]
 

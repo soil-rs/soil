@@ -1,3 +1,8 @@
+// This file is part of Soil.
+
+// Copyright (C) Soil contributors.
+// SPDX-License-Identifier: Apache-2.0 OR GPL-3.0-or-later WITH Classpath-exception-2.0
+
 use soil_client::executor::{common::runtime_blob::RuntimeBlob, WasmExecutor};
 use subsoil::io::TestExternalities;
 

@@ -1,3 +1,8 @@
+// This file is part of Soil.
+
+// Copyright (C) Soil contributors.
+// SPDX-License-Identifier: Apache-2.0 OR GPL-3.0-or-later WITH Classpath-exception-2.0
+
 #[cfg(feature = "bls-experimental")]
 #[path = "application_crypto/bls381.rs"]
 mod bls381;
