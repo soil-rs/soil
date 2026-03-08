@@ -235,58 +235,106 @@ zero-prefixed-literal = { level = "allow", priority = 2 }            # 00_1000_0
 
 [workspace.dependencies]
 
-# Substrate path dependencies
-soil-test-staging-node-spec-builder = { path = "contrib/soil-test-staging-node-spec-builder", default-features = false, package = "soil-test-staging-node-spec-builder" }
-soil = { path = "main/soil", default-features = false }
-soil-fork-tree = { path = "main/soil-fork-tree", default-features = false }
-topsoil = { path = "main/topsoil", default-features = false }
-topsoil-benchmarking = { path = "main/topsoil-benchmarking", default-features = false }
-topsoil-benchmarking-pallet-pov = { default-features = false, path = "main/topsoil-benchmarking-pallet-pov" }
-plant-election-provider-macros = { path = "runtime/plant-election-provider-macros", default-features = false }
-plant-election-provider = { path = "runtime/plant-election-provider", default-features = false }
-topsoil-executive = { path = "main/topsoil-executive", default-features = false }
-plant-metadata-hash-extension = { path = "runtime/plant-metadata-hash-extension", default-features = false }
-topsoil-support = { path = "main/topsoil-support", default-features = false }
-topsoil-support-procedural = { path = "main/topsoil-support-procedural", default-features = false }
-topsoil-support-procedural-tools = { path = "main/topsoil-support-procedural-tools", default-features = false }
-topsoil-support-procedural-tools-macros = { path = "main/topsoil-support-procedural-tools-macros", default-features = false }
-topsoil-test-support = { path = "harness/topsoil-test-support" }
-topsoil-system = { path = "main/topsoil-system", default-features = false }
-topsoil-system-benchmarking = { path = "main/topsoil-system-benchmarking", default-features = false }
-topsoil-system-rpc-runtime-api = { path = "main/topsoil-system-rpc-runtime-api", default-features = false }
-topsoil-try-runtime = { path = "main/topsoil-try-runtime", default-features = false }
+soil = { path = "main/soil", version = "0.2.0", default-features = false }
+soil-aura = { path = "main/soil-aura", version = "0.2.0", default-features = false }
+soil-babe = { path = "main/soil-babe", version = "0.2.0", default-features = false }
+soil-beefy = { path = "main/soil-beefy", version = "0.2.0", default-features = false }
+soil-chain-spec = { path = "main/soil-chain-spec", version = "0.2.0", default-features = false }
+soil-chain-spec-macros = { path = "main/soil-chain-spec-macros", version = "0.2.0", default-features = false }
+soil-cli = { path = "main/soil-cli", version = "0.2.0", default-features = false }
+soil-client = { path = "main/soil-client", version = "0.2.0", default-features = false }
+soil-consensus = { path = "main/soil-consensus", version = "0.2.0", default-features = false }
+soil-fork-tree = { path = "main/soil-fork-tree", version = "0.2.0", default-features = false }
+soil-grandpa = { path = "main/soil-grandpa", version = "0.2.0", default-features = false }
+soil-manual-seal = { path = "main/soil-manual-seal", version = "0.2.0", default-features = false }
+soil-mmr-gadget = { path = "main/soil-mmr-gadget", version = "0.2.0", default-features = false }
+soil-network = { path = "main/soil-network", version = "0.2.0", default-features = false }
+soil-offchain = { path = "main/soil-offchain", version = "0.2.0", default-features = false }
+soil-pow = { path = "main/soil-pow", version = "0.2.0", default-features = false }
+soil-prometheus = { path = "main/soil-prometheus", version = "0.2.0", default-features = false }
+soil-rpc = { path = "main/soil-rpc", version = "0.2.0", default-features = false }
+soil-runtime-utilities = { path = "main/soil-runtime-utilities", version = "0.2.0", default-features = true }
+soil-service = { path = "main/soil-service", version = "0.2.0", default-features = false }
+soil-statement-store = { path = "main/soil-statement-store", version = "0.2.0", default-features = false }
+soil-sync-state-rpc = { path = "main/soil-sync-state-rpc", version = "0.2.0", default-features = false }
+soil-telemetry = { path = "main/soil-telemetry", version = "0.2.0", default-features = false }
+soil-transaction-storage-proof = { path = "main/soil-transaction-storage-proof", version = "0.2.0", default-features = false }
+soil-txpool = { path = "main/soil-txpool", version = "0.2.0", default-features = false }
+subsoil = { path = "main/subsoil", version = "0.2.0", default-features = false }
+subsoil-crypto-hashing = { path = "main/subsoil-crypto-hashing", version = "0.2.0", default-features = false }
+subsoil-macros = { path = "main/subsoil-macros", version = "0.2.0" }
+topsoil = { path = "main/topsoil", version = "0.2.0", default-features = false }
+topsoil-benchmarking = { path = "main/topsoil-benchmarking", version = "0.2.0", default-features = false }
+topsoil-benchmarking-pallet-pov = { default-features = false, path = "main/topsoil-benchmarking-pallet-pov", version = "0.2.0" }
+topsoil-executive = { path = "main/topsoil-executive", version = "0.2.0", default-features = false }
+topsoil-support = { path = "main/topsoil-support", version = "0.2.0", default-features = false }
+topsoil-support-procedural = { path = "main/topsoil-support-procedural", version = "0.2.0", default-features = false }
+topsoil-support-procedural-tools = { path = "main/topsoil-support-procedural-tools", version = "0.2.0", default-features = false }
+topsoil-support-procedural-tools-macros = { path = "main/topsoil-support-procedural-tools-macros", version = "0.2.0", default-features = false }
+topsoil-system = { path = "main/topsoil-system", version = "0.2.0", default-features = false }
+topsoil-system-benchmarking = { path = "main/topsoil-system-benchmarking", version = "0.2.0", default-features = false }
+topsoil-system-rpc-runtime-api = { path = "main/topsoil-system-rpc-runtime-api", version = "0.2.0", default-features = false }
+topsoil-try-runtime = { path = "main/topsoil-try-runtime", version = "0.2.0", default-features = false }
+
+plant-asset-conversion = { path = "runtime/plant-asset-conversion", version = "0.2.0", default-features = false }
+plant-asset-conversion-ops = { path = "runtime/plant-asset-conversion-ops", version = "0.2.0", default-features = false }
+plant-asset-conversion-tx-payment = { path = "runtime/plant-asset-conversion-tx-payment", version = "0.2.0", default-features = false }
+plant-asset-tx-payment = { path = "runtime/plant-asset-tx-payment", version = "0.2.0", default-features = false }
+plant-assets = { path = "runtime/plant-assets", version = "0.2.0", default-features = false }
+plant-aura = { path = "runtime/plant-aura", version = "0.2.0", default-features = false }
+plant-authority-discovery = { path = "runtime/plant-authority-discovery", version = "0.2.0", default-features = false }
+plant-authorship = { path = "runtime/plant-authorship", version = "0.2.0", default-features = false }
+plant-babe = { path = "runtime/plant-babe", version = "0.2.0", default-features = false }
+plant-bags-list = { path = "runtime/plant-bags-list", version = "0.2.0", default-features = false }
+plant-balances = { path = "runtime/plant-balances", version = "0.2.0", default-features = false }
+plant-beefy = { path = "runtime/plant-beefy", version = "0.2.0", default-features = false }
+plant-beefy-mmr = { path = "runtime/plant-beefy-mmr", version = "0.2.0", default-features = false }
+plant-collective = { path = "runtime/plant-collective", version = "0.2.0", default-features = false }
+plant-election-provider = { path = "runtime/plant-election-provider", version = "0.2.0", default-features = false }
+plant-election-provider-macros = { path = "runtime/plant-election-provider-macros", version = "0.2.0", default-features = false }
+plant-grandpa = { path = "runtime/plant-grandpa", version = "0.2.0", default-features = false }
+plant-im-online = { path = "runtime/plant-im-online", version = "0.2.0", default-features = false }
+plant-metadata-hash-extension = { path = "runtime/plant-metadata-hash-extension", version = "0.2.0", default-features = false }
+plant-mmr = { path = "runtime/plant-mmr", version = "0.2.0", default-features = false }
+plant-offences = { path = "runtime/plant-offences", version = "0.2.0", default-features = false }
+plant-session = { path = "runtime/plant-session", version = "0.2.0", default-features = false }
+plant-staking = { path = "runtime/plant-staking", version = "0.2.0", default-features = false }
+plant-staking-macros = { path = "runtime/plant-staking-macros", version = "0.2.0", default-features = false }
+plant-timestamp = { path = "runtime/plant-timestamp", version = "0.2.0", default-features = false }
+plant-transaction-payment = { path = "runtime/plant-transaction-payment", version = "0.2.0", default-features = false }
+plant-transaction-storage = { default-features = false, path = "runtime/plant-transaction-storage", version = "0.2.0" }
+plant-utility = { path = "runtime/plant-utility", version = "0.2.0", default-features = false }
+
 generate-bags = { path = "library/generate-bags", default-features = false }
-soil-test-staging-node-runtime = { path = "contrib/soil-test-staging-node-runtime" }
-soil-mmr-gadget = { path = "main/soil-mmr-gadget", default-features = false }
-soil-test-staging-node-cli = { path = "contrib/soil-test-staging-node-cli", package = "soil-test-staging-node-cli" }
-soil-test-staging-node-inspect = { path = "contrib/soil-test-staging-node-inspect", default-features = false, package = "soil-test-staging-node-inspect" }
-soil-test-staging-node-primitives = { path = "contrib/soil-test-staging-node-primitives", default-features = false }
-soil-test-staging-node-rpc = { path = "contrib/soil-test-staging-node-rpc" }
-soil-test-staging-node-testing = { path = "contrib/soil-test-staging-node-testing" }
+remote-externalities = { path = "library/frame-remote-externalities", default-features = false, package = "frame-remote-externalities" }
+subkey = { path = "library/subkey", default-features = false }
+substrate-build-script-utils = { path = "library/substrate-build-script-utils", default-features = false }
+substrate-frame-rpc-support = { default-features = false, path = "library/substrate-frame-rpc-support" }
+substrate-frame-rpc-system = { path = "library/substrate-frame-rpc-system", default-features = false }
+substrate-wasm-builder = { path = "library/substrate-wasm-builder", default-features = false }
+
+plant-test-bags-list = { path = "harness/plant-test-bags-list" }
+plant-test-root = { path = "harness/plant-test-root", default-features = false }
+soil-test = { path = "harness/soil-test" }
+soil-test-node-client = { path = "harness/soil-test-node-client" }
+soil-test-node-runtime = { path = "harness/soil-test-node-runtime" }
+soil-test-node-runtime-client = { path = "harness/soil-test-node-runtime-client" }
+soil-test-node-runtime-txpool = { path = "harness/soil-test-node-runtime-txpool" }
+soil-test-runtime = { path = "harness/soil-test-runtime" }
+soil-test-runtime-interface-wasm = { path = "harness/soil-test-runtime-interface-wasm" }
+soil-test-runtime-interface-wasm-deprecated = { path = "harness/soil-test-runtime-interface-wasm-deprecated" }
+test-pallet = { path = "harness/topsoil-test-support-pallet", default-features = false, package = "topsoil-test-support-pallet" }
+topsoil-test-support = { path = "harness/topsoil-test-support" }
+
 plant-alliance = { path = "contrib/plant-alliance", default-features = false }
-plant-asset-conversion = { path = "runtime/plant-asset-conversion", default-features = false }
-plant-asset-conversion-ops = { path = "runtime/plant-asset-conversion-ops", default-features = false }
-plant-asset-conversion-tx-payment = { path = "runtime/plant-asset-conversion-tx-payment", default-features = false }
 plant-asset-rate = { path = "contrib/plant-asset-rate", default-features = false }
 plant-asset-rewards = { path = "contrib/plant-asset-rewards", default-features = false }
-plant-asset-tx-payment = { path = "runtime/plant-asset-tx-payment", default-features = false }
-plant-assets = { path = "runtime/plant-assets", default-features = false }
 plant-assets-freezer = { path = "contrib/plant-assets-freezer", default-features = false }
 plant-assets-holder = { path = "contrib/plant-assets-holder", default-features = false }
 plant-atomic-swap = { default-features = false, path = "contrib/plant-atomic-swap" }
-plant-aura = { path = "runtime/plant-aura", default-features = false }
-plant-authority-discovery = { path = "runtime/plant-authority-discovery", default-features = false }
-plant-authorship = { path = "runtime/plant-authorship", default-features = false }
-plant-babe = { path = "runtime/plant-babe", default-features = false }
-plant-bags-list = { path = "runtime/plant-bags-list", default-features = false }
-plant-test-bags-list = { path = "harness/plant-test-bags-list" }
-plant-balances = { path = "runtime/plant-balances", default-features = false }
-plant-beefy = { path = "runtime/plant-beefy", default-features = false }
-plant-beefy-mmr = { path = "runtime/plant-beefy-mmr", default-features = false }
 plant-bounties = { path = "contrib/plant-bounties", default-features = false }
 plant-broker = { path = "contrib/plant-broker", default-features = false }
 plant-child-bounties = { path = "contrib/plant-child-bounties", default-features = false }
-plant-collective = { path = "runtime/plant-collective", default-features = false }
 plant-conviction-voting = { path = "contrib/plant-conviction-voting", default-features = false }
 plant-core-fellowship = { path = "contrib/plant-core-fellowship", default-features = false }
 plant-dap = { path = "contrib/plant-dap", default-features = false }
@@ -308,9 +356,7 @@ plant-example-split = { path = "contrib/plant-examples/split", default-features 
 plant-examples = { path = "contrib/plant-examples" }
 plant-fast-unstake = { path = "contrib/plant-fast-unstake", default-features = false }
 plant-glutton = { path = "contrib/plant-glutton", default-features = false }
-plant-grandpa = { path = "runtime/plant-grandpa", default-features = false }
 plant-identity = { path = "contrib/plant-identity", default-features = false }
-plant-im-online = { path = "runtime/plant-im-online", default-features = false }
 plant-indices = { path = "contrib/plant-indices", default-features = false }
 plant-insecure-randomness-collective-flip = { path = "contrib/plant-insecure-randomness-collective-flip", default-features = false }
 plant-lottery = { default-features = false, path = "contrib/plant-lottery" }
@@ -318,7 +364,6 @@ plant-membership = { path = "contrib/plant-membership", default-features = false
 plant-message-queue = { path = "contrib/plant-message-queue", default-features = false }
 plant-meta-tx = { path = "contrib/plant-meta-tx", default-features = false }
 plant-mixnet = { default-features = false, path = "contrib/plant-mixnet" }
-plant-mmr = { path = "runtime/plant-mmr", default-features = false }
 plant-multi-asset-bounties = { path = "contrib/plant-multi-asset-bounties", default-features = false }
 plant-multisig = { path = "contrib/plant-multisig", default-features = false }
 plant-nft-fractionalization = { path = "contrib/plant-nft-fractionalization", default-features = false }
@@ -329,7 +374,6 @@ plant-node-authorization = { default-features = false, path = "contrib/plant-nod
 plant-nomination-pools = { path = "contrib/plant-nomination-pools", default-features = false }
 plant-nomination-pools-benchmarking = { path = "contrib/plant-nomination-pools/benchmarking", default-features = false }
 plant-nomination-pools-runtime-api = { path = "contrib/plant-nomination-pools/runtime-api", default-features = false }
-plant-offences = { path = "runtime/plant-offences", default-features = false }
 plant-oracle = { path = "contrib/plant-honzon/oracle", default-features = false }
 plant-oracle-runtime-api = { path = "contrib/plant-honzon/oracle/runtime-api", default-features = false }
 plant-origin-restriction = { path = "contrib/plant-origin-restriction", default-features = false }
@@ -343,70 +387,29 @@ plant-recovery = { path = "contrib/plant-recovery", default-features = false }
 plant-referenda = { path = "contrib/plant-referenda", default-features = false }
 plant-remark = { default-features = false, path = "contrib/plant-remark" }
 plant-root-offences = { default-features = false, path = "contrib/plant-root-offences" }
-plant-test-root = { path = "harness/plant-test-root", default-features = false }
 plant-safe-mode = { default-features = false, path = "contrib/plant-safe-mode" }
 plant-salary = { path = "contrib/plant-salary", default-features = false }
 plant-scheduler = { path = "contrib/plant-scheduler", default-features = false }
 plant-scored-pool = { default-features = false, path = "contrib/plant-scored-pool" }
-plant-session = { path = "runtime/plant-session", default-features = false }
 plant-society = { path = "contrib/plant-society", default-features = false }
-plant-staking = { path = "runtime/plant-staking", default-features = false }
-plant-staking-macros = { path = "runtime/plant-staking-macros", default-features = false }
 plant-state-trie-migration = { path = "contrib/plant-state-trie-migration", default-features = false }
 plant-statement = { default-features = false, path = "contrib/plant-statement" }
 plant-sudo = { path = "contrib/plant-sudo", default-features = false }
-plant-timestamp = { path = "runtime/plant-timestamp", default-features = false }
 plant-tips = { path = "contrib/plant-tips", default-features = false }
-plant-transaction-payment = { path = "runtime/plant-transaction-payment", default-features = false }
-plant-transaction-storage = { default-features = false, path = "runtime/plant-transaction-storage" }
 plant-treasury = { path = "contrib/plant-treasury", default-features = false }
 plant-tx-pause = { default-features = false, path = "contrib/plant-tx-pause" }
 plant-uniques = { path = "contrib/plant-uniques", default-features = false }
-plant-utility = { path = "runtime/plant-utility", default-features = false }
 plant-verify-signature = { path = "contrib/plant-verify-signature", default-features = false }
 plant-vesting = { path = "contrib/plant-vesting", default-features = false }
 plant-whitelist = { path = "contrib/plant-whitelist", default-features = false }
-soil-prometheus = { path = "main/soil-prometheus", default-features = false }
-remote-externalities = { path = "library/frame-remote-externalities", default-features = false, package = "frame-remote-externalities" }
-soil-chain-spec = { path = "main/soil-chain-spec", default-features = false }
-soil-chain-spec-macros = { path = "main/soil-chain-spec-macros", default-features = false }
-soil-cli = { path = "main/soil-cli", default-features = false }
-soil-client = { path = "main/soil-client", default-features = false }
-soil-consensus = { path = "main/soil-consensus", default-features = false }
-soil-aura = { path = "main/soil-aura", default-features = false }
-soil-babe = { path = "main/soil-babe", default-features = false }
-soil-beefy = { path = "main/soil-beefy", default-features = false }
-soil-grandpa = { path = "main/soil-grandpa", default-features = false }
-soil-manual-seal = { path = "main/soil-manual-seal", default-features = false }
-soil-pow = { path = "main/soil-pow", default-features = false }
-soil-network = { path = "main/soil-network", default-features = false }
-soil-offchain = { path = "main/soil-offchain", default-features = false }
-soil-test = { path = "harness/soil-test" }
-soil-test-runtime = { path = "harness/soil-test-runtime" }
-soil-runtime-utilities = { path = "main/soil-runtime-utilities", default-features = true }
-soil-service = { path = "main/soil-service", default-features = false }
-soil-sync-state-rpc = { path = "main/soil-sync-state-rpc", default-features = false }
-soil-telemetry = { path = "main/soil-telemetry", default-features = false }
-soil-txpool = { path = "main/soil-txpool", default-features = false }
-subsoil = { path = "main/subsoil", default-features = false }
-subsoil-crypto-hashing = { path = "main/subsoil-crypto-hashing", default-features = false }
-subsoil-macros = { path = "main/subsoil-macros" }
-soil-rpc = { path = "main/soil-rpc", default-features = false }
-soil-test-runtime-interface-wasm = { path = "harness/soil-test-runtime-interface-wasm" }
-soil-test-runtime-interface-wasm-deprecated = { path = "harness/soil-test-runtime-interface-wasm-deprecated" }
-soil-statement-store = { path = "main/soil-statement-store", default-features = false }
-soil-transaction-storage-proof = { path = "main/soil-transaction-storage-proof", default-features = false }
-subkey = { path = "library/subkey", default-features = false }
-substrate-build-script-utils = { path = "library/substrate-build-script-utils", default-features = false }
+soil-test-staging-node-cli = { path = "contrib/soil-test-staging-node-cli", package = "soil-test-staging-node-cli" }
 soil-test-staging-node-cli-test-utils = { path = "contrib/soil-test-staging-node-cli-test-utils" }
-substrate-frame-rpc-support = { default-features = false, path = "library/substrate-frame-rpc-support" }
-substrate-frame-rpc-system = { path = "library/substrate-frame-rpc-system", default-features = false }
-soil-test-node-client = { path = "harness/soil-test-node-client" }
-soil-test-node-runtime = { path = "harness/soil-test-node-runtime" }
-soil-test-node-runtime-client = { path = "harness/soil-test-node-runtime-client" }
-soil-test-node-runtime-txpool = { path = "harness/soil-test-node-runtime-txpool" }
-substrate-wasm-builder = { path = "library/substrate-wasm-builder", default-features = false }
-test-pallet = { path = "harness/topsoil-test-support-pallet", default-features = false, package = "topsoil-test-support-pallet" }
+soil-test-staging-node-inspect = { path = "contrib/soil-test-staging-node-inspect", default-features = false, package = "soil-test-staging-node-inspect" }
+soil-test-staging-node-primitives = { path = "contrib/soil-test-staging-node-primitives", default-features = false }
+soil-test-staging-node-rpc = { path = "contrib/soil-test-staging-node-rpc" }
+soil-test-staging-node-runtime = { path = "contrib/soil-test-staging-node-runtime" }
+soil-test-staging-node-spec-builder = { path = "contrib/soil-test-staging-node-spec-builder", default-features = false, package = "soil-test-staging-node-spec-builder" }
+soil-test-staging-node-testing = { path = "contrib/soil-test-staging-node-testing" }
 
 # External dependencies
 Inflector = { version = "0.11.4" }

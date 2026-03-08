@@ -1,7 +1,7 @@
 [package]
 name = "soil-test-node-client"
 description = "Client testing utilities"
-version = "2.0.1"
+version = "0.0.0-dev"
 authors.workspace = true
 edition.workspace = true
 license.workspace = true

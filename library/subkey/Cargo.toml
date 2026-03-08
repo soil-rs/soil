@@ -1,6 +1,7 @@
 [package]
 name = "subkey"
-version = "9.0.0"
+version = "0.0.0-dev"
+publish = false
 authors.workspace = true
 description = "Generate and restore keys for Substrate based chains such as Polkadot, Kusama and a growing number of parachains and Substrate based projects."
 edition.workspace = true

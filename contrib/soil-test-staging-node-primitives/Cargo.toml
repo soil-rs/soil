@@ -1,6 +1,6 @@
 [package]
 name = "soil-test-staging-node-primitives"
-version = "2.0.0"
+version = "0.0.0-dev"
 authors.workspace = true
 description = "Substrate node low-level primitives."
 edition.workspace = true

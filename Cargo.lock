@@ -3135,7 +3135,7 @@ dependencies = [
 
 [[package]]
 name = "frame-remote-externalities"
-version = "0.35.0"
+version = "0.0.0-dev"
 dependencies = [
  "futures",
  "indicatif",
@@ -3345,7 +3345,7 @@ dependencies = [
 
 [[package]]
 name = "generate-bags"
-version = "28.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "chrono",
  "num-format",
@@ -5910,7 +5910,7 @@ checksum = "b93853da6d84c2e3c7d730d6473e8817692dd89be387eb01b94d7f108ecb5b8c"
 
 [[package]]
 name = "node-template-release"
-version = "3.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "clap",
  "flate2",
@@ -6429,7 +6429,7 @@ checksum = "b4596b6d070b27117e987119b4dac604f3c58cfb0b191112e24771b2faeac1a6"
 
 [[package]]
 name = "plant-alliance"
-version = "27.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "array-bytes 6.2.3",
  "log",
@@ -6447,7 +6447,7 @@ dependencies = [
 
 [[package]]
 name = "plant-asset-conversion"
-version = "10.0.0"
+version = "0.2.0"
 dependencies = [
  "log",
  "parity-scale-codec",
@@ -6463,7 +6463,7 @@ dependencies = [
 
 [[package]]
 name = "plant-asset-conversion-ops"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "log",
  "parity-scale-codec",
@@ -6480,7 +6480,7 @@ dependencies = [
 
 [[package]]
 name = "plant-asset-conversion-tx-payment"
-version = "10.0.0"
+version = "0.2.0"
 dependencies = [
  "parity-scale-codec",
  "plant-asset-conversion",
@@ -6496,7 +6496,7 @@ dependencies = [
 
 [[package]]
 name = "plant-asset-rate"
-version = "7.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "parity-scale-codec",
  "plant-balances",
@@ -6509,7 +6509,7 @@ dependencies = [
 
 [[package]]
 name = "plant-asset-rewards"
-version = "0.1.0"
+version = "0.0.0-dev"
 dependencies = [
  "parity-scale-codec",
  "plant-assets",
@@ -6525,7 +6525,7 @@ dependencies = [
 
 [[package]]
 name = "plant-asset-tx-payment"
-version = "28.0.0"
+version = "0.2.0"
 dependencies = [
  "parity-scale-codec",
  "plant-assets",
@@ -6542,7 +6542,7 @@ dependencies = [
 
 [[package]]
 name = "plant-assets"
-version = "29.1.0"
+version = "0.2.0"
 dependencies = [
  "impl-trait-for-tuples",
  "log",
@@ -6557,7 +6557,7 @@ dependencies = [
 
 [[package]]
 name = "plant-assets-freezer"
-version = "0.1.0"
+version = "0.0.0-dev"
 dependencies = [
  "log",
  "parity-scale-codec",
@@ -6569,7 +6569,7 @@ dependencies = [
 
 [[package]]
 name = "plant-assets-holder"
-version = "0.1.0"
+version = "0.0.0-dev"
 dependencies = [
  "log",
  "parity-scale-codec",
@@ -6584,7 +6584,7 @@ dependencies = [
 
 [[package]]
 name = "plant-atomic-swap"
-version = "28.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "parity-scale-codec",
  "plant-balances",
@@ -6594,7 +6594,7 @@ dependencies = [
 
 [[package]]
 name = "plant-aura"
-version = "27.0.0"
+version = "0.2.0"
 dependencies = [
  "log",
  "parity-scale-codec",
@@ -6607,7 +6607,7 @@ dependencies = [
 
 [[package]]
 name = "plant-authority-discovery"
-version = "29.0.0"
+version = "0.2.0"
 dependencies = [
  "async-trait",
  "futures",
@@ -6641,7 +6641,7 @@ dependencies = [
 
 [[package]]
 name = "plant-authorship"
-version = "28.0.0"
+version = "0.2.0"
 dependencies = [
  "impl-trait-for-tuples",
  "parity-scale-codec",
@@ -6653,7 +6653,7 @@ dependencies = [
 
 [[package]]
 name = "plant-babe"
-version = "28.0.0"
+version = "0.2.0"
 dependencies = [
  "log",
  "parity-scale-codec",
@@ -6674,7 +6674,7 @@ dependencies = [
 
 [[package]]
 name = "plant-bags-list"
-version = "27.0.0"
+version = "0.2.0"
 dependencies = [
  "aquamarine",
  "docify",
@@ -6691,7 +6691,7 @@ dependencies = [
 
 [[package]]
 name = "plant-balances"
-version = "28.0.0"
+version = "0.2.0"
 dependencies = [
  "docify",
  "log",
@@ -6707,7 +6707,7 @@ dependencies = [
 
 [[package]]
 name = "plant-beefy"
-version = "28.0.0"
+version = "0.2.0"
 dependencies = [
  "log",
  "parity-scale-codec",
@@ -6728,7 +6728,7 @@ dependencies = [
 
 [[package]]
 name = "plant-beefy-mmr"
-version = "28.0.0"
+version = "0.2.0"
 dependencies = [
  "array-bytes 6.2.3",
  "log",
@@ -6747,7 +6747,7 @@ dependencies = [
 
 [[package]]
 name = "plant-bounties"
-version = "27.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "log",
  "parity-scale-codec",
@@ -6763,7 +6763,7 @@ dependencies = [
 
 [[package]]
 name = "plant-broker"
-version = "0.6.0"
+version = "0.0.0-dev"
 dependencies = [
  "bitvec",
  "log",
@@ -6778,7 +6778,7 @@ dependencies = [
 
 [[package]]
 name = "plant-child-bounties"
-version = "27.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "log",
  "parity-scale-codec",
@@ -6794,7 +6794,7 @@ dependencies = [
 
 [[package]]
 name = "plant-collective"
-version = "28.0.0"
+version = "0.2.0"
 dependencies = [
  "docify",
  "log",
@@ -6809,7 +6809,7 @@ dependencies = [
 
 [[package]]
 name = "plant-conviction-voting"
-version = "28.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "assert_matches",
  "parity-scale-codec",
@@ -6824,7 +6824,7 @@ dependencies = [
 
 [[package]]
 name = "plant-core-fellowship"
-version = "12.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "log",
  "parity-scale-codec",
@@ -6838,7 +6838,7 @@ dependencies = [
 
 [[package]]
 name = "plant-dap"
-version = "0.1.0"
+version = "0.0.0-dev"
 dependencies = [
  "log",
  "parity-scale-codec",
@@ -6852,7 +6852,7 @@ dependencies = [
 
 [[package]]
 name = "plant-default-config-example"
-version = "10.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "log",
  "parity-scale-codec",
@@ -6864,7 +6864,7 @@ dependencies = [
 
 [[package]]
 name = "plant-delegated-staking"
-version = "1.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "log",
  "parity-scale-codec",
@@ -6882,7 +6882,7 @@ dependencies = [
 
 [[package]]
 name = "plant-democracy"
-version = "28.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "log",
  "parity-scale-codec",
@@ -6899,7 +6899,7 @@ dependencies = [
 
 [[package]]
 name = "plant-dev-mode"
-version = "10.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "log",
  "parity-scale-codec",
@@ -6912,7 +6912,7 @@ dependencies = [
 
 [[package]]
 name = "plant-dummy-dim"
-version = "1.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "log",
  "parity-scale-codec",
@@ -6927,7 +6927,7 @@ dependencies = [
 
 [[package]]
 name = "plant-election-provider"
-version = "28.0.0"
+version = "0.2.0"
 dependencies = [
  "parity-scale-codec",
  "plant-election-provider-macros",
@@ -6941,7 +6941,7 @@ dependencies = [
 
 [[package]]
 name = "plant-election-provider-e2e-test"
-version = "1.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "log",
  "parity-scale-codec",
@@ -6963,7 +6963,7 @@ dependencies = [
 
 [[package]]
 name = "plant-election-provider-macros"
-version = "13.0.0"
+version = "0.2.0"
 dependencies = [
  "parity-scale-codec",
  "plant-election-provider",
@@ -6979,7 +6979,7 @@ dependencies = [
 
 [[package]]
 name = "plant-election-provider-multi-block"
-version = "0.9.0"
+version = "0.0.0-dev"
 dependencies = [
  "log",
  "parity-scale-codec",
@@ -6996,7 +6996,7 @@ dependencies = [
 
 [[package]]
 name = "plant-election-provider-multi-phase"
-version = "27.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "frame-remote-externalities",
  "hex",
@@ -7017,7 +7017,7 @@ dependencies = [
 
 [[package]]
 name = "plant-elections-phragmen"
-version = "29.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "log",
  "parity-scale-codec",
@@ -7031,7 +7031,7 @@ dependencies = [
 
 [[package]]
 name = "plant-example-authorization-tx-extension"
-version = "1.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "docify",
  "log",
@@ -7046,7 +7046,7 @@ dependencies = [
 
 [[package]]
 name = "plant-example-basic"
-version = "27.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "log",
  "parity-scale-codec",
@@ -7060,7 +7060,7 @@ dependencies = [
 
 [[package]]
 name = "plant-example-frame-crate"
-version = "0.0.1"
+version = "0.0.0-dev"
 dependencies = [
  "parity-scale-codec",
  "scale-info",
@@ -7069,7 +7069,7 @@ dependencies = [
 
 [[package]]
 name = "plant-example-kitchensink"
-version = "4.0.0-dev"
+version = "0.0.0-dev"
 dependencies = [
  "log",
  "parity-scale-codec",
@@ -7083,7 +7083,7 @@ dependencies = [
 
 [[package]]
 name = "plant-example-offchain-worker"
-version = "28.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "lite-json",
  "log",
@@ -7096,7 +7096,7 @@ dependencies = [
 
 [[package]]
 name = "plant-example-single-block-migrations"
-version = "0.0.1"
+version = "0.0.0-dev"
 dependencies = [
  "docify",
  "log",
@@ -7110,7 +7110,7 @@ dependencies = [
 
 [[package]]
 name = "plant-example-split"
-version = "10.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "log",
  "parity-scale-codec",
@@ -7123,7 +7123,7 @@ dependencies = [
 
 [[package]]
 name = "plant-examples"
-version = "4.0.0-dev"
+version = "0.0.0-dev"
 dependencies = [
  "plant-default-config-example",
  "plant-dev-mode",
@@ -7138,7 +7138,7 @@ dependencies = [
 
 [[package]]
 name = "plant-fast-unstake"
-version = "27.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "docify",
  "log",
@@ -7157,7 +7157,7 @@ dependencies = [
 
 [[package]]
 name = "plant-glutton"
-version = "14.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "blake2 0.10.6",
  "log",
@@ -7171,7 +7171,7 @@ dependencies = [
 
 [[package]]
 name = "plant-grandpa"
-version = "28.0.0"
+version = "0.2.0"
 dependencies = [
  "finality-grandpa",
  "log",
@@ -7193,7 +7193,7 @@ dependencies = [
 
 [[package]]
 name = "plant-identity"
-version = "29.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "enumflags2",
  "log",
@@ -7208,7 +7208,7 @@ dependencies = [
 
 [[package]]
 name = "plant-im-online"
-version = "27.0.0"
+version = "0.2.0"
 dependencies = [
  "log",
  "parity-scale-codec",
@@ -7224,7 +7224,7 @@ dependencies = [
 
 [[package]]
 name = "plant-indices"
-version = "28.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "parity-scale-codec",
  "plant-balances",
@@ -7237,7 +7237,7 @@ dependencies = [
 
 [[package]]
 name = "plant-insecure-randomness-collective-flip"
-version = "16.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "parity-scale-codec",
  "safe-mix",
@@ -7247,7 +7247,7 @@ dependencies = [
 
 [[package]]
 name = "plant-lottery"
-version = "28.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "parity-scale-codec",
  "plant-balances",
@@ -7261,7 +7261,7 @@ dependencies = [
 
 [[package]]
 name = "plant-membership"
-version = "28.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "log",
  "parity-scale-codec",
@@ -7274,7 +7274,7 @@ dependencies = [
 
 [[package]]
 name = "plant-message-queue"
-version = "31.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "environmental",
  "log",
@@ -7292,7 +7292,7 @@ dependencies = [
 
 [[package]]
 name = "plant-meta-tx"
-version = "0.1.0"
+version = "0.0.0-dev"
 dependencies = [
  "docify",
  "parity-scale-codec",
@@ -7309,7 +7309,7 @@ dependencies = [
 
 [[package]]
 name = "plant-metadata-hash-extension"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "array-bytes 6.2.3",
  "const-hex",
@@ -7328,7 +7328,7 @@ dependencies = [
 
 [[package]]
 name = "plant-mixnet"
-version = "0.4.0"
+version = "0.0.0-dev"
 dependencies = [
  "log",
  "parity-scale-codec",
@@ -7340,7 +7340,7 @@ dependencies = [
 
 [[package]]
 name = "plant-mmr"
-version = "27.0.0"
+version = "0.2.0"
 dependencies = [
  "itertools 0.11.0",
  "log",
@@ -7352,7 +7352,7 @@ dependencies = [
 
 [[package]]
 name = "plant-multi-asset-bounties"
-version = "1.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "docify",
  "log",
@@ -7369,7 +7369,7 @@ dependencies = [
 
 [[package]]
 name = "plant-multisig"
-version = "28.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "log",
  "parity-scale-codec",
@@ -7380,7 +7380,7 @@ dependencies = [
 
 [[package]]
 name = "plant-nft-fractionalization"
-version = "10.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "log",
  "parity-scale-codec",
@@ -7393,7 +7393,7 @@ dependencies = [
 
 [[package]]
 name = "plant-nfts"
-version = "22.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "enumflags2",
  "log",
@@ -7408,7 +7408,7 @@ dependencies = [
 
 [[package]]
 name = "plant-nfts-runtime-api"
-version = "14.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "parity-scale-codec",
  "subsoil",
@@ -7416,7 +7416,7 @@ dependencies = [
 
 [[package]]
 name = "plant-nis"
-version = "28.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "parity-scale-codec",
  "plant-balances",
@@ -7427,7 +7427,7 @@ dependencies = [
 
 [[package]]
 name = "plant-node-authorization"
-version = "28.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "log",
  "parity-scale-codec",
@@ -7438,7 +7438,7 @@ dependencies = [
 
 [[package]]
 name = "plant-nomination-pools"
-version = "25.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "log",
  "parity-scale-codec",
@@ -7451,7 +7451,7 @@ dependencies = [
 
 [[package]]
 name = "plant-nomination-pools-benchmarking"
-version = "26.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "parity-scale-codec",
  "plant-bags-list",
@@ -7471,7 +7471,7 @@ dependencies = [
 
 [[package]]
 name = "plant-nomination-pools-fuzzer"
-version = "2.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "honggfuzz",
  "log",
@@ -7484,7 +7484,7 @@ dependencies = [
 
 [[package]]
 name = "plant-nomination-pools-runtime-api"
-version = "23.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "parity-scale-codec",
  "plant-nomination-pools",
@@ -7493,7 +7493,7 @@ dependencies = [
 
 [[package]]
 name = "plant-offences"
-version = "27.0.0"
+version = "0.2.0"
 dependencies = [
  "log",
  "parity-scale-codec",
@@ -7516,7 +7516,7 @@ dependencies = [
 
 [[package]]
 name = "plant-oracle"
-version = "1.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "impl-trait-for-tuples",
  "parity-scale-codec",
@@ -7530,7 +7530,7 @@ dependencies = [
 
 [[package]]
 name = "plant-oracle-runtime-api"
-version = "1.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "parity-scale-codec",
  "scale-info",
@@ -7539,7 +7539,7 @@ dependencies = [
 
 [[package]]
 name = "plant-origin-restriction"
-version = "1.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "log",
  "parity-scale-codec",
@@ -7553,7 +7553,7 @@ dependencies = [
 
 [[package]]
 name = "plant-paged-list"
-version = "0.6.0"
+version = "0.0.0-dev"
 dependencies = [
  "docify",
  "parity-scale-codec",
@@ -7564,7 +7564,7 @@ dependencies = [
 
 [[package]]
 name = "plant-paged-list-fuzzer"
-version = "0.1.0"
+version = "0.0.0-dev"
 dependencies = [
  "arbitrary",
  "honggfuzz",
@@ -7574,7 +7574,7 @@ dependencies = [
 
 [[package]]
 name = "plant-parameters"
-version = "0.1.0"
+version = "0.0.0-dev"
 dependencies = [
  "docify",
  "parity-scale-codec",
@@ -7591,7 +7591,7 @@ dependencies = [
 
 [[package]]
 name = "plant-people"
-version = "1.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "log",
  "parity-scale-codec",
@@ -7605,7 +7605,7 @@ dependencies = [
 
 [[package]]
 name = "plant-preimage"
-version = "28.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "log",
  "parity-scale-codec",
@@ -7619,7 +7619,7 @@ dependencies = [
 
 [[package]]
 name = "plant-proxy"
-version = "28.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "parity-scale-codec",
  "plant-balances",
@@ -7630,7 +7630,7 @@ dependencies = [
 
 [[package]]
 name = "plant-ranked-collective"
-version = "28.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "impl-trait-for-tuples",
  "log",
@@ -7644,7 +7644,7 @@ dependencies = [
 
 [[package]]
 name = "plant-recovery"
-version = "28.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "parity-scale-codec",
  "plant-balances",
@@ -7655,7 +7655,7 @@ dependencies = [
 
 [[package]]
 name = "plant-referenda"
-version = "28.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "assert_matches",
  "log",
@@ -7673,7 +7673,7 @@ dependencies = [
 
 [[package]]
 name = "plant-remark"
-version = "28.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "parity-scale-codec",
  "scale-info",
@@ -7686,7 +7686,7 @@ dependencies = [
 
 [[package]]
 name = "plant-root-offences"
-version = "25.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "parity-scale-codec",
  "plant-balances",
@@ -7703,7 +7703,7 @@ dependencies = [
 
 [[package]]
 name = "plant-safe-mode"
-version = "9.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "docify",
  "parity-scale-codec",
@@ -7716,7 +7716,7 @@ dependencies = [
 
 [[package]]
 name = "plant-salary"
-version = "13.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "log",
  "parity-scale-codec",
@@ -7728,7 +7728,7 @@ dependencies = [
 
 [[package]]
 name = "plant-sassafras"
-version = "0.3.5-dev"
+version = "0.2.0"
 dependencies = [
  "array-bytes 6.2.3",
  "log",
@@ -7743,7 +7743,7 @@ dependencies = [
 
 [[package]]
 name = "plant-scheduler"
-version = "29.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "docify",
  "log",
@@ -7758,7 +7758,7 @@ dependencies = [
 
 [[package]]
 name = "plant-scored-pool"
-version = "28.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "parity-scale-codec",
  "plant-balances",
@@ -7770,7 +7770,7 @@ dependencies = [
 
 [[package]]
 name = "plant-session"
-version = "28.0.0"
+version = "0.2.0"
 dependencies = [
  "impl-trait-for-tuples",
  "log",
@@ -7789,7 +7789,7 @@ dependencies = [
 
 [[package]]
 name = "plant-society"
-version = "28.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "log",
  "parity-scale-codec",
@@ -7806,7 +7806,7 @@ dependencies = [
 
 [[package]]
 name = "plant-staking"
-version = "28.0.0"
+version = "0.2.0"
 dependencies = [
  "log",
  "parity-scale-codec",
@@ -7828,7 +7828,7 @@ dependencies = [
 
 [[package]]
 name = "plant-staking-macros"
-version = "11.0.0"
+version = "0.2.0"
 dependencies = [
  "proc-macro-crate 3.4.0",
  "proc-macro2",
@@ -7839,7 +7839,7 @@ dependencies = [
 
 [[package]]
 name = "plant-state-trie-migration"
-version = "29.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "frame-remote-externalities",
  "log",
@@ -7859,7 +7859,7 @@ dependencies = [
 
 [[package]]
 name = "plant-statement"
-version = "10.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "log",
  "parity-scale-codec",
@@ -7872,7 +7872,7 @@ dependencies = [
 
 [[package]]
 name = "plant-sudo"
-version = "28.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "docify",
  "parity-scale-codec",
@@ -7885,7 +7885,7 @@ dependencies = [
 
 [[package]]
 name = "plant-test-bags-list"
-version = "4.0.0-dev"
+version = "0.0.0-dev"
 dependencies = [
  "frame-remote-externalities",
  "log",
@@ -7899,7 +7899,7 @@ dependencies = [
 
 [[package]]
 name = "plant-test-root"
-version = "4.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "parity-scale-codec",
  "scale-info",
@@ -7910,7 +7910,7 @@ dependencies = [
 
 [[package]]
 name = "plant-timestamp"
-version = "27.0.0"
+version = "0.2.0"
 dependencies = [
  "docify",
  "log",
@@ -7924,7 +7924,7 @@ dependencies = [
 
 [[package]]
 name = "plant-tips"
-version = "27.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "log",
  "parity-scale-codec",
@@ -7940,7 +7940,7 @@ dependencies = [
 
 [[package]]
 name = "plant-transaction-payment"
-version = "28.0.0"
+version = "0.2.0"
 dependencies = [
  "jsonrpsee",
  "log",
@@ -7959,7 +7959,7 @@ dependencies = [
 
 [[package]]
 name = "plant-transaction-storage"
-version = "27.0.0"
+version = "0.2.0"
 dependencies = [
  "array-bytes 6.2.3",
  "parity-scale-codec",
@@ -7976,7 +7976,7 @@ dependencies = [
 
 [[package]]
 name = "plant-treasury"
-version = "27.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "docify",
  "impl-trait-for-tuples",
@@ -7994,7 +7994,7 @@ dependencies = [
 
 [[package]]
 name = "plant-tx-pause"
-version = "9.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "docify",
  "parity-scale-codec",
@@ -8007,7 +8007,7 @@ dependencies = [
 
 [[package]]
 name = "plant-uniques"
-version = "28.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "log",
  "parity-scale-codec",
@@ -8021,7 +8021,7 @@ dependencies = [
 
 [[package]]
 name = "plant-utility"
-version = "28.0.0"
+version = "0.2.0"
 dependencies = [
  "parity-scale-codec",
  "plant-balances",
@@ -8037,7 +8037,7 @@ dependencies = [
 
 [[package]]
 name = "plant-verify-signature"
-version = "1.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "parity-scale-codec",
  "scale-info",
@@ -8049,7 +8049,7 @@ dependencies = [
 
 [[package]]
 name = "plant-vesting"
-version = "28.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "log",
  "parity-scale-codec",
@@ -8063,7 +8063,7 @@ dependencies = [
 
 [[package]]
 name = "plant-whitelist"
-version = "27.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "parity-scale-codec",
  "plant-balances",
@@ -10820,7 +10820,7 @@ dependencies = [
 
 [[package]]
 name = "soil-test"
-version = "0.1.0"
+version = "0.0.0-dev"
 dependencies = [
  "array-bytes 6.2.3",
  "async-channel 1.9.0",
@@ -10857,7 +10857,7 @@ dependencies = [
 
 [[package]]
 name = "soil-test-fuzz"
-version = "0.1.0"
+version = "0.0.0-dev"
 dependencies = [
  "clap",
  "honggfuzz",
@@ -10873,7 +10873,7 @@ dependencies = [
 
 [[package]]
 name = "soil-test-node-client"
-version = "2.0.1"
+version = "0.0.0-dev"
 dependencies = [
  "array-bytes 6.2.3",
  "async-trait",
@@ -10890,7 +10890,7 @@ dependencies = [
 
 [[package]]
 name = "soil-test-node-runtime"
-version = "2.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "array-bytes 6.2.3",
  "futures",
@@ -10924,7 +10924,7 @@ dependencies = [
 
 [[package]]
 name = "soil-test-node-runtime-client"
-version = "2.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "futures",
  "soil-client",
@@ -10936,7 +10936,7 @@ dependencies = [
 
 [[package]]
 name = "soil-test-node-runtime-txpool"
-version = "2.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "async-trait",
  "futures",
@@ -10952,7 +10952,7 @@ dependencies = [
 
 [[package]]
 name = "soil-test-runtime"
-version = "2.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "subsoil",
  "substrate-wasm-builder",
@@ -10960,7 +10960,7 @@ dependencies = [
 
 [[package]]
 name = "soil-test-runtime-interface-wasm"
-version = "2.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "bytes",
  "subsoil",
@@ -10969,7 +10969,7 @@ dependencies = [
 
 [[package]]
 name = "soil-test-runtime-interface-wasm-deprecated"
-version = "2.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "subsoil",
  "substrate-wasm-builder",
@@ -10977,7 +10977,7 @@ dependencies = [
 
 [[package]]
 name = "soil-test-staging-node-bench"
-version = "0.9.0-dev"
+version = "0.0.0-dev"
 dependencies = [
  "array-bytes 6.2.3",
  "async-trait",
@@ -11005,7 +11005,7 @@ dependencies = [
 
 [[package]]
 name = "soil-test-staging-node-cli"
-version = "3.0.0-dev"
+version = "0.0.0-dev"
 dependencies = [
  "array-bytes 6.2.3",
  "assert_cmd",
@@ -11087,7 +11087,7 @@ dependencies = [
 
 [[package]]
 name = "soil-test-staging-node-cli-test-utils"
-version = "0.1.0"
+version = "0.0.0-dev"
 dependencies = [
  "assert_cmd",
  "futures",
@@ -11103,7 +11103,7 @@ dependencies = [
 
 [[package]]
 name = "soil-test-staging-node-generate-bags"
-version = "3.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "clap",
  "generate-bags",
@@ -11112,7 +11112,7 @@ dependencies = [
 
 [[package]]
 name = "soil-test-staging-node-inspect"
-version = "0.12.0"
+version = "0.0.0-dev"
 dependencies = [
  "clap",
  "parity-scale-codec",
@@ -11126,14 +11126,14 @@ dependencies = [
 
 [[package]]
 name = "soil-test-staging-node-primitives"
-version = "2.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "subsoil",
 ]
 
 [[package]]
 name = "soil-test-staging-node-rpc"
-version = "3.0.0-dev"
+version = "0.0.0-dev"
 dependencies = [
  "jsonrpsee",
  "plant-transaction-payment",
@@ -11152,7 +11152,7 @@ dependencies = [
 
 [[package]]
 name = "soil-test-staging-node-runtime"
-version = "3.0.0-dev"
+version = "0.0.0-dev"
 dependencies = [
  "array-bytes 6.2.3",
  "log",
@@ -11280,7 +11280,7 @@ dependencies = [
 
 [[package]]
 name = "soil-test-staging-node-spec-builder"
-version = "1.6.1"
+version = "0.0.0-dev"
 dependencies = [
  "clap",
  "cmd_lib",
@@ -11295,7 +11295,7 @@ dependencies = [
 
 [[package]]
 name = "soil-test-staging-node-testing"
-version = "3.0.0-dev"
+version = "0.0.0-dev"
 dependencies = [
  "fs_extra",
  "futures",
@@ -11541,7 +11541,7 @@ dependencies = [
 
 [[package]]
 name = "subkey"
-version = "9.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "clap",
  "soil-cli",
@@ -11688,11 +11688,11 @@ dependencies = [
 
 [[package]]
 name = "substrate-build-script-utils"
-version = "11.0.0"
+version = "0.0.0-dev"
 
 [[package]]
 name = "substrate-frame-rpc-support"
-version = "29.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "jsonrpsee",
  "parity-scale-codec",
@@ -11707,7 +11707,7 @@ dependencies = [
 
 [[package]]
 name = "substrate-frame-rpc-system"
-version = "28.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "assert_matches",
  "docify",
@@ -11726,7 +11726,7 @@ dependencies = [
 
 [[package]]
 name = "substrate-wasm-builder"
-version = "17.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "array-bytes 6.2.3",
  "build-helper",
@@ -12661,7 +12661,7 @@ dependencies = [
 
 [[package]]
 name = "topsoil-test-support"
-version = "3.0.0"
+version = "0.0.0-dev"
 dependencies = [
  "frame-metadata",
  "parity-scale-codec",
@@ -12681,7 +12681,7 @@ dependencies = [
 
 [[package]]
 name = "topsoil-test-support-compile-pass"
-version = "4.0.0-dev"
+version = "0.0.0-dev"
 dependencies = [
  "parity-scale-codec",
  "scale-info",
@@ -12692,7 +12692,7 @@ dependencies = [
 
 [[package]]
 name = "topsoil-test-support-pallet"
-version = "4.0.0-dev"
+version = "0.0.0-dev"
 dependencies = [
  "parity-scale-codec",
  "scale-info",
@@ -12704,7 +12704,7 @@ dependencies = [
 
 [[package]]
 name = "topsoil-test-support-stg-frame-crate"
-version = "0.1.0"
+version = "0.0.0-dev"
 dependencies = [
  "parity-scale-codec",
  "scale-info",

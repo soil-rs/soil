@@ -1,6 +1,7 @@
 [package]
 name = "plant-broker"
-version = "0.6.0"
+version = "0.0.0-dev"
+publish = false
 description = "Brokerage tool for managing Polkadot Core scheduling"
 authors.workspace = true
 homepage.workspace = true

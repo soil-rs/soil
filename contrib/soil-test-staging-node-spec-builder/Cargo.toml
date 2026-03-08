@@ -1,13 +1,13 @@
 [package]
 name = "soil-test-staging-node-spec-builder"
-version = "1.6.1"
+version = "0.0.0-dev"
 authors.workspace = true
 edition.workspace = true
 build = "build.rs"
 license.workspace = true
 homepage.workspace = true
 repository.workspace = true
-publish = true
+publish = false
 description = "Utility for building chain-specification files for Substrate-based runtimes based on `sp-genesis-builder`"
 
 [lints]

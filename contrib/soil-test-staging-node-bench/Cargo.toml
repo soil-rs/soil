@@ -1,6 +1,6 @@
 [package]
 name = "soil-test-staging-node-bench"
-version = "0.9.0-dev"
+version = "0.0.0-dev"
 authors.workspace = true
 description = "Substrate node integration benchmarks."
 edition.workspace = true

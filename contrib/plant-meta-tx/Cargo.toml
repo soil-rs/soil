@@ -2,7 +2,8 @@
 name = "plant-meta-tx"
 description = "FRAME pallet enabling meta transactions."
 license.workspace = true
-version = "0.1.0"
+version = "0.0.0-dev"
+publish = false
 edition.workspace = true
 authors.workspace = true
 homepage.workspace = true

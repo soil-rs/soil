@@ -1,6 +1,7 @@
 [package]
 name = "plant-asset-rate"
-version = "7.0.0"
+version = "0.0.0-dev"
+publish = false
 description = "Whitelist non-native assets for treasury spending and provide conversion to native balance"
 authors.workspace = true
 homepage.workspace = true

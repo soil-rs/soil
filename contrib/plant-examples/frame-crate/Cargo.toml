@@ -1,6 +1,6 @@
 [package]
 name = "plant-example-frame-crate"
-version = "0.0.1"
+version = "0.0.0-dev"
 authors = ["Parity Technologies <admin@parity.io>"]
 edition.workspace = true
 license.workspace = true

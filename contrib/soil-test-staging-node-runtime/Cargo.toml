@@ -1,6 +1,6 @@
 [package]
 name = "soil-test-staging-node-runtime"
-version = "3.0.0-dev"
+version = "0.0.0-dev"
 authors.workspace = true
 description = "Substrate node kitchensink runtime."
 edition.workspace = true

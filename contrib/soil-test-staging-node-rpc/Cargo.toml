@@ -1,6 +1,6 @@
 [package]
 name = "soil-test-staging-node-rpc"
-version = "3.0.0-dev"
+version = "0.0.0-dev"
 authors.workspace = true
 description = "Substrate node rpc methods."
 edition.workspace = true
