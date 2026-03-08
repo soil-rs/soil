@@ -22,7 +22,7 @@ use crate as plant_lottery;
 
 use subsoil::runtime::{BuildStorage, Perbill};
 use topsoil_support::{derive_impl, parameter_types, traits::ConstU32};
-use topsoil_support_test::TestRandomness;
+use topsoil_test_support::TestRandomness;
 use topsoil_system::EnsureRoot;
 
 type Block = topsoil_system::mocking::MockBlock<Test>;

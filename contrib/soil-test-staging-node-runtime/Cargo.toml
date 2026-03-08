@@ -115,7 +115,7 @@ plant-recovery = { workspace = true }
 plant-referenda = { workspace = true }
 plant-remark = { workspace = true }
 plant-root-offences = { workspace = true }
-plant-root-testing = { workspace = true }
+plant-test-root = { workspace = true }
 plant-safe-mode = { workspace = true }
 plant-salary = { workspace = true }
 plant-scheduler = { workspace = true }
@@ -243,7 +243,7 @@ std = [
 	"plant-referenda/std",
 	"plant-remark/std",
 	"plant-root-offences/std",
-	"plant-root-testing/std",
+	"plant-test-root/std",
 	"plant-safe-mode/std",
 	"plant-salary/std",
 	"plant-scheduler/std",
@@ -440,7 +440,7 @@ try-runtime = [
 	"plant-referenda/try-runtime",
 	"plant-remark/try-runtime",
 	"plant-root-offences/try-runtime",
-	"plant-root-testing/try-runtime",
+	"plant-test-root/try-runtime",
 	"plant-safe-mode/try-runtime",
 	"plant-salary/try-runtime",
 	"plant-scheduler/try-runtime",

@@ -110,7 +110,7 @@ assert_cmd = { workspace = true }
 topsoil-support = { workspace = true, default-features = true }
 plant-bags-list = { workspace = true, default-features = true }
 plant-balances = { workspace = true, default-features = true }
-plant-root-testing = { workspace = true, default-features = true }
+plant-test-root = { workspace = true, default-features = true }
 plant-sudo = { workspace = true, default-features = true }
 plant-timestamp = { workspace = true, default-features = true }
 plant-transaction-payment = { workspace = true, default-features = true }

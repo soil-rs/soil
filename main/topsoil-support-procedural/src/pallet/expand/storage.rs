@@ -858,7 +858,7 @@ pub fn expand_storages(def: &mut Def) -> proc_macro2::TokenStream {
 			.iter()
 			.filter_map(|storage| {
 				// A little hacky; don't generate for cfg gated storages to not get compile errors
-				// when building "frame-feature-testing" gated storages in the "topsoil-support-test"
+				// when building "frame-feature-testing" gated storages in the "topsoil-test-support"
 				// crate.
 				if storage.try_decode && storage.cfg_attrs.is_empty() {
 					let ident = &storage.ident;

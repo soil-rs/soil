@@ -51,7 +51,7 @@ members = [
 	"runtime/plant-authorship",
 	"runtime/plant-babe",
 	"runtime/plant-bags-list",
-	"runtime/plant-bags-list-remote-tests",
+	"harness/plant-test-bags-list",
 	"runtime/plant-balances",
 	"runtime/plant-beefy",
 	"runtime/plant-beefy-mmr",
@@ -125,7 +125,7 @@ members = [
 	"contrib/plant-referenda",
 	"contrib/plant-remark",
 	"contrib/plant-root-offences",
-	"runtime/plant-root-testing",
+	"harness/plant-test-root",
 	"contrib/plant-safe-mode",
 	"contrib/plant-salary",
 	"runtime/plant-sassafras",
@@ -143,10 +143,10 @@ members = [
 	"main/topsoil-support-procedural",
 	"main/topsoil-support-procedural-tools",
 	"main/topsoil-support-procedural-tools-macros",
-	"main/topsoil-support-test",
-	"main/topsoil-support-test-compile-pass",
-	"main/topsoil-support-test-pallet",
-	"main/topsoil-support-test-stg-frame-crate",
+	"harness/topsoil-test-support",
+	"harness/topsoil-test-support-compile-pass",
+	"harness/topsoil-test-support-pallet",
+	"harness/topsoil-test-support-stg-frame-crate",
 	"main/topsoil-system",
 	"main/topsoil-system-benchmarking",
 	"main/topsoil-system-rpc-runtime-api",
@@ -253,7 +253,7 @@ topsoil-support = { path = "main/topsoil-support", default-features = false }
 topsoil-support-procedural = { path = "main/topsoil-support-procedural", default-features = false }
 topsoil-support-procedural-tools = { path = "main/topsoil-support-procedural-tools", default-features = false }
 topsoil-support-procedural-tools-macros = { path = "main/topsoil-support-procedural-tools-macros", default-features = false }
-topsoil-support-test = { path = "main/topsoil-support-test" }
+topsoil-test-support = { path = "harness/topsoil-test-support" }
 topsoil-system = { path = "main/topsoil-system", default-features = false }
 topsoil-system-benchmarking = { path = "main/topsoil-system-benchmarking", default-features = false }
 topsoil-system-rpc-runtime-api = { path = "main/topsoil-system-rpc-runtime-api", default-features = false }
@@ -282,7 +282,7 @@ plant-authority-discovery = { path = "runtime/plant-authority-discovery", defaul
 plant-authorship = { path = "runtime/plant-authorship", default-features = false }
 plant-babe = { path = "runtime/plant-babe", default-features = false }
 plant-bags-list = { path = "runtime/plant-bags-list", default-features = false }
-plant-bags-list-remote-tests = { path = "runtime/plant-bags-list-remote-tests" }
+plant-test-bags-list = { path = "harness/plant-test-bags-list" }
 plant-balances = { path = "runtime/plant-balances", default-features = false }
 plant-beefy = { path = "runtime/plant-beefy", default-features = false }
 plant-beefy-mmr = { path = "runtime/plant-beefy-mmr", default-features = false }
@@ -347,7 +347,7 @@ plant-recovery = { path = "contrib/plant-recovery", default-features = false }
 plant-referenda = { path = "contrib/plant-referenda", default-features = false }
 plant-remark = { default-features = false, path = "contrib/plant-remark" }
 plant-root-offences = { default-features = false, path = "contrib/plant-root-offences" }
-plant-root-testing = { path = "runtime/plant-root-testing", default-features = false }
+plant-test-root = { path = "harness/plant-test-root", default-features = false }
 plant-safe-mode = { default-features = false, path = "contrib/plant-safe-mode" }
 plant-salary = { path = "contrib/plant-salary", default-features = false }
 plant-scheduler = { path = "contrib/plant-scheduler", default-features = false }
@@ -414,7 +414,7 @@ soil-test-node-runtime = { path = "harness/soil-test-node-runtime" }
 soil-test-node-runtime-client = { path = "harness/soil-test-node-runtime-client" }
 soil-test-node-runtime-txpool = { path = "harness/soil-test-node-runtime-txpool" }
 substrate-wasm-builder = { path = "library/substrate-wasm-builder", default-features = false }
-test-pallet = { path = "main/topsoil-support-test-pallet", default-features = false, package = "topsoil-support-test-pallet" }
+test-pallet = { path = "harness/topsoil-test-support-pallet", default-features = false, package = "topsoil-test-support-pallet" }
 
 # External dependencies
 Inflector = { version = "0.11.4" }

@@ -132,7 +132,7 @@ topsoil_support::construct_runtime!(
 		System: topsoil_system,
 		Timestamp: plant_timestamp,
 		Balances: plant_balances,
-		RootTesting: plant_root_testing,
+		RootTesting: plant_test_root,
 		Council: plant_collective::<Instance1>,
 		Utility: utility,
 		Example: example,
@@ -157,7 +157,7 @@ impl plant_balances::Config for Test {
 	type AccountStore = System;
 }
 
-impl plant_root_testing::Config for Test {
+impl plant_test_root::Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 }
 
@@ -230,7 +230,7 @@ type ExampleCall = example::Call<Test>;
 type UtilityCall = crate::Call<Test>;
 
 use plant_balances::Call as BalancesCall;
-use plant_root_testing::Call as RootTestingCall;
+use plant_test_root::Call as RootTestingCall;
 use topsoil_system::Call as SystemCall;
 use plant_timestamp::Call as TimestampCall;
 

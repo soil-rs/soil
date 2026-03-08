@@ -1100,7 +1100,7 @@ impl plant_remark::Config for Runtime {
 	type RuntimeEvent = RuntimeEvent;
 }
 
-impl plant_root_testing::Config for Runtime {
+impl plant_test_root::Config for Runtime {
 	type RuntimeEvent = RuntimeEvent;
 }
 
@@ -2656,7 +2656,7 @@ mod runtime {
 	pub type Remark = plant_remark::Pallet<Runtime>;
 
 	#[runtime::pallet_index(57)]
-	pub type RootTesting = plant_root_testing::Pallet<Runtime>;
+	pub type RootTesting = plant_test_root::Pallet<Runtime>;
 
 	#[runtime::pallet_index(58)]
 	pub type ConvictionVoting = plant_conviction_voting::Pallet<Runtime>;

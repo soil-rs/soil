@@ -27,7 +27,7 @@ topsoil-system = { workspace = true }
 subsoil = { workspace = true }
 
 [dev-dependencies]
-topsoil-support-test = { workspace = true }
+topsoil-test-support = { workspace = true }
 plant-balances = { workspace = true, default-features = true }
 subsoil-crypto-hashing = { workspace = true, default-features = true }
 
@@ -36,7 +36,7 @@ default = ["std"]
 std = [
 	"codec/std",
 	"topsoil-benchmarking?/std",
-	"topsoil-support-test/std",
+	"topsoil-test-support/std",
 	"topsoil-support/std",
 	"topsoil-system/std",
 	"log/std",
@@ -48,14 +48,14 @@ std = [
 runtime-benchmarks = [
 	"topsoil-benchmarking",
 	"topsoil-benchmarking/runtime-benchmarks",
-	"topsoil-support-test/runtime-benchmarks",
+	"topsoil-test-support/runtime-benchmarks",
 	"topsoil-support/runtime-benchmarks",
 	"topsoil-system/runtime-benchmarks",
 	"plant-balances/runtime-benchmarks",
 	"subsoil/runtime-benchmarks",
 ]
 try-runtime = [
-	"topsoil-support-test/try-runtime",
+	"topsoil-test-support/try-runtime",
 	"topsoil-support/try-runtime",
 	"topsoil-system/try-runtime",
 	"plant-balances/try-runtime",
