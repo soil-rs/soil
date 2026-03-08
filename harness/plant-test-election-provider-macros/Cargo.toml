@@ -1,0 +1,15 @@
+[package]
+name = "plant-test-election-provider-macros"
+version = "0.0.0-dev"
+authors.workspace = true
+edition.workspace = true
+license.workspace = true
+publish = false
+
+[lints]
+workspace = true
+
+[dependencies]
+plant-election-provider = { workspace = true, default-features = true }
+plant-election-provider-macros = { workspace = true, default-features = true }
+trybuild = { workspace = true, default-features = true }

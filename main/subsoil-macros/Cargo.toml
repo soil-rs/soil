@@ -28,7 +28,6 @@ syn = { features = ["extra-traits", "fold", "full", "parsing", "proc-macro", "vi
 
 [dev-dependencies]
 assert_matches = { workspace = true }
-subsoil = { workspace = true, default-features = true }
 
 [features]
 no-metadata-docs = []

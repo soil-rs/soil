@@ -43,13 +43,19 @@ tempfile = { workspace = true }
 tokio = { workspace = true, default-features = true }
 tracing = { workspace = true, default-features = true }
 tracing-core = { workspace = true, default-features = true }
+soil-rpc = { workspace = true, features = ["test-helpers"], default-features = true }
 soil-test-node-runtime = { workspace = true }
 soil-test-node-runtime-client = { workspace = true }
+subsoil-crypto-hashing = { workspace = true, default-features = true }
+subsoil-macros = { workspace = true }
 wat = { workspace = true }
 
 [dev-dependencies]
+assert_matches = { workspace = true }
 criterion = { workspace = true, default-features = true }
+jsonrpsee = { workspace = true }
 rustversion = { workspace = true }
+serde_json = { workspace = true, default-features = true }
 static_assertions = { workspace = true, default-features = true }
 trybuild = { workspace = true }
 

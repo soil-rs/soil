@@ -28,10 +28,6 @@ scale-info = { features = ["derive"], workspace = true }
 serde = { optional = true, workspace = true, default-features = true }
 subsoil = { workspace = true }
 
-[dev-dependencies]
-plant-balances = { workspace = true, default-features = true }
-serde_json = { workspace = true, default-features = true }
-
 [features]
 default = ["std"]
 client = ["std", "dep:jsonrpsee", "dep:soil-client", "dep:soil-rpc"]
@@ -49,12 +45,10 @@ runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",
 	"topsoil-support/runtime-benchmarks",
 	"topsoil-system/runtime-benchmarks",
-	"plant-balances/runtime-benchmarks",
 	"subsoil/runtime-benchmarks",
 ]
 try-runtime = [
 	"topsoil-support/try-runtime",
 	"topsoil-system/try-runtime",
-	"plant-balances/try-runtime",
 	"subsoil/try-runtime",
 ]

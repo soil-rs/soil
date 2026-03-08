@@ -7,6 +7,7 @@ license.workspace = true
 homepage.workspace = true
 repository.workspace = true
 description = "Proc macro of Support code for the runtime."
+autoexamples = false
 
 [lints]
 workspace = true
@@ -16,9 +17,6 @@ targets = ["x86_64-unknown-linux-gnu"]
 
 [lib]
 proc-macro = true
-
-[[example]]
-name = "proc_main"
 
 [dependencies]
 Inflector = { workspace = true }
@@ -36,25 +34,12 @@ subsoil-crypto-hashing = { workspace = true }
 syn = { features = ["full", "parsing", "visit-mut"], workspace = true }
 
 [dev-dependencies]
-codec = { features = ["derive", "max-encoded-len"], workspace = true, default-features = true }
-topsoil-benchmarking = { workspace = true, default-features = true }
-topsoil-support = { workspace = true, default-features = true }
-topsoil-system = { workspace = true, default-features = true }
-pretty_assertions = { workspace = true }
 regex = { workspace = true }
-scale-info = { features = ["derive"], workspace = true, default-features = true }
-subsoil = { workspace = true, default-features = true }
 
 [features]
 default = ["std"]
 std = [
-	"codec/std",
-	"topsoil-benchmarking/std",
-	"topsoil-support/std",
-	"topsoil-system/std",
-	"scale-info/std",
 	"subsoil-crypto-hashing/std",
-	"subsoil/std",
 ]
 no-metadata-docs = []
 experimental = []

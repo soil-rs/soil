@@ -27,9 +27,7 @@ subsoil = { workspace = true }
 
 [dev-dependencies]
 plant-election-provider = { workspace = true, default-features = true }
-plant-babe = { workspace = true, default-features = true }
 plant-balances = { workspace = true, default-features = true }
-plant-grandpa = { workspace = true, default-features = true }
 plant-im-online = { workspace = true, default-features = true }
 plant-session = { workspace = true, default-features = true }
 plant-staking = { workspace = true, default-features = true }

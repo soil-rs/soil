@@ -135,7 +135,6 @@ mod benchmarking;
 mod impl_currency;
 mod impl_fungible;
 pub mod migration;
-mod tests;
 mod types;
 pub mod weights;
 
@@ -185,7 +184,7 @@ pub use pallet::*;
 const LOG_TARGET: &str = "runtime::balances";
 
 // Default derivation(hard) for development accounts.
-const DEFAULT_ADDRESS_URI: &str = "//Sender//{}";
+pub const DEFAULT_ADDRESS_URI: &str = "//Sender//{}";
 
 type AccountIdLookupOf<T> = <<T as topsoil_system::Config>::Lookup as StaticLookup>::Source;
 
@@ -947,7 +946,7 @@ pub mod pallet {
 		}
 
 		/// Get both the free and reserved balances of an account.
-		pub(crate) fn account(who: &T::AccountId) -> AccountData<T::Balance> {
+		pub fn account(who: &T::AccountId) -> AccountData<T::Balance> {
 			T::AccountStore::get(who)
 		}
 
@@ -1013,7 +1012,7 @@ pub mod pallet {
 		/// NOTE: LOW-LEVEL: `force_consumer_bump` is mainly there to accomodate for locks, which
 		/// have no ability in their API to return an error, and therefore better force increment
 		/// the consumer, or else the system will be inconsistent. See `consumer_limits_tests`.
-		pub(crate) fn mutate_account<R>(
+		pub fn mutate_account<R>(
 			who: &T::AccountId,
 			force_consumer_bump: bool,
 			f: impl FnOnce(&mut AccountData<T::Balance>) -> R,

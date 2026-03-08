@@ -47,11 +47,6 @@ mod randomness;
 
 #[cfg(any(feature = "runtime-benchmarks", test))]
 mod benchmarking;
-#[cfg(all(feature = "std", test))]
-mod mock;
-#[cfg(all(feature = "std", test))]
-mod tests;
-
 pub use equivocation::{EquivocationOffence, EquivocationReportSystem};
 #[allow(deprecated)]
 pub use randomness::CurrentBlockRandomness;
@@ -808,7 +803,7 @@ impl<T: Config> Pallet<T> {
 		Self::deposit_consensus(ConsensusLog::NextEpochData(next));
 	}
 
-	fn initialize(now: BlockNumberFor<T>) {
+	pub fn initialize(now: BlockNumberFor<T>) {
 		// since `initialize` can be called twice (e.g. if session module is present)
 		// let's ensure that we only do the initialization once per block
 		let initialized = Initialized::<T>::get().is_some();
@@ -880,7 +875,7 @@ impl<T: Config> Pallet<T> {
 	/// This function is only well defined for epochs that actually existed,
 	/// e.g. if we skipped from epoch 10 to 20 then a call for epoch 15 (which
 	/// didn't exist) will return an incorrect session index.
-	pub(crate) fn session_index_for_epoch(epoch_index: u64) -> SessionIndex {
+	pub fn session_index_for_epoch(epoch_index: u64) -> SessionIndex {
 		let skipped_epochs = SkippedEpochs::<T>::get();
 		match skipped_epochs.binary_search_by_key(&epoch_index, |(epoch_index, _)| *epoch_index) {
 			// we have an exact match so we just return the given session index
@@ -1020,7 +1015,7 @@ where
 // VRF outputs in the prior epoch.
 //
 // an optional size hint as to how many VRF outputs there were may be provided.
-fn compute_randomness(
+pub fn compute_randomness(
 	last_epoch_randomness: BabeRandomness,
 	epoch_index: u64,
 	rho: impl Iterator<Item = BabeRandomness>,

@@ -25,11 +25,6 @@ log = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 subsoil = { workspace = true }
 
-[dev-dependencies]
-topsoil-support = { features = ["experimental"], workspace = true, default-features = true }
-plant-transaction-payment = { workspace = true, default-features = true }
-paste = { workspace = true, default-features = true }
-
 [features]
 default = ["std"]
 std = [
@@ -38,7 +33,6 @@ std = [
 	"topsoil-support/std",
 	"topsoil-system/std",
 	"log/std",
-	"plant-transaction-payment/std",
 	"scale-info/std",
 	"subsoil/std",
 ]
@@ -48,12 +42,10 @@ runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",
 	"topsoil-support/runtime-benchmarks",
 	"topsoil-system/runtime-benchmarks",
-	"plant-transaction-payment/runtime-benchmarks",
 	"subsoil/runtime-benchmarks",
 ]
 try-runtime = [
 	"topsoil-support/try-runtime",
 	"topsoil-system/try-runtime",
-	"plant-transaction-payment/try-runtime",
 	"subsoil/try-runtime",
 ]

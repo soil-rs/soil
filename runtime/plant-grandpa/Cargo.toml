@@ -26,56 +26,30 @@ plant-session = { workspace = true }
 scale-info = { features = ["derive", "serde"], workspace = true }
 subsoil = { features = ["serde"], workspace = true }
 
-[dev-dependencies]
-finality-grandpa = { features = ["derive-codec"], workspace = true, default-features = true }
-topsoil-benchmarking = { workspace = true, default-features = true }
-plant-election-provider = { workspace = true, default-features = true }
-plant-balances = { workspace = true, default-features = true }
-plant-offences = { workspace = true, default-features = true }
-plant-staking = { workspace = true, default-features = true }
-plant-staking-macros = { workspace = true, default-features = true }
-plant-timestamp = { workspace = true, default-features = true }
-subsoil = { workspace = true, default-features = true }
-
 [features]
 default = ["std"]
 std = [
 	"codec/std",
 	"topsoil-benchmarking?/std",
-	"plant-election-provider/std",
 	"topsoil-support/std",
 	"topsoil-system/std",
 	"log/std",
 	"plant-authorship/std",
-	"plant-balances/std",
-	"plant-offences/std",
 	"plant-session/std",
-	"plant-staking/std",
-	"plant-timestamp/std",
 	"scale-info/std",
 	"subsoil/std",
 ]
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",
-	"plant-election-provider/runtime-benchmarks",
 	"topsoil-support/runtime-benchmarks",
 	"topsoil-system/runtime-benchmarks",
-	"plant-balances/runtime-benchmarks",
-	"plant-offences/runtime-benchmarks",
 	"plant-session/runtime-benchmarks",
-	"plant-staking/runtime-benchmarks",
-	"plant-timestamp/runtime-benchmarks",
 	"subsoil/runtime-benchmarks",
 ]
 try-runtime = [
-	"plant-election-provider/try-runtime",
 	"topsoil-support/try-runtime",
 	"topsoil-system/try-runtime",
 	"plant-authorship/try-runtime",
-	"plant-balances/try-runtime",
-	"plant-offences/try-runtime",
 	"plant-session/try-runtime",
-	"plant-staking/try-runtime",
-	"plant-timestamp/try-runtime",
 	"subsoil/try-runtime",
 ]

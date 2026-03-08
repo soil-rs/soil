@@ -53,6 +53,8 @@ members = [
 	"runtime/plant-babe",
 	"runtime/plant-bags-list",
 	"harness/plant-test-bags-list",
+	"harness/plant-test-balances",
+	"harness/plant-test-consensus",
 	"runtime/plant-balances",
 	"runtime/plant-beefy",
 	"runtime/plant-beefy-mmr",
@@ -73,6 +75,7 @@ members = [
 	"contrib/plant-election-provider-multi-phase/test-staking-e2e",
 	"runtime/plant-election-provider",
 	"runtime/plant-election-provider-macros",
+	"harness/plant-test-election-provider-macros",
 	"contrib/plant-elections-phragmen",
 	"contrib/plant-examples",
 	"contrib/plant-examples/authorization-tx-extension",
@@ -292,6 +295,7 @@ plant-beefy-mmr = { path = "runtime/plant-beefy-mmr", version = "0.2.0", default
 plant-collective = { path = "runtime/plant-collective", version = "0.2.0", default-features = false }
 plant-election-provider = { path = "runtime/plant-election-provider", version = "0.2.0", default-features = false }
 plant-election-provider-macros = { path = "runtime/plant-election-provider-macros", version = "0.2.0", default-features = false }
+plant-test-election-provider-macros = { path = "harness/plant-test-election-provider-macros" }
 plant-grandpa = { path = "runtime/plant-grandpa", version = "0.2.0", default-features = false }
 plant-im-online = { path = "runtime/plant-im-online", version = "0.2.0", default-features = false }
 plant-metadata-hash-extension = { path = "runtime/plant-metadata-hash-extension", version = "0.2.0", default-features = false }
@@ -314,6 +318,8 @@ substrate-frame-rpc-system = { path = "library/substrate-frame-rpc-system", defa
 substrate-wasm-builder = { path = "library/substrate-wasm-builder", default-features = false }
 
 plant-test-bags-list = { path = "harness/plant-test-bags-list" }
+plant-test-balances = { path = "harness/plant-test-balances" }
+plant-test-consensus = { path = "harness/plant-test-consensus" }
 plant-test-root = { path = "harness/plant-test-root", default-features = false }
 soil-test = { path = "harness/soil-test" }
 soil-test-node-client = { path = "harness/soil-test-node-client" }

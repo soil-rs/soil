@@ -96,7 +96,7 @@ pub(crate) fn syn_err(message: &'static str) -> syn::Error {
 /// lead to many `0`s in the solution. If prefixed with `#[compact]`, then a custom compact encoding
 /// for numbers will be used, similar to how `parity-scale-codec`'s `Compact` works.
 ///
-/// ```
+/// ```ignore
 /// # use plant_election_provider_macros::generate_solution_type;
 /// # use plant_election_provider::NposSolution;
 /// # use subsoil::arithmetic::per_things::Perbill;
@@ -262,19 +262,5 @@ fn imports() -> Result<TokenStream2> {
 			},
 			_ => Err(syn::Error::new(Span::call_site(), e)),
 		},
-	}
-}
-
-#[cfg(test)]
-mod tests {
-	#[test]
-	fn ui_fail() {
-		// Only run the ui tests when `RUN_UI_TESTS` is set.
-		if std::env::var("RUN_UI_TESTS").is_err() {
-			return;
-		}
-
-		let cases = trybuild::TestCases::new();
-		cases.compile_fail("tests/ui/fail/*.rs");
 	}
 }

@@ -1281,7 +1281,7 @@ pub fn dynamic_aggregated_params_internal(attrs: TokenStream, input: TokenStream
 ///
 /// ## Example/Overview:
 ///
-/// ```
+/// ```ignore
 /// # #[allow(unused)]
 /// #[topsoil_support::pallet]
 /// pub mod pallet {

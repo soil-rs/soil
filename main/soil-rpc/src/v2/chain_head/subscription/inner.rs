@@ -773,48 +773,26 @@ mod tests {
 	use jsonrpsee::ConnectionId;
 	use soil_client::block_builder::BlockBuilderBuilder;
 	use soil_client::consensus::BlockOrigin;
-	use soil_service::client::new_with_backend;
-	use subsoil::core::{testing::TaskExecutor, H256};
+	use subsoil::core::H256;
+	use subsoil::runtime::traits::Block as BlockT;
 	use soil_test_node_runtime_client::{
 		prelude::*,
-		runtime::{Block, RuntimeApi},
-		Client, ClientBlockImportExt, GenesisInit,
+		runtime::Block,
+		Backend, ClientBlockImportExt, TestClient,
 	};
 
 	/// Maximum number of ongoing operations per subscription ID.
 	const MAX_OPERATIONS_PER_SUB: usize = 16;
 
-	fn init_backend() -> (
-		Arc<soil_client::client_api::in_mem::Backend<Block>>,
-		Arc<Client<soil_client::client_api::in_mem::Backend<Block>>>,
-	) {
-		let backend = Arc::new(soil_client::client_api::in_mem::Backend::new());
-		let executor = soil_test_node_runtime_client::WasmExecutor::default();
-		let client_config = soil_service::ClientConfig::default();
-		let genesis_block_builder = soil_service::GenesisBlockBuilder::new(
-			&soil_test_node_runtime_client::GenesisParameters::default().genesis_storage(),
-			!client_config.no_genesis,
-			backend.clone(),
-			executor.clone(),
-		)
-		.unwrap();
-		let client = Arc::new(
-			new_with_backend::<_, _, Block, _, RuntimeApi>(
-				backend.clone(),
-				executor,
-				genesis_block_builder,
-				Box::new(TaskExecutor::new()),
-				None,
-				None,
-				client_config,
-			)
-			.unwrap(),
-		);
+	fn init_backend() -> (Arc<Backend>, Arc<TestClient>) {
+		let builder = TestClientBuilder::new();
+		let backend = builder.backend();
+		let client = Arc::new(builder.build());
 		(backend, client)
 	}
 
 	fn produce_blocks(
-		client: Arc<Client<soil_client::client_api::in_mem::Backend<Block>>>,
+		client: Arc<TestClient>,
 		num_blocks: usize,
 	) -> Vec<<Block as BlockT>::Hash> {
 		let mut blocks = Vec::with_capacity(num_blocks);
@@ -959,6 +937,141 @@ mod tests {
 	}
 
 	#[test]
+	fn subscription_lock_block() {
+		let builder = TestClientBuilder::new();
+		let backend = builder.backend();
+		let mut subs =
+			SubscriptionsInner::new(10, Duration::from_secs(10), MAX_OPERATIONS_PER_SUB, backend);
+
+		let id = "abc".to_string();
+		let hash = H256::random();
+
+		// Subscription not inserted.
+		let err = subs.lock_block(&id, hash, 1).unwrap_err();
+		assert_eq!(err, SubscriptionManagementError::SubscriptionAbsent);
+
+		let _stop = subs.insert_subscription(id.clone(), true).unwrap();
+		// Cannot insert the same subscription ID twice.
+		assert!(subs.insert_subscription(id.clone(), true).is_none());
+
+		// No block hash.
+		let err = subs.lock_block(&id, hash, 1).unwrap_err();
+		assert_eq!(err, SubscriptionManagementError::BlockHashAbsent);
+
+		subs.remove_subscription(&id);
+
+		// No subscription.
+		let err = subs.lock_block(&id, hash, 1).unwrap_err();
+		assert_eq!(err, SubscriptionManagementError::SubscriptionAbsent);
+	}
+
+	#[test]
+	fn subscription_check_stop_event() {
+		let builder = TestClientBuilder::new();
+		let backend = builder.backend();
+		let mut subs =
+			SubscriptionsInner::new(10, Duration::from_secs(10), MAX_OPERATIONS_PER_SUB, backend);
+
+		let id = "abc".to_string();
+
+		let mut sub_data = subs.insert_subscription(id.clone(), true).unwrap();
+
+		// Check the stop signal was not received.
+		let res = sub_data.rx_stop.try_recv().unwrap();
+		assert!(res.is_none());
+
+		let sub = subs.subs.get_mut(&id).unwrap();
+		sub.stop();
+
+		// Check the signal was received.
+		let res = sub_data.rx_stop.try_recv().unwrap();
+		assert!(res.is_some());
+	}
+
+	#[test]
+	fn ongoing_operations() {
+		// The object can hold at most 2 operations.
+		let ops = LimitOperations::new(2);
+
+		// One operation is reserved.
+		let permit_one = ops.reserve_at_most(1).unwrap();
+		assert_eq!(permit_one.num_permits(), 1);
+
+		// Request 2 operations, however there is capacity only for one.
+		let permit_two = ops.reserve_at_most(2).unwrap();
+		// Number of reserved permits is smaller than provided.
+		assert_eq!(permit_two.num_permits(), 1);
+
+		// Try to reserve operations when there's no space.
+		let permit = ops.reserve_at_most(1);
+		assert!(permit.is_none());
+
+		// Release capacity.
+		drop(permit_two);
+
+		// Can reserve again
+		let permit_three = ops.reserve_at_most(1).unwrap();
+		assert_eq!(permit_three.num_permits(), 1);
+	}
+
+	#[test]
+	fn reserved_subscription_cleans_resources() {
+		let builder = TestClientBuilder::new();
+		let backend = builder.backend();
+		let subs = Arc::new(parking_lot::RwLock::new(SubscriptionsInner::new(
+			10,
+			Duration::from_secs(10),
+			MAX_OPERATIONS_PER_SUB,
+			backend,
+		)));
+
+		// Maximum 2 subscriptions per connection.
+		let rpc_connections = crate::v2::common::connections::RpcConnections::new(2);
+
+		let subscription_management =
+			crate::v2::chain_head::subscription::SubscriptionManagement::_from_inner(
+				subs.clone(),
+				rpc_connections.clone(),
+			);
+
+		let reserved_sub_first =
+			subscription_management.reserve_subscription(ConnectionId(1)).unwrap();
+		let mut reserved_sub_second =
+			subscription_management.reserve_subscription(ConnectionId(1)).unwrap();
+		// Subscriptions reserved but not yet populated.
+		assert_eq!(subs.read().subs.len(), 0);
+
+		// Cannot reserve anymore.
+		assert!(subscription_management.reserve_subscription(ConnectionId(1)).is_none());
+		// Drop the first subscription.
+		drop(reserved_sub_first);
+		// Space is freed-up for the rpc connections.
+		let mut reserved_sub_first =
+			subscription_management.reserve_subscription(ConnectionId(1)).unwrap();
+
+		// Insert subscriptions.
+		let _sub_data_first =
+			reserved_sub_first.insert_subscription("sub1".to_string(), true).unwrap();
+		let _sub_data_second =
+			reserved_sub_second.insert_subscription("sub2".to_string(), true).unwrap();
+		// Check we have 2 subscriptions under management.
+		assert_eq!(subs.read().subs.len(), 2);
+
+		// Drop first reserved subscription.
+		drop(reserved_sub_first);
+		// Check that the subscription is removed.
+		assert_eq!(subs.read().subs.len(), 1);
+		// Space is freed-up for the rpc connections.
+		let reserved_sub_first =
+			subscription_management.reserve_subscription(ConnectionId(1)).unwrap();
+
+		// Drop all subscriptions.
+		drop(reserved_sub_first);
+		drop(reserved_sub_second);
+		assert_eq!(subs.read().subs.len(), 0);
+	}
+
+	#[test]
 	fn unpin_duplicate_hashes() {
 		let (backend, client) = init_backend();
 
@@ -999,35 +1112,6 @@ mod tests {
 		assert_eq!(subs.global_blocks.get(&hash_1), None);
 		assert_eq!(*subs.global_blocks.get(&hash_2).unwrap(), 1);
 		assert_eq!(*subs.global_blocks.get(&hash_3).unwrap(), 1);
-	}
-
-	#[test]
-	fn subscription_lock_block() {
-		let builder = TestClientBuilder::new();
-		let backend = builder.backend();
-		let mut subs =
-			SubscriptionsInner::new(10, Duration::from_secs(10), MAX_OPERATIONS_PER_SUB, backend);
-
-		let id = "abc".to_string();
-		let hash = H256::random();
-
-		// Subscription not inserted.
-		let err = subs.lock_block(&id, hash, 1).unwrap_err();
-		assert_eq!(err, SubscriptionManagementError::SubscriptionAbsent);
-
-		let _stop = subs.insert_subscription(id.clone(), true).unwrap();
-		// Cannot insert the same subscription ID twice.
-		assert!(subs.insert_subscription(id.clone(), true).is_none());
-
-		// No block hash.
-		let err = subs.lock_block(&id, hash, 1).unwrap_err();
-		assert_eq!(err, SubscriptionManagementError::BlockHashAbsent);
-
-		subs.remove_subscription(&id);
-
-		// No subscription.
-		let err = subs.lock_block(&id, hash, 1).unwrap_err();
-		assert_eq!(err, SubscriptionManagementError::SubscriptionAbsent);
 	}
 
 	#[test]
@@ -1242,55 +1326,6 @@ mod tests {
 	}
 
 	#[test]
-	fn subscription_check_stop_event() {
-		let builder = TestClientBuilder::new();
-		let backend = builder.backend();
-		let mut subs =
-			SubscriptionsInner::new(10, Duration::from_secs(10), MAX_OPERATIONS_PER_SUB, backend);
-
-		let id = "abc".to_string();
-
-		let mut sub_data = subs.insert_subscription(id.clone(), true).unwrap();
-
-		// Check the stop signal was not received.
-		let res = sub_data.rx_stop.try_recv().unwrap();
-		assert!(res.is_none());
-
-		let sub = subs.subs.get_mut(&id).unwrap();
-		sub.stop();
-
-		// Check the signal was received.
-		let res = sub_data.rx_stop.try_recv().unwrap();
-		assert!(res.is_some());
-	}
-
-	#[test]
-	fn ongoing_operations() {
-		// The object can hold at most 2 operations.
-		let ops = LimitOperations::new(2);
-
-		// One operation is reserved.
-		let permit_one = ops.reserve_at_most(1).unwrap();
-		assert_eq!(permit_one.num_permits(), 1);
-
-		// Request 2 operations, however there is capacity only for one.
-		let permit_two = ops.reserve_at_most(2).unwrap();
-		// Number of reserved permits is smaller than provided.
-		assert_eq!(permit_two.num_permits(), 1);
-
-		// Try to reserve operations when there's no space.
-		let permit = ops.reserve_at_most(1);
-		assert!(permit.is_none());
-
-		// Release capacity.
-		drop(permit_two);
-
-		// Can reserve again
-		let permit_three = ops.reserve_at_most(1).unwrap();
-		assert_eq!(permit_three.num_permits(), 1);
-	}
-
-	#[test]
 	fn stop_all_subscriptions() {
 		let (backend, client) = init_backend();
 
@@ -1321,62 +1356,5 @@ mod tests {
 		// Stop all active subscriptions.
 		subs.stop_all_subscriptions();
 		assert!(subs.global_blocks.is_empty());
-	}
-
-	#[test]
-	fn reserved_subscription_cleans_resources() {
-		let builder = TestClientBuilder::new();
-		let backend = builder.backend();
-		let subs = Arc::new(parking_lot::RwLock::new(SubscriptionsInner::new(
-			10,
-			Duration::from_secs(10),
-			MAX_OPERATIONS_PER_SUB,
-			backend,
-		)));
-
-		// Maximum 2 subscriptions per connection.
-		let rpc_connections = crate::v2::common::connections::RpcConnections::new(2);
-
-		let subscription_management =
-			crate::v2::chain_head::subscription::SubscriptionManagement::_from_inner(
-				subs.clone(),
-				rpc_connections.clone(),
-			);
-
-		let reserved_sub_first =
-			subscription_management.reserve_subscription(ConnectionId(1)).unwrap();
-		let mut reserved_sub_second =
-			subscription_management.reserve_subscription(ConnectionId(1)).unwrap();
-		// Subscriptions reserved but not yet populated.
-		assert_eq!(subs.read().subs.len(), 0);
-
-		// Cannot reserve anymore.
-		assert!(subscription_management.reserve_subscription(ConnectionId(1)).is_none());
-		// Drop the first subscription.
-		drop(reserved_sub_first);
-		// Space is freed-up for the rpc connections.
-		let mut reserved_sub_first =
-			subscription_management.reserve_subscription(ConnectionId(1)).unwrap();
-
-		// Insert subscriptions.
-		let _sub_data_first =
-			reserved_sub_first.insert_subscription("sub1".to_string(), true).unwrap();
-		let _sub_data_second =
-			reserved_sub_second.insert_subscription("sub2".to_string(), true).unwrap();
-		// Check we have 2 subscriptions under management.
-		assert_eq!(subs.read().subs.len(), 2);
-
-		// Drop first reserved subscription.
-		drop(reserved_sub_first);
-		// Check that the subscription is removed.
-		assert_eq!(subs.read().subs.len(), 1);
-		// Space is freed-up for the rpc connections.
-		let reserved_sub_first =
-			subscription_management.reserve_subscription(ConnectionId(1)).unwrap();
-
-		// Drop all subscriptions.
-		drop(reserved_sub_first);
-		drop(reserved_sub_second);
-		assert_eq!(subs.read().subs.len(), 0);
 	}
 }

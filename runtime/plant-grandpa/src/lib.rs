@@ -49,11 +49,6 @@ pub mod migrations;
 
 #[cfg(any(feature = "runtime-benchmarks", test))]
 mod benchmarking;
-#[cfg(all(feature = "std", test))]
-mod mock;
-#[cfg(all(feature = "std", test))]
-mod tests;
-
 pub use equivocation::{EquivocationOffence, EquivocationReportSystem, TimeSlot};
 
 pub use pallet::*;

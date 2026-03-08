@@ -119,7 +119,7 @@ const IS_NEW_LOGIC: u128 = 0x80000000_00000000_00000000_00000000u128;
 #[derive(
 	Encode, Decode, DecodeWithMemTracking, Clone, PartialEq, Eq, Debug, MaxEncodedLen, TypeInfo,
 )]
-pub struct ExtraFlags(pub(crate) u128);
+pub struct ExtraFlags(pub u128);
 impl Default for ExtraFlags {
 	fn default() -> Self {
 		Self(IS_NEW_LOGIC)

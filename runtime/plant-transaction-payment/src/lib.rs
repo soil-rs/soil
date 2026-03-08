@@ -62,11 +62,6 @@ use topsoil_support::{
 pub use types::{FeeDetails, InclusionFee, RuntimeDispatchInfo};
 pub use weights::WeightInfo;
 
-#[cfg(test)]
-mod mock;
-#[cfg(test)]
-mod tests;
-
 #[cfg(feature = "runtime-benchmarks")]
 mod benchmarking;
 #[cfg(feature = "runtime-benchmarks")]

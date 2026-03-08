@@ -75,8 +75,4 @@ mod benchmarks {
 		Ok(())
 	}
 
-	impl_benchmark_test_suite!(Pallet, crate::benchmarking::mock::new_test_ext(), crate::benchmarking::mock::Test);
 }
-
-#[cfg(test)]
-mod mock;

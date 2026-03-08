@@ -31,7 +31,6 @@ twox-hash = { features = ["digest_0_10"], workspace = true }
 
 [dev-dependencies]
 criterion = { workspace = true, default-features = true }
-subsoil-macros = { workspace = true }
 
 [features]
 default = ["std"]

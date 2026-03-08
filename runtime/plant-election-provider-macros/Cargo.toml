@@ -27,9 +27,4 @@ syn = { features = ["full", "visit"], workspace = true }
 codec = { workspace = true, default-features = true }
 scale-info = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
-# used by generate_solution_type:
-# NOTE: we have to explicitly specify `std` because of trybuild
-# https://github.com/paritytech/polkadot-sdk/pull/5167
-plant-election-provider = { workspace = true, default-features = true, features = ["std"] }
 topsoil-support = { workspace = true, default-features = true }
-trybuild = { workspace = true }

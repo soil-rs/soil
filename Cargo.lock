@@ -6658,12 +6658,7 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "plant-authorship",
- "plant-balances",
- "plant-election-provider",
- "plant-offences",
  "plant-session",
- "plant-staking",
- "plant-staking-macros",
  "plant-timestamp",
  "scale-info",
  "subsoil",
@@ -6696,8 +6691,6 @@ dependencies = [
  "docify",
  "log",
  "parity-scale-codec",
- "paste",
- "plant-transaction-payment",
  "scale-info",
  "subsoil",
  "topsoil-benchmarking",
@@ -6966,7 +6959,6 @@ name = "plant-election-provider-macros"
 version = "0.2.0"
 dependencies = [
  "parity-scale-codec",
- "plant-election-provider",
  "proc-macro-crate 3.4.0",
  "proc-macro2",
  "quote",
@@ -6974,7 +6966,6 @@ dependencies = [
  "subsoil",
  "syn 2.0.117",
  "topsoil-support",
- "trybuild",
 ]
 
 [[package]]
@@ -7173,17 +7164,10 @@ dependencies = [
 name = "plant-grandpa"
 version = "0.2.0"
 dependencies = [
- "finality-grandpa",
  "log",
  "parity-scale-codec",
  "plant-authorship",
- "plant-balances",
- "plant-election-provider",
- "plant-offences",
  "plant-session",
- "plant-staking",
- "plant-staking-macros",
- "plant-timestamp",
  "scale-info",
  "subsoil",
  "topsoil-benchmarking",
@@ -7497,10 +7481,8 @@ version = "0.2.0"
 dependencies = [
  "log",
  "parity-scale-codec",
- "plant-babe",
  "plant-balances",
  "plant-election-provider",
- "plant-grandpa",
  "plant-im-online",
  "plant-session",
  "plant-staking",
@@ -7776,9 +7758,6 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "plant-balances",
- "plant-election-provider",
- "plant-staking",
- "plant-staking-macros",
  "plant-timestamp",
  "scale-info",
  "subsoil",
@@ -7898,6 +7877,55 @@ dependencies = [
 ]
 
 [[package]]
+name = "plant-test-balances"
+version = "0.0.0-dev"
+dependencies = [
+ "docify",
+ "parity-scale-codec",
+ "paste",
+ "plant-balances",
+ "plant-transaction-payment",
+ "scale-info",
+ "serde_json",
+ "subsoil",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "plant-test-consensus"
+version = "0.0.0-dev"
+dependencies = [
+ "finality-grandpa",
+ "parity-scale-codec",
+ "plant-authorship",
+ "plant-babe",
+ "plant-balances",
+ "plant-election-provider",
+ "plant-grandpa",
+ "plant-im-online",
+ "plant-offences",
+ "plant-session",
+ "plant-staking",
+ "plant-staking-macros",
+ "plant-timestamp",
+ "scale-info",
+ "subsoil",
+ "topsoil-benchmarking",
+ "topsoil-support",
+ "topsoil-system",
+]
+
+[[package]]
+name = "plant-test-election-provider-macros"
+version = "0.0.0-dev"
+dependencies = [
+ "plant-election-provider",
+ "plant-election-provider-macros",
+ "trybuild",
+]
+
+[[package]]
 name = "plant-test-root"
 version = "0.0.0-dev"
 dependencies = [
@@ -7945,10 +7973,8 @@ dependencies = [
  "jsonrpsee",
  "log",
  "parity-scale-codec",
- "plant-balances",
  "scale-info",
  "serde",
- "serde_json",
  "soil-client",
  "soil-rpc",
  "subsoil",
@@ -10691,14 +10717,12 @@ dependencies = [
  "soil-client",
  "soil-network",
  "soil-prometheus",
- "soil-service",
  "soil-statement-store",
  "soil-test-node-runtime",
  "soil-test-node-runtime-client",
  "soil-test-node-runtime-txpool",
  "soil-txpool",
  "subsoil",
- "subsoil-crypto-hashing",
  "tempfile",
  "thiserror 1.0.69",
  "tokio",
@@ -10823,12 +10847,14 @@ name = "soil-test"
 version = "0.0.0-dev"
 dependencies = [
  "array-bytes 6.2.3",
+ "assert_matches",
  "async-channel 1.9.0",
  "async-trait",
  "criterion",
  "fdlimit",
  "futures",
  "futures-timer",
+ "jsonrpsee",
  "libp2p",
  "log",
  "parity-scale-codec",
@@ -10837,9 +10863,11 @@ dependencies = [
  "rustversion",
  "scale-info",
  "serde",
+ "serde_json",
  "soil-client",
  "soil-consensus",
  "soil-network",
+ "soil-rpc",
  "soil-service",
  "soil-test-node-runtime",
  "soil-test-node-runtime-client",
@@ -10847,6 +10875,8 @@ dependencies = [
  "soil-test-runtime-interface-wasm-deprecated",
  "static_assertions",
  "subsoil",
+ "subsoil-crypto-hashing",
+ "subsoil-macros",
  "tempfile",
  "tokio",
  "tracing",
@@ -11664,7 +11694,6 @@ dependencies = [
  "digest 0.10.7",
  "sha2 0.10.9",
  "sha3",
- "subsoil-macros",
  "twox-hash 1.6.3",
 ]
 
@@ -11681,7 +11710,6 @@ dependencies = [
  "proc-macro-warning",
  "proc-macro2",
  "quote",
- "subsoil",
  "subsoil-crypto-hashing",
  "syn 2.0.117",
 ]
@@ -12586,20 +12614,13 @@ dependencies = [
  "expander",
  "itertools 0.11.0",
  "macro_magic",
- "parity-scale-codec",
- "pretty_assertions",
  "proc-macro-warning",
  "proc-macro2",
  "quote",
  "regex",
- "scale-info",
- "subsoil",
  "subsoil-crypto-hashing",
  "syn 2.0.117",
- "topsoil-benchmarking",
- "topsoil-support",
  "topsoil-support-procedural-tools",
- "topsoil-system",
 ]
 
 [[package]]
@@ -12663,6 +12684,7 @@ dependencies = [
 name = "topsoil-test-support"
 version = "0.0.0-dev"
 dependencies = [
+ "docify",
  "frame-metadata",
  "parity-scale-codec",
  "pretty_assertions",
