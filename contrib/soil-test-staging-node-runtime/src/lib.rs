@@ -98,6 +98,7 @@ use topsoil_support::{
 		AsEnsureOriginWithArg, ConstBool, ConstU128, ConstU16, ConstU32, ConstU64,
 		ConstantStoragePrice, Contains, Currency, EitherOfDiverse, EnsureOriginWithArg,
 		EqualPrivilegeOnly, InsideBoth, InstanceFilter, KeyOwnerProofSystem, LinearStoragePrice,
+		OnInitialize,
 		LockIdentifier, Nothing, OnUnbalanced, VariantCountOf, WithdrawReasons,
 	},
 	weights::{
@@ -3008,6 +3009,244 @@ mod benches {
 	);
 }
 
+#[cfg(feature = "runtime-benchmarks")]
+type SessionMembershipBenchmarkSetup =
+	((subsoil::runtime::KeyTypeId, Vec<u8>), subsoil::session::MembershipProof);
+
+#[cfg(feature = "runtime-benchmarks")]
+type RuntimeIdentificationTuple = plant_session::historical::IdentificationTuple<Runtime>;
+
+#[cfg(feature = "runtime-benchmarks")]
+struct BenchmarkOffender {
+	controller: AccountId,
+	#[allow(dead_code)]
+	stash: AccountId,
+	#[allow(dead_code)]
+	nominator_stashes: Vec<AccountId>,
+}
+
+#[cfg(feature = "runtime-benchmarks")]
+fn benchmark_generate_session_keys_and_proof(owner: AccountId) -> (SessionKeys, Vec<u8>) {
+	let keys = SessionKeys::generate(&owner.encode(), None);
+	(keys.keys, keys.proof.encode())
+}
+
+#[cfg(feature = "runtime-benchmarks")]
+fn benchmark_setup_session_controller() -> Result<AccountId, &'static str> {
+	let max_nominations = plant_staking::MaxNominationsOf::<Runtime>::get();
+	let (stash, _) = plant_staking::benchmarking::create_validator_with_nominators::<Runtime>(
+		max_nominations,
+		max_nominations,
+		false,
+		true,
+		plant_staking::RewardDestination::Staked,
+	)?;
+
+	Staking::bonded(&stash).ok_or("not stash")
+}
+
+#[cfg(feature = "runtime-benchmarks")]
+fn benchmark_setup_session_membership_proof(
+	n: u32,
+) -> Result<SessionMembershipBenchmarkSetup, &'static str> {
+	plant_staking::ValidatorCount::<Runtime>::put(n);
+	let mut first_key = None;
+
+	for who in plant_staking::testing_utils::create_validators::<Runtime>(n, 1000)? {
+		let validator =
+			<Runtime as topsoil_system::Config>::Lookup::lookup(who).map_err(|_| "lookup failed")?;
+		let controller = Staking::bonded(&validator).ok_or("not stash")?;
+		let (keys, proof) = benchmark_generate_session_keys_and_proof(controller.clone());
+
+		if first_key.is_none() {
+			let key_type = SessionKeys::key_ids()[0];
+			let key_data = keys.get_raw(key_type).to_vec();
+			first_key = Some((key_type, key_data));
+		}
+
+		Session::set_keys(
+			topsoil_system::RawOrigin::Signed(controller).into(),
+			keys,
+			proof,
+		)
+		.map_err(|_| "failed to set keys")?;
+	}
+
+	plant_session::benchmarking::Pallet::<Runtime>::on_initialize(
+		subsoil::runtime::traits::One::one(),
+	);
+
+	while plant_session::Validators::<Runtime>::get().len() < n as usize {
+		Session::rotate_session();
+	}
+
+	let key = first_key.ok_or("missing benchmark key")?;
+	let proof = Historical::prove((key.0, key.1.clone())).ok_or("failed to prove")?;
+	Ok((key, proof))
+}
+
+#[cfg(feature = "runtime-benchmarks")]
+fn benchmark_offence_bond_amount() -> Balance {
+	plant_staking::asset::existential_deposit::<Runtime>().saturating_mul(10_000u32.into())
+}
+
+#[cfg(feature = "runtime-benchmarks")]
+fn benchmark_create_offender(
+	index: u32,
+	nominators: u32,
+) -> Result<BenchmarkOffender, &'static str> {
+	const SEED: u32 = 0;
+	const MAX_BENCH_NOMINATORS: u32 = 100;
+
+	let stash: AccountId = topsoil_benchmarking::account("stash", index, SEED);
+	let stash_lookup = <Runtime as topsoil_system::Config>::Lookup::unlookup(stash.clone());
+	let reward_destination = plant_staking::RewardDestination::Staked;
+	let amount = benchmark_offence_bond_amount();
+	let free_amount = amount.saturating_mul(2u32.into());
+
+	plant_staking::asset::set_stakeable_balance::<Runtime>(&stash, free_amount);
+	Staking::bond(
+		topsoil_system::RawOrigin::Signed(stash.clone()).into(),
+		amount,
+		reward_destination.clone(),
+	)
+	.map_err(|_| "failed to bond stash")?;
+
+	let validator_prefs = plant_staking::ValidatorPrefs {
+		commission: Perbill::from_percent(50),
+		..Default::default()
+	};
+	Staking::validate(
+		topsoil_system::RawOrigin::Signed(stash.clone()).into(),
+		validator_prefs,
+	)
+	.map_err(|_| "failed to validate")?;
+
+	let (keys, proof) = benchmark_generate_session_keys_and_proof(stash.clone());
+	Session::ensure_can_pay_key_deposit(&stash).map_err(|_| "key deposit")?;
+	Session::set_keys(
+		topsoil_system::RawOrigin::Signed(stash.clone()).into(),
+		keys,
+		proof,
+	)
+	.map_err(|_| "failed to set keys")?;
+
+	let mut individual_exposures = Vec::new();
+	let mut nominator_stashes = Vec::new();
+	for i in 0..nominators {
+		let nominator_stash: AccountId =
+			topsoil_benchmarking::account("nominator stash", index * MAX_BENCH_NOMINATORS + i, SEED);
+		plant_staking::asset::set_stakeable_balance::<Runtime>(&nominator_stash, free_amount);
+		Staking::bond(
+			topsoil_system::RawOrigin::Signed(nominator_stash.clone()).into(),
+			amount,
+			reward_destination.clone(),
+		)
+		.map_err(|_| "failed to bond nominator")?;
+		Staking::nominate(
+			topsoil_system::RawOrigin::Signed(nominator_stash.clone()).into(),
+			vec![stash_lookup.clone()],
+		)
+		.map_err(|_| "failed to nominate")?;
+		individual_exposures.push(plant_staking::IndividualExposure {
+			who: nominator_stash.clone(),
+			value: amount,
+		});
+		nominator_stashes.push(nominator_stash);
+	}
+
+	let exposure = plant_staking::Exposure {
+		total: amount.saturating_mul((nominators + 1).into()),
+		own: amount,
+		others: individual_exposures,
+	};
+	Staking::add_era_stakers(0, stash.clone(), exposure);
+
+	Ok(BenchmarkOffender { controller: stash.clone(), stash, nominator_stashes })
+}
+
+#[cfg(feature = "runtime-benchmarks")]
+fn benchmark_make_offenders(
+	num_offenders: u32,
+	num_nominators: u32,
+) -> Result<Vec<RuntimeIdentificationTuple>, &'static str> {
+	let mut offenders = Vec::new();
+	for i in 0..num_offenders {
+		let offender = benchmark_create_offender(i + 1, num_nominators)?;
+		plant_session::Validators::<Runtime>::mutate(|validators| {
+			validators.push(offender.controller.clone())
+		});
+		offenders.push(offender);
+	}
+
+	let id_tuples = offenders
+		.iter()
+		.map(|offender| offender.controller.clone())
+		.map(|validator_id| {
+			<Runtime as plant_session::historical::Config>::FullIdentificationOf::convert(
+				validator_id.clone(),
+			)
+			.map(|full_id| (validator_id, full_id))
+			.expect("historical identification should exist")
+		})
+		.collect::<Vec<_>>();
+
+	if plant_staking::ActiveEra::<Runtime>::get().is_none() {
+		plant_staking::ActiveEra::<Runtime>::put(plant_staking::ActiveEraInfo {
+			index: 0,
+			start: Some(0),
+		});
+	}
+
+	Ok(id_tuples)
+}
+
+#[cfg(feature = "runtime-benchmarks")]
+fn benchmark_setup_grandpa_offence(
+	n: u32,
+) -> Result<
+	(
+		Vec<AccountId>,
+		plant_grandpa::EquivocationOffence<RuntimeIdentificationTuple>,
+	),
+	&'static str,
+> {
+	let reporters = vec![topsoil_benchmarking::account("reporter", 1, 0)];
+	Staking::set_slash_reward_fraction(Perbill::one());
+	let mut offenders = benchmark_make_offenders(1, n)?;
+	let validator_set_count = Session::validators().len() as u32;
+	let offence = plant_grandpa::EquivocationOffence {
+		time_slot: plant_grandpa::TimeSlot { set_id: 0, round: 0 },
+		session_index: 0,
+		validator_set_count,
+		offender: offenders.pop().ok_or("missing offender")?,
+	};
+	Ok((reporters, offence))
+}
+
+#[cfg(feature = "runtime-benchmarks")]
+fn benchmark_setup_babe_offence(
+	n: u32,
+) -> Result<
+	(
+		Vec<AccountId>,
+		plant_babe::EquivocationOffence<RuntimeIdentificationTuple>,
+	),
+	&'static str,
+> {
+	let reporters = vec![topsoil_benchmarking::account("reporter", 1, 0)];
+	Staking::set_slash_reward_fraction(Perbill::one());
+	let mut offenders = benchmark_make_offenders(1, n)?;
+	let validator_set_count = Session::validators().len() as u32;
+	let offence = plant_babe::EquivocationOffence {
+		slot: 0u64.into(),
+		session_index: 0,
+		validator_set_count,
+		offender: offenders.pop().ok_or("missing offender")?,
+	};
+	Ok((reporters, offence))
+}
+
 subsoil::api::impl_runtime_apis! {
 	impl subsoil::api::Core<Block> for Runtime {
 		fn version() -> RuntimeVersion {
@@ -3546,11 +3785,8 @@ subsoil::api::impl_runtime_apis! {
 			use topsoil_benchmarking::{baseline, BenchmarkList};
 			use topsoil_support::traits::StorageInfoTrait;
 
-			// Trying to add benchmarks directly to the Session Pallet caused cyclic dependency
-			// issues. To get around that, we separated the Session benchmarks into its own crate,
-			// which is why we need these two lines below.
-			use plant_session_benchmarking::Pallet as SessionBench;
-			use plant_offences_benchmarking::Pallet as OffencesBench;
+			use plant_session::benchmarking::Pallet as SessionBench;
+			use plant_offences::benchmarking::Pallet as OffencesBench;
 			use plant_election_provider::benchmarking::Pallet as EPSBench;
 			use topsoil_system_benchmarking::Pallet as SystemBench;
 			use topsoil_system_benchmarking::extensions::Pallet as SystemExtensionsBench;
@@ -3572,24 +3808,56 @@ subsoil::api::impl_runtime_apis! {
 			use topsoil_benchmarking::{baseline, BenchmarkBatch};
 			use subsoil::storage::TrackedStorageKey;
 
-			// Trying to add benchmarks directly to the Session Pallet caused cyclic dependency
-			// issues. To get around that, we separated the Session benchmarks into its own crate,
-			// which is why we need these two lines below.
-			use plant_session_benchmarking::Pallet as SessionBench;
-			use plant_offences_benchmarking::Pallet as OffencesBench;
+			use plant_session::benchmarking::Pallet as SessionBench;
+			use plant_offences::benchmarking::Pallet as OffencesBench;
 			use plant_election_provider::benchmarking::Pallet as EPSBench;
 			use topsoil_system_benchmarking::Pallet as SystemBench;
 			use topsoil_system_benchmarking::extensions::Pallet as SystemExtensionsBench;
 			use baseline::Pallet as BaselineBench;
 			use plant_nomination_pools_benchmarking::Pallet as NominationPoolsBench;
 
-			impl plant_session_benchmarking::Config for Runtime {
+			impl plant_session::benchmarking::Config for Runtime {
 				fn generate_session_keys_and_proof(owner: Self::AccountId) -> (Self::Keys, Vec<u8>) {
-					let keys = SessionKeys::generate(&owner.encode(), None);
-					(keys.keys, keys.proof.encode())
+					benchmark_generate_session_keys_and_proof(owner)
+				}
+
+				fn setup_benchmark_controller() -> Result<Self::AccountId, &'static str> {
+					benchmark_setup_session_controller()
+				}
+
+				fn setup_membership_proof_benchmark(
+					n: u32,
+				) -> Result<
+					(
+						(subsoil::runtime::KeyTypeId, Vec<u8>),
+						subsoil::session::MembershipProof,
+					),
+					&'static str,
+				> {
+					benchmark_setup_session_membership_proof(n)
 				}
 			}
-			impl plant_offences_benchmarking::Config for Runtime {}
+
+			impl plant_offences::benchmarking::Config for Runtime {
+				type MaxNominators = plant_staking::MaxNominationsOf<Self>;
+				type BabeBenchmarkOffence =
+					plant_babe::EquivocationOffence<plant_session::historical::IdentificationTuple<Self>>;
+				type GrandpaBenchmarkOffence =
+					plant_grandpa::EquivocationOffence<plant_session::historical::IdentificationTuple<Self>>;
+
+				fn setup_babe_benchmark(
+					n: u32,
+				) -> Result<(Vec<Self::AccountId>, Self::BabeBenchmarkOffence), &'static str> {
+					benchmark_setup_babe_offence(n)
+				}
+
+				fn setup_grandpa_benchmark(
+					n: u32,
+				) -> Result<(Vec<Self::AccountId>, Self::GrandpaBenchmarkOffence), &'static str> {
+					benchmark_setup_grandpa_offence(n)
+				}
+			}
+
 			impl plant_election_provider::benchmarking::Config for Runtime {}
 			impl topsoil_system_benchmarking::Config for Runtime {}
 			impl plant_transaction_payment::BenchmarkConfig for Runtime {}

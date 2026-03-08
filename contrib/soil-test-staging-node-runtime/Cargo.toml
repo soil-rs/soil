@@ -101,7 +101,6 @@ plant-nomination-pools = { workspace = true }
 plant-nomination-pools-benchmarking = { workspace = true }
 plant-nomination-pools-runtime-api = { workspace = true }
 plant-offences = { workspace = true }
-plant-offences-benchmarking = { workspace = true }
 plant-oracle = { workspace = true }
 plant-oracle-runtime-api = { workspace = true }
 plant-origin-restriction = { workspace = true }
@@ -121,7 +120,6 @@ plant-salary = { workspace = true }
 plant-scheduler = { workspace = true }
 plant-scored-pool = { workspace = true }
 plant-session = { workspace = true }
-plant-session-benchmarking = { workspace = true }
 plant-society = { workspace = true }
 plant-staking = { workspace = true }
 plant-staking-macros = { workspace = true }
@@ -229,7 +227,6 @@ std = [
 	"plant-nomination-pools-benchmarking/std",
 	"plant-nomination-pools-runtime-api/std",
 	"plant-offences/std",
-	"plant-offences-benchmarking/std",
 	"plant-oracle/std",
 	"plant-oracle-runtime-api/std",
 	"plant-origin-restriction/std",
@@ -249,7 +246,6 @@ std = [
 	"plant-scheduler/std",
 	"plant-scored-pool/std",
 	"plant-session/std",
-	"plant-session-benchmarking/std",
 	"plant-society/std",
 	"plant-staking/std",
 	"plant-state-trie-migration/std",
@@ -330,7 +326,6 @@ runtime-benchmarks = [
 	"plant-nomination-pools/runtime-benchmarks",
 	"plant-nomination-pools-benchmarking/runtime-benchmarks",
 	"plant-offences/runtime-benchmarks",
-	"plant-offences-benchmarking/runtime-benchmarks",
 	"plant-oracle/runtime-benchmarks",
 	"plant-origin-restriction/runtime-benchmarks",
 	"plant-paged-list/runtime-benchmarks",
@@ -347,7 +342,6 @@ runtime-benchmarks = [
 	"plant-salary/runtime-benchmarks",
 	"plant-scheduler/runtime-benchmarks",
 	"plant-session/runtime-benchmarks",
-	"plant-session-benchmarking/runtime-benchmarks",
 	"plant-society/runtime-benchmarks",
 	"plant-staking/runtime-benchmarks",
 	"plant-state-trie-migration/runtime-benchmarks",

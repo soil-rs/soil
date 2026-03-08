@@ -1,34 +1,25 @@
 // This file is part of Substrate.
-
+//
 // Copyright (C) Parity Technologies (UK) Ltd.
 // SPDX-License-Identifier: Apache-2.0
-
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-// 	http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
 
 //! Mock file for session benchmarking.
 
 #![cfg(test)]
 
+use super::MembershipBenchmarkSetup;
 use codec::Encode;
-use subsoil::runtime::{traits::IdentityLookup, BuildStorage, KeyTypeId};
+use subsoil::runtime::{traits::{IdentityLookup, OpaqueKeys, One}, BuildStorage, KeyTypeId};
 use plant_election_provider::{
 	bounds::{ElectionBounds, ElectionBoundsBuilder},
 	onchain, SequentialPhragmen,
 };
 use topsoil_support::{
 	derive_impl, parameter_types,
-	traits::{ConstU32, ConstU64},
+	traits::{ConstU32, ConstU64, Get, KeyOwnerProofSystem, OnInitialize},
 };
+
+use crate::{historical::Pallet as Historical, Pallet as Session, Validators};
 
 type AccountId = u64;
 type Nonce = u32;
@@ -67,6 +58,7 @@ impl plant_timestamp::Config for Test {
 	type MinimumPeriod = ConstU64<5>;
 	type WeightInfo = ();
 }
+
 impl plant_session::historical::Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type FullIdentification = ();
@@ -81,7 +73,6 @@ subsoil::impl_opaque_keys! {
 
 pub struct TestSessionHandler;
 impl plant_session::SessionHandler<AccountId> for TestSessionHandler {
-	// corresponds to the opaque key id above
 	const KEY_TYPE_IDS: &'static [KeyTypeId] = &[KeyTypeId([100u8, 117u8, 109u8, 121u8])];
 
 	fn on_genesis_session<Ks: subsoil::runtime::traits::OpaqueKeys>(
@@ -111,10 +102,9 @@ impl plant_session::Config for Test {
 	type DisablingStrategy = ();
 	type WeightInfo = ();
 	type Currency = Balances;
-	// Note: setting to a large amount to ensure bench setup can handle increasing the balance of
-	// the validator before setting session keys; see `ensure_can_pay_key_deposit`.
-	type KeyDeposit = ConstU64<2000000000>;
+	type KeyDeposit = ConstU64<2_000_000_000>;
 }
+
 plant_staking_macros::build! {
 	const I_NPOS: subsoil::runtime::curve::PiecewiseLinear<'static> = curve!(
 		min_inflation: 0_025_000,
@@ -159,11 +149,58 @@ impl plant_staking::Config for Test {
 	type TargetList = plant_staking::UseValidatorsMap<Self>;
 }
 
-impl crate::Config for Test {
+impl super::Config for Test {
 	fn generate_session_keys_and_proof(owner: Self::AccountId) -> (Self::Keys, Vec<u8>) {
 		let keys = SessionKeys::generate(&owner.encode(), None);
-
 		(keys.keys, keys.proof.encode())
+	}
+
+	fn setup_benchmark_controller() -> Result<Self::AccountId, &'static str> {
+		let max_nominations = plant_staking::MaxNominationsOf::<Self>::get();
+		let (stash, _) = plant_staking::benchmarking::create_validator_with_nominators::<Self>(
+			max_nominations,
+			max_nominations,
+			false,
+			true,
+			plant_staking::RewardDestination::Staked,
+		)?;
+
+		plant_staking::Pallet::<Self>::bonded(&stash).ok_or("not stash")
+	}
+
+	fn setup_membership_proof_benchmark(n: u32) -> Result<MembershipBenchmarkSetup, &'static str> {
+		plant_staking::ValidatorCount::<Self>::put(n);
+		let mut first_key = None;
+
+		for who in plant_staking::testing_utils::create_validators::<Self>(n, 1000)? {
+			let validator = Self::Lookup::lookup(who).map_err(|_| "lookup failed")?;
+			let controller = plant_staking::Pallet::<Self>::bonded(&validator).ok_or("not stash")?;
+			let (keys, proof) = Self::generate_session_keys_and_proof(controller.clone());
+
+			if first_key.is_none() {
+				let key_type = SessionKeys::key_ids()[0];
+				let key_data = keys.get_raw(key_type).to_vec();
+				first_key = Some((key_type, key_data));
+			}
+
+			Session::<Self>::set_keys(
+				topsoil_system::RawOrigin::Signed(controller).into(),
+				keys,
+				proof,
+			)
+			.map_err(|_| "failed to set keys")?;
+		}
+
+		crate::benchmarking::Pallet::<Self>::on_initialize(One::one());
+
+		while Validators::<Self>::get().len() < n as usize {
+			Session::<Self>::rotate_session();
+		}
+
+		let key = first_key.ok_or("missing benchmark key")?;
+		let proof = Historical::<Self>::prove((key.0, key.1.clone())).ok_or("failed to prove")?;
+
+		Ok((key, proof))
 	}
 }
 

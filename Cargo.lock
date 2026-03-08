@@ -7504,31 +7504,17 @@ version = "27.0.0"
 dependencies = [
  "log",
  "parity-scale-codec",
- "scale-info",
- "serde",
- "subsoil",
- "topsoil-support",
- "topsoil-system",
-]
-
-[[package]]
-name = "plant-offences-benchmarking"
-version = "28.0.0"
-dependencies = [
- "log",
- "parity-scale-codec",
  "plant-babe",
  "plant-balances",
  "plant-election-provider",
  "plant-grandpa",
  "plant-im-online",
- "plant-offences",
  "plant-session",
- "plant-session-benchmarking",
  "plant-staking",
  "plant-staking-macros",
  "plant-timestamp",
  "scale-info",
+ "serde",
  "subsoil",
  "topsoil-benchmarking",
  "topsoil-support",
@@ -7797,25 +7783,10 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "plant-balances",
- "plant-timestamp",
- "scale-info",
- "subsoil",
- "topsoil-support",
- "topsoil-system",
-]
-
-[[package]]
-name = "plant-session-benchmarking"
-version = "28.0.0"
-dependencies = [
- "parity-scale-codec",
- "plant-balances",
  "plant-election-provider",
- "plant-session",
  "plant-staking",
  "plant-staking-macros",
  "plant-timestamp",
- "rand 0.8.5",
  "scale-info",
  "subsoil",
  "topsoil-benchmarking",
@@ -11227,7 +11198,6 @@ dependencies = [
  "plant-nomination-pools-benchmarking",
  "plant-nomination-pools-runtime-api",
  "plant-offences",
- "plant-offences-benchmarking",
  "plant-oracle",
  "plant-oracle-runtime-api",
  "plant-origin-restriction",
@@ -11246,7 +11216,6 @@ dependencies = [
  "plant-scheduler",
  "plant-scored-pool",
  "plant-session",
- "plant-session-benchmarking",
  "plant-society",
  "plant-staking",
  "plant-staking-macros",

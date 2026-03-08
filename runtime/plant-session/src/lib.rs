@@ -109,6 +109,8 @@
 pub mod disabling;
 #[cfg(feature = "historical")]
 pub mod historical;
+#[cfg(feature = "runtime-benchmarks")]
+pub mod benchmarking;
 pub mod migrations;
 #[cfg(test)]
 mod mock;

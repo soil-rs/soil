@@ -112,7 +112,6 @@ members = [
 	"contrib/plant-nomination-pools/fuzzer",
 	"contrib/plant-nomination-pools/runtime-api",
 	"runtime/plant-offences",
-	"runtime/plant-offences-benchmarking",
 	"contrib/plant-origin-restriction",
 	"contrib/plant-paged-list",
 	"contrib/plant-paged-list/fuzzer",
@@ -132,7 +131,6 @@ members = [
 	"contrib/plant-scheduler",
 	"contrib/plant-scored-pool",
 	"runtime/plant-session",
-	"runtime/plant-session-benchmarking",
 	"contrib/plant-society",
 	"runtime/plant-staking",
 	"runtime/plant-staking-macros",
@@ -333,7 +331,6 @@ plant-nomination-pools = { path = "contrib/plant-nomination-pools", default-feat
 plant-nomination-pools-benchmarking = { path = "contrib/plant-nomination-pools/benchmarking", default-features = false }
 plant-nomination-pools-runtime-api = { path = "contrib/plant-nomination-pools/runtime-api", default-features = false }
 plant-offences = { path = "runtime/plant-offences", default-features = false }
-plant-offences-benchmarking = { path = "runtime/plant-offences-benchmarking", default-features = false }
 plant-oracle = { path = "contrib/plant-honzon/oracle", default-features = false }
 plant-oracle-runtime-api = { path = "contrib/plant-honzon/oracle/runtime-api", default-features = false }
 plant-origin-restriction = { path = "contrib/plant-origin-restriction", default-features = false }
@@ -353,7 +350,6 @@ plant-salary = { path = "contrib/plant-salary", default-features = false }
 plant-scheduler = { path = "contrib/plant-scheduler", default-features = false }
 plant-scored-pool = { default-features = false, path = "contrib/plant-scored-pool" }
 plant-session = { path = "runtime/plant-session", default-features = false }
-plant-session-benchmarking = { path = "runtime/plant-session-benchmarking", default-features = false }
 plant-society = { path = "contrib/plant-society", default-features = false }
 plant-staking = { path = "runtime/plant-staking", default-features = false }
 plant-staking-macros = { path = "runtime/plant-staking-macros", default-features = false }
