@@ -154,8 +154,6 @@ members = [
 	"runtime/plant-transaction-payment",
 	"runtime/plant-asset-conversion-tx-payment",
 	"runtime/plant-asset-tx-payment",
-	"runtime/plant-transaction-payment-rpc",
-	"runtime/plant-transaction-payment-rpc-runtime-api",
 	"runtime/plant-transaction-storage",
 	"contrib/plant-treasury",
 	"main/topsoil-try-runtime",
@@ -359,8 +357,6 @@ plant-sudo = { path = "contrib/plant-sudo", default-features = false }
 plant-timestamp = { path = "runtime/plant-timestamp", default-features = false }
 plant-tips = { path = "contrib/plant-tips", default-features = false }
 plant-transaction-payment = { path = "runtime/plant-transaction-payment", default-features = false }
-plant-transaction-payment-rpc = { path = "runtime/plant-transaction-payment-rpc", default-features = false }
-plant-transaction-payment-rpc-runtime-api = { path = "runtime/plant-transaction-payment-rpc-runtime-api", default-features = false }
 plant-transaction-storage = { default-features = false, path = "runtime/plant-transaction-storage" }
 plant-treasury = { path = "contrib/plant-treasury", default-features = false }
 plant-tx-pause = { default-features = false, path = "contrib/plant-tx-pause" }

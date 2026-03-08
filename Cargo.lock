@@ -7949,37 +7949,19 @@ dependencies = [
 name = "plant-transaction-payment"
 version = "28.0.0"
 dependencies = [
+ "jsonrpsee",
  "log",
  "parity-scale-codec",
  "plant-balances",
  "scale-info",
  "serde",
  "serde_json",
+ "soil-client",
+ "soil-rpc",
  "subsoil",
  "topsoil-benchmarking",
  "topsoil-support",
  "topsoil-system",
-]
-
-[[package]]
-name = "plant-transaction-payment-rpc"
-version = "30.0.0"
-dependencies = [
- "jsonrpsee",
- "parity-scale-codec",
- "plant-transaction-payment-rpc-runtime-api",
- "soil-client",
- "soil-rpc",
- "subsoil",
-]
-
-[[package]]
-name = "plant-transaction-payment-rpc-runtime-api"
-version = "28.0.0"
-dependencies = [
- "parity-scale-codec",
- "plant-transaction-payment",
- "subsoil",
 ]
 
 [[package]]
@@ -11012,7 +10994,6 @@ dependencies = [
  "plant-test-root",
  "plant-timestamp",
  "plant-transaction-payment",
- "plant-transaction-payment-rpc",
  "plant-treasury",
  "pretty_assertions",
  "rand 0.8.5",
@@ -11119,7 +11100,7 @@ name = "soil-test-staging-node-rpc"
 version = "3.0.0-dev"
 dependencies = [
  "jsonrpsee",
- "plant-transaction-payment-rpc",
+ "plant-transaction-payment",
  "soil-babe",
  "soil-beefy",
  "soil-chain-spec",
@@ -11226,7 +11207,6 @@ dependencies = [
  "plant-timestamp",
  "plant-tips",
  "plant-transaction-payment",
- "plant-transaction-payment-rpc-runtime-api",
  "plant-transaction-storage",
  "plant-treasury",
  "plant-tx-pause",

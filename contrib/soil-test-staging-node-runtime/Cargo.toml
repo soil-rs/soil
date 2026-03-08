@@ -129,7 +129,6 @@ plant-sudo = { workspace = true }
 plant-timestamp = { workspace = true }
 plant-tips = { workspace = true }
 plant-transaction-payment = { workspace = true }
-plant-transaction-payment-rpc-runtime-api = { workspace = true }
 plant-transaction-storage = { workspace = true }
 plant-treasury = { workspace = true }
 plant-tx-pause = { workspace = true }
@@ -254,7 +253,6 @@ std = [
 	"plant-timestamp/std",
 	"plant-tips/std",
 	"plant-transaction-payment/std",
-	"plant-transaction-payment-rpc-runtime-api/std",
 	"plant-transaction-storage/std",
 	"plant-treasury/std",
 	"plant-tx-pause/std",

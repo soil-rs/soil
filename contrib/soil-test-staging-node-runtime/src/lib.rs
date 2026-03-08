@@ -3495,7 +3495,7 @@ subsoil::api::impl_runtime_apis! {
 		}
 	}
 
-	impl plant_transaction_payment_rpc_runtime_api::TransactionPaymentApi<
+	impl plant_transaction_payment::TransactionPaymentApi<
 		Block,
 		Balance,
 	> for Runtime {
@@ -3532,7 +3532,7 @@ subsoil::api::impl_runtime_apis! {
 		}
 	}
 
-	impl plant_transaction_payment_rpc_runtime_api::TransactionPaymentCallApi<Block, Balance, RuntimeCall>
+	impl plant_transaction_payment::TransactionPaymentCallApi<Block, Balance, RuntimeCall>
 		for Runtime
 	{
 		fn query_call_info(call: RuntimeCall, len: u32) -> RuntimeDispatchInfo<Balance> {

@@ -52,6 +52,7 @@ use scale_info::TypeInfo;
 
 pub use pallet::*;
 pub use payment::*;
+pub use runtime_api::*;
 use subsoil::runtime::{
 	traits::{
 		Convert, DispatchInfoOf, Dispatchable, One, PostDispatchInfoOf, SaturatedConversion,
@@ -82,7 +83,11 @@ mod benchmarking;
 #[cfg(feature = "runtime-benchmarks")]
 pub use benchmarking::Config as BenchmarkConfig;
 
+#[cfg(feature = "client")]
+pub mod client;
+
 mod payment;
+mod runtime_api;
 mod types;
 pub mod weights;
 
