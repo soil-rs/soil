@@ -10201,7 +10201,7 @@ dependencies = [
 
 [[package]]
 name = "soil"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "soil-aura",
  "soil-babe",
@@ -10224,7 +10224,7 @@ dependencies = [
 
 [[package]]
 name = "soil-aura"
-version = "0.34.0"
+version = "0.2.0"
 dependencies = [
  "async-trait",
  "futures",
@@ -10247,7 +10247,7 @@ dependencies = [
 
 [[package]]
 name = "soil-babe"
-version = "0.34.0"
+version = "0.2.0"
 dependencies = [
  "async-trait",
  "futures",
@@ -10275,7 +10275,7 @@ dependencies = [
 
 [[package]]
 name = "soil-beefy"
-version = "13.0.0"
+version = "0.2.0"
 dependencies = [
  "array-bytes 6.2.3",
  "async-channel 1.9.0",
@@ -10301,7 +10301,7 @@ dependencies = [
 
 [[package]]
 name = "soil-chain-spec"
-version = "28.0.0"
+version = "0.2.0"
 dependencies = [
  "array-bytes 6.2.3",
  "clap",
@@ -10323,7 +10323,7 @@ dependencies = [
 
 [[package]]
 name = "soil-chain-spec-macros"
-version = "11.0.0"
+version = "0.2.0"
 dependencies = [
  "proc-macro-crate 3.4.0",
  "proc-macro2",
@@ -10333,7 +10333,7 @@ dependencies = [
 
 [[package]]
 name = "soil-cli"
-version = "0.36.0"
+version = "0.2.0"
 dependencies = [
  "array-bytes 6.2.3",
  "bip39",
@@ -10365,7 +10365,7 @@ dependencies = [
 
 [[package]]
 name = "soil-client"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "anyhow",
  "array-bytes 6.2.3",
@@ -10426,7 +10426,7 @@ dependencies = [
 
 [[package]]
 name = "soil-consensus"
-version = "0.33.0"
+version = "0.2.0"
 dependencies = [
  "async-trait",
  "futures",
@@ -10446,14 +10446,14 @@ dependencies = [
 
 [[package]]
 name = "soil-fork-tree"
-version = "12.0.0"
+version = "0.2.0"
 dependencies = [
  "parity-scale-codec",
 ]
 
 [[package]]
 name = "soil-grandpa"
-version = "0.19.0"
+version = "0.2.0"
 dependencies = [
  "ahash 0.8.12",
  "array-bytes 6.2.3",
@@ -10514,7 +10514,7 @@ dependencies = [
 
 [[package]]
 name = "soil-mmr-gadget"
-version = "29.0.0"
+version = "0.2.0"
 dependencies = [
  "futures",
  "log",
@@ -10529,7 +10529,7 @@ dependencies = [
 
 [[package]]
 name = "soil-network"
-version = "0.34.0"
+version = "0.2.0"
 dependencies = [
  "ahash 0.8.12",
  "array-bytes 6.2.3",
@@ -10600,7 +10600,7 @@ dependencies = [
 
 [[package]]
 name = "soil-offchain"
-version = "29.0.0"
+version = "0.2.0"
 dependencies = [
  "async-trait",
  "bytes",
@@ -10629,7 +10629,7 @@ dependencies = [
 
 [[package]]
 name = "soil-pow"
-version = "0.33.0"
+version = "0.2.0"
 dependencies = [
  "async-trait",
  "futures",
@@ -10646,7 +10646,7 @@ dependencies = [
 
 [[package]]
 name = "soil-prometheus"
-version = "0.17.0"
+version = "0.2.0"
 dependencies = [
  "http-body-util",
  "hyper 1.8.1",
@@ -10659,7 +10659,7 @@ dependencies = [
 
 [[package]]
 name = "soil-rpc"
-version = "26.0.0"
+version = "0.2.0"
 dependencies = [
  "array-bytes 6.2.3",
  "assert_matches",
@@ -10710,7 +10710,7 @@ dependencies = [
 
 [[package]]
 name = "soil-runtime-utilities"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "parity-scale-codec",
  "soil-client",
@@ -10722,7 +10722,7 @@ dependencies = [
 
 [[package]]
 name = "soil-service"
-version = "0.35.0"
+version = "0.2.0"
 dependencies = [
  "async-trait",
  "console",
@@ -10765,7 +10765,7 @@ dependencies = [
 
 [[package]]
 name = "soil-statement-store"
-version = "10.0.0"
+version = "0.2.0"
 dependencies = [
  "aes-gcm",
  "curve25519-dalek",
@@ -10785,7 +10785,7 @@ dependencies = [
 
 [[package]]
 name = "soil-sync-state-rpc"
-version = "0.34.0"
+version = "0.2.0"
 dependencies = [
  "jsonrpsee",
  "parity-scale-codec",
@@ -10802,7 +10802,7 @@ dependencies = [
 
 [[package]]
 name = "soil-telemetry"
-version = "15.0.0"
+version = "0.2.0"
 dependencies = [
  "chrono",
  "futures",
@@ -11319,7 +11319,7 @@ dependencies = [
 
 [[package]]
 name = "soil-transaction-storage-proof"
-version = "26.0.0"
+version = "0.2.0"
 dependencies = [
  "async-trait",
  "parity-scale-codec",
@@ -11329,7 +11329,7 @@ dependencies = [
 
 [[package]]
 name = "soil-txpool"
-version = "28.0.0"
+version = "0.2.0"
 dependencies = [
  "anyhow",
  "assert_matches",
@@ -11657,7 +11657,7 @@ dependencies = [
 
 [[package]]
 name = "subsoil-crypto-hashing"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "blake2b_simd",
  "byteorder",
@@ -11671,7 +11671,7 @@ dependencies = [
 
 [[package]]
 name = "subsoil-macros"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "Inflector",
  "assert_matches",
@@ -12480,7 +12480,7 @@ checksum = "ab16f14aed21ee8bfd8ec22513f7287cd4a91aa92e44edfe2c17ddd004e92607"
 
 [[package]]
 name = "topsoil"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "docify",
  "log",
@@ -12499,7 +12499,7 @@ dependencies = [
 
 [[package]]
 name = "topsoil-benchmarking"
-version = "28.0.0"
+version = "0.2.0"
 dependencies = [
  "array-bytes 6.2.3",
  "linregress",
@@ -12519,7 +12519,7 @@ dependencies = [
 
 [[package]]
 name = "topsoil-benchmarking-pallet-pov"
-version = "18.0.0"
+version = "0.2.0"
 dependencies = [
  "parity-scale-codec",
  "scale-info",
@@ -12531,7 +12531,7 @@ dependencies = [
 
 [[package]]
 name = "topsoil-executive"
-version = "28.0.0"
+version = "0.2.0"
 dependencies = [
  "aquamarine",
  "array-bytes 6.2.3",
@@ -12549,7 +12549,7 @@ dependencies = [
 
 [[package]]
 name = "topsoil-support"
-version = "28.0.0"
+version = "0.2.0"
 dependencies = [
  "Inflector",
  "aquamarine",
@@ -12578,7 +12578,7 @@ dependencies = [
 
 [[package]]
 name = "topsoil-support-procedural"
-version = "23.0.0"
+version = "0.2.0"
 dependencies = [
  "Inflector",
  "cfg-expr",
@@ -12605,7 +12605,7 @@ dependencies = [
 
 [[package]]
 name = "topsoil-support-procedural-tools"
-version = "10.0.0"
+version = "0.2.0"
 dependencies = [
  "proc-macro-crate 3.4.0",
  "proc-macro2",
@@ -12616,7 +12616,7 @@ dependencies = [
 
 [[package]]
 name = "topsoil-support-procedural-tools-macros"
-version = "11.0.0"
+version = "0.2.0"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -12625,7 +12625,7 @@ dependencies = [
 
 [[package]]
 name = "topsoil-system"
-version = "28.0.0"
+version = "0.2.0"
 dependencies = [
  "cfg-if",
  "criterion",
@@ -12641,7 +12641,7 @@ dependencies = [
 
 [[package]]
 name = "topsoil-system-benchmarking"
-version = "28.0.0"
+version = "0.2.0"
 dependencies = [
  "parity-scale-codec",
  "scale-info",
@@ -12653,7 +12653,7 @@ dependencies = [
 
 [[package]]
 name = "topsoil-system-rpc-runtime-api"
-version = "26.0.0"
+version = "0.2.0"
 dependencies = [
  "docify",
  "parity-scale-codec",
@@ -12714,7 +12714,7 @@ dependencies = [
 
 [[package]]
 name = "topsoil-try-runtime"
-version = "0.34.0"
+version = "0.2.0"
 dependencies = [
  "parity-scale-codec",
  "subsoil",
