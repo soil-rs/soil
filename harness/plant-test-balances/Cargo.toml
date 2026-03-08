@@ -12,7 +12,7 @@ workspace = true
 [dependencies]
 codec = { features = ["derive", "max-encoded-len"], workspace = true, default-features = true }
 docify = { workspace = true }
-plant-balances = { features = ["insecure_zero_ed"], workspace = true, default-features = true }
+plant-balances = { workspace = true, default-features = true }
 plant-transaction-payment = { workspace = true, default-features = true }
 paste = { workspace = true, default-features = true }
 scale-info = { features = ["derive"], workspace = true, default-features = true }
