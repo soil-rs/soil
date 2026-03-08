@@ -1,12 +1,12 @@
 [package]
 name = "soil-chain-spec-macros"
-version = "11.0.0"
+version = "0.2.0"
 authors.workspace = true
 edition.workspace = true
 license.workspace = true
 homepage.workspace = true
 repository.workspace = true
-description = "Macros to derive chain spec extension traits implementation."
+description = "Macros to derive chain spec extension traits implementation"
 
 [lints]
 workspace = true

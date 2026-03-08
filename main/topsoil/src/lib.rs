@@ -4,20 +4,7 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
 // SPDX-License-Identifier: Apache-2.0 OR GPL-3.0-or-later WITH Classpath-exception-2.0
 
-//! # FRAME
-//!
-//! ```no_compile
-//!   ______   ______    ________   ___ __ __   ______
-//!  /_____/\ /_____/\  /_______/\ /__//_//_/\ /_____/\
-//!  \::::_\/_\:::_ \ \ \::: _  \ \\::\| \| \ \\::::_\/_
-//!   \:\/___/\\:(_) ) )_\::(_)  \ \\:.      \ \\:\/___/\
-//!    \:::._\/ \: __ `\ \\:: __  \ \\:.\-/\  \ \\::___\/_
-//!     \:\ \    \ \ `\ \ \\:.\ \  \ \\. \  \  \ \\:\____/\
-//!      \_\/     \_\/ \_\/ \__\/\__\/ \__\/ \__\/ \_____\/
-//! ```
-//!
-//! > **F**ramework for **R**untime **A**ggregation of **M**odularized **E**ntities: Substrate's
-//! > State Transition Function (Runtime) Framework.
+//! Topsoil
 //!
 //! ## Usage
 //!
@@ -118,10 +105,6 @@
 //! 	"topsoil/try-runtime",
 //! ]
 //! ```
-//!
-//! ## Documentation
-//!
-//! For more detailed documentation and examples, see [`topsoil`](https://paritytech.github.io/polkadot-sdk/master/topsoil/index.html).
 
 #![cfg_attr(not(feature = "std"), no_std)]
 

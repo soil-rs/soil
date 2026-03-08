@@ -1,13 +1,12 @@
 [package]
 name = "soil-transaction-storage-proof"
-version = "26.0.0"
+version = "0.2.0"
 authors.workspace = true
-description = "Transaction storage proof primitives"
 edition.workspace = true
 license.workspace = true
 homepage.workspace = true
 repository.workspace = true
-readme = "README.md"
+description = "Transaction storage proof primitives"
 
 [lints]
 workspace = true

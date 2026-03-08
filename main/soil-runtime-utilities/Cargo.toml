@@ -1,13 +1,12 @@
 [package]
-description = "Substrate client utilities for frame runtime functions calls."
 name = "soil-runtime-utilities"
-version = "0.1.0"
+version = "0.2.0"
 license.workspace = true
 authors.workspace = true
 edition.workspace = true
 homepage.workspace = true
 repository.workspace = true
-documentation = "https://docs.rs/sc-metadata"
+description = "Soil client utilities for frame runtime functions calls"
 
 [lints]
 workspace = true

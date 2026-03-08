@@ -1,14 +1,13 @@
 [package]
 name = "soil-service"
-version = "0.35.0"
-authors.workspace = true
+version = "0.2.0"
 build = "build.rs"
+authors.workspace = true
 edition.workspace = true
 license.workspace = true
 homepage.workspace = true
 repository.workspace = true
-description = "Substrate service. Starts a thread that spins up the network, client, and extrinsic pool. Manages communication between them."
-readme = "README.md"
+description = "Soil service. Starts a thread that spins up the network, client, and extrinsic pool. Manages communication between them."
 
 [lints]
 workspace = true

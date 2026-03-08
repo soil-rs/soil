@@ -1,13 +1,13 @@
 [package]
 name = "subsoil"
 version = "0.1.0"
+build = "build.rs"
 authors.workspace = true
 edition.workspace = true
 license.workspace = true
 homepage.workspace = true
 repository.workspace = true
-description = "Substrate primitives foundation crate"
-build = "build.rs"
+description = "Soil primitives foundation crate"
 
 [lints]
 workspace = true

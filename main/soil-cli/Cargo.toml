@@ -1,13 +1,12 @@
 [package]
 name = "soil-cli"
-version = "0.36.0"
+version = "0.2.0"
 authors.workspace = true
-description = "Substrate CLI interface."
 edition.workspace = true
 license.workspace = true
 homepage.workspace = true
 repository.workspace = true
-readme = "README.md"
+description = "Soil CLI interface"
 
 [lints]
 workspace = true

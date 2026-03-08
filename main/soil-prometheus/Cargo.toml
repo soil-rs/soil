@@ -1,13 +1,12 @@
 [package]
-description = "Endpoint to expose Prometheus metrics"
 name = "soil-prometheus"
-version = "0.17.0"
+version = "0.2.0"
 license.workspace = true
 authors.workspace = true
 edition.workspace = true
 homepage.workspace = true
 repository.workspace = true
-readme = "README.md"
+description = "Endpoint to expose Prometheus metrics"
 
 [lints]
 workspace = true

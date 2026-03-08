@@ -1,14 +1,13 @@
 [package]
 name = "soil-consensus"
-version = "0.33.0"
+version = "0.2.0"
 authors.workspace = true
 edition.workspace = true
 build = "build.rs"
 license.workspace = true
 homepage.workspace = true
 repository.workspace = true
-description = "Collection of common consensus specific implementations for Substrate (client)"
-readme = "README.md"
+description = "Collection of common consensus specific implementations for Soil"
 
 [lints]
 workspace = true

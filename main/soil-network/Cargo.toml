@@ -1,14 +1,12 @@
 [package]
-description = "Substrate network protocol"
 name = "soil-network"
-version = "0.34.0"
+version = "0.2.0"
 license.workspace = true
 authors.workspace = true
 edition.workspace = true
 homepage.workspace = true
 repository.workspace = true
-documentation = "https://docs.rs/soil-network"
-readme = "README.md"
+description = "Soil network protocol"
 
 [lints]
 workspace = true
