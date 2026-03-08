@@ -124,9 +124,7 @@ topsoil-session = { workspace = true }
 topsoil-session-benchmarking = { workspace = true }
 plant-society = { workspace = true }
 plant-staking = { workspace = true }
-plant-staking-reward-curve = { workspace = true }
-plant-staking-reward-fn = { workspace = true }
-plant-staking-runtime-api = { workspace = true }
+plant-staking-macros = { workspace = true }
 plant-state-trie-migration = { workspace = true }
 plant-statement = { workspace = true }
 plant-sudo = { workspace = true }
@@ -254,8 +252,6 @@ std = [
 	"topsoil-session-benchmarking/std",
 	"plant-society/std",
 	"plant-staking/std",
-	"plant-staking-reward-fn/std",
-	"plant-staking-runtime-api/std",
 	"plant-state-trie-migration/std",
 	"plant-statement/std",
 	"plant-sudo/std",

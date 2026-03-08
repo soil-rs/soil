@@ -19,7 +19,7 @@
 //! See tests directory.
 
 mod test_small_falloff {
-	plant_staking_reward_curve::build! {
+	plant_staking_macros::build! {
 		const REWARD_CURVE: subsoil::runtime::curve::PiecewiseLinear<'static> = curve!(
 			min_inflation: 0_020_000,
 			max_inflation: 0_200_000,
@@ -32,7 +32,7 @@ mod test_small_falloff {
 }
 
 mod test_big_falloff {
-	plant_staking_reward_curve::build! {
+	plant_staking_macros::build! {
 		const REWARD_CURVE: subsoil::runtime::curve::PiecewiseLinear<'static> = curve!(
 			min_inflation: 0_100_000,
 			max_inflation: 0_400_000,

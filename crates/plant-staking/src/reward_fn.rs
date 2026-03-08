@@ -15,8 +15,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#![cfg_attr(not(feature = "std"), no_std)]
-
 //! Useful function for inflation for nominated proof of stake.
 
 use subsoil::arithmetic::{
@@ -53,7 +51,6 @@ use subsoil::arithmetic::{
 ///   inflation at the cost of greater volatility for validators. Must be more than 0.01.
 pub fn compute_inflation<P: PerThing>(stake: P, ideal_stake: P, falloff: P) -> P {
 	if stake < ideal_stake {
-		// ideal_stake is more than 0 because it is strictly more than stake
 		return stake / ideal_stake;
 	}
 
@@ -72,13 +69,11 @@ pub fn compute_inflation<P: PerThing>(stake: P, ideal_stake: P, falloff: P) -> P
 	falloff.lstrip();
 
 	let ln2 = {
-		/// `ln(2)` expressed in as perquintillionth.
 		const LN2: u64 = 0_693_147_180_559_945_309;
 		let ln2 = P::from_rational(LN2.into(), Perquintill::ACCURACY.into());
 		BigUint::from(ln2.deconstruct().into())
 	};
 
-	// falloff is stripped above.
 	let ln2_div_d = div_by_stripped(ln2.mul(&accuracy), &falloff);
 
 	let inpos_param = INPoSParam {
@@ -92,7 +87,6 @@ pub fn compute_inflation<P: PerThing>(stake: P, ideal_stake: P, falloff: P) -> P
 
 	match u128::try_from(res.clone()) {
 		Ok(res) if res <= Into::<u128>::into(P::ACCURACY) => P::from_parts(res.saturated_into()),
-		// If result is beyond bounds there is nothing we can do
 		_ => {
 			log::error!("Invalid inflation computation: unexpected result {:?}", res);
 			P::zero()
@@ -100,30 +94,16 @@ pub fn compute_inflation<P: PerThing>(stake: P, ideal_stake: P, falloff: P) -> P
 	}
 }
 
-/// Internal struct holding parameter info alongside other cached value.
-///
-/// All expressed in part from `accuracy`
 struct INPoSParam {
 	ln2_div_d: BigUint,
 	x_ideal: BigUint,
 	x: BigUint,
-	/// Must be stripped and have no leading zeros.
 	accuracy: BigUint,
 }
 
-/// Compute `2^((x_ideal - x) / d)` using taylor series.
-///
-/// x must be strictly more than x_ideal.
-///
-/// result is expressed with accuracy `INPoSParam.accuracy`
 fn compute_taylor_serie_part(p: &INPoSParam) -> BigUint {
-	// The last computed taylor term.
 	let mut last_taylor_term = p.accuracy.clone();
-
-	// Whereas taylor sum is positive.
 	let mut taylor_sum_positive = true;
-
-	// The sum of all taylor term.
 	let mut taylor_sum = last_taylor_term.clone();
 
 	for k in 1..300 {
@@ -138,17 +118,10 @@ fn compute_taylor_serie_part(p: &INPoSParam) -> BigUint {
 		if taylor_sum_positive == last_taylor_term_positive {
 			taylor_sum = taylor_sum.add(&last_taylor_term);
 		} else if taylor_sum >= last_taylor_term {
-			taylor_sum = taylor_sum
-				.sub(&last_taylor_term)
-				// NOTE: Should never happen as checked above
-				.unwrap_or_else(|e| e);
+			taylor_sum = taylor_sum.sub(&last_taylor_term).unwrap_or_else(|e| e);
 		} else {
 			taylor_sum_positive = !taylor_sum_positive;
-			taylor_sum = last_taylor_term
-				.clone()
-				.sub(&taylor_sum)
-				// NOTE: Should never happen as checked above
-				.unwrap_or_else(|e| e);
+			taylor_sum = last_taylor_term.clone().sub(&taylor_sum).unwrap_or_else(|e| e);
 		}
 	}
 
@@ -160,26 +133,11 @@ fn compute_taylor_serie_part(p: &INPoSParam) -> BigUint {
 	taylor_sum
 }
 
-/// Return the absolute value of k-th taylor term of `2^((x_ideal - x))/d` i.e.
-/// `((x - x_ideal) * ln(2) / d)^k / k!`
-///
-/// x must be strictly more x_ideal.
-///
-/// We compute the term from the last term using this formula:
-///
-/// `((x - x_ideal) * ln(2) / d)^k / k! == previous_term * (x - x_ideal) * ln(2) / d / k`
-///
-/// `previous_taylor_term` and result are expressed with accuracy `INPoSParam.accuracy`
 fn compute_taylor_term(k: u32, previous_taylor_term: &BigUint, p: &INPoSParam) -> BigUint {
 	let x_minus_x_ideal =
-		p.x.clone()
-			.sub(&p.x_ideal)
-			// NOTE: Should never happen, as x must be more than x_ideal
-			.unwrap_or_else(|_| BigUint::zero());
+		p.x.clone().sub(&p.x_ideal).unwrap_or_else(|_| BigUint::zero());
 
 	let res = previous_taylor_term.clone().mul(&x_minus_x_ideal).mul(&p.ln2_div_d).div_unit(k);
-
-	// p.accuracy is stripped by definition.
 	let res = div_by_stripped(res, &p.accuracy);
 	let mut res = div_by_stripped(res, &p.accuracy);
 
@@ -187,9 +145,6 @@ fn compute_taylor_term(k: u32, previous_taylor_term: &BigUint, p: &INPoSParam) -
 	res
 }
 
-/// Compute a div b.
-///
-/// requires `b` to be stripped and have no leading zeros.
 fn div_by_stripped(mut a: BigUint, b: &BigUint) -> BigUint {
 	a.lstrip();
 
@@ -207,7 +162,6 @@ fn div_by_stripped(mut a: BigUint, b: &BigUint) -> BigUint {
 	}
 
 	if b.len() == a.len() {
-		// 100_000^2 is more than 2^32-1, thus `new_a` has more limbs than `b`.
 		let mut new_a = a.mul(&BigUint::from(100_000u64.pow(2)));
 		new_a.lstrip();
 
@@ -221,4 +175,79 @@ fn div_by_stripped(mut a: BigUint, b: &BigUint) -> BigUint {
 	}
 
 	a.div(b, false).map(|res| res.0).unwrap_or_else(BigUint::zero)
+}
+
+#[cfg(test)]
+mod tests {
+	use super::compute_inflation;
+	use subsoil::arithmetic::{PerThing, PerU16, Perbill, Percent, Perquintill};
+
+	fn test_precision<P: PerThing>(stake: P, ideal_stake: P, falloff: P) {
+		let accuracy_f64 = Into::<u128>::into(P::ACCURACY) as f64;
+		let res = compute_inflation(stake, ideal_stake, falloff);
+		let res = Into::<u128>::into(res.deconstruct()) as f64 / accuracy_f64;
+		let expect = float_i_npos(stake, ideal_stake, falloff);
+		let error = (res - expect).abs();
+
+		assert!(
+			error <= 8f64 / accuracy_f64 || error <= 8.0 * f64::EPSILON,
+			"stake: {:?}, ideal_stake: {:?}, falloff: {:?}, res: {}, expect: {}",
+			stake,
+			ideal_stake,
+			falloff,
+			res,
+			expect,
+		);
+	}
+
+	fn float_i_npos<P: PerThing>(stake: P, ideal_stake: P, falloff: P) -> f64 {
+		let accuracy_f64 = Into::<u128>::into(P::ACCURACY) as f64;
+		let ideal_stake = Into::<u128>::into(ideal_stake.deconstruct()) as f64 / accuracy_f64;
+		let stake = Into::<u128>::into(stake.deconstruct()) as f64 / accuracy_f64;
+		let falloff = Into::<u128>::into(falloff.deconstruct()) as f64 / accuracy_f64;
+
+		if stake < ideal_stake {
+			stake / ideal_stake
+		} else {
+			2_f64.powf((ideal_stake - stake) / falloff)
+		}
+	}
+
+	#[test]
+	fn test_precision_for_minimum_falloff() {
+		fn test_falloff_precision_for_minimum_falloff<P: PerThing>() {
+			for stake in 0..1_000 {
+				let stake = P::from_rational(stake, 1_000);
+				let ideal_stake = P::zero();
+				let falloff = P::from_rational(1, 100);
+				test_precision(stake, ideal_stake, falloff);
+			}
+		}
+
+		test_falloff_precision_for_minimum_falloff::<Perquintill>();
+		test_falloff_precision_for_minimum_falloff::<PerU16>();
+		test_falloff_precision_for_minimum_falloff::<Perbill>();
+		test_falloff_precision_for_minimum_falloff::<Percent>();
+	}
+
+	#[test]
+	fn compute_inflation_works() {
+		fn compute_inflation_works<P: PerThing>() {
+			for stake in 0..100 {
+				for ideal_stake in 0..10 {
+					for falloff in 1..10 {
+						let stake = P::from_rational(stake, 100);
+						let ideal_stake = P::from_rational(ideal_stake, 10);
+						let falloff = P::from_rational(falloff, 100);
+						test_precision(stake, ideal_stake, falloff);
+					}
+				}
+			}
+		}
+
+		compute_inflation_works::<Perquintill>();
+		compute_inflation_works::<PerU16>();
+		compute_inflation_works::<Perbill>();
+		compute_inflation_works::<Percent>();
+	}
 }

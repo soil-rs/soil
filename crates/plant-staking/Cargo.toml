@@ -37,7 +37,7 @@ plant-election-provider = { workspace = true, default-features = true }
 topsoil-support = { features = ["experimental"], workspace = true, default-features = true }
 plant-bags-list = { workspace = true, default-features = true }
 topsoil-balances = { workspace = true, default-features = true }
-plant-staking-reward-curve = { workspace = true, default-features = true }
+plant-staking-macros = { workspace = true, default-features = true }
 topsoil-timestamp = { workspace = true, default-features = true }
 rand_chacha = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }

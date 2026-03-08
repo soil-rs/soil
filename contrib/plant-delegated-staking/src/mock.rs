@@ -75,7 +75,7 @@ impl topsoil_balances::Config for Runtime {
 	type RuntimeFreezeReason = RuntimeFreezeReason;
 }
 
-plant_staking_reward_curve::build! {
+plant_staking_macros::build! {
 	const I_NPOS: subsoil::runtime::curve::PiecewiseLinear<'static> = curve!(
 		min_inflation: 0_025_000,
 		max_inflation: 0_100_000,

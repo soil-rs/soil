@@ -32,7 +32,7 @@ plant-election-provider = { workspace = true, default-features = true }
 topsoil-balances = { workspace = true, default-features = true }
 topsoil-offences = { workspace = true, default-features = true }
 plant-staking = { workspace = true, default-features = true }
-plant-staking-reward-curve = { workspace = true, default-features = true }
+plant-staking-macros = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
 
 [features]

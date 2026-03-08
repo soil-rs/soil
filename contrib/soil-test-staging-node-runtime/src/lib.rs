@@ -687,7 +687,7 @@ impl topsoil_session::historical::Config for Runtime {
 	type FullIdentificationOf = plant_staking::UnitIdentificationOf<Self>;
 }
 
-plant_staking_reward_curve::build! {
+plant_staking_macros::build! {
 	const REWARD_CURVE: PiecewiseLinear<'static> = curve!(
 		min_inflation: 0_025_000,
 		max_inflation: 0_100_000,
@@ -3155,7 +3155,7 @@ subsoil::api::impl_runtime_apis! {
 		}
 	}
 
-	impl plant_staking_runtime_api::StakingApi<Block, Balance, AccountId> for Runtime {
+	impl plant_staking::runtime_api::StakingApi<Block, Balance, AccountId> for Runtime {
 		fn nominations_quota(balance: Balance) -> u32 {
 			Staking::api_nominations_quota(balance)
 		}

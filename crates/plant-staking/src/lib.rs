@@ -300,6 +300,8 @@ mod tests;
 pub mod asset;
 pub mod election_size_tracker;
 pub mod inflation;
+pub mod reward_fn;
+pub mod runtime_api;
 pub mod ledger;
 pub mod migrations;
 pub mod slashing;

@@ -1,5 +1,5 @@
 [package]
-name = "plant-staking-reward-curve"
+name = "plant-staking-macros"
 version = "11.0.0"
 authors.workspace = true
 edition.workspace = true

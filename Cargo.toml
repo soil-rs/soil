@@ -135,9 +135,7 @@ members = [
 	"crates/topsoil/session/benchmarking",
 	"contrib/plant-society",
 	"crates/plant-staking",
-	"crates/plant-staking-reward-curve",
-	"crates/plant-staking-reward-fn",
-	"crates/plant-staking-runtime-api",
+	"crates/plant-staking-macros",
 	"contrib/plant-state-trie-migration",
 	"contrib/plant-statement",
 	"contrib/plant-sudo",
@@ -358,9 +356,7 @@ topsoil-session = { path = "crates/topsoil/session", default-features = false }
 topsoil-session-benchmarking = { path = "crates/topsoil/session/benchmarking", default-features = false }
 plant-society = { path = "contrib/plant-society", default-features = false }
 plant-staking = { path = "crates/plant-staking", default-features = false }
-plant-staking-reward-curve = { path = "crates/plant-staking-reward-curve", default-features = false }
-plant-staking-reward-fn = { path = "crates/plant-staking-reward-fn", default-features = false }
-plant-staking-runtime-api = { path = "crates/plant-staking-runtime-api", default-features = false }
+plant-staking-macros = { path = "crates/plant-staking-macros", default-features = false }
 plant-state-trie-migration = { path = "contrib/plant-state-trie-migration", default-features = false }
 plant-statement = { default-features = false, path = "contrib/plant-statement" }
 plant-sudo = { path = "contrib/plant-sudo", default-features = false }

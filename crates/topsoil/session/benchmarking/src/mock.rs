@@ -115,7 +115,7 @@ impl topsoil_session::Config for Test {
 	// the validator before setting session keys; see `ensure_can_pay_key_deposit`.
 	type KeyDeposit = ConstU64<2000000000>;
 }
-plant_staking_reward_curve::build! {
+plant_staking_macros::build! {
 	const I_NPOS: subsoil::runtime::curve::PiecewiseLinear<'static> = curve!(
 		min_inflation: 0_025_000,
 		max_inflation: 0_100_000,
