@@ -30,9 +30,7 @@ std = [
 	"codec/std",
 	"topsoil-core/std",
 	"scale-info/std",
-	"subsoil/std",
 ]
 try-runtime = [
 	"topsoil-core/try-runtime",
-	"subsoil/try-runtime",
 ]
