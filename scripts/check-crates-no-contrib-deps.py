@@ -24,16 +24,18 @@ def main() -> int:
     name_by_id = {pkg["id"]: pkg["name"] for pkg in data["packages"]}
     nodes_by_id = {node["id"]: node for node in data["resolve"]["nodes"]}
 
-    crate_ids = {
-        pkg_id
-        for pkg_id, manifest in manifest_by_id.items()
-        if "/crates/" in str(manifest)
-    }
-    contrib_ids = {
-        pkg_id
-        for pkg_id, manifest in manifest_by_id.items()
-        if "/contrib/" in str(manifest)
-    }
+    protected_dirs = {"main", "runtime", "library", "harness"}
+    crate_ids = set()
+    contrib_ids = set()
+    for pkg_id, manifest in manifest_by_id.items():
+        try:
+            rel = manifest.relative_to(repo_root)
+        except ValueError:
+            continue
+        if rel.parts and rel.parts[0] in protected_dirs:
+            crate_ids.add(pkg_id)
+        elif rel.parts and rel.parts[0] == "contrib":
+            contrib_ids.add(pkg_id)
 
     violations = []
     for pkg_id in sorted(crate_ids, key=lambda item: str(manifest_by_id[item])):
@@ -70,10 +72,12 @@ def main() -> int:
             )
 
     if not violations:
-        print("OK: no crates/* package directly depends on a contrib/* package")
+        dirs = ", ".join(sorted(protected_dirs))
+        print(f"OK: no {dirs} package directly depends on a contrib/* package")
         return 0
 
-    print("ERROR: found crates/* packages with direct deps on contrib/* packages", file=sys.stderr)
+    dirs = ", ".join(sorted(protected_dirs))
+    print(f"ERROR: found {dirs} packages with direct deps on contrib/* packages", file=sys.stderr)
     for violation in violations:
         rel_manifest = violation["manifest"].relative_to(repo_root)
         print(f"{violation['pkg']}\t{rel_manifest}", file=sys.stderr)
