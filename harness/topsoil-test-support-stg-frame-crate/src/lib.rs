@@ -4,7 +4,7 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
 // SPDX-License-Identifier: Apache-2.0 OR GPL-3.0-or-later WITH Classpath-exception-2.0
 
-use topsoil::deps::{topsoil_core, topsoil_core::system};
+use topsoil::deps::topsoil_core;
 
 #[topsoil_core::pallet]
 pub mod pallet {
@@ -39,8 +39,8 @@ pub mod pallet {
 mod tests {
 	use super::{
 		pallet,
+		topsoil_core,
 		topsoil_core::{construct_runtime, derive_impl},
-		topsoil_core::system,
 	};
 
 	type Block = topsoil_core::system::mocking::MockBlock<Runtime>;
