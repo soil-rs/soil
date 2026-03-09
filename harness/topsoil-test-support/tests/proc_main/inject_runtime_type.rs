@@ -25,7 +25,7 @@ fn derive_impl_works_with_no_aggregated_types() {
 	struct DummyRuntime;
 
 	#[derive_impl(
-        super::topsoil_core::system::config_preludes::TestDefaultConfig as super::topsoil_core::system::DefaultConfig,
+        super::topsoil_system::config_preludes::TestDefaultConfig as super::topsoil_system::DefaultConfig,
         no_aggregated_types
     )]
 	impl Config for DummyRuntime {

@@ -6,13 +6,11 @@
 
 #![allow(deprecated, clippy::deprecated_semver)]
 
-use super::{topsoil_core::system, Block};
+use super::Block;
 use crate::derive_impl;
 
 #[crate::pallet(dev_mode)]
 mod pallet_basic {
-	use super::topsoil_core::system;
-
 	#[pallet::pallet]
 	pub struct Pallet<T>(_);
 
@@ -24,8 +22,6 @@ impl pallet_basic::Config for Runtime {}
 
 #[crate::pallet(dev_mode)]
 mod pallet_with_disabled_call {
-	use super::topsoil_core::system;
-
 	#[pallet::pallet]
 	pub struct Pallet<T>(_);
 
@@ -37,8 +33,6 @@ impl pallet_with_disabled_call::Config for Runtime {}
 
 #[crate::pallet(dev_mode)]
 mod pallet_with_disabled_unsigned {
-	use super::topsoil_core::system;
-
 	#[pallet::pallet]
 	pub struct Pallet<T>(_);
 
@@ -50,8 +44,6 @@ impl pallet_with_disabled_unsigned::Config for Runtime {}
 
 #[crate::pallet]
 mod pallet_with_instance {
-	use super::topsoil_core::system;
-
 	#[pallet::pallet]
 	pub struct Pallet<T, I = ()>(_);
 

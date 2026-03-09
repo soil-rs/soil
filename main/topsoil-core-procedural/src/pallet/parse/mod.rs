@@ -254,7 +254,14 @@ impl Def {
 			storages,
 			composites,
 			type_values,
-			topsoil_system,
+			// When `is_frame_system` is true, the pallet IS the system pallet.
+			// Use `self` so generated code (e.g. `<T as self::Config>::PalletInfo`)
+			// references the pallet's own types rather than `topsoil_core::system`.
+			topsoil_system: if is_frame_system {
+				syn::parse_quote!(self)
+			} else {
+				topsoil_system
+			},
 			topsoil_core,
 			dev_mode,
 			view_functions,

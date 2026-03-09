@@ -158,14 +158,9 @@ fn construct_runtime_final_expansion(
 	let scrate = generate_crate_access(hidden_crate_name, "topsoil-core");
 	let scrate_decl = generate_hidden_includes(hidden_crate_name, "topsoil-core");
 
-	let topsoil_system = {
-		let mut path = generate_access_from_frame_or_crate("topsoil-core")?;
-		path.segments.push(syn::PathSegment::from(syn::Ident::new(
-			"system",
-			proc_macro2::Span::call_site(),
-		)));
-		path
-	};
+	// Use the system pallet's registered path for Config resolution,
+	// so mock system pallets (e.g. in tests) resolve correctly.
+	let topsoil_system = &system_pallet.path;
 	let block = quote!(<#name as #topsoil_system::Config>::Block);
 	let unchecked_extrinsic =
 		quote!(<#block as #scrate::subsoil::runtime::traits::Block>::Extrinsic);
